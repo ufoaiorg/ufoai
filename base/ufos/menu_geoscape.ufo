@@ -941,6 +941,8 @@ menu popup_baseattack
 		pos "264 262"
 		size	"496 247"
 		dragbutton true
+		modal	true				// we can't click out
+		preventtypingescape true	// we can't use ESC
 	}
 
 	zone popup

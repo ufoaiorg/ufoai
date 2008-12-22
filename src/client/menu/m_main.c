@@ -417,8 +417,14 @@ static void MN_CloseMenu_f (void)
  */
 static void MN_PopMenu_f (void)
 {
-	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3)) {
-		MN_PopMenu(qfalse);
+	if (Cmd_Argc() < 2 || !Q_strncmp(Cmd_Argv(1), "esc", 3)) {
+		/** @todo we can do the same in a better way: event returning agreement */
+		/* some window can prevent escape */
+		menu_t *menu = mn.menuStack[mn.menuStackPos - 1];
+		assert(mn.menuStackPos);
+		if (!menu->preventTypingEscape) {
+			MN_PopMenu(qfalse);
+		}
 	} else {
 		int i;
 

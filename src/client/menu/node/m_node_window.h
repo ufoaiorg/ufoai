@@ -41,6 +41,7 @@ typedef struct menu_s {
 	vec2_t noticePos; 		/**< the position where the cl.msgText messages are rendered */
 	qboolean dragButton;
 	qboolean closeButton;
+	qboolean preventTypingEscape;
 	qboolean modal;
 
 	menuNode_t *firstChild;	/**< first element of linked list of child */

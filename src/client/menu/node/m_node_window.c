@@ -150,6 +150,7 @@ static const value_t windowNodeProperties[] = {
 	{"dragbutton", V_BOOL, offsetof(menu_t, dragButton), MEMBER_SIZEOF(menu_t, dragButton)},
 	{"closebutton", V_BOOL, offsetof(menu_t, closeButton), MEMBER_SIZEOF(menu_t, closeButton)},
 	{"modal", V_BOOL, offsetof(menu_t, modal), MEMBER_SIZEOF(menu_t, modal)},
+	{"preventtypingescape", V_BOOL, offsetof(menu_t, preventTypingEscape), MEMBER_SIZEOF(menu_t, preventTypingEscape)},
 
 	{"init", V_SPECIAL_ACTION, offsetof(menu_t, onInit), MEMBER_SIZEOF(menu_t, onInit)},
 	{"close", V_SPECIAL_ACTION, offsetof(menu_t, onClose), MEMBER_SIZEOF(menu_t, onClose)},
