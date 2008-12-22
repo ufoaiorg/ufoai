@@ -27,5 +27,6 @@
 void MapInfo_Construct();
 void MapInfo_Destroy();
 GtkWidget *MapInfo_constructNotebookTab();
+void MapInfo_Update(void);
 
 #endif

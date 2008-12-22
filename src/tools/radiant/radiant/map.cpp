@@ -62,7 +62,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "select.h"
 #include "plugin.h"
 #include "filetypes.h"
-#include "sidebar/entityinspector.h"
+#include "sidebar/mapinfo.h"
 #include "qe3.h"
 #include "camwindow.h"
 #include "xywindow.h"
@@ -699,8 +699,6 @@ void Map_LoadFile (const char *filename) {
 	Map_UpdateTitle(g_map);
 
 	{
-		ScopeTimer timer("map load");
-
 		g_map.m_resource = GlobalReferenceCache().capture(g_map.m_name.c_str());
 		g_map.m_resource->attach(g_map);
 
@@ -719,6 +717,8 @@ void Map_LoadFile (const char *filename) {
 	FocusViews(g_vector3_identity, 0);
 
 	g_currentMap = &g_map;
+
+	MapInfo_Update();
 }
 
 void Map_Reload (void)
