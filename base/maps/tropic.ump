@@ -1,8 +1,27 @@
 // ********
-// TROPICAL
+// TROPICAL assembly
 // ********
 
+
 base tropic/tr_
+
+// Legend:
+//  tr_*01
+// ------
+// f* - ordinary tiles, without any trees and info_*_start
+// h* - house tiles
+// p* - palms tiles
+// r* - river tiles
+
+// Tiletypes
+// ------
+// a: normal
+// b: water horizontal 
+//    should be b    ,,,
+//              b    ```
+// c: house tiles
+
+
 
 // ---------------------------------
 tile +r01
@@ -234,15 +253,75 @@ abc     +a    +a      +a     abc
 0      abc     abc     abc     0
 }
 
+// craft_ufo_fighter
+tile +craft_ufo_fighter
+
+{
+4 5
+
+0      abc     abc     0
+abc     +a    +a     abc
+abc     +a    +a     abc
+abc     +a    +a     abc
+0      abc     abc     0
+}
+
+
+// craft_crash_fighter
+tile +craft_crash_fighter 
+{
+6 5
+0      abc     abc     abc     0       0
+abc     +a    +a      +a       abc     0
+abc     +a    +a      +a      +a     abc
+abc     +a    +a      +a      +a     abc
+0      abc     abc     abc     abc     0
+
+
+
+}
+
+// craft_ufo_harvester
+
+//      ++
+//      ++
+//     ++++
+//     ++++
+//     ++++
+//
+
+tile +craft_ufo_harvester
+{
+6 7 
+//1   2    3    4    5    6    7
+0     0   abc  abc  abc   0     0        // 1
+0    ac   +a   +a   +a   ac     0        // 2
+abc  +a   +a   +a   +a   +a   abc        // 3
+abc  +a   +a   +a   +a   +a   abc        // 4
+abc  +a   +a   +a   +a   +a   abc        // 5
+0    abc  abc  abc  abc  abc    0        // 6
+
+}
+
 
 // craft_ufo_corrupter
+
+//
+//       ++++++
+//       ++++++
+//     ++++++++
+//     ++++++++
+//      +++++++
+//      +++++++
+//
+
 tile +craft_ufo_corrupter
 {
 10 8
 
 0       0      abc     abc     abc     abc     abc     abc     abc     0
-0       0      a      +a      +a      +a      +a      +a      +a     abc
-0        a     a      +a      +a      +a      +a      +a      +a     abc
+0       0      ac     +a      +a      +a      +a      +a      +a     abc
+0       ac     ac     +a      +a      +a      +a      +a      +a     abc
 abc     +a    +a      +a      +a      +a      +a      +a      +a     abc
 abc     +a    +a      +a      +a      +a      +a      +a      +a     abc
 0        a    +a      +a      +a      +a      +a      +a      +a     abc
@@ -307,5 +386,25 @@ title "_Tropical drug"
 
 *rm_drop +drop_firebird "1 1"
 *rm_ufo +craft_ufo_scout "1 1"
-
 }
+
+assembly bigufo
+{
+size "10 8"
+title "_Tropical UFO"
+
+
++f01 "0 10"
++f02 "0 10"
++f03 "0 10"
++f04 "0 10"
++f05 "0 3"
++f06 "0 3"
++f07 "0 3"
+
++p02 "0 8"
+
+*rm_drop +drop_firebird "1 1"
+*rm_ufo +craft_ufo_corrupter "1 1"
+}
+

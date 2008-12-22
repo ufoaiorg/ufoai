@@ -64,13 +64,13 @@ font f_menu
 font f_menubig
 {
 	font	"_media/FreeSans.ttf"
-	size	28
+	size	24
 	style	TTF_STYLE_BOLD
 }
 
 font f_menusmall
 {
 	font	"_media/FreeSans.ttf"
-	size	20
+	size	18
 	style	TTF_STYLE_BOLD
 }

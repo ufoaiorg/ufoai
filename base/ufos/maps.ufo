@@ -9,7 +9,12 @@
 // See also http://ufoai.ninex.info/wiki/index.php/Mapping/Terrain_Types
 //
 // valid UFO values:
-// * craft_ufo_scout, craft_crash_scout, craft_ufo_fighter, craft_crash_fighter, craft_ufo_harvester, craft_crash_harvester, craft_ufo_lander, craft_crash_lander, craft_ufo_bomber, craft_crash_corrupter
+// * craft_ufo_scout, craft_crash_scout,
+// * craft_ufo_fighter, craft_crash_fighter,
+// * craft_ufo_harvester, craft_crash_harvester,
+// * craft_ufo_bomber, craft_crash_bomber
+// * craft_ufo_corrupter, craft_crash_corrupter
+// * craft_crash_supply
 
 ////////////////////////
 // INDUSTRIAL RANDOM MAPS
@@ -491,7 +496,10 @@ mapdef tropic_river
 	{
   craft_ufo_corrupter
   craft_ufo_scout
+  craft_ufo_fighter
+  craft_ufo_harvester
   craft_crash_scout
+  craft_crash_fighter
 	}
 
 	terrains
@@ -525,7 +533,43 @@ mapdef tropic_drug
 	{
   craft_ufo_corrupter
   craft_ufo_scout
+  craft_ufo_fighter
+  craft_ufo_harvester
   craft_crash_scout
+  craft_crash_fighter
+	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef tropic_bigufo
+{
+	map				"+tropic"
+	description		"_A cleared stretch of land in the middle of the jungle."
+	param			bigufo
+	multiplayer		false
+	maxaliens		18 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+  craft_ufo_corrupter
+  craft_ufo_harvester
 	}
 
 	terrains
