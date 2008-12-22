@@ -108,7 +108,6 @@ GtkWidget* Console_constructWindow(GtkWindow* toplevel) {
 
 	{
 		GtkWidget* text = gtk_text_view_new();
-		gtk_widget_set_size_request(text, 0, -1); // allow shrinking
 		gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text), GTK_WRAP_WORD);
 		gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
 		gtk_container_add(GTK_CONTAINER (scr), text);

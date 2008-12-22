@@ -67,7 +67,7 @@ static GtkEntry* numeric_entry_new (void)
 {
 	GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 	gtk_widget_show(GTK_WIDGET(entry));
-	gtk_widget_set_size_request(GTK_WIDGET(entry), 10, -1);
+	widget_set_size(GTK_WIDGET(entry), 10, 0);
 	return entry;
 }
 
@@ -172,7 +172,7 @@ class StringAttribute: public EntityAttribute
 		{
 			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 			gtk_widget_show(GTK_WIDGET(entry));
-			gtk_widget_set_size_request(GTK_WIDGET(entry), 50, -1);
+			widget_set_size(GTK_WIDGET(entry), 50, 0);
 
 			m_entry = entry;
 			m_nonModal.connect(m_entry);
@@ -1363,7 +1363,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 				{
 					GtkTextView* text = GTK_TEXT_VIEW(gtk_text_view_new());
-					gtk_widget_set_size_request(GTK_WIDGET(text), 0, -1); // allow shrinking
+					widget_set_size(GTK_WIDGET(text), 0, 0); // as small as possible
 					gtk_text_view_set_wrap_mode(text, GTK_WRAP_WORD);
 					gtk_text_view_set_editable(text, FALSE);
 					gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(text));

@@ -15,6 +15,8 @@
  */
 
 #include "sidebar.h"
+#include "../commands.h"
+#include "gtkutil/widget.h"
 
 #include <gtk/gtk.h>
 
@@ -98,16 +100,44 @@ static void Sidebar_constructJobInfo (GtkWidget *notebook)
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), swin, label);
 }
 
+static GtkWidget *notebook;
+
+void ToggleSidebar (void)
+{
+	if (widget_is_visible(notebook))
+		gtk_widget_hide_all(notebook);
+	else
+		gtk_widget_show_all(notebook);
+}
+
+static void SidebarButtonToggle (GtkWidget* widget, gpointer data)
+{
+	ToggleSidebar();
+}
+
 GtkWidget *Sidebar_construct (void)
 {
-	GtkWidget *notebook = gtk_notebook_new();
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+
+	GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
+	GtkWidget *button = gtk_button_new();
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(SidebarButtonToggle), 0);
+	widget_set_size(GTK_WIDGET(button), 20, 20);
+
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
+
+	notebook = gtk_notebook_new();
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(notebook), TRUE, TRUE, 0);
 
 	Sidebar_constructEntities(notebook);
 	Sidebar_constructSurfaces(notebook);
 	Sidebar_constructMapInfo(notebook);
 	Sidebar_constructJobInfo(notebook);
 
-	gtk_widget_show_all(notebook);
+	gtk_widget_show_all(vbox);
 
-	return notebook;
+	GlobalCommands_insert("ToggleSidebar", FreeCaller<ToggleSidebar> (), Accelerator('S'));
+
+	return vbox;
 }

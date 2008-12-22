@@ -470,7 +470,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 0, 1,
 					(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
 			GtkWidget* label = gtk_label_new("Step");
@@ -486,7 +486,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 0, 1,
 					(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			widget_set_size(GTK_WIDGET(entry), 50, 0);
 			m_hshiftIncrement.m_entry = entry;
 			m_hshiftEntry.connect(entry);
 		}
@@ -506,7 +506,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 1, 2,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
 			GtkWidget* label = gtk_label_new("Step");
@@ -522,7 +522,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 1, 2,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			widget_set_size(GTK_WIDGET(entry), 50, 0);
 			m_vshiftIncrement.m_entry = entry;
 			m_vshiftEntry.connect(entry);
 		}
@@ -542,7 +542,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 2, 3,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
 			GtkWidget* label = gtk_label_new ("Step");
@@ -558,7 +558,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 2, 3,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 2, 3);
-			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			widget_set_size(GTK_WIDGET(entry), 50, 0);
 			m_hscaleIncrement.m_entry = entry;
 			m_hscaleEntry.connect(entry);
 		}
@@ -578,7 +578,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 3, 4,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
 			GtkWidget* label = gtk_label_new("Step");
@@ -594,7 +594,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 3, 4,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			widget_set_size(GTK_WIDGET(entry), 50, 0);
 			m_vscaleIncrement.m_entry = entry;
 			m_vscaleEntry.connect(entry);
 		}
@@ -614,7 +614,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(spin), 1, 2, 4, 5,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(spin), 60, -2);
+			widget_set_size(GTK_WIDGET(spin), 60, 0);
 			gtk_spin_button_set_wrap(spin, TRUE);
 		}
 		{
@@ -631,7 +631,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), GTK_WIDGET(entry), 3, 4, 4, 5,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize(GTK_WIDGET(entry), 50, -2);
+			widget_set_size(GTK_WIDGET(entry), 50, 0);
 			m_rotateIncrement.m_entry = entry;
 			m_rotateEntry.connect(entry);
 		}
@@ -686,7 +686,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 						(GtkAttachOptions) (0), 0, 0);
 				g_signal_connect(G_OBJECT(button), "clicked",
 						G_CALLBACK(OnBtnAxial), 0);
-				gtk_widget_set_usize (button, 60, -2);
+				widget_set_size (button, 60, 0);
 			}
 			{
 				GtkWidget* button = gtk_button_new_with_label("Fit");
@@ -696,7 +696,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 						(GtkAttachOptions) (0), 0, 0);
 				g_signal_connect(G_OBJECT(button), "clicked",
 						G_CALLBACK(OnBtnFaceFit), 0);
-				gtk_widget_set_usize (button, 60, -2);
+				widget_set_size (button, 60, 0);
 			}
 			{
 				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
@@ -704,7 +704,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				gtk_table_attach(GTK_TABLE(table), spin, 2, 3, 1, 2,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 						(GtkAttachOptions) (0), 0, 0);
-				gtk_widget_set_usize (spin, 60, -2);
+				widget_set_size (spin, 60, 0);
 				//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitHorizontal);
 		}
 		{
@@ -713,7 +713,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2,
 					(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
-			gtk_widget_set_usize (spin, 60, -2);
+			widget_set_size (spin, 60, 0);
 			//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitVertical);
 		}
 	}

@@ -27,6 +27,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "generic/callback.h"
 #include "debugging/debugging.h"
 
+inline void widget_set_size(GtkWidget* widget, int width, int height) {
+	if (height == 0) {
+		GtkRequisition size;
+		gtk_widget_size_request(widget, &size);
+		gtk_widget_set_size_request(widget, width, size.height);
+	} else {
+		gtk_widget_set_size_request(widget, width, height);
+	}
+}
+
 inline void widget_set_visible(GtkWidget* widget, bool shown) {
 	if (shown) {
 		gtk_widget_show(widget);

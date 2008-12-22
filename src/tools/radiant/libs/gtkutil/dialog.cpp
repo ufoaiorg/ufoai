@@ -61,8 +61,8 @@ GtkTable* create_dialog_table(unsigned int rows, unsigned int columns, unsigned 
 
 GtkButton* create_dialog_button(const char* label, GCallback func, gpointer data) {
 	GtkButton* button = GTK_BUTTON(gtk_button_new_with_label(label));
-	gtk_widget_set_size_request(GTK_WIDGET(button), 64, -1);
 	gtk_widget_show(GTK_WIDGET(button));
+	widget_set_size(GTK_WIDGET(button), 64, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", func, data);
 	return button;
 }
@@ -119,12 +119,6 @@ GtkWindow* create_fixedsize_modal_dialog_window(GtkWindow* parent, const char* t
 	gtk_window_set_position(window, GTK_WIN_POS_CENTER);
 
 	window_remove_minmax(window);
-
-	//gtk_widget_set_size_request(GTK_WIDGET(window), width, height);
-	//gtk_window_set_default_size(window, width, height);
-	//gtk_window_resize(window, width, height);
-	//GdkGeometry geometry = { width, height, -1, -1, width, height, -1, -1, -1, -1, GDK_GRAVITY_STATIC, };
-	//gtk_window_set_geometry_hints(window, GTK_WIDGET(window), &geometry, (GdkWindowHints)(GDK_HINT_POS|GDK_HINT_MIN_SIZE|GDK_HINT_BASE_SIZE));
 
 	return window;
 }

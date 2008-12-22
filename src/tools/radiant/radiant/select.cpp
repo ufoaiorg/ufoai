@@ -915,7 +915,6 @@ void DoRotateDlg (void)
 					gtk_table_attach(table, GTK_WIDGET(spin), 1, 2, 0, 1,
 									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_widget_set_size_request(GTK_WIDGET(spin), 64, -1);
 					gtk_spin_button_set_wrap(spin, TRUE);
 
 					gtk_widget_grab_focus(GTK_WIDGET(spin));
@@ -929,7 +928,6 @@ void DoRotateDlg (void)
 					gtk_table_attach(table, GTK_WIDGET(spin), 1, 2, 1, 2,
 									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_widget_set_size_request(GTK_WIDGET(spin), 64, -1);
 					gtk_spin_button_set_wrap(spin, TRUE);
 
 					g_rotate_dialog.y = spin;
@@ -941,7 +939,6 @@ void DoRotateDlg (void)
 					gtk_table_attach(table, GTK_WIDGET(spin), 1, 2, 2, 3,
 									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_widget_set_size_request(GTK_WIDGET(spin), 64, -1);
 					gtk_spin_button_set_wrap(spin, TRUE);
 
 					g_rotate_dialog.z = spin;

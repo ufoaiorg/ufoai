@@ -189,7 +189,6 @@ static void CreateCheckDialog (void)
 	button = gtk_button_new_with_label("Close");
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editorHideCallback), NULL);
-	gtk_widget_set_usize(button, 60, -2);
 
 	button = gtk_button_new_with_label("Fix");
 #if GTK_CHECK_VERSION(2, 12, 0)
@@ -197,7 +196,6 @@ static void CreateCheckDialog (void)
 #endif
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(fixCallback), NULL);
-	gtk_widget_set_usize(button, 60, -2);
 }
 
 void ToolsCheckErrors (void)

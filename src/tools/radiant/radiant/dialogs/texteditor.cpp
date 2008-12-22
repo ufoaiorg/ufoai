@@ -110,14 +110,12 @@ static void CreateGtkTextEditor(void)
 	gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked",
 	                 G_CALLBACK(editor_close), dlg);
-	gtk_widget_set_usize (button, 60, -2);
 
 	button = gtk_button_new_with_label ("Save");
 	gtk_widget_show (button);
 	gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked",
 	                 G_CALLBACK(editor_save), dlg);
-	gtk_widget_set_usize (button, 60, -2);
 
 	text_editor = dlg;
 	text_widget = text;
@@ -190,6 +188,7 @@ bool g_TextEditor_useCustomEditor = false;
 CopiedString g_TextEditor_editorCommand("");
 #endif
 
+// TODO: Use me (particle editor, terrain defintion, ...)
 void DoTextEditor (const char* filename, int cursorpos)
 {
 #ifdef WIN32
