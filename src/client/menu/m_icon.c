@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 const value_t mn_iconProperties[] = {
 	{"texl", V_POS, offsetof(menuIcon_t, pos), MEMBER_SIZEOF(menuIcon_t, pos)},
 	{"size", V_POS, offsetof(menuIcon_t, size), MEMBER_SIZEOF(menuIcon_t, size)},
-	{"image", V_STRING|V_MENU_COPY, offsetof(menuIcon_t, image), 0},
+	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image), 0},
 	{NULL, V_NULL, 0, 0}
 };
 

@@ -85,9 +85,9 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 				break;
 			}
 
-			if (!(action->scriptValues->type & V_MENU_COPY))
+			if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
 				Com_SetValue(node, (char *) data, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-			else {
+			else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
 				void *mem = ((byte *) node + action->scriptValues->ofs);
 				switch (action->scriptValues->type & V_BASETYPEMASK) {
 				case V_FLOAT:
@@ -99,6 +99,8 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 				default:
 					*(byte **) mem = data;
 				}
+			} else {
+					assert(qfalse);
 			}
 		}
 		break;
@@ -176,7 +178,8 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 					if (property) {
 						const char* value;
 						int l;
-						if ((property->type & (V_SPECIAL|V_MENU_COPY)) != 0) {
+						/* only allow common type or cvar */
+						if ((property->type & V_SPECIAL_TYPE) != 0 && (property->type & V_SPECIAL_TYPE) != V_SPECIAL_CVAR) {
 							Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s.%s'", property->string, source->menu->name, source->name);
 						}
 						/* inject the property value */
@@ -249,9 +252,9 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 					break;
 				}
 
-				if (!(action->scriptValues->type & V_MENU_COPY))
+				if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
 					Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-				else {
+				else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
 					void *mem = ((byte *) node + action->scriptValues->ofs);
 					switch (action->scriptValues->type & V_BASETYPEMASK) {
 					case V_FLOAT:
@@ -263,6 +266,8 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 					default:
 						*(byte **) mem = value;
 					}
+				} else {
+					assert(qfalse);
 				}
 			}
 			break;

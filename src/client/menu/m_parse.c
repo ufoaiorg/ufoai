@@ -441,7 +441,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	return qtrue;
 }
 
-static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const char **text, const char **token, const char *errhead)
+static qboolean MN_ParseNodeProperty (menuNode_t * node, const value_t *val, const char **text, const char **token, const char *errhead)
 {
 	size_t bytes;
 	int result;
@@ -461,7 +461,7 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 	/* Com_Printf(" %s", *token); */
 
 	/* get the value */
-	if (!(val->type & V_MENU_COPY)) {
+	if ((val->type & V_SPECIAL_TYPE) == 0) {
 		result = Com_ParseValue(node, *token, val->type, val->ofs, val->size, &bytes);
 		if (result != RESULT_OK) {
 			Com_Printf("Invalid value for property '%s': %s\n", val->string, Com_GetError());
@@ -474,7 +474,7 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 		if (**token == '*') {
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
+				Com_Printf("MN_ParseNodeProperty: Value '%s' is too long (key %s)\n", *token, val->string);
 				return qfalse;
 			}
 
@@ -487,7 +487,7 @@ static qboolean MN_ParseProperty (menuNode_t * node, const value_t *val, const c
 		} else {
 			/* sanity check */
 			if (val->type == V_STRING && strlen(*token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, val->string);
+				Com_Printf("MN_ParseNodeProperty: Value '%s' is too long (key %s)\n", *token, val->string);
 				return qfalse;
 			}
 
@@ -601,8 +601,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 
 		/* if its not a special case */
-		if (!(val->type & V_SPECIAL)) {
-			result = MN_ParseProperty(node, val, text, token, errhead);
+		if ((val->type & V_SPECIAL_TYPE) == 0 || (val->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
+			result = MN_ParseNodeProperty(node, val, text, token, errhead);
 			if (!result)
 				return qfalse;
 
@@ -636,7 +636,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 		} else {
 			/* unknown val->type !!!!! */
-			Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" ignored (node %s.%s)\n", val->type, node->menu->name, node->name);
+			Com_Printf("MN_ParseNodeBody: unknown val->type \"%d\" (0x%X) ignored (node %s.%s@%s)\n", val->type, val->type, node->menu->name, node->name, val->string);
 			return qfalse;
 		}
 	} while (*text);
@@ -997,7 +997,7 @@ void MN_ParseIcon (const char *name, const char **text)
 		if (*text == NULL)
 			return;
 
-		if (!(property->type & V_MENU_COPY)) {
+		if ((property->type & V_SPECIAL_TYPE) == 0) {
 			size_t bytes;
 			qboolean result = Com_ParseValue(icon, token, property->type, property->ofs, property->size, &bytes);
 			if (result != RESULT_OK) {
@@ -1013,7 +1013,7 @@ void MN_ParseIcon (const char *name, const char **text)
 
 			/* sanity check */
 			if ((property->type&V_BASETYPEMASK) == V_STRING && strlen(token) > MAX_VAR - 1) {
-				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", token, property->string);
+				Com_Printf("MN_ParseNodeProperty: Value '%s' is too long (key %s)\n", token, property->string);
 				return;
 			}
 

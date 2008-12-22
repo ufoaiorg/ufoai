@@ -39,12 +39,20 @@ char* MN_AllocString(const char* string, int size);
 
 qboolean MN_ScriptSanityCheck(void);
 
-#define V_MENU_COPY 0x100 /**< flag to request a memory copy into the menu structure */
-
+/* main special type */
+#define	V_SPECIAL_TYPE			0x8F00
 #define	V_SPECIAL				0x8000
-#define	V_SPECIAL_ACTION		(V_SPECIAL + 0)	/**< Identify an action type into the value_t structure */
-#define V_SPECIAL_EXCLUDERECT	(V_SPECIAL + 1)	/**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) /**< Identify a special attribute, use special parse function */
-#define V_SPECIAL_ICONREF		(V_SPECIAL + 3) /**< Identify a special attribute, use special parse function */
+#define	V_SPECIAL_ACTION		(V_SPECIAL + 0)			/**< Identify an action type into the value_t structure */
+#define V_SPECIAL_EXCLUDERECT	(V_SPECIAL + 1)			/**< Identify a special attribute, use special parse function */
+#define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) 		/**< Identify a special attribute, use special parse function */
+#define V_SPECIAL_ICONREF		(V_SPECIAL + 3) 		/**< Identify a special attribute, use special parse function */
+#define V_SPECIAL_CVAR			(V_SPECIAL + 0x0100) 	/**< Property is a CVAR string */
+#define V_SPECIAL_REF			(V_SPECIAL + 0x0200) 	/**< Property is a ref into a value */
+
+/* composite special type */
+#define V_CVAR_OR_FLOAT			(V_SPECIAL_CVAR + V_FLOAT)
+#define V_CVAR_OR_STRING		(V_SPECIAL_CVAR + V_STRING)
+#define V_CVAR_OR_LONGSTRING	(V_SPECIAL_CVAR + V_LONGSTRING)
+#define V_REF_OF_STRING			(V_SPECIAL_REF + V_STRING)
 
 #endif

@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 
 static const value_t properties[] = {
-	{"current", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.value), 0},
-	{"delta", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.delta), 0},
-	{"max", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.max), 0},
-	{"min", V_FLOAT|V_MENU_COPY, offsetof(menuNode_t, u.abstractvalue.min), 0},
+	{"current", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.value), 0},
+	{"delta", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.delta), 0},
+	{"max", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.max), 0},
+	{"min", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.min), 0},
 	{"lastdiff", V_FLOAT, offsetof(menuNode_t, u.abstractvalue.lastdiff), MEMBER_SIZEOF(menuNode_t, u.abstractvalue.lastdiff)},
 	{NULL, V_NULL, 0, 0}
 };

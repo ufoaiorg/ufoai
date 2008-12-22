@@ -53,26 +53,28 @@ static const value_t properties[] = {
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 	{"key", V_STRING, offsetof(menuNode_t, key), 0},
 
-	{"tooltip", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
-	{"image", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
-	{"roq", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
-	{"model", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
-	{"cvar", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
-	{"skin", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
-	{"string", V_LONGSTRING|V_MENU_COPY, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
-	{"font", V_STRING|V_MENU_COPY, offsetof(menuNode_t, font), 0},
+	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
+	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
+	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
+	{"roq", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
+	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
+	{"cvar", V_SPECIAL_CVAR, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
+	{"skin", V_CVAR_OR_STRING, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
+	{"string", V_CVAR_OR_STRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
+	/** @todo use V_REF_OF_STRING when its possible ('font' is never a cvar) */
+	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
 #if 0 /* never use */
-	{"weapon", V_STRING|V_MENU_COPY, offsetof(menuNode_t, dataImageOrModel), 0},
+	{"weapon", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
 #endif
 
 	/* specific for model
 	 * @todo move it into the node behaviour
 	 */
-	{"anim", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.animation), 0},
+	{"anim", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.animation), 0},
 	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
 	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
 	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
-	{"tag", V_STRING|V_MENU_COPY, offsetof(menuNode_t, u.model.tag), 0},
+	{"tag", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.tag), 0},
 
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
@@ -210,7 +212,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 
 	if (property->type == V_FLOAT) {
 		*(float*) b = atof(value);
-	} else if (property->type == (V_FLOAT|V_MENU_COPY)) {
+	} else if (property->type == V_CVAR_OR_FLOAT) {
 		b = (byte*) (*(void**)b);
 		if (!Q_strncmp((const char*)b, "*cvar", 5)) {
 			MN_SetCvar(&((char*)b)[6], NULL, atof(value));
