@@ -131,6 +131,7 @@ Defines the alien mission target
 "angle"		determines the opening direction
 "health"	define the needed damage to destroy the door
 "group"		multipart doors can be grouped to open together
+"noise"		soundfile to play when door opens
 "particle"	particle id to be spawned after object is destroyed
 */
 

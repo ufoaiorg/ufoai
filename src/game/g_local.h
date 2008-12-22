@@ -555,6 +555,7 @@ struct edict_s {
 	const char *targetname;	/**< name pointed to by target */
 	const char *item;	/**< the item id that must be placed to e.g. the func_mission to activate the use function */
 	const char *particle;
+	const char *noise;	/**< sounds - e.g. for func_door */
 	edictMaterial_t material;	/**< material value (e.g. for func_breakable) */
 	int count;		/**< general purpose 'amount' variable - set via mapeditor often */
 	int time;		/**< general purpose 'rounds' variable - set via mapeditor often */

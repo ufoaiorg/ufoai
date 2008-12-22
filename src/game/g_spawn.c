@@ -98,6 +98,7 @@ static const field_t fields[] = {
 	{"target", offsetof(edict_t, target), F_LSTRING, 0},
 	{"targetname", offsetof(edict_t, targetname), F_LSTRING, 0},
 	{"item", offsetof(edict_t, item), F_LSTRING, 0},
+	{"noise", offsetof(edict_t, noise), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
 	{"team", offsetof(edict_t, team), F_INT, 0},
 	{"group", offsetof(edict_t, group), F_LSTRING, 0},

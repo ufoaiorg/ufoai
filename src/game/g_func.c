@@ -145,6 +145,8 @@ static qboolean Door_Use (edict_t *door)
 			/* let everybody know, that the door opens */
 			gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 			gi.WriteShort(door->number);
+			if (door->noise[0] != '\0')
+				gi.PositionedSound(PM_ALL, door->origin, door, door->noise, CHAN_AUTO, 1);
 		}
 	} else if (door->moveinfo.state == STATE_OPENED) {
 		door->moveinfo.state = STATE_CLOSED;
@@ -159,6 +161,8 @@ static qboolean Door_Use (edict_t *door)
 		/* let everybody know, that the door closes */
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(door->number);
+		if (door->noise[0] != '\0')
+			gi.PositionedSound(PM_ALL, door->origin, door, door->noise, CHAN_AUTO, 1);
 	} else
 		return qfalse;
 
@@ -224,6 +228,8 @@ void SP_func_door (edict_t *ent)
 
 	ent->classname = "door";
 	ent->type = ET_DOOR;
+	if (!ent->noise)
+		ent->noise = "";
 
 	/* set an inline model */
 	gi.SetModel(ent, ent->model);
