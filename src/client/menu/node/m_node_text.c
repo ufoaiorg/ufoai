@@ -510,10 +510,19 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 		EXTRADATA(node).textLineSelected = line;
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 	}
-	else if (node->onClick && node->onClick->type == EA_CMD) {
-		assert(node->onClick->data);
-		EXTRADATA(node).textLineSelected = line;
-		Cbuf_AddText(va("%s %i\n", (const char *)node->onClick->data, line));
+	else if (node->onClick) {
+		switch (node->onClick->type) {
+			case EA_CMD:
+				assert(node->onClick->data);
+				EXTRADATA(node).textLineSelected = line;
+				Cbuf_AddText(va("%s %i\n", (const char *)node->onClick->data, line));
+				break;
+			case EA_CALL:
+				MN_ExecuteEventActions(node, node->onClick);
+			default:
+				/* unsupported action type */
+				break;
+		}
 	}
 }
 
@@ -530,6 +539,20 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
 	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, line));
+	else if (node->onRightClick) {
+		switch (node->onRightClick->type) {
+			case EA_CMD:
+				assert(node->onRightClick->data);
+				EXTRADATA(node).textLineSelected = line;
+				Cbuf_AddText(va("%s %i\n", (const char *)node->onRightClick->data, line));
+				break;
+			case EA_CALL:
+				MN_ExecuteEventActions(node, node->onRightClick);
+			default:
+				/* unsupported action type */
+				break;
+		}
+	}
 }
 
 static void MN_TextNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
