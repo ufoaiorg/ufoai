@@ -728,9 +728,6 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node)
 
 /**
  * @brief Draw a preview of the DND item dropped into the node
- * @todo function create from a merge; computation can be cleanup (maybe)
- * @todo it will finally nice to split computation and draw :)
- * @return True if we draw a preview
  */
 static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 {
@@ -800,26 +797,26 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 		return;
 	if (!menuInventory)
 		return;
+	/* is container invisible */
+	if (node->color[3] < 0.001)
+		return;
 
-	if (node->color[3] > 0.001) {
-		if (node->container->single) {
-			MN_ContainerNodeDrawSingle(node);
+	if (node->container->single) {
+		MN_ContainerNodeDrawSingle(node);
+	} else {
+		if (MN_IsScrollContainerNode(node)) {
+			MN_ContainerNodeDrawBaseInventory(node);
 		} else {
-			if (MN_IsScrollContainerNode(node)) {
-				MN_ContainerNodeDrawBaseInventory(node);
-			} else {
-				MN_ContainerNodeDrawGrid(node);
-			}
+			MN_ContainerNodeDrawGrid(node);
 		}
-
-		/* Draw free space if dragging - but not for idEquip */
-		if (MN_DNDIsDragging() && node->container->id != csi.idEquip)
-			MN_ContainerNodeDrawFreeSpace(node, menuInventory);
 	}
 
-	if (MN_DNDIsTargetNode(node)) {
+	/* Draw free space if dragging - but not for idEquip */
+	if (MN_DNDIsDragging() && node->container->id != csi.idEquip)
+		MN_ContainerNodeDrawFreeSpace(node, menuInventory);
+
+	if (MN_DNDIsTargetNode(node))
 		MN_ContainerNodeDrawDropPreview(node);
-	}
 }
 
 /**
