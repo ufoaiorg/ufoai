@@ -112,18 +112,16 @@ aircraft craft_drop_firebird
 	}
 }
 
-// FIXME: These values are just copied from craft_drop_firebird and
-// needs tweaking
 aircraft craft_drop_herakles
 {
 	param {
-		speed		7
-		maxspeed	10
-		shield		0
-		ecm			100
-		damage		50
+		speed		9
+		maxspeed	13
+		shield		5
+		ecm			80
+		damage		120
 		accuracy	70
-		range		243
+		range		240
 	}
 	name		"_Herakles-class Heavy Lifter"
 	shortname	"_Herakles D"
