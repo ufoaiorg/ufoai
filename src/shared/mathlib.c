@@ -148,7 +148,7 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
 		return 0;
 	}
 
-	VectorScale (in, 1.0 / max, out);
+	VectorScale(in, 1.0 / max, out);
 
 	return max;
 }
