@@ -320,7 +320,7 @@ menu_model inter_dragon
 // ============== Starchaser Interceptor ======================
 menu_model inter_starchaser
 {
-	model	"aircraft/inter_dragon/starchaser_folded"
+	model	"aircraft/inter_starchaser/starchaser_folded"
 }
 
 // ============== Stiletto Interceptor =====================
