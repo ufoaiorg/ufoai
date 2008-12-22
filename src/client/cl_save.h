@@ -116,6 +116,12 @@ typedef enum {
  */
 extern int presaveArray[MAX_ARRAYINDEXES];
 
+/**
+ * @brief True if a game is currently loading.
+ * @note Used to execute some actions only while loading in function used ingame and while loading.
+ */
+extern qboolean loading;
+
 /** and now the save and load prototypes for every subsystem */
 qboolean CP_Save(sizebuf_t *sb, void *data);
 qboolean CP_Load(sizebuf_t *sb, void *data);

@@ -35,6 +35,7 @@ saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 int saveSubsystemsAmount;
 static cvar_t* save_compressed;
 int presaveArray[MAX_ARRAYINDEXES];
+qboolean loading = qfalse;
 
 /**
  * @brief Fills the presaveArray with needed values and saves it.
@@ -196,6 +197,8 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	if (curCampaign)
 		CL_GameExit();
 
+	loading = qtrue;
+
 	CL_StartSingleplayer(qtrue);
 
 	CL_ReadSinglePlayerData();
@@ -206,6 +209,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		if (!saveSubsystems[i].load(&sb, &header)) {
 			*error = _("Error in loading a subsystem.\n\nSee game console for more information.");
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
+			loading = qfalse;
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
@@ -216,11 +220,14 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 				"See game console for more information.");
 			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (is %x, should be %x)\n",
 				saveSubsystems[i].name, check, saveSubsystems[i].check);
+			loading = qfalse;
 			return qfalse;
 		}
 	}
 
 	SAV_GameActionsAfterLoad(error);
+
+	loading = qfalse;
 
 	assert(ccs.singleplayer);
 
