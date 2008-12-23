@@ -172,9 +172,9 @@ static void G_Init (void)
 	/* this cvar is set in singleplayer via campaign definition */
 	ai_equipment = gi.Cvar_Get("ai_equipment", "multiplayer_alien", 0, "Initial equipment definition for aliens");
 	/* aliens in singleplayer (can differ each mission) */
-	ai_numaliens = gi.Cvar_Get("ai_numaliens", "8", 0, "How many aliens in this battle (singleplayer)");
+	ai_numaliens = gi.Cvar_Get("ai_numaliens", "30", 0, "How many aliens in this battle (singleplayer)");
 	/* civilians for singleplayer */
-	ai_numcivilians = gi.Cvar_Get("ai_numcivilians", "8", 0, "How many civilians in this battle");
+	ai_numcivilians = gi.Cvar_Get("ai_numcivilians", "10", 0, "How many civilians in this battle");
 	/* aliens in multiplayer */
 	ai_numactors = gi.Cvar_Get("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
 	/* autojoin aliens */
