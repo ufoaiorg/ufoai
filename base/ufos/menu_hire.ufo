@@ -566,8 +566,8 @@ menu employees
 
 	tab empl_switch {
 		cvar "*cvar"
-		pos	"35 106"
-		size	"500 36"
+		pos	"35 107"
+		size	"950 40"
 		cvar	"*cvar mn_hiretype"
 		option soldier {
 			label	"_Soldiers"
