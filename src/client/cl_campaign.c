@@ -3534,7 +3534,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
 
 	assert(mission->pos);
 
-	numAliens = 4 + rand() % (2 + ccs.overallInterest / 100);
+	numAliens = 4 + (int) ccs.overallInterest / 50;
 	if (numAliens > mission->mapDef->maxAliens)
 		numAliens = mission->mapDef->maxAliens;
 	ccs.battleParameters.aliens = numAliens;
