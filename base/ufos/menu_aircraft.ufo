@@ -385,13 +385,13 @@ menu aircraft_equip
 	// aircraft model
 	// ==================
 
-	confunc airequip_zone3_off
+	confunc airequip_zone2_off
 	{
-		*airequip_header3	invis true
+		*airequip_header2	invis true
 	}
-	confunc airequip_zone3_on
+	confunc airequip_zone2_on
 	{
-		*airequip_header3	invis false
+		*airequip_header2	invis false
 	}
 
 	func airequip_zone1
@@ -400,11 +400,7 @@ menu aircraft_equip
 	}
 	func airequip_zone2
 	{
-		cmd "airequip_zone_select 2;airequip_updatemenu;"
-	}
-	func airequip_zone3
-	{
-		cmd "airequip_zone_select 3;airequip_updatemenu 6;"
+		cmd "airequip_zone_select 2;airequip_updatemenu 6;"
 	}
 
 	model aircraftequip
@@ -669,28 +665,6 @@ menu aircraft_equip
 		click { cmd "airequip_del_item 2;" }
 	}
 
-	pic airequip_button_add3
-	{
-		tooltip	"_Add selected item"
-		mousefx	true
-		pos		"467 308"
-		image	menu/button_aircraft_menu
-		texl	"0 0"
-		texh	"36 32"
-		click { cmd "airequip_add_item 3;" }
-	}
-
-	pic airequip_button_remove3
-	{
-		tooltip	"_Remove item from slot"
-		mousefx	true
-		pos	"467 343"
-		image	menu/button_aircraft_menu
-		texl	"37 0"
-		texh	"73 32"
-		click { cmd "airequip_del_item 3;" }
-	}
-
 	pic airequip_zone_select1
 	{
 		invis false
@@ -739,30 +713,6 @@ menu aircraft_equip
 		click	{ call airequip_zone2 }
 	}
 
-	pic airequip_zone_select3
-	{
-		invis false
-		tooltip	"_Select this zone"
-		mousefx	true
-		pos		"534 300"
-		image	menu/button_big_menu
-		texl	"0 0"
-		texh	"458 82"
-		click	{ call airequip_zone3 }
-	}
-
-	text airequip_text_zone3
-	{
-		pos	"546 339"
-		size	"430 35"
-		lineheight	"16"
-//		bgcolor	"1 1 1 0.5"
-		textid	TEXT_AIREQUIP_3
-		rows	"2"
-		tooltip	"_Select this zone"
-		click	{ call airequip_zone3 }
-	}
-
 	string airequip_header1
 	{
 		string	"_Current item in slot"
@@ -774,17 +724,8 @@ menu aircraft_equip
 
 	string airequip_header2
 	{
-		string	"_Item to install after removal"
-		pos		"545 185"
-		font	f_small
-		color	"0 .78 0 1"
-		align	cl
-	}
-
-	string airequip_header3
-	{
 		string	"_Ammo fitting this weapon"
-		pos		"545 320"
+		pos		"545 185"
 		font	f_small
 		color	"0 .78 0 1"
 		align	cl

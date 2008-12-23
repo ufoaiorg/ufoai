@@ -88,6 +88,17 @@ static technology_t **AII_GetCraftitemTechsByType (int type)
 }
 
 /**
+ * @brief Check if we are removing current item in slot.
+ * @param[in] slot Pointer to aircarft slot.
+ * @note This doesn't mean there is a next weapon!
+ * @return True if we are removeing current item.
+ */
+static inline qboolean AIM_IsRemovingCurrentWeapon (aircraftSlot_t *slot)
+{
+	return (slot->item && slot->installationTime < 0);
+}
+
+/**
  * @brief Check airequipID value and set the correct values for aircraft items
  * and base defence items
  */
@@ -157,23 +168,6 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 		default:
 			Com_Printf("AIM_CheckAirequipSelectedZone: aircraftItemType_t must end with ammos !!!\n");
 			return;
-		}
-	}
-
-	/* You can select an item to install after removing only if you're removing an item */
-	if (airequipSelectedZone == ZONE_NEXT && (slot->installationTime >= 0 || !slot->item)) {
-		airequipSelectedZone = ZONE_MAIN;
-		switch (airequipID) {
-		case AC_ITEM_AMMO:
-			airequipID = AC_ITEM_WEAPON;
-			break;
-		case AC_ITEM_BASE_MISSILE:
-			airequipID = AC_ITEM_AMMO_MISSILE;
-			break;
-		case AC_ITEM_AMMO_LASER:
-			airequipID = AC_ITEM_BASE_LASER;
-			break;
-		/* no default */
 		}
 	}
 }
@@ -479,12 +473,6 @@ static void AIM_DrawSelectedZone (void)
 		MN_UnHideNode(node);
 
 	node = MN_GetNodeFromCurrentMenu("airequip_zone_select2");
-	if (airequipSelectedZone == ZONE_NEXT)
-		MN_HideNode(node);
-	else
-		MN_UnHideNode(node);
-
-	node = MN_GetNodeFromCurrentMenu("airequip_zone_select3");
 	if (airequipSelectedZone == ZONE_AMMO)
 		MN_HideNode(node);
 	else
@@ -761,7 +749,6 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	static char defBuffer[1024];
 	static char smallbuffer1[128];
 	static char smallbuffer2[128];
-	static char smallbuffer3[128];
 	aircraftSlot_t *slot;
 	int i;
 	int type;
@@ -771,7 +758,6 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	MN_MenuTextReset(TEXT_BASEDEFENCE_LIST);
 	MN_MenuTextReset(TEXT_AIREQUIP_1);
 	MN_MenuTextReset(TEXT_AIREQUIP_2);
-	MN_MenuTextReset(TEXT_AIREQUIP_3);
 	MN_MenuTextReset(TEXT_STANDARD);
 
 	/* baseCurrent or installationCurrent should be non NULL because we are in the menu of this base or installation */
@@ -908,42 +894,37 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		/* Weight are not used for base defence atm
 		Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."), AII_WeightToName(slot->size)), sizeof(smallbuffer1)); */
 	} else {
-		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", _(slot->item->tech->name));
+		/* Print next item if we are removing item currently installed and a new item has been added. */
+		assert(slot->item->tech);
+		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n",
+			slot->nextItem ? _(slot->nextItem->tech->name) : _(slot->item->tech->name));
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, _("This defence system is functional.\n"), sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
-			Q_strcat(smallbuffer1, va(_("This defence system will be installed in %i hours.\n"), slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This defence system will be installed in %i hours.\n"),
+				slot->installationTime), sizeof(smallbuffer1));
+		else if (slot->nextItem)
+			Q_strcat(smallbuffer1, va(_("This defence system will be installed in %i hours.\n"),
+				slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer1));
 		else
-			Q_strcat(smallbuffer1, va(_("This defence system will be removed in %i hours.\n"), -slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This defence system will be removed in %i hours.\n"),
+				-slot->installationTime), sizeof(smallbuffer1));
 	}
 	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
-	/* Second slot: next item to install when the first one will be removed */
-	if (slot->item && slot->installationTime < 0) {
-		if (!slot->nextItem)
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _("No defence system assigned."));
-		else {
-			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _("%s\nThis defence system will be operational in %i hours.\n"),
-				_(slot->nextItem->tech->name), slot->nextItem->craftitem.installationTime - slot->installationTime);
-		}
-	} else {
-		*smallbuffer2 = '\0';
-	}
-	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
-
-	/* Third slot: ammo slot (only used for weapons) */
+	/* Second slot: ammo slot (only used for weapons) */
 	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->item) {
 		char const* const ammo = slot->ammo ?
 			_(slot->ammo->tech->name) :
 			_("No ammo assigned to this defence system.");
-		Q_strncpyz(smallbuffer3, ammo, sizeof(smallbuffer3));
+		Q_strncpyz(smallbuffer2, ammo, sizeof(smallbuffer2));
 		/* inform player that base missile are unlimited */
 		if ((airequipID == AC_ITEM_AMMO_MISSILE) || (airequipID == AC_ITEM_BASE_MISSILE))
-			Q_strcat(smallbuffer3, _(" (unlimited missiles)"), sizeof(smallbuffer3));
+			Q_strcat(smallbuffer2, _(" (unlimited missiles)"), sizeof(smallbuffer2));
 	} else {
-		*smallbuffer3 = '\0';
+		*smallbuffer2 = '\0';
 	}
-	mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
+	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
 
 	/* Draw selected zone */
 	AIM_DrawSelectedZone();
@@ -1179,26 +1160,26 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 }
 
 /**
- * @brief Write in red the text in zone ammo (zone 3)
+ * @brief Write in red the text in zone ammo (zone 2)
  * @sa AIM_NoEmphazeAmmoSlotText
  * @note This is intended to show the player that there is no ammo in his aircraft
  */
 static inline void AIM_EmphazeAmmoSlotText (void)
 {
-	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone2");
 	if (!node)
 		return;
 	VectorSet(node->color, 1.0f, .0f, .0f);
 }
 
 /**
- * @brief Write in white the text in zone ammo (zone 3)
+ * @brief Write in white the text in zone ammo (zone 2)
  * @sa AIM_EmphazeAmmoSlotText
  * @note This is intended to revert effects of AIM_EmphazeAmmoSlotText
  */
 static inline void AIM_NoEmphazeAmmoSlotText (void)
 {
-	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone3");
+	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone2");
 	if (!node)
 		return;
 	VectorSet(node->color, 1.0f, 1.0f, 1.0f);
@@ -1234,7 +1215,6 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 {
 	static char smallbuffer1[128];
 	static char smallbuffer2[128];
-	static char smallbuffer3[128];
 	int type;
 	menuNode_t *node;
 	aircraft_t *aircraft;
@@ -1247,7 +1227,6 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	MN_MenuTextReset(TEXT_STANDARD);
 	MN_MenuTextReset(TEXT_AIREQUIP_1);
 	MN_MenuTextReset(TEXT_AIREQUIP_2);
-	MN_MenuTextReset(TEXT_AIREQUIP_3);
 	MN_MenuTextReset(TEXT_LIST);
 
 	if (Cmd_Argc() != 2 || noparams) {
@@ -1273,11 +1252,11 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		case AC_ITEM_ELECTRONICS:
 		case AC_ITEM_SHIELD:
 			airequipID = type;
-			Cbuf_AddText("airequip_zone3_off;");
+			Cbuf_AddText("airequip_zone2_off;");
 			break;
 		case AC_ITEM_WEAPON:
 			airequipID = type;
-			Cbuf_AddText("airequip_zone3_on;");
+			Cbuf_AddText("airequip_zone2_on;");
 			break;
 		default:
 			airequipID = AC_ITEM_WEAPON;
@@ -1323,10 +1302,8 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			Q_strncpyz(smallbuffer1, _("No pilot assigned."), sizeof(smallbuffer1));
 		}
 		*smallbuffer2 = '\0';
-		*smallbuffer3 = '\0';
 		mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 		mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
-		mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
 	} else {
 		/* First slot: item currently assigned */
 		if (!slot->item) {
@@ -1334,46 +1311,38 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			Q_strcat(smallbuffer1, va(_("This slot is for %s or smaller items."),
 				AII_WeightToName(slot->size)), sizeof(smallbuffer1));
 		} else {
+			/* Print next item if we are removing item currently installed and a new item has been added. */
 			assert(slot->item->tech);
-			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n", _(slot->item->tech->name));
+			Com_sprintf(smallbuffer1, sizeof(smallbuffer1), "%s\n",
+				slot->nextItem ? _(slot->nextItem->tech->name) : _(slot->item->tech->name));
 			if (!slot->installationTime)
 				Q_strcat(smallbuffer1, _("This item is functional.\n"), sizeof(smallbuffer1));
 			else if (slot->installationTime > 0)
 				Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),
 					slot->installationTime), sizeof(smallbuffer1));
+			else if (slot->nextItem)
+				Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),
+					slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer1));
 			else
 				Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),
 					-slot->installationTime), sizeof(smallbuffer1));
 		}
 		mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
-		/* Second slot: next item to install when the first one will be removed */
-		if (slot->item && slot->installationTime < 0) {
-			if (!slot->nextItem)
-				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _("No item assigned."));
-			else {
-				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _(slot->nextItem->tech->name));
-				Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-				Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours.\n"), slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer2));
-			}
-		} else
-			*smallbuffer2 = '\0';
-		mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
-
-		/* Third slot: ammo slot (only used for weapons) */
+		/* Second slot: ammo slot (only used for weapons) */
 		if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->item) {
 			if (!slot->ammo) {
 				AIM_EmphazeAmmoSlotText();
-				Com_sprintf(smallbuffer3, sizeof(smallbuffer3), "%s", _("No ammo assigned to this weapon."));
+				Com_sprintf(smallbuffer2, sizeof(smallbuffer2), "%s", _("No ammo assigned to this weapon."));
 			} else {
 				AIM_NoEmphazeAmmoSlotText();
 				assert(slot->ammo->tech);
-				Q_strncpyz(smallbuffer3, _(slot->ammo->tech->name), sizeof(smallbuffer3));
+				Q_strncpyz(smallbuffer2, _(slot->ammo->tech->name), sizeof(smallbuffer2));
 			}
 		} else {
-			*smallbuffer3 = '\0';
+			*smallbuffer2 = '\0';
 		}
-		mn.menuText[TEXT_AIREQUIP_3] = smallbuffer3;
+		mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
 	}
 
 	/* Draw existing slots for this aircraft */
@@ -1562,7 +1531,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 }
 
 /**
- * @brief Auto add ammo corresponding to weapon in main zone, if there is enough in storage.
+ * @brief Auto add ammo corresponding to weapon, if there is enough in storage.
  * @param[in] base Pointer to the base where you want to add/remove ammo
  * @param[in] installation Pointer to the installation where you want to add/remove ammo
  * @param[in] aircraft Pointer to the aircraft (NULL if we are changing base defence system)
@@ -1579,8 +1548,8 @@ static void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraf
 
 	assert(slot);
 
-	/* Get the weapon */
-	item = slot->item;
+	/* Get the weapon (either current weapon or weapon to install after this one is removed) */
+	item = slot->nextItem ? slot->nextItem : slot->item;
 
 	if (!item)
 		return;
@@ -1818,7 +1787,6 @@ void AIM_AircraftEquipAddItem_f (void)
 	}
 
 	if (airequipID == AC_ITEM_PILOT) {
-
 		aircraft->pilot = airequipSelectedPilot;
 
 		/* Update the values of aircraft stats */
@@ -1834,43 +1802,42 @@ void AIM_AircraftEquipAddItem_f (void)
 	if (zone != airequipSelectedZone)
 		return;
 
-	/* there's no item in ZONE_MAIN: you can't use zone ZONE_NEXT */
-	if (zone == ZONE_NEXT && !slot->item)
-		return;
-
 	/* check if the zone exists */
 	if (zone >= ZONE_MAX)
 		return;
 
-	/* select the slot we are changing */
 	/* update the new item to slot */
 
 	switch (zone) {
 	case ZONE_MAIN:
-		/* we add the weapon, shield, item, or base defence if slot is free or the installation of
-			current item just began */
-		if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
-			AII_RemoveItemFromSlot(base, slot, qfalse);
-			AII_AddItemToSlot(base, airequipSelectedTechnology, slot); /* Aircraft stats are updated below */
-			AIM_AutoAddAmmo(base, installation, aircraft, slot);
-			break;
-		} else if (slot->item == AII_GetAircraftItemByID(airequipSelectedTechnology->provides) &&
-			slot->installationTime == -slot->item->craftitem.installationTime) {
-			/* player changed he's mind: he just want to readd the item he just removed */
-			slot->installationTime = 0;
-			slot->nextItem = NULL;
-			AIM_AutoAddAmmo(base, installation, aircraft, slot);
-		} else {
-			AII_RemoveItemFromSlot(base, slot, qtrue); /* remove ammo */
-			/* We start removing current item in slot, and the selected item will be installed afterwards */
-			slot->installationTime = -slot->item->craftitem.installationTime;
-			/* more below (don't use break) */
+		if (!AIM_IsRemovingCurrentWeapon(slot)) {
+			/* we add the weapon, shield, item, or base defence if slot is free or the installation of
+			 * current item just began */
+			if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
+				AII_RemoveItemFromSlot(base, slot, qfalse);
+				AII_AddItemToSlot(base, airequipSelectedTechnology, slot); /* Aircraft stats are updated below */
+				AIM_AutoAddAmmo(base, installation, aircraft, slot);
+				break;
+			} else if (slot->item == AII_GetAircraftItemByID(airequipSelectedTechnology->provides) &&
+				slot->installationTime == -slot->item->craftitem.installationTime) {
+				/* player changed he's mind: he just want to re-add the item he just removed */
+				slot->installationTime = 0;
+				slot->nextItem = NULL;
+				AIM_AutoAddAmmo(base, installation, aircraft, slot);
+				break;
+			} else {
+				AII_RemoveItemFromSlot(base, slot, qtrue); /* remove ammo */
+				/* We start removing current item in slot, and the selected item will be installed afterwards */
+				slot->installationTime = -slot->item->craftitem.installationTime;
+				/* more below (don't use else) */
 			}
-	case ZONE_NEXT:
+		}
+
 		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
 		 * of the one in the slot atm */
 		slot->nextItem = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 		/* do not remove item from storage now, this will be done in AII_RemoveItemFromSlot */
+		AIM_AutoAddAmmo(base, installation, aircraft, slot);
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
@@ -1959,27 +1926,28 @@ void AIM_AircraftEquipDeleteItem_f (void)
 
 	switch (zone) {
 	case ZONE_MAIN:
-		/* we change the weapon, shield, item, or base defence that is already in the slot */
-		/* if the item has been installed since less than 1 hour, you don't need time to remove it */
-		if (slot->installationTime < slot->item->craftitem.installationTime) {
-			slot->installationTime = -slot->item->craftitem.installationTime;
-			if (baseCurrent)
-				AII_RemoveItemFromSlot(baseCurrent, slot, qtrue); /* we remove only ammo, not item */
-			else
-				AII_RemoveItemFromSlot(NULL, slot, qtrue); /* we remove only ammo, not item */
-		} else {
-			if (baseCurrent) {
-				AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
+		if (!AIM_IsRemovingCurrentWeapon(slot)) {
+			/* we change the weapon, shield, item, or base defence that is already in the slot */
+			/* if the item has been installed since less than 1 hour, you don't need time to remove it */
+			if (slot->installationTime < slot->item->craftitem.installationTime) {
+				slot->installationTime = -slot->item->craftitem.installationTime;
+				if (baseCurrent)
+					AII_RemoveItemFromSlot(baseCurrent, slot, qtrue); /* we remove only ammo, not item */
+				else
+					AII_RemoveItemFromSlot(NULL, slot, qtrue); /* we remove only ammo, not item */
 			} else {
-				AII_RemoveItemFromSlot(NULL, slot, qfalse);
+				if (baseCurrent) {
+					AII_RemoveItemFromSlot(baseCurrent, slot, qfalse);
+				} else {
+					AII_RemoveItemFromSlot(NULL, slot, qfalse);
+				}
 			}
+			/* aircraft stats are updated below */
+		} else {
+			/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
+			 * of the one in the slot atm */
+			slot->nextItem = NULL;
 		}
-		/* aircraft stats are updated below */
-		break;
-	case ZONE_NEXT:
-		/* we change the weapon, shield, item, or base defence that will be installed AFTER the removal
-		 * of the one in the slot atm */
-		slot->nextItem = NULL;
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */

@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	ZONE_NONE,	/**< This is not a zone (used when no zone is selected). */
 	ZONE_MAIN,	/**< This is the upper (1st) zone containing the current item installed in the slot. */
-	ZONE_NEXT,	/**< This is the zone in the middle (2nd) containing the item to install when the item
-				 ** in ZONE_MAIN will be removed (if we ask for removing it). */
 	ZONE_AMMO,	/**< This is the lowest (3rd) zone containing the ammo fitting the weapon in ZONE_MAIN
 				 ** Therefore, this zone should only be used when 1st zone contain an WEAPON. */
 

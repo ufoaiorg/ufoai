@@ -54,11 +54,7 @@ menu basedefence
 	}
 	func basedef_zone2
 	{
-		cmd "airequip_zone_select 2;basedef_updatemenu;"
-	}
-	func basedef_zone3
-	{
-		cmd "airequip_zone_select 3;basedef_updatemenu 2;"
+		cmd "airequip_zone_select 2;basedef_updatemenu 2;"
 	}
 
 	text basedef_slot_list
@@ -261,7 +257,7 @@ menu basedefence
 	pic airequip_zone_select2
 	{
 		invis	false
-		tooltip	"_Choose defence system to build after removing current one"
+		tooltip	"_Change ammo in the defence system"
 		mousefx	true
 		pos		"534 164"
 		image	menu/button_big_menu
@@ -280,28 +276,6 @@ menu basedefence
 		rows	"2"
 	}
 
-	pic airequip_zone_select3
-	{
-		invis false
-		tooltip	"_Change ammo in the defence system"
-		mousefx	true
-		pos		"534 300"
-		image	menu/button_big_menu
-		texl	"0 0"
-		texh	"458 82"
-		click	{ call basedef_zone3 }
-	}
-
-	text basedef_text_zone3
-	{
-		pos	"546 339"
-		size	"430 35"
-		lineheight	"16"
-//		bgcolor	"1 1 1 0.5"
-		textid		TEXT_AIREQUIP_3
-		rows	"2"
-	}
-
 	string basedef_header1
 	{
 		string	"_Current defence system"
@@ -313,21 +287,13 @@ menu basedefence
 
 	string basedef_header2
 	{
-		string	"_System to install after removal"
+		string	"_Ammo to use with installed system"
 		pos		"545 185"
 		font	f_small
 		color	"0 .78 0 1"
 		align	cl
 	}
 
-	string basedef_header3
-	{
-		string	"_Ammo to use with installed system"
-		pos		"545 320"
-		font	f_small
-		color	"0 .78 0 1"
-		align	cl
-	}
 
 	// ==================
 	// additional stuff
