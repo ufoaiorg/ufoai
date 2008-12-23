@@ -244,7 +244,6 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	aircraft_t *aircraft;
 	int i;
 	vec2_t pos;
-	char clickBuffer[30];
 	const linkedList_t *list = ccs.missions;
 
 	/* get map position */
@@ -254,9 +253,8 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		MAP_ScreenToMap(node, x, y, pos);
 	}
 	if (cl_showCoords->integer) {
-		Com_sprintf(clickBuffer, sizeof(clickBuffer), "Long: %.1f Lat: %.1f", pos[0], pos[1]);
-		MN_AddNewMessage("Click", clickBuffer, qfalse, MSG_DEBUG, NULL);
 		Com_Printf("Clicked at %.1f %.1f\n", pos[0], pos[1]);
+		MAP_PrintParameterStringByPos(pos);
 	}
 
 	/* new base construction */
@@ -2177,6 +2175,21 @@ static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
 {
 	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
 	return MAP_GetPopulationType(color);
+}
+
+/**
+ * @brief Prints positions parameter in console.
+ * @param[in] pos Location (latitude, longitude) where you want to check parameters.
+ * @note Used for printing in console, do not translate.
+ * @sa NAT_ScriptSanityCheck
+ */
+void MAP_PrintParameterStringByPos (const vec2_t pos)
+{
+	const char *terrainType = MAP_GetTerrainTypeByPos(pos);
+	const char *cultureType = MAP_GetCultureTypeByPos(pos);
+	const char *populationType = MAP_GetPopulationTypeByPos(pos);
+
+	Com_Printf ("      (Terrain: %s, Culture: %s, Population: %s)\n", terrainType, cultureType, populationType);
 }
 
 /**

@@ -85,6 +85,7 @@ const char* NAT_GetHappinessString(const nation_t* nation);
 
 void CL_ParseNations(const char *name, const char **text);
 void CL_ParseCities(const char *name, const char **text);
+qboolean NAT_ScriptSanityCheck(void);
 
 void NAT_InitStartup(void);
 

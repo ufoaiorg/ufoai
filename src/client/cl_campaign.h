@@ -392,6 +392,7 @@ void CP_MissionNotifyInstallationDestroyed(const installation_t const *installat
 mission_t *CP_GetMissionById(const char *missionId);
 const char *CP_MissionToTypeString(const mission_t *mission);
 base_t* CP_PositionCloseToBase(const vec2_t pos);
+int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 void CP_MissionIsOverByUFO(aircraft_t *ufocraft);

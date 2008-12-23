@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_map.h"
+#include "cl_ufo.h"
 
 /**
  * @brief Return a nation-pointer by the nations id (nation_t->id) text.
@@ -400,6 +401,77 @@ void CL_ParseCities (const char *name, const char **text)
 	} while (*text);
 }
 
+
+/**
+ * @brief Checks the parsed nations and cities for errors
+ * @return false if there are errors - true otherwise
+ */
+qboolean NAT_ScriptSanityCheck (void)
+{
+	int idx, i;
+	int error = 0;
+
+	/* Check if there is at least one map fitting city parameter for terror mission */
+	for (idx = 0; idx < gd.numCities; idx++) {
+		int mapIdx;
+		city_t *city = &gd.cities[idx];
+		const vec2_t pos = {city->pos[0], city->pos[1]};
+		qboolean cityCanBeUsed = qfalse;
+		qboolean parametersFit = qfalse;
+		int ufoTypes[UFO_MAX];
+		int numTypes;
+
+		if (!city->name) {
+			error++;
+			Com_Printf("...... city '%s' has no name\n", city->id);
+		}
+
+		numTypes = CP_TerrorMissionAvailableUFOs(NULL, ufoTypes);
+
+		for (mapIdx = 0; mapIdx < csi.numMDs; mapIdx++) {
+			const mapDef_t const *md = &csi.mds[mapIdx];
+
+			if (md->storyRelated)
+				continue;
+
+			if (MAP_PositionFitsTCPNTypes(pos, md->terrains, md->cultures, md->populations, NULL)) {
+				/* this map fits city parameter, check if we have some terror mission UFOs available for this map */
+
+				parametersFit = qtrue;
+
+				/* no UFO on this map (LIST_ContainsString doesn't like empty string) */
+				if (!md->ufos) {
+					continue;
+				}
+
+				/* loop must be backward, as we remove items */
+				for (i = numTypes - 1 ; i >= 0; i--) {
+					if (LIST_ContainsString(md->ufos, UFO_TypeToShortName(ufoTypes[i]))) {
+						REMOVE_ELEM(ufoTypes, i, numTypes);
+					}
+				}
+			}
+			if (numTypes == 0) {
+				cityCanBeUsed = qtrue;
+				break;
+			}
+		}
+
+		if (!cityCanBeUsed) {
+			error++;
+			Com_Printf("...... city '%s' can't be used in game: it has no map fitting parameters\n", city->id);
+			if (parametersFit) {
+				Com_Printf("      (No map fitting");
+				for (i = 0 ; i < numTypes; i++)
+					Com_Printf(" %s", UFO_TypeToShortName(ufoTypes[i]));
+				Com_Printf(")\n");
+			}
+			MAP_PrintParameterStringByPos(pos);
+		}
+	}
+
+	return !error;
+}
 
 /*=====================================
 Menu functions

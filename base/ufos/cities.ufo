@@ -10,13 +10,12 @@
 //		East and South have negative values.
 // ==============================================
 
-city stockholm
-{
-	name 		"_Stockholm"
-	pos			"-18 59.3"
-}
+//city stockholm
+//{
+//	name 		"_Stockholm"
+//	pos			"-18 59.3"
+//}
 
-// We don't have grass western urban maps with scout or fighter
 //city amsterdam
 //{
 //	name 		"_Amsterdam"
@@ -29,14 +28,12 @@ city athens
 	pos			"-23.7 38"
 }
 
-// We don't have tropical maps with Scout or Fighters
-//city bangkok
-//{
-//	name 		"_Bangkok"
-//	pos			"-100.5 13.8"
-//}
+city bangkok
+{
+	name 		"_Bangkok"
+	pos			"-100.5 13.8"
+}
 
-// We don't have grass urban maps with scout or fighter
 //city beijing
 //{
 //	name 		"_Beijing"
@@ -49,11 +46,10 @@ city berlin
 	pos			"-13.4 52.5"
 }
 
-// We don't have tropical maps with Scout or Fighters
-//city bombay
+//city mumbai
 //{
-//	name 		"_Bombay"
-//	pos			"-72.8 19"
+//	name 		"_Mumbai"
+//	pos			"-73.2 18.5"
 //}
 
 city capetown
@@ -62,35 +58,30 @@ city capetown
 	pos			"-18.5 -33.7"
 }
 
-// We don't have desert maps with Scout or Fighters
 //city cairo
 //{
 //	name 		"_Cayenne"
 //	pos			"-31.4 30"
 //}
 
-// We don't have tropical maps with Scout or Fighters
-//city cayenne
-//{
-//	name 		"_Cayenne"
-//	pos			"52.6 4.5"
-//}
+city cayenne
+{
+	name 		"_Cayenne"
+	pos			"52.6 4.5"
+}
 
-// We don't have african maps with Scout or Fighters
 //city dakar
 //{
 //	name 		"_Dakar"
 //	pos			"16.8 14.7"
 //}
 
-// We don't have mountain western urban maps with scout or fighter
 //city mexico
 //{
 //	name 		"_Mexico City"
 //	pos			"99.1 19.4"
 //}
 
-// We don't have grass western urban maps with scout or fighter
 //city paris
 //{
 //	name 		"_Paris"
@@ -103,14 +94,12 @@ city sydney
 	pos			"-151 -34"
 }
 
-// We don't have montain oriental maps with scout or fighter
 //city teheran
 //{
 //	name 		"_Teheran"
 //	pos			"-51.4 35.4"
 //}
 
-// We don't have grass eastern urban maps with scout or fighter
 //city tokyo
 //{
 //	name 		"_Tokyo"

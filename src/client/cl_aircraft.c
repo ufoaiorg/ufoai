@@ -2652,10 +2652,7 @@ qboolean AIR_ScriptSanityCheck (void)
 		}
 	}
 
-	if (!error)
-		return qtrue;
-	else
-		return qfalse;
+	return !error;
 }
 
 /**

@@ -1373,24 +1373,18 @@ static void CP_TerrorMissionGo (mission_t *mission)
 
 /**
  * @brief Fill an array with available UFOs for Terror attack mission type.
- * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[in] mission Pointer to the mission we are currently creating (may be NULL if we want to know what UFO
+ * types will be needed during the whole game).
  * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
  * @note Terror attack mission -- Stage 0
  * @return number of elements written in @c ufoTypes
  */
-static int CP_TerrorMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+int CP_TerrorMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
 {
 	int num = 0;
-	const float CORRUPTER_PROBABILITY = 0.2;	/**< Probability to get a corrupter. Note that the probability
-													to get a corrupter among all possible UFO is this number
-													divided by the number of possible UFO */
 
-	ufoTypes[num++] = UFO_SCOUT;
-	ufoTypes[num++] = UFO_FIGHTER;
-
-	/* give a small chance to get a corrupter when XVI spreading started */
-	if (ccs.XVISpreadActivated && (frand() < CORRUPTER_PROBABILITY))
-		ufoTypes[num++] = UFO_CORRUPTER;
+	ufoTypes[num++] = UFO_HARVESTER;
+	/**< @todo Add Corrupter, Bomber and Battleship when maps will be available */
 
 	return num;
 }
