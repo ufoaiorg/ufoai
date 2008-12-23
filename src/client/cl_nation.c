@@ -727,10 +727,28 @@ static void CL_NationSelect_f (void)
 	CL_NationStatsUpdate_f();
 }
 
+/**
+ * @brief Debug function to list all cities in game.
+ * @note Called with debug_listcities.
+ */
+static void CL_ListCities_f (void)
+{
+	int idx;
+
+	for (idx = 0; idx < gd.numCities; idx++) {
+		const city_t const *city = &gd.cities[idx];
+
+		Com_Printf("City %s -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
+		MAP_PrintParameterStringByPos(city->pos);
+	}
+}
+
 void NAT_InitStartup (void)
 {
 	Cmd_AddCommand("nation_stats_click", CP_NationStatsClick_f, NULL);
 	Cmd_AddCommand("nation_update", CL_NationStatsUpdate_f, "Shows the current nation list + statistics.");
 	Cmd_AddCommand("nation_select", CL_NationSelect_f, "Select nation and display all relevant information for it.");
-
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listcities", CL_ListCities_f, "Debug function to list all cities in game.");
+#endif
 }
