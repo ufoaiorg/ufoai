@@ -17,3 +17,23 @@
 		lightmap
 	}
 }
+
+{
+	material tex_nature/rock005
+	hardness 0.2
+	specular 0.2
+	bump 2.0
+}
+
+{
+	material tex_nature/rock006
+	hardness 0.2
+	specular 0.2
+}
+
+{
+	material tex_nature/rock007
+	hardness 0.2
+	specular 0.2
+}
+
