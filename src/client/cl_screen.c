@@ -257,7 +257,7 @@ static void SCR_DrawCursor (void)
 
 	if (mouseSpace != MS_DRAGITEM) {
 		if (cls.state == ca_active && cls.team != cl.actTeam)
-			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "wait");
+			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursors/wait");
 		else {
 			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 			if (cl_showCoords->integer)
