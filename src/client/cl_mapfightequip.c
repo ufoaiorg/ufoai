@@ -1364,6 +1364,9 @@ static void AIM_NextItemtype_f (void)
 	else if (airequipID < AC_ITEM_WEAPON)
 		airequipID = AC_ITEM_PILOT;
 
+	/* you should never be able to reach ammo by using this button */
+	airequipSelectedZone = ZONE_MAIN;
+
 	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
 
@@ -1378,6 +1381,9 @@ static void AIM_PreviousItemtype_f (void)
 		airequipID = AC_ITEM_WEAPON;
 	else if (airequipID < AC_ITEM_WEAPON)
 		airequipID = AC_ITEM_PILOT;
+
+	/* you should never be able to reach ammo by using this button */
+	airequipSelectedZone = ZONE_MAIN;
 
 	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
