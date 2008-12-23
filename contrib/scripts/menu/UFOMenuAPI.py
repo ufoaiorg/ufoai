@@ -352,6 +352,29 @@ def moveMultiplayerMenuContent():
 
 ##
 # @brief move the reserch table where we want
+
+##
+# Move a range of node into a new position
+def moveFullCol(menu, prefix, number, newpos, posref, dexY):
+	print "----- " + prefix + " -----"
+	dec = menu.childname[prefix + "0"].pos
+	dec = dec[0] - posref[0], dec[1] - posref[1]
+
+	for i in xrange(0, number + 1):
+		x, y = newpos[0] + dec[0], newpos[1] + dec[1] + i * dexY
+		menu.childname[prefix + str(i)].updateParam("pos", '"' + str(x) + " " + str(y) + '"')
+
+
+def moveFullPanel(menu, nodes, newpos, posref):
+	print "----- " + "moveFullPanel" + " -----"
+	dec = newpos[0] - posref[0], newpos[1] - posref[1]
+
+	for n in nodes:
+		x, y = menu.childname[n].pos
+		x, y = x + dec[0], y + dec[1]
+		menu.childname[n].updateParam("pos", '"' + str(x) + " " + str(y) + '"')
+		
+
 # @note update newpos to set a new position
 def moveResearchTable():
 	root = Root()
@@ -359,36 +382,63 @@ def moveResearchTable():
 
 	print '-----'
 
-	def fullMove(menu, prefix, newpos, posref):
-		print "----- " + prefix + " -----"
-		dec = menu.childname[prefix + "0"].pos
-		dec = dec[0] - posref[0], dec[1] - posref[1]
-	
-		for i in xrange(0, 27 + 1):
-			x, y = newpos[0] + dec[0], newpos[1] + dec[1] + i * 25
-			menu.childname[prefix + str(i)].updateParam("pos", '"' + str(x) + " " + str(y) + '"')
-
-	
 	menu = root.nodes.childname["research"]
 	posref = menu.childname["img_status0"].pos
 	newpos = 50, 113
 	
-	fullMove(menu, "img_status", newpos, posref)
-	fullMove(menu, "txt_item", newpos, posref)
-	fullMove(menu, "txt_assigned", newpos, posref)
-	fullMove(menu, "txt_available", newpos, posref)
-	fullMove(menu, "txt_max", newpos, posref)
-	fullMove(menu, "bt_rs_change", newpos, posref)	
+	moveFullCol(menu, "img_status", 27, newpos, posref, 25)
+	moveFullCol(menu, "txt_item", 27, newpos, posref, 25)
+	moveFullCol(menu, "txt_assigned", 27, newpos, posref, 25)
+	moveFullCol(menu, "txt_available", 27, newpos, posref, 25)
+	moveFullCol(menu, "txt_max", 27, newpos, posref, 25)
+	moveFullCol(menu, "bt_rs_change", 27, newpos, posref, 25)	
+
+	root.save()
+
+def moveHireTable():
+	root = Root()
+	root.loadFile('base/ufos/menu_hire.ufo')
+	print '-----'
+
+	menu = root.nodes.childname["employees"]
+	posref = menu.childname["bt_employee0"].pos
+	newpos = 325, 180
+	
+	moveFullCol(menu, "bt_employee", 18, newpos, posref, 38)
+
+	root.save()
+
+def moveHirePanel():
+	root = Root()
+	root.loadFile('base/ufos/menu_hire.ufo')
+	print '-----'
+
+	nodes = ['name','bt_edit',
+		'rank_img','rank_lbl',
+		'pwr_lbl','pwr_val','pwr_brd','pwr_bar',
+		'spd_lbl','spd_val','spd_bdr','spd_bar',
+		'acc_lbl','acc_val','acc_bdr','acc_bar',
+		'mnd_lbl','mnd_val','mnd_bdr','mnd_bar',
+		'cls_lbl','cls_val','cls_bdr','cls_bar',
+		'hvy_lbl','hvy_val','hvy_bdr','hvy_bar',
+		'ass_lbl','ass_val','ass_bdr','ass_bar',
+		'snp_lbl','snp_val','snp_bdr','snp_bar',
+		'exp_lbl','exp_val','exp_bdr','exp_bar',
+		'hp_lbl','hp_val','hp_bdr','hp_bar',
+		'missions_lbl','missions_val','kills_lbl','kills_val'
+	]
+
+	menu = root.nodes.childname["employees"]
+	posref = menu.childname["rank_lbl"].pos
+	newpos = 485, 330
+	
+	moveFullPanel(menu, nodes, newpos, posref)
 
 	root.save()
 
 
-
-
-	
-	
 if __name__ == "__main__":
-	#moveResearchTable()
+	#moveHirePanel()
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')

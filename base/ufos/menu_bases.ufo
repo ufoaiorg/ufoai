@@ -31,7 +31,7 @@ menu bases
 		image	menu/button_background	blend	true
 		texl	"1 1"	size	"59 55"
 		tooltip	"_Back to geoscape"
-		pos	"950 10"
+		pos		"950 20"
 		icon geoscape
 		click	{ cmd "mn_pop;check_baseattacks;" }
 	}
