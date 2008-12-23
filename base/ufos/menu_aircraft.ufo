@@ -684,11 +684,11 @@ menu aircraft_equip
 	text airequip_text_zone1
 	{
 		pos	"546 105"
-		size	"430 35"
+		size	"430 50"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
 		textid	TEXT_AIREQUIP_1
-		rows	"2"
+		rows	"3"
 		tooltip	"_Select this zone"
 		click	{ call airequip_zone1 }
 	}

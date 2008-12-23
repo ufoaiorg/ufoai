@@ -738,7 +738,7 @@ static void CL_ListCities_f (void)
 	for (idx = 0; idx < gd.numCities; idx++) {
 		const city_t const *city = &gd.cities[idx];
 
-		Com_Printf("City %s -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
+		Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
 		MAP_PrintParameterStringByPos(city->pos);
 	}
 }

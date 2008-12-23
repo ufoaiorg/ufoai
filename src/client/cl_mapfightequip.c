@@ -736,7 +736,7 @@ void BDEF_MenuInit_f (void)
 void BDEF_BaseDefenseMenuUpdate_f (void)
 {
 	static char defBuffer[1024];
-	static char smallbuffer1[128];
+	static char smallbuffer1[256];
 	static char smallbuffer2[128];
 	aircraftSlot_t *slot;
 	int i;
@@ -892,10 +892,12 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		else if (slot->installationTime > 0)
 			Q_strcat(smallbuffer1, va(_("This defence system will be installed in %i hours.\n"),
 				slot->installationTime), sizeof(smallbuffer1));
-		else if (slot->nextItem)
-			Q_strcat(smallbuffer1, va(_("This defence system will be installed in %i hours.\n"),
+		else if (slot->nextItem) {
+			Q_strcat(smallbuffer1, va(_("%s will be removed in %i hours.\n"), _(slot->item->tech->name),
+				- slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("%s will be installed in %i hours.\n"), _(slot->nextItem->tech->name),
 				slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer1));
-		else
+		} else
 			Q_strcat(smallbuffer1, va(_("This defence system will be removed in %i hours.\n"),
 				-slot->installationTime), sizeof(smallbuffer1));
 	}
@@ -1202,7 +1204,7 @@ static inline const char *AIM_AircraftItemtypeName (const int equiptype)
  */
 void AIM_AircraftEquipMenuUpdate_f (void)
 {
-	static char smallbuffer1[128];
+	static char smallbuffer1[256];
 	static char smallbuffer2[128];
 	int type;
 	menuNode_t *node;
@@ -1309,10 +1311,12 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			else if (slot->installationTime > 0)
 				Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),
 					slot->installationTime), sizeof(smallbuffer1));
-			else if (slot->nextItem)
-				Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours.\n"),
+			else if (slot->nextItem) {
+				Q_strcat(smallbuffer1, va(_("%s will be removed in %i hours.\n"), _(slot->item->tech->name),
+					- slot->installationTime), sizeof(smallbuffer1));
+				Q_strcat(smallbuffer1, va(_("%s will be installed in %i hours.\n"), _(slot->nextItem->tech->name),
 					slot->nextItem->craftitem.installationTime - slot->installationTime), sizeof(smallbuffer1));
-			else
+			} else
 				Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),
 					-slot->installationTime), sizeof(smallbuffer1));
 		}
