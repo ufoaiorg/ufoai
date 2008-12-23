@@ -650,6 +650,7 @@ menu research
 		image	"*cvar mn_research_imagetop"
 		pos	"730 235"
 		size	"220 380"
+		preventratio	true
 	}
 
 	string txt_selected_status

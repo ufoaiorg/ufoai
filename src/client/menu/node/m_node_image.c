@@ -57,7 +57,10 @@ static void MN_ImageNodeLoaded (menuNode_t *node) {
 #endif
 }
 
-
+/**
+ * @todo Extract ekg_ into another node behaviour
+ * @todo Center image, or use textalign property
+ */
 void MN_ImageNodeDraw(menuNode_t *node)
 {
 	vec2_t size;
@@ -97,11 +100,29 @@ void MN_ImageNodeDraw(menuNode_t *node)
 		scale = h / node->size[1];
 		Vector2Set(size, w / scale, node->size[1]);
 	} else {
-		Vector2Copy(node->size, size);
+		if (node->preventRatio) {
+			/* maximise the image into the bounding box */
+			float ratio;
+			int w, h;
+			R_DrawGetPicSize(&w, &h, imageName);
+			ratio = (float) w / (float) h;
+			if (node->size[1] * ratio > node->size[0]) {
+				Vector2Set(size, node->size[0], node->size[0] / ratio);
+			} else {
+				Vector2Set(size, node->size[1] * ratio, node->size[1]);
+			}
+		} else {
+			Vector2Copy(node->size, size);
+		}
 	}
 	R_DrawNormPic(nodepos[0], nodepos[1], size[0], size[1],
 		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
 }
+
+static const value_t properties[] = {
+	{"preventratio", V_BOOL, offsetof(menuNode_t, preventRatio), MEMBER_SIZEOF(menuNode_t, preventRatio)},
+	{NULL, V_NULL, 0, 0}
+};
 
 void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 {
@@ -109,4 +130,5 @@ void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 	behaviour->id = MN_PIC;
 	behaviour->draw = MN_ImageNodeDraw;
 	behaviour->loaded = MN_ImageNodeLoaded;
+	behaviour->properties = properties;
 }
