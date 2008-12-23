@@ -4259,7 +4259,9 @@ tech rs_craft_weapon_alc
 	type		craftitem
 	up_chapter	crafts
 	name		"_Aerial Laser Cannon"
-	// pre_description	"_craft_weapon_alc_pre_txt"
+	pre_description	{
+		default "_craft_weapon_alc_pre_txt"
+	}
 	description {
 		default "_craft_weapon_alc_txt"
 	}
@@ -4270,7 +4272,7 @@ tech rs_craft_weapon_alc
 	}
 
 	provides	craft_weapon_alc
-	time		0
+	time		1500
 	producetime	100
 
 	mdl		"aircraft/craft_weapon_alc/alc"
