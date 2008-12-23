@@ -115,6 +115,7 @@ menu transfer
 		pos		"60 370"
 		size	"460 360"
 		mousefx	true
+		longlines prettychop
 		click
 		lineheight	"20"
 		rows	"18"
@@ -157,6 +158,7 @@ menu transfer
 		mousefx	true
 		click
 		lineheight	"20"
+		longlines prettychop
 		wheel
 		rows	"20"
 //		bgcolor	"1 1 1 0.5"
