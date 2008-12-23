@@ -4881,8 +4881,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.angles[1] = MSG_ReadFloat(sb);
 	ccs.zoom = MSG_ReadFloat(sb);
 
-	/* restore the overlay */
-	Cvar_SetValue("r_geoscape_overlay", MSG_ReadShort(sb));
+	/* restore the overlay.
+	 * do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
+	 * and we never set r_geoscape_overlay->string in game: r_geoscape_overlay won't be updated if the loaded
+	 * value is 0 (and that's a problem if you're loading a game when r_geoscape_overlay is set to another value */
+	r_geoscape_overlay->integer = MSG_ReadShort(sb);
 	radarOverlayWasSet = MSG_ReadShort(sb);
 
 	/* read credits */
