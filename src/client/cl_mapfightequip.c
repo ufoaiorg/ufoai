@@ -88,17 +88,6 @@ static technology_t **AII_GetCraftitemTechsByType (int type)
 }
 
 /**
- * @brief Check if we are removing current item in slot.
- * @param[in] slot Pointer to aircarft slot.
- * @note This doesn't mean there is a next weapon!
- * @return True if we are removeing current item.
- */
-static inline qboolean AIM_IsRemovingCurrentWeapon (aircraftSlot_t *slot)
-{
-	return (slot->item && slot->installationTime < 0);
-}
-
-/**
  * @brief Check airequipID value and set the correct values for aircraft items
  * and base defence items
  */
