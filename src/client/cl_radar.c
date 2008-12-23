@@ -181,6 +181,10 @@ void RADAR_DeactivateRadarOverlay (void)
 {
 	int idx, aircraftIdx;
 
+	/* never deactivate radar if player wants it to be alwayse turned on */
+	if (radarOverlayWasSet)
+		return;
+
 	for (idx = 0; idx < MAX_BASES; idx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(idx);
 		if (!base)

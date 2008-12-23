@@ -854,9 +854,8 @@ qboolean UFO_CampaignCheckEvents (void)
 				AIR_AircraftsUFODisappear(ufo);
 				MAP_NotifyUFODisappear(ufo);
 
-				/* Deactivate Radar overlay if it was previously not set */
-				if (!radarOverlayWasSet)
-					RADAR_DeactivateRadarOverlay();
+				/* Deactivate Radar overlay */
+				RADAR_DeactivateRadarOverlay();
 			}
 		}
 	}
