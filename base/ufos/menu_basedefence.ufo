@@ -170,7 +170,7 @@ menu basedefence
 	{
 		tooltip	"_Install selected defence system"
 		mousefx	true
-		pos		"467 40"
+		pos		"467 75"
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
@@ -181,7 +181,7 @@ menu basedefence
 	{
 		tooltip	"_Remove this defence system"
 		mousefx	true
-		pos		"467 75"
+		pos		"467 125"
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
@@ -192,7 +192,7 @@ menu basedefence
 	{
 		tooltip	"_Install selected defence system"
 		mousefx	true
-		pos		"467 174"
+		pos		"467 259"
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
@@ -203,33 +203,11 @@ menu basedefence
 	{
 		tooltip	"_Remove this defence system"
 		mousefx	true
-		pos		"467 209"
+		pos		"467 294"
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
 		click { cmd "airequip_del_item 2;" }
-	}
-
-	pic basedef_button_add3
-	{
-		tooltip	"_Equip this defence system with selected ammo"
-		mousefx	true
-		pos		"467 308"
-		image	menu/button_aircraft_menu
-		texl	"0 0"
-		texh	"36 32"
-		click { cmd "airequip_add_item 3;" }
-	}
-
-	pic basedef_button_remove3
-	{
-		tooltip	"_Remove ammo from this defence system"
-		mousefx	true
-		pos		"467 343"
-		image	menu/button_aircraft_menu
-		texl	"37 0"
-		texh	"73 32"
-		click { cmd "airequip_del_item 3;" }
 	}
 
 	pic airequip_zone_select1
@@ -237,16 +215,16 @@ menu basedefence
 		invis false
 		tooltip	"_Choose defence system to build"
 		mousefx	true
-		pos		"534 30"
+		pos		"534 66"
 		image	menu/button_big_menu
-		texl	"0 0"
-		texh	"458 82"
+		texl	"0 83"
+		texh	"458 190"
 		click	{ call basedef_zone1 }
 	}
 
 	text basedef_text_zone1
 	{
-		pos		"546 70"
+		pos		"546 105"
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
@@ -259,7 +237,7 @@ menu basedefence
 		invis	false
 		tooltip	"_Change ammo in the defence system"
 		mousefx	true
-		pos		"534 164"
+		pos		"534 254"
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
@@ -268,7 +246,7 @@ menu basedefence
 
 	text basedef_text_zone2
 	{
-		pos		"546 204"
+		pos		"546 294"
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
@@ -279,7 +257,7 @@ menu basedefence
 	string basedef_header1
 	{
 		string	"_Current defence system"
-		pos		"545 50"
+		pos		"545 85"
 		font	f_small
 		color	"0 .78 0 1"
 		align	cl
@@ -288,7 +266,7 @@ menu basedefence
 	string basedef_header2
 	{
 		string	"_Ammo to use with installed system"
-		pos		"545 185"
+		pos		"545 273"
 		font	f_small
 		color	"0 .78 0 1"
 		align	cl

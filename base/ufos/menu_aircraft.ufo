@@ -621,11 +621,15 @@ menu aircraft_equip
 		click
 	}
 
+	// ==================
+	// Zones
+	// ==================
+
 	pic airequip_button_add1
 	{
 		tooltip	"_Add selected item"
 		mousefx	true
-		pos	"467 40"
+		pos	"467 75"
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
@@ -636,7 +640,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Remove item from slot"
 		mousefx	true
-		pos	"467 75"
+		pos	"467 125"
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
@@ -647,7 +651,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Add selected item"
 		mousefx	true
-		pos	"467 174"
+		pos	"467 259"
 		image	menu/button_aircraft_menu
 		texl	"0 0"
 		texh	"36 32"
@@ -658,7 +662,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Remove item from slot"
 		mousefx	true
-		pos	"467 209"
+		pos	"467 294"
 		image	menu/button_aircraft_menu
 		texl	"37 0"
 		texh	"73 32"
@@ -670,16 +674,16 @@ menu aircraft_equip
 		invis false
 		tooltip	"_Select this zone"
 		mousefx	true
-		pos	"534 30"
+		pos	"534 66"
 		image	menu/button_big_menu
-		texl	"0 0"
-		texh	"458 82"
+		texl	"0 83"
+		texh	"458 190"
 		click	{ call airequip_zone1 }
 	}
 
 	text airequip_text_zone1
 	{
-		pos	"546 70"
+		pos	"546 105"
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
@@ -694,7 +698,7 @@ menu aircraft_equip
 		invis false
 		tooltip	"_Select this zone"
 		mousefx	true
-		pos	"534 164"
+		pos	"534 254"
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
@@ -703,7 +707,7 @@ menu aircraft_equip
 
 	text airequip_text_zone2
 	{
-		pos	"546 204"
+		pos	"546 294"
 		size	"430 35"
 		lineheight	"16"
 //		bgcolor	"1 1 1 0.5"
@@ -716,7 +720,7 @@ menu aircraft_equip
 	string airequip_header1
 	{
 		string	"_Current item in slot"
-		pos		"545 50"
+		pos		"545 85"
 		font	f_small
 		color	"0 .78 0 1"
 		align	cl
@@ -725,7 +729,7 @@ menu aircraft_equip
 	string airequip_header2
 	{
 		string	"_Ammo fitting this weapon"
-		pos		"545 185"
+		pos		"545 273"
 		font	f_small
 		color	"0 .78 0 1"
 		align	cl
@@ -739,6 +743,10 @@ menu aircraft_equip
 		origin	"68 68 0"
 		angles	"0 0 180"
 	}
+
+	// ==================
+	// slots
+	// ==================
 
 	pic airequip_slot0
 	{
