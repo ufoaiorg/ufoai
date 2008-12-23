@@ -2178,6 +2178,33 @@ static inline const char* MAP_GetPopulationTypeByPos (const vec2_t pos)
 }
 
 /**
+ * @brief Get number of civilian on a map at given position.
+ * @param[in] pos Position where the mission takes place.
+ * @return Number of civilian.
+ * @sa CP_CreateCivilianTeam
+ */
+int MAP_GetCivilianNumberByPosition (const vec2_t pos)
+{
+	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
+
+	if (MapIsWater(color)) {
+		Sys_Error("MAP_GetPopulationType: Trying to get number of civilian in a position on water");
+		return 0;
+	} else if (MapIsUrban(color))
+		return 10;
+	else if (MapIsSuburban(color))
+		return 8;
+	else if (MapIsVillage(color))
+		return 6;
+	else if (MapIsRural(color))
+		return 4;
+	else if (MapIsNopopulation(color))
+		return 2;
+	else
+		return 0;
+}
+
+/**
  * @brief Prints positions parameter in console.
  * @param[in] pos Location (latitude, longitude) where you want to check parameters.
  * @note Used for printing in console, do not translate.

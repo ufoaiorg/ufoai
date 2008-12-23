@@ -65,6 +65,7 @@ void MAP_NotifyAircraftRemoved(const aircraft_t* aircraft, qboolean destroyed);
 void MAP_NotifyUFODisappear(const aircraft_t* ufo);
 void MAP_InitStartup(void);
 const char* MAP_GetTerrainType(const byte* color);
+int MAP_GetCivilianNumberByPosition(const vec2_t pos);
 void MAP_PrintParameterStringByPos(const vec2_t pos);
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void MAP_CheckPositionBoundaries(float *pos);

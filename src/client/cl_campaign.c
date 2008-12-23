@@ -3554,10 +3554,7 @@ static void CP_CreateCivilianTeam (mission_t *mission)
 
 	assert(mission->pos);
 
-	/** @todo I've no idea what civilian number should be, please set it to desired value -- Kracken */
-	ccs.battleParameters.civilians = (frand() * 10);
-	ccs.battleParameters.civilians %= 4;
-	ccs.battleParameters.civilians += 1;
+	ccs.battleParameters.civilians = MAP_GetCivilianNumberByPosition(mission->pos);
 
 	nation = MAP_GetNation(mission->pos);
 	ccs.battleParameters.nation = nation;
