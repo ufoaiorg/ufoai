@@ -181,6 +181,7 @@ static void R_ModLoadSubmodels (const lump_t *l)
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleFloat(in->mins[j]) - 1.0f + (float)shift[j];
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1.0f + (float)shift[j];
+			out->origin[j] = LittleFloat(in->origin[j]) + (float)shift[j];
 		}
 		out->radius = RadiusFromBounds(out->mins, out->maxs);
 		out->headnode = LittleLong(in->headnode);
@@ -262,8 +263,8 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 	VectorSet(mins, 999999, 999999, 999999);
 	VectorSet(maxs, -999999, -999999, -999999);
 
-	stmins[0] = stmins[1] = 999999;
-	stmaxs[0] = stmaxs[1] = -999999;
+	Vector2Set(stmins, 999999, 999999);
+	Vector2Set(stmaxs, -999999, -999999);
 
 	tex = surf->texinfo;
 
@@ -725,7 +726,7 @@ static void R_SortSurfacesArrays (const model_t *mod)
 	for (i = 0, surf = s; i < ns; i++, surf++) {
 		mBspSurfaces_t *surfs = r_sorted_surfaces[surf->texinfo->image->texnum];
 		if (!surfs) {  /* allocate it */
-			surfs = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(mBspSurfaces_t), vid_modelPool, 0);
+			surfs = (mBspSurfaces_t *)Mem_PoolAlloc(sizeof(*surfs), vid_modelPool, 0);
 			r_sorted_surfaces[surf->texinfo->image->texnum] = surfs;
 		}
 
@@ -884,13 +885,21 @@ static void R_SetupSubmodels (void)
 	/* set up the submodels, the first 255 submodels are the models of the
 	 * different levels, don't care about them */
 	for (i = NUM_REGULAR_MODELS; i < r_worldmodel->bsp.numsubmodels; i++) {
-		const mBspHeader_t *bm = &r_worldmodel->bsp.submodels[i];
 		model_t *mod = &r_modelsInline[r_numModelsInline];
+		const mBspHeader_t *sub = &r_worldmodel->bsp.submodels[i];
 
+		/* copy most info from world */
 		*mod = *r_worldmodel;
-		mod->bsp.firstmodelsurface = bm->firstface;
-		mod->bsp.nummodelsurfaces = bm->numfaces;
-		mod->bsp.firstnode = bm->headnode;
+		mod->type = mod_bsp_submodel;
+
+		Com_sprintf(mod->name, sizeof(mod->name), "*%d", i);
+
+		/* copy the rest from the submodel */
+		VectorCopy(sub->maxs, mod->maxs);
+		VectorCopy(sub->mins, mod->mins);
+		mod->radius = sub->radius;
+
+		mod->bsp.firstnode = sub->headnode;
 		mod->bsp.nodes = &r_worldmodel->bsp.nodes[mod->bsp.firstnode];
 		mod->bsp.maptile = r_numMapTiles - 1;
 		if (mod->bsp.firstnode >= r_worldmodel->bsp.numnodes)
@@ -898,12 +907,9 @@ static void R_SetupSubmodels (void)
 
 		R_RecursiveSetModel(mod->bsp.nodes, mod);
 
-		VectorCopy(bm->maxs, mod->maxs);
-		VectorCopy(bm->mins, mod->mins);
-		mod->radius = bm->radius;
-		mod->type = mod_bsp_submodel;
-
-		mod->bsp.numleafs = bm->visleafs;
+		mod->bsp.firstmodelsurface = sub->firstface;
+		mod->bsp.nummodelsurfaces = sub->numfaces;
+		/*mod->bsp.numleafs = sub->visleafs;*/
 		r_numModelsInline++;
 	}
 }

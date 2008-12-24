@@ -251,7 +251,8 @@ void R_CreateSurfaceLightmap (mBspSurface_t * surf)
 		/* upload the last block */
 		R_UploadLightmapBlock();
 		if (!R_AllocLightmapBlock(smax, tmax, &surf->light_s, &surf->light_t))
-			Com_Error(ERR_DROP, "R_CreateSurfaceLightmap: Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lightmap_scale: %i)\n", smax, tmax, surf->lightmap_scale);
+			Com_Error(ERR_DROP, "R_CreateSurfaceLightmap: Consecutive calls to R_AllocLightmapBlock(%d,%d) failed (lightmap_scale: %i, stextends: %f %f)\n",
+					smax, tmax, surf->lightmap_scale, surf->stextents[0], surf->stextents[1]);
 	}
 
 	surf->lightmap_texnum = r_lightmaps.lightmap_texnum;
@@ -408,6 +409,9 @@ static qboolean R_LightPoint_ (const int tile, const int firstsurface, const int
 
 #define STATIC_LIGHTING_INTERVAL 0.25
 
+/**
+ * @brief Linear interpolation of mesh lighting
+ */
 static void R_LightPointLerp (static_lighting_t *lighting)
 {
 	float lerp;
