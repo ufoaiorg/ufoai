@@ -27,19 +27,19 @@ menu basedefence
 
 	func basedef_reset
 	{
-		*basedef_header3				invis true
+		*basedef_header2				invis true
 	}
 
 	func basedef_initnodevalues
 	{
-		*basedef_header3				invis false
+		*basedef_header2				invis false
 	}
 
 	func basedef_missile
 	{
 		cmd "basedef_updatemenu 0;"
 		call basedef_reset
-		*basedef_header3 invis false
+		*basedef_header2 invis false
 	}
 
 	func basedef_laser
