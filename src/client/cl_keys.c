@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_console.h"
 
 char key_lines[MAXKEYLINES][MAXCMDLINE];
 int key_linepos;
@@ -239,10 +240,10 @@ static void Key_Console (int key, int unicode)
 			Cbuf_AddText(key_lines[edit_line] + 1);	/* valid command */
 
 		Cbuf_AddText("\n");
-		Com_Printf("%s\n", key_lines[edit_line]);
+		Com_Printf("%s\n", key_lines[edit_line] + 1);
 		edit_line = (edit_line + 1) & (MAXKEYLINES - 1);
 		history_line = edit_line;
-		key_lines[edit_line][0] = ']';
+		key_lines[edit_line][0] = CONSOLE_PROMPT_CHAR | CONSOLE_COLORED_TEXT_MASK;
 		/* maybe MAXKEYLINES was reached - we don't want to spawn 'random' strings
 		 * from history buffer in our console */
 		key_lines[edit_line][1] = '\0';
@@ -294,7 +295,7 @@ static void Key_Console (int key, int unicode)
 		} while (history_line != edit_line && !key_lines[history_line][1]);
 
 		if (history_line == edit_line) {
-			key_lines[edit_line][0] = ']';
+			key_lines[edit_line][0] = CONSOLE_PROMPT_CHAR | CONSOLE_COLORED_TEXT_MASK;
 			/* fresh edit line */
 			key_lines[edit_line][1] = '\0';
 			key_linepos = 1;
@@ -858,7 +859,7 @@ void Key_Init (void)
 	int i;
 
 	for (i = 0; i < MAXKEYLINES; i++) {
-		key_lines[i][0] = ']';
+		key_lines[i][0] = CONSOLE_PROMPT_CHAR | CONSOLE_COLORED_TEXT_MASK;
 		key_lines[i][1] = 0;
 	}
 	key_linepos = 1;

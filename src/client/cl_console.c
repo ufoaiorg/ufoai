@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUM_CON_TIMES 8
 #define COLORED_TEXT_MASK 128
 #define CON_TEXTSIZE 32768
+#define CONSOLE_CURSOR_CHAR 11
 
 typedef struct {
 	qboolean initialized;
@@ -399,7 +400,7 @@ void Con_Print (const char *txt)
 		return;
 
 	if (txt[0] == 1 || txt[0] == 2) {
-		mask = COLORED_TEXT_MASK; /* go to colored text */
+		mask = CONSOLE_COLORED_TEXT_MASK; /* go to colored text */
 		txt++;
 	} else
 		mask = 0;
@@ -482,7 +483,7 @@ static void Con_DrawInput (void)
 
 	/* add the cursor frame */
 	if ((int)(cls.realtime >> 8) & 1) {
-		text[key_linepos] = 11;
+		text[key_linepos] = CONSOLE_CURSOR_CHAR | CONSOLE_COLORED_TEXT_MASK;
 		if (key_linepos == y)
 			y++;
 	}
@@ -530,7 +531,7 @@ void Con_DrawNotify (void)
 
 		for (x = 0; x < con.lineWidth; x++) {
 			/* only draw chat or check for developer mode */
-			if (developer->integer || text[x] & COLORED_TEXT_MASK) {
+			if (developer->integer || text[x] & CONSOLE_COLORED_TEXT_MASK) {
 				R_DrawChar(l + (x << con_fontShift), v, text[x]);
 				draw = qtrue;
 			}
@@ -588,7 +589,7 @@ void Con_DrawConsole (float frac)
 		const int versionX = viddef.width - (len * con_fontWidth) - CONSOLE_CHAR_ALIGN;
 		const int versionY = lines - (con_fontHeight + CONSOLE_CHAR_ALIGN);
 		for (x = 0; x < len; x++)
-			R_DrawChar(versionX + x * con_fontWidth, versionY, consoleMessage[x] | COLORED_TEXT_MASK);
+			R_DrawChar(versionX + x * con_fontWidth, versionY, consoleMessage[x] | CONSOLE_COLORED_TEXT_MASK);
 	}
 
 	/* draw the text */

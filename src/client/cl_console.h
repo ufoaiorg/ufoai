@@ -43,4 +43,7 @@ void Con_Close(void);
 void Con_SaveConsoleHistory(const char* path);
 void Con_LoadConsoleHistory(const char* path);
 
+#define CONSOLE_COLORED_TEXT_MASK 128
+#define CONSOLE_PROMPT_CHAR ']'
+
 #endif /* CLIENT_CL_CONSOLE_H */
