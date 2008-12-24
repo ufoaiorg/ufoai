@@ -107,3 +107,33 @@ icon greenhead_medic {
 	texl	"228 0"
 	size	"28 28"
 }
+
+icon speed_stop {
+	image "menu/icon_pack2"
+	texl	"115 33"
+	size	"10 15"
+}
+
+icon speed_play1 {
+	image "menu/icon_pack2"
+	texl	"130 33"
+	size	"8 15"
+}
+
+icon speed_play2 {
+	image "menu/icon_pack2"
+	texl	"143 33"
+	size	"14 15"
+}
+
+icon speed_play3 {
+	image "menu/icon_pack2"
+	texl	"162 33"
+	size	"20 15"
+}
+
+icon speed_dot {
+	image "menu/icon_pack2"
+	texl	"187 37"
+	size	"7 7"
+}

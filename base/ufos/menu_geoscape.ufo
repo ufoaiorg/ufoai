@@ -85,6 +85,29 @@ menu map
 	}
 
 	// ==================
+	// texts
+	// ==================
+
+	string daytime
+	{
+		string	"*cvar mn_mapdaytime"
+		pos			"900 304"
+		align	"uc"
+	}
+
+	text description
+	{
+		pos			"800 154"
+		size		"192 144"
+		lineheight		18
+		tabwidth	100
+		rows		"8"
+		wheel
+//		bgcolor		"1 1 1 0.6"
+		scrollbar	true
+	}
+
+	// ==================
 	// time
 	// ==================
 
@@ -158,6 +181,99 @@ menu map
 		whdown	{ cmd "game_timeslow;" }
 	}
 
+	radiobutton bt_timestop0
+	{
+		cvar	"*cvar mn_timelapse_id"	value "0"
+		icon	speed_stop
+		pos	"816 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+	radiobutton bt_timeplay1
+	{
+		cvar	"*cvar mn_timelapse_id"	value "1"
+		icon	speed_dot
+		pos	"836 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+	radiobutton bt_timeplay2
+	{
+		cvar	"*cvar mn_timelapse_id"	value "4"
+		icon	speed_play1
+		pos	"856 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+
+	radiobutton bt_timeplay3
+	{
+		cvar	"*cvar mn_timelapse_id"	value "6"
+		icon	speed_dot
+		pos	"876 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+	radiobutton bt_timeplay4
+	{
+		cvar	"*cvar mn_timelapse_id"	value "7"
+		icon	speed_play2
+		pos	"896 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+
+	radiobutton bt_timeplay5
+	{
+		cvar	"*cvar mn_timelapse_id"	value "8"
+		icon	speed_dot
+		pos	"916 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+
+	radiobutton bt_timeplay6
+	{
+		cvar	"*cvar mn_timelapse_id"	value "9"
+		icon	speed_dot
+		pos	"936 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+	radiobutton bt_timeplay7
+	{
+		tooltip	"_Very fast"
+		cvar	"*cvar mn_timelapse_id"	value "10"
+		icon	speed_play3
+		pos	"956 150"
+		size	"20 20"
+		change	{ cmd "game_settimeid <value>;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
+	}
+
+
 	string timelapse
 	{
 		string	"*cvar mn_timelapse"
@@ -225,29 +341,6 @@ menu map
 		clickdelay	100
 //		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_zoom out;" }
-	}
-
-	// ==================
-	// texts
-	// ==================
-
-	string daytime
-	{
-		string	"*cvar mn_mapdaytime"
-		pos			"900 304"
-		align	"uc"
-	}
-
-	text description
-	{
-		pos			"800 154"
-		size		"192 144"
-		lineheight		18
-		tabwidth	100
-		rows		"8"
-		wheel
-//		bgcolor		"1 1 1 0.6"
-		scrollbar	true
 	}
 
 	// ==================
@@ -2864,7 +2957,7 @@ menu messageoptions
 	// ===================
 	// confuncs to update widgets
 	// ===================
-	
+
 	/**
 	 * @param[in] <1> row in current view
 	 * @param[in] <2> state for pause button
@@ -2876,7 +2969,7 @@ menu messageoptions
 		cmd "mn_setnodeproperty bt_notify<1> current <3>"
 		cmd "mn_setnodeproperty bt_sound<1> current <4>"
 	}
-	
+
 
 	// ===================
 	// confuncs to enable/disable lines

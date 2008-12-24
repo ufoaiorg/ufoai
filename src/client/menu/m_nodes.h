@@ -68,6 +68,7 @@ typedef enum mn_s {
 	MN_ABSTRACTVALUE,
 	MN_ABSTRACTOPTION,
 	MN_ABSTRACTNODE,
+	MN_RADIOBUTTON,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -98,7 +99,7 @@ typedef struct menuNode_s {
 	char name[MAX_VAR];			/**< name from the script files */
 	struct nodeBehaviour_s *behaviour;
 
-	struct menuNode_s *super; /**< Node inherited, else NULL */
+	struct menuNode_s *super;	/**< Node inherited, else NULL */
 
 	/* common navigation */
 	struct menuNode_s *next;
@@ -125,14 +126,14 @@ typedef struct menuNode_s {
 
 	/* not used a lot */
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
-	int excludeRectNum;					/**< how many exclude rects defined? */
+	int excludeRectNum;			/**< how many exclude rects defined? */
 
 
 	byte align;					/** @todo delete it when its possible */
 
 	/** @todo needs cleanup */
-	void* dataImageOrModel;	/**< an image, or a model, this depends on the node type */
-	void* dataModelSkinOrCVar; /**< a skin or a cvar, this depends on the node type */
+	void* dataImageOrModel;		/**< an image, or a model, this depends on the node type */
+	void* dataModelSkinOrCVar;	/**< a skin or a cvar, this depends on the node type */
 
 	/* common color */
 	vec4_t color;				/**< rgba */
@@ -159,6 +160,9 @@ typedef struct menuNode_s {
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
 	menuDepends_t depends;
 	const value_t *scriptValues;
+
+	/* temporary, and/or for testing */
+	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
 
 	/* MN_IMAGE, and more */
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */

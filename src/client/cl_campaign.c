@@ -4147,6 +4147,7 @@ void CL_UpdateTime (void)
 	if (gameLapse >= 0 && gameLapse < NUM_TIMELAPSE) {
 		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
 		gd.gameTimeScale = lapse[gameLapse].scale;
+		Cvar_SetValue("mn_timelapse_id", gameLapse);
 	}
 
 	/* Update the date */
@@ -4688,6 +4689,20 @@ void CL_UpdateCredits (int credits)
 		credits = MAX_CREDITS;
 	ccs.credits = credits;
 	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
+}
+
+/**
+ * @brief Set a new time game from id
+ * @sa CL_SetGameTime
+ * @sa lapse
+ */
+static void CL_SetGameTime_f (void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <timeid>\n", Cmd_Argv(0));
+		return;
+	}
+	CL_SetGameTime(atoi(Cmd_Argv(1)));
 }
 
 #define MAX_STATS_BUFFER 2048
@@ -6696,6 +6711,7 @@ static const cmdList_t game_commands[] = {
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
+	{"game_settimeid", CL_SetGameTime_f, NULL},
 	{"mn_mapaction_reset", MAP_ResetAction, NULL},
 	{"map_center", MAP_CenterOnPoint_f, "Centers the geoscape view on items on the geoscape - and cycle through them"},
 	{"map_zoom", MAP_Zoom_f, NULL},

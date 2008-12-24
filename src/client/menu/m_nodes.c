@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_airfightmap.h"
 #include "node/m_node_model.h"
 #include "node/m_node_radar.h"
+#include "node/m_node_radiobutton.h"
 #include "node/m_node_selectbox.h"
 #include "node/m_node_string.h"
 #include "node/m_node_special.h"
@@ -376,6 +377,7 @@ void MN_InitNodes (void)
 	MN_RegisterModelNode(current++);
 	MN_RegisterImageNode(current++); /** @todo 'pic', rename it according to the function when its possible */
 	MN_RegisterRadarNode(current++);
+	MN_RegisterRadioButtonNode(current++);
 	MN_RegisterSelectBoxNode(current++);
 	MN_RegisterSpinnerNode(current++);
 	MN_RegisterStringNode(current++);
@@ -389,9 +391,11 @@ void MN_InitNodes (void)
 
 	/* check for safe data: list must be sorted by alphabet */
 	current = nodeBehaviourList;
+	assert(current);
 	for (i = 0; i < MN_NUM_NODETYPE - 1; i++) {
 		const nodeBehaviour_t *a = current;
 		const nodeBehaviour_t *b = current + 1;
+		assert(b);
 		if (Q_strcmp(a->name, b->name) >= 0) {
 #ifdef DEBUG
 			Sys_Error("MN_InitNodes: '%s' is before '%s'. Please order node behaviour registrations by name\n", a->name, b->name);
