@@ -51,8 +51,8 @@ byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 			val = *data++;
 			data++; /* Advance data again.  The first two bytes are identical!!! */
 			c = 0; /* This means 2 bytes are the same.  Total bytes the same is 2 + c */
-			/* Loop while the NEXT piece of data equals val */
-			while (data + 1 < dend && val == *(data + 1)) {
+			/* Loop while the piece of data being looked at equals val */
+			while (data + 1 < dend && val == *(data)) {
 				if (c >= SCHAR_MAX) /* must fit into one byte */
 					break;
 				data++;
