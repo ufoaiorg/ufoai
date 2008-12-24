@@ -587,9 +587,9 @@ craftitem craft_ammo_alc
 	notonmarket	true
 
 	unlimitedAmmo	true
-	wdamage		10
-	accuracy	0.4
-	wrange		3
+	wdamage		9
+	accuracy	0.7
+	wrange		0.4
 	wspeed		900
 	delay		9
 	size	10	// light
