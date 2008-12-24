@@ -6748,12 +6748,11 @@ void CL_GameExit (void)
 }
 
 /**
- * @brief Called at new game and load game
+ * @brief Called when Skirmish game starts
  * @param[in] load qtrue if we are loading game, qfalse otherwise
- * @sa SAV_GameLoad
- * @sa CL_GameNew_f
+ * @sa CL_GameInit
  */
-void CL_GameInit (qboolean load)
+static void CL_GameSkirmishInit (qboolean load)
 {
 	const cmdList_t *commands;
 
@@ -6765,10 +6764,33 @@ void CL_GameInit (qboolean load)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
 	}
 
-	CL_GameTimeStop();
-
 	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
 	RS_InitTree(load);		/**< Initialise all data in the research tree. */
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	if (!load)
+		CL_ScriptSanityCheck();
+}
+
+/**
+ * @brief Called at new game and load game
+ * @param[in] load qtrue if we are loading game, qfalse otherwise
+ * @sa SAV_GameLoad
+ * @sa CL_GameNew_f
+ */
+void CL_GameInit (qboolean load)
+{
+	assert(curCampaign);
+
+	/* We need more than for skirmish */
+	CL_GameSkirmishInit(load);
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	if (!load) {
+		CL_ScriptSanityCheckCampaign();
+	}
+
+	CL_GameTimeStop();
 
 	CL_CampaignInitMarket(load);
 
@@ -6778,10 +6800,6 @@ void CL_GameInit (qboolean load)
 	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
 	if (!rsAlienXVI)
 		Sys_Error("CL_GameInit: Could not find tech definition for " XVI_EVENT_NAME);
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	if (!load)
-		CL_ScriptSanityCheck();
 }
 
 /**
@@ -6854,7 +6872,7 @@ static void CL_GameSkirmish_f (void)
 	baseCurrent = base;
 	gd.numAircraft = 0;
 
-	CL_GameInit(qfalse);
+	CL_GameSkirmishInit(qfalse);
 	RS_MarkResearchedAll();
 
 	gd.numBases = 1;

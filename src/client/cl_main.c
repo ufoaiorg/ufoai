@@ -1782,7 +1782,6 @@ static const sanity_functions_t sanity_functions[] = {
 	{RS_ScriptSanityCheck, "tech"},
 	{AIR_ScriptSanityCheck, "aircraft"},
 	{MN_ScriptSanityCheck, "menu"},
-	{NAT_ScriptSanityCheck, "nations"},
 #ifdef DEBUG
 	{INV_ItemsSanityCheck, "items"},
 	{INV_EquipmentDefSanityCheck, "items"},
@@ -1802,6 +1801,33 @@ void CL_ScriptSanityCheck (void)
 
 	Com_Printf("Sanity check for script data\n");
 	s = sanity_functions;
+	while (s->check) {
+		status = s->check();
+		Com_Printf("...%s %s\n", s->name, (status ? "ok" : "failed"));
+		s++;
+	}
+}
+
+/** @brief Data for sanity check of parsed script data
+ * @note Only datas that are specific to campaign (not skirmish).
+ */
+static const sanity_functions_t sanity_functions_campaign[] = {
+	{NAT_ScriptSanityCheck, "nations"},
+
+	{NULL, NULL}
+};
+
+/**
+ * @brief Check the parsed script values for errors after parsing every script file
+ * @note Only datas that are specific to campaign (not skirmish).
+ * @sa CL_ReadSinglePlayerData
+ */
+void CL_ScriptSanityCheckCampaign (void)
+{
+	qboolean status;
+	const sanity_functions_t *s;
+
+	s = sanity_functions_campaign;
 	while (s->check) {
 		status = s->check();
 		Com_Printf("...%s %s\n", s->name, (status ? "ok" : "failed"));

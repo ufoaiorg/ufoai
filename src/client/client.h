@@ -291,6 +291,7 @@ void CL_StartSingleplayer(qboolean singleplayer);
 void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
 void CL_ParseUGVs(const char *name, const char **text);
 void CL_ScriptSanityCheck(void);
+void CL_ScriptSanityCheckCampaign(void);
 
 void CL_ClearState(void);
 
