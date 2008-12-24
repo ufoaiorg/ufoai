@@ -531,7 +531,13 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 	if ((s->contentFlags & CONTENTS_WATER)
 	 || strstr(textureref[mipTexIndex].name, "glass")
 	 || strstr(textureref[mipTexIndex].name, "window")) {
-		fprintf(file, "{\n\tmaterial %s\n\t{\n\t\tenvmap 0\n\t}\n}\n", textureref[mipTexIndex].name);
+		fprintf(file, "{\n\tmaterial %s\n\tspecular 2.0\n\t{\n\t\tenvmap 0\n\t}\n}\n", textureref[mipTexIndex].name);
+		textureref[mipTexIndex].materialMarked = qtrue;
+		materialsCnt++;
+	}
+
+	if (strstr(textureref[mipTexIndex].name, "wood")) {
+		fprintf(file, "{\n\tmaterial %s\n\tspecular 0.2\n}\n", textureref[mipTexIndex].name);
 		textureref[mipTexIndex].materialMarked = qtrue;
 		materialsCnt++;
 	}
