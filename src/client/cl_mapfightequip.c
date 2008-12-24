@@ -57,7 +57,6 @@ itemWeight_t AII_GetItemWeightBySize (const objDef_t *od)
 		return ITEM_HEAVY;
 }
 
-
 /**
  * @brief Returns a list of craftitem technologies for the given type.
  * @note This list is terminated by a NULL pointer.
@@ -85,6 +84,33 @@ static technology_t **AII_GetCraftitemTechsByType (int type)
 	/* terminate the list */
 	techList[j] = NULL;
 	return techList;
+}
+
+/**
+ * @brief Get the technology of the item that is in current zone.
+ * @note NULL if zone is empty.
+ * @param[in] slot Pointer to the slot.
+ */
+static inline technology_t *AII_GetTechnologyToDisplay (const aircraftSlot_t const *slot)
+{
+	/* this is pilot */
+	if (!slot)
+		return NULL;
+
+	if (airequipSelectedZone == ZONE_MAIN) {
+		if (!slot->item)
+			return NULL;
+		else if (slot->nextItem)
+			return slot->nextItem->tech;
+		else
+			return slot->item->tech;
+	} else if (airequipSelectedZone == ZONE_AMMO) {
+		if (slot->ammo)
+			return slot->ammo->tech;
+		else
+			return NULL;
+	} else
+		return NULL;
 }
 
 /**
@@ -388,12 +414,17 @@ qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
 
 /**
  * @brief Update the list of item you can choose
+ * @param[in] base Pointer to the base where items are listed (NULL if not in base).
+ * @param[in] installation Pointer to installation where items are listed (NULL if not in installation).
+ * @param[in] aircraft Pointer to aircraft where items are listed (NULL if not in aircraft).
+ * @param[in] tech Pointer to the technolgy to select if needed (NULL if no selected technology).
  */
-static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installation, aircraft_t* aircraft)
+static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installation, aircraft_t* aircraft, const technology_t *tech)
 {
 	static char buffer[1024];
 	technology_t **list;
 	int i;
+	int selectedLine = 0;
 
 	/* Delete list */
 	buffer[0] = '\0';
@@ -429,6 +460,8 @@ static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installati
 		while (*list) {
 			if (AIM_SelectableAircraftItem(base, installation, aircraft, *list)) {
 				Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
+				if ((*list) == tech)
+					selectedLine = i;
 				i++;
 			}
 			list++;
@@ -440,7 +473,7 @@ static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installati
 
 	/* if there is at least one element, select the first one */
 	if (i)
-		Cmd_ExecuteString("airequip_list_click 0");
+		Cmd_ExecuteString(va("airequip_list_click %i", selectedLine));
 	else {
 		/* no element in list, no tech selected */
 		airequipSelectedTechnology = NULL;
@@ -823,7 +856,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(baseCurrent, installationCurrent, NULL);
+	AIM_UpdateAircraftItemList(baseCurrent, installationCurrent, NULL, AII_GetTechnologyToDisplay(slot));
 
 	/* Delete list */
 	defBuffer[0] = '\0';
@@ -1281,7 +1314,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	AIM_CheckAirequipSelectedZone(slot);
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(NULL, NULL, aircraft);
+	AIM_UpdateAircraftItemList(NULL, NULL, aircraft, AII_GetTechnologyToDisplay(slot));
 
 	Cvar_Set("mn_equip_itemtype_name", AIM_AircraftItemtypeName(airequipID));
 
@@ -1520,7 +1553,8 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	airequipSelectedZone = zone;
 
 	/* Fill the list of item you can equip your aircraft with */
-	AIM_UpdateAircraftItemList(aircraftMenu ? NULL : baseCurrent, aircraftMenu ? NULL : installationCurrent, aircraft);
+	AIM_UpdateAircraftItemList(aircraftMenu ? NULL : baseCurrent, aircraftMenu ? NULL : installationCurrent,
+		aircraft, AII_GetTechnologyToDisplay(slot));
 
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
