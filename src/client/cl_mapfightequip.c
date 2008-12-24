@@ -1565,7 +1565,8 @@ void AIM_AircraftEquipZoneSelect_f (void)
 
 /**
  * @brief Auto add ammo corresponding to weapon, if there is enough in storage.
- * @param[in] base Pointer to the base where you want to add/remove ammo
+ * @param[in] base Pointer to the base where you want to add/remove ammo (needed even for aicraft:
+ * we need to know where to add / remove items. Maybe be NULL for installations or UFOs.
  * @param[in] installation Pointer to the installation where you want to add/remove ammo
  * @param[in] aircraft Pointer to the aircraft (NULL if we are changing base defence system)
  * @param[in] slot Pointer to the slot where you want to add ammo
@@ -1600,7 +1601,7 @@ static void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraf
 		if (ammo) {
 			ammo_tech = ammo->tech;
 			if (ammo_tech && AIM_SelectableAircraftItem(base, installation, aircraft, ammo_tech)) {
-				AII_AddAmmoToSlot(ammo->notOnMarket ? NULL : base, ammo_tech, slot);
+				AII_AddAmmoToSlot((ammo->notOnMarket || ammo->craftitem.unlimitedAmmo) ? NULL : base, ammo_tech, slot);
 				/* some weapons have unlimited ammo */
 				if (ammo->craftitem.unlimitedAmmo) {
 					slot->ammoLeft = AMMO_STATUS_UNLIMITED;
@@ -1774,11 +1775,11 @@ void AIM_AircraftEquipAddItem_f (void)
 {
 	int zone;
 	aircraftSlot_t *slot;
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = NULL;
 	const menu_t *activeMenu;
 	qboolean aircraftMenu;
-	base_t* base;
-	installation_t* installation;
+	base_t* base = NULL;
+	installation_t* installation = NULL;
 
 	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent)) {
 		Com_Printf("Exiting early base and install both true or both false\n");
@@ -1805,18 +1806,15 @@ void AIM_AircraftEquipAddItem_f (void)
 	if (aircraftMenu) {
 		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
-		base = aircraft->homebase;
-		installation = NULL;
+		base = aircraft->homebase;	/* we need to know where items will be removed */
 		slot = AII_SelectAircraftSlot(aircraft);
-	} else {
-		if (baseCurrent)
-			slot = BDEF_SelectBaseSlot(baseCurrent);
-		else
-			slot = BDEF_SelectInstallationSlot(installationCurrent);
-
+	} else if (baseCurrent) {
 		base = baseCurrent;
+		slot = BDEF_SelectBaseSlot(base);
+	} else {
 		installation = installationCurrent;
-		aircraft = NULL;
+		assert(installation);
+		slot = BDEF_SelectInstallationSlot(installation);
 	}
 
 	if (airequipID == AC_ITEM_PILOT) {
@@ -1911,9 +1909,11 @@ void AIM_AircraftEquipDeleteItem_f (void)
 {
 	int zone;
 	aircraftSlot_t *slot;
-	aircraft_t *aircraft;
+	aircraft_t *aircraft = NULL;
 	const menu_t *activeMenu;
 	qboolean aircraftMenu;
+	base_t* base = NULL;
+	installation_t* installation = NULL;
 
 	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent)) {
 		Com_Printf("Exiting early base and install both true or both false\n");
@@ -1934,14 +1934,16 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	 * and select the slot we are changing */
 	if (aircraftMenu) {
 		aircraft = baseCurrent->aircraftCurrent;
+		assert(aircraft);
+		base = aircraft->homebase;	/* we need to know where items will be added / removed */
 		slot = AII_SelectAircraftSlot(aircraft);
+	} else if (baseCurrent) {
+		base = baseCurrent;
+		slot = BDEF_SelectBaseSlot(base);
 	} else {
-		if (baseCurrent) {
-			slot = BDEF_SelectBaseSlot(baseCurrent);
-		} else {
-			slot = BDEF_SelectInstallationSlot(installationCurrent);
-		}
-		aircraft = NULL;
+		installation = installationCurrent;
+		assert(installation);
+		slot = BDEF_SelectInstallationSlot(installation);
 	}
 
 	if (airequipID == AC_ITEM_PILOT) {
@@ -1969,16 +1971,9 @@ void AIM_AircraftEquipDeleteItem_f (void)
 			/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 			if (slot->installationTime < slot->item->craftitem.installationTime) {
 				slot->installationTime = -slot->item->craftitem.installationTime;
-				if (baseCurrent)
-					AII_RemoveItemFromSlot(baseCurrent, slot, qtrue); /* we remove only ammo, not item */
-				else
-					AII_RemoveItemFromSlot(NULL, slot, qtrue); /* we remove only ammo, not item */
+				AII_RemoveItemFromSlot(base, slot, qtrue); /* we remove only ammo, not item */
 			} else {
-				if (baseCurrent) {
-					AII_RemoveItemFromSlot(baseCurrent, slot, qfalse); /* we remove weapon and ammo */
-				} else {
-					AII_RemoveItemFromSlot(NULL, slot, qfalse); /* we remove weapon and ammo */
-				}
+				AII_RemoveItemFromSlot(base, slot, qfalse); /* we remove weapon and ammo */
 			}
 			/* aircraft stats are updated below */
 		} else {
@@ -1989,16 +1984,17 @@ void AIM_AircraftEquipDeleteItem_f (void)
 			if (slot->installationTime == -slot->item->craftitem.installationTime) {
 				slot->installationTime = 0;
 			}
+			if (airequipID <= AC_ITEM_WEAPON) {
+				/* reset ammo to ammo used by current weapon in slot */
+				AII_RemoveItemFromSlot(base, slot, qtrue); /* we remove only ammo, not item */
+				AIM_AutoAddAmmo(base, installation, aircraft, slot);
+			}
 		}
 		break;
 	case ZONE_AMMO:
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
 		if (airequipID >= AC_ITEM_AMMO) {
-			if (baseCurrent) {
-				AII_RemoveItemFromSlot(baseCurrent, slot, qtrue);
-			} else {
-				AII_RemoveItemFromSlot(NULL, slot, qtrue);
-			}
+			AII_RemoveItemFromSlot(base, slot, qtrue);
 		}
 		break;
 	default:
