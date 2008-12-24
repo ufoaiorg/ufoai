@@ -316,8 +316,8 @@ typedef struct ccs_s {
 	float timer;
 
 	vec3_t angles;			/**< 3d geoscape rotation */
-	vec2_t center;
-	float zoom;
+	vec2_t center;			/**< latitude and longitude of the point we're looking at on earth */
+	float zoom;				/**< zoom used when looking at earth */
 
 	/** governs zero build time for first base if empty base option chosen */
 	int instant_build;
