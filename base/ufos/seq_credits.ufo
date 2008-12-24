@@ -174,7 +174,7 @@ sequence credits
 	// =====================================
 	2dobj winter_text
 	{
-		text	"_Lead Story Developer"
+		text	"_Lead Story Developer/Game Design"
 		pos		"974 50"
 		align	ur	color	"0 1 0 0"	fade	"0 0 0 1"
 	}
@@ -197,7 +197,7 @@ sequence credits
 	// =====================================
 	2dobj btaxis_text
 	{
-		text	"_Story Developer"
+		text	"_Story Developer/Game Design"
 		pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
@@ -239,11 +239,11 @@ sequence credits
 	rem zenerka_name
 
 	// =====================================
-	// LordHavoc
+	// LordHavoc and Tron
 	// =====================================
-	2dobj lordhavoc_text
+	2dobj techconsult_text
 	{
-		text	"_Technology Consultant"
+		text	"_Technology Consultants"
 		pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
@@ -253,20 +253,28 @@ sequence credits
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
+	2dobj tron_name
+	{
+		text	"_Tron"
+		pos		"50 100"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
 	wait 2
 	// now fade out the font
-	2dobj lordhavoc_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj lordhavoc_name { fade "0 0 0 -1" speed "0 100" }
+	2dobj techconsult_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj lordhavoc_name { fade "0 0 0 -1" speed "0 80" }
+	2dobj tron_name { fade "0 0 0 -1" speed "0 100" }
 	wait 2
-	rem lordhavoc_text
+	rem techconsultant_text
 	rem lordhavoc_name
+	rem tron_name
 
 	// =====================================
-	// Ubequitz
+	// Programmers
 	// =====================================
-	2dobj ubequitz_text
+	2dobj programmers_text
 	{
-		text	"_Contributing Programmer"
+		text	"_Contributing Programmers"
 		pos		"974 50"		align	ur
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
@@ -276,15 +284,88 @@ sequence credits
 		pos		"974 75"		align	ur
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
+	2dobj kracken_name
+	{
+		text	"_KrackenO"
+		pos		"974 100"		align	ur
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	2dobj geever_name
+	{
+		text	"_Fehervari Tamas (geever)"
+		pos		"974 125"		align	ur
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	2dobj bobbens_name
+	{
+		text	"_Edgar Simo (bobbens)"
+		pos		"974 150"		align	ur
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	2dobj blondandy_name
+	{
+		text	"_Andy Buckle (blondandy)"
+		pos		"974 175"		align	ur
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	2dobj wilminator_name
+	{
+		text	"_Michael Wilmes (wilminator)"
+		pos		"974 200"		align	ur
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	wait 5
+	// now fade out the font
+	2dobj programmers_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj ubequitz_name { fade "0 0 0 -1" speed "0 65" }
+	2dobj kracken_name { fade "0 0 0 -1" speed "0 70" }
+	2dobj geever_name { fade "0 0 0 -1" speed "0 75" }
+	2dobj bobbens_name { fade "0 0 0 -1" speed "0 80" }
+	2dobj blondandy_name { fade "0 0 0 -1" speed "0 85" }
+	2dobj wilminator_name { fade "0 0 0 -1" speed "0 90" }
+	wait 2
+	rem programmers_text
+	rem ubequitz_name
+	rem kracken_name
+	rem geever_name
+	rem blondandy_name
+	rem bobbens_name
+	rem wilminator_name
+
+	// =====================================
+	// General Support
+	// =====================================
+	2dobj generalsupport_text
+	{
+		text	"_General Support"
+		pos		"50 50"		align	ul
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj richlv_name
+	{
+		text	"_Richlv"
+		pos		"50 75"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	2dobj kildor_name
+	{
+		text	"_Kildor"
+		pos		"50 100"		align	ul
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
 	wait 2
 	// now fade out the font
-	2dobj ubequitz_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj ubequitz_name { fade "0 0 0 -1" speed "0 100" }
+	2dobj generalsupport_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj richlv_name { fade "0 0 0 -1" speed "0 80" }
+	2dobj kildor_name { fade "0 0 0 -1" speed "0 100" }
 	wait 2
-	rem ubequitz_text
-	rem ubequitz_name
+	rem generalsupport_text
+	rem richlv_name
+	rem kildor_name
 
-	// now begin the original dev team credits
+	// =====================================
+	// The Original Team
+	// =====================================
 	2dobj community_driven
 	{
 		text	"_This game is now community driven"
