@@ -630,7 +630,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
 			Q_strcat(itemText, va(_("Weight:\t%s\n"), AII_WeightToName(AII_GetItemWeightBySize(item))), sizeof(itemText));
 		else if (item->craftitem.type == AC_ITEM_AMMO) {
 			/* We display the characteristics of this ammo */
-			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
+			if (!item->craftitem.unlimitedAmmo)
+				Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
 			if (!equal(item->craftitem.weaponDamage, 0))
 				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay), sizeof(itemText));
