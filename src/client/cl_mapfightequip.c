@@ -2342,18 +2342,6 @@ int AII_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
 }
 
 /**
- * @brief Check if slot weapon can shoot
- * @param[in] slot Pointer to the slot where weapon is.
- */
-static qboolean AII_SlotCanShoot (const aircraftSlot_t const *slot)
-{
-	return (slot->item	/* is there a weapon? */
-		&& slot->ammo	/* is there ammo? */
-		&& slot->installationTime == 0	/* is it functional? */
-		&& (slot->ammoLeft > 0 || slot->ammoLeft == AMMO_STATUS_UNLIMITED));	/* is there still ammo? */
-}
-
-/**
  * @brief Check if the aircraft has weapon and ammo
  * @param[in] aircraft The aircraft to count the items for (may not be NULL)
  * @return qtrue if the aircraft can fight, qfalse else
@@ -2366,7 +2354,7 @@ int AII_AircraftCanShoot (const aircraft_t *aircraft)
 	assert(aircraft);
 
 	for (i = 0; i < aircraft->maxWeapons; i++)
-		if (AII_SlotCanShoot(&aircraft->weapons[i]))
+		if (AIRFIGHT_CheckWeapon(&aircraft->weapons[i], 0) != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
 			return qtrue;
 
 	return qfalse;
@@ -2384,7 +2372,7 @@ static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, const int *num
 	int i;
 
 	for (i = 0; i < *numWeapons; i++) {
-		if (AII_SlotCanShoot(&weapons[i].slot))
+		if (AIRFIGHT_CheckWeapon(&weapons[i].slot, 0) != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
 			return qtrue;
 	}
 

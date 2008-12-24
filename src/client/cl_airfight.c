@@ -227,7 +227,7 @@ static void AIRFIGHT_MissTarget (aircraftProjectile_t *projectile, qboolean retu
  * -1 AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if it can't shoot atm,
  * -2 AIRFIGHT_WEAPON_CAN_NEVER_SHOOT if it will never be able to shoot.
  */
-static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
+int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 {
 	assert(slot);
 
@@ -235,7 +235,7 @@ static int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 	if (!slot->item || slot->installationTime != 0)
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
-		/* check if there is still ammo in this weapon */
+	/* check if there is still ammo in this weapon */
 	if (!slot->ammo || (slot->ammoLeft <= 0  && slot->ammoLeft != AMMO_STATUS_UNLIMITED))
 		return AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
 
