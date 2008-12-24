@@ -138,7 +138,7 @@ menu map
 		textalign	ur
 		in
 	}
-
+/*
 	pic bt_timestop
 	{
 		tooltip	"_Stop time"
@@ -180,12 +180,12 @@ menu map
 		whup	{ cmd "game_timefast;" }
 		whdown	{ cmd "game_timeslow;" }
 	}
-
+*/
 	radiobutton bt_timestop0
 	{
 		cvar	"*cvar mn_timelapse_id"	value "0"
 		icon	speed_stop
-		pos	"816 150"
+		pos	"816 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
@@ -196,7 +196,7 @@ menu map
 	{
 		cvar	"*cvar mn_timelapse_id"	value "1"
 		icon	speed_dot
-		pos	"836 150"
+		pos	"836 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
@@ -207,7 +207,7 @@ menu map
 	{
 		cvar	"*cvar mn_timelapse_id"	value "4"
 		icon	speed_play1
-		pos	"856 150"
+		pos	"856 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
@@ -219,7 +219,7 @@ menu map
 	{
 		cvar	"*cvar mn_timelapse_id"	value "6"
 		icon	speed_dot
-		pos	"876 150"
+		pos	"876 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
@@ -230,7 +230,7 @@ menu map
 	{
 		cvar	"*cvar mn_timelapse_id"	value "7"
 		icon	speed_play2
-		pos	"896 150"
+		pos	"896 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
@@ -242,7 +242,7 @@ menu map
 	{
 		cvar	"*cvar mn_timelapse_id"	value "8"
 		icon	speed_dot
-		pos	"916 150"
+		pos	"916 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
@@ -254,7 +254,7 @@ menu map
 	{
 		cvar	"*cvar mn_timelapse_id"	value "9"
 		icon	speed_dot
-		pos	"936 150"
+		pos	"936 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
@@ -266,7 +266,7 @@ menu map
 		tooltip	"_Very fast"
 		cvar	"*cvar mn_timelapse_id"	value "10"
 		icon	speed_play3
-		pos	"956 150"
+		pos	"956 100"
 		size	"20 20"
 		change	{ cmd "game_settimeid <value>;" }
 		whup	{ cmd "game_timefast;" }
