@@ -4278,6 +4278,15 @@ tech rs_craft_weapon_alc
 	mdl		"aircraft/craft_weapon_alc/alc"
 }
 
+tech rs_craft_ammo_alc
+{
+	type		tech
+	name		"_DF-Tank"
+	provides	craft_ammo_alc
+	time		0
+	producetime	-1
+}
+
 tech rs_craft_weapon_shiva
 {
 	type		craftitem

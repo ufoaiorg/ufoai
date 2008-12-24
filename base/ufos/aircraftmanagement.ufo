@@ -579,6 +579,22 @@ craftitem craft_weapon_alc
 	bullets		false
 }
 
+craftitem craft_ammo_alc
+{
+	name		"_DF-Tank"
+	crafttype		ammo
+	craftweapon		craft_weapon_alc
+	notonmarket	true
+
+	unlimitedAmmo	true
+	wdamage		10
+	accuracy	0.4
+	wrange		3
+	wspeed		900
+	delay		9
+	size	10	// light
+}
+
 craftitem craft_weapon_shiva
 {
 	name		"_Shiva Rotary Cannon"
