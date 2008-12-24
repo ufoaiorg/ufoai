@@ -613,11 +613,15 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 
 /**
  * @sa Cmd_AddParamCompleteFunction
+ * @param[out] match The found entry of the list we are searching (only in case we found exactly one)
+ * @param[in] len The length of the already typed string (where you are searching entries for in the @c list)
+ * @param[in] matches The amount of entries in the @c list parameter
+ * @param[in] list The list of entries to search for possible matches
+ * @returns the amount of matches
  */
 int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, const char **list)
 {
 	static char matchString[MAX_QPATH];
-	char matchChar;
 	int lenResult = 0;
 	int i;
 
@@ -634,7 +638,7 @@ int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, co
 		/* get the shortest matching string of the results */
 		lenResult = len;
 		while (qtrue) {
-			matchChar = list[0][lenResult];
+			const char matchChar = list[0][lenResult];
 			for (i = 0; i < matches; i++) {
 				if (matchChar != list[i][lenResult])
 					break;
@@ -807,6 +811,7 @@ qboolean Cmd_Exists (const char *cmd_name)
  * @brief Unix like tab completion for console commands parameters
  * @param[in] command The command we try to complete the parameter for
  * @param[in] partial The beginning of the parameter we try to complete
+ * @param[out] The command we are writing back (if something was found)
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */

@@ -297,6 +297,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 /**
  * @brief Translate string into glmode
+ * @sa R_ConstToName
  */
 static GLenum R_ConstByName (const char *c)
 {
@@ -317,7 +318,7 @@ static GLenum R_ConstByName (const char *c)
 	return GL_ZERO;
 }
 
-static int R_LoadAnimImages (materialStage_t *s)
+int R_LoadAnimImages (materialStage_t *s)
 {
 	char name[MAX_QPATH];
 	int i, j;
@@ -358,7 +359,7 @@ static int R_LoadAnimImages (materialStage_t *s)
  * @brief Material stage parser
  * @sa R_LoadMaterials
  */
-static int R_ParseStage (materialStage_t *s, const char **buffer)
+int R_ParseStage (materialStage_t *s, const char **buffer)
 {
 	const char *c;
 	int i;
@@ -613,13 +614,11 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 void R_LoadMaterials (const char *map)
 {
 	char path[MAX_QPATH];
-	const char *c;
 	byte *fileBuffer;
 	const char *buffer;
 	qboolean inmaterial;
 	image_t *image;
 	material_t *m;
-	materialStage_t *s, *ss;
 	int i;
 
 	/* clear previously loaded materials */
@@ -642,7 +641,7 @@ void R_LoadMaterials (const char *map)
 	m = NULL;
 
 	while (qtrue) {
-		c = COM_Parse(&buffer);
+		const char *c = COM_Parse(&buffer);
 
 		if (!strlen(c))
 			break;
@@ -698,7 +697,7 @@ void R_LoadMaterials (const char *map)
 		}
 
 		if (*c == '{' && inmaterial) {
-			s = (materialStage_t *)Mem_PoolAlloc(sizeof(materialStage_t), vid_imagePool, 0);
+			materialStage_t *s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
 
 			if (R_ParseStage(s, &buffer) == -1) {
 				Mem_Free(s);
@@ -717,7 +716,7 @@ void R_LoadMaterials (const char *map)
 			if (!m->stages)
 				m->stages = s;
 			else {
-				ss = m->stages;
+				materialStage_t *ss = m->stages;
 				while (ss->next)
 					ss = ss->next;
 				ss->next = s;

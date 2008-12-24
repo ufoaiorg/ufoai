@@ -135,6 +135,7 @@ CLIENT_SRCS = \
 	client/renderer/r_lightmap.c \
 	client/renderer/r_main.c \
 	client/renderer/r_material.c \
+	client/renderer/r_material_edit.c \
 	client/renderer/r_misc.c \
 	client/renderer/r_mesh.c \
 	client/renderer/r_mesh_anim.c \
