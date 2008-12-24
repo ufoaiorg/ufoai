@@ -121,7 +121,7 @@ sequence credits
 		parent	body7
 		tag		tag_head
 	}
-	wait 4
+	wait 2
 
 	// =====================================
 	// Mattn
@@ -129,16 +129,26 @@ sequence credits
 	2dobj mattn_text
 	{
 		text	"_Project leader"
-		pos		"974 50"
-		align	ur	color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"1100 50"
+		align	ur
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj mattn_text { speed "0 0" }
 	2dobj mattn_name
 	{
 		text	"_Martin Gerhardy (mattn/tlh2000)"
-		pos		"974 75"
-		align	ur	color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 75"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
-	wait 2
+	wait 1
+	2dobj mattn_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj mattn_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj mattn_name { fade "0 0 0 -1" speed "0 100" }
@@ -152,16 +162,26 @@ sequence credits
 	2dobj hoehrer_text
 	{
 		text	"_Project leader"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"-80 50"
+		align	ul
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
+	wait 1
+	2dobj hoehrer_text { speed "0 0" }
 	2dobj hoehrer_name
 	{
 		text	"_Werner Hoehrer (hoehrer)"
-		pos		"50 75"
-		align	ul	color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"-80 75"
+		align	ul
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
-	wait 2
+	wait 1
+	2dobj hoehrer_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj hoehrer_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj hoehrer_name { fade "0 0 0 -1" speed "0 100" }
@@ -175,16 +195,26 @@ sequence credits
 	2dobj winter_text
 	{
 		text	"_Lead Story Developer/Game Design"
-		pos		"974 50"
-		align	ur	color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"1100 50"
+		align	ur
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj winter_text { speed "0 0" }
 	2dobj winter_name
 	{
 		text	"_Ryan A. Span. (Winter)"
 		pos		"974 75"
-		align	ur	color	"1 1 1 0"	fade	"0 0 0 1"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
-	wait 2
+	wait 1
+	2dobj winter_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj winter_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj winter_name { fade "0 0 0 -1" speed "0 100" }
@@ -198,16 +228,26 @@ sequence credits
 	2dobj btaxis_text
 	{
 		text	"_Story Developer/Game Design"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"-80 50"
+		align	ul
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
+	wait 1
+	2dobj btaxis_text { speed "0 0" }
 	2dobj btaxis_name
 	{
 		text	"_Bas Fournier (BTAxis)"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"-80 75"
+		align	ul
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
-	wait 2
+	wait 1
+	2dobj btaxis_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj btaxis_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj btaxis_name { fade "0 0 0 -1" speed "0 100" }
@@ -221,16 +261,26 @@ sequence credits
 	2dobj zenerka_text
 	{
 		text	"_Contributing Developer"
-		pos		"974 50"		align	ur
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"1100 50"
+		align	ur
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj zenerka_text { speed "0 0" }
 	2dobj zenerka_name
 	{
 		text	"_Maciej Wierzbicki (Zenerka/Voovoos)"
-		pos		"974 75"		align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 75"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
-	wait 2
+	wait 1
+	2dobj zenerka_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj zenerka_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj zenerka_name { fade "0 0 0 -1" speed "0 100" }
@@ -244,22 +294,37 @@ sequence credits
 	2dobj techconsult_text
 	{
 		text	"_Technology Consultants"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"-80 50"
+		align	ul
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
+	wait 1
+	2dobj techconsult_text { speed "0 0" }
 	2dobj lordhavoc_name
 	{
 		text	"_Forest Hale (LordHavoc)"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"-80 75"
+		align	ul
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
+	wait 1
+	2dobj lordhavoc_name { speed "0 0" }
 	2dobj tron_name
 	{
 		text	"_Tron"
-		pos		"50 100"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"-80 100"
+		align	ul
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
-	wait 2
+	wait 1
+	2dobj tron_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj techconsult_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj lordhavoc_name { fade "0 0 0 -1" speed "0 80" }
@@ -275,46 +340,81 @@ sequence credits
 	2dobj programmers_text
 	{
 		text	"_Contributing Programmers"
-		pos		"974 50"		align	ur
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"1100 50"
+		align	ur
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj programmers_text { speed "0 0" }
 	2dobj ubequitz_name
 	{
 		text	"_Ivor Blockley (ubequitz/cassiterite)"
-		pos		"974 75"		align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 75"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj ubequitz_name { speed "0 0" }
 	2dobj kracken_name
 	{
 		text	"_Kracken"
-		pos		"974 100"		align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 100"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj kracken_name { speed "0 0" }
 	2dobj geever_name
 	{
 		text	"_Fehervari Tamas (geever)"
-		pos		"974 125"		align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 125"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj geever_name { speed "0 0" }
 	2dobj bobbens_name
 	{
 		text	"_Edgar Simo (bobbens)"
-		pos		"974 150"		align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 150"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj bobbens_name { speed "0 0" }
 	2dobj blondandy_name
 	{
 		text	"_Andy Buckle (blondandy)"
-		pos		"974 175"		align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 175"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
+	wait 1
+	2dobj blondandy_name { speed "0 0" }
 	2dobj wilminator_name
 	{
 		text	"_Michael Wilmes (wilminator)"
-		pos		"974 200"		align	ur
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"1100 200"
+		align	ur
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"-120 0"
 	}
-	wait 5
+	wait 1
+	2dobj wilminator_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj programmers_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj ubequitz_name { fade "0 0 0 -1" speed "0 65" }
@@ -338,22 +438,37 @@ sequence credits
 	2dobj generalsupport_text
 	{
 		text	"_General Support"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		pos		"-80 50"
+		align	ul
+		color	"0 1 0 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
+	wait 1
+	2dobj generalsupport_text { speed "0 0" }
 	2dobj richlv_name
 	{
 		text	"_Richlv"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		pos		"-80 75"
+		align	ul
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
+	wait 1
+	2dobj richlv_name { speed "0 0" }
 	2dobj kildor_name
 	{
-		text	"_Kildor"
-		pos		"50 100"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
+		text	"_Kostia Romanov (Kildor)"
+		pos		"-80 100"
+		align	ul
+		color	"1 1 1 0"
+		fade	"0 0 0 1"
+		speed	"120 0"
 	}
-	wait 2
+	wait 1
+	2dobj kildor_name { speed "0 0" }
+	wait 1
 	// now fade out the font
 	2dobj generalsupport_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj richlv_name { fade "0 0 0 -1" speed "0 80" }
@@ -614,7 +729,7 @@ sequence credits
 	}
 	2dobj copyright
 	{
-		text	"_Copyright 2004-2007 by UFO: AI Team"
+		text	"_Copyright 2004-2009 by UFO: AI Team"
 		pos		"512 736"	align	uc
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
@@ -637,33 +752,39 @@ sequence credits
 	}
 	model ship_hull
 	{
-		model	aircraft/ufo_fighter/ufo_fighter_hull
+		model	aircraft/inter_starchaser/starchaser
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
-	model ship_wings
-	{
-		model	aircraft/ufo_fighter/ufo_fighter_wings
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-	}
-	model ship_engine1
-	{
-		model	aircraft/ufo_fighter/ufo_fighter_engines_1
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-	}
-	model ship_engine2
-	{
-		model	aircraft/ufo_fighter/ufo_fighter_engines_2
-		origin	"0 -4000 0"
-		speed	"0 3000 0"
-	}
+//	model ship_hull
+//	{
+//		model	aircraft/ufo_fighter/ufo_fighter_hull
+//		origin	"0 -4000 0"
+//		speed	"0 3000 0"
+//	}
+//	model ship_wings
+//	{
+//		model	aircraft/ufo_fighter/ufo_fighter_wings
+//		origin	"0 -4000 0"
+//		speed	"0 3000 0"
+//	}
+//	model ship_engine1
+//	{
+//		model	aircraft/ufo_fighter/ufo_fighter_engines_1
+//		origin	"0 -4000 0"
+//		speed	"0 3000 0"
+//	}
+//	model ship_engine2
+//	{
+//		model	aircraft/ufo_fighter/ufo_fighter_engines_2
+//		origin	"0 -4000 0"
+//		speed	"0 3000 0"
+//	}
 	wait 2.0
 
 	rem ship_hull
-	rem ship_wings
-	rem ship_engine1
-	rem ship_engine2
+//	rem ship_wings
+//	rem ship_engine1
+//	rem ship_engine2
 	wait 2.0
 }
