@@ -300,8 +300,6 @@ void MN_MouseMove (int x, int y)
  */
 void MN_LeftClick (int x, int y)
 {
-	menuNode_t *node;
-
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->leftClick)
@@ -309,39 +307,12 @@ void MN_LeftClick (int x, int y)
 		return;
 	}
 
-	if (hoveredNode) {
-#if 0 /* this code do nothing? */
-		qboolean mouseOver;
-#endif
-		node = hoveredNode;
-#if 0 /* this code do nothing? */
-		if (mouseSpace == MS_DRAGITEM && node->behaviour->id == MN_CONTAINER && dragInfo.item.t) {
-			int itemX = 0;
-			int itemY = 0;
-
-			/** We calculate the position of the top-left corner of the dragged
-			 * item in oder to compensate for the centered-drawn cursor-item.
-			 * Or to be more exact, we calculate the relative offset from the cursor
-			 * location to the middle of the top-left square of the item.
-			 * @sa MN_DrawMenus:MN_CONTAINER */
-			if (dragInfo.item.t) {
-				itemX = C_UNIT * dragInfo.item.t->sx / 2;	/* Half item-width. */
-				itemY = C_UNIT * dragInfo.item.t->sy / 2;	/* Half item-height. */
-
-				/* Place relative center in the middle of the square. */
-				itemX -= C_UNIT / 2;
-				itemY -= C_UNIT / 2;
-			}
-			mouseOver = MN_CheckNodeZone(node, x, y) || MN_CheckNodeZone(node, x - itemX, y - itemY);
-		}
-#endif
-
-		if (node->behaviour->leftClick) {
-			node->behaviour->leftClick(node, x, y);
+	if (hoveredNode && !hoveredNode->disabled) {
+		if (hoveredNode->behaviour->leftClick) {
+			hoveredNode->behaviour->leftClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteEventActions(node, node->onClick);
+			MN_ExecuteEventActions(hoveredNode, hoveredNode->onClick);
 		}
-		return;
 	}
 }
 
@@ -362,13 +333,12 @@ void MN_RightClick (int x, int y)
 		return;
 	}
 
-	if (hoveredNode) {
+	if (hoveredNode && !hoveredNode->disabled) {
 		if (hoveredNode->behaviour->rightClick) {
 			hoveredNode->behaviour->rightClick(hoveredNode, x, y);
 		} else {
 			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onRightClick);
 		}
-		return;
 	}
 }
 
@@ -386,7 +356,7 @@ void MN_MiddleClick (int x, int y)
 		return;
 	}
 
-	if (hoveredNode) {
+	if (hoveredNode && !hoveredNode->disabled) {
 		if (hoveredNode->behaviour->middleClick) {
 			hoveredNode->behaviour->middleClick(hoveredNode, x, y);
 		} else {
@@ -428,7 +398,6 @@ void MN_MouseWheel (qboolean down, int x, int y)
 			else
 				MN_ExecuteActions(hoveredNode->menu, hoveredNode->onWheel);
 		}
-		return;
 	}
 }
 
