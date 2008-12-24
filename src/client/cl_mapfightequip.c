@@ -342,15 +342,15 @@ static qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* instal
 		return qfalse;
 
 	/* you can't install an item that you don't possess
-	 * missiles does not need to be possessed */
+	 * unlimited ammo don't need to be possessed */
 	if (aircraft) {
-		if (aircraft->homebase->storage.num[item->idx] <= 0)
+		if (aircraft->homebase->storage.num[item->idx] <= 0 && !item->notOnMarket  && !item->craftitem.unlimitedAmmo)
 			return qfalse;
 	} else if (base) {
-		if (base->storage.num[item->idx] <= 0 && !item->notOnMarket)
+		if (base->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
 			return qfalse;
 	} else if (installation) {
-		if (installation->storage.num[item->idx] <= 0 && !item->notOnMarket)
+		if (installation->storage.num[item->idx] <= 0 && !item->notOnMarket && !item->craftitem.unlimitedAmmo)
 			return qfalse;
 	}
 
