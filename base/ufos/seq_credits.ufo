@@ -286,7 +286,7 @@ sequence credits
 	}
 	2dobj kracken_name
 	{
-		text	"_KrackenO"
+		text	"_Kracken"
 		pos		"974 100"		align	ur
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
