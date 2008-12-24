@@ -186,6 +186,7 @@ typedef struct craftitem_s {
 	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
 	qboolean bullets;			/**< create bullets for the projectiles */
 	qboolean laser;				/**< create laser particles for the projectiles */
+	qboolean unlimitedAmmo;		/**< Does this weapon have unlimited ammo? */
 } craftitem_t;
 
 /**

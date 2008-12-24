@@ -49,6 +49,11 @@ extern const vec4_t color_white;
 
 qboolean Q_IsPowerOfTwo(int i);
 
+/* Used to compare floats when rounding errors could occur  */
+#ifndef equal
+#define equal(a,b) (fabs((a)-(b))<0.0000000001)
+#endif
+
 #ifndef max
 #define max(a,b) ((a)>(b)?(a):(b))
 #endif

@@ -341,7 +341,7 @@ void RADAR_Initialise (radar_t *radar, float range, float trackingRange, float l
 
 	assert(radar->numUFOs >= 0);
 
-	if (updateSourceRadarMap && (fabs(radar->range - oldrange) > UFO_EPSILON)) {
+	if (updateSourceRadarMap && !equal(radar->range,oldrange)) {
 		RADAR_UpdateStaticRadarCoverage();
 		RADAR_UpdateWholeRadarOverlay();
 	}

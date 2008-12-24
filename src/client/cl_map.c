@@ -1526,10 +1526,12 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
 			/** @todo When there will be different possible installation weapon, range should change */
 			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
-				if (installation->batteries[i].slot.item && installation->batteries[i].slot.ammoLeft > 0
-					&& installation->batteries[i].slot.installationTime == 0) {
+				const aircraftSlot_t const *slot = &installation->batteries[i].slot;
+				if (slot->item
+					&& (slot->ammoLeft > 0 || slot->ammoLeft)
+					&& slot->installationTime == 0) {
 					MAP_MapDrawEquidistantPoints(node, installation->pos,
-							installation->batteries[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE], red);
+							slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
 				}
 			}
 		}
@@ -1578,10 +1580,12 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (oneUFOVisible && AII_BaseCanShoot(base)) {
 			/** @todo When there will be different possible base weapon, range should change */
 			for (i = 0; i < base->numBatteries; i++) {
-				if (base->batteries[i].slot.item && base->batteries[i].slot.ammoLeft > 0
-					&& base->batteries[i].slot.installationTime == 0) {
+				const aircraftSlot_t const *slot = &base->batteries[i].slot;
+				if (slot->item
+					&& (slot->ammoLeft > 0 || slot->ammoLeft)
+					&& slot->installationTime == 0) {
 					MAP_MapDrawEquidistantPoints(node, base->pos,
-						base->batteries[i].slot.ammo->craftitem.stats[AIR_STATS_WRANGE], red);
+							slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
 				}
 			}
 		}

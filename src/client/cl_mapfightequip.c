@@ -1567,8 +1567,8 @@ static void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraf
 			ammo_tech = ammo->tech;
 			if (ammo_tech && AIM_SelectableAircraftItem(base, installation, aircraft, ammo_tech)) {
 				AII_AddAmmoToSlot(ammo->notOnMarket ? NULL : base, ammo_tech, slot);
-				/* base missile are free and unlimited */
-				if (item->craftitem.type == AC_ITEM_BASE_MISSILE && (slot->ammoLeft == AMMO_STATUS_NOT_SET)) {
+				/* some weapons have unlimited ammo */
+				if (ammo->craftitem.unlimitedAmmo) {
 					slot->ammoLeft = AMMO_STATUS_UNLIMITED;
 				} else if (aircraft)
 					AII_ReloadWeapon(aircraft);
@@ -1667,7 +1667,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
 	slot->ammo = ammo;
 
 	/* the base pointer can be null here - e.g. in case you are equipping a UFO */
-	if (base && ammo->craftitem.type <= AC_ITEM_AMMO)
+	if (base && !ammo->craftitem.unlimitedAmmo)
 		B_UpdateStorageAndCapacity(base, ammo, -1, qfalse, qfalse);
 
 	return qtrue;
@@ -1846,8 +1846,10 @@ void AIM_AircraftEquipAddItem_f (void)
 		/* we can change ammo only if the selected item is an ammo (for weapon or base defence system) */
 		if (airequipID >= AC_ITEM_AMMO) {
 			AII_AddAmmoToSlot(base, airequipSelectedTechnology, slot);
-			/* reload its ammunition */
-			if (aircraft)
+			/* some weapons have unlimited ammo */
+			if (slot->ammo->craftitem.unlimitedAmmo) {
+				slot->ammoLeft = AMMO_STATUS_UNLIMITED;
+			} else if (aircraft)
 				AII_ReloadWeapon(aircraft);
 		}
 		break;
@@ -2246,7 +2248,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = aircraft->electronics[i].item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->craftitem.stats[currentStat];
-			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+			else if (!equal(item->craftitem.stats[currentStat], 0))
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
@@ -2258,7 +2260,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = aircraft->weapons[i].item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
-			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+			else if (!equal(item->craftitem.stats[currentStat], 0))
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 
@@ -2267,7 +2269,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = aircraft->shield.item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
-			else if (item->craftitem.stats[currentStat] > UFO_EPSILON)
+			else if (!equal(item->craftitem.stats[currentStat], 0))
 				aircraft->stats[currentStat] *= item->craftitem.stats[currentStat];
 		}
 	}
@@ -2365,7 +2367,6 @@ int AII_AircraftCanShoot (const aircraft_t *aircraft)
  * @param[in] numWeapons Pointer to the number of weapon in this base.
  * @return qtrue if the base can fight, qfalse else
  * @sa AII_BaseCanShoot
- * @note No need to check for ammos: base and installations have unlimited ammos.
  */
 static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, const int *numWeapons)
 {
@@ -2374,7 +2375,8 @@ static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, const int *num
 	for (i = 0; i < *numWeapons; i++) {
 		const baseWeapon_t *weapon = weapons + i;
 		if (weapon->slot.item
-		 && weapon->slot.installationTime == 0)
+		 && weapon->slot.installationTime == 0
+		 && (weapon->slot.ammoLeft > 0 || weapon->slot.ammoLeft == AMMO_STATUS_UNLIMITED))
 			return qtrue;
 	}
 

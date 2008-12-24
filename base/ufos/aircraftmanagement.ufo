@@ -55,13 +55,14 @@
 //		speed 0.75	means: the aircraft is 25% slower
 //
 //	--vv-- Parameters for craftitem specific to "crafttype ammo". --vv--
-//	craftweapon	- The weapon that can use this ammo.
-//	ammo		- The total number of ammo that can be fired with one unit of ammunition.
-//	wspeed		- The speed of the ammo on geoscape once it's been shot.
-//	wrange		- The range of the weapon, which tells the minimum distance of opening fire. (this one is not V_RELABS).
-//	delay		- The delay between 2 shots of this ammunition.
-//	wdamage		- The amount of damage a weapon with this ammo can do (this one is not V_RELABS).
-//  accuracy	- Modifier to craft accuracy when firing this weapon
+//	craftweapon		- The weapon that can use this ammo.
+//	ammo			- The total number of ammo that can be fired with one unit of ammunition.
+//	wspeed			- The speed of the ammo on geoscape once it's been shot.
+//	wrange			- The range of the weapon, which tells the minimum distance of opening fire. (this one is not V_RELABS).
+//	delay			- The delay between 2 shots of this ammunition.
+//	wdamage			- The amount of damage a weapon with this ammo can do (this one is not V_RELABS).
+//  accuracy		- Modifier to craft accuracy when firing this weapon
+//	unlimitedAmmo	- True if ammo is unlimited
 //	---------------------------------------------------------------------
 //
 //=========================================================================
@@ -802,9 +803,7 @@ craftitem base_ammo_AA51
 	notonmarket	true
 	model		"geoscape/missile"
 
-//	ammo		80
-// The value (20) below is a workaround until we can display (or fake) high numbers of projectiles in interception
-	ammo		20
+	unlimitedAmmo	true
 	wdamage		20
 	accuracy	0.3
 	wrange		7

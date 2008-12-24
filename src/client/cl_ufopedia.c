@@ -631,12 +631,12 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		else if (item->craftitem.type == AC_ITEM_AMMO) {
 			/* We display the characteristics of this ammo */
 			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
-			if (item->craftitem.weaponDamage > UFO_EPSILON)
+			if (!equal(item->craftitem.weaponDamage, 0))
 				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->craftitem.weaponDamage), sizeof(itemText));
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->craftitem.weaponDelay), sizeof(itemText));
 		}
 		/* We write the range of the weapon */
-		if (item->craftitem.stats[AIR_STATS_WRANGE] > UFO_EPSILON)
+		if (!equal(item->craftitem.stats[AIR_STATS_WRANGE], 0))
 			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_WRANGE),
 				CL_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE)), sizeof(itemText));
 
@@ -648,7 +648,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), CL_AircraftMenuStatsValues(item->craftitem.stats[i], i)),  sizeof(itemText));
 			else if (item->craftitem.stats[i] > 1.0f)
 				Q_strcat(itemText, va(_("%s:\t+%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100), sizeof(itemText));
-			else if (item->craftitem.stats[i] > UFO_EPSILON)
+			else if (!equal(item->craftitem.stats[i], 0))
 				Q_strcat(itemText, va(_("%s:\t%i %%\n"), CL_AircraftStatToName(i), (int) (item->craftitem.stats[i] * 100) - 100), sizeof(itemText));
 		}
 	}
