@@ -542,6 +542,12 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 		materialsCnt++;
 	}
 
+	if (strstr(textureref[mipTexIndex].name, "wall")) {
+		fprintf(file, "{\n\tmaterial %s\n\tspecular 0.6\n\tbump 2.0\n}\n", textureref[mipTexIndex].name);
+		textureref[mipTexIndex].materialMarked = qtrue;
+		materialsCnt++;
+	}
+
 	fclose(file);
 }
 
