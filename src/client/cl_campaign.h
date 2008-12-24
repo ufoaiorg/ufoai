@@ -131,7 +131,12 @@ typedef enum missionStage_s {
 	STAGE_OVER						/**< Mission is over */
 } missionStage_t;
 
-/** mission definition */
+
+
+/** @brief mission definition
+ * @note A mission is different from a map: a mission is the whole set of actions aliens will carry.
+ * For example, comming with a UFO on earth, land, explore earth, and leave with UFO
+ */
 typedef struct mission_s {
 	char id[MAX_VAR];				/**< script id (must be first element of mission_t to use LIST_ContainsString) */
 	mapDef_t* mapDef;				/**< mapDef used for this mission */
