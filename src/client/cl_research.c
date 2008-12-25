@@ -73,7 +73,6 @@ static stringlist_t curRequiredList;
 /* prototype */
 static void RS_InitGUI(base_t* base, qboolean update);
 
-
 /**
  * @brief Push a news about this tech when researched.
  * @param[in] tech Technology pointer.
@@ -1002,9 +1001,6 @@ void RS_AssignScientist (technology_t* tech, base_t *base)
 		}
 
 		tech->statusResearch = RS_RUNNING;
-
-		/* Update display-list and display-info. */
-		RS_InitGUI(base, qtrue);
 	}
 }
 
@@ -1041,6 +1037,9 @@ static void RS_ChangeScientist_f ()
 	} else {
 		RS_RemoveScientist(researchList2[num].tech, NULL);
 	}
+
+	/* Update display-list and display-info. */
+	RS_InitGUI(researchList2[num].tech->base, qtrue);
 }
 
 /**
@@ -1066,6 +1065,9 @@ static void RS_AssignScientist_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist_f: num %i\n", num);
 	RS_AssignScientist(researchList2[num].tech, baseCurrent);
+
+	/* Update display-list and display-info. */
+	RS_InitGUI(researchList2[num].tech->base, qtrue);
 }
 
 
@@ -1113,9 +1115,6 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 		tech->base = NULL;
 		tech->statusResearch = RS_PAUSED;
 	}
-
-	/* Update display-list and display-info. */
-	RS_InitGUI(base, qtrue);
 }
 
 
@@ -1165,6 +1164,9 @@ static void RS_RemoveScientist_f (void)
 		return;
 
 	RS_RemoveScientist(researchList2[num].tech, NULL);
+
+	/* Update display-list and display-info. */
+	RS_InitGUI(researchList2[num].tech->base, qtrue);
 }
 
 /**
