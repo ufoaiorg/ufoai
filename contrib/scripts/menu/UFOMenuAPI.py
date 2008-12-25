@@ -430,7 +430,7 @@ def moveHirePanel():
 
 	menu = root.nodes.childname["employees"]
 	posref = menu.childname["rank_lbl"].pos
-	newpos = 485, 330
+	newpos = 485, 383
 	
 	moveFullPanel(menu, nodes, newpos, posref)
 
@@ -438,7 +438,7 @@ def moveHirePanel():
 
 
 if __name__ == "__main__":
-	#moveHirePanel()
+	moveHirePanel()
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')
