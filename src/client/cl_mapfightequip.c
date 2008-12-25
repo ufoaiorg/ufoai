@@ -449,8 +449,7 @@ static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installati
 			}
 			hiredEmployees = hiredEmployees->next;
 		}
-	}
-	else {
+	} else {
 
 		/* Add all items corresponding to airequipID to list */
 		list = AII_GetCraftitemTechsByType(airequipID);
@@ -477,6 +476,7 @@ static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installati
 	else {
 		/* no element in list, no tech selected */
 		airequipSelectedTechnology = NULL;
+		airequipSelectedPilot = NULL;
 		UP_AircraftItemDescription(NULL);
 	}
 }
