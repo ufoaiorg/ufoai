@@ -216,6 +216,11 @@ void AIR_ListAircraft_f (void)
 				else
 					Com_Printf("...electronics slot %i is empty\n", k);
 			}
+			if (aircraft->pilot) {
+				Com_Printf("...pilot: idx: %i name: %s\n", aircraft->pilot->idx, aircraft->pilot->chr.name);
+			} else {
+				Com_Printf("...no pilot assigned\n");
+			}
 			Com_Printf("...damage: %i\n", aircraft->damage);
 			Com_Printf("...stats: ");
 			for (k = 0; k < AIR_STATS_MAX; k++)
