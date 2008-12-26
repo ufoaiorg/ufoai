@@ -1119,7 +1119,8 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	}
 
 	/* Update display of scroll buttons. */
-	MN_ScrollContainerUpdate_f();
+	if (MN_IsScrollContainerNode(node))
+		MN_ScrollContainerUpdate_f();
 
 	/** @todo need to understand better that */
 	/* We are in the base or multiplayer inventory */
@@ -1254,11 +1255,13 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 
 	/* tactical mission */
 	if (selActor) {
+		const menuNode_t *target = MN_DNDGetTargetNode();
 		assert(source->container);
-		/** @todo aren't there a bug here? 2 source->container */
+		assert(target);
+		assert(target->container);
 		MSG_Write_PA(PA_INVMOVE, selActor->entnum,
 			source->container->id, dragInfoFromX, dragInfoFromY,
-			source->container->id, dragInfoToX, dragInfoToY);
+			target->container->id, dragInfoToX, dragInfoToY);
 	} else {
 		invList_t *fItem;
 		menuNode_t *target;
