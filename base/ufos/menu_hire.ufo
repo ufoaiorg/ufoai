@@ -564,6 +564,77 @@ menu employees
 	// buttons
 	// ==================
 
+	string label_people {
+		string "_Occupation"
+		pos	"500 228"
+		size "100 30"
+		textalign	ur
+	}
+	string number_people {
+		string "*cvar mn_hirepeople"
+		pos	"500 248"
+		size "100 30"
+		textalign	ur
+	}
+
+	custombutton icon_soldier {
+		icon	bighead_soldier
+		pos	"670 208"
+		size "42 42"
+	}
+	string number_soldier {
+		string "*cvar mn_hiresoldiers"
+		pos	"670 248"
+		size "42 20"
+		textalign	ur
+	}
+
+	custombutton icon_pilot {
+		icon	bighead_pilot
+		pos	"730 208"
+		size "42 42"
+	}
+	string number_pilot {
+		string "*cvar mn_hirepilots"
+		pos	"730 248"
+		size "42 20"
+		textalign	ur
+	}
+
+	custombutton icon_worker {
+		icon	bighead_worker
+		pos	"790 208"
+		size "42 42"
+	}
+	string number_worker {
+		string "*cvar mn_hireworkers"
+		pos	"790 248"
+		size "42 20"
+		textalign	ur
+	}
+
+	custombutton icon_scientist {
+		icon	bighead_scientist
+		pos	"850 208"
+		size "42 42"
+	}
+	string number_scientist {
+		string "*cvar mn_hirescientists"
+		pos	"850 248"
+		size "42 20"
+		textalign	ur
+	}
+
+	//custombutton icon_medic {
+	//	icon	bighead_medic
+	//	pos	"850 208"
+	//	size "42 42"
+	//}
+
+	// ==================
+	// buttons
+	// ==================
+
 	tab empl_switch {
 		cvar "*cvar"
 		pos	"35 107"
@@ -572,31 +643,31 @@ menu employees
 		option soldier {
 			label	"_Soldiers"
 			value	"0"
-			icon	greenhead_soldier
+			icon	smallhead_soldier
 			action "employee_init 0;"
 		}
 		option pilot {
 			label	"_Pilots"
 			value	"3"
-			icon	greenhead_pilot
+			icon	smallhead_pilot
 			action "employee_init 3;"
 		}
 		option worker {
 			label	"_Workers"
 			value	"2"
-			icon	greenhead_worker
+			icon	smallhead_worker
 			action "employee_init 2;"
 		}
 		option scientist {
 			label	"_Scientists"
 			value	"1"
-			icon	greenhead_scientist
+			icon	smallhead_scientist
 			action "employee_init 1;"
 		}
 		//option medic {
 		//	label	"_Medics"
 		//	value	"5"
-		//	icon	greenhead_medic
+		//	icon	smallhead_medic
 		//	action "employee_init 4;"
 		//}
 	}
@@ -652,6 +723,7 @@ menu employees
 		call employee_clear
 		cmd "employee_init 0;"
 		cmd "set mn_hiretype 0;"
+		cmd "employee_update_count"
 	}
 
 	func close

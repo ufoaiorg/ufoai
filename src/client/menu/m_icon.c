@@ -31,6 +31,7 @@ const value_t mn_iconProperties[] = {
 	{"texl", V_POS, offsetof(menuIcon_t, pos), MEMBER_SIZEOF(menuIcon_t, pos)},
 	{"size", V_POS, offsetof(menuIcon_t, size), MEMBER_SIZEOF(menuIcon_t, size)},
 	{"image", V_REF_OF_STRING, offsetof(menuIcon_t, image), 0},
+	{"single", V_BOOL, offsetof(menuIcon_t, single), 0},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -82,8 +83,13 @@ menuIcon_t* MN_AllocIcon (const char* name)
 void MN_DrawIconInBox (menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY)
 {
 	const int texX = icon->pos[0];
-	const int texY = icon->pos[1] + (64 * status);
+	int texY;
 	assert(icon->image != NULL);
+
+	if (icon->single)
+		texY = icon->pos[1];
+	else
+		texY = icon->pos[1] + (64 * status);
 
 	posX += (sizeX - icon->size[0]) / 2;
 	posY += (sizeY - icon->size[1]) / 2;

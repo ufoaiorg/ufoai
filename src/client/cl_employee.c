@@ -49,6 +49,21 @@ VISUAL/GUI STUFF
 *****************************************************/
 
 /**
+ * @brief Update GUI with the current number of employee per category
+ */
+void E_UpdateGUICount_f (void)
+{
+	int max;
+	assert(baseCurrent);
+	max = baseCurrent->capacities[CAP_EMPLOYEES].max;
+	Cvar_SetValue("mn_hiresoldiers", E_CountHired(baseCurrent, EMPL_SOLDIER));
+	Cvar_SetValue("mn_hireworkers", E_CountHired(baseCurrent, EMPL_WORKER));
+	Cvar_SetValue("mn_hirescientists", E_CountHired(baseCurrent, EMPL_SCIENTIST));
+	Cvar_SetValue("mn_hirepilots", E_CountHired(baseCurrent, EMPL_PILOT));
+	Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(baseCurrent), max));
+}
+
+/**
  * @brief Click function for employee_list node
  * @sa E_EmployeeList_f
  */
@@ -1332,7 +1347,7 @@ static void E_EmployeeHire_f (void)
 	/* check whether this is called with the text node click function
 	 * with values from 0 - #available employees (bigger values than
 	 * cl_numnames [19]) possible ... */
-	if (*arg == '+') {
+	if (arg[0] == '+') {
 		num = atoi(arg + 1);
 		button = num - employeeListNode->u.text.textScroll;
 	/* ... or with the hire pictures that are using only values from
@@ -1361,6 +1376,7 @@ static void E_EmployeeHire_f (void)
 			Cbuf_AddText(va("employeeadd %i\n", button));
 	}
 	Cbuf_AddText(va("employee_select %i\n", num));
+	E_UpdateGUICount_f();
 }
 
 /**
@@ -1437,6 +1453,7 @@ void E_InitStartup (void)
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
+	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listhired", E_ListHired_f, "Debug command to list all hired employee");
 #endif

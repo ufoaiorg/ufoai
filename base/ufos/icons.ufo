@@ -78,35 +78,76 @@ icon question {
 	size	"27 46"
 }
 
-icon greenhead_soldier {
+// small employee
+
+icon smallhead_soldier {
 	image "menu/icon_pack2"
 	texl	"116 0"
 	size	"28 28"
 }
 
-icon greenhead_pilot {
+icon smallhead_pilot {
 	image "menu/icon_pack2"
 	texl	"144 0"
 	size	"28 28"
 }
 
-icon greenhead_worker {
+icon smallhead_worker {
 	image "menu/icon_pack2"
 	texl	"172 0"
 	size	"28 28"
 }
 
-icon greenhead_scientist {
+icon smallhead_scientist {
 	image "menu/icon_pack2"
 	texl	"200 0"
 	size	"28 28"
 }
 
-icon greenhead_medic {
+icon smallhead_medic {
 	image "menu/icon_pack2"
 	texl	"228 0"
 	size	"28 28"
 }
+
+// big employee
+
+icon bighead_soldier {
+	image "icons/soldier"
+	texl	"0 0"
+	size	"42 42"
+	single	true
+}
+
+icon bighead_pilot {
+	image "icons/pilot"
+	texl	"0 0"
+	size	"42 42"
+	single	true
+}
+
+icon bighead_worker {
+	image "icons/worker"
+	texl	"0 0"
+	size	"42 42"
+	single	true
+}
+
+icon bighead_scientist {
+	image "icons/scientist"
+	texl	"0 0"
+	size	"42 42"
+	single	true
+}
+
+icon bighead_medic {
+	image "icons/medic"
+	texl	"0 0"
+	size	"42 42"
+	single	true
+}
+
+// delay time
 
 icon speed_stop {
 	image "menu/icon_pack2"
