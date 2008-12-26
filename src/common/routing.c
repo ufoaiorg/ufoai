@@ -446,23 +446,13 @@ static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int ac
 {
 	vec3_t bmin, bmax;
 	int hz, lz;
-	int bitmask = 0x100; /**< Trace the clip levels by default */
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
 	VectorSet(bmax, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, hi * QUANT - DIST_EPSILON);
 	VectorSet(bmin, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, -UNIT_SIZE * actor_size / 2 + WALL_SIZE + DIST_EPSILON, lo * QUANT + DIST_EPSILON);
 
-	/* Calculate the needed bitmask. */
-	/* Include levels up to the hi mark. */
-	hz = floor((hi + start[2]) / UNIT_SIZE);
-	bitmask |= (1 << (hz + 1)) -1;
-	/* Remove levels below the lo mark */
-	lz = floor((lo + start[2]) / UNIT_SIZE);
-	if (lz > 0)
-		bitmask ^= (1 << lz) -1;
-
 	/* perform the trace, then return true if the trace was obstructed. */
-	tr_obstruction = RT_COMPLETEBOXTRACE(start, end, bmin, bmax, bitmask, MASK_IMPASSABLE, MASK_PASSABLE);
+	tr_obstruction = RT_COMPLETEBOXTRACE(start, end, bmin, bmax, 0x1FF, MASK_IMPASSABLE, MASK_PASSABLE);
 
 	return tr_obstruction.fraction < 1.0;
 }
