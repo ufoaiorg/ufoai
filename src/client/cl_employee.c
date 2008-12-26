@@ -51,7 +51,7 @@ VISUAL/GUI STUFF
 /**
  * @brief Update GUI with the current number of employee per category
  */
-void E_UpdateGUICount_f (void)
+static void E_UpdateGUICount_f (void)
 {
 	int max;
 	assert(baseCurrent);
@@ -1414,6 +1414,9 @@ static void E_EmployeeSelect_f (void)
 }
 
 #ifdef DEBUG
+/**
+ * @brief Debug command to list all hired employee
+ */
 static void E_ListHired_f (void)
 {
 	int emplType;
