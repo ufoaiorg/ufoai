@@ -217,8 +217,6 @@ SectionGroup /e "Mapping" SECGROUP02
     file "..\..\..\radiant\gl\*.cg"
     SetOutPath "$INSTDIR\radiant\plugins"
     file "..\..\..\radiant\plugins\*.dll"
-    SetOutPath "$INSTDIR\radiant\plugins\bitmaps"
-    file "..\..\..\radiant\plugins\bitmaps\*.bmp"
   SectionEnd
 
   Section "Mapping Tools Shortcuts" SEC02B
@@ -318,10 +316,15 @@ Section "Source Code" SEC03
   SetOutPath "$INSTDIR\src\tools\radiant\radiant"
   File "..\..\tools\radiant\radiant\*.cpp"
   File "..\..\tools\radiant\radiant\*.h"
+  SetOutPath "$INSTDIR\src\tools\radiant\radiant\dialogs"
+  File "..\..\tools\radiant\radiant\dialogs\*.cpp"
+  File "..\..\tools\radiant\radiant\dialogs\*.h"
+  SetOutPath "$INSTDIR\src\tools\radiant\sidebar"
+  File "..\..\tools\radiant\radiant\sidebar\*.cpp"
+  File "..\..\tools\radiant\radiant\sidebar\*.h"
+
   SetOutPath "$INSTDIR\src\tools\radiant\libs"
   File "..\..\tools\radiant\libs\*.h"
-  SetOutPath "$INSTDIR\src\tools\radiant\libs\cmdlib"
-  File "..\..\tools\radiant\libs\cmdlib\*.cpp"
   SetOutPath "$INSTDIR\src\tools\radiant\libs\container"
   File "..\..\tools\radiant\libs\container\*.h"
   SetOutPath "$INSTDIR\src\tools\radiant\libs\debugging"
@@ -357,6 +360,7 @@ Section "Source Code" SEC03
   File "..\..\tools\radiant\libs\xml\*.h"
 
   SetOutPath "$INSTDIR\src\tools\radiant\plugins"
+  File "..\..\tools\radiant\plugins\*.def"
   SetOutPath "$INSTDIR\src\tools\radiant\plugins\archivezip"
   File "..\..\tools\radiant\plugins\archivezip\*.cpp"
   File "..\..\tools\radiant\plugins\archivezip\*.h"
