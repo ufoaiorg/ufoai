@@ -55,6 +55,9 @@ menu team
 	confunc listdel {
 		*bt_actor<1> disabled false
 		*(checkbox)bt_actor<1> current 0
+		*bt_actor<1> invis false
+		*txt_actor<1> invis false
+		*bt_equip<1> invis false
 	}
 
 	/**
@@ -63,6 +66,9 @@ menu team
 	confunc listadd {
 		*bt_actor<1> disabled false
 		*(checkbox)bt_actor<1> current 1
+		*bt_actor<1> invis false
+		*txt_actor<1> invis false
+		*bt_equip<1> invis false
 	}
 
 	/**
@@ -85,7 +91,9 @@ menu team
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc listdisable {
-		*bt_actor<1> disabled true
+		*bt_equip<1> invis true
+		*bt_actor<1> invis true
+		*txt_actor<1> invis true
 	}
 
 	confunc teamselect0 { *txt_actor0 color "1 1 1 1" }
@@ -136,6 +144,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip1
@@ -146,6 +155,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip2
@@ -156,6 +166,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip3
@@ -166,6 +177,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip4
@@ -176,6 +188,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip5
@@ -186,6 +199,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip6
@@ -196,6 +210,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip7
@@ -206,6 +221,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip8
@@ -216,6 +232,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip9
@@ -226,6 +243,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip10
@@ -236,6 +254,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip11
@@ -246,6 +265,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip12
@@ -256,6 +276,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip13
@@ -266,6 +287,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip14
@@ -276,6 +298,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip15
@@ -286,6 +309,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip16
@@ -296,6 +320,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip17
@@ -306,6 +331,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	pic bt_equip18
@@ -316,6 +342,7 @@ menu team
 		texl	"0 0"
 		texh	"16 16"
 		in
+		invis	true
 	}
 
 	// checkbox
@@ -328,6 +355,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor1
 	{
@@ -337,6 +365,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor2
 	{
@@ -346,6 +375,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor3
 	{
@@ -355,6 +385,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor4
 	{
@@ -364,6 +395,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor5
 	{
@@ -373,6 +405,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor6
 	{
@@ -382,6 +415,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor7
 	{
@@ -391,6 +425,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor8
 	{
@@ -400,6 +435,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor9
 	{
@@ -409,6 +445,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor10
 	{
@@ -418,6 +455,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor11
 	{
@@ -427,6 +465,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor12
 	{
@@ -436,6 +475,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor13
 	{
@@ -445,6 +485,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor14
 	{
@@ -454,6 +495,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor15
 	{
@@ -463,6 +505,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor16
 	{
@@ -472,6 +515,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor17
 	{
@@ -481,6 +525,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 	checkbox bt_actor18
 	{
@@ -490,6 +535,7 @@ menu team
 		current 0
 		image menu/checkbox_green
 		size "20 20"
+		invis	true
 	}
 
 	string txt_actor0
@@ -498,6 +544,7 @@ menu team
 		pos		"60 32"
 		size	"290 16"
 		click { cmd "team_select 0;" }
+		invis	true
 	}
 	string txt_actor1
 	{
@@ -505,6 +552,7 @@ menu team
 		pos		"60 70"
 		size	"290 16"
 		click { cmd "team_select 1;" }
+		invis	true
 	}
 	string txt_actor2
 	{
@@ -512,6 +560,7 @@ menu team
 		pos		"60 108"
 		size	"290 16"
 		click { cmd "team_select 2;" }
+		invis	true
 	}
 	string txt_actor3
 	{
@@ -519,6 +568,7 @@ menu team
 		pos		"60 146"
 		size	"290 16"
 		click { cmd "team_select 3;" }
+		invis	true
 	}
 	string txt_actor4
 	{
@@ -526,6 +576,7 @@ menu team
 		pos		"60 184"
 		size	"290 16"
 		click { cmd "team_select 4;" }
+		invis	true
 	}
 	string txt_actor5
 	{
@@ -533,6 +584,7 @@ menu team
 		pos		"60 222"
 		size	"290 16"
 		click { cmd "team_select 5;" }
+		invis	true
 	}
 	string txt_actor6
 	{
@@ -540,6 +592,7 @@ menu team
 		pos		"60 260"
 		size	"290 16"
 		click { cmd "team_select 6;" }
+		invis	true
 	}
 	string txt_actor7
 	{
@@ -547,6 +600,7 @@ menu team
 		pos		"60 298"
 		size	"290 16"
 		click { cmd "team_select 7;" }
+		invis	true
 	}
 	string txt_actor8
 	{
@@ -554,6 +608,7 @@ menu team
 		pos		"60 336"
 		size	"290 16"
 		click { cmd "team_select 8;" }
+		invis	true
 	}
 	string txt_actor9
 	{
@@ -561,6 +616,7 @@ menu team
 		pos		"60 374"
 		size	"290 16"
 		click { cmd "team_select 9;" }
+		invis	true
 	}
 	string txt_actor10
 	{
@@ -568,6 +624,7 @@ menu team
 		pos		"60 412"
 		size	"290 16"
 		click { cmd "team_select 10;" }
+		invis	true
 	}
 	string txt_actor11
 	{
@@ -575,6 +632,7 @@ menu team
 		pos		"60 450"
 		size	"290 16"
 		click { cmd "team_select 11;" }
+		invis	true
 	}
 	string txt_actor12
 	{
@@ -582,6 +640,7 @@ menu team
 		pos		"60 488"
 		size	"290 16"
 		click { cmd "team_select 12;" }
+		invis	true
 	}
 	string txt_actor13
 	{
@@ -589,6 +648,7 @@ menu team
 		pos		"60 526"
 		size	"290 16"
 		click { cmd "team_select 13;" }
+		invis	true
 	}
 	string txt_actor14
 	{
@@ -596,6 +656,7 @@ menu team
 		pos		"60 564"
 		size	"290 16"
 		click { cmd "team_select 14;" }
+		invis	true
 	}
 	string txt_actor15
 	{
@@ -603,6 +664,7 @@ menu team
 		pos		"60 602"
 		size	"290 16"
 		click { cmd "team_select 15;" }
+		invis	true
 	}
 	string txt_actor16
 	{
@@ -610,6 +672,7 @@ menu team
 		pos		"60 640"
 		size	"290 16"
 		click { cmd "team_select 16;" }
+		invis	true
 	}
 	string txt_actor17
 	{
@@ -617,6 +680,7 @@ menu team
 		pos		"60 678"
 		size	"290 16"
 		click { cmd "team_select 17;" }
+		invis	true
 	}
 	string txt_actor18
 	{
@@ -624,6 +688,7 @@ menu team
 		pos		"60 716"
 		size	"290 16"
 		click { cmd "team_select 18;" }
+		invis	true
 	}
 
 
