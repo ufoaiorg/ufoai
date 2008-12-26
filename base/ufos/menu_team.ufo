@@ -634,7 +634,7 @@ menu team
 	textentry name
 	{
 		string	"*cvar mn_name"
-		pos		"475 17"
+		pos		"475 12"
 		size	"128 32"
 		change {
 			cmd	"team_changename;"
@@ -646,7 +646,7 @@ menu team
 		if "mn_team_hired == 1"
 		tooltip	"_Rename your soldier"
 		image	menu/buttons_small
-		pos	"875 17"
+		pos	"875 20"
 		texl	"0 48"
 		texh	"16 64"
 		click
@@ -1488,7 +1488,7 @@ menu equipment
 	string txt_actorname
 	{
 		string	"*cvar mn_name"
-		pos		"544 22"
+		pos		"544 24"
 	}
 
 	model body
