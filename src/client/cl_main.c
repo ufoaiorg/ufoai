@@ -281,6 +281,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 			RS_RequiredLinksAssign();
 			Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 		}
+		Cvar_Set("mn_aircraft_model", "");
 	}
 }
 

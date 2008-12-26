@@ -1601,6 +1601,8 @@ void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t
 		/* Assign soldier to aircraft/team if aircraft is not full */
 		if (CL_AssignSoldierToAircraft(employee, aircraft))
 			Cbuf_AddText(va("listadd %i\n", num));
+		else
+			Cbuf_AddText(va("listdel %i\n", num));
 	}
 	/* Select the desired one anyways. */
 	CL_UpdateActorAircraftVar(aircraft, employee->type);
