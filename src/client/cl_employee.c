@@ -1397,6 +1397,32 @@ static void E_EmployeeSelect_f (void)
 	}
 }
 
+#ifdef DEBUG
+static void E_ListHired_f (void)
+{
+	int emplType;
+	int emplIdx;
+
+	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
+		for (emplIdx = 0; emplIdx < gd.numEmployees[emplType]; emplIdx++) {
+			const employee_t employee = gd.employees[emplType][emplIdx];
+
+			if (!employee.hired) {
+				if (employee.baseHired) {
+					Com_Printf("Warning: empolyee: %s (idx: %i) %s not hired but has baseHired: %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, employee.baseHired->name);
+				}
+				continue;
+			}
+
+			Com_Printf("Empolyee: %s (idx: %i) %s at base %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, ((employee.baseHired) ? employee.baseHired->name : "NULL"));
+			if (employee.type != emplType) {
+				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee.type);
+			}
+		}
+	}
+}
+#endif
+
 /**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
@@ -1411,6 +1437,9 @@ void E_InitStartup (void)
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listhired", E_ListHired_f, "Debug command to list all hired employee");
+#endif
 }
 
 /**
