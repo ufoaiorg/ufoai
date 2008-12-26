@@ -64,7 +64,7 @@ void NAT_UpdateHappinessForAllNations (void)
 		const mission_t *mission = (mission_t *)list->data;
 		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
-		const float difficultyModifier = (4.0f + (float)curCampaign->difficulty) / 400;
+		const float difficultyModifier = (4.0f + curCampaign->difficulty) / 400;
 
 		/* Some non-water location have no nation */
 		if (nation) {
