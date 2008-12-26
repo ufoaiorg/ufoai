@@ -7008,6 +7008,7 @@ static void CL_GameNew_f (void)
 	CL_ResetAlienInterest();
 
 	/* Initialize XVI overlay */
+	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 	R_InitializeXVIOverlay(curCampaign->map, NULL, 0, 0);
 
 	/* Reset alien bases */
