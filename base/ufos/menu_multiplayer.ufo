@@ -66,7 +66,7 @@ menu multiplayer
 	{
 		pos	"80 450"
 		size "256 64"
-		click	{ cmd "mn_escpop 5; mn_pop esc;" }
+		click	{ cmd "mn_escpop 5; mn_pop esc; mn_pop multiplayer;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
