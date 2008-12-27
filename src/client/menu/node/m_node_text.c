@@ -398,6 +398,7 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 	const message_t *message;
 	int skip_messages;
 	int screenLines;
+	int addTextLines = 0;					/**< Number of wraped lines after n-lines */
 
 	/* scrollbar space */
 	if (EXTRADATA(node).scrollbar) {
@@ -409,6 +410,8 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 	skip_messages = EXTRADATA(node).textScroll;
 	screenLines = 0;
 	for (message = messageStack; message; message = message->next) {
+		const int prevScreenLines = screenLines;	/**< Screen lines before R_FontDrawString(...) is executed */
+
 		if (skip_messages) {
 			skip_messages--;
 			continue;
@@ -416,6 +419,7 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
 		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
+		addTextLines += screenLines - prevScreenLines - 1;
 		if (screenLines > EXTRADATA(node).rows)
 			break;
 	}
@@ -424,13 +428,7 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 		int lines = 0;
 		for (message = messageStack; message; message = message->next)
 			lines++;
-		/** @todo This is a hack to allow scrolling all the way
-		 * to the last message, if the last page has multiline
-		 * messages. Getting an accurate count of the last page
-		 * would be nice, if it can be done efficiently enough. */
-		if (lines > EXTRADATA(node).rows)
-			lines += EXTRADATA(node).rows / 2;
-		EXTRADATA(node).textLines = lines;
+		EXTRADATA(node).textLines = lines + addTextLines;
 		MN_DrawScrollBar(node);
 	}
 }
