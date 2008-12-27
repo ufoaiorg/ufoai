@@ -141,7 +141,7 @@ menu map
 
 	radiobutton bt_timestop0
 	{
-		tooltip	"_Pause the game"
+		tooltip	"_Pause"
 		cvar	"*cvar mn_timelapse_id"	value "0"
 		icon	speed_stop
 		pos	"816 100"
