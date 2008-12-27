@@ -64,7 +64,7 @@ void AB_SetAlienBasePosition (vec2_t position)
 		CP_GetRandomPosOnGeoscape(pos, qtrue);
 
 		/* Alien base must not be too close from phalanx base */
-		if (CP_PositionCloseToBase(pos))
+		if (MAP_PositionCloseToBase(pos))
 			continue;
 
 		/* If this is the first alien base, there's no further condition: select this pos and quit */

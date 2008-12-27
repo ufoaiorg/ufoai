@@ -2390,6 +2390,32 @@ byte *MAP_GetColor (const vec2_t pos, mapType_t type)
 }
 
 /**
+ * @brief Minimum distance between a new mission and an existing base.
+ */
+static const float MIN_DIST_BASE = 4.0f;
+
+/**
+ * @brief Check if given pos is close to an existing base.
+ * @return Pointer to the base if one base is closer than MIN_DIST_BASE from pos, NULL else
+ */
+base_t* MAP_PositionCloseToBase (const vec2_t pos)
+{
+	int baseIdx;
+
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+
+		if (MAP_GetDistance(pos, base->pos) < MIN_DIST_BASE) {
+			return base;
+		}
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Checks for a given location, if it fulfills all criteria given via parameters (terrain, culture, population, nation type)
  * @param[in] pos Location to be tested
  * @param[in] terrainTypes A linkedList_t containing a list of strings determining the terrain types to be tested for (e.g. "grass") may be NULL

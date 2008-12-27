@@ -51,6 +51,7 @@ void MAP_SetCombatZoomedUFO(aircraft_t *combatZoomedUFO);
 void MAP_CombatZoomExit_f(void);
 void MAP_StopSmoothMovement(void);
 void MAP_SetSmoothZoom(float finalZoomLevel, qboolean useSafeAcceleration);
+base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
 void MAP_ToggleCombatZoomLevel_f(void);
 void MAP_Scroll_f(void);

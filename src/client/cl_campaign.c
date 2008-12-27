@@ -881,32 +881,6 @@ static qboolean CP_MissionCreate (mission_t *mission)
 	return qtrue;
 }
 
-/**
- * @brief Minimum distance between a new mission and an existing base.
- */
-static const float MIN_DIST_BASE = 4.0f;
-
-/**
- * @brief Check if given pos is close to an existing base.
- * @return Pointer to the base if one base is closer than MIN_DIST_BASE from pos, NULL else
- */
-base_t* CP_PositionCloseToBase (const vec2_t pos)
-{
-	int baseIdx;
-
-	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			continue;
-
-		if (MAP_GetDistance(pos, base->pos) < MIN_DIST_BASE) {
-			return base;
-		}
-	}
-
-	return NULL;
-}
-
 /*****	Recon Mission *****/
 
 /**
@@ -1013,7 +987,7 @@ static void CP_ReconMissionGroundGo (mission_t *mission)
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, NULL))
 				continue;
-			if (CP_PositionCloseToBase(mission->pos))
+			if (MAP_PositionCloseToBase(mission->pos))
 				continue;
 			break;
 		}
@@ -1260,7 +1234,7 @@ static void CP_TerrorMissionGo (mission_t *mission)
 	for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 		const city_t const *city = CP_ChooseCity();
 
-		if (CP_PositionCloseToBase(city->pos))
+		if (MAP_PositionCloseToBase(city->pos))
 			continue;
 
 		if (!CP_ChooseMap(mission, city->pos, qfalse))
@@ -2523,7 +2497,7 @@ static void CP_HarvestMissionGo (mission_t *mission)
 		for (counter = 0; counter < MAX_POS_LOOP; counter++) {
 			if (!CP_GetRandomPosOnGeoscapeWithParameters(mission->pos, mission->mapDef->terrains, mission->mapDef->cultures, mission->mapDef->populations, nationTest ? nationList : NULL))
 				continue;
-			if (CP_PositionCloseToBase(mission->pos))
+			if (MAP_PositionCloseToBase(mission->pos))
 				continue;
 			break;
 		}
