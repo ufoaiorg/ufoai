@@ -33,5 +33,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void CP_SetMissionVars(const mission_t *mission);
 void CP_StartMissionMap(mission_t* mission);
+void CP_MissionRemove(mission_t *mission);
+qboolean CP_MissionCreate(mission_t *mission);
+qboolean CP_CheckNewMissionDetectedOnGeoscape(void);
+qboolean CP_CheckMissionLimitedInTime(const mission_t *mission);
+void CP_MissionDisableTimeLimit(mission_t *mission);
+void CP_MissionRemoveFromGeoscape(mission_t *mission);
+void CP_MissionAddToGeoscape(mission_t *mission, qboolean force);
+void CP_UFORemoveFromGeoscape(mission_t *mission, qboolean destroyed);
+mission_t* CP_GetLastMissionAdded(void);
 
 #endif

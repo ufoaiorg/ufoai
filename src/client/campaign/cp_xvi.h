@@ -33,5 +33,7 @@ void CP_SpreadXVIAtPos(const vec2_t pos);
 technology_t *CP_IsXVIResearched(void);
 void CP_SpreadXVI(void);
 int CP_GetAverageXVIRate(void);
+void CP_UpdateXVIMapButton(void);
+void CP_StartXVISpreading_f(void);
 
 #endif

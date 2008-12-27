@@ -175,3 +175,37 @@ qboolean XVI_Load (sizebuf_t *sb, void *data)
 	return qtrue;
 }
 
+/**
+ * @brief Start XVI spreading in campaign.
+ * @note This is called when 'a new twist' technology is discovered
+ */
+void CP_StartXVISpreading_f (void)
+{
+	int i, numAlienBases;
+
+	/** @todo ccs.XVIShowMap should not be enabled at the same time than
+	 * ccs.XVISpreadActivated: ccs.XVIShowMap means that PHALANX has a map of
+	 * XVI, whereas ccs.XVISpreadActivated  means that aliens started
+	 * spreading XVI */
+	ccs.XVISpreadActivated = qtrue;
+	ccs.XVIShowMap = qtrue;
+
+	/* Spawn a few alien bases depending on difficulty level */
+	if (difficulty->integer > 0)
+		numAlienBases = 3;
+	else if (difficulty->integer < 0)
+		numAlienBases = 1;
+	else
+		numAlienBases = 2;
+
+	for (i = 0; i < numAlienBases; i++)
+		CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qfalse);
+}
+
+/**
+ * @brief This will hide or show the geoscape button for handling the xvi overlay map
+ */
+void CP_UpdateXVIMapButton (void)
+{
+	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
+}

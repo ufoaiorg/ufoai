@@ -368,7 +368,6 @@ qboolean CL_OnBattlescape(void);
 void CL_GameInit(qboolean load);
 aircraft_t* AIR_NewAircraft(base_t * base, const char *name);
 const char* CL_SecondConvert(int second);
-void CP_UpdateXVIMapButton(void);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
@@ -399,5 +398,8 @@ base_t *CP_GetMissionBase(void);
 void CP_SpawnCrashSiteMission(aircraft_t *ufo);
 struct alienBase_s;
 void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
+int CP_MissionChooseUFO(const mission_t *mission);
+void CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
+const char* CP_MissionStageToName(const missionStage_t stage);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */
