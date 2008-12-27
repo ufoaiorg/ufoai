@@ -1,6 +1,6 @@
 /**
- * @file cp_missions.h
- * @brief Campaign missions headers
+ * @file cp_mission_baseattack.h
+ * @brief Campaign mission headers
  */
 
 /*
@@ -23,15 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_MISSIONS_H
-#define CP_MISSIONS_H
-
-#include "cp_mission_baseattack.h"
-#include "cp_mission_harvest.h"
-#include "cp_mission_recon.h"
-#include "cp_mission_terror.h"
-
-mission_t* CL_AddMission(const char *name);
-void CP_RemoveLastMission(void);
+#ifndef CP_MISSION_BASEATTACK_H
+#define CP_MISSION_BASEATTACK_H
 
 #endif

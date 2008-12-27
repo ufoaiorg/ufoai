@@ -611,6 +611,18 @@
 		<Unit filename="..\..\src\client\campaign\cp_missions.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_mission_baseattack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_mission_harvest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_mission_recon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_mission_terror.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\renderer\anormtab.h" />
 		<Unit filename="..\..\src\client\renderer\r_bsp.c">
 			<Option compilerVar="CC" />

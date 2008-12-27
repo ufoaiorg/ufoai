@@ -53,6 +53,10 @@ CLIENT_SRCS = \
 	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_alien_interest.c \
 	client/campaign/cp_missions.c \
+	client/campaign/cp_mission_baseattack.c \
+	client/campaign/cp_mission_harvest.c \
+	client/campaign/cp_mission_recon.c \
+	client/campaign/cp_mission_terror.c \
 	\
 	client/menu/m_actions.c \
 	client/menu/m_dragndrop.c \
