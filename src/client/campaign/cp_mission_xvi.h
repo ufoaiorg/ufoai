@@ -1,6 +1,6 @@
 /**
- * @file cp_mission_baseattack.h
- * @brief Campaign mission headers
+ * @file cp_mission_xvi.h
+ * @brief Campaign mission header
  */
 
 /*
@@ -23,19 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_MISSION_BASEATTACK_H
-#define CP_MISSION_BASEATTACK_H
+#ifndef CP_MISSION_XVI_H
+#define CP_MISSION_XVI_H
 
-extern aircraft_t baseAttackFakeAircraft;
-
-void CP_BaseAttackStartMission(mission_t *mission);
-void CP_BaseAttackMissionLeave(mission_t *mission);
-void CP_BaseAttackMissionIsSuccess(mission_t *mission);
-void CP_BaseAttackMissionIsFailure(mission_t *mission);
-void CP_BaseAttackMissionStart(mission_t *mission);
-int CP_BaseAttackMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
-void CP_BaseAttackMissionNextStage(mission_t *mission);
-
-void CP_CheckBaseAttacks_f(void);
+int CP_XVIMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+void CP_XVIMissionNextStage(mission_t *mission);
+void CP_XVIMissionIsFailure(mission_t *mission);
+void CP_XVIMissionIsSuccess(mission_t *mission);
 
 #endif

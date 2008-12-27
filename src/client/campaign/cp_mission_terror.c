@@ -1,6 +1,6 @@
 /**
  * @file cp_mission_terror.c
- * @brief Campaign mission
+ * @brief Campaign mission code
  */
 
 /*

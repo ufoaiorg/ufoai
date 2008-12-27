@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_global.h"
 #include "../cl_map.h"
+#include "../cl_ufo.h"
 #include "../menu/m_popup.h"
 #include "cp_missions.h"
 #include "cp_time.h"
@@ -188,3 +189,166 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	MN_PushMenu("popup_baseattack", NULL);
 }
 
+
+/**
+ * @brief Check and start baseattack missions
+ * @sa CP_BaseAttackStartMission
+ */
+void CP_CheckBaseAttacks_f (void)
+{
+	linkedList_t *missionlist = ccs.missions;
+	base_t *base = NULL;
+
+	if (Cmd_Argc() == 2) {
+		base = B_GetFoundedBaseByIDX(atoi(Cmd_Argv(1)));
+	}
+
+	while (missionlist) {
+		mission_t *mission = (mission_t*) missionlist->data;
+
+		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->stage == STAGE_BASE_ATTACK) {
+			if (base && ((base_t*) mission->data != base))
+				continue;
+			CP_BaseAttackStartMission(mission);
+		}
+		missionlist = missionlist->next;
+	}
+}
+
+/**
+ * @brief Choose Base that will be attacked, and add it to mission description.
+ * @note Base attack mission -- Stage 1
+ * @return Pointer to the base, NULL if no base set
+ */
+static base_t* CP_BaseAttackChooseBase (const mission_t *mission)
+{
+	float randomNumber, sum = 0.0f;
+	int baseIdx;
+	base_t *base = NULL;
+
+	assert(mission);
+
+	/* Choose randomly a base depending on alienInterest values for those bases */
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+		sum += base->alienInterest;
+	}
+	randomNumber = frand() * sum;
+	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
+		base = B_GetFoundedBaseByIDX(baseIdx);
+		if (!base)
+			continue;
+		randomNumber -= base->alienInterest;
+		if (randomNumber < 0)
+			break;
+	}
+
+	/* Make sure we have a base */
+	assert(base && (randomNumber < 0));
+
+	/* base is already under attack */
+	if (base->baseStatus == BASE_UNDER_ATTACK)
+		return NULL;
+
+	return base;
+}
+
+/**
+ * @brief Set base attack mission, and go to base position.
+ * @note Base attack mission -- Stage 1
+ */
+static void CP_BaseAttackGoToBase (mission_t *mission)
+{
+	base_t *base;
+
+	mission->stage = STAGE_MISSION_GOTO;
+
+	base = CP_BaseAttackChooseBase(mission);
+	if (!base) {
+		Com_Printf("CP_BaseAttackGoToBase: no base found\n");
+		CP_MissionRemove(mission);
+		return;
+	}
+	mission->data = (void *)base;
+
+	mission->mapDef = Com_GetMapDefinitionByID("baseattack");
+	if (!mission->mapDef) {
+		CP_MissionRemove(mission);
+		Sys_Error("Could not find mapdef baseattack");
+		return;
+	}
+
+	Vector2Copy(base->pos, mission->pos);
+
+	Com_sprintf(mission->location, sizeof(mission->location), "%s", base->name);
+
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SendToDestination(mission->ufo, mission->pos);
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
+}
+
+/**
+ * @brief Fill an array with available UFOs for Base Attack mission type.
+ * @param[in] mission Pointer to the mission we are currently creating.
+ * @param[out] ufoTypes Array of ufoType_t that may be used for this mission.
+ * @note Base Attack mission -- Stage 0
+ * @return number of elements written in @c ufoTypes
+ */
+int CP_BaseAttackMissionAvailableUFOs (const mission_t const *mission, int *ufoTypes)
+{
+	int num = 0;
+#if 0
+	/** @todo use me when we have a geoscape model for bomber, as well as at least one map using it */
+	const int BOMBER_INTEREST_MIN = 500;	/**< Minimum value interest to have a mission spawned by bomber */
+#endif
+
+	ufoTypes[num++] = UFO_FIGHTER;
+
+#if 0
+	/** @todo use me when we have a geoscape model for bomber, as well as at least one map using it */
+	if (mission->initialOverallInterest > BOMBER_INTEREST_MIN)
+		ufoTypes[num++] = UFO_BOMBER;
+#endif
+
+	return num;
+}
+
+/**
+ * @brief Determine what action should be performed when a Base Attack mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
+ */
+void CP_BaseAttackMissionNextStage (mission_t *mission)
+{
+	switch (mission->stage) {
+	case STAGE_NOT_ACTIVE:
+		/* Create mission */
+		CP_MissionCreate(mission);
+		break;
+	case STAGE_COME_FROM_ORBIT:
+		/* Choose a base to attack and go to this base */
+		CP_BaseAttackGoToBase(mission);
+		break;
+	case STAGE_MISSION_GOTO:
+		/* just arrived on base location: attack it */
+		CP_BaseAttackStartMission(mission);
+		break;
+	case STAGE_BASE_ATTACK:
+		/* Leave earth */
+		CP_BaseAttackMissionLeave(mission);
+		break;
+	case STAGE_RETURN_TO_ORBIT:
+		/* mission is over, remove mission */
+		CP_BaseAttackMissionIsSuccess(mission);
+		break;
+	default:
+		Com_Printf("CP_BaseAttackMissionNextStage: Unknown stage: %i, removing mission.\n", mission->stage);
+		CP_MissionRemove(mission);
+		break;
+	}
+}
