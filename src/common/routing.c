@@ -445,7 +445,6 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 static qboolean RT_ObstructedTrace (const vec3_t start, const vec3_t end, int actor_size, int hi, int lo)
 {
 	vec3_t bmin, bmax;
-	int hz, lz;
 
 	/* Configure the box trace extents. The box is relative to the original floor. */
 	VectorSet(bmax, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, UNIT_SIZE * actor_size / 2 - WALL_SIZE - DIST_EPSILON, hi * QUANT - DIST_EPSILON);
