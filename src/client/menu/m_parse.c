@@ -118,19 +118,24 @@ char* MN_AllocString (const char* string, int size)
 }
 
 /**
- * @brief
+ * @brief Prse actions and return action list
+ * @return The first element from a list of action
  * @sa MN_ExecuteActions
+ * @todo need cleanup, compute action out of the final memory; reduce number of var
  */
-static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const const char **token)
+static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, const const char **token)
 {
 	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
+	menuAction_t *firstAction;
 	menuAction_t *lastAction;
+	menuAction_t *action;
 	menuNode_t *node;
 	qboolean found;
 	const value_t *val;
 	int i;
 
 	lastAction = NULL;
+	firstAction = NULL;
 
 	/* prevent bad position */
 	assert(*token[0] == '{');
@@ -142,7 +147,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 		/* get new token */
 		*token = COM_EParse(text, errhead, NULL);
 		if (!*token)
-			return qfalse;
+			return NULL;
 
 		if (*token[0] == '}')
 			break;
@@ -173,17 +178,20 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 		/* unknown, we break the parsing */
 		if (type == EA_NULL) {
 			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s.%s)\n", *token, menuNode->menu->name, menuNode->name);
-			return qfalse;
+			return NULL;
 		}
 
 		/** @todo better to append the action after initialization */
 		/* add the action */
+		if (mn.numActions >= MAX_MENUACTIONS)
+			Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+		action = &mn.menuActions[mn.numActions++];
+		memset(action, 0, sizeof(*action));
 		if (lastAction) {
-			if (mn.numActions >= MAX_MENUACTIONS)
-				Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-			action = &mn.menuActions[mn.numActions++];
-			memset(action, 0, sizeof(*action));
 			lastAction->next = action;
+		}
+		if (!firstAction) {
+			firstAction = action;
 		}
 		action->type = type;
 
@@ -193,7 +201,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 			/* get parameter values */
 			*token = COM_EParse(text, errhead, NULL);
 			if (!*text)
-				return qfalse;
+				return NULL;
 
 			/* get the value */
 			action->data = mn.curadata;
@@ -229,7 +237,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 				/* get the node property */
 				*token = COM_EParse(text, errhead, NULL);
 				if (!*text)
-					return qfalse;
+					return NULL;
 
 				castedBehaviour = MN_GetNodeBehaviour(cast);
 				val = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
@@ -254,7 +262,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 				/* get the value */
 				*token = COM_EParse(text, errhead, NULL);
 				if (!*text)
-					return qfalse;
+					return NULL;
 
 				mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 			}
@@ -290,7 +298,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 			/** @todo use scanef instead of atoi, no need to check '}' */
 			if (!*token || **token == '}') {
 				Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", menuNode->name);
-				return qfalse;
+				return NULL;
 			}
 			menuNode->timeOut = atoi(*token);
 
@@ -308,7 +316,7 @@ static qboolean MN_ParseAction (menuNode_t *menuNode, menuAction_t *action, cons
 
 	assert(*token[0] == '}');
 
-	return qtrue;
+	return firstAction;
 }
 
 static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char **token, const char *errhead)
@@ -438,23 +446,23 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 	action = (menuAction_t **) ((byte *) node + event->ofs);
 	for (; *action; action = &(*action)->next) {}
 
-	if (mn.numActions >= MAX_MENUACTIONS)
-		Sys_Error("MN_ParseEventProperty: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-	*action = &mn.menuActions[mn.numActions++];
-	memset(*action, 0, sizeof(**action));
-
 	/* get the action body */
 	*token = COM_EParse(text, errhead, node->name);
 	if (!*text)
 		return qfalse;
 
 	if (**token == '{') {
-		MN_ParseAction(node, *action, text, token);
-
+		*action = MN_ParseAction(node, text, token);
 		/* get next token */
 		*token = COM_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
+	} else {
+		/** @todo dummy action, look at if its realy need */
+		if (mn.numActions >= MAX_MENUACTIONS)
+			Sys_Error("MN_ParseEventProperty: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+		*action = &mn.menuActions[mn.numActions++];
+		memset(*action, 0, sizeof(**action));
 	}
 	return qtrue;
 }
@@ -650,7 +658,8 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			}
 		}
 
-		return MN_ParseAction(node, *action, text, token);
+		*action = MN_ParseAction(node, text, token);
+		return *token[0] == '}';
 	}
 
 	do {
