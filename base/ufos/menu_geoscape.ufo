@@ -138,49 +138,7 @@ menu map
 		textalign	ur
 		in
 	}
-/*
-	pic bt_timestop
-	{
-		tooltip	"_Stop time"
-		image	menu/buttons_time
-		pos	"865 100"
-		texl	"0 0"
-		texh	"20 20"
-		out	{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
-		in	{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
-		click	{ cmd "game_timestop;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
-	}
 
-	pic bt_timeslow
-	{
-		tooltip	"_Slow down time"
-		image	menu/buttons_time
-		pos	"896 100"
-		texl	"42 0"
-		texh	"52 20"
-		out	{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
-		in	{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
-		click	{ cmd "game_timeslow;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
-	}
-
-	pic bt_timefast
-	{
-		tooltip	"_Speed up time"
-		image	menu/buttons_time
-		pos	"916 100"
-		texl	"53 0"
-		texh	"63 20"
-		out	{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
-		in	{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
-		click	{ cmd "game_timefast;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
-	}
-*/
 	radiobutton bt_timestop0
 	{
 		cvar	"*cvar mn_timelapse_id"	value "0"
@@ -289,7 +247,6 @@ menu map
 		size	"60 30"
 		repeat	true
 		clickdelay	100
-//		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll down;" }
 	}
 
@@ -299,7 +256,6 @@ menu map
 		size	"60 30"
 		repeat	true
 		clickdelay	100
-//		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll up;" }
 	}
 
@@ -309,7 +265,6 @@ menu map
 		size	"30 60"
 		repeat	true
 		clickdelay	100
-//		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll right;" }
 	}
 
@@ -319,7 +274,6 @@ menu map
 		size	"30 60"
 		repeat	true
 		clickdelay	100
-//		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_scroll left;" }
 	}
 
@@ -329,7 +283,6 @@ menu map
 		size	"20 60"
 		repeat	true
 		clickdelay	100
-//		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_zoom in;" }
 	}
 
@@ -339,7 +292,6 @@ menu map
 		size	"20 60"
 		repeat	true
 		clickdelay	100
-//		bgcolor	"1 1 1 0.5"
 		click	{ cmd "map_zoom out;" }
 	}
 
@@ -603,13 +555,6 @@ menu map_combatzoom
 		size	"1024 768"
 		click	mclick wheel
 		rclick	{ cmd "mn_mapaction_reset;" }
-		// menu
-		// @todo check if it is realy need
-		excluderect
-		{
-			pos		"768 0"
-			size	"256 768"
-		}
 	}
 
 	text messagesystem
@@ -783,7 +728,6 @@ menu popup_list
 		lineheight	16
 		tabwidth	100
 		size	"446 32"
-//		bgcolor	"1 1 1 0.5"
 		rows	2
 	}
 	text popup_list
@@ -793,7 +737,6 @@ menu popup_list
 		lineheight	16
 		tabwidth	100
 		size	"446 96"
-//		bgcolor	"1 1 1 0.5"
 		rows	6
 		wheel
 		scrollbar true
@@ -864,7 +807,6 @@ menu popup_button
 		lineheight	16
 		tabwidth	100
 		size	"446 128"
-//		bgcolor	"1 1 1 0.5"
 		rows	8
 		scrollbar	true
 		wheel
@@ -1175,7 +1117,6 @@ menu popup_transferbaselist
 		textid		TEXT_LIST
 		pos		"26 74"
 		size	"450 144"
-//		bgcolor	"1 1 1 0.5"
 		lineheight	16
 		tabwidth	100
 		rows	9
@@ -2970,7 +2911,6 @@ menu messageoptions
 		cmd "mn_setnodeproperty bt_sound<1> current <4>"
 	}
 
-
 	// ===================
 	// confuncs to enable/disable lines
 	// ===================
@@ -2992,6 +2932,5 @@ menu messageoptions
 		*bt_notify<1> invis true
 		*bt_sound<1> invis true
 	}
-
 
 }
