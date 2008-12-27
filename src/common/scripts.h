@@ -26,37 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SCRIPTS_H
 #define SCRIPTS_H
 
-/**
- * @brief conditions for V_IF
- * @todo move it on the menu code
- */
-typedef enum menuIfCondition_s {
-	/** float compares */
-	IF_EQ = 0, /**< == */
-	IF_LE, /**< <= */
-	IF_GE, /**< >= */
-	IF_GT, /**< > */
-	IF_LT, /**< < */
-	IF_NE = 5, /**< != */
-	IF_EXISTS, /**< only cvar given - check for existence */
-
-	/** string compares */
-	IF_STR_EQ,	/**< eq */
-	IF_STR_NE,	/**< ne */
-
-	IF_SIZE
-} menuIfCondition_t;
-
-/** @sa menuIfCondition_t */
-typedef struct menuDepends_s {
-	char *var;
-	char *value;
-	cvar_t *cvar;
-	int cond;
-} menuDepends_t;
-
-/* end of V_IF */
-
 #ifndef ALIGNBYTES
 #define ALIGNBYTES 1
 #endif

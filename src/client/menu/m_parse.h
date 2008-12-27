@@ -36,7 +36,6 @@ struct value_s;
 const value_t* MN_FindPropertyByName(const struct value_s* propertyList, const char* name);
 char* MN_AllocString(const char* string, int size);
 
-
 qboolean MN_ScriptSanityCheck(void);
 
 /* main special type */
