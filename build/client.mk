@@ -2,23 +2,14 @@ CLIENT_CFLAGS+=-DCOMPILE_UFO
 
 CLIENT_SRCS = \
 	client/cl_actor.c \
-	client/cl_alienbase.c \
-	client/cl_aliencont.c \
 	client/cl_aircraft.c \
-	client/cl_airfight.c \
 	client/cl_basemanagement.c \
-	client/cl_basesummary.c \
-	client/cl_campaign.c \
 	client/cl_cinematic.c \
 	client/cl_console.c \
-	client/cl_event.c \
 	client/cl_employee.c \
-	client/cl_hospital.c \
 	client/cl_http.c \
 	client/cl_inventory.c \
 	client/cl_input.c \
-	client/cl_installation.c \
-	client/cl_airfightmap.c \
 	client/cl_irc.c \
 	client/cl_joystick.c \
 	client/cl_keys.c \
@@ -26,15 +17,9 @@ CLIENT_SRCS = \
 	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \
-	client/cl_market.c \
-	client/cl_map.c \
-	client/cl_mapfightequip.c \
-	client/cl_nation.c \
 	client/cl_popup.c \
-	client/cl_produce.c \
 	client/cl_parse.c \
 	client/cl_particle.c \
-	client/cl_radar.c \
 	client/cl_research.c \
 	client/cl_save.c \
 	client/cl_screen.c \
@@ -42,10 +27,7 @@ CLIENT_SRCS = \
 	client/cl_sequence.c \
 	client/cl_team.c \
 	client/cl_tip.c \
-	client/cl_transfer.c \
 	client/cl_tutorials.c \
-	client/cl_ufo.c \
-	client/cl_uforecovery.c \
 	client/cl_ufopedia.c \
 	client/cl_video.c \
 	client/cl_view.c \
@@ -58,6 +40,24 @@ CLIENT_SRCS = \
 	client/campaign/cp_parse.c \
 	client/campaign/cp_time.c \
 	client/campaign/cp_xvi.c \
+	client/campaign/cl_alienbase.c \
+	client/campaign/cl_aliencont.c \
+	client/campaign/cl_airfight.c \
+	client/campaign/cl_basesummary.c \
+	client/campaign/cl_campaign.c \
+	client/campaign/cl_event.c \
+	client/campaign/cl_hospital.c \
+	client/campaign/cl_installation.c \
+	client/campaign/cl_airfightmap.c \
+	client/campaign/cl_market.c \
+	client/campaign/cl_map.c \
+	client/campaign/cl_mapfightequip.c \
+	client/campaign/cl_nation.c \
+	client/campaign/cl_produce.c \
+	client/campaign/cl_radar.c \
+	client/campaign/cl_transfer.c \
+	client/campaign/cl_ufo.c \
+	client/campaign/cl_uforecovery.c \
 	\
 	client/campaign/missions/cp_mission_baseattack.c \
 	client/campaign/missions/cp_mission_buildbase.c \

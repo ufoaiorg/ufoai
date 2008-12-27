@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_map.h"
+#include "../campaign/cl_map.h"
 #include "m_main.h"
 #include "m_draw.h"
 #include "m_parse.h"

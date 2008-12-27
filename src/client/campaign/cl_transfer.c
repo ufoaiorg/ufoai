@@ -24,13 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
+#include "../client.h"
+#include "../cl_global.h"
+#include "../cl_team.h"
+#include "../menu/m_popup.h"
 #include "cl_hospital.h"
-#include "cl_team.h"
 #include "cl_uforecovery.h"
 #include "cl_map.h"
-#include "menu/m_popup.h"
 
 /** @brief Current selected aircraft for transfer (if transfer started from mission). */
 static aircraft_t *transferStartAircraft = NULL;

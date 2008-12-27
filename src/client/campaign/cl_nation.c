@@ -24,8 +24,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
+#include "../client.h"
+#include "../cl_global.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
 
@@ -727,6 +727,7 @@ static void CL_NationSelect_f (void)
 	CL_NationStatsUpdate_f();
 }
 
+#ifdef DEBUG
 /**
  * @brief Debug function to list all cities in game.
  * @note Called with debug_listcities.
@@ -742,6 +743,7 @@ static void CL_ListCities_f (void)
 		MAP_PrintParameterStringByPos(city->pos);
 	}
 }
+#endif
 
 void NAT_InitStartup (void)
 {

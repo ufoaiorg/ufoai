@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_INSTALLATION_H
 #define CLIENT_CL_INSTALLATION_H
 
-#include "cl_basemanagement.h"
-
 #define MAX_INSTALLATIONS	16
 #define MAX_INSTALLATION_TEMPLATES	6
 

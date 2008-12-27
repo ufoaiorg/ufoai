@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
+#include "../client.h"
+#include "../cl_global.h"
 
 /** Statics for menu. */
 static int numAliensOnList = 0;			/**< Number of aliens on AC menu list. */

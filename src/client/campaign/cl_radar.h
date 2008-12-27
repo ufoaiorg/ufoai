@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_RADAR_H
 #define CLIENT_CL_RADAR_H
 
-#include "menu/m_nodes.h"
-
 #define MAX_UFOONGEOSCAPE	8
 
 extern qboolean radarOverlayWasSet;

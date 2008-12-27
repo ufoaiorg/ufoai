@@ -25,11 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
+#include "../client.h"
+#include "../cl_global.h"
 #include "cl_mapfightequip.h"
-#include "menu/node/m_node_text.h"
-#include "menu/node/m_node_abstractnode.h"
+#include "../menu/node/m_node_text.h"
+#include "../menu/node/m_node_abstractnode.h"
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
 static qboolean noparams = qfalse;			/**< true if AIM_AircraftEquipMenuUpdate_f or BDEF_BaseDefenseMenuUpdate_f don't need paramters */

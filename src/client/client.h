@@ -38,8 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_keys.h"
 #include "cl_cinematic.h"
 #include "cl_console.h"
-#include "cl_market.h"
-#include "cl_event.h"
+#include "campaign/cl_market.h"
+#include "campaign/cl_event.h"
 #include "cl_save.h"
 #include "cl_http.h"
 #include "renderer/r_entity.h"
@@ -314,22 +314,22 @@ struct employee_s;
 
 #include "cl_le.h"
 #include "cl_menu.h"
-#include "cl_radar.h"
+#include "campaign/cl_radar.h"
 #include "cl_research.h"
-#include "cl_produce.h"
-#include "cl_aliencont.h"
+#include "campaign/cl_produce.h"
+#include "campaign/cl_aliencont.h"
 /* we need this in cl_aircraft.h */
 #define MAX_EMPLOYEES 512
 #include "cl_aircraft.h"
-#include "cl_airfight.h"
+#include "campaign/cl_airfight.h"
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
 #include "cl_employee.h"
-#include "cl_transfer.h"
-#include "cl_nation.h"
-#include "cl_campaign.h"
+#include "campaign/cl_transfer.h"
+#include "campaign/cl_nation.h"
+#include "campaign/cl_campaign.h"
 #include "cl_inventory.h"
 #include "cl_parse.h"
-#include "cl_uforecovery.h"
+#include "campaign/cl_uforecovery.h"
 
 #endif /* CLIENT_CLIENT_H */

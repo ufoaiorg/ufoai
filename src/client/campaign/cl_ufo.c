@@ -23,12 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
-#include "cl_popup.h"
+#include "../client.h"
+#include "../cl_global.h"
+#include "../cl_popup.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
-#include "cl_aircraft.h"
+#include "../cl_aircraft.h"
 #include "cl_mapfightequip.h"
 
 static const float MAX_DETECTING_RANGE = 25.0f; /**< range to detect and fire at phalanx aircraft */
