@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_nodes.h"
 #include "menu/m_popup.h"
 #include "campaign/cp_geoscape_actions.h"
+#include "campaign/cp_time.h"
 
 void R_CreateRadarOverlay(void);
 

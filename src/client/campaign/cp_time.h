@@ -1,6 +1,6 @@
 /**
- * @file cp_missions.h
- * @brief Campaign missions headers
+ * @file cp_time.h
+ * @brief Campaign geoscape time header
  */
 
 /*
@@ -23,15 +23,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_MISSIONS_H
-#define CP_MISSIONS_H
+#ifndef CP_TIME_H
+#define CP_TIME_H
 
-#include "cp_mission_baseattack.h"
-#include "cp_mission_harvest.h"
-#include "cp_mission_recon.h"
-#include "cp_mission_terror.h"
-
-void CP_SetMissionVars(const mission_t *mission);
-void CP_StartMissionMap(mission_t* mission);
+void CL_UpdateTime(void);
+void CL_EnsureValidGameLapseForCombatZoom(void);
+void CL_EnsureValidGameLapseForGeoscape(void);
+void CL_GameTimeStop(void);
+void CL_GameTimeFast(void);
+void CL_GameTimeSlow(void);
+void CL_SetGameTime(int gameLapseValue);
 
 #endif
+

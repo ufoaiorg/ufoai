@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_draw.h"
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
+#include "campaign/cp_time.h"
 
 void R_UploadRadarCoverage(qboolean smooth);
 void R_InitializeRadarOverlay(qboolean source);

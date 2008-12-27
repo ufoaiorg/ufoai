@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_messages.h"
 #include "m_popup.h"
+#include "../campaign/cp_time.h"
+
 
 /** @brief valid notification types that may cause pause / notice */
 static const char *nt_strings[NT_NUM_NOTIFYTYPE] = {

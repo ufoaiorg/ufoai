@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "menu/m_popup.h"
 #include "menu/m_font.h"
+#include "campaign/cp_time.h"
 
 static aircraft_t *aircraftList[MAX_AIRCRAFT];
 static aircraft_t *ufoList[MAX_AIRCRAFT];

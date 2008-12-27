@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ufo.h"
 #include "cl_alienbase.h"
 #include "menu/m_popup.h"
+#include "campaign/cp_time.h"
 
 saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 int saveSubsystemsAmount;
