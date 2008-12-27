@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_language.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
+#include "cl_skirmish.h"
 #include "campaign/cl_basesummary.h"
 #include "campaign/cl_installation.h"
 #include "campaign/cl_hospital.h"
@@ -207,6 +208,23 @@ static void CL_Quit_f (void)
 {
 	CL_Disconnect();
 	Com_Quit();
+}
+
+/**
+ * @brief Called when skirmish or campaign game starts
+ * @param[in] load qtrue if we are loading game, qfalse otherwise
+ * @sa CL_CampaignInit
+ */
+void CL_GameInit (qboolean load)
+{
+	assert(curCampaign);
+
+	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
+	RS_InitTree(load);		/**< Initialise all data in the research tree. */
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	if (!load)
+		CL_ScriptSanityCheck();
 }
 
 /**
@@ -2061,6 +2079,7 @@ static void CL_InitLocal (void)
 	TUT_InitStartup();
 	PTL_InitStartup();
 	CP_InitStartup();
+	SK_InitStartup();
 	UR_InitStartup();
 	NAT_InitStartup();
 	BS_InitStartup();

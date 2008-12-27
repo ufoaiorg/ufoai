@@ -25,6 +25,7 @@ CLIENT_SRCS = \
 	client/cl_screen.c \
 	client/cl_sound.c \
 	client/cl_sequence.c \
+	client/cl_skirmish.c \
 	client/cl_team.c \
 	client/cl_tip.c \
 	client/cl_tutorials.c \

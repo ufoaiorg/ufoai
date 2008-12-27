@@ -121,7 +121,7 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
  * @param[in] file Savegame to load (relative to writepath/save)
  * @sa SAV_GameLoad_f
  * @sa SAV_GameSave
- * @sa CL_GameInit
+ * @sa CL_CampaignInit
  * @sa CL_ReadSinglePlayerData
  */
 static qboolean SAV_GameLoad (const char *file, char **error)

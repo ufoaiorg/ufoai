@@ -1628,7 +1628,7 @@ const char *CL_DateGetMonthName (int month)
 
 /**
  * @brief sets market prices at start of the game
- * @sa CL_GameInit
+ * @sa CL_CampaignInit
  * @sa BS_Load (Market load function)
  * @param[in] load It this an attempt to init the market for a savegame?
  */
@@ -2037,7 +2037,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		return qfalse;
 	}
 
-	CL_GameInit(qtrue);
+	CL_CampaignInit(qtrue);
 
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
@@ -3186,6 +3186,41 @@ static const cmdList_t game_commands[] = {
 };
 
 /**
+ * @brief Called at new game and load game
+ * @param[in] load qtrue if we are loading game, qfalse otherwise
+ * @sa SAV_GameLoad
+ * @sa CL_GameNew_f
+ */
+void CL_CampaignInit (qboolean load)
+{
+	const cmdList_t *commands;
+
+	assert(curCampaign);
+
+	Com_DPrintf(DEBUG_CLIENT, "Init game commands\n");
+	for (commands = game_commands; commands->name; commands++) {
+		Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
+		Cmd_AddCommand(commands->name, commands->function, commands->description);
+	}
+
+	CL_GameInit(load);
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	if (!load) {
+		CL_ScriptSanityCheckCampaign();
+	}
+
+	CL_GameTimeStop();
+
+	CL_CampaignInitMarket(load);
+
+	/* Init popup and map/geoscape */
+	CL_PopupInit();
+
+	CP_XVIInit();
+}
+
+/**
  * @sa CL_GameNew_f
  * @sa SAV_GameLoad
  */
@@ -3219,59 +3254,6 @@ void CL_GameExit (void)
 }
 
 /**
- * @brief Called when Skirmish game starts
- * @param[in] load qtrue if we are loading game, qfalse otherwise
- * @sa CL_GameInit
- */
-static void CL_GameSkirmishInit (qboolean load)
-{
-	const cmdList_t *commands;
-
-	assert(curCampaign);
-
-	Com_DPrintf(DEBUG_CLIENT, "Init game commands\n");
-	for (commands = game_commands; commands->name; commands++) {
-		Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
-		Cmd_AddCommand(commands->name, commands->function, commands->description);
-	}
-
-	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
-	RS_InitTree(load);		/**< Initialise all data in the research tree. */
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	if (!load)
-		CL_ScriptSanityCheck();
-}
-
-/**
- * @brief Called at new game and load game
- * @param[in] load qtrue if we are loading game, qfalse otherwise
- * @sa SAV_GameLoad
- * @sa CL_GameNew_f
- */
-void CL_GameInit (qboolean load)
-{
-	assert(curCampaign);
-
-	/* We need more than for skirmish */
-	CL_GameSkirmishInit(load);
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	if (!load) {
-		CL_ScriptSanityCheckCampaign();
-	}
-
-	CL_GameTimeStop();
-
-	CL_CampaignInitMarket(load);
-
-	/* Init popup and map/geoscape */
-	CL_PopupInit();
-
-	CP_XVIInit();
-}
-
-/**
  * @brief Returns the campaign pointer from global campaign array
  * @param name Name of the campaign
  * @return campaign_t pointer to campaign with name or NULL if not found
@@ -3293,104 +3275,8 @@ campaign_t* CL_GetCampaign (const char* name)
 }
 
 /**
- * @brief Starts a new skirmish game
- * @todo Check the stuff in this function - maybe not every function call
- * is needed here or maybe some are missing
- */
-static void CL_GameSkirmish_f (void)
-{
-	base_t* base;
-	char map[MAX_VAR];
-	mapDef_t *md;
-	int i;
-
-	if (!ccs.singleplayer)
-		return;
-
-	assert(cls.currentSelectedMap >= 0);
-	assert(cls.currentSelectedMap < MAX_MAPDEFS);
-
-	md = &csi.mds[cls.currentSelectedMap];
-	if (!md)
-		return;
-
-	assert(md->map);
-	Com_sprintf(map, sizeof(map), "map %s %s %s;", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
-
-	/* exit running game */
-	if (curCampaign)
-		CL_GameExit();
-
-	/* get campaign - they are already parsed here */
-	curCampaign = CL_GetCampaign(cl_campaign->string);
-	if (!curCampaign) {
-		Com_Printf("CL_GameSkirmish_f: Could not find campaign '%s'\n", cl_campaign->string);
-		return;
-	}
-
-	Cvar_Set("cl_team", curCampaign->team);
-
-	memset(&ccs, 0, sizeof(ccs));
-	CL_StartSingleplayer(qtrue);
-	CL_ReadSinglePlayerData();
-
-	/* create employees and clear bases */
-	B_NewBases();
-
-	base = B_GetBaseByIDX(0);
-	baseCurrent = base;
-	gd.numAircraft = 0;
-
-	CL_GameSkirmishInit(qfalse);
-	RS_MarkResearchedAll();
-
-	gd.numBases = 1;
-
-	/* even in skirmish mode we need a little money to build the base */
-	CL_UpdateCredits(MAX_CREDITS);
-
-	/* only needed for base dummy creation */
-	R_CreateRadarOverlay();
-
-	/* build our pseudo base */
-	B_SetUpBase(base, qtrue, qtrue);
-
-	if (!base->numAircraftInBase) {
-		Com_Printf("CL_GameSkirmish_f: Error - there is no dropship in base\n");
-		return;
-	}
-
-	/* we have to set this manually here */
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		if (base->aircraft[i].type == AIRCRAFT_TRANSPORTER) {
-			cls.missionaircraft = &base->aircraft[i];
-			break;
-		}
-	}
-
-	base->aircraftCurrent = cls.missionaircraft;
-
-	if (!cls.missionaircraft || !cls.missionaircraft->homebase) {
-		Com_Printf("CL_GameSkirmish_f: Error - could not set the mission aircraft: %i\n", base->numAircraftInBase);
-		return;
-	}
-
-	/* prepare */
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main_afterdrop", "singleplayermission");
-
-	/* make sure, that we are not trying to switch to singleplayer a second time */
-	sv_maxclients->modified = qfalse;
-
-	/* this is no real campaign - but we need the pointer for some of
-	 * the previous actions */
-	curCampaign = NULL;
-	Cbuf_AddText(map);
-}
-
-/**
  * @brief Starts a new single-player game
- * @sa CL_GameInit
+ * @sa CL_CampaignInit
  * @sa CL_CampaignInitMarket
  */
 static void CL_GameNew_f (void)
@@ -3475,7 +3361,7 @@ static void CL_GameNew_f (void)
 	/* create a base as first step */
 	B_SelectBase(NULL);
 
-	CL_GameInit(qfalse);
+	CL_CampaignInit(qfalse);
 	Cmd_ExecuteString("addeventmail prolog");
 
 	/* Spawn first missions of the game */
@@ -3810,7 +3696,6 @@ void CP_InitStartup (void)
 	/* commands */
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("cp_getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
-	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
 	Cmd_AddCommand("game_new", CL_GameNew_f, "Start the new campaign");
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 	Cmd_AddCommand("cp_tryagain", CP_TryAgain_f, "Try again a mission");

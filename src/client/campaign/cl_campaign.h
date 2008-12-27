@@ -365,7 +365,6 @@ void CL_CampaignRun(void);
 void CP_EndCampaign(qboolean won);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
-void CL_GameInit(qboolean load);
 aircraft_t* AIR_NewAircraft(base_t * base, const char *name);
 const char* CL_SecondConvert(int second);
 

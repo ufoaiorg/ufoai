@@ -108,7 +108,7 @@ void CP_XVIInit (void)
 {
 	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
 	if (!rsAlienXVI)
-		Sys_Error("CL_GameInit: Could not find tech definition for " XVI_EVENT_NAME);
+		Sys_Error("CP_XVIInit: Could not find tech definition for " XVI_EVENT_NAME);
 }
 
 /**
