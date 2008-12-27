@@ -142,6 +142,7 @@ menu map
 	radiobutton bt_timestop0
 	{
 		cvar	"*cvar mn_timelapse_id"	value "0"
+		tooltip "_Pause the game"
 		icon	speed_stop
 		pos	"816 100"
 		size	"20 20"
@@ -152,6 +153,7 @@ menu map
 
 	radiobutton bt_timeplay1
 	{
+		tooltip "_Time lapse: 5 seconds"
 		cvar	"*cvar mn_timelapse_id"	value "1"
 		icon	speed_dot
 		pos	"836 100"
@@ -163,6 +165,7 @@ menu map
 
 	radiobutton bt_timeplay2
 	{
+		tooltip "_Time lapse: 5 minutes"
 		cvar	"*cvar mn_timelapse_id"	value "4"
 		icon	speed_play1
 		pos	"856 100"
@@ -175,6 +178,7 @@ menu map
 
 	radiobutton bt_timeplay3
 	{
+		tooltip "_Time lapse: 20 minutes"
 		cvar	"*cvar mn_timelapse_id"	value "6"
 		icon	speed_dot
 		pos	"876 100"
@@ -186,6 +190,7 @@ menu map
 
 	radiobutton bt_timeplay4
 	{
+		tooltip "_Time lapse: 1 hour"
 		cvar	"*cvar mn_timelapse_id"	value "7"
 		icon	speed_play2
 		pos	"896 100"
@@ -198,6 +203,7 @@ menu map
 
 	radiobutton bt_timeplay5
 	{
+		tooltip "_Time lapse: 12 hours"
 		cvar	"*cvar mn_timelapse_id"	value "8"
 		icon	speed_dot
 		pos	"916 100"
@@ -210,6 +216,7 @@ menu map
 
 	radiobutton bt_timeplay6
 	{
+		tooltip "_Time lapse: 1 day"
 		cvar	"*cvar mn_timelapse_id"	value "9"
 		icon	speed_dot
 		pos	"936 100"
@@ -221,7 +228,7 @@ menu map
 
 	radiobutton bt_timeplay7
 	{
-		tooltip	"_Very fast"
+		tooltip "_Time lapse: 5 days"
 		cvar	"*cvar mn_timelapse_id"	value "10"
 		icon	speed_play3
 		pos	"956 100"
