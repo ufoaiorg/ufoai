@@ -60,6 +60,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_mission_triggers.c \
 	client/campaign/cp_parse.c \
 	client/campaign/cp_time.c \
+	client/campaign/cp_xvi.c \
 	\
 	client/menu/m_actions.c \
 	client/menu/m_dragndrop.c \

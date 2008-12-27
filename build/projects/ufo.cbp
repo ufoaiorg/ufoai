@@ -632,6 +632,9 @@
 		<Unit filename="..\..\src\client\campaign\cp_time.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\renderer\anormtab.h" />
 		<Unit filename="..\..\src\client\renderer\r_bsp.c">
 			<Option compilerVar="CC" />

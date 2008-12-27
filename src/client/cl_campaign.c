@@ -3587,7 +3587,7 @@ technology_t *CP_IsXVIResearched (void)
  * They will change while the curent month is running of course :)
  * @todo other stuff to back up?
  */
-static void CL_BackupMonthlyData (void)
+static void CL_NationBackupMonthlyData (void)
 {
 	int i, nat;
 
@@ -4308,7 +4308,7 @@ void CL_CampaignRun (void)
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
 		if (date.day == 1 && gd.fund != qfalse && gd.numBases) {
-			CL_BackupMonthlyData();	/* Back up monthly data. */
+			CL_NationBackupMonthlyData();	/* Back up monthly data. */
 			CL_HandleBudget();
 			gd.fund = qfalse;
 		} else if (date.day > 1)
