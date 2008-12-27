@@ -64,14 +64,9 @@ inline void write_angles(const Vector3& angles, Entity* entity) {
 	} else {
 		char value[64];
 
-		if (angles[0] == 0 && angles[1] == 0) {
-			entity->setKeyValue("angles", "");
-			write_angle(angles[2], entity);
-		} else {
-			sprintf(value, "%g %g %g", angles[1], angles[2], angles[0]);
-			entity->setKeyValue("angle", "");
-			entity->setKeyValue("angles", value);
-		}
+		sprintf(value, "%g %g %g", angles[1], angles[2], angles[0]);
+		entity->setKeyValue("angle", "");
+		entity->setKeyValue("angles", value);
 	}
 }
 
