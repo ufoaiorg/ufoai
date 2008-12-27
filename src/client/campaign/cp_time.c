@@ -64,7 +64,7 @@ static int gameLapse;
  * @param[in] type The game lapse type.
  * @return The Maximum game lapse array position.
  */
-static int CL_MaxGameLapseForType (int type)
+static int CP_MaxGameLapseForType (int type)
 {
 	int idx;
 
@@ -81,7 +81,7 @@ static int CL_MaxGameLapseForType (int type)
  * @param[in] type The game lapse type.
  * @return The Minimum game lapse array position.
  */
-static int CL_MinGameLapseForType (int type)
+static int CP_MinGameLapseForType (int type)
 {
 	int idx;
 
@@ -98,10 +98,10 @@ static int CL_MinGameLapseForType (int type)
  * If it isn't then it sets it to the minimum for that type.
  * @param[in] type The game lapse type.
  */
-static void CL_EnsureValidGameLapseForType (int type)
+static void CP_EnsureValidGameLapseForType (int type)
 {
 	if ((lapse[gameLapse].type & type) != type) {
-		gameLapse = CL_MinGameLapseForType(type);
+		gameLapse = CP_MinGameLapseForType(type);
 		CL_UpdateTime();
 	}
 }
@@ -112,7 +112,7 @@ static void CL_EnsureValidGameLapseForType (int type)
  */
 void CL_EnsureValidGameLapseForCombatZoom (void)
 {
-	CL_EnsureValidGameLapseForType(LAPSETYPE_COMBATZOOM);
+	CP_EnsureValidGameLapseForType(LAPSETYPE_COMBATZOOM);
 }
 
 /**
@@ -121,7 +121,7 @@ void CL_EnsureValidGameLapseForCombatZoom (void)
  */
 void CL_EnsureValidGameLapseForGeoscape (void)
 {
-	CL_EnsureValidGameLapseForType(LAPSETYPE_GEOSCAPE);
+	CP_EnsureValidGameLapseForType(LAPSETYPE_GEOSCAPE);
 }
 
 /**
@@ -181,7 +181,7 @@ void CL_GameTimeSlow (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
 	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
-	const int minGameLapse = CL_MinGameLapseForType(lapseType);
+	const int minGameLapse = CP_MinGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
 	 * so the gd.numBases values is pointless here */
@@ -219,7 +219,7 @@ void CL_GameTimeFast (void)
 {
 	const menu_t *menu = MN_GetActiveMenu();
 	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
-	const int maxGameLapse = CL_MaxGameLapseForType(lapseType);
+	const int maxGameLapse = CP_MaxGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
 	 * so the gd.numBases values is pointless here */
