@@ -33,6 +33,7 @@ void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
 void CL_SetGameTime(int gameLapseValue);
+void CL_SetGameTime_f(void);
 
 #endif
 

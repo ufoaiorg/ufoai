@@ -626,6 +626,9 @@
 		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_nations.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>

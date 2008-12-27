@@ -274,3 +274,17 @@ void CL_SetGameTime (int gameLapseValue)
 	CL_UpdateTime();
 }
 
+
+/**
+ * @brief Set a new time game from id
+ * @sa CL_SetGameTime
+ * @sa lapse
+ */
+void CL_SetGameTime_f (void)
+{
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <timeid>\n", Cmd_Argv(0));
+		return;
+	}
+	CL_SetGameTime(atoi(Cmd_Argv(1)));
+}

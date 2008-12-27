@@ -1,6 +1,6 @@
 /**
- * @file cp_xvi.h
- * @brief Campaign XVI header
+ * @file cp_nations.h
+ * @brief Campaign nations headers
  */
 
 /*
@@ -23,15 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_XVI_H
-#define CP_XVI_H
+#ifndef CP_NATIONS_H
+#define CP_NATIONS_H
 
-#define XVI_EVENT_NAME "rs_alien_xvi_event"
-
-void CP_XVIInit(void);
-void CP_SpreadXVIAtPos(const vec2_t pos);
-technology_t *CP_IsXVIResearched(void);
-void CP_SpreadXVI(void);
-int CP_GetAverageXVIRate(void);
+void CP_NationHandleBudget(void);
+void CP_NationBackupMonthlyData(void);
 
 #endif

@@ -58,6 +58,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_mission_recon.c \
 	client/campaign/cp_mission_terror.c \
 	client/campaign/cp_mission_triggers.c \
+	client/campaign/cp_nations.c \
 	client/campaign/cp_parse.c \
 	client/campaign/cp_time.c \
 	client/campaign/cp_xvi.c \

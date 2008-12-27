@@ -400,6 +400,4 @@ void CP_SpawnCrashSiteMission(aircraft_t *ufo);
 struct alienBase_s;
 void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
 
-technology_t *CP_IsXVIResearched(void);
-
 #endif /* CLIENT_CL_CAMPAIGN_H */

@@ -41,7 +41,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_installation.h"
 #include "campaign/cp_missions.h"
 #include "campaign/cp_mission_triggers.h"
+#include "campaign/cp_nations.h"
 #include "campaign/cp_time.h"
+#include "campaign/cp_xvi.h"
 
 /**
  * @brief This fake aircraft is used to assign soldiers for a base attack mission
@@ -50,9 +52,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static aircraft_t baseAttackFakeAircraft;
 
-void R_IncreaseXVILevel(const vec2_t pos);
-void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
-byte* R_XVIMapCopy(int *width, int *height);
 void R_CreateRadarOverlay(void);
 
 /* public vars */
@@ -65,8 +64,6 @@ missionResults_t missionresults;
 
 campaign_t campaigns[MAX_CAMPAIGNS];
 int numCampaigns;
-static technology_t *rsAlienXVI;
-#define XVI_EVENT_NAME "rs_alien_xvi_event"
 salary_t salaries[MAX_CAMPAIGNS];
 cvar_t *cl_campaign;
 static const int MAX_POS_LOOP = 10;				/**< Maximum number of loops to choose a mission position (to avoid infinite loops) */
@@ -806,49 +803,6 @@ static inline qboolean CP_CheckMissionLimitedInTime (const mission_t *mission)
 {
 	return mission->finalDate.day != 0;
 }
-
-/**
- * @brief Sread XVI at a given position.
- * @param[in] pos Position where XVI should be spread.
- */
-static void CP_SpreadXVIAtPos (const vec2_t pos)
-{
-	nation_t *nation;
-
-#ifdef DEBUG
-	if (!ccs.XVISpreadActivated) {
-		Com_Printf("CP_SpreadXVIAtPos: Try to spread XVI but XVISpread is not activated\n");
-		return;
-	}
-#endif
-
-	nation = MAP_GetNation(pos);
-	if (nation)
-		nation->stats[0].xviInfection++;
-
-	R_IncreaseXVILevel(pos);
-}
-
-/**
- * @brief Return the average XVI rate
- * @note XVI = eXtraterrestial Viral Infection
- */
-static int CP_GetAverageXVIRate (void)
-{
-	int XVIRate = 0;
-	int i;
-	nation_t* nation;
-
-	assert(gd.numNations);
-
-	/* check for XVI infection rate */
-	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
-		XVIRate += nation->stats[0].xviInfection;
-	}
-	XVIRate /= gd.numNations;
-	return (int) XVIRate;
-}
-
 
 static int CP_MissionChooseUFO(const mission_t *mission);
 
@@ -3555,56 +3509,6 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 }
 
 /**
- * @brief Spread XVI for each mission that needs to be daily spread.
- * @note Daily called
- */
-static void CP_SpreadXVI (void)
-{
-	const linkedList_t *list = ccs.missions;
-
-	/* don't check if XVI spreading didn't start yet */
-	if (!ccs.XVISpreadActivated)
-		return;
-
-	for (;list; list = list->next) {
-		const mission_t *mission = (mission_t *)list->data;
-		if (mission->stage == STAGE_SPREAD_XVI)
-			CP_SpreadXVIAtPos(mission->pos);
-	}
-}
-
-/**
- * @brief Returns the alien XVI tech if the tech was already researched
- */
-technology_t *CP_IsXVIResearched (void)
-{
-	return RS_IsResearched_ptr(rsAlienXVI) ? rsAlienXVI : NULL;
-}
-
-/**
- * @brief Backs up each nation's relationship values.
- * @note Right after the copy the stats for the current month are the same as the ones from the (end of the) previous month.
- * They will change while the curent month is running of course :)
- * @todo other stuff to back up?
- */
-static void CL_NationBackupMonthlyData (void)
-{
-	int i, nat;
-
-	/**
-	 * Back up nation relationship .
-	 * "inuse" is copied as well so we do not need to set it anywhere.
-	 */
-	for (nat = 0; nat < gd.numNations; nat++) {
-		nation_t *nation = &gd.nations[nat];
-
-		for (i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
-			nation->stats[i] = nation->stats[i - 1];
-		}
-	}
-}
-
-/**
  * @brief Function to handle the campaign end
  */
 void CP_EndCampaign (qboolean won)
@@ -3932,161 +3836,6 @@ const char *CL_DateGetMonthName (int month)
 }
 
 /**
- * @brief Update the nation data from all parsed nation each month
- * @note give us nation support by:
- * * credits
- * * new soldiers
- * * new scientists
- * @note Called from CL_CampaignRun
- * @sa CL_CampaignRun
- * @sa B_CreateEmployee
- */
-static void CL_HandleBudget (void)
-{
-	int i, j;
-	char message[1024];
-	int cost;
-	int initial_credits = ccs.credits;
-
-	/* Refreshes the pilot global list.  Pilots who are already hired are unchanged, but all other
-	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
-	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qtrue);
-
-	for (i = 0; i < gd.numNations; i++) {
-		nation_t *nation = &gd.nations[i];
-		const int funding = NAT_GetFunding(nation, 0);
-		int new_scientists = 0, new_soldiers = 0, new_workers = 0;
-		CL_UpdateCredits(ccs.credits + funding);
-
-		for (j = 0; 0.25 + j < (float) nation->maxScientists * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
-			/* Create a scientist, but don't auto-hire her. */
-			E_CreateEmployee(EMPL_SCIENTIST, nation, NULL);
-			new_scientists++;
-		}
-
-
-		if (nation->stats[0].happiness > 0) {
-			for (j = 0; 0.25 + j < (float) nation->maxSoldiers * nation->stats[0].happiness * nation->stats[0].happiness * nation->stats[0].happiness; j++) {
-				/* Create a soldier. */
-				E_CreateEmployee(EMPL_SOLDIER, nation, NULL);
-				new_soldiers++;
-			}
-		}
-
-		for (j = 0; 0.25 + j * 2 < (float) nation->maxSoldiers * nation->stats[0].happiness; j++) {
-			/* Create a worker. */
-			E_CreateEmployee(EMPL_WORKER, nation, NULL);
-			new_workers++;
-		}
-
-		Com_sprintf(message, sizeof(message), _("Gained %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"),
-					funding, ngettext("credit", "credits", funding),
-					new_scientists, ngettext("scientist", "scientists", new_scientists),
-					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
-					new_workers, ngettext("worker", "workers", new_workers),
-					_(nation->name), NAT_GetHappinessString(nation));
-		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-	}
-
-	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (gd.employees[EMPL_SOLDIER][i].hired)
-			cost += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
-	}
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
-	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-
-	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
-		if (gd.employees[EMPL_WORKER][i].hired)
-			cost += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
-	}
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
-	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-
-	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (gd.employees[EMPL_SCIENTIST][i].hired)
-			cost += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
-	}
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
-	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-
-	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
-		if (gd.employees[EMPL_PILOT][i].hired)
-			cost += SALARY_PILOT_BASE + gd.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
-	}
-
-	Com_sprintf(message, sizeof(message), _("Paid %i credits to pilots"), cost);
-	CL_UpdateCredits(ccs.credits - cost);
-	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-
-	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		if (gd.employees[EMPL_ROBOT][i].hired)
-			cost += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
-	}
-
-	if (cost != 0) {
-		Com_sprintf(message, sizeof(message), _("Paid %i credits for robots"), cost);
-		CL_UpdateCredits(ccs.credits - cost);
-		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-	}
-
-	cost = 0;
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-		for (j = 0; j < base->numAircraftInBase; j++) {
-			cost += base->aircraft[j].price * SALARY_AIRCRAFT_FACTOR / SALARY_AIRCRAFT_DIVISOR;
-		}
-	}
-
-	if (cost != 0) {
-		Com_sprintf(message, sizeof(message), _("Paid %i credits for aircraft"), cost);
-		CL_UpdateCredits(ccs.credits - cost);
-		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-	}
-
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-		cost = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < gd.numBuildings[i]; j++) {
-			cost += gd.buildings[i][j].varCosts;
-		}
-
-		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of base %s"), cost, base->name);
-		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-		CL_UpdateCredits(ccs.credits - cost);
-	}
-
-	cost = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
-	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
-	CL_UpdateCredits(ccs.credits - cost);
-	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-
-	if (initial_credits < 0) {
-		float interest = initial_credits * SALARY_DEBT_INTEREST;
-
-		cost = (int)ceil(interest);
-		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
-		CL_UpdateCredits(ccs.credits - cost);
-		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-	}
-	CL_GameTimeStop();
-}
-
-/**
  * @brief sets market prices at start of the game
  * @sa CL_GameInit
  * @sa BS_Load (Market load function)
@@ -4206,7 +3955,7 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types MN_MAP and MN_3DMAP
  * @sa MN_DrawMenus
- * @sa CL_HandleBudget
+ * @sa CP_NationHandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft
  * @sa CP_CheckEvents
@@ -4308,8 +4057,8 @@ void CL_CampaignRun (void)
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
 		if (date.day == 1 && gd.fund != qfalse && gd.numBases) {
-			CL_NationBackupMonthlyData();	/* Back up monthly data. */
-			CL_HandleBudget();
+			CP_NationBackupMonthlyData();
+			CP_NationHandleBudget();
 			gd.fund = qfalse;
 		} else if (date.day > 1)
 			gd.fund = qtrue;
@@ -4337,20 +4086,6 @@ void CL_UpdateCredits (int credits)
 		credits = MAX_CREDITS;
 	ccs.credits = credits;
 	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
-}
-
-/**
- * @brief Set a new time game from id
- * @sa CL_SetGameTime
- * @sa lapse
- */
-static void CL_SetGameTime_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <timeid>\n", Cmd_Argv(0));
-		return;
-	}
-	CL_SetGameTime(atoi(Cmd_Argv(1)));
 }
 
 #define MAX_STATS_BUFFER 2048
@@ -4868,70 +4603,6 @@ qboolean STATS_Load (sizebuf_t* sb, void* data)
 	campaignStats.moneyBases = MSG_ReadShort(sb);
 	campaignStats.moneyResearch = MSG_ReadShort(sb);
 	campaignStats.moneyWeapons = MSG_ReadShort(sb);
-	return qtrue;
-}
-
-/**
- * @brief XVI map saving callback
- * @note Only save transparency
- * @sa Savegame callback
- * @sa SAV_Init
- * @sa XVI_Load
- */
-qboolean XVI_Save (sizebuf_t *sb, void *data)
-{
-	byte *out;
-	int x, y;
-	int width;
-	int height;
-
-	out = R_XVIMapCopy(&width, &height);
-	if (!out) {
-		MSG_WriteShort(sb, 0);
-		MSG_WriteShort(sb, 0);
-		return qtrue;
-	}
-
-	MSG_WriteShort(sb, width);
-	MSG_WriteShort(sb, height);
-
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x++)
-			MSG_WriteByte(sb, out[y * width + x]);
-	}
-	Mem_Free(out);
-	return qtrue;
-}
-
-/**
- * @brief Load the XVI map from the savegame.
- * @sa Savegame callback
- * @sa SAV_Init
- * @sa XVI_Save
- */
-qboolean XVI_Load (sizebuf_t *sb, void *data)
-{
-	byte *out;
-	int i, j;
-	int width, height;
-
-	width = MSG_ReadShort(sb);
-	height = MSG_ReadShort(sb);
-
-	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
-	if (!out)
-		Sys_Error("TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
-
-	for (i = 0; i < width; i++) {
-		for (j = 0; j < height; j++) {
-			out[j * width + i] = MSG_ReadByte(sb);
-		}
-	}
-
-	R_InitializeXVIOverlay(curCampaign->map, out, width, height);
-
-	Mem_Free(out);
-
 	return qtrue;
 }
 
@@ -5814,9 +5485,7 @@ void CL_GameInit (qboolean load)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 
-	rsAlienXVI = RS_GetTechByID(XVI_EVENT_NAME);
-	if (!rsAlienXVI)
-		Sys_Error("CL_GameInit: Could not find tech definition for " XVI_EVENT_NAME);
+	CP_XVIInit();
 }
 
 /**

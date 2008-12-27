@@ -1040,7 +1040,7 @@ qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
  * @param[in] type The type of the employee list to process.
  * @param[in] excludeUnhappyNations True if a nation is unhappy then they wont
  * send any pilots, false if happiness of nations in not considered.
- * @sa CL_HandleBudget
+ * @sa CP_NationHandleBudget
  */
 void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboolean excludeUnhappyNations)
 {
