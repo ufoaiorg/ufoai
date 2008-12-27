@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_font.h"
 #include "menu/m_parse.h"
 #include "menu/node/m_node_selectbox.h"
+#include "campaign/cp_parse.h"
 
 cvar_t *cl_isometric;
 

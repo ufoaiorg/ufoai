@@ -236,6 +236,9 @@ typedef struct campaign_s {
 	qboolean finished;
 } campaign_t;
 
+extern campaign_t campaigns[MAX_CAMPAIGNS];
+extern int numCampaigns;
+
 /** salary values for a campaign */
 typedef struct salary_s {
 	int soldier_base;
@@ -259,6 +262,8 @@ typedef struct salary_s {
 	int admin_robot;
 	float debt_interest;
 } salary_t;
+
+extern salary_t salaries[MAX_CAMPAIGNS];
 
 #define SALARY_SOLDIER_BASE salaries[curCampaign->idx].soldier_base
 #define SALARY_SOLDIER_RANKBONUS salaries[curCampaign->idx].soldier_rankbonus
@@ -342,6 +347,7 @@ extern mission_t *selectedMission;
 extern campaign_t *curCampaign;
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
+extern cvar_t *cl_campaign;
 
 void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
 void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
@@ -356,6 +362,7 @@ int CL_DateCreateDay(const short years, const byte months, const byte days);
 int CL_DateCreateSeconds(byte hours, byte minutes, byte seconds);
 const char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
+void CP_EndCampaign(qboolean won);
 void CL_UpdateTime(void);
 void CL_EnsureValidGameLapseForCombatZoom(void);
 void CL_EnsureValidGameLapseForGeoscape(void);
@@ -363,15 +370,10 @@ void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
 void CL_SetGameTime(int gameLapseValue);
-void CL_ParseCampaign(const char *name, const char **text);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit(qboolean load);
 aircraft_t* AIR_NewAircraft(base_t * base, const char *name);
-void CL_ParseAlienTeam(const char *name, const char **text);
-void CL_ParseResearchedCampaignItems(const char *name, const char **text);
-void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
-void CP_ExecuteMissionTrigger(mission_t * m, qboolean won);
 const char* CL_SecondConvert(int second);
 
 void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
