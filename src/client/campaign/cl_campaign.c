@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_xvi.h"
 
 void R_CreateRadarOverlay(void);
+static void CL_CampaignInit(qboolean load);
 
 /* public vars */
 mission_t *selectedMission;			/**< Currently selected mission on geoscape */
@@ -3191,7 +3192,7 @@ static const cmdList_t game_commands[] = {
  * @sa SAV_GameLoad
  * @sa CL_GameNew_f
  */
-void CL_CampaignInit (qboolean load)
+static void CL_CampaignInit (qboolean load)
 {
 	const cmdList_t *commands;
 
