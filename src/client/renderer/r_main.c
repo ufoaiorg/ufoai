@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_lightmap.h"
 #include "r_main.h"
 #include "r_error.h"
-#include "r_material_edit.h"
 #include "../../common/tracing.h"
 
 refdef_t refdef;
@@ -737,7 +736,6 @@ qboolean R_Init (void)
 	R_DrawInitLocal();
 	R_SphereInit();
 	R_FontInit();
-	R_MaterialEditInit();
 
 	R_CheckError();
 

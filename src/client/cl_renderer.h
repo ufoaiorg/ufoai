@@ -188,7 +188,6 @@ typedef struct {
 	struct entity_s *trace_ent;
 
 	const char *mapZone;		/**< used to replace textures in base assembly */
-	const char *mapName;
 } refdef_t;
 
 extern refdef_t refdef;

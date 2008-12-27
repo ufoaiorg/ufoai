@@ -1023,12 +1023,10 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 	R_FreeWorldImages();
 
-	if (mapName[0] == '+')
-		refdef.mapName = mapName + 1;
+	if (*mapName == '+')
+		R_LoadMaterials(mapName + 1);
 	else
-		refdef.mapName = mapName;
-
-	R_LoadMaterials(refdef.mapName);
+		R_LoadMaterials(mapName);
 
 	/* fix this, currently needed, slows down loading times */
 	R_ShutdownModels();

@@ -1,11 +1,10 @@
 /**
  * @file r_material.h
  * @brief
- * @author Jay Dolan
  */
 
 /*
-All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -131,7 +130,5 @@ typedef struct material_s {
 } material_t;
 
 void R_LoadMaterials(const char *map);
-int R_ParseStage(materialStage_t *s, const char **buffer);
-int R_LoadAnimImages(materialStage_t *s);
 
 #endif
