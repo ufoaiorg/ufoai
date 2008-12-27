@@ -28,7 +28,7 @@ menu map
 	text messagesystem
 	{
 		pos	"0 0"
-		size	"768 22"
+		size	"768 20"
 		bgcolor	"0 0 0 .5"
 		lineheight	"20"
 		rows	1
@@ -46,24 +46,24 @@ menu map
 	confunc messagesystem_mode0
 	{
 		*messagesystem	rows	1
-		*messagesystem	size	"768 22"
+		*messagesystem	size	"768 20"
 		*messagesystem	scrollbar false
 		cmd "set mn_messagesystem 0;"
 	}
 
-	/* 5 lines */
+	/* 6 lines */
 	confunc messagesystem_mode1
 	{
-		*messagesystem	rows	5
-		*messagesystem	size	"768 110"
+		*messagesystem	rows	6
+		*messagesystem	size	"768 120"
 		*messagesystem	scrollbar false
 	}
 
-	/* 10 lines */
+	/* 12 lines */
 	confunc messagesystem_mode2
 	{
-		*messagesystem	rows	10
-		*messagesystem	size	"768 220"
+		*messagesystem	rows	12
+		*messagesystem	size	"768 240"
 		*messagesystem	scrollbar false
 	}
 
