@@ -50,6 +50,10 @@ CLIENT_SRCS = \
 	client/cl_video.c \
 	client/cl_view.c \
 	\
+	client/campaign/cp_geoscape_actions.c \
+	client/campaign/cp_alien_interest.c \
+	client/campaign/cp_missions.c \
+	\
 	client/menu/m_actions.c \
 	client/menu/m_dragndrop.c \
 	client/menu/m_draw.c \

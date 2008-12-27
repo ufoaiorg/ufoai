@@ -602,6 +602,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_zone.h" />
+		<Unit filename="..\..\src\client\campaign\cp_geoscape_actions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_alien_interest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_missions.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\renderer\anormtab.h" />
 		<Unit filename="..\..\src\client\renderer\r_bsp.c">
 			<Option compilerVar="CC" />
