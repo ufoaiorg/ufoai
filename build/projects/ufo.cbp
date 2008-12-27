@@ -617,6 +617,9 @@
 		<Unit filename="..\..\src\client\campaign\cp_mission_harvest.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_mission_intercept.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_mission_recon.c">
 			<Option compilerVar="CC" />
 		</Unit>

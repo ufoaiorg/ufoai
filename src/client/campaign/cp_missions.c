@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cp_time.h"
 
+/** Maximum number of loops to choose a mission position (to avoid infinite loops) */
+const int MAX_POS_LOOP = 10;
+
 /**
  * @brief Set some needed cvars from mission definition
  * @param[in] mission mission definition pointer with the needed data to set the cvars to

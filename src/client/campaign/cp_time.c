@@ -288,3 +288,51 @@ void CL_SetGameTime_f (void)
 	}
 	CL_SetGameTime(atoi(Cmd_Argv(1)));
 }
+
+/**
+ * @brief Check wheter given date and time is later than current date.
+ * @param[in] now Current date.
+ * @param[in] compare Date to compare.
+ * @return True if current date is later than given one.
+ */
+qboolean Date_LaterThan (date_t now, date_t compare)
+{
+	if (now.day > compare.day)
+		return qtrue;
+	if (now.day < compare.day)
+		return qfalse;
+	if (now.sec > compare.sec)
+		return qtrue;
+	return qfalse;
+}
+
+/**
+ * @brief Add two dates and return the result.
+ * @param[in] a First date.
+ * @param[in] b Second date.
+ * @return The result of adding date_ b to date_t a.
+ */
+date_t Date_Add (date_t a, date_t b)
+{
+	a.sec += b.sec;
+	a.day += (a.sec / SECONDS_PER_DAY) + b.day;
+	a.sec %= SECONDS_PER_DAY;
+	return a;
+}
+
+/**
+ * @brief Return a random relative date which lies between a lower and upper limit.
+ * @param[in] minFrame Minimal date.
+ * @param[in] maxFrame Maximal date.
+ * @return A date value between minFrame and maxFrame.
+ */
+date_t Date_Random (date_t minFrame, date_t maxFrame)
+{
+	maxFrame.sec = max(minFrame.day * SECONDS_PER_DAY + minFrame.sec,
+		(maxFrame.day * SECONDS_PER_DAY + maxFrame.sec) * frand());
+
+	maxFrame.day = maxFrame.sec / SECONDS_PER_DAY;
+	maxFrame.sec = maxFrame.sec % SECONDS_PER_DAY;
+	return maxFrame;
+}
+

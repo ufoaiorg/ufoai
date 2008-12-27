@@ -26,4 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_MISSION_RECON_H
 #define CP_MISSION_RECON_H
 
+void CP_ReconMissionNextStage(mission_t *mission);
+int CP_ReconMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+void CP_ReconMissionLeave(mission_t *mission);
+void CP_ReconMissionGroundGo(mission_t *mission);
+void CP_ReconMissionIsFailure(mission_t *mission);
+void CP_ReconMissionAerial(mission_t *mission);
+
 #endif

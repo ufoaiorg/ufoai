@@ -1,5 +1,5 @@
 /**
- * @file cp_mission_harvest.h
+ * @file cp_mission_intercept.h
  * @brief Campaign mission headers
  */
 
@@ -23,12 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_MISSION_HARVEST_H
-#define CP_MISSION_HARVEST_H
+#ifndef CP_MISSION_INTECEPT_H
+#define CP_MISSION_INTECEPT_H
 
-void CP_HarvestMissionNextStage(mission_t *mission);
-int CP_HarvestMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
-void CP_HarvestMissionIsFailure(mission_t *mission);
-void CP_HarvestMissionGo(mission_t *mission);
+void CP_InterceptMissionLeave(mission_t *mission, qboolean destroyed);
+int CP_InterceptMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
+void CP_InterceptNextStage(mission_t *mission);
+void CP_InterceptMissionIsFailure(mission_t *mission);
+void CP_InterceptMissionIsSuccess(mission_t *mission);
+void CP_InterceptGoToInstallation(mission_t *mission);
+void CP_InterceptAircraftMissionSet(mission_t *mission);
 
 #endif

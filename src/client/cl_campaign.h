@@ -401,5 +401,7 @@ void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
 int CP_MissionChooseUFO(const mission_t *mission);
 void CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 const char* CP_MissionStageToName(const missionStage_t stage);
+void CL_ChangeIndividualInterest(float percentage, interestCategory_t category);
+qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

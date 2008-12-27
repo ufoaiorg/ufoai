@@ -28,8 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cp_mission_baseattack.h"
 #include "cp_mission_harvest.h"
+#include "cp_mission_intercept.h"
 #include "cp_mission_recon.h"
 #include "cp_mission_terror.h"
+
+extern const int MAX_POS_LOOP;
 
 void CP_SetMissionVars(const mission_t *mission);
 void CP_StartMissionMap(mission_t* mission);
