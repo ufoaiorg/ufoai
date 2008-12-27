@@ -23,12 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../cl_alienbase.h"
-#include "../cl_ufo.h"
-#include "cp_missions.h"
-#include "cp_time.h"
-#include "cp_xvi.h"
+#include "../../client.h"
+#include "../../cl_alienbase.h"
+#include "../../cl_ufo.h"
+#include "../cp_missions.h"
+#include "../cp_time.h"
+#include "../cp_xvi.h"
 
 /**
  * @brief Supply mission is over and is a success (from an alien point of view): change interest values.

@@ -26,14 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_MISSIONS_H
 #define CP_MISSIONS_H
 
-#include "cp_mission_baseattack.h"
-#include "cp_mission_buildbase.h"
-#include "cp_mission_harvest.h"
-#include "cp_mission_intercept.h"
-#include "cp_mission_recon.h"
-#include "cp_mission_supply.h"
-#include "cp_mission_terror.h"
-#include "cp_mission_xvi.h"
+#include "missions/cp_mission_baseattack.h"
+#include "missions/cp_mission_buildbase.h"
+#include "missions/cp_mission_harvest.h"
+#include "missions/cp_mission_intercept.h"
+#include "missions/cp_mission_recon.h"
+#include "missions/cp_mission_supply.h"
+#include "missions/cp_mission_terror.h"
+#include "missions/cp_mission_xvi.h"
 
 extern const int MAX_POS_LOOP;
 
