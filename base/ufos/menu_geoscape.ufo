@@ -558,7 +558,7 @@ menu map_combatzoom
 	text messagesystem
 	{
 		pos		"0 0"
-		size	"768 22"
+		size	"768 20"
 		bgcolor	"0 0 0 .5"
 		lineheight	"20"
 		rows	1
