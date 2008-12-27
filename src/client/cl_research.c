@@ -1039,7 +1039,7 @@ static void RS_ChangeScientist_f ()
 	}
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(researchList2[num].tech->base, qtrue);
+	RS_InitGUI(baseCurrent, qtrue);
 }
 
 /**
@@ -1067,7 +1067,7 @@ static void RS_AssignScientist_f (void)
 	RS_AssignScientist(researchList2[num].tech, baseCurrent);
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(researchList2[num].tech->base, qtrue);
+	RS_InitGUI(baseCurrent, qtrue);
 }
 
 
@@ -1166,7 +1166,7 @@ static void RS_RemoveScientist_f (void)
 	RS_RemoveScientist(researchList2[num].tech, NULL);
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(researchList2[num].tech->base, qtrue);
+	RS_InitGUI(baseCurrent, qtrue);
 }
 
 /**
