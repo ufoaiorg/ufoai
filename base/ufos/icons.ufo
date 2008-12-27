@@ -178,3 +178,41 @@ icon speed_dot {
 	texl	"187 37"
 	size	"7 7"
 }
+
+// geoscape
+
+icon geo_messagelog {
+	image "menu/icon_pack3"
+	texl	"2 2"
+	size	"22 21"
+}
+
+icon geo_radar {
+	image "menu/icon_pack3"
+	texl	"32 2"
+	size	"18 20"
+}
+
+icon geo_option {
+	image "menu/icon_pack3"
+	texl	"57 2"
+	size	"21 20"
+}
+
+icon geo_center {
+	image "menu/icon_pack3"
+	texl	"82 3"
+	size	"18 18"
+}
+
+icon geo_messageoption {
+	image "menu/icon_pack3"
+	texl	"108 3"
+	size	"22 21"
+}
+
+icon geo_map {
+	image "menu/icon_pack3"
+	texl	"131 2"
+	size	"22 20"
+}

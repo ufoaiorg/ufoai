@@ -464,14 +464,14 @@ menu map
 		in		{ *bt_show_xvi texl "32 0" *bt_show_xvi texh "64 32" }
 	}
 
-	pic bt_messagesystem
+	custombutton bt_messagesystem
 	{
 		// @todo: better -more verbose- tooltip
 		tooltip	"_Open up messages"
-		image	menu/geo_eventlog
-		pos		"850 320"
-		texl	"0 0"
-		texh	"32 32"
+		image	menu/button_background	blend true
+		icon	geo_messagelog
+		pos		"850 324"
+		texl	"193 38"	size "28 25"
 		// out	{ cmd "bt_messagesystem_out" }
 		// in	{ cmd "bt_messagesystem_in" }
 		click	{
@@ -484,43 +484,34 @@ menu map
 		}
 	}
 
-	pic bt_messagesettings
+	custombutton bt_messagesettings
 	{
 		tooltip	"_Change message and pause settings"
-		image	menu/geo_eventoptions
-		pos		"850 350"
-		texl	"32 0"
-		texh	"64 32"
-		mousefx	false
+		image	menu/button_background	blend true
+		icon	geo_messageoption
+		pos		"850 354"
+		texl	"193 38"	size "28 25"
 		click	{ cmd "mn_push messageoptions;" }
-		out		{ *bt_messagesettings texl "0 0" *bt_messagesettings texh "32 32" }
-		in		{ *bt_messagesettings texl "32 0" *bt_messagesettings texh "64 32" }
 	}
 
-	pic bt_mapcenter
+	custombutton bt_mapcenter
 	{
 		tooltip	"_Center objects on the map"
-		image	menu/geo_mapcenter
-		pos		"892 320"
-		texl	"0 0"
-		texh	"32 32"
-		mousefx	false
-		out		{ *bt_mapcenter texl "0 0" *bt_mapcenter texh "32 32" }
-		in		{ *bt_mapcenter texl "32 0" *bt_mapcenter texh "64 32" }
+		image	menu/button_background	blend true
+		icon	geo_center
+		pos		"892 324"
+		texl	"193 38"	size "28 25"
 		click	{ cmd "map_center;" }
 	}
 
-	pic bt_menu
+	custombutton bt_menu
 	{
 		tooltip	"_Go to Options"
-		image	menu/geo_options
-		pos		"950 320"
-		texl	"0 0"
-		texh	"32 32"
-		mousefx	false
+		image	menu/button_background	blend true
+		icon	geo_option
+		pos		"950 324"
+		texl	"193 38"	size "28 25"
 		click	{ cmd mn_pop; }
-		out		{ *bt_menu texl "0 0" *bt_menu texh "32 32" }
-		in		{ *bt_menu texl "32 0" *bt_menu texh "64 32" }
 	}
 
 	func init
