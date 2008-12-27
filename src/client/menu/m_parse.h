@@ -46,6 +46,7 @@ qboolean MN_ScriptSanityCheck(void);
 #define V_SPECIAL_EXCLUDERECT	(V_SPECIAL + 1)			/**< Identify a special attribute, use special parse function */
 #define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) 		/**< Identify a special attribute, use special parse function */
 #define V_SPECIAL_ICONREF		(V_SPECIAL + 3) 		/**< Identify a special attribute, use special parse function */
+#define V_SPECIAL_IF			(V_SPECIAL + 4)			/**< Identify a special attribute, use special parse function */
 #define V_SPECIAL_CVAR			(V_SPECIAL + 0x0100) 	/**< Property is a CVAR string */
 #define V_SPECIAL_REF			(V_SPECIAL + 0x0200) 	/**< Property is a ref into a value */
 

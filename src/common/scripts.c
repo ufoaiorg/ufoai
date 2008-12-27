@@ -56,10 +56,9 @@ const char *const vt_names[] = {
 	"dmgtype", /* 20 */
 	"dmgweight",
 	"date",
-	"if",
 	"relabs",
-	"client_hunk", /* 25 */
-	"client_hunk_string",
+	"client_hunk",
+	"client_hunk_string", /* 25 */
 	"num",
 	"baseid",
 	"longlines"
@@ -107,40 +106,6 @@ const char *const longlines_names[] = {
 };
 CASSERT(lengthof(longlines_names) == LONGLINES_LAST);
 
-#ifndef DEDICATED_ONLY
-static const char *const if_strings[] = {
-	"==",
-	"<=",
-	">=",
-	">",
-	"<",
-	"!=",
-	"",
-	"eq",
-	"ne"
-};
-CASSERT(lengthof(if_strings) == IF_SIZE);
-
-/**
- * @brief Translate the condition string to menuIfCondition_t enum value
- * @param[in] conditionString The string from scriptfiles (see if_strings)
- * @return menuIfCondition_t value
- * @return enum value for condition string
- * @note Produces a Sys_Error if conditionString was not found in if_strings array
- */
-static int Com_ParseConditionType (const char* conditionString, const char *token)
-{
-	int i;
-	for (i = 0; i < IF_SIZE; i++) {
-		if (!Q_strncmp(if_strings[i], conditionString, 2)) {
-			return i;
-		}
-	}
-	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
-	return -1;
-}
-#endif
-
 /** @brief target sizes for buffer */
 static const size_t vt_sizes[] = {
 	0,	/* V_NULL */
@@ -166,7 +131,6 @@ static const size_t vt_sizes[] = {
 	sizeof(byte),	/* V_DMGTYPE */
 	sizeof(byte),	/* V_DMGWEIGHT */
 	0,	/* V_DATE */
-	0,	/* V_IF */
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
@@ -452,30 +416,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
 		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
 		*writedByte = ALIGN(sizeof(date_t));
-		break;
-
-	case V_IF:
-#ifndef DEDICATED_ONLY
-		if (!strstr(token, " ")) {
-			/* cvar exists? (not null) */
-			Mem_PoolStrDupTo(token, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
-			((menuDepends_t *) b)->cond = IF_EXISTS;
-		} else if (strstr(strstr(token, " "), " ")) {
-			char string[MAX_VAR];
-			char string2[MAX_VAR];
-			char condition[MAX_VAR];
-			sscanf(token, "%s %s %s", string, condition, string2);
-
-			Mem_PoolStrDupTo(string, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
-			Mem_PoolStrDupTo(string2, (char**) &((menuDepends_t *) b)->value, cl_menuSysPool, CL_TAG_MENU);
-			((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
-		} else {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal if statement '%s'", token);
-			return RESULT_ERROR;
-		}
-#endif
-
-		*writedByte = ALIGN(sizeof(menuDepends_t));
 		break;
 
 	case V_RELABS:
@@ -792,9 +732,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	case V_DATE:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((const date_t *) b)->day / DAYS_PER_YEAR, ((const date_t *) b)->day % DAYS_PER_YEAR, ((const date_t *) b)->sec);
 		return valuestr;
-
-	case V_IF:
-		return "";
 
 	case V_RELABS:
 		/* absolute value */

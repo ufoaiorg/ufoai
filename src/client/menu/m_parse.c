@@ -60,8 +60,6 @@ static const value_t menuModelValues[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
-/* =========================================================== */
-
 /** @brief valid node event actions */
 static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
@@ -77,6 +75,40 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 static const char *ea_special_strings[EA_SPECIAL_NUM_EVENTACTION] = {
 	"timeout",
 };
+
+static const char *const if_strings[] = {
+	"==",
+	"<=",
+	">=",
+	">",
+	"<",
+	"!=",
+	"",
+	"eq",
+	"ne"
+};
+CASSERT(lengthof(if_strings) == IF_SIZE);
+
+/* =========================================================== */
+
+/**
+ * @brief Translate the condition string to menuIfCondition_t enum value
+ * @param[in] conditionString The string from scriptfiles (see if_strings)
+ * @return menuIfCondition_t value
+ * @return enum value for condition string
+ * @note Produces a Sys_Error if conditionString was not found in if_strings array
+ */
+static int Com_ParseConditionType (const char* conditionString, const char *token)
+{
+	int i;
+	for (i = 0; i < IF_SIZE; i++) {
+		if (!Q_strncmp(if_strings[i], conditionString, 2)) {
+			return i;
+		}
+	}
+	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
+	return -1;
+}
 
 /**
  * @brief Find a value_t by name into a array of value_t
@@ -602,6 +634,34 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				*icon = MN_GetIconByName(*token);
 				if (*icon == NULL) {
 					Com_Printf("MN_ParseProperty: icon '%s' not found (object %s)\n", *token, objectName);
+				}
+			}
+			break;
+
+		case V_SPECIAL_IF:
+			{
+				byte *b = (byte *) object + property->ofs;
+
+				*token = COM_EParse(text, errhead, objectName);
+				if (!*text)
+					return qfalse;
+
+				if (!strstr(*token, " ")) {
+					/* cvar exists? (not null) */
+					Mem_PoolStrDupTo(*token, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
+					((menuDepends_t *) b)->cond = IF_EXISTS;
+				} else if (strstr(strstr(*token, " "), " ")) {
+					char string[MAX_VAR];
+					char string2[MAX_VAR];
+					char condition[MAX_VAR];
+					sscanf(*token, "%s %s %s", string, condition, string2);
+
+					Mem_PoolStrDupTo(string, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
+					Mem_PoolStrDupTo(string2, (char**) &((menuDepends_t *) b)->value, cl_menuSysPool, CL_TAG_MENU);
+					((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, *token);
+				} else {
+					Com_Printf("Illegal if statement '%s'\n", *token);
+					return qfalse;
 				}
 			}
 			break;

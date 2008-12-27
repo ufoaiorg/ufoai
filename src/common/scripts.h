@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief conditions for V_IF
+ * @todo move it on the menu code
  */
 typedef enum menuIfCondition_s {
 	/** float compares */
@@ -103,10 +104,9 @@ typedef enum {
 	V_DMGTYPE = 20,
 	V_DMGWEIGHT,
 	V_DATE,
-	V_IF,
 	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
-	V_CLIENT_HUNK = 25,			/**< only for client side data - not handled in Com_EParseValue */
-	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
+	V_CLIENT_HUNK,			/**< only for client side data - not handled in Com_EParseValue */
+	V_CLIENT_HUNK_STRING = 25,		/**< same as for V_CLIENT_HUNK */
 	V_MENUTEXTID,
 	V_BASEID,
 	V_LONGLINES,
