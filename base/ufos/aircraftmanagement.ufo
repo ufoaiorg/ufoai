@@ -751,7 +751,7 @@ craftitem craft_shield_polymer
 	price		33600
 	size	40	// light
 
-	shield		+5
+	shield		+2
 	speed		0.9
 	maxspeed	0.9
 }
@@ -764,7 +764,7 @@ craftitem craft_shield_plating
 	price		50000
 	size	50	// light
 
-	shield		+10
+	shield		+4
 	speed		0.8
 	maxspeed	0.8
 }
