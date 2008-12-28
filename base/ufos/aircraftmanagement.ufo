@@ -85,7 +85,7 @@ aircraft craft_drop_firebird
 		maxspeed	10
 		shield		0
 		ecm			70
-		damage		70
+		damage		200
 		accuracy	70
 		range		240
 	}
@@ -120,7 +120,7 @@ aircraft craft_drop_herakles
 		maxspeed	13
 		shield		5
 		ecm			80
-		damage		120
+		damage		300
 		accuracy	70
 		range		240
 	}
@@ -159,7 +159,7 @@ aircraft craft_inter_stiletto
 		maxspeed	14
 		shield		0
 		ecm		100
-		damage		30
+		damage		100
 		accuracy	100
 		range		80
 	}
@@ -204,7 +204,7 @@ aircraft craft_inter_saracen
 		maxspeed	18
 		shield		3
 		ecm		80
-		damage		50
+		damage		150
 		accuracy	70
 		range		110
 	}
@@ -244,7 +244,7 @@ aircraft craft_inter_dragon
 		maxspeed	23
 		shield		0
 		ecm			100
-		damage		40
+		damage		120
 		accuracy	80
 		range		146
 	}
@@ -284,7 +284,7 @@ aircraft craft_inter_starchaser
 		maxspeed	14
 		shield		0
 		ecm		100
-		damage		30
+		damage		180
 		accuracy	100
 		range		80
 	}
@@ -329,7 +329,7 @@ aircraft craft_inter_stingray
 		maxspeed	30
 		shield		3
 		ecm		100
-		damage		70
+		damage		250
 		accuracy	100
 		range		156
 	}
@@ -376,7 +376,7 @@ aircraft craft_ufo_scout
 		maxspeed	13
 		shield		0
 		ecm		70
-		damage		30
+		damage		100
 		accuracy	50
 		range		208
 	}
@@ -397,7 +397,7 @@ aircraft craft_ufo_fighter
 		maxspeed	14
 		shield		0
 		ecm		90
-		damage		50
+		damage		150
 		accuracy	80
 		range		236
 	}
@@ -425,7 +425,7 @@ aircraft craft_ufo_harvester
 		maxspeed	18
 		shield		3
 		ecm		100
-		damage		80
+		damage		250
 		accuracy	100
 		range		278
 	}
@@ -466,7 +466,7 @@ aircraft craft_ufo_corrupter
 		maxspeed	17
 		shield		4
 		ecm			100
-		damage		100
+		damage		300
 		accuracy	80
 		range		347
 	}
@@ -493,7 +493,7 @@ aircraft craft_ufo_supply
 		maxspeed	16
 		shield		5
 		ecm		80
-		damage		70
+		damage		200
 		accuracy	50
 		range		208
 	}
@@ -516,7 +516,7 @@ aircraft craft_ufo_bomber
 		maxspeed	27
 		shield		0
 		ecm			100
-		damage		40
+		damage		500
 		accuracy	80
 		range		347
 	}
