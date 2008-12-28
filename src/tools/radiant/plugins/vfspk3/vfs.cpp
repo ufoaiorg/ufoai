@@ -129,7 +129,7 @@ static void InitPakFile (ArchiveModules& archiveModules, const char *filename) {
 		entry.archive = table->m_pfnOpenArchive(filename);
 		entry.is_pakfile = true;
 		g_archives.push_back(entry);
-		globalOutputStream() << "  pak file: " << filename << "\n";
+		g_message("  pak file: %s\n", filename);
 	}
 }
 
@@ -274,7 +274,7 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 		GDir* dir = g_dir_open (path, 0, 0);
 
 		if (dir != 0) {
-			globalOutputStream() << "vfs directory: " << path << "\n";
+			g_message("vfs directory: %s\n", path);
 
 			Archives archives;
 			Archives archivesOverride;
@@ -432,12 +432,12 @@ public:
 		InitDirectory(path, FileSystemAPI_getArchiveModules());
 	}
 	void initialise() {
-		globalOutputStream() << "filesystem initialised\n";
+		g_message("filesystem initialised\n");
 		g_observers.realise();
 	}
 	void shutdown() {
 		g_observers.unrealise();
-		globalOutputStream() << "filesystem shutdown\n";
+		g_message("filesystem shutdown\n");
 		Shutdown();
 	}
 

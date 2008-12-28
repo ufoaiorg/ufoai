@@ -167,7 +167,7 @@ GdkGLConfig* glconfig_new_with_depth() {
 		}
 	}
 
-	globalOutputStream() << "OpenGL window configuration: colour-buffer = auto, depth-buffer = auto (fallback)\n";
+	g_message("OpenGL window configuration: colour-buffer = auto, depth-buffer = auto (fallback)\n");
 	return gdk_gl_config_new_by_mode((GdkGLConfigMode)(GDK_GL_MODE_RGBA | GDK_GL_MODE_DOUBLE | GDK_GL_MODE_DEPTH));
 }
 

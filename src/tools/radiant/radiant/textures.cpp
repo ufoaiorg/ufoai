@@ -459,11 +459,11 @@ void Textures_UpdateTextureCompressionFormat() {
 			if (g_texture_globals.m_nTextureCompressionFormat != TEXTURECOMPRESSION_NONE
 			        && g_texture_globals.m_nTextureCompressionFormat != TEXTURECOMPRESSION_RGBA
 			        && !g_texture_globals.m_bS3CompressionSupported) {
-				globalOutputStream() << "OpenGL extension GL_EXT_texture_compression_s3tc not supported by current graphics drivers\n";
+				g_message("OpenGL extension GL_EXT_texture_compression_s3tc not supported by current graphics drivers\n");
 				g_texture_globals.m_nTextureCompressionFormat = TEXTURECOMPRESSION_RGBA; // if this is not supported either, see below
 			}
 			if (g_texture_globals.m_nTextureCompressionFormat == TEXTURECOMPRESSION_RGBA && !g_texture_globals.m_bOpenGLCompressionSupported) {
-				globalOutputStream() << "OpenGL extension GL_ARB_texture_compression not supported by current graphics drivers\n";
+				g_message("OpenGL extension GL_ARB_texture_compression not supported by current graphics drivers\n");
 				g_texture_globals.m_nTextureCompressionFormat = TEXTURECOMPRESSION_NONE;
 			}
 

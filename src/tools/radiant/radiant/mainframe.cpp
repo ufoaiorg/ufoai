@@ -495,9 +495,9 @@ void Radiant_Shutdown (void)
 	g_gameToolsPathObservers.unrealise();
 
 	if (!g_preferences_globals.disable_ini) {
-		globalOutputStream() << "Start writing prefs\n";
+		g_message("Start writing prefs\n");
 		Preferences_Save();
-		globalOutputStream() << "Done prefs\n";
+		g_message("Done prefs\n");
 	}
 
 	Radiant_Destroy();
@@ -1484,6 +1484,7 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 	if (style == MainFrame::eSplit) {
 		create_menu_item_with_mnemonic(menu, "Texture Browser", "ToggleTextures");
 	}
+	create_menu_item_with_mnemonic(menu, "Toggle Sidebar", "ToggleSidebar");
 
 	menu_separator(menu);
 	{
@@ -2085,6 +2086,8 @@ void MainFrame::Create (void)
 	}
 #endif
 
+	GtkWidget *notebook = Sidebar_construct();
+
 	gtk_widget_add_events(GTK_WIDGET(window), GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_FOCUS_CHANGE_MASK);
 	g_signal_connect(G_OBJECT(window), "delete_event", G_CALLBACK(mainframe_delete), this);
 
@@ -2255,7 +2258,6 @@ void MainFrame::Create (void)
 		Error("Invalid layout type set - remove your radiant config files and retry");
 	}
 
-	GtkWidget *notebook = Sidebar_construct();
 	gtk_box_pack_start(GTK_BOX(mainHBox), GTK_WIDGET(notebook), FALSE, FALSE, 0);
 
 	SetActiveXY(m_pXYWnd);

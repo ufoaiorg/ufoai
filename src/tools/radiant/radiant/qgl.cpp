@@ -95,7 +95,7 @@ typedef void* (*glXGetProcAddressARBProc) (const GLubyte *procName);
 
 
 void QGL_Shutdown(OpenGLBinding& table) {
-	globalOutputStream() << "Shutting down OpenGL module...";
+	g_message("Shutting down OpenGL module...");
 
 #if defined(WIN32)
 	qwglCopyContext              = 0;
@@ -143,7 +143,7 @@ void QGL_Shutdown(OpenGLBinding& table) {
 #error "unsupported platform"
 #endif
 
-	globalOutputStream() << "Done.\n";
+	g_message("Done.\n");
 }
 
 
@@ -1517,9 +1517,9 @@ void QGL_sharedContextCreated(OpenGLBinding& table) {
 
 	if (QGL_ExtensionSupported("GL_EXT_texture_filter_anisotropic")) {
 		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &g_maxTextureAnisotropy);
-		globalOutputStream() << "Anisotropic filtering possible (max " << g_maxTextureAnisotropy << "x)\n";
+		g_message("Anisotropic filtering possible (max %ix)\n", g_maxTextureAnisotropy);
 	} else {
-		globalOutputStream() << "No Anisotropic filtering available\n";
+		g_message("No Anisotropic filtering available\n");
 		g_maxTextureAnisotropy = 0;
 	}
 }

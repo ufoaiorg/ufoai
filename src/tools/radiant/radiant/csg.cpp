@@ -525,16 +525,16 @@ void CSG_Merge(void) {
 	GlobalSceneGraph().traverse(BrushGatherSelected(selected_brushes));
 
 	if (selected_brushes.empty()) {
-		globalOutputStream() << "CSG Merge: No brushes selected.\n";
+		g_message("CSG Merge: No brushes selected.\n");
 		return;
 	}
 
 	if (selected_brushes.size() < 2) {
-		globalOutputStream() << "CSG Merge: At least two brushes have to be selected.\n";
+		g_message("CSG Merge: At least two brushes have to be selected.\n");
 		return;
 	}
 
-	globalOutputStream() << "CSG Merge: Merging " << Unsigned(selected_brushes.size()) << " brushes.\n";
+	g_message("CSG Merge: Merging %u brushes.\n", Unsigned(selected_brushes.size()));
 
 	UndoableCommand undo("brushMerge");
 
@@ -544,7 +544,7 @@ void CSG_Merge(void) {
 	Brush* brush = Node_getBrush(node);
 	// if the new brush would not be convex
 	if (!Brush_merge(*brush, selected_brushes, true)) {
-		globalOutputStream() << "CSG Merge: Failed - result would not be convex.\n";
+		g_message("CSG Merge: Failed - result would not be convex.\n");
 	} else {
 		ASSERT_MESSAGE(!brush->empty(), "brush left with no faces after merge");
 
@@ -557,7 +557,7 @@ void CSG_Merge(void) {
 
 		selectPath(merged_path, true);
 
-		globalOutputStream() << "CSG Merge: Succeeded.\n";
+		g_message("CSG Merge: Succeeded.\n");
 		SceneChangeNotify();
 	}
 }
