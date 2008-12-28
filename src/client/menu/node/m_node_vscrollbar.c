@@ -235,9 +235,13 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 
 }
 
+static void MN_VScrollbarNodeLoading (menuNode_t *node)
+{
+	node->size[0] = 19;
+}
+
 static void MN_VScrollbarNodeLoaded (menuNode_t *node)
 {
-	node->size[0] = 27;
 #ifdef DEBUG
 	if (node->size[1] - (ELEMENT_HEIGHT * 4) < 0)
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s.%s' too small. It can create graphical glitches\n", node->menu->name, node->name);
@@ -255,4 +259,5 @@ void MN_RegisterVScrollbarNode (nodeBehaviour_t *behaviour)
 	behaviour->capturedMouseMove = MN_VScrollbarNodeCapturedMouseMove;
 	behaviour->draw = MN_VScrollbarNodeDraw;
 	behaviour->loaded = MN_VScrollbarNodeLoaded;
+	behaviour->loading = MN_VScrollbarNodeLoading;
 }
