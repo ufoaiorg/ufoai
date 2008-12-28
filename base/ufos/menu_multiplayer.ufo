@@ -1214,14 +1214,12 @@ menu mp_create_server
 		disabled	true
 	}
 
-	text string_gametypes
+	string string_gametypes
 	{
 		pos			"85 570"
 		font		"f_verysmall"
 		string		"*cvar mn_mapgametypes"
 		size		"256 32"
-		// FIXME: should not be wrapped but linebreaked
-		longlines	wrap
 	}
 
 	pic prev_map
