@@ -68,6 +68,32 @@ acdg     +a     +a     +a	  acef
 0      abde    abde    abde	  0
 }
 
+tile +craft_crash_fighter
+{
+5 5
+
+0      abfg    abfg    abfg	  0
+acdg     +a     +a     +a	  acef
+acdg     +a     +a     +a	  acef
+acdg     +a     +a     +a	  acef
+0      abde    abde    abde	  0
+}
+
+
+tile +craft_ufo_harvester
+{
+7 6
+
+0      abfg    abfg    abfg    abfg    abfg	  0
+acdg     +a      +a      +a     +a     +a	  acef
+acdg     +a      +a      +a     +a     +a	  acef
+acdg     +a      +a      +a     +a     +a	  acef
+0        ad      +a      +a     +a     +a	  acef
+0         0    abde    abde    abde    abde	  0
+}
+
+
+
 //** forest tiles
 
 tile +f1
@@ -383,63 +409,5 @@ size "8 8"
 +a1 "2 3"
 +a2 "1 2"
 *rm_ufo +craft_ufo_fighter "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_crash_scout
-{
-title "_Crashed UFO - Scout"
-size "4 8"
-
-+f1 "0 10"
-+f2 "0 10"
-+f3 "0 10"
-+f4 "0 10"
-+f5 "0 10"
-+f6 "0 10"
-+f7 "0 10"
-+f8 "0 10"
-+f9 "0 5"
-+f10 "0 1"
-+h1 "0 1"
-+w1 "0 4"
-+w2 "0 4"
-+w3 "0 4"
-+w4 "0 4"
-+w5 "0 3"
-+w6 "1 3"
-+w7 "2 3"
-+w8 "1 2"
-*rm_ufo +craft_crash_scout "1 1"
-*rm_drop +drop_firebird "1 1"
-}
-
-assembly craft_landed_scout
-{
-title "_UFO - Scout"
-size "7 7"
-
-+f1 "0 10"
-+f2 "0 10"
-+f3 "0 10"
-+f4 "0 10"
-+f5 "0 10"
-+f6 "0 10"
-+f7 "0 10"
-+f8 "0 10"
-+f9 "0 5"
-+f10 "0 1"
-+h1 "1 1"
-+w1 "0 3"
-+w2 "0 3"
-+w3 "0 3"
-+w4 "0 3"
-+w5 "1 2"
-+w6 "0 1"
-+w7 "0 2"
-+w8 "1 1"
-+a1 "0 2"
-+a2 "0 1"
-*rm_ufo +craft_ufo_scout "1 1"
 *rm_drop +drop_firebird "1 1"
 }
