@@ -39,42 +39,32 @@ menu map
 
 	confunc messagesystem_changemode
 	{
-		cmd "messagesystem_mode<cvar:mn_messagesystem>;"
-	}
+		/* one line */
+		if "mn_messagesystem == 0" {
+			*messagesystem	rows	1
+			*messagesystem	size	"768 20"
+			*messagesystem	scrollbar false
+		}
+		/* 6 lines */
+		if "mn_messagesystem == 1" {
+			*messagesystem	rows	6
+			*messagesystem	size	"768 120"
+			*messagesystem	scrollbar false
+		}
+		/* 12 lines */
+		if "mn_messagesystem == 2" {
+			*messagesystem	rows	12
+			*messagesystem	size	"768 240"
+			*messagesystem	scrollbar false
+		}
+		/* full screen */
+		if "mn_messagesystem == 3" {
+			*messagesystem	rows	38
+			*messagesystem	size	"768 768"
+			*messagesystem	scrollbar true
+			cmd "game_timestop;"
+		}
 
-	/* one line */
-	confunc messagesystem_mode0
-	{
-		*messagesystem	rows	1
-		*messagesystem	size	"768 20"
-		*messagesystem	scrollbar false
-		cmd "set mn_messagesystem 0;"
-	}
-
-	/* 6 lines */
-	confunc messagesystem_mode1
-	{
-		*messagesystem	rows	6
-		*messagesystem	size	"768 120"
-		*messagesystem	scrollbar false
-	}
-
-	/* 12 lines */
-	confunc messagesystem_mode2
-	{
-		*messagesystem	rows	12
-		*messagesystem	size	"768 240"
-		*messagesystem	scrollbar false
-	}
-
-	/* full screen */
-	confunc messagesystem_mode3
-	{
-		*messagesystem	rows	38
-		*messagesystem	size	"768 768"
-		*messagesystem	scrollbar true
-		cmd "game_timestop;"
-		cmd "set mn_messagesystem 3;"
 	}
 
 	pic back
@@ -487,7 +477,8 @@ menu map
 			cmd "messagesystem_changemode"
 		}
 		rclick	{
-			cmd "messagesystem_mode3"
+			cmd "set mn_messagesystem 3;"
+			cmd "messagesystem_changemode"
 		}
 	}
 
@@ -524,7 +515,8 @@ menu map
 	func init
 	{
 		cmd	"music_change geoscape;"
-		call messagesystem_mode0
+		cmd "set mn_messagesystem 0;"
+		cmd "messagesystem_changemode"
 	}
 }
 
@@ -667,7 +659,9 @@ menu map_combatzoom
 	func init
 	{
 		cmd	"music_change aircombat;"
-		cmd	"messagesystem_mode0"	// MessageSystem turned off
+		// MessageSystem turned off
+		cmd "set mn_messagesystem 0;"
+		cmd "messagesystem_changemode"
 	}
 
 	func close

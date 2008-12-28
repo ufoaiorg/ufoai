@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_messages.h"
 #include "m_nodes.h"
 #include "m_icon.h"
+#include "m_condition.h"
 #include "node/m_node_model.h"
 
 typedef struct mouseRepeat_s {
@@ -87,6 +88,9 @@ typedef struct menuGlobal_s {
 
 	excludeRect_t excludeRect[MAX_EXLUDERECTS];
 	int numExcludeRect;
+
+	menuDepends_t menuConditions[MAX_MENUCONDITIONS];
+	int numConditions;
 
 	menuIcon_t menuIcons[MAX_MENUICONS];
 	int numIcons;

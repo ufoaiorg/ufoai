@@ -66,7 +66,8 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"cmd",
 	"call",
 	"*",
-	"&"
+	"&",
+	"if"
 };
 
 #define EA_SPECIAL_NUM_EVENTACTION 1
@@ -290,6 +291,20 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 					break;
 				}
 			}
+			break;
+
+		case EA_IF:
+			/* get the condition */
+			*token = COM_EParse(text, errhead, NULL);
+			if (!*text)
+				return NULL;
+			action->data = MN_AllocCondition(*token);
+
+			/* get the action block */
+			*token = COM_EParse(text, errhead, NULL);
+			if (!*text)
+				return NULL;
+			action->scriptValues = (const value_t *) MN_ParseAction (menuNode, text, token);
 			break;
 
 		case EA_SPECIAL_TIMEOUT:

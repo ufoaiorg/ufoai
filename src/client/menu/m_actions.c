@@ -104,6 +104,12 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 			}
 		}
 		break;
+	case EA_IF:
+		if (MN_CheckCondition((menuDepends_t *) action->data)) {
+			MN_ExecuteActions(menu, (const menuAction_t* const) action->scriptValues);
+		}
+		break;
+
 	default:
 		Sys_Error("unknown action type\n");
 		break;
@@ -114,9 +120,9 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 /**
  * @sa MN_ParseAction
  */
-void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
+void MN_ExecuteActions (const menu_t* const menu, const menuAction_t* const first)
 {
-	menuAction_t *action;
+	const menuAction_t *action;
 	for (action = first; action; action = action->next) {
 		MN_ExecuteAction(menu, action);
 	}

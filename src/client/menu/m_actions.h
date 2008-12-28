@@ -34,6 +34,7 @@ typedef enum ea_s {
 	EA_CALL,
 	EA_NODE,
 	EA_VAR,	/**< @todo finish menu var implementation - to reduce the cvar use */
+	EA_IF,
 
 	EA_NUM_EVENTACTION
 } ea_t;
@@ -57,7 +58,7 @@ void MN_ExecuteConfunc(const char *fmt, ...);
 
 #define printf _SAVE_PRINTF_
 
-void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
+void MN_ExecuteActions(const menu_t* const menu, const menuAction_t* const first);
 void MN_ConfuncCommand_f(void);
 void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* firstAction);
 

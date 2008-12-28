@@ -30,10 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct cvar_s;
 
+#define MAX_MENUCONDITIONS 64
+
 /**
  * @brief conditions for V_SPECIAL_IF
  */
 typedef enum menuIfCondition_s {
+	IF_INVALID = -1,
 	/** float compares */
 	IF_EQ = 0, /**< == */
 	IF_LE, /**< <= */
@@ -62,5 +65,6 @@ typedef struct menuDepends_s {
 
 qboolean MN_CheckCondition(menuDepends_t *condition);
 qboolean MN_InitCondition(menuDepends_t *condition, const char *token);
+menuDepends_t *MN_AllocCondition(const char *description);
 
 #endif

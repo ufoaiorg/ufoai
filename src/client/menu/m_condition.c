@@ -118,16 +118,15 @@ qboolean MN_CheckCondition (menuDepends_t *condition)
  * @return enum value for condition string
  * @note Produces a Sys_Error if conditionString was not found in if_strings array
  */
-static int MN_ParseConditionType (const char* conditionString, const char *token)
+static int MN_GetOperatorByName (const char* operatorName)
 {
 	int i;
 	for (i = 0; i < IF_SIZE; i++) {
-		if (!Q_strncmp(if_strings[i], conditionString, 2)) {
+		if (!Q_strncmp(if_strings[i], operatorName, 2)) {
 			return i;
 		}
 	}
-	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
-	return -1;
+	return IF_INVALID;
 }
 
 /**
@@ -138,6 +137,7 @@ static int MN_ParseConditionType (const char* conditionString, const char *token
  */
 qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 {
+	condition->cvar = NULL;
 	if (!strstr(token, " ")) {
 		/* cvar exists? (not null) */
 		Mem_PoolStrDupTo(token, &condition->var, cl_menuSysPool, CL_TAG_MENU);
@@ -150,10 +150,35 @@ qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 
 		Mem_PoolStrDupTo(param1, &condition->var, cl_menuSysPool, CL_TAG_MENU);
 		Mem_PoolStrDupTo(param2, &condition->value, cl_menuSysPool, CL_TAG_MENU);
-		condition->cond = MN_ParseConditionType(operator_, token);
+		condition->cond = MN_GetOperatorByName(operator_);
+		if (condition->cond == IF_INVALID)
+			Sys_Error("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator_, token);
+
 	} else {
 		Com_Printf("Illegal if statement '%s'\n", token);
 		return qfalse;
 	}
 	return qtrue;
+}
+
+/**
+ * @brief Alloc and init a condition according to a string
+ * @param[in] token String describ a condition
+ * @param[out] condition Contition to init
+ * @return The condition if every thing is ok, else NULL
+ */
+menuDepends_t *MN_AllocCondition (const char *description)
+{
+	menuDepends_t condition;
+	qboolean result;
+	assert(mn.numConditions < MAX_MENUCONDITIONS);
+	result = MN_InitCondition(&condition, description);
+	if (!result)
+		return NULL;
+
+	/* alloc memory */
+	mn.menuConditions[mn.numConditions] = condition;
+	mn.numConditions++;
+
+	return &mn.menuConditions[mn.numConditions - 1];
 }
