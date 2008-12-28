@@ -41,8 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cp_geoscape_actions.h"
 #include "campaign/cp_time.h"
 
-void R_CreateRadarOverlay(void);
-
 vec3_t newBasePos;
 static cvar_t *mn_base_title;
 static cvar_t *cl_equip;
@@ -51,21 +49,6 @@ static building_t *buildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
 static void B_BuildingInit(base_t* base);
-
-/**
- * @brief Count all employees (hired) in the given base
- */
-int B_GetEmployeeCount (const base_t* const base)
-{
-	int cnt = 0;
-	employeeType_t type;
-
-	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++)
-		cnt += E_CountHired(base, type);
-	Com_DPrintf(DEBUG_CLIENT, "B_GetEmployeeCount: %i\n", cnt);
-
-	return cnt;
-}
 
 /**
  * @brief Array bound check for the base index.
