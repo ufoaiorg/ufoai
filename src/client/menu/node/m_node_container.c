@@ -466,7 +466,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node)
 	vec2_t pos;
 	vec2_t nodepos;
 	qboolean drawLoadable = qfalse;
-	objDef_t *dragType;
+	objDef_t *dragType = NULL;
 
 	MN_GetNodeAbsPos(node, nodepos);
 	Vector2Copy(nodepos, pos);
@@ -547,7 +547,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node)
 	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	qboolean drawLoadable = qfalse;
 	vec2_t nodepos;
-	objDef_t *dragType;
+	objDef_t *dragType = NULL;
 
 	/* Remember the last used scroll settings, so we know if we
 	 * need to update the button-display later on. */
@@ -707,7 +707,7 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node)
 	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	qboolean drawLoadable = qfalse;
 	vec2_t nodepos;
-	objDef_t *dragType;
+	objDef_t *dragType = NULL;
 
 	MN_GetNodeAbsPos(node, nodepos);
 
