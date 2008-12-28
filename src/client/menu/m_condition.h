@@ -61,6 +61,6 @@ typedef struct menuDepends_s {
 } menuDepends_t;
 
 qboolean MN_CheckCondition(menuDepends_t *condition);
-int Com_ParseConditionType (const char* conditionString, const char *token);
+qboolean MN_InitCondition(menuDepends_t *condition, const char *token);
 
 #endif

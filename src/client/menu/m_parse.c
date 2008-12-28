@@ -608,29 +608,16 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_SPECIAL_IF:
 			{
-				byte *b = (byte *) object + property->ofs;
+				menuDepends_t *condition = (menuDepends_t *) ((byte *) object + property->ofs);
+				qboolean r;
 
 				*token = COM_EParse(text, errhead, objectName);
 				if (!*text)
 					return qfalse;
 
-				if (!strstr(*token, " ")) {
-					/* cvar exists? (not null) */
-					Mem_PoolStrDupTo(*token, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
-					((menuDepends_t *) b)->cond = IF_EXISTS;
-				} else if (strstr(strstr(*token, " "), " ")) {
-					char string[MAX_VAR];
-					char string2[MAX_VAR];
-					char condition[MAX_VAR];
-					sscanf(*token, "%s %s %s", string, condition, string2);
-
-					Mem_PoolStrDupTo(string, (char**) &((menuDepends_t *) b)->var, cl_menuSysPool, CL_TAG_MENU);
-					Mem_PoolStrDupTo(string2, (char**) &((menuDepends_t *) b)->value, cl_menuSysPool, CL_TAG_MENU);
-					((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, *token);
-				} else {
-					Com_Printf("Illegal if statement '%s'\n", *token);
+				r = MN_InitCondition(condition, *token);
+				if (!r)
 					return qfalse;
-				}
 			}
 			break;
 

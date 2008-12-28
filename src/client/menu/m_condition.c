@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
 #include "m_condition.h"
 
 static const char *const if_strings[] = {
@@ -117,7 +118,7 @@ qboolean MN_CheckCondition (menuDepends_t *condition)
  * @return enum value for condition string
  * @note Produces a Sys_Error if conditionString was not found in if_strings array
  */
-int Com_ParseConditionType (const char* conditionString, const char *token)
+static int MN_ParseConditionType (const char* conditionString, const char *token)
 {
 	int i;
 	for (i = 0; i < IF_SIZE; i++) {
@@ -127,4 +128,32 @@ int Com_ParseConditionType (const char* conditionString, const char *token)
 	}
 	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
 	return -1;
+}
+
+/**
+ * @brief Initilize a condition according to a string
+ * @param[in] token String describ a condition
+ * @param[out] condition Contition to init
+ * @return True, if the condition is initialized
+ */
+qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
+{
+	if (!strstr(token, " ")) {
+		/* cvar exists? (not null) */
+		Mem_PoolStrDupTo(token, &condition->var, cl_menuSysPool, CL_TAG_MENU);
+		condition->cond = IF_EXISTS;
+	} else if (strstr(strstr(token, " "), " ")) {
+		char param1[MAX_VAR];
+		char param2[MAX_VAR];
+		char operator_[MAX_VAR];
+		sscanf(token, "%s %s %s", param1, operator_, param2);
+
+		Mem_PoolStrDupTo(param1, &condition->var, cl_menuSysPool, CL_TAG_MENU);
+		Mem_PoolStrDupTo(param2, &condition->value, cl_menuSysPool, CL_TAG_MENU);
+		condition->cond = MN_ParseConditionType(operator_, token);
+	} else {
+		Com_Printf("Illegal if statement '%s'\n", token);
+		return qfalse;
+	}
+	return qtrue;
 }
