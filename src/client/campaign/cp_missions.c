@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_global.h"
+#include "../cl_team.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
 #include "cp_missions.h"
@@ -1109,4 +1110,97 @@ void CP_MissionsInit (void)
 	Cmd_AddCommand("debug_listmission", CP_MissionList_f, "Debug function to show all missions");
 	Cmd_AddCommand("debug_listinterest", CP_AlienInterestList_f, "Debug function to show alien interest values");
 #endif
+}
+
+void CP_MissionEnd (mission_t* mission, qboolean won)
+{
+	int civilians_killed;
+	int aliens_killed;
+	int i;
+	base_t *base;
+	aircraft_t *aircraft;
+	int numberofsoldiers = 0; /* DEBUG */
+
+	if (mission->stage == STAGE_BASE_ATTACK) {
+		base = (base_t *)mission->data;
+		/* HACK */
+		aircraft = &baseAttackFakeAircraft;
+		assert(base);
+	} else {
+		/* note that gd.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
+		assert(gd.interceptAircraft);
+		aircraft = gd.interceptAircraft;
+		base = aircraft->homebase;
+		assert(base);
+	}
+
+	/* add the looted goods to base storage and market */
+	base->storage = ccs.eMission; /* copied, including the arrays! */
+
+	civilians_killed = ccs.civiliansKilled;
+	aliens_killed = ccs.aliensKilled;
+	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
+		won, ccs.battleParameters.civilians - civilians_killed, civilians_killed,
+		ccs.battleParameters.aliens - aliens_killed, aliens_killed);
+	CL_HandleNationData(!won, ccs.battleParameters.civilians - civilians_killed, civilians_killed, ccs.battleParameters.aliens - aliens_killed, aliens_killed, mission);
+	CP_CheckLostCondition(!won, mission, civilians_killed);
+
+	/* update the character stats */
+	CL_ParseCharacterData(NULL);
+
+	/* update stats */
+	CL_UpdateCharacterStats(base, won, aircraft);
+
+	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
+	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
+		employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
+
+		if (CL_SoldierInAircraft(employee, aircraft))
+			numberofsoldiers++;
+
+		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
+
+		if (employee->hired && employee->baseHired == base) {
+			const character_t *chr = &(employee->chr);
+			assert(chr);
+			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
+			/* if employee is marked as dead */
+			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
+				/* Delete the employee. */
+				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
+				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, chr->name);
+				E_DeleteEmployee(employee, EMPL_SOLDIER);
+			} /* if dead */
+		}
+	}
+	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
+
+	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
+
+	/* Check for alien containment in aircraft homebase. */
+	if (aircraft->alientypes && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
+		 * Popup aircraft transer dialog to choose a better base. */
+		TR_TransferAircraftMenu(aircraft);
+	} else {
+		/* The aircraft can be savely sent to its homebase without losing aliens */
+	}
+
+	/* handle base attack mission */
+	if (mission->stage == STAGE_BASE_ATTACK) {
+		if (won) {
+			/* fake an aircraft return to collect goods and aliens */
+			CL_AircraftReturnedToHomeBase(aircraft);
+
+			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
+			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+			CP_BaseAttackMissionIsFailure(mission);
+			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
+		} else
+			CP_BaseAttackMissionLeave(mission);
+	} else {
+		AIR_AircraftReturnToBase(aircraft);
+		if (won)
+			CP_MissionIsOver(mission);
+	}
 }

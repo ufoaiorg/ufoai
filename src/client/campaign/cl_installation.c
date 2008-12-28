@@ -299,7 +299,7 @@ static void INS_BuildInstallation_f (void)
 		return;
 
 	assert(!installationCurrent->founded);
-	assert(ccs.singleplayer);
+	assert(GAME_IsCampaign());
 	assert(curCampaign);
 	assert(installationTemplate->cost >= 0);
 

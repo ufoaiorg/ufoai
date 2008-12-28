@@ -27,5 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CL_GAME_CAMPAIGN_H
 
 void GAME_CP_InitStartup(void);
+void GAME_CP_Shutdown(void);
 
 #endif

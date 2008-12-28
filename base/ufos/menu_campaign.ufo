@@ -119,6 +119,6 @@ menu campaigns
 
 	func init
 	{
-		cmd "cp_getcampaigns;"
+		cmd "game_setmode;cp_getcampaigns;"
 	}
 }

@@ -34,9 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_language.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
-#include "cl_game_skirmish.h"
-#include "cl_game_campaign.h"
-#include "cl_game_multiplayer.h"
 #include "campaign/cl_basesummary.h"
 #include "campaign/cl_installation.h"
 #include "campaign/cl_hospital.h"
@@ -230,83 +227,6 @@ void CL_GameInit (qboolean load)
 }
 
 /**
- * @brief Disconnects a multiplayer game if singleplayer is true and set ccs.singleplayer to true
- * @param[in] singleplayer If this is true, we init singleplayer, otherwise multiplayer
- */
-void CL_StartSingleplayer (qboolean singleplayer)
-{
-	if (singleplayer) {
-		ccs.singleplayer = qtrue;
-		if (Com_ServerState()) {
-			/* shutdown server */
-			SV_Shutdown("Server was killed (switched to singleplayer).", qfalse);
-		} else if (cls.state >= ca_connecting) {
-			Com_Printf("Disconnect from current server\n");
-			CL_Disconnect();
-		}
-		Cvar_ForceSet("sv_maxclients", "1");
-		Com_Printf("Changing to Singleplayer\n");
-
-		/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
-		/** @todo these should probably default to something bigger */
-		if (Cvar_VariableInteger("sv_maxsoldiersperteam") != 4)
-			Cvar_SetValue("sv_maxsoldiersperteam", 4);
-		if (Cvar_VariableInteger("sv_maxsoldiersperplayer") != 8)
-			Cvar_SetValue("sv_maxsoldiersperplayer", 8);
-
-		/* this is needed to let 'soldier_select 0' do
-		 * the right thing while we are on geoscape */
-		sv_maxclients->modified = qtrue;
-	} else {
-		const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
-		const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
-		const char *type, *name, *text;
-		base_t *base;
-
-		/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
-		 * cvars if values were previously set */
-		if (strlen(max_s))
-			Cvar_Set("sv_maxsoldiersperteam", max_s);
-		if (strlen(max_spp))
-			Cvar_Set("sv_maxsoldiersperplayer", max_spp);
-
-		ccs.singleplayer = qfalse;
-		curCampaign = NULL;
-		selectedMission = NULL;
-		base = B_GetBaseByIDX(0);
-		B_ClearBase(base);
-		RS_ResetTechs();
-		gd.numBases = 1;
-		gd.numAircraft = 0;
-
-		/* now add a dropship where we can place our soldiers in */
-		AIR_NewAircraft(base, "craft_drop_firebird");
-
-		Com_Printf("Changing to Multiplayer\n");
-		/* disconnect already running session - when entering the
-		 * multiplayer menu while you are still connected */
-		if (cls.state >= ca_connecting)
-			CL_Disconnect();
-
-		/* pre-stage parsing */
-		FS_BuildFileList("ufos/*.ufo");
-		FS_NextScriptHeader(NULL, NULL, NULL);
-		text = NULL;
-
-		if (!gd.numTechnologies) {
-			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-				if (!Q_strncmp(type, "tech", 4))
-					RS_ParseTechnologies(name, &text);
-
-			/* fill in IDXs for required research techs */
-			RS_RequiredLinksAssign();
-			Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
-		}
-		Cvar_Set("mn_aircraft_model", "");
-	}
-}
-
-/**
  * @brief Ensures the right menu cvars are set after error drop or mapchange
  * @note E.g. called after an ERR_DROP was thrown
  * @sa CL_Disconnect
@@ -324,7 +244,7 @@ void CL_Drop (void)
 
 	/* make sure that we are in the correct menus in singleplayer after
 	 * dropping the game due to a failure */
-	if (ccs.singleplayer && curCampaign) {
+	if (GAME_IsSingleplayer() && curCampaign) {
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
 		MN_PushMenu("map", NULL);
@@ -394,7 +314,7 @@ static void CL_Connect_f (void)
 		return;
 	}
 
-	if (ccs.singleplayer) {
+	if (!GAME_IsMultiplayer()) {
 		Com_Printf("Start multiplayer first\n");
 		return;
 	}
@@ -588,7 +508,7 @@ static void CL_Reconnect_f (void)
 	if (Com_ServerState())
 		return;
 
-	if (ccs.singleplayer) {
+	if (!GAME_IsMultiplayer()) {
 		Com_Printf("Start multiplayer first\n");
 		return;
 	}
@@ -844,7 +764,7 @@ static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	teamData.parsed = qtrue;
 
 	/* spawn multi-player death match soldiers here */
-	if (!ccs.singleplayer && baseCurrent && !teamData.teamplay)
+	if (GAME_IsMultiplayer() && baseCurrent && !teamData.teamplay)
 		CL_SpawnSoldiers_f();
 }
 
@@ -1403,7 +1323,7 @@ static void CL_SpawnSoldiers_f (void)
 
 	base = CP_GetMissionBase();
 
-	if (!ccs.singleplayer && base && !teamData.parsed) {
+	if (GAME_IsMultiplayer() && base && !teamData.parsed) {
 		Com_Printf("CL_SpawnSoldiers_f: teaminfo unparsed\n");
 		return;
 	}
@@ -1413,7 +1333,7 @@ static void CL_SpawnSoldiers_f (void)
 		return;
 	}
 
-	if (!ccs.singleplayer && base) {
+	if (GAME_IsMultiplayer() && base) {
 		/* we are already connected and in this list */
 		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
 			mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
@@ -1455,7 +1375,7 @@ static void CL_SpawnSoldiers_f (void)
 	soldiersSpawned = qtrue;
 
 	/* spawn immediately if in single-player, otherwise wait for other players to join */
-	if (ccs.singleplayer) {
+	if (GAME_IsSingleplayer()) {
 		/* activate hud */
 		MN_PushMenu(mn_hud->string, NULL);
 		Cvar_Set("mn_active", mn_hud->string);
@@ -1551,7 +1471,7 @@ void CL_RequestNextDownload (void)
 	}
 
 	/* for singleplayer the soldiers get spawned here */
-	if (ccs.singleplayer && cls.missionaircraft)
+	if (GAME_IsSingleplayer() && cls.missionaircraft)
 		CL_SpawnSoldiers_f();
 
 	cls.waitingForStart = cls.realtime;
@@ -2081,9 +2001,7 @@ static void CL_InitLocal (void)
 	TUT_InitStartup();
 	PTL_InitStartup();
 	CP_InitStartup();
-	GAME_SK_InitStartup();
-	GAME_CP_InitStartup();
-	GAME_MP_InitStartup();
+	GAME_InitStartup();
 	UR_InitStartup();
 	NAT_InitStartup();
 	BS_InitStartup();
@@ -2200,8 +2118,6 @@ static void CL_InitLocal (void)
 #endif
 
 	memset(&teamData, 0, sizeof(teamData));
-	/* Default to single-player mode */
-	ccs.singleplayer = qtrue;
 }
 
 /**
@@ -2223,6 +2139,25 @@ static void CL_SendChangedUserinfos (void)
 	}
 }
 
+/**
+ * @brief Check whether we are in a tactical mission as server or as client
+ * @note handles multiplayer and singleplayer
+ *
+ * @return true when we are in battlefield
+ * @todo Check cvar mn_main for value
+ */
+qboolean CL_OnBattlescape (void)
+{
+	/* server_state is set to zero (ss_dead) on every battlefield shutdown */
+	if (Com_ServerState())
+		return qtrue; /* server */
+
+	/* client */
+	if (cls.state >= ca_connected)
+		return qtrue;
+
+	return qfalse;
+}
 
 /**
  * @sa CL_Frame
@@ -2363,15 +2298,6 @@ void CL_Frame (int now, void *data)
 {
 	static int last_frame = 0;
 	int delta;
-
-	if (sv_maxclients->modified) {
-		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
-			CL_StartSingleplayer(qfalse);
-		} else if (sv_maxclients->integer == 1) {
-			CL_StartSingleplayer(qtrue);
-		}
-		sv_maxclients->modified = qfalse;
-	}
 
 	if (sys_priority->modified || sys_affinity->modified)
 		Sys_SetAffinityAndPriority();

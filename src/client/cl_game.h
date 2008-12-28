@@ -1,6 +1,6 @@
 /**
- * @file cl_game_multiplayer.h
- * @brief Multiplayer game type headers
+ * @file cl_game.h
+ * @brief Shared game type headers
  */
 
 /*
@@ -23,10 +23,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_GAME_MULITPLAYER_H
-#define CL_GAME_MULITPLAYER_H
+#ifndef CL_GAME_H
+#define CL_GAME_H
 
-void GAME_MP_InitStartup(void);
-void GAME_MP_Shutdown(void);
+#define GAME_NONE			0
+#define GAME_SINGLEPLAYER	(1 << 0)
+#define GAME_MULTIPLAYER	(1 << 1)
+#define GAME_CAMPAIGN		(GAME_SINGLEPLAYER | (1 << 2))
+#define GAME_SKIRMISH		(GAME_SINGLEPLAYER | (1 << 3))
+
+#define GAME_MAX			GAME_SKIRMISH
+
+#define GAME_IsSingleplayer()	(ccs.gametype & GAME_SINGLEPLAYER)
+#define GAME_IsMultiplayer()	(ccs.gametype == GAME_MULTIPLAYER)
+#define GAME_IsSkirmish()		(ccs.gametype == GAME_SKIRMISH)
+#define GAME_IsCampaign()		(ccs.gametype == GAME_CAMPAIGN)
+
+void GAME_InitStartup(void);
+void GAME_SetMode(int gametype);
 
 #endif

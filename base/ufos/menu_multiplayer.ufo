@@ -77,7 +77,7 @@ menu multiplayer
 	func init
 	{
 		// first switch to multiplayer - otherwise we will crash
-		cmd "sv_maxclients 2;mn_escpop 5;mn_push mp_serverbrowser;"
+		cmd "game_setmode;mn_escpop 5;mn_push mp_serverbrowser;"
 		// mn_slot 0; loadteamslot;
 	}
 }
@@ -350,7 +350,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"mn_escpop 5;set mn_slot 0;mp_env;team_comments;set team human;"
+		cmd	"mn_escpop 5;set mn_slot 0;team_comments;set team human;"
 	}
 }
 

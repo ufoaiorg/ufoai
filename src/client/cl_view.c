@@ -148,7 +148,7 @@ static void CL_ParseEntitystring (const char *es)
 			/* maximum level */
 			cl.map_maxlevel = maxlevel;
 
-			if (!ccs.singleplayer && (cl_teamnum->integer > maxmultiplayerteams
+			if (GAME_IsMultiplayer() && (cl_teamnum->integer > maxmultiplayerteams
 			 || cl_teamnum->integer <= TEAM_CIVILIAN)) {
 				Com_Printf("The selected team is not useable. "
 					"The map doesn't support %i teams but only %i teams\n",
@@ -221,7 +221,7 @@ void CL_LoadMedia (void)
 
 	/* register models, pics, and skins */
 	Com_Printf("Map: %s\n", cl.configstrings[CS_NAME]);
-	if (!ccs.singleplayer)
+	if (GAME_IsMultiplayer())
 		SCR_SetLoadingBackground(cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
 	R_ModBeginLoading(cl.configstrings[CS_TILES], atoi(cl.configstrings[CS_LIGHTMAP]), cl.configstrings[CS_POSITIONS], cl.configstrings[CS_NAME]);

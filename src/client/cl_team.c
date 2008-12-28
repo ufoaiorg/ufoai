@@ -47,29 +47,6 @@ static void CL_MarkTeam_f(void);
 chrList_t chrDisplayList;
 
 /**
- * @brief Prepares environment for multiplayer.
- * @todo Ugly hack which sets proper values of global variables.
- * Should be removed as soon as mp won't use base and aircraft
- * and mp team handling functions won't use baseCurrent
- */
-static void CL_MultiplayerEnvironment_f (void)
-{
-	base_t *base = B_GetBaseByIDX(0);
-
-	/* multiplayer is not ready yet */
-	if (!gd.numBases)
-		CL_StartSingleplayer(qfalse);
-
-	assert(gd.numBases == 1);
-	baseCurrent = base;
-	cls.missionaircraft = AIR_AircraftGetFromIdx(0);
-	if (!cls.missionaircraft) {
-		Sys_Error("No aircraft for multiplayer - check the sv_maxclients value");
-	}
-	baseCurrent->aircraftCurrent = cls.missionaircraft;
-}
-
-/**
  * @brief Translate the skin id to skin name
  * @param[in] id The id of the skin
  * @return Translated skin name
@@ -322,7 +299,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	character_t *chr;
 	char teamDefName[MAX_VAR];
 	int teamValue;
-	const qboolean multiplayer = (sv_maxclients->integer >= 2);
 
 	if (!employee)
 		return;
@@ -362,25 +338,25 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 	case EMPL_SOLDIER:
 		chr->score.rank = CL_GetRankIdx("rifleman");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
 		Q_strncpyz(teamDefName, team, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
 		chr->score.rank = CL_GetRankIdx("scientist");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
 		break;
 	case EMPL_PILOT:
 		chr->score.rank = CL_GetRankIdx("pilot");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", team);
 		break;
 	case EMPL_WORKER:
 		chr->score.rank = CL_GetRankIdx("worker");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
 		break;
 	case EMPL_ROBOT:
@@ -391,7 +367,7 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 
 		/** Create attributes.
 		 * @todo get the min/max values from ugv_t def? */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, multiplayer);
+		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
 
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", team, ugvType->actors);
 		break;
@@ -493,7 +469,7 @@ static void CL_ChangeSkin_f (void)
 			newSkin = 0;
 
 		/* don't allow all skins in singleplayer */
-		if (ccs.singleplayer && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
+		if (GAME_IsSingleplayer() && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
 			newSkin = 0;
 
 		if (chrDisplayList.chr[sel]) {
@@ -532,7 +508,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 		newSkin = 0;
 
 	/* don't allow all skins in singleplayer */
-	if (ccs.singleplayer && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
+	if (GAME_IsSingleplayer() && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
 		newSkin = 0;
 
 	/**
@@ -994,7 +970,7 @@ static void CL_Select_f (void)
 		/* no soldiers in the current aircraft */
 		if (chrDisplayList.num <= 0) {
 			/* multiplayer - load a team first */
-			if (!ccs.singleplayer) {
+			if (GAME_IsMultiplayer()) {
 				/** @todo Why not use the MN_PopMenu and MN_PushMenu functions? */
 				Cbuf_AddText("mn_pop;mn_push mp_team;");
 			}
@@ -1144,7 +1120,7 @@ void CL_ResetMultiplayerTeamInBase (base_t *base)
 {
 	employee_t* employee;
 
-	if (ccs.singleplayer)
+	if (!GAME_IsMultiplayer())
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "Reset of base team flags.\n");
@@ -1813,8 +1789,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		return;
 	}
 
-	CL_MultiplayerEnvironment_f();
-
 	/* read data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
 	sb.cursize = fread(buf, 1, MAX_TEAMDATASIZE, f);
@@ -1891,7 +1865,7 @@ static void CL_LoadTeamMultiplayerSlot_f (void)
 {
 	char filename[MAX_OSPATH];
 
-	if (ccs.singleplayer) {
+	if (!GAME_IsMultiplayer()) {
 		Com_Printf("Only for multiplayer\n");
 		return;
 	}
@@ -1924,7 +1898,6 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");
-	Cmd_AddCommand("mp_env", CL_MultiplayerEnvironment_f, "Prepares environment for multiplayer");
 #ifdef DEBUG
 	Cmd_AddCommand("teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
@@ -2327,7 +2300,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		MN_PushMenu("map", NULL);
 	}
 	/* show win screen */
-	if (ccs.singleplayer) {
+	if (GAME_IsCampaign()) {
 		/* Make sure that at this point we are able to 'Try Again' a mission. */
 		Cvar_SetValue("mission_tryagain", 0);
 		if (selectedMission && base)
@@ -2378,7 +2351,7 @@ static int CL_GetRankIdx (const char* rankID)
 	int i;
 
 	/* only check in singleplayer */
-	if (!ccs.singleplayer)
+	if (!GAME_IsCampaign())
 		return -1;
 
 	for (i = 0; i < gd.numRanks; i++) {

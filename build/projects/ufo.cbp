@@ -437,6 +437,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_sound.h" />
+		<Unit filename="..\..\src\client\cl_game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_game.h" />
 		<Unit filename="..\..\src\client\cl_game_skirmish.c">
 			<Option compilerVar="CC" />
 		</Unit>

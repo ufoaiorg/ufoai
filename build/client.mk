@@ -7,6 +7,7 @@ CLIENT_SRCS = \
 	client/cl_cinematic.c \
 	client/cl_console.c \
 	client/cl_employee.c \
+	client/cl_game.c \
 	client/cl_game_campaign.c \
 	client/cl_game_multiplayer.c \
 	client/cl_game_skirmish.c \

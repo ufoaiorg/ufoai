@@ -2081,7 +2081,7 @@ static const value_t valid_techmail_vars[] = {
  * @param[in] name Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
  * @param[in] text the whole following text that is part of the "tech" item definition in research.ufo.
  * @sa CL_ParseScriptFirst
- * @sa CL_StartSingleplayer
+ * @sa GAME_SetMode
  * @note write into cl_localPool - free on every game restart and reparse
  */
 void RS_ParseTechnologies (const char *name, const char **text)
@@ -2499,7 +2499,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
  */
 qboolean RS_IsResearched_idx (int techIdx)
 {
-	if (ccs.singleplayer == qfalse)
+	if (!GAME_IsCampaign())
 		return qtrue;
 
 	if (techIdx == TECH_INVALID)
@@ -2520,7 +2520,7 @@ qboolean RS_IsResearched_idx (int techIdx)
  */
 qboolean RS_IsResearched_ptr (const technology_t * tech)
 {
-	if (ccs.singleplayer == qfalse)
+	if (!GAME_IsCampaign())
 		return qtrue;
 	if (tech && tech->statusResearch == RS_FINISH)
 		return qtrue;
@@ -2541,7 +2541,7 @@ qboolean RS_ItemIsResearched (const char *idProvided)
 	technology_t *tech;
 
 	/* in multiplayer everyting is researched */
-	if (!ccs.singleplayer)
+	if (GAME_IsMultiplayer())
 		return qtrue;
 
 	tech = RS_GetTechByProvided(idProvided);

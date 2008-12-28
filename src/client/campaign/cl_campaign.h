@@ -314,7 +314,7 @@ typedef struct ccs_s {
 	vec2_t mapPos;		/**< geoscape map position (from the menu node) */
 	vec2_t mapSize;		/**< geoscape map size (from the menu node) */
 
-	qboolean singleplayer;	/**< singleplayer or multiplayer */
+	int gametype;		/**< singleplayer or multiplayer */
 
 	int credits;			/**< actual credits amount */
 	int civiliansKilled;	/**< how many civilians were killed already */
@@ -363,7 +363,6 @@ int CL_DateCreateSeconds(byte hours, byte minutes, byte seconds);
 void CL_CampaignRun(void);
 void CP_EndCampaign(qboolean won);
 void CL_UpdateCredits(int credits);
-qboolean CL_OnBattlescape(void);
 aircraft_t* AIR_NewAircraft(base_t * base, const char *name);
 const char* CL_SecondConvert(int second);
 
@@ -397,5 +396,9 @@ struct alienBase_s;
 void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
 void CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
+void CL_GameGo(void);
+void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis);
+void CP_CheckLostCondition(qboolean lost, const mission_t* mission, int civiliansKilled);
+void CL_UpdateCharacterStats(const base_t *base, int won, const aircraft_t *aircraft);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

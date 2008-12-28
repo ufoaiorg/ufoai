@@ -2609,7 +2609,7 @@ void B_AssignInitial (base_t *base)
 	if (!base) {
 		aircraft_t *aircraft;
 
-		if (ccs.singleplayer)
+		if (GAME_IsSingleplayer())
 			return;
 		/* in case of multiplayer, we just take the first aircraft in the fake
 		 * base to assign the soldiers and the equipment */
@@ -2625,7 +2625,7 @@ void B_AssignInitial (base_t *base)
 		assert(base->aircraftCurrent);
 	}
 
-	if (!ccs.singleplayer) {
+	if (GAME_IsMultiplayer()) {
 		CL_ResetMultiplayerTeamInBase(base);
 		CL_GenTeamList(base);	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be populated. */
 		Cvar_Set("mn_teamname", _("NewTeam"));
@@ -2637,7 +2637,7 @@ void B_AssignInitial (base_t *base)
 		CL_AssignSoldierFromMenuToAircraft(base, i, base->aircraftCurrent);
 
 	B_PackInitialEquipment(base);
-	if (!ccs.singleplayer)
+	if (GAME_IsMultiplayer())
 		MN_PushMenu("team", NULL);
 }
 
@@ -2671,7 +2671,7 @@ static void B_BuildBase_f (void)
 		return;
 
 	assert(!base->founded);
-	assert(ccs.singleplayer);
+	assert(GAME_IsCampaign());
 	assert(curCampaign);
 
 	if (ccs.credits - curCampaign->basecost > 0) {

@@ -200,7 +200,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	loading = qtrue;
 
-	CL_StartSingleplayer(qtrue);
+	GAME_SetMode(GAME_CAMPAIGN);
 
 	CL_ReadSinglePlayerData();
 
@@ -230,7 +230,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	loading = qfalse;
 
-	assert(ccs.singleplayer);
+	assert(GAME_IsCampaign());
 
 	CL_Drop();
 

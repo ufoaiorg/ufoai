@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_save.h"
 #include "cl_http.h"
 #include "renderer/r_entity.h"
+#include "cl_game.h"
 
 /*============================================================================= */
 
@@ -282,12 +283,12 @@ extern cvar_t* cl_mapDebug;
 void CL_LoadMedia(void);
 
 /* cl_main.c */
+qboolean CL_OnBattlescape(void);
 void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);
 void CL_ReadSinglePlayerData(void);
 void CL_RequestNextDownload(void);
-void CL_StartSingleplayer(qboolean singleplayer);
 void CL_GameInit(qboolean load);
 void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
 void CL_ParseUGVs(const char *name, const char **text);

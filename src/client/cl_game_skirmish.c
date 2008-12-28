@@ -41,9 +41,7 @@ static void CL_GameSkirmish_f (void)
 	mapDef_t *md;
 	int i;
 
-	if (!ccs.singleplayer)
-		return;
-
+	assert(GAME_IsSkirmish());
 	assert(cls.currentSelectedMap >= 0);
 	assert(cls.currentSelectedMap < MAX_MAPDEFS);
 
@@ -53,10 +51,6 @@ static void CL_GameSkirmish_f (void)
 
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
-
-	/* exit running game */
-	if (curCampaign)
-		CL_GameExit();
 
 	/* get campaign - they are already parsed here */
 	curCampaign = CL_GetCampaign(cl_campaign->string);
@@ -68,7 +62,7 @@ static void CL_GameSkirmish_f (void)
 	Cvar_Set("cl_team", curCampaign->team);
 
 	memset(&ccs, 0, sizeof(ccs));
-	CL_StartSingleplayer(qtrue);
+	ccs.gametype = GAME_SKIRMISH;
 	CL_ReadSinglePlayerData();
 
 	/* create employees and clear bases */
@@ -116,9 +110,6 @@ static void CL_GameSkirmish_f (void)
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main_afterdrop", "singleplayermission");
 
-	/* make sure, that we are not trying to switch to singleplayer a second time */
-	sv_maxclients->modified = qfalse;
-
 	/* this is no real campaign - but we need the pointer for some of
 	 * the previous actions */
 	curCampaign = NULL;
@@ -127,6 +118,11 @@ static void CL_GameSkirmish_f (void)
 
 void GAME_SK_InitStartup (void)
 {
+	Cvar_ForceSet("sv_maxclients", "1");
 	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
 }
 
+void GAME_SK_Shutdown (void)
+{
+	Cmd_RemoveCommand("game_skirmish");
+}

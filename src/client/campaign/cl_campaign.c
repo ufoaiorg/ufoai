@@ -636,7 +636,7 @@ void CP_EndCampaign (qboolean won)
 /**
  * @brief Checks whether the player has lost the campaign
  */
-static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
+void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civiliansKilled)
 {
 	qboolean endCampaign = qfalse;
 	/* fraction of nation that can be below min happiness before the game is lost */
@@ -709,7 +709,7 @@ static void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int 
  * where missionScore is the relative score for the mission (a value between -1 and 1) and
  * missionWeight is the absolute effect this mission has (a function of the maximum absolute score possible for the mission)
  */
-static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis)
+void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis)
 {
 	int i, is_on_Earth = 0;
 	const int civilianSum = civiliansKilled + civiliansSurvived;
@@ -1328,7 +1328,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	MAP_Init();
 
 	memset(&ccs, 0, sizeof(ccs));
-	ccs.singleplayer = qtrue;
+	ccs.gametype = GAME_CAMPAIGN;
 
 	gd.fund = MSG_ReadByte(sb);
 	gd.nextUCN = MSG_ReadShort(sb);
@@ -1677,7 +1677,7 @@ qboolean STATS_Load (sizebuf_t* sb, void* data)
  * it has a team on board
  * @sa CP_SetMissionVars
  */
-static void CL_GameGo (void)
+void CL_GameGo (void)
 {
 	mission_t *mis;
 	aircraft_t *aircraft;
@@ -1705,7 +1705,7 @@ static void CL_GameGo (void)
 	memset(&missionresults, 0, sizeof(missionresults));
 
 	/* Various sanity checks. */
-	if (ccs.singleplayer) {
+	if (GAME_IsCampaign()) {
 		if (!mis->active) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: Dropship not near landing zone: mis->active: %i\n", mis->active);
 			return;
@@ -1738,29 +1738,6 @@ static void CL_GameGo (void)
 	LE_Cleanup();
 
 	CP_StartMissionMap(mis);
-}
-
-/**
- * @brief Checks whether you have to play this mission
- * You can mark a mission as story related.
- * If a mission is story related the cvar @c game_autogo is set to @c 0
- * If this cvar is @c 1 - the mission dialog will have a auto mission button
- * @sa CL_GameAutoGo_f
- */
-static void CL_GameAutoCheck_f (void)
-{
-	if (!curCampaign || !selectedMission || !gd.interceptAircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoCheck_f: No update after automission\n");
-		return;
-	}
-
-	if (selectedMission->mapDef->storyRelated) {
-		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
-		Cvar_Set("game_autogo", "0");
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "auto mission is enabled\n");
-		Cvar_Set("game_autogo", "1");
-	}
 }
 
 /**
@@ -2028,41 +2005,12 @@ void CL_GameAutoGo (mission_t *mis)
 }
 
 /**
- * @sa CL_GameAutoCheck_f
- * @sa CL_GameGo
- */
-static void CL_GameAutoGo_f (void)
-{
-	if (!curCampaign || !selectedMission) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo_f: No update after automission\n");
-		return;
-	}
-
-	if (!cls.missionaircraft) {
-		Com_Printf("CL_GameAutoGo_f: No aircraft at target pos\n");
-		return;
-	}
-
-	/* start the map */
-	CL_GameAutoGo(selectedMission);
-}
-
-/**
- * @brief Let the aliens win the match
- */
-static void CL_GameAbort_f (void)
-{
-	/* aborting means letting the aliens win */
-	Cbuf_AddText(va("sv win %i\n", TEAM_ALIEN));
-}
-
-/**
  * @brief Update employeer stats after mission.
  * @param[in] won Determines whether we won the mission or not.
  * @note Soldier promotion is being done here.
  * @sa CL_GameResults_f
  */
-static void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
+void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
 	int i, j;
 
@@ -2250,146 +2198,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 	if (baseCurrent->aircraftCurrent)
 		CL_UpdateCharacterStats(baseCurrent, 1, baseCurrent->aircraftCurrent);
 }
-#endif
 
-/**
- * @sa CL_ParseResults
- * @sa CL_ParseCharacterData
- * @sa CL_GameAbort_f
- */
-static void CL_GameResults_f (void)
-{
-	int won;
-	int civilians_killed;
-	int aliens_killed;
-	int i;
-	base_t *base;
-	aircraft_t *aircraft;
-	int numberofsoldiers = 0; /* DEBUG */
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
-
-	/* multiplayer? */
-	if (!curCampaign || !selectedMission)
-		return;
-
-	/* check for replay */
-	if (Cvar_VariableInteger("game_tryagain")) {
-		/* don't collect things and update stats --- we retry the mission */
-		CL_GameGo();
-		return;
-	}
-	/* check for win */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <won>\n", Cmd_Argv(0));
-		return;
-	}
-	won = atoi(Cmd_Argv(1));
-
-	if (selectedMission->stage == STAGE_BASE_ATTACK) {
-		base = (base_t *)selectedMission->data;
-		aircraft = &baseAttackFakeAircraft;
-		assert(base);
-	} else {
-		/* note that gd.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
-		assert(gd.interceptAircraft);
-		aircraft = gd.interceptAircraft;
-		base = aircraft->homebase;
-		assert(base);
-	}
-
-	/* add the looted goods to base storage and market */
-	base->storage = ccs.eMission; /* copied, including the arrays! */
-
-	civilians_killed = ccs.civiliansKilled;
-	aliens_killed = ccs.aliensKilled;
-	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
-		won, ccs.battleParameters.civilians - civilians_killed, civilians_killed,
-		ccs.battleParameters.aliens - aliens_killed, aliens_killed);
-	CL_HandleNationData(!won, ccs.battleParameters.civilians - civilians_killed, civilians_killed, ccs.battleParameters.aliens - aliens_killed, aliens_killed, selectedMission);
-	CP_CheckLostCondition(!won, selectedMission, civilians_killed);
-
-	/* update the character stats */
-	CL_ParseCharacterData(NULL);
-
-	/* update stats */
-	CL_UpdateCharacterStats(base, won, aircraft);
-
-	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
-	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
-		employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
-
-		if (CL_SoldierInAircraft(employee, aircraft))
-			numberofsoldiers++;
-
-		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
-
-		if (employee->hired && employee->baseHired == base) {
-			const character_t *chr = &(employee->chr);
-			assert(chr);
-			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
-			/* if employee is marked as dead */
-			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
-				/* Delete the employee. */
-				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
-				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, chr->name);
-				E_DeleteEmployee(employee, EMPL_SOLDIER);
-			} /* if dead */
-		}
-	}
-	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
-
-	/* Check for alien containment in aircraft homebase. */
-	if (aircraft->alientypes && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
-		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
-		 * Popup aircraft transer dialog to choose a better base. */
-		TR_TransferAircraftMenu(aircraft);
-	} else {
-		/* The aircraft can be savely sent to its homebase without losing aliens */
-	}
-
-	/* handle base attack mission */
-	if (selectedMission->stage == STAGE_BASE_ATTACK) {
-		if (won) {
-			/* fake an aircraft return to collect goods and aliens */
-			CL_AircraftReturnedToHomeBase(aircraft);
-
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
-			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-			CP_BaseAttackMissionIsFailure(selectedMission);
-			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
-		} else
-			CP_BaseAttackMissionLeave(selectedMission);
-	} else {
-		AIR_AircraftReturnToBase(aircraft);
-		if (won)
-			CP_MissionIsOver(selectedMission);
-	}
-}
-
-/**
- * @brief Check whether we are in a tactical mission as server or as client
- * @note handles multiplayer and singleplayer
- *
- * @return true when we are in battlefield
- * @todo Check cvar mn_main for value
- */
-qboolean CL_OnBattlescape (void)
-{
-	/* server_state is set to zero (ss_dead) on every battlefield shutdown */
-	if (Com_ServerState())
-		return qtrue; /* server */
-
-	/* client */
-	if (cls.state >= ca_connected)
-		return qtrue;
-
-	return qfalse;
-}
-
-#ifdef DEBUG
 /**
  * @brief Scriptfunction to list all parsed nations with their current values
  * @note called with debug_listnation
@@ -2441,10 +2250,6 @@ static const cmdList_t game_commands[] = {
 	{"airfightmap_init", AFM_Init_f, "Exit air fight map mode."},
 	{"airfightmap_exit", AFM_Exit_f, "Exit air fight map mode."},
 	{"game_go", CL_GameGo, NULL},
-	{"game_auto_check", CL_GameAutoCheck_f, "Checks whether this mission can be done automatically"},
-	{"game_auto_go", CL_GameAutoGo_f, "Let the current selection mission be done automatically"},
-	{"game_abort", CL_GameAbort_f, "Abort the game and let the aliens win"},
-	{"game_results", CL_GameResults_f, "Parses and shows the game results"},
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
@@ -2576,7 +2381,7 @@ static void CL_GameNew_f (void)
 	selectedMission = NULL;
 
 	memset(&ccs, 0, sizeof(ccs));
-	CL_StartSingleplayer(qtrue);
+	ccs.gametype = GAME_CAMPAIGN;
 
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
@@ -2607,9 +2412,6 @@ static void CL_GameNew_f (void)
 	INS_NewInstallations();
 	PR_ProductionInit();
 	R_CreateRadarOverlay();
-
-	/* ensure ccs.singleplayer is set to true */
-	CL_StartSingleplayer(qtrue);
 
 	/* get day */
 	while (ccs.date.sec > SECONDS_PER_DAY) {

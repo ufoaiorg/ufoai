@@ -325,7 +325,7 @@ void UP_ItemDescription (const objDef_t *od)
 	Cvar_Set("mn_item", od->id);
 
 #ifdef DEBUG
-	if (!od->tech && ccs.singleplayer) {
+	if (!od->tech && GAME_IsCampaign()) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		mn.menuText[TEXT_STANDARD] = itemText;
 		odAmmo = NULL;
@@ -618,7 +618,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 #ifdef DEBUG
-	if (!item->tech && ccs.singleplayer) {
+	if (!item->tech && GAME_IsCampaign()) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		mn.menuText[TEXT_STANDARD] = itemText;
 	} else

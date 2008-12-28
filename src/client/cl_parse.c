@@ -528,7 +528,7 @@ static void CL_Reset (struct dbuffer *msg)
 
 	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
 	/* if in multiplayer spawn the soldiers */
-	if (!ccs.singleplayer) {
+	if (GAME_IsMultiplayer()) {
 		/* pop any waiting menu and activate the HUD */
 		MN_PopMenu(qtrue);
 		MN_PushMenu(mn_hud->string, NULL);
@@ -582,7 +582,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	/* back to the console */
 	MN_PopMenu(qtrue);
 
-	if (!ccs.singleplayer && baseCurrent) {
+	if (GAME_IsMultiplayer() && baseCurrent) {
 		if (team_play) {
 			MN_PushMenu("multiplayer_selectteam", NULL);
 			Cvar_Set("mn_active", "multiplayer_selectteam");
@@ -862,7 +862,7 @@ static void CL_EndRoundAnnounce (struct dbuffer * msg)
 	playerName = cl.configstrings[CS_PLAYERNAMES + playerNum];
 
 	/* not needed to announce this for singleplayer games */
-	if (ccs.singleplayer)
+	if (!GAME_IsMultiplayer())
 		return;
 
 	/* it was our own round */
@@ -1757,7 +1757,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		Com_Printf("%s\n", s);
 		CL_Drop();	/* ensure the right menu cvars are set */
 		MN_PopMenu(qfalse);	/* leave the hud mode */
-		if (!ccs.singleplayer)
+		if (GAME_IsMultiplayer())
 			MN_Popup(_("Notice"), _("The server has disconnected.\n"));
 		break;
 
