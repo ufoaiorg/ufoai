@@ -891,11 +891,8 @@ void SurfaceInspector::Update (void)
 	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
 		GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
 		const unsigned int state = flags.m_surfaceFlags & (1 << (p - m_surfaceFlags));
-		// 		const unsigned int stateInconistent = flags.m_surfaceFlagsDirty & (1 << (p - m_surfaceFlags));
-		// 		if (stateInconistent)
-		// 			gtk_toggle_button_set_inconsistent(b, TRUE);
-		// 		else
-		gtk_toggle_button_set_inconsistent(b, FALSE);
+		const unsigned int stateInconistent = flags.m_surfaceFlagsDirty & (1 << (p - m_surfaceFlags));
+		gtk_toggle_button_set_inconsistent(b, stateInconistent);
 		toggle_button_set_active_no_signal(b, state);
 	}
 
@@ -907,11 +904,8 @@ void SurfaceInspector::Update (void)
 		for (GtkCheckButton** p = m_contentFlags; p != m_contentFlags + 32; ++p) {
 			GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
 			const unsigned int state = flags.m_contentFlags & (1 << (p - m_contentFlags));
-			// 			const unsigned int stateInconistent = flags.m_contentFlagsDirty & (1 << (p - m_contentFlags));
-			// 			if (stateInconistent)
-			// 				gtk_toggle_button_set_inconsistent(b, TRUE);
-			// 			else
-			gtk_toggle_button_set_inconsistent(b, FALSE);
+			const unsigned int stateInconistent = flags.m_contentFlagsDirty & (1 << (p - m_contentFlags));
+			gtk_toggle_button_set_inconsistent(b, stateInconistent);
 			toggle_button_set_active_no_signal(b, state);
 		}
 	}

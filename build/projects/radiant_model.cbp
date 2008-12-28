@@ -96,9 +96,6 @@
 		<Unit filename="../../src/tools/radiant/libs/picomodel/picomodules.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/picomodel/pm_3ds.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/picomodel/pm_ase.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -108,16 +105,7 @@
 		<Unit filename="../../src/tools/radiant/libs/picomodel/pm_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/picomodel/pm_mdc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/picomodel/pm_ms3d.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/tools/radiant/libs/picomodel/pm_obj.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/tools/radiant/libs/picomodel/pm_terrain.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/radiant/plugins/export.def">

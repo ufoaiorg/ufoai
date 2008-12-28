@@ -989,8 +989,10 @@ public:
 		ContentsFlagsValue oldFlags = flags;
 		flags = m_shader.getFlags();
 
-		// rescue the mark dirty value
+		// rescue the mark dirty value and old dirty flags
 		flags.m_markDirty = oldFlags.m_markDirty;
+		flags.m_surfaceFlagsDirty = oldFlags.m_surfaceFlagsDirty;
+		flags.m_contentFlagsDirty = oldFlags.m_contentFlagsDirty;
 
 		if (flags.m_markDirty) {
 			// Figure out which buttons are inconsistent
