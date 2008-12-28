@@ -242,7 +242,7 @@ aircraft craft_inter_dragon
 	param {
 		speed		17
 		maxspeed	23
-		shield		0
+		shield		5
 		ecm			100
 		damage		120
 		accuracy	80
@@ -282,7 +282,7 @@ aircraft craft_inter_starchaser
 	param {
 		speed		9
 		maxspeed	14
-		shield		0
+		shield		7
 		ecm		100
 		damage		180
 		accuracy	100
@@ -327,7 +327,7 @@ aircraft craft_inter_stingray
 	param {
 		speed		20
 		maxspeed	30
-		shield		3
+		shield		7
 		ecm		100
 		damage		250
 		accuracy	100
@@ -514,7 +514,7 @@ aircraft craft_ufo_bomber
 	param {
 		speed		18
 		maxspeed	27
-		shield		0
+		shield		7
 		ecm			100
 		damage		500
 		accuracy	80
@@ -587,7 +587,7 @@ craftitem craft_ammo_alc
 	notonmarket	true
 
 	unlimitedAmmo	true
-	wdamage		9
+	wdamage		10
 	accuracy	0.7
 	wrange		0.4
 	wspeed		900
@@ -713,7 +713,7 @@ craftitem craft_weapon_particle_beam
 	installationTime	4
 	price		45000
 
-	wdamage		17
+	wdamage		21
 	speed		0.8
 	maxspeed	0.8
 	wrange		0.45
