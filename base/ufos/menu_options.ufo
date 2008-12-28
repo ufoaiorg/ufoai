@@ -771,7 +771,7 @@ menu options_keys
 
 	vscrollbar keyscroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos	"500 110"	size	"27 560"
+		pos	"508 110"	size	"27 560"
 		current 0
 		viewsize 28
 		fullsize 50

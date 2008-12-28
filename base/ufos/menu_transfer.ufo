@@ -132,7 +132,7 @@ menu transfer
 
 	vscrollbar trans_list_scroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos		"514 370"	size	"27 360"
+		pos		"522 370"	size	"27 360"
 		current 0
 		viewsize 18
 		fullsize 18

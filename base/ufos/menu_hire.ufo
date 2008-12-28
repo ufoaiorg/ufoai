@@ -220,7 +220,7 @@ menu employees
 	vscrollbar scroll
 	{
 		image	menu/scrollbar_v_green	blend	true
-		pos	"360 180"	size	"27 552"
+		pos	"368 180"	size	"27 552"
 		current 0
 		viewsize 15
 		fullsize 50

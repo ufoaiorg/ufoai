@@ -1612,7 +1612,7 @@ menu equipment
 
 	vscrollbar equip_scroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos	"800 397"	size	"27 340"
+		pos	"808 397"	size	"27 340"
 		current 0
 		viewsize 8
 		fullsize 20

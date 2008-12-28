@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static const int TILE_WIDTH = 32;
 static const int TILE_HEIGHT = 18;
-static const int ELEMENT_WIDTH = 27;
+static const int ELEMENT_WIDTH = 19;
 static const int ELEMENT_HEIGHT = 16;
 
 #define EXTRADATA(node) (node->u.abstractscrollbar)
