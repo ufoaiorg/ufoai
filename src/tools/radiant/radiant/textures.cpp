@@ -244,6 +244,7 @@ typedef std::pair<LoadImageCallback, CopiedString> TextureKey;
 
 void qtexture_realise(qtexture_t& texture, const TextureKey& key) {
 	texture.texture_number = 0;
+	/* skip empty names and normalmaps */
 	if (!string_empty(key.second.c_str()) && !strstr(key.second.c_str(), "_nm")) {
 		AutoPtr<Image> image(key.first.loadImage(key.second.c_str()));
 		if (image) {
@@ -251,9 +252,9 @@ void qtexture_realise(qtexture_t& texture, const TextureKey& key) {
 			texture.surfaceFlags = image->getSurfaceFlags();
 			texture.contentFlags = image->getContentFlags();
 			texture.value = image->getValue();
-			globalOutputStream() << "Loaded Texture: \"" << key.second.c_str() << "\"\n";
+			g_message("Loaded Texture: \"%s\"\n", key.second.c_str());
 		} else {
-			globalErrorStream() << "Texture load failed: \"" << key.second.c_str() << "\"\n";
+			g_error("Texture load failed: \"%s\"\n", key.second.c_str());
 		}
 	}
 }

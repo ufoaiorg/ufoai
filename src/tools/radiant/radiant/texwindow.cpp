@@ -1,3 +1,9 @@
+/**
+ * @file texwindow.cpp
+ * @brief Texture Window
+ * @author Leonardo Zide (leo@lokigames.com)
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -18,12 +24,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-//
-// Texture Window
-//
-// Leonardo Zide (leo@lokigames.com)
-//
 
 #include "texwindow.h"
 
@@ -80,7 +80,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 void TextureBrowser_queueDraw(TextureBrowser& textureBrowser);
 
-bool string_equal_start(const char* string, StringRange start) {
+static bool string_equal_start(const char* string, StringRange start) {
 	return string_equal_n(string, start.first, start.last - start.first);
 }
 
@@ -119,8 +119,8 @@ class DeferredAdjustment {
 
 	static gboolean deferred_value_changed(gpointer data) {
 		reinterpret_cast<DeferredAdjustment*>(data)->m_function(
-		    reinterpret_cast<DeferredAdjustment*>(data)->m_data,
-		    reinterpret_cast<DeferredAdjustment*>(data)->m_value
+			reinterpret_cast<DeferredAdjustment*>(data)->m_data,
+			reinterpret_cast<DeferredAdjustment*>(data)->m_value
 		);
 		reinterpret_cast<DeferredAdjustment*>(data)->m_handler = 0;
 		reinterpret_cast<DeferredAdjustment*>(data)->m_value = 0;
@@ -153,12 +153,6 @@ class TextureBrowser;
 typedef ReferenceCaller<TextureBrowser, TextureBrowser_queueDraw> TextureBrowserQueueDrawCaller;
 
 void TextureBrowser_scrollChanged(void* data, gdouble value);
-
-
-enum StartupShaders {
-	STARTUPSHADERS_NONE = 0,
-	STARTUPSHADERS_COMMON,
-};
 
 void TextureBrowser_hideUnusedExport(const BoolImportCallback& importer);
 typedef FreeCaller1<const BoolImportCallback&, TextureBrowser_hideUnusedExport> TextureBrowserHideUnusedExport;
@@ -216,7 +210,6 @@ public:
 	// make the texture increments match the grid changes
 	bool m_showShaders;
 	bool m_showTextureScrollbar;
-	StartupShaders m_startupShaders;
 	// if true, the texture window will only display in-use shaders
 	// if false, all the shaders in memory are displayed
 	bool m_hideUnused;
@@ -268,7 +261,6 @@ public:
 			m_textureScale(50),
 			m_showShaders(true),
 			m_showTextureScrollbar(true),
-			m_startupShaders(STARTUPSHADERS_NONE),
 			m_hideUnused(false),
 			m_rmbSelected(false),
 			m_uniformTextureSize(128) {
@@ -516,7 +508,7 @@ bool texture_name_ignore(const char* name) {
 	StringOutputStream strTemp(string_length(name));
 	strTemp << LowerCase(name);
 
-	/* only show the dummy texture - the other should not be used directly */
+	/* only show the dummy texture - the others should not be used directly */
 	return strstr(strTemp.c_str(), "tex_terrain") != 0 &&
 			strstr(strTemp.c_str(), "dummy") == 0;
 }
@@ -572,7 +564,7 @@ void TextureDirectory_loadTexture(const char* directory, const char* texture) {
 	}
 
 	if (!shader_valid(name.c_str())) {
-		globalWarningStream() << "Skipping invalid texture name: [" << name.c_str() << "]\n";
+		g_warning("Skipping invalid texture name: [%s]\n", name.c_str());
 		return;
 	}
 
@@ -599,7 +591,7 @@ void TextureBrowser_ShowDirectory(TextureBrowser& textureBrowser, const char* di
 
 	std::size_t shaders_count;
 	GlobalShaderSystem().foreachShaderName(makeCallback1(TextureCategoryLoadShader(directory, shaders_count)));
-	globalOutputStream() << "Showing " << Unsigned(shaders_count) << " shaders.\n";
+	g_message("Showing %u shaders.\n", Unsigned(shaders_count));
 
 	// load remaining texture files
 	StringOutputStream dirstring(64);
@@ -642,9 +634,7 @@ void TextureBrowser_SetHideUnused(TextureBrowser& textureBrowser, bool hideUnuse
 }
 
 void TextureBrowser_ShowStartupShaders(TextureBrowser& textureBrowser) {
-	if (textureBrowser.m_startupShaders == STARTUPSHADERS_COMMON) {
-		TextureBrowser_ShowDirectory(textureBrowser, "tex_common/");
-	}
+	TextureBrowser_ShowDirectory(textureBrowser, "tex_common/");
 }
 
 
@@ -1043,33 +1033,33 @@ void TextureBrowser_ToggleHideUnused (void) {
 	}
 }
 
+/**
+ * @brief Generates the treeview with the subdirs in textures/
+ */
 static void TextureGroups_constructTreeModel (TextureGroups groups, GtkTreeStore* store) {
-	// put the information from the old textures menu into a treeview
 	GtkTreeIter iter, child;
 
 	TextureGroups::const_iterator i = groups.begin();
 	while (i != groups.end()) {
 		const char* dirName = (*i).c_str();
 		const char* firstUnderscore = strchr(dirName, '_');
-		StringRange dirRoot (dirName, (firstUnderscore == 0) ? dirName : firstUnderscore + 1);
+		StringRange dirRoot(dirName, (firstUnderscore == 0) ? dirName : firstUnderscore + 1);
 
 		TextureGroups::const_iterator next = i;
 		++next;
-		if (firstUnderscore != 0
-		        && next != groups.end()
-		        && string_equal_start((*next).c_str(), dirRoot)) {
+		if (firstUnderscore != 0 && next != groups.end() && string_equal_start((*next).c_str(), dirRoot)) {
 			gtk_tree_store_append(store, &iter, NULL);
-			gtk_tree_store_set (store, &iter, 0, CopiedString(StringRange(dirName, firstUnderscore)).c_str(), -1);
+			gtk_tree_store_set(store, &iter, 0, CopiedString(StringRange(dirName, firstUnderscore)).c_str(), -1);
 
 			// keep going...
 			while (i != groups.end() && string_equal_start((*i).c_str(), dirRoot)) {
 				gtk_tree_store_append(store, &child, &iter);
-				gtk_tree_store_set (store, &child, 0, (*i).c_str(), -1);
+				gtk_tree_store_set(store, &child, 0, (*i).c_str(), -1);
 				++i;
 			}
 		} else {
 			gtk_tree_store_append(store, &iter, NULL);
-			gtk_tree_store_set (store, &iter, 0, dirName, -1);
+			gtk_tree_store_set(store, &iter, 0, dirName, -1);
 			++i;
 		}
 	}
@@ -1092,6 +1082,7 @@ static void TextureBrowser_constructTreeStore (void) {
 	GtkTreeModel* model = GTK_TREE_MODEL(store);
 
 	gtk_tree_view_set_model(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree), model);
+	gtk_tree_view_expand_all(GTK_TREE_VIEW(g_TextureBrowser.m_treeViewTree));
 
 	g_object_unref(G_OBJECT(store));
 }
@@ -1213,6 +1204,8 @@ GtkWidget* TextureBrowser_constructWindow (GtkWindow* toplevel) {
 	}
 	{ // gl_widget
 		g_TextureBrowser.m_gl_widget = glwidget_new(FALSE);
+		// TODO: store these values in the config file and reuse them
+		gtk_widget_set_size_request(GTK_WIDGET(g_TextureBrowser.m_gl_widget), 800, 600);
 		gtk_widget_ref(g_TextureBrowser.m_gl_widget);
 
 		gtk_widget_set_events(g_TextureBrowser.m_gl_widget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
@@ -1334,10 +1327,6 @@ static void TextureBrowser_constructPreferences (PreferencesPage& page) {
 		);
 	}
 	page.appendEntry("Mousewheel Increment", GlobalTextureBrowser().m_mouseWheelScrollIncrement);
-	{
-		const char* startup_shaders[] = { "None", "Common" };
-		page.appendCombo("Load Shaders at Startup", reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders), STRING_ARRAY_RANGE(startup_shaders));
-	}
 }
 
 void TextureBrowser_constructPage (PreferenceGroup& group) {
@@ -1375,7 +1364,6 @@ void TextureBrowser_Construct (void)
 		BoolExportStringCaller(GlobalTextureBrowser().m_showTextureScrollbar));
 	GlobalPreferenceSystem().registerPreference("ShowShaders", BoolImportStringCaller(GlobalTextureBrowser().m_showShaders), BoolExportStringCaller(GlobalTextureBrowser().m_showShaders));
 	GlobalPreferenceSystem().registerPreference("FixedSize", BoolImportStringCaller(g_TextureBrowser_fixedSize), BoolExportStringCaller(g_TextureBrowser_fixedSize));
-	GlobalPreferenceSystem().registerPreference("LoadShaders", IntImportStringCaller(reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders)), IntExportStringCaller(reinterpret_cast<int&>(GlobalTextureBrowser().m_startupShaders)));
 	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement));
 	GlobalPreferenceSystem().registerPreference("SI_Colors0", Vector3ImportStringCaller(GlobalTextureBrowser().color_textureback), Vector3ExportStringCaller(GlobalTextureBrowser().color_textureback));
 
