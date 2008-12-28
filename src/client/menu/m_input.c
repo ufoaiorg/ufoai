@@ -151,7 +151,7 @@ void MN_InvalidateMouse (void)
 qboolean MN_CheckMouseMove (void)
 {
 	/* is hovered node no more draw */
-	if (hoveredNode && (hoveredNode->invis || !MN_CheckCondition(hoveredNode)))
+	if (hoveredNode && (hoveredNode->invis || !MN_CheckVisibility(hoveredNode)))
 		MN_InvalidateMouse();
 
 	if (mousePosX != oldMousePosX || mousePosY != oldMousePosY) {
@@ -231,7 +231,7 @@ menuNode_t *MN_GetNodeByPosition (int x, int y)
 	if (menu) {
 		/* check mouse vs node boundedbox */
 		for (node = menu->firstChild; node; node = node->next) {
-			if (node->invis || node->behaviour->isVirtual || !MN_CheckCondition(node))
+			if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
 				continue;
 			if (MN_IsInnerNode(node, x, y)) {
 				find = node;

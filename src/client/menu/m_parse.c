@@ -76,39 +76,7 @@ static const char *ea_special_strings[EA_SPECIAL_NUM_EVENTACTION] = {
 	"timeout",
 };
 
-static const char *const if_strings[] = {
-	"==",
-	"<=",
-	">=",
-	">",
-	"<",
-	"!=",
-	"",
-	"eq",
-	"ne"
-};
-CASSERT(lengthof(if_strings) == IF_SIZE);
-
 /* =========================================================== */
-
-/**
- * @brief Translate the condition string to menuIfCondition_t enum value
- * @param[in] conditionString The string from scriptfiles (see if_strings)
- * @return menuIfCondition_t value
- * @return enum value for condition string
- * @note Produces a Sys_Error if conditionString was not found in if_strings array
- */
-static int Com_ParseConditionType (const char* conditionString, const char *token)
-{
-	int i;
-	for (i = 0; i < IF_SIZE; i++) {
-		if (!Q_strncmp(if_strings[i], conditionString, 2)) {
-			return i;
-		}
-	}
-	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
-	return -1;
-}
 
 /**
  * @brief Find a value_t by name into a array of value_t

@@ -204,7 +204,7 @@ void MN_DrawMenus (void)
 				continue;
 
 			/* if construct */
-			if (!MN_CheckCondition(node))
+			if (!MN_CheckVisibility(node))
 				continue;
 
 			/** @todo remove it when its possible */

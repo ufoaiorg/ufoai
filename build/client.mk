@@ -72,6 +72,7 @@ CLIENT_SRCS = \
 	client/campaign/missions/cp_mission_xvi.c \
 	\
 	client/menu/m_actions.c \
+	client/menu/m_condition.c \
 	client/menu/m_dragndrop.c \
 	client/menu/m_draw.c \
 	client/menu/m_font.c \

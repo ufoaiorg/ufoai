@@ -98,7 +98,7 @@ extern struct memPool_s *cl_menuSysPool;
 
 void MN_Init(void);
 void MN_Shutdown(void);
-qboolean MN_CheckCondition(menuNode_t *node);
+qboolean MN_CheckVisibility(menuNode_t *node);
 int MN_GetVisibleMenuCount(void);
 void MN_SetNewMenuPos(menu_t* menu, int x, int y);
 

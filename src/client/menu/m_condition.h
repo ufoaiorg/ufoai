@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_CONDITION_H
 #define CLIENT_MENU_M_CONDITION_H
 
+#include "../../common/common.h"
+
 /* prototype */
 struct cvar_s;
 
@@ -57,5 +59,8 @@ typedef struct menuDepends_s {
 	struct cvar_s *cvar;
 	int cond;
 } menuDepends_t;
+
+qboolean MN_CheckCondition(menuDepends_t *condition);
+int Com_ParseConditionType (const char* conditionString, const char *token);
 
 #endif

@@ -173,7 +173,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (MN_GetMouseCapture())
 		return qfalse;
 
-	if (node->invis || !MN_CheckCondition(node))
+	if (node->invis || !MN_CheckVisibility(node))
 		return qfalse;
 
 	MN_GetNodeAbsPos(node, nodepos);

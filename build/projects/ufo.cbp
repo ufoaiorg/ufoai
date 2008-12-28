@@ -490,6 +490,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_actions.h" />
+		<Unit filename="..\..\src\client\menu\m_condition.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\menu\m_condition.h" />
 		<Unit filename="..\..\src\client\menu\m_dragndrop.c">
 			<Option compilerVar="CC" />

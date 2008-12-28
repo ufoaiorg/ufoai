@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "m_input.h"
 #include "m_timer.h"
+#include "m_condition.h"
 #include "../client.h"
 
 menuGlobal_t mn;
@@ -792,68 +793,9 @@ static void MN_Memory_f (void)
  * @sa V_SPECIAL_IF
  * @returns qfalse if the node is not drawn due to not meet if conditions
  */
-qboolean MN_CheckCondition (menuNode_t *node)
+qboolean MN_CheckVisibility (menuNode_t *node)
 {
-	if (node->depends.var) {
-		if (!node->depends.cvar || Q_strcmp(node->depends.cvar->name, node->depends.var))
-			node->depends.cvar = Cvar_Get(node->depends.var, node->depends.value ? node->depends.value : "", 0, "Menu if condition cvar");
-		assert(node->depends.cvar);
-
-		/* menuIfCondition_t */
-		switch (node->depends.cond) {
-		case IF_EQ:
-			assert(node->depends.value);
-			if (atof(node->depends.value) != node->depends.cvar->value)
-				return qfalse;
-			break;
-		case IF_LE:
-			assert(node->depends.value);
-			if (node->depends.cvar->value > atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_GE:
-			assert(node->depends.value);
-			if (node->depends.cvar->value < atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_GT:
-			assert(node->depends.value);
-			if (node->depends.cvar->value <= atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_LT:
-			assert(node->depends.value);
-			if (node->depends.cvar->value >= atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_NE:
-			assert(node->depends.value);
-			if (node->depends.cvar->value == atof(node->depends.value))
-				return qfalse;
-			break;
-		case IF_EXISTS:
-			assert(node->depends.cvar->string);
-			if (!*node->depends.cvar->string)
-				return qfalse;
-			break;
-		case IF_STR_EQ:
-			assert(node->depends.value);
-			assert(node->depends.cvar->string);
-			if (Q_strncmp(node->depends.cvar->string, node->depends.value, MAX_VAR))
-				return qfalse;
-			break;
-		case IF_STR_NE:
-			assert(node->depends.value);
-			assert(node->depends.cvar->string);
-			if (!Q_strncmp(node->depends.cvar->string, node->depends.value, MAX_VAR))
-				return qfalse;
-			break;
-		default:
-			Sys_Error("Unknown condition for if statement: %i\n", node->depends.cond);
-			break;
-		}
-	}
-	return qtrue;
+	return MN_CheckCondition(&node->depends);
 }
 
 /**

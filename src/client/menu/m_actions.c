@@ -309,7 +309,7 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
 	if (node)
 		node = node->next;
 	while (node) {
-		if (MN_CheckCondition(node) && !node->invis
+		if (MN_CheckVisibility(node) && !node->invis
 		 && ((node->onClick && node->onMouseIn) || node->onMouseIn))
 			return node;
 		node = node->next;
