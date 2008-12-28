@@ -117,7 +117,7 @@ menu ufopedia
 	vscrollbar ufopedia_scroll {
 		if "mn_up_mail == 0"
 		image	menu/scrollbar_v_green	blend	true
-		pos	"704 85"	size	"27 368"
+		pos	"704 85"	height	"368"
 		current 0
 		viewsize 16
 		fullsize 50
@@ -149,7 +149,7 @@ menu ufopedia
 	vscrollbar ufopedia_mail_scroll {
 		if "mn_up_mail == 1"
 		image	menu/scrollbar_v_green	blend	true
-		pos	"704 208"	size	"27 240"
+		pos	"704 208"	height	"240"
 		current 0
 		viewsize 10
 		fullsize 50

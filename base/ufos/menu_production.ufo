@@ -174,7 +174,7 @@ menu production
 
 	vscrollbar prodlist_scroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos	"428 70"	size	"27 660"
+		pos	"428 70"	height	"660"
 		current 0
 		viewsize 30
 		fullsize 30

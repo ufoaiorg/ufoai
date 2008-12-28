@@ -95,7 +95,7 @@ menu irc
 
 	vscrollbar irc_data_scroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos	"701 168"	size	"27 528"
+		pos	"701 168"	height	"528"
 		current 0
 		viewsize 24
 		fullsize 24
