@@ -591,7 +591,7 @@ craftitem craft_ammo_alc
 	accuracy	0.7
 	wrange		0.4
 	wspeed		900
-	delay		9
+	delay		30
 	size	10	// light
 }
 
@@ -617,7 +617,7 @@ craftitem craft_ammo_shiva_API
 	accuracy	0.3
 	wrange		0.28
 	wspeed		62
-	delay		1
+	delay		3
 	size	10	// light
 }
 
@@ -633,7 +633,7 @@ craftitem craft_ammo_shiva_HEI
 	accuracy	0.2
 	wrange		0.28
 	wspeed		62
-	delay		1
+	delay		3
 	size	10	// light
 }
 
@@ -671,7 +671,7 @@ craftitem craft_ammo_sparrowhawk
 	accuracy	0.4
 	wrange		0.62
 	wspeed		25
-	delay		15
+	delay		45
 }
 
 craftitem craft_weapon_tr20
@@ -702,7 +702,7 @@ craftitem craft_ammo_tr20
 	accuracy	0.4
 	wrange		0.28
 	wspeed		19
-	delay		3
+	delay		10
 }
 
 craftitem craft_weapon_particle_beam
