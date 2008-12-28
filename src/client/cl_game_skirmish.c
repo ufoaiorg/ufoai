@@ -1,5 +1,5 @@
 /**
- * @file cl_skirmish.c
+ * @file cl_game_skirmish.c
  * @brief Skirmish game type implementation
  */
 
@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-#include "cl_skirmish.h"
+#include "cl_game_skirmish.h"
 
 #define MAX_CREDITS 10000000
 
@@ -125,7 +125,7 @@ static void CL_GameSkirmish_f (void)
 	Cbuf_AddText(map);
 }
 
-void SK_InitStartup (void)
+void GAME_SK_InitStartup (void)
 {
 	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
 }

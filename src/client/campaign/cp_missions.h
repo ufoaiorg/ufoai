@@ -48,5 +48,12 @@ void CP_MissionRemoveFromGeoscape(mission_t *mission);
 void CP_MissionAddToGeoscape(mission_t *mission, qboolean force);
 void CP_UFORemoveFromGeoscape(mission_t *mission, qboolean destroyed);
 mission_t* CP_GetLastMissionAdded(void);
+int CP_MissionChooseUFO(const mission_t *mission);
+void CP_MissionStageEnd(mission_t *mission);
+void CP_InitializeSpawningDelay(void);
+void CP_MissionsInit(void);
+void CP_SpawnNewMissions(void);
+void CP_MissionIsOver(mission_t *mission);
+void CP_MissionIsOverByUFO(aircraft_t *ufocraft);
 
 #endif

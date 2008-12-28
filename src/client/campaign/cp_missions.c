@@ -24,10 +24,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../cl_global.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
 #include "cp_missions.h"
 #include "cp_time.h"
+#include "cp_xvi.h"
 
 /** Maximum number of loops to choose a mission position (to avoid infinite loops) */
 const int MAX_POS_LOOP = 10;
@@ -179,10 +181,86 @@ const char* CP_MissionToTypeString (const mission_t *mission)
 	case STAGE_HARVEST:
 		return _("Harvesting mission");
 	default:
-		break;
+		return _("Crashed UFO");
 	}
-	return _("Crashed UFO");
 }
+
+#ifdef DEBUG
+/**
+ * @brief Return Name of the category of a mission.
+ */
+static const char* CP_MissionCategoryToName (interestCategory_t category)
+{
+	switch (category) {
+	case INTERESTCATEGORY_NONE:
+		return "None";
+	case INTERESTCATEGORY_RECON:
+		return "Recon Mission";
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		return "Terror mission";
+	case INTERESTCATEGORY_BASE_ATTACK:
+		return "Base attack";
+	case INTERESTCATEGORY_BUILDING:
+		return "Building Base or Subverting Government";
+	case INTERESTCATEGORY_SUPPLY:
+		return "Supply base";
+	case INTERESTCATEGORY_XVI:
+		return "XVI propagation";
+	case INTERESTCATEGORY_INTERCEPT:
+		return "Interception";
+	case INTERESTCATEGORY_HARVEST:
+		return "Harvest";
+	case INTERESTCATEGORY_MAX:
+		return "Unknown mission category";
+	default:
+		Sys_Error("Invalid mission category given");
+	}
+}
+
+/**
+ * @brief Return Name of the category of a mission.
+ * @note Not translated yet - only for console usage
+ */
+static const char* CP_MissionStageToName (const missionStage_t stage)
+{
+	switch (stage) {
+	case STAGE_NOT_ACTIVE:
+		return "Not active yet";
+	case STAGE_COME_FROM_ORBIT:
+		return "UFO coming from orbit";
+	case STAGE_RECON_AIR:
+		return "Aerial recon underway";
+	case STAGE_MISSION_GOTO:
+		return "Going to mission position";
+	case STAGE_RECON_GROUND:
+		return "Ground recon mission underway";
+	case STAGE_TERROR_MISSION:
+		return "Terror mission underway";
+	case STAGE_BUILD_BASE:
+		return "Building base";
+	case STAGE_BASE_ATTACK:
+		return "Attacking a base";
+	case STAGE_SUBVERT_GOV:
+		return "Subverting a government";
+	case STAGE_SUPPLY:
+		return "Supplying";
+	case STAGE_SPREAD_XVI:
+		return "Spreading XVI";
+	case STAGE_INTERCEPT:
+		return "Intercepting or attacking installation";
+	case STAGE_RETURN_TO_ORBIT:
+		return "Leaving earth";
+	case STAGE_BASE_DISCOVERED:
+		return "Base visible";
+	case STAGE_HARVEST:
+		return "Harvesting";
+	case STAGE_OVER:
+		return "Mission over";
+	default:
+		Sys_Error("Unknown state type given: %i", stage);
+	}
+}
+#endif
 
 /**
  * @brief Count the number of mission created.
@@ -569,4 +647,466 @@ qboolean CP_MissionCreate (mission_t *mission)
 	}
 
 	return qtrue;
+}
+
+
+/**
+ * @brief Choose UFO type for a given mission category.
+ * @param[in] mission Pointer to the mission where the UFO will be added
+ * @sa CP_MissionChooseUFO
+ * @sa CP_SupplyMissionCreate
+ * @return ufoType_t of the UFO spawning the mission, UFO_MAX if the mission is spawned from ground
+ */
+int CP_MissionChooseUFO (const mission_t *mission)
+{
+	int ufoTypes[UFO_MAX];
+	int numTypes = 0;
+	int idx;
+	qboolean canBeSpawnedFromGround = qfalse;
+	float groundProbability = 0.0f;	/**< Probability to start a mission from earth (without UFO) */
+	float randNumber;
+
+	switch (mission->category) {
+	case INTERESTCATEGORY_RECON:
+		numTypes = CP_ReconMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		numTypes = CP_TerrorMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		numTypes = CP_BaseAttackMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
+		break;
+	case INTERESTCATEGORY_BUILDING:
+		numTypes = CP_BuildBaseMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	case INTERESTCATEGORY_SUPPLY:
+		numTypes = CP_SupplyMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	case INTERESTCATEGORY_XVI:
+		numTypes = CP_XVIMissionAvailableUFOs(mission, ufoTypes);
+		canBeSpawnedFromGround = qtrue;
+		break;
+	case INTERESTCATEGORY_INTERCEPT:
+		numTypes = CP_InterceptMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	case INTERESTCATEGORY_HARVEST:
+		numTypes = CP_HarvestMissionAvailableUFOs(mission, ufoTypes);
+		break;
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
+		break;
+	}
+	if (numTypes > UFO_MAX)
+		Sys_Error("CP_MissionChooseUFO: Too many values UFOs (%i/%i)\n", numTypes, UFO_MAX);
+
+	/* Roll the random number */
+	randNumber = frand();
+
+	/* Check if the mission is spawned without UFO */
+	if (canBeSpawnedFromGround) {
+		const int XVI_PARAM = 10;		/**< Typical XVI average value for spreading mission from earth */
+		/* The higher the XVI rate, the higher the probability to have a mission spawned from ground */
+		groundProbability = 1.0f - exp(-CP_GetAverageXVIRate() / XVI_PARAM);
+
+		/* Mission spawned from ground */
+		if (randNumber < groundProbability)
+			return UFO_MAX;
+	}
+
+	/* If we reached this point, then mission will be spawned from space: choose UFO */
+	assert(numTypes);
+	idx = (int) (numTypes * (randNumber - groundProbability) / (1.0f - groundProbability));
+	assert(idx < numTypes);
+
+	return ufoTypes[idx];
+}
+
+/**
+ * @brief Determine what action should be performed when a mission stage ends.
+ * @param[in] mission Pointer to the mission which stage ended.
+ */
+void CP_MissionStageEnd (mission_t *mission)
+{
+	Com_DPrintf(DEBUG_CLIENT, "Ending mission category %i, stage %i (time: %i day, %i sec)\n",
+		mission->category, mission->stage, ccs.date.day, ccs.date.sec);
+	switch (mission->category) {
+	case INTERESTCATEGORY_RECON:
+		CP_ReconMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		CP_TerrorMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		CP_BaseAttackMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_BUILDING:
+		CP_BuildBaseMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_SUPPLY:
+		CP_SupplyMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_XVI:
+		CP_XVIMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_INTERCEPT:
+		CP_InterceptNextStage(mission);
+		break;
+	case INTERESTCATEGORY_HARVEST:
+		CP_HarvestMissionNextStage(mission);
+		break;
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		Com_Printf("CP_MissionStageEnd: Invalid type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
+		CP_MissionRemove(mission);
+	}
+}
+
+/**
+ * @brief Mission is finished because Phalanx team ended it.
+ * @param[in] mission Pointer to the mission that is ended.
+ */
+void CP_MissionIsOver (mission_t *mission)
+{
+	switch (mission->category) {
+	case INTERESTCATEGORY_RECON:
+		CP_ReconMissionIsFailure(mission);
+		break;
+	case INTERESTCATEGORY_TERROR_ATTACK:
+		CP_TerrorMissionIsFailure(mission);
+		break;
+	case INTERESTCATEGORY_BASE_ATTACK:
+		if (mission->stage <= STAGE_BASE_ATTACK)
+			CP_BaseAttackMissionIsFailure(mission);
+		else
+			CP_BaseAttackMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_BUILDING:
+		if (mission->stage <= STAGE_BUILD_BASE)
+			CP_BuildBaseMissionIsFailure(mission);
+		else if (mission->stage == STAGE_BASE_DISCOVERED)
+			CP_BuildBaseMissionBaseDestroyed(mission);
+		else
+			CP_BuildBaseMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_SUPPLY:
+		if (mission->stage <= STAGE_SUPPLY)
+			CP_SupplyMissionIsFailure(mission);
+		else
+			CP_SupplyMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_XVI:
+		if (mission->stage <= STAGE_SPREAD_XVI)
+			CP_XVIMissionIsFailure(mission);
+		else
+			CP_XVIMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_INTERCEPT:
+		if (mission->stage <= STAGE_INTERCEPT)
+			CP_InterceptMissionIsFailure(mission);
+		else
+			CP_InterceptMissionIsSuccess(mission);
+		break;
+	case INTERESTCATEGORY_HARVEST:
+		CP_HarvestMissionIsFailure(mission);
+		break;
+	case INTERESTCATEGORY_NONE:
+	case INTERESTCATEGORY_MAX:
+		Com_Printf("CP_MissionIsOver: Invalid type of mission (%i), remove mission\n", mission->category);
+		CP_MissionRemove(mission);
+	}
+}
+
+/**
+ * @brief Mission is finished because Phalanx team ended it.
+ * @param[in] ufocraft Pointer to the UFO involved in this mission
+ */
+void CP_MissionIsOverByUFO (aircraft_t *ufocraft)
+{
+	assert(ufocraft->mission);
+	CP_MissionIsOver(ufocraft->mission);
+}
+
+/**
+ * @brief Set mission name.
+ * @note that mission name must be unique in mission global array
+ * @param[out] mission The mission to set the name for
+ * @sa CP_CreateNewMission
+ */
+static inline void CP_SetMissionName (mission_t *mission)
+{
+	int num = 0;
+
+	do {
+		Com_sprintf(mission->id, sizeof(mission->id), "cat%i_interest%i_%i",
+			mission->category, mission->initialOverallInterest, num);
+
+		/* if mission list is empty, the id is unique for sure */
+		if (!ccs.missions)
+			return;
+
+		/* check whether a mission with the same id already exists in the list
+		 * if so, generate a new name by using an increased num values - otherwise
+		 * just use the mission->id we just stored - it should be unique now */
+		if (!LIST_ContainsString(ccs.missions, mission->id))
+			break;
+
+		num++;
+	} while (num); /* fake condition */
+}
+
+/**
+ * @brief Create a new mission of given category.
+ * @param[in] category category of the mission
+ * @param[in] beginNow true if the mission should begin now
+ * @sa CP_SpawnNewMissions
+ * @sa CP_MissionStageEnd
+ */
+void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
+{
+	mission_t mission;
+	const date_t minNextSpawningDate = {0, 0};
+	const date_t nextSpawningDate = {3, 0};	/* Delay between 2 mission spawning */
+
+	/* Some event are non-occurrence */
+	if (category == INTERESTCATEGORY_NONE)
+		return;
+
+	memset(&mission, 0, sizeof(mission));
+
+	/* First fill common datas between all type of missions */
+	mission.category = category;
+	mission.initialOverallInterest = ccs.overallInterest;
+	mission.initialIndividualInterest = ccs.interest[category];
+	mission.stage = STAGE_NOT_ACTIVE;
+	mission.ufo = NULL;
+	if (beginNow) {
+		mission.startDate.day = ccs.date.day;
+		mission.startDate.sec = ccs.date.sec;
+	} else
+		mission.startDate = Date_Add(ccs.date, Date_Random(minNextSpawningDate, nextSpawningDate));
+	mission.finalDate = mission.startDate;
+	CP_SetMissionName(&mission);
+
+	/* Lower alien interest in base building if a base building mission is
+	 * started to avoid several bases at the same time */
+	if (mission.category == INTERESTCATEGORY_BUILDING)
+		CP_BuildBaseMissionStart(&mission);
+	else if (mission.category == INTERESTCATEGORY_BASE_ATTACK)
+		CP_BaseAttackMissionStart(&mission);
+
+	/* Add mission to global array */
+	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
+}
+
+/**
+ * @brief Select new mission type.
+ * @sa CP_SpawnNewMissions
+ */
+static int CP_SelectNewMissionType (void)
+{
+	int sum = 0;
+	int i, randomNumber;
+
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		sum += ccs.interest[i];
+
+	randomNumber = (int) (frand() * (float) sum);
+
+	for (i = 0; randomNumber >= 0; i++) {
+		randomNumber -= ccs.interest[i];
+	}
+
+	return i - 1;
+}
+
+/** @brief Number of days between events are spawned */
+static const int DELAY_BETWEEN_MISSION_SPAWNING = 3;
+
+/**
+ * @brief Spawn new missions.
+ * @sa CL_CampaignRun
+ * @note daily called
+ */
+void CP_SpawnNewMissions (void)
+{
+	int i;
+
+	ccs.lastMissionSpawnedDelay++;
+
+	if (ccs.lastMissionSpawnedDelay > DELAY_BETWEEN_MISSION_SPAWNING) {
+		/* How many missions will be spawned until next cycle ? */
+		const int newMissionNum = (int) (pow(ccs.overallInterest / 10.0f, 0.6));
+		for (i = 0; i < newMissionNum; i++) {
+			const int type = CP_SelectNewMissionType();
+			CP_CreateNewMission(type, qfalse);
+		}
+
+		ccs.lastMissionSpawnedDelay -= DELAY_BETWEEN_MISSION_SPAWNING;
+	}
+}
+
+/**
+ * @brief Initialize spawning delay.
+ * @sa CP_SpawnNewMissions
+ * @note only called when new game is started, in order to spawn new event on the beginning of the game.
+ */
+void CP_InitializeSpawningDelay (void)
+{
+	ccs.lastMissionSpawnedDelay = DELAY_BETWEEN_MISSION_SPAWNING;
+
+	CP_SpawnNewMissions();
+}
+
+#ifdef DEBUG
+/**
+ * @brief Debug function for creating a mission.
+ * @note called with debug_addmission
+ */
+static void CP_SpawnNewMissions_f (void)
+{
+	int category, type = 0;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
+		for (category = INTERESTCATEGORY_RECON; category < INTERESTCATEGORY_MAX; category++) {
+			Com_Printf("...%i: %s", category, CP_MissionCategoryToName(category));
+			if (category == INTERESTCATEGORY_RECON)
+				Com_Printf(" <0:Random, 1:Aerial, 2:Ground>");
+			else if (category == INTERESTCATEGORY_BUILDING)
+				Com_Printf(" <0:Subverse Government, 1:Build Base>");
+			else if (category == INTERESTCATEGORY_INTERCEPT)
+				Com_Printf(" <0:Intercept aircraft, 1:Attack installation>");
+			Com_Printf("\n");
+		}
+		return;
+	}
+
+	if (Cmd_Argc() == 3)
+		type = atoi(Cmd_Argv(2));
+
+	category = atoi(Cmd_Argv(1));
+
+	if (category < INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
+		return;
+
+	CP_CreateNewMission(category, qtrue);
+
+	if (type) {
+		mission_t *mission = CP_GetLastMissionAdded();
+		if (!mission) {
+			Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
+			return;
+		}
+		switch (category) {
+		case INTERESTCATEGORY_RECON:
+			/* Start mission */
+			if (!CP_MissionCreate(mission))
+				return;
+			if (type == 1)
+				/* Aerial mission */
+				CP_ReconMissionAerial(mission);
+			else
+				/* This is a ground mission */
+				CP_ReconMissionGroundGo(mission);
+			break;
+		case INTERESTCATEGORY_BUILDING:
+			if (type == 1)
+				mission->initialOverallInterest = STARTING_BASEBUILD_INTEREST + 1;
+			break;
+		case INTERESTCATEGORY_INTERCEPT:
+			/* Start mission */
+			if (!CP_MissionCreate(mission))
+				return;
+			if (type == 1) {
+				mission->ufo->ufotype = UFO_HARVESTER;
+				CP_InterceptGoToInstallation(mission);
+			} else {
+				CP_InterceptAircraftMissionSet(mission);
+			}
+			break;
+		default:
+			Com_Printf("Type is not implemented for this category.\n");
+		}
+	}
+}
+
+/**
+ * @brief List all current mission to console.
+ * @note Use with debug_listmission
+ */
+static void CP_MissionList_f (void)
+{
+	const linkedList_t *list = ccs.missions;
+	qboolean noMission = qtrue;
+
+	for (; list; list = list->next) {
+		const mission_t *mission = (mission_t *)list->data;
+		Com_Printf("mission: '%s'\n", mission->id);
+		Com_Printf("...category %i. '%s' -- stage %i. '%s'\n", mission->category,
+			CP_MissionCategoryToName(mission->category), mission->stage, CP_MissionStageToName(mission->stage));
+		Com_Printf("...mapDef: '%s'\n", mission->mapDef ? mission->mapDef->id : "No mapDef defined");
+		Com_Printf("...location: '%s'\n", mission->location);
+		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
+			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
+		Com_Printf("...pos (%.02f, %.02f) -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->onGeoscape ? "" : "not ");
+		if (mission->ufo)
+			Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - gd.ufos), gd.numUFOs - 1);
+		else
+			Com_Printf("...UFO: no UFO\n");
+		noMission = qfalse;
+	}
+	if (noMission)
+		Com_Printf("No mission currently in game.\n");
+}
+
+/**
+ * @brief Debug function for deleting all mission in global array.
+ * @note called with debug_delmissions
+ */
+static void CP_DeleteMissions_f (void)
+{
+	int n = CP_CountMission();
+	const linkedList_t *list = ccs.missions;
+
+	for (;list; list = list->next) {
+		mission_t *mission = (mission_t *)list->data;
+		CP_MissionRemove(mission);
+	}
+	Com_Printf("Removed %i mission(s) from global array\n", n);
+
+	if (gd.numUFOs != 0) {
+		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions. Force removal.\n", gd.numUFOs);
+		while (gd.numUFOs)
+			UFO_RemoveFromGeoscape(gd.ufos);
+	}
+}
+
+/**
+ * @brief List alien interest values.
+ * @sa function called with debug_listinterest
+ */
+static void CP_AlienInterestList_f (void)
+{
+	int i;
+
+	Com_Printf("Overall interest: %i\n", ccs.overallInterest);
+	Com_Printf("Individual interest:\n");
+
+	for (i = 0; i < INTERESTCATEGORY_MAX; i++)
+		Com_Printf("...%i. %s -- %i\n", i, CP_MissionCategoryToName(i), ccs.interest[i]);
+}
+#endif
+
+void CP_MissionsInit (void)
+{
+#ifdef DEBUG
+	Cmd_AddCommand("debug_addmission", CP_SpawnNewMissions_f, "Add a new mission");
+	Cmd_AddCommand("debug_delmissions", CP_DeleteMissions_f, "Remove all missions from global array");
+	Cmd_AddCommand("debug_listmission", CP_MissionList_f, "Debug function to show all missions");
+	Cmd_AddCommand("debug_listinterest", CP_AlienInterestList_f, "Debug function to show alien interest values");
+#endif
 }

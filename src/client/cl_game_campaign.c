@@ -1,6 +1,6 @@
 /**
- * @file cl_skirmish.h
- * @brief Skirmish game type headers
+ * @file cl_game_campaign.c
+ * @brief Singleplayer campaign game type code
  */
 
 /*
@@ -23,9 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_SKIRMISH_H
-#define CL_SKIRMISH_H
+#include "client.h"
+#include "cl_game_campaign.h"
 
-void SK_InitStartup(void);
+void GAME_CP_InitStartup (void)
+{
 
-#endif
+}

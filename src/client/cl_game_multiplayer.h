@@ -1,6 +1,6 @@
 /**
- * @file cp_alien_interest.h
- * @brief Alien interest header
+ * @file cl_game_multiplayer.h
+ * @brief Multiplayer game type headers
  */
 
 /*
@@ -23,13 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_ALIEN_INTEREST_H
-#define CP_ALIEN_INTEREST_H
+#ifndef CL_GAME_MULITPLAYER_H
+#define CL_GAME_MULITPLAYER_H
 
-void CL_ResetAlienInterest(void);
-void CP_IncreaseAlienInterest(void);
-void CL_ChangeIndividualInterest(float percentage, interestCategory_t category);
-void CP_SetAlienTeamByInterest(const mission_t *mission);
+void GAME_MP_InitStartup(void);
 
 #endif
-

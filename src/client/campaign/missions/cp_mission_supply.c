@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cp_missions.h"
 #include "../cp_time.h"
 #include "../cp_xvi.h"
+#include "../cp_alien_interest.h"
 
 /**
  * @brief Supply mission is over and is a success (from an alien point of view): change interest values.

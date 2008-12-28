@@ -34,7 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_language.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
-#include "cl_skirmish.h"
+#include "cl_game_skirmish.h"
+#include "cl_game_campaign.h"
+#include "cl_game_multiplayer.h"
 #include "campaign/cl_basesummary.h"
 #include "campaign/cl_installation.h"
 #include "campaign/cl_hospital.h"
@@ -2079,7 +2081,9 @@ static void CL_InitLocal (void)
 	TUT_InitStartup();
 	PTL_InitStartup();
 	CP_InitStartup();
-	SK_InitStartup();
+	GAME_SK_InitStartup();
+	GAME_CP_InitStartup();
+	GAME_MP_InitStartup();
 	UR_InitStartup();
 	NAT_InitStartup();
 	BS_InitStartup();
