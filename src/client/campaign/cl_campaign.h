@@ -360,7 +360,6 @@ void CL_DateConvert(const date_t * date, byte *day, byte *month, short *year);
 void CL_DateConvertLong(const date_t * date, dateLong_t * dateLong);
 int CL_DateCreateDay(const short years, const byte months, const byte days);
 int CL_DateCreateSeconds(byte hours, byte minutes, byte seconds);
-const char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CP_EndCampaign(qboolean won);
 void CL_UpdateCredits(int credits);

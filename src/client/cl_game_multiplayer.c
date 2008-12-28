@@ -170,7 +170,7 @@ static void MN_ChangeGametype_f (void)
 static void MN_MapInfo (int step)
 {
 	int i = 0;
-	mapDef_t *md;
+	const mapDef_t *md;
 	const char *mapname;
 
 	if (!csi.numMDs)

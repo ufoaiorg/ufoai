@@ -310,7 +310,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
-		date.year, CL_DateGetMonthName(date.month - 1), date.day);
+		date.year, Date_GetMonthName(date.month - 1), date.day);
 	/** @todo fill real date string */
 	memcpy(fbuf, &header, sizeof(header));
 

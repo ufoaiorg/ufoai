@@ -142,7 +142,7 @@ void CL_UpdateTime (void)
 	}
 
 	/* Update the date */
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), date.year, CL_DateGetMonthName(date.month - 1), date.day);
+	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
 	Cvar_Set("mn_mapdate", mn.messageBuffer);
 
 	/* Update the time. */
@@ -336,3 +336,39 @@ date_t Date_Random (date_t minFrame, date_t maxFrame)
 	return maxFrame;
 }
 
+/**
+ * @brief Returns the monatname to the given month index
+ * @param[in] month The month index - [0-11]
+ * @return month name as char*
+ */
+const char *Date_GetMonthName (int month)
+{
+	switch (month) {
+	case 0:
+		return _("Jan");
+	case 1:
+		return _("Feb");
+	case 2:
+		return _("Mar");
+	case 3:
+		return _("Apr");
+	case 4:
+		return _("May");
+	case 5:
+		return _("Jun");
+	case 6:
+		return _("Jul");
+	case 7:
+		return _("Aug");
+	case 8:
+		return _("Sep");
+	case 9:
+		return _("Oct");
+	case 10:
+		return _("Nov");
+	case 11:
+		return _("Dec");
+	default:
+		return "Error";
+	}
+}

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "campaign/cl_mapfightequip.h"
+#include "campaign/cp_time.h"
 #include "menu/m_messages.h"
 #include "menu/node/m_node_text.h"
 
@@ -853,17 +854,13 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 			case TECHMAIL_PRE:
 				CL_DateConvertLong (&tech->preResearchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-					date.year,
-					CL_DateGetMonthName(date.month - 1),
-					date.day);
+					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
 			case TECHMAIL_RESEARCHED:
 				CL_DateConvertLong (&tech->researchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-					date.year,
-					CL_DateGetMonthName(date.month - 1),
-					date.day);
-					break;
+					date.year, Date_GetMonthName(date.month - 1), date.day);
+				break;
 			default:
 				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
 			}
@@ -1639,15 +1636,11 @@ static void UP_OpenMail_f (void)
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
-					date.year,
-					CL_DateGetMonthName(date.month - 1),
-					date.day);
+					date.year, Date_GetMonthName(date.month - 1), date.day);
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
-					date.year,
-					CL_DateGetMonthName(date.month - 1),
-					date.day);
+					date.year, Date_GetMonthName(date.month - 1), date.day);
 			CHECK_MAIL_EOL
 			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
@@ -1658,15 +1651,11 @@ static void UP_OpenMail_f (void)
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-					date.year,
-					CL_DateGetMonthName(date.month - 1),
-					date.day);
+					date.year, Date_GetMonthName(date.month - 1), date.day);
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-					date.year,
-					CL_DateGetMonthName(date.month - 1),
-					date.day);
+					date.year, Date_GetMonthName(date.month - 1), date.day);
 			CHECK_MAIL_EOL
 			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
@@ -1676,15 +1665,11 @@ static void UP_OpenMail_f (void)
 				if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
-						date.year,
-						CL_DateGetMonthName(date.month - 1),
-						date.day);
+						date.year, Date_GetMonthName(date.month - 1), date.day);
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
-						date.year,
-						CL_DateGetMonthName(date.month - 1),
-						date.day);
+						date.year, Date_GetMonthName(date.month - 1), date.day);
 				CHECK_MAIL_EOL
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
@@ -1692,15 +1677,11 @@ static void UP_OpenMail_f (void)
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-						date.year,
-						CL_DateGetMonthName(date.month - 1),
-						date.day);
+						date.year, Date_GetMonthName(date.month - 1), date.day);
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
-						date.year,
-						CL_DateGetMonthName(date.month - 1),
-						date.day);
+						date.year, Date_GetMonthName(date.month - 1), date.day);
 				CHECK_MAIL_EOL
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			}

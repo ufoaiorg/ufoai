@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_global.h"
+#include "cp_time.h"
 
 static linkedList_t *eventMails = NULL;
 
@@ -245,7 +246,7 @@ void CL_EventAddMail_f (void)
 		dateLong_t date;
 		CL_DateConvertLong(&ccs.date, &date);
 		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
-			date.year, CL_DateGetMonthName(date.month - 1), date.day);
+			date.year, Date_GetMonthName(date.month - 1), date.day);
 		eventMail->date = Mem_PoolStrDup(dateBuf, cl_localPool, 0);
 	}
 

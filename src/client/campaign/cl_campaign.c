@@ -909,43 +909,6 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 }
 
 /**
- * @brief Returns the monatname to the given month index
- * @param[in] month The month index - [0-11]
- * @return month name as char*
- */
-const char *CL_DateGetMonthName (int month)
-{
-	switch (month) {
-	case 0:
-		return _("Jan");
-	case 1:
-		return _("Feb");
-	case 2:
-		return _("Mar");
-	case 3:
-		return _("Apr");
-	case 4:
-		return _("May");
-	case 5:
-		return _("Jun");
-	case 6:
-		return _("Jul");
-	case 7:
-		return _("Aug");
-	case 8:
-		return _("Sep");
-	case 9:
-		return _("Oct");
-	case 10:
-		return _("Nov");
-	case 11:
-		return _("Dec");
-	default:
-		return "Error";
-	}
-}
-
-/**
  * @brief sets market prices at start of the game
  * @sa CL_CampaignInit
  * @sa BS_Load (Market load function)

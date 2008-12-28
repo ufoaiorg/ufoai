@@ -38,6 +38,7 @@ void CL_SetGameTime_f(void);
 qboolean Date_LaterThan(date_t now, date_t compare);
 date_t Date_Add(date_t a, date_t b);
 date_t Date_Random(date_t minFrame, date_t maxFrame);
+const char *Date_GetMonthName(int month);
 
 #endif
 
