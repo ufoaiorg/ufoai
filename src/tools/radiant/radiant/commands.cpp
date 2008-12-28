@@ -394,7 +394,7 @@ void LoadCommandMap (const char* path)
 			globalOutputStream() << "commands import: data version " << dataVersion << " is compatible with code version " << version << "\n";
 			ReadCommandMap visitor(strINI.c_str());
 			GlobalShortcuts_foreach(visitor);
-			g_message("parsed %ui custom shortcuts\n", Unsigned(visitor.count()));
+			g_message("parsed %u custom shortcuts\n", Unsigned(visitor.count()));
 		} else {
 			globalWarningStream() << "commands import: data version " << dataVersion << " is not compatible with code version " << version << "\n";
 		}
