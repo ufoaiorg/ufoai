@@ -108,6 +108,7 @@ void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
 void E_DeleteEmployeesExceedingCapacity(base_t *base);
 qboolean E_IsInBase(const employee_t* empl, const base_t* const base);
+void E_HireForBuilding(base_t* base, building_t * building, int num);
 void E_Init(void);
 
 #endif /* CLIENT_CL_EMPLOYEE */

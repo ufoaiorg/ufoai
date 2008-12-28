@@ -1036,49 +1036,6 @@ static void B_BuildingStatus_f (void)
 }
 
 /**
- * @brief  Hires some employees of appropriate type for a building
- * @param[in] building in which building
- * @param[in] num how many employees, if -1, hire building->maxEmployees
- * @sa B_SetUpBase
- */
-static void B_HireForBuilding (base_t* base, building_t * building, int num)
-{
-	if (num < 0)
-		num = building->maxEmployees;
-
-	if (num) {
-		employeeType_t employeeType;
-		switch (building->buildingType) {
-		case B_WORKSHOP:
-			employeeType = EMPL_WORKER;
-			break;
-		case B_LAB:
-			employeeType = EMPL_SCIENTIST;
-			break;
-		case B_HANGAR: /* the Dropship Hangar */
-			employeeType = EMPL_SOLDIER;
-			break;
-		case B_MISC:
-			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
-			return;
-		default:
-			Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
-			return;
-		}
-		/* don't try to hire more that available - see E_CreateEmployee */
-		if (num > gd.numEmployees[employeeType])
-			num = gd.numEmployees[employeeType];
-		for (;num--;) {
-			assert(base);
-			if (!E_HireEmployeeByType(base, employeeType)) {
-				Com_DPrintf(DEBUG_CLIENT, "B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
-				return;
-			}
-		}
-	}
-}
-
-/**
  * @brief Updates base status for particular buildings as well as capacities.
  * @param[in] building Pointer to building.
  * @param[in] base Pointer to base with given building.
@@ -1145,7 +1102,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
 	B_BuildingInit(base);
 
 	if (hire)
-		B_HireForBuilding(base, buildingNew, -1);
+		E_HireForBuilding(base, buildingNew, -1);
 
 	/* now call the onconstruct trigger */
 	if (buildingNew->onConstruct[0] != '\0') {

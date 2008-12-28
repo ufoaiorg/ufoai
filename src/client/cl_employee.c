@@ -247,6 +247,49 @@ EMPLOYEE BACKEND STUFF
 *****************************************************/
 
 /**
+ * @brief  Hires some employees of appropriate type for a building
+ * @param[in] building in which building
+ * @param[in] num how many employees, if -1, hire building->maxEmployees
+ * @sa B_SetUpBase
+ */
+void E_HireForBuilding (base_t* base, building_t * building, int num)
+{
+	if (num < 0)
+		num = building->maxEmployees;
+
+	if (num) {
+		employeeType_t employeeType;
+		switch (building->buildingType) {
+		case B_WORKSHOP:
+			employeeType = EMPL_WORKER;
+			break;
+		case B_LAB:
+			employeeType = EMPL_SCIENTIST;
+			break;
+		case B_HANGAR: /* the Dropship Hangar */
+			employeeType = EMPL_SOLDIER;
+			break;
+		case B_MISC:
+			Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
+			return;
+		default:
+			Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
+			return;
+		}
+		/* don't try to hire more that available - see E_CreateEmployee */
+		if (num > gd.numEmployees[employeeType])
+			num = gd.numEmployees[employeeType];
+		for (;num--;) {
+			assert(base);
+			if (!E_HireEmployeeByType(base, employeeType)) {
+				Com_DPrintf(DEBUG_CLIENT, "E_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
+				return;
+			}
+		}
+	}
+}
+
+/**
  * @brief Checks whether the given employee is in the given base
  * @sa E_EmployeeIsCurrentlyInBase
  */
