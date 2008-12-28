@@ -74,7 +74,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "mainframe.h"
 #include "dialogs/findtextures.h"
 #include "sidebar/sidebar.h"
-#include "groupdialog.h"
 #include "preferences.h"
 #include "commands.h"
 #include "xywindow.h"
@@ -535,18 +534,12 @@ public:
 
 void TextureBrowser_SetHideUnused(TextureBrowser& textureBrowser, bool hideUnused);
 
-GtkWidget* g_page_textures;
+GtkWindow* g_window_textures;
 
 void TextureBrowser_toggleShow() {
-	GroupDialog_showPage(g_page_textures);
+	GtkWidget *widget = GTK_WIDGET(g_window_textures);
+	widget_toggle_visible(widget);
 }
-
-
-void TextureBrowser_updateTitle() {
-	GroupDialog_updatePageTitle(g_page_textures);
-}
-
-
 
 class TextureCategoryLoadShader {
 	const char* m_directory;
@@ -616,8 +609,6 @@ void TextureBrowser_ShowDirectory(TextureBrowser& textureBrowser, const char* di
 
 	// we'll display the newly loaded textures + all the ones already in use
 	TextureBrowser_SetHideUnused(textureBrowser, false);
-
-	TextureBrowser_updateTitle();
 }
 
 static bool TextureBrowser_hideUnused(void);
@@ -1277,7 +1268,6 @@ void TextureBrowser_ToggleShowShaders(void) {
 void TextureBrowser_showAll(void) {
 	g_TextureBrowser_currentDirectory = "";
 	TextureBrowser_heightChanged(g_TextureBrowser);
-	TextureBrowser_updateTitle();
 }
 
 void TextureBrowser_FixedSize(void) {
@@ -1285,18 +1275,6 @@ void TextureBrowser_FixedSize(void) {
 	GlobalTextureBrowser().m_fixedsize_item.update();
 	TextureBrowser_activeShadersChanged(GlobalTextureBrowser());
 }
-
-void TextureBrowser_exportTitle(const StringImportCallback& importer) {
-	StringOutputStream buffer(64);
-	buffer << "Textures: ";
-	if (!string_empty(g_TextureBrowser_currentDirectory.c_str())) {
-		buffer << g_TextureBrowser_currentDirectory.c_str();
-	} else {
-		buffer << "all";
-	}
-	importer(buffer.c_str());
-}
-
 
 void TextureScaleImport (TextureBrowser& textureBrowser, int value) {
 	switch (value) {

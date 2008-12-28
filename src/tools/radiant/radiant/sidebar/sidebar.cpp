@@ -104,10 +104,7 @@ static GtkWidget *notebook;
 
 void ToggleSidebar (void)
 {
-	if (widget_is_visible(notebook))
-		gtk_widget_hide_all(notebook);
-	else
-		gtk_widget_show_all(notebook);
+	widget_toggle_visible(notebook);
 }
 
 static void SidebarButtonToggle (GtkWidget* widget, gpointer data)

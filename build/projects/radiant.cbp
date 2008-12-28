@@ -281,9 +281,6 @@
 		<Unit filename="../../src/tools/radiant/radiant/grid.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/groupdialog.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/gtkmisc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

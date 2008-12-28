@@ -60,7 +60,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "mainframe.h"
 #include "lastused.h"
 #include "multimon.h"
-#include "groupdialog.h"
 #include "camwindow.h"
 #include "xywindow.h"
 #include "entity.h"
@@ -227,7 +226,6 @@ public:
 		MapInfo_Construct();
 		JobInfo_Construct();
 		MainFrame_Construct();
-		GroupDialog_Construct();
 		SurfaceInspector_Construct();
 		CamWnd_Construct();
 		XYWindow_Construct();
@@ -255,7 +253,6 @@ public:
 		XYWindow_Destroy();
 		CamWnd_Destroy();
 		SurfaceInspector_Destroy();
-		GroupDialog_Destroy();
 		MainFrame_Destroy();
 		EntityList_Destroy();
 		MapInfo_Destroy();

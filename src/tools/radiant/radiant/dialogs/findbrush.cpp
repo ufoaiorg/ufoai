@@ -105,22 +105,22 @@ void DoFind (void) {
 				GtkWidget* label = gtk_label_new ("Entity number");
 				gtk_widget_show (label);
 				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-				                  (GtkAttachOptions) (0),
-				                  (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (0),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkWidget* label = gtk_label_new ("Brush number");
 				gtk_widget_show (label);
 				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-				                  (GtkAttachOptions) (0),
-				                  (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (0),
+								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
 				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 0, 1,
-				                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 				gtk_widget_grab_focus(GTK_WIDGET(entry));
 				entity = entry;
 			}
@@ -128,8 +128,8 @@ void DoFind (void) {
 				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
 				gtk_widget_show(GTK_WIDGET(entry));
 				gtk_table_attach(table, GTK_WIDGET(entry), 1, 2, 1, 2,
-				                 (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-				                 (GtkAttachOptions) (0), 0, 0);
+								(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+								(GtkAttachOptions) (0), 0, 0);
 
 				brush = entry;
 			}

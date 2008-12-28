@@ -48,9 +48,7 @@ typedef Callback1<const char*> StringImportCallback;
 template < typename FirstArgument, void (*func)(FirstArgument) >
 class FreeCaller1;
 
-extern GtkWidget* g_page_textures;
-void TextureBrowser_exportTitle(const StringImportCallback& importer);
-typedef FreeCaller1<const StringImportCallback&, TextureBrowser_exportTitle> TextureBrowserExportTitleCaller;
+extern GtkWindow* g_window_textures;
 
 const Vector3& TextureBrowser_getBackgroundColour(TextureBrowser& textureBrowser);
 void TextureBrowser_setBackgroundColour(TextureBrowser& textureBrowser, const Vector3& colour);

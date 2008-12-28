@@ -78,7 +78,6 @@
 #include "filters.h"
 #include "dialogs/findtextures.h"
 #include "grid.h"
-#include "groupdialog.h"
 #include "dialogs/about.h"
 #include "dialogs/findbrush.h"
 #include "dialogs/maptools.h"
@@ -2129,8 +2128,6 @@ void MainFrame::Create (void)
 	GtkToolbar* main_toolbar_v = create_main_toolbar_vertical(CurrentStyle());
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 
-	GroupDialog_constructWindow(window);
-
 #ifdef WIN32
 	if (g_multimon_globals.m_bStartOnPrimMon) {
 		PositionWindowOnPrimaryScreen(g_layout_globals.m_position);
@@ -2243,8 +2240,14 @@ void MainFrame::Create (void)
 		gtk_paned_pack1(GTK_PANED(m_vSplit), GTK_WIDGET(split), TRUE, TRUE);
 
 		// textures
-		GtkFrame* frame = create_framed_widget(TextureBrowser_constructWindow(window));
-		g_page_textures = GroupDialog_addPage("Textures", GTK_WIDGET(frame), TextureBrowserExportTitleCaller());
+		g_window_textures = create_persistent_floating_window("Textures", window);
+		global_accel_connect_window(g_window_textures);
+		window_connect_focus_in_clear_focus_widget(g_window_textures);
+		GtkWidget *textureBox = gtk_hbox_new(FALSE, 0);
+		gtk_container_add(GTK_CONTAINER(g_window_textures), GTK_WIDGET(textureBox));
+		GtkWidget *table = TextureBrowser_constructWindow(window);
+		gtk_box_pack_start(GTK_BOX(textureBox), GTK_WIDGET(table), TRUE, TRUE, 2);
+		gtk_widget_show_all(textureBox);
 
 		// console
 		GtkWidget* console_window = Console_constructWindow(window);
@@ -2305,9 +2308,6 @@ void MainFrame::Shutdown (void)
 
 	PreferencesDialog_destroyWindow();
 	FindTextureDialog_destroyWindow();
-
-	// destroying group-dialog last because it may contain texture-browser
-	GroupDialog_destroyWindow();
 }
 
 /**

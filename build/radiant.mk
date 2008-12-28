@@ -28,7 +28,6 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/filetypes.cpp \
 	$(RADIANT_BASE)/radiant/filters.cpp \
 	$(RADIANT_BASE)/radiant/grid.cpp \
-	$(RADIANT_BASE)/radiant/groupdialog.cpp \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/lastused.cpp \
