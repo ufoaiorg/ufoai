@@ -355,6 +355,7 @@ menu popup_tipoftheday
 		image	"menu/checkbox_blue"
 		size	"20 18"
 		align	ul
+		change	{ cmd "check_nexttip;" }
 	}
 	string activate_string
 	{
@@ -378,7 +379,8 @@ menu popup_tipoftheday
 
 	button bt_next
 	{
-		tooltip	"_Next"
+		string	"_Next"
+		tooltip	"_Next tip"
 		image	menu/button_green_small
 		blend	true
 		width	"176"
@@ -386,11 +388,22 @@ menu popup_tipoftheday
 		click	{ cmd "tipoftheday;" }
 		font	f_menu
 		color	"0 0.5 0 1"
-		string	"_Next"
+	}
+
+	confunc check_nexttip
+	{
+		if "cl_showTipOfTheDay == 1" {
+			*bt_next string "_Next"
+			*bt_next tooltip "_Next tip"
+		}
+		if "cl_showTipOfTheDay != 1" {
+			*bt_next string "_Close"
+			*bt_next tooltip "_Close window"
+		}
 	}
 
 	func init
 	{
-		cmd "tipoftheday random;"
+		cmd "tipoftheday random; check_nexttip;"
 	}
 }
