@@ -101,7 +101,7 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
 		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
-		globalWarningStream() << message.c_str() << "\n";
+		g_warning("%s\n", message.c_str());
 	}
 	return 1;
 }

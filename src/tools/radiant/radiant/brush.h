@@ -929,7 +929,7 @@ public:
 #endif
 			SceneChangeNotify();
 			if (!plane3_valid(m_plane.plane3())) {
-				globalWarningStream() << "Invalid plane after snap to grid\n";
+				g_warning("Invalid plane after snap to grid\n");
 			}
 		}
 	}

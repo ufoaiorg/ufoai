@@ -41,7 +41,7 @@ private:
 				name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "pics/" << m_imageName << ".jpg";
 				m_image = GlobalTexturesCache().capture(name.c_str());
 				if (!m_image)
-					globalWarningStream() << "Particle image: " << m_imageName << " wasn't found\n";
+					g_warning("Particle image: %s wasn't found\n", m_imageName);
 			}
 #endif
 		}
@@ -82,8 +82,8 @@ public:
 
 	void particleChanged(const char* id) {
 		m_id = id;
-		globalOutputStream() << "ID is now: " << m_id << "\n";
-		globalWarningStream() << "TODO: Implement particle changing\n";
+		g_message("ID is now: %s\n", m_id);
+		g_warning("TODO: Implement particle changing\n");
 		freeParticleTexture();
 		reloadParticleTextureName();
 		loadParticleTexture();
@@ -182,7 +182,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 			if (!kill && (model || image)) {
 				// do we already have this particle?
 				if (!g_particleDefinitions.insert(ParticleDefinitionMap::value_type(pID, ParticleDefinition(pID, model, image))).second)
-					globalWarningStream() << "Particle " << pID << " is already in memory, definition in " << filename << " ignored.\n";
+					g_warning("Particle '%s' is already in memory, definition in '%s' ignored.\n", pID, filename);
 			}
 		}
 	}
@@ -194,7 +194,7 @@ void LoadUFOFile(const char* filename) {
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
 		ParseUFOFile(*tokeniser, filename);
 	} else {
-		globalWarningStream() << "Unable to read ufo script file " << filename << "\n";
+		g_warning("Unable to read ufo script file '%s'\n", filename);
 	}
 }
 

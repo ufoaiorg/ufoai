@@ -59,7 +59,7 @@ void GlobalShortcuts_reportUnregistered (void)
 {
 	for (Shortcuts::iterator i = g_shortcuts.begin(); i != g_shortcuts.end(); ++i) {
 		if ((*i).second.first.key != 0 && !(*i).second.second) {
-			globalWarningStream() << "Shortcut not registered: " << (*i).first.c_str() << "\n";
+			g_warning("Shortcut not registered: '%s'\n", (*i).first.c_str());
 		}
 	}
 }
@@ -337,7 +337,7 @@ public:
 				           && string_equal_nocase_n(modifier, "+shift", 6) != 0) {
 					modifiers |= GDK_SHIFT_MASK;
 				} else {
-					globalWarningStream() << "failed to parse user command " << makeQuoted(value) << ": unknown modifier " << makeQuoted(StringRange(modifier, next)) << "\n";
+					g_warning("failed to parse user command '%s': unknown modifier '%s'\n", value, modifier);
 				}
 				modifier = next;
 			}
@@ -355,7 +355,7 @@ public:
 				if (accelerator.key != 0) {
 					++m_count;
 				} else {
-					globalWarningStream() << "Failed to parse user command " << makeQuoted(value) << ": unknown key " << makeQuoted(keyName.c_str()) << "\n";
+					g_warning("Failed to parse user command '%s': unknown key '%s'\n", value, keyName.c_str());
 					// modifier only bindings are not allowed
 					accelerator.modifiers = (GdkModifierType)0;
 				}
@@ -394,11 +394,11 @@ void LoadCommandMap (const char* path)
 			globalOutputStream() << "commands import: data version " << dataVersion << " is compatible with code version " << version << "\n";
 			ReadCommandMap visitor(strINI.c_str());
 			GlobalShortcuts_foreach(visitor);
-			globalOutputStream() << "parsed " << Unsigned(visitor.count()) << " custom shortcuts\n";
+			g_message("parsed %ui custom shortcuts\n", Unsigned(visitor.count()));
 		} else {
 			globalWarningStream() << "commands import: data version " << dataVersion << " is not compatible with code version " << version << "\n";
 		}
 	} else {
-		globalWarningStream() << "failed to load custom shortcuts from " << makeQuoted(strINI.c_str()) << "\n";
+		g_warning("failed to load custom shortcuts from '%s'\n", strINI.c_str());
 	}
 }

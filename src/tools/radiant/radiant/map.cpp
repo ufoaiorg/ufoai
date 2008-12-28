@@ -1356,7 +1356,7 @@ void Scene_parentSelected (void)
 		ParentSelectedBrushesToEntityWalker visitor(GlobalSelectionSystem().ultimateSelected().path());
 		GlobalSelectionSystem().foreachSelected(visitor);
 	} else {
-		globalWarningStream() << "Failed - did not find two selected nodes.\n";
+		g_warning("Failed - did not find two selected nodes.\n");
 	}
 }
 

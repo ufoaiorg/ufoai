@@ -1237,7 +1237,7 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	GtkTreeSelection* selection = gtk_tree_view_get_selection(view);
 
 	if (gtk_tree_selection_get_selected(selection, &model, &iter) == FALSE) {
-		globalWarningStream() << "No entity parameter selected to change the value for\n";
+		g_warning("No entity parameter selected to change the value for\n");
 		return;
 	}
 

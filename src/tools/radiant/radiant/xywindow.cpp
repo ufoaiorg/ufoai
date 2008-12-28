@@ -1450,7 +1450,7 @@ void XYWnd::XY_LoadBackgroundImage (const char *name)
 {
 	const char* relative = path_make_relative(name, GlobalFileSystem().findRoot(name));
 	if (relative == name)
-		globalWarningStream() << "Could not extract the relative path, using full path instead\n";
+		g_warning("Could not extract the relative path, using full path instead\n");
 
 	char fileNameWithoutExt[512];
 	strncpy(fileNameWithoutExt, relative, sizeof(fileNameWithoutExt) - 1);
@@ -1459,13 +1459,13 @@ void XYWnd::XY_LoadBackgroundImage (const char *name)
 
 	Image *image = QERApp_LoadImage(0, fileNameWithoutExt);
 	if (!image) {
-		globalWarningStream() << "Could not load texture " << fileNameWithoutExt << "\n";
+		g_warning("Could not load texture %s\n", fileNameWithoutExt);
 		return;
 	}
 	g_pParentWnd->ActiveXY()->m_tex = (qtexture_t*) malloc(sizeof(qtexture_t));
 	LoadTextureRGBA(g_pParentWnd->ActiveXY()->XYWnd::m_tex, image->getRGBAPixels(), image->getWidth(),
 			image->getHeight());
-	globalOutputStream() << "Loaded background texture " << relative << "\n";
+	g_message("Loaded background texture %s\n", relative);
 	g_pParentWnd->ActiveXY()->m_backgroundActivated = true;
 
 	int m_ix, m_iy;
@@ -1516,11 +1516,11 @@ void WXY_BackgroundSelect (void)
 	g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);
 }
 
-	/*
-	 ============================================================================
-	 DRAWING
-	 ============================================================================
-	 */
+/*
+============================================================================
+DRAWING
+============================================================================
+*/
 
 static inline double two_to_the_power (int power)
 {

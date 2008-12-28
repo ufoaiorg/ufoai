@@ -580,27 +580,27 @@ public:
 			);
 
 		if (!lightingSupported()) {
-			globalWarningStream() << "Lighting mode requires OpenGL features not supported by your graphics drivers:\n";
+			g_warning("Lighting mode requires OpenGL features not supported by your graphics drivers:\n");
 			if (!GlobalOpenGL().GL_1_3()) {
-				globalOutputStream() << "  GL version 1.3 or better\n";
+				g_message("  GL version 1.3 or better\n");
 			}
 			if (!GlobalOpenGL().ARB_vertex_program()) {
-				globalOutputStream() << "  GL_ARB_vertex_program\n";
+				g_message("  GL_ARB_vertex_program\n");
 			}
 			if (!GlobalOpenGL().ARB_fragment_program()) {
-				globalOutputStream() << "  GL_ARB_fragment_program\n";
+				g_message("  GL_ARB_fragment_program\n");
 			}
 			if (!GlobalOpenGL().ARB_shader_objects()) {
-				globalOutputStream() << "  GL_ARB_shader_objects\n";
+				g_message("  GL_ARB_shader_objects\n");
 			}
 			if (!GlobalOpenGL().ARB_vertex_shader()) {
-				globalOutputStream() << "  GL_ARB_vertex_shader\n";
+				g_message("  GL_ARB_vertex_shader\n");
 			}
 			if (!GlobalOpenGL().ARB_fragment_shader()) {
-				globalOutputStream() << "  GL_ARB_fragment_shader\n";
+				g_message("  GL_ARB_fragment_shader\n");
 			}
 			if (!GlobalOpenGL().ARB_shading_language_100()) {
-				globalOutputStream() << "  GL_ARB_shading_language_100\n";
+				g_message("  GL_ARB_shading_language_100\n");
 			}
 		}
 	}
