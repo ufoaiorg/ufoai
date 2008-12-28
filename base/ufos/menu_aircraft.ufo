@@ -92,13 +92,32 @@ menu aircraft
 	}
 
 	// ===============
+	// equip
+	// ===============
+	button button_equip
+	{
+		string	"_Equip"
+		color	"0 0.8 0 1"
+		tooltip	"_Equip aircraft components"
+		image	menu/button_green_small
+		pos	"60 180"
+		size		"207 48"
+		font	f_menu
+		blend	true
+		click
+		{
+			cmd "mn_push aircraft_equip;"
+		}
+	}
+
+	// ===============
 	// buy/sell aircraft
 	// ===============
 	button button_buysell
 	{
 		tooltip	"_Buy or sell aircraft"
 		image	menu/button_green_small
-		pos	"60 185"
+		pos	"60 380"
 		size		"207 48"
 		blend	true
 		click
@@ -108,89 +127,6 @@ menu aircraft
 		string	"_Buy/Sell Aircraft"
 		color	"0 0.8 0 1"
 		font	f_menu
-	}
-
-	// ===============
-	// start/recall
-	// ===============
-	pic button_start
-	{
-		if "mn_aircraftinbase > 0"
-		tooltip	"_Start your aircraft"
-		image	menu/button
-		pos	"45 240"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "aircraft_start;"
-		}
-		out		{ *txt_start color "0 0.8 0 1" *button_start texl "0 0" *button_start texh "230 64" }
-		in		{ *txt_start color "1 1 1 1" *button_start texl "230 0" *button_start texh "460 64" }
-	}
-	string txt_start
-	{
-		if "mn_aircraftinbase > 0"
-		string	"_Start Aircraft"
-		color	"0 0.8 0 1"
-		pos	"164 273"
-		font	f_menu
-		align	cc
-	}
-	pic button_recall
-	{
-		if "mn_aircraftinbase <= 0"
-		tooltip	"_Call back aircraft"
-		image	menu/button
-		pos	"45 240"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "aircraft_return;"
-		}
-		out		{ *txt_recall color "0 0.8 0 1" *button_recall texl "0 0" *button_recall texh "230 64" }
-		in		{ *txt_recall color "1 1 1 1" *button_recall texl "230 0" *button_recall texh "460 64" }
-	}
-	string txt_recall
-	{
-		if "mn_aircraftinbase <= 0"
-		string	"_Call back"
-		color	"0 0.8 0 1"
-		pos	"164 273"
-		font	f_menu
-		align	cc
-	}
-
-	// ===============
-	// equip
-	// ===============
-	pic button_equip
-	{
-		if "mn_aircraftinbase > 0"
-		tooltip	"_Equip aircraft components"
-		image	menu/button
-		pos	"45 380"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "mn_push aircraft_equip;"
-		}
-		out		{ *txt_equip color "0 0.8 0 1" *button_equip texl "0 0" *button_equip texh "230 64" }
-		in		{ *txt_equip color "1 1 1 1" *button_equip texl "230 0" *button_equip texh "460 64" }
-	}
-	string txt_equip
-	{
-		if "mn_aircraftinbase > 0"
-		string	"_Equip"
-		color	"0 0.8 0 1"
-		pos	"164 413"
-		font	f_menu
-		align	cc
 	}
 
 	// ===============
@@ -251,7 +187,6 @@ menu aircraft
 	/** @todo merge this two buttons by calling a confunc to update status (disable, tooltips) */
 	custombutton aircraft_return
 	{
-		if "mn_aircraftinbase <= 0"
 		tooltip	"_Call back"
 		pos	"550 410"
 		image	menu/button_pack1
@@ -259,17 +194,6 @@ menu aircraft
 		texl	"0 0"
 		size	"16 16"
 		click	{ cmd "aircraft_return;" }
-	}
-	custombutton aircraft_return_disabled
-	{
-		if "mn_aircraftinbase > 0"
-		tooltip	"_Call back"
-		pos	"550 410"
-		image	menu/button_pack1
-		blend	true
-		texl	"0 0"
-		size	"16 16"
-		disabled	true
 	}
 
 	string team_members
@@ -352,6 +276,18 @@ menu aircraft
 		click	{ cmd "mn_pop;"  }
 	}
 
+	confunc aircraft_checkbuttons
+	{
+		if "mn_aircraftinbase > 0" {
+			*button_equip		disabled	false
+			*aircraft_return	disabled	true
+		}
+		if "mn_aircraftinbase <= 0" {
+			*button_equip		disabled	true
+			*aircraft_return	disabled	false
+		}
+	}
+	
 	func init
 	{
 		cmd "aircraft_select;"

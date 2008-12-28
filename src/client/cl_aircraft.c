@@ -752,6 +752,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
 	mn.menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
+	MN_ExecuteConfunc("aircraft_checkbuttons");
 }
 
 /**

@@ -755,7 +755,7 @@ menu research
 	{
 		image	menu/button_background	blend	true
 		texl	"1 1"	size	"59 55"
-		tooltip	"_Back to baseview"
+		tooltip	"_Back"
 		pos		"950 20"
 		icon	"return"
 		click	{ cmd "mn_pop;" }

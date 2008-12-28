@@ -1226,7 +1226,7 @@ menu buy
 
 	pic bt_continue
 	{
-		tooltip	"_Back to baseview"
+		tooltip	"_Back"
 		image	hud/buttons2
 		mousefx	true
 		pos	"920 715"
