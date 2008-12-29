@@ -254,7 +254,7 @@ void qtexture_realise(qtexture_t& texture, const TextureKey& key) {
 			texture.value = image->getValue();
 			g_message("Loaded Texture: \"%s\"\n", key.second.c_str());
 		} else {
-			g_error("Texture load failed: \"%s\"\n", key.second.c_str());
+			g_warning("Texture load failed: \"%s\"\n", key.second.c_str());
 		}
 	}
 }

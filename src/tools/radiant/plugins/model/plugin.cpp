@@ -63,7 +63,7 @@ void PicoPrintFunc( int level, const char *str ) {
 		break;
 
 	case PICO_ERROR:
-		g_error("PICO_ERROR: %s\n", str);
+		g_warning("PICO_ERROR: %s\n", str);
 		break;
 
 	case PICO_FATAL:

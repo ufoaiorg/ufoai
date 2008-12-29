@@ -95,6 +95,11 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 	is_fatal = (log_level & G_LOG_FLAG_FATAL) != 0;
 	log_level = (GLogLevelFlags) (log_level & G_LOG_LEVEL_MASK);
 
+#ifndef DEBUG
+	if (log_level == G_LOG_LEVEL_DEBUG)
+		return;
+#endif
+
 	if (!message)
 		message = "(0) message";
 
@@ -167,12 +172,10 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 
 	strcat(buf, message);
 	if (is_fatal)
-		strcat(buf, "\naborting...\n");
-	else
-		strcat(buf, "\n");
+		strcat(buf, "aborting...\n");
 
 	// spam it...
-	globalErrorStream() << buf << "\n";
+	globalErrorStream() << buf;
 
 	if (is_fatal)
 		ERROR_MESSAGE("GTK+ error: " << buf);
