@@ -153,13 +153,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	int sx, sy, tx, ty, i;
 	vec2_t nodepos;
 
-	/*	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
-	if (mn.numNodes >= MAX_MENUNODES)
-		Sys_Error("MAX_MENUNODES hit");
-	memset(node, 0, sizeof(*node));
-	node->behaviour = MN_GetNodeBehaviour(type);
-	return node;
- skip all unactive nodes */
+	/* skip all unactive nodes */
 	if (node->behaviour->isVirtual)
 		return qfalse;
 
