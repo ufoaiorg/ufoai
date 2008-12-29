@@ -104,14 +104,14 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterWindowPanelNode,
 	MN_RegisterZoneNode
 };
-#define NUMBER_OF_NODES lengthof(registerFunctions)
+#define NUMBER_OF_BEHAVIOURS lengthof(registerFunctions)
 
 extern menuNode_t *focusNode;
 
 /**
  * @brief List of all node behaviours, indexes by nodetype num.
  */
-static nodeBehaviour_t nodeBehaviourList[NUMBER_OF_NODES];
+static nodeBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
 
 /*
  * @brief Get a property from a behaviour or his inheritance
@@ -278,7 +278,7 @@ menuNode_t* MN_AllocNode (const char* type)
 nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 {
 	unsigned char min = 0;
-	unsigned char max = NUMBER_OF_NODES;
+	unsigned char max = NUMBER_OF_BEHAVIOURS;
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
@@ -392,7 +392,7 @@ void MN_InitNodes (void)
 	nodeBehaviour_t *current = nodeBehaviourList;
 
 	/* compute list of node behaviours */
-	for (i = 0; i < NUMBER_OF_NODES; i++) {
+	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
 		registerFunctions[i](current);
 		current++;
 	}
@@ -400,7 +400,7 @@ void MN_InitNodes (void)
 	/* check for safe data: list must be sorted by alphabet */
 	current = nodeBehaviourList;
 	assert(current);
-	for (i = 0; i < NUMBER_OF_NODES - 1; i++) {
+	for (i = 0; i < NUMBER_OF_BEHAVIOURS - 1; i++) {
 		const nodeBehaviour_t *a = current;
 		const nodeBehaviour_t *b = current + 1;
 		assert(b);
@@ -416,7 +416,7 @@ void MN_InitNodes (void)
 
 	/* finalyse node behaviour initialization */
 	current = nodeBehaviourList;
-	for (i = 0; i < NUMBER_OF_NODES; i++) {
+	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
 		MN_InitializeNodeBehaviour(current);
 		current++;
 	}
