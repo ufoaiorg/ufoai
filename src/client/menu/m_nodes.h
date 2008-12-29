@@ -243,7 +243,6 @@ typedef struct nodeBehaviour_s {
 #endif
 } nodeBehaviour_t;
 
-qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y);
 menuNode_t* MN_AllocNode(const char* type);
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 struct value_s;

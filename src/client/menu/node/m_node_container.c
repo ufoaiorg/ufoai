@@ -1177,6 +1177,9 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	int checkedTo = INV_DOES_NOT_FIT;
 	item_t *dragItem = MN_DNDGetItem();
 
+	/* we already check it when the node accepte the DND */
+	assert(target->container);
+
 	MN_GetNodeAbsPos(target, nodepos);
 
 	/** We calculate the position of the top-left corner of the dragged
@@ -1193,35 +1196,30 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 		itemY -= C_UNIT / 2;
 	}
 
-	/* Store information for preview drawing of dragged items. */
-	if (MN_CheckNodeZone(target, mousePosX, mousePosY)
-	 ||	MN_CheckNodeZone(target, mousePosX - itemX, mousePosY - itemY)) {
-		dragInfoToX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
-		dragInfoToY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
+	dragInfoToX = (mousePosX - nodepos[0] - itemX) / C_UNIT;
+	dragInfoToY = (mousePosY - nodepos[1] - itemY) / C_UNIT;
 
-		/** Check if the items already exists in the container. i.e. there is already at least one item.
-		 * @sa Com_AddToInventory */
-		exists = qfalse;
-		if (target->container
-		 && (target->container->id == csi.idFloor || target->container->id == csi.idEquip)
-		 && (dragInfoToX  < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
-		 && Com_ExistsInInventory(menuInventory, target->container, *dragItem)) {
-				exists = qtrue;
-		 }
+	/** Check if the items already exists in the container. i.e. there is already at least one item.
+	 * @sa Com_AddToInventory */
+	exists = qfalse;
+	if ((target->container->id == csi.idFloor || target->container->id == csi.idEquip)
+		&& (dragInfoToX  < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
+		&& Com_ExistsInInventory(menuInventory, target->container, *dragItem)) {
+		exists = qtrue;
+	}
 
-		/** Search for a suitable position to render the item at if
-		 * the container is "single", the cursor is out of bound of the container.
-		 */
-		 if (!exists && dragItem->t && (target->container->single
-		  || dragInfoToX  < 0 || dragInfoToY < 0
-		  || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)) {
+	/** Search for a suitable position to render the item at if
+	 * the container is "single", the cursor is out of bound of the container.
+	 */
+	if (!exists && dragItem->t && (target->container->single
+		|| dragInfoToX  < 0 || dragInfoToY < 0
+		|| dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)) {
 #if 0
 /* ... or there is something in the way. */
 /* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-		  || (Com_CheckToInventory(menuInventory, dragItem->t, target->container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
+		|| (Com_CheckToInventory(menuInventory, dragItem->t, target->container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
 #endif
-			Com_FindSpace(menuInventory, dragItem, target->container, &dragInfoToX, &dragInfoToY, dragInfoIC);
-		}
+		Com_FindSpace(menuInventory, dragItem, target->container, &dragInfoToX, &dragInfoToY, dragInfoIC);
 	}
 
 	if (!MN_IsScrollContainerNode(target)) {

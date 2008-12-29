@@ -97,7 +97,7 @@ const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char*
 	return MN_GetPropertyFromBehaviour(node->behaviour, name);
 }
 
-#if 0
+#if 0	/* not used */
 /** @todo (menu) to be integrated into MN_CheckNodeZone */
 /**
  * @brief Check if the node is an image and if it is transparent on the given (global) position.
@@ -145,8 +145,8 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 }
 #endif
 
+#if 0 /* not used */
 /**
- * @sa MN_LeftClick
  */
 qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 {
@@ -214,6 +214,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 
 	return qtrue;
 }
+#endif
 
 /**
  * @brief Allocate a node into the menu memory
