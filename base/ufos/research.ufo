@@ -3345,7 +3345,7 @@ tech rs_craft_inter_starchaser
 
 	provides	craft_inter_starchaser
 	require_AND {
-		tech rs_craft_upgrade_am_engines
+		tech rs_craft_inter_dragon
 	}
 	time	3000
 	producetime	600
@@ -3366,8 +3366,7 @@ tech rs_craft_inter_stingray
 
 	provides	craft_inter_stingray
 	require_OR {
-		tech rs_craft_ufo_scout
-		tech rs_craft_ufo_fighter
+		tech rs_craft_inter_starchaser
 	}
 	time	3000
 	producetime	800
