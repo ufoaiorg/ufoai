@@ -153,7 +153,6 @@ void MN_DrawMenus (void)
 	menuNode_t *hoveredNode;
 	menu_t *menu;
 	int sp, pp;
-	qboolean mouseOver = qfalse;
 	qboolean mouseMoved = qfalse;
 	vec2_t nodepos;
 
@@ -224,15 +223,6 @@ void MN_DrawMenus (void)
 			/** @todo remove it when its possible */
 			if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
 				MN_DrawBorder(node);
-
-			/** @todo remove it when its possible */
-			/* mouse darken effect */
-			if (node->mousefx && node->behaviour->id == MN_PIC && mouseOver && sp > pp) {
-				vec4_t color;
-				VectorScale(node->color, 0.8, color);
-				color[3] = node->color[3];
-				R_ColorBlend(color);
-			}
 
 			/* draw the node */
 			if (node->behaviour->draw) {

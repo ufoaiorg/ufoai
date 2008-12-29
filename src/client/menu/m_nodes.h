@@ -165,20 +165,20 @@ typedef struct menuNode_s {
 	/* temporary, and/or for testing */
 	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
 
-	/* MN_IMAGE, and more */
+	/* image, and more */
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
 	qboolean preventRatio;
 
-	/* MN_TBAR */
+	/* tbar */
 	float pointWidth;			/**< MN_TBAR: texture pixels per one point */
 	int gapWidth;				/**< MN_TBAR: tens separator width */
 
-	/* MN_TEXT */
+	/* text */
 	/** @todo remove it  from 'string node', need to full implement R_FontDrawStringInBox */
 	byte longlines;				/**< what to do with long lines */
 
-	/* MN_ZONE */
+	/* zone */
 	qboolean repeat;			/**< repeat action when "click" is holded */
 	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
 
