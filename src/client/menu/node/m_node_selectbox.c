@@ -39,17 +39,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Adds a new selectbox option to a selectbox node
- * @sa MN_SELECTBOX
  * @return NULL if menuSelectBoxes is 'full' - otherwise pointer to the selectBoxOption
- * @param[in] node The node (must be of type MN_SELECTBOX) where you want to append
- * the option
+ * @param[in] node The abstractoption where you want to append the option
  * @note You have to add the values manually to the option pointer
  */
 selectBoxOptions_t* MN_NodeAddOption (menuNode_t *node)
 {
 	selectBoxOptions_t *selectBoxOption;
 
-	assert(node->behaviour->id == MN_SELECTBOX || node->behaviour->id == MN_TAB);
+	assert(MN_NodeInstanceOf(node, "abstractoption"));
 
 	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
 		Com_Printf("MN_AddSelectboxOption: numSelectBoxes exceeded - increase MAX_SELECT_BOX_OPTIONS\n");
@@ -189,7 +187,6 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 /**
  * @brief Handles selectboxes clicks
- * @sa MN_SELECTBOX
  */
 static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 {

@@ -46,9 +46,9 @@ typedef enum mn_s {
 	MN_TEXTENTRY,
 	MN_BAR,
 	MN_TBAR,
-	MN_MODEL,
+	MN_MODEL,	/* used */
 	MN_CONTAINER,
-	MN_ITEM,	/**< used to display the model of an item or aircraft */
+	MN_ITEM,
 	MN_MAP,
 	MN_AIRFIGHTMAP,
 	MN_BASEMAP,
@@ -56,10 +56,10 @@ typedef enum mn_s {
 	MN_CHECKBOX,
 	MN_SELECTBOX,
 	MN_LINESTRIP,
-	MN_CINEMATIC, /**< every menu can only have one cinematic */
-	MN_RADAR,	/**< tactical mission radar */
+	MN_CINEMATIC,
+	MN_RADAR,
 	MN_TAB,
-	MN_CONTROLS,	/**< menu controls */
+	MN_CONTROLS,
 	MN_CUSTOMBUTTON,
 	MN_WINDOWPANEL,
 	MN_BUTTON,
@@ -171,8 +171,8 @@ typedef struct menuNode_s {
 	qboolean preventRatio;
 
 	/* tbar */
-	float pointWidth;			/**< MN_TBAR: texture pixels per one point */
-	int gapWidth;				/**< MN_TBAR: tens separator width */
+	float pointWidth;			/**< texture pixels per one point */
+	int gapWidth;				/**< tens separator width */
 
 	/* text */
 	/** @todo remove it  from 'string node', need to full implement R_FontDrawStringInBox */
@@ -189,7 +189,7 @@ typedef struct menuNode_s {
 	union {
 		abstractValueExtraData_t abstractvalue;
 		abstractScrollbarExtraData_t abstractscrollbar;
-		lineStripExtraData_t linestrip;	/**< List of lines to draw. (MN_LINESTRIP) */
+		lineStripExtraData_t linestrip;
 		modelExtraData_t model;
 		optionExtraData_t option;
 		textEntryExtraData_t textentry;

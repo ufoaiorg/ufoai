@@ -31,10 +31,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief extradata for the linestrip node
  */
 typedef struct lineStripExtraData_s {
-	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes MN_LINESTRIP. */
+	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes */
 	int numPoints[MAX_LINESTRIPS];	/**< Number of points in each list */
 	vec4_t color[MAX_LINESTRIPS];	/**< Color of the point-list. */
-	int numStrips;			/**< Number of point-lists. */
+	int numStrips;					/**< Number of point-lists. */
 } lineStripExtraData_t;
 
 struct nodeBehaviour_s; /* prototype */

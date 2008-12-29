@@ -38,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Handles CustomButton draw
- * @sa MN_CUSTOMBUTTON
  */
 static void MN_CustomButtonNodeDraw (menuNode_t *node)
 {

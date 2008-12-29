@@ -87,8 +87,7 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 }
 
 /**
- * @brief Handles selectboxes clicks
- * @sa MN_SELECTBOX
+ * @brief Handles tab clicks
  */
 static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 {

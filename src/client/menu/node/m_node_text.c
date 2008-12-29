@@ -191,7 +191,7 @@ static void MN_DrawScrollBar (const menuNode_t *node)
  */
 int MN_TextNodeGetLine (const menuNode_t *node, int x, int y)
 {
-	assert(node->behaviour->id == MN_TEXT);
+	assert(MN_NodeInstanceOf(node, "text"));
 
 	/* if no texh, its not a text list, result is not important */
 	if (!node->u.text.lineHeight)

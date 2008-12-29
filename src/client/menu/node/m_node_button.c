@@ -41,7 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Handles Button clicks
- * @sa MN_BUTTON
  * @todo node->disabled is not need, a disabled node must not receive
  * any input event; but it dont work like that for the moment
  */

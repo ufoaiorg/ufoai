@@ -35,6 +35,7 @@ void MN_HideNode(struct menuNode_s* node);
 void MN_SetNewNodePos(struct menuNode_s* node, int x, int y);
 void MN_GetNodeAbsPos(const struct menuNode_s* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const struct menuNode_s* node, int *x, int *y);
+qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
 
 struct value_s;
 qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);

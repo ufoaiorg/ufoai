@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct menuIcon_s;
 
-/** @brief MN_SELECTBOX definition */
+/** @brief Option definition */
 typedef struct selectBoxOptions_s {
 	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
 	char label[SELECTBOX_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
@@ -44,7 +44,7 @@ typedef struct selectBoxOptions_s {
 } selectBoxOptions_t;
 
 typedef struct {
-	selectBoxOptions_t *first;	/**< pointer to select box options when type is MN_SELECTBOX */
+	selectBoxOptions_t *first;	/**< first option */
 	int count;
 } optionExtraData_t;
 

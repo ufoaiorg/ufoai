@@ -607,7 +607,6 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				return qfalse;
 			break;
 
-		/* for MN_SELECTBOX */
 		case V_SPECIAL_OPTIONNODE:
 			result = MN_ParseOption(object, text, token, errhead);
 			if (!result)

@@ -28,6 +28,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_main.h"
 #include "m_node_abstractnode.h"
 
+/*
+ * @brief Check the node inheritance
+ * @param[in] node Requested node
+ * @param[in] behaviourName Property name we search
+ * @return True if the node inherite from the behaviour
+ */
+qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
+{
+	const nodeBehaviour_t *behaviour;
+	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
+		if (Q_strcmp(behaviour->name, behaviourName) == 0)
+			return qtrue;
+	}
+	return qfalse;
+}
+
 /** @brief valid properties for a node */
 static const value_t properties[] = {
 	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
@@ -257,26 +273,26 @@ static void MN_NodeSetProperty_f (void)
 	MN_NodeSetProperty(node, property, Cmd_Argv(3));
 }
 
-static qboolean MN_ABstractNodeDNDEnter (menuNode_t *node)
+static qboolean MN_AbstractNodeDNDEnter (menuNode_t *node)
 {
 	return qfalse;
 }
 
-static qboolean MN_ABstractNodeDNDMove (menuNode_t *node, int x, int y)
+static qboolean MN_AbstractNodeDNDMove (menuNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static void MN_ABstractNodeDNDLeave (menuNode_t *node)
+static void MN_AbstractNodeDNDLeave (menuNode_t *node)
 {
 }
 
-static qboolean MN_ABstractNodeDNDDrop (menuNode_t *node, int x, int y)
+static qboolean MN_AbstractNodeDNDDrop (menuNode_t *node, int x, int y)
 {
 	return qtrue;
 }
 
-static qboolean MN_ABstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
+static qboolean MN_AbstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
 {
 	return isDroped;
 }
@@ -289,11 +305,11 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->properties = properties;
 
 	/* drag and drop callback */
-	behaviour->dndEnter = MN_ABstractNodeDNDEnter;
-	behaviour->dndMove = MN_ABstractNodeDNDMove;
-	behaviour->dndLeave = MN_ABstractNodeDNDLeave;
-	behaviour->dndDrop = MN_ABstractNodeDNDDrop;
-	behaviour->dndFinished = MN_ABstractNodeDNDFinished;
+	behaviour->dndEnter = MN_AbstractNodeDNDEnter;
+	behaviour->dndMove = MN_AbstractNodeDNDMove;
+	behaviour->dndLeave = MN_AbstractNodeDNDLeave;
+	behaviour->dndDrop = MN_AbstractNodeDNDDrop;
+	behaviour->dndFinished = MN_AbstractNodeDNDFinished;
 
 	/* some commands */
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");

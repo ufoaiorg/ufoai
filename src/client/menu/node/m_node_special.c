@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_actions.h"
 #include "m_node_window.h"
 #include "m_node_special.h"
+#include "m_node_abstractnode.h"
 
 /**
  * @brief Call before the script initializes the node
@@ -94,7 +95,7 @@ static void MN_ConfuncCommand_f (void)
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
 	assert(node);
-	assert(node->behaviour->id == MN_CONFUNC);
+	assert(MN_NodeInstanceOf(node, "confunc"));
 	MN_ExecuteConFuncActions(node, node->onClick);
 }
 

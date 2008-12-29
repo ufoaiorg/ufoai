@@ -636,7 +636,6 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	 */
 
 	/* idEquip and idFloor */
-	/** @sa MN_DrawMenus -> MN_CONTAINER */
 	if (container->temp) {
 		for (ic = i->c[container->id]; ic; ic = ic->next)
 			if (Com_CompareItem(&ic->item, &item)) {

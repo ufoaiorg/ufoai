@@ -43,7 +43,6 @@ static void MN_DrawBarNode (menuNode_t *node)
 	VectorScale(node->color, 0.8, color);
 	color[3] = node->color[3];
 
-	/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 	fac = node->size[0] / (max - min);
 	bar_width = (value - min) * fac;
 	R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->align, node->state ? color : node->color);
@@ -73,7 +72,6 @@ static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		const float frac = (float) x / node->size[0];
 		const float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
 		const float value = min + frac * (MN_GetReferenceFloat(menu, node->u.abstractvalue.max) - min);
-		/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 		MN_SetCvar(&var[6], NULL, value);
 	}
 }
