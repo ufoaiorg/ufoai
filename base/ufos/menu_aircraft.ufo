@@ -22,128 +22,54 @@ menu aircraft
 	}
 
 	// ===============
-	// equip squad
+	// Buttons
 	// ===============
-	pic button_squad
+	button button_squad
 	{
-		if "mn_equipsoldierstate == 3"
-		tooltip	"_Assign your squad"
-		image   menu/button
-		pos	"45 100"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "mn_push team;"
-		}
-		out		{ *txt_squad color "0 0.8 0 1" *button_squad texl "0 0" *button_squad texh "230 64" }
-		in		{ *txt_squad color "1 1 1 1" *button_squad texl "230 0" *button_squad texh "460 64" }
-	}
-	pic button_no_squad
-	{
-		if "mn_equipsoldierstate == 2"
-		tooltip	"_Hire your team first"
-		image   menu/button
-		pos	"45 100"
-		texl	"0 64"
-		texh	"230 128"
-		mousefx true
-		in
-	}
-	pic button_aircraft_away
-	{
-		if "mn_equipsoldierstate == 1"
-		tooltip	"_Aircraft absent from base"
-		image   menu/button
-		pos	"45 100"
-		texl	"0 64"
-		texh	"230 128"
-		mousefx false
-		in
-	}
-	string txt_squad
-	{
-		if "mn_equipsoldierstate == 3"
 		string	"_Assign Soldiers"
+		image	menu/button_green_small
 		color	"0 0.8 0 1"
-		pos	"164 133"
+		pos		"60 100"
+		size	"207 48"
 		font	f_menu
-		align	cc
-	}
-	string txt_no_squad
-	{
-		// no soldiers available
-		if "mn_equipsoldierstate == 2"
-		string	"_Assign Soldiers"
-		color	"0.5 0.5 0.5 1"
-		pos	"164 133"
-		font	f_menu
-		align	cc
-	}
-	string txt_aircraft_away
-	{
-		if "mn_equipsoldierstate == 1"
-		string	"_Aircraft away"
-		color	"0.5 0.5 0.5 1"
-		pos	"164 133"
-		font	f_menu
-		align	cc
+		click	{ cmd "mn_push team;" }
 	}
 
-	// ===============
-	// equip
-	// ===============
 	button button_equip
 	{
 		string	"_Equip"
 		color	"0 0.8 0 1"
 		tooltip	"_Equip aircraft components"
 		image	menu/button_green_small
-		pos	"60 180"
-		size		"207 48"
+		pos		"60 180"
+		size	"207 48"
 		font	f_menu
 		blend	true
-		click
-		{
-			cmd "mn_push aircraft_equip;"
-		}
+		click	{ cmd "mn_push aircraft_equip;" }
 	}
 
-	// ===============
-	// buy/sell aircraft
-	// ===============
 	button button_buysell
 	{
+		string	"_Buy/Sell Aircraft"
 		tooltip	"_Buy or sell aircraft"
 		image	menu/button_green_small
-		pos	"60 380"
-		size		"207 48"
+		pos		"60 380"
+		size	"207 48"
 		blend	true
-		click
-		{
-			cmd "set mn_itemtype 8; mn_push buy;"
-		}
-		string	"_Buy/Sell Aircraft"
+		click	{ cmd "set mn_itemtype 8; mn_push buy;" }
 		color	"0 0.8 0 1"
 		font	f_menu
 	}
 
-	// ===============
-	// produce
-	// ===============
 	button button_produce
 	{
+		string		"_Produce"
 		tooltip		"_Produce aircraft or aircraft components"
 		image		menu/button_green_small
 		pos			"60 465"
 		size		"207 48"
-		blend	true
-		click
-		{
-			cmd		"set mn_itemtype 8; mn_push production;"
-		}
-		string		"_Produce"
+		blend		true
+		click		{ cmd "set mn_itemtype 8; mn_push production;" }
 		font		f_menu
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
@@ -184,18 +110,6 @@ menu aircraft
 	// additional stuff
 	// ==================
 
-	/** @todo merge this two buttons by calling a confunc to update status (disable, tooltips) */
-	custombutton aircraft_return
-	{
-		tooltip	"_Call back"
-		pos	"550 410"
-		image	menu/button_pack1
-		blend	true
-		texl	"0 0"
-		size	"16 16"
-		click	{ cmd "aircraft_return;" }
-	}
-
 	string team_members
 	{
 		string	"_Team Members:"
@@ -208,6 +122,15 @@ menu aircraft
 		pos		"480 508"
 	}
 
+	custombutton aircraft_return
+	{
+		pos	"550 410"
+		image	menu/button_pack1
+		blend	true
+		texl	"0 0"
+		size	"16 16"
+	}
+
 	text aircraftinfo
 	{
 		pos		"480 540"
@@ -218,50 +141,30 @@ menu aircraft
 		rows	"10"
 	}
 
-	pic prev_aircraft
+	custombutton prev_aircraft
 	{
-		if "mn_base_num_aircraft > 1"
+		image	menu/button_pack1
 		tooltip	"_Switch to the previous aircraft"
-		image	menu/buttons_small
 		pos	"500 410"
-		mousefx true
-		texl	"0 0"
-		texh	"16 16"
+		texl	"0 16"
+		size	"16 16"
+		blend	true
 		click	{ cmd "mn_prev_aircraft;" }
 		whup	{ cmd "mn_next_aircraft;" }
 		whdown	{ cmd "mn_prev_aircraft;" }
 	}
-	pic prev_aircraft_disabled
-	{
-		if "mn_base_num_aircraft <= 1"
-		tooltip	"_Switch to the previous aircraft"
-		image	menu/buttons_small
-		pos	"500 410"
-		texl	"65 0"
-		texh	"80 16"
-	}
 
-	pic next_aircraft
+	custombutton next_aircraft
 	{
-		if "mn_base_num_aircraft > 1"
+		image	menu/button_pack1
 		tooltip	"_Switch to the next aircraft"
-		image	menu/buttons_small
 		pos	"970 410"
-		mousefx	true
-		texl	"16 0"
-		texh	"32 16"
+		texl	"16 16"
+		size	"16 16"
+		blend	true
 		click	{ cmd "mn_next_aircraft;" }
 		whup	{ cmd "mn_next_aircraft;" }
 		whdown	{ cmd "mn_prev_aircraft;" }
-	}
-	pic next_aircraft_disabled
-	{
-		if "mn_base_num_aircraft <= 1"
-		tooltip	"_Switch to the next aircraft"
-		image	menu/buttons_small
-		pos	"970 410"
-		texl	"81 0"
-		texh	"96 16"
 	}
 
 	pic button_leave
@@ -280,11 +183,37 @@ menu aircraft
 	{
 		if "mn_aircraftinbase > 0" {
 			*button_equip		disabled	false
-			*aircraft_return	disabled	true
+
+			*aircraft_return	tooltip		"_Start Aircraft"
+			*aircraft_return	click		{ cmd "aircraft_start;" }
 		}
 		if "mn_aircraftinbase <= 0" {
 			*button_equip		disabled	true
-			*aircraft_return	disabled	false
+
+			*aircraft_return	tooltip		"_Call back"
+			*aircraft_return	click		{ cmd "aircraft_return;" }
+		}
+
+		if "mn_equipsoldierstate == 3" {
+			*button_squad		tooltip		"_Assign your squad"
+			*button_squad		disabled	false
+		}
+		if "mn_equipsoldierstate == 2" {
+			*button_squad		tooltip		"_Hire your team first"
+			*button_squad		disabled	true
+		}
+		if "mn_equipsoldierstate == 1" {
+			*button_squad		tooltip		"_Aircraft absent from base"
+			*button_squad		disabled	true
+		}
+
+		if "mn_base_num_aircraft > 1" {
+			*prev_aircraft		disabled	false
+			*next_aircraft		disabled	false
+		}
+		if "mn_base_num_aircraft <= 1" {
+			*prev_aircraft		disabled	true
+			*next_aircraft		disabled	true
 		}
 	}
 	

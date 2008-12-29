@@ -762,7 +762,7 @@ menu options_keys
 	text keylist
 	{
 		pos	"65 110"
-		size	"460 540"
+		size	"430 560"
 		//rows	"28"
 		textid	TEXT_LIST
 		lineheight	"20"
