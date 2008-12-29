@@ -60,12 +60,58 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_windowpanel.h"
 #include "node/m_node_zone.h"
 
+typedef void (*registerFunction_t)(nodeBehaviour_t *node);
+
+/**
+ * @brief List of functions to register nodes
+ * @note Functions must be sorted by node name
+ */
+const static registerFunction_t registerFunctions[] = {
+	MN_RegisterNullNode,
+	MN_RegisterAbstractNode,
+	MN_RegisterAbstractOptionNode,
+	MN_RegisterAbstractScrollbarNode,
+	MN_RegisterAbstractValueNode,
+	MN_RegisterAirfightMapNode,
+	MN_RegisterBarNode,
+	MN_RegisterBaseLayoutNode,
+	MN_RegisterBaseMapNode,
+	MN_RegisterButtonNode,
+	MN_RegisterCheckBoxNode,
+	MN_RegisterCinematicNode,
+	MN_RegisterConFuncNode,
+	MN_RegisterContainerNode,
+	MN_RegisterControlsNode,
+	MN_RegisterCustomButtonNode,
+	MN_RegisterCvarFuncNode,
+	MN_RegisterFuncNode,
+	MN_RegisterItemNode,
+	MN_RegisterLineStripNode,
+	MN_RegisterMapNode,
+	MN_RegisterWindowNode,
+	MN_RegisterModelNode,
+	MN_RegisterImageNode,
+	MN_RegisterRadarNode,
+	MN_RegisterRadioButtonNode,
+	MN_RegisterSelectBoxNode,
+	MN_RegisterSpinnerNode,
+	MN_RegisterStringNode,
+	MN_RegisterTabNode,
+	MN_RegisterTBarNode,
+	MN_RegisterTextNode,
+	MN_RegisterTextEntryNode,
+	MN_RegisterVScrollbarNode,
+	MN_RegisterWindowPanelNode,
+	MN_RegisterZoneNode
+};
+#define NUMBER_OF_NODES lengthof(registerFunctions)
+
 extern menuNode_t *focusNode;
 
 /**
  * @brief List of all node behaviours, indexes by nodetype num.
  */
-static nodeBehaviour_t nodeBehaviourList[MN_NUM_NODETYPE];
+static nodeBehaviour_t nodeBehaviourList[NUMBER_OF_NODES];
 
 /*
  * @brief Get a property from a behaviour or his inheritance
@@ -232,7 +278,7 @@ menuNode_t* MN_AllocNode (const char* type)
 nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 {
 	unsigned char min = 0;
-	unsigned char max = MN_NUM_NODETYPE;
+	unsigned char max = NUMBER_OF_NODES;
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
@@ -345,49 +391,16 @@ void MN_InitNodes (void)
 	int i = 0;
 	nodeBehaviour_t *current = nodeBehaviourList;
 
-	/** @todo convert it with an array of function */
 	/* compute list of node behaviours */
-	MN_RegisterNullNode(current++);
-	MN_RegisterAbstractNode(current++);
-	MN_RegisterAbstractOptionNode(current++);
-	MN_RegisterAbstractScrollbarNode(current++);
-	MN_RegisterAbstractValueNode(current++);
-	MN_RegisterAirfightMapNode(current++);
-	MN_RegisterBarNode(current++);
-	MN_RegisterBaseLayoutNode(current++);
-	MN_RegisterBaseMapNode(current++);
-	MN_RegisterButtonNode(current++);
-	MN_RegisterCheckBoxNode(current++);
-	MN_RegisterCinematicNode(current++);
-	MN_RegisterConFuncNode(current++);
-	MN_RegisterContainerNode(current++);
-	MN_RegisterControlsNode(current++);
-	MN_RegisterCustomButtonNode(current++);
-	MN_RegisterCvarFuncNode(current++);
-	MN_RegisterFuncNode(current++);
-	MN_RegisterItemNode(current++);
-	MN_RegisterLineStripNode(current++);
-	MN_RegisterMapNode(current++);
-	MN_RegisterWindowNode(current++); /** @todo 'menu', rename it according to the function when its possible */
-	MN_RegisterModelNode(current++);
-	MN_RegisterImageNode(current++); /** @todo 'pic', rename it according to the function when its possible */
-	MN_RegisterRadarNode(current++);
-	MN_RegisterRadioButtonNode(current++);
-	MN_RegisterSelectBoxNode(current++);
-	MN_RegisterSpinnerNode(current++);
-	MN_RegisterStringNode(current++);
-	MN_RegisterTabNode(current++);
-	MN_RegisterTBarNode(current++);
-	MN_RegisterTextNode(current++);
-	MN_RegisterTextEntryNode(current++);
-	MN_RegisterVScrollbarNode(current++);
-	MN_RegisterWindowPanelNode(current++);
-	MN_RegisterZoneNode(current++);
+	for (i = 0; i < NUMBER_OF_NODES; i++) {
+		registerFunctions[i](current);
+		current++;
+	}
 
 	/* check for safe data: list must be sorted by alphabet */
 	current = nodeBehaviourList;
 	assert(current);
-	for (i = 0; i < MN_NUM_NODETYPE - 1; i++) {
+	for (i = 0; i < NUMBER_OF_NODES - 1; i++) {
 		const nodeBehaviour_t *a = current;
 		const nodeBehaviour_t *b = current + 1;
 		assert(b);
@@ -403,7 +416,7 @@ void MN_InitNodes (void)
 
 	/* finalyse node behaviour initialization */
 	current = nodeBehaviourList;
-	for (i = 0; i < MN_NUM_NODETYPE; i++) {
+	for (i = 0; i < NUMBER_OF_NODES; i++) {
 		MN_InitializeNodeBehaviour(current);
 		current++;
 	}
