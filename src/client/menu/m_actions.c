@@ -99,8 +99,11 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 				default:
 					*(byte **) mem = data;
 				}
+			} else if (action->scriptValues->type == V_SPECIAL_ACTION) {
+				void *mem = ((byte *) node + action->scriptValues->ofs);
+				*(menuAction_t**) mem = *(menuAction_t**) data;
 			} else {
-					assert(qfalse);
+				assert(qfalse);
 			}
 		}
 		break;
@@ -272,6 +275,9 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 					default:
 						*(byte **) mem = value;
 					}
+				} else if (action->scriptValues->type == V_SPECIAL_ACTION) {
+					void *mem = ((byte *) node + action->scriptValues->ofs);
+					*(menuAction_t**) mem = *(menuAction_t**)value;
 				} else {
 					assert(qfalse);
 				}

@@ -265,7 +265,13 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 				if (!*text)
 					return NULL;
 
-				mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+				if (val->type == V_SPECIAL_ACTION) {
+					void *mem = mn.curadata;
+					mn.curadata += sizeof(menuAction_t*);
+					*(menuAction_t**)mem = MN_ParseAction(menuNode, text, token);
+				} else {
+					mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+				}
 			}
 			break;
 
