@@ -763,6 +763,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_state.h" />
+		<Unit filename="..\..\src\client\renderer\r_array.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\renderer\r_array.h" />
 		<Unit filename="..\..\src\client\renderer\r_surface.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_gl.h"
 #include "r_state.h"
+#include "r_array.h"
 #include "r_material.h"
 #include "r_image.h"
 #include "r_model.h"
@@ -117,6 +118,12 @@ typedef struct rlocals_s {
 	int tracenum;
 
 	float world_matrix[16];
+
+	/**
+	 * @brief this is the currently handled bsp model
+	 * @note Remember that we can have loaded more than one bsp at the same time
+	 */
+	const model_t* bufferMapTile;
 } rlocals_t;
 
 extern rlocals_t r_locals;

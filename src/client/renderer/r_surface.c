@@ -29,87 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 
 /**
- * @brief this is the currently handled bsp model
- * @note Remember that we can have loaded more than one bsp at the same time
- */
-static const model_t* bufferMapTile = NULL;
-
-/**
- * @sa R_SetVertexBufferState
- * @param[in] mod The loaded maptile (more than one bsp loaded at the same time)
- * @note r_vertexbuffers must be set to 1 to use this
- */
-static inline void R_SetVertexArrayState (const model_t* mod)
-{
-	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.verts);
-
-	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoords);
-
-	if (texunit_lightmap.enabled) {  /* lightmap texcoords */
-		R_SelectTexture(&texunit_lightmap);
-		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoords);
-		R_SelectTexture(&texunit_diffuse);
-	}
-
-	if (r_state.lighting_enabled) { /* normal vectors for lighting */
-		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
-
-		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value)
-			R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
-	}
-}
-
-/**
- * @sa R_SetVertexArrayState
- * @param[in] mod The loaded maptile (more than one bsp loaded at the same time)
- */
-static inline void R_SetVertexBufferState (const model_t* mod)
-{
-	R_BindBuffer(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.vertex_buffer);
-
-	R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoord_buffer);
-
-	if (texunit_lightmap.enabled) {  /* lightmap texcoords */
-		R_SelectTexture(&texunit_lightmap);
-		R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoord_buffer);
-		R_SelectTexture(&texunit_diffuse);
-	}
-
-	if (r_state.lighting_enabled) { /* normal vectors for lighting */
-		R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
-
-		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value)
-			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangent_buffer);
-	}
-}
-
-static void R_ResetArrayState (void)
-{
-	R_BindBuffer(0, 0, 0);
-
-	R_BindDefaultArray(GL_VERTEX_ARRAY);
-
-	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-
-	if (texunit_lightmap.enabled) {
-		R_SelectTexture(&texunit_lightmap);
-		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-		R_SelectTexture(&texunit_diffuse);
-	}
-
-	if (r_state.lighting_enabled) {
-		R_BindDefaultArray(GL_NORMAL_ARRAY);
-
-		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value)
-			R_BindDefaultArray(GL_TANGENT_ARRAY);
-	}
-	bufferMapTile = NULL;
-}
-
-/**
  * @brief Set the surface state according to surface flags and bind the texture
  * @sa R_DrawSurfaces
  */
@@ -132,14 +51,7 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 		R_Color(color);
 	}
 
-	if (bufferMapTile != mod) {
-		bufferMapTile = mod;
-
-		if (qglBindBuffer && r_vertexbuffers->integer)
-			R_SetVertexBufferState(mod);
-		else
-			R_SetVertexArrayState(mod);
-	}
+	R_SetArrayState(mod);
 
 	image = surf->texinfo->image;
 	R_BindTexture(image->texnum);  /* texture */
@@ -152,9 +64,9 @@ static void R_SetSurfaceState (const mBspSurface_t *surf)
 			R_BindDeluxemapTexture(surf->deluxemap_texnum);
 			R_BindNormalmapTexture(image->normalmap->texnum);
 
-			R_EnableBumpmap(qtrue, &image->material);
+			R_EnableBumpmap(&image->material, qtrue);
 		} else
-			R_EnableBumpmap(qfalse, NULL);
+			R_EnableBumpmap(NULL, qfalse);
 	}
 
 	R_CheckError();
@@ -192,7 +104,7 @@ static void R_DrawSurfaces (const mBspSurfaces_t *surfs)
 	/* reset state */
 	if (r_state.lighting_enabled) {
 		if (r_state.bumpmap_enabled)
-			R_EnableBumpmap(qfalse, NULL);
+			R_EnableBumpmap(NULL, qfalse);
 	}
 
 	/* and restore array pointers */

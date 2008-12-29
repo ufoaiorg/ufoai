@@ -469,10 +469,10 @@ static void R_DrawNullModel (const entity_t *e)
 {
 	int i;
 
+	R_EnableTexture(&texunit_diffuse, qfalse);
+
 	glPushMatrix();
 	glMultMatrixf(e->transform.matrix);
-
-	glDisable(GL_TEXTURE_2D);
 
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3f(0, 0, -16);
@@ -488,7 +488,7 @@ static void R_DrawNullModel (const entity_t *e)
 
 	glPopMatrix();
 
-	glEnable(GL_TEXTURE_2D);
+	R_EnableTexture(&texunit_diffuse, qtrue);
 }
 
 /**
