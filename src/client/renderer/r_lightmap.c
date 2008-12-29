@@ -473,10 +473,10 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 
 	/* shuffle the samples */
 	VectorCopy(lighting->colors[0], lighting->colors[1]);
+	VectorCopy(refdef.ambient_light, lighting->colors[0]);
 
 	/* hit something */
 	if (refdef.trace.leafnum) {
-		VectorSet(lighting->colors[0], 1.0, 1.0, 1.0);
 		/* resolve the lighting sample */
 		if (r_mapTiles[refdef.trace.mapTile]->bsp.lightdata) {
 			/* clip to all surfaces of the bsp entity */
@@ -500,8 +500,6 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 					node = node->parent;
 				}
 			}
-		} else { /* use the level's ambient lighting */
-			VectorCopy(refdef.ambient_light, lighting->colors[0]);
 		}
 	}
 
