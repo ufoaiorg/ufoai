@@ -456,28 +456,19 @@ void MN_FindContainer (menuNode_t* const node)
 
 /**
  * @brief Draw a container can containe only one iten
- * @todo maybe we can move some local var into param or global
  */
-static void MN_ContainerNodeDrawSingle (menuNode_t *node)
+static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightType)
 {
 	const vec3_t scale = {3.5, 3.5, 3.5};
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	vec2_t pos;
 	vec2_t nodepos;
-	qboolean drawLoadable = qfalse;
-	objDef_t *dragType = NULL;
 
 	MN_GetNodeAbsPos(node, nodepos);
 	Vector2Copy(nodepos, pos);
 	pos[0] += node->size[0] / 2.0;
 	pos[1] += node->size[1] / 2.0;
-
-	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (MN_DNDIsDragging()) {
-		dragType = MN_DNDGetItem()->t;
-		drawLoadable = qtrue;
-	}
 
 	/* Single item container (special case for left hand). */
 	if (node->container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
@@ -489,7 +480,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node)
 			assert(item->t);
 
 			if (item->t->holdTwoHanded) {
-				if (drawLoadable && INVSH_LoadableInWeapon(dragType, item->t))
+				if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t))
 					MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
 				else
 					MN_DrawItem(node, pos, item, -1, -1, scale, color);
@@ -515,7 +506,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node)
 		item = &menuInventory->c[node->container->id]->item;
 		assert(item);
 		assert(item->t);
-		if (drawLoadable && INVSH_LoadableInWeapon(dragType, item->t))
+		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t))
 			MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
 		else
 			MN_DrawItem(node, pos, item, -1, -1, scale, color);
@@ -525,9 +516,8 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node)
 
 /**
  * @brief Draw the inventory of the base
- * @todo maybe we can move some local var into param or global
  */
-static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node)
+static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highlightType)
 {
 	/** @todo We really should group similar weapons (using same ammo) and their ammo together. */
 	invList_t *ic;
@@ -545,9 +535,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node)
 	const vec3_t scale = {3.5, 3.5, 3.5};
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
-	qboolean drawLoadable = qfalse;
 	vec2_t nodepos;
-	objDef_t *dragType = NULL;
 
 	/* Remember the last used scroll settings, so we know if we
 	 * need to update the button-display later on. */
@@ -556,12 +544,6 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node)
 	const int cache_scrollTotalNum = menuInventory->scrollTotalNum;
 
 	MN_GetNodeAbsPos(node, nodepos);
-
-	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (MN_DNDIsDragging()) {
-		dragType = MN_DNDGetItem()->t;
-		drawLoadable = qtrue;
-	}
 
 	menuInventory->scrollNum = 0;
 	menuInventory->scrollTotalNum = 0;
@@ -623,7 +605,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node)
 
 						/* Actually draw the item. */
 						tempItem.t = ic->item.t;
-						if (drawLoadable && INVSH_LoadableInWeapon(dragType, ic->item.t))
+						if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
 						else
 							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
@@ -695,9 +677,8 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node)
 
 /**
  * @brief Draw a grip container
- * @todo maybe we can move some local var into param or global
  */
-static void MN_ContainerNodeDrawGrid (menuNode_t *node)
+static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 {
 	/** @todo We really should group similar weapons (using same ammo) and their ammo together. */
 	const invList_t *ic;
@@ -705,21 +686,13 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node)
 	const vec3_t scale = {3.5, 3.5, 3.5};
 	vec4_t color = {1, 1, 1, 1};
 	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
-	qboolean drawLoadable = qfalse;
 	vec2_t nodepos;
-	objDef_t *dragType = NULL;
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
-	if (MN_DNDIsDragging()) {
-		dragType = MN_DNDGetItem()->t;
-		drawLoadable = qtrue;
-	}
-
 	for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 		assert(ic->item.t);
-		if (drawLoadable && INVSH_LoadableInWeapon(dragType, ic->item.t))
+		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 		else
 			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, color);
@@ -793,6 +766,8 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
  */
 static void MN_ContainerNodeDraw (menuNode_t *node)
 {
+	objDef_t *highlightType = NULL;
+
 	if (!node->container)
 		return;
 	if (!menuInventory)
@@ -801,13 +776,18 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 	if (node->color[3] < 0.001)
 		return;
 
+	/* Highlight weapons that the dragged ammo (if it is one) can be loaded into. */
+	if (MN_DNDIsDragging() && MN_DNDGetType() == DND_ITEM) {
+		highlightType = MN_DNDGetItem()->t;
+	}
+
 	if (node->container->single) {
-		MN_ContainerNodeDrawSingle(node);
+		MN_ContainerNodeDrawSingle(node, highlightType);
 	} else {
 		if (MN_IsScrollContainerNode(node)) {
-			MN_ContainerNodeDrawBaseInventory(node);
+			MN_ContainerNodeDrawBaseInventory(node, highlightType);
 		} else {
-			MN_ContainerNodeDrawGrid(node);
+			MN_ContainerNodeDrawGrid(node, highlightType);
 		}
 	}
 
