@@ -208,6 +208,7 @@ typedef struct nodeBehaviour_s {
 	const char* extends;			/**< name of the extends behaviour */
 	int id;							/**< id of the behaviour: @todo will be removed soon */
 	qboolean isVirtual;				/**< true, if the node dont have any position on the screen */
+	qboolean isFunction;			/**< true, if the node is a function */
 	qboolean isAbstract;			/**< true, if we can't instanciate the behaviour */
 	qboolean isInitialized;			/**< cache if we already have initialized the node behaviour */
 	const value_t* properties;		/**< list of properties of the node */

@@ -285,17 +285,17 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 
 			/* function calls */
 			for (node = mn.menus[mn.numMenus - 1].firstChild; node; node = node->next) {
-				if ((node->behaviour->id == MN_FUNC || node->behaviour->id == MN_CONFUNC || node->behaviour->id == MN_CVARFUNC)
-					&& !Q_strncmp(node->name, *token, sizeof(node->name))) {
+				if (!node->behaviour->isFunction)
+					continue;
+				if (Q_strncmp(node->name, *token, sizeof(node->name)) != 0)
+					continue;
 
-					action->data = mn.curadata;
-					*(menuAction_t ***) mn.curadata = &node->onClick;
-					mn.curadata += ALIGN(sizeof(menuAction_t *));
+				action->data = mn.curadata;
+				*(menuAction_t ***) mn.curadata = &node->onClick;
+				mn.curadata += ALIGN(sizeof(menuAction_t *));
 
-					lastAction = action;
-					found = qtrue;
-					break;
-				}
+				lastAction = action;
+				break;
 			}
 			break;
 
@@ -671,7 +671,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 	qboolean nextTokenAlreadyRead = qfalse;
 
 	/* functions are a special case */
-	if (node->behaviour->id == MN_CONFUNC || node->behaviour->id == MN_FUNC || node->behaviour->id == MN_CVARFUNC) {
+	if (node->behaviour->isFunction) {
 		menuAction_t **action;
 
 		/* add new actions to end of list */
@@ -682,17 +682,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 		*action = &mn.menuActions[mn.numActions++];
 		memset(*action, 0, sizeof(**action));
-
-		/* register confunc non inherited */
-		if (node->super == NULL && node->behaviour->id == MN_CONFUNC) {
-			/* don't add a callback twice */
-			if (!Cmd_Exists(node->name)) {
-				Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Confunc callback");
-				Cmd_AddUserdata(node->name, node);
-			} else {
-				Com_Printf("MN_ParseNodeBody: Command name for confunc '%s.%s' already registered\n", node->menu->name, node->name);
-			}
-		}
 
 		*action = MN_ParseAction(node, text, token);
 		return *token[0] == '}';

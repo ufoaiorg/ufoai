@@ -294,7 +294,7 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 /**
  * @brief allow to inject command param into cmd of confunc command
  */
-static void MN_ExecuteConFuncActions (const menuNode_t* source, const menuAction_t* firstAction)
+void MN_ExecuteConFuncActions (const menuNode_t* source, const menuAction_t* firstAction)
 {
 	MN_ExecuteInjectedActions(source, qtrue, firstAction);
 }
@@ -302,14 +302,6 @@ static void MN_ExecuteConFuncActions (const menuNode_t* source, const menuAction
 void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* firstAction)
 {
 	MN_ExecuteInjectedActions(source, qfalse, firstAction);
-}
-
-void MN_ConfuncCommand_f (void)
-{
-	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
-	assert(node);
-	assert(node->behaviour->id == MN_CONFUNC);
-	MN_ExecuteConFuncActions(node, node->onClick);
 }
 
 /**
