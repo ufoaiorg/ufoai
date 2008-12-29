@@ -86,7 +86,7 @@ menu ufopedia
 		texl	"0 0"
 		texh	"64 37"
 		click	{
-			cmd "mn_pop; mn_reinit;"
+			cmd "mn_pop;"
 		}
 	}
 
@@ -453,6 +453,11 @@ menu ufopedia
 	func init
 	{
 		cmd "mn_upcontent;"
+	}
+
+	func close
+	{
+		cmd "mn_reinit;"
 	}
 }
 
