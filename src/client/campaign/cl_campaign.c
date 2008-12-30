@@ -965,7 +965,7 @@ static void CL_CampaignInitMarket (qboolean load)
  * @sa CL_CampaignRun
  * @sa daily called
  * @note This function makes items number on market slowly reach the asymptotic number of items defined in equipment.ufo
- * If an item has just been researched, it's available on market until RESEARCH_LIMIT_DELAY days is reached.
+ * If an item has just been researched, it's not available on market until RESEARCH_LIMIT_DELAY days is reached.
  */
 static void CL_CampaignRunMarket (void)
 {
