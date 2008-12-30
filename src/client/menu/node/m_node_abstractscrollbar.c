@@ -30,6 +30,7 @@ static const value_t properties[] = {
 	{"viewsize", V_INT, offsetof(menuNode_t, u.abstractscrollbar.viewsize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.viewsize)},
 	{"fullsize", V_INT, offsetof(menuNode_t, u.abstractscrollbar.fullsize),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.fullsize)},
 	{"lastdiff", V_INT, offsetof(menuNode_t, u.abstractscrollbar.lastdiff),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.lastdiff)},
+	{"hidewhenunused", V_BOOL, offsetof(menuNode_t, u.abstractscrollbar.hideWhenUnused),  MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar.hideWhenUnused)},
 	{NULL, V_NULL, 0, 0}
 };
 
