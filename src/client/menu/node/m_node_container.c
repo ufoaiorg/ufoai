@@ -1282,7 +1282,6 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "container";
-	behaviour->id = MN_CONTAINER;
 	behaviour->draw = MN_ContainerNodeDraw;
 	behaviour->drawTooltip = MN_ContainerNodeDrawTooltip;
 	behaviour->leftClick = MN_ContainerNodeClick;

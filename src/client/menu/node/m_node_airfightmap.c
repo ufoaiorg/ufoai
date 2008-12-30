@@ -67,7 +67,6 @@ static void MN_AirfightmapNodeMouseWheel (menuNode_t *node, qboolean down, int x
 void MN_RegisterAirfightMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "airfightmap";
-	behaviour->id = MN_AIRFIGHTMAP;
 	behaviour->draw = MN_AirfightmapNodeDraw;
 	behaviour->rightClick = MN_AirfightmapNodeRightClick;
 	behaviour->mouseWheel = MN_AirfightmapNodeMouseWheel;

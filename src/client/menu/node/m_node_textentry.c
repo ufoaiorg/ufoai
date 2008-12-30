@@ -279,7 +279,6 @@ static const value_t properties[] = {
 void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
-	behaviour->id = MN_TEXTENTRY;
 	behaviour->leftClick = MN_TextEntryNodeClick;
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;

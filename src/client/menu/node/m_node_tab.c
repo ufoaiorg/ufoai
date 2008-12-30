@@ -227,7 +227,6 @@ void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tab";
 	behaviour->extends = "abstractoption";
-	behaviour->id = MN_TAB;
 	behaviour->draw = MN_TabNodeDraw;
 	behaviour->leftClick = MN_TabNodeClick;
 }

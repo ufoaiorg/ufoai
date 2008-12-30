@@ -140,7 +140,6 @@ void MN_RegisterImageNode (nodeBehaviour_t* behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "pic";
-	behaviour->id = MN_PIC;
 	behaviour->draw = MN_ImageNodeDraw;
 	behaviour->loaded = MN_ImageNodeLoaded;
 	behaviour->properties = properties;

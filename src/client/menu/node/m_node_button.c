@@ -135,7 +135,6 @@ static void MN_ButtonNodeLoaded (menuNode_t *node)
 void MN_RegisterButtonNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "button";
-	behaviour->id = MN_BUTTON;
 	behaviour->draw = MN_ButtonNodeDraw;
 	behaviour->loaded = MN_ButtonNodeLoaded;
 	behaviour->leftClick = MN_ButtonNodeClick;

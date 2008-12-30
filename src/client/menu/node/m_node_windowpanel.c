@@ -85,7 +85,6 @@ static void MN_WindowPanelNodeDraw (menuNode_t *node)
 void MN_RegisterWindowPanelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "windowpanel";
-	behaviour->id = MN_WINDOWPANEL;
 	behaviour->draw = MN_WindowPanelNodeDraw;
 	behaviour->loaded = MN_WindowPanelNodeLoaded;
 }

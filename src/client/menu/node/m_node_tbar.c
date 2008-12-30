@@ -59,6 +59,5 @@ void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
-	behaviour->id = MN_TBAR;
 	behaviour->draw = MN_TBarNodeDraw;
 }

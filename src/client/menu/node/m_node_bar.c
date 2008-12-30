@@ -105,7 +105,6 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
-	behaviour->id = MN_BAR;
 	behaviour->draw = MN_DrawBarNode;
 	behaviour->loading = MN_DrawBarLoading;
 	behaviour->mouseDown = MN_BarNodeMouseDown;

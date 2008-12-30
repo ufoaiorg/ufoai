@@ -40,6 +40,5 @@ void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractvalue";
 	behaviour->isAbstract = qtrue;
-	behaviour->id = MN_ABSTRACTVALUE;
 	behaviour->properties = properties;
 }

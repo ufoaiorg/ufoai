@@ -301,7 +301,6 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
 	behaviour->isAbstract = qtrue;
-	behaviour->id = MN_ABSTRACTNODE;
 	behaviour->properties = properties;
 
 	/* drag and drop callback */

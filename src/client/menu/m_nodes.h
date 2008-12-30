@@ -32,46 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_mesh_anim.h"
 #include "m_condition.h"
 
-/** @brief possible menu node types */
-typedef enum mn_s {
-	MN_NULL,
-	MN_CONFUNC,
-	MN_CVARFUNC,
-	MN_FUNC,
-	MN_ZONE,
-	MN_PIC,
-	MN_STRING,
-	MN_SPINNER,
-	MN_TEXT,
-	MN_TEXTENTRY,
-	MN_BAR,
-	MN_TBAR,
-	MN_MODEL,	/* used */
-	MN_CONTAINER,
-	MN_ITEM,
-	MN_MAP,
-	MN_AIRFIGHTMAP,
-	MN_BASEMAP,
-	MN_BASELAYOUT,
-	MN_CHECKBOX,
-	MN_SELECTBOX,
-	MN_LINESTRIP,
-	MN_CINEMATIC,
-	MN_RADAR,
-	MN_TAB,
-	MN_CONTROLS,
-	MN_CUSTOMBUTTON,
-	MN_WINDOWPANEL,
-	MN_BUTTON,
-	MN_WINDOW,
-	MN_VSCROLLBAR,
-	MN_ABSTRACTSCROLLBAR,
-	MN_ABSTRACTVALUE,
-	MN_ABSTRACTOPTION,
-	MN_ABSTRACTNODE,
-	MN_RADIOBUTTON,
-} mn_t;
-
 #define MAX_EXLUDERECTS	32
 
 typedef struct excludeRect_s {
@@ -204,7 +164,6 @@ typedef struct nodeBehaviour_s {
 	/* behaviour attributes */
 	const char* name;				/**< name of the behaviour: string type of a node */
 	const char* extends;			/**< name of the extends behaviour */
-	int id;							/**< id of the behaviour: @todo will be removed soon */
 	qboolean isVirtual;				/**< true, if the node dont have any position on the screen */
 	qboolean isFunction;			/**< true, if the node is a function */
 	qboolean isAbstract;			/**< true, if we can't instanciate the behaviour */
@@ -226,6 +185,7 @@ typedef struct nodeBehaviour_s {
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
+	void (*init)(menuNode_t *node);			/**< call every time we push the parent menu */
 
 	/* drag and drop callback */
 	qboolean (*dndEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */

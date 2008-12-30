@@ -252,7 +252,6 @@ void MN_RegisterVScrollbarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "vscrollbar";
 	behaviour->extends = "abstractscrollbar";
-	behaviour->id = MN_VSCROLLBAR;
 	behaviour->mouseWheel = MN_VScrollbarNodeWheel;
 	behaviour->mouseDown = MN_VScrollbarNodeMouseDown;
 	behaviour->mouseUp = MN_VScrollbarNodeMouseUp;

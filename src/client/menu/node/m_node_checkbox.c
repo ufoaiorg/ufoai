@@ -107,7 +107,6 @@ void MN_RegisterCheckBoxNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "checkbox";
 	behaviour->extends = "abstractvalue";
-	behaviour->id = MN_CHECKBOX;
 	behaviour->draw = MN_CheckBoxNodeDraw;
 	behaviour->leftClick = MN_CheckBoxNodeClick;
 	behaviour->loading = MN_CheckBoxNodeLoading;

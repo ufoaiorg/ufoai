@@ -264,7 +264,6 @@ static const value_t properties[] = {
 void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractoption";
-	behaviour->id = MN_ABSTRACTOPTION;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 }
@@ -273,7 +272,6 @@ void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
-	behaviour->id = MN_SELECTBOX;
 	behaviour->draw = MN_SelectBoxNodeDraw;
 	behaviour->leftClick = MN_SelectBoxNodeClick;
 	behaviour->mouseMove = MN_SelectBoxNodeMouseMove;

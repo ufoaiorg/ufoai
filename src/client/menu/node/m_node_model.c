@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_model.h"
 #include "m_node_abstractnode.h"
 
+static nodeBehaviour_t *modelBehaviour;
+
 /**
  * @brief Add a menu link to menumodel definition for faster access
  * @note Called after all menus are parsed - only once
@@ -91,6 +93,8 @@ static void MN_SetModelTransform_f (void)
 	const char *command, *nodeOrMenuID, *menuModel;
 	float x, y ,z;
 	vec3_t value;
+
+	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
 
 	/* not initialized yet - commandline? */
 	if (mn.menuStackPos <= 0)
@@ -155,7 +159,7 @@ static void MN_SetModelTransform_f (void)
 			/* didn't find node -> "kill" action and print error */
 			Com_Printf("MN_SetModelTransform_f: node \"%s\" doesn't exist\n", nodeOrMenuID);
 			return;
-		} else if (node->behaviour->id != MN_MODEL) {
+		} else if (node->behaviour != modelBehaviour) {
 			Com_Printf("MN_SetModelTransform_f: node \"%s\" isn't a model node\n", nodeOrMenuID);
 			return;
 		}
@@ -199,6 +203,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	static vec3_t nodeorigin;
 	static vec3_t pmiorigin;
 	const menu_t* menu = node->menu;
+
+	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
 
 	if (source[0] == '\0')
 		return;
@@ -430,7 +436,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 				*tag++ = 0;
 
 				for (search = menu->firstChild; search != node && search; search = search->next)
-					if (search->behaviour->id == MN_MODEL && !Q_strncmp(search->name, parent, sizeof(search->name))) {
+					if (search->behaviour == modelBehaviour && !Q_strncmp(search->name, parent, sizeof(search->name))) {
 						char modelName[MAX_VAR];
 						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
 
@@ -498,7 +504,6 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "model";
-	behaviour->id = MN_MODEL;
 	behaviour->draw = MN_DrawModelNode2;
 	behaviour->leftClick = MN_ModelNodeClick;
 	behaviour->loading = MN_ModelNodeLoading;
@@ -509,4 +514,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
 #endif
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
+
+	/* save the behaviour */
+	modelBehaviour = behaviour;
 }

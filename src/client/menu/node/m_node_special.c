@@ -73,7 +73,6 @@ void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "func";
-	behaviour->id = MN_FUNC;
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
 	behaviour->loading = MN_FuncNodeLoading;
@@ -84,7 +83,6 @@ void MN_RegisterNullNode (nodeBehaviour_t *behaviour)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "";
-	behaviour->id = MN_NULL;
 	behaviour->isVirtual = qtrue;
 }
 
@@ -116,21 +114,32 @@ static void MN_ConFuncNodeLoaded (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Callback every time the parent menu is open (pushed into the active menu stack)
+ */
+static void MN_ConFuncNodeInit (menuNode_t *node)
+{
+	/* override confunc only for inherited confunc node */
+	if (node->super) {
+		assert(Cmd_Exists(node->name));
+		Cmd_AddUserdata(node->name, node);
+	}
+}
+
 void MN_RegisterConFuncNode (nodeBehaviour_t *behaviour)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "confunc";
-	behaviour->id = MN_CONFUNC;
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
 	behaviour->loaded = MN_ConFuncNodeLoaded;
+	behaviour->init = MN_ConFuncNodeInit;
 }
 
 void MN_RegisterCvarFuncNode (nodeBehaviour_t *behaviour)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "cvarfunc";
-	behaviour->id = MN_CVARFUNC;
 	behaviour->isVirtual = qtrue;
 	behaviour->isFunction = qtrue;
 }

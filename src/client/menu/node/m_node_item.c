@@ -74,6 +74,5 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 void MN_RegisterItemNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
-	behaviour->id = MN_ITEM;
 	behaviour->draw = MN_ItemNodeDraw;
 }

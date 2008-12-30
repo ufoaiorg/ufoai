@@ -163,7 +163,6 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "menu";
-	behaviour->id = MN_WINDOW;
 	/** @todo waithing for the merge of menu and node */
 	/* behaviour->loading = MN_WindowNodeLoading; */
 	/* behaviour->loaded = MN_WindowNodeLoaded; */

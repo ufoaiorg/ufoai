@@ -481,6 +481,5 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
-	behaviour->id = MN_RADAR;
 	behaviour->draw = MN_RadarNodeDraw;
 }

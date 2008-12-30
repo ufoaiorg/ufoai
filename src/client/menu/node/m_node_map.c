@@ -95,7 +95,6 @@ static void MN_MapNodeLoading (menuNode_t *node)
 void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "map";
-	behaviour->id = MN_MAP;
 	behaviour->draw = MN_MapNodeDraw;
 	behaviour->leftClick = MAP_MapClick;
 	behaviour->rightClick = MN_MapNodeRightClick;

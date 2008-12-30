@@ -768,7 +768,7 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	/* test if node already exists */
 	node = MN_GetNode(menu, *token);
 	if (node) {
-		if (node->behaviour->id != behaviour->id) {
+		if (node->behaviour != behaviour) {
 			Com_Printf("MN_ParseNode: we can't change node type (node \"%s.%s\")\n", menu->name, node->name);
 			return qfalse;
 		}

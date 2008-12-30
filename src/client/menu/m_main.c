@@ -165,13 +165,10 @@ static menu_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean
 			node->timePushed = cl.time;
 	}
 
-	/* override confunc only for inherited confunc node */
-	if (menu->super) {
-		for (node = menu->firstChild; node; node = node->next) {
-			if (node->super && node->behaviour->id == MN_CONFUNC) {
-				assert(Cmd_Exists(node->name));
-				Cmd_AddUserdata(node->name, node);
-			}
+	/* callback into nodes */
+	for (node = menu->firstChild; node; node = node->next) {
+		if (node->behaviour->init) {
+			node->behaviour->init(node);
 		}
 	}
 

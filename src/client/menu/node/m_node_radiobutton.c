@@ -107,9 +107,7 @@ static const value_t properties[] = {
 void MN_RegisterRadioButtonNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radiobutton";
-	behaviour->id = MN_RADIOBUTTON;
 	behaviour->draw = MN_RadioButtonNodeDraw;
 	behaviour->leftClick = MN_RadioButtonNodeClick;
 	behaviour->properties = properties;
 }
-

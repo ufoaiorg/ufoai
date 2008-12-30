@@ -106,7 +106,6 @@ void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
 {
 	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "zone";
-	behaviour->id = MN_ZONE;
 	behaviour->loading = MN_ZoneNodeLoading;
 	behaviour->loaded = MN_ZoneNodeLoaded;
 	behaviour->mouseDown = MN_ZoneNodeDown;

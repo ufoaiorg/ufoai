@@ -79,7 +79,6 @@ void MN_RegisterControlsNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "controls";
 	behaviour->extends = "pic";
-	behaviour->id = MN_CONTROLS;
 	behaviour->mouseDown = MN_ControlsNodeMouseDown;
 	behaviour->mouseUp = MN_ControlsNodeMouseUp;
 	behaviour->capturedMouseMove = MN_ControlsNodeCapturedMouseMove;
