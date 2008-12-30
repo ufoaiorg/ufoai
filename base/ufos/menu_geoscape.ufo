@@ -1607,7 +1607,6 @@ menu popup_newinstallation
 	}
 }
 
-//menu samsite extends basedefence
 menu samsite
 {
 	func init

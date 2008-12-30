@@ -148,7 +148,7 @@ tech rs_laser
 	}
 
 	time	1500
-	image	techs/laser
+	image	techs/continuous_wave_laser_operation
 }
 
 tech rs_antimatter

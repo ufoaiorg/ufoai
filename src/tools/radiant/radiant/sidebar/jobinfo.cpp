@@ -98,7 +98,9 @@ GtkWidget *JobInfo_constructNotebookTab (void)
 				gtk_tree_view_column_set_max_width(column, 20);
 			}
 
+#if GTK_CHECK_VERSION(2, 12, 0)
 			gtk_tree_view_set_tooltip_column(GTK_TREE_VIEW(view), JOB_ACTION_TOOLTIP);
+#endif
 			gtk_container_add(GTK_CONTAINER(scr), view);
 
 			jobList = store;
