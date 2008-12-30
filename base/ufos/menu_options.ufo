@@ -364,7 +364,6 @@ menu options_video
 		color	"0 .8 0 1"
 		current	"*cvar vid_gamma"
 		max		3.0
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -386,7 +385,6 @@ menu options_video
 		color	"0 .8 0 1"
 		current	"*cvar r_contrast"
 		max		2.0
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -408,7 +406,6 @@ menu options_video
 		color	"0 .8 0 1"
 		current	"*cvar r_brightness"
 		max		2.0
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -430,7 +427,6 @@ menu options_video
 		color	"0 .8 0 1"
 		current	"*cvar r_modulate"
 		max		4.0
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -659,7 +655,6 @@ menu options_sound
 		color	"0 .8 0 1"
 		current	"*cvar snd_volume"
 		max		128
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -681,7 +676,6 @@ menu options_sound
 		color	"0 .8 0 1"
 		current	"*cvar snd_music_volume"
 		max		128
-		align	ul
 		mousefx true
 		click	{ }
 	}
@@ -886,7 +880,6 @@ menu options_game
 		string	"_Show tip of the day"
 		pos		"85 380"
 		font	f_small
-		align ul
 	}
 	checkbox tipoftheday
 	{
@@ -933,7 +926,6 @@ menu options_game
 		color	"0 .8 0 1"
 		current	"*cvar g_actorspeed"
 		max		9
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -1053,7 +1045,6 @@ menu options_input
 		current	"*cvar cl_cammovespeed"
 		min		150
 		max		3000
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -1079,7 +1070,6 @@ menu options_input
 		current	"*cvar cl_camrotspeed"
 		min		50
 		max		1000
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -1105,7 +1095,6 @@ menu options_input
 		current	"*cvar cl_cammoveaccel"
 		min		150
 		max		3000
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -1140,7 +1129,6 @@ menu options_input
 		current	"*cvar in_joystickThreshold"
 		min		0.0
 		max		1.0
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -1166,7 +1154,6 @@ menu options_input
 		current	"*cvar in_joystickSpeed"
 		min		5
 		max		30
-		align	ul
 		mousefx	true
 		click	{ }
 	}

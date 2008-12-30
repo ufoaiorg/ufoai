@@ -702,7 +702,6 @@ menu research
 		string	"_CREDIT"
 		pos	"680 30"
 		font	f_big
-		align	ul
 	}
 
 	string txt_credits

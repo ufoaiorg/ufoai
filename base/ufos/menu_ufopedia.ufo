@@ -498,7 +498,6 @@ menu ufopedia_mail
 	{
 		string	"_Time:"
 		pos	"710 36"
-		align	ul
 		color	"0 .78 0 1"
 		font	f_normal
 	}
@@ -506,7 +505,6 @@ menu ufopedia_mail
 	{
 		string	"*cvar mn_maptime"
 		pos	"780 36"
-		align	ul
 		color	"0 .9 0 1"
 		font	f_normal
 	}
@@ -515,7 +513,6 @@ menu ufopedia_mail
 	{
 		string	"_Date:"
 		pos	"710 56"
-		align	ul
 		color	"0 .78 0 1"
 		font	f_normal
 	}
@@ -523,7 +520,6 @@ menu ufopedia_mail
 	{
 		string	"*cvar mn_mapdate"
 		pos	"780 56"
-		align	ul
 		color	"0 .9 0 1"
 		font	f_normal
 	}

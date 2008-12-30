@@ -583,7 +583,6 @@ menu map_combatzoom
 		string	"_CREDITS"
 		pos		"808 54"
 		font	f_small
-		align	ul
 	}
 
 	string txt_credits
@@ -1347,7 +1346,6 @@ menu popup_newinstallation_type
 	{
 		image	"menu/popup_button_hl"
 		invis	true
-		align	ul
 	}
 
 	pic radar_icon

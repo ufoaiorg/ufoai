@@ -30,7 +30,6 @@ menu production
 		string	"_CREDIT"
 		pos	"610 30"
 		font	f_big
-		align	ul
 	}
 
 	string txt_credits
@@ -50,7 +49,6 @@ menu production
 		string	"_Production limit:"
 		pos	"610 70"
 		font	f_small
-		align	ul
 	}
 
 	string txt_prod_limit
@@ -70,7 +68,6 @@ menu production
 		string	"_Workers (ready/all):"
 		pos	"610 95"
 		font	f_small
-		align	ul
 	}
 
 	string txt_prod_workers
@@ -90,7 +87,6 @@ menu production
 		string	"_Workshop capacity:"
 		pos	"610 120"
 		font	f_small
-		align	ul
 	}
 
 	string txt_prod_basecap
@@ -111,7 +107,6 @@ menu production
 		string	"_Storage capacity:"
 		pos	"610 145"
 		font	f_small
-		align	ul
 	}
 
 	string txt_prod_storage
@@ -131,14 +126,12 @@ menu production
 	{
 		string 	"_Q"
 		pos 	"465 30"
-		align	ul
 	}
 
 	string txt_amount
 	{
 		string 	"_Num"
 		pos		"505 30"
-		align	ul
 	}
 
 	text prodlist

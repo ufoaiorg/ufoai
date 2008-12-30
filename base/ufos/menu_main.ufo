@@ -227,7 +227,6 @@ menu checkcvars
 		color	"0 .8 0 1"
 		current	"*cvar snd_volume"
 		max		128
-		align	ul
 		mousefx	true
 		click	{ }
 	}
@@ -248,7 +247,6 @@ menu checkcvars
 		color	"0 .8 0 1"
 		current	"*cvar snd_music_volume"
 		max		128
-		align	ul
 		mousefx true
 		click	{ }
 	}
@@ -354,7 +352,6 @@ menu popup_tipoftheday
 		pos	"36 194"
 		image	"menu/checkbox_blue"
 		size	"20 18"
-		align	ul
 		change	{ cmd "check_nexttip;" }
 	}
 	string activate_string
@@ -362,7 +359,6 @@ menu popup_tipoftheday
 		string	"_Show tip of the day"
 		pos	"58 194"
 		font	f_small
-		align ul
 	}
 
 	text popup_tipoftheday_text

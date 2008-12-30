@@ -425,7 +425,6 @@ menu serverinfo
 		color	"1 1 1 1"
 		string	"*cvar mn_svmapname"
 		pos	"500 110"
-		align	ul
 	}
 
 	pic mappic

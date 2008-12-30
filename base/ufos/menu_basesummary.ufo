@@ -29,7 +29,6 @@ menu basesummary
 		string	"_CREDIT"
 		pos		"650 300"
 		font	f_normal
-		align	ul
 	}
 
 	string txt_credits

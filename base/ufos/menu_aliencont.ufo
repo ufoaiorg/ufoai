@@ -415,7 +415,6 @@ menu aliencont
 		string "_Alive:"
 		pos "440 705"
 		font	f_small
-		align	ul
 	}
 
 	string txt_alc_alice_v
@@ -435,7 +434,6 @@ menu aliencont
 		string "_Dead:"
 		pos "440 730"
 		font	f_small
-		align	ul
 	}
 
 	string txt_alc_dead_v
@@ -466,7 +464,6 @@ menu aliencont
 		string "_Current base:"
 		pos "40 705"
 		font	f_small
-		align	ul
 	}
 
 	string txt_alc_currentbase_v
@@ -486,7 +483,6 @@ menu aliencont
 		string "_Base capacity:"
 		pos	"40 730"
 		font	f_small
-		align	ul
 	}
 
 	string txt_alc_limit_v
