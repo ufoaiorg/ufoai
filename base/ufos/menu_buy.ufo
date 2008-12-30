@@ -1170,7 +1170,6 @@ menu buy
 		string 		"_Storage (used/all):"
 		pos		"650 80"
 		font		f_small
-		align		ul
 	}
 
 	string txt_storage_value
@@ -1179,7 +1178,6 @@ menu buy
 		string 		"*cvar mn_bs_storage"
 		pos		"855 80"
 		font		f_small
-		align		ul
 	}
 
 	// ==================

@@ -599,7 +599,7 @@ menu hud extends ahud
 		if	"sv_maxclients >= 2"
 		image	hud/bar_chat
 		pos		"1024 64"
-		align	"ur"
+		align	ur
 		out	{
 				*bar_chat image hud/bar_chat
 				*bar_chat size "64 64"
@@ -618,7 +618,7 @@ menu hud extends ahud
 		tooltip	"_Chat"
 		image	hud/button_chat
 		pos		"976 76"
-		align	"ur"
+		align	ur
 		texl	"0 0"
 		texh	"32 32"
 		click {
@@ -632,7 +632,7 @@ menu hud extends ahud
 		tooltip	"_Teamchat"
 		image	hud/button_chat
 		pos		"938 76"
-		align	"ur"
+		align	ur
 		texl	"32 0"
 		texh	"64 32"
 		click {
@@ -646,7 +646,7 @@ menu hud extends ahud
 		tooltip	"_Show chat history"
 		image	hud/button_chat
 		pos		"900 76"
-		align	"ur"
+		align	ur
 		texl	"64 0"
 		texh	"96 32"
 		mousefx false

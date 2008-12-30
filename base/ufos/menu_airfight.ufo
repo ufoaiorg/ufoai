@@ -57,7 +57,6 @@ menu airfight
 		string	"_CREDITS"
 		pos		"808 54"
 		font	f_small
-		align	ul
 	}
 
 	string txt_credits
@@ -89,7 +88,7 @@ menu airfight
 		image	menu/buttons_time
 		pos		"871 100"
 		texl	"42 0"
-		texh	"52 20"	
+		texh	"52 20"
 		out		{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
 		in		{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
 		click	{ cmd "game_timeslow;" }

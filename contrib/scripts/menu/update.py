@@ -263,8 +263,38 @@ def renameTextNodeAlignProperty():
 
 	root.save()
 
+def checkAlign():
+	root = Root()
+	root.loadAll()
+
+	behaviours = {}
+
+	print '-----'
+	
+	for menu in root.nodes.child:
+		print 'menu ' + menu.name
+		for node in menu.child:
+			if not node.existsParam('align'):
+				continue
+			
+			if not node.behaviour in behaviours:
+				behaviours[node.behaviour] = {'total':0}
+			align = node.getParam('align')
+			if not align in behaviours[node.behaviour]:
+				behaviours[node.behaviour][align] = 0
+			
+			behaviours[node.behaviour]['total'] = behaviours[node.behaviour]['total'] + 1
+			behaviours[node.behaviour][align] = behaviours[node.behaviour][align] + 1
+			
+			#print '  ' + node.name + ' ' + str(node.getParam('align'))
+	
+	print '-' * 20
+	for b in behaviours:
+		print b
+		for i in behaviours[b]: print '\t' + i + '\t' + str(behaviours[b][i])
+
 if __name__ == "__main__":
-	renameTextNodeAlignProperty()
+	checkAlign()
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')

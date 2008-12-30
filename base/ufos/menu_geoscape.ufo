@@ -82,7 +82,7 @@ menu map
 	{
 		string	"*cvar mn_mapdaytime"
 		pos			"900 304"
-		align	"uc"
+		align	uc
 	}
 
 	text description

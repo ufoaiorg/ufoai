@@ -46,7 +46,7 @@ class Root:
 					# is event alone
 					if value != '...':
 						result.insert(0, value)
-					
+			
 			else:
 				if len(result) > 0:
 					value = result.pop(0)
@@ -60,11 +60,11 @@ class Root:
 		data = removeFunctions.sub('\\1\\2\\3\\4\\5{}', data)
 		data = removeOptions.sub('\\1\\2\\3\\4\\5', data)
 		data = '\n\n' + data
-	
+		
 		menus = data.split('\nmenu')
 		menus.pop(0)
 		for m in menus:
-		
+			
 			m = m.split('{', 1)
 			name = m[0].strip()
 			menu = NodeObject("menu", name)
@@ -72,7 +72,7 @@ class Root:
 			menu.root = self
 			m = m[1].strip()
 			m = m[0:len(m) - 1]
-	
+			
 			# menu param
 			if m[0] == '{':
 				m = m.split('}', 1)
@@ -91,7 +91,6 @@ class Root:
 				menu.addChild(node)
 				self.parseUFOParam(node, param)
 			
-			
 			self.nodes.addChild(menu)
 
 	def loadFile(self, filename):
@@ -104,8 +103,7 @@ class Root:
 		self.fileBases[filename] = data
 		
 		self.parseUFOMenu(data, filename)
-	
-	
+
 	def loadAll(self):
 		for f in os.listdir(UFOAI_ROOT + '/base/ufos'):
 			if "menu_" not in f:
@@ -158,7 +156,7 @@ class Root:
 		data = match.sub('\\1' + newname + '\\3', data, 1)
 		self.files[filename] = data
 
-		
+
 class NodeObject:
 	def __init__(self, behaviour, name):
 		self.behaviour = behaviour
@@ -167,11 +165,11 @@ class NodeObject:
 		self.child = []
 		self.childname = {}
 		self.mouseevent = None
-		
+
 	def addChild(self, node):
 		self.child.append(node)
 		self.childname[node.name] = node
-		
+
 	def addParam(self, name, value):
 		if name == 'pos':
 			v = value[1:len(value)-1].split(" ")
@@ -181,7 +179,7 @@ class NodeObject:
 			self.size = (int(v[0]), int(v[len(v)-1]))
 		
 		self.param[name] = value
-		
+
 	def __print__(self, level = 0):
 		tab = '\t' * level
 		print tab + self.behaviour + " " + self.name
@@ -192,7 +190,12 @@ class NodeObject:
 
 	def existsParam(self, param):
 		return param in self.param
-	
+
+	def getParam(self, param):
+		if param in self.param:
+			return self.param[param]
+		return None
+
 	def renameParam(self, old, new):
 		if self.behaviour == "menu":
 			self.root.renameMenuParam(self, old, new)
