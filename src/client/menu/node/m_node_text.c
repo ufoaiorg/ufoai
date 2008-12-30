@@ -286,7 +286,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			/* don't draw images that would be out of visible area */
 			if (y + height > y1 && lines >= EXTRADATA(node).textScroll) {
 				/** @todo (menu) once font_t from r_font.h is known everywhere we should scale the height here, too */
-				image = R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->align, node->blend, token);
+				image = R_DrawNormPic(x1, y1, 0, 0, 0, 0, 0, 0, node->textalign, node->blend, token);
 				x1 += image->height;
 			}
 		}
@@ -336,7 +336,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 				*tab++ = '\0';
 
 			/*Com_Printf("tab - first part - lines: %i \n", lines);*/
-			R_FontDrawString(font, node->align, x1, y, x, y, tabwidth-1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
+			R_FontDrawString(font, node->textalign, x1, y, x, y, tabwidth-1, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qfalse, LONGLINES_PRETTYCHOP);
 			x1 += tabwidth;
 			/* now skip to the first char after the \t */
 			cur = tab;
@@ -350,7 +350,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			if (!cur) {
 				lines++;
 			} else {
-				R_FontDrawString(font, node->align, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
+				R_FontDrawString(font, node->textalign, x1, y, x, y, width, height, node->u.text.lineHeight, cur, EXTRADATA(node).rows, EXTRADATA(node).textScroll, &lines, qtrue, node->longlines);
 			}
 		}
 
@@ -418,7 +418,7 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 		}
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
-		R_FontDrawString(font, node->align, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
+		R_FontDrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
 		addTextLines += screenLines - prevScreenLines - 1;
 		if (screenLines > EXTRADATA(node).rows)
 			break;

@@ -876,7 +876,7 @@ menu mp_create_server
 		pos		"-207 150"
 		size	"256 40"
 		longlines	wrap
-		align	uc
+		textalign	uc
 		font	"f_small"
 	}
 

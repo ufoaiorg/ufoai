@@ -43,7 +43,7 @@ menu buy
 	text market_storage
 	{
 		color	"0 .78 0 1"
-		align	ur
+		textalign	ur
 		textid		TEXT_MARKET_STORAGE
 		rows	"28"
 		size	"40 700"
@@ -54,7 +54,7 @@ menu buy
 	text market_market
 	{
 		color	"0 .78 0 1"
-		align	ur
+		textalign	ur
 		textid		TEXT_MARKET_MARKET
 		rows	"28"
 		size	"40 700"
@@ -65,7 +65,7 @@ menu buy
 	text market_prices
 	{
 		color	"0 .78 0 1"
-		align	ur
+		textalign	ur
 		textid		TEXT_MARKET_PRICES
 		rows	"28"
 		size	"80 700"

@@ -714,7 +714,7 @@ menu lostgame
 	// reason why you've lost
 	text reason {
 		color	"0 0.8 0 0.9"
-		align	uc
+		textalign	uc
 		pos		"512 640"
 		size	"900 100"
 		lineheight	"20"
@@ -780,7 +780,7 @@ menu endgame
 	// reason why you've won
 	text reason {
 		color	"0 0.8 0 0.9"
-		align	uc
+		textalign	uc
 		pos		"512 640"
 		size	"900 100"
 		lineheight	"20"

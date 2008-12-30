@@ -706,7 +706,7 @@ menu popup_list
 	text title
 	{
 		pos		"176 18"
-		align	uc
+		textalign	uc
 		width	"446"
 		rows	"1"
 		textid		TEXT_POPUP
@@ -784,11 +784,10 @@ menu popup_button
 	text title
 	{
 		pos		"248 30"
-		align	uc
+		textalign	uc
 		width	"446"
 		rows	"1"
 		textid		TEXT_POPUP
-		align cc
 	}
 
 	text popup_text
@@ -2219,7 +2218,7 @@ menu popup
 	text title
 	{
 		pos		"176 18"
-		align	uc
+		textalign	uc
 		width	"446"
 		rows	"1"
 		textid		TEXT_POPUP

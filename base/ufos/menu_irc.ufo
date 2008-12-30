@@ -187,7 +187,7 @@ menu irc_popup
 	text title
 	{
 		pos		"176 18"
-		align	uc
+		textalign	uc
 		width	"446"
 		rows	"1"
 		textid	TEXT_POPUP
