@@ -72,12 +72,15 @@ void MN_ImageNodeDraw(menuNode_t *node)
 		return;
 
 	/* mouse darken effect */
-	if (node->mousefx && node->state) {
+	/** @todo convert all pic using mousefx into button.
+	 * @todo delete mousefx
+	 */
+	/*if (node->mousefx && node->state) {
 		vec4_t color;
 		VectorScale(node->color, 0.8, color);
 		color[3] = node->color[3];
 		R_ColorBlend(color);
-	}
+	}*/
 
 	MN_GetNodeAbsPos(node, nodepos);
 	/* HACK for ekg pics */
@@ -126,9 +129,12 @@ void MN_ImageNodeDraw(menuNode_t *node)
 	R_DrawNormPic(nodepos[0], nodepos[1], size[0], size[1],
 		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
 
-	if (node->mousefx && node->state) {
+	/** @todo convert all pic using mousefx into button.
+	 * @todo delete mousefx
+	 */
+	/*if (node->mousefx && node->state) {
 		R_ColorBlend(NULL);
-	}
+	}*/
 }
 
 static const value_t properties[] = {
