@@ -559,29 +559,15 @@ static void CL_TurnUp_f (void)
 static void CL_HudRadarDown_f (void)
 {
 	const menu_t* menu = MN_GetMenu(mn_hud->string);
-	menuNode_t *hudRadarNode;
-
 	if (!menu)
 		return;
 
-	hudRadarNode = MN_GetNode(menu, "hudradar");
-	if (hudRadarNode)
-		MN_UnHideNode(hudRadarNode);
-	else
-		Com_Printf("Could not get a hudradar node from menu: '%s'\n", menu->name);
+	MN_PushMenu("radarmenu", NULL);
 }
 
 static void CL_HudRadarUp_f (void)
 {
-	const menu_t* menu = MN_GetMenu(mn_hud->string);
-	menuNode_t *hudRadarNode;
-
-	if (!menu)
-		return;
-
-	hudRadarNode = MN_GetNode(menu, "hudradar");
-	if (hudRadarNode)
-		MN_HideNode(hudRadarNode);
+	MN_CloseMenu("radarmenu");
 }
 
 /**

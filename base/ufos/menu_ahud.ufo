@@ -30,3 +30,14 @@ menu ahud {
 	confunc crouch_checkbox_check_s	{ }
 
 }
+
+menu radarmenu {
+
+	radar hudradar
+	{
+		pos	"512 384"
+		bgcolor	"0.3 0.3 0.3 0.8"
+		blend	yes
+		align	cc
+	}
+}
