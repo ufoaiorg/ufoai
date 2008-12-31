@@ -300,6 +300,11 @@ static void MN_CloseAllMenu (void)
 	}
 }
 
+qboolean MN_MenuIsOnStack(const char* name)
+{
+	return MN_GetMenuPositionFromStackByName(name) != -1;
+}
+
 /**
  * @todo FInd  better name
  */
@@ -312,6 +317,10 @@ static void MN_CloseMenuByRef (menu_t *menu)
 
 	assert(mn.menuStackPos);
 	i = MN_GetMenuPositionFromStackByName(menu->name);
+	if (i == -1) {
+		Com_Printf("Menu '%s' is not on the active stack\n", menu->name);
+		return;
+	}
 
 	/* close child */
 	while (i + 1 < mn.menuStackPos) {

@@ -113,6 +113,7 @@ void MN_DragMenu(void);
 menu_t* MN_PushMenu(const char *name, const char *parentName);
 void MN_PopMenu(qboolean all);
 void MN_CloseMenu(const char* name);
+qboolean MN_MenuIsOnStack(const char* name);
 menu_t* MN_GetActiveMenu(void);
 menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
 qboolean MN_CursorOnMenu(int x, int y);

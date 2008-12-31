@@ -556,17 +556,23 @@ static void CL_TurnUp_f (void)
 	cl.cmode = M_MOVE;
 }
 
+/**
+ * @todo only call/register it when we are on the battlescape
+ */
 static void CL_HudRadarDown_f (void)
 {
-	const menu_t* menu = MN_GetMenu(mn_hud->string);
-	if (!menu)
+	if (!MN_MenuIsOnStack(mn_hud->string))
 		return;
-
 	MN_PushMenu("radarmenu", NULL);
 }
 
+/**
+ * @todo only call/register it when we are on the battlescape
+ */
 static void CL_HudRadarUp_f (void)
 {
+	if (!MN_MenuIsOnStack(mn_hud->string))
+		return;
 	MN_CloseMenu("radarmenu");
 }
 
