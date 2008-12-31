@@ -1221,14 +1221,13 @@ menu buy
 		click	{ cmd "next_buy_type;" }
 	}
 
-	pic bt_continue
+	custombutton bt_continue
 	{
 		tooltip	"_Back"
-		image	hud/buttons2
-		mousefx	true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos	"920 715"
-		texl	"0 0"
-		texh	"64 37"
+		icon return
 		click	{ cmd mn_pop }
 	}
 
