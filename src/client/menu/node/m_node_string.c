@@ -74,10 +74,16 @@ static void MN_StringNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 }
 
+static const value_t properties[] = {
+	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
 	behaviour->draw = MN_StringNodeDraw;
 	behaviour->loading = MN_StringNodeLoading;
 	behaviour->loaded = MN_StringNodeLoaded;
+	behaviour->properties = properties;
 }
