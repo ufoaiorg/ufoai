@@ -342,7 +342,6 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 {
 	int num;
 	nation_t *nation;
-	menuNode_t *nationList;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <nationid>\n", Cmd_Argv(0));
@@ -358,14 +357,9 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 	nation = &gd.nations[num];
 	ufoRecovery.nation = nation;
 
-	/* Pop the menu and launch it again - now with updated value of selected nation. */
-	MN_PopMenu(qfalse);
-	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
-	Cmd_ExecuteString("cp_uforecoverysell");
-
-	/* Highlight currently selected entry */
-	nationList = MN_GetNodeFromCurrentMenu("cp_uforecovery_nationlist");
-	MN_TextNodeSelectLine(nationList, num);
+	assert(nation);
+	Cvar_Set("mission_recoverynation", _(nation->name));
+	MN_ExecuteConfunc("nationselect_enable");
 }
 
 /**
@@ -449,9 +443,6 @@ static void CP_UFORecoveredSell_f (void)
 			sizeof(recoveryNationSelectPopup), "%s\t\t\t%i\t\t%s\n",
 			_(nation->name), ufoRecovery.UFOprices[i], NAT_GetHappinessString(nation));
 	}
-
-	if (ufoRecovery.nation)
-		Cvar_Set("mission_recoverynation", _(ufoRecovery.nation->name));
 
 	/* Do nothing without at least one nation. */
 	if (nations == 0)
