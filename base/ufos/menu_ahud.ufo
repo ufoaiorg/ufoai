@@ -32,11 +32,13 @@ menu ahud {
 }
 
 menu radarmenu {
+	{
+		modal true
+	}
 
 	radar hudradar
 	{
 		pos	"512 384"
-		bgcolor	"0.3 0.3 0.3 0.8"
 		blend	yes
 		align	cc
 	}

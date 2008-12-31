@@ -155,7 +155,7 @@ void MN_DrawMenus (void)
 	int sp, pp;
 	qboolean mouseMoved = qfalse;
 	vec2_t nodepos;
-
+	static const vec4_t modalBackground = {0, 0, 0, 0.6};
 
 	mouseMoved = MN_CheckMouseMove();
 	hoveredNode = MN_GetHoveredNode();
@@ -197,6 +197,12 @@ void MN_DrawMenus (void)
 #endif
 			}
 		}
+
+		/** draker background for the last modal */
+		if (menu->modal && sp == mn.menuStackPos) {
+			R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
+		}
+
 		for (node = menu->firstChild; node; node = node->next) {
 			/* skip invisible, virtual, and undrawable nodes */
 			if (node->invis || node->behaviour->isVirtual || !node->behaviour->draw)

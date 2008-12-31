@@ -439,13 +439,6 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	if (!cl.radarInited)
 		return;
 
-	if (node->dataImageOrModel)
-		R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0,
-			ALIGN_UL, node->blend, node->dataImageOrModel);
-
-	if (VectorNotEmpty(node->bgcolor))
-		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, node->bgcolor);
-
 	for (i = 0; i < radar.numImages; i++) {
 		hudRadarImage_t *image = &radar.images[i];
 		int maxlevel = cl_worldlevel->integer;
