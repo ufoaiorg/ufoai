@@ -1518,14 +1518,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	missionId = MSG_ReadString(sb);
 	if (missionId[0] != '\0') {
 		ccs.battleParameters.mission = CP_GetMissionById(missionId);
-#if 1
-		/* we can't restore values: just avoid to break loading */
-		i = MSG_ReadShort(sb);
-		for (j = 0; j < i; j++)
-			MSG_ReadString(sb);
-		/* set any value to make sure we can save this game */
-		ccs.battleParameters.alienTeamGroup = &gd.alienCategories[0].alienTeamGroups[0];
-#else
 		name = MSG_ReadString(sb);
 		/* get corresponding category */
 		for (i = 0; i < gd.numAlienCategories; i++)
@@ -1542,7 +1534,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			return qfalse;
 		}
 		ccs.battleParameters.alienTeamGroup = &gd.alienCategories[i].alienTeamGroups[j];
-#endif
 		name = MSG_ReadString(sb);
 		if (name[0] != '\0')
 			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
