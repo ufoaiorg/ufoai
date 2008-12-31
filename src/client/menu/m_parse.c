@@ -765,10 +765,6 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	if (!*text)
 		return qfalse;
 
-	if (!Q_strcmp(node->name, "name_label")) {
-		node->name[0] = 'n';
-	}
-
 	/* test if node already exists */
 	node = MN_GetNode(menu, *token);
 	if (node) {
