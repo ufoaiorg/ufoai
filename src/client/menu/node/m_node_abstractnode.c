@@ -76,7 +76,7 @@ static const value_t properties[] = {
 	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
 	{"cvar", V_SPECIAL_CVAR, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
 	{"skin", V_CVAR_OR_STRING, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
-	{"string", V_CVAR_OR_STRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
+	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	/** @todo use V_REF_OF_STRING when its possible ('font' is never a cvar) */
 	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
 #if 0 /* never use */
