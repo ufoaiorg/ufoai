@@ -329,7 +329,7 @@ menu employees
 	tbar pwr_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 398"  align ul_rsl current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 398"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string spd_lbl
@@ -350,7 +350,7 @@ menu employees
 	tbar spd_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 428" align ul_rsl current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 428" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string acc_lbl
@@ -372,7 +372,7 @@ menu employees
 	tbar acc_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 458" align ul_rsl current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 458" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string mnd_lbl
@@ -393,7 +393,7 @@ menu employees
 	tbar mnd_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 488" align ul_rsl current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 488" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string cls_lbl
@@ -414,7 +414,7 @@ menu employees
 	tbar cls_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 523" align ul_rsl current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 523" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string hvy_lbl
@@ -435,7 +435,7 @@ menu employees
 	tbar hvy_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 553" align ul_rsl current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 553" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string ass_lbl
@@ -456,7 +456,7 @@ menu employees
 	tbar ass_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 583" align ul_rsl current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 583" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string snp_lbl
@@ -477,7 +477,7 @@ menu employees
 	tbar snp_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 613" align ul_rsl current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 613" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string exp_lbl
@@ -499,7 +499,7 @@ menu employees
 	tbar exp_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 643" align ul_rsl current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 643" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string hp_lbl
@@ -520,7 +520,7 @@ menu employees
 	tbar hp_bar
 	{
 		if "mn_show_employee == 1"
-		pos "717 678" current	"*cvar mn_vhp" max "*cvar mn_vhpmax" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health
+		pos "717 678" current "*cvar mn_vhp" max "*cvar mn_vhpmax" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health
 	}
 
 	string	missions_lbl

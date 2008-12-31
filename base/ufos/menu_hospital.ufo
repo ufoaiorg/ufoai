@@ -490,53 +490,53 @@ menu hospital_employee
 
 	string pwr_lbl { pos "700 80"  string "_Strength:" }
 	string pwr_val { pos "975 80"  string "*cvar mn_tpwr" align ur }
-	pic pwr_bdr    { pos "707 98"  image menu/bar_border align ul_rsl }
-	tbar pwr_bar   { pos "710 98"  max 100 current "*cvar mn_vpwr" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic pwr_bdr    { pos "707 98"  image menu/bar_border }
+	tbar pwr_bar   { pos "710 98"  max 100 current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
 	string spd_lbl { pos "700 110" string "_Speed:" }
 	string spd_val { pos "975 110" string "*cvar mn_tspd" align ur }
-	pic spd_bdr    { pos "707 128" image menu/bar_border align ul_rsl }
-	tbar spd_bar   { pos "710 128" current "*cvar mn_vspd" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic spd_bdr    { pos "707 128" image menu/bar_border }
+	tbar spd_bar   { pos "710 128" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
 	string acc_lbl { pos "700 140" string "_Accuracy:" }
 	string acc_val { pos "975 140" string "*cvar mn_tacc" align ur }
-	pic acc_brd    { pos "707 158" image menu/bar_border align ul_rsl }
-	tbar acc_bar   { pos "710 158" current "*cvar mn_vacc" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic acc_brd    { pos "707 158" image menu/bar_border }
+	tbar acc_bar   { pos "710 158" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
 	string mnd_lbl { pos "700 170" string "_Mind:" }
 	string mnd_val { pos "975 170" string "*cvar mn_tmnd" align ur }
-	pic mnd_brd    { pos "707 188" image menu/bar_border align ul_rsl }
-	tbar mnd_bar   { pos "710 188" current "*cvar mn_vmnd" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic mnd_brd    { pos "707 188" image menu/bar_border }
+	tbar mnd_bar   { pos "710 188" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
 	string cls_lbl { pos "700 210" string "_Close Combat:" }
 	string cls_val { pos "975 210" string "*cvar mn_tcls" align ur }
-	pic cls_brd    { pos "707 228" image menu/bar_border align ul_rsl }
-	tbar cls_bar   { pos "710 228" current "*cvar mn_vcls" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic cls_brd    { pos "707 228" image menu/bar_border }
+	tbar cls_bar   { pos "710 228" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
 	string hvy_lbl { pos "700 240" string "_Heavy Weapons:" }
 	string hvy_val { pos "975 240" string "*cvar mn_thvy" align ur }
-	pic hvy_brd    { pos "707 258" image menu/bar_border align ul_rsl }
-	tbar hvy_bar   { pos "710 258" current "*cvar mn_vhvy" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic hvy_brd    { pos "707 258" image menu/bar_border }
+	tbar hvy_bar   { pos "710 258" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
 	string ass_lbl { pos "700 270" string "_Assault Weapons:" }
 	string ass_val { pos "975 270" string "*cvar mn_tass" align ur }
-	pic ass_brd    { pos "707 288" image menu/bar_border align ul_rsl }
-	tbar ass_bar   { pos "710 288" current "*cvar mn_vass" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic ass_brd    { pos "707 288" image menu/bar_border }
+	tbar ass_bar   { pos "710 288" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
 	string snp_lbl { pos "700 300" string "_Sniper Rifles:" }
 	string snp_val { pos "975 300" string "*cvar mn_tsnp" align ur }
-	pic snp_brd    { pos "707 318" image menu/bar_border align ul_rsl }
-	tbar snp_bar   { pos "710 318" current "*cvar mn_vsnp" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic snp_brd    { pos "707 318" image menu/bar_border }
+	tbar snp_bar   { pos "710 318" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
 	string exp_lbl { pos "700 330" string "_High-Explosives:" }
 	string exp_val { pos "975 330" string "*cvar mn_texp" align ur }
-	pic exp_brd    { pos "707 348" image menu/bar_border align ul_rsl }
-	tbar exp_bar   { pos "710 348" current "*cvar mn_vexp" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic exp_brd    { pos "707 348" image menu/bar_border }
+	tbar exp_bar   { pos "710 348" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
 	string health     { pos "700 374" string "_Health:" font f_normal }
 	string health_val { pos "975 374" string "*cvar mn_hp" align ur font f_normal }
-	pic health_brd    { pos "707 398" image menu/bar_border align ul_rsl }
-	tbar health_bar   { pos "710 398" current "*cvar mn_hp" max "*cvar mn_hpmax" align ul_rsl point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health }
+	pic health_brd    { pos "707 398" image menu/bar_border }
+	tbar health_bar   { pos "710 398" current "*cvar mn_hp" max "*cvar mn_hpmax" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health }
 
 
 	// ==================
