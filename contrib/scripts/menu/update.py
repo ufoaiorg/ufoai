@@ -285,7 +285,9 @@ def checkAlign():
 			
 			behaviours[node.behaviour]['total'] = behaviours[node.behaviour]['total'] + 1
 			behaviours[node.behaviour][align] = behaviours[node.behaviour][align] + 1
-			
+
+			#if node.behaviour == 'pic':
+			#	print node.name + '  ' + node.behaviour + '  ' + node.getParam('align')
 			#print '  ' + node.name + ' ' + str(node.getParam('align'))
 	
 	print '-' * 20

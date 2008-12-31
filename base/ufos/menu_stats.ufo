@@ -361,8 +361,9 @@ menu nations
 	pic nation_symbol
 	{
 		image	"*cvar mn_nat_symbol"
-		pos		"512 390"
-		align	uc
+		pos		"269 390"
+		size	"486 300"
+		preventratio	true
 	}
 
 	func init

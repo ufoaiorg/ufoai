@@ -75,8 +75,8 @@ menu althud extends ahud
 	{
 		if	"sv_maxclients >= 2"
 		image	hud/bar_chat
-		pos		"1024 580"
-		align	ur
+		pos		"960 64"
+		size	"64 64"
 		out	{
 				*bar_chat image hud/bar_chat
 				*bar_chat size "64 64"
@@ -94,10 +94,10 @@ menu althud extends ahud
 		key "*binding messagesay"
 		tooltip	"_Chat"
 		image	hud/button_chat
-		pos		"976 592"
-		align	ur
+		pos		"944 76"
 		texl	"0 0"
 		texh	"32 32"
+		size	"32 32"
 		click {
 				cmd	"messagesay;"
 			}
@@ -108,10 +108,10 @@ menu althud extends ahud
 		key "*binding messagesayteam"
 		tooltip	"_Teamchat"
 		image	hud/button_chat
-		pos		"938 592"
-		align	ur
+		pos		"906 592"
 		texl	"32 0"
 		texh	"64 32"
+		size	"32 32"
 		click {
 				cmd	"messagesayteam;"
 			}
@@ -122,10 +122,10 @@ menu althud extends ahud
 		key "*binding showchat"
 		tooltip	"_Show chat history"
 		image	hud/button_chat
-		pos		"900 592"
-		align	ur
+		pos		"868 592"
 		texl	"64 0"
 		texh	"96 32"
+		size	"32 32"
 		mousefx false
 		out	{
 				*chatscreen size "690 48"

@@ -35,7 +35,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
  */
-static void MN_ImageNodeLoaded (menuNode_t *node) {
+static void MN_ImageNodeLoaded (menuNode_t *node)
+{
+	/* align is deprecated */
+	if (node->align != 0) {
+		Sys_Error("'align' is deprecated. Set the pos of the top-left of the image");
+	}
+
 	/* update the size when its possible */
 	if (node->size[0] == 0 && node->size[1] == 0) {
 		if (node->texl[0] != 0 || node->texh[0]) {
