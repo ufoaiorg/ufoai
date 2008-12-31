@@ -28,7 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_PROJECTILESONGEOSCAPE 32
 
-#define MAX_ALIEN_TEAM_LEVEL	4
+/* Maximum alien team category defined in scripts */
+#define ALIENCATEGORY_MAX	4
 
 /**
  * @brief This struct/variable holds the global data for a game.
@@ -160,9 +161,9 @@ typedef struct globalData_s
 	int numAliensTD;
 
 	/* Alien Team Package used during battle */
-	teamDef_t *alienTeams[ALIENTEAM_MAX][MAX_ALIEN_TEAM_LEVEL][MAX_TEAMS_PER_MISSION];	/**< different alien team available
-																	 * that will be used in mission */
-	int numAlienTeams[ALIENTEAM_MAX];		/** number of alienTeams defined */
+	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
+														 * that will be used in mission */
+	int numAlienCategories;		/** number of alien team categories defined */
 
 	/* message categories */
 	msgCategory_t messageCategories[MAX_MESSAGECATEGORIES];

@@ -54,14 +54,16 @@ void CP_SetMissionVars (const mission_t *mission)
 
 	/* now store the alien teams in the shared csi struct to let the game dll
 	 * have access to this data, too */
-	for (i = 0; i < MAX_TEAMS_PER_MISSION; i++)
-		csi.alienTeams[i] = ccs.battleParameters.alienTeams[i];
-	csi.numAlienTeams = ccs.battleParameters.numAlienTeams;
+	csi.numAlienTeams = 0;
+	for (i = 0; i < ccs.battleParameters.alienTeamGroup->numAlienTeams; i++) {
+		csi.alienTeams[i] = ccs.battleParameters.alienTeamGroup->alienTeams[i];
+		csi.numAlienTeams++;
+	}
 
-	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..alienTeams: '%i'\n..civTeam: '%s'\n..alienEquip: '%s'\n",
+	Com_DPrintf(DEBUG_CLIENT, "..numAliens: %i\n..numCivilians: %i\n..numalienTeams: %i\n..civTeam: '%s'\n..alienEquip: '%s'\n",
 		ccs.battleParameters.aliens,
 		ccs.battleParameters.civilians,
-		ccs.battleParameters.numAlienTeams,
+		ccs.battleParameters.alienTeamGroup->numAlienTeams,
 		ccs.battleParameters.civTeam,
 		ccs.battleParameters.alienEquipment);
 }

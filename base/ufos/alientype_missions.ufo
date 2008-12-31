@@ -1,24 +1,109 @@
-// Different alien type that can be using during battle
+//=========================================================================
+// Different alien teams that can be used during battle
+//=========================================================================
+//
+//	category - mission category that may use this alien team definition. see CL_GetAlienMissionTypeByID()
+//		for all available mission category. All mission category must appear at least once.
+//
+//	equipment - equipment pack this alien team may use. You can enter several equipment pack.
+//		This alien team will be able to use any equipment pack from equipment_missions.ufo starting with this string.
+//
+//	team - alien races that should be use for an alien overall interest with: mininterest <= interest < maxinterest.
+//
+//	Notes:
+//	 * If there are several possible alien teams (either in different alien teams, or because several teams in the
+//		same category may be used for the same alien interest), there is an equal probability to get one of them.
+//	 * Every team must have a different name.
 
-alienteam default
+alienteam default_workers
 {
+	category
+	{
+		recon
+		building
+		supply
+	}
+	equipment
+	{
+		alien_workers
+	}
 	team
 	{
+		mininterest 0
+		maxinterest 100
+
 		taman
 	}
 	team
 	{
+		mininterest 100
+		maxinterest 300
+
 		taman
 		ortnok
 	}
 	team
 	{
+		mininterest 300
+		maxinterest 500
+
 		taman
 		ortnok
 		shevaar
 	}
 	team
 	{
+		mininterest 500
+		maxinterest 10000
+
+		ortnok
+		shevaar
+	}
+}
+
+alienteam default_soldiers
+{
+	category
+	{
+		terror
+		baseattack
+		intercept
+	}
+
+	equipment
+	{
+		alien_soldiers
+	}
+
+	team
+	{
+		mininterest 0
+		maxinterest 100
+
+		taman
+	}
+	team
+	{
+		mininterest 100
+		maxinterest 300
+
+		taman
+		ortnok
+	}
+	team
+	{
+		mininterest 300
+		maxinterest 500
+
+		taman
+		ortnok
+		shevaar
+	}
+	team
+	{
+		mininterest 500
+		maxinterest 10000
+
 		ortnok
 		shevaar
 	}
@@ -26,19 +111,35 @@ alienteam default
 
 alienteam harvest
 {
+	category
+	{
+		harvest
+	}
+
+	equipment
+	{
+		alien_workers
+	}
+
 	team
 	{
+		mininterest 0
+		maxinterest 100
 		taman
 		bloodspider
 	}
 	team
 	{
+		mininterest 100
+		maxinterest 300
 		taman
 		ortnok
 		bloodspider
 	}
 	team
 	{
+		mininterest 300
+		maxinterest 500
 		taman
 		ortnok
 		shevaar
@@ -46,6 +147,8 @@ alienteam harvest
 	}
 	team
 	{
+		mininterest 500
+		maxinterest 10000
 		ortnok
 		shevaar
 		bloodspider
@@ -54,19 +157,35 @@ alienteam harvest
 
 alienteam xvi
 {
+	category
+	{
+		xvi
+	}
+
+	equipment
+	{
+		alien_soldiers
+	}
+
 	team
 	{
+		mininterest 0
+		maxinterest 100
 		taman
 		bloodspider
 	}
 	team
 	{
+		mininterest 100
+		maxinterest 200
 		taman
 		ortnok
 		bloodspider
 	}
 	team
 	{
+		mininterest 200
+		maxinterest 500
 		taman
 		ortnok
 		shevaar
@@ -74,6 +193,8 @@ alienteam xvi
 	}
 	team
 	{
+		mininterest 500
+		maxinterest 10000
 		ortnok
 		shevaar
 		bloodspider

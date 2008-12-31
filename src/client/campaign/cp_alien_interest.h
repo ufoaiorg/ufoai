@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void CL_ResetAlienInterest(void);
 void CP_IncreaseAlienInterest(void);
 void CL_ChangeIndividualInterest(float percentage, interestCategory_t category);
-void CP_SetAlienTeamByInterest(const mission_t *mission);
 
 #endif
 

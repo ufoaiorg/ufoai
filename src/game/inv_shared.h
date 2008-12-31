@@ -385,6 +385,7 @@ typedef struct equipDef_s {
 	int maxInterest;		/**< Maximum overall interest to use this equipment definition (only for alien) */
 } equipDef_t;
 
+/* Maximum number of alien teams per alien group */
 #define MAX_TEAMS_PER_MISSION 4
 #define MAX_TERRAINS 8
 #define MAX_CULTURES 8
@@ -406,7 +407,6 @@ typedef struct mapDef_s {
 	/* singleplayer */
 	int maxAliens;				/**< Number of spawning points on the map */
 
-	/** @todo Make use of these values */
 	linkedList_t *terrains;		/**< terrain strings this map is useable for */
 	linkedList_t *populations;	/**< population strings this map is useable for */
 	linkedList_t *cultures;		/**< culture strings this map is useable for */

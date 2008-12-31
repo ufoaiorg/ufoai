@@ -427,52 +427,119 @@ static qboolean CP_UFOIsCrashed (const mission_t *mission)
 }
 
 /**
+ * @brief Check if an alien team category may be used for a mission category.
+ * @param[in] cat Pointer to the alien team category.
+ * @param[in] missionCat Mission category to check.
+ * @return True if alien Category may be used for this mission category.
+ */
+static qboolean CP_IsAlienTeamForCategory (const alienTeamCategory_t const *cat, interestCategory_t missionCat)
+{
+	int i;
+
+	for (i = 0; i < cat->numMissionCategories; i++) {
+		if (missionCat == cat->missionCategories[i])
+			return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Sets the alien races used for a mission.
+ * @param[in] mission Pointer to the mission.
+ */
+static void CP_SetAlienTeamByInterest (const mission_t *mission)
+{
+	int i, j;
+	const int MAX_AVAILABLE_GROUPS = 4;
+	alienTeamGroup_t *availableGroups[MAX_AVAILABLE_GROUPS];
+	int numAvailableGroup = 0;
+
+	/* Find all available alien team groups */
+	for (i = 0; i < gd.numAlienCategories; i++) {
+		alienTeamCategory_t *cat = &gd.alienCategories[i];
+
+		/* Check if this alien team category may be used */
+		if (!CP_IsAlienTeamForCategory(cat, mission->category))
+			continue;
+
+		/* Find all available team groups for current alien interest
+		 * use mission->initialOverallInterest and not ccs.overallInterest:
+		 * the alien team should not change depending on when you encounter it */
+		for (j = 0; j < cat->numAlienTeamGroups; j++) {
+			if (cat->alienTeamGroups[j].minInterest <= mission->initialOverallInterest
+				&& cat->alienTeamGroups[j].maxInterest > mission->initialOverallInterest)
+				availableGroups[numAvailableGroup++] = &cat->alienTeamGroups[j];
+		}
+	}
+
+	if (!numAvailableGroup)
+		Sys_Error("CP_SetAlienTeamByInterest: no available alien team for mission '%s': interest = %i -- category = %i",
+			mission->id, mission->initialOverallInterest, mission->category);
+
+	/* Pick up one group randomly */
+	i = rand() % numAvailableGroup;
+
+	/* store this group for latter use */
+	ccs.battleParameters.alienTeamGroup = availableGroups[i];
+}
+
+/**
+ * @brief Check if an alien equipment may be used with a mission.
+ * @param[in] mission Pointter to the mission.
+ * @param[in] equip Pointer to the alien equipment to check.
+ * @return True if equipment definition is selectable.
+ */
+static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip)
+{
+	const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
+	const linkedList_t const *equipPack = gd.alienCategories[group->categoryIdx].equipment;
+
+	if (mission->initialOverallInterest > equip->maxInterest ||
+		mission->initialOverallInterest <= equip->minInterest)
+		return qfalse;
+
+	while ((equip->name != NULL) && (equipPack != NULL)) {
+		if (!Q_strncmp((const char*)equipPack->data, equip->name, 13))
+			return qtrue;
+		equipPack = equipPack->next;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Set alien equipment for a mission (depends on the interest values)
  * @note This function is used to know which equipment pack described in equipment_missions.ufo should be used
+ * @pre Alien team must be already chosen
+ * @sa CP_SetAlienTeamByInterest
  */
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 {
 	int i, randomNum, availableEquipDef = 0;
+	const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
+	const linkedList_t const *equipPack = gd.alienCategories[group->categoryIdx].equipment;
 
-	Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "alien_");
-
-	switch (mission->category) {
-	case INTERESTCATEGORY_NONE:
-	case INTERESTCATEGORY_MAX:
-		Sys_Error("CP_GetAlienByInterest: Try to set alien team for invalid mission category '%i'\n", mission->category);
-	case INTERESTCATEGORY_XVI:
-	case INTERESTCATEGORY_TERROR_ATTACK:
-	case INTERESTCATEGORY_BASE_ATTACK:
-	case INTERESTCATEGORY_INTERCEPT:
-		Q_strcat(ccs.battleParameters.alienEquipment, "soldiers", sizeof(ccs.battleParameters.alienEquipment));
-		break;
-	case INTERESTCATEGORY_HARVEST:
-	case INTERESTCATEGORY_RECON:
-	case INTERESTCATEGORY_BUILDING:
-	case INTERESTCATEGORY_SUPPLY:
-		Q_strcat(ccs.battleParameters.alienEquipment, "workers", sizeof(ccs.battleParameters.alienEquipment));
-		break;
-	}
-
-	/* look for all available alien equipement definitions
+	assert(equipPack);
+	/* look for all available fitting alien equipement definitions
 	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien equipment should not change depending on
 	 * when you encounter it */
 	for (i = 0; i < csi.numEDs; i++) {
-		if (mission->initialOverallInterest <= csi.eds[i].maxInterest &&
-			mission->initialOverallInterest >= csi.eds[i].minInterest &&
-			!Q_strncmp(csi.eds[i].name, ccs.battleParameters.alienEquipment, 13)) {
+		if (CP_IsAlienEquipmentSelectable(mission, &csi.eds[i]))
 			availableEquipDef++;
-		}
 	}
+
+	Com_DPrintf(DEBUG_CLIENT, "CP_SetAlienEquipmentByInterest: %i available equipment packs for mission %s\n", availableEquipDef, mission->id);
+
+	if (!availableEquipDef)
+		Sys_Error("CP_SetAlienEquipmentByInterest: no available alien equipment for mission '%s'", mission->id);
 
 	/* Choose an alien equipment definition -- between 0 and availableStage - 1 */
 	randomNum = rand() % availableEquipDef;
 
 	availableEquipDef = 0;
 	for (i = 0; i < csi.numEDs; i++) {
-		if (mission->initialOverallInterest <= csi.eds[i].maxInterest &&
-			mission->initialOverallInterest >= csi.eds[i].minInterest &&
-			!Q_strncmp(csi.eds[i].name, ccs.battleParameters.alienEquipment, 13)) {
+		if (CP_IsAlienEquipmentSelectable(mission, &csi.eds[i])) {
 			if (availableEquipDef == randomNum) {
 				Com_sprintf(ccs.battleParameters.alienEquipment, sizeof(ccs.battleParameters.alienEquipment), "%s", csi.eds[i].name);
 				break;
@@ -480,11 +547,14 @@ static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 				availableEquipDef++;
 		}
 	}
+
+	Com_DPrintf(DEBUG_CLIENT, "CP_SetAlienEquipmentByInterest: selected available equipment pack '%s'\n", ccs.battleParameters.alienEquipment);
 }
 
 /**
- * @brief Create alien team.
- * @param[in] mission Pointer to the mission that generates the battle
+ * @brief Set number of aliens in mission.
+ * @param[in] mission Pointer to the mission that generates the battle.
+ * @sa CP_SetAlienTeamByInterest
  */
 static void CP_CreateAlienTeam (mission_t *mission)
 {
@@ -1448,9 +1518,31 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	missionId = MSG_ReadString(sb);
 	if (missionId[0] != '\0') {
 		ccs.battleParameters.mission = CP_GetMissionById(missionId);
-		ccs.battleParameters.numAlienTeams = MSG_ReadShort(sb);
-		for (i = 0; i < ccs.battleParameters.numAlienTeams; i++)
-			ccs.battleParameters.alienTeams[i] = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
+#if 1
+		/* we can't restore values: just avoid to break loading */
+		i = MSG_ReadShort(sb);
+		for (j = 0; j < i; j++)
+			MSG_ReadString(sb);
+		/* set any value to make sure we can save this game */
+		ccs.battleParameters.alienTeamGroup = &gd.alienCategories[0].alienTeamGroups[0];
+#else
+		name = MSG_ReadString(sb);
+		/* get corresponding category */
+		for (i = 0; i < gd.numAlienCategories; i++)
+			if (!Q_strncmp(name, gd.alienCategories[i].id, sizeof(gd.alienCategories[i].id))) {
+				break;
+			}
+		if (i >= gd.numAlienCategories) {
+			Com_Printf("CP_Load: alien category def \"%s\" doesn't exist\n", name);
+			return qfalse;
+		} 
+		j = MSG_ReadShort(sb);
+		if (j >= INTERESTCATEGORY_MAX) {
+			Com_Printf("CP_Load: Undefined alien team (category '%s', group '%i')\n", name, j);
+			return qfalse;
+		}
+		ccs.battleParameters.alienTeamGroup = &gd.alienCategories[i].alienTeamGroups[j];
+#endif
 		name = MSG_ReadString(sb);
 		if (name[0] != '\0')
 			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
@@ -1613,9 +1705,8 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	/* store ccs.battleParameters */
 	if (ccs.battleParameters.mission) {
 		MSG_WriteString(sb, ccs.battleParameters.mission->id);
-		MSG_WriteShort(sb, ccs.battleParameters.numAlienTeams);
-		for (i = 0; i < ccs.battleParameters.numAlienTeams; i++)
-			MSG_WriteString(sb, ccs.battleParameters.alienTeams[i]->id);
+		MSG_WriteString(sb, gd.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
+		MSG_WriteShort(sb, ccs.battleParameters.alienTeamGroup->idx);
 		MSG_WriteString(sb, (ccs.battleParameters.param ? ccs.battleParameters.param : ""));
 		MSG_WriteString(sb, ccs.battleParameters.alienEquipment);
 		MSG_WriteString(sb, ccs.battleParameters.civTeam);
@@ -1921,13 +2012,13 @@ void CL_GameAutoGo (mission_t *mis)
 		/* Make sure dropship aliencargo is empty. */
 		memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
 
-		aircraft->alientypes = ccs.battleParameters.numAlienTeams;
+		aircraft->alientypes = ccs.battleParameters.alienTeamGroup->numAlienTeams;
 		amount = 0;
 		while (aliensLeft > 0) {
 			for (i = 0; i < aircraft->alientypes; i++) {
 				assert(i < MAX_CARGO);
-				assert(ccs.battleParameters.alienTeams[i]);
-				cargo[i].teamDef = ccs.battleParameters.alienTeams[i];
+				assert(ccs.battleParameters.alienTeamGroup->alienTeams[i]);
+				cargo[i].teamDef = ccs.battleParameters.alienTeamGroup->alienTeams[i];
 				cargo[i].amount_dead += rand() % aliensLeft;
 				aliensLeft -= cargo[i].amount_dead;
 				amount += cargo[i].amount_dead;

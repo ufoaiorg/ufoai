@@ -67,6 +67,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HAPPINESS_UFO_SALE_LOSS				0.01
 #define HAPPINESS_MAX_MISSION_IMPACT		0.15
 
+/* Maximum alien groups per alien team category */
+#define MAX_ALIEN_GROUP_PER_CATEGORY	4
+
 /** possible map types */
 typedef enum mapType_s {
 	MAPTYPE_TERRAIN,
@@ -76,15 +79,6 @@ typedef enum mapType_s {
 
 	MAPTYPE_MAX
 } mapType_t;
-
-/** @brief possible alien teams type */
-typedef enum alienTeamType_s {
-	ALIENTEAM_DEFAULT,
-	ALIENTEAM_XVI,
-	ALIENTEAM_HARVEST,
-
-	ALIENTEAM_MAX
-} alienTeamType_t;
 
 /** @brief possible mission detection status */
 typedef enum missionDetectionStatus_s {
@@ -131,7 +125,39 @@ typedef enum missionStage_s {
 	STAGE_OVER						/**< Mission is over */
 } missionStage_t;
 
+/** @brief alien team group definition.
+ * @note This is the definition of one groupe of aliens (several races) that can 
+ * be used on the same map.
+ * @sa alienTeamCategory_s
+ */
+typedef struct alienTeamGroup_s {
+	int idx;			/**< idx of the group in the alien team category */
+	int categoryIdx;	/**< idx of category it's used in */
+	int minInterest;	/**< Minimum interest value this group should be used with. */
+	int maxInterest;	/**< Maximum interest value this group should be used with. */
+ 
+	teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
+													 * that will be used in mission */
+	int numAlienTeams;		/**< Number of alienTeams defined in this group. */
+} alienTeamGroup_t;
+ 
+/** @brief alien team category definition
+ * @note This is the definition of all groupe of aliens that can be used for
+ * a mission category
+ * @sa alienTeamGroup_s
+ */
+typedef struct alienTeamCategory_s {
+	char id[MAX_VAR];			/**< id of the category */
+	interestCategory_t missionCategories[INTERESTCATEGORY_MAX];		/**< Mission category that should use this
+															 * alien team Category. */
+	int numMissionCategories;					/**< Number of category using this alien team Category. */
 
+	linkedList_t *equipment;		/**< Equipment definitions that may be used for this def. */
+
+	alienTeamGroup_t alienTeamGroups[MAX_ALIEN_GROUP_PER_CATEGORY];		/**< Different alien group available
+																 * for this category */
+	int numAlienTeamGroups;		/**< Number of alien group defined for this category */
+} alienTeamCategory_t;
 
 /** @brief mission definition
  * @note A mission is different from a map: a mission is the whole set of actions aliens will carry.
@@ -161,10 +187,9 @@ typedef struct mission_s {
 /** battlescape parameters that were used */
 typedef struct battleParam_s {
 	mission_t *mission;
-	teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< Race of aliens present in battle */
+	alienTeamGroup_t *alienTeamGroup;	/**< Races of aliens present in battle */
 	char *param;					/**< in case of a random map assembly we can't use the param from mapDef - because
 									 * this is global for the mapDef - but we need a local mission param */
-	int numAlienTeams;								/**< Number of different races */
 	char alienEquipment[MAX_VAR];					/**< Equipment of alien team */
 	char civTeam[MAX_VAR];							/**< Type of civilian (europeean, ...) */
 	qboolean day;									/**< Mission is played during day */

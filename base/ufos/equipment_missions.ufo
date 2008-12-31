@@ -83,16 +83,13 @@
 // If you get in equipment definition weapon1 with ammo1 and weapon2 with ammo2, when ammo2 can fit ammo1, note
 //    that you will be able to get ammo1 OR ammo2 for weapon1.
 //
-// there are 2 types of alien equipment:
-// alien_workersS or alien_soldiersS
-//    alien_workers is used for harvest, recon, building and supply missions.
-//    alien_soliders is used for all other mission categories.
-//    S is any string (used to specify the equipment definition)
-//    For a given stage, all equipment definitions can be chosen with the same probability.
-//    For each alien equipment, you must specifiy mininterest and maxinterest: the lower
-//    and upper value of overall alieninterest that can use this equipment definition.
-//    Equipment used will be picked randomly between all definition fitting overallinterest.
-//    Note that all equipment definitions must have different names.
+// Notes:
+//  * There are different types of alien equipment. The one that will be used is the one which name starts with the
+//    equipment name defined in alientype_mission.ufo.
+//    For example, if alientype_mission.ufo states that 'alien_workers' may be used, every equipment pack begining
+//    with this string (like 'alien_workers1' or 'alien_workers_explosive3') with overall alien interest between
+//    mininterest and maxinterest may be used with the same probability.
+//  * Note that all equipment definitions must have different names.
 
 
 // =======================
