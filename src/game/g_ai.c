@@ -1944,11 +1944,11 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 	ent->type = ET_ACTOR;
 	ent->pnum = player->num;
 
+	/* Set the model and chose alien race. */
+	AI_SetModel(ent, team);
+
 	/* Calculate stats. */
 	AI_SetStats(ent, team);
-
-	/* Set the model. */
-	AI_SetModel(ent, team);
 
 	/* Give equipment. */
 	AI_SetEquipment(ent, team, ed);
