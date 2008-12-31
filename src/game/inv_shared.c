@@ -1796,17 +1796,28 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 
 	assert(chr);
 
-	if (chr->teamDef->race == RACE_TAMAN) {
-		soldierTemplate = tamanSoldier;
+	/* team definition is not defined when new phalanx recruits are added */
+	if (chr->teamDef) {
 		/* Add modifiers for difficulty setting here! */
-	} else if (chr->teamDef->race == RACE_ORTNOK) {
-		soldierTemplate = ortnokSoldier;
-	} else if (chr->teamDef->race == RACE_BLOODSPIDER) {
-		soldierTemplate = bloodSoldier;
-	} else if (chr->teamDef->race == RACE_SHEVAAR) {
-		soldierTemplate = shevaarSoldier;
-	} else if (chr->teamDef->race == RACE_CIVILIAN) {
-		soldierTemplate = civilSoldier;
+		switch (chr->teamDef->race) {
+		case RACE_TAMAN:
+			soldierTemplate = tamanSoldier;
+			break;
+		case RACE_ORTNOK:
+			soldierTemplate = ortnokSoldier;
+			break;
+		case RACE_BLOODSPIDER:
+			soldierTemplate = bloodSoldier;
+			break;
+		case RACE_SHEVAAR:
+			soldierTemplate = shevaarSoldier;
+			break;
+		case RACE_CIVILIAN:
+			soldierTemplate = civilSoldier;
+			break;
+		default:
+			Sys_Error("CHRSH_CharGenAbilitySkills: unexpected race '%i'", chr->teamDef->race);
+		}
 	} else if (!multiplayer) {
 		float soldierRoll;
 		/* Determine which soldier template to use.

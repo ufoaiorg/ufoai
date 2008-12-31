@@ -1852,7 +1852,6 @@ static void AI_SetStats (edict_t * ent, int team)
 			ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
 	} else if (team == TEAM_CIVILIAN) {
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
-
 	}
 
 
