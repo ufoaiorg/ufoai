@@ -295,13 +295,12 @@ menu quickload
 		font	f_big
 	}
 
-	text name_label
+	string name_label
 	{
 		string	"_Are you sure that you really want to reload the last automatically saved campaign state?"
 		pos		"26 58"
-		size	"440 64"
-		lineheight	"16"
-		rows	4
+		size	"440 104"
+		longlines wrap
 	}
 
 	pic bt_cancel
