@@ -1708,17 +1708,53 @@ static const int civilSoldier[][2] =
 	 {5, 10}, /* Explosives */
 	 {5, 10}}; /* Health */
 
-static const int alienSoldier[][2] =
+static const int tamanSoldier[][2] =
 	{{25, 35}, /* Strength */
 	 {25, 35}, /* Speed */
-	 {30, 40}, /* Accuracy */
-	 {30, 45}, /* Mind */
-	 {25, 40}, /* Close */
-	 {25, 40}, /* Heavy */
-	 {25, 40}, /* Assault */
-	 {25, 40}, /* Sniper */
-	 {25, 40}, /* Explosives */
+	 {40, 50}, /* Accuracy */
+	 {50, 85}, /* Mind */
+	 {50, 90}, /* Close */
+	 {50, 90}, /* Heavy */
+	 {50, 90}, /* Assault */
+	 {50, 90}, /* Sniper */
+	 {50, 90}, /* Explosives */
 	 {100, 130}}; /* Health */
+
+static const int ortnokSoldier[][2] =
+	{{45, 65}, /* Strength */
+	 {20, 30}, /* Speed */
+	 {30, 45}, /* Accuracy */
+	 {20, 40}, /* Mind */
+	 {50, 90}, /* Close */
+	 {50, 90}, /* Heavy */
+	 {50, 90}, /* Assault */
+	 {50, 90}, /* Sniper */
+	 {50, 90}, /* Explosives */
+	 {150, 190}}; /* Health */
+
+static const int shevaarSoldier[][2] =
+	{{30, 40}, /* Strength */
+	 {30, 40}, /* Speed */
+	 {40, 70}, /* Accuracy */
+	 {30, 60}, /* Mind */
+	 {50, 90}, /* Close */
+	 {50, 90}, /* Heavy */
+	 {50, 90}, /* Assault */
+	 {50, 90}, /* Sniper */
+	 {50, 90}, /* Explosives */
+	 {120, 160}}; /* Health */
+
+static const int bloodSoldier[][2] =
+	{{55, 55}, /* Strength */
+	 {50, 50}, /* Speed */
+	 {50, 50}, /* Accuracy */
+	 {0, 0}, /* Mind */
+	 {50, 50}, /* Close */
+	 {50, 50}, /* Heavy */
+	 {50, 50}, /* Assault */
+	 {50, 50}, /* Sniper */
+	 {50, 50}, /* Explosives */
+	 {150, 150}}; /* Health */
 
 static const int robotSoldier[][2] =
 	{{55, 55}, /* Strength */
@@ -1761,20 +1797,15 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 	assert(chr);
 
 	if (chr->teamDef->race == RACE_TAMAN) {
-		/** @todo create template specific for this race */
-		soldierTemplate = alienSoldier;
+		soldierTemplate = tamanSoldier;
 		/* Add modifiers for difficulty setting here! */
 	} else if (chr->teamDef->race == RACE_ORTNOK) {
-		/** @todo create template specific for this race */
-		soldierTemplate = alienSoldier;
+		soldierTemplate = ortnokSoldier;
 	} else if (chr->teamDef->race == RACE_BLOODSPIDER) {
-		/** @todo create template specific for this race */
-		soldierTemplate = alienSoldier;
+		soldierTemplate = bloodSoldier;
 	} else if (chr->teamDef->race == RACE_SHEVAAR) {
-		/** @todo create template specific for this race */
-		soldierTemplate = alienSoldier;
+		soldierTemplate = shevaarSoldier;
 	} else if (chr->teamDef->race == RACE_CIVILIAN) {
-		/* Civilian team gets special treatment. */
 		soldierTemplate = civilSoldier;
 	} else if (!multiplayer) {
 		float soldierRoll;
