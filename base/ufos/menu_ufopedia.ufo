@@ -386,8 +386,8 @@ menu ufopedia
 		in
 		size	"240 20"
 		string	"*cvar mn_researchedlinkname"
-		pos		"395 704"
-		align	uc
+		pos		"275 704"
+		textalign	uc
 		font	f_small
 	}
 

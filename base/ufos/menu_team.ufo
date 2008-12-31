@@ -918,8 +918,8 @@ menu equipment
 
 	string s_backpack
 	{
-		pos "932 25"
-		align uc
+		pos "852 25"
+		textalign uc
 		string	"_Backpack"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -927,8 +927,8 @@ menu equipment
 
 	string s_left
 	{
-		pos "932 150"
-		align uc
+		pos "852 150"
+		textalign uc
 		string	"_Left Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -936,8 +936,8 @@ menu equipment
 
 	string s_right
 	{
-		pos "610 150"
-		align uc
+		pos "530 150"
+		textalign uc
 		string	"_Right Hand"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -945,8 +945,8 @@ menu equipment
 
 	string s_extension
 	{
-		pos "610 76"
-		align uc
+		pos "530 76"
+		textalign uc
 		string	"_Extension"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -954,8 +954,8 @@ menu equipment
 
 	string s_headgear
 	{
-		pos "700 76"
-		align uc
+		pos "620 76"
+		textalign uc
 		string	"_Headgear"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -963,8 +963,8 @@ menu equipment
 
 	string s_holster
 	{
-		pos "932 245"
-		align uc
+		pos "852 245"
+		textalign uc
 		string	"_Holster"
 		color "0 0.6 0 1"
 		size "160 25"
@@ -972,8 +972,8 @@ menu equipment
 
 	string s_belt
 	{
-		pos "610 245"
-		align uc
+		pos "530 245"
+		textalign uc
 		string	"_Belt"
 		color "0 0.6 0 1"
 		size "160 25"

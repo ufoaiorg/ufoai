@@ -114,9 +114,9 @@ menu irc
 	string irc_server_topic
 	{
 		string	"*cvar irc_topic"
-		align	uc
+		textalign	uc
 		size	"512 40"
-		pos		"340 80"
+		pos		"84 80"
 		font	f_verysmall
 	}
 

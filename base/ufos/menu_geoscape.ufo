@@ -590,9 +590,9 @@ menu map_combatzoom
 		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
 		size	"256 20"
-		pos		"990 54"
+		pos		"734 54"
 		font	f_small
-		align	ur
+		textalign	ur
 		in
 	}
 

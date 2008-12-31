@@ -355,9 +355,9 @@ menu aircraft_equip
 
 	string aircraftname
 	{
-		pos		"224 686"
+		pos		"74 678"
 		size	"300 16"
-		align	cc
+		textalign	cc
 		string	"*cvar mn_aircraftname"
 		whup	{
 			cmd	"mn_next_aircraft;"
@@ -461,9 +461,9 @@ menu aircraft_equip
 
 	string craftitemtype
 	{
-		pos		"224 730"
+		pos		"74 722"
 		size	"300 16"
-		align	cc
+		textalign	cc
 		string	"*cvar mn_equip_itemtype_name"
 		whup	{
 			cmd "mn_prev_equiptype;"

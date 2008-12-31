@@ -186,9 +186,9 @@ menu hud extends ahud
 	{
 		key "*binding nextalien"
 		string	"*cvar mn_numaliensspotted"
-		pos	"840 28"
+		pos	"816 11"
 		size	"48 34"
-		align	cc
+		textalign	cc
 		tooltip "_Click to cycle through spotted enemies"
 		click	{ cmd "nextalien;" }
 	}

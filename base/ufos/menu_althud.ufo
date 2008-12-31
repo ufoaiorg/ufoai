@@ -536,9 +536,9 @@ menu althud extends ahud
 		key "*binding nextalien"
 		tooltip "_Click to cycle through spotted enemies"
 		string	"*cvar mn_numaliensspotted"
-		pos		"865 30"
+		pos		"841 13"
 		size    "48 34"
-		align	cc
+		textalign	cc
 		in
 	}
 	pic nextround
