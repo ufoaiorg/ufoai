@@ -419,15 +419,16 @@ menu production
 		click   { cmd "next_prod_type;" }
 	}
 
-	pic bt_continue
+	custombutton production_leave
 	{
-		tooltip	"_Back"
-		image	hud/buttons2
-		mousefx	true
-		pos     "920 715"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;" }
+		tooltip		"_Back"
+		image		menu/button_background
+		blend		true
+		texl		"192 0"
+		size		"64 37"
+		pos			"920 715"
+		icon		return
+		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================

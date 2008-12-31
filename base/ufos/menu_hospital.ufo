@@ -413,15 +413,16 @@ menu hospital
 	// additional stuff
 	// ==================
 
-	pic bt_go
+	custombutton hospital_leave
 	{
-		tooltip	"_Done"
-		image	hud/buttons2
-		mousefx	true
-		pos		"940 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;"  }
+		tooltip		"_Back"
+		image		menu/button_background
+		blend		true
+		texl		"192 0"
+		size		"64 37"
+		pos			"940 720"
+		icon		return	
+		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -543,45 +544,35 @@ menu hospital_employee
 	// action buttons
 	// ==================
 
-
-	pic button_hosp_bionic_start
+	button button_hosp_bionic_start
 	{
-		tooltip	"_Implants"
-		image   menu/button
-		pos	"45 170"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
+		string		"_Implants"
+		color		"0 0.8 0 1"
+		image		menu/button_green_small
+		pos			"60 170"
+		size		"207 48"
+		font		f_menu
+		blend		true
+		// disable till not function
+		tooltip		"_not implemented"
+		disabled	true
 		click
-		{
-			cmd ""
-		}
-		out		{ *txt_hosp_bionic_start color "0 0.8 0 1" *button_hosp_bionic_start texl "0 0" *button_hosp_bionic_start texh "230 64" }
-		in		{ *txt_hosp_bionic_start color "1 1 1 1" *button_hosp_bionic_start texl "230 0" *button_hosp_bionic_start texh "460 64" }
-	}
-
-	string txt_hosp_bionic_start
-	{
-		string	"_Implants"
-		color	"0 0.8 0 1"
-		pos	"164 203"
-		font	f_menu
-		align	cc
 	}
 
 	// ==================
 	// additional stuff
 	// ==================
 
-	pic bt_go
+	custombutton hospitalemployee_leave
 	{
-		tooltip	"_Done"
-		image	hud/buttons2
-		mousefx	true
-		pos		"940 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;" }
+		tooltip		"_Back"
+		image		menu/button_background
+		blend		true
+		texl		"192 0"
+		size		"64 37"
+		pos			"940 720"
+		icon		return
+		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================

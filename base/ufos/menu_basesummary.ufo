@@ -81,7 +81,6 @@ menu basesummary
 	{
 		pos			"615 330"
 		size		"350 400"
-//		bgcolor		"1 1 1 0.5"
 		font		f_small
 		lineheight		16
 		tabwidth	50
@@ -219,6 +218,22 @@ menu basesummary
 	}
 
 	// ==================
+	// buttons
+	// ==================
+
+	custombutton basesummary_leave
+	{
+		tooltip		"_Back to baseview"
+		image		menu/button_background
+		blend		true
+		texl		"192 0"
+		size		"64 37"
+		pos			"940 720"
+		icon		return
+		click		{ cmd "mn_pop;" }
+	}
+
+	// ==================
 	// init
 	// ==================
 	func init
@@ -226,19 +241,4 @@ menu basesummary
 		call resetbaselayout
 		cmd "basesummary_init;"
 	}
-
-	// ==================
-	// buttons
-	// ==================
-	pic bt_continue
-	{
-		tooltip	"_Back to baseview"
-		image	hud/buttons2
-		mousefx	true
-		pos	"920 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;" }
-	}
-
 }
