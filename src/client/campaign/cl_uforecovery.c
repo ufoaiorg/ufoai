@@ -310,7 +310,6 @@ static void CP_UFORecoveredStore_f (void)
 static void CP_UFORecoveryBaseSelectPopup_f (void)
 {
 	int num;
-	menuNode_t *baseList;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
@@ -321,16 +320,12 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 	if (num < 0 || num >= MAX_BASES || !ufoRecovery.UFObases[num])
 		return;
 
-	/* Pop the menu and launch it again - now with updated value of selected base. */
 	ufoRecovery.base = ufoRecovery.UFObases[num];
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n",
 		ufoRecovery.base->name);
-	MN_PopMenu(qfalse);
-	CP_UFORecoveredStore_f();
 
-	/* Highlight currently selected entry */
-	baseList = MN_GetNodeFromCurrentMenu("cp_uforecovery_baselist");
-	MN_TextNodeSelectLine(baseList, num);
+	Cvar_Set("mission_recoverybase", _(ufoRecovery.base->name));
+	MN_ExecuteConfunc("baseselect_enable");
 }
 
 /**
@@ -356,8 +351,8 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 
 	nation = &gd.nations[num];
 	ufoRecovery.nation = nation;
+	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
-	assert(nation);
 	Cvar_Set("mission_recoverynation", _(nation->name));
 	MN_ExecuteConfunc("nationselect_enable");
 }
