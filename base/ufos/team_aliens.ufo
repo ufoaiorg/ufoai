@@ -9,6 +9,7 @@
 // TEAM DESCRIPTIONS
 // weapons	Team may carry and use weapons
 // armour	Team may carry armour
+// race		Race of the team (see CL_GetAlienRaceByID() for available values). Default value is phalanx race.
 // alien	Team is an alien team
 // civilian	Team is a civilian team
 // tech		Tech id to link
@@ -24,7 +25,7 @@ team taman
 {
 	name	"_Taman"
 	tech	"rs_alien_taman_autopsy"
-	alien	true
+	race	taman
 	size	1
 	hit_particle	blood
 
@@ -93,7 +94,7 @@ team ortnok
 {
 	name	"_Ortnok"
 	tech	rs_alien_ortnok_autopsy
-	alien	true
+	race	ortnok
 	size	1
 	//hit_particle	none
 
@@ -168,7 +169,7 @@ team shevaar
 {
 	name	"_Shevaar"
 	tech	"rs_alien_shevaar_autopsy"
-	alien	true
+	race	shevaar
 	armour	false
 	size	1
 	hit_particle	blood
@@ -205,7 +206,7 @@ team bloodspider
 {
 	name	"_Bloodspider"
 	tech	"rs_alien_bloodspider_autopsy"
-	alien	true
+	race	bloodspider
 	armour	false
 	weapons	false
 	onlyWeapon	bloodspider_weapon

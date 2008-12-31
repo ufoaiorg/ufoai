@@ -13,7 +13,7 @@ team latin
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -52,7 +52,7 @@ team states
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -111,7 +111,7 @@ team europe
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -168,7 +168,7 @@ team asia
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -207,7 +207,7 @@ team middle
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -247,7 +247,7 @@ team africa
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -286,7 +286,7 @@ team russia
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -325,7 +325,7 @@ team oceania
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		female { a }
@@ -368,7 +368,7 @@ team armysoldier
 	hit_particle	blood
 	weapons true
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		male { b }
@@ -399,7 +399,7 @@ team scientist
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		male { b }
@@ -434,7 +434,7 @@ team worker
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		male { b }
@@ -466,7 +466,7 @@ team miner
 	hit_particle	blood
 	weapons false
 	armour false
-	civilian true
+	race civilian
 
 	names {
 		male { b }

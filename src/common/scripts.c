@@ -1871,17 +1871,40 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 	} while (*text);
 }
 
+/**
+ * @return Alien race
+ * @sa racetypes_t
+ */
+static int CL_GetAlienRaceByID (const char *type)
+{
+	if (!Q_strncmp(type, "human", MAX_VAR))
+		return RACE_PHALANX_HUMAN;
+	else if (!Q_strncmp(type, "civilian", MAX_VAR))
+		return RACE_CIVILIAN;
+	else if (!Q_strncmp(type, "robot", MAX_VAR))
+		return RACE_ROBOT;
+	else if (!Q_strncmp(type, "taman", MAX_VAR))
+		return RACE_TAMAN;
+	else if (!Q_strncmp(type, "ortnok", MAX_VAR))
+		return RACE_ORTNOK;
+	else if (!Q_strncmp(type, "bloodspider", MAX_VAR))
+		return RACE_BLOODSPIDER;
+	else if (!Q_strncmp(type, "shevaar", MAX_VAR))
+		return RACE_SHEVAAR;
+	else {
+		Com_Printf("CL_GetAlienRaceByID: unknown alien race '%s'\n", type);
+		return RACE_PHALANX_HUMAN;
+	}
+}
+
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
 	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
-	{"alien", V_BOOL, offsetof(teamDef_t, alien), MEMBER_SIZEOF(teamDef_t, alien)}, /**< is this an alien? */
 	{"armour", V_BOOL, offsetof(teamDef_t, armour), MEMBER_SIZEOF(teamDef_t, armour)}, /**< are these team members able to wear armour? */
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
-	{"civilian", V_BOOL, offsetof(teamDef_t, civilian), MEMBER_SIZEOF(teamDef_t, civilian)}, /**< is this a civilian? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
-	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)}, /**< Is this a robotic unit? */
 	{NULL, 0, 0, 0}
 };
 
@@ -1966,7 +1989,12 @@ static void Com_ParseTeam (const char *name, const char **text)
 				Com_ParseActorNames(name, text, td);
 			else if (!Q_strcmp(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
-			else
+			else if (!Q_strcmp(token, "race")) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					Sys_Error("Com_ParseTeam: race is not defined");
+				td->race = CL_GetAlienRaceByID(token);
+			} else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
 	} while (*text);

@@ -1589,7 +1589,7 @@ team human_worker
 team human_ugv_phoenix
 {
 	size 2
-	robot true
+	race robot
 	//hit_particle none
 
 	names {
@@ -1612,7 +1612,7 @@ team human_ugv_phoenix
 team human_ugv_ares_w
 {
 	size 2
-	robot true
+	race robot
 	//hit_particle none
 
 	names {

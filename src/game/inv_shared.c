@@ -1760,11 +1760,20 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 
 	assert(chr);
 
-	if (team == TEAM_ALIEN) {
-		/* Aliens get special treatment. */
+	if (chr->teamDef->race == RACE_TAMAN) {
+		/** @todo create template specific for this race */
 		soldierTemplate = alienSoldier;
 		/* Add modifiers for difficulty setting here! */
-	} else if (team == TEAM_CIVILIAN) {
+	} else if (chr->teamDef->race == RACE_ORTNOK) {
+		/** @todo create template specific for this race */
+		soldierTemplate = alienSoldier;
+	} else if (chr->teamDef->race == RACE_BLOODSPIDER) {
+		/** @todo create template specific for this race */
+		soldierTemplate = alienSoldier;
+	} else if (chr->teamDef->race == RACE_SHEVAAR) {
+		/** @todo create template specific for this race */
+		soldierTemplate = alienSoldier;
+	} else if (chr->teamDef->race == RACE_CIVILIAN) {
 		/* Civilian team gets special treatment. */
 		soldierTemplate = civilSoldier;
 	} else if (!multiplayer) {

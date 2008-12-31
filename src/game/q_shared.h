@@ -494,6 +494,22 @@ typedef enum {
 	NAME_NUM_TYPES
 } nametypes_t;
 
+/**
+ * @brief Different races of actors used in game
+ * @todo add different robot races.
+ */
+typedef enum {
+	RACE_PHALANX_HUMAN,		/**< Phalanx team */
+	RACE_CIVILIAN,			/**< Civilian team */
+
+	RACE_ROBOT,				/**< Robot */
+
+	RACE_TAMAN,				/**< Alien: taman race */
+	RACE_ORTNOK,			/**< Alien: ortnok race */
+	RACE_BLOODSPIDER,		/**< Alien: bloodspider race */
+	RACE_SHEVAAR			/**< Alien: shevaar race */
+} racetypes_t;
+
 typedef struct teamDef_s {
 	int idx;			/**< The index in the teamDef array. */
 	char id[MAX_VAR];	/**< id from script file. */
@@ -509,9 +525,7 @@ typedef struct teamDef_s {
 	linkedList_t *sounds[SND_MAX][NAME_LAST];	/**< Sounds list per gender and per sound type. */
 	int numSounds[SND_MAX][NAME_LAST];	/**< Amount of sounds in this list for all different genders and soundtypes. */
 
-	qboolean alien;		/**< Is this an alien teamdesc definition? */
-	qboolean civilian;	/**< Is this a civilian teamdesc definition? */
-	qboolean robot;		/**< Is this a robotic team? */
+	racetypes_t race;	/**< What is the race of this team?*/
 
 	qboolean armour;	/**< Does this team use armour. */
 	qboolean weapons;	/**< Does this team use weapons. */

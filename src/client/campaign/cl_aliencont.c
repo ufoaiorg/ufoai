@@ -45,6 +45,15 @@ static qboolean breathingMailSent = qfalse;
  */
 
 /**
+ * @brief Check if a team definition is alien.
+ * @param[in] td Pointer to the team definition to check.
+ */
+qboolean AL_IsTeamDefAlien (const teamDef_t const *td)
+{
+	return (td->race == RACE_TAMAN) || (td->race == RACE_ORTNOK) || (td->race == RACE_BLOODSPIDER) || (td->race == RACE_SHEVAAR);
+}
+
+/**
  * @brief Prepares Alien Containment - names, states, and zeroed amount.
  * @param[in] base Pointer to the base with AC.
  * @sa B_BuildBase
@@ -59,7 +68,7 @@ void AL_FillInContainment (base_t *base)
 	containment = base->alienscont;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (!csi.teamDef[i].alien)
+		if (!AL_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
 		if (counter >= MAX_ALIENCONT_CAP)
 			Sys_Error("Overflow in AL_FillInContainment");
@@ -203,7 +212,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 				INV_CollectItem(aircraft, alBrOd, cargo[i].amount_dead);
 				if (cargo[i].amount_alive <= 0)
 					continue;
-				if (!alienBreathing && !cargo[i].teamDef->robot) {
+				if (!alienBreathing && !cargo[i].teamDef->race == RACE_ROBOT) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well */
@@ -394,7 +403,7 @@ static int AL_GetAlienIdx (const teamDef_t *alienType)
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (alienType == &csi.teamDef[i])
 			return index;
-		if (csi.teamDef[i].alien)
+		if (AL_IsTeamDefAlien(&csi.teamDef[i]))
 			index++;
 	}
 
@@ -413,7 +422,7 @@ int AL_GetAlienGlobalIdx (int idx)
 	int i, counter = 0;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (csi.teamDef[i].alien) {
+		if (AL_IsTeamDefAlien(&csi.teamDef[i])) {
 			if (counter == idx)
 				return i;
 			counter++;

@@ -2670,7 +2670,7 @@ void CL_ResetSinglePlayerData (void)
 	INVSH_InitInventory(invList);
 	/* Count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (csi.teamDef[i].alien)
+		if (AL_IsTeamDefAlien(&csi.teamDef[i]))
 			gd.numAliensTD++;
 	}
 	menuAircraft = NULL;

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hospital.h"
 #include "cl_uforecovery.h"
 #include "cl_map.h"
+#include "cl_aliencont.h"
 
 /** @brief Current selected aircraft for transfer (if transfer started from mission). */
 static aircraft_t *transferStartAircraft = NULL;
@@ -873,7 +874,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	for (i = 0; i < transferStartAircraft->alientypes; i++) {		/* Aliens. */
 		if (transferStartAircraft->aliencargo[i].amount_alive > 0) {
 			for (j = 0; j < gd.numAliensTD; j++) {
-				if (!csi.teamDef[j].alien)
+				if (!AL_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
 					transfer->hasAliens = qtrue;
@@ -885,7 +886,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 		}
 		if (transferStartAircraft->aliencargo[i].amount_dead > 0) {
 			for (j = 0; j < gd.numAliensTD; j++) {
-				if (!csi.teamDef[j].alien)
+				if (!AL_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
 					transfer->hasAliens = qtrue;
@@ -1081,7 +1082,7 @@ static void TR_TransferStart_f (void)
 		}
 	}
 	for (i = 0; i < gd.numAliensTD; i++) {		/* Aliens. */
-		if (!csi.teamDef[i].alien)
+		if (!AL_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			transfer->hasAliens = qtrue;
