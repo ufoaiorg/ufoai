@@ -324,7 +324,7 @@ menu employees
 	pic pwr_brd
 	{
 		if "mn_show_employee == 1"
-		pos "714 398"  image menu/bar_border align ul_rsl
+		pos "714 398"  image menu/bar_border
 	}
 	tbar pwr_bar
 	{
@@ -345,7 +345,7 @@ menu employees
 	pic spd_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 428" image menu/bar_border align ul_rsl
+		pos "714 428" image menu/bar_border
 	}
 	tbar spd_bar
 	{
@@ -367,7 +367,7 @@ menu employees
 	pic acc_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 458" image menu/bar_border align ul_rsl
+		pos "714 458" image menu/bar_border
 	}
 	tbar acc_bar
 	{
@@ -388,7 +388,7 @@ menu employees
 	pic mnd_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 488" image menu/bar_border align ul_rsl
+		pos "714 488" image menu/bar_border
 	}
 	tbar mnd_bar
 	{
@@ -409,7 +409,7 @@ menu employees
 	pic cls_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 523" image menu/bar_border align ul_rsl
+		pos "714 523" image menu/bar_border
 	}
 	tbar cls_bar
 	{
@@ -430,7 +430,7 @@ menu employees
 	pic hvy_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 553" image menu/bar_border align ul_rsl
+		pos "714 553" image menu/bar_border
 	}
 	tbar hvy_bar
 	{
@@ -451,7 +451,7 @@ menu employees
 	pic ass_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 583" image menu/bar_border align ul_rsl
+		pos "714 583" image menu/bar_border
 	}
 	tbar ass_bar
 	{
@@ -472,7 +472,7 @@ menu employees
 	pic snp_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 613" image menu/bar_border align ul_rsl
+		pos "714 613" image menu/bar_border
 	}
 	tbar snp_bar
 	{
@@ -494,7 +494,7 @@ menu employees
 	pic exp_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 643" image menu/bar_border align ul_rsl
+		pos "714 643" image menu/bar_border
 	}
 	tbar exp_bar
 	{
@@ -515,7 +515,7 @@ menu employees
 	pic hp_bdr
 	{
 		if "mn_show_employee == 1"
-		pos "714 678"  image menu/bar_border align ul_rsl
+		pos "714 678"  image menu/bar_border
 	}
 	tbar hp_bar
 	{

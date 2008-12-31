@@ -805,7 +805,6 @@ menu team
 		current	"*cvar mn_vhp"
 		max	"*cvar mn_vhpmax"
 		pos "707 374"
-		align ul_rsl
 		point_width 2.2
 		gap_width 3
 		texl "3 0"
