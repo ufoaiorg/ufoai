@@ -540,6 +540,8 @@ typedef struct teamDef_s {
 								* @todo "hitbody" will not spawn blood in the future. */
 } teamDef_t;
 
+qboolean AL_IsTeamDefRobot(const struct teamDef_s const *td);
+
 /** @brief Reject messages that are send to the client from the game module */
 #define REJ_PASSWORD_REQUIRED_OR_INCORRECT "Password required or incorrect."
 #define REJ_BANNED "Banned."

@@ -211,7 +211,6 @@ team bloodspider
 	weapons	false
 	onlyWeapon	bloodspider_weapon
 	size	1
-	robot true
 	//hit_particle	none
 
 	names {
