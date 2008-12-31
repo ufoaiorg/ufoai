@@ -577,7 +577,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			mn.curadata += bytes;
 		} else {
 			/* sanity check */
-			if (property->type == V_STRING && strlen(*token) > MAX_VAR - 1) {
+			if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
 				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
 				return qfalse;
 			}
@@ -764,6 +764,10 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	*token = COM_EParse(text, errhead, menu->name);
 	if (!*text)
 		return qfalse;
+
+	if (!Q_strcmp(node->name, "name_label")) {
+		node->name[0] = 'n';
+	}
 
 	/* test if node already exists */
 	node = MN_GetNode(menu, *token);
