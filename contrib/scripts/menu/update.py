@@ -263,6 +263,49 @@ def renameTextNodeAlignProperty():
 
 	root.save()
 
+def fixStringNodeAlignProperty():
+	root = Root()
+	root.loadAll()
+
+	print '-----'
+	
+	for menu in root.nodes.child:
+		print 'menu ' + menu.name
+		for node in menu.child:
+			if node.behaviour != "string":
+				continue
+			if not node.existsParam("align"):
+				continue
+			if not node.existsParam("size"):
+				continue
+			
+			valign = node.getParam("align")[0]
+			halign = node.getParam("align")[1]
+			
+			x,y = node.pos
+			size = node.size
+
+			if halign == 'r':
+				x = x - size[0]
+			elif halign == 'c':
+				x = x - long(size[0]/2)
+			elif halign == 'l':
+				pass
+
+			if valign == 'l':
+				y = y - size[1]
+			elif valign == 'c':
+				y = y - long(size[1]/2)
+			elif valign == 'u':
+				pass
+
+			node.updateParam('pos', '"' + str(x) + " " + str(y) + '"')
+			#node.updateParam('align', '##########')
+			node.renameParam('align', 'textalign')
+			print ' #FIX  ' + node.name + '  ' + node.behaviour
+
+	root.save()
+
 def checkAlign():
 	root = Root()
 	root.loadAll()
@@ -286,8 +329,8 @@ def checkAlign():
 			behaviours[node.behaviour]['total'] = behaviours[node.behaviour]['total'] + 1
 			behaviours[node.behaviour][align] = behaviours[node.behaviour][align] + 1
 
-			#if node.behaviour == 'pic':
-			#	print node.name + '  ' + node.behaviour + '  ' + node.getParam('align')
+			if node.existsParam('size'):
+				print ' #  ' + node.name + '  ' + node.behaviour + '  ' + node.getParam('align')
 			#print '  ' + node.name + ' ' + str(node.getParam('align'))
 	
 	print '-' * 20
@@ -296,6 +339,7 @@ def checkAlign():
 		for i in behaviours[b]: print '\t' + i + '\t' + str(behaviours[b][i])
 
 if __name__ == "__main__":
+	#fixStringNodeAlignProperty()
 	checkAlign()
 	#root = Root()
 	#root.loadAll()

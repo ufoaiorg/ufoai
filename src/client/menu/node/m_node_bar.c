@@ -101,6 +101,11 @@ static void MN_BarNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
+static const value_t properties[] = {
+	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
@@ -110,4 +115,5 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_BarNodeMouseDown;
 	behaviour->mouseUp = MN_BarNodeMouseUp;
 	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;
+	behaviour->properties = properties;
 }

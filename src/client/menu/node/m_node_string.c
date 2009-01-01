@@ -76,6 +76,7 @@ static void MN_StringNodeLoading (menuNode_t *node)
 
 static const value_t properties[] = {
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
+	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
 	{NULL, V_NULL, 0, 0}
 };
 

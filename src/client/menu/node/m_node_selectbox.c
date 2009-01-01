@@ -165,7 +165,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		if (selectBoxOption->hovered)
 			R_DrawFill(selBoxX, selBoxY, node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
 		/* print the option label */
-		R_FontDrawString(font, node->align, selBoxX, selBoxY,
+		R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
 			node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
@@ -173,16 +173,16 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	}
 	/* left side */
 	R_DrawNormPic(nodepos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-		7.0f, 32.0f, 0.0f, 28.0f, node->align, node->blend, image);
+		7.0f, 32.0f, 0.0f, 28.0f, ALIGN_UL, node->blend, image);
 
 	/* stretched middle bar */
 	R_DrawNormPic(nodepos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0]-SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-		16.0f, 32.0f, 7.0f, 28.0f, node->align, node->blend, image);
+		16.0f, 32.0f, 7.0f, 28.0f, ALIGN_UL, node->blend, image);
 
 	/* right bottom side */
 	R_DrawNormPic(nodepos[0] + node->size[0] -SELECTBOX_SIDE_WIDTH-SELECTBOX_RIGHT_WIDTH, selBoxY - SELECTBOX_SPACER,
 		SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
-		23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
+		23.0f, 32.0f, 16.0f, 28.0f, ALIGN_UL, node->blend, image);
 }
 
 /**

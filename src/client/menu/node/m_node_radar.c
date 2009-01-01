@@ -471,8 +471,14 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	}
 }
 
+static const value_t properties[] = {
+	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = MN_RadarNodeDraw;
+	behaviour->properties = properties;
 }

@@ -230,19 +230,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	tx = x - nodepos[0];
 	ty = y - nodepos[1];
 
-	if (node->align > 0 && node->align < ALIGN_LAST) {
-		switch (node->align % 3) {
-		/* center */
-		case 1:
-			tx = x - nodepos[0] + sx / 2;
-			break;
-		/* right */
-		case 2:
-			tx = x - nodepos[0] + sx;
-			break;
-		}
-	}
-
 	if (tx < 0 || ty < 0 || tx > sx || ty > sy)
 		return qfalse;
 

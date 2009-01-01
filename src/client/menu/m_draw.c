@@ -50,16 +50,16 @@ static void MN_DrawBorder (const menuNode_t *node)
 	/** @todo use GL_LINE_LOOP + array here */
 	/* left */
 	R_DrawFill(nodepos[0] - node->padding - node->border, nodepos[1] - node->padding - node->border,
-		node->border, node->size[1] + (node->padding*2) + (node->border*2), node->align, node->bordercolor);
+		node->border, node->size[1] + (node->padding*2) + (node->border*2), ALIGN_UL, node->bordercolor);
 	/* right */
 	R_DrawFill(nodepos[0] + node->size[0] + node->padding, nodepos[1] - node->padding - node->border,
-		node->border, node->size[1] + (node->padding*2) + (node->border*2), node->align, node->bordercolor);
+		node->border, node->size[1] + (node->padding*2) + (node->border*2), ALIGN_UL, node->bordercolor);
 	/* top */
 	R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding - node->border,
-		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
+		node->size[0] + (node->padding*2), node->border, ALIGN_UL, node->bordercolor);
 	/* down */
 	R_DrawFill(nodepos[0] - node->padding, nodepos[1] + node->size[1] + node->padding,
-		node->size[0] + (node->padding*2), node->border, node->align, node->bordercolor);
+		node->size[0] + (node->padding*2), node->border, ALIGN_UL, node->bordercolor);
 }
 
 static void MN_HilightNode (menuNode_t *node, vec4_t color, int textPositionY)

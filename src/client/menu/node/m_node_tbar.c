@@ -52,7 +52,7 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 		shx = node->texh[0];
 
 	R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
-		shx, node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
+		shx, node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, ref);
 }
 
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)

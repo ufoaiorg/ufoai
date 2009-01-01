@@ -37,11 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void MN_ImageNodeLoaded (menuNode_t *node)
 {
-	/* align is deprecated */
-	if (node->align != 0) {
-		Sys_Error("'align' is deprecated. Set the pos of the top-left of the image");
-	}
-
 	/* update the size when its possible */
 	if (node->size[0] == 0 && node->size[1] == 0) {
 		if (node->texl[0] != 0 || node->texh[0]) {
@@ -133,7 +128,7 @@ void MN_ImageNodeDraw(menuNode_t *node)
 		}
 	}
 	R_DrawNormPic(nodepos[0], nodepos[1], size[0], size[1],
-		node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, imageName);
+		node->texh[0], node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, imageName);
 
 	/** @todo convert all pic using mousefx into button.
 	 * @todo delete mousefx
