@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
-static void MN_DrawBarNode (menuNode_t *node)
+static void MN_BarNodeDraw (menuNode_t *node)
 {
 	vec4_t color;
 	float fac, bar_width;
@@ -45,7 +45,7 @@ static void MN_DrawBarNode (menuNode_t *node)
 
 	fac = node->size[0] / (max - min);
 	bar_width = (value - min) * fac;
-	R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], node->align, node->state ? color : node->color);
+	R_DrawFill(nodepos[0], nodepos[1], bar_width, node->size[1], ALIGN_UL, node->state ? color : node->color);
 }
 
 /**
@@ -96,7 +96,7 @@ static void MN_BarNodeMouseUp (menuNode_t *node, int x, int y, int button)
 /**
  * @brief Called before loading. Used to set default attribute values
  */
-static void MN_DrawBarLoading (menuNode_t *node)
+static void MN_BarNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
@@ -105,8 +105,8 @@ void MN_RegisterBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "bar";
 	behaviour->extends = "abstractvalue";
-	behaviour->draw = MN_DrawBarNode;
-	behaviour->loading = MN_DrawBarLoading;
+	behaviour->draw = MN_BarNodeDraw;
+	behaviour->loading = MN_BarNodeLoading;
 	behaviour->mouseDown = MN_BarNodeMouseDown;
 	behaviour->mouseUp = MN_BarNodeMouseUp;
 	behaviour->capturedMouseMove = MN_BarNodeCapturedMouseMove;
