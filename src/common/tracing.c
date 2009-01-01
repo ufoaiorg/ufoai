@@ -983,15 +983,17 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 		offset = trace_data->extents[type];
 	} else {
 		const float dist = plane->dist;
-		vec3_t *normal = &plane->normal;
-		t1 = DotProduct(*normal, p1) - dist;
-		t2 = DotProduct(*normal, p2) - dist;
+		vec3_t normal;
+
+		VectorCopy(plane->normal, normal);
+		t1 = DotProduct(normal, p1) - dist;
+		t2 = DotProduct(normal, p2) - dist;
 		if (trace_data->ispoint)
 			offset = 0;
 		else
-			offset = fabs(trace_data->extents[0] * *normal[0])
-				+ fabs(trace_data->extents[1] * *normal[1])
-				+ fabs(trace_data->extents[2] * *normal[2]);
+			offset = fabs(trace_data->extents[0] * normal[0])
+				+ fabs(trace_data->extents[1] * normal[1])
+				+ fabs(trace_data->extents[2] * normal[2]);
 	}
 
 	/* see which sides we need to consider */
@@ -1043,7 +1045,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 		frac2 = 1;
 
 	midf = p1f + (p2f - p1f) * frac2;
-	VectorInterpolation(p1, p2, frac, mid);
+	VectorInterpolation(p1, p2, frac2, mid);
 	TR_RecursiveHullCheck(trace_data, node->children[side ^ 1], midf, p2f, mid, p2);
 }
 
