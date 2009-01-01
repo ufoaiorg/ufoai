@@ -15,6 +15,9 @@ CFLAGS_M_OPTS=-MD -MT $@ -MP
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32 -lopengl32
 	SERVER_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
+	ifeq ($(PROFILING),1)
+		SERVER_LIBS += -lgmon
+	endif
 	RADIANT_LIBS+=-lglib-2.0 -lgtk-win32-2.0 -lgobject-2.0
 	SHARED_EXT=dll
 	SHARED_LDFLAGS=-shared
