@@ -9,7 +9,7 @@
 // +: tile contains something
 // a: any
 
-base icen/ice_
+base ice/ice_
 
 // ---------------------------------
 // Dropship on ice map
@@ -57,15 +57,15 @@ abc     +a     +a	abc
 
 // ---------------------------------
 // Plain snow terrain
-tile +r04
-{
-4 4
-0      abc     abc	0
-abc     +a     +a	abc
-abc     +a     +a	abc
-0      abc     abc	0
-}
-
+// @todo Where is it?
+//tile +r04
+//{
+//4 4
+//0      abc     abc	0
+//abc     +a     +a	abc
+//abc     +a     +a	abc
+//0      abc     abc	0
+//}
 
 // *********************************
 
@@ -75,7 +75,7 @@ size "6 6"
 +r01 "1 4"
 +r02 "1 8"
 +r03 "0 8"
-+r04 "1 6"
+//+r04 "1 6"
 +drop_firebird "1 1"
 }
 
