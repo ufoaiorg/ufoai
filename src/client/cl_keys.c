@@ -59,6 +59,8 @@ size_t msg_bufferlen = 0;
 
 char *keybindings[K_KEY_SIZE];
 char *menukeybindings[K_KEY_SIZE];
+char *battlekeybindings[K_KEY_SIZE];
+
 static qboolean keydown[K_KEY_SIZE];
 
 typedef struct {
@@ -611,6 +613,9 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 	case KEYSPACE_GAME:
 		keySpace = keybindings;
 		break;
+	case KEYSPACE_BATTLE:
+		keySpace = battlekeybindings;
+		break;
 	default:
 		return "";
 	}
@@ -628,9 +633,10 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  * @brief Bind a keynum to script command
  * @param[in] keynum Converted from string to keynum
  * @param[in] binding The script command to bind keynum to
- * @param[in] space The key space to bind the key for (menu or game)
+ * @param[in] space The key space to bind the key for (menu, game or battle)
  * @sa Key_Bind_f
  * @sa Key_StringToKeynum
+ * @note If command is empty, this function will only remove the actual key binding instead of setting empty string.
  */
 static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 {
@@ -650,6 +656,10 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 		keySpace = &keybindings[keynum];
 		Com_DPrintf(DEBUG_CLIENT, "game\n");
 		break;
+	case KEYSPACE_BATTLE:
+		keySpace = &battlekeybindings[keynum];
+		Com_DPrintf(DEBUG_CLIENT, "battle\n");
+		break;
 	default:
 		Com_DPrintf(DEBUG_CLIENT, "failure\n");
 		return;
@@ -661,9 +671,12 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 		*keySpace = NULL;
 	}
 
-	/* allocate memory for new binding */
-	new = Mem_PoolStrDup(binding, com_genericPool, CL_TAG_NONE);
-	*keySpace = new;
+	/* allocate memory for new binding, but don't set empty commands*/
+	if (binding)
+	{
+		new = Mem_PoolStrDup(binding, com_genericPool, CL_TAG_NONE);
+		*keySpace = new;
+	}
 }
 
 /**
@@ -687,6 +700,8 @@ static void Key_Unbind_f (void)
 
 	if (!Q_strncmp(Cmd_Argv(0), "unbindmenu", MAX_VAR))
 		Key_SetBinding(b, "", KEYSPACE_MENU);
+	else if (!Q_strncmp(Cmd_Argv(0), "unbindbattle", MAX_VAR))
+		Key_SetBinding(b, "", KEYSPACE_BATTLE);
 	else
 		Key_SetBinding(b, "", KEYSPACE_GAME);
 }
@@ -748,6 +763,8 @@ static void Key_Bind_f (void)
 
 	if (!Q_strncmp(Cmd_Argv(0), "bindmenu", MAX_VAR))
 		Key_SetBinding(b, cmd, KEYSPACE_MENU);
+	else if (!Q_strncmp(Cmd_Argv(0), "bindbattle", MAX_VAR))
+		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
 	else
 		Key_SetBinding(b, cmd, KEYSPACE_GAME);
 }
@@ -775,15 +792,20 @@ void Key_WriteBindings (const char* filename)
 	fprintf(f.f, "// If you want to know the keyname of a specific key - set in_debug cvar to 1 and press the key\n");
 	fprintf(f.f, "unbindallmenu\n");
 	fprintf(f.f, "unbindall\n");
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
+	fprintf(f.f, "unbindbattle\n");
+	/* failfast, stops loop for first occurred error in fprintf */
+	for (i = 0; i < K_LAST_KEY && delete == qfalse; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			if (fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]) < 0)
 				delete = qtrue;
-	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
+	for (i = 0; i < K_LAST_KEY && delete == qfalse; i++)
 		if (keybindings[i] && keybindings[i][0])
 			if (fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]) < 0)
 				delete = qtrue;
-
+	for (i = 0; i < K_LAST_KEY && delete == qfalse; i++)
+		if (battlekeybindings[i] && battlekeybindings[i][0])
+			if (fprintf(f.f, "bindbattle %s \"%s\"\n", Key_KeynumToString(i), battlekeybindings[i]) < 0)
+				delete = qtrue;
 	FS_CloseFile(&f);
 	if (!delete)
 		Com_Printf("Wrote %s\n", filename);
@@ -824,6 +846,11 @@ static void Key_Bindlist_f (void)
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]);
+	Com_Printf("key space: battle\n");
+	for (i = 0; i < K_LAST_KEY; i++)
+		if (battlekeybindings[i] && battlekeybindings[i][0])
+			Com_Printf("- %s \"%s\"\n", Key_KeynumToString(i), battlekeybindings[i]);
+
 }
 
 static int Key_CompleteKeyName (const char *partial, const char **match)
@@ -867,14 +894,19 @@ void Key_Init (void)
 	/* register our functions */
 	Cmd_AddCommand("bindmenu", Key_Bind_f, "Bind a key to a console command - only executed when hovering a menu");
 	Cmd_AddCommand("bind", Key_Bind_f, "Bind a key to a console command");
-	Cmd_AddCommand("unbindmenu", Key_Unbind_f, "Unind a key");
+	Cmd_AddCommand("bindbattle", Key_Bind_f, "Bind a key to a console command - only executed when in battlescape");
+	Cmd_AddCommand("unbindmenu", Key_Unbind_f, "Unbind a key");
 	Cmd_AddCommand("unbind", Key_Unbind_f, "Unbind a key");
+	Cmd_AddCommand("unbindbattle", Key_Unbind_f, "Unbind a key");
 	Cmd_AddParamCompleteFunction("bind", Key_CompleteKeyName);
 	Cmd_AddParamCompleteFunction("unbind", Key_CompleteKeyName);
 	Cmd_AddParamCompleteFunction("bindmenu", Key_CompleteKeyName);
 	Cmd_AddParamCompleteFunction("unbindmenu", Key_CompleteKeyName);
+	Cmd_AddParamCompleteFunction("bindbattle", Key_CompleteKeyName);
+	Cmd_AddParamCompleteFunction("unbindbattle", Key_CompleteKeyName);
 	Cmd_AddCommand("unbindallmenu", Key_Unbindall_f, "Delete all key bindings for the menu");
 	Cmd_AddCommand("unbindall", Key_Unbindall_f, "Delete all key bindings");
+	Cmd_AddCommand("unbindallbattle", Key_Unbindall_f, "Delete all key bindings for battlescape");
 	Cmd_AddCommand("bindlist", Key_Bindlist_f, "Show all bindings on the game console");
 	Cmd_AddCommand("savebind", Key_WriteBindings_f, "Saves key bindings to keys.cfg");
 }
@@ -972,7 +1004,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 			}
 			kb = keybindings[key];
 		}
-
+		/*@todo check how battlekeybindings must be taken in account here */
 		return;
 	}
 
@@ -990,6 +1022,8 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 			kb = keybindings[unicode];
 		if (!kb)
 			kb = keybindings[key];
+		if (!kb && CL_OnBattlescape() == qtrue)
+			kb = battlekeybindings[key];
 		if (kb) {
 			if (kb[0] == '+') {	/* button commands add keynum and time as a parm */
 				/* '+' means we have pressed the key

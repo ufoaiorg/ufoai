@@ -180,6 +180,7 @@ typedef enum {
 typedef enum {
 	KEYSPACE_MENU,
 	KEYSPACE_GAME,
+	KEYSPACE_BATTLE,
 
 	KEYSPACE_MAX
 } keyBindSpace_t;
@@ -193,6 +194,7 @@ extern char key_lines[MAXKEYLINES][MAXCMDLINE];
 extern int history_line;
 extern char *keybindings[K_KEY_SIZE];
 extern char *menukeybindings[K_KEY_SIZE];
+extern char *battlekeybindings[K_KEY_SIZE];
 
 void Key_SetDest(int key_dest);
 void Key_Event(unsigned int key, unsigned short unicode, qboolean down, unsigned time);
