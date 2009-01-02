@@ -885,15 +885,14 @@ menu ufopedia_mail
 	text mailclient
 	{
 		pos		"100 130"
-		size	"870 550"
+		width	"870"
 		textid		TEXT_UFOPEDIA_MAIL
-		//rows	"15"
+		rows	"15"
 		font	"f_small"
 		lineheight	38
 		tabwidth	700
 		click	rclick wheel
 		mousefx	true
-//		bgcolor	" 0 1 0 0.5"
 		scrollbar	true
 		wheel	{ cmd "ufopedia_scrollmail;" }
 	}
