@@ -797,6 +797,22 @@ aircraft_t *AIR_GetAircraft (const char *name)
 }
 
 /**
+ * @brief Initialise aircraft pointer in each slot of an aircraft.
+ * @param[in] aircraft Pointer to the aircraft where slots are.
+ */
+static void AII_SetAircraftInSlots (aircraft_t *aircraft)
+{
+	int i;
+
+	/* initialise weapon slots */
+	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+		aircraft->weapons[i].aircraft = aircraft;
+		aircraft->electronics[i].aircraft = aircraft;
+	}
+		aircraft->shield.aircraft = aircraft;
+}
+
+/**
  * @brief Places a new aircraft in the given base.
  * @param[in] base Pointer to base where aircraft should be added.
  * @param[in] name Id of aircraft to add (aircraft->id).
@@ -824,6 +840,8 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		aircraft->homebase = base;
 		/* Update the values of its stats */
 		AII_UpdateAircraftStats(aircraft);
+		/* initialise aircraft pointer in slots */
+		AII_SetAircraftInSlots(aircraft);
 		/* give him some fuel */
 		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 		/* Set HP to maximum */
@@ -2479,7 +2497,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				if (j < ufo->maxWeapons) {
 					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
-						AII_AddItemToSlot(NULL, tech, ufo->weapons + j);
+						AII_AddItemToSlot(NULL, tech, ufo->weapons + j, qfalse);
 					ufo->weapons[j].ammoLeft = MSG_ReadShort(sb);
 					ufo->weapons[j].delayNextShot = MSG_ReadShort(sb);
 					ufo->weapons[j].installationTime = MSG_ReadShort(sb);
@@ -2502,7 +2520,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int) {
 				tech = RS_GetTechByProvided(MSG_ReadString(sb));
 				if (tech)
-					AII_AddItemToSlot(NULL, tech, &ufo->shield);
+					AII_AddItemToSlot(NULL, tech, &ufo->shield, qfalse);
 				ufo->shield.installationTime = MSG_ReadShort(sb);
 			}
 			/* read electronics slot */
@@ -2516,7 +2534,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				if (j < ufo->maxElectronics) {
 					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
-						AII_AddItemToSlot(NULL, tech, ufo->electronics + j);
+						AII_AddItemToSlot(NULL, tech, ufo->electronics + j, qfalse);
 					ufo->electronics[j].installationTime = MSG_ReadShort(sb);
 				} else {
 					MSG_ReadString(sb);

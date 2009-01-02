@@ -109,7 +109,7 @@ typedef struct aircraftSlot_s {
 	int idx;					/**< self link */
 	struct base_s *base;		/**< A link to the base. (if defined by aircraftItemType_t) */
 	struct installation_s *installation;	/**< A link to the installation. (if defined by aircraftItemType_t) */
-	struct aircraft_s *aircraftTemplate;	/**< A link to the aircraft template (if defined by aircraftItemType_t). */
+	struct aircraft_s *aircraft;	/**< A link to the aircraft (if defined by aircraftItemType_t). */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
 
 	const objDef_t *item;		/**< Item that is currently in the slot. NULL if empty. */
@@ -120,7 +120,8 @@ typedef struct aircraftSlot_s {
 	int installationTime;		/**< The time (in hours) left before the item is finished to be installed or removed in/from slot
 								  *	This is > 0 if the item is being installed, < 0 if the item is being removed, 0 if the item is in place */
 	const objDef_t *nextItem;	/**< Next item to install when the current item in slot will be removed
-								  *	(Should be used only if installationTime is different of 0 */
+								  *	(Should be used only if installationTime is different of 0) */
+	const objDef_t *nextAmmo;	/**< Next ammo to install when the nextItem will be installed */
 	itemPos_t pos;				/**< Position of the slot on the aircraft */
 } aircraftSlot_t;
 

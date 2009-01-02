@@ -3427,31 +3427,50 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 
 /**
  * @brief Saves an item slot
+ * @param[in] slot Pointer to the slot where item is.
+ * @param[in] sb buffer where information are written.
+ * @param[in] weapon True if the slot is a weapon slot.
+ * @sa B_LoadOneSlot
+ * @sa B_SaveAircraftSlots
+ * @sa B_SaveBaseSlots
+ * @sa AII_InitialiseSlot
+ */
+static void B_SaveOneSlot (const aircraftSlot_t* slot, sizebuf_t* sb, qboolean weapon)
+{
+	const objDef_t *ammo = slot->ammo;
+	const objDef_t *nextAmmo = slot->nextAmmo;
+	MSG_WriteString(sb, slot->item ? slot->item->id : "");
+	if (weapon)
+		MSG_WriteString(sb, ammo ? ammo->id : "");
+	MSG_WriteString(sb, slot->nextItem ? slot->nextItem->id : "");
+	if (weapon)
+		MSG_WriteString(sb, nextAmmo ? nextAmmo->id : "");
+	MSG_WriteShort(sb, slot->installationTime);
+	/* everything below is only for weapon */
+	if (!weapon)
+		return;
+	MSG_WriteShort(sb, slot->ammoLeft);
+	MSG_WriteShort(sb, slot->delayNextShot);
+}
+
+/**
+ * @brief Saves an item slot
+ * @param[in] slot Pointer to the slot where item is.
+ * @param[in] num Number of slots for this aircraft.
+ * @param[in] sb buffer where information are written.
+ * @param[in] weapon True if the slot is a weapon slot.
  * @sa B_LoadAircraftSlots
  * @sa B_Save
  * @sa AII_InitialiseSlot
  */
-static void B_SaveAircraftSlots (const aircraftSlot_t* slot, const int num, sizebuf_t* sb)
+static void B_SaveAircraftSlots (const aircraftSlot_t* slot, const int num, sizebuf_t* sb, qboolean weapon)
 {
 	int i;
 
+	MSG_WriteByte(sb, num);
+
 	for (i = 0; i < num; i++) {
-		if (slot[i].item) {
-			const objDef_t *ammo = slot[i].ammo;
-			MSG_WriteString(sb, slot[i].item->id);
-			MSG_WriteShort(sb, slot[i].ammoLeft);
-			MSG_WriteShort(sb, slot[i].delayNextShot);
-			MSG_WriteShort(sb, slot[i].installationTime);
-			/* if there is no ammo MSG_WriteString will write an empty string */
-			MSG_WriteString(sb, ammo ? ammo->id : "");
-		} else {
-			MSG_WriteString(sb, "");
-			MSG_WriteShort(sb, AMMO_STATUS_NOT_SET);
-			MSG_WriteShort(sb, 0);
-			MSG_WriteShort(sb, 0);
-			/* if there is no ammo MSG_WriteString will write an empty string */
-			MSG_WriteString(sb, "");
-		}
+		B_SaveOneSlot(&slot[i], sb, weapon);
 	}
 }
 
@@ -3462,23 +3481,10 @@ void B_SaveBaseSlots (const baseWeapon_t *weapons, const int numWeapons, sizebuf
 {
 	int i;
 
+	MSG_WriteByte(sb, numWeapons);
+
 	for (i = 0; i < numWeapons; i++) {
-		if (weapons[i].slot.item) {
-			const objDef_t *ammo = weapons[i].slot.ammo;
-			MSG_WriteString(sb, weapons[i].slot.item->id);
-			MSG_WriteShort(sb, weapons[i].slot.ammoLeft);
-			MSG_WriteShort(sb, weapons[i].slot.delayNextShot);
-			MSG_WriteShort(sb, weapons[i].slot.installationTime);
-			/* if there is no ammo MSG_WriteString will write an empty string */
-			MSG_WriteString(sb, ammo ? ammo->id : "");
-		} else {
-			MSG_WriteString(sb, "");
-			MSG_WriteShort(sb, AMMO_STATUS_NOT_SET);
-			MSG_WriteShort(sb, 0);
-			MSG_WriteShort(sb, 0);
-			/* if there is no ammo MSG_WriteString will write an empty string */
-			MSG_WriteString(sb, "");
-		}
+		B_SaveOneSlot(&weapons[i].slot, sb, qtrue);
 
 		/* save target of this weapon */
 		MSG_WriteShort(sb, weapons[i].target ? weapons[i].target->idx : -1);
@@ -3522,10 +3528,8 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->baseStatus);
 		MSG_WriteFloat(sb, b->alienInterest);
 
-		MSG_WriteByte(sb, b->numBatteries);
 		B_SaveBaseSlots(b->batteries, b->numBatteries, sb);
 
-		MSG_WriteByte(sb, b->numLasers);
 		B_SaveBaseSlots(b->lasers, b->numLasers, sb);
 
 		MSG_WriteShort(sb, AIR_GetAircraftIdxInBase(b->aircraftCurrent));
@@ -3548,30 +3552,13 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteByte(sb, BYTES_NONE);
 
 			/* save weapon slots */
-			MSG_WriteByte(sb, aircraft->maxWeapons);
-			B_SaveAircraftSlots(aircraft->weapons, aircraft->maxWeapons, sb);
+			B_SaveAircraftSlots(aircraft->weapons, aircraft->maxWeapons, sb, qtrue);
 
 			/* save shield slots - currently only one */
-			MSG_WriteByte(sb, 1);
-			if (aircraft->shield.item) {
-				MSG_WriteString(sb, aircraft->shield.item->id);
-				MSG_WriteShort(sb, aircraft->shield.installationTime);
-			} else {
-				MSG_WriteString(sb, "");
-				MSG_WriteShort(sb, 0);
-			}
+			B_SaveAircraftSlots(&aircraft->shield, 1, sb, qfalse);
 
 			/* save electronics slots */
-			MSG_WriteByte(sb, aircraft->maxElectronics);
-			for (l = 0; l < aircraft->maxElectronics; l++) {
-				if (aircraft->electronics[l].item) {
-					MSG_WriteString(sb, aircraft->electronics[l].item->id);
-					MSG_WriteShort(sb, aircraft->electronics[l].installationTime);
-				} else {
-					MSG_WriteString(sb, "");
-					MSG_WriteShort(sb, 0);
-				}
-			}
+			B_SaveAircraftSlots(aircraft->electronics, aircraft->maxElectronics, sb, qfalse);
 
 			/** Save team on board
 			 * @note presaveArray[PRE_ACTTEA]==MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
@@ -3641,32 +3628,93 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 }
 
 /**
- * @brief Loads the weapon slots of an aircraft.
+ * @brief Loads one slot (base, installation or aircraft)
+ * @param[in] slot Pointer to the slot where item should be added.
+ * @param[in] sb buffer where information are.
+ * @param[in] weapon True if the slot is a weapon slot.
  * @sa B_Load
  * @sa B_SaveAircraftSlots
  */
-static void B_LoadAircraftSlots (base_t* base, aircraftSlot_t* slot, int num, sizebuf_t* sb)
+static void B_LoadOneSlot (aircraftSlot_t* slot, sizebuf_t* sb, qboolean weapon)
 {
-	int i;
-	technology_t *tech;
-
-	for (i = 0; i < num; i++) {
-		tech = RS_GetTechByProvided(MSG_ReadString(sb));
+	const char *name;
+	name = MSG_ReadString(sb);
+	if (name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
 		/* base is NULL here to not check against the storage amounts - they
 		 * are already loaded in the campaign load function and set to the value
 		 * after the craftitem was already removed from the initial game - thus
-		 * there might not be any of these items in the storage at this point */
-		/** @todo Check whether storage and capacities needs updating now */
+		 * there might not be any of these items in the storage at this point.
+		 * Furthermore, they have already be taken from storage during game. */
 		if (tech)
-			AII_AddItemToSlot(NULL, tech, slot + i);
-		slot[i].ammoLeft = MSG_ReadShort(sb);
-		slot[i].delayNextShot = MSG_ReadShort(sb);
-		slot[i].installationTime = MSG_ReadShort(sb);
-		tech = RS_GetTechByProvided(MSG_ReadString(sb));
+			AII_AddItemToSlot(NULL, tech, slot, qfalse);
+	}
+#ifdef NEW_SAVEGAME
+	/* current ammo */
+	if (weapon) {
+		name = MSG_ReadString(sb);
+		if (name[0] != '\0') {
+			technology_t *tech = RS_GetTechByProvided(name);
+			if (tech)
+				AII_AddAmmoToSlot(NULL, tech, slot);	/* next Item must not be loaded yet in order to
+															 * install ammo properly */
+		}
+	}
+	/* item to install after current one is removed */
+	name = MSG_ReadString(sb);
+	if (name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
 		if (tech)
-			slot[i].ammo = AII_GetAircraftItemByID(tech->provides);
-		else
-			slot[i].ammo = NULL;
+			AII_AddItemToSlot(NULL, tech, slot, qtrue);
+	}
+	if (weapon) {
+		/* ammo to install after current one is removed */
+		name = MSG_ReadString(sb);
+		if (name[0] != '\0') {
+			technology_t *tech = RS_GetTechByProvided(name);
+			if (tech)
+				AII_AddAmmoToSlot(NULL, tech, slot);
+		}
+	}
+
+	slot->installationTime = MSG_ReadShort(sb);
+
+	/* everything below is weapon specific */
+	if (!weapon)
+		return;
+
+	slot->ammoLeft = MSG_ReadShort(sb);
+	slot->delayNextShot = MSG_ReadShort(sb);
+#else
+	slot->ammoLeft = MSG_ReadShort(sb);
+	slot->delayNextShot = MSG_ReadShort(sb);
+	slot->installationTime = MSG_ReadShort(sb);
+	name = MSG_ReadString(sb);
+	if (name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		if (tech)
+			AII_AddAmmoToSlot(NULL, tech, slot);
+	}
+#endif
+}
+
+/**
+ * @brief Loads the weapon slots of an aircraft.
+ * @param[in] aircraft Pointer to the aircraft.
+ * @param[in] slot Pointer to the slot where item should be added.
+ * @param[in] num Number of slots for this aircraft that should be loaded.
+ * @param[in] sb buffer where information are.
+ * @param[in] weapon True if the slot is a weapon slot.
+ * @sa B_Load
+ * @sa B_SaveAircraftSlots
+ */
+static void B_LoadAircraftSlots (aircraft_t *aircraft, aircraftSlot_t* slot, int num, sizebuf_t* sb, qboolean weapon)
+{
+	int i;
+
+	for (i = 0; i < num; i++) {
+		slot[i].aircraft = aircraft;
+		B_LoadOneSlot(&slot[i], sb, weapon);
 	}
 }
 
@@ -3680,24 +3728,10 @@ void B_LoadBaseSlots (baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
 	int i, target;
 
 	for (i = 0; i < numWeapons; i++) {
-		technology_t *tech = RS_GetTechByProvided(MSG_ReadString(sb));
-		/* base is NULL here to not check against the storage amounts - they
-		 * are already loaded in the campaign load function and set to the value
-		 * after the craftitem was already removed from the initial game - thus
-		 * there might not be any of these items in the storage at this point */
-		if (tech)
-			AII_AddItemToSlot(NULL, tech, &weapons[i].slot);
-		weapons[i].slot.ammoLeft = MSG_ReadShort(sb);
-		weapons[i].slot.delayNextShot = MSG_ReadShort(sb);
-		weapons[i].slot.installationTime = MSG_ReadShort(sb);
-		tech = RS_GetTechByProvided(MSG_ReadString(sb));
-		if (tech)
-			weapons[i].slot.ammo = AII_GetAircraftItemByID(tech->provides);
-		else
-			weapons[i].slot.ammo = NULL;
+		B_LoadOneSlot(&weapons[i].slot, sb, qtrue);
 
 		target = MSG_ReadShort(sb);
-		weapons[i].target = (target >= 0) ? gd.ufos + target : NULL;
+		weapons[i].target = (target >= 0) ? &gd.ufos[target] : NULL;
 	}
 }
 
@@ -3877,10 +3911,35 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			else
 				aircraft->aircraftTarget = gd.ufos + ufoIdx;
 
+#ifdef NEW_SAVEGAME
+			/* read weapon slots */
+			amount = MSG_ReadByte(sb);
+			if (aircraft->maxWeapons < amount) {
+				Com_Printf("B_Load: number of weapons in aircraft '%s' (%i) exceed maximum value (%i)\n", aircraft->id, amount, aircraft->maxWeapons);
+				return qfalse;
+			}
+			B_LoadAircraftSlots(aircraft, aircraft->weapons, amount, sb, qtrue);
+
+			/* read shield slot */
+			amount = MSG_ReadByte(sb);
+			if (amount != 1) {
+				Com_Printf("B_Load: There should be only one slot for shield in aircraft '%s'\n", aircraft->id);
+				return qfalse;
+			}
+			B_LoadAircraftSlots(aircraft, &aircraft->shield, 1, sb, qfalse);
+
+			/* read electronic slots */
+			amount = MSG_ReadByte(sb);
+			if (aircraft->maxElectronics < amount) {
+				Com_Printf("B_Load: number of electronics in aircraft '%s' (%i) exceed maximum value (%i)\n", aircraft->id, amount, aircraft->maxElectronics);
+				return qfalse;
+			}
+			B_LoadAircraftSlots(aircraft, aircraft->electronics, amount, sb, qfalse);
+#else
 			/* read weapon slot */
 			amount = MSG_ReadByte(sb);
 			/* only read aircraft->maxWeapons here - skip the rest in the following loop */
-			B_LoadAircraftSlots(b, aircraft->weapons, min(amount, aircraft->maxWeapons), sb);
+			B_LoadAircraftSlots(aircraft, aircraft->weapons, min(amount, aircraft->maxWeapons), sb, qtrue);
 			/* just in case there are less slots in new game that in saved one */
 			for (l = aircraft->maxWeapons; l < amount; l++) {
 				MSG_ReadString(sb);
@@ -3889,6 +3948,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 				MSG_ReadString(sb);
 			}
+
 			/* check for shield slot */
 			/* there is only one shield - but who knows - breaking the savegames if this changes
 			 * isn't worth it */
@@ -3896,7 +3956,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < amount; l++) {
 				const technology_t *const tech = RS_GetTechByProvided(MSG_ReadString(sb));
 				if (tech)
-					AII_AddItemToSlot(NULL, tech, &aircraft->shield);
+					AII_AddItemToSlot(NULL, tech, &aircraft->shield, qfalse);
 				aircraft->shield.installationTime = MSG_ReadShort(sb);
 			}
 
@@ -3907,13 +3967,14 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				if (l < aircraft->maxElectronics) {
 					const technology_t *const tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
-						AII_AddItemToSlot(NULL, tech, aircraft->electronics + l);
+						AII_AddItemToSlot(NULL, tech, aircraft->electronics + l, qfalse);
 					aircraft->electronics[l].installationTime = MSG_ReadShort(sb);
 				} else {
 					MSG_ReadString(sb);
 					MSG_ReadShort(sb);
 				}
 			}
+#endif
 
 			/** Load team on board
 			 * @note presaveArray[PRE_ACTTEA] == MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */

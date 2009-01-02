@@ -754,7 +754,6 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteFloat(sb, inst->alienInterest);
 		MSG_WriteLong(sb, inst->buildStart);
 
-		MSG_WriteByte(sb, inst->numBatteries);
 		B_SaveBaseSlots(inst->batteries, inst->numBatteries, sb);
 
 		/* store equipments */
