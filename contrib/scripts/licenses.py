@@ -358,6 +358,9 @@ def main():
             print '\n'
     generate('', data, texture_map, map_texture)
 
+    # TODO
+    #scp <license-data> ufosf:/home/groups/u/uf/ufoai/htdocs/licenses
+
     copy('licenses.py', 'licenses/html')
     print 'bye'
 
