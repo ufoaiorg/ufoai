@@ -1765,13 +1765,14 @@ void CL_RemainingTus_f (void)
 	type = Cmd_Argv(1);
 	state = atoi(Cmd_Argv(2));
 
-	if (!Q_strncmp(type, "reload_r", 8)) {
+	if (!Q_strcmp(type, "reload_r")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;
-	} else if (!Q_strncmp(type, "reload_l", 8)) {
+	} else if (!Q_strcmp(type, "reload_l")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_LEFT] = state;
-	} else if (!Q_strncmp(type, "crouch", 6)) {
+	} else if (!Q_strcmp(type, "crouch")) {
 		displayRemainingTus[REMAINING_TU_CROUCH] = state;
 	}
+
 	/* Update "remaining TUs" bar in HUD.*/
 	CL_ActorUpdateCVars();
 }
@@ -1828,25 +1829,25 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* Crouch/stand reservation checkbox. */
 	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
-		MN_ExecuteConfunc("crouch_checkbox_check\n");
+		MN_ExecuteConfunc("crouch_checkbox_check");
 		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."), CL_ReservedTUs(selActor, RES_CROUCH)));
 	} else if (time >= TU_CROUCH) {
-		MN_ExecuteConfunc("crouch_checkbox_clear\n");
+		MN_ExecuteConfunc("crouch_checkbox_clear");
 		Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
 	} else {
-		MN_ExecuteConfunc("crouch_checkbox_disable\n");
+		MN_ExecuteConfunc("crouch_checkbox_disable");
 		Cvar_Set("mn_crouch_reservation_tt", _("Not enough TUs left to reserve for crouching/standing up."));
 	}
 
 	/* Shot reservation button. mn_shot_reservation_tt is the tooltip text */
 	if (CL_ReservedTUs(selActor, RES_SHOT)) {
-		MN_ExecuteConfunc("reserve_shot_check\n");
+		MN_ExecuteConfunc("reserve_shot_check");
 		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."), CL_ReservedTUs(selActor, RES_SHOT)));
 	} else if (CL_CheckFiremodeReservation()) {
-		MN_ExecuteConfunc("reserve_shot_clear\n");
+		MN_ExecuteConfunc("reserve_shot_clear");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
 	} else {
-		MN_ExecuteConfunc("reserve_shot_disable\n");
+		MN_ExecuteConfunc("reserve_shot_disable");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
 	}
 
@@ -1876,7 +1877,7 @@ static void CL_RefreshWeaponButtons (int time)
 					if (!headgear->item.m->fd[headgear_fds_idx][i].time)
 						continue;
 					if (headgear->item.m->fd[headgear_fds_idx][i].time < minheadgeartime)
-					minheadgeartime = headgear->item.m->fd[headgear_fds_idx][i].time;
+						minheadgeartime = headgear->item.m->fd[headgear_fds_idx][i].time;
 				}
 		} else {
 			if (headgear_fds_idx != -1)
@@ -1899,7 +1900,7 @@ static void CL_RefreshWeaponButtons (int time)
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
 		if ((time >= CL_ReservedTUs(selActor, RES_REACTION))
-		&& (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')))
+		 && (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')))
 			SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
@@ -1912,12 +1913,10 @@ static void CL_RefreshWeaponButtons (int time)
 		}
 	}
 
-	/** Reload buttons  @sa CL_ActorUpdateCVars*/
+	/** Reload buttons @sa CL_ActorUpdateCVars */
 	if (weaponr)
 		reloadtime = CL_CalcReloadTime(weaponr->item.t);
-	if (!weaponr || !weaponr->item.m
-		 || !weaponr->item.t->reload
-		 || time < reloadtime) {
+	if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime) {
 		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 		Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand."));
 	} else {
@@ -1927,9 +1926,7 @@ static void CL_RefreshWeaponButtons (int time)
 
 	if (weaponl)
 		reloadtime = CL_CalcReloadTime(weaponl->item.t);
-	if (!weaponl || !weaponl->item.m
-		 || !weaponl->item.t->reload
-		 || time < reloadtime) {
+	if (!weaponl || !weaponl->item.m || !weaponl->item.t->reload || time < reloadtime) {
 		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 		Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand."));
 	} else {
@@ -1963,7 +1960,7 @@ static void CL_RefreshWeaponButtons (int time)
 					if (!weaponr->item.m->fd[weaponr_fds_idx][i].time)
 						continue;
 					if (weaponr->item.m->fd[weaponr_fds_idx][i].time < minweaponrtime)
-					minweaponrtime = weaponr->item.m->fd[weaponr_fds_idx][i].time;
+						minweaponrtime = weaponr->item.m->fd[weaponr_fds_idx][i].time;
 				}
 		} else {
 			if (weaponr_fds_idx != -1)
