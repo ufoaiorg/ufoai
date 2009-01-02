@@ -454,14 +454,17 @@ void MN_FindContainer (menuNode_t* const node)
 	}
 }
 
+static const vec3_t scale = {3.5, 3.5, 3.5};
+static const vec4_t defaultColor = {1, 1, 1, 1};
+static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
+
 /**
  * @brief Draw a container can containe only one iten
  */
 static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightType)
 {
-	const vec3_t scale = {3.5, 3.5, 3.5};
-	vec4_t color = {1, 1, 1, 1};
-	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
+	static vec4_t color = {1, 1, 1, 1};				/**< @todo remove it */
+	static vec4_t colorLoadable = {0.5, 1, 0.5, 1};	/**< @todo remove it */
 	vec2_t pos;
 	vec2_t nodepos;
 
@@ -531,10 +534,6 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	qboolean lastItem = qfalse;	/**< Did we reach the last displayed/visible item? We only count the items after that.*/
 	int rowOffset;
 	int ammoIdx;
-
-	const vec3_t scale = {3.5, 3.5, 3.5};
-	vec4_t color = {1, 1, 1, 1};
-	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	vec2_t nodepos;
 
 	/* Remember the last used scroll settings, so we know if we
@@ -608,7 +607,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 						if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
 						else
-							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
+							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, defaultColor);
 
 						if (node->container->scrollVertical) {
 							/* Draw the item name. */
@@ -637,7 +636,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 									curWidth += tempItem.t->sx * C_UNIT;
 
-									MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
+									MN_DrawItem(node, pos, &tempItem, -1, -1, scale, defaultColor);
 									R_FontDrawString("f_verysmall", ALIGN_LC,
 										pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
 										pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
@@ -682,10 +681,6 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 {
 	/** @todo We really should group similar weapons (using same ammo) and their ammo together. */
 	const invList_t *ic;
-
-	const vec3_t scale = {3.5, 3.5, 3.5};
-	vec4_t color = {1, 1, 1, 1};
-	vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 	vec2_t nodepos;
 
 	MN_GetNodeAbsPos(node, nodepos);
@@ -695,7 +690,7 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 		else
-			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, color);
+			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, defaultColor);
 	}
 }
 
