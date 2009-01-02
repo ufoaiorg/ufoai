@@ -524,8 +524,8 @@ void CP_UFORemoveFromGeoscape (mission_t *mission, qboolean destroyed)
 		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 
 	if (destroyed) {
-		if (mission->ufo->detected)
-			RADAR_NotifyUFORemoved(mission->ufo, destroyed);
+		/* remove UFO from radar and update idx of ufo in radar array */
+		RADAR_NotifyUFORemoved(mission->ufo, destroyed);
 
 		/* Update UFO idx */
 		list = ccs.missions;
