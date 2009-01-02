@@ -25,7 +25,7 @@ import re
 
 # config
 CACHING = True
-ABS_URI = 'http://phidev.org/~dino/ufo/html/'
+ABS_URI = 'http://ufoai.sourceforge.net/licenses/'
 
 HTML = u"""<html>
 <head>
@@ -39,8 +39,8 @@ div {font-size: 10px;}
 
 <body>
 <h1>Licenses in UFO:ai (base/%s)</h1>
-Please note that the information are extracted from the svn tags.<br />
-Warning: the statics/graphs might be wrong since it would be to expensive to get information if a enrty was a directory in the past or not.
+Please note that the information are extracted from the svn tags (svn:copyright, svn:license, svn:source and svn:license).<br />
+Warning: the statics/graphs might be wrong since it would be to expensive to get information if a entry was a directory in the past or not.
 <br />
 State as in revision %i.
 <hr />
@@ -315,6 +315,9 @@ def clean_up():
 def setup():
     # TODO check if all folders are in place
     pass
+    #os.mkdir('licenses/html/')
+    #os.mkdir('licenses/history/')
+    #os.mkdir('licenses/cache/')
 
 
 def kill_suffix(i):
