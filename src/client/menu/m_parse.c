@@ -65,8 +65,7 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
 	"cmd",
 	"call",
-	"*",
-	"&",
+	"set",
 	"if"
 };
 
@@ -155,24 +154,21 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 
 		/* decode action type */
 		for (i = 0; i < EA_NUM_EVENTACTION; i++) {
-			if (i == EA_VAR || i == EA_NODE)
-				continue;
-			if (Q_strcasecmp(*token, ea_strings[i]) != 0)
-				continue;
-			type = i;
-		}
-		if (type == EA_NULL) {
-			if (*token[0] == ea_strings[EA_VAR][0])
-				type = EA_VAR;
-			else if (*token[0] == ea_strings[EA_NODE][0]) {
-				type = EA_NODE;
+			if (Q_strcasecmp(*token, ea_strings[i]) == 0) {
+				type = i;
+				break;
 			}
+		}
+		/* short setter form */
+		if (type == EA_NULL && *token[0] == '*') {
+			type = EA_SET;
 		}
 		if (type == EA_NULL) {
 			for (i = 0; i < EA_SPECIAL_NUM_EVENTACTION; i++) {
-				if (Q_strcasecmp(*token, ea_special_strings[i]) != 0)
-					continue;
-				type = EA_NUM_EVENTACTION + 1 + i;
+				if (Q_strcasecmp(*token, ea_special_strings[i]) == 0) {
+					type = EA_NUM_EVENTACTION + 1 + i;
+					break;
+				}
 			}
 		}
 
@@ -209,7 +205,14 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			mn.curadata += Com_EParseValue(mn.curadata, *token, V_LONGSTRING, 0, 0);
 			break;
 
-		case EA_NODE:
+		case EA_SET:
+			/* if not short syntaxe */
+			if (Q_strcasecmp(*token, ea_strings[EA_SET]) == 0) {
+				*token = COM_EParse(text, errhead, NULL);
+				if (!*token)
+					return NULL;
+			}
+
 			/* get the node name */
 			{
 				char cast[32] = "abstractnode";
@@ -273,10 +276,6 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 					mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 				}
 			}
-			break;
-
-		case EA_VAR:
-			Com_Printf("MN_ParseAction: token \"%s\" ignored, EA_VAR not implemented (node: %s.%s)\n", *token, menuNode->menu->name, menuNode->name);
 			break;
 
 		case EA_CALL:

@@ -66,9 +66,7 @@ static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_
 		/* call another function */
 		MN_ExecuteActions(menu, **(menuAction_t ***) action->data);
 		break;
-	case EA_VAR:
-		break;
-	case EA_NODE:
+	case EA_SET:
 		/* set a property */
 		if (action->data) {
 			menuNode_t *node;
@@ -242,7 +240,7 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 				Cbuf_AddText(MN_GenInjectedString(source, useCmdParam, action->data, qtrue));
 			break;
 
-		case EA_NODE:
+		case EA_SET:
 			/* set a property */
 			if (action->data) {
 				const char* nodeName = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);

@@ -30,12 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum ea_s {
 	EA_NULL,
 	EA_CMD,
-
 	EA_CALL,
-	EA_NODE,
-	EA_VAR,	/**< @todo finish menu var implementation - to reduce the cvar use */
+	EA_SET,
 	EA_IF,
-
 	EA_NUM_EVENTACTION
 } ea_t;
 
