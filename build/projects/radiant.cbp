@@ -296,6 +296,12 @@
 		<Unit filename="../../src/tools/radiant/radiant/mainframe.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/toolbars.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/radiant/radiant/material.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/map.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

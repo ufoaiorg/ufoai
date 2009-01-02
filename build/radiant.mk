@@ -31,6 +31,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/gtkmisc.cpp \
 	$(RADIANT_BASE)/radiant/image.cpp \
 	$(RADIANT_BASE)/radiant/lastused.cpp \
+	$(RADIANT_BASE)/radiant/material.cpp \
 	$(RADIANT_BASE)/radiant/main.cpp \
 	$(RADIANT_BASE)/radiant/mainframe.cpp \
 	$(RADIANT_BASE)/radiant/map.cpp \
@@ -56,6 +57,7 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/radiant/textures.cpp \
 	$(RADIANT_BASE)/radiant/texwindow.cpp \
 	$(RADIANT_BASE)/radiant/timer.cpp \
+	$(RADIANT_BASE)/radiant/toolbars.cpp \
 	$(RADIANT_BASE)/radiant/treemodel.cpp \
 	$(RADIANT_BASE)/radiant/undo.cpp \
 	$(RADIANT_BASE)/radiant/url.cpp \
