@@ -407,15 +407,14 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 	}
 
+	message       = messageStack;
 	skip_messages = EXTRADATA(node).textScroll;
-	screenLines = 0;
-	for (message = messageStack; message; message = message->next) {
-		const int prevScreenLines = screenLines;	/**< Screen lines before R_FontDrawString(...) is executed */
+	while (skip_messages-- != 0)
+		message = message->next;
 
-		if (skip_messages) {
-			skip_messages--;
-			continue;
-		}
+	screenLines = 0;
+	for (; message; message = message->next) {
+		const int prevScreenLines = screenLines;	/**< Screen lines before R_FontDrawString(...) is executed */
 
 		Com_sprintf(text, sizeof(text), "%s%s", message->timestamp, message->text);
 		R_FontDrawString(font, node->textalign, x, y, x, y, width, height, node->u.text.lineHeight, text, EXTRADATA(node).rows, 0, &screenLines, qtrue, node->longlines);
