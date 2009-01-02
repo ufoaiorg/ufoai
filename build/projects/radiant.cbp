@@ -305,9 +305,6 @@
 		<Unit filename="../../src/tools/radiant/radiant/map.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/tools/radiant/radiant/multimon.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="../../src/tools/radiant/radiant/nullmodel.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

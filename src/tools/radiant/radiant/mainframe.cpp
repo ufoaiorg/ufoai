@@ -85,7 +85,6 @@
 #include "gtkmisc.h"
 #include "map.h"
 #include "lastused.h"
-#include "multimon.h"
 #include "plugin.h"
 #include "pluginmanager.h"
 #include "pluginmenu.h"

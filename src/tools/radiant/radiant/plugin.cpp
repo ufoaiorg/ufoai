@@ -59,7 +59,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "texwindow.h"
 #include "mainframe.h"
 #include "lastused.h"
-#include "multimon.h"
 #include "camwindow.h"
 #include "xywindow.h"
 #include "entity.h"
@@ -219,7 +218,6 @@ public:
 		HomePaths_Construct();
 		VFS_Construct();
 		Grid_construct();
-		MultiMon_Construct();
 		MRU_Construct();
 		GLWindow_Construct();
 		Map_Construct();
