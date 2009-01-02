@@ -1,10 +1,6 @@
-/ufo
-/ufoded
-/ufo2map
-/config.status
-/config.log
-/config.h
-/Makefile
-/debug-*
-/release-*
-/gmon.out
+/*.bsp
+/*.bak
+/*autosave*
+/*.tmp
+/*.footsteps
+/*.map.original*
