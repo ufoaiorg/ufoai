@@ -209,6 +209,7 @@ item vhs
 	scale		1.2
 	ammo		30
 	reload		10
+	size		20
 	notonmarket	true
 	is_primary	true
 }
