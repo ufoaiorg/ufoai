@@ -12414,28 +12414,24 @@ msgid "5 sec"
 msgstr "5 秒"
 
 #: client/campaign/cp_time.c:48
-#, fuzzy
 msgid "10 sec"
-msgstr "5 秒"
+msgstr "10 秒"
 
 #: client/campaign/cp_time.c:49
-#, fuzzy
 msgid "1 min"
-msgstr "5 分"
+msgstr "1 分"
 
 #: client/campaign/cp_time.c:50
 msgid "5 mins"
 msgstr "5 分"
 
 #: client/campaign/cp_time.c:51
-#, fuzzy
 msgid "10 mins"
-msgstr "5 分"
+msgstr "10 分"
 
 #: client/campaign/cp_time.c:52
-#, fuzzy
 msgid "20 mins"
-msgstr "5 分"
+msgstr "20 分"
 
 #: client/campaign/cp_time.c:53
 msgid "1 hour"
@@ -12461,51 +12457,51 @@ msgstr "%02i:%02i"
 
 #: client/campaign/cp_time.c:348
 msgid "Jan"
-msgstr ""
+msgstr "1月"
 
 #: client/campaign/cp_time.c:350
 msgid "Feb"
-msgstr ""
+msgstr "2月"
 
 #: client/campaign/cp_time.c:352
 msgid "Mar"
-msgstr ""
+msgstr "3月"
 
 #: client/campaign/cp_time.c:354
 msgid "Apr"
-msgstr ""
+msgstr "4月"
 
 #: client/campaign/cp_time.c:356
 msgid "May"
-msgstr ""
+msgstr "5月"
 
 #: client/campaign/cp_time.c:358
 msgid "Jun"
-msgstr ""
+msgstr "6月"
 
 #: client/campaign/cp_time.c:360
 msgid "Jul"
-msgstr ""
+msgstr "7月"
 
 #: client/campaign/cp_time.c:362
 msgid "Aug"
-msgstr ""
+msgstr "8月"
 
 #: client/campaign/cp_time.c:364
 msgid "Sep"
-msgstr ""
+msgstr "9月"
 
 #: client/campaign/cp_time.c:366
 msgid "Oct"
-msgstr ""
+msgstr "10月"
 
 #: client/campaign/cp_time.c:368
 msgid "Nov"
-msgstr ""
+msgstr "11月"
 
 #: client/campaign/cp_time.c:370
 msgid "Dec"
-msgstr ""
+msgstr "12月"
 
 #: client/campaign/missions/cp_mission_baseattack.c:106
 #, fuzzy, c-format
