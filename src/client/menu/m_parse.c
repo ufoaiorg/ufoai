@@ -215,7 +215,6 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 	menuAction_t *firstAction;
 	menuAction_t *lastAction;
 	menuAction_t *action;
-	menuNode_t *node;
 	qboolean result;
 	int i;
 
@@ -302,22 +301,19 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			break;
 
 		case EA_CALL:
-			/* get the function name */
-			*token = COM_EParse(text, errhead, NULL);
-
-			/* function calls */
-			for (node = mn.menus[mn.numMenus - 1].firstChild; node; node = node->next) {
-				if (!node->behaviour->isFunction)
-					continue;
-				if (Q_strncmp(node->name, *token, sizeof(node->name)) != 0)
-					continue;
-
+			{
+				menuNode_t* callNode = NULL;
+				/* get the function name */
+				*token = COM_EParse(text, errhead, NULL);
+				callNode = MN_GetNode(menuNode->menu, *token);
+				if (!callNode) {
+					Com_Printf("MN_ParseAction: function '%s' not found (%s.%s)\n", *token, menuNode->menu->name, menuNode->name);
+					return NULL;
+				}
 				action->data = mn.curadata;
-				*(menuAction_t ***) mn.curadata = &node->onClick;
+				*(menuAction_t ***) mn.curadata = &callNode->onClick;
 				mn.curadata += ALIGN(sizeof(menuAction_t *));
-
 				lastAction = action;
-				break;
 			}
 			break;
 
