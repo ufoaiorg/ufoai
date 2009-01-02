@@ -462,7 +462,6 @@ void CL_ResetWeaponButtons (void)
 static void SetWeaponButton (int button, weaponButtonState_t state)
 {
 	const weaponButtonState_t currentState = weaponButtonState[button];
-	char cbufText[MAX_VAR];
 	const char const* prefix;
 
 	assert(button < BT_NUM_TYPES);
@@ -480,9 +479,7 @@ static void SetWeaponButton (int button, weaponButtonState_t state)
 	}
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
-	Com_sprintf(cbufText, lengthof(cbufText), "%s%s", prefix, shoot_type_strings[button]);
-
-	MN_ExecuteConfunc(cbufText);
+	MN_ExecuteConfunc("%s%s", prefix, shoot_type_strings[button]);
 	weaponButtonState[button] = state;
 }
 
