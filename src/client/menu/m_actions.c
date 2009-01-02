@@ -154,7 +154,7 @@ static menuNode_t* MN_GetNodeByPath (const char* path)
 	const char* nextName = strstr(path, ".");
 	assert(nextName);
 
-	strncpy(name, path, nextName - path);
+	Q_strncpyz(name, path, nextName - path + 1);
 	nextName++;
 
 	menu = MN_GetMenu(name);
@@ -177,7 +177,7 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 		char cvarName[MAX_VAR];
 		const char* textValue;
 		assert(action->type.param2 == EA_VALUE);
-		strncpy(cvarName, MN_GenInjectedString(source, useCmdParam, action->data, qfalse), MAX_VAR);
+		Q_strncpyz(cvarName, MN_GenInjectedString(source, useCmdParam, action->data, qfalse), MAX_VAR);
 
 		textValue = action->data;
 		textValue += ALIGN(strlen(action->data) + 1);
