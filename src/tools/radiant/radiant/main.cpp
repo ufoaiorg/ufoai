@@ -88,11 +88,10 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 
 static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data) {
 	gboolean in_recursion;
-	gboolean is_fatal;
 	char buf[256];
 
 	in_recursion = (log_level & G_LOG_FLAG_RECURSION) != 0;
-	is_fatal = (log_level & G_LOG_FLAG_FATAL) != 0;
+	const gboolean is_fatal = (log_level & G_LOG_FLAG_FATAL) != 0;
 	log_level = (GLogLevelFlags) (log_level & G_LOG_LEVEL_MASK);
 
 #ifndef DEBUG
@@ -158,21 +157,21 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 			gchar *p = string + 2;
 			guint i;
 
-			i = g_bit_nth_msf (log_level, -1);
+			i = g_bit_nth_msf(log_level, -1);
 			*p = i >> 4;
 			p++;
 			*p = '0' + (i & 0xf);
 			if (*p > '9')
 				*p += 'A' - '9' - 1;
 
-			strcat(buf, string);
+			strncat(buf, string, sizeof(buf));
 		} else
 			strcat(buf, "): ");
 	}
 
-	strcat(buf, message);
+	strncat(buf, message, sizeof(buf));
 	if (is_fatal)
-		strcat(buf, "aborting...\n");
+		strncat(buf, "aborting...\n", sizeof(buf));
 
 	// spam it...
 	globalErrorStream() << buf;
@@ -254,7 +253,7 @@ public:
 		globalErrorStream() << m_buffer.c_str();
 		if (!m_lock.locked()) {
 			ScopedLock lock(m_lock);
-#if defined DEBUG
+#ifdef DEBUG
 			m_buffer << "Break into the debugger?\n";
 			bool handled = gtk_MessageBox(0, m_buffer.c_str(), "Radiant - Runtime Error", eMB_YESNO, eMB_ICONERROR) == eIDNO;
 			m_buffer.clear();

@@ -100,6 +100,9 @@ public:
 	}
 };
 
+/**
+ * @sa MapResource_saveFile
+ */
 void Map_Write(scene::Node& root, GraphTraversalFunc traverse, TokenWriter& writer) {
 	g_count_entities = 0;
 	traverse(root, WriteTokensWalker(writer));

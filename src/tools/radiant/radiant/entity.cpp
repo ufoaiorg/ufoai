@@ -161,7 +161,7 @@ void Entity_connectSelected ()
 		GlobalEntityCreator().connectEntities(GlobalSelectionSystem().penultimateSelected().path(),
 				GlobalSelectionSystem().ultimateSelected().path());
 	} else {
-		globalErrorStream() << "entityConnectSelected: exactly two instances must be selected\n";
+		g_warning("entityConnectSelected: exactly two instances must be selected\n");
 	}
 }
 
@@ -183,7 +183,7 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	const bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 
 	if (!(entityClass->fixedsize || isModel) && !brushesSelected) {
-		globalErrorStream() << "failed to create a group entity - no brushes are selected\n";
+		g_warning("failed to create a group entity - no brushes are selected\n");
 		return;
 	}
 

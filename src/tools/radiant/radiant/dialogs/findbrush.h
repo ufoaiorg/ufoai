@@ -19,4 +19,9 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-void DoFind();
+#ifndef FINDBRUSH_H
+#define FINDBRUSH_H
+
+void FindBrushOrEntity();
+
+#endif

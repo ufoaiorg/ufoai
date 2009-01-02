@@ -83,8 +83,8 @@ static void Map_Snapshot ()
 		Map_SaveFile(snapshotFilename.c_str());
 
 		if (lSize > 50 * 1024 * 1024) { // total size of saves > 50 mb
-			globalWarningStream() << "The snapshot files in " << snapshotsDir.c_str()
-					<< " total more than 50 megabytes. You might consider cleaning up.";
+			g_warning("The snapshot files in %s total more than 50 megabytes. You might consider cleaning up.\n",
+				snapshotsDir.c_str());
 		}
 	} else {
 		StringOutputStream strMsg(256);
@@ -136,7 +136,7 @@ void QE_CheckAutoSave (void)
 
 		if (g_AutoSave_Enabled) {
 			const char* strMsg = g_SnapShots_Enabled ? "Autosaving snapshot..." : "Autosaving...";
-			globalOutputStream() << strMsg << "\n";
+			g_message("%s\n", strMsg);
 			//Sys_Status(strMsg);
 
 			// only snapshot if not working on a default map
@@ -158,8 +158,7 @@ void QE_CheckAutoSave (void)
 				}
 			}
 		} else {
-			globalOutputStream() << "Autosave skipped...\n";
-			//Sys_Status("Autosave skipped...");
+			g_message("Autosave skipped...\n");
 		}
 	}
 }

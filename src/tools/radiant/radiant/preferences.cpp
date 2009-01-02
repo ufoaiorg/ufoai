@@ -53,15 +53,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 void Interface_constructPreferences (PreferencesPage& page)
 {
-#ifdef WIN32
-	page.appendCheckBox("", "Default Text Editor", g_TextEditor_useWin32Editor);
-#else
-	{
-		GtkWidget* use_custom = page.appendCheckBox("Text Editor", "Custom", g_TextEditor_useCustomEditor);
-		GtkWidget* custom_editor = page.appendPathEntry("Text Editor Command", g_TextEditor_editorCommand, false);
-		Widget_connectToggleDependency(custom_editor, use_custom);
-	}
-#endif
 	page.appendCheckBox("Console", "Enable Logging", g_Console_enableLogging);
 	page.appendCheckBox("", "Load last map on open", g_bLoadLastMap);
 }
@@ -616,13 +607,6 @@ typedef FreeCaller1<const StringImportCallback&, GameName_exportString> GameName
 
 static void RegisterPreferences(PreferenceSystem& preferences) {
 	preferences.registerPreference("log console", LogConsoleImportStringCaller(), BoolExportStringCaller(g_Console_enableLogging));
-#ifdef WIN32
-	preferences.registerPreference("UseCustomShaderEditor", BoolImportStringCaller(g_TextEditor_useWin32Editor), BoolExportStringCaller(g_TextEditor_useWin32Editor));
-#else
-	preferences.registerPreference("UseCustomShaderEditor", BoolImportStringCaller(g_TextEditor_useCustomEditor), BoolExportStringCaller(g_TextEditor_useCustomEditor));
-	preferences.registerPreference("CustomShaderEditorCommand", CopiedStringImportStringCaller(g_TextEditor_editorCommand), CopiedStringExportStringCaller(g_TextEditor_editorCommand));
-#endif
-
 	preferences.registerPreference("GameName", GameNameImportStringCaller(), GameNameExportStringCaller());
 }
 

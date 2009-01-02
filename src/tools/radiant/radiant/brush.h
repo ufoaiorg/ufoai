@@ -1297,7 +1297,6 @@ private:
 
 	// state
 	Faces m_faces;
-	// ----
 
 	// cached data compiled from state
 	Array<PointVertex> m_faceCentroidPoints;
@@ -1317,14 +1316,12 @@ private:
 	Array<EdgeFaces> m_edge_faces;
 
 	AABB m_aabb_local;
-	// ----
 
 	Callback m_evaluateTransform;
 	Callback m_boundsChanged;
 
 	mutable bool m_planeChanged; // b-rep evaluation required
 	mutable bool m_transformChanged; // transform evaluation required
-	// ----
 
 public:
 	STRING_CONSTANT(Name, "Brush");
@@ -1333,7 +1330,6 @@ public:
 
 	// static data
 	static Shader* m_state_point;
-	// ----
 
 	static double m_maxWorldCoord;
 
@@ -1731,15 +1727,13 @@ class BrushUndoMemento : public UndoMemento {
 	void removeEmptyFaces() {
 		evaluateBRep();
 
-		{
-			std::size_t i = 0;
-			while (i < m_faces.size()) {
-				if (!m_faces[i]->contributes()) {
-					erase(i);
-					planeChanged();
-				} else {
-					++i;
-				}
+		std::size_t i = 0;
+		while (i < m_faces.size()) {
+			if (!m_faces[i]->contributes()) {
+				erase(i);
+				planeChanged();
+			} else {
+				++i;
 			}
 		}
 	}
@@ -1906,16 +1900,13 @@ private:
 	void removeDuplicateEdges() {
 		// verify face connectivity graph
 		for (std::size_t i = 0; i < m_faces.size(); ++i) {
-			//if(m_faces[i]->contributes())
-			{
-				Winding& winding = m_faces[i]->getWinding();
-				for (std::size_t j = 0; j != winding.numpoints;) {
-					std::size_t next = Winding_next(winding, j);
-					if (winding[j].adjacent == winding[next].adjacent) {
-						winding.erase(winding.begin() + next);
-					} else {
-						++j;
-					}
+			Winding& winding = m_faces[i]->getWinding();
+			for (std::size_t j = 0; j != winding.numpoints;) {
+				std::size_t next = Winding_next(winding, j);
+				if (winding[j].adjacent == winding[next].adjacent) {
+					winding.erase(winding.begin() + next);
+				} else {
+					++j;
 				}
 			}
 		}
@@ -1925,17 +1916,14 @@ private:
 	void verifyConnectivityGraph() {
 		// verify face connectivity graph
 		for (std::size_t i = 0; i < m_faces.size(); ++i) {
-			//if(m_faces[i]->contributes())
-			{
-				Winding& winding = m_faces[i]->getWinding();
-				for (Winding::iterator j = winding.begin(); j != winding.end();) {
-					// remove unidirectional graph edges
-					if ((*j).adjacent == c_brush_maxFaces
-					        || Winding_FindAdjacent(m_faces[(*j).adjacent]->getWinding(), i) == c_brush_maxFaces) {
-						winding.erase(j);
-					} else {
-						++j;
-					}
+			Winding& winding = m_faces[i]->getWinding();
+			for (Winding::iterator j = winding.begin(); j != winding.end();) {
+				// remove unidirectional graph edges
+				if ((*j).adjacent == c_brush_maxFaces
+						|| Winding_FindAdjacent(m_faces[(*j).adjacent]->getWinding(), i) == c_brush_maxFaces) {
+					winding.erase(j);
+				} else {
+					++j;
 				}
 			}
 		}
@@ -1953,31 +1941,28 @@ private:
 
 	/// \brief Constructs the polygon windings for each face of the brush. Also updates the brush bounding-box and face texture-coordinates.
 	bool buildWindings() {
+		m_aabb_local = AABB();
 
-		{
-			m_aabb_local = AABB();
+		for (std::size_t i = 0;  i < m_faces.size(); ++i) {
+			Face& f = *m_faces[i];
 
-			for (std::size_t i = 0;  i < m_faces.size(); ++i) {
-				Face& f = *m_faces[i];
+			if (!plane3_valid(f.plane3()) || !plane_unique(i)) {
+				f.getWinding().resize(0);
+			} else {
+				windingForClipPlane(f.getWinding(), f.plane3());
 
-				if (!plane3_valid(f.plane3()) || !plane_unique(i)) {
-					f.getWinding().resize(0);
-				} else {
-					windingForClipPlane(f.getWinding(), f.plane3());
-
-					// update brush bounds
-					const Winding& winding = f.getWinding();
-					for (Winding::const_iterator i = winding.begin(); i != winding.end(); ++i) {
-						aabb_extend_by_point_safe(m_aabb_local, (*i).vertex);
-					}
-
-					// update texture coordinates
-					f.EmitTextureCoordinates();
+				// update brush bounds
+				const Winding& winding = f.getWinding();
+				for (Winding::const_iterator i = winding.begin(); i != winding.end(); ++i) {
+					aabb_extend_by_point_safe(m_aabb_local, (*i).vertex);
 				}
+
+				// update texture coordinates
+				f.EmitTextureCoordinates();
 			}
 		}
 
-		bool degenerate = !isBounded();
+		const bool degenerate = !isBounded();
 
 		if (!degenerate) {
 			// clean up connectivity information.
@@ -1997,27 +1982,34 @@ private:
 
 class FaceInstance;
 
+typedef SelectionList<FaceInstance> FaceInstancesList;
+
 class FaceInstanceSet {
-	typedef SelectionList<FaceInstance> FaceInstances;
-	FaceInstances m_faceInstances;
 public:
+	FaceInstancesList m_faceInstances;
+
+	/** @brief Insert a new face instance into the selected faces list */
 	void insert(FaceInstance& faceInstance) {
 		m_faceInstances.append(faceInstance);
 	}
+	/** @brief Removes a face instance from the selected faces list */
 	void erase(FaceInstance& faceInstance) {
 		m_faceInstances.erase(faceInstance);
 	}
 
 	template<typename Functor>
 	void foreach(Functor functor) {
-		for (FaceInstances::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
+		for (FaceInstancesList::iterator i = m_faceInstances.begin(); i != m_faceInstances.end(); ++i) {
 			functor(*(*i));
 		}
 	}
 
+	/** @brief Wipes the list of selected faces */
 	bool empty() const {
 		return m_faceInstances.empty();
 	}
+
+	/** @return The last entry of all the selected faces */
 	FaceInstance& last() const {
 		return m_faceInstances.back();
 	}

@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 template<typename Element> class BasicVector3;
 typedef BasicVector3<float> Vector3;
 void Entity_createFromSelection(const char* name, const Vector3& origin);
+void Entity_connectSelected();
 
 void Scene_EntitySetKeyValue_Selected(const char* key, const char* value);
 void Scene_EntitySetClassname_Selected(const char* classname);

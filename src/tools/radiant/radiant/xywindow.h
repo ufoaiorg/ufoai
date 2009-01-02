@@ -88,7 +88,6 @@ public:
 public:
 	SelectionSystemWindowObserver* m_window_observer;
 	XORRectangle m_XORRectangle;
-	WindowPositionTracker m_positionTracker;
 
 	static void captureStates();
 	static void releaseStates();

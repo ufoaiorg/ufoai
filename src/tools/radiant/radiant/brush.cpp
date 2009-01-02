@@ -22,7 +22,7 @@
 #include "brush.h"
 #include "signal/signal.h"
 
-Signal0 g_brushTextureChangedCallbacks;
+static Signal0 g_brushTextureChangedCallbacks;
 
 void Brush_addTextureChangedCallback (const SignalHandler& handler)
 {

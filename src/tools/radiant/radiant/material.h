@@ -1,3 +1,8 @@
+/**
+ * @file material.h
+ * @brief Material generation headers
+ */
+
 /*
  Copyright (C) 1999-2006 Id Software, Inc. and contributors.
  For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -19,38 +24,10 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#if !defined(INCLUDED_SURFACEDIALOG_H)
-#define INCLUDED_SURFACEDIALOG_H
+#ifndef MATERIAL_H
+#define MATERIAL_H
 
-#include <gtk/gtk.h>
-
-void SurfaceInspector_Construct();
-void SurfaceInspector_Destroy();
-void SurfaceInspector_FitTexture(void);
-
-bool SelectedFaces_empty();
-void SelectedFaces_copyTexture();
-void SelectedFaces_pasteTexture();
-
-// the increment we are using for the surface inspector (this is saved in the prefs)
-struct si_globals_t
-{
-	float shift[2];
-	float scale[2];
-	float rotate;
-
-	bool m_bSnapTToGrid;
-
-	si_globals_t() : m_bSnapTToGrid(false) {
-		shift[0] = 8.0f;
-		shift[1] = 8.0f;
-		scale[0] = 0.5f;
-		scale[1] = 0.5f;
-		rotate = 45.0f;
-	}
-};
-extern si_globals_t g_si_globals;
-
-GtkWidget *SurfaceInspector_constructNotebookTab(void);
+void Material_Construct(void);
+void Material_Destroy(void);
 
 #endif

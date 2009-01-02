@@ -70,6 +70,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dialogs/findtextures.h"
 #include "nullmodel.h"
 #include "grid.h"
+#include "material.h"
 
 #include "modulesystem/modulesmap.h"
 #include "modulesystem/singletonmodule.h"
@@ -236,6 +237,7 @@ public:
 		FindTextureDialog_Construct();
 		NullModel_construct();
 		MapRoot_construct();
+		Material_Construct();
 
 		EnginePath_verify();
 		EnginePath_Realise();
@@ -243,6 +245,7 @@ public:
 	~Radiant() {
 		EnginePath_Unrealise();
 
+		Material_Destroy();
 		MapRoot_destroy();
 		NullModel_destroy();
 		FindTextureDialog_Destroy();

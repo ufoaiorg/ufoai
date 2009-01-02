@@ -33,7 +33,7 @@ private:
 			return;
 
 		if (m_imageName) {
-#if 0
+#if 1
 			StringOutputStream name(256);
 			name << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/" << "pics/" << m_imageName << ".tga";
 			m_image = GlobalTexturesCache().capture(name.c_str());

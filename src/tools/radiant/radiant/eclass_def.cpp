@@ -272,10 +272,10 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 
 	TextFileInputStream inputFile(filename);
 	if (inputFile.failed()) {
-		globalErrorStream() << "ScanFile: " << filename << " not found\n";
+		g_warning("ScanFile: '%s' not found\n", filename);
 		return;
 	}
-	globalOutputStream() << "ScanFile: " << filename << "\n";
+	g_message("ScanFile: '%s'\n", filename);
 
 	enum EParserState
 	{
@@ -333,7 +333,7 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 				if (e)
 					collector.insert(e);
 				else
-					globalErrorStream() << "Error parsing: " << debugname << " in " << filename << "\n";
+					g_warning("Error parsing: '%s' in '%s'\n", debugname, filename);
 
 				buffer.clear();
 				state = eParseDefault;

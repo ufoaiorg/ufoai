@@ -1,3 +1,7 @@
+/**
+ * @file texteditor.h
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -19,12 +23,9 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifdef WIN32
-extern bool g_TextEditor_useWin32Editor;
-#else
-#include "string/stringfwd.h"
-extern bool g_TextEditor_useCustomEditor;
-extern CopiedString g_TextEditor_editorCommand;
-#endif
+#ifndef TEXTEDITOR_H
+#define TEXTEDITOR_H
 
-void DoTextEditor(const char* filename, int cursorpos);
+void DoTextEditor(const char* filename, int cursorpos, const char *appendContent);
+
+#endif

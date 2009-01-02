@@ -85,7 +85,7 @@ public:
 	}
 
 	void render(RenderStateFlags state) const {
-
+		/** @todo render the image and/or model */
 	}
 };
 

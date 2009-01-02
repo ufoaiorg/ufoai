@@ -168,6 +168,7 @@ public:
 	int width, height;
 	int originy;
 	int m_nTotalHeight;
+	WindowPositionTracker m_position_tracker;
 
 	CopiedString shader;
 
@@ -217,13 +218,12 @@ public:
 	// The uniform size (in pixels) that textures are resized to when m_resizeTextures is true.
 	int m_uniformTextureSize;
 	// Return the display width of a texture in the texture browser
-	int getTextureWidth(qtexture_t* tex) {
+	int getTextureWidth(const qtexture_t* tex) {
 		int width;
 		if (!g_TextureBrowser_fixedSize) {
 			// Don't use uniform size
 			width = (int)(tex->width * ((float)m_textureScale / 100));
-		} else if
-		(tex->width >= tex->height) {
+		} else if (tex->width >= tex->height) {
 			// Texture is square, or wider than it is tall
 			width = m_uniformTextureSize;
 		} else {
@@ -233,7 +233,7 @@ public:
 		return width;
 	}
 	// Return the display height of a texture in the texture browser
-	int getTextureHeight(qtexture_t* tex) {
+	int getTextureHeight(const qtexture_t* tex) {
 		int height;
 		if (!g_TextureBrowser_fixedSize) {
 			// Don't use uniform size
@@ -343,8 +343,8 @@ static void Texture_StartPos(TextureLayout& layout) {
 static void Texture_NextPos(TextureBrowser& textureBrowser, TextureLayout& layout, qtexture_t* current_texture, int *x, int *y) {
 	qtexture_t* q = current_texture;
 
-	int nWidth = textureBrowser.getTextureWidth(q);
-	int nHeight = textureBrowser.getTextureHeight(q);
+	const int nWidth = textureBrowser.getTextureWidth(q);
+	const int nHeight = textureBrowser.getTextureHeight(q);
 	if (layout.current_x + nWidth > textureBrowser.width - 8 && layout.current_row) { // go to the next row unless the texture is the first on the row
 		layout.current_x = 8;
 		layout.current_y -= layout.current_row + TextureBrowser_fontHeight(textureBrowser) + 4;
@@ -530,6 +530,13 @@ GtkWindow* g_window_textures;
 
 void TextureBrowser_toggleShow() {
 	GtkWidget *widget = GTK_WIDGET(g_window_textures);
+#if 0
+	if (!widget_is_visible(widget)) {
+		// workaround for strange gtk behaviour - modifying the contents of a window while it is not
+		// visible causes the window position to change without sending a configure_event
+		GlobalTextureBrowser().m_position_tracker.sync(GlobalTextureBrowser().m_parent);
+	}
+#endif
 	widget_toggle_visible(widget);
 }
 
@@ -655,14 +662,14 @@ void TextureBrowser_Focus(TextureBrowser& textureBrowser, const char* name) {
 
 		int x, y;
 		Texture_NextPos(textureBrowser, layout, shader->getTexture(), &x, &y);
-		qtexture_t* q = shader->getTexture();
+		const qtexture_t* q = shader->getTexture();
 		if (!q)
 			break;
 
 		// we have found when texdef->name and the shader name match
 		// NOTE: as everywhere else for our comparisons, we are not case sensitive
 		if (shader_equal(name, shader->getName())) {
-			int textureHeight = (int)(q->height * ((float)textureBrowser.m_textureScale / 100))
+			const int textureHeight = (int)(q->height * ((float)textureBrowser.m_textureScale / 100))
 			                    + 2 * TextureBrowser_fontHeight(textureBrowser);
 
 			int originy = TextureBrowser_getOriginY(textureBrowser);
@@ -802,12 +809,12 @@ void Texture_Draw(TextureBrowser& textureBrowser) {
 
 		int x, y;
 		Texture_NextPos(textureBrowser, layout, shader->getTexture(), &x, &y);
-		qtexture_t *q = shader->getTexture();
+		const qtexture_t *q = shader->getTexture();
 		if (!q)
 			break;
 
-		int nWidth = textureBrowser.getTextureWidth(q);
-		int nHeight = textureBrowser.getTextureHeight(q);
+		const int nWidth = textureBrowser.getTextureWidth(q);
+		const int nHeight = textureBrowser.getTextureHeight(q);
 
 		if (y != last_y) {
 			last_y = y;
@@ -1155,6 +1162,15 @@ GtkWidget* TextureBrowser_constructWindow (GtkWindow* toplevel) {
 
 	g_TextureBrowser.m_parent = toplevel;
 
+#ifdef WIN32
+	if (g_multimon_globals.m_bStartOnPrimMon) {
+		WindowPosition pos(g_TextureBrowser.m_position_tracker.getPosition());
+		PositionWindowOnPrimaryScreen(pos);
+		g_TextureBrowser.m_position_tracker.setPosition(pos);
+	}
+#endif
+	g_TextureBrowser.m_position_tracker.connect(toplevel);
+
 	GtkWidget* table = gtk_table_new(3, 3, FALSE);
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
 	gtk_table_attach(GTK_TABLE(table), vbox, 0, 1, 1, 3, GTK_FILL, GTK_FILL, 0, 0);
@@ -1349,27 +1365,28 @@ void TextureClipboard_textureSelected(const char* shader);
 void TextureBrowser_Construct (void)
 {
 	GlobalCommands_insert("RefreshShaders", FreeCaller<RefreshShaders>());
-	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_hideunused_item), Accelerator('U'));
+	GlobalToggles_insert("ShowInUse", FreeCaller<TextureBrowser_ToggleHideUnused>(), ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_hideunused_item), Accelerator('U'));
 	GlobalCommands_insert("ShowAllTextures", FreeCaller<TextureBrowser_showAll>(), Accelerator('A', (GdkModifierType)GDK_CONTROL_MASK));
 	GlobalCommands_insert("ToggleTextures", FreeCaller<TextureBrowser_toggleShow>(), Accelerator('T'));
 	GlobalCommands_insert("ToggleBackground", FreeCaller<WXY_BackgroundSelect>());
-	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_showshaders_item));
-	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize>(), ToggleItem::AddCallbackCaller(g_TextureBrowser.m_fixedsize_item));
+	GlobalToggles_insert("ToggleShowShaders", FreeCaller<TextureBrowser_ToggleShowShaders>(), ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_showshaders_item));
+	GlobalToggles_insert("FixedSize", FreeCaller<TextureBrowser_FixedSize>(), ToggleItem::AddCallbackCaller(GlobalTextureBrowser().m_fixedsize_item));
 
 	GlobalPreferenceSystem().registerPreference("TextureScale",
-		makeSizeStringImportCallback(TextureBrowserSetScaleCaller(g_TextureBrowser)),
-		SizeExportStringCaller(g_TextureBrowser.m_textureScale));
+		makeSizeStringImportCallback(TextureBrowserSetScaleCaller(GlobalTextureBrowser())),
+		SizeExportStringCaller(GlobalTextureBrowser().m_textureScale));
 	GlobalPreferenceSystem().registerPreference("TextureScrollbar",
-		makeBoolStringImportCallback(TextureBrowserImportShowScrollbarCaller(g_TextureBrowser)),
+		makeBoolStringImportCallback(TextureBrowserImportShowScrollbarCaller(GlobalTextureBrowser())),
 		BoolExportStringCaller(GlobalTextureBrowser().m_showTextureScrollbar));
 	GlobalPreferenceSystem().registerPreference("ShowShaders", BoolImportStringCaller(GlobalTextureBrowser().m_showShaders), BoolExportStringCaller(GlobalTextureBrowser().m_showShaders));
 	GlobalPreferenceSystem().registerPreference("FixedSize", BoolImportStringCaller(g_TextureBrowser_fixedSize), BoolExportStringCaller(g_TextureBrowser_fixedSize));
 	GlobalPreferenceSystem().registerPreference("WheelMouseInc", SizeImportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement), SizeExportStringCaller(GlobalTextureBrowser().m_mouseWheelScrollIncrement));
 	GlobalPreferenceSystem().registerPreference("SI_Colors0", Vector3ImportStringCaller(GlobalTextureBrowser().color_textureback), Vector3ExportStringCaller(GlobalTextureBrowser().color_textureback));
+	GlobalPreferenceSystem().registerPreference("TextureWnd", WindowPositionTrackerImportStringCaller(GlobalTextureBrowser().m_position_tracker), WindowPositionTrackerExportStringCaller(GlobalTextureBrowser().m_position_tracker));
 
-	g_TextureBrowser.shader = texdef_name_default();
+	GlobalTextureBrowser().shader = texdef_name_default();
 
-	Textures_setModeChangedNotify(ReferenceCaller<TextureBrowser, TextureBrowser_queueDraw>(g_TextureBrowser));
+	Textures_setModeChangedNotify(ReferenceCaller<TextureBrowser, TextureBrowser_queueDraw>(GlobalTextureBrowser()));
 
 	TextureBrowser_registerPreferencesPage();
 

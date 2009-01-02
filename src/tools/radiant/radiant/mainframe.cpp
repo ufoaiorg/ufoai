@@ -102,6 +102,7 @@
 #include "windowobservers.h"
 #include "renderstate.h"
 #include "referencecache.h"
+#include "toolbars.h"
 
 struct layout_globals_t
 {
@@ -1484,6 +1485,8 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 		create_menu_item_with_mnemonic(menu, "Texture Browser", "ToggleTextures");
 	}
 	create_menu_item_with_mnemonic(menu, "Toggle Sidebar", "ToggleSidebar");
+	create_menu_item_with_mnemonic(menu, "Toggle EntityInspector", "ToggleEntityInspector");
+	create_menu_item_with_mnemonic(menu, "Toggle SurfaceInspector", "ToggleSurfaceInspector");
 
 	menu_separator(menu);
 	{
@@ -1783,152 +1786,6 @@ void register_shortcuts (void)
 	SelectByType_registerShortcuts();
 }
 
-static void File_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_button(toolbar, "Open an existing map (CTRL + O)", "file_open.bmp", "OpenMap");
-	toolbar_append_button(toolbar, "Save the active map (CTRL + S)", "file_save.bmp", "SaveMap");
-}
-
-static void UndoRedo_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_button(toolbar, "Undo (CTRL + Z)", "undo.bmp", "Undo");
-	toolbar_append_button(toolbar, "Redo (CTRL + Y)", "redo.bmp", "Redo");
-}
-
-static void RotateFlip_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_button(toolbar, "x-axis Flip", "brush_flipx.bmp", "MirrorSelectionX");
-	toolbar_append_button(toolbar, "x-axis Rotate", "brush_rotatex.bmp", "RotateSelectionX");
-	toolbar_append_button(toolbar, "y-axis Flip", "brush_flipy.bmp", "MirrorSelectionY");
-	toolbar_append_button(toolbar, "y-axis Rotate", "brush_rotatey.bmp", "RotateSelectionY");
-	toolbar_append_button(toolbar, "z-axis Flip", "brush_flipz.bmp", "MirrorSelectionZ");
-	toolbar_append_button(toolbar, "z-axis Rotate", "brush_rotatez.bmp", "RotateSelectionZ");
-}
-
-static void Select_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_button(toolbar, "Select touching", "selection_selecttouching.bmp", "SelectTouching");
-	toolbar_append_button(toolbar, "Select inside", "selection_selectinside.bmp", "SelectInside");
-	toolbar_append_button(toolbar, "Select whole entity", "selection_selectentities.bmp", "ExpandSelectionToEntities");
-}
-
-static void CSG_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_button(toolbar, "CSG Subtract (SHIFT + U)", "selection_csgsubtract.bmp", "CSGSubtract");
-	toolbar_append_button(toolbar, "CSG Merge (CTRL + U)", "selection_csgmerge.bmp", "CSGMerge");
-	toolbar_append_button(toolbar, "Hollow", "selection_makehollow.bmp", "CSGHollow");
-}
-
-static void ComponentModes_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_toggle_button(toolbar, "Select Vertices (V)", "modify_vertices.bmp", "DragVertices");
-	toolbar_append_toggle_button(toolbar, "Select Edges (E)", "modify_edges.bmp", "DragEdges");
-	toolbar_append_toggle_button(toolbar, "Select Faces (F)", "modify_faces.bmp", "DragFaces");
-}
-
-static void Clipper_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_toggle_button(toolbar, "Clipper (X)", "view_clipper.bmp", "ToggleClipper");
-}
-
-static void Filters_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_toggle_button(toolbar, "Filter nodraw", "filter_nodraw.bmp", "FilterNodraw");
-	toolbar_append_toggle_button(toolbar, "Filter actorclip", "filter_actorclip.bmp", "FilterActorClips");
-	toolbar_append_toggle_button(toolbar, "Filter weaponclip", "filter_weaponclip.bmp", "FilterWeaponClips");
-}
-
-static void XYWnd_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_button(toolbar, "Change views", "view_change.bmp", "NextView");
-}
-
-static void Manipulators_constructToolbar (GtkToolbar* toolbar)
-{
-	toolbar_append_toggle_button(toolbar, "Translate (W)", "select_mousetranslate.bmp", "MouseTranslate");
-	toolbar_append_toggle_button(toolbar, "Rotate (R)", "select_mouserotate.bmp", "MouseRotate");
-	toolbar_append_toggle_button(toolbar, "Scale", "select_mousescale.bmp", "MouseScale");
-	toolbar_append_toggle_button(toolbar, "Resize (Q)", "select_mouseresize.bmp", "MouseDrag");
-
-	Clipper_constructToolbar(toolbar);
-}
-
-static GtkToolbar* create_main_toolbar_horizontal (MainFrame::EViewStyle style)
-{
-	GtkToolbar* toolbar = GTK_TOOLBAR(gtk_toolbar_new());
-	gtk_toolbar_set_show_arrow(toolbar, TRUE);
-	gtk_toolbar_set_orientation(toolbar, GTK_ORIENTATION_HORIZONTAL);
-	gtk_toolbar_set_style(toolbar, GTK_TOOLBAR_ICONS);
-
-	gtk_widget_show(GTK_WIDGET(toolbar));
-
-	File_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-
-	UndoRedo_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-
-	RotateFlip_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	Select_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	ComponentModes_constructToolbar(toolbar);
-
-	if (style == MainFrame::eRegular) {
-		gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-		XYWnd_constructToolbar(toolbar);
-	}
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	Filters_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-	toolbar_append_button(toolbar, "Refresh Models", "refresh_models.bmp", "RefreshReferences");
-	toolbar_append_button(toolbar, "Background image", "background.bmp", "ToggleBackground");
-
-	return toolbar;
-}
-
-static GtkToolbar* create_main_toolbar_vertical (MainFrame::EViewStyle style)
-{
-	GtkToolbar* toolbar = GTK_TOOLBAR(gtk_toolbar_new());
-	gtk_toolbar_set_show_arrow(toolbar, TRUE);
-	gtk_toolbar_set_orientation(toolbar, GTK_ORIENTATION_VERTICAL);
-	gtk_toolbar_set_style(toolbar, GTK_TOOLBAR_ICONS);
-
-	gtk_widget_show(GTK_WIDGET(toolbar));
-
-	CamWnd_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	Manipulators_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
-
-	CSG_constructToolbar(toolbar);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	toolbar_append_toggle_button(toolbar, "Texture Lock (SHIFT +T)", "texture_lock.bmp", "TogTexLock");
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	if (style != MainFrame::eRegular) {
-		toolbar_append_button(toolbar, "Texture Browser (T)", "texture_browser.bmp", "ToggleTextures");
-	}
-
-	return toolbar;
-}
-
 static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status])
 {
 	GtkTable* table = GTK_TABLE(gtk_table_new(1, c_count_status + 1, FALSE));
@@ -2051,11 +1908,6 @@ void MainFrame::SetActiveXY (XYWnd* p)
 		m_pActiveXY->SetActive(true);
 
 }
-
-static WindowPositionTracker g_posCamWnd;
-static WindowPositionTracker g_posXYWnd;
-static WindowPositionTracker g_posXZWnd;
-static WindowPositionTracker g_posYZWnd;
 
 static gint mainframe_delete (GtkWidget *widget, GdkEvent *event, gpointer data)
 {
@@ -2245,7 +2097,7 @@ void MainFrame::Create (void)
 		window_connect_focus_in_clear_focus_widget(g_window_textures);
 		GtkWidget *textureBox = gtk_hbox_new(FALSE, 0);
 		gtk_container_add(GTK_CONTAINER(g_window_textures), GTK_WIDGET(textureBox));
-		GtkWidget *table = TextureBrowser_constructWindow(window);
+		GtkWidget *table = TextureBrowser_constructWindow(g_window_textures);
 		gtk_box_pack_start(GTK_BOX(textureBox), GTK_WIDGET(table), TRUE, TRUE, 2);
 		gtk_widget_show_all(textureBox);
 
@@ -2461,7 +2313,7 @@ void MainFrame_Construct (void)
 	GlobalCommands_insert("ArbitraryRotation", FreeCaller<DoRotateDlg> ());
 	GlobalCommands_insert("ArbitraryScale", FreeCaller<DoScaleDlg> ());
 
-	GlobalCommands_insert("FindBrush", FreeCaller<DoFind> ());
+	GlobalCommands_insert("FindBrush", FreeCaller<FindBrushOrEntity> ());
 
 	GlobalCommands_insert("ToolsCheckErrors", FreeCaller<ToolsCheckErrors> ());
 	GlobalCommands_insert("ToolsCompile", FreeCaller<ToolsCompile> ());
@@ -2556,15 +2408,6 @@ void MainFrame_Construct (void)
 			IntExportStringCaller(g_layout_globals.m_position.w));
 	GlobalPreferenceSystem().registerPreference("Height", IntImportStringCaller(g_layout_globals.m_position.h),
 			IntExportStringCaller(g_layout_globals.m_position.h));
-
-	GlobalPreferenceSystem().registerPreference("CamWnd", WindowPositionTrackerImportStringCaller(g_posCamWnd),
-			WindowPositionTrackerExportStringCaller(g_posCamWnd));
-	GlobalPreferenceSystem().registerPreference("XYWnd", WindowPositionTrackerImportStringCaller(g_posXYWnd),
-			WindowPositionTrackerExportStringCaller(g_posXYWnd));
-	GlobalPreferenceSystem().registerPreference("YZWnd", WindowPositionTrackerImportStringCaller(g_posYZWnd),
-			WindowPositionTrackerExportStringCaller(g_posYZWnd));
-	GlobalPreferenceSystem().registerPreference("XZWnd", WindowPositionTrackerImportStringCaller(g_posXZWnd),
-			WindowPositionTrackerExportStringCaller(g_posXZWnd));
 
 	{
 		/// @todo this should not be used - radiant is installed in the ufo dir

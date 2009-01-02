@@ -22,7 +22,7 @@
 
 static void Sidebar_constructEntities (GtkWidget *notebook)
 {
-	GtkWidget *label = gtk_label_new("Entities");
+	GtkWidget *label = gtk_label_new_with_mnemonic("_Entities");
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
@@ -45,7 +45,7 @@ static void Sidebar_constructEntities (GtkWidget *notebook)
 
 static void Sidebar_constructSurfaces (GtkWidget *notebook)
 {
-	GtkWidget *label = gtk_label_new("Surfaces");
+	GtkWidget *label = gtk_label_new_with_mnemonic("_Surfaces");
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
@@ -107,26 +107,28 @@ void ToggleSidebar (void)
 	widget_toggle_visible(notebook);
 }
 
-static void SidebarButtonToggle (GtkWidget* widget, gpointer data)
+void ToggleSurfaceInspector (void)
 {
-	ToggleSidebar();
+	if (!widget_is_visible(GTK_WIDGET(notebook)))
+		widget_set_visible(GTK_WIDGET(notebook), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 1);
+}
+
+void ToggleEntityInspector (void)
+{
+	if (!widget_is_visible(GTK_WIDGET(notebook)))
+		widget_set_visible(GTK_WIDGET(notebook), TRUE);
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 }
 
 GtkWidget *Sidebar_construct (void)
 {
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
-	GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
-	GtkWidget *button = gtk_button_new();
-	gtk_button_set_image(GTK_BUTTON(button), image);
-	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(SidebarButtonToggle), 0);
-	widget_set_size(GTK_WIDGET(button), 20, 20);
-
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
-
 	notebook = gtk_notebook_new();
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(notebook), TRUE, TRUE, 0);
 
+	/* if you change the order here - make sure to also change the toggle functions tab page indices */
 	Sidebar_constructEntities(notebook);
 	Sidebar_constructSurfaces(notebook);
 	Sidebar_constructMapInfo(notebook);
@@ -134,7 +136,9 @@ GtkWidget *Sidebar_construct (void)
 
 	gtk_widget_show_all(vbox);
 
-	GlobalCommands_insert("ToggleSidebar", FreeCaller<ToggleSidebar> (), Accelerator('S'));
+	GlobalCommands_insert("ToggleSidebar", FreeCaller<ToggleSidebar> (), Accelerator('B'));
+	GlobalCommands_insert("ToggleSurfaceInspector", FreeCaller<ToggleSurfaceInspector> (), Accelerator('S'));
+	GlobalCommands_insert("ToggleEntityInspector", FreeCaller<ToggleEntityInspector> (), Accelerator('E'));
 
 	return vbox;
 }

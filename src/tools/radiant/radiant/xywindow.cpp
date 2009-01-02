@@ -67,6 +67,7 @@
 #include "preferences.h"
 #include "commands.h"
 #include "grid.h"
+#include "sidebar/sidebar.h"
 #include "windowobservers.h"
 
 void LoadTextureRGBA (qtexture_t* q, unsigned char* pPixels, int nWidth, int nHeight);
@@ -1078,6 +1079,10 @@ void XYWnd::NewBrushDrag (int x, int y)
 	Scene_BrushResize_Selected(GlobalSceneGraph(), aabb_for_minmax(mins, maxs), NewBrushDragGetTexture());
 }
 
+/**
+ * @brief Callback for entity selection in the drop down menu
+ * @sa EntityClassMenu_addItem
+ */
 static void entitycreate_activated (GtkWidget* item)
 {
 	scene::Node* world_node = Map_FindWorldspawn(g_map);
@@ -1091,10 +1096,26 @@ static void entitycreate_activated (GtkWidget* item)
 	}
 }
 
+/**
+ * @brief Adds an entity name to the entity drop down menu
+ * with @c entitycreate_activated as callback
+ * @sa entitycreate_activated
+ */
 static void EntityClassMenu_addItem (GtkMenu* menu, const char* name)
 {
 	GtkMenuItem* item = GTK_MENU_ITEM(gtk_menu_item_new_with_label(name));
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(entitycreate_activated), item);
+	gtk_widget_show(GTK_WIDGET(item));
+	menu_add_item(menu, item);
+}
+
+/**
+ * @brief Adds a context sensitive action to the entity drop down menu
+ */
+static void EntityClassMenu_addAction (GtkMenu* menu, const char* name, void (*callback)(gpointer data))
+{
+	GtkMenuItem* item = GTK_MENU_ITEM(gtk_menu_item_new_with_label(name));
+	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(callback), item);
 	gtk_widget_show(GTK_WIDGET(item));
 	menu_add_item(menu, item);
 }
@@ -1164,11 +1185,19 @@ class EntityClassMenuInserter: public EntityClassVisitor
 
 			EntityClassMenu_addItem(m_stack.back().first, name);
 		}
-	};
+};
 
-			/**
-			 * @brief Context menu for the right click in the views
-			 */
+static void Entity_connectSelectedCallback (void *data) {
+	Entity_connectSelected();
+}
+
+static void Texture_FitFace (void *data) {
+	SurfaceInspector_FitTexture();
+}
+
+/**
+ * @brief Context menu for the right click in the views
+ */
 void XYWnd::OnContextMenu (void)
 {
 	if (g_xywindow_globals.m_bRightClick == false)
@@ -1180,6 +1209,18 @@ void XYWnd::OnContextMenu (void)
 		EntityClassMenuInserter inserter(menu);
 		GlobalEntityClassManager().forEach(inserter);
 	}
+
+	/** @todo seperator to split entities and actions */
+
+	if (GlobalSelectionSystem().countSelected() > 0) {
+		if (GlobalSelectionSystem().countSelected() == 2) {
+			EntityClassMenu_addAction(m_mnuDrop, "Connect", Entity_connectSelectedCallback);
+		}
+		EntityClassMenu_addAction(m_mnuDrop, "Fit Face", Texture_FitFace);
+	}
+
+	/** @todo remove connection if already connected */
+	/** @todo group and ungroup */
 
 	gtk_menu_popup(m_mnuDrop, 0, 0, 0, 0, 1, GDK_CURRENT_TIME);
 }
@@ -1268,7 +1309,9 @@ void XYWnd::Zoom_End (void)
 	g_signal_handler_disconnect(G_OBJECT(m_gl_widget), m_zoom_focusOut);
 }
 
-// makes sure the selected brush or camera is in view
+/**
+ * @brief makes sure the selected brush or camera is in view
+ */
 void XYWnd::PositionView (const Vector3& position)
 {
 	const int nDim1 = (m_viewType == YZ) ? 1 : 0;
@@ -1302,6 +1345,13 @@ void XYWnd::mouseDown (const WindowVector& position, ButtonIdentifier button, Mo
 	XY_MouseDown(static_cast<int> (position.x()), static_cast<int> (position.y()), buttons_for_button_and_modifiers(
 			button, modifiers));
 }
+
+/**
+ * @brief Mouse button actions
+ * @param[in] x X coordinate of the mouse cursor
+ * @param[in] y Y coordinate of the mouse cursor
+ * @param[in] buttons Currently pressed buttons mask
+ */
 void XYWnd::XY_MouseDown (int x, int y, unsigned int buttons)
 {
 	if (buttons == Move_buttons()) {

@@ -71,16 +71,16 @@ void MapChanged() {
 static EntityCreator* g_entityCreator = 0;
 
 bool MapResource_loadFile(const MapFormat& format, scene::Node& root, const char* filename) {
-	globalOutputStream() << "Open file " << filename << " for read...";
+	g_message("Open file '%s' for read...\n", filename);
 	TextFileInputStream file(filename);
 	if (!file.failed()) {
-		globalOutputStream() << "success\n";
+		g_message("success\n");
 		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename), "Loading Map");
 		ASSERT_NOTNULL(g_entityCreator);
 		format.readGraph(root, file, *g_entityCreator);
 		return true;
 	} else {
-		globalErrorStream() << "failure\n";
+		g_warning("failure\n");
 		return false;
 	}
 }
@@ -94,24 +94,27 @@ NodeSmartReference MapResource_load(const MapFormat& format, const char* path, c
 	if (g_path_is_absolute(fullpath.c_str())) {
 		MapResource_loadFile(format, root, fullpath.c_str());
 	} else {
-		globalErrorStream() << "map path is not fully qualified: " << makeQuoted(fullpath.c_str()) << "\n";
+		g_warning("map path is not fully qualified: '%s'\n", fullpath.c_str());
 	}
 
 	return root;
 }
 
+/**
+ * @sa Map_Write
+ */
 bool MapResource_saveFile(const MapFormat& format, scene::Node& root, GraphTraversalFunc traverse, const char* filename) {
 	//ASSERT_MESSAGE(g_path_is_absolute(filename), "MapResource_saveFile: path is not absolute: " << makeQuoted(filename));
-	globalOutputStream() << "Open file " << filename << " for write...";
+	g_message("Open file '%s' for write...\n", filename);
 	TextFileOutputStream file(filename);
 	if (!file.failed()) {
-		globalOutputStream() << "success\n";
+		g_message("success\n");
 		ScopeDisableScreenUpdates disableScreenUpdates(path_get_filename_start(filename), "Saving Map");
 		format.writeGraph(root, traverse, file);
 		return true;
 	}
 
-	globalErrorStream() << "failure\n";
+	g_warning("failure\n");
 	return false;
 }
 
@@ -124,7 +127,7 @@ static bool file_saveBackup(const char* path) {
 			&& file_move(path, backup.c_str()); // rename current to backup
 	}
 
-	globalErrorStream() << "map path is not writeable: " << makeQuoted(path) << "\n";
+	g_warning("map path is not writeable: '%s'\n", path);
 	return false;
 }
 
@@ -137,11 +140,11 @@ bool MapResource_save(const MapFormat& format, scene::Node& root, const char* pa
 			return MapResource_saveFile(format, root, Map_Traverse, fullpath.c_str());
 		}
 
-		globalErrorStream() << "failed to save a backup map file: " << makeQuoted(fullpath.c_str()) << "\n";
+		g_warning("failed to save a backup map file: '%s'\n", fullpath.c_str());
 		return false;
 	}
 
-	globalErrorStream() << "map path is not fully qualified: " << makeQuoted(fullpath.c_str()) << "\n";
+	g_warning("map path is not fully qualified: '%s'\n", fullpath.c_str());
 	return false;
 }
 
@@ -172,7 +175,7 @@ static ModelLoader* ModelLoader_forType(const char* type) {
 		if (table != 0) {
 			return table;
 		} else {
-			globalErrorStream() << "ERROR: Model type incorrectly registered: \"" << moduleName << "\"\n";
+			g_warning("ERROR: Model type incorrectly registered: '%s'\n", moduleName);
 			return &g_NullModelLoader;
 		}
 	}
@@ -187,10 +190,10 @@ NodeSmartReference ModelResource_load(ModelLoader* loader, const char* name) {
 	{
 		AutoPtr<ArchiveFile> file(GlobalFileSystem().openFile(name));
 		if (file) {
-			globalOutputStream() << "Loaded Model: \"" << name << "\"\n";
+			g_message("Loaded Model: '%s'\n", name);
 			model = loader->loadModel(*file);
 		} else {
-			globalErrorStream() << "Model load failed: \"" << name << "\"\n";
+			g_warning("Model load failed: '%s'\n", name);
 		}
 	}
 
@@ -278,12 +281,12 @@ NodeSmartReference Model_load(ModelLoader* loader, const char* path, const char*
 			if (format != 0) {
 				return MapResource_load(*format, path, name);
 			} else {
-				globalErrorStream() << "ERROR: Map type incorrectly registered: \"" << moduleName << "\"\n";
+				g_warning("ERROR: Map type incorrectly registered: '%s'\n", moduleName);
 				return g_nullModel;
 			}
 		} else {
 			if (string_not_empty(type)) {
-				globalErrorStream() << "Model type not supported: \"" << name << "\"\n";
+				g_warning("Model type not supported: '%s'\n", name);
 			}
 			return g_nullModel;
 		}

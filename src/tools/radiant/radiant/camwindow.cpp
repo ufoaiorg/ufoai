@@ -1022,13 +1022,22 @@ void CamWnd_Move_Discrete_Enable (CamWnd& camwnd)
 	command_connect_accelerator("CameraForward");
 	command_connect_accelerator("CameraBack");
 	command_connect_accelerator("CameraLeft");
+	command_connect_accelerator("CameraStrafeLeft");
 	command_connect_accelerator("CameraRight");
 	command_connect_accelerator("CameraStrafeRight");
-	command_connect_accelerator("CameraStrafeLeft");
 	command_connect_accelerator("CameraUp");
 	command_connect_accelerator("CameraDown");
 	command_connect_accelerator("CameraAngleUp");
 	command_connect_accelerator("CameraAngleDown");
+#if 0
+	command_connect_accelerator("CameraFreeMoveForward");
+	command_connect_accelerator("CameraFreeMoveBack");
+	command_connect_accelerator("CameraFreeMoveLeft");
+	command_connect_accelerator("CameraFreeMoveRight");
+	command_connect_accelerator("CameraFreeMoveUp");
+	command_connect_accelerator("CameraFreeMoveDown");
+	command_connect_accelerator("ToggleCamera");
+#endif
 }
 
 void CamWnd_Move_Discrete_Disable (CamWnd& camwnd)

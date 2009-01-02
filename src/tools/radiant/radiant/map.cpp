@@ -376,8 +376,8 @@ void Map_SetWorldspawn(Map& map, scene::Node* node) {
 float g_MaxWorldCoord = 64 * 1024;
 float g_MinWorldCoord = -64 * 1024;
 
-void AddRegionBrushes (void);
-void RemoveRegionBrushes (void);
+static void AddRegionBrushes (void);
+static void RemoveRegionBrushes (void);
 
 
 /*
@@ -682,7 +682,7 @@ public:
 	}
 	~ScopeTimer (void) {
 		double elapsed_time = m_timer.elapsed_msec() / 1000.f;
-		globalOutputStream() << m_message << " timer: " << FloatFormat(elapsed_time, 5, 2) << " second(s) elapsed\n";
+		g_message("%s timer: %f second(s) elapsed\n", m_message, elapsed_time);
 	}
 };
 
@@ -692,7 +692,7 @@ public:
  * @note The file must be checked for existence and readability already
  */
 void Map_LoadFile (const char *filename) {
-	globalOutputStream() << "Loading map from " << filename << "\n";
+	g_message("Loading map from %s\n", filename);
 	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
 
 	g_map.m_name = filename;
@@ -807,7 +807,7 @@ public:
 	}
 };
 
-bool Node_selectedDescendant(scene::Node& node) {
+static bool Node_selectedDescendant(scene::Node& node) {
 	bool selected;
 	Node_traverseSubgraph(node, SelectedDescendantWalker(selected));
 	return selected;
@@ -893,7 +893,7 @@ void Map_Traverse_Region(scene::Node& root, const scene::Traversable::Walker& wa
 bool Map_SaveRegion(const char *filename) {
 	AddRegionBrushes();
 
-	bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Region, filename);
+	const bool success = MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse_Region, filename);
 
 	RemoveRegionBrushes();
 
@@ -972,12 +972,12 @@ extern void ConstructRegionBrushes(scene::Node* brushes[6], const Vector3& regio
 REGION
 ===========================================================
 */
-bool	region_active;
+static bool region_active;
 Vector3	region_mins(g_MinWorldCoord, g_MinWorldCoord, g_MinWorldCoord);
 Vector3	region_maxs(g_MaxWorldCoord, g_MaxWorldCoord, g_MaxWorldCoord);
 
-scene::Node* region_sides[6];
-scene::Node* region_startpoint = 0;
+static scene::Node* region_sides[6];
+static scene::Node* region_startpoint = 0;
 
 /**
  * @brief a regioned map will have temp walls put up at the region boundary
@@ -986,7 +986,7 @@ scene::Node* region_startpoint = 0;
  * with the new implementation we should be able to append them in a temporary manner
  * to the data we pass to the map module
  */
-void AddRegionBrushes (void)
+static void AddRegionBrushes (void)
 {
 	int		i;
 
@@ -1002,7 +1002,7 @@ void AddRegionBrushes (void)
 	Node_getTraversable(GlobalSceneGraph().root())->insert(NodeSmartReference(*region_startpoint));
 }
 
-void RemoveRegionBrushes (void)
+static void RemoveRegionBrushes (void)
 {
 	for (std::size_t i = 0; i < 6; i++) {
 		Node_getTraversable(*Map_GetWorldspawn(g_map))->erase(*region_sides[i]);
@@ -1010,7 +1010,7 @@ void RemoveRegionBrushes (void)
 	Node_getTraversable(GlobalSceneGraph().root())->erase(*region_startpoint);
 }
 
-inline void exclude_node(scene::Node& node, bool exclude)
+static inline void exclude_node(scene::Node& node, bool exclude)
 {
 	if (exclude)
 		node.enable(scene::Node::eExcluded);

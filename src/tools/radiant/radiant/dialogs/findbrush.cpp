@@ -72,6 +72,11 @@ public:
 	}
 };
 
+/**
+ * @brief Get the brush and ent number of the last selected world item
+ * @param[out] ent The amount of entities
+ * @param[out] brush The amount of brushes
+ */
 static void GetSelectionIndex (int *ent, int *brush) {
 	std::size_t count_brush = 0;
 	std::size_t count_entity = 0;
@@ -85,7 +90,8 @@ static void GetSelectionIndex (int *ent, int *brush) {
 	*ent = int(count_entity);
 }
 
-void DoFind (void) {
+void FindBrushOrEntity (void)
+{
 	ModalDialog dialog;
 	GtkEntry* entity;
 	GtkEntry* brush;
@@ -102,14 +108,14 @@ void DoFind (void) {
 			GtkTable* table = create_dialog_table(2, 2, 4, 4);
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(table), TRUE, TRUE, 0);
 			{
-				GtkWidget* label = gtk_label_new ("Entity number");
+				GtkWidget* label = gtk_label_new("Entity number");
 				gtk_widget_show (label);
 				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 								(GtkAttachOptions) (0),
 								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkWidget* label = gtk_label_new ("Brush number");
+				GtkWidget* label = gtk_label_new("Brush number");
 				gtk_widget_show (label);
 				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 								(GtkAttachOptions) (0),
@@ -155,16 +161,16 @@ void DoFind (void) {
 	char buf[16];
 	int ent, br;
 
-	GetSelectionIndex (&ent, &br);
-	sprintf (buf, "%i", ent);
+	GetSelectionIndex(&ent, &br);
+	sprintf(buf, "%i", ent);
 	gtk_entry_set_text(entity, buf);
-	sprintf (buf, "%i", br);
+	sprintf(buf, "%i", br);
 	gtk_entry_set_text(brush, buf);
 
 	if (modal_dialog_show(window, dialog) == eIDOK) {
 		const char *entstr = gtk_entry_get_text(entity);
 		const char *brushstr = gtk_entry_get_text(brush);
-		SelectBrush (atoi(entstr), atoi(brushstr), true);
+		SelectBrush(atoi(entstr), atoi(brushstr), true);
 	}
 
 	gtk_widget_destroy(GTK_WIDGET(window));

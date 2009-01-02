@@ -96,7 +96,9 @@ static void entitylist_treeviewcolumn_celldatafunc (GtkTreeViewColumn* column, G
 	gtk_tree_model_get_pointer(model, iter, 1, &instance);
 	if (node != 0) {
 		gtk_cell_renderer_set_fixed_size(renderer, -1, -1);
-		char* name = const_cast<char*> (node_get_name(*node));
+		const char* name = const_cast<char*> (node_get_name(*node));
+		if (name[0] == '\0')
+			name = "unnamed.map";
 		g_object_set(G_OBJECT(renderer), "text", name, "visible", TRUE, (char const*) 0);
 
 		//globalOutputStream() << "rendering cell " << makeQuoted(name) << "\n";
