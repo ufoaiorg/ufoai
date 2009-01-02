@@ -359,6 +359,7 @@ static void CL_ActorGlobalCVars (void)
 			const character_t *chr = CL_GetActorChr(le);
 
 			/* the model name is the first entry in model_t */
+			/** @todo fix this once model_t is known in the client */
 			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
 			Cvar_SetValue(va("mn_hp%i", i), le->HP);
 			Cvar_SetValue(va("mn_hpmax%i", i), le->maxHP);
