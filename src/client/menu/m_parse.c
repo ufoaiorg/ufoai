@@ -123,6 +123,7 @@ static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, con
 static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const const char **token, const char *errhead)
 {
 	char cast[32] = "abstractnode";
+	char path[MAX_VAR] = "\0";
 	const char *nodeName = *token + 1;
 	nodeBehaviour_t *castedBehaviour;
 	const value_t *val;
@@ -141,8 +142,17 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		return qtrue;
 	}
 
-	action->type.param1 = EA_THISMENUNODENAMEPROPERTY;
-	action->type.param2 = EA_RAWVALUE;
+	/* copy the menu name, and move to the node name */
+	if (Q_strncmp(nodeName, "menu:", 5) == 0) {
+		const char *menuName = nodeName + 5;
+		nodeName = strstr(nodeName, ".");
+		assert(nodeName);
+		nodeName++;
+		strncpy(path, menuName, nodeName - menuName);
+		action->type.param1 = EA_PATHPROPERTY;
+	} else {
+		action->type.param1 = EA_THISMENUNODENAMEPROPERTY;
+	}
 
 	/* check cast */
 	if (nodeName[0] == '(') {
@@ -158,10 +168,13 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		}
 	}
 
-	/* copy the node */
-	action->data = mn.curadata;
-	strcpy((char *) mn.curadata, nodeName);
-	mn.curadata += ALIGN(strlen((char *) mn.curadata) + 1);
+	/* copy the node path */
+	if (action->type.param1 == EA_PATHPROPERTY) {
+		strcat(path, nodeName);
+		action->data = (byte*) MN_AllocString(path, 0);
+	} else {
+		action->data = (byte*) MN_AllocString(nodeName, 0);
+	}
 
 	/* get the node property */
 	*token = COM_EParse(text, errhead, NULL);
@@ -170,9 +183,10 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 
 	castedBehaviour = MN_GetNodeBehaviour(cast);
 	val = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
-	if (!val) {
+	if (!val && action->type.param1 != EA_PATHPROPERTY) {
 		/* do we ALREADY know this node? and his type */
-		menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
+		menuNode_t *node = NULL;
+		node = MN_GetNode(menuNode->menu, action->data);
 		if (node) {
 			val = MN_NodeGetPropertyDefinition(node, *token);
 		} else {
@@ -180,6 +194,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		}
 	}
 
+	action->type.param2 = EA_RAWVALUE;
 	action->scriptValues = val;
 
 	if (!val || !val->type) {

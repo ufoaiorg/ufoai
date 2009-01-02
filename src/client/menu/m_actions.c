@@ -143,9 +143,30 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 	return cmd;
 }
 
+/**
+ * @brief Return a node by a path name (names with dot separation)
+ * @todo move it into nodes.c
+ */
+static menuNode_t* MN_GetNodeByPath (const char* path)
+{
+	char name[MAX_VAR];
+	menu_t* menu;
+	const char* nextName = strstr(path, ".");
+	assert(nextName);
+
+	strncpy(name, path, nextName - path);
+	nextName++;
+
+	menu = MN_GetMenu(name);
+	if (!menu)
+		return NULL;
+
+	return MN_GetNode(menu, nextName);
+}
+
 inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* menu, qboolean useCmdParam, const menuAction_t* action)
 {
-	const char* nodeName;
+	const char* path;
 	byte *value;
 	menuNode_t *node;
 
@@ -168,22 +189,31 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 		return;
 	}
 
-	assert(action->type.param1 == EA_THISMENUNODENAMEPROPERTY);
 	assert(action->type.param2 == EA_RAWVALUE);
 
-	nodeName = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
+	/* search the node */
+	path = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
+	switch (action->type.param1) {
+	case EA_THISMENUNODENAMEPROPERTY:
+		node = MN_GetNode(menu, path);
+		if (!node) {
+			Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist\n", menu->name, path);
+			return;
+		}
+		break;
+	case EA_PATHPROPERTY:
+		node = MN_GetNodeByPath(path);
+		if (!node) {
+			Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist\n", path);
+			return;
+		}
+		break;
+	default:
+		assert(qfalse);
+	}
 
 	value = action->data;
 	value += ALIGN(strlen(action->data) + 1);
-
-	/* search the node */
-	node = MN_GetNode(menu, nodeName);
-
-	if (!node) {
-		/* didn't find node -> "kill" action and print error */
-		Com_Printf("MN_ExecuteInjectedActions: node \"%s.%s\" doesn't exist\n", menu->name, nodeName);
-		return;
-	}
 
 	if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
 		Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
