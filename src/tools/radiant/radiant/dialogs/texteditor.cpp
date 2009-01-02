@@ -163,6 +163,7 @@ void DoTextEditor (const char* filename, int cursorpos, const char *appendConten
 	if (f == 0) {
 		content = "";
 		len = 1;
+		buf = NULL;
 	} else {
 		fseek(f, 0, SEEK_END);
 		len = ftell(f);
