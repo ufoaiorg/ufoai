@@ -2052,7 +2052,7 @@ static void CL_InitLocal (void)
 	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
 	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
 
-	cl_mapDebug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options");
+	cl_mapDebug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
 
 
 	/* register our commands */
