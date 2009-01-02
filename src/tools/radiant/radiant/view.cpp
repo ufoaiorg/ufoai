@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <stdio.h>
 
-char g_cull_stats[1024];
+static char g_cull_stats[1024];
 int g_count_dots;
 int g_count_planes;
 int g_count_oriented_planes;

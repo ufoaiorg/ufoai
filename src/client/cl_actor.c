@@ -354,6 +354,7 @@ static void CL_ActorGlobalCVars (void)
 	for (i = 0; i < MAX_TEAMLIST; i++) {
 		const le_t *le = cl.teamList[i];
 		if (le && !LE_IsDead(le)) {
+			invList_t *invList;
 			char tooltip[80] = "";
 			const character_t *chr = CL_GetActorChr(le);
 
@@ -366,13 +367,13 @@ static void CL_ActorGlobalCVars (void)
 			Cvar_SetValue(va("mn_morale%i",i), le->morale);
 			Cvar_SetValue(va("mn_moralemax%i",i), le->maxMorale);
 			Cvar_SetValue(va("mn_stun%i", i), le->STUN);
-			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n",
-				chr ? chr->name : "", le->HP, le->maxHP, le->TU);
-			if (RIGHT(le))
-				Q_strcat(tooltip, va("%s\n", RIGHT(le)->item.t->name), sizeof(tooltip));
-			/* check for left hand weapon */
-			if ((!RIGHT(le) || !RIGHT(le)->item.t->holdTwoHanded) && LEFT(le))
-				Q_strcat(tooltip, va("%s", LEFT(le)->item.t->name), sizeof(tooltip));
+
+			invList = RIGHT(le);
+			if ((!invList || !invList->item.t->holdTwoHanded) && LEFT(le))
+				invList = LEFT(le);
+
+			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n%s",
+				chr ? chr->name : "", le->HP, le->maxHP, le->TU, invList ? invList->item.t->name : "");
 			Cvar_Set(va("mn_soldier%i_tt", i), tooltip);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
