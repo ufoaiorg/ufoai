@@ -344,7 +344,9 @@ void CL_UGVCvars (const character_t *chr)
 }
 
 /**
- * @brief Updates the global character cvars.
+ * @brief Updates the global character cvars for battlescape.
+ * @note This is only called when we are in battlescape rendering mode
+ * It's assumed that every living actor - @c le_t - has a character assigned, too
  */
 static void CL_ActorGlobalCVars (void)
 {
@@ -357,6 +359,7 @@ static void CL_ActorGlobalCVars (void)
 			invList_t *invList;
 			char tooltip[80] = "";
 			const character_t *chr = CL_GetActorChr(le);
+			assert(chr);
 
 			/* the model name is the first entry in model_t */
 			/** @todo fix this once model_t is known in the client */
@@ -374,7 +377,7 @@ static void CL_ActorGlobalCVars (void)
 				invList = LEFT(le);
 
 			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n%s",
-				chr ? chr->name : "", le->HP, le->maxHP, le->TU, invList ? invList->item.t->name : "");
+				chr->name, le->HP, le->maxHP, le->TU, invList ? invList->item.t->name : "");
 			Cvar_Set(va("mn_soldier%i_tt", i), tooltip);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
@@ -448,39 +451,6 @@ static int CL_CalcReloadTime (const objDef_t *weapon)
 	return tu;
 }
 
-/**
- * @sa HighlightWeaponButton
- */
-static void ClearHighlights (void)
-{
-#if 0
-	int i;
-
-	for (i = 0; i < BT_NUM_TYPES; i++)
-		if (weaponButtonState[i] == BT_STATE_HIGHLIGHT) {
-			weaponButtonState[i] = -1;
-			return;
-		}
-#endif
-}
-
-#if 0
-/**
- * @sa ClearHighlights
- */
-static void HighlightWeaponButton (int button)
-{
-	char cbufText[MAX_VAR];
-
-	/* only one button can be highlighted at once, so reset other buttons */
-	ClearHighlights();
-
-	Com_sprintf(cbufText, lengthof(cbufText), "sel%s", shoot_type_strings[button]);
-	Cbuf_AddText(cbufText);
-	weaponButtonState[button] = BT_STATE_HIGHLIGHT;
-}
-#endif
-
 void CL_ResetWeaponButtons (void)
 {
 	memset(weaponButtonState, -1, sizeof(weaponButtonState));
@@ -512,7 +482,7 @@ static void SetWeaponButton (int button, weaponButtonState_t state)
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
 	Com_sprintf(cbufText, lengthof(cbufText), "%s%s", prefix, shoot_type_strings[button]);
 
-	Cbuf_AddText(cbufText);
+	MN_ExecuteConfunc(cbufText);
 	weaponButtonState[button] = state;
 }
 
@@ -585,8 +555,8 @@ static void HideFiremodes (void)
 	visible_firemode_list_left = qfalse;
 	visible_firemode_list_right = qfalse;
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		Cbuf_AddText(va("set_left_inv %i\n", i));
-		Cbuf_AddText(va("set_right_inv %i\n", i));
+		MN_ExecuteConfunc("set_left_inv %i", i);
+		MN_ExecuteConfunc("set_right_inv %i", i);
 	}
 
 }
@@ -973,55 +943,44 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
  */
 static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, const qboolean status)
 {
-	int usableTusForRF = 0;
-	/* char cbufText[MAX_VAR]; */
-	if (!fd)
+	int usableTusForRF;
+	char cvarName[MAX_VAR];
+
+	if (!fd || !selActor)
 		return;
 
-	if (!selActor)
-		return;
+	assert(hand == 'r' || hand == 'l');
 
 	usableTusForRF = CL_UsableReactionTUs(selActor);
 
 	if (hand == 'r') {
-		Cbuf_AddText(va("set_right_vis %i\n", fd->fdIdx)); /* Make this entry visible (in case it wasn't). */
+		MN_ExecuteConfunc("set_right_vis %i", fd->fdIdx); /* Make this entry visible (in case it wasn't). */
 
-		if (status) {
-			Cbuf_AddText(va("set_right_a %i\n", fd->fdIdx));
-		} else {
-			Cbuf_AddText(va("set_right_ina %i\n", fd->fdIdx));
-		}
-
-		if (usableTusForRF > fd->time)
-			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fdIdx),va(_("Remaining TUs: %i"), usableTusForRF - fd->time));
+		if (status)
+			MN_ExecuteConfunc("set_right_a %i", fd->fdIdx);
 		else
-			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fdIdx),_("No remaining TUs left after shot."));
-
-		Cvar_Set(va("mn_r_fm_name%i", fd->fdIdx), va("%s", fd->name));
-		Cvar_Set(va("mn_r_fm_tu%i", fd->fdIdx), va(_("TU: %i"), fd->time));
-		Cvar_Set(va("mn_r_fm_shot%i", fd->fdIdx), va(_("Shots:%i"), fd->ammo));
-
+			MN_ExecuteConfunc("set_right_ina %i", fd->fdIdx);
 	} else if (hand == 'l') {
-		Cbuf_AddText(va("set_left_vis %i\n", fd->fdIdx)); /* Make this entry visible (in case it wasn't). */
+		MN_ExecuteConfunc("set_left_vis %i", fd->fdIdx); /* Make this entry visible (in case it wasn't). */
 
-		if (status) {
-			Cbuf_AddText(va("set_left_a %i\n", fd->fdIdx));
-		} else {
-			Cbuf_AddText(va("set_left_ina %i\n", fd->fdIdx));
-		}
-
-		if (usableTusForRF > fd->time)
-			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fdIdx),va(_("Remaining TUs: %i"), usableTusForRF - fd->time));
+		if (status)
+			MN_ExecuteConfunc("set_left_a %i", fd->fdIdx);
 		else
-			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fdIdx),_("No remaining TUs left after shot."));
-
-		Cvar_Set(va("mn_l_fm_name%i", fd->fdIdx), va("%s", fd->name));
-		Cvar_Set(va("mn_l_fm_tu%i", fd->fdIdx), va(_("TU: %i"), fd->time));
-		Cvar_Set(va("mn_l_fm_shot%i", fd->fdIdx), va(_("Shots:%i"), fd->ammo));
-	} else {
-		Com_Printf("CL_DisplayFiremodeEntry: Bad hand [l|r] defined: '%c'\n", hand);
-		return;
+			MN_ExecuteConfunc("set_left_ina %i", fd->fdIdx);
 	}
+
+	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tt_tu%i", hand, fd->fdIdx);
+	if (usableTusForRF > fd->time)
+		Cvar_Set(cvarName, va(_("Remaining TUs: %i"), usableTusForRF - fd->time));
+	else
+		Cvar_Set(cvarName, _("No remaining TUs left after shot."));
+
+	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_name%i", hand, fd->fdIdx);
+	Cvar_Set(cvarName, fd->name);
+	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tu%i", hand, fd->fdIdx);
+	Cvar_Set(cvarName, va(_("TU: %i"), fd->time));
+	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_shot%i", hand, fd->fdIdx);
+	Cvar_Set(cvarName, va(_("Shots:%i"), fd->ammo));
 }
 /**
  * @brief Check if at least one firemode is available for reservation.
@@ -1325,10 +1284,10 @@ static void CL_DisplayPossibleReaction (const le_t * actor)
 	 * Code also used in CL_ActorToggleReaction_f */
 	switch (CL_GetReactionState(actor)) {
 	case R_FIRE_ONCE:
-		Cbuf_AddText("startreactiononce\n");
+		MN_ExecuteConfunc("startreactiononce");
 		break;
 	case R_FIRE_MANY:
-		Cbuf_AddText("startreactionmany\n");
+		MN_ExecuteConfunc("startreactionmany");
 		break;
 	default:
 		break;
@@ -1354,11 +1313,11 @@ static qboolean CL_DisplayImpossibleReaction (const le_t * actor)
 	switch (CL_GetReactionState(actor)) {
 	case R_FIRE_ONCE:
 		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;	/* Set but not used anywhere (yet) */
-		Cbuf_AddText("startreactiononce_impos\n");
+		MN_ExecuteConfunc("startreactiononce_impos");
 		break;
 	case R_FIRE_MANY:
 		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;	/* Set but not used anywhere (yet) */
-		Cbuf_AddText("startreactionmany_impos\n");
+		MN_ExecuteConfunc("startreactionmany_impos");
 		break;
 	default:
 		return qtrue;
@@ -1644,27 +1603,27 @@ void CL_DisplayFiremodes_f (void)
 				if (hand[0] == 'r') {
 					if (THIS_FIREMODE(&selChr->RFmode, 0, i)) {
 						/* Set this checkbox visible+active. */
-						Cbuf_AddText(va("set_right_cb_a %i\n", i));
+						MN_ExecuteConfunc("set_right_cb_a %i", i);
 					} else {
 						/* Set this checkbox visible+inactive. */
-						Cbuf_AddText(va("set_right_cb_ina %i\n", i));
+						MN_ExecuteConfunc("set_right_cb_ina %i", i);
 					}
 				} else { /* hand[0] == 'l' */
 					if (THIS_FIREMODE(&selChr->RFmode, 1, i)) {
 						/* Set this checkbox visible+active. */
-						Cbuf_AddText(va("set_left_cb_a %i\n", i));
+						MN_ExecuteConfunc("set_left_cb_a %i", i);
 					} else {
 						/* Set this checkbox visible+active. */
-						Cbuf_AddText(va("set_left_cb_ina %i\n", i));
+						MN_ExecuteConfunc("set_left_cb_ina %i", i);
 					}
 				}
 			}
 
 		} else { /* No more fd left in the list or weapon not researched. */
 			if (hand[0] == 'r')
-				Cbuf_AddText(va("set_right_inv %i\n", i)); /* Hide this entry */
+				MN_ExecuteConfunc("set_right_inv %i", i); /* Hide this entry */
 			else
-				Cbuf_AddText(va("set_left_inv %i\n", i)); /* Hide this entry */
+				MN_ExecuteConfunc("set_left_inv %i", i); /* Hide this entry */
 		}
 	}
 }
@@ -2429,8 +2388,7 @@ void CL_ActorUpdateCVars (void)
 			Cvar_Set("mn_ammoleft", "");
 		}
 
-		if (!LEFT(selActor) && RIGHT(selActor)
-			&& RIGHT(selActor)->item.t->holdTwoHanded)
+		if (!LEFT(selActor) && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
 			Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
 
 		/* change stand-crouch & reaction button state */
@@ -2440,10 +2398,10 @@ void CL_ActorUpdateCVars (void)
 				selActorOldReactionState = selActorReactionState;
 				switch (selActorReactionState) {
 				case R_FIRE_MANY:
-					Cbuf_AddText("startreactionmany\n");
+					MN_ExecuteConfunc("startreactionmany");
 					break;
 				case R_FIRE_ONCE:
-					Cbuf_AddText("startreactiononce\n");
+					MN_ExecuteConfunc("startreactiononce");
 					break;
 				case R_FIRE_OFF: /* let RefreshWeaponButtons work it out */
 					weaponButtonState[BT_REACTION] = -1;
@@ -2459,21 +2417,8 @@ void CL_ActorUpdateCVars (void)
 			else
 				CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		} else {
-			/* no actor selected, reset cvars */
-			/** @todo this overwrites the correct values a bit to often.
-			Cvar_Set("mn_tu", "0");
-			Cvar_Set("mn_turemain", "0");
-			Cvar_Set("mn_tumax", "30");
-			Cvar_Set("mn_morale", "0");
-			Cvar_Set("mn_moralemax", "1");
-			Cvar_Set("mn_hp", "0");
-			Cvar_Set("mn_hpmax", "1");
-			Cvar_Set("mn_ammoright", "");
-			Cvar_Set("mn_ammoleft", "");
-			Cvar_Set("mn_stun", "0");
-			*/
 			if (refresh)
-				Cbuf_AddText("deselstand\n");
+				MN_ExecuteConfunc("deselstand");
 
 			/* this allows us to display messages even with no actor selected */
 			if (cl.time < cl.msgTime) {
@@ -2495,19 +2440,6 @@ void CL_ActorUpdateCVars (void)
 
 	/* mode */
 	if (cl.oldcmode != cl.cmode || refresh) {
-		switch (cl.cmode) {
-		/** @todo Better highlight for active firemode (from the list, not the buttons) needed ... */
-		case M_FIRE_L:
-		case M_PEND_FIRE_L:
-			/** @todo Display current firemode better*/
-			break;
-		case M_FIRE_R:
-		case M_PEND_FIRE_R:
-			/** @todo Display current firemode better*/
-			break;
-		default:
-			ClearHighlights();
-		}
 		cl.oldcmode = cl.cmode;
 		if (selActor)
 			CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
@@ -2519,13 +2451,13 @@ void CL_ActorUpdateCVars (void)
 
 		for (i = 0; i < MAX_TEAMLIST; i++) {
 			if (!cl.teamList[i] || LE_IsDead(cl.teamList[i])) {
-				Cbuf_AddText(va("huddisable%i\n", i));
+				MN_ExecuteConfunc("huddisable%i", i);
 			} else if (i == cl_selected->integer) {
 				/* stored in menu_nohud.ufo - confunc that calls all the different
 				 * hud select confuncs */
-				Cbuf_AddText(va("hudselect%i\n", i));
+				MN_ExecuteConfunc("hudselect%i", i);
 			} else {
-				Cbuf_AddText(va("huddeselect%i\n", i));
+				MN_ExecuteConfunc("huddeselect%i", i);
 			}
 		}
 		cl_selected->modified = qfalse;
@@ -2563,8 +2495,8 @@ void CL_AddActorToTeamList (le_t * le)
 	if (i == -1) {
 		i = cl.numTeamList;
 		cl.teamList[cl.numTeamList++] = le;
-		Cbuf_AddText(va("numonteam%i\n", cl.numTeamList)); /* althud */
-		Cbuf_AddText(va("huddeselect%i\n", i));
+		MN_ExecuteConfunc("numonteam%i", cl.numTeamList); /* althud */
+		MN_ExecuteConfunc("huddeselect%i", i);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}
@@ -2587,7 +2519,7 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
 			/* disable hud button */
-			Cbuf_AddText(va("huddisable%i\n", i));
+			MN_ExecuteConfunc("huddisable%i", i);
 
 			/* remove from list */
 			cl.teamList[i] = NULL;
@@ -4205,7 +4137,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 
 	/* hud changes */
 	if (cls.team == cl.actTeam)
-		Cbuf_AddText("endround\n");
+		MN_ExecuteConfunc("endround");
 
 	refdef.rdflags &= ~RDF_IRGOGGLES;
 
