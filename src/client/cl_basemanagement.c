@@ -3649,7 +3649,7 @@ static void B_LoadOneSlot (aircraftSlot_t* slot, sizebuf_t* sb, qboolean weapon)
 		if (tech)
 			AII_AddItemToSlot(NULL, tech, slot, qfalse);
 	}
-#ifdef NEW_SAVEGAME
+
 	/* current ammo */
 	if (weapon) {
 		name = MSG_ReadString(sb);
@@ -3685,17 +3685,6 @@ static void B_LoadOneSlot (aircraftSlot_t* slot, sizebuf_t* sb, qboolean weapon)
 
 	slot->ammoLeft = MSG_ReadShort(sb);
 	slot->delayNextShot = MSG_ReadShort(sb);
-#else
-	slot->ammoLeft = MSG_ReadShort(sb);
-	slot->delayNextShot = MSG_ReadShort(sb);
-	slot->installationTime = MSG_ReadShort(sb);
-	name = MSG_ReadString(sb);
-	if (name[0] != '\0') {
-		technology_t *tech = RS_GetTechByProvided(name);
-		if (tech)
-			AII_AddAmmoToSlot(NULL, tech, slot);
-	}
-#endif
 }
 
 /**
@@ -3911,7 +3900,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			else
 				aircraft->aircraftTarget = gd.ufos + ufoIdx;
 
-#ifdef NEW_SAVEGAME
 			/* read weapon slots */
 			amount = MSG_ReadByte(sb);
 			if (aircraft->maxWeapons < amount) {
@@ -3935,46 +3923,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				return qfalse;
 			}
 			B_LoadAircraftSlots(aircraft, aircraft->electronics, amount, sb, qfalse);
-#else
-			/* read weapon slot */
-			amount = MSG_ReadByte(sb);
-			/* only read aircraft->maxWeapons here - skip the rest in the following loop */
-			B_LoadAircraftSlots(aircraft, aircraft->weapons, min(amount, aircraft->maxWeapons), sb, qtrue);
-			/* just in case there are less slots in new game that in saved one */
-			for (l = aircraft->maxWeapons; l < amount; l++) {
-				MSG_ReadString(sb);
-				MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-				MSG_ReadShort(sb);
-				MSG_ReadString(sb);
-			}
-
-			/* check for shield slot */
-			/* there is only one shield - but who knows - breaking the savegames if this changes
-			 * isn't worth it */
-			amount = MSG_ReadByte(sb);
-			for (l = 0; l < amount; l++) {
-				const technology_t *const tech = RS_GetTechByProvided(MSG_ReadString(sb));
-				if (tech)
-					AII_AddItemToSlot(NULL, tech, &aircraft->shield, qfalse);
-				aircraft->shield.installationTime = MSG_ReadShort(sb);
-			}
-
-			/* read electronics slot */
-			amount = MSG_ReadByte(sb);
-			for (l = 0; l < amount; l++) {
-				/* check that there are enough slots in this aircraft */
-				if (l < aircraft->maxElectronics) {
-					const technology_t *const tech = RS_GetTechByProvided(MSG_ReadString(sb));
-					if (tech)
-						AII_AddItemToSlot(NULL, tech, aircraft->electronics + l, qfalse);
-					aircraft->electronics[l].installationTime = MSG_ReadShort(sb);
-				} else {
-					MSG_ReadString(sb);
-					MSG_ReadShort(sb);
-				}
-			}
-#endif
 
 			/** Load team on board
 			 * @note presaveArray[PRE_ACTTEA] == MAX_ACTIVETEAM and NOT teamSize or maxTeamSize */
