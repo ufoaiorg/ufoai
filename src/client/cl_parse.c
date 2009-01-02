@@ -623,7 +623,7 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 			if (chr->reservedTus.reserveCrouch) {
 				/** @sa CL_ActorToggleCrouchReservation_f */
 				/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
-				if ((CL_UsableTUs(le) + CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH)) {
+				if (CL_UsableTUs(le) + CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
 					CL_ReserveTUs(le, RES_CROUCH, TU_CROUCH);
 					MN_ExecuteConfunc("crouch_checkbox_check");
 				} else {
