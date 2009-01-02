@@ -633,7 +633,7 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 				}
 			}
 		} else {
-			CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], 'r');
+			CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], ACTOR_HAND_CHAR_RIGHT);
 		}
 
 #if 0

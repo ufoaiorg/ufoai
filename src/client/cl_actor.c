@@ -576,7 +576,7 @@ static void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapo
 	if (!actor)
 		return;
 
-	if (hand == 'r')
+	if (hand == ACTOR_HAND_CHAR_RIGHT)
 		invlistWeapon = RIGHT(actor);
 	else
 		invlistWeapon = LEFT(actor);
@@ -677,17 +677,17 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 		return qfalse;
 	}
 
-	/**@todo Get Weapon&Firedef and compare with settings. */
+	/** @todo Get weapon & firedef and compare with settings.
+	 * @todo remove magic numbers */
 	/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-	CL_GetWeaponAndAmmo(actor, (fmSettings->hand == 1) ? 'l' : 'r', NULL, &ammo, &weapFdsIdx);
+	CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_INDEX(fmSettings->hand), NULL, &ammo, &weapFdsIdx);
 
 	if (!ammo || weapFdsIdx < 0) {
 		/* No weapon&ammo found or bad index returned. Stored settings possibly bad. */
 		return qfalse;
 	}
 
-	if (ammo->weapons[weapFdsIdx]->idx == fmSettings->wpIdx
-	 && fmSettings->fmIdx >= 0
+	if (ammo->weapons[weapFdsIdx]->idx == fmSettings->wpIdx && fmSettings->fmIdx >= 0
 	 && fmSettings->fmIdx < ammo->numFiredefs[weapFdsIdx]) {
 		/* Stored firemode settings up to date - nothing has to be changed */
 		return qtrue;
@@ -825,48 +825,6 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 		return;
 	}
 }
-#if 0
-/**
- * @brief Search for the first (reaction) firemode that is also the most expensive.
- * @param[in] ammo The objDef_t pointer that contains the different firemodes (could also be a weapon with no ammo).
- * @param[in] TUs The number of TU we have for fireing.
- */
-static int CL_GetMostExpensiveFiremode (objDef_t *weapon, objDef_t *ammo, int TUs)
-{
-	int i;
-	int foundFmIdx = -1;
-	int foundFmTUs = -1;
-	int weapFdsIdx;
-
-	assert(TUs >= 0);
-
-	if (!ammo || !weapon)
-		return foundFmIdx;
-
-	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(ammo, weapon);
-
-	if (weapFdsIdx < 0)
-		return foundFmIdx;
-
-	/* Search for the the (reaction) firemode that is also the most expensive. */
-	for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
-		if (ammo->fd[weapFdsIdx][i].reaction) {
-			if (ammo->fd[weapFdsIdx][i].time <= TUs				/**< We can actually use the firemode ... */
-			&& (foundFmIdx < 0									/**< ...AND either no fm-index yet found OR... */
-				|| (foundFmTUs < ammo->fd[weapFdsIdx][i].time	/**< ... the found value is smaller AND the value is not the same as the found one. */
-				&& foundFmTUs != ammo->fd[weapFdsIdx][i].time))) {
-				foundFmIdx = weapFdsIdx;
-				foundFmTUs = ammo->fd[weapFdsIdx][i].time;
-			}
-
-			if (ammo->fd[weapFdsIdx][i].time == TUs)			/**< We can't possibly find a better FM - return this one. */
-				return foundFmIdx;
-		}
-	}
-
-	return foundFmIdx;
-}
-#endif
 
 /**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
@@ -908,7 +866,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 		int weapFdsIdx = -1;
 
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		CL_GetWeaponAndAmmo(actor, handidx == 1 ? 'l' : 'r', NULL, &ammo, &weapFdsIdx);
+		CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_INDEX(handidx), NULL, &ammo, &weapFdsIdx);
 
 		/* Get The firedefinition of the selected firemode */
 		fd = &ammo->fd[weapFdsIdx][fdIdx];
@@ -946,18 +904,18 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 	if (!fd || !selActor)
 		return;
 
-	assert(hand == 'r' || hand == 'l');
+	assert(hand == ACTOR_HAND_CHAR_RIGHT || hand == ACTOR_HAND_CHAR_LEFT);
 
 	usableTusForRF = CL_UsableReactionTUs(selActor);
 
-	if (hand == 'r') {
+	if (hand == ACTOR_HAND_CHAR_RIGHT) {
 		MN_ExecuteConfunc("set_right_vis %i", fd->fdIdx); /* Make this entry visible (in case it wasn't). */
 
 		if (status)
 			MN_ExecuteConfunc("set_right_a %i", fd->fdIdx);
 		else
 			MN_ExecuteConfunc("set_right_ina %i", fd->fdIdx);
-	} else if (hand == 'l') {
+	} else if (hand == ACTOR_HAND_CHAR_LEFT) {
 		MN_ExecuteConfunc("set_left_vis %i", fd->fdIdx); /* Make this entry visible (in case it wasn't). */
 
 		if (status)
@@ -979,6 +937,7 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_shot%i", hand, fd->fdIdx);
 	Cvar_Set(cvarName, va(_("Shots:%i"), fd->ammo));
 }
+
 /**
  * @brief Check if at least one firemode is available for reservation.
  * @return qtrue if there is at least one firemode - qfalse otherwise.
@@ -987,7 +946,7 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
  */
 static qboolean CL_CheckFiremodeReservation (void)
 {
-	char hand = 'r';
+	char hand = ACTOR_HAND_CHAR_RIGHT;
 
 	if (!selActor)
 		return qfalse;
@@ -1010,12 +969,11 @@ static qboolean CL_CheckFiremodeReservation (void)
 		}
 
 		/* Prepare for next run or for end of loop. */
-		if (hand == 'r') {
-			hand = 'l';	/* First run. Set hand for second run of the loop (other hand) */
-		} else {
-			hand = 0;	/* Second (&last) run -> quit. */
-		}
-	} while (hand != 0);
+		if (hand == ACTOR_HAND_CHAR_RIGHT)
+			hand = ACTOR_HAND_CHAR_LEFT;
+		else
+			break;
+	} while (qtrue);
 
 	/* No reservation possible */
 	return qfalse;
@@ -1036,7 +994,7 @@ static void CL_PopupFiremodeReservation (qboolean reset)
 	int tempInvalid = -1;
 	int tempZero = 0;
 	int tempOne = 1;
-	char hand = 'r';
+	char hand = ACTOR_HAND_CHAR_RIGHT;
 	int i;
 	static char text[MAX_VAR];
 	int selectedEntry;
@@ -1100,7 +1058,7 @@ static void CL_PopupFiremodeReservation (qboolean reset)
 					/* Store text for popup */
 					LIST_AddString(&popupListText, text);
 					/* Store Data for popup-callback. */
-					if (hand == 'r')
+					if (hand == ACTOR_HAND_CHAR_RIGHT)
 						LIST_Add(&popupListData, (byte *)&tempZero, sizeof(int));
 					else
 						LIST_Add(&popupListData, (byte *)&tempOne, sizeof(int));
@@ -1109,26 +1067,26 @@ static void CL_PopupFiremodeReservation (qboolean reset)
 					LIST_Add(&popupListData, (byte *)&ammo->fd[weapFdsIdx][i].time, sizeof(int));	/* TUs */
 
 					/* Remember the line that is currently selected (if any). */
-					if ((selChr->reservedTus.shotSettings.hand == ((hand == 'r') ? 0 : 1))
-					 && (selChr->reservedTus.shotSettings.fmIdx == i)
-					 && (selChr->reservedTus.shotSettings.wpIdx == ammo->weapons[weapFdsIdx]->idx))
+					if (selChr->reservedTus.shotSettings.hand == ACTOR_GET_HAND_INDEX(hand)
+					 && selChr->reservedTus.shotSettings.fmIdx == i
+					 && selChr->reservedTus.shotSettings.wpIdx == ammo->weapons[weapFdsIdx]->idx)
 						selectedEntry = popupNum;
 
 					Com_DPrintf(DEBUG_CLIENT, "CL_PopupFiremodeReservation: hand %i, fm %i, wp %i -- hand %i, fm %i, wp %i\n",
 						selChr->reservedTus.shotSettings.hand, selChr->reservedTus.shotSettings.fmIdx, selChr->reservedTus.shotSettings.wpIdx,
-						((hand == 'r') ? 0 : 1), i, ammo->weapons[weapFdsIdx]->idx);
+						ACTOR_GET_HAND_INDEX(hand), i, ammo->weapons[weapFdsIdx]->idx);
 					popupNum++;
 				}
 			}
 		}
 
 		/* Prepare for next run or for end of loop. */
-		if (hand == 'r') {
-			hand = 'l';	/* First run. Set hand for second run of the loop (other hand) */
-		} else {
-			hand = 0;	/* Second (&last) run -> quit. */
-		}
-	} while (hand != 0);
+		if (hand == ACTOR_HAND_CHAR_RIGHT)
+			/* First run. Set hand for second run of the loop (other hand) */
+			hand = ACTOR_HAND_CHAR_LEFT;
+		else
+			break;
+	} while (qtrue);
 
 	if (popupNum > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
@@ -1336,8 +1294,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	int weapFdsIdx = -1;
 	int i = -1;
 	character_t *chr;
-
-	const int handidx = (hand == 'r') ? 0 : 1;
+	const int handidx = ACTOR_GET_HAND_INDEX(hand);
 
 	if (!actor) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: No actor given!\n");
@@ -1381,20 +1338,9 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 			}
 		} else {
 			/* Weapon in _this_ hand not RF-capable. */
-			if (CL_WeaponWithReaction(actor, (hand == 'r') ? 'l' : 'r')) {
+			if (CL_WeaponWithReaction(actor, ACTOR_SWAP_HAND(hand))) {
 				/* The _other_ hand has usable firemodes for RF, use it instead. */
-				CL_UpdateReactionFiremodes(actor, (hand == 'r') ? 'l' : 'r', -1);
-
-#if 0
-				/** This should already be be handled in the call of CL_UpdateReactionFiremodes above. */
-				if (CL_UsableReactionTUs(&actor) >= ammo->fd[weapFdsIdx][xxxxxxx].time) {
-					/* Display 'usable" (blue) reaction buttons */
-					CL_DisplayPossibleReaction(actor);
-				} else {
-					/* Display "impossible" (red) reaction button. */
-					CL_DisplayImpossibleReaction(actor);
-				}
-#endif
+				CL_UpdateReactionFiremodes(actor, ACTOR_SWAP_HAND(hand), -1);
 			} else {
 				/* No RF-capable item in either hand. */
 
@@ -1435,16 +1381,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 				if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][firemodeActive].time) {
 					CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
 				}
-#if 0
-				else {
-					/** @todo Popup that tells the player no enough TUs? */
-					CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
-					CL_ReserveTUs(actor, RES_REACTION, 0);
-					CL_DisplayImpossibleReaction(actor);
-				}
-#endif
 				return;
-
 			}
 		}
 	}
@@ -1462,33 +1399,21 @@ void CL_SetDefaultReactionFiremode (le_t *actor, const char hand)
 		return;
 	}
 
-	if (hand == 'r') {
+	if (hand == ACTOR_HAND_CHAR_RIGHT) {
 		/* Set default firemode (try right hand first, then left hand). */
 		/* Try to set right hand */
-		CL_UpdateReactionFiremodes(actor, 'r', -1);
+		CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_RIGHT, -1);
 		if (!CL_WorkingFiremode(actor, qtrue)) {
 			/* If that failed try to set left hand. */
-			CL_UpdateReactionFiremodes(actor, 'l', -1);
-#if 0
-			if (!CL_WorkingFiremode(actor, qtrue)) {
-				/* If that fails as well set firemode to undef. */
-				CL_SetReactionFiremode(actor, -1, NONE, -1);
-			}
-#endif
+			CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_LEFT, -1);
 		}
 	} else {
 		/* Set default firemode (try left hand first, then right hand). */
 		/* Try to set left hand. */
-		CL_UpdateReactionFiremodes(actor, 'l', -1);
+		CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_LEFT, -1);
 		if (!CL_WorkingFiremode(actor, qtrue)) {
 			/* If that failed try to set right hand. */
-			CL_UpdateReactionFiremodes(actor, 'r', -1);
-#if 0
-			if (!CL_WorkingFiremode(actor, qtrue)) {
-				/* If that fails as well set firemode to undef. */
-				CL_SetReactionFiremode(actor, -1, NONE, -1);
-			}
-#endif
+			CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_RIGHT, -1);
 		}
 	}
 }
@@ -1504,7 +1429,7 @@ void CL_DisplayFiremodes_f (void)
 	objDef_t *ammo = NULL;
 	int weapFdsIdx = -1;
 	int i;
-	const char *hand;
+	char hand;
 
 	if (!selActor)
 		return;
@@ -1517,17 +1442,17 @@ void CL_DisplayFiremodes_f (void)
 	}
 
 	if (Cmd_Argc() < 2) { /* no argument given */
-		hand = "r";
+		hand = ACTOR_HAND_CHAR_RIGHT;
 	} else {
-		hand = Cmd_Argv(1);
+		hand = Cmd_Argv(1)[0];
 	}
 
-	if (hand[0] != 'r' && hand[0] != 'l') {
+	if (hand != ACTOR_HAND_CHAR_RIGHT && hand != ACTOR_HAND_CHAR_LEFT) {
 		Com_Printf("Usage: %s [l|r]\n", Cmd_Argv(0));
 		return;
 	}
 
-	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weapFdsIdx);
+	CL_GetWeaponAndAmmo(selActor, hand, &weapon, &ammo, &weapFdsIdx);
 	if (weapFdsIdx == -1)
 		return;
 
@@ -1538,11 +1463,11 @@ void CL_DisplayFiremodes_f (void)
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: displaying %s firemodes.\n", hand);
+	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: displaying %c firemodes.\n", hand);
 
 	if (firemodes_change_display) {
 		/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
-		if (hand[0] == 'r') {
+		if (hand == ACTOR_HAND_CHAR_RIGHT) {
 			if (visible_firemode_list_right == qtrue) {
 				HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
 				return;
@@ -1551,7 +1476,7 @@ void CL_DisplayFiremodes_f (void)
 				visible_firemode_list_left = qfalse;
 				visible_firemode_list_right = qtrue;
 			}
-		} else { /* 'l' */
+		} else { /* ACTOR_HAND_CHAR_LEFT */
 			if (visible_firemode_list_left == qtrue) {
 				HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
 				return;
@@ -1578,10 +1503,10 @@ void CL_DisplayFiremodes_f (void)
 		/* Make sure we use the same hand if it's defined */
 		if (selChr->RFmode.hand != 1) { /* No the left hand defined */
 			/* Set default firemode (try right hand first, then left hand). */
-			CL_SetDefaultReactionFiremode(selActor, 'r');
+			CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
 		} else  if (selChr->RFmode.hand == 1) {
 			/* Set default firemode (try left hand first, then right hand). */
-			CL_SetDefaultReactionFiremode(selActor, 'l');
+			CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_LEFT);
 		}
 	}
 
@@ -1589,15 +1514,15 @@ void CL_DisplayFiremodes_f (void)
 		if (i < ammo->numFiredefs[weapFdsIdx]) { /* We have a defined fd ... */
 			/* Display the firemode information (image + text). */
 			if (ammo->fd[weapFdsIdx][i].time <= CL_UsableTUs(selActor)) {	/* Enough timeunits for this firemode?*/
-				CL_DisplayFiremodeEntry(&ammo->fd[weapFdsIdx][i], hand[0], qtrue);
+				CL_DisplayFiremodeEntry(&ammo->fd[weapFdsIdx][i], hand, qtrue);
 			} else{
-				CL_DisplayFiremodeEntry(&ammo->fd[weapFdsIdx][i], hand[0], qfalse);
+				CL_DisplayFiremodeEntry(&ammo->fd[weapFdsIdx][i], hand, qfalse);
 			}
 
 			/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
 			if (ammo->fd[weapFdsIdx][i].reaction) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
-				if (hand[0] == 'r') {
+				if (hand == ACTOR_HAND_CHAR_RIGHT) {
 					if (THIS_FIREMODE(&selChr->RFmode, 0, i)) {
 						/* Set this checkbox visible+active. */
 						MN_ExecuteConfunc("set_right_cb_a %i", i);
@@ -1605,7 +1530,7 @@ void CL_DisplayFiremodes_f (void)
 						/* Set this checkbox visible+inactive. */
 						MN_ExecuteConfunc("set_right_cb_ina %i", i);
 					}
-				} else { /* hand[0] == 'l' */
+				} else { /* hand[0] == ACTOR_HAND_CHAR_LEFT */
 					if (THIS_FIREMODE(&selChr->RFmode, 1, i)) {
 						/* Set this checkbox visible+active. */
 						MN_ExecuteConfunc("set_left_cb_a %i", i);
@@ -1617,7 +1542,7 @@ void CL_DisplayFiremodes_f (void)
 			}
 
 		} else { /* No more fd left in the list or weapon not researched. */
-			if (hand[0] == 'r')
+			if (hand == ACTOR_HAND_CHAR_RIGHT)
 				MN_ExecuteConfunc("set_right_inv %i", i); /* Hide this entry */
 			else
 				MN_ExecuteConfunc("set_left_inv %i", i); /* Hide this entry */
@@ -1632,7 +1557,7 @@ void CL_DisplayFiremodes_f (void)
 void CL_SwitchFiremodeList_f (void)
 {
 	/* Cmd_Argv(1) ... = hand */
-	if (Cmd_Argc() < 2 || (Cmd_Argv(1)[0] != 'r' && Cmd_Argv(1)[0] != 'l')) { /* no argument given */
+	if (Cmd_Argc() < 2 || (Cmd_Argv(1)[0] != ACTOR_HAND_CHAR_RIGHT && Cmd_Argv(1)[0] != ACTOR_HAND_CHAR_LEFT)) { /* no argument given */
 		Com_Printf("Usage: %s [l|r]\n", Cmd_Argv(0));
 		return;
 	}
@@ -1647,7 +1572,7 @@ void CL_SwitchFiremodeList_f (void)
  */
 void CL_SelectReactionFiremode_f (void)
 {
-	const char *hand;
+	char hand;
 	int firemode;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
@@ -1655,9 +1580,9 @@ void CL_SelectReactionFiremode_f (void)
 		return;
 	}
 
-	hand = Cmd_Argv(1);
+	hand = Cmd_Argv(1)[0];
 
-	if (hand[0] != 'r' && hand[0] != 'l') {
+	if (hand != ACTOR_HAND_CHAR_RIGHT && hand != ACTOR_HAND_CHAR_LEFT) {
 		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
@@ -1668,11 +1593,12 @@ void CL_SelectReactionFiremode_f (void)
 	firemode = atoi(Cmd_Argv(2));
 
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("CL_SelectReactionFiremode_f: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
+		Com_Printf("CL_SelectReactionFiremode_f: Firemode index to big (%i). Highest possible number is %i.\n",
+			firemode, MAX_FIREDEFS_PER_WEAPON - 1);
 		return;
 	}
 
-	CL_UpdateReactionFiremodes(selActor, hand[0], firemode);
+	CL_UpdateReactionFiremodes(selActor, hand, firemode);
 
 	/* Update display of firemode checkbuttons. */
 	firemodes_change_display = qfalse; /* So CL_DisplayFiremodes_f doesn't hide the list. */
@@ -1687,7 +1613,7 @@ void CL_SelectReactionFiremode_f (void)
  */
 void CL_FireWeapon_f (void)
 {
-	const char *hand;
+	char hand;
 	int firemode;
 
 	objDef_t *weapon = NULL;
@@ -1699,9 +1625,9 @@ void CL_FireWeapon_f (void)
 		return;
 	}
 
-	hand = Cmd_Argv(1);
+	hand = Cmd_Argv(1)[0];
 
-	if (hand[0] != 'r' && hand[0] != 'l') {
+	if (hand != ACTOR_HAND_CHAR_RIGHT && hand != ACTOR_HAND_CHAR_LEFT) {
 		Com_Printf("Usage: %s [l|r] <num>   num=firemode number\n", Cmd_Argv(0));
 		return;
 	}
@@ -1712,17 +1638,18 @@ void CL_FireWeapon_f (void)
 	firemode = atoi(Cmd_Argv(2));
 
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("CL_FireWeapon_f: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
+		Com_Printf("CL_FireWeapon_f: Firemode index to big (%i). Highest possible number is %i.\n",
+			firemode, MAX_FIREDEFS_PER_WEAPON - 1);
 		return;
 	}
 
-	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weapFdsIdx);
+	CL_GetWeaponAndAmmo(selActor, hand, &weapon, &ammo, &weapFdsIdx);
 	if (weapFdsIdx == -1)
 		return;
 
 	/* Let's check if shooting is possible.
 	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
-	if (hand[0] == 'r') {
+	if (hand == ACTOR_HAND_CHAR_RIGHT) {
 		if (!CL_CheckMenuAction(CL_UsableTUs(selActor), RIGHT(selActor), EV_INV_AMMO))
 			return;
 	} else {
@@ -1732,7 +1659,7 @@ void CL_FireWeapon_f (void)
 
 	if (ammo->fd[weapFdsIdx][firemode].time <= CL_UsableTUs(selActor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
-		if (hand[0] == 'r')
+		if (hand == ACTOR_HAND_CHAR_RIGHT)
 			cl.cmode = M_FIRE_R;
 		else
 			cl.cmode = M_FIRE_L;
@@ -1742,7 +1669,7 @@ void CL_FireWeapon_f (void)
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
 		SCR_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
-		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weapFdsIdx][firemode].name);
+		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%c, %s).\n", hand, ammo->fd[weapFdsIdx][firemode].name);
 		return;
 	}
 }
@@ -1900,13 +1827,13 @@ static void CL_RefreshWeaponButtons (int time)
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
 		if ((time >= CL_ReservedTUs(selActor, RES_REACTION))
-		 && (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')))
+		 && (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)))
 			SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 
 	} else {
-		if ((CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l'))) {
+		if ((CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT))) {
 			CL_DisplayPossibleReaction(selActor);
 		} else {
 			CL_DisplayImpossibleReaction(selActor);
@@ -3228,10 +3155,10 @@ void CL_InvCheckHands (struct dbuffer *msg)
 		/* Update the changed hand with default firemode. */
 		if (hand == 0) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG right\n");
-			CL_UpdateReactionFiremodes(le, 'r', -1);
+			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_RIGHT, -1);
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG left\n");
-			CL_UpdateReactionFiremodes(le, 'l', -1);
+			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_LEFT, -1);
 		}
 		HideFiremodes();
 	}
@@ -3496,7 +3423,7 @@ void CL_ActorToggleReaction_f (void)
 		selActorReactionState = R_FIRE_OFF;
 
 	/* Check all hands for reaction-enabled ammo-firemodes. */
-	if (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')) {
+	if (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)) {
 		/* At least one weapon is RF capable. */
 
 		switch (selActorReactionState) {
@@ -3507,7 +3434,7 @@ void CL_ActorToggleReaction_f (void)
 			state = STATE_REACTION_ONCE;
 			/* Check if stored info for RF is up-to-date and set it to default if not. */
 			if (!CL_WorkingFiremode(selActor, qtrue)) {
-				CL_SetDefaultReactionFiremode(selActor, 'r');
+				CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
 			} else {
 				/* We would reserve more TUs than are available - reserve nothing and abort. */
 				if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
@@ -3518,7 +3445,7 @@ void CL_ActorToggleReaction_f (void)
 			state = STATE_REACTION_MANY;
 			/* Check if stored info for RF is up-to-date and set it to default if not. */
 			if (!CL_WorkingFiremode(selActor, qtrue)) {
-				CL_SetDefaultReactionFiremode(selActor, 'r');
+				CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
 			} else {
 				/* Just in case. */
 				if (CL_UsableReactionTUs(selActor) < CL_ReservedTUs(selActor, RES_REACTION))
@@ -4155,7 +4082,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 				if (!CL_WorkingFiremode(cl.teamList[actorIdx], qtrue)) {
 					Com_DPrintf(DEBUG_CLIENT, "CL_DoEndRound: INFO Updating reaction firemode for actor %i! - We need to check why that happened.\n", actorIdx);
 					/* At this point the rest of the code forgot to update RF-settings somewhere. */
-					CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], 'r');
+					CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], ACTOR_HAND_CHAR_RIGHT);
 				}
 
 				/** @todo Reset reservations for shots?

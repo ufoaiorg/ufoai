@@ -32,6 +32,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* distance from vertical center of grid-point to head when crouched */
 #define EYE_HT_CROUCH UNIT_HEIGHT * 0.06
 
+#define ACTOR_HAND_CHAR_RIGHT 'r'
+#define ACTOR_HAND_CHAR_LEFT 'l'
+#define ACTOR_HAND_RIGHT 0
+#define ACTOR_HAND_LEFT 1
+
+/** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
+#define ACTOR_GET_HAND_INDEX(hand) ((hand) == ACTOR_HAND_LEFT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)
+/** @param[in] hand Hand char (ACTOR_HAND_CHAR_RIGHT, ACTOR_HAND_CHAR_LEFT) */
+#define ACTOR_SWAP_HAND(hand) ((hand) == ACTOR_HAND_CHAR_RIGHT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)
+
 /**
  * @brief Reaction fire toggle state, don't mess with the order!!!
  */
