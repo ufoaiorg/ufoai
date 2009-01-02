@@ -633,7 +633,7 @@ then
 	OLD_RADIANT_LIBS="$RADIANT_LIBS"
 	RADIANT_LIBS=
 	AC_MSG_NOTICE([GtkRadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
-	PKG_CHECK_MODULES(RADIANT, [gtk+-2.0 gtkglext-1.0 glib-2.0])
+	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0])
 
 	#---------------------------------------------------------------------------------------------
 	# Check for libxml2
