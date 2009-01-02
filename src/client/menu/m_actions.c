@@ -152,6 +152,25 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 	if (!action->data)
 		return;
 
+	if (action->type.param1 == EA_CVARNAME) {
+		char cvarName[MAX_VAR];
+		const char* textValue;
+		assert(action->type.param2 == EA_VALUE);
+		strncpy(cvarName, MN_GenInjectedString(source, useCmdParam, action->data, qfalse), MAX_VAR);
+
+		textValue = action->data;
+		textValue += ALIGN(strlen(action->data) + 1);
+		textValue = MN_GenInjectedString(source, useCmdParam, textValue, qfalse);
+		if (textValue[0] == '_') {
+			textValue = gettext(textValue + 1);
+		}
+		Cvar_Set(cvarName, textValue);
+		return;
+	}
+
+	assert(action->type.param1 == EA_THISMENUNODENAMEPROPERTY);
+	assert(action->type.param2 == EA_RAWVALUE);
+
 	nodeName = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
 
 	value = action->data;

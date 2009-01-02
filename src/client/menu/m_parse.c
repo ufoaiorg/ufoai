@@ -112,9 +112,95 @@ char* MN_AllocString (const char* string, int size)
 		mn.curadata += size;
 	} else {
 		assert(mn.curadata - mn.adata + strlen(string) + 1 <= mn.adataize);
-		mn.curadata += sprintf((char *)mn.curadata, "%s", string);
+		mn.curadata += sprintf((char *)mn.curadata, "%s", string) + 1;
 	}
 	return result;
+}
+
+/* prototype */
+static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
+
+static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const const char **token, const char *errhead)
+{
+	char cast[32] = "abstractnode";
+	const char *nodeName = *token + 1;
+	nodeBehaviour_t *castedBehaviour;
+	const value_t *val;
+
+	/* cvar setter */
+	if (Q_strncmp(nodeName, "cvar:", 5) == 0) {
+		action->data = MN_AllocString(nodeName + 5, 0);
+		action->type.param1 = EA_CVARNAME;
+		action->type.param2 = EA_VALUE;
+
+		/* get the value */
+		*token = COM_EParse(text, errhead, NULL);
+		if (!*text)
+			return qfalse;
+		MN_AllocString(*token, 0);
+		return qtrue;
+	}
+
+	action->type.param1 = EA_THISMENUNODENAMEPROPERTY;
+	action->type.param2 = EA_RAWVALUE;
+
+	/* check cast */
+	if (nodeName[0] == '(') {
+		char *end = strchr(nodeName, ')');
+		assert(end != NULL);
+		assert(end - nodeName < 32);
+
+		/* copy the cast and update the node name */
+		if (end != NULL) {
+			strncpy(cast, nodeName + 1, end - nodeName - 1);
+			cast[end - nodeName - 1] = '\0';
+			nodeName = end + 1;
+		}
+	}
+
+	/* copy the node */
+	action->data = mn.curadata;
+	strcpy((char *) mn.curadata, nodeName);
+	mn.curadata += ALIGN(strlen((char *) mn.curadata) + 1);
+
+	/* get the node property */
+	*token = COM_EParse(text, errhead, NULL);
+	if (!*text)
+		return qfalse;
+
+	castedBehaviour = MN_GetNodeBehaviour(cast);
+	val = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
+	if (!val) {
+		/* do we ALREADY know this node? and his type */
+		menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
+		if (node) {
+			val = MN_NodeGetPropertyDefinition(node, *token);
+		} else {
+			Com_Printf("MN_ParseAction: node \"%s\" not already know (in event), you can cast it\n", *token);
+		}
+	}
+
+	action->scriptValues = val;
+
+	if (!val || !val->type) {
+		Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
+		action->type.op = EA_NULL;
+		return qtrue;
+	}
+
+	/* get the value */
+	*token = COM_EParse(text, errhead, NULL);
+	if (!*text)
+		return qfalse;
+
+	if (val->type == V_SPECIAL_ACTION) {
+		void *mem = mn.curadata;
+		mn.curadata += sizeof(menuAction_t*);
+		*(menuAction_t**)mem = MN_ParseAction(menuNode, text, token);
+	} else {
+		mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+	}
+	return qtrue;
 }
 
 /**
@@ -130,8 +216,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 	menuAction_t *lastAction;
 	menuAction_t *action;
 	menuNode_t *node;
-	qboolean found;
-	const value_t *val;
+	qboolean result;
 	int i;
 
 	lastAction = NULL;
@@ -142,7 +227,6 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 
 	while (qtrue) {
 		int type = EA_NULL;
-		found = qfalse;
 
 		/* get new token */
 		*token = COM_EParse(text, errhead, NULL);
@@ -212,70 +296,9 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 				if (!*token)
 					return NULL;
 			}
-
-			/* get the node name */
-			{
-				char cast[32] = "abstractnode";
-				const char *nodeName = *token + 1;
-				nodeBehaviour_t *castedBehaviour;
-
-				/* check cast */
-				if (nodeName[0] == '(') {
-					char *end = strchr(nodeName, ')');
-					assert(end != NULL);
-					assert(end - nodeName < 32);
-
-					/* copy the cast and update the node name */
-					if (end != NULL) {
-						strncpy(cast, nodeName + 1, end - nodeName - 1);
-						cast[end - nodeName - 1] = '\0';
-						nodeName = end + 1;
-					}
-				}
-
-				/* copy the node */
-				action->data = mn.curadata;
-				strcpy((char *) mn.curadata, nodeName);
-				mn.curadata += ALIGN(strlen((char *) mn.curadata) + 1);
-
-				/* get the node property */
-				*token = COM_EParse(text, errhead, NULL);
-				if (!*text)
-					return NULL;
-
-				castedBehaviour = MN_GetNodeBehaviour(cast);
-				val = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
-				if (!val) {
-					/* do we ALREADY know this node? and his type */
-					menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
-					if (node) {
-						val = MN_NodeGetPropertyDefinition(node, *token);
-					} else {
-						Com_Printf("MN_ParseAction: node \"%s\" not already know (in event), you can cast it\n", *token);
-					}
-				}
-
-				action->scriptValues = val;
-
-				if (!val || !val->type) {
-					Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
-					action->type.op = EA_NULL;
-					break;
-				}
-
-				/* get the value */
-				*token = COM_EParse(text, errhead, NULL);
-				if (!*text)
-					return NULL;
-
-				if (val->type == V_SPECIAL_ACTION) {
-					void *mem = mn.curadata;
-					mn.curadata += sizeof(menuAction_t*);
-					*(menuAction_t**)mem = MN_ParseAction(menuNode, text, token);
-				} else {
-					mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
-				}
-			}
+			result = MN_ParseSetAction(menuNode, action, text, token, errhead);
+			if (!result)
+				return NULL;
 			break;
 
 		case EA_CALL:
