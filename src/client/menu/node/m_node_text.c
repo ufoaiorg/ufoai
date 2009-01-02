@@ -509,7 +509,7 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 	}
 	else if (node->onClick) {
-		switch (node->onClick->type) {
+		switch (node->onClick->type.op) {
 			case EA_CMD:
 				assert(node->onClick->data);
 				EXTRADATA(node).textLineSelected = line;
@@ -538,7 +538,7 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 	else if (node->onRightClick) {
-		switch (node->onRightClick->type) {
+		switch (node->onRightClick->type.op) {
 			case EA_CMD:
 				assert(node->onRightClick->data);
 				EXTRADATA(node).textLineSelected = line;

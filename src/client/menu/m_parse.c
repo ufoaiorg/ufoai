@@ -190,10 +190,10 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 		if (!firstAction) {
 			firstAction = action;
 		}
-		action->type = type;
+		action->type.op = type;
 
 		/* decode action */
-		switch (action->type) {
+		switch (action->type.op) {
 		case EA_CMD:
 			/* get parameter values */
 			*token = COM_EParse(text, errhead, NULL);
@@ -259,7 +259,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 
 				if (!val || !val->type) {
 					Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
-					action->type = EA_NULL;
+					action->type.op = EA_NULL;
 					break;
 				}
 
@@ -323,7 +323,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			menuNode->timeOut = atoi(*token);
 
 			/* no action for that */
-			action->type = EA_NULL;
+			action->type.op = EA_NULL;
 			break;
 
 		default:

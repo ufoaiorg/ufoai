@@ -36,8 +36,24 @@ typedef enum ea_s {
 	EA_NUM_EVENTACTION
 } ea_t;
 
+typedef enum {
+	EA_VALUE,						/** char string value */
+	EA_RAWVALUE,					/** parsed value */
+	EA_CVARNAME,					/** a cvar name */
+	EA_PATHPROPERTY,				/** a property identify by a path */
+	EA_THISMENUNODENAMEPROPERTY,	/** a property identify by a node name into 'this' menu */
+	EA_THISPROPERTY,				/** a property of 'this' node */
+} ea_paramType;
+
+typedef struct {
+	unsigned char op;
+	unsigned char param1;
+	unsigned char param2;
+} ea_opcode;
+
 typedef struct menuAction_s {
-	int type;
+	ea_opcode type;
+
 	void *data;
 	struct menuAction_s *next;
 	const value_t *scriptValues;
