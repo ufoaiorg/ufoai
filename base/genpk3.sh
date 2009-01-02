@@ -1,7 +1,9 @@
 #!/bin/bash
 
-ZIP_PROG=/usr/bin/zip
-UNZIP_PROG=/usr/bin/unzip
+#ZIP_PROG=/usr/bin/zip
+ZIP_PROG=zip.exe
+#UNZIP_PROG=/usr/bin/unzip
+UNZIP_PROG=zip.exe
 EXT=pk3
 VERSION=0.1
 
@@ -90,15 +92,15 @@ if ! test -d "./maps"; then
 	exit 1
 fi
 
-if ! test -x "$ZIP_PROG"; then
-	echo "You must have zip installed ($ZIP_PROG)"
-	exit 1
-fi
+#if ! test -x "$ZIP_PROG"; then
+#	echo "You must have zip installed ($ZIP_PROG)"
+#	exit 1
+#fi
 
-if ! test -x "$UNZIP_PROG"; then
-	echo "You must have unzip installed ($UNZIP_PROG)"
-	exit 1
-fi
+#if ! test -x "$UNZIP_PROG"; then
+#	echo "You must have unzip installed ($UNZIP_PROG)"
+#	exit 1
+#fi
 
 while true
 do
@@ -143,21 +145,19 @@ else
 	mapname=`basename "$1"`
 	echo "Generating $mapname.pk3"
 	echo ".. zip options: $ZIP_PARM"
-	for daynight in `echo "d n"`; do
-		if test -f "maps/$mapname$daynight.bsp"; then
-			if test -f "maps/$mapname$daynight.map"; then
-				echo "... adding maps/$mapname$daynight.map"
-				echo "... adding maps/$mapname$daynight.bsp"
-				zip $ZIP_PARM $mapname.$EXT maps/$mapname$daynight.map maps/$mapname$daynight.bsp
-			else
-				echo "$mapname$daynight.map (source map) does not exist."
-				exit 1
-			fi
+	if test -f "maps/$mapname.bsp"; then
+		if test -f "maps/$mapname.map"; then
+			echo "... adding maps/$mapname.map"
+			echo "... adding maps/$mapname.bsp"
+			zip $ZIP_PARM $mapname.$EXT maps/$mapname.map maps/$mapname.bsp
 		else
-			echo "$1$daynight.bsp (compiled map) does not exist."
+			echo "$mapname.map (source map) does not exist."
 			exit 1
 		fi
-	done
+	else
+		echo "$1.bsp (compiled map) does not exist."
+		exit 1
+	fi
 
 	# now the loading screens and thumbnail shots
 	if test -f "pics/maps/loading/$mapname.jpg"; then
@@ -183,55 +183,53 @@ else
 
 	# now search for models given in the map file that are not in the already
 	# existing [0-9].*\.pk3 files
-	for daynight in `echo "d n"`; do
-		# no need to check the existence of the map - done above
-		# search for misc_model in the *.map files
-		GetMapModels "maps/$mapname$daynight.map"
-		for model in $FILES; do
-			# add model if it exists and is not in pk3
-			if test -e $model; then
-				CheckExistenceInPK3 $model;
+	# no need to check the existence of the map - done above
+	# search for misc_model in the *.map files
+	GetMapModels "maps/$mapname.map"
+	for model in $FILES; do
+		# add model if it exists and is not in pk3
+		if test -e $model; then
+			CheckExistenceInPK3 $model;
+			if [ $? -eq 0 ]
+			then
+				echo "... adding $model"
+				zip $ZIP_PARM $mapname.$EXT $model
+			else
+				echo "the model $model is already in a pk3"
+			fi
+		elif test "$VERBOSE" == 1; then
+			echo "... $model must be in a pk3 file or doesn't exists"
+		fi
+		# add animation if it exists and is not in pk3
+		animation=`echo $model | cut -d . -f 1`".anm"
+		if test -e $animation; then
+			CheckExistenceInPK3 $animation;
+			if [ $? -eq 0 ]
+			then
+				echo "... adding $model"
+				zip $ZIP_PARM $mapname.$EXT $animation
+			else
+				echo "the animation $animation is already in a pk3"
+			fi
+		fi
+	done
+	GetMapTextures "maps/$mapname.map"
+	for texture in $FILES; do
+		for extension in $IMAGE_TYPES; do
+			if test -e "textures/$texture.$extension"; then
+				CheckExistenceInPK3 "textures/$texture.$extension";
 				if [ $? -eq 0 ]
 				then
-					echo "... adding $model"
-					zip $ZIP_PARM $mapname.$EXT $model
+					echo "... adding textures/$texture.$extension"
+					zip $ZIP_PARM $mapname.$EXT "textures/$texture.$extension"
+					break;
 				else
-					echo "the model $model is already in a pk3"
+					echo "the texture textures/$texture.$extension is already in a pk3"
+					break;
 				fi
 			elif test "$VERBOSE" == 1; then
-				echo "... $model must be in a pk3 file or doesn't exists"
+				echo "... textures/$texture.$extension must be in a pk3 file or doesn't exists"
 			fi
-			# add animation if it exists and is not in pk3
-			animation=`echo $model | cut -d . -f 1`".anm"
-			if test -e $animation; then
-				CheckExistenceInPK3 $animation;
-				if [ $? -eq 0 ]
-				then
-					echo "... adding $model"
-					zip $ZIP_PARM $mapname.$EXT $animation
-				else
-					echo "the animation $animation is already in a pk3"
-				fi
-			fi
-		done
-		GetMapTextures "maps/$mapname$daynight.map"
-		for texture in $FILES; do
-			for extension in $IMAGE_TYPES; do
-				if test -e "textures/$texture.$extension"; then
-					CheckExistenceInPK3 "textures/$texture.$extension";
-					if [ $? -eq 0 ]
-					then
-						echo "... adding textures/$texture.$extension"
-						zip $ZIP_PARM $mapname.$EXT "textures/$texture.$extension"
-						break;
-					else
-						echo "the texture textures/$texture.$extension is already in a pk3"
-						break;
-					fi
-				elif test "$VERBOSE" == 1; then
-					echo "... textures/$texture.$extension must be in a pk3 file or doesn't exists"
-				fi
-			done
 		done
 	done
 fi

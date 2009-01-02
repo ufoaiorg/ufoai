@@ -726,6 +726,28 @@ particle blood
 	think { kill }
 }
 
+particle oil
+{
+	init
+	{
+		image  sfx/blood_oil_1
+		blend  blend
+		style  facing
+		thinkfade  out
+		tps    2.3
+		v      "0 0 0"
+		a      "0 0 0"
+	}
+	run
+	{
+		push pos "32 32"
+		mul  *t
+		add  pos "16 16"
+		pop  *size
+	}
+	think { kill }
+}
+
 particle inRangeTracer
 {
 	init
