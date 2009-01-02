@@ -893,8 +893,28 @@ menu ufopedia_mail
 		tabwidth	700
 		click	rclick wheel
 		mousefx	true
-		scrollbar	true
-		wheel	{ cmd "ufopedia_scrollmail;" }
+		wheel	{
+			cmd "mn_setnodeproperty mailclient_scroll current <text_scroll>;"
+			cmd "ufopedia_scrollmail;"
+		}
+		lineschange {
+			cmd "mn_setnodeproperty mailclient_scroll fullsize <lines>;"
+			cmd "mn_setnodeproperty mailclient_scroll current <text_scroll>;"
+		}
+	}
+
+	vscrollbar mailclient_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos		"950 125"
+		height 560
+		current 0
+		viewsize 15
+		fullsize 50
+		hidewhenunused true
+		change {
+			cmd "mn_textscroll mailclient <lastdiff>;"
+			cmd "ufopedia_scrollmail;"
+		}
 	}
 
 	pic button_exit
