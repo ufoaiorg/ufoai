@@ -302,6 +302,7 @@ static void B_BaseMenuInit (const base_t *base)
 
 	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
 
+	MN_ExecuteConfunc("mn_buildings_reset");
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(base))
 		MN_ExecuteConfunc("set_aircraft_enabled");

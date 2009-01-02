@@ -10,7 +10,7 @@ menu buildings
 
 	zone render
 	{
-		invis true
+		invis		true
 	}
 
 	// ==================
@@ -19,26 +19,26 @@ menu buildings
 
 	pic back_ul
 	{
-		image	menu/base_ul
-		pos	"0 0"
+		image		menu/base_ul
+		pos			"0 0"
 	}
 
 	pic back_ur
 	{
-		image	menu/base_ur
-		pos		"512 0"
+		image		menu/base_ur
+		pos			"512 0"
 	}
 
 	pic back_lr
 	{
-		image	menu/base_lr
-		pos		"512 256"
+		image		menu/base_lr
+		pos			"512 256"
 	}
 
 	basemap thebasemap
 	{
-		pos	"0 96"
-		size	"725 672"
+		pos			"0 96"
+		size		"725 672"
 		click
 		rclick
 		mclick
@@ -46,10 +46,10 @@ menu buildings
 
 	string name
 	{
-		tooltip	"_Name of this base"
-		string	"*cvar mn_base_title"
-		pos	"60 30"
-		font	f_big
+		string		"*cvar mn_base_title"
+		tooltip		"_Name of this base"
+		pos			"60 30"
+		font		f_big
 	}
 
 	// ==================
@@ -58,12 +58,13 @@ menu buildings
 
 	custombutton back
 	{
-		image	menu/button_background	blend	true
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Back to baseview"
-		pos		"950 10"
-		icon	return
-		click	{ cmd "mn_pop;" }
+		tooltip		"_Back to baseview"
+		image		menu/button_background	blend	true
+		texl		"1 1"
+		size		"59 55"
+		pos			"950 10"
+		icon		return
+		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -72,36 +73,44 @@ menu buildings
 
 	string txt_credits_caption
 	{
-		string	"_CREDIT"
-		pos	"680 30"
-		font	f_big
+		string		"_CREDIT"
+		pos		"680 30"
+		font		f_big
 	}
 	string txt_credits
 	{
-		string	"*cvar mn_credits"
-		pos	"900 30"
-		font	f_big
-		align	ur
+		string		"*cvar mn_credits"
+		pos			"900 30"
+		font		f_big
+		align		ur
 	}
 
 	text buildings
 	{
-		pos		"770 120"
-		size	"210 600"
+		pos			"770 120"
+		size		"210 600"
 		lineheight	30
 		tabwidth	700
-		color	"0 .78 0 1"
+		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		mousefx	true
+		mousefx		true
 		textid		TEXT_BUILDINGS
-		rows	"20"
+		rows		"20"
 		click
+	}
+	confunc mn_buildings_reset
+	{
+		*buildings lineselected	-1
+		*cvar:mn_building_name	"_Select building"
+		*cvar:mn_building_image	""
+		*cvar:mn_building_info	""
+		cmd "mn_textreset 4;" // TEXT_BUILDING_INFO
 	}
 
 	func init
 	{
-		cmd "building_init;mn_push_child popup_buildingpreview buildings;buildings_click 0;"
-		*buildings lineselected 0
+		cmd "building_init;mn_push_child popup_buildingpreview buildings;"
+		call mn_buildings_reset
 	}
 
 	func close
@@ -114,25 +123,25 @@ menu buildings
 menu popup_buildingpreview
 {
 	{
-		pos "38 456"
-		size "526 237"
-		dragbutton true
+		pos			"38 456"
+		size		"526 237"
+		dragbutton	true
 	}
 
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size "526 237"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"526 237"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Building preview"
-		pos	"248 18"
-		font	f_big
-		align uc
+		string		"_Building preview"
+		pos			"248 18"
+		font		f_big
+		align		uc
 	}
 
 	// ==================
@@ -141,35 +150,35 @@ menu popup_buildingpreview
 
 	pic building_pic
 	{
-		image   "*cvar mn_building_image"
-		pos     "350 58"
-		size	"150 154"
-		bgcolor	"0 0.08 0 1"
+		image		"*cvar mn_building_image"
+		pos			"350 58"
+		size		"150 154"
+		bgcolor		"0 0.08 0 1"
 	}
 
 	string title_building
 	{
-		string	"*cvar mn_building_name"
-		pos	"30 58"
-		font	f_normal
+		string		"*cvar mn_building_name"
+		pos			"30 58"
+		font		f_normal
 	}
 
 	string status_building
 	{
-		string	"*cvar mn_building_status"
-		pos	"30 190"
-		font	f_small
+		string		"*cvar mn_building_status"
+		pos			"30 190"
+		font		f_small
 	}
 
 	text buildinginfo
 	{
-		pos		"30 100"
-		size	"300 150"
-		mousefx false
+		pos			"30 100"
+		size		"300 150"
+		mousefx	 	false
 		lineheight	20
 		tabwidth	140
 		textid		TEXT_BUILDING_INFO
-		rows	"7"
+		rows		"7"
 	}
 
 	pic ufopedia_link
@@ -179,9 +188,6 @@ menu popup_buildingpreview
 		pos			"320 190"
 		texl		"32 0"
 		texh		"47 16"
-		click
-		{
-			cmd "building_ufopedia;"
-		}
+		click		{ cmd "building_ufopedia;" }
 	}
 }
