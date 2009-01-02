@@ -343,6 +343,8 @@ menu bases
 		*production disabled true
 		*hire disabled true
 		*hospital disabled true
+		*menu:aircraft.button_buysell disabled true
+		*menu:aircraft.button_produce disabled true
 	}
 	confunc set_base_to_normal
 	{
@@ -365,10 +367,12 @@ menu bases
 	confunc set_buysell_disabled
 	{
 		*buysell disabled true
+		*menu:aircraft.button_buysell disabled true
 	}
 	confunc set_buysell_enabled
 	{
 		*buysell disabled false
+		*menu:aircraft.button_buysell disabled false
 	}
 
 	confunc set_transfer_disabled
@@ -392,10 +396,12 @@ menu bases
 	confunc set_prod_disabled
 	{
 		*production disabled true
+		*menu:aircraft.button_produce disabled true
 	}
 	confunc set_prod_enabled
 	{
 		*production disabled false
+		*menu:aircraft.button_produce disabled false
 	}
 
 	confunc set_hire_disabled
