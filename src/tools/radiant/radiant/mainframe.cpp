@@ -1979,12 +1979,6 @@ void MainFrame::Create (void)
 	GtkToolbar* main_toolbar_v = create_main_toolbar_vertical(CurrentStyle());
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 
-#ifdef WIN32
-	if (g_multimon_globals.m_bStartOnPrimMon) {
-		PositionWindowOnPrimaryScreen(g_layout_globals.m_position);
-		window_set_position(window, g_layout_globals.m_position);
-	} else
-#endif
 	if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
 		window_set_position(window, g_layout_globals.m_position);
 	}

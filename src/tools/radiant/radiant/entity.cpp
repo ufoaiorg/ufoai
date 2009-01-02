@@ -204,9 +204,9 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 		if (transform != 0) {
 			transform->setType(TRANSFORM_PRIMITIVE);
 			if (isStartingPosition) {
-				const int sizeX = (entityClass->maxs[0] - entityClass->mins[0]) / 2;
-				const int sizeY = (entityClass->maxs[1] - entityClass->mins[1]) / 2;
-				const int sizeZ = (entityClass->maxs[2] - entityClass->mins[2]) / 2;
+				const int sizeX = (entityClass->maxs[0] - entityClass->mins[0]) / 2.0;
+				const int sizeY = (entityClass->maxs[1] - entityClass->mins[1]) / 2.0;
+				const int sizeZ = (entityClass->maxs[2] - entityClass->mins[2]) / 2.0;
 				const int x = ((int) origin.x() / UNIT_SIZE) * UNIT_SIZE - sizeX;
 				const int y = ((int) origin.y() / UNIT_SIZE) * UNIT_SIZE - sizeY;
 				const int z = ((int) origin.z() / UNIT_HEIGHT) * UNIT_HEIGHT + sizeZ;

@@ -1161,14 +1161,6 @@ GtkWidget* TextureBrowser_constructWindow (GtkWindow* toplevel) {
 	GlobalShaderSystem().setActiveShadersChangedNotify(ReferenceCaller<TextureBrowser, TextureBrowser_activeShadersChanged>(g_TextureBrowser));
 
 	g_TextureBrowser.m_parent = toplevel;
-
-#ifdef WIN32
-	if (g_multimon_globals.m_bStartOnPrimMon) {
-		WindowPosition pos(g_TextureBrowser.m_position_tracker.getPosition());
-		PositionWindowOnPrimaryScreen(pos);
-		g_TextureBrowser.m_position_tracker.setPosition(pos);
-	}
-#endif
 	g_TextureBrowser.m_position_tracker.connect(toplevel);
 
 	GtkWidget* table = gtk_table_new(3, 3, FALSE);
