@@ -155,29 +155,25 @@ void DoTextEditor (const char* filename, int cursorpos, const char *appendConten
 	// Load file
 	FILE *f = fopen(filename, "r");
 
-	const char *content;
-	int len;
 	void *old_filename;
-	void *buf;
 
-	if (f == 0) {
-		content = "";
-		len = 1;
-		buf = NULL;
-	} else {
+	gtk_window_set_title(GTK_WINDOW(text_editor), filename);
+	GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
+
+	if (f != 0) {
 		fseek(f, 0, SEEK_END);
-		len = ftell(f);
-		buf = malloc(len);
+		const int len = ftell(f);
+		void *buf = malloc(len);
 
 		rewind(f);
 		fread(buf, 1, len, f);
-		content = (char *)buf;
+
+		gtk_text_buffer_set_text(text_buffer, (char *)buf, len);
+
+		free(buf);
+		fclose(f);
 	}
 
-	gtk_window_set_title(GTK_WINDOW(text_editor), filename);
-
-	GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
-	gtk_text_buffer_set_text(text_buffer, content, len);
 	if (appendContent) {
 		GtkTextIter iter;
 		gtk_text_buffer_get_end_iter(text_buffer, &iter);
@@ -210,9 +206,4 @@ void DoTextEditor (const char* filename, int cursorpos, const char *appendConten
 #ifdef WIN32
 	gtk_widget_queue_draw(text_widget);
 #endif
-
-	if (f != 0) {
-		free(buf);
-		fclose(f);
-	}
 }
