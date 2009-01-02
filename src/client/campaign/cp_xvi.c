@@ -191,9 +191,9 @@ void CP_StartXVISpreading_f (void)
 	ccs.XVIShowMap = qtrue;
 
 	/* Spawn a few alien bases depending on difficulty level */
-	if (difficulty->integer > 0)
+	if (curCampaign->difficulty > 0)
 		numAlienBases = 3;
-	else if (difficulty->integer < 0)
+	else if (curCampaign->difficulty < 0)
 		numAlienBases = 1;
 	else
 		numAlienBases = 2;

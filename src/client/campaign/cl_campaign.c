@@ -1527,7 +1527,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		if (i >= gd.numAlienCategories) {
 			Com_Printf("CP_Load: alien category def \"%s\" doesn't exist\n", name);
 			return qfalse;
-		} 
+		}
 		j = MSG_ReadShort(sb);
 		if (j >= INTERESTCATEGORY_MAX) {
 			Com_Printf("CP_Load: Undefined alien team (category '%s', group '%i')\n", name, j);
@@ -1842,16 +1842,16 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			/* very hard to win this */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		case INTERESTCATEGORY_XVI:
 			/* not that hard to win this, they want to spread xvi - no real terror mission */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		default:
 			/** @todo change the formular here to reflect the above comments */
-			winProbability = exp((0.5 - .15 * difficulty->integer) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, aircraft->teamSize, winProbability);
@@ -1905,7 +1905,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 				listPos = listPos->next;
 			}
 
-			winProbability = exp((0.5 - .15 * difficulty->integer) * numSoldiers - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * numSoldiers - ccs.battleParameters.aliens);
 			winProbability += increaseWinProbability;
 
 			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i - UGVs: %i -- probability to win: %.02f\n",
@@ -2478,9 +2478,9 @@ static void CL_GameNew_f (void)
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
-	if (difficulty->integer < -4)
+	if (curCampaign->difficulty < -4)
 		Cvar_ForceSet("difficulty", "-4");
-	else if (difficulty->integer > 4)
+	else if (curCampaign->difficulty > 4)
 		Cvar_ForceSet("difficulty", "4");
 
 	MAP_Init();
