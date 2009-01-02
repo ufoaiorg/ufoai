@@ -610,35 +610,33 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 
 	/* Set default reaction-firemode (or set already working again one to update TUs) on game-start. */
 	for (actorIdx = 0; actorIdx < cl.numTeamList; actorIdx++) {
-		/** @todo CL_WorkingFiremode also checks for CL_GetActorChr - when this
-		 * function returns true, it's possible that the chr->... stuff will
-		 * segfault here - and true is returned when CL_GetActorChr return NULL
-		 * in CL_WorkingFiremode */
-		if (CL_WorkingFiremode(cl.teamList[actorIdx], qtrue)) {
+		le_t *le = cl.teamList[actorIdx];
+		if (CL_WorkingFiremode(le, qtrue)) {
 			/* Rewrite/-send selected reaction firemode in case reserved-TUs or server is outdated. */
-			const character_t *chr = CL_GetActorChr(cl.teamList[actorIdx]);
+			const character_t *chr = CL_GetActorChr(le);
+			if (!chr)
+				Com_Error(ERR_DROP, "No character struct assigned to actor");
 			assert(cls.missionaircraft);
-			assert(chr);
-			CL_SetReactionFiremode(cl.teamList[actorIdx], chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
+			CL_SetReactionFiremode(le, chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
 
 			/* Reserve Tus for crouching/standing up if player selected this previously. */
 			if (chr->reservedTus.reserveCrouch) {
 				/** @sa CL_ActorToggleCrouchReservation_f */
 				/* Reserve the exact amount for crouching/standing up (if we have enough to do so). */
-				if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
-					CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
+				if ((CL_UsableTUs(le) + CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH)) {
+					CL_ReserveTUs(le, RES_CROUCH, TU_CROUCH);
 					MN_ExecuteConfunc("crouch_checkbox_check");
 				} else {
 					MN_ExecuteConfunc("crouch_checkbox_disable");
 				}
 			}
 		} else {
-			CL_SetDefaultReactionFiremode(cl.teamList[actorIdx], ACTOR_HAND_CHAR_RIGHT);
+			CL_SetDefaultReactionFiremode(le, ACTOR_HAND_CHAR_RIGHT);
 		}
 
 #if 0
 		/** @todo Check for changed settings here. */
-		if (CL_WorkingFiremode(cl.teamList[actorIdx], qfalse)) {
+		if (CL_WorkingFiremode(le, qfalse)) {
 		} else {
 		}
 #endif
