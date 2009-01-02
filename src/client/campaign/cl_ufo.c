@@ -492,6 +492,7 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 {
 	int slotIdx;
+	vec2_t dest;
 
 	assert(ufo);
 	assert(aircraft);
@@ -504,7 +505,8 @@ qboolean UFO_SendPursuingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
 		return qfalse;
 	}
 
-	MAP_MapCalcLine(ufo->pos, aircraft->pos, &ufo->route);
+	AIR_GetDestinationWhilePursuing(ufo, aircraft, &dest);
+	MAP_MapCalcLine(ufo->pos, dest, &ufo->route);
 	ufo->status = AIR_UFO;
 	ufo->time = 0;
 	ufo->point = 0;

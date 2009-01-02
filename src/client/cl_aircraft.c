@@ -1915,8 +1915,10 @@ void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
  * We should use here geometry on a sphere, and only compute this calculation every time target
  * change destination, or one of the aircraft speed changes. The calculation here gives good results
  * when both aircraft are quite close (most of the time, it's true).
+ * @sa AIR_SendAircraftPursuingUFO
+ * @sa UFO_SendPursuingAircraft
  */
-static void AIR_GetDestination (const aircraft_t const *shooter, const aircraft_t const *target, vec2_t *dest)
+void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const aircraft_t const *target, vec2_t *dest)
 {
 	vec3_t shooterPos, targetPos, targetDestPos, shooterDestPos, rotationAxis;
 	float dist;
@@ -1967,7 +1969,7 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 
 	/* don't check if the aircraft has enough fuel: maybe UFO will come closer */
 
-	AIR_GetDestination(aircraft, ufo, &dest);
+	AIR_GetDestinationWhilePursuing(aircraft, ufo, &dest);
 	MAP_MapCalcLine(aircraft->pos, dest, &aircraft->route);
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
