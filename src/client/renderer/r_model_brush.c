@@ -125,14 +125,12 @@ static void R_ModLoadNormals (const lump_t *l)
 	in = (const void *)(mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in)) {
 		Com_Error(ERR_DROP, "R_LoadNormals: Funny lump size in %s.", r_worldmodel->name);
-		return;
 	}
 	count = l->filelen / sizeof(*in);
 
 	if (count != r_worldmodel->bsp.numvertexes) {  /* ensure sane normals count */
 		Com_Error(ERR_DROP, "R_LoadNormals: unexpected normals count in %s: (%d != %d).",
 				r_worldmodel->name, count, r_worldmodel->bsp.numvertexes);
-		return;
 	}
 
 	out = r_worldmodel->bsp.vertexes;
@@ -144,7 +142,7 @@ static void R_ModLoadNormals (const lump_t *l)
 	}
 }
 
-static inline float RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
+static inline float R_RadiusFromBounds (const vec3_t mins, const vec3_t maxs)
 {
 	int i;
 	vec3_t corner;
@@ -183,7 +181,7 @@ static void R_ModLoadSubmodels (const lump_t *l)
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1.0f + (float)shift[j];
 			out->origin[j] = LittleFloat(in->origin[j]) + (float)shift[j];
 		}
-		out->radius = RadiusFromBounds(out->mins, out->maxs);
+		out->radius = R_RadiusFromBounds(out->mins, out->maxs);
 		out->headnode = LittleLong(in->headnode);
 		out->firstface = LittleLong(in->firstface);
 		out->numfaces = LittleLong(in->numfaces);
