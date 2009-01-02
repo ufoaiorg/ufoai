@@ -1797,7 +1797,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 	assert(chr);
 
 	/* team definition is not defined when new phalanx recruits are added */
-	if (chr->teamDef) {
+	if (chr->teamDef && chr->teamDef->race != RACE_PHALANX_HUMAN && chr->teamDef->race != RACE_ROBOT) {
 		/* Add modifiers for difficulty setting here! */
 		switch (chr->teamDef->race) {
 		case RACE_TAMAN:

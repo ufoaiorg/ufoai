@@ -10,8 +10,7 @@
 // weapons	Team may carry and use weapons
 // armour	Team may carry armour
 // race		Race of the team (see CL_GetAlienRaceByID() for available values). Default value is phalanx race.
-// alien	Team is an alien team
-// civilian	Team is a civilian team
+// robot	Team is a robot team
 // tech		Tech id to link
 // name		Translateable team name
 // size		Actorsize
@@ -207,6 +206,7 @@ team bloodspider
 	name	"_Bloodspider"
 	tech	"rs_alien_bloodspider_autopsy"
 	race	bloodspider
+	robot	true
 	armour	false
 	weapons	false
 	onlyWeapon	bloodspider_weapon

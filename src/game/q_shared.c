@@ -44,12 +44,3 @@ const char *pa_format[] =
 	"sss",				/**< PA_REACT_SELECT */
 	"sss"				/**< PA_RESERVE_STATE */
 };
-
-/**
- * @brief Check if a team definition is a robot.
- * @param[in] td Pointer to the team definition to check.
- */
-qboolean AL_IsTeamDefRobot (const teamDef_t const *td)
-{
-	return (td->race == RACE_ROBOT) || (td->race == RACE_BLOODSPIDER);
-}

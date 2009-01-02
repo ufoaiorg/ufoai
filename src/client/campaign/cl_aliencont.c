@@ -212,7 +212,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 				INV_CollectItem(aircraft, alBrOd, cargo[i].amount_dead);
 				if (cargo[i].amount_alive <= 0)
 					continue;
-				if (!alienBreathing && !AL_IsTeamDefRobot(cargo[i].teamDef)) {
+				if (!alienBreathing && !cargo[i].teamDef->robot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well */
