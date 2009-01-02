@@ -560,8 +560,7 @@ void UFO_CheckShootBack (aircraft_t *ufo, aircraft_t* phalanxAircraft)
  */
 void UFO_CampaignRunUFOs (int dt)
 {
-	aircraft_t*	ufo;
-	int k;
+	int ufoIdx, k;
 
 	assert(dt >= 0);
 
@@ -570,7 +569,8 @@ void UFO_CampaignRunUFOs (int dt)
 		return;
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
-	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
+	for (ufoIdx = gd.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
+		aircraft_t *ufo = &gd.ufos[ufoIdx];
 		/* don't run a landed ufo */
 		if (ufo->landed)
 			continue;
@@ -591,7 +591,9 @@ void UFO_CampaignRunUFOs (int dt)
 				UFO_SetRandomDestAround(ufo, ufo->mission->pos);
 			} else
 				UFO_SetRandomDest(ufo);
-			CP_CheckNextStageDestination(ufo);
+			if (CP_CheckNextStageDestination(ufo))
+				/* UFO has been removed from game */
+				continue;
 		}
 
 		/* is there a PHALANX aircraft to shoot at ? */
@@ -755,8 +757,12 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 		return;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->name);
-	memcpy(gd.ufos + num, gd.ufos + num + 1, (gd.numUFOs - num - 1) * sizeof(aircraft_t));
+	/* move other ufos if the deleted ufo was not the last one */
+	if (num < gd.numUFOs - 1)
+		memcpy(&gd.ufos[num], &gd.ufos[num + 1], (gd.numUFOs - num - 1) * sizeof(aircraft_t));
 	gd.numUFOs--;
+	/* wipe the now vacant last slot */
+	memset(&gd.ufos[gd.numUFOs], 0, sizeof(gd.ufos[gd.numUFOs]));
 }
 
 #ifdef DEBUG

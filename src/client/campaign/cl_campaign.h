@@ -377,7 +377,7 @@ extern cvar_t *cl_campaign;
 void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
 void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 
-void CP_CheckNextStageDestination(aircraft_t *ufo);
+qboolean CP_CheckNextStageDestination(aircraft_t *ufo);
 
 void CP_InitStartup(void);
 void CL_ResetSinglePlayerData(void);

@@ -247,10 +247,11 @@ void CP_MissionNotifyInstallationDestroyed (const installation_t const *installa
 
 /**
  * @brief Check if a stage mission is over when UFO reached destination.
- * @param[in] ufocraft Pointer to the ufo that reached destination
+ * @param[in] ufocraft Pointer to the ufo that reached destination.
  * @sa UFO_CampaignRunUFOs
+ * @return True if UFO is removed from global array (and therfore pointer ufocraft can't be used anymore).
  */
-void CP_CheckNextStageDestination (aircraft_t *ufocraft)
+qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
 {
 	mission_t *mission;
 
@@ -259,13 +260,15 @@ void CP_CheckNextStageDestination (aircraft_t *ufocraft)
 
 	switch (mission->stage) {
 	case STAGE_COME_FROM_ORBIT:
-	case STAGE_RETURN_TO_ORBIT:
 	case STAGE_MISSION_GOTO:
 		CP_MissionStageEnd(mission);
-		break;
+		return qfalse;
+	case STAGE_RETURN_TO_ORBIT:
+		CP_MissionStageEnd(mission);
+		return qtrue;
 	default:
 		/* Do nothing */
-		break;
+		return qfalse;
 	}
 }
 
