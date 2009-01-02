@@ -570,8 +570,8 @@ character_t *CL_GetActorChr (const le_t * le)
 		}
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: No character info found!\n");
-	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: aircraft: %i, actorIdx: %i, p: %i\n", aircraft->idx, actorIdx, p);
+	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: No character info found! aircraft: %i, actorIdx: %i, p: %i\n",
+		aircraft->idx, actorIdx, p);
 	return NULL;
 }
 
