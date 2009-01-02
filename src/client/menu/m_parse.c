@@ -120,7 +120,7 @@ char* MN_AllocString (const char* string, int size)
 /**
  * @brief Prse actions and return action list
  * @return The first element from a list of action
- * @sa MN_ExecuteActions
+ * @sa ea_t
  * @todo need cleanup, compute action out of the final memory; reduce number of var
  */
 static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, const const char **token)

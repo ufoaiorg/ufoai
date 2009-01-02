@@ -48,87 +48,6 @@ void MN_ExecuteConfunc (const char *fmt, ...)
 	va_end(ap);
 }
 
-static inline void MN_ExecuteAction (const menu_t* const menu, const menuAction_t* const action)
-{
-	byte *data;
-	switch (action->type) {
-	case EA_NULL:
-		/* do nothing */
-		break;
-	case EA_CMD:
-		/* execute a command */
-		if (action->data) {
-			const char *cmd = (const char *)action->data;
-			Cbuf_AddText(va("%s\n", cmd));
-		}
-		break;
-	case EA_CALL:
-		/* call another function */
-		MN_ExecuteActions(menu, **(menuAction_t ***) action->data);
-		break;
-	case EA_SET:
-		/* set a property */
-		if (action->data) {
-			menuNode_t *node;
-
-			data = action->data;
-			data += ALIGN(strlen(action->data) + 1);
-
-			/* search the node */
-			node = MN_GetNode(menu, (char *) action->data);
-
-			if (!node) {
-				/* didn't find node -> "kill" action and print error */
-				Com_Printf("MN_ExecuteActions: node \"%s\" doesn't exist\n", (char *) action->data);
-				break;
-			}
-
-			if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
-				Com_SetValue(node, (char *) data, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-			else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
-				void *mem = ((byte *) node + action->scriptValues->ofs);
-				switch (action->scriptValues->type & V_BASETYPEMASK) {
-				case V_FLOAT:
-					**(float **) mem = *(float*) data;
-					break;
-				case V_INT:
-					**(int **) mem = *(int*) data;
-					break;
-				default:
-					*(byte **) mem = data;
-				}
-			} else if (action->scriptValues->type == V_SPECIAL_ACTION) {
-				void *mem = ((byte *) node + action->scriptValues->ofs);
-				*(menuAction_t**) mem = *(menuAction_t**) data;
-			} else {
-				assert(qfalse);
-			}
-		}
-		break;
-	case EA_IF:
-		if (MN_CheckCondition((menuDepends_t *) action->data)) {
-			MN_ExecuteActions(menu, (const menuAction_t* const) action->scriptValues);
-		}
-		break;
-
-	default:
-		Sys_Error("unknown action type\n");
-		break;
-	}
-
-}
-
-/**
- * @sa MN_ParseAction
- */
-void MN_ExecuteActions (const menu_t* const menu, const menuAction_t* const first)
-{
-	const menuAction_t *action;
-	for (action = first; action; action = action->next) {
-		MN_ExecuteAction(menu, action);
-	}
-}
-
 /**
  * @brief read a property name from an input buffer to an output
  * @return last position into the input buffer if we find property, else NULL
@@ -224,6 +143,94 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 	return cmd;
 }
 
+/**
+ * @todo remove 'menu' param when its possible
+ */
+static inline void MN_ExecuteInjectedAction (const menuNode_t* source, const menu_t* menu, qboolean useCmdParam, const menuAction_t* action)
+{
+	switch (action->type) {
+
+	case EA_NULL:
+		/* do nothing */
+		break;
+
+	case EA_CMD:
+		/* execute a command */
+		if (action->data)
+			Cbuf_AddText(MN_GenInjectedString(source, useCmdParam, action->data, qtrue));
+		break;
+
+	case EA_CALL:
+		/* call another function */
+		MN_ExecuteActions(menu, **(menuAction_t ***) action->data);
+		break;
+
+	case EA_SET:
+		/* set a property */
+		if (action->data) {
+			const char* nodeName = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
+			byte *value;
+			menuNode_t *node;
+
+			value = action->data;
+			value += ALIGN(strlen(action->data) + 1);
+
+			/* search the node */
+			node = MN_GetNode(menu, nodeName);
+
+			if (!node) {
+				/* didn't find node -> "kill" action and print error */
+				Com_Printf("MN_ExecuteInjectedActions: node \"%s.%s\" doesn't exist\n", menu->name, nodeName);
+				break;
+			}
+
+			if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
+				Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
+			else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
+				void *mem = ((byte *) node + action->scriptValues->ofs);
+				switch (action->scriptValues->type & V_BASETYPEMASK) {
+				case V_FLOAT:
+					**(float **) mem = *(float*) value;
+					break;
+				case V_INT:
+					**(int **) mem = *(int*) value;
+					break;
+				default:
+					*(byte **) mem = value;
+				}
+			} else if (action->scriptValues->type == V_SPECIAL_ACTION) {
+				void *mem = ((byte *) node + action->scriptValues->ofs);
+				*(menuAction_t**) mem = *(menuAction_t**)value;
+			} else {
+				assert(qfalse);
+			}
+		}
+		break;
+
+	case EA_IF:
+		if (MN_CheckCondition((menuDepends_t *) action->data)) {
+			MN_ExecuteActions(menu, (const menuAction_t* const) action->scriptValues);
+		}
+		break;
+
+	default:
+		Sys_Error("unknown action type\n");
+		break;
+	}
+
+}
+
+/**
+ * @sa MN_ParseAction
+ */
+void MN_ExecuteActions (const menu_t* const menu, const menuAction_t* const first)
+{
+	const menuAction_t *action;
+	for (action = first; action; action = action->next) {
+		MN_ExecuteInjectedAction(NULL, menu, qfalse, action);
+	}
+}
+
 static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
 {
 	static int callnumber = 0;
@@ -233,58 +240,11 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 		return;
 	}
 	for (action = firstAction; action; action = action->next) {
-		switch (action->type) {
-		/* execute a command */
-		case EA_CMD:
-			if (action->data)
-				Cbuf_AddText(MN_GenInjectedString(source, useCmdParam, action->data, qtrue));
-			break;
-
-		case EA_SET:
-			/* set a property */
-			if (action->data) {
-				const char* nodeName = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
-				byte *value;
-				menuNode_t *node;
-
-				value = action->data;
-				value += ALIGN(strlen(action->data) + 1);
-
-				/* search the node */
-				node = MN_GetNode(source->menu, nodeName);
-
-				if (!node) {
-					/* didn't find node -> "kill" action and print error */
-					Com_Printf("MN_ExecuteInjectedActions: node \"%s.%s\" doesn't exist\n", source->menu->name, nodeName);
-					break;
-				}
-
-				if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
-					Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
-				else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
-					void *mem = ((byte *) node + action->scriptValues->ofs);
-					switch (action->scriptValues->type & V_BASETYPEMASK) {
-					case V_FLOAT:
-						**(float **) mem = *(float*) value;
-						break;
-					case V_INT:
-						**(int **) mem = *(int*) value;
-						break;
-					default:
-						*(byte **) mem = value;
-					}
-				} else if (action->scriptValues->type == V_SPECIAL_ACTION) {
-					void *mem = ((byte *) node + action->scriptValues->ofs);
-					*(menuAction_t**) mem = *(menuAction_t**)value;
-				} else {
-					assert(qfalse);
-				}
-			}
-			break;
-
-		default:
-			MN_ExecuteAction(source->menu, action);
+		menu_t *menu = NULL;
+		if (source) {
+			menu = source->menu;
 		}
+		MN_ExecuteInjectedAction(source, menu, useCmdParam, action);
 	}
 	callnumber--;
 }
