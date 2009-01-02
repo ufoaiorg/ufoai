@@ -26,33 +26,30 @@ menu ufopedia
 	// buttons
 	// ==================
 
-	pic bt_prev
+	custombutton bt_prev
 	{
 		tooltip "_Previous entry"
-		image	icons/ufopedia_prev
-		blend true
-		pos	"675 10"
-		size "65 65"
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"10 10"	size	"64 37"
+		icon prev
 		click	{ cmd mn_upprev; }
 	}
 
-	pic bt_next
+	custombutton bt_next
 	{
 		tooltip "_Next entry"
-		image	icons/ufopedia_next
-		blend true
-		pos	"845 10"
-		size	"65 65"
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"950 10"	size	"64 37"
+		icon next
 		click	{ cmd mn_upnext; }
 	}
 
-	pic button_content
+	custombutton button_content
 	{
 		tooltip "_Back to content"
-		image	icons/ufopedia_idx
-		blend true
-		pos	"760 10"
-		size	"65 65"
+		image	menu/button_background	texl	"192 0"	blend true
+		pos	"10 720"	size	"64 37"
+		icon list
 		click	{ cmd "mn_upback;" }
 	}
 
@@ -83,9 +80,11 @@ menu ufopedia
 	pic button_exit
 	{
 		tooltip "_Leave UFOpaedia"
-		image	icons/ufopedia_geo
+		image	hud/buttons2
 		mousefx true
-		pos		"920 10"
+		pos		"950 720"
+		texl	"0 0"
+		texh	"64 37"
 		click	{
 			cmd "mn_pop;"
 		}
@@ -99,11 +98,12 @@ menu ufopedia
 	{
 		if "mn_up_mail == 0"
 		pos		"40 85"
-		size	"540 640"
+		size	"640 368"
 		textid		TEXT_UFOPEDIA
 		lineheight	23
 		tabwidth	100
 		click rclick
+//		bgcolor " 0.5 1 0.5 0.3"
 		rows	"16"
 		wheel {
 			cmd "mn_setnodeproperty ufopedia_scroll current <text_scroll>;"
@@ -117,7 +117,7 @@ menu ufopedia
 	vscrollbar ufopedia_scroll {
 		if "mn_up_mail == 0"
 		image	menu/scrollbar_v_green	blend	true
-		pos	"704 85"	height	"640"
+		pos	"704 85"	height	"368"
 		current 0
 		viewsize 16
 		fullsize 50
@@ -129,14 +129,14 @@ menu ufopedia
 	text ufopedia_mail
 	{
 		if "mn_up_mail == 1"
-		pos		"40 208"
-		size	"540 540"
+		pos		"50 208"
+		size	"640 240"
 		textid		TEXT_UFOPEDIA
 		lineheight	24
 		tabwidth	100
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
-		rows	"23"
+		rows	"10"
 		wheel {
 			cmd "mn_setnodeproperty ufopedia_mail_scroll current <text_scroll>;"
 		}
@@ -149,9 +149,9 @@ menu ufopedia
 	vscrollbar ufopedia_mail_scroll {
 		if "mn_up_mail == 1"
 		image	menu/scrollbar_v_green	blend	true
-		pos	"585 208"	height	"540"
+		pos	"704 208"	height	"240"
 		current 0
-		viewsize 23
+		viewsize 10
 		fullsize 50
 		change {
 			cmd "mn_textscroll ufopedia_mail <lastdiff>;"
@@ -161,8 +161,8 @@ menu ufopedia
 	text ufopedia_mail_header
 	{
 		if "mn_up_mail == 1"
-		pos		"40 80"
-		size	"550 134"
+		pos		"50 80"
+		size	"660 134"
 		textid		TEXT_UFOPEDIA_MAILHEADER
 		lineheight	"24"
 		rows	"5"
@@ -198,13 +198,13 @@ menu ufopedia
 
 	text description
 	{
-		pos		"630 420"
-		size	"380 200"
+		pos		"30 495"
+		size	"495 200"
 		lineheight	20
 		tabwidth	230
-		bgcolor	" 1 0.5 0.5 0.3"
+//		bgcolor	" 1 0.5 0.5 0.3"
 		wheel
-		rows	"12"
+		rows	"10"
 		scrollbar true
 	}
 
@@ -283,8 +283,8 @@ menu ufopedia
 	pic image_top
 	{
 		image	"*cvar mn_upimage_top"
-		pos		"680 85"
-		size	"280 0"
+		pos		"750 85"
+		size	"240 0"
 //		bgcolor "1 0.5 1 0.3"
 	}
 

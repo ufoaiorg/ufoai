@@ -393,7 +393,7 @@ menu popup_tipoftheday
 			*bt_next tooltip "_Next tip"
 		}
 		if "cl_showTipOfTheDay != 1" {
-			*bt_next string "_Close tip"
+			*bt_next string "_Close"
 			*bt_next tooltip "_Close window"
 		}
 	}

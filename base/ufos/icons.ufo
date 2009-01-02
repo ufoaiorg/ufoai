@@ -216,31 +216,3 @@ icon geo_map {
 	texl	"131 2"
 	size	"22 20"
 }
-
-icon u_geo {
-	image "icons/ufopaedy_geo"
-	texl	"0 0"
-	size	"65 65"
-	single	true
-}
-
-icon u_idx {
-	image "ufopaedy_idx"
-	texl	"0 0"
-	size	"65 65"
-	single	true
-}
-
-icon u_next {
-	image "ufopaedy_next"
-	texl	"0 0"
-	size	"65 65"
-	single	true
-}
-
-icon u_prev {
-	image "ufopaedy_prev"
-	texl	"0 0"
-	size	"65 65"
-	single	true
-}
