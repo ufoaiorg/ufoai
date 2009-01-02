@@ -99,11 +99,9 @@
 equipment alien_workers1
 {
 	mininterest			0
-	maxinterest			250
+	maxinterest			150
 
 	// Primary
-	plasrifle			2
-		plasrifle_ammo		0
 
 	// Secondary
 	plaspistol			50
@@ -119,11 +117,9 @@ equipment alien_workers1
 equipment alien_workers1_explosive
 {
 	mininterest			0
-	maxinterest			250
+	maxinterest			150
 
 	// Primary
-	plasblaster			35
-		plasblaster_ammo	1
 
 	// Secondary
 	plaspistol			30
@@ -138,45 +134,9 @@ equipment alien_workers1_explosive
 	medium_alien		2
 }
 
-equipment alien_soldiers0
-{
-	mininterest			0
-	maxinterest			40
-
-	// Secondary
-	plaspistol			5
-		plaspistol_ammo		0
-
-	// Misc
-	kerrblade			100
-}
-
-equipment alien_soldiers1
-{
-	mininterest			0
-	maxinterest			250
-
-	// Primary
-	plasrifle			40
-		plasrifle_ammo		1
-	plasblaster			18
-		plasblaster_ammo	0
-
-	// Secondary
-	plaspistol			38
-		plaspistol_ammo		1
-
-	// Misc
-	kerrblade			80
-	plasblade			3
-
-	// Armour
-	light_alien			33
-}
-
 equipment alien_workers2
 {
-	mininterest			250
+	mininterest			150
 	maxinterest			500
 
 	// Primary
@@ -194,61 +154,6 @@ equipment alien_workers2
 	// Armour
 	light_alien			2
 	medium_alien		18
-}
-
-equipment alien_soldiers_melee2
-{
-	mininterest			250
-	maxinterest			500
-
-	// Primary
-	plasrifle			3
-		plasrifle_ammo		0
-	pbeamrifle			3
-		pbeamrifle_ammo		0
-
-	// Secondary
-	plaspistol			3
-		plaspistol_ammo		0
-	pbeampistol			3
-		pbeampistol_ammo	0
-
-	// Misc
-	kerrblade			10
-	plasblade			85
-	plasmagrenade		5
-
-	// Armour
-	light_alien			18
-	medium_alien		25
-//	heavy_alien			3
-}
-
-equipment alien_soldiers2
-{
-	mininterest			250
-	maxinterest			500
-
-	// Primary
-	plasrifle			60
-		plasrifle_ammo		0
-	plasblaster			30
-		plasblaster_ammo	1
-
-	// Secondary
-	plaspistol			90
-		plaspistol_ammo		0
-	pbeampistol			3
-		pbeampistol_ammo	1
-
-	// Misc
-	kerrblade			80
-	plasblade			15
-	plasmagrenade		5
-
-	// Armour
-	light_alien			60
-	medium_alien		8
 }
 
 equipment alien_workers3
@@ -299,38 +204,6 @@ equipment alien_workers_explosive3
 //  heavy_alien			3
 }
 
-equipment alien_soldiers3
-{
-	mininterest			500
-	maxinterest			750
-
-	// Primary
-	plasblaster			30
-		plasblaster_ammo	1
-	plasrifle			30
-		plasrifle_ammo		1
-	pbeamrifle			6
-		pbeamrifle_ammo		0
-	needlergun          20
-		needlergun_ammo     1
-
-	// Secondary
-	plaspistol			38
-		plaspistol_ammo		1
-	pbeampistol			50
-		pbeampistol_ammo	1
-
-	// Misc
-	kerrblade			10
-	plasblade			50
-	plasmagrenade		30
-
-	// Armour
-	light_alien         38
-	medium_alien		50
-//  heavy_alien			3
-}
-
 equipment alien_workers4
 {
 	mininterest			750
@@ -363,33 +236,152 @@ equipment alien_workers4
 //	heavy_alien         40
 }
 
-equipment alien_soldiers_plasma4
+equipment alien_soldiers0
 {
-	mininterest			750
-	maxinterest			10000
+	mininterest			0
+	maxinterest			100
+
+	// Secondary
+	plaspistol			5
+		plaspistol_ammo		0
+
+	// Misc
+	kerrblade			100
+}
+
+equipment alien_soldiers1
+{
+	mininterest			50
+	maxinterest			150
 
 	// Primary
-	plasrifle			22
+	plasrifle			40
 		plasrifle_ammo		1
-	plasblaster			70
+
+	// Secondary
+	plaspistol			38
+		plaspistol_ammo		1
+
+	// Misc
+	kerrblade			80
+	plasblade			3
+
+	// Armour
+	light_alien			33
+}
+
+equipment alien_soldiers2
+{
+	mininterest			150
+	maxinterest			300
+
+	// Primary
+	plasrifle			60
+		plasrifle_ammo		0
+	plasblaster			30
 		plasblaster_ammo	1
 
 	// Secondary
-	plaspistol			80
-		plaspistol_ammo		3
+	plaspistol			90
+		plaspistol_ammo		0
 
 	// Misc
-	kerrblade			2
-	plasblade			40
-	plasmagrenade		360
+	kerrblade			80
+	plasblade			15
+	plasmagrenade		5
 
 	// Armour
-	light_alien			2
-	medium_alien		95	// 10
-//	heavy_alien         85
+	light_alien			60
+	medium_alien		10
+}
+
+equipment alien_soldiers2_melee
+{
+	mininterest			150
+	maxinterest			300
+
+	// Primary
+	plasrifle			3
+		plasrifle_ammo		0
+
+	// Secondary
+	plaspistol			3
+		plaspistol_ammo		0
+
+	// Misc
+	kerrblade			10
+	plasblade			85
+	plasmagrenade		5
+
+	// Armour
+	light_alien			40
+	medium_alien		20
+//	heavy_alien			3
+}
+
+equipment alien_soldiers3
+{
+	mininterest			250
+	maxinterest			500
+
+	// Primary
+	plasblaster			30
+		plasblaster_ammo	1
+	plasrifle			30
+		plasrifle_ammo		1
+	needlergun          20
+		needlergun_ammo     1
+
+	// Secondary
+	plaspistol			38
+		plaspistol_ammo		1
+	pbeampistol			50
+		pbeampistol_ammo	1
+
+	// Misc
+	kerrblade			10
+	plasblade			50
+	plasmagrenade		30
+
+	// Armour
+	light_alien         38
+	medium_alien		50
+//  heavy_alien			3
 }
 
 equipment alien_soldiers4
+{
+	mininterest			400
+	maxinterest			750
+
+	// Primary
+	plasblaster			20
+		plasblaster_ammo	1
+	needlergun          20
+		needlergun_ammo     1
+	pbeamrifle			25
+		pbeamrifle_ammo		1
+	heavyneedler        10
+//		needlergun_ammo		(use same ammo as for needlergun)
+
+	// Secondary
+	plaspistol			20
+		plaspistol_ammo		1
+	pbeampistol			70
+		pbeampistol_ammo	1
+
+	// Misc
+	kerrblade			10
+	plasblade			50
+	plasmagrenade		30
+
+	// Armour
+	light_alien         38
+	medium_alien		50
+//  heavy_alien			3
+}
+
+equipment alien_soldiers99
 {
 	mininterest			750
 	maxinterest			10000
@@ -423,6 +415,32 @@ equipment alien_soldiers4
 	light_alien			2
 	medium_alien		95	// 10
 //	heavy_alien			70
+}
+
+equipment alien_soldiers99_plasma
+{
+	mininterest			750
+	maxinterest			10000
+
+	// Primary
+	plasrifle			22
+		plasrifle_ammo		1
+	plasblaster			70
+		plasblaster_ammo	1
+
+	// Secondary
+	plaspistol			80
+		plaspistol_ammo		3
+
+	// Misc
+	kerrblade			2
+	plasblade			40
+	plasmagrenade		360
+
+	// Armour
+	light_alien			2
+	medium_alien		95	// 10
+//	heavy_alien         85
 }
 
 // =======================
