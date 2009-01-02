@@ -301,7 +301,7 @@ static void R_SetSurfaceExtents (mBspSurface_t *surf, const model_t* mod)
 		surf->stmaxs[i] = bmaxs * surf->lightmap_scale;
 
 		surf->stcenter[i] = (surf->stmaxs[i] + surf->stmins[i]) / 2.0;
-		surf->stextents[i] = surf->stmaxs[i] - surf->stmins[i];
+		surf->stextents[i] = (bmaxs - bmins) * surf->lightmap_scale;
 	}
 }
 
