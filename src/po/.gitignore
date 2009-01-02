@@ -1,10 +1,1 @@
-/ufo
-/ufoded
-/ufo2map
-/config.status
-/config.log
-/config.h
-/Makefile
-/debug-*
-/release-*
-/gmon.out
+/*.mo

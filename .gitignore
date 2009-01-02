@@ -8,3 +8,4 @@
 /debug-*
 /release-*
 /ufo*.csv
+/gmon.out
