@@ -503,7 +503,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 		return qfalse;
 
 	while ((equip->name != NULL) && (equipPack != NULL)) {
-		if (!Q_strncmp((const char*)equipPack->data, equip->name, 13))
+		if (!Q_strncmp((const char*)equipPack->data, equip->name, strlen((const char*)equipPack->data)))
 			return qtrue;
 		equipPack = equipPack->next;
 	}
@@ -520,10 +520,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 static void CP_SetAlienEquipmentByInterest (const mission_t *mission)
 {
 	int i, randomNum, availableEquipDef = 0;
-	const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
-	const linkedList_t const *equipPack = gd.alienCategories[group->categoryIdx].equipment;
 
-	assert(equipPack);
 	/* look for all available fitting alien equipement definitions
 	 * use mission->initialOverallInterest and not ccs.overallInterest: the alien equipment should not change depending on
 	 * when you encounter it */
