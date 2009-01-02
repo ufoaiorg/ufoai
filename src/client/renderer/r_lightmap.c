@@ -487,7 +487,7 @@ void R_LightPoint (const vec3_t point, static_lighting_t *lighting)
 				R_LightPoint_(refdef.trace_ent->model->bsp.maptile,
 						refdef.trace_ent->model->bsp.firstmodelsurface,
 						refdef.trace_ent->model->bsp.nummodelsurfaces,
-						refdef.trace.endpos, lighting->color);
+						refdef.trace.endpos, lighting->colors[0]);
 			} else {
 				/* general case is to recurse up the nodes */
 				mBspLeaf_t *leaf = &r_mapTiles[refdef.trace.mapTile]->bsp.leafs[refdef.trace.leafnum];
