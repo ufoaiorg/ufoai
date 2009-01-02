@@ -37,12 +37,12 @@ typedef enum ea_s {
 } ea_t;
 
 typedef enum {
-	EA_VALUE,						/** char string value */
-	EA_RAWVALUE,					/** parsed value */
-	EA_CVARNAME,					/** a cvar name */
-	EA_PATHPROPERTY,				/** a property identify by a path */
-	EA_THISMENUNODENAMEPROPERTY,	/** a property identify by a node name into 'this' menu */
-	EA_THISPROPERTY,				/** a property of 'this' node */
+	EA_VALUE,						/**< char string value */
+	EA_RAWVALUE,					/**< parsed value */
+	EA_CVARNAME,					/**< a cvar name */
+	EA_PATHPROPERTY,				/**< a property identify by a path */
+	EA_THISMENUNODENAMEPROPERTY,	/**< a property identify by a node name into 'this' menu */
+	EA_THISPROPERTY,				/**< a property of 'this' node */
 } ea_paramType;
 
 typedef struct {
