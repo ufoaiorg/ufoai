@@ -409,7 +409,6 @@ int main (int argc, char* argv[]) {
 
 	streams_init();
 
-	gtk_disable_setlocale();
 	gtk_init(&argc, &argv);
 
 	g_thread_init(NULL);

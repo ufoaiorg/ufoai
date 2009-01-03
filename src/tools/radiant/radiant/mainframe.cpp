@@ -45,7 +45,9 @@
 
 #include <ctime>
 
+#define GETTEXT_PACKAGE "uforadiant"
 #include <gtk/gtk.h>
+#include <glib/gi18n-lib.h>
 
 #include "scenelib.h"
 #include "stream/stringstream.h"
@@ -272,7 +274,7 @@ void setEnginePath (const char* path)
 	StringOutputStream buffer(256);
 	buffer << DirectoryCleaned(path);
 	if (!path_equal(buffer.c_str(), g_strEnginePath.c_str())) {
-		ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Changing Engine Path");
+		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Changing Engine Path"));
 
 		EnginePath_Unrealise();
 
