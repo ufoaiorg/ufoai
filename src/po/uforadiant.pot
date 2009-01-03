@@ -1,0 +1,7 @@
+#: src/tools/radiant/radiant/mainframe.cpp:277
+msgid "Processing..."
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:277
+msgid "Changing Engine Path"
+msgstr ""
