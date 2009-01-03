@@ -83,6 +83,7 @@ msgid "Always use nodraw for new brushes"
 msgstr ""
 
 #: src/tools/radiant/radiant/brushmodule.cpp:66
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:662
 msgid "Brush"
 msgstr ""
 
@@ -643,6 +644,7 @@ msgid "Nudge Down"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1594
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:603
 msgid "Rotate"
 msgstr ""
 
@@ -724,4 +726,90 @@ msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1679
 msgid "B_rush"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:26
+msgid "_Entities"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:49
+msgid "_Surfaces"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:68
+msgid "Map Info"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:87
+msgid "Job Info"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:424
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
+msgid "Surface Inspector"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:438
+msgid "Texture"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:459
+msgid "Horizontal shift"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:477
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:513
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:549
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:585
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:622
+msgctxt "Step width"
+msgid "Step"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:495
+msgid "Vertical shift"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:531
+msgid "Horizontal stretch"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:567
+msgid "Vertical stretch"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:641
+msgid "Match Grid"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:651
+msgid "Texturing"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:669
+msgid "Width"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:676
+msgid "Height"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:723
+msgid "Surface Flags"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:759
+msgid "Content Flags"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
+msgid "Value"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1195
+msgid "Surface Inspector Increments Match Grid"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
+msgid "Surface Inspector Preferences"
 msgstr ""

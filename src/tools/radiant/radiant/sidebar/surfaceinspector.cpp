@@ -26,6 +26,7 @@
  */
 
 #include "surfaceinspector.h"
+#include "../radiant.h"
 
 #include "debugging/debugging.h"
 
@@ -420,7 +421,7 @@ static guint togglebutton_connect_toggled (GtkToggleButton* button, const Callba
 
 GtkWidget* SurfaceInspector::BuildNotebook (void)
 {
-	GtkWidget* pageframe = gtk_frame_new("Surface Inspector");
+	GtkWidget* pageframe = gtk_frame_new(_("Surface Inspector"));
 
 	// replaced by only the vbox:
 	GtkWidget *surfaceDialogBox = gtk_vbox_new(FALSE, 5);
@@ -434,7 +435,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(hbox2), FALSE, FALSE, 0);
 
 		{
-			GtkWidget* label = gtk_label_new("Texture");
+			GtkWidget* label = gtk_label_new(_("Texture"));
 			gtk_widget_show(label);
 			gtk_box_pack_start(GTK_BOX (hbox2), label, FALSE, TRUE, 0);
 		}
@@ -455,7 +456,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 		gtk_table_set_row_spacings(GTK_TABLE(table), 5);
 		gtk_table_set_col_spacings(GTK_TABLE(table), 5);
 		{
-			GtkWidget* label = gtk_label_new("Horizontal shift");
+			GtkWidget* label = gtk_label_new(_("Horizontal shift"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
@@ -473,7 +474,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Step");
+			GtkWidget* label = gtk_label_new(C_("Step width", "Step"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
@@ -491,7 +492,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			m_hshiftEntry.connect(entry);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Vertical shift");
+			GtkWidget* label = gtk_label_new(_("Vertical shift"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
@@ -509,7 +510,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Step");
+			GtkWidget* label = gtk_label_new(C_("Step width", "Step"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
@@ -527,7 +528,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			m_vshiftEntry.connect(entry);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Horizontal stretch");
+			GtkWidget* label = gtk_label_new(_("Horizontal stretch"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
@@ -545,7 +546,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
-			GtkWidget* label = gtk_label_new ("Step");
+			GtkWidget* label = gtk_label_new(C_("Step width", "Step"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 2, 3,
@@ -563,7 +564,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			m_hscaleEntry.connect(entry);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Vertical stretch");
+			GtkWidget* label = gtk_label_new(_("Vertical stretch"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
@@ -581,7 +582,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			widget_set_size(GTK_WIDGET(spin), 60, 0);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Step");
+			GtkWidget* label = gtk_label_new(C_("Step width", "Step"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 3, 4,
@@ -599,7 +600,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			m_vscaleEntry.connect(entry);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Rotate");
+			GtkWidget* label = gtk_label_new(_("Rotate"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 0, 1, 4, 5,
@@ -618,7 +619,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_spin_button_set_wrap(spin, TRUE);
 		}
 		{
-			GtkWidget* label = gtk_label_new("Step");
+			GtkWidget* label = gtk_label_new(C_("Step width", "Step"));
 			gtk_widget_show(label);
 			gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
 			gtk_table_attach(GTK_TABLE(table), label, 2, 3, 4, 5,
@@ -637,7 +638,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 		}
 		{
 			// match grid button
-			GtkWidget* button = gtk_button_new_with_label("Match Grid");
+			GtkWidget* button = gtk_button_new_with_label(_("Match Grid"));
 			gtk_widget_show(button);
 			gtk_table_attach(GTK_TABLE(table), button, 2, 4, 5, 6,
 					(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -647,7 +648,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 	}
 
 	{
-		GtkWidget* frame = gtk_frame_new("Texturing");
+		GtkWidget* frame = gtk_frame_new(_("Texturing"));
 		gtk_widget_show(frame);
 		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 		{
@@ -658,21 +659,21 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 			gtk_table_set_col_spacings(GTK_TABLE(table), 5);
 			gtk_container_set_border_width (GTK_CONTAINER (table), 5);
 			{
-				GtkWidget* label = gtk_label_new("Brush");
+				GtkWidget* label = gtk_label_new(_("Brush"));
 				gtk_widget_show(label);
 				gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
 						(GtkAttachOptions) (GTK_FILL),
 						(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkWidget* label = gtk_label_new("Width");
+				GtkWidget* label = gtk_label_new(_("Width"));
 				gtk_widget_show(label);
 				gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
 						(GtkAttachOptions) (GTK_FILL),
 						(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkWidget* label = gtk_label_new("Height");
+				GtkWidget* label = gtk_label_new(_("Height"));
 				gtk_widget_show(label);
 				gtk_table_attach(GTK_TABLE(table), label, 3, 4, 0, 1,
 						(GtkAttachOptions) (GTK_FILL),
@@ -719,7 +720,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 	}
 }
 {
-	m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new("Surface Flags"));
+	m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
 	gtk_widget_show(GTK_WIDGET(m_surfaceFlagsFrame));
 	gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_surfaceFlagsFrame), TRUE, TRUE, 0);
 	{
@@ -755,7 +756,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 	}
 }
 {
-	m_contentFlagsFrame = GTK_FRAME(gtk_frame_new("Content Flags"));
+	m_contentFlagsFrame = GTK_FRAME(gtk_frame_new(_("Content Flags")));
 	gtk_widget_show(GTK_WIDGET(m_contentFlagsFrame));
 	gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_contentFlagsFrame), TRUE, TRUE, 0);
 	{
@@ -792,7 +793,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 	}
 }
 {
-	GtkFrame* frame = GTK_FRAME(gtk_frame_new("Value"));
+	GtkFrame* frame = GTK_FRAME(gtk_frame_new(_("Value")));
 	gtk_widget_show(GTK_WIDGET(frame));
 	gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 	{
@@ -1191,12 +1192,12 @@ void SelectedFaces_pasteTexture (void)
 
 static void SurfaceInspector_constructPreferences (PreferencesPage& page)
 {
-	page.appendCheckBox("", "Surface Inspector Increments Match Grid", g_si_globals.m_bSnapTToGrid);
+	page.appendCheckBox("", _("Surface Inspector Increments Match Grid"), g_si_globals.m_bSnapTToGrid);
 }
 
 void SurfaceInspector_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Surface Inspector", "Surface Inspector Preferences"));
+	PreferencesPage page(group.createPage(_("Surface Inspector"), _("Surface Inspector Preferences")));
 	SurfaceInspector_constructPreferences(page);
 }
 

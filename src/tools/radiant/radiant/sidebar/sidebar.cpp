@@ -15,6 +15,7 @@
  */
 
 #include "sidebar.h"
+#include "../radiant.h"
 #include "../commands.h"
 #include "gtkutil/widget.h"
 
@@ -22,7 +23,7 @@
 
 static void Sidebar_constructEntities (GtkWidget *notebook)
 {
-	GtkWidget *label = gtk_label_new_with_mnemonic("_Entities");
+	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Entities"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
@@ -45,7 +46,7 @@ static void Sidebar_constructEntities (GtkWidget *notebook)
 
 static void Sidebar_constructSurfaces (GtkWidget *notebook)
 {
-	GtkWidget *label = gtk_label_new_with_mnemonic("_Surfaces");
+	GtkWidget *label = gtk_label_new_with_mnemonic(_("_Surfaces"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
@@ -64,7 +65,7 @@ static void Sidebar_constructSurfaces (GtkWidget *notebook)
 
 static void Sidebar_constructMapInfo (GtkWidget *notebook)
 {
-	GtkWidget *label = gtk_label_new("Map Info");
+	GtkWidget *label = gtk_label_new(_("Map Info"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
@@ -83,7 +84,7 @@ static void Sidebar_constructMapInfo (GtkWidget *notebook)
 
 static void Sidebar_constructJobInfo (GtkWidget *notebook)
 {
-	GtkWidget *label = gtk_label_new("Job Info");
+	GtkWidget *label = gtk_label_new(_("Job Info"));
 	GtkWidget *swin = gtk_scrolled_window_new(0, 0);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 
