@@ -97,6 +97,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_container.c \
 	client/menu/node/m_node_controls.c \
 	client/menu/node/m_node_custombutton.c \
+	client/menu/node/m_node_editor.c \
 	client/menu/node/m_node_image.c \
 	client/menu/node/m_node_item.c \
 	client/menu/node/m_node_linestrip.c \
