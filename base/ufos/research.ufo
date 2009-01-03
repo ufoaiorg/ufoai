@@ -649,7 +649,7 @@ tech rs_weapon_pistol2
 {
 	type	weapon
 	up_chapter	equipment
-	mdl	weap_machine_pistol	// Overrides the one from weapons*.ufo
+
 	description {
 		default "_pistol2_txt"
 	}
@@ -1349,8 +1349,6 @@ tech rs_weapon_heavylaser
 	type	weapon
 	up_chapter	equipment
 
-	mdl weap_heavy_laser
-
 	description {
 		default "_heavylaser_txt"
 	}
@@ -1388,7 +1386,6 @@ tech rs_weapon_heavylaser
 tech rs_irgoggles
 {
 	type	weapon
-	mdl weap_irgoggles
 
 	up_chapter	equipment
 	description {
@@ -1995,7 +1992,6 @@ tech rs_weapon_shotgun2_slug_ammo
 tech rs_weapon_shotgun_micro
 {
 	type	weapon
-	mdl	weap_micro_shotgun
 
 	up_chapter	equipment
 	description {
@@ -2225,8 +2221,6 @@ tech rs_weapon_stunrod
 {
 	type		weapon
 	up_chapter	equipment
-
-	mdl	weap_stunrod
 
 	description {
 		default "_stunrod_txt"

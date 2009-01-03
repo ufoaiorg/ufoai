@@ -591,47 +591,6 @@ menu_model ufo_crash
 	need	"ufo_crash_engine"
 }
 
-// ============== WEAPONS =========================
-menu_model weap_machine_pistol
-{
-	model	"weapons/pistol2/pistol2"
-	menutransform {
-		ufopedia	"40 40 40"	#	"-15 0 0"
-	}
-}
-
-menu_model weap_micro_shotgun
-{
-	model	"weapons/shotgunmicro/shotgunmicro"
-	menutransform {
-		ufopedia	"25 25 25"	#	"-50 0 0"
-	}
-}
-
-menu_model weap_stunrod
-{
-	model	"weapons/stunrod/stunrod"
-	menutransform {
-		ufopedia	"8 8 8"	"-30 0 0"	"-50 0 0"
-	}
-}
-
-menu_model weap_heavy_laser
-{
-	model	"weapons/laserheavy/laserheavy"
-	menutransform {
-		ufopedia	"10 10 10"	#	"-80 0 0"
-	}
-}
-
-menu_model weap_irgoggles
-{
-	model	"weapons/irgoggles/irgoggles"
-	menutransform {
-		ufopedia	" 20 20 20"	"-90 120 0" #
-	}
-}
-
 // ============== ALIEN CRAFT EQUIPMENT =========================
 menu_model craft_item_target
 {
