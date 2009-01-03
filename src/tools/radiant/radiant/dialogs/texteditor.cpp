@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "gtkutil/messagebox.h"
-#include <gtk/gtk.h>
+#include "../radiant.h"
 #include "texteditor.h"
 #include "string/string.h"
 #include "stream/stringstream.h"
@@ -117,12 +117,12 @@ static void CreateGtkTextEditor (void)
 	gtk_widget_show(hbox);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), FALSE, TRUE, 0);
 
-	button = gtk_button_new_with_label("Close");
+	button = gtk_button_new_with_label(_("Close"));
 	gtk_widget_show(button);
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editor_close), dlg);
 
-	button = gtk_button_new_with_label("Save");
+	button = gtk_button_new_with_label(_("Save"));
 	gtk_widget_show(button);
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editor_save), dlg);

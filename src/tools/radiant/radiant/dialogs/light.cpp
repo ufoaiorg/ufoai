@@ -24,7 +24,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <gtk/gtk.h>
+#include "../radiant.h"
 #include <gdk/gdkkeysyms.h>
 #include "qerplugin.h"
 #include "gtkutil/dialog.h"
@@ -48,7 +48,7 @@ EMessageBoxReturn DoLightIntensityDlg (int *intensity) {
 			GtkVBox* vbox = create_dialog_vbox(4);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), TRUE, TRUE, 0);
 			{
-				GtkLabel* label = GTK_LABEL(gtk_label_new("ESC for default, ENTER to validate"));
+				GtkLabel* label = GTK_LABEL(gtk_label_new(_("ESC for default, ENTER to validate")));
 				gtk_widget_show(GTK_WIDGET(label));
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(label), FALSE, FALSE, 0);
 			}
@@ -67,13 +67,13 @@ EMessageBoxReturn DoLightIntensityDlg (int *intensity) {
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), FALSE, FALSE, 0);
 
 			{
-				GtkButton* button = create_modal_dialog_button("OK", ok_button);
+				GtkButton* button = create_modal_dialog_button(_("OK"), ok_button);
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				widget_make_default(GTK_WIDGET(button));
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel_group, GDK_Return, (GdkModifierType)0, GTK_ACCEL_VISIBLE);
 			}
 			{
-				GtkButton* button = create_modal_dialog_button("Cancel", cancel_button);
+				GtkButton* button = create_modal_dialog_button(_("Cancel"), cancel_button);
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel_group, GDK_Escape, (GdkModifierType)0, GTK_ACCEL_VISIBLE);
 			}

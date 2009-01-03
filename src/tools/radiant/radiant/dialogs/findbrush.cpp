@@ -24,7 +24,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <gtk/gtk.h>
+#include "../radiant.h"
 #include "iscenegraph.h"
 #include "scenelib.h"
 #include "gtkutil/dialog.h"
@@ -108,14 +108,14 @@ void FindBrushOrEntity (void)
 			GtkTable* table = create_dialog_table(2, 2, 4, 4);
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(table), TRUE, TRUE, 0);
 			{
-				GtkWidget* label = gtk_label_new("Entity number");
+				GtkWidget* label = gtk_label_new(_("Entity number"));
 				gtk_widget_show (label);
 				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 								(GtkAttachOptions) (0),
 								(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkWidget* label = gtk_label_new("Brush number");
+				GtkWidget* label = gtk_label_new(_("Brush number"));
 				gtk_widget_show (label);
 				gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 								(GtkAttachOptions) (0),

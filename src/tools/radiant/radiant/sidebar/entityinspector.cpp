@@ -24,6 +24,7 @@
  */
 
 #include "entityinspector.h"
+#include "../radiant.h"
 
 #include "debugging/debugging.h"
 
@@ -36,7 +37,6 @@
 
 #include <map>
 #include <set>
-#include <gtk/gtk.h>
 
 #include "os/path.h"
 #include "eclasslib.h"
@@ -1296,7 +1296,7 @@ static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* 
 
 GtkWidget* EntityInspector_constructNotebookTab (void)
 {
-	GtkWidget* pageframe = gtk_frame_new("Entity Inspector");
+	GtkWidget* pageframe = gtk_frame_new(_("Entity Inspector"));
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 2);
 
 	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 2);

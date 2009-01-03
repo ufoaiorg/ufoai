@@ -25,6 +25,7 @@
  */
 
 #include "entitylist.h"
+#include "../radiant.h"
 
 #include "iselection.h"
 #include "preferencesystem.h"
@@ -248,7 +249,7 @@ static void AttachEntityTreeModel (void)
 
 GtkWidget *EntityList_constructNotebookTab (void)
 {
-	GtkWidget* pageframe = gtk_frame_new("Entity List");
+	GtkWidget* pageframe = gtk_frame_new(_("Entity List"));
 
 	gtk_container_set_border_width(GTK_CONTAINER(pageframe), 2);
 

@@ -25,6 +25,7 @@
 					<Add library="libglib-2.0" />
 					<Add library="libgtk-win32-2.0" />
 					<Add library="gobject-2.0" />
+					<Add library="intl" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -48,6 +49,7 @@
 					<Add library="libglib-2.0" />
 					<Add library="gobject-2.0" />
 					<Add library="libgtk-win32-2.0" />
+					<Add library="intl" />
 				</Linker>
 			</Target>
 			<Target title="linux">

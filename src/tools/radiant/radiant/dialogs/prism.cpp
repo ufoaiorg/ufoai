@@ -24,7 +24,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <gtk/gtk.h>
+#include "../radiant.h"
 #include <gdk/gdkkeysyms.h>
 #include "gtkutil/dialog.h"
 #include "scenelib.h"
@@ -46,7 +46,7 @@ void DoSides (int type, int axis)
 		GtkHBox* hbox = create_dialog_hbox(4, 4);
 		gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(hbox));
 		{
-			GtkLabel* label = GTK_LABEL(gtk_label_new("Sides:"));
+			GtkLabel* label = GTK_LABEL(gtk_label_new(_("Sides:")));
 			gtk_widget_show(GTK_WIDGET(label));
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(label), FALSE, FALSE, 0);
 		}
@@ -61,13 +61,13 @@ void DoSides (int type, int axis)
 			GtkVBox* vbox = create_dialog_vbox(4);
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), TRUE, TRUE, 0);
 			{
-				GtkButton* button = create_dialog_button("OK", G_CALLBACK(dialog_button_ok), &dialog);
+				GtkButton* button = create_dialog_button(_("OK"), G_CALLBACK(dialog_button_ok), &dialog);
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				widget_make_default(GTK_WIDGET(button));
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
 			}
 			{
-				GtkButton* button = create_dialog_button("Cancel", G_CALLBACK(dialog_button_cancel), &dialog);
+				GtkButton* button = create_dialog_button(_("Cancel"), G_CALLBACK(dialog_button_cancel), &dialog);
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
 			}

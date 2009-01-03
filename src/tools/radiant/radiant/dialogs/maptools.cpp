@@ -25,7 +25,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <gtk/gtk.h>
+#include "../radiant.h"
 #include "maptools.h"
 #include "../exec.h"
 #include "os/file.h"  // file_exists
@@ -186,13 +186,13 @@ static void CreateCheckDialog (void)
 	hbox = gtk_hbox_new(FALSE, 5);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), FALSE, TRUE, 0);
 
-	button = gtk_button_new_with_label("Close");
+	button = gtk_button_new_with_label(_("Close"));
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(editorHideCallback), NULL);
 
-	button = gtk_button_new_with_label("Fix");
+	button = gtk_button_new_with_label(_("Fix"));
 #if GTK_CHECK_VERSION(2, 12, 0)
-	gtk_widget_set_tooltip_text(button, "Will fix all errors, not only the selected ones");
+	gtk_widget_set_tooltip_text(button, _("Will fix all errors, not only the selected ones"));
 #endif
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(fixCallback), NULL);
@@ -203,12 +203,12 @@ void ToolsCheckErrors (void)
 	const char* fullname = Map_Name(g_map);
 	const char *compilerBinaryWithPath;
 
-	if (!ConfirmModified("Check Map"))
+	if (!ConfirmModified(_("Check Map")))
 		return;
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, "Nothing to check in this map\n", "Map compiling", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, _("Nothing to check in this map\n"), _("Map compiling"), eMB_OK, eMB_ICONERROR);
 		return;
 	}
 
@@ -229,7 +229,7 @@ void ToolsCheckErrors (void)
 			if (!checkDialog)
 				CreateCheckDialog();
 
-			gtk_window_set_title(GTK_WINDOW(checkDialog), "Check output");
+			gtk_window_set_title(GTK_WINDOW(checkDialog), _("Check output"));
 
 			StringTokeniser outputTokeniser(output, "\n");
 
@@ -292,7 +292,7 @@ void ToolsCheckErrors (void)
 
 			if (rows == 0) {
 				gtk_list_store_append(store, &iter);
-				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, "No problems in your map found. Output was:", CHECK_SELECT, NULL, -1);
+				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, _("No problems in your map found. Output was:"), CHECK_SELECT, NULL, -1);
 				gtk_list_store_append(store, &iter);
 				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, output, CHECK_SELECT, NULL, -1);
 			}
@@ -306,13 +306,13 @@ void ToolsCheckErrors (void)
 
 			free(output);
 		} else {
-			globalOutputStream() << "-------------------\nCommand: " << bufCmd << "\n-------------------\n";
-			globalOutputStream() << "No output for checking " << fullname << "\n";
+			g_message("-------------------\nCommand: %s\n-------------------\n", bufCmd);
+			g_message("No output for checking %s\n", fullname);
 		}
 	} else {
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
-		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, message.c_str(), _("Map compiling"), eMB_OK, eMB_ICONERROR);
 		g_warning("%s\n", message.c_str());
 	}
 }
@@ -379,7 +379,7 @@ void ToolsCompile (void)
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, "Nothing to compile in this map\n", "Map compiling", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, _("Nothing to compile in this map\n"), _("Map compiling"), eMB_OK, eMB_ICONERROR);
 		return;
 	}
 
@@ -389,7 +389,7 @@ void ToolsCompile (void)
 		const char* fullname = Map_Name(g_map);
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
 
-		Exec *compilerRun = exec_new("CompileRun", "Compiles the current map with the mapcompiler");
+		Exec *compilerRun = exec_new("CompileRun", _("Compiles the current map with the mapcompiler"));
 		ExecCmd *cmd = exec_cmd_new(&compilerRun);
 		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
 		exec_cmd_add_arg(cmd, compiler_parameter);
@@ -402,7 +402,7 @@ void ToolsCompile (void)
 	} else {
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
-		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, message.c_str(), _("Map compiling"), eMB_OK, eMB_ICONERROR);
 		g_warning("%s\n", message.c_str());
 	}
 }

@@ -251,6 +251,9 @@ msgid "Key"
 msgstr ""
 
 #: src/tools/radiant/radiant/commands.cpp:255
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:184
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:189
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:120
 msgid "Close"
 msgstr ""
 
@@ -812,4 +815,192 @@ msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
 msgid "Surface Inspector Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:47
+msgid "About UFORadiant"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:73
+msgid "<b>UFORadiant "
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:87
+msgid "<b>GTK+ Properties</b>"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:95
+#, c-format
+msgid "Version: %i.%i.%i"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:103
+msgid "<b>OpenGL Properties</b>"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:109
+msgid "Vendor:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:117
+msgid "Version:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:125
+msgid "Renderer:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findbrush.cpp:111
+msgid "Entity number"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findbrush.cpp:118
+msgid "Brush number"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:118
+msgid "Find / Replace Texture(s)"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:135
+msgid "Find:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:142
+msgid "Replace:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:169
+msgid "Within selected brushes only"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:178
+#: src/tools/radiant/radiant/select.cpp:960
+#: src/tools/radiant/radiant/select.cpp:1104
+msgid "Apply"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/light.cpp:51
+msgid "ESC for default, ENTER to validate"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/light.cpp:70
+#: src/tools/radiant/radiant/dialogs/prism.cpp:64
+#: src/tools/radiant/radiant/select.cpp:949
+#: src/tools/radiant/radiant/select.cpp:1093
+msgid "OK"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/light.cpp:76
+#: src/tools/radiant/radiant/dialogs/prism.cpp:70
+#: src/tools/radiant/radiant/select.cpp:955
+#: src/tools/radiant/radiant/select.cpp:1099
+msgid "Cancel"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:193
+msgid "Fix"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:195
+msgid "Will fix all errors, not only the selected ones"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:206
+msgid "Check Map"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:211
+msgid "Nothing to check in this map\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:211
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:315
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:382
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:405
+msgid "Map compiling"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:232
+msgid "Check output"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:295
+msgid "No problems in your map found. Output was:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:382
+msgid "Nothing to compile in this map\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:392
+msgid "Compiles the current map with the mapcompiler"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/prism.cpp:49
+msgid "Sides:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:125
+msgid "Save"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1299
+msgid "Entity Inspector"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entitylist.cpp:252
+msgid "Entity List"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:128
+msgid "Total Brushes"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:135
+msgid "Total Entities"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:144
+msgid "Entity breakdown"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:160
+msgid "Entity"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:167
+msgid "Count"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:683
+msgid "Axial"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:693
+msgid "Fit"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1793
+#: src/tools/radiant/radiant/mainframe.cpp:1807
+msgid "Label"
+msgstr ""
+
+#: src/tools/radiant/radiant/select.cpp:889
+#: src/tools/radiant/radiant/select.cpp:1036
+msgid "  X  "
+msgstr ""
+
+#: src/tools/radiant/radiant/select.cpp:896
+#: src/tools/radiant/radiant/select.cpp:1043
+msgid "  Y  "
+msgstr ""
+
+#: src/tools/radiant/radiant/select.cpp:903
+#: src/tools/radiant/radiant/select.cpp:1050
+msgid "  Z  "
+msgstr ""
+
+#: src/tools/radiant/radiant/select.cpp:1024
+msgid "Arbitrary scale"
 msgstr ""

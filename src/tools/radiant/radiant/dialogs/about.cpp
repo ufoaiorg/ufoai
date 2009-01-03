@@ -24,7 +24,7 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <gtk/gtk.h>
+#include "../radiant.h"
 #include "version.h"
 #include "aboutmsg.h"
 #include "gtkutil/dialog.h"
@@ -44,7 +44,7 @@ void DoAbout (void)
 	ModalDialog dialog;
 	ModalDialogButton ok_button(dialog, eIDOK);
 
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), "About UFORadiant", dialog);
+	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), _("About UFORadiant"), dialog);
 
 	{
 		GtkVBox* vbox = create_dialog_vbox(4, 4);
@@ -70,12 +70,12 @@ void DoAbout (void)
 
 			{
 				GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
-				gtk_label_set_markup(label, "<b>UFORadiant " RADIANT_VERSION "</b>\n"
+				gtk_label_set_markup(label, _("<b>UFORadiant " RADIANT_VERSION "</b>\n"
 					__DATE__ " " ABOUT_DEBUG "\n\n"
 					RADIANT_ABOUTMSG "\n\n"
 					"This program is free software\n"
 					"licensed under the GNU GPL.\n\n"
-					"<b>UFO:AI</b> http://ufoai.sourceforge.net\n");
+					"<b>UFO:AI</b> http://ufoai.sourceforge.net\n"));
 
 				gtk_widget_show(GTK_WIDGET(label));
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(label), FALSE, FALSE, 0);
@@ -84,7 +84,7 @@ void DoAbout (void)
 			}
 		}
 		{
-			GtkFrame* frame = create_dialog_frame("<b>GTK+ Properties</b>");
+			GtkFrame* frame = create_dialog_frame(_("<b>GTK+ Properties</b>"));
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 			gtk_widget_show(GTK_WIDGET(frame));
 
@@ -92,7 +92,7 @@ void DoAbout (void)
 			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(hboxVersion));
 
 			char versionString[64];
-			snprintf(versionString, sizeof(versionString), "Version: %i.%i.%i", gtk_major_version, gtk_minor_version, gtk_micro_version);
+			g_snprintf(versionString, sizeof(versionString), _("Version: %i.%i.%i"), gtk_major_version, gtk_minor_version, gtk_micro_version);
 			GtkLabel* label = GTK_LABEL(gtk_label_new(versionString));
 			gtk_widget_show(GTK_WIDGET(label));
 			gtk_box_pack_start(GTK_BOX(hboxVersion), GTK_WIDGET(label), FALSE, FALSE, 0);
@@ -100,13 +100,13 @@ void DoAbout (void)
 			gtk_label_set_justify(label, GTK_JUSTIFY_LEFT);
 		}
 		{
-			GtkFrame* frame = create_dialog_frame("<b>OpenGL Properties</b>");
+			GtkFrame* frame = create_dialog_frame(_("<b>OpenGL Properties</b>"));
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 			{
 				GtkTable* table = create_dialog_table(3, 2, 4, 4, 4);
 				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(table));
 				{
-					GtkLabel* label = GTK_LABEL(gtk_label_new("Vendor:"));
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("Vendor:")));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 0, 1,
 									(GtkAttachOptions) (GTK_FILL),
@@ -114,7 +114,7 @@ void DoAbout (void)
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
-					GtkLabel* label = GTK_LABEL(gtk_label_new("Version:"));
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("Version:")));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 1, 2,
 									(GtkAttachOptions) (GTK_FILL),
@@ -122,7 +122,7 @@ void DoAbout (void)
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 				}
 				{
-					GtkLabel* label = GTK_LABEL(gtk_label_new("Renderer:"));
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("Renderer:")));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 2, 3,
 									(GtkAttachOptions) (GTK_FILL),

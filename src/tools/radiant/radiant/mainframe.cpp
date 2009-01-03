@@ -1790,7 +1790,7 @@ static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status]
 	gtk_widget_show(GTK_WIDGET(table));
 
 	{
-		GtkLabel* label = GTK_LABEL(gtk_label_new("Label"));
+		GtkLabel* label = GTK_LABEL(gtk_label_new(_("Label")));
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 		gtk_misc_set_padding(GTK_MISC(label), 2, 2);
 		gtk_widget_show(GTK_WIDGET(label));
@@ -1804,7 +1804,7 @@ static GtkWidget* create_main_statusbar (GtkWidget *pStatusLabel[c_count_status]
 		gtk_table_attach_defaults(table, GTK_WIDGET(frame), i, i + 1, 0, 1);
 		gtk_frame_set_shadow_type(frame, GTK_SHADOW_IN);
 
-		GtkLabel* label = GTK_LABEL(gtk_label_new("Label"));
+		GtkLabel* label = GTK_LABEL(gtk_label_new(_("Label")));
 		gtk_label_set_ellipsize(label, PANGO_ELLIPSIZE_END);
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 		gtk_misc_set_padding(GTK_MISC(label), 2, 2);

@@ -1,3 +1,9 @@
+/**
+ * @file findtextures.cpp
+ * @brief Find/Replace textures dialogs
+ * @author Leonardo Zide (leo@lokigames.com)
+ */
+
 /*
 Copyright (C) 1999-2006 Id Software, Inc. and contributors.
 For a list of contributors, see the accompanying CONTRIBUTORS file.
@@ -19,19 +25,12 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-//
-// Find/Replace textures dialogs
-//
-// Leonardo Zide (leo@lokigames.com)
-//
-
 #include "findtextures.h"
+#include "../radiant.h"
 
 #include "debugging/debugging.h"
 
 #include "ishaders.h"
-
-#include <gtk/gtk.h>
 
 #include "gtkutil/window.h"
 #include "stream/stringstream.h"
@@ -116,7 +115,7 @@ GtkWindow* FindTextureDialog::BuildDialog() {
 	GtkWidget* vbox, *hbox, *table, *label;
 	GtkWidget* button, *check, *entry;
 
-	GtkWindow* dlg = create_floating_window("Find / Replace Texture(s)", m_parent);
+	GtkWindow* dlg = create_floating_window(_("Find / Replace Texture(s)"), m_parent);
 
 	hbox = gtk_hbox_new (FALSE, 5);
 	gtk_widget_show (hbox);
@@ -133,14 +132,14 @@ GtkWindow* FindTextureDialog::BuildDialog() {
 	gtk_table_set_row_spacings(GTK_TABLE (table), 5);
 	gtk_table_set_col_spacings(GTK_TABLE (table), 5);
 
-	label = gtk_label_new ("Find:");
+	label = gtk_label_new (_("Find:"));
 	gtk_widget_show (label);
 	gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1,
 					(GtkAttachOptions) (GTK_FILL),
 					(GtkAttachOptions) (0), 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
 
-	label = gtk_label_new ("Replace:");
+	label = gtk_label_new (_("Replace:"));
 	gtk_widget_show (label);
 	gtk_table_attach(GTK_TABLE (table), label, 0, 1, 1, 2,
 					(GtkAttachOptions) (GTK_FILL),
@@ -167,7 +166,7 @@ GtkWindow* FindTextureDialog::BuildDialog() {
 	AddDialogData(*GTK_ENTRY(entry), m_strReplace);
 	GlobalTextureEntryCompletion::instance().connect(GTK_ENTRY(entry));
 
-	check = gtk_check_button_new_with_label ("Within selected brushes only");
+	check = gtk_check_button_new_with_label (_("Within selected brushes only"));
 	gtk_widget_show (check);
 	gtk_box_pack_start(GTK_BOX(vbox), check, TRUE, TRUE, 0);
 	AddDialogData(*GTK_TOGGLE_BUTTON(check), m_bSelectedOnly);
@@ -176,13 +175,13 @@ GtkWindow* FindTextureDialog::BuildDialog() {
 	gtk_widget_show (vbox);
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), FALSE, FALSE, 0);
 
-	button = gtk_button_new_with_label ("Apply");
+	button = gtk_button_new_with_label (_("Apply"));
 	gtk_widget_show (button);
 	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked",
 					G_CALLBACK(OnApply), 0);
 
-	button = gtk_button_new_with_label ("Close");
+	button = gtk_button_new_with_label (_("Close"));
 	gtk_widget_show (button);
 	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked",

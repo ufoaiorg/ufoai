@@ -680,7 +680,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 						(GtkAttachOptions) (0), 0, 0);
 			}
 			{
-				GtkWidget* button = gtk_button_new_with_label("Axial");
+				GtkWidget* button = gtk_button_new_with_label(_("Axial"));
 				gtk_widget_show(button);
 				gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -690,7 +690,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				widget_set_size (button, 60, 0);
 			}
 			{
-				GtkWidget* button = gtk_button_new_with_label("Fit");
+				GtkWidget* button = gtk_button_new_with_label(_("Fit"));
 				gtk_widget_show(button);
 				gtk_table_attach(GTK_TABLE(table), button, 1, 2, 1, 2,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),

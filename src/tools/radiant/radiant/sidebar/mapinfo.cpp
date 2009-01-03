@@ -25,6 +25,7 @@
  */
 
 #include "mapinfo.h"
+#include "../radiant.h"
 
 #include <map>
 
@@ -124,14 +125,14 @@ GtkWidget *MapInfo_constructNotebookTab (void)
 				entities_entry = entry;
 			}
 			{
-				GtkWidget* label = gtk_label_new("Total Brushes");
+				GtkWidget* label = gtk_label_new(_("Total Brushes"));
 				gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1,
 								(GtkAttachOptions) (GTK_FILL),
 								(GtkAttachOptions) (0), 0, 0);
 				gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 			}
 			{
-				GtkWidget* label = gtk_label_new("Total Entities");
+				GtkWidget* label = gtk_label_new(_("Total Entities"));
 				gtk_table_attach(GTK_TABLE (table), label, 0, 1, 1, 2,
 								(GtkAttachOptions) (GTK_FILL),
 								(GtkAttachOptions) (0), 0, 0);
@@ -140,7 +141,7 @@ GtkWidget *MapInfo_constructNotebookTab (void)
 		}
 	}
 	{
-		GtkWidget* label = gtk_label_new("Entity breakdown");
+		GtkWidget* label = gtk_label_new(_("Entity breakdown"));
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(label), FALSE, TRUE, 0);
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 	}
@@ -156,14 +157,14 @@ GtkWidget *MapInfo_constructNotebookTab (void)
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Entity", renderer, "text", 0, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Entity"), renderer, "text", 0, (char const*)0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				gtk_tree_view_column_set_sort_column_id(column, 0);
 			}
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Count", renderer, "text", 1, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Count"), renderer, "text", 1, (char const*)0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				gtk_tree_view_column_set_sort_column_id(column, 1);
 			}
