@@ -332,7 +332,7 @@ class PathsDialog: public Dialog
 	public:
 		GtkWindow* BuildDialog (void)
 		{
-			GtkFrame* frame = create_dialog_frame(_("Path settings"), GTK_SHADOW_ETCHED_IN);
+			GtkFrame* frame = create_dialog_frame(_("Path Settings"), GTK_SHADOW_ETCHED_IN);
 
 			GtkVBox* vbox2 = create_dialog_vbox(0, 4);
 			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));

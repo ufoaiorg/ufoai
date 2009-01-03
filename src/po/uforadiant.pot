@@ -495,6 +495,7 @@ msgid "Look Through Camera"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1507
+#: src/tools/radiant/radiant/xywindow.cpp:2710
 msgid "Orthographic"
 msgstr ""
 
@@ -1003,4 +1004,141 @@ msgstr ""
 
 #: src/tools/radiant/radiant/select.cpp:1024
 msgid "Arbitrary scale"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:198
+msgid "Grid0.125"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:199
+msgid "Grid0.25"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:200
+msgid "Grid0.5"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:201
+msgid "Grid1"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:202
+msgid "Grid2"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:203
+msgid "Grid4"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:204
+msgid "Grid8"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:205
+msgid "Grid16"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:206
+msgid "Grid32"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:207
+msgid "Grid64"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:208
+msgid "Grid128"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:209
+msgid "Grid256"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:220
+msgid "Default grid spacing"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:226
+msgid "Grid"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:226
+msgid "Grid Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:295
+#: src/tools/radiant/radiant/main.cpp:360
+msgid "UFORadiant"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:366
+msgid ""
+"UFORadiant failed to start properly the last time it was run.\n"
+"The failure may be caused by current preferences.\n"
+"Do you want to reset all preferences to defaults?"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:370
+msgid "UFORadiant - Startup Failure"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:377
+msgid "UFORadiant - Console Log"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:315
+msgid "Engine Path"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:317
+msgid "Compiler Binary"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:321
+msgid "Paths"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:321
+#: src/tools/radiant/radiant/mainframe.cpp:335
+msgid "Path Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:335
+msgid "Path settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:345
+msgid "Engine Path Not Found"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2703
+msgid "Solid selection boxes"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2704
+msgid "Display size info"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2705
+msgid "Chase mouse during drags"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2706
+msgid "Update views on camera move"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2710
+msgid "Orthographic View Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2720
+msgid "Clipper tool uses nodraw"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2724
+msgid "Clipper"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2724
+msgid "Clipper Tool Settings"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-03 19:09+0100\n"
+"PO-Revision-Date: 2009-01-04 00:04+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -557,8 +557,9 @@ msgid "Look Through Camera"
 msgstr "&Backspace durch Tabs"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1507
+#: src/tools/radiant/radiant/xywindow.cpp:2710
 msgid "Orthographic"
-msgstr ""
+msgstr "Orthographisch"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1511
 #, fuzzy
@@ -1042,9 +1043,8 @@ msgid "Save"
 msgstr "Speichern"
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1299
-#, fuzzy
 msgid "Entity Inspector"
-msgstr "Entity inspector"
+msgstr "Entity Inspector"
 
 #: src/tools/radiant/radiant/sidebar/entitylist.cpp:252
 msgid "Entity List"
@@ -1073,7 +1073,7 @@ msgstr "Anzahl"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:683
 msgid "Axial"
-msgstr ""
+msgstr "Achsenförmig"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:693
 msgid "Fit"
@@ -1104,4 +1104,163 @@ msgstr "  Z  "
 #, fuzzy
 msgid "Arbitrary scale"
 msgstr "BRD Skala"
+
+#: src/tools/radiant/radiant/grid.cpp:198
+#, fuzzy
+msgid "Grid0.125"
+msgstr "Gitter0.25"
+
+#: src/tools/radiant/radiant/grid.cpp:199
+#, fuzzy
+msgid "Grid0.25"
+msgstr "Gitter0.25"
+
+#: src/tools/radiant/radiant/grid.cpp:200
+#, fuzzy
+msgid "Grid0.5"
+msgstr "Gitter0.5"
+
+#: src/tools/radiant/radiant/grid.cpp:201
+#, fuzzy
+msgid "Grid1"
+msgstr "Gitter1"
+
+#: src/tools/radiant/radiant/grid.cpp:202
+#, fuzzy
+msgid "Grid2"
+msgstr "Gitter2"
+
+#: src/tools/radiant/radiant/grid.cpp:203
+#, fuzzy
+msgid "Grid4"
+msgstr "Gitter4"
+
+#: src/tools/radiant/radiant/grid.cpp:204
+#, fuzzy
+msgid "Grid8"
+msgstr "Gitter8"
+
+#: src/tools/radiant/radiant/grid.cpp:205
+#, fuzzy
+msgid "Grid16"
+msgstr "Gitter16"
+
+#: src/tools/radiant/radiant/grid.cpp:206
+#, fuzzy
+msgid "Grid32"
+msgstr "Gitter32"
+
+#: src/tools/radiant/radiant/grid.cpp:207
+#, fuzzy
+msgid "Grid64"
+msgstr "Gitter64"
+
+#: src/tools/radiant/radiant/grid.cpp:208
+#, fuzzy
+msgid "Grid128"
+msgstr "Gitter128"
+
+#: src/tools/radiant/radiant/grid.cpp:209
+#, fuzzy
+msgid "Grid256"
+msgstr "Gitter256"
+
+#: src/tools/radiant/radiant/grid.cpp:220
+#, fuzzy
+msgid "Default grid spacing"
+msgstr "Am Gitter fangen"
+
+#: src/tools/radiant/radiant/grid.cpp:226
+msgid "Grid"
+msgstr "Raster"
+
+#: src/tools/radiant/radiant/grid.cpp:226
+msgid "Grid Settings"
+msgstr "Rastereinstellungen"
+
+#: src/tools/radiant/radiant/main.cpp:295
+#: src/tools/radiant/radiant/main.cpp:360
+msgid "UFORadiant"
+msgstr "UFORadiant"
+
+#: src/tools/radiant/radiant/main.cpp:366
+msgid ""
+"UFORadiant failed to start properly the last time it was run.\n"
+"The failure may be caused by current preferences.\n"
+"Do you want to reset all preferences to defaults?"
+msgstr ""
+"UFORadiant wurde beim letzten Mal nicht korrekt gestartet.\n"
+"Dieser Fehler kann durch die derzeitigen Einstellungen hervorgerufen worden sein.\n"
+"Sollen die Einstellungen zurückgesetzt werden?"
+
+#: src/tools/radiant/radiant/main.cpp:370
+msgid "UFORadiant - Startup Failure"
+msgstr "UFORadiant - Start fehlgeschlagen"
+
+#: src/tools/radiant/radiant/main.cpp:377
+msgid "UFORadiant - Console Log"
+msgstr "UFORadiant - Konsolen Log"
+
+#: src/tools/radiant/radiant/mainframe.cpp:315
+#, fuzzy
+msgid "Engine Path"
+msgstr "doppelter Pfad %s"
+
+#: src/tools/radiant/radiant/mainframe.cpp:317
+#, fuzzy
+msgid "Compiler Binary"
+msgstr "_Binärdatei hinzufügen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:321
+msgid "Paths"
+msgstr "Pfade"
+
+#: src/tools/radiant/radiant/mainframe.cpp:321
+msgid "Path Settings"
+msgstr "Pfadeinstellungen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:335
+msgid "Path settings"
+msgstr "Pfadeinstellungen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:345
+#, fuzzy
+msgid "Engine Path Not Found"
+msgstr "dpkg: »%s« wurde im PATH nicht gefunden.\n"
+
+#: src/tools/radiant/radiant/xywindow.cpp:2703
+#, fuzzy
+msgid "Solid selection boxes"
+msgstr "Auswahl %s nicht gefunden"
+
+#: src/tools/radiant/radiant/xywindow.cpp:2704
+#, fuzzy
+msgid "Display size info"
+msgstr "INFO: gl: Maximale Texturgröße: %d\n"
+
+#: src/tools/radiant/radiant/xywindow.cpp:2705
+msgid "Chase mouse during drags"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2706
+msgid "Update views on camera move"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2710
+#, fuzzy
+msgid "Orthographic View Preferences"
+msgstr "Internen Betrachter ben&utzen"
+
+#: src/tools/radiant/radiant/xywindow.cpp:2720
+msgid "Clipper tool uses nodraw"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2724
+msgid "Clipper"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2724
+#, fuzzy
+msgid "Clipper Tool Settings"
+msgstr "Pro_jekteinstellungen..."
 
