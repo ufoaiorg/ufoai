@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "pluginmenu.h"
+#include "radiant.h"
 
 #include "stream/textstream.h"
 
@@ -140,7 +141,7 @@ static void PluginsMenu_populate() {
 
 GtkMenuItem* create_plugins_menu() {
 	// Plugins menu
-	GtkMenuItem* plugins_menu_item = new_sub_menu_item_with_mnemonic("_Plugins");
+	GtkMenuItem* plugins_menu_item = new_sub_menu_item_with_mnemonic(_("_Plugins"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(plugins_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value) {
 		menu_tearoff(menu);

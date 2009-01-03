@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "commands.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 
@@ -221,13 +222,13 @@ void DoCommandListDlg (void)
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Command", renderer, "text", 0, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Command"), renderer, "text", 0, (char const*)0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 			}
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text", 1, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text", 1, (char const*)0);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*)0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(keyShortcutEdited), (gpointer)view);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
@@ -251,7 +252,7 @@ void DoCommandListDlg (void)
 	GtkVBox* vbox = create_dialog_vbox(4);
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), FALSE, FALSE, 0);
 	{
-		GtkButton* button = create_modal_dialog_button("Close", dialog.m_close_button);
+		GtkButton* button = create_modal_dialog_button(_("Close"), dialog.m_close_button);
 		gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 	}
 

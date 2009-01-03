@@ -1128,30 +1128,30 @@ static void TextureBrowser_createTreeViewTree (void) {
 }
 
 static GtkMenuItem* TextureBrowser_constructViewMenu (GtkMenu* menu) {
-	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic("_View");
+	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic(_("_View"));
 
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff (menu);
 
-	create_check_menu_item_with_mnemonic(menu, "Hide _Unused", "ShowInUse");
+	create_check_menu_item_with_mnemonic(menu, _("Hide _Unused"), "ShowInUse");
 
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "Show All", "ShowAllTextures");
-	create_check_menu_item_with_mnemonic(menu, "Show shaders", "ToggleShowShaders");
-	create_check_menu_item_with_mnemonic(menu, "Fixed Size", "FixedSize");
+	create_menu_item_with_mnemonic(menu, _("Show All"), "ShowAllTextures");
+	create_check_menu_item_with_mnemonic(menu, _("Show shaders"), "ToggleShowShaders");
+	create_check_menu_item_with_mnemonic(menu, _("Fixed Size"), "FixedSize");
 
 	return textures_menu_item;
 }
 
 static GtkMenuItem* TextureBrowser_constructToolsMenu (GtkMenu* menu) {
-	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic("_Tools");
+	GtkMenuItem* textures_menu_item = new_sub_menu_item_with_mnemonic(_("_Tools"));
 
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff (menu);
 
-	create_menu_item_with_mnemonic(menu, "Flush & Reload Shaders", "RefreshShaders");
-	// TODO: some better place for this?
-	create_menu_item_with_mnemonic(menu, "Find / Replace...", "FindReplaceTextures");
+	create_menu_item_with_mnemonic(menu, _("Flush & Reload Shaders"), "RefreshShaders");
+	//! @todo some better place for this?
+	create_menu_item_with_mnemonic(menu, _("Find / Replace..."), "FindReplaceTextures");
 
 	return textures_menu_item;
 }
@@ -1327,17 +1327,17 @@ static void TextureBrowser_constructPreferences (PreferencesPage& page) {
 	{
 		const char* texture_scale[] = { "10%", "25%", "50%", "100%", "200%" };
 		page.appendCombo(
-			"Texture Thumbnail Scale",
+			_("Texture Thumbnail Scale"),
 			STRING_ARRAY_RANGE(texture_scale),
 			IntImportCallback(TextureScaleImportCaller(GlobalTextureBrowser())),
 			IntExportCallback(TextureScaleExportCaller(GlobalTextureBrowser()))
 		);
 	}
-	page.appendEntry("Mousewheel Increment", GlobalTextureBrowser().m_mouseWheelScrollIncrement);
+	page.appendEntry(_("Mousewheel Increment"), GlobalTextureBrowser().m_mouseWheelScrollIncrement);
 }
 
 void TextureBrowser_constructPage (PreferenceGroup& group) {
-	PreferencesPage page(group.createPage("Texture Browser", "Texture Browser Preferences"));
+	PreferencesPage page(group.createPage(_("Texture Browser"), _("Texture Browser Preferences")));
 	TextureBrowser_constructPreferences(page);
 }
 

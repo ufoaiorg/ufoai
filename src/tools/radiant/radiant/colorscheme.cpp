@@ -3,7 +3,8 @@
  * @brief
  */
 
-#include <gtk/gtk.h>
+
+#include "radiant.h"
 #include "colorscheme.h"
 #include "mainframe.h"
 #include "camwindow.h"
@@ -159,36 +160,36 @@ class ColoursMenu
 
 GtkMenuItem* create_colours_menu (void)
 {
-	GtkMenuItem* colours_menu_item = new_sub_menu_item_with_mnemonic("Colors");
+	GtkMenuItem* colours_menu_item = new_sub_menu_item_with_mnemonic(_("Colors"));
 	GtkMenu* menu_in_menu = GTK_MENU(gtk_menu_item_get_submenu(colours_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu_in_menu);
 
-	GtkMenu* menu_3 = create_sub_menu_with_mnemonic(menu_in_menu, "Themes");
+	GtkMenu* menu_3 = create_sub_menu_with_mnemonic(menu_in_menu, _("Themes"));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu_3);
 
-	create_menu_item_with_mnemonic(menu_3, "QE4 Original", "ColorSchemeOriginal");
-	create_menu_item_with_mnemonic(menu_3, "Q3Radiant Original", "ColorSchemeQER");
-	create_menu_item_with_mnemonic(menu_3, "Black and Green", "ColorSchemeBlackAndGreen");
-	create_menu_item_with_mnemonic(menu_3, "Maya/Max/Lightwave Emulation", "ColorSchemeYdnar");
+	create_menu_item_with_mnemonic(menu_3, _("QE4 Original"), "ColorSchemeOriginal");
+	create_menu_item_with_mnemonic(menu_3, _("Q3Radiant Original"), "ColorSchemeQER");
+	create_menu_item_with_mnemonic(menu_3, _("Black and Green"), "ColorSchemeBlackAndGreen");
+	create_menu_item_with_mnemonic(menu_3, _("Maya/Max/Lightwave Emulation"), "ColorSchemeYdnar");
 
 	menu_separator(menu_in_menu);
 
-	create_menu_item_with_mnemonic(menu_in_menu, "_Texture Background...", "ChooseTextureBackgroundColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Grid Background...", "ChooseGridBackgroundColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Grid Major...", "ChooseGridMajorColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Grid Minor...", "ChooseGridMinorColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Grid Major Small...", "ChooseSmallGridMajorColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Grid Minor Small...", "ChooseSmallGridMinorColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Grid Text...", "ChooseGridTextColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Grid Block...", "ChooseGridBlockColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Default Brush...", "ChooseBrushColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Camera Background...", "ChooseCameraBackgroundColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Selected Brush...", "ChooseSelectedBrushColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Selected Brush (Camera)...", "ChooseCameraSelectedBrushColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Clipper...", "ChooseClipperColor");
-	create_menu_item_with_mnemonic(menu_in_menu, "Active View name...", "ChooseOrthoViewNameColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("_Texture Background..."), "ChooseTextureBackgroundColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Grid Background..."), "ChooseGridBackgroundColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Grid Major..."), "ChooseGridMajorColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Grid Minor..."), "ChooseGridMinorColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Grid Major Small..."), "ChooseSmallGridMajorColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Grid Minor Small..."), "ChooseSmallGridMinorColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Grid Text..."), "ChooseGridTextColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Grid Block..."), "ChooseGridBlockColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Default Brush..."), "ChooseBrushColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Camera Background..."), "ChooseCameraBackgroundColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Selected Brush..."), "ChooseSelectedBrushColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Selected Brush (Camera)..."), "ChooseCameraSelectedBrushColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Clipper..."), "ChooseClipperColor");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Active View name..."), "ChooseOrthoViewNameColor");
 
 	return colours_menu_item;
 }

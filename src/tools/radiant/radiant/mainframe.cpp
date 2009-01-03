@@ -1390,33 +1390,33 @@ void ClipperChangeNotify (void)
 	XY_UpdateAllWindows();
 }
 
-static LatchedInt g_Layout_viewStyle(MainFrame::eSplit, "Window Layout");
-LatchedBool g_Layout_enableDetachableMenus(false, "Detachable Menus");
-static LatchedBool g_Layout_enablePluginToolbar(true, "Plugin Toolbar");
+static LatchedInt g_Layout_viewStyle(MainFrame::eSplit, _("Window Layout"));
+LatchedBool g_Layout_enableDetachableMenus(false, _("Detachable Menus"));
+static LatchedBool g_Layout_enablePluginToolbar(true, _("Plugin Toolbar"));
 
 static GtkMenuItem* create_file_menu (void)
 {
 	// File menu
-	GtkMenuItem* file_menu_item = new_sub_menu_item_with_mnemonic("_File");
+	GtkMenuItem* file_menu_item = new_sub_menu_item_with_mnemonic(_("_File"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(file_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, "_New Map", "NewMap");
+	create_menu_item_with_mnemonic(menu, _("_New Map"), "NewMap");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "_Open...", "OpenMap");
-	create_menu_item_with_mnemonic(menu, "_Import...", "ImportMap");
-	create_menu_item_with_mnemonic(menu, "_Save", "SaveMap");
-	create_menu_item_with_mnemonic(menu, "Save _as...", "SaveMapAs");
-	create_menu_item_with_mnemonic(menu, "Save s_elected...", "SaveSelected");
+	create_menu_item_with_mnemonic(menu, _("_Open..."), "OpenMap");
+	create_menu_item_with_mnemonic(menu, _("_Import..."), "ImportMap");
+	create_menu_item_with_mnemonic(menu, _("_Save"), "SaveMap");
+	create_menu_item_with_mnemonic(menu, _("Save _as..."), "SaveMapAs");
+	create_menu_item_with_mnemonic(menu, _("Save s_elected..."), "SaveSelected");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "Save re_gion...", "SaveRegion");
+	create_menu_item_with_mnemonic(menu, _("Save re_gion..."), "SaveRegion");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "_Refresh models", "RefreshReferences");
+	create_menu_item_with_mnemonic(menu, _("_Refresh models"), "RefreshReferences");
 	menu_separator(menu);
 	MRU_constructMenu(menu);
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "E_xit", "Exit");
+	create_menu_item_with_mnemonic(menu, _("E_xit"), "Exit");
 
 	return file_menu_item;
 }
@@ -1424,36 +1424,36 @@ static GtkMenuItem* create_file_menu (void)
 static GtkMenuItem* create_edit_menu (void)
 {
 	// Edit menu
-	GtkMenuItem* edit_menu_item = new_sub_menu_item_with_mnemonic("_Edit");
+	GtkMenuItem* edit_menu_item = new_sub_menu_item_with_mnemonic(_("_Edit"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(edit_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
-	create_menu_item_with_mnemonic(menu, "_Undo", "Undo");
-	create_menu_item_with_mnemonic(menu, "_Redo", "Redo");
+	create_menu_item_with_mnemonic(menu, _("_Undo"), "Undo");
+	create_menu_item_with_mnemonic(menu, _("_Redo"), "Redo");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "_Copy", "Copy");
-	create_menu_item_with_mnemonic(menu, "_Paste", "Paste");
-	create_menu_item_with_mnemonic(menu, "P_aste To Camera", "PasteToCamera");
+	create_menu_item_with_mnemonic(menu, _("_Copy"), "Copy");
+	create_menu_item_with_mnemonic(menu, _("_Paste"), "Paste");
+	create_menu_item_with_mnemonic(menu, _("P_aste To Camera"), "PasteToCamera");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "_Duplicate", "CloneSelection");
-	create_menu_item_with_mnemonic(menu, "D_elete", "DeleteSelection");
+	create_menu_item_with_mnemonic(menu, _("_Duplicate"), "CloneSelection");
+	create_menu_item_with_mnemonic(menu, _("D_elete"), "DeleteSelection");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "Pa_rent", "ParentSelection");
+	create_menu_item_with_mnemonic(menu, _("Pa_rent"), "ParentSelection");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "C_lear Selection", "UnSelectSelection");
-	create_menu_item_with_mnemonic(menu, "_Invert Selection", "InvertSelection");
-	create_menu_item_with_mnemonic(menu, "Select i_nside", "SelectInside");
-	create_menu_item_with_mnemonic(menu, "Select _touching", "SelectTouching");
+	create_menu_item_with_mnemonic(menu, _("C_lear Selection"), "UnSelectSelection");
+	create_menu_item_with_mnemonic(menu, _("_Invert Selection"), "InvertSelection");
+	create_menu_item_with_mnemonic(menu, _("Select i_nside"), "SelectInside");
+	create_menu_item_with_mnemonic(menu, _("Select _touching"), "SelectTouching");
 
-	GtkMenu* convert_menu = create_sub_menu_with_mnemonic(menu, "E_xpand Selection");
+	GtkMenu* convert_menu = create_sub_menu_with_mnemonic(menu, _("E_xpand Selection"));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(convert_menu);
-	create_menu_item_with_mnemonic(convert_menu, "To Whole _Entities", "ExpandSelectionToEntities");
+	create_menu_item_with_mnemonic(convert_menu, _("To Whole _Entities"), "ExpandSelectionToEntities");
 
 	menu_separator(menu);
 
-	create_menu_item_with_mnemonic(menu, "Shortcuts list", FreeCaller<DoCommandListDlg> ());
-	create_menu_item_with_mnemonic(menu, "Pre_ferences...", "Preferences");
+	create_menu_item_with_mnemonic(menu, _("Shortcuts list"), FreeCaller<DoCommandListDlg> ());
+	create_menu_item_with_mnemonic(menu, _("Pre_ferences..."), "Preferences");
 
 	return edit_menu_item;
 }
@@ -1461,7 +1461,7 @@ static GtkMenuItem* create_edit_menu (void)
 static GtkMenuItem* create_filter_menu (void)
 {
 	// Edit menu
-	GtkMenuItem* filter_menu_item = new_sub_menu_item_with_mnemonic("Filter");
+	GtkMenuItem* filter_menu_item = new_sub_menu_item_with_mnemonic(_("Filter"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(filter_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
@@ -1474,88 +1474,88 @@ static GtkMenuItem* create_filter_menu (void)
 static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 {
 	// View menu
-	GtkMenuItem* view_menu_item = new_sub_menu_item_with_mnemonic("Vie_w");
+	GtkMenuItem* view_menu_item = new_sub_menu_item_with_mnemonic(_("Vie_w"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(view_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
 	if (style == MainFrame::eSplit) {
-		create_menu_item_with_mnemonic(menu, "Texture Browser", "ToggleTextures");
+		create_menu_item_with_mnemonic(menu, _("Texture Browser"), "ToggleTextures");
 	}
-	create_menu_item_with_mnemonic(menu, "Toggle Sidebar", "ToggleSidebar");
-	create_menu_item_with_mnemonic(menu, "Toggle EntityInspector", "ToggleEntityInspector");
-	create_menu_item_with_mnemonic(menu, "Toggle SurfaceInspector", "ToggleSurfaceInspector");
+	create_menu_item_with_mnemonic(menu, _("Toggle Sidebar"), "ToggleSidebar");
+	create_menu_item_with_mnemonic(menu, _("Toggle EntityInspector"), "ToggleEntityInspector");
+	create_menu_item_with_mnemonic(menu, _("Toggle SurfaceInspector"), "ToggleSurfaceInspector");
 
 	menu_separator(menu);
 	{
-		GtkMenu* camera_menu = create_sub_menu_with_mnemonic(menu, "Camera");
+		GtkMenu* camera_menu = create_sub_menu_with_mnemonic(menu, _("Camera"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(camera_menu);
-		create_menu_item_with_mnemonic(camera_menu, "_Center", "CenterView");
-		create_menu_item_with_mnemonic(camera_menu, "_Up Floor", "UpFloor");
-		create_menu_item_with_mnemonic(camera_menu, "_Down Floor", "DownFloor");
+		create_menu_item_with_mnemonic(camera_menu, _("_Center"), "CenterView");
+		create_menu_item_with_mnemonic(camera_menu, _("_Up Floor"), "UpFloor");
+		create_menu_item_with_mnemonic(camera_menu, _("_Down Floor"), "DownFloor");
 		menu_separator(camera_menu);
-		create_menu_item_with_mnemonic(camera_menu, "Far Clip Plane In", "CubicClipZoomIn");
-		create_menu_item_with_mnemonic(camera_menu, "Far Clip Plane Out", "CubicClipZoomOut");
+		create_menu_item_with_mnemonic(camera_menu, _("Far Clip Plane In"), "CubicClipZoomIn");
+		create_menu_item_with_mnemonic(camera_menu, _("Far Clip Plane Out"), "CubicClipZoomOut");
 		menu_separator(camera_menu);
-		create_menu_item_with_mnemonic(camera_menu, "Look Through Selected", "LookThroughSelected");
-		create_menu_item_with_mnemonic(camera_menu, "Look Through Camera", "LookThroughCamera");
+		create_menu_item_with_mnemonic(camera_menu, _("Look Through Selected"), "LookThroughSelected");
+		create_menu_item_with_mnemonic(camera_menu, _("Look Through Camera"), "LookThroughCamera");
 	}
 
 	menu_separator(menu);
 	{
-		GtkMenu* orthographic_menu = create_sub_menu_with_mnemonic(menu, "Orthographic");
+		GtkMenu* orthographic_menu = create_sub_menu_with_mnemonic(menu, _("Orthographic"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(orthographic_menu);
 		if (style == MainFrame::eRegular) {
-			create_menu_item_with_mnemonic(orthographic_menu, "_Next (XY, YZ, YZ)", "NextView");
-			create_menu_item_with_mnemonic(orthographic_menu, "XY (Top)", "ViewTop");
-			create_menu_item_with_mnemonic(orthographic_menu, "XZ (Side)", "ViewSide");
-			create_menu_item_with_mnemonic(orthographic_menu, "YZ (Front)", "ViewFront");
+			create_menu_item_with_mnemonic(orthographic_menu, _("_Next (XY, YZ, YZ)"), "NextView");
+			create_menu_item_with_mnemonic(orthographic_menu, _("XY (Top)"), "ViewTop");
+			create_menu_item_with_mnemonic(orthographic_menu, _("XZ (Side)"), "ViewSide");
+			create_menu_item_with_mnemonic(orthographic_menu, _("YZ (Front)"), "ViewFront");
 			menu_separator(orthographic_menu);
 		}
 
-		create_menu_item_with_mnemonic(orthographic_menu, "_XY 100%", "Zoom100");
-		create_menu_item_with_mnemonic(orthographic_menu, "XY Zoom _In", "ZoomIn");
-		create_menu_item_with_mnemonic(orthographic_menu, "XY Zoom _Out", "ZoomOut");
+		create_menu_item_with_mnemonic(orthographic_menu, _("_XY 100%"), "Zoom100");
+		create_menu_item_with_mnemonic(orthographic_menu, _("XY Zoom _In"), "ZoomIn");
+		create_menu_item_with_mnemonic(orthographic_menu, _("XY Zoom _Out"), "ZoomOut");
 	}
 
 	menu_separator(menu);
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Show");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Show"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, "Toggle Grid", "ToggleGrid");
-		create_menu_item_with_mnemonic(menu_in_menu, "Toggle Crosshairs", "ToggleCrosshairs");
-		create_menu_item_with_mnemonic(menu_in_menu, "Toggle Sizeinfo", "ToggleSizePaint");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show _Angles", "ShowAngles");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show _Names", "ShowNames");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show Blocks", "ShowBlocks");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show C_oordinates", "ShowCoordinates");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show Window Outline", "ShowWindowOutline");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show Axes", "ShowAxes");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show Workzone", "ShowWorkzone");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "Show Stats", "ShowStats");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Grid"), "ToggleGrid");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Crosshairs"), "ToggleCrosshairs");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Toggle Sizeinfo"), "ToggleSizePaint");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show _Angles"), "ShowAngles");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show _Names"), "ShowNames");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Blocks"), "ShowBlocks");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show C_oordinates"), "ShowCoordinates");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Window Outline"), "ShowWindowOutline");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Axes"), "ShowAxes");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Workzone"), "ShowWorkzone");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("Show Stats"), "ShowStats");
 	}
 
 	menu_separator(menu);
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Hide/Show");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Hide/Show"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, "Hide Selected", "HideSelected");
-		create_menu_item_with_mnemonic(menu_in_menu, "Show Hidden", "ShowHidden");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Hide Selected"), "HideSelected");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Show Hidden"), "ShowHidden");
 	}
 
 	menu_separator(menu);
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Region");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Region"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, "_Off", "RegionOff");
-		create_menu_item_with_mnemonic(menu_in_menu, "_Set XY", "RegionSetXY");
-		create_menu_item_with_mnemonic(menu_in_menu, "Set _Brush", "RegionSetBrush");
-		create_menu_item_with_mnemonic(menu_in_menu, "Set Se_lected Brushes", "RegionSetSelection");
+		create_menu_item_with_mnemonic(menu_in_menu, _("_Off"), "RegionOff");
+		create_menu_item_with_mnemonic(menu_in_menu, _("_Set XY"), "RegionSetXY");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Set _Brush"), "RegionSetBrush");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Set Se_lected Brushes"), "RegionSetSelection");
 	}
 
 	command_connect_accelerator("CenterXYViews");
@@ -1566,50 +1566,50 @@ static GtkMenuItem* create_view_menu (MainFrame::EViewStyle style)
 static GtkMenuItem* create_selection_menu (void)
 {
 	// Selection menu
-	GtkMenuItem* selection_menu_item = new_sub_menu_item_with_mnemonic("M_odify");
+	GtkMenuItem* selection_menu_item = new_sub_menu_item_with_mnemonic(_("M_odify"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(selection_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Components");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Components"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_check_menu_item_with_mnemonic(menu_in_menu, "_Edges", "DragEdges");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "_Vertices", "DragVertices");
-		create_check_menu_item_with_mnemonic(menu_in_menu, "_Faces", "DragFaces");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("_Edges"), "DragEdges");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("_Vertices"), "DragVertices");
+		create_check_menu_item_with_mnemonic(menu_in_menu, _("_Faces"), "DragFaces");
 	}
 
 	menu_separator(menu);
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Nudge");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Nudge"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, "Nudge Left", "SelectNudgeLeft");
-		create_menu_item_with_mnemonic(menu_in_menu, "Nudge Right", "SelectNudgeRight");
-		create_menu_item_with_mnemonic(menu_in_menu, "Nudge Up", "SelectNudgeUp");
-		create_menu_item_with_mnemonic(menu_in_menu, "Nudge Down", "SelectNudgeDown");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Left"), "SelectNudgeLeft");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Right"), "SelectNudgeRight");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Up"), "SelectNudgeUp");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Nudge Down"), "SelectNudgeDown");
 	}
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Rotate");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Rotate"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, "Rotate X", "RotateSelectionX");
-		create_menu_item_with_mnemonic(menu_in_menu, "Rotate Y", "RotateSelectionY");
-		create_menu_item_with_mnemonic(menu_in_menu, "Rotate Z", "RotateSelectionZ");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Rotate X"), "RotateSelectionX");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Rotate Y"), "RotateSelectionY");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Rotate Z"), "RotateSelectionZ");
 	}
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Flip");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Flip"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, "Flip _X", "MirrorSelectionX");
-		create_menu_item_with_mnemonic(menu_in_menu, "Flip _Y", "MirrorSelectionY");
-		create_menu_item_with_mnemonic(menu_in_menu, "Flip _Z", "MirrorSelectionZ");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Flip _X"), "MirrorSelectionX");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Flip _Y"), "MirrorSelectionY");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Flip _Z"), "MirrorSelectionZ");
 	}
 
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "Arbitrary rotation...", "ArbitraryRotation");
-	create_menu_item_with_mnemonic(menu, "Arbitrary scale...", "ArbitraryScale");
+	create_menu_item_with_mnemonic(menu, _("Arbitrary rotation..."), "ArbitraryRotation");
+	create_menu_item_with_mnemonic(menu, _("Arbitrary scale..."), "ArbitraryScale");
 
 	return selection_menu_item;
 }
@@ -1617,7 +1617,7 @@ static GtkMenuItem* create_selection_menu (void)
 static GtkMenuItem* create_grid_menu (void)
 {
 	// Grid menu
-	GtkMenuItem* grid_menu_item = new_sub_menu_item_with_mnemonic("_Grid");
+	GtkMenuItem* grid_menu_item = new_sub_menu_item_with_mnemonic(_("_Grid"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(grid_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
@@ -1630,17 +1630,17 @@ static GtkMenuItem* create_grid_menu (void)
 static GtkMenuItem* create_misc_menu (void)
 {
 	// Misc menu
-	GtkMenuItem* misc_menu_item = new_sub_menu_item_with_mnemonic("M_isc");
+	GtkMenuItem* misc_menu_item = new_sub_menu_item_with_mnemonic(_("M_isc"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(misc_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
 	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(create_colours_menu()));
 
-	create_menu_item_with_mnemonic(menu, "Find brush...", "FindBrush");
-	create_menu_item_with_mnemonic(menu, "_Print XY View", FreeCaller<WXY_Print>());
-	create_menu_item_with_mnemonic(menu, "_Background select", FreeCaller<WXY_BackgroundSelect>());
-	//	create_menu_item_with_mnemonic(menu, "_Benchmark", FreeCaller<GlobalCamera_Benchmark>());
+	create_menu_item_with_mnemonic(menu, _("Find brush..."), "FindBrush");
+	create_menu_item_with_mnemonic(menu, _("_Print XY View"), FreeCaller<WXY_Print>());
+	create_menu_item_with_mnemonic(menu, _("_Background select"), FreeCaller<WXY_BackgroundSelect>());
+	//	create_menu_item_with_mnemonic(menu, _("_Benchmark"), FreeCaller<GlobalCamera_Benchmark>());
 
 			return misc_menu_item;
 		}
@@ -1648,14 +1648,14 @@ static GtkMenuItem* create_misc_menu (void)
 static GtkMenuItem* create_tools_menu (void)
 {
 	// Tools menu
-	GtkMenuItem* tools_menu_item = new_sub_menu_item_with_mnemonic("Tools");
+	GtkMenuItem* tools_menu_item = new_sub_menu_item_with_mnemonic(_("Tools"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(tools_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, "Check for errors", "ToolsCheckErrors");
-	create_menu_item_with_mnemonic(menu, "Compile the map", "ToolsCompile");
-	create_menu_item_with_mnemonic(menu, "Show pathfinding info", "ShowPathfinding");
+	create_menu_item_with_mnemonic(menu, _("Check for errors"), "ToolsCheckErrors");
+	create_menu_item_with_mnemonic(menu, _("Compile the map"), "ToolsCompile");
+	create_menu_item_with_mnemonic(menu, _("Show pathfinding info"), "ShowPathfinding");
 
 	return tools_menu_item;
 }
@@ -1663,7 +1663,7 @@ static GtkMenuItem* create_tools_menu (void)
 static GtkMenuItem* create_entity_menu (void)
 {
 	// Brush menu
-	GtkMenuItem* entity_menu_item = new_sub_menu_item_with_mnemonic("E_ntity");
+	GtkMenuItem* entity_menu_item = new_sub_menu_item_with_mnemonic(_("E_ntity"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(entity_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
@@ -1676,7 +1676,7 @@ static GtkMenuItem* create_entity_menu (void)
 static GtkMenuItem* create_brush_menu (void)
 {
 	// Brush menu
-	GtkMenuItem* brush_menu_item = new_sub_menu_item_with_mnemonic("B_rush");
+	GtkMenuItem* brush_menu_item = new_sub_menu_item_with_mnemonic(_("B_rush"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(brush_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
@@ -1689,15 +1689,15 @@ static GtkMenuItem* create_brush_menu (void)
 static GtkMenuItem* create_help_menu (void)
 {
 	// Help menu
-	GtkMenuItem* help_menu_item = new_sub_menu_item_with_mnemonic("_Help");
+	GtkMenuItem* help_menu_item = new_sub_menu_item_with_mnemonic(_("_Help"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(help_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
 
-	create_menu_item_with_mnemonic(menu, "Manual", "OpenManual");
+	create_menu_item_with_mnemonic(menu, _("Manual"), "OpenManual");
 
-	create_menu_item_with_mnemonic(menu, "Bug report", FreeCaller<OpenBugReportURL> ());
-	create_menu_item_with_mnemonic(menu, "_About", FreeCaller<DoAbout> ());
+	create_menu_item_with_mnemonic(menu, _("Bug report"), FreeCaller<OpenBugReportURL> ());
+	create_menu_item_with_mnemonic(menu, _("_About"), FreeCaller<DoAbout> ());
 
 	return help_menu_item;
 }
