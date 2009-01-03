@@ -25,7 +25,6 @@ import re
 
 # config
 CACHING = True
-ABS_URI = 'http://ufoai.sourceforge.net/licenses/'
 
 HTML = u"""<html>
 <head>
@@ -212,7 +211,7 @@ def generate(d, data, texture_map, map_texture):
                 thumb = '.thumbnails/%s/%s.png' % (d,j)
                 if not os.path.exists('licenses/html/%s' % thumb):
                     os.system('convert base/%s/%s -thumbnail 128x128 licenses/html/%s' % (d, j, thumb))
-                img = '<img src="%s%s"/>' % (ABS_URI, thumb)
+                img = '<img src="licenses/%s"/>' % (thumb)
 
 
             content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
@@ -334,6 +333,10 @@ def setup():
 
 	if os.system('gnuplot -h > /dev/null'):
 		print 'you must have gnuplot installed'
+		sys.exit(1)
+
+	if os.system('convert -h > /dev/null'):
+		print 'you must have imagemagick\'s convert installed'
 		sys.exit(1)
 
 
