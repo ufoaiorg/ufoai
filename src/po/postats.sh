@@ -34,7 +34,7 @@ test -d "${PO_DIR}" || usage
 test -e "${POT_FILE}" || usage
 test -d "${IMAGES_DIR}" || mkdir -p "${IMAGES_DIR}"
 
-for po in $(ls ${PO_DIR}/*.po); do
+for po in $(ls ${PO_DIR}/ufoai-*.po); do
 	echo -n "Generating stats for locale "$(basename "${po}" .po)"..."
 	fuzzy_x=$(${MSGSTATS} "${POT_FILE}" "${po}" | \
 	awk -v width=${WIDTH} '/fuzzy:/ {fuzzy = $2}
