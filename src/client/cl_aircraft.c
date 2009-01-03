@@ -1942,6 +1942,14 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 	float dist;
 	float angle;
 
+	dist = MAP_GetDistance(shooter->pos, target->pos);
+	/* below calculation gives bad results when aircraft are far away: just go to target location at first
+	 * (this is a hack that should be removed when sphere calculation is made) */
+	if (dist > 50.0f) {
+		Vector2Copy(target->pos, (*dest));
+		return;
+	}
+
 	/* Convert aircraft position into cartesian frame */
 	PolarToVec(shooter->pos, shooterPos);
 	PolarToVec(target->pos, targetPos);
@@ -1954,7 +1962,6 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 	angle = acos(DotProduct(shooterPos, targetPos));
 
 	/* Calculate the distance target will be able to fly before shooter reaches it */
-	dist = MAP_GetDistance(shooter->pos, target->pos);
 	dist /= cos(angle) + sqrt(pow(shooter->stats[AIR_STATS_SPEED], 2) / pow(target->stats[AIR_STATS_SPEED], 2) - pow(sin(angle), 2));
 
 	/* Get rotation vector */
