@@ -49,6 +49,8 @@ static int CL_GetAlienMissionTypeByID (const char *type)
 		return INTERESTCATEGORY_INTERCEPT;
 	else if (!Q_strncmp(type, "harvest", MAX_VAR))
 		return INTERESTCATEGORY_HARVEST;
+	else if (!Q_strncmp(type, "alienbase", MAX_VAR))
+		return INTERESTCATEGORY_ALIENBASE;
 	else {
 		Com_Printf("CL_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
 		return INTERESTCATEGORY_NONE;
@@ -81,8 +83,8 @@ void CL_ParseAlienTeam (const char *name, const char **text)
 		return;
 	}
 
-	if (gd.numAlienCategories >= MAX_ALIEN_GROUP_PER_CATEGORY) {
-		Com_Printf("CL_ParseAlienTeam: maximum number of alien team category reached (%i)\n", MAX_ALIEN_GROUP_PER_CATEGORY);
+	if (gd.numAlienCategories >= ALIENCATEGORY_MAX) {
+		Com_Printf("CL_ParseAlienTeam: maximum number of alien team category reached (%i)\n", ALIENCATEGORY_MAX);
 		return;
 	}
 

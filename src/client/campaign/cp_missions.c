@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
+#include "cl_alienbase.h"
 #include "cp_missions.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
@@ -213,6 +214,8 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 		return "Interception";
 	case INTERESTCATEGORY_HARVEST:
 		return "Harvest";
+	case INTERESTCATEGORY_ALIENBASE:
+		return "Alien base discovered";
 	case INTERESTCATEGORY_MAX:
 		return "Unknown mission category";
 	default:
@@ -698,6 +701,8 @@ int CP_MissionChooseUFO (const mission_t *mission)
 	case INTERESTCATEGORY_HARVEST:
 		numTypes = CP_HarvestMissionAvailableUFOs(mission, ufoTypes);
 		break;
+	case INTERESTCATEGORY_ALIENBASE:
+		/* can't be spawned: alien base is the result of base building mission */
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
@@ -761,6 +766,7 @@ void CP_MissionStageEnd (mission_t *mission)
 	case INTERESTCATEGORY_HARVEST:
 		CP_HarvestMissionNextStage(mission);
 		break;
+	case INTERESTCATEGORY_ALIENBASE:
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Com_Printf("CP_MissionStageEnd: Invalid type of mission (%i), remove mission '%s'\n", mission->category, mission->id);
@@ -790,8 +796,6 @@ void CP_MissionIsOver (mission_t *mission)
 	case INTERESTCATEGORY_BUILDING:
 		if (mission->stage <= STAGE_BUILD_BASE)
 			CP_BuildBaseMissionIsFailure(mission);
-		else if (mission->stage == STAGE_BASE_DISCOVERED)
-			CP_BuildBaseMissionBaseDestroyed(mission);
 		else
 			CP_BuildBaseMissionIsSuccess(mission);
 		break;
@@ -815,6 +819,9 @@ void CP_MissionIsOver (mission_t *mission)
 		break;
 	case INTERESTCATEGORY_HARVEST:
 		CP_HarvestMissionIsFailure(mission);
+		break;
+	case INTERESTCATEGORY_ALIENBASE:
+		CP_BuildBaseMissionBaseDestroyed(mission);
 		break;
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
@@ -995,6 +1002,20 @@ static void CP_SpawnNewMissions_f (void)
 
 	if (category < INTERESTCATEGORY_NONE || category >= INTERESTCATEGORY_MAX)
 		return;
+
+	if (category == INTERESTCATEGORY_ALIENBASE) {
+		/* spawning an alien base is special */
+		vec2_t pos;
+		alienBase_t *base;
+		AB_SetAlienBasePosition(pos);				/* get base position */
+		base = AB_BuildBase(pos);					/* build base */
+		if (!base) {
+			Com_Printf("CP_BuildBaseSetUpBase: could not create base\n");
+			return;
+		}
+		CP_SpawnAlienBaseMission(base);				/* make base visible */
+		return;
+	}
 
 	CP_CreateNewMission(category, qtrue);
 

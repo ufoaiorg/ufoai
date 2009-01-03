@@ -342,7 +342,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 {
 	mission_t *mission;
 
-	CP_CreateNewMission(INTERESTCATEGORY_BUILDING, qtrue);
+	CP_CreateNewMission(INTERESTCATEGORY_ALIENBASE, qtrue);
 	mission = CP_GetLastMissionAdded();
 	if (!mission) {
 		Com_Printf("CP_SpawnAlienBaseMission: Could not add mission, abort\n");
@@ -661,12 +661,9 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		/** @todo Should be a special crashed UFO mission model */
 		return "geoscape/mission";
 
-	if (mission->mapDef->storyRelated) {
-		if ((mission->category == INTERESTCATEGORY_BUILDING) && (mission->stage == STAGE_BASE_DISCOVERED))
-			return "geoscape/alienbase";
-		else
-			/** @todo Should be a special story related mission model */
-			return "geoscape/mission";
+	if (mission->mapDef->storyRelated && mission->category != INTERESTCATEGORY_ALIENBASE) {
+		/** @todo Should be a special story related mission model */
+		return "geoscape/mission";
 	}
 
 	switch (mission->category) {
@@ -677,6 +674,8 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	case INTERESTCATEGORY_TERROR_ATTACK:
 	case INTERESTCATEGORY_BUILDING:
 		return "geoscape/mission";
+	case INTERESTCATEGORY_ALIENBASE:
+		return "geoscape/alienbase";
 	case INTERESTCATEGORY_BASE_ATTACK:	/* Should not be reached, this mission category is not drawn on geoscape */
 	case INTERESTCATEGORY_SUPPLY:		/* Should not be reached, this mission category is not drawn on geoscape */
 	case INTERESTCATEGORY_INTERCEPT:	/* Should not be reached, this mission category is not drawn on geoscape */

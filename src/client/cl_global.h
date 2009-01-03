@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_PROJECTILESONGEOSCAPE 32
 
 /* Maximum alien team category defined in scripts */
-#define ALIENCATEGORY_MAX	4
+#define ALIENCATEGORY_MAX	8
 
 /**
  * @brief This struct/variable holds the global data for a game.

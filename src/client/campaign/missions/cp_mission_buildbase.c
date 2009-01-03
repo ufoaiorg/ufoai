@@ -117,8 +117,8 @@ static void CP_BuildBaseMissionLeave (mission_t *mission)
 static void CP_BuildBaseSetUpBase (mission_t *mission)
 {
 	alienBase_t *base;
-	const date_t minBuildingTime = {5, 0};	/**< Time needed to start a new base construction */
-	const date_t buildingTime = {10, 0};	/**< Time needed to start a new base construction */
+	const date_t minBuildingTime = {5, 0};	/**< Minimum time needed to start a new base construction */
+	const date_t buildingTime = {10, 0};	/**< Maximum time needed to start a new base construction */
 
 	assert(mission->ufo);
 

@@ -200,3 +200,24 @@ alienteam xvi
 		bloodspider
 	}
 }
+
+alienteam alienbase
+{
+	category
+	{
+		alienbase
+	}
+
+	equipment
+	{
+		alien_soldiers
+	}
+
+	team
+	{
+		mininterest 0		// set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
+		maxinterest 10000
+		ortnok
+		shevaar
+	}
+}
