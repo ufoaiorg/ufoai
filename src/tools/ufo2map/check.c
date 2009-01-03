@@ -180,7 +180,7 @@ void Check_MapSize (vec3_t mapSize) {
 	VectorSubtract(maxs, mins, mapSize);
 }
 
-
+#define MIN_TILE_SIZE 256 /**< @todo take this datum from the correct place */
 
 /**
  * @brief print map stats on -stats
@@ -192,6 +192,7 @@ void Check_Stats() {
 	Verb_Printf(VERB_NORMAL, "         Number of planes: %i\n",nummapplanes);
 	Verb_Printf(VERB_NORMAL, "    Number of brush sides: %i\n",nummapbrushsides);
 	Verb_Printf(VERB_NORMAL, "        Map size (fields): %.0f %.0f %.0f\n", worldSize[0] / UNIT_SIZE, worldSize[1] / UNIT_SIZE, worldSize[2] / UNIT_HEIGHT);
+	Verb_Printf(VERB_NORMAL, "         Map size (tiles): %.0f %.0f %.0f\n", worldSize[0] / (MIN_TILE_SIZE), worldSize[1] / (MIN_TILE_SIZE), worldSize[2] / UNIT_HEIGHT);
 }
 
 /**
