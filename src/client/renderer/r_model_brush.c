@@ -1021,9 +1021,10 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 
 	R_FreeWorldImages();
 
-	if (*mapName == '+')
+	if (mapName[0] == '+')
 		R_LoadMaterials(mapName + 1);
-	else
+	/* already assembled maps via console command? Skip them */
+	else if (mapName[0] != '-')
 		R_LoadMaterials(mapName);
 
 	/* fix this, currently needed, slows down loading times */
