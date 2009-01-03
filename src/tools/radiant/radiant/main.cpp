@@ -404,9 +404,12 @@ static void user_shortcuts_init(void) {
 	SaveCommandMap(SettingsPath_get());
 }
 
-int main (int argc, char* argv[]) {
-
+int main (int argc, char* argv[])
+{
 	streams_init();
+
+	/** @todo support system wide locale dirs */
+	bindtextdomain(GETTEXT_PACKAGE, "i18n");
 
 	gtk_init(&argc, &argv);
 
