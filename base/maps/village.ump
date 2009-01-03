@@ -304,7 +304,7 @@ ac     +a     +a     +a     ac
 // *********************************
 assembly residential
 {
-size "6 6"
+size "8 8"
 title "_Village residential"
 +s01 "1 2"
 +s02 "0 4"
@@ -336,7 +336,7 @@ title "_Village residential"
 
 assembly commercial
 {
-size "7 7"
+size "8 8"
 title "_Village commercial"
 +s01 "0 2"
 +s02 "0 4"
@@ -368,7 +368,7 @@ title "_Village commercial"
 
 assembly recreational
 {
-size "6 6"
+size "8 8"
 title "_Village recreational"
 +s01 "0 1"
 +s02 "0 4"
@@ -399,7 +399,7 @@ title "_Village recreational"
 /*
 assembly big
 {
-size "10 10"
+size "12 12"
 title "_Village big"
 +s01 "0 8"
 +s02 "0 32"
