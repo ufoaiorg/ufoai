@@ -30,11 +30,11 @@ HTML = u"""<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
-body { color: #ffffff; background-color: #262626; font-family: verdana, helvetica, arial, sans-serif; font-size: 71%; margin: 0; padding: 0; }
+body { color: #ffffff; background-color: #262626; font-family: verdana, helvetica, arial, sans-serif; margin: 0; padding: 0; }
 html > body { font-size: 8.5pt; }
 a { color: #ffd800; background-color: transparent; text-decoration: none; }
 a:hover { color: #ffffff; background-color: transparent; text-decoration: none; }
-li { margin-bottom: 8px;}
+li { margin-bottom: 8px; }
 .author { }
 </style></head>
 
@@ -186,7 +186,7 @@ def generate(d, data, texture_map, map_texture):
 		for i in os.listdir('base'):
 			if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
 				index+= u'<li><a href="%s/index.html">%s</a></li>' % (i,i)
-		index += "</ul>"
+		index+= u'</ul><br />'
 
 		content = index + u'<ul>%s</ul>' %  content
 		content+= '<hr/>You can <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/contrib/scripts/licenses.py">download</a> the source code. USE AT OWN RISK. NOT USERFRIENDLY.'
@@ -240,7 +240,7 @@ def generate(d, data, texture_map, map_texture):
 
 			content+= '</li>'
 		content+= '</ol>'
-		html = HTML % (d, rev, content)
+		html = HTML % (d, d, rev, rev, content)
 		html = html.encode('UTF-8')
 		open('licenses/html/%s/%s.html' % (d, h), 'w').write(html)
 
