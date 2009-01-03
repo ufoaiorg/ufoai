@@ -1322,7 +1322,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 				{
 					GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text",
+					GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text",
 							0, (char const*) 0);
 					gtk_tree_view_append_column(view, column);
 				}
@@ -1388,7 +1388,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Key", renderer, "text",
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text",
 						0, (char const*) 0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
@@ -1397,7 +1397,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Value	", renderer,
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Value"), renderer,
 						"text", 1, (char const*) 0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);

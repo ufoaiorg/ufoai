@@ -84,6 +84,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/brushmodule.cpp:66
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:662
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:163
 msgid "Brush"
 msgstr ""
 
@@ -247,6 +248,8 @@ msgid "Command"
 msgstr ""
 
 #: src/tools/radiant/radiant/commands.cpp:231
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1325
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1391
 msgid "Key"
 msgstr ""
 
@@ -807,6 +810,7 @@ msgid "Content Flags"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1400
 msgid "Value"
 msgstr ""
 
@@ -889,6 +893,8 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/prism.cpp:64
 #: src/tools/radiant/radiant/select.cpp:949
 #: src/tools/radiant/radiant/select.cpp:1093
+#: src/tools/radiant/radiant/dialogs/particle.cpp:94
+#: src/tools/radiant/radiant/preferences.cpp:389
 msgid "OK"
 msgstr ""
 
@@ -896,6 +902,8 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/prism.cpp:70
 #: src/tools/radiant/radiant/select.cpp:955
 #: src/tools/radiant/radiant/select.cpp:1099
+#: src/tools/radiant/radiant/dialogs/particle.cpp:100
+#: src/tools/radiant/radiant/preferences.cpp:393
 msgid "Cancel"
 msgstr ""
 
@@ -967,6 +975,7 @@ msgid "Entity breakdown"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:160
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:159
 msgid "Entity"
 msgstr ""
 
@@ -1141,4 +1150,113 @@ msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2724
 msgid "Clipper Tool Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:167
+msgid "Message"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:173
+msgid "Select"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/particle.cpp:49
+#: src/tools/radiant/radiant/dialogs/particle.cpp:71
+msgid "Particle"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/jobinfo.cpp:76
+msgid "Job"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/jobinfo.cpp:84
+msgid "Progress"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:55
+msgid "Console"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:55
+msgid "Enable Logging"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:56
+msgid "Load last map on open"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:62
+msgid "Mouse Type"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:64
+msgid "Right Button"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:64
+msgid "Activates Context Menu"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:67
+msgid "Mouse"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:67
+msgid "Mouse Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:99
+#, c-format
+msgid "Didn't find 'game' node in the game description file '%s'\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:218
+msgid ""
+"This will close UFORadiant and clean the corresponding registry entries.\n"
+"Next time you start UFORadiant it will be good as new. Do you wish to "
+"continue?"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:220
+msgid "Reset Registry"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:374
+msgid "UFORadiant Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:397
+msgid "Clean"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:430
+msgid "Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:447
+msgid "Front Page"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:450
+msgid "Interface Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:456
+msgid "Interface"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:463
+msgid "General Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:469
+msgid "Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:585
+msgid "Edit Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:588
+msgid "Preference changes require a restart:\n"
 msgstr ""

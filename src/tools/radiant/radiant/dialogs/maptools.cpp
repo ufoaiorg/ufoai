@@ -156,21 +156,21 @@ static void CreateCheckDialog (void)
 		treeViewWidget = gtk_tree_view_new();
 
 		renderer = gtk_cell_renderer_text_new();
-		column = gtk_tree_view_column_new_with_attributes("Entity", renderer, "text", CHECK_ENTITY, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Entity"), renderer, "text", CHECK_ENTITY, (const char*)0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 		renderer = gtk_cell_renderer_text_new();
-		column = gtk_tree_view_column_new_with_attributes("Brush", renderer, "text", CHECK_BRUSH, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Brush"), renderer, "text", CHECK_BRUSH, (const char*)0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 		renderer = gtk_cell_renderer_text_new();
-		column = gtk_tree_view_column_new_with_attributes("Message", renderer, "text", CHECK_MESSAGE, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Message"), renderer, "text", CHECK_MESSAGE, (const char*)0);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 		renderer = gtk_cell_renderer_toggle_new();
 		g_object_set(renderer, "activatable", TRUE, (const char*)0);
 		g_signal_connect(G_OBJECT(renderer), "toggled", G_CALLBACK(selectBrushesViaTreeView), NULL);
-		column = gtk_tree_view_column_new_with_attributes("Select", renderer, "active", CHECK_SELECT, (const char*)0);
+		column = gtk_tree_view_column_new_with_attributes(_("Select"), renderer, "active", CHECK_SELECT, (const char*)0);
 		gtk_tree_view_column_set_alignment(column, 0.5);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 

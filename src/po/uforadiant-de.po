@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-04 00:04+0100\n"
+"PO-Revision-Date: 2009-01-04 00:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -104,6 +104,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/brushmodule.cpp:66
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:662
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:163
 msgid "Brush"
 msgstr "Brush"
 
@@ -284,6 +285,8 @@ msgid "Command"
 msgstr "Kommando"
 
 #: src/tools/radiant/radiant/commands.cpp:231
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1325
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1391
 msgid "Key"
 msgstr "Schlüssel"
 
@@ -462,14 +465,12 @@ msgid "Pa_rent"
 msgstr "Phags-pa"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1443
-#, fuzzy
 msgid "C_lear Selection"
-msgstr "Deckel Auswahl"
+msgstr "Auswahl löschen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1444
-#, fuzzy
 msgid "_Invert Selection"
-msgstr "Deckel Auswahl"
+msgstr "Auswahl umkehren"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1445
 #, fuzzy
@@ -509,19 +510,16 @@ msgid "Vie_w"
 msgstr "&Datei anzeigen...    "
 
 #: src/tools/radiant/radiant/mainframe.cpp:1485
-#, fuzzy
 msgid "Toggle Sidebar"
-msgstr "&Menü umschalten"
+msgstr "Seitenleiste umschalten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1486
-#, fuzzy
 msgid "Toggle EntityInspector"
-msgstr "&Menü umschalten"
+msgstr "Entity Inspector umschalten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1487
-#, fuzzy
 msgid "Toggle SurfaceInspector"
-msgstr "&Menü umschalten"
+msgstr "Surface Inspector umschalten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1494
 #, fuzzy
@@ -784,9 +782,8 @@ msgid "_Print XY View"
 msgstr "Internen Betrachter ben&utzen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1642
-#, fuzzy
 msgid "_Background select"
-msgstr "Hintergrundbild auswählen"
+msgstr "Hintergrund_bild auswählen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1651
 msgid "Tools"
@@ -841,39 +838,33 @@ msgid "Texture"
 msgstr "Textur"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:459
-#, fuzzy
 msgid "Horizontal shift"
-msgstr "Zeitverschiebung"
+msgstr "Horizontale Verschiebung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:477
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:513
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:549
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:585
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:622
-#, fuzzy
 msgctxt "Step width"
 msgid "Step"
-msgstr "Schritt 1"
+msgstr "Schrittweite"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:495
-#, fuzzy
 msgid "Vertical shift"
-msgstr "Zeitverschiebung"
+msgstr "Vertikale Verschiebung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:531
-#, fuzzy
 msgid "Horizontal stretch"
-msgstr "Horizontal Stereo"
+msgstr "Horizontale Ausdehnung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:567
-#, fuzzy
 msgid "Vertical stretch"
-msgstr "Vertikales Lineal"
+msgstr "Vertikale Ausdehnung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:641
-#, fuzzy
 msgid "Match Grid"
-msgstr "Gitter Hintergrund..."
+msgstr "An Gitter anpassen"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:651
 msgid "Texturing"
@@ -898,6 +889,7 @@ msgid "Content Flags"
 msgstr "Flags von %s wie folgt gesetzt: "
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1400
 msgid "Value"
 msgstr "Wert"
 
@@ -982,6 +974,8 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/prism.cpp:64
 #: src/tools/radiant/radiant/select.cpp:949
 #: src/tools/radiant/radiant/select.cpp:1093
+#: src/tools/radiant/radiant/dialogs/particle.cpp:94
+#: src/tools/radiant/radiant/preferences.cpp:389
 msgid "OK"
 msgstr "OK"
 
@@ -989,6 +983,8 @@ msgstr "OK"
 #: src/tools/radiant/radiant/dialogs/prism.cpp:70
 #: src/tools/radiant/radiant/select.cpp:955
 #: src/tools/radiant/radiant/select.cpp:1099
+#: src/tools/radiant/radiant/dialogs/particle.cpp:100
+#: src/tools/radiant/radiant/preferences.cpp:393
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -1064,6 +1060,7 @@ msgid "Entity breakdown"
 msgstr "Entity Info..."
 
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:160
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:159
 msgid "Entity"
 msgstr "Entity"
 
@@ -1081,7 +1078,6 @@ msgstr "Passend"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1793
 #: src/tools/radiant/radiant/mainframe.cpp:1807
-#, fuzzy
 msgid "Label"
 msgstr "Textmarke"
 
@@ -1101,67 +1097,54 @@ msgid "  Z  "
 msgstr "  Z  "
 
 #: src/tools/radiant/radiant/select.cpp:1024
-#, fuzzy
 msgid "Arbitrary scale"
-msgstr "BRD Skala"
+msgstr "Beliebig skalieren"
 
 #: src/tools/radiant/radiant/grid.cpp:198
-#, fuzzy
 msgid "Grid0.125"
 msgstr "Gitter0.25"
 
 #: src/tools/radiant/radiant/grid.cpp:199
-#, fuzzy
 msgid "Grid0.25"
 msgstr "Gitter0.25"
 
 #: src/tools/radiant/radiant/grid.cpp:200
-#, fuzzy
 msgid "Grid0.5"
 msgstr "Gitter0.5"
 
 #: src/tools/radiant/radiant/grid.cpp:201
-#, fuzzy
 msgid "Grid1"
 msgstr "Gitter1"
 
 #: src/tools/radiant/radiant/grid.cpp:202
-#, fuzzy
 msgid "Grid2"
 msgstr "Gitter2"
 
 #: src/tools/radiant/radiant/grid.cpp:203
-#, fuzzy
 msgid "Grid4"
 msgstr "Gitter4"
 
 #: src/tools/radiant/radiant/grid.cpp:204
-#, fuzzy
 msgid "Grid8"
 msgstr "Gitter8"
 
 #: src/tools/radiant/radiant/grid.cpp:205
-#, fuzzy
 msgid "Grid16"
 msgstr "Gitter16"
 
 #: src/tools/radiant/radiant/grid.cpp:206
-#, fuzzy
 msgid "Grid32"
 msgstr "Gitter32"
 
 #: src/tools/radiant/radiant/grid.cpp:207
-#, fuzzy
 msgid "Grid64"
 msgstr "Gitter64"
 
 #: src/tools/radiant/radiant/grid.cpp:208
-#, fuzzy
 msgid "Grid128"
 msgstr "Gitter128"
 
 #: src/tools/radiant/radiant/grid.cpp:209
-#, fuzzy
 msgid "Grid256"
 msgstr "Gitter256"
 
@@ -1216,6 +1199,7 @@ msgid "Paths"
 msgstr "Pfade"
 
 #: src/tools/radiant/radiant/mainframe.cpp:321
+#: src/tools/radiant/radiant/mainframe.cpp:335
 msgid "Path Settings"
 msgstr "Pfadeinstellungen"
 
@@ -1263,4 +1247,119 @@ msgstr ""
 #, fuzzy
 msgid "Clipper Tool Settings"
 msgstr "Pro_jekteinstellungen..."
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:167
+msgid "Message"
+msgstr "Nachricht"
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:173
+#, fuzzy
+msgid "Select"
+msgstr "Auswählen"
+
+#: src/tools/radiant/radiant/dialogs/particle.cpp:49
+#: src/tools/radiant/radiant/dialogs/particle.cpp:71
+msgid "Particle"
+msgstr "Partikel"
+
+#: src/tools/radiant/radiant/sidebar/jobinfo.cpp:76
+msgid "Job"
+msgstr "Job"
+
+#: src/tools/radiant/radiant/sidebar/jobinfo.cpp:84
+msgid "Progress"
+msgstr "Fortschritt"
+
+#: src/tools/radiant/radiant/preferences.cpp:55
+msgid "Console"
+msgstr "Konsole"
+
+#: src/tools/radiant/radiant/preferences.cpp:55
+#, fuzzy
+msgid "Enable Logging"
+msgstr "Logge ein"
+
+#: src/tools/radiant/radiant/preferences.cpp:56
+msgid "Load last map on open"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:62
+#, fuzzy
+msgid "Mouse Type"
+msgstr "<qt><b>Ausführung:</b></qt>"
+
+#: src/tools/radiant/radiant/preferences.cpp:64
+msgid "Right Button"
+msgstr "Rechte Maustaste"
+
+#: src/tools/radiant/radiant/preferences.cpp:64
+msgid "Activates Context Menu"
+msgstr "Aktivieren des Kontextmenüs"
+
+#: src/tools/radiant/radiant/preferences.cpp:67
+msgid "Mouse"
+msgstr "Mouse"
+
+#: src/tools/radiant/radiant/preferences.cpp:67
+msgid "Mouse Preferences"
+msgstr "Maus Einstellungen"
+
+#: src/tools/radiant/radiant/preferences.cpp:99
+#, c-format
+msgid "Didn't find 'game' node in the game description file '%s'\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:218
+msgid ""
+"This will close UFORadiant and clean the corresponding registry entries.\n"
+"Next time you start UFORadiant it will be good as new. Do you wish to continue?"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:220
+msgid "Reset Registry"
+msgstr "Zurücksetzen der Einstellungen"
+
+#: src/tools/radiant/radiant/preferences.cpp:374
+msgid "UFORadiant Preferences"
+msgstr "UFORadiant Einstellungen"
+
+#: src/tools/radiant/radiant/preferences.cpp:397
+#, fuzzy
+msgid "Clean"
+msgstr "Clean-Speech"
+
+#: src/tools/radiant/radiant/preferences.cpp:430
+msgid "Preferences"
+msgstr "Einstellungen"
+
+#: src/tools/radiant/radiant/preferences.cpp:447
+#, fuzzy
+msgid "Front Page"
+msgstr "Unterseite:"
+
+#: src/tools/radiant/radiant/preferences.cpp:450
+#, fuzzy
+msgid "Interface Preferences"
+msgstr "GtkRadiant Einstellungen"
+
+#: src/tools/radiant/radiant/preferences.cpp:456
+#, fuzzy
+msgid "Interface"
+msgstr "Interface"
+
+#: src/tools/radiant/radiant/preferences.cpp:463
+msgid "General Settings"
+msgstr "Allgemeine Optionen"
+
+#: src/tools/radiant/radiant/preferences.cpp:469
+msgid "Settings"
+msgstr "Optionen"
+
+#: src/tools/radiant/radiant/preferences.cpp:585
+msgid "Edit Preferences"
+msgstr "Einstellungen bearbeiten"
+
+#: src/tools/radiant/radiant/preferences.cpp:588
+msgid "Preference changes require a restart:\n"
+msgstr ""
 

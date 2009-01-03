@@ -22,6 +22,7 @@
  */
 
 #include "jobinfo.h"
+#include "../radiant.h"
 #include "../exec.h"
 #include "gtkutil/window.h"
 #include "gtkutil/dialog.h"
@@ -72,7 +73,7 @@ GtkWidget *JobInfo_constructNotebookTab (void)
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Job", renderer, "text", JOB_TITLE, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Job"), renderer, "text", JOB_TITLE, (char const*)0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				gtk_tree_view_column_set_sort_column_id(column, JOB_TITLE);
 				gtk_tree_view_column_set_expand(column, TRUE);
@@ -80,7 +81,7 @@ GtkWidget *JobInfo_constructNotebookTab (void)
 
 			{
 				GtkCellRenderer* renderer = gtk_cell_renderer_progress_new();
-				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes("Progress", renderer, "value", JOB_PROGRESS, (char const*)0);
+				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Progress"), renderer, "value", JOB_PROGRESS, (char const*)0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				gtk_tree_view_column_set_sort_column_id(column, JOB_PROGRESS);
 				gtk_tree_view_column_set_expand(column, TRUE);

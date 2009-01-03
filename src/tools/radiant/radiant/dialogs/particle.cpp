@@ -46,7 +46,7 @@ EMessageBoxReturn DoParticleDlg (char **particle)
 
 	Particles_Init();
 
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), "Particle", dialog, -1, -1);
+	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), _("Particle"), dialog, -1, -1);
 
 	gtk_widget_set_size_request(GTK_WIDGET(window), 250, 175);
 
@@ -68,7 +68,7 @@ EMessageBoxReturn DoParticleDlg (char **particle)
 				treeViewWidget = gtk_tree_view_new();
 
 				renderer = gtk_cell_renderer_text_new();
-				column = gtk_tree_view_column_new_with_attributes("Particle", renderer, "text", 0, (const char*)0);
+				column = gtk_tree_view_column_new_with_attributes(_("Particle"), renderer, "text", 0, (const char*)0);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 				gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(treeViewWidget));
@@ -91,13 +91,13 @@ EMessageBoxReturn DoParticleDlg (char **particle)
 			gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(vbox), FALSE, FALSE, 0);
 
 			{
-				GtkButton* button = create_modal_dialog_button("OK", ok_button);
+				GtkButton* button = create_modal_dialog_button(_("OK"), ok_button);
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				widget_make_default(GTK_WIDGET(button));
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel_group, GDK_Return, (GdkModifierType)0, GTK_ACCEL_VISIBLE);
 			}
 			{
-				GtkButton* button = create_modal_dialog_button("Cancel", cancel_button);
+				GtkButton* button = create_modal_dialog_button(_("Cancel"), cancel_button);
 				gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel_group, GDK_Escape, (GdkModifierType)0, GTK_ACCEL_VISIBLE);
 			}
