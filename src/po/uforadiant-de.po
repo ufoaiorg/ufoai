@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-03 18:42+0100\n"
+"PO-Revision-Date: 2009-01-03 19:09+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -288,6 +288,9 @@ msgid "Key"
 msgstr "Schlüssel"
 
 #: src/tools/radiant/radiant/commands.cpp:255
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:184
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:189
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:120
 msgid "Close"
 msgstr "Schließen"
 
@@ -849,7 +852,7 @@ msgstr "Zeitverschiebung"
 #, fuzzy
 msgctxt "Step width"
 msgid "Step"
-msgstr "Schrittweite"
+msgstr "Schritt 1"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:495
 #, fuzzy
@@ -904,4 +907,201 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
 msgid "Surface Inspector Preferences"
 msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:47
+msgid "About UFORadiant"
+msgstr "Über UFORadiant"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:73
+msgid "<b>UFORadiant "
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:87
+msgid "<b>GTK+ Properties</b>"
+msgstr "<b>GTK+ Eigenschaften</b>"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:95
+#, c-format
+msgid "Version: %i.%i.%i"
+msgstr "Version: %i.%i.%i"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:103
+msgid "<b>OpenGL Properties</b>"
+msgstr "<b>OpenGL Eigenschaften</b>"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:109
+msgid "Vendor:"
+msgstr "Vendor:"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:117
+msgid "Version:"
+msgstr "Version:"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:125
+msgid "Renderer:"
+msgstr "Renderer:"
+
+#: src/tools/radiant/radiant/dialogs/findbrush.cpp:111
+msgid "Entity number"
+msgstr "Entity Nummer"
+
+#: src/tools/radiant/radiant/dialogs/findbrush.cpp:118
+msgid "Brush number"
+msgstr "Brush Nummer"
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:118
+#, fuzzy
+msgid "Find / Replace Texture(s)"
+msgstr "Kann Alternative »%s« nicht finden."
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:135
+msgid "Find:"
+msgstr "Suchen"
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:142
+msgid "Replace:"
+msgstr "Ersetzen:"
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:169
+#, fuzzy
+msgid "Within selected brushes only"
+msgstr "<b>Nur die ausgewählten Felder importieren</b>"
+
+#: src/tools/radiant/radiant/dialogs/findtextures.cpp:178
+#: src/tools/radiant/radiant/select.cpp:960
+#: src/tools/radiant/radiant/select.cpp:1104
+msgid "Apply"
+msgstr "Anwenden"
+
+#: src/tools/radiant/radiant/dialogs/light.cpp:51
+msgid "ESC for default, ENTER to validate"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/light.cpp:70
+#: src/tools/radiant/radiant/dialogs/prism.cpp:64
+#: src/tools/radiant/radiant/select.cpp:949
+#: src/tools/radiant/radiant/select.cpp:1093
+msgid "OK"
+msgstr "OK"
+
+#: src/tools/radiant/radiant/dialogs/light.cpp:76
+#: src/tools/radiant/radiant/dialogs/prism.cpp:70
+#: src/tools/radiant/radiant/select.cpp:955
+#: src/tools/radiant/radiant/select.cpp:1099
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:193
+msgid "Fix"
+msgstr "Repariere"
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:195
+msgid "Will fix all errors, not only the selected ones"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:206
+#, fuzzy
+msgid "Check Map"
+msgstr "_Neue Map"
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:211
+msgid "Nothing to check in this map\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:211
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:315
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:382
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:405
+#, fuzzy
+msgid "Map compiling"
+msgstr "_Neue Map"
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:232
+#, fuzzy
+msgid "Check output"
+msgstr "Ausgabezeilen"
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:295
+msgid "No problems in your map found. Output was:"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:382
+msgid "Nothing to compile in this map\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:392
+msgid "Compiles the current map with the mapcompiler"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/prism.cpp:49
+msgid "Sides:"
+msgstr "Seiten:"
+
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:125
+msgid "Save"
+msgstr "Speichern"
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1299
+#, fuzzy
+msgid "Entity Inspector"
+msgstr "Entity inspector"
+
+#: src/tools/radiant/radiant/sidebar/entitylist.cpp:252
+msgid "Entity List"
+msgstr "Entity Liste"
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:128
+msgid "Total Brushes"
+msgstr "# Brushes"
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:135
+msgid "Total Entities"
+msgstr "# Entities"
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:144
+#, fuzzy
+msgid "Entity breakdown"
+msgstr "Entity Info..."
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:160
+msgid "Entity"
+msgstr "Entity"
+
+#: src/tools/radiant/radiant/sidebar/mapinfo.cpp:167
+msgid "Count"
+msgstr "Anzahl"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:683
+msgid "Axial"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:693
+msgid "Fit"
+msgstr "Passend"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1793
+#: src/tools/radiant/radiant/mainframe.cpp:1807
+#, fuzzy
+msgid "Label"
+msgstr "Textmarke"
+
+#: src/tools/radiant/radiant/select.cpp:889
+#: src/tools/radiant/radiant/select.cpp:1036
+msgid "  X  "
+msgstr "  X  "
+
+#: src/tools/radiant/radiant/select.cpp:896
+#: src/tools/radiant/radiant/select.cpp:1043
+msgid "  Y  "
+msgstr "  Y  "
+
+#: src/tools/radiant/radiant/select.cpp:903
+#: src/tools/radiant/radiant/select.cpp:1050
+msgid "  Z  "
+msgstr "  Z  "
+
+#: src/tools/radiant/radiant/select.cpp:1024
+#, fuzzy
+msgid "Arbitrary scale"
+msgstr "BRD Skala"
 

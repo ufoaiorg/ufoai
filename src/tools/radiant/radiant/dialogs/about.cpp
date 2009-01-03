@@ -70,12 +70,12 @@ void DoAbout (void)
 
 			{
 				GtkLabel* label = GTK_LABEL(gtk_label_new(NULL));
-				gtk_label_set_markup(label, _("<b>UFORadiant " RADIANT_VERSION "</b>\n"
+				gtk_label_set_markup(label, "<b>UFORadiant " RADIANT_VERSION "</b>\n"
 					__DATE__ " " ABOUT_DEBUG "\n\n"
 					RADIANT_ABOUTMSG "\n\n"
 					"This program is free software\n"
 					"licensed under the GNU GPL.\n\n"
-					"<b>UFO:AI</b> http://ufoai.sourceforge.net\n"));
+					"<b>UFO:AI</b> http://ufoai.sourceforge.net\n");
 
 				gtk_widget_show(GTK_WIDGET(label));
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(label), FALSE, FALSE, 0);
