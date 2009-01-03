@@ -19,7 +19,7 @@
 
 
 import subprocess
-import md5, os
+import md5, os, sys
 import cPickle
 import re
 
@@ -58,7 +58,7 @@ def get(cmd, cacheable=True):
             return open('licenses/cache/' + h).read()
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
     data = p.stdout.read()
-    
+
     if cacheable and CACHING:
         open('licenses/cache/' + h, 'w').write(data)
         print ' written to cache: ', cmd
@@ -84,14 +84,14 @@ def get_rev(d):
 
 def get_data(d, files):
     print ' getting data for "%s"' % d
-    
+
     data = [i.split(' - ', 1) for i in get('svn propget svn:license base/%s -R' % d, False).split('\n') if i != '']
     remove = d != '' and len(d) + 1 or 0
     data = [(i[0][5 + remove:], i[1]) for i in data] # remove "base/.../"
-    
+
     # get current revision
     rev = get_rev(d)
-    
+
     print '  Current Revision r' + str(rev)
 
     licenses = {}
@@ -127,7 +127,7 @@ FFILTERS = (re.compile('.txt$'),
 def ffilter(fname):
     for i in FFILTERS:
         if i.search(fname.lower()):
-            print 'Ignoriere: ', fname
+            print 'Ignore: ', fname
             return False
     return True
 
@@ -138,7 +138,7 @@ def get_all_data():
     files = filter(ffilter, get('svn list -r %i -R base/' % get_rev('.')).split('\n'))
 
     print '  done'
-    
+
     print 'calculate'
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.')and os.path.exists('base/%s/.svn' % i):
@@ -185,7 +185,7 @@ def generate(d, data, texture_map, map_texture):
         for i in os.listdir('base'):
             if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
                 index+= u' - <a href="%s/index.html">%s</a><br/>' % (i,i)
-        
+
         content = index + u'<ul>%s</ul>' %  content
         content+= '<hr/>You can <a href="licenses.py">download</a> the source code. USE AT OWN RISK. NOT USERFRIENDLY.'
 
@@ -213,7 +213,7 @@ def generate(d, data, texture_map, map_texture):
                 if not os.path.exists('licenses/html/%s' % thumb):
                     os.system('convert base/%s/%s -thumbnail 128x128 licenses/html/%s' % (d, j, thumb))
                 img = '<img src="%s%s"/>' % (ABS_URI, thumb)
-            
+
 
             content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
             copy = get('svn propget svn:copyright base/%s/%s' % (d, j), False).strip()
@@ -239,7 +239,7 @@ def generate(d, data, texture_map, map_texture):
                     content+= '<br/><div>Used in: %s </div>' % ', '.join(texture_map[kill_suffix(j)])
                 else:
                     content+= '<br/><b>UNUSED</b> (at least no map uses it)'
-                
+
             content+= '</li>'
         content+= '</ol>'
         html = HTML % (d, rev, content)
@@ -252,9 +252,9 @@ def generate(d, data, texture_map, map_texture):
     data = {}
     print 'Ploting'
     times = []
-    
 
-    
+
+
     for time in sorted(os.listdir('licenses/history/%s' % d)):
         if os.path.isdir('licenses/history/%s/%s' % (d, time)):
             continue
@@ -264,15 +264,15 @@ def generate(d, data, texture_map, map_texture):
         for i in this:
             if i not in data:
                 data[i] = []
-            
+
             # the >>if '.' in x<< is a hack to check if it is a file..
             # not "good practice" but not easy to get for files/durs that
             # might not exist anymore ;)
             data[i].append([int(time), len([x for x in this[i] if test(x)])])
-    
+
     def key(x):
         return x[0]
-    
+
     import copy
     for i in data:
         data[i].sort(key=key)
@@ -285,14 +285,14 @@ def plot(d, data, times):
     cmds+= 'set data style linespoints;\n'
     cmds+= 'set output "licenses/html/%s/plot.png";\n' % d
     cmds+= 'set xrange [%i to %i];\n' % (min(times), max(times) + (max(times)-min(times))*0.15)
-    
+
     cmds+= 'plot '
     p = []
     for i in data:
         plot_data = '\n'.join('%i %i' % (x[0], x[1]) for x in data[i])
         p.append("'%s' title \"%s\" " % ('/tmp/' + md5.md5(i).hexdigest(), i))
         open('/tmp/' + md5.md5(i).hexdigest(), 'w').write(plot_data)
-    
+
     cmds+= ', '.join(p) + ';\n'
     open('/tmp/cmds', 'w').write(cmds)
     os.system('gnuplot /tmp/cmds')
@@ -309,7 +309,7 @@ def clean_up():
             os.mkdir('licenses/html/'+i)
             if not os.path.exists('licenses/history/'+i):
                 os.mkdir('licenses/history/'+i)
-    
+
     for i in os.walk('base'):
         print i[0]
         if '/.' in i[0]:
@@ -320,12 +320,21 @@ def clean_up():
 
 
 def setup():
-    # TODO check if all folders are in place
-    pass
-    #os.mkdir('licenses/html/')
-    #os.mkdir('licenses/history/')
-    #os.mkdir('licenses/cache/')
-    # TODO check if gnuplot is installed
+	if not os.path.exists('licenses/'):
+		os.mkdir('licenses/')
+
+	if not os.path.exists('licenses/html/'):
+		os.mkdir('licenses/html/')
+
+	if not os.path.exists('licenses/history/'):
+		os.mkdir('licenses/history/')
+
+	if not os.path.exists('licenses/cache/'):
+		os.mkdir('licenses/cache/')
+
+	if os.system('gnuplot -h > /dev/null'):
+		print 'you must have gnuplot installed'
+		sys.exit(1)
 
 
 def kill_suffix(i):
@@ -350,7 +359,7 @@ def main():
         for f in i[2]:
             if not f.endswith('.map'):
                 continue
-            
+
             path = (i[0] +'/' + f)[10:]
             map_texture[kill_suffix(path)] = []
             for tex in get_used_tex(i[0] +'/' + f):
@@ -358,8 +367,8 @@ def main():
                 if not tex in texture_map:
                     texture_map[tex] = []
                 texture_map[tex].append(kill_suffix(path))
-        
-    
+
+
     for i in os.listdir('base'):
         if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
             generate(i, data, texture_map, map_texture)
