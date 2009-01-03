@@ -650,11 +650,13 @@ static void MN_DebugTabWidth_f (void) {
 	strcat(buf, "aaaaaaaaaaaaaa aaaaaaa\taaaa\n");
 	strcat(buf, "aaaaaaaaaaaaaaa aaaaaa\taaaa\n");
 	strcat(buf, "aaaaaaaaaaaaaaaa aaaaa\taaaa\n");
-	strcat(buf, "aaaaaaaaaaaaaaaaa aaaa\taaaa\n");
-	strcat(buf, "aaaaaaaaaaaaaaaaaa aaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaa aaaa\t\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaa aaa\t\taaaa\n");
 	strcat(buf, "aaaaaaaaaaaaaaaaaaa aa\taaaa\n");
 	strcat(buf, "aaaaaaaaaaaaaaaaaaaa a\taaaa\n");
-	strcat(buf, "aaaaaaaaaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaaaaa \taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaaaaa \t aaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaaaaa\t aaaa\n");
 	mn.menuText[TEXT_STANDARD] = buf;
 }
 #endif
@@ -675,6 +677,6 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
 	Cmd_AddCommand("mn_textupdated", MN_TextUpdated_f, "Event to inform node the text is updated");
 #ifdef DEBUG
-	Cmd_AddCommand("mn_textupdated", MN_DebugTabWidth_f, "Init TEXT_STANDARD with a tabed text");
+	Cmd_AddCommand("debug_texttab", MN_DebugTabWidth_f, "Init TEXT_STANDARD with a tabed text");
 #endif
 }
