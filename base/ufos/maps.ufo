@@ -757,6 +757,76 @@ mapdef forest_large
 	}
 }
 
+mapdef country_large
+{
+	map				"+country"
+	param			large
+	multiplayer		false
+	description		"_Some houses in desert"
+	size			"large"
+	multiplayer		false
+	maxaliens		10 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_fighter
+//		craft_crash_fighter // todo
+//		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		desert
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
+		rural
+		nopopulation
+	}
+}
+
+mapdef country_street
+{
+	map				"+country"
+	param			street
+	multiplayer		false
+	description		"_Some houses in desert"
+	size			"large"
+	multiplayer		false
+	maxaliens		15 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		desert
+		mountain
+	}
+
+	cultures
+	{
+		western
+	}
+
+	populations
+	{
+		village
+		rural
+		nopopulation
+	}
+}
+
 
 
 /////////////

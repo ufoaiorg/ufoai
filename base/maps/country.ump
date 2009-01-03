@@ -47,7 +47,7 @@ acdrst  +a       +a       +a       acdopq
 //--
 
 // UFO - Harvester
-tile +ufo_harvester
+tile +craft_ufo_harvester
 {
 8 6
 
@@ -61,7 +61,7 @@ acdrst  +a       +a       +a       +a       +a       +a       acdopq
 //--
 
 // UFO - Fighter
-tile +ufo_fighter
+tile +craft_ufo_fighter
 {
 5 4
 
@@ -715,6 +715,7 @@ size "7 8"
 +re03_2 "0 1"
 +re04_2 "0 1"
 *rm_drop +drop_firebird "1 1"
+*rm_ufo +craft_ufo_fighter "1 1"
 }
 
 assembly large
@@ -759,6 +760,7 @@ size "7 7"
 +re03_2 "0 1"
 +re04_2 "0 1"
 *rm_drop +drop_firebird "1 1"
+*rm_ufo +craft_ufo_fighter "1 1"
 }
 
 assembly street
@@ -787,6 +789,5 @@ size "10 10"
 +d09 "0 2"
 +d10 "0 20"
 *rm_drop +drop_firebird "1 1"
-+ufo_fighter "1 1"
-+ufo_harvester "1 1"
+*rm_ufo +craft_ufo_harvester "1 1"
 }
