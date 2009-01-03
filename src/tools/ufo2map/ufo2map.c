@@ -72,6 +72,7 @@ static void Usage (void)
 		" -tracefile                 : generate two csv files describing the floors and walls found by the trace functions\n"
 		" -debugfile (TODO)          : generate a trace debug file. The client can load the file to highlight map obstructions\n"
 		" -onlynewer                 : only proceed when the map is newer than the bsp\n"
+		" -stats --statistics        : print statistics and quit. may be used with -check or -fix\n"
 	); Com_Printf(
 		" -v --verbosity <int>       : set verbosity. higher <int> gives more output\n"
 		"                              if it is required, this should be the first option\n"
@@ -166,6 +167,10 @@ static void U2M_Parameter (int argc, const char **argv)
 			/* make every point unique */
 			Verb_Printf(VERB_LESS, "noweld = true\n");
 			config.noweld = qtrue;
+		} else if (!strcmp(argv[i], "--statistics") || !strcmp(argv[i], "-stats")) {
+			Verb_Printf(VERB_LESS, "statistics mode\n");
+			config.stats = qtrue;
+			config.performMapCheck = qtrue;
 		} else if (!strcmp(argv[i], "-check") || !strcmp(argv[i], "-fix")) {
 			/* check for subparameters terminate loop before last arg (path) or
 			 * when we hit a param (as opposed to a subparam).
@@ -571,7 +576,6 @@ int main (int argc, const char **argv)
 
 		WriteBSPFile(bspFilename);
 	} else if (config.performMapCheck || config.fixMap) {
-		Verb_Printf(VERB_NORMAL, "Starting map %s\n", config.fixMap ? "fixes" : "checks");
 		LoadMapFile(mapFilename);
 		/* level flags must be fixed before mixed face contents, or they swamp the
 		 * console with output, as levelflags are contentflags */
@@ -602,10 +606,12 @@ int main (int argc, const char **argv)
 			CheckZFighting();
 		if (config.chkEntities || config.chkAll)
 			CheckEntities();
-
 		/* not included in bru or all by design */
 		if (config.chkIntersection)
 			Check_BrushIntersection();
+
+		if (config.stats)
+			Check_Stats();
 
 		if (config.fixMap) {
 			/* update dentdata */

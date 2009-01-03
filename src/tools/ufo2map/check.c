@@ -157,6 +157,15 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 }
 
 /**
+ * @brief print map stats on -stats
+ */
+void Check_Stats() {
+	Verb_Printf(VERB_NORMAL, "        Number of brushes: %i\n",nummapbrushes);
+	Verb_Printf(VERB_NORMAL, "         Number of planes: %i\n",nummapplanes);
+	Verb_Printf(VERB_NORMAL, "    Number of brush sides: %i\n",nummapbrushsides);
+}
+
+/**
  * @param[in] mandatory if this key is missing the entity will be deleted, else just a warning
  * @sa checkEntityNotSet
  */

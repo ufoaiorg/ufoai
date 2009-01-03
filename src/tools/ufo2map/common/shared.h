@@ -106,6 +106,7 @@ typedef struct mapConfig_s {
 	float mapMicrovol; /**< -check mbr micro test before CSG */
 	qboolean chkAll;
 	qboolean fixMap;
+	qboolean stats; /**< print stats and quit. implemented as a kind of check */
 	qboolean generateTraceFile;
 	qboolean generateDebugTrace;
 

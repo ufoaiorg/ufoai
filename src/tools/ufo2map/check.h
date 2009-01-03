@@ -41,6 +41,7 @@ void CheckPropagateParserContentFlags(mapbrush_t *b);
 void Check_ContainedBrushes(void);
 void CheckZFighting(void);
 
+void Check_Stats(void);
 void Check_Free(void);
 
 mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes);
