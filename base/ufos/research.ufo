@@ -383,7 +383,7 @@ tech rs_alien_mind
 		alienglobal 3
 	}
 	time	1500
-//	image		"techs/alien_mind"
+	image		"techs/alien_mind"
 }
 
 tech rs_alien_oddbehaviour
