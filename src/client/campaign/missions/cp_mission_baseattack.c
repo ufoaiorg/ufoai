@@ -140,10 +140,11 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	/* we always need at least one command centre in the base - because the
 	 * phalanx soldiers have their starting positions here
-	 * @note There should also always be an entrance - the aliens start there */
+	 * @note There should also always be an entrance - the aliens start there
+	 * but we don't need to check that as entrance can't be destroyed */
 	if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, B_COMMAND)) {
 		/** @todo handle command centre properly */
-		Com_Printf("CP_BaseAttackStartMission: This base (%s) can not be set under attack - because there are no Command Center in this base\n", base->name);
+		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no Command Center: it can't defend itself. Destroy base.\n", base->name);
 		CP_BaseAttackMissionLeave(mission);
 		return;
 	}
