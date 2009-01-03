@@ -1540,14 +1540,13 @@ static void RS_InitGUI (base_t* base, qboolean update)
 			break;
 		case RSGUI_RESEARCH:
 			{
-				const int min = 0;
 				const int value = element->tech->scientists;
 				const int max = available[element->base->idx] + element->tech->scientists;
 				MN_ExecuteConfunc("research_research %i", i);
 				if (!update) {
 					Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 				}
-				MN_ExecuteConfunc("research_updateitem %i %i %i %i", i, value, min, max);
+				MN_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
 
