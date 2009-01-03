@@ -36,7 +36,7 @@ static menuNode_t* anchoredNode = NULL;
 static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
 static const vec4_t grey = {0.8, 0.8, 0.8, 1.0};
 static const int anchorSize = 10;
-static int status = 0;
+static int status = -1;
 static int startX;
 static int startY;
 
@@ -49,13 +49,47 @@ static void MN_EditorNodeHilightNode (menuNode_t *node, const vec4_t color)
 	R_FontDrawString("f_small_bold", ALIGN_UL, 20, 50, 20, 50, 400, 400, 0, va("%s (%s)", node->name, node->behaviour->name), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	R_ColorBlend(NULL);
 
-	R_DrawFill(pos[0], pos[1], anchorSize, anchorSize, ALIGN_UL, color);
-	R_DrawFill(pos[0] + node->size[0] - anchorSize, pos[1] + node->size[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+	R_DrawFill(pos[0] - anchorSize, pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+	R_DrawFill(pos[0] - anchorSize, pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
+	R_DrawFill(pos[0] + node->size[0], pos[1] + node->size[1], anchorSize, anchorSize, ALIGN_UL, color);
+	R_DrawFill(pos[0] + node->size[0], pos[1] - anchorSize, anchorSize, anchorSize, ALIGN_UL, color);
+}
+
+static int MN_EditorNodeGetElementAtPosition (menuNode_t *node, int x, int y)
+{
+	MN_NodeAbsoluteToRelativePos(anchoredNode, &x, &y);
+
+	if (x > 0 && x < node->size[0] && y > 0 && y < node->size[1]) {
+		return 4;
+	}
+
+	if (y > -anchorSize && y < 0) {
+		if (x > -anchorSize && x < 0) {
+			return 0;
+		} else if (x > node->size[0] && x < node->size[0] + anchorSize) {
+			return 1;
+		}
+	} else if (y > node->size[1] && y < node->size[1] + anchorSize) {
+		if (x > -anchorSize && x < 0) {
+			return 2;
+		} else if (x > node->size[0] && x < node->size[0] + anchorSize) {
+			return 3;
+		}
+	}
+	return -1;
 }
 
 static void MN_EditorNodeDraw (menuNode_t *node)
 {
-	menuNode_t* hovered = MN_GetNodeByPosition(mousePosX, mousePosY);
+	menuNode_t* hovered = NULL;
+
+	if (status == -1) {
+		int s = -1;
+		if (anchoredNode)
+			MN_EditorNodeGetElementAtPosition(anchoredNode, mousePosX, mousePosY);
+		if (s == -1 || s == 4)
+			hovered = MN_GetNodeByPosition(mousePosX, mousePosY);
+	}
 
 	if (hovered && hovered != anchoredNode)
 		MN_EditorNodeHilightNode(hovered, grey);
@@ -70,59 +104,85 @@ static void MN_EditorNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 		return;
 
 	switch (status) {
+	case -1:
+		return;
 	case 0:
+		anchoredNode->pos[0] += x - startX;
+		anchoredNode->size[0] -= x - startX;
+		anchoredNode->pos[1] += y - startY;
+		anchoredNode->size[1] -= y - startY;
+		startX = x;
+		startY = y;
 		break;
 	case 1:
-		anchoredNode->pos[0] += x - startX;
+		anchoredNode->size[0] += x - startX;
 		anchoredNode->pos[1] += y - startY;
+		anchoredNode->size[1] -= y - startY;
 		startX = x;
 		startY = y;
 		break;
 	case 2:
+		anchoredNode->pos[0] += x - startX;
+		anchoredNode->size[0] -= x - startX;
+		anchoredNode->size[1] += y - startY;
+		startX = x;
+		startY = y;
+		break;
+	case 3:
 		anchoredNode->size[0] += x - startX;
 		anchoredNode->size[1] += y - startY;
-		if (anchoredNode->size[0] <= 0)
-			anchoredNode->size[0] = 5;
-		if (anchoredNode->size[1] <= 0)
-			anchoredNode->size[1] = 5;
+		startX = x;
+		startY = y;
+		break;
+	case 4:
+		anchoredNode->pos[0] += x - startX;
+		anchoredNode->pos[1] += y - startY;
 		startX = x;
 		startY = y;
 		break;
 	default:
 		assert(qfalse);
 	}
+
+	if (anchoredNode->size[0] < 5)
+		anchoredNode->size[0] = 5;
+	if (anchoredNode->size[1] < 5)
+		anchoredNode->size[1] = 5;
 }
 
 static void MN_EditorNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
-	status = 0;
+	status = -1;
 }
 
 static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	menuNode_t* hovered;
+
+	hovered = MN_GetNodeByPosition(mousePosX, mousePosY);
+	if (hovered == anchoredNode)
+		hovered = NULL;
+
 	if (button != K_MOUSE1)
 		return;
 	if (anchoredNode) {
-		MN_NodeAbsoluteToRelativePos(anchoredNode, &x, &y);
-		if (x > 0 && x < anchorSize && y > 0 && y < anchorSize) {
-			startX = mousePosX;
-			startY = mousePosY;
-			status = 1;
-			return;
-		} else if (x > anchoredNode->size[0] - anchorSize && x < anchoredNode->size[0]
-			&& y > anchoredNode->size[1] - anchorSize && y < anchoredNode->size[1]) {
-			startX = mousePosX;
-			startY = mousePosY;
-			status = 2;
+		status = MN_EditorNodeGetElementAtPosition(anchoredNode, x, y);
+		if (status == 4) {
+			if (hovered == NULL) {
+				startX = x;
+				startY = y;
+				return;
+			}
+		} else if (status != -1) {
+			startX = x;
+			startY = y;
 			return;
 		}
 	}
 
-	hovered = MN_GetNodeByPosition(mousePosX, mousePosY);
-	if (hovered->menu != node->menu)
+	if (hovered && hovered->menu != node->menu)
 		anchoredNode = hovered;
 }
 
