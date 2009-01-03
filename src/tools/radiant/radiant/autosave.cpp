@@ -60,7 +60,7 @@ static void Map_Snapshot ()
 	StringOutputStream snapshotsDir(256);
 	snapshotsDir << StringRange(path, name) << "snapshots";
 
-	if (file_exists(snapshotsDir.c_str()) || g_mkdir(snapshotsDir.c_str(), 775)) {
+	if (file_exists(snapshotsDir.c_str()) || g_mkdir(snapshotsDir.c_str(), 0775)) {
 		std::size_t lSize = 0;
 		StringOutputStream strNewPath(256);
 		strNewPath << snapshotsDir.c_str() << '/' << name;
@@ -147,7 +147,7 @@ void QE_CheckAutoSave (void)
 				if (Map_Unnamed(g_map)) {
 					StringOutputStream autosave(256);
 					autosave << g_qeglobals.m_userGamePath.c_str() << "maps/";
-					g_mkdir(autosave.c_str(), 775);
+					g_mkdir(autosave.c_str(), 0775);
 					autosave << "autosave.map";
 					Map_SaveFile(autosave.c_str());
 				} else {

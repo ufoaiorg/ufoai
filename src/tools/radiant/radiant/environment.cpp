@@ -52,7 +52,7 @@ void environment_init (void)
 {
 	StringOutputStream path(256);
 	path << DirectoryCleaned(g_get_home_dir()) << RADIANT_HOME << RADIANT_DIRECTORY;
-	g_mkdir_with_parents(path.c_str(), 775);
+	g_mkdir_with_parents(path.c_str(), 0775);
 	home_path = path.c_str();
 
 	path.clear();

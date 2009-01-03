@@ -191,6 +191,8 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 		}
 	}
 
+	/** @todo reactivate this - but only if radiant is already initialized - because otherwise the enginePath might not be valid */
+#if 0
 	// we add all important paths as shortcut folder..
 	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
 	const char *enginePath = GlobalRadiant().getEnginePath();
@@ -201,6 +203,7 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 		gtk_file_chooser_add_shortcut_folder(GTK_FILE_CHOOSER(dialog), uri, NULL);
 		shortcut++;
 	}
+#endif
 
 	for (std::size_t i = 0; i < masks.m_filters.size(); ++i) {
 		GtkFileFilter* filter = gtk_file_filter_new();

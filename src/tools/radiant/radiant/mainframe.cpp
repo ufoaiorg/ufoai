@@ -168,7 +168,7 @@ void HomePaths_Realise (void)
 		StringOutputStream path(256);
 		path << DirectoryCleaned(g_get_home_dir()) << prefix << "/";
 		g_qeglobals.m_userEnginePath = path.c_str();
-		g_mkdir_with_parents(g_qeglobals.m_userEnginePath.c_str(), 775);
+		g_mkdir_with_parents(g_qeglobals.m_userEnginePath.c_str(), 0775);
 	} else
 #endif
 	{
@@ -181,7 +181,7 @@ void HomePaths_Realise (void)
 		g_qeglobals.m_userGamePath = path.c_str();
 	}
 	ASSERT_MESSAGE(!string_empty(g_qeglobals.m_userGamePath.c_str()), "HomePaths_Realise: user-game-path is empty");
-	g_mkdir_with_parents(g_qeglobals.m_userGamePath.c_str(), 775);
+	g_mkdir_with_parents(g_qeglobals.m_userGamePath.c_str(), 0775);
 }
 
 ModuleObservers g_homePathObservers;
@@ -312,13 +312,13 @@ typedef ReferenceCaller1<CopiedString, const char*, EnginePathImport> EnginePath
 
 void Paths_constructPreferences (PreferencesPage& page)
 {
-	page.appendPathEntry("Engine Path", true, StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
+	page.appendPathEntry(_("Engine Path"), true, StringImportCallback(EnginePathImportCaller(g_strEnginePath)),
 			StringExportCallback(StringExportCaller(g_strEnginePath)));
-	page.appendPathEntry("Compiler Binary", g_strCompilerBinaryWithPath, false);
+	page.appendPathEntry(_("Compiler Binary"), g_strCompilerBinaryWithPath, false);
 }
 void Paths_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Paths", "Path Settings"));
+	PreferencesPage page(group.createPage(_("Paths"), _("Path Settings")));
 	Paths_constructPreferences(page);
 }
 
@@ -332,7 +332,7 @@ class PathsDialog: public Dialog
 	public:
 		GtkWindow* BuildDialog (void)
 		{
-			GtkFrame* frame = create_dialog_frame("Path settings", GTK_SHADOW_ETCHED_IN);
+			GtkFrame* frame = create_dialog_frame(_("Path settings"), GTK_SHADOW_ETCHED_IN);
 
 			GtkVBox* vbox2 = create_dialog_vbox(0, 4);
 			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox2));
@@ -342,7 +342,7 @@ class PathsDialog: public Dialog
 				Paths_constructPreferences(preferencesPage);
 			}
 
-			return create_simple_modal_dialog_window("Engine Path Not Found", m_modal, GTK_WIDGET(frame));
+			return create_simple_modal_dialog_window(_("Engine Path Not Found"), m_modal, GTK_WIDGET(frame));
 		}
 	};
 

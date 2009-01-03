@@ -1600,7 +1600,7 @@ public:
 			ASSERT_MESSAGE(!string_empty(g_qeglobals.m_userGamePath.c_str()), "maps_directory: user-game-path is empty");
 			StringOutputStream buffer(256);
 			buffer << g_qeglobals.m_userGamePath.c_str() << "maps/";
-			g_mkdir(buffer.c_str(), 775);
+			g_mkdir(buffer.c_str(), 0775);
 			g_mapsPath = buffer.c_str();
 		}
 	}

@@ -282,6 +282,18 @@ static void paths_init(void) {
 	BitmapsPath_set(path.c_str());
 }
 
+static void remove_global_pid(void) {
+	StringOutputStream g_pidFile(256);
+	g_pidFile << SettingsPath_get() << "radiant.pid";
+
+	// close the primary
+	if (remove(g_pidFile.c_str()) == -1) {
+		StringOutputStream msg(256);
+		msg << "WARNING: Could not delete global pid at " << g_pidFile.c_str();
+		gtk_MessageBox(0, msg.c_str(), _("UFORadiant"), eMB_OK, eMB_ICONERROR);
+	}
+}
+
 static void create_global_pid(void) {
 	/*!
 	the global prefs loading / game selection dialog might fail for any reason we don't know about
@@ -298,11 +310,7 @@ static void create_global_pid(void) {
 	if (pid != 0) {
 		fclose(pid);
 
-		if (remove(g_pidFile.c_str()) == -1) {
-			StringOutputStream msg(256);
-			msg << "WARNING: Could not delete " << g_pidFile.c_str();
-			gtk_MessageBox(0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR );
-		}
+		remove_global_pid();
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
@@ -333,18 +341,6 @@ static void create_global_pid(void) {
 		fclose(pid);
 }
 
-static void remove_global_pid(void) {
-	StringOutputStream g_pidFile(256);
-	g_pidFile << SettingsPath_get() << "radiant.pid";
-
-	// close the primary
-	if (remove(g_pidFile.c_str()) == -1) {
-		StringOutputStream msg(256);
-		msg << "WARNING: Could not delete " << g_pidFile.c_str();
-		gtk_MessageBox(0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR);
-	}
-}
-
 /**
  * @brief now the secondary game dependant .pid file
  */
@@ -355,27 +351,28 @@ static void create_local_pid(void) {
 	FILE *pid = fopen(g_pidGameFile.c_str(), "r");
 	if (pid != 0) {
 		fclose(pid);
+
 		if (remove(g_pidGameFile.c_str()) == -1) {
-			StringOutputStream msg;
-			msg << "WARNING: Could not delete " << g_pidGameFile.c_str();
-			gtk_MessageBox(0, msg.c_str(), "Radiant", eMB_OK, eMB_ICONERROR);
+			StringOutputStream msg(256);
+			msg << "WARNING: Could not delete game pid at " << g_pidGameFile.c_str();
+			gtk_MessageBox(0, msg.c_str(), _("UFORadiant"), eMB_OK, eMB_ICONERROR );
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
 		StringOutputStream msg;
-		msg << "Radiant failed to start properly the last time it was run.\n"
+		msg << _("UFORadiant failed to start properly the last time it was run.\n"
 			"The failure may be caused by current preferences.\n"
-			"Do you want to reset all preferences to defaults?";
+			"Do you want to reset all preferences to defaults?");
 
-		if (gtk_MessageBox(0, msg.c_str(), "Radiant - Startup Failure", eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
+		if (gtk_MessageBox(0, msg.c_str(), _("UFORadiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			Preferences_Reset();
 		}
 
 		msg.clear();
 		msg << "Logging console output to " << SettingsPath_get() << "radiant.log\nRefer to the log if Radiant fails to start again.";
 
-		gtk_MessageBox (0, msg.c_str(), "Radiant - Console Log", eMB_OK);
+		gtk_MessageBox (0, msg.c_str(), _("UFORadiant - Console Log"), eMB_OK);
 #endif
 
 		// force console logging on! (will go in prefs too)
