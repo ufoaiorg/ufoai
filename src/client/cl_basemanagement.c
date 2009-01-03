@@ -3952,6 +3952,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				aircraft->pilot = NULL;
 
 			aircraft->numUpgrades = MSG_ReadShort(sb);
+			RADAR_InitialiseUFOs(&aircraft->radar);
 			aircraft->radar.range = MSG_ReadShort(sb);
 			aircraft->radar.trackingRange = MSG_ReadShort(sb);
 			aircraft->route.numPoints = MSG_ReadShort(sb);
@@ -4015,6 +4016,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 		}
 
+		RADAR_InitialiseUFOs(&b->radar);
 		RADAR_Initialise(&b->radar, MSG_ReadShort(sb), MSG_ReadShort(sb), B_GetMaxBuildingLevel(b, B_RADAR), qtrue);
 
 		/* Alien Containment. */

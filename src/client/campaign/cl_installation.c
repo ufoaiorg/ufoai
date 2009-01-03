@@ -794,6 +794,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->installationStatus = MSG_ReadByte(sb);
 		inst->installationDamage = MSG_ReadShort(sb);
 		inst->alienInterest = MSG_ReadFloat(sb);
+		RADAR_InitialiseUFOs(&inst->radar);
 		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
 		RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
 		inst->buildStart = MSG_ReadLong(sb);
