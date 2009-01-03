@@ -319,6 +319,7 @@ def setup():
     #os.mkdir('licenses/html/')
     #os.mkdir('licenses/history/')
     #os.mkdir('licenses/cache/')
+    # TODO check if gnuplot is installed
 
 
 def kill_suffix(i):
@@ -362,6 +363,7 @@ def main():
     # TODO
     #scp <license-data> ufosf:/home/groups/u/uf/ufoai/htdocs/licenses
 
+    # TODO check whether licenses.py is in current path otherwise use contrib/scripts
     copy('licenses.py', 'licenses/html')
     print 'bye'
 
