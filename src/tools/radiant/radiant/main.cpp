@@ -62,12 +62,11 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 */
 
 #include "version.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 
 #include "iundo.h"
-
-#include <gtk/gtk.h>
 
 #include "os/file.h"
 #include "os/path.h"

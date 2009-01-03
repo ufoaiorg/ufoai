@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "map.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 
@@ -39,8 +40,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "moduleobserver.h"
 
 #include <set>
-
-#include <gtk/gtk.h>
 
 #include "scenelib.h"
 #include "transformlib.h"
@@ -693,7 +692,7 @@ public:
  */
 void Map_LoadFile (const char *filename) {
 	g_message("Loading map from %s\n", filename);
-	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
+	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 
 	g_map.m_name = filename;
 	Map_UpdateTitle(g_map);
@@ -924,7 +923,7 @@ void Map_RenameAbsolute(const char* absolute) {
 
 void Map_Rename(const char* filename) {
 	if (!string_equal(g_map.m_name.c_str(), filename)) {
-		ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Saving Map");
+		ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
 
 		Map_RenameAbsolute(filename);
 
@@ -1162,7 +1161,7 @@ void Map_RegionBrush(void)
 
 bool Map_ImportFile (const char* filename)
 {
-	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
+	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 
 	bool success = false;
 	{
@@ -1187,7 +1186,7 @@ bool Map_ImportFile (const char* filename)
 
 bool Map_SaveFile (const char* filename)
 {
-	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Saving Map");
+	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Saving Map"));
 	return MapResource_saveFile(MapFormat_forFile(filename), GlobalSceneGraph().root(), Map_Traverse, filename);
 }
 
@@ -1573,7 +1572,7 @@ public:
 	void realise (void) {
 		if (--m_unrealised == 0) {
 			if (g_map.m_resource != 0) {
-				ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Map");
+				ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Map"));
 				g_map.m_resource->realise();
 			}
 		}

@@ -27,6 +27,7 @@
  */
 
 #include "mainframe.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 #include "version.h"
@@ -44,10 +45,6 @@
 #include "moduleobserver.h"
 
 #include <ctime>
-
-#define GETTEXT_PACKAGE "uforadiant"
-#include <gtk/gtk.h>
-#include <glib/gi18n-lib.h>
 
 #include "scenelib.h"
 #include "stream/stringstream.h"

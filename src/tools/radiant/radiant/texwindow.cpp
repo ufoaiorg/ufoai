@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "texwindow.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 
@@ -38,8 +39,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <set>
 #include <string>
 #include <vector>
-
-#include <gtk/gtk.h>
 
 #include "signal/signal.h"
 #include "math/vector.h"
@@ -1108,7 +1107,7 @@ static void TreeView_onRowActivated(GtkTreeView* treeview, GtkTreePath* path, Gt
 		g_free(buffer);
 		strcat(dirName, "/");
 
-		ScopeDisableScreenUpdates disableScreenUpdates(dirName, "Loading Textures");
+		ScopeDisableScreenUpdates disableScreenUpdates(dirName, _("Loading Textures"));
 		TextureBrowser_ShowDirectory(GlobalTextureBrowser (), dirName);
 		TextureBrowser_queueDraw(GlobalTextureBrowser ());
 	}
@@ -1255,7 +1254,7 @@ void TextureBrowser_setBackgroundColour(TextureBrowser& textureBrowser, const Ve
 }
 
 void RefreshShaders(void) {
-	ScopeDisableScreenUpdates disableScreenUpdates("Processing...", "Loading Shaders");
+	ScopeDisableScreenUpdates disableScreenUpdates(_("Processing..."), _("Loading Shaders"));
 	GlobalShaderSystem().refresh();
 	UpdateAllWindows();
 }
