@@ -3,13 +3,13 @@ UFOAI_POFILES = $(wildcard src/po/ufoai-*.po)
 RADIANT_POFILES = $(wildcard src/po/uforadiant-*.po)
 
 UFOAI_MOFILES = $(patsubst src/po/ufoai-%.po, base/i18n/%/LC_MESSAGES/ufoai.mo, $(UFOAI_POFILES))
-RADIANT_MOFILES = $(patsubst src/po/uforadiant-%.po, radiant/lang/%/LC_MESSAGES/uforadiant.mo, $(RADIANT_POFILES))
+RADIANT_MOFILES = $(patsubst src/po/uforadiant-%.po, radiant/i18n/%/LC_MESSAGES/uforadiant.mo, $(RADIANT_POFILES))
 
 $(UFOAI_MOFILES) : base/i18n/%/LC_MESSAGES/ufoai.mo : src/po/ufoai-%.po
 	@mkdir -p $(dir $@)
 	msgfmt -v -o $@ $^
 
-$(RADIANT_MOFILES) : radiant/lang/%/LC_MESSAGES/uforadiant.mo : src/po/uforadiant-%.po
+$(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : src/po/uforadiant-%.po
 	@mkdir -p $(dir $@)
 	msgfmt -v -o $@ $^
 
