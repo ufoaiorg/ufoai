@@ -143,27 +143,6 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 	return cmd;
 }
 
-/**
- * @brief Return a node by a path name (names with dot separation)
- * @todo move it into nodes.c
- */
-static menuNode_t* MN_GetNodeByPath (const char* path)
-{
-	char name[MAX_VAR];
-	menu_t* menu;
-	const char* nextName = strstr(path, ".");
-	assert(nextName);
-
-	Q_strncpyz(name, path, nextName - path + 1);
-	nextName++;
-
-	menu = MN_GetMenu(name);
-	if (!menu)
-		return NULL;
-
-	return MN_GetNode(menu, nextName);
-}
-
 inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* menu, qboolean useCmdParam, const menuAction_t* action)
 {
 	const char* path;

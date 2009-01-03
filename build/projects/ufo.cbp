@@ -164,6 +164,7 @@
 		<Unit filename="..\..\base\ufos\menu_buildings.ufo" />
 		<Unit filename="..\..\base\ufos\menu_buy.ufo" />
 		<Unit filename="..\..\base\ufos\menu_campaign.ufo" />
+		<Unit filename="..\..\base\ufos\menu_debug.ufo" />
 		<Unit filename="..\..\base\ufos\menu_geoscape.ufo" />
 		<Unit filename="..\..\base\ufos\menu_hire.ufo" />
 		<Unit filename="..\..\base\ufos\menu_hospital.ufo" />
@@ -232,6 +233,78 @@
 		<Unit filename="..\tools.mk" />
 		<Unit filename="..\various.mk" />
 		<Unit filename="..\..\configure.ac" />
+		<Unit filename="..\..\src\client\campaign\cl_airfight.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_airfight.h" />
+		<Unit filename="..\..\src\client\campaign\cl_airfightmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_airfightmap.h" />
+		<Unit filename="..\..\src\client\campaign\cl_alienbase.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_alienbase.h" />
+		<Unit filename="..\..\src\client\campaign\cl_aliencont.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_aliencont.h" />
+		<Unit filename="..\..\src\client\campaign\cl_basesummary.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_basesummary.h" />
+		<Unit filename="..\..\src\client\campaign\cl_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_campaign.h" />
+		<Unit filename="..\..\src\client\campaign\cl_event.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_event.h" />
+		<Unit filename="..\..\src\client\campaign\cl_hospital.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_hospital.h" />
+		<Unit filename="..\..\src\client\campaign\cl_installation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_installation.h" />
+		<Unit filename="..\..\src\client\campaign\cl_map.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_map.h" />
+		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.h" />
+		<Unit filename="..\..\src\client\campaign\cl_market.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_market.h" />
+		<Unit filename="..\..\src\client\campaign\cl_nation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_nation.h" />
+		<Unit filename="..\..\src\client\campaign\cl_produce.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_produce.h" />
+		<Unit filename="..\..\src\client\campaign\cl_radar.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_radar.h" />
+		<Unit filename="..\..\src\client\campaign\cl_transfer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_transfer.h" />
+		<Unit filename="..\..\src\client\campaign\cl_ufo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_ufo.h" />
+		<Unit filename="..\..\src\client\campaign\cl_uforecovery.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_uforecovery.h" />
 		<Unit filename="..\..\src\client\campaign\cp_alien_interest.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -288,34 +361,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_aircraft.h" />
-		<Unit filename="..\..\src\client\campaign\cl_airfight.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_airfight.h" />
-		<Unit filename="..\..\src\client\campaign\cl_airfightmap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_airfightmap.h" />
-		<Unit filename="..\..\src\client\campaign\cl_alienbase.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_alienbase.h" />
-		<Unit filename="..\..\src\client\campaign\cl_aliencont.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_aliencont.h" />
 		<Unit filename="..\..\src\client\cl_basemanagement.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_basemanagement.h" />
-		<Unit filename="..\..\src\client\campaign\cl_basesummary.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_basesummary.h" />
-		<Unit filename="..\..\src\client\campaign\cl_campaign.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_campaign.h" />
 		<Unit filename="..\..\src\client\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -328,15 +377,23 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_employee.h" />
-		<Unit filename="..\..\src\client\campaign\cl_event.c">
+		<Unit filename="..\..\src\client\cl_game.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_event.h" />
+		<Unit filename="..\..\src\client\cl_game.h" />
+		<Unit filename="..\..\src\client\cl_game_campaign.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_game_campaign.h" />
+		<Unit filename="..\..\src\client\cl_game_multiplayer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_game_multiplayer.h" />
+		<Unit filename="..\..\src\client\cl_game_skirmish.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_game_skirmish.h" />
 		<Unit filename="..\..\src\client\cl_global.h" />
-		<Unit filename="..\..\src\client\campaign\cl_hospital.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_hospital.h" />
 		<Unit filename="..\..\src\client\cl_http.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -345,10 +402,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_input.h" />
-		<Unit filename="..\..\src\client\campaign\cl_installation.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_installation.h" />
 		<Unit filename="..\..\src\client\cl_inventory.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -376,26 +429,10 @@
 		<Unit filename="..\..\src\client\cl_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_map.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_map.h" />
-		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.h" />
-		<Unit filename="..\..\src\client\campaign\cl_market.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_market.h" />
 		<Unit filename="..\..\src\client\cl_menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.h" />
-		<Unit filename="..\..\src\client\campaign\cl_nation.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_nation.h" />
 		<Unit filename="..\..\src\client\cl_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -408,14 +445,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_popup.h" />
-		<Unit filename="..\..\src\client\campaign\cl_produce.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_produce.h" />
-		<Unit filename="..\..\src\client\campaign\cl_radar.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_radar.h" />
 		<Unit filename="..\..\src\client\cl_renderer.h" />
 		<Unit filename="..\..\src\client\cl_research.c">
 			<Option compilerVar="CC" />
@@ -437,22 +466,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_sound.h" />
-		<Unit filename="..\..\src\client\cl_game.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game.h" />
-		<Unit filename="..\..\src\client\cl_game_skirmish.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game_skirmish.h" />
-		<Unit filename="..\..\src\client\cl_game_campaign.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game_campaign.h" />
-		<Unit filename="..\..\src\client\cl_game_multiplayer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_game_multiplayer.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -461,26 +474,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_tip.h" />
-		<Unit filename="..\..\src\client\campaign\cl_transfer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_transfer.h" />
 		<Unit filename="..\..\src\client\cl_tutorials.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_tutorials.h" />
-		<Unit filename="..\..\src\client\campaign\cl_ufo.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_ufo.h" />
 		<Unit filename="..\..\src\client\cl_ufopedia.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_ufopedia.h" />
-		<Unit filename="..\..\src\client\campaign\cl_uforecovery.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_uforecovery.h" />
 		<Unit filename="..\..\src\client\cl_video.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -594,6 +595,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_custombutton.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_editor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_editor.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -671,6 +676,10 @@
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_zone.h" />
 		<Unit filename="..\..\src\client\renderer\anormtab.h" />
+		<Unit filename="..\..\src\client\renderer\r_array.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\renderer\r_array.h" />
 		<Unit filename="..\..\src\client\renderer\r_bsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -763,10 +772,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_state.h" />
-		<Unit filename="..\..\src\client\renderer\r_array.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\renderer\r_array.h" />
 		<Unit filename="..\..\src\client\renderer\r_surface.c">
 			<Option compilerVar="CC" />
 		</Unit>

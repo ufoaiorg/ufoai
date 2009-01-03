@@ -1,0 +1,25 @@
+// ==================
+// DEBUG MENU
+// ==================
+
+menu editor {
+
+	{
+		pos "0 0"
+		size "1 1"
+	}
+
+	editor editor {
+		pos "0 0"
+		size "1 1"
+	}
+
+	func init {
+		cmd "debug_mneditionstart editor.editor"
+	}
+
+	func close {
+		cmd "debug_mneditionstop editor.editor"
+	}
+
+}

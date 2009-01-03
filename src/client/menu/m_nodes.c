@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_cinematic.h"
 #include "node/m_node_container.h"
 #include "node/m_node_custombutton.h"
+#include "node/m_node_editor.h"
 #include "node/m_node_image.h"
 #include "node/m_node_item.h"
 #include "node/m_node_linestrip.h"
@@ -84,6 +85,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterControlsNode,
 	MN_RegisterCustomButtonNode,
 	MN_RegisterCvarFuncNode,
+	MN_RegisterEditorNode,
 	MN_RegisterFuncNode,
 	MN_RegisterItemNode,
 	MN_RegisterLineStripNode,
@@ -242,6 +244,26 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	return qtrue;
 }
 #endif
+
+/**
+ * @brief Return a node by a path name (names with dot separation)
+ */
+menuNode_t* MN_GetNodeByPath (const char* path)
+{
+	char name[MAX_VAR];
+	menu_t* menu;
+	const char* nextName = strstr(path, ".");
+	assert(nextName);
+
+	Q_strncpyz(name, path, nextName - path + 1);
+	nextName++;
+
+	menu = MN_GetMenu(name);
+	if (!menu)
+		return NULL;
+
+	return MN_GetNode(menu, nextName);
+}
 
 /**
  * @brief Allocate a node into the menu memory
