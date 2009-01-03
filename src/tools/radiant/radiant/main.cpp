@@ -85,6 +85,8 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 #include "referencecache.h"
 #include "stacktrace.h"
 
+#include <locale.h>
+
 static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data) {
 	gboolean in_recursion;
 	char buf[256];
@@ -409,6 +411,11 @@ int main (int argc, char* argv[])
 	bindtextdomain(GETTEXT_PACKAGE, "i18n");
 
 	gtk_init(&argc, &argv);
+
+	/* reset some locale settings back to standard c
+	 * this is e.g. needed for parsing float values from textfiles */
+	setlocale(LC_NUMERIC, "C");
+	setlocale(LC_TIME, "C");
 
 	g_thread_init(NULL);
 
