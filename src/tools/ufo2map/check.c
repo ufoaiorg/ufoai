@@ -156,13 +156,42 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 	startOfLine = containsNewline ? qtrue : qfalse;
 }
 
+/** needs to be done here, on map brushes as worldMins and worldMaxs from levels.c
+ * are only calculated on BSPing
+ * @param[out] mapSize the returned size in map units
+ */
+void Check_MapSize (vec3_t mapSize) {
+	int i, bi, vi;
+	vec3_t mins, maxs;
+
+	for (i = 0; i < nummapbrushes; i++) {
+		const mapbrush_t *brush = &mapbrushes[i];
+
+		for (bi = 0; bi < brush->numsides; bi++) {
+			const winding_t *winding = brush->original_sides[bi].winding;
+
+			for (vi = 0; vi < winding->numpoints; vi++) {
+
+				AddPointToBounds(winding->p[vi], mins, maxs);
+			}
+		}
+	}
+
+	VectorSubtract(maxs, mins, mapSize);
+}
+
+
+
 /**
  * @brief print map stats on -stats
  */
 void Check_Stats() {
+	vec3_t worldSize;
+	Check_MapSize(worldSize);
 	Verb_Printf(VERB_NORMAL, "        Number of brushes: %i\n",nummapbrushes);
 	Verb_Printf(VERB_NORMAL, "         Number of planes: %i\n",nummapplanes);
 	Verb_Printf(VERB_NORMAL, "    Number of brush sides: %i\n",nummapbrushsides);
+	Verb_Printf(VERB_NORMAL, "        Map size (fields): %.0f %.0f %.0f\n", worldSize[0] / UNIT_SIZE, worldSize[1] / UNIT_SIZE, worldSize[2] / UNIT_HEIGHT);
 }
 
 /**
