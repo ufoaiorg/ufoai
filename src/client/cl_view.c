@@ -234,13 +234,14 @@ void CL_LoadMedia (void)
 	LM_Register();
 	CL_ParticleRegisterArt();
 
-	for (i = 1, max = 0; i < MAX_MODELS && cl.configstrings[CS_MODELS+i][0]; i++)
+	for (i = 1, max = 0; i < MAX_MODELS && cl.configstrings[CS_MODELS + i][0]; i++)
 		max++;
 
 	max += csi.numODs;
 
 	for (i = 1; i < MAX_MODELS && cl.configstrings[CS_MODELS + i][0]; i++) {
 		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], sizeof(name));
+		/* skip inline bmodels */
 		if (name[0] != '*') {
 			Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
 				_("loading %s"), name);
@@ -248,6 +249,7 @@ void CL_LoadMedia (void)
 		SCR_UpdateScreen();
 		IN_SendKeyEvents();	/* pump message loop */
 		cl.model_draw[i] = R_RegisterModelShort(cl.configstrings[CS_MODELS + i]);
+		/* initialize clipping for bmodels */
 		if (name[0] == '*')
 			cl.model_clip[i] = CM_InlineModel(cl.configstrings[CS_MODELS + i]);
 		else
