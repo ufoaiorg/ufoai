@@ -443,6 +443,40 @@ equipment alien_soldiers99_plasma
 //	heavy_alien         85
 }
 
+equipment alien_base1
+{
+	mininterest			0
+	maxinterest			10000
+
+	// Primary
+	plasrifle			3
+		plasrifle_ammo		1
+	plasblaster			5
+		plasblaster_ammo	1
+	pbeamcannon			30
+		pbeamcannon_ammo	1
+	pbeamrifle			25
+		pbeamrifle_ammo		1
+	needlergun          20
+		needlergun_ammo		1
+	needlerheavy		15
+//		needlergun_ammo		(use same ammo as for needlergun)
+
+	// Secondary
+	pbeampistol			90
+		pbeampistol_ammo	2
+
+	// Misc
+	kerrblade			5
+	plasblade			50
+	plasmagrenade		250
+
+	// Armour
+	light_alien			30
+	medium_alien		70
+//	heavy_alien			70
+}
+
 // =======================
 // PHALANX EQUIPMENT
 // =======================

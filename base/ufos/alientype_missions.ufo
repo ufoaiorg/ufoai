@@ -210,13 +210,14 @@ alienteam alienbase
 
 	equipment
 	{
-		alien_soldiers
+		alien_base
 	}
 
 	team
 	{
 		mininterest 0		// set to 0 for debugging purpose, but this shouldn't be used before alien bases are spawned
 		maxinterest 10000
+		taman
 		ortnok
 		shevaar
 	}
