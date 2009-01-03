@@ -136,7 +136,7 @@ static void S_Music_Start (const char *file)
 			S_Music_Stop();
 		if (music.nextMusicTrack)
 			Mem_Free(music.nextMusicTrack);
-		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_NONE);
+		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_PARSE_ONCE);
 		return;
 	}
 
@@ -644,6 +644,9 @@ static void S_Music_Change_f (void)
 	int rnd;
 	int category;
 
+	if (!sound_started)
+		return;
+
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <geoscape|battlescape|main|aircombat>\n", Cmd_Argv(0));
 		return;
@@ -843,7 +846,7 @@ void S_Shutdown (void)
 	Mix_CloseAudio();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
-	Mem_FreePool(cl_soundSysPool);
+	Mem_FreeTag(cl_soundSysPool, CL_TAG_NONE);
 	memset(sfx_hash, 0, sizeof(sfx_hash));
 	sound_started = qfalse;
 }
@@ -891,7 +894,7 @@ void CL_ParseMusic (const char *name, const char **text)
 			FS_SkipBlock(text);
 			break;
 		}
-		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_soundSysPool, CL_TAG_NONE);
+		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_soundSysPool, CL_TAG_PARSE_ONCE);
 		musicArrayLength[i]++;
 	} while (*text);
 }
