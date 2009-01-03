@@ -4062,6 +4062,11 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 		base->storage.numLoose[obj->idx] = 0; /** @todo needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
+		if (!INV_ItemsIsStoredInStorage(obj)) {
+			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
+			return qfalse;
+		}
+
 		if (!ignorecap && (amount > 0)) {
 			/* Only add items if there is enough room in storage */
 			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < (obj->size * amount)) {

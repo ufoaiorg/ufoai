@@ -561,6 +561,25 @@ int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 }
 
 /**
+ * @brief Check if an item is stored in storage.
+ * @param[in] obj Pointer to the item to check.
+ * @return True if item is stored in storage.
+ */
+qboolean INV_ItemsIsStoredInStorage (const objDef_t *obj)
+{
+	/* antimatter is stored in antimatter storage */
+	if (!Q_strncmp(obj->id, "antimatter", 10))
+		return qfalse;
+
+	/* aircraft are stored in hangars */
+	assert(obj->tech);
+	if (obj->tech->type == RS_CRAFT)
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Remove items until everything fits in storage.
  * @note items will be randomly selected for removal.
  * @param[in] base Pointer to the base
@@ -576,15 +595,9 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 
 	for (i = 0, numObj = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
-		/* don't count antimatter */
-		if (!Q_strncmp(obj->id, "antimatter", 10))
-			continue;
 
-		/* Don't count aircraft */
-		assert(obj->tech);
-		if (obj->tech->type == RS_CRAFT) {
+		if (!INV_ItemsIsStoredInStorage(obj))
 			continue;
-		}
 
 		/* Don't count item that we don't have in base */
 		if (!base->storage.num[i])
@@ -621,7 +634,7 @@ void INV_RemoveItemsExceedingCapacity (base_t *base)
 		if (numObj <= 0)
 			break;
 	}
-	Com_DPrintf(DEBUG_CLIENT, "INV_RemoveItemsExceedingCapacity: Remains %i in storage for a maxium of %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "INV_RemoveItemsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
 		base->capacities[CAP_ITEMS].cur, base->capacities[CAP_ITEMS].max);
 }
 
@@ -708,15 +721,8 @@ void INV_UpdateStorageCap (base_t *base)
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
 
-		/* don't count antimatter */
-		if (!Q_strncmp(obj->id, "antimatter", 10))
+		if (!INV_ItemsIsStoredInStorage(obj))
 			continue;
-
-		/* Don't count aircraft */
-		assert(obj->tech);
-		if (obj->tech->type == RS_CRAFT) {
-			continue;
-		}
 
 		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * obj->size;
 	}
