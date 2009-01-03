@@ -31,7 +31,7 @@ PARANOID=@PARANOID@
 BUILD_CLIENT=@BUILD_CLIENT@
 BUILD_DEDICATED=@BUILD_DEDICATED@
 BUILD_UFO2MAP=@BUILD_UFO2MAP@
-BUILD_GTKRADIANT=@BUILD_GTKRADIANT@
+BUILD_UFORADIANT=@BUILD_UFORADIANT@
 BUILD_DEBUG=@BUILD_DEBUG@
 
 # assign parameters from configure
@@ -105,8 +105,8 @@ echo_info:
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) pk3' to assemble the pk3 files"
 	@echo
-ifeq ($(BUILD_GTKRADIANT),1)
-	@echo "Radiant"
+ifeq ($(BUILD_UFORADIANT),1)
+	@echo "UFORadiant"
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) radiant' to compile radiant mapeditor"
 	@echo

@@ -67,9 +67,9 @@ AC_ARG_ENABLE(ufo2map,
 	[AS_HELP_STRING([--disable-ufo2map], [build ufo2map @<:@default=enabled@:>@])],
 	[], [enable_ufo2map=yes])
 
-AC_ARG_ENABLE(gtkradiant,
-	[AS_HELP_STRING([--enable-gtkradiant], [build gtkradiant @<:@default=enabled@:>@])],
-	[], [enable_gtkradiant=yes])
+AC_ARG_ENABLE(uforadiant,
+	[AS_HELP_STRING([--enable-uforadiant], [build uforadiant @<:@default=enabled@:>@])],
+	[], [enable_uforadiant=yes])
 
 AC_ARG_ENABLE(release,
 	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],
@@ -627,12 +627,12 @@ SERVER_LIBS="$SERVER_LIBS $LIBS"
 # Check for radiant
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_gtkradiant" = "yes"
+if test "$enable_uforadiant" = "yes"
 then
 	LIBS=
 	OLD_RADIANT_LIBS="$RADIANT_LIBS"
 	RADIANT_LIBS=
-	AC_MSG_NOTICE([GtkRadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
+	AC_MSG_NOTICE([UFORadiant dependencies: gtk2, gtkglext, glib2 and libxml2])
 	PKG_CHECK_MODULES([RADIANT], [gtk+-2.0 gtkglext-1.0 glib-2.0])
 
 	#---------------------------------------------------------------------------------------------
@@ -691,13 +691,13 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
-# Check for gtkradiant
+# Check for uforadiant
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_gtkradiant" = "yes"
+if test "$enable_uforadiant" = "yes"
 then
-	AC_MSG_NOTICE([Enabling GtkRadiant])
-	AC_SUBST([BUILD_GTKRADIANT],1)
+	AC_MSG_NOTICE([Enabling UFORadiant])
+	AC_SUBST([BUILD_UFORADIANT],1)
 fi
 
 #---------------------------------------------------------------------------------------------
