@@ -60,6 +60,8 @@ static void MN_ZoneNodeUp (menuNode_t *node, int x, int y, int button)
 	/** @todo remove that when the input handler is updated */
 	if (node->disabled)
 		return;
+	if (!node->repeat)
+		return;
 	if (button == K_MOUSE1) {
 		if (capturedTimer) {
 			MN_TimerRelease(capturedTimer);
