@@ -44,6 +44,8 @@ FILE* g_hLogFile;
 
 bool g_Console_enableLogging = false;
 
+static bool g_Console_createLogFailed = false;
+
 /**
  * @note called whenever we need to open/close/check the console log file
  */
@@ -62,12 +64,16 @@ void Sys_LogFile(bool enable) {
 			globalOutputStream() << "Started logging to " << name.c_str() << "\n";
 			time_t localtime;
 			time(&localtime);
+			g_Console_createLogFailed = false;
 			globalOutputStream() << "Today is: " << ctime(&localtime)
 				<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
 		} else {
+			if (g_Console_createLogFailed)
+				return;
 			StringOutputStream error(512);
 			error << "Failed to create log file " << name.c_str() << ", check write permissions in Radiant directory.\n";
 			gtk_MessageBox(0, error.c_str(), "Console logging", eMB_OK, eMB_ICONERROR);
+			g_Console_createLogFailed = true;
 		}
 	} else if (!enable && g_hLogFile != 0) {
 		// settings say we should not be logging but still we have an active logfile .. close it
