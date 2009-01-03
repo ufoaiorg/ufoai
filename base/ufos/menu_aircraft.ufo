@@ -128,7 +128,6 @@ menu aircraft
 		pos			"550 410"
 		image		menu/button_pack1
 		blend		true
-		texl		"0 0"
 		size		"16 16"
 	}
 
@@ -194,12 +193,14 @@ menu aircraft
 
 			*aircraft_return	tooltip		"_Start Aircraft"
 			*aircraft_return	click		{ cmd "aircraft_start;" }
+			*aircraft_return	texl		"0 32"
 		}
 		if "mn_aircraftinbase <= 0" {
 			*button_equip		disabled	true
 
 			*aircraft_return	tooltip		"_Call back"
 			*aircraft_return	click		{ cmd "aircraft_return;" }
+			*aircraft_return	texl		"0 0"
 		}
 
 
