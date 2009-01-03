@@ -1,3 +1,11 @@
+ufoai (2.3~~svn21498) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Added section games to control
+  * Added some mode build dependencies and dependencies
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Sat, 03 Jan 2009 23:19:00 -0600
+
 ufoai (2.3~~svn20849) intrepid; urgency=low
 
   [ Arthur Haney ]
