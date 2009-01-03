@@ -81,7 +81,10 @@ menu aircraft
 	model aircraft
 	{
 		model		"*cvar mn_aircraft_model"
+		// @todo remove origin property when possible
 		origin		"690 240 0"
+		pos			"470 74"
+		size		"536 324"
 	}
 
 	zone wz_aircraft
@@ -261,10 +264,6 @@ menu aircraft_equip
 		image	menu/airequip_bg
 	}
 
-	// ==================
-	// aircraft model
-	// ==================
-
 	confunc airequip_zone2_off
 	{
 		*airequip_header2	invis true
@@ -283,18 +282,23 @@ menu aircraft_equip
 		cmd "airequip_zone_select 2;airequip_updatemenu 6;"
 	}
 
+	// ==================
+	// aircraft model
+	// ==================
+
 	model aircraftequip
 	{
 		model	"*cvar mn_aircraft_model"
+		// @todo remove origin property when possible
 		origin	"228 318 0"
-		pos		"20 20"
-		size	"415 728"
+		pos		"14 14"
+		size	"429 641"
 	}
 
 	zone wz_aircraftequip
 	{
-		pos	"18 18"
-		size	"420 631"
+		pos		"14 14"
+		size	"429 641"
 		whup	{
 			cmd "mn_next_aircraft;"
 			call airequip_zone1
@@ -349,15 +353,15 @@ menu aircraft_equip
 
 	string aircraftname
 	{
-		pos		"74 678"
-		size	"300 16"
+		string		"*cvar mn_aircraftname"
+		pos			"74 678"
+		size		"300 16"
 		textalign	cc
-		string	"*cvar mn_aircraftname"
-		whup	{
+		whup {
 			cmd	"mn_next_aircraft;"
 			call airequip_zone1
 		}
-		whdown	{
+		whdown {
 			cmd	"mn_prev_aircraft;"
 			call airequip_zone1
 		}
@@ -365,18 +369,21 @@ menu aircraft_equip
 
 	string airequip_available
 	{
-		string	"_Available equipment:"
-		pos		"594 440"
-		font	f_big
-		align	uc
+		string		"_Available equipment:"
+		pos			"470 440"
+		size		"250 25"
+		font		f_big
+		textalign	cc
 	}
 
 	text airequip_selected_description
 	{
 		pos			"760 630"
-		size		"400 100"
+		size		"240 60"
 		lineheight	"20"
-		rows		"5"
+		rows		"3"
+		tabwidth	120
+		scrollbar	true
 	}
 
 	model mdl_top
@@ -405,17 +412,19 @@ menu aircraft_equip
 
 	string airequip_item_name
 	{
-		string	"*cvar mn_itemname"
-		pos	"880 475"
-		align	uc
+		string		"*cvar mn_itemname"
+		pos			"880 475"
+		align		uc
 	}
 
-	string airequip_description
+	string airequip_selected
 	{
-		string	"_Selected item:"
-		pos	"880 440"
-		font	f_big
-		align	uc
+		string		"_Selected item:"
+		pos			"750 440"
+		size		"260 25"
+		font		f_big
+		textalign	cc
+
 	}
 
 	custombutton bt_prev_craftitemtype
