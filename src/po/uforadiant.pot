@@ -1,7 +1,161 @@
 #: src/tools/radiant/radiant/mainframe.cpp:277
+#: src/tools/radiant/radiant/mainframe.cpp:274
+#: src/tools/radiant/radiant/map.cpp:695 src/tools/radiant/radiant/map.cpp:926
+#: src/tools/radiant/radiant/map.cpp:1164
+#: src/tools/radiant/radiant/map.cpp:1189
+#: src/tools/radiant/radiant/map.cpp:1575
+#: src/tools/radiant/radiant/referencecache.cpp:600
+#: src/tools/radiant/radiant/referencecache.cpp:621
+#: src/tools/radiant/radiant/texwindow.cpp:1257
 msgid "Processing..."
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:277
+#: src/tools/radiant/radiant/mainframe.cpp:274
 msgid "Changing Engine Path"
+msgstr ""
+
+#: src/tools/radiant/radiant/map.cpp:695
+#: src/tools/radiant/radiant/map.cpp:1164
+#: src/tools/radiant/radiant/map.cpp:1575
+#: src/tools/radiant/radiant/referencecache.cpp:79
+msgid "Loading Map"
+msgstr ""
+
+#: src/tools/radiant/radiant/map.cpp:926
+#: src/tools/radiant/radiant/map.cpp:1189
+#: src/tools/radiant/radiant/referencecache.cpp:113
+#: src/tools/radiant/radiant/referencecache.cpp:600
+msgid "Saving Map"
+msgstr ""
+
+#: src/tools/radiant/radiant/referencecache.cpp:187
+msgid "Loading Model"
+msgstr ""
+
+#: src/tools/radiant/radiant/referencecache.cpp:621
+msgid "Refreshing Models"
+msgstr ""
+
+#: src/tools/radiant/radiant/texwindow.cpp:1110
+msgid "Loading Textures"
+msgstr ""
+
+#: src/tools/radiant/radiant/texwindow.cpp:1257
+msgid "Loading Shaders"
+msgstr ""
+
+#: src/tools/radiant/radiant/autosave.cpp:169
+#: src/tools/radiant/radiant/autosave.cpp:176
+msgid "Autosave"
+msgstr ""
+
+#: src/tools/radiant/radiant/autosave.cpp:169
+msgid "Enable Autosave"
+msgstr ""
+
+#: src/tools/radiant/radiant/autosave.cpp:170
+msgid "Autosave Frequency (minutes)"
+msgstr ""
+
+#: src/tools/radiant/radiant/autosave.cpp:172
+msgid "Save Snapshots"
+msgstr ""
+
+#: src/tools/radiant/radiant/autosave.cpp:176
+msgid "Autosave Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:56
+msgid "Snap planes to integer grid"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:57
+msgid "Default texture scale"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:59
+msgid "Use alternative texture-projection"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:62
+msgid "Always use nodraw for new brushes"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:66
+msgid "Brush"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:66
+msgid "Brush Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1787
+msgid "Movement Speed"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1789
+msgid "Link strafe speed to movement speed"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1790
+msgid "Rotation Speed"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1791
+msgid "Invert mouse vertical axis"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1792
+msgid "Discrete movement"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1794
+msgid "Enable far-clip plane"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1797
+msgctxt "Render Mode"
+msgid "Wireframe"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1797
+msgctxt "Render Mode"
+msgid "Flatshade"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1797
+msgctxt "Render Mode"
+msgid "Textured"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1798
+msgid "Render Mode"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1801
+msgctxt "Strafe Mode"
+msgid "Both"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1801
+msgctxt "Strafe Mode"
+msgid "Forward"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1801
+msgctxt "Strafe Mode"
+msgid "Up"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1802
+msgid "Strafe Mode"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1807
+msgid "Camera"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1807
+msgid "Camera View Preferences"
 msgstr ""

@@ -25,6 +25,7 @@
  */
 
 #include "autosave.h"
+#include "radiant.h"
 
 #include "os/file.h"
 #include "os/path.h"
@@ -165,14 +166,14 @@ void QE_CheckAutoSave (void)
 
 static void Autosave_constructPreferences (PreferencesPage& page)
 {
-	GtkWidget* autosave_enabled = page.appendCheckBox("Autosave", "Enable Autosave", g_AutoSave_Enabled);
-	GtkWidget* autosave_frequency = page.appendSpinner("Autosave Frequency (minutes)", m_AutoSave_Frequency, 1, 1, 60);
+	GtkWidget* autosave_enabled = page.appendCheckBox(_("Autosave"), _("Enable Autosave"), g_AutoSave_Enabled);
+	GtkWidget* autosave_frequency = page.appendSpinner(_("Autosave Frequency (minutes)"), m_AutoSave_Frequency, 1, 1, 60);
 	Widget_connectToggleDependency(autosave_frequency, autosave_enabled);
-	page.appendCheckBox("", "Save Snapshots", g_SnapShots_Enabled);
+	page.appendCheckBox("", _("Save Snapshots"), g_SnapShots_Enabled);
 }
 void Autosave_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Autosave", "Autosave Preferences"));
+	PreferencesPage page(group.createPage(_("Autosave"), _("Autosave Preferences")));
 	Autosave_constructPreferences(page);
 }
 void Autosave_registerPreferencesPage ()

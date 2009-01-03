@@ -26,6 +26,7 @@
  */
 
 #include "camwindow.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 
@@ -1783,27 +1784,27 @@ typedef FreeCaller1<const IntImportCallback&, RenderModeExport> RenderModeExport
 
 void Camera_constructPreferences (PreferencesPage& page)
 {
-	page.appendSlider("Movement Speed", g_camwindow_globals_private.m_nMoveSpeed, TRUE, 0, 0, 100,
+	page.appendSlider(_("Movement Speed"), g_camwindow_globals_private.m_nMoveSpeed, TRUE, 0, 0, 100,
 			MIN_CAM_SPEED, MAX_CAM_SPEED, 1, 10, 10);
-	page.appendCheckBox("", "Link strafe speed to movement speed", g_camwindow_globals_private.m_bCamLinkSpeed);
-	page.appendSlider("Rotation Speed", g_camwindow_globals_private.m_nAngleSpeed, TRUE, 0, 0, 3, 1, 180, 1, 10, 10);
-	page.appendCheckBox("", "Invert mouse vertical axis", g_camwindow_globals_private.m_bCamInverseMouse);
-	page.appendCheckBox("", "Discrete movement", FreeCaller1<bool, CamWnd_Move_Discrete_Import> (), BoolExportCaller(
+	page.appendCheckBox("", _("Link strafe speed to movement speed"), g_camwindow_globals_private.m_bCamLinkSpeed);
+	page.appendSlider(_("Rotation Speed"), g_camwindow_globals_private.m_nAngleSpeed, TRUE, 0, 0, 3, 1, 180, 1, 10, 10);
+	page.appendCheckBox("", _("Invert mouse vertical axis"), g_camwindow_globals_private.m_bCamInverseMouse);
+	page.appendCheckBox("", _("Discrete movement"), FreeCaller1<bool, CamWnd_Move_Discrete_Import> (), BoolExportCaller(
 			g_camwindow_globals_private.m_bCamDiscrete));
-	page.appendCheckBox("", "Enable far-clip plane", FreeCaller1<bool, Camera_SetFarClip> (), BoolExportCaller(
+	page.appendCheckBox("", _("Enable far-clip plane"), FreeCaller1<bool, Camera_SetFarClip> (), BoolExportCaller(
 			g_camwindow_globals_private.m_bCubicClipping));
 
-	const char* render_mode[] = { "Wireframe", "Flatshade", "Textured" };
-	page.appendCombo("Render Mode", STRING_ARRAY_RANGE(render_mode),
+	const char* render_mode[] = { C_("Render Mode", "Wireframe"), C_("Render Mode", "Flatshade"), C_("Render Mode", "Textured") };
+	page.appendCombo(_("Render Mode"), STRING_ARRAY_RANGE(render_mode),
 	IntImportCallback(RenderModeImportCaller()), IntExportCallback(RenderModeExportCaller()));
 
-	const char* strafe_mode[] = { "Both", "Forward", "Up" };
-	page.appendCombo("Strafe Mode", g_camwindow_globals_private.m_nStrafeMode, STRING_ARRAY_RANGE(strafe_mode));
+	const char* strafe_mode[] = { C_("Strafe Mode", "Both"), C_("Strafe Mode", "Forward"), C_("Strafe Mode", "Up") };
+	page.appendCombo(_("Strafe Mode"), g_camwindow_globals_private.m_nStrafeMode, STRING_ARRAY_RANGE(strafe_mode));
 }
 
 void Camera_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Camera", "Camera View Preferences"));
+	PreferencesPage page(group.createPage(_("Camera"), _("Camera View Preferences")));
 	Camera_constructPreferences(page);
 }
 void Camera_registerPreferencesPage ()

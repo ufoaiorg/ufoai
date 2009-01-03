@@ -20,6 +20,7 @@
  */
 
 #include "brushmodule.h"
+#include "radiant.h"
 
 #include "qerplugin.h"
 
@@ -52,17 +53,17 @@ typedef FreeCaller1<const BoolImportCallback&, Face_exportSnapPlanes> FaceExport
 
 void Brush_constructPreferences (PreferencesPage& page)
 {
-	page.appendCheckBox("", "Snap planes to integer grid", FaceImportSnapPlanesCaller(), FaceExportSnapPlanesCaller());
-	page.appendEntry("Default texture scale", g_texdef_default_scale);
+	page.appendCheckBox("", _("Snap planes to integer grid"), FaceImportSnapPlanesCaller(), FaceExportSnapPlanesCaller());
+	page.appendEntry(_("Default texture scale"), g_texdef_default_scale);
 	if (g_showAlternativeTextureProjectionOption) {
-		page.appendCheckBox("", "Use alternative texture-projection", LatchedBoolImportCaller(
+		page.appendCheckBox("", _("Use alternative texture-projection"), LatchedBoolImportCaller(
 				g_useAlternativeTextureProjection), BoolExportCaller(g_useAlternativeTextureProjection.m_latched));
 	}
-	page.appendCheckBox("", "Always use nodraw for new brushes", g_brush_always_nodraw);
+	page.appendCheckBox("", _("Always use nodraw for new brushes"), g_brush_always_nodraw);
 }
 void Brush_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Brush", "Brush Settings"));
+	PreferencesPage page(group.createPage(_("Brush"), _("Brush Settings")));
 	Brush_constructPreferences(page);
 }
 void Brush_registerPreferencesPage ()
