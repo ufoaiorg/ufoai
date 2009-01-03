@@ -30,10 +30,12 @@ HTML = u"""<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
-body {background-color: #fff;}
+body { color: #ffffff; background-color: #262626; font-family: verdana, helvetica, arial, sans-serif; font-size: 71%; margin: 0; padding: 0; }
+html > body { font-size: 8.5pt; }
+a { color: #ffd800; background-color: transparent; text-decoration: none; }
+a:hover { color: #ffffff; background-color: transparent; text-decoration: none; }
 li { margin-bottom: 8px;}
-span {font-size: 10px;}
-div {font-size: 10px;}
+.author { }
 </style></head>
 
 <body>
@@ -41,7 +43,7 @@ div {font-size: 10px;}
 Please note that the information are extracted from the svn tags (svn:copyright, svn:license, svn:source and svn:license).<br />
 Warning: the statics/graphs might be wrong since it would be to expensive to get information if a entry was a directory in the past or not.
 <br />
-State as in revision %i.
+State as in revision <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=%i">%i</a>.
 <hr />
 
 %s
@@ -180,23 +182,21 @@ def generate(d, data, texture_map, map_texture):
 		content = u'<a href="../index.html">Back</a><br/><ul>%s</ul>' %  content
 	else:
 		# print index
-		index = u'<b>See also:</b><br />'
+		index = u'<b>See also:</b><br /><ul>'
 		for i in os.listdir('base'):
 			if os.path.isdir('base/'+i) and not i.startswith('.') and os.path.exists('base/%s/.svn' % i):
-				index+= u' - <a href="%s/index.html">%s</a><br/>' % (i,i)
+				index+= u'<li><a href="%s/index.html">%s</a></li>' % (i,i)
+		index += "</ul>"
 
 		content = index + u'<ul>%s</ul>' %  content
 		content+= '<hr/>You can <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/contrib/scripts/licenses.py">download</a> the source code. USE AT OWN RISK. NOT USERFRIENDLY.'
 
-	html = HTML % (d, d, rev, content)
+	html = HTML % (d, d, rev, rev, content)
 	open('licenses/html/%s/index.html' % d, 'w').write(html)
-
-
 
 	sources = [i.split(' - ', 1) for i in get('svn propget svn:source base/%s -R' % d, False).split('\n') if i != '']
 
 	print 'Generating stats per license'
-
 
 	for i in licenses:
 		h = md5.md5(i).hexdigest()
@@ -208,16 +208,15 @@ def generate(d, data, texture_map, map_texture):
 			# preview file
 			img = ''
 			if j.endswith('.jpg') or j.endswith('.tga') or j.endswith('.png'):
-				thumb = '.thumbnails/%s/%s.png' % (d,j)
+				thumb = '.thumbnails/%s/%s.png' % (d, j)
 				if not os.path.exists('licenses/html/%s' % thumb):
 					os.system('convert base/%s/%s -thumbnail 128x128 licenses/html/%s' % (d, j, thumb))
-				img = '<img src="licenses/%s"/>' % (thumb)
+				img = '<img alt="%s" src="html/%s" widht="128" height="128" /> ' % (j, thumb)
 
-
-			content+= u'<li>%s<a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
+			content+= u'<li> %s <a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
 			copy = get('svn propget svn:copyright base/%s/%s' % (d, j), False).strip()
 			copy = copy == '' and 'UNKNOWN' or copy
-			content+= u' <span>by %s</span>' % unicode(copy.decode('utf-8'))
+			content+= u' <span class="author">by %s</span>' % unicode(copy.decode('utf-8'))
 
 			if j in sources:
 				source = sources[j]
