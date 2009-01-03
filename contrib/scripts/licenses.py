@@ -200,7 +200,7 @@ def generate(d, data, texture_map, map_texture):
 
 	for i in licenses:
 		h = md5.md5(i).hexdigest()
-		content = u'<a href="index.html">Back</a><br /><h2>%s</h2><ol>' % i
+		content = u'<a href="index.html">Back</a><br /><h2>%s</h2><ol>\n' % i
 		for j in licenses[i]:
 			if os.path.isdir('base/%s/%s' % (d, j)):
 				continue
@@ -211,9 +211,9 @@ def generate(d, data, texture_map, map_texture):
 				thumb = '.thumbnails/%s/%s.png' % (d, j)
 				if not os.path.exists('licenses/html/%s' % thumb):
 					os.system('convert base/%s/%s -thumbnail 128x128 licenses/html/%s' % (d, j, thumb))
-				img = '<img alt="%s" src="html/%s" widht="128" height="128" /> ' % (j, thumb)
+				img = '<img alt="%s" src="../%s" width="128" height="128" /> ' % (j, thumb)
 
-			content+= u'<li> %s <a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
+			content+= u'\t<li> %s <a href="https://ufoai.svn.sourceforge.net/viewvc/*checkout*/ufoai/ufoai/trunk/base/%s/%s">%s</a>'  % (img, d, j ,j)
 			copy = get('svn propget svn:copyright base/%s/%s' % (d, j), False).strip()
 			copy = copy == '' and 'UNKNOWN' or copy
 			content+= u' <span class="author">by %s</span>' % unicode(copy.decode('utf-8'))
@@ -238,7 +238,7 @@ def generate(d, data, texture_map, map_texture):
 				else:
 					content+= '<br/><b>UNUSED</b> (at least no map uses it)'
 
-			content+= '</li>'
+			content+= '</li>\n'
 		content+= '</ol>'
 		html = HTML % (d, d, rev, rev, content)
 		html = html.encode('UTF-8')
