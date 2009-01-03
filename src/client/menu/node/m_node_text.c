@@ -630,6 +630,35 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
+#ifdef DEBUG
+
+static void MN_DebugTabWidth_f (void) {
+	static char buf[512];
+	strcat(buf, "a aaaaaaaaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aa aaaaaaaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaa aaaaaaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaa aaaaaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaa aaaaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaa aaaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaa aaaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaa aaaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaa aaaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaa aaaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaa aaaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaa aaaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaa aaaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaa aaaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaa aaaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaa aaaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaa aaaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaa aaa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaaa aa\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaaaa a\taaaa\n");
+	strcat(buf, "aaaaaaaaaaaaaaaaaaaaa\taaaa\n");
+	mn.menuText[TEXT_STANDARD] = buf;
+}
+#endif
+
 void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
@@ -645,4 +674,7 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
 	Cmd_AddCommand("mn_textupdated", MN_TextUpdated_f, "Event to inform node the text is updated");
+#ifdef DEBUG
+	Cmd_AddCommand("mn_textupdated", MN_DebugTabWidth_f, "Init TEXT_STANDARD with a tabed text");
+#endif
 }
