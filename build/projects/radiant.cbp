@@ -41,6 +41,9 @@
 					<Add library="libgtkglext-win32-1.0" />
 					<Add library="intl" />
 				</Linker>
+				<ExtraCommands>
+					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
+				</ExtraCommands>
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
@@ -80,6 +83,9 @@
 					<Add library="libgtkglext-win32-1.0" />
 					<Add library="intl" />
 				</Linker>
+				<ExtraCommands>
+					<Add after="..\..\contrib\scripts\compile_po.bat /uforadiant" />
+				</ExtraCommands>
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
