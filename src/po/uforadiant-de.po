@@ -1,0 +1,907 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: UFORadiant\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-01-03 18:42+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: src/tools/radiant/radiant/mainframe.cpp:277
+#: src/tools/radiant/radiant/mainframe.cpp:274
+#: src/tools/radiant/radiant/map.cpp:695
+#: src/tools/radiant/radiant/map.cpp:926
+#: src/tools/radiant/radiant/map.cpp:1164
+#: src/tools/radiant/radiant/map.cpp:1189
+#: src/tools/radiant/radiant/map.cpp:1575
+#: src/tools/radiant/radiant/referencecache.cpp:600
+#: src/tools/radiant/radiant/referencecache.cpp:621
+#: src/tools/radiant/radiant/texwindow.cpp:1257
+msgid "Processing..."
+msgstr "In Bearbeitung..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:277
+#: src/tools/radiant/radiant/mainframe.cpp:274
+#, fuzzy
+msgid "Changing Engine Path"
+msgstr "--%s benötigt <Name> <Pfad>"
+
+#: src/tools/radiant/radiant/map.cpp:695
+#: src/tools/radiant/radiant/map.cpp:1164
+#: src/tools/radiant/radiant/map.cpp:1575
+#: src/tools/radiant/radiant/referencecache.cpp:79
+msgid "Loading Map"
+msgstr "Lade Map"
+
+#: src/tools/radiant/radiant/map.cpp:926
+#: src/tools/radiant/radiant/map.cpp:1189
+#: src/tools/radiant/radiant/referencecache.cpp:113
+#: src/tools/radiant/radiant/referencecache.cpp:600
+msgid "Saving Map"
+msgstr "Speichere Map"
+
+#: src/tools/radiant/radiant/referencecache.cpp:187
+msgid "Loading Model"
+msgstr "Lade Model"
+
+#: src/tools/radiant/radiant/referencecache.cpp:621
+msgid "Refreshing Models"
+msgstr ""
+
+#: src/tools/radiant/radiant/texwindow.cpp:1110
+msgid "Loading Textures"
+msgstr "Lade Texturen"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1257
+msgid "Loading Shaders"
+msgstr "Lade Shader"
+
+#: src/tools/radiant/radiant/autosave.cpp:169
+#: src/tools/radiant/radiant/autosave.cpp:176
+msgid "Autosave"
+msgstr ""
+
+#: src/tools/radiant/radiant/autosave.cpp:169
+#, fuzzy
+msgid "Enable Autosave"
+msgstr "Aktiviere CABAC"
+
+#: src/tools/radiant/radiant/autosave.cpp:170
+#, fuzzy
+msgid "Autosave Frequency (minutes)"
+msgstr "Hohe Bandbreiten-Frequenz:"
+
+#: src/tools/radiant/radiant/autosave.cpp:172
+#, fuzzy
+msgid "Save Snapshots"
+msgstr "Speichern _als..."
+
+#: src/tools/radiant/radiant/autosave.cpp:176
+#, fuzzy
+msgid "Autosave Preferences"
+msgstr "GtkRadiant Einstellungen"
+
+#: src/tools/radiant/radiant/brushmodule.cpp:56
+msgid "Snap planes to integer grid"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:57
+#, fuzzy
+msgid "Default texture scale"
+msgstr "Scale Entry Beispiel 1"
+
+#: src/tools/radiant/radiant/brushmodule.cpp:59
+msgid "Use alternative texture-projection"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:62
+msgid "Always use nodraw for new brushes"
+msgstr ""
+
+#: src/tools/radiant/radiant/brushmodule.cpp:66
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:662
+msgid "Brush"
+msgstr "Brush"
+
+#: src/tools/radiant/radiant/brushmodule.cpp:66
+#, fuzzy
+msgid "Brush Settings"
+msgstr "Spieleinstellungen"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1787
+#, fuzzy
+msgid "Movement Speed"
+msgstr "Geschwindigkeit ändern"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1789
+msgid "Link strafe speed to movement speed"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1790
+#, fuzzy
+msgid "Rotation Speed"
+msgstr "Geschwindigkeit ändern"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1791
+msgid "Invert mouse vertical axis"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1792
+msgid "Discrete movement"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1794
+msgid "Enable far-clip plane"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1797
+msgctxt "Render Mode"
+msgid "Wireframe"
+msgstr "Gitternetz"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1797
+msgctxt "Render Mode"
+msgid "Flatshade"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1797
+msgctxt "Render Mode"
+msgid "Textured"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1798
+#, fuzzy
+msgid "Render Mode"
+msgstr "ungültiger Modus %s"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1801
+msgctxt "Strafe Mode"
+msgid "Both"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1801
+msgctxt "Strafe Mode"
+msgid "Forward"
+msgstr "Vorwärts"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1801
+msgctxt "Strafe Mode"
+msgid "Up"
+msgstr "Hoch"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1802
+#, fuzzy
+msgid "Strafe Mode"
+msgstr "ungültiger Modus %s"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1807
+#: src/tools/radiant/radiant/mainframe.cpp:1491
+msgid "Camera"
+msgstr "Kamera"
+
+#: src/tools/radiant/radiant/camwindow.cpp:1807
+#, fuzzy
+msgid "Camera View Preferences"
+msgstr "Internen Betrachter ben&utzen"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:163
+msgid "Colors"
+msgstr "Farben"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:168
+msgid "Themes"
+msgstr ""
+
+#: src/tools/radiant/radiant/colorscheme.cpp:172
+msgid "QE4 Original"
+msgstr "QE4 Original"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:173
+msgid "Q3Radiant Original"
+msgstr "Q3Radiant Original"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:174
+msgid "Black and Green"
+msgstr "Schwarz und Grün"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:175
+msgid "Maya/Max/Lightwave Emulation"
+msgstr ""
+
+#: src/tools/radiant/radiant/colorscheme.cpp:179
+#, fuzzy
+msgid "_Texture Background..."
+msgstr "Gitter Hintergrund..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:180
+msgid "Grid Background..."
+msgstr "Gitter Hintergrund..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:181
+#, fuzzy
+msgid "Grid Major..."
+msgstr "Gitter Hintergrund..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:182
+#, fuzzy
+msgid "Grid Minor..."
+msgstr "Gitter Hintergrund..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:183
+#, fuzzy
+msgid "Grid Major Small..."
+msgstr "Am Gitter fangen"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:184
+#, fuzzy
+msgid "Grid Minor Small..."
+msgstr "Am Gitter fangen"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:185
+#, fuzzy
+msgid "Grid Text..."
+msgstr "Gitter Text..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:186
+#, fuzzy
+msgid "Grid Block..."
+msgstr " Block speichern "
+
+#: src/tools/radiant/radiant/colorscheme.cpp:187
+#, fuzzy
+msgid "Default Brush..."
+msgstr "Gewählte Brush..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:188
+#, fuzzy
+msgid "Camera Background..."
+msgstr "Gitter Hintergrund..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:189
+msgid "Selected Brush..."
+msgstr "Gewählte Brush..."
+
+#: src/tools/radiant/radiant/colorscheme.cpp:190
+#, fuzzy
+msgid "Selected Brush (Camera)..."
+msgstr "Gewählte Version %s (%s) für %s\n"
+
+#: src/tools/radiant/radiant/colorscheme.cpp:191
+msgid "Clipper..."
+msgstr ""
+
+#: src/tools/radiant/radiant/colorscheme.cpp:192
+#, fuzzy
+msgid "Active View name..."
+msgstr "--%s benötigt <Name> <Pfad>"
+
+#: src/tools/radiant/radiant/commands.cpp:225
+msgid "Command"
+msgstr "Kommando"
+
+#: src/tools/radiant/radiant/commands.cpp:231
+msgid "Key"
+msgstr "Schlüssel"
+
+#: src/tools/radiant/radiant/commands.cpp:255
+msgid "Close"
+msgstr "Schließen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1692
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1697
+msgid "Manual"
+msgstr "Anleitung"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1699
+msgid "Bug report"
+msgstr "Bug melden"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1700
+msgid "_About"
+msgstr "Über"
+
+#: src/tools/radiant/radiant/pluginmenu.cpp:144
+msgid "_Plugins"
+msgstr "_Plugins"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1131
+#, fuzzy
+msgid "_View"
+msgstr "Anzeige"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1136
+msgid "Hide _Unused"
+msgstr "Verstecke _ungenutzte"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1139
+msgid "Show All"
+msgstr "Zeige _alle"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1140
+msgid "Show shaders"
+msgstr "Zeige Shader"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1141
+msgid "Fixed Size"
+msgstr "Feste Größe"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1147
+msgid "_Tools"
+msgstr "Werkzeuge"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1152
+#, fuzzy
+msgid "Flush & Reload Shaders"
+msgstr "Schnelles Neulesen"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1154
+msgid "Find / Replace..."
+msgstr "Suchen / Ersetzen..."
+
+#: src/tools/radiant/radiant/texwindow.cpp:1330
+#, fuzzy
+msgid "Texture Thumbnail Scale"
+msgstr "Scale Entry Beispiel 1"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1336
+msgid "Mousewheel Increment"
+msgstr ""
+
+#: src/tools/radiant/radiant/texwindow.cpp:1340
+#: src/tools/radiant/radiant/mainframe.cpp:1483
+msgid "Texture Browser"
+msgstr "Texture Browser"
+
+#: src/tools/radiant/radiant/texwindow.cpp:1340
+#, fuzzy
+msgid "Texture Browser Preferences"
+msgstr "INFO: gl: Frame=%dx%d, Textur=%dx%d\n"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1393
+#, fuzzy
+msgid "Window Layout"
+msgstr "Hauptfenster"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1394
+#, fuzzy
+msgid "Detachable Menus"
+msgstr "&DVD Menüs"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1395
+#, fuzzy
+msgid "Plugin Toolbar"
+msgstr "<b>Aussehen der Werkzeugleiste</b>"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1400
+msgid "_File"
+msgstr "Datei"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1405
+msgid "_New Map"
+msgstr "_Neue Map"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1407
+msgid "_Open..."
+msgstr "Öffnen..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1408
+msgid "_Import..."
+msgstr "_Importieren..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1409
+msgid "_Save"
+msgstr "_Speichern"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1410
+msgid "Save _as..."
+msgstr "Speichern unter..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1411
+msgid "Save s_elected..."
+msgstr "Speichere Auswahl..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1413
+msgid "Save re_gion..."
+msgstr "Speichere Region..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1415
+#, fuzzy
+msgid "_Refresh models"
+msgstr "Schirm auff&rischen      C-l"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1419
+msgid "E_xit"
+msgstr "Beenden"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1427
+msgid "_Edit"
+msgstr "B_earbeiten"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1431
+msgid "_Undo"
+msgstr "Rückgängig"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1432
+msgid "_Redo"
+msgstr "Wiede_rholen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1434
+msgid "_Copy"
+msgstr "Kopieren"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1435
+msgid "_Paste"
+msgstr "Einfügen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1436
+#, fuzzy
+msgid "P_aste To Camera"
+msgstr "Am Gitter fangen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1438
+msgid "_Duplicate"
+msgstr "_Duplizieren"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1439
+msgid "D_elete"
+msgstr "_Entfernen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1441
+#, fuzzy
+msgid "Pa_rent"
+msgstr "Phags-pa"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1443
+#, fuzzy
+msgid "C_lear Selection"
+msgstr "Deckel Auswahl"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1444
+#, fuzzy
+msgid "_Invert Selection"
+msgstr "Deckel Auswahl"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1445
+#, fuzzy
+msgid "Select i_nside"
+msgstr "Wähle das Spiel:"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1446
+#, fuzzy
+msgid "Select _touching"
+msgstr "Wähle das Spiel:"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1448
+#, fuzzy
+msgid "E_xpand Selection"
+msgstr "Deckel Auswahl"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1451
+#, fuzzy
+msgid "To Whole _Entities"
+msgstr "Zeige Entities als"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1455
+msgid "Shortcuts list"
+msgstr "Tastenbelegung"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1456
+msgid "Pre_ferences..."
+msgstr "Einstellungen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1464
+msgid "Filter"
+msgstr "Filter"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1477
+#, fuzzy
+msgid "Vie_w"
+msgstr "&Datei anzeigen...    "
+
+#: src/tools/radiant/radiant/mainframe.cpp:1485
+#, fuzzy
+msgid "Toggle Sidebar"
+msgstr "&Menü umschalten"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1486
+#, fuzzy
+msgid "Toggle EntityInspector"
+msgstr "&Menü umschalten"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1487
+#, fuzzy
+msgid "Toggle SurfaceInspector"
+msgstr "&Menü umschalten"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1494
+#, fuzzy
+msgid "_Center"
+msgstr "Mitte"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1495
+#, fuzzy
+msgid "_Up Floor"
+msgstr "Aufwärts schieben"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1496
+#, fuzzy
+msgid "_Down Floor"
+msgstr "Abwärts schieben"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1498
+msgid "Far Clip Plane In"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1499
+msgid "Far Clip Plane Out"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1501
+#, fuzzy
+msgid "Look Through Selected"
+msgstr "Gewählte Version %s (%s) für %s\n"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1502
+#, fuzzy
+msgid "Look Through Camera"
+msgstr "&Backspace durch Tabs"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1507
+msgid "Orthographic"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1511
+#, fuzzy
+msgid "_Next (XY, YZ, YZ)"
+msgstr "OSD Nächster Kanal"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1512
+msgid "XY (Top)"
+msgstr "XY (Oben)"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1513
+msgid "XZ (Side)"
+msgstr "YZ (Seite)"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1514
+msgid "YZ (Front)"
+msgstr "XZ (Vorne)"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1518
+msgid "_XY 100%"
+msgstr "_XY 100%"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1519
+#, fuzzy
+msgid "XY Zoom _In"
+msgstr "Horizontal vergrößern"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1520
+#, fuzzy
+msgid "XY Zoom _Out"
+msgstr "Horizontal verkleinern"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1525
+msgid "Show"
+msgstr "Zeige"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1528
+#, fuzzy
+msgid "Toggle Grid"
+msgstr "Gitter Hintergrund..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1529
+#, fuzzy
+msgid "Toggle Crosshairs"
+msgstr "&Menü umschalten"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1530
+#, fuzzy
+msgid "Toggle Sizeinfo"
+msgstr "&Menü umschalten"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1531
+#, fuzzy
+msgid "Show _Angles"
+msgstr "Zeigen _Namen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1532
+msgid "Show _Names"
+msgstr "Zeige _Namen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1533
+#, fuzzy
+msgid "Show Blocks"
+msgstr "  Freie Blöcke: "
+
+#: src/tools/radiant/radiant/mainframe.cpp:1534
+#, fuzzy
+msgid "Show C_oordinates"
+msgstr "Zeigen _Namen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1535
+#, fuzzy
+msgid "Show Window Outline"
+msgstr "&Kommentarfenster anzeigen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1536
+msgid "Show Axes"
+msgstr "Zeige Achsen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1537
+#, fuzzy
+msgid "Show Workzone"
+msgstr "Zeigen _Namen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1538
+#, fuzzy
+msgid "Show Stats"
+msgstr "Anzeigestatus"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1543
+msgid "Hide/Show"
+msgstr "Anzeigen / Verbergen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1546
+msgid "Hide Selected"
+msgstr "Verstecke Auswahl"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1547
+msgid "Show Hidden"
+msgstr "Zeige versteckte"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1552
+msgid "Region"
+msgstr "Region"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1555
+#, fuzzy
+msgid "_Off"
+msgstr "aus"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1556
+#, fuzzy
+msgid "_Set XY"
+msgstr "XY (Oben)"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1557
+#, fuzzy
+msgid "Set _Brush"
+msgstr "Gewählte Brush..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1558
+msgid "Set Se_lected Brushes"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1569
+msgid "M_odify"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1575
+msgid "Components"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1578
+#, fuzzy
+msgid "_Edges"
+msgstr "Zeichne keine Kanten"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1579
+msgid "_Vertices"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1580
+msgid "_Faces"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1585
+msgid "Nudge"
+msgstr "Links schieben"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1588
+msgid "Nudge Left"
+msgstr "Links schieben"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1589
+msgid "Nudge Right"
+msgstr "Rechts schieben"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1590
+msgid "Nudge Up"
+msgstr "Aufwärts schieben"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1591
+msgid "Nudge Down"
+msgstr "Abwärts schieben"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1594
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:603
+msgid "Rotate"
+msgstr "Rotieren"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1597
+msgid "Rotate X"
+msgstr "Rotiere X"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1598
+msgid "Rotate Y"
+msgstr "Rotiere Y"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1599
+msgid "Rotate Z"
+msgstr "Rotiere Z"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1602
+msgid "Flip"
+msgstr "Spiegeln"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1605
+msgid "Flip _X"
+msgstr "Spiegele _X"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1606
+msgid "Flip _Y"
+msgstr "Spiegele _Y"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1607
+msgid "Flip _Z"
+msgstr "Spiegele _Z"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1611
+msgid "Arbitrary rotation..."
+msgstr "Beliebig drehen..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1612
+msgid "Arbitrary scale..."
+msgstr "Beliebig skalieren..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1620
+msgid "_Grid"
+msgstr "_Gitter"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1633
+msgid "M_isc"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1640
+msgid "Find brush..."
+msgstr "Finde Brush..."
+
+#: src/tools/radiant/radiant/mainframe.cpp:1641
+#, fuzzy
+msgid "_Print XY View"
+msgstr "Internen Betrachter ben&utzen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1642
+#, fuzzy
+msgid "_Background select"
+msgstr "Hintergrundbild auswählen"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1651
+msgid "Tools"
+msgstr "Werkzeuge"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1656
+#, fuzzy
+msgid "Check for errors"
+msgstr "Prüfe auf GtkRadiant Update (web)"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1657
+#, fuzzy
+msgid "Compile the map"
+msgstr "_Neue Map"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1658
+#, fuzzy
+msgid "Show pathfinding info"
+msgstr "Kopfzeilen-Info-Element"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1666
+msgid "E_ntity"
+msgstr "E_ntity"
+
+#: src/tools/radiant/radiant/mainframe.cpp:1679
+msgid "B_rush"
+msgstr "B_rush"
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:26
+msgid "_Entities"
+msgstr "_Entities"
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:49
+msgid "_Surfaces"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:68
+msgid "Map Info"
+msgstr "Map Info"
+
+#: src/tools/radiant/radiant/sidebar/sidebar.cpp:87
+msgid "Job Info"
+msgstr "Job Info"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:424
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
+msgid "Surface Inspector"
+msgstr "Surface Inspector"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:438
+msgid "Texture"
+msgstr "Textur"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:459
+#, fuzzy
+msgid "Horizontal shift"
+msgstr "Zeitverschiebung"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:477
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:513
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:549
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:585
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:622
+#, fuzzy
+msgctxt "Step width"
+msgid "Step"
+msgstr "Schrittweite"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:495
+#, fuzzy
+msgid "Vertical shift"
+msgstr "Zeitverschiebung"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:531
+#, fuzzy
+msgid "Horizontal stretch"
+msgstr "Horizontal Stereo"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:567
+#, fuzzy
+msgid "Vertical stretch"
+msgstr "Vertikales Lineal"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:641
+#, fuzzy
+msgid "Match Grid"
+msgstr "Gitter Hintergrund..."
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:651
+msgid "Texturing"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:669
+msgid "Width"
+msgstr "Weite"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:676
+msgid "Height"
+msgstr "Höhe"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:723
+#, fuzzy
+msgid "Surface Flags"
+msgstr "_Surface Inspector"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:759
+#, fuzzy
+msgid "Content Flags"
+msgstr "Flags von %s wie folgt gesetzt: "
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
+msgid "Value"
+msgstr "Wert"
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1195
+msgid "Surface Inspector Increments Match Grid"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
+msgid "Surface Inspector Preferences"
+msgstr ""
+
