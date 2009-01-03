@@ -155,7 +155,6 @@ menu aircraft
 		pos			"480 486"
 		size		"520 20"
 		textalign	cl
-		in
 	}
 
 	string team_hired
@@ -164,7 +163,6 @@ menu aircraft
 		pos			"480 508"
 		size		"520 20"
 		textalign	cl
-		in
 	}
 
 	text aircraftinfo
@@ -222,10 +220,14 @@ menu aircraft
 		if "mn_base_num_aircraft > 1" {
 			*prev_aircraft		disabled	false
 			*next_aircraft		disabled	false
+			*menu:aircraft_equip.bt_prev	disabled	false
+			*menu:aircraft_equip.bt_next	disabled	false
 		}
 		if "mn_base_num_aircraft <= 1" {
 			*prev_aircraft		disabled	true
 			*next_aircraft		disabled	true
+			*menu:aircraft_equip.bt_prev	disabled	true
+			*menu:aircraft_equip.bt_next	disabled	true
 		}
 	}
 	
@@ -286,7 +288,6 @@ menu aircraft_equip
 		origin	"228 318 0"
 		pos		"20 20"
 		size	"415 728"
-//		bgcolor	"1 1 1 0.5"
 	}
 
 	zone wz_aircraftequip
@@ -305,7 +306,6 @@ menu aircraft_equip
 
 	custombutton bt_prev
 	{
-		if "mn_base_num_aircraft > 1"
 		tooltip "_Previous aircraft"
 		image	menu/button_background	texl	"192 0"	blend true
 		pos	"10 665"	size	"64 37"
@@ -325,19 +325,9 @@ menu aircraft_equip
 			call airequip_zone1
 		}
 	}
-	custombutton bt_prev_disabled
-	{
-		if "mn_base_num_aircraft <= 1"
-		tooltip "_Previous aircraft"
-		image	menu/button_background	texl	"192 0"	blend true
-		pos	"10 665"	size	"64 37"
-		icon prev
-		disabled	true
-	}
 
 	custombutton bt_next
 	{
-		if "mn_base_num_aircraft > 1"
 		tooltip "_Next aircraft"
 		image	menu/button_background	texl	"192 0"	blend true
 		pos	"382 665"	size	"64 37"
@@ -354,15 +344,6 @@ menu aircraft_equip
 			cmd "mn_prev_aircraft;"
 			call airequip_zone1
 		}
-	}
-	custombutton bt_next_disabled
-	{
-		if "mn_base_num_aircraft <= 1"
-		tooltip "_Next aircraft"
-		image	menu/button_background	texl	"192 0"	blend true
-		pos	"382 665"	size	"64 37"
-		icon next
-		disabled true
 	}
 
 	string aircraftname
@@ -384,18 +365,17 @@ menu aircraft_equip
 	string airequip_available
 	{
 		string	"_Available equipment:"
-		pos	"594 440"
+		pos		"594 440"
 		font	f_big
 		align	uc
 	}
 
 	text airequip_selected_description
 	{
-		pos	"760 630"
-		size	"400 120"
+		pos			"760 630"
+		size		"400 100"
 		lineheight	"20"
-//		bgcolor	"1 1 1 0.5"
-		rows	"6"
+		rows		"5"
 	}
 
 	model mdl_top
@@ -489,7 +469,6 @@ menu aircraft_equip
 	{
 		pos		"472 480"
 		size	"252 220"
-//		bgcolor	"1 1 1 0.5"
 		lineheight	"20"
 		wheel
 		rows	"11"
@@ -822,64 +801,63 @@ menu popup_aircraft_action
 
 	zone popup
 	{
-		invis true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos		"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Action"
-		pos	"26 18"
-		font	f_big
+		string		"_Action"
+		pos			"26 18"
+		font		f_big
 	}
 
 	string string_info
 	{
-		font	f_small
-		string	"_You don't have any aircraft in the base - what do you want to do?"
-		pos	"30 58"
-//		bgcolor	"1 1 1 0.4"
-		size "440 80"
+		font		f_small
+		string		"_You don't have any aircraft in the base - what do you want to do?"
+		pos			"30 58"
+		size		"440 80"
 	}
 
 	button aircraft_buy
 	{
+		string		"_Buy"
 		tooltip		"_Buy aircraft"
 		image		menu/button_green_small
 		pos			"30 148"
 		size		"200 56"
 		blend		true
+		font		f_menu
+		color		"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
 		click
 		{
 			cmd		"mn_pop; set mn_itemtype 8; mn_push buy;"
 		}
-		string		"_Buy"
-		font		f_menu
-		color		"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
 	}
 
 	button aircraft_prod
 	{
+		string		"_Produce"
 		tooltip		"_Produce aircraft"
 		image		menu/button_green_small
 		pos			"260 148"
 		size		"200 56"
 		blend		true
+		font		f_menu
+		color		"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
 		click
 		{
 			cmd 	"mn_pop; set mn_itemtype 8; mn_push production;"
 		}
-		string		"_Produce"
-		font		f_menu
-		color		"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
 	}
 
 	confunc set_aircraftprod_disabled
