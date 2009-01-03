@@ -502,16 +502,19 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 	int line = MN_TextNodeGetLine(node, x, y);
 	char cmd[MAX_VAR];
 
+	if (line < 0 || line >= EXTRADATA(node).textLines)
+		return;
+
 	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
 	if (Cmd_Exists(cmd)) {
-		EXTRADATA(node).textLineSelected = line;
+		MN_TextNodeSelectLine(node, line);
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 	}
 	else if (node->onClick) {
 		switch (node->onClick->type.op) {
 			case EA_CMD:
 				assert(node->onClick->data);
-				EXTRADATA(node).textLineSelected = line;
+				MN_TextNodeSelectLine(node, line);
 				Cbuf_AddText(va("%s %i\n", (const char *)node->onClick->data, line));
 				break;
 			case EA_CALL:
@@ -533,6 +536,9 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 	int line = MN_TextNodeGetLine(node, x, y);
 	char cmd[MAX_VAR];
 
+	if (line < 0 || line >= EXTRADATA(node).textLines)
+		return;
+
 	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
 	if (Cmd_Exists(cmd))
 		Cbuf_AddText(va("%s %i\n", cmd, line));
@@ -540,7 +546,7 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 		switch (node->onRightClick->type.op) {
 			case EA_CMD:
 				assert(node->onRightClick->data);
-				EXTRADATA(node).textLineSelected = line;
+				MN_TextNodeSelectLine(node, line);
 				Cbuf_AddText(va("%s %i\n", (const char *)node->onRightClick->data, line));
 				break;
 			case EA_CALL:
