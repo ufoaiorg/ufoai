@@ -25,6 +25,7 @@
  */
 
 #include "xywindow.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 
@@ -37,9 +38,6 @@
 #include "os/path.h"
 #include "image.h"
 #include "gtkutil/messagebox.h"
-
-#include <gtk/gtklabel.h>
-#include <gtk/gtkmenuitem.h>
 
 #include "generic/callback.h"
 #include "string/string.h"
@@ -2702,14 +2700,14 @@ void XYWnd_registerShortcuts (void)
 
 void Orthographic_constructPreferences (PreferencesPage& page)
 {
-	page.appendCheckBox("", "Solid selection boxes", g_xywindow_globals.m_bNoStipple);
-	page.appendCheckBox("", "Display size info", g_xywindow_globals_private.m_bSizePaint);
-	page.appendCheckBox("", "Chase mouse during drags", g_xywindow_globals_private.m_bChaseMouse);
-	page.appendCheckBox("", "Update views on camera move", g_xywindow_globals_private.m_bCamXYUpdate);
+	page.appendCheckBox("", _("Solid selection boxes"), g_xywindow_globals.m_bNoStipple);
+	page.appendCheckBox("", _("Display size info"), g_xywindow_globals_private.m_bSizePaint);
+	page.appendCheckBox("", _("Chase mouse during drags"), g_xywindow_globals_private.m_bChaseMouse);
+	page.appendCheckBox("", _("Update views on camera move"), g_xywindow_globals_private.m_bCamXYUpdate);
 }
 void Orthographic_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Orthographic", "Orthographic View Preferences"));
+	PreferencesPage page(group.createPage(_("Orthographic"), _("Orthographic View Preferences")));
 	Orthographic_constructPreferences(page);
 }
 void Orthographic_registerPreferencesPage (void)
@@ -2719,11 +2717,11 @@ void Orthographic_registerPreferencesPage (void)
 
 void Clipper_constructPreferences (PreferencesPage& page)
 {
-	page.appendCheckBox("", "Clipper tool uses nodraw", g_clip_useNodraw);
+	page.appendCheckBox("", _("Clipper tool uses nodraw"), g_clip_useNodraw);
 }
 void Clipper_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Clipper", "Clipper Tool Settings"));
+	PreferencesPage page(group.createPage(_("Clipper"), _("Clipper Tool Settings")));
 	Clipper_constructPreferences(page);
 }
 void Clipper_registerPreferencesPage (void)

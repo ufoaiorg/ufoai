@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "grid.h"
+#include "radiant.h"
 
 #include <math.h>
 #include <vector>
@@ -130,18 +131,18 @@ public:
 	typedef MemberCaller1<GridMenuItem, const BoolImportCallback&, &GridMenuItem::active> ExportCaller;
 };
 
-GridMenuItem g_gridMenu0125(GRIDPOWER_0125);
-GridMenuItem g_gridMenu025(GRIDPOWER_025);
-GridMenuItem g_gridMenu05(GRIDPOWER_05);
-GridMenuItem g_gridMenu1(GRIDPOWER_1);
-GridMenuItem g_gridMenu2(GRIDPOWER_2);
-GridMenuItem g_gridMenu4(GRIDPOWER_4);
-GridMenuItem g_gridMenu8(GRIDPOWER_8);
-GridMenuItem g_gridMenu16(GRIDPOWER_16);
-GridMenuItem g_gridMenu32(GRIDPOWER_32);
-GridMenuItem g_gridMenu64(GRIDPOWER_64);
-GridMenuItem g_gridMenu128(GRIDPOWER_128);
-GridMenuItem g_gridMenu256(GRIDPOWER_256);
+static GridMenuItem g_gridMenu0125(GRIDPOWER_0125);
+static GridMenuItem g_gridMenu025(GRIDPOWER_025);
+static GridMenuItem g_gridMenu05(GRIDPOWER_05);
+static GridMenuItem g_gridMenu1(GRIDPOWER_1);
+static GridMenuItem g_gridMenu2(GRIDPOWER_2);
+static GridMenuItem g_gridMenu4(GRIDPOWER_4);
+static GridMenuItem g_gridMenu8(GRIDPOWER_8);
+static GridMenuItem g_gridMenu16(GRIDPOWER_16);
+static GridMenuItem g_gridMenu32(GRIDPOWER_32);
+static GridMenuItem g_gridMenu64(GRIDPOWER_64);
+static GridMenuItem g_gridMenu128(GRIDPOWER_128);
+static GridMenuItem g_gridMenu256(GRIDPOWER_256);
 
 static void setGridPower(GridPower power) {
 	g_gridsize = GridSize_forGridPower(power);
@@ -194,18 +195,18 @@ void Grid_registerCommands() {
 
 
 void Grid_constructMenu(GtkMenu* menu) {
-	create_check_menu_item_with_mnemonic(menu, "Grid0.125", "SetGrid0.125");
-	create_check_menu_item_with_mnemonic(menu, "Grid0.25", "SetGrid0.25");
-	create_check_menu_item_with_mnemonic(menu, "Grid0.5", "SetGrid0.5");
-	create_check_menu_item_with_mnemonic(menu, "Grid1", "SetGrid1");
-	create_check_menu_item_with_mnemonic(menu, "Grid2", "SetGrid2");
-	create_check_menu_item_with_mnemonic(menu, "Grid4", "SetGrid4");
-	create_check_menu_item_with_mnemonic(menu, "Grid8", "SetGrid8");
-	create_check_menu_item_with_mnemonic(menu, "Grid16", "SetGrid16");
-	create_check_menu_item_with_mnemonic(menu, "Grid32", "SetGrid32");
-	create_check_menu_item_with_mnemonic(menu, "Grid64", "SetGrid64");
-	create_check_menu_item_with_mnemonic(menu, "Grid128", "SetGrid128");
-	create_check_menu_item_with_mnemonic(menu, "Grid256", "SetGrid256");
+	create_check_menu_item_with_mnemonic(menu, _("Grid0.125"), "SetGrid0.125");
+	create_check_menu_item_with_mnemonic(menu, _("Grid0.25"), "SetGrid0.25");
+	create_check_menu_item_with_mnemonic(menu, _("Grid0.5"), "SetGrid0.5");
+	create_check_menu_item_with_mnemonic(menu, _("Grid1"), "SetGrid1");
+	create_check_menu_item_with_mnemonic(menu, _("Grid2"), "SetGrid2");
+	create_check_menu_item_with_mnemonic(menu, _("Grid4"), "SetGrid4");
+	create_check_menu_item_with_mnemonic(menu, _("Grid8"), "SetGrid8");
+	create_check_menu_item_with_mnemonic(menu, _("Grid16"), "SetGrid16");
+	create_check_menu_item_with_mnemonic(menu, _("Grid32"), "SetGrid32");
+	create_check_menu_item_with_mnemonic(menu, _("Grid64"), "SetGrid64");
+	create_check_menu_item_with_mnemonic(menu, _("Grid128"), "SetGrid128");
+	create_check_menu_item_with_mnemonic(menu, _("Grid256"), "SetGrid256");
 }
 
 void Grid_registerShortcuts() {
@@ -216,13 +217,13 @@ void Grid_registerShortcuts() {
 
 static void Grid_constructPreferences(PreferencesPage& page) {
 	page.appendCombo(
-		"Default grid spacing",
+		_("Default grid spacing"),
 		g_grid_default,
 		ARRAY_RANGE(g_gridnames)
 	);
 }
 void Grid_constructPage(PreferenceGroup& group) {
-	PreferencesPage page(group.createPage("Grid", "Grid Settings"));
+	PreferencesPage page(group.createPage(_("Grid"), _("Grid Settings")));
 	Grid_constructPreferences(page);
 }
 void Grid_registerPreferencesPage() {
