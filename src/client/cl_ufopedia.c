@@ -1625,7 +1625,7 @@ static void UP_OpenMail_f (void)
 	if (!mailClientListNode)
 		Sys_Error("Could not find the mailclient node in ufopedia_mail menu\n");
 
-	*mailBuffer = '\0';
+	mailBuffer[0] = '\0';
 
 	while (m) {
 		switch (m->type) {
