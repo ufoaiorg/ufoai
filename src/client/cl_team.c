@@ -35,6 +35,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static qboolean displayHeavyEquipmentList = qfalse; /**< Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
 
+/**
+ * @brief The current selected category in equip menu.
+ * @todo Check if we can change this to be of type "itemFilterTypes_t"
+ */
+int equipType;
+
 linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
@@ -75,6 +81,22 @@ const char* CL_GetTeamSkinName (int id)
 		break;
 	}
 	return NULL; /* never reached */
+}
+
+/**
+ * @brief Returns the aircraft for the team and soldier selection menus
+ * @note Multiplayer and skirmish are using @c cls.missionaircraft, campaign mode is
+ * using the current selected aircraft in base
+ */
+static aircraft_t *CL_GetTeamAircraft (base_t *base)
+{
+	if (GAME_IsCampaign()) {
+		if (!base)
+			Sys_Error("CL_GetTeamAircraft: Called without base");
+		return base->aircraftCurrent;
+	} else {
+		return cls.missionaircraft;
+	}
 }
 
 /**
@@ -865,14 +887,14 @@ static void CL_EquipType_f (void)
 		return;
 
 	/* Reset scroll info for a new filter type/category. */
-	if (menuInventory && (baseCurrent->equipType != num || !menuInventory->c[csi.idEquip])) {
+	if (menuInventory && (equipType != num || !menuInventory->c[csi.idEquip])) {
 		menuInventory->scrollCur = 0;
 		menuInventory->scrollNum = 0;
 		menuInventory->scrollTotalNum = 0;
 	}
 
 	/* Display new items. */
-	baseCurrent->equipType = num;
+	equipType = num;
 
 	/* First-time linking of menuInventory. */
 	if (menuInventory && !menuInventory->c[csi.idEquip]) {
@@ -1340,10 +1362,8 @@ qboolean CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraf
 			return qfalse;
 	}
 
-	assert(aircraft->homebase);
-
 	Com_DPrintf(DEBUG_CLIENT, "CL_RemoveSoldierFromAircraft: base: %i - aircraft->idx: %i\n",
-		aircraft->homebase->idx, aircraft->idx);
+		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
 
 	INVSH_DestroyInventory(&employee->inv);
 	return AIR_RemoveFromAircraftTeam(aircraft, employee);
@@ -1492,6 +1512,7 @@ void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t
 static void CL_AssignSoldier_f (void)
 {
 	base_t *base = baseCurrent;
+	aircraft_t *aircraft;
 	int num;
 	const employeeType_t employeeType =
 		displayHeavyEquipmentList
@@ -1515,10 +1536,11 @@ static void CL_AssignSoldier_f (void)
 		return;
 	}
 
-	if (!base->aircraftCurrent)
+	aircraft = CL_GetTeamAircraft(base);
+	if (!aircraft)
 		return;
 
-	CL_AssignSoldierFromMenuToAircraft(base, num, base->aircraftCurrent);
+	CL_AssignSoldierFromMenuToAircraft(base, num, aircraft);
 }
 
 void TEAM_InitStartup (void)

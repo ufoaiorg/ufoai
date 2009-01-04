@@ -1190,18 +1190,19 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
  * @param[in] base The base where we count.
  * @param[in] type The type of employee to search.
  * @return count of hired employees of a given type in a given base
+ * @note base can be @c NULL in none-campaign mode games
  */
 int E_CountHired (const base_t* const base, employeeType_t type)
 {
 	int count = 0, i;
 
 	/* if no base is given, we can't count and return 0 here */
-	if (!base)
+	if (!base && GAME_IsCampaign())
 		return 0;
 
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		const employee_t *employee = &gd.employees[type][i];
-		if (employee->hired && employee->baseHired == base)
+		if (employee->hired && (!base || employee->baseHired == base))
 			count++;
 	}
 	return count;

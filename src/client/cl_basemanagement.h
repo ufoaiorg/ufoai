@@ -225,9 +225,6 @@ typedef struct base_s {
 	inventory_t bEquipment;	/**< The equipment of the base; needen't be saved;
 		a hack based on assertion (MAX_CONTAINERS >= FILTER_AIRCRAFT) ... see e.g. CL_GenerateEquipment_f */
 
-	int equipType;	/**< The current selected category in equip menu.
-					 * @todo Check if we can change this to be of type "itemFilterTypes_t" */
-
 	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
 	int numBatteries;
 	baseWeapon_t lasers[MAX_BASE_SLOT];		/**< Laser batteries assigned to base. */

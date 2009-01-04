@@ -3,7 +3,7 @@
  * @todo need refactoring. one possible way:
  * @todo 1) generic drag-and-drop
  * @todo 2) move container list code out
- * @todo 3) improve the code genericity (remove baseCurrent...)
+ * @todo 3) improve the code genericity
  */
 
 /*
@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
 #include "../../cl_actor.h"
+#include "../../cl_team.h"
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_dragndrop.h"
@@ -80,10 +81,7 @@ static void MN_ScrollContainerNext_f (void)
 	const menuNode_t* const node = MN_GetNodeFromCurrentMenu("equip");
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !node)
-		return;
-
-	if (!menuInventory)
+	if (!node || !menuInventory)
 		return;
 
 	/* Check if the end of the currently visible items still is not the last of the displayable items. */
@@ -113,10 +111,7 @@ static void MN_ScrollContainerPrev_f (void)
 	const menuNode_t* const node = MN_GetNodeFromCurrentMenu("equip");
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !node)
-		return;
-
-	if (!menuInventory)
+	if (!node || !menuInventory)
 		return;
 
 	if (menuInventory->scrollCur > 0) {
@@ -148,9 +143,6 @@ static void MN_ScrollContainerScroll_f (void)
 	}
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent)
-		return;
-
 	if (!menuInventory)
 		return;
 
@@ -553,7 +545,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 		for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 			if (ic->item.t
 			 && ((!itemType && !(!Q_strncmp(ic->item.t->type, "ammo", 4))) || (itemType && !Q_strncmp(ic->item.t->type, "ammo", 4)))
-			 && INV_ItemMatchesFilter(ic->item.t, baseCurrent->equipType)) {
+			 && INV_ItemMatchesFilter(ic->item.t, equipType)) {
 				if (!lastItem && curItem >= menuInventory->scrollCur) {
 					item_t tempItem = {1, NULL, NULL, 0, 0};
 					qboolean newRow = qfalse;
@@ -625,7 +617,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 						for (ammoIdx = 0; ammoIdx < ic->item.t->numAmmos; ammoIdx++) {
 							tempItem.t = ic->item.t->ammos[ammoIdx];
 							if (tempItem.t->tech && RS_IsResearched_ptr(tempItem.t->tech)) {
-								invList_t *icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, tempItem.t, baseCurrent->equipType);
+								invList_t *icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, tempItem.t, equipType);
 
 								/* If we've found a piece of this ammo in the inventory we draw it. */
 								if (icAmmo) {
@@ -847,14 +839,16 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 	int curWidth = 0;	/**< Combined width of all drawn item so far. */
 	int curHeight = 0;	/**< Combined height of all drawn item so far. */
 	int maxHeight = 0;	/**< Max. height of a row. */
-	int curItem = 0;	/**< Item counter for all items that _could_ get displayed in the current view (baseCurrent->equipType). */
+	int curItem = 0;	/**< Item counter for all items that _could_ get displayed in the current view (equipType). */
 	int curDispItem = 0;	/**< Item counter for all items that actually get displayed. */
 	int rowOffset;
 
 	int tempX, tempY;
 
-	if (!contX)	contX = &tempX;
-	if (!contY)	contY = &tempY;
+	if (!contX)
+		contX = &tempX;
+	if (!contY)
+		contY = &tempY;
 
 	/* Change row spacing according to vertical/horizontal setting. */
 	rowOffset = node->container->scrollVertical ? C_ROW_OFFSET : 0;
@@ -863,9 +857,8 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 		for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 			if (ic->item.t
 			 && ((!itemType && !(!Q_strncmp(ic->item.t->type, "ammo", 4))) || (itemType && !Q_strncmp(ic->item.t->type, "ammo", 4)))
-			 && INV_ItemMatchesFilter(ic->item.t, baseCurrent->equipType)) {
-				if (curItem >= menuInventory->scrollCur
-				&& curDispItem < menuInventory->scrollNum) {
+			 && INV_ItemMatchesFilter(ic->item.t, equipType)) {
+				if (curItem >= menuInventory->scrollCur && curDispItem < menuInventory->scrollNum) {
 					qboolean newRow = qfalse;
 					vec2_t posMin;
 					vec2_t posMax;
@@ -923,7 +916,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 							ammoItem = ic->item.t->ammos[ammoIdx];
 							/* Only check for researched ammo (although this is implyed in most cases). */
 							if (ammoItem->tech && RS_IsResearched_ptr(ammoItem->tech)) {
-								invList_t *icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, ammoItem, baseCurrent->equipType);
+								invList_t *icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, ammoItem, equipType);
 
 								/* Only check the item (and calculate its size) if it's in the container. */
 								if (icAmmo) {
@@ -1237,11 +1230,10 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 	} else {
 		invList_t *fItem;
 		menuNode_t *target;
-		assert(baseCurrent);
 
 		/* menu */
 		if (MN_IsScrollContainerNode(source))
-			fItem = INV_SearchInScrollableContainer(menuInventory, source->container, NONE, NONE, dragItem->t, baseCurrent->equipType);
+			fItem = INV_SearchInScrollableContainer(menuInventory, source->container, NONE, NONE, dragItem->t, equipType);
 		else
 			fItem = Com_SearchInInventory(menuInventory, source->container, dragInfoFromX, dragInfoFromY);
 
@@ -1285,7 +1277,7 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndEnter = MN_ContainerNodeDNDEnter;
 	behaviour->dndFinished = MN_ContainerNodeDNDFinished;
 	behaviour->dndMove = MN_ContainerNodeDNDMove;
-	behaviour->dndLeave= MN_ContainerNodeDNDLeave;
+	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
 
 	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
 	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");

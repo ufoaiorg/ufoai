@@ -26,14 +26,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_game_multiplayer.h"
+#include "cl_team.h"
+#include "cl_team_multiplayer.h"
 #include "menu/m_popup.h"
 
 static aircraft_t multiplayerFakeAircraft;
 
 static void B_MultiplayerAssignInitial_f (void)
 {
+#if 1
 	if (GAME_IsMultiplayer())
 		B_AssignInitial(cls.missionaircraft, cl_equip->string);
+#else
+	int i;
+
+	if (!GAME_IsMultiplayer())
+		return;
+
+	for (i = 0; i < MAX_ACTIVETEAM; i++) {
+		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+		equipDef_t *ed = INV_GetEquipmentDefinitionByID(cl_equip->string);
+		CL_AssignSoldierToAircraft(employee, cls.missionaircraft);
+		B_PackInitialEquipment(cls.missionaircraft, ed);
+	}
+#endif
 }
 
 /**
@@ -49,7 +65,10 @@ static void MN_StartServer_f (void)
 		return;
 
 	if (!sv_dedicated->integer && !B_GetNumOnTeam(cls.missionaircraft)) {
+		CL_ResetMultiplayerTeamInAircraft(cls.missionaircraft);
+		Cvar_Set("mn_teamname", _("NewTeam"));
 		B_AssignInitial(cls.missionaircraft, cl_equip->string);
+		MN_PushMenu("team", NULL);
 		MN_Popup(_("No team assigned"), _("Please choose and equip your team first"));
 		return;
 	}

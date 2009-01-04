@@ -2548,13 +2548,7 @@ void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
 		return;
 	}
 
-	if (GAME_IsMultiplayer()) {
-		CL_ResetMultiplayerTeamInAircraft(aircraft);
-		/** @todo this is NULL for multiplayer */
-		CL_GenTeamList(aircraft->homebase);	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be populated. */
-		Cvar_Set("mn_teamname", _("NewTeam"));
-	}
-
+	/* homebase is only set in campaign mode */
 	num = CL_GenTeamList(aircraft->homebase);
 	num = min(num, MAX_TEAMLIST);
 	for (i = 0; i < num; i++)
@@ -2562,8 +2556,6 @@ void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
 
 	ed = INV_GetEquipmentDefinitionByID(equipName);
 	B_PackInitialEquipment(aircraft, ed);
-	if (GAME_IsMultiplayer())
-		MN_PushMenu("team", NULL);
 }
 
 /**
@@ -3565,7 +3557,6 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteLong(sb, aircraft->stats[l]);
 			}
 		}
-		MSG_WriteByte(sb, b->equipType);	/** @todo Do we really need to save this? */
 
 		/* store equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
@@ -3961,7 +3952,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				aircraft->stats[l] = MSG_ReadLong(sb);
 		}
 
-		b->equipType = MSG_ReadByte(sb);
+		/** @todo remove this */
+		MSG_ReadByte(sb);
 
 		/* read equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
