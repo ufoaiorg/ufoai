@@ -780,6 +780,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Action allocation: %i/%i\n", mn.numActions, MAX_MENUACTIONS);
 	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
 	Com_Printf("\t-Exclude rect allocation: %i/%i\n", mn.numExcludeRect, MAX_EXLUDERECTS);
+	Com_Printf("\t-Condition allocation: %i/%i\n", mn.numConditions, MAX_MENUCONDITIONS);
 	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", mn.curadata - mn.adata, mn.adataize);
 	Com_Printf("\tMemory:\n");
 	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(selectBoxOptions_t));
@@ -788,6 +789,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Menu structure size: "UFO_SIZE_T" B\n", sizeof(menu_t));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
+	Com_Printf("\t-Condition structure size: "UFO_SIZE_T" B\n", sizeof(menuDepends_t));
 	Com_Printf("\t-AData size: %i B\n", mn.adataize);
 	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
 }
@@ -798,10 +800,13 @@ static void MN_Memory_f (void)
  * @sa MN_DrawMenus
  * @sa V_SPECIAL_IF
  * @returns qfalse if the node is not drawn due to not meet if conditions
+ * @todo move it into m_node_abstractnode.c
  */
 qboolean MN_CheckVisibility (menuNode_t *node)
 {
-	return MN_CheckCondition(&node->depends);
+	if (!node->visibilityCondition)
+		return qtrue;
+	return MN_CheckCondition(node->visibilityCondition);
 }
 
 /**

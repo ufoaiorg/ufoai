@@ -663,14 +663,14 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_SPECIAL_IF:
 			{
-				menuDepends_t *condition = (menuDepends_t *) ((byte *) object + property->ofs);
+				menuDepends_t **condition = (menuDepends_t **) ((byte *) object + property->ofs);
 				qboolean r;
 
 				*token = COM_EParse(text, errhead, objectName);
 				if (!*text)
 					return qfalse;
 
-				r = MN_InitCondition(condition, *token);
+				*condition = MN_AllocCondition(*token);
 				if (!r)
 					return qfalse;
 			}

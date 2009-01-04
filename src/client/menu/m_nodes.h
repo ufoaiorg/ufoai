@@ -30,15 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_mesh.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_mesh_anim.h"
-#include "m_condition.h"
 
-#define MAX_EXLUDERECTS	32
-
-typedef struct excludeRect_s {
-	vec2_t pos, size;
-} excludeRect_t;
-
+/* prototype */
 struct menuIcon_s;
+struct menuDepends_s;
+struct value_s;
 
 /* extradata struct */
 #include "node/m_node_abstractvalue.h"
@@ -48,6 +44,13 @@ struct menuIcon_s;
 #include "node/m_node_selectbox.h"
 #include "node/m_node_text.h"
 #include "node/m_node_textentry.h"
+
+/* exclude rect */
+#define MAX_EXLUDERECTS	32
+
+typedef struct excludeRect_s {
+	vec2_t pos, size;
+} excludeRect_t;
 
 /**
  * @brief menu node
@@ -85,8 +88,9 @@ typedef struct menuNode_s {
 
 	/* not used a lot */
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
-	int excludeRectNum;			/**< how many exclude rects defined? */
+	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
 
+	struct menuDepends_s* visibilityCondition;	/**< cvar condition to display/hide the node */
 
 	byte align;					/** @todo delete it when its possible */
 
@@ -117,7 +121,6 @@ typedef struct menuNode_s {
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
-	menuDepends_t depends;
 	const value_t *scriptValues;
 
 	/* temporary, and/or for testing */
@@ -204,7 +207,6 @@ typedef struct nodeBehaviour_s {
 
 menuNode_t* MN_AllocNode(const char* type);
 nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
-struct value_s;
 const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const char* name);
 const struct value_s *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, const char* name);
 menuNode_t* MN_GetNodeByPath (const char* path);
