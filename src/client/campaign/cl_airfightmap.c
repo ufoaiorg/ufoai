@@ -47,26 +47,26 @@ static const int BULLET_SIZE = 1;					/**< the pixel size of a bullet */
 static const float AF_SMOOTHING_STEP_2D = 0.02f;	/**< @todo */
 
 /**
- * @brief Fills the @c aircraftList array with aircraft that are in the given combat range
- * @param[in] distance
+ * @brief Fills the @c aircraftList array with aircraft that are in the given combat range.
+ * @param[in] maxDistance maximum distance from UFO centered on combat zoom to have aircraft added to list.
  * @see AFM_GetUFOsInCombatRange
  */
-static void AFM_GetAircraftInCombatRange (float distance)
+static void AFM_GetAircraftInCombatRange (float maxDistance)
 {
-	aircraft_t *aircraft;
-	int baseIdx;
+	int baseIdx, aircraftIdx;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--) {
+		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				/* const float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);*/
 				if (aircraft->aircraftTarget == gd.combatZoomedUFO || aircraft == gd.combatZoomedUFO->aircraftTarget) {
 					const float distanceToTarget = MAP_GetDistance(aircraft->pos, gd.combatZoomedUFO->pos);
-					if (distanceToTarget < distance) {
+					if (distanceToTarget < maxDistance) {
 						assert(numAircraftList < MAX_AIRCRAFT);
 						aircraftList[numAircraftList++] = aircraft;
 					}
@@ -77,17 +77,18 @@ static void AFM_GetAircraftInCombatRange (float distance)
 }
 
 /**
- * @brief
- * @param[in] distance
+ * @brief Fills the @c aircraftList array with UFOs that are in the given combat range.
+ * @param[in] maxDistance maximum distance from UFO centered on combat zoom to have UFO added to list.
  * @see AFM_GetAircraftInCombatRange
  */
-static void AFM_GetUFOsInCombatRange (float distance)
+static void AFM_GetUFOsInCombatRange (float maxDistance)
 {
-	aircraft_t *ufo;
+	int ufoIdx;
 
-	for (ufo = &gd.ufos[gd.numUFOs - 1]; ufo >= gd.ufos; ufo--) {
+	for (ufoIdx = 0; ufoIdx < gd.numUFOs; ufoIdx++) {
+		aircraft_t *ufo = &gd.ufos[ufoIdx];
 		const float distance = MAP_GetDistance(ufo->pos, gd.combatZoomedUFO->pos);
-		if (distance < distance || gd.combatZoomedUFO == ufo) {
+		if (distance < maxDistance || gd.combatZoomedUFO == ufo) {
 			assert(numUFOList < MAX_AIRCRAFT);
 			ufoList[numUFOList++] = ufo;
 		}
@@ -99,6 +100,7 @@ static void AFM_GetUFOsInCombatRange (float distance)
  */
 void AFM_Init_f (void)
 {
+	const float MAXIMUM_COMBAT_RANGE = 4.0f;
 	Vector2Copy(gd.combatZoomedUFO->pos, airFightMapCenter);
 
 	ccs.zoom = 1.2f;
@@ -113,8 +115,8 @@ void AFM_Init_f (void)
 	numAircraftList = 0;
 	numUFOList = 0;
 
-	AFM_GetAircraftInCombatRange(4.0f);
-	AFM_GetUFOsInCombatRange(4.0f);
+	AFM_GetAircraftInCombatRange(MAXIMUM_COMBAT_RANGE);
+	AFM_GetUFOsInCombatRange(MAXIMUM_COMBAT_RANGE);
 }
 
 /**
@@ -160,7 +162,8 @@ static void AFM_MapDrawEquidistantPoints (const menuNode_t* node, const vec2_t c
 	/* Now, each equidistant point is given by a rotation around centerPos */
 	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
 		qboolean draw = qfalse;
-		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
+		const float degrees = i * 360.0f / (float)CIRCLE_DRAW_POINTS;
+		RotatePointAroundVector(currentPoint, centerPos, initialVector, degrees);
 		VecToPolar(currentPoint, posCircle);
 		if (AFM_MapToScreen(node, posCircle, &xCircle, &yCircle))
 			draw = qtrue;

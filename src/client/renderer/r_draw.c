@@ -556,16 +556,14 @@ void R_DrawFlatGeoscape (int x, int y, int w, int h, float p, float q, float cx,
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 }
 
-
 /**
- * @brief
- * @param[in] x The x position of the geoscape node
- * @param[in] y The y position of the geoscape node
- * @param[in] w The width of the geoscape node
- * @param[in] h The height of the geoscape node
- * @param[in] cx
- * @param[in] cy
- * @param[in] cz
+ * @brief Draw the background picture of airfight node.
+ * @param[in] x The x position of the air fight node.
+ * @param[in] y The y position of the air fight node.
+ * @param[in] w The width of the air fight node.
+ * @param[in] h The height of the air fight node.
+ * @param[in] cx x texture coordinates that should be displayed in the center of the node.
+ * @param[in] cy y texture coordinates that should be displayed in the center of the node.
  */
 void R_DrawAirFightBackground (int x, int y, int w, int h, float cx, float cy, float iz)
 {
