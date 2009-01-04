@@ -147,10 +147,11 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	/* copy the menu name, and move to the node name */
 	if (Q_strncmp(nodeName, "menu:", 5) == 0) {
 		const char *menuName = nodeName + 5;
-		nodeName = strstr(nodeName, ".");
+		nodeName = strchr(nodeName, '.');
 		assert(nodeName);
 		nodeName++;
-		strncpy(path, menuName, nodeName - menuName);
+		assert(nodeName - menuName < sizeof(path));
+		Q_strncpyz(path, menuName, nodeName - menuName + 1);
 		action->type.param1 = EA_PATHPROPERTY;
 	} else {
 		action->type.param1 = EA_THISMENUNODENAMEPROPERTY;
