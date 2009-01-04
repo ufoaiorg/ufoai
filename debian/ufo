@@ -21,8 +21,9 @@
 
 set -e
 
-INSTDIR=/usr/lib/games/ufoai
+BINDIR=/usr/lib/games/ufoai
+BASEDIR=/usr/share/games/ufoai
 
-cd $INSTDIR
+cd $BASEDIR
 
-${INSTDIR}/ufo "$@"
+${BINDIR}/ufo "$@"

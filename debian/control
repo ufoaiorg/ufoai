@@ -3,8 +3,8 @@ Section: games
 Priority: optional
 Maintainer: Yann Dirson <dirson@debian.org>
 Build-Depends: debhelper (>= 6.0.0), dh-buildinfo, libpng-dev, libjpeg-dev,
- libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, libcurl4-dev,
- texlive-latex-recommended, quilt, texlive-latex-extra,
+ libgl-dev, libsdl-dev, libsdl-ttf2.0-dev, libsdl-mixer1.2-dev, libcurl4-openssl-dev,
+ texlive-latex-recommended, quilt, texlive-latex-extra, zip,
  libgtk2.0-dev, libxml2-dev, libgtkglext1-dev, libglib2.0-dev
 Standards-Version: 3.7.3
 

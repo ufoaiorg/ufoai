@@ -107,6 +107,8 @@ install-indep: stamps/build-indep
 	#From ttf-thai-tlwg
 	ln -s /usr/share/fonts/truetype/thai/Loma.ttf $(FONTDIR)
 	ln -s /usr/share/fonts/truetype/thai/Norasi.ttf $(FONTDIR)
+	#From ttf-wqy-zenhei
+	ln -s /usr/share/fonts/truetype/wqy/wqy-zenhei.ttf $(FONTDIR)
 	# This is not in Debian yet, see ITP #461757 for ttf-ume
 	cp base/media/ume-pgo4.ttf $(FONTDIR)
 
