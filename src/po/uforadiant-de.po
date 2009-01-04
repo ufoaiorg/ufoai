@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-04 00:28+0100\n"
+"PO-Revision-Date: 2009-01-04 11:10+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -214,9 +214,8 @@ msgid "Maya/Max/Lightwave Emulation"
 msgstr ""
 
 #: src/tools/radiant/radiant/colorscheme.cpp:179
-#, fuzzy
 msgid "_Texture Background..."
-msgstr "Gitter Hintergrund..."
+msgstr "_Textur Hintergrund..."
 
 #: src/tools/radiant/radiant/colorscheme.cpp:180
 msgid "Grid Background..."
@@ -258,9 +257,8 @@ msgid "Default Brush..."
 msgstr "Gewählte Brush..."
 
 #: src/tools/radiant/radiant/colorscheme.cpp:188
-#, fuzzy
 msgid "Camera Background..."
-msgstr "Gitter Hintergrund..."
+msgstr "Kamera Hintergrund..."
 
 #: src/tools/radiant/radiant/colorscheme.cpp:189
 msgid "Selected Brush..."
@@ -483,9 +481,8 @@ msgid "Select _touching"
 msgstr "Wähle das Spiel:"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1448
-#, fuzzy
 msgid "E_xpand Selection"
-msgstr "Deckel Auswahl"
+msgstr "Erweitere Auswahl"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1451
 #, fuzzy
@@ -705,7 +702,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1585
 msgid "Nudge"
-msgstr "Links schieben"
+msgstr "Schieben"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1588
 msgid "Nudge Left"
@@ -790,14 +787,12 @@ msgid "Tools"
 msgstr "Werkzeuge"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1656
-#, fuzzy
 msgid "Check for errors"
-msgstr "Prüfe auf GtkRadiant Update (web)"
+msgstr "Prüfe auf Fehler"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1657
-#, fuzzy
 msgid "Compile the map"
-msgstr "_Neue Map"
+msgstr "Kompiliere die Map"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1658
 #, fuzzy
@@ -943,9 +938,8 @@ msgid "Brush number"
 msgstr "Brush Nummer"
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:118
-#, fuzzy
 msgid "Find / Replace Texture(s)"
-msgstr "Kann Alternative »%s« nicht finden."
+msgstr "Finde / Ersetze Textur(en)"
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:135
 msgid "Find:"
@@ -997,9 +991,8 @@ msgid "Will fix all errors, not only the selected ones"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:206
-#, fuzzy
 msgid "Check Map"
-msgstr "_Neue Map"
+msgstr "Map überprüfen"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:211
 msgid "Nothing to check in this map\n"
@@ -1009,9 +1002,8 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:315
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:382
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:405
-#, fuzzy
 msgid "Map compiling"
-msgstr "_Neue Map"
+msgstr "Map kompilieren"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:232
 #, fuzzy
@@ -1275,18 +1267,16 @@ msgid "Console"
 msgstr "Konsole"
 
 #: src/tools/radiant/radiant/preferences.cpp:55
-#, fuzzy
 msgid "Enable Logging"
-msgstr "Logge ein"
+msgstr "Logging aktivieren"
 
 #: src/tools/radiant/radiant/preferences.cpp:56
 msgid "Load last map on open"
-msgstr ""
+msgstr "Laden zuletzt bearbeitete Map nach dem Starten"
 
 #: src/tools/radiant/radiant/preferences.cpp:62
-#, fuzzy
 msgid "Mouse Type"
-msgstr "<qt><b>Ausführung:</b></qt>"
+msgstr "Maustyp"
 
 #: src/tools/radiant/radiant/preferences.cpp:64
 msgid "Right Button"
@@ -1338,12 +1328,10 @@ msgid "Front Page"
 msgstr "Unterseite:"
 
 #: src/tools/radiant/radiant/preferences.cpp:450
-#, fuzzy
 msgid "Interface Preferences"
-msgstr "GtkRadiant Einstellungen"
+msgstr "Interface Einstellungen"
 
 #: src/tools/radiant/radiant/preferences.cpp:456
-#, fuzzy
 msgid "Interface"
 msgstr "Interface"
 
