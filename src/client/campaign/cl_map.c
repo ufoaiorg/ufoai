@@ -88,6 +88,11 @@ aircraft_t *selectedAircraft;		/**< Currently selected aircraft */
 aircraft_t *selectedUFO;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
+static const vec2_t northPole = {0.0f, 90.0f};	/**< Position of the north pole (used to know where is the 'up' side */
+
+/* Colors */
+static const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
+static const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
 
 /* Smoothing variables */
 static qboolean smoothRotation = qfalse;	/**< qtrue if the rotation of 3D geoscape must me smooth */
@@ -1437,6 +1442,130 @@ static void MAP_DrawLaser (const menuNode_t* node, const vec3_t start, const vec
 #define SELECT_CIRCLE_RADIUS	1.5f + 3.0f / ccs.zoom
 
 /**
+ * @brief Draws one mission on the geoscape map (2D and 3D)
+ * @param[in] node The menu node which will be used for drawing markers.
+ * @param[in] ms Pointer to the mission to draw.
+ */
+static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
+{
+	int x, y;
+
+	if (!MAP_AllMapToScreen(node, ms->pos, &x, &y, NULL))
+		return;
+
+	if (ms == selectedMission) {
+		Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
+
+		/* Draw circle around the mission */
+		if (cl_3dmap->integer) {
+			if (!selectedMission->active)
+				MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
+		} else
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selectedMission->active ? "geoscape/circleactive" : "geoscape/circle");
+	}
+
+	/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
+	if (cl_3dmap->integer) {
+		const float angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
+		MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
+	} else
+		R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/mission");
+
+	R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse, 0);
+}
+
+/**
+ * @brief Draws one installation on the geoscape map (2D and 3D)
+ * @param[in] node The menu node which will be used for drawing markers.
+ * @param[in] installation Pointer to the installation to draw.
+ * @pre installation is not NULL.
+ */
+static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installation_t *installation,
+	qboolean oneUFOVisible, const char* font)
+{
+	const installationTemplate_t *tpl = installation->installationTemplate;
+	int i, x, y;
+
+	/* Draw weapon range if at least one UFO is visible */
+	if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
+		/** @todo When there will be different possible installation weapon, range should change */
+		for (i = 0; i < tpl->maxBatteries; i++) {
+			const aircraftSlot_t const *slot = &installation->batteries[i].slot;
+			if (slot->item
+				&& (slot->ammoLeft > 0 || slot->ammoLeft)
+				&& slot->installationTime == 0) {
+				MAP_MapDrawEquidistantPoints(node, installation->pos,
+					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
+			}
+		}
+	}
+
+	/* Draw installation radar (only the "wire" style part) */
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		RADAR_DrawInMap(node, &installation->radar, installation->pos);
+
+	/* Draw installation */
+	if (cl_3dmap->integer) {
+		const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
+		MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, tpl->model, 0);
+	} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
+		R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, tpl->model);
+	}
+
+	/* Draw installation names */
+	if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
+		R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], installation->name, 0, 0, NULL, qfalse, 0);
+}
+
+/**
+ * @brief Draws one base on the geoscape map (2D and 3D)
+ * @param[in] node The menu node which will be used for drawing markers.
+ * @param[in] base Pointer to the base to draw.
+ */
+static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
+	qboolean oneUFOVisible, const char* font)
+{
+	int i, x, y;
+
+	/* Draw weapon range if at least one UFO is visible */
+	if (oneUFOVisible && AII_BaseCanShoot(base)) {
+		/** @todo When there will be different possible base weapon, range should change */
+		for (i = 0; i < base->numBatteries; i++) {
+			const aircraftSlot_t const *slot = &base->batteries[i].slot;
+			if (slot->item
+				&& (slot->ammoLeft > 0 || slot->ammoLeft)
+				&& slot->installationTime == 0) {
+				MAP_MapDrawEquidistantPoints(node, base->pos,
+					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
+			}
+		}
+	}
+
+	/* Draw base radar (only the "wire" style part) */
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		RADAR_DrawInMap(node, &base->radar, base->pos);
+
+	/* Draw base */
+	if (cl_3dmap->integer) {
+		const float angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
+		if (base->baseStatus == BASE_UNDER_ATTACK)
+			/* two skins - second skin is for baseattack */
+			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 1);
+		else
+			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 0);
+	} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
+		if (base->baseStatus == BASE_UNDER_ATTACK)
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/baseattack");
+		else
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/base");
+	}
+
+	/* Draw base names */
+	if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
+		R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse, 0);
+}
+
+/**
  * @brief Draws all ufos, aircraft, bases and so on to the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
  * @note This is a drawing function only, called each time a frame is drawn. Therefore
@@ -1449,9 +1578,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	const linkedList_t *list = ccs.missions;
 	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
 	const char* font;
-	const vec2_t northPole = {0.0f, 90.0f};
-	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
-	const vec4_t red = {1.0f, 0.0f, 0.0f, 0.8f};
+
 	const vec4_t darkBrown = {0.3608f, 0.251f, 0.2f, 1.0f};
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
@@ -1495,67 +1622,15 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		const mission_t *ms = (mission_t *)list->data;
 		if (!ms->onGeoscape)
 			continue;
-		if (MAP_AllMapToScreen(node, ms->pos, &x, &y, NULL)) {
-			if (ms == selectedMission) {
-				Cvar_Set("mn_mapdaytime", MAP_IsNight(ms->pos) ? _("Night") : _("Day"));
-
-				/* Draw circle around the mission */
-				if (cl_3dmap->integer) {
-					if (!selectedMission->active)
-						MAP_MapDrawEquidistantPoints(node, ms->pos, SELECT_CIRCLE_RADIUS, yellow);
-				} else
-					R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, selectedMission->active ? "geoscape/circleactive" : "geoscape/circle");
-			}
-
-			/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
-			if (cl_3dmap->integer) {
-				const float angle = MAP_AngleOfPath(ms->pos, northPole, NULL, NULL) + 90.0f;
-				MAP_Draw3DMarkerIfVisible(node, ms->pos, angle, MAP_GetMissionModel(ms), 0);
-			} else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/mission");
-
-			R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse, 0);
-		}
+		MAP_DrawMapOneMission(node, ms);
 	}
 
 	/* draw installations */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		const installationTemplate_t *tpl;
 		if (!installation)
 			continue;
-
-		tpl = installation->installationTemplate;
-
-		/* Draw weapon range if at least one UFO is visible */
-		if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
-			/** @todo When there will be different possible installation weapon, range should change */
-			for (i = 0; i < tpl->maxBatteries; i++) {
-				const aircraftSlot_t const *slot = &installation->batteries[i].slot;
-				if (slot->item
-					&& (slot->ammoLeft > 0 || slot->ammoLeft)
-					&& slot->installationTime == 0) {
-					MAP_MapDrawEquidistantPoints(node, installation->pos,
-							slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
-				}
-			}
-		}
-
-		/* Draw installation radar (only the "wire" style part) */
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-			RADAR_DrawInMap(node, &installation->radar, installation->pos);
-
-		/* Draw installation */
-		if (cl_3dmap->integer) {
-			const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
-			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, tpl->model, 0);
-		} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, tpl->model);
-		}
-
-		/* Draw installation names */
-		if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], installation->name, 0, 0, NULL, qfalse, 0);
+		MAP_DrawMapOneInstallation(node, installation, oneUFOVisible, font);
 	}
 
 	closestInterceptorDistance = -1.0f;
@@ -1566,42 +1641,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (!base)
 			continue;
 
-		/* Draw weapon range if at least one UFO is visible */
-		if (oneUFOVisible && AII_BaseCanShoot(base)) {
-			/** @todo When there will be different possible base weapon, range should change */
-			for (i = 0; i < base->numBatteries; i++) {
-				const aircraftSlot_t const *slot = &base->batteries[i].slot;
-				if (slot->item
-					&& (slot->ammoLeft > 0 || slot->ammoLeft)
-					&& slot->installationTime == 0) {
-					MAP_MapDrawEquidistantPoints(node, base->pos,
-							slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
-				}
-			}
-		}
-
-		/* Draw base radar (only the "wire" style part) */
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-			RADAR_DrawInMap(node, &base->radar, base->pos);
-
-		/* Draw base */
-		if (cl_3dmap->integer) {
-			const float angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL) + 90.0f;
-			if (base->baseStatus == BASE_UNDER_ATTACK)
-				/* two skins - second skin is for baseattack */
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 1);
-			else
-				MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "geoscape/base", 0);
-		} else if (MAP_MapToScreen(node, base->pos, &x, &y)) {
-			if (base->baseStatus == BASE_UNDER_ATTACK)
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/baseattack");
-			else
-				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/base");
-		}
-
-		/* Draw base names */
-		if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse, 0);
+		MAP_DrawMapOneBase(node, base, oneUFOVisible, font);
 
 		/* draw all aircraft of base */
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
