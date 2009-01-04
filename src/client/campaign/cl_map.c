@@ -1439,14 +1439,15 @@ static void MAP_DrawLaser (const menuNode_t* node, const vec3_t start, const vec
 /**
  * @brief Draws all ufos, aircraft, bases and so on to the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
+ * @note This is a drawing function only, called each time a frame is drawn. Therefore
+ * you should not use this function to calculate eg. distance between 2 items on geoscape
+ * (you should instead calculate it just after one of the item moved).
  * @sa MAP_DrawMap
  */
 void MAP_DrawMapMarkers (const menuNode_t* node)
 {
-	aircraft_t *aircraft;
 	const linkedList_t *list = ccs.missions;
-	aircraftProjectile_t *projectile;
-	int x, y, i, baseIdx, installationIdx;
+	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
 	const char* font;
 	const vec2_t northPole = {0.0f, 90.0f};
 	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
@@ -1471,9 +1472,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	assert(node);
 
-	if (ccs.zoom < 35.0f  && gd.combatZoomedUFO)
+	if (ccs.zoom < 35.0f && gd.combatZoomedUFO)
 		MN_PushMenu("airfight", NULL);
-
 
 	/* font color on geoscape */
 	R_Color(node->color);
@@ -1481,7 +1481,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	font = MN_GetFont(NULL, node);
 
 	/* check if at least 1 UFO is visible */
-	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraftIdx = 0; aircraftIdx < gd.numUFOs; aircraftIdx++) {
+		const aircraft_t const *aircraft = &gd.ufos[aircraftIdx];
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			oneUFOVisible = qtrue;
 			break;
@@ -1603,7 +1604,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse, 0);
 
 		/* draw all aircraft of base */
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
+		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				float angle;
 				float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
@@ -1681,12 +1683,14 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
 				VectorCopy(aircraft->pos, aircraft->oldDrawPos);
 			}
+		}
 	}
 
 
 
 	/* draws ufos */
-	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraftIdx = 0; aircraftIdx < gd.numUFOs; aircraftIdx++) {
+		aircraft_t *aircraft = &gd.ufos[aircraftIdx];
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableInteger("debug_showufos")) {
@@ -1786,8 +1790,11 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	else
 		maxInterpolationPoints = 0;
 
-	/* draws projectiles */
-	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
+	/** draws projectiles
+	 * @todo you should only draw projectile comming from base here: projectiles fired by missiles
+	 * are drawn only in airfight menu */
+	for (idx = 0; idx < gd.numProjectiles; idx++) {
+		aircraftProjectile_t *projectile = &gd.projectiles[idx];
 		vec3_t drawPos = {0, 0, 0};
 
 		if (projectile->attackingAircraft && !gd.combatZoomedUFO)
