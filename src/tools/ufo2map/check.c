@@ -160,7 +160,7 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
  * are only calculated on BSPing
  * @param[out] mapSize the returned size in map units
  */
-void Check_MapSize (vec3_t mapSize) {
+static void Check_MapSize (vec3_t mapSize) {
 	int i, bi, vi;
 	vec3_t mins, maxs;
 
