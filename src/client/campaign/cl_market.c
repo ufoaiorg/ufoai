@@ -107,6 +107,45 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 }
 
 /**
+ * @brief Calculates amount of aircraft in base and on the market.
+ * @param[in] base The base to get the storage amount from
+ * @param[in] airCharId Aircraft id (type).
+ * @param[in] inbase True if function has to return storage, false - when supply (market).
+ * @return Amount of aircraft in base or amount of aircraft on the market.
+ */
+static int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean inbase)
+{
+	const aircraft_t *aircraft;
+	int i, j;
+	int amount = 0, storage = 0, supply;
+
+	/* Get storage amount in baseCurrent. */
+	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
+		if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
+			storage++;
+	}
+	/* Get supply amount (global). */
+	for (j = 0; j < MAX_BASES; j++) {
+		base = B_GetFoundedBaseByIDX(j);
+		if (!base)
+			continue;
+		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
+				amount++;
+		}
+	}
+	if (amount < MAX_AIRCRAFT_SUPPLY)
+		supply = MAX_AIRCRAFT_SUPPLY - amount;
+	else
+		supply = 0;
+
+	if (inbase)
+		return storage;
+	else
+		return supply;
+}
+
+/**
  * @brief
  * @param[in] base
  * @param[in] itemNum
@@ -126,6 +165,13 @@ static inline qboolean BS_GetMinMaxValueByItemID (const base_t *base, int itemNu
 		*min = 0;
 		*value = 10000;
 		*max = 20000;
+	} else if (buyCat == FILTER_AIRCRAFT && buyList.l[itemNum + buyList.scroll].aircraft) {
+		const aircraft_t *aircraft = buyList.l[itemNum + buyList.scroll].aircraft;
+		if (!aircraft)
+			return qfalse;
+		*value = AIR_GetStorageSupply(base, aircraft->id, qtrue);
+		*max = AIR_GetStorageSupply(base, aircraft->id, qtrue) + AIR_GetStorageSupply(base, aircraft->id, qfalse);
+		*min = 0;
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[itemNum + buyList.scroll]);
 		if (!item)
@@ -258,45 +304,6 @@ static void BS_MarketClick_f (void)
 	MN_ExecuteConfunc("buy_selectitem %i", num);
 }
 
-/**
- * @brief Calculates amount of aircraft in base and on the market.
- * @param[in] base The base to get the storage amount from
- * @param[in] airCharId Aircraft id (type).
- * @param[in] inbase True if function has to return storage, false - when supply (market).
- * @return Amount of aircraft in base or amount of aircraft on the market.
- */
-static int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean inbase)
-{
-	const aircraft_t *aircraft;
-	int i, j;
-	int amount = 0, storage = 0, supply;
-
-	/* Get storage amount in baseCurrent. */
-	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-		if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
-			storage++;
-	}
-	/* Get supply amount (global). */
-	for (j = 0; j < MAX_BASES; j++) {
-		base = B_GetFoundedBaseByIDX(j);
-		if (!base)
-			continue;
-		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
-				amount++;
-		}
-	}
-	if (amount < MAX_AIRCRAFT_SUPPLY)
-		supply = MAX_AIRCRAFT_SUPPLY - amount;
-	else
-		supply = 0;
-
-	if (inbase)
-		return storage;
-	else
-		return supply;
-}
-
 /** @brief Market text nodes buffers */
 static char bsMarketNames[1024];
 static char bsMarketStorage[256];
@@ -370,11 +377,11 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = air_samp;
+				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
 		}
-		buyList.length = j;
 		}
 		break;
 	case FILTER_CRAFTITEM:	/* Aircraft items */
@@ -395,11 +402,11 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
+				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
 		}
-		buyList.length = j;
 		break;
 	case FILTER_UGVITEM:	/* Heavy equipment like UGVs and it's weapons/ammo. */
 		{
@@ -430,6 +437,7 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = NULL;
 				buyList.l[j].ugv = &gd.ugvs[i];
 				buyList.l[j].aircraft = NULL;
+				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
@@ -456,11 +464,11 @@ static void BS_BuyType (const base_t *base)
 				buyList.l[j].item = od;
 				buyList.l[j].ugv = NULL;
 				buyList.l[j].aircraft = NULL;
+				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);
 				j++;
 			}
 		}
-		buyList.length = j;
 		}
 		break;
 	default:	/* Normal items */
@@ -489,11 +497,11 @@ static void BS_BuyType (const base_t *base)
 					buyList.l[j].item = od;
 					buyList.l[j].ugv = NULL;
 					buyList.l[j].aircraft = NULL;
+					buyList.length = j + 1;
 					BS_UpdateItem(base, j - buyList.scroll);
 					j++;
 				}
 			}
-			buyList.length = j;
 		}
 		break;
 	}
