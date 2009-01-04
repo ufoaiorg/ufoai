@@ -24,10 +24,11 @@ menu skirmish
 
 	button button_back
 	{
-		pos "90 200"
-		size "256 64"
+		pos		"90 200"
+		size	"256 64"
 		click	{ cmd "mn_pop;" }
-		image	menu/button_green_big	blend true
+		image	menu/button_green_big
+		blend	true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -39,10 +40,11 @@ menu skirmish
 	// ====================
 	button button_start
 	{
-		pos	"90 80"
-		size "256 64"
+		pos		"90 80"
+		size	"256 64"
 		click	{ cmd "game_skirmish;" }
-		image	menu/button_green_big	blend true
+		image	menu/button_green_big
+		blend	true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -52,8 +54,55 @@ menu skirmish
 	string settings
 	{
 		string	"_Skirmish game settings"
-		pos	"500 100"
+		pos		"500 100"
 		font	f_big
+	}
+
+	// ===================
+	// EQUIPMENT
+	// ===================
+	string equipment
+	{
+		string	"_Equipment"
+		pos		"500 190"
+	}
+	textentry slot_equipment
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"500 210"
+		size		"256 34"
+		string		"*cvar cl_equip"
+		whup		{ cmd "mn_prevequip;" }
+		whdown		{ cmd "mn_nextequip;" }
+		disabled	true
+	}
+	pic prev_equipment
+	{
+		image	menu/buttons_small
+		pos		"478 218"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		whup	{ cmd "mn_prevequip;" }
+		whdown	{ cmd "mn_nextequip;" }
+		click	{ cmd "mn_prevequip;" }
+	}
+	pic next_equipment
+	{
+		image	menu/buttons_small
+		pos		"760 218"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		whup	{ cmd "mn_prevequip;" }
+		whdown	{ cmd "mn_nextequip;" }
+		click	{ cmd "mn_nextequip;" }
 	}
 
 	// ===================
@@ -127,7 +176,7 @@ menu skirmish
 	pic prev_map
 	{
 		image	menu/buttons_small
-		pos	"478 538"
+		pos		"478 538"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -138,7 +187,7 @@ menu skirmish
 	pic next_map
 	{
 		image	menu/buttons_small
-		pos	"760 538"
+		pos		"760 538"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true

@@ -83,13 +83,25 @@ static void CL_GameSkirmish_f (void)
 	Cbuf_AddText(map);
 }
 
+/**
+ * @brief Changed the cl_equip cvar to the next/prev equipment definition
+ */
+static void CL_ChangeEquip_f (void)
+{
+	/** @todo Implement this */
+}
+
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");
 	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
+	Cmd_AddCommand("mn_prevequip", CL_ChangeEquip_f, "Previous equipment definition");
+	Cmd_AddCommand("mn_nextequip", CL_ChangeEquip_f, "Next equipment definition");
 }
 
 void GAME_SK_Shutdown (void)
 {
 	Cmd_RemoveCommand("game_skirmish");
+	Cmd_RemoveCommand("mn_nextequip");
+	Cmd_RemoveCommand("mn_prevequip");
 }
