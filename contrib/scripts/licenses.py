@@ -40,10 +40,10 @@ li { margin-bottom: 8px; }
 
 <body>
 <h1>Licenses in UFO:AI (<a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai/ufoai/trunk/base/%s">base/%s</a>)</h1>
-Please note that the information are extracted from the svn tags (svn:copyright, svn:license, svn:source and svn:license).<br />
-Warning: the statics/graphs might be wrong since it would be to expensive to get information if a entry was a directory in the past or not.
+Please note that the information is extracted from the svn tags (svn:copyright, svn:license and svn:source).<br />
+Warning: the statistics/graphs might be wrong since it would be too expensive to get information whether an entry was a directory in the past or not.
 <br />
-State as in revision <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=%i">%i</a>.
+State as of revision <a href="http://ufoai.svn.sourceforge.net/viewvc/ufoai?view=rev&revision=%i">%i</a>.
 <hr />
 
 %s
