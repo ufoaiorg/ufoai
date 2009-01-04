@@ -30,6 +30,7 @@ CLIENT_SRCS = \
 	client/cl_sound.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
+	client/cl_team_multiplayer.c \
 	client/cl_tip.c \
 	client/cl_tutorials.c \
 	client/cl_ufopedia.c \

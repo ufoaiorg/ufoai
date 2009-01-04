@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_WHOLETEAM	32
 
+#define MAX_TEAMDATASIZE	32768
+
 #define NUM_TEAMSKINS	6
 #define NUM_TEAMSKINS_SINGLEPLAYER 4
 
@@ -36,7 +38,6 @@ void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
 void CL_CleanTempInventory(base_t* base);
 
 void CL_ResetCharacters(base_t* const base);
-void CL_ResetMultiplayerTeamInAircraft(aircraft_t *aircraft);
 int CL_GenTeamList(const base_t *base);
 void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType, const ugv_t *ugvType);
 ugv_t *CL_GetUgvByID(const char *ugvID);

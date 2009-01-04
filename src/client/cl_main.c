@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_tip.h"
 #include "cl_team.h"
+#include "cl_team_multiplayer.h"
 #include "cl_language.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
@@ -2002,6 +2003,7 @@ static void CL_InitLocal (void)
 	BS_InitStartup();
 	SEQ_InitStartup();
 	TEAM_InitStartup();
+	TEAM_MP_InitStartup();
 	TOTD_InitStartup();
 	AIM_InitStartup();
 

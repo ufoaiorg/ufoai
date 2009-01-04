@@ -470,6 +470,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_team.h" />
+		<Unit filename="..\..\src\client\cl_team_multiplayer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_team_multiplayer.h" />
 		<Unit filename="..\..\src\client\cl_tip.c">
 			<Option compilerVar="CC" />
 		</Unit>
