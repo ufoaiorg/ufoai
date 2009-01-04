@@ -170,15 +170,14 @@ menu hud extends ahud
 		pos	"130 14"
 	}
 
-	pic bt_nextround
+	custombutton bt_nextround
 	{
 		key "*binding nextround"
 		tooltip	"_Finish round"
-		image	hud/buttons2g
-		mousefx true
-		pos	"950 10"
-		texl	"0 0"
-		texh	"64 37"
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
+		pos		"950 10"
+		icon	return
 		click	{ cmd "nextround;" }
 	}
 
@@ -307,12 +306,12 @@ menu hud extends ahud
 
 	confunc startrounds
 	{
-		*bt_nextround image hud/buttons2
+		*bt_nextround disabled false
 	}
 
 	confunc endrounds
 	{
-		*bt_nextround image hud/buttons2g
+		*bt_nextround disabled true
 	}
 
 	// ==================
