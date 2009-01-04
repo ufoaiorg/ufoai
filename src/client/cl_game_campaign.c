@@ -44,7 +44,7 @@ qboolean GAME_CP_IsRunning (void)
  */
 static void CL_GameAutoGo_f (void)
 {
-	if (!GAME_CP_IsRunning() || !selectedMission) {
+	if (!GAME_CP_IsRunning() || !ccs.selectedMission) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo_f: No update after automission\n");
 		return;
 	}
@@ -55,7 +55,7 @@ static void CL_GameAutoGo_f (void)
 	}
 
 	/* start the map */
-	CL_GameAutoGo(selectedMission);
+	CL_GameAutoGo(ccs.selectedMission);
 }
 
 /**
@@ -67,12 +67,12 @@ static void CL_GameAutoGo_f (void)
  */
 static void CL_GameAutoCheck_f (void)
 {
-	if (!GAME_CP_IsRunning() || !selectedMission || !gd.interceptAircraft) {
+	if (!GAME_CP_IsRunning() || !ccs.selectedMission || !ccs.interceptAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoCheck_f: No update after automission\n");
 		return;
 	}
 
-	if (selectedMission->mapDef->storyRelated) {
+	if (ccs.selectedMission->mapDef->storyRelated) {
 		Com_DPrintf(DEBUG_CLIENT, "story related - auto mission is disabled\n");
 		Cvar_Set("game_autogo", "0");
 	} else {
@@ -91,7 +91,7 @@ static void CL_GameResults_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
 
 	/* multiplayer? */
-	if (!GAME_CP_IsRunning() || !selectedMission)
+	if (!GAME_CP_IsRunning() || !ccs.selectedMission)
 		return;
 
 	/* check for replay */
@@ -106,7 +106,7 @@ static void CL_GameResults_f (void)
 		return;
 	}
 
-	CP_MissionEnd(selectedMission, atoi(Cmd_Argv(1)));
+	CP_MissionEnd(ccs.selectedMission, atoi(Cmd_Argv(1)));
 }
 
 void GAME_CP_InitStartup (void)

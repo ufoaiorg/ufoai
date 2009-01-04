@@ -1232,8 +1232,8 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 								aircraft->status = AIR_DROP;
 								cls.missionaircraft = aircraft;
 								MAP_SelectMission(cls.missionaircraft->mission);
-								gd.interceptAircraft = cls.missionaircraft;
-								Com_DPrintf(DEBUG_CLIENT, "gd.interceptAircraft: %i\n", gd.interceptAircraft->idx);
+								ccs.interceptAircraft = cls.missionaircraft;
+								Com_DPrintf(DEBUG_CLIENT, "ccs.interceptAircraft: %i\n", ccs.interceptAircraft->idx);
 								CL_GameTimeStop();
 								MN_PushMenu("popup_intercept_ready", NULL);
 								break;
@@ -1385,7 +1385,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	}
 
 	/* ensure interceptAircraft is set correctly */
-	gd.interceptAircraft = aircraft;
+	ccs.interceptAircraft = aircraft;
 
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */

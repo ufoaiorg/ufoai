@@ -100,8 +100,6 @@ typedef struct globalData_s
 	baseAction_t baseAction;
 	/* how fast the game is running */
 	int gameTimeScale;
-	/* selected aircraft for interceptions */
-	aircraft_t *interceptAircraft;
 	/* already paid in this month? */
 	qboolean fund;
 

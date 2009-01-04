@@ -478,7 +478,7 @@ static void CP_UFOCrashed_f (void)
 	components_t *comp;
 	itemsTmp_t *cargo;
 
-	if (!baseCurrent || !gd.interceptAircraft)
+	if (!baseCurrent || !ccs.interceptAircraft)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -514,7 +514,7 @@ static void CP_UFOCrashed_f (void)
 	}
 
 	/* Find dropship. */
-	aircraft = gd.interceptAircraft;
+	aircraft = ccs.interceptAircraft;
 	assert(aircraft);
 	cargo = aircraft->itemcargo;
 

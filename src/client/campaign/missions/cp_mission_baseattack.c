@@ -75,7 +75,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	 * mission has been created */
 	CL_ChangeIndividualInterest(0.5f, INTERESTCATEGORY_BASE_ATTACK);
 
-	/* reset selectedMission */
+	/* reset ccs.selectedMission */
 	MAP_NotifyMissionRemoved(mission);
 
 	CP_MissionRemove(mission);
@@ -162,9 +162,9 @@ void CP_BaseAttackStartMission (mission_t *mission)
 #endif
 
 	MAP_SelectMission(mission);
-	selectedMission->active = qtrue;
+	ccs.selectedMission->active = qtrue;
 	gd.mapAction = MA_BASEATTACK;
-	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", selectedMission->id, selectedMission->pos[0], selectedMission->pos[1]);
+	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", ccs.selectedMission->id, ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
 
 	/* Fill the fake aircraft */
 	memset(&baseAttackFakeAircraft, 0, sizeof(baseAttackFakeAircraft));
@@ -178,7 +178,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	LIST_Delete(&hiredSoldiersInBase);
 	cls.missionaircraft = &baseAttackFakeAircraft;
-	gd.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
+	ccs.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 
 	if (base->capacities[CAP_ALIENS].cur) {
 		Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"), base->name);

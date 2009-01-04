@@ -96,15 +96,15 @@ static void CP_ChangeNationHappiness_f (void)
 	}
 	change = atof(Cmd_Argv(1));
 
-	if (!selectedMission) {
+	if (!ccs.selectedMission) {
 		Com_Printf("No mission selected - could not determine nation to use\n");
 		return;
 	}
 
 	/* we can use an assert here - because this script function will only
 	 * be available as trigger command - selectedMission must be set at that stage */
-	assert(selectedMission);
-	nation = MAP_GetNation(selectedMission->pos);
+	assert(ccs.selectedMission);
+	nation = MAP_GetNation(ccs.selectedMission->pos);
 	assert(nation);
 
 	NAT_SetHappiness(nation, nation->stats[0].happiness + change);

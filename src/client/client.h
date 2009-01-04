@@ -298,7 +298,6 @@ extern cvar_t *mn_serverday;
 extern cvar_t *mn_inputlength;
 
 extern cvar_t *s_language;
-extern cvar_t *difficulty;
 extern cvar_t *confirm_actions;
 
 extern cvar_t* cl_mapDebug;

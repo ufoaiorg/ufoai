@@ -52,7 +52,6 @@ void R_CreateRadarOverlay(void);
 static void CL_CampaignInit(qboolean load);
 
 /* public vars */
-mission_t *selectedMission;			/**< Currently selected mission on geoscape */
 campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;
 base_t *baseCurrent;				/**< Pointer to current base. */
@@ -619,11 +618,11 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	zoneType = MAP_GetTerrainType(color);
 	ccs.battleParameters.zoneType = zoneType; /* store to terrain type for texture replacement */
 	/* Is there a UFO to recover ? */
-	if (selectedMission->ufo) {
+	if (ccs.selectedMission->ufo) {
 		const char *shortUFOType;
 		const char *missionType;
 		if (CP_UFOIsCrashed(mission)) {
-			shortUFOType = UFO_CrashedTypeToShortName(selectedMission->ufo->ufotype);
+			shortUFOType = UFO_CrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
 			missionType = "cp_ufocrashed";
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
@@ -632,7 +631,7 @@ static void CP_CreateBattleParameters (mission_t *mission)
 					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cl_localPool, 0);
 			}
 		} else {
-			shortUFOType = UFO_TypeToShortName(selectedMission->ufo->ufotype);
+			shortUFOType = UFO_TypeToShortName(ccs.selectedMission->ufo->ufotype);
 			missionType = "cp_uforecovery";
 		}
 
@@ -1383,9 +1382,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	CL_CampaignInit(qtrue);
 
-	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
-	Cvar_ForceSet("difficulty", val);
-
 	/* init the map images and reset the map actions */
 	MAP_Init();
 
@@ -1541,9 +1537,9 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* stores the select mission on geoscape */
 	missionId = MSG_ReadString(sb);
 	if (missionId[0] != '\0')
-		selectedMission = CP_GetMissionById(missionId);
+		ccs.selectedMission = CP_GetMissionById(missionId);
 	else
-		selectedMission = NULL;
+		ccs.selectedMission = NULL;
 
 	/* and now fix the mission pointers for e.g. ufocrash sites
 	 * this is needed because the base load function which loads the aircraft
@@ -1697,7 +1693,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteString(sb, "");
 
 	/* stores the select mission on geoscape */
-	MSG_WriteString(sb, selectedMission ? selectedMission->id : "");
+	MSG_WriteString(sb, ccs.selectedMission ? ccs.selectedMission->id : "");
 
 	return qtrue;
 }
@@ -1759,15 +1755,15 @@ void CL_GameGo (void)
 	aircraft = cls.missionaircraft;
 	base = CP_GetMissionBase();
 
-	if (!selectedMission)
-		selectedMission = aircraft->mission;
+	if (!ccs.selectedMission)
+		ccs.selectedMission = aircraft->mission;
 
-	if (!selectedMission) {
-		Com_DPrintf(DEBUG_CLIENT, "No selectedMission\n");
+	if (!ccs.selectedMission) {
+		Com_DPrintf(DEBUG_CLIENT, "No ccs.selectedMission\n");
 		return;
 	}
 
-	mis = selectedMission;
+	mis = ccs.selectedMission;
 	assert(mis);
 	assert(aircraft);
 
@@ -1922,10 +1918,10 @@ void CL_GameAutoGo (mission_t *mis)
 {
 	qboolean won;
 	float winProbability;
-	/* maybe gd.interceptAircraft is changed in some functions we call here
+	/* maybe ccs.interceptAircraft is changed in some functions we call here
 	 * so store a local pointer to guarantee that we access the right aircraft
-	 * note that gd.interceptAircraft is a fake aircraft for base attack missions */
-	aircraft_t *aircraft = gd.interceptAircraft;
+	 * note that ccs.interceptAircraft is a fake aircraft for base attack missions */
+	aircraft_t *aircraft = ccs.interceptAircraft;
 	int i;
 
 	assert(mis);
@@ -1934,7 +1930,7 @@ void CL_GameAutoGo (mission_t *mis)
 	CP_CreateCivilianTeam(mis);
 	CP_CreateBattleParameters(mis);
 
-	if (!gd.interceptAircraft) {
+	if (!ccs.interceptAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo: No update after automission\n");
 		return;
 	}
@@ -1962,10 +1958,10 @@ void CL_GameAutoGo (mission_t *mis)
 	/* update nation opinions */
 	if (won) {
 		int civiliansKilled = 0; /** @todo fill this for the case you won the game */
-		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, selectedMission);
+		CL_HandleNationData(!won, ccs.battleParameters.civilians, 0, 0, ccs.battleParameters.aliens, ccs.selectedMission);
 		CP_CheckLostCondition(!won, mis, civiliansKilled);
 	} else {
-		CL_HandleNationData(!won, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, selectedMission);
+		CL_HandleNationData(!won, 0, ccs.battleParameters.civilians, ccs.battleParameters.aliens, 0, ccs.selectedMission);
 		CP_CheckLostCondition(!won, mis, ccs.battleParameters.civilians);
 	}
 
@@ -2039,31 +2035,31 @@ void CL_GameAutoGo (mission_t *mis)
 	}
 
 	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selectedMission, won);
+	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && missionresults.recovery)
 		Cmd_ExecuteString("cp_uforecoverystore");
 
 	/* handle base attack mission */
-	if (selectedMission->stage == STAGE_BASE_ATTACK) {
-		const base_t *base = (base_t*)selectedMission->data;
+	if (ccs.selectedMission->stage == STAGE_BASE_ATTACK) {
+		const base_t *base = (base_t*)ccs.selectedMission->data;
 		assert(base);
 
 		if (won) {
 			/* fake an aircraft return to collect goods and aliens */
-			CL_AircraftReturnedToHomeBase(gd.interceptAircraft);
+			CL_AircraftReturnedToHomeBase(ccs.interceptAircraft);
 
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
 			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
-			CP_BaseAttackMissionIsFailure(selectedMission);
+			CP_BaseAttackMissionIsFailure(ccs.selectedMission);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
-			CP_BaseAttackMissionLeave(selectedMission);
+			CP_BaseAttackMissionLeave(ccs.selectedMission);
 	} else {
-		AIR_AircraftReturnToBase(gd.interceptAircraft);
+		AIR_AircraftReturnToBase(ccs.interceptAircraft);
 		if (won)
-			CP_MissionIsOver(selectedMission);
+			CP_MissionIsOver(ccs.selectedMission);
 	}
 
 	if (won)
@@ -2443,26 +2439,16 @@ static void CL_GameNew_f (void)
 	if (!curCampaign)
 		return;
 
-	/* reset, set time */
-	selectedMission = NULL;
+	GAME_SetMode(GAME_CAMPAIGN);
 
+	/* reset campaign data */
 	memset(&ccs, 0, sizeof(ccs));
-
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
 	/* initialise date */
 	ccs.date = curCampaign->date;
 
 	CL_ReadSinglePlayerData();
-
-	/* difficulty */
-	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
-	Cvar_ForceSet("difficulty", val);
-
-	if (curCampaign->difficulty < -4)
-		Cvar_ForceSet("difficulty", "-4");
-	else if (curCampaign->difficulty > 4)
-		Cvar_ForceSet("difficulty", "4");
 
 	MAP_Init();
 

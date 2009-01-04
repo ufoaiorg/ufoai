@@ -1808,7 +1808,7 @@ void CL_ParseResults (struct dbuffer *msg)
 	else
 		civilian_killed += civilian_stunned;
 
-	if (!GAME_CP_IsRunning() || !selectedMission) {
+	if (!GAME_CP_IsRunning() || !ccs.selectedMission) {
 		/* the mission was started via console
 		 * buffer - needs to be cleared and then append to it */
 		/** @todo or is multiplayer? */
@@ -1879,10 +1879,10 @@ void CL_ParseResults (struct dbuffer *msg)
 	if (GAME_IsCampaign()) {
 		/* Make sure that at this point we are able to 'Try Again' a mission. */
 		Cvar_SetValue("mission_tryagain", 0);
-		if (selectedMission && base)
-			CP_ExecuteMissionTrigger(selectedMission, winner == we);
+		if (ccs.selectedMission && base)
+			CP_ExecuteMissionTrigger(ccs.selectedMission, winner == we);
 		else if (GAME_CP_IsRunning())
-			Com_Printf("CL_ParseResults: Error - no mission triggers, because selectedMission or base are not valid\n");
+			Com_Printf("CL_ParseResults: Error - no mission triggers, because ccs.selectedMission or base are not valid\n");
 
 		if (winner == we) {
 			/* We need to update Menu Won with UFO recovery stuff. */

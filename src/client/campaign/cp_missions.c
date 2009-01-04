@@ -1151,9 +1151,9 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		aircraft = &baseAttackFakeAircraft;
 		assert(base);
 	} else {
-		/* note that gd.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
-		assert(gd.interceptAircraft);
-		aircraft = gd.interceptAircraft;
+		/* note that ccs.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
+		assert(ccs.interceptAircraft);
+		aircraft = ccs.interceptAircraft;
 		base = aircraft->homebase;
 		assert(base);
 	}

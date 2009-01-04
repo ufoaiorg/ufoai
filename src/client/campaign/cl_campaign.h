@@ -357,6 +357,9 @@ typedef struct ccs_s {
 
 	/** governs zero build time for first base if empty base option chosen */
 	int instant_build;
+
+	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
+	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
 } ccs_t;
 
 /** possible geoscape actions */
@@ -369,7 +372,6 @@ typedef enum mapAction_s {
 	MA_UFORADAR				/**< ufos are in our radar */
 } mapAction_t;
 
-extern mission_t *selectedMission;
 extern campaign_t *curCampaign;
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;

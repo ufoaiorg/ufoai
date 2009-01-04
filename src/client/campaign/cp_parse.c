@@ -503,4 +503,9 @@ void CL_ParseCampaign (const char *name, const char **text)
 			COM_EParse(text, errhead, name);
 		}
 	} while (*text);
+
+	if (cp->difficulty < -4)
+		cp->difficulty = -4;
+	else if (cp->difficulty > 4)
+		cp->difficulty = 4;
 }

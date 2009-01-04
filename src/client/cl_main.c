@@ -81,7 +81,6 @@ cvar_t *mn_serverday;
 cvar_t *mn_inputlength;
 
 cvar_t *cl_lastsave;
-cvar_t *difficulty;
 cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
@@ -2027,7 +2026,6 @@ static void CL_InitLocal (void)
 	/* only 19 soldiers in soldier selection list */
 	cl_numnames = Cvar_Get("cl_numnames", "15", CVAR_NOSET, NULL);
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
-	difficulty = Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
 	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, "Start with assigned equipment - see cl_start_employees");
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
