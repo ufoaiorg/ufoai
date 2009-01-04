@@ -3952,9 +3952,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				aircraft->stats[l] = MSG_ReadLong(sb);
 		}
 
-		/** @todo remove this */
-		MSG_ReadByte(sb);
-
 		/* read equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
 			const char *const s = MSG_ReadString(sb);
