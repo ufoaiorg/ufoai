@@ -25,9 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_game.h"
-#include "cl_game_campaign.h"
-#include "cl_game_skirmish.h"
-#include "cl_game_multiplayer.h"
 
 typedef struct gameTypeList_s {
 	const char *name;

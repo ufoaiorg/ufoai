@@ -142,7 +142,7 @@ static void E_EmployeeList_f (void)
 	int hiredEmployeeIdx;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	if (Cmd_Argc() < 2) {

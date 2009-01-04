@@ -42,4 +42,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void GAME_InitStartup(void);
 void GAME_SetMode(int gametype);
 
+#include "cl_game_campaign.h"
+#include "cl_game_skirmish.h"
+#include "cl_game_multiplayer.h"
+
 #endif

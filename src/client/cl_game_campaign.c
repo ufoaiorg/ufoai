@@ -28,6 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game_campaign.h"
 #include "campaign/cp_missions.h"
 
+/**
+ * @brief Checks whether a campaign mode game is running
+ */
+qboolean GAME_CP_IsRunning (void)
+{
+	return curCampaign != NULL;
+}
 
 /**
  * @sa CL_GameAutoCheck_f
@@ -35,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CL_GameAutoGo_f (void)
 {
-	if (!curCampaign || !selectedMission) {
+	if (!GAME_CP_IsRunning() || !selectedMission) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoGo_f: No update after automission\n");
 		return;
 	}
@@ -58,7 +65,7 @@ static void CL_GameAutoGo_f (void)
  */
 static void CL_GameAutoCheck_f (void)
 {
-	if (!curCampaign || !selectedMission || !gd.interceptAircraft) {
+	if (!GAME_CP_IsRunning() || !selectedMission || !gd.interceptAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GameAutoCheck_f: No update after automission\n");
 		return;
 	}
@@ -82,7 +89,7 @@ static void CL_GameResults_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f\n");
 
 	/* multiplayer? */
-	if (!curCampaign || !selectedMission)
+	if (!GAME_CP_IsRunning() || !selectedMission)
 		return;
 
 	/* check for replay */

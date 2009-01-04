@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "cl_game.h"
 #include "cl_save.h"
 #include "campaign/cl_hospital.h"
 #include "campaign/cl_ufo.h"
@@ -262,7 +263,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	dateLong_t date;
 	saveFileHeader_t header;
 
-	if (!curCampaign) {
+	if (!GAME_CP_IsRunning()) {
 		*error = _("No campaign active.");
 		Com_Printf("Error: No campaign active.\n");
 		return qfalse;
@@ -365,7 +366,7 @@ static void SAV_GameSave_f (void)
 		return;
 	}
 
-	if (!curCampaign) {
+	if (!GAME_CP_IsRunning()) {
 		Com_Printf("No running game - no saving...\n");
 		return;
 	}
@@ -400,22 +401,21 @@ static void SAV_GameSave_f (void)
  */
 static void SAV_GameReadGameComments_f (void)
 {
-	char comment[MAX_VAR];
-	FILE *f;
 	int i;
-	saveFileHeader_t header;
 
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
-		if (!curCampaign && !Q_strncmp(Cmd_Argv(1), "save", 4)) {
+		if (!GAME_CP_IsRunning() && !Q_strncmp(Cmd_Argv(1), "save", 4)) {
 			MN_PopMenu(qfalse);
 			return;
 		}
 	}
 
 	for (i = 0; i < 8; i++) {
+		char comment[MAX_VAR];
+		saveFileHeader_t header;
 		/* open file */
-		f = fopen(va("%s/save/slot%i.sav", FS_Gamedir(), i), "rb");
+		FILE *f = fopen(va("%s/save/slot%i.sav", FS_Gamedir(), i), "rb");
 		if (!f) {
 			Cvar_Set(va("mn_slot%i", i), "");
 			continue;
@@ -476,15 +476,13 @@ static void SAV_GameContinue_f (void)
 		return;
 	}
 
-	if (!curCampaign) {
+	if (!GAME_CP_IsRunning()) {
 		/* try to load the last saved campaign */
 		if (!SAV_GameLoad(cl_lastsave->string, &error)) {
 			Cbuf_Execute(); /* wipe outstanding campaign commands */
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error ? error : "");
 			MN_Popup(_("Error"), popupText);
 		}
-		if (!curCampaign)
-			return;
 	} else {
 		/* just continue the current running game */
 		MN_PopMenu(qfalse);
@@ -576,7 +574,7 @@ static void SAV_GameQuickLoadInit_f (void)
 	FILE *f;
 
 	/* only allow quickload while there is already a running campaign */
-	if (!curCampaign) {
+	if (!GAME_CP_IsRunning()) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -594,7 +592,7 @@ static void SAV_GameQuickLoadInit_f (void)
  */
 static void SAV_GameQuickSave_f (void)
 {
-	if (!curCampaign)
+	if (!GAME_CP_IsRunning())
 		return;
 
 	if (!SAV_QuickSave())
@@ -611,7 +609,7 @@ static void SAV_GameQuickLoad_f (void)
 {
 	char *error = NULL;
 
-	if (!curCampaign)
+	if (!GAME_CP_IsRunning())
 		return;
 
 	if (CL_OnBattlescape()) {

@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "cl_game.h"
 #include "cl_team.h"
 #include "cl_actor.h"
 #include "campaign/cl_ufo.h"
@@ -2232,11 +2233,11 @@ void CL_ParseResults (struct dbuffer *msg)
 	else
 		civilian_killed += civilian_stunned;
 
-	if (!curCampaign || !selectedMission) {
+	if (!GAME_CP_IsRunning() || !selectedMission) {
 		/* the mission was started via console
 		 * buffer - needs to be cleared and then append to it */
 		/** @todo or is multiplayer? */
-		if (curCampaign) {
+		if (GAME_IsCampaign() && GAME_CP_IsRunning()) {
 			Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
 			ccs.aliensKilled += thier_killed;
 			Q_strcat(resultText, va(_("Aliens captured\t%i\n\n"), thier_stunned), sizeof(resultText));
@@ -2254,7 +2255,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		Q_strcat(resultText, va(_("Friendly fire losses\t%i\n"), num_kills[we][we]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Team survivors\t%i\n\n"), our_surviviurs), sizeof(resultText));
 
-		if (curCampaign)
+		if (GAME_IsCampaign())
 			Q_strcat(resultText, va(_("Civilians killed by the Aliens\t%i\n"), civilian_killed - num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
 		else
 			Q_strcat(resultText, va(_("Civilians killed by the Enemies\t%i\n"), civilian_killed - civilian_stunned - num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
@@ -2305,7 +2306,7 @@ void CL_ParseResults (struct dbuffer *msg)
 		Cvar_SetValue("mission_tryagain", 0);
 		if (selectedMission && base)
 			CP_ExecuteMissionTrigger(selectedMission, winner == we);
-		else if (curCampaign)
+		else if (GAME_CP_IsRunning())
 			Com_Printf("CL_ParseResults: Error - no mission triggers, because selectedMission or base are not valid\n");
 
 		if (winner == we) {

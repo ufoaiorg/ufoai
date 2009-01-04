@@ -659,6 +659,8 @@ static inline qboolean R_SearchForVendor (const char *vendor)
 		|| Q_stristr(r_config.rendererString, vendor);
 }
 
+#define INTEL_TEXTURE_RESOLUTION 1024
+
 /**
  * @brief Checks whether we have hardware acceleration
  */
@@ -673,8 +675,6 @@ static inline void R_VerifyDriver (void)
 		/* HACK: */
 		Com_Printf("Activate texture compression for Intel chips - see cvar r_intel_hack\n");
 		Cvar_Set("r_ext_texture_compression", "1");
-		r_ext_texture_compression->modified = qfalse;
-#define INTEL_TEXTURE_RESOLUTION 1024
 		if (r_maxtexres->integer > INTEL_TEXTURE_RESOLUTION) {
 			Com_Printf("Set max. texture resolution to %i - see cvar r_intel_hack\n", INTEL_TEXTURE_RESOLUTION);
 			Cvar_SetValue("r_maxtexres", INTEL_TEXTURE_RESOLUTION);

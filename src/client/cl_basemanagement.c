@@ -1980,7 +1980,7 @@ void B_ClearBase (base_t *const base)
 	memset(base, 0, sizeof(*base));
 
 	/* only go further if we have a active campaign */
-	if (!curCampaign)
+	if (!GAME_CP_IsRunning())
 		return;
 
 	/* setup team */
