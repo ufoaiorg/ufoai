@@ -472,8 +472,12 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 	 * over the whole string, this is good enough. */
 	for (wrap = hash[hashValue]; wrap; wrap = wrap->next)
 		if (!Q_strncmp(text, wrap->text, sizeof(wrap->text) - 1)
-		 && wrap->font == f && wrap->method == method
-		 && (wrap->maxWidth == maxWidth || (wrap->numChunks == 1 && (chunkCache[wrap->chunkIdx].width <= maxWidth || maxWidth <= 0))))
+		 && wrap->font == f
+		 && wrap->method == method
+		 && (wrap->maxWidth == maxWidth
+			|| (wrap->method != LONGLINES_PRETTYCHOP
+				&& wrap->numChunks == 1
+				&& (chunkCache[wrap->chunkIdx].width <= maxWidth || maxWidth <= 0))))
 			return wrap;
 
 	if (numWraps >= MAX_WRAP_CACHE)
