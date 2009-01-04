@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_error.h"
 #include "r_draw.h"
 #include "r_mesh.h"
+#include "r_overlay.h"
 
 extern const float STANDARD_3D_ZOOM;
 

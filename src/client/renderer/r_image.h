@@ -83,6 +83,7 @@ void R_WriteJPG(qFILE *f, byte *buffer, int width, int height, int quality);
 void R_WriteTGA(qFILE *f, byte *buffer, int width, int height);
 void R_WriteCompressedTGA(qFILE *f, byte *buffer, int width, int height);
 
+void R_UploadTexture(unsigned *data, int width, int height, image_t* image);
 void R_SoftenTexture(byte *in, int width, int height, int bpp);
 
 void R_ImageList_f(void);
@@ -95,13 +96,6 @@ void R_FilterTexture(unsigned *in, int width, int height, imagetype_t type);
 void R_TextureMode(const char *string);
 void R_TextureAlphaMode(const char *string);
 void R_TextureSolidMode(const char *string);
-void R_IncreaseXVILevel(const vec2_t pos);
-void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
-byte* R_XVIMapCopy(int *width, int *height);
-void R_CreateRadarOverlay(void);
-void R_InitializeRadarOverlay(qboolean source);
-void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
-void R_UploadRadarCoverage(qboolean smooth);
 
 image_t *R_LoadImageData(const char *name, byte * pic, int width, int height, imagetype_t type);
 #ifdef DEBUG
@@ -119,7 +113,5 @@ extern image_t *blood[MAX_DEATH]; /**< draw this when actor is dead */
 extern image_t *r_noTexture;
 extern image_t *r_warpTexture;
 extern image_t *r_dayandnightTexture;
-extern image_t *r_xviTexture;
-extern image_t *r_radarTexture;
 
 #endif
