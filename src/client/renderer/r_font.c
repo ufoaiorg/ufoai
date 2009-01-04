@@ -475,8 +475,8 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 		 && wrap->font == f
 		 && wrap->method == method
 		 && (wrap->maxWidth == maxWidth
-			|| (wrap->method != LONGLINES_PRETTYCHOP
-				&& wrap->numChunks == 1
+			|| (wrap->numChunks == 1
+				&& !chunkCache[wrap->chunkIdx].truncated
 				&& (chunkCache[wrap->chunkIdx].width <= maxWidth || maxWidth <= 0))))
 			return wrap;
 
