@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ufo.h"
 #include "../cl_popup.h"
 #include "../renderer/r_draw.h"
-#include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
 #include "cl_installation.h"
 #include "cp_geoscape_actions.h"
