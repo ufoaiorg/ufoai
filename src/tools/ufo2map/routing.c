@@ -173,6 +173,11 @@ void DoRouting (void)
 	VecToPos(mins, wpMins);
 	VecToPos(maxs, wpMaxs);
 
+	/* Verify the world extents are not lopsided. */
+	assert(wpMins[0] <= wpMaxs[0]);
+	assert(wpMins[1] <= wpMaxs[1]);
+	assert(wpMins[2] <= wpMaxs[2]);
+
 	/* scan area heights */
 	RunThreadsOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
 
