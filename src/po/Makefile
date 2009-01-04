@@ -42,7 +42,7 @@ MSGFILTER = msgfilter
 UFOPO := $(top_srcdir)/po/ufopo.pl
 MSGCAT = msgcat
 
-POFILES = $(wildcard *.po)
+POFILES = $(wildcard ufoai-*.po)
 GMOFILES = $(POFILES:.po=.gmo)
 UPDATEPOFILES = $(POFILES:.po=.po-update)
 DUMMYPOFILES = $(POFILES:.po=.nop)
