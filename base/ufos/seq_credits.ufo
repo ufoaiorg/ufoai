@@ -330,7 +330,7 @@ sequence credits
 	2dobj lordhavoc_name { fade "0 0 0 -1" speed "0 80" }
 	2dobj tron_name { fade "0 0 0 -1" speed "0 100" }
 	wait 2
-	rem techconsultant_text
+	rem techconsult_text
 	rem lordhavoc_name
 	rem tron_name
 
