@@ -47,6 +47,7 @@ typedef struct components_s {
 
 /* Size of UGV in storage */
 extern const int UGV_SIZE;
+extern cvar_t *cl_equip;
 
 void INV_ParseComponents(const char *name, const char **text);
 void INV_TransferItemCarriedByChr(employee_t *employee, base_t *sourceBase, base_t* destBase);
@@ -68,6 +69,7 @@ void INV_RemoveAntimatterExceedingCapacity(base_t *base);
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
 void INV_RemoveUFOsExceedingCapacity(base_t *base, const buildingType_t buildingType);
 equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
+void INV_InitStartup(void);
 
 #ifdef DEBUG
 void INV_InventoryList_f(void);

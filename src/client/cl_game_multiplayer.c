@@ -33,7 +33,7 @@ static aircraft_t multiplayerFakeAircraft;
 static void B_MultiplayerAssignInitial_f (void)
 {
 	if (GAME_IsMultiplayer())
-		B_AssignInitial(cls.missionaircraft);
+		B_AssignInitial(cls.missionaircraft, cl_equip->string);
 }
 
 /**
@@ -49,7 +49,7 @@ static void MN_StartServer_f (void)
 		return;
 
 	if (!sv_dedicated->integer && !B_GetNumOnTeam(cls.missionaircraft)) {
-		B_AssignInitial(cls.missionaircraft);
+		B_AssignInitial(cls.missionaircraft, cl_equip->string);
 		MN_Popup(_("No team assigned"), _("Please choose and equip your team first"));
 		return;
 	}

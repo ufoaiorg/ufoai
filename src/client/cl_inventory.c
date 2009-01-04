@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 
+cvar_t *cl_equip;
+
 const int UGV_SIZE = 300;	/**< Size of a UGV in hangar capacity */
 
 /**
@@ -415,7 +417,8 @@ void INV_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, cons
 
 	/* Initial soldiers and their equipment. */
 	if (assignInitialAircraft) {
-		B_AssignInitial(assignInitialAircraft);
+		const char *name = GAME_CP_IsRunning() ? cl_initial_equipment->string : cl_equip->string;
+		B_AssignInitial(assignInitialAircraft, name);
 	} else {
 		ed = INV_GetEquipmentDefinitionByID(eqname);
 		if (ed == NULL) {
@@ -971,3 +974,8 @@ qboolean INV_EquipmentDefSanityCheck (void)
 	return result;
 }
 #endif
+
+void INV_InitStartup (void)
+{
+	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, "Equipment that is used for none-campaign mode games");
+}

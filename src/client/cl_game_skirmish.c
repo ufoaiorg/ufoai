@@ -88,7 +88,19 @@ static void CL_GameSkirmish_f (void)
  */
 static void CL_ChangeEquip_f (void)
 {
-	/** @todo Implement this */
+	equipDef_t *ed = INV_GetEquipmentDefinitionByID(cl_equip->string);
+	int index = ed ? ed - csi.eds : 0;
+	if (!Q_strcmp(Cmd_Argv(0), "mn_prevequip")) {
+		index--;
+		if (index < 0)
+			index = csi.numEDs - 1;
+		Cvar_Set("cl_equip", csi.eds[index].name);
+	} else {
+		index++;
+		if (index >= csi.numEDs)
+			index = 0;
+		Cvar_Set("cl_equip", csi.eds[index].name);
+	}
 }
 
 void GAME_SK_InitStartup (void)

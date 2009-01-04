@@ -1980,6 +1980,7 @@ static void CL_InitLocal (void)
 	MN_InitStartup();
 	UP_InitStartup();
 	B_InitStartup();
+	INV_InitStartup();
 	INS_InitStartup();
 	RS_InitStartup();
 	PR_InitStartup();

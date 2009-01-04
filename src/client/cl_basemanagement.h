@@ -249,7 +249,7 @@ typedef struct baseTemplate_s {
 /** Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
-void B_AssignInitial(aircraft_t *aircraft);
+void B_AssignInitial(aircraft_t *aircraft, const char *equipName);
 
 void B_UpdateBaseData(void);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);

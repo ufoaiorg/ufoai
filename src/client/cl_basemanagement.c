@@ -43,8 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 vec3_t newBasePos;
 static cvar_t *mn_base_title;
-static cvar_t *cl_equip;
-
 static building_t *buildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
@@ -2541,11 +2539,10 @@ void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
  * multiplayer - assign_initial with no parameters is for singleplayer
  * @sa B_PackInitialEquipment
  */
-void B_AssignInitial (aircraft_t *aircraft)
+void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
 {
 	int i, num;
 	equipDef_t *ed;
-	const char *name = GAME_CP_IsRunning() ? cl_initial_equipment->string : cl_equip->string;
 
 	if (!aircraft) {
 		Com_Printf("B_AssignInitial: No aircraft given\n");
@@ -2564,7 +2561,7 @@ void B_AssignInitial (aircraft_t *aircraft)
 	for (i = 0; i < num; i++)
 		CL_AssignSoldierFromMenuToAircraft(aircraft->homebase, i, aircraft);
 
-	ed = INV_GetEquipmentDefinitionByID(name);
+	ed = INV_GetEquipmentDefinitionByID(equipName);
 	B_PackInitialEquipment(aircraft, ed);
 	if (GAME_IsMultiplayer())
 		MN_PushMenu("team", NULL);
@@ -3158,8 +3155,6 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_destroybase", CL_BaseDestroy_f, "Destroy a base");
 	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
 #endif
-
-	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 }
 
 /**
