@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_game.h"
 #include "cl_team.h"
+#include "cl_team_multiplayer.h"
 #include "cl_actor.h"
 #include "campaign/cl_ufo.h"
 #include "menu/node/m_node_container.h"
@@ -96,6 +97,22 @@ static aircraft_t *CL_GetTeamAircraft (base_t *base)
 		return base->aircraftCurrent;
 	} else {
 		return cls.missionaircraft;
+	}
+}
+
+/**
+ * @brief Returns the storage for the team and soldier selection menus
+ * @note Multiplayer and skirmish are using @c ccs.eMission, campaign mode is
+ * using the storage from the given base
+ */
+static equipDef_t *CL_GetStorage (base_t *base)
+{
+	if (GAME_IsCampaign()) {
+		if (!base)
+			Sys_Error("CL_GetStorage: Called without base");
+		return &base->storage;
+	} else {
+		return &ccs.eMission;
 	}
 }
 
@@ -509,20 +526,6 @@ static void CL_ChangeSkinOnBoard_f (void)
 {
 	int newSkin, i;
 
-	if (!baseCurrent)
-		return;
-
-	/** @todo Do we really need to check aircraftcurrent here? */
-	if (baseCurrent->aircraftCurrent) {
-		/* aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent]; */
-	} else {
-#ifdef DEBUG
-		/* Should never happen. */
-		Com_Printf("CL_ChangeSkinOnBoard_f: No aircraft selected!\n");
-#endif
-		return;
-	}
-
 	/* Get selected skin and fall back to default skin if it is not valid. */
 	newSkin = Cvar_VariableInteger("mn_skin");
 	if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
@@ -626,7 +629,6 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		/* The item is a weapon and it was reloaded one time. */
 		if (item.a == type->ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			assert(item.m);	/** @todo Isn't this redundant here? */
 			if (ed->num[item.m->idx] > 0) {
 				ed->num[item.m->idx]--;
 				return item;
@@ -705,8 +707,6 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
  */
 void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 {
-	base_t *base;
-	character_t *chr;
 	invList_t *ic, *next;
 	int p, container;
 
@@ -720,8 +720,6 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	 * leaving others with unloaded guns in their hands... */
 
 	assert(aircraft);
-	base = aircraft->homebase;
-	assert(base);
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried:aircraft idx: %i, team size: %i\n",
 		aircraft->idx, aircraft->teamSize);
@@ -730,7 +728,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	for (p = 0; p < aircraft->maxTeamSize; p++) {
 		if (aircraft->acTeam[p] && aircraft->acTeam[p]->ugv) {
 			/** This is an UGV */
-			chr = &aircraft->acTeam[p]->chr;
+			character_t *chr = &aircraft->acTeam[p]->chr;
 			assert(chr);
 
 			/* Check if there is a weapon and add it if there isn't. */
@@ -742,7 +740,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < aircraft->maxTeamSize; p++) {
 			if (aircraft->acTeam[p]) {
-				chr = &aircraft->acTeam[p]->chr;
+				character_t *chr = &aircraft->acTeam[p]->chr;
 				assert(chr);
 				for (ic = chr->inv->c[container]; ic; ic = next) {
 					next = ic->next;
@@ -796,10 +794,12 @@ static void CL_GenerateEquipment_f (void)
 	aircraft_t *aircraft;
 	int team;
 
-	if (!baseCurrent || !baseCurrent->aircraftCurrent)
+	if (GAME_IsCampaign() && !baseCurrent)
 		return;
 
-	aircraft = baseCurrent->aircraftCurrent;
+	aircraft = CL_GetTeamAircraft(baseCurrent);
+	if (!aircraft)
+		return;
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
 	if (!aircraft->teamSize) {
@@ -838,30 +838,32 @@ static void CL_GenerateEquipment_f (void)
 	MN_MenuTextReset(TEXT_STANDARD);
 
 	/* manage inventory */
-	unused = baseCurrent->storage; /* copied, including arrays inside! */
+	unused = *CL_GetStorage(aircraft->homebase); /* copied, including arrays inside! */
 
-	CL_CleanTempInventory(baseCurrent);
+	CL_CleanTempInventory(aircraft->homebase);
 	CL_ReloadAndRemoveCarried(aircraft, &unused);
 
-	/* a 'tiny hack' to add the remaining equipment (not carried)
-	 * correctly into buy categories, reloading at the same time;
-	 * it is valid only due to the following property: */
-	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
+	if (GAME_IsCampaign()) {
+			/* a 'tiny hack' to add the remaining equipment (not carried)
+		* correctly into buy categories, reloading at the same time;
+		* it is valid only due to the following property: */
+		assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
-	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armour for other teams in the menu. */
-		if ((Q_strncmp(csi.ods[i].type, "armour", MAX_VAR) == 0) && (csi.ods[i].useable != team))
-			continue;
+		for (i = 0; i < csi.numODs; i++) {
+			/* Don't allow to show armour for other teams in the menu. */
+			if ((Q_strncmp(csi.ods[i].type, "armour", MAX_VAR) == 0) && (csi.ods[i].useable != team))
+				continue;
 
-		/* Don't allow to show unresearched items. */
-		if (!RS_IsResearched_ptr(csi.ods[i].tech))
-			continue;
+			/* Don't allow to show unresearched items. */
+			if (!RS_IsResearched_ptr(csi.ods[i].tech))
+				continue;
 
-		while (unused.num[i]) {
-			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
-
-			if (!Com_AddToInventory(&baseCurrent->bEquipment, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
-				break; /* no space left in menu */
+			while (unused.num[i]) {
+				const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+				inventory_t *i = &aircraft->homebase->bEquipment;
+				if (!Com_AddToInventory(i, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
+					break; /* no space left in menu */
+			}
 		}
 	}
 }
@@ -878,7 +880,7 @@ static void CL_EquipType_f (void)
 		return;
 	}
 
-	if (!baseCurrent)
+	if (!menuInventory)
 		return;
 
 	/* Read filter type and check range. */
@@ -887,7 +889,7 @@ static void CL_EquipType_f (void)
 		return;
 
 	/* Reset scroll info for a new filter type/category. */
-	if (menuInventory && (equipType != num || !menuInventory->c[csi.idEquip])) {
+	if (equipType != num || !menuInventory->c[csi.idEquip]) {
 		menuInventory->scrollCur = 0;
 		menuInventory->scrollNum = 0;
 		menuInventory->scrollTotalNum = 0;
@@ -897,10 +899,9 @@ static void CL_EquipType_f (void)
 	equipType = num;
 
 	/* First-time linking of menuInventory. */
-	if (menuInventory && !menuInventory->c[csi.idEquip]) {
+	if (baseCurrent && !menuInventory->c[csi.idEquip]) {
 		menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
 	}
-
 }
 
 typedef enum {
@@ -1138,21 +1139,18 @@ static void CL_MarkTeam_f (void)
 
 	if (GAME_IsCampaign()) {
 		/* Check if we are allowed to be here.
-		* We are only allowed to be here if we already set up a base. */
+		 * We are only allowed to be here if we already set up a base. */
 		if (!baseCurrent) {
 			Com_Printf("No base set up\n");
 			MN_PopMenu(qfalse);
 			return;
 		}
-		if (!baseCurrent->aircraftCurrent) {
-			Com_Printf("No aircraft selected\n");
-			MN_PopMenu(qfalse);
-			return;
-		}
-
-		aircraft = baseCurrent->aircraftCurrent;
-	} else
-		aircraft = cls.missionaircraft;
+	}
+	aircraft = CL_GetTeamAircraft(baseCurrent);
+	if (!aircraft) {
+		MN_PopMenu(qfalse);
+		return;
+	}
 
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
@@ -1547,7 +1545,7 @@ void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
-	Cmd_AddCommand("equip_type", CL_EquipType_f, NULL);
+	Cmd_AddCommand("equip_type", CL_EquipType_f, "Change the item category in soldier equipment menu");
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_Select_f, NULL);

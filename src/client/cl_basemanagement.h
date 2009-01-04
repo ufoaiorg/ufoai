@@ -222,7 +222,7 @@ typedef struct base_s {
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
-	inventory_t bEquipment;	/**< The equipment of the base; needen't be saved;
+	inventory_t bEquipment;	/**< The equipment of the base; needn't be saved;
 		a hack based on assertion (MAX_CONTAINERS >= FILTER_AIRCRAFT) ... see e.g. CL_GenerateEquipment_f */
 
 	baseWeapon_t batteries[MAX_BASE_SLOT];	/**< Missile batteries assigned to base. */
