@@ -502,8 +502,7 @@ int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedLi
 
 	for (i = 0, j = 0; i < gd.numEmployees[type]; i++) {
 		employee_t *employee = &gd.employees[type][i];
-		if (employee->hired
-		 && (employee->baseHired == base || !base) && !employee->transfer) {
+		if (employee->hired && (employee->baseHired == base || !base) && !employee->transfer) {
 			LIST_AddPointer(hiredEmployees, employee);
 			j++;
 		}

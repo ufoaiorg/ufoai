@@ -188,6 +188,8 @@ void GAME_MP_InitStartup (void)
 	RS_ResetTechs();
 
 	cls.missionaircraft = &multiplayerFakeAircraft;
+	memset(&multiplayerFakeAircraft, 0, sizeof(multiplayerFakeAircraft));
+	gd.numAircraft = 1;
 
 	Com_Printf("Changing to Multiplayer\n");
 	/* disconnect already running session - when entering the

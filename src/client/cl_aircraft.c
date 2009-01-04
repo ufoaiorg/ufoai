@@ -2116,21 +2116,9 @@ qboolean AIR_IsInAircraftTeam (const aircraft_t *aircraft, const employee_t *emp
 		return qfalse;
 	}
 
-	if (!aircraft->homebase)
-		Sys_Error("AIR_IsInAircraftTeam: aircraft '%s' has no homebase set\n", aircraft->id);
-#ifdef PARANOID
-	else
-		Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n",
-			aircraft->name, aircraft->homebase->name);
-#endif
-
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i] == employee) {
 			/** @note This also skips the NULL entries in acTeam[]. */
-#ifdef DEBUG
-			Com_DPrintf(DEBUG_CLIENT, "AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n",
-				employee->idx, aircraft->homebase->name, baseCurrent ? baseCurrent->name : "");
-#endif
 			return qtrue;
 		}
 	}

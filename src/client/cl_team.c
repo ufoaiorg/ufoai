@@ -1081,8 +1081,9 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 
 /**
  * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
- * @note Depends ondisplayHeavyEquipmentList and baseCurrent to be set correctly.
+ * @note Depends on displayHeavyEquipmentList to be set correctly.
  * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
+ * @note If base is NULL all employees of all bases are added to the list - especially useful for none-campaign mode games
  */
 int CL_GenTeamList (const base_t *base)
 {
@@ -1090,8 +1091,6 @@ int CL_GenTeamList (const base_t *base)
 		displayHeavyEquipmentList
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
-
-	assert(base);
 
 	employeesInCurrentList = E_GetHiredEmployees(base, employeeType, &employeeList);
 	return employeesInCurrentList;
@@ -1115,29 +1114,33 @@ static void CL_MarkTeam_f (void)
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
 
-	/* Check if we are allowed to be here.
-	 * We are only allowed to be here if we already set up a base. */
-	if (!baseCurrent) {
-		Com_Printf("No base set up\n");
-		MN_PopMenu(qfalse);
-		return;
-	}
-	if (!baseCurrent->aircraftCurrent) {
-		Com_Printf("No aircraft selected\n");
-		MN_PopMenu(qfalse);
-		return;
-	}
+	if (GAME_IsCampaign()) {
+		/* Check if we are allowed to be here.
+		* We are only allowed to be here if we already set up a base. */
+		if (!baseCurrent) {
+			Com_Printf("No base set up\n");
+			MN_PopMenu(qfalse);
+			return;
+		}
+		if (!baseCurrent->aircraftCurrent) {
+			Com_Printf("No aircraft selected\n");
+			MN_PopMenu(qfalse);
+			return;
+		}
 
-	aircraft = baseCurrent->aircraftCurrent;
+		aircraft = baseCurrent->aircraftCurrent;
+	} else
+		aircraft = cls.missionaircraft;
+
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
-	CL_GenTeamList(baseCurrent);	/* Populate employeeList */
+	/* Populate employeeList - base might be NULL for none-campaign mode games */
+	CL_GenTeamList(aircraft->homebase);
 	emplList = employeeList;
 	while (emplList) {
 		const employee_t *employee = (employee_t*)emplList->data;
 		assert(employee->hired);
 		assert(!employee->transfer);
-		assert(employee->baseHired == baseCurrent);
 
 		/* Search all aircraft except the current one. */
 		alreadyInOtherShip = qfalse;
@@ -1448,7 +1451,7 @@ void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t
 {
 	employee_t *employee;
 
-	if (!base->numAircraftInBase) {
+	if (GAME_IsCampaign() && !base->numAircraftInBase) {
 		Com_Printf("CL_AssignSoldierFromMenuToAircraft: No aircraft in base\n");
 		return;
 	}

@@ -63,7 +63,6 @@ static void CL_MultiplayerTeamSlotComments_f (void)
  * @brief Multiplayer-only call to reset team and team inventory (when setting up new team).
  * @sa E_ResetEmployees
  * @sa CL_CleanTempInventory
- * @note We need baseCurrent to point to gd.bases[0] here.
  * @note Available via script command team_reset.
  * @note Called when initializing the multiplayer menu (for init node and new team button).
  */
@@ -72,7 +71,6 @@ void CL_ResetMultiplayerTeamInAircraft (aircraft_t *aircraft)
 	if (!GAME_IsMultiplayer())
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "Reset of base team flags.\n");
 	if (!aircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: No aircraft given\n");
 		return;
@@ -85,6 +83,7 @@ void CL_ResetMultiplayerTeamInAircraft (aircraft_t *aircraft)
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->integer) {
 		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+		employee->hired = qtrue;
 		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: Generate character for multiplayer - employee->chr.name: '%s'\n", employee->chr.name);
 	}
 
@@ -243,7 +242,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 		}
 	}
 
-	/* store equipment in baseCurrent so soldiers can be properly equipped */
+	/* store equipment in ccs.eMission so soldiers can be properly equipped */
 	MSG_WriteShort(&sb, csi.numODs);
 	for (i = 0; i < csi.numODs; i++) {
 		MSG_WriteString(&sb, csi.ods[i].id);
@@ -387,6 +386,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	for (i = 0; i < num; i++) {
 		/* New employee */
 		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+		employee->hired = qtrue;
 		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
 	}
 

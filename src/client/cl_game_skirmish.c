@@ -65,10 +65,6 @@ static void CL_GameSkirmish_f (void)
 	CL_GameInit(qfalse);
 	RS_MarkResearchedAll();
 
-	cls.missionaircraft = &skirmishFakeAircraft;
-	memset(&skirmishFakeAircraft, 0, sizeof(skirmishFakeAircraft));
-	skirmishFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
-
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
@@ -106,6 +102,12 @@ static void CL_ChangeEquip_f (void)
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");
+
+	cls.missionaircraft = &skirmishFakeAircraft;
+	memset(&skirmishFakeAircraft, 0, sizeof(skirmishFakeAircraft));
+	skirmishFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
+	gd.numAircraft = 1;
+
 	Cmd_AddCommand("game_skirmish", CL_GameSkirmish_f, "Start the new skirmish game");
 	Cmd_AddCommand("mn_prevequip", CL_ChangeEquip_f, "Previous equipment definition");
 	Cmd_AddCommand("mn_nextequip", CL_ChangeEquip_f, "Next equipment definition");
