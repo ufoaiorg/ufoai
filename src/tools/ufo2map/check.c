@@ -64,6 +64,55 @@ typedef enum {
 #define NUM_DIFF -2
 #define NUM_SAME -3
 
+static int checkWorld (entity_t *e, int entnum);
+static int checkLight (entity_t *e, int entnum);
+static int checkFuncBreakable (entity_t *e, int entnum);
+static int checkFuncDoor (entity_t *e, int entnum);
+static int checkFuncRotating (entity_t *e, int entnum);
+static int checkFuncGroup (entity_t *e, int entnum);
+static int checkMiscItem (entity_t *e, int entnum);
+static int checkMiscModel (entity_t *e, int entnum);
+static int checkMiscParticle (entity_t *e, int entnum);
+static int checkMiscSound (entity_t *e, int entnum);
+static int checkMiscMission (entity_t *e, int entnum);
+static int checkInfoPlayerStart (entity_t *e, int entnum);
+static int checkStartPosition (entity_t *e, int entnum);
+static int checkInfoNull (entity_t *e, int entnum);
+static int checkInfoCivilianTarget (entity_t *e, int entnum);
+static int checkTriggerHurt (entity_t *e, int entnum);
+static int checkTriggerTouch (entity_t *e, int entnum);
+
+typedef struct entityCheck_s {
+	const char *name;	/**< The entity name */
+	int (*checkCallback)(entity_t* e, int entnum);		/**< @return 0 if successfully fixed it
+						 * everything else in case of an error that can't be fixed automatically */
+} entityCheck_t;
+
+static const entityCheck_t checkArray[] = {
+	{"worldspawn", checkWorld},
+	{"light", checkLight},
+	{"func_breakable", checkFuncBreakable},
+	{"func_door", checkFuncDoor},
+	{"func_rotating", checkFuncRotating},
+	{"func_group", checkFuncGroup},
+	{"misc_item", checkMiscItem},
+	{"misc_model", checkMiscModel},
+	{"misc_particle", checkMiscParticle},
+	{"misc_sound", checkMiscSound},
+	{"misc_mission", checkMiscMission},
+	{"misc_mission_aliens", checkMiscMission},
+	{"info_player_start", checkInfoPlayerStart},
+	{"info_human_start", checkStartPosition},
+	{"info_alien_start", checkStartPosition},
+	{"info_2x2_start", checkStartPosition},
+	{"info_civilian_start", checkStartPosition},
+	{"info_null", checkInfoNull},
+	{"info_civilian_target", checkInfoCivilianTarget},
+	{"trigger_hurt", checkTriggerHurt},
+	{"trigger_touch", checkTriggerTouch},
+
+	{NULL, NULL}
+};
 
 static void Check_Printf(const verbosityLevel_t msgVerbLevel, qboolean change, int entnum, int brushnum, const char *format, ...) __attribute__((format(printf, 5, 6)));
 
@@ -164,6 +213,9 @@ static void Check_MapSize (vec3_t mapSize) {
 	int i, bi, vi;
 	vec3_t mins, maxs;
 
+	VectorSet(mins, 0, 0, 0);
+	VectorSet(maxs, 0, 0, 0);
+
 	for (i = 0; i < nummapbrushes; i++) {
 		const mapbrush_t *brush = &mapbrushes[i];
 
@@ -181,18 +233,54 @@ static void Check_MapSize (vec3_t mapSize) {
 }
 
 #define MIN_TILE_SIZE 256 /**< @todo take this datum from the correct place */
+#define NUM_ENT_TYPES 32
 
 /**
  * @brief print map stats on -stats
  */
 void Check_Stats() {
 	vec3_t worldSize;
+	int i, j;
+	int entNums[NUM_ENT_TYPES];
+
+	memset(entNums, '\0', NUM_ENT_TYPES * sizeof(int));
+
 	Check_MapSize(worldSize);
 	Verb_Printf(VERB_NORMAL, "        Number of brushes: %i\n",nummapbrushes);
 	Verb_Printf(VERB_NORMAL, "         Number of planes: %i\n",nummapplanes);
 	Verb_Printf(VERB_NORMAL, "    Number of brush sides: %i\n",nummapbrushsides);
 	Verb_Printf(VERB_NORMAL, "        Map size (fields): %.0f %.0f %.0f\n", worldSize[0] / UNIT_SIZE, worldSize[1] / UNIT_SIZE, worldSize[2] / UNIT_HEIGHT);
 	Verb_Printf(VERB_NORMAL, "         Map size (tiles): %.0f %.0f %.0f\n", worldSize[0] / (MIN_TILE_SIZE), worldSize[1] / (MIN_TILE_SIZE), worldSize[2] / UNIT_HEIGHT);
+	Verb_Printf(VERB_NORMAL, "       Number of entities: %i\n", num_entities);
+
+	/* count number of each type of entity */
+	for (i = 0; i < num_entities; i++) {
+		entity_t *e = &entities[i];
+		const char *name = ValueForKey(e, "classname");
+		const entityCheck_t *v;
+
+		for (v = checkArray, j = 0; v->name; v++, j++)
+			if (!strncmp(name, v->name, strlen(v->name))) {
+				entNums[j]++;
+#ifdef DEBUG
+			if (j >= NUM_ENT_TYPES)
+				Com_Printf("Check_Stats: buffer overflow");
+#endif
+				break;
+			}
+		if (!v->name) {
+			Com_Printf("Check_Stats: entity '%s' not recognised\n", name);
+		}
+	}
+
+	{
+		const entityCheck_t *v;
+		/* print number of each type of entity */
+		for (v = checkArray, j = 0; v->name; v++, j++)
+			if (entNums[j]) {
+				Com_Printf("%27s: %i\n", v->name, entNums[j]);
+			}
+	}
 }
 
 /**
@@ -465,38 +553,6 @@ static int checkTriggerTouch (entity_t *e, int entnum)
 		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "trigger_touch could not find specified target: '%s'\n", val);
 	return 0;
 }
-
-typedef struct entityCheck_s {
-	const char *name;	/**< The entity name */
-	int (*checkCallback)(entity_t* e, int entnum);		/**< @return 0 if successfully fixed it
-						 * everything else in case of an error that can't be fixed automatically */
-} entityCheck_t;
-
-static const entityCheck_t checkArray[] = {
-	{"worldspawn", checkWorld},
-	{"light", checkLight},
-	{"func_breakable", checkFuncBreakable},
-	{"func_door", checkFuncDoor},
-	{"func_rotating", checkFuncRotating},
-	{"func_group", checkFuncGroup},
-	{"misc_item", checkMiscItem},
-	{"misc_model", checkMiscModel},
-	{"misc_particle", checkMiscParticle},
-	{"misc_sound", checkMiscSound},
-	{"misc_mission", checkMiscMission},
-	{"misc_mission_aliens", checkMiscMission},
-	{"info_player_start", checkInfoPlayerStart},
-	{"info_human_start", checkStartPosition},
-	{"info_alien_start", checkStartPosition},
-	{"info_2x2_start", checkStartPosition},
-	{"info_civilian_start", checkStartPosition},
-	{"info_null", checkInfoNull},
-	{"info_civilian_target", checkInfoCivilianTarget},
-	{"trigger_hurt", checkTriggerHurt},
-	{"trigger_touch", checkTriggerTouch},
-
-	{NULL, NULL}
-};
 
 /** faces close to pointing down may be set to nodraw.
  * this is the cosine of the angle of how close it has to be. around 10 degrees */
