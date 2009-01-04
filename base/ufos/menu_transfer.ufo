@@ -229,14 +229,13 @@ menu transfer
 		string	"_Transfer"
 	}
 
-	pic bt_continue
+	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	hud/buttons2
-		mousefx	true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos	"933 710"
-		texl	"0 0"
-		texh	"64 37"
+		icon return
 		click	{ cmd "mn_pop;" }
 	}
 

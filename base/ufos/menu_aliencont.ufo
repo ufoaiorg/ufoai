@@ -24,15 +24,14 @@ menu aliencont
 	// ================================================================================
 	// buttons
 	// ================================================================================
-	pic bt_continue
+	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	hud/buttons2
-		mousefx	true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos		"940 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "mn_pop;" }
+		icon return
+		click	{ cmd mn_pop }
 	}
 
 	// ==================

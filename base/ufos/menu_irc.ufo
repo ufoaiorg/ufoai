@@ -43,15 +43,14 @@ menu irc
 		font	f_normal
 	}
 
-	pic button_exit
+	custombutton button_exit
 	{
 		tooltip	"_Close menu but stay connected"
-		image	hud/buttons2
-		mousefx true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos		"950 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{ cmd "irc_deactivate; mn_pop;" }
+		icon return
+		click	{ cmd "mn_pop;" }
 	}
 
 	string users_string

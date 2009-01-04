@@ -874,14 +874,13 @@ menu team
 		click	{ cmd "team_toggle_list;" }
 	}
 
-	pic bt_go
+	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	hud/buttons2
-		mousefx	true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos		"940 720"
-		texl	"0 0"
-		texh	"64 37"
+		icon return
 		click	{ cmd "mn_pop;mn_push equipment;"  }
 	}
 
@@ -1624,14 +1623,13 @@ menu equipment
 	// additional stuff
 	// ==================
 
-	pic bt_go
+	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	hud/buttons2
-		mousefx	true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos		"940 720"
-		texl	"0 0"
-		texh	"64 37"
+		icon return
 		click	{ cmd "mn_pop;" }
 	}
 

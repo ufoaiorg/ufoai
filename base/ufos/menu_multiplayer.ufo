@@ -447,17 +447,14 @@ menu serverinfo
 		string	"_Connect"
 	}
 
-	pic button_exit
+	custombutton button_exit
 	{
 		tooltip "_Leave Serverbrowser"
-		image	hud/buttons2
-		mousefx true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos		"26 720"
-		texl	"0 0"
-		texh	"64 37"
-		click	{
-			cmd "mn_pop;pingservers;"
-		}
+		icon return
+		click	{ cmd "mn_pop;pingservers;" }
 	}
 
 	button button_favorite
@@ -1439,14 +1436,13 @@ menu multiplayer_selectteam
 		click	{ cmd "teamnum_dec;" }
 	}
 
-	pic button_exit
+	custombutton button_exit
 	{
 		tooltip	"_Finish the teamselection and start the game"
-		image	hud/buttons2
-		mousefx	true
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
 		pos		"684 494"
-		texl	"0 0"
-		texh	"64 37"
+		icon return
 		click	{ cmd "spawnsoldiers;" }
 	}
 
