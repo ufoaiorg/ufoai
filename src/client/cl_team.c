@@ -935,15 +935,12 @@ static void CL_Select_f (void)
 		}
 		/* we are still in the menu - so fall through */
 	case SELECT_MODE_EQUIP:
-		/* no base or no aircraft selected */
-		if (!baseCurrent || !baseCurrent->aircraftCurrent)
-			return;
 		/* no soldiers in the current aircraft */
 		if (chrDisplayList.num <= 0) {
 			/* multiplayer - load a team first */
 			if (GAME_IsMultiplayer()) {
-				/** @todo Why not use the MN_PopMenu and MN_PushMenu functions? */
-				Cbuf_AddText("mn_pop;mn_push mp_team;");
+				MN_PopMenu(qfalse);
+				MN_PushMenu("mp_team", NULL);
 			}
 			return;
 		/* not that many soldiers from the  aircraft shown. */
@@ -963,18 +960,21 @@ static void CL_Select_f (void)
 		{
 			const employeeType_t employeeType = displayHeavyEquipmentList
 					? EMPL_ROBOT : EMPL_SOLDIER;
-			if (!baseCurrent || num >= E_CountHired(baseCurrent, employeeType)) {
-				/*Com_Printf("num: %i / max: %i\n", num, E_CountHired(baseCurrent, EMPL_SOLDIER));*/
+			base_t *base = GAME_IsCampaign() ? baseCurrent : NULL;
+
+			if (GAME_IsCampaign() && !base)
 				return;
-			}
+
+			if (num >= E_CountHired(base, employeeType))
+				return;
 
 			employee = E_GetEmployeeByMenuIndex(num);
 			if (!employee)
-				Sys_Error("CL_Select_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+				Sys_Error("CL_Select_f: No employee at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
 
 			chr = &employee->chr;
 			if (!chr)
-				Sys_Error("CL_Select_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+				Sys_Error("CL_Select_f: No hired character at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
 		}
 		break;
 	default:
@@ -993,14 +993,14 @@ static void CL_Select_f (void)
 				return;
 		} else {
 			/* HACK */
-			/* deselect current selected soldier and select the new one - these are confuncs */
+			/* deselect current selected soldier and select the new one */
 			MN_ExecuteConfunc("teamdeselect%i", cl_selected->integer);
 			MN_ExecuteConfunc("teamselect%i", num);
 			MN_ExecuteConfunc("equipdeselect%i", cl_selected->integer);
 			MN_ExecuteConfunc("equipselect%i", num);
 		}
 	} else {
-		/* deselect current selected soldier and select the new one - these are confuncs */
+		/* deselect current selected soldier and select the new one */
 		MN_ExecuteConfunc("%sdeselect%i", command, cl_selected->integer);
 		MN_ExecuteConfunc("%sselect%i", command, num);
 	}
@@ -1469,16 +1469,16 @@ void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t
 
 	if (CL_SoldierInAircraft(employee, aircraft)) {
 		/* Remove soldier from aircraft/team. */
-		Cbuf_AddText(va("listdel %i\n", num));
+		MN_ExecuteConfunc("listdel %i\n", num);
 		/* use the global aircraft index here */
 		CL_RemoveSoldierFromAircraft(employee, aircraft);
-		Cbuf_AddText(va("listholdsnoequip %i\n", num));
+		MN_ExecuteConfunc("listholdsnoequip %i\n", num);
 	} else {
 		/* Assign soldier to aircraft/team if aircraft is not full */
 		if (CL_AssignSoldierToAircraft(employee, aircraft))
-			Cbuf_AddText(va("listadd %i\n", num));
+			MN_ExecuteConfunc("listadd %i\n", num);
 		else
-			Cbuf_AddText(va("listdel %i\n", num));
+			MN_ExecuteConfunc("listdel %i\n", num);
 	}
 	/* Select the desired one anyways. */
 	CL_UpdateActorAircraftVar(aircraft, employee->type);
