@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "../renderer/r_overlay.h"
+#include "../renderer/r_draw.h"
 
 void R_CreateRadarOverlay(void);
 static void CL_CampaignInit(qboolean load);

@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cl_alienbase.h"
 #include "menu/m_popup.h"
 #include "campaign/cp_time.h"
+#include "renderer/r_draw.h"
 
 
 /** @todo Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */

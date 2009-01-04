@@ -25,11 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODES_H
 #define CLIENT_MENU_M_NODES_H
 
-#include "../cl_renderer.h"
-#include "../../common/common.h"
-#include "../renderer/r_mesh.h"
-#include "../renderer/r_draw.h"
-#include "../renderer/r_mesh_anim.h"
+#include "../../shared/ufotypes.h"
+#include "../../shared/mathlib.h"
 
 /* prototype */
 struct menuIcon_s;
