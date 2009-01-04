@@ -613,7 +613,7 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 
 /**
  * @sa Cmd_AddParamCompleteFunction
- * @param[out] match The found entry of the list we are searching (only in case we found exactly one)
+ * @param[out] match The found entry of the list we are searching, in case of more than one entry their common suffix is returned.
  * @param[in] len The length of the already typed string (where you are searching entries for in the @c list)
  * @param[in] matches The amount of entries in the @c list parameter
  * @param[in] list The list of entries to search for possible matches
@@ -629,6 +629,7 @@ int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, co
 	/* exactly one match */
 	case 1:
 		*match = list[0];
+		lenResult = strlen(list[0]);
 		break;
 	/* no matches */
 	case 0:
@@ -643,20 +644,19 @@ int Cmd_GenericCompleteFunction (size_t len, const char **match, int matches, co
 				if (matchChar != list[i][lenResult])
 					break;
 			}
-			lenResult++;
 			if (i != matches)
 				break;
-		}
-		/* len is >= 1 here */
-		if (len != lenResult) {
-			if (lenResult >= MAX_QPATH)
-				lenResult = MAX_QPATH - 1;
-			/* j must be bigger than 0 here */
-			Q_strncpyz(matchString, list[0], lenResult);
-			*match = matchString;
-			matches = 1;
+			else
+				lenResult++;
 		}
 		break;
+	}
+	/* len is >= 1 here */
+	if (matches && len != lenResult) {
+		if (lenResult >= MAX_QPATH)
+			lenResult = MAX_QPATH - 1;
+		Q_strncpyz(matchString, list[0], lenResult + 1);
+		*match = matchString;
 	}
 	return matches;
 }

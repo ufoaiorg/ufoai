@@ -566,11 +566,16 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 		cntCmd = Cmd_CompleteCommand(s, &cmd);
 		cntCvar = Cvar_CompleteVariable(s, &cvar);
 
-		if (cntCmd == 1 && !cntCvar)
+		/* complete as much as possible, append only if one single match is found */
+		if (cntCmd > 0 && !cntCvar) {
 			use = cmd;
-		else if (!cntCmd && cntCvar == 1)
+			if (cntCmd != 1)
+				append = qfalse;
+		} else if (!cntCmd && cntCvar > 0) {
 			use = cvar;
-		else
+			if (cntCvar != 1)
+				append = qfalse;
+		} else
 			Com_Printf("\n");
 	}
 
