@@ -123,10 +123,12 @@ static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, con
 static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const const char **token, const char *errhead)
 {
 	char cast[32] = "abstractnode";
-	char path[MAX_VAR] = "\0";
+	char path[MAX_VAR];
 	const char *nodeName = *token + 1;
 	nodeBehaviour_t *castedBehaviour;
 	const value_t *val;
+
+	path[0] = '\0';
 
 	/* cvar setter */
 	if (Q_strncmp(nodeName, "cvar:", 5) == 0) {
@@ -158,19 +160,18 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	if (nodeName[0] == '(') {
 		char *end = strchr(nodeName, ')');
 		assert(end != NULL);
-		assert(end - nodeName < 32);
+		assert(end - nodeName < sizeof(cast));
 
 		/* copy the cast and update the node name */
 		if (end != NULL) {
-			strncpy(cast, nodeName + 1, end - nodeName - 1);
-			cast[end - nodeName - 1] = '\0';
+			Q_strncpyz(cast, nodeName + 1, end - nodeName);
 			nodeName = end + 1;
 		}
 	}
 
 	/* copy the node path */
 	if (action->type.param1 == EA_PATHPROPERTY) {
-		strcat(path, nodeName);
+		Q_strcat(path, nodeName, sizeof(path));
 		action->data = (byte*) MN_AllocString(path, 0);
 	} else {
 		action->data = (byte*) MN_AllocString(nodeName, 0);
