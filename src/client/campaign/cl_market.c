@@ -872,31 +872,6 @@ static void BS_SellAircraft_f (void)
 	}
 }
 
-static void BS_BuySellItem_f (void)
-{
-	int num;
-	float value;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!baseCurrent)
-		return;
-
-	num = atoi(Cmd_Argv(1));
-	value = atof(Cmd_Argv(2));
-	if (value == 0)
-		return;
-
-	if (value > 0) {
-		Cbuf_AddText(va("mn_buy %d\n", num));
-	} else {
-		Cbuf_AddText(va("mn_sell %d\n", num));
-	}
-}
-
 /**
  * @brief Buy one item of a given type.
  * @sa BS_SellItem_f
@@ -925,7 +900,7 @@ static void BS_BuyItem_f (void)
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	Cbuf_AddText(va("market_click %i\n", num + buyList.scroll));
+	Cbuf_AddText(va("buy_selectitem %i\n", num + buyList.scroll));
 
 	if ((buyCat == FILTER_UGVITEM) && (buyList.l[num + buyList.scroll].ugv)) {
 		/* The list entry is an actual ugv/robot */
@@ -1002,7 +977,7 @@ static void BS_SellItem_f (void)
 	if (num < 0 || num >= buyList.length)
 		return;
 
-	Cbuf_AddText(va("market_click %i\n", num + buyList.scroll));
+	Cbuf_AddText(va("buy_selectitem %i\n", num + buyList.scroll));
 	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		employee_t *employee;
 		/* The list entry is an actual ugv/robot */
@@ -1048,6 +1023,31 @@ static void BS_SellItem_f (void)
 			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item->idx] * numItems);
 			BS_UpdateItem(baseCurrent, num);
 		}
+	}
+}
+
+static void BS_BuySellItem_f (void)
+{
+	int num;
+	float value;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if (!baseCurrent)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+	value = atof(Cmd_Argv(2));
+	if (value == 0)
+		return;
+
+	if (value > 0) {
+		BS_BuyItem_f();
+	} else {
+		BS_SellItem_f();
 	}
 }
 
