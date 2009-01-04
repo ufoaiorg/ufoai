@@ -615,6 +615,18 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 	mn_installation_title = Cvar_Get("mn_installation_title", "", 0, NULL);
 }
 
+static const value_t installation_vals[] = {
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(installationTemplate_t, name), 0},
+	{"radar_range", V_INT, offsetof(installationTemplate_t, radarRange), MEMBER_SIZEOF(installationTemplate_t, radarRange)},
+	{"radar_tracking_range", V_INT, offsetof(installationTemplate_t, trackingRange), MEMBER_SIZEOF(installationTemplate_t, trackingRange)},
+	{"max_batteries", V_INT, offsetof(installationTemplate_t, maxBatteries), MEMBER_SIZEOF(installationTemplate_t, maxBatteries)},
+	{"max_ufo_stored", V_INT, offsetof(installationTemplate_t, maxUFOsStored), MEMBER_SIZEOF(installationTemplate_t, maxUFOsStored)},
+	{"max_damage", V_INT, offsetof(installationTemplate_t, maxDamage), MEMBER_SIZEOF(installationTemplate_t, maxDamage)},
+	{"model", V_CLIENT_HUNK_STRING, offsetof(installationTemplate_t, model), 0},
+
+	{NULL, 0, 0, 0}
+};
+
 /**
  * @brief Copies an entry from the installation description file into the list of installation templates.
  * @note Parses one "installation" entry in the installation.ufo file and writes
@@ -627,6 +639,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 	installationTemplate_t *installation;
 	const char *errhead = "INS_ParseInstallations: unexpected end of file (names ";
 	const char *token;
+	const value_t *vp;
 	int i;
 
 	/* get id list body */
@@ -670,62 +683,55 @@ void INS_ParseInstallations (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		/* get values */
-		if (!Q_strncmp(token, "name", MAX_VAR)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
+		/* check for some standard values */
+		for (vp = installation_vals; vp->string; vp++)
+			if (!Q_strcmp(token, vp->string)) {
+				/* found a definition */
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
 
-			installation->name = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-		} else if (!Q_strncmp(token, "cost", MAX_VAR)) {
-			char cvarname[MAX_VAR] = "mn_installation_";
+				switch (vp->type) {
+				case V_TRANSLATION_MANUAL_STRING:
+					token++;
+				case V_CLIENT_HUNK_STRING:
+					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					break;
+				default:
+					if (Com_EParseValue(installation, token, vp->type, vp->ofs, vp->size) == -1)
+						Com_Printf("INS_ParseInstallations: Wrong size for value %s\n", vp->string);
+					break;
+				}
+				break;
+			}
 
-			Q_strcat(cvarname, installation->id, MAX_VAR);
-			Q_strcat(cvarname, "_cost", MAX_VAR);
+		/* other values */
+		if (!vp->string) {
+			if (!Q_strncmp(token, "cost", MAX_VAR)) {
+				char cvarname[MAX_VAR] = "mn_installation_";
 
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			installation->cost = atoi(token);
+				Q_strcat(cvarname, installation->id, MAX_VAR);
+				Q_strcat(cvarname, "_cost", MAX_VAR);
 
-			Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
-		} else if (!Q_strncmp(token, "radar_range", MAX_VAR)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			installation->radarRange = atof(token);
-		} else if (!Q_strncmp(token, "radar_tracking_range", MAX_VAR)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			installation->trackingRange = atof(token);
-		} else if (!Q_strncmp(token, "max_batteries", MAX_VAR)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			installation->maxBatteries = atoi(token);
-		} else if (!Q_strncmp(token, "max_ufo_stored", MAX_VAR)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			installation->maxUFOsStored = atoi(token);
-		} else if (!Q_strncmp(token, "max_damage", MAX_VAR)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			installation->maxDamage = atoi(token);
-		} else if (!Q_strncmp(token, "buildtime", MAX_VAR)) {
-			char cvarname[MAX_VAR] = "mn_installation_";
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				installation->cost = atoi(token);
 
-			Q_strcat(cvarname, installation->id, MAX_VAR);
-			Q_strcat(cvarname, "_buildtime", MAX_VAR);
+				Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
+			} else if (!Q_strncmp(token, "buildtime", MAX_VAR)) {
+				char cvarname[MAX_VAR] = "mn_installation_";
 
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			installation->buildTime = atoi(token);
+				Q_strcat(cvarname, installation->id, MAX_VAR);
+				Q_strcat(cvarname, "_buildtime", MAX_VAR);
 
-			Cvar_Set(cvarname, va(ngettext("%d day\n", "%d days\n", atoi(token)), atoi(token)));
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				installation->buildTime = atoi(token);
+
+				Cvar_Set(cvarname, va(ngettext("%d day\n", "%d days\n", atoi(token)), atoi(token)));
+			}
 		}
 	} while (*text);
 }

@@ -1519,15 +1519,17 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draw installations */
 	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		const char *symbol;
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(installationIdx);
+		const installationTemplate_t *tpl;
 		if (!installation)
 			continue;
+
+		tpl = installation->installationTemplate;
 
 		/* Draw weapon range if at least one UFO is visible */
 		if (oneUFOVisible && AII_InstallationCanShoot(installation)) {
 			/** @todo When there will be different possible installation weapon, range should change */
-			for (i = 0; i < installation->installationTemplate->maxBatteries; i++) {
+			for (i = 0; i < tpl->maxBatteries; i++) {
 				const aircraftSlot_t const *slot = &installation->batteries[i].slot;
 				if (slot->item
 					&& (slot->ammoLeft > 0 || slot->ammoLeft)
@@ -1542,30 +1544,15 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			RADAR_DrawInMap(node, &installation->radar, installation->pos);
 
-		switch (INS_GetType(installation)) {
-		case INSTALLATION_RADAR:
-			symbol = "geoscape/radar";
-			break;
-		case INSTALLATION_UFOYARD:
-			symbol = "geoscape/ufoyard";
-			break;
-		case INSTALLATION_DEFENCE:
-			symbol = "geoscape/defence";
-			break;
-		default:
-			symbol = "geoscape/base";
-			break;
-		}
-
 		/* Draw installation */
 		if (cl_3dmap->integer) {
 			const float angle = MAP_AngleOfPath(installation->pos, northPole, NULL, NULL) + 90.0f;
-			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, symbol, 0);
+			MAP_Draw3DMarkerIfVisible(node, installation->pos, angle, tpl->model, 0);
 		} else if (MAP_MapToScreen(node, installation->pos, &x, &y)) {
-			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, symbol);
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, tpl->model);
 		}
 
-		/* Draw base names */
+		/* Draw installation names */
 		if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
 			R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], installation->name, 0, 0, NULL, qfalse, 0);
 	}

@@ -177,7 +177,7 @@ typedef struct aircraft_s {
 	char *name;			/**< Translateable name. */
 	char *shortname;	/**< Translateable shortname (being used in small popups). */
 	char *image;		/**< Image on geoscape. */
-	char *model;
+	char *model;		/**< Model used on geoscape */
 	aircraftType_t type;/**< Type of aircraft, see aircraftType_t. */
 	ufoType_t ufotype;	/**< Type of UFO, see ufoType_t (UFO_MAX if craft is not a UFO). */
 	int status;			/**< Status of this aircraft, see aircraftStatus_t. */
