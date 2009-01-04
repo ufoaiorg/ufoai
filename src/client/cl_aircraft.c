@@ -226,8 +226,12 @@ void AIR_ListAircraft_f (void)
 			}
 			Com_Printf("...damage: %i\n", aircraft->damage);
 			Com_Printf("...stats: ");
-			for (k = 0; k < AIR_STATS_MAX; k++)
-				Com_Printf("%i ", aircraft->stats[k]);
+			for (k = 0; k < AIR_STATS_MAX; k++) {
+				if (k == AIR_STATS_WRANGE)
+					Com_Printf("%.2f ", aircraft->stats[k] / 1000.0f);
+				else
+					Com_Printf("%i ", aircraft->stats[k]);
+			}
 			Com_Printf("\n");
 			Com_Printf("...name %s\n", aircraft->id);
 			Com_Printf("...type %i\n", aircraft->type);
@@ -1438,7 +1442,9 @@ static const char *air_position_strings[AIR_POSITIONS_MAX] = {
 	"rear_right"
 };
 
-/** @brief Valid aircraft parameter definitions from script files. */
+/** @brief Valid aircraft parameter definitions from script files.
+ * @note wrange can't be parsed in aircraft definition: this is a property
+ * of weapon */
 static const value_t aircraft_param_vals[] = {
 	{"speed", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"maxspeed", V_INT, offsetof(aircraft_t, stats[AIR_STATS_MAXSPEED]), MEMBER_SIZEOF(aircraft_t, stats[0])},
@@ -1446,7 +1452,6 @@ static const value_t aircraft_param_vals[] = {
 	{"ecm", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"damage", V_INT, offsetof(aircraft_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
-	{"wrange", V_INT, offsetof(aircraft_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 
 	{NULL, 0, 0, 0}
 };

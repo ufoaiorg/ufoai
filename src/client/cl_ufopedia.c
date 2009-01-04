@@ -642,8 +642,10 @@ void UP_AircraftItemDescription (const objDef_t *item)
 			Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_WRANGE),
 				CL_AircraftMenuStatsValues(item->craftitem.stats[AIR_STATS_WRANGE], AIR_STATS_WRANGE)), sizeof(itemText));
 
-		/* we scan all stats except last one which is range */
-		for (i = 0; i < AIR_STATS_WRANGE; i++) {
+		/* we scan all stats except weapon range */
+		for (i = 0; i < AIR_STATS_MAX; i++) {
+			if (i == AIR_STATS_WRANGE)
+				continue;
 			if (item->craftitem.stats[i] > 2.0f)
 				Q_strcat(itemText, va("%s:\t+%i\n", CL_AircraftStatToName(i), CL_AircraftMenuStatsValues(item->craftitem.stats[i], i)), sizeof(itemText));
 			else if (item->craftitem.stats[i] < -2.0f)

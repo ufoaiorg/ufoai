@@ -2251,7 +2251,7 @@ static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int st
 	/* you can not have advantages from items if it is being installed or removed, but only disavantages */
 	if (slot->installationTime != 0) {
 		item = slot->item;
-		if (item->craftitem.stats[stat] > 1.0f) /* advandages for relative and absolute values */
+		if (item->craftitem.stats[stat] > 1.0f) /* advantages for relative and absolute values */
 			return qfalse;
 	}
 
@@ -2297,8 +2297,11 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 	source = aircraft->tpl;
 
-	/* we scan all the stats except AIR_STATS_WRANGE (see below) */
-	for (currentStat = 0; currentStat < AIR_STATS_MAX - 1; currentStat++) {
+	for (currentStat = 0; currentStat < AIR_STATS_MAX; currentStat++) {
+		/* we scan all the stats except AIR_STATS_WRANGE (see below) */
+		if (currentStat == AIR_STATS_WRANGE)
+			continue;
+
 		/* initialise value */
 		aircraft->stats[currentStat] = source->stats[currentStat];
 
@@ -2335,14 +2338,16 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		}
 	}
 
-	/* now we update AIR_STATS_WRANGE (this one is the biggest value of every ammo) */
+	/* now we update AIR_STATS_WRANGE (this one is the biggest range of every ammo) */
 	aircraft->stats[AIR_STATS_WRANGE] = 0;
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		if (!AII_CheckUpdateAircraftStats (&aircraft->weapons[i], AIR_STATS_WRANGE))
+		if (!AII_CheckUpdateAircraftStats(&aircraft->weapons[i], AIR_STATS_WRANGE))
 			continue;
 		item = aircraft->weapons[i].ammo;
-		if (item && item->craftitem.stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])	/***@todo Check if the "ammo" is _supposed_ to be set here! */
-			aircraft->stats[AIR_STATS_WRANGE] = item->craftitem.stats[AIR_STATS_WRANGE];
+		/* you can't fire if you don't have ammo
+		 * store wrange in millidegree, because this is an int */
+		if (item && item->craftitem.stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE] / 1000.0f)
+			aircraft->stats[AIR_STATS_WRANGE] = 1000 * item->craftitem.stats[AIR_STATS_WRANGE];
 	}
 
 	/* check that aircraft hasn't too much fuel (caused by removal of fuel pod) */

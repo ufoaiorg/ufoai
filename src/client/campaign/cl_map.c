@@ -1478,6 +1478,8 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
  * @brief Draws one installation on the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
  * @param[in] installation Pointer to the installation to draw.
+ * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
+ * @param[in] font Default font.
  * @pre installation is not NULL.
  */
 static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installation_t *installation,
@@ -1521,6 +1523,8 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
  * @brief Draws one base on the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
  * @param[in] base Pointer to the base to draw.
+ * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
+ * @param[in] font Default font.
  */
 static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 	qboolean oneUFOVisible, const char* font)
@@ -1566,11 +1570,73 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 }
 
 /**
+ * @brief Draws one Phalanx aircraft on the geoscape map (2D and 3D)
+ * @param[in] node The menu node which will be used for drawing markers.
+ * @param[in] aircraft Pointer to the aircraft to draw.
+ * @param[in] oneUFOVisible Is there at least one UFO visible on the geoscape?
+ */
+static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *aircraft, qboolean oneUFOVisible)
+{
+	int x, y;
+	float angle;
+
+	/* Draw aircraft radar (only the "wire" style part) */
+	if (r_geoscape_overlay->integer & OVERLAY_RADAR)
+		RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
+
+	/* Draw only the bigger weapon range on geoscape: more detail will be given on airfight map */
+	if (oneUFOVisible)
+		MAP_MapDrawEquidistantPoints(node, aircraft->pos, aircraft->stats[AIR_STATS_WRANGE] / 1000.0f, red);
+
+	/* Draw aircraft route */
+	if (aircraft->status >= AIR_TRANSIT) {
+		/* aircraft is moving */
+		mapline_t path;
+
+		path.numPoints = aircraft->route.numPoints - aircraft->point;
+		/** @todo : check why path.numPoints can be sometime equal to -1 */
+		if (path.numPoints > 1) {
+			memcpy(path.point, aircraft->pos, sizeof(vec2_t));
+			memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
+			if (cl_3dmap->integer)
+				MAP_3DMapDrawLine(node, &path);
+			else
+				MAP_MapDrawLine(node, &path);
+		}
+		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+	} else {
+		/* aircraft is idle */
+		angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL);
+	}
+
+	/* Draw a circle around selected aircraft */
+	if (aircraft == selectedAircraft) {
+		if (cl_3dmap->integer)
+			MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
+		else
+			R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
+
+		/* Draw a circle around ufo purchased by selected aircraft */
+		if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
+			if (cl_3dmap->integer)
+				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
+			else
+				R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
+		}
+	}
+
+	/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
+	MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
+	VectorCopy(aircraft->pos, aircraft->oldDrawPos);
+}
+
+/**
  * @brief Draws all ufos, aircraft, bases and so on to the geoscape map (2D and 3D)
  * @param[in] node The menu node which will be used for drawing markers.
  * @note This is a drawing function only, called each time a frame is drawn. Therefore
  * you should not use this function to calculate eg. distance between 2 items on geoscape
- * (you should instead calculate it just after one of the item moved).
+ * (you should instead calculate it just after one of the item moved -- distance is not
+ * going to change when you rotate earth around itself and time is stopped eg.).
  * @sa MAP_DrawMap
  */
 void MAP_DrawMapMarkers (const menuNode_t* node)
@@ -1579,7 +1645,6 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
 	const char* font;
 
-	const vec4_t darkBrown = {0.3608f, 0.251f, 0.2f, 1.0f};
 	const vec4_t white = {1.f, 1.f, 1.f, 0.7f};
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
@@ -1647,11 +1712,11 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
 			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
-				float angle;
 				float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
-				float weaponRanges[MAX_AIRCRAFTSLOT];
-				int numWeaponRanges = AIR_GetAircraftWeaponRanges(aircraft->weapons, aircraft->maxWeapons, weaponRanges);
 
+				MAP_DrawMapOnePhalanxAircraft(node, aircraft, oneUFOVisible);
+
+				/** @todo Remove me: this shouldn't be in this function */
 				if (gd.combatZoomedUFO && aircraft->aircraftTarget == gd.combatZoomedUFO) {
 					float distance = MAP_GetDistance(aircraft->pos, gd.combatZoomedUFO->pos);
 					VectorCopy(aircraft->pos, combatZoomAttackingAircraftPos[combatZoomNumAttackingAircraft]);
@@ -1664,69 +1729,9 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 						closestInterceptorStatus = aircraft->status;
 					}
 				}
-
-				/* Draw aircraft radar (only the "wire" style part) */
-				if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-					RADAR_DrawInMap(node, &aircraft->radar, aircraft->pos);
-
-
-				/* Draw all weapon ranges for thi aircraft if at least one UFO is visible */
-				if (oneUFOVisible && numWeaponRanges > 0) {
-					if (gd.combatZoomedUFO) {
-						int idxWeaponRanges;
-						for (idxWeaponRanges = 0; idxWeaponRanges < numWeaponRanges; idxWeaponRanges++) {
-							MAP_MapDrawEquidistantPoints(node, aircraft->pos, weaponRanges[idxWeaponRanges], darkBrown);
-						}
-					} else {
-						MAP_MapDrawEquidistantPoints(node, aircraft->pos, weaponRanges[numWeaponRanges - 1], red);
-					}
-				}
-
-				/* Draw aircraft route */
-				if (aircraft->status >= AIR_TRANSIT) {
-					mapline_t path;
-
-					path.numPoints = aircraft->route.numPoints - aircraft->point;
-					/** @todo : check why path.numPoints can be sometime equal to -1 */
-					if (path.numPoints > 1) {
-						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
-						memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-						if (!gd.combatZoomedUFO) {
-							if (cl_3dmap->integer)
-								MAP_3DMapDrawLine(node, &path);
-							else
-								MAP_MapDrawLine(node, &path);
-						}
-					}
-					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
-				} else {
-					angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL);
-				}
-
-				/* Draw a circle around selected aircraft */
-				if (aircraft == selectedAircraft && !gd.combatZoomedUFO) {
-					if (cl_3dmap->integer)
-						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-					else
-						R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
-
-					/* Draw a circle around ufo purchased by selected aircraft */
-					if (aircraft->status == AIR_UFO && MAP_AllMapToScreen(node, aircraft->aircraftTarget->pos, &x, &y, NULL)) {
-						if (cl_3dmap->integer)
-							MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
-						else
-							R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "geoscape/circle");
-					}
-				}
-
-				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model, 0);
-				VectorCopy(aircraft->pos, aircraft->oldDrawPos);
 			}
 		}
 	}
-
-
 
 	/* draws ufos */
 	for (aircraftIdx = 0; aircraftIdx < gd.numUFOs; aircraftIdx++) {

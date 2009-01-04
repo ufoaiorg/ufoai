@@ -229,7 +229,8 @@ typedef struct aircraft_s {
 	struct installation_s *installationTarget;		/**< Target of the aircraft. NULL if the target is an aircraft */
 	struct aircraft_s *aircraftTarget;		/**< Target of the aircraft (ufo or phalanx) */
 	radar_t	radar;				/**< Radar to track ufos */
-	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on */
+	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on
+								 * @note As this is an int, wrange is multiplied by 1000 */
 
 	technology_t* tech;		/**< link to the aircraft tech */
 
