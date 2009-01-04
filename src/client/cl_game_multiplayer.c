@@ -28,6 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_game_multiplayer.h"
 #include "menu/m_popup.h"
 
+static aircraft_t multiplayerFakeAircraft;
+
+static void B_MultiplayerAssignInitial_f (void)
+{
+	if (GAME_IsMultiplayer())
+		B_AssignInitial(cls.missionaircraft);
+}
+
 /**
  * @brief Starts a server and checks if the server loads a team unless he is a dedicated
  * server admin
@@ -36,25 +44,18 @@ static void MN_StartServer_f (void)
 {
 	char map[MAX_VAR];
 	mapDef_t *md;
-	aircraft_t *aircraft;
-	base_t *base;
 
 	if (!GAME_IsMultiplayer())
 		return;
 
-	base = B_GetBaseByIDX(0);
-	aircraft = &base->aircraft[0];
-	assert(aircraft);
-
-	if (!sv_dedicated->integer && !B_GetNumOnTeam(aircraft)) {
-		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
-		B_AssignInitial(NULL);
+	if (!sv_dedicated->integer && !B_GetNumOnTeam(cls.missionaircraft)) {
+		B_AssignInitial(cls.missionaircraft);
 		MN_Popup(_("No team assigned"), _("Please choose and equip your team first"));
 		return;
 	}
 
 	if (Cvar_VariableInteger("sv_teamplay")
-		&& Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {
+	 && Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {
 		MN_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
 		return;
 	}
@@ -168,7 +169,6 @@ void GAME_MP_InitStartup (void)
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
 	const char *type, *name, *text;
-	base_t *base;
 
 	Cvar_ForceSet("sv_maxclients", "2");
 
@@ -176,6 +176,7 @@ void GAME_MP_InitStartup (void)
 	Cmd_AddCommand("mn_updategametype", MN_UpdateGametype_f, "Update the menu values with current gametype values");
 	Cmd_AddCommand("mn_nextgametype", MN_ChangeGametype_f, "Switch to the next multiplayer game type");
 	Cmd_AddCommand("mn_prevgametype", MN_ChangeGametype_f, "Switch to the previous multiplayer game type");
+	Cmd_AddCommand("assign_initial", B_MultiplayerAssignInitial_f, "Assign initial multiplayer equipment to soldiers");
 
 	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 	 * cvars if values were previously set */
@@ -184,23 +185,9 @@ void GAME_MP_InitStartup (void)
 	if (strlen(max_spp))
 		Cvar_Set("sv_maxsoldiersperplayer", max_spp);
 
-	curCampaign = NULL;
-	selectedMission = NULL;
-	base = B_GetBaseByIDX(0);
-	B_ClearBase(base);
 	RS_ResetTechs();
-	gd.numBases = 1;
-	gd.numAircraft = 0;
-	baseCurrent = base;
 
-	/* now add a dropship where we can place our soldiers in */
-	AIR_NewAircraft(base, "craft_drop_firebird");
-
-	cls.missionaircraft = AIR_AircraftGetFromIdx(0);
-	if (!cls.missionaircraft) {
-		Sys_Error("No aircraft for multiplayer - check the sv_maxclients value");
-	}
-	baseCurrent->aircraftCurrent = cls.missionaircraft;
+	cls.missionaircraft = &multiplayerFakeAircraft;
 
 	Com_Printf("Changing to Multiplayer\n");
 	/* disconnect already running session - when entering the
@@ -222,7 +209,6 @@ void GAME_MP_InitStartup (void)
 		RS_RequiredLinksAssign();
 		Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 	}
-	Cvar_Set("mn_aircraft_model", "");
 }
 
 void GAME_MP_Shutdown (void)
@@ -231,4 +217,5 @@ void GAME_MP_Shutdown (void)
 	Cmd_RemoveCommand("mn_updategametype");
 	Cmd_RemoveCommand("mn_nextgametype");
 	Cmd_RemoveCommand("mn_prevgametype");
+	Cmd_RemoveCommand("assign_initial");
 }

@@ -41,7 +41,7 @@ linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
 static int CL_GetRankIdx(const char* rankID);
-static void CL_SaveTeamMultiplayerInfo(sizebuf_t *buf, base_t *base, const employeeType_t type);
+static void CL_SaveTeamMultiplayerInfo(sizebuf_t *buf, const employeeType_t type);
 static void CL_MarkTeam_f(void);
 
 /* List of currently displayed or equipeable characters. extern definition in client.h */
@@ -770,7 +770,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 /**
  * @brief Clears all containers that are temp containers (see script definition).
  * @sa CL_GenerateEquipment_f
- * @sa CL_ResetMultiplayerTeamInBase
+ * @sa CL_ResetMultiplayerTeamInAircraft
  * @sa CL_SaveTeamMultiplayerInfo
  * @sa CL_SendCurTeamInfo
  */
@@ -778,10 +778,6 @@ void CL_CleanTempInventory (base_t* base)
 {
 	int i, k;
 
-	if (!base)
-		return;
-
-	INVSH_DestroyInventory(&base->bEquipment);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (csi.ids[k].temp) {
@@ -789,6 +785,11 @@ void CL_CleanTempInventory (base_t* base)
 				gd.employees[EMPL_SOLDIER][i].inv.c[k] = NULL;
 				gd.employees[EMPL_ROBOT][i].inv.c[k] = NULL;
 			}
+
+	if (!base)
+		return;
+
+	INVSH_DestroyInventory(&base->bEquipment);
 }
 
 /**
@@ -1117,54 +1118,47 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
  * @note Available via script command team_reset.
  * @note Called when initializing the multiplayer menu (for init node and new team button).
  */
-void CL_ResetMultiplayerTeamInBase (base_t *base)
+void CL_ResetMultiplayerTeamInAircraft (aircraft_t *aircraft)
 {
-	employee_t* employee;
-
 	if (!GAME_IsMultiplayer())
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "Reset of base team flags.\n");
-	if (!base) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: No base given\n");
+	if (!aircraft) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: No aircraft given\n");
 		return;
 	}
 
-	CL_CleanTempInventory(base);
+	CL_CleanTempInventory(NULL);
 
-	AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, 0));
+	AIR_ResetAircraftTeam(aircraft);
 
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->integer) {
-		employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-		employee->hired = qtrue;
-		employee->baseHired = base;
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: Generate character for multiplayer - employee->chr.name: '%s' (base: %i)\n", employee->chr.name, base->idx);
+		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: Generate character for multiplayer - employee->chr.name: '%s'\n", employee->chr.name);
 	}
 
-	/* reset the multiplayer inventory; stored in baseCurrent->storage */
+	/* reset the multiplayer inventory; stored in ccs.eMission */
 	{
 		const equipDef_t *ed;
 		const char *name = "multiplayer";
-		int i;
 
 		/* search equipment definition */
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInBase: no curCampaign - using equipment '%s'\n", name);
-		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
-			if (!Q_strncmp(name, ed->name, MAX_VAR))
-				break;
-		}
-		if (i == csi.numEDs) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: no curCampaign - using equipment '%s'\n", name);
+		ed = INV_GetEquipmentDefinitionByID(name);
+		if (ed == NULL) {
 			Com_Printf("Equipment '%s' not found!\n", name);
 			return;
 		}
-		base->storage = *ed; /* copied, including the arrays inside! */
+		ccs.eMission = *ed; /* copied, including the arrays inside! */
 	}
 }
 
-static void CL_ResetMultiplayerTeamInBase_f (void)
+static void CL_ResetMultiplayerTeamInAircraft_f (void)
 {
-	CL_ResetMultiplayerTeamInBase(baseCurrent);
+	if (baseCurrent)
+		CL_ResetMultiplayerTeamInAircraft(baseCurrent->aircraftCurrent);
 }
 
 /**
@@ -1186,11 +1180,15 @@ int CL_GenTeamList (const base_t *base)
 }
 
 /**
- * @brief Call all the needed functions to generate a new initial team (e.g. for multiplayer)
+ * @brief Call all the needed functions to generate a new initial team for multiplayer
  */
 static void CL_GenerateNewTeam_f (void)
 {
-	CL_ResetMultiplayerTeamInBase(baseCurrent);
+	if (!GAME_IsMultiplayer()) {
+		Com_Printf("%s should only be called for multiplayer games\n", Cmd_Argv(0));
+		return;
+	}
+	CL_ResetMultiplayerTeamInAircraft(cls.missionaircraft);
 	Cvar_Set("mn_teamname", _("NewTeam"));
 	CL_GameExit();
 	MN_PushMenu("team", NULL);
@@ -1487,7 +1485,7 @@ void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
  * @sa CL_RemoveSoldierFromAircraft
  * @sa AIR_AddToAircraftTeam
  */
-static qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *aircraft)
+qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *aircraft)
 {
 	if (!employee || !aircraft)
 		return qfalse;
@@ -1629,14 +1627,13 @@ static void CL_AssignSoldier_f (void)
  * @sa CL_LoadTeamMultiplayer
  * @todo Implement EMPL_ROBOT
  */
-static qboolean CL_SaveTeamMultiplayer (base_t *base, aircraft_t *aircraft, const char *filename)
+static qboolean CL_SaveTeamMultiplayer (const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	const char *name;
 	int i, res;
-
-	assert(base);
+	aircraft_t *aircraft = cls.missionaircraft;
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
@@ -1649,7 +1646,7 @@ static qboolean CL_SaveTeamMultiplayer (base_t *base, aircraft_t *aircraft, cons
 	MSG_WriteString(&sb, name);
 
 	/* store team */
-	CL_SaveTeamMultiplayerInfo(&sb, base, EMPL_SOLDIER);
+	CL_SaveTeamMultiplayerInfo(&sb, EMPL_SOLDIER);
 
 	/* store assignment */
 	MSG_WriteByte(&sb, aircraft->teamSize);
@@ -1672,8 +1669,8 @@ static qboolean CL_SaveTeamMultiplayer (base_t *base, aircraft_t *aircraft, cons
 	MSG_WriteShort(&sb, csi.numODs);
 	for (i = 0; i < csi.numODs; i++) {
 		MSG_WriteString(&sb, csi.ods[i].id);
-		MSG_WriteLong(&sb, base->storage.num[i]);
-		MSG_WriteByte(&sb, base->storage.numLoose[i]);
+		MSG_WriteLong(&sb, ccs.eMission.num[i]);
+		MSG_WriteByte(&sb, ccs.eMission.numLoose[i]);
 	}
 
 	/* write data */
@@ -1692,15 +1689,17 @@ static qboolean CL_SaveTeamMultiplayer (base_t *base, aircraft_t *aircraft, cons
  */
 static void CL_SaveTeamMultiplayerSlot_f (void)
 {
-	/* baseCurrent is checked here */
-	if (!E_CountHired(baseCurrent, EMPL_SOLDIER)) {
+	if (!GAME_IsMultiplayer())
+		return;
+
+	if (!gd.numEmployees[EMPL_SOLDIER]) {
 		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
-	} else if (baseCurrent->aircraftCurrent) {
+	} else if (cls.missionaircraft) {
 		char filename[MAX_OSPATH];
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-		if (!CL_SaveTeamMultiplayer(baseCurrent, baseCurrent->aircraftCurrent, filename))
+		if (!CL_SaveTeamMultiplayer(filename))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	} else {
 		Com_Printf("Nothing to safe - no team assigned to the aircraft\n");
@@ -1781,7 +1780,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	int version;
 	aircraft_t *aircraft;
 	int i, num;
-	base_t *base;
 
 	/* open file */
 	f = fopen(filename, "rb");
@@ -1804,12 +1802,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	/* load the teamname */
 	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
 
-	base = B_GetBaseByIDX(0);
-
-	/* load the team */
-	/* reset data */
-	CL_ResetCharacters(base);
-
 	/* read whole team list */
 	num = MSG_ReadByte(&sb);
 	Com_DPrintf(DEBUG_CLIENT, "load %i teammembers\n", num);
@@ -1817,12 +1809,10 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	for (i = 0; i < num; i++) {
 		/* New employee */
 		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-		employee->hired = qtrue;
-		employee->baseHired = base;
 		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
 	}
 
-	aircraft = &base->aircraft[0];
+	aircraft = cls.missionaircraft;
 	AIR_ResetAircraftTeam(aircraft);
 
 	/* get assignment */
@@ -1853,8 +1843,8 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 			MSG_ReadLong(&sb);
 			MSG_ReadByte(&sb);
 		} else {
-			base->storage.num[od->idx] = MSG_ReadLong(&sb);
-			base->storage.numLoose[od->idx] = MSG_ReadByte(&sb);
+			ccs.eMission.num[od->idx] = MSG_ReadLong(&sb);
+			ccs.eMission.numLoose[od->idx] = MSG_ReadByte(&sb);
 		}
 	}
 }
@@ -1882,7 +1872,7 @@ void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("team_new", CL_GenerateNewTeam_f, "Generates a new empty team");
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
-	Cmd_AddCommand("team_reset", CL_ResetMultiplayerTeamInBase_f, NULL);
+	Cmd_AddCommand("team_reset", CL_ResetMultiplayerTeamInAircraft_f, NULL);
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
 	Cmd_AddCommand("equip_type", CL_EquipType_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
@@ -1911,25 +1901,21 @@ void TEAM_InitStartup (void)
  * @sa CL_SendCurTeamInfo
  * @sa CL_LoadTeamMultiplayerMember
  */
-static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf, base_t *base, const employeeType_t type)
+static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf, const employeeType_t type)
 {
 	linkedList_t *hiredEmployees = NULL;
 	linkedList_t *hiredEmployeesTemp;
-	int j, num;
-
-	assert(base);
+	int i, j, num;
 
 	/* clean temp inventory */
-	CL_CleanTempInventory(base);
+	CL_CleanTempInventory(NULL);
 
-	num = E_GetHiredEmployees(base, type, &hiredEmployees);
-	hiredEmployeesTemp = hiredEmployees;
+	num = gd.numEmployees[type];
 
 	/* header */
 	MSG_WriteByte(buf, num);
-	while (hiredEmployeesTemp) {
-		const employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
-		assert(employee);
+	for (i = 0; i < num; i++) {
+		const employee_t *employee = &gd.employees[type][i];
 
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, employee->chr.fieldSize);
@@ -1992,10 +1978,7 @@ static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf, base_t *base, const empl
  */
 void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team, base_t *base)
 {
-	character_t *chr;
 	int i, j;
-
-	assert(base);
 
 	/* clean temp inventory */
 	CL_CleanTempInventory(base);
@@ -2006,7 +1989,7 @@ void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team, base_t *base)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_SendCurTeamInfo: Upload information about %i soldiers to server\n", team->num);
 	for (i = 0; i < team->num; i++) {
-		chr = team->chr[i];
+		character_t *chr = team->chr[i];
 		assert(chr);
 		assert(chr->fieldSize > 0);
 		/* send the fieldSize ACTOR_SIZE_* */

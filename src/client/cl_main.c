@@ -216,8 +216,6 @@ static void CL_Quit_f (void)
  */
 void CL_GameInit (qboolean load)
 {
-	assert(curCampaign);
-
 	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
 	RS_InitTree(load);		/**< Initialise all data in the research tree. */
 
@@ -1344,26 +1342,22 @@ static void CL_SpawnSoldiers_f (void)
 		}
 	}
 
-	/* maybe we start the map directly from commandline for testing */
-	if (base) {
-		/* convert aircraft team to chr_list */
-		for (i = 0, chrListTemp.num = 0; i < aircraft->maxTeamSize; i++) {
-			if (aircraft->acTeam[i]) {
-				chrListTemp.chr[chrListTemp.num] = &aircraft->acTeam[i]->chr;
-				chrListTemp.num++;
-			}
+	/* convert aircraft team to chr_list */
+	for (i = 0, chrListTemp.num = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			chrListTemp.chr[chrListTemp.num] = &aircraft->acTeam[i]->chr;
+			chrListTemp.num++;
 		}
+	}
 
-		if (chrListTemp.num <= 0) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chrListTemp.num);
-		} else {
-			/* send team info */
-			struct dbuffer *msg = new_dbuffer();
-			CL_SendCurTeamInfo(msg, &chrListTemp, base);
-			NET_WriteMsg(cls.netStream, msg);
-		}
-	} else
-		Com_Printf("Don't spawn soldiers - no homebase of mission aircraft\n");
+	if (chrListTemp.num <= 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chrListTemp.num);
+	} else {
+		/* send team info */
+		struct dbuffer *msg = new_dbuffer();
+		CL_SendCurTeamInfo(msg, &chrListTemp, base);
+		NET_WriteMsg(cls.netStream, msg);
+	}
 
 	{
 		struct dbuffer *msg = new_dbuffer();

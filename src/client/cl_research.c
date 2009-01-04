@@ -652,12 +652,18 @@ void RS_InitTree (qboolean load)
 	byte found;
 
 	for (i = 0, tech = gd.technologies; i < gd.numTechnologies; i++, tech++) {
-		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
-			if (tech->markResearched.markOnly[j] && !Q_strncmp(tech->markResearched.campaign[j], curCampaign->researched, MAX_VAR)) {
-				Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
-				RS_ResearchFinish(tech);
-				break;
+		if (GAME_IsCampaign()) {
+			assert(GAME_CP_IsRunning());
+			for (j = 0; j < tech->markResearched.numDefinitions; j++) {
+				if (tech->markResearched.markOnly[j] && !Q_strncmp(tech->markResearched.campaign[j], curCampaign->researched, MAX_VAR)) {
+					Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+					RS_ResearchFinish(tech);
+					break;
+				}
 			}
+		} else {
+			Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+			RS_ResearchFinish(tech);
 		}
 
 		/* Save the idx to the id-names of the different requirement-types for quicker access. The id-strings themself are not really needed afterwards :-/ */
@@ -772,23 +778,25 @@ void RS_InitTree (qboolean load)
 		}
 	}
 
-	if (!load) {
-		assert(baseCurrent);
-		RS_MarkResearchable(qtrue, baseCurrent);
-	} else {
-		/* when you load a savegame right after starting UFO, the aircraft in bases
-		 * and installations don't have any tech assigned */
-		int k;
+	if (GAME_IsCampaign()) {
+		if (!load) {
+			assert(baseCurrent);
+			RS_MarkResearchable(qtrue, baseCurrent);
+		} else {
+			/* when you load a savegame right after starting UFO, the aircraft in bases
+			* and installations don't have any tech assigned */
+			int k;
 
-		for (j = 0; j < gd.numBases; j++) {
-			base_t *b = B_GetFoundedBaseByIDX(j);
-			if (!b)
-				continue;
-			for (k = 0; k < b->numAircraftInBase; k++) {
-				aircraft_t *aircraft = &b->aircraft[k];
-				/* if you already played before loading the game, tech are already defined for templates */
-				if (!aircraft->tech)
-					aircraft->tech = RS_GetTechByProvided(aircraft->id);
+			for (j = 0; j < gd.numBases; j++) {
+				base_t *b = B_GetFoundedBaseByIDX(j);
+				if (!b)
+					continue;
+				for (k = 0; k < b->numAircraftInBase; k++) {
+					aircraft_t *aircraft = &b->aircraft[k];
+					/* if you already played before loading the game, tech are already defined for templates */
+					if (!aircraft->tech)
+						aircraft->tech = RS_GetTechByProvided(aircraft->id);
+				}
 			}
 		}
 	}

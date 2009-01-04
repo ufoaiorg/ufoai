@@ -1142,6 +1142,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		int i;
 		/* get template for base */
 		const baseTemplate_t *template = B_GetBaseTemplate(curCampaign->firstBaseTemplate);
+		const equipDef_t *ed = NULL;
 
 		/* find each building in the template */
 		for (i = 0; i < template->numBuildings; ++i) {
@@ -1178,8 +1179,11 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 			}
 		}
 
+		/* Find the initial equipment definition for current campaign. */
+		ed = INV_GetEquipmentDefinitionByID(curCampaign->equipment);
+
 		/* initial base equipment */
-		INV_InitialEquipment(base, curCampaign, hire);
+		INV_InitialEquipment(base, hire ? base->aircraftCurrent : NULL, curCampaign, cl_initial_equipment->string, &base->storage, ed);
 
 		/* Auto equip interceptors with weapons and ammos */
 		for (i = 0; i < base->numAircraftInBase; i++) {
@@ -1188,6 +1192,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 			if (aircraft->type == AIRCRAFT_INTERCEPTOR)
 				AIM_AutoEquipAircraft(aircraft);
 		}
+		/** @todo remove this - has nothing to do with base setup */
 		CL_GameTimeFast();
 		CL_GameTimeFast();
 	} else {
@@ -1986,7 +1991,6 @@ void B_ClearBase (base_t *const base)
 	/* setup team */
 	/** @todo I think this should be made only once per game, not once per base, no ? -- Kracken 19/12/07 */
 	if (!E_CountUnhired(EMPL_SOLDIER)) {
-		/* should be multiplayer (campaignmode @todo) or singleplayer */
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
 			E_CreateEmployee(EMPL_SOLDIER, B_RandomNation(), NULL);
@@ -2482,60 +2486,54 @@ static void CL_SwapSkills (chrList_t *team)
 /**
  * @brief Assigns initial soldier equipment for the first base
  * @sa B_AssignInitial
+ * @todo Move this function to a better place - has nothing to do with bases anymore
  */
-static void B_PackInitialEquipment (base_t *base)
+void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
 {
 	int i;
-	equipDef_t *ed;
-	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("cl_equip");
+	base_t *base = aircraft->homebase;
+	int container, price = 0;
+	chrList_t chrListTemp;
 
-	if (!base)
+	if (!aircraft)
 		return;
 
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(name, ed->name, MAX_VAR))
-			break;
-
-	if (i == csi.numEDs) {
-		Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Initial Phalanx equipment %s not found.\n", name);
-	} else if (base->aircraftCurrent) {
-		int container, price = 0;
-		chrList_t chrListTemp;
-		aircraft_t *aircraft = base->aircraftCurrent;
-		chrListTemp.num = 0;
-		for (i = 0; i < aircraft->maxTeamSize; i++) {
-			if (aircraft->acTeam[i]) {
-				character_t *chr = &aircraft->acTeam[i]->chr;
-				/* pack equipment */
-				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
-				INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, name, chr);
-				Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
-				chrListTemp.chr[chrListTemp.num] = chr;
-				chrListTemp.num++;
-			}
+	chrListTemp.num = 0;
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			character_t *chr = &aircraft->acTeam[i]->chr;
+			/* pack equipment */
+			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
+			/** @todo maybe give equipDef_t directly? */
+			INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, ed->name, chr);
+			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
+			chrListTemp.chr[chrListTemp.num] = chr;
+			chrListTemp.num++;
 		}
+	}
 
+	if (base) {
 		CL_AddCarriedToEquipment(aircraft, &base->storage);
 		INV_UpdateStorageCap(base);
-		CL_SwapSkills(&chrListTemp);
+	}
+	CL_SwapSkills(&chrListTemp);
 
-		/* pay for the initial equipment */
-		for (container = 0; container < csi.numIDs; container++) {
-			int p;
-			for (p = 0; p < aircraft->maxTeamSize; p++) {
-				if (aircraft->acTeam[p]) {
-					const invList_t *ic;
-					const character_t *chr = &aircraft->acTeam[p]->chr;
-					for (ic = chr->inv->c[container]; ic; ic = ic->next) {
-						const item_t item = ic->item;
-						price += item.t->price;
-						Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment_f: adding price for %s, price: %i\n", item.t->id, price);
-					}
+	/* pay for the initial equipment */
+	for (container = 0; container < csi.numIDs; container++) {
+		int p;
+		for (p = 0; p < aircraft->maxTeamSize; p++) {
+			if (aircraft->acTeam[p]) {
+				const invList_t *ic;
+				const character_t *chr = &aircraft->acTeam[p]->chr;
+				for (ic = chr->inv->c[container]; ic; ic = ic->next) {
+					const item_t item = ic->item;
+					price += item.t->price;
+					Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: adding price for %s, price: %i\n", item.t->id, price);
 				}
 			}
 		}
-		CL_UpdateCredits(ccs.credits - price);
 	}
+	CL_UpdateCredits(ccs.credits - price);
 }
 
 /**
@@ -2544,60 +2542,33 @@ static void B_PackInitialEquipment (base_t *base)
  * multiplayer - assign_initial with no parameters is for singleplayer
  * @sa B_PackInitialEquipment
  */
-void B_AssignInitial (base_t *base)
+void B_AssignInitial (aircraft_t *aircraft)
 {
 	int i, num;
+	equipDef_t *ed;
+	const char *name = GAME_CP_IsRunning() ? cl_initial_equipment->string : cl_equip->string;
 
-	if (!base) {
-		aircraft_t *aircraft;
-
-		if (GAME_IsSingleplayer())
-			return;
-		/* in case of multiplayer, we just take the first aircraft in the fake
-		 * base to assign the soldiers and the equipment */
-		aircraft = AIR_AircraftGetFromIdx(0);
-		assert(aircraft);
-		base = aircraft->homebase;
-		base->aircraftCurrent = aircraft;
-	}
-	assert(base);
-	if (!base->aircraftCurrent) {
-		Com_Printf("B_AssignInitial: No aircraftCurrent given\n");
-		base->aircraftCurrent = AIR_AircraftGetFromIdx(0);
-		assert(base->aircraftCurrent);
-	}
-
-	if (GAME_IsMultiplayer()) {
-		CL_ResetMultiplayerTeamInBase(base);
-		CL_GenTeamList(base);	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be populated. */
-		Cvar_Set("mn_teamname", _("NewTeam"));
-	}
-
-	num = CL_GenTeamList(base);
-	num = min(num, MAX_TEAMLIST);
-	for (i = 0; i < num; i++)
-		CL_AssignSoldierFromMenuToAircraft(base, i, base->aircraftCurrent);
-
-	B_PackInitialEquipment(base);
-	if (GAME_IsMultiplayer())
-		MN_PushMenu("team", NULL);
-}
-
-static void B_AssignInitial_f (void)
-{
-	if (baseCurrent && baseCurrent->aircraftCurrent)
-		B_AssignInitial(baseCurrent);
-}
-
-static void B_PackInitialEquipment_f (void)
-{
-	/* check syntax */
-	if (Cmd_Argc() > 1) {
-		Com_Printf("Usage: %s\n", Cmd_Argv(0));
+	if (!aircraft) {
+		Com_Printf("B_AssignInitial: No aircraft given\n");
 		return;
 	}
 
-	B_PackInitialEquipment(baseCurrent);
+	if (GAME_IsMultiplayer()) {
+		CL_ResetMultiplayerTeamInAircraft(aircraft);
+		/** @todo this is NULL for multiplayer */
+		CL_GenTeamList(aircraft->homebase);	/* In order for team_hire/CL_AssignSoldier_f to work the employeeList needs to be populated. */
+		Cvar_Set("mn_teamname", _("NewTeam"));
+	}
+
+	num = CL_GenTeamList(aircraft->homebase);
+	num = min(num, MAX_TEAMLIST);
+	for (i = 0; i < num; i++)
+		CL_AssignSoldierFromMenuToAircraft(aircraft->homebase, i, aircraft);
+
+	ed = INV_GetEquipmentDefinitionByID(name);
+	B_PackInitialEquipment(aircraft, ed);
+	if (GAME_IsMultiplayer())
+		MN_PushMenu("team", NULL);
 }
 
 /**
@@ -2771,13 +2742,11 @@ static void B_AssembleMap_f (void)
  */
 void B_NewBases (void)
 {
-	/* reset bases */
 	int i;
 	char title[MAX_VAR];
-	base_t *base;
 
 	for (i = 0; i < MAX_BASES; i++) {
-		base = B_GetBaseByIDX(i);
+		base_t *base = B_GetBaseByIDX(i);
 		Q_strncpyz(title, base->name, sizeof(title));
 		B_ClearBase(base);
 		Q_strncpyz(base->name, title, sizeof(title));
@@ -3181,8 +3150,6 @@ void B_InitStartup (void)
 	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
-	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
-	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
 	Cmd_AddCommand("building_ondestroy", B_BuildingOnDestroy_f, "Destroy a building");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");

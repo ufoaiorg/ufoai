@@ -47,7 +47,7 @@ void GAME_SetMode (int gametype)
 	const gameTypeList_t *list = gameTypeList;
 
 	if (gametype == GAME_NONE) {
-		ccs.gametype = gametype;
+		cls.gametype = gametype;
 		return;
 	}
 
@@ -56,21 +56,21 @@ void GAME_SetMode (int gametype)
 		return;
 	}
 
-	if (ccs.gametype == gametype)
+	if (cls.gametype == gametype)
 		return;
 
 	while (list->name) {
 		if (list->gametype == gametype) {
 			Com_Printf("Change gametype to '%s'\n", list->name);
 			list->init();
-		} else if (list->gametype == ccs.gametype) {
+		} else if (list->gametype == cls.gametype) {
 			Com_Printf("Shutdown gametype '%s'\n", list->name);
 			list->shutdown();
 		}
 		list++;
 	}
 
-	ccs.gametype = gametype;
+	cls.gametype = gametype;
 }
 
 /**

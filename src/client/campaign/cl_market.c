@@ -1060,7 +1060,7 @@ static void BS_Autosell_f (void)
 	const objDef_t *item;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	if (Cmd_Argc() < 2) {

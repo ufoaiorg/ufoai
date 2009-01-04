@@ -482,7 +482,7 @@ static void CP_NationStatsClick_f (void)
 {
 	int num;
 
-	if (!curCampaign)
+	if (!GAME_CP_IsRunning())
 		return;
 
 	if (Cmd_Argc() < 2) {

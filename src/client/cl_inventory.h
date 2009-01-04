@@ -56,7 +56,7 @@ void INV_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void INV_CollectingItems(int won);
 void INV_SellOrAddItems(aircraft_t *aircraft);
 void INV_EnableAutosell(const technology_t *tech);
-void INV_InitialEquipment(base_t *base, const campaign_t* campaign, qboolean assignInitial);
+void INV_InitialEquipment(base_t *base, aircraft_t *assignInitialAircraft, const campaign_t* campaign, const char *eqname, equipDef_t *edTarget, const equipDef_t *ed);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
 int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
 qboolean INV_ItemsIsStoredInStorage(const objDef_t *obj);
@@ -66,7 +66,8 @@ void INV_UpdateAntimatterCap(base_t *base);
 void INV_ManageAntimatter(base_t *base, int amount, qboolean add);
 void INV_RemoveAntimatterExceedingCapacity(base_t *base);
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
-void INV_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingType);
+void INV_RemoveUFOsExceedingCapacity(base_t *base, const buildingType_t buildingType);
+equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 
 #ifdef DEBUG
 void INV_InventoryList_f(void);

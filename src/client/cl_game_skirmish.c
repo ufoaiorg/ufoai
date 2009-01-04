@@ -26,9 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_game_skirmish.h"
+#include "cl_team.h"
 #include "renderer/r_overlay.h"
 
 #define MAX_CREDITS 10000000
+
+/**
+ * @brief This fake aircraft is used to assign soldiers for a skirmish game
+ */
+static aircraft_t skirmishFakeAircraft;
 
 /**
  * @brief Starts a new skirmish game
@@ -37,10 +43,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CL_GameSkirmish_f (void)
 {
-	base_t* base;
 	char map[MAX_VAR];
 	mapDef_t *md;
 	int i;
+	const char *name = Cvar_VariableString("cl_equip");
 
 	assert(GAME_IsSkirmish());
 	assert(cls.currentSelectedMap >= 0);
@@ -53,67 +59,27 @@ static void CL_GameSkirmish_f (void)
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
 
-	/* get campaign - they are already parsed here */
-	curCampaign = CL_GetCampaign(cl_campaign->string);
-	if (!curCampaign) {
-		Com_Printf("CL_GameSkirmish_f: Could not find campaign '%s'\n", cl_campaign->string);
-		return;
-	}
-
-	Cvar_Set("cl_team", curCampaign->team);
-
 	memset(&ccs, 0, sizeof(ccs));
-	ccs.gametype = GAME_SKIRMISH;
 	CL_ReadSinglePlayerData();
-
-	/* create employees and clear bases */
-	B_NewBases();
-
-	base = B_GetBaseByIDX(0);
-	baseCurrent = base;
-	gd.numAircraft = 0;
 
 	CL_GameInit(qfalse);
 	RS_MarkResearchedAll();
 
-	gd.numBases = 1;
+	cls.missionaircraft = &skirmishFakeAircraft;
+	memset(&skirmishFakeAircraft, 0, sizeof(skirmishFakeAircraft));
+	skirmishFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
 
-	/* even in skirmish mode we need a little money to build the base */
-	CL_UpdateCredits(MAX_CREDITS);
-
-	/* only needed for base dummy creation */
-	R_CreateRadarOverlay();
-
-	/* build our pseudo base */
-	B_SetUpBase(base, qtrue, qtrue);
-
-	if (!base->numAircraftInBase) {
-		Com_Printf("CL_GameSkirmish_f: Error - there is no dropship in base\n");
-		return;
-	}
-
-	/* we have to set this manually here */
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		if (base->aircraft[i].type == AIRCRAFT_TRANSPORTER) {
-			cls.missionaircraft = &base->aircraft[i];
-			break;
-		}
-	}
-
-	base->aircraftCurrent = cls.missionaircraft;
-
-	if (!cls.missionaircraft || !cls.missionaircraft->homebase) {
-		Com_Printf("CL_GameSkirmish_f: Error - could not set the mission aircraft: %i\n", base->numAircraftInBase);
-		return;
+	for (i = 0; i < MAX_ACTIVETEAM; i++) {
+		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
+		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
+		CL_AssignSoldierToAircraft(employee, cls.missionaircraft);
+		B_PackInitialEquipment(cls.missionaircraft, ed);
 	}
 
 	/* prepare */
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main_afterdrop", "singleplayermission");
 
-	/* this is no real campaign - but we need the pointer for some of
-	 * the previous actions */
-	curCampaign = NULL;
 	Cbuf_AddText(map);
 }
 

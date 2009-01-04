@@ -190,6 +190,8 @@ typedef struct client_static_s {
 	/** showing loading plaque between levels if time gets > 30 seconds ahead, break it */
 	float disable_screen;
 
+	int gametype;		/**< singleplayer or multiplayer */
+
 	/* connection information */
 	char servername[MAX_OSPATH];	/**< name of server from original connect */
 	char serverport[16];			/**< port the server is running at */
@@ -207,7 +209,7 @@ typedef struct client_static_s {
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;			/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
-	struct aircraft_s *missionaircraft;	/**< aircraft pointer for mission handling */
+	struct aircraft_s *missionaircraft;	/**< aircraft pointer for mission handling - holds the teams for skirmish and multiplayer, too */
 
 	float loadingPercent;
 	char loadingMessages[96];

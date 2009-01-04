@@ -799,7 +799,7 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int emplIdx)
+static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int emplIdx, const char *teamID)
 {
 	employee_t* employee;
 	int curEmployeeIdx;
@@ -835,12 +835,12 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 
 	switch (type) {
 	case EMPL_SOLDIER:
-		CL_GenerateCharacter(employee, cl_team->string, type, NULL);
+		CL_GenerateCharacter(employee, teamID, type, NULL);
 		break;
 	case EMPL_SCIENTIST:
 	case EMPL_PILOT:
 	case EMPL_WORKER:
-		CL_GenerateCharacter(employee, cl_team->string, type, NULL);
+		CL_GenerateCharacter(employee, teamID, type, NULL);
 		employee->speed = 100;
 		break;
 	case EMPL_ROBOT:
@@ -848,7 +848,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 			Com_DPrintf(DEBUG_CLIENT, "E_CreateEmployee: No ugvType given!\n");
 			return NULL;
 		}
-		CL_GenerateCharacter(employee, cl_team->string, type, ugvType);
+		CL_GenerateCharacter(employee, teamID, type, ugvType);
 		employee->ugv = ugvType;
 		break;
 	default:
@@ -871,8 +871,9 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
  */
 employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
 {
+	const char *team = GAME_CP_IsRunning() ? curCampaign->team : "human";
 	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
-	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1);
+	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1, team);
 }
 
 /**
@@ -1090,6 +1091,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	nation_t *happyNations[MAX_NATIONS];
 	int numHappyNations = 0;
 	int idx, nationIdx;
+	const char *team = GAME_CP_IsRunning() ? curCampaign->team : "human";
 
 	happyNations[0] = NULL;
 	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
@@ -1109,7 +1111,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 
 		/* we dont want to overwrite employees that have already been hired */
 		if (!employee->hired) {
-			E_CreateEmployeeAtIndex(type, happyNations[nationIdx], NULL, idx);
+			E_CreateEmployeeAtIndex(type, happyNations[nationIdx], NULL, idx, team);
 			nationIdx = (nationIdx + 1) % numHappyNations;
 		}
 	}

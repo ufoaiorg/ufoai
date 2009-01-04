@@ -36,7 +36,7 @@ void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
 void CL_CleanTempInventory(base_t* base);
 
 void CL_ResetCharacters(base_t* const base);
-void CL_ResetMultiplayerTeamInBase(base_t *base);
+void CL_ResetMultiplayerTeamInAircraft(aircraft_t *aircraft);
 int CL_GenTeamList(const base_t *base);
 void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType, const ugv_t *ugvType);
 ugv_t *CL_GetUgvByID(const char *ugvID);
@@ -47,6 +47,7 @@ const aircraft_t *CL_SoldierInAircraft(const employee_t *employee, const aircraf
 qboolean CL_RemoveSoldierFromAircraft(employee_t *employee, aircraft_t* aircraft);
 void CL_RemoveSoldiersFromAircraft(aircraft_t* aircraft);
 void CL_AssignSoldierFromMenuToAircraft(base_t *base, const int num, aircraft_t *aircraft);
+qboolean CL_AssignSoldierToAircraft(employee_t *employee, aircraft_t *aircraft);
 
 void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);
 void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);

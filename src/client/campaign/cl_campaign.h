@@ -129,7 +129,7 @@ typedef enum missionStage_s {
 } missionStage_t;
 
 /** @brief alien team group definition.
- * @note This is the definition of one groupe of aliens (several races) that can 
+ * @note This is the definition of one groupe of aliens (several races) that can
  * be used on the same map.
  * @sa alienTeamCategory_s
  */
@@ -138,12 +138,12 @@ typedef struct alienTeamGroup_s {
 	int categoryIdx;	/**< idx of category it's used in */
 	int minInterest;	/**< Minimum interest value this group should be used with. */
 	int maxInterest;	/**< Maximum interest value this group should be used with. */
- 
+
 	teamDef_t *alienTeams[MAX_TEAMS_PER_MISSION];	/**< different alien teams available
 													 * that will be used in mission */
 	int numAlienTeams;		/**< Number of alienTeams defined in this group. */
 } alienTeamGroup_t;
- 
+
 /** @brief alien team category definition
  * @note This is the definition of all groupe of aliens that can be used for
  * a mission category
@@ -323,7 +323,7 @@ typedef struct market_s {
 } market_t;
 
 /**
- * @brief client structure
+ * @brief client campaign structure
  * @sa csi_t
  */
 typedef struct ccs_s {
@@ -341,8 +341,6 @@ typedef struct ccs_s {
 
 	vec2_t mapPos;		/**< geoscape map position (from the menu node) */
 	vec2_t mapSize;		/**< geoscape map size (from the menu node) */
-
-	int gametype;		/**< singleplayer or multiplayer */
 
 	int credits;			/**< actual credits amount */
 	int civiliansKilled;	/**< how many civilians were killed already */

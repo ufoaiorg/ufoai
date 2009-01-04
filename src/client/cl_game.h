@@ -34,10 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define GAME_MAX			GAME_SKIRMISH
 
-#define GAME_IsSingleplayer()	(ccs.gametype & GAME_SINGLEPLAYER)
-#define GAME_IsMultiplayer()	(ccs.gametype == GAME_MULTIPLAYER)
-#define GAME_IsSkirmish()		(ccs.gametype == GAME_SKIRMISH)
-#define GAME_IsCampaign()		(ccs.gametype == GAME_CAMPAIGN)
+#define GAME_IsSingleplayer()	(cls.gametype & GAME_SINGLEPLAYER)
+#define GAME_IsMultiplayer()	(cls.gametype == GAME_MULTIPLAYER)
+#define GAME_IsSkirmish()		(cls.gametype == GAME_SKIRMISH)
+#define GAME_IsCampaign()		(cls.gametype == GAME_CAMPAIGN)
 
 void GAME_InitStartup(void);
 void GAME_SetMode(int gametype);

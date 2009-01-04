@@ -614,7 +614,7 @@ static void AC_NextAC_f (void)
 	qboolean found = qfalse;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
 		return;
 
 	/* Get next base */
@@ -657,7 +657,7 @@ static void AC_PrevAC_f (void)
 	const base_t *base;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
 		return;
 
 	/* Get previous base */
@@ -698,7 +698,7 @@ static void AC_OpenUFOpedia_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;
@@ -750,7 +750,7 @@ void AC_KillAll (base_t *base)
 static void AC_KillAll_f (void)
 {
 	/* Can be called from everywhere. */
-	if (!baseCurrent ||!curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	AC_KillAll(baseCurrent);
@@ -764,7 +764,7 @@ static void AC_KillOne_f (void)
 	int num, i, step;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -809,7 +809,7 @@ static void AC_AddOne_f (void)
 	int j;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign) {
+	if (!baseCurrent || !GAME_CP_IsRunning()) {
 		return;
 	}
 
@@ -873,7 +873,7 @@ static void AC_ResearchAlien_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign || !aliencontCurrent)
+	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;

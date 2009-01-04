@@ -35,7 +35,7 @@ static void BaseSummary_SelectBase_f (void)
 	int i;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	if (Cmd_Argc() != 2) {

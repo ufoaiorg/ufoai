@@ -694,7 +694,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 void CP_EndCampaign (qboolean won)
 {
 	CL_GameExit();
-	assert(!curCampaign);
+	assert(!GAME_CP_IsRunning());
 
 	if (won)
 		Cvar_Set("mn_afterdrop", "endgame");
@@ -987,24 +987,15 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 static void CL_CampaignInitMarket (qboolean load)
 {
 	int i;
-	equipDef_t *ed;
 
 	assert(curCampaign);
 
 	/* find the relevant markets */
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR)) {
-			curCampaign->marketDef = ed;
-			break;
-		}
+	curCampaign->marketDef = INV_GetEquipmentDefinitionByID(curCampaign->market);
 	if (!curCampaign->marketDef)
 		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 			curCampaign->id, curCampaign->market);
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-		if (!Q_strncmp(curCampaign->asymptoticMarket, ed->name, MAX_VAR)) {
-			curCampaign->asymptoticMarketDef = ed;
-			break;
-		}
+	curCampaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(curCampaign->asymptoticMarket);
 	if (!curCampaign->asymptoticMarketDef)
 		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 			curCampaign->id, curCampaign->asymptoticMarket);
@@ -1398,7 +1389,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	MAP_Init();
 
 	memset(&ccs, 0, sizeof(ccs));
-	ccs.gametype = GAME_CAMPAIGN;
 
 	gd.fund = MSG_ReadByte(sb);
 	gd.nextUCN = MSG_ReadShort(sb);
@@ -1546,9 +1536,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		ccs.battleParameters.aliens = MSG_ReadShort(sb);
 		ccs.battleParameters.civilians = MSG_ReadShort(sb);
 	}
-
-	/* reset team */
-	Cvar_Set("cl_team", curCampaign->team);
 
 	/* stores the select mission on geoscape */
 	missionId = MSG_ReadString(sb);
@@ -1765,7 +1752,7 @@ void CL_GameGo (void)
 	aircraft_t *aircraft;
 	base_t *base;
 
-	if (!curCampaign || !cls.missionaircraft)
+	if (!GAME_CP_IsRunning() || !cls.missionaircraft)
 		return;
 
 	aircraft = cls.missionaircraft;
@@ -2153,8 +2140,6 @@ static void CL_DebugAllItems_f (void)
 {
 	int i;
 	base_t *base;
-	technology_t *tech;
-	objDef_t *obj;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -2169,12 +2154,12 @@ static void CL_DebugAllItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		obj = &csi.ods[i];
+		objDef_t *obj = &csi.ods[i];
 		if (!obj->weapon && !obj->numWeapons)
 			continue;
 		B_UpdateStorageAndCapacity(base, obj, 1, qfalse, qtrue);
 		if (base->storage.num[i] > 0) {
-			tech = obj->tech;
+			technology_t *tech = obj->tech;
 			if (!tech)
 				Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", obj->id, obj->name);
 			RS_MarkCollected(tech);
@@ -2190,7 +2175,6 @@ static void CL_DebugShowItems_f (void)
 {
 	int i;
 	base_t *base;
-	objDef_t *obj;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -2205,7 +2189,7 @@ static void CL_DebugShowItems_f (void)
 	base = B_GetBaseByIDX(i);
 
 	for (i = 0; i < csi.numODs; i++) {
-		obj = &csi.ods[i];
+		const objDef_t *obj = &csi.ods[i];
 		if (!obj->tech)
 			Sys_Error("CL_DebugAllItems_f: No tech for %s\n", obj->id);
 		Com_Printf("%i. %s: %i\n", i, obj->id, base->storage.num[i]);
@@ -2463,7 +2447,6 @@ static void CL_GameNew_f (void)
 	selectedMission = NULL;
 
 	memset(&ccs, 0, sizeof(ccs));
-	ccs.gametype = GAME_CAMPAIGN;
 
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
@@ -2471,8 +2454,6 @@ static void CL_GameNew_f (void)
 	ccs.date = curCampaign->date;
 
 	CL_ReadSinglePlayerData();
-
-	Cvar_Set("cl_team", curCampaign->team);
 
 	/* difficulty */
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
@@ -2683,7 +2664,7 @@ void CL_ResetSinglePlayerData (void)
  */
 static void CP_CampaignStats_f (void)
 {
-	if (!curCampaign) {
+	if (!GAME_CP_IsRunning()) {
 		Com_Printf("No campaign active\n");
 		return;
 	}
@@ -2732,10 +2713,14 @@ static void CP_TryAgain_f (void)
 /**
  * @brief Returns "homebase" of the mission.
  * @note see struct client_static_s
+ * @note This might be @c NULL for skirmish and multiplayer
  */
 base_t *CP_GetMissionBase (void)
 {
-	assert(cls.missionaircraft && cls.missionaircraft->homebase);
+	if (!cls.missionaircraft)
+		Sys_Error("CP_GetMissionBase: No missionaircraft given");
+	if (GAME_IsCampaign() && !cls.missionaircraft->homebase)
+		Sys_Error("CP_GetMissionBase: Missionaircraft has no homebase set");
 	return cls.missionaircraft->homebase;
 }
 

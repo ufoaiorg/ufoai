@@ -872,7 +872,7 @@ static void PR_ProductionListRightClick_f (void)
 	production_queue_t *queue;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 	queue = &gd.productions[baseCurrent->idx];
 
@@ -951,7 +951,7 @@ static void PR_ProductionListClick_f (void)
 	base_t* base;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	base = baseCurrent;
@@ -1033,7 +1033,7 @@ static void PR_ProductionSelect_f (void)
 	int cat;
 
 	/* Can be called from everywhere without a started game. */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -1096,7 +1096,7 @@ static void PR_ProductionList_f (void)
 	}
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !curCampaign)
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
 
 	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, B_WORKSHOP));

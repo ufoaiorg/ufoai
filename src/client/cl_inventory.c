@@ -383,6 +383,18 @@ void INV_EnableAutosell (const technology_t *tech)
 	}
 }
 
+equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
+{
+	int i;
+
+	for (i = 0, csi.eds; i < csi.numEDs; i++)
+		if (!Q_strcmp(name, csi.eds[i].name))
+			return &csi.eds[i];
+
+	Com_DPrintf(DEBUG_CLIENT, "INV_GetEquipmentDefinitionByID: equipment %s not found.\n", name);
+	return NULL;
+}
+
 /**
  * @brief Prepares initial equipment for first base at the beginning of the campaign.
  * @param[in] base Pointer to first base.
@@ -390,45 +402,34 @@ void INV_EnableAutosell (const technology_t *tech)
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  */
-void INV_InitialEquipment (base_t *base, const campaign_t* campaign, qboolean assignInitial)
+void INV_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const campaign_t* campaign, const char *eqname, equipDef_t *edTarget, const equipDef_t *ed)
 {
 	int i, price = 0;
-	const equipDef_t *ed;
-	const char *eqname = cl_initial_equipment->string;
 
-	assert(campaign);
 	assert(base);
-
-	/* Find the initial equipment definition for current campaign. */
-	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
-		if (!Q_strncmp(campaign->equipment, ed->name, sizeof(campaign->equipment)))
-			break;
-	}
+	assert(edTarget);
 
 	/* Copy it to base storage. */
-	if (i != csi.numEDs)
-		base->storage = *ed;
+	if (ed)
+		*edTarget = *ed;
 
 	/* Initial soldiers and their equipment. */
-	if (assignInitial) {
-		B_AssignInitial(base);
+	if (assignInitialAircraft) {
+		B_AssignInitial(assignInitialAircraft);
 	} else {
-		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
-			if (!Q_strncmp(eqname, ed->name, MAX_VAR))
-				break;
-		}
-		if (i == csi.numEDs) {
+		ed = INV_GetEquipmentDefinitionByID(eqname);
+		if (ed == NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
 		} else {
 			for (i = 0; i < csi.numODs; i++)
-				base->storage.num[i] += ed->num[i] / 5;
+				edTarget->num[i] += ed->num[i] / 5;
 		}
 	}
 
 	/* Pay for the initial equipment as well as update storage capacity. */
 	for (i = 0; i < csi.numODs; i++) {
-		price += base->storage.num[i] * csi.ods[i].price;
-		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * csi.ods[i].size;
+		price += edTarget->num[i] * csi.ods[i].price;
+		base->capacities[CAP_ITEMS].cur += edTarget->num[i] * csi.ods[i].size;
 	}
 
 	/* Finally update credits. */
