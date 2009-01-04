@@ -60,191 +60,142 @@ menu bases
 
 	button buildings
 	{
-		tooltip	"_Build base facilities"
-		image	menu/button_green_small
-		blend true
-		pos	"755 128"
-		size	"230 56"
-		click	{
-			cmd "mn_push buildings"
-		}
+		string		"_Buildings"
+		tooltip		"_Build base facilities"
+		image		menu/button_green_small
+		blend		 true
+		pos			"755 128"
+		size		"230 56"
 		color "0 0.8 0 1"
 		selectcolor "1 1 1 1"
-		string	"_Buildings"
-		font	f_menu
+		font		f_menu
+		click		{ cmd "mn_push buildings;" }
 	}
 
 	button aircraft
 	{
-		// only if base has at least one aircraft
-		if "mn_base_num_aircraft > 0"
-		tooltip	"_Manage your aircraft"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 188"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push aircraft;"
-		}
-		string	"_Aircraft"
-		font	f_menu
-		color "0 0.8 0 1"
-		selectcolor "1 1 1 1"
-	}
-	button aircraft_action
-	{
-		// only if base has no aircraft but can handle them
-		if "mn_base_num_aircraft == 0"
-		tooltip	"_Buy or produce a new aircraft"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 188"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push popup_aircraft_action;"
-		}
-		string	"_Aircraft"
-		font	f_menu
-		color "0 0.8 0 1"
-		selectcolor "1 1 1 1"
+		string		"_Aircraft"
+		tooltip		"_Manage your aircraft"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 188"
+		size		"230 56"
+		font		f_menu
+		color		"0 0.8 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push aircraft;" }
 	}
 
 	button buysell
 	{
-		tooltip	"_Buy/Sell equipment"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 248"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push buy"
-		}
-		string	"_Buy/Sell Equipment"
+		string		"_Buy/Sell Equipment"
+		tooltip		"_Buy/Sell equipment"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 248"
+		size		"230 56"
 		selectcolor	"1 1 1 1"
-		color	"0 0.8 0 1"
-		font	f_menu
+		color		"0 0.8 0 1"
+		font		f_menu
+		click		{ cmd "mn_push buy;" }
 	}
 
 	button transfer
 	{
-		tooltip	"_Transfer equipment or personnel"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 308"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push transfer"
-		}
-		string	"_Transfer"
-		color	"0 0.8 0 1"
+		string		"_Transfer"
+		tooltip		"_Transfer equipment or personnel"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 308"
+		size		"230 56"
+		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		font	f_menu
+		font		f_menu
+		click		{ cmd "mn_push transfer;" }
 	}
 
 	button research
 	{
-		tooltip	"_Research new technology"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 368"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push research"
-		}
-		string	"_Research"
-		color	"0 0.8 0 1"
+		string		"_Research"
+		tooltip		"_Research new technology"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 368"
+		size		"230 56"
+		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		font	f_menu
+		font		f_menu
+		click		{ cmd "mn_push research;" }
 	}
 
 	button production
 	{
-		tooltip	"_Produce new equipment"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 428"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push production"
-		}
-		string	"_Production"
-		color	"0 0.8 0 1"
+		string		"_Production"
+		tooltip		"_Produce new equipment"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 428"
+		size		"230 56"
+		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		font	f_menu
+		font		f_menu
+		click		{ cmd "mn_push production;" }
 	}
 
 	button hire
 	{
-		tooltip	"_Hire employees"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 488"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push employees"
-		}
-		string	"_Hire employees"
-		color	"0 0.8 0 1"
+		string		"_Hire employees"
+		tooltip		"_Hire employees"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 488"
+		size		"230 56"
+		click		{ cmd "mn_push employees;" }
+		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		font	f_menu
+		font		f_menu
 	}
 
 	button containment
 	{
-		tooltip	"_Deal with Aliens in Alien Containment"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 548"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push aliencont"
-		}
-		string	"_Containment"
-		color	"0 0.8 0 1"
+		string		"_Containment"
+		tooltip		"_Deal with Aliens in Alien Containment"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 548"
+		size		"230 56"
+		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		font	f_menu
+		font		f_menu
+		click		{ cmd "mn_push aliencont;" }
 	}
 
 	button hospital
 	{
-		tooltip	"_Medical and Surgery operations"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 608"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push hospital"
-		}
-		string	"_Hospital"
-		color	"0 0.8 0 1"
+		string		"_Hospital"
+		tooltip		"_Medical and Surgery operations"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 608"
+		size		"230 56"
+		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		font	f_menu
+		font		f_menu
+		click		{ cmd "mn_push hospital;" }
 	}
 
 	button summary
 	{
-		tooltip	"_Base Information"
-		image	menu/button_green_small
-		blend	true
-		pos	"755 668"
-		size	"230 56"
-		click
-		{
-			cmd "mn_push basesummary;"
-		}
-		string	"_Base Summary"
-		color	"0 0.8 0 1"
+		string		"_Base Summary"
+		tooltip		"_Base Information"
+		image		menu/button_green_small
+		blend		true
+		pos			"755 668"
+		size		"230 56"
+		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		font	f_menu
+		font		f_menu
+		click		{ cmd "mn_push basesummary;" }
 	}
 
 	// ==================
@@ -253,28 +204,30 @@ menu bases
 
 	string txt_credits_caption
 	{
-		string	"_CREDIT"
-		pos	"680 30"
-		font	f_big
+		string		"_CREDIT"
+		pos			"680 30"
+		size		"100 30"
+		font		f_big
 	}
 
 	string txt_credits
 	{
-		tooltip	"_Organisation capital"
-		string	"*cvar mn_credits"
-		pos	"900 30"
-		font	f_big
-		align	ur
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"790 30"
+		size		"110 30"
+		font		f_big
+		textalign	ur
 	}
 
 	textentry name
 	{
-		tooltip	"_Name of this base"
-		string	"*cvar mn_base_title"
-		pos	"60 30"
-		size "240 32"
-		font	f_big
-		change {
+		string		"*cvar mn_base_title"
+		tooltip		"_Name of this base"
+		pos			"60 30"
+		size		"240 32"
+		font		f_big
+		change { 
 			// stores the value of the cvar in the base structure
 			cmd	"base_changename"
 		}
@@ -356,12 +309,10 @@ menu bases
 	confunc set_aircraft_disabled
 	{
 		*aircraft disabled true
-		*aircraft_action disabled true
 	}
 	confunc set_aircraft_enabled
 	{
 		*aircraft disabled false
-		*aircraft_action disabled false
 	}
 
 	confunc set_buysell_disabled

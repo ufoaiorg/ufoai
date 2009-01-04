@@ -303,7 +303,7 @@ static void B_BaseMenuInit (const base_t *base)
 
 	MN_ExecuteConfunc("mn_buildings_reset");
 	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed(base))
+	if (AIR_AircraftAllowed(base) && base->numAircraftInBase)
 		MN_ExecuteConfunc("set_aircraft_enabled");
 	else
 		MN_ExecuteConfunc("set_aircraft_disabled");
@@ -325,10 +325,8 @@ static void B_BaseMenuInit (const base_t *base)
 
 	if (PR_ProductionAllowed(base)) {
 		MN_ExecuteConfunc("set_prod_enabled");
-		MN_ExecuteConfunc("set_aircraftprod_enabled");
 	} else {
 		MN_ExecuteConfunc("set_prod_disabled");
-		MN_ExecuteConfunc("set_aircraftprod_disabled");
 	}
 
 	if (E_HireAllowed(base))

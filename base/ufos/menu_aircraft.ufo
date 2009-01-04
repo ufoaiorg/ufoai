@@ -386,26 +386,27 @@ menu aircraft_equip
 		scrollbar	true
 	}
 
+	// @todo: merge: mdl_top and mdl_top_pilot
 	model mdl_top
 	{
-		if "mn_equip_pilot != 1"
+		visiblewhen "mn_equip_pilot != 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
 		origin	"886 545 0"
-		pos		"786 500"
-		size	"200 175"
+		pos		"760 500"
+		size	"241 120"
 		mousefx	true
 		click
 	}
 
 	model mdl_top_pilot
 	{
-		if "mn_equip_pilot == 1"
+		visiblewhen "mn_equip_pilot == 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"15 60 100"
 		origin	"886 555 0"
-		pos		"786 500"
-		size	"100 100"
+		pos		"760 500"
+		size	"241 120"
 		mousefx	true
 		click
 	}
@@ -413,8 +414,9 @@ menu aircraft_equip
 	string airequip_item_name
 	{
 		string		"*cvar mn_itemname"
-		pos			"880 475"
-		align		uc
+		pos			"750 480"
+		size		"261 20"
+		textalign	cc
 	}
 
 	string airequip_selected
@@ -429,62 +431,52 @@ menu aircraft_equip
 
 	custombutton bt_prev_craftitemtype
 	{
-		tooltip	"_Previous category"
-		image	menu/button_background	texl	"192 0"	blend true
-		pos	"10 712"	size	"64 37"
-		icon prev
-		click	{
-			cmd "mn_prev_equiptype;"
-		}
-		whup	{
-			cmd "mn_next_equiptype;"
-		}
-		whdown	{
-			cmd "mn_prev_equiptype;"
-		}
+		tooltip		"_Previous category"
+		image		menu/button_background
+		texl		"192 0"
+		blend		true
+		pos			"10 712"
+		size		"64 37"
+		icon		prev
+		click		{ cmd "mn_prev_equiptype;" }
+		whup		{ cmd "mn_next_equiptype;" }
+		whdown		{ cmd "mn_prev_equiptype;" }
 	}
 
 	custombutton bt_next_craftitemtype
 	{
-		tooltip	"_Next category"
-		image	menu/button_background	texl	"192 0"	blend true
-		pos	"382 712"	size	"64 37"
-		icon next
-		click	{
-			cmd "mn_next_equiptype;"
-		}
-		whup	{
-			cmd "mn_next_equiptype;"
-		}
-		whdown	{
-			cmd "mn_prev_equiptype;"
-		}
+		tooltip		"_Next category"
+		image		menu/button_background
+		texl		"192 0"
+		blend		true
+		pos			"382 712"
+		size		"64 37"
+		icon		next
+		click		{ cmd "mn_next_equiptype;" }
+		whup		{ cmd "mn_next_equiptype;" }
+		whdown		{ cmd "mn_prev_equiptype;" }
 	}
 
 	string craftitemtype
 	{
-		pos		"74 722"
-		size	"300 16"
+		string		"*cvar mn_equip_itemtype_name"
+		pos			"74 722"
+		size		"300 16"
 		textalign	cc
-		string	"*cvar mn_equip_itemtype_name"
-		whup	{
-			cmd "mn_prev_equiptype;"
-		}
-		whdown	{
-			cmd "mn_next_equiptype;"
-		}
+		whup		{ cmd "mn_prev_equiptype;" }
+		whdown		{ cmd "mn_next_equiptype;" }
 	}
 
 	text airequip_list
 	{
-		pos		"472 480"
-		size	"252 220"
+		pos			"472 480"
+		size		"252 220"
 		lineheight	"20"
-		wheel
-		rows	"11"
-		textid TEXT_LIST
-		mousefx	true
+		rows		"11"
+		textid		TEXT_LIST
+		mousefx		true
 		click
+		wheel
 	}
 
 	// ==================
@@ -493,70 +485,69 @@ menu aircraft_equip
 
 	pic airequip_button_add1
 	{
-		tooltip	"_Add selected item"
-		mousefx	true
-		pos	"467 75"
-		image	menu/button_aircraft_menu
-		texl	"0 0"
-		texh	"36 32"
-		click { cmd "airequip_add_item 1;" }
+		tooltip		"_Add selected item"
+		pos			"467 75"
+		image		menu/button_aircraft_menu
+		texl		"0 0"
+		texh		"36 32"
+		mousefx		true
+		click		{ cmd "airequip_add_item 1;" }
 	}
 
 	pic airequip_button_remove1
 	{
-		tooltip	"_Remove item from slot"
-		mousefx	true
-		pos	"467 125"
-		image	menu/button_aircraft_menu
-		texl	"37 0"
-		texh	"73 32"
-		click { cmd "airequip_del_item 1;" }
+		tooltip		"_Remove item from slot"
+		pos			"467 125"
+		image		menu/button_aircraft_menu
+		texl		"37 0"
+		texh		"73 32"
+		mousefx		true
+		click		{ cmd "airequip_del_item 1;" }
 	}
 
 	pic airequip_button_add2
 	{
-		tooltip	"_Add selected item"
-		mousefx	true
-		pos	"467 259"
-		image	menu/button_aircraft_menu
-		texl	"0 0"
-		texh	"36 32"
-		click { cmd "airequip_add_item 2;" }
+		tooltip		"_Add selected item"
+		pos			"467 259"
+		image		menu/button_aircraft_menu
+		texl		"0 0"
+		texh		"36 32"
+		mousefx		true
+		click		{ cmd "airequip_add_item 2;" }
 	}
 
 	pic airequip_button_remove2
 	{
-		tooltip	"_Remove item from slot"
-		mousefx	true
-		pos	"467 294"
-		image	menu/button_aircraft_menu
-		texl	"37 0"
-		texh	"73 32"
-		click { cmd "airequip_del_item 2;" }
+		tooltip		"_Remove item from slot"
+		pos			"467 294"
+		image		menu/button_aircraft_menu
+		texl		"37 0"
+		texh		"73 32"
+		mousefx		true
+		click		{ cmd "airequip_del_item 2;" }
 	}
 
 	pic airequip_zone_select1
 	{
-		invis false
 		tooltip	"_Select this zone"
-		mousefx	true
-		pos	"534 66"
-		image	menu/button_big_menu
-		texl	"0 83"
-		texh	"458 190"
-		click	{ call airequip_zone1 }
+		pos			"534 66"
+		image		menu/button_big_menu
+		texl		"0 83"
+		texh		"458 190"
+		invis		false
+		mousefx		true
+		click		{ call airequip_zone1 }
 	}
 
 	text airequip_text_zone1
 	{
-		pos	"546 105"
-		size	"430 50"
+		tooltip		"_Select this zone"
+		pos			"546 105"
+		size		"430 50"
 		lineheight	"16"
-//		bgcolor	"1 1 1 0.5"
-		textid	TEXT_AIREQUIP_1
-		rows	"3"
-		tooltip	"_Select this zone"
-		click	{ call airequip_zone1 }
+		textid		TEXT_AIREQUIP_1
+		rows		"3"
+		click		{ call airequip_zone1 }
 	}
 
 	pic airequip_zone_select2
@@ -573,67 +564,66 @@ menu aircraft_equip
 
 	text airequip_text_zone2
 	{
-		pos	"546 294"
-		size	"430 35"
+		tooltip		"_Select this zone"
+		pos			"546 294"
+		size		"430 35"
 		lineheight	"16"
-//		bgcolor	"1 1 1 0.5"
-		textid	TEXT_AIREQUIP_2
-		rows	"2"
-		tooltip	"_Select this zone"
-		click	{ call airequip_zone2 }
+		textid		TEXT_AIREQUIP_2
+		rows		"2"
+		click		{ call airequip_zone2 }
 	}
 
 	string airequip_header1
 	{
-		string	"_Current item in slot"
-		pos		"545 85"
-		font	f_small
-		color	"0 .78 0 1"
-		align	cl
+		string		"_Current item in slot"
+		pos			"545 75"
+		size		"275 20"
+		font		f_small
+		color		"0 .78 0 1"
+		textalign	cl
 	}
 
 	string airequip_header2
 	{
-		string	"_Ammo fitting this weapon"
-		pos		"545 273"
-		font	f_small
-		color	"0 .78 0 1"
-		align	cl
-	}
-
-	model airequip_model_slot0
-	{
-		model	"*cvar mn_aircraft_item_model_slot0"
-		pos		"38 38"
-		size	"60 60"
-		origin	"68 68 0"
-		angles	"0 0 180"
+		string		"_Ammo fitting this weapon"
+		pos			"545 263"
+		size		"275 20"
+		font		f_small
+		color		"0 .78 0 1"
+		textalign	cl
 	}
 
 	// ==================
 	// slots
 	// ==================
 
+	model airequip_model_slot0
+	{
+		model		"*cvar mn_aircraft_item_model_slot0"
+		pos			"40 40"
+		size		"60 60"
+		origin		"68 68 0"
+		angles		"0 0 180"
+	}
 	pic airequip_slot0
 	{
-		tooltip	"_Select this slot"
-		image	menu/button_square
-		mousefx	true
-		pos		"38 38"
-		texl	"0 0"
-		texh	"64 64"
-		click	{ cmd "airequip_slot_select 0;" }
+		tooltip		"_Select this slot"
+		image		menu/button_square
+		mousefx		true
+		pos			"38 38"
+		texl		"0 0"
+		texh		"64 64"
+		click		{ cmd "airequip_slot_select 0;" }
 	}
 
 	model airequip_model_slot1
 	{
 		model	"*cvar mn_aircraft_item_model_slot1"
-		pos		"196 38"
+		pos		"198 40"
 		size	"60 60"
 		origin	"226 68 0"
 		angles	"0 0 180"
 	}
-
 	pic airequip_slot1
 	{
 		tooltip	"_Select this slot"
@@ -648,12 +638,11 @@ menu aircraft_equip
 	model airequip_model_slot2
 	{
 		model	"*cvar mn_aircraft_item_model_slot2"
-		pos		"353 38"
+		pos		"355 40"
 		size	"60 60"
 		origin	"383 68 0"
 		angles	"0 0 180"
 	}
-
 	pic airequip_slot2
 	{
 		tooltip	"_Select this slot"
@@ -668,12 +657,11 @@ menu aircraft_equip
 	model airequip_model_slot3
 	{
 		model	"*cvar mn_aircraft_item_model_slot3"
-		pos		"38 301"
+		pos		"40 303"
 		size	"60 60"
 		origin	"68 331 0"
 		angles	"0 0 180"
 	}
-
 	pic airequip_slot3
 	{
 		tooltip	"_Select this slot"
@@ -688,12 +676,11 @@ menu aircraft_equip
 	model airequip_model_slot4
 	{
 		model	"*cvar mn_aircraft_item_model_slot4"
-		pos		"353 301"
+		pos		"355 303"
 		size	"60 60"
 		origin	"383 331 0"
 		angles	"0 0 180"
 	}
-
 	pic airequip_slot4
 	{
 		tooltip	"_Select this slot"
@@ -708,12 +695,11 @@ menu aircraft_equip
 	model airequip_model_slot5
 	{
 		model	"*cvar mn_aircraft_item_model_slot5"
-		pos		"38 564"
+		pos		"40 566"
 		size	"60 60"
 		origin	"68 594 0"
 		angles	"0 0 180"
 	}
-
 	pic airequip_slot5
 	{
 		tooltip	"_Select this slot"
@@ -728,12 +714,11 @@ menu aircraft_equip
 	model airequip_model_slot6
 	{
 		model	"*cvar mn_aircraft_item_model_slot6"
-		pos		"196 564"
+		pos		"198 566"
 		size	"60 60"
 		origin	"226 594 0"
 		angles	"0 0 180"
 	}
-
 	pic airequip_slot6
 	{
 		tooltip	"_Select this slot"
@@ -748,12 +733,11 @@ menu aircraft_equip
 	model airequip_model_slot7
 	{
 		model	"*cvar mn_aircraft_item_model_slot7"
-		pos		"353 564"
+		pos		"355 566"
 		size	"60 60"
 		origin	"383 594 0"
 		angles	"0 0 180"
 	}
-
 	pic airequip_slot7
 	{
 		tooltip	"_Select this slot"
@@ -794,93 +778,5 @@ menu aircraft_equip
 		cmd "del mn_aircraft_item_model_slot4;del mn_aircraft_item_model_slot5;"
 		cmd "del mn_aircraft_item_model_slot6;del mn_aircraft_item_model_slot7;"
 		cmd "aircraft_select;"
-	}
-}
-
-//
-// This menu is only called when there is already a hangar
-//
-menu popup_aircraft_action
-{
-	{
-		pos			"264 262"
-		size		"496 247"
-		dragbutton	true
-		closebutton	true
-	}
-
-	zone popup
-	{
-		invis		true
-	}
-	windowpanel back
-	{
-		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
-		blend		true
-	}
-
-	string title
-	{
-		string		"_Action"
-		pos			"26 18"
-		font		f_big
-	}
-
-	string string_info
-	{
-		font		f_small
-		string		"_You don't have any aircraft in the base - what do you want to do?"
-		pos			"30 58"
-		size		"440 80"
-	}
-
-	button aircraft_buy
-	{
-		string		"_Buy"
-		tooltip		"_Buy aircraft"
-		image		menu/button_green_small
-		pos			"30 148"
-		size		"200 56"
-		blend		true
-		font		f_menu
-		color		"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		click
-		{
-			cmd		"mn_pop; set mn_itemtype 8; mn_push buy;"
-		}
-	}
-
-	button aircraft_prod
-	{
-		string		"_Produce"
-		tooltip		"_Produce aircraft"
-		image		menu/button_green_small
-		pos			"260 148"
-		size		"200 56"
-		blend		true
-		font		f_menu
-		color		"0 0.8 0 1"
-		selectcolor	"1 1 1 1"
-		click
-		{
-			cmd 	"mn_pop; set mn_itemtype 8; mn_push production;"
-		}
-	}
-
-	confunc set_aircraftprod_disabled
-	{
-		*aircraft_prod disabled true
-	}
-	confunc set_aircraftprod_enabled
-	{
-		*aircraft_prod disabled false
-	}
-
-	func leave
-	{
-		cmd "mn_pop;"
 	}
 }
