@@ -1569,6 +1569,36 @@ static inline float R_GetRadarDeltaLongitude (const vec2_t radarPos, float radiu
 }
 
 /**
+ * @brief Set lower and upper value of the radar's overlay row that can be modified by current radar.
+ * @param[in] pos Position of the center of radar.
+ * @param[in] radius Radius of the radar coverage.
+ * @param[in] radarHeight Number of pixels of the texture in y direction.
+ * @param[out] yMin Pointer to the lower row of radar overlay that should be changed.
+ * @param[out] yMax Pointer to the higher row of radar overlay that should be changed.
+ */
+static void R_SetMinMaxRadarRows (const vec2_t pos, float radius, const float radarHeight, int *yMin, int *yMax)
+{
+	const int bpp = 4;							/**< byte per pixel */
+	const float radarHeightPerDegree = radarHeight / 180.0f;
+
+	if (pos[1] + radius > 90) {
+		*yMin = 0;
+		*yMax = bpp * round((90 - pos[1] + radius) * radarHeightPerDegree);
+	} else if (pos[1] - radius < -90) {
+		*yMin = bpp * ceil((90 - pos[1] - radius) * radarHeightPerDegree);
+		*yMax = bpp * radarHeight;
+	} else {
+		*yMin = bpp * ceil((90 - pos[1] - radius) * radarHeightPerDegree);
+		*yMax = bpp * round((90 - pos[1] + radius) * radarHeightPerDegree);
+	}
+
+	/* a few assert to avoid buffer overflow */
+	assert(*yMin >= 0);
+	assert(*yMin <= *yMax);
+	assert(*yMax <= bpp * radarHeight);			/* the loop will stop just BEFORE yMax, so use <= rather than < */
+}
+
+/**
  * @brief Add a radar coverage (base or aircraft) to radar overlay
  * @param[in] pos Position of the center of radar
  * @param[in] innerRadius Radius of the radar coverage
@@ -1587,33 +1617,12 @@ void R_AddRadarCoverage (const vec2_t pos, float innerRadius, float outerRadius,
 	int yMax, yMin;								/**< Bounding box of the inner radar zone */
 	int outeryMax, outeryMin;					/**< Bounding box of the outer radar zone */
 
-	assert(outerRadius < 180);
+	assert(outerRadius < 180.0f);
+	assert(outerRadius > innerRadius);
 
-	if (pos[1] + innerRadius > 90) {
-		yMin = 0;
-		yMax = bpp * round((90 - pos[1] + innerRadius) * radarHeightPerDegree);
-	} else if (pos[1] - innerRadius < -90) {
-		yMin = bpp * ceil((90 - pos[1] - innerRadius) * radarHeightPerDegree);
-		yMax = bpp * radarHeight;
-	} else {
-		yMin = bpp * ceil((90 - pos[1] - innerRadius) * radarHeightPerDegree);
-		yMax = bpp * round((90 - pos[1] + innerRadius) * radarHeightPerDegree);
-	}
-
-	if (pos[1] + outerRadius > 90) {
-		outeryMin = 0;
-		outeryMax = bpp * round((90 - pos[1] + outerRadius) * radarHeightPerDegree);
-	} else if (pos[1] - outerRadius < -90) {
-		outeryMin = bpp * ceil((90 - pos[1] - outerRadius) * radarHeightPerDegree);
-		outeryMax = bpp * radarHeight;
-	} else {
-		outeryMin = bpp * ceil((90 - pos[1] - outerRadius) * radarHeightPerDegree);
-		outeryMax = bpp * round((90 - pos[1] + outerRadius) * radarHeightPerDegree);
-	}
-
-	assert(outeryMin >= 0);
-	assert(outeryMax <= bpp * radarHeight);		/* the loop will stop just BEFORE yMax */
-	assert(yMin <= yMax);
+	/* Set minimum and maximum rows value we'll have to change */
+	R_SetMinMaxRadarRows(pos, innerRadius, radarHeight, &yMin, &yMax);
+	R_SetMinMaxRadarRows(pos, outerRadius, radarHeight, &outeryMin, &outeryMax);
 
 	/* Draw upper part of the radar coverage */
 	for (y = outeryMin; y < yMin; y += bpp) {
