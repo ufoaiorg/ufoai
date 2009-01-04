@@ -701,6 +701,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_image.h" />
+		<Unit filename="..\..\src\client\renderer\r_overlay.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\renderer\r_overlay.h" />
 		<Unit filename="..\..\src\client\renderer\r_light.c">
 			<Option compilerVar="CC" />
 		</Unit>
