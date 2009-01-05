@@ -71,7 +71,7 @@ static int MN_VScrollbarNodeGetElement (menuNode_t *node, int low, int middle, i
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
 
 	for (i = 0; i < 5; i++) {
-		if (y < sizes[i])
+		if (y <= sizes[i])
 			return i;
 		y -= sizes[i];
 	}
