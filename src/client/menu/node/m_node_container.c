@@ -444,28 +444,27 @@ void MN_FindContainer (menuNode_t* const node)
 }
 
 static const vec3_t scale = {3.5, 3.5, 3.5};
-static const vec4_t defaultColor = {1, 1, 1, 1};
+/** @todo it may nice to vectorise that */
+static const vec4_t colorDefault = {1, 1, 1, 1};
 static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
+static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
+static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
 
 /**
  * @brief Draw a container can containe only one iten
  */
 static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightType)
 {
-	static vec4_t color = {1, 1, 1, 1};				/**< @todo remove it */
-	static vec4_t colorLoadable = {0.5, 1, 0.5, 1};	/**< @todo remove it */
+	vec4_t color;
 	vec2_t pos;
-	vec2_t nodepos;
+	qboolean disabled = qfalse;
 
-	MN_GetNodeAbsPos(node, nodepos);
-	Vector2Copy(nodepos, pos);
+	MN_GetNodeAbsPos(node, pos);
 	pos[0] += node->size[0] / 2.0;
 	pos[1] += node->size[1] / 2.0;
 
 	/* Single item container (special case for left hand). */
 	if (node->container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
-		color[3] = 0.5;
-		colorLoadable[3] = 0.5;
 		if (menuInventory->c[csi.idRight]) {
 			const item_t *item = &menuInventory->c[csi.idRight]->item;
 			assert(item);
@@ -473,9 +472,11 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 
 			if (item->t->holdTwoHanded) {
 				if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t))
-					MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
+					memcpy(color, colorLoadable, sizeof(vec4_t));
 				else
-					MN_DrawItem(node, pos, item, -1, -1, scale, color);
+					memcpy(color, colorDefault, sizeof(vec4_t));
+				color[3] = 0.5;
+				MN_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
 	} else if (menuInventory->c[node->container->id]) {
@@ -489,8 +490,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 			assert(item);
 			assert(item->t);
 			if (node->container->id == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
-				Vector4Set(color, 0.5, 0.5, 0.5, 0.5);
-				Vector4Set(colorLoadable, 0.5, 0.25, 0.25, 0.5);
+				disabled = qtrue;
 				MN_DrawDisabled(node);
 			}
 		}
@@ -498,17 +498,28 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 		item = &menuInventory->c[node->container->id]->item;
 		assert(item);
 		assert(item->t);
-		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t))
-			MN_DrawItem(node, pos, item, -1, -1, scale, colorLoadable);
-		else
-			MN_DrawItem(node, pos, item, -1, -1, scale, color);
+		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t)) {
+			if (disabled)
+					memcpy(color, colorDisabledLoadable, sizeof(vec4_t));
+			else
+					memcpy(color, colorLoadable, sizeof(vec4_t));
+		} else {
+			if (disabled)
+					memcpy(color, colorDisabled, sizeof(vec4_t));
+			else
+					memcpy(color, colorDefault, sizeof(vec4_t));
+		}
+		if (disabled)
+			color[3] = 0.5;
+		MN_DrawItem(node, pos, item, -1, -1, scale, color);
 	}
-
 }
 
 /**
  * @brief Draw the inventory of the base
  * @todo We really should group similar weapons (using same ammo) and their ammo together.
+ * @todo Need to split and cleanup the loop
+ * @todo More local var than it should
  */
 static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highlightType)
 {
@@ -596,7 +607,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 						if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
 						else
-							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, defaultColor);
+							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
 
 						if (node->container->scrollVertical) {
 							/* Draw the item name. */
@@ -611,34 +622,40 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 						if (newRow)
 							curWidth += ic->item.t->sx * C_UNIT;
 
+						/* marge */
+						pos[0] += ic->item.t->sx * C_UNIT / 2.0;
+
 						/* Loop through all ammo-types for this item. */
 						for (ammoIdx = 0; ammoIdx < ic->item.t->numAmmos; ammoIdx++) {
+							invList_t *icAmmo;
 							tempItem.t = ic->item.t->ammos[ammoIdx];
-							if (tempItem.t->tech && RS_IsResearched_ptr(tempItem.t->tech)) {
-								invList_t *icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, tempItem.t, equipType);
 
-								/* If we've found a piece of this ammo in the inventory we draw it. */
-								if (icAmmo) {
-									/* Calculate the center of the item model/image. */
-									pos[0] += tempItem.t->sx * C_UNIT / 2;
-									pos[1] = nodepos[1] + curHeight + icAmmo->item.t->sy * C_UNIT / 2.0;
+							/* skip unusable ammo */
+							if (!tempItem.t->tech || !RS_IsResearched_ptr(tempItem.t->tech))
+								continue;
 
-									curWidth += tempItem.t->sx * C_UNIT;
+							/* find and skip unexisting ammo */
+							icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, tempItem.t, equipType);
+							if (!icAmmo)
+								continue;
 
-									MN_DrawItem(node, pos, &tempItem, -1, -1, scale, defaultColor);
-									R_FontDrawString("f_verysmall", ALIGN_LC,
-										pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
-										pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
-										C_UNIT,	/* maxWidth */
-										0,	/* maxHeight */
-										0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
+							/* Calculate the center of the item model/image. */
+							pos[0] += tempItem.t->sx * C_UNIT / 2;
+							pos[1] = nodepos[1] + curHeight + icAmmo->item.t->sy * C_UNIT / 2.0;
 
-									/* Add width of text and the rest of the item. */
-									curWidth += C_UNIT / 2.0;
-									pos[0] += tempItem.t->sx * C_UNIT / 2 + C_UNIT / 2.0;
+							curWidth += tempItem.t->sx * C_UNIT;
 
-								}
-							}
+							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
+							R_FontDrawString("f_verysmall", ALIGN_LC,
+								pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
+								pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
+								C_UNIT,	/* maxWidth */
+								0,	/* maxHeight */
+								0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
+
+							/* Add width of text and the rest of the item. */
+							curWidth += C_UNIT / 2.0;
+							pos[0] += tempItem.t->sx * C_UNIT / 2 + C_UNIT / 2.0;
 						}
 					}
 
@@ -679,7 +696,7 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 		else
-			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, defaultColor);
+			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorDefault);
 	}
 }
 
