@@ -214,7 +214,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
-		if ((le->type == ET_ACTOR || le->type == ET_ACTORHIDDEN || le->type == ET_ACTOR2x2) && le->team == TEAM_ALIEN) {
+		if (LE_IsActor(le) && le->team == TEAM_ALIEN) {
 			assert(le->teamDef);
 
 			if (LE_IsStunned(le))

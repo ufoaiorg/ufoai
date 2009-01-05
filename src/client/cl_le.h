@@ -173,6 +173,7 @@ void CL_RecalcRouting(const le_t *le);
 void CL_CompleteRecalcRouting(void);
 
 qboolean LE_IsLivingActor(const le_t *le);
+qboolean LE_IsActor(const le_t *le);
 void LE_Explode(struct dbuffer *msg);
 void LE_DoorOpen(struct dbuffer *msg);
 void LE_DoorClose(struct dbuffer *msg);

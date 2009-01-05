@@ -153,10 +153,22 @@ static inline localModel_t *LM_Find (int entnum)
  * @param[in] le The local entity to perform the check for
  * @sa G_IsLivingActor
  */
+qboolean LE_IsActor (const le_t *le)
+{
+	assert(le);
+	return le->type == ET_ACTOR || le->type == ET_ACTOR2x2 || le->type == ET_ACTORHIDDEN;
+}
+
+/**
+ * @brief Checks whether the given le is a living actor
+ * @param[in] le The local entity to perform the check for
+ * @sa G_IsLivingActor
+ * @sa LE_IsActor
+ */
 qboolean LE_IsLivingActor (const le_t *le)
 {
 	assert(le);
-	return ((le->type == ET_ACTOR || le->type == ET_ACTOR2x2) && !LE_IsDead(le));
+	return LE_IsActor(le) && !LE_IsDead(le);
 }
 
 /**
