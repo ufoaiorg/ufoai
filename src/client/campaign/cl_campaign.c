@@ -2592,7 +2592,6 @@ void CL_ResetSinglePlayerData (void)
 		if (AL_IsTeamDefAlien(&csi.teamDef[i]))
 			gd.numAliensTD++;
 	}
-	menuAircraft = NULL;
 }
 
 #ifdef DEBUG

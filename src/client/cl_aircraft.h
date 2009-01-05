@@ -244,9 +244,6 @@ typedef struct aircraft_s {
 extern aircraft_t aircraftTemplates[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraftTemplates;
 
-/** @todo Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */
-extern aircraft_t *menuAircraft; /**< current selected aircraft for menu texts*/
-
 /* script functions */
 
 #ifdef DEBUG

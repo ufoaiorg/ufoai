@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_draw.h"
 
 
-/** @todo Is this really needed - we have base_t->aircraftCurrent - isn't that the same? */
-aircraft_t *menuAircraft = NULL;
 aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
 /**
  * Number of aircraft templates.
@@ -453,14 +451,7 @@ void AIM_ResetAircraftCvars_f (void)
 		return;
 	}
 
-	if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
-		/* Bad aircraft found.
-		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf(DEBUG_CLIENT, "AIM_ResetAircraftCvars_f: Bad aircraft found. Setting to first in base.\n");
-		menuAircraft = &baseCurrent->aircraft[0];
-	}
-
-	AIR_AircraftSelect(NULL);
+	AIR_AircraftSelect(baseCurrent->aircraftCurrent);
 }
 
 /**
@@ -470,27 +461,17 @@ void AIM_ResetAircraftCvars_f (void)
  */
 void AIM_NextAircraft_f (void)
 {
-	if (!baseCurrent || (baseCurrent->numAircraftInBase <= 0))
+	base_t *base = baseCurrent;
+
+	if (!base || base->numAircraftInBase <= 0)
 		return;
 
-	if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
-		/* Bad aircraft found.
-		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf(DEBUG_CLIENT, "AIM_NextAircraft_f: Bad aircraft found. Setting to first in base.\n");
-		menuAircraft = &baseCurrent->aircraft[0];
-		AIR_AircraftSelect(NULL);
-		return;
-	}
-
-	/* otherwise pointer arithmetic will access wrong memory */
-	assert(menuAircraft->homebase == baseCurrent);
-
-	if (menuAircraft == &baseCurrent->aircraft[baseCurrent->numAircraftInBase - 1])
-		menuAircraft = &baseCurrent->aircraft[0];
+	if (!base->aircraftCurrent || base->aircraftCurrent == &base->aircraft[base->numAircraftInBase - 1])
+		base->aircraftCurrent = &base->aircraft[0];
 	else
-		menuAircraft++;
+		base->aircraftCurrent++;
 
-	AIR_AircraftSelect(NULL);
+	AIR_AircraftSelect(base->aircraftCurrent);
 }
 
 /**
@@ -500,27 +481,17 @@ void AIM_NextAircraft_f (void)
  */
 void AIM_PrevAircraft_f (void)
 {
-	if (!baseCurrent || (baseCurrent->numAircraftInBase <= 0))
+	base_t *base = baseCurrent;
+
+	if (!base || base->numAircraftInBase <= 0)
 		return;
 
-	if (!menuAircraft || menuAircraft->homebase != baseCurrent) {
-		/* Bad aircraft found.
-		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf(DEBUG_CLIENT, "AIM_PrevAircraft_f: Bad aircraft found. Setting to first in base.\n");
-		menuAircraft = &baseCurrent->aircraft[0];
-		AIR_AircraftSelect(NULL);
-		return;
-	}
-
-	/* otherwise pointer arithmetic will access wrong memory */
-	assert(menuAircraft->homebase == baseCurrent);
-
-	if (menuAircraft == &baseCurrent->aircraft[0])
-		menuAircraft = &baseCurrent->aircraft[baseCurrent->numAircraftInBase - 1];
+	if (!base->aircraftCurrent || base->aircraftCurrent == &base->aircraft[0])
+		base->aircraftCurrent = &base->aircraft[base->numAircraftInBase - 1];
 	else
-		menuAircraft--;
+		base->aircraftCurrent--;
 
-	AIR_AircraftSelect(NULL);
+	AIR_AircraftSelect(base->aircraftCurrent);
 }
 
 /**
@@ -697,41 +668,20 @@ int AIR_GetAircraftIdxInBase (const aircraft_t* aircraft)
 
 /**
  * @brief Sets aircraftCurrent and updates related cvars and menutexts.
- * @param[in] aircraft Pointer to given aircraft that should be selected
- * in the menu.
- * @note If @c aircraft is @c NULL, it uses the @c menuAircraft pointer to
- * determine the aircraft.
- * If either the pointer is @c NULL or no aircraft is set in @c menuAircraft, it
- * takes the first aircraft in base (if there is any).
+ * @param[in] aircraft Pointer to given aircraft that should be selected in the menu.
  */
 void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	menuNode_t *node = NULL;
 	static char aircraftInfo[256];
-	base_t *base = aircraft ? aircraft->homebase : baseCurrent;
+	base_t *base = aircraft->homebase;
 
 	if (!base || !base->numAircraftInBase) {
 		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
 		return;
 	}
 
-	if (!aircraft) {
-		/**
-		 * Selecting the first aircraft in base (every base has at least one
-		 * aircraft at this point because base->numAircraftInBase was not zero)
-		 * if a non-sane idx was found.
-		 */
-		if (!menuAircraft || menuAircraft->homebase != base)
-			menuAircraft = &baseCurrent->aircraft[0];
-		aircraft = menuAircraft;
-	} else {
-		menuAircraft = aircraft;
-	}
-
 	node = MN_GetNodeFromCurrentMenu("aircraft");
-
-	/* We were not in the aircraft menu yet. */
-	base->aircraftCurrent = aircraft;
 
 	assert(aircraft);
 	assert(aircraft->homebase == base);
@@ -776,8 +726,7 @@ void AIR_AircraftSelect_f (void)
 		return;
 	}
 
-	base->aircraftCurrent = NULL;
-	AIR_AircraftSelect(NULL);
+	AIR_AircraftSelect(base->aircraftCurrent);
 	if (!base->aircraftCurrent && !Q_strncmp(menu.name, "aircraft", 8))
 		MN_PopMenu(qfalse);
 }
