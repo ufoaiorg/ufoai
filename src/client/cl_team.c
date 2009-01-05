@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_team_multiplayer.h"
 #include "cl_actor.h"
 #include "cl_rank.h"
+#include "cl_ugv.h"
 #include "campaign/cl_ufo.h"
 #include "menu/node/m_node_container.h"
 #include "menu/m_popup.h"
