@@ -49,6 +49,9 @@ static int alientypes[MAX_AIRCRAFT];						/**< How many types of aliens we colle
 
 /**
  * @brief Returns the alien cargo for the given aircraft
+ * @param[in] aircraft The aircraft to get the cargo for
+ * @note It's assumed that aircraft is a valid aircraft pointer
+ * @returns The aircraft cargo for (dead or alive) aliens
  */
 aliensTmp_t *AL_GetAircraftAlienCargo (const aircraft_t *aircraft)
 {
@@ -56,12 +59,28 @@ aliensTmp_t *AL_GetAircraftAlienCargo (const aircraft_t *aircraft)
 	return aliencargo[aircraft->idx];
 }
 
+/**
+ * @brief Returns the amount of different alien races on board of the given aircraft
+ * @param[in] aircraft The aircraft to return the amount of different alien races for
+ * @sa AL_SetAircraftAlienCargoTypes
+ * @note It's assumed that aircraft is a valid aircraft pointer
+ * @return The amount of different alien races
+ */
 int AL_GetAircraftAlienCargoTypes (const aircraft_t *aircraft)
 {
 	assert(aircraft);
 	return alientypes[aircraft->idx];
 }
 
+/**
+ * @brief Sets the value of how many different alien races the aircraft has collected
+ * @param[in] aircraft The aircraft to set the different alien races amount for
+ * @param[in] alienCargoTypes The different alien race amount
+ * @note dead or alive doesn't matter here
+ * @note It's assumed that aircraft is a valid aircraft pointer
+ * @return The amount of alien races the aircraft holds at the moment
+ * @sa AL_GetAircraftAlienCargoTypes
+ */
 int AL_SetAircraftAlienCargoTypes (const aircraft_t *aircraft, int alienCargoTypes)
 {
 	assert(aircraft);
@@ -69,6 +88,13 @@ int AL_SetAircraftAlienCargoTypes (const aircraft_t *aircraft, int alienCargoTyp
 	return alientypes[aircraft->idx];
 }
 
+/**
+ * @brief Searches an existing index in the alien cargo of an aircraft, or returns the next free index of
+ * the alien cargo if the team defintion wasn't found in the current alien cargo.
+ * @param[in] aircraft The aircraft that should have the given team definition in its alien cargo
+ * @param[in] teamDef The team definition that should be searched for
+ * @return The index of the team definition in the alien cargo of the given aircraft
+ */
 static inline const int AL_GetCargoIndexForTeamDefintion (const aircraft_t *aircraft, const teamDef_t *teamDef)
 {
 	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
@@ -87,6 +113,15 @@ static inline const int AL_GetCargoIndexForTeamDefintion (const aircraft_t *airc
 
 /**
  * @brief Adds an alientype to an aircraft cargo
+ * @param[in] aircraft The aircraft that owns the alien cargo to add the alien race to
+ * @param[in] teamDef The team definition of the alien race to add to the alien cargo container of the
+ * given aircraft
+ * @param[in] amount The amount of aliens of the given race (@c teamDef ) that should be added to
+ * the alien cargo
+ * @param[in] dead true for cases where the aliens should be added as dead to the alien cargo - false for
+ * living aliens
+ * @todo Return false for cases where the alien race could not be added to the alien cargo of the aircraft
+ * @returns Currently always true
  */
 qboolean AL_AddAlienTypeToAircraftCargo (const aircraft_t *aircraft, const teamDef_t *teamDef, int amount, qboolean dead)
 {
