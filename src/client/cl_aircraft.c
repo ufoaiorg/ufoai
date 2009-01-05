@@ -2172,35 +2172,6 @@ void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
 }
 
 /**
- * @brief Get the maximum weapon range of aircraft.
- * @param[in] slot Pointer to the aircrafts weapon slot list.
- * @param[in] maxSlot maximum number of weapon slots in aircraft.
- * @return Maximum weapon range for this aircaft as an angle.
- */
-float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
-{
-	int i;
-	float range = 0.0f;
-
-	assert(slot);
-
-	/* We choose the usable weapon with the smallest range */
-	for (i = 0; i < maxSlot; i++) {
-		const aircraftSlot_t *weapon = slot + i;
-		const objDef_t *ammo = weapon->ammo;
-
-		if (!ammo)
-			continue;
-
-		/* select this weapon if this is the one with the longest range */
-		if (ammo->craftitem.stats[AIR_STATS_WRANGE] > range) {
-			range = ammo->craftitem.stats[AIR_STATS_WRANGE];
-		}
-	}
-	return range;
-}
-
-/**
  * @brief Get the all the unique weapon ranges of this aircraft.
  * @param[in] slot Pointer to the aircrafts weapon slot list.
  * @param[in] maxSlot maximum number of weapon slots in aircraft.
@@ -2243,7 +2214,6 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 
 	return numUniqueWeaponRanges;
 }
-
 
 /**
  * @brief Save callback for savegames

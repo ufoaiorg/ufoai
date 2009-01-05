@@ -1746,7 +1746,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 				MAP_MapDrawLine(node, &aircraft->route);
 		} else
 #endif
-		if (!UFO_IsUFOSeenOnGeoscape(aircraft) || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
+		if (!oneUFOVisible || !UFO_IsUFOSeenOnGeoscape(aircraft) || !MAP_AllMapToScreen(node, aircraft->pos, &x, &y, NULL))
 			continue;
 
 		{

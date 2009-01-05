@@ -2259,6 +2259,39 @@ static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int st
 }
 
 /**
+ * @brief Get the maximum weapon range of aircraft.
+ * @param[in] slot Pointer to the aircrafts weapon slot list.
+ * @param[in] maxSlot maximum number of weapon slots in aircraft.
+ * @return Maximum weapon range for this aircaft as an angle.
+ */
+float AIR_GetMaxAircraftWeaponRange (const aircraftSlot_t *slot, int maxSlot)
+{
+	int i;
+	float range = 0.0f;
+
+	assert(slot);
+
+	/* We choose the usable weapon with the biggest range */
+	for (i = 0; i < maxSlot; i++) {
+		const aircraftSlot_t *weapon = slot + i;
+		const objDef_t *ammo = weapon->ammo;
+
+		if (!ammo)
+			continue;
+
+		/* make sure this item is useable */
+		if (!AII_CheckUpdateAircraftStats(slot, AIR_STATS_WRANGE))
+			continue;
+
+		/* select this weapon if this is the one with the longest range */
+		if (ammo->craftitem.stats[AIR_STATS_WRANGE] > range) {
+			range = ammo->craftitem.stats[AIR_STATS_WRANGE];
+		}
+	}
+	return range;
+}
+
+/**
  * @brief Repair aircraft.
  * @note Hourly called.
  */
@@ -2339,16 +2372,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 	}
 
 	/* now we update AIR_STATS_WRANGE (this one is the biggest range of every ammo) */
-	aircraft->stats[AIR_STATS_WRANGE] = 0;
-	for (i = 0; i < aircraft->maxWeapons; i++) {
-		if (!AII_CheckUpdateAircraftStats(&aircraft->weapons[i], AIR_STATS_WRANGE))
-			continue;
-		item = aircraft->weapons[i].ammo;
-		/* you can't fire if you don't have ammo
-		 * store wrange in millidegree, because this is an int */
-		if (item && item->craftitem.stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE] / 1000.0f)
-			aircraft->stats[AIR_STATS_WRANGE] = 1000 * item->craftitem.stats[AIR_STATS_WRANGE];
-	}
+	aircraft->stats[AIR_STATS_WRANGE] = 1000.0f * AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
 
 	/* check that aircraft hasn't too much fuel (caused by removal of fuel pod) */
 	if (aircraft->fuel > aircraft->stats[AIR_STATS_FUELSIZE])
