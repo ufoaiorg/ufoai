@@ -10,7 +10,7 @@ menu buy
 
 	zone render
 	{
-		invis true
+		invis		true
 	}
 
 	// ==================
@@ -19,7 +19,7 @@ menu buy
 
 	pic background
 	{
-		image	menu/market_bg
+		image		menu/market_bg
 	}
 
 	// ==================
@@ -97,7 +97,7 @@ menu buy
 		*bt_autosell<1> tooltip "_Item autosell disabled"
 	}
 	/**
-	 * @brief makes an autosell invisible
+	 * @brief makes an autosell checkbox invisible
 	 * @param[in] <1> row of item
 	 */
 	confunc buy_autoselli {
@@ -105,7 +105,7 @@ menu buy
 	}
 
 	/**
-	 @ @brief sets the selected line of the buylist
+	 * @brief sets the selected line of the buylist
 	 * @param[in] <1> row of the item
 	 */
 	confunc buy_selectitem {
@@ -144,8 +144,8 @@ menu buy
 	// buy/sell/autosell buttons
 	// =========================
 
-	/* @note correct current and max values of spinners will be set via confunc
-	 *		 but need to set here to assign memory for them
+	/**
+	 * @note correct current and max values of spinners will be set via confunc
 	 * @sa (confunc) buy_updateitem
 	 * @sa BS_UpdateItem
 	 */
@@ -800,17 +800,19 @@ menu buy
 
 	string txt_credits_caption
 	{
-		string	"_CREDIT"
-		pos	"650 50"
-		font	f_big
+		string		"_CREDIT"
+		pos			"650 50"
+		size		"130 30"
+		font		f_big
 	}
 
 	string txt_credits
 	{
-		font	"f_big"
-		string	"*cvar mn_credits"
-		pos		"940 50"
-		align	ur
+		string		"*cvar mn_credits"
+		pos			"790 50"
+		size		"150 30"
+		font		"f_big"
+		textalign	cr
 	}
 
 	// ==================

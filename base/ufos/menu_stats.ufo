@@ -139,23 +139,24 @@ menu stats
 
 	text nation_stats
 	{
-		pos		"518 284"
-		bgcolor	"0.5 0.5 0.5 0.2"
-		size	"470 240"
+		tooltip		"_Click for funding graphs"
+		pos			"518 284"
+		bgcolor		"0.5 0.5 0.5 0.2"
+		size		"470 240"
 		lineheight  22
 		tabwidth	360
 		textid		TEXT_STATS_NATIONS
-		rows	"10"
+		rows		"10"
+		mousefx		true
 		click
-		mousefx	true
 	}
 
 	string campaign_string
 	{
-		string	"_Campaign"
-		pos		"754 550"
-		align	uc
-		font	f_small
+		string		"_Campaign"
+		pos			"754 550"
+		align		uc
+		font		f_small
 	}
 
 	text campaign_stats

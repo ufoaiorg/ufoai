@@ -10,30 +10,20 @@ menu bases
 
 	pic back_ul
 	{
-		image	menu/base_ul
-		pos	"0 0"
+		image		menu/base_ul
+		pos			"0 0"
 	}
 
 	pic back_ur
 	{
-		image	menu/base_ur
-		pos		"512 0"
+		image		menu/base_ur
+		pos			"512 0"
 	}
 
 	pic back_lr
 	{
-		image	menu/base_lr
-		pos		"512 256"
-	}
-
-	custombutton back_geo
-	{
-		image	menu/button_background	blend	true
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Back to geoscape"
-		pos		"950 20"
-		icon geoscape
-		click	{ cmd "mn_pop;check_baseattacks;" }
+		image		menu/base_lr
+		pos			"512 256"
 	}
 
 	// ==================
@@ -42,13 +32,26 @@ menu bases
 
 	zone render
 	{
-		invis false
+		invis		false
+	}
+
+
+	custombutton back_geo
+	{
+		tooltip		"_Back to geoscape"
+		image		menu/button_background
+		texl		"1 1"
+		size		"59 55"
+		blend		true
+		pos			"950 20"
+		icon		geoscape
+		click		{ cmd "mn_pop;check_baseattacks;" }
 	}
 
 	basemap thebasemap
 	{
-		pos	"0 96"
-		size	"725 672"
+		pos			"0 96"
+		size		"725 672"
 		click
 		rclick
 		mclick
@@ -66,7 +69,7 @@ menu bases
 		blend		 true
 		pos			"755 128"
 		size		"230 56"
-		color "0 0.8 0 1"
+		color		"0 0.8 0 1"
 		selectcolor "1 1 1 1"
 		font		f_menu
 		click		{ cmd "mn_push buildings;" }
@@ -205,7 +208,7 @@ menu bases
 	string txt_credits_caption
 	{
 		string		"_CREDIT"
-		pos			"680 30"
+		pos			"675 30"
 		size		"100 30"
 		font		f_big
 	}
@@ -214,8 +217,8 @@ menu bases
 	{
 		tooltip		"_Organisation capital"
 		string		"*cvar mn_credits"
-		pos			"790 30"
-		size		"110 30"
+		pos			"780 30"
+		size		"130 30"
 		font		f_big
 		textalign	ur
 	}
@@ -278,7 +281,7 @@ menu bases
 
 	string base_status
 	{
-		if "mn_base_status_id == 1"
+		visiblewhen "mn_base_status_id == 1"
 		string	"*cvar mn_base_status_name"
 		color	"1 1 1 1"
 		pos	"512 370"
