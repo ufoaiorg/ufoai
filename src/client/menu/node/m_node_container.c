@@ -1,9 +1,7 @@
 /**
  * @file m_node_container.c
- * @todo need refactoring. one possible way:
- * @todo 1) generic drag-and-drop
- * @todo 2) move container list code out
- * @todo 3) improve the code genericity
+ * @todo move container list code out
+ * @todo improve the code genericity
  */
 
 /*
@@ -510,10 +508,10 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 
 /**
  * @brief Draw the inventory of the base
+ * @todo We really should group similar weapons (using same ammo) and their ammo together.
  */
 static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highlightType)
 {
-	/** @todo We really should group similar weapons (using same ammo) and their ammo together. */
 	invList_t *ic;
 	byte itemType;
 	int curWidth = 0;	/**< Combined width of all drawn item so far. */
@@ -667,10 +665,10 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 /**
  * @brief Draw a grip container
+ * @todo We really should group similar weapons (using same ammo) and their ammo together.
  */
 static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 {
-	/** @todo We really should group similar weapons (using same ammo) and their ammo together. */
 	const invList_t *ic;
 	vec2_t nodepos;
 
@@ -747,8 +745,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 }
 
 /**
- * @todo need to think about a common mechanism from drag-drop
- * @todo need a cleanup/marge/refactoring with MN_DrawContainerNode
+ * @brief Main function to draw a container node
  */
 static void MN_ContainerNodeDraw (menuNode_t *node)
 {
@@ -790,7 +787,6 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
  * @param[in] node Node we request to draw tooltip
  * @param[in] x Position x of the mouse
  * @param[in] y Position y of the mouse
- * @todo Why "MAX_VAR * 2"? MAX_VAR is already very big for tooltip no?
  */
 static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 {
@@ -1254,7 +1250,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 
 		target = MN_DNDGetTargetNode();
 		if (target) {
-			/** @todo We must split the move in two, we may not know how to add the item to the target (see dndDrop) */
+			/** @todo We must split the move in two. Here, we sould not know how to add the item to the target (see dndDrop) */
 			assert(target->container);
 			INV_MoveItem(menuInventory,
 				target->container, dragInfoToX, dragInfoToY,
