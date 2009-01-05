@@ -200,6 +200,7 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 
 static void MN_SpinnerNodeLoaded (menuNode_t *node)
 {
+	node->behaviour->super->loaded(node);
 	/* we can't choose a size */
 	node->size[0] = SPINNER_WIDTH;
 	node->size[1] = SPINNER_HEIGHT;

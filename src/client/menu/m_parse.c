@@ -96,6 +96,24 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
 }
 
 /**
+ * @brief Allocate a float into the menu memory
+ * @note Its not a dynamic memory allocation. Please only use it at the loading time
+ * @param[in] value Value use to initialize the float
+ * @param[in] count number of element need to alloc
+ * @todo use it every where its possible (search mn.curadata)
+ * @todo Assert out when we are not in parsing/loading stage
+ */
+float* MN_AllocFloat (int count)
+{
+	float *result;
+	assert(count > 0);
+	mn.curadata = ALIGN(mn.curadata);
+	result = (float*) mn.curadata;
+	mn.curadata += sizeof(float);
+	return result;
+}
+
+/**
  * @brief Allocate a string into the menu memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] string Use to initialize the string

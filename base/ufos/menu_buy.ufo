@@ -162,10 +162,6 @@ menu buy
 		image		menu/spinner_blue
 		blend		true
 		pos			"376 40"
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		change	{ cmd "mn_buysell 0 <lastdiff>; market_click 0;" }
 	}
 	pic bt_autosell0
@@ -189,10 +185,6 @@ menu buy
 		image		menu/spinner_blue
 		blend		true
 		pos			"376 65"
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		change		{ cmd "mn_buysell 1 <lastdiff>; market_click 1" }
 	}
 	pic bt_autosell1
@@ -215,10 +207,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 90"
 		change		{ cmd "mn_buysell 2 <lastdiff>; market_click 2" }
 	}
@@ -242,10 +230,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 115"
 		change		{ cmd "mn_buysell 3 <lastdiff>; market_click 3" }
 	}
@@ -269,10 +253,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 140"
 		change		{ cmd "mn_buysell 4 <lastdiff>; market_click 4" }
 	}
@@ -296,10 +276,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 165"
 		change		{ cmd "mn_buysell 5 <lastdiff>; market_click 5" }
 	}
@@ -323,10 +299,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 190"
 		change		{ cmd "mn_buysell 6 <lastdiff>; market_click 6" }
 	}
@@ -350,10 +322,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 215"
 		change		{ cmd "mn_buysell 7 <lastdiff>; market_click 7" }
 	}
@@ -377,10 +345,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 240"
 		change		{ cmd "mn_buysell 8 <lastdiff>; market_click 8" }
 	}
@@ -404,10 +368,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 265"
 		change		{ cmd "mn_buysell 9 <lastdiff>; market_click 9" }
 	}
@@ -431,10 +391,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 290"
 		change		{ cmd "mn_buysell 10 <lastdiff>; market_click 10" }
 	}
@@ -458,10 +414,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 315"
 		change		{ cmd "mn_buysell 11 <lastdiff>; market_click 11" }
 	}
@@ -485,10 +437,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 340"
 		change		{ cmd "mn_buysell 12 <lastdiff>; market_click 12" }
 	}
@@ -512,10 +460,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 365"
 		change		{ cmd "mn_buysell 13 <lastdiff>; market_click 13" }
 	}
@@ -539,10 +483,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 390"
 		change		{ cmd "mn_buysell 14 <lastdiff>; market_click 14" }
 	}
@@ -566,10 +506,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 415"
 		change		{ cmd "mn_buysell 15 <lastdiff>; market_click 15" }
 	}
@@ -593,10 +529,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 440"
 		change		{ cmd "mn_buysell 16 <lastdiff>; market_click 16" }
 	}
@@ -620,10 +552,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 465"
 		change		{ cmd "mn_buysell 17 <lastdiff>; market_click 17" }
 	}
@@ -647,10 +575,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 490"
 		change		{ cmd "mn_buysell 18 <lastdiff>; market_click 18" }
 	}
@@ -674,10 +598,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 515"
 		change		{ cmd "mn_buysell 19 <lastdiff>; market_click 19" }
 	}
@@ -701,10 +621,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 540"
 		change		{ cmd "mn_buysell 20 <lastdiff>; market_click 20" }
 	}
@@ -728,10 +644,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 565"
 		change		{ cmd "mn_buysell 21 <lastdiff>; market_click 21" }
 	}
@@ -755,10 +667,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 590"
 		change		{ cmd "mn_buysell 22 <lastdiff>; market_click 22" }
 	}
@@ -782,10 +690,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 615"
 		change		{ cmd "mn_buysell 23 <lastdiff>; market_click 23" }
 	}
@@ -809,10 +713,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 640"
 		change		{ cmd "mn_buysell 24 <lastdiff>; market_click 24" }
 	}
@@ -836,10 +736,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 665"
 		change		{ cmd "mn_buysell 25 <lastdiff>; market_click 25" }
 	}
@@ -863,10 +759,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 690"
 		change		{ cmd "mn_buysell 26 <lastdiff>; market_click 26" }
 	}
@@ -890,10 +782,6 @@ menu buy
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		min			0
-		current		10000
-		max			20000
-		delta		1
 		pos			"376 715"
 		change		{ cmd "mn_buysell 27 <lastdiff>; market_click 27" }
 	}

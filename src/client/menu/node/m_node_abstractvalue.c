@@ -27,6 +27,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "m_node_abstractvalue.h"
 
+inline static void MN_InitCvarOrFloat (float** adress)
+{
+	if (*adress == NULL) {
+		*adress = MN_AllocFloat(1);
+		**adress = 0;
+	}
+}
+
+static void MN_RegisterAbstractValueLoaded (menuNode_t * node)
+{
+	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.value);
+	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.delta);
+	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.max);
+	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.min);
+	*(float*)node->u.abstractvalue.delta = 1;
+}
+
 static const value_t properties[] = {
 	{"current", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.value), 0},
 	{"delta", V_CVAR_OR_FLOAT, offsetof(menuNode_t, u.abstractvalue.delta), 0},
@@ -39,6 +56,7 @@ static const value_t properties[] = {
 void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractvalue";
+	behaviour->loaded = MN_RegisterAbstractValueLoaded;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 }
