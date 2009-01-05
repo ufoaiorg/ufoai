@@ -361,10 +361,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_aircraft.h" />
-		<Unit filename="..\..\src\client\cl_basemanagement.c">
+		<Unit filename="..\..\src\client\campaign\cl_basemanagement.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_basemanagement.h" />
+		<Unit filename="..\..\src\client\campaign\cl_basemanagement.h" />
 		<Unit filename="..\..\src\client\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>

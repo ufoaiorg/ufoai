@@ -25,21 +25,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
-#include "cl_team.h"
-#include "cl_team_multiplayer.h"
-#include "campaign/cl_mapfightequip.h"
-#include "cl_aircraft.h"
-#include "campaign/cl_hospital.h"
-#include "cl_view.h"
-#include "campaign/cl_map.h"
-#include "campaign/cl_uforecovery.h"
-#include "cl_popup.h"
-#include "renderer/r_draw.h"
-#include "menu/m_popup.h"
-#include "campaign/cp_geoscape_actions.h"
-#include "campaign/cp_time.h"
+#include "../client.h"
+#include "../cl_global.h"
+#include "../cl_team.h"
+#include "../cl_team_multiplayer.h"
+#include "cl_mapfightequip.h"
+#include "../cl_aircraft.h"
+#include "cl_hospital.h"
+#include "../cl_view.h"
+#include "cl_map.h"
+#include "cl_uforecovery.h"
+#include "../cl_popup.h"
+#include "../renderer/r_draw.h"
+#include "../menu/m_popup.h"
+#include "cp_geoscape_actions.h"
+#include "cp_time.h"
 
 vec3_t newBasePos;
 static cvar_t *mn_base_title;

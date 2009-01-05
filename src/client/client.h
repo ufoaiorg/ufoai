@@ -344,7 +344,7 @@ typedef struct chr_list_s {
 #include "cl_aircraft.h"
 #include "campaign/cl_airfight.h"
 /* needs the MAX_ACTIVETEAM definition from above. */
-#include "cl_basemanagement.h"
+#include "campaign/cl_basemanagement.h"
 #include "cl_employee.h"
 #include "campaign/cl_transfer.h"
 #include "campaign/cl_nation.h"

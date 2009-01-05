@@ -3,7 +3,6 @@ CLIENT_CFLAGS+=-DCOMPILE_UFO
 CLIENT_SRCS = \
 	client/cl_actor.c \
 	client/cl_aircraft.c \
-	client/cl_basemanagement.c \
 	client/cl_cinematic.c \
 	client/cl_console.c \
 	client/cl_employee.c \
@@ -50,6 +49,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_alienbase.c \
 	client/campaign/cl_aliencont.c \
 	client/campaign/cl_airfight.c \
+	client/campaign/cl_basemanagement.c \
 	client/campaign/cl_basesummary.c \
 	client/campaign/cl_campaign.c \
 	client/campaign/cl_event.c \
