@@ -319,7 +319,7 @@ static void CL_Connect_f (void)
 		return;
 	}
 
-	aircraft = AIR_AircraftGetFromIdx(0);
+	aircraft = AIR_AircraftGetFromIDX(0);
 	assert(aircraft);
 	if (!B_GetNumOnTeam(aircraft)) {
 		MN_Popup(_("Error"), _("Assemble a team first"));

@@ -252,7 +252,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 	 * into the same hangar type than aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++)
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIdx(i);
+			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIDX(i);
 			assert(aircraftTemp);
 			if (aircraftTemp->size == aircraft->size)
 				numAircraftTransfer++;
@@ -353,7 +353,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)"),
-				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
+				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
 			LIST_AddString(&cargoList, str);
 			cargo[trCargoCountTmp].type = CARGO_TYPE_ALIEN_DEAD;
 			cargo[trCargoCountTmp].itemidx = i;
@@ -367,7 +367,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < gd.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
-				_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
+				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 			LIST_AddString(&cargoList, str);
 			cargo[trCargoCountTmp].type = CARGO_TYPE_ALIEN_ALIVE;
 			cargo[trCargoCountTmp].itemidx = i;
@@ -382,7 +382,7 @@ static void TR_CargoList (void)
 	/* Show all aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraft_t *aircraft = AIR_AircraftGetFromIdx(trAircraftsTmp[i]);
+			aircraft_t *aircraft = AIR_AircraftGetFromIDX(trAircraftsTmp[i]);
 			assert(aircraft);
 			Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
 			LIST_AddString(&cargoList, str);
@@ -412,7 +412,7 @@ static qboolean TR_AircraftListSelect (int i)
 	if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
 		return qfalse;
 
-	aircraft = AIR_AircraftGetFromIdx(i);
+	aircraft = AIR_AircraftGetFromIDX(i);
 	if (!AIR_IsAircraftInBase(aircraft))	/* Aircraft is not in base. */
 		return qfalse;
 
@@ -546,22 +546,22 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_DEAD],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_DEAD],
 						srcbase->alienscont[i].amount_dead);
 					else
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), srcbase->alienscont[i].amount_dead);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), srcbase->alienscont[i].amount_dead);
 					LIST_AddString(&transferList, str);
 					cnt++;
 				}
 				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_alive > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE],
 						srcbase->alienscont[i].amount_alive);
 					else
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIdx(i))), srcbase->alienscont[i].amount_alive);
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), srcbase->alienscont[i].amount_alive);
 					LIST_AddString(&transferList, str);
 					cnt++;
 				}
@@ -577,7 +577,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	case TRANS_TYPE_AIRCRAFT:
 		if (B_GetBuildingStatus(destbase, B_HANGAR) || B_GetBuildingStatus(destbase, B_SMALL_HANGAR)) {
 			for (i = 0; i < MAX_AIRCRAFT; i++) {
-				aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
+				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 				if (aircraft) {
 					if ((aircraft->homebase == srcbase) && TR_AircraftListSelect(i)) {
 						Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
@@ -805,7 +805,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 		/* reverse loop: aircraft are deleted in the loop: idx change */
 		for (i = MAX_AIRCRAFT - 1; i >= 0; i--) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
-				aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
+				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 				assert(aircraft);
 
 				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
@@ -1099,7 +1099,7 @@ static void TR_TransferStart_f (void)
 	}
 	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
+			aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 			aircraft->status = AIR_TRANSFER;
 			CL_RemoveSoldiersFromAircraft(aircraft);
 			transfer->hasAircraft = qtrue;
@@ -1299,7 +1299,7 @@ static void TR_TransferListSelect_f (void)
 		if (!B_GetBuildingStatus(transferBase, B_HANGAR) && !B_GetBuildingStatus(transferBase, B_SMALL_HANGAR))
 			return;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
-			const aircraft_t *aircraft = AIR_AircraftGetFromIdx(i);
+			const aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 			if (!aircraft)
 				return;
 			if (aircraft->homebase == baseCurrent && TR_AircraftListSelect(i)) {

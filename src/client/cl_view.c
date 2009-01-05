@@ -202,7 +202,7 @@ void CL_LoadMedia (void)
 	/* Prepare environment. This is needed hack to allow /devmap and /map usage.
 	 * When an user has base built and calls /devmap or /map, cls.missionaircraft has to be set. */
 	if (!cls.missionaircraft) {
-		cls.missionaircraft = AIR_AircraftGetFromIdx(0);
+		cls.missionaircraft = AIR_AircraftGetFromIDX(0);
 		if (cls.missionaircraft)
 			cls.missionaircraft->homebase = B_GetBaseByIDX(0);
 		else

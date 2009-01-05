@@ -1038,7 +1038,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	for (i = aircraft->idx + 1; i < gd.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
-		aircraft_t *aircraft_temp = AIR_AircraftGetFromIdx(i);
+		aircraft_t *aircraft_temp = AIR_AircraftGetFromIDX(i);
 		if (aircraft_temp) {
 			aircraft_temp->idx--;
 		} else {
@@ -1331,19 +1331,19 @@ objDef_t *AII_GetAircraftItemByID (const char *id)
  * @param[in] idx Global aircraft index.
  * @return An aircraft pointer (to a struct in a base) that has the given index or NULL if no aircraft found.
  */
-aircraft_t* AIR_AircraftGetFromIdx (int idx)
+aircraft_t* AIR_AircraftGetFromIDX (int idx)
 {
 	int baseIdx;
 	aircraft_t* aircraft;
 
 	if (idx == AIRCRAFT_INVALID || idx >= gd.numAircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
+		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: bad aircraft index: %i\n", idx);
 		return NULL;
 	}
 
 #ifdef PARANOID
 	if (gd.numBases < 1) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: no base(s) found!\n");
+		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: no base(s) found!\n");
 	}
 #endif
 
@@ -1354,7 +1354,7 @@ aircraft_t* AIR_AircraftGetFromIdx (int idx)
 			continue;
 		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
 			if (aircraft->idx == idx) {
-				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
+				Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
 			}
 		}
@@ -2462,7 +2462,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int == -1)
 				ufo->aircraftTarget = NULL;
 			else
-				ufo->aircraftTarget = AIR_AircraftGetFromIdx(tmp_int);
+				ufo->aircraftTarget = AIR_AircraftGetFromIDX(tmp_int);
 			/* read weapon slot */
 			tmp_int = MSG_ReadByte(sb);
 			if (tmp_int > MAX_AIRCRAFTSLOT) {
@@ -2548,7 +2548,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			else if (tmp_int == 1)
 				gd.projectiles[i].attackingAircraft = gd.ufos + MSG_ReadShort(sb);
 			else
-				gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
+				gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int >= 0)
 				gd.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
@@ -2560,7 +2560,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			else if (tmp_int == 1)
 				gd.projectiles[i].aimedAircraft = gd.ufos + MSG_ReadShort(sb);
 			else
-				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIdx(MSG_ReadShort(sb));
+				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
 			gd.projectiles[i].time = MSG_ReadLong(sb);
 			gd.projectiles[i].angle = MSG_ReadFloat(sb);
 			gd.projectiles[i].bullets = MSG_ReadByte(sb);

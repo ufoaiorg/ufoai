@@ -276,7 +276,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					INV_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amount_alive);
 					/* only once */
 					if (!messageAlreadySet) {
-						MN_AddNewMessage(_("Notice"), _("You cannot hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
+						MN_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
 						messageAlreadySet = qtrue;
 					}
 					if (!breathingMailSent) {
@@ -450,9 +450,9 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
  * @note It does NOT return the global team index from @c csi.teamDef array.
  * That would be @c alienType->idx
  * @sa RS_AssignTechLinks
- * @sa AL_GetAlienGlobalIdx
+ * @sa AL_GetAlienGlobalIDX
  */
-static int AL_GetAlienIdx (const teamDef_t *alienType)
+static int AL_GetAlienIDX (const teamDef_t *alienType)
 {
 	int i, index;
 
@@ -464,7 +464,7 @@ static int AL_GetAlienIdx (const teamDef_t *alienType)
 			index++;
 	}
 
-	Com_Printf("AL_GetAlienIdx: Alien \"%s\" not found!\n", alienType->id);
+	Com_Printf("AL_GetAlienIDX: Alien \"%s\" not found!\n", alienType->id);
 	return -1;
 }
 
@@ -472,9 +472,9 @@ static int AL_GetAlienIdx (const teamDef_t *alienType)
  * @brief Returns global alien index.
  * @param[in] idx Alien index in Alien Containment.
  * @return Global alien index in csi.teamDef array.
- * @sa AL_GetAlienIdx
+ * @sa AL_GetAlienIDX
  */
-int AL_GetAlienGlobalIdx (int idx)
+int AL_GetAlienGlobalIDX (int idx)
 {
 	int i, counter = 0;
 
@@ -485,7 +485,7 @@ int AL_GetAlienGlobalIdx (int idx)
 			counter++;
 		}
 	}
-	Com_Printf("AL_GetAlienGlobalIdx: Alien with AC index %i not found!\n", idx);
+	Com_Printf("AL_GetAlienGlobalIDX: Alien with AC index %i not found!\n", idx);
 	return -1;
 }
 
@@ -505,7 +505,7 @@ int AL_GetAlienAmount (const teamDef_t *alienType, requirementType_t reqtype, co
 
 	assert(alienType);
 	assert(base);
-	alienTypeIndex = AL_GetAlienIdx(alienType);
+	alienTypeIndex = AL_GetAlienIDX(alienType);
 	assert(alienTypeIndex >= 0);
 	containment = &base->alienscont[alienTypeIndex];
 

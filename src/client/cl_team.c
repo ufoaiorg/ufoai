@@ -1166,7 +1166,7 @@ static void CL_MarkTeam_f (void)
 			if (j == aircraft->idx)
 				continue;
 			/* already on another aircraft */
-			if (CL_SoldierInAircraft(employee, AIR_AircraftGetFromIdx(j)))
+			if (CL_SoldierInAircraft(employee, AIR_AircraftGetFromIDX(j)))
 				alreadyInOtherShip = qtrue;
 		}
 
@@ -1249,7 +1249,7 @@ const aircraft_t *CL_SoldierInAircraft (const employee_t *employee, const aircra
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
 		for (i = 0; i < gd.numAircraft; i++) {
-			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIdx(i);
+			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
 			if (aircraftByIDX && CL_SoldierInAircraft(employee, aircraftByIDX))
 				return aircraftByIDX;
 		}
@@ -1282,7 +1282,7 @@ qboolean CL_PilotInAircraft (const employee_t *employee, const aircraft_t* aircr
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
 		for (i = 0; i < gd.numAircraft; i++) {
-			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIdx(i);
+			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
 			if (aircraftByIDX && CL_PilotInAircraft(employee, aircraftByIDX))
 				return qtrue;
 		}
@@ -1348,7 +1348,7 @@ qboolean CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraf
 	if (!aircraft) {
 		int i;
 		for (i = 0; i < gd.numAircraft; i++) {
-			aircraft_t *acTemp = AIR_AircraftGetFromIdx(i);
+			aircraft_t *acTemp = AIR_AircraftGetFromIDX(i);
 			if (CL_SoldierInAircraft(employee, acTemp)) {
 				aircraft = acTemp;
 				break;

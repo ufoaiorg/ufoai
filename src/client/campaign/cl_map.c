@@ -198,7 +198,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		break;
 
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
-		aircraft = AIR_AircraftGetFromIdx(id);
+		aircraft = AIR_AircraftGetFromIDX(id);
 		if (aircraft == NULL) {
 			Com_DPrintf(DEBUG_CLIENT, "MAP_MultiSelectExecuteAction: selection of an unknow aircraft idx %i\n", id);
 			return;
