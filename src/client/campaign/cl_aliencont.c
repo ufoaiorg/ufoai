@@ -210,31 +210,18 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 {
 	int i;
 	le_t *le;
-	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
-	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse)
 			continue;
 		if ((le->type == ET_ACTOR || le->type == ET_ACTORHIDDEN || le->type == ET_ACTOR2x2) && le->team == TEAM_ALIEN) {
-			if (!le->teamDef) {
-				Com_Printf("AL_CollectingAliens: Can't collect alien with no teamDef assigned\n");
-				continue;
-			}
+			assert(le->teamDef);
 
 			if (LE_IsStunned(le))
 				AL_AddAlienTypeToAircraftCargo(aircraft, le->teamDef, 1, qfalse);
 			else if (LE_IsDead(le))
 				AL_AddAlienTypeToAircraftCargo(aircraft, le->teamDef, 1, qtrue);
 		}
-	}
-
-	/* print all of them */
-	for (i = 0; i < alienCargoTypes; i++) {
-		if (cargo[i].amount_dead > 0)
-			Com_DPrintf(DEBUG_CLIENT, "Collecting alien bodies... type: %s amount: %i\n", cargo[i].teamDef->name, cargo[i].amount_dead);
-		if (cargo[i].amount_alive > 0)
-			Com_DPrintf(DEBUG_CLIENT, "Aliens captured alive... type: %s amount: %i\n", cargo[i].teamDef->name, cargo[i].amount_alive);
 	}
 }
 
@@ -248,7 +235,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 void AL_AddAliens (aircraft_t *aircraft)
 {
 	int i, j, k, alienCargoTypes;
-	const objDef_t *alBrOd;
+	const objDef_t *alienBreathingObjDef;
 	base_t *tobase;
 	const aliensTmp_t *cargo;
 	qboolean messageAlreadySet = qfalse;
@@ -268,8 +255,8 @@ void AL_AddAliens (aircraft_t *aircraft)
 	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 
 	alienBreathing = RS_IsResearched_ptr(RS_GetTechByID("rs_alien_breathing"));
-	alBrOd = INVSH_GetItemByID("brapparatus");
-	if (!alBrOd)
+	alienBreathingObjDef = INVSH_GetItemByID("brapparatus");
+	if (!alienBreathingObjDef)
 		Sys_Error("AL_AddAliens: Could not get brapparatus item definition");
 
 	for (i = 0; i < alienCargoTypes; i++) {
@@ -279,14 +266,14 @@ void AL_AddAliens (aircraft_t *aircraft)
 			if (tobase->alienscont[j].teamDef == cargo[i].teamDef) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
 				/* Add breathing apparatuses to aircraft cargo so that they are processed with other collected items */
-				INV_CollectItem(aircraft, alBrOd, cargo[i].amount_dead);
+				INV_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amount_dead);
 				if (cargo[i].amount_alive <= 0)
 					continue;
 				if (!alienBreathing && !cargo[i].teamDef->robot) {
 					/* We can not store living (i.e. no robots or dead bodies) aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
 					/* Add breathing apparatuses as well */
-					INV_CollectItem(aircraft, alBrOd, cargo[i].amount_alive);
+					INV_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amount_alive);
 					/* only once */
 					if (!messageAlreadySet) {
 						MN_AddNewMessage(_("Notice"), _("You cannot hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
@@ -311,7 +298,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							}
 							/* Just kill aliens which don't fit the limit. */
 							tobase->alienscont[j].amount_dead++;
-							INV_CollectItem(aircraft, alBrOd, 1);
+							INV_CollectItem(aircraft, alienBreathingObjDef, 1);
 						}
 					}
 					/* only once */
