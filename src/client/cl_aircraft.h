@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRCRAFT_H
 #define CLIENT_CL_AIRCRAFT_H
 
+#include "campaign/cl_radar.h"
+
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64
 #define LINE_MAXPTS (LINE_MAXSEG + 2)
@@ -211,8 +213,6 @@ typedef struct aircraft_s {
 
 	mapline_t route;
 	struct base_s *homebase;			/**< Pointer to homebase for faster access. */
-	aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
-	int alientypes;						/**< How many types of aliens we collected. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 	int itemtypes;						/**< How many types of items we collected. */
 
@@ -303,4 +303,5 @@ void AIR_RemovePilotFromAssignedAircraft(struct base_s* base, const struct emplo
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
 int AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base, const int capacity);
+
 #endif

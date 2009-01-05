@@ -1202,7 +1202,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
 
 	/* Check for alien containment in aircraft homebase. */
-	if (aircraft->alientypes && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+	if (AL_GetAircraftAlienCargoTypes(aircraft) && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment.
 		 * Popup aircraft transer dialog to choose a better base. */
 		TR_TransferAircraftMenu(aircraft);

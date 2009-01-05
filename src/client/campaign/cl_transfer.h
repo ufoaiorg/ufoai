@@ -61,7 +61,7 @@ enum {
 typedef struct transfer_s {
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
 	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */
-	employee_t *trEmployees[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personel transfering. */
+	struct employee_s *trEmployees[MAX_EMPL][MAX_EMPLOYEES];	/**< List of personel transfering. */
 
 	int aircraftArray[MAX_AIRCRAFT];		/**< Aircraft being transferred. aircraftIdx */
 	base_t *destBase;				/**< Pointer to destination base. May not be NULL if active is true. */

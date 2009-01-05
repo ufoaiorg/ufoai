@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*============================================================================= */
 
 #define MAX_TEAMLIST	8
+#define MAX_CARGO		32
 
 /* Map debugging constants */
 /** @brief cvar debug_map options:
@@ -335,22 +336,14 @@ typedef struct chr_list_s {
 
 #include "cl_le.h"
 #include "cl_menu.h"
-#include "campaign/cl_radar.h"
 #include "cl_research.h"
-#include "campaign/cl_produce.h"
-#include "campaign/cl_aliencont.h"
 /* we need this in cl_aircraft.h */
 #define MAX_EMPLOYEES 512
 #include "cl_aircraft.h"
-#include "campaign/cl_airfight.h"
 /* needs the MAX_ACTIVETEAM definition from above. */
-#include "campaign/cl_basemanagement.h"
 #include "cl_employee.h"
-#include "campaign/cl_transfer.h"
-#include "campaign/cl_nation.h"
-#include "campaign/cl_campaign.h"
 #include "cl_inventory.h"
 #include "cl_parse.h"
-#include "campaign/cl_uforecovery.h"
+#include "campaign/cl_campaign.h"
 
 #endif /* CLIENT_CLIENT_H */

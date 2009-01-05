@@ -1906,6 +1906,34 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 }
 
 /**
+ * @brief Collect alien bodies for auto missions
+ * @note collect all aliens as dead ones
+ */
+static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
+{
+	int i;
+	int aliens = ccs.battleParameters.aliens;
+
+	if (!aliens)
+		return;
+
+	MN_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
+
+	while (aliens > 0) {
+		for (i = 0; i < ccs.battleParameters.alienTeamGroup->numAlienTeams; i++) {
+			const teamDef_t *teamDef = ccs.battleParameters.alienTeamGroup->alienTeams[i];
+			const int addDeadAlienAmount = rand() % aliens;
+			assert(i < MAX_CARGO);
+			assert(ccs.battleParameters.alienTeamGroup->alienTeams[i]);
+			AL_AddAlienTypeToAircraftCargo(aircraft, i, teamDef, addDeadAlienAmount, qtrue);
+			aliens -= addDeadAlienAmount;
+			if (!aliens)
+				break;
+		}
+	}
+}
+
+/**
  * @brief Handles the auto mission for none storyrelated missions or missions
  * that failed to assembly
  * @sa CL_GameAutoGo_f
@@ -1920,7 +1948,6 @@ void CL_GameAutoGo (mission_t *mis)
 	 * so store a local pointer to guarantee that we access the right aircraft
 	 * note that ccs.interceptAircraft is a fake aircraft for base attack missions */
 	aircraft_t *aircraft = ccs.interceptAircraft;
-	int i;
 
 	assert(mis);
 
@@ -1963,74 +1990,7 @@ void CL_GameAutoGo (mission_t *mis)
 		CP_CheckLostCondition(!won, mis, ccs.battleParameters.civilians);
 	}
 
-	/* Collect alien bodies */
-	{
-		int amount;
-		int aliensLeft = ccs.battleParameters.aliens;
-		aliensTmp_t *cargo;
-		aliensTmp_t aliencargoTemp[MAX_CARGO];
-		int aliencargoTypes = 0;
-
-		assert(aircraft);
-
-		/* collect all aliens as dead ones */
-		cargo = aircraft->aliencargo;
-
-		/* check whether there are already dead aliens on board */
-		if (aircraft->alientypes) {
-			*aliencargoTemp = *aircraft->aliencargo;
-			aliencargoTypes = aircraft->alientypes;
-		}
-
-		/* Make sure dropship aliencargo is empty. */
-		memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
-
-		aircraft->alientypes = ccs.battleParameters.alienTeamGroup->numAlienTeams;
-		amount = 0;
-		while (aliensLeft > 0) {
-			for (i = 0; i < aircraft->alientypes; i++) {
-				assert(i < MAX_CARGO);
-				assert(ccs.battleParameters.alienTeamGroup->alienTeams[i]);
-				cargo[i].teamDef = ccs.battleParameters.alienTeamGroup->alienTeams[i];
-				cargo[i].amount_dead += rand() % aliensLeft;
-				aliensLeft -= cargo[i].amount_dead;
-				amount += cargo[i].amount_dead;
-				if (!aliensLeft)
-					break;
-			}
-		}
-		if (amount)
-			MN_AddNewMessage(_("Notice"), va(_("Collected %i dead alien bodies"), amount), qfalse, MSG_STANDARD, NULL);
-
-		/* put the old aliens back into the cargo */
-		for (i = 0; i < aliencargoTypes; i++) {
-			int j;
-			for (j = 0; j < aircraft->alientypes; j++) {
-				if (aliencargoTemp[i].teamDef == cargo[j].teamDef)
-					break;
-			}
-			if (j < aircraft->alientypes) {
-				/* 'old' race was collected during this mission, too */
-				cargo[j].amount_dead += aliencargoTemp[i].amount_dead;
-			} else if (j < MAX_CARGO) {
-				/* add the 'old' race as a 'new' race to the cargo
-				 * it wasn't collected during this mission */
-				cargo[j].amount_dead += aliencargoTemp[i].amount_dead;
-				cargo[j].teamDef = aliencargoTemp[i].teamDef;
-				aircraft->alientypes++;
-			} else {
-				Com_DPrintf(DEBUG_CLIENT, "Could not readd the 'old' alien race to the cargo\n");
-			}
-		}
-
-		/* Check for alien containment in aircraft homebase. */
-		if (aircraft->alientypes && !B_GetBuildingStatus(aircraft->homebase, B_ALIEN_CONTAINMENT)) {
-			/* We have captured/killed aliens, but the homebase of this aircraft
-			 * does not have alien containment. Popup aircraft transer dialog to
-			 * choose a better base. */
-			TR_TransferAircraftMenu(aircraft);
-		}
-	}
+	CL_AutoMissionAlienCollect(aircraft);
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(ccs.selectedMission, won);

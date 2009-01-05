@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_ALIENCONT_H
 #define CLIENT_CL_ALIENCONT_H
 
-#define MAX_CARGO		32
 #define MAX_ALIENCONT_CAP	32
 
 /** specializations of aliens *
@@ -77,14 +76,16 @@ int AL_GetAlienAmount(const teamDef_t *alienType, requirementType_t reqtype, con
 void AL_ChangeAliveAlienNumber(struct base_s *base, aliensCont_t *containment, int num);
 qboolean AL_CheckAliveFreeSpace(const struct base_s *base, const aliensCont_t *containment, const int num);
 int AL_CountInBase(const struct base_s *base);
+aliensTmp_t *AL_GetAircraftAlienCargo(const aircraft_t *aircraft);
+int AL_GetAircraftAlienCargoTypes(const aircraft_t *aircraft);
+int AL_SetAircraftAlienCargoTypes(const aircraft_t *aircraft, int alienCargoTypes);
+qboolean AL_AddAlienTypeToAircraftCargo(const aircraft_t *aircraft, int index, const teamDef_t *teamDef, int amount, qboolean dead);
 
 /**
  * Menu functions
  */
 int AL_CountAll(void);
-
 void AC_InitStartup(void);
-
 void AC_KillAll(struct base_s *base);
 
 #endif /* CLIENT_CL_ALIENCONT_H */

@@ -3270,6 +3270,8 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
  */
 void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 {
+	aliensTmp_t *cargo;
+
 	AII_ReloadWeapon(aircraft);				/**< Reload weapons */
 
 	/* Don't call cargo functions if aircraft is not a transporter. */
@@ -3286,9 +3288,10 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	INV_UpdateStorageCap(aircraft->homebase);
 
 	/* Now empty alien/item cargo just in case. */
-	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
+	cargo = AL_GetAircraftAlienCargo(aircraft);
+	memset(cargo, 0, sizeof(*cargo));
 	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
-	aircraft->alientypes = 0;
+	AL_SetAircraftAlienCargoTypes(aircraft, 0);
 }
 
 /**
@@ -3491,6 +3494,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			const aircraft_t *aircraft = &b->aircraft[k];
+			const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 			MSG_WriteString(sb, aircraft->id);
 			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
@@ -3531,14 +3535,15 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteFloat(sb, aircraft->route.distance);
 			for (l = 0; l < aircraft->route.numPoints; l++)
 				MSG_Write2Pos(sb, aircraft->route.point[l]);
-			MSG_WriteShort(sb, aircraft->alientypes);
+			MSG_WriteShort(sb, alienCargoTypes);
 			MSG_WriteShort(sb, aircraft->itemtypes);
 			/* aliencargo */
-			for (l = 0; l < aircraft->alientypes; l++) {
-				assert(aircraft->aliencargo[l].teamDef);
-				MSG_WriteString(sb, aircraft->aliencargo[l].teamDef->id);
-				MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
-				MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
+			for (l = 0; l < alienCargoTypes; l++) {
+				const aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
+				assert(cargo[l].teamDef);
+				MSG_WriteString(sb, cargo[l].teamDef->id);
+				MSG_WriteShort(sb, cargo[l].amount_alive);
+				MSG_WriteShort(sb, cargo[l].amount_dead);
 			}
 			/* itemcargo */
 			for (l = 0; l < aircraft->itemtypes; l++) {
@@ -3825,6 +3830,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft_t *aircraft;
+			int alienCargoTypes;
 
 			const aircraft_t *const model = AIR_GetAircraft(MSG_ReadString(sb));
 			if (!model)
@@ -3912,9 +3918,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->route.distance = MSG_ReadFloat(sb);
 			for (l = 0; l < aircraft->route.numPoints; l++)
 				MSG_Read2Pos(sb, aircraft->route.point[l]);
-			aircraft->alientypes = MSG_ReadShort(sb);
-			if (aircraft->alientypes > MAX_CARGO) {
-				Com_Printf("B_Load: number of alien types (%i) exceed maximum value (%i)\n", aircraft->alientypes, MAX_CARGO);
+			alienCargoTypes = MSG_ReadShort(sb);
+			AL_SetAircraftAlienCargoTypes(aircraft, alienCargoTypes);
+			alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
+			if (alienCargoTypes > MAX_CARGO) {
+				Com_Printf("B_Load: number of alien types (%i) exceed maximum value (%i)\n", alienCargoTypes, MAX_CARGO);
 				return qfalse;
 			}
 			aircraft->itemtypes = MSG_ReadShort(sb);
@@ -3923,12 +3931,13 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				return qfalse;
 			}
 			/* aliencargo */
-			for (l = 0; l < aircraft->alientypes; l++) {
-				aircraft->aliencargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
-				if (!aircraft->aliencargo[l].teamDef)
+			for (l = 0; l < alienCargoTypes; l++) {
+				aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
+				cargo[l].teamDef = Com_GetTeamDefinitionByID(MSG_ReadString(sb));
+				if (!cargo[l].teamDef)
 					return qfalse;
-				aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
-				aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
+				cargo[l].amount_alive = MSG_ReadShort(sb);
+				cargo[l].amount_dead = MSG_ReadShort(sb);
 			}
 			/* itemcargo */
 			for (l = 0; l < aircraft->itemtypes; l++) {

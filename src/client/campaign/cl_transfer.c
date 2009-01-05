@@ -838,6 +838,8 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transfer_t *transfer;
 	float time;
 	char message[256];
+	int alienCargoTypes;
+	aliensTmp_t *cargo;
 
 	if (!base) {
 		Com_Printf("TR_TransferAlienAfterMissionStart_f: No base selected!\n");
@@ -871,27 +873,29 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transfer->srcBase = NULL;	/* Source base. */
 	transfer->active = qtrue;
 
-	for (i = 0; i < transferStartAircraft->alientypes; i++) {		/* Aliens. */
-		if (transferStartAircraft->aliencargo[i].amount_alive > 0) {
+	alienCargoTypes = AL_GetAircraftAlienCargoTypes(transferStartAircraft);
+	cargo = AL_GetAircraftAlienCargo(transferStartAircraft);
+	for (i = 0; i < alienCargoTypes; i++, cargo++) {		/* Aliens. */
+		if (cargo->amount_alive > 0) {
 			for (j = 0; j < gd.numAliensTD; j++) {
 				if (!AL_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
-				if (base->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
+				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer->hasAliens = qtrue;
-					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = transferStartAircraft->aliencargo[i].amount_alive;
-					transferStartAircraft->aliencargo[j].amount_alive = 0;
+					transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = cargo->amount_alive;
+					cargo->amount_alive = 0;
 					break;
 				}
 			}
 		}
-		if (transferStartAircraft->aliencargo[i].amount_dead > 0) {
+		if (cargo->amount_dead > 0) {
 			for (j = 0; j < gd.numAliensTD; j++) {
 				if (!AL_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
-				if (base->alienscont[j].teamDef == transferStartAircraft->aliencargo[i].teamDef) {
+				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer->hasAliens = qtrue;
-					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = transferStartAircraft->aliencargo[i].amount_dead;
-					transferStartAircraft->aliencargo[j].amount_dead = 0;
+					transfer->alienAmount[j][TRANS_ALIEN_DEAD] = cargo->amount_dead;
+					cargo->amount_dead = 0;
 					break;
 				}
 			}
