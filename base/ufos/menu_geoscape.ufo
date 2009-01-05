@@ -2894,9 +2894,9 @@ menu messageoptions
 	 * @param[in] <4> state for sound notification button
 	 */
 	confunc ms_btnstate {
-		cmd "mn_setnodeproperty bt_pause<1> current <2>"
-		cmd "mn_setnodeproperty bt_notify<1> current <3>"
-		cmd "mn_setnodeproperty bt_sound<1> current <4>"
+		*(abstractvalue)bt_pause<1> current <2>
+		*(abstractvalue)bt_notify<1> current <3>
+		*(abstractvalue)bt_sound<1> current <4>
 	}
 
 	// ===================

@@ -187,23 +187,23 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	val = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
 	if (!val && action->type.param1 != EA_PATHPROPERTY) {
 		/* do we ALREADY know this node? and his type */
-		menuNode_t *node = NULL;
-		node = MN_GetNode(menuNode->menu, action->data);
+		const menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
 		if (node) {
 			val = MN_NodeGetPropertyDefinition(node, *token);
 		} else {
-			Com_Printf("MN_ParseAction: node \"%s\" not already know (in event), you can cast it\n", *token);
+			Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", *token);
 		}
 	}
 
-	action->type.param2 = EA_RAWVALUE;
 	action->scriptValues = val;
 
 	if (!val || !val->type) {
-		Com_Printf("MN_ParseAction: token \"%s\" isn't a node property (in event)\n", *token);
+		Com_Printf("MN_ParseSetAction: token \"%s\" isn't a node property (in event)\n", *token);
 		action->type.op = EA_NULL;
 		return qtrue;
 	}
+
+	action->type.param2 = EA_RAWVALUE;
 
 	/* get the value */
 	*token = COM_EParse(text, errhead, NULL);
@@ -215,7 +215,17 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		mn.curadata += sizeof(menuAction_t*);
 		*(menuAction_t**)mem = MN_ParseAction(menuNode, text, token);
 	} else {
-		mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+		if (MN_IsInjectedString(*token)) {
+			action->type.param2 = EA_VALUE;
+			MN_AllocString(*token, 0);
+		} else {
+			const int baseType = val->type & V_SPECIAL_TYPE;
+			if (baseType != 0 && baseType != V_SPECIAL_CVAR) {
+				Com_Printf("MN_ParseSetAction: setter for property '%s' (type %d, 0x%X) is not supported (%s.%s)\n", val->string, val->type, val->type, menuNode->menu->name, menuNode->name);
+				return qfalse;
+			}
+			mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
+		}
 	}
 	return qtrue;
 }

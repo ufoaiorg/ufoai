@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_parse.h"
 #include "m_input.h"
+#include "node/m_node_abstractnode.h"
 
 menuNode_t *focusNode;
 
@@ -168,8 +169,6 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 		return;
 	}
 
-	assert(action->type.param2 == EA_RAWVALUE);
-
 	/* search the node */
 	path = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
 	switch (action->type.param1) {
@@ -194,6 +193,15 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 	value = action->data;
 	value += ALIGN(strlen(action->data) + 1);
 
+	/* decode text value */
+	if (action->type.param2 == EA_VALUE) {
+		value = MN_GenInjectedString(source, useCmdParam, value, qfalse);
+		MN_NodeSetProperty (node, action->scriptValues, value);
+		return;
+	}
+
+	/* decode RAW value */
+	assert(action->type.param2 == EA_RAWVALUE);
 	if ((action->scriptValues->type & V_SPECIAL_TYPE) == 0)
 		Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
 	else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
@@ -420,6 +428,16 @@ qboolean MN_FocusNextActionNode (void)
 	MN_FocusRemove();
 
 	return qfalse;
+}
+
+/**
+ * @brief Test if a string use an injection syntaxe
+ * @todo improve the test
+ */
+qboolean MN_IsInjectedString(const char *string)
+{
+	assert(string);
+	return string[0] == '<';
 }
 
 /**

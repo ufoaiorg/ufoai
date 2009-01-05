@@ -760,7 +760,9 @@ menu options_keys
 		//rows	"28"
 		textid	TEXT_LIST
 		lineheight	"20"
-		wheel	{ cmd "mn_setnodeproperty keyscroll current <text_scroll>;" }
+		wheel	{
+			*(abstractscrollbar)keyscroll current <text_scroll>
+		}
 	}
 
 	vscrollbar keyscroll {
@@ -776,7 +778,7 @@ menu options_keys
 
 	confunc optionkey_count
 	{
-		cmd "mn_setnodeproperty keyscroll fullsize <1>;"
+		*(abstractscrollbar)keyscroll fullsize <1>
 	}
 
 	func init

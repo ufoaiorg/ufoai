@@ -310,7 +310,7 @@ menu buy
 	 * @param[in] <1> row of the item
      */
 	confunc buy_selectitem {
-		cmd "mn_setnodeproperty market lineselected <1>;"
+		*market lineselected <1>
 	}
 
 	/**
@@ -320,9 +320,9 @@ menu buy
 	 * @param[in] <4> max value allowed
 	 */
 	confunc buy_updateitem {
-		cmd "mn_setnodeproperty bt_buysell<1> current <2>"
-		cmd "mn_setnodeproperty bt_buysell<1> min <3>"
-		cmd "mn_setnodeproperty bt_buysell<1> max <4>"
+		*(abstractvalue)bt_buysell<1> current <2>
+		*(abstractvalue)bt_buysell<1> min <3>
+		*(abstractvalue)bt_buysell<1> max <4>
 	}
 
 	confunc buy_hide0 { *bt_autosell0 invis true	*bt_buysell0 invis true }

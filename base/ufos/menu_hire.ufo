@@ -34,7 +34,7 @@ menu employees
 	 */
 	confunc employeedel
 	{
-		cmd "mn_setnodeproperty bt_employee<1> current 0"
+		*(abstractvalue)bt_employee<1> current 0
 		*bt_employee<1> invis false
 	}
 
@@ -43,7 +43,7 @@ menu employees
 	 */
 	confunc employeeadd
 	{
-		cmd "mn_setnodeproperty bt_employee<1> current 1"
+		*(abstractvalue)bt_employee<1> current 1
 		*bt_employee<1> invis false
 	}
 
@@ -210,11 +210,11 @@ menu employees
 	 * @param[in] <1> number of employee in the list
 	 */
 	confunc hire_update_number {
-		cmd "mn_setnodeproperty scroll fullsize <1>"
+		*(abstractscrollbar)scroll fullsize <1>
 	}
 
 	confunc hire_fix_scroll {
-		cmd "mn_setnodeproperty scroll current <1>"
+		*(abstractscrollbar)scroll current <1>
 	}
 
 	vscrollbar scroll

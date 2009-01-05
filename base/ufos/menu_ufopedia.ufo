@@ -103,11 +103,11 @@ menu ufopedia
 //		bgcolor " 0.5 1 0.5 0.3"
 		rows	"16"
 		wheel {
-			cmd "mn_setnodeproperty ufopedia_scroll current <text_scroll>;"
+			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
 		lineschange {
-			cmd "mn_setnodeproperty ufopedia_scroll fullsize <lines>;"
-			cmd "mn_setnodeproperty ufopedia_scroll current <text_scroll>;"
+			*(abstractscrollbar)ufopedia_scroll fullsize <lines>
+			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
 	}
 
@@ -135,11 +135,11 @@ menu ufopedia
 //		bgcolor " 0.5 1 0.5 0.3"
 		rows	"10"
 		wheel {
-			cmd "mn_setnodeproperty ufopedia_mail_scroll current <text_scroll>;"
+			*(abstractscrollbar)ufopedia_mail_scroll current <text_scroll>
 		}
 		lineschange {
-			cmd "mn_setnodeproperty ufopedia_mail_scroll fullsize <lines>;"
-			cmd "mn_setnodeproperty ufopedia_mail_scroll current <text_scroll>;"
+			*(abstractscrollbar)ufopedia_mail_scroll fullsize <lines>
+			*(abstractscrollbar)ufopedia_mail_scroll current <text_scroll>
 		}
 	}
 
@@ -890,13 +890,13 @@ menu ufopedia_mail
 		tabwidth	700
 		click	rclick wheel
 		mousefx	true
-		wheel	{
-			cmd "mn_setnodeproperty mailclient_scroll current <text_scroll>;"
+		wheel {
+			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 			cmd "ufopedia_scrollmail;"
 		}
 		lineschange {
-			cmd "mn_setnodeproperty mailclient_scroll fullsize <lines>;"
-			cmd "mn_setnodeproperty mailclient_scroll current <text_scroll>;"
+			*(abstractscrollbar)mailclient_scroll fullsize <lines>
+			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 		}
 	}
 

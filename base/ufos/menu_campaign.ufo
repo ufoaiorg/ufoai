@@ -98,11 +98,11 @@ menu campaigns
 		rows	19
 //		bgcolor "1 1 1 0.4"
 		wheel {
-			cmd "mn_setnodeproperty campaign_desc_scroll current <text_scroll>"
+			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
 		}
 		lineschange {
-			cmd "mn_setnodeproperty campaign_desc_scroll fullsize <lines>"
-			cmd "mn_setnodeproperty campaign_desc_scroll current <text_scroll>"
+			*(abstractscrollbar)campaign_desc_scroll fullsize <lines>
+			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
 		}
 	}
 

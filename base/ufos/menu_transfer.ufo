@@ -122,11 +122,11 @@ menu transfer
 //		bgcolor	"1 1 1 0.5"
 //		repeat	true
 		wheel {
-			cmd "mn_setnodeproperty trans_list_scroll current <text_scroll>"
+			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
 		lineschange {
-			cmd "mn_setnodeproperty trans_list_scroll fullsize <lines>"
-			cmd "mn_setnodeproperty trans_list_scroll current <text_scroll>"
+			*(abstractscrollbar)trans_list_scroll fullsize <lines>
+			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
 	}
 

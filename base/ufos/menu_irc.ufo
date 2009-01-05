@@ -84,11 +84,11 @@ menu irc
 		lineheight  "22"
 		textid		TEXT_STANDARD
 		wheel {
-			cmd "mn_setnodeproperty irc_data_scroll current <text_scroll>"
+			*(abstractscrollbar)irc_data_scroll current <text_scroll>
 		}
 		lineschange {
-			cmd "mn_setnodeproperty irc_data_scroll fullsize <lines>"
-			cmd "mn_setnodeproperty irc_data_scroll current <text_scroll>"
+			*(abstractscrollbar)irc_data_scroll fullsize <lines>
+			*(abstractscrollbar)irc_data_scroll current <text_scroll>
 		}
 	}
 
