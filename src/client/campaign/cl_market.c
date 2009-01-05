@@ -186,6 +186,7 @@ static inline qboolean BS_GetMinMaxValueByItemID (const base_t *base, int itemNu
 
 /**
  * @brief Update the GUI by calling a console function
+ * @sa BS_BuyType
  */
 static void BS_UpdateItem (const base_t *base, int itemNum)
 {
@@ -232,7 +233,7 @@ static void BS_MarketScroll_f (void)
 
 	/* now update the menu pics */
 	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++) {
-		MN_ExecuteConfunc("buy_autoselld%i", i);
+		MN_ExecuteConfunc("buy_autoselli %i", i);
 	}
 
 	assert(buyList.scroll >= 0);
@@ -245,10 +246,12 @@ static void BS_MarketScroll_f (void)
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
 			/* Check whether the item matches the proper filter, storage in current base and market. */
 			if (od && INV_ItemMatchesFilter(od, buyCat) && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx])) {
-				MN_ExecuteConfunc("buy_show%i", i - buyList.scroll);
+				MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 				BS_UpdateItem(baseCurrent, i - buyList.scroll);
 				if (gd.autosell[od->idx])
-					MN_ExecuteConfunc("buy_autoselle%i", i - buyList.scroll);
+					MN_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
+				else
+					MN_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
 			}
 		}
 	}
@@ -368,7 +371,8 @@ static void BS_BuyType (const base_t *base)
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_show%i", j - buyList.scroll);
+					MN_ExecuteConfunc("buy_autoselli %i", j - buyList.scroll);
+					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
 				BS_AddToList(air_samp->name, AIR_GetStorageSupply(base, air_samp->id, qtrue),
 						AIR_GetStorageSupply(base, air_samp->id, qfalse), air_samp->price);
@@ -394,7 +398,11 @@ static void BS_BuyType (const base_t *base)
 			 && (RS_Collected_(od->tech) || RS_IsResearched_ptr(od->tech))
 			 && (base->storage.num[i] || ccs.eMarket.num[i])) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_show%i", j - buyList.scroll);
+					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
+					if (gd.autosell[i])
+						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
+					else
+						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 				}
 				BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				if (j >= MAX_BUYLIST)
@@ -424,7 +432,7 @@ static void BS_BuyType (const base_t *base)
 					continue;
 
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_show%i", j - buyList.scroll);
+					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 				}
 
 				BS_AddToList(tech->name,
@@ -452,11 +460,11 @@ static void BS_BuyType (const base_t *base)
 				BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-					MN_ExecuteConfunc("buy_show%i", j - buyList.scroll);
+					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 					if (gd.autosell[i])
-						MN_ExecuteConfunc("buy_autoselle%i", j - buyList.scroll);
+						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 					else
-						MN_ExecuteConfunc("buy_autoselld%i", j - buyList.scroll);
+						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 				}
 
 				if (j >= MAX_BUYLIST)
@@ -473,9 +481,6 @@ static void BS_BuyType (const base_t *base)
 		break;
 	default:	/* Normal items */
 		if (buyCat < MAX_SOLDIER_FILTERTYPES || buyCat == FILTER_DUMMY) {
-			/* Add autosell button for every entry. */
-			for (j = 0; j < MAX_MARKET_MENU_ENTRIES; j++)
-				MN_ExecuteConfunc("buy_autoselld%i", j);
 			/* get item list */
 			for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 				if (od->notOnMarket)
@@ -485,11 +490,11 @@ static void BS_BuyType (const base_t *base)
 					BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
-						MN_ExecuteConfunc("buy_show%i", j - buyList.scroll);
+						MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 						if (gd.autosell[i])
-							MN_ExecuteConfunc("buy_autoselle%i", j - buyList.scroll);
+							MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 						else
-							MN_ExecuteConfunc("buy_autoselld%i", j - buyList.scroll);
+							MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
 					}
 
 					if (j >= MAX_BUYLIST)
@@ -508,7 +513,8 @@ static void BS_BuyType (const base_t *base)
 
 	for (; j < MAX_MARKET_MENU_ENTRIES; j++) {
 		/* Hide the rest of the entries. */
-		MN_ExecuteConfunc("buy_hide%i", j);
+		MN_ExecuteConfunc("buy_autoselli %i", j);
+		MN_ExecuteConfunc("buy_hide %i", j);
 	}
 
 	/* Update some menu cvars. */
