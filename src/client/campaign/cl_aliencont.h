@@ -79,7 +79,7 @@ int AL_CountInBase(const struct base_s *base);
 aliensTmp_t *AL_GetAircraftAlienCargo(const aircraft_t *aircraft);
 int AL_GetAircraftAlienCargoTypes(const aircraft_t *aircraft);
 int AL_SetAircraftAlienCargoTypes(const aircraft_t *aircraft, int alienCargoTypes);
-qboolean AL_AddAlienTypeToAircraftCargo(const aircraft_t *aircraft, int index, const teamDef_t *teamDef, int amount, qboolean dead);
+qboolean AL_AddAlienTypeToAircraftCargo(const aircraft_t *aircraft, const teamDef_t *teamDef, int amount, qboolean dead);
 
 /**
  * Menu functions

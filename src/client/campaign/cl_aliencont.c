@@ -69,16 +69,30 @@ int AL_SetAircraftAlienCargoTypes (const aircraft_t *aircraft, int alienCargoTyp
 	return alientypes[aircraft->idx];
 }
 
-/**
- * @brief Adds an alientype to an aircraft cargo
- * @todo index should not be needed here - teamDef should be enough
- */
-qboolean AL_AddAlienTypeToAircraftCargo (const aircraft_t *aircraft, int index, const teamDef_t *teamDef, int amount, qboolean dead)
+static inline const int AL_GetCargoIndexForTeamDefintion (const aircraft_t *aircraft, const teamDef_t *teamDef)
 {
 	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
-	assert(index < 0);
-	assert(index > MAX_CARGO);
+	int i;
+
+	for (i = 0; i < alienCargoTypes; i++, cargo++) {
+		if (cargo->teamDef == teamDef)
+			break;
+	}
+
+	/* in case teamdef wasn't found, return the next free index */
+	assert(i < MAX_CARGO);
+	return i;
+}
+
+/**
+ * @brief Adds an alientype to an aircraft cargo
+ */
+qboolean AL_AddAlienTypeToAircraftCargo (const aircraft_t *aircraft, const teamDef_t *teamDef, int amount, qboolean dead)
+{
+	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
+	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
+	const int index = AL_GetCargoIndexForTeamDefintion(aircraft, teamDef);
 
 	if (!cargo[index].teamDef)
 		AL_SetAircraftAlienCargoTypes(aircraft, alienCargoTypes + 1);
@@ -159,8 +173,8 @@ const char *AL_AlienTypeToName (int teamDefIdx)
  */
 void AL_CollectingAliens (aircraft_t *aircraft)
 {
-	int i, j;
-	le_t *le = NULL;
+	int i;
+	le_t *le;
 	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 
@@ -173,42 +187,10 @@ void AL_CollectingAliens (aircraft_t *aircraft)
 				continue;
 			}
 
-			/** @todo rewrite to use AL_AddAlienTypeToAircraftCargo */
-			if (LE_IsDead(le) || LE_IsStunned(le)) {
-				for (j = 0; j < alienCargoTypes; j++) {
-					/* Search alien type and increase amount */
-					assert(cargo[j].teamDef);
-					assert(le->teamDef);
-					if (cargo[j].teamDef == le->teamDef) {
-						/* Search stunned first. */
-						if (LE_IsStunned(le)) {
-							/* alive alien */
-							cargo[j].amount_alive++;
-							Com_DPrintf(DEBUG_CLIENT, "Counting: alive %s count: %i\n", le->teamDef->name, cargo[j].amount_alive);
-						} else {
-							/* alien body */
-							cargo[j].amount_dead++;
-							Com_DPrintf(DEBUG_CLIENT, "Counting: dead %s count: %i\n", le->teamDef->name, cargo[j].amount_dead);
-						}
-						break;
-					}
-				}
-				if (j == alienCargoTypes) {
-					/* otherwise add new alien type */
-					cargo[j].teamDef = le->teamDef;
-					/* Search stunned first. */
-					if (LE_IsStunned(le)) {
-						/* live alien */
-						cargo[j].amount_alive++;
-						Com_DPrintf(DEBUG_CLIENT, "Adding: alive %s count: %i\n", le->teamDef->name, cargo[j].amount_alive);
-					} else {
-						/* alien body */
-						cargo[j].amount_dead++;
-						Com_DPrintf(DEBUG_CLIENT, "Adding: dead %s count: %i\n", le->teamDef->name, cargo[j].amount_dead);
-					}
-					AL_SetAircraftAlienCargoTypes(aircraft, alienCargoTypes + 1);
-				}
-			}
+			if (LE_IsStunned(le))
+				AL_AddAlienTypeToAircraftCargo(aircraft, le->teamDef, 1, qfalse);
+			else if (LE_IsDead(le))
+				AL_AddAlienTypeToAircraftCargo(aircraft, le->teamDef, 1, qtrue);
 		}
 	}
 
@@ -230,7 +212,7 @@ void AL_CollectingAliens (aircraft_t *aircraft)
  */
 void AL_AddAliens (aircraft_t *aircraft)
 {
-	int i, j, k, alienCargoType;
+	int i, j, k, alienCargoTypes;
 	const objDef_t *alBrOd;
 	base_t *tobase;
 	const aliensTmp_t *cargo;
@@ -248,14 +230,14 @@ void AL_AddAliens (aircraft_t *aircraft)
 	}
 
 	cargo = AL_GetAircraftAlienCargo(aircraft);
-	alienCargoType = AL_GetAircraftAlienCargoTypes(aircraft);
+	alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);
 
 	alienBreathing = RS_IsResearched_ptr(RS_GetTechByID("rs_alien_breathing"));
 	alBrOd = INVSH_GetItemByID("brapparatus");
 	if (!alBrOd)
 		Sys_Error("AL_AddAliens: Could not get brapparatus item definition");
 
-	for (i = 0; i < alienCargoType; i++) {
+	for (i = 0; i < alienCargoTypes; i++) {
 		for (j = 0; j < gd.numAliensTD; j++) {
 			assert(tobase->alienscont[j].teamDef);
 			assert(cargo[i].teamDef);

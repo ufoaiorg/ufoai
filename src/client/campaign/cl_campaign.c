@@ -1925,7 +1925,7 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 			const int addDeadAlienAmount = rand() % aliens;
 			assert(i < MAX_CARGO);
 			assert(ccs.battleParameters.alienTeamGroup->alienTeams[i]);
-			AL_AddAlienTypeToAircraftCargo(aircraft, i, teamDef, addDeadAlienAmount, qtrue);
+			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
 			aliens -= addDeadAlienAmount;
 			if (!aliens)
 				break;
