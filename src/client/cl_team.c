@@ -425,7 +425,6 @@ void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_
 void CL_ResetCharacters (base_t* const base)
 {
 	int i;
-	employee_t *employee;
 	linkedList_t *hiredEmployees = NULL;
 	linkedList_t *hiredEmployeesTemp;
 
@@ -434,7 +433,7 @@ void CL_ResetCharacters (base_t* const base)
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredEmployees);
 	hiredEmployeesTemp = hiredEmployees;
 	while (hiredEmployeesTemp) {
-		employee = (employee_t*)hiredEmployeesTemp->data;
+		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
 		if (employee)
 			INVSH_DestroyInventory(employee->chr.inv);
 		hiredEmployeesTemp = hiredEmployeesTemp->next;
@@ -443,7 +442,7 @@ void CL_ResetCharacters (base_t* const base)
 	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
 	hiredEmployeesTemp = hiredEmployees;
 	while (hiredEmployeesTemp) {
-		employee = (employee_t*)hiredEmployeesTemp->data;
+		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
 		if (employee)
 			INVSH_DestroyInventory(employee->chr.inv);
 		hiredEmployeesTemp = hiredEmployeesTemp->next;
