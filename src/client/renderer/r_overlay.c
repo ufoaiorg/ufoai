@@ -189,7 +189,7 @@ void R_CreateRadarOverlay (void)
 
 	/* create new texture only once per life time, but reset it for every
 	 * new game (campaign start or game load) */
-	if (r_radarTexture) {
+	if (r_radarTexture && r_radarTexture->texnum > 0) {
 		memset(r_radarSourcePic, 0, size);
 		memset(r_radarPic, 0, size);
 		R_UploadRadarCoverage(qfalse);

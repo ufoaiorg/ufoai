@@ -1365,7 +1365,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 {
 	int i, j, num;
 	const char *name, *missionId;
-	char val[32];
 
 	/* read campaign name */
 	name = MSG_ReadString(sb);
@@ -2428,8 +2427,6 @@ campaign_t* CL_GetCampaign (const char* name)
  */
 static void CL_GameNew_f (void)
 {
-	char val[8];
-
 	/* exit running game */
 	if (curCampaign)
 		CL_GameExit();
