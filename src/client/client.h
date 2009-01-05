@@ -327,17 +327,12 @@ void CL_ClearState(void);
 
 struct base_s;
 struct installation_s;
+struct employee_s;
 
 typedef struct chr_list_s {
 	character_t* chr[MAX_ACTIVETEAM];
 	int num;	/* Number of entries */
 } chrList_t;
-
-/**
- * @brief List of currently displayed or equipeable characters.
- */
-extern chrList_t chrDisplayList;
-struct employee_s;
 
 #include "cl_le.h"
 #include "cl_menu.h"

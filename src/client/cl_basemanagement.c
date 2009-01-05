@@ -2360,9 +2360,7 @@ static void CL_SwapSkill (character_t *cp1, character_t *cp2, abilityskills_t sk
  */
 static void CL_SwapSkills (chrList_t *team)
 {
-	int j, i1, i2, skill, no1, no2;
-	character_t *cp1, *cp2;
-	int weaponr_fd_idx, weaponh_fd_idx;
+	int j, i1, i2, skill;
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 
@@ -2373,9 +2371,9 @@ static void CL_SwapSkills (chrList_t *team)
 		/* or perhaps 2 times is enough as long as weapons have 1 skill? */
 		for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
 			for (i1 = 0; i1 < team->num - 1; i1++) {
-				cp1 = team->chr[i1];
-				weaponr_fd_idx = -1;
-				weaponh_fd_idx = -1;
+				character_t *cp1 = team->chr[i1];
+				int weaponr_fd_idx = -1;
+				int weaponh_fd_idx = -1;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m && RIGHT(cp1)->item.t)
 					weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(RIGHT(cp1)->item.m, RIGHT(cp1)->item.t);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m && HOLSTER(cp1)->item.t)
@@ -2386,7 +2384,7 @@ static void CL_SwapSkills (chrList_t *team)
 					/** @todo Is there a better way to check for this case? */
 					Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 				} else {
-					no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
+					const int no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
 						+ 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode2].weaponSkill)
 						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.t->reload
 						   && skill == HOLSTER(cp1)->item.m->fd[weaponh_fd_idx][fmode1].weaponSkill)
@@ -2394,7 +2392,7 @@ static void CL_SwapSkills (chrList_t *team)
 						   && skill == HOLSTER(cp1)->item.m->fd[weaponh_fd_idx][fmode2].weaponSkill);
 
 					for (i2 = i1 + 1; i2 < team->num; i2++) {
-						cp2 = team->chr[i2];
+						character_t *cp2 = team->chr[i2];
 						weaponr_fd_idx = -1;
 						weaponh_fd_idx = -1;
 
@@ -2407,7 +2405,7 @@ static void CL_SwapSkills (chrList_t *team)
 							/** @todo Is there a better way to check for this case? */
 							Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 						} else {
-							no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
+							const int no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
 								+ 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode2].weaponSkill)
 								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.t->reload
 								   && skill == HOLSTER(cp2)->item.m->fd[weaponh_fd_idx][fmode1].weaponSkill)

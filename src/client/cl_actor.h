@@ -74,7 +74,7 @@ void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void CL_CharacterCvars(const character_t *chr);
 void CL_UGVCvars(const character_t *chr);
-void CL_ActorUpdateCVars(void);
+void CL_ActorUpdateCvars(void);
 qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
 void CL_ResetWeaponButtons(void);

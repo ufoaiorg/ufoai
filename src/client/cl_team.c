@@ -48,8 +48,8 @@ int employeesInCurrentList;
 
 static void CL_MarkTeam_f(void);
 
-/* List of currently displayed or equipeable characters. extern definition in client.h */
-chrList_t chrDisplayList;
+/** @brief List of currently displayed or equipeable characters. */
+static chrList_t chrDisplayList;
 
 /**
  * @brief Translate the skin id to skin name
@@ -903,24 +903,10 @@ static void CL_EquipType_f (void)
 	}
 }
 
-typedef enum {
-	SELECT_MODE_SOLDIER,
-	SELECT_MODE_EQUIP,
-	SELECT_MODE_TEAM
-} selectSoldierModes_t;
-
-/**
- * @note This function has various console commands:
- * team_select, soldier_select, equip_select
- */
-static void CL_Select_f (void)
+static void CL_ActorEquipmentSelect_f (void)
 {
-	const char *arg;
-	char command[MAX_VAR];
-	employee_t *employee;
-	character_t *chr;
 	int num;
-	selectSoldierModes_t mode;
+	character_t *chr;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -929,109 +915,121 @@ static void CL_Select_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	/* don't select the same actor twice */
-/*	if (num == cl_selected->integer)
-		return;*/
-
-	/* change highlights */
-	arg = Cmd_Argv(0);
-	/* there must be a _ in the console command */
-	*strchr(arg, '_') = 0;
-	Q_strncpyz(command, arg, sizeof(command));
-
-	if (!Q_strcmp(command, "soldier"))
-		mode = SELECT_MODE_SOLDIER;
-	else if (!Q_strcmp(command, "equip"))
-		mode = SELECT_MODE_EQUIP;
-	else if (!Q_strcmp(command, "team"))
-		mode = SELECT_MODE_TEAM;
-	else
+	if (num >= chrDisplayList.num)
 		return;
 
-	switch (mode) {
-	case SELECT_MODE_SOLDIER:
-		/* check whether we are connected (tactical mission) */
-		if (CL_OnBattlescape()) {
-			CL_ActorSelectList(num);
-			return;
-		}
-		/* we are still in the menu - so fall through */
-	case SELECT_MODE_EQUIP:
-		/* no soldiers in the current aircraft */
-		if (chrDisplayList.num <= 0) {
-			/* multiplayer - load a team first */
-			if (GAME_IsMultiplayer()) {
-				MN_PopMenu(qfalse);
-				MN_PushMenu("mp_team", NULL);
-			}
-			return;
-		/* not that many soldiers from the  aircraft shown. */
-		} else if (num >= chrDisplayList.num)
-			return;
-
-		/* update menu inventory */
-		if (menuInventory && menuInventory != chrDisplayList.chr[num]->inv) {
-			chrDisplayList.chr[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
-			/* set 'old' idEquip to NULL */
-			menuInventory->c[csi.idEquip] = NULL;
-		}
-		menuInventory = chrDisplayList.chr[num]->inv;
-		chr = chrDisplayList.chr[num];
-		break;
-	case SELECT_MODE_TEAM:
-		{
-			const employeeType_t employeeType = displayHeavyEquipmentList
-					? EMPL_ROBOT : EMPL_SOLDIER;
-			base_t *base = GAME_IsCampaign() ? baseCurrent : NULL;
-
-			if (GAME_IsCampaign() && !base)
-				return;
-
-			if (num >= E_CountHired(base, employeeType))
-				return;
-
-			employee = E_GetEmployeeByMenuIndex(num);
-			if (!employee)
-				Sys_Error("CL_Select_f: No employee at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
-
-			chr = &employee->chr;
-			if (!chr)
-				Sys_Error("CL_Select_f: No hired character at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
-		}
-		break;
-	default:
-		Sys_Error("Unknown select mode %i\n", mode);
+	/* update menu inventory */
+	if (menuInventory && menuInventory != chrDisplayList.chr[num]->inv) {
+		chrDisplayList.chr[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
+		/* set 'old' idEquip to NULL */
+		menuInventory->c[csi.idEquip] = NULL;
 	}
+	menuInventory = chrDisplayList.chr[num]->inv;
+	chr = chrDisplayList.chr[num];
 
-	if (mode == SELECT_MODE_SOLDIER) {
-		const menu_t *activeMenu = MN_GetActiveMenu();
-		if (!Q_strncmp(activeMenu->name, "employees", 9)) {
-			/* this is hire menu: we can select soldiers, worker, pilots, or researcher */
-			if (num < employeesInCurrentList) {
-				Cmd_ExecuteString(va("employee_list_click %i", num));
-				Cmd_ExecuteString(va("employee_select +%i", num));
-			} else
-				/* there's no employee corresponding to this num, skip */
-				return;
-		} else {
-			/* HACK */
-			/* deselect current selected soldier and select the new one */
-			MN_ExecuteConfunc("teamdeselect%i", cl_selected->integer);
-			MN_ExecuteConfunc("teamselect%i", num);
-			MN_ExecuteConfunc("equipdeselect%i", cl_selected->integer);
-			MN_ExecuteConfunc("equipselect%i", num);
-		}
-	} else {
-		/* deselect current selected soldier and select the new one */
-		MN_ExecuteConfunc("%sdeselect%i", command, cl_selected->integer);
-		MN_ExecuteConfunc("%sselect%i", command, num);
-	}
+	/* deselect current selected soldier and select the new one */
+	MN_ExecuteConfunc("equipdeselect%i", cl_selected->integer);
+	MN_ExecuteConfunc("equipselect%i", num);
+
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_Select_f: Command: '%s' - num: %i\n", command, num);
+	/* set info cvars */
+	if (chr->emplType == EMPL_ROBOT)
+		CL_UGVCvars(chr);
+	else
+		CL_CharacterCvars(chr);
+}
 
-	assert(chr);
+static void CL_ActorSoldierSelect_f (void)
+{
+	const menu_t *activeMenu = MN_GetActiveMenu();
+	int num;
+	employee_t *employee;
+	character_t *chr;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	/* check whether we are connected (tactical mission) */
+	if (CL_OnBattlescape()) {
+		CL_ActorSelectList(num);
+		return;
+	}
+
+	/* we are still in the menu */
+	if (!Q_strncmp(activeMenu->name, "employees", 9)) {
+		/* this is hire menu: we can select soldiers, worker, pilots, or researcher */
+		if (num < employeesInCurrentList) {
+			Cmd_ExecuteString(va("employee_list_click %i", num));
+			Cmd_ExecuteString(va("employee_select +%i", num));
+		}
+	}
+
+	/* deselect current selected soldier and select the new one */
+	MN_ExecuteConfunc("soldierdeselect%i", cl_selected->integer);
+	MN_ExecuteConfunc("soldierselect%i", num);
+
+	/* now set the cl_selected cvar to the new actor id */
+	Cvar_ForceSet("cl_selected", va("%i", num));
+
+	employee = E_GetEmployeeByMenuIndex(num);
+	if (!employee)
+		Sys_Error("CL_ActorSoldierSelect_f: No employee at list-pos %i\n", num);
+
+	chr = &employee->chr;
+	if (!chr)
+		Sys_Error("CL_ActorSoldierSelect_f: No character for employee at list pos %i\n", num);
+
+	/* set info cvars */
+	if (chr->emplType == EMPL_ROBOT)
+		CL_UGVCvars(chr);
+	else
+		CL_CharacterCvars(chr);
+}
+
+static void CL_ActorTeamSelect_f (void)
+{
+	employee_t *employee;
+	character_t *chr;
+	int num;
+	const employeeType_t employeeType = displayHeavyEquipmentList
+			? EMPL_ROBOT : EMPL_SOLDIER;
+	base_t *base = GAME_IsCampaign() ? baseCurrent : NULL;
+
+	if (GAME_IsCampaign() && !base)
+		return;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num >= E_CountHired(base, employeeType))
+		return;
+
+	employee = E_GetEmployeeByMenuIndex(num);
+	if (!employee)
+		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
+
+	chr = &employee->chr;
+	if (!chr)
+		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
+
+	/* deselect current selected soldier and select the new one */
+	MN_ExecuteConfunc("teamdeselect%i", cl_selected->integer);
+	MN_ExecuteConfunc("teamselect%i", num);
+
+	/* now set the cl_selected cvar to the new actor id */
+	Cvar_ForceSet("cl_selected", va("%i", num));
+
 	/* set info cvars */
 	if (chr->emplType == EMPL_ROBOT)
 		CL_UGVCvars(chr);
@@ -1547,12 +1545,12 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("equip_type", CL_EquipType_f, "Change the item category in soldier equipment menu");
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
-	Cmd_AddCommand("team_select", CL_Select_f, NULL);
+	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
 	Cmd_AddCommand("team_changename", CL_ChangeName_f, "Change the name of an actor");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, "Change the skin for the hole team in the current aircraft");
-	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
-	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));
+	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select a soldier in the equipment menu");
+	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
 	Cmd_AddCommand("soldier_reselect", CL_ThisSoldier_f, _("Reselect the current soldier"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
 	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");

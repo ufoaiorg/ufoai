@@ -1676,7 +1676,7 @@ void CL_FireWeapon_f (void)
 
 /**
  * @brief Remember if we hover over a button that would cost some TUs when pressed.
- * @note tis is used in CL_ActorUpdateCVars to update the "remaining TUs" bar correctly.
+ * @note tis is used in CL_ActorUpdateCvars to update the "remaining TUs" bar correctly.
  * @note commandline:remaining_tus
  */
 void CL_RemainingTus_f (void)
@@ -1701,13 +1701,13 @@ void CL_RemainingTus_f (void)
 	}
 
 	/* Update "remaining TUs" bar in HUD.*/
-	CL_ActorUpdateCVars();
+	CL_ActorUpdateCvars();
 }
 
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] time The amount of TU (of an actor) left in case of action.
- * @sa CL_ActorUpdateCVars
+ * @sa CL_ActorUpdateCvars
  */
 static void CL_RefreshWeaponButtons (int time)
 {
@@ -1840,7 +1840,7 @@ static void CL_RefreshWeaponButtons (int time)
 		}
 	}
 
-	/** Reload buttons @sa CL_ActorUpdateCVars */
+	/** Reload buttons @sa CL_ActorUpdateCvars */
 	if (weaponr)
 		reloadtime = CL_CalcReloadTime(weaponr->item.t);
 	if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime) {
@@ -2044,7 +2044,7 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
  * @sa CL_CharacterCvars
  * @sa CL_UGVCvars
  */
-void CL_ActorUpdateCVars (void)
+void CL_ActorUpdateCvars (void)
 {
 	static char infoText[MAX_SMALLMENUTEXTLEN];
 	static char mouseText[MAX_SMALLMENUTEXTLEN];
@@ -2523,7 +2523,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	/* Forcing the hud-display to refresh its displayed stuff. */
 	Cvar_SetValue("hud_refresh", 1);
-	CL_ActorUpdateCVars();
+	CL_ActorUpdateCvars();
 
 	CL_ConditionalMoveCalcForCurrentSelectedActor();
 

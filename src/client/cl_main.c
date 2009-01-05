@@ -2358,7 +2358,7 @@ void CL_SlowFrame (int now, void *data)
 {
 	CL_CvarCheck();
 
-	CL_ActorUpdateCVars();
+	CL_ActorUpdateCvars();
 }
 
 /**
