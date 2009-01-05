@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 #include "r_error.h"
+#include "r_overlay.h"
 
 /* Workaround for a warning about redeclaring the macro. jpeglib sets this macro
  * and SDL, too. */
@@ -1458,7 +1459,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 }
 
 /**
- * @brief Any image that was not touched on this registration sequence will be freed
+ * @brief Any image that is a mesh or world texture will be removed here
  * @sa R_ShutdownImages
  */
 void R_FreeWorldImages (void)
@@ -1496,6 +1497,8 @@ void R_InitImages (void)
 		if (r_envmaptextures[i] == r_noTexture)
 			Sys_Error("Could not load environment map %i", i);
 	}
+
+	R_CreateRadarOverlay();
 }
 
 /**

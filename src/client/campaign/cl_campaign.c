@@ -45,10 +45,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_nations.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
-#include "../renderer/r_overlay.h"
 #include "../renderer/r_draw.h"
+#include "../renderer/r_overlay.h"
 
-void R_CreateRadarOverlay(void);
 static void CL_CampaignInit(qboolean load);
 
 /* public vars */
@@ -2449,15 +2448,11 @@ static void CL_GameNew_f (void)
 
 	MAP_Init();
 
-	/* base setup */
-	gd.numBases = 0;
-	Cvar_Set("mn_base_count", "0");
 	gd.numAircraft = 0;
 
 	B_NewBases();
 	INS_NewInstallations();
 	PR_ProductionInit();
-	R_CreateRadarOverlay();
 
 	/* get day */
 	while (ccs.date.sec > SECONDS_PER_DAY) {

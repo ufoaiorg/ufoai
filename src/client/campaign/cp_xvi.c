@@ -27,13 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "cl_map.h"
 #include "cp_xvi.h"
+#include "../renderer/r_overlay.h"
 
 static technology_t *rsAlienXVI;
 
-/* headers from renderer */
-void R_IncreaseXVILevel(const vec2_t pos);
-void R_InitializeXVIOverlay(const char *mapname, byte *data, int width, int height);
-byte* R_XVIMapCopy(int *width, int *height);
 
 /**
  * @brief Sread XVI at a given position.

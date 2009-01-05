@@ -37,7 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cl_uforecovery.h"
 #include "cl_popup.h"
 #include "renderer/r_draw.h"
-#include "renderer/r_overlay.h"
 #include "menu/m_popup.h"
 #include "campaign/cp_geoscape_actions.h"
 #include "campaign/cp_time.h"
@@ -2724,13 +2723,18 @@ static void B_AssembleMap_f (void)
 }
 
 /**
- * @brief Cleans all bases but restore the base names
+ * @brief Cleans all bases and related structures to prepare a new campaign mode game
+ * @note restores the original base names
  * @sa CL_GameNew
  */
 void B_NewBases (void)
 {
 	int i;
 	char title[MAX_VAR];
+
+	/* base setup */
+	gd.numBases = 0;
+	Cvar_Set("mn_base_count", "0");
 
 	for (i = 0; i < MAX_BASES; i++) {
 		base_t *base = B_GetBaseByIDX(i);
@@ -3755,11 +3759,6 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	int teamTypes[MAX_TEAMLIST_SIZE_FOR_LOADING];	/**< Temp list of employee-types. */
 	int buildingIdx;
 	int pilotIdx;
-
-	/* Initialize Radar coverage and create textures if not yet done
-	 * This is needed if no other game was played before and we try to load
-	 * a game as first action */
-	R_CreateRadarOverlay();
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
