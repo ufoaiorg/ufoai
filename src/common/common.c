@@ -575,8 +575,22 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			use = cvar;
 			if (cntCvar != 1)
 				append = qfalse;
-		} else
-			Com_Printf("\n");
+		} else if (cmd && cvar) {
+			int maxLength = min(strlen(cmd),strlen(cvar));
+			int idx = 0;
+			/* try to find similar content of cvar and cmd match */
+			Q_strncpyz(cmdLine,cmd,sizeof(cmdLine));
+			for (; idx < maxLength; idx++) {
+				if (cmd[idx] != cvar[idx]) {
+					cmdLine[idx+1] = '\0';
+					break;
+				}
+			}
+			if (idx == maxLength)
+				cmdLine[idx+1] = '\0';
+			use = cmdLine;
+			append = qfalse;
+		}
 	}
 
 	if (use) {
