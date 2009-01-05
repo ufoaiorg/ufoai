@@ -1164,7 +1164,8 @@ qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 
 	dist = (float) aircraft->stats[AIR_STATS_SPEED] * (aircraft->time + dt) / (float)SECONDS_PER_HOUR;
 
-	/* Now calculate the projected position */
+	/* Now calculate the projected position. This is the position that the aircraft should get on
+	 * next frame if its route didn't change in meantime. */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1)) {
 		VectorSet(aircraft->projectedPos, 0.0f, 0.0f, 0.0f);
 	} else {
@@ -1950,8 +1951,10 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 
 	dist = MAP_GetDistance(shooter->pos, target->pos);
 	/* below calculation gives bad results when aircraft are far away: just go to target location at first
-	 * (this is a hack that should be removed when sphere calculation is made) */
-	if (dist > 50.0f) {
+	 * (this is a hack that should be removed when sphere calculation is made)
+	 * we also skip the calculation if aircraft are really close one from each other (eg. in airfight map)
+	 * otherwise the dotproduct may be greater than 1 due to rounding errors */
+	if (dist > 50.0f || dist < .02f) {
 		Vector2Copy(target->pos, (*dest));
 		return;
 	}
@@ -1977,6 +1980,9 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 	/* Rotate target position of dist to find destination point */
 	RotatePointAroundVector(shooterDestPos, rotationAxis, targetPos, dist);
 	VecToPolar(shooterDestPos, *dest);
+
+	/* make sure we don't get a NAN value */
+	assert((*dest)[0] <= 180.0f && (*dest)[0] >= -180.0f && (*dest)[1] <= 90.0f && (*dest)[1] >= -90.0f);
 }
 
 /**
