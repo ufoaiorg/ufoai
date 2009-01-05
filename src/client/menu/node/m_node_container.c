@@ -1089,6 +1089,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	if (MN_IsScrollContainerNode(node))
 		MN_ScrollContainerUpdate_f();
 
+	#if 0
 	/** @todo need to understand better that */
 	/* We are in the base or multiplayer inventory */
 	if (sel < chrDisplayList.num) {
@@ -1104,6 +1105,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 			Cvar_Set("mn_item", MN_DNDGetItem()->t->id);
 		}
 	}
+	#endif
 }
 
 static void MN_ContainerNodeClick (menuNode_t *node, int x, int y)
