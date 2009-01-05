@@ -24,6 +24,7 @@ CLIENT_SRCS = \
 	client/cl_popup.c \
 	client/cl_parse.c \
 	client/cl_particle.c \
+	client/cl_rank.c \
 	client/cl_research.c \
 	client/cl_save.c \
 	client/cl_screen.c \

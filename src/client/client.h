@@ -316,7 +316,6 @@ void CL_Init(void);
 void CL_ReadSinglePlayerData(void);
 void CL_RequestNextDownload(void);
 void CL_GameInit(qboolean load);
-void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
 void CL_ParseUGVs(const char *name, const char **text);
 void CL_ScriptSanityCheck(void);
 void CL_ScriptSanityCheckCampaign(void);
