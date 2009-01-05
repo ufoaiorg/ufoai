@@ -470,6 +470,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_rank.h" />
+		<Unit filename="..\..\src\client\cl_ugv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_ugv.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>

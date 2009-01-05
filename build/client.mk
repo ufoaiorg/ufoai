@@ -35,6 +35,7 @@ CLIENT_SRCS = \
 	client/cl_tip.c \
 	client/cl_tutorials.c \
 	client/cl_ufopedia.c \
+	client/cl_ugv.c \
 	client/cl_video.c \
 	client/cl_view.c \
 	\

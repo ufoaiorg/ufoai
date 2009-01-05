@@ -752,7 +752,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 	if (RS_IsResearched_ptr(tech)) {
-		/**@todo make me shiny */
+		/** @todo make me shiny */
 		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), _(tech->name), ugvType->weapon);
 		mn.menuText[TEXT_STANDARD] = itemText;
 	} else if (RS_Collected_(tech)) {
