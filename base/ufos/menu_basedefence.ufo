@@ -166,48 +166,44 @@ menu basedefence
 	// Zones
 	// ==================
 
-	pic basedef_button_add1
+	custombutton basedef_button_add1
 	{
 		tooltip	"_Install selected defence system"
-		mousefx	true
-		pos		"467 75"
-		image	menu/button_aircraft_menu
-		texl	"0 0"
-		texh	"36 32"
-		click { cmd "airequip_add_item 1;" }
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
+		pos			"467 75"
+		click		{ cmd "airequip_add_item 1;" }
+		icon		plus
 	}
 
-	pic basedef_button_remove1
+	custombutton basedef_button_remove1
 	{
 		tooltip	"_Remove this defence system"
-		mousefx	true
-		pos		"467 125"
-		image	menu/button_aircraft_menu
-		texl	"37 0"
-		texh	"73 32"
-		click { cmd "airequip_del_item 1;" }
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
+		pos			"467 125"
+		click		{ cmd "airequip_del_item 1;" }
+		icon		del
 	}
 
-	pic basedef_button_add2
+	custombutton basedef_button_add2
 	{
 		tooltip	"_Install selected defence system"
-		mousefx	true
-		pos		"467 259"
-		image	menu/button_aircraft_menu
-		texl	"0 0"
-		texh	"36 32"
-		click { cmd "airequip_add_item 2;" }
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
+		pos			"467 259"
+		click		{ cmd "airequip_add_item 2;" }
+		icon		plus
 	}
 
-	pic basedef_button_remove2
+	custombutton basedef_button_remove2
 	{
 		tooltip	"_Remove this defence system"
-		mousefx	true
-		pos		"467 294"
-		image	menu/button_aircraft_menu
-		texl	"37 0"
-		texh	"73 32"
-		click { cmd "airequip_del_item 2;" }
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
+		pos			"467 294"
+		click 		{ cmd "airequip_del_item 2;" }
+		icon		del
 	}
 
 	pic airequip_zone_select1

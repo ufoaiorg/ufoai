@@ -219,6 +219,9 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 	} else if (action->scriptValues->type == V_SPECIAL_ACTION) {
 		void *mem = ((byte *) node + action->scriptValues->ofs);
 		*(menuAction_t**) mem = *(menuAction_t**)value;
+	} else if (action->scriptValues->type == V_SPECIAL_ICONREF) {
+		void *mem = ((byte *) node + action->scriptValues->ofs);
+		*(menuIcon_t**) mem = *(menuIcon_t**)value;
 	} else {
 		assert(qfalse);
 	}

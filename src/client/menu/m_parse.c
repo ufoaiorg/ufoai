@@ -232,6 +232,15 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		void *mem = mn.curadata;
 		mn.curadata += sizeof(menuAction_t*);
 		*(menuAction_t**)mem = MN_ParseAction(menuNode, text, token);
+	} else if (val->type == V_SPECIAL_ICONREF) {
+		menuIcon_t* icon = MN_GetIconByName(*token);
+		if (icon == NULL) {
+			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s.%s)\n", *token, menuNode->menu->name, menuNode->name);
+			return qfalse;
+		}
+		mn.curadata = ALIGN(mn.curadata);
+		*(menuIcon_t**)mn.curadata = icon;
+		mn.curadata += sizeof(menuIcon_t*);
 	} else {
 		if (MN_IsInjectedString(*token)) {
 			action->type.param2 = EA_VALUE;

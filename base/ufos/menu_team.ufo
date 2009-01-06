@@ -855,23 +855,23 @@ menu team
 	// ==================
 	confunc toggle_show_heavybutton {
 		*bt_switch_list tooltip	"_Assign tanks"
-		*bt_switch_list texl	"0 0"
-		*bt_switch_list texh	"64 37"
+		*bt_switch_list icon	uvc
 	}
 	confunc toggle_show_soldiersbutton {
 		*bt_switch_list tooltip	"_Assign soldiers"
-		*bt_switch_list texl	"0 38"
-		*bt_switch_list texh	"64 75"
+		*bt_switch_list icon	soldier
 	}
-	pic bt_switch_list
+
+	custombutton bt_switch_list
 	{
-		tooltip	"_Assign tanks"
-		pos	"874 720"
-		image	menu/buttons_team
-		texl	"0 0"
-		texh	"64 37"
-		mousefx	true
-		click	{ cmd "team_toggle_list;" }
+		tooltip		"_Assign tanks"
+		image		menu/button_background
+		blend		true
+		texl		"192 0"
+		size		"64 37"
+		pos			"874 720"
+		icon		uvc
+		click		{ cmd "team_toggle_list;" }
 	}
 
 	custombutton bt_go

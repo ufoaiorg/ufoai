@@ -185,7 +185,7 @@ menu aircraft
 		texl		"192 0"
 		size		"64 37"
 		pos			"940 720"
-		icon		return	
+		icon		return
 		click		{ cmd "mn_pop;" }
 	}
 
@@ -234,7 +234,7 @@ menu aircraft
 			*menu:aircraft_equip.bt_next	disabled	true
 		}
 	}
-	
+
 	func init
 	{
 		cmd "aircraft_select;"
@@ -483,48 +483,44 @@ menu aircraft_equip
 	// Zones
 	// ==================
 
-	pic airequip_button_add1
+	custombutton airequip_button_add1
 	{
 		tooltip		"_Add selected item"
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
 		pos			"467 75"
-		image		menu/button_aircraft_menu
-		texl		"0 0"
-		texh		"36 32"
-		mousefx		true
 		click		{ cmd "airequip_add_item 1;" }
+		icon		plus
 	}
 
-	pic airequip_button_remove1
+	custombutton airequip_button_remove1
 	{
 		tooltip		"_Remove item from slot"
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
 		pos			"467 125"
-		image		menu/button_aircraft_menu
-		texl		"37 0"
-		texh		"73 32"
-		mousefx		true
 		click		{ cmd "airequip_del_item 1;" }
+		icon		del
 	}
 
-	pic airequip_button_add2
+	custombutton airequip_button_add2
 	{
 		tooltip		"_Add selected item"
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
 		pos			"467 259"
-		image		menu/button_aircraft_menu
-		texl		"0 0"
-		texh		"36 32"
-		mousefx		true
 		click		{ cmd "airequip_add_item 2;" }
+		icon		plus
 	}
 
-	pic airequip_button_remove2
+	custombutton airequip_button_remove2
 	{
 		tooltip		"_Remove item from slot"
+		image menu/button_background	blend true
+		texl "128 0"	size "37 32"
 		pos			"467 294"
-		image		menu/button_aircraft_menu
-		texl		"37 0"
-		texh		"73 32"
-		mousefx		true
 		click		{ cmd "airequip_del_item 2;" }
+		icon		del
 	}
 
 	pic airequip_zone_select1
@@ -757,7 +753,7 @@ menu aircraft_equip
 		texl		"192 0"
 		size		"64 37"
 		pos			"940 720"
-		icon		return	
+		icon		return
 		click		{ cmd "mn_pop;" }
 	}
 
