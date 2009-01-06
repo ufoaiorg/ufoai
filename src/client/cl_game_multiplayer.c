@@ -32,12 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static aircraft_t multiplayerFakeAircraft;
 
-static void B_MultiplayerAssignInitial_f (void)
+static void GAME_MP_AutoTeam_f (void)
 {
-#if 1
-	if (GAME_IsMultiplayer())
-		B_AssignInitial(cls.missionaircraft, cl_equip->string);
-#else
 	int i;
 
 	if (!GAME_IsMultiplayer())
@@ -49,14 +45,13 @@ static void B_MultiplayerAssignInitial_f (void)
 		CL_AssignSoldierToAircraft(employee, cls.missionaircraft);
 		B_PackInitialEquipment(cls.missionaircraft, ed);
 	}
-#endif
 }
 
 /**
  * @brief Starts a server and checks if the server loads a team unless he is a dedicated
  * server admin
  */
-static void MN_StartServer_f (void)
+static void GAME_MP_StartServer_f (void)
 {
 	char map[MAX_VAR];
 	mapDef_t *md;
@@ -99,7 +94,7 @@ static void MN_StartServer_f (void)
 /**
  * @brief Update the menu values with current gametype values
  */
-static void MN_UpdateGametype_f (void)
+static void GAME_MP_UpdateGametype_f (void)
 {
 	Com_SetGameType();
 }
@@ -108,7 +103,7 @@ static void MN_UpdateGametype_f (void)
  * @brief Switch to the next multiplayer game type
  * @sa MN_PrevGametype_f
  */
-static void MN_ChangeGametype_f (void)
+static void GAME_MP_ChangeGametype_f (void)
 {
 	int i, newType;
 	const mapDef_t *md;
@@ -191,11 +186,11 @@ void GAME_MP_InitStartup (void)
 
 	Cvar_ForceSet("sv_maxclients", "2");
 
-	Cmd_AddCommand("mp_startserver", MN_StartServer_f, NULL);
-	Cmd_AddCommand("mp_updategametype", MN_UpdateGametype_f, "Update the menu values with current gametype values");
-	Cmd_AddCommand("mp_nextgametype", MN_ChangeGametype_f, "Switch to the next multiplayer game type");
-	Cmd_AddCommand("mp_prevgametype", MN_ChangeGametype_f, "Switch to the previous multiplayer game type");
-	Cmd_AddCommand("mp_autoteam", B_MultiplayerAssignInitial_f, "Assign initial multiplayer equipment to soldiers");
+	Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, NULL);
+	Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
+	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
+	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
+	Cmd_AddCommand("mp_autoteam", GAME_MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
 
 	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 	 * cvars if values were previously set */
