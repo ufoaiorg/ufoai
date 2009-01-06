@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-01-02 11:50+0600\n"
-"PO-Revision-Date: 2009-01-03 20:37+0100\n"
+"PO-Revision-Date: 2009-01-06 22:29+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1409,7 +1409,7 @@ msgstr "Les abords tranquille d'une zone à forte densité de population."
 #: ../base/ufos/maps.ufo:694
 #: ../base/ufos/maps.ufo:730
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr ""
+msgstr "Les aliens ne peuvent que préparer le pire dans cette région dépeuplée de la forêt."
 
 #: ../base/ufos/maps.ufo:768
 msgid "An excavation site that has fallen under alien attack."
@@ -1524,7 +1524,7 @@ msgstr "Une banlieue africaine qui a été visité par une moissonneuse alienne.
 
 #: ../base/ufos/maps.ufo:2082
 msgid "An alien Harvester has crashed in the wastelands."
-msgstr ""
+msgstr "Une moissoneuse alienne s'est écrasé dans une zone désertique."
 
 #: ../base/ufos/maps.ufo:2121
 msgid "A small settlement in winter."
@@ -2502,33 +2502,32 @@ msgid "Pause"
 msgstr "Pause"
 
 #: ../base/ufos/menu_geoscape.ufo:146
-#, fuzzy
 msgid "Time lapse: 5 seconds"
-msgstr "Remettre le temps à 5 secondes"
+msgstr "Intervalle de temps : 5 secondes"
 
 #: ../base/ufos/menu_geoscape.ufo:158
 msgid "Time lapse: 5 minutes"
-msgstr ""
+msgstr "Intervalle de temps : 5 minutes"
 
 #: ../base/ufos/menu_geoscape.ufo:171
 msgid "Time lapse: 20 minutes"
-msgstr ""
+msgstr "Intervalle de temps : 20 minutes"
 
 #: ../base/ufos/menu_geoscape.ufo:183
 msgid "Time lapse: 1 hour"
-msgstr ""
+msgstr "Intervalle de temps : 1 heure"
 
 #: ../base/ufos/menu_geoscape.ufo:196
 msgid "Time lapse: 12 hours"
-msgstr ""
+msgstr "Intervalle de temps : 12 heures"
 
 #: ../base/ufos/menu_geoscape.ufo:209
 msgid "Time lapse: 1 day"
-msgstr ""
+msgstr "Intervalle de temps : 1 jour"
 
 #: ../base/ufos/menu_geoscape.ufo:221
 msgid "Time lapse: 5 days"
-msgstr ""
+msgstr "Intervalle de temps : 5 jours"
 
 #: ../base/ufos/menu_geoscape.ufo:304
 msgid "INBOX (with unread mails)"
@@ -3250,7 +3249,7 @@ msgstr "Implants"
 
 #: ../base/ufos/menu_hospital.ufo:557
 msgid "not implemented"
-msgstr ""
+msgstr "non implémenté"
 
 #: ../base/ufos/menu_hud.ufo:58
 msgid "Level 1"
@@ -3946,12 +3945,11 @@ msgstr "Effets météorologiques :"
 
 #: ../base/ufos/menu_options.ufo:294
 msgid "Vertex buffers:"
-msgstr ""
+msgstr "Buffers sommets:"
 
 #: ../base/ufos/menu_options.ufo:307
-#, fuzzy
 msgid "Multisample buffers:"
-msgstr "Tirs Multiples"
+msgstr "Buffer multi-échantillons :"
 
 #: ../base/ufos/menu_options.ufo:329
 msgid "Swap interval:"
@@ -10187,18 +10185,16 @@ msgid "Werner Hoehrer (hoehrer)"
 msgstr "Werner Hoehrer (hoehrer)"
 
 #: ../base/ufos/seq_credits.ufo:197
-#, fuzzy
 msgid "Lead Story Developer/Game Design"
-msgstr "Responsable scénariste"
+msgstr "Responsable scénariste / Ergonomie du jeu"
 
 #: ../base/ufos/seq_credits.ufo:208
 msgid "Ryan A. Span. (Winter)"
 msgstr "Ryan A. Span. (Winter)"
 
 #: ../base/ufos/seq_credits.ufo:230
-#, fuzzy
 msgid "Story Developer/Game Design"
-msgstr "Scénariste"
+msgstr "Scénariste / Ergonomie du jeu"
 
 #: ../base/ufos/seq_credits.ufo:241
 msgid "Bas Fournier (BTAxis)"
@@ -10726,7 +10722,6 @@ msgid "Be sure to equip your interceptor with weapons before launching it."
 msgstr "Pensez à armer votre intercepteur avant de le faire décoller."
 
 #: ../base/ufos/tips.ufo:44
-#, fuzzy
 msgid "Remember that items will slow an aircraft down. To intercept fast UFOs, you may prefer to send several lightly equipped aircraft."
 msgstr "Les objets dont vous équipez vos appareils peuvent le ralentir. Pour intercepter des OVNI rapides, il peut être intéressant d'envoyer plusieurs appareil légèrement équipés."
 
