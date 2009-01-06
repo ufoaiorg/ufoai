@@ -1135,9 +1135,11 @@ static void MN_ContainerNodeClick (menuNode_t *node, int x, int y)
 
 static void MN_ContainerNodeRightClick (menuNode_t *node, int x, int y)
 {
-	if (MN_DNDIsDragging())
-		return;
-	MN_Drag(node, x, y, qtrue);
+	if (MN_DNDIsDragging()) {
+		MN_DNDAbort();
+	} else {
+		MN_Drag(node, x, y, qtrue);
+	}
 }
 
 static void MN_ContainerNodeLoading (menuNode_t *node)

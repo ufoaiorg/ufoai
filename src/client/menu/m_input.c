@@ -320,6 +320,10 @@ void MN_LeftClick (int x, int y)
  */
 void MN_RightClick (int x, int y)
 {
+	if (mouseSpace == MS_DRAGITEM) {
+		mouseSpace = MS_DRAGITEM;
+	}
+
 	/* send it to the captured mouse node */
 	if (capturedNode) {
 		if (capturedNode->behaviour->rightClick)

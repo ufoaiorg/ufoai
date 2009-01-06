@@ -1,5 +1,6 @@
 /**
  * @file m_dragndrop.c
+ * @todo very important to delete MS_DRAGITEM
  */
 
 /*

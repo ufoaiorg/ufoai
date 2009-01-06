@@ -522,6 +522,8 @@ static void CL_SelectDown_f (void)
 
 static void CL_SelectUp_f (void)
 {
+	if (mouseSpace == MS_DRAGITEM)
+		return;
 	mouseSpace = MS_NULL;
 }
 
@@ -537,6 +539,8 @@ static void CL_ActionDown_f (void)
 
 static void CL_ActionUp_f (void)
 {
+	if (mouseSpace == MS_DRAGITEM)
+		return;
 	mouseSpace = MS_NULL;
 }
 
@@ -545,12 +549,16 @@ static void CL_ActionUp_f (void)
  */
 static void CL_TurnDown_f (void)
 {
+	if (mouseSpace == MS_DRAGITEM)
+		return;
 	if (mouseSpace == MS_WORLD)
 		CL_ActorTurnMouse();
 }
 
 static void CL_TurnUp_f (void)
 {
+	if (mouseSpace == MS_DRAGITEM)
+		return;
 	mouseSpace = MS_NULL;
 	/* leave the fire mode when turning around - not everybody has a mmb mouse */
 	cl.cmode = M_MOVE;
@@ -581,7 +589,7 @@ static void CL_HudRadarUp_f (void)
  */
 static void CL_RightClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_MENU || mouseSpace == MS_DRAGITEM) {
 		MN_MouseDown(mousePosX, mousePosY, K_MOUSE2);
 		MN_RightClick(mousePosX, mousePosY);
 	}
@@ -592,10 +600,9 @@ static void CL_RightClickDown_f (void)
  */
 static void CL_RightClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_MENU || mouseSpace == MS_DRAGITEM) {
 		MN_MouseUp(mousePosX, mousePosY, K_MOUSE2);
 	}
-	mouseSpace = MS_NULL;
 }
 
 /**
@@ -617,7 +624,6 @@ static void CL_MiddleClickUp_f (void)
 	if (mouseSpace == MS_MENU) {
 		MN_MouseUp(mousePosX, mousePosY, K_MOUSE3);
 	}
-	mouseSpace = MS_NULL;
 }
 
 /**
@@ -645,10 +651,9 @@ static void CL_LeftClickUp_f (void)
 	if (mouseSpace == MS_DRAGITEM) {
 		MN_LeftClick(mousePosX, mousePosY);
 	}
-	if (mouseSpace == MS_MENU) {
+	if (mouseSpace == MS_MENU || mouseSpace == MS_DRAGITEM) {
 		MN_MouseUp(mousePosX, mousePosY, K_MOUSE1);
 	}
-	mouseSpace = MS_NULL;
 }
 
 /**
@@ -1511,19 +1516,24 @@ static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned s
 		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *ascii, *ascii);
 }
 
-#define EVENT_ENQUEUE(keyNum, keyUnicode, keyDown) \
-	if (keyNum > 0) { \
-		if (in_debug->integer) \
-			Com_Printf("Enqueue: %s (%i) (down: %i)\n", Key_KeynumToString(keyNum), keyNum, keyDown); \
-		keyq[keyq_head].down = (keyDown); \
-		keyq[keyq_head].unicode = (keyUnicode); \
-		keyq[keyq_head].key = (keyNum); \
-		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1); \
+/**
+ * @todo rename this function
+ */
+inline static void EVENT_ENQUEUE (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
+{
+	if (keyNum > 0) {
+		if (in_debug->integer)
+			Com_Printf("Enqueue: %s (%i) (down: %i)\n", Key_KeynumToString(keyNum), keyNum, keyDown);
+		keyq[keyq_head].down = (keyDown);
+		keyq[keyq_head].unicode = (keyUnicode);
+		keyq[keyq_head].key = (keyNum);
+		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 	}
+}
 
 void IN_EventEnqueue (unsigned int key, unsigned short unicode, qboolean down)
 {
-	EVENT_ENQUEUE(key, unicode, down)
+	EVENT_ENQUEUE(key, unicode, down);
 }
 
 /**
@@ -1595,7 +1605,7 @@ void IN_Frame (void)
 				mouse_buttonstate = K_AUX1 + (event.button.button - 8) % 16;
 				break;
 			}
-			EVENT_ENQUEUE(mouse_buttonstate, 0, (event.type == SDL_MOUSEBUTTONDOWN))
+			EVENT_ENQUEUE(mouse_buttonstate, 0, (event.type == SDL_MOUSEBUTTONDOWN));
 			break;
 
 		case SDL_MOUSEMOTION:
@@ -1635,7 +1645,7 @@ void IN_Frame (void)
 			}
 
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			EVENT_ENQUEUE(key, unicode, qtrue)
+			EVENT_ENQUEUE(key, unicode, qtrue);
 			break;
 
 		case SDL_VIDEOEXPOSE:
@@ -1644,7 +1654,7 @@ void IN_Frame (void)
 		case SDL_KEYUP:
 			IN_PrintKey(&event, 0);
 			IN_TranslateKey(&event.key.keysym, &key, &unicode);
-			EVENT_ENQUEUE(key, unicode, qfalse)
+			EVENT_ENQUEUE(key, unicode, qfalse);
 			break;
 
 		case SDL_QUIT:
