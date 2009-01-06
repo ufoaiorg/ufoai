@@ -48,6 +48,7 @@ static menuTimer_t *mn_firstTimer;
  */
 static inline void MN_RemoveTimerFromActiveList (menuTimer_t *timer)
 {
+	assert(timer >= mn_timerSlots && timer < mn_timerSlots + MN_TIMER_SLOT_NUMBER);
 	if (timer->prev) {
 		timer->prev->next = timer->next;
 	} else {
