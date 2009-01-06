@@ -3,12 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"light" "190"
-"_color" "0.9 0.9 1"
-"angles" "0.032285 225 0"
-"ambient" "0.45 0.45 0.45"
-"maxteams" "0"
-"spawnflags" "255"
 // brush 0
 {
 ( 224 352 4 ) ( 224 480 4 ) ( 288 480 4 ) tex_nature/snow002 0 0 0 0.25 0.25 65280 0 0

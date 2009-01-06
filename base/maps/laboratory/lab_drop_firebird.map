@@ -2,12 +2,8 @@
 // entity 0
 {
 "classname" "worldspawn"
-"_color" "0.8 0.8 1"
 "maxteams" "2"
 "maxlevel" "4"
-"angles" "15 60"
-"light" "35"
-"ambient" "0 0 0"
 // brush 0
 {
 ( 528 180 60 ) ( 528 140 60 ) ( 576 140 60 ) tex_common/nodraw 4 8 -90 0.5 0.5 0 128 0

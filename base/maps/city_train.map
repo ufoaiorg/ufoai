@@ -3,11 +3,6 @@
 {
 "classname" "worldspawn"
 "maxlevel" "5"
-"maxteams" "0"
-"light" "160"
-"_color" "1 0.8 0.8"
-"angles" "30 210"
-"ambient" "0.4 0.4 0.4"
 // brush 0
 {
 ( -64 -160 4 ) ( 320 0 64 ) ( 320 -160 64 ) tex_streets/street001 0 0 0 0.4 0.4 65280 0 0
