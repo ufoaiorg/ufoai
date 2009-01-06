@@ -911,7 +911,8 @@ menu buy
 	item itemmodel
 	{
 		model	"*cvar mn_item"
-		pos		"793 250"
+		pos	"600 175"
+		size	"385 200"
 		scale	"7 7 7"
 		origin	"793 250 0"
 	}
