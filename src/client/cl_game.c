@@ -52,6 +52,7 @@ void GAME_RestartMode (int gametype)
 void GAME_SetMode (int gametype)
 {
 	const gameTypeList_t *list = gameTypeList;
+	const int currentGameType = cls.gametype;
 
 	if (gametype < 0 || gametype > GAME_MAX) {
 		Com_Printf("Invalid gametype %i given\n", gametype);
@@ -61,18 +62,18 @@ void GAME_SetMode (int gametype)
 	if (cls.gametype == gametype)
 		return;
 
+	cls.gametype = gametype;
+
 	while (list->name) {
 		if (list->gametype == gametype) {
 			Com_Printf("Change gametype to '%s'\n", list->name);
 			list->init();
-		} else if (list->gametype == cls.gametype) {
+		} else if (list->gametype == currentGameType) {
 			Com_Printf("Shutdown gametype '%s'\n", list->name);
 			list->shutdown();
 		}
 		list++;
 	}
-
-	cls.gametype = gametype;
 }
 
 /**

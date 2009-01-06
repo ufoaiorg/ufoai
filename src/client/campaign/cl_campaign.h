@@ -430,6 +430,7 @@ qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
 const char* MAP_GetMissionModel(const mission_t *mission);
 void CP_UFOProceedMission(aircraft_t *ufocraft);
+void CP_InitMarket(qboolean load);
 
 base_t *CP_GetMissionBase(void);
 void CP_SpawnCrashSiteMission(aircraft_t *ufo);

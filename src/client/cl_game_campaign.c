@@ -231,6 +231,8 @@ static void GAME_CP_Start_f (void)
 	if (!curCampaign)
 		return;
 
+	GAME_Init(qfalse);
+
 	CP_CampaignInit(qfalse);
 
 	/* Intro sentences */
@@ -378,8 +380,6 @@ void GAME_CP_InitStartup (void)
 	/* reset campaign data */
 	memset(&ccs, 0, sizeof(ccs));
 	CL_ReadSinglePlayerData();
-
-	GAME_Init(qfalse);
 
 	CP_InitStartup();
 }

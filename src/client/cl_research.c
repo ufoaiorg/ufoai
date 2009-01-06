@@ -101,7 +101,7 @@ void RS_ResearchFinish (technology_t* tech)
 	}
 
 	if (tech->finishedResearchEvent && tech->statusResearch != RS_FINISH)
-		Cbuf_AddText(va("%s\n", tech->finishedResearchEvent));
+		Cmd_ExecuteString(tech->finishedResearchEvent);
 	tech->statusResearch = RS_FINISH;
 	tech->researchedDate = ccs.date;
 	if (!tech->statusResearchable) {
@@ -779,10 +779,7 @@ void RS_InitTree (qboolean load)
 	}
 
 	if (GAME_IsCampaign()) {
-		if (!load) {
-			assert(baseCurrent);
-			RS_MarkResearchable(qtrue, baseCurrent);
-		} else {
+		if (load) {
 			/* when you load a savegame right after starting UFO, the aircraft in bases
 			* and installations don't have any tech assigned */
 			int k;

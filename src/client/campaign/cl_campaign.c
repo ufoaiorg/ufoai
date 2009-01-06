@@ -968,7 +968,7 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
  * @sa BS_Load (Market load function)
  * @param[in] load It this an attempt to init the market for a savegame?
  */
-static void CP_InitMarket (qboolean load)
+void CP_InitMarket (qboolean load)
 {
 	int i;
 
@@ -2297,15 +2297,15 @@ void CP_CampaignInit (qboolean load)
 
 	CL_GameTimeStop();
 
-	CP_InitMarket(load);
-
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 
 	CP_XVIInit();
 
-	if (load)
+	if (load) {
+		CP_InitMarket(load);
 		return;
+	}
 
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;

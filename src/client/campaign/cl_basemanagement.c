@@ -1187,6 +1187,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 			if (aircraft->type == AIRCRAFT_INTERCEPTOR)
 				AIM_AutoEquipAircraft(aircraft);
 		}
+
 		/** @todo remove this - has nothing to do with base setup */
 		CL_GameTimeFast();
 		CL_GameTimeFast();
@@ -1194,6 +1195,9 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		/* if no autobuild, set up zero build time for the first base */
 		ccs.instant_build = 1;
 	}
+
+	RS_MarkResearchable(qtrue, base);
+	CP_InitMarket(qfalse);
 }
 
 /**
