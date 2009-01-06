@@ -1138,7 +1138,7 @@ static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int butto
 		break;
 	case K_MOUSE2:
 		if (MN_DNDIsDragging()) {
-			assert(qfalse); /**< understand why this is never called */
+			assert(qfalse); /**< @todo understand why this is never called */
 			MN_DNDAbort();
 		} else {
 			/* auto place */
@@ -1152,7 +1152,7 @@ static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int butto
 
 static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
-	/** @todo understand why the MN_DNDAbort on the Button down event is nevert call */
+	/** @todo understand why the MN_DNDAbort on the Down button event is never called */
 	if (button == K_MOUSE2 && MN_DNDIsDragging()) {
 		MN_DNDAbort();
 		return;
