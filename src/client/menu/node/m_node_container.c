@@ -980,6 +980,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
  * @param[in] base The base we are in.
  * @param[in] mouseX/mouseY Mouse coordinates.
  * @param[in] rightClick If we want to auto-assign items instead of dragging them this has to be qtrue.
+ * @todo split this function in three start drag, drop, and autoplace
  */
 static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightClick)
 {
@@ -1128,18 +1129,39 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	#endif
 }
 
-static void MN_ContainerNodeClick (menuNode_t *node, int x, int y)
+static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
-	MN_Drag(node, x, y, qfalse);
+	switch (button) {
+	case K_MOUSE1:
+		/* start drag and drop */
+		MN_Drag(node, x, y, qfalse);
+		break;
+	case K_MOUSE2:
+		if (MN_DNDIsDragging()) {
+			assert(qfalse); /**< understand why this is never called */
+			MN_DNDAbort();
+		} else {
+			/* auto place */
+			MN_Drag(node, x, y, qtrue);
+		}
+		break;
+	default:
+		break;
+	}
 }
 
-static void MN_ContainerNodeRightClick (menuNode_t *node, int x, int y)
+static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
-	if (MN_DNDIsDragging()) {
+	/** @todo understand why the MN_DNDAbort on the Button down event is nevert call */
+	if (button == K_MOUSE2 && MN_DNDIsDragging()) {
 		MN_DNDAbort();
-	} else {
-		MN_Drag(node, x, y, qtrue);
+		return;
 	}
+
+	if (button != K_MOUSE1)
+		return;
+	/* stop drag and drop */
+	MN_Drag(node, x, y, qfalse);
 }
 
 static void MN_ContainerNodeLoading (menuNode_t *node)
@@ -1296,8 +1318,8 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->name = "container";
 	behaviour->draw = MN_ContainerNodeDraw;
 	behaviour->drawTooltip = MN_ContainerNodeDrawTooltip;
-	behaviour->leftClick = MN_ContainerNodeClick;
-	behaviour->rightClick = MN_ContainerNodeRightClick;
+	behaviour->mouseDown = MN_ContainerNodeMouseDown;
+	behaviour->mouseUp = MN_ContainerNodeMouseUp;
 	behaviour->loading = MN_ContainerNodeLoading;
 	behaviour->loaded = MN_FindContainer;
 	behaviour->dndEnter = MN_ContainerNodeDNDEnter;
