@@ -191,11 +191,11 @@ void GAME_MP_InitStartup (void)
 
 	Cvar_ForceSet("sv_maxclients", "2");
 
-	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
-	Cmd_AddCommand("mn_updategametype", MN_UpdateGametype_f, "Update the menu values with current gametype values");
-	Cmd_AddCommand("mn_nextgametype", MN_ChangeGametype_f, "Switch to the next multiplayer game type");
-	Cmd_AddCommand("mn_prevgametype", MN_ChangeGametype_f, "Switch to the previous multiplayer game type");
-	Cmd_AddCommand("assign_initial", B_MultiplayerAssignInitial_f, "Assign initial multiplayer equipment to soldiers");
+	Cmd_AddCommand("mp_startserver", MN_StartServer_f, NULL);
+	Cmd_AddCommand("mp_updategametype", MN_UpdateGametype_f, "Update the menu values with current gametype values");
+	Cmd_AddCommand("mp_nextgametype", MN_ChangeGametype_f, "Switch to the next multiplayer game type");
+	Cmd_AddCommand("mp_prevgametype", MN_ChangeGametype_f, "Switch to the previous multiplayer game type");
+	Cmd_AddCommand("mp_autoteam", B_MultiplayerAssignInitial_f, "Assign initial multiplayer equipment to soldiers");
 
 	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 	 * cvars if values were previously set */
@@ -234,9 +234,9 @@ void GAME_MP_InitStartup (void)
 
 void GAME_MP_Shutdown (void)
 {
-	Cmd_RemoveCommand("mn_startserver");
-	Cmd_RemoveCommand("mn_updategametype");
-	Cmd_RemoveCommand("mn_nextgametype");
-	Cmd_RemoveCommand("mn_prevgametype");
-	Cmd_RemoveCommand("assign_initial");
+	Cmd_RemoveCommand("mp_startserver");
+	Cmd_RemoveCommand("mp_updategametype");
+	Cmd_RemoveCommand("mp_nextgametype");
+	Cmd_RemoveCommand("mp_prevgametype");
+	Cmd_RemoveCommand("mp_autoteam");
 }
