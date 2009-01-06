@@ -643,7 +643,7 @@ void RS_RequiredLinksAssign (void)
  * @param[in] load qtrue if we are loading a game, qfalse otherwise
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
  * @todo Enhance ammo model display (see comment in code).
- * @sa CL_CampaignInit
+ * @sa CP_CampaignInit
  */
 void RS_InitTree (qboolean load)
 {

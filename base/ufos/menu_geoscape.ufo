@@ -929,7 +929,7 @@ menu popup_intercept_ready
 
 	pic bt_auto_go
 	{
-		if	"game_autogo == 1"
+		if	"cp_mission_autogo_available == 1"
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos		"266 148"
@@ -938,11 +938,11 @@ menu popup_intercept_ready
 		texl	"0 32"
 		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
 		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
-		click	{ cmd "game_auto_go;" }
+		click	{ cmd "cp_mission_autogo;" }
 	}
 	string string_auto_go
 	{
-		if "game_autogo == 1"
+		if "cp_mission_autogo_available == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
@@ -952,7 +952,7 @@ menu popup_intercept_ready
 
 	func init
 	{
-		cmd 	"game_auto_check;"
+		cmd 	"cp_missionauto_check;"
 	}
 }
 
@@ -1028,7 +1028,7 @@ menu popup_baseattack
 		texl	"0 32"
 		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
 		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
-		click	{ cmd "game_auto_go;" }
+		click	{ cmd "cp_mission_autogo;" }
 	}
 	string string_auto_go
 	{
@@ -1062,7 +1062,7 @@ menu popup_baseattack
 
 	func init
 	{
-		cmd	"game_auto_check;"
+		cmd	"cp_missionauto_check;"
 	}
 }
 

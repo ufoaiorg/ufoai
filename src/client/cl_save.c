@@ -122,7 +122,7 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
  * @param[in] file Savegame to load (relative to writepath/save)
  * @sa SAV_GameLoad_f
  * @sa SAV_GameSave
- * @sa CL_CampaignInit
+ * @sa CP_CampaignInit
  * @sa CL_ReadSinglePlayerData
  */
 static qboolean SAV_GameLoad (const char *file, char **error)
@@ -195,15 +195,9 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 			filename, header.version);
 	}
 
-	/* exit running game */
-	if (curCampaign)
-		CL_GameExit();
-
 	loading = qtrue;
 
-	GAME_SetMode(GAME_CAMPAIGN);
-
-	CL_ReadSinglePlayerData();
+	GAME_RestartMode(GAME_CAMPAIGN);
 
 	Com_Printf("Load '%s'\n", filename);
 	for (i = 0; i < saveSubsystemsAmount; i++) {

@@ -28,5 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void GAME_MP_InitStartup(void);
 void GAME_MP_Shutdown(void);
+void GAME_MP_Results(int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 
 #endif

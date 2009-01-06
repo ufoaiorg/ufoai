@@ -119,7 +119,10 @@ static void CL_GenerateNewMultiplayerTeam_f (void)
 	}
 	CL_ResetMultiplayerTeamInAircraft(cls.missionaircraft);
 	Cvar_Set("mn_teamname", _("NewTeam"));
-	CL_GameExit();
+
+	SV_Shutdown("Game exit", qfalse);
+	CL_Disconnect();
+
 	MN_PushMenu("team", NULL);
 }
 

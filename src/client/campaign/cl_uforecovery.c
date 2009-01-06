@@ -198,7 +198,7 @@ static void CP_UFORecovered_f (void)
 static void CP_UFORecoveryDone (void)
 {
 	/* Disable Try Again a mission. */
-	Cvar_SetValue("mission_tryagain", 1);
+	ccs.mission_tryagain = qfalse;
 	MN_ExecuteConfunc("distryagain\n");
 	/* Disable UFORecovery buttons. */
 	MN_ExecuteConfunc("disallrecovery\n");

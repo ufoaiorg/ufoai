@@ -40,7 +40,7 @@ const int MAX_POS_LOOP = 10;
 /**
  * @brief Set some needed cvars from mission definition
  * @param[in] mission mission definition pointer with the needed data to set the cvars to
- * @sa CL_GameGo
+ * @sa CP_StartSelectedMission
  */
 void CP_SetMissionVars (const mission_t *mission)
 {
@@ -73,7 +73,7 @@ void CP_SetMissionVars (const mission_t *mission)
 /**
  * @brief Select the mission type and start the map from mission definition
  * @param[in] mission Mission definition to start the map from
- * @sa CL_GameGo
+ * @sa CP_StartSelectedMission
  * @note Also sets the terrain textures
  * @sa Mod_LoadTexinfo
  * @sa B_AssembleMap_f
@@ -1182,24 +1182,24 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		if (CL_SoldierInAircraft(employee, aircraft))
 			numberofsoldiers++;
 
-		Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - try to get player %i \n", i);
+		Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - try to get player %i \n", i);
 
 		if (employee->hired && employee->baseHired == base) {
 			const character_t *chr = &(employee->chr);
 			assert(chr);
-			Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - idx %d hp %d\n", chr->ucn, chr->HP);
+			Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - idx %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */
 			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
-				Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, chr->name);
+				Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd: Delete this dead employee: %i (%s)\n", i, chr->name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
 			} /* if dead */
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
+	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberofsoldiers); /* DEBUG */
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_GameResults_f - done removing dead players\n");
+	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - done removing dead players\n");
 
 	/* Check for alien containment in aircraft homebase. */
 	if (AL_GetAircraftAlienCargoTypes(aircraft) && !B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {

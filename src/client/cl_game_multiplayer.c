@@ -178,6 +178,36 @@ static void GAME_MP_ChangeGametype_f (void)
 	}
 }
 
+void GAME_MP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+{
+	char resultText[MAX_SMALLMENUTEXTLEN];
+	int their_killed, their_stunned;
+	int i;
+
+	if (winner == 0) {
+		Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), sizeof(popupText));
+		MN_Popup(_("Game Drawn!"), popupText);
+		return;
+	}
+
+	their_killed = their_stunned = 0;
+	for (i = 0; i < MAX_TEAMS; i++) {
+		if (i != cls.team) {
+			their_killed += numKilled[cls.team][i];
+			their_stunned += numStunned[cls.team][i];
+		}
+	}
+
+	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), their_killed + their_stunned, numAlive[cls.team]);
+	if (winner == cls.team) {
+		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You won the game!"), resultText);
+		MN_Popup(_("Congratulations"), popupText);
+	} else {
+		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
+		MN_Popup(_("Better luck next time"), popupText);
+	}
+}
+
 void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
@@ -229,6 +259,11 @@ void GAME_MP_InitStartup (void)
 
 void GAME_MP_Shutdown (void)
 {
+	/* shutdown server */
+	SV_Shutdown("Quitting multiplayer.", qfalse);
+	/* or disconnect from server */
+	CL_Disconnect();
+
 	Cmd_RemoveCommand("mp_startserver");
 	Cmd_RemoveCommand("mp_updategametype");
 	Cmd_RemoveCommand("mp_nextgametype");

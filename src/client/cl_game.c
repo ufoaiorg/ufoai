@@ -32,24 +32,26 @@ typedef struct gameTypeList_s {
 	int gametype;
 	void (*init)(void);
 	void (*shutdown)(void);
+	void (*results)(int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Results},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Results},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Results},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
 
+void GAME_RestartMode (int gametype)
+{
+	GAME_SetMode(GAME_NONE);
+	GAME_SetMode(gametype);
+}
+
 void GAME_SetMode (int gametype)
 {
 	const gameTypeList_t *list = gameTypeList;
-
-	if (gametype == GAME_NONE) {
-		cls.gametype = gametype;
-		return;
-	}
 
 	if (gametype < 0 || gametype > GAME_MAX) {
 		Com_Printf("Invalid gametype %i given\n", gametype);
@@ -171,6 +173,9 @@ static void GAME_SetMode_f (void)
 	const menu_t *menu = MN_GetActiveMenu();
 	const gameTypeList_t *list = gameTypeList;
 
+	if (!menu)
+		return;
+
 	while (list->name) {
 		if (!Q_strcmp(list->menu, menu->name)) {
 			GAME_SetMode(list->gametype);
@@ -181,18 +186,56 @@ static void GAME_SetMode_f (void)
 }
 
 /**
+ * @param[in] load qtrue if we are loading game, qfalse otherwise
+ */
+void GAME_Init (qboolean load)
+{
+	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
+	RS_InitTree(load);		/**< Initialise all data in the research tree. */
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	if (!load)
+		CL_ScriptSanityCheck();
+}
+
+/**
+ * @brief After a mission was finished this function is called
+ */
+void GAME_HandleResults (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+{
+	const gameTypeList_t *list = gameTypeList;
+
+	while (list->name) {
+		if (list->gametype == cls.gametype) {
+			list->results(winner, numSpawned, numAlive, numKilled, numStunned);
+			break;
+		}
+		list++;
+	}
+}
+
+/**
  * @brief Let the aliens win the match
  */
-static void GAME_GameAbort_f (void)
+static void GAME_Abort_f (void)
 {
 	/* aborting means letting the aliens win */
 	Cbuf_AddText(va("sv win %i\n", TEAM_ALIEN));
 }
 
+/**
+ * @brief Quits the current running game by calling the @c shutdown callback
+ */
+static void GAME_Exit_f (void)
+{
+	GAME_SetMode(GAME_NONE);
+}
+
 void GAME_InitStartup (void)
 {
 	Cmd_AddCommand("game_setmode", GAME_SetMode_f, "Decides with game mode should be set - takes the menu as reference");
-	Cmd_AddCommand("game_abort", GAME_GameAbort_f, "Abort the game and let the aliens/opponents win");
+	Cmd_AddCommand("game_exit", GAME_Exit_f, "Abort the game and let the aliens/opponents win");
+	Cmd_AddCommand("game_abort", GAME_Abort_f, "Abort the game and let the aliens/opponents win");
 	Cmd_AddCommand("mn_getmaps", MN_GetMaps_f, "The initial map to show");
 	Cmd_AddCommand("mn_nextmap", MN_ChangeMap_f, "Switch to the next multiplayer map");
 	Cmd_AddCommand("mn_prevmap", MN_ChangeMap_f, "Switch to the previous multiplayer map");

@@ -48,13 +48,13 @@ menu won
 	}
 
 	confunc disufostore
-	{ 
+	{
 		*bt_storeufo	disabled	true
 		*bt_storeufo	tooltip		"_No UFO hangars or no power supply"
 		*bt_continue	disabled	false
 	}
 	confunc disufosell
-	{ 
+	{
 		*bt_sellufo		disabled	true
 		*bt_sellufo		tooltip		"_No nation with accepted level of alien infiltration"
 		*bt_continue	disabled	false
@@ -122,7 +122,7 @@ menu won
 	// ==================
 
 	confunc distryagain
-	{ 
+	{
 		*bt_tryagain	disabled	true
 	}
 	button bt_tryagain
@@ -148,7 +148,7 @@ menu won
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set game_tryagain 0;mn_pop;" }
+		click		{ cmd "set cp_mission_tryagain 0;mn_pop;" }
 	}
 
 	confunc won_check
@@ -166,7 +166,7 @@ menu won
 
 	func close
 	{
-		cmd "game_results 1;"
+		cmd "cp_results 1;"
 	}
 }
 
@@ -221,7 +221,7 @@ menu lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set game_tryagain 1;mn_pop;" }
+		click		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
 	}
 
 	button bt_continue
@@ -236,7 +236,7 @@ menu lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set game_tryagain 0;mn_pop;" }
+		click		{ cmd "set cp_mission_tryagain 0;mn_pop;" }
 	}
 
 	func init
@@ -246,7 +246,7 @@ menu lost
 
 	func close
 	{
-		cmd "game_results 0;"
+		cmd "cp_results 0;"
 	}
 }
 

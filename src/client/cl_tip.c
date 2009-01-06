@@ -39,8 +39,7 @@ static int tipCount; /**< how many tips do we have */
 static cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
 
 /**
- * @brief Popup with tip of the day messages on new single player campaigns
- * @sa CL_GameNew_f
+ * @brief Popup with tip of the day messages
  * @note Only call this from the menu definition (click action or init node)
  * because this function calls also MN_PopMenu if cl_showTipOfTheDay is false
  */

@@ -27,8 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_game_skirmish.h"
 #include "cl_team.h"
-
-#define MAX_CREDITS 10000000
+#include "menu/m_popup.h"
 
 /**
  * @brief This fake aircraft is used to assign soldiers for a skirmish game
@@ -61,7 +60,7 @@ static void GAME_SK_Start_f (void)
 	memset(&ccs, 0, sizeof(ccs));
 	CL_ReadSinglePlayerData();
 
-	CL_GameInit(qfalse);
+	GAME_Init(qfalse);
 	RS_MarkResearchedAll();
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
@@ -98,6 +97,36 @@ static void GAME_SK_ChangeEquip_f (void)
 	}
 }
 
+void GAME_SK_Results (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+{
+	char resultText[MAX_SMALLMENUTEXTLEN];
+	int their_killed, their_stunned;
+	int i;
+
+	if (winner == 0) {
+		Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), sizeof(popupText));
+		MN_Popup(_("Game Drawn!"), popupText);
+		return;
+	}
+
+	their_killed = their_stunned = 0;
+	for (i = 0; i < MAX_TEAMS; i++) {
+		if (i != cls.team) {
+			their_killed += numKilled[cls.team][i];
+			their_stunned += numStunned[cls.team][i];
+		}
+	}
+
+	Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), their_killed + their_stunned, numAlive[cls.team]);
+	if (winner == cls.team) {
+		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You won the game!"), resultText);
+		MN_Popup(_("Congratulations"), popupText);
+	} else {
+		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
+		MN_Popup(_("Better luck next time"), popupText);
+	}
+}
+
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");
@@ -114,6 +143,9 @@ void GAME_SK_InitStartup (void)
 
 void GAME_SK_Shutdown (void)
 {
+	/* shutdown any running tactical mission */
+	SV_Shutdown("Quitting skirmish.", qfalse);
+
 	Cmd_RemoveCommand("sk_start");
 	Cmd_RemoveCommand("sk_nextequip");
 	Cmd_RemoveCommand("sk_prevequip");

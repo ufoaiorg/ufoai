@@ -1193,10 +1193,6 @@ static void PR_ProductionListScroll_f (void)
 	node1->u.text.textScroll = node2->u.text.textScroll = prodlist->u.text.textScroll;
 }
 
-/**
- * @brief Sets the production array to 0
- * @sa CL_GameNew_f
- */
 void PR_ProductionInit (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Reset all productions\n");

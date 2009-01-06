@@ -631,8 +631,8 @@ void AIR_AircraftReturnToBase (aircraft_t *aircraft)
  * @brief Script function for AIR_AircraftReturnToBase
  * @note Sends the current aircraft back to homebase (called from aircraft menu).
  * @note This function updates some cvars for current aircraft.
- * @sa CL_GameAutoGo_f
- * @sa CL_GameResults_f
+ * @sa GAME_CP_MissionAutoGo_f
+ * @sa GAME_CP_Results_f
  */
 void AIR_AircraftReturnToBase_f (void)
 {

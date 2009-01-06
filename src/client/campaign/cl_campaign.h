@@ -369,6 +369,8 @@ typedef struct ccs_s {
 
 	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
 	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
+	qboolean mission_tryagain;			/**< value to decide whether the try again button is
+										 * available after you played a campaign mission */
 } ccs_t;
 
 /** possible geoscape actions */
@@ -407,8 +409,10 @@ void CP_GetRandomPosOnGeoscape(vec2_t pos, qboolean noWater);
 qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t *terrainTypes, const linkedList_t *cultureTypes, const linkedList_t *populationTypes, const linkedList_t *nations);
 
 campaign_t* CL_GetCampaign(const char *name);
-void CL_GameExit(void);
 void CL_GameAutoGo(mission_t *mission);
+void CP_CampaignInit(qboolean load);
+void CP_CampaignExit(void);
+void CP_RemoveCampaignCommands(void);
 
 /* Mission related functions */
 int MAP_GetIdxByMission(const mission_t *mis);
@@ -433,7 +437,7 @@ struct alienBase_s;
 void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
 void CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
-void CL_GameGo(void);
+void CP_StartSelectedMission(void);
 void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis);
 void CP_CheckLostCondition(qboolean lost, const mission_t* mission, int civiliansKilled);
 void CL_UpdateCharacterStats(const base_t *base, int won, const aircraft_t *aircraft);

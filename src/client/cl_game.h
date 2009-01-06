@@ -41,6 +41,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void GAME_InitStartup(void);
 void GAME_SetMode(int gametype);
+void GAME_RestartMode(int gametype);
+void GAME_Init(qboolean load);
+void GAME_HandleResults(int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 
 #include "cl_game_campaign.h"
 #include "cl_game_skirmish.h"

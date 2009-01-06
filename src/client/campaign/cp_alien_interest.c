@@ -36,7 +36,7 @@ static const int FINAL_OVERALL_INTEREST = 1000;
 /**
  * @brief Initialize alien interest values and mission cycle
  * @note Should be used when a new single player campaign starts
- * @sa CL_GameNew_f
+ * @sa CP_CampaignInit
  */
 void CL_ResetAlienInterest (void)
 {

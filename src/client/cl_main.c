@@ -153,7 +153,7 @@ void Cmd_ForwardToServer (void)
 	struct dbuffer *msg;
 
 	if (cls.state <= ca_connected || cmd[0] == '-' || cmd[0] == '+') {
-		Com_Printf("Unknown command \"%s\"\n", cmd);
+		Com_Printf("Unknown command \"%s\" - wasn't send to server\n", cmd);
 		return;
 	}
 
@@ -209,21 +209,6 @@ static void CL_Quit_f (void)
 {
 	CL_Disconnect();
 	Com_Quit();
-}
-
-/**
- * @brief Called when skirmish or campaign game starts
- * @param[in] load qtrue if we are loading game, qfalse otherwise
- * @sa CL_CampaignInit
- */
-void CL_GameInit (qboolean load)
-{
-	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
-	RS_InitTree(load);		/**< Initialise all data in the research tree. */
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	if (!load)
-		CL_ScriptSanityCheck();
 }
 
 /**
@@ -332,9 +317,7 @@ static void CL_Connect_f (void)
 	}
 
 	/* if running a local server, kill it and reissue */
-	if (Com_ServerState())
-		SV_Shutdown("Server quit.", qfalse);
-
+	SV_Shutdown("Server quit.", qfalse);
 	CL_Disconnect();
 
 	if (Cmd_Argc() == 2) {
@@ -1212,7 +1195,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 		return;
 	}
 
-	Com_Printf("Unknown command '%s'.\n", c);
+	Com_Printf("Unknown command received \"%s\"\n", c);
 }
 
 /**

@@ -48,8 +48,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
 
-static void CL_CampaignInit(qboolean load);
-
 /* public vars */
 campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;
@@ -61,19 +59,6 @@ campaign_t campaigns[MAX_CAMPAIGNS];
 int numCampaigns;
 salary_t salaries[MAX_CAMPAIGNS];
 cvar_t *cl_campaign;
-
-
-/*****************************************************************************
- *
- * Alien interest functions
- *
- *****************************************************************************/
-
-/*****************************************************************************
- *
- *	Mission functions
- *
-  *****************************************************************************/
 
 /**
  * @brief Check if a map may be selected for mission.
@@ -692,7 +677,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
  */
 void CP_EndCampaign (qboolean won)
 {
-	CL_GameExit();
+	CP_CampaignExit();
 	assert(!GAME_CP_IsRunning());
 
 	if (won)
@@ -979,11 +964,11 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 
 /**
  * @brief sets market prices at start of the game
- * @sa CL_CampaignInit
+ * @sa CP_CampaignInit
  * @sa BS_Load (Market load function)
  * @param[in] load It this an attempt to init the market for a savegame?
  */
-static void CL_CampaignInitMarket (qboolean load)
+static void CP_InitMarket (qboolean load)
 {
 	int i;
 
@@ -992,11 +977,11 @@ static void CL_CampaignInitMarket (qboolean load)
 	/* find the relevant markets */
 	curCampaign->marketDef = INV_GetEquipmentDefinitionByID(curCampaign->market);
 	if (!curCampaign->marketDef)
-		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+		Sys_Error("CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 			curCampaign->id, curCampaign->market);
 	curCampaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(curCampaign->asymptoticMarket);
 	if (!curCampaign->asymptoticMarketDef)
-		Sys_Error("CL_CampaignInitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
+		Sys_Error("CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
 			curCampaign->id, curCampaign->asymptoticMarket);
 
 	/* the savegame loading process will get the following values from savefile */
@@ -1013,9 +998,9 @@ static void CL_CampaignInitMarket (qboolean load)
 			continue;
 
 		if (!RS_IsResearched_ptr(csi.ods[i].tech) && curCampaign->marketDef->num[i] > 0)
-			Com_Printf("CL_CampaignInitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, curCampaign->id);
+			Com_Printf("CP_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, curCampaign->id);
 		else
-			/* the other relevant values were already set in CL_CampaignInitMarket */
+			/* the other relevant values were already set above */
 			ccs.eMarket.num[i] = curCampaign->marketDef->num[i];
 	}
 }
@@ -1378,7 +1363,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		return qfalse;
 	}
 
-	CL_CampaignInit(qtrue);
+	CP_CampaignInit(qtrue);
 
 	/* init the map images and reset the map actions */
 	MAP_Init();
@@ -1741,7 +1726,7 @@ qboolean STATS_Load (sizebuf_t* sb, void* data)
  * it has a team on board
  * @sa CP_SetMissionVars
  */
-void CL_GameGo (void)
+void CP_StartSelectedMission (void)
 {
 	mission_t *mis;
 	aircraft_t *aircraft;
@@ -1769,22 +1754,13 @@ void CL_GameGo (void)
 	memset(&missionresults, 0, sizeof(missionresults));
 
 	/* Various sanity checks. */
-	if (GAME_IsCampaign()) {
-		if (!mis->active) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: Dropship not near landing zone: mis->active: %i\n", mis->active);
-			return;
-		}
-		if (aircraft->teamSize <= 0) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_GameGo: No team in dropship. teamSize=%i\n", aircraft->teamSize);
-			return;
-		}
-	} else {
-		if (B_GetNumOnTeam(aircraft) == 0) {
-			/** Multiplayer; but we never reach this far!
-			 * @todo Why is that? GameGo can be called via console.*/
-			MN_Popup(_("Note"), _("Assemble or load a team"));
-			return;
-		}
+	if (!mis->active) {
+		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: Dropship not near landing zone: mis->active: %i\n", mis->active);
+		return;
+	}
+	if (aircraft->teamSize <= 0) {
+		Com_DPrintf(DEBUG_CLIENT, "CP_StartSelectedMission: No team in dropship. teamSize=%i\n", aircraft->teamSize);
+		return;
 	}
 
 	CP_CreateAlienTeam(mis);
@@ -1922,7 +1898,9 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 	while (aliens > 0) {
 		for (i = 0; i < ccs.battleParameters.alienTeamGroup->numAlienTeams; i++) {
 			const teamDef_t *teamDef = ccs.battleParameters.alienTeamGroup->alienTeams[i];
-			const int addDeadAlienAmount = rand() % aliens;
+			const int addDeadAlienAmount = aliens > 1 ? rand() % aliens : aliens;
+			if (!addDeadAlienAmount)
+				continue;
 			assert(i < MAX_CARGO);
 			assert(ccs.battleParameters.alienTeamGroup->alienTeams[i]);
 			AL_AddAlienTypeToAircraftCargo(aircraft, teamDef, addDeadAlienAmount, qtrue);
@@ -1936,7 +1914,7 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 /**
  * @brief Handles the auto mission for none storyrelated missions or missions
  * that failed to assembly
- * @sa CL_GameAutoGo_f
+ * @sa GAME_CP_MissionAutoGo_f
  * @sa CL_Drop
  * @sa AL_CollectingAliens
  */
@@ -1967,7 +1945,7 @@ void CL_GameAutoGo (mission_t *mis)
 		} else if (mis->mapDef->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
 			/* ensure, that the automatic button is no longer visible */
-			Cvar_Set("game_autogo", "0");
+			Cvar_Set("cp_mission_autogo_available", "0");
 			return;
 		}
 
@@ -2032,7 +2010,7 @@ void CL_GameAutoGo (mission_t *mis)
  * @brief Update employeer stats after mission.
  * @param[in] won Determines whether we won the mission or not.
  * @note Soldier promotion is being done here.
- * @sa CL_GameResults_f
+ * @sa GAME_CP_Results_f
  */
 void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *aircraft)
 {
@@ -2270,7 +2248,7 @@ static const cmdList_t game_commands[] = {
 	{"combatzoom_exit", MAP_CombatZoomExit_f, "Exit combat zoom mode."},
 	{"airfightmap_init", AFM_Init_f, "Exit air fight map mode."},
 	{"airfightmap_exit", AFM_Exit_f, "Exit air fight map mode."},
-	{"game_go", CL_GameGo, NULL},
+	{"game_go", CP_StartSelectedMission, NULL},
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},
 	{"game_timefast", CL_GameTimeFast, NULL},
@@ -2291,120 +2269,48 @@ static const cmdList_t game_commands[] = {
 	{NULL, NULL, NULL}
 };
 
-/**
- * @brief Called at new game and load game
- * @param[in] load qtrue if we are loading game, qfalse otherwise
- * @sa SAV_GameLoad
- * @sa CL_GameNew_f
- */
-static void CL_CampaignInit (qboolean load)
+static void CP_AddCampaignCommands (void)
 {
 	const cmdList_t *commands;
 
+	for (commands = game_commands; commands->name; commands++)
+		Cmd_AddCommand(commands->name, commands->function, commands->description);
+}
+
+void CP_RemoveCampaignCommands (void)
+{
+	const cmdList_t *commands;
+
+	for (commands = game_commands; commands->name; commands++)
+		Cmd_RemoveCommand(commands->name);
+}
+
+/**
+ * @brief Called at new game and load game
+ * @param[in] load qtrue if we are loading game, qfalse otherwise
+ */
+void CP_CampaignInit (qboolean load)
+{
 	assert(curCampaign);
 
-	Com_DPrintf(DEBUG_CLIENT, "Init game commands\n");
-	for (commands = game_commands; commands->name; commands++) {
-		Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
-		Cmd_AddCommand(commands->name, commands->function, commands->description);
-	}
-
-	CL_GameInit(load);
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	if (!load) {
-		CL_ScriptSanityCheckCampaign();
-	}
+	CP_AddCampaignCommands();
 
 	CL_GameTimeStop();
 
-	CL_CampaignInitMarket(load);
+	CP_InitMarket(load);
 
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 
 	CP_XVIInit();
-}
 
-/**
- * @sa CL_GameNew_f
- * @sa SAV_GameLoad
- */
-void CL_GameExit (void)
-{
-	const cmdList_t *commands;
-
-	if (Com_ServerState())
-		SV_Shutdown("Game exit", qfalse);
-	else
-		CL_Disconnect();
-	Cvar_Set("mn_main", "main");
-	Cvar_Set("mn_active", "");
-
-	/* singleplayer commands are no longer available */
-	if (curCampaign) {
-		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
-		for (commands = game_commands; commands->name; commands++) {
-			Com_DPrintf(DEBUG_CLIENT, "...%s\n", commands->name);
-			Cmd_RemoveCommand(commands->name);
-		}
-
-		CL_ResetSinglePlayerData();
-	}
-	curCampaign = NULL;
-	selActor = NULL;
-
-	/* maybe this is not the best place - but it is needed */
-	menuInventory = NULL;
-}
-
-/**
- * @brief Returns the campaign pointer from global campaign array
- * @param name Name of the campaign
- * @return campaign_t pointer to campaign with name or NULL if not found
- */
-campaign_t* CL_GetCampaign (const char* name)
-{
-	campaign_t* campaign;
-	int i;
-
-	for (i = 0, campaign = campaigns; i < numCampaigns; i++, campaign++)
-		if (!Q_strncmp(name, campaign->id, MAX_VAR))
-			break;
-
-	if (i == numCampaigns) {
-		Com_Printf("CL_GetCampaign: Campaign \"%s\" doesn't exist.\n", name);
-		return NULL;
-	}
-	return campaign;
-}
-
-/**
- * @brief Starts a new single-player game
- * @sa CL_CampaignInit
- * @sa CL_CampaignInitMarket
- */
-static void CL_GameNew_f (void)
-{
-	/* exit running game */
-	if (curCampaign)
-		CL_GameExit();
-
-	/* get campaign - they are already parsed here */
-	curCampaign = CL_GetCampaign(cl_campaign->string);
-	if (!curCampaign)
+	if (load)
 		return;
 
-	GAME_SetMode(GAME_CAMPAIGN);
-
-	/* reset campaign data */
-	memset(&ccs, 0, sizeof(ccs));
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
 	/* initialise date */
 	ccs.date = curCampaign->date;
-
-	CL_ReadSinglePlayerData();
 
 	MAP_Init();
 
@@ -2444,121 +2350,53 @@ static void CL_GameNew_f (void)
 	/* create a base as first step */
 	B_SelectBase(NULL);
 
-	CL_CampaignInit(qfalse);
 	Cmd_ExecuteString("addeventmail prolog");
 
 	/* Spawn first missions of the game */
 	CP_InitializeSpawningDelay();
 
-	/* Intro sentences */
-	Cbuf_AddText("seq_start intro;\n");
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	CL_ScriptSanityCheckCampaign();
 }
 
-#define MAXCAMPAIGNTEXT 4096
-static char campaignText[MAXCAMPAIGNTEXT];
-static char campaignDesc[MAXCAMPAIGNTEXT];
-/**
- * @brief Fill the campaign list with available campaigns
- */
-static void CP_GetCampaigns_f (void)
+void CP_CampaignExit (void)
 {
+	if (!curCampaign)
+		return;
+
+	SV_Shutdown("Game exit", qfalse);
+	CL_Disconnect();
+
+	Cvar_Set("mn_main", "main");
+	Cvar_Set("mn_active", "");
+
+	/* singleplayer commands are no longer available */
+	Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
+	CP_RemoveCampaignCommands();
+
+	Com_Printf("Shutdown campaign\n");
+	CL_ResetSinglePlayerData();
+}
+
+/**
+ * @brief Returns the campaign pointer from global campaign array
+ * @param name Name of the campaign
+ * @return campaign_t pointer to campaign with name or NULL if not found
+ */
+campaign_t* CL_GetCampaign (const char* name)
+{
+	campaign_t* campaign;
 	int i;
 
-	*campaignText = *campaignDesc = '\0';
-	for (i = 0; i < numCampaigns; i++) {
-		if (campaigns[i].visible)
-			Q_strcat(campaignText, va("%s\n", campaigns[i].name), MAXCAMPAIGNTEXT);
+	for (i = 0, campaign = campaigns; i < numCampaigns; i++, campaign++)
+		if (!Q_strncmp(name, campaign->id, MAX_VAR))
+			break;
+
+	if (i == numCampaigns) {
+		Com_Printf("CL_GetCampaign: Campaign \"%s\" doesn't exist.\n", name);
+		return NULL;
 	}
-	/* default campaign */
-	mn.menuText[TEXT_STANDARD] = campaignDesc;
-
-	/* select main as default */
-	for (i = 0; i < numCampaigns; i++)
-		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
-			Cmd_ExecuteString(va("campaignlist_click %i", i));
-			return;
-		}
-	Cmd_ExecuteString("campaignlist_click 0");
-}
-
-/**
- * @brief Translate the difficulty int to a translated string
- * @param difficulty the difficulty integer value
- */
-static inline const char* CL_ToDifficultyName (int difficulty)
-{
-	switch (difficulty) {
-	case -4:
-		return _("Chicken-hearted");
-	case -3:
-		return _("Very Easy");
-	case -2:
-	case -1:
-		return _("Easy");
-	case 0:
-		return _("Normal");
-	case 1:
-	case 2:
-		return _("Hard");
-	case 3:
-		return _("Very Hard");
-	case 4:
-		return _("Insane");
-	default:
-		Sys_Error("Unknown difficulty id %i\n", difficulty);
-		break;
-	}
-	return NULL;
-}
-
-/**
- * @brief Script function to select a campaign from campaign list
- */
-static void CP_CampaignsClick_f (void)
-{
-	int num;
-	const char *racetype;
-	menuNode_t *campaignlist;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* Which campaign in the list? */
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= numCampaigns)
-		return;
-
-	/* jump over all invisible campaigns */
-	while (!campaigns[num].visible) {
-		num++;
-		if (num >= numCampaigns)
-			return;
-	}
-
-	Cvar_Set("cl_campaign", campaigns[num].id);
-	if (!Q_strncmp(campaigns[num].team, "human", 5))
-		racetype = _("Human");
-	else
-		racetype = _("Aliens");
-
-	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("%s\n\nRace: %s\nRecruits: %i %s, %i %s, %i %s\n"
-		"Credits: %ic\nDifficulty: %s\n"
-		"Min. happiness of nations: %i %%\n"
-		"Max. allowed debts: %ic\n"
-		"%s\n"), campaigns[num].name, racetype,
-			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
-			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
-			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
-			campaigns[num].credits, CL_ToDifficultyName(campaigns[num].difficulty),
-			(int)(round(campaigns[num].minhappiness * 100.0f)), campaigns[num].negativeCreditsUntilLost,
-			_(campaigns[num].text));
-	mn.menuText[TEXT_STANDARD] = campaignDesc;
-
-	/* Highlight currently selected entry */
-	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
-	MN_TextNodeSelectLine(campaignlist, num);
+	return campaign;
 }
 
 /**
@@ -2634,18 +2472,6 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
 }
 #endif /* DEBUG */
-
-/**
- * @brief Function to issue Try Again a Mission.
- * @note Command to call this: cp_tryagain.
- */
-static void CP_TryAgain_f (void)
-{
-	/* Do nothing if user did other stuff. */
-	if (Cvar_VariableInteger("mission_tryagain") == 1)
-		return;
-	Cbuf_AddText("set game_tryagain 1;mn_pop\n");
-}
 
 /**
  * @brief Returns "homebase" of the mission.
@@ -2770,21 +2596,12 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	return qtrue;
 }
 
+/** @todo remove me */
 void CP_InitStartup (void)
 {
-	/* reset some vars */
-	curCampaign = NULL;
-	baseCurrent = NULL;
-	mn.menuText[TEXT_CAMPAIGN_LIST] = campaignText;
-
 	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
 
 	/* commands */
-	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
-	Cmd_AddCommand("cp_getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
-	Cmd_AddCommand("game_new", CL_GameNew_f, "Start the new campaign");
-	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
-	Cmd_AddCommand("cp_tryagain", CP_TryAgain_f, "Try again a mission");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 	Cmd_AddCommand("debug_listcampaign", CP_CampaignStats_f, "Print campaign stats to game console");

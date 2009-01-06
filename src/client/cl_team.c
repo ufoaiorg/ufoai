@@ -31,10 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_rank.h"
 #include "cl_ugv.h"
-#include "campaign/cl_ufo.h"
 #include "menu/node/m_node_container.h"
-#include "menu/m_popup.h"
-#include "campaign/cp_mission_triggers.h"
 
 static qboolean displayHeavyEquipmentList = qfalse; /**< Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
 
@@ -1711,21 +1708,21 @@ void CL_ParseCharacterData (struct dbuffer *msg)
  * @brief Reads mission result data from server
  * @sa EV_RESULTS
  * @sa G_EndGame
- * @sa CL_GameResults_f
+ * @sa GAME_CP_Results_f
  */
 void CL_ParseResults (struct dbuffer *msg)
 {
-	static char resultText[MAX_SMALLMENUTEXTLEN];
+	int winner;
+	int i, j, num;
 	int num_spawned[MAX_TEAMS];
 	int num_alive[MAX_TEAMS];
 	int num_kills[MAX_TEAMS][MAX_TEAMS];
 	int num_stuns[MAX_TEAMS][MAX_TEAMS];
-	int winner, we;
-	int i, j, num;
-	int our_surviviurs, our_killed, our_stunned;
-	int thier_surviviurs, thier_killed, thier_stunned;
-	int civilian_surviviurs, civilian_killed, civilian_stunned;
-	base_t *base;
+
+	memset(num_spawned, 0, sizeof(num_spawned));
+	memset(num_alive, 0, sizeof(num_alive));
+	memset(num_kills, 0, sizeof(num_kills));
+	memset(num_stuns, 0, sizeof(num_stuns));
 
 	/* get number of teams */
 	num = NET_ReadByte(msg);
@@ -1736,10 +1733,9 @@ void CL_ParseResults (struct dbuffer *msg)
 
 	/* get winning team */
 	winner = NET_ReadByte(msg);
-	we = cls.team;
 
-	if (we > num)
-		Sys_Error("Team number %d too high (only %d teams)\n", we, num);
+	if (cls.team > num)
+		Sys_Error("Team number %d too high (only %d teams)\n", cls.team, num);
 
 	/* get spawn and alive count */
 	for (i = 0; i < num; i++) {
@@ -1757,161 +1753,8 @@ void CL_ParseResults (struct dbuffer *msg)
 		for (j = 0; j < num; j++)
 			num_stuns[i][j] = NET_ReadByte(msg);
 
-	base = CP_GetMissionBase();
 	CL_ParseCharacterData(msg);
 
-	/* init result text */
-	mn.menuText[TEXT_STANDARD] = resultText;
-
-	our_surviviurs = 0;
-	our_killed = 0;
-	our_stunned = 0;
-	thier_surviviurs = 0;
-	thier_killed = 0;
-	thier_stunned = 0;
-	civilian_surviviurs = 0;
-	civilian_killed = 0;
-	civilian_stunned = 0;
-
-	for (i = 0; i < num; i++) {
-		if (i == we)
-			our_surviviurs = num_alive[i];
-		else if (i == TEAM_CIVILIAN)
-			civilian_surviviurs = num_alive[i];
-		else
-			thier_surviviurs += num_alive[i];
-		for (j = 0; j < num; j++)
-			if (j == we) {
-				our_killed += num_kills[i][j];
-				our_stunned += num_stuns[i][j]++;
-			} else if (j == TEAM_CIVILIAN) {
-				civilian_killed += num_kills[i][j];
-				civilian_stunned += num_stuns[i][j]++;
-			} else {
-				thier_killed += num_kills[i][j];
-				thier_stunned += num_stuns[i][j]++;
-			}
-	}
-	/* if we won, our stunned are alive */
-	if (winner == we) {
-		our_surviviurs += our_stunned;
-		our_stunned = 0;
-	} else
-		/* if we lost, they revive stunned */
-		thier_stunned = 0;
-
-	/* we won, and we're not the dirty aliens */
-	if ((winner == we) && (curCampaign))
-		civilian_surviviurs += civilian_stunned;
-	else
-		civilian_killed += civilian_stunned;
-
-	if (!GAME_CP_IsRunning() || !ccs.selectedMission) {
-		/* the mission was started via console
-		 * buffer - needs to be cleared and then append to it */
-		/** @todo or is multiplayer? */
-		if (GAME_IsCampaign() && GAME_CP_IsRunning()) {
-			Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
-			ccs.aliensKilled += thier_killed;
-			Q_strcat(resultText, va(_("Aliens captured\t%i\n\n"), thier_stunned), sizeof(resultText));
-			Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
-		} else {
-			Com_sprintf(resultText, sizeof(resultText), _("Enemies killed\t%i\n"), thier_killed + civilian_killed);
-			ccs.aliensKilled += thier_killed + civilian_killed;
-			Q_strcat(resultText, va(_("Enemies captured\t%i\n\n"), thier_stunned), sizeof(resultText));
-			Q_strcat(resultText, va(_("Enemy survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
-		}
-
-		/* team stats */
-		Q_strcat(resultText, va(_("Team losses\t%i\n"), our_killed), sizeof(resultText));
-		Q_strcat(resultText, va(_("Team missing in action\t%i\n"), our_stunned), sizeof(resultText));
-		Q_strcat(resultText, va(_("Friendly fire losses\t%i\n"), num_kills[we][we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Team survivors\t%i\n\n"), our_surviviurs), sizeof(resultText));
-
-		if (GAME_IsCampaign())
-			Q_strcat(resultText, va(_("Civilians killed by the Aliens\t%i\n"), civilian_killed - num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
-		else
-			Q_strcat(resultText, va(_("Civilians killed by the Enemies\t%i\n"), civilian_killed - civilian_stunned - num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
-
-		Q_strcat(resultText, va(_("Civilians killed by your Team\t%i\n"), num_kills[we][TEAM_CIVILIAN]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n\n"), civilian_surviviurs), sizeof(resultText));
-
-		MN_PopMenu(qtrue);
-		Cvar_Set("mn_main", "main");
-		Cvar_Set("mn_active", "");
-		MN_PushMenu("main", NULL);
-	} else {
-		/* the mission was in singleplayer */
-		/* loot the battlefield */
-		INV_CollectingItems(winner == we);				/**< Collect items from the battlefield. */
-		if (winner == we)
-			AL_CollectingAliens(cls.missionaircraft);	/**< Collect aliens from the battlefield. */
-
-		/* clear unused LE inventories */
-		LE_Cleanup();
-
-		/* needs to be cleared and then append to it */
-		Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
-		ccs.aliensKilled += thier_killed;
-
-		Q_strcat(resultText, va(_("Aliens captured\t%i\n"), thier_stunned), sizeof(resultText));
-		Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
-
-		/* team stats */
-		Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), our_killed - num_kills[we][we] - num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), our_stunned), sizeof(resultText));
-		Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), num_kills[we][we] + num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), our_surviviurs), sizeof(resultText));
-
-		Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), civilian_killed), sizeof(resultText));
-		Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), civilian_surviviurs), sizeof(resultText));
-		Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionresults.itemtypes,  missionresults.itemamount), sizeof(resultText));
-
-		MN_PopMenu(qtrue);
-		Cvar_Set("mn_main", "singleplayerInGame");
-		Cvar_Set("mn_active", "map");
-		MN_PushMenu("map", NULL);
-	}
-	/* show win screen */
-	if (GAME_IsCampaign()) {
-		/* Make sure that at this point we are able to 'Try Again' a mission. */
-		Cvar_SetValue("mission_tryagain", 0);
-		if (ccs.selectedMission && base)
-			CP_ExecuteMissionTrigger(ccs.selectedMission, winner == we);
-		else if (GAME_CP_IsRunning())
-			Com_Printf("CL_ParseResults: Error - no mission triggers, because ccs.selectedMission or base are not valid\n");
-
-		if (winner == we) {
-			/* We need to update Menu Won with UFO recovery stuff. */
-			if (missionresults.recovery) {
-				if (missionresults.crashsite)
-					Q_strcat(resultText, va(_("\nSecured crashed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
-				else
-					Q_strcat(resultText, va(_("\nSecured landed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
-			}
-			MN_PushMenu("won", NULL);
-		} else
-			MN_PushMenu("lost", NULL);
-
-		/* on singleplayer we disconnect the game and shutdown the server
-		 * we can safely wipe all mission data now */
-		SV_Shutdown("Mission end", qfalse);
-		CL_Disconnect();
-	} else {
-		Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), thier_killed + thier_stunned, our_surviviurs);
-		if (winner == we) {
-			Q_strncpyz(popupText, _("You won the game!"), sizeof(popupText));
-			Q_strcat(popupText, resultText, sizeof(popupText));
-			MN_Popup(_("Congratulations"), popupText);
-		} else if (winner == 0) {
-			Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), sizeof(popupText));
-			MN_Popup(_("Game Drawn!"), popupText);
-		} else {
-			Q_strncpyz(popupText, _("You've lost the game"), sizeof(popupText));
-			Q_strcat(popupText, resultText, sizeof(popupText));
-			MN_Popup(_("Better luck next time"), popupText);
-		}
-	}
+	GAME_HandleResults(winner, num_spawned, num_alive, num_kills, num_stuns);
 }
 
