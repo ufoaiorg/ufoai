@@ -42,7 +42,7 @@ menu skirmish
 	{
 		pos		"90 80"
 		size	"256 64"
-		click	{ cmd "game_skirmish;" }
+		click	{ cmd "sk_start;" }
 		image	menu/button_green_big
 		blend	true
 		font	f_menubig
@@ -78,8 +78,8 @@ menu skirmish
 		pos			"500 210"
 		size		"256 34"
 		string		"*cvar cl_equip"
-		whup		{ cmd "mn_prevequip;" }
-		whdown		{ cmd "mn_nextequip;" }
+		whup		{ cmd "sk_prevequip;" }
+		whdown		{ cmd "sk_nextequip;" }
 		disabled	true
 	}
 	pic prev_equipment
@@ -89,9 +89,9 @@ menu skirmish
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		whup	{ cmd "mn_prevequip;" }
-		whdown	{ cmd "mn_nextequip;" }
-		click	{ cmd "mn_prevequip;" }
+		whup	{ cmd "sk_prevequip;" }
+		whdown	{ cmd "sk_nextequip;" }
+		click	{ cmd "sk_prevequip;" }
 	}
 	pic next_equipment
 	{
@@ -100,9 +100,9 @@ menu skirmish
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		whup	{ cmd "mn_prevequip;" }
-		whdown	{ cmd "mn_nextequip;" }
-		click	{ cmd "mn_nextequip;" }
+		whup	{ cmd "sk_prevequip;" }
+		whdown	{ cmd "sk_nextequip;" }
+		click	{ cmd "sk_nextequip;" }
 	}
 
 	// ===================
