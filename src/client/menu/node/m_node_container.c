@@ -57,6 +57,12 @@ static int dragInfoToY = -1;
  */
 static const invList_t *dragInfoIC;
 
+/*#define DEBUG_BLINKING*/		/**< @todo Delete it when we are sure no more blinking */
+
+#ifdef DEBUG_BLINKING
+static int debugPos = 0;
+#endif
+
 /**
  * @brief Update display of scroll buttons.
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
@@ -172,6 +178,7 @@ static inline qboolean MN_IsScrollContainerNode(menuNode_t *node)
  * @sa SCR_DrawCursor
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
+ * @todo check each call of this function nd see if org is every time a vec3_t
  */
 void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
@@ -181,6 +188,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 
 	assert(item);
 	assert(item->t);
+	assert(org[2] > -1000 && org[2] < 1000); 	/*< see the todo "check each call" */
 	od = item->t;
 
 	Vector4Copy(color, col);
@@ -221,6 +229,16 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 
 		/* Draw the image. */
 		R_DrawNormPic(origin[0], origin[1], imgWidth, imgHeight, 0, 0, 0, 0, ALIGN_CC, qtrue, od->image);
+#ifdef DEBUG_BLINKING
+			{
+				vec4_t c = {0,0,1,1};
+				if (debugPos != 0) {
+					R_DrawFill(0, debugPos, 10, 10, ALIGN_UL, c);
+					R_DrawFill(11, debugPos, 10, 10, ALIGN_UL, color);
+					debugPos += 14;
+				}
+			}
+#endif
 	} else {
 		menuModel_t *menuModel = NULL;
 		const char *modelName = od->model;
@@ -240,6 +258,16 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 		if (menuModel && node) {
 			const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 			MN_DrawModelNode(node, ref, modelName);
+#ifdef DEBUG_BLINKING
+			{
+				vec4_t c = {1,0,0,1};
+				if (debugPos != 0) {
+					R_DrawFill(0, debugPos, 10, 10, ALIGN_UL, c);
+					R_DrawFill(11, debugPos, 10, 10, ALIGN_UL, color);
+					debugPos += 14;
+				}
+			}
+#endif
 		} else {
 			modelInfo_t mi;
 			vec3_t angles = {-10, 160, 70};
@@ -260,6 +288,27 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 
 			/* draw the model */
 			R_DrawModelDirect(&mi, NULL, NULL);
+#ifdef DEBUG_BLINKING
+			{
+				vec4_t c = {0,1,0,1};
+				const char* t;
+				if (debugPos != 0) {
+					R_DrawFill(0, debugPos, 10, 10, ALIGN_UL, c);
+					R_DrawFill(11, debugPos, 10, 10, ALIGN_UL, color);
+					R_DrawFill(22, debugPos, 10, 10, ALIGN_UL, col);
+
+					t = va("%d\to%.2f,%.2f,%.2f a%.2f,%.2f,%.2f c%.2f,%.2f,%.2f s%.2f,%.2f,%.2f n%s",
+						debugPos, mi.origin[0], mi.origin[1], mi.origin[2],
+						mi.angles[0], mi.angles[1], mi.angles[2],
+						mi.center[0], mi.center[1], mi.center[2],
+						mi.scale[0], mi.scale[1], mi.scale[2], mi.name);
+					R_FontDrawString("f_verysmall", 0, 50, debugPos,
+						50, debugPos, 1000, 0, 0, t, 0, 0, NULL, qfalse, 0);
+					Com_Printf("%s\n", t);
+					debugPos += 14;
+				}
+			}
+#endif
 		}
 	}
 }
@@ -456,12 +505,13 @@ static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
 static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightType)
 {
 	vec4_t color;
-	vec2_t pos;
+	vec3_t pos;
 	qboolean disabled = qfalse;
 
 	MN_GetNodeAbsPos(node, pos);
 	pos[0] += node->size[0] / 2.0;
 	pos[1] += node->size[1] / 2.0;
+	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
 	if (node->container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
@@ -542,6 +592,10 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	const int cache_scrollNum = menuInventory->scrollNum;
 	const int cache_scrollTotalNum = menuInventory->scrollTotalNum;
 
+#ifdef DEBUG_BLINKING
+	debugPos = 10;
+#endif
+
 	MN_GetNodeAbsPos(node, nodepos);
 
 	menuInventory->scrollNum = 0;
@@ -558,10 +612,11 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 				if (!lastItem && curItem >= menuInventory->scrollCur) {
 					item_t tempItem = {1, NULL, NULL, 0, 0};
 					qboolean newRow = qfalse;
-					vec2_t pos;
+					vec3_t pos;
 					Vector2Copy(nodepos, pos);
 					pos[0] += curWidth;
 					pos[1] += curHeight;
+					pos[2] = 0;
 
 					if (!node->container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= node->container->scroll) {
 						curWidth += ic->item.t->sx * C_UNIT;
@@ -604,10 +659,25 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 						/* Actually draw the item. */
 						tempItem.t = ic->item.t;
+
+#ifdef DEBUG_BLINKING
+						assert(colorLoadable[3] == 1.0);
+						assert(colorDefault[3] == 1.0);
+						assert(scale[0] == 3.5 && scale[1] == 3.5 && scale[2] == 3.5);
+						assert(tempItem.t != NULL);
+#endif
+						assert(pos[2] == 0);
 						if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
 						else
 							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
+
+#ifdef DEBUG_BLINKING
+						{
+							vec4_t c = {0,0,1,1};
+							R_DrawFill(pos[0], pos[1], 10, 10, ALIGN_UL, c);
+						}
+#endif
 
 						if (node->container->scrollVertical) {
 							/* Draw the item name. */
@@ -678,6 +748,10 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	 || cache_scrollNum != menuInventory->scrollNum
 	 ||	cache_scrollTotalNum != menuInventory->scrollTotalNum)
 		MN_ScrollContainerUpdate_f();
+
+#ifdef DEBUG_BLINKING
+	debugPos = 0;
+#endif
 }
 
 /**
@@ -687,16 +761,17 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 {
 	const invList_t *ic;
-	vec2_t nodepos;
+	vec3_t pos;
 
-	MN_GetNodeAbsPos(node, nodepos);
+	MN_GetNodeAbsPos(node, pos);
+	pos[2] = 0;
 
 	for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 		assert(ic->item.t);
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
-			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorLoadable);
+			MN_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
 		else
-			MN_DrawItem(node, nodepos, &ic->item, ic->x, ic->y, scale, colorDefault);
+			MN_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorDefault);
 	}
 }
 
@@ -828,7 +903,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 
 		/* Get name and info about item */
 		MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
-#ifdef DEBUG
+#ifdef DEBUG_BLINKING
 		/* Display stored container-coordinates of the item. */
 		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
 #endif
@@ -1128,6 +1203,8 @@ static void MN_ContainerNodeClick (menuNode_t *node, int x, int y)
 
 static void MN_ContainerNodeRightClick (menuNode_t *node, int x, int y)
 {
+	if (MN_DNDIsDragging())
+		return;
 	MN_Drag(node, x, y, qtrue);
 }
 
