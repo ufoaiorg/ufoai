@@ -40,7 +40,7 @@ static aircraft_t skirmishFakeAircraft;
  * @todo Check the stuff in this function - maybe not every function call
  * is needed here or maybe some are missing
  */
-static void CL_GameSkirmish_f (void)
+static void GAME_SK_Start_f (void)
 {
 	char map[MAX_VAR];
 	mapDef_t *md;
@@ -81,7 +81,7 @@ static void CL_GameSkirmish_f (void)
 /**
  * @brief Changed the cl_equip cvar to the next/prev equipment definition
  */
-static void CL_ChangeEquip_f (void)
+static void GAME_SK_ChangeEquip_f (void)
 {
 	equipDef_t *ed = INV_GetEquipmentDefinitionByID(cl_equip->string);
 	int index = ed ? ed - csi.eds : 0;
@@ -107,9 +107,9 @@ void GAME_SK_InitStartup (void)
 	skirmishFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
 	gd.numAircraft = 1;
 
-	Cmd_AddCommand("sk_start", CL_GameSkirmish_f, "Start the new skirmish game");
-	Cmd_AddCommand("sk_prevequip", CL_ChangeEquip_f, "Previous equipment definition");
-	Cmd_AddCommand("sk_nextequip", CL_ChangeEquip_f, "Next equipment definition");
+	Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
+	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
+	Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
 }
 
 void GAME_SK_Shutdown (void)
