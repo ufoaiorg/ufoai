@@ -266,6 +266,14 @@ language zh_cn {
 	}
 }
 
+language bg {
+	"_Bulgarian"
+	{
+		bg_BG.UTF-8
+		bg_BG.utf8
+	}
+}
+
 language none {
 	"_No language"
 	{
