@@ -191,6 +191,9 @@ static void GAME_SetMode_f (void)
  */
 void GAME_Init (qboolean load)
 {
+	/* @todo are all these needed on every load? */
+	/* objects links seem to only be needed once on campaign startup? */
+	/* what about RS_InitTree? how often must this be done? */
 	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
 	RS_InitTree(load);		/**< Initialise all data in the research tree. */
 
