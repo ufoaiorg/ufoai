@@ -50,12 +50,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <dirent.h>
 #endif
 
-#ifdef DEDICATED_ONLY
-/* no gettext support for dedicated servers */
-# define _(String) String
-# define ngettext(x, y, cnt) x
-#endif
-
 #ifndef logf
 #define logf(x) ((float)log((double)(x)))
 #endif

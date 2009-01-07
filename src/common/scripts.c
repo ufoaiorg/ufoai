@@ -24,9 +24,6 @@
 #include "common.h"
 #include "scripts.h"
 #include "../game/inv_shared.h"
-#ifndef DEDICATED_ONLY
-#include "../client/client.h"
-#endif
 
 /**
  * @brief possible values for parsing functions
@@ -2282,7 +2279,7 @@ MAIN SCRIPT PARSING FUNCTION
 */
 
 /**
- * @brief Creates links to the technology entries in the pedia and to other items (i.e. ammo<->weapons)
+ * @brief Creates links to other items (i.e. ammo<->weapons)
  */
 void Com_AddObjectLinks (void)
 {
@@ -2291,20 +2288,6 @@ void Com_AddObjectLinks (void)
 	int i, n, m;
 	byte k, weaponsIdx;
 	char *id;
-#ifndef DEDICATED_ONLY
-	technology_t *tech;
-#endif
-
-#ifndef DEDICATED_ONLY
-	/* Add links to technologies. */
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		tech = RS_GetTechByProvided(od->id);
-		od->tech = tech;
-		if (!od->tech) {
-			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
-		}
-	}
-	#endif
 
 	/* Add links to weapons. */
 	while (ll) {

@@ -650,6 +650,16 @@ void RS_InitTree (qboolean load)
 	int i, j;
 	technology_t *tech;
 	byte found;
+	objDef_t *od;
+
+	/* Add links to technologies. */
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		tech = RS_GetTechByProvided(od->id);
+		od->tech = tech;
+		if (!od->tech) {
+			Com_Printf("RS_InitTree: Could not find a valid tech for item %s\n", od->id);
+		}
+	}
 
 	for (i = 0, tech = gd.technologies; i < gd.numTechnologies; i++, tech++) {
 		if (GAME_IsCampaign()) {
@@ -778,22 +788,20 @@ void RS_InitTree (qboolean load)
 		}
 	}
 
-	if (GAME_IsCampaign()) {
-		if (load) {
-			/* when you load a savegame right after starting UFO, the aircraft in bases
-			* and installations don't have any tech assigned */
-			int k;
+	if (load) {
+		/* when you load a savegame right after starting UFO, the aircraft in bases
+		 * and installations don't have any tech assigned */
+		int k;
 
-			for (j = 0; j < gd.numBases; j++) {
-				base_t *b = B_GetFoundedBaseByIDX(j);
-				if (!b)
-					continue;
-				for (k = 0; k < b->numAircraftInBase; k++) {
-					aircraft_t *aircraft = &b->aircraft[k];
-					/* if you already played before loading the game, tech are already defined for templates */
-					if (!aircraft->tech)
-						aircraft->tech = RS_GetTechByProvided(aircraft->id);
-				}
+		for (j = 0; j < gd.numBases; j++) {
+			base_t *b = B_GetFoundedBaseByIDX(j);
+			if (!b)
+				continue;
+			for (k = 0; k < b->numAircraftInBase; k++) {
+				aircraft_t *aircraft = &b->aircraft[k];
+				/* if you already played before loading the game, tech are already defined for templates */
+				if (!aircraft->tech)
+					aircraft->tech = RS_GetTechByProvided(aircraft->id);
 			}
 		}
 	}

@@ -254,16 +254,6 @@ typedef enum {
 
 /*============================================================================= */
 
-/* i18n support via gettext */
-#include <libintl.h>
-
-/* the used textdomain for gettext */
-#define TEXT_DOMAIN "ufoai"
-#include <locale.h>
-#define _(String) gettext(String)
-#define gettext_noop(String) String
-#define N_(String) gettext_noop (String)
-
 /* cvars */
 extern cvar_t *cl_http_downloads;
 extern cvar_t *cl_http_filelists;

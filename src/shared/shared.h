@@ -95,6 +95,18 @@ const char *COM_EParse(const char **text, const char *errhead, const char *errin
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
+#ifdef DEDICATED_ONLY
+# define _(String) String
+# define ngettext(x, y, cnt) x
+#else
+# include <libintl.h>
+# define TEXT_DOMAIN "ufoai"
+# include <locale.h>
+# define _(String) gettext(String)
+# define gettext_noop(String) String
+# define N_(String) gettext_noop (String)
+#endif
+
 /** Is this the second or later byte of a multibyte UTF-8 character? */
 /* The definition of UTF-8 guarantees that the second and later
  * bytes of a multibyte character have high bits 10, and that

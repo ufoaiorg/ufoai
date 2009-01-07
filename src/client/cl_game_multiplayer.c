@@ -235,9 +235,8 @@ void GAME_MP_InitStartup (void)
 	memset(&multiplayerFakeAircraft, 0, sizeof(multiplayerFakeAircraft));
 	gd.numAircraft = 1;
 
-	Com_Printf("Changing to Multiplayer\n");
 	/* disconnect already running session - when entering the
-		* multiplayer menu while you are still connected */
+	 * multiplayer menu while you are still connected */
 	if (cls.state >= ca_connecting)
 		CL_Disconnect();
 

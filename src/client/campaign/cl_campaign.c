@@ -2303,6 +2303,7 @@ void CP_CampaignInit (qboolean load)
 	CP_XVIInit();
 
 	if (load) {
+		/** @todo move into CP_Load? */
 		CP_InitMarket(load);
 		return;
 	}
