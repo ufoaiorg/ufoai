@@ -39,27 +39,28 @@ cwalk3_RPG				207		224		15
 // Panic animation
 panic0				225		227		3
 
-// "animation" used for menu-display (currently a copy of stand0)
-stand_menu				60		60		1
+// "animation" used for menu-display
+stand_menu				60		60		1	// Currently not available in blend file -> link to stand0
 
-// "animation" used for ???? (currently a copy of stand0)
-stand_still				225		225		1
+// "animation" used for ????
+stand_still				60		60		1	// Currently not available in blend file -> link to stand0
 
 shoot_rifle				243		257		22
-shoot_biggun				258		272		22	// currently a frame-by-frame copy of rifle
+shoot_biggun				258		272		22
 shoot_melee				273		282		22
 shoot_pistol				283		297		22
 shoot_pistol_d				298		312		22
 shoot_grenade				313		322		22
-//shoot_item				323		332		22	// no animation yet
+shoot_item				323		332		22
 shoot_rpg				333		347		22
+
 cshoot_rifle				348		362		22
-cshoot_biggun				363		377		22	// currently a frame-by-frame copy of rifle
-//cshoot_melee				378		387		22	// no animation yet
+cshoot_biggun				363		377		22
+cshoot_melee				378		387		22
 cshoot_pistol				388		402		22
 cshoot_pistol_d				403		417		22
 cshoot_grenade				418		427		22
-//cshoot_item				428		437		22	// no animation yet
+cshoot_item				428		437		22
 cshoot_rpg				438		452		22
 
 // IDLE animations (right now these are reused "stand" animations)
