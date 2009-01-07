@@ -21,7 +21,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="intl" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -43,7 +42,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-pg -lgmon" />
-					<Add library="intl" />
 				</Linker>
 			</Target>
 			<Target title="linux">

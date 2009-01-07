@@ -50,6 +50,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <dirent.h>
 #endif
 
+#ifdef DEDICATED_ONLY
+/* no gettext support for dedicated servers */
+# define _(String) String
+# define ngettext(x, y, cnt) x
+#endif
+
 #ifndef logf
 #define logf(x) ((float)log((double)(x)))
 #endif
@@ -151,23 +157,9 @@ char *Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
 
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
-
-/* prevent preprocessing of 'printf' into __attribute__ */
-#define _SAVE_PRINTF_ printf
-#undef printf
-
-#ifdef __GNUC__
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
-#else
-void Sys_Error(const char *error, ...);
-void Com_Printf(const char *msg, ...);
-void Com_DPrintf(int level, const char *msg, ...);
-#endif
-
-#define printf _SAVE_PRINTF_
-
 
 extern cvar_t* sys_priority;
 extern cvar_t* sys_affinity;

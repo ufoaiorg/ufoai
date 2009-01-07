@@ -34,10 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/infostring.h"
 
 /** no gettext support for game lib - but we must be able to mark the strings */
-#undef _
-#undef ngettext
-#define _(String) String
-#define ngettext(x, y, cnt) x
+# define _(String) String
+# define ngettext(x, y, cnt) x
 
 /** @note define GAME_INCLUDE so that game.h does not define the
  * short, server-visible player_t and edict_t structures,

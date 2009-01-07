@@ -95,18 +95,6 @@ const char *COM_EParse(const char **text, const char *errhead, const char *errin
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]
 
-#ifdef DEDICATED_ONLY
-# define _(String) String
-# define ngettext(x, y, cnt) x
-#else
-# include <libintl.h>
-# define TEXT_DOMAIN "ufoai"
-# include <locale.h>
-# define _(String) gettext(String)
-# define gettext_noop(String) String
-# define N_(String) gettext_noop (String)
-#endif
-
 /** Is this the second or later byte of a multibyte UTF-8 character? */
 /* The definition of UTF-8 guarantees that the second and later
  * bytes of a multibyte character have high bits 10, and that
@@ -119,23 +107,11 @@ int UTF8_insert_char(char *s, int n, int pos, int codepoint);
 int UTF8_char_len(unsigned char c);
 int UTF8_encoded_len(int codepoint);
 
-/* prevent preprocessing of 'printf' into __attribute__ */
-#define _SAVE_PRINTF_ printf
-#undef printf
-
-#ifdef __GNUC__
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
-int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
-qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
-#else
-char *va(const char *format, ...);
-int Q_StringSort(const void *string1, const void *string2);
-qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...);
-#endif
-
-#define printf _SAVE_PRINTF_
-
 int Q_FloatSort(const void *float1, const void *float2);
+int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
+
+qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
 /* portable case sensitive compare */
 #define Q_strcmp(a, b)     strcmp((a), (b))

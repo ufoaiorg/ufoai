@@ -20,7 +20,6 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="--export-all-symbols" />
-					<Add library="intl" />
 				</Linker>
 			</Target>
 			<Target title="windows_debug">
@@ -39,7 +38,6 @@
 				<Linker>
 					<Add option="-pg -lgmon" />
 					<Add option="--export-all-symbols" />
-					<Add library="intl" />
 				</Linker>
 			</Target>
 			<Target title="linux">
@@ -63,7 +61,6 @@
 					<Add option="-dynamiclib" />
 					<Add option="-single_module" />
 					<Add option="-compatibility_version 1" />
-					<Add library="intl" />
 				</Linker>
 			</Target>
 		</Build>
