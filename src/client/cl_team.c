@@ -943,8 +943,6 @@ static void CL_ActorSoldierSelect_f (void)
 {
 	const menu_t *activeMenu = MN_GetActiveMenu();
 	int num;
-	employee_t *employee;
-	character_t *chr;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -961,34 +959,15 @@ static void CL_ActorSoldierSelect_f (void)
 	}
 
 	/* we are still in the menu */
-	if (!Q_strncmp(activeMenu->name, "employees", 9)) {
+	if (!Q_strcmp(activeMenu->name, "employees")) {
 		/* this is hire menu: we can select soldiers, worker, pilots, or researcher */
+		/** @todo remove this test, employee_list_click can do the same better */
 		if (num < employeesInCurrentList) {
 			Cmd_ExecuteString(va("employee_list_click %i", num));
-			Cmd_ExecuteString(va("employee_select +%i", num));
 		}
+	} else if (!Q_strcmp(activeMenu->name, "team")) {
+		Cmd_ExecuteString(va("team_select %i", num));
 	}
-
-	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("soldierdeselect%i", cl_selected->integer);
-	MN_ExecuteConfunc("soldierselect%i", num);
-
-	/* now set the cl_selected cvar to the new actor id */
-	Cvar_ForceSet("cl_selected", va("%i", num));
-
-	employee = E_GetEmployeeByMenuIndex(num);
-	if (!employee)
-		Sys_Error("CL_ActorSoldierSelect_f: No employee at list-pos %i\n", num);
-
-	chr = &employee->chr;
-	if (!chr)
-		Sys_Error("CL_ActorSoldierSelect_f: No character for employee at list pos %i\n", num);
-
-	/* set info cvars */
-	if (chr->emplType == EMPL_ROBOT)
-		CL_UGVCvars(chr);
-	else
-		CL_CharacterCvars(chr);
 }
 
 static void CL_ActorTeamSelect_f (void)
