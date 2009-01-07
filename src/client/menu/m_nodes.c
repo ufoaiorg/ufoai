@@ -205,10 +205,6 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (node->behaviour->isVirtual)
 		return qfalse;
 
-	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
-	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
-		return qfalse;
-
 	if (focusNode && mouseSpace != MS_NULL)
 		return qfalse;
 

@@ -436,8 +436,8 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
  * @sa R_Draw3DGlobe
  * @param[in] map The geoscape map to draw (can be changed in the campaign definition)
  * @param[in] iz The zoomlevel of the geoscape - see ccs.zoom
- * @param[in] cx The x texture coordinate (see MS_SHIFTMAP)
- * @param[in] cy The y texture coordinate (see MS_SHIFTMAP)
+ * @param[in] cx The x texture coordinate
+ * @param[in] cy The y texture coordinate
  * @param[in] p
  * @param[in] q
  * @param[in] x The x position of the geoscape node
