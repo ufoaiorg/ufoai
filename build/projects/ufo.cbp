@@ -450,10 +450,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_research.h" />
-		<Unit filename="..\..\src\client\cl_save.c">
+		<Unit filename="..\..\src\client\campaign\cl_save.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_save.h" />
+		<Unit filename="..\..\src\client\campaign\cl_save.h" />
 		<Unit filename="..\..\src\client\cl_screen.c">
 			<Option compilerVar="CC" />
 		</Unit>

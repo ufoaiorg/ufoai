@@ -38,10 +38,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_keys.h"
 #include "cl_cinematic.h"
 #include "cl_console.h"
+#include "cl_http.h"
 #include "campaign/cl_market.h"
 #include "campaign/cl_event.h"
-#include "cl_save.h"
-#include "cl_http.h"
+#include "campaign/cl_save.h"
 #include "renderer/r_entity.h"
 #include "cl_game.h"
 

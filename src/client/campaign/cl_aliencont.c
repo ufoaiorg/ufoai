@@ -95,7 +95,7 @@ int AL_SetAircraftAlienCargoTypes (const aircraft_t *aircraft, int alienCargoTyp
  * @param[in] teamDef The team definition that should be searched for
  * @return The index of the team definition in the alien cargo of the given aircraft
  */
-static inline const int AL_GetCargoIndexForTeamDefintion (const aircraft_t *aircraft, const teamDef_t *teamDef)
+static inline int AL_GetCargoIndexForTeamDefintion (const aircraft_t *aircraft, const teamDef_t *teamDef)
 {
 	aliensTmp_t *cargo = AL_GetAircraftAlienCargo(aircraft);
 	const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(aircraft);

@@ -25,7 +25,6 @@ CLIENT_SRCS = \
 	client/cl_particle.c \
 	client/cl_rank.c \
 	client/cl_research.c \
-	client/cl_save.c \
 	client/cl_screen.c \
 	client/cl_sound.c \
 	client/cl_sequence.c \
@@ -62,6 +61,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_nation.c \
 	client/campaign/cl_produce.c \
 	client/campaign/cl_radar.c \
+	client/campaign/cl_save.c \
 	client/campaign/cl_transfer.c \
 	client/campaign/cl_ufo.c \
 	client/campaign/cl_uforecovery.c \

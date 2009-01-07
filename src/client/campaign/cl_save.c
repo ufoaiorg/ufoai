@@ -23,15 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
-#include "cl_game.h"
+#include "../client.h"
+#include "../cl_global.h"
+#include "../cl_game.h"
+#include "../menu/m_popup.h"
 #include "cl_save.h"
-#include "campaign/cl_hospital.h"
-#include "campaign/cl_ufo.h"
-#include "campaign/cl_alienbase.h"
-#include "menu/m_popup.h"
-#include "campaign/cp_time.h"
+#include "cl_hospital.h"
+#include "cl_ufo.h"
+#include "cl_alienbase.h"
+#include "cp_time.h"
 
 saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 int saveSubsystemsAmount;

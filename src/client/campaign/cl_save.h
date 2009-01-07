@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_SAVE_H
 #define CLIENT_CL_SAVE_H
 
-#include "../common/msg.h"
+#include "../../common/msg.h"
 
 extern cvar_t *cl_lastsave;
 
