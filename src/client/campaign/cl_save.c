@@ -33,8 +33,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "cp_time.h"
 
-saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
-int saveSubsystemsAmount;
+/**
+ * @brief save file header
+ */
+typedef struct saveFileHeader_s {
+	int version; /**< which savegame version */
+	int compressed; /**< is this file compressed via zlib */
+	int dummy[14]; /**< maybe we have to extend this later */
+	char gameVersion[16]; /**< game version that was used to save this file */
+	char name[32]; /**< savefile name */
+	char gameDate[32]; /**< internal game date */
+	char realDate[32]; /**< real datestring when the user saved this game */
+} saveFileHeader_t;
+
+typedef struct saveSubsystems_s {
+	const char *name;
+	qboolean (*save) (sizebuf_t *sb, void *data);	/**< return false if saving failed */
+	qboolean (*load) (sizebuf_t *sb, void *data);	/**< return false if loading failed */
+	int check;
+} saveSubsystems_t;
+
+static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
+static int saveSubsystemsAmount;
 static cvar_t* save_compressed;
 int presaveArray[MAX_ARRAYINDEXES];
 qboolean loading = qfalse;

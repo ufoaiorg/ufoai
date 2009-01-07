@@ -49,29 +49,6 @@ extern cvar_t *cl_lastsave;
 
 #include <zlib.h>
 
-/**
- * @brief save file header
- */
-typedef struct saveFileHeader_s {
-	int version; /**< which savegame version */
-	int compressed; /**< is this file compressed via zlib */
-	int dummy[14]; /**< maybe we have to extend this later */
-	char gameVersion[16]; /**< game version that was used to save this file */
-	char name[32]; /**< savefile name */
-	char gameDate[32]; /**< internal game date */
-	char realDate[32]; /**< real datestring when the user saved this game */
-} saveFileHeader_t;
-
-typedef struct saveSubsystems_s {
-	const char *name;
-	qboolean (*save) (sizebuf_t *sb, void *data);	/**< return false if saving failed */
-	qboolean (*load) (sizebuf_t *sb, void *data);	/**< return false if loading failed */
-	int check;
-} saveSubsystems_t;
-
-extern saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
-extern int saveSubsystemsAmount;
-
 qboolean SAV_QuickSave(void);
 void SAV_Init(void);
 #define MAX_ARRAYINDEXES	512
