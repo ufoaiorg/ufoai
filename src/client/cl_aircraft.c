@@ -674,7 +674,10 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	menuNode_t *node = NULL;
 	static char aircraftInfo[256];
-	base_t *base = aircraft->homebase;
+	base_t *base = NULL;
+
+	if (aircraft != NULL)
+		base = aircraft->homebase;
 
 	if (!base || !base->numAircraftInBase) {
 		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
