@@ -967,6 +967,8 @@ static void CL_ActorSoldierSelect_f (void)
 		}
 	} else if (!Q_strcmp(activeMenu->name, "team")) {
 		Cmd_ExecuteString(va("team_select %i", num));
+	} else if (!Q_strcmp(activeMenu->name, "equipment")) {
+		Cmd_ExecuteString(va("equip_select %i", num));
 	}
 }
 
