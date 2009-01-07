@@ -119,11 +119,23 @@ int UTF8_insert_char(char *s, int n, int pos, int codepoint);
 int UTF8_char_len(unsigned char c);
 int UTF8_encoded_len(int codepoint);
 
-char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
-int Q_FloatSort(const void *float1, const void *float2);
-int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
+/* prevent preprocessing of 'printf' into __attribute__ */
+#define _SAVE_PRINTF_ printf
+#undef printf
 
+#ifdef __GNUC__
+char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
+int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+#else
+char *va(const char *format, ...);
+int Q_StringSort(const void *string1, const void *string2);
+qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...);
+#endif
+
+#define printf _SAVE_PRINTF_
+
+int Q_FloatSort(const void *float1, const void *float2);
 
 /* portable case sensitive compare */
 #define Q_strcmp(a, b)     strcmp((a), (b))
