@@ -173,8 +173,8 @@ static qboolean MN_IsInnerNode (const menuNode_t* const node, int x, int y)
 	y -= node->menu->pos[1];
 
 	/* check bounding box */
-	if (x < node->pos[0] || x > node->pos[0] + node->size[0]
-	 || y < node->pos[1] || y > node->pos[1] + node->size[1]) {
+	if (x < node->pos[0] || x >= node->pos[0] + node->size[0]
+	 || y < node->pos[1] || y >= node->pos[1] + node->size[1]) {
 		return qfalse;
 	}
 
@@ -185,9 +185,9 @@ static qboolean MN_IsInnerNode (const menuNode_t* const node, int x, int y)
 	/* check excluded box */
 	for (i = 0; i < node->excludeRectNum; i++) {
 		if (x >= node->excludeRect[i].pos[0]
-		 && x <= node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
+		 && x < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
 		 && y >= node->excludeRect[i].pos[1]
-		 && y <= node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+		 && y < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
 			return qfalse;
 	}
 	return qtrue;
