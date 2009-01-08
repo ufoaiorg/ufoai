@@ -1,6 +1,8 @@
 echo off
 echo =====================================================
 echo Updater POTFILES.in from sources.
+echo 	Search and write all *.c files contained gettext
+echo 	tokens '_("' and 'ngettext("'
 echo =====================================================
 
 setlocal enableextensions
