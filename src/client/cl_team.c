@@ -490,6 +490,40 @@ static void CL_ChangeName_f (void)
 	}
 }
 
+static selectBoxOptions_t skinlist[] = {
+	{"urban", "Urban", "team_changeskin;", "0", NULL, NULL, qfalse},
+	{"jungle", "Jungle", "team_changeskin;", "1", NULL, NULL, qfalse},
+	{"desert", "Desert", "team_changeskin;", "2", NULL, NULL, qfalse},
+	{"arctic", "Arctic", "team_changeskin;", "3", NULL, NULL, qfalse},
+	{"multionly_yellow", "Yellow", "team_changeskin;", "4", NULL, NULL, qfalse},
+	{"multionly_cccp", "CCCP", "team_changeskin;", "5", NULL, NULL, qfalse},
+};
+
+/**
+ * @brief Init skins into the GUI
+ */
+static void CL_InitSkin_f (void)
+{
+	menuNode_t *node = MN_GetNodeByPath("equipment.skins");
+	assert(node);
+
+	/** link all elements */
+	if (node->u.option.first == NULL) {
+		int i;
+		for (i = 0; i < NUM_TEAMSKINS-1; i++)
+			skinlist[i].next = &skinlist[i + 1];
+		node->u.option.first = skinlist;
+	}
+
+	/** link/unlink multiplayer skins */
+	if (GAME_IsSingleplayer()) {
+		skinlist[NUM_TEAMSKINS_SINGLEPLAYER-1].next = NULL;
+		node->u.option.count = NUM_TEAMSKINS_SINGLEPLAYER;
+	} else {
+		skinlist[NUM_TEAMSKINS_SINGLEPLAYER-1].next = &skinlist[NUM_TEAMSKINS_SINGLEPLAYER];
+		node->u.option.count = NUM_TEAMSKINS;
+	}
+}
 
 /**
  * @brief Change the skin of the selected actor.
@@ -1525,6 +1559,7 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
+	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changename", CL_ChangeName_f, "Change the name of an actor");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, "Change the skin for the hole team in the current aircraft");

@@ -1563,6 +1563,7 @@ menu equipment
 		scale	"1.0 1.0 1.0"
 	}
 
+/*
 	pic bt_skinforteam
 	{
 //		FIXME: probably add better button here
@@ -1583,6 +1584,19 @@ menu equipment
 		in		{ *changeskin color "0.7 0.7 0.7 1" }
 		out		{ *changeskin color "1 1 1 1" }
 		click	{ cmd "team_changeskin;" }
+	}
+*/
+
+	/**
+	 * @sa CL_InitSkin_f
+	 * @sa team_initskin
+	 */
+	selectbox skins {
+		image	"menu/selectbox_green"
+		pos	"650 290"
+		size	"100 40"
+		cvar	"*cvar mn_skin"
+		color	"0.6 0.6 0.6 0.3"
 	}
 
 	// ==================
@@ -1629,6 +1643,6 @@ menu equipment
 		call names_clear
 		call actor_stats
 		cmd "set mn_infotype 0"
-		cmd "genequip;equip_primary;equip_select 0;"
+		cmd "team_initskin;genequip;equip_primary;equip_select 0;"
 	}
 }
