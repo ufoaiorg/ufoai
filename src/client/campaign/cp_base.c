@@ -43,10 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 
 vec3_t newBasePos;
-static building_t *buildingConstructionList[MAX_BUILDINGS];
-static int numBuildingConstructionList;
-
-static void B_BuildingInit(base_t* base);
+building_t *buildingConstructionList[MAX_BUILDINGS];
 
 /**
  * @brief Array bound check for the base index.
@@ -242,24 +239,11 @@ qboolean B_CheckBuildingDependencesStatus (const base_t* const base, const build
  * @note Make sure you are not doing anything with the buildingCurrent pointer
  * in this function, the pointer might already be invalid
  */
-static void B_ResetBuildingCurrent (base_t* base)
+void B_ResetBuildingCurrent (base_t* base)
 {
 	if (base)
 		base->buildingCurrent = NULL;
 	gd.baseAction = BA_NONE;
-}
-
-/**
- * @brief Resets the currently selected building.
- *
- * Is called e.g. when leaving the build-menu
- */
-static void B_ResetBuildingCurrent_f (void)
-{
-	if (Cmd_Argc() == 2)
-		ccs.instant_build = atoi(Cmd_Argv(1));
-
-	B_ResetBuildingCurrent(baseCurrent);
 }
 
 /**
@@ -292,69 +276,6 @@ static const value_t valid_building_vars[] = {
 	{"autobuild", V_BOOL, offsetof(building_t, autobuild), MEMBER_SIZEOF(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
 };
-
-static void B_BaseMenuInit (const base_t *base)
-{
-	/* make sure the credits cvar is up-to-date */
-	CL_UpdateCredits(ccs.credits);
-
-	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
-
-	MN_ExecuteConfunc("mn_buildings_reset");
-	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed(base) && base->numAircraftInBase)
-		MN_ExecuteConfunc("set_aircraft_enabled");
-	else
-		MN_ExecuteConfunc("set_aircraft_disabled");
-
-	if (BS_BuySellAllowed(base))
-		MN_ExecuteConfunc("set_buysell_enabled");
-	else
-		MN_ExecuteConfunc("set_buysell_disabled");
-
-	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK)
-		MN_ExecuteConfunc("set_transfer_enabled");
-	else
-		MN_ExecuteConfunc("set_transfer_disabled");
-
-	if (RS_ResearchAllowed(base))
-		MN_ExecuteConfunc("set_research_enabled");
-	else
-		MN_ExecuteConfunc("set_research_disabled");
-
-	if (PR_ProductionAllowed(base)) {
-		MN_ExecuteConfunc("set_prod_enabled");
-	} else {
-		MN_ExecuteConfunc("set_prod_disabled");
-	}
-
-	if (E_HireAllowed(base))
-		MN_ExecuteConfunc("set_hire_enabled");
-	else
-		MN_ExecuteConfunc("set_hire_disabled");
-
-	if (AC_ContainmentAllowed(base))
-		MN_ExecuteConfunc("set_containment_enabled");
-	else
-		MN_ExecuteConfunc("set_containment_disabled");
-
-	if (HOS_HospitalAllowed(base))
-		MN_ExecuteConfunc("set_hospital_enabled");
-	else
-		MN_ExecuteConfunc("set_hospital_disabled");
-}
-
-/**
- * @brief Initialises base.
- * @note This command is executed in the init node of the base menu.
- * It is called everytime the base menu pops up and sets the cvars.
- */
-static void B_BaseInit_f (void)
-{
-	if (!baseCurrent)
-		return;
-	B_BaseMenuInit(baseCurrent);
-}
 
 /**
  * @brief Get the maximum level of a building type in a base.
@@ -601,7 +522,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
  * @sa B_BuildingDestroy_f
  * @todo If player choose to destroy the building, a popup should ask him if he wants to sell aircraft in it.
  */
-static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingType)
+void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingType)
 {
 	baseCapacities_t capacity;
 	int aircraftIdx;
@@ -657,72 +578,56 @@ static void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buil
 	}
 }
 
-/**
- * @brief On destroy function for several building type.
- * @note this function is only used for sanity checks, and send to related function depending on building type.
- * @pre Functions below will be called AFTER the building is actually destroyed.
- * @sa B_BuildingDestroy_f
- */
-static void B_BuildingOnDestroy_f (void)
+/** @todo should go into cp_base_callbacks.c */
+void B_BaseMenuInit (const base_t *base)
 {
-	int baseIdx, buildingType;
-	base_t *base;
+	/* make sure the credits cvar is up-to-date */
+	CL_UpdateCredits(ccs.credits);
 
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <baseIdx> <buildingType>\n", Cmd_Argv(0));
-		return;
+	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
+
+	MN_ExecuteConfunc("mn_buildings_reset");
+	/* activate or deactivate the aircraft button */
+	if (AIR_AircraftAllowed(base) && base->numAircraftInBase)
+		MN_ExecuteConfunc("set_aircraft_enabled");
+	else
+		MN_ExecuteConfunc("set_aircraft_disabled");
+
+	if (BS_BuySellAllowed(base))
+		MN_ExecuteConfunc("set_buysell_enabled");
+	else
+		MN_ExecuteConfunc("set_buysell_disabled");
+
+	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK)
+		MN_ExecuteConfunc("set_transfer_enabled");
+	else
+		MN_ExecuteConfunc("set_transfer_disabled");
+
+	if (RS_ResearchAllowed(base))
+		MN_ExecuteConfunc("set_research_enabled");
+	else
+		MN_ExecuteConfunc("set_research_disabled");
+
+	if (PR_ProductionAllowed(base)) {
+		MN_ExecuteConfunc("set_prod_enabled");
+	} else {
+		MN_ExecuteConfunc("set_prod_disabled");
 	}
 
-	buildingType = atoi(Cmd_Argv(2));
-	if (buildingType < 0 || buildingType >= MAX_BUILDING_TYPE) {
-		Com_Printf("B_BuildingOnDestroy_f: buildingType '%i' outside limits\n", buildingType);
-		return;
-	}
+	if (E_HireAllowed(base))
+		MN_ExecuteConfunc("set_hire_enabled");
+	else
+		MN_ExecuteConfunc("set_hire_disabled");
 
-	baseIdx = atoi(Cmd_Argv(1));
+	if (AC_ContainmentAllowed(base))
+		MN_ExecuteConfunc("set_containment_enabled");
+	else
+		MN_ExecuteConfunc("set_containment_disabled");
 
-	if (baseIdx < 0 || baseIdx >= MAX_BASES) {
-		Com_Printf("B_BuildingOnDestroy_f: %i is outside bounds\n", baseIdx);
-		return;
-	}
-
-	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (base) {
-		switch (buildingType) {
-		case B_WORKSHOP:
-			PR_UpdateProductionCap(base);
-			break;
-		case B_STORAGE:
-			INV_RemoveItemsExceedingCapacity(base);
-			break;
-		case B_ALIEN_CONTAINMENT:
-			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
-				AL_RemoveAliens(base, NULL, (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max), AL_RESEARCH);
-			break;
-		case B_LAB:
-			RS_RemoveScientistsExceedingCapacity(base);
-			break;
-		case B_HANGAR: /* the Dropship Hangar */
-		case B_SMALL_HANGAR:
-			B_RemoveAircraftExceedingCapacity(base, buildingType);
-			break;
-		case B_UFO_HANGAR:
-		case B_UFO_SMALL_HANGAR:
-			INV_RemoveUFOsExceedingCapacity(base, buildingType);
-			break;
-		case B_QUARTERS:
-			E_DeleteEmployeesExceedingCapacity(base);
-			break;
-		case B_ANTIMATTER:
-			INV_RemoveAntimatterExceedingCapacity(base);
-			break;
-		default:
-			/* handled in a seperate function, or number of buildings have no impact
-			 * on how the building works */
-			break;
-		}
-	} else
-		Com_Printf("B_BuildingOnDestroy_f: base %i is not founded\n", baseIdx);
+	if (HOS_HospitalAllowed(base))
+		MN_ExecuteConfunc("set_hospital_enabled");
+	else
+		MN_ExecuteConfunc("set_hospital_disabled");
 }
 
 /**
@@ -871,21 +776,6 @@ static void CL_BaseDestroy_f (void)
 #endif
 
 /**
- * @brief We are doing the real destroy of a building here
- * @sa B_BuildingDestroy
- * @sa B_NewBuilding
- */
-static void B_BuildingDestroy_f (void)
-{
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
-
-	B_BuildingDestroy(baseCurrent, baseCurrent->buildingCurrent);
-
-	B_ResetBuildingCurrent(baseCurrent);
-}
-
-/**
  * @brief Mark a building for destruction - you only have to confirm it now
  * @note Also calls the ondestroy trigger
  */
@@ -997,19 +887,6 @@ void B_BuildingStatus (const base_t* base, const building_t* building)
 	default:
 		break;
 	}
-}
-
-/**
- * @brief Console callback for B_BuildingStatus
- * @sa B_BuildingStatus
- */
-static void B_BuildingStatus_f (void)
-{
-	/* maybe someone called this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
-		return;
-
-	B_BuildingStatus(baseCurrent, baseCurrent->buildingCurrent);
 }
 
 /**
@@ -1494,7 +1371,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 /**
  * @brief Draws a building.
  */
-static void B_DrawBuilding (base_t* base, building_t* building)
+void B_DrawBuilding (base_t* base, building_t* building)
 {
 	static char buildingText[MAX_BUILDING_INFO_TEXT_LENGTH];
 
@@ -1625,7 +1502,7 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
  * @brief Update the building-list.
  * @sa B_BuildingInit_f
  */
-static void B_BuildingInit (base_t* base)
+void B_BuildingInit (base_t* base)
 {
 	int i;
 
@@ -1638,7 +1515,6 @@ static void B_BuildingInit (base_t* base)
 
 	/* delete the whole linked list - it's rebuild in the loop below */
 	LIST_Delete(&base->buildingList);
-	numBuildingConstructionList = 0;
 
 	for (i = 0; i < gd.numBuildingTemplates; i++) {
 		building_t *tpl = &gd.buildingTemplates[i];
@@ -1668,60 +1544,6 @@ static void B_BuildingInit (base_t* base)
 		B_DrawBuilding(base, base->buildingCurrent);
 
 	mn.menuTextLinkedList[TEXT_BUILDINGS] = base->buildingList;
-}
-
-/**
- * @brief Script command binding for B_BuildingInit
- */
-static void B_BuildingInit_f (void)
-{
-	if (!baseCurrent)
-		return;
-	B_BuildingInit(baseCurrent);
-}
-
-/**
- * @brief Opens the UFOpedia for the current selected building.
- */
-static void B_BuildingInfoClick_f (void)
-{
-	if (baseCurrent && baseCurrent->buildingCurrent) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingInfoClick_f: %s - %i\n",
-			baseCurrent->buildingCurrent->id, baseCurrent->buildingCurrent->buildingStatus);
-		UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-	}
-}
-
-/**
- * @brief Script function for clicking the building list text field.
- */
-static void B_BuildingClick_f (void)
-{
-	int num, count;
-	building_t *building;
-
-	if (Cmd_Argc() < 2 || !baseCurrent) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* which building? */
-	num = atoi(Cmd_Argv(1));
-
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx);
-
-	count = LIST_Count(baseCurrent->buildingList);
-	if (num > count || num < 0) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, count);
-		return;
-	}
-
-	building = buildingConstructionList[num];
-
-	baseCurrent->buildingCurrent = building;
-	B_DrawBuilding(baseCurrent, building);
-
-	gd.baseAction = BA_NEWBUILDING;
 }
 
 /**
@@ -2479,104 +2301,6 @@ void B_BaseResetStatus (base_t* const base)
 }
 
 /**
- * @brief Builds a base map for tactical combat.
- * @sa SV_AssembleMap
- * @sa CP_BaseAttackChooseBase
- * @note Do we need day and night maps here, too? Sure!
- * @todo Search a empty field and add a alien craft there, also add alien
- * spawn points around the craft, also some trees, etc. for their cover
- * @todo Add soldier spawn points, the best place is quarters.
- * @todo We need to get rid of the tunnels to nirvana.
- */
-static void B_AssembleMap_f (void)
-{
-	int row, col;
-	char baseMapPart[1024];
-	building_t *entry;
-	char maps[2024];
-	char coords[2048];
-	int setUnderAttack = 0, baseID = 0;
-	base_t* base = baseCurrent;
-
-	if (Cmd_Argc() < 2)
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
-	else {
-		if (Cmd_Argc() == 3)
-			setUnderAttack = atoi(Cmd_Argv(2));
-		baseID = atoi(Cmd_Argv(1));
-		if (baseID < 0 || baseID >= gd.numBases) {
-			Com_DPrintf(DEBUG_CLIENT, "Invalid baseID: %i\n", baseID);
-			return;
-		}
-		base = B_GetBaseByIDX(baseID);
-	}
-
-	if (!base) {
-		Com_Printf("B_AssembleMap_f: No base to assemble\n");
-		return;
-	}
-
-	/* reset menu text */
-	MN_MenuTextReset(TEXT_STANDARD);
-
-	*maps = '\0';
-	*coords = '\0';
-
-	/* reset the used flag */
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col].building) {
-				entry = base->map[row][col].building;
-				entry->used = 0;
-			}
-		}
-
-	/** @todo If a building is still under construction, it will be assembled as a finished part.
-	 * Otherwise we need mapparts for all the maps under construction. */
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++) {
-			baseMapPart[0] = '\0';
-
-			if (base->map[row][col].building) {
-				entry = base->map[row][col].building;
-
-				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
-				/* this is why we check the used flag and continue if it was set already */
-				if (!entry->used && entry->needs) {
-					entry->used = 1;
-				} else if (entry->needs) {
-					Com_DPrintf(DEBUG_CLIENT, "B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used);
-					entry->used = 0;
-					continue;
-				}
-
-				if (entry->mapPart)
-					Com_sprintf(baseMapPart, sizeof(baseMapPart), "b/%s", entry->mapPart);
-				else
-					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
-			} else
-				Q_strncpyz(baseMapPart, "b/empty", sizeof(baseMapPart));
-
-			if (*baseMapPart) {
-				Q_strcat(maps, baseMapPart, sizeof(maps));
-				Q_strcat(maps, " ", sizeof(maps));
-				/* basetiles are 16 units in each direction
-				 * 512 / UNIT_SIZE = 16
-				 * 512 is the size in the mapeditor and the worldplane for a
-				 * single base map tile */
-				Q_strcat(coords, va("%i %i %i ", col * 16, (BASE_SIZE - row - 1) * 16, 0), sizeof(coords));
-			}
-		}
-	/* set maxlevel for base attacks */
-	cl.map_maxlevel_base = 6;
-
-	if (curCampaign)
-		SAV_QuickSave();
-
-	Cbuf_AddText(va("map day \"%s\" \"%s\"\n", maps, coords));
-}
-
-/**
  * @brief Cleans all bases and related structures to prepare a new campaign mode game
  * @note restores the original base names
  * @sa CL_GameNew
@@ -2596,28 +2320,6 @@ void B_NewBases (void)
 		B_ClearBase(base);
 		Q_strncpyz(base->name, title, sizeof(title));
 	}
-}
-
-/**
- * @brief Builds a random base
- *
- * call B_AssembleMap with a random base over script command 'base_assemble_rand'
- */
-static void B_AssembleRandomBase_f (void)
-{
-	int setUnderAttack = 0;
-	int randomBase = rand() % gd.numBases;
-	if (Cmd_Argc() < 2)
-		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <setUnderAttack>\n", Cmd_Argv(0));
-	else
-		setUnderAttack = atoi(Cmd_Argv(1));
-
-	if (!gd.bases[randomBase].founded) {
-		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
-		return;
-	}
-
-	Cbuf_AddText(va("base_assemble %i %i\n", randomBase, setUnderAttack));
 }
 
 #ifdef DEBUG
@@ -2711,116 +2413,6 @@ static void B_BaseList_f (void)
 	}
 }
 #endif
-
-/**
- * @brief Checks why a button in base menu is disabled, and create a popup to inform player
- */
-static void B_CheckBuildingStatusForMenu_f (void)
-{
-	int i, num;
-	int baseIdx;
-	const char *buildingID;
-	building_t *building;
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s buildingID\n", Cmd_Argv(0));
-		return;
-	}
-	buildingID = Cmd_Argv(1);
-	building = B_GetBuildingTemplate(buildingID);
-
-	if (!building) {
-		Com_Printf("B_CheckBuildingStatusForMenu_f: building pointer is NULL\n");
-		return;
-	}
-
-	if (!baseCurrent) {
-		Com_Printf("B_CheckBuildingStatusForMenu_f: baseCurrent pointer is NULL\n");
-		return;
-	}
-
-	/* Maybe base is under attack ? */
-	if (baseCurrent->baseStatus == BASE_UNDER_ATTACK) {
-		Com_sprintf(popupText, sizeof(popupText), _("Base is under attack, you can't access this building !"));
-		MN_Popup(_("Notice"), popupText);
-		return;
-	}
-
-	baseIdx = baseCurrent->idx;
-
-	if (building->buildingType == B_HANGAR) {
-		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
-		Com_sprintf(popupText, sizeof(popupText), _("You need at least one Hangar (and its dependencies) to use aircraft."));
-		MN_Popup(_("Notice"), popupText);
-		return;
-	}
-
-	num = B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, building->buildingType);
-	if (num > 0) {
-		int numUnderConstruction;
-		/* maybe all buildings of this type are under construction ? */
-		B_CheckBuildingTypeStatus(baseCurrent, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
-		if (numUnderConstruction == num) {
-			int minDay = 99999;
-			/* Find the building whose construction will finish first */
-			for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-				if (gd.buildings[baseIdx][i].buildingType == building->buildingType
-					&& gd.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION
-					&& minDay > gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart))
-					minDay = gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart);
-			}
-			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
-				minDay), minDay);
-			MN_Popup(_("Notice"), popupText);
-			return;
-		}
-
-		if (!B_CheckBuildingDependencesStatus(baseCurrent, building)) {
-			building_t *dependenceBuilding = building->dependsBuilding;
-			assert(building->dependsBuilding);
-			if (B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, dependenceBuilding->buildingType) <= 0) {
-				/* the dependence of the building is not built */
-				Com_sprintf(popupText, sizeof(popupText), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
-				MN_Popup(_("Notice"), popupText);
-				return;
-			} else {
-				/* maybe the dependence of the building is under construction
-				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
-				 * is not use for every building (for exemple Command Centre) */
-				for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-					if (gd.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
-					 && gd.buildings[baseIdx][i].buildTime > (ccs.date.day - gd.buildings[baseIdx][i].timeStart)) {
-						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
-							_(dependenceBuilding->name), _(building->name));
-						MN_Popup(_("Notice"), popupText);
-						return;
-					}
-				}
-				/* the dependence is built but doesn't work - must be because of their dependendes */
-				Com_sprintf(popupText, sizeof(popupText), _("Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."),
-					_(dependenceBuilding->name), _(dependenceBuilding->dependsBuilding->name), _(building->name));
-				MN_Popup(_("Notice"), popupText);
-				return;
-			}
-		}
-		/* all buildings are OK: employees must be missing */
-		if ((building->buildingType == B_WORKSHOP) && (E_CountHired(baseCurrent, EMPL_WORKER) <= 0)) {
-			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_WORKER), _(building->name));
-			MN_Popup(_("Notice"), popupText);
-			return;
-		} else if ((building->buildingType == B_LAB) && (E_CountHired(baseCurrent, EMPL_SCIENTIST) <= 0)) {
-			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
-				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name));
-			MN_Popup(_("Notice"), popupText);
-			return;
-		}
-	} else {
-		Com_sprintf(popupText, sizeof(popupText), _("Build a %s first."), _(building->name));
-		MN_Popup(_("Notice"), popupText);
-		return;
-	}
-}
 
 /**
  * @brief Checks whether the building menu or the pedia entry should be called
@@ -2985,17 +2577,6 @@ void B_InitStartup (void)
 	/* add commands and cvars */
 	B_InitCallbacks();
 
-	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
-	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
-	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
-	Cmd_AddCommand("building_init", B_BuildingInit_f, NULL);
-	Cmd_AddCommand("building_status", B_BuildingStatus_f, NULL);
-	Cmd_AddCommand("building_destroy", B_BuildingDestroy_f, "Function to destroy a building (select via right click in baseview first)");
-	Cmd_AddCommand("building_ufopedia", B_BuildingInfoClick_f, "Opens the UFOpedia for the current selected building");
-	Cmd_AddCommand("check_building_status", B_CheckBuildingStatusForMenu_f, "Create a popup to inform player why he can't use a button");
-	Cmd_AddCommand("buildings_click", B_BuildingClick_f, "Opens the building information window in construction mode");
-	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
-	Cmd_AddCommand("building_ondestroy", B_BuildingOnDestroy_f, "Destroy a building");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");

@@ -245,8 +245,11 @@ typedef struct baseTemplate_s {
 	int numBuildings;		/**< Number of buildings in this template. */
 } baseTemplate_t;
 
-/** Currently displayed/accessed base. */
+/** Currently displayed/accessed base.
+ * @todo this should not be extern but only available in cp_base_callbacks,c */
 extern base_t *baseCurrent;
+/** @todo this should not be extern but only available in cp_base_callbacks,c */
+extern building_t *buildingConstructionList[MAX_BUILDINGS];
 
 void B_AssignInitial(aircraft_t *aircraft, const char *equipName);
 
@@ -303,6 +306,12 @@ void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
+
+void B_ResetBuildingCurrent(base_t* base);
+void B_BuildingInit(base_t* base);
+void B_BaseMenuInit(const base_t *base);
+void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);
+void B_DrawBuilding(base_t* base, building_t* building);
 
 void B_SaveBaseSlots(const baseWeapon_t *weapons, const int numWeapons, sizebuf_t* sb);
 void B_LoadBaseSlots(baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb);
