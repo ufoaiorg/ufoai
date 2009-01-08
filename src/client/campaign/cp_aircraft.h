@@ -251,13 +251,6 @@ void AIR_ListAircraft_f(void);
 void AIR_ListAircraftSamples_f(void);
 #endif
 
-void AIM_AircraftStart_f(void);
-void AIR_NewAircraft_f(void);
-void AIM_ResetAircraftCvars_f (void);
-void AIM_NextAircraft_f(void);
-void AIM_PrevAircraft_f(void);
-void AIR_AircraftReturnToBase_f(void);
-
 int AIR_GetAircraftIdxInBase(const aircraft_t* aircraft);
 const char *AIR_AircraftStatusToName(const aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(const aircraft_t *aircraft);

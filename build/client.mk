@@ -37,6 +37,7 @@ CLIENT_SRCS = \
 	client/cl_view.c \
 	\
 	client/campaign/cp_aircraft.c \
+	client/campaign/cp_aircraft_callbacks.c \
 	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_alien_interest.c \
 	client/campaign/cp_missions.c \

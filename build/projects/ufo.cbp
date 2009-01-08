@@ -357,10 +357,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_actor.h" />
-		<Unit filename="..\..\src\client\campaign\cl_aircraft.c">
+		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_aircraft.h" />
+		<Unit filename="..\..\src\client\campaign\cp_aircraft.h" />
+		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_basemanagement.c">
 			<Option compilerVar="CC" />
 		</Unit>

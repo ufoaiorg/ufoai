@@ -45,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_nations.h"
 #include "cp_time.h"
 #include "cp_xvi.h"
+#include "cp_aircraft_callbacks.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
 
@@ -2227,7 +2228,7 @@ static const cmdList_t game_commands[] = {
 	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL},
 	{"aircraft_new", AIR_NewAircraft_f, NULL},
 	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
-	{"aircraft_return", AIR_AircraftReturnToBase_f, "Sends the current aircraft back to homebase"},
+	{"aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase"},
 	{"aircraft_start", AIM_AircraftStart_f, NULL},
 	{"aircraft_select", AIR_AircraftSelect_f, NULL},
 	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},
