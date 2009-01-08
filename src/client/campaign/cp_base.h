@@ -302,6 +302,7 @@ void B_PackInitialEquipment(aircraft_t *aircraft, equipDef_t *ed);
 void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
 qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amount, qboolean reset, qboolean ignorecap);
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
+void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
 
 void B_SaveBaseSlots(const baseWeapon_t *weapons, const int numWeapons, sizebuf_t* sb);
 void B_LoadBaseSlots(baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb);

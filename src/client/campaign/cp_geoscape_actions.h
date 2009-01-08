@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_GEOSCAPE_ACTIONS_H
 #define CP_GEOSCAPE_ACTIONS_H
 
-qboolean CL_NewBase(base_t* base, vec2_t pos);
 qboolean CL_NewInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
 
 #endif

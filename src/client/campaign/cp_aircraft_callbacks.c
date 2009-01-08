@@ -176,3 +176,11 @@ void AIM_AircraftStart_f (void)
 	MN_PopMenu(qfalse);
 	MN_PopMenu(qfalse);
 }
+
+void AIR_InitCallbacks (void)
+{
+}
+
+void AIR_ShutdownCallbacks (void)
+{
+}

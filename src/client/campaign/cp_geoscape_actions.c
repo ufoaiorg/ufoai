@@ -28,50 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cp_geoscape_actions.h"
 
-
-/**
- * @brief Check conditions for new base and build it.
- * @param[in] pos Position on the geoscape.
- * @return True if the base has been build.
- * @sa B_BuildBase
- */
-qboolean CL_NewBase (base_t* base, vec2_t pos)
-{
-	byte *colorTerrain;
-
-	assert(base);
-
-	if (base->founded) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: base already founded: %i\n", base->idx);
-		return qfalse;
-	} else if (gd.numBases == MAX_BASES) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: max base limit hit\n");
-		return qfalse;
-	}
-
-	colorTerrain = MAP_GetColor(pos, MAPTYPE_TERRAIN);
-
-	if (MapIsWater(colorTerrain)) {
-		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
-		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
-		return qfalse;
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "CL_NewBase: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for base terrain: R:%i G:%i B:%i\n", colorTerrain[0], colorTerrain[1], colorTerrain[2]);
-
-	/* build base */
-	Vector2Copy(pos, base->pos);
-
-	gd.numBases++;
-
-	/* set up the base with buildings that have the autobuild flag set */
-	B_SetUpBase(base, cl_start_employees->integer, cl_start_buildings->integer);
-
-	return qtrue;
-}
-
 /**
  * @brief Check conditions for new installation and build it.
  * @param[in] pos Position on the geoscape.

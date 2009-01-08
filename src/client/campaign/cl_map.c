@@ -267,6 +267,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	/* new base construction */
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
+		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos and make newBasePos static */
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
 			const nation_t* nation = MAP_GetNation(pos);
 			if (nation)
