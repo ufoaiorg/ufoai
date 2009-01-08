@@ -1,5 +1,5 @@
 /**
- * @file cl_aircraft.h
+ * @file cp_aircraft.h
  * @brief Header file for aircraft stuff
  */
 
@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRCRAFT_H
 #define CLIENT_CL_AIRCRAFT_H
 
-#include "campaign/cl_radar.h"
+#include "cl_radar.h"
 
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64

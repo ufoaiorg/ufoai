@@ -338,7 +338,7 @@ typedef struct chr_list_s {
 #include "cl_research.h"
 /* we need this in cl_aircraft.h */
 #define MAX_EMPLOYEES 512
-#include "cl_aircraft.h"
+#include "campaign/cp_aircraft.h"
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_employee.h"
 #include "cl_inventory.h"

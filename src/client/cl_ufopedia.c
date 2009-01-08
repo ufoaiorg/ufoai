@@ -179,7 +179,6 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
 
 /**
  * @brief Translate a aircraft stat int to a translated string
- * The aircraft stats were defined in cl_aircraft.h
  * @sa aircraftParams_t
  * @sa CL_AircraftMenuStatsValues
  */

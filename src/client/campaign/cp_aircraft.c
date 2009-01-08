@@ -27,17 +27,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
-#include "cl_team.h"
-#include "campaign/cl_mapfightequip.h"
-#include "campaign/cl_hospital.h"
-#include "campaign/cl_map.h"
-#include "campaign/cl_ufo.h"
-#include "campaign/cl_alienbase.h"
-#include "menu/m_popup.h"
-#include "campaign/cp_time.h"
-#include "renderer/r_draw.h"
+#include "../client.h"
+#include "../cl_global.h"
+#include "../cl_team.h"
+#include "../menu/m_popup.h"
+#include "../renderer/r_draw.h"
+#include "cl_mapfightequip.h"
+#include "cl_hospital.h"
+#include "cl_map.h"
+#include "cl_ufo.h"
+#include "cl_alienbase.h"
+#include "cp_time.h"
 
 
 aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
@@ -301,16 +301,16 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
  * @brief Count and collect ammo from gun magazine.
  * @param[in] magazine Pointer to invList_t being magazine.
  * @param[in] aircraft Pointer to aircraft used in this mission.
- * @sa AIR_CollectingItems
+ * @sa AII_CollectingItems
  */
-static void AIR_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
+static void AII_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
 {
 	/* Let's add remaining ammo to market. */
 	eTempEq.numLoose[magazine->item.m->idx] += magazine->item.a;
 	if (eTempEq.numLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
 		eTempEq.numLoose[magazine->item.m->idx] -= magazine->item.t->ammo;
-		AIR_CollectItem(aircraft, magazine->item.m, 1);
+		AII_CollectItem(aircraft, magazine->item.m, 1);
 	}
 }
 
@@ -1527,7 +1527,7 @@ static void AII_InitialiseAircraftSlots (aircraft_t *aircraftTemplate)
 
 /**
  * @brief List of valid strings for itemPos_t
- * @note must be in the same order than itemPos_t in cl_aircraft.h
+ * @note must be in the same order than @c itemPos_t
  */
 static const char *air_position_strings[AIR_POSITIONS_MAX] = {
 	"nose_left",
