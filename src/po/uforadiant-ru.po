@@ -65,15 +65,15 @@ msgstr ""
 #: src/tools/radiant/radiant/autosave.cpp:169
 #: src/tools/radiant/radiant/autosave.cpp:176
 msgid "Autosave"
-msgstr ""
+msgstr "Автосохранение"
 
 #: src/tools/radiant/radiant/autosave.cpp:169
 msgid "Enable Autosave"
-msgstr ""
+msgstr "Включить автосохранение"
 
 #: src/tools/radiant/radiant/autosave.cpp:170
 msgid "Autosave Frequency (minutes)"
-msgstr ""
+msgstr "Частота автосохранения (минуты)"
 
 #: src/tools/radiant/radiant/autosave.cpp:172
 msgid "Save Snapshots"
@@ -101,6 +101,7 @@ msgstr "Всегда использовать «nodraw» для новых бр�
 
 #: src/tools/radiant/radiant/brushmodule.cpp:66
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:662
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:163
 msgid "Brush"
 msgstr ""
 
@@ -264,6 +265,8 @@ msgid "Command"
 msgstr "Команда"
 
 #: src/tools/radiant/radiant/commands.cpp:231
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1325
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1391
 msgid "Key"
 msgstr "Клавиша"
 
@@ -512,6 +515,7 @@ msgid "Look Through Camera"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1507
+#: src/tools/radiant/radiant/xywindow.cpp:2710
 msgid "Orthographic"
 msgstr ""
 
@@ -823,6 +827,7 @@ msgid "Content Flags"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1400
 msgid "Value"
 msgstr ""
 
@@ -877,25 +882,25 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:118
 msgid "Find / Replace Texture(s)"
-msgstr ""
+msgstr "Поиск/замена текстур"
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:135
 msgid "Find:"
-msgstr ""
+msgstr "Найти:"
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:142
 msgid "Replace:"
-msgstr ""
+msgstr "Заменить"
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:169
 msgid "Within selected brushes only"
-msgstr ""
+msgstr "Только выбранные браши"
 
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:178
 #: src/tools/radiant/radiant/select.cpp:960
 #: src/tools/radiant/radiant/select.cpp:1104
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #: src/tools/radiant/radiant/dialogs/light.cpp:51
 msgid "ESC for default, ENTER to validate"
@@ -905,15 +910,19 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/prism.cpp:64
 #: src/tools/radiant/radiant/select.cpp:949
 #: src/tools/radiant/radiant/select.cpp:1093
+#: src/tools/radiant/radiant/dialogs/particle.cpp:94
+#: src/tools/radiant/radiant/preferences.cpp:389
 msgid "OK"
-msgstr ""
+msgstr "ОК"
 
 #: src/tools/radiant/radiant/dialogs/light.cpp:76
 #: src/tools/radiant/radiant/dialogs/prism.cpp:70
 #: src/tools/radiant/radiant/select.cpp:955
 #: src/tools/radiant/radiant/select.cpp:1099
+#: src/tools/radiant/radiant/dialogs/particle.cpp:100
+#: src/tools/radiant/radiant/preferences.cpp:393
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:193
 msgid "Fix"
@@ -925,7 +934,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:206
 msgid "Check Map"
-msgstr ""
+msgstr "Проверить карту"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:211
 msgid "Nothing to check in this map\n"
@@ -960,7 +969,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:125
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1299
 msgid "Entity Inspector"
@@ -983,6 +992,7 @@ msgid "Entity breakdown"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:160
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:159
 msgid "Entity"
 msgstr ""
 
@@ -1006,19 +1016,264 @@ msgstr ""
 #: src/tools/radiant/radiant/select.cpp:889
 #: src/tools/radiant/radiant/select.cpp:1036
 msgid "  X  "
-msgstr ""
+msgstr "  X  "
 
 #: src/tools/radiant/radiant/select.cpp:896
 #: src/tools/radiant/radiant/select.cpp:1043
 msgid "  Y  "
-msgstr ""
+msgstr "  Y  "
 
 #: src/tools/radiant/radiant/select.cpp:903
 #: src/tools/radiant/radiant/select.cpp:1050
 msgid "  Z  "
-msgstr ""
+msgstr "  Z  "
 
 #: src/tools/radiant/radiant/select.cpp:1024
 msgid "Arbitrary scale"
 msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:198
+msgid "Grid0.125"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:199
+msgid "Grid0.25"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:200
+msgid "Grid0.5"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:201
+msgid "Grid1"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:202
+msgid "Grid2"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:203
+msgid "Grid4"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:204
+msgid "Grid8"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:205
+msgid "Grid16"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:206
+msgid "Grid32"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:207
+msgid "Grid64"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:208
+msgid "Grid128"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:209
+msgid "Grid256"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:220
+msgid "Default grid spacing"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:226
+msgid "Grid"
+msgstr ""
+
+#: src/tools/radiant/radiant/grid.cpp:226
+msgid "Grid Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:295
+#: src/tools/radiant/radiant/main.cpp:360
+msgid "UFORadiant"
+msgstr "UFORadiant"
+
+#: src/tools/radiant/radiant/main.cpp:366
+msgid ""
+"UFORadiant failed to start properly the last time it was run.\n"
+"The failure may be caused by current preferences.\n"
+"Do you want to reset all preferences to defaults?"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:370
+msgid "UFORadiant - Startup Failure"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:377
+msgid "UFORadiant - Console Log"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:315
+msgid "Engine Path"
+msgstr "Путь к движку"
+
+#: src/tools/radiant/radiant/mainframe.cpp:317
+msgid "Compiler Binary"
+msgstr "Путь к компилятору"
+
+#: src/tools/radiant/radiant/mainframe.cpp:321
+msgid "Paths"
+msgstr "Пути"
+
+#: src/tools/radiant/radiant/mainframe.cpp:321
+#: src/tools/radiant/radiant/mainframe.cpp:335
+msgid "Path Settings"
+msgstr "Настройки путей"
+
+#: src/tools/radiant/radiant/mainframe.cpp:335
+msgid "Path settings"
+msgstr "Настройки путей"
+
+#: src/tools/radiant/radiant/mainframe.cpp:345
+msgid "Engine Path Not Found"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2703
+msgid "Solid selection boxes"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2704
+msgid "Display size info"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2705
+msgid "Chase mouse during drags"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2706
+msgid "Update views on camera move"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2710
+msgid "Orthographic View Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2720
+msgid "Clipper tool uses nodraw"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2724
+msgid "Clipper"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:2724
+msgid "Clipper Tool Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:167
+msgid "Message"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:173
+msgid "Select"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/particle.cpp:49
+#: src/tools/radiant/radiant/dialogs/particle.cpp:71
+msgid "Particle"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/jobinfo.cpp:76
+msgid "Job"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/jobinfo.cpp:84
+msgid "Progress"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:55
+msgid "Console"
+msgstr "Консоль"
+
+#: src/tools/radiant/radiant/preferences.cpp:55
+msgid "Enable Logging"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:56
+msgid "Load last map on open"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:62
+msgid "Mouse Type"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:64
+msgid "Right Button"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:64
+msgid "Activates Context Menu"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:67
+msgid "Mouse"
+msgstr "Мышь"
+
+#: src/tools/radiant/radiant/preferences.cpp:67
+msgid "Mouse Preferences"
+msgstr "Настройки мыши"
+
+#: src/tools/radiant/radiant/preferences.cpp:99
+#, c-format
+msgid "Didn't find 'game' node in the game description file '%s'\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:218
+msgid ""
+"This will close UFORadiant and clean the corresponding registry entries.\n"
+"Next time you start UFORadiant it will be good as new. Do you wish to continue?"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:220
+msgid "Reset Registry"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:374
+msgid "UFORadiant Preferences"
+msgstr "Настройки UFORadiant"
+
+#: src/tools/radiant/radiant/preferences.cpp:397
+msgid "Clean"
+msgstr "Очистить"
+
+#: src/tools/radiant/radiant/preferences.cpp:430
+msgid "Preferences"
+msgstr "Настройки"
+
+#: src/tools/radiant/radiant/preferences.cpp:447
+msgid "Front Page"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:450
+msgid "Interface Preferences"
+msgstr "Настройки интерфейса"
+
+#: src/tools/radiant/radiant/preferences.cpp:456
+msgid "Interface"
+msgstr "Интерфейс"
+
+#: src/tools/radiant/radiant/preferences.cpp:463
+msgid "General Settings"
+msgstr "Общие настройки"
+
+#: src/tools/radiant/radiant/preferences.cpp:469
+msgid "Settings"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:585
+msgid "Edit Preferences"
+msgstr ""
+
+#: src/tools/radiant/radiant/preferences.cpp:588
+msgid "Preference changes require a restart:\n"
+msgstr "Изменения настроек, требующие перезапуска:\n"
 
