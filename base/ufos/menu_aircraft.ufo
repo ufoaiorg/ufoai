@@ -21,6 +21,49 @@ menu aircraft
 		image		menu/aircraft_bg
 	}
 
+	// ==================
+	// base info
+	// ==================
+
+	string name
+	{
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
+	}
+
+	custombutton bt_continue
+	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		tooltip	"_Back"
+		pos		"950 20"
+		icon	"return"
+		click	{ cmd "mn_pop;" }
+	}
+
+	string txt_credits_caption
+	{
+		string		"_CREDIT"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
+	}
+
+	string txt_credits
+	{
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
+	}
+
 	// ===============
 	// Buttons
 	// ===============
@@ -29,7 +72,7 @@ menu aircraft
 		string		"_Assign Soldiers"
 		image		menu/button_green_small
 		color		"0 0.8 0 1"
-		pos			"60 100"
+		pos			"60 190"
 		size		"207 48"
 		font		f_menu
 		blend		true
@@ -42,7 +85,7 @@ menu aircraft
 		color		"0 0.8 0 1"
 		tooltip		"_Equip aircraft components"
 		image		menu/button_green_small
-		pos			"60 180"
+		pos			"60 270"
 		size		"207 48"
 		font		f_menu
 		blend		true
@@ -54,7 +97,7 @@ menu aircraft
 		string		"_Buy/Sell Aircraft"
 		tooltip		"_Buy or sell aircraft"
 		image		menu/button_green_small
-		pos			"60 380"
+		pos			"60 470"
 		size		"207 48"
 		blend		true
 		color		"0 0.8 0 1"
@@ -67,7 +110,7 @@ menu aircraft
 		string		"_Produce"
 		tooltip		"_Produce aircraft or aircraft components"
 		image		menu/button_green_small
-		pos			"60 465"
+		pos			"60 555"
 		size		"207 48"
 		blend		true
 		font		f_menu
@@ -82,14 +125,14 @@ menu aircraft
 	{
 		model		"*cvar mn_aircraft_model"
 		// @todo remove origin property when possible
-		origin		"690 240 0"
-		pos			"470 74"
+		origin		"690 280 0"
+		pos			"470 114"
 		size		"536 324"
 	}
 
 	zone wz_aircraft
 	{
-		pos			"470 74"
+		pos			"470 114"
 		size		"536 364"
 		whup		{ cmd "mn_next_aircraft;" }
 		whdown		{ cmd "mn_prev_aircraft;" }
@@ -98,7 +141,7 @@ menu aircraft
 	string aircraft_name
 	{
 		string		"*cvar mn_aircraftname"
-		pos			"588 400"
+		pos			"588 430"
 		size		"356 20"
 		textalign	cc
 	}
@@ -106,7 +149,7 @@ menu aircraft
 	string aircraft_status
 	{
 		string		"*cvar mn_aircraftstatus"
-		pos			"588 420"
+		pos			"588 450"
 		size		"356 20"
 		textalign	cc
 	}
@@ -117,7 +160,7 @@ menu aircraft
 	{
 		image		menu/button_pack1
 		tooltip		"_Switch to the previous aircraft"
-		pos			"500 410"
+		pos			"500 450"
 		texl		"0 16"
 		size		"16 16"
 		blend		true
@@ -128,7 +171,7 @@ menu aircraft
 
 	custombutton aircraft_return
 	{
-		pos			"550 410"
+		pos			"550 450"
 		image		menu/button_pack1
 		blend		true
 		size		"16 16"
@@ -138,7 +181,7 @@ menu aircraft
 	{
 		image		menu/button_pack1
 		tooltip		"_Switch to the next aircraft"
-		pos			"970 410"
+		pos			"970 450"
 		texl		"16 16"
 		size		"16 16"
 		blend		true
@@ -154,7 +197,7 @@ menu aircraft
 	string team_members
 	{
 		string		"_Team Members:"
-		pos			"480 486"
+		pos			"480 526"
 		size		"520 20"
 		textalign	cl
 	}
@@ -162,31 +205,19 @@ menu aircraft
 	string team_hired
 	{
 		string		"*cvar mn_hired"
-		pos			"480 508"
+		pos			"480 548"
 		size		"520 20"
 		textalign	cl
 	}
 
 	text aircraftinfo
 	{
-		pos			"480 540"
+		pos			"480 580"
 		size		"520 160"
 		lineheight	20
 		tabwidth	220
 		textid		TEXT_AIRCRAFT_INFO
 		rows		8
-	}
-
-	custombutton aircraft_leave
-	{
-		tooltip		"_Back"
-		image		menu/button_background
-		blend		true
-		texl		"192 0"
-		size		"64 37"
-		pos			"940 720"
-		icon		return
-		click		{ cmd "mn_pop;" }
 	}
 
 	confunc aircraft_checkbuttons
