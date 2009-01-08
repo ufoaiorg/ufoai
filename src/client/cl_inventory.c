@@ -37,7 +37,7 @@ cvar_t *cl_equip;
 /**
  * @brief Process items carried by soldiers.
  * @param[in] soldier Pointer to le_t being a soldier from our team.
- * @sa AIR_CollectingItems
+ * @sa AII_CollectingItems
  * @todo this is campaign mode only - doesn't belong here
  */
 void INV_CarriedItems (const le_t *soldier)

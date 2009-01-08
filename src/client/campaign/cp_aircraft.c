@@ -317,21 +317,21 @@ static void AII_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
 /**
  * @brief Add an item to aircraft inventory.
  * @sa AL_AddAliens
- * @sa AIR_CollectingItems
+ * @sa AII_CollectingItems
  */
-void AIR_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
+void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 {
 	int i;
 	itemsTmp_t *cargo = aircraft->itemcargo;
 
 	for (i = 0; i < aircraft->itemtypes; i++) {
 		if (cargo[i].item == item) {
-			Com_DPrintf(DEBUG_CLIENT, "AIR_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
+			Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
 			cargo[i].amount += amount;
 			return;
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "AIR_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
+	Com_DPrintf(DEBUG_CLIENT, "AII_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
 	cargo[i].item = item;
 	cargo[i].amount = amount;
 	aircraft->itemtypes++;
@@ -346,11 +346,11 @@ void AIR_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
  * @note 3. Sell everything or add to base storage when dropship lands in base.
  * @note 4. Items carried by soldiers are processed nothing is being sold.
  * @sa CL_ParseResults
- * @sa AIR_CollectingAmmo
+ * @sa AII_CollectingAmmo
  * @sa INV_SellorAddAmmo
  * @sa INV_CarriedItems
  */
-void AIR_CollectingItems (aircraft_t *aircraft, int won)
+void AII_CollectingItems (aircraft_t *aircraft, int won)
 {
 	int i, j;
 	le_t *le;
@@ -381,9 +381,9 @@ void AIR_CollectingItems (aircraft_t *aircraft, int won)
 		case ET_ITEM:
 			if (won) {
 				for (item = FLOOR(le); item; item = item->next) {
-					AIR_CollectItem(aircraft, item->item.t, 1);
+					AII_CollectItem(aircraft, item->item.t, 1);
 					if (item->item.t->reload && item->item.a > 0)
-						AIR_CollectingAmmo(aircraft, item);
+						AII_CollectingAmmo(aircraft, item);
 				}
 			}
 			break;
@@ -394,7 +394,7 @@ void AIR_CollectingItems (aircraft_t *aircraft, int won)
 				if (LE_IsDead(le) || LE_IsStunned(le)) {
 					if (le->i.c[csi.idArmour]) {
 						item = le->i.c[csi.idArmour];
-						AIR_CollectItem(aircraft, item->item.t, 1);
+						AII_CollectItem(aircraft, item->item.t, 1);
 					}
 					break;
 				}
