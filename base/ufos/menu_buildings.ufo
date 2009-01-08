@@ -46,10 +46,13 @@ menu buildings
 
 	string name
 	{
-		string		"*cvar mn_base_title"
-		tooltip		"_Name of this base"
-		pos			"60 30"
-		font		f_big
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
 	}
 
 	// ==================
@@ -74,15 +77,19 @@ menu buildings
 	string txt_credits_caption
 	{
 		string		"_CREDIT"
-		pos		"680 30"
+		pos			"675 30"
+		size		"100 30"
 		font		f_big
 	}
+
 	string txt_credits
 	{
+		tooltip		"_Organisation capital"
 		string		"*cvar mn_credits"
-		pos			"900 30"
+		pos			"780 30"
+		size		"130 30"
 		font		f_big
-		align		ur
+		textalign	ur
 	}
 
 	text buildings

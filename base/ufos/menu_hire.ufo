@@ -689,18 +689,20 @@ menu employees
 
 	string txt_credits_caption
 	{
-		string	"_CREDIT"
-		pos	"680 30"
-		font	f_big
+		string		"_CREDIT"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
 	}
 
 	string txt_credits
 	{
-		tooltip	"_Organisation capital"
-		string	"*cvar mn_credits"
-		pos	"900 30"
-		font	f_big
-		align	ur
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
 	}
 
 	custombutton bt_continue
