@@ -35,8 +35,6 @@ static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
 
 cvar_t *cl_equip;
 
-const int UGV_SIZE = 300;	/**< Size of a UGV in hangar capacity */
-
 /**
  * @brief Add an item to aircraft inventory.
  * @sa AL_AddAliens

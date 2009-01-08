@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_ASSEMBLIES	16
 #define MAX_COMP	32
 #define ANTIMATTER_SIZE 10
+
 /**
  * @brief The definition of a "components" entry (i.e. an assembly of several items) parsed from a ufo-file.
  * @sa INV_ParseComponents
@@ -45,8 +46,9 @@ typedef struct components_s {
 	int item_amount2[MAX_COMP];		/**< How many items of this type are in this assembly when it crashed (max-value?). */
 } components_t;
 
-/* Size of UGV in storage */
-extern const int UGV_SIZE;
+/** Size of a UGV in hangar capacity */
+#define UGV_SIZE 300
+
 extern cvar_t *cl_equip;
 
 void INV_ParseComponents(const char *name, const char **text);
