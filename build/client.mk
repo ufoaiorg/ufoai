@@ -38,8 +38,9 @@ CLIENT_SRCS = \
 	\
 	client/campaign/cp_aircraft.c \
 	client/campaign/cp_aircraft_callbacks.c \
-	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_alien_interest.c \
+	client/campaign/cp_base.c \
+	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_missions.c \
 	client/campaign/cp_mission_triggers.c \
 	client/campaign/cp_nations.c \
@@ -49,7 +50,6 @@ CLIENT_SRCS = \
 	client/campaign/cl_alienbase.c \
 	client/campaign/cl_aliencont.c \
 	client/campaign/cl_airfight.c \
-	client/campaign/cl_basemanagement.c \
 	client/campaign/cl_basesummary.c \
 	client/campaign/cl_campaign.c \
 	client/campaign/cl_event.c \

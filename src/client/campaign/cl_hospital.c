@@ -388,7 +388,7 @@ void HOS_InitStartup (void)
  */
 qboolean HOS_Save (sizebuf_t *sb, void* data)
 {
-	/* nothing to save here - all saved in cl_basemanagement.c */
+	/* nothing to save here */
 	return qtrue;
 }
 

@@ -365,10 +365,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cl_basemanagement.c">
+		<Unit filename="..\..\src\client\campaign\cp_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_basemanagement.h" />
+		<Unit filename="..\..\src\client\campaign\cp_base.h" />
 		<Unit filename="..\..\src\client\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>

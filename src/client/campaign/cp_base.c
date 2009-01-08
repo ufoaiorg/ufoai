@@ -1,5 +1,5 @@
 /**
- * @file cl_basemanagement.c
+ * @file cp_base.c
  * @brief Handles everything that is located in or accessed trough a base.
  * @note Basemanagement functions prefix: B_
  * @note See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
@@ -252,7 +252,7 @@ static void B_ResetBuildingCurrent (base_t* base)
 /**
  * @brief Resets the currently selected building.
  *
- * Is called e.g. when leaving the build-menu but also several times from cl_basemanagement.c.
+ * Is called e.g. when leaving the build-menu
  */
 static void B_ResetBuildingCurrent_f (void)
 {

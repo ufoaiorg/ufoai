@@ -1,6 +1,6 @@
 /**
- * @file cp_aircraft_callbacks.h
- * @brief Header file for menu related console command callbacks
+ * @file cp_base_callbacks.c
+ * @brief Menu related console command callbacks
  */
 
 /*
@@ -23,15 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_AIRCRAFT_CALLBACKS_H
-#define CP_AIRCRAFT_CALLBACKS_H
+#include "../client.h"
+#include "../cl_global.h"
+#include "cp_base_callbacks.h"
+#include "cp_base.h"
 
-void AIM_AircraftStart_f(void);
-void AIR_NewAircraft_f(void);
-void AIM_ResetAircraftCvars_f (void);
-void AIM_NextAircraft_f(void);
-void AIM_PrevAircraft_f(void);
-void AIM_AircraftReturnToBase_f(void);
-
-#endif
 
