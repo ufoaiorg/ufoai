@@ -556,7 +556,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	for (itemType = 0; itemType <= 1; itemType++) {	/**< 0==weapons, 1==ammo */
 		for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
 			if (ic->item.t
-			 && ((!itemType && !(!Q_strncmp(ic->item.t->type, "ammo", 4))) || (itemType && !Q_strncmp(ic->item.t->type, "ammo", 4)))
+			 && ((!itemType && Q_strncmp(ic->item.t->type, "ammo", 4) != 0) || (itemType && !Q_strncmp(ic->item.t->type, "ammo", 4)))
 			 && INV_ItemMatchesFilter(ic->item.t, equipType)) {
 				if (!lastItem && curItem >= menuInventory->scrollCur) {
 					item_t tempItem = {1, NULL, NULL, 0, 0};
@@ -619,10 +619,9 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 							/* Draw the item name. */
 							R_FontDrawString("f_verysmall", ALIGN_UL,
 								posName[0], posName[1],
-								posName[0], posName[1],
-								0,	/* maxWidth */
-								0,	/* maxHeight */
-								0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, 0);
+								node->pos[0], posName[1],
+								node->size[0], 100,	/* max width/height */
+								0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 						} /* scrollVertical */
 
 						if (newRow)
