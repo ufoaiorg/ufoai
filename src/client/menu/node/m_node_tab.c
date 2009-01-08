@@ -58,7 +58,8 @@ static const int TILE_SIZE = 40;
 static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y)
 {
 	const char *font;
-	selectBoxOptions_t* tabOption;
+	selectBoxOptions_t* option;
+	selectBoxOptions_t* prev = NULL;
 
 	/* Bounded box test */
 	if (x < node->pos[0] || y < node->pos[1])
@@ -70,20 +71,21 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 	font = MN_GetFont(node->menu, node);
 
 	/* Text box test */
-	for (tabOption = node->u.option.first; tabOption; tabOption = tabOption->next) {
+	for (option = node->u.option.first; option; option = option->next) {
 		int fontWidth;
 
-		if (x < TILE_WIDTH)
-			return NULL;
+		if (x < TILE_WIDTH / 2)
+			return prev;
 
-		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, NULL, NULL);
-		if (tabOption->icon) {
-			fontWidth += tabOption->icon->size[0];
+		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, NULL, NULL);
+		if (option->icon) {
+			fontWidth += option->icon->size[0];
 		}
 		if (x < TILE_WIDTH + fontWidth)
-			return tabOption;
+			return option;
 
 		x -= TILE_WIDTH + fontWidth;
+		prev = option;
 	}
 	return NULL;
 }
