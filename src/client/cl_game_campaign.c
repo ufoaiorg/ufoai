@@ -302,7 +302,7 @@ void GAME_CP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 
 	/* the mission was in singleplayer */
 	/* loot the battlefield */
-	INV_CollectingItems(winner == cls.team);				/**< Collect items from the battlefield. */
+	AIR_CollectingItems(cls.missionaircraft, winner == cls.team);				/**< Collect items from the battlefield. */
 	if (winner == cls.team)
 		AL_CollectingAliens(cls.missionaircraft);	/**< Collect aliens from the battlefield. */
 

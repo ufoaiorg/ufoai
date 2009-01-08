@@ -300,5 +300,8 @@ void AIR_RemovePilotFromAssignedAircraft(struct base_s* base, const struct emplo
 int AIR_GetAircraftWeaponRanges(const aircraftSlot_t *slot, int maxSlot, float *weaponRanges);
 int AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base, const int capacity);
+void AIR_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
+void AIR_CollectingItems(aircraft_t *aircraft, int won);
+
 
 #endif

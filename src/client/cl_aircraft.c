@@ -295,6 +295,151 @@ void AIM_AircraftStart_f (void)
 	MN_PopMenu(qfalse);
 }
 
+static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
+
+/**
+ * @brief Count and collect ammo from gun magazine.
+ * @param[in] magazine Pointer to invList_t being magazine.
+ * @param[in] aircraft Pointer to aircraft used in this mission.
+ * @sa AIR_CollectingItems
+ */
+static void AIR_CollectingAmmo (aircraft_t *aircraft, const invList_t *magazine)
+{
+	/* Let's add remaining ammo to market. */
+	eTempEq.numLoose[magazine->item.m->idx] += magazine->item.a;
+	if (eTempEq.numLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
+		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
+		eTempEq.numLoose[magazine->item.m->idx] -= magazine->item.t->ammo;
+		AIR_CollectItem(aircraft, magazine->item.m, 1);
+	}
+}
+
+/**
+ * @brief Add an item to aircraft inventory.
+ * @sa AL_AddAliens
+ * @sa AIR_CollectingItems
+ */
+void AIR_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
+{
+	int i;
+	itemsTmp_t *cargo = aircraft->itemcargo;
+
+	for (i = 0; i < aircraft->itemtypes; i++) {
+		if (cargo[i].item == item) {
+			Com_DPrintf(DEBUG_CLIENT, "AIR_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
+			cargo[i].amount += amount;
+			return;
+		}
+	}
+	Com_DPrintf(DEBUG_CLIENT, "AIR_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
+	cargo[i].item = item;
+	cargo[i].amount = amount;
+	aircraft->itemtypes++;
+}
+
+
+/**
+ * @brief Collect items from the battlefield.
+ * @note The way we are collecting items:
+ * @note 1. Grab everything from the floor and add it to the aircraft cargo here.
+ * @note 2. When collecting gun, collect it's remaining ammo as well
+ * @note 3. Sell everything or add to base storage when dropship lands in base.
+ * @note 4. Items carried by soldiers are processed nothing is being sold.
+ * @sa CL_ParseResults
+ * @sa AIR_CollectingAmmo
+ * @sa INV_SellorAddAmmo
+ * @sa INV_CarriedItems
+ */
+void AIR_CollectingItems (aircraft_t *aircraft, int won)
+{
+	int i, j;
+	le_t *le;
+	invList_t *item;
+	itemsTmp_t *cargo;
+	itemsTmp_t previtemcargo[MAX_CARGO];
+	int previtemtypes;
+
+	/* Save previous cargo */
+	memcpy(previtemcargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
+	previtemtypes = aircraft->itemtypes;
+	/* Make sure itemcargo is empty. */
+	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
+
+	/* Make sure eTempEq is empty as well. */
+	memset(&eTempEq, 0, sizeof(eTempEq));
+
+	cargo = aircraft->itemcargo;
+	aircraft->itemtypes = 0;
+
+	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+		/* Winner collects everything on the floor, and everything carried
+		 * by surviving actors. Loser only gets what their living team
+		 * members carry. */
+		if (!le->inuse)
+			continue;
+		switch (le->type) {
+		case ET_ITEM:
+			if (won) {
+				for (item = FLOOR(le); item; item = item->next) {
+					AIR_CollectItem(aircraft, item->item.t, 1);
+					if (item->item.t->reload && item->item.a > 0)
+						AIR_CollectingAmmo(aircraft, item);
+				}
+			}
+			break;
+		case ET_ACTOR:
+		case ET_ACTOR2x2:
+			/* First of all collect armour of dead or stunned actors (if won). */
+			if (won) {
+				if (LE_IsDead(le) || LE_IsStunned(le)) {
+					if (le->i.c[csi.idArmour]) {
+						item = le->i.c[csi.idArmour];
+						AIR_CollectItem(aircraft, item->item.t, 1);
+					}
+					break;
+				}
+			}
+			/* Now, if this is dead or stunned actor, additional check. */
+			if (le->team != cls.team || LE_IsDead(le) || LE_IsStunned(le)) {
+				/* The items are already dropped to floor and are available
+				 * as ET_ITEM; or the actor is not ours. */
+				break;
+			}
+			/* Finally, the living actor from our team. */
+			INV_CarriedItems(le);
+			break;
+		default:
+			break;
+		}
+	}
+	/* Fill the missionresults array. */
+	missionresults.itemtypes = aircraft->itemtypes;
+	for (i = 0; i < aircraft->itemtypes; i++)
+		missionresults.itemamount += cargo[i].amount;
+
+#ifdef DEBUG
+	/* Print all of collected items. */
+	for (i = 0; i < aircraft->itemtypes; i++) {
+		if (cargo[i].amount > 0)
+			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].item->idx, cargo[i].item->name, cargo[i].amount);
+	}
+#endif
+
+	/* Put previous cargo back */
+	for (i = 0; i < previtemtypes; i++) {
+		for (j = 0; j < aircraft->itemtypes; j++) {
+			if (cargo[j].item == previtemcargo[i].item) {
+				cargo[j].amount += previtemcargo[i].amount;
+				break;
+			}
+		}
+		if (j == aircraft->itemtypes) {
+			cargo[j] = previtemcargo[i];
+			aircraft->itemtypes++;
+		}
+	}
+}
+
 /**
  * @brief Translates the aircraft status id to a translateable string
  * @param[in] aircraft Aircraft to translate the status of
@@ -901,7 +1046,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 			base->capacities[CAP_EMPLOYEES].cur++;
 			oldBase->capacities[CAP_EMPLOYEES].cur--;
 			/* Transfer items carried by soldiers from oldBase to base */
-			INV_TransferItemCarriedByChr(employee, oldBase, base);
+			INV_TransferItemCarriedByChr(&employee->chr, oldBase, base);
 		}
 	}
 

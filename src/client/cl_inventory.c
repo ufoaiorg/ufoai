@@ -1,7 +1,8 @@
 /**
  * @file cl_inventory.c
- * @brief Actor related inventory function.
+ * @brief General actor related inventory function for are used in every game mode
  * @note Inventory functions prefix: INV_
+ * @todo Remove those functions that doesn't really belong here
  */
 
 /*
@@ -31,63 +32,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Collecting items functions.
  */
 
-static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
-
 cvar_t *cl_equip;
-
-/**
- * @brief Add an item to aircraft inventory.
- * @sa AL_AddAliens
- * @sa INV_CollectingItems
- */
-void INV_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
-{
-	int i;
-	itemsTmp_t *cargo = aircraft->itemcargo;
-
-	for (i = 0; i < aircraft->itemtypes; i++) {
-		if (cargo[i].item == item) {
-			Com_DPrintf(DEBUG_CLIENT, "INV_CollectItem: collecting %s (%i) amount %i -> %i\n", item->name, item->idx, cargo[i].amount, cargo[i].amount + amount);
-			cargo[i].amount += amount;
-			return;
-		}
-	}
-	Com_DPrintf(DEBUG_CLIENT, "INV_CollectItem: adding %s (%i) amount %i\n", item->name, item->idx, amount);
-	cargo[i].item = item;
-	cargo[i].amount = amount;
-	aircraft->itemtypes++;
-}
-
-/**
- * @brief Count and collect ammo from gun magazine.
- * @param[in] magazine Pointer to invList_t being magazine.
- * @param[in] aircraft Pointer to aircraft used in this mission.
- * @sa INV_CollectingItems
- */
-static void INV_CollectingAmmo (const invList_t *magazine, aircraft_t *aircraft)
-{
-	/* Let's add remaining ammo to market. */
-	eTempEq.numLoose[magazine->item.m->idx] += magazine->item.a;
-	if (eTempEq.numLoose[magazine->item.m->idx] >= magazine->item.t->ammo) {
-		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
-		eTempEq.numLoose[magazine->item.m->idx] -= magazine->item.t->ammo;
-		INV_CollectItem(aircraft, magazine->item.m, 1);
-	}
-}
 
 /**
  * @brief Process items carried by soldiers.
  * @param[in] soldier Pointer to le_t being a soldier from our team.
- * @sa INV_CollectingItems
+ * @sa AIR_CollectingItems
+ * @todo this is campaign mode only - doesn't belong here
  */
-static void INV_CarriedItems (const le_t *soldier)
+void INV_CarriedItems (const le_t *soldier)
 {
 	int container;
 	invList_t *item;
 	technology_t *tech;
 
 	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].temp) /* Items collected as ET_ITEM in INV_CollectingItems(). */
+		if (csi.ids[container].temp) /* Items collected as ET_ITEM */
 			continue;
 		for (item = soldier->i.c[container]; item; item = item->next) {
 			/* Fake item. */
@@ -122,13 +82,13 @@ static void INV_CarriedItems (const le_t *soldier)
  * @param[in] sourceBase Base where employee comes from.
  * @param[in] destBase Base where employee is going.
  */
-void INV_TransferItemCarriedByChr (employee_t *employee, base_t *sourceBase, base_t* destBase)
+void INV_TransferItemCarriedByChr (character_t *chr, base_t *sourceBase, base_t* destBase)
 {
 	invList_t *ic;
 	int container;
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (ic = employee->chr.inv->c[container]; ic; ic = ic->next) {
+		for (ic = chr->inv->c[container]; ic; ic = ic->next) {
 			objDef_t *obj = ic->item.t;
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
@@ -169,111 +129,6 @@ int INV_GetStorageRoom (const aircraft_t *aircraft)
 	}
 
 	return size;
-}
-
-/**
- * @brief Collect items from the battlefield.
- * @note The way we are collecting items:
- * @note 1. Grab everything from the floor and add it to the aircraft cargo here.
- * @note 2. When collecting gun, collect it's remaining ammo as well in CL_CollectingAmmo
- * @note 3. Sell everything or add to base storage in CL_SellingAmmo, when dropship lands in base.
- * @note 4. Items carried by soldiers are processed in CL_CarriedItems, nothing is being sold.
- * @sa CL_ParseResults
- * @sa INV_CollectingAmmo
- * @sa INV_SellorAddAmmo
- * @sa INV_CarriedItems
- */
-void INV_CollectingItems (int won)
-{
-	int i, j;
-	le_t *le;
-	invList_t *item;
-	itemsTmp_t *cargo;
-	aircraft_t *aircraft;
-	itemsTmp_t previtemcargo[MAX_CARGO];
-	int previtemtypes;
-
-	aircraft = cls.missionaircraft;
-
-	/* Save previous cargo */
-	memcpy(previtemcargo, aircraft->itemcargo, sizeof(aircraft->itemcargo));
-	previtemtypes = aircraft->itemtypes;
-	/* Make sure itemcargo is empty. */
-	memset(aircraft->itemcargo, 0, sizeof(aircraft->itemcargo));
-
-	/* Make sure eTempEq is empty as well. */
-	memset(&eTempEq, 0, sizeof(eTempEq));
-
-	cargo = aircraft->itemcargo;
-	aircraft->itemtypes = 0;
-
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		/* Winner collects everything on the floor, and everything carried
-		 * by surviving actors. Loser only gets what their living team
-		 * members carry. */
-		if (!le->inuse)
-			continue;
-		switch (le->type) {
-		case ET_ITEM:
-			if (won) {
-				for (item = FLOOR(le); item; item = item->next) {
-					INV_CollectItem(aircraft, item->item.t, 1);
-					if (item->item.t->reload && item->item.a > 0)
-						INV_CollectingAmmo(item, aircraft);
-				}
-			}
-			break;
-		case ET_ACTOR:
-		case ET_ACTOR2x2:
-			/* First of all collect armour of dead or stunned actors (if won). */
-			if (won) {
-				if (LE_IsDead(le) || LE_IsStunned(le)) {
-					if (le->i.c[csi.idArmour]) {
-						item = le->i.c[csi.idArmour];
-						INV_CollectItem(aircraft, item->item.t, 1);
-					}
-					break;
-				}
-			}
-			/* Now, if this is dead or stunned actor, additional check. */
-			if (le->team != cls.team || LE_IsDead(le) || LE_IsStunned(le)) {
-				/* The items are already dropped to floor and are available
-				 * as ET_ITEM; or the actor is not ours. */
-				break;
-			}
-			/* Finally, the living actor from our team. */
-			INV_CarriedItems(le);
-			break;
-		default:
-			break;
-		}
-	}
-	/* Fill the missionresults array. */
-	missionresults.itemtypes = aircraft->itemtypes;
-	for (i = 0; i < aircraft->itemtypes; i++)
-		missionresults.itemamount += cargo[i].amount;
-
-#ifdef DEBUG
-	/* Print all of collected items. */
-	for (i = 0; i < aircraft->itemtypes; i++) {
-		if (cargo[i].amount > 0)
-			Com_DPrintf(DEBUG_CLIENT, "Collected items: idx: %i name: %s amount: %i\n", cargo[i].item->idx, cargo[i].item->name, cargo[i].amount);
-	}
-#endif
-
-	/* Put previous cargo back */
-	for (i = 0; i < previtemtypes; i++) {
-		for (j = 0; j < aircraft->itemtypes; j++) {
-			if (cargo[j].item == previtemcargo[i].item) {
-				cargo[j].amount += previtemcargo[i].amount;
-				break;
-			}
-		}
-		if (j == aircraft->itemtypes) {
-			cargo[j] = previtemcargo[i];
-			aircraft->itemtypes++;
-		}
-	}
 }
 
 /**
@@ -346,41 +201,6 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 
 	/* ship no longer has cargo aboard */
 	aircraft->itemtypes = 0;
-}
-
-/**
- * @brief Enable autosell option.
- * @param[in] tech Pointer to newly researched technology.
- * @sa RS_MarkResearched
- */
-void INV_EnableAutosell (const technology_t *tech)
-{
-	int i;
-
-	/* If the tech leads to weapon or armour, find related item and enable autosell. */
-	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOUR)) {
-		const objDef_t *obj = NULL;
-		for (i = 0; i < csi.numODs; i++) {
-			obj = &csi.ods[i];
-			if (!Q_strncmp(tech->provides, obj->id, MAX_VAR)) {
-				gd.autosell[i] = qtrue;
-				break;
-			}
-		}
-		if (i == csi.numODs)
-			return;
-
-		/* If the weapon has ammo, enable autosell for proper ammo as well. */
-		if ((tech->type == RS_WEAPON) && (obj->reload)) {
-			for (i = 0; i < obj->numAmmos; i++) {
-				const objDef_t *ammo = obj->ammos[i];
-				const technology_t *ammotech = ammo->tech;
-				if (ammotech && (ammotech->produceTime < 0))
-					continue;
-				gd.autosell[ammo->idx] = qtrue;
-			}
-		}
-	}
 }
 
 equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
@@ -885,7 +705,7 @@ qboolean INV_ItemsSanityCheck (void)
 		const objDef_t *item = &csi.ods[i];
 
 		/* Warn if item has no size set. */
-		if (item->size <= 0 && !(INV_ItemMatchesFilter(item, FILTER_DUMMY) && item->notOnMarket)) {
+		if (item->size <= 0 && !(item->notOnMarket && INV_ItemMatchesFilter(item, FILTER_DUMMY))) {
 			result = qfalse;
 			Com_Printf("INV_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
 		}
@@ -932,9 +752,8 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
 			const objDef_t const *obj = &csi.ods[j];
-			if (obj->weapon
-				&& (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))
-				&& obj->fireTwoHanded)
+			if (obj->weapon && obj->fireTwoHanded
+			 && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)))
 				sum += ed->num[j];
 		}
 		if (sum > 100) {
@@ -946,7 +765,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 		sum = 0;
 		for (j = 0; j < csi.numODs; j++) {
 			const objDef_t const *obj = &csi.ods[j];
-			if (obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload && !obj->deplete)
+			if (obj->weapon && obj->reload && !obj->deplete && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY))
 				sum += ed->num[j];
 		}
 		if (sum > 100) {

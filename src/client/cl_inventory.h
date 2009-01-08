@@ -52,13 +52,11 @@ typedef struct components_s {
 extern cvar_t *cl_equip;
 
 void INV_ParseComponents(const char *name, const char **text);
-void INV_TransferItemCarriedByChr(employee_t *employee, base_t *sourceBase, base_t* destBase);
+void INV_TransferItemCarriedByChr(character_t *chr, base_t *sourceBase, base_t* destBase);
 int INV_GetStorageRoom(const aircraft_t *aircraft);
 
-void INV_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
-void INV_CollectingItems(int won);
+void INV_CarriedItems(const le_t *soldier);
 void INV_SellOrAddItems(aircraft_t *aircraft);
-void INV_EnableAutosell(const technology_t *tech);
 void INV_InitialEquipment(base_t *base, aircraft_t *assignInitialAircraft, const campaign_t* campaign, const char *eqname, equipDef_t *edTarget, const equipDef_t *ed);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
 int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
