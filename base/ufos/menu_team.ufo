@@ -1181,8 +1181,9 @@ menu equipment
 	{
 		tooltip	"_Show available primary weapons"
 		image	menu/button_blue
-		pos		"374 70"	//125
-		size	"128 52"
+		blend	true
+		pos "687 392"
+		size "128 52"
 		click	{ call equip_primary }
 		color "1 1 1 0.6"
 		selectcolor "1 1 1 1"
@@ -1194,8 +1195,9 @@ menu equipment
 	{
 		tooltip	"_Show available secondary weapons"
 		image	menu/button_blue
-		pos		"374 125"	//180
-		size	"128 52"
+		blend	true
+		pos "687 450"
+		size "128 52"
 		click	{ call equip_secondary }
 		color "1 1 1 0.6"
 		selectcolor "1 1 1 1"
@@ -1207,8 +1209,9 @@ menu equipment
 	{
 		tooltip	"_Show available heavy weapons"
 		image	menu/button_blue
-		pos		"374 180"
-		size	"128 52"
+		blend	true
+		pos "687 508"
+		size "128 52"
 		click	{ call equip_heavy }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
@@ -1220,8 +1223,9 @@ menu equipment
 	{
 		tooltip	"_Show available miscellaneous equipment and weapons"
 		image	menu/button_blue
-		pos		"374 235"
-		size	"128 52"
+		blend	true
+		pos "688 566"
+		size "128 52"
 		click	{ call equip_misc }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
@@ -1233,8 +1237,9 @@ menu equipment
 	{
 		tooltip	"_Show available armour"
 		image	menu/button_blue
-		pos		"374 290"
-		size	"128 52"
+		blend	true
+		pos "689 623"
+		size "128 52"
 		click	{ call equip_armour }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
@@ -1610,7 +1615,7 @@ menu equipment
 
 	vscrollbar equip_scroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos	"808 397"	height	"340"
+		pos "636 391"	height	"340"
 		current 0
 		viewsize 8
 		fullsize 20
