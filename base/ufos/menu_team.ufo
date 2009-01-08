@@ -1163,88 +1163,36 @@ menu equipment
 	// category buttons
 	// ==================
 
-	confunc equip_reset
+	tab equip_type
 	{
-		*bt_primary	color "1 1 1 0.8"
-		*bt_secondary	color "1 1 1 0.8"
-		*bt_heavy	color "1 1 1 0.8"
-		*bt_misc		color "1 1 1 0.8"
-		*bt_armour	color "1 1 1 0.8"
-	}
-	confunc equip_primary	{ cmd "equip_type primary;"	call equip_reset *bt_primary	color "1 1 1 1" }
-	confunc equip_secondary	{ cmd "equip_type secondary;"	call equip_reset *bt_secondary	color "1 1 1 1" }
-	confunc equip_heavy	{ cmd "equip_type heavy;"	call equip_reset *bt_heavy	color "1 1 1 1" }
-	confunc equip_misc	{ cmd "equip_type misc;"	call equip_reset *bt_misc	color "1 1 1 1" }
-	confunc equip_armour	{ cmd "equip_type armour;"	call equip_reset *bt_armour	color "1 1 1 1" }
-
-	button bt_primary
-	{
-		tooltip	"_Show available primary weapons"
-		image	menu/button_blue
-		blend	true
-		pos "687 392"
-		size "128 52"
-		click	{ call equip_primary }
-		color "1 1 1 0.6"
-		selectcolor "1 1 1 1"
-		font	"f_big"
-		string	"_Primary"
-	}
-
-	button bt_secondary
-	{
-		tooltip	"_Show available secondary weapons"
-		image	menu/button_blue
-		blend	true
-		pos "687 450"
-		size "128 52"
-		click	{ call equip_secondary }
-		color "1 1 1 0.6"
-		selectcolor "1 1 1 1"
-		font	"f_big"
-		string	"_Secondary"
-	}
-
-	button bt_heavy
-	{
-		tooltip	"_Show available heavy weapons"
-		image	menu/button_blue
-		blend	true
-		pos "687 508"
-		size "128 52"
-		click	{ call equip_heavy }
-		color "1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font	"f_big"
-		string	"_Heavy"
-	}
-
-	button bt_misc
-	{
-		tooltip	"_Show available miscellaneous equipment and weapons"
-		image	menu/button_blue
-		blend	true
-		pos "688 566"
-		size "128 52"
-		click	{ call equip_misc }
-		color "1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font	"f_big"
-		string	"_Misc"
-	}
-
-	button bt_armour
-	{
-		tooltip	"_Show available armour"
-		image	menu/button_blue
-		blend	true
-		pos "689 623"
-		size "128 52"
-		click	{ call equip_armour }
-		color "1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font	"f_big"
-		string	"_Armour"
+		pos		"400 365"
+		size	"505 40"
+		cvar	"*cvar mn_equiptype"
+		option primary {
+			label	"_Primary"
+			value	"0"
+			action	"equip_type primary;"
+		}
+		option secondary {
+			label	"_Secondary"
+			value	"1"
+			action	"equip_type secondary;"
+		}
+		option heavy {
+			label	"_Heavy"
+			value	"2"
+			action	"equip_type heavy;"
+		}
+		option misc {
+			label	"_Misc"
+			value	"3"
+			action	"equip_type misc;"
+		}
+		option armour {
+			label	"_Armour"
+			value	"4"
+			action	"equip_type armour;"
+		}
 	}
 
 	// ==================
@@ -1610,12 +1558,12 @@ menu equipment
 	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }
-	container equip		{ pos "422 397" }
+	container equip		{ pos "422 415" }
 	container headgear	{ pos "678 104" }
 
 	vscrollbar equip_scroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos "636 391"	height	"340"
+		pos "893 405"	height	"339"
 		current 0
 		viewsize 8
 		fullsize 20
@@ -1642,7 +1590,7 @@ menu equipment
 	{
 		call names_clear
 		call actor_stats
-		cmd "set mn_infotype 0"
-		cmd "team_initskin;genequip;equip_primary;equip_select 0;"
+		cmd "set mn_infotype 0;set mn_equiptype 0"
+		cmd "team_initskin;genequip;equip_type primary;equip_select 0;"
 	}
 }
