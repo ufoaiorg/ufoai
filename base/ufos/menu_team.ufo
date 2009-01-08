@@ -1254,20 +1254,20 @@ menu equipment
 	string itemname
 	{
 		string	"*cvar mn_itemname"
-		pos		"203 390"
+		pos		"203 426"
 		align	uc
 	}
 
 	item itemmodel
 	{
 		model	"*cvar mn_item"
-		pos		"203 472"
+		pos		"203 508"
 		scale	"7 7 7"
 	}
 
 	text description
 	{
-		pos		"40 530"
+		pos		"40 566"
 		size	"326 160"
 		lineheight	20
 		tabwidth	190
@@ -1280,7 +1280,7 @@ menu equipment
 		if "mn_changeweapon == 1"
 		tooltip "_Previous weapon chambered for this ammunition"
 		image	menu/buttons_small
-		pos		"160 671"
+		pos		"160 707"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1295,7 +1295,7 @@ menu equipment
 		if "mn_changeweapon == 2"
 		tooltip "_Previous ammunition compatible with this weapon"
 		image	menu/buttons_small
-		pos		"160 671"
+		pos		"160 707"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1310,7 +1310,7 @@ menu equipment
 		if "mn_changeweapon == 1"
 		tooltip "_Next weapon chambered for this ammunition"
 		image	menu/buttons_small
-		pos		"367 671"
+		pos		"367 707"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1325,7 +1325,7 @@ menu equipment
 		if "mn_changeweapon == 2"
 		tooltip "_Next ammunition compatible with this weapon"
 		image	menu/buttons_small
-		pos		"367 671"
+		pos		"367 707"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1340,7 +1340,7 @@ menu equipment
 	{
 		if "mn_displayweapon == 1"
 		string	"_With weapon:"
-		pos		"30 679"
+		pos		"30 715"
 		align	cl
 		font	f_small
 	}
@@ -1349,7 +1349,7 @@ menu equipment
 	{
 		if "mn_displayweapon == 2"
 		string	"_With ammo:"
-		pos		"30 679"
+		pos		"30 715"
 		align	cl
 		font	f_small
 	}
@@ -1357,7 +1357,7 @@ menu equipment
 	string weapon_name
 	{
 		string	"*cvar mn_researchedlinkname"
-		pos		"270 679"
+		pos		"270 715"
 		align	cc
 		font	f_small
 	}
@@ -1367,7 +1367,7 @@ menu equipment
 		if "mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
-		pos		"160 689"
+		pos		"160 725"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1382,7 +1382,7 @@ menu equipment
 		if "mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
-		pos		"367 689"
+		pos		"367 725"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1396,7 +1396,7 @@ menu equipment
 	{
 		if "mn_displayfiremode == 1"
 		string	"_Firemode:"
-		pos		"30 697"
+		pos		"30 733"
 		align	cl
 		font	f_small
 	}
@@ -1405,7 +1405,7 @@ menu equipment
 	{
 		if "mn_displayfiremode == 1"
 		string	"*cvar mn_firemodename"
-		pos		"270 697"
+		pos		"270 733"
 		align	cc
 		font	f_small
 	}
@@ -1414,56 +1414,56 @@ menu equipment
 	// actor stats
 	// ==================
 
-	string pwr_lbl { pos "34 378"  string "_Strength:" }
-	string pwr_val { pos "370 378" string "*cvar mn_tpwr" align ur }
-	pic pwr_bdr    { pos "67 395"  image menu/bar_border }
-	tbar pwr_bar   { pos "70 395"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string pwr_lbl { pos "34 414"  string "_Strength:" }
+	string pwr_val { pos "370 414" string "*cvar mn_tpwr" align ur }
+	pic pwr_bdr    { pos "67 431"  image menu/bar_border }
+	tbar pwr_bar   { pos "70 431"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string spd_lbl { pos "34 413"  string "_Speed:" }
-	string spd_val { pos "370 413" string "*cvar mn_tspd" align ur }
-	pic spd_bdr    { pos "67 430"  image menu/bar_border }
-	tbar spd_bar   { pos "70 430"  current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string spd_lbl { pos "34 449"  string "_Speed:" }
+	string spd_val { pos "370 449" string "*cvar mn_tspd" align ur }
+	pic spd_bdr    { pos "67 466"  image menu/bar_border }
+	tbar spd_bar   { pos "70 466"  current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string acc_lbl { pos "34 448"  string "_Accuracy:" }
-	string acc_val { pos "370 448" string "*cvar mn_tacc" align ur }
-	pic acc_bdr    { pos "67 465"  image menu/bar_border }
-	tbar acc_bar   { pos "70 465"  current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string acc_lbl { pos "34 484"  string "_Accuracy:" }
+	string acc_val { pos "370 484" string "*cvar mn_tacc" align ur }
+	pic acc_bdr    { pos "67 501"  image menu/bar_border }
+	tbar acc_bar   { pos "70 501"  current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string mnd_lbl { pos "34 483"  string "_Mind:" }
-	string mnd_val { pos "370 483" string "*cvar mn_tmnd" align ur }
-	pic mnd_bdr    { pos "67 500"  image menu/bar_border }
-	tbar mnd_bar   { pos "70 500"  current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string mnd_lbl { pos "34 519"  string "_Mind:" }
+	string mnd_val { pos "370 519" string "*cvar mn_tmnd" align ur }
+	pic mnd_bdr    { pos "67 536"  image menu/bar_border }
+	tbar mnd_bar   { pos "70 536"  current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
 
-	string cls_lbl { pos "34 526"  string "_Close Combat:" }
-	string cls_val { pos "370 526" string "*cvar mn_tcls" align ur }
-	pic cls_bdr    { pos "67 543"  image menu/bar_border }
-	tbar cls_bar   { pos "70 543"  current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string cls_lbl { pos "34 562"  string "_Close Combat:" }
+	string cls_val { pos "370 562" string "*cvar mn_tcls" align ur }
+	pic cls_bdr    { pos "67 579"  image menu/bar_border }
+	tbar cls_bar   { pos "70 579"  current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string hvy_lbl { pos "34 561"  string "_Heavy Weapons:" }
-	string hvy_val { pos "370 561" string "*cvar mn_thvy" align ur }
-	pic hvy_bdr    { pos "67 578"  image menu/bar_border }
-	tbar hvy_bar   { pos "70 578"  current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string hvy_lbl { pos "34 597"  string "_Heavy Weapons:" }
+	string hvy_val { pos "370 597" string "*cvar mn_thvy" align ur }
+	pic hvy_bdr    { pos "67 614"  image menu/bar_border }
+	tbar hvy_bar   { pos "70 614"  current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string ass_lbl { pos "34 596"  string "_Assault Weapons:" }
-	string ass_val { pos "370 596" string "*cvar mn_tass" align ur }
-	pic ass_bdr    { pos "67 613"  image menu/bar_border }
-	tbar ass_bar   { pos "70 613"  current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string ass_lbl { pos "34 632"  string "_Assault Weapons:" }
+	string ass_val { pos "370 632" string "*cvar mn_tass" align ur }
+	pic ass_bdr    { pos "67 649"  image menu/bar_border }
+	tbar ass_bar   { pos "70 649"  current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string snp_lbl { pos "34 631"  string "_Sniper Rifles:" }
-	string snp_val { pos "370 631" string "*cvar mn_tsnp" align ur }
-	pic snp_bdr    { pos "67 648"  image menu/bar_border }
-	tbar snp_bar   { pos "70 648"  current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string snp_lbl { pos "34 667"  string "_Sniper Rifles:" }
+	string snp_val { pos "370 667" string "*cvar mn_tsnp" align ur }
+	pic snp_bdr    { pos "67 684"  image menu/bar_border }
+	tbar snp_bar   { pos "70 684"  current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
-	string exp_lbl { pos "34 666"  string "_High-Explosives:" }
-	string exp_val { pos "370 666" string "*cvar mn_texp" align ur }
-	pic exp_bdr    { pos "67 683"  image menu/bar_border }
-	tbar exp_bar   { pos "70 683"  current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string exp_lbl { pos "34 702"  string "_High-Explosives:" }
+	string exp_val { pos "370 702" string "*cvar mn_texp" align ur }
+	pic exp_bdr    { pos "67 719"  image menu/bar_border }
+	tbar exp_bar   { pos "70 719"  current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
 
 	// ==================
 	// switch
 	// ==================
 
-	func weapon_stats
+	confunc weapon_stats
 	{
 		*itemname invis false
 		*itemmodel invis false
@@ -1489,12 +1489,9 @@ menu equipment
 		*ass_lbl invis true *ass_val invis true *ass_bdr invis true *ass_bar invis true
 		*snp_lbl invis true *snp_val invis true *snp_bdr invis true *snp_bar invis true
 		*exp_lbl invis true *exp_val invis true *exp_bdr invis true *exp_bar invis true
-
-		*txt_weaponinfo color "1 1 1 1"
-		*txt_abilities color "0 .78 0 1"
 	}
 
-	func actor_stats
+	confunc actor_stats
 	{
 		*itemname invis true
 		*itemmodel invis true
@@ -1520,33 +1517,22 @@ menu equipment
 		*ass_lbl invis false *ass_val invis false *ass_bdr invis false *ass_bar invis false
 		*snp_lbl invis false *snp_val invis false *snp_bdr invis false *snp_bar invis false
 		*exp_lbl invis false *exp_val invis false *exp_bdr invis false *exp_bar invis false
-
-		*txt_weaponinfo color "0 .78 0 1"
-		*txt_abilities color "1 1 1 1"
 	}
 
-	string txt_weaponinfo
-	{
-		string	"_Object Info"
-		pos		"40 722"
-	}
-	zone zone_weaponinfo
-	{
-		pos		"20 710"
-		size	"180 40"
-		click	{ call weapon_stats }
-	}
-
-	string txt_abilities
-	{
-		string	"_Actor Abilities"
-		pos		"207 722"
-	}
-	zone zone_abilities
-	{
-		pos		"205 710"
-		size	"180 40"
-		click	{ call actor_stats }
+	tab info {
+		pos		"20 365"
+		size	"355 40"
+		cvar	"*cvar mn_infotype"
+		option abilities {
+			label	"_Actor Abilities"
+			value	"0"
+			action "actor_stats"
+		}
+		option weaponinfo {
+			label	"_Object Info"
+			value	"1"
+			action "weapon_stats"
+		}
 	}
 
 	// ==================
@@ -1642,6 +1628,7 @@ menu equipment
 	{
 		call names_clear
 		call actor_stats
+		cmd "set mn_infotype 0"
 		cmd "genequip;equip_primary;equip_select 0;"
 	}
 }

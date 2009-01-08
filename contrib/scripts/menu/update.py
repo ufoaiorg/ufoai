@@ -338,9 +338,39 @@ def checkAlign():
 		print b
 		for i in behaviours[b]: print '\t' + i + '\t' + str(behaviours[b][i])
 
+def moveEquipmentPanel():
+	root = Root()
+	root.loadFile('base/ufos/menu_team.ufo')
+	print '-----'
+
+	nodes = ["itemname",
+		"itemmodel", "description", "weapon_dec",
+		"ammo_dec", "weapon_inc", "ammo_inc",
+		"header_weapon", "header_ammo", "weapon_name",
+		"firemode_dec", "firemode_inc", "header_firemode",
+		"firemode_name",
+		"pwr_lbl", "pwr_val", "pwr_bdr", "pwr_bar",
+		"spd_lbl", "spd_val", "spd_bdr", "spd_bar",
+		"acc_lbl", "acc_val", "acc_bdr", "acc_bar",
+		"mnd_lbl", "mnd_val", "mnd_bdr", "mnd_bar",
+		"cls_lbl", "cls_val", "cls_bdr", "cls_bar",
+		"hvy_lbl", "hvy_val", "hvy_bdr", "hvy_bar",
+		"ass_lbl", "ass_val", "ass_bdr", "ass_bar",
+		"snp_lbl", "snp_val", "snp_bdr", "snp_bar",
+		"exp_lbl", "exp_val", "exp_bdr", "exp_bar"
+	]
+
+	menu = root.nodes.childname["equipment"]
+	posref = menu.childname["itemname"].pos
+	newpos = 203, 426
+	
+	moveFullPanel(menu, nodes, newpos, posref)
+
+	root.save()
+
 if __name__ == "__main__":
 	#fixStringNodeAlignProperty()
-	checkAlign()
+	moveEquipmentPanel()
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')
