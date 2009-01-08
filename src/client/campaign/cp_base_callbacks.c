@@ -628,6 +628,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 /** @todo unify the names into mn_base_* */
 void B_InitCallbacks (void)
 {
+	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");
@@ -665,5 +666,5 @@ void B_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("buildings_click");
 	Cmd_RemoveCommand("reset_building_current");
 	Cmd_RemoveCommand("building_ondestroy");
-
+	Cvar_Delete("mn_base_title");
 }
