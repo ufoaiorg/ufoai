@@ -75,8 +75,7 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 		if (x < TILE_WIDTH)
 			return NULL;
 
-		/* @todo use LONGLINES_CHOP once rendering is done that way */
-		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &fontWidth, NULL, NULL);
+		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, NULL, NULL);
 		if (tabOption->icon) {
 			fontWidth += tabOption->icon->size[0];
 		}
@@ -167,6 +166,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	const char *ref;
 	const char *font;
 	int currentX;
+	int allowedWidth;
 
 	const char* image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	if (!image)
@@ -180,10 +180,13 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	}
 	currentX = node->pos[0];
 	tabOption = node->u.option.first;
+	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
 
 	while (tabOption) {
 		int fontHeight, tabWidth;
 		int textPos;
+		qboolean drawIcon = qfalse;
+
 		/* Check the status of the current tab */
 		mn_tab_type_t status = MN_TAB_NORMAL;
 		if (!Q_strcmp(tabOption->value, ref)) {
@@ -196,26 +199,36 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_WRAP, &tabWidth, &fontHeight, NULL);
-		if (tabOption->icon) {
+		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, &fontHeight, NULL);
+		if (tabOption->icon && tabOption->icon->size[0] < allowedWidth) {
 			tabWidth += tabOption->icon->size[0];
+			drawIcon = qtrue;
+		}
+		if (tabWidth > allowedWidth) {
+			if (allowedWidth > 0)
+				tabWidth = allowedWidth;
+			else
+				tabWidth = 0;
 		}
 
-		MN_TabNodeDrawPlain(image, currentX, node->pos[1], tabWidth, status);
+		if (tabWidth > 0) {
+			MN_TabNodeDrawPlain(image, currentX, node->pos[1], tabWidth, status);
+		}
 
 		textPos = currentX;
-		if (tabOption->icon) {
+		if (drawIcon) {
 			MN_DrawIconInBox(tabOption->icon, 0, currentX, node->pos[1], tabOption->icon->size[0], TILE_HEIGHT);
 			textPos += tabOption->icon->size[0];
 		}
-		R_FontDrawString(font, 0, textPos, node->pos[1] + ((node->size[1] - fontHeight) / 2),
-			currentX, node->pos[1], 400, TILE_HEIGHT,
-			0, _(tabOption->label), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+		R_FontDrawString(font, ALIGN_UL, textPos, node->pos[1] + ((node->size[1] - fontHeight) / 2),
+			textPos, node->pos[1], tabWidth+1, TILE_HEIGHT,
+			0, _(tabOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
+		allowedWidth -= tabWidth;
 
 		/* Next */
-		tabOption = tabOption->next;
 		lastStatus = status;
+		tabOption = tabOption->next;
 	}
 
 	/* Display last junction and end of header */
