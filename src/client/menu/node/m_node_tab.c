@@ -1,7 +1,7 @@
 /**
  * @file m_node_tab.c
  * @todo add disabled status into @c selectBoxOptions_t update parser and this code with it.
- * @todo add an icon into @c selectBoxOptions_t update parser and this code with it.
+ * @todo auto tooltip for chopped options
  */
 
 /*
@@ -52,7 +52,8 @@ static const int TILE_SIZE = 40;
  * @param[in] x The x position of the screen to test
  * @param[in] y The x position of the screen to test
  * @return A selectBoxOptions_t, or NULL if nothing.
- * @todo improve the test when we are on a junction
+ * @todo improve test when we are on a junction
+ * @todo improve test when we are on a chopped tab
  */
 static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y)
 {
