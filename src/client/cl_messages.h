@@ -1,5 +1,5 @@
 /**
- * @file m_messages.c
+ * @file cl_messages.h
  */
 
 /*
@@ -22,3 +22,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef CLIENT_CL_MESSAGES_H
+#define CLIENT_CL_MESSAGES_H
+
+#include "menu/m_messages.h"
+#include "campaign/cl_messageoptions.h"
+
+
+#include "../game/q_shared.h"
+
+
+message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
+message_t *MN_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
+void MN_RemoveMessage(const char *title);
+void MN_AddChatMessage(const char *text);
+void MN_MessageInit(void);
+
+
+#endif /* CLIENT_CL_MESSAGES_H */

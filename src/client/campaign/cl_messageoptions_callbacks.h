@@ -1,5 +1,6 @@
 /**
- * @file m_messages.c
+ * @file cl_messageoptions_callbacks.h
+ * @brief Header file for menu related console command callbacks.
  */
 
 /*
@@ -22,3 +23,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../shared/ufotypes.h"
+
+#ifndef CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H
+#define CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H
+
+typedef enum msoMenuState_s {
+	MSO_MSTATE_REINIT,
+	MSO_MSTATE_PREPARED,
+	MSO_MSTATE_INITIALIZED
+} msoMenuState_t;
+
+void MSO_SetMenuState (const msoMenuState_t newState, const qboolean initNow, const qboolean preserveIndex);
+
+void MSO_InitCallbacks(void);
+void MSO_ShutdownCallbacks(void);
+
+#endif /* CLIENT_CL_MESSAGEOPTIONS_CALLBACKS_H */

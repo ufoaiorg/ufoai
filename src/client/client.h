@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cl_event.h"
 #include "campaign/cl_save.h"
 #include "renderer/r_entity.h"
+#include "cl_messages.h"
 
 /*============================================================================= */
 

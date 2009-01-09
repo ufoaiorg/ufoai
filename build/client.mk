@@ -35,6 +35,7 @@ CLIENT_SRCS = \
 	client/cl_ugv.c \
 	client/cl_video.c \
 	client/cl_view.c \
+	client/cl_messages.c \
 	\
 	client/campaign/cp_aircraft.c \
 	client/campaign/cp_aircraft_callbacks.c \
@@ -67,6 +68,8 @@ CLIENT_SRCS = \
 	client/campaign/cl_transfer.c \
 	client/campaign/cl_ufo.c \
 	client/campaign/cl_uforecovery.c \
+	client/campaign/cl_messageoptions.c \
+	client/campaign/cl_messageoptions_callbacks.c \
 	\
 	client/campaign/missions/cp_mission_baseattack.c \
 	client/campaign/missions/cp_mission_buildbase.c \

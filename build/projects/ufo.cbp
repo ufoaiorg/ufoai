@@ -349,6 +349,14 @@
 		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions.h" />
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -511,6 +519,10 @@
 		</Unit>
 		<Unit filename="..\..\src\client\cl_view.h" />
 		<Unit filename="..\..\src\client\client.h" />
+		<Unit filename="..\..\src\client\cl_messages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_messages.h" />
 		<Unit filename="..\..\src\client\menu\m_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
