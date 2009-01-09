@@ -542,37 +542,10 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
  * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa Com_SearchInInventory
- * @todo cleanup params
  */
-static invList_t *MN_ContainerNodeSearchInScrollableContainer (const menuNode_t *node, const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
+static invList_t *MN_ContainerNodeGetItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
-	invList_t *ic;
-	int curItem = 0;	/**< Current (visible) item in the container. */
-	int curDispItem = 0;	/**< Item counter for all items that actually get displayed. */
-
-	for (ic = i->c[container->id]; ic; ic = ic->next) {
-		/* Search only in the items that could get displayed. */
-		if (ic && ic->item.t && (INV_ItemMatchesFilter(ic->item.t, filterType) || filterType == MAX_FILTERTYPES)) {
-			if (item) {
-				/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
-				if (item == ic->item.t)
-					return ic;
-			} else if (curItem >= EXTRADATA(node).scrollCur && curDispItem < EXTRADATA(node).scrollNum) {
-				/* We search only in actually visible items. */
-				if (ic->x == x && ic->y == y)
-					return ic;
-
-				/* Count displayed/visible items. */
-				curDispItem++;
-			}
-
-			/* Count all items that could get displayed. */
-			curItem++;
-		}
-	}
-
-	/* No item with these coordinates (or matching item) found. */
-	return NULL;
+	return Com_SearchInInventoryWithFilter(menuInventory, EXTRADATA(node).container, NONE, NONE, item, filterType);
 }
 
 /**
@@ -698,7 +671,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 								continue;
 
 							/* find and skip unexisting ammo */
-							icAmmo = MN_ContainerNodeSearchInScrollableContainer(node, menuInventory, EXTRADATA(node).container, NONE, NONE, tempItem.t, equipType);
+							icAmmo = MN_ContainerNodeGetItem(node, tempItem.t, equipType);
 							if (!icAmmo)
 								continue;
 
@@ -994,7 +967,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 							ammoItem = ic->item.t->ammos[ammoIdx];
 							/* Only check for researched ammo (although this is implyed in most cases). */
 							if (ammoItem->tech && RS_IsResearched_ptr(ammoItem->tech)) {
-								invList_t *icAmmo = MN_ContainerNodeSearchInScrollableContainer(node, menuInventory, EXTRADATA(node).container, NONE, NONE, ammoItem, equipType);
+								invList_t *icAmmo = MN_ContainerNodeGetItem(node, ammoItem, equipType);
 
 								/* Only check the item (and calculate its size) if it's in the container. */
 								if (icAmmo) {
@@ -1329,7 +1302,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		/* menu */
 		if (MN_IsScrollContainerNode(source)) {
 			const int equipType = EXTRADATA(source).filterEquipType;
-			fItem = MN_ContainerNodeSearchInScrollableContainer(source, menuInventory, EXTRADATA(source).container, NONE, NONE, dragItem->t, equipType);
+			fItem = MN_ContainerNodeGetItem(source, dragItem->t, equipType);
 		} else
 			fItem = Com_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
 
