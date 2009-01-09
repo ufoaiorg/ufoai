@@ -88,18 +88,6 @@ static int *leaf_list;
 static float *leaf_mins, *leaf_maxs;
 static int leaf_topnode;
 
-/*
-static vec3_t trace_start, trace_end;
-static vec3_t trace_mins, trace_maxs;
-static vec3_t trace_extents;
-
-static trace_t trace_trace;
-static int trace_contents;
-static int trace_rejects;
-static qboolean trace_ispoint;			/ * optimized case * /
-*/
-
-
 tnode_t *tnode_p;
 
 
@@ -242,7 +230,7 @@ LINE TRACING - TEST FOR BRUSH PRESENCE
  * @sa TR_TestLineDist_r
  * @sa CM_TestLine
  */
-static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
+static int TR_TestLine_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -252,7 +240,7 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 	if (node & (1 << 31))
 		return node & ~(1 << 31);
 
-	tnode = &curTile->tnodes[node];
+	tnode = &tile->tnodes[node];
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
@@ -262,10 +250,10 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 		back = stop[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TR_TestLine_r(tnode->children[0], start, stop);
+		r = TR_TestLine_r(tile, tnode->children[0], start, stop);
 		if (r)
 			return r;
-		return TR_TestLine_r(tnode->children[1], start, stop);
+		return TR_TestLine_r(tile, tnode->children[1], start, stop);
 	default:
 		front = DotProduct(start, tnode->normal) - tnode->dist;
 		back = DotProduct(stop, tnode->normal) - tnode->dist;
@@ -273,9 +261,9 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TR_TestLine_r(tnode->children[0], start, stop);
+		return TR_TestLine_r(tile, tnode->children[0], start, stop);
 	else if (front < ON_EPSILON && back < ON_EPSILON)
-		return TR_TestLine_r(tnode->children[1], start, stop);
+		return TR_TestLine_r(tile, tnode->children[1], start, stop);
 	else {
 		const int side = front < 0;
 		const float frac = front / (front - back);
@@ -283,10 +271,10 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
 
 		VectorInterpolation(start, stop, frac, mid);
 
-		r = TR_TestLine_r(tnode->children[side], start, mid);
+		r = TR_TestLine_r(tile, tnode->children[side], start, mid);
 		if (r)
 			return r;
-		return TR_TestLine_r(tnode->children[!side], mid, stop);
+		return TR_TestLine_r(tile, tnode->children[!side], mid, stop);
 	}
 }
 
@@ -305,22 +293,21 @@ static int TR_TestLine_r (int node, const vec3_t start, const vec3_t stop)
  * 256: weaponclip-level
  * 257: actorclip-level
  */
-static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, int levelmask)
+static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t stop, const int levelmask)
 {
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
 
-	curTile = tile;
 	/* loop over all theads */
-	for (i = 0; i < curTile->numtheads; i++) {
-		const int level = curTile->theadlevel[i];
+	for (i = 0; i < tile->numtheads; i++) {
+		const int level = tile->theadlevel[i];
 		if (level && corelevels && !(level & levelmask))
 			continue;
 		if (level == LEVEL_ACTORCLIP && !(levelmask & TL_FLAG_ACTORCLIP))
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
-		if (TR_TestLine_r(curTile->thead[i], start, stop))
+		if (TR_TestLine_r(tile, tile->thead[i], start, stop))
 			return qtrue;
 	}
 	return qfalse;
@@ -335,32 +322,34 @@ static qboolean TR_TileTestLine (TR_TILE_TYPE *tile, const vec3_t start, const v
  * @sa GatherSampleLight
  * @return qfalse if not blocked
  */
-qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop)
+qboolean TR_TestLineSingleTile (const vec3_t start, const vec3_t stop, int *headhint)
 {
 	int i;
-	static int lastthead = 0;
+	static int shared_lastthead = 0;
+	int lastthead = *headhint;
+
+	if (!lastthead) {
+		lastthead = shared_lastthead;
+		*headhint = lastthead;
+	}
 
 	assert(numTiles == 1);
-	curTile = &mapTiles[0];
 
 	/* ufo2map does many traces to the same endpoint.
 	 * Often an occluding node will be found in the same thead
 	 * as the last trace, so test that one first. */
-	if (curTile->theadlevel[lastthead] != LEVEL_ACTORCLIP
-	 && curTile->theadlevel[lastthead] != LEVEL_WEAPONCLIP
-	 && TR_TestLine_r(curTile->thead[lastthead], start, stop))
+	if (mapTiles[0].theadlevel[lastthead] <= LEVEL_LASTVISIBLE
+	    && TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[lastthead], start, stop))
 		return qtrue;
 
-	for (i = 0; i < curTile->numtheads; i++) {
-		const int level = curTile->theadlevel[i];
+	for (i = 0; i < mapTiles[0].numtheads; i++) {
+		const int level = mapTiles[0].theadlevel[i];
 		if (i == lastthead)
 			continue;
-		if (level == LEVEL_ACTORCLIP)
+		if (level > LEVEL_LASTVISIBLE)
 			continue;
-		if (level == LEVEL_WEAPONCLIP)
-			continue;
-		if (TR_TestLine_r(curTile->thead[i], start, stop)) {
-			lastthead = i;
+		if (TR_TestLine_r(&mapTiles[0], mapTiles[0].thead[i], start, stop)) {
+			shared_lastthead = *headhint = i;
 			return qtrue;
 		}
 	}

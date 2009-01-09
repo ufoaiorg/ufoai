@@ -464,7 +464,7 @@ void BuildLights (void)
 /**
  * @brief A follow-up to GatherSampleLight, simply trace along the sun normal, adding sunlight
  */
-static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale)
+static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int *headhint)
 {
 	vec3_t delta;
 	float dot, light;
@@ -480,7 +480,7 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 	 * higher value - because the light angle is not fixed at 90 degree */
 	VectorMA(pos, 8192, sun_normal, delta);
 
-	if (TR_TestLineSingleTile(pos, delta))
+	if (TR_TestLineSingleTile(pos, delta, headhint))
 		return; /* occluded */
 
 	light = sun_intensity * dot * scale;
@@ -497,15 +497,18 @@ static void GatherSampleSunlight (const vec3_t pos, const vec3_t normal, float *
 /**
  * @param[in] scale is the normalizer for multisampling
  */
-static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale)
+static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, float *direction, float scale, int *headhints)
 {
 	light_t *l;
 	vec3_t delta;
 	float dot, dot2;
 	float dist;
+	int *headhint;
 
-	for (l = lights[config.compile_for_day]; l; l = l->next) {
+	for (l = lights[config.compile_for_day], headhint = headhints; l; l = l->next, headhint++) {
 		float light = 0.0;
+
+		//Com_Printf("Looking with next hint.\n");
 
 		VectorSubtract(l->origin, pos, delta);
 		dist = VectorNormalize(delta);
@@ -543,7 +546,7 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 		if (light <= 0.0)  /* no light */
 			continue;
 
-		if (TR_TestLineSingleTile(pos, l->origin))
+		if (TR_TestLineSingleTile(pos, l->origin, headhint))
 			continue;	/* occluded */
 
 		/* add some light to it */
@@ -554,7 +557,8 @@ static void GatherSampleLight (vec3_t pos, const vec3_t normal, float *sample, f
 		VectorMA(direction, light * scale, delta, direction);
 	}
 
-	GatherSampleSunlight(pos, normal, sample, direction, scale);
+	//Com_Printf("Looking with last hint.\n");
+	GatherSampleSunlight(pos, normal, sample, direction, scale, headhint);
 }
 
 #define SAMPLE_NUDGE 0.25
@@ -709,6 +713,7 @@ void BuildFacelights (unsigned int facenum)
 	float scale;
 	int i, j, numsamples;
 	facelight_t *fl;
+	int *headhints;
 
 	if (facenum >= MAX_MAP_FACES) {
 		Com_Printf("MAX_MAP_FACES hit\n");
@@ -770,6 +775,10 @@ void BuildFacelights (unsigned int facenum)
 
 	center = face_extents[facenum].center;  /* center of the face */
 
+	/* Also setup the hints.  Each hint is specific to each light source, including sunlight. */
+	headhints = malloc((numlights[config.compile_for_day] + 1) * sizeof(int));
+	memset(headhints, 0, (numlights[config.compile_for_day] + 1) * sizeof(int));
+
 	/* calculate light for each sample */
 	for (i = 0; i < fl->numsamples; i++) {
 		float *sample = fl->samples + i * 3;			/* accumulate lighting here */
@@ -787,7 +796,7 @@ void BuildFacelights (unsigned int facenum)
 
 			NudgeSamplePosition(l[j].surfpt[i], normal, center, pos);
 
-			GatherSampleLight(pos, normal, sample, direction, scale);
+			GatherSampleLight(pos, normal, sample, direction, scale, headhints);
 		}
 		if (!VectorCompare(direction, vec3_origin)) {
 			vec3_t dir;
@@ -805,6 +814,9 @@ void BuildFacelights (unsigned int facenum)
 			VectorCopy(dir, direction);
 		}
 	}
+
+	/* Free the hints. */
+	free(headhints);
 
 	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
 		float *direction = fl->directions + i * 3;
