@@ -541,152 +541,171 @@ menu team
 	string txt_actor0
 	{
 		string	"*cvar mn_ename0"
-		pos		"60 32"
-		size	"290 16"
+		pos		"60 22"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 0;" }
 		invis	true
 	}
 	string txt_actor1
 	{
 		string	"*cvar mn_ename1"
-		pos		"60 70"
-		size	"290 16"
+		pos		"60 60"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 1;" }
 		invis	true
 	}
 	string txt_actor2
 	{
 		string	"*cvar mn_ename2"
-		pos		"60 108"
-		size	"290 16"
+		pos		"60 98"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 2;" }
 		invis	true
 	}
 	string txt_actor3
 	{
 		string	"*cvar mn_ename3"
-		pos		"60 146"
-		size	"290 16"
+		pos		"60 136"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 3;" }
 		invis	true
 	}
 	string txt_actor4
 	{
 		string	"*cvar mn_ename4"
-		pos		"60 184"
-		size	"290 16"
+		pos		"60 174"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 4;" }
 		invis	true
 	}
 	string txt_actor5
 	{
 		string	"*cvar mn_ename5"
-		pos		"60 222"
-		size	"290 16"
+		pos		"60 212"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 5;" }
 		invis	true
 	}
 	string txt_actor6
 	{
 		string	"*cvar mn_ename6"
-		pos		"60 260"
-		size	"290 16"
+		pos		"60 250"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 6;" }
 		invis	true
 	}
 	string txt_actor7
 	{
 		string	"*cvar mn_ename7"
-		pos		"60 298"
-		size	"290 16"
+		pos		"60 288"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 7;" }
 		invis	true
 	}
 	string txt_actor8
 	{
 		string	"*cvar mn_ename8"
-		pos		"60 336"
-		size	"290 16"
+		pos		"60 326"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 8;" }
 		invis	true
 	}
 	string txt_actor9
 	{
 		string	"*cvar mn_ename9"
-		pos		"60 374"
-		size	"290 16"
+		pos		"60 364"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 9;" }
 		invis	true
 	}
 	string txt_actor10
 	{
 		string	"*cvar mn_ename10"
-		pos		"60 412"
-		size	"290 16"
+		pos		"60 402"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 10;" }
 		invis	true
 	}
 	string txt_actor11
 	{
 		string	"*cvar mn_ename11"
-		pos		"60 450"
-		size	"290 16"
+		pos		"60 440"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 11;" }
 		invis	true
 	}
 	string txt_actor12
 	{
 		string	"*cvar mn_ename12"
-		pos		"60 488"
-		size	"290 16"
+		pos		"60 478"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 12;" }
 		invis	true
 	}
 	string txt_actor13
 	{
 		string	"*cvar mn_ename13"
-		pos		"60 526"
-		size	"290 16"
+		pos		"60 516"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 13;" }
 		invis	true
 	}
 	string txt_actor14
 	{
 		string	"*cvar mn_ename14"
-		pos		"60 564"
-		size	"290 16"
+		pos		"60 554"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 14;" }
 		invis	true
 	}
 	string txt_actor15
 	{
 		string	"*cvar mn_ename15"
-		pos		"60 602"
-		size	"290 16"
+		pos		"60 592"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 15;" }
 		invis	true
 	}
 	string txt_actor16
 	{
 		string	"*cvar mn_ename16"
-		pos		"60 640"
-		size	"290 16"
+		pos		"60 630"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 16;" }
 		invis	true
 	}
 	string txt_actor17
 	{
 		string	"*cvar mn_ename17"
-		pos		"60 678"
-		size	"290 16"
+		pos		"60 668"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 17;" }
 		invis	true
 	}
 	string txt_actor18
 	{
 		string	"*cvar mn_ename18"
-		pos		"60 716"
-		size	"290 16"
+		pos		"60 706"
+		size	"290 40"
+		textalign cl
 		click { cmd "team_select 18;" }
 		invis	true
 	}
@@ -1105,57 +1124,65 @@ menu equipment
 	string txt_actor0
 	{
 		string	"*cvar mn_name0"
-		pos		"60 23"
-		size	"270 16"
+		pos		"60 13"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 0;" }
 	}
 	string txt_actor1
 	{
 		string	"*cvar mn_name1"
-		pos		"60 64"
-		size	"270 16"
+		pos		"60 54"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 1;" }
 	}
 	string txt_actor2
 	{
 		string	"*cvar mn_name2"
-		pos		"60 105"
-		size	"270 16"
+		pos		"60 95"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 2;" }
 	}
 	string txt_actor3
 	{
 		string	"*cvar mn_name3"
-		pos		"60 146"
-		size	"270 16"
+		pos		"60 136"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 3;" }
 	}
 	string txt_actor4
 	{
 		string	"*cvar mn_name4"
-		pos		"60 187"
-		size	"270 16"
+		pos		"60 177"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 4;" }
 	}
 	string txt_actor5
 	{
 		string	"*cvar mn_name5"
-		pos		"60 228"
-		size	"270 16"
+		pos		"60 218"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 5;" }
 	}
 	string txt_actor6
 	{
 		string	"*cvar mn_name6"
-		pos		"60 269"
-		size	"270 16"
+		pos		"60 259"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 6;" }
 	}
 	string txt_actor7
 	{
 		string	"*cvar mn_name7"
-		pos		"60 310"
-		size	"270 16"
+		pos		"60 300"
+		size	"270 40"
+		textalign cl
 		click { cmd "equip_select 7;" }
 	}
 
