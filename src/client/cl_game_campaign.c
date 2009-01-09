@@ -25,7 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-#include "cl_game_campaign.h"
+#include "cl_game.h"
+#include "cl_team.h"
 #include "campaign/cp_missions.h"
 #include "campaign/cp_mission_triggers.h"
 #include "campaign/cl_ufo.h"
@@ -248,7 +249,8 @@ static void GAME_CP_TryAgain_f (void)
 	/* Do nothing if user did other stuff. */
 	if (!ccs.mission_tryagain)
 		return;
-	Cbuf_AddText("set cp_mission_tryagain 1;mn_pop\n");
+	Cvar_Set("cp_mission_tryagain", "1");
+	MN_PopMenu(qfalse);
 }
 
 void GAME_CP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
@@ -357,6 +359,26 @@ void GAME_CP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 	CL_Disconnect();
 }
 
+qboolean GAME_CP_Spawn (chrList_t *chrList)
+{
+	aircraft_t *aircraft = cls.missionaircraft;
+	base_t *base;
+
+	if (!aircraft)
+		return qfalse;
+
+	base = CP_GetMissionBase();
+
+	/* clean temp inventory */
+	CL_CleanTempInventory(base);
+
+	/* activate hud */
+	MN_PushMenu(mn_hud->string, NULL);
+	Cvar_Set("mn_active", mn_hud->string);
+
+	return qtrue;
+}
+
 void GAME_CP_InitStartup (void)
 {
 	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
@@ -368,7 +390,9 @@ void GAME_CP_InitStartup (void)
 	Cmd_AddCommand("cp_exit", CP_CampaignExit, "Stop the current running campaign");
 	Cmd_AddCommand("cp_tryagain", GAME_CP_TryAgain_f, "Try again a mission");
 
+	/* cvars might have been changed by other gametypes */
 	Cvar_ForceSet("sv_maxclients", "1");
+	Cvar_ForceSet("sv_ai", "1");
 
 	/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
 	/** @todo do we have to set sv_maxsoldiersperteam for campaign mode? */

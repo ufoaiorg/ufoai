@@ -287,7 +287,7 @@ menu mp_team
 		pos	"365 490"
 		tooltip	"_Generate a team automatically"
 		size "128 64"
-		click	{ cmd "game_exit;mp_autoteam;" }
+		click	{ cmd "mp_autoteam;" }
 		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"

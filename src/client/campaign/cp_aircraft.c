@@ -821,13 +821,11 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		Com_DPrintf(DEBUG_CLIENT, "Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		if (!base->aircraftCurrent)
 			base->aircraftCurrent = aircraft;
-		if (GAME_IsCampaign()) {
-			aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
-			if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
-				Com_Printf("AIR_NewAircraft: ERROR, new aircraft but no free space in hangars!\n");
-			/* also update the base menu buttons */
-			Cmd_ExecuteString("base_init");
-		}
+		aircraft->hangar = AIR_UpdateHangarCapForOne(aircraft->tpl, base);
+		if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
+			Com_Printf("AIR_NewAircraft: ERROR, new aircraft but no free space in hangars!\n");
+		/* also update the base menu buttons */
+		Cmd_ExecuteString("base_init");
 		return aircraft;
 	}
 	return NULL;

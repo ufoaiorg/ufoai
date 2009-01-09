@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_game.h"
+#include "cl_team.h"
 
 typedef struct gameTypeList_s {
 	const char *name;
@@ -32,13 +33,14 @@ typedef struct gameTypeList_s {
 	int gametype;
 	void (*init)(void);
 	void (*shutdown)(void);
+	qboolean (*spawn)(chrList_t *chrList);
 	void (*results)(int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Results},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Results},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Results},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_Results},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_Results},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_Results},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -71,6 +73,9 @@ void GAME_SetMode (int gametype)
 		} else if (list->gametype == currentGameType) {
 			Com_Printf("Shutdown gametype '%s'\n", list->name);
 			list->shutdown();
+			/* menu cvars are the same everywhere when shutting down a game type */
+			Cvar_Set("mn_main", "main");
+			Cvar_Set("mn_active", "");
 		}
 		list++;
 	}
@@ -192,9 +197,7 @@ static void GAME_SetMode_f (void)
 void GAME_Init (qboolean load)
 {
 	/* @todo are all these needed on every load? */
-	/* objects links seem to only be needed once on campaign startup? */
 	/* what about RS_InitTree? how often must this be done? */
-	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
 	RS_InitTree(load);		/**< Initialise all data in the research tree. */
 
 	/* now check the parsed values for errors that are not catched at parsing stage */
@@ -212,6 +215,98 @@ void GAME_HandleResults (int winner, int *numSpawned, int *numAlive, int numKill
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
 			list->results(winner, numSpawned, numAlive, numKilled, numStunned);
+			break;
+		}
+		list++;
+	}
+}
+
+/**
+ * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
+ * @sa G_ClientTeamInfo
+ * @sa CL_SaveTeamMultiplayerInfo
+ * @note Called in CL_Precache_f to send the team info to server
+ */
+static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *team)
+{
+	int i, j;
+
+	/* header */
+	NET_WriteByte(buf, clc_teaminfo);
+	NET_WriteByte(buf, team->num);
+
+	Com_DPrintf(DEBUG_CLIENT, "GAME_SendCurrentTeamSpawningInfo: Upload information about %i soldiers to server\n", team->num);
+	for (i = 0; i < team->num; i++) {
+		character_t *chr = team->chr[i];
+		assert(chr);
+		assert(chr->fieldSize > 0);
+		/* send the fieldSize ACTOR_SIZE_* */
+		NET_WriteByte(buf, chr->fieldSize);
+
+		/* unique character number */
+		NET_WriteShort(buf, chr->ucn);
+
+		/* name */
+		NET_WriteString(buf, chr->name);
+
+		/* model */
+		NET_WriteString(buf, chr->path);
+		NET_WriteString(buf, chr->body);
+		NET_WriteString(buf, chr->head);
+		NET_WriteByte(buf, chr->skin);
+
+		NET_WriteShort(buf, chr->HP);
+		NET_WriteShort(buf, chr->maxHP);
+		NET_WriteByte(buf, chr->teamDef ? chr->teamDef->idx : NONE);
+		NET_WriteByte(buf, chr->gender);
+		NET_WriteByte(buf, chr->STUN);
+		NET_WriteByte(buf, chr->morale);
+
+		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+			NET_WriteLong(buf, chr->score.experience[j]);
+		for (j = 0; j < SKILL_NUM_TYPES; j++)
+			NET_WriteByte(buf, chr->score.skills[j]);
+		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
+			NET_WriteByte(buf, chr->score.initialSkills[j]);
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			NET_WriteShort(buf, chr->score.kills[j]);
+		for (j = 0; j < KILLED_NUM_TYPES; j++)
+			NET_WriteShort(buf, chr->score.stuns[j]);
+		NET_WriteShort(buf, chr->score.assignedMissions);
+		NET_WriteByte(buf, chr->score.rank);
+
+		/* Send user-defined (default) reaction-state. */
+		NET_WriteShort(buf, chr->reservedTus.reserveReaction);
+
+		/* inventory */
+		CL_NetSendInventory(buf, chr->inv);
+	}
+}
+
+/**
+ * @brief After a mission was finished this function is called
+ */
+void GAME_SpawnSoldiers (chrList_t *chrList)
+{
+	const gameTypeList_t *list = gameTypeList;
+
+	while (list->name) {
+		if (list->gametype == cls.gametype) {
+			const qboolean spawnStatus = list->spawn(chrList);
+			if (spawnStatus && chrList->num > 0) {
+				struct dbuffer *msg;
+
+				/* send team info */
+				msg = new_dbuffer();
+				GAME_SendCurrentTeamSpawningInfo(msg, chrList);
+				NET_WriteMsg(cls.netStream, msg);
+
+				msg = new_dbuffer();
+				NET_WriteByte(msg, clc_stringcmd);
+				NET_WriteString(msg, va("spawn %i\n", cl.servercount));
+				NET_WriteMsg(cls.netStream, msg);
+			}
 			break;
 		}
 		list++;

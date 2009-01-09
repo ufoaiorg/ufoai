@@ -77,6 +77,9 @@ CLIENT_SRCS = \
 	client/campaign/missions/cp_mission_terror.c \
 	client/campaign/missions/cp_mission_xvi.c \
 	\
+	client/multiplayer/mp_callbacks.c \
+	client/multiplayer/mp_serverlist.c \
+	\
 	client/menu/m_actions.c \
 	client/menu/m_condition.c \
 	client/menu/m_dragndrop.c \

@@ -371,7 +371,7 @@ static void CheckNeedPass (void)
  * @note parsed in CL_ParseCharacterData
  * @sa CL_ParseCharacterData
  * @sa G_EndGame
- * @sa CL_SendCurTeamInfo
+ * @sa GAME_SendCurrentTeamSpawningInfo
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
 static void G_SendCharacterData (const edict_t* ent)

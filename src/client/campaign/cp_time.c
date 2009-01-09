@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_global.h"
+#include "../cl_game.h"
 #include "cp_time.h"
 
 
@@ -155,15 +156,16 @@ void CL_UpdateTime (void)
  */
 void CL_GameTimeStop (void)
 {
-	const menu_t *menu = MN_GetActiveMenu();
 	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+
+	if (!GAME_IsCampaign())
+		return;
 
 	if ((lapse[0].type & lapseType) != lapseType)
 		return;
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	/* @todo check whether we really need to identify menu with CL_OnBattlescape - was checking menu name before */
-	if (menu && !CL_OnBattlescape()) {
+	if (!CL_OnBattlescape()) {
 		gameLapse = 0;
 	}
 

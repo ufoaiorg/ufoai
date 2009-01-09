@@ -27,8 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "cl_tutorials.h"
 #include "cl_global.h"
+#include "cl_game.h"
+#include "cl_tutorials.h"
 #include "cl_tip.h"
 #include "cl_team.h"
 #include "cl_team_multiplayer.h"
@@ -56,10 +57,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_parse.h"
 #include "menu/node/m_node_selectbox.h"
 #include "campaign/cp_parse.h"
+#include "multiplayer/mp_callbacks.h"
+#include "multiplayer/mp_serverlist.h"
 
 cvar_t *cl_isometric;
-
-static cvar_t *rcon_client_password;
 
 cvar_t *cl_fps;
 cvar_t *cl_particleweather;
@@ -97,10 +98,8 @@ cvar_t *confirm_actions;
 static cvar_t *cl_shownet;
 static cvar_t *cl_precache;
 static cvar_t *cl_introshown;
-static cvar_t *cl_serverlist;
 
 /* userinfo */
-static cvar_t *info_password;
 static cvar_t *cl_name;
 static cvar_t *cl_msg;
 cvar_t *cl_teamnum;
@@ -109,27 +108,9 @@ cvar_t *cl_team;
 client_static_t cls;
 client_state_t cl;
 
-/** @brief Are the soldiers for this game already spawned? */
-static qboolean soldiersSpawned = qfalse;
-
-typedef struct teamData_s {
-	int teamCount[MAX_TEAMS];	/**< team counter - parsed from server data 'teaminfo' */
-	qboolean teamplay;
-	int maxteams;
-	int maxplayersperteam;		/**< max players per team */
-	char teamInfoText[MAX_MESSAGE_TEXT];
-	qboolean parsed;
-} teamData_t;
-
-static teamData_t teamData;
-
-static char serverText[1024];
-
 static int precache_check;
 
 static void CL_SpawnSoldiers_f(void);
-
-#define MAX_BOOKMARKS 16
 
 struct memPool_s *cl_localPool;		/**< reset on every game restart */
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
@@ -288,88 +269,6 @@ static void CL_Connect (void)
 	}
 }
 
-static void CL_Connect_f (void)
-{
-	const char *server;
-	const char *serverport;
-	aircraft_t *aircraft;
-
-	if (!cls.selectedServer && Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <server>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!GAME_IsMultiplayer()) {
-		Com_Printf("Start multiplayer first\n");
-		return;
-	}
-
-	aircraft = AIR_AircraftGetFromIDX(0);
-	assert(aircraft);
-	if (!B_GetNumOnTeam(aircraft)) {
-		MN_Popup(_("Error"), _("Assemble a team first"));
-		return;
-	}
-
-	if (Cvar_VariableInteger("mn_server_need_password")) {
-		MN_PushMenu("serverpassword", NULL);
-		return;
-	}
-
-	/* if running a local server, kill it and reissue */
-	SV_Shutdown("Server quit.", qfalse);
-	CL_Disconnect();
-
-	if (Cmd_Argc() == 2) {
-		server = Cmd_Argv(1);
-		serverport = va("%d", PORT_SERVER);
-	} else {
-		assert(cls.selectedServer);
-		server = cls.selectedServer->node;
-		serverport = cls.selectedServer->service;
-	}
-	Q_strncpyz(cls.servername, server, sizeof(cls.servername));
-	Q_strncpyz(cls.serverport, serverport, sizeof(cls.serverport));
-
-	CL_SetClientState(ca_connecting);
-
-	/* everything should be reasearched for multiplayer matches */
-/*	RS_MarkResearchedAll(); */
-
-	Cvar_Set("mn_main", "multiplayerInGame");
-}
-
-/**
- * Send the rest of the command line over as
- * an unconnected command.
- */
-static void CL_Rcon_f (void)
-{
-	char message[MAX_STRING_CHARS];
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <command>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!rcon_client_password->string) {
-		Com_Printf("You must set 'rcon_password' before issuing an rcon command.\n");
-		return;
-	}
-
-	/** @todo Implement rcon_address to be able to access servers we are not
-	 * connected to */
-	if (cls.state < ca_connected) {
-		Com_Printf("You are not connected to any server\n");
-		return;
-	}
-
-	Com_sprintf(message, sizeof(message), "rcon %s %s",
-		rcon_client_password->string, Cmd_Args());
-
-	NET_OOB_Printf(cls.netStream, "%s", message);
-}
-
 /**
  * @sa CL_ParseServerData
  * @sa CL_Disconnect
@@ -427,18 +326,6 @@ void CL_Disconnect (void)
 	CL_SetClientState(ca_disconnected);
 }
 
-/**
- * @brief Binding for disconnect console command
- * @sa CL_Disconnect
- * @sa CL_Drop
- * @sa SV_ShutdownWhenEmpty
- */
-static void CL_Disconnect_f (void)
-{
-	SV_ShutdownWhenEmpty();
-	CL_Drop();
-}
-
 /* it's dangerous to activate this */
 /*#define ACTIVATE_PACKET_COMMAND*/
 #ifdef ACTIVATE_PACKET_COMMAND
@@ -482,634 +369,6 @@ static void CL_Packet_f (void)
 	NET_OOB_Printf(s, va("%s %i", out, PROTOCOL_VERSION));
 }
 #endif
-
-/**
- * @brief The server is changing levels
- */
-static void CL_Reconnect_f (void)
-{
-	if (Com_ServerState())
-		return;
-
-	if (!GAME_IsMultiplayer()) {
-		Com_Printf("Start multiplayer first\n");
-		return;
-	}
-
-	if (cls.servername[0]) {
-		if (cls.state >= ca_connecting) {
-			Com_Printf("disconnecting...\n");
-			CL_Disconnect();
-		}
-
-		cls.connectTime = cls.realtime - 1500;
-
-		CL_SetClientState(ca_connecting);
-		Com_Printf("reconnecting...\n");
-	} else
-		Com_Printf("No server to reconnect to\n");
-}
-
-/**
- * @sa CL_PingServerCallback
- * @sa SVC_Info
- */
-static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
-{
-	if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "sv_protocol"))) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
-		return qfalse;
-	}
-	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "sv_version"))) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Version mismatch\n");
-	}
-
-	if (server->pinged)
-		return qfalse;
-
-	server->pinged = qtrue;
-	Q_strncpyz(server->sv_hostname, Info_ValueForKey(msg, "sv_hostname"),
-		sizeof(server->sv_hostname));
-	Q_strncpyz(server->version, Info_ValueForKey(msg, "sv_version"),
-		sizeof(server->version));
-	Q_strncpyz(server->mapname, Info_ValueForKey(msg, "sv_mapname"),
-		sizeof(server->mapname));
-	Q_strncpyz(server->gametype, Info_ValueForKey(msg, "sv_gametype"),
-		sizeof(server->gametype));
-	server->clients = atoi(Info_ValueForKey(msg, "clients"));
-	server->sv_dedicated = atoi(Info_ValueForKey(msg, "sv_dedicated"));
-	server->sv_maxclients = atoi(Info_ValueForKey(msg, "sv_maxclients"));
-	return qtrue;
-}
-
-typedef enum {
-	SERVERLIST_SHOWALL,
-	SERVERLIST_HIDEFULL,
-	SERVERLIST_HIDEEMPTY
-} serverListStatus_t;
-
-/**
- * @brief CL_PingServer
- */
-static void CL_PingServerCallback (struct net_stream *s)
-{
-	struct dbuffer *buf = NET_ReadMsg(s);
-	serverList_t *server = NET_StreamGetData(s);
-	const int cmd = NET_ReadByte(buf);
-	const char *str = NET_ReadStringLine(buf);
-
-	if (cmd == clc_oob && Q_strncmp(str, "info", 4) == 0) {
-		str = NET_ReadString(buf);
-		if (!str)
-			return;
-		if (!CL_ProcessPingReply(server, str))
-			return;
-	} else
-		return;
-
-	if (cl_serverlist->integer == SERVERLIST_SHOWALL
-	|| (cl_serverlist->integer == SERVERLIST_HIDEFULL && server->clients < server->sv_maxclients)
-	|| (cl_serverlist->integer == SERVERLIST_HIDEEMPTY && server->clients)) {
-		char string[MAX_INFO_STRING];
-		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t\t%i/%i\n",
-			server->sv_hostname,
-			server->mapname,
-			server->gametype,
-			server->clients,
-			server->sv_maxclients);
-		server->serverListPos = cls.serverListPos;
-		cls.serverListPos++;
-		Q_strcat(serverText, string, sizeof(serverText));
-	}
-	NET_StreamFree(s);
-}
-
-/**
- * @brief Pings all servers in serverList
- * @sa CL_AddServerToList
- * @sa CL_ParseServerInfoMessage
- */
-static void CL_PingServer (serverList_t *server)
-{
-	struct net_stream *s = NET_Connect(server->node, server->service);
-
-	if (s) {
-		Com_DPrintf(DEBUG_CLIENT, "pinging [%s]:%s...\n", server->node, server->service);
-		NET_OOB_Printf(s, "info %i", PROTOCOL_VERSION);
-		NET_StreamSetData(s, server);
-		NET_StreamSetCallback(s, &CL_PingServerCallback);
-	} else {
-		Com_Printf("pinging failed [%s]:%s...\n", server->node, server->service);
-	}
-}
-
-/**
- * @brief Prints all the servers on the list to game console
- */
-static void CL_PrintServerList_f (void)
-{
-	int i;
-
-	Com_Printf("%i servers on the list\n", cls.serverListLength);
-
-	for (i = 0; i < cls.serverListLength; i++) {
-		Com_Printf("%02i: [%s]:%s (pinged: %i)\n", i, cls.serverList[i].node, cls.serverList[i].service, cls.serverList[i].pinged);
-	}
-}
-
-/**
- * @brief Adds a server to the serverlist cache
- * @return false if it is no valid address or server already exists
- * @sa CL_ParseStatusMessage
- */
-static void CL_AddServerToList (const char *node, const char *service)
-{
-	int i;
-
-	if (cls.serverListLength >= MAX_SERVERLIST)
-		return;
-
-	for (i = 0; i < cls.serverListLength; i++)
-		if (strcmp(cls.serverList[i].node, node) == 0 && strcmp(cls.serverList[i].service, service) == 0)
-			return;
-
-	memset(&(cls.serverList[cls.serverListLength]), 0, sizeof(serverList_t));
-	cls.serverList[cls.serverListLength].node = Mem_PoolStrDup(node, cl_localPool, CL_TAG_NONE);
-	cls.serverList[cls.serverListLength].service = Mem_PoolStrDup(service, cl_localPool, CL_TAG_NONE);
-	CL_PingServer(&cls.serverList[cls.serverListLength]);
-	cls.serverListLength++;
-}
-
-/**
- * @brief Multiplayer wait menu init function
- */
-static void CL_WaitInit_f (void)
-{
-	static qboolean reconnect = qfalse;
-	char buf[32];
-
-	/* the server knows this already */
-	if (!Com_ServerState()) {
-		Cvar_SetValue("sv_maxteams", atoi(cl.configstrings[CS_MAXTEAMS]));
-		Cvar_Set("mp_wait_init_show_force", "0");
-	} else {
-		Cvar_Set("mp_wait_init_show_force", "1");
-	}
-	Com_sprintf(buf, sizeof(buf), "%s/%s", cl.configstrings[CS_PLAYERCOUNT], cl.configstrings[CS_MAXCLIENTS]);
-	Cvar_Set("mp_wait_init_players", buf);
-	if (cl.configstrings[CS_NAME][0] == '\0') {
-		if (!reconnect) {
-			reconnect = qtrue;
-			CL_Reconnect_f();
-			MN_PopMenu(qfalse);
-		} else {
-			CL_Disconnect_f();
-			MN_PopMenu(qfalse);
-			MN_Popup(_("Error"), _("Server needs restarting - something went wrong"));
-		}
-	} else
-		reconnect = qfalse;
-}
-
-/**
- * @brief Team selection text
- *
- * This function fills the multiplayer_selectteam menu with content
- * @sa NET_OOB_Printf
- * @sa SV_TeamInfoString
- * @sa CL_SelectTeam_Init_f
- */
-static void CL_ParseTeamInfoMessage (struct dbuffer *msg)
-{
-	char *s = NET_ReadString(msg);
-	char *var;
-	char *value;
-	int cnt = 0, n;
-
-	if (!s) {
-		MN_MenuTextReset(TEXT_LIST);
-		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
-		return;
-	}
-
-	memset(&teamData, 0, sizeof(teamData));
-
-#if 0
-	Com_Printf("CL_ParseTeamInfoMessage: %s\n", s);
-#endif
-
-	value = s;
-	var = strstr(value, "\n");
-	*var++ = '\0';
-
-	teamData.teamplay = atoi(value);
-
-	value = var;
-	var = strstr(var, "\n");
-	*var++ = '\0';
-	teamData.maxteams = atoi(value);
-
-	value = var;
-	var = strstr(var, "\n");
-	*var++ = '\0';
-	teamData.maxplayersperteam = atoi(value);
-
-	s = var;
-	if (s)
-		Q_strncpyz(teamData.teamInfoText, s, sizeof(teamData.teamInfoText));
-
-	while (s != NULL) {
-		value = strstr(s, "\n");
-		if (value)
-			*value++ = '\0';
-		else
-			break;
-		/* get teamnum */
-		var = strstr(s, "\t");
-		if (var)
-			*var++ = '\0';
-
-		n = atoi(s);
-		if (n > 0 && n < MAX_TEAMS)
-			teamData.teamCount[n]++;
-		s = value;
-		cnt++;
-	}
-
-	/* no players are connected atm */
-	if (!cnt)
-		Q_strcat(teamData.teamInfoText, _("No player connected\n"), sizeof(teamData.teamInfoText));
-
-	Cvar_SetValue("mn_maxteams", teamData.maxteams);
-	Cvar_SetValue("mn_maxplayersperteam", teamData.maxplayersperteam);
-
-	mn.menuText[TEXT_LIST] = teamData.teamInfoText;
-	teamData.parsed = qtrue;
-
-	/* spawn multi-player death match soldiers here */
-	if (GAME_IsMultiplayer() && baseCurrent && !teamData.teamplay)
-		CL_SpawnSoldiers_f();
-}
-
-static char serverInfoText[1024];
-static char userInfoText[256];
-/**
- * @brief Serverbrowser text
- * @sa CL_PingServer
- * @sa CL_PingServers_f
- * @note This function fills the network browser server information with text
- * @sa NET_OOB_Printf
- * @sa CL_ServerInfoCallback
- */
-static void CL_ParseServerInfoMessage (struct net_stream *stream, const char *s)
-{
-	const char *value;
-	int team;
-	const char *token;
-	char buf[256];
-
-	if (!s)
-		return;
-
-	/* check for server status response message */
-	value = Info_ValueForKey(s, "sv_dedicated");
-	if (*value) {
-		/* server info cvars and users are seperated via newline */
-		const char *users = strstr(s, "\n");
-		if (!users) {
-			Com_Printf("%c%s\n", COLORED_GREEN, s);
-			return;
-		}
-		Com_DPrintf(DEBUG_CLIENT, "%s\n", s); /* status string */
-
-		Cvar_Set("mn_mappic", "maps/shots/default.jpg");
-		if (*Info_ValueForKey(s, "sv_needpass") == '1')
-			Cvar_Set("mn_server_need_password", "1");
-		else
-			Cvar_Set("mn_server_need_password", "0");
-
-		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), NET_StreamPeerToName(stream, buf, sizeof(buf), qtrue));
-		Cvar_Set("mn_server_ip", buf);
-		value = Info_ValueForKey(s, "sv_mapname");
-		assert(value);
-		Cvar_Set("mn_svmapname", value);
-		Q_strncpyz(buf, value, sizeof(buf));
-		token = buf;
-		/* skip random map char */
-		if (token[0] == '+')
-			token++;
-
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
-		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", token)) != -1) {
-			/* store it relative to pics/ dir - not relative to game dir */
-			Cvar_Set("mn_mappic", va("maps/shots/%s", token));
-		}
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "sv_hostname"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), _(Info_BoolForKey(s, "sv_enablemorale")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(s, "sv_gametype"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(s, "ver"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), _(Info_BoolForKey(s, "sv_dedicated")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(s, "sys_os"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(s, "sv_protocol"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(s, "sv_roundtimelimit"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Teamplay:\t%s\n"), _(Info_BoolForKey(s, "sv_teamplay")));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(s, "sv_maxplayersperteam"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. teams allowed in this map:\t%s\n"), Info_ValueForKey(s, "sv_maxteams"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(s, "sv_maxclients"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperplayer"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperteam"));
-		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(s, "sv_needpass")));
-		mn.menuText[TEXT_STANDARD] = serverInfoText;
-		userInfoText[0] = '\0';
-		do {
-			token = COM_Parse(&users);
-			if (!users)
-				break;
-			team = atoi(token);
-			token = COM_Parse(&users);
-			if (!users)
-				break;
-			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
-		} while (1);
-		mn.menuText[TEXT_LIST] = userInfoText;
-		MN_PushMenu("serverinfo", NULL);
-	} else
-		Com_Printf("%c%s", COLORED_GREEN, s);
-}
-
-/**
- * @sa CL_ServerInfo_f
- * @sa CL_ParseServerInfoMessage
- */
-static void CL_ServerInfoCallback (struct net_stream *s)
-{
-	struct dbuffer *buf = NET_ReadMsg(s);
-
-	if (!buf)
-		return;
-
-	{
-		const int cmd = NET_ReadByte(buf);
-		const char *str = NET_ReadStringLine(buf);
-
-		if (cmd == clc_oob && Q_strncmp(str, "print", 5) == 0) {
-			str = NET_ReadString(buf);
-			if (str)
-				CL_ParseServerInfoMessage(s, str);
-		}
-	}
-	NET_StreamFree(s);
-}
-
-/**
- * @sa CL_PingServers_f
- * @todo Not yet thread-safe
- */
-static int CL_QueryMasterServer (void *data)
-{
-	char *responseBuf;
-	const char *serverList;
-	const char *token;
-	char node[MAX_VAR], service[MAX_VAR];
-	int i, num;
-
-	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?query", masterserver_url->string));
-	if (!responseBuf) {
-		Com_Printf("Could not query masterserver\n");
-		return 1;
-	}
-
-	serverList = responseBuf;
-
-	Com_DPrintf(DEBUG_CLIENT, "masterserver response: %s\n", serverList);
-	token = COM_Parse(&serverList);
-
-	num = atoi(token);
-	if (num >= MAX_SERVERLIST) {
-		Com_DPrintf(DEBUG_CLIENT, "Too many servers: %i\n", num);
-		num = MAX_SERVERLIST;
-	}
-	for (i = 0; i < num; i++) {
-		/* host */
-		token = COM_Parse(&serverList);
-		if (!*token || !serverList) {
-			Com_Printf("Could not finish the masterserver response parsing\n");
-			break;
-		}
-		Q_strncpyz(node, token, sizeof(node));
-		/* port */
-		token = COM_Parse(&serverList);
-		if (!*token || !serverList) {
-			Com_Printf("Could not finish the masterserver response parsing\n");
-			break;
-		}
-		Q_strncpyz(service, token, sizeof(service));
-		CL_AddServerToList(node, service);
-	}
-
-	Mem_Free(responseBuf);
-
-	return 0;
-}
-
-/**
- * @sa SV_DiscoveryCallback
- */
-static void CL_ServerListDiscoveryCallback (struct datagram_socket *s, const char *buf, int len, struct sockaddr *from)
-{
-	const char match[] = "discovered";
-	if (len == sizeof(match) && memcmp(buf, match, len) == 0) {
-		char node[MAX_VAR];
-		char service[MAX_VAR];
-		NET_SockaddrToStrings(s, from, node, sizeof(node), service, sizeof(service));
-		CL_AddServerToList(node, service);
-	}
-}
-
-/**
- * @brief Add a new bookmark
- *
- * bookmarks are saved in cvar adr[0-15]
- */
-static void CL_BookmarkAdd_f (void)
-{
-	int i;
-	const char *newBookmark;
-
-	if (Cmd_Argc() < 2) {
-		newBookmark = Cvar_VariableString("mn_server_ip");
-		if (!newBookmark) {
-			Com_Printf("Usage: %s <ip>\n", Cmd_Argv(0));
-			return;
-		}
-	} else
-		newBookmark = Cmd_Argv(1);
-
-	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *bookmark = Cvar_VariableString(va("adr%i", i));
-		if (bookmark[0] == '\0') {
-			Cvar_Set(va("adr%i", i), newBookmark);
-			return;
-		}
-	}
-	/* bookmarks are full - overwrite the first entry */
-	MN_Popup(_("Notice"), _("All bookmark slots are used - please removed unused entries and repeat this step"));
-}
-
-/**
- * @sa CL_ServerInfoCallback
- */
-static void CL_ServerInfo_f (void)
-{
-	struct net_stream *s;
-	const char *host;
-	const char *port;
-
-	switch (Cmd_Argc()) {
-	case 2:
-		host = Cmd_Argv(1);
-		port = va("%d", PORT_SERVER);
-		break;
-	case 3:
-		host = Cmd_Argv(1);
-		port = Cmd_Argv(2);
-		break;
-	default:
-		if (cls.selectedServer) {
-			host = cls.selectedServer->node;
-			port = cls.selectedServer->service;
-		} else {
-			host = Cvar_VariableString("mn_server_ip");
-			port = va("%d", PORT_SERVER);
-		}
-		break;
-	}
-	s = NET_Connect(host, port);
-	if (s) {
-		NET_OOB_Printf(s, "status %i", PROTOCOL_VERSION);
-		NET_StreamSetCallback(s, &CL_ServerInfoCallback);
-	} else
-		Com_Printf("Could not connect to %s %s\n", host, port);
-}
-
-/**
- * @brief Callback for bookmark nodes in multiplayer menu (mp_bookmarks)
- * @sa CL_ParseServerInfoMessage
- */
-static void CL_ServerListClick_f (void)
-{
-	int num, i;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-	num = atoi(Cmd_Argv(1));
-
-	mn.menuText[TEXT_STANDARD] = serverInfoText;
-	if (num >= 0 && num < cls.serverListLength)
-		for (i = 0; i < cls.serverListLength; i++)
-			if (cls.serverList[i].pinged && cls.serverList[i].serverListPos == num) {
-				/* found the server - grab the infos for this server */
-				cls.selectedServer = &cls.serverList[i];
-				Cbuf_AddText(va("server_info %s %s;", cls.serverList[i].node, cls.serverList[i].service));
-				return;
-			}
-}
-
-/**
- * @brief Send the teaminfo string to server
- * @sa CL_ParseTeamInfoMessage
- */
-static void CL_SelectTeam_Init_f (void)
-{
-	/* reset menu text */
-	MN_MenuTextReset(TEXT_STANDARD);
-
-	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
-	mn.menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
-}
-
-/** this is true if pingservers was already executed */
-static qboolean serversAlreadyQueried = qfalse;
-static int lastServerQuery = 0;
-/** ms until the server query timed out */
-#define SERVERQUERYTIMEOUT 40000
-
-/**
- * @brief The first function called when entering the multiplayer menu, then CL_Frame takes over
- * @sa CL_ParseServerInfoMessage
- * @note Use a parameter for pingservers to update the current serverlist
- */
-static void CL_PingServers_f (void)
-{
-	int i;
-	char name[6];
-	const char *adrstring;
-
-	cls.selectedServer = NULL;
-
-	/* refresh the list */
-	if (Cmd_Argc() == 2) {
-		/* reset current list */
-		serverText[0] = 0;
-		serversAlreadyQueried = qfalse;
-		for (i = 0; i < cls.serverListLength; i++) {
-			Mem_Free(cls.serverList[i].node);
-			Mem_Free(cls.serverList[i].service);
-		}
-		cls.serverListPos = 0;
-		cls.serverListLength = 0;
-		memset(cls.serverList, 0, sizeof(cls.serverList));
-	} else {
-		mn.menuText[TEXT_LIST] = serverText;
-		return;
-	}
-
-	if (!cls.netDatagramSocket)
-		cls.netDatagramSocket = NET_DatagramSocketNew(NULL, va("%d", PORT_CLIENT), &CL_ServerListDiscoveryCallback);
-
-	/* broadcast search for all the servers int the local network */
-	if (cls.netDatagramSocket) {
-		const char buf[] = "discover";
-		NET_DatagramBroadcast(cls.netDatagramSocket, buf, sizeof(buf), PORT_SERVER);
-	}
-
-	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		char service[256];
-		const char *p;
-		Com_sprintf(name, sizeof(name), "adr%i", i);
-		adrstring = Cvar_VariableString(name);
-		if (!adrstring || !adrstring[0])
-			continue;
-
-		p = strrchr(adrstring, ':');
-		if (p)
-			Q_strncpyz(service, p + 1, sizeof(service));
-		else
-			Com_sprintf(service, sizeof(service), "%d", PORT_SERVER);
-		CL_AddServerToList(adrstring, service);
-	}
-
-	mn.menuText[TEXT_LIST] = serverText;
-
-	/* don't query the masterservers with every call */
-	if (serversAlreadyQueried) {
-		if (lastServerQuery + SERVERQUERYTIMEOUT > cls.realtime)
-			return;
-	} else
-		serversAlreadyQueried = qtrue;
-
-	lastServerQuery = cls.realtime;
-
-	/* query master server? */
-	if (Cmd_Argc() == 2 && Q_strcmp(Cmd_Argv(1), "local")) {
-		Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
-		/*SDL_CreateThread(CL_QueryMasterServer, NULL);*/
-		CL_QueryMasterServer(NULL);
-	}
-}
-
 
 /**
  * @brief Responses to broadcasts, etc
@@ -1229,138 +488,28 @@ static void CL_UserInfo_f (void)
 }
 
 /**
- * @brief Increase or decrease the teamnum
- * @sa CL_SelectTeam_Init_f
- */
-static void CL_TeamNum_f (void)
-{
-	int max = 4;
-	int i = cl_teamnum->integer;
-	static char buf[MAX_STRING_CHARS];
-	const int maxteamnum = Cvar_VariableInteger("mn_maxteams");
-
-	if (maxteamnum > 0)
-		max = maxteamnum;
-
-	cl_teamnum->modified = qfalse;
-
-	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
-		Cvar_SetValue("cl_teamnum", DEFAULT_TEAMNUM);
-		i = DEFAULT_TEAMNUM;
-	}
-
-	if (Q_strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {
-		for (i--; i > TEAM_CIVILIAN; i--) {
-			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
-				Cvar_SetValue("cl_teamnum", i);
-				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				mn.menuText[TEXT_STANDARD] = buf;
-				break;
-			} else {
-				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
-#ifdef DEBUG
-				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
-#endif
-			}
-		}
-	} else {
-		for (i++; i <= teamData.maxteams; i++) {
-			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
-				Cvar_SetValue("cl_teamnum", i);
-				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				mn.menuText[TEXT_STANDARD] = buf;
-				break;
-			} else {
-				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
-#ifdef DEBUG
-				Com_DPrintf(DEBUG_CLIENT, "team %i: %i (max: %i)\n", i, teamData.teamCount[i], teamData.maxplayersperteam);
-#endif
-			}
-		}
-	}
-
-#if 0
-	if (!teamnum->modified)
-		mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
-#endif
-	CL_SelectTeam_Init_f();
-}
-
-static int spawnCountFromServer = -1;
-/**
  * @brief Send the clc_teaminfo command to server
- * @sa CL_SendCurTeamInfo
+ * @todo Should really not depend on an aircraft
+ * @sa GAME_SendCurrentTeamSpawningInfo
  */
 static void CL_SpawnSoldiers_f (void)
 {
-	const int n = cl_teamnum->integer;
-	base_t *base;
-	aircraft_t *aircraft = cls.missionaircraft;
-	chrList_t chrListTemp;
 	int i;
-
-	if (!cls.missionaircraft) {
+	aircraft_t *aircraft = cls.missionaircraft;
+	if (!aircraft) {
 		Com_Printf("CL_SpawnSoldiers_f: No mission aircraft\n");
 		return;
 	}
 
-	base = CP_GetMissionBase();
-
-	if (GAME_IsMultiplayer() && base && !teamData.parsed) {
-		Com_Printf("CL_SpawnSoldiers_f: teaminfo unparsed\n");
-		return;
-	}
-
-	if (soldiersSpawned) {
-		Com_Printf("CL_SpawnSoldiers_f: Soldiers are already spawned\n");
-		return;
-	}
-
-	if (GAME_IsMultiplayer() && base) {
-		/* we are already connected and in this list */
-		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
-			mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
-			Com_Printf("CL_SpawnSoldiers_f: Invalid or full team %i\n"
-				"  maxplayers per team: %i - players on team: %i",
-				n, teamData.maxplayersperteam, teamData.teamCount[n]);
-			return;
-		}
-	}
-
 	/* convert aircraft team to chr_list */
-	for (i = 0, chrListTemp.num = 0; i < aircraft->maxTeamSize; i++) {
+	for (i = 0, cl.chrList.num = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i]) {
-			chrListTemp.chr[chrListTemp.num] = &aircraft->acTeam[i]->chr;
-			chrListTemp.num++;
+			cl.chrList.chr[cl.chrList.num] = &aircraft->acTeam[i]->chr;
+			cl.chrList.num++;
 		}
 	}
 
-	if (chrListTemp.num <= 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_SpawnSoldiers_f: Error - team number <= zero - %i\n", chrListTemp.num);
-	} else {
-		/* send team info */
-		struct dbuffer *msg = new_dbuffer();
-		CL_SendCurTeamInfo(msg, &chrListTemp, base);
-		NET_WriteMsg(cls.netStream, msg);
-	}
-
-	{
-		struct dbuffer *msg = new_dbuffer();
-		NET_WriteByte(msg, clc_stringcmd);
-		NET_WriteString(msg, va("spawn %i\n", spawnCountFromServer));
-		NET_WriteMsg(cls.netStream, msg);
-	}
-
-	soldiersSpawned = qtrue;
-
-	/* spawn immediately if in single-player, otherwise wait for other players to join */
-	if (GAME_IsSingleplayer()) {
-		/* activate hud */
-		MN_PushMenu(mn_hud->string, NULL);
-		Cvar_Set("mn_active", mn_hud->string);
-	} else {
-		MN_PushMenu("multiplayer_wait", NULL);
-	}
+	GAME_SpawnSoldiers(&cl.chrList);
 }
 
 /**
@@ -1436,8 +585,7 @@ void CL_RequestNextDownload (void)
 
 	CL_LoadMedia();
 
-	soldiersSpawned = qfalse;
-	spawnCountFromServer = atoi(Cmd_Argv(1));
+	cl.servercount = atoi(Cmd_Argv(1));
 
 	{
 		struct dbuffer *msg = new_dbuffer();
@@ -1445,7 +593,7 @@ void CL_RequestNextDownload (void)
 		/* this will activate the render process (see client state ca_active) */
 		NET_WriteByte(msg, clc_stringcmd);
 		/* see CL_StartGame */
-		NET_WriteString(msg, va("begin %i\n", spawnCountFromServer));
+		NET_WriteString(msg, va("begin %i\n", cl.servercount));
 		NET_WriteMsg(cls.netStream, msg);
 	}
 
@@ -1689,6 +837,8 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		AIR_ParseAircraft(name, text, qtrue);
 	else if (!Q_strncmp(type, "ugv", 3))
 		CL_ParseUGVs(name, text);
+
+	Com_AddObjectLinks();	/**< Add tech links + ammo<->weapon links to items.*/
 }
 
 /** @brief struct that holds the sanity check data */
@@ -1952,8 +1102,6 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
  */
 static void CL_InitLocal (void)
 {
-	int i;
-
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
 
@@ -1992,8 +1140,6 @@ static void CL_InitLocal (void)
 	AIM_InitStartup();
 
 	/* register our variables */
-	for (i = 0; i < MAX_BOOKMARKS; i++)
-		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", 0, "Show geoscape coords on console (for mission placement) and shows menu coord besides the cursor");
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
@@ -2002,7 +1148,6 @@ static void CL_InitLocal (void)
 	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entites as null models");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
-	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
 	cl_logevents = Cvar_Get("cl_logevents", "0", 0, "Log all events to events.log");
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	cl_worldlevel->modified = qfalse;
@@ -2017,9 +1162,7 @@ static void CL_InitLocal (void)
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "8000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
-	cl_serverlist = Cvar_Get("cl_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 	/* userinfo */
-	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
 	cl_team = Cvar_Get("cl_team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
@@ -2040,11 +1183,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
 	Cmd_AddCommand("invopen", CL_ActorInventoryOpen_f, _("Open the actors inventory while we are in tactical mission"));
 
-	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
-	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);
-	Cmd_AddCommand("serverlist", CL_PrintServerList_f, NULL);
-	/* text id is servers in menu_multiplayer.ufo */
-	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 	Cmd_AddCommand("disconnect", CL_Disconnect_f, "Disconnect from the current server");
@@ -2062,11 +1200,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("env", CL_Env_f, NULL);
 
 	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
-	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
-	Cmd_AddCommand("mp_wait_init", CL_WaitInit_f, "Function that inits some nodes");
 	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
-	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
-	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
 	Cmd_AddCommand("cl_configstrings", CL_ShowConfigstrings_f, "Print client configstrings to game console");
 
 	/* forward to server commands
@@ -2096,8 +1230,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("debug_stunteam", NULL, "Stuns a given team");
 	Cmd_AddCommand("debug_listscore", NULL, "Shows mission-score entries of all team members");
 #endif
-
-	memset(&teamData, 0, sizeof(teamData));
 }
 
 /**

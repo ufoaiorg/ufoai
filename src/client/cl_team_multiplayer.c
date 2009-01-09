@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
+#include "cl_game.h"
 #include "cl_team.h"
 #include "cl_team_multiplayer.h"
 #include "menu/m_popup.h"
@@ -129,7 +130,7 @@ static void CL_GenerateNewMultiplayerTeam_f (void)
 /**
  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
  * @note Called by CL_SaveTeamMultiplayer to store the team info
- * @sa CL_SendCurTeamInfo
+ * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa CL_LoadTeamMultiplayerMember
  */
 static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf, const employeeType_t type)

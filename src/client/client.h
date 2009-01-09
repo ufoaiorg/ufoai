@@ -43,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cl_event.h"
 #include "campaign/cl_save.h"
 #include "renderer/r_entity.h"
-#include "cl_game.h"
 
 /*============================================================================= */
 
@@ -93,8 +92,17 @@ typedef struct {
 	char cinfo[MAX_QPATH];
 } clientinfo_t;
 
+/* if you increase this, you also have to change the aircraft buy/sell menu scripts */
+#define MAX_ACTIVETEAM	8
+
+typedef struct chr_list_s {
+	character_t* chr[MAX_ACTIVETEAM];
+	int num;	/* Number of entries */
+} chrList_t;
+
 /**
- * @brief the client_state_t structure is wiped completely at every server map change
+ * @brief This is the structure that should be used for data that is needed for tactical missions only.
+ * @note the client_state_t structure is wiped completely at every server map change
  * @sa client_static_t
  */
 typedef struct client_state_s {
@@ -134,6 +142,9 @@ typedef struct client_state_s {
 
 	int map_maxlevel;
 	int map_maxlevel_base;
+
+	/** @todo what about the teamList - should one of these be removed */
+	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
 
 extern client_state_t cl;
@@ -153,23 +164,6 @@ typedef enum {
 	key_console,
 	key_message
 } keydest_t;
-
-
-typedef struct serverList_s {
-	char *node;						/**< node ip address */
-	char *service;					/**< node port */
-	qboolean pinged;				/**< already pinged */
-	char sv_hostname[MAX_OSPATH];	/**< the server hostname */
-	char mapname[16];				/**< currently running map */
-	char version[8];				/**< the game version */
-	char gametype[8];				/**< the game type */
-	qboolean sv_dedicated;			/**< dedicated server */
-	int sv_maxclients;				/**< max. client amount allowed */
-	int clients;					/**< already connected clients */
-	int serverListPos;				/**< position in the server list array */
-} serverList_t;
-
-#define MAX_SERVERLIST 128
 
 /**
  * @brief Not cleared on a map change (static data)
@@ -198,10 +192,6 @@ typedef struct client_static_s {
 	char serverport[16];			/**< port the server is running at */
 	int connectTime;				/**< for connection retransmits */
 	int waitingForStart;			/**< waiting for EV_START or timeout */
-	int serverListLength;
-	int serverListPos;
-	serverList_t serverList[MAX_SERVERLIST];
-	serverList_t *selectedServer;
 
 	struct datagram_socket *netDatagramSocket;
 	struct net_stream *netStream;
@@ -321,17 +311,9 @@ void CL_ScriptSanityCheckCampaign(void);
 
 void CL_ClearState(void);
 
-/* if you increase this, you also have to change the aircraft buy/sell menu scripts */
-#define MAX_ACTIVETEAM	8
-
 struct base_s;
 struct installation_s;
 struct employee_s;
-
-typedef struct chr_list_s {
-	character_t* chr[MAX_ACTIVETEAM];
-	int num;	/* Number of entries */
-} chrList_t;
 
 #include "cl_le.h"
 #include "cl_menu.h"

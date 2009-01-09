@@ -46,8 +46,7 @@ void MN_Popup (const char *title, const char *text)
 {
 	mn.menuText[TEXT_POPUP] = title;
 	mn.menuText[TEXT_POPUP_INFO] = text;
-	if (GAME_IsCampaign())
-		CL_GameTimeStop();
+	CL_GameTimeStop();
 	MN_PushMenu(POPUP_MENU_NAME, NULL);
 }
 
@@ -69,8 +68,7 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 	/* make sure, that we are using the linked list */
 	MN_MenuTextReset(TEXT_LIST);
 	mn.menuTextLinkedList[TEXT_LIST] = entries;
-	if (GAME_IsCampaign())
-		CL_GameTimeStop();
+	CL_GameTimeStop();
 
 	popupListMenu = MN_GetMenu(POPUPLIST_MENU_NAME);
 	if (!popupListMenu)
@@ -162,8 +160,7 @@ void MN_PopupButton (const char *title, const char *text,
 	else
 		mn.menuText[TEXT_POPUP_INFO] = popupText;
 
-	if (GAME_IsCampaign())
-		CL_GameTimeStop();
+	CL_GameTimeStop();
 
 	popupButtonMenu = MN_GetMenu(POPUPBUTTON_MENU_NAME);
 	if (!popupButtonMenu)

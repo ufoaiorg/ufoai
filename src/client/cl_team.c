@@ -195,7 +195,7 @@ void CL_LoadInventory (sizebuf_t *buf, inventory_t *i)
  */
 static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int x, int y)
 {
-	int ammoIdx = item.m ? item.m->idx : NONE;
+	const int ammoIdx = item.m ? item.m->idx : NONE;
 	assert(item.t);
 	Com_DPrintf(DEBUG_CLIENT, "CL_NetSendItem: Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n",
 		item.t->id, container, item.t->idx, item.a, ammoIdx, x, y);
@@ -205,10 +205,10 @@ static void CL_NetSendItem (struct dbuffer *buf, item_t item, int container, int
 /**
  * @sa G_SendInventory
  */
-static void CL_NetSendInventory (struct dbuffer *buf, inventory_t *i)
+void CL_NetSendInventory (struct dbuffer *buf, const inventory_t *i)
 {
 	int j, nr = 0;
-	invList_t *ic;
+	const invList_t *ic;
 
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
@@ -792,7 +792,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
  * @sa CL_GenerateEquipment_f
  * @sa CL_ResetMultiplayerTeamInAircraft
  * @sa CL_SaveTeamMultiplayerInfo
- * @sa CL_SendCurTeamInfo
+ * @sa GAME_SendCurrentTeamSpawningInfo
  */
 void CL_CleanTempInventory (base_t* base)
 {
@@ -841,10 +841,10 @@ static void CL_GenerateEquipment_f (void)
 	/* Get team. */
 	if (strstr(Cvar_VariableString("team"), "alien")) {
 		team = 1;
-		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team alien, id: %i\n", team);
+		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f: team alien, id: %i\n", team);
 	} else {
 		team = 0;
-		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f().. team human, id: %i\n", team);
+		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f: team human, id: %i\n", team);
 	}
 
 	/* Store hired names. */
@@ -1573,72 +1573,6 @@ void TEAM_InitStartup (void)
 #endif
 }
 
-/**
- * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
- * @sa G_ClientTeamInfo
- * @sa CL_SaveTeamMultiplayerInfo
- * @note Called in CL_Precache_f to send the team info to server
- */
-void CL_SendCurTeamInfo (struct dbuffer * buf, chrList_t *team, base_t *base)
-{
-	int i, j;
-
-	/* clean temp inventory */
-	CL_CleanTempInventory(base);
-
-	/* header */
-	NET_WriteByte(buf, clc_teaminfo);
-	NET_WriteByte(buf, team->num);
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_SendCurTeamInfo: Upload information about %i soldiers to server\n", team->num);
-	for (i = 0; i < team->num; i++) {
-		character_t *chr = team->chr[i];
-		assert(chr);
-		assert(chr->fieldSize > 0);
-		/* send the fieldSize ACTOR_SIZE_* */
-		NET_WriteByte(buf, chr->fieldSize);
-
-		/* unique character number */
-		NET_WriteShort(buf, chr->ucn);
-
-		/* name */
-		NET_WriteString(buf, chr->name);
-
-		/* model */
-		NET_WriteString(buf, chr->path);
-		NET_WriteString(buf, chr->body);
-		NET_WriteString(buf, chr->head);
-		NET_WriteByte(buf, chr->skin);
-
-		NET_WriteShort(buf, chr->HP);
-		NET_WriteShort(buf, chr->maxHP);
-		NET_WriteByte(buf, chr->teamDef ? chr->teamDef->idx : NONE);
-		NET_WriteByte(buf, chr->gender);
-		NET_WriteByte(buf, chr->STUN);
-		NET_WriteByte(buf, chr->morale);
-
-		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			NET_WriteLong(buf, chr->score.experience[j]);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)
-			NET_WriteByte(buf, chr->score.skills[j]);
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			NET_WriteByte(buf, chr->score.initialSkills[j]);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			NET_WriteShort(buf, chr->score.kills[j]);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			NET_WriteShort(buf, chr->score.stuns[j]);
-		NET_WriteShort(buf, chr->score.assignedMissions);
-		NET_WriteByte(buf, chr->score.rank);
-
-		/* Send user-defined (default) reaction-state. */
-		NET_WriteShort(buf, chr->reservedTus.reserveReaction);
-
-		/* inventory */
-		CL_NetSendInventory(buf, chr->inv);
-	}
-}
-
 typedef struct {
 	int ucn;
 	int HP;
@@ -1654,7 +1588,7 @@ typedef struct {
  * is not NULL the data is stored in a temp buffer because the player can choose to retry
  * the mission and we have to catch this situation to not update the character data in this case.
  * @sa G_SendCharacterData
- * @sa CL_SendCurTeamInfo
+ * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa G_EndGame
  * @sa E_Save
  */

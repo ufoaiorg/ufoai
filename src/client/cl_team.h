@@ -57,8 +57,8 @@ void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int
 void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void TEAM_InitStartup(void);
 void CL_ParseResults(struct dbuffer *msg);
-void CL_SendCurTeamInfo(struct dbuffer * buf, chrList_t *team, base_t *base);
 void CL_AddCarriedToEquipment(const struct aircraft_s *aircraft, equipDef_t *equip);
 void CL_ParseCharacterData(struct dbuffer *msg);
+void CL_NetSendInventory(struct dbuffer *buf, const inventory_t *i);
 
 #endif

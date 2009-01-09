@@ -401,6 +401,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_game_skirmish.h" />
+		<Unit filename="..\..\src\client\multiplayer\cp_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\multiplayer\cp_callbacks.h" />
+		<Unit filename="..\..\src\client\multiplayer\cp_serverlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\multiplayer\cp_serverlist.h" />
 		<Unit filename="..\..\src\client\cl_global.h" />
 		<Unit filename="..\..\src\client\cl_http.c">
 			<Option compilerVar="CC" />

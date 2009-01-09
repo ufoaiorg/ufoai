@@ -25,7 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-#include "cl_game_multiplayer.h"
+#include "cl_game.h"
+#include "multiplayer/mp_callbacks.h"
+#include "multiplayer/mp_serverlist.h"
 #include "cl_team.h"
 #include "cl_team_multiplayer.h"
 #include "menu/m_popup.h"
@@ -208,11 +210,32 @@ void GAME_MP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 	}
 }
 
+qboolean GAME_MP_Spawn (chrList_t *chrList)
+{
+	const int n = cl_teamnum->integer;
+
+	if (!teamData.parsed) {
+		Com_Printf("GAME_MP_Spawn: teaminfo unparsed\n");
+		return qfalse;
+	}
+
+	/* we are already connected and in this list */
+	if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
+		mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
+		Com_Printf("GAME_MP_Spawn: Invalid or full team %i\n"
+			"  maxplayers per team: %i - players on team: %i",
+			n, teamData.maxplayersperteam, teamData.teamCount[n]);
+		return qfalse;
+	}
+
+	MN_PushMenu("multiplayer_wait", NULL);
+	return qtrue;
+}
+
 void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
-	const char *type, *name, *text;
 
 	Cvar_ForceSet("sv_maxclients", "2");
 
@@ -221,6 +244,8 @@ void GAME_MP_InitStartup (void)
 	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
 	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
 	Cmd_AddCommand("mp_autoteam", GAME_MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
+	MP_CallbacksInit();
+	MP_ServerListInit();
 
 	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
 	 * cvars if values were previously set */
@@ -239,21 +264,6 @@ void GAME_MP_InitStartup (void)
 	 * multiplayer menu while you are still connected */
 	if (cls.state >= ca_connecting)
 		CL_Disconnect();
-
-	/* pre-stage parsing */
-	FS_BuildFileList("ufos/*.ufo");
-	FS_NextScriptHeader(NULL, NULL, NULL);
-	text = NULL;
-
-	if (!gd.numTechnologies) {
-		while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-			if (!Q_strncmp(type, "tech", 4))
-				RS_ParseTechnologies(name, &text);
-
-		/* fill in IDXs for required research techs */
-		RS_RequiredLinksAssign();
-		Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
-	}
 }
 
 void GAME_MP_Shutdown (void)
@@ -268,4 +278,8 @@ void GAME_MP_Shutdown (void)
 	Cmd_RemoveCommand("mp_nextgametype");
 	Cmd_RemoveCommand("mp_prevgametype");
 	Cmd_RemoveCommand("mp_autoteam");
+	MP_CallbacksShutdown();
+	MP_ServerListShutdown();
+
+	memset(&teamData, 0, sizeof(teamData));
 }

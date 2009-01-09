@@ -31,5 +31,6 @@ qboolean GAME_CP_IsRunning(void);
 void GAME_CP_InitStartup(void);
 void GAME_CP_Shutdown(void);
 void GAME_CP_Results(int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
+qboolean GAME_CP_Spawn(chrList_t *chrList);
 
 #endif

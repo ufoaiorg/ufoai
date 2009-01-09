@@ -2667,7 +2667,7 @@ static void G_ClientSkipActorInfo (void)
 /**
  * @brief The client lets the server spawn the actors for a given player by sending their information (models, inventory, etc..) over the network.
  * @param[in] player The player to spawn the actors for.
- * @sa CL_SendCurTeamInfo
+ * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa globals.ClientTeamInfo
  * @sa clc_teaminfo
  * @sa G_EndGame

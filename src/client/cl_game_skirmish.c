@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-#include "cl_game_skirmish.h"
+#include "cl_game.h"
 #include "cl_team.h"
 #include "menu/m_popup.h"
 
@@ -125,6 +125,11 @@ void GAME_SK_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 		Com_sprintf(popupText, lengthof(popupText), "%s%s", _("You've lost the game!"), resultText);
 		MN_Popup(_("Better luck next time"), popupText);
 	}
+}
+
+qboolean GAME_SK_Spawn (chrList_t *chrList)
+{
+	return qtrue;
 }
 
 void GAME_SK_InitStartup (void)

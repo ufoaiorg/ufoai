@@ -1,6 +1,6 @@
 /**
- * @file cl_game_skirmish.h
- * @brief Skirmish game type headers
+ * @file mp_callbacks.h
+ * @brief Serverlist menu callbacks headers for multiplayer
  */
 
 /*
@@ -23,12 +23,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_GAME_SKIRMISH_H
-#define CL_GAME_SKIRMISH_H
+#ifndef MP_CALLBACKS_H
+#define MP_CALLBACKS_H
 
-void GAME_SK_InitStartup(void);
-void GAME_SK_Shutdown(void);
-void GAME_SK_Results(int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
-qboolean GAME_SK_Spawn(chrList_t *chrList);
+#include "../client.h"
+
+typedef struct teamData_s {
+	int teamCount[MAX_TEAMS];	/**< team counter - parsed from server data 'teaminfo' */
+	qboolean teamplay;
+	int maxteams;
+	int maxplayersperteam;		/**< max players per team */
+	char teamInfoText[MAX_MESSAGE_TEXT];
+	qboolean parsed;
+} teamData_t;
+
+extern teamData_t teamData;
+
+void CL_Rcon_f(void);
+void CL_Connect_f(void);
+void CL_Disconnect_f(void);
+void CL_Reconnect_f(void);
+void MP_CallbacksInit(void);
+void MP_CallbacksShutdown(void);
 
 #endif
