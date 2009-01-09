@@ -33,7 +33,6 @@ typedef enum {
 	MS_NULL,
 	MS_MENU,		/**< we are over some menu node */
 	MS_DRAGITEM,	/**< we are dragging some stuff / equipment */
-	MS_ROTATE,		/**< we are rotating models (UFOpaedia) */
 	MS_WORLD,		/**< we are in tactical mode */
 } mouseSpace_t;
 
@@ -60,7 +59,6 @@ typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
 extern camera_mode_t camera_mode;
 extern int mouseSpace;
 extern int mousePosX, mousePosY;
-extern float *rotateAngles;
 extern const float MIN_ZOOM, MAX_ZOOM;
 
 void IN_Init(void);

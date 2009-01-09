@@ -78,7 +78,6 @@ static int oldMousePosX, oldMousePosY;
  * rotate angles for menu models - pointer to menu node angles vec3_t
  * modify the node->angles values to rotate a model
  */
-float *rotateAngles;
 static qboolean wasCrouched = qfalse, doCrouch = qfalse;
 static float crouchHt = 0.;
 
@@ -1175,23 +1174,6 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
 static void IN_Parse (void)
 {
 	switch (mouseSpace) {
-	case MS_ROTATE:
-		/* rotate a model */
-		rotateAngles[YAW] -= ROTATE_SPEED * (mousePosX - oldMousePosX);
-		rotateAngles[ROLL] += ROTATE_SPEED * (mousePosY - oldMousePosY);
-
-		/* clamp the angles */
-		while (rotateAngles[YAW] > 360.0)
-			rotateAngles[YAW] -= 360.0;
-		while (rotateAngles[YAW] < 0.0)
-			rotateAngles[YAW] += 360.0;
-
-		if (rotateAngles[ROLL] < 0.0)
-			rotateAngles[ROLL] = 0.0;
-		else if (rotateAngles[ROLL] > 180.0)
-			rotateAngles[ROLL] = 180.0;
-		return;
-
 	case MS_DRAGITEM:
 		/* do nothing */
 		return;

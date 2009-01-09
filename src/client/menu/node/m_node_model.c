@@ -29,8 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh_anim.h"
 #include "../m_nodes.h"
 #include "../m_parse.h"
+#include "../m_input.h"
 #include "m_node_model.h"
 #include "m_node_abstractnode.h"
+
+#define ROTATE_SPEED	0.5
 
 static nodeBehaviour_t *modelBehaviour;
 
@@ -484,16 +487,46 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	} while (menuModel != NULL);
 }
 
-/**
- * @brief Activates the model rotation
- * @note set the mouse space to MS_ROTATE
- * @sa rotateAngles
- */
-static void MN_ModelNodeClick (menuNode_t * node, int x, int y)
+static int oldMousePosX = 0;
+static int oldMousePosY = 0;
+
+static void MN_ModelNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 {
-	mouseSpace = MS_ROTATE;
-	/* modify node->model.angles (vec3_t) if you rotate the model */
-	rotateAngles = node->u.model.angles;
+	float *rotateAngles = node->u.model.angles;
+
+	/* rotate a model */
+	rotateAngles[YAW] -= ROTATE_SPEED * (x - oldMousePosX);
+	rotateAngles[ROLL] += ROTATE_SPEED * (y - oldMousePosY);
+
+	/* clamp the angles */
+	while (rotateAngles[YAW] > 360.0)
+		rotateAngles[YAW] -= 360.0;
+	while (rotateAngles[YAW] < 0.0)
+		rotateAngles[YAW] += 360.0;
+
+	if (rotateAngles[ROLL] < 0.0)
+		rotateAngles[ROLL] = 0.0;
+	else if (rotateAngles[ROLL] > 180.0)
+		rotateAngles[ROLL] = 180.0;
+
+	oldMousePosX = x;
+	oldMousePosY = y;
+}
+
+static void MN_ModelNodeMouseDown (menuNode_t *node, int x, int y, int button)
+{
+	if (button != K_MOUSE1)
+		return;
+	MN_SetMouseCapture(node);
+	oldMousePosX = x;
+	oldMousePosY = y;
+}
+
+static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
+{
+	if (button != K_MOUSE1)
+		return;
+	MN_MouseRelease();
 }
 
 /**
@@ -508,8 +541,10 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "model";
 	behaviour->draw = MN_DrawModelNode2;
-	behaviour->leftClick = MN_ModelNodeClick;
+	behaviour->mouseDown = MN_ModelNodeMouseDown;
+	behaviour->mouseUp = MN_ModelNodeMouseUp;
 	behaviour->loading = MN_ModelNodeLoading;
+	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
