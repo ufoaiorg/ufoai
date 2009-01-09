@@ -544,6 +544,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	const int cache_scrollCur = menuInventory->scrollCur;
 	const int cache_scrollNum = menuInventory->scrollNum;
 	const int cache_scrollTotalNum = menuInventory->scrollTotalNum;
+	const int equipType = node->filterEquipType;
 
 	MN_GetNodeAbsPos(node, nodepos);
 
@@ -861,6 +862,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 	int curItem = 0;	/**< Item counter for all items that _could_ get displayed in the current view (equipType). */
 	int curDispItem = 0;	/**< Item counter for all items that actually get displayed. */
 	int rowOffset;
+	const int equipType = node->filterEquipType;
 
 	int tempX, tempY;
 
@@ -1268,9 +1270,10 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		menuNode_t *target;
 
 		/* menu */
-		if (MN_IsScrollContainerNode(source))
+		if (MN_IsScrollContainerNode(source)) {
+			const int equipType = source->filterEquipType;
 			fItem = INV_SearchInScrollableContainer(menuInventory, source->container, NONE, NONE, dragItem->t, equipType);
-		else
+		} else
 			fItem = Com_SearchInInventory(menuInventory, source->container, dragInfoFromX, dragInfoFromY);
 
 		/** @todo need to understand what its done here */

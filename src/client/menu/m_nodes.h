@@ -114,7 +114,6 @@ typedef struct menuNode_s {
 
 	/** @todo needs cleanup */
 	vec3_t scale;
-	invDef_t *container;		/** The container linked to this node. */
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
@@ -142,6 +141,10 @@ typedef struct menuNode_s {
 
 	/* BaseLayout */
 	int baseid;					/**< the baseid - e.g. for baselayout nodes */
+
+	/* container */
+	invDef_t *container;		/** The container linked to this node. */
+	int filterEquipType;
 
 	/** union will contain all extradata for a node */
 	union {

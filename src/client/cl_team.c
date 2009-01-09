@@ -35,12 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static qboolean displayHeavyEquipmentList = qfalse; /**< Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
 
-/**
- * @brief The current selected category in equip menu.
- * @todo Check if we can change this to be of type "itemFilterTypes_t"
- */
-int equipType;
-
 linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
@@ -901,10 +895,12 @@ static void CL_GenerateEquipment_f (void)
 
 /**
  * @brief Sets (filter type) category for equip menu.
+ * @todo delete this and translate equipType by property
  */
 static void CL_EquipType_f (void)
 {
 	itemFilterTypes_t num;	/**< filter type/equipment category. */
+	menuNode_t *node;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category name>\n", Cmd_Argv(0));
@@ -920,14 +916,14 @@ static void CL_EquipType_f (void)
 		return;
 
 	/* Reset scroll info for a new filter type/category. */
-	if (equipType != num || !menuInventory->c[csi.idEquip]) {
+	node = MN_GetNodeByPath("equipment.equip");
+	assert(node);
+	if (node->filterEquipType != num) {
+		node->filterEquipType = num;
 		menuInventory->scrollCur = 0;
 		menuInventory->scrollNum = 0;
 		menuInventory->scrollTotalNum = 0;
 	}
-
-	/* Display new items. */
-	equipType = num;
 
 	/* First-time linking of menuInventory. */
 	if (baseCurrent && !menuInventory->c[csi.idEquip]) {

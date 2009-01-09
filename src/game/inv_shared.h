@@ -371,6 +371,7 @@ typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
 
 	/* Scroll information for idEquip. */
+	/** @todo move it into the container node */
 	int scrollCur;		/**< Index of first item that is displayed. */
 	int scrollNum;		/**< Number of items that are displayed. */
 	int scrollTotalNum;	/**< Total number of displayable items. */
