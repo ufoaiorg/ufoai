@@ -508,6 +508,34 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 }
 
 /**
+ * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
+ * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
+ * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
+ * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
+ * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @sa Com_SearchInInventory
+ */
+invList_t *Com_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
+{
+	invList_t *ic;
+	for (ic = i->c[container->id]; ic; ic = ic->next) {
+		/* Search only in the items that could get displayed. */
+		if (ic && ic->item.t && (INV_ItemMatchesFilter(ic->item.t, filterType) || filterType == MAX_FILTERTYPES)) {
+			if (item) {
+				/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
+				if (item == ic->item.t)
+					return ic;
+			}
+		}
+	}
+
+	/* No item with these coordinates (or matching item) found. */
+	return NULL;
+}
+
+/**
  * @brief Searches if there is an item at location (x,y) in a container.
  * @param[in] i Pointer to the inventory where we will search.
  * @param[in] container Container in the inventory.
