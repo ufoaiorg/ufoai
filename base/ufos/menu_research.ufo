@@ -674,13 +674,13 @@ menu research
 	}
 	pic progress_img
 	{
-		if "mn_research_seltimebar != 0"
+		visiblewhen "mn_research_seltimebar != 0"
 		pos "704 657"
 		image menu/bar_rahmen
 	}
 	bar progress_bar
 	{
-		if "mn_research_seltimebar != 0"
+		visiblewhen "mn_research_seltimebar != 0"
 		pos "714 662"
 		current "*cvar mn_research_seltimebar"
 		size "245 6"

@@ -52,7 +52,7 @@ menu options
 
 	button button_sound
 	{
-		if "snd_init == 1"
+		visiblewhen "snd_init == 1"
 		pos	"80 310"
 		size "256 64"
 		click	{ cmd "mn_pop;mn_push options_sound;" }
@@ -65,7 +65,7 @@ menu options
 
 	button button_sound_na
 	{
-		if "snd_init == 0"
+		visiblewhen "snd_init == 0"
 		tooltip	"_Sound is not activated"
 		pos	"80 310"
 		size "256 64"

@@ -894,7 +894,7 @@ menu buy
 
 	string itemname
 	{
-		if "mn_itemtype != 8"	// for everything except aircraft
+		visiblewhen "mn_itemtype != 8"	// for everything except aircraft
 		string	"*cvar mn_itemname"
 		pos	"793 155"
 		align	uc
@@ -902,7 +902,7 @@ menu buy
 
 	string aircraftname
 	{
-		if "mn_itemtype == 8"	// Only for aircraft.
+		visiblewhen "mn_itemtype == 8"	// Only for aircraft.
 		string  "*cvar mn_aircraftname"
 		pos	"793 155"
 		align   uc
@@ -938,7 +938,7 @@ menu buy
 
 	pic weapon_dec
 	{
-		if "mn_changeweapon == 1"
+		visiblewhen "mn_changeweapon == 1"
 		tooltip "_Previous weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos	"745 498"
@@ -953,7 +953,7 @@ menu buy
 
 	pic ammo_dec
 	{
-		if "mn_changeweapon == 2"
+		visiblewhen "mn_changeweapon == 2"
 		tooltip "_Previous ammunition compatible with this weapon"
 		image	menu/buttons_small
 		pos	"745 498"
@@ -969,7 +969,7 @@ menu buy
 
 	pic weapon_inc
 	{
-		if "mn_changeweapon == 1"
+		visiblewhen "mn_changeweapon == 1"
 		tooltip "_Next weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos	"955 498"
@@ -984,7 +984,7 @@ menu buy
 
 	pic ammo_inc
 	{
-		if "mn_changeweapon == 2"
+		visiblewhen "mn_changeweapon == 2"
 		tooltip "_Next ammunition compatible with this weapon"
 		image	menu/buttons_small
 		pos	"955 498"
@@ -999,7 +999,7 @@ menu buy
 
 	string header_weapon
 	{
-		if "mn_displayweapon == 1"
+		visiblewhen "mn_displayweapon == 1"
 		string	"_With weapon:"
 		pos	"620 506"
 		align	cl
@@ -1008,7 +1008,7 @@ menu buy
 
 	string header_ammo
 	{
-		if "mn_displayweapon == 2"
+		visiblewhen "mn_displayweapon == 2"
 		string	"_With ammo:"
 		pos	"620 506"
 		align	cl
@@ -1033,7 +1033,7 @@ menu buy
 
 	pic firemode_dec
 	{
-		if "mn_changefiremode == 1"
+		visiblewhen "mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
 		pos	"745 516"
@@ -1048,7 +1048,7 @@ menu buy
 
 	pic firemode_inc
 	{
-		if "mn_changefiremode == 1"
+		visiblewhen "mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
 		pos	"955 516"
@@ -1063,7 +1063,7 @@ menu buy
 
 	string header_firemode
 	{
-		if "mn_displayfiremode == 1"
+		visiblewhen "mn_displayfiremode == 1"
 		string	"_Firemode:"
 		pos	"620 524"
 		align	cl
@@ -1072,7 +1072,7 @@ menu buy
 
 	string firemode_name
 	{
-		if "mn_displayfiremode == 1"
+		visiblewhen "mn_displayfiremode == 1"
 		string	"*cvar mn_firemodename"
 		pos	"855 524"
 		align	cc

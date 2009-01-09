@@ -103,7 +103,7 @@ menu production
 
 	string txt_prod_storage_caption
 	{
-		if "mn_itemtype != 5"
+		visiblewhen "mn_itemtype != 5"
 		string	"_Storage capacity:"
 		pos	"610 145"
 		font	f_small
@@ -111,7 +111,7 @@ menu production
 
 	string txt_prod_storage
 	{
-		if "mn_itemtype != 5"
+		visiblewhen "mn_itemtype != 5"
 		font	f_small
 		string	"*cvar mn_production_storage"
 		pos	"975 145"
@@ -194,7 +194,7 @@ menu production
 
 	item itemmodel
 	{
-		if "mn_itemtype != 5"
+		visiblewhen "mn_itemtype != 5"
 		model	"*cvar mn_item"
 		pos	"793 288"
 		scale	"7 7 7"

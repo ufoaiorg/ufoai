@@ -298,7 +298,7 @@ menu map
 
 	button bt_mailclient
 	{
-		if "mn_upunreadmail != 0"
+		visiblewhen "mn_upunreadmail != 0"
 		color	"0 0.5 0 1"
 		font 	f_small
 		tooltip	"_INBOX (with unread mails)"
@@ -313,7 +313,7 @@ menu map
 
 	button bt_mailclient_nomail
 	{
-		if "mn_upunreadmail == 0"
+		visiblewhen "mn_upunreadmail == 0"
 		color	"0 0.5 0 1"
 		font 	f_small
 		tooltip	"_INBOX"
@@ -356,7 +356,7 @@ menu map
 
 	button bt_base
 	{
-		if "mn_base_count < 8"
+		visiblewhen "mn_base_count < 8"
 		tooltip	"_Create base"
 		color	"0 0.5 0 1"
 		size	"175 34"
@@ -371,7 +371,7 @@ menu map
 
 	button bt_base_nomore
 	{
-		if "mn_base_count >= 8"
+		visiblewhen "mn_base_count >= 8"
 		tooltip	"_Max. bases reached"
 		string	"_Create base"
 		font 	f_small
@@ -386,8 +386,8 @@ menu map
 
 	button bt_installation
 	{
-		// if "mn_installation_count < mn_installation_max"
-		if "mn_installation_count < 10"
+		// visiblewhen "mn_installation_count < mn_installation_max"
+		visiblewhen "mn_installation_count < 10"
 		tooltip	"_Create installation"
 		color	"0 0.5 0 1"
 		size	"175 34"
@@ -402,8 +402,8 @@ menu map
 
 	button bt_installation_nomore
 	{
-		// if "mn_installation_count >= mn_installation_max"
-		if "mn_installation_count >= 10"
+		// visiblewhen "mn_installation_count >= mn_installation_max"
+		visiblewhen "mn_installation_count >= 10"
 		tooltip	"_Max. installations reached"
 		string	"_Create installation"
 		font 	f_small
@@ -449,7 +449,7 @@ menu map
 
 	pic bt_show_xvi
 	{
-		if "mn_xvimap == 1"
+		visiblewhen "mn_xvimap == 1"
 		tooltip	"_Show XVI map"
 		image	menu/geo_nations_highlight
 		pos		"950 350"
@@ -942,7 +942,7 @@ menu popup_intercept_ready
 	}
 	string string_auto_go
 	{
-		if "cp_mission_autogo_available == 1"
+		visiblewhen "cp_mission_autogo_available == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
@@ -1491,21 +1491,21 @@ menu popup_newinstallation
 
 	string title_radar
 	{
-		if "mn_installation_type eq radartower"
+		visiblewhen "mn_installation_type eq radartower"
 		string	"_New radar tower"
 		pos	"26 18"
 		font	f_big
 	}
 	string title_samsite
 	{
-		if "mn_installation_type eq samsite"
+		visiblewhen "mn_installation_type eq samsite"
 		string	"_New SAM site"
 		pos	"26 18"
 		font	f_big
 	}
 	string title_ufoyard
 	{
-		if "mn_installation_type eq ufoyard"
+		visiblewhen "mn_installation_type eq ufoyard"
 		string	"_New UFO yard"
 		pos	"26 18"
 		font	f_big
@@ -1545,21 +1545,21 @@ menu popup_newinstallation
 
 	string cost_radartower
 	{
-		if "mn_installation_type eq radartower"
+		visiblewhen "mn_installation_type eq radartower"
 		string	"*cvar mn_installation_radartower_cost"
 		pos	"26 133"
 		font	f_big
 	}
 	string cost_samsite
 	{
-		if "mn_installation_type eq samsite"
+		visiblewhen "mn_installation_type eq samsite"
 		string	"*cvar mn_installation_samsite_cost"
 		pos	"26 133"
 		font	f_big
 	}
 	string cost_ufoyard
 	{
-		if "mn_installation_type eq ufoyard"
+		visiblewhen "mn_installation_type eq ufoyard"
 		string	"*cvar mn_installation_ufoyard_cost"
 		pos	"26 133"
 		font	f_big
@@ -1729,14 +1729,14 @@ menu popup_installationstatus
 
 	string buildtime_label
 	{
-		if "mn_installation_timetobuild ne -"
+		visiblewhen "mn_installation_timetobuild ne -"
 		string	"_Time to build:"
 		pos	"26 118"
 	}
 
 	string buildtime
 	{
-		if "mn_installation_timetobuild ne -"
+		visiblewhen "mn_installation_timetobuild ne -"
 		string	"*cvar mn_installation_timetobuild"
 		pos	"126 118"
 	}
@@ -1755,8 +1755,8 @@ menu popup_installationstatus
 	}
 	pic bt_enter
 	{
-//		if "mn_installation_type eq samsite"
-		if "mn_installation_timetobuild eq -"
+//		visiblewhen "mn_installation_type eq samsite"
+		visiblewhen "mn_installation_timetobuild eq -"
 		tooltip	"_Manage installation"
 		image	menu/multi_buttons3
 		pos	"296 188"
@@ -1789,7 +1789,7 @@ menu popup_installationstatus
 	}
 	string string_enter
 	{
-		if "mn_installation_timetobuild eq -"
+		visiblewhen "mn_installation_timetobuild eq -"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Manage"

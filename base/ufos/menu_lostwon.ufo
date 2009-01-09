@@ -77,7 +77,7 @@ menu won
 
 	button bt_storeufo
 	{
-		if "mission_uforecovered == 1"
+		visiblewhen "mission_uforecovered == 1"
 		string		"_Store UFO"
 		tooltip		"_Store the UFO in base"
 		image		"menu/button_blue"
@@ -91,7 +91,7 @@ menu won
 
 	button bt_sellufo
 	{
-		if "mission_uforecovered == 1"
+		visiblewhen "mission_uforecovered == 1"
 		string		"_Sell UFO"
 		tooltip		"_Sell the UFO to desired nation"
 		image		"menu/button_blue"
@@ -105,7 +105,7 @@ menu won
 
 	button bt_destroyufo
 	{
-		if "mission_uforecovered == 1"
+		visiblewhen "mission_uforecovered == 1"
 		string		"_Destroy UFO"
 		tooltip		"_Destroy recovered UFO"
 		image		"menu/button_blue"

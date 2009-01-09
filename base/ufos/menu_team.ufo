@@ -727,7 +727,7 @@ menu team
 
 	pic bt_edit
 	{
-		if "mn_team_hired == 1"
+		visiblewhen "mn_team_hired == 1"
 		tooltip	"_Rename your soldier"
 		image	menu/buttons_small
 		pos	"875 20"
@@ -813,14 +813,14 @@ menu team
 	string hp_lbl { pos "700 359" string "_Health:" }
 	string hp_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "975 359" string "*cvar mn_thp" align ur
 	}
 
 	pic hp_bdr    { pos "704 374" image menu/bar_border }
 	tbar hp_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		current	"*cvar mn_vhp"
 		max	"*cvar mn_vhpmax"
 		pos "707 374"
@@ -1252,7 +1252,7 @@ menu equipment
 	}
 	pic weapon_dec
 	{
-		if "mn_changeweapon == 1"
+		visiblewhen "mn_changeweapon == 1"
 		tooltip "_Previous weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos		"160 707"
@@ -1267,7 +1267,7 @@ menu equipment
 
 	pic ammo_dec
 	{
-		if "mn_changeweapon == 2"
+		visiblewhen "mn_changeweapon == 2"
 		tooltip "_Previous ammunition compatible with this weapon"
 		image	menu/buttons_small
 		pos		"160 707"
@@ -1282,7 +1282,7 @@ menu equipment
 
 	pic weapon_inc
 	{
-		if "mn_changeweapon == 1"
+		visiblewhen "mn_changeweapon == 1"
 		tooltip "_Next weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos		"367 707"
@@ -1297,7 +1297,7 @@ menu equipment
 
 	pic ammo_inc
 	{
-		if "mn_changeweapon == 2"
+		visiblewhen "mn_changeweapon == 2"
 		tooltip "_Next ammunition compatible with this weapon"
 		image	menu/buttons_small
 		pos		"367 707"
@@ -1313,7 +1313,7 @@ menu equipment
 
 	string header_weapon
 	{
-		if "mn_displayweapon == 1"
+		visiblewhen "mn_displayweapon == 1"
 		string	"_With weapon:"
 		pos		"30 715"
 		align	cl
@@ -1322,7 +1322,7 @@ menu equipment
 
 	string header_ammo
 	{
-		if "mn_displayweapon == 2"
+		visiblewhen "mn_displayweapon == 2"
 		string	"_With ammo:"
 		pos		"30 715"
 		align	cl
@@ -1339,7 +1339,7 @@ menu equipment
 
 	pic firemode_dec
 	{
-		if "mn_changefiremode == 1"
+		visiblewhen "mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
 		pos		"160 725"
@@ -1354,7 +1354,7 @@ menu equipment
 
 	pic firemode_inc
 	{
-		if "mn_changefiremode == 1"
+		visiblewhen "mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
 		pos		"367 725"
@@ -1369,7 +1369,7 @@ menu equipment
 
 	string header_firemode
 	{
-		if "mn_displayfiremode == 1"
+		visiblewhen "mn_displayfiremode == 1"
 		string	"_Firemode:"
 		pos		"30 733"
 		align	cl
@@ -1378,7 +1378,7 @@ menu equipment
 
 	string firemode_name
 	{
-		if "mn_displayfiremode == 1"
+		visiblewhen "mn_displayfiremode == 1"
 		string	"*cvar mn_firemodename"
 		pos		"270 733"
 		align	cc

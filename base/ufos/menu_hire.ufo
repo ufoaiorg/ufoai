@@ -252,7 +252,7 @@ menu employees
 
 	textentry name
 	{
-		if "mn_show_employee >= 1"
+		visiblewhen "mn_show_employee >= 1"
 		string	"*cvar mn_name"
 		pos		"465 325"
 		size	"400 32"
@@ -263,7 +263,7 @@ menu employees
 
 	pic bt_edit
 	{
-		if "mn_employee_hired == 1"
+		visiblewhen "mn_employee_hired == 1"
 		tooltip	"_Rename your employee"
 		image	menu/buttons_small
 		pos	"865 332"
@@ -277,7 +277,7 @@ menu employees
 
 	model body
 	{
-		if "mn_show_employee >= 1"
+		visiblewhen "mn_show_employee >= 1"
 		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand2"
@@ -292,7 +292,7 @@ menu employees
 
 	model head
 	{
-		if "mn_show_employee >= 1"
+		visiblewhen "mn_show_employee >= 1"
 		model		"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"body tag_head"
@@ -301,247 +301,247 @@ menu employees
 
 	pic	rank_img
 	{
-		if "mn_show_employee >= 1"
+		visiblewhen "mn_show_employee >= 1"
 		pos "485 674" image "*cvar mn_chrrank_img"
 	}
 
 	string	rank_lbl
 	{
-		if "mn_show_employee >= 1"
+		visiblewhen "mn_show_employee >= 1"
 		pos "485 383" string "*cvar mn_chrrank"
 	}
 
 	string pwr_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 383"  string "_Strength:"
 	}
 	string pwr_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 383"  string "*cvar mn_tpwr" align ur
 	}
 	pic pwr_brd
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 398"  image menu/bar_border
 	}
 	tbar pwr_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 398"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string spd_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 413" string "_Speed:"
 	}
 	string spd_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 413" string "*cvar mn_tspd" align ur
 	}
 	pic spd_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 428" image menu/bar_border
 	}
 	tbar spd_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 428" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string acc_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 443" string "_Accuracy:"
 	}
 	string acc_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 443" string "*cvar mn_tacc" align ur
 	}
 
 	pic acc_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 458" image menu/bar_border
 	}
 	tbar acc_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 458" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string mnd_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 473" string "_Mind:"
 	}
 	string mnd_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 473" string "*cvar mn_tmnd" align ur
 	}
 	pic mnd_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 488" image menu/bar_border
 	}
 	tbar mnd_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 488" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
 	}
 
 	string cls_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 508" string "_Close Combat:"
 	}
 	string cls_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 508" string "*cvar mn_tcls" align ur
 	}
 	pic cls_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 523" image menu/bar_border
 	}
 	tbar cls_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 523" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string hvy_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 538" string "_Heavy Weapons:"
 	}
 	string hvy_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 538" string "*cvar mn_thvy" align ur
 	}
 	pic hvy_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 553" image menu/bar_border
 	}
 	tbar hvy_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 553" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string ass_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 568" string "_Assault Weapons:"
 	}
 	string ass_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 568" string "*cvar mn_tass" align ur
 	}
 	pic ass_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 583" image menu/bar_border
 	}
 	tbar ass_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 583" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string snp_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 598" string "_Sniper Rifles:"
 	}
 	string snp_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 598" string "*cvar mn_tsnp" align ur
 	}
 	pic snp_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 613" image menu/bar_border
 	}
 	tbar snp_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 613" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string exp_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 628" string "_High-Explosives:"
 	}
 	string exp_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 628" string "*cvar mn_texp" align ur
 	}
 
 	pic exp_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 643" image menu/bar_border
 	}
 	tbar exp_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 643" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
 	}
 
 	string hp_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 663" string "_Health:"
 	}
 	string hp_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 663" string "*cvar mn_thp" align ur
 	}
 	pic hp_bdr
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "714 678"  image menu/bar_border
 	}
 	tbar hp_bar
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "717 678" current "*cvar mn_vhp" max "*cvar mn_vhpmax" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health
 	}
 
 	string	missions_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 698" string "_Missions Performed:"
 	}
 	string	missions_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 698" string "*cvar mn_chrmis" align ur
 	}
 
 	string	kills_lbl
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "710 718" string "_Enemies Killed:"
 	}
 	string	kills_val
 	{
-		if "mn_show_employee == 1"
+		visiblewhen "mn_show_employee == 1"
 		pos "985 718" string "*cvar mn_chrkillalien" align ur
 	}
 

@@ -59,7 +59,7 @@ menu singleplayer
 	button button_save_na
 	{
 		// only if we have no game started yet
-		if "mn_main ne singleplayerInGame"
+		visiblewhen "mn_main ne singleplayerInGame"
 		tooltip	"_No game to save"
 		pos	"640 310"
 		size "256 64"
@@ -73,7 +73,7 @@ menu singleplayer
 	button button_save
 	{
 		// only if we already have a game started
-		if "mn_main eq singleplayerInGame"
+		visiblewhen "mn_main eq singleplayerInGame"
 		pos	"640 310"
 		size "256 64"
 		click	{ cmd "mn_push save;" }
@@ -86,7 +86,7 @@ menu singleplayer
 
 	button button_continue
 	{
-		if "mn_lastsave"
+		visiblewhen "mn_lastsave"
 		tooltip	"_Load last saved game or continue playing"
 		pos	"640 380"
 		size "256 64"
