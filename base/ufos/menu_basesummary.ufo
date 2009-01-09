@@ -22,39 +22,22 @@ menu basesummary
 	}
 
 	// ==================
-	// General info
-	// ==================
-	string txt_credits_caption
-	{
-		string	"_CREDIT"
-		pos		"650 300"
-		font	f_normal
-	}
-
-	string txt_credits
-	{
-		font	f_normal
-		string	"*cvar mn_credits"
-		pos		"944 300"
-		align	ur
-	}
-
-	// ==================
 	// main window
 	// ==================
 
 	string txt_basesummary_currentbase
 	{
 		string		"_Name:"
-		pos			"30 40"
+		pos			"40 137"
+		size		"85 22"
 		font		f_small_bold
-		//color		"0 .78 0 1"
 	}
 
 	string txt_basesummary_currentbase_v
 	{
 		string		"*cvar mn_base_title"
-		pos			"100 40"
+		pos			"105 137"
+		size		"266 22"
 	}
 
 	// ===================
@@ -63,8 +46,8 @@ menu basesummary
 	text txt_base_summary
 	{
 		textid		TEXT_STATS_BASESUMMARY
-		pos			"30 66"
-		size		"520 672"
+		pos			"39 189"
+		size		"510 537"
 		lineheight	16
 		tabwidth	42
 		font		f_small
@@ -79,8 +62,8 @@ menu basesummary
 	// ==================
 	text txt_info
 	{
-		pos			"615 330"
-		size		"350 400"
+		pos			"615 362"
+		size		"350 370"
 		font		f_small
 		lineheight		16
 		tabwidth	50
@@ -110,7 +93,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"654 62"
+		pos			"650 145"
 		baseid		0
 		click 		{
 			call resetbaselayout
@@ -124,7 +107,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"724 62"
+		pos			"720 145"
 		baseid		1
 		click		{
 			call resetbaselayout
@@ -138,7 +121,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"794 62"
+		pos			"790 145"
 		baseid		2
 		click		{
 			call resetbaselayout
@@ -152,7 +135,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"864 62"
+		pos			"860 145"
 		baseid		3
 		click		{
 			call resetbaselayout
@@ -166,7 +149,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"654 137"
+		pos			"650 220"
 		baseid		4
 		click		{
 			call resetbaselayout
@@ -180,7 +163,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"724 137"
+		pos			"720 220"
 		baseid		5
 		click		{
 			call resetbaselayout
@@ -194,7 +177,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"794 137"
+		pos			"790 220"
 		baseid		6
 		click		{
 			call resetbaselayout
@@ -208,7 +191,7 @@ menu basesummary
 		size		"67 72"
 		color		"1 0 0 0.4"
 		padding		2
-		pos			"864 137"
+		pos			"860 220"
 		baseid		7
 		click		{
 			call resetbaselayout
@@ -218,19 +201,46 @@ menu basesummary
 	}
 
 	// ==================
-	// buttons
+	// Base header
 	// ==================
 
-	custombutton basesummary_leave
+	string base_name
 	{
-		tooltip		"_Back to baseview"
-		image		menu/button_background
-		blend		true
-		texl		"192 0"
-		size		"64 37"
-		pos			"940 720"
-		icon		return
-		click		{ cmd "mn_pop;" }
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
+	}
+
+	string txt_credits_caption
+	{
+		string		"_CREDIT"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
+	}
+
+	string txt_credits
+	{
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
+	}
+
+	custombutton bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		pos		"950 20"
+		icon	"return"
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
