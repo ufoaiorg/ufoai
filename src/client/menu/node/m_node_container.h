@@ -35,17 +35,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 #define	C_ROW_OFFSET		15
 
+/* prototypes */
 struct base_s;
 struct inventory_s;
-
-#include "../m_nodes.h"
+struct nodeBehaviour_s;
+struct menuNode_s;
+struct invList_s;
+struct item_s;
+struct invDef_s;
 
 extern struct inventory_s *menuInventory;
 
-void MN_RegisterContainerNode(nodeBehaviour_t *behaviour);
-void MN_FindContainer(menuNode_t* const node);
-invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY);
-void MN_DrawItem(menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color);
-void MN_GetItemTooltip(item_t item, char *tooltiptext, size_t string_maxlength);
+void MN_RegisterContainerNode(struct nodeBehaviour_s *behaviour);
+void MN_FindContainer(struct menuNode_s* const node);
+struct invList_s *MN_GetItemFromScrollableContainer (const struct menuNode_s* const node, int mouseX, int mouseY, int* contX, int* contY);
+void MN_DrawItem(struct menuNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
+void MN_ContainerNodeSetFilter(struct menuNode_s* node, int num);
+
+/**
+ * @brief extradata for container widget
+ * @note everything is not used by all container's type (grid, single, scrolled)
+ */
+typedef struct containerExtraData_s {
+	/* for all containers */
+	struct invDef_s *container;	/**< The container linked to this node. */
+
+	/* for scrolled container */
+	int filterEquipType;	/**< A filter */
+	int scrollCur;			/**< Index of first item that is displayed. */
+	int scrollNum;			/**< Number of items that are displayed. */
+	int scrollTotalNum;		/**< Total number of displayable items. */
+} containerExtraData_t;
+
 
 #endif

@@ -918,12 +918,7 @@ static void CL_EquipType_f (void)
 	/* Reset scroll info for a new filter type/category. */
 	node = MN_GetNodeByPath("equipment.equip");
 	assert(node);
-	if (node->filterEquipType != num) {
-		node->filterEquipType = num;
-		menuInventory->scrollCur = 0;
-		menuInventory->scrollNum = 0;
-		menuInventory->scrollTotalNum = 0;
-	}
+	MN_ContainerNodeSetFilter(node, num);
 
 	/* First-time linking of menuInventory. */
 	if (baseCurrent && !menuInventory->c[csi.idEquip]) {

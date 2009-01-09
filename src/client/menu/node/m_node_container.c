@@ -40,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 inventory_t *menuInventory = NULL;
 
+#define EXTRADATA(node) (node->u.container)
+
 /** self cache for drag item
  * @note we can use a global var because we only can have 1 source node at a time
  */
@@ -58,15 +60,28 @@ static int dragInfoToY = -1;
 static const invList_t *dragInfoIC;
 
 /**
+ * @brief Set a filter
+ */
+void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
+{
+	if (EXTRADATA(node).filterEquipType != num) {
+		EXTRADATA(node).filterEquipType = num;
+		EXTRADATA(node).scrollCur = 0;
+		EXTRADATA(node).scrollNum = 0;
+		EXTRADATA(node).scrollTotalNum = 0;
+	}
+}
+
+/**
  * @brief Update display of scroll buttons.
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
  * set by the "in" and "out" functions of the scroll buttons.
  */
-static void MN_ScrollContainerUpdate_f (void)
+static void MN_ScrollContainerUpdateScroll (menuNode_t* node)
 {
-	Cbuf_AddText(va("mn_setnodeproperty equip_scroll current %i\n", menuInventory->scrollCur));
-	Cbuf_AddText(va("mn_setnodeproperty equip_scroll viewsize %i\n", menuInventory->scrollNum));
-	Cbuf_AddText(va("mn_setnodeproperty equip_scroll fullsize %i\n", menuInventory->scrollTotalNum));
+	Cbuf_AddText(va("mn_setnodeproperty equip_scroll current %i\n", EXTRADATA(node).scrollCur));
+	Cbuf_AddText(va("mn_setnodeproperty equip_scroll viewsize %i\n", EXTRADATA(node).scrollNum));
+	Cbuf_AddText(va("mn_setnodeproperty equip_scroll fullsize %i\n", EXTRADATA(node).scrollTotalNum));
 }
 
 /**
@@ -76,28 +91,28 @@ static void MN_ScrollContainerUpdate_f (void)
  */
 static void MN_ScrollContainerNext_f (void)
 {
-	const menuNode_t* const node = MN_GetNodeFromCurrentMenu("equip");
+	menuNode_t* node = MN_GetNodeFromCurrentMenu("equip");
 
 	/* Can be called from everywhere. */
 	if (!node || !menuInventory)
 		return;
 
 	/* Check if the end of the currently visible items still is not the last of the displayable items. */
-	if (menuInventory->scrollCur < menuInventory->scrollTotalNum
-	 && menuInventory->scrollCur + menuInventory->scrollNum < menuInventory->scrollTotalNum) {
-		menuInventory->scrollCur++;
+	if (EXTRADATA(node).scrollCur < EXTRADATA(node).scrollTotalNum
+	 && EXTRADATA(node).scrollCur + EXTRADATA(node).scrollNum < EXTRADATA(node).scrollTotalNum) {
+		EXTRADATA(node).scrollCur++;
 		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Increased current scroll index: %i (num: %i, total: %i).\n",
-			menuInventory->scrollCur,
-			menuInventory->scrollNum,
-			menuInventory->scrollTotalNum);
+			EXTRADATA(node).scrollCur,
+			EXTRADATA(node).scrollNum,
+			EXTRADATA(node).scrollTotalNum);
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Current scroll index already %i (num: %i, total: %i)).\n",
-			menuInventory->scrollCur,
-			menuInventory->scrollNum,
-			menuInventory->scrollTotalNum);
+			EXTRADATA(node).scrollCur,
+			EXTRADATA(node).scrollNum,
+			EXTRADATA(node).scrollTotalNum);
 
 	/* Update display of scroll buttons. */
-	MN_ScrollContainerUpdate_f();
+	MN_ScrollContainerUpdateScroll(node);
 }
 
 /**
@@ -106,26 +121,26 @@ static void MN_ScrollContainerNext_f (void)
  */
 static void MN_ScrollContainerPrev_f (void)
 {
-	const menuNode_t* const node = MN_GetNodeFromCurrentMenu("equip");
+	menuNode_t* node = MN_GetNodeFromCurrentMenu("equip");
 
 	/* Can be called from everywhere. */
 	if (!node || !menuInventory)
 		return;
 
-	if (menuInventory->scrollCur > 0) {
-		menuInventory->scrollCur--;
+	if (EXTRADATA(node).scrollCur > 0) {
+		EXTRADATA(node).scrollCur--;
 		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Decreased current scroll index: %i (num: %i, total: %i).\n",
-			menuInventory->scrollCur,
-			menuInventory->scrollNum,
-			menuInventory->scrollTotalNum);
+			EXTRADATA(node).scrollCur,
+			EXTRADATA(node).scrollNum,
+			EXTRADATA(node).scrollTotalNum);
 	} else
 		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Current scroll index already %i (num: %i, total: %i).\n",
-			menuInventory->scrollCur,
-			menuInventory->scrollNum,
-			menuInventory->scrollTotalNum);
+			EXTRADATA(node).scrollCur,
+			EXTRADATA(node).scrollNum,
+			EXTRADATA(node).scrollTotalNum);
 
 	/* Update display of scroll buttons. */
-	MN_ScrollContainerUpdate_f();
+	MN_ScrollContainerUpdateScroll(node);
 }
 
 /**
@@ -157,7 +172,7 @@ static void MN_ScrollContainerScroll_f (void)
 
 static inline qboolean MN_IsScrollContainerNode(menuNode_t *node)
 {
-	return node->container && node->container->scroll;
+	return EXTRADATA(node).container && EXTRADATA(node).container->scroll;
 }
 
 /**
@@ -273,7 +288,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
  * @param[in] string_maxlength Max. string size of tooltiptext.
  * @return Number of lines
  */
-void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
+static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_maxlength)
 {
 	int i;
 	objDef_t *weapon;
@@ -363,10 +378,10 @@ static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
 
 	MN_GetNodeAbsPos(node, nodepos);
 	/* if single container (hands, extension, headgear) */
-	if (node->container->single) {
+	if (EXTRADATA(node).container->single) {
 		/* if container is free or the dragged-item is in it */
-		if (MN_DNDIsSourceNode(node) || Com_CheckToInventory(inv, od, node->container, 0, 0, dragInfoIC))
-			MN_DrawFree(node->container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
+		if (MN_DNDIsSourceNode(node) || Com_CheckToInventory(inv, od, EXTRADATA(node).container, 0, 0, dragInfoIC))
+			MN_DrawFree(EXTRADATA(node).container->id, node, nodepos[0], nodepos[1], node->size[0], node->size[1], qtrue);
 	} else {
 		/* The shape of the free positions. */
 		uint32_t free[SHAPE_BIG_MAX_HEIGHT];
@@ -380,16 +395,16 @@ static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
 				/* Check if the current position is usable (topleft of the item). */
 
 				/* Add '1's to each position the item is 'blocking'. */
-				const int checkedTo = Com_CheckToInventory(inv, od, node->container, x, y, dragInfoIC);
+				const int checkedTo = Com_CheckToInventory(inv, od, EXTRADATA(node).container, x, y, dragInfoIC);
 				if (checkedTo & INV_FITS)				/* Item can be placed normally. */
 					Com_MergeShapes(free, (uint32_t)od->shape, x, y);
 				if (checkedTo & INV_FITS_ONLY_ROTATED)	/* Item can be placed rotated. */
 					Com_MergeShapes(free, Com_ShapeRotate((uint32_t)od->shape), x, y);
 
 				/* Only draw on existing positions. */
-				if (Com_CheckShape(node->container->shape, x, y)) {
+				if (Com_CheckShape(EXTRADATA(node).container->shape, x, y)) {
 					if (Com_CheckShape(free, x, y)) {
-						MN_DrawFree(node->container->id, node, nodepos[0] + x * C_UNIT, nodepos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
+						MN_DrawFree(EXTRADATA(node).container->id, node, nodepos[0] + x * C_UNIT, nodepos[1] + y * C_UNIT, C_UNIT, C_UNIT, showTUs);
 						showTUs = qfalse;
 					}
 				}
@@ -409,7 +424,7 @@ void MN_FindContainer (menuNode_t* const node)
 	int i, j;
 
 	/* already a container assigned - no need to recalculate the size */
-	if (node->container)
+	if (EXTRADATA(node).container)
 		return;
 
 	for (i = 0, id = csi.ids; i < csi.numIDs; id++, i++)
@@ -417,15 +432,15 @@ void MN_FindContainer (menuNode_t* const node)
 			break;
 
 	if (i == csi.numIDs)
-		node->container = NULL;
+		EXTRADATA(node).container = NULL;
 	else
-		node->container = &csi.ids[i];
+		EXTRADATA(node).container = &csi.ids[i];
 
 	if (MN_IsScrollContainerNode(node)) {
 		/* No need to calculate the size - we directly define it in
 		 * the "inventory" entry in the .ufo file anyway. */
-		node->size[0] = node->container->scroll;
-		node->size[1] = node->container->scrollHeight;
+		node->size[0] = EXTRADATA(node).container->scroll;
+		node->size[1] = EXTRADATA(node).container->scrollHeight;
 	} else {
 		/* Start on the last bit of the shape mask. */
 		for (i = 31; i >= 0; i--) {
@@ -467,7 +482,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 	pos[2] = 0;
 
 	/* Single item container (special case for left hand). */
-	if (node->container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
+	if (EXTRADATA(node).container->id == csi.idLeft && !menuInventory->c[csi.idLeft]) {
 		if (menuInventory->c[csi.idRight]) {
 			const item_t *item = &menuInventory->c[csi.idRight]->item;
 			assert(item);
@@ -482,7 +497,7 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 				MN_DrawItem(node, pos, item, -1, -1, scale, color);
 			}
 		}
-	} else if (menuInventory->c[node->container->id]) {
+	} else if (menuInventory->c[EXTRADATA(node).container->id]) {
 		const item_t *item;
 
 		if (menuInventory->c[csi.idRight]) {
@@ -492,13 +507,13 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 			 * fireTwoHanded weapon. */
 			assert(item);
 			assert(item->t);
-			if (node->container->id == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
+			if (EXTRADATA(node).container->id == csi.idRight && item->t->fireTwoHanded && menuInventory->c[csi.idLeft]) {
 				disabled = qtrue;
 				MN_DrawDisabled(node);
 			}
 		}
 
-		item = &menuInventory->c[node->container->id]->item;
+		item = &menuInventory->c[EXTRADATA(node).container->id]->item;
 		assert(item);
 		assert(item->t);
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t)) {
@@ -516,6 +531,48 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 			color[3] = 0.5;
 		MN_DrawItem(node, pos, item, -1, -1, scale, color);
 	}
+}
+
+/**
+ * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
+ * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
+ * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
+ * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
+ * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @sa Com_SearchInInventory
+ * @todo cleanup params
+ */
+static invList_t *MN_ContainerNodeSearchInScrollableContainer (const menuNode_t *node, const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType)
+{
+	invList_t *ic;
+	int curItem = 0;	/**< Current (visible) item in the container. */
+	int curDispItem = 0;	/**< Item counter for all items that actually get displayed. */
+
+	for (ic = i->c[container->id]; ic; ic = ic->next) {
+		/* Search only in the items that could get displayed. */
+		if (ic && ic->item.t && (INV_ItemMatchesFilter(ic->item.t, filterType) || filterType == MAX_FILTERTYPES)) {
+			if (item) {
+				/* We search _everything_, no matter what location it is (i.e. x/y are ignored). */
+				if (item == ic->item.t)
+					return ic;
+			} else if (curItem >= EXTRADATA(node).scrollCur && curDispItem < EXTRADATA(node).scrollNum) {
+				/* We search only in actually visible items. */
+				if (ic->x == x && ic->y == y)
+					return ic;
+
+				/* Count displayed/visible items. */
+				curDispItem++;
+			}
+
+			/* Count all items that could get displayed. */
+			curItem++;
+		}
+	}
+
+	/* No item with these coordinates (or matching item) found. */
+	return NULL;
 }
 
 /**
@@ -541,25 +598,25 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 	/* Remember the last used scroll settings, so we know if we
 	 * need to update the button-display later on. */
-	const int cache_scrollCur = menuInventory->scrollCur;
-	const int cache_scrollNum = menuInventory->scrollNum;
-	const int cache_scrollTotalNum = menuInventory->scrollTotalNum;
-	const int equipType = node->filterEquipType;
+	const int cache_scrollCur = EXTRADATA(node).scrollCur;
+	const int cache_scrollNum = EXTRADATA(node).scrollNum;
+	const int cache_scrollTotalNum = EXTRADATA(node).scrollTotalNum;
+	const int equipType = EXTRADATA(node).filterEquipType;
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	menuInventory->scrollNum = 0;
-	menuInventory->scrollTotalNum = 0;
+	EXTRADATA(node).scrollNum = 0;
+	EXTRADATA(node).scrollTotalNum = 0;
 
 	/* Change row spacing according to vertical/horizontal setting. */
-	rowOffset = node->container->scrollVertical ? C_ROW_OFFSET : 0;
+	rowOffset = EXTRADATA(node).container->scrollVertical ? C_ROW_OFFSET : 0;
 
 	for (itemType = 0; itemType <= 1; itemType++) {	/**< 0==weapons, 1==ammo */
-		for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
+		for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
 			if (ic->item.t
 			 && ((!itemType && Q_strncmp(ic->item.t->type, "ammo", 4) != 0) || (itemType && !Q_strncmp(ic->item.t->type, "ammo", 4)))
 			 && INV_ItemMatchesFilter(ic->item.t, equipType)) {
-				if (!lastItem && curItem >= menuInventory->scrollCur) {
+				if (!lastItem && curItem >= EXTRADATA(node).scrollCur) {
 					item_t tempItem = {1, NULL, NULL, 0, 0};
 					qboolean newRow = qfalse;
 					vec3_t pos;
@@ -568,11 +625,11 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 					pos[1] += curHeight;
 					pos[2] = 0;
 
-					if (!node->container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= node->container->scroll) {
+					if (!EXTRADATA(node).container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= EXTRADATA(node).container->scroll) {
 						curWidth += ic->item.t->sx * C_UNIT;
 					} else {
 						/* New row */
-						if (curHeight + maxHeight + rowOffset > node->container->scrollHeight) {
+						if (curHeight + maxHeight + rowOffset > EXTRADATA(node).container->scrollHeight) {
 							/* Last item - We do not draw anything else. */
 							lastItem = qtrue;
 						} else {
@@ -589,7 +646,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 					maxHeight = max(ic->item.t->sy * C_UNIT, maxHeight);
 
-					if (lastItem || curHeight + ic->item.t->sy + rowOffset > node->container->scrollHeight) {
+					if (lastItem || curHeight + ic->item.t->sy + rowOffset > EXTRADATA(node).container->scrollHeight) {
 						/* Last item - We do not draw anything else. */
 						lastItem = qtrue;
 					} else {
@@ -616,7 +673,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 						else
 							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
 
-						if (node->container->scrollVertical) {
+						if (EXTRADATA(node).container->scrollVertical) {
 							/* Draw the item name. */
 							R_FontDrawString("f_verysmall", ALIGN_UL,
 								posName[0], posName[1],
@@ -641,7 +698,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 								continue;
 
 							/* find and skip unexisting ammo */
-							icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, tempItem.t, equipType);
+							icAmmo = MN_ContainerNodeSearchInScrollableContainer(node, menuInventory, EXTRADATA(node).container, NONE, NONE, tempItem.t, equipType);
 							if (!icAmmo)
 								continue;
 
@@ -667,23 +724,23 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 					/* Count displayed items */
 					if (!lastItem) {
-						menuInventory->scrollNum++;
+						EXTRADATA(node).scrollNum++;
 						curCol++;
 					}
 				}
 
 				/* Count items that are possible to be displayed. */
-				menuInventory->scrollTotalNum++;
+				EXTRADATA(node).scrollTotalNum++;
 				curItem++;
 			}
 		}
 	}
 
 	/* Update display of scroll buttons if something changed. */
-	if (cache_scrollCur != menuInventory->scrollCur
-	 || cache_scrollNum != menuInventory->scrollNum
-	 ||	cache_scrollTotalNum != menuInventory->scrollTotalNum)
-		MN_ScrollContainerUpdate_f();
+	if (cache_scrollCur != EXTRADATA(node).scrollCur
+	 || cache_scrollNum != EXTRADATA(node).scrollNum
+	 ||	cache_scrollTotalNum != EXTRADATA(node).scrollTotalNum)
+		MN_ScrollContainerUpdateScroll(node);
 }
 
 /**
@@ -698,7 +755,7 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 	MN_GetNodeAbsPos(node, pos);
 	pos[2] = 0;
 
-	for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
+	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
 		assert(ic->item.t);
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
 			MN_DrawItem(node, pos, &ic->item, ic->x, ic->y, scale, colorLoadable);
@@ -733,7 +790,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 
 	/* Draw "preview" of placed (&rotated) item. */
 	if (!MN_IsScrollContainerNode(target)) {
-		checkedTo = Com_CheckToInventory(menuInventory, previewItem.t, target->container, dragInfoToX, dragInfoToY, dragInfoIC);
+		checkedTo = Com_CheckToInventory(menuInventory, previewItem.t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 
 		if (checkedTo == INV_FITS_ONLY_ROTATED)
 			previewItem.rotated = qtrue;
@@ -742,7 +799,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 			vec2_t nodepos;
 
 			MN_GetNodeAbsPos(target, nodepos);
-			if (target->container->single) { /* Get center of single container for placement of preview item */
+			if (EXTRADATA(target).container->single) { /* Get center of single container for placement of preview item */
 				VectorSet(origine,
 					nodepos[0] + target->size[0] / 2.0,
 					nodepos[1] + target->size[1] / 2.0,
@@ -775,7 +832,7 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 {
 	objDef_t *highlightType = NULL;
 
-	if (!node->container)
+	if (!EXTRADATA(node).container)
 		return;
 	if (!menuInventory)
 		return;
@@ -788,7 +845,7 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 		highlightType = MN_DNDGetItem()->t;
 	}
 
-	if (node->container->single) {
+	if (EXTRADATA(node).container->single) {
 		MN_ContainerNodeDrawSingle(node, highlightType);
 	} else {
 		if (MN_IsScrollContainerNode(node)) {
@@ -799,7 +856,7 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 	}
 
 	/* Draw free space if dragging - but not for idEquip */
-	if (MN_DNDIsDragging() && node->container->id != csi.idEquip)
+	if (MN_DNDIsDragging() && EXTRADATA(node).container->id != csi.idEquip)
 		MN_ContainerNodeDrawFreeSpace(node, menuInventory);
 
 	if (MN_DNDIsTargetNode(node))
@@ -825,7 +882,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 		itemHover = MN_GetItemFromScrollableContainer(node, x, y, NULL, NULL);
 	} else {
 		itemHover = Com_SearchInInventory(menuInventory,
-			node->container,
+			EXTRADATA(node).container,
 			(x - nodepos[0]) / C_UNIT,
 			(y - nodepos[1]) / C_UNIT);
 	}
@@ -850,7 +907,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
  * @param[in] mouseY	Y location of the mouse.
  * @param[out] contX	X location in the container (index of item in row).
  * @param[out] contY	Y location in the container (row).
- * @sa INV_SearchInScrollableContainer
+ * @sa MN_ContainerNodeSearchInScrollableContainer
  */
 invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
@@ -862,7 +919,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 	int curItem = 0;	/**< Item counter for all items that _could_ get displayed in the current view (equipType). */
 	int curDispItem = 0;	/**< Item counter for all items that actually get displayed. */
 	int rowOffset;
-	const int equipType = node->filterEquipType;
+	const int equipType = EXTRADATA(node).filterEquipType;
 
 	int tempX, tempY;
 
@@ -872,14 +929,14 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 		contY = &tempY;
 
 	/* Change row spacing according to vertical/horizontal setting. */
-	rowOffset = node->container->scrollVertical ? C_ROW_OFFSET : 0;
+	rowOffset = EXTRADATA(node).container->scrollVertical ? C_ROW_OFFSET : 0;
 
 	for (itemType = 0; itemType <= 1; itemType++) {	/**< 0==weapons, 1==ammo */
-		for (ic = menuInventory->c[node->container->id]; ic; ic = ic->next) {
+		for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
 			if (ic->item.t
 			 && ((!itemType && !(!Q_strncmp(ic->item.t->type, "ammo", 4))) || (itemType && !Q_strncmp(ic->item.t->type, "ammo", 4)))
 			 && INV_ItemMatchesFilter(ic->item.t, equipType)) {
-				if (curItem >= menuInventory->scrollCur && curDispItem < menuInventory->scrollNum) {
+				if (curItem >= EXTRADATA(node).scrollCur && curDispItem < EXTRADATA(node).scrollNum) {
 					qboolean newRow = qfalse;
 					vec2_t posMin;
 					vec2_t posMax;
@@ -890,11 +947,11 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 
 					assert(ic->item.t);
 
-					if (!node->container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= node->container->scroll) {
+					if (!EXTRADATA(node).container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= EXTRADATA(node).container->scroll) {
 						curWidth += ic->item.t->sx * C_UNIT;
 					} else {
 						/* New row */
-						if (curHeight + maxHeight + rowOffset > node->container->scrollHeight)
+						if (curHeight + maxHeight + rowOffset > EXTRADATA(node).container->scrollHeight)
 								return NULL;
 
 						curHeight += maxHeight + rowOffset;
@@ -908,7 +965,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 					}
 
 					maxHeight = max(ic->item.t->sy * C_UNIT, maxHeight);
-					if (curHeight + ic->item.t->sy + rowOffset > node->container->scrollHeight)
+					if (curHeight + ic->item.t->sy + rowOffset > EXTRADATA(node).container->scrollHeight)
 						return NULL;
 
 					posMax[0] += ic->item.t->sx * C_UNIT;
@@ -926,7 +983,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 						curWidth += ic->item.t->sx * C_UNIT;
 
 					/* This item uses ammo - lets check that as well. */
-					if (node->container->scrollVertical && ic->item.t->numAmmos && ic->item.t != ic->item.t->ammos[0]) {
+					if (EXTRADATA(node).container->scrollVertical && ic->item.t->numAmmos && ic->item.t != ic->item.t->ammos[0]) {
 						int ammoIdx;
 						objDef_t *ammoItem;
 						posMin[0] += ic->item.t->sx * C_UNIT;
@@ -937,7 +994,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 							ammoItem = ic->item.t->ammos[ammoIdx];
 							/* Only check for researched ammo (although this is implyed in most cases). */
 							if (ammoItem->tech && RS_IsResearched_ptr(ammoItem->tech)) {
-								invList_t *icAmmo = INV_SearchInScrollableContainer(menuInventory, node->container, NONE, NONE, ammoItem, equipType);
+								invList_t *icAmmo = MN_ContainerNodeSearchInScrollableContainer(node, menuInventory, EXTRADATA(node).container, NONE, NONE, ammoItem, equipType);
 
 								/* Only check the item (and calculate its size) if it's in the container. */
 								if (icAmmo) {
@@ -1000,7 +1057,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	if (sel < 0)
 		return;
 
-	assert(node->container);
+	assert(EXTRADATA(node).container);
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (MN_IsScrollContainerNode(node)) {
 		ic = MN_GetItemFromScrollableContainer(node, mouseX, mouseY, &fromX, &fromY);
@@ -1013,7 +1070,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 		fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
 		fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
 
-		ic = Com_SearchInInventory(menuInventory, node->container, fromX, fromY);
+		ic = Com_SearchInInventory(menuInventory, EXTRADATA(node).container, fromX, fromY);
 	}
 
 	/* Start drag  */
@@ -1026,27 +1083,27 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 			dragInfoFromY = fromY;
 		} else {
 			/* Right click: automatic item assignment/removal. */
-			if (node->container->id != csi.idEquip) {
+			if (EXTRADATA(node).container->id != csi.idEquip) {
 				/* Move back to idEquip (ground, floor) container. */
-				INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, node->container, ic);
+				INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, EXTRADATA(node).container, ic);
 			} else {
 				qboolean packed = qfalse;
 				int px, py;
 				assert(ic->item.t);
 				/* armour can only have one target */
 				if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
-					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, node->container, ic);
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, EXTRADATA(node).container, ic);
 				/* ammo or item */
 				} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
 					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, node->container, ic);
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
 					if (!packed) {
 						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, node->container, ic);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, EXTRADATA(node).container, ic);
 					}
 					if (!packed) {
 						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
-						packed = INV_MoveItem( menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, ic);
+						packed = INV_MoveItem( menuInventory, &csi.ids[csi.idBackpack], px, py, EXTRADATA(node).container, ic);
 					}
 					/* Finally try left and right hand. There is no other place to put it now. */
 					if (!packed) {
@@ -1055,42 +1112,42 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 						/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
 						if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, node->container, ic);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
 						}
 					}
 					if (!packed) {
 						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, node->container, ic);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, EXTRADATA(node).container, ic);
 					}
 				} else {
 					if (ic->item.t->headgear) {
 						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHeadgear], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHeadgear], px, py, node->container, ic);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHeadgear], px, py, EXTRADATA(node).container, ic);
 					} else {
 						/* left and right are single containers, but this might change - it's cleaner to check
 						 * for available space here, too */
 						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, node->container, ic);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, EXTRADATA(node).container, ic);
 						if (!packed) {
 							const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
 
 							/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
 							if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
 								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
-								packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, node->container, ic);
+								packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
 							}
 						}
 						if (!packed) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, node->container, ic);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
 						}
 						if (!packed) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, node->container, ic);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, EXTRADATA(node).container, ic);
 						}
 						if (!packed) {
 							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, ic);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBackpack], px, py, EXTRADATA(node).container, ic);
 						}
 					}
 				}
@@ -1105,7 +1162,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 
 	/* Update display of scroll buttons. */
 	if (MN_IsScrollContainerNode(node))
-		MN_ScrollContainerUpdate_f();
+		MN_ScrollContainerUpdateScroll(node);
 
 	#if 0
 	/** @todo need to understand better that */
@@ -1156,7 +1213,7 @@ static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 
 static void MN_ContainerNodeLoading (menuNode_t *node)
 {
-	node->container = NULL;
+	EXTRADATA(node).container = NULL;
 	node->color[3] = 1.0;
 }
 
@@ -1166,7 +1223,7 @@ static void MN_ContainerNodeLoading (menuNode_t *node)
 static qboolean MN_ContainerNodeDNDEnter (menuNode_t *target)
 {
 	/* accept items only, if we have a container */
-	return MN_DNDGetType() == DND_ITEM && target->container;
+	return MN_DNDGetType() == DND_ITEM && EXTRADATA(target).container;
 }
 
 /**
@@ -1183,7 +1240,7 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	item_t *dragItem = MN_DNDGetItem();
 
 	/* we already check it when the node accepte the DND */
-	assert(target->container);
+	assert(EXTRADATA(target).container);
 
 	MN_GetNodeAbsPos(target, nodepos);
 
@@ -1207,28 +1264,28 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	/** Check if the items already exists in the container. i.e. there is already at least one item.
 	 * @sa Com_AddToInventory */
 	exists = qfalse;
-	if ((target->container->id == csi.idFloor || target->container->id == csi.idEquip)
+	if ((EXTRADATA(target).container->id == csi.idFloor || EXTRADATA(target).container->id == csi.idEquip)
 		&& (dragInfoToX  < 0 || dragInfoToY < 0 || dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)
-		&& Com_ExistsInInventory(menuInventory, target->container, *dragItem)) {
+		&& Com_ExistsInInventory(menuInventory, EXTRADATA(target).container, *dragItem)) {
 		exists = qtrue;
 	}
 
 	/** Search for a suitable position to render the item at if
 	 * the container is "single", the cursor is out of bound of the container.
 	 */
-	if (!exists && dragItem->t && (target->container->single
+	if (!exists && dragItem->t && (EXTRADATA(target).container->single
 		|| dragInfoToX  < 0 || dragInfoToY < 0
 		|| dragInfoToX >= SHAPE_BIG_MAX_WIDTH || dragInfoToY >= SHAPE_BIG_MAX_HEIGHT)) {
 #if 0
 /* ... or there is something in the way. */
 /* We would need to check for weapon/ammo as well here, otherwise a preview would be drawn as well when hovering over the correct weapon to reload. */
-		|| (Com_CheckToInventory(menuInventory, dragItem->t, target->container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
+		|| (Com_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY) == INV_DOES_NOT_FIT)) {
 #endif
-		Com_FindSpace(menuInventory, dragItem, target->container, &dragInfoToX, &dragInfoToY, dragInfoIC);
+		Com_FindSpace(menuInventory, dragItem, EXTRADATA(target).container, &dragInfoToX, &dragInfoToY, dragInfoIC);
 	}
 
 	if (!MN_IsScrollContainerNode(target)) {
-		checkedTo = Com_CheckToInventory(menuInventory, dragItem->t, target->container, dragInfoToX, dragInfoToY, dragInfoIC);
+		checkedTo = Com_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 		return checkedTo != 0;
 	}
 
@@ -1259,31 +1316,31 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 	/* tactical mission */
 	if (selActor) {
 		const menuNode_t *target = MN_DNDGetTargetNode();
-		assert(source->container);
+		assert(EXTRADATA(source).container);
 		assert(target);
-		assert(target->container);
+		assert(EXTRADATA(target).container);
 		MSG_Write_PA(PA_INVMOVE, selActor->entnum,
-			source->container->id, dragInfoFromX, dragInfoFromY,
-			target->container->id, dragInfoToX, dragInfoToY);
+			EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
+			EXTRADATA(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
 		invList_t *fItem;
 		menuNode_t *target;
 
 		/* menu */
 		if (MN_IsScrollContainerNode(source)) {
-			const int equipType = source->filterEquipType;
-			fItem = INV_SearchInScrollableContainer(menuInventory, source->container, NONE, NONE, dragItem->t, equipType);
+			const int equipType = EXTRADATA(source).filterEquipType;
+			fItem = MN_ContainerNodeSearchInScrollableContainer(source, menuInventory, EXTRADATA(source).container, NONE, NONE, dragItem->t, equipType);
 		} else
-			fItem = Com_SearchInInventory(menuInventory, source->container, dragInfoFromX, dragInfoFromY);
+			fItem = Com_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
 
 		/** @todo need to understand what its done here */
-		if (source->container->id == csi.idArmour) {
+		if (EXTRADATA(source).container->id == csi.idArmour) {
 			/** hackhack @todo This is only because armour containers (and their nodes) are
 			 * handled differently than normal containers somehow.
 			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
-			 * In a perfect world node->container would always be the same as dragInfo.to here. */
+			 * In a perfect world EXTRADATA(node).container would always be the same as dragInfo.to here. */
 			if (MN_DNDGetTargetNode() == source) {
-				/* dragInfo.to = source->container; */
+				/* dragInfo.to = EXTRADATA(source).container; */
 				dragInfoToX = 0;
 				dragInfoToY = 0;
 			}
@@ -1292,10 +1349,10 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		target = MN_DNDGetTargetNode();
 		if (target) {
 			/** @todo We must split the move in two. Here, we sould not know how to add the item to the target (see dndDrop) */
-			assert(target->container);
+			assert(EXTRADATA(target).container);
 			INV_MoveItem(menuInventory,
-				target->container, dragInfoToX, dragInfoToY,
-				source->container, fItem);
+				EXTRADATA(target).container, dragInfoToX, dragInfoToY,
+				EXTRADATA(source).container, fItem);
 		}
 	}
 
@@ -1318,7 +1375,6 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndMove = MN_ContainerNodeDNDMove;
 	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
 
-	Cmd_AddCommand("scrollcont_update", MN_ScrollContainerUpdate_f, "Update display of scroll buttons.");
 	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
 	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
 	Cmd_AddCommand("scrollcont_scroll", MN_ScrollContainerScroll_f, "Scrolls the current container.");

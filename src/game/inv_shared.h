@@ -369,12 +369,6 @@ typedef struct invList_s {
 /** @brief inventory defintion with all its containers */
 typedef struct inventory_s {
 	invList_t *c[MAX_CONTAINERS];
-
-	/* Scroll information for idEquip. */
-	/** @todo move it into the container node */
-	int scrollCur;		/**< Index of first item that is displayed. */
-	int scrollNum;		/**< Number of items that are displayed. */
-	int scrollTotalNum;	/**< Total number of displayable items. */
 } inventory_t;
 
 #define MAX_EQUIPDEFS   64
@@ -755,7 +749,6 @@ void Com_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean Com_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
 itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
 qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
-invList_t *INV_SearchInScrollableContainer(const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item, const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, const invDef_t * container, invList_t *item) __attribute__((nonnull(1)));

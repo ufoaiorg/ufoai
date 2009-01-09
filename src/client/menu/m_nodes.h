@@ -36,6 +36,7 @@ struct value_s;
 /* extradata struct */
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_abstractscrollbar.h"
+#include "node/m_node_container.h"
 #include "node/m_node_linestrip.h"
 #include "node/m_node_model.h"
 #include "node/m_node_selectbox.h"
@@ -142,14 +143,11 @@ typedef struct menuNode_s {
 	/* BaseLayout */
 	int baseid;					/**< the baseid - e.g. for baselayout nodes */
 
-	/* container */
-	invDef_t *container;		/** The container linked to this node. */
-	int filterEquipType;
-
 	/** union will contain all extradata for a node */
 	union {
 		abstractValueExtraData_t abstractvalue;
 		abstractScrollbarExtraData_t abstractscrollbar;
+		containerExtraData_t container;
 		lineStripExtraData_t linestrip;
 		modelExtraData_t model;
 		optionExtraData_t option;
