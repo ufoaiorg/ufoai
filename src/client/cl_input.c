@@ -521,7 +521,7 @@ static void CL_SelectDown_f (void)
 
 static void CL_SelectUp_f (void)
 {
-	if (mouseSpace == MS_DRAGITEM)
+	if (mouseSpace == MS_MENU)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -538,7 +538,7 @@ static void CL_ActionDown_f (void)
 
 static void CL_ActionUp_f (void)
 {
-	if (mouseSpace == MS_DRAGITEM)
+	if (mouseSpace == MS_MENU)
 		return;
 	mouseSpace = MS_NULL;
 }
@@ -548,7 +548,7 @@ static void CL_ActionUp_f (void)
  */
 static void CL_TurnDown_f (void)
 {
-	if (mouseSpace == MS_DRAGITEM)
+	if (mouseSpace == MS_MENU)
 		return;
 	if (mouseSpace == MS_WORLD)
 		CL_ActorTurnMouse();
@@ -556,7 +556,7 @@ static void CL_TurnDown_f (void)
 
 static void CL_TurnUp_f (void)
 {
-	if (mouseSpace == MS_DRAGITEM)
+	if (mouseSpace == MS_MENU)
 		return;
 	mouseSpace = MS_NULL;
 	/* leave the fire mode when turning around - not everybody has a mmb mouse */
@@ -588,7 +588,7 @@ static void CL_HudRadarUp_f (void)
  */
 static void CL_RightClickDown_f (void)
 {
-	if (mouseSpace == MS_MENU || mouseSpace == MS_DRAGITEM) {
+	if (mouseSpace == MS_MENU) {
 		MN_MouseDown(mousePosX, mousePosY, K_MOUSE2);
 		MN_RightClick(mousePosX, mousePosY);
 	}
@@ -599,7 +599,7 @@ static void CL_RightClickDown_f (void)
  */
 static void CL_RightClickUp_f (void)
 {
-	if (mouseSpace == MS_MENU || mouseSpace == MS_DRAGITEM) {
+	if (mouseSpace == MS_MENU) {
 		MN_MouseUp(mousePosX, mousePosY, K_MOUSE2);
 	}
 }
@@ -647,10 +647,7 @@ static void CL_LeftClickDown_f (void)
  */
 static void CL_LeftClickUp_f (void)
 {
-	if (mouseSpace == MS_DRAGITEM) {
-		MN_LeftClick(mousePosX, mousePosY);
-	}
-	if (mouseSpace == MS_MENU || mouseSpace == MS_DRAGITEM) {
+	if (mouseSpace == MS_MENU) {
 		MN_MouseUp(mousePosX, mousePosY, K_MOUSE1);
 	}
 }
@@ -1173,36 +1170,28 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
  */
 static void IN_Parse (void)
 {
-	switch (mouseSpace) {
-	case MS_DRAGITEM:
-		/* do nothing */
-		return;
+	mouseSpace = MS_NULL;
 
-	default:
-		mouseSpace = MS_NULL;
-
-		/* standard menu and world mouse handling */
-		if (MN_CursorOnMenu(mousePosX, mousePosY)) {
-			mouseSpace = MS_MENU;
-			return;
-		}
-
-		if (cls.state != ca_active)
-			return;
-
-		if (!viddef.viewWidth || !viddef.viewHeight)
-			return;
-
-		CL_ActorMouseTrace();
-		/* set the mousespace to MS_WORLD because we are not in a menu
-		 * (MN_CursorOnMenu failed) and we have the cursor in the world */
-		if (cl.cmode > M_PEND_MOVE)
-			mouseSpace = MS_WORLD;
-
-		/* we are in tactical missions here - no focus needed */
-		MN_FocusRemove();
+	/* standard menu and world mouse handling */
+	if (MN_CursorOnMenu(mousePosX, mousePosY)) {
+		mouseSpace = MS_MENU;
 		return;
 	}
+
+	if (cls.state != ca_active)
+		return;
+
+	if (!viddef.viewWidth || !viddef.viewHeight)
+		return;
+
+	CL_ActorMouseTrace();
+	/* set the mousespace to MS_WORLD because we are not in a menu
+	 * (MN_CursorOnMenu failed) and we have the cursor in the world */
+	if (cl.cmode > M_PEND_MOVE)
+		mouseSpace = MS_WORLD;
+
+	/* we are in tactical missions here - no focus needed */
+	MN_FocusRemove();
 }
 
 /**

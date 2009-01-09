@@ -979,11 +979,13 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
  * @param[in] base The base we are in.
  * @param[in] mouseX/mouseY Mouse coordinates.
  * @param[in] rightClick If we want to auto-assign items instead of dragging them this has to be qtrue.
- * @todo split this function in three start drag, drop, and autoplace
+ * @todo split this function in two start drag, and autoplace
  */
 static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightClick)
 {
 	int sel;
+	invList_t *ic;
+	int fromX, fromY;
 
 	if (!menuInventory)
 		return;
@@ -996,58 +998,77 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	if (sel < 0)
 		return;
 
-	if (mouseSpace == MS_MENU) {
-		invList_t *ic;
-		int fromX, fromY;
-		assert(node->container);
-		/* Get coordinates inside a scrollable container (if it is one). */
-		if (MN_IsScrollContainerNode(node)) {
-			ic = MN_GetItemFromScrollableContainer(node, mouseX, mouseY, &fromX, &fromY);
-			Com_DPrintf(DEBUG_CLIENT, "MN_Drag: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	assert(node->container);
+	/* Get coordinates inside a scrollable container (if it is one). */
+	if (MN_IsScrollContainerNode(node)) {
+		ic = MN_GetItemFromScrollableContainer(node, mouseX, mouseY, &fromX, &fromY);
+		Com_DPrintf(DEBUG_CLIENT, "MN_Drag: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	} else {
+		vec2_t nodepos;
+
+		MN_GetNodeAbsPos(node, nodepos);
+		/* Normalize screen coordinates to container coordinates. */
+		fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
+		fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
+
+		ic = Com_SearchInInventory(menuInventory, node->container, fromX, fromY);
+	}
+
+	/* Start drag  */
+	if (ic) {
+		if (!rightClick) {
+			/* Found item to drag. Prepare for drag-mode. */
+			MN_DNDDragItem(node, &(ic->item));
+			dragInfoIC = ic;
+			dragInfoFromX = fromX;
+			dragInfoFromY = fromY;
 		} else {
-			vec2_t nodepos;
-
-			MN_GetNodeAbsPos(node, nodepos);
-			/* Normalize screen coordinates to container coordinates. */
-			fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
-			fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
-
-			ic = Com_SearchInInventory(menuInventory, node->container, fromX, fromY);
-		}
-
-		/* Start drag  */
-		if (ic) {
-			if (!rightClick) {
-				/* Found item to drag. Prepare for drag-mode. */
-				MN_DNDDragItem(node, &(ic->item));
-				dragInfoIC = ic;
-				dragInfoFromX = fromX;
-				dragInfoFromY = fromY;
+			/* Right click: automatic item assignment/removal. */
+			if (node->container->id != csi.idEquip) {
+				/* Move back to idEquip (ground, floor) container. */
+				INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, node->container, ic);
 			} else {
-				/* Right click: automatic item assignment/removal. */
-				if (node->container->id != csi.idEquip) {
-					/* Move back to idEquip (ground, floor) container. */
-					INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, node->container, ic);
+				qboolean packed = qfalse;
+				int px, py;
+				assert(ic->item.t);
+				/* armour can only have one target */
+				if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, node->container, ic);
+				/* ammo or item */
+				} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
+					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, node->container, ic);
+					if (!packed) {
+						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, node->container, ic);
+					}
+					if (!packed) {
+						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
+						packed = INV_MoveItem( menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, ic);
+					}
+					/* Finally try left and right hand. There is no other place to put it now. */
+					if (!packed) {
+						const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
+
+						/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
+						if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, node->container, ic);
+						}
+					}
+					if (!packed) {
+						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, node->container, ic);
+					}
 				} else {
-					qboolean packed = qfalse;
-					int px, py;
-					assert(ic->item.t);
-					/* armour can only have one target */
-					if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, node->container, ic);
-					/* ammo or item */
-					} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
-						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, node->container, ic);
-						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, node->container, ic);
-						}
-						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
-							packed = INV_MoveItem( menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, ic);
-						}
-						/* Finally try left and right hand. There is no other place to put it now. */
+					if (ic->item.t->headgear) {
+						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHeadgear], &px, &py, NULL);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHeadgear], px, py, node->container, ic);
+					} else {
+						/* left and right are single containers, but this might change - it's cleaner to check
+						 * for available space here, too */
+						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, node->container, ic);
 						if (!packed) {
 							const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
 
@@ -1058,51 +1079,26 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 							}
 						}
 						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, node->container, ic);
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, node->container, ic);
 						}
-					} else {
-						if (ic->item.t->headgear) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHeadgear], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHeadgear], px, py, node->container, ic);
-						} else {
-							/* left and right are single containers, but this might change - it's cleaner to check
-							 * for available space here, too */
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, node->container, ic);
-							if (!packed) {
-								const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
-
-								/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
-								if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
-									Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
-									packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, node->container, ic);
-								}
-							}
-							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
-								packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, node->container, ic);
-							}
-							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
-								packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, node->container, ic);
-							}
-							if (!packed) {
-								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
-								packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, ic);
-							}
+						if (!packed) {
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, node->container, ic);
+						}
+						if (!packed) {
+							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
+							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBackpack], px, py, node->container, ic);
 						}
 					}
-					/* no need to continue here - placement wasn't successful at all */
-					if (!packed)
-						return;
 				}
+				/* no need to continue here - placement wasn't successful at all */
+				if (!packed)
+					return;
 			}
-			UP_ItemDescription(ic->item.t);
-/*			MN_DrawTooltip("f_verysmall", csi.ods[MN_DNDGetItem()->t].name, fromX, fromY, 0);*/
 		}
-	} else {
-		MN_DNDDrop();
+		UP_ItemDescription(ic->item.t);
+/*		MN_DrawTooltip("f_verysmall", csi.ods[MN_DNDGetItem()->t].name, fromX, fromY, 0);*/
 	}
 
 	/* Update display of scroll buttons. */
@@ -1137,7 +1133,6 @@ static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int butto
 		break;
 	case K_MOUSE2:
 		if (MN_DNDIsDragging()) {
-			assert(qfalse); /**< @todo understand why this is never called */
 			MN_DNDAbort();
 		} else {
 			/* auto place */
@@ -1151,16 +1146,10 @@ static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int butto
 
 static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
-	/** @todo understand why the MN_DNDAbort on the Down button event is never called */
-	if (button == K_MOUSE2 && MN_DNDIsDragging()) {
-		MN_DNDAbort();
-		return;
-	}
-
 	if (button != K_MOUSE1)
 		return;
-	/* stop drag and drop */
-	MN_Drag(node, x, y, qfalse);
+	if (MN_DNDIsDragging())
+		MN_DNDDrop();
 }
 
 static void MN_ContainerNodeLoading (menuNode_t *node)

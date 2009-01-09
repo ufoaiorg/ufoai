@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_nodes.h"
 #include "m_draw.h"
+#include "m_dragndrop.h"
 
 /**
  * @sa MN_DisplayNotice
@@ -241,8 +242,7 @@ menuNode_t *MN_GetNodeByPosition (int x, int y)
  */
 void MN_MouseMove (int x, int y)
 {
-	/** @todo very bad code */
-	if (mouseSpace == MS_DRAGITEM)
+	if (MN_DNDIsDragging())
 		return;
 
 	/* send the captured move mouse event */

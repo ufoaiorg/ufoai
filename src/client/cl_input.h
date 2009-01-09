@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef enum {
 	MS_NULL,
 	MS_MENU,		/**< we are over some menu node */
-	MS_DRAGITEM,	/**< we are dragging some stuff / equipment */
 	MS_WORLD,		/**< we are in tactical mode */
 } mouseSpace_t;
 

@@ -496,8 +496,6 @@ static void MN_MenuTextReset_f (void)
  * must be a console command that has the same name as the node has + _click
  * attached.
  * @sa MN_TextRightClick
- * @todo Check for scrollbars and when one would click them scroll according to
- * mouse movement, maybe implement a new mousespace (MS_* - @sa cl_input.c)
  */
 static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 {

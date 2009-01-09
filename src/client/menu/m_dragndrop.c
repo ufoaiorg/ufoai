@@ -1,6 +1,5 @@
 /**
  * @file m_dragndrop.c
- * @todo very important to delete MS_DRAGITEM
  */
 
 /*
@@ -49,7 +48,7 @@ static menuNode_t *targetNode;				/**< Current node under the mouse */
  */
 qboolean MN_DNDIsDragging (void)
 {
-	return mouseSpace == MS_DRAGITEM && objectType != DND_NOTHING;
+	return objectType != DND_NOTHING;
 }
 
 /**
@@ -57,7 +56,7 @@ qboolean MN_DNDIsDragging (void)
  */
 qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
 {
-	if (mouseSpace != MS_DRAGITEM)
+	if (!MN_DNDIsDragging())
 		return qfalse;
 	return targetNode == node;
 }
@@ -67,7 +66,7 @@ qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
  */
 qboolean MN_DNDIsSourceNode (struct menuNode_s *node)
 {
-	if (mouseSpace != MS_DRAGITEM)
+	if (!MN_DNDIsDragging())
 		return qfalse;
 	return sourceNode == node;
 }
@@ -82,7 +81,7 @@ int MN_DNDGetType (void)
 
 menuNode_t *MN_DNDGetTargetNode (void)
 {
-	assert(mouseSpace == MS_DRAGITEM);
+	assert(MN_DNDIsDragging());
 	return targetNode;
 }
 
@@ -94,8 +93,8 @@ menuNode_t *MN_DNDGetTargetNode (void)
  */
 static void MN_DNDDrag (menuNode_t *node)
 {
-	assert(mouseSpace != MS_DRAGITEM);
-	mouseSpace = MS_DRAGITEM;
+	assert(!MN_DNDIsDragging());
+	objectType = DND_SOMETHING;
 	sourceNode = node;
 }
 
@@ -108,8 +107,7 @@ static void MN_DNDDrag (menuNode_t *node)
 void MN_DNDDragItem (menuNode_t *node, item_t *item)
 {
 	MN_DNDDrag(node);
-	assert(mouseSpace == MS_DRAGITEM);
-	assert(objectType == DND_NOTHING);
+	assert(MN_DNDIsDragging());
 	objectType = DND_ITEM;
 	draggingItem = *item;
 }
@@ -131,7 +129,7 @@ static inline void MN_DNDCleanup (void)
  */
 void MN_DNDAbort (void)
 {
-	assert(mouseSpace == MS_DRAGITEM);
+	assert(MN_DNDIsDragging());
 	assert(objectType != DND_NOTHING);
 	assert(sourceNode != NULL);
 
@@ -141,7 +139,6 @@ void MN_DNDAbort (void)
 	sourceNode->behaviour->dndFinished(sourceNode, qfalse);
 
 	MN_DNDCleanup();
-	mouseSpace = MS_NULL;
 	MN_InvalidateMouse();
 }
 
@@ -153,7 +150,7 @@ void MN_DNDAbort (void)
 void MN_DNDDrop (void)
 {
 	qboolean result = qfalse;
-	assert(mouseSpace == MS_DRAGITEM);
+	assert(MN_DNDIsDragging());
 	assert(objectType != DND_NOTHING);
 	assert(sourceNode != NULL);
 
@@ -168,7 +165,6 @@ void MN_DNDDrop (void)
 	sourceNode->behaviour->dndFinished(sourceNode, result);
 
 	MN_DNDCleanup();
-	mouseSpace = MS_NULL;
 	MN_InvalidateMouse();
 }
 

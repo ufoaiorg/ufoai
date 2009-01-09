@@ -33,6 +33,7 @@ struct item_s;
 
 typedef enum {
 	DND_NOTHING,
+	DND_SOMETHING,	/**< Untyped object */
 	DND_ITEM,
 } dndType_t;
 
