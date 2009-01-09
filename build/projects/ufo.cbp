@@ -293,6 +293,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_radar.h" />
+		<Unit filename="..\..\src\client\campaign\cl_save.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_save.h" />
 		<Unit filename="..\..\src\client\campaign\cl_transfer.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -305,9 +309,25 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_uforecovery.h" />
+		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_aircraft.h" />
+		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_alien_interest.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_base.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_base.h" />
+		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_geoscape_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -357,22 +377,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_actor.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aircraft.h" />
-		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_aircraft_callbacks.h" />
-		<Unit filename="..\..\src\client\campaign\cp_base.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_base.h" />
-		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.h" />
 		<Unit filename="..\..\src\client\cl_cinematic.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -401,14 +405,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_game_skirmish.h" />
-		<Unit filename="..\..\src\client\multiplayer\cp_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\cp_callbacks.h" />
-		<Unit filename="..\..\src\client\multiplayer\cp_serverlist.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\cp_serverlist.h" />
 		<Unit filename="..\..\src\client\cl_global.h" />
 		<Unit filename="..\..\src\client\cl_http.c">
 			<Option compilerVar="CC" />
@@ -461,15 +457,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_popup.h" />
+		<Unit filename="..\..\src\client\cl_rank.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_rank.h" />
 		<Unit filename="..\..\src\client\cl_renderer.h" />
 		<Unit filename="..\..\src\client\cl_research.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_research.h" />
-		<Unit filename="..\..\src\client\campaign\cl_save.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_save.h" />
 		<Unit filename="..\..\src\client\cl_screen.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -482,14 +478,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_sound.h" />
-		<Unit filename="..\..\src\client\cl_rank.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_rank.h" />
-		<Unit filename="..\..\src\client\cl_ugv.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_ugv.h" />
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -510,6 +498,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_ufopedia.h" />
+		<Unit filename="..\..\src\client\cl_ugv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_ugv.h" />
 		<Unit filename="..\..\src\client\cl_video.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -703,6 +695,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_zone.h" />
+		<Unit filename="..\..\src\client\multiplayer\mp_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\multiplayer\mp_callbacks.h" />
+		<Unit filename="..\..\src\client\multiplayer\mp_serverlist.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\multiplayer\mp_serverlist.h" />
 		<Unit filename="..\..\src\client\renderer\anormtab.h" />
 		<Unit filename="..\..\src\client\renderer\r_array.c">
 			<Option compilerVar="CC" />
@@ -729,10 +729,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_image.h" />
-		<Unit filename="..\..\src\client\renderer\r_overlay.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\renderer\r_overlay.h" />
 		<Unit filename="..\..\src\client\renderer\r_light.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -785,6 +781,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_model_md3.h" />
+		<Unit filename="..\..\src\client\renderer\r_overlay.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\renderer\r_overlay.h" />
 		<Unit filename="..\..\src\client\renderer\r_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>
