@@ -458,7 +458,7 @@ tech rs_alien_communication
 		tech rs_alien_oddbehaviour
 	}
 	time	1600
-//	image		"techs/alien_communication"
+	image		"techs/alien_communication"
 }
 
 tech rs_alien_base
