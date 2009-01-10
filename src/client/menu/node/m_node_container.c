@@ -421,7 +421,7 @@ static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
  */
 static void MN_ContainerNodeLoaded (menuNode_t* const node)
 {
-	char *name;
+	const char *name;
 	invDef_t *container;
 	int i, j;
 
@@ -442,7 +442,7 @@ static void MN_ContainerNodeLoaded (menuNode_t* const node)
 	EXTRADATA(node).container = container;
 
 	if (MN_IsScrollContainerNode(node)) {
-		/* No need to calculate the size, menu script do it himself */
+		/* No need to calculate the size, this is done in the menu script */
 	} else {
 		/* Start on the last bit of the shape mask. */
 		for (i = 31; i >= 0; i--) {
@@ -463,7 +463,7 @@ static void MN_ContainerNodeLoaded (menuNode_t* const node)
 }
 
 static const vec3_t scale = {3.5, 3.5, 3.5};
-/** @todo it may nice to vectorise that */
+/** @todo it may be nice to vectorise that */
 static const vec4_t colorDefault = {1, 1, 1, 1};
 static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
