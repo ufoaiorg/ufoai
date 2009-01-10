@@ -238,6 +238,25 @@ qboolean GAME_MP_Spawn (void)
 	return qtrue;
 }
 
+/**
+ * @brief Fills the multiplayer equipment storage
+ * @todo Multiplayer is currently using the ccs.eMission - this should be
+ * changed - ccs is campaign mode only
+ */
+static void GAME_MP_GetEquipment (void)
+{
+	const equipDef_t *ed;
+	const char *equipmentName = "multiplayer";
+
+	/* search equipment definition */
+	ed = INV_GetEquipmentDefinitionByID(equipmentName);
+	if (ed == NULL) {
+		Com_Printf("Equipment '%s' not found!\n", equipmentName);
+		return;
+	}
+	ccs.eMission = *ed; /* copied, including the arrays inside! */
+}
+
 void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
@@ -264,6 +283,8 @@ void GAME_MP_InitStartup (void)
 	 * multiplayer menu while you are still connected */
 	if (cls.state >= ca_connecting)
 		CL_Disconnect();
+
+	GAME_MP_GetEquipment();
 }
 
 void GAME_MP_Shutdown (void)

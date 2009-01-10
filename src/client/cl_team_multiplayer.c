@@ -35,14 +35,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void CL_MultiplayerTeamSlotComments_f (void)
 {
-	char comment[MAX_VAR];
-	FILE *f;
 	int i;
-	byte version;
 
 	for (i = 0; i < 8; i++) {
+		byte version;
+		char comment[MAX_VAR];
+		const size_t size = sizeof(comment);
+
 		/* open file */
-		f = fopen(va("%s/save/team%i.mpt", FS_Gamedir(), i), "rb");
+		FILE *f = fopen(va("%s/save/team%i.mpt", FS_Gamedir(), i), "rb");
 		if (!f) {
 			Cvar_Set(va("mn_slot%i", i), "");
 			continue;
@@ -52,61 +53,11 @@ static void CL_MultiplayerTeamSlotComments_f (void)
 		if (fread(&version, 1, 1, f) != 1)
 			Com_Printf("Warning: Teamfile may have corrupted version\n");
 
-		if (fread(comment, 1, MAX_VAR, f) != MAX_VAR)
+		if (fread(comment, 1, size, f) != size)
 			Com_Printf("Warning: Teamfile may have corrupted comment\n");
 		Cvar_Set(va("mn_slot%i", i), comment);
 		fclose(f);
 	}
-}
-
-
-/**
- * @brief Multiplayer-only call to reset team and team inventory (when setting up new team).
- * @sa E_ResetEmployees
- * @sa CL_CleanTempInventory
- * @note Available via script command team_reset.
- * @note Called when initializing the multiplayer menu (for init node and new team button).
- */
-void CL_ResetMultiplayerTeamInAircraft (aircraft_t *aircraft)
-{
-	if (!GAME_IsMultiplayer())
-		return;
-
-	if (!aircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: No aircraft given\n");
-		return;
-	}
-
-	CL_CleanTempInventory(NULL);
-
-	AIR_ResetAircraftTeam(aircraft);
-
-	E_ResetEmployees();
-	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->integer) {
-		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-		employee->hired = qtrue;
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: Generate character for multiplayer - employee->chr.name: '%s'\n", employee->chr.name);
-	}
-
-	/* reset the multiplayer inventory; stored in ccs.eMission */
-	{
-		const equipDef_t *ed;
-		const char *name = "multiplayer";
-
-		/* search equipment definition */
-		Com_DPrintf(DEBUG_CLIENT, "CL_ResetMultiplayerTeamInAircraft: no curCampaign - using equipment '%s'\n", name);
-		ed = INV_GetEquipmentDefinitionByID(name);
-		if (ed == NULL) {
-			Com_Printf("Equipment '%s' not found!\n", name);
-			return;
-		}
-		ccs.eMission = *ed; /* copied, including the arrays inside! */
-	}
-}
-
-static void CL_ResetMultiplayerTeamInAircraft_f (void)
-{
-	CL_ResetMultiplayerTeamInAircraft(cls.missionaircraft);
 }
 
 /**
@@ -114,11 +65,6 @@ static void CL_ResetMultiplayerTeamInAircraft_f (void)
  */
 static void CL_GenerateNewMultiplayerTeam_f (void)
 {
-	if (!GAME_IsMultiplayer()) {
-		Com_Printf("%s should only be called for multiplayer games\n", Cmd_Argv(0));
-		return;
-	}
-	CL_ResetMultiplayerTeamInAircraft(cls.missionaircraft);
 	Cvar_Set("mn_teamname", _("NewTeam"));
 
 	SV_Shutdown("Game exit", qfalse);
@@ -397,6 +343,5 @@ void TEAM_MP_InitStartup (void)
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("team_comments", CL_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
-	Cmd_AddCommand("team_reset", CL_ResetMultiplayerTeamInAircraft_f, NULL);
 	Cmd_AddCommand("team_new", CL_GenerateNewMultiplayerTeam_f, "Generates a new empty multiplayer team");
 }
