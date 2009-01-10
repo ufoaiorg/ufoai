@@ -1063,7 +1063,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 	return NULL;
 }
 
-invList_t *MN_ContainerBaseAmmoNodeGetItem (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *MN_ContainerBaseAmmoNodeGetItem (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	invList_t *ic;
 	int curHeight = 0;	/**< Combined Height of all drawn item so far. */
@@ -1145,7 +1145,7 @@ invList_t *MN_ContainerBaseAmmoNodeGetItem (const menuNode_t* const node, int mo
  * @param[out] contY	Y location in the container (row).
  * @sa MN_ContainerNodeSearchInScrollableContainer
  */
-invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
 {
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (MN_IsScrollContainerNode(node)) {
