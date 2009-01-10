@@ -203,20 +203,6 @@ qboolean INV_ItemsIsStoredInStorage (const objDef_t *obj)
 	return qtrue;
 }
 
-#ifdef DEBUG
-/**
- * @brief Lists all object definitions.
- * @note called with debug_listinventory
- */
-void INV_InventoryList_f (void)
-{
-	int i;
-
-	for (i = 0; i < csi.numODs; i++)
-		INVSH_PrintItemDescription(&csi.ods[i]);
-}
-#endif
-
 /**
  * @param[in] inv list where the item is currently in
  * @param[in] toContainer target container to place the item in
@@ -258,6 +244,19 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 }
 
 #ifdef DEBUG
+/**
+ * @brief Lists all object definitions.
+ * @note called with debug_listinventory
+ */
+static void INV_InventoryList_f (void)
+{
+	int i;
+
+	for (i = 0; i < csi.numODs; i++)
+		INVSH_PrintItemDescription(&csi.ods[i]);
+}
+#endif
+
 /**
  * @brief Make sure values of items after parsing are proper.
  */
@@ -355,9 +354,11 @@ qboolean INV_EquipmentDefSanityCheck (void)
 
 	return result;
 }
-#endif
 
 void INV_InitStartup (void)
 {
 	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, "Equipment that is used for none-campaign mode games");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listinventory", INV_InventoryList_f, "Print the current inventory to the game console");
+#endif
 }

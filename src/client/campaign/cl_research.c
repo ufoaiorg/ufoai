@@ -2072,7 +2072,6 @@ void RS_InitStartup (void)
 	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
 	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_listinventory", INV_InventoryList_f, "Print the current inventory to the game console");
 	Cmd_AddCommand("debug_listtech", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
 	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll, "Mark all techs as researched");
 	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll, "Mark all techs as researchable");
