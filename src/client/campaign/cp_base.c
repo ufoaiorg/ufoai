@@ -444,6 +444,23 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 }
 
 /**
+ * @brief Update Antimatter Capacity.
+ * @param[in] base Pointer to the base
+ * @sa B_ResetAllStatusAndCapacities_f
+ */
+static void B_UpdateAntimatterCap (base_t *base)
+{
+	int i;
+
+	for (i = 0; i < csi.numODs; i++) {
+		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10)) {
+			base->capacities[CAP_ANTIMATTER].cur = (base->storage.num[i] * ANTIMATTER_SIZE);
+			return;
+		}
+	}
+}
+
+/**
  * @brief Recalculate status and capacities of one base
  * @param[in] base Pointer to the base where status and capacities must be recalculated
  * @param[in] firstEnable qtrue if this is the first time the function is called for this base
@@ -492,7 +509,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 		base->capacities[CAP_EMPLOYEES].cur = E_CountAllHired(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ITEMS)))
-		INV_UpdateStorageCap(base);
+		B_UpdateStorageCap(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_LABSPACE)))
 		base->capacities[CAP_LABSPACE].cur = RS_CountInBase(base);
@@ -505,7 +522,7 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 		UR_UpdateUFOHangarCapForAll(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ANTIMATTER)))
-		INV_UpdateAntimatterCap(base);
+		B_UpdateAntimatterCap(base);
 
 	/* Check that current capacity is possible -- if we changed values in *.ufo */
 	for (i = 0; i < MAX_CAP; i++)
@@ -2330,7 +2347,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 
 	if (base) {
 		AIR_MoveEmployeeInventoryIntoStorage(aircraft, &base->storage);
-		INV_UpdateStorageCap(base);
+		B_UpdateStorageCap(base);
 	}
 	CL_SwapSkills(&chrListTemp);
 
@@ -2883,7 +2900,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	/** @note Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground
 	 * @todo this should be removed when new inventory code will be over */
 	assert(aircraft->homebase);
-	INV_UpdateStorageCap(aircraft->homebase);
+	B_UpdateStorageCap(aircraft->homebase);
 
 	/* Now empty alien/item cargo just in case. */
 	cargo = AL_GetAircraftAlienCargo(aircraft);
@@ -3683,4 +3700,224 @@ qboolean B_ScriptSanityCheck (void)
 		return qtrue;
 	else
 		return qfalse;
+}
+
+/**
+ * @brief Remove items until everything fits in storage.
+ * @note items will be randomly selected for removal.
+ * @param[in] base Pointer to the base
+ */
+void B_RemoveItemsExceedingCapacity (base_t *base)
+{
+	int i;
+	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
+	int numObj;
+
+	if (base->capacities[CAP_ITEMS].cur <= base->capacities[CAP_ITEMS].max)
+		return;
+
+	for (i = 0, numObj = 0; i < csi.numODs; i++) {
+		const objDef_t *obj = &csi.ods[i];
+
+		if (!INV_ItemsIsStoredInStorage(obj))
+			continue;
+
+		/* Don't count item that we don't have in base */
+		if (!base->storage.num[i])
+			continue;
+
+		objIdx[numObj++] = i;
+	}
+
+	/* UGV takes room in storage capacity: we store them with a value MAX_OBJDEFS that can't be used by objIdx */
+	for (i = 0; i < E_CountHired(base, EMPL_ROBOT); i++) {
+		objIdx[numObj++] = MAX_OBJDEFS;
+	}
+
+	while (numObj && base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
+		/* Select the item to remove */
+		const int randNumber = rand() % numObj;
+		if (objIdx[randNumber] >= MAX_OBJDEFS) {
+			/* A UGV is destroyed: get first one */
+			employee_t* employee = E_GetHiredRobot(base, 0);
+			/* There should be at least a UGV */
+			assert(employee);
+			E_DeleteEmployee(employee, EMPL_ROBOT);
+		} else {
+			/* items are destroyed. We guess that all items of a given type are stored in the same location
+			 *	=> destroy all items of this type */
+			const int idx = objIdx[randNumber];
+			assert(idx >= 0);
+			assert(idx < MAX_OBJDEFS);
+			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
+		}
+		REMOVE_ELEM(objIdx, randNumber, numObj);
+
+		/* Make sure that we don't have an infinite loop */
+		if (numObj <= 0)
+			break;
+	}
+	Com_DPrintf(DEBUG_CLIENT, "B_RemoveItemsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
+		base->capacities[CAP_ITEMS].cur, base->capacities[CAP_ITEMS].max);
+}
+
+/**
+ * @brief Remove ufos until everything fits in ufo hangars.
+ * @param[in] base Pointer to the base
+ * @param[in] ufohangar type
+ */
+void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingType)
+{
+	const baseCapacities_t capacity_type = B_GetCapacityFromBuildingType (buildingType);
+	int i;
+	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
+	int numObj;
+
+	if (capacity_type != CAP_UFOHANGARS_SMALL && capacity_type != CAP_UFOHANGARS_LARGE)
+		return;
+
+	if (base->capacities[capacity_type].cur <= base->capacities[capacity_type].max)
+		return;
+
+	for (i = 0, numObj = 0; i < csi.numODs; i++) {
+		const objDef_t *obj = &csi.ods[i];
+		aircraft_t *ufocraft;
+
+		/* Don't count what isn't an aircraft */
+		assert(obj->tech);
+		if (obj->tech->type != RS_CRAFT) {
+			continue;
+		}
+
+		/* look for corresponding aircraft in global array */
+		ufocraft = AIR_GetAircraft (obj->id);
+		if (!ufocraft) {
+			Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Did not find UFO %s\n", obj->id);
+			continue;
+		}
+
+		if (ufocraft->size == AIRCRAFT_LARGE && capacity_type != CAP_UFOHANGARS_LARGE)
+			continue;
+		if (ufocraft->size == AIRCRAFT_SMALL && capacity_type != CAP_UFOHANGARS_SMALL)
+			continue;
+
+		/* Don't count item that we don't have in base */
+		if (!base->storage.num[i])
+			continue;
+
+		objIdx[numObj++] = i;
+	}
+
+	while (numObj && base->capacities[capacity_type].cur > base->capacities[capacity_type].max) {
+		/* Select the item to remove */
+		const int randNumber = rand() % numObj;
+		/* items are destroyed. We guess that all items of a given type are stored in the same location
+		 *	=> destroy all items of this type */
+		const int idx = objIdx[randNumber];
+
+		assert(idx >= 0);
+		assert(idx < MAX_OBJDEFS);
+		B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
+
+		REMOVE_ELEM(objIdx, randNumber, numObj);
+		UR_UpdateUFOHangarCapForAll(base);
+
+		/* Make sure that we don't have an infinite loop */
+		if (numObj <= 0)
+			break;
+	}
+	Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Remains %i in storage for a maxium of %i\n",
+		base->capacities[capacity_type].cur, base->capacities[capacity_type].max);
+}
+
+/**
+ * @brief Update Storage Capacity.
+ * @param[in] base Pointer to the base
+ * @sa B_ResetAllStatusAndCapacities_f
+ */
+void B_UpdateStorageCap (base_t *base)
+{
+	int i;
+
+	base->capacities[CAP_ITEMS].cur = 0;
+
+	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *obj = &csi.ods[i];
+
+		if (!INV_ItemsIsStoredInStorage(obj))
+			continue;
+
+		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * obj->size;
+	}
+
+	/* UGV takes room in storage capacity */
+	base->capacities[CAP_ITEMS].cur += UGV_SIZE * E_CountHired(base, EMPL_ROBOT);
+}
+
+/**
+ * @brief Manages Antimatter (adding, removing) through Antimatter Storage Facility.
+ * @param[in] base Pointer to the base.
+ * @param[in] amount quantity of antimatter to add/remove (> 0 even if antimatter is removed)
+ * @param[in] add True if we are adding antimatter, false when removing.
+ * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.
+ * @note Call with amount = 0 if you want to remove ALL antimatter from given base.
+ */
+void B_ManageAntimatter (base_t *base, int amount, qboolean add)
+{
+	int i, j;
+	objDef_t *od;
+
+	assert(base);
+
+	if (!B_GetBuildingStatus(base, B_ANTIMATTER) && add) {
+		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+			_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
+			base->name, amount);
+		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+		return;
+	}
+
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		if (!Q_strncmp(od->id, "antimatter", 10))
+			break;
+	}
+
+	if (i == csi.numODs)
+		Sys_Error("Could not find antimatter object definition");
+
+	if (add) {	/* Adding. */
+		if (base->capacities[CAP_ANTIMATTER].cur + (amount * ANTIMATTER_SIZE) <= base->capacities[CAP_ANTIMATTER].max) {
+			base->storage.num[i] += amount;
+			base->capacities[CAP_ANTIMATTER].cur += (amount * ANTIMATTER_SIZE);
+		} else {
+			for (j = 0; j < amount; j++) {
+				if (base->capacities[CAP_ANTIMATTER].cur + ANTIMATTER_SIZE <= base->capacities[CAP_ANTIMATTER].max) {
+					base->storage.num[i]++;
+					base->capacities[CAP_ANTIMATTER].cur += ANTIMATTER_SIZE;
+				} else
+					break;
+			}
+		}
+	} else {	/* Removing. */
+		if (amount == 0) {
+			base->capacities[CAP_ANTIMATTER].cur = 0;
+			base->storage.num[i] = 0;
+		} else {
+			base->capacities[CAP_ANTIMATTER].cur -= amount * ANTIMATTER_SIZE;
+			base->storage.num[i] -= amount;
+		}
+	}
+}
+
+/**
+ * @brief Remove exceeding antimatter if an antimatter tank has been destroyed.
+ * @param[in] base Pointer to the base.
+ */
+void B_RemoveAntimatterExceedingCapacity (base_t *base)
+{
+	const int amount = ceil(((float) (base->capacities[CAP_ANTIMATTER].cur - base->capacities[CAP_ANTIMATTER].max)) / ANTIMATTER_SIZE);
+	if (amount < 0)
+		return;
+
+	B_ManageAntimatter(base, amount, qfalse);
 }

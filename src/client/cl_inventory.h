@@ -52,18 +52,10 @@ typedef struct components_s {
 extern cvar_t *cl_equip;
 
 void INV_ParseComponents(const char *name, const char **text);
-void INV_TransferItemCarriedByChr(character_t *chr, base_t *sourceBase, base_t* destBase);
-
 void INV_CarriedItems(const le_t *soldier);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
 qboolean INV_ItemsIsStoredInStorage(const objDef_t *obj);
-void INV_RemoveItemsExceedingCapacity(base_t *base);
-void INV_UpdateStorageCap(base_t *base);
-void INV_UpdateAntimatterCap(base_t *base);
-void INV_ManageAntimatter(base_t *base, int amount, qboolean add);
-void INV_RemoveAntimatterExceedingCapacity(base_t *base);
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
-void INV_RemoveUFOsExceedingCapacity(base_t *base, const buildingType_t buildingType);
 equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);
 

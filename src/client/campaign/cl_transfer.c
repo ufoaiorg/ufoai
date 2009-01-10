@@ -669,7 +669,7 @@ static void TR_TransferListClear_f (void)
 	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
 		if (trItemsTmp[i] > 0) {
 			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
-				INV_ManageAntimatter(baseCurrent, trItemsTmp[i], qtrue);
+				B_ManageAntimatter(baseCurrent, trItemsTmp[i], qtrue);
 			else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 				const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 				assert(ufocraft);
@@ -724,7 +724,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			for (i = 0; i < csi.numODs; i++) {
 				if (transfer->itemAmount[i] > 0) {
 					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
-						INV_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
+						B_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 						assert(ufocraft);
@@ -1176,7 +1176,7 @@ static void TR_TransferListSelect_f (void)
 					if (amount) {
 						trItemsTmp[i] += amount;
 						if (!Q_strncmp(od->id, "antimatter", 10))
-							INV_ManageAntimatter(baseCurrent, amount, qfalse);
+							B_ManageAntimatter(baseCurrent, amount, qfalse);
 						else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 							assert(ufocraft);
@@ -1493,7 +1493,7 @@ static void TR_CargoListSelect_f (void)
 					amount = min(amount, trItemsTmp[i]);
 					trItemsTmp[i] -= amount;
 					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
-						INV_ManageAntimatter(baseCurrent, amount, qfalse);
+						B_ManageAntimatter(baseCurrent, amount, qfalse);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 						assert(ufocraft);

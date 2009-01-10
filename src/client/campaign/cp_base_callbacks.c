@@ -249,7 +249,7 @@ static void B_BaseInit_f (void)
  * @note this function is only used for sanity checks, and send to related function depending on building type.
  * @pre Functions below will be called AFTER the building is actually destroyed.
  * @sa B_BuildingDestroy_f
- * @todo Why this exist? why is this not part of B_BuildingDestroy?
+ * @todo Why does this exist? why is this not part of B_BuildingDestroy?
  */
 static void B_BuildingOnDestroy_f (void)
 {
@@ -281,7 +281,7 @@ static void B_BuildingOnDestroy_f (void)
 			PR_UpdateProductionCap(base);
 			break;
 		case B_STORAGE:
-			INV_RemoveItemsExceedingCapacity(base);
+			B_RemoveItemsExceedingCapacity(base);
 			break;
 		case B_ALIEN_CONTAINMENT:
 			if (base->capacities[CAP_ALIENS].cur - base->capacities[CAP_ALIENS].max > 0)
@@ -296,13 +296,13 @@ static void B_BuildingOnDestroy_f (void)
 			break;
 		case B_UFO_HANGAR:
 		case B_UFO_SMALL_HANGAR:
-			INV_RemoveUFOsExceedingCapacity(base, buildingType);
+			B_RemoveUFOsExceedingCapacity(base, buildingType);
 			break;
 		case B_QUARTERS:
 			E_DeleteEmployeesExceedingCapacity(base);
 			break;
 		case B_ANTIMATTER:
-			INV_RemoveAntimatterExceedingCapacity(base);
+			B_RemoveAntimatterExceedingCapacity(base);
 			break;
 		default:
 			/* handled in a seperate function, or number of buildings have no impact

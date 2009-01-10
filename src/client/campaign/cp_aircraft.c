@@ -894,6 +894,33 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 }
 
 /**
+ * @brief Transfer items carried by a soldier from one base to another.
+ * @param[in] employee Pointer to employee.
+ * @param[in] sourceBase Base where employee comes from.
+ * @param[in] destBase Base where employee is going.
+ * @todo this is campaign mode only - doesn't belong here
+ */
+static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t *sourceBase, base_t* destBase)
+{
+	invList_t *ic;
+	int container;
+
+	for (container = 0; container < csi.numIDs; container++) {
+		for (ic = chr->inv.c[container]; ic; ic = ic->next) {
+			objDef_t *obj = ic->item.t;
+			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
+
+			obj = ic->item.m;
+			if (obj) {
+				B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
+			}
+		}
+	}
+}
+
+/**
  * @brief Moves a given aircraft to a new base (also the employees and inventory)
  * @note Also checks for a working hangar
  * @param[in] aircraft The aircraft to move into a new base
@@ -927,7 +954,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 			base->capacities[CAP_EMPLOYEES].cur++;
 			oldBase->capacities[CAP_EMPLOYEES].cur--;
 			/* Transfer items carried by soldiers from oldBase to base */
-			INV_TransferItemCarriedByChr(&employee->chr, oldBase, base);
+			AIR_TransferItemsCarriedByCharacterToBase(&employee->chr, oldBase, base);
 		}
 	}
 

@@ -585,7 +585,7 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calcul
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
 			if (!Q_strncmp(compOd->id, "antimatter", 10))
-				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
+				B_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
 				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);
 			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", comp->item_amount[i], compOd->id);

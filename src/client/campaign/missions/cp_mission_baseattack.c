@@ -111,9 +111,9 @@ void CP_BaseAttackMissionLeave (mission_t *mission)
 	/* we really don't want to use the fake aircraft anywhere */
 	cls.missionaircraft = NULL;
 
-	/* HACK This hack (lines below) only needed until base will be really destroyed
-	 * we must recalculate item in storage because of item collected on battlefield */
-	INV_UpdateStorageCap(base);
+	/* HACK This hack is only needed until base will be really destroyed
+	 * we must recalculate items in storage because of the items we collected on battlefield */
+	B_UpdateStorageCap(base);
 	base->baseStatus = BASE_WORKING;
 }
 
