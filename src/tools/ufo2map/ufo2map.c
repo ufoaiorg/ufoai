@@ -136,6 +136,7 @@ static const usagePair_t usageArray[] = {
 	{NULL, NULL}
 };
 
+#define USAGE_FORMAT_BUFF 16
 
 /**
  * @brief print usage information.
@@ -144,8 +145,8 @@ static void Usage (void)
 {
 	const usagePair_t *v;
 	int maxFlagsLen = 0;
-	char flagsDescLineFmt[16];
-	char contDescLineFmt[16];
+	char flagsDescLineFmt[USAGE_FORMAT_BUFF];
+	char contDescLineFmt[USAGE_FORMAT_BUFF];
 
 	/* run through to find the length of the longest
 	 * flags string */
@@ -158,8 +159,8 @@ static void Usage (void)
 
 	/* set up fmt strings appropriately
 	 * eg if max length was 20, would get "%-20s: %s\n" */
-	sprintf(flagsDescLineFmt, "%%-%is: %%s\n", maxFlagsLen);
-	sprintf(contDescLineFmt, "%%-%is%%s\n", maxFlagsLen+2);
+	snprintf(flagsDescLineFmt, USAGE_FORMAT_BUFF, "%%-%is: %%s\n", maxFlagsLen);
+	snprintf(contDescLineFmt, USAGE_FORMAT_BUFF,"%%-%is%%s\n", maxFlagsLen+2);
 
 	for (v = usageArray; v->flags || v->desc; v++) {
 		if (v->flags && v->desc)
