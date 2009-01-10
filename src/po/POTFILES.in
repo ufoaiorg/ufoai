@@ -23,6 +23,8 @@
 ./client/campaign/cp_nations.c
 ./client/campaign/cp_time.c
 ./client/campaign/cl_messageoptions.c
+./client/campaign/cl_research.c
+./client/campaign/cl_ufopedia.c
 ./client/campaign/missions/cp_mission_baseattack.c
 ./client/campaign/missions/cp_mission_harvest.c
 ./client/campaign/missions/cp_mission_recon.c
@@ -40,11 +42,9 @@
 ./client/cl_main.c
 ./client/cl_parse.c
 ./client/cl_popup.c
-./client/cl_research.c
 ./client/cl_screen.c
 ./client/cl_team.c
 ./client/cl_team_multiplayer.c
-./client/cl_ufopedia.c
 ./client/cl_view.c
 ./client/cl_messages.c
 ./client/menu/m_input.c
