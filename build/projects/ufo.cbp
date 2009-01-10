@@ -393,10 +393,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_console.h" />
-		<Unit filename="..\..\src\client\cl_employee.c">
+		<Unit filename="..\..\src\client\campaign\cl_employee.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_employee.h" />
+		<Unit filename="..\..\src\client\campaign\cl_employee.h" />
 		<Unit filename="..\..\src\client\cl_game.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -4,7 +4,6 @@ CLIENT_SRCS = \
 	client/cl_actor.c \
 	client/cl_cinematic.c \
 	client/cl_console.c \
-	client/cl_employee.c \
 	client/cl_game.c \
 	client/cl_game_campaign.c \
 	client/cl_game_multiplayer.c \
@@ -42,6 +41,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_alien_interest.c \
 	client/campaign/cp_base.c \
 	client/campaign/cp_base_callbacks.c \
+	client/campaign/cl_employee.c \
 	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_missions.c \
 	client/campaign/cp_mission_triggers.c \

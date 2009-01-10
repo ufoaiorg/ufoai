@@ -323,7 +323,7 @@ struct employee_s;
 #define MAX_EMPLOYEES 512
 #include "campaign/cp_aircraft.h"
 /* needs the MAX_ACTIVETEAM definition from above. */
-#include "cl_employee.h"
+#include "campaign/cl_employee.h"
 #include "cl_inventory.h"
 #include "cl_parse.h"
 #include "campaign/cl_campaign.h"

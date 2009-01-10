@@ -24,14 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
-#include "cl_game.h"
-#include "cl_team.h"
-#include "campaign/cl_hospital.h"
-#include "cl_actor.h"
-#include "menu/m_popup.h"
-#include "menu/m_draw.h"
+#include "../client.h"
+#include "../cl_global.h"
+#include "../cl_game.h"
+#include "../cl_team.h"
+#include "../cl_actor.h"
+#include "../menu/m_popup.h"
+#include "../menu/m_draw.h"
+#include "cl_hospital.h"
 
 /** Currently selected employee. @sa cl_employee.h */
 employee_t *selectedEmployee = NULL;
