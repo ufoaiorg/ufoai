@@ -1464,15 +1464,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 			EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
 			EXTRADATA(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
-		invList_t *fItem;
 		menuNode_t *target;
-
-		/* menu */
-		if (MN_IsScrollContainerNode(source)) {
-			const int equipType = EXTRADATA(source).filterEquipType;
-			fItem = MN_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
-		} else
-			fItem = Com_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
 
 		/** @todo need to understand what its done here */
 		if (EXTRADATA(source).container->id == csi.idArmour) {
@@ -1489,6 +1481,14 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 
 		target = MN_DNDGetTargetNode();
 		if (target) {
+			invList_t *fItem;
+			/* menu */
+			if (MN_IsScrollContainerNode(source)) {
+				const int equipType = EXTRADATA(source).filterEquipType;
+				fItem = MN_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
+			} else
+				fItem = Com_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
+
 			/** @todo We must split the move in two. Here, we sould not know how to add the item to the target (see dndDrop) */
 			assert(EXTRADATA(target).container);
 			INV_MoveItem(menuInventory,
