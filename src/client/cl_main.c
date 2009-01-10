@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_tutorials.h"
 #include "cl_tip.h"
 #include "cl_team.h"
-#include "cl_team_multiplayer.h"
+#include "multiplayer/mp_team.h"
 #include "cl_rank.h"
 #include "cl_language.h"
 #include "cl_particle.h"

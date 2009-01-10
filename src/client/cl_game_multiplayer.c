@@ -26,10 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 #include "cl_game.h"
+#include "cl_team.h"
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
-#include "cl_team.h"
-#include "cl_team_multiplayer.h"
+#include "multiplayer/mp_team.h"
 #include "menu/m_popup.h"
 
 #define MAX_MULTIPLAYER_CHARACTERS 32

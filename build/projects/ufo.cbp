@@ -490,10 +490,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_team.h" />
-		<Unit filename="..\..\src\client\cl_team_multiplayer.c">
+		<Unit filename="..\..\src\client\multiplayer\mp_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_team_multiplayer.h" />
+		<Unit filename="..\..\src\client\multiplayer\mp_team.h" />
 		<Unit filename="..\..\src\client\cl_tip.c">
 			<Option compilerVar="CC" />
 		</Unit>

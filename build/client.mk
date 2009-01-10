@@ -26,7 +26,6 @@ CLIENT_SRCS = \
 	client/cl_sound.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
-	client/cl_team_multiplayer.c \
 	client/cl_tip.c \
 	client/cl_tutorials.c \
 	client/cl_ugv.c \
@@ -82,6 +81,7 @@ CLIENT_SRCS = \
 	\
 	client/multiplayer/mp_callbacks.c \
 	client/multiplayer/mp_serverlist.c \
+	client/multiplayer/mp_team.c \
 	\
 	client/menu/m_actions.c \
 	client/menu/m_condition.c \

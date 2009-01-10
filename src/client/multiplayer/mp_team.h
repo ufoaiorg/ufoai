@@ -1,6 +1,6 @@
 /**
- * @file cl_team_multiplayer.c
- * @brief Multiplayer team management.
+ * @file mp_team.h
+ * @brief Multiplayer team management headers.
  */
 
 /*
@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_TEAM_MULTIPLAYER_H
 #define CL_TEAM_MULTIPLAYER_H
 
-void CL_ResetMultiplayerTeamInAircraft(aircraft_t *aircraft);
 void TEAM_MP_InitStartup(void);
 
 #endif
