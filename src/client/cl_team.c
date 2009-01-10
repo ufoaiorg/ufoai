@@ -1020,6 +1020,26 @@ static void CL_ThisSoldier_f (void)
 	}
 }
 
+static void CL_UpdateSoldier_f (void)
+{
+	int num;
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	/* We are in the base or multiplayer inventory */
+	if (num < chrDisplayList.num) {
+		assert(chrDisplayList.chr[num]);
+		if (chrDisplayList.chr[num]->emplType == EMPL_ROBOT)
+			CL_UGVCvars(chrDisplayList.chr[num]);
+		else
+			CL_CharacterCvars(chrDisplayList.chr[num]);
+	}
+}
+
 /**
  * @brief Updates data about teams in aircraft.
  * @param[in] aircraft Pointer to an aircraft for a desired team.
@@ -1516,6 +1536,7 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select a soldier in the equipment menu");
 	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
 	Cmd_AddCommand("soldier_reselect", CL_ThisSoldier_f, _("Reselect the current soldier"));
+	Cmd_AddCommand("soldier_update", CL_UpdateSoldier_f, _("Update a soldier"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
 	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");
 #ifdef DEBUG

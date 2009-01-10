@@ -1160,8 +1160,11 @@ static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
-	if (MN_DNDIsDragging())
+	if (MN_DNDIsDragging()) {
 		MN_DNDDrop();
+		/** @todo ungeneric */
+		Cbuf_AddText(va("soldier_update %i\n", cl_selected->integer));
+	}
 }
 
 static void MN_ContainerNodeLoading (menuNode_t *node)
