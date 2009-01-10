@@ -125,7 +125,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 		if (newOption->action[0] != '\0') {
 #ifdef DEBUG
 			if (newOption->action[strlen(newOption->action) - 1] != ';') {
-				Com_Printf("selectbox option with none terminated action command\n");
+				Com_Printf("Selectbox option with none terminated action command (%s.%s)\n", node->menu->name, node->name);
 			}
 #endif
 			Cbuf_AddText(newOption->action);

@@ -234,7 +234,7 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 		if (*selectBoxOption->action) {
 #ifdef DEBUG
 			if (selectBoxOption->action[strlen(selectBoxOption->action) - 1] != ';')
-				Com_Printf("selectbox option with none terminated action command\n");
+				Com_Printf("Selectbox option with none terminated action command (%s.%s)\n", node->menu->name, node->name);
 #endif
 			Cbuf_AddText(selectBoxOption->action);
 		}
