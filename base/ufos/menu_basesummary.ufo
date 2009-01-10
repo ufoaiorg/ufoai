@@ -52,7 +52,7 @@ menu basesummary
 		tabwidth	42
 		font		f_small
 		scrollbar	true
-		rows		"42"
+		rows		"33"
 		longlines	prettychop
 		wheel
 	}
@@ -69,7 +69,7 @@ menu basesummary
 		tabwidth	50
 		wheel
 		scrollbar	yes
-		rows		"25"
+		rows		"23"
 		textid			TEXT_STANDARD
 	}
 
