@@ -55,7 +55,6 @@ void INV_ParseComponents(const char *name, const char **text);
 void INV_TransferItemCarriedByChr(character_t *chr, base_t *sourceBase, base_t* destBase);
 
 void INV_CarriedItems(const le_t *soldier);
-void INV_InitialEquipment(base_t *base, aircraft_t *assignInitialAircraft, const campaign_t* campaign, const char *eqname, equipDef_t *edTarget, const equipDef_t *ed);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
 int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
 qboolean INV_ItemsIsStoredInStorage(const objDef_t *obj);

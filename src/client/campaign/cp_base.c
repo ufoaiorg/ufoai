@@ -45,6 +45,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 vec3_t newBasePos;
 building_t *buildingConstructionList[MAX_BUILDINGS];
 
+static void B_AssignInitial(aircraft_t *aircraft, const equipDef_t *ed);
+
 /**
  * @brief Array bound check for the base index.
  * @return Pointer to the base corresponding to baseIdx.
@@ -979,6 +981,47 @@ static inline void B_AddBuildingToBase (base_t *base, const building_t const *te
 }
 
 /**
+ * @brief Prepares initial equipment for first base at the beginning of the campaign.
+ * @param[in] base Pointer to first base.
+ * @param[in] campaign The current running campaign
+ * @sa B_BuildBase_f
+ * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
+ */
+static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const campaign_t* campaign, const char *eqname, equipDef_t *edTarget, const equipDef_t *ed)
+{
+	int i, price = 0;
+
+	assert(base);
+	assert(edTarget);
+
+	/* Copy it to base storage. */
+	if (ed)
+		*edTarget = *ed;
+
+	/* Initial soldiers and their equipment. */
+	ed = INV_GetEquipmentDefinitionByID(eqname);
+	if (ed == NULL) {
+		Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
+	} else {
+		if (assignInitialAircraft) {
+			B_AssignInitial(assignInitialAircraft, ed);
+		} else {
+			for (i = 0; i < csi.numODs; i++)
+				edTarget->num[i] += ed->num[i] / 5;
+		}
+	}
+
+	/* Pay for the initial equipment as well as update storage capacity. */
+	for (i = 0; i < csi.numODs; i++) {
+		price += edTarget->num[i] * csi.ods[i].price;
+		base->capacities[CAP_ITEMS].cur += edTarget->num[i] * csi.ods[i].size;
+	}
+
+	/* Finally update credits. */
+	CL_UpdateCredits(ccs.credits - price);
+}
+
+/**
  * @brief Setup buildings and equipment for first base
  * @param[in,out] base The base to set up
  * @param[in] hire Hire employees for the building we create from the template
@@ -1035,7 +1078,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		ed = INV_GetEquipmentDefinitionByID(curCampaign->equipment);
 
 		/* initial base equipment */
-		INV_InitialEquipment(base, hire ? base->aircraftCurrent : NULL, curCampaign, cl_initial_equipment->string, &base->storage, ed);
+		B_InitialEquipment(base, hire ? base->aircraftCurrent : NULL, curCampaign, cl_initial_equipment->string, &base->storage, ed);
 
 		/* Auto equip interceptors with weapons and ammos */
 		for (i = 0; i < base->numAircraftInBase; i++) {
@@ -2261,7 +2304,7 @@ static void CL_SwapSkills (chrList_t *team)
  * @sa B_AssignInitial
  * @todo Move this function to a better place - has nothing to do with bases anymore
  */
-static void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
+static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
 	int i;
 	base_t *base = aircraft->homebase;
@@ -2313,10 +2356,9 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
  * @brief Assigns initial team of soldiers with equipment to aircraft
  * @sa B_PackInitialEquipment
  */
-void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
+static void B_AssignInitial (aircraft_t *aircraft, const equipDef_t *ed)
 {
 	int i, num;
-	equipDef_t *ed;
 	base_t *base;
 
 	if (!aircraft) {
@@ -2331,7 +2373,6 @@ void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
 	for (i = 0; i < num; i++)
 		AIM_AddEmployeeFromMenu(aircraft, i);
 
-	ed = INV_GetEquipmentDefinitionByID(equipName);
 	B_PackInitialEquipment(aircraft, ed);
 }
 

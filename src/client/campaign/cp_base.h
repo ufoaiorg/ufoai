@@ -251,8 +251,6 @@ extern base_t *baseCurrent;
 /** @todo this should not be extern but only available in cp_base_callbacks,c */
 extern building_t *buildingConstructionList[MAX_BUILDINGS];
 
-void B_AssignInitial(aircraft_t *aircraft, const char *equipName);
-
 void B_UpdateBaseData(void);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);

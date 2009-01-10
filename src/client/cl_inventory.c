@@ -117,48 +117,6 @@ equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 }
 
 /**
- * @brief Prepares initial equipment for first base at the beginning of the campaign.
- * @param[in] base Pointer to first base.
- * @param[in] campaign The current running campaign
- * @sa B_BuildBase_f
- * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
- */
-void INV_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const campaign_t* campaign, const char *eqname, equipDef_t *edTarget, const equipDef_t *ed)
-{
-	int i, price = 0;
-
-	assert(base);
-	assert(edTarget);
-
-	/* Copy it to base storage. */
-	if (ed)
-		*edTarget = *ed;
-
-	/* Initial soldiers and their equipment. */
-	if (assignInitialAircraft) {
-		const char *name = GAME_CP_IsRunning() ? cl_initial_equipment->string : cl_equip->string;
-		B_AssignInitial(assignInitialAircraft, name);
-	} else {
-		ed = INV_GetEquipmentDefinitionByID(eqname);
-		if (ed == NULL) {
-			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
-		} else {
-			for (i = 0; i < csi.numODs; i++)
-				edTarget->num[i] += ed->num[i] / 5;
-		}
-	}
-
-	/* Pay for the initial equipment as well as update storage capacity. */
-	for (i = 0; i < csi.numODs; i++) {
-		price += edTarget->num[i] * csi.ods[i].price;
-		base->capacities[CAP_ITEMS].cur += edTarget->num[i] * csi.ods[i].size;
-	}
-
-	/* Finally update credits. */
-	CL_UpdateCredits(ccs.credits - price);
-}
-
-/**
  * @brief Parses one "components" entry in a .ufo file and writes it into the next free entry in xxxxxxxx (components_t).
  * @param[in] name The unique id of a components_t array entry.
  * @param[in] text the whole following text after the "components" definition.
