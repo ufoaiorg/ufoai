@@ -564,6 +564,37 @@ static void PR_ProductionRollBottom_f (void)
 }
 
 /**
+ * @brief Disassembles item, adds components to base storage and calculates all components size.
+ * @param[in] base Pointer to base where the disassembling is being made.
+ * @param[in] comp Pointer to components definition.
+ * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
+ * @return Size of all components in this disassembling.
+ */
+static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calculate)
+{
+	int i, size = 0;
+
+	assert(comp);
+	if (!calculate && !base)	/* We need base only if this is real disassembling. */
+		Sys_Error("PR_DisassembleItem: No base given");
+
+	for (i = 0; i < comp->numItemtypes; i++) {
+		const objDef_t *compOd = comp->items[i];
+		assert(compOd);
+		size += compOd->size * comp->item_amount[i];
+		/* Add to base storage only if this is real disassembling, not calculation of size. */
+		if (!calculate) {
+			if (!Q_strncmp(compOd->id, "antimatter", 10))
+				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
+			else
+				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);
+			Com_DPrintf(DEBUG_CLIENT, "PR_DisassembleItem: added %i amounts of %s\n", comp->item_amount[i], compOd->id);
+		}
+	}
+	return size;
+}
+
+/**
  * @brief Checks whether an item is finished.
  * @sa CL_CampaignRun
  */
@@ -646,7 +677,7 @@ void PR_ProductionRun (void)
 				}
 			}
 		} else {		/* This is disassembling. */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < INV_DisassemblyItem(NULL, INV_GetComponentsByItem(prod->item), qtrue)) {
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, INV_GetComponentsByItem(prod->item), qtrue)) {
 				if (!prod->spacemessage) {
 					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Disassembling postponed.\n"), base->name);
 					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -698,7 +729,7 @@ void PR_ProductionRun (void)
 					}
 				}
 			} else {	/* This is disassembling. */
-				base->capacities[CAP_ITEMS].cur += INV_DisassemblyItem(base, INV_GetComponentsByItem(prod->item), qfalse);
+				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, INV_GetComponentsByItem(prod->item), qfalse);
 				prod->percentDone = 0.0f;
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */

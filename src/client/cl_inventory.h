@@ -56,7 +56,6 @@ void INV_TransferItemCarriedByChr(character_t *chr, base_t *sourceBase, base_t* 
 
 void INV_CarriedItems(const le_t *soldier);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
-int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
 qboolean INV_ItemsIsStoredInStorage(const objDef_t *obj);
 void INV_RemoveItemsExceedingCapacity(base_t *base);
 void INV_UpdateStorageCap(base_t *base);

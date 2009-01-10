@@ -211,37 +211,6 @@ components_t *INV_GetComponentsByItem (const objDef_t *item)
 }
 
 /**
- * @brief Disassembles item, adds components to base storage and calculates all components size.
- * @param[in] base Pointer to base where the disassembling is being made.
- * @param[in] comp Pointer to components definition.
- * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
- * @return Size of all components in this disassembling.
- */
-int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
-{
-	int i, size = 0;
-
-	assert(comp);
-	if (!calculate && !base)	/* We need base only if this is real disassembling. */
-		Sys_Error("INV_DisassemblyItem: No base given");
-
-	for (i = 0; i < comp->numItemtypes; i++) {
-		const objDef_t *compOd = comp->items[i];
-		assert(compOd);
-		size += compOd->size * comp->item_amount[i];
-		/* Add to base storage only if this is real disassembling, not calculation of size. */
-		if (!calculate) {
-			if (!Q_strncmp(compOd->id, "antimatter", 10))
-				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
-			else
-				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);
-			Com_DPrintf(DEBUG_CLIENT, "INV_DisassemblyItem: added %i amounts of %s\n", comp->item_amount[i], compOd->id);
-		}
-	}
-	return size;
-}
-
-/**
  * @brief Check if an item is stored in storage.
  * @param[in] obj Pointer to the item to check.
  * @return True if item is stored in storage.
