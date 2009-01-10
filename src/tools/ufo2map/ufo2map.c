@@ -51,101 +51,124 @@ static char mapFilename[MAX_OSPATH];
 
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
+typedef struct usagePair_s {
+	const char *flags;	/**< The command line flag (and maybe an alias), or a full line (in which case the desc should be NULL */
+	const char *desc;/**< a description of the functionality provided by the flag, or NULL if the flags is actually a full line  */
+} usagePair_t;
+
+static const usagePair_t usageArray[] = {
+	{"Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]", NULL},
+#ifdef _WIN32
+	{"Even on Windows, use / slashes in the path", NULL},
+#endif
+	{"\nGeneral options:",NULL},
+	{" -h --help", "print (this) help and exit"},
+#ifndef _WIN32
+	{" -nice <prio>","priority level [unix nice level from -20 to 19 where 19 is the lowest priority]"},
+#else
+	{" -nice <prio>","priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]"},
+#endif
+	{" -nofootstep","don't generate a footstep file"},
+	{" -tracefile","generate two csv files describing the floors and walls found by the trace functions"},
+	{" -debugfile (TODO)","generate a trace debug file. The client can load the file to highlight map obstructions"},
+	{" -onlynewer","only proceed when the map is newer than the bsp"},
+	{" -stats --statistics","print statistics and quit. may be used with -check or -fix"},
+	{" -v --verbosity <int>","set verbosity. higher <int> gives more output"},
+	{NULL, "if it is required, this should be the first option"},
+	{NULL, "0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname"},
+	{NULL, "2 - (check/fix) mapname if findings, 4 - normal output,"},
+	{NULL, "5 - extra output, 6 - dump (a lot extra from BSPing)"},
+	{"\nLighting options:", NULL},
+	{" -extra","extra light samples"},
+	{" -nolighting TYPE","don't perform the lighting calculations, where TYPE is one of day, night, all"},
+	{NULL, "default is all"},
+	{" -quant","lightquant - lightmap resolution downscale (e.g. 4 = 1 << 4) (values between 1 and 6)"},
+	{" -scale","lightscale"},
+	{" -saturation","saturation factor (e.g. 1.5 - default is 1.0)"},
+	{" -contrast","contrast factor (e.g. 1.05, default is 1.0)"},
+	{" -t --threads","thread amount"},
+	{"\nBinary space partitioning (BSPing) options:", NULL},
+	{" -block <xl> <yl>",""},
+	{" -blocks <xl> <yl> <xh> <yh>",""},
+	{" -subdivide","subdivide brushes for better light effects (but higher polycount)"},
+	{" -direct","direct light scaling (float value)"},
+	{" -entity","entity light scaling (float value)"},
+	{" -fulldetail","don't treat details (and trans surfaces) as details"},
+	{" -info","print bsp file info"},
+	{" -material","generate a material file"},
+	{" -micro <float>","warn if a brush has a volume lower than the specified float."},
+	{NULL, "brushes are tested after CSG."},
+	{" -nobackclip","draw downward pointing faces. (so actors cannot see up through floors"},
+	{NULL,"in first person view). default is to set SURF_NODRAW to downard faces."},
+	{" -nocsg",""},
+	{" -nodetail","skip detail brushes"},
+	{" -nomerge","skip node face merging"},
+	{" -noprune","don't prune (or cut) nodes"},
+	{" -noshare",""},
+	{" -notjunc",""},
+	{" -nowater","skip water brushes in compilation"},
+	{" -noweld",""},
+	{" -onlyents","modify existing bsp file with entities from map file"},
+	{" -verboseentities","also be verbose about submodels (entities)"},
+	{"\nMapping options:", NULL},
+	{"\n These options operate on map file only. No bsp file is created.", NULL},
+	{" Output prefixed by an asterisk (*) indicates operations that would change the map file.", NULL},
+	{" -check","check source map, only print information."},
+	{" -fix","same subparameters as -check, changes the source map file."},
+	{" \n subparameters for -check and -fix", NULL},
+	{"    all","performs all checks and fixes. This is the default."},
+	{"    bru brushes","includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes."},
+	{"    ent entities","performs all checks and fixes associated with entities."},
+	{"    con contained","checks for brushes contained entirely within other brushes. includes coincident duplicates."},
+	{"    isc intersection","report intersection between optimisable brushes from worldspawn and func_group entities"},
+	{NULL, "this is not included in all or bru as it is not always a bad thing"},
+	{"    mbr microbrush <float> ","test for brushes smaller than <float> unit^3. this is done without the csg"},
+	{NULL, "step, unlike the bsp -micro option. default 1 unit^3."},
+	{"    lvl levelflags","if no levelflags for a brush or entity are set, all of them are set"},
+	{"    flv filllevelflags","ensure set levelflag bits are uninterrupted"},
+	{"    ndr nodraws","assigns SURF_NODRAW to hidden faces and checks for faces that"},
+	{NULL, "may have it incorrectly assigned."},
+	{"    tex textures","warns when no texture or error texture is assigned."},
+	{NULL, "ensures special textures and content/surface flags are consistent."},
+	{"    mfc mixedfacecontents","ensures the contentflags are the same on each face of each brush."},
+	{"    zft zfighting","intersecting brushes with a common face: prevent textures shimmering together."},
+
+	{NULL, NULL}
+};
+
 
 /**
  * @brief print usage information.
  */
 static void Usage (void)
 {
-	Com_Printf("Usage: ufo2map <param1 <subparam1> <subparam2> <...>> <param2> <...> [map]\n"
-#ifdef _WIN32
-		"Even on Windows, use / slashes in the path\n"
-#endif
-		"\nGeneral options:\n"
-		" -h --help                  : print (this) help and exit\n"
-#ifndef _WIN32
-		" -nice <prio>               : priority level [unix nice level from -20 to 19 where 19 is the lowest priority]\n"
-#else
-		" -nice <prio>               : priority level [0 = HIGH, 1 = NORMAL, 2 = IDLE]\n"
-#endif
-		" -nofootstep                : don't generate a footstep file\n"
-		" -tracefile                 : generate two csv files describing the floors and walls found by the trace functions\n"
-		" -debugfile (TODO)          : generate a trace debug file. The client can load the file to highlight map obstructions\n"
-		" -onlynewer                 : only proceed when the map is newer than the bsp\n"
-		" -stats --statistics        : print statistics and quit. may be used with -check or -fix\n"
-	); Com_Printf(
-		" -v --verbosity <int>       : set verbosity. higher <int> gives more output\n"
-		"                              if it is required, this should be the first option\n"
-		"                              0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname\n"
-		"                              2 - (check/fix) mapname if findings, 4 - normal output,\n"
-		"                              5 - extra output, 6 - dump (a lot extra from BSPing)\n"
-	); Com_Printf(
-		"\nLighting options:\n"
-		" -extra                     : extra light samples\n"
-		" -nolighting TYPE           : don't perform the lighting calculations, where TYPE is one of day, night, all\n"
-		"                              default is all\n"
-		" -quant                     : lightquant - lightmap resolution downscale (e.g. 4 = 1 << 4) (values between 1 and 6)\n"
-		" -scale                     : lightscale\n"
-		" -saturation                : saturation factor (e.g. 1.5 - default is 1.0)\n"
-		" -contrast                  : contrast factor (e.g. 1.05, default is 1.0)\n"
-		" -t --threads               : thread amount\n"
-	); Com_Printf(
-		"\nBinary space partitioning (BSPing) options:\n"
-		" -block <xl> <yl>           : \n"
-		" -blocks <xl> <yl> <xh> <yh>: \n"
-		" -subdivide                 : subdivide brushes for better light effects (but higher polycount)\n"
-		" -direct                    : direct light scaling (float value)\n"
-		" -entity                    : entity light scaling (float value)\n"
-		" -fulldetail                : don't treat details (and trans surfaces) as details\n"
-		" -info                      : print bsp file info\n"
-	); Com_Printf(
-		" -material                  : generate a material file\n"
-		" -micro <float>             : warn if a brush has a volume lower than the specified float.\n"
-		"                              brushes are tested after CSG.\n"
-		" -nobackclip                : draw downward pointing faces. (so actors cannot see up through floors\n"
-		"                              in first person view). default is to set SURF_NODRAW to downard faces.\n"
-		" -nocsg                     : \n"
-	); Com_Printf(
-		" -nodetail                  : skip detail brushes\n"
-		" -nomerge                   : skip node face merging\n"
-		" -noprune                   : don't prune (or cut) nodes\n"
-		" -nosubdiv                  : don't subdivide (low polycount, but crappy light effects)\n"
-		" -noshare                   : \n"
-		" -notjunc                   : \n"
-		" -nowater                   : skip water brushes in compilation\n"
-	); Com_Printf(
-		" -noweld                    : \n"
-		" -onlyents                  : modify existing bsp file with entities from map file\n"
-		" -verboseentities           : also be verbose about submodels (entities)\n"
-		"\nMapping options:\n"
-		"\n These options operate on map file only. No bsp file is created.\n"
-	); Com_Printf(
-		" Output prefixed by an asterisk (*) indicates operations that would change the map file.\n"
-		" \n -check                     : check source map, only print information.\n"
-		" -fix                       : same subparameters as -check, changes the source map file.\n"
-	); Com_Printf(
-		" \n subparameters for -check and -fix\n"
-		"    all                     : performs all checks and fixes. This is the default.\n"
-		"    bru brushes             : includes 'lvl tex mfc mbr'. Performs all checks and fixes associated with brushes.\n"
-		"    ent entities            : performs all checks and fixes associated with entities.\n"
-	); Com_Printf(
-		"    con contained           : checks for brushes contained entirely within other brushes. includes coincident duplicates.\n"
-		"    isc intersection        : report intersection between optimisable brushes from worldspawn and func_group entities\n"
-		"                              this is not included in all or bru as it is not always a bad thing\n"
-		"    mbr microbrush <float>  : test for brushes smaller than <float> unit^3. this is done without the csg\n"
-	); Com_Printf(
-		"                              step, unlike the bsp -micro option. default 1 unit^3.\n"
-		"    lvl levelflags          : if no levelflags for a brush or entity are set, all of them are set\n"
-		"    flv filllevelflags      : ensure set levelflag bits are uninterrupted\n"
-		"    ndr nodraws             : assigns SURF_NODRAW to hidden faces and checks for faces that\n"
-	); Com_Printf(
-		"                              may have it incorrectly assigned.\n"
-		"    tex textures            : warns when no texture or error texture is assigned.\n"
-		"                              ensures special textures and content/surface flags are consistent.\n"
-	); Com_Printf(
-		"    mfc mixedfacecontents   : ensures the contentflags are the same on each face of each brush.\n"
-		"    zft zfighting           : intersecting brushes with a common face: prevent textures shimmering together.\n"
-	);
+	const usagePair_t *v;
+	int maxFlagsLen = 0;
+	char flagsDescLineFmt[16];
+	char contDescLineFmt[16];
+
+	/* run through to find the length of the longest
+	 * flags string */
+	for (v = usageArray; v->flags || v->desc; v++) {
+		if (v->flags && v->desc) {
+			const int len = strlen(v->flags);
+			maxFlagsLen = len > maxFlagsLen ? len : maxFlagsLen;
+		}
+	}
+
+	/* set up fmt strings appropriately
+	 * eg if max length was 20, would get "%-20s: %s\n" */
+	sprintf(flagsDescLineFmt, "%%-%is: %%s\n", maxFlagsLen);
+	sprintf(contDescLineFmt, "%%-%is%%s\n", maxFlagsLen+2);
+
+	for (v = usageArray; v->flags || v->desc; v++) {
+		if (v->flags && v->desc)
+			Com_Printf(flagsDescLineFmt,v->flags, v->desc);
+		else if (v->desc)
+			Com_Printf(contDescLineFmt,"", v->desc);
+		else /* must be v->flags only, a full line not describing a flag */
+			Com_Printf("%s\n",v->flags);
+	}
 }
 
 /**
