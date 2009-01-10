@@ -2747,6 +2747,78 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
 }
 
 /**
+ * @brief Sell items to the market or add them to base storage.
+ * @param[in] aircraft Pointer to an aircraft landing in base.
+ * @sa CL_AircraftReturnedToHomeBase
+ */
+static void B_SellOrAddItems (aircraft_t *aircraft)
+{
+	int i;
+	int numitems = 0;
+	int gained = 0;
+	int forcedsold = 0;
+	int forcedgained = 0;
+	char str[128];
+	itemsTmp_t *cargo;
+	base_t *base;
+
+	assert(aircraft);
+	base = aircraft->homebase;
+	assert(base);
+
+	cargo = aircraft->itemcargo;
+
+	for (i = 0; i < aircraft->itemtypes; i++) {
+		technology_t *tech = cargo[i].item->tech;
+		if (!tech)
+			Sys_Error("B_SellOrAddItems: No tech for %s / %s\n", cargo[i].item->id, cargo[i].item->name);
+		/* If the related technology is NOT researched, don't sell items. */
+		if (!RS_IsResearched_ptr(tech)) {
+			/* Items not researched cannot be thrown out even if not enough space in storage. */
+			B_UpdateStorageAndCapacity(base, cargo[i].item, cargo[i].amount, qfalse, qtrue);
+			if (cargo[i].amount > 0)
+				RS_MarkCollected(tech);
+			continue;
+		} else {
+			/* If the related technology is researched, check the autosell option. */
+			if (gd.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
+				ccs.eMarket.num[cargo[i].item->idx] += cargo[i].amount;
+				gained += (cargo[i].item->price * cargo[i].amount);
+				numitems += cargo[i].amount;
+			} else {
+				int j;
+				/* Check whether there is enough space for adding this item.
+				 * If yes - add. If not - sell. */
+				for (j = 0; j < cargo[i].amount; j++) {
+					if (!B_UpdateStorageAndCapacity(base, cargo[i].item, 1, qfalse, qfalse)) {
+						/* Not enough space, sell item. */
+						ccs.eMarket.num[cargo[i].item->idx]++;
+						forcedgained += cargo[i].item->price;
+						forcedsold++;
+					}
+				}
+			}
+			continue;
+		}
+	}
+
+	if (numitems > 0) {
+		Com_sprintf(str, sizeof(str), _("By selling %s you gathered %i credits."),
+			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
+		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
+	}
+	if (forcedsold > 0) {
+		Com_sprintf(str, sizeof(str), _("Not enough storage space in base %s. %s"),
+			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
+		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
+	}
+	CL_UpdateCredits(ccs.credits + gained + forcedgained);
+
+	/* ship no longer has cargo aboard */
+	aircraft->itemtypes = 0;
+}
+
+/**
  * @brief Do anything when dropship returns to base
  * @param[in] aircraft Returning aircraft.
  * @note Place here any stuff, which should be called
@@ -2763,7 +2835,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
 	AL_AddAliens(aircraft);			/**< Add aliens to Alien Containment. */
-	INV_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
+	B_SellOrAddItems(aircraft);		/**< Sell collected items or add them to storage. */
 	RS_MarkResearchable(qfalse, aircraft->homebase);		/**< Mark new technologies researchable. */
 	RADAR_InitialiseUFOs(&aircraft->radar);		/**< Reset UFO sensored on radar */
 

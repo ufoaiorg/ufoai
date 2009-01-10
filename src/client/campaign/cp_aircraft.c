@@ -842,6 +842,35 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
 }
 
+/**
+ * @brief Calculate storage room corresponding to items in an aircraft.
+ * @param[in] aircraft Pointer to the aircraft.
+ */
+static int AIR_GetStorageRoom (const aircraft_t *aircraft)
+{
+	invList_t *ic;
+	int i, container;
+	int size = 0;
+
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			const employee_t const *employee = aircraft->acTeam[i];
+			for (container = 0; container < csi.numIDs; container++) {
+				for (ic = employee->chr.inv.c[container]; ic; ic = ic->next) {
+					objDef_t *obj = ic->item.t;
+					size += obj->size;
+
+					obj = ic->item.m;
+					if (obj)
+						size += obj->size;
+				}
+			}
+		}
+	}
+
+	return size;
+}
+
 const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base_t* base, const int capacity)
 {
 	if (!B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(capacity)))
@@ -854,7 +883,7 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 	if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
 		return _("Insufficient free crew quarter space at that base.");
 
-	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + INV_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
+	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + AIR_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
 		return _("Insufficient storage space at that base.");
 
 	/* check aircraft fuel, because the aircraft has to travel to the new base */
