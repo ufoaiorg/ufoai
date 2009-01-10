@@ -978,7 +978,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 					} else {
 						/* New row */
 						if (curHeight + maxHeight + rowOffset > EXTRADATA(node).container->scrollHeight)
-								return NULL;
+							return NULL;
 
 						curHeight += maxHeight + rowOffset;
 						curWidth = maxHeight = 0;
@@ -1108,7 +1108,7 @@ static invList_t *MN_ContainerBaseAmmoNodeGetItem (const menuNode_t* const node,
 		if (mouseX < pos[1])
 			break;
 		if (mouseX >= pos[0] && mouseX < pos[0] + ic->item.t->sx * C_UNIT
-			 && mouseY >= pos[1] && mouseY < pos[1] + ic->item.t->sy * C_UNIT) {
+		 && mouseY >= pos[1] && mouseY < pos[1] + ic->item.t->sy * C_UNIT) {
 			*contX = ic->x;
 			*contY = ic->y;
 			return ic;
@@ -1179,7 +1179,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	/** Find out where the mouse is. */
+	/* Find out where the mouse is. */
 	itemHover = MN_ContainerNodeGetItemAtPosition(node, x, y, NULL, NULL);
 
 	if (itemHover) {
@@ -1214,6 +1214,8 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 		return;
 
 	/* don't allow this in tactical missions */
+	/** @todo use CL_OnBattlescape here?
+	 * get rid of selActor here - if it's really needed, make this a param to this function maybe? */
 	if (selActor && rightClick)
 		return;
 
