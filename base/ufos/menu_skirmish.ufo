@@ -145,7 +145,7 @@ menu skirmish
 		min		1
 		max		30
 		delta	1
-		current	"*cvar ai_numactors"
+		current	"*cvar ai_numaliens"
 	}
 
 	// ===================
@@ -234,7 +234,7 @@ menu skirmish
 	// ===================
 	func init
 	{
-		cmd	"game_setmode;set ai_numactors 8;"
+		cmd	"game_setmode;set ai_numaliens 8;"
 		cmd "set mn_serverday 1;mn_getmaps;"
 	}
 
