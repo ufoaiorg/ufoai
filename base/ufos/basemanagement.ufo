@@ -408,6 +408,6 @@ basetemplate balanced {
 	building_intercept		"1 3"
 	building_workshop		"4 0"
 	building_radar			"1 4"
-	building_lab			"3 2"
-//	building_hospital		"3 3"
+	building_lab			"3 1"
+	building_hospital		"3 2"
 }
