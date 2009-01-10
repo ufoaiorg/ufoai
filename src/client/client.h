@@ -318,7 +318,7 @@ struct employee_s;
 
 #include "cl_le.h"
 #include "cl_menu.h"
-#include "cl_research.h"
+#include "campaign/cl_research.h"
 /* we need this in cl_aircraft.h */
 #define MAX_EMPLOYEES 512
 #include "campaign/cp_aircraft.h"

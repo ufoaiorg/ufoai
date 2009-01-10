@@ -22,7 +22,6 @@ CLIENT_SRCS = \
 	client/cl_parse.c \
 	client/cl_particle.c \
 	client/cl_rank.c \
-	client/cl_research.c \
 	client/cl_screen.c \
 	client/cl_sound.c \
 	client/cl_sequence.c \
@@ -30,7 +29,6 @@ CLIENT_SRCS = \
 	client/cl_team_multiplayer.c \
 	client/cl_tip.c \
 	client/cl_tutorials.c \
-	client/cl_ufopedia.c \
 	client/cl_ugv.c \
 	client/cl_video.c \
 	client/cl_view.c \
@@ -41,7 +39,6 @@ CLIENT_SRCS = \
 	client/campaign/cp_alien_interest.c \
 	client/campaign/cp_base.c \
 	client/campaign/cp_base_callbacks.c \
-	client/campaign/cl_employee.c \
 	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_missions.c \
 	client/campaign/cp_mission_triggers.c \
@@ -52,21 +49,24 @@ CLIENT_SRCS = \
 	client/campaign/cl_alienbase.c \
 	client/campaign/cl_aliencont.c \
 	client/campaign/cl_airfight.c \
+	client/campaign/cl_airfightmap.c \
 	client/campaign/cl_basesummary.c \
 	client/campaign/cl_campaign.c \
 	client/campaign/cl_event.c \
+	client/campaign/cl_employee.c \
 	client/campaign/cl_hospital.c \
 	client/campaign/cl_installation.c \
-	client/campaign/cl_airfightmap.c \
 	client/campaign/cl_market.c \
 	client/campaign/cl_map.c \
 	client/campaign/cl_mapfightequip.c \
 	client/campaign/cl_nation.c \
 	client/campaign/cl_produce.c \
 	client/campaign/cl_radar.c \
+	client/campaign/cl_research.c \
 	client/campaign/cl_save.c \
 	client/campaign/cl_transfer.c \
 	client/campaign/cl_ufo.c \
+	client/campaign/cl_ufopedia.c \
 	client/campaign/cl_uforecovery.c \
 	client/campaign/cl_messageoptions.c \
 	client/campaign/cl_messageoptions_callbacks.c \

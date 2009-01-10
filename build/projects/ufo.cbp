@@ -470,10 +470,10 @@
 		</Unit>
 		<Unit filename="..\..\src\client\cl_rank.h" />
 		<Unit filename="..\..\src\client\cl_renderer.h" />
-		<Unit filename="..\..\src\client\cl_research.c">
+		<Unit filename="..\..\src\client\campaign\cl_research.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_research.h" />
+		<Unit filename="..\..\src\client\campaign\cl_research.h" />
 		<Unit filename="..\..\src\client\cl_screen.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -502,10 +502,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_tutorials.h" />
-		<Unit filename="..\..\src\client\cl_ufopedia.c">
+		<Unit filename="..\..\src\client\campaign\cl_ufopedia.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_ufopedia.h" />
+		<Unit filename="..\..\src\client\campaign\cl_ufopedia.h" />
 		<Unit filename="..\..\src\client\cl_ugv.c">
 			<Option compilerVar="CC" />
 		</Unit>
