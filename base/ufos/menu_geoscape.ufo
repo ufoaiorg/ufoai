@@ -2265,6 +2265,7 @@ menu messageoptions
 		size	"496 496"
 		dragbutton	true
 		closebutton	true
+		modal		true
 	}
 
 	zone popup
@@ -2282,7 +2283,7 @@ menu messageoptions
 
 	func init
 	{
-		cmd "msgoptions_init;msgoptions_backup;"
+		cmd "game_timestop;msgoptions_init;msgoptions_backup;"
 	}
 
 	func close
