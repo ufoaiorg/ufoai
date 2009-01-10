@@ -773,6 +773,9 @@ static void CL_EquipType_f (void)
 	node = MN_GetNodeByPath("equipment.equip");
 	assert(node);
 	MN_ContainerNodeSetFilter(node, num);
+	node = MN_GetNodeByPath("equipment.equip_ammo");
+	assert(node);
+	MN_ContainerNodeSetFilter(node, num);
 
 	/* First-time linking of menuInventory. */
 	if (baseCurrent && !menuInventory->c[csi.idEquip]) {

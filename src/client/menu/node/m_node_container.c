@@ -79,6 +79,7 @@ void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
  */
 static void MN_ScrollContainerUpdateScroll (menuNode_t* node)
 {
+	/** @todo ungeneric */
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll current %i\n", EXTRADATA(node).scrollCur));
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll viewsize %i\n", EXTRADATA(node).scrollNum));
 	Cbuf_AddText(va("mn_setnodeproperty equip_scroll fullsize %i\n", EXTRADATA(node).scrollTotalNum));
@@ -170,7 +171,7 @@ static void MN_ScrollContainerScroll_f (void)
 	}
 }
 
-static inline qboolean MN_IsScrollContainerNode(menuNode_t *node)
+static inline qboolean MN_IsScrollContainerNode(const menuNode_t* const node)
 {
 	return EXTRADATA(node).container && EXTRADATA(node).container->scroll;
 }
@@ -420,22 +421,23 @@ static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
  */
 static void MN_ContainerNodeLoaded (menuNode_t* const node)
 {
+	char *name;
 	invDef_t *container;
 	int i, j;
 
-	/* already a container assigned - no need to recalculate the size */
-	if (EXTRADATA(node).container)
-		return;
+	/** @todo find a better way to add more equip node, without this hack */
+	name = node->name;
+	if (!Q_strcmp(node->name, "equip_ammo")) {
+		name = "equip";
+	}
 
 	for (i = 0, container = csi.ids; i < csi.numIDs; container++, i++)
-		if (!Q_strncmp(node->name, container->name, sizeof(node->name)))
+		if (!Q_strncmp(name, container->name, sizeof(node->name)))
 			break;
 
 	/* not find */
-	if (i == csi.numIDs) {
-		EXTRADATA(node).container = NULL;
+	if (i == csi.numIDs)
 		return;
-	}
 
 	EXTRADATA(node).container = container;
 
@@ -465,6 +467,7 @@ static const vec3_t scale = {3.5, 3.5, 3.5};
 static const vec4_t colorDefault = {1, 1, 1, 1};
 static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
+static const vec4_t colorDisabledHiden = {0.5, 0.5, 0.5, 0.5};
 static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
 static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look blueish */
 
@@ -544,9 +547,96 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
  * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
  * @sa Com_SearchInInventory
  */
-static invList_t *MN_ContainerNodeGetItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
 {
 	return Com_SearchInInventoryWithFilter(menuInventory, EXTRADATA(node).container, NONE, NONE, item, filterType);
+}
+
+static void MN_ContainerNodeDrawBaseAmmo (menuNode_t *node, objDef_t *highlightType)
+{
+	invList_t *ic;
+	byte itemType;
+	int curHeight = 0;	/**< Combined Height of all drawn item so far. */
+	int rowOffset;
+	vec2_t nodepos;
+	const int columns = 2;
+	int itemNum = 0;
+	int rowHeight = 0;
+
+	/* Remember the last used scroll settings, so we know if we
+	 * need to update the button-display later on. */
+	const int equipType = EXTRADATA(node).filterEquipType;
+
+	MN_GetNodeAbsPos(node, nodepos);
+
+	EXTRADATA(node).scrollNum = 0;
+	EXTRADATA(node).scrollTotalNum = 0;
+
+	/* Change row spacing according to vertical/horizontal setting. */
+	rowOffset = EXTRADATA(node).container->scrollVertical ? C_ROW_OFFSET : 0;
+
+	itemType = 1;
+
+
+	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
+		item_t tempItem = {1, NULL, NULL, 0, 0};
+		vec3_t pos;
+		const float* color;
+		const int col = itemNum % columns;
+		int cellHeight = 0;
+
+		/* only ammo in the filter */
+		if (Q_strncmp(ic->item.t->type, "ammo", 4) != 0)
+			continue;
+		if (!INV_ItemMatchesFilter(ic->item.t, equipType))
+			continue;
+
+		/* next row */
+		if (col == 0) {
+			curHeight += rowHeight;
+			/* vertical marge if need */
+			if (curHeight != 0) {
+				curHeight += 10;
+			}
+			rowHeight = 0;
+		}
+
+		/* compute cell position */
+		Vector2Copy(nodepos, pos);
+		pos[0] += (col * node->size[0]) / columns;
+		pos[1] += curHeight;
+		pos[2] = 0;
+
+		/* draw item */
+		if (highlightType && Q_strncmp(highlightType->type, "ammo", 4) != 0) {
+			if (INVSH_LoadableInWeapon(ic->item.t, highlightType))
+				color = colorLoadable;
+			else
+				color = colorDisabledHiden;
+		} else
+			color = colorDefault;
+		tempItem.t = ic->item.t;
+		pos[0] += ic->item.t->sx * C_UNIT / 2.0;
+		pos[1] += ic->item.t->sy * C_UNIT / 2.0;
+		MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
+		pos[0] -= ic->item.t->sx * C_UNIT / 2.0;
+
+		/* draw the item name. */
+		pos[1] += ic->item.t->sy * C_UNIT / 2.0;
+		cellHeight += ic->item.t->sy * C_UNIT;
+		cellHeight += R_FontDrawString("f_verysmall", ALIGN_UL,
+			pos[0], pos[1],
+			pos[0], nodepos[1],
+			node->size[0] / 2 - 5, node->size[1],	/* max width/height */
+			0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+
+		/* update row */
+		if (cellHeight > rowHeight) {
+			rowHeight = cellHeight;
+		}
+
+		itemNum++;
+	}
 }
 
 /**
@@ -585,129 +675,133 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	/* Change row spacing according to vertical/horizontal setting. */
 	rowOffset = EXTRADATA(node).container->scrollVertical ? C_ROW_OFFSET : 0;
 
-	for (itemType = 0; itemType <= 1; itemType++) {	/**< 0==weapons, 1==ammo */
-		for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
-			if (ic->item.t
-			 && ((!itemType && Q_strncmp(ic->item.t->type, "ammo", 4) != 0) || (itemType && !Q_strncmp(ic->item.t->type, "ammo", 4)))
-			 && INV_ItemMatchesFilter(ic->item.t, equipType)) {
-				if (!lastItem && curItem >= EXTRADATA(node).scrollCur) {
-					item_t tempItem = {1, NULL, NULL, 0, 0};
-					qboolean newRow = qfalse;
-					vec3_t pos;
+	itemType = 0; /**< 0==weapons, 1==ammo */
+
+	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
+		/* skip invalide, ammo, and out of filter */
+		if (!ic->item.t)
+			continue;
+		if (!Q_strncmp(ic->item.t->type, "ammo", 4))
+			continue;
+		if (!INV_ItemMatchesFilter(ic->item.t, equipType))
+			continue;
+
+		if (!lastItem && curItem >= EXTRADATA(node).scrollCur) {
+			item_t tempItem = {1, NULL, NULL, 0, 0};
+			qboolean newRow = qfalse;
+			vec3_t pos;
+			Vector2Copy(nodepos, pos);
+			pos[0] += curWidth;
+			pos[1] += curHeight;
+			pos[2] = 0;
+
+			if (!EXTRADATA(node).container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= EXTRADATA(node).container->scroll) {
+				curWidth += ic->item.t->sx * C_UNIT;
+			} else {
+				/* New row */
+				if (curHeight + maxHeight + rowOffset > EXTRADATA(node).container->scrollHeight) {
+					/* Last item - We do not draw anything else. */
+					lastItem = qtrue;
+				} else {
+					curHeight += maxHeight + rowOffset;
+					curWidth = maxHeight = curCol = 0;
+					curRow++;
+
+					/* Re-calculate the position of this item in the new row. */
 					Vector2Copy(nodepos, pos);
-					pos[0] += curWidth;
 					pos[1] += curHeight;
-					pos[2] = 0;
-
-					if (!EXTRADATA(node).container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= EXTRADATA(node).container->scroll) {
-						curWidth += ic->item.t->sx * C_UNIT;
-					} else {
-						/* New row */
-						if (curHeight + maxHeight + rowOffset > EXTRADATA(node).container->scrollHeight) {
-							/* Last item - We do not draw anything else. */
-							lastItem = qtrue;
-						} else {
-							curHeight += maxHeight + rowOffset;
-							curWidth = maxHeight = curCol = 0;
-							curRow++;
-
-							/* Re-calculate the position of this item in the new row. */
-							Vector2Copy(nodepos, pos);
-							pos[1] += curHeight;
-							newRow = qtrue;
-						}
-					}
-
-					maxHeight = max(ic->item.t->sy * C_UNIT, maxHeight);
-
-					if (lastItem || curHeight + ic->item.t->sy + rowOffset > EXTRADATA(node).container->scrollHeight) {
-						/* Last item - We do not draw anything else. */
-						lastItem = qtrue;
-					} else {
-						vec2_t posName;
-						Vector2Copy(pos, posName);	/* Save original coordiantes for drawing of the item name. */
-						posName[1] -= rowOffset;
-
-						/* Calculate the center of the item model/image. */
-						pos[0] += ic->item.t->sx * C_UNIT / 2.0;
-						pos[1] += ic->item.t->sy * C_UNIT / 2.0;
-
-						assert(ic->item.t);
-
-						/* Update location info for this entry. */
-						ic->x = curCol;
-						ic->y = curRow;
-
-						/* Actually draw the item. */
-						tempItem.t = ic->item.t;
-
-						assert(pos[2] == 0);
-						if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
-							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
-						else
-							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
-
-						if (EXTRADATA(node).container->scrollVertical) {
-							/* Draw the item name. */
-							R_FontDrawString("f_verysmall", ALIGN_UL,
-								posName[0], posName[1],
-								node->pos[0], posName[1],
-								node->size[0], 100,	/* max width/height */
-								0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-						} /* scrollVertical */
-
-						if (newRow)
-							curWidth += ic->item.t->sx * C_UNIT;
-
-						/* marge */
-						pos[0] += ic->item.t->sx * C_UNIT / 2.0;
-
-						/* Loop through all ammo-types for this item. */
-						for (ammoIdx = 0; ammoIdx < ic->item.t->numAmmos; ammoIdx++) {
-							invList_t *icAmmo;
-							tempItem.t = ic->item.t->ammos[ammoIdx];
-
-							/* skip unusable ammo */
-							if (!tempItem.t->tech || !RS_IsResearched_ptr(tempItem.t->tech))
-								continue;
-
-							/* find and skip unexisting ammo */
-							icAmmo = MN_ContainerNodeGetItem(node, tempItem.t, equipType);
-							if (!icAmmo)
-								continue;
-
-							/* Calculate the center of the item model/image. */
-							pos[0] += tempItem.t->sx * C_UNIT / 2;
-							pos[1] = nodepos[1] + curHeight + icAmmo->item.t->sy * C_UNIT / 2.0;
-
-							curWidth += tempItem.t->sx * C_UNIT;
-
-							MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
-							R_FontDrawString("f_verysmall", ALIGN_LC,
-								pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
-								pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
-								C_UNIT,	/* maxWidth */
-								0,	/* maxHeight */
-								0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
-
-							/* Add width of text and the rest of the item. */
-							curWidth += C_UNIT / 2.0;
-							pos[0] += tempItem.t->sx * C_UNIT / 2 + C_UNIT / 2.0;
-						}
-					}
-
-					/* Count displayed items */
-					if (!lastItem) {
-						EXTRADATA(node).scrollNum++;
-						curCol++;
-					}
+					newRow = qtrue;
 				}
+			}
 
-				/* Count items that are possible to be displayed. */
-				EXTRADATA(node).scrollTotalNum++;
-				curItem++;
+			maxHeight = max(ic->item.t->sy * C_UNIT, maxHeight);
+
+			if (lastItem || curHeight + ic->item.t->sy + rowOffset > EXTRADATA(node).container->scrollHeight) {
+				/* Last item - We do not draw anything else. */
+				lastItem = qtrue;
+			} else {
+				vec2_t posName;
+				Vector2Copy(pos, posName);	/* Save original coordiantes for drawing of the item name. */
+				posName[1] -= rowOffset;
+
+				/* Calculate the center of the item model/image. */
+				pos[0] += ic->item.t->sx * C_UNIT / 2.0;
+				pos[1] += ic->item.t->sy * C_UNIT / 2.0;
+
+				assert(ic->item.t);
+
+				/* Update location info for this entry. */
+				ic->x = curCol;
+				ic->y = curRow;
+
+				/* Actually draw the item. */
+				tempItem.t = ic->item.t;
+
+				assert(pos[2] == 0);
+				if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
+					MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
+				else
+					MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
+
+				if (EXTRADATA(node).container->scrollVertical) {
+					/* Draw the item name. */
+					R_FontDrawString("f_verysmall", ALIGN_UL,
+						posName[0], posName[1],
+						node->pos[0], posName[1],
+						node->size[0], 100,	/* max width/height */
+						0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+				} /* scrollVertical */
+
+				if (newRow)
+					curWidth += ic->item.t->sx * C_UNIT;
+
+				/* marge */
+				pos[0] += ic->item.t->sx * C_UNIT / 2.0;
+
+				/* Loop through all ammo-types for this item. */
+				for (ammoIdx = 0; ammoIdx < ic->item.t->numAmmos; ammoIdx++) {
+					invList_t *icAmmo;
+					tempItem.t = ic->item.t->ammos[ammoIdx];
+
+					/* skip unusable ammo */
+					if (!tempItem.t->tech || !RS_IsResearched_ptr(tempItem.t->tech))
+						continue;
+
+					/* find and skip unexisting ammo */
+					icAmmo = MN_ContainerNodeGetExistingItem(node, tempItem.t, equipType);
+					if (!icAmmo)
+						continue;
+
+					/* Calculate the center of the item model/image. */
+					pos[0] += tempItem.t->sx * C_UNIT / 2;
+					pos[1] = nodepos[1] + curHeight + icAmmo->item.t->sy * C_UNIT / 2.0;
+
+					curWidth += tempItem.t->sx * C_UNIT;
+
+					MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
+					R_FontDrawString("f_verysmall", ALIGN_LC,
+						pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
+						pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
+						C_UNIT,	/* maxWidth */
+						0,	/* maxHeight */
+						0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
+
+					/* Add width of text and the rest of the item. */
+					curWidth += C_UNIT / 2.0;
+					pos[0] += tempItem.t->sx * C_UNIT / 2 + C_UNIT / 2.0;
+				}
+			}
+
+			/* Count displayed items */
+			if (!lastItem) {
+				EXTRADATA(node).scrollNum++;
+				curCol++;
 			}
 		}
+
+		/* Count items that are possible to be displayed. */
+		EXTRADATA(node).scrollTotalNum++;
+		curItem++;
 	}
 
 	/* Update display of scroll buttons if something changed. */
@@ -820,7 +914,11 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 		MN_ContainerNodeDrawSingle(node, highlightType);
 	} else {
 		if (MN_IsScrollContainerNode(node)) {
-			MN_ContainerNodeDrawBaseInventory(node, highlightType);
+			if (!Q_strcmp(node->name, "equip_ammo")) {
+				MN_ContainerNodeDrawBaseAmmo(node, highlightType);
+			} else {
+				MN_ContainerNodeDrawBaseInventory(node, highlightType);
+			}
 		} else {
 			MN_ContainerNodeDrawGrid(node, highlightType);
 		}
@@ -832,43 +930,6 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 
 	if (MN_DNDIsTargetNode(node))
 		MN_ContainerNodeDrawDropPreview(node);
-}
-
-/**
- * @brief Custom tooltip for container node
- * @param[in] node Node we request to draw tooltip
- * @param[in] x Position x of the mouse
- * @param[in] y Position y of the mouse
- */
-static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
-{
-	static char tooltiptext[MAX_VAR * 2];
-	const invList_t *itemHover;
-	vec2_t nodepos;
-
-	MN_GetNodeAbsPos(node, nodepos);
-
-	/** Find out where the mouse is. */
-	if (MN_IsScrollContainerNode(node)) {
-		itemHover = MN_GetItemFromScrollableContainer(node, x, y, NULL, NULL);
-	} else {
-		itemHover = Com_SearchInInventory(menuInventory,
-			EXTRADATA(node).container,
-			(x - nodepos[0]) / C_UNIT,
-			(y - nodepos[1]) / C_UNIT);
-	}
-
-	if (itemHover) {
-		const int itemToolTipWidth = 250;
-
-		/* Get name and info about item */
-		MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
-#ifdef DEBUG
-		/* Display stored container-coordinates of the item. */
-		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
-#endif
-		MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, 0);
-	}
 }
 
 /**
@@ -965,7 +1026,7 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 							ammoItem = ic->item.t->ammos[ammoIdx];
 							/* Only check for researched ammo (although this is implyed in most cases). */
 							if (ammoItem->tech && RS_IsResearched_ptr(ammoItem->tech)) {
-								invList_t *icAmmo = MN_ContainerNodeGetItem(node, ammoItem, equipType);
+								invList_t *icAmmo = MN_ContainerNodeGetExistingItem(node, ammoItem, equipType);
 
 								/* Only check the item (and calculate its size) if it's in the container. */
 								if (icAmmo) {
@@ -1002,6 +1063,144 @@ invList_t *MN_GetItemFromScrollableContainer (const menuNode_t* const node, int 
 	return NULL;
 }
 
+invList_t *MN_ContainerBaseAmmoNodeGetItem (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+{
+	invList_t *ic;
+	int curHeight = 0;	/**< Combined Height of all drawn item so far. */
+	vec2_t nodepos;
+	const int columns = 2;
+	int itemNum = 0;
+	int rowHeight = 0;
+	const int equipType = EXTRADATA(node).filterEquipType;
+
+	int tempX, tempY;
+
+	if (!contX)
+		contX = &tempX;
+	if (!contY)
+		contY = &tempY;
+
+	MN_GetNodeAbsPos(node, nodepos);
+
+	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
+		vec3_t pos;
+		const int col = itemNum % columns;
+		int cellHeight = 0;
+		int height;
+
+		/* only ammo in the filter */
+		if (Q_strncmp(ic->item.t->type, "ammo", 4) != 0)
+			continue;
+		if (!INV_ItemMatchesFilter(ic->item.t, equipType))
+			continue;
+
+		/* next row */
+		if (col == 0) {
+			curHeight += rowHeight;
+			/* vertical marge if need */
+			if (curHeight != 0) {
+				curHeight += 10;
+			}
+			rowHeight = 0;
+		}
+
+		/* compute cell position */
+		Vector2Copy(nodepos, pos);
+		pos[0] += (col * node->size[0]) / columns;
+		pos[1] += curHeight;
+		pos[2] = 0;
+
+		/* check item */
+		if (mouseX < pos[1])
+			break;
+		if (mouseX >= pos[0] && mouseX < pos[0] + ic->item.t->sx * C_UNIT
+			 && mouseY >= pos[1] && mouseY < pos[1] + ic->item.t->sy * C_UNIT) {
+			*contX = ic->x;
+			*contY = ic->y;
+			return ic;
+		}
+		cellHeight += ic->item.t->sy * C_UNIT;
+		R_FontTextSize("f_verysmall", va("%s (%i)", ic->item.t->name,  ic->item.amount),
+			node->size[0] / 2 - 5, LONGLINES_WRAP, NULL, &height, NULL);
+		cellHeight += height;
+
+		/* update row */
+		if (cellHeight > rowHeight) {
+			rowHeight = cellHeight;
+		}
+
+		itemNum++;
+	}
+	*contX = NONE;
+	*contY = NONE;
+	return NULL;
+}
+
+/**
+ * @brief Gets location of the item the mouse is over
+ * @param[in] node	The container-node.
+ * @param[in] mouseX	X location of the mouse.
+ * @param[in] mouseY	Y location of the mouse.
+ * @param[out] contX	X location in the container (index of item in row).
+ * @param[out] contY	Y location in the container (row).
+ * @sa MN_ContainerNodeSearchInScrollableContainer
+ */
+invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
+{
+	/* Get coordinates inside a scrollable container (if it is one). */
+	if (MN_IsScrollContainerNode(node)) {
+		if (!Q_strcmp(node->name, "equip_ammo")) {
+			return MN_ContainerBaseAmmoNodeGetItem(node, mouseX, mouseY, contY, contY);
+		} else {
+			return MN_GetItemFromScrollableContainer(node, mouseX, mouseY, contY, contY);
+		}
+	} else {
+		vec2_t nodepos;
+		int fromX, fromY;
+
+		MN_GetNodeAbsPos(node, nodepos);
+		/* Normalize screen coordinates to container coordinates. */
+		fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
+		fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
+		if (contX)
+			*contX = fromX;
+		if (contY)
+			*contY = fromY;
+
+		return Com_SearchInInventory(menuInventory, EXTRADATA(node).container, fromX, fromY);
+	}
+}
+
+/**
+ * @brief Custom tooltip for container node
+ * @param[in] node Node we request to draw tooltip
+ * @param[in] x Position x of the mouse
+ * @param[in] y Position y of the mouse
+ */
+static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
+{
+	static char tooltiptext[MAX_VAR * 2];
+	const invList_t *itemHover;
+	vec2_t nodepos;
+
+	MN_GetNodeAbsPos(node, nodepos);
+
+	/** Find out where the mouse is. */
+	itemHover = MN_ContainerNodeGetItemAtPosition(node, x, y, NULL, NULL);
+
+	if (itemHover) {
+		const int itemToolTipWidth = 250;
+
+		/* Get name and info about item */
+		MN_GetItemTooltip(itemHover->item, tooltiptext, sizeof(tooltiptext));
+#ifdef DEBUG
+		/* Display stored container-coordinates of the item. */
+		Q_strcat(tooltiptext, va("\n%i/%i", itemHover->x, itemHover->y), sizeof(tooltiptext));
+#endif
+		MN_DrawTooltip("f_small", tooltiptext, x, y, itemToolTipWidth, 0);
+	}
+}
+
 /**
  * @brief Tries to switch to drag mode or auto-assign items
  * when right-click was used in the inventory.
@@ -1029,20 +1228,9 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 		return;
 
 	assert(EXTRADATA(node).container);
-	/* Get coordinates inside a scrollable container (if it is one). */
-	if (MN_IsScrollContainerNode(node)) {
-		ic = MN_GetItemFromScrollableContainer(node, mouseX, mouseY, &fromX, &fromY);
-		Com_DPrintf(DEBUG_CLIENT, "MN_Drag: item %i/%i selected from scrollable container.\n", fromX, fromY);
-	} else {
-		vec2_t nodepos;
 
-		MN_GetNodeAbsPos(node, nodepos);
-		/* Normalize screen coordinates to container coordinates. */
-		fromX = (int) (mouseX - nodepos[0]) / C_UNIT;
-		fromY = (int) (mouseY - nodepos[1]) / C_UNIT;
-
-		ic = Com_SearchInInventory(menuInventory, EXTRADATA(node).container, fromX, fromY);
-	}
+	ic = MN_ContainerNodeGetItemAtPosition(node, mouseX, mouseY, &fromX, &fromY);
+	Com_DPrintf(DEBUG_CLIENT, "MN_Drag: item %i/%i selected from scrollable container.\n", fromX, fromY);
 
 	/* Start drag  */
 	if (ic) {
@@ -1285,7 +1473,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		/* menu */
 		if (MN_IsScrollContainerNode(source)) {
 			const int equipType = EXTRADATA(source).filterEquipType;
-			fItem = MN_ContainerNodeGetItem(source, dragItem->t, equipType);
+			fItem = MN_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
 		} else
 			fItem = Com_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
 
