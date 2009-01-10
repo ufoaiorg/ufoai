@@ -73,6 +73,10 @@ void GAME_SetMode (int gametype)
 		} else if (list->gametype == currentGameType) {
 			Com_Printf("Shutdown gametype '%s'\n", list->name);
 			list->shutdown();
+
+			/** @todo this doesn't belong here */
+			menuInventory = NULL;
+
 			/* menu cvars are the same everywhere when shutting down a game type */
 			Cvar_Set("mn_main", "main");
 			Cvar_Set("mn_active", "");

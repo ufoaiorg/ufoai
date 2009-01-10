@@ -56,6 +56,7 @@ typedef struct {
 static console_t con;
 static cvar_t *con_notifytime;
 static cvar_t *con_history;
+static cvar_t *con_background;
 const int con_fontHeight = 12;
 const int con_fontWidth = 10;
 const int con_fontShift = 3;
@@ -354,6 +355,7 @@ void Con_Init (void)
 	/* register our commands and cvars */
 	con_notifytime = Cvar_Get("con_notifytime", "10", CVAR_ARCHIVE, "How many seconds console messages should be shown before they fade away");
 	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
+	con_background = Cvar_Get("con_background", "1", CVAR_ARCHIVE, "Console is rendered with background image");
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
@@ -582,7 +584,8 @@ void Con_DrawConsole (float frac)
 		lines = viddef.height;
 
 	/* draw the background */
-	R_DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
+	if (con_background->integer)
+		R_DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
 
 	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
 	{
