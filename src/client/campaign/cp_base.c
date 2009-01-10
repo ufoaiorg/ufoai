@@ -2287,7 +2287,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
 	}
 
 	if (base) {
-		CL_AddCarriedToEquipment(aircraft, &base->storage);
+		AIR_MoveEmployeeInventoryIntoStorage(aircraft, &base->storage);
 		INV_UpdateStorageCap(base);
 	}
 	CL_SwapSkills(&chrListTemp);
@@ -2312,25 +2312,25 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
 
 /**
  * @brief Assigns initial team of soldiers with equipment to aircraft
- * @note If assign_initial is called with one parameter (e.g. a 1), this is for
- * multiplayer - assign_initial with no parameters is for singleplayer
  * @sa B_PackInitialEquipment
  */
 void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
 {
 	int i, num;
 	equipDef_t *ed;
+	base_t *base;
 
 	if (!aircraft) {
 		Com_Printf("B_AssignInitial: No aircraft given\n");
 		return;
 	}
 
+	base = aircraft->homebase;
 	/* homebase is only set in campaign mode */
-	num = E_GenerateHiredEmployeesList(aircraft->homebase);
+	num = E_GenerateHiredEmployeesList(base);
 	num = min(num, MAX_TEAMLIST);
 	for (i = 0; i < num; i++)
-		CL_AssignSoldierFromMenuToAircraft(aircraft->homebase, i, aircraft);
+		CL_AssignSoldierFromMenuToAircraft(base, i, aircraft);
 
 	ed = INV_GetEquipmentDefinitionByID(equipName);
 	B_PackInitialEquipment(aircraft, ed);

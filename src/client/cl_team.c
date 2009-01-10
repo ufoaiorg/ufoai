@@ -474,57 +474,6 @@ static void CL_ChangeSkinOnBoard_f (void)
 }
 
 /**
- * @brief Move all the equipment carried by the team on the aircraft into the given equipment
- * @param[in] aircraft The craft with the team (and thus equipment) onboard.
- * @param[out] ed The equipment definition which will receive all the stuff from the aircraft-team.
- */
-void CL_AddCarriedToEquipment (const aircraft_t *aircraft, equipDef_t *ed)
-{
-	int p, container;
-
-	if (!aircraft) {
-		Com_Printf("CL_AddCarriedToEquipment: Warning: Called with no aicraft (and thus no carried equipment to add).\n");
-		return;
-	}
-	if (!ed) {
-		Com_Printf("CL_AddCarriedToEquipment: Warning: Called with no equipment definition at add stuff to.\n");
-		return;
-	}
-
-	if (aircraft->teamSize <= 0) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AddCarriedToEquipment: No team to remove equipment from.\n");
-		return;
-	}
-
-	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < aircraft->maxTeamSize; p++) {
-			if (aircraft->acTeam[p]) {
-				character_t *chr = &aircraft->acTeam[p]->chr;
-				invList_t *ic = chr->inv.c[container];
-				while (ic) {
-					const item_t item = ic->item;
-					const objDef_t *type = item.t;
-					invList_t *next = ic->next;
-
-					ed->num[type->idx]++;
-					if (item.a) {
-						assert(type->reload);
-						assert(item.m);
-						ed->numLoose[item.m->idx] += item.a;
-						/* Accumulate loose ammo into clips */
-						if (ed->numLoose[item.m->idx] >= type->ammo) {
-							ed->numLoose[item.m->idx] -= type->ammo;
-							ed->num[item.m->idx]++;
-						}
-					}
-					ic = next;
-				}
-			}
-		}
-	}
-}
-
-/**
  * @sa CL_ReloadAndRemoveCarried
  */
 static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
