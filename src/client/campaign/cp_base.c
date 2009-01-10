@@ -2330,7 +2330,7 @@ void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
 	num = E_GenerateHiredEmployeesList(base);
 	num = min(num, MAX_TEAMLIST);
 	for (i = 0; i < num; i++)
-		CL_AssignSoldierFromMenuToAircraft(base, i, aircraft);
+		AIM_AddEmployeeFromMenu(aircraft, i);
 
 	ed = INV_GetEquipmentDefinitionByID(equipName);
 	B_PackInitialEquipment(aircraft, ed);

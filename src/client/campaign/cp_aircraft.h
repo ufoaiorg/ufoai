@@ -299,6 +299,6 @@ void AIR_RemoveEmployees(aircraft_t* aircraft);
 qboolean AIR_RemoveEmployee(struct employee_s *employee, aircraft_t* aircraft);
 const aircraft_t *AIR_IsEmployeeInAircraft(const struct employee_s *employee, const aircraft_t* aircraft);
 void AIR_MoveEmployeeInventoryIntoStorage(const aircraft_t *aircraft, equipDef_t *equip);
-
+void AIM_AddEmployeeFromMenu(aircraft_t *aircraft, const int num);
 
 #endif

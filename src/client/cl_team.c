@@ -1091,41 +1091,6 @@ static void CL_ToggleTeamList_f (void)
 	Cbuf_AddText("team_mark;team_select 0\n");
 }
 
-/**
- * @brief Assigns a soldier to an aircraft.
- * @param[in] employee The employee to be assigned to the aircraft.
- * @param[in] aircraft What aircraft to assign employee to.
- * @return returns true if a soldier could be assigned to the aircraft.
- * @sa AIR_RemoveEmployee
- * @sa AIR_AddToAircraftTeam
- */
-static qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *aircraft)
-{
-	if (!employee || !aircraft)
-		return qfalse;
-
-	if (aircraft->teamSize < MAX_ACTIVETEAM) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee->idx);
-
-		/* Check whether the soldier is already on another aircraft */
-		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: found idx '%d' \n", employee->idx);
-			return qfalse;
-		}
-
-		/* Assign the soldier to the aircraft. */
-		if (aircraft->teamSize < aircraft->maxTeamSize) {
-			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to add idx '%d' \n", employee->idx);
-			return AIR_AddToAircraftTeam(aircraft, employee);
-		}
-#ifdef DEBUG
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: aircraft full - not added\n");
-#endif
-	}
-	return qfalse;
-}
-
 #ifdef DEBUG
 static void CL_TeamListDebug_f (void)
 {
@@ -1155,48 +1120,6 @@ static void CL_TeamListDebug_f (void)
 	}
 }
 #endif
-
-/**
- * @brief Adds or removes a soldier to/from an aircraft.
- * @sa E_EmployeeHire_f
- */
-void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t *aircraft)
-{
-	employee_t *employee;
-
-	if (GAME_IsCampaign() && !base->numAircraftInBase) {
-		Com_Printf("CL_AssignSoldierFromMenuToAircraft: No aircraft in base\n");
-		return;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierFromMenuToAircraft: Trying to get employee with hired-idx %i.\n", num);
-
-	/* If this fails it's very likely that employeeList is not filled. */
-	employee = E_GetEmployeeByMenuIndex(num);
-	if (!employee)
-		Sys_Error("CL_AssignSoldierFromMenuToAircraft: Could not get employee %i\n", num);
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierFromMenuToAircraft: employee with idx %i selected\n", employee->idx);
-
-	assert(aircraft);
-
-	if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
-		/* Remove soldier from aircraft/team. */
-		MN_ExecuteConfunc("listdel %i\n", num);
-		/* use the global aircraft index here */
-		AIR_RemoveEmployee(employee, aircraft);
-		MN_ExecuteConfunc("listholdsnoequip %i\n", num);
-	} else {
-		/* Assign soldier to aircraft/team if aircraft is not full */
-		if (CL_AssignSoldierToAircraft(employee, aircraft))
-			MN_ExecuteConfunc("listadd %i\n", num);
-		else
-			MN_ExecuteConfunc("listdel %i\n", num);
-	}
-	/* Select the desired one anyways. */
-	CL_UpdateActorAircraftVar(aircraft, employee->type);
-	Cbuf_AddText(va("team_select %i\n", num));
-}
 
 /**
  * @brief Adds or removes a soldier to/from an aircraft.
@@ -1234,7 +1157,7 @@ static void CL_AssignSoldier_f (void)
 	if (!aircraft)
 		return;
 
-	CL_AssignSoldierFromMenuToAircraft(base, num, aircraft);
+	AIM_AddEmployeeFromMenu(aircraft, num);
 }
 
 void TEAM_InitStartup (void)
