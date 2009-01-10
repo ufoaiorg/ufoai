@@ -45,7 +45,7 @@ typedef struct epair_s {
  */
 typedef struct {
 	vec3_t		origin;			/**< the origin vector of the entity */
-	int			firstbrush;		/**< the first brush in the brush list in case of a bmodel */
+	int			firstbrush;		/**< the index of the first brush in mapbrushes in case of a bmodel */
 	int			numbrushes;		/**< the number of brushes in case of a bmodel */
 	epair_t		*epairs;		/**< the entity parameters (key, value) */
 	qboolean	skip;			/**< skip this entity in case the check functions have found an error and it should

@@ -678,7 +678,7 @@ void CheckEntities (void)
 {
 	int i;
 
-	/* 0 is the world - start at 1 */
+	/* include worldspawn, at entities[0] */
 	for (i = 0; i < num_entities; i++) {
 		entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
@@ -898,6 +898,7 @@ static qboolean Check_SidesTouch (side_t *a, side_t *b)
 	for (i = 0; i < 2; i++) {
 		const winding_t *w = s[i]->winding; /* winding from one of the sides */
 		const mapbrush_t *b = s[i ^ 1]->brush; /* the brush that the other side belongs to */
+
 		for (j = 0; j < w->numpoints ; j++) {
 			if (Check_IsPointInsideBrush(w->p[j], b, PIB_INCL_SURF))
 				return qtrue;
@@ -1484,8 +1485,8 @@ void CheckNodraws (void)
 	int i, j, k, l, m, n, is, js;
 	int numSetFromSingleSide = 0, numSetPointingDown = 0, numSetFromCompositeSide = 0, iBrushNumSet = 0;
 
-	/* initialise mapbrush_t.nearBrushes */
-	Check_NearList();
+	/* Initialise compositeSides[].. Note that this function
+	 * calls Check_NearList to initialise mapbrush_t.nearBrushes */
 	Check_FindCompositeSides();
 
 	/* check each brush, i, for downward sides */

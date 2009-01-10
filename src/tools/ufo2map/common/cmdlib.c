@@ -164,7 +164,7 @@ const char* FS_GameDir (void)
 }
 
 /**
- * @brief
+ * @brief loads 0pics.pk3, if it exists.
  * @param[in] path The path to the map filename - relative or absolute
  */
 void FS_Init (const char *path)
@@ -182,7 +182,7 @@ void FS_Init (const char *path)
 }
 
 /**
- * @brief
+ * @brief prefixes relative path with working dir, leaves full path unchanged
  */
 char *COM_ExpandRelativePath (const char *path)
 {

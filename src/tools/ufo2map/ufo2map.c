@@ -623,6 +623,9 @@ int main (int argc, const char **argv)
 	} else {
 		/* start from scratch */
 		LoadMapFile(mapFilename);
+#if 0 /* this segfualts */
+		CheckNodraws();
+#endif
 		SetModelNumbers();
 
 		ProcessModels(bspFilename);

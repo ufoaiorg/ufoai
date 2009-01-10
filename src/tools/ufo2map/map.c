@@ -842,6 +842,9 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 /**
  * @brief Takes all of the brushes from the current entity and adds them to the world's brush list.
  * @note Used by func_group
+ * @note This will only work if the func_group is the last entity currently known. At the moment,
+ * this function is only called by ParseMapEntity and this happens directly after the func_group
+ * is parsed, so this is OK.
  * @sa MoveModelToWorld
  */
 static void MoveBrushesToWorld (entity_t *mapent)
@@ -986,7 +989,7 @@ static qboolean ParseMapEntity (const char *filename)
 	/* group entities are just for editor convenience
 	 * toss all brushes into the world entity */
 	entName = ValueForKey(mapent, "classname");
-	if (!config.performMapCheck && !config.fixMap && !strcmp("func_group", entName)) {
+	if (notCheckOrFix && !strcmp("func_group", entName)) {
 		MoveBrushesToWorld(mapent);
 		num_entities--;
 	} else if (IsInlineModelEntity(entName)) {
