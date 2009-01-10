@@ -957,7 +957,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
 	if (aircraft->teamSize > 0)
-		CL_RemoveSoldiersFromAircraft(aircraft);
+		AIR_RemoveEmployees(aircraft);
 
 	/* base is NULL here because we don't want to readd this to the inventory
 	 * If you want this in the inventory you really have to call these functions
@@ -2669,3 +2669,105 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 		}
 	}
 }
+
+/**
+ * @brief Removes a soldier from an aircraft.
+ * @param[in,out] employee The soldier to be removed from the aircraft.
+ * @param[in,out] aircraft The aircraft to remove the soldier from.
+ * Use @c NULL to remove the soldier from any aircraft.
+ * @sa CL_AssignSoldierToAircraft
+ */
+qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
+{
+	if (!employee)
+		return qfalse;
+
+	/* If no aircraft is given we search if he is in _any_ aircraft and set
+	 * the aircraft pointer to it. */
+	if (!aircraft) {
+		int i;
+		for (i = 0; i < gd.numAircraft; i++) {
+			aircraft_t *acTemp = AIR_AircraftGetFromIDX(i);
+			if (AIR_IsEmployeeInAircraft(employee, acTemp)) {
+				aircraft = acTemp;
+				break;
+			}
+		}
+		if (!aircraft)
+			return qfalse;
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "AIR_RemoveEmployee: base: %i - aircraft->idx: %i\n",
+		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
+
+	INVSH_DestroyInventory(&employee->chr.inv);
+	return AIR_RemoveFromAircraftTeam(aircraft, employee);
+}
+
+/**
+ * @brief Tells you if a soldier is assigned to an aircraft.
+ * @param[in] employee The soldier to search for.
+ * @param[in] aircraft The aircraft to search the soldier in. Use @c NULL to
+ * check if the soldier is in @b any aircraft.
+ * @return true if the soldier was found in the aircraft otherwise false.
+ */
+const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const aircraft_t* aircraft)
+{
+	int i;
+
+	if (!employee)
+		return NULL;
+
+	if (employee->transfer)
+		return NULL;
+
+	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
+	if (!aircraft) {
+		for (i = 0; i < gd.numAircraft; i++) {
+			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
+			if (aircraftByIDX && AIR_IsEmployeeInAircraft(employee, aircraftByIDX))
+				return aircraftByIDX;
+		}
+		return NULL;
+	}
+
+	if (employee->type == EMPL_PILOT) {
+		if (aircraft->pilot == employee)
+			return aircraft;
+		return NULL;
+	}
+
+	if (AIR_IsInAircraftTeam(aircraft, employee))
+		return aircraft;
+	else
+		return NULL;
+}
+
+/**
+ * @brief Removes all soldiers from an aircraft.
+ * @param[in,out] aircraft The aircraft to remove the soldiers from.
+ * @sa AIR_RemoveEmployee
+ */
+void AIR_RemoveEmployees (aircraft_t *aircraft)
+{
+	int i;
+
+	if (!aircraft)
+		return;
+
+	/* Counting backwards because aircraft->acTeam[] is changed in AIR_RemoveEmployee */
+	for (i = aircraft->maxTeamSize; i >= 0; i--) {
+		/* use global aircraft index here */
+		if (AIR_RemoveEmployee(aircraft->acTeam[i], aircraft)) {
+			/* if the acTeam is not NULL the acTeam list and AIR_IsEmployeeInAircraft
+			 * is out of sync */
+			assert(aircraft->acTeam[i] == NULL);
+		} else if (aircraft->acTeam[i]) {
+			Com_Printf("AIR_RemoveEmployees: Error, could not remove soldier from aircraft team at pos: %i\n", i);
+		}
+	}
+
+	if (aircraft->teamSize > 0)
+		Sys_Error("AIR_RemoveEmployees: Error, there went something wrong with soldier-removing from aircraft.");
+}
+

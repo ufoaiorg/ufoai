@@ -183,18 +183,18 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 	switch (employee->type) {
 	case EMPL_SOLDIER:
 		/* Is this a soldier assigned to aircraft? */
-		if (CL_SoldierInAircraft(employee, NULL)) {
+		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-			gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
+				gd.ranks[employee->chr.score.rank].shortname, employee->chr.name);
 			MN_Popup(_("Soldier in aircraft"), popupText);
 			return qfalse;
 		}
 		break;
 	case EMPL_PILOT:
 		/* Is this a pilot assigned to aircraft? */
-		if (CL_PilotInAircraft(employee, NULL)) {
+		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			Com_sprintf(popupText, sizeof(popupText), _("%s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-			employee->chr.name);
+				employee->chr.name);
 			MN_Popup(_("Pilot in aircraft"), popupText);
 			return qfalse;
 		}
@@ -1101,7 +1101,7 @@ static void TR_TransferStart_f (void)
 		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 			aircraft->status = AIR_TRANSFER;
-			CL_RemoveSoldiersFromAircraft(aircraft);
+			AIR_RemoveEmployees(aircraft);
 			transfer->hasAircraft = qtrue;
 			transfer->aircraftArray[i] = i;
 		}

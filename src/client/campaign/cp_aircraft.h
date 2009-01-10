@@ -295,6 +295,9 @@ int AIR_GetCapacityByAircraftWeight(const aircraft_t *aircraft);
 const char *AIR_CheckMoveIntoNewHomebase(const aircraft_t *aircraft, const struct base_s* base, const int capacity);
 void AII_CollectItem(aircraft_t *aircraft, const objDef_t *item, int amount);
 void AII_CollectingItems(aircraft_t *aircraft, int won);
+void AIR_RemoveEmployees(aircraft_t* aircraft);
+qboolean AIR_RemoveEmployee(struct employee_s *employee, aircraft_t* aircraft);
+const aircraft_t *AIR_IsEmployeeInAircraft(const struct employee_s *employee, const aircraft_t* aircraft);
 
 
 #endif

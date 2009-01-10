@@ -1179,7 +1179,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
 		employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
 
-		if (CL_SoldierInAircraft(employee, aircraft))
+		if (AIR_IsEmployeeInAircraft(employee, aircraft))
 			numberofsoldiers++;
 
 		Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - try to get player %i \n", i);

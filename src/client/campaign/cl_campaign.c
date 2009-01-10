@@ -2025,7 +2025,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 
 	/* only soldiers have stats and ranks, ugvs not */
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (CL_SoldierInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft)) {
+		if (AIR_IsEmployeeInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft)) {
 			character_t *chr = &gd.employees[EMPL_SOLDIER][i].chr;
 			assert(chr);
 			if (!gd.employees[EMPL_SOLDIER][i].hired) {

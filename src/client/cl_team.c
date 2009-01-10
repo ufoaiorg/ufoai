@@ -1080,7 +1080,7 @@ static void CL_MarkTeam_f (void)
 			if (j == aircraft->idx)
 				continue;
 			/* already on another aircraft */
-			if (CL_SoldierInAircraft(employee, AIR_AircraftGetFromIDX(j)))
+			if (AIR_IsEmployeeInAircraft(employee, AIR_AircraftGetFromIDX(j)))
 				alreadyInOtherShip = qtrue;
 		}
 
@@ -1088,7 +1088,7 @@ static void CL_MarkTeam_f (void)
 		Cvar_ForceSet(va("mn_ename%i", k), employee->chr.name);
 		/* Change the buttons */
 		MN_ExecuteConfunc("listdel %i", k);
-		if (!alreadyInOtherShip && CL_SoldierInAircraft(employee, aircraft))
+		if (!alreadyInOtherShip && AIR_IsEmployeeInAircraft(employee, aircraft))
 			MN_ExecuteConfunc("listadd %i", k);
 		else if (alreadyInOtherShip)
 			/* Disable the button - the soldier is already on another aircraft */
@@ -1143,139 +1143,14 @@ static void CL_ToggleTeamList_f (void)
 }
 
 /**
- * @brief Tells you if a soldier is assigned to an aircraft.
- * @param[in] employee The soldier to search for.
- * @param[in] aircraft The aircraft to search the soldier in. Use @c NULL to
- * check if the soldier is in @b any aircraft.
- * @return true if the soldier was found in the aircraft otherwise false.
- */
-const aircraft_t *CL_SoldierInAircraft (const employee_t *employee, const aircraft_t* aircraft)
-{
-	int i;
-
-	if (!employee)
-		return NULL;
-
-	if (employee->transfer)
-		return NULL;
-
-	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
-	if (!aircraft) {
-		for (i = 0; i < gd.numAircraft; i++) {
-			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
-			if (aircraftByIDX && CL_SoldierInAircraft(employee, aircraftByIDX))
-				return aircraftByIDX;
-		}
-		return NULL;
-	}
-
-	if (AIR_IsInAircraftTeam(aircraft, employee))
-		return aircraft;
-	else
-		return NULL;
-}
-
-/**
- * @brief Tells you if a pilot is assigned to an aircraft.
- * @param[in] employee The pilot to search for.
- * @param[in] aircraft The aircraft to search the pilot in. Use @c NULL to
- * check if the pilot is in @b any aircraft.
- * @return true if the pilot was found in the aircraft otherwise false.
- */
-qboolean CL_PilotInAircraft (const employee_t *employee, const aircraft_t* aircraft)
-{
-	int i;
-
-	if (!employee)
-		return qfalse;
-
-	if (employee->transfer)
-		return qfalse;
-
-	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
-	if (!aircraft) {
-		for (i = 0; i < gd.numAircraft; i++) {
-			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
-			if (aircraftByIDX && CL_PilotInAircraft(employee, aircraftByIDX))
-				return qtrue;
-		}
-		return qfalse;
-	}
-
-	return (aircraft->pilot == employee);
-}
-
-/**
- * @brief Removes a soldier from an aircraft.
- * @param[in,out] employee The soldier to be removed from the aircraft.
- * @param[in,out] aircraft The aircraft to remove the soldier from.
- * Use @c NULL to remove the soldier from any aircraft.
- * @sa CL_AssignSoldierToAircraft
- */
-qboolean CL_RemoveSoldierFromAircraft (employee_t *employee, aircraft_t *aircraft)
-{
-	if (!employee)
-		return qfalse;
-
-	/* If no aircraft is given we search if he is in _any_ aircraft and set
-	 * the aircraft pointer to it. */
-	if (!aircraft) {
-		int i;
-		for (i = 0; i < gd.numAircraft; i++) {
-			aircraft_t *acTemp = AIR_AircraftGetFromIDX(i);
-			if (CL_SoldierInAircraft(employee, acTemp)) {
-				aircraft = acTemp;
-				break;
-			}
-		}
-		if (!aircraft)
-			return qfalse;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_RemoveSoldierFromAircraft: base: %i - aircraft->idx: %i\n",
-		aircraft->homebase ? aircraft->homebase->idx : -1, aircraft->idx);
-
-	INVSH_DestroyInventory(&employee->chr.inv);
-	return AIR_RemoveFromAircraftTeam(aircraft, employee);
-}
-
-/**
- * @brief Removes all soldiers from an aircraft.
- * @param[in,out] aircraft The aircraft to remove the soldiers from.
- * @sa CL_RemoveSoldierFromAircraft
- */
-void CL_RemoveSoldiersFromAircraft (aircraft_t *aircraft)
-{
-	int i;
-
-	if (!aircraft)
-		return;
-
-	/* Counting backwards because aircraft->acTeam[] is changed in CL_RemoveSoldierFromAircraft */
-	for (i = aircraft->maxTeamSize; i >= 0; i--) {
-		/* use global aircraft index here */
-		if (CL_RemoveSoldierFromAircraft(aircraft->acTeam[i], aircraft)) {
-			/* if the acTeam is not NULL the acTeam list and CL_SoldierInAircraft
-			 * is out of sync */
-			assert(aircraft->acTeam[i] == NULL);
-		} else if (aircraft->acTeam[i]) {
-			Com_Printf("CL_RemoveSoldiersFromAircraft: Error, could not remove soldier from aircraft team at pos: %i\n", i);
-		}
-	}
-
-	if (aircraft->teamSize > 0)
-		Sys_Error("CL_RemoveSoldiersFromAircraft: Error, there went something wrong with soldier-removing from aircraft.");
-}
-
-/**
  * @brief Assigns a soldier to an aircraft.
  * @param[in] employee The employee to be assigned to the aircraft.
  * @param[in] aircraft What aircraft to assign employee to.
  * @return returns true if a soldier could be assigned to the aircraft.
- * @sa CL_RemoveSoldierFromAircraft
+ * @sa AIR_RemoveEmployee
  * @sa AIR_AddToAircraftTeam
  */
-qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *aircraft)
+static qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *aircraft)
 {
 	if (!employee || !aircraft)
 		return qfalse;
@@ -1284,7 +1159,7 @@ qboolean CL_AssignSoldierToAircraft (employee_t *employee, aircraft_t *aircraft)
 		Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: attempting to find idx '%d'\n", employee->idx);
 
 		/* Check whether the soldier is already on another aircraft */
-		if (CL_SoldierInAircraft(employee, NULL)) {
+		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_AssignSoldierToAircraft: found idx '%d' \n", employee->idx);
 			return qfalse;
 		}
@@ -1356,11 +1231,11 @@ void CL_AssignSoldierFromMenuToAircraft (base_t *base, const int num, aircraft_t
 
 	assert(aircraft);
 
-	if (CL_SoldierInAircraft(employee, aircraft)) {
+	if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 		/* Remove soldier from aircraft/team. */
 		MN_ExecuteConfunc("listdel %i\n", num);
 		/* use the global aircraft index here */
-		CL_RemoveSoldierFromAircraft(employee, aircraft);
+		AIR_RemoveEmployee(employee, aircraft);
 		MN_ExecuteConfunc("listholdsnoequip %i\n", num);
 	} else {
 		/* Assign soldier to aircraft/team if aircraft is not full */

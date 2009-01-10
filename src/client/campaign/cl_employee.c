@@ -639,7 +639,7 @@ qboolean E_EmployeeIsCurrentlyInBase (const employee_t * employee)
 	if (employee->transfer)
 		return qfalse;
 	else {
-		const aircraft_t *aircraft = CL_SoldierInAircraft(employee, NULL);
+		const aircraft_t *aircraft = AIR_IsEmployeeInAircraft(employee, NULL);
 		if (aircraft && aircraft->status > AIR_HOME)
 			return qfalse;
 
@@ -1231,8 +1231,8 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 
 	case EMPL_SOLDIER:
 		/* Remove soldier from aircraft/team if he was assigned to one. */
-		if (CL_SoldierInAircraft(employee, NULL)) {
-			CL_RemoveSoldierFromAircraft(employee, NULL);
+		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
+			AIR_RemoveEmployee(employee, NULL);
 		}
 		break;
 
@@ -1249,8 +1249,8 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 		/** @todo Check if they are linked to anywhere and remove them there. */
 #if 0
 		/* Remove ugv from aircraft/team if it was assigned to one. */
-		if (CL_SoldierInAircraft(employee, NULL)) {
-			CL_RemoveSoldierFromAircraft(employee, NULL);
+		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
+			AIR_RemoveEmployee(employee, NULL);
 		}
 #endif
 		break;

@@ -40,12 +40,7 @@ void CL_GenerateCharacter(character_t *chr, const char *team, employeeType_t emp
 ugv_t *CL_GetUgvByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
-qboolean CL_PilotInAircraft(const employee_t *employee, const aircraft_t* aircraft);
-const aircraft_t *CL_SoldierInAircraft(const employee_t *employee, const aircraft_t* aircraft);
-qboolean CL_RemoveSoldierFromAircraft(employee_t *employee, aircraft_t* aircraft);
-void CL_RemoveSoldiersFromAircraft(aircraft_t* aircraft);
 void CL_AssignSoldierFromMenuToAircraft(base_t *base, const int num, aircraft_t *aircraft);
-qboolean CL_AssignSoldierToAircraft(employee_t *employee, aircraft_t *aircraft);
 
 void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);
 void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
