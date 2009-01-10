@@ -1773,8 +1773,56 @@ static inline nation_t *B_RandomNation (void)
 }
 
 /**
+ * @brief Remove all character_t information (and linked to that employees & team info) from the game.
+ * @param[in] base The base to remove all this stuff from.
+ * @sa CL_GenerateCharacter
+ * @sa AIR_ResetAircraftTeam
+ */
+static void B_ResetHiredEmployeesInBase (base_t* const base)
+{
+	int i;
+	linkedList_t *hiredEmployees = NULL;
+	linkedList_t *hiredEmployeesTemp;
+
+	/* Reset inventory data of all hired employees that can be sent into combat (i.e. characters with inventories).
+	 * i.e. these are soldiers and robots right now. */
+	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredEmployees);
+	hiredEmployeesTemp = hiredEmployees;
+	while (hiredEmployeesTemp) {
+		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
+		if (employee)
+			INVSH_DestroyInventory(&employee->chr.inv);
+		hiredEmployeesTemp = hiredEmployeesTemp->next;
+	}
+
+	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
+	hiredEmployeesTemp = hiredEmployees;
+	while (hiredEmployeesTemp) {
+		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
+		if (employee)
+			INVSH_DestroyInventory(&employee->chr.inv);
+		hiredEmployeesTemp = hiredEmployeesTemp->next;
+	}
+
+	LIST_Delete(&hiredEmployees);
+
+	/* Reset hire info. */
+	Cvar_ForceSet("cl_selected", "0");
+
+	/* Fire 'em all (in multiplayer they are not hired) */
+	for (i = 0; i < MAX_EMPL; i++) {
+		E_UnhireAllEmployees(base, i);
+	}
+
+	/* Purge all team-info from the aircraft */
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
+	}
+}
+
+/**
  * @brief Clears a base with all its characters
- * @sa CL_ResetCharacters
+ * @sa B_ResetHiredEmployeesInBase
  * @sa CL_GenerateCharacter
  */
 void B_ClearBase (base_t *const base)
@@ -1782,7 +1830,7 @@ void B_ClearBase (base_t *const base)
 	int i;
 	int j = 0;
 
-	CL_ResetCharacters(base);
+	B_ResetHiredEmployeesInBase(base);
 
 	memset(base, 0, sizeof(*base));
 

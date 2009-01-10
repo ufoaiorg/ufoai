@@ -37,7 +37,6 @@ int CL_UpdateActorAircraftVar(aircraft_t *aircraft, employeeType_t employeeType)
 void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
 void CL_CleanTempInventory(base_t* base);
 
-void CL_ResetCharacters(base_t* const base);
 int CL_GenTeamList(const base_t *base);
 void CL_GenerateCharacter(character_t *chr, const char *team, employeeType_t employeeType, const ugv_t *ugvType);
 ugv_t *CL_GetUgvByID(const char *ugvID);
