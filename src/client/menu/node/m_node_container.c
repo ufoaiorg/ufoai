@@ -522,14 +522,14 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 		assert(item->t);
 		if (highlightType && INVSH_LoadableInWeapon(highlightType, item->t)) {
 			if (disabled)
-					memcpy(color, colorDisabledLoadable, sizeof(vec4_t));
+				Vector4Copy(colorDisabledLoadable, color);
 			else
-					memcpy(color, colorLoadable, sizeof(vec4_t));
+				Vector4Copy(colorLoadable, color);
 		} else {
 			if (disabled)
-					memcpy(color, colorDisabled, sizeof(vec4_t));
+				Vector4Copy(colorDisabled, color);
 			else
-					memcpy(color, colorDefault, sizeof(vec4_t));
+				Vector4Copy(colorDefault, color);
 		}
 		if (disabled)
 			color[3] = 0.5;
@@ -555,8 +555,7 @@ static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDe
 static void MN_ContainerNodeDrawBaseAmmo (menuNode_t *node, objDef_t *highlightType)
 {
 	invList_t *ic;
-	byte itemType;
-	int curHeight = 0;	/**< Combined Height of all drawn item so far. */
+	int curHeight = 0;	/**< Combined height of all drawn item so far. */
 	int rowOffset;
 	vec2_t nodepos;
 	const int columns = 2;
@@ -574,9 +573,6 @@ static void MN_ContainerNodeDrawBaseAmmo (menuNode_t *node, objDef_t *highlightT
 
 	/* Change row spacing according to vertical/horizontal setting. */
 	rowOffset = EXTRADATA(node).container->scrollVertical ? C_ROW_OFFSET : 0;
-
-	itemType = 1;
-
 
 	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
 		item_t tempItem = {1, NULL, NULL, 0, 0};
@@ -615,6 +611,7 @@ static void MN_ContainerNodeDrawBaseAmmo (menuNode_t *node, objDef_t *highlightT
 				color = colorDisabledHiden;
 		} else
 			color = colorDefault;
+
 		tempItem.t = ic->item.t;
 		pos[0] += ic->item.t->sx * C_UNIT / 2.0;
 		pos[1] += ic->item.t->sy * C_UNIT / 2.0;
@@ -628,7 +625,7 @@ static void MN_ContainerNodeDrawBaseAmmo (menuNode_t *node, objDef_t *highlightT
 			pos[0], pos[1],
 			pos[0], nodepos[1],
 			node->size[0] / 2 - 5, node->size[1],	/* max width/height */
-			0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			0, va("%s (%i)", ic->item.t->name, ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 
 		/* update row */
 		if (cellHeight > rowHeight) {
@@ -648,7 +645,6 @@ static void MN_ContainerNodeDrawBaseAmmo (menuNode_t *node, objDef_t *highlightT
 static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highlightType)
 {
 	invList_t *ic;
-	byte itemType;
 	int curWidth = 0;	/**< Combined width of all drawn item so far. */
 	int curHeight = 0;	/**< Combined Height of all drawn item so far. */
 	int maxHeight = 0;	/**< Max. height of a row. */
@@ -674,8 +670,6 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 	/* Change row spacing according to vertical/horizontal setting. */
 	rowOffset = EXTRADATA(node).container->scrollVertical ? C_ROW_OFFSET : 0;
-
-	itemType = 0; /**< 0==weapons, 1==ammo */
 
 	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
 		/* skip invalide, ammo, and out of filter */
