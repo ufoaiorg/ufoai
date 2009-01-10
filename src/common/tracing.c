@@ -47,14 +47,6 @@ static cBspSurface_t nullsurface;
  * @sa TR_TestLineMask (tracing.c)
  * @sa TR_InitBoxHull (tracing.c)
  * @sa TR_TestLineDM (tracing.c)
- * @sa TR_BoxLeafnums_r (tracing.c)
- * @sa TR_BoxLeafnums_headnode (tracing.c)
- * @sa TR_TestBoxInBrush (tracing.c)
- * @sa TR_TraceToLeaf (tracing.c)
- * @sa TR_TestInLeaf (tracing.c)
- * @sa TR_RecursiveHullCheck (tracing.c)
- * @sa TR_BoxTrace (tracing.c)
- * @sa TR_TransformedBoxTrace (tracing.c)
  * @sa CMod_LoadSubmodels (cmodel.c)
  * @sa CMod_LoadSurfaces (cmodel.c)
  * @sa CMod_LoadNodes (cmodel.c)
@@ -392,7 +384,7 @@ LINE TRACING - TEST FOR BRUSH LOCATION
  * @sa TR_TestLine_r
  * @sa TR_TestLineDM
  */
-static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
+static int TR_TestLineDist_r (TR_TILE_TYPE *tile, int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -408,7 +400,7 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 		return r;				/* leaf node */
 	}
 
-	tnode = &curTile->tnodes[node];
+	tnode = &tile->tnodes[node];
 	assert(tnode);
 	switch (tnode->type) {
 	case PLANE_X:
@@ -418,10 +410,10 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 		back = stop[tnode->type] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TR_TestLineDist_r(tnode->children[0], start, stop);
+		r = TR_TestLineDist_r(tile, tnode->children[0], start, stop);
 		if (r)
 			VectorCopy(tr_end, mid);
-		side = TR_TestLineDist_r(tnode->children[1], start, stop);
+		side = TR_TestLineDist_r(tile, tnode->children[1], start, stop);
 		if (side && r) {
 			if (VectorNearer(mid, tr_end, start)) {
 				VectorCopy(mid, tr_end);
@@ -444,10 +436,10 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TR_TestLineDist_r(tnode->children[0], start, stop);
+		return TR_TestLineDist_r(tile, tnode->children[0], start, stop);
 
 	if (front < ON_EPSILON && back < ON_EPSILON)
-		return TR_TestLineDist_r(tnode->children[1], start, stop);
+		return TR_TestLineDist_r(tile, tnode->children[1], start, stop);
 
 	side = front < 0;
 
@@ -455,10 +447,10 @@ static int TR_TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 
 	VectorInterpolation(start, stop, frac, mid);
 
-	r = TR_TestLineDist_r(tnode->children[side], start, mid);
+	r = TR_TestLineDist_r(tile, tnode->children[side], start, mid);
 	if (r)
 		return r;
-	return TR_TestLineDist_r(tnode->children[!side], mid, stop);
+	return TR_TestLineDist_r(tile, tnode->children[!side], mid, stop);
 }
 
 /**
@@ -476,8 +468,6 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 	const int corelevels = (levelmask & TL_FLAG_REGULAR_LEVELS);
 	int i;
 
-	curTile = tile;
-
 	VectorCopy(stop, end);
 
 	for (i = 0; i < tile->numtheads; i++) {
@@ -488,7 +478,7 @@ static qboolean TR_TileTestLineDM (TR_TILE_TYPE *tile, const vec3_t start, const
 			continue;
 		if (level == LEVEL_WEAPONCLIP && !(levelmask & TL_FLAG_WEAPONCLIP))
 			continue;
-		if (TR_TestLineDist_r(tile->thead[i], start, stop))
+		if (TR_TestLineDist_r(tile, tile->thead[i], start, stop))
 			if (VectorNearer(tr_end, end, start))
 				VectorCopy(tr_end, end);
 	}
@@ -770,7 +760,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace_data, cBspBrush_t *brush, TR_LE
 		trace_data->trace.startsolid = qtrue;
 		if (!getout)
 			trace_data->trace.allsolid = qtrue;
-		trace_data->trace.leafnum = leaf - curTile->leafs;
+		trace_data->trace.leafnum = leaf - myTile->leafs;
 		return;
 	}
 	if (enterfrac < leavefrac) {
@@ -784,7 +774,7 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace_data, cBspBrush_t *brush, TR_LE
 			trace_data->trace.surface = leadside->surface;
 #endif
 			trace_data->trace.contentFlags = brush->contentFlags;
-			trace_data->trace.leafnum = leaf - curTile->leafs;
+			trace_data->trace.leafnum = leaf - myTile->leafs;
 		}
 	}
 }
@@ -841,13 +831,13 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 
 /**
  * @param[in] leafnum the leaf index that we are looking in for a hit against
- * @sa trace_contents (set in TR_BoxTrace)
  * @sa CM_ClipBoxToBrush
  * @sa CM_TestBoxInBrush
  * @sa CM_RecursiveHullCheck
- * @brief This function checks if the specified leaf matches any mask specified in trace_contents.  If so, each brush
- *  in the leaf is examined to see if it is intersected by the line drawn in TR_RecursiveHullCheck or is within the
- *  bounding box set in trace_mins and trace_maxs with the origin on the line.
+ * @brief This function checks if the specified leaf matches any mask specified in trace_data.contents. and does
+ *  not contain any mask specified in trace_data.rejects  If so, each brush in the leaf is examined to see if it
+ *  is intersected by the line drawn in TR_RecursiveHullCheck or is within the bounding box set in trace_mins and
+ *  trace_maxs with the origin on the line.
  */
 static void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 {
@@ -856,7 +846,7 @@ static void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 	TR_TILE_TYPE *myTile = trace_data->tile;
 
 	assert(leafnum > LEAFNODE);
-	assert(leafnum <= curTile->numleafs);
+	assert(leafnum <= myTile->numleafs);
 
 	leaf = &myTile->leafs[leafnum];
 
@@ -865,8 +855,8 @@ static void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 
 	/* trace line against all brushes in the leaf */
 	for (k = 0; k < leaf->numleafbrushes; k++) {
-		const int brushnum = curTile->leafbrushes[leaf->firstleafbrush + k];
-		cBspBrush_t *b = &curTile->brushes[brushnum];
+		const int brushnum = myTile->leafbrushes[leaf->firstleafbrush + k];
+		cBspBrush_t *b = &myTile->brushes[brushnum];
 
 		if (b->checkcount == checkcount)
 			continue;			/* already checked this brush in another leaf */
@@ -940,10 +930,9 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 	int side;
 	float midf;
 	vec3_t mid;
-	trace_t *trace = &trace_data->trace;
 	TR_TILE_TYPE *myTile = trace_data->tile;
 
-	if (trace->fraction <= p1f)
+	if (trace_data->trace.fraction <= p1f)
 		return;					/* already hit something nearer */
 
 	/* if < 0, we are in a leaf node */
@@ -1132,7 +1121,7 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 	}
 
 	/* general sweeping through world */
-	TR_RecursiveHullCheck(&trace_data, headnode, 0, 1, astart, aend);
+	TR_RecursiveHullCheck(&trace_data, headnode, 0.0, 1.0, astart, aend);
 
 	if (trace_data.trace.fraction >= 1.0) {
 		VectorCopy(aend, trace_data.trace.endpos);
@@ -1157,15 +1146,12 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	vec3_t temp;
 	qboolean rotated;
 
-	/* init */
-	curTile = tile;
-
 	/* subtract origin offset */
 	VectorSubtract(start, origin, start_l);
 	VectorSubtract(end, origin, end_l);
 
 	/* rotate start and end into the models frame of reference */
-	if (headnode != curTile->box_headnode && VectorNotEmpty(angles)) {
+	if (headnode != tile->box_headnode && VectorNotEmpty(angles)) {
 		rotated = qtrue;
 	} else {
 		rotated = qfalse;
@@ -1183,11 +1169,6 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 		end_l[0] = DotProduct(temp, forward);
 		end_l[1] = -DotProduct(temp, right);
 		end_l[2] = DotProduct(temp, up);
-	}
-
-	if (headnode >= curTile->numnodes + 6) {/* +6 => bbox */
-		Com_Printf("TR_TransformedBoxTrace: headnode: %i, curTile->numnodes: %i\n", headnode, curTile->numnodes + 6);
-		headnode = 0;
 	}
 
 	/* sweep the box through the model */
@@ -1218,14 +1199,15 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 	trace_t newtr, tr;
 	int tile, i;
 	cBspHead_t *h;
+	TR_TILE_TYPE *myTile;
 
 	memset(&tr, 0, sizeof(tr));
 	tr.fraction = 2.0f;
 
 	/* trace against all loaded map tiles */
 	for (tile = 0; tile < numTiles; tile++) {
-		curTile = &mapTiles[tile];
-		for (i = 0, h = curTile->cheads; i < curTile->numcheads; i++, h++) {
+		myTile = &mapTiles[tile];
+		for (i = 0, h = myTile->cheads; i < myTile->numcheads; i++, h++) {
 			/** @todo Is this levelmask supposed to limit by game level (1-8)
 			 *  or map level (0-LEVEL_ACTORCLIP)?
 			 * @brief This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
@@ -1239,8 +1221,8 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 			if (h->level && levelmask && !(h->level & levelmask))
 				continue;
 
-			assert(h->cnode < curTile->numnodes + 6); /* +6 => bbox */
-			newtr = TR_BoxTrace(start, end, mins, maxs, &mapTiles[tile], h->cnode, brushmask, brushreject);
+			assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
+			newtr = TR_BoxTrace(start, end, mins, maxs, myTile, h->cnode, brushmask, brushreject);
 			newtr.mapTile = tile;
 
 			/* memorize the trace with the minimal fraction */
