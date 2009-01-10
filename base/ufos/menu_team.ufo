@@ -1502,12 +1502,12 @@ menu equipment
 		option abilities {
 			label	"_Actor Abilities"
 			value	"0"
-			action "actor_stats"
+			action "actor_stats;"
 		}
 		option weaponinfo {
 			label	"_Object Info"
 			value	"1"
-			action "weapon_stats"
+			action "weapon_stats;"
 		}
 	}
 
