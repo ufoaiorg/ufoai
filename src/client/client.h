@@ -220,11 +220,14 @@ typedef struct client_static_s {
 	char downloadReferer[32];	/**< libcurl requires a static string :( */
 	CURL *curl;
 
-	/* these models must only be loaded once */
+	/** these models must only be loaded once */
 	struct model_s *model_weapons[MAX_OBJDEFS];
 
-	/* this pool is reloaded on every sound system restart */
+	/** this pool is reloaded on every sound system restart */
 	sfx_t *sound_pool[MAX_SOUNDIDS];
+
+	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
+	qboolean displayHeavyEquipmentList;
 } client_static_t;
 
 extern client_static_t cls;

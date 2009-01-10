@@ -248,6 +248,62 @@ EMPLOYEE BACKEND STUFF
 *****************************************************/
 
 /**
+ * @brief Tells you if a employee is away from his home base (gone in mission).
+ * @param[in] employee Pointer to the employee.
+ * @return qboolean qtrue if the employee is away in mission, qfalse if he is not or he is unhired.
+ */
+qboolean E_IsAwayFromBase (const employee_t *employee)
+{
+	int i;
+	const base_t *base;
+
+	assert(employee);
+
+	/* Check that employee is hired */
+	if (!employee->hired)
+		return qfalse;
+
+	/* Check if employee is currently transferred. */
+	if (employee->transfer)
+		return qtrue;
+
+	/* for now only soldiers, ugvs and pilots can be assigned to an aircraft */
+	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
+	 && employee->type != EMPL_PILOT)
+		return qfalse;
+
+	base = employee->baseHired;
+	assert(base);
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		const aircraft_t *aircraft = &base->aircraft[i];
+		assert(aircraft);
+
+		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
+			return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
+ * @note Depends on cls.displayHeavyEquipmentList to be set correctly.
+ * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
+ * @note If base is NULL all employees of all bases are added to the list - especially useful for none-campaign mode games
+ */
+int E_GenerateHiredEmployeesList (const base_t *base)
+{
+	const employeeType_t employeeType =
+		cls.displayHeavyEquipmentList
+			? EMPL_ROBOT
+			: EMPL_SOLDIER;
+
+	employeesInCurrentList = E_GetHiredEmployees(base, employeeType, &employeeList);
+	return employeesInCurrentList;
+}
+
+/**
  * @brief  Hires some employees of appropriate type for a building
  * @param[in] building in which building
  * @param[in] num how many employees, if -1, hire building->maxEmployees

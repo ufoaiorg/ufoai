@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ugv.h"
 #include "menu/node/m_node_container.h"
 
-static qboolean displayHeavyEquipmentList = qfalse; /**< Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
-
 linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
@@ -910,7 +908,7 @@ static void CL_ActorTeamSelect_f (void)
 	employee_t *employee;
 	character_t *chr;
 	int num;
-	const employeeType_t employeeType = displayHeavyEquipmentList
+	const employeeType_t employeeType = cls.displayHeavyEquipmentList
 			? EMPL_ROBOT : EMPL_SOLDIER;
 	base_t *base = GAME_IsCampaign() ? baseCurrent : NULL;
 
@@ -1032,23 +1030,6 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 }
 
 /**
- * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
- * @note Depends on displayHeavyEquipmentList to be set correctly.
- * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
- * @note If base is NULL all employees of all bases are added to the list - especially useful for none-campaign mode games
- */
-int CL_GenTeamList (const base_t *base)
-{
-	const employeeType_t employeeType =
-		displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
-
-	employeesInCurrentList = E_GetHiredEmployees(base, employeeType, &employeeList);
-	return employeesInCurrentList;
-}
-
-/**
  * @brief Init the teamlist checkboxes
  * @sa CL_UpdateActorAircraftVar
  * @todo Make this function use a temporary list with all list-able employees
@@ -1065,7 +1046,7 @@ static void CL_MarkTeam_f (void)
 	linkedList_t *emplList;
 
 	const employeeType_t employeeType =
-		displayHeavyEquipmentList
+		cls.displayHeavyEquipmentList
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
 
@@ -1086,7 +1067,7 @@ static void CL_MarkTeam_f (void)
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
 	/* Populate employeeList - base might be NULL for none-campaign mode games */
-	CL_GenTeamList(aircraft->homebase);
+	E_GenerateHiredEmployeesList(aircraft->homebase);
 	emplList = employeeList;
 	while (emplList) {
 		const employee_t *employee = (employee_t*)emplList->data;
@@ -1144,14 +1125,14 @@ static void CL_MarkTeam_f (void)
  */
 static void CL_ToggleTeamList_f (void)
 {
-	if (displayHeavyEquipmentList) {
+	if (cls.displayHeavyEquipmentList) {
 		Com_DPrintf(DEBUG_CLIENT, "Changing to soldier-list.\n");
-		displayHeavyEquipmentList = qfalse;
+		cls.displayHeavyEquipmentList = qfalse;
 		MN_ExecuteConfunc("toggle_show_heavybutton");
 	} else {
 		if (gd.numEmployees[EMPL_ROBOT] > 0) {
 			Com_DPrintf(DEBUG_CLIENT, "Changing to heavy equipment (tank) list.\n");
-			displayHeavyEquipmentList = qtrue;
+			cls.displayHeavyEquipmentList = qtrue;
 			MN_ExecuteConfunc("toggle_show_soldiersbutton");
 		} else {
 			/* Nothing to display/assign - staying in soldier-list. */
@@ -1222,45 +1203,6 @@ qboolean CL_PilotInAircraft (const employee_t *employee, const aircraft_t* aircr
 	}
 
 	return (aircraft->pilot == employee);
-}
-
-/**
- * @brief Tells you if a employee is away from his home base (gone in mission).
- * @param[in] employee Pointer to the employee.
- * @return qboolean qtrue if the employee is away in mission, qfalse if he is not or he is unhired.
- */
-qboolean CL_SoldierAwayFromBase (const employee_t *employee)
-{
-	int i;
-	const base_t *base;
-
-	assert(employee);
-
-	/* Check that employee is hired */
-	if (!employee->hired)
-		return qfalse;
-
-	/* Check if employee is currently transferred. */
-	if (employee->transfer)
-		return qtrue;
-
-	/* for now only soldiers, ugvs and pilots can be assigned to an aircraft */
-	if (employee->type != EMPL_SOLDIER && employee->type != EMPL_ROBOT
-	 && employee->type != EMPL_PILOT)
-		return qfalse;
-
-	base = employee->baseHired;
-	assert(base);
-
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		const aircraft_t *aircraft = &base->aircraft[i];
-		assert(aircraft);
-
-		if (!AIR_IsAircraftInBase(aircraft) && AIR_IsInAircraftTeam(aircraft, employee))
-			return qtrue;
-	}
-
-	return qfalse;
 }
 
 /**
@@ -1443,7 +1385,7 @@ static void CL_AssignSoldier_f (void)
 	aircraft_t *aircraft;
 	int num;
 	const employeeType_t employeeType =
-		displayHeavyEquipmentList
+		cls.displayHeavyEquipmentList
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
 
@@ -1454,7 +1396,7 @@ static void CL_AssignSoldier_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	/* In case we didn't populate the list with CL_GenTeamList before. */
+	/* In case we didn't populate the list with E_GenerateHiredEmployeesList before. */
 	if (!employeeList)
 		return;
 

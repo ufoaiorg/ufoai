@@ -151,7 +151,7 @@ static void HOS_UpdateMenu (void)
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
 			/* Don't show soldiers who are gone in mission */
-			if (CL_SoldierAwayFromBase(employee))
+			if (E_IsAwayFromBase(employee))
 				continue;
 			/* Don't show healthy employees */
 			if (employee->chr.HP >= employee->chr.maxHP)
@@ -319,7 +319,7 @@ static void HOS_ListClick_f (void)
 			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= employee->chr.maxHP)
 				continue;
 			/* Don't select soldiers who are gone in mission */
-			if (CL_SoldierAwayFromBase(employee))
+			if (E_IsAwayFromBase(employee))
 				continue;
 			if (!num) {
 				currentEmployeeInHospital = employee;

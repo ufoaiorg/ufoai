@@ -82,6 +82,8 @@ qboolean E_UnhireEmployee(employee_t* employee);
 void E_RefreshUnhiredEmployeeGlobalList(const employeeType_t type, const qboolean excludeUnhappyNations);
 qboolean E_RemoveEmployeeFromBuildingOrAircraft(employee_t *employee);
 void E_ResetEmployee(employee_t *employee);
+int E_GenerateHiredEmployeesList(const base_t *base);
+qboolean E_IsAwayFromBase(const employee_t *employee);
 
 employeeType_t E_GetEmployeeType(const char* type);
 extern const char* E_GetEmployeeString(employeeType_t type);

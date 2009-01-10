@@ -2327,7 +2327,7 @@ void B_AssignInitial (aircraft_t *aircraft, const char *equipName)
 	}
 
 	/* homebase is only set in campaign mode */
-	num = CL_GenTeamList(aircraft->homebase);
+	num = E_GenerateHiredEmployeesList(aircraft->homebase);
 	num = min(num, MAX_TEAMLIST);
 	for (i = 0; i < num; i++)
 		CL_AssignSoldierFromMenuToAircraft(aircraft->homebase, i, aircraft);
