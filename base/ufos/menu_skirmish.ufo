@@ -234,7 +234,8 @@ menu skirmish
 	// ===================
 	func init
 	{
-		cmd	"game_setmode;set ai_numaliens 8;"
+		// TODO: Allow changing the difficulty via menu
+		cmd	"game_setmode;set ai_numaliens 8;set difficulty 0;"
 		cmd "set mn_serverday 1;mn_getmaps;"
 	}
 
