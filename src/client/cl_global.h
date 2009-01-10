@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief This struct/variable holds the global data for a game.
  * @sa CL_ReadSinglePlayerData
+ * @todo move everything campaign-mode only into the @c ccs_t structure
  */
 typedef struct globalData_s
 {
