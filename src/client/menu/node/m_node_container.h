@@ -47,7 +47,6 @@ struct invDef_s;
 extern struct inventory_s *menuInventory;
 
 void MN_RegisterContainerNode(struct nodeBehaviour_s *behaviour);
-void MN_FindContainer(struct menuNode_s* const node);
 struct invList_s *MN_GetItemFromScrollableContainer (const struct menuNode_s* const node, int mouseX, int mouseY, int* contX, int* contY);
 void MN_DrawItem(struct menuNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
 void MN_ContainerNodeSetFilter(struct menuNode_s* node, int num);

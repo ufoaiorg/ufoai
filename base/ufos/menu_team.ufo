@@ -1586,8 +1586,11 @@ menu equipment
 	container backpack	{ pos "872 54" }
 	container belt		{ pos "569 273" }
 	container holster	{ pos "898 270" }
-	container equip		{ pos "422 415" }
 	container headgear	{ pos "678 104" }
+	container equip		{
+		pos "422 415"
+		size "207 317"
+	}
 
 	vscrollbar equip_scroll {
 		image	menu/scrollbar_v_green	blend	true

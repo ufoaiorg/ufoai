@@ -326,14 +326,12 @@ typedef struct invDef_s {
 	qboolean headgear;	/**< Only headgear items can be stored in this container. */
 	qboolean all;		/**< Every item type can be stored in this container. */
 	qboolean temp;		/**< This is only a pointer to another inventory definitions. */
-	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape.
-											 * Also used in MN_FindContainer to calculate the node size. */
+	uint32_t shape[SHAPE_BIG_MAX_HEIGHT];	/**< The inventory form/shape. */
 	int in, out;	/**< parsed: TU costs for moving items in and out. */
 
 	/** Scroll information. @sa inventory_t */
 	int scroll;			/**< If set this container is scrollable (i.e. no grid and no single container)
-						 * The number tells us how many pixels (width) the container can display at one time.
-						 * Also used (along with scrollHeight) in MN_FindContainer to calculate the node size. */
+						 * The number tells us how many pixels (width) the container can display at one time. */
 	int scrollHeight;	/**< Tells us how many pixels (height) the conatiner can display. */
 	int scrollVertical;	/**< 0/false=horizontal 1/true=vertical */
 } invDef_t;

@@ -418,34 +418,34 @@ static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
  * into the node (uses the @c invDef_t shape bitmask to determine the size)
  * @param[in,out] node The node to get the size for
  */
-void MN_FindContainer (menuNode_t* const node)
+static void MN_ContainerNodeLoaded (menuNode_t* const node)
 {
-	invDef_t *id;
+	invDef_t *container;
 	int i, j;
 
 	/* already a container assigned - no need to recalculate the size */
 	if (EXTRADATA(node).container)
 		return;
 
-	for (i = 0, id = csi.ids; i < csi.numIDs; id++, i++)
-		if (!Q_strncmp(node->name, id->name, sizeof(node->name)))
+	for (i = 0, container = csi.ids; i < csi.numIDs; container++, i++)
+		if (!Q_strncmp(node->name, container->name, sizeof(node->name)))
 			break;
 
-	if (i == csi.numIDs)
+	/* not find */
+	if (i == csi.numIDs) {
 		EXTRADATA(node).container = NULL;
-	else
-		EXTRADATA(node).container = &csi.ids[i];
+		return;
+	}
+
+	EXTRADATA(node).container = container;
 
 	if (MN_IsScrollContainerNode(node)) {
-		/* No need to calculate the size - we directly define it in
-		 * the "inventory" entry in the .ufo file anyway. */
-		node->size[0] = EXTRADATA(node).container->scroll;
-		node->size[1] = EXTRADATA(node).container->scrollHeight;
+		/* No need to calculate the size, menu script do it himself */
 	} else {
 		/* Start on the last bit of the shape mask. */
 		for (i = 31; i >= 0; i--) {
 			for (j = 0; j < SHAPE_BIG_MAX_HEIGHT; j++)
-				if (id->shape[j] & (1 << i))
+				if (container->shape[j] & (1 << i))
 					break;
 			if (j < SHAPE_BIG_MAX_HEIGHT)
 				break;
@@ -454,7 +454,7 @@ void MN_FindContainer (menuNode_t* const node)
 
 		/* start on the lower row of the shape mask */
 		for (i = SHAPE_BIG_MAX_HEIGHT - 1; i >= 0; i--)
-			if (id->shape[i] & ~0x0)
+			if (container->shape[i] & ~0x0)
 				break;
 		node->size[1] = C_UNIT * (i + 1) + 0.01;
 	}
@@ -466,6 +466,7 @@ static const vec4_t colorDefault = {1, 1, 1, 1};
 static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
 static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
+static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look blueish */
 
 /**
  * @brief Draw a container can containe only one iten
@@ -745,8 +746,6 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 	vec2_t nodepos;
 	int checkedTo = INV_DOES_NOT_FIT;
 	vec3_t origine;
-	vec4_t color = { 1, 1, 1, 1 };
-	const vec3_t scale = { 3.5, 3.5, 3.5 };
 	item_t previewItem;
 
 	MN_GetNodeAbsPos(target, nodepos);
@@ -792,8 +791,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 						nodepos[1] + (dragInfoToY + previewItem.t->sy / 2.0) * C_UNIT,
 						-40);
 			}
-			Vector4Set(color, 0.5, 0.5, 1, 1);	/**< Make the preview item look blueish */
-			MN_DrawItem(NULL, origine, &previewItem, -1, -1, scale, color);	/**< Draw preview item. */
+			MN_DrawItem(NULL, origine, &previewItem, -1, -1, scale, colorPreview);
 		}
 	}
 }
@@ -1324,7 +1322,7 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->mouseDown = MN_ContainerNodeMouseDown;
 	behaviour->mouseUp = MN_ContainerNodeMouseUp;
 	behaviour->loading = MN_ContainerNodeLoading;
-	behaviour->loaded = MN_FindContainer;
+	behaviour->loaded = MN_ContainerNodeLoaded;
 	behaviour->dndEnter = MN_ContainerNodeDNDEnter;
 	behaviour->dndFinished = MN_ContainerNodeDNDFinished;
 	behaviour->dndMove = MN_ContainerNodeDNDMove;
