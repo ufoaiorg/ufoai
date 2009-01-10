@@ -494,22 +494,7 @@ static void CL_UserInfo_f (void)
  */
 static void CL_SpawnSoldiers_f (void)
 {
-	int i;
-	aircraft_t *aircraft = cls.missionaircraft;
-	if (!aircraft) {
-		Com_Printf("CL_SpawnSoldiers_f: No mission aircraft\n");
-		return;
-	}
-
-	/* convert aircraft team to chr_list */
-	for (i = 0, cl.chrList.num = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			cl.chrList.chr[cl.chrList.num] = &aircraft->acTeam[i]->chr;
-			cl.chrList.num++;
-		}
-	}
-
-	GAME_SpawnSoldiers(&cl.chrList);
+	GAME_SpawnSoldiers();
 }
 
 /**
@@ -598,8 +583,8 @@ void CL_RequestNextDownload (void)
 	}
 
 	/* for singleplayer the soldiers get spawned here */
-	if (GAME_IsSingleplayer() && cls.missionaircraft)
-		CL_SpawnSoldiers_f();
+	if (GAME_IsSingleplayer())
+		GAME_SpawnSoldiers();
 
 	cls.waitingForStart = cls.realtime;
 }

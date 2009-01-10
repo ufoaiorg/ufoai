@@ -33,7 +33,7 @@ typedef struct gameTypeList_s {
 	int gametype;
 	void (*init)(void);
 	void (*shutdown)(void);
-	qboolean (*spawn)(chrList_t *chrList);
+	qboolean (*spawn)(void);
 	void (*results)(int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 } gameTypeList_t;
 
@@ -192,20 +192,6 @@ static void GAME_SetMode_f (void)
 }
 
 /**
- * @param[in] load qtrue if we are loading game, qfalse otherwise
- */
-void GAME_Init (qboolean load)
-{
-	/* @todo are all these needed on every load? */
-	/* what about RS_InitTree? how often must this be done? */
-	RS_InitTree(load);		/**< Initialise all data in the research tree. */
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	if (!load)
-		CL_ScriptSanityCheck();
-}
-
-/**
  * @brief After a mission was finished this function is called
  */
 void GAME_HandleResults (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
@@ -280,26 +266,27 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 		NET_WriteShort(buf, chr->reservedTus.reserveReaction);
 
 		/* inventory */
-		CL_NetSendInventory(buf, chr->inv);
+		CL_NetSendInventory(buf, &chr->inv);
 	}
 }
 
 /**
  * @brief After a mission was finished this function is called
  */
-void GAME_SpawnSoldiers (chrList_t *chrList)
+void GAME_SpawnSoldiers (void)
 {
 	const gameTypeList_t *list = gameTypeList;
 
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
-			const qboolean spawnStatus = list->spawn(chrList);
-			if (spawnStatus && chrList->num > 0) {
+			/* this callback is responsible to set up the cl.chrList */
+			const qboolean spawnStatus = list->spawn();
+			if (spawnStatus && cl.chrList.num > 0) {
 				struct dbuffer *msg;
 
 				/* send team info */
 				msg = new_dbuffer();
-				GAME_SendCurrentTeamSpawningInfo(msg, chrList);
+				GAME_SendCurrentTeamSpawningInfo(msg, &cl.chrList);
 				NET_WriteMsg(cls.netStream, msg);
 
 				msg = new_dbuffer();

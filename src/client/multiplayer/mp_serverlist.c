@@ -241,7 +241,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 
 	/* spawn multi-player death match soldiers here */
 	if (!teamData.teamplay)
-		GAME_SpawnSoldiers(&cl.chrList);
+		GAME_SpawnSoldiers();
 }
 
 static char serverInfoText[1024];

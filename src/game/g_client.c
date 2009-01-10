@@ -2804,7 +2804,8 @@ void G_ClientTeamInfo (player_t * player)
 			}
 
 			/* set models */
-			ent->chr.inv = &ent->i;
+			/** @todo is this copy needed? - wouldn't it be enough to use the inventory from character_t? */
+			ent->chr.inv = ent->i;
 			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;

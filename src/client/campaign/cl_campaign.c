@@ -2295,6 +2295,14 @@ void CP_CampaignInit (qboolean load)
 {
 	assert(curCampaign);
 
+	/** @todo are all these needed on every load?
+	 * what about RS_InitTree? how often must this be done? */
+	RS_InitTree(load);		/**< Initialise all data in the research tree. */
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	if (!load)
+		CL_ScriptSanityCheck();
+
 	CP_AddCampaignCommands();
 
 	CL_GameTimeStop();

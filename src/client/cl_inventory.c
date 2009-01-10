@@ -89,7 +89,7 @@ void INV_TransferItemCarriedByChr (character_t *chr, base_t *sourceBase, base_t*
 	int container;
 
 	for (container = 0; container < csi.numIDs; container++) {
-		for (ic = chr->inv->c[container]; ic; ic = ic->next) {
+		for (ic = chr->inv.c[container]; ic; ic = ic->next) {
 			objDef_t *obj = ic->item.t;
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
@@ -117,7 +117,7 @@ int INV_GetStorageRoom (const aircraft_t *aircraft)
 		if (aircraft->acTeam[i]) {
 			const employee_t const *employee = aircraft->acTeam[i];
 			for (container = 0; container < csi.numIDs; container++) {
-				for (ic = employee->chr.inv->c[container]; ic; ic = ic->next) {
+				for (ic = employee->chr.inv.c[container]; ic; ic = ic->next) {
 					objDef_t *obj = ic->item.t;
 					size += obj->size;
 

@@ -39,7 +39,7 @@ void CL_CleanTempInventory(base_t* base);
 
 void CL_ResetCharacters(base_t* const base);
 int CL_GenTeamList(const base_t *base);
-void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType, const ugv_t *ugvType);
+void CL_GenerateCharacter(character_t *chr, const char *team, employeeType_t employeeType, const ugv_t *ugvType);
 ugv_t *CL_GetUgvByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 

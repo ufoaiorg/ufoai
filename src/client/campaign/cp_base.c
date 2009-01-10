@@ -2061,8 +2061,8 @@ void B_SelectBase (base_t *base)
 
 #undef RIGHT
 #undef HOLSTER
-#define RIGHT(e) ((e)->inv->c[csi.idRight])
-#define HOLSTER(e) ((e)->inv->c[csi.idHolster])
+#define RIGHT(e) ((e)->inv.c[csi.idRight])
+#define HOLSTER(e) ((e)->inv.c[csi.idHolster])
 
 /**
  * @brief Swaps one skill from character1 to character 2 and vice versa.
@@ -2214,7 +2214,7 @@ static void CL_SwapSkills (chrList_t *team)
  * @sa B_AssignInitial
  * @todo Move this function to a better place - has nothing to do with bases anymore
  */
-void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
+static void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
 {
 	int i;
 	base_t *base = aircraft->homebase;
@@ -2231,7 +2231,7 @@ void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
 			/* pack equipment */
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
 			/** @todo maybe give equipDef_t directly? */
-			INVSH_EquipActor(chr->inv, ed->num, MAX_OBJDEFS, ed->name, chr);
+			INVSH_EquipActor(&chr->inv, ed->num, MAX_OBJDEFS, ed->name, chr);
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
 			chrListTemp.chr[chrListTemp.num] = chr;
 			chrListTemp.num++;
@@ -2251,7 +2251,7 @@ void B_PackInitialEquipment (aircraft_t *aircraft, equipDef_t *ed)
 			if (aircraft->acTeam[p]) {
 				const invList_t *ic;
 				const character_t *chr = &aircraft->acTeam[p]->chr;
-				for (ic = chr->inv->c[container]; ic; ic = ic->next) {
+				for (ic = chr->inv.c[container]; ic; ic = ic->next) {
 					const item_t item = ic->item;
 					price += item.t->price;
 					Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: adding price for %s, price: %i\n", item.t->id, price);

@@ -257,7 +257,7 @@ menu employees
 		pos		"465 325"
 		size	"400 32"
 		change {
-			cmd	"team_changename;"
+			cmd	"employee_changename;"
 		}
 	}
 

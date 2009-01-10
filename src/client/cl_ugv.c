@@ -113,7 +113,6 @@ qboolean CL_AddUGV (le_t * le, entity_t * ent)
 void CL_UGVCvars (const character_t *chr)
 {
 	assert(chr);
-	assert(chr->inv);	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
 
 	Cvar_ForceSet("mn_name", chr->name);
 	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));

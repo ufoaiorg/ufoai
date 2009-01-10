@@ -133,73 +133,61 @@ static void CL_GenerateNewMultiplayerTeam_f (void)
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @sa CL_LoadTeamMultiplayerMember
  */
-static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf, const employeeType_t type)
+static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf)
 {
-	linkedList_t *hiredEmployees = NULL;
-	linkedList_t *hiredEmployeesTemp;
-	int i, j, num;
-
-	/* clean temp inventory */
-	CL_CleanTempInventory(NULL);
-
-	num = gd.numEmployees[type];
+	int i, j;
 
 	/* header */
-	MSG_WriteByte(buf, num);
-	for (i = 0; i < num; i++) {
-		const employee_t *employee = &gd.employees[type][i];
-
+	MSG_WriteByte(buf, cl.chrList.num);
+	for (i = 0; i < cl.chrList.num; i++) {
+		const character_t *chr = cl.chrList.chr[i];
 		/* send the fieldSize ACTOR_SIZE_* */
-		MSG_WriteByte(buf, employee->chr.fieldSize);
+		MSG_WriteByte(buf, chr->fieldSize);
 
 		/* unique character number */
-		MSG_WriteShort(buf, employee->chr.ucn);
+		MSG_WriteShort(buf, chr->ucn);
 
 		/* name */
-		MSG_WriteString(buf, employee->chr.name);
+		MSG_WriteString(buf, chr->name);
 
 		/* model */
-		MSG_WriteString(buf, employee->chr.path);
-		MSG_WriteString(buf, employee->chr.body);
-		MSG_WriteString(buf, employee->chr.head);
-		MSG_WriteByte(buf, employee->chr.skin);
+		MSG_WriteString(buf, chr->path);
+		MSG_WriteString(buf, chr->body);
+		MSG_WriteString(buf, chr->head);
+		MSG_WriteByte(buf, chr->skin);
 
-		MSG_WriteShort(buf, employee->chr.HP);
-		MSG_WriteShort(buf, employee->chr.maxHP);
-		MSG_WriteByte(buf, employee->chr.teamDef ? employee->chr.teamDef->idx : BYTES_NONE);
-		MSG_WriteByte(buf, employee->chr.gender);
-		MSG_WriteByte(buf, employee->chr.STUN);
-		MSG_WriteByte(buf, employee->chr.morale);
+		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteShort(buf, chr->maxHP);
+		MSG_WriteByte(buf, chr->teamDef ? chr->teamDef->idx : BYTES_NONE);
+		MSG_WriteByte(buf, chr->gender);
+		MSG_WriteByte(buf, chr->STUN);
+		MSG_WriteByte(buf, chr->morale);
 
 		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
 		MSG_WriteByte(buf, SKILL_NUM_TYPES + 1);
 		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			MSG_WriteLong(buf, employee->chr.score.experience[j]);
+			MSG_WriteLong(buf, chr->score.experience[j]);
 		MSG_WriteByte(buf, SKILL_NUM_TYPES);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)	/* even new attributes */
-			MSG_WriteByte(buf, employee->chr.score.skills[j]);
+			MSG_WriteByte(buf, chr->score.skills[j]);
 		MSG_WriteByte(buf, SKILL_NUM_TYPES + 1);
 		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			MSG_WriteByte(buf, employee->chr.score.initialSkills[j]);
+			MSG_WriteByte(buf, chr->score.initialSkills[j]);
 		MSG_WriteByte(buf, KILLED_NUM_TYPES);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			MSG_WriteShort(buf, employee->chr.score.kills[j]);
+			MSG_WriteShort(buf, chr->score.kills[j]);
 		MSG_WriteByte(buf, KILLED_NUM_TYPES);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			MSG_WriteShort(buf, employee->chr.score.stuns[j]);
-		MSG_WriteShort(buf, employee->chr.score.assignedMissions);
-		MSG_WriteShort(buf, employee->chr.score.rank);
+			MSG_WriteShort(buf, chr->score.stuns[j]);
+		MSG_WriteShort(buf, chr->score.assignedMissions);
+		MSG_WriteShort(buf, chr->score.rank);
 
 		/* Save user-defined (default) reaction-state. */
-		MSG_WriteShort(buf, employee->chr.reservedTus.reserveReaction);
+		MSG_WriteShort(buf, chr->reservedTus.reserveReaction);
 
 		/* inventory */
-		CL_SaveInventory(buf, employee->chr.inv);
-
-		hiredEmployeesTemp = hiredEmployeesTemp->next;
+		CL_SaveInventory(buf, &chr->inv);
 	}
-
-	LIST_Delete(&hiredEmployees);
 }
 
 /**
@@ -214,7 +202,6 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	byte buf[MAX_TEAMDATASIZE];
 	const char *name;
 	int i, res;
-	aircraft_t *aircraft = cls.missionaircraft;
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
@@ -227,24 +214,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	MSG_WriteString(&sb, name);
 
 	/* store team */
-	CL_SaveTeamMultiplayerInfo(&sb, EMPL_SOLDIER);
-
-	/* store assignment */
-	MSG_WriteByte(&sb, aircraft->teamSize);
-
-	/* store aircraft soldier content for multi-player */
-	MSG_WriteByte(&sb, aircraft->maxTeamSize);
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		/* We save them all, even unused ones (->size). */
-		if (aircraft->acTeam[i]) {
-			MSG_WriteShort(&sb, aircraft->acTeam[i]->idx);
-			MSG_WriteShort(&sb, aircraft->acTeam[i]->type);
-		} else {
-			MSG_WriteShort(&sb, -1);
-			/** @todo use the presave value here - same for reading */
-			MSG_WriteShort(&sb, MAX_EMPL);
-		}
-	}
+	CL_SaveTeamMultiplayerInfo(&sb);
 
 	/* store equipment in ccs.eMission so soldiers can be properly equipped */
 	MSG_WriteShort(&sb, csi.numODs);
@@ -343,8 +313,8 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->reservedTus.reserveReaction = MSG_ReadShort(sb);
 
 	/* Inventory */
-	INVSH_DestroyInventory(chr->inv);
-	CL_LoadInventory(sb, chr->inv);
+	INVSH_DestroyInventory(&chr->inv);
+	CL_LoadInventory(sb, &chr->inv);
 }
 
 /**
@@ -359,7 +329,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
 	int version;
-	aircraft_t *aircraft;
 	int i, num;
 
 	/* open file */
@@ -386,41 +355,14 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	/* read whole team list */
 	num = MSG_ReadByte(&sb);
 	Com_DPrintf(DEBUG_CLIENT, "load %i teammembers\n", num);
-	E_ResetEmployees();
-	for (i = 0; i < num; i++) {
-		/* New employee */
-		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-		employee->hired = qtrue;
-		CL_LoadTeamMultiplayerMember(&sb, &employee->chr, version);
-	}
-
-	aircraft = cls.missionaircraft;
-	AIR_ResetAircraftTeam(aircraft);
-
-	/* get assignment */
-	aircraft->teamSize = MSG_ReadByte(&sb);
-
-	/* get aircraft soldier content for multi-player */
-	aircraft->maxTeamSize = MSG_ReadByte(&sb);
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		const int emplIdx = MSG_ReadShort(&sb);
-		const employeeType_t emplType = MSG_ReadShort(&sb);
-		if (emplIdx >= 0 && emplIdx < MAX_EMPLOYEES) {
-			if (emplType != EMPL_SOLDIER && emplType != EMPL_ROBOT) {
-				Com_Printf("Only soldiers and ugvs are allowed to be in an "
-					"aircraft team, but %i should be added\n", emplType);
-				return;
-			}
-			aircraft->acTeam[i] = &gd.employees[emplType][emplIdx];
-		}
-	}
-	CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
-	CL_UpdateActorAircraftVar(aircraft, EMPL_ROBOT);
+	for (i = 0; i < num; i++)
+		CL_LoadTeamMultiplayerMember(&sb, cl.chrList.chr[num], version);
 
 	/* read equipment */
 	num = MSG_ReadShort(&sb);
 	for (i = 0; i < num; i++) {
-		const objDef_t *od = INVSH_GetItemByID(MSG_ReadString(&sb));
+		const char *objID = MSG_ReadString(&sb);
+		const objDef_t *od = INVSH_GetItemByID(objID);
 		if (!od) {
 			MSG_ReadLong(&sb);
 			MSG_ReadByte(&sb);

@@ -124,7 +124,6 @@ static qboolean SAV_PresaveArrayLoad (sizebuf_t* sb, void* data)
  */
 static qboolean SAV_GameActionsAfterLoad (char **error)
 {
-	GAME_Init(qtrue);
 	RS_PostLoadInit();
 
 	B_PostLoadInit();

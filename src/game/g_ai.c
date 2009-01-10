@@ -1880,18 +1880,16 @@ static void AI_SetStats (edict_t * ent, int team)
 
 
 /**
- * @brief Sets an Actor's ingame model.
+ * @brief Sets an Actor's ingame model and character values.
  * @param ent Actor to set model of.
  * @param[in] team Team to which actor belongs.
  */
-static void AI_SetModel (edict_t * ent, int team)
+static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
 {
-	int alienTeam;
-
 	/* Set model. */
 	if (team != TEAM_CIVILIAN) {
 		if (gi.csi->numAlienTeams) {
-			alienTeam = rand() % gi.csi->numAlienTeams;
+			const int alienTeam = rand() % gi.csi->numAlienTeams;
 			assert(gi.csi->alienTeams[alienTeam]);
 			ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
 		} else
@@ -1900,7 +1898,6 @@ static void AI_SetModel (edict_t * ent, int team)
 		/** @todo Maybe we have civilians with armour, too - police and so on */
 		ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
 	}
-	ent->chr.inv = &ent->i;
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 	ent->skin = ent->chr.skin;
@@ -1936,15 +1933,14 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
  */
 static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 {
-	int team;
-	team = player->pers.team;
+	const int team = player->pers.team;
 
 	/* Set Actor state. */
 	ent->type = ET_ACTOR;
 	ent->pnum = player->num;
 
 	/* Set the model and chose alien race. */
-	AI_SetModel(ent, team);
+	AI_SetModelAndCharacterValues(ent, team);
 
 	/* Calculate stats. */
 	AI_SetStats(ent, team);

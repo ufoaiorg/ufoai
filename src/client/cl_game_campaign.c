@@ -232,8 +232,6 @@ static void GAME_CP_Start_f (void)
 	if (!curCampaign)
 		return;
 
-	GAME_Init(qfalse);
-
 	CP_CampaignInit(qfalse);
 
 	/* Intro sentences */
@@ -359,13 +357,22 @@ void GAME_CP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 	CL_Disconnect();
 }
 
-qboolean GAME_CP_Spawn (chrList_t *chrList)
+qboolean GAME_CP_Spawn (void)
 {
 	aircraft_t *aircraft = cls.missionaircraft;
 	base_t *base;
+	int i;
 
 	if (!aircraft)
 		return qfalse;
+
+	/* convert aircraft team to chr_list */
+	for (i = 0, cl.chrList.num = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			cl.chrList.chr[cl.chrList.num] = &aircraft->acTeam[i]->chr;
+			cl.chrList.num++;
+		}
+	}
 
 	base = CP_GetMissionBase();
 

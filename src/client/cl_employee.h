@@ -59,7 +59,6 @@ typedef struct employee_s {
 								 * @sa Set in TR_TransferStart_f
 								 * @todo make use of this whereever needed. */
 	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
-	inventory_t inv;			/**< employee inventory */
 	employeeType_t type;		/**< back link to employee type in gd.employees */
 	struct nation_s *nation;	/**< What nation this employee came from. This is NULL if the nation is unknown for some (code-related) reason. */
 	ugv_t *ugv;	/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */

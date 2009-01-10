@@ -29,10 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_team.h"
 #include "menu/m_popup.h"
 
-/**
- * @brief This fake aircraft is used to assign soldiers for a skirmish game
- */
-static aircraft_t skirmishFakeAircraft;
+static character_t skirmishCharacters[MAX_ACTIVETEAM];
 
 /**
  * @brief Starts a new skirmish game
@@ -46,7 +43,6 @@ static void GAME_SK_Start_f (void)
 	int i;
 	const char *name = Cvar_VariableString("cl_equip");
 
-	assert(GAME_IsSkirmish());
 	assert(cls.currentSelectedMap >= 0);
 	assert(cls.currentSelectedMap < MAX_MAPDEFS);
 
@@ -54,20 +50,17 @@ static void GAME_SK_Start_f (void)
 	if (!md)
 		return;
 
+	memset(&skirmishCharacters, 0, sizeof(skirmishCharacters));
+
 	assert(md->map);
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
 
-	memset(&ccs, 0, sizeof(ccs));
-	CL_ReadSinglePlayerData();
-
-	GAME_Init(qfalse);
-	RS_MarkResearchedAll();
-
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
 		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
-		CL_AssignSoldierToAircraft(employee, cls.missionaircraft);
-		B_PackInitialEquipment(cls.missionaircraft, ed);
+
+		CL_GenerateCharacter(&skirmishCharacters[i], Cvar_VariableString("cl_team"), EMPL_SOLDIER, NULL);
+		/* pack equipment */
+		INVSH_EquipActor(&skirmishCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &skirmishCharacters[i]);
 	}
 
 	/* prepare */
@@ -127,19 +120,20 @@ void GAME_SK_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 	}
 }
 
-qboolean GAME_SK_Spawn (chrList_t *chrList)
+qboolean GAME_SK_Spawn (void)
 {
+	int i;
+
+	for (i = 0; i < MAX_ACTIVETEAM; i++)
+		cl.chrList.chr[i] = &skirmishCharacters[i];
+	cl.chrList.num = MAX_ACTIVETEAM;
+
 	return qtrue;
 }
 
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");
-
-	cls.missionaircraft = &skirmishFakeAircraft;
-	memset(&skirmishFakeAircraft, 0, sizeof(skirmishFakeAircraft));
-	skirmishFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;
-	gd.numAircraft = 1;
 
 	Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
 	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");

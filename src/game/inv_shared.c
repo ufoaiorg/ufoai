@@ -1407,7 +1407,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
 				if (equip[i] && obj->weapon
-					&& INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload && !obj->deplete) {
+				 && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload && !obj->deplete) {
 					randNumber -= equip[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
 						weapon = obj;
@@ -1420,9 +1420,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missedPrimary, name);
 				if (hasWeapon) {
 					/* Try to get the second akimbo pistol if no primary weapon. */
-					if (primary == WEAPON_NO_PRIMARY
-						&& !weapon->fireTwoHanded
-						&& frand() < AKIMBO_CHANCE) {
+					if (primary == WEAPON_NO_PRIMARY && !weapon->fireTwoHanded && frand() < AKIMBO_CHANCE) {
 						INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 					}
 				}
@@ -1454,7 +1452,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
 					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
-						 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
+					 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 						randNumber -= equip[i] ? max(equip[i] % 100,1) : 0;
 						if (randNumber < 0) {
 							weapon = obj;
@@ -1886,15 +1884,13 @@ char *CHRSH_CharGetBody (const character_t * const chr)
 	char *underline;
 
 	assert(chr);
-	assert(chr->inv);
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (chr->inv->c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		assert(!Q_strcmp(chr->inv->c[CSI->idArmour]->item.t->type, "armour"));
-/*		Com_Printf("CHRSH_CharGetBody: Use '%s' as armour\n", chr->inv->c[CSI->idArmour]->item.t->id);*/
+	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+		assert(!Q_strcmp(chr->inv.c[CSI->idArmour]->item.t->type, "armour"));
 
 		/* check for the underline */
-		Q_strncpyz(id, chr->inv->c[CSI->idArmour]->item.t->id, sizeof(id));
+		Q_strncpyz(id, chr->inv.c[CSI->idArmour]->item.t->id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
@@ -1916,15 +1912,13 @@ char *CHRSH_CharGetHead (const character_t * const chr)
 	char *underline;
 
 	assert(chr);
-	assert(chr->inv);
 
 	/* models of UGVs don't change - because they are already armoured */
-	if (chr->inv->c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		assert(!Q_strcmp(chr->inv->c[CSI->idArmour]->item.t->type, "armour"));
-/*		Com_Printf("CHRSH_CharGetHead: Use '%s' as armour\n", chr->inv->c[CSI->idArmour]->item.t->id);*/
+	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+		assert(!Q_strcmp(chr->inv.c[CSI->idArmour]->item.t->type, "armour"));
 
 		/* check for the underline */
-		Q_strncpyz(id, chr->inv->c[CSI->idArmour]->item.t->id, sizeof(id));
+		Q_strncpyz(id, chr->inv.c[CSI->idArmour]->item.t->id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';

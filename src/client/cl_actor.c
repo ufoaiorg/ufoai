@@ -244,8 +244,6 @@ static int CL_MoveMode (int length)
 void CL_CharacterCvars (const character_t * chr)
 {
 	assert(chr);
-	/** needed for CHRSH_CharGetBody and CHRSH_CharGetHead */
-	assert(chr->inv);
 
 	Cvar_ForceSet("mn_name", chr->name);
 	Cvar_ForceSet("mn_body", CHRSH_CharGetBody(chr));
@@ -461,37 +459,13 @@ static int CL_GetActorNumber (const le_t * le)
  */
 character_t *CL_GetActorChr (const le_t * le)
 {
-	int actorIdx;
-	aircraft_t *aircraft = cls.missionaircraft;
-	int i, p;
-
-	if (!aircraft) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: No mission-aircraft found!\n");
-		return NULL;
-	}
-
-	assert(le);
-
-	actorIdx = CL_GetActorNumber(le);
-
+	const int actorIdx = CL_GetActorNumber(le);
 	if (actorIdx < 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: BAD ACTOR INDEX!\n");
 		return NULL;
 	}
 
-	/* Search in the aircraft team (we skip unused entries) for this actor. */
-	for (i = 0, p = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			if (actorIdx == p) {
-				return &aircraft->acTeam[i]->chr;
-			}
-			p++;
-		}
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_GetActorChr: No character info found! aircraft: %i, actorIdx: %i, p: %i\n",
-		aircraft->idx, actorIdx, p);
-	return NULL;
+	return cl.chrList.chr[actorIdx];
 }
 
 /**
@@ -2459,18 +2433,16 @@ qboolean CL_ActorSelect (le_t * le)
 	selChr = CL_GetActorChr(le);
 	assert(selChr);
 
-	if (selChr->inv) {
-		/* Right now we can only update this if the selChr is already set. */
-		switch (le->fieldSize) {
-		case ACTOR_SIZE_NORMAL:
-			CL_CharacterCvars(selChr);
-			break;
-		case ACTOR_SIZE_2x2:
-			CL_UGVCvars(selChr);
-			break;
-		default:
-			Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
-		}
+	/* Right now we can only update this if the selChr is already set. */
+	switch (le->fieldSize) {
+	case ACTOR_SIZE_NORMAL:
+		CL_CharacterCvars(selChr);
+		break;
+	case ACTOR_SIZE_2x2:
+		CL_UGVCvars(selChr);
+		break;
+	default:
+		Com_Error(ERR_DROP, "CL_ActorSelect: Unknown fieldsize");
 	}
 
 	/* Forcing the hud-display to refresh its displayed stuff. */
@@ -3900,7 +3872,7 @@ void CL_ActorSelectMouse (void)
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Try and select another team member */
-		if ((mouseActor != selActor) && CL_ActorSelect(mouseActor)) {
+		if (mouseActor != selActor && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
 			cl.cmode = M_MOVE;
 		} else {

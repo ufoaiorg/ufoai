@@ -705,7 +705,7 @@ typedef struct character_s {
 	/** @sa memcpy in Grid_CheckForbidden */
 	int fieldSize;				/**< @sa ACTOR_SIZE_**** */
 
-	inventory_t *inv;			/**< Inventory definition. */
+	inventory_t inv;			/**< Inventory definition. */
 
 	/** @note These unfortunately need to be indices 'cause in the battlescape there is no employee-info anywhere (AFAIK). */
 	int emplIdx;				/**< Backlink to employee-struct - global employee index (gd.employees[][emplIdx]). */

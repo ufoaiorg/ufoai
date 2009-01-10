@@ -721,7 +721,8 @@ menu team
 		pos		"475 12"
 		size	"128 32"
 		change {
-			cmd	"team_changename;"
+			// TODO: only for singleplayer (sv_maxclients == 1)
+			cmd	"employee_changename;"
 		}
 	}
 
@@ -1617,7 +1618,7 @@ menu equipment
 	{
 		call names_clear
 		call actor_stats
-		cmd "set mn_infotype 0;set mn_equiptype 0"
+		cmd "set mn_infotype 0;set mn_equiptype 0;"
 		cmd "team_initskin;genequip;equip_type primary;equip_select 0;"
 	}
 }

@@ -720,7 +720,7 @@ void E_ResetEmployee (employee_t *employee)
 	/* Remove employee from building (and tech/production). */
 	E_RemoveEmployeeFromBuildingOrAircraft(employee);
 	/* Destroy the inventory of the employee (carried items will remain in base->storage) */
-	INVSH_DestroyInventory(&employee->inv);
+	INVSH_DestroyInventory(&employee->chr.inv);
 }
 
 /**
@@ -835,12 +835,12 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 
 	switch (type) {
 	case EMPL_SOLDIER:
-		CL_GenerateCharacter(employee, teamID, type, NULL);
+		CL_GenerateCharacter(&employee->chr, teamID, type, NULL);
 		break;
 	case EMPL_SCIENTIST:
 	case EMPL_PILOT:
 	case EMPL_WORKER:
-		CL_GenerateCharacter(employee, teamID, type, NULL);
+		CL_GenerateCharacter(&employee->chr, teamID, type, NULL);
 		employee->speed = 100;
 		break;
 	case EMPL_ROBOT:
@@ -848,12 +848,18 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 			Com_DPrintf(DEBUG_CLIENT, "E_CreateEmployee: No ugvType given!\n");
 			return NULL;
 		}
-		CL_GenerateCharacter(employee, teamID, type, ugvType);
+		CL_GenerateCharacter(&employee->chr, teamID, type, ugvType);
 		employee->ugv = ugvType;
 		break;
 	default:
 		break;
 	}
+
+	Com_DPrintf(DEBUG_CLIENT, "Generate character for team: '%s' (type: %i)\n", teamID, type);
+
+	/* Backlink from chr to employee struct. */
+	employee->chr.emplIdx = employee->idx;
+	employee->chr.emplType = type;
 
 	if (emplIdx < 0)
 		gd.numEmployees[type]++;
@@ -874,6 +880,22 @@ employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvT
 	const char *team = GAME_CP_IsRunning() ? curCampaign->team : "human";
 	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
 	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1, team);
+}
+
+/**
+ * @brief Change the name of the selected actor.
+ * @sa CL_MessageMenu_f
+ */
+static void E_ChangeName_f (void)
+{
+	employee_t *employee = selectedEmployee;
+
+	/* Maybe called without base initialized or active. */
+	if (!baseCurrent || !GAME_IsCampaign())
+		return;
+
+	if (employee)
+		Q_strncpyz(employee->chr.name, Cvar_VariableString("mn_name"), sizeof(employee->chr.name));
 }
 
 /**
@@ -918,7 +940,6 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				gd.employees[type][i] = gd.employees[type][i + 1];
 				gd.employees[type][i].idx = i;
 				gd.employees[type][i].chr.emplIdx = i;
-				gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
 			}
 		}
 	}
@@ -1500,6 +1521,7 @@ void E_InitStartup (void)
 	Cmd_AddCommand("employee_delete", E_EmployeeDelete_f, "Removed an employee from the global employee list");
 	Cmd_AddCommand("employee_hire", E_EmployeeHire_f, NULL);
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
+	Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
 	Cmd_AddCommand("employee_list_click", E_EmployeeListClick_f, "Callback for employee_list click function");
 	Cmd_AddCommand("employee_update_count", E_UpdateGUICount_f, "Callback to update the employee count of the current GUI");
@@ -1608,7 +1630,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.score.rank);
 
 			/* Store inventories */
-			CL_SaveInventory(sb, &e->inv);
+			CL_SaveInventory(sb, &e->chr.inv);
 		}
 	}
 
@@ -1715,9 +1737,8 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.score.rank = MSG_ReadByte(sb);
 
 			/* clear the mess of stray loaded pointers */
-			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
-			CL_LoadInventory(sb, &e->inv);
-			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;
+			memset(&gd.employees[j][i].chr.inv, 0, sizeof(inventory_t));
+			CL_LoadInventory(sb, &e->chr.inv);
 		}
 	}
 

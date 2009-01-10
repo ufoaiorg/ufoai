@@ -1136,24 +1136,6 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	/* Update display of scroll buttons. */
 	if (MN_IsScrollContainerNode(node))
 		MN_ScrollContainerUpdateScroll(node);
-
-	#if 0
-	/** @todo need to understand better that */
-	/* We are in the base or multiplayer inventory */
-	if (sel < chrDisplayList.num) {
-		assert(chrDisplayList.chr[sel]);
-		if (chrDisplayList.chr[sel]->emplType == EMPL_ROBOT)
-			CL_UGVCvars(chrDisplayList.chr[sel]);
-		else
-			CL_CharacterCvars(chrDisplayList.chr[sel]);
-
-		/** @todo ungeneric */
-		/* Update object info */
-		if (MN_DNDGetType() == DND_ITEM) {
-			Cvar_Set("mn_item", MN_DNDGetItem()->t->id);
-		}
-	}
-	#endif
 }
 
 static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int button)

@@ -32,21 +32,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_team_multiplayer.h"
 #include "menu/m_popup.h"
 
-static aircraft_t multiplayerFakeAircraft;
+#define MAX_MULTIPLAYER_CHARACTERS 32
+
+static character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
+
+static void GAME_MP_AutoTeam (void)
+{
+	int i;
+	const char *name = Cvar_VariableString("cl_equip");
+
+	for (i = 0; i < MAX_ACTIVETEAM; i++) {
+		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
+
+		CL_GenerateCharacter(&multiplayerCharacters[i], Cvar_VariableString("cl_team"), EMPL_SOLDIER, NULL);
+		/* pack equipment */
+		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &multiplayerCharacters[i]);
+	}
+	MN_PushMenu("team", NULL);
+	Cvar_Set("mn_teamname", _("NewTeam"));
+}
 
 static void GAME_MP_AutoTeam_f (void)
 {
-	int i;
-
-	if (!GAME_IsMultiplayer())
-		return;
-
-	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		employee_t *employee = E_CreateEmployee(EMPL_SOLDIER, NULL, NULL);
-		equipDef_t *ed = INV_GetEquipmentDefinitionByID(cl_equip->string);
-		CL_AssignSoldierToAircraft(employee, cls.missionaircraft);
-		B_PackInitialEquipment(cls.missionaircraft, ed);
-	}
+	GAME_MP_AutoTeam();
 }
 
 /**
@@ -58,15 +66,8 @@ static void GAME_MP_StartServer_f (void)
 	char map[MAX_VAR];
 	mapDef_t *md;
 
-	if (!GAME_IsMultiplayer())
-		return;
-
-	if (!sv_dedicated->integer && !B_GetNumOnTeam(cls.missionaircraft)) {
-		CL_ResetMultiplayerTeamInAircraft(cls.missionaircraft);
-		Cvar_Set("mn_teamname", _("NewTeam"));
-		B_AssignInitial(cls.missionaircraft, cl_equip->string);
-		MN_PushMenu("team", NULL);
-		MN_Popup(_("No team assigned"), _("Please choose and equip your team first"));
+	if (!sv_dedicated->integer && !cl.chrList.num) {
+		GAME_MP_AutoTeam();
 		return;
 	}
 
@@ -210,9 +211,10 @@ void GAME_MP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 	}
 }
 
-qboolean GAME_MP_Spawn (chrList_t *chrList)
+qboolean GAME_MP_Spawn (void)
 {
 	const int n = cl_teamnum->integer;
+	int i;
 
 	if (!teamData.parsed) {
 		Com_Printf("GAME_MP_Spawn: teaminfo unparsed\n");
@@ -227,6 +229,10 @@ qboolean GAME_MP_Spawn (chrList_t *chrList)
 			n, teamData.maxplayersperteam, teamData.teamCount[n]);
 		return qfalse;
 	}
+
+	for (i = 0; i < MAX_ACTIVETEAM; i++)
+		cl.chrList.chr[i] = &multiplayerCharacters[i];
+	cl.chrList.num = MAX_ACTIVETEAM;
 
 	MN_PushMenu("multiplayer_wait", NULL);
 	return qtrue;
@@ -253,12 +259,6 @@ void GAME_MP_InitStartup (void)
 		Cvar_Set("sv_maxsoldiersperteam", max_s);
 	if (strlen(max_spp))
 		Cvar_Set("sv_maxsoldiersperplayer", max_spp);
-
-	RS_ResetTechs();
-
-	cls.missionaircraft = &multiplayerFakeAircraft;
-	memset(&multiplayerFakeAircraft, 0, sizeof(multiplayerFakeAircraft));
-	gd.numAircraft = 1;
 
 	/* disconnect already running session - when entering the
 	 * multiplayer menu while you are still connected */
