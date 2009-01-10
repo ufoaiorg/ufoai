@@ -132,7 +132,7 @@ menu skirmish
 	}
 	string ai_numactors_value
 	{
-		string	"*cvar ai_numactors"
+		string	"*cvar ai_numaliens"
 		pos	"840 280"
 		align	ur
 	}
@@ -142,8 +142,8 @@ menu skirmish
 		blend	true
 		pos		"868 279"
 		mousefx	true
-		min		0
-		max		8
+		min		1
+		max		30
 		delta	1
 		current	"*cvar ai_numactors"
 	}
