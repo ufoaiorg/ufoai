@@ -1598,7 +1598,7 @@ menu equipment
 
 	vscrollbar equip_scroll {
 		image	menu/scrollbar_v_green	blend	true
-		pos "609 405"	height	"339"
+		pos "629 405"	height	"339"
 		current 0
 		viewsize 8
 		fullsize 20

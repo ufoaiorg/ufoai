@@ -68,7 +68,7 @@ void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
 		EXTRADATA(node).filterEquipType = num;
 		EXTRADATA(node).scrollCur = 0;
 		EXTRADATA(node).scrollNum = 0;
-		EXTRADATA(node).scrollTotalNum = 0;
+		EXTRADATA(node).scrollTotalNum = -1;	/**< invalidate the value */
 	}
 }
 
@@ -77,12 +77,15 @@ void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
  * @note The cvars "mn_cont_scroll_prev_hover" and "mn_cont_scroll_next_hover" are
  * set by the "in" and "out" functions of the scroll buttons.
  */
-static void MN_ScrollContainerUpdateScroll (menuNode_t* node)
+static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 {
+	menuNode_t* scroll;
 	/** @todo ungeneric */
-	Cbuf_AddText(va("mn_setnodeproperty equip_scroll current %i\n", EXTRADATA(node).scrollCur));
-	Cbuf_AddText(va("mn_setnodeproperty equip_scroll viewsize %i\n", EXTRADATA(node).scrollNum));
-	Cbuf_AddText(va("mn_setnodeproperty equip_scroll fullsize %i\n", EXTRADATA(node).scrollTotalNum));
+	scroll = MN_GetNodeByPath("equipment.equip_scroll");
+	assert(scroll);
+	scroll->u.abstractscrollbar.pos = EXTRADATA(node).scrollCur;
+	scroll->u.abstractscrollbar.viewsize = EXTRADATA(node).scrollNum;
+	scroll->u.abstractscrollbar.fullsize = EXTRADATA(node).scrollTotalNum;
 }
 
 /**
@@ -113,7 +116,7 @@ static void MN_ScrollContainerNext_f (void)
 			EXTRADATA(node).scrollTotalNum);
 
 	/* Update display of scroll buttons. */
-	MN_ScrollContainerUpdateScroll(node);
+	MN_ContainerNodeUpdateScroll(node);
 }
 
 /**
@@ -141,7 +144,7 @@ static void MN_ScrollContainerPrev_f (void)
 			EXTRADATA(node).scrollTotalNum);
 
 	/* Update display of scroll buttons. */
-	MN_ScrollContainerUpdateScroll(node);
+	MN_ContainerNodeUpdateScroll(node);
 }
 
 /**
@@ -645,164 +648,129 @@ static void MN_ContainerNodeDrawBaseAmmo (menuNode_t *node, objDef_t *highlightT
 static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highlightType)
 {
 	invList_t *ic;
-	int curWidth = 0;	/**< Combined width of all drawn item so far. */
 	int curHeight = 0;	/**< Combined Height of all drawn item so far. */
-	int maxHeight = 0;	/**< Max. height of a row. */
-	int curCol = 0;		/**< Index of item in current row. */
-	int curRow = 0;		/**< Current row. */
-	int curItem = 0;	/**< Item counter for all items that get displayed. */
-	qboolean lastItem = qfalse;	/**< Did we reach the last displayed/visible item? We only count the items after that.*/
 	int rowOffset;
 	int ammoIdx;
 	vec2_t nodepos;
+	qboolean outOfNode = qfalse;
 
-	/* Remember the last used scroll settings, so we know if we
-	 * need to update the button-display later on. */
-	const int cache_scrollCur = EXTRADATA(node).scrollCur;
-	const int cache_scrollNum = EXTRADATA(node).scrollNum;
-	const int cache_scrollTotalNum = EXTRADATA(node).scrollTotalNum;
-	const int equipType = EXTRADATA(node).filterEquipType;
+	int visibleItems = 0;
+	int totalItems = 0;
 
 	MN_GetNodeAbsPos(node, nodepos);
-
-	EXTRADATA(node).scrollNum = 0;
-	EXTRADATA(node).scrollTotalNum = 0;
 
 	/* Change row spacing according to vertical/horizontal setting. */
 	rowOffset = EXTRADATA(node).container->scrollVertical ? C_ROW_OFFSET : 0;
 
 	for (ic = menuInventory->c[EXTRADATA(node).container->id]; ic; ic = ic->next) {
+		item_t tempItem = {1, NULL, NULL, 0, 0};
+		vec3_t pos;
+		vec3_t ammopos;
+		const float *color;
+
 		/* skip invalide, ammo, and out of filter */
 		if (!ic->item.t)
 			continue;
 		if (!Q_strncmp(ic->item.t->type, "ammo", 4))
 			continue;
-		if (!INV_ItemMatchesFilter(ic->item.t, equipType))
+		if (!INV_ItemMatchesFilter(ic->item.t, EXTRADATA(node).filterEquipType))
 			continue;
 
-		if (!lastItem && curItem >= EXTRADATA(node).scrollCur) {
-			item_t tempItem = {1, NULL, NULL, 0, 0};
-			qboolean newRow = qfalse;
-			vec3_t pos;
-			Vector2Copy(nodepos, pos);
-			pos[0] += curWidth;
-			pos[1] += curHeight;
-			pos[2] = 0;
+		/* skip items over and bellow the node view */
+		if (outOfNode || totalItems < EXTRADATA(node).scrollCur) {
+			totalItems++;
+			continue;
+		}
 
-			if (!EXTRADATA(node).container->scrollVertical && curWidth + ic->item.t->sx * C_UNIT <= EXTRADATA(node).container->scroll) {
-				curWidth += ic->item.t->sx * C_UNIT;
-			} else {
-				/* New row */
-				if (curHeight + maxHeight + rowOffset > EXTRADATA(node).container->scrollHeight) {
-					/* Last item - We do not draw anything else. */
-					lastItem = qtrue;
-				} else {
-					curHeight += maxHeight + rowOffset;
-					curWidth = maxHeight = curCol = 0;
-					curRow++;
+		/* we are out (the last label can be a little out) */
+		if (curHeight + ic->item.t->sy * C_UNIT > node->size[1]) {
+			totalItems++;
+			outOfNode = qtrue;
+			continue;
+		}
 
-					/* Re-calculate the position of this item in the new row. */
-					Vector2Copy(nodepos, pos);
-					pos[1] += curHeight;
-					newRow = qtrue;
-				}
-			}
+		assert(ic->item.t);
 
-			maxHeight = max(ic->item.t->sy * C_UNIT, maxHeight);
+		/* add a marge between rows */
+		if (curHeight != 0) {
+			curHeight += 10;
+		}
 
-			if (lastItem || curHeight + ic->item.t->sy + rowOffset > EXTRADATA(node).container->scrollHeight) {
-				/* Last item - We do not draw anything else. */
-				lastItem = qtrue;
-			} else {
-				vec2_t posName;
-				Vector2Copy(pos, posName);	/* Save original coordiantes for drawing of the item name. */
-				posName[1] -= rowOffset;
+		Vector2Copy(nodepos, pos);
+		pos[1] += curHeight;
+		pos[2] = 0;
 
-				/* Calculate the center of the item model/image. */
-				pos[0] += ic->item.t->sx * C_UNIT / 2.0;
-				pos[1] += ic->item.t->sy * C_UNIT / 2.0;
+		if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
+			color = colorLoadable;
+		else
+			color = colorDefault;
 
-				assert(ic->item.t);
+		/* draw item */
+		pos[0] += ic->item.t->sx * C_UNIT / 2.0;
+		pos[1] += ic->item.t->sy * C_UNIT / 2.0;
+		tempItem.t = ic->item.t;
+		MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
+		pos[0] -= ic->item.t->sx * C_UNIT / 2.0;
+		pos[1] += ic->item.t->sy * C_UNIT / 2.0;
+		curHeight += ic->item.t->sy * C_UNIT;
 
-				/* Update location info for this entry. */
-				ic->x = curCol;
-				ic->y = curRow;
+		/* save position for ammo */
+		Vector2Copy(pos, ammopos);
+		ammopos[2] = 0;
+		ammopos[0] += ic->item.t->sx * C_UNIT + 10;
 
-				/* Actually draw the item. */
-				tempItem.t = ic->item.t;
+		/* draw the item name. */
+		curHeight += R_FontDrawString("f_verysmall", ALIGN_UL,
+			pos[0], pos[1],
+			node->pos[0], node->pos[1],
+			node->size[0], node->size[1],	/* max width/height */
+			0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 
-				assert(pos[2] == 0);
-				if (highlightType && INVSH_LoadableInWeapon(highlightType, ic->item.t))
-					MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorLoadable);
-				else
-					MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
+		/* draw ammos */
+		for (ammoIdx = 0; ammoIdx < ic->item.t->numAmmos; ammoIdx++) {
+			invList_t *icAmmo;
+			tempItem.t = ic->item.t->ammos[ammoIdx];
 
-				if (EXTRADATA(node).container->scrollVertical) {
-					/* Draw the item name. */
-					R_FontDrawString("f_verysmall", ALIGN_UL,
-						posName[0], posName[1],
-						node->pos[0], posName[1],
-						node->size[0], 100,	/* max width/height */
-						0, va("%s (%i)", ic->item.t->name,  ic->item.amount), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-				} /* scrollVertical */
+			/* skip unusable ammo */
+			if (!tempItem.t->tech || !RS_IsResearched_ptr(tempItem.t->tech))
+				continue;
 
-				if (newRow)
-					curWidth += ic->item.t->sx * C_UNIT;
+			/* find and skip unexisting ammo */
+			icAmmo = MN_ContainerNodeGetExistingItem(node, tempItem.t, EXTRADATA(node).filterEquipType);
+			if (!icAmmo)
+				continue;
 
-				/* marge */
-				pos[0] += ic->item.t->sx * C_UNIT / 2.0;
-
-				/* Loop through all ammo-types for this item. */
-				for (ammoIdx = 0; ammoIdx < ic->item.t->numAmmos; ammoIdx++) {
-					invList_t *icAmmo;
-					tempItem.t = ic->item.t->ammos[ammoIdx];
-
-					/* skip unusable ammo */
-					if (!tempItem.t->tech || !RS_IsResearched_ptr(tempItem.t->tech))
-						continue;
-
-					/* find and skip unexisting ammo */
-					icAmmo = MN_ContainerNodeGetExistingItem(node, tempItem.t, equipType);
-					if (!icAmmo)
-						continue;
-
-					/* Calculate the center of the item model/image. */
-					pos[0] += tempItem.t->sx * C_UNIT / 2;
-					pos[1] = nodepos[1] + curHeight + icAmmo->item.t->sy * C_UNIT / 2.0;
-
-					curWidth += tempItem.t->sx * C_UNIT;
-
-					MN_DrawItem(node, pos, &tempItem, -1, -1, scale, colorDefault);
-					R_FontDrawString("f_verysmall", ALIGN_LC,
-						pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
-						pos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, pos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
-						C_UNIT,	/* maxWidth */
-						0,	/* maxHeight */
-						0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
-
-					/* Add width of text and the rest of the item. */
-					curWidth += C_UNIT / 2.0;
-					pos[0] += tempItem.t->sx * C_UNIT / 2 + C_UNIT / 2.0;
-				}
-			}
-
-			/* Count displayed items */
-			if (!lastItem) {
-				EXTRADATA(node).scrollNum++;
-				curCol++;
-			}
+			/* Calculate the center of the item model/image. */
+			ammopos[0] += icAmmo->item.t->sx * C_UNIT / 2.0;
+			ammopos[1] -= icAmmo->item.t->sy * C_UNIT / 2.0;
+			MN_DrawItem(node, ammopos, &tempItem, -1, -1, scale, colorDefault);
+			R_FontDrawString("f_verysmall", ALIGN_LC,
+				ammopos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, ammopos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
+				ammopos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, ammopos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
+				C_UNIT,	/* maxWidth */
+				0,	/* maxHeight */
+				0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
+			ammopos[0] += icAmmo->item.t->sx * C_UNIT / 2.0;
+			ammopos[1] += icAmmo->item.t->sy * C_UNIT / 2.0;
 		}
 
 		/* Count items that are possible to be displayed. */
-		EXTRADATA(node).scrollTotalNum++;
-		curItem++;
+		totalItems++;
+		visibleItems++;
 	}
 
 	/* Update display of scroll buttons if something changed. */
-	if (cache_scrollCur != EXTRADATA(node).scrollCur
-	 || cache_scrollNum != EXTRADATA(node).scrollNum
-	 ||	cache_scrollTotalNum != EXTRADATA(node).scrollTotalNum)
-		MN_ScrollContainerUpdateScroll(node);
+	/** @todo dont call 2 time MN_ContainerNodeUpdateScroll */
+	if (EXTRADATA(node).scrollCur < 0 || EXTRADATA(node).scrollCur > totalItems - visibleItems) {
+		EXTRADATA(node).scrollCur = totalItems - visibleItems;
+		MN_ContainerNodeUpdateScroll(node);
+	}
+
+	if (visibleItems != EXTRADATA(node).scrollNum || totalItems != EXTRADATA(node).scrollTotalNum) {
+		EXTRADATA(node).scrollNum = visibleItems;
+		EXTRADATA(node).scrollTotalNum = totalItems;
+		MN_ContainerNodeUpdateScroll(node);
+	}
 }
 
 /**
@@ -1317,7 +1285,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 
 	/* Update display of scroll buttons. */
 	if (MN_IsScrollContainerNode(node))
-		MN_ScrollContainerUpdateScroll(node);
+		MN_ContainerNodeUpdateScroll(node);
 }
 
 static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int button)
