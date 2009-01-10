@@ -91,9 +91,9 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 			Com_Printf("AIR_UpdateHangarCapForOne: base does not have big hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
-		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+		freespace = base->capacities[CAP_AIRCRAFT_BIG].max - base->capacities[CAP_AIRCRAFT_BIG].cur;
 		if (freespace > 0) {
-			base->capacities[CAP_AIRCRAFTS_BIG].cur++;
+			base->capacities[CAP_AIRCRAFT_BIG].cur++;
 			return AIRCRAFT_HANGAR_BIG;
 		} else {
 			/* No free space for this aircraft. This should never happen here. */
@@ -105,9 +105,9 @@ static int AIR_UpdateHangarCapForOne (aircraft_t *aircraftTemplate, base_t *base
 			Com_Printf("AIR_UpdateHangarCapForOne: base does not have small hangar - error!\n");
 			return AIRCRAFT_HANGAR_ERROR;
 		}
-		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
+		freespace = base->capacities[CAP_AIRCRAFT_SMALL].max - base->capacities[CAP_AIRCRAFT_SMALL].cur;
 		if (freespace > 0) {
-			base->capacities[CAP_AIRCRAFTS_SMALL].cur++;
+			base->capacities[CAP_AIRCRAFT_SMALL].cur++;
 			return AIRCRAFT_HANGAR_SMALL;
 		} else {
 			/* No free space for this aircraft. This should never happen here. */
@@ -135,15 +135,15 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 	}
 
 	/* Reset current capacities for hangar. */
-	base->capacities[CAP_AIRCRAFTS_BIG].cur = 0;
-	base->capacities[CAP_AIRCRAFTS_SMALL].cur = 0;
+	base->capacities[CAP_AIRCRAFT_BIG].cur = 0;
+	base->capacities[CAP_AIRCRAFT_SMALL].cur = 0;
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		const aircraft_t *aircraft = &base->aircraft[i];
 		Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base: %s, aircraft: %s\n", base->name, aircraft->id);
 		AIR_UpdateHangarCapForOne(aircraft->tpl, base);
 	}
-	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+	Com_DPrintf(DEBUG_CLIENT, "AIR_UpdateHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFT_SMALL].cur, base->capacities[CAP_AIRCRAFT_BIG].cur);
 }
 
 #ifdef DEBUG
@@ -835,9 +835,9 @@ int AIR_GetCapacityByAircraftWeight (const aircraft_t *aircraft)
 {
 	switch (aircraft->size) {
 	case AIRCRAFT_SMALL:
-		return CAP_AIRCRAFTS_SMALL;
+		return CAP_AIRCRAFT_SMALL;
 	case AIRCRAFT_LARGE:
-		return CAP_AIRCRAFTS_BIG;
+		return CAP_AIRCRAFT_BIG;
 	}
 	Sys_Error("AIR_GetCapacityByAircraftWeight: Unkown weight of aircraft '%i'\n", aircraft->size);
 }
@@ -2676,9 +2676,9 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 
 	/* If this is a small aircraft, we will check space in small hangar. */
 	if (aircraftSize == AIRCRAFT_SMALL) {
-		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur - used;
+		freespace = base->capacities[CAP_AIRCRAFT_SMALL].max - base->capacities[CAP_AIRCRAFT_SMALL].cur - used;
 		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage: freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
-			base->capacities[CAP_AIRCRAFTS_SMALL].max, base->capacities[CAP_AIRCRAFTS_SMALL].cur);
+			base->capacities[CAP_AIRCRAFT_SMALL].max, base->capacities[CAP_AIRCRAFT_SMALL].cur);
 		if (freespace > 0) {
 			return freespace;
 		} else {
@@ -2687,9 +2687,9 @@ int AIR_CalculateHangarStorage (const aircraft_t *aircraftTemplate, const base_t
 		}
 	} else {
 		/* If this is a large aircraft, we will check space in big hangar. */
-		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur - used;
+		freespace = base->capacities[CAP_AIRCRAFT_BIG].max - base->capacities[CAP_AIRCRAFT_BIG].cur - used;
 		Com_DPrintf(DEBUG_CLIENT, "AIR_CalculateHangarStorage: freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
-			base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+			base->capacities[CAP_AIRCRAFT_BIG].max, base->capacities[CAP_AIRCRAFT_BIG].cur);
 		if (freespace > 0) {
 			return freespace;
 		} else {

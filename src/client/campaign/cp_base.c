@@ -122,11 +122,11 @@ baseCapacities_t B_GetCapacityFromBuildingType (buildingType_t type)
 	case B_WORKSHOP:
 		return CAP_WORKSPACE;
 	case B_HANGAR:
-		return CAP_AIRCRAFTS_BIG;
+		return CAP_AIRCRAFT_BIG;
 	case B_ALIEN_CONTAINMENT:
 		return CAP_ALIENS;
 	case B_SMALL_HANGAR:
-		return CAP_AIRCRAFTS_SMALL;
+		return CAP_AIRCRAFT_SMALL;
 	case B_UFO_HANGAR:
 		return CAP_UFOHANGARS_LARGE;
 	case B_UFO_SMALL_HANGAR:
@@ -150,9 +150,9 @@ buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 	switch (cap) {
 	case CAP_ALIENS:
 		return B_ALIEN_CONTAINMENT;
-	case CAP_AIRCRAFTS_SMALL:
+	case CAP_AIRCRAFT_SMALL:
 		return B_SMALL_HANGAR;
-	case CAP_AIRCRAFTS_BIG:
+	case CAP_AIRCRAFT_BIG:
 		return B_HANGAR;
 	case CAP_EMPLOYEES:
 		return B_QUARTERS;
@@ -484,8 +484,8 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_ALIENS)))
 		base->capacities[CAP_ALIENS].cur = AL_CountInBase(base);
 
-	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_SMALL)) ||
-		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFTS_BIG)))
+	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_SMALL)) ||
+		B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_AIRCRAFT_BIG)))
 		AIR_UpdateHangarCapForAll(base);
 
 	if (B_GetBuildingStatus(base, B_GetBuildingTypeByCapacity(CAP_EMPLOYEES)))
@@ -2940,8 +2940,8 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_LABSPACE:		/**< Update laboratory space capacity in base. */
 	case CAP_WORKSPACE:		/**< Update workshop space capacity in base. */
 	case CAP_ITEMS:			/**< Update items capacity in base. */
-	case CAP_AIRCRAFTS_SMALL:	/**< Update aircraft capacity in base. */
-	case CAP_AIRCRAFTS_BIG:		/**< Update aircraft capacity in base. */
+	case CAP_AIRCRAFT_SMALL:	/**< Update aircraft capacity in base. */
+	case CAP_AIRCRAFT_BIG:		/**< Update aircraft capacity in base. */
 	case CAP_UFOHANGARS_SMALL:	/**< Base capacities for UFO hangars. */
 	case CAP_UFOHANGARS_LARGE:	/**< Base capacities for UFO hangars. */
 	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */

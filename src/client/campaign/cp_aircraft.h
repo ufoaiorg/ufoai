@@ -198,7 +198,7 @@ typedef struct aircraft_s {
 	int point;			/**< Number of route points that has already been done when aircraft is moving */
 	int time;			/**< Elapsed seconds since aircraft started it's new route */
 	int hangar;			/**< This is the baseCapacities_t enum value which says in which hangar this aircraft
-						 * is being parked in (CAP_AIRCRAFTS_SMALL/CAP_AIRCRAFTS_BIG). */
+						 * is being parked in (CAP_AIRCRAFT_SMALL/CAP_AIRCRAFT_BIG). */
 
 	int teamSize;				/**< How many soldiers/units are on board (i.e. in the craft-team). */
 	struct employee_s *acTeam[MAX_ACTIVETEAM];			/**< List of employees. i.e. current team for this aircraft. @todo Make this a linked list? */
