@@ -1454,6 +1454,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 	}
 
 	/* tactical mission */
+	/** @todo use CL_OnBattlescape here? */
 	if (selActor) {
 		const menuNode_t *target = MN_DNDGetTargetNode();
 		assert(EXTRADATA(source).container);
