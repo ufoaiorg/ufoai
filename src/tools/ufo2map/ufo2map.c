@@ -487,6 +487,8 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 		return 0;
 	if (difftime(mapStat.st_mtime, bspStat.st_mtime) < 0)
 		return 1;
+	/* not up-to-date - recompile */
+	return 0;
 }
 #elif defined (_WIN32)
 static int CheckTimeDiff (const char *map, const char *bsp)
@@ -651,7 +653,7 @@ int main (int argc, const char **argv)
 	} else {
 		/* start from scratch */
 		LoadMapFile(mapFilename);
-#if 0 /** @todo work out why this segfualts */
+#if 0 /** @todo work out why this segfaults */
 		CheckNodraws();
 #endif
 		SetModelNumbers();
