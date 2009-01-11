@@ -992,7 +992,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		 * downs can be matched with ups */
 		kb = menukeybindings[key];
 		/* this loop ensures, that every down event reaches it's proper kbutton_t */
-		for (i = 0; i < 2; i++) {
+		for (i = 0; i < 3; i++) {
 			if (kb && kb[0] == '+') {
 				/* '-' means we have released the key
 				 * the key number is used to determine whether the kbutton_t is really
@@ -1002,9 +1002,11 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 				Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
 				Cbuf_AddText(cmd);
 			}
-			kb = keybindings[key];
+			if (i == 0)
+				kb = keybindings[key];
+			else
+				kb = battlekeybindings[key];
 		}
-		/*@todo check how battlekeybindings must be taken in account here */
 		return;
 	}
 
