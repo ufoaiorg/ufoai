@@ -45,6 +45,9 @@ enum {
 static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
 
+/** @brief Support sound file extensions */
+static const char *soundExtensions[] = {"ogg", "wav", NULL};
+
 /*
 =======================================================================
 Internal sound data & structures
@@ -249,6 +252,7 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 	byte *sfxBuf;
 	int size;
 	Mix_Chunk *mix = NULL;
+	const char **extension = soundExtensions;
 
 	if (!sound || *sound == '*')
 		return NULL;
@@ -259,18 +263,19 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 		return NULL;
 	}
 
-	/* load it in */
-	if ((size = FS_LoadFile(va("sound/%s.ogg", sound), &sfxBuf)) != -1) {
-		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
-		mix = Mix_LoadWAV_RW(src, 1);
-		if (!mix)
-			Com_Printf("S_LoadSound: Could not load ogg file 'sound/%s.ogg' (%s)\n", sound, Mix_GetError());
-	} else if ((size = FS_LoadFile(va("sound/%s.wav", sound), &sfxBuf)) != -1) {
-		SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
-		mix = Mix_LoadWAV_RW(src, 1);
-		if (!mix)
-			Com_Printf("S_LoadSound: Could not load wave file 'sound/%s.wav' (%s)\n", sound, Mix_GetError());
-	} else {
+	size = 0;
+	while (*extension) {
+		/* load it in */
+		if ((size = FS_LoadFile(va("sound/%s.%s", sound, *extension), &sfxBuf)) != -1) {
+			SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
+			mix = Mix_LoadWAV_RW(src, 1);
+			if (!mix)
+				Com_Printf("S_LoadSound: Could not load %s file 'sound/%s.%s' (%s)\n", *extension, sound, *extension, Mix_GetError());
+		}
+		extension++;
+	}
+
+	if (size != 0) {
 		Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
 		return NULL;
 	}
@@ -716,7 +721,7 @@ static int S_CompleteMusic (const char *partial, const char **match)
 
 /** @todo This should be removed and read from the dir tree instead */
 static const char *soundFileSubDirs[] = {
-	"aliens", "ambience", "civilians", "footsteps", "misc", "weapons", NULL
+	"aliens", "ambience", "civilians", "doors", "footsteps", "geoscape", "misc", "soldiers", "weapons", NULL
 };
 
 static int S_CompleteSounds (const char *partial, const char **match)
@@ -726,26 +731,29 @@ static int S_CompleteSounds (const char *partial, const char **match)
 	char *localMatch[MAX_COMPLETE];
 	size_t len = strlen(partial);
 	const char **dirList = soundFileSubDirs;
+	const char **extension = soundExtensions;
 	int returnValue;
 
 	/* check for partial matches */
 	while (*dirList) {
-		char pattern[MAX_OSPATH];
-		Com_sprintf(pattern, sizeof(pattern), "sound/%s/*.wav", *dirList);
-		FS_BuildFileList(pattern);
-		while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
-			char fileWithPath[MAX_OSPATH];
-			Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s/%s", *dirList, filename);
-			if (!len) {
-				Com_Printf("%s\n", fileWithPath);
-			} else if (!Q_strncmp(partial, fileWithPath, len)) {
-				Com_Printf("%s\n", fileWithPath);
-				localMatch[matches++] = strdup(fileWithPath);
-				if (matches >= MAX_COMPLETE)
-					break;
+		while (*extension) {
+			char pattern[MAX_OSPATH];
+			Com_sprintf(pattern, sizeof(pattern), "sound/%s/*.%s", *dirList, *extension);
+			FS_BuildFileList(pattern);
+			while ((filename = FS_NextFileFromFileList(pattern)) != NULL) {
+				char fileWithPath[MAX_OSPATH];
+				Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s/%s", *dirList, filename);
+				if (!len) {
+					Com_Printf("%s\n", fileWithPath);
+				} else if (!Q_strncmp(partial, fileWithPath, len)) {
+					Com_Printf("%s\n", fileWithPath);
+					localMatch[matches++] = strdup(fileWithPath);
+					if (matches >= MAX_COMPLETE)
+						break;
+				}
 			}
+			FS_NextFileFromFileList(NULL);
 		}
-		FS_NextFileFromFileList(NULL);
 		dirList++;
 	}
 
