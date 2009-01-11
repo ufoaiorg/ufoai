@@ -61,6 +61,14 @@ typedef struct containerExtraData_s {
 
 	/* for scrolled container */
 	int filterEquipType;	/**< A filter */
+
+	int columns;
+	qboolean displayWeapon;
+	qboolean displayAmmo;
+	qboolean displayUnavailableItem;
+	qboolean displayAmmoOfWeapon;
+	qboolean displayUnavailableAmmoOfWeapon;
+
 	int scrollCur;			/**< Index of first item that is displayed. */
 	int scrollNum;			/**< Number of items that are displayed. */
 	int scrollTotalNum;		/**< Total number of displayable items. */
