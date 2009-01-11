@@ -476,9 +476,10 @@ static void U2M_SetDefaultConfigValues (void)
 	config.generateDebugTrace = qfalse;
 }
 
+
+#ifdef HAVE_SYS_STAT_H
 static int CheckTimeDiff (const char *map, const char *bsp)
 {
-#ifdef HAVE_SYS_STAT_H
 	struct stat mapStat, bspStat;
 	if (stat(map, &mapStat) == -1)
 		return 0;
@@ -486,7 +487,10 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 		return 0;
 	if (difftime(mapStat.st_mtime, bspStat.st_mtime) < 0)
 		return 1;
+}
 #elif defined (_WIN32)
+static int CheckTimeDiff (const char *map, const char *bsp)
+{
 	FILETIME ftCreate, ftAccess, ftWriteMap, ftWriteBsp;
 	HANDLE hMapFile, hBspFile;
 	int retval = 0;
@@ -512,10 +516,8 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 	CloseHandle(hBspFile);
 
 	return retval;
-#endif
-	/* not up-to-date - recompile */
-	return 0;
 }
+#endif
 
 /**
  * @brief print name in concise form for lower verbosity levels.
@@ -583,10 +585,12 @@ int main (int argc, const char **argv)
 	if (config.verbosity == VERB_MAPNAME && !(config.performMapCheck || config.fixMap))
 		PrintName();
 
+#if defined (HAVE_SYS_STAT_H) || defined (_WIN32)
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
 		Verb_Printf(VERB_LESS, "bsp file is up-to-date\n");
 		return 0;
 	}
+#endif
 
 	/* if onlyents just grab the entites and resave */
 	if (config.onlyents) {
@@ -647,7 +651,7 @@ int main (int argc, const char **argv)
 	} else {
 		/* start from scratch */
 		LoadMapFile(mapFilename);
-#if 0 /* this segfualts */
+#if 0 /** @todo work out why this segfualts */
 		CheckNodraws();
 #endif
 		SetModelNumbers();
