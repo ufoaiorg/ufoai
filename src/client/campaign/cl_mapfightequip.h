@@ -69,23 +69,13 @@ void BDEF_RemoveBattery(base_t *base, basedefenceType_t basedefType, int idx);
 void BDEF_RemoveBattery_f(void);
 void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_InitialiseInstallationSlots(installation_t *installation);
-void BDEF_MenuInit_f(void);
-void BDEF_BaseDefenseMenuUpdate_f(void);
-void BDEF_ListClick_f(void);
 void BDEF_ReloadBattery(void);
 
 void AII_UpdateInstallationDelay(void);
-void AIM_AircraftEquipMenuUpdate_f(void);
-void AIM_AircraftEquipSlotSelect_f(void);
-void AIM_AircraftEquipZoneSelect_f(void);
 qboolean AII_AddItemToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot, qboolean nextItem);
 qboolean AII_AddAmmoToSlot(base_t* base, const technology_t *tech, aircraftSlot_t *slot);
 void AII_RemoveItemFromSlot(base_t* base, aircraftSlot_t *slot, qboolean ammo);
 qboolean AIM_PilotAssignedAircraft(const base_t* base, const employee_t* pilot);
-void AIM_ResetEquipAircraftMenu(void);
-void AIM_AircraftEquipAddItem_f(void);
-void AIM_AircraftEquipDeleteItem_f(void);
-void AIM_AircraftEquipMenuClick_f(void);
 void AIM_AutoEquipAircraft(aircraft_t *aircraft);
 void AII_InitialiseSlot(aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base, installation_t *installation, aircraftItemType_t type);
 float AIR_GetMaxAircraftWeaponRange(const aircraftSlot_t *slot, int maxSlot);
@@ -99,6 +89,9 @@ qboolean AII_InstallationCanShoot(const installation_t *installation);
 itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
 const char* AII_WeightToName(itemWeight_t weight);
+void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *aircraft, aircraftSlot_t *slot, const int airequipID);
+
+qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* installation, aircraft_t *aircraft, const technology_t *tech, const int airequipID);
 
 void AIM_InitStartup(void);
 

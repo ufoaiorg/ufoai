@@ -277,6 +277,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.h" />
+		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_market.c">
 			<Option compilerVar="CC" />
 		</Unit>

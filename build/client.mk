@@ -69,6 +69,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_messageoptions.c \
 	client/campaign/cl_messageoptions_callbacks.c \
 	client/campaign/cl_popup.c \
+	client/campaign/cl_fightequip_callbacks.c \
 	\
 	client/campaign/missions/cp_mission_baseattack.c \
 	client/campaign/missions/cp_mission_buildbase.c \

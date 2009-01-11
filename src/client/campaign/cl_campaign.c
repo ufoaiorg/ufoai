@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "cp_aircraft_callbacks.h"
+#include  "cl_fightequip_callbacks.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
 
