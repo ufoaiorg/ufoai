@@ -367,7 +367,7 @@ static void compileReadProgress (void *ex, void *buffer)
 			}
 		}
 	}
-	g_message("%s\n", (gchar*) buffer);
+	/*g_message("%s\n", (gchar*) buffer);*/
 }
 
 void ToolsGenerateMaterials (void)
