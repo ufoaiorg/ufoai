@@ -119,12 +119,8 @@ static inline technology_t *AII_GetTechnologyToDisplay (const aircraftSlot_t con
  */
 static void AIM_CheckAirequipID (void)
 {
-	const menu_t *activeMenu = NULL;
-	qboolean aircraftMenu;
-
-	/* select menu */
-	activeMenu = MN_GetActiveMenu();
-	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
+	const menu_t *activeMenu = MN_GetActiveMenu();
+	const qboolean aircraftMenu = !Q_strcmp(activeMenu->name, "aircraft_equip");
 
 	if (aircraftMenu) {
 		switch (airequipID) {
