@@ -79,18 +79,12 @@ void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
  */
 static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 {
-	menuNode_t* scroll;
-
-	/** @todo ungeneric */
-
-	if (!Q_strcmp(node->name, "equip")) {
-		scroll = MN_GetNodeByPath("equipment.equip_scroll");
-		assert(scroll);
-		scroll->u.abstractscrollbar.pos = EXTRADATA(node).scrollCur;
-		scroll->u.abstractscrollbar.viewsize = EXTRADATA(node).scrollNum;
-		scroll->u.abstractscrollbar.fullsize = EXTRADATA(node).scrollTotalNum;
+	if (node->u.container.onViewChange) {
+		MN_ExecuteEventActions(node, node->u.container.onViewChange);
 	}
 }
+
+#if 0	/* maybe not need */
 
 /**
  * @brief Scrolls one item forward in a scrollable container.
@@ -177,6 +171,8 @@ static void MN_ScrollContainerScroll_f (void)
 		offset++;
 	}
 }
+
+#endif
 
 static inline qboolean MN_IsScrollContainerNode(const menuNode_t* const node)
 {
@@ -1438,6 +1434,11 @@ static const value_t properties[] = {
 	{"displayammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayAmmoOfWeapon)},
 	{"displayunavailableammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayUnavailableAmmoOfWeapon)},
 	{"columns", V_INT, offsetof(menuNode_t, u.container.columns),  MEMBER_SIZEOF(menuNode_t, u.container.columns)},
+
+	{"scrollpos", V_INT, offsetof(menuNode_t, u.container.scrollCur),  MEMBER_SIZEOF(menuNode_t, u.container.scrollCur)},
+	{"viewsize", V_INT, offsetof(menuNode_t, u.container.scrollNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollNum)},
+	{"fullsize", V_INT, offsetof(menuNode_t, u.container.scrollTotalNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollTotalNum)},
+	{"viewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.container.onViewChange), MEMBER_SIZEOF(menuNode_t, u.container.onViewChange)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -1456,7 +1457,9 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
 	behaviour->properties = properties;
 
+#if 0
 	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
 	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
 	Cmd_AddCommand("scrollcont_scroll", MN_ScrollContainerScroll_f, "Scrolls the current container.");
+#endif
 }

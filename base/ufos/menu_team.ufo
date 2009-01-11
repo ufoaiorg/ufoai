@@ -1594,6 +1594,11 @@ menu equipment
 		displayammoofweapon		true
 		displayunavailableitem	true
 		columns					1
+		viewchange {
+			*(abstractscrollbar)equip_scroll current <scrollpos>
+			*(abstractscrollbar)equip_scroll viewsize <viewsize>
+			*(abstractscrollbar)equip_scroll fullsize <fullsize>
+		}
 	}
 	container equip_ammo	{
 		pos				"702 418"
@@ -1609,7 +1614,7 @@ menu equipment
 		viewsize 8
 		fullsize 20
 		change {
-			cmd "scrollcont_scroll <lastdiff>;"
+			*equip scrollpos <current>
 		}
 	}
 

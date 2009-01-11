@@ -72,6 +72,7 @@ typedef struct containerExtraData_s {
 	int scrollCur;			/**< Index of first item that is displayed. */
 	int scrollNum;			/**< Number of items that are displayed. */
 	int scrollTotalNum;		/**< Total number of displayable items. */
+	struct menuAction_s *onViewChange;	/**< called when view change (scrollCur, scrollNum, scrollTotalNum) */
 } containerExtraData_t;
 
 
