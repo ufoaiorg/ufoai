@@ -398,6 +398,7 @@ static void R_RegisterSystemVars (void)
 	r_lighting = Cvar_Get("r_lighting", "1", CVAR_ARCHIVE, "Activates or deactivates hardware lighting");
 	r_warp = Cvar_Get("r_warp", "1", CVAR_ARCHIVE, "Activates or deactivates warping surface rendering");
 	r_programs = Cvar_Get("r_programs", "1", CVAR_ARCHIVE, "Use GLSL shaders");
+	r_programs->modified = qfalse;
 	r_shownormals = Cvar_Get("r_shownormals", "0", CVAR_ARCHIVE, "Show normals on bsp surfaces");
 	r_bumpmap = Cvar_Get("r_bumpmap", "1.0", CVAR_ARCHIVE, "Activate bump mapping");
 	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
