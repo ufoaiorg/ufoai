@@ -1024,7 +1024,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 			kb = keybindings[unicode];
 		if (!kb)
 			kb = keybindings[key];
-		if (!kb && CL_OnBattlescape() == qtrue)
+		if (!kb && CL_OnBattlescape())
 			kb = battlekeybindings[key];
 		if (kb) {
 			if (kb[0] == '+') {	/* button commands add keynum and time as a parm */
