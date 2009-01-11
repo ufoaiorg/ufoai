@@ -113,23 +113,19 @@ void AIM_PrevAircraft_f (void)
  */
 void AIR_NewAircraft_f (void)
 {
-	int i = -1;
-	base_t *b = NULL;
+	base_t *b;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <type> <baseIdx>\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (Cmd_Argc() == 3)
-		i = atoi(Cmd_Argv(2));
-
-	if (!baseCurrent || (i >= 0)) {
-		if (i < 0 || i >= MAX_BASES)
+	if (Cmd_Argc() == 3) {
+		const int i = atoi(Cmd_Argv(2));
+			if (i < 0 || i >= MAX_BASES)
 			return;
 
-		if (gd.bases[i].founded)
-			b = B_GetBaseByIDX(i);
+		b = B_GetFoundedBaseByIDX(i);
 	} else
 		b = baseCurrent;
 
