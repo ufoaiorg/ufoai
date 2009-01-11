@@ -134,7 +134,7 @@ void R_DrawChars (void)
 	/* and restore them */
 	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
- }
+}
 
 /**
  * @brief Uploads image data

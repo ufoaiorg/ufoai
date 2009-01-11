@@ -633,6 +633,7 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 {
 	character_t *chr;
+	int reservedReaction, reservedCrouch, reservedShot;
 
 	if (!le) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: No le_t given.\n");
@@ -640,35 +641,35 @@ int CL_ReservedTUs (const le_t * le, const reservation_types_t type)
 	}
 
 	chr = CL_GetActorChr(le);
-
 	if (!chr) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: No character found for le.\n");
 		return -1;
 	}
 
+	reservedReaction = max(0, chr->reservedTus.reaction);
+	reservedCrouch = max(0, chr->reservedTus.crouch);
+	reservedShot = max(0, chr->reservedTus.shot);
+
 	switch (type) {
 	case RES_ALL:
 		/* A summary of ALL TUs that are reserved. */
-		return max(0,chr->reservedTus.reaction)
-			+ max(0, chr->reservedTus.crouch)
-			+ max(0, chr->reservedTus.shot);
-	case RES_ALL_ACTIVE:
+		return reservedReaction + reservedCrouch + reservedShot;
+	case RES_ALL_ACTIVE: {
 		/* A summary of ALL TUs that are reserved depending on their "status". */
+		const int crouch = (chr->reservedTus.reserveCrouch) ? reservedCrouch : 0;
+		/** @todo reserveReaction is not yet correct on the client side - at least not tested. */
 		/* Only use reaction-value if we are have RF activated. */
-		return (
-			((le->state & STATE_REACTION)	/** @todo reserveReaction is not yet correct on the client side - at least not tested. */
-				? max(0,chr->reservedTus.reaction)
-				: 0)
-			+ ((selChr->reservedTus.reserveCrouch)
-				? max(0, chr->reservedTus.crouch)
-				: 0)
-			+ max(0,chr->reservedTus.shot));	/*+ ((chr->reservedTus.shotreserveShot) */
+		if ((le->state & STATE_REACTION))
+			return reservedReaction + reservedShot + crouch;
+		else
+			return reservedShot + crouch;
+	}
 	case RES_REACTION:
-		return max(0, chr->reservedTus.reaction);
+		return reservedReaction;
 	case RES_CROUCH:
-		return max(0, chr->reservedTus.crouch);
+		return reservedCrouch;
 	case RES_SHOT:
-		return max(0, chr->reservedTus.shot);
+		return reservedShot;
 	default:
 		Com_DPrintf(DEBUG_CLIENT, "CL_ReservedTUs: Bad type given: %i\n", type);
 		return -1;
