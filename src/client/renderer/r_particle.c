@@ -122,16 +122,16 @@ static void R_DrawSprite (const ptl_t * p)
 	glTexCoord2f(0, 0);
 	glVertex3fv(pos);
 
+	VectorSubtract(pos, up, pos);
+	glTexCoord2f(1, 0);
+	glVertex3fv(pos);
+
 	VectorAdd(pos, up, pos);
 	glTexCoord2f(0, 1);
 	glVertex3fv(pos);
 
 	VectorAdd(pos, right, pos);
 	glTexCoord2f(1, 1);
-	glVertex3fv(pos);
-
-	VectorSubtract(pos, up, pos);
-	glTexCoord2f(1, 0);
 	glVertex3fv(pos);
 
 	glEnd();
@@ -186,9 +186,10 @@ static void R_DrawPtlCircle (const ptl_t* p)
 	} else {
 		glBegin(GL_TRIANGLE_STRIP);
 		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
+			const float f = theta - M_PI / (radius * accuracy);
 			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
-			glVertex3f(p->s[0] + radius * cos(theta - M_PI / (radius * accuracy)), p->s[1] + radius * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
-			glVertex3f(p->s[0] + (radius - thickness) * cos(theta - M_PI / (radius * accuracy)), p->s[1] + (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
+			glVertex3f(p->s[0] + radius * cos(f), p->s[1] + radius * sin(f), p->s[2]);
+			glVertex3f(p->s[0] + (radius - thickness) * cos(f), p->s[1] + (radius - thickness) * sin(f), p->s[2]);
 			glVertex3f(p->s[0] + (radius - thickness) * cos(theta), p->s[1] + (radius - thickness) * sin(theta), p->s[2]);
 		}
 		glEnd();
