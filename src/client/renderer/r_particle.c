@@ -69,9 +69,7 @@ static void R_GetSpriteVectors (const ptl_t *p, vec3_t right, vec3_t up)
 		break;
 
 	default:
-		/* shouldn't happen */
-		abort();
-		return;
+		Sys_Error("R_GetSpriteVectors: unknown style");
 	}
 }
 
@@ -172,15 +170,11 @@ static void R_DrawPtlCircle (const ptl_t* p)
 	float theta;
 	const float accuracy = 5.0f;
 
-	glDisable(GL_TEXTURE_2D);
-	glEnable(GL_LINE_SMOOTH);
+	R_EnableTexture(&texunit_diffuse, qfalse);
 
 	R_Color(p->color);
 
-	if (p->stipplePattern) {
-		glLineStipple(1, p->stipplePattern);
-		glEnable(GL_LINE_STIPPLE);
-	}
+	glEnable(GL_LINE_SMOOTH);
 
 	assert(radius > thickness);
 	if (thickness <= 1) {
@@ -200,11 +194,9 @@ static void R_DrawPtlCircle (const ptl_t* p)
 		glEnd();
 	}
 
-	if (p->stipplePattern)
-		glDisable(GL_LINE_STIPPLE);
-
 	glDisable(GL_LINE_SMOOTH);
-	glEnable(GL_TEXTURE_2D);
+
+	R_EnableTexture(&texunit_diffuse, qtrue);
 }
 
 /**
@@ -212,15 +204,11 @@ static void R_DrawPtlCircle (const ptl_t* p)
  */
 static void R_DrawPtlLine (const ptl_t * p)
 {
-	glDisable(GL_TEXTURE_2D);
+	R_EnableTexture(&texunit_diffuse, qfalse);
+
 	glEnable(GL_LINE_SMOOTH);
 
 	R_Color(p->color);
-
-	if (p->stipplePattern) {
-		glLineStipple(1, p->stipplePattern);
-		glEnable(GL_LINE_STIPPLE);
-	}
 
 	/* draw line from s to v */
 	glBegin(GL_LINE_STRIP);
@@ -228,11 +216,9 @@ static void R_DrawPtlLine (const ptl_t * p)
 	glVertex3fv(p->v);
 	glEnd();
 
-	if (p->stipplePattern)
-		glDisable(GL_LINE_STIPPLE);
-
 	glDisable(GL_LINE_SMOOTH);
-	glEnable(GL_TEXTURE_2D);
+
+	R_EnableTexture(&texunit_diffuse, qtrue);
 }
 
 
@@ -301,4 +287,6 @@ void R_DrawParticles (void)
 				R_DrawPtlModel(p);
 			R_TexEnv(GL_MODULATE);
 		}
+
+	R_Color(NULL);
 }

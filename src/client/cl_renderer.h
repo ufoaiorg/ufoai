@@ -136,7 +136,6 @@ typedef struct ptl_s {
 	float lightIntensity;
 	float lightSustain;
 	int levelFlags;
-	short stipplePattern;	/**< the GL_LINE_STIPPLE pattern */
 
 	int skin;		/**< model skin to use for this particle */
 
