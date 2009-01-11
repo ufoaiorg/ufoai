@@ -1569,8 +1569,8 @@ menu equipment
 	 */
 	selectbox skins {
 		image	"menu/selectbox_green"
-		pos	"650 290"
-		size	"100 40"
+		pos	"660 290"
+		size	"120 40"
 		cvar	"*cvar mn_skin"
 		color	"0.6 0.6 0.6 0.3"
 	}
