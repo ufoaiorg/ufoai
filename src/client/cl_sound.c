@@ -753,6 +753,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
 				}
 			}
 			FS_NextFileFromFileList(NULL);
+			extension++;
 		}
 		dirList++;
 	}
