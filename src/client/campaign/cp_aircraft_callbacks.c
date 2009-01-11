@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cp_aircraft_callbacks.h"
 #include "cp_aircraft.h"
+#include "../cl_team.h" /* for CL_UpdateActorAircraftVar */
+#include "cl_mapfightequip.h" /* for AII_GetSlotItems */
 
 /**
  * @brief Script function for AIR_AircraftReturnToBase
@@ -175,6 +177,95 @@ void AIM_AircraftStart_f (void)
 	/* Return to geoscape. */
 	MN_PopMenu(qfalse);
 	MN_PopMenu(qfalse);
+}
+
+/**
+ * @brief Console command binding for AIR_AircraftSelect().
+ */
+void AIR_AircraftSelect_f (void)
+{
+	base_t *base = baseCurrent;
+	const menu_t menu = *MN_GetActiveMenu();
+
+	/* calling from console? with no baseCurrent? */
+	if (!base || !base->numAircraftInBase
+	 || (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
+		if (!Q_strncmp(menu.name, "aircraft", 8))
+			MN_PopMenu(qfalse);
+		return;
+	}
+
+	AIR_AircraftSelect(base->aircraftCurrent);
+	if (!base->aircraftCurrent && !Q_strncmp(menu.name, "aircraft", 8))
+		MN_PopMenu(qfalse);
+}
+
+#define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
+#define SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE 2
+#define SOLDIER_EQUIP_MENU_BUTTON_OK 3
+/**
+ * @brief Determines the state of the equip soldier menu button:
+ * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE if no aircraft in base
+ * @returns SOLIDER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE if no soldiers available
+ * @returns SOLIDER_EQUIP_MENU_BUTTON_OK if none of the above is true
+ */
+static int CL_EquipSoldierState (const aircraft_t * aircraft)
+{
+	if (!AIR_IsAircraftInBase(aircraft)) {
+		return SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE;
+	} else {
+		if (E_CountHired(aircraft->homebase, EMPL_SOLDIER) <= 0)
+			return SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE;
+		else
+			return SOLDIER_EQUIP_MENU_BUTTON_OK;
+	}
+}
+
+/**
+ * @brief Sets aircraftCurrent and updates related cvars and menutexts.
+ * @param[in] aircraft Pointer to given aircraft that should be selected in the menu.
+ */
+void AIR_AircraftSelect (aircraft_t* aircraft)
+{
+	menuNode_t *node = NULL;
+	static char aircraftInfo[256];
+	base_t *base = NULL;
+
+	if (aircraft != NULL)
+		base = aircraft->homebase;
+
+	if (!base || !base->numAircraftInBase) {
+		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
+		return;
+	}
+
+	node = MN_GetNodeFromCurrentMenu("aircraft");
+
+	assert(aircraft);
+	assert(aircraft->homebase == base);
+	CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
+
+	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
+	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
+	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
+	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", _(aircraft->name), AIR_GetAircraftIdxInBase(aircraft) + 1, base->numAircraftInBase));	/**< @todo Comment on the "+1" part here. */
+	if (!aircraft->tech)
+		Sys_Error("No technology assigned to aircraft '%s'", aircraft->id);
+	Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
+
+	/* generate aircraft info text */
+	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i km/h\n"),
+		CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_SPEED], AIR_STATS_SPEED));
+	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(aircraft->fuel, AIR_STATS_FUELSIZE),
+		CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Operational range:\t%i km\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE] *
+		aircraft->stats[AIR_STATS_SPEED], AIR_STATS_OP_RANGE)), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AII_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
+
+	mn.menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
+	MN_ExecuteConfunc("aircraft_checkbuttons");
 }
 
 void AIR_InitCallbacks (void)

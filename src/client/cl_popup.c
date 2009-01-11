@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_popup.h"
 #include "menu/m_popup.h"
 #include "campaign/cp_time.h"
+#include "campaign/cp_aircraft_callbacks.h"
 
 /* popup_aircraft display the actions availables for an aircraft */
 

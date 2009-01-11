@@ -32,6 +32,8 @@ void AIM_ResetAircraftCvars_f (void);
 void AIM_NextAircraft_f(void);
 void AIM_PrevAircraft_f(void);
 void AIM_AircraftReturnToBase_f(void);
+void AIR_AircraftSelect(aircraft_t *aircraft);
+void AIR_AircraftSelect_f(void);
 
 void AIR_InitCallbacks(void);
 void AIR_ShutdownCallbacks(void);
