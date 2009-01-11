@@ -21,3 +21,4 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 void ToolsCheckErrors(void);
 void ToolsCompile(void);
+void ToolsGenerateMaterials(void);

@@ -650,6 +650,10 @@ int main (int argc, const char **argv)
 		}
 		Check_Free();
 		return 0;
+	} else if (config.generateMaterialFile) {
+		/* start from scratch */
+		LoadMapFile(mapFilename);
+		config.nolighting = LIGHTING_NONE;
 	} else {
 		/* start from scratch */
 		LoadMapFile(mapFilename);

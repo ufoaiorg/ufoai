@@ -51,9 +51,9 @@ static void exec_print_cmd (const ExecCmd *e)
 	g_return_if_fail(e != NULL);
 	if (show_trace) {
 		guint i = 0;
-		for (; i < e->args->len; i++)
-			g_debug("%s ", (gchar*) g_ptr_array_index(e->args, i));
-		g_debug("\n");
+		/* args are null terminated */
+		for (; i < e->args->len - 1; i++)
+			g_debug("- %s\n", (gchar*) g_ptr_array_index(e->args, i));
 	}
 }
 
@@ -129,9 +129,8 @@ static void exec_spawn_process (ExecCmd *e, GSpawnChildSetupFunc child_setup)
 	exec_print_cmd(e);
 	gint std_out = 0, std_err = 0;
 	GError *err = NULL;
-	if (g_spawn_async_with_pipes(NULL, (gchar**) e->args->pdata, NULL, (GSpawnFlags)(G_SPAWN_SEARCH_PATH
-			| G_SPAWN_LEAVE_DESCRIPTORS_OPEN | G_SPAWN_DO_NOT_REAP_CHILD), child_setup, e, &e->pid, NULL, &std_out,
-			&std_err, &err)) {
+	const GSpawnFlags flags = (GSpawnFlags)(G_SPAWN_SEARCH_PATH | G_SPAWN_LEAVE_DESCRIPTORS_OPEN | G_SPAWN_DO_NOT_REAP_CHILD);
+	if (g_spawn_async_with_pipes(NULL, (gchar**) e->args->pdata, NULL, flags, child_setup, e, &e->pid, NULL, &std_out, &std_err, &err)) {
 		g_debug("exec_spawn_process - spawed process with pid [%d]\n", e->pid);
 		GIOChannel *char_out = NULL, *chan_err = NULL;
 		guint chan_out_id = 0, chan_err_id = 0;

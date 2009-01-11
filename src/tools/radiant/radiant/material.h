@@ -29,5 +29,6 @@
 
 void Material_Construct(void);
 void Material_Destroy(void);
+const char *Material_GetFilename(void);
 
 #endif

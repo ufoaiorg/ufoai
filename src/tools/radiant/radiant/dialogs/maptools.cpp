@@ -27,11 +27,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "../radiant.h"
 #include "maptools.h"
+#include "../material.h"
 #include "../exec.h"
 #include "os/file.h"  // file_exists
 #include "os/path.h"  // path_get_filename_start
 #include "scenelib.h" // g_brushCount
 #include "gtkutil/messagebox.h"  // gtk_MessageBox
+#include "../dialogs/texteditor.h"
 #include "stream/stringstream.h"
 #include "../qe3.h" // g_brushCount
 #include "../map.h"
@@ -365,6 +367,47 @@ static void compileReadProgress (void *ex, void *buffer)
 			}
 		}
 	}
+	g_message("%s\n", (gchar*) buffer);
+}
+
+void ToolsGenerateMaterials (void)
+{
+	const char *compilerBinaryWithPath;
+
+	if (!ConfirmModified("Generate Materials"))
+		return;
+
+	/* empty map? */
+	if (!g_brushCount.get()) {
+		gtk_MessageBox(0, _("Nothing to generate materials from in this map\n"), _("Generate Materials"), eMB_OK, eMB_ICONERROR);
+		return;
+	}
+
+	compilerBinaryWithPath = CompilerBinaryWithPath_get();
+
+	if (file_exists(compilerBinaryWithPath)) {
+		const char* fullname = Map_Name(g_map);
+		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_materials");
+		const char *enginePath = GlobalRadiant().getEnginePath();
+
+		Exec *compilerRun = exec_new("GenerateMaterialsRun", _("Generate materials from the current map"));
+		ExecCmd *cmd = exec_cmd_new(&compilerRun);
+		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
+		exec_cmd_add_arg(cmd, compiler_parameter);
+		exec_cmd_add_arg(cmd, fullname);
+		cmd->read_proc = compileReadProgress;
+		cmd->working_dir = g_strdup(enginePath);
+		exec_run(compilerRun);
+		g_warning("cnt: %i (%s)\n", cnt, fullname);
+		cnt = 0;
+		if (exec_cmd_get_state(cmd) == COMPLETED)
+			DoTextEditor(Material_GetFilename(), 0, "");
+	} else {
+		StringOutputStream message(256);
+		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
+		gtk_MessageBox(0, message.c_str(), _("Generate Materials"), eMB_OK, eMB_ICONERROR);
+		g_warning("%s\n", message.c_str());
+	}
 }
 
 /**
@@ -388,6 +431,7 @@ void ToolsCompile (void)
 	if (file_exists(compilerBinaryWithPath)) {
 		const char* fullname = Map_Name(g_map);
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_compile");
+		const char *enginePath = GlobalRadiant().getEnginePath();
 
 		Exec *compilerRun = exec_new("CompileRun", _("Compiles the current map with the mapcompiler"));
 		ExecCmd *cmd = exec_cmd_new(&compilerRun);
@@ -395,7 +439,7 @@ void ToolsCompile (void)
 		exec_cmd_add_arg(cmd, compiler_parameter);
 		exec_cmd_add_arg(cmd, fullname);
 		cmd->read_proc = compileReadProgress;
-		cmd->working_dir = g_strdup(path_get_filename_start(compilerBinaryWithPath));
+		cmd->working_dir = g_strdup(enginePath);
 		exec_run(compilerRun);
 		g_warning("cnt: %i (%s)\n", cnt, fullname);
 		cnt = 0;

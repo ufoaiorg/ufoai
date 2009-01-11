@@ -70,15 +70,9 @@ void GenerateMaterialFromTexture (void)
 		return;
 	}
 
-	char materialFileName[256];
-	const char *enginePath = GlobalRadiant().getEnginePath();
-	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
-	snprintf(materialFileName, sizeof(materialFileName), "%s%s/materials/%s", enginePath, baseGame, path_get_filename_start(mapname));
-	materialFileName[strlen(materialFileName) - 1] = 't'; /* map => mat */
-
+	const char *materialFileName = Material_GetFilename();
 	int cursorPos = 0;
 	StringOutputStream append(256);
-
 	const char *materialFileContent = Material_LoadFile(materialFileName);
 
 	if (!g_SelectedFaceInstances.empty()) {
@@ -99,6 +93,17 @@ void GenerateMaterialFromTexture (void)
 	}
 
 	DoTextEditor(materialFileName, cursorPos, append.c_str());
+}
+
+const char *Material_GetFilename (void)
+{
+	static char materialFileName[256];
+	const char *mapname = Map_Name(g_map);
+	const char *enginePath = GlobalRadiant().getEnginePath();
+	const char *baseGame = GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame");
+	snprintf(materialFileName, sizeof(materialFileName), "%s%s/materials/%s", enginePath, baseGame, path_get_filename_start(mapname));
+	materialFileName[strlen(materialFileName) - 1] = 't'; /* map => mat */
+	return materialFileName;
 }
 
 void Material_Construct (void)

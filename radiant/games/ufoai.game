@@ -15,6 +15,7 @@
   mapcompiler_param_compile="-extra"
   mapcompiler_param_fix="-v 1 -fix"
   mapcompiler_param_check="-v 1 -check"
+  mapcompiler_param_materials="-material"
   surf1="light"
   surf2="slick"
   surf4="warp"
