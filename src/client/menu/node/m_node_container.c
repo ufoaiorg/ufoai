@@ -611,6 +611,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		vec3_t pos;
 		vec3_t ammopos;
 		const float *color;
+		qboolean isHilight = qfalse;
 		int amount;
 		const int col = items % node->u.container.columns;
 		int cellHeight = 0;
@@ -649,13 +650,20 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		pos[1] += *currentHeight;
 		pos[2] = 0;
 
+		if (highlightType) {
+			if (!Q_strncmp(obj->type, "ammo", MAX_VAR))
+				isHilight = INVSH_LoadableInWeapon(obj, highlightType);
+			else
+				isHilight = INVSH_LoadableInWeapon(highlightType, obj);
+		}
+
 		if (icItem != NULL) {
-			if (highlightType && INVSH_LoadableInWeapon(highlightType, obj))
+			if (isHilight)
 				color = colorLoadable;
 			else
 				color = colorDefault;
 		} else {
-			if (highlightType && INVSH_LoadableInWeapon(highlightType, obj))
+			if (isHilight)
 				color = colorDisabledHiden;
 			else
 				color = colorDisabledLoadable;
