@@ -953,8 +953,6 @@ void CL_ParticleRun (void)
 }
 
 
-/* =========================================================== */
-
 /**
  * @param[in] es Entity string to parse the particle from
  * @param[in] afterwards If this is true you can modify the particle after the init
@@ -1041,9 +1039,6 @@ void CL_RunMapParticles (void)
 				mp->nextTime = 0;
 		}
 }
-
-
-/* =========================================================== */
 
 
 static void CL_ParsePtlCmds (const char *name, const char **text)
@@ -1234,30 +1229,6 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 	pc = &ptlCmd[numPtlCmds++];
 	memset(pc, 0, sizeof(*pc));
 }
-
-#if 0
-/**
- * @brief Searches for the particle index in ptlDef array
- * @param[in] name Name of the particle
- * @return id of the particle in ptlDef array
- */
-int CL_GetParticleIndex (const char *name)
-{
-	int i;
-
-	/* search for menus with same name */
-	for (i = 0; i < numPtlDefs; i++)
-		if (!Q_strncmp(name, ptlDef[i].name, MAX_VAR))
-			break;
-
-	if (i >= numPtlDefs) {
-		Com_Printf("CL_GetParticleIndex: unknown particle '%s'\n", name);
-		return -1;
-	}
-
-	return i;
-}
-#endif
 
 /**
  * @brief Parses particle definitions from UFO-script files

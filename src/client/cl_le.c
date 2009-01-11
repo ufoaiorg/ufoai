@@ -1367,6 +1367,7 @@ static inline void CL_TraceBounds (const vec3_t start, const vec3_t mins, const 
  * @param[in] passle Ignore this local entity in the trace (might be NULL)
  * @param[in] passle2 Ignore this local entity in the trace (might be NULL)
  * @param[in] contentmask Searched content the trace should watch for
+ * @todo cl_worldlevel->integer should be a function parameter to eliminate sideeffects like e.g. in the particles code
  */
 trace_t CL_Trace (vec3_t start, vec3_t end, const vec3_t mins, const vec3_t maxs, le_t * passle, le_t * passle2, int contentmask)
 {
