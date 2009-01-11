@@ -928,7 +928,6 @@ void Key_SetDest (int key_dest)
  */
 void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigned time)
 {
-	const char *kb = NULL;
 	char cmd[MAX_STRING_CHARS];
 
 	/* unbindable key */
@@ -990,7 +989,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		 * to keep the character from continuing an action started before a console
 		 * switch.  Button commands include the kenum as a parameter, so multiple
 		 * downs can be matched with ups */
-		kb = menukeybindings[key];
+		const char *kb = menukeybindings[key];
 		/* this loop ensures, that every down event reaches it's proper kbutton_t */
 		for (i = 0; i < 3; i++) {
 			if (kb && kb[0] == '+') {
@@ -1016,6 +1015,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		/* Some keyboards need modifiers to access key values that are
 		 * present as bare keys on other keyboards. Smooth over the difference
 		 * here by using the translated value if there is a binding for it. */
+		const char *kb = NULL;
 		if (mouseSpace == MS_MENU && unicode >= 32 && unicode < 127)
 			kb = menukeybindings[unicode];
 		if (!kb && mouseSpace == MS_MENU)

@@ -102,13 +102,13 @@ void Cbuf_Init (void)
 void Cbuf_AddText (const char *text)
 {
 	int l;
-	char *cmdopen;
 
-	if (cmd_closed && (cmdopen = strstr(text, "cmdopen")) != NULL)
-		text = cmdopen;
-	else if (cmd_closed) {
-		Com_DPrintf(DEBUG_COMMANDS, "Cbuf_AddText: currently closed\n");
-		return;
+	if (cmd_closed) {
+		text = strstr(text, "cmdopen");
+		if (text == NULL) {
+			Com_DPrintf(DEBUG_COMMANDS, "Cbuf_AddText: currently closed\n");
+			return;
+		}
 	}
 
 	l = strlen(text);
