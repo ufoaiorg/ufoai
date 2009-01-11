@@ -108,32 +108,6 @@ void AIM_PrevAircraft_f (void)
 }
 
 /**
- * @brief Calls AIR_NewAircraft for given base with given aircraft type.
- * @sa AIR_NewAircraft
- */
-void AIR_NewAircraft_f (void)
-{
-	base_t *b;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <type> <baseIdx>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (Cmd_Argc() == 3) {
-		const int i = atoi(Cmd_Argv(2));
-			if (i < 0 || i >= MAX_BASES)
-			return;
-
-		b = B_GetFoundedBaseByIDX(i);
-	} else
-		b = baseCurrent;
-
-	if (b)
-		AIR_NewAircraft(b, Cmd_Argv(1));
-}
-
-/**
  * @brief Starts an aircraft or stops the current mission and let the aircraft idle around.
  */
 void AIM_AircraftStart_f (void)

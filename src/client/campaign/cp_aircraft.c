@@ -736,7 +736,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		if (aircraft->hangar == AIRCRAFT_HANGAR_ERROR)
 			Com_Printf("AIR_NewAircraft: ERROR, new aircraft but no free space in hangars!\n");
 		/* also update the base menu buttons */
-		Cmd_ExecuteString("base_init");
+		B_BaseMenuInit(base);
 		return aircraft;
 	}
 	return NULL;
@@ -999,7 +999,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	}
 
 	/* also update the base menu buttons */
-	Cmd_ExecuteString("base_init");
+	B_BaseMenuInit(base);
 
 	/* update hangar capacities */
 	AIR_UpdateHangarCapForAll(base);

@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_AIRCRAFT_CALLBACKS_H
 
 void AIM_AircraftStart_f(void);
-void AIR_NewAircraft_f(void);
 void AIM_ResetAircraftCvars_f (void);
 void AIM_NextAircraft_f(void);
 void AIM_PrevAircraft_f(void);

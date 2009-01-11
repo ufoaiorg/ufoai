@@ -2228,7 +2228,6 @@ static void CL_NationList_f (void)
 static const cmdList_t game_commands[] = {
 	{"mn_next_aircraft", AIM_NextAircraft_f, NULL},
 	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL},
-	{"aircraft_new", AIR_NewAircraft_f, NULL},
 	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
 	{"aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase"},
 	{"aircraft_start", AIM_AircraftStart_f, NULL},
