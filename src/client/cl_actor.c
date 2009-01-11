@@ -727,7 +727,6 @@ void CL_ReserveTUs (const le_t * le, const reservation_types_t type, const int t
 	}
 
 	chr = CL_GetActorChr(le);
-
 	if (!chr)
 		return;
 
@@ -782,12 +781,13 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n",  CL_GetActorNumber(actor), actor->entnum, handidx, fdIdx);
+	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n",
+		CL_GetActorNumber(actor), actor->entnum, handidx, fdIdx);
 
 	chr = CL_GetActorChr(actor);
 
 	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
-	if ((objIdx >= 0) && (fdIdx >= 0)) {
+	if (objIdx >= 0 && fdIdx >= 0) {
 		objDef_t *ammo = NULL;
 		const fireDef_t *fd;
 		int weapFdsIdx = -1;
@@ -801,7 +801,8 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 		/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
 		if (fd) {
 			if (chr->reservedTus.reserveReaction == STATE_REACTION_MANY) {
-				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Reserving %i x %i = %i TUs for RF.\n", usableTusForRF / fd->time, fd->time, fd->time * (usableTusForRF / fd->time));
+				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Reserving %i x %i = %i TUs for RF.\n",
+					usableTusForRF / fd->time, fd->time, fd->time * (usableTusForRF / fd->time));
 				CL_ReserveTUs(actor, RES_REACTION, fd->time * (usableTusForRF / fd->time));
 			} else {
 				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Reserving %i TUs for RF.\n", fd->time);
@@ -813,8 +814,10 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 	}
 
 	CL_CharacterSetRFMode(chr, handidx, fdIdx, objIdx);
-	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fdIdx, objIdx); /* Send RFmode[] to server-side storage as well. See g_local.h for more. */
-	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction); /* Update server-side settings */
+	/* Send RFmode[] to server-side storage as well. See g_local.h for more. */
+	MSG_Write_PA(PA_REACT_SELECT, actor->entnum, handidx, fdIdx, objIdx);
+	/* Update server-side settings */
+	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction);
 }
 
 /**
@@ -862,7 +865,7 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tu%i", hand, fd->fdIdx);
 	Cvar_Set(cvarName, va(_("TU: %i"), fd->time));
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_shot%i", hand, fd->fdIdx);
-	Cvar_Set(cvarName, va(_("Shots:%i"), fd->ammo));
+	Cvar_Set(cvarName, va(_("Shots: %i"), fd->ammo));
 }
 
 /**
