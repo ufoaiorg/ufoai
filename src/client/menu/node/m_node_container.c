@@ -995,7 +995,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		ammopos[2] = 0;
 
 		/* draw the item name. */
-		R_FontTextSize("f_verysmall", va("%s", obj->name),
+		R_FontTextSize("f_verysmall", obj->name,
 			cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
 		cellHeight += height;
 
