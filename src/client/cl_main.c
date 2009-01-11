@@ -662,9 +662,6 @@ void CL_InitAfter (void)
 	cls.loadingPercent = 5.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 
-	/** @todo show this on the screen */
-	S_RegisterSounds();
-
 	/* preload all models for faster access */
 	CL_PrecacheModels(); /* 95% */
 

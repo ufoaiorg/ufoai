@@ -271,11 +271,13 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 			mix = Mix_LoadWAV_RW(src, 1);
 			if (!mix)
 				Com_Printf("S_LoadSound: Could not load %s file 'sound/%s.%s' (%s)\n", *extension, sound, *extension, Mix_GetError());
+			else
+				break;
 		}
 		extension++;
 	}
 
-	if (size != 0) {
+	if (size == 0) {
 		Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
 		return NULL;
 	}
@@ -510,12 +512,10 @@ static void S_Play_f (void)
 
 
 /**
- * @note Called at precache phase - only load these soundfiles once
- * @sa CL_LoadMedia
+ * @note Called at precache phase - only load these soundfiles once at startup or on sound restart
  * @sa S_Restart_f
- * @sa CL_RequestNextDownload
  */
-void S_RegisterSounds (void)
+static void S_RegisterSounds (void)
 {
 	int i, j, k;
 
@@ -523,13 +523,13 @@ void S_RegisterSounds (void)
 	for (i = 0; i < csi.numODs; i++) { /* i = obj */
 		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
 			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
-				if (csi.ods[i].fd[j][k].fireSound[0])
+				if (csi.ods[i].fd[j][k].fireSound[0] != '\0')
 					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
-				if (csi.ods[i].fd[j][k].impactSound[0])
+				if (csi.ods[i].fd[j][k].impactSound[0] != '\0')
 					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
-				if (csi.ods[i].fd[j][k].hitBodySound[0])
+				if (csi.ods[i].fd[j][k].hitBodySound[0] != '\0')
 					S_RegisterSound(csi.ods[i].fd[j][k].hitBodySound);
-				if (csi.ods[i].fd[j][k].bounceSound[0])
+				if (csi.ods[i].fd[j][k].bounceSound[0] != '\0')
 					S_RegisterSound(csi.ods[i].fd[j][k].bounceSound);
 			}
 		}
@@ -556,7 +556,6 @@ static void S_Restart_f (void)
 	if (!sound_started)
 		return;
 
-	S_RegisterSounds();
 	/* restart the music, too */
 	snd_music->modified = qtrue;
 }
@@ -830,6 +829,8 @@ void S_Init (void)
 	}
 
 	sound_started = qtrue;
+
+	S_RegisterSounds();
 
 	memset(&music, 0, sizeof(music));
 }
