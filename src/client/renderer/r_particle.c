@@ -122,16 +122,16 @@ static void R_DrawSprite (const ptl_t * p)
 	glTexCoord2f(0, 0);
 	glVertex3fv(pos);
 
-	VectorSubtract(pos, up, pos);
-	glTexCoord2f(1, 0);
-	glVertex3fv(pos);
-
 	VectorAdd(pos, up, pos);
 	glTexCoord2f(0, 1);
 	glVertex3fv(pos);
 
 	VectorAdd(pos, right, pos);
 	glTexCoord2f(1, 1);
+	glVertex3fv(pos);
+
+	VectorSubtract(pos, up, pos);
+	glTexCoord2f(1, 0);
 	glVertex3fv(pos);
 
 	glEnd();
