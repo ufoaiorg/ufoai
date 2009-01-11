@@ -76,10 +76,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	char filename_inzip[MAX_QPATH];
 
 	char const* const ext = strrchr(packfile, '.');
-	if (!ext || (
-	      Q_strcasecmp(ext, ".pk3") != 0 &&
-	      Q_strcasecmp(ext, ".zip") != 0
-	    )) {
+	if (!ext || (Q_strcasecmp(ext, ".pk3") != 0 && Q_strcasecmp(ext, ".zip") != 0)) {
 		/* Unrecognized file type! */
 		Com_Printf("Pack file type %s unrecognized\n", ext);
 		return NULL;

@@ -481,7 +481,7 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 {
 	FILE *file;
 	qboolean terrainByTexture = qfalse;
-	char fileBase[MAX_OSPATH];
+	char fileBase[MAX_OSPATH], materialPath[MAX_OSPATH];
 
 	if (!config.generateMaterialFile)
 		return;
@@ -493,13 +493,14 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 	assert(filename);
 
 	COM_StripExtension(filename, fileBase, sizeof(fileBase));
+	Com_sprintf(materialPath, sizeof(materialPath), "%smaterials/%s.mat", FS_GameDir(), COM_SkipPath(fileBase));
 
-	file = fopen(va("%s.mat", fileBase), "r");
+	file = fopen(materialPath, "r");
 	if (!file) {
 		/* create a new file */
-		file = fopen(va("%s.mat", fileBase), "a");
+		file = fopen(materialPath, "a");
 		if (!file) {
-			Com_Printf("Could not open material file '%s.mat' for writing\n", fileBase);
+			Com_Printf("Could not open material file '%s' for writing\n", materialPath);
 			config.generateMaterialFile = qfalse;
 			return;
 		}
@@ -507,9 +508,9 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 	} else {
 		/* reuse the existing file */
 		fclose(file);
-		file = fopen(va("%s.mat", fileBase), "a");
+		file = fopen(materialPath, "a");
 		if (!file) {
-			Com_Printf("Could not open material file '%s.mat' for writing\n", fileBase);
+			Com_Printf("Could not open material file '%s' for writing\n", materialPath);
 			config.generateMaterialFile = qfalse;
 			return;
 		}
@@ -767,7 +768,6 @@ static void ParseBrush (entity_t *mapent, const char *filename)
 			planepts[1][0], planepts[1][1], planepts[1][2],
 			planepts[2][0], planepts[2][1], planepts[2][2],
 			side->texinfo, td.name, planenum);
-
 
 		nummapbrushsides++;
 		b->numsides++;
