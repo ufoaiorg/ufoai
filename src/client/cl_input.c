@@ -781,7 +781,7 @@ static void CL_NextAlien_f (void)
 		if (++i >= numLEs)
 			i = 0;
 		le = &LEs[i];
-		if (le->inuse && LE_IsLivingActor(le) && le->team != cls.team
+		if (le->inuse && !le->invis && LE_IsLivingActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			V_CenterView(le->pos);
