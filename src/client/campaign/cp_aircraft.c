@@ -2935,16 +2935,16 @@ void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
 
 	if (AIR_IsEmployeeInAircraft(employee, aircraft)) {
 		/* Remove soldier from aircraft/team. */
-		MN_ExecuteConfunc("listdel %i\n", num);
+		MN_ExecuteConfunc("listdel %i", num);
 		/* use the global aircraft index here */
 		AIR_RemoveEmployee(employee, aircraft);
-		MN_ExecuteConfunc("listholdsnoequip %i\n", num);
+		MN_ExecuteConfunc("listholdsnoequip %i", num);
 	} else {
 		/* Assign soldier to aircraft/team if aircraft is not full */
 		if (AIR_AddEmployee(employee, aircraft))
-			MN_ExecuteConfunc("listadd %i\n", num);
+			MN_ExecuteConfunc("listadd %i", num);
 		else
-			MN_ExecuteConfunc("listdel %i\n", num);
+			MN_ExecuteConfunc("listdel %i", num);
 	}
 	/* Select the desired one anyways. */
 	CL_UpdateActorAircraftVar(aircraft, employee->type);
