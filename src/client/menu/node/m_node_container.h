@@ -68,6 +68,7 @@ typedef struct containerExtraData_s {
 	qboolean displayUnavailableItem;
 	qboolean displayAmmoOfWeapon;
 	qboolean displayUnavailableAmmoOfWeapon;
+	qboolean displayAvailableOnTop;
 
 	int scrollCur;			/**< Index of first item that is displayed. */
 	int scrollNum;			/**< Number of items that are displayed. */

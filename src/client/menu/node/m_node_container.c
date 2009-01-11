@@ -561,7 +561,7 @@ static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDe
  * @param[out] itemFound Item found in the container (can be null)
  * @return True is the object is allowed
  */
-static qboolean MN_ContainerNodeFilterItem(const menuNode_t const *node, int displayType, qboolean displayAvailable, objDef_t *obj, invList_t **itemFound)
+static qboolean MN_ContainerNodeFilterItem(const menuNode_t const *node, int displayType, int displayAvailable, objDef_t *obj, invList_t **itemFound)
 {
 	qboolean isAmmo;
 	qboolean isWeapon;
@@ -581,8 +581,10 @@ static qboolean MN_ContainerNodeFilterItem(const menuNode_t const *node, int dis
 		return qfalse;
 
 	*itemFound = MN_ContainerNodeGetExistingItem(node, obj, EXTRADATA(node).filterEquipType);
-	if ((displayAvailable && *itemFound == NULL) || (!displayAvailable && *itemFound != NULL))
-		return qfalse;
+	if (displayAvailable != -1) {
+		if ((displayAvailable == 1 && *itemFound == NULL) || (displayAvailable == 0 && *itemFound != NULL))
+			return qfalse;
+	}
 
 	return qtrue;
 }
@@ -758,18 +760,31 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	int visibleRows = 0;
 	int totalRows = 0;
 
-	/* available items */
-	if (EXTRADATA(node).displayWeapon)
-		MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, qtrue);
-	if (EXTRADATA(node).displayAmmo)
-		MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, qtrue);
-
-	/* unavailable items */
-	if (EXTRADATA(node).displayUnavailableItem) {
+	if (EXTRADATA(node).displayAvailableOnTop) {
+		/* available items */
 		if (EXTRADATA(node).displayWeapon)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, qfalse);
+			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, 1);
 		if (EXTRADATA(node).displayAmmo)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, qfalse);
+			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, 1);
+		/* unavailable items */
+		if (EXTRADATA(node).displayUnavailableItem) {
+			if (EXTRADATA(node).displayWeapon)
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, 0);
+			if (EXTRADATA(node).displayAmmo)
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, 0);
+		}
+	} else {
+		if (EXTRADATA(node).displayUnavailableItem) {
+			if (EXTRADATA(node).displayWeapon)
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, -1);
+			if (EXTRADATA(node).displayAmmo)
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, -1);
+		} else {
+			if (EXTRADATA(node).displayWeapon)
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, 1);
+			if (EXTRADATA(node).displayAmmo)
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, 1);
+		}
 	}
 
 	/* Update display of scroll buttons if something changed. */
@@ -908,7 +923,7 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
  */
 static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* const node,
 	int *currentHeight, int *visibleRows, int *totalRows,
-	int displayType, qboolean displayAvailable,
+	int displayType, int displayAvailable,
 	int mouseX, int mouseY, int* contX, int* contY)
 {
 	qboolean outOfNode = qfalse;
@@ -1066,18 +1081,31 @@ static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const nod
 		int visibleRows = 0;
 		int totalRows = 0;
 
-		/* available items */
-		if (EXTRADATA(node).displayWeapon)
-			result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, qtrue, mouseX, mouseY, contX, contY);
-		if (!result && EXTRADATA(node).displayAmmo)
-			result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, qtrue, mouseX, mouseY, contX, contY);
-
-		/* unavailable items */
-		if (!result && EXTRADATA(node).displayUnavailableItem) {
+		if (EXTRADATA(node).displayAvailableOnTop) {
+			/* available items */
 			if (EXTRADATA(node).displayWeapon)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, qfalse, mouseX, mouseY, contX, contY);
+				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, 1, mouseX, mouseY, contX, contY);
 			if (!result && EXTRADATA(node).displayAmmo)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, qfalse, mouseX, mouseY, contX, contY);
+				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, 1, mouseX, mouseY, contX, contY);
+			/* unavailable items */
+			if (!result && EXTRADATA(node).displayUnavailableItem) {
+				if (EXTRADATA(node).displayWeapon)
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, 0, mouseX, mouseY, contX, contY);
+				if (!result && EXTRADATA(node).displayAmmo)
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, 0, mouseX, mouseY, contX, contY);
+			}
+		} else {
+			if (EXTRADATA(node).displayUnavailableItem) {
+				if (EXTRADATA(node).displayWeapon)
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, -1, mouseX, mouseY, contX, contY);
+				if (!result && EXTRADATA(node).displayAmmo)
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, -1, mouseX, mouseY, contX, contY);
+			} else {
+				if (EXTRADATA(node).displayWeapon)
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, 1, mouseX, mouseY, contX, contY);
+				if (!result && EXTRADATA(node).displayAmmo)
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, 1, mouseX, mouseY, contX, contY);
+			}
 		}
 	} else {
 		vec2_t nodepos;
@@ -1472,6 +1500,7 @@ static const value_t properties[] = {
 	{"displayweapon", V_BOOL, offsetof(menuNode_t, u.container.displayWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayWeapon)},
 	{"displayammo", V_BOOL, offsetof(menuNode_t, u.container.displayAmmo),  MEMBER_SIZEOF(menuNode_t, u.container.displayAmmo)},
 	{"displayunavailableitem", V_BOOL, offsetof(menuNode_t, u.container.displayUnavailableItem),  MEMBER_SIZEOF(menuNode_t, u.container.displayUnavailableItem)},
+	{"displayavailableontop", V_BOOL, offsetof(menuNode_t, u.container.displayAvailableOnTop),  MEMBER_SIZEOF(menuNode_t, u.container.displayAvailableOnTop)},
 	{"displayammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayAmmoOfWeapon)},
 	{"displayunavailableammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayUnavailableAmmoOfWeapon)},
 	{"columns", V_INT, offsetof(menuNode_t, u.container.columns),  MEMBER_SIZEOF(menuNode_t, u.container.columns)},
