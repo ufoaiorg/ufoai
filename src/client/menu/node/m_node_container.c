@@ -1121,15 +1121,15 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 }
 
 /**
- * @brief Tries to switch to drag mode or auto-assign items
+ * @brief Try to autoplace an item at a position
  * when right-click was used in the inventory.
  * @param[in] node The node in the menu that the mouse is over (i.e. a container node).
  * @param[in] base The base we are in.
  * @param[in] mouseX/mouseY Mouse coordinates.
  * @param[in] rightClick If we want to auto-assign items instead of dragging them this has to be qtrue.
- * @todo split this function in two start drag, and autoplace
+ * @todo Ungeneric function, Not sure we can do it in a generic way
  */
-static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightClick)
+static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 {
 	int sel;
 	invList_t *ic;
@@ -1141,7 +1141,7 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	/* don't allow this in tactical missions */
 	/** @todo use CL_OnBattlescape here?
 	 * get rid of selActor here - if it's really needed, make this a param to this function maybe? */
-	if (selActor && rightClick)
+	if (selActor)
 		return;
 
 	sel = cl_selected->integer;
@@ -1151,93 +1151,96 @@ static void MN_Drag (menuNode_t* node, int mouseX, int mouseY, qboolean rightCli
 	assert(EXTRADATA(node).container);
 
 	ic = MN_ContainerNodeGetItemAtPosition(node, mouseX, mouseY, &fromX, &fromY);
-	Com_DPrintf(DEBUG_CLIENT, "MN_Drag: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	Com_DPrintf(DEBUG_CLIENT, "MN_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
+	if (!ic)
+		return;
 
-	/* Start drag  */
-	if (ic) {
-		if (!rightClick) {
-			/* Found item to drag. Prepare for drag-mode. */
-			MN_DNDDragItem(node, &(ic->item));
-			dragInfoIC = ic;
-			dragInfoFromX = fromX;
-			dragInfoFromY = fromY;
+	/* Right click: automatic item assignment/removal. */
+	if (EXTRADATA(node).container->id != csi.idEquip) {
+		/* Move back to idEquip (ground, floor) container. */
+		INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, EXTRADATA(node).container, ic);
+	} else {
+		qboolean packed = qfalse;
+		int px, py;
+		assert(ic->item.t);
+		/* armour can only have one target */
+		if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
+			packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, EXTRADATA(node).container, ic);
+		/* ammo or item */
+		} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
+			Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
+			packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
+			if (!packed) {
+				Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, EXTRADATA(node).container, ic);
+			}
+			if (!packed) {
+				Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
+				packed = INV_MoveItem( menuInventory, &csi.ids[csi.idBackpack], px, py, EXTRADATA(node).container, ic);
+			}
+			/* Finally try left and right hand. There is no other place to put it now. */
+			if (!packed) {
+				const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
+
+				/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
+				if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
+					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
+				}
+			}
+			if (!packed) {
+				Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, EXTRADATA(node).container, ic);
+			}
 		} else {
-			/* Right click: automatic item assignment/removal. */
-			if (EXTRADATA(node).container->id != csi.idEquip) {
-				/* Move back to idEquip (ground, floor) container. */
-				INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, EXTRADATA(node).container, ic);
+			if (ic->item.t->headgear) {
+				Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHeadgear], &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHeadgear], px, py, EXTRADATA(node).container, ic);
 			} else {
-				qboolean packed = qfalse;
-				int px, py;
-				assert(ic->item.t);
-				/* armour can only have one target */
-				if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
-					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, EXTRADATA(node).container, ic);
-				/* ammo or item */
-				} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
-					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
-					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
-					if (!packed) {
-						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, EXTRADATA(node).container, ic);
-					}
-					if (!packed) {
-						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
-						packed = INV_MoveItem( menuInventory, &csi.ids[csi.idBackpack], px, py, EXTRADATA(node).container, ic);
-					}
-					/* Finally try left and right hand. There is no other place to put it now. */
-					if (!packed) {
-						const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
+				/* left and right are single containers, but this might change - it's cleaner to check
+				 * for available space here, too */
+				Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
+				packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, EXTRADATA(node).container, ic);
+				if (!packed) {
+					const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
 
-						/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
-						if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
-						}
-					}
-					if (!packed) {
-						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, EXTRADATA(node).container, ic);
-					}
-				} else {
-					if (ic->item.t->headgear) {
-						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHeadgear], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHeadgear], px, py, EXTRADATA(node).container, ic);
-					} else {
-						/* left and right are single containers, but this might change - it's cleaner to check
-						 * for available space here, too */
-						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
-						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, EXTRADATA(node).container, ic);
-						if (!packed) {
-							const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
-
-							/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
-							if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
-								Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
-								packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
-							}
-						}
-						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
-						}
-						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, EXTRADATA(node).container, ic);
-						}
-						if (!packed) {
-							Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
-							packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBackpack], px, py, EXTRADATA(node).container, ic);
-						}
+					/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
+					if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
+						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
+						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
 					}
 				}
-				/* no need to continue here - placement wasn't successful at all */
-				if (!packed)
-					return;
+				if (!packed) {
+					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
+				}
+				if (!packed) {
+					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, EXTRADATA(node).container, ic);
+				}
+				if (!packed) {
+					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
+					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBackpack], px, py, EXTRADATA(node).container, ic);
+				}
 			}
 		}
-		UP_ItemDescription(ic->item.t);
-/*		MN_DrawTooltip("f_verysmall", csi.ods[MN_DNDGetItem()->t].name, fromX, fromY, 0);*/
+		/* no need to continue here - placement wasn't successful at all */
+		if (!packed)
+			return;
+	}
+	UP_ItemDescription(ic->item.t);
+
+	/** Hack. Hard to know where are the item now, but if its an armor
+	 * we fire the change event of the armour container. At least to
+	 * update the actor skin.
+	 * The right way is to compute the source and the target container
+	 * and fire the change event for both */
+	if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
+		menuNode_t *armour = MN_GetNode(node->menu, "armour");
+		if (armour) {
+			if (armour->onChange)
+				MN_ExecuteEventActions(armour, armour->onChange);
+		}
 	}
 
 	/* Update display of scroll buttons. */
@@ -1249,15 +1252,25 @@ static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int butto
 {
 	switch (button) {
 	case K_MOUSE1:
+	{
 		/* start drag and drop */
-		MN_Drag(node, x, y, qfalse);
+		invList_t *ic;
+		int fromX, fromY;
+		ic = MN_ContainerNodeGetItemAtPosition(node, x, y, &fromX, &fromY);
+		if (ic) {
+			MN_DNDDragItem(node, &(ic->item));
+			dragInfoIC = ic;
+			dragInfoFromX = fromX;
+			dragInfoFromY = fromY;
+		}
 		break;
+	}
 	case K_MOUSE2:
 		if (MN_DNDIsDragging()) {
 			MN_DNDAbort();
 		} else {
 			/* auto place */
-			MN_Drag(node, x, y, qtrue);
+			MN_ContainerNodeAutoPlace(node, x, y);
 		}
 		break;
 	default:
@@ -1271,8 +1284,6 @@ static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 		return;
 	if (MN_DNDIsDragging()) {
 		MN_DNDDrop();
-		/** @todo ungeneric */
-		Cbuf_AddText(va("soldier_update %i\n", cl_selected->integer));
 	}
 }
 
@@ -1391,6 +1402,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 	} else {
 		menuNode_t *target;
 
+#if 0 /* is it realy need? */
 		/** @todo need to understand what its done here */
 		if (EXTRADATA(source).container->id == csi.idArmour) {
 			/** hackhack @todo This is only because armour containers (and their nodes) are
@@ -1403,7 +1415,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 				dragInfoToY = 0;
 			}
 		}
-
+#endif
 		target = MN_DNDGetTargetNode();
 		if (target) {
 			invList_t *fItem;
@@ -1419,6 +1431,10 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 			INV_MoveItem(menuInventory,
 				EXTRADATA(target).container, dragInfoToX, dragInfoToY,
 				EXTRADATA(source).container, fItem);
+			if (source->onChange)
+				MN_ExecuteEventActions(source, source->onChange);
+			if (source != target && target->onChange)
+				MN_ExecuteEventActions(target, target->onChange);
 		}
 	}
 
