@@ -2041,6 +2041,7 @@ menu popup_multi_selection
 		pos "264 262"
 		size	"496 247"
 		dragbutton true
+		modal	true
 	}
 
 	zone popup

@@ -19,6 +19,9 @@ msgoptions default
 	installation_build_finished notify
 	installation_build_finished sound
 	installation_build_finished pause
+	installation_destroyed notify
+	installation_destroyed sound
+	installation_destroyed pause
 	research_new_proposed notify
 	research_new_proposed pause
 	research_new_proposed sound
