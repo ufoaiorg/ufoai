@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/image.h"
 #include "igl.h"
 #include "../mainframe.h"
+#include <gtk/gtkgl.h>
 
 #ifdef DEBUG
 # define ABOUT_DEBUG "Debug build"
@@ -87,17 +88,64 @@ void DoAbout (void)
 			GtkFrame* frame = create_dialog_frame(_("<b>GTK+ Properties</b>"));
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 			gtk_widget_show(GTK_WIDGET(frame));
-
-			GtkHBox* hboxVersion = create_dialog_hbox(0, 4);
-			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(hboxVersion));
-
-			char versionString[64];
-			g_snprintf(versionString, sizeof(versionString), _("Version: %i.%i.%i"), gtk_major_version, gtk_minor_version, gtk_micro_version);
-			GtkLabel* label = GTK_LABEL(gtk_label_new(versionString));
-			gtk_widget_show(GTK_WIDGET(label));
-			gtk_box_pack_start(GTK_BOX(hboxVersion), GTK_WIDGET(label), FALSE, FALSE, 0);
-			gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-			gtk_label_set_justify(label, GTK_JUSTIFY_LEFT);
+			{
+				GtkTable* table = create_dialog_table(3, 2, 4, 4, 4);
+				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(table));
+				{
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("GTK version:")));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 0, 1,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+				}
+				{
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("GTKGL version:")));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 1, 2,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+				}
+				{
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("GLib version:")));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 2, 3,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+				}
+				{
+					char versionString[16];
+					g_snprintf(versionString, sizeof(versionString), "%i.%i.%i", gtk_major_version, gtk_minor_version, gtk_micro_version);
+					GtkLabel* label = GTK_LABEL(gtk_label_new(versionString));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 0, 1,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+				}
+				{
+					char versionString[16];
+					g_snprintf(versionString, sizeof(versionString), "%i.%i.%i", gtkglext_major_version, gtkglext_minor_version, gtkglext_micro_version);
+					GtkLabel* label = GTK_LABEL(gtk_label_new(versionString));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 1, 2,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+				}
+				{
+					char versionString[16];
+					g_snprintf(versionString, sizeof(versionString), "%i.%i.%i", glib_major_version, glib_minor_version, glib_micro_version);
+					GtkLabel* label = GTK_LABEL(gtk_label_new(versionString));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 2, 3,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+				}
+			}
 		}
 		{
 			GtkFrame* frame = create_dialog_frame(_("<b>OpenGL Properties</b>"));
