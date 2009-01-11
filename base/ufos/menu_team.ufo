@@ -1636,16 +1636,28 @@ menu equipment
 		size			"207 317"
 		displayammo		true
 		columns			2
+		viewchange {
+			*(abstractscrollbar)equip_ammo_scroll current <scrollpos>
+			*(abstractscrollbar)equip_ammo_scroll viewsize <viewsize>
+			*(abstractscrollbar)equip_ammo_scroll fullsize <fullsize>
+		}
 	}
 
 	vscrollbar equip_scroll {
 		image	menu/scrollbar_v_green	blend	true
 		pos "629 405"	height	"339"
-		current 0
-		viewsize 8
-		fullsize 20
+		hidewhenunused true
 		change {
 			*equip scrollpos <current>
+		}
+	}
+
+	vscrollbar equip_ammo_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos "892 405"	height	"339"
+		hidewhenunused true
+		change {
+			*equip_ammo scrollpos <current>
 		}
 	}
 
