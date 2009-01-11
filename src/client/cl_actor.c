@@ -701,7 +701,7 @@ int CL_UsableTUs (const le_t * le)
 static int CL_UsableReactionTUs (const le_t * le)
 {
 	/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) */
-	if (selActor->state & STATE_REACTION)
+	if (le->state & STATE_REACTION)
 		/* CL_UsableTUs DOES NOT return the stored value for "reaction" here. */
 		return CL_UsableTUs(le) + CL_ReservedTUs(le, RES_REACTION);
 	else
