@@ -3115,12 +3115,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
+	if (!LE_IsActor(le)) {
 		Com_Printf("Can't move, LE doesn't exist or is not an actor (number: %i, type: %i)\n",
 			number, le ? le->type : -1);
 		return;
@@ -3225,12 +3220,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 		return;
 	}
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
+	if (!LE_IsActor(le)) {
 		Com_Printf("Can't turn, LE doesn't exist or is not an actor (number: %i, type: %i)\n", entnum, le ? le->type : -1);
 		return;
 	}
@@ -3440,12 +3430,7 @@ static void CL_ActorHit (const le_t * le, vec3_t impact, int normal)
 		return;
 	}
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
+	if (!LE_IsActor(le)) {
 		Com_Printf("CL_ActorHit: Can't spawn particles, LE is not an actor (type: %i)\n", le->type);
 		return;
 	}
@@ -3506,12 +3491,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	if (!le)
 		return; /* maybe hidden or inuse is false? */
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
+	if (!LE_IsActor(le)) {
 		Com_Printf("Can't shoot, LE not an actor (type: %i)\n", le->type);
 		return;
 	}
@@ -3661,12 +3641,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		/* it's OK, the actor not visible */
 		return;
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
+	if (!LE_IsActor(le)) {
 		Com_Printf("CL_ActorStartShoot: LE (%i) not an actor (type: %i)\n", number, le->type);
 		return;
 	}
@@ -3727,12 +3702,7 @@ void CL_ActorDie (struct dbuffer *msg)
 		return;
 	}
 
-	switch (le->type) {
-	case ET_ACTORHIDDEN:
-	case ET_ACTOR:
-	case ET_ACTOR2x2:
-		break;
-	default:
+	if (!LE_IsActor(le)) {
 		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor (type: %i)\n", le->type);
 		return;
 	}
