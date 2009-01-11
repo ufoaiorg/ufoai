@@ -151,7 +151,6 @@ void DoTextEditor (const char* filename, int cursorpos, const char *appendConten
 		}
 		return;
 	} else {
-		GtkTextIter iter;
 		GtkTextBuffer* text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_widget));
 		gtk_text_buffer_set_text(text_buffer, "", 0);
 	}
