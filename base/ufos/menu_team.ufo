@@ -1668,6 +1668,6 @@ menu equipment
 		call names_clear
 		call actor_stats
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
-		cmd "team_initskin;genequip;equip_type primary;equip_select 0;"
+		cmd "team_initskin;genequip;update_item_list;equip_select 0;"
 	}
 }
