@@ -27,14 +27,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "dialog.h"
 #include "widget.h"
 
-GtkWidget* create_padding(int width, int height) {
+static GtkWidget* create_padding(int width, int height) {
 	GtkWidget* widget = gtk_alignment_new(0.0, 0.0, 0.0, 0.0);
 	gtk_widget_show(widget);
 	gtk_widget_set_size_request(widget, width, height);
 	return widget;
 }
 
-const char* messagebox_stock_icon(EMessageBoxIcon type) {
+static const char* messagebox_stock_icon(EMessageBoxIcon type) {
 	switch (type) {
 	default:
 	case eMB_ICONDEFAULT:

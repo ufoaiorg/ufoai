@@ -44,7 +44,7 @@ struct SKeyInfo {
 	unsigned int m_nVKKey;
 };
 
-SKeyInfo g_Keys[] = {
+static const SKeyInfo g_Keys[] = {
 	{"Space", GDK_space},
 	{"Backspace", GDK_BackSpace},
 	{"Escape", GDK_Escape},
@@ -92,7 +92,7 @@ SKeyInfo g_Keys[] = {
 	{"Home", GDK_Home}
 };
 
-int g_nKeyCount = sizeof(g_Keys) / sizeof(SKeyInfo);
+static const int g_nKeyCount = sizeof(g_Keys) / sizeof(SKeyInfo);
 
 const char* global_keys_find(unsigned int key) {
 	for (int i = 0; i < g_nKeyCount; ++i) {
@@ -141,7 +141,7 @@ bool accelerator_map_insert(AcceleratorMap& acceleratorMap, Accelerator accelera
 	return true;
 }
 
-bool accelerator_map_erase(AcceleratorMap& acceleratorMap, Accelerator accelerator) {
+static bool accelerator_map_erase(AcceleratorMap& acceleratorMap, Accelerator accelerator) {
 	if (accelerator.key != 0) {
 		AcceleratorMap::iterator i = acceleratorMap.find(accelerator);
 		if (i == acceleratorMap.end()) {
@@ -152,14 +152,14 @@ bool accelerator_map_erase(AcceleratorMap& acceleratorMap, Accelerator accelerat
 	return true;
 }
 
-Accelerator accelerator_for_event_key(guint keyval, guint state) {
+static Accelerator accelerator_for_event_key(guint keyval, guint state) {
 	keyval = gdk_keyval_to_upper(keyval);
 	if (keyval == GDK_ISO_Left_Tab)
 		keyval = GDK_Tab;
 	return Accelerator(keyval, (GdkModifierType)(state & gtk_accelerator_get_default_mod_mask()));
 }
 
-bool AcceleratorMap_activate(const AcceleratorMap& acceleratorMap, const Accelerator& accelerator) {
+static bool AcceleratorMap_activate(const AcceleratorMap& acceleratorMap, const Accelerator& accelerator) {
 	AcceleratorMap::const_iterator i = acceleratorMap.find(accelerator);
 	if (i != acceleratorMap.end()) {
 		(*i).second();
@@ -174,7 +174,7 @@ static gboolean accelerator_key_event(GtkWindow* window, GdkEventKey* event, Acc
 }
 
 
-AcceleratorMap g_special_accelerators;
+static AcceleratorMap g_special_accelerators;
 
 
 namespace MouseButton {
@@ -187,21 +187,7 @@ enum {
 
 typedef unsigned int ButtonMask;
 
-void print_buttons(ButtonMask mask) {
-	globalOutputStream() << "button state: ";
-	if ((mask & MouseButton::Left) != 0) {
-		globalOutputStream() << "Left ";
-	}
-	if ((mask & MouseButton::Right) != 0) {
-		globalOutputStream() << "Right ";
-	}
-	if ((mask & MouseButton::Middle) != 0) {
-		globalOutputStream() << "Middle ";
-	}
-	globalOutputStream() << "\n";
-}
-
-ButtonMask ButtonMask_for_event_button(guint button) {
+static ButtonMask ButtonMask_for_event_button(guint button) {
 	switch (button) {
 	case 1:
 		return MouseButton::Left;
@@ -213,7 +199,7 @@ ButtonMask ButtonMask_for_event_button(guint button) {
 	return 0;
 }
 
-bool window_has_accel(GtkWindow* toplevel) {
+static bool window_has_accel(GtkWindow* toplevel) {
 	return g_slist_length(gtk_accel_groups_from_object(G_OBJECT(toplevel))) != 0;
 }
 
@@ -221,7 +207,7 @@ namespace {
 bool g_accel_enabled = true;
 }
 
-bool global_accel_enabled() {
+static bool global_accel_enabled() {
 	return g_accel_enabled;
 }
 
