@@ -46,8 +46,8 @@ typedef struct r_progvar_s {
 typedef struct r_program_s {
 	GLuint id;
 	char name[MAX_VAR];
-	r_shader_t *v;
-	r_shader_t *f;
+	r_shader_t *v;	/**< vertex shader */
+	r_shader_t *f;	/**< fragment shader */
 	r_progvar_t vars[MAX_PROGRAM_VARS];
 	void (*init)(void);
 	void (*use)(void);

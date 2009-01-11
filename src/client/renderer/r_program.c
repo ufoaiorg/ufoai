@@ -20,6 +20,7 @@
 */
 
 #include "r_local.h"
+#include "r_error.h"
 
 void R_UseProgram  (r_program_t *prog)
 {
@@ -159,10 +160,16 @@ static void R_ShutdownShader (r_shader_t *sh)
 
 static void R_ShutdownProgram (r_program_t *prog)
 {
-	if (prog->v)
+	if (prog->v) {
+		qglDetachShader(prog->id, prog->v->id);
 		R_ShutdownShader(prog->v);
-	if (prog->f)
+		R_CheckError();
+	}
+	if (prog->f) {
+		qglDetachShader(prog->id, prog->f->id);
 		R_ShutdownShader(prog->f);
+		R_CheckError();
+	}
 
 	qglDeleteProgram(prog->id);
 
