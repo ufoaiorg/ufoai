@@ -63,7 +63,8 @@ void BDEF_MenuInit_f (void)
 	airequipSelectedSlot = 0;
 	/* update position of the arrow in front of the selected base defence */
 	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
-	Vector2Set(node->pos, 25, 30);
+	if (node)
+		Vector2Set(node->pos, 25, 30);
 }
 
 /**
