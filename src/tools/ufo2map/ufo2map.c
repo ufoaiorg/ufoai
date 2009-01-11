@@ -83,7 +83,7 @@ static const usagePair_t usageArray[] = {
 	{" -nolighting TYPE","don't perform the lighting calculations, where TYPE is one of day, night, all"},
 	{NULL, "default is all"},
 	{" -quant","lightquant - lightmap resolution downscale (e.g. 4 = 1 << 4) (values between 1 and 6)"},
-	{" -scale","lightscale"},
+	{" -scale","global light scale factor"},
 	{" -saturation","saturation factor (e.g. 1.5 - default is 1.0)"},
 	{" -contrast","contrast factor (e.g. 1.05, default is 1.0)"},
 	{" -t --threads","thread amount"},
@@ -91,7 +91,7 @@ static const usagePair_t usageArray[] = {
 	{" -block <xl> <yl>",""},
 	{" -blocks <xl> <yl> <xh> <yh>",""},
 	{" -subdivide","subdivide brushes for better light effects (but higher polycount)"},
-	{" -direct","direct light scaling (float value)"},
+	{" -surface","surface light scaling (float value)"},
 	{" -entity","entity light scaling (float value)"},
 	{" -fulldetail","don't treat details (and trans surfaces) as details"},
 	{" -info","print bsp file info"},
@@ -380,7 +380,7 @@ static void U2M_Parameter (int argc, const char **argv)
 			}
 			i++;
 		} else if (!strcmp(argv[i],"-scale")) {
-			config.lightscale = atof(argv[i + 1]);
+			config.brightness = atof(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i], "-saturation")) {
 			config.saturation = atof(argv[i + 1]);
@@ -390,9 +390,9 @@ static void U2M_Parameter (int argc, const char **argv)
 			config.contrast = atof(argv[i + 1]);
 			Verb_Printf(VERB_LESS, "contrast at %f\n", config.contrast);
 			i++;
-		} else if (!strcmp(argv[i],"-direct")) {
-			config.direct_scale *= atof(argv[i + 1]);
-			Verb_Printf(VERB_LESS, "direct light scaling at %f\n", config.direct_scale);
+		} else if (!strcmp(argv[i],"-surface")) {
+			config.surface_scale *= atof(argv[i + 1]);
+			Verb_Printf(VERB_LESS, "surface light scaling at %f\n", config.surface_scale);
 			i++;
 		} else if (!strcmp(argv[i],"-entity")) {
 			config.entity_scale *= atof(argv[i + 1]);
@@ -448,7 +448,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.mapMicrovol = 1.0f; /* this value is up for debate blondandy */
 
 	/* lightmap night values */
-	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.06, 0.06, 0.09);
+	VectorSet(config.sun_ambient_color[LIGHTMAP_NIGHT], 0.8, 0.8, 0.11);
 	config.sun_intensity[LIGHTMAP_NIGHT] = 70;
 	Vector2Set(config.sun_angles[LIGHTMAP_NIGHT], -80, 220);
 	VectorSet(config.sun_color[LIGHTMAP_NIGHT], 0.65, 0.75, 0.95);
@@ -456,8 +456,8 @@ static void U2M_SetDefaultConfigValues (void)
 	AngleVectors(config.sun_angles[LIGHTMAP_NIGHT], config.sun_normal[LIGHTMAP_NIGHT], NULL, NULL);
 
 	/* lightmap day values */
-	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.14, 0.14, 0.14);
-	config.sun_intensity[LIGHTMAP_DAY] = 240;
+	VectorSet(config.sun_ambient_color[LIGHTMAP_DAY], 0.26, 0.26, 0.26);
+	config.sun_intensity[LIGHTMAP_DAY] = 280;
 	Vector2Set(config.sun_angles[LIGHTMAP_DAY], -75, 100);
 	VectorSet(config.sun_color[LIGHTMAP_DAY], 0.90, 0.75, 0.65);
 	ColorNormalize(config.sun_color[LIGHTMAP_DAY], config.sun_color[LIGHTMAP_DAY]);
@@ -465,9 +465,9 @@ static void U2M_SetDefaultConfigValues (void)
 
 	config.saturation = 1.0f;
 	config.contrast = 1.0f;
-	config.lightscale = 0.7;
+	config.brightness = 1.0;
 	config.lightquant = 4;
-	config.direct_scale = 0.4f; /**< surface lighting scale factor */
+	config.surface_scale = 0.4f;
 	config.entity_scale = 1.0f;
 
 	config.generateFootstepFile = qtrue;

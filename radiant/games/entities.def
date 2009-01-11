@@ -81,7 +81,7 @@ pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360])
 "angles_day"	Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220.
 "color_day"		Controls sunlight color, specified as rgb floating point values, e.g. 1.0 0.9 0.8.
 "ambient_day"	Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb color, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels.
-"light_scale"	Controls light intensity. This is used to uniformly brighten or darken your level. 1.0 is default, all positive floating point values are valid.
+"brightness"	Controls light intensity. This is used to uniformly brighten or darken your level. 1.0 is default, all positive floating point values are valid.
 "saturation"	Controls light saturation, or color influence. This can be used to make a level look more colorful, or more pale. The default value is 1.0. Values from 0.5 to 3.0 are most useful.
 "contrast"		Controls light contrast. This can be used to create darker dark areas and lighter light areas. The default value is 1.0. Values significantly higher than 1.0 are not recommended.
 "quant"			Controls lightmap resolution, which is relative to texture size. Default is 4 (1 << 4). A value of 3 will produce sharper lightmaps, but will dramatically lengthen your radiosity compile times. In fact, setting this to 5 during development is a nice trick for speeding up your level design process.

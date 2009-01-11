@@ -118,10 +118,10 @@ typedef struct mapConfig_s {
 
 	float saturation;
 	float contrast;
-	float lightscale;
+	float brightness;		/**< global light scale factor */
 	byte lightquant;
-	float direct_scale;
-	float entity_scale;
+	float surface_scale;	/**< surface lighting scale factor */
+	float entity_scale;		/**< entity lighting scale factor */
 
 	int onlynewer;	/**< only compile (update) the bsp if the map file is newer */
 

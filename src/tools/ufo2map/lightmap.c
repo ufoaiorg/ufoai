@@ -314,7 +314,7 @@ void BuildLights (void)
 			l->type = emit_surface;
 
 			l->intensity = ColorNormalize(p->light, l->color);
-			l->intensity *= p->area * config.direct_scale;
+			l->intensity *= p->area * config.surface_scale;
 
 			p = p->next;
 		}
@@ -430,10 +430,10 @@ void BuildLights (void)
 		if (ambient[0] != '\0')
 			GetVectorFromString(ambient, sun_ambient_color);
 
-		/* optionally pull light_scale from worldspawn */
-		f = FloatForKey(e, "light_scale");
+		/* optionally pull brightness from worldspawn */
+		f = FloatForKey(e, "brightness");
 		if (f > 0.0)
-			config.lightscale = f;
+			config.brightness = f;
 
 		/* saturation as well */
 		f = FloatForKey(e, "saturation");
@@ -882,7 +882,7 @@ void FinalLightFace (unsigned int facenum)
 		VectorAdd(temp, sun_ambient_color, temp);
 
 		/* apply global scale factor */
-		VectorScale(temp, config.lightscale, temp);
+		VectorScale(temp, config.brightness, temp);
 
 		max = 0.0;
 
