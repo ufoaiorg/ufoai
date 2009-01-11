@@ -1286,10 +1286,28 @@ static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 		MN_DNDDrop();
 	}
 }
+static void MN_ContainerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
+{
+	if (MN_IsScrollContainerNode(node)) {
+		if (down) {
+			const int lenght = EXTRADATA(node).scrollTotalNum - EXTRADATA(node).scrollNum;
+			if (EXTRADATA(node).scrollCur < lenght) {
+				EXTRADATA(node).scrollCur++;
+				MN_ContainerNodeUpdateScroll(node);
+			}
+		} else {
+			if (EXTRADATA(node).scrollCur > 0) {
+				EXTRADATA(node).scrollCur--;
+				MN_ContainerNodeUpdateScroll(node);
+			}
+		}
+	}
+}
 
 static void MN_ContainerNodeLoading (menuNode_t *node)
 {
 	EXTRADATA(node).container = NULL;
+	EXTRADATA(node).columns = 1;
 	node->color[3] = 1.0;
 }
 
@@ -1471,6 +1489,7 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndFinished = MN_ContainerNodeDNDFinished;
 	behaviour->dndMove = MN_ContainerNodeDNDMove;
 	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
+	behaviour->mouseWheel = MN_ContainerNodeWheel;
 	behaviour->properties = properties;
 
 #if 0
