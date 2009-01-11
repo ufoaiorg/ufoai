@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-04 11:10+0100\n"
+"PO-Revision-Date: 2009-01-11 15:26+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -105,6 +105,7 @@ msgstr ""
 #: src/tools/radiant/radiant/brushmodule.cpp:66
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:662
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:163
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:165
 msgid "Brush"
 msgstr "Brush"
 
@@ -292,22 +293,27 @@ msgstr "Schlüssel"
 #: src/tools/radiant/radiant/dialogs/findtextures.cpp:184
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:189
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:120
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:191
 msgid "Close"
 msgstr "Schließen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1692
+#: src/tools/radiant/radiant/mainframe.cpp:1693
 msgid "_Help"
 msgstr "_Hilfe"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1697
+#: src/tools/radiant/radiant/mainframe.cpp:1698
 msgid "Manual"
 msgstr "Anleitung"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1699
+#: src/tools/radiant/radiant/mainframe.cpp:1700
 msgid "Bug report"
 msgstr "Bug melden"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1700
+#: src/tools/radiant/radiant/mainframe.cpp:1701
 msgid "_About"
 msgstr "Über"
 
@@ -767,7 +773,7 @@ msgstr "_Gitter"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1633
 msgid "M_isc"
-msgstr ""
+msgstr "Versch_iedenes"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1640
 msgid "Find brush..."
@@ -795,15 +801,18 @@ msgid "Compile the map"
 msgstr "Kompiliere die Map"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1658
+#: src/tools/radiant/radiant/mainframe.cpp:1659
 #, fuzzy
 msgid "Show pathfinding info"
 msgstr "Kopfzeilen-Info-Element"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1666
+#: src/tools/radiant/radiant/mainframe.cpp:1667
 msgid "E_ntity"
 msgstr "E_ntity"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1679
+#: src/tools/radiant/radiant/mainframe.cpp:1680
 msgid "B_rush"
 msgstr "B_rush"
 
@@ -897,6 +906,7 @@ msgid "Surface Inspector Preferences"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:47
+#: src/tools/radiant/radiant/dialogs/about.cpp:48
 msgid "About UFORadiant"
 msgstr "Über UFORadiant"
 
@@ -905,6 +915,7 @@ msgid "<b>UFORadiant "
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:87
+#: src/tools/radiant/radiant/dialogs/about.cpp:88
 msgid "<b>GTK+ Properties</b>"
 msgstr "<b>GTK+ Eigenschaften</b>"
 
@@ -914,18 +925,22 @@ msgid "Version: %i.%i.%i"
 msgstr "Version: %i.%i.%i"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:103
+#: src/tools/radiant/radiant/dialogs/about.cpp:151
 msgid "<b>OpenGL Properties</b>"
 msgstr "<b>OpenGL Eigenschaften</b>"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:109
+#: src/tools/radiant/radiant/dialogs/about.cpp:157
 msgid "Vendor:"
 msgstr "Vendor:"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:117
+#: src/tools/radiant/radiant/dialogs/about.cpp:165
 msgid "Version:"
 msgstr "Version:"
 
 #: src/tools/radiant/radiant/dialogs/about.cpp:125
+#: src/tools/radiant/radiant/dialogs/about.cpp:173
 msgid "Renderer:"
 msgstr "Renderer:"
 
@@ -983,18 +998,22 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:193
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:195
 msgid "Fix"
 msgstr "Repariere"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:195
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:197
 msgid "Will fix all errors, not only the selected ones"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:206
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:208
 msgid "Check Map"
 msgstr "Map überprüfen"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:211
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:213
 msgid "Nothing to check in this map\n"
 msgstr ""
 
@@ -1002,23 +1021,31 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:315
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:382
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:405
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:213
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:317
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:425
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:449
 msgid "Map compiling"
 msgstr "Map kompilieren"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:232
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:234
 #, fuzzy
 msgid "Check output"
 msgstr "Ausgabezeilen"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:295
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:297
 msgid "No problems in your map found. Output was:"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:382
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:425
 msgid "Nothing to compile in this map\n"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:392
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:436
 msgid "Compiles the current map with the mapcompiler"
 msgstr ""
 
@@ -1053,6 +1080,7 @@ msgstr "Entity Info..."
 
 #: src/tools/radiant/radiant/sidebar/mapinfo.cpp:160
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:159
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:161
 msgid "Entity"
 msgstr "Entity"
 
@@ -1070,6 +1098,8 @@ msgstr "Passend"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1793
 #: src/tools/radiant/radiant/mainframe.cpp:1807
+#: src/tools/radiant/radiant/mainframe.cpp:1794
+#: src/tools/radiant/radiant/mainframe.cpp:1808
 msgid "Label"
 msgstr "Textmarke"
 
@@ -1241,10 +1271,12 @@ msgid "Clipper Tool Settings"
 msgstr "Pro_jekteinstellungen..."
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:167
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:169
 msgid "Message"
 msgstr "Nachricht"
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:173
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:175
 #, fuzzy
 msgid "Select"
 msgstr "Auswählen"
@@ -1349,5 +1381,34 @@ msgstr "Einstellungen bearbeiten"
 
 #: src/tools/radiant/radiant/preferences.cpp:588
 msgid "Preference changes require a restart:\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:95
+msgid "GTK version:"
+msgstr "GTK Version:"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:103
+msgid "GTKGL version:"
+msgstr "GTKGL Version:"
+
+#: src/tools/radiant/radiant/dialogs/about.cpp:111
+msgid "GLib version:"
+msgstr "GLib Version:"
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:382
+msgid "Nothing to generate materials from in this map\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:382
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:408
+msgid "Generate Materials"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:393
+msgid "Generate materials from the current map"
+msgstr ""
+
+#: src/tools/radiant/radiant/mainframe.cpp:1658
+msgid "Generate materials"
 msgstr ""
 
