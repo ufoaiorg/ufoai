@@ -1191,6 +1191,31 @@ menu equipment
 	// category buttons
 	// ==================
 
+	confunc update_item_list {
+		if "mn_equiptype == 0" {
+			*(container)equip filter 0
+			*(container)equip_ammo filter 0
+		}
+		if "mn_equiptype == 1" {
+			*(container)equip filter 1
+			*(container)equip_ammo filter 1
+		}
+		if "mn_equiptype == 2" {
+			*(container)equip filter 2
+			*(container)equip_ammo filter 2
+		}
+		if "mn_equiptype == 3" {
+			*(container)equip filter 3
+			*(container)equip_ammo filter 3
+		}
+		if "mn_equiptype == 4" {
+			*(container)equip filter 4
+			*(container)equip_ammo filter 4
+		}
+		*(container)equip scrollpos 0
+		*(container)equip_ammo scrollpos 0
+	}
+
 	tab equip_type
 	{
 		pos		"400 365"
@@ -1199,27 +1224,27 @@ menu equipment
 		option primary {
 			label	"_Primary"
 			value	"0"
-			action	"equip_type primary;"
+			action	"update_item_list;"
 		}
 		option secondary {
 			label	"_Secondary"
 			value	"1"
-			action	"equip_type secondary;"
+			action	"update_item_list;"
 		}
 		option heavy {
 			label	"_Heavy"
 			value	"2"
-			action	"equip_type heavy;"
+			action	"update_item_list;"
 		}
 		option misc {
 			label	"_Misc"
 			value	"3"
-			action	"equip_type misc;"
+			action	"update_item_list;"
 		}
 		option armour {
 			label	"_Armour"
 			value	"4"
-			action	"equip_type armour;"
+			action	"update_item_list;"
 		}
 	}
 

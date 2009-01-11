@@ -747,42 +747,6 @@ static void CL_GenerateEquipment_f (void)
 	}
 }
 
-/**
- * @brief Sets (filter type) category for equip menu.
- * @todo delete this and translate equipType by property
- */
-static void CL_EquipType_f (void)
-{
-	itemFilterTypes_t num;	/**< filter type/equipment category. */
-	menuNode_t *node;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <category name>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (!menuInventory)
-		return;
-
-	/* Read filter type and check range. */
-	num = INV_GetFilterTypeID(Cmd_Argv(1));
-	if (num < 0 || num >= MAX_SOLDIER_FILTERTYPES)
-		return;
-
-	/* Reset scroll info for a new filter type/category. */
-	node = MN_GetNodeByPath("equipment.equip");
-	assert(node);
-	MN_ContainerNodeSetFilter(node, num);
-	node = MN_GetNodeByPath("equipment.equip_ammo");
-	assert(node);
-	MN_ContainerNodeSetFilter(node, num);
-
-	/* First-time linking of menuInventory. */
-	if (baseCurrent && !menuInventory->c[csi.idEquip]) {
-		menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
-	}
-}
-
 static void CL_ActorEquipmentSelect_f (void)
 {
 	int num;
@@ -1163,7 +1127,6 @@ void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
 	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
-	Cmd_AddCommand("equip_type", CL_EquipType_f, "Change the item category in soldier equipment menu");
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");

@@ -1475,6 +1475,7 @@ static const value_t properties[] = {
 	{"displayammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayAmmoOfWeapon)},
 	{"displayunavailableammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayUnavailableAmmoOfWeapon)},
 	{"columns", V_INT, offsetof(menuNode_t, u.container.columns),  MEMBER_SIZEOF(menuNode_t, u.container.columns)},
+	{"filter", V_INT, offsetof(menuNode_t, u.container.filterEquipType),  MEMBER_SIZEOF(menuNode_t, u.container.filterEquipType)},
 
 	{"scrollpos", V_INT, offsetof(menuNode_t, u.container.scrollCur),  MEMBER_SIZEOF(menuNode_t, u.container.scrollCur)},
 	{"viewsize", V_INT, offsetof(menuNode_t, u.container.scrollNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollNum)},
