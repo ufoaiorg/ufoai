@@ -165,8 +165,8 @@ static void R_DrawPtlModel (ptl_t * p)
  */
 static void R_DrawPtlCircle (const ptl_t* p)
 {
-	float radius = p->size[0];
-	int thickness = (int)p->size[1];
+	const float radius = p->size[0];
+	const int thickness = (int)p->size[1];
 	float theta;
 	const float accuracy = 5.0f;
 
@@ -184,8 +184,9 @@ static void R_DrawPtlCircle (const ptl_t* p)
 		}
 		glEnd();
 	} else {
+		const float delta = M_PI / (radius * accuracy);
 		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
+		for (theta = 0; theta <= 2 * M_PI; theta += delta) {
 			const float f = theta - M_PI / (radius * accuracy);
 			glVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
 			glVertex3f(p->s[0] + radius * cos(f), p->s[1] + radius * sin(f), p->s[2]);
