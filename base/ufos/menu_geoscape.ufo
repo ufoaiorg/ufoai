@@ -2058,7 +2058,7 @@ menu popup_multi_selection
 	string title
 	{
 		string	"_Select item"
-		pos		"26 14"
+		pos		"26 18"
 		font	f_big
 	}
 

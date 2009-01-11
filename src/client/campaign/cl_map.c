@@ -372,7 +372,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 #endif
 		)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO"), _(aircraft->name));
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO Sighting"), (RS_IsResearched_ptr(aircraft->tech)) ? _(aircraft->name) : _("Unknown"));
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
