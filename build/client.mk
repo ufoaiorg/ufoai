@@ -18,7 +18,6 @@ CLIENT_SRCS = \
 	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \
-	client/cl_popup.c \
 	client/cl_parse.c \
 	client/cl_particle.c \
 	client/cl_rank.c \
@@ -69,6 +68,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_uforecovery.c \
 	client/campaign/cl_messageoptions.c \
 	client/campaign/cl_messageoptions_callbacks.c \
+	client/campaign/cl_popup.c \
 	\
 	client/campaign/missions/cp_mission_baseattack.c \
 	client/campaign/missions/cp_mission_buildbase.c \

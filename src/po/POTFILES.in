@@ -25,6 +25,7 @@
 ./client/campaign/cl_messageoptions.c
 ./client/campaign/cl_research.c
 ./client/campaign/cl_ufopedia.c
+./client/campaign/cl_popup.c
 ./client/campaign/missions/cp_mission_baseattack.c
 ./client/campaign/missions/cp_mission_harvest.c
 ./client/campaign/missions/cp_mission_recon.c
@@ -41,7 +42,6 @@
 ./client/cl_language.c
 ./client/cl_main.c
 ./client/cl_parse.c
-./client/cl_popup.c
 ./client/cl_screen.c
 ./client/cl_team.c
 ./client/cl_team_multiplayer.c

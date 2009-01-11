@@ -461,10 +461,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_particle.h" />
-		<Unit filename="..\..\src\client\cl_popup.c">
+		<Unit filename="..\..\src\client\campaign\cl_popup.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_popup.h" />
+		<Unit filename="..\..\src\client\campaign\cl_popup.h" />
 		<Unit filename="..\..\src\client\cl_rank.c">
 			<Option compilerVar="CC" />
 		</Unit>
