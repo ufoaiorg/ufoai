@@ -249,17 +249,18 @@ static aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
 static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 {
 	aircraftSlot_t *slot;
-	menuNode_t *node;
 
 	switch (airequipID) {
 	case AC_ITEM_AMMO_MISSILE:
 	case AC_ITEM_BASE_MISSILE:
 		assert(base->numBatteries > 0);
 		if (airequipSelectedSlot >= base->numBatteries) {
-			airequipSelectedSlot = 0;
 			/* update position of the arrow in front of the selected base defence */
-			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			menuNode_t *node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			if (!node)
+				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
+			airequipSelectedSlot = 0;
 		}
 		slot = &base->batteries[airequipSelectedSlot].slot;
 		break;
@@ -267,10 +268,12 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 	case AC_ITEM_BASE_LASER:
 		assert(base->numLasers > 0);
 		if (airequipSelectedSlot >= base->numLasers) {
-			airequipSelectedSlot = 0;
 			/* update position of the arrow in front of the selected base defence */
-			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			menuNode_t *node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			if (!node)
+				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
+			airequipSelectedSlot = 0;
 		}
 		slot = &base->lasers[airequipSelectedSlot].slot;
 		break;
@@ -291,7 +294,6 @@ static aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
 static aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation)
 {
 	aircraftSlot_t *slot;
-	menuNode_t *node;
 
 	switch (airequipID) {
 	case AC_ITEM_AMMO_MISSILE:
@@ -300,10 +302,12 @@ static aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation
 	case AC_ITEM_BASE_LASER:
 		assert(installation->installationTemplate->maxBatteries > 0);
 		if (airequipSelectedSlot >= installation->installationTemplate->maxBatteries) {
-			airequipSelectedSlot = 0;
 			/* update position of the arrow in front of the selected base defence */
-			node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			menuNode_t *node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			if (!node)
+				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
+			airequipSelectedSlot = 0;
 		}
 		slot = &installation->batteries[airequipSelectedSlot].slot;
 		break;
