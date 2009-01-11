@@ -1050,6 +1050,9 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 	assert(curCampaign);
 	assert(curCampaign->firstBaseTemplate[0]);
 
+	RS_MarkResearchable(qtrue, base);
+	CP_InitMarket(qfalse);
+
 	if (buildings) {
 		int i;
 		/* get template for base */
@@ -1112,9 +1115,6 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		/* if no autobuild, set up zero build time for the first base */
 		ccs.instant_build = 1;
 	}
-
-	RS_MarkResearchable(qtrue, base);
-	CP_InitMarket(qfalse);
 }
 
 /**
