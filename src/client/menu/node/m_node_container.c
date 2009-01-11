@@ -592,7 +592,6 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 	int displayType, qboolean displayAvailable)
 {
 	qboolean outOfNode = qfalse;
-	int ammoIdx;
 	vec2_t nodepos;
 	int items = 0;
 	int id;
@@ -669,10 +668,20 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 				color = colorDisabledLoadable;
 		}
 
+		if (icItem)
+			amount = icItem->item.amount;
+		else
+			amount = 0;
+
 		/* draw item */
 		pos[0] += obj->sx * C_UNIT / 2.0;
 		pos[1] += obj->sy * C_UNIT / 2.0;
 		MN_DrawItem(node, pos, &tempItem, -1, -1, scale, color);
+		R_FontDrawString("f_verysmall", ALIGN_LC,
+			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
+			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
+			C_UNIT,	0,	/* maxWidth/maxHeight */
+			0, va("%i", amount), 0, 0, NULL, qfalse, 0);
 		pos[0] -= obj->sx * C_UNIT / 2.0;
 		pos[1] += obj->sy * C_UNIT / 2.0;
 		cellHeight += obj->sy * C_UNIT;
@@ -682,20 +691,16 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		ammopos[2] = 0;
 		ammopos[0] += obj->sx * C_UNIT + 10;
 
-		if (icItem)
-			amount = icItem->item.amount;
-		else
-			amount = 0;
-
 		/* draw the item name. */
 		cellHeight += R_FontDrawString("f_verysmall", ALIGN_UL,
 			pos[0], pos[1],
 			pos[0], nodepos[1],
 			cellWidth - 5, 200,	/* max width/height */
-			0, va("%s (%i)", obj->name, amount), 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			0, obj->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
 
 		/* draw ammos of weapon */
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
+			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
 				invList_t *icAmmo;
 				tempItem.t = obj->ammos[ammoIdx];
@@ -929,7 +934,6 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		objDef_t *obj = &csi.ods[id];
 		vec3_t pos;
 		vec3_t ammopos;
-		int amount;
 		const int col = items % node->u.container.columns;
 		int cellHeight = 0;
 		invList_t *icItem;
@@ -990,13 +994,8 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		ammopos[0] += obj->sx * C_UNIT + 10;
 		ammopos[2] = 0;
 
-		if (icItem)
-			amount = icItem->item.amount;
-		else
-			amount = 0;
-
 		/* draw the item name. */
-		R_FontTextSize("f_verysmall", va("%s (%i)", obj->name, amount),
+		R_FontTextSize("f_verysmall", va("%s", obj->name),
 			cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
 		cellHeight += height;
 
