@@ -193,7 +193,6 @@ static inline qboolean MN_IsScrollContainerNode(const menuNode_t* const node)
  * @sa SCR_DrawCursor
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
- * @todo check each call of this function nd see if org is every time a vec3_t
  */
 void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
@@ -203,7 +202,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 
 	assert(item);
 	assert(item->t);
-	assert(org[2] > -1000 && org[2] < 1000); 	/*< see the todo "check each call" */
+	assert(org[2] > -1000 && org[2] < 1000); 	/*< prevent use of vec2_t for org */
 	od = item->t;
 
 	Vector4Copy(color, col);

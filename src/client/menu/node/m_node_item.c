@@ -45,7 +45,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 	if (od) {
 		item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */
 		const vec4_t color = {1, 1, 1, 1};
-		vec2_t pos;
+		vec3_t pos;
 
 		item.t = &csi.ods[od->idx];
 
@@ -54,6 +54,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		MN_GetNodeAbsPos(node, pos);
 		pos[0] += node->size[0] / 2.0;
 		pos[1] += node->size[1] / 2.0;
+		pos[2] = 0;
 		MN_DrawItem(node, pos, &item, -1, -1, node->scale, color);
 
 	} else {
