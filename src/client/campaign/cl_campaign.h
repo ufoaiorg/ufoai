@@ -412,7 +412,6 @@ campaign_t* CL_GetCampaign(const char *name);
 void CL_GameAutoGo(mission_t *mission);
 void CP_CampaignInit(qboolean load);
 void CP_CampaignExit(void);
-void CP_RemoveCampaignCommands(void);
 
 /* Mission related functions */
 int MAP_GetIdxByMission(const mission_t *mis);

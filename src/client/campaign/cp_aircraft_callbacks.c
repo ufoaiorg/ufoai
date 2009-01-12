@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa GAME_CP_MissionAutoGo_f
  * @sa GAME_CP_Results_f
  */
-void AIM_AircraftReturnToBase_f (void)
+static void AIM_AircraftReturnToBase_f (void)
 {
 	if (baseCurrent && baseCurrent->aircraftCurrent) {
 		AIR_AircraftReturnToBase(baseCurrent->aircraftCurrent);
@@ -51,8 +51,9 @@ void AIM_AircraftReturnToBase_f (void)
 /**
  * @brief Restores aircraft cvars after going back from aircraft buy menu.
  * @sa BS_MarketAircraftDescription
+ * @todo check whether this is needed any longer - this is not called anywhere
  */
-void AIM_ResetAircraftCvars_f (void)
+static void AIM_ResetAircraftCvars_f (void)
 {
 	if (!baseCurrent || baseCurrent->numAircraftInBase < 0)
 		return;
@@ -72,7 +73,7 @@ void AIM_ResetAircraftCvars_f (void)
  * @sa AIR_AircraftSelect
  * @sa AIM_PrevAircraft_f
  */
-void AIM_NextAircraft_f (void)
+static void AIM_NextAircraft_f (void)
 {
 	base_t *base = baseCurrent;
 
@@ -92,7 +93,7 @@ void AIM_NextAircraft_f (void)
  * @sa AIR_AircraftSelect
  * @sa AIM_NextAircraft_f
  */
-void AIM_PrevAircraft_f (void)
+static void AIM_PrevAircraft_f (void)
 {
 	base_t *base = baseCurrent;
 
@@ -110,7 +111,7 @@ void AIM_PrevAircraft_f (void)
 /**
  * @brief Starts an aircraft or stops the current mission and let the aircraft idle around.
  */
-void AIM_AircraftStart_f (void)
+static void AIM_AircraftStart_f (void)
 {
 	aircraft_t *aircraft;
 
@@ -149,27 +150,6 @@ void AIM_AircraftStart_f (void)
 	MN_PopMenu(qfalse);
 }
 
-/**
- * @brief Console command binding for AIR_AircraftSelect().
- */
-void AIR_AircraftSelect_f (void)
-{
-	base_t *base = baseCurrent;
-	const menu_t menu = *MN_GetActiveMenu();
-
-	/* calling from console? with no baseCurrent? */
-	if (!base || !base->numAircraftInBase
-	 || (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
-		if (!Q_strncmp(menu.name, "aircraft", 8))
-			MN_PopMenu(qfalse);
-		return;
-	}
-
-	AIR_AircraftSelect(base->aircraftCurrent);
-	if (!base->aircraftCurrent && !Q_strncmp(menu.name, "aircraft", 8))
-		MN_PopMenu(qfalse);
-}
-
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_AIRCRAFT_IN_BASE 1
 #define SOLDIER_EQUIP_MENU_BUTTON_NO_SOLDIES_AVAILABLE 2
 #define SOLDIER_EQUIP_MENU_BUTTON_OK 3
@@ -189,6 +169,27 @@ static int CL_EquipSoldierState (const aircraft_t * aircraft)
 		else
 			return SOLDIER_EQUIP_MENU_BUTTON_OK;
 	}
+}
+
+/**
+ * @brief Console command binding for AIR_AircraftSelect().
+ */
+static void AIR_AircraftSelect_f (void)
+{
+	base_t *base = baseCurrent;
+	const menu_t menu = *MN_GetActiveMenu();
+
+	/* calling from console? with no baseCurrent? */
+	if (!base || !base->numAircraftInBase
+	 || (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
+		if (!Q_strncmp(menu.name, "aircraft", 8))
+			MN_PopMenu(qfalse);
+		return;
+	}
+
+	AIR_AircraftSelect(base->aircraftCurrent);
+	if (!base->aircraftCurrent && !Q_strncmp(menu.name, "aircraft", 8))
+		MN_PopMenu(qfalse);
 }
 
 /**
@@ -240,8 +241,26 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 void AIR_InitCallbacks (void)
 {
+	/* used nowhere ?*/
+	Cmd_AddCommand("mn_reset_air", AIM_ResetAircraftCvars_f, NULL);
+	/* menu aircraft */
+	Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, NULL);
+	/* menu aircraft_equip, aircraft */
+	Cmd_AddCommand("mn_next_aircraft", AIM_NextAircraft_f, NULL);
+	Cmd_AddCommand("mn_prev_aircraft", AIM_PrevAircraft_f, NULL);
+	/* menu aircraft, popup_transferbaselist */
+	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
+	/* menu aircraft_equip, aircraft, buy, hangar destroy popup (B_MarkBuildingDestroy)*/
+	Cmd_AddCommand("aircraft_select", AIR_AircraftSelect_f, NULL);
+
 }
 
 void AIR_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("mn_reset_air");
+	Cmd_RemoveCommand("aircraft_start");
+	Cmd_RemoveCommand("mn_next_aircraft");
+	Cmd_RemoveCommand("mn_prev_aircraft");
+	Cmd_RemoveCommand("aircraft_return");
+	Cmd_RemoveCommand("aircraft_select");
 }

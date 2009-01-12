@@ -2226,12 +2226,6 @@ static void CL_NationList_f (void)
 
 /* these commands are only available in singleplayer */
 static const cmdList_t game_commands[] = {
-	{"mn_next_aircraft", AIM_NextAircraft_f, NULL},
-	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL},
-	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
-	{"aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase"},
-	{"aircraft_start", AIM_AircraftStart_f, NULL},
-	{"aircraft_select", AIR_AircraftSelect_f, NULL},
 	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},
 	{"airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL},
 	{"airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL},
@@ -2271,20 +2265,50 @@ static const cmdList_t game_commands[] = {
 	{NULL, NULL, NULL}
 };
 
+/**
+ * @brief registers callback commands that are used by campaign
+ * @todo callbacks should be registered on menu push
+ * (what about sideeffects for commands that are called from different menus?)
+ * @sa CP_AddCampaignCommands
+ * @sa CP_RemoveCampaignCallbackCommands
+ */
+static void CP_AddCampaignCallbackCommands (void)
+{
+	AIM_InitCallbacks();
+	AIR_InitCallbacks();
+}
+
 static void CP_AddCampaignCommands (void)
 {
 	const cmdList_t *commands;
 
 	for (commands = game_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
+
+	CP_AddCampaignCallbackCommands();
 }
 
-void CP_RemoveCampaignCommands (void)
+/**
+ * @brief registers callback commands that are used by campaign
+ * @todo callbacks should be removed on menu pop
+ * (what about sideeffects for commands that are called from different menus?)
+ * @sa CP_AddCampaignCommands
+ * @sa CP_RemoveCampaignCallbackCommands
+ */
+static void CP_RemoveCampaignCallbackCommands (void)
+{
+	AIM_ShutdownCallbacks();
+	AIR_ShutdownCallbacks();
+}
+
+static void CP_RemoveCampaignCommands (void)
 {
 	const cmdList_t *commands;
 
 	for (commands = game_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
+
+	CP_RemoveCampaignCallbackCommands();
 }
 
 /**
