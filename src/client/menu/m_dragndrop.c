@@ -104,7 +104,7 @@ static void MN_DNDDrag (menuNode_t *node)
  * @sa MN_DNDDrop
  * @sa MN_DNDAbort
  */
-void MN_DNDDragItem (menuNode_t *node, item_t *item)
+void MN_DNDDragItem (menuNode_t *node, const item_t *item)
 {
 	MN_DNDDrag(node);
 	assert(MN_DNDIsDragging());

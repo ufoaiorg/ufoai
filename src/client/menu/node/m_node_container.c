@@ -3,7 +3,6 @@
  * @todo move container list code out
  * @todo improve the code genericity
  * @todo rename 'visibleRows' and 'EXTRADATA(node).scrollNum' into 'heightCache' or something like that
- * @todo add a min move before starting DND
  */
 
 /*
@@ -36,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_dragndrop.h"
 #include "../m_tooltip.h"
 #include "../m_nodes.h"
+#include "../m_input.h"
 #include "m_node_model.h"
 #include "m_node_container.h"
 #include "m_node_abstractnode.h"
@@ -1162,6 +1162,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 {
 	int sel;
+	int id;
 	invList_t *ic;
 	int fromX, fromY;
 
@@ -1184,6 +1185,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 	Com_DPrintf(DEBUG_CLIENT, "MN_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
 	if (!ic)
 		return;
+	id = ic->item.t->idx;
 
 	/* Right click: automatic item assignment/removal. */
 	if (EXTRADATA(node).container->id != csi.idEquip) {
@@ -1259,10 +1261,19 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 			return;
 	}
 
-	EXTRADATA(node).lastSelectedId = ic->item.t->idx;
-	if (EXTRADATA(node).onSelect) {
-		MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+#if 0 /** finally better to remove it, i dont think anybody need it */
+	/** Hack. We can say a right click on the base inventory container
+	 * is a selection, but, not the de-equipping.
+	 * Better way is to remove that. Every where we use right click,
+	 * its not a selection (IMHO better, but POV)
+	 */
+	if (MN_IsScrollContainerNode(node)) {
+		EXTRADATA(node).lastSelectedId = id;
+		if (EXTRADATA(node).onSelect) {
+			MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+		}
 	}
+#endif
 
 	/** Hack. Hard to know where are the item now, but if its an armor
 	 * we fire the change event of the armour container. At least to
@@ -1282,21 +1293,33 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 		MN_ContainerNodeUpdateScroll(node);
 }
 
+static int oldMouseX = 0;
+static int oldMouseY = 0;
+
+static void MN_ContainerNodeCapturedMouseMove (menuNode_t *node, int x, int y)
+{
+	const int delta = abs(oldMouseX - x) + abs(oldMouseY - y);
+	if (delta > 15) {
+		MN_DNDDragItem(node, &(dragInfoIC->item));
+		MN_MouseRelease();
+	}
+}
+
 static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	switch (button) {
 	case K_MOUSE1:
 	{
 		/* start drag and drop */
-		invList_t *ic;
 		int fromX, fromY;
-		ic = MN_ContainerNodeGetItemAtPosition(node, x, y, &fromX, &fromY);
-		if (ic) {
-			MN_DNDDragItem(node, &(ic->item));
-			dragInfoIC = ic;
+		dragInfoIC = MN_ContainerNodeGetItemAtPosition(node, x, y, &fromX, &fromY);
+		if (dragInfoIC) {
 			dragInfoFromX = fromX;
 			dragInfoFromY = fromY;
-			EXTRADATA(node).lastSelectedId = ic->item.t->idx;
+			oldMouseX = x;
+			oldMouseY = y;
+			MN_SetMouseCapture(node);
+			EXTRADATA(node).lastSelectedId = dragInfoIC->item.t->idx;
 			if (EXTRADATA(node).onSelect) {
 				MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
 			}
@@ -1320,6 +1343,9 @@ static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
+	if (MN_GetMouseCapture() == node) {
+		MN_MouseRelease();
+	}
 	if (MN_DNDIsDragging()) {
 		MN_DNDDrop();
 	}
@@ -1531,6 +1557,7 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->drawTooltip = MN_ContainerNodeDrawTooltip;
 	behaviour->mouseDown = MN_ContainerNodeMouseDown;
 	behaviour->mouseUp = MN_ContainerNodeMouseUp;
+	behaviour->capturedMouseMove = MN_ContainerNodeCapturedMouseMove;
 	behaviour->loading = MN_ContainerNodeLoading;
 	behaviour->loaded = MN_ContainerNodeLoaded;
 	behaviour->dndEnter = MN_ContainerNodeDNDEnter;

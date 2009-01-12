@@ -1631,6 +1631,7 @@ menu equipment
 			*(abstractscrollbar)equip_scroll viewsize <viewsize>
 			*(abstractscrollbar)equip_scroll fullsize <fullsize>
 		}
+		select { cmd "object_update <lastselectedid>;" }
 	}
 
 	container equip_ammo	{
@@ -1643,6 +1644,7 @@ menu equipment
 			*(abstractscrollbar)equip_ammo_scroll viewsize <viewsize>
 			*(abstractscrollbar)equip_ammo_scroll fullsize <fullsize>
 		}
+		select { cmd "object_update <lastselectedid>;" }
 	}
 
 	vscrollbar equip_scroll {
