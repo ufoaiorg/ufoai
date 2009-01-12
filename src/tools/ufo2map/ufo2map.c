@@ -78,7 +78,7 @@ static const usagePair_t usageArray[] = {
 	{NULL, "0 - no stdout, 1 - only check/fix messages, 2  - (compile) only mapname"},
 	{NULL, "2 - (check/fix) mapname if findings, 4 - normal output,"},
 	{NULL, "5 - extra output, 6 - dump (a lot extra from BSPing)"},
-	{" -material","generate a material (.mat) file"},
+	{" -material","generate a material (.mat) file, do not proceed to compilation"},
 	{"\nLighting options:", NULL},
 	{" -extra","extra light samples"},
 	{" -nolighting TYPE","don't perform the lighting calculations, where TYPE is one of day, night, all"},
@@ -126,12 +126,11 @@ static const usagePair_t usageArray[] = {
 	{NULL, "step, unlike the bsp -micro option. default 1 unit^3."},
 	{"    lvl levelflags","if no levelflags for a brush or entity are set, all of them are set"},
 	{"    flv filllevelflags","ensure set levelflag bits are uninterrupted"},
-	{"    ndr nodraws","assigns SURF_NODRAW to hidden faces and checks for faces that"},
-	{NULL, "may have it incorrectly assigned."},
+	{"    ndr nodraws","assigns SURF_NODRAW to hidden faces"},
 	{"    tex textures","warns when no texture or error texture is assigned."},
 	{NULL, "ensures special textures and content/surface flags are consistent."},
 	{"    mfc mixedfacecontents","ensures the contentflags are the same on each face of each brush."},
-	{"    zft zfighting","intersecting brushes with a common face: prevent textures shimmering together."},
+	{"    zft zfighting","intersecting brushes with a common face: prevent textures shimmering together"},
 
 	{NULL, NULL}
 };
