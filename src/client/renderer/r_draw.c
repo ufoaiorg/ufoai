@@ -1145,3 +1145,35 @@ void R_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboo
 	R_DrawNormPic(pos[0] + size[0] - bottomHeight, y, rightWidth, bottomHeight, texX + thirdPos + rightWidth, texY + thirdPosY + bottomHeight,
 		texX + thirdPos, texY + thirdPosY, ALIGN_UL, blend, texture);
 }
+
+/**
+ * @brief Force to draw only on a rect
+ * @todo add left and right
+ */
+void R_BeginClipRect (int x, int y, int width, int height)
+{
+	double eq[4];
+
+	/* up */
+	eq[0] = 0;
+	eq[1] = 1;
+	eq[2] = 0;
+	eq[3] = -y  * viddef.ry;
+	glClipPlane(GL_CLIP_PLANE0, eq);
+
+	/* down */
+	eq[0] = 0;
+	eq[1] = -1;
+	eq[2] = 0;
+	eq[3] = (y + height)  * viddef.ry;
+	glClipPlane(GL_CLIP_PLANE1, eq);
+
+	glEnable(GL_CLIP_PLANE0);
+	glEnable(GL_CLIP_PLANE1);
+}
+
+void R_EndClipRect (void)
+{
+	glDisable(GL_CLIP_PLANE0);
+	glDisable(GL_CLIP_PLANE1);
+}

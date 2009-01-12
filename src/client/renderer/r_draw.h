@@ -43,6 +43,8 @@ void R_DrawCircle(vec3_t mid, float radius, const vec4_t color, int thickness);
 void R_DrawCircle2D(int x, int y, float radius, qboolean fill, const vec4_t color, float thickness);
 void R_DrawPolygon(int points, int *verts);
 void R_DrawPanel(const vec2_t pos, const vec2_t size, const char *texture, qboolean blend, int texX, int texY, const int *panelDef);
+void R_BeginClipRect (int x, int y, int width, int height);
+void R_EndClipRect (void);
 
 extern cvar_t *r_geoscape_overlay;
 

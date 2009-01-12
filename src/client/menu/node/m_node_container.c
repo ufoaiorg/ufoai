@@ -2,6 +2,7 @@
  * @file m_node_container.c
  * @todo move container list code out
  * @todo improve the code genericity
+ * @todo rename 'visibleRows' and 'EXTRADATA(node).scrollNum' into 'heightCache' or something like that
  */
 
 /*
@@ -590,8 +591,7 @@ static qboolean MN_ContainerNodeFilterItem(const menuNode_t const *node, int dis
 }
 
 static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType,
-	int *currentHeight, int *visibleRows, int *totalRows,
-	int displayType, qboolean displayAvailable)
+	int *currentHeight, int displayType, qboolean displayAvailable)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -602,7 +602,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	if (*currentHeight > node->size[1]) {
+	if (*currentHeight >= node->size[1]) {
 		outOfNode = qtrue;
 	}
 
@@ -622,33 +622,26 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 			continue;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || *totalRows < EXTRADATA(node).scrollCur) {
-			items++;
-			if (col == 0)
-				(*totalRows)++;
-			continue;
-		}
+		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
+			int height;
+			R_FontTextSize("f_verysmall", obj->name,
+				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
+			height += obj->sy * C_UNIT + 10;
+			if (height > rowHeight)
+				rowHeight = height;
 
-		/* add a marge between rows */
-		if (col == 0) {
-			if (*currentHeight != 0) {
-				*currentHeight += 10;
-			}
-			*currentHeight += rowHeight;
-			rowHeight = 0;
-			(*totalRows)++;
-
-			/* we are out (the last label can be a little out) */
-			if (*currentHeight + obj->sy * C_UNIT > node->size[1]) {
-				outOfNode = qtrue;
+			if (outOfNode || *currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
+				if (col == EXTRADATA(node).columns - 1) {
+					*currentHeight += rowHeight;
+					rowHeight = 0;
+				}
 				continue;
 			}
-			(*visibleRows)++;
 		}
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += *currentHeight;
+		pos[1] += *currentHeight - EXTRADATA(node).scrollCur;
 		pos[2] = 0;
 
 		if (highlightType) {
@@ -683,7 +676,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
 			pos[0] + obj->sx * C_UNIT / 2.0, pos[1] + obj->sy * C_UNIT / 2.0,
 			C_UNIT,	0,	/* maxWidth/maxHeight */
-			0, va("%i", amount), 0, 0, NULL, qfalse, 0);
+			0, va("x%i", amount), 0, 0, NULL, qfalse, 0);
 		pos[0] -= obj->sx * C_UNIT / 2.0;
 		pos[1] += obj->sy * C_UNIT / 2.0;
 		cellHeight += obj->sy * C_UNIT;
@@ -704,7 +697,6 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
 			int ammoIdx;
 			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
-				invList_t *icAmmo;
 				tempItem.t = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
@@ -712,27 +704,36 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 					continue;
 
 				/* find and skip unexisting ammo */
-				icAmmo = MN_ContainerNodeGetExistingItem(node, tempItem.t, EXTRADATA(node).filterEquipType);
-				if (!icAmmo)
+				icItem = MN_ContainerNodeGetExistingItem(node, tempItem.t, EXTRADATA(node).filterEquipType);
+				if (!icItem)
 					continue;
 
 				/* Calculate the center of the item model/image. */
-				ammopos[0] += icAmmo->item.t->sx * C_UNIT / 2.0;
-				ammopos[1] -= icAmmo->item.t->sy * C_UNIT / 2.0;
+				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
+				ammopos[1] -= icItem->item.t->sy * C_UNIT / 2.0;
 				MN_DrawItem(node, ammopos, &tempItem, -1, -1, scale, colorDefault);
 				R_FontDrawString("f_verysmall", ALIGN_LC,
-					ammopos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, ammopos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
-					ammopos[0] + icAmmo->item.t->sx * C_UNIT / 2.0, ammopos[1] + icAmmo->item.t->sy * C_UNIT / 2.0,
+					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
+					ammopos[0] + icItem->item.t->sx * C_UNIT / 2.0, ammopos[1] + icItem->item.t->sy * C_UNIT / 2.0,
 					C_UNIT,	/* maxWidth */
 					0,	/* maxHeight */
-					0, va("%i", icAmmo->item.amount), 0, 0, NULL, qfalse, 0);
-				ammopos[0] += icAmmo->item.t->sx * C_UNIT / 2.0;
-				ammopos[1] += icAmmo->item.t->sy * C_UNIT / 2.0;
+					0, va("x%i", icItem->item.amount), 0, 0, NULL, qfalse, 0);
+				ammopos[0] += icItem->item.t->sx * C_UNIT / 2.0;
+				ammopos[1] += icItem->item.t->sy * C_UNIT / 2.0;
 			}
 		}
+		cellHeight += 10;
 
 		if (cellHeight > rowHeight) {
 			rowHeight = cellHeight;
+		}
+
+		/* add a marge between rows */
+		if (col == EXTRADATA(node).columns - 1) {
+			*currentHeight += rowHeight;
+			rowHeight = 0;
+			if (*currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
+				outOfNode = qtrue;
 		}
 
 		/* count items */
@@ -741,64 +742,71 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 
 	if (rowHeight != 0) {
 		*currentHeight += rowHeight;
-		rowHeight = 0;
-		(*visibleRows)++;
-		(*totalRows)++;
 	}
 }
 
-
 /**
  * @brief Draw the inventory of the base
- * @todo We really should group similar weapons (using same ammo) and their ammo together.
- * @todo Need to split and cleanup the loop
- * @todo More local var than it should
  */
 static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highlightType)
 {
+	qboolean updateScroll = qfalse;
 	int currentHeight = 0;
 	int visibleRows = 0;
 	int totalRows = 0;
 
+	R_BeginClipRect(node->pos[0], node->pos[1], node->size[0], node->size[1]);
+	currentHeight = 0;
+
 	if (EXTRADATA(node).displayAvailableOnTop) {
 		/* available items */
 		if (EXTRADATA(node).displayWeapon)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, 1);
+			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 0, 1);
 		if (EXTRADATA(node).displayAmmo)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, 1);
+			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 1, 1);
 		/* unavailable items */
 		if (EXTRADATA(node).displayUnavailableItem) {
 			if (EXTRADATA(node).displayWeapon)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, 0);
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 0, 0);
 			if (EXTRADATA(node).displayAmmo)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, 0);
+				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 1, 0);
 		}
 	} else {
-		if (EXTRADATA(node).displayUnavailableItem) {
-			if (EXTRADATA(node).displayWeapon)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, -1);
-			if (EXTRADATA(node).displayAmmo)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, -1);
-		} else {
-			if (EXTRADATA(node).displayWeapon)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 0, 1);
-			if (EXTRADATA(node).displayAmmo)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, &visibleRows, &totalRows, 1, 1);
-		}
+		const int availableFilter = (EXTRADATA(node).displayUnavailableItem)?-1:1;
+		if (EXTRADATA(node).displayWeapon)
+			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 0, availableFilter);
+		if (EXTRADATA(node).displayAmmo)
+			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 1, availableFilter);
 	}
+
+	R_EndClipRect();
+	totalRows = currentHeight;
+	visibleRows = node->size[1];
+
+#if 0
+	R_FontDrawString("f_verysmall", ALIGN_UL,
+		node->pos[0], node->pos[1], node->pos[0], node->pos[1],
+		0,	0,	/* maxWidth/maxHeight */
+		0, va("%i %i/%i", EXTRADATA(node).scrollCur, visibleRows, totalRows), 0, 0, NULL, qfalse, 0);
+#endif
 
 	/* Update display of scroll buttons if something changed. */
-	/** @todo dont call 2 time MN_ContainerNodeUpdateScroll */
-	if (EXTRADATA(node).scrollCur < 0 || EXTRADATA(node).scrollCur > totalRows - visibleRows) {
+	if (visibleRows != EXTRADATA(node).scrollNum || totalRows != EXTRADATA(node).scrollTotalNum) {
+		EXTRADATA(node).scrollTotalNum = totalRows;
+		EXTRADATA(node).scrollNum = visibleRows;
+		updateScroll = qtrue;
+	}
+	if (EXTRADATA(node).scrollCur > totalRows - visibleRows) {
 		EXTRADATA(node).scrollCur = totalRows - visibleRows;
-		MN_ContainerNodeUpdateScroll(node);
+		updateScroll = qtrue;
+	}
+	if (EXTRADATA(node).scrollCur < 0) {
+		EXTRADATA(node).scrollCur = 0;
+		updateScroll = qtrue;
 	}
 
-	if (visibleRows != EXTRADATA(node).scrollNum || totalRows != EXTRADATA(node).scrollTotalNum) {
-		EXTRADATA(node).scrollNum = visibleRows;
-		EXTRADATA(node).scrollTotalNum = totalRows;
+	if (updateScroll)
 		MN_ContainerNodeUpdateScroll(node);
-	}
 }
 
 /**
@@ -922,8 +930,7 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
  * @note this function is a copy-paste of MN_ContainerNodeDrawItems (with remove of unneed code)
  */
 static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* const node,
-	int *currentHeight, int *visibleRows, int *totalRows,
-	int displayType, int displayAvailable,
+	int *currentHeight, int displayType, int displayAvailable,
 	int mouseX, int mouseY, int* contX, int* contY)
 {
 	qboolean outOfNode = qfalse;
@@ -941,14 +948,14 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	if (*currentHeight > node->size[1]) {
+	if (*currentHeight >= node->size[1]) {
 		outOfNode = qtrue;
 	}
 
 	for (id = 0; id < csi.numODs; id++) {
 		objDef_t *obj = &csi.ods[id];
-		vec3_t pos;
-		vec3_t ammopos;
+		vec2_t pos;
+		vec2_t ammopos;
 		const int col = items % node->u.container.columns;
 		int cellHeight = 0;
 		invList_t *icItem;
@@ -958,36 +965,27 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 			continue;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || *totalRows < EXTRADATA(node).scrollCur) {
-			items++;
-			if (col == 0)
-				(*totalRows)++;
-			continue;
-		}
+		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
+			int height;
+			R_FontTextSize("f_verysmall", obj->name,
+				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
+			height += obj->sy * C_UNIT + 10;
+			if (height > rowHeight)
+				rowHeight = height;
 
-		/* add a marge between rows */
-		if (col == 0) {
-			if (*currentHeight != 0) {
-				*currentHeight += 10;
-			}
-			*currentHeight += rowHeight;
-			rowHeight = 0;
-			(*totalRows)++;
-
-			/* we are out (the last label can be a little out) */
-			if (*currentHeight + obj->sy * C_UNIT > node->size[1]) {
-				outOfNode = qtrue;
+			if (outOfNode || *currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
+				if (col == EXTRADATA(node).columns - 1) {
+					*currentHeight += rowHeight;
+					rowHeight = 0;
+				}
 				continue;
 			}
-			(*visibleRows)++;
 		}
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += *currentHeight;
-		pos[2] = 0;
+		pos[1] += *currentHeight - EXTRADATA(node).scrollCur;
 
-		/* check item */
 		/* check item */
 		if (mouseY < pos[1])
 			break;
@@ -1007,7 +1005,6 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		/* save position for ammo */
 		Vector2Copy(pos, ammopos);
 		ammopos[0] += obj->sx * C_UNIT + 10;
-		ammopos[2] = 0;
 
 		/* draw the item name. */
 		R_FontTextSize("f_verysmall", obj->name,
@@ -1017,16 +1014,15 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		/* draw ammos of weapon */
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
 			int ammoIdx;
-			objDef_t *weaponObj = obj;
+			for (ammoIdx = 0; ammoIdx < obj->numAmmos; ammoIdx++) {
+				objDef_t *objammo = obj->ammos[ammoIdx];
 
-			for (ammoIdx = 0; ammoIdx < weaponObj->numAmmos; ammoIdx++) {
-				obj = weaponObj->ammos[ammoIdx];
 				/* skip unusable ammo */
-				if (!obj->tech || !RS_IsResearched_ptr(obj->tech))
+				if (!objammo->tech || !RS_IsResearched_ptr(objammo->tech))
 					continue;
 
 				/* find and skip unexisting ammo */
-				icItem = MN_ContainerNodeGetExistingItem(node, obj, EXTRADATA(node).filterEquipType);
+				icItem = MN_ContainerNodeGetExistingItem(node, objammo, EXTRADATA(node).filterEquipType);
 				if (!icItem)
 					continue;
 
@@ -1042,9 +1038,18 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 				ammopos[0] += obj->sx * C_UNIT;
 			}
 		}
+		cellHeight += 10;
 
 		if (cellHeight > rowHeight) {
 			rowHeight = cellHeight;
+		}
+
+		/* add a marge between rows */
+		if (col == EXTRADATA(node).columns - 1) {
+			*currentHeight += rowHeight;
+			rowHeight = 0;
+			if (*currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
+				return NULL;
 		}
 
 		/* count items */
@@ -1054,8 +1059,6 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 	if (rowHeight != 0) {
 		*currentHeight += rowHeight;
 		rowHeight = 0;
-		(*visibleRows)++;
-		(*totalRows)++;
 	}
 
 	*contX = NONE;
@@ -1078,34 +1081,25 @@ static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const nod
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (MN_IsScrollContainerNode(node)) {
 		int currentHeight = 0;
-		int visibleRows = 0;
-		int totalRows = 0;
-
 		if (EXTRADATA(node).displayAvailableOnTop) {
 			/* available items */
 			if (EXTRADATA(node).displayWeapon)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, 1, mouseX, mouseY, contX, contY);
+				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 0, 1, mouseX, mouseY, contX, contY);
 			if (!result && EXTRADATA(node).displayAmmo)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, 1, mouseX, mouseY, contX, contY);
+				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 1, 1, mouseX, mouseY, contX, contY);
 			/* unavailable items */
 			if (!result && EXTRADATA(node).displayUnavailableItem) {
 				if (EXTRADATA(node).displayWeapon)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, 0, mouseX, mouseY, contX, contY);
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 0, 0, mouseX, mouseY, contX, contY);
 				if (!result && EXTRADATA(node).displayAmmo)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, 0, mouseX, mouseY, contX, contY);
+					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 1, 0, mouseX, mouseY, contX, contY);
 			}
 		} else {
-			if (EXTRADATA(node).displayUnavailableItem) {
-				if (EXTRADATA(node).displayWeapon)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, -1, mouseX, mouseY, contX, contY);
-				if (!result && EXTRADATA(node).displayAmmo)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, -1, mouseX, mouseY, contX, contY);
-			} else {
-				if (EXTRADATA(node).displayWeapon)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 0, 1, mouseX, mouseY, contX, contY);
-				if (!result && EXTRADATA(node).displayAmmo)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, &visibleRows, &totalRows, 1, 1, mouseX, mouseY, contX, contY);
-			}
+			const int availableFilter = (EXTRADATA(node).displayUnavailableItem)?-1:1;
+			if (EXTRADATA(node).displayWeapon)
+				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight,0, availableFilter, mouseX, mouseY, contX, contY);
+			if (!result && EXTRADATA(node).displayAmmo)
+				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 1, availableFilter, mouseX, mouseY, contX, contY);
 		}
 	} else {
 		vec2_t nodepos;
@@ -1324,15 +1318,20 @@ static void MN_ContainerNodeMouseUp (menuNode_t *node, int x, int y, int button)
 static void MN_ContainerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	if (MN_IsScrollContainerNode(node)) {
+		const int delta = 20;
 		if (down) {
 			const int lenght = EXTRADATA(node).scrollTotalNum - EXTRADATA(node).scrollNum;
 			if (EXTRADATA(node).scrollCur < lenght) {
-				EXTRADATA(node).scrollCur++;
+				EXTRADATA(node).scrollCur += delta;
+				if (EXTRADATA(node).scrollCur > lenght)
+					EXTRADATA(node).scrollCur = lenght;
 				MN_ContainerNodeUpdateScroll(node);
 			}
 		} else {
 			if (EXTRADATA(node).scrollCur > 0) {
-				EXTRADATA(node).scrollCur--;
+				EXTRADATA(node).scrollCur -= delta;
+				if (EXTRADATA(node).scrollCur < 0)
+					EXTRADATA(node).scrollCur = 0;
 				MN_ContainerNodeUpdateScroll(node);
 			}
 		}
