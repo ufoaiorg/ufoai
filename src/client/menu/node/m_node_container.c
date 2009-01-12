@@ -3,6 +3,7 @@
  * @todo move container list code out
  * @todo improve the code genericity
  * @todo rename 'visibleRows' and 'EXTRADATA(node).scrollNum' into 'heightCache' or something like that
+ * @todo add a min move before starting DND
  */
 
 /*
@@ -1257,7 +1258,11 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 		if (!packed)
 			return;
 	}
-	UP_ItemDescription(ic->item.t);
+
+	EXTRADATA(node).lastSelectedId = ic->item.t->idx;
+	if (EXTRADATA(node).onSelect) {
+		MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+	}
 
 	/** Hack. Hard to know where are the item now, but if its an armor
 	 * we fire the change event of the armour container. At least to
@@ -1291,6 +1296,10 @@ static void MN_ContainerNodeMouseDown (menuNode_t *node, int x, int y, int butto
 			dragInfoIC = ic;
 			dragInfoFromX = fromX;
 			dragInfoFromY = fromY;
+			EXTRADATA(node).lastSelectedId = ic->item.t->idx;
+			if (EXTRADATA(node).onSelect) {
+				MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
+			}
 		}
 		break;
 	}
@@ -1504,6 +1513,9 @@ static const value_t properties[] = {
 	{"displayunavailableammoofweapon", V_BOOL, offsetof(menuNode_t, u.container.displayUnavailableAmmoOfWeapon),  MEMBER_SIZEOF(menuNode_t, u.container.displayUnavailableAmmoOfWeapon)},
 	{"columns", V_INT, offsetof(menuNode_t, u.container.columns),  MEMBER_SIZEOF(menuNode_t, u.container.columns)},
 	{"filter", V_INT, offsetof(menuNode_t, u.container.filterEquipType),  MEMBER_SIZEOF(menuNode_t, u.container.filterEquipType)},
+
+	{"lastselectedid", V_INT, offsetof(menuNode_t, u.container.lastSelectedId),  MEMBER_SIZEOF(menuNode_t, u.container.lastSelectedId)},
+	{"select", V_SPECIAL_ACTION, offsetof(menuNode_t, u.container.onSelect),  MEMBER_SIZEOF(menuNode_t, u.container.onSelect)},
 
 	{"scrollpos", V_INT, offsetof(menuNode_t, u.container.scrollCur),  MEMBER_SIZEOF(menuNode_t, u.container.scrollCur)},
 	{"viewsize", V_INT, offsetof(menuNode_t, u.container.scrollNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollNum)},

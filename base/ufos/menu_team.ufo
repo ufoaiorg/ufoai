@@ -1604,20 +1604,21 @@ menu equipment
 	// Containers (see inventory.ufo for the definition)
 	// ==================
 
-	container extension	{ pos "548 104" }
-	container right		{ pos "548 178" }
-	container left		{ pos "872 178" }
+	container extension	{ pos "548 104"	select { cmd "object_update <lastselectedid>;" } }
+	container right		{ pos "548 178"	select { cmd "object_update <lastselectedid>;" } }
+	container left		{ pos "872 178"	select { cmd "object_update <lastselectedid>;" } }
+	container backpack	{ pos "872 54"	select { cmd "object_update <lastselectedid>;" } }
+	container belt		{ pos "569 273"	select { cmd "object_update <lastselectedid>;" } }
+	container holster	{ pos "898 270"	select { cmd "object_update <lastselectedid>;" } }
+	container headgear	{ pos "678 104"	select { cmd "object_update <lastselectedid>;" } }
+
 	container armour	{
 		pos "735 100"
 		color "1 1 1 0"		// active, but display it transparent
-		change {
-			cmd "soldier_updatecurrent;"
-		}
+		change { cmd "soldier_updatecurrent;" }
+		select { cmd "object_update <lastselectedid>;" }
 	}
-	container backpack	{ pos "872 54" }
-	container belt		{ pos "569 273" }
-	container holster	{ pos "898 270" }
-	container headgear	{ pos "678 104" }
+
 	container equip		{
 		pos						"422 415"
 		size					"207 317"
@@ -1631,6 +1632,7 @@ menu equipment
 			*(abstractscrollbar)equip_scroll fullsize <fullsize>
 		}
 	}
+
 	container equip_ammo	{
 		pos				"702 418"
 		size			"207 317"

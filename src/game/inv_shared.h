@@ -747,6 +747,7 @@ void Com_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean Com_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
 itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
 qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
+itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));
 invList_t *Com_SearchInInventoryWithFilter (const inventory_t* const i, const invDef_t * container, int x, int y, objDef_t *item,  const itemFilterTypes_t filterType) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, const invDef_t * container, int x, int y, int amount) __attribute__((nonnull(1)));

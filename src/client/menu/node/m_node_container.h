@@ -59,7 +59,11 @@ typedef struct containerExtraData_s {
 	/* for all containers */
 	struct invDef_s *container;	/**< The container linked to this node. */
 
+	int lastSelectedId;		/**< id oject the object type selected */
+	struct menuAction_s *onSelect;	/**< call when we select an item */
+
 	/* for scrolled container */
+
 	int filterEquipType;	/**< A filter */
 
 	int columns;

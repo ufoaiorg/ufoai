@@ -883,6 +883,41 @@ static void CL_ThisSoldier_f (void)
 }
 
 /**
+ * @brief Update the GUI with the selected item
+ */
+static void CL_UpdateObject_f (void)
+{
+	int num;
+	objDef_t *obj;
+	int filter;
+	cvar_t *var;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <objectid>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= csi.numODs) {
+		Com_Printf("Id %i out of range 0..%i\n", num, csi.numODs);
+		return;
+	}
+	obj = &csi.ods[num];
+
+	/* update item description */
+	UP_ItemDescription(obj);
+
+	/* update tab */
+	var = Cvar_FindVar("mn_equiptype");
+	filter = INV_GetFilterFromItem(obj);
+	if (var->integer != filter) {
+		Cvar_SetValue("mn_equiptype", filter);
+		MN_ExecuteConfunc("update_item_list\n");
+	}
+}
+
+/**
  * @brief Update the skin of the current soldier
  */
 static void CL_UpdateSoldier_f (void)
@@ -1137,6 +1172,7 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
 	Cmd_AddCommand("soldier_reselect", CL_ThisSoldier_f, _("Reselect the current soldier"));
 	Cmd_AddCommand("soldier_updatecurrent", CL_UpdateSoldier_f, _("Update a soldier"));
+	Cmd_AddCommand("object_update", CL_UpdateObject_f, _("Update a soldier"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
 	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");
 #ifdef DEBUG

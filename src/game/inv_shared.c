@@ -425,6 +425,24 @@ qboolean INV_IsBaseDefenceItem (const objDef_t *obj)
 	return obj->craftitem.type != MAX_ACITEMS && obj->isDummy;
 }
 
+itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
+{
+	assert(obj);
+
+	if (obj->isPrimary)
+		return FILTER_S_PRIMARY;
+	if (obj->isSecondary)
+		return FILTER_S_SECONDARY;
+	if (obj->isHeavy)
+		return FILTER_S_HEAVY;
+	if (obj->isMisc)
+		return FILTER_S_MISC;
+	if (!Q_strcmp(obj->type, "armour"))
+		return FILTER_S_ARMOUR;
+
+	/** @todo need to implement everything */
+	assert(qfalse);
+}
 
 /**
  * @brief Checks if the given object/item matched the giben filter type.
