@@ -745,6 +745,11 @@ static void CL_GenerateEquipment_f (void)
 			}
 		}
 	}
+
+	/* First-time linking of menuInventory. */
+	if (baseCurrent && !menuInventory->c[csi.idEquip]) {
+			menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
+	}
 }
 
 static void CL_ActorEquipmentSelect_f (void)
