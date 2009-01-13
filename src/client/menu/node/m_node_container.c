@@ -1496,6 +1496,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		if (target) {
 			invList_t *fItem;
 			/* menu */
+			/** @todo Is filterEquipType here is need?, we can use anyway Com_SearchInInventory if we disable dragInfoFromX/Y when we start DND */
 			if (MN_IsScrollContainerNode(source)) {
 				const int equipType = EXTRADATA(source).filterEquipType;
 				fItem = MN_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
