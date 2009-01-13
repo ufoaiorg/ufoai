@@ -423,7 +423,7 @@ class CLoadModule
 			ASSERT_MESSAGE(strlen(m_path) + strlen(name) < 1024, "");
 			strcpy(fullname, m_path);
 			strcat(fullname, name);
-			globalOutputStream() << "Found '" << fullname << "'\n";
+			g_message("Found '%s'\n", fullname);
 			GlobalModuleServer_loadModule(fullname);
 		}
 };

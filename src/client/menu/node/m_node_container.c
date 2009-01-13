@@ -200,8 +200,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 	vec4_t col;
 	vec3_t origin;
 
-	assert(item);
-	assert(item->t);
+	assert(od);
 	assert(org[2] > -1000 && org[2] < 1000); 	/*< prevent use of vec2_t for org */
 
 	Vector4Copy(color, col);
