@@ -196,14 +196,13 @@ static inline qboolean MN_IsScrollContainerNode(const menuNode_t* const node)
  */
 void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x, int y, const vec3_t scale, const vec4_t color)
 {
-	objDef_t *od;
+	objDef_t *od = item->t;
 	vec4_t col;
 	vec3_t origin;
 
 	assert(item);
 	assert(item->t);
 	assert(org[2] > -1000 && org[2] < 1000); 	/*< prevent use of vec2_t for org */
-	od = item->t;
 
 	Vector4Copy(color, col);
 	/* no ammo in this weapon - highlight this item */
@@ -811,7 +810,6 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 
 /**
  * @brief Draw a grip container
- * @todo We really should group similar weapons (using same ammo) and their ammo together.
  */
 static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
 {
@@ -835,57 +833,50 @@ static void MN_ContainerNodeDrawGrid (menuNode_t *node, objDef_t *highlightType)
  */
 static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 {
-	vec2_t nodepos;
-	int checkedTo = INV_DOES_NOT_FIT;
-	vec3_t origine;
 	item_t previewItem;
+	int checkedTo;
+	vec3_t origine;
 
-	MN_GetNodeAbsPos(target, nodepos);
+	/* no preview into scrollable list */
+	if (MN_IsScrollContainerNode(target))
+		return;
 
-	/* draw the drop preview item */
-
-	/** Revert the rotation info for the cursor-item in case it
-	 * has been changed (can happen in rare conditions).
-	 * @todo Maybe we can later change this to reflect "manual" rotation?
-	 * @todo Check if this causes problems when letting the item snap back to its original location. */
+	/* copy the DND item to not change the original one */
 	previewItem = *MN_DNDGetItem();
-
 	previewItem.rotated = qfalse;
+	checkedTo = Com_CheckToInventory(menuInventory, previewItem.t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+	if (checkedTo == INV_FITS_ONLY_ROTATED)
+		previewItem.rotated = qtrue;
 
-	/* Draw "preview" of placed (&rotated) item. */
-	if (!MN_IsScrollContainerNode(target)) {
-		checkedTo = Com_CheckToInventory(menuInventory, previewItem.t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+	/* no place found */
+	if (!checkedTo)
+		return;
 
-		if (checkedTo == INV_FITS_ONLY_ROTATED)
-			previewItem.rotated = qtrue;
+	/* Hack, no preview for armour, we dont want it out of the armour container (and armour container is not visible) */
+	if (!Q_strncmp(previewItem.t->type, "armour", MAX_VAR))
+		return;
 
-		if (checkedTo && Q_strncmp(previewItem.t->type, "armour", MAX_VAR)) {	/* If the item fits somehow and it's not armour */
-			vec2_t nodepos;
+	MN_GetNodeAbsPos(target, origine);
+	origine[2] = -40;
 
-			MN_GetNodeAbsPos(target, nodepos);
-			if (EXTRADATA(target).container->single) { /* Get center of single container for placement of preview item */
-				VectorSet(origine,
-					nodepos[0] + target->size[0] / 2.0,
-					nodepos[1] + target->size[1] / 2.0,
-					-40);
-			} else {
-				/* This is a "grid" container - we need to calculate the item-position
-				 * (on the screen) from stored placement in the container and the
-				 * calculated rotation info. */
-				if (previewItem.rotated)
-					VectorSet(origine,
-						nodepos[0] + (dragInfoToX + previewItem.t->sy / 2.0) * C_UNIT,
-						nodepos[1] + (dragInfoToY + previewItem.t->sx / 2.0) * C_UNIT,
-						-40);
-				else
-					VectorSet(origine,
-						nodepos[0] + (dragInfoToX + previewItem.t->sx / 2.0) * C_UNIT,
-						nodepos[1] + (dragInfoToY + previewItem.t->sy / 2.0) * C_UNIT,
-						-40);
-			}
-			MN_DrawItem(NULL, origine, &previewItem, -1, -1, scale, colorPreview);
+	/* Get center of single container for placement of preview item */
+	if (EXTRADATA(target).container->single) {
+		origine[0] += target->size[0] / 2.0;
+		origine[1] += target->size[1] / 2.0;
+	/* This is a "grid" container - we need to calculate the item-position
+	 * (on the screen) from stored placement in the container and the
+	 * calculated rotation info. */
+	} else {
+		if (previewItem.rotated) {
+			origine[0] += (dragInfoToX + previewItem.t->sy / 2.0) * C_UNIT;
+			origine[1] += (dragInfoToY + previewItem.t->sx / 2.0) * C_UNIT;
+		} else {
+			origine[0] += (dragInfoToX + previewItem.t->sx / 2.0) * C_UNIT;
+			origine[1] += (dragInfoToY + previewItem.t->sy / 2.0) * C_UNIT;
 		}
 	}
+
+	MN_DrawItem(NULL, origine, &previewItem, -1, -1, scale, colorPreview);
 }
 
 /**
@@ -1161,7 +1152,9 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
 static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 {
 	int sel;
+#if 0	/* see bellow #1 */
 	int id;
+#endif
 	invList_t *ic;
 	int fromX, fromY;
 
@@ -1169,9 +1162,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 		return;
 
 	/* don't allow this in tactical missions */
-	/** @todo use CL_OnBattlescape here?
-	 * get rid of selActor here - if it's really needed, make this a param to this function maybe? */
-	if (selActor)
+	if (CL_OnBattlescape())
 		return;
 
 	sel = cl_selected->integer;
@@ -1184,7 +1175,9 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 	Com_DPrintf(DEBUG_CLIENT, "MN_ContainerNodeAutoPlace: item %i/%i selected from scrollable container.\n", fromX, fromY);
 	if (!ic)
 		return;
+#if 0	/* see bellow #1 */
 	id = ic->item.t->idx;
+#endif
 
 	/* Right click: automatic item assignment/removal. */
 	if (EXTRADATA(node).container->id != csi.idEquip) {
@@ -1260,7 +1253,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 			return;
 	}
 
-#if 0 /** finally better to remove it, i dont think anybody need it */
+#if 0 /** #1 finally better to remove it, i dont think anybody need it */
 	/** Hack. We can say a right click on the base inventory container
 	 * is a selection, but, not the de-equipping.
 	 * Better way is to remove that. Every where we use right click,
@@ -1475,9 +1468,8 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		return qfalse;
 	}
 
-	/* tactical mission */
-	/** @todo use CL_OnBattlescape here? */
-	if (selActor) {
+	/* on tactical mission */
+	if (CL_OnBattlescape()) {
 		const menuNode_t *target = MN_DNDGetTargetNode();
 		assert(EXTRADATA(source).container);
 		assert(target);
@@ -1489,7 +1481,6 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		menuNode_t *target;
 
 #if 0 /* is it realy need? */
-		/** @todo need to understand what its done here */
 		if (EXTRADATA(source).container->id == csi.idArmour) {
 			/** hackhack @todo This is only because armour containers (and their nodes) are
 			 * handled differently than normal containers somehow.
