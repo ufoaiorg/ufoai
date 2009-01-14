@@ -656,9 +656,9 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 				color = colorDefault;
 		} else {
 			if (isHilight)
-				color = colorDisabledHiden;
-			else
 				color = colorDisabledLoadable;
+			else
+				color = colorDisabledHiden;
 		}
 
 		if (icItem)
