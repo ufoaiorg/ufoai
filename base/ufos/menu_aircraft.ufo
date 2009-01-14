@@ -608,6 +608,7 @@ menu aircraft_equip
 		font		f_small
 		color		"0 .78 0 1"
 		textalign	cl
+		click		{ call airequip_zone1 }
 	}
 
 	string airequip_header2
@@ -618,6 +619,7 @@ menu aircraft_equip
 		font		f_small
 		color		"0 .78 0 1"
 		textalign	cl
+		click		{ call airequip_zone2 }
 	}
 
 	// ==================
