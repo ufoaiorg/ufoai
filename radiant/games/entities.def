@@ -32,7 +32,7 @@ Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]),
 "model"		arbitrary .md2 file to display
 "angles"	direction of the model [pitch yaw roll]
 "angle"		direction of the model [yaw]
-"modelscale_vec"	scale of the model (default 1.0)
+"modelscale_vec"	scale of the model (vector of 3 values, default 1.0 1.0 1.0)
 "skin"		skin number (default 0)
 "frame"		frame number (default 0) - use frame or anim - but not both
 "anim"		is this an animated model (default empty otherwise fill the animname)
