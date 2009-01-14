@@ -896,12 +896,16 @@ static void CL_UpdateObject_f (void)
 	objDef_t *obj;
 	int filter;
 	cvar_t *var;
+	qboolean mustWeChangeTab = qtrue;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <objectid>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <objectid> <mustwechangetab>\n", Cmd_Argv(0));
 		return;
 	}
+
+	if (Cmd_Argc() == 3)
+		mustWeChangeTab = atoi(Cmd_Argv(2)) >= 1;
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= csi.numODs) {
@@ -914,11 +918,13 @@ static void CL_UpdateObject_f (void)
 	UP_ItemDescription(obj);
 
 	/* update tab */
-	var = Cvar_FindVar("mn_equiptype");
-	filter = INV_GetFilterFromItem(obj);
-	if (var->integer != filter) {
-		Cvar_SetValue("mn_equiptype", filter);
-		MN_ExecuteConfunc("update_item_list\n");
+	if (mustWeChangeTab) {
+		var = Cvar_FindVar("mn_equiptype");
+		filter = INV_GetFilterFromItem(obj);
+		if (var->integer != filter) {
+			Cvar_SetValue("mn_equiptype", filter);
+			MN_ExecuteConfunc("update_item_list\n");
+		}
 	}
 }
 
