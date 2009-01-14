@@ -41,9 +41,9 @@ void AIM_ResetEquipAircraftMenu(void);
 
 void BDEF_BaseDefenseMenuUpdate_f(void);
 
-aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft);
-aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base);
-aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation);
+aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, const int airequipID);
+aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base, const int airequipID);
+aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation, const int airequipID);
 
 void AIM_InitCallbacks(void);
 void AIM_ShutdownCallbacks(void);

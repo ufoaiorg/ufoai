@@ -64,11 +64,11 @@ qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* installation,
 	aircraftSlot_t *slot;
 
 	if (aircraft)
-		slot = AII_SelectAircraftSlot(aircraft);
+		slot = AII_SelectAircraftSlot(aircraft, airequipID);
 	else if (base)
-		slot = BDEF_SelectBaseSlot(base);
+		slot = BDEF_SelectBaseSlot(base, airequipID);
 	else if (installation)
-		slot = BDEF_SelectInstallationSlot(installation);
+		slot = BDEF_SelectInstallationSlot(installation, airequipID);
 	else {
 		Com_Printf("AIM_SelectableAircraftItem: no aircraft, no base and no installation given\n");
 		return qfalse;

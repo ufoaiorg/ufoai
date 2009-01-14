@@ -165,7 +165,7 @@ static void AIM_CheckAirequipSelectedSlot (const aircraft_t *aircraft)
  * @note There is always at least one slot, otherwise you can't enter base defence menu screen.
  * @sa BDEF_ListClick_f
  */
-aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
+aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base, const int airequipID)
 {
 	aircraftSlot_t *slot;
 
@@ -210,7 +210,7 @@ aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base)
  * @return Pointer to the slot corresponding to airequipID
  * @sa BDEF_ListClick_f
  */
-aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation)
+aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation, const int airequipID)
 {
 	aircraftSlot_t *slot;
 
@@ -243,7 +243,7 @@ aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation)
  * @param[in] aircraft Pointer to the aircraft
  * @return Pointer to the slot corresponding to airequipID
  */
-aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft)
+aircraftSlot_t *AII_SelectAircraftSlot (aircraft_t *aircraft, const int airequipID)
 {
 	aircraftSlot_t *slot;
 
@@ -645,9 +645,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	/* Select slot */
 	if (baseCurrent)
-		slot = BDEF_SelectBaseSlot(baseCurrent);
+		slot = BDEF_SelectBaseSlot(baseCurrent, airequipID);
 	else
-		slot = BDEF_SelectInstallationSlot(installationCurrent);
+		slot = BDEF_SelectInstallationSlot(installationCurrent, airequipID);
 
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
@@ -832,7 +832,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	AIM_CheckAirequipSelectedSlot(aircraft);
 
 	/* Select slot */
-	slot = AII_SelectAircraftSlot(aircraft);
+	slot = AII_SelectAircraftSlot(aircraft, airequipID);
 
 	/* Check that the selected zone is OK */
 	AIM_CheckAirequipSelectedZone(slot);
@@ -999,13 +999,13 @@ void AIM_AircraftEquipZoneSelect_f (void)
 		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		/* Select slot */
-		slot = AII_SelectAircraftSlot(aircraft);
+		slot = AII_SelectAircraftSlot(aircraft, airequipID);
 	} else {
 		/* Select slot */
 		if (installationCurrent)
-			slot = BDEF_SelectInstallationSlot(installationCurrent);
+			slot = BDEF_SelectInstallationSlot(installationCurrent, airequipID);
 		else
-			slot = BDEF_SelectBaseSlot(baseCurrent);
+			slot = BDEF_SelectBaseSlot(baseCurrent, airequipID);
 		aircraft = NULL;
 	}
 
@@ -1102,14 +1102,14 @@ void AIM_AircraftEquipAddItem_f (void)
 		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		base = aircraft->homebase;	/* we need to know where items will be removed */
-		slot = AII_SelectAircraftSlot(aircraft);
+		slot = AII_SelectAircraftSlot(aircraft, airequipID);
 	} else if (baseCurrent) {
 		base = baseCurrent;
-		slot = BDEF_SelectBaseSlot(base);
+		slot = BDEF_SelectBaseSlot(base, airequipID);
 	} else {
 		installation = installationCurrent;
 		assert(installation);
-		slot = BDEF_SelectInstallationSlot(installation);
+		slot = BDEF_SelectInstallationSlot(installation, airequipID);
 	}
 
 	if (airequipID == AC_ITEM_PILOT) {
@@ -1227,14 +1227,14 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		aircraft = baseCurrent->aircraftCurrent;
 		assert(aircraft);
 		base = aircraft->homebase;	/* we need to know where items will be added / removed */
-		slot = AII_SelectAircraftSlot(aircraft);
+		slot = AII_SelectAircraftSlot(aircraft, airequipID);
 	} else if (baseCurrent) {
 		base = baseCurrent;
-		slot = BDEF_SelectBaseSlot(base);
+		slot = BDEF_SelectBaseSlot(base, airequipID);
 	} else {
 		installation = installationCurrent;
 		assert(installation);
-		slot = BDEF_SelectInstallationSlot(installation);
+		slot = BDEF_SelectInstallationSlot(installation, airequipID);
 	}
 
 	if (airequipID == AC_ITEM_PILOT) {
