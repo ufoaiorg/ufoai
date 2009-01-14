@@ -134,7 +134,7 @@ void Cmd_ForwardToServer (void)
 	struct dbuffer *msg;
 
 	if (cls.state <= ca_connected || cmd[0] == '-' || cmd[0] == '+') {
-		Com_Printf("Unknown command \"%s\" - wasn't send to server\n", cmd);
+		Com_Printf("Unknown command \"%s\" - wasn't sent to server\n", cmd);
 		return;
 	}
 
