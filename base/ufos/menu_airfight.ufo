@@ -21,21 +21,17 @@ menu airfight
 	{
 		pos		"0 0"
 		size	"1024 768"
-		click	mclick wheel
+		wheel
+		click
+		mclick
 		rclick	{ cmd "mn_mapaction_reset;" }
-		// menu
-		excluderect
-		{
-			pos		"768 0"
-			size	"256 768"
-		}
 	}
-
 
 	pic back
 	{
 		image	menu/geo_menu_mini
 		pos		"768 0"
+		size	"256 207"
 		blend	true
 	}
 
@@ -46,8 +42,9 @@ menu airfight
 	string date
 	{
 		string	"*cvar mn_mapdate *cvar mn_maptime"
-		pos		"896 30"
-		align	uc
+		pos		"795 30"
+		size	"205 20"
+		textalign	cc
 		color	"1 1 1 1"
 		font	f_small
 	}
@@ -56,6 +53,7 @@ menu airfight
 	{
 		string	"_CREDITS"
 		pos		"808 54"
+		size	"90 20"
 		font	f_small
 	}
 
@@ -63,8 +61,8 @@ menu airfight
 	{
 		tooltip	"_Organisation capital"
 		string	"*cvar mn_credits"
-		size	"256 20"
-		pos		"734 54"
+		pos		"885 54"
+		size	"100 20"
 		font	f_small
 		textalign	ur
 		in
@@ -122,7 +120,7 @@ menu airfight
 	func init
 	{
 		cmd		"music_change aircombat;"
-		cmd		"set mn_messagesystem 0;"	// MessageSystem turned off
+		*cvar:mn_messagesystem 0			// MessageSystem turned off
 		cmd		"airfightmap_init;"
 	}
 

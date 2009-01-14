@@ -1,7 +1,7 @@
 // ==============
 // BUILDINGS
 // ==============
-// @todo move the preview into  popup
+
 menu buildings
 {
 	// ==================
@@ -46,13 +46,13 @@ menu buildings
 
 	string name
 	{
-		tooltip	"_Name of this base"
-		string	"*cvar mn_base_title"
-		pos	"60 30"
-		size "240 32"
+		string		"*cvar mn_base_title"
+		tooltip		"_Name of this base"
+		pos			"60 30"
+		size		"240 32"
 		textalign	cl
-		padding	8
-		font	f_big
+		padding		8
+		font		f_big
 	}
 
 	// ==================
@@ -105,6 +105,7 @@ menu buildings
 		rows		"20"
 		click
 	}
+
 	confunc mn_buildings_reset
 	{
 		*buildings lineselected	-1
@@ -147,9 +148,10 @@ menu popup_buildingpreview
 	string title
 	{
 		string		"_Building preview"
-		pos			"248 18"
+		pos			"13 13"
+		size		"500 34"
 		font		f_big
-		align		uc
+		textalign	cc
 	}
 
 	// ==================
@@ -168,6 +170,7 @@ menu popup_buildingpreview
 	{
 		string		"*cvar mn_building_name"
 		pos			"30 58"
+		size		"300 25"
 		font		f_normal
 	}
 
@@ -175,6 +178,7 @@ menu popup_buildingpreview
 	{
 		string		"*cvar mn_building_status"
 		pos			"30 190"
+		size		"260 20"
 		font		f_small
 	}
 
@@ -189,13 +193,13 @@ menu popup_buildingpreview
 		rows		"4"
 	}
 
-	pic ufopedia_link
+	custombutton ufopedia_link
 	{
 		image		menu/buttons_small
-		tooltip 	"_UFOpaedia"
+		tooltip		"_UFOpaedia"
 		pos			"320 190"
+		size		"16 16"
 		texl		"32 0"
-		texh		"47 16"
 		click		{ cmd "building_ufopedia;" }
 	}
 }
