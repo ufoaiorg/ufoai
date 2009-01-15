@@ -104,6 +104,9 @@ void LM_AddToScene (void)
 	int i;
 
 	for (i = 0, lm = LMs; i < numLMs; i++, lm++) {
+		if (!lm->inuse)
+			continue;
+
 		/* check for visibility */
 		if (!((1 << cl_worldlevel->integer) & lm->levelflags))
 			continue;
@@ -269,6 +272,8 @@ void LM_Register (void)
 			if (!lm->as.change)
 				Com_Printf("LM_Register: Could not change anim of model '%s'\n", lm->animname);
 		}
+		if (!lm->model)
+			lm->inuse = qfalse;
 	}
 }
 
@@ -301,6 +306,7 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	lm->levelflags = levelflags;
 	lm->renderFlags = renderFlags;
 	lm->lighting.dirty = qtrue;
+	lm->inuse = qtrue;
 	VectorCopy(scale, lm->scale);
 
 	return lm;

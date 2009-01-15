@@ -112,6 +112,7 @@ typedef struct le_s {
 typedef struct lm_s {
 	char name[MAX_VAR];
 	char particle[MAX_VAR];
+	qboolean inuse;
 
 	vec3_t origin;
 	vec3_t angles;
