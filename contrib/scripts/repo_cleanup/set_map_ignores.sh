@@ -23,7 +23,8 @@ echo "*.bsp
 *autosave*
 *.tmp
 *.footsteps
-*.map.original*" > $PROPFILE || fail "failed to write $PROPFILE"
+*.map.original*
+gmon.out" > $PROPFILE || fail "failed to write $PROPFILE"
 
 [[ $REPORTTARGET ]] && {
     echo "svn:ignore will be set to:"
