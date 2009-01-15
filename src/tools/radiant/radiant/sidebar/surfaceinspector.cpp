@@ -164,6 +164,8 @@ class SurfaceInspector
 		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyTexdef> ApplyTexdefCaller;
 		void ApplyFlags ();
 		typedef MemberCaller<SurfaceInspector, &SurfaceInspector::ApplyFlags> ApplyFlagsCaller;
+
+		static void ApplyFlagsWithIndicator (GtkWidget *widget, SurfaceInspector *inspector);
 };
 
 namespace
@@ -414,9 +416,9 @@ static const char* getContentFlagName (std::size_t bit)
 // =============================================================================
 // SurfaceInspector class
 
-static guint togglebutton_connect_toggled (GtkToggleButton* button, const Callback& callback)
+static guint togglebutton_connect_toggled (GtkToggleButton* button, SurfaceInspector* environment)
 {
-	return g_signal_connect_swapped(G_OBJECT(button), "toggled", G_CALLBACK(callback.getThunk()), callback.getEnvironment());
+	return g_signal_connect(G_OBJECT(button), "toggled", G_CALLBACK(SurfaceInspector::ApplyFlagsWithIndicator), environment);
 }
 
 GtkWidget* SurfaceInspector::BuildNotebook (void)
@@ -708,111 +710,111 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				widget_set_size (spin, 60, 0);
 				//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitHorizontal);
 		}
-		{
-			GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
-			gtk_widget_show(spin);
-			gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2,
-					(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-					(GtkAttachOptions) (0), 0, 0);
-			widget_set_size (spin, 60, 0);
-			//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitVertical);
+			{
+				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(1, 0, 1 << 16, 1, 10, 10)), 0,
+						6);
+				gtk_widget_show(spin);
+				gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+						(GtkAttachOptions) (0), 0, 0);
+				widget_set_size(spin, 60, 0);
+				//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitVertical);
+			}
 		}
 	}
-}
-{
-	m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
-	gtk_widget_show(GTK_WIDGET(m_surfaceFlagsFrame));
-	gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_surfaceFlagsFrame), TRUE, TRUE, 0);
 	{
-		GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-		//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-		gtk_widget_show(GTK_WIDGET(vbox3));
-		gtk_container_add(GTK_CONTAINER(m_surfaceFlagsFrame), GTK_WIDGET(vbox3));
+		m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
+		gtk_widget_show( GTK_WIDGET (m_surfaceFlagsFrame));
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_surfaceFlagsFrame), TRUE, TRUE, 0);
 		{
-			GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-			gtk_widget_show(GTK_WIDGET(table));
-			gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-			gtk_table_set_row_spacings(table, 0);
-			gtk_table_set_col_spacings(table, 0);
+			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+			//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+			gtk_widget_show( GTK_WIDGET (vbox3));
+			gtk_container_add(GTK_CONTAINER(m_surfaceFlagsFrame), GTK_WIDGET(vbox3));
+			{
+				GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+				gtk_widget_show( GTK_WIDGET (table));
+				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+				gtk_table_set_row_spacings(table, 0);
+				gtk_table_set_col_spacings(table, 0);
 
-			GtkCheckButton** p = m_surfaceFlags;
+				GtkCheckButton** p = m_surfaceFlags;
 
-			for (int c = 0; c != 4; ++c) {
-				for (int r = 0; r != 8; ++r) {
-					const char *name = getSurfaceFlagName(c * 8 + r);
-					GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
-					gtk_widget_show(GTK_WIDGET(check));
-					gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-							(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-							(GtkAttachOptions)(0), 0, 0);
-					*p++ = check;
-					guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-					g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-					if (!strncmp(name, "surf", 4))
-					gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+				for (int c = 0; c != 4; ++c) {
+					for (int r = 0; r != 8; ++r) {
+						const std::size_t id = c * 8 + r;
+						const char *name = getSurfaceFlagName(id);
+						GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+						gtk_widget_show( GTK_WIDGET (check));
+						gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1, (GtkAttachOptions) (GTK_EXPAND
+								| GTK_FILL), (GtkAttachOptions) (0), 0, 0);
+						*p++ = check;
+						guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+						g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						if (!strncmp(name, "surf", 4))
+							gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+					}
 				}
 			}
 		}
 	}
-}
-{
-	m_contentFlagsFrame = GTK_FRAME(gtk_frame_new(_("Content Flags")));
-	gtk_widget_show(GTK_WIDGET(m_contentFlagsFrame));
-	gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_contentFlagsFrame), TRUE, TRUE, 0);
 	{
-		GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-		//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-		gtk_widget_show(GTK_WIDGET(vbox3));
-		gtk_container_add(GTK_CONTAINER(m_contentFlagsFrame), GTK_WIDGET(vbox3));
+		m_contentFlagsFrame = GTK_FRAME(gtk_frame_new(_("Content Flags")));
+		gtk_widget_show( GTK_WIDGET (m_contentFlagsFrame));
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_contentFlagsFrame), TRUE, TRUE, 0);
 		{
-			GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-			gtk_widget_show(GTK_WIDGET(table));
-			gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-			gtk_table_set_row_spacings(table, 0);
-			gtk_table_set_col_spacings(table, 0);
+			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+			//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+			gtk_widget_show( GTK_WIDGET (vbox3));
+			gtk_container_add(GTK_CONTAINER(m_contentFlagsFrame), GTK_WIDGET(vbox3));
+			{
+				GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+				gtk_widget_show( GTK_WIDGET (table));
+				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+				gtk_table_set_row_spacings(table, 0);
+				gtk_table_set_col_spacings(table, 0);
 
-			GtkCheckButton** p = m_contentFlags;
+				GtkCheckButton** p = m_contentFlags;
 
-			for (int c = 0; c != 4; ++c) {
-				for (int r = 0; r != 8; ++r) {
-					const char *name = getContentFlagName(c * 8 + r);
-					GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
-					gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
-					gtk_widget_show(GTK_WIDGET(check));
-					gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
-							(GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-							(GtkAttachOptions)(0), 0, 0);
-					*p++ = check;
-					guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), ApplyFlagsCaller(*this));
-					g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-					if (!strncmp(name, "cont", 4))
-					gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+				for (int c = 0; c != 4; ++c) {
+					for (int r = 0; r != 8; ++r) {
+						const std::size_t id = c * 8 + r;
+						const char *name = getContentFlagName(id);
+						GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+						gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
+						gtk_widget_show( GTK_WIDGET (check));
+						gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1, (GtkAttachOptions) (GTK_EXPAND
+								| GTK_FILL), (GtkAttachOptions) (0), 0, 0);
+						*p++ = check;
+						guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check),this);
+						g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						if (!strncmp(name, "cont", 4))
+							gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+					}
 				}
 			}
 		}
 	}
-}
-{
-	GtkFrame* frame = GTK_FRAME(gtk_frame_new(_("Value")));
-	gtk_widget_show(GTK_WIDGET(frame));
-	gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 	{
-		GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-		gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-		gtk_widget_show(GTK_WIDGET(vbox3));
-		gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
-
+		GtkFrame* frame = GTK_FRAME(gtk_frame_new(_("Value")));
+		gtk_widget_show( GTK_WIDGET (frame));
+		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(frame), TRUE, TRUE, 0);
 		{
-			GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
-			gtk_widget_show(GTK_WIDGET(entry));
-			gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
-			m_valueEntryWidget = entry;
-			m_valueEntry.connect(entry);
+			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+			gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+			gtk_widget_show( GTK_WIDGET (vbox3));
+			gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(vbox3));
+
+			{
+				GtkEntry* entry = GTK_ENTRY(gtk_entry_new());
+				gtk_widget_show( GTK_WIDGET (entry));
+				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(entry), TRUE, TRUE, 0);
+				m_valueEntryWidget = entry;
+				m_valueEntry.connect(entry);
+			}
 		}
 	}
-}
 
-return pageframe;
+	return pageframe;
 }
 
 static void spin_button_set_value_no_signal (GtkSpinButton* spin, gdouble value)
@@ -948,39 +950,53 @@ void SurfaceInspector::ApplyTexdef (void)
 	Select_SetTexdef(projection);
 }
 
+void SurfaceInspector::ApplyFlags( void )
+{
+	/** @todo convert membercaller somehow to use this directly, perhaps use some sort of signal connect instead of member caller? */
+	ApplyFlagsWithIndicator(GTK_WIDGET(m_valueEntryWidget), this);
+}
+
 /**
  * @brief Sets the flags for all selected faces/brushes
+ * @param[in] activatedWidget currently activated widget
+ * @param[in] inspector SurfaceInspector which holds the buttons
  * @todo Change this to only update those, that were changed
  * @todo Make sure to set those flags that are not used (and not clickable anymore)
  * are set back to 0
  */
-void SurfaceInspector::ApplyFlags (void)
+void SurfaceInspector::ApplyFlagsWithIndicator (GtkWidget *activatedWidget, SurfaceInspector *inspector)
 {
 	unsigned int surfaceflags = 0;
 	unsigned int surfaceflagsDirty = 0;
-	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
+	for (GtkCheckButton** p = inspector->m_surfaceFlags; p != inspector->m_surfaceFlags + 32; ++p) {
 		GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
-		if (gtk_toggle_button_get_inconsistent(b)) {
-			surfaceflagsDirty |= (1 << (p - m_surfaceFlags));
+		unsigned int bitmask = 1 << (p - inspector->m_surfaceFlags);
+		if (activatedWidget == GTK_WIDGET(b))
 			gtk_toggle_button_set_inconsistent(b, FALSE);
-		} else if (gtk_toggle_button_get_active(b)) {
-			surfaceflags |= (1 << (p - m_surfaceFlags));
+		if (gtk_toggle_button_get_inconsistent(b)) {
+			surfaceflagsDirty |= bitmask;
+		}
+		if (gtk_toggle_button_get_active(b)) {
+			surfaceflags |= bitmask;
 		}
 	}
 
 	unsigned int contentflags = 0;
 	unsigned int contentflagsDirty = 0;
-	for (GtkCheckButton** p = m_contentFlags; p != m_contentFlags + 32; ++p) {
+	for (GtkCheckButton** p = inspector->m_contentFlags; p != inspector->m_contentFlags + 32; ++p) {
 		GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
-		if (gtk_toggle_button_get_inconsistent(b)) {
-			contentflagsDirty |= (1 << (p - m_contentFlags));
+		unsigned int bitmask = 1 << (p - inspector->m_contentFlags);
+		if (activatedWidget == GTK_WIDGET(b))
 			gtk_toggle_button_set_inconsistent(b, FALSE);
-		} else if (gtk_toggle_button_get_active(b)) {
-			contentflags |= (1 << (p - m_contentFlags));
+		if (gtk_toggle_button_get_inconsistent(b)) {
+			contentflagsDirty |= bitmask;
+		}
+		if (gtk_toggle_button_get_active(b)) {
+			contentflags |= bitmask;
 		}
 	}
 
-	int value = entry_get_int(m_valueEntryWidget);
+	int value = entry_get_int(inspector->m_valueEntryWidget);
 
 	UndoableCommand undo("flagsSetSelected");
 	globalOutputStream() << "dirty: " << surfaceflagsDirty << "\n";

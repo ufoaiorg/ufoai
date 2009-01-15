@@ -260,11 +260,13 @@ public:
 };
 
 static inline void ContentsFlagsValue_assignMasked(ContentsFlagsValue& flags, const ContentsFlagsValue& other) {
-	unsigned int noChangeContentFlags = (flags.m_contentFlags & flags.m_contentFlagsDirty);
-	unsigned int noChangeSurfaceFlags = (flags.m_surfaceFlags & flags.m_surfaceFlagsDirty);
+	unsigned int unchangedContentFlags = (flags.m_contentFlags & other.m_contentFlagsDirty);
+	unsigned int changedContentFlags = (other.m_contentFlags & (~other.m_contentFlagsDirty));
+	unsigned int unchangedSurfaceFlags = (flags.m_surfaceFlags & other.m_surfaceFlagsDirty);
+	unsigned int changedSurfaceFlags = (other.m_surfaceFlags & (~other.m_surfaceFlagsDirty));
 	flags = other;
-	flags.m_contentFlags |= noChangeContentFlags;
-	flags.m_surfaceFlags |= noChangeSurfaceFlags;
+	flags.m_contentFlags = unchangedContentFlags | changedContentFlags;
+	flags.m_surfaceFlags = unchangedSurfaceFlags | changedSurfaceFlags;
 //	flags.m_contentFlagsDirty = 0;
 //	flags.m_surfaceFlagsDirty = 0;
 //	flags.m_markDirty = 0;
