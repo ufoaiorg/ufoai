@@ -38,6 +38,7 @@ typedef unsigned char byte;
 #include "iundo.h"
 #include "ifiletypes.h"
 #include "preferencesystem.h"
+#include "stringio.h"
 
 #include "modulesystem/singletonmodule.h"
 #include "stream/textstream.h"
@@ -46,6 +47,8 @@ typedef unsigned char byte;
 #include "typesystem.h"
 
 #include "model.h"
+
+bool g_showModelNormals = false;
 
 static void PicoPrintFunc (int level, const char *str)
 {
@@ -132,6 +135,9 @@ class ModelPicoAPI: public TypeSystemRef
 			filter << "*." << extension;
 			GlobalFiletypesModule::getTable().addType(Type::Name(), extension, filetype_t(module->displayName,
 					filter.c_str()));
+
+			GlobalPreferenceSystem().registerPreference("ShowModelNormals", BoolImportStringCaller(g_showModelNormals),
+					BoolExportStringCaller(g_showModelNormals));
 		}
 		ModelLoader* getTable ()
 		{
