@@ -2573,7 +2573,7 @@ static void CL_BuildForbiddenList (void)
 		if (!le->inuse || le->invis)
 			continue;
 		/* Dead ugv will stop walking, too. */
-		if (LE_IsLivingActor(le) || le->type == ET_ACTOR2x2) {
+		if (le->type == ET_ACTOR2x2 || LE_IsLivingAndVisibleActor(le)) {
 			fb_list[fb_length++] = le->pos;
 			fb_list[fb_length++] = (byte*)&le->fieldSize;
 		}
@@ -4145,7 +4145,7 @@ void CL_ActorMouseTrace (void)
 	/* search for an actor on this field */
 	mouseActor = NULL;
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingActor(le))
+		if (le->inuse && LE_IsLivingAndVisibleActor(le))
 			switch (le->fieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				if (VectorCompare(le->pos, mousePos)) {
@@ -4519,7 +4519,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}
@@ -4604,7 +4604,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->inuse && LE_IsLivingActor(le) && VectorCompare(le->pos, toPos)) {
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && VectorCompare(le->pos, toPos)) {
 			target = le;
 			break;
 		}

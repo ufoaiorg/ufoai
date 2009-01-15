@@ -701,7 +701,7 @@ static void CL_EntPerish (struct dbuffer *msg)
 	}
 
 	/* decrease the count of spotted aliens */
-	if (LE_IsLivingActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
+	if (LE_IsLivingAndVisibleActor(le) && le->team != cls.team && le->team != TEAM_CIVILIAN)
 		cl.numAliensSpotted--;
 
 	switch (le->type) {

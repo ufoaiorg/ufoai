@@ -160,7 +160,7 @@ qboolean LE_IsActor (const le_t *le)
 }
 
 /**
- * @brief Checks whether the given le is a living actor
+ * @brief Checks whether the given le is a living actor (but might be hidden)
  * @param[in] le The local entity to perform the check for
  * @sa G_IsLivingActor
  * @sa LE_IsActor
@@ -169,6 +169,23 @@ qboolean LE_IsLivingActor (const le_t *le)
 {
 	assert(le);
 	return LE_IsActor(le) && !LE_IsDead(le);
+}
+
+/**
+ * @brief Checks whether the given le is a living and visible actor
+ * @param[in] le The local entity to perform the check for
+ * @sa G_IsLivingActor
+ * @sa LE_IsActor
+ */
+qboolean LE_IsLivingAndVisibleActor (const le_t *le)
+{
+	assert(le);
+	if (le->invis)
+		return qfalse;
+
+	assert(le->type != ET_ACTORHIDDEN);
+
+	return LE_IsLivingActor(le);
 }
 
 /**
@@ -558,6 +575,7 @@ le_t* LE_GetClosestActor (const vec3_t origin)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->pnum != cl.pnum)
 			continue;
+		/* visible because it's our team - so we just check for living actor here */
 		if (!LE_IsLivingActor(le))
 			continue;
 		VectorSubtract(origin, le->origin, leOrigin);
@@ -749,6 +767,7 @@ void LET_ProjectileAutoHide (le_t *le)
 	for (i = 0, actors = LEs; i < numLEs; i++, actors++) {
 		if (actors->team != cls.team)
 			continue;
+		/* visible because it's our team - so we just check for living actor here */
 		if (LE_IsLivingActor(actors)) {
 			/* at least one of our actors can see this */
 			if (FrustumVis(actors->origin, actors->dir, le->origin)) {

@@ -674,7 +674,7 @@ static void CL_DrawSpottedLines_f (void)
 
 	for (i = 0; i < numLEs; i++) {
 		const le_t *le = &LEs[i];
-		if (le->inuse && LE_IsLivingActor(le) && le->team != cls.team
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			/* not facing in the direction of the 'target' */
 			if (!FrustumVis(watcher->origin, watcher->dir, le->origin))
@@ -733,7 +733,7 @@ static void CL_NextAlienVisibleFromActor_f (void)
 		if (++i >= numLEs)
 			i = 0;
 		le = &LEs[i];
-		if (le->inuse && LE_IsLivingActor(le) && le->team != cls.team
+		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			VectorCopy(watcher->origin, from);
 			VectorCopy(le->origin, at);
@@ -781,7 +781,7 @@ static void CL_NextAlien_f (void)
 		if (++i >= numLEs)
 			i = 0;
 		le = &LEs[i];
-		if (le->inuse && !le->invis && LE_IsLivingActor(le) && le->team != cls.team
+		if (le->inuse && !le->invis && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
 		 && le->team != TEAM_CIVILIAN) {
 			lastAlien = i;
 			V_CenterView(le->pos);
