@@ -57,7 +57,7 @@
 
 #include "entity.h"
 
-void sphere_draw_fill (const Vector3& origin, float radius, int sides)
+static void sphere_draw_fill (const Vector3& origin, float radius, int sides)
 {
 	if (radius <= 0)
 		return;
@@ -127,52 +127,40 @@ void sphere_draw_fill (const Vector3& origin, float radius, int sides)
 	glEnd();
 }
 
-void sphere_draw_wire (const Vector3& origin, float radius, int sides)
+static void sphere_draw_wire (const Vector3& origin, float radius, int sides)
 {
-	{
-		glBegin(GL_LINE_LOOP);
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i <= sides; i++) {
+		const double ds = sin((i * 2 * c_pi) / sides);
+		const double dc = cos((i * 2 * c_pi) / sides);
 
-		for (int i = 0; i <= sides; i++) {
-			const double ds = sin((i * 2 * c_pi) / sides);
-			const double dc = cos((i * 2 * c_pi) / sides);
-
-			glVertex3f(static_cast<float> (origin[0] + radius * dc), static_cast<float> (origin[1] + radius * ds),
-					origin[2]);
-		}
-
-		glEnd();
+		glVertex3f(static_cast<float> (origin[0] + radius * dc), static_cast<float> (origin[1] + radius * ds),
+				origin[2]);
 	}
+	glEnd();
 
-	{
-		glBegin(GL_LINE_LOOP);
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i <= sides; i++) {
+		const double ds = sin((i * 2 * c_pi) / sides);
+		const double dc = cos((i * 2 * c_pi) / sides);
 
-		for (int i = 0; i <= sides; i++) {
-			const double ds = sin((i * 2 * c_pi) / sides);
-			const double dc = cos((i * 2 * c_pi) / sides);
-
-			glVertex3f(static_cast<float> (origin[0] + radius * dc), origin[1], static_cast<float> (origin[2] + radius
-					* ds));
-		}
-
-		glEnd();
+		glVertex3f(static_cast<float> (origin[0] + radius * dc), origin[1],
+				static_cast<float> (origin[2] + radius * ds));
 	}
+	glEnd();
 
-	{
-		glBegin(GL_LINE_LOOP);
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i <= sides; i++) {
+		const double ds = sin((i * 2 * c_pi) / sides);
+		const double dc = cos((i * 2 * c_pi) / sides);
 
-		for (int i = 0; i <= sides; i++) {
-			const double ds = sin((i * 2 * c_pi) / sides);
-			const double dc = cos((i * 2 * c_pi) / sides);
-
-			glVertex3f(origin[0], static_cast<float> (origin[1] + radius * dc), static_cast<float> (origin[2] + radius
-					* ds));
-		}
-
-		glEnd();
+		glVertex3f(origin[0], static_cast<float> (origin[1] + radius * dc),
+				static_cast<float> (origin[2] + radius * ds));
 	}
+	glEnd();
 }
 
-void light_draw_box_lines (const Vector3& origin, const Vector3 points[8])
+static void light_draw_box_lines (const Vector3& origin, const Vector3 points[8])
 {
 	//draw lines from the center of the bbox to the corners
 	glBegin(GL_LINES);
@@ -204,7 +192,7 @@ void light_draw_box_lines (const Vector3& origin, const Vector3 points[8])
 	glEnd();
 }
 
-void light_draw_radius_wire (const Vector3& origin, const float envelope[3])
+static void light_draw_radius_wire (const Vector3& origin, const float envelope[3])
 {
 	if (envelope[0] > 0)
 		sphere_draw_wire(origin, envelope[0], 24);
@@ -214,7 +202,7 @@ void light_draw_radius_wire (const Vector3& origin, const float envelope[3])
 		sphere_draw_wire(origin, envelope[2], 24);
 }
 
-void light_draw_radius_fill (const Vector3& origin, const float envelope[3])
+static void light_draw_radius_fill (const Vector3& origin, const float envelope[3])
 {
 	if (envelope[0] > 0)
 		sphere_draw_fill(origin, envelope[0], 16);
@@ -224,7 +212,7 @@ void light_draw_radius_fill (const Vector3& origin, const float envelope[3])
 		sphere_draw_fill(origin, envelope[2], 16);
 }
 
-void light_vertices (const AABB& aabb_light, Vector3 points[6])
+static void light_vertices (const AABB& aabb_light, Vector3 points[6])
 {
 	Vector3 max(vector3_added(aabb_light.origin, aabb_light.extents));
 	Vector3 min(vector3_subtracted(aabb_light.origin, aabb_light.extents));
@@ -239,7 +227,7 @@ void light_vertices (const AABB& aabb_light, Vector3 points[6])
 	points[5] = Vector3(min[0], min[1], mid[2]);
 }
 
-void light_draw (const AABB& aabb_light, RenderStateFlags state)
+static void light_draw (const AABB& aabb_light, RenderStateFlags state)
 {
 	Vector3 points[6];
 	light_vertices(aabb_light, points);
@@ -755,7 +743,7 @@ class Light: public OpenGLRenderable, public Cullable, public Bounded, public Ed
 
 		void render (RenderStateFlags state) const
 		{
-			//			aabb_draw(m_aabb_light, state);
+			//aabb_draw(m_aabb_light, state);
 			light_draw(m_aabb_light, state);
 		}
 

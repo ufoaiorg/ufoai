@@ -1,3 +1,9 @@
+/**
+ * @file group.cpp
+ * @brief Represents any entity which does not have a fixed size specified in its entity-definition (except misc_model).
+ * This entity behaves as a group, i.e. it contains brushes.
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -18,11 +24,6 @@ You should have received a copy of the GNU General Public License
 along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-///\file
-///\brief Represents any entity which does not have a fixed size specified in its entity-definition (except misc_model).
-///
-/// This entity behaves as a group, i.e. it contains brushes.
 
 #include "cullable.h"
 #include "renderable.h"
