@@ -2,7 +2,7 @@
 
 #
 # @brief GUI to check UFOAI GUI. Only a viewer for the moment
-# @license Public domaine
+# @license Public domain
 # @note tested with Python 2.4.1
 #
 

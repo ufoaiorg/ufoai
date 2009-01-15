@@ -2,7 +2,7 @@
 
 #
 # @brief extract node inheritance from .h and .c files
-# @license Public domain,e
+# @license Public domain
 # @return a DOT document into stdout (http://www.graphviz.org/)
 # @todo generate functions, confunc too
 #
@@ -151,4 +151,3 @@ def genDot(nodeList):
 
 nodeList = extractData()
 genDot(nodeList)
-

@@ -2,7 +2,7 @@
 
 #
 # @brief check the usage of menuNode_s attributes into all menu file (call it from the root of the trunk)
-# @license Public domain,e
+# @license Public domain
 # @return an XHTML page into stdout
 # @todo reading "attributes" from the nodes.h file
 #
@@ -140,5 +140,3 @@ print "</table>"
 
 print "</body>"
 print "</html>"
-
-

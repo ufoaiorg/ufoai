@@ -2,7 +2,7 @@
 
 #
 # @brief some example to update menu_*.ufo files
-# @license Public domaine
+# @license Public domain
 # @note tested with Python 2.4.1
 #
 
@@ -41,7 +41,7 @@ def searchWindowpanelWithoutParentPosSize():
 			if node.behaviour != "windowpanel":
 				continue
 				
-			print menu.filename + ' > menu ' + menu.name + ' have no pos or size'
+			print menu.filename + ' > menu ' + menu.name + ' has no pos or size'
 
 
 def fixeWindowpanelUnderWindow():

@@ -2,7 +2,7 @@
 
 #
 # @brief functions to check and update menu_*.ufo files
-# @license Public domaine
+# @license Public domain
 # @note tested with Python 2.4.1
 #
 
