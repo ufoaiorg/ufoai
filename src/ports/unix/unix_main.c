@@ -132,8 +132,8 @@ const char *Sys_SetLocale (const char *localeID)
 		locale = setlocale(LC_MESSAGES, "");
 		if (!locale) {
 			Com_DPrintf(DEBUG_CLIENT, "...could not set to system language\n");
-			return NULL;
 		}
+		return NULL;
 	} else {
 		Com_Printf("...using language: %s\n", locale);
 	}
