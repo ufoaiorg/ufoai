@@ -686,8 +686,8 @@ static void TR_ClipBoxToBrush (boxtrace_t *trace_data, cBspBrush_t *brush, TR_LE
 	TR_BRUSHSIDE_TYPE *leadside;
 	TR_TILE_TYPE *myTile = trace_data->tile;
 
-	enterfrac = -1;
-	leavefrac = 1;
+	enterfrac = -1.0;
+	leavefrac = 1.0;
 	clipplane = NULL;
 
 	if (!brush || !brush->numsides)
@@ -1035,6 +1035,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
  * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @sa TR_TransformedBoxTrace
  * @sa TR_CompleteBoxTrace
  * @sa TR_RecursiveHullCheck
@@ -1134,6 +1135,14 @@ trace_t TR_BoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, co
 }
 
 /**
+ * @param[in] start trace start vector
+ * @param[in] end trace end vector
+ * @param[in] mins box mins
+ * @param[in] maxs box maxs
+ * @param[in] tile Tile to check (normally 0 - except in assembled maps)
+ * @param[in] headnode if < 0 we are in a leaf node
+ * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] brushreject brushes the trace should ignore (see MASK_*)
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
  * @sa CM_BoxTrace
  */
@@ -1191,10 +1200,19 @@ trace_t TR_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3
 	return trace;
 }
 
+#ifdef COMPILE_MAP
+
 /**
- * @brief Handles all 255 level specific submodels too
+ * @param[in] start trace start vector
+ * @param[in] end trace end vector
+ * @param[in] mins box mins
+ * @param[in] maxs box maxs
+ * @param[in] levelmask Selects which submodels get scanned.
+ * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] brushreject brushes the trace should ignore (see MASK_*)
+ * @brief Traces all submodels in the first tile.  Used by ufo2map.
  */
-trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
+trace_t TR_SingleTileBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
 {
 	trace_t newtr, tr;
 	int tile, i;
@@ -1205,8 +1223,86 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 	tr.fraction = 2.0f;
 
 	/* trace against all loaded map tiles */
+	myTile = &mapTiles[0];
+	for (i = 0, h = myTile->cheads; i < myTile->numcheads; i++, h++) {
+		/** @todo Is this levelmask supposed to limit by game level (1-8)
+		 *  or map level (0-LEVEL_ACTORCLIP)?
+		 * @brief This code uses levelmask to limit by maplevel.  Supposedly maplevels 1-255
+		 * are bitmasks of game levels 1-8.  0 is a special case repeat fo 255.
+		 * However a levelmask including 0x100 is usually included so the CLIP levels are
+		 * examined.
+		 * @todo @note that LEVEL_STEPON should not be available at this point, but may be erroneously
+		 * included in another level, requiring the addition ot the brushreject parameter.
+		 * @todo the above is no longer true - clean up here
+		 */
+		if (h->level && levelmask && !(h->level & levelmask))
+			continue;
+
+		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
+		newtr = TR_BoxTrace(start, end, mins, maxs, myTile, h->cnode, brushmask, brushreject);
+		newtr.mapTile = tile;
+
+		/* memorize the trace with the minimal fraction */
+		if (newtr.fraction == 0.0)
+			return newtr;
+		if (newtr.fraction < tr.fraction)
+			tr = newtr;
+	}
+	return tr;
+}
+
+#else
+
+/**
+ * @param[in] start trace start vector
+ * @param[in] end trace end vector
+ * @param[in] mins box mins
+ * @param[in] maxs box maxs
+ * @param[in] levelmask Selects which submodels get scanned.
+ * @param[in] brushmask brushes the trace should stop at (see MASK_*)
+ * @param[in] brushreject brushes the trace should ignore (see MASK_*)
+ * @brief Traces all submodels in all tiles.  Used by ufo adn ufo_ded.
+ */
+trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject)
+{
+	trace_t newtr, tr;
+	int tile, i;
+	cBspHead_t *h;
+	TR_TILE_TYPE *myTile;
+	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
+	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
+
+	memset(&tr, 0, sizeof(tr));
+	tr.fraction = 2.0f;
+
+	/* Prep the mins and maxs */
+	for (i = 0; i < 3 ; i++) {
+		smin[i] = start[i] + min(mins[i], maxs[i]);
+		smax[i] = start[i] + max(mins[i], maxs[i]);
+		emin[i] = end[i] + min(mins[i], maxs[i]);
+		emax[i] = end[i] + max(mins[i], maxs[i]);
+	}
+
+	/* trace against all loaded map tiles */
 	for (tile = 0; tile < numTiles; tile++) {
 		myTile = &mapTiles[tile];
+		PosToVec(myTile->wpMins, wpmins);
+		VectorSubtract(wpmins, offset, wpmins);
+		PosToVec(myTile->wpMaxs, wpmaxs);
+		VectorAdd(wpmaxs, offset, wpmaxs);
+		/* If the trace is completely outside of the tile, then skip it. */
+		if (smax[0] < wpmins[0] && emax[0] < wpmins[0])
+			continue;
+		if (smax[1] < wpmins[1] && emax[1] < wpmins[1])
+			continue;
+		if (smax[2] < wpmins[2] && emax[2] < wpmins[2])
+			continue;
+		if (smin[0] > wpmaxs[0] && emin[0] > wpmaxs[0])
+			continue;
+		if (smin[1] > wpmaxs[1] && emin[1] > wpmaxs[1])
+			continue;
+		if (smin[2] > wpmaxs[2] && emin[2] > wpmaxs[2])
+			continue;
 		for (i = 0, h = myTile->cheads; i < myTile->numcheads; i++, h++) {
 			/** @todo Is this levelmask supposed to limit by game level (1-8)
 			 *  or map level (0-LEVEL_ACTORCLIP)?
@@ -1234,3 +1330,4 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 	}
 	return tr;
 }
+#endif

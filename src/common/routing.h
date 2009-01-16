@@ -32,7 +32,7 @@ GLOBAL TYPES
 #if defined(COMPILE_MAP)
   #define RT_TESTLINE			TR_TestLine
   #define RT_TESTLINEDM			TR_TestLineDM
-  #define RT_COMPLETEBOXTRACE	TR_CompleteBoxTrace
+  #define RT_COMPLETEBOXTRACE	TR_SingleTileBoxTrace
 
 #elif defined(COMPILE_UFO)
   #define RT_TESTLINE			CM_EntTestLine
