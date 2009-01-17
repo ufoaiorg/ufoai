@@ -338,7 +338,7 @@ static void R_Trace (vec3_t start, vec3_t end, float size, int contentmask)
 		if (!m || m->type != mod_bsp_submodel)
 			continue;
 
-		tr = TR_TransformedBoxTrace(start, end, mins, maxs, &mapTiles[m->bsp.maptile], m->bsp.firstnode,
+		tr = TR_TransformedBoxTrace(&mapTiles[m->bsp.maptile], start, end, mins, maxs, m->bsp.firstnode,
 				contentmask, 0, ent->origin, ent->angles);
 
 		if (tr.fraction < frac) {

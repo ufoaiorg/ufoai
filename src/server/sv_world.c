@@ -406,7 +406,7 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
 			angles = touch->angles;
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, 0, touch->origin, angles);
+		trace = CM_TransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, touch->origin, angles);
 
 #ifdef PARANOID
 		Com_DPrintf(DEBUG_SERVER, "SV_ClipMoveToEntities: %i %i: (%i %i %i) (%i %i %i) (%i %i %i)\n", touch->number, touch->modelindex,

@@ -105,8 +105,9 @@ int TR_HeadnodeForBox(mapTile_t *tile, const vec3_t mins, const vec3_t maxs);
 
 void TR_BuildTracingNode_r(int node, int level);
 
-trace_t TR_BoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject);
-trace_t TR_TransformedBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, TR_TILE_TYPE *tile, int headnode, int brushmask, int brushreject, const vec3_t origin, const vec3_t angles);
+trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction);
+trace_t TR_HintedTransformedBoxTrace(TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const vec3_t origin, const vec3_t angles, const float fraction);
+#define TR_TransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles) TR_HintedTransformedBoxTrace(tile, start, end, mins, maxs, headnode, brushmask, brushreject, origin, angles, 1.0f);
 
 #ifdef COMPILE_MAP
 trace_t TR_SingleTileBoxTrace(const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int levelmask, int brushmask, int brushreject);

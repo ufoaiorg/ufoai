@@ -1330,7 +1330,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		VectorCopy(le->origin, origin);
 
 		assert(headnode < MAX_MAP_NODES);
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, 0, origin, angles);
+		trace = CM_TransformedBoxTrace(tile, clip->start, clip->end, clip->mins, clip->maxs, headnode, clip->contentmask, 0, origin, angles);
 
 		if (trace.fraction < clip->trace.fraction) {
 			qboolean oldStart;

@@ -607,7 +607,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, 0, model->origin, model->angles);
+		trace = CM_TransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
 		if (trace.startsolid || trace.fraction < 1.0)
@@ -672,7 +672,7 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, 0, model->origin, model->angles);
+		trace = CM_TransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
 			VectorCopy(start, end);
@@ -694,9 +694,9 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
  * @brief Wrapper for TR_TransformedBoxTrace that accepts a tile number,
  * @sa TR_TransformedBoxTrace
  */
-trace_t CM_TransformedBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, int tile, int headnode, int brushmask, int brushrejects, const vec3_t origin, const vec3_t angles)
+trace_t CM_HintedTransformedBoxTrace (const int tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushrejects, const vec3_t origin, const vec3_t angles, const float fraction)
 {
-	return TR_TransformedBoxTrace(start, end, mins, maxs, &mapTiles[tile], headnode, brushmask, brushrejects, origin, angles);
+	return TR_HintedTransformedBoxTrace(&mapTiles[tile], start, end, mins, maxs, headnode, brushmask, brushrejects, origin, angles, fraction);
 }
 
 
@@ -721,7 +721,7 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 
 	/* trace against world first */
 	trace = TR_CompleteBoxTrace(start, end, mins, maxs, levelmask, brushmask, brushreject);
-	if (!inlineList)
+	if (!inlineList || trace.fraction == 0.0)
 		return trace;
 
 	for (name = inlineList; *name; name++) {
@@ -732,7 +732,7 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
 
-		newtr = CM_TransformedBoxTrace(start, end, mins, maxs, model->tile, model->headnode, brushmask, brushreject, model->origin, model->angles);
+		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, mins, maxs, model->headnode, brushmask, brushreject, model->origin, model->angles, trace.fraction);
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
