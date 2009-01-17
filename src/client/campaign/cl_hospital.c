@@ -168,12 +168,12 @@ static void HOS_UpdateMenu (void)
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
-					Cbuf_AddText(va("hospitalserious%i\n", entry));
+					MN_ExecuteConfunc("hospitalserious%i\n", entry);
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
-					Cbuf_AddText(va("hospitalmedium%i\n", entry));
+					MN_ExecuteConfunc("hospitalmedium%i\n", entry);
 				else
-					Cbuf_AddText(va("hospitallight%i\n", entry));
+					MN_ExecuteConfunc("hospitallight%i\n", entry);
 
 				/* Display name in the correct list-entry. */
 				Cvar_Set(va("mn_hos_item%i", entry), name);
