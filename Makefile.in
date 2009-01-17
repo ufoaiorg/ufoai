@@ -137,9 +137,9 @@ install_complete: install_data install_exec
 #
 # For destination directories see install_complete above.
 #
-install: install_exec
+install: install_exec install_data
 	@echo
-	@echo Please unpack file ufoai-$(VERSION)-data.tar into $(DATADIR)
+	@echo Copied pk3 files into $(DATADIR) and binaries into $(BINDIR)
 	@echo
 	@echo
 
