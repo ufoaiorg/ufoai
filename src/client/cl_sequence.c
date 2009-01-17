@@ -95,7 +95,7 @@ typedef struct seqEnt_s {
 typedef struct seq2D_s {
 	qboolean inuse;
 	char name[MAX_VAR];
-	char *text;	/**< a placeholder for gettext (V_TRANSLATION_MANUAL_STRING) */
+	char *text;	/**< a placeholder for gettext (V_TRANSLATION_STRING) */
 	char font[MAX_VAR];
 	char image[MAX_VAR];
 	vec2_t pos, speed;
@@ -461,7 +461,7 @@ static const value_t seqEnt_vals[] = {
 /** @brief valid id names for 2d entity */
 static const value_t seq2D_vals[] = {
 	{"name", V_STRING, offsetof(seq2D_t, name), 0},
-	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(seq2D_t, text), 0},
+	{"text", V_TRANSLATION_STRING, offsetof(seq2D_t, text), 0},
 	{"font", V_STRING, offsetof(seq2D_t, font), 0},
 	{"image", V_STRING, offsetof(seq2D_t, image), 0},
 	{"pos", V_POS, offsetof(seq2D_t, pos), MEMBER_SIZEOF(seq2D_t, pos)},
@@ -649,7 +649,7 @@ int SEQ_2Dobj (const char *name, char *data)
 			if (!Q_strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
 				switch (vp->type) {
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					data++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(data, (char**) ((char*)s2d + (int)vp->ofs), cl_localPool, 0);

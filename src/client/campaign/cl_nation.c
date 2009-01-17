@@ -213,7 +213,7 @@ Parsing
 ==========================================*/
 
 static const value_t nation_vals[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(nation_t, name), 0},
+	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name), 0},
 	{"pos", V_POS, offsetof(nation_t, pos), MEMBER_SIZEOF(nation_t, pos)},
 	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
 	{"funding", V_INT, offsetof(nation_t, maxFunding), MEMBER_SIZEOF(nation_t, maxFunding)},
@@ -291,7 +291,7 @@ void CL_ParseNations (const char *name, const char **text)
 					return;
 
 				switch (vp->type) {
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -312,7 +312,7 @@ void CL_ParseNations (const char *name, const char **text)
 }
 
 static const value_t city_vals[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(city_t, name), 0},
+	{"name", V_TRANSLATION_STRING, offsetof(city_t, name), 0},
 	{"pos", V_POS, offsetof(city_t, pos), MEMBER_SIZEOF(city_t, pos)},
 
 	{NULL, 0, 0, 0}
@@ -382,7 +382,7 @@ void CL_ParseCities (const char *name, const char **text)
 					return;
 
 				switch (vp->type) {
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)city + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

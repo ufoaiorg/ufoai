@@ -133,12 +133,12 @@ eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *bod
 
 /** @brief Valid event mail parameters */
 static const value_t eventMail_vals[] = {
-	{"subject", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, subject), 0},
-	{"from", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, from), 0},
-	{"to", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, to), 0},
-	{"cc", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, cc), 0},
-	{"date", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, date), 0},
-	{"body", V_TRANSLATION_MANUAL_STRING, offsetof(eventMail_t, body), 0},
+	{"subject", V_TRANSLATION_STRING, offsetof(eventMail_t, subject), 0},
+	{"from", V_TRANSLATION_STRING, offsetof(eventMail_t, from), 0},
+	{"to", V_TRANSLATION_STRING, offsetof(eventMail_t, to), 0},
+	{"cc", V_TRANSLATION_STRING, offsetof(eventMail_t, cc), 0},
+	{"date", V_TRANSLATION_STRING, offsetof(eventMail_t, date), 0},
+	{"body", V_TRANSLATION_STRING, offsetof(eventMail_t, body), 0},
 	{"icon", V_CLIENT_HUNK_STRING, offsetof(eventMail_t, icon), 0},
 
 	{NULL, 0, 0, 0}
@@ -192,7 +192,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 					return;
 
 				switch (vp->type) {
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)eventMail + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

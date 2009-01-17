@@ -118,7 +118,7 @@ static const size_t vt_sizes[] = {
 	sizeof(vec4_t),	/* V_COLOR */
 	sizeof(vec4_t),	/* V_RGBA */
 	0,	/* V_STRING */
-	0,	/* V_TRANSLATION_MANUAL_STRING */
+	0,	/* V_TRANSLATION_STRING */
 	0,	/* V_LONGSTRING */
 	sizeof(byte),	/* V_ALIGN */
 	sizeof(byte),	/* V_BLEND */
@@ -288,7 +288,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	/* just remove the _ but don't translate */
-	case V_TRANSLATION_MANUAL_STRING:
+	case V_TRANSLATION_STRING:
 		if (*token == '_')
 			token++;
 
@@ -681,7 +681,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((const int *) b)[0], ((const int *) b)[1], ((const int *) b)[2], ((const int *) b)[3]);
 		return valuestr;
 
-	case V_TRANSLATION_MANUAL_STRING:
+	case V_TRANSLATION_STRING:
 	case V_STRING:
 	case V_LONGSTRING:
 		if (b == NULL)
@@ -771,7 +771,7 @@ static const value_t od_vals[] = {
 	{"protection", V_NULL, 0, 0},
 	{"rating", V_NULL, 0, 0},
 
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(objDef_t, name), 0},
+	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
 	{"image", V_STRING, offsetof(objDef_t, image), 0},
 	{"type", V_STRING, offsetof(objDef_t, type), 0},
@@ -825,7 +825,7 @@ static const value_t od_vals[] = {
 /* =========================================================== */
 
 static const value_t fdps[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(fireDef_t, name), 0},
+	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name), 0},
 	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg), MEMBER_SIZEOF(fireDef_t, shotOrg)},
 	{"projtl", V_STRING, offsetof(fireDef_t, projectile), 0},
 	{"impact", V_STRING, offsetof(fireDef_t, impact), 0},
@@ -1889,7 +1889,7 @@ static int CL_GetAlienRaceByID (const char *type)
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
+	{"name", V_TRANSLATION_STRING, offsetof(teamDef_t, name), 0}, /**< internal team name */
 	{"armour", V_BOOL, offsetof(teamDef_t, armour), MEMBER_SIZEOF(teamDef_t, armour)}, /**< are these team members able to wear armour? */
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
@@ -2102,7 +2102,7 @@ int numGTs = 0;
 
 /** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
 static const value_t gameTypeValues[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
+	{"name", V_TRANSLATION_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
 	{NULL, 0, 0, 0}
 };
 
@@ -2346,7 +2346,7 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 
 /** @brief valid mapdef descriptors */
 static const value_t mapdef_vals[] = {
-	{"description", V_TRANSLATION_MANUAL_STRING, offsetof(mapDef_t, description), 0},
+	{"description", V_TRANSLATION_STRING, offsetof(mapDef_t, description), 0},
 	{"map", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, map), 0},
 	{"param", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, param), 0},
 	{"size", V_CLIENT_HUNK_STRING, offsetof(mapDef_t, size), 0},
@@ -2400,7 +2400,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 				default:
 					Com_EParseValue(md, token, vp->type, vp->ofs, vp->size);
 					break;
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					if (*token == '_')
 						token++;
 				/* fall through */

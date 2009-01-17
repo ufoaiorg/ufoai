@@ -34,7 +34,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 /** @brief valid properties for options of the selectbox and tab */
 static const value_t selectBoxValues[] = {
-	{"label", V_TRANSLATION_MANUAL_STRING, offsetof(selectBoxOptions_t, label), sizeof(char) * SELECTBOX_MAX_VALUE_LENGTH},
+	{"label", V_TRANSLATION_STRING, offsetof(selectBoxOptions_t, label), sizeof(char) * SELECTBOX_MAX_VALUE_LENGTH},
 	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
 	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
 	{"icon", V_SPECIAL_ICONREF, offsetof(selectBoxOptions_t, icon), 0},
@@ -583,7 +583,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		if (!*text)
 			return qfalse;
 
-		if (property->type == V_TRANSLATION_MANUAL_STRING) {
+		if (property->type == V_TRANSLATION_STRING) {
 			/* selectbox values are static arrays */
 			char *target = ((char*)object + property->ofs);
 			const char *translateableToken = *token;

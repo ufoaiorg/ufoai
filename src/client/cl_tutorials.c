@@ -89,7 +89,7 @@ void TUT_InitStartup (void)
 
 
 static const value_t tutValues[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(tutorial_t, name), 0},
+	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name), 0},
 	{"sequence", V_CLIENT_HUNK_STRING, offsetof(tutorial_t, sequence), 0},
 	{NULL, 0, 0, 0}
 };

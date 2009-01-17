@@ -47,8 +47,8 @@ int CL_GetRankIdx (const char* rankID)
 }
 
 static const value_t rankValues[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(rank_t, name), 0},
-	{"shortname", V_TRANSLATION_MANUAL_STRING,	offsetof(rank_t, shortname), 0},
+	{"name", V_TRANSLATION_STRING, offsetof(rank_t, name), 0},
+	{"shortname", V_TRANSLATION_STRING,	offsetof(rank_t, shortname), 0},
 	{"image", V_CLIENT_HUNK_STRING, offsetof(rank_t, image), 0},
 	{"mind", V_INT, offsetof(rank_t, mind), MEMBER_SIZEOF(rank_t, mind)},
 	{"killed_enemies", V_INT, offsetof(rank_t, killed_enemies), MEMBER_SIZEOF(rank_t, killed_enemies)},
@@ -109,7 +109,7 @@ void CL_ParseRanks (const char *name, const char **text)
 				if (!*text)
 					return;
 				switch (v->type) {
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

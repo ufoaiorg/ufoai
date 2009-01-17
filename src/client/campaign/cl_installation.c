@@ -617,7 +617,7 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 }
 
 static const value_t installation_vals[] = {
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(installationTemplate_t, name), 0},
+	{"name", V_TRANSLATION_STRING, offsetof(installationTemplate_t, name), 0},
 	{"radar_range", V_INT, offsetof(installationTemplate_t, radarRange), MEMBER_SIZEOF(installationTemplate_t, radarRange)},
 	{"radar_tracking_range", V_INT, offsetof(installationTemplate_t, trackingRange), MEMBER_SIZEOF(installationTemplate_t, trackingRange)},
 	{"max_batteries", V_INT, offsetof(installationTemplate_t, maxBatteries), MEMBER_SIZEOF(installationTemplate_t, maxBatteries)},
@@ -693,7 +693,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 					return;
 
 				switch (vp->type) {
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)installation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);

@@ -33,8 +33,8 @@ struct menuIcon_s;
 
 /** @brief Option definition */
 typedef struct selectBoxOptions_s {
-	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
-	char label[SELECTBOX_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_MANUAL_STRING */
+	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_STRING */
+	char label[SELECTBOX_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_STRING */
 	char action[MAX_VAR];	/**< execute this when the value is selected */
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node

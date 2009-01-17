@@ -399,8 +399,8 @@ static const value_t campaign_vals[] = {
 	{"map", V_STRING, offsetof(campaign_t, map), 0},
 	{"credits", V_INT, offsetof(campaign_t, credits), MEMBER_SIZEOF(campaign_t, credits)},
 	{"visible", V_BOOL, offsetof(campaign_t, visible), MEMBER_SIZEOF(campaign_t, visible)},
-	{"text", V_TRANSLATION_MANUAL_STRING, offsetof(campaign_t, text), 0}, /* just a gettext placeholder */
-	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(campaign_t, name), 0},
+	{"text", V_TRANSLATION_STRING, offsetof(campaign_t, text), 0}, /* just a gettext placeholder */
+	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name), 0},
 	{"date", V_DATE, offsetof(campaign_t, date), 0},
 	{"basecost", V_INT, offsetof(campaign_t, basecost), MEMBER_SIZEOF(campaign_t, basecost)},
 	{"firstbase", V_STRING, offsetof(campaign_t, firstBaseTemplate), 0},

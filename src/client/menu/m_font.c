@@ -35,7 +35,7 @@ font_t *fontBig;
 font_t *fontSmall;
 
 static const value_t fontValues[] = {
-	{"font", V_TRANSLATION_MANUAL_STRING, offsetof(font_t, path), 0},
+	{"font", V_TRANSLATION_STRING, offsetof(font_t, path), 0},
 	{"size", V_INT, offsetof(font_t, size), MEMBER_SIZEOF(font_t, size)},
 	{"style", V_CLIENT_HUNK_STRING, offsetof(font_t, style), 0},
 
@@ -123,7 +123,7 @@ void MN_ParseFont (const char *name, const char **text)
 					return;
 
 				switch (v->type) {
-				case V_TRANSLATION_MANUAL_STRING:
+				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
