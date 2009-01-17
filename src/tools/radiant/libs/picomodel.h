@@ -157,7 +157,7 @@ enum {
 	PICO_PMV_ERROR_IDENT, /**< unknown file magic (aka ident) */
 	PICO_PMV_ERROR_VERSION, /**< unsupported file version */
 	PICO_PMV_ERROR_SIZE, /**< file size error */
-	PICO_PMV_ERROR_MEMORY, /**< out of memory error */
+	PICO_PMV_ERROR_MEMORY /**< out of memory error */
 };
 
 /* convenience (makes it easy to add new params to the callbacks) */
