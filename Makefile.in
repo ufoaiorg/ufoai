@@ -61,7 +61,7 @@ all: all2
 # include the make files for each module
 -include $(patsubst %, build/%.mk, $(MODULES))
 
-ALL_DEPS = $(patsubst %.o, %.d, $(ALL_OBJS))
+ALL_DEPS = $(patsubst %.o, %.d, $(ALL_OBJS) $(ALL_RADIANT_OBJS))
 
 all2: Makefile $(TARGETS) echo_info
 
