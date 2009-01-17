@@ -430,7 +430,7 @@ static void CL_ChangeSkin_f (void)
 	const int sel = cl_selected->integer;
 
 	if (sel >= 0 && sel < chrDisplayList.num) {
-		int newSkin = Cvar_VariableInteger("mn_skin") + 1;
+		int newSkin = Cvar_VariableInteger("mn_skin");
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 
