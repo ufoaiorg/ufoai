@@ -953,8 +953,10 @@ static void Check_FindCompositeSides (void)
 		for (is = 0; is < iBrush->numsides; is++) {
 			side_t *iSide = &iBrush->original_sides[is];
 
-			if (iSide->isCompositeMember || Check_SurfProp(SURF_NODRAW, iSide))
-				continue; /* do not find the same composite again. no nodraws */
+			/* do not find the same composite again. no nodraws
+			 * AddBrushBevels creates sides without windings. skip these too */
+			if (iSide->isCompositeMember || Check_SurfProp(SURF_NODRAW, iSide) || !iSide->winding)
+				continue;
 
 			/* start making the list of brushes in the composite,
 			 * we will only keep it if the composite has more than member */
@@ -979,8 +981,8 @@ static void Check_FindCompositeSides (void)
 				for (j = 0; j < bChecking->numsides; j++) {
 					side_t *sChecking = &bChecking->original_sides[j];
 
-					if (Check_SurfProp(SURF_NODRAW, sChecking))
-						continue; /* no nodraws in composites */
+					if (Check_SurfProp(SURF_NODRAW, sChecking) || !sChecking->winding)
+						continue; /* no nodraws in composites. see comment above above regarding winding*/
 
 					if (ParallelAndCoincidentTo(iSide, sChecking)) {
 
@@ -1543,6 +1545,9 @@ void CheckNodraws (void)
 			for (is = 0; is < iBrush->numsides; is++) {
 				side_t *iSide = &iBrush->original_sides[is];
 
+				if (!iSide->winding)
+					continue; /* AddBrushBevels adds sides with no windings. skip these */
+
 				/* skip those that are already nodraw */
 				if (Check_SurfProp(SURF_NODRAW, iSide))
 					continue;
@@ -1553,6 +1558,9 @@ void CheckNodraws (void)
 				/* check each side of brush j for doing the hiding */
 				for (js = 0; js < jBrush->numsides; js++) {
 					const side_t *jSide = &jBrush->original_sides[js];
+
+					if (!jSide->winding)
+						continue; /* AddBrushBevels adds sides with no windings. skip these */
 
 #if 0
 					/* run on a largish map, this section proves that the plane indices alone cannot
@@ -1604,6 +1612,9 @@ void CheckNodraws (void)
 					continue;
 
 				iWinding = iSide->winding;
+
+				if (!iWinding)
+					continue; /* AddBrushBevels adds sides with no windings. skip these */
 
 				/* to be covered each vertex of iSide must be on one of the composite side's members */
 				for (k = 0; k < iWinding->numpoints; k++) {

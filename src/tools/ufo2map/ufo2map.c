@@ -656,9 +656,10 @@ int main (int argc, const char **argv)
 	} else {
 		/* start from scratch */
 		LoadMapFile(mapFilename);
-#if 0 /** @todo work out why this segfaults */
+
 		CheckNodraws();
-#endif
+		Check_Free();
+
 		SetModelNumbers();
 
 		ProcessModels(bspFilename);
@@ -699,6 +700,5 @@ int main (int argc, const char **argv)
 		end = time(NULL);
 	}
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
-	Check_Free();
 	return 0;
 }
