@@ -267,7 +267,7 @@ bool parseShaderParameters(Tokeniser& tokeniser, ShaderParameters& params) {
 bool ShaderTemplate::parseTemplate(Tokeniser& tokeniser) {
 	m_Name = tokeniser.getToken();
 	if (!parseShaderParameters(tokeniser, m_params))
-		globalErrorStream() << "shader template: " << makeQuoted(m_Name.c_str()) << ": parameter parse failed\n";
+		g_warning("shader template: '%s': parameter parse failed\n", m_Name.c_str());
 
 	return false;
 }
@@ -356,7 +356,7 @@ float evaluateFloat(const ShaderValue& value, const ShaderParameters& params, co
 	return f;
 }
 
-BlendFactor evaluateBlendFactor(const ShaderValue& value, const ShaderParameters& params, const ShaderArguments& args) {
+static BlendFactor evaluateBlendFactor(const ShaderValue& value, const ShaderParameters& params, const ShaderArguments& args) {
 	const char* result = evaluateShaderValue(value.c_str(), params, args);
 
 	if (string_equal_nocase(result, "gl_zero")) {
@@ -393,7 +393,7 @@ BlendFactor evaluateBlendFactor(const ShaderValue& value, const ShaderParameters
 		return BLEND_SRC_ALPHA_SATURATE;
 	}
 
-	globalErrorStream() << "parsing blend-factor value failed: " << makeQuoted(result) << "\n";
+	g_warning("parsing blend-factor value failed: '%s'\n", result);
 	return BLEND_ZERO;
 }
 
@@ -726,23 +726,20 @@ void ParseShaderFile(Tokeniser& tokeniser, const char* filename) {
 		}
 		// first token should be the path + name.. (from base)
 		CopiedString name;
-		if (!Tokeniser_parseShaderName(tokeniser, name)) {
-		}
+		Tokeniser_parseShaderName(tokeniser, name);
 		ShaderTemplatePointer shaderTemplate(new ShaderTemplate());
 		shaderTemplate->setName(name.c_str());
 
 		g_shaders.insert(ShaderTemplateMap::value_type(shaderTemplate->getName(), shaderTemplate));
 
-		bool result = shaderTemplate->parseUFO(tokeniser);
+		const bool result = shaderTemplate->parseUFO(tokeniser);
 		if (result) {
 			// do we already have this shader?
 			if (!g_shaderDefinitions.insert(ShaderDefinitionMap::value_type(shaderTemplate->getName(), ShaderDefinition(shaderTemplate.get(), ShaderArguments(), filename))).second) {
-#ifdef DEBUG
-				globalWarningStream() << "Shader " << shaderTemplate->getName() << " is already in memory, definition in " << filename << " ignored.\n";
-#endif
+				g_debug("Shader '%s' is already in memory, definition in '%s' ignored.\n", shaderTemplate->getName(), filename);
 			}
 		} else {
-			globalErrorStream() << "Error parsing shader " << shaderTemplate->getName() << "\n";
+			g_warning("Error parsing shader '%s'\n", shaderTemplate->getName());
 			return;
 		}
 	}
@@ -755,12 +752,12 @@ static void LoadShaderFile(const char* filename) {
 
 	AutoPtr<ArchiveTextFile> file(GlobalFileSystem().openTextFile(shadername.c_str()));
 	if (file) {
-		globalOutputStream() << "Parsing shaderfile " << shadername.c_str() << "\n";
+		g_message("Parsing shaderfile '%s'\n", shadername.c_str());
 
 		AutoPtr<Tokeniser> tokeniser(GlobalScriptLibrary().m_pfnNewScriptTokeniser(file->getInputStream()));
 		ParseShaderFile(*tokeniser, shadername.c_str());
 	} else {
-		globalErrorStream() << "Unable to read shaderfile " << shadername.c_str() << "\n";
+		g_warning("Unable to read shaderfile '%s'\n", shadername.c_str());
 	}
 }
 

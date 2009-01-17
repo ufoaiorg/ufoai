@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 typedef struct _GtkToolbar GtkToolbar;
 GtkToolbar* create_plugin_toolbar();
-void PluginToolbar_populate();
 void PluginToolbar_clear();
 
 typedef struct _GtkImage GtkImage;

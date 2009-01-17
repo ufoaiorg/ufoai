@@ -308,6 +308,9 @@ void Entity_setColour ()
 	}
 }
 
+/**
+ * @todo Support pk3 files
+ */
 const char* misc_model_dialog (GtkWidget* parent)
 {
 	StringOutputStream buffer(1024);

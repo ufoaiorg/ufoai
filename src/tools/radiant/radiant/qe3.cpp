@@ -1,30 +1,34 @@
-/*
-Copyright (C) 1999-2006 Id Software, Inc. and contributors.
-For a list of contributors, see the accompanying CONTRIBUTORS file.
-
-This file is part of GtkRadiant.
-
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/**
+ * @file qe3.cpp
+ */
 
 /*
-The following source code is licensed by Id Software and subject to the terms of
-its LIMITED USE SOFTWARE LICENSE AGREEMENT, a copy of which is included with
-GtkRadiant. If you did not receive a LIMITED USE SOFTWARE LICENSE AGREEMENT,
-please contact Id Software immediately at info@idsoftware.com.
-*/
+ Copyright (C) 1999-2006 Id Software, Inc. and contributors.
+ For a list of contributors, see the accompanying CONTRIBUTORS file.
+
+ This file is part of GtkRadiant.
+
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+/*
+ The following source code is licensed by Id Software and subject to the terms of
+ its LIMITED USE SOFTWARE LICENSE AGREEMENT, a copy of which is included with
+ GtkRadiant. If you did not receive a LIMITED USE SOFTWARE LICENSE AGREEMENT,
+ please contact Id Software immediately at info@idsoftware.com.
+ */
 
 #include "qe3.h"
 
@@ -35,10 +39,12 @@ please contact Id Software immediately at info@idsoftware.com.
 #include "map.h"
 #include "mainframe.h"
 #include "convert.h"
+#include "radiant.h"
 
-QEGlobals_t  g_qeglobals;
+QEGlobals_t g_qeglobals;
 
-void QE_InitVFS (void) {
+void QE_InitVFS (void)
+{
 	// VFS initialization -----------------------
 	// we will call GlobalFileSystem().initDirectory, giving the directories to look in (for files in pk3's and for standalone files)
 	// we need to call in order, the mod ones first, then the base ones .. they will be searched in this order
@@ -97,7 +103,7 @@ void QE_InitVFS (void) {
 void QE_UpdateStatusBar (void)
 {
 	char buffer[128];
-	sprintf(buffer, "Brushes: %d Entities: %d", int(g_brushCount.get()), int(g_entityCount.get()));
+	sprintf(buffer, _("Brushes: %d Entities: %d"), int(g_brushCount.get()), int(g_entityCount.get()));
 	g_pParentWnd->SetStatusText(g_pParentWnd->m_brushcount_status, buffer);
 }
 
@@ -120,8 +126,9 @@ bool ConfirmModified (const char* title)
 	if (!Map_Modified(g_map))
 		return true;
 
-	EMessageBoxReturn result = gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()),
-		"The current map has changed since it was last saved.\nDo you want to save the current map before continuing?",
+	EMessageBoxReturn result = gtk_MessageBox(
+		GTK_WIDGET(MainFrame_getWindow()),
+		_("The current map has changed since it was last saved.\nDo you want to save the current map before continuing?"),
 		title, eMB_YESNOCANCEL, eMB_ICONQUESTION);
 	if (result == eIDCANCEL)
 		return false;
