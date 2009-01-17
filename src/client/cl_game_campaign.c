@@ -155,7 +155,7 @@ static void GAME_CP_GetCampaigns_f (void)
 	*campaignText = *campaignDesc = '\0';
 	for (i = 0; i < numCampaigns; i++) {
 		if (campaigns[i].visible)
-			Q_strcat(campaignText, va("%s\n", campaigns[i].name), MAXCAMPAIGNTEXT);
+			Q_strcat(campaignText, va("%s\n", _(campaigns[i].name)), MAXCAMPAIGNTEXT);
 	}
 	/* default campaign */
 	mn.menuText[TEXT_STANDARD] = campaignDesc;
@@ -206,7 +206,7 @@ static void GAME_CP_CampaignListClick_f (void)
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
-		"%s\n"), campaigns[num].name, racetype,
+		"%s\n"), _(campaigns[num].name), racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
 			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
