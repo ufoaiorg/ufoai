@@ -714,16 +714,18 @@ menu team
 	// ==================
 	// actor info
 	// ==================
+	confunc changename {
+		if "sv_maxclients == 1" {
+			cmd	"employee_changename;"
+		}
+	}	
 
 	textentry name
 	{
 		string	"*cvar mn_name"
 		pos		"475 12"
-		size	"128 32"
-		change {
-			// TODO: only for singleplayer (sv_maxclients == 1)
-			cmd	"employee_changename;"
-		}
+		size	"400 32"
+		change { call changename }
 	}
 
 	pic bt_edit

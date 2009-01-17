@@ -975,7 +975,8 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	 */
 	base->numAircraftInBase--;
 	/* Update index of aircraftCurrent in base if it is affected by the index-change. */
-	if (base->aircraftCurrent >= aircraft && base->aircraftCurrent->homebase == aircraft->homebase)
+	/* We have to check that we do NOT decrease the counter under the first Aircraft.... */
+	if (base->aircraftCurrent >= aircraft && base->aircraftCurrent->homebase == aircraft->homebase && !(base->aircraftCurrent == &base->aircraft[0]))
 		base->aircraftCurrent--;
 
 	/* rearrange the aircraft-list (in base) */
