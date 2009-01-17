@@ -148,9 +148,7 @@ typedef LatchedValue<int> LatchedInt;
 typedef MemberCaller1<LatchedInt, int, &LatchedInt::import> LatchedIntImportCaller;
 
 /*!
-holds information for a given game
-I'm a bit unclear on that still
-it holds game specific configuration stuff
+holds game specific configuration stuff
 such as base names, engine names, some game specific features to activate in the various modules
 it is not strictly a prefs thing since the user is not supposed to edit that (unless he is hacking
 support for a new game)
@@ -183,8 +181,6 @@ public:
 	}
 
 	CGameDescription(xmlDocPtr pDoc, const CopiedString &GameFile);
-
-	void Dump();
 };
 
 extern CGameDescription *g_pGameDescription;

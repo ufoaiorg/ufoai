@@ -1156,12 +1156,6 @@ static BrushPrefab g_brushprism (eBrushPrism);
 static BrushPrefab g_brushcone (eBrushCone);
 static BrushPrefab g_brushsphere (eBrushSphere);
 
-void FlipClip ();
-void SplitClip ();
-void Clip ();
-void OnClipMode (bool enable);
-bool ClipMode ();
-
 void ClipSelected ()
 {
 	if (ClipMode()) {

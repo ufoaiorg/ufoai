@@ -46,7 +46,6 @@ class Node;
 typedef struct _GtkWindow GtkWindow;
 typedef struct _GtkMenu GtkMenu;
 
-
 void FlipClip();
 void SplitClip();
 void Clip();

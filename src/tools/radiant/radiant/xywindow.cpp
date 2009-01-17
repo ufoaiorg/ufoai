@@ -573,69 +573,69 @@ void WXY_Print (void)
 		char m1 = 'B', m2 = 'M';
 		fwrite(&m1, 1, 1, fp);
 		byteswritten++; // B
-			fwrite(&m2, 1, 1, fp);
-			byteswritten++; // M
-			fwrite(&bfSize, 4, 1, fp);
-			byteswritten += 4;// bfSize
-			fwrite(&res, 2, 1, fp);
-			byteswritten += 2;// bfReserved1
-			fwrite(&res, 2, 1, fp);
-			byteswritten += 2;// bfReserved2
-			fwrite(&pixoff, 4, 1, fp);
-			byteswritten += 4;// bfOffBits
+		fwrite(&m2, 1, 1, fp);
+		byteswritten++; // M
+		fwrite(&bfSize, 4, 1, fp);
+		byteswritten += 4;// bfSize
+		fwrite(&res, 2, 1, fp);
+		byteswritten += 2;// bfReserved1
+		fwrite(&res, 2, 1, fp);
+		byteswritten += 2;// bfReserved2
+		fwrite(&pixoff, 4, 1, fp);
+		byteswritten += 4;// bfOffBits
 
-			unsigned long biSize = 40, compress = 0, size = 0;
-			long pixels = 0;
-			unsigned short planes = 1;
-			fwrite(&biSize, 4, 1, fp);
-			byteswritten += 4;// biSize
-			fwrite(&width, 4, 1, fp);
-			byteswritten += 4;// biWidth
-			fwrite(&height, 4, 1, fp);
-			byteswritten += 4;// biHeight
-			fwrite(&planes, 2, 1, fp);
-			byteswritten += 2;// biPlanes
-			fwrite(&bits, 2, 1, fp);
-			byteswritten += 2;// biBitCount
-			fwrite(&compress, 4, 1, fp);
-			byteswritten += 4;// biCompression
-			fwrite(&size, 4, 1, fp);
-			byteswritten += 4;// biSizeImage
-			fwrite(&pixels, 4, 1, fp);
-			byteswritten += 4;// biXPelsPerMeter
-			fwrite(&pixels, 4, 1, fp);
-			byteswritten += 4;// biYPelsPerMeter
-			fwrite(&cmap, 4, 1, fp);
-			byteswritten += 4;// biClrUsed
-			fwrite(&cmap, 4, 1, fp);
-			byteswritten += 4;// biClrImportant
+		unsigned long biSize = 40, compress = 0, size = 0;
+		long pixels = 0;
+		unsigned short planes = 1;
+		fwrite(&biSize, 4, 1, fp);
+		byteswritten += 4;// biSize
+		fwrite(&width, 4, 1, fp);
+		byteswritten += 4;// biWidth
+		fwrite(&height, 4, 1, fp);
+		byteswritten += 4;// biHeight
+		fwrite(&planes, 2, 1, fp);
+		byteswritten += 2;// biPlanes
+		fwrite(&bits, 2, 1, fp);
+		byteswritten += 2;// biBitCount
+		fwrite(&compress, 4, 1, fp);
+		byteswritten += 4;// biCompression
+		fwrite(&size, 4, 1, fp);
+		byteswritten += 4;// biSizeImage
+		fwrite(&pixels, 4, 1, fp);
+		byteswritten += 4;// biXPelsPerMeter
+		fwrite(&pixels, 4, 1, fp);
+		byteswritten += 4;// biYPelsPerMeter
+		fwrite(&cmap, 4, 1, fp);
+		byteswritten += 4;// biClrUsed
+		fwrite(&cmap, 4, 1, fp);
+		byteswritten += 4;// biClrImportant
 
-			unsigned long widthDW = (((width * 24) + 31) / 32 * 4);
-			long row, row_size = width * 3;
-			for (row = 0; row < height; row++) {
-				const unsigned char* buf = img + row * row_size;
+		unsigned long widthDW = (((width * 24) + 31) / 32 * 4);
+		long row, row_size = width * 3;
+		for (row = 0; row < height; row++) {
+			const unsigned char* buf = img + row * row_size;
 
-				// write a row
-				int col;
-				for (col = 0; col < row_size; col += 3) {
-					putc(buf[col+2], fp);
-					putc(buf[col+1], fp);
-					putc(buf[col], fp);
-				}
-				byteswritten += row_size;
-
-				unsigned long count;
-				for (count = row_size; count < widthDW; count++) {
-					putc(0, fp); // dummy
-					byteswritten++;
-				}
+			// write a row
+			int col;
+			for (col = 0; col < row_size; col += 3) {
+				putc(buf[col+2], fp);
+				putc(buf[col+1], fp);
+				putc(buf[col], fp);
 			}
+			byteswritten += row_size;
 
-			fclose(fp);
+			unsigned long count;
+			for (count = row_size; count < widthDW; count++) {
+				putc(0, fp); // dummy
+				byteswritten++;
+			}
 		}
 
-		free (img);
+		fclose(fp);
 	}
+
+	free(img);
+}
 
 #include "timer.h"
 
@@ -645,8 +645,6 @@ void XYWnd::ChaseMouse (void)
 {
 	const float multiplier = g_chasemouse_timer.elapsed_msec() / 10.0f;
 	Scroll(float_to_integer(multiplier * m_chasemouse_delta_x), float_to_integer(multiplier * -m_chasemouse_delta_y));
-
-	//globalOutputStream() << "chasemouse: multiplier=" << multiplier << " x=" << m_chasemouse_delta_x << " y=" << m_chasemouse_delta_y << '\n';
 
 	XY_MouseMoved(m_chasemouse_current_x, m_chasemouse_current_y, getButtonState());
 	g_chasemouse_timer.start();
@@ -658,7 +656,7 @@ static inline gboolean xywnd_chasemouse (gpointer data)
 	return TRUE;
 }
 
-inline const int& min_int (const int& left, const int& right)
+static inline const int& min_int (const int& left, const int& right)
 {
 	return std::min(left, right);
 }
