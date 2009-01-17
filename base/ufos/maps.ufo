@@ -453,110 +453,109 @@ mapdef alienlandingindustrial_fix
 // TROPIC RANDOM MAPS
 /////////////////////
 
-// mapdef tropic_river
-// {
-// 	map				"+tropic"
-// 	description		"_A river runs through this piece of jungle."
-// 	param			river
-// 	multiplayer		false
-// 	maxaliens		8 //TODO: This is an arbitrary value right now.
-// 
-// 	ufos
-// 	{
-// 		craft_ufo_scout
-// 		craft_ufo_fighter
-// 		craft_ufo_harvester
-// 		craft_crash_scout
-// 		craft_crash_fighter
-// 	}
-// 
-// 	terrains
-// 	{
-// 		tropical
-// 	}
-// 
-// 	cultures
-// 	{
-// 		//any
-// 	}
-// 
-// 	populations
-// 	{
-// 		nopopulation
-// 		rural
-// 		village
-// 		suburban
-// 	}
-// }
-// 
-// mapdef tropic_drug
-// {
-// 	map				"+tropic"
-// 	description		"_A cleared stretch of land in the middle of the jungle."
-// 	param			drug
-// 	multiplayer		false
-// 	maxaliens		8 //TODO: This is an arbitrary value right now.
-// 
-// 	ufos
-// 	{
-// 		craft_ufo_scout
-// 		craft_ufo_fighter
-// 		craft_ufo_harvester
-// 		craft_crash_scout
-// 		craft_crash_fighter
-// 	}
-// 
-// 	terrains
-// 	{
-// 		tropical
-// 	}
-// 
-// 	cultures
-// 	{
-// 		//any
-// 	}
-// 
-// 	populations
-// 	{
-// 		nopopulation
-// 		rural
-// 		village
-// 		suburban
-// 	}
-// }
-// 
-// mapdef tropic_bigufo
-// {
-// 	map				"+tropic"
-// 	description		"_A cleared stretch of land in the middle of the jungle."
-// 	param			bigufo
-// 	multiplayer		false
-// 	maxaliens		18 //TODO: This is an arbitrary value right now.
-// 
-// 	ufos
-// 	{
-// 		craft_ufo_corrupter
-// 		craft_ufo_harvester
-// 	}
-// 
-// 	terrains
-// 	{
-// 		tropical
-// 	}
-// 
-// 	cultures
-// 	{
-// 		//any
-// 	}
-// 
-// 	populations
-// 	{
-// 		nopopulation
-// 		rural
-// 		village
-// 		suburban
-//  }
-// }
+mapdef tropic_river
+{
+	map				"+tropic"
+	description		"_A river runs through this piece of jungle."
+	param			river
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_crash_scout
+		craft_crash_fighter
+	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef tropic_drug
+{
+	map				"+tropic"
+	description		"_A cleared stretch of land in the middle of the jungle."
+	param			drug
+	multiplayer		false
+	maxaliens		8 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_scout
+		craft_ufo_fighter
+		craft_ufo_harvester
+		craft_crash_scout
+		craft_crash_fighter
+	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+	}
+}
+
+mapdef tropic_bigufo
+{
+	map				"+tropic"
+	description		"_A cleared stretch of land in the middle of the jungle."
+	param			bigufo
+	multiplayer		false
+	maxaliens		18 //TODO: This is an arbitrary value right now.
+
+	ufos
+	{
+		craft_ufo_corrupter
+		craft_ufo_harvester
+	}
+
+	terrains
+	{
+		tropical
+	}
+
+	cultures
+	{
+		//any
+	}
+
+	populations
+	{
+		nopopulation
+		rural
+		village
+		suburban
+ }
+}
 
 //////////////////////
 // VILLAGE RANDOM MAPS
