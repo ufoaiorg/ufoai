@@ -300,7 +300,7 @@ static void TR_CargoList (void)
 	for (i = 0; i < csi.numODs; i++) {
 		if (trItemsTmp[i] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
-				csi.ods[i].name, trItemsTmp[i]);
+				_(csi.ods[i].name), trItemsTmp[i]);
 			LIST_AddString(&cargoList, str);
 			cargo[trCargoCountTmp].type = CARGO_TYPE_ITEM;
 			cargo[trCargoCountTmp].itemidx = i;
@@ -491,9 +491,9 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			for (i = 0; i < csi.numODs; i++)
 				if (srcbase->storage.num[i]) {
 					if (trItemsTmp[i] > 0)
-						Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)"), csi.ods[i].name, trItemsTmp[i], srcbase->storage.num[i]);
+						Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)"), _(csi.ods[i].name), trItemsTmp[i], srcbase->storage.num[i]);
 					else
-						Com_sprintf(str, sizeof(str), _("%s (%i available)"), csi.ods[i].name, srcbase->storage.num[i]);
+						Com_sprintf(str, sizeof(str), _("%s (%i available)"), _(csi.ods[i].name), srcbase->storage.num[i]);
 					LIST_AddString(&transferList, str);
 					cnt++;
 				}

@@ -327,7 +327,7 @@ static void CL_ActorGlobalCvars (void)
 				invList = LEFT(le);
 
 			Com_sprintf(tooltip, lengthof(tooltip), "%s\nHP: %i/%i TU: %i\n%s",
-				chr->name, le->HP, le->maxHP, le->TU, invList ? invList->item.t->name : "");
+				chr->name, le->HP, le->maxHP, le->TU, invList ? _(invList->item.t->name) : "");
 			Cvar_Set(va("mn_soldier%i_tt", i), tooltip);
 		} else {
 			Cvar_Set(va("mn_head%i", i), "");
@@ -861,7 +861,7 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 		Cvar_Set(cvarName, _("No remaining TUs left after shot."));
 
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_name%i", hand, fd->fdIdx);
-	Cvar_Set(cvarName, fd->name);
+	Cvar_Set(cvarName, _(fd->name));
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_tu%i", hand, fd->fdIdx);
 	Cvar_Set(cvarName, va(_("TU: %i"), fd->time));
 	Com_sprintf(cvarName, lengthof(cvarName), "mn_%c_fm_shot%i", hand, fd->fdIdx);
@@ -982,7 +982,7 @@ static void CL_PopupFiremodeReservation (qboolean reset)
 					Com_sprintf(text, lengthof(text),
 						_("[%i TU] %s - %s"),
 						ammo->fd[weapFdsIdx][i].time,
-						weapon->name,
+						_(weapon->name),
 						ammo->fd[weapFdsIdx][i].name);
 
 					/* Store text for popup */
@@ -2175,9 +2175,9 @@ void CL_ActorUpdateCvars (void)
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
 				Com_sprintf(infoText, lengthof(infoText),
-							"%s\n%s (%i) [%i%%] %i\n", selWeapon->item.t->name, selFD->name, selFD->ammo, selToHit, selFD->time);
+							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, selToHit, selFD->time);
 				Com_sprintf(mouseText, lengthof(mouseText),
-							"%s: %s (%i) [%i%%] %i\n", selWeapon->item.t->name, selFD->name, selFD->ammo, selToHit, selFD->time);
+							"%s: %s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, selToHit, selFD->time);
 
 				mn.menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;	/* Save the text for later display next to the cursor. */
 
@@ -2188,7 +2188,7 @@ void CL_ActorUpdateCvars (void)
 					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				}
 			} else if (selWeapon) {
-				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), selWeapon->item.t->name);
+				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
 			} else {
 				cl.cmode = M_MOVE;
 				CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);

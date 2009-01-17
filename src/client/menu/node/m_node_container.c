@@ -299,9 +299,9 @@ static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 	assert(item.t);
 
 	if (item.amount > 1)
-		Com_sprintf(tooltiptext, string_maxlength, "%i x %s\n", item.amount, item.t->name);
+		Com_sprintf(tooltiptext, string_maxlength, "%i x %s\n", item.amount, _(item.t->name));
 	else
-		Com_sprintf(tooltiptext, string_maxlength, "%s\n", item.t->name);
+		Com_sprintf(tooltiptext, string_maxlength, "%s\n", _(item.t->name));
 
 	/* Only display further info if item.t is researched */
 	if (RS_IsResearched_ptr(item.t->tech)) {
@@ -314,7 +314,7 @@ static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 				}
 			} else if (item.m) {
 				/* Search for used ammo and display name + ammo count */
-				Q_strcat(tooltiptext, va(_("%s loaded\n"), item.m->name), string_maxlength);
+				Q_strcat(tooltiptext, va(_("%s loaded\n"), _(item.m->name)), string_maxlength);
 				Q_strcat(tooltiptext, va(_("Ammo: %i\n"),  item.a), string_maxlength);
 			}
 		} else if (item.t->numWeapons) {
@@ -325,7 +325,7 @@ static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 				for (i = 0; i < item.t->numWeapons; i++) {
 					weapon = item.t->weapons[i];
 					if (RS_IsResearched_ptr(weapon->tech)) {
-						Q_strcat(tooltiptext, va("* %s\n", weapon->name), string_maxlength);
+						Q_strcat(tooltiptext, va("* %s\n", _(weapon->name)), string_maxlength);
 					}
 				}
 			}
@@ -622,7 +622,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		/* skip items over and bellow the node view */
 		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
 			int height;
-			R_FontTextSize("f_verysmall", obj->name,
+			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
 			height += obj->sy * C_UNIT + 10;
 			if (height > rowHeight)
@@ -689,7 +689,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 			pos[0], pos[1],
 			pos[0], nodepos[1],
 			cellWidth - 5, 200,	/* max width/height */
-			0, obj->name, 0, 0, NULL, qfalse, LONGLINES_WRAP);
+			0, _(obj->name), 0, 0, NULL, qfalse, LONGLINES_WRAP);
 
 		/* draw ammos of weapon */
 		if (obj->weapon && EXTRADATA(node).displayAmmoOfWeapon) {
@@ -957,7 +957,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		/* skip items over and bellow the node view */
 		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
 			int height;
-			R_FontTextSize("f_verysmall", obj->name,
+			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
 			height += obj->sy * C_UNIT + 10;
 			if (height > rowHeight)
@@ -997,7 +997,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		ammopos[0] += obj->sx * C_UNIT + 10;
 
 		/* draw the item name. */
-		R_FontTextSize("f_verysmall", obj->name,
+		R_FontTextSize("f_verysmall", _(obj->name),
 			cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
 		cellHeight += height;
 

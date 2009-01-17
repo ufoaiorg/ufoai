@@ -782,7 +782,7 @@ static const value_t od_vals[] = {
 	{"protection", V_NULL, 0, 0},
 	{"rating", V_NULL, 0, 0},
 
-	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(objDef_t, name), 0},
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
 	{"image", V_STRING, offsetof(objDef_t, image), 0},
 	{"type", V_STRING, offsetof(objDef_t, type), 0},
@@ -836,7 +836,7 @@ static const value_t od_vals[] = {
 /* =========================================================== */
 
 static const value_t fdps[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name), 0},
+	{"name", V_TRANSLATION_MANUAL_STRING, offsetof(fireDef_t, name), 0},
 	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg), MEMBER_SIZEOF(fireDef_t, shotOrg)},
 	{"projtl", V_STRING, offsetof(fireDef_t, projectile), 0},
 	{"impact", V_STRING, offsetof(fireDef_t, impact), 0},

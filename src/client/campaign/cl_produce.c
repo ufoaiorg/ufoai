@@ -408,7 +408,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		const production_t *prod = &queue->items[i];
 		if (!prod->aircraft) {
 			const objDef_t *od = prod->item;
-			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+			Q_strcat(productionList, va("%s\n", _(od->name)), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", base->storage.num[prod->item->idx]), sizeof(productionAmount));
 			Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
 		} else {
@@ -444,7 +444,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			if (PR_ConditionsDisassembly(base, comp)) {
 				LIST_AddPointer(&productionItemList, comp);
 
-				Q_strcat(productionList, va("%s\n", asOd->name), sizeof(productionList));
+				Q_strcat(productionList, va("%s\n", _(asOd->name)), sizeof(productionList));
 				Q_strcat(productionAmount, va("%i\n", base->storage.num[asOd->idx]), sizeof(productionAmount));
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 			}
@@ -486,7 +486,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			 && od->tech->produceTime > 0) {
 				LIST_AddPointer(&productionItemList, od);
 
-				Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+				Q_strcat(productionList, va("%s\n", _(od->name)), sizeof(productionList));
 				Q_strcat(productionAmount, va("%i\n", base->storage.num[i]), sizeof(productionAmount));
 				Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 			}
@@ -711,7 +711,7 @@ void PR_ProductionRun (void)
 
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), od->name);
+						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), _(od->name));
 						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 						PR_QueueNext(base);
 					}
@@ -753,7 +753,7 @@ void PR_ProductionRun (void)
 						}
 				}
 				if (prod->amount <= 0) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The disassembling of %s has finished."), od->name);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The disassembling of %s has finished."), _(od->name));
 					MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 					PR_QueueNext(base);
 				}
@@ -787,7 +787,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, float
 		assert(prodPerHour > 0);
 		time = ceil((1.0f - percentDone) / prodPerHour);
 
-		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
+		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", _(od->name));
 		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR)),
 			sizeof(productionInfo));
 		Q_strcat(productionInfo, va(_("Production time\t%ih\n"), time), sizeof(productionInfo));
@@ -818,13 +818,13 @@ static void PR_DisassemblyInfo (const base_t *base, const objDef_t *od, const co
 	assert(prodPerHour > 0);
 	time = ceil((1.0f - percentDone) / prodPerHour);
 
-	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
+	Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), _(od->name));
 	Q_strcat(productionInfo, _("Components: "), sizeof(productionInfo));
 	/* Print components. */
 	for (i = 0; i < comp->numItemtypes; i++) {
 		const objDef_t *compOd = comp->items[i];
 		assert(compOd);
-		Q_strcat(productionInfo, va(_("%s (%i) "), compOd->name, comp->item_amount[i]),
+		Q_strcat(productionInfo, va(_("%s (%i) "), _(compOd->name), comp->item_amount[i]),
 			sizeof(productionInfo));
 	}
 	Q_strcat(productionInfo, "\n", sizeof(productionInfo));
@@ -1390,10 +1390,10 @@ static void PR_ProductionIncrease_f (void)
 				}
 
 				if (!selectedDisassembly) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), od->name);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(od->name));
 					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 				} else {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Disassembling of %s started"), od->name);
+					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Disassembling of %s started"), _(od->name));
 					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 				}
 

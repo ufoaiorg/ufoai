@@ -4636,7 +4636,7 @@ tech news_new_twist
 		tech rs_alien_xvi_event
 	}
 
-	event "cp_start_xvi_spreading;"
+	event "cp_start_xvi_spreading"
 
 	time		0
 	pushnews	true

@@ -321,7 +321,7 @@ void UP_ItemDescription (const objDef_t *od)
 	activeMenu = MN_GetActiveMenu();
 
 	/* select item */
-	Cvar_Set("mn_itemname", od->name);
+	Cvar_Set("mn_itemname", _(od->name));
 	Cvar_Set("mn_item", od->id);
 
 #ifdef DEBUG
@@ -361,8 +361,8 @@ void UP_ItemDescription (const objDef_t *od)
 
 			/* Display the name of the associated weapon */
 			Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
-			Cvar_Set("mn_researchedlinkname", od->weapons[upResearchedLink]->name);
-			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), od->weapons[upResearchedLink]->name));
+			Cvar_Set("mn_researchedlinkname", _(od->weapons[upResearchedLink]->name));
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), _(od->weapons[upResearchedLink]->name)));
 
 			/* Needed for writing stats below */
 			odAmmo = od;
@@ -415,8 +415,8 @@ void UP_ItemDescription (const objDef_t *od)
 			}
 
 			Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
-			Cvar_Set("mn_researchedlinkname", odAmmo->name);
-			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), odAmmo->name));
+			Cvar_Set("mn_researchedlinkname", _(odAmmo->name));
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), _(odAmmo->name)));
 		} else {
 			/* Reset upResearchedLink to make sure we don't hit an assert while drawing ammo */
 			upResearchedLink = 0;
@@ -483,7 +483,7 @@ void UP_ItemDescription (const objDef_t *od)
 
 			/* We always display the name of the firemode for an ammo */
 			Cvar_Set("mn_displayfiremode", "1"); /* use strings here - no int */
-			Cvar_Set("mn_firemodename", odAmmo->fd[up_weapon_id][upFireMode].name);
+			Cvar_Set("mn_firemodename", _(odAmmo->fd[up_weapon_id][upFireMode].name));
 			/* We display the pre/next buttons for changing firemode only if there are more than one */
 			if (odAmmo->numFiredefs[up_weapon_id] > 1)
 				Cvar_Set("mn_changefiremode", "1"); /* use strings here - no int */
