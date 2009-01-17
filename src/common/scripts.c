@@ -45,21 +45,20 @@ const char *const vt_names[] = {
 	"rgba",
 	"string", /* 10 */
 	"translation_string",
-	"translation2_string",
 	"longstring",
 	"align",
-	"blend", /* 15 */
-	"style",
+	"blend",
+	"style", /* 15 */
 	"fade",
 	"shapes",
 	"shapeb",
-	"dmgtype", /* 20 */
-	"dmgweight",
+	"dmgtype",
+	"dmgweight", /* 20 */
 	"date",
 	"relabs",
 	"client_hunk",
-	"client_hunk_string", /* 25 */
-	"num",
+	"client_hunk_string",
+	"num", /* 25 */
 	"baseid",
 	"longlines"
 };
@@ -119,7 +118,6 @@ static const size_t vt_sizes[] = {
 	sizeof(vec4_t),	/* V_COLOR */
 	sizeof(vec4_t),	/* V_RGBA */
 	0,	/* V_STRING */
-	0,	/* V_TRANSLATION_STRING */
 	0,	/* V_TRANSLATION_MANUAL_STRING */
 	0,	/* V_LONGSTRING */
 	sizeof(byte),	/* V_ALIGN */
@@ -287,14 +285,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		if (w > MAX_VAR)
 			w = MAX_VAR;
 		*writedByte = ALIGN(w);
-		break;
-
-	case V_TRANSLATION_STRING:
-		if (*token == '_')
-			token++;
-
-		Q_strncpyz((char *) b, _(token), MAX_VAR);
-		*writedByte = ALIGN((int)strlen((char *) b) + 1);
 		break;
 
 	/* just remove the _ but don't translate */
@@ -691,7 +681,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((const int *) b)[0], ((const int *) b)[1], ((const int *) b)[2], ((const int *) b)[3]);
 		return valuestr;
 
-	case V_TRANSLATION_STRING:
 	case V_TRANSLATION_MANUAL_STRING:
 	case V_STRING:
 	case V_LONGSTRING:

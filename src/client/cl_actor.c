@@ -262,7 +262,9 @@ void CL_CharacterCvars (const character_t * chr)
 
 	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
 	if (chr->score.rank >= 0 && gd.numRanks) {
-		Cvar_Set("mn_chrrank", va(_("Rank: %s"), gd.ranks[chr->score.rank].name));
+		char buf[MAX_VAR];
+		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(gd.ranks[chr->score.rank].name));
+		Cvar_Set("mn_chrrank", buf);
 		Cvar_Set("mn_chrrank_img", gd.ranks[chr->score.rank].image);
 	} else {
 		Cvar_Set("mn_chrrank", "");
@@ -3738,11 +3740,11 @@ void CL_ActorDie (struct dbuffer *msg)
 		character_t *chr = CL_GetActorChr(le);
 		if (chr && LE_IsStunned(le)) {
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was stunned\n"),
-			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
+			chr->score.rank >= 0 ? _(gd.ranks[chr->score.rank].shortname) : "", chr->name);
 			SCR_DisplayHudMessage(tmpbuf, 2000);
 		} else if (chr) {
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was killed\n"),
-			chr->score.rank >= 0 ? gd.ranks[chr->score.rank].shortname : "", chr->name);
+			chr->score.rank >= 0 ? _(gd.ranks[chr->score.rank].shortname) : "", chr->name);
 			SCR_DisplayHudMessage(tmpbuf, 2000);
 		}
 	} else {
