@@ -1,23 +1,23 @@
 /*
-Copyright (C) 2001-2006, William Joseph.
-All Rights Reserved.
+ Copyright (C) 2001-2006, William Joseph.
+ All Rights Reserved.
 
-This file is part of GtkRadiant.
+ This file is part of GtkRadiant.
 
-GtkRadiant is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ GtkRadiant is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-GtkRadiant is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ GtkRadiant is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GtkRadiant; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ You should have received a copy of the GNU General Public License
+ along with GtkRadiant; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 #if !defined(INCLUDED_VIEW_H)
 #define INCLUDED_VIEW_H
@@ -25,54 +25,36 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "cullable.h"
 #include "math/frustum.h"
 
-
-#if defined(DEBUG)
-#define DEBUG_CULLING
-#endif
-
-
-#if defined(DEBUG_CULLING)
-
 extern int g_count_dots;
 extern int g_count_planes;
 extern int g_count_oriented_planes;
 extern int g_count_bboxs;
 extern int g_count_oriented_bboxs;
 
-#endif
-
-inline void debug_count_dot() {
-#if defined(DEBUG_CULLING)
+static inline void debug_count_dot ()
+{
 	++g_count_dots;
-#endif
 }
 
-inline void debug_count_plane() {
-#if defined(DEBUG_CULLING)
+static inline void debug_count_plane ()
+{
 	++g_count_planes;
-#endif
 }
 
-inline void debug_count_oriented_plane() {
-#if defined(DEBUG_CULLING)
+static inline void debug_count_oriented_plane ()
+{
 	++g_count_oriented_planes;
-#endif
 }
 
-inline void debug_count_bbox() {
-#if defined(DEBUG_CULLING)
+static inline void debug_count_bbox ()
+{
 	++g_count_bboxs;
-#endif
 }
 
-inline void debug_count_oriented_bbox() {
-#if defined(DEBUG_CULLING)
+static inline void debug_count_oriented_bbox ()
+{
 	++g_count_oriented_bboxs;
-#endif
 }
-
-
-
 
 /// \brief View-volume culling and transformations.
 class View : public VolumeTest {
@@ -100,12 +82,12 @@ class View : public VolumeTest {
 		m_frustum = frustum_from_viewproj(m_viewproj);
 		m_viewer = viewer_from_viewproj(m_viewproj);
 	}
-public:
+	public:
 	View(bool fill = false) :
-			m_modelview(g_matrix4_identity),
-			m_projection(g_matrix4_identity),
-			m_scissor(g_matrix4_identity),
-			m_fill(fill) {
+	m_modelview(g_matrix4_identity),
+	m_projection(g_matrix4_identity),
+	m_scissor(g_matrix4_identity),
+	m_fill(fill) {
 	}
 	void Construct(const Matrix4& projection, const Matrix4& modelview, std::size_t width, std::size_t height) {
 		// modelview
@@ -118,10 +100,10 @@ public:
 		m_viewport = g_matrix4_identity;
 		m_viewport[0] = float(width / 2);
 		m_viewport[5] = float(height / 2);
-		if (fabs(m_projection[11]) > 0.0000001)
-			m_viewport[10] = m_projection[0] * m_viewport[0];
+		if (fabs(m_projection[11])> 0.0000001)
+		m_viewport[10] = m_projection[0] * m_viewport[0];
 		else
-			m_viewport[10] = 1 / m_projection[10];
+		m_viewport[10] = 1 / m_projection[10];
 
 		construct();
 	}
@@ -169,7 +151,7 @@ public:
 	}
 	const Matrix4& GetViewport() const {
 		return m_viewport;
-	};
+	}
 	const Matrix4& GetModelview() const {
 		return m_modelview;
 	}
