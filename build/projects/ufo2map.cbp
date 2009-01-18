@@ -186,6 +186,10 @@
 		<Unit filename="..\..\src\tools\ufo2map\writebsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\entitiesdef.c" />
+		<Unit filename="..\..\src\tools\ufo2map\entitiesdef.h">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

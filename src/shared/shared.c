@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
+/* flags for Com_Parse_O, could be expanded to specify other options */
+#define PARSE_NO_COMMENTS 0 /**< Com_Parse_O ignores all comments */
+#define PARSE_C_STYLE_COMMENTS 1 /**< Com_Parse_O does not ignore c-style comments */
+
 /**
  * @brief Returns just the filename from a given path
  * @sa COM_StripExtension
@@ -104,11 +108,12 @@ void COM_FilePath (const char *in, char *out)
 /**
  * @brief Parse a token out of a string
  * @param data_p Pointer to a string which is to be parsed
+ * @param options wether to ignore comments or not
  * @pre @c data_p is expected to be null-terminated
  * @return The string result of parsing in a string.
  * @sa COM_EParse
  */
-const char *COM_Parse (const char *data_p[])
+const char *COM_Parse_O (const char *data_p[], const int options)
 {
 	static char com_token[4096];
 	int c;
@@ -134,7 +139,8 @@ skipwhite:
 		data++;
 	}
 
-	if (c == '/' && data[1] == '*') {
+	if (!(options & PARSE_C_STYLE_COMMENTS)
+	 && c == '/' && data[1] == '*') {
 		int clen = 0;
 		data += 2;
 		while (!((data[clen] && data[clen] == '*') && (data[clen + 1] && data[clen + 1] == '/'))) {
@@ -199,6 +205,12 @@ skipwhite:
 
 	*data_p = data;
 	return com_token;
+}
+
+/* @brief as Com_Parse_O, but does not parse comments */
+const char *COM_Parse (const char *data_p[])
+{
+	return COM_Parse_O(data_p, PARSE_NO_COMMENTS);
 }
 
 /**
