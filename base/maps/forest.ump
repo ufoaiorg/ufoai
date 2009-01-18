@@ -92,6 +92,19 @@ acdg     +a      +a      +a     +a     +a	  acef
 0         0    abde    abde    abde    abde	  0
 }
 
+tile +craft_crash_harvester
+{
+7 7
+
+0         0       0    abfg    abfg    abfg	  0
+0         a       a      +a     +a     +a	  acef
+acdg     +a      +a      +a     +a     +a	  acef
+acdg     +a      +a      +a     +a     +a	  acef
+0         a       a      +a     +a     +a	  acef
+0         0       a      +a     +a     +a	  acef
+0         0       0    abde    abde    abde	  0
+}
+
 
 
 //** forest tiles
