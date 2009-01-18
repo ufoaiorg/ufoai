@@ -109,8 +109,6 @@ void CL_ParseRanks (const char *name, const char **text)
 				if (!*text)
 					return;
 				switch (v->type) {
-				case V_TRANSLATION_STRING:
-					token++;
 				case V_CLIENT_HUNK_STRING:
 					Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					break;
