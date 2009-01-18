@@ -116,6 +116,7 @@ class SurfaceInspector
 
 		NonModalEntry m_valueEntry;
 		GtkEntry* m_valueEntryWidget;
+		bool m_valueInconsistent; // inconsistent marker for valueEntryWidget
 	public:
 		GtkWidget* BuildNotebook ();
 
@@ -149,6 +150,7 @@ class SurfaceInspector
 			m_fitVertical = 1;
 			m_fitHorizontal = 1;
 			AddGridChangeCallback(FreeCaller<SurfaceInspector_GridChange> ());
+			m_valueInconsistent = false;
 		}
 
 		void queueDraw (void)
@@ -888,8 +890,13 @@ void SurfaceInspector::Update (void)
 	// and surface flags
 	ContentsFlagsValue flags(SurfaceInspector_GetSelectedFlags());
 
-	// TODO: Check for inconsistences here, too
-	entry_set_int(m_valueEntryWidget, flags.m_value);
+	if (!flags.m_valueDirty) {
+		entry_set_int(m_valueEntryWidget, flags.m_value);
+		m_valueInconsistent = false;
+	} else {
+		entry_set_string(m_valueEntryWidget, "");
+		m_valueInconsistent = true;
+	}
 
 	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
 		GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
@@ -952,9 +959,10 @@ void SurfaceInspector::ApplyTexdef (void)
 
 void SurfaceInspector::ApplyFlags( void )
 {
-	/** @todo convert membercaller somehow to use this directly, perhaps use some sort of signal connect instead of member caller? */
+	m_valueInconsistent = false;
 	ApplyFlagsWithIndicator(GTK_WIDGET(m_valueEntryWidget), this);
 }
+
 
 /**
  * @brief Sets the flags for all selected faces/brushes
@@ -1001,7 +1009,7 @@ void SurfaceInspector::ApplyFlagsWithIndicator (GtkWidget *activatedWidget, Surf
 	UndoableCommand undo("flagsSetSelected");
 	globalOutputStream() << "dirty: " << surfaceflagsDirty << "\n";
 	/* set flags to the selection */
-	Select_SetFlags(ContentsFlagsValue(surfaceflags, contentflags, value, true, surfaceflagsDirty, contentflagsDirty));
+	Select_SetFlags(ContentsFlagsValue(surfaceflags, contentflags, value, true, surfaceflagsDirty, contentflagsDirty, inspector->m_valueInconsistent));
 }
 
 void Face_getTexture (Face& face, CopiedString& shader, TextureProjection& projection, ContentsFlagsValue& flags)

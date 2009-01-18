@@ -241,15 +241,18 @@ class ContentsFlagsValue {
 public:
 	ContentsFlagsValue() {
 	}
-	ContentsFlagsValue(int surfaceFlags, int contentFlags, int value, bool specified, int surfaceFlagsDirty = 0, int contentFlagsDirty = 0) :
+	ContentsFlagsValue(int surfaceFlags, int contentFlags, int value, bool specified, int surfaceFlagsDirty = 0, int contentFlagsDirty = 0, bool valueDirty = false) :
 			m_surfaceFlags(surfaceFlags),
 			m_contentFlags(contentFlags),
 			m_value(value),
 			m_specified(specified),
 			m_surfaceFlagsDirty(surfaceFlagsDirty),
 			m_contentFlagsDirty(contentFlagsDirty),
-			m_markDirty(0) {
+			m_markDirty(0),
+			m_valueDirty(valueDirty),
+			m_firstValue(true){
 	}
+
 	int m_surfaceFlags;
 	int m_contentFlags;
 	int m_value;
@@ -257,6 +260,8 @@ public:
 	int m_surfaceFlagsDirty;
 	int m_contentFlagsDirty;
 	int m_markDirty;
+	bool m_valueDirty;
+	bool m_firstValue;// marker for value diff calculation. see GetFlags for use
 };
 
 static inline void ContentsFlagsValue_assignMasked(ContentsFlagsValue& flags, const ContentsFlagsValue& other) {
@@ -264,9 +269,13 @@ static inline void ContentsFlagsValue_assignMasked(ContentsFlagsValue& flags, co
 	unsigned int changedContentFlags = (other.m_contentFlags & (~other.m_contentFlagsDirty));
 	unsigned int unchangedSurfaceFlags = (flags.m_surfaceFlags & other.m_surfaceFlagsDirty);
 	unsigned int changedSurfaceFlags = (other.m_surfaceFlags & (~other.m_surfaceFlagsDirty));
+	int value = flags.m_value;
 	flags = other;
 	flags.m_contentFlags = unchangedContentFlags | changedContentFlags;
 	flags.m_surfaceFlags = unchangedSurfaceFlags | changedSurfaceFlags;
+	if (flags.m_valueDirty)
+		flags.m_value = value;
+	flags.m_valueDirty = false;
 //	flags.m_contentFlagsDirty = 0;
 //	flags.m_surfaceFlagsDirty = 0;
 //	flags.m_markDirty = 0;
@@ -1002,6 +1011,11 @@ public:
 			flags.m_surfaceFlagsDirty |= (oldFlags.m_surfaceFlags ^ flags.m_surfaceFlags);
 		}
 		flags.m_markDirty = 1;
+		// preserve dirty state, don't mark dirty if we only select one face / first face (value in old flags is 0, own value could differ)
+		if (oldFlags.m_valueDirty || ((flags.m_value != oldFlags.m_value) && !oldFlags.m_firstValue)) {
+				flags.m_valueDirty = true;
+			}
+		flags.m_firstValue = false;
 	}
 	/** @sa ContentsFlagsValue_assignMasked */
 	void SetFlags(const ContentsFlagsValue& flags) {
