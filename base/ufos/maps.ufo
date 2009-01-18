@@ -736,6 +736,7 @@ mapdef forest_large
 		craft_ufo_fighter
 		craft_crash_fighter
 		craft_ufo_harvester
+		craft_crash_harvester
 	}
 
 	terrains
