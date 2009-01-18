@@ -35,14 +35,14 @@ static int defBuffSize;
  * @brief load entities.def
  * @todo currently assumes trunk is the current directory, and has path to def hardcoded - is there a better way?
  */
-void ED_Load ()
+void ED_Load (void)
 {
 	const char *defPath = "./radiant/games/entities.def";
 	Verb_Printf(VERB_EXTRA, "Loading def: %s\n", defPath);
 	defBuffSize = LoadFile(defPath, (void **)&defBuffer);
 }
 
-void ED_Free ()
+void ED_Free (void)
 {
 	free (defBuffer);
 }
