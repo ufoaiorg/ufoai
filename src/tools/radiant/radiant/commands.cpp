@@ -288,8 +288,6 @@ void SaveCommandMap(const char* path) {
 				const char* key = global_keys_find(accelerator.key);
 				if (!string_empty(key)) {
 					m_file << key;
-				} else if (accelerator.key != 0) {
-					m_file << gdk_keyval_name(accelerator.key);
 				}
 
 				if (accelerator.modifiers & GDK_MOD1_MASK) {
@@ -344,23 +342,18 @@ public:
 			}
 			accelerator.modifiers = (GdkModifierType)modifiers;
 
-
-			// strBuff has been cleaned of it's modifiers .. switch between a regular key and a virtual one
-			// based on length
-			if (keyEnd - value == 1) { // most often case.. deal with first
-				accelerator.key = std::toupper(value[0]);
+			CopiedString keyName(StringRange(value, keyEnd));
+			accelerator.key = global_keys_find(keyName.c_str());
+			if (accelerator.key != 0) {
 				++m_count;
-			} else { // special key
-				CopiedString keyName(StringRange(value, keyEnd));
-				accelerator.key = global_keys_find(keyName.c_str());
-				if (accelerator.key != 0) {
-					++m_count;
-				} else {
-					g_warning("Failed to parse user command '%s': unknown key '%s'\n", value, keyName.c_str());
-					// modifier only bindings are not allowed
-					accelerator.modifiers = (GdkModifierType)0;
-				}
+			} else {
+				g_warning("Failed to parse user command '%s': unknown key '%s'\n", value, keyName.c_str());
+				// modifier only bindings are not allowed
+				accelerator.modifiers = (GdkModifierType)0;
 			}
+			accelerator.key = gdk_keyval_from_name(CopiedString(StringRange(value, keyEnd)).c_str());
+			if (accelerator.key == GDK_VoidSymbol)
+				accelerator.key = 0;
 		}
 	}
 	std::size_t count() const {
