@@ -101,6 +101,7 @@ use constant FORMAT => (
 	OffsetMeshes	=> 'I',		# offset to meshes
 	OffsetEnd		=> 'I',		# offset to end of file
 
+	prelude_MD3_mesh	=> 'a{$OffsetMeshes-108}',	# 'a56 = $OffsetMeshes - a108' [a108 = 11*I + 64*a from the previous header]
 	MD3_mesh		=> ['a108', '{$NumMeshes}', 1 ],
 
 	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
