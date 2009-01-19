@@ -258,24 +258,25 @@ sub model_read ($) {
 	}
 }
 
-sub model_get_skin ($$$) {
-	my ($filename, $model_file, $i) = @_;
+sub model_get_skin ($$$$) {
+	my ($filename, $model_file, $mesh, $i) = @_;
 	if ($filename =~ /\.md2$/) {
 		return $model_file->Path->[$i][0]
 	} elsif ($filename =~ /\.md3$/) {
-		# TODO: support other mesh than the first
-		return $model_file->children->{'MD3_mesh'}[$i]->Name;
+		# TODO: This isn't correct
+		return $model_file->children->{'MD3_mesh'}[$mesh]->Name;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
 }
 
-sub model_set_skin ($$$$) {
-	my ($filename, $model_file, $i, $skin) = @_;
+sub model_set_skin ($$$$$) {
+	my ($filename, $model_file, $mesh, $i, $skin) = @_;
 	if ($filename =~ /\.md2$/) {
 		$model_file->Path->[$i][0] = $skin;
 	} elsif ($filename =~ /\.md3$/) {
-		$model_file->children->{'MD3_mesh'}[$i]->Name = $skin;
+		# TODO: This isn't correct
+		$model_file->children->{'MD3_mesh'}[$mesh]->Name = $skin;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
@@ -286,26 +287,28 @@ sub model_skins_list ($$) {
 	if ($filename =~ /\.md2$/) {
 		md2_skins_list($model_file);
 	} elsif ($filename =~ /\.md3$/) {
-		# TODO:
+		for (my $i=0; $i<$model_file->NumMeshes; $i++) {
+			# TODO:
+		}
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
 }
 
-sub model_get_skins ($$) {
-	my ($filename, $model_file) = @_;
+sub model_get_skins ($$$) {
+	my ($filename, $model_file, $mesh) = @_;
 	if ($filename =~ /\.md2$/) {
 		return $model_file->NumSkins;
 	} elsif ($filename =~ /\.md3$/) {
-		# TODO: Use the meshes value?
+		# TODO: What about the other meshes?
 		return $model_file->children->{'MD3_mesh'}[0]->NumSkins;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
 }
 
-sub model_add_skinnum ($$$) {
-	my ($filename, $model_file, $num) = @_;
+sub model_add_skinnum ($$$$) {
+	my ($filename, $model_file, $mesh, $num) = @_;
 	if ($filename =~ /\.md2$/) {
 		md2_add_skinnum($model_file, $num);
 	} elsif ($filename =~ /\.md3$/) {
@@ -378,29 +381,32 @@ if ($param_action eq 'skinedit') {
 		print "TEX= \"$_\"\n" for (@TextureString);
 	}
 
+	# TODO: Commandline support
+	my $mesh = 0;
+
 	# read model file
 	my $model_file = model_read($MODEL_IN);
 
-	print model_get_skins($MODEL_IN, $model_file), " Skin(s) found\n";
+	print model_get_skins($MODEL_IN, $model_file, $mesh), " Skin(s) found\n";
 
 	# If no texture parameters are given and no skins found inside the file we create one.
 	if ($#TextureString == 0) {
-		while (model_get_skins($MODEL_IN, $model_file) == 0) {
+		while (model_get_skins($MODEL_IN, $model_file, $mesh) == 0) {
 			print "No skins to edit found in this file - adding one. (Use the option 'skinnum' to increase this value.)\n";
-			$model_file = model_add_skinnum($MODEL_IN, $model_file, 1);
+			$model_file = model_add_skinnum($MODEL_IN, $model_file, $mesh, 1);
 		}
 	}
 
-	if (model_get_skins($MODEL_IN, $model_file) > 0) {
+	if (model_get_skins($MODEL_IN, $model_file, $mesh) > 0) {
 		#just to prevent warnings
-		if ($#TextureString < model_get_skins($MODEL_IN, $model_file)) {
-			for (my $i = $#TextureString + 1; $i < model_get_skins($MODEL_IN, $model_file); $i++ ) {
+		if ($#TextureString < model_get_skins($MODEL_IN, $model_file, $mesh)) {
+			for (my $i = $#TextureString + 1; $i < model_get_skins($MODEL_IN, $model_file, $mesh); $i++ ) {
 				$TextureString[$i] = '';
 			}
 		}
 
-		for (my $i=0; $i<model_get_skins($MODEL_IN, $model_file); $i++) {
-			print "Skin ",$i," old: \"", model_get_skin($MODEL_IN, $model_file, $i),"\"\n";
+		for (my $i=0; $i<model_get_skins($MODEL_IN, $model_file, $mesh); $i++) {
+			print "Skin ",$i," old: \"", model_get_skin($MODEL_IN, $model_file, $mesh, $i),"\"\n";
 
 			# get new texture-path from user if no filename was given per commandline parameter.
 			if ($TextureString[$i] eq '') {
@@ -410,10 +416,10 @@ if ($param_action eq 'skinedit') {
 
 			# replace texture-path
 			if ($TextureString[$i] ne '') {
-				model_set_skin($MODEL_IN, $model_file, $i, $TextureString[$i]);
+				model_set_skin($MODEL_IN, $model_file, $mesh, $i, $TextureString[$i]);
 			}
 
-			print "Skin ",$i," new: \"", model_get_skin($MODEL_IN, $model_file, $i),"\"\n";
+			print "Skin ",$i," new: \"", model_get_skin($MODEL_IN, $model_file, $mesh, $i),"\"\n";
 		}
 
 		# save as another model file
@@ -443,10 +449,13 @@ if ($param_action eq 'skinedit') {
 		print "OUT= \"$MODEL_OUT\"\n";
 	}
 
+	# TODO: Commandline support
+	my $mesh = 0;
+
 	# read model file
 	my $model_file = model_read($MODEL_IN);
 
-	print model_get_skins($MODEL_IN, $model_file), " Skin(s) found\n";
+	print model_get_skins($MODEL_IN, $model_file, $mesh), " Skin(s) found\n";
 
 	# DEBUG
 	#use Data::Dumper;
@@ -458,14 +467,14 @@ if ($param_action eq 'skinedit') {
 
 	# Ask for new skin-number
 	#use Scalar::Util::Numeric qw(isint);
-	my $NumSkins_new = model_get_skins($MODEL_IN, $model_file);
+	my $NumSkins_new = model_get_skins($MODEL_IN, $model_file, $mesh);
 	do { # TODO: as until we get a sane number (integer)
 		print "Enter new skin number:";
 		$NumSkins_new = getString();
 	#} while (!isint($NumSkins_new));
-	} while (($NumSkins_new == model_get_skins($MODEL_IN, $model_file)) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
+	} while (($NumSkins_new == model_get_skins($MODEL_IN, $model_file, $mesh)) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
 
-	if ($NumSkins_new == model_get_skins($MODEL_IN, $model_file)) {
+	if ($NumSkins_new == model_get_skins($MODEL_IN, $model_file, $mesh)) {
 		print "No change in skin-number.\n";
 		return;
 	}
@@ -476,11 +485,11 @@ if ($param_action eq 'skinedit') {
 	}
 
 	# Add/remove skins and update offsets correctly
-	if ($NumSkins_new > model_get_skins($MODEL_IN, $model_file)) {
+	if ($NumSkins_new > model_get_skins($MODEL_IN, $model_file, $mesh)) {
 		# So the magic (add skins and update offsets correctly)
 		print "Adding skins and updating offsets ...\n";
 
-		$model_file = model_add_skinnum($MODEL_IN, $model_file, $NumSkins_new);
+		$model_file = model_add_skinnum($MODEL_IN, $model_file, $mesh, $NumSkins_new);
 	} else {
 		# TODO: do the magic (remove skins and update offsets correctly)
 		print "Removing skins and updating offsets ...\n";
