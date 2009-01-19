@@ -50,7 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <glib/gstrfuncs.h>
 
 #include "autoptr.h"
-#include "qerplugin.h"
+#include "iradiant.h"
 #include "idatastream.h"
 #include "iarchive.h"
 ArchiveModules& FileSystemAPI_getArchiveModules();

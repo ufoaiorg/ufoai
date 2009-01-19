@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "ientity.h"     // declaration of entity system
 #include "iscenegraph.h" // declaration of datastructure of the map
 #include "scenelib.h"    // declaration of datastructure of the map
-#include "qerplugin.h"   // declaration to use other interfaces as a plugin
+#include "iradiant.h"   // declaration to use other interfaces as a plugin
 #include "ieclass.h"
 
 class UFOAIPluginDependencies :

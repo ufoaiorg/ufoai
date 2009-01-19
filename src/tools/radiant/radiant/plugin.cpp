@@ -28,7 +28,7 @@
 
 #include "debugging/debugging.h"
 
-#include "qerplugin.h"
+#include "iradiant.h"
 #include "ifilesystem.h"
 #include "ishaders.h"
 #include "ientity.h"

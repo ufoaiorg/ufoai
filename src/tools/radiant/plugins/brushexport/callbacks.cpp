@@ -2,7 +2,7 @@
 #include <gtk/gtk.h>
 #include <set>
 
-#include "qerplugin.h"
+#include "iradiant.h"
 #include "debugging/debugging.h"
 #include "support.h"
 #include "export.h"

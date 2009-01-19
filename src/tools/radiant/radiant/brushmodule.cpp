@@ -22,7 +22,7 @@
 #include "brushmodule.h"
 #include "radiant.h"
 
-#include "qerplugin.h"
+#include "iradiant.h"
 
 #include "brushnode.h"
 #include "brushmanip.h"

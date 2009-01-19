@@ -27,7 +27,7 @@
 #include "pluginmanager.h"
 
 #include "modulesystem.h"
-#include "qerplugin.h"
+#include "iradiant.h"
 #include "iplugin.h"
 
 #include "math/vector.h"

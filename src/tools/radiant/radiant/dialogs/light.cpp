@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "../radiant.h"
 #include <gdk/gdkkeysyms.h>
-#include "qerplugin.h"
+#include "iradiant.h"
 #include "gtkutil/dialog.h"
 #include "../mainframe.h"
 

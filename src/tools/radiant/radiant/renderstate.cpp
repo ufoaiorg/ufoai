@@ -33,7 +33,7 @@
 #include "igl.h"
 #include "iglrender.h"
 #include "renderable.h"
-#include "qerplugin.h"
+#include "iradiant.h"
 
 #include <set>
 #include <vector>

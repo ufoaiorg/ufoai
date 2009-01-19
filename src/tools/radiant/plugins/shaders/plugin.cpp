@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "ifilesystem.h"
 #include "itextures.h"
 #include "iscriplib.h"
-#include "qerplugin.h"
+#include "iradiant.h"
 
 #include "string/string.h"
 #include "modulesystem/singletonmodule.h"

@@ -48,7 +48,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ishaders.h"
 #include "iscriplib.h"
 #include "itextures.h"
-#include "qerplugin.h"
+#include "iradiant.h"
 #include "irender.h"
 
 #include <glib/gslist.h>

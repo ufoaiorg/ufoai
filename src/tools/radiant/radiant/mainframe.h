@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/widget.h"
 #include "string/string.h"
 
-#include "qerplugin.h"
+#include "iradiant.h"
 
 class IPlugIn;
 class IToolbarButton;

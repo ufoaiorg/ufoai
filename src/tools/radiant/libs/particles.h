@@ -12,7 +12,7 @@
 #include "ifilesystem.h"
 #include "itextures.h"
 #include "stream/stringstream.h"
-#include "qerplugin.h"
+#include "iradiant.h"
 #include <map>
 #include <list>
 

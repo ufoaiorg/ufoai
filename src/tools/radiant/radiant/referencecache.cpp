@@ -42,7 +42,7 @@ ModelModules& ReferenceAPI_getModelModules ();
 #include "ifiletypes.h"
 #include "ireference.h"
 #include "ientity.h"
-#include "qerplugin.h"
+#include "iradiant.h"
 
 #include <list>
 

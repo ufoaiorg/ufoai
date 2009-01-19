@@ -26,7 +26,7 @@
 
 #include "../radiant.h"
 #include <gdk/gdkkeysyms.h>
-#include "qerplugin.h"
+#include "iradiant.h"
 #include "gtkutil/dialog.h"
 #include "../mainframe.h"
 #include "particles.h"
