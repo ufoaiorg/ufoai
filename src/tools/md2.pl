@@ -230,6 +230,7 @@ sub model_info ($) {
 		print "NumMeshes: ", $model_file->NumMeshes, " (max is 32)\n";
 		print "NumSkins: ", $model_file->NumSkins, "\n";
 		use Data::Dumper;
+		$Data::Dumper::Useqq = 1;
 		print Dumper($model_file);
 		print "\n\n";
 		print Dumper($model_file->struct);
@@ -384,6 +385,7 @@ if ($param_action eq 'skinedit') {
 
 	# DEBUG
 	#use Data::Dumper;
+	#$Data::Dumper::Useqq = 1;
 	#print Dumper($model_file->struct);
 
 	# Print Skins
@@ -422,6 +424,7 @@ if ($param_action eq 'skinedit') {
 
 	# Print Skins
 	md2_skins_list($model_file);
+	#$Data::Dumper::Useqq = 1;
 	#print Dumper($model_file);
 
 	# save as another model file
