@@ -80,7 +80,7 @@ package MD2_frame;
 use constant FORMAT => (
 	Scale			=> ['f', 3, 1 ],
 	Translate		=> ['f', 3, 1 ],
-	Name			=> 'a16',	# 16chars
+	Name			=> 'Z16',	# 16chars (Z = 0-terminated)
 	VertexData		=> 'a*'		# The whole rest
 );
 
@@ -89,7 +89,7 @@ use base 'Parse::Binary';
 use constant FORMAT => (
 	Magic		=> 'l',		# magic number. must be equal to "IDP3"
 	Version		=> 'l',		# md2 version. must be equal to 15
-	Filename	=> 'a64',	# 64chars
+	Filename	=> 'Z64',	# 64chars (Z = 0-terminated)
 	Flags		=> 'l',		#
 	NumFrames	=> 'l',		# total number of frames
 	NumTags		=> 'l',		# number of tags
@@ -111,7 +111,7 @@ package MD3_mesh;
 use base 'Parse::Binary';
 use constant FORMAT => (
 	ID			=> 'l',		# 4chars (IDP3)
-	Name		=> 'a64',	# 64chars
+	Name		=> 'Z64',	# 64chars (Z = 0-terminated)
 	Flags		=> 'l',		#
 	NumFrames	=> 'l',		# total number of frames
 	NumSkins	=> 'l',		# number of textures
@@ -133,7 +133,7 @@ use constant FORMAT => (
 
 package Path;
 use base 'Parse::Binary';
-use constant FORMAT => ('a64');
+use constant FORMAT => ('Z64');		# 64chars (Z = 0-terminated)
 
 package Model;
 
