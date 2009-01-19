@@ -229,13 +229,19 @@ sub model_info ($) {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
 		print "NumMeshes: ", $model_file->NumMeshes, " (max is 32)\n";
-		print "NumSkins: ", $model_file->NumSkins, "\n";
-		use Data::Dumper;
-		$Data::Dumper::Useqq = 1;
-		print Dumper($model_file);
-		print "\n\n";
-		print Dumper($model_file->struct);
+		#use Data::Dumper;
+		#$Data::Dumper::Useqq = 1;
+		#print Dumper($model_file);
 		for (my $i=0; $i<$model_file->NumMeshes; $i++) {
+			my $mesh = $model_file->children->{'MD3_mesh'}[$i];
+			print "Name: ", $mesh->Name, "\n";
+			print "Flags: ", $mesh->Flags, "\n";
+			print "NumSkins: ", $mesh->NumSkins, "\n";
+			print "NumFrames: ", $mesh->NumFrames, " (max is 1024)\n";
+			print "NumTris: ", $mesh->NumTris, " (max is 8192)\n";
+			print "NumXYZ: ", $mesh->NumVerts, " (max is 4096)\n";
+			die "Mesh has wrong magic number \"".$mesh->ID."\".\n"
+				unless ($mesh->ID == 860898377); # equals "IDP3"
 		}
 	}
 }
