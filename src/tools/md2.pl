@@ -244,11 +244,11 @@ sub model_info ($) {
 			my $mesh = $model_file->children->{'MD3_mesh'}[$i];
 			print "Name: ", $mesh->Name, "\n";
 			print "Flags: ", $mesh->Flags, "\n";
-			print "NumSkins: ", $mesh->NumSkins, "\n";
+			print "NumSkins: ", $mesh->NumSkins, " (max is 256)\n";
 			print "NumFrames: ", $mesh->NumFrames, " (max is 1024)\n";
 			print "NumTris: ", $mesh->NumTris, " (max is 8192)\n";
 			print "NumXYZ: ", $mesh->NumVerts, " (max is 4096)\n";
-			die "Mesh has wrong magic number \"".$mesh->ID."\".\n"
+			die "Mesh ",$i," has wrong magic number \"".$mesh->ID."\".\n"
 				unless ($mesh->ID == 860898377); # equals "IDP3"
 		}
 	}
