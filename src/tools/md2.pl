@@ -288,6 +288,7 @@ sub model_skins_list ($$) {
 		md2_skins_list($model_file);
 	} elsif ($filename =~ /\.md3$/) {
 		for (my $i=0; $i<$model_file->NumMeshes; $i++) {
+			my $mesh = $model_file->children->{'MD3_mesh'}[$i];
 			# TODO:
 		}
 	} else {
@@ -300,8 +301,7 @@ sub model_get_skins ($$$) {
 	if ($filename =~ /\.md2$/) {
 		return $model_file->NumSkins;
 	} elsif ($filename =~ /\.md3$/) {
-		# TODO: What about the other meshes?
-		return $model_file->children->{'MD3_mesh'}[0]->NumSkins;
+		return $model_file->children->{'MD3_mesh'}[$mesh]->NumSkins;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
