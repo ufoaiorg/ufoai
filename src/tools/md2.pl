@@ -298,7 +298,7 @@ sub model_get_skins ($$) {
 		return $model_file->NumSkins;
 	} elsif ($filename =~ /\.md3$/) {
 		# TODO: Use the meshes value?
-		return $model_file->NumSkins;
+		return $model_file->children->{'MD3_mesh'}[0]->NumSkins;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
@@ -391,15 +391,15 @@ if ($param_action eq 'skinedit') {
 		}
 	}
 
-	if ($model_file->NumSkins > 0) {
+	if (model_get_skins($MODEL_IN, $model_file) > 0) {
 		#just to prevent warnings
-		if ($#TextureString < $model_file->NumSkins) {
-			for ( my $i = $#TextureString + 1; $i < $model_file->NumSkins; $i++ ) {
+		if ($#TextureString < model_get_skins($MODEL_IN, $model_file)) {
+			for (my $i = $#TextureString + 1; $i < model_get_skins($MODEL_IN, $model_file); $i++ ) {
 				$TextureString[$i] = '';
 			}
 		}
 
-		for (my $i=0; $i<$model_file->NumSkins; $i++) {
+		for (my $i=0; $i<model_get_skins($MODEL_IN, $model_file); $i++) {
 			print "Skin ",$i," old: \"", model_get_skin($MODEL_IN, $model_file, $i),"\"\n";
 
 			# get new texture-path from user if no filename was given per commandline parameter.
