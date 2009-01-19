@@ -101,7 +101,7 @@ use constant FORMAT => (
 	OffsetMeshes	=> 'I',		# offset to meshes
 	OffsetEnd		=> 'I',		# offset to end of file
 
-	MD3_mesh		=> ['a*', '{$NumMeshes}', 1 ],
+	MD3_mesh		=> ['a108', '{$NumMeshes}', 1 ],
 
 	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
 );
