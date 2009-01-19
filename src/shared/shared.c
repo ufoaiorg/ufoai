@@ -27,10 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
-/* flags for Com_Parse_O, could be expanded to specify other options */
-#define PARSE_NO_COMMENTS 0 /**< Com_Parse_O ignores all comments */
-#define PARSE_C_STYLE_COMMENTS 1 /**< Com_Parse_O does not ignore c-style comments */
-
 /**
  * @brief Returns just the filename from a given path
  * @sa COM_StripExtension
@@ -103,114 +99,6 @@ void COM_FilePath (const char *in, char *out)
 	/** @todo Q_strncpyz */
 	strncpy(out, in, s - in);
 	out[s - in] = 0;
-}
-
-/**
- * @brief Parse a token out of a string
- * @param data_p Pointer to a string which is to be parsed
- * @param options wether to ignore comments or not
- * @pre @c data_p is expected to be null-terminated
- * @return The string result of parsing in a string.
- * @sa COM_EParse
- */
-const char *COM_Parse_O (const char *data_p[], const int options)
-{
-	static char com_token[4096];
-	int c;
-	size_t len;
-	const char *data;
-
-	data = *data_p;
-	len = 0;
-	com_token[0] = 0;
-
-	if (!data) {
-		*data_p = NULL;
-		return "";
-	}
-
-	/* skip whitespace */
-skipwhite:
-	while ((c = *data) <= ' ') {
-		if (c == 0) {
-			*data_p = NULL;
-			return "";
-		}
-		data++;
-	}
-
-	if (!(options & PARSE_C_STYLE_COMMENTS)
-	 && c == '/' && data[1] == '*') {
-		int clen = 0;
-		data += 2;
-		while (!((data[clen] && data[clen] == '*') && (data[clen + 1] && data[clen + 1] == '/'))) {
-			clen++;
-		}
-		data += clen + 2; /* skip end of multiline comment */
-		goto skipwhite;
-	}
-
-	/* skip // comments */
-	if (c == '/' && data[1] == '/') {
-		while (*data && *data != '\n')
-			data++;
-		goto skipwhite;
-	}
-
-	/* handle quoted strings specially */
-	if (c == '\"') {
-		data++;
-		while (1) {
-			c = *data++;
-			if (c == '\\' && data[0] == 'n') {
-				c = '\n';
-				data++;
-			/* nested quotation */
-			} else if (c == '\\' && data[0] == '\"') {
-				c = '\"';
-				data++;
-			} else if (c == '\"' || !c) {
-				com_token[len] = 0;
-				*data_p = data;
-				return com_token;
-			}
-			if (len < sizeof(com_token)) {
-				com_token[len] = c;
-				len++;
-			} else {
-				Com_Printf("Com_Parse len exceeded: "UFO_SIZE_T"/MAX_TOKEN_CHARS\n", len);
-			}
-		}
-	}
-
-	/* parse a regular word */
-	do {
-		if (c == '\\' && data[1] == 'n') {
-			c = '\n';
-			data++;
-		}
-		if (len < sizeof(com_token)) {
-			com_token[len] = c;
-			len++;
-		}
-		data++;
-		c = *data;
-	} while (c > 32);
-
-	if (len == sizeof(com_token)) {
-		Com_Printf("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
-		len = 0;
-	}
-	com_token[len] = 0;
-
-	*data_p = data;
-	return com_token;
-}
-
-/* @brief as Com_Parse_O, but does not parse comments */
-const char *COM_Parse (const char *data_p[])
-{
-	return COM_Parse_O(data_p, PARSE_NO_COMMENTS);
 }
 
 /**
