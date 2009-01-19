@@ -209,7 +209,8 @@ sub md3_read ($) {
 sub model_save ($$) {
 	my ($model_file, $filename) = @_;
 
-	# Save .md2 file
+	print "Writing model to ", $filename, "\n";
+	# Save model file
 	$model_file->write($filename);
 }
 
@@ -218,14 +219,14 @@ sub model_info ($) {
 
 	my $model_file = model_read($filename);
 
-	if ($filename =~ /.md2$/) {
+	if ($filename =~ /\.md2$/) {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 512)\n";
 		print "NumSkins: ", $model_file->NumSkins, " (max is 32)\n";
 		print "NumXYZ: ", $model_file->NumXYZ, " (max is 2048)\n";
 		print "NumST: ", $model_file->NumST, "\n";
 		print "NumTris: ", $model_file->NumTris, " (max is 4096)\n";
 		print "NumGLcmds: ", $model_file->NumGLcmds, "\n";
-	} elsif ($filename =~ /.md3$/) {
+	} elsif ($filename =~ /\.md3$/) {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
 		print "NumMeshes: ", $model_file->NumMeshes, " (max is 32)\n";
@@ -248,10 +249,67 @@ sub model_info ($) {
 
 sub model_read ($) {
 	my ($filename) = @_;
-	if ($filename =~ /.md2$/) {
+	if ($filename =~ /\.md2$/) {
 		return md2_read($filename);
-	} elsif ($filename =~ /.md3$/) {
+	} elsif ($filename =~ /\.md3$/) {
 		return md3_read($filename);
+	} else {
+		die "unknown file extension for '", $filename, "'\n";
+	}
+}
+
+sub model_get_skin ($$$) {
+	my ($filename, $model_file, $i) = @_;
+	if ($filename =~ /\.md2$/) {
+		return $model_file->Path->[$i][0]
+	} elsif ($filename =~ /\.md3$/) {
+		# TODO: support other mesh than the first
+		return $model_file->children->{'MD3_mesh'}[$i]->Name;
+	} else {
+		die "unknown file extension for '", $filename, "'\n";
+	}
+}
+
+sub model_set_skin ($$$$) {
+	my ($filename, $model_file, $i, $skin) = @_;
+	if ($filename =~ /\.md2$/) {
+		$model_file->Path->[$i][0] = $skin;
+	} elsif ($filename =~ /\.md3$/) {
+		$model_file->children->{'MD3_mesh'}[$i]->Name = $skin;
+	} else {
+		die "unknown file extension for '", $filename, "'\n";
+	}
+}
+
+sub model_skins_list ($$) {
+	my ($filename, $model_file) = @_;
+	if ($filename =~ /\.md2$/) {
+		md2_skins_list($model_file);
+	} elsif ($filename =~ /\.md3$/) {
+		# TODO:
+	} else {
+		die "unknown file extension for '", $filename, "'\n";
+	}
+}
+
+sub model_get_skins ($$) {
+	my ($filename, $model_file) = @_;
+	if ($filename =~ /\.md2$/) {
+		return $model_file->NumSkins;
+	} elsif ($filename =~ /\.md3$/) {
+		# TODO: Use the meshes value?
+		return $model_file->NumSkins;
+	} else {
+		die "unknown file extension for '", $filename, "'\n";
+	}
+}
+
+sub model_add_skinnum ($$$) {
+	my ($filename, $model_file, $num) = @_;
+	if ($filename =~ /\.md2$/) {
+		md2_add_skinnum($model_file, $num);
+	} elsif ($filename =~ /\.md3$/) {
+		# TODO:
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
@@ -275,10 +333,10 @@ sub getString () {
 #######################################
 
 my $param_action;
-# parse commandline parameters (md2-filenames)
-if ( $#ARGV < 0 ) {
-	die "Usage:\t$0 [skinedit|skinnum] [options...]\n";
-} elsif ( $#ARGV >= 0 ) {
+# parse commandline parameters (model-filenames)
+if ($#ARGV < 0) {
+	die "Usage:\t$0 [skinedit|skinnum|skinsize|info] [options...]\n";
+} elsif ($#ARGV >= 0) {
 	$param_action = $ARGV[0];
 	unless (
 		($param_action eq 'skinedit') ||
@@ -297,10 +355,10 @@ if ($param_action eq 'skinedit') {
 	my @TextureString = ('');
 
 	# parse commandline parameters (md2-filenames)
-	if ( $#ARGV == 1 ) {
+	if ($#ARGV == 1) {
 		$MODEL_IN = $MODEL_OUT = $ARGV[1];
 		print "IN=OUT= \"$MODEL_IN\"\n";
-	} elsif  ( $#ARGV == 2 ) {
+	} elsif  ($#ARGV == 2) {
 		$MODEL_IN	= $ARGV[1];
 		$MODEL_OUT	= $ARGV[2];
 		if ($MODEL_OUT eq '-') {
@@ -308,41 +366,41 @@ if ($param_action eq 'skinedit') {
 		}
 		print "IN = \"$MODEL_IN\"\n";
 		print "OUT= \"$MODEL_OUT\"\n";
-	} elsif  ( $#ARGV >= 3 ) {
+	} elsif ($#ARGV >= 3) {
 		$MODEL_IN	= $ARGV[1];
 		$MODEL_OUT	= $ARGV[2];
-		for ( my $i = 1; $i <= $#ARGV - 2; $i++ ) {
+		for (my $i = 1; $i <= $#ARGV - 2; $i++) {
 			$TextureString[$i] = $ARGV[$i+2];
 		}
 		print "IN = \"$MODEL_IN\"\n";
 		print "OUT= \"$MODEL_OUT\"\n";
 
-		print "TEX= \"$_\"\n" for ( @TextureString );
+		print "TEX= \"$_\"\n" for (@TextureString);
 	}
 
 	# read model file
 	my $model_file = model_read($MODEL_IN);
 
-	print $model_file->NumSkins, " Skin(s) found\n";
+	print model_get_skins($MODEL_IN, $model_file), " Skin(s) found\n";
 
 	# If no texture parameters are given and no skins found inside the file we create one.
 	if ($#TextureString == 0) {
-		while ($model_file->NumSkins == 0) {
+		while (model_get_skins($MODEL_IN, $model_file) == 0) {
 			print "No skins to edit found in this file - adding one. (Use the option 'skinnum' to increase this value.)\n";
-			$model_file = md2_add_skinnum($model_file, 1);
+			$model_file = model_add_skinnum($MODEL_IN, $model_file, 1);
 		}
 	}
 
 	if ($model_file->NumSkins > 0) {
 		#just to prevent warnings
-		if ( $#TextureString < $model_file->NumSkins ) {
+		if ($#TextureString < $model_file->NumSkins) {
 			for ( my $i = $#TextureString + 1; $i < $model_file->NumSkins; $i++ ) {
 				$TextureString[$i] = '';
 			}
 		}
 
-		for (my $i=0; $i < $model_file->NumSkins; $i++ ) {
-			print "Skin ",$i," old: \"", $model_file->Path->[$i][0],"\"\n";
+		for (my $i=0; $i<$model_file->NumSkins; $i++) {
+			print "Skin ",$i," old: \"", model_get_skin($MODEL_IN, $model_file, $i),"\"\n";
 
 			# get new texture-path from user if no filename was given per commandline parameter.
 			if ($TextureString[$i] eq '') {
@@ -352,10 +410,10 @@ if ($param_action eq 'skinedit') {
 
 			# replace texture-path
 			if ($TextureString[$i] ne '') {
-				$model_file->Path->[$i][0] = $TextureString[$i];
+				model_set_skin($MODEL_IN, $model_file, $i, $TextureString[$i]);
 			}
 
-			print "Skin ",$i," new: \"", $model_file->Path->[$i][0],"\"\n";
+			print "Skin ",$i," new: \"", model_get_skin($MODEL_IN, $model_file, $i),"\"\n";
 		}
 
 		# save as another model file
@@ -370,12 +428,12 @@ if ($param_action eq 'skinedit') {
 	# TODO: add proper commandline handling (maybe use extra file?)
 
 	# parse commandline parameters (md2-filenames)
-	if ( $#ARGV < 1 || $#ARGV > 2) {
+	if ($#ARGV < 1 || $#ARGV > 2) {
 		die "Usage:\t$0 skinnum [in.md2 [out.md2]]\n";
-	} elsif ( $#ARGV == 1 ) {
+	} elsif ($#ARGV == 1) {
 		$MODEL_IN = $MODEL_OUT = $ARGV[1];
 		print "IN=OUT= \"$MODEL_IN\"\n";
-	} elsif  ( $#ARGV == 2 ) {
+	} elsif ($#ARGV == 2) {
 		$MODEL_IN	= $ARGV[1];
 		$MODEL_OUT	= $ARGV[2];
 		if ($MODEL_OUT eq '-') {
@@ -385,10 +443,10 @@ if ($param_action eq 'skinedit') {
 		print "OUT= \"$MODEL_OUT\"\n";
 	}
 
-	# read .md2 file
-	my $model_file = md2_read($MODEL_IN);
+	# read model file
+	my $model_file = model_read($MODEL_IN);
 
-	print $model_file->NumSkins, " Skin(s) found\n";
+	print model_get_skins($MODEL_IN, $model_file), " Skin(s) found\n";
 
 	# DEBUG
 	#use Data::Dumper;
@@ -396,18 +454,18 @@ if ($param_action eq 'skinedit') {
 	#print Dumper($model_file->struct);
 
 	# Print Skins
-	md2_skins_list($model_file);
+	model_skins_list($MODEL_IN, $model_file);
 
 	# Ask for new skin-number
 	#use Scalar::Util::Numeric qw(isint);
-	my $NumSkins_new = $model_file->NumSkins;
+	my $NumSkins_new = model_get_skins($MODEL_IN, $model_file);
 	do { # TODO: as until we get a sane number (integer)
 		print "Enter new skin number:";
 		$NumSkins_new = getString();
 	#} while (!isint($NumSkins_new));
-	} while (($NumSkins_new == $model_file->NumSkins) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
+	} while (($NumSkins_new == model_get_skins($MODEL_IN, $model_file)) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
 
-	if ($NumSkins_new == $model_file->NumSkins) {
+	if ($NumSkins_new == model_get_skins($MODEL_IN, $model_file)) {
 		print "No change in skin-number.\n";
 		return;
 	}
@@ -418,11 +476,11 @@ if ($param_action eq 'skinedit') {
 	}
 
 	# Add/remove skins and update offsets correctly
-	if ($NumSkins_new > $model_file->NumSkins) {
+	if ($NumSkins_new > model_get_skins($MODEL_IN, $model_file)) {
 		# So the magic (add skins and update offsets correctly)
 		print "Adding skins and updating offsets ...\n";
 
-		$model_file = md2_add_skinnum($model_file, $NumSkins_new);
+		$model_file = model_add_skinnum($MODEL_IN, $model_file, $NumSkins_new);
 	} else {
 		# TODO: do the magic (remove skins and update offsets correctly)
 		print "Removing skins and updating offsets ...\n";
@@ -430,7 +488,7 @@ if ($param_action eq 'skinedit') {
 	}
 
 	# Print Skins
-	md2_skins_list($model_file);
+	model_skins_list($MODEL_IN, $model_file);
 	#$Data::Dumper::Useqq = 1;
 	#print Dumper($model_file);
 
@@ -438,12 +496,12 @@ if ($param_action eq 'skinedit') {
 	model_save($model_file, $MODEL_OUT);
 } elsif ($param_action eq 'skinsize') {
 	# parse commandline parameters (md2-filenames)
-	if ( $#ARGV < 1 || $#ARGV > 2) {
+	if ($#ARGV < 1 || $#ARGV > 2) {
 		die "Usage:\t$0 skinsize [in.md2 [out.md2]]\n";
-	} elsif ( $#ARGV == 1 ) {
+	} elsif ($#ARGV == 1) {
 		$MODEL_IN = $MODEL_OUT = $ARGV[1];
 		print "IN=OUT= \"$MODEL_IN\"\n";
-	} elsif  ( $#ARGV == 2 ) {
+	} elsif ($#ARGV == 2) {
 		$MODEL_IN	= $ARGV[1];
 		$MODEL_OUT	= $ARGV[2];
 		if ($MODEL_OUT eq '-') {
@@ -453,7 +511,10 @@ if ($param_action eq 'skinedit') {
 		print "OUT= \"$MODEL_OUT\"\n";
 	}
 
-	my $model_file = md2_read($MODEL_IN);
+	die "Only md2 model format is supported here\n"
+		unless ($MODEL_IN =~ /\.md2$/);
+
+	my $model_file = model_read($MODEL_IN);
 
 	print "Changing skin sizes ...\n";
 	print "Current size: ", $model_file->SkinWidth, "w x ", $model_file->SkinHeight, "h\n";
