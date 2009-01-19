@@ -124,6 +124,13 @@ use constant FORMAT => (
 	MeshSize	=> 'I'		#
 );
 
+package MD3_skin;
+use base 'Parse::Binary';
+use constant FORMAT => (
+	Path		=> 'a64',	# filename of the texture
+	ShaderIndex => 'I'		# unused
+);
+
 package Path;
 use base 'Parse::Binary';
 use constant FORMAT => ('a64');
@@ -433,7 +440,7 @@ if ($param_action eq 'skinedit') {
 	# TODO: this is undocumented and untested right now
 	# TODO: add proper commandline handling (maybe use extra file?)
 
-	# parse commandline parameters (md2-filenames)
+	# parse commandline parameters (model-filenames)
 	if ($#ARGV < 1 || $#ARGV > 2) {
 		die "Usage:\t$0 skinnum [in.md2 [out.md2]]\n";
 	} elsif ($#ARGV == 1) {
