@@ -54,24 +54,24 @@ my $MODEL_OUT		= 'out.md2';
 package MD2;
 use base 'Parse::Binary';
 use constant FORMAT => (
-	Magic		=> 'I',		# magic number. must be equal to "IDP2"
-	Version		=> 'I',		# md2 version. must be equal to 8
-	SkinWidth		=> 'I',		# width of the texture
-	SkinHeight		=> 'I',		# height of the texture
-	FrameSize		=> 'I',		# size of one frame in bytes
+	Magic		=> 'l',		# magic number. must be equal to "IDP2"
+	Version		=> 'l',		# md2 version. must be equal to 8
+	SkinWidth		=> 'l',		# width of the texture
+	SkinHeight		=> 'l',		# height of the texture
+	FrameSize		=> 'l',		# size of one frame in bytes
 
-	NumSkins		=> 'I',		# number of textures
-	NumXYZ		=> 'I',		# number of vertices (x,y,z)
-	NumST		=> 'I',		# number of texture coordinates (s,t)
-	NumTris		=> 'I',		# number of triangles (md2 only supports tris)
-	NumGLcmds	=> 'I',		# number of OpenGL commands
-	NumFrames		=> 'I',		# total number of frames
-	OffsetSkins		=> 'I',		# offset to skin names (64 bytes each)
-	OffsetST		=> 'I',		# offset to s-t texture coordinates
-	OffsetTris		=> 'I',		# offset to triangles
-	OffsetFrames	=> 'I',		# offset to frame data
-	OffsetGLcmds	=> 'I',		# offset to opengl commands
-	OffsetEnd		=> 'I',		# offset to end of file
+	NumSkins		=> 'l',		# number of textures
+	NumXYZ		=> 'l',		# number of vertices (x,y,z)
+	NumST		=> 'l',		# number of texture coordinates (s,t)
+	NumTris		=> 'l',		# number of triangles (md2 only supports tris)
+	NumGLcmds	=> 'l',		# number of OpenGL commands
+	NumFrames		=> 'l',		# total number of frames
+	OffsetSkins		=> 'l',		# offset to skin names (64 bytes each)
+	OffsetST		=> 'l',		# offset to s-t texture coordinates
+	OffsetTris		=> 'l',		# offset to triangles
+	OffsetFrames	=> 'l',		# offset to frame data
+	OffsetGLcmds	=> 'l',		# offset to opengl commands
+	OffsetEnd		=> 'l',		# offset to end of file
 	Path			=> ['a64', '{$NumSkins}', 1 ],	# 64chars * NumSkins -> see "package Path"
 	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
 );
@@ -87,19 +87,19 @@ use constant FORMAT => (
 package MD3;
 use base 'Parse::Binary';
 use constant FORMAT => (
-	Magic		=> 'I',		# magic number. must be equal to "IDP3"
-	Version		=> 'I',		# md2 version. must be equal to 15
+	Magic		=> 'l',		# magic number. must be equal to "IDP3"
+	Version		=> 'l',		# md2 version. must be equal to 15
 	Filename	=> 'a64',	# 64chars
-	Flags		=> 'I',		#
-	NumFrames	=> 'I',		# total number of frames
-	NumTags		=> 'I',		# number of tags
-	NumMeshes	=> 'I',		# number of meshes
-	NumSkins	=> 'I',		# number of textures
+	Flags		=> 'l',		#
+	NumFrames	=> 'l',		# total number of frames
+	NumTags		=> 'l',		# number of tags
+	NumMeshes	=> 'l',		# number of meshes
+	NumSkins	=> 'l',		# number of textures
 
-	OffsetFrames	=> 'I',		# offset to frame data
-	OffsetTags		=> 'I',		# offset to tags
-	OffsetMeshes	=> 'I',		# offset to meshes
-	OffsetEnd		=> 'I',		# offset to end of file
+	OffsetFrames	=> 'l',		# offset to frame data
+	OffsetTags		=> 'l',		# offset to tags
+	OffsetMeshes	=> 'l',		# offset to meshes
+	OffsetEnd		=> 'l',		# offset to end of file
 
 	prelude_MD3_mesh	=> 'a{$OffsetMeshes-108}',	# 'a56 = $OffsetMeshes - a108' [a108 = 11*I + 64*a from the previous header]
 	MD3_mesh		=> ['a108', '{$NumMeshes}', 1 ],
@@ -110,25 +110,25 @@ use constant FORMAT => (
 package MD3_mesh;
 use base 'Parse::Binary';
 use constant FORMAT => (
-	ID			=> 'I',		# 4chars (IDP3)
+	ID			=> 'l',		# 4chars (IDP3)
 	Name		=> 'a64',	# 64chars
-	Flags		=> 'I',		#
-	NumFrames	=> 'I',		# total number of frames
-	NumSkins	=> 'I',		# number of textures
-	NumVerts	=> 'I',		# number of vertices
-	NumTris		=> 'I',		# number of tris
-	OffsetTris	=> 'I',		# offset to tris
-	OffsetSkins	=> 'I',		# offset to skins
-	OffsetTCS	=> 'I',		# offset to ...
-	OffsetVerts	=> 'I',		# offset to vertices
-	MeshSize	=> 'I'		#
+	Flags		=> 'l',		#
+	NumFrames	=> 'l',		# total number of frames
+	NumSkins	=> 'l',		# number of textures
+	NumVerts	=> 'l',		# number of vertices
+	NumTris		=> 'l',		# number of tris
+	OffsetTris	=> 'l',		# offset to tris
+	OffsetSkins	=> 'l',		# offset to skins
+	OffsetTCS	=> 'l',		# offset to ...
+	OffsetVerts	=> 'l',		# offset to vertices
+	MeshSize	=> 'l'		#
 );
 
 package MD3_skin;
 use base 'Parse::Binary';
 use constant FORMAT => (
 	Path		=> 'a64',	# filename of the texture
-	ShaderIndex => 'I'		# unused
+	ShaderIndex => 'l'		# unused
 );
 
 package Path;
