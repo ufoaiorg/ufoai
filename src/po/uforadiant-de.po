@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-17 23:13+0100\n"
+"PO-Revision-Date: 2009-01-20 22:36+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -126,6 +126,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:163
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:165
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:664
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:666
 msgid "Brush"
 msgstr "Brush"
 
@@ -183,7 +184,7 @@ msgstr "ungültiger Modus %s"
 #: src/tools/radiant/radiant/camwindow.cpp:1801
 msgctxt "Strafe Mode"
 msgid "Both"
-msgstr ""
+msgstr "Beide"
 
 #: src/tools/radiant/radiant/camwindow.cpp:1801
 msgctxt "Strafe Mode"
@@ -763,6 +764,7 @@ msgstr "Abwärts schieben"
 #: src/tools/radiant/radiant/mainframe.cpp:1594
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:603
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:605
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:607
 msgid "Rotate"
 msgstr "Rotieren"
 
@@ -871,16 +873,20 @@ msgstr "Job Info"
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:426
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1216
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:428
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1224
 msgid "Surface Inspector"
 msgstr "Surface Inspector"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:438
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:440
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:442
 msgid "Texture"
 msgstr "Textur"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:459
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:461
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:463
 msgid "Horizontal shift"
 msgstr "Horizontale Verschiebung"
 
@@ -894,53 +900,67 @@ msgstr "Horizontale Verschiebung"
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:551
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:587
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:624
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:481
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:517
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:553
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:589
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:626
 msgctxt "Step width"
 msgid "Step"
 msgstr "Schrittweite"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:495
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:497
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:499
 msgid "Vertical shift"
 msgstr "Vertikale Verschiebung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:531
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:533
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:535
 msgid "Horizontal stretch"
 msgstr "Horizontale Ausdehnung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:567
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:569
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:571
 msgid "Vertical stretch"
 msgstr "Vertikale Ausdehnung"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:641
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:643
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:645
 msgid "Match Grid"
 msgstr "An Gitter anpassen"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:651
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:653
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:655
 msgid "Texturing"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:669
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:671
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:673
 msgid "Width"
 msgstr "Weite"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:676
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:678
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:680
 msgid "Height"
 msgstr "Höhe"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:723
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:725
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:727
 #, fuzzy
 msgid "Surface Flags"
 msgstr "_Surface Inspector"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:759
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:761
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:763
 #, fuzzy
 msgid "Content Flags"
 msgstr "Flags von %s wie folgt gesetzt: "
@@ -948,16 +968,19 @@ msgstr "Flags von %s wie folgt gesetzt: "
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1400
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:798
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:800
 msgid "Value"
 msgstr "Wert"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1195
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1211
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1219
 msgid "Surface Inspector Increments Match Grid"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1216
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1224
 msgid "Surface Inspector Preferences"
 msgstr ""
 
@@ -1067,6 +1090,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:206
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:208
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:70
 msgid "Check Map"
 msgstr "Map überprüfen"
 
@@ -1083,6 +1107,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:317
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:425
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:449
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:105
 msgid "Map compiling"
 msgstr "Map kompilieren"
 
@@ -1148,11 +1173,13 @@ msgstr "Anzahl"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:683
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:685
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:687
 msgid "Axial"
 msgstr "Achsenförmig"
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:693
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:695
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:697
 msgid "Fit"
 msgstr "Passend"
 
@@ -1245,10 +1272,14 @@ msgstr "Rastereinstellungen"
 
 #: src/tools/radiant/radiant/main.cpp:295
 #: src/tools/radiant/radiant/main.cpp:360
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:46
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:83
+#: src/tools/radiant/radiant/main.cpp:359
 msgid "UFORadiant"
 msgstr "UFORadiant"
 
 #: src/tools/radiant/radiant/main.cpp:366
+#: src/tools/radiant/radiant/main.cpp:365
 msgid ""
 "UFORadiant failed to start properly the last time it was run.\n"
 "The failure may be caused by current preferences.\n"
@@ -1259,10 +1290,12 @@ msgstr ""
 "Sollen die Einstellungen zurückgesetzt werden?"
 
 #: src/tools/radiant/radiant/main.cpp:370
+#: src/tools/radiant/radiant/main.cpp:369
 msgid "UFORadiant - Startup Failure"
 msgstr "UFORadiant - Start fehlgeschlagen"
 
 #: src/tools/radiant/radiant/main.cpp:377
+#: src/tools/radiant/radiant/main.cpp:375
 msgid "UFORadiant - Console Log"
 msgstr "UFORadiant - Konsolen Log"
 
@@ -1500,12 +1533,10 @@ msgid "Generate materials"
 msgstr "Datenbank erstellen"
 
 #: src/tools/radiant/radiant/preferences.cpp:61
-#, fuzzy
 msgid "2 button"
 msgstr "2 Tasten"
 
 #: src/tools/radiant/radiant/preferences.cpp:61
-#, fuzzy
 msgid "3 button"
 msgstr "3 Tasten"
 
@@ -1521,7 +1552,6 @@ msgid ""
 msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:635
-#, fuzzy
 msgid "Texture Quality"
 msgstr "Texturqualität"
 
@@ -1541,12 +1571,165 @@ msgid "Hardware Texture Compression"
 msgstr "unbekannter Komprimierungstyp »%s«!"
 
 #: src/tools/radiant/radiant/textures.cpp:682
-#, fuzzy
 msgid "Textures"
 msgstr "Texturen"
 
 #: src/tools/radiant/radiant/textures.cpp:682
-#, fuzzy
 msgid "Texture Settings"
 msgstr "Textureinstellungen"
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:46
+#, fuzzy
+msgid "BrushExport-Plugin 3.0 by namespace"
+msgstr "<b>%(plugin)s</b> wird von den Plugins <b>%(plugin_list)s</b> benötigt."
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:67
+msgid "Collapse mesh"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:69
+msgid "Collapse all brushes into a single group"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:75
+#, fuzzy
+msgid "Collapse by material"
+msgstr "Umleitung durch %s von: %s\n"
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:77
+msgid "Collapse into groups by material"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:83
+#, fuzzy
+msgid "Don't collapse"
+msgstr "Nicht wiederherstellen"
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:85
+msgid "Every brush is stored in its own group"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:114
+#, fuzzy
+msgid "Ignored materials:"
+msgstr "%s: --description ignoriert mit --remove"
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:153
+msgid "Use short material names (max. 20 chars)"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:158
+msgid "Create (o)bjects instead of (g)roups"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:163
+msgid "Create material information (.mtl file)"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:75
+msgid "Nothing to fix in this map\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:75
+#, fuzzy
+msgid "Map fixing"
+msgstr "_Neue Map"
+
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:46
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:83
+msgid "Close the editor?"
+msgstr "Den Editor schließen?"
+
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:61
+msgid "Error saving file."
+msgstr "Fehler beim Speichern der Datei."
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1078
+msgid "You must have a selected class to create an entity"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1078
+#: src/tools/radiant/radiant/xywindow.cpp:1091
+msgid "Info"
+msgstr "Hinweis"
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1261
+msgid "Cannot change \"classname\" key back to worldspawn."
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1267
+msgid "No spaces are allowed in entity keys."
+msgstr "Im Entity Schlüsselwörtern sind keine Leerzeichen erlaubt."
+
+#: src/tools/radiant/radiant/console.cpp:76
+#, fuzzy
+msgid "Console logging"
+msgstr "Logge ein"
+
+#: src/tools/radiant/radiant/main.cpp:259
+#: src/tools/radiant/radiant/main.cpp:264
+#, fuzzy
+msgid "Radiant - Runtime Error"
+msgstr "Fehler beim Speichern der Datei"
+
+#: src/tools/radiant/radiant/main.cpp:319
+#, fuzzy
+msgid ""
+"Radiant failed to start properly the last time it was run.\n"
+"The failure may be related to current global preferences.\n"
+"Do you want to reset global preferences to defaults?"
+msgstr ""
+"UFORadiant wurde beim letzten Mal nicht korrekt gestartet.\n"
+"Dieser Fehler kann durch die derzeitigen Einstellungen hervorgerufen worden sein.\n"
+"Sollen die Einstellungen zurückgesetzt werden?"
+
+#: src/tools/radiant/radiant/main.cpp:323
+#, fuzzy
+msgid "Radiant - Startup Failure"
+msgstr "Temporärer Fehlschlag beim Auflösen von »%s«"
+
+#: src/tools/radiant/radiant/main.cpp:330
+#, fuzzy
+msgid "Radiant - Console Log"
+msgstr "konnte Protokoll-Datei »%s« nicht öffnen: %s\n"
+
+#: src/tools/radiant/radiant/main.cpp:358
+msgid "WARNING: Could not delete game pid at "
+msgstr ""
+
+#: src/tools/radiant/radiant/material.cpp:70
+msgid "You have to save your map before material generation can work"
+msgstr ""
+
+#: src/tools/radiant/radiant/url.cpp:54
+msgid "Failed to launch browser!"
+msgstr "Konnte Browser nicht starten!"
+
+#: src/tools/radiant/radiant/xywindow.cpp:1090
+msgid "There's already a worldspawn in your map!"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1554
+msgid "You have to select some brushes to get the bounding box for.\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1554
+#, fuzzy
+msgid "No selection"
+msgstr "Deckel Auswahl"
+
+#: src/tools/radiant/radiant/xywindow.cpp:1559
+msgid "Background Image"
+msgstr "Hintergrundbild"
+
+#: src/tools/radiant/radiant/xywindow.cpp:1213
+msgctxt "Context Menu Action"
+msgid "Connect"
+msgstr "Verbinden"
+
+#: src/tools/radiant/radiant/xywindow.cpp:1215
+#, fuzzy
+msgctxt "Context Menu Action"
+msgid "Fit Face"
+msgstr "Projekt einpassen"
 
