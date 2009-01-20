@@ -27,6 +27,34 @@ update-po-radiant:
 		src/tools/radiant/radiant/*.cpp \
 		src/tools/radiant/radiant/*.h
 
+# From coreutils.
+# Verify that all source files using _() are listed in po/POTFILES.in.
+# The idea is to run this before making pretests, as well as official
+# releases, so that
+po-check:
+	cd src \
+	if test -f ./po/POTFILES.in; then					\
+	  grep -E -v '^(#|$$)' ./po/POTFILES.in				\
+	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
+	  files="./po/OTHER_STRINGS";							\
+	  for file in `find ./client -name '*.[ch]'` `find ./game -name '*.[ch]'`; do \
+	    case $$file in						\
+	    djgpp/* | man/*) continue;;					\
+	    esac;							\
+	    case $$file in						\
+	    *.[ch])							\
+	      base=`expr " $$file" : ' \(.*\)\..'`;			\
+	      { test -f $$base.l || test -f $$base.y; } && continue;;	\
+	    esac;							\
+	    files="$$files $$file";					\
+	  done;								\
+	  grep -E -l '\b(N?_|gettext *)\([^)"]*("|$$)' $$files		\
+	    | sort -u > $@-2;						\
+	  diff -u $@-1 $@-2 || exit 1;					\
+	  rm -f $@-1 $@-2;						\
+	fi \
+	cd ..
+
 po-sync:
 	@echo "This will sync all po files with the wiki articles - run update-po before this step"
 	@echo "Gamers don't have to do this - translators should use ./src/po/update_po_from_wiki <lang> directly"
