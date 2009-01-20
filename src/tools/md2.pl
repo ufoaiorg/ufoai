@@ -334,9 +334,9 @@ sub model_info ($) {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
 		print "NumSurfaces: ", $model_file->NumSurfaces, " (max is 32)\n";
-		use Data::Dumper;
-		$Data::Dumper::Useqq = 1;
-		print Dumper($model_file);
+		#use Data::Dumper;
+		#$Data::Dumper::Useqq = 1;
+		#print Dumper($model_file);
 		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
 			my $mesh = $model_file->children->{'MD3_surface'}[$i];
 			print "Name: ", $mesh->Name, "\n";
@@ -356,7 +356,22 @@ sub model_read ($) {
 	if ($filename =~ /\.md2$/) {
 		return md2_read($filename);
 	} elsif ($filename =~ /\.md3$/) {
-		return md3_read($filename);
+		my $md3 = md3_read($filename);
+
+		# Sanity check of data order.
+		my $frames =	($md3->NumFrames > 0);
+		my $tags = 	($md3->NumTags > 0);
+		my $surfaces =	($md3->NumSurfaces > 0);
+		if ((($frames && $tags && $surfaces) && !(($md3->OffsetFrames < $md3->OffsetTags) && ($md3->OffsetTags < $md3->OffsetSurfaces)))
+		|| (($frames && !$tags && $surfaces) && !($md3->OffsetFrames < $md3->OffsetSurfaces))
+		|| ((!$frames && $tags && $surfaces) && !($md3->OffsetTags < $md3->OffsetSurfaces))
+		|| (($frames && $tags && !$surfaces) && !($md3->OffsetFrames < $md3->OffsetTags))) {
+				print "Frames:'". $frames ."' Tags:'". $tags ."' Surfaces:'". $surfaces ."' <--Used\n";
+				print "Frames:'". $md3->OffsetFrames ."' Tags:'". $md3->OffsetTags ."' Surfaces:'". $md3->OffsetSurfaces. "' <-- Number\n";
+				die "Order of Frames/Tags/Surfaces data of the file is in a different order.\nThis script does not support this order (yet).\n";
+		}
+
+		return $md3
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
