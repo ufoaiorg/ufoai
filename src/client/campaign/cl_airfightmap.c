@@ -373,12 +373,10 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			aircraft->numInterpolationPoints += 1;
 			drawPos[0] = aircraft->pos[0] + (xInterpolStep * (float)aircraft->numInterpolationPoints);
 			LinearInterpolation(aircraft->pos, aircraft->projectedPos, drawPos[0], drawPos[1]);
+		} else if (maxInterpolationPoints <= 2) {
+			VectorCopy(aircraft->pos, drawPos);
 		} else {
-			if (maxInterpolationPoints <= 2) {
-				VectorCopy(aircraft->pos, drawPos);
-			} else {
-				newDraw = qfalse;
-			}
+			newDraw = qfalse;
 		}
 
 		if (newDraw) {
@@ -422,12 +420,10 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			ufo->numInterpolationPoints += 1;
 			drawPos[0] = ufo->pos[0] + (xInterpolStep * (float)ufo->numInterpolationPoints);
 			LinearInterpolation(ufo->pos, ufo->projectedPos, drawPos[0], drawPos[1]);
+		} else if (maxInterpolationPoints <= 2) {
+			VectorCopy(ufo->pos, drawPos);
 		} else {
-			if (maxInterpolationPoints <= 2) {
-				VectorCopy(ufo->pos, drawPos);
-			} else {
-				newDraw = qfalse;
-			}
+			newDraw = qfalse;
 		}
 
 		if (newDraw) {
@@ -479,13 +475,10 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 				projectile->numInterpolationPoints += 1;
 				drawPos[0] = projectile->pos[0][0] + (xInterpolStep * projectile->numInterpolationPoints);
 				LinearInterpolation(projectile->pos[0], projectile->projectedPos[0], drawPos[0], drawPos[1]);
+			} else if (maxInterpolationPoints <= 2) {
+				VectorCopy(projectile->pos[0], drawPos);
 			} else {
-				if (maxInterpolationPoints <= 2) {
-					VectorCopy(projectile->pos[0], drawPos);
-				} else {
-					newDraw = qfalse;
-				}
-
+				newDraw = qfalse;
 			}
 
 			if (newDraw) {
