@@ -41,6 +41,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "entity.h"
 #include "skincache.h"
+#include "itextures.h"
 
 #include "modulesystem/singletonmodule.h"
 
@@ -51,6 +52,7 @@ class EntityDependencies :
 			public GlobalSceneGraphModuleRef,
 			public GlobalShaderCacheModuleRef,
 			public GlobalSelectionModuleRef,
+			public GlobalTexturesModuleRef,
 			public GlobalReferenceModuleRef,
 			public GlobalFilterModuleRef,
 			public GlobalPreferenceSystemModuleRef,
