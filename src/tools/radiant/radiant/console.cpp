@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "console.h"
+#include "radiant.h"
 
 #include <time.h>
 #include <gtk/gtk.h>
@@ -61,25 +62,25 @@ void Sys_LogFile(bool enable) {
 		name << SettingsPath_get() << "radiant.log";
 		g_hLogFile = fopen(name.c_str(), "w");
 		if (g_hLogFile != 0) {
-			globalOutputStream() << "Started logging to " << name.c_str() << "\n";
+			g_message("Started logging to %s\n", name.c_str());
 			time_t localtime;
 			time(&localtime);
 			g_Console_createLogFailed = false;
-			globalOutputStream() << "Today is: " << ctime(&localtime)
-				<< "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
+			g_message("Today is: %s\n", ctime(&localtime));
+			g_message("This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n");
 		} else {
 			if (g_Console_createLogFailed)
 				return;
 			StringOutputStream error(512);
 			error << "Failed to create log file " << name.c_str() << ", check write permissions in Radiant directory.\n";
-			gtk_MessageBox(0, error.c_str(), "Console logging", eMB_OK, eMB_ICONERROR);
+			gtk_MessageBox(0, error.c_str(), _("Console logging"), eMB_OK, eMB_ICONERROR);
 			g_Console_createLogFailed = true;
 		}
 	} else if (!enable && g_hLogFile != 0) {
 		// settings say we should not be logging but still we have an active logfile .. close it
 		time_t localtime;
 		time(&localtime);
-		globalOutputStream() << "Closing log file at " << ctime(&localtime) << "\n";
+		g_message("Closing log file at %s\n", ctime(&localtime));
 		fclose(g_hLogFile);
 		g_hLogFile = NULL;
 	}

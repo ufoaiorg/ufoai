@@ -25,6 +25,7 @@
  */
 
 #include "material.h"
+#include "radiant.h"
 
 #include <gtk/gtk.h>
 #include "mainframe.h"
@@ -66,7 +67,7 @@ void GenerateMaterialFromTexture (void)
 	const char *mapname = Map_Name(g_map);
 	if (!mapname || Map_Unnamed(g_map)) {
 		// save the map first
-		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), "You have to save your map before material generation can work");
+		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("You have to save your map before material generation can work"));
 		return;
 	}
 

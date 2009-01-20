@@ -1087,8 +1087,8 @@ static void entitycreate_activated (GtkWidget* item)
 	if (!(world_node && string_equal(entity_name, "worldspawn"))) {
 		g_pParentWnd->ActiveXY()->OnEntityCreate(entity_name);
 	} else {
-		GlobalRadiant().m_pfnMessageBox(GTK_WIDGET(MainFrame_getWindow()), "There's already a worldspawn in your map!"
-			"", "Info", eMB_OK, eMB_ICONDEFAULT);
+		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("There's already a worldspawn in your map!"),
+			_("Info"), eMB_OK, eMB_ICONDEFAULT);
 	}
 }
 
@@ -1551,12 +1551,12 @@ void WXY_BackgroundSelect (void)
 {
 	bool brushesSelected = Scene_countSelectedBrushes(GlobalSceneGraph()) != 0;
 	if (!brushesSelected) {
-		gtk_MessageBox(0, "You have to select some brushes to get the bounding box for.\n", "No selection", eMB_OK,
+		gtk_MessageBox(0, _("You have to select some brushes to get the bounding box for.\n"), _("No selection"), eMB_OK,
 				eMB_ICONERROR);
 		return;
 	}
 
-	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, "Background Image", NULL, NULL);
+	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"), NULL, NULL);
 	g_pParentWnd->ActiveXY()->XY_DisableBackground();
 	if (filename)
 	g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);

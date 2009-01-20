@@ -43,7 +43,7 @@ static GtkWidget *text_widget; // slave, text widget from the gtk editor
 
 static gint editor_delete (GtkWidget *widget, gpointer data)
 {
-	if (gtk_MessageBox(widget, "Close the editor?", "UFORadiant", eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
+	if (gtk_MessageBox(widget, _("Close the editor?"), _("UFORadiant"), eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
 		return TRUE;
 
 	gtk_widget_hide(text_editor);
@@ -58,7 +58,7 @@ static void editor_save (GtkWidget *widget, gpointer data)
 	gpointer text = g_object_get_data(G_OBJECT(data), "text");
 
 	if (f == NULL) {
-		gtk_MessageBox(GTK_WIDGET(data), "Error saving file !");
+		gtk_MessageBox(GTK_WIDGET(data), _("Error saving file."));
 		return;
 	}
 
@@ -80,7 +80,7 @@ static void editor_save (GtkWidget *widget, gpointer data)
 
 static void editor_close (GtkWidget *widget, gpointer data)
 {
-	if (gtk_MessageBox(text_editor, "Close the editor?", "UFORadiant", eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
+	if (gtk_MessageBox(text_editor, _("Close the editor?"), _("UFORadiant"), eMB_YESNO, eMB_ICONQUESTION) == eIDNO)
 		return;
 
 	gtk_widget_hide(text_editor);

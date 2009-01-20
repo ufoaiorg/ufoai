@@ -67,12 +67,12 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 	const char* fullname = Map_Name(g_map);
 	const char *compilerBinaryWithPath;
 
-	if (!ConfirmModified("Check Map"))
+	if (!ConfirmModified(_("Check Map")))
 		return 0;
 
 	/* empty map? */
 	if (!g_brushCount.get()) {
-		gtk_MessageBox(0, "Nothing to fix in this map\n", "Map fixing", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, _("Nothing to fix in this map\n"), _("Map fixing"), eMB_OK, eMB_ICONERROR);
 		return 0;
 	}
 
@@ -102,7 +102,7 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 	} else {
 		StringOutputStream message(256);
 		message << "Could not find the mapcompiler (" << compilerBinaryWithPath << ") check your path settings\n";
-		gtk_MessageBox(0, message.c_str(), "Map compiling", eMB_OK, eMB_ICONERROR);
+		gtk_MessageBox(0, message.c_str(), _("Map compiling"), eMB_OK, eMB_ICONERROR);
 		g_warning("%s\n", message.c_str());
 	}
 	return 1;

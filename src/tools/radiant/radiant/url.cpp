@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "url.h"
+#include "radiant.h"
 
 #include "mainframe.h"
 #include "gtkutil/messagebox.h"
@@ -50,6 +51,6 @@ void OpenURL(const char *url) {
 	// let's put a little comment
 	globalOutputStream() << "OpenURL: " << url << "\n";
 	if (!open_url(url)) {
-		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), "Failed to launch browser!");
+		gtk_MessageBox(GTK_WIDGET(MainFrame_getWindow()), _("Failed to launch browser!"));
 	}
 }

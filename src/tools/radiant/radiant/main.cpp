@@ -256,12 +256,12 @@ public:
 			ScopedLock lock(m_lock);
 #ifdef DEBUG
 			m_buffer << "Break into the debugger?\n";
-			bool handled = gtk_MessageBox(0, m_buffer.c_str(), "Radiant - Runtime Error", eMB_YESNO, eMB_ICONERROR) == eIDNO;
+			bool handled = gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_YESNO, eMB_ICONERROR) == eIDNO;
 			m_buffer.clear();
 			return handled;
 #else
 			m_buffer << "Please report this error to the developers\n";
-			gtk_MessageBox(0, m_buffer.c_str(), "Radiant - Runtime Error", eMB_OK, eMB_ICONERROR);
+			gtk_MessageBox(0, m_buffer.c_str(), _("Radiant - Runtime Error"), eMB_OK, eMB_ICONERROR);
 			m_buffer.clear();
 #endif
 		}
@@ -316,19 +316,18 @@ static void create_global_pid(void) {
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
-		StringOutputStream msg(256);
-		msg << "Radiant failed to start properly the last time it was run.\n"
+		const char *startupFailure = _("Radiant failed to start properly the last time it was run.\n"
 			"The failure may be related to current global preferences.\n"
-			"Do you want to reset global preferences to defaults?";
+			"Do you want to reset global preferences to defaults?");
 
-		if (gtk_MessageBox(0, msg.c_str(), "Radiant - Startup Failure", eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
+		if (gtk_MessageBox(0, startupFailure, _("Radiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			g_GamesDialog.Reset();
 		}
 
-		msg.clear();
+		StringOutputStream msg(256);
 		msg << "Logging console output to " << SettingsPath_get() << "radiant.log\nRefer to the log if Radiant fails to start again.";
 
-		gtk_MessageBox(0, msg.c_str(), "Radiant - Console Log", eMB_OK);
+		gtk_MessageBox(0, msg.c_str(), _("Radiant - Console Log"), eMB_OK);
 #endif
 
 		// set without saving, the class is not in a coherent state yet
@@ -356,22 +355,21 @@ static void create_local_pid(void) {
 
 		if (remove(g_pidGameFile.c_str()) == -1) {
 			StringOutputStream msg(256);
-			msg << "WARNING: Could not delete game pid at " << g_pidGameFile.c_str();
+			msg << _("WARNING: Could not delete game pid at ") << g_pidGameFile.c_str();
 			gtk_MessageBox(0, msg.c_str(), _("UFORadiant"), eMB_OK, eMB_ICONERROR );
 		}
 
 		// in debug, never prompt to clean registry, turn console logging auto after a failed start
 #if !defined(DEBUG)
 		StringOutputStream msg;
-		msg << _("UFORadiant failed to start properly the last time it was run.\n"
+		const char *startupFailure = _("UFORadiant failed to start properly the last time it was run.\n"
 			"The failure may be caused by current preferences.\n"
 			"Do you want to reset all preferences to defaults?");
 
-		if (gtk_MessageBox(0, msg.c_str(), _("UFORadiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
+		if (gtk_MessageBox(0, startupFailure, _("UFORadiant - Startup Failure"), eMB_YESNO, eMB_ICONQUESTION) == eIDYES) {
 			Preferences_Reset();
 		}
 
-		msg.clear();
 		msg << "Logging console output to " << SettingsPath_get() << "radiant.log\nRefer to the log if Radiant fails to start again.";
 
 		gtk_MessageBox (0, msg.c_str(), _("UFORadiant - Console Log"), eMB_OK);
