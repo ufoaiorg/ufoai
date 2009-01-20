@@ -106,6 +106,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:163
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:165
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:664
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:666
 msgid "Brush"
 msgstr ""
 
@@ -693,6 +694,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1594
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:603
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:605
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:607
 msgid "Rotate"
 msgstr ""
 
@@ -799,16 +801,20 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:426
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1216
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:428
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1224
 msgid "Surface Inspector"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:438
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:440
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:442
 msgid "Texture"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:459
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:461
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:463
 msgid "Horizontal shift"
 msgstr ""
 
@@ -822,68 +828,85 @@ msgstr ""
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:551
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:587
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:624
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:481
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:517
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:553
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:589
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:626
 msgctxt "Step width"
 msgid "Step"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:495
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:497
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:499
 msgid "Vertical shift"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:531
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:533
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:535
 msgid "Horizontal stretch"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:567
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:569
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:571
 msgid "Vertical stretch"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:641
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:643
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:645
 msgid "Match Grid"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:651
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:653
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:655
 msgid "Texturing"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:669
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:671
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:673
 msgid "Width"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:676
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:678
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:680
 msgid "Height"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:723
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:725
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:727
 msgid "Surface Flags"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:759
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:761
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:763
 msgid "Content Flags"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:796
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1400
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:798
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:800
 msgid "Value"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1195
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1211
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1219
 msgid "Surface Inspector Increments Match Grid"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1200
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1216
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:1224
 msgid "Surface Inspector Preferences"
 msgstr ""
 
@@ -1071,11 +1094,13 @@ msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:683
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:685
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:687
 msgid "Axial"
 msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:693
 #: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:695
+#: src/tools/radiant/radiant/sidebar/surfaceinspector.cpp:697
 msgid "Fit"
 msgstr ""
 
@@ -1448,4 +1473,48 @@ msgstr ""
 
 #: src/tools/radiant/radiant/textures.cpp:682
 msgid "Texture Settings"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:46
+msgid "BrushExport-Plugin 3.0 by namespace"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:67
+msgid "Collapse mesh"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:69
+msgid "Collapse all brushes into a single group"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:75
+msgid "Collapse by material"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:77
+msgid "Collapse into groups by material"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:83
+msgid "Don't collapse"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:85
+msgid "Every brush is stored in its own group"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:114
+msgid "Ignored materials:"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:153
+msgid "Use short material names (max. 20 chars)"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:158
+msgid "Create (o)bjects instead of (g)roups"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/interface.cpp:163
+msgid "Create material information (.mtl file)"
 msgstr ""

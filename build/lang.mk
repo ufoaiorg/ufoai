@@ -20,10 +20,14 @@ update-po:
 
 update-po-radiant:
 	xgettext -j --keyword="_" --keyword="C_:1c,2" -C -o src/po/uforadiant.pot --omit-header \
-		src/tools/radiant/radiant/dialogs/*.cpp \
-		src/tools/radiant/radiant/dialogs/*.h \
-		src/tools/radiant/radiant/sidebar/*.cpp \
-		src/tools/radiant/radiant/sidebar/*.h \
+		src/tools/radiant/libs/*.h \
+		src/tools/radiant/libs/*/*.h \
+		src/tools/radiant/libs/*/*.cpp \
+		src/tools/radiant/include/*.h \
+		src/tools/radiant/plugins/*/*.cpp \
+		src/tools/radiant/plugins/*/*.h \
+		src/tools/radiant/radiant/*/*.cpp \
+		src/tools/radiant/radiant/*/*.h \
 		src/tools/radiant/radiant/*.cpp \
 		src/tools/radiant/radiant/*.h
 
