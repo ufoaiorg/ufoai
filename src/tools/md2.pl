@@ -51,6 +51,7 @@ use warnings;
 my $MODEL_IN		= 'in.md2';
 my $MODEL_OUT		= 'out.md2';
 
+#######################################
 package MD2;
 use base 'Parse::Binary';
 use constant FORMAT => (
@@ -84,57 +85,153 @@ use constant FORMAT => (
 	VertexData		=> 'a*'		# The whole rest
 );
 
-package MD3;
+#######################################
+# For an overview of the MD3 spec see:
+# http://www.icculus.org/homepages/phaethon/q3/formats/md3format.html
+# Copyright of some of the comments used here: PhaethonH (phaethon@linux.ucla.edu)
+
+#package MD3_header;	# Only used to get the important offset data.
+#use base 'Parse::Binary';
+#use constant FORMAT => (
+#	Magic		=> 'l',		# magic number. must be equal to "IDP3"
+#	Version		=> 'l',		# md2 version. must be equal to 15
+#	Filename	=> 'Z64',	# 64chars (Z = 0-terminated)
+#	Flags		=> 'l',		#
+#	NumFrames	=> 'l',		# total number of frames
+#	NumTags		=> 'l',		# number of tags
+#	NumSurfaces	=> 'l',		# number of meshes
+#	NumSkins	=> 'l',		# number of textures
+#
+#	OffsetFrames	=> 'l',		# offset to frame data
+#	OffsetTags		=> 'l',		# offset to tags
+#	OffsetMeshes	=> 'l',		# offset to meshes
+#	OffsetEnd		=> 'l',		# offset to end of file
+#
+#	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
+#);
+
+package MD3_1frame_2tag_3surface;
+# This package always assumes the order of data like: frame->tag->surface (i.e. in the order the "num" values are defined)
+# @todo: If we ever encounter an md3 file that has a different order we might want to code a re-order function for sanitys sake.
 use base 'Parse::Binary';
 use constant FORMAT => (
 	Magic		=> 'l',		# magic number. must be equal to "IDP3"
 	Version		=> 'l',		# md2 version. must be equal to 15
 	Filename	=> 'Z64',	# 64chars (Z = 0-terminated)
 	Flags		=> 'l',		#
-	NumFrames	=> 'l',		# total number of frames
-	NumTags		=> 'l',		# number of tags
-	NumMeshes	=> 'l',		# number of meshes
-	NumSkins	=> 'l',		# number of textures
+	NumFrames	=> 'l',		# Total number of frame objects.
+	NumTags		=> 'l',		# Number of tag objects.
+	NumSurfaces	=> 'l',		# Number of surface objects.
+	NumSkins	=> 'l',		# Number of Skin objects. I should note that I have not seen an MD3 using this particular field for anything; this appears to be an artifact from the Quake 2 MD2 format. Surface objects have their own Shader field.
 
 	OffsetFrames	=> 'l',		# offset to frame data
-	OffsetTags		=> 'l',		# offset to tags
-	OffsetMeshes	=> 'l',		# offset to meshes
-	OffsetEnd		=> 'l',		# offset to end of file
+	OffsetTags	=> 'l',		# offset to tags
+	OffsetSurfaces	=> 'l',		# offset to meshes
+	OffsetEnd	=> 'l',		# offset to end of file
 
-	prelude_MD3_mesh	=> 'a{$OffsetMeshes-108}',	# 'a56 = $OffsetMeshes - a108' [a108 = 11*I + 64*a from the previous header]
-	MD3_mesh		=> ['a108', '{$NumMeshes}', 1 ],
+	prelude_MD3_frame	=> 'a{$OffsetFrames-108}',	# Just in case $OffsetFrames is _not_ 108.
+	MD3_frame	=> ['a56', '{$NumFrames}', 1 ],
 
-	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
+	#prelude_MD3_tag	=> 'a{xxxx}',
+	MD3_tag		=> ['a112', '{$NumTags}', 1 ],
+
+	#prelude_MD3_surface	=> 'a{xxxx}',
+	MD3_surface	=> ['a108', '{$NumSurfaces}', 1 ],
+
+	Data			=> 'a*'		# @todo: The whole rest .. currently without structure.
 );
 
-package MD3_mesh;
+package MD3_frame;		# @todo: Fixme. For some reason this doesn't parse correctly.
+use base 'Parse::Binary';
+use constant FORMAT => (
+	#MinBounds	=> ['f', 3, 1 ],	#<-- needs extra module
+	MinBoundsX	=> 'f',	# First corner of the bounding box.
+	MinBoundsY	=> 'f',
+	MinBoundsZ	=> 'f',
+
+	#MaxBounds	=> ['f', 3, 1 ],
+	MaxBoundsX	=> 'f',	# Second corner of the bounding box.
+	MaxBoundsY	=> 'f',
+	MaxBoundsZ	=> 'f',
+
+	#LocalOrigin	=> ['f', 3, 1 ],
+	LocalOriginX	=> 'f',	# Local origin, usually (0, 0, 0).
+	LocalOriginY	=> 'f',
+	LocalOriginZ	=> 'f',
+
+	Radius		=> 'f',			# Radius of bounding sphere.
+	Name		=> 'Z16'		# Name of Frame. 16chars (Z = 0-terminated)
+);
+
+package MD3_tag;
+use base 'Parse::Binary';
+use constant FORMAT => (
+	Name		=> 'Z64',	# Name of the tag object. 64chars (Z = 0-terminated)
+	#Loc		=> ['f', 3, 1 ],	# Coordinates of Tag object.
+	LocX	=> 'f',
+	LocY	=> 'f',
+	LocZ	=> 'f',
+	#AxisX		=> ['f', 3, 1 ],	# Orientation of Tag object.... ?
+	#AxisY		=> ['f', 3, 1 ],
+	#AxisZ		=> ['f', 3, 1 ]
+	AxisX1	=> 'f',
+	AxisX2	=> 'f',
+	AxisX3	=> 'f',
+	AxisY1	=> 'f',
+	AxisY2	=> 'f',
+	AxisY3	=> 'f',
+	AxisZ1	=> 'f',
+	AxisZ2	=> 'f',
+	AxisZ3	=> 'f'
+);
+
+package MD3_surface;	# Equals MD2 "meshes"
+# This package always assumes the order of data like: shader->verts->tris (i.e. in the order the "num" values are defined)
+# @todo: If we ever encounter an md3 file that has a different order we might want to code a re-order function for sanitys sake.
 use base 'Parse::Binary';
 use constant FORMAT => (
 	ID			=> 'l',		# 4chars (IDP3)
 	Name		=> 'Z64',	# 64chars (Z = 0-terminated)
 	Flags		=> 'l',		#
-	NumFrames	=> 'l',		# total number of frames
-	NumSkins	=> 'l',		# number of textures
-	NumVerts	=> 'l',		# number of vertices
-	NumTris		=> 'l',		# number of tris
+	NumFrames	=> 'l',		# Number of animation frames. This should match NUM_FRAMES in the MD3 header.
+	NumShaders	=> 'l',		# Number of Shader objects defined in this Surface, with a limit of MD3_MAX_SHADERS. Current value of MD3_MAX_SHADERS is 256.
+	NumVerts	=> 'l',		# Number of Vertex objects defined in this Surface, up to MD3_MAX_VERTS. Current value of MD3_MAX_VERTS is 4096.
+	NumTris		=> 'l',		# Number of Triangle objects defined in this Surface, maximum of MD3_MAX_TRIANGLES. Current value of MD3_MAX_TRIANGLES is 8192.
 	OffsetTris	=> 'l',		# offset to tris
-	OffsetSkins	=> 'l',		# offset to skins
-	OffsetTCS	=> 'l',		# offset to ...
+	OffsetShaders	=> 'l',		# Relative offset from the top of MD3_surface to where the list of Shader objects starts.
+	OffsetST	=> 'l',		# Relative offset from the top of MD3_surface to where the list of St objects (Texture Coordinates, S-T vertices) starts.
 	OffsetVerts	=> 'l',		# offset to vertices
-	MeshSize	=> 'l'		#
+	ShaderSize	=> 'l',		# Relative offset from the top of MD3_surface to where the Surface object ends.
+	MD3_shader	=> ['a68', '{$NumShaders}', 1 ],
+	Data		=> 'a*'
 );
 
-package MD3_skin;
+package MD3_shader;
 use base 'Parse::Binary';
 use constant FORMAT => (
-	Path		=> 'a64',	# filename of the texture
-	ShaderIndex => 'l'		# unused
+	Path		=> 'Z64',	# Filename of the texture. 64chars (Z = 0-terminated)
+	ShaderIndex	=> 'l'		# Shader index number. unused
 );
 
+#package MD3_TexCoord;	# yet unused
+#use base 'Parse::Binary';
+#use constant FORMAT => (
+#	ST		=> ['f', 2, 1 ]
+#);
+
+#package MD3_Vertex;	# yet unused
+#use base 'Parse::Binary';
+#use constant FORMAT => (
+#	Loc		=> ['s', 3, 1 ],	# Multiply with 1.0/64 to get original value.
+#	Normal		=> 's'
+#);
+
+#######################################
 package Path;
 use base 'Parse::Binary';
 use constant FORMAT => ('Z64');		# 64chars (Z = 0-terminated)
 
+#######################################
 package Model;
 
 #######################################
@@ -198,7 +295,7 @@ sub md3_read ($) {
 	my ($filename) = @_;
 
 	# read model file
-	my $model_file = MD3->new($filename);
+	my $model_file = MD3_1frame_2tag_3surface->new($filename);
 
 	die "File has wrong magic number \"".$model_file->Magic."\".\n"
 		unless ($model_file->Magic == 860898377); # equals "IDP3"
@@ -236,15 +333,15 @@ sub model_info ($) {
 	} elsif ($filename =~ /\.md3$/) {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
-		print "NumMeshes: ", $model_file->NumMeshes, " (max is 32)\n";
-		#use Data::Dumper;
-		#$Data::Dumper::Useqq = 1;
-		#print Dumper($model_file);
-		for (my $i=0; $i<$model_file->NumMeshes; $i++) {
-			my $mesh = $model_file->children->{'MD3_mesh'}[$i];
+		print "NumSurfaces: ", $model_file->NumSurfaces, " (max is 32)\n";
+		use Data::Dumper;
+		$Data::Dumper::Useqq = 1;
+		print Dumper($model_file);
+		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
+			my $mesh = $model_file->children->{'MD3_surface'}[$i];
 			print "Name: ", $mesh->Name, "\n";
 			print "Flags: ", $mesh->Flags, "\n";
-			print "NumSkins: ", $mesh->NumSkins, " (max is 256)\n";
+			print "NumShaders: ", $mesh->NumShaders, " (max is 256)\n";
 			print "NumFrames: ", $mesh->NumFrames, " (max is 1024)\n";
 			print "NumTris: ", $mesh->NumTris, " (max is 8192)\n";
 			print "NumXYZ: ", $mesh->NumVerts, " (max is 4096)\n";
@@ -271,7 +368,7 @@ sub model_get_skin ($$$$) {
 		return $model_file->Path->[$i][0]
 	} elsif ($filename =~ /\.md3$/) {
 		# TODO: This isn't correct
-		return $model_file->children->{'MD3_mesh'}[$mesh]->Name;
+		return $model_file->children->{'MD3_surface'}[$mesh]->Name;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
@@ -283,7 +380,7 @@ sub model_set_skin ($$$$$) {
 		$model_file->Path->[$i][0] = $skin;
 	} elsif ($filename =~ /\.md3$/) {
 		# TODO: This isn't correct
-		$model_file->children->{'MD3_mesh'}[$mesh]->Name = $skin;
+		$model_file->children->{'MD3_surface'}[$mesh]->Name = $skin;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
@@ -294,8 +391,8 @@ sub model_skins_list ($$) {
 	if ($filename =~ /\.md2$/) {
 		md2_skins_list($model_file);
 	} elsif ($filename =~ /\.md3$/) {
-		for (my $i=0; $i<$model_file->NumMeshes; $i++) {
-			my $mesh = $model_file->children->{'MD3_mesh'}[$i];
+		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
+			my $mesh = $model_file->children->{'MD3_surface'}[$i];
 			# TODO:
 		}
 	} else {
@@ -308,7 +405,7 @@ sub model_get_skins ($$$) {
 	if ($filename =~ /\.md2$/) {
 		return $model_file->NumSkins;
 	} elsif ($filename =~ /\.md3$/) {
-		return $model_file->children->{'MD3_mesh'}[$mesh]->NumSkins;
+		return $model_file->children->{'MD3_surface'}[$mesh]->NumShaders;
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
