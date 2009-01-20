@@ -456,7 +456,7 @@ qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 		const missionDetectionStatus_t status = CP_CheckMissionVisibleOnGeoscape(mission);
 
 		/* only check mission that can be detected, and that are not already detected */
-		if (status != MISDET_MAY_BE_DETECTED || mission->onGeoscape == qtrue)
+		if (status != MISDET_MAY_BE_DETECTED || mission->onGeoscape)
 			continue;
 
 		/* if there is a ufo assigned, it must not be detected */

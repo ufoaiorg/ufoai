@@ -1400,7 +1400,7 @@ void CL_DisplayFiremodes_f (void)
 	if (firemodes_change_display) {
 		/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
 		if (hand == ACTOR_HAND_CHAR_RIGHT) {
-			if (visible_firemode_list_right == qtrue) {
+			if (visible_firemode_list_right) {
 				HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
 				return;
 			} else {
@@ -1409,7 +1409,7 @@ void CL_DisplayFiremodes_f (void)
 				visible_firemode_list_right = qtrue;
 			}
 		} else { /* ACTOR_HAND_CHAR_LEFT */
-			if (visible_firemode_list_left == qtrue) {
+			if (visible_firemode_list_left) {
 				HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
 				return;
 			} else {

@@ -381,7 +381,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			}
 		}
 
-		if (newDraw == qtrue) {
+		if (newDraw) {
 			VectorCopy(drawPos, aircraft->oldDrawPos);
 		} else {
 			VectorCopy(aircraft->oldDrawPos, drawPos);
@@ -430,7 +430,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 			}
 		}
 
-		if (newDraw == qtrue) {
+		if (newDraw) {
 			VectorCopy(drawPos, ufo->oldDrawPos);
 		} else {
 			VectorCopy(ufo->oldDrawPos, drawPos);
@@ -488,7 +488,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 
 			}
 
-			if (newDraw == qtrue) {
+			if (newDraw) {
 				VectorCopy(drawPos, projectile->oldDrawPos[0]);
 			} else {
 				VectorCopy(projectile->oldDrawPos[0], drawPos);
