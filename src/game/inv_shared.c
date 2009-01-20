@@ -441,7 +441,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 		return FILTER_S_ARMOUR;
 
 	/** @todo need to implement everything */
-	assert(qfalse);
+	Sys_Error("INV_GetFilterFromItem: unknown filter category for item '%s'", obj->id);
 }
 
 /**
