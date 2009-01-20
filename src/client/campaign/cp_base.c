@@ -2073,7 +2073,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		tile->posY = pos[1];
 
 		/* check for buildings on same position */
-		assert(map[tile->posX][tile->posY] == qfalse);
+		assert(!map[tile->posX][tile->posY]);
 		map[tile->posX][tile->posY] = qtrue;
 	} while (*text);
 

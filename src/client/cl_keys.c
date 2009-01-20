@@ -794,15 +794,15 @@ void Key_WriteBindings (const char* filename)
 	fprintf(f.f, "unbindall\n");
 	fprintf(f.f, "unbindbattle\n");
 	/* failfast, stops loop for first occurred error in fprintf */
-	for (i = 0; i < K_LAST_KEY && delete == qfalse; i++)
+	for (i = 0; i < K_LAST_KEY && !delete; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
 			if (fprintf(f.f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]) < 0)
 				delete = qtrue;
-	for (i = 0; i < K_LAST_KEY && delete == qfalse; i++)
+	for (i = 0; i < K_LAST_KEY && !delete; i++)
 		if (keybindings[i] && keybindings[i][0])
 			if (fprintf(f.f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]) < 0)
 				delete = qtrue;
-	for (i = 0; i < K_LAST_KEY && delete == qfalse; i++)
+	for (i = 0; i < K_LAST_KEY && !delete; i++)
 		if (battlekeybindings[i] && battlekeybindings[i][0])
 			if (fprintf(f.f, "bindbattle %s \"%s\"\n", Key_KeynumToString(i), battlekeybindings[i]) < 0)
 				delete = qtrue;

@@ -653,7 +653,7 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
 		if (base->alienscont[alienidx].teamDef) {
-			if (alive == qfalse)
+			if (!alive)
 				amount += base->alienscont[alienidx].amount_dead;
 			else
 				amount += base->alienscont[alienidx].amount_alive;

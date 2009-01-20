@@ -784,19 +784,19 @@ int UP_GetUnreadMails (void)
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
 			assert(m->pedia);
-			if (m->pedia->mail[TECHMAIL_PRE].from && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_PRE].from && !m->pedia->mail[TECHMAIL_PRE].read)
 				gd.numUnreadMails++;
 			break;
 		case MSG_RESEARCH_FINISHED:
 			assert(m->pedia);
-			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && RS_IsResearched_ptr(m->pedia) && !m->pedia->mail[TECHMAIL_RESEARCHED].read)
 				gd.numUnreadMails++;
 			break;
 		case MSG_NEWS:
 			assert(m->pedia);
-			if (m->pedia->mail[TECHMAIL_PRE].from && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_PRE].from && !m->pedia->mail[TECHMAIL_PRE].read)
 				gd.numUnreadMails++;
-			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && !m->pedia->mail[TECHMAIL_RESEARCHED].read)
 				gd.numUnreadMails++;
 			break;
 		case MSG_EVENT:
@@ -1635,7 +1635,7 @@ static void UP_OpenMail_f (void)
 			if (!m->pedia->mail[TECHMAIL_PRE].from)
 				break;
 			CL_DateConvertLong(&m->pedia->preResearchedDate, &date);
-			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+			if (!m->pedia->mail[TECHMAIL_PRE].read)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_PRE].subject),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
@@ -1650,7 +1650,7 @@ static void UP_OpenMail_f (void)
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
 				break;
 			CL_DateConvertLong(&m->pedia->researchedDate, &date);
-			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+			if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s\t%i %s %02i\n"),
 					_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
@@ -1664,7 +1664,7 @@ static void UP_OpenMail_f (void)
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from) {
 				CL_DateConvertLong(&m->pedia->preResearchedDate, &date);
-				if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+				if (!m->pedia->mail[TECHMAIL_PRE].read)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_PRE].subject),
 						date.year, Date_GetMonthName(date.month - 1), date.day);
@@ -1676,7 +1676,7 @@ static void UP_OpenMail_f (void)
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				CL_DateConvertLong(&m->pedia->researchedDate, &date);
-				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+				if (!m->pedia->mail[TECHMAIL_RESEARCHED].read)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%i %s %02i\n"),
 						_(m->pedia->mail[TECHMAIL_RESEARCHED].subject),
 						date.year, Date_GetMonthName(date.month - 1), date.day);
@@ -1692,7 +1692,7 @@ static void UP_OpenMail_f (void)
 			assert(m->eventMail);
 			if (!m->eventMail->from)
 				break;
-			if (m->eventMail->read == qfalse)
+			if (!m->eventMail->read)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s\t%s\n"),
 					_(m->eventMail->subject), _(m->eventMail->date));
 			else
