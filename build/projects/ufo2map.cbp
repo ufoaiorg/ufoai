@@ -110,6 +110,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\shared.h" />
+		<Unit filename="..\..\src\shared\parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\parse.h" />
 		<Unit filename="..\..\src\tools\ufo2map\brushbsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
