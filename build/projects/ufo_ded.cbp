@@ -242,6 +242,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
+		<Unit filename="..\..\src\shared\parse.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\shared\shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
