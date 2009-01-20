@@ -22,6 +22,7 @@ GAME_SRCS=\
 	game/inv_shared.c \
 	shared/mathlib.c \
 	shared/shared.c \
+	shared/parse.c \
 	shared/infostring.c \
 	game/lua/lapi.c \
 	game/lua/lauxlib.c \
