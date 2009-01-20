@@ -62,12 +62,12 @@ void Sys_LogFile(bool enable) {
 		name << SettingsPath_get() << "radiant.log";
 		g_hLogFile = fopen(name.c_str(), "w");
 		if (g_hLogFile != 0) {
-			g_message("Started logging to %s\n", name.c_str());
+			globalOutputStream() << "Started logging to " << name.c_str() << "\n";
 			time_t localtime;
 			time(&localtime);
 			g_Console_createLogFailed = false;
-			g_message("Today is: %s\n", ctime(&localtime));
-			g_message("This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n");
+			globalOutputStream() << "Today is: " << ctime(&localtime) << "\n";
+			globalOutputStream() << "This is UFORadiant '" RADIANT_VERSION "' compiled " __DATE__ "\n" RADIANT_ABOUTMSG "\n";
 		} else {
 			if (g_Console_createLogFailed)
 				return;
