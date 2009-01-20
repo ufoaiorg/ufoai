@@ -1169,7 +1169,7 @@ void CL_CampaignRun (void)
 		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
-		if (date.day == 1 && gd.fund != qfalse && gd.numBases) {
+		if (date.day == 1 && gd.fund && gd.numBases) {
 			CP_NationBackupMonthlyData();
 			CP_NationHandleBudget();
 			gd.fund = qfalse;

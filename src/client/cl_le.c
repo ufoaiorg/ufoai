@@ -555,8 +555,8 @@ static void LE_PlaySoundFileAndParticleForSurface (le_t* le, const char *texture
 	/** @todo use the Grid_Fall method (ACTOR_SIZE_NORMAL) to ensure, that the particle is
 	 * drawn at the ground (if needed - maybe the origin is already ground aligned)*/
 	if (t->particle) {
-		/* check whether actor is visibile */
-		if (le->invis != qfalse)
+		/* check whether actor is visible */
+		if (le->invis)
 			CL_ParticleSpawn(t->particle, 0, origin, NULL, NULL);
 	}
 	if (t->footStepSound) {
