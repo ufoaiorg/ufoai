@@ -304,9 +304,8 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 				const int y = ((int) origin.y() / UNIT_SIZE) * UNIT_SIZE - sizeY;
 				const int z = ((int) origin.z() / UNIT_HEIGHT) * UNIT_HEIGHT + sizeZ;
 				const Vector3 vec(x, y, z);
-				globalWarningStream() << "original start position: " << origin.x() << " " << origin.y() << " "
-						<< origin.z() << "\n";
-				globalWarningStream() << "start position: " << x << " " << y << " " << z << "\n";
+				g_warning("original %s origin: %.0f %.0f %.0f\n", name, origin.x(), origin.y(), origin.z());
+				g_warning("     new %s origin: %i %i %i\n", name, x, y, z);
 
 				transform->setTranslation(vec);
 			} else {
