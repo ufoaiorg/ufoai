@@ -1015,6 +1015,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:206
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:208
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:70
 msgid "Check Map"
 msgstr ""
 
@@ -1031,6 +1032,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:317
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:425
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:449
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:105
 msgid "Map compiling"
 msgstr ""
 
@@ -1192,10 +1194,14 @@ msgstr ""
 
 #: src/tools/radiant/radiant/main.cpp:295
 #: src/tools/radiant/radiant/main.cpp:360
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:46
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:83
+#: src/tools/radiant/radiant/main.cpp:359
 msgid "UFORadiant"
 msgstr ""
 
 #: src/tools/radiant/radiant/main.cpp:366
+#: src/tools/radiant/radiant/main.cpp:365
 msgid ""
 "UFORadiant failed to start properly the last time it was run.\n"
 "The failure may be caused by current preferences.\n"
@@ -1203,10 +1209,12 @@ msgid ""
 msgstr ""
 
 #: src/tools/radiant/radiant/main.cpp:370
+#: src/tools/radiant/radiant/main.cpp:369
 msgid "UFORadiant - Startup Failure"
 msgstr ""
 
 #: src/tools/radiant/radiant/main.cpp:377
+#: src/tools/radiant/radiant/main.cpp:375
 msgid "UFORadiant - Console Log"
 msgstr ""
 
@@ -1517,4 +1525,90 @@ msgstr ""
 
 #: src/tools/radiant/plugins/brushexport/interface.cpp:163
 msgid "Create material information (.mtl file)"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:75
+msgid "Nothing to fix in this map\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/maptools.cpp:75
+msgid "Map fixing"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:46
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:83
+msgid "Close the editor?"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:61
+msgid "Error saving file."
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1078
+msgid "You must have a selected class to create an entity"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1078
+#: src/tools/radiant/radiant/xywindow.cpp:1091
+msgid "Info"
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1261
+msgid "Cannot change \"classname\" key back to worldspawn."
+msgstr ""
+
+#: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1267
+msgid "No spaces are allowed in entity keys."
+msgstr ""
+
+#: src/tools/radiant/radiant/console.cpp:76
+msgid "Console logging"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:259
+#: src/tools/radiant/radiant/main.cpp:264
+msgid "Radiant - Runtime Error"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:319
+msgid ""
+"Radiant failed to start properly the last time it was run.\n"
+"The failure may be related to current global preferences.\n"
+"Do you want to reset global preferences to defaults?"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:323
+msgid "Radiant - Startup Failure"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:330
+msgid "Radiant - Console Log"
+msgstr ""
+
+#: src/tools/radiant/radiant/main.cpp:358
+msgid "WARNING: Could not delete game pid at "
+msgstr ""
+
+#: src/tools/radiant/radiant/material.cpp:70
+msgid "You have to save your map before material generation can work"
+msgstr ""
+
+#: src/tools/radiant/radiant/url.cpp:54
+msgid "Failed to launch browser!"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1090
+msgid "There's already a worldspawn in your map!"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1554
+msgid "You have to select some brushes to get the bounding box for.\n"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1554
+msgid "No selection"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1559
+msgid "Background Image"
 msgstr ""
