@@ -1210,9 +1210,9 @@ void XYWnd::OnContextMenu (void)
 
 	if (GlobalSelectionSystem().countSelected() > 0) {
 		if (GlobalSelectionSystem().countSelected() == 2) {
-			EntityClassMenu_addAction(m_mnuDrop, "Connect", Entity_connectSelectedCallback);
+			EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Connect"), Entity_connectSelectedCallback);
 		}
-		EntityClassMenu_addAction(m_mnuDrop, "Fit Face", Texture_FitFace);
+		EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Fit Face"), Texture_FitFace);
 	}
 
 	/** @todo remove connection if already connected */

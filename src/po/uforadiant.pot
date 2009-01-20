@@ -1612,3 +1612,13 @@ msgstr ""
 #: src/tools/radiant/radiant/xywindow.cpp:1559
 msgid "Background Image"
 msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1213
+msgctxt "Context Menu Action"
+msgid "Connect"
+msgstr ""
+
+#: src/tools/radiant/radiant/xywindow.cpp:1215
+msgctxt "Context Menu Action"
+msgid "Fit Face"
+msgstr ""
