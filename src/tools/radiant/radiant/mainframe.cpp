@@ -1981,6 +1981,9 @@ void MainFrame::Create (void)
 
 	if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
 		window_set_position(window, g_layout_globals.m_position);
+	} else {
+		/* maximize will be done when window is shown */
+		gtk_window_maximize(window);
 	}
 
 	m_window = window;
