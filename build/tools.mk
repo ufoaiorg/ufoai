@@ -30,9 +30,12 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
 	tools/ufo2map/common/imagelib.c \
+	\
 	shared/mathlib.c \
 	shared/byte.c \
+	shared/parse.c \
 	shared/shared.c \
+	\
 	common/unzip.c \
 	common/tracing.c \
 	common/routing.c \

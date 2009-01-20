@@ -193,6 +193,7 @@ CLIENT_SRCS = \
 	shared/byte.c \
 	shared/mathlib.c \
 	shared/infostring.c \
+	shared/parse.c \
 	shared/shared.c
 
 ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
