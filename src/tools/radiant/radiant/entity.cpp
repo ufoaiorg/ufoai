@@ -342,7 +342,7 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	} else if (isSound) {
 		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));
 		if (sound != 0) {
-			Node_getEntity(node)->setKeyValue("sound", sound);
+			Node_getEntity(node)->setKeyValue("noise", sound);
 		}
 	} else if (isParticle) {
 		char* particle = misc_particle_dialog(GTK_WIDGET(MainFrame_getWindow()));

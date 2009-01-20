@@ -951,7 +951,7 @@ class EntityAttributeFactory
 			m_creators.insert(Creators::value_type("angles", &StatelessAttributeCreator<AnglesAttribute>::create));
 			m_creators.insert(Creators::value_type("particle", &StatelessAttributeCreator<ParticleAttribute>::create));
 			m_creators.insert(Creators::value_type("model", &StatelessAttributeCreator<ModelAttribute>::create));
-			m_creators.insert(Creators::value_type("sound", &StatelessAttributeCreator<SoundAttribute>::create));
+			m_creators.insert(Creators::value_type("noise", &StatelessAttributeCreator<SoundAttribute>::create));
 			m_creators.insert(Creators::value_type("vector3", &StatelessAttributeCreator<Vector3Attribute>::create));
 		}
 		EntityAttribute* create (const char* type, const char* name)

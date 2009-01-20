@@ -261,7 +261,7 @@ static EntityClass *Eclass_InitFromText (const char *text)
 	}
 	EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model"));
 	EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
-	EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("sound", "Sound"));
+	EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound"));
 
 	return e;
 }
