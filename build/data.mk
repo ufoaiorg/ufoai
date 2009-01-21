@@ -15,12 +15,16 @@ clean-pk3:
 ifeq ($(TARGET_OS),mingw32)
 FIND = dir \S \B $(1)
 ZIP = 7za
-ZIP_UP_OPTS = a -tzip
+ZIP_UP_OPTS = a -tzip -mx=9
 ZIP_DEL_OPTS = d -tzip
 # bonus points if you can get this to work using 7za
 ZIP_LIST =
 else
 FIND = find $(addprefix $(BASE_DIR)/,$(1)) -type f -print
+#ZIP = 7z
+#ZIP_UP_OPTS = a -tzip -mx=9
+#ZIP_DEL_OPTS = d -tzip
+#ZIP_LIST = 7z l $(1) | grep -e :\.*: | tr -s " " | cut -d " " -f 6
 ZIP = zip
 ZIP_UP_OPTS = -u9
 ZIP_DEL_OPTS = -d
