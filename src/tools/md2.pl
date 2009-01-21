@@ -229,7 +229,9 @@ use constant FORMAT => (
 	OffsetVerts	=> 'l',		# offset to vertices
 	ShaderSize	=> 'l',		# Relative offset from the top of MD3_surface to where the Surface object ends.
 	MD3_shader	=> ['a68', '{$NumShaders}', 1 ],
-	Data		=> 'a*'
+	MD3_triangle	=> ['a12', '{$NumTris}', 1 ],
+	MD3_TexCoord	=> ['a8', '{$NumTris}', 1 ],
+	MD3_Vertex	=> ['a8', '{$NumVerts}', 1 ]
 );
 
 package MD3_shader;
@@ -239,18 +241,31 @@ use constant FORMAT => (
 	ShaderIndex	=> 'l'		# Shader index number. unused
 );
 
-#package MD3_TexCoord;	# yet unused
-#use base 'Parse::Binary';
-#use constant FORMAT => (
-#	ST		=> ['f', 2, 1 ]
-#);
+package MD3_triangle;
+use base 'Parse::Binary';
+use constant FORMAT => (
+	X	=> 'l',
+	Y	=> 'l',
+	Z	=> 'l'
+);
 
-#package MD3_Vertex;	# yet unused
-#use base 'Parse::Binary';
-#use constant FORMAT => (
-#	Loc		=> ['s', 3, 1 ],	# Multiply with 1.0/64 to get original value.
-#	Normal		=> 's'
-#);
+package MD3_TexCoord;
+use base 'Parse::Binary';
+use constant FORMAT => (
+	#ST	=> ['f', 2, 1],
+	S	=> 'f',
+	T	=> 'f'
+);
+
+package MD3_Vertex;
+use base 'Parse::Binary';
+use constant FORMAT => (
+	#Loc		=> ['s', 3, 1 ],
+	LocX		=> 's',	# Multiply with 1.0/64 to get original value.
+	LocY		=> 's',
+	LocZ		=> 's',
+	Normal		=> 's'
+);
 
 #######################################
 
