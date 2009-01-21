@@ -155,14 +155,14 @@ use constant FORMAT => (
 	OffsetSurfaces	=> 'l',		# offset to meshes
 	OffsetEnd	=> 'l',		# offset to end of file
 
-	prelude_MD3_frame	=> 'a{$OffsetFrames-108}',	# Just in case $OffsetFrames is _not_ 108.
+#	prelude_MD3_frame	=> 'a{$OffsetFrames-108}',	# Just in case $OffsetFrames is _not_ 108.
 	MD3_frame	=> ['a56', '{$NumFrames}', 1 ],
 
 	#prelude_MD3_tag	=> 'a{xxxx}',
 	MD3_tag		=> ['a112', '{$NumTags}', 1 ],
 
 	#prelude_MD3_surface	=> 'a{xxxx}',
-	MD3_surface	=> ['a108', '{$NumSurfaces}', 1 ],
+	MD3_surface	=> ['a*', '{$NumSurfaces}', 1 ],
 
 	Data			=> 'a*'		# @todo: The whole rest .. currently without structure.
 );
@@ -216,7 +216,7 @@ package MD3_surface;	# Equals MD2 "meshes"
 # @todo: If we ever encounter an md3 file that has a different order we might want to code a re-order function for sanitys sake.
 use base 'Parse::Binary';
 use constant FORMAT => (
-	ID			=> 'l',		# 4chars (IDP3)
+	ID			=> 'l',		# 4chars ("IDP3" or 860898377)
 	Name		=> 'Z64',	# 64chars (Z = 0-terminated)
 	Flags		=> 'l',		#
 	NumFrames	=> 'l',		# Number of animation frames. This should match NUM_FRAMES in the MD3 header.
@@ -600,6 +600,9 @@ if ($param_action eq 'skinedit') {
 
 	# read model file
 	my $model_file = model_read($MODEL_IN);
+	use Data::Dumper;
+	$Data::Dumper::Useqq = 1;
+	print Dumper($model_file);
 
 	print model_get_skinnum($model_file, $mesh), " Skin(s) found\n";
 
