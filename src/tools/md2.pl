@@ -61,6 +61,18 @@ use warnings;
 my $MODEL_IN		= 'in.md2';
 my $MODEL_OUT		= 'out.md2';
 
+
+#######################################
+package Magic;
+# Only used for reading header info of a file.
+# Everything after the first 2 32bit ints is ignored.
+use base 'Parse::Binary';
+use constant FORMAT => (
+	Magic		=> 'l',		# Magic number.
+	Version		=> 'l'		# MDx version.
+);
+#######################################
+
 #######################################
 package MD2;
 use base 'Parse::Binary';
@@ -252,15 +264,15 @@ sub md2_read ($) {
 	my ($filename) = @_;
 
 	# read model file
-	my $model_file = MD2->new($filename);
+	
+	my $mag = Magic->new($filename);
 
-	die "File has wrong magic number \"".$model_file->Magic."\".\n"
-		unless ($model_file->Magic == 844121161); # equals "IDP2"
-
-	die "File has wrong format version \"".$model_file->Version."\".\n"
-		unless ($model_file->Version == 8);
-
-	return $model_file;
+	if (($mag->Magic == 844121161)	# Magic number. Equals "IDP2"
+	 && ($mag->Version == 8)) {		# File format version.
+		return MD2->new($filename);
+	} else {
+		return 0;
+	}
 }
 
 sub md2_skins_list ($) {
@@ -306,15 +318,14 @@ sub md3_read ($) {
 	my ($filename) = @_;
 
 	# read model file
-	my $model_file = MD3->new($filename);
+	my $mag = Magic->new($filename);
 
-	die "File has wrong magic number \"".$model_file->Magic."\".\n"
-		unless ($model_file->Magic == 860898377); # equals "IDP3"
-
-	die "File has wrong format version \"".$model_file->Version."\".\n"
-		unless ($model_file->Version == 15);
-
-	return $model_file;
+	if (($mag->Magic == 860898377)	# Magic number. Equals "IDP3"
+	 && ($mag->Version == 15)) {	# File format version.
+		return MD3->new($filename);
+	} else {
+		return 0;
+	}
 }
 
 sub md3_skins_list ($) {
@@ -341,6 +352,45 @@ sub md3_skins_list ($) {
 #######################################
 # Generic model file functions
 #######################################
+
+sub model_read ($) {
+	my ($filename) = @_;
+
+
+	# Check if this is a MD2 file.
+	my $model = md2_read($filename);
+
+	if ($model == 0) {
+		# Check if this is a MD3 file.
+		$model = md3_read($filename);
+
+		if ($model == 0) {
+			print "Unknown file format of file '", $filename, "'.\n";
+		} else {
+			# MD3 file
+			print "MD3 file found.\n";
+			# Sanity check of data order.
+			my $frames =	($model->NumFrames > 0);
+			my $tags = 	($model->NumTags > 0);
+			my $surfaces =	($model->NumSurfaces > 0);
+			if ((($frames && $tags && $surfaces) && !(($model->OffsetFrames < $model->OffsetTags) && ($model->OffsetTags < $model->OffsetSurfaces)))
+			|| (($frames && !$tags && $surfaces) && !($model->OffsetFrames < $model->OffsetSurfaces))
+			|| ((!$frames && $tags && $surfaces) && !($model->OffsetTags < $model->OffsetSurfaces))
+			|| (($frames && $tags && !$surfaces) && !($model->OffsetFrames < $model->OffsetTags))) {
+					print "Frames:'". $frames ."' Tags:'". $tags ."' Surfaces:'". $surfaces ."' <--Used\n";
+					print "Frames:'". $model->OffsetFrames ."' Tags:'". $model->OffsetTags ."' Surfaces:'". $model->OffsetSurfaces. "' <-- Number\n";
+					die "Order of Frames/Tags/Surfaces data of the file is in a different order.\nThis script does not support this order (yet).\n";
+			}
+
+			return $model
+			
+		}
+	} else {
+		# MD2 file
+		print "MD2 file found.\n";
+		return $model;
+	}
+}
 
 sub model_save ($$) {
 	my ($model_file, $filename) = @_;
@@ -384,36 +434,10 @@ sub model_info ($) {
 	}
 }
 
-sub model_read ($) {
-	my ($filename) = @_;
-	if ($filename =~ /\.md2$/) {
-		return md2_read($filename);
-	} elsif ($filename =~ /\.md3$/) {
-		my $md3 = md3_read($filename);
-
-		# Sanity check of data order.
-		my $frames =	($md3->NumFrames > 0);
-		my $tags = 	($md3->NumTags > 0);
-		my $surfaces =	($md3->NumSurfaces > 0);
-		if ((($frames && $tags && $surfaces) && !(($md3->OffsetFrames < $md3->OffsetTags) && ($md3->OffsetTags < $md3->OffsetSurfaces)))
-		|| (($frames && !$tags && $surfaces) && !($md3->OffsetFrames < $md3->OffsetSurfaces))
-		|| ((!$frames && $tags && $surfaces) && !($md3->OffsetTags < $md3->OffsetSurfaces))
-		|| (($frames && $tags && !$surfaces) && !($md3->OffsetFrames < $md3->OffsetTags))) {
-				print "Frames:'". $frames ."' Tags:'". $tags ."' Surfaces:'". $surfaces ."' <--Used\n";
-				print "Frames:'". $md3->OffsetFrames ."' Tags:'". $md3->OffsetTags ."' Surfaces:'". $md3->OffsetSurfaces. "' <-- Number\n";
-				die "Order of Frames/Tags/Surfaces data of the file is in a different order.\nThis script does not support this order (yet).\n";
-		}
-
-		return $md3
-	} else {
-		die "Unknown file extension for '", $filename, "'.\n";
-	}
-}
-
 sub model_get_skin ($$$) {
 	my ($model_file, $mesh, $i) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
-	# $i ... Index of the Skin in the file (MD2) or the idnex of the skin in the surface (MD3).
+	# $i ... Index of the Skin in the file (MD2) or the index of the skin in the surface (MD3).
 
 	if (ref($model_file) eq "MD2") {
 		return $model_file->MD2_path->[$i][0]
