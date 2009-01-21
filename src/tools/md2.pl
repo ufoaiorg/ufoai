@@ -311,13 +311,13 @@ sub md3_skins_list ($) {
 	my ($model_file) = @_;
 
 	for (my $i=0; $i < $model_file->NumSurfaces; $i++) {
-		my $mesh = $model_file->children->{'MD3_surface'}[$i];
+		my $surface = $model_file->children->{'MD3_surface'}[$i];
 		#use Data::Dumper;
 		#$Data::Dumper::Useqq = 1;
-		#print Dumper($mesh);
-		print "Skins for surface \"", $mesh->Name , "\" (", $i, ") \n";
-		for (my $j=0; $j < $mesh->NumShaders; $j++) {
-			my $shader = $mesh->children->{MD3_shader};
+		#print Dumper($surface);
+		print "Skins for surface \"", $surface->Name , "\" (", $i, ") \n";
+		for (my $j=0; $j < $surface->NumShaders; $j++) {
+			my $shader = $surface->children->{MD3_shader};
 			#print Dumper($shader);
 			print " Skin ", $j, " \"", $shader->[$j]->Path, "\"\n";
 		}
@@ -357,15 +357,15 @@ sub model_info ($) {
 		#print Dumper($model_file);
 		model_skins_list($filename, $model_file);	#debug
 		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
-			my $mesh = $model_file->children->{'MD3_surface'}[$i];
-			print "Name: ", $mesh->Name, "\n";
-			print "Flags: ", $mesh->Flags, "\n";
-			print "NumShaders: ", $mesh->NumShaders, " (max is 256)\n";
-			print "NumFrames: ", $mesh->NumFrames, " (max is 1024)\n";
-			print "NumTris: ", $mesh->NumTris, " (max is 8192)\n";
-			print "NumXYZ: ", $mesh->NumVerts, " (max is 4096)\n";
-			die "Mesh ",$i," has wrong magic number \"".$mesh->ID."\".\n"
-				unless ($mesh->ID == 860898377); # equals "IDP3"
+			my $surface = $model_file->children->{'MD3_surface'}[$i];
+			print "Name: ", $surface->Name, "\n";
+			print "Flags: ", $surface->Flags, "\n";
+			print "NumShaders: ", $surface->NumShaders, " (max is 256)\n";
+			print "NumFrames: ", $surface->NumFrames, " (max is 1024)\n";
+			print "NumTris: ", $surface->NumTris, " (max is 8192)\n";
+			print "NumXYZ: ", $surface->NumVerts, " (max is 4096)\n";
+			die "Mesh ",$i," has wrong magic number \"".$surface->ID."\".\n"
+				unless ($surface->ID == 860898377); # equals "IDP3"
 		}
 	}
 }
@@ -392,31 +392,40 @@ sub model_read ($) {
 
 		return $md3
 	} else {
-		die "unknown file extension for '", $filename, "'\n";
+		die "Unknown file extension for '", $filename, "'.\n";
 	}
 }
 
 sub model_get_skin ($$$$) {
 	my ($filename, $model_file, $mesh, $i) = @_;
+	# $mesh ... MD3 only. Index of the MD3 surface in the file.
+	# $i ... Index of the Skin in the file (MD2) or the idnex of the skin in the surface (MD3).
+
 	if ($filename =~ /\.md2$/) {
 		return $model_file->MD2_path->[$i][0]
 	} elsif ($filename =~ /\.md3$/) {
-		# TODO: This isn't correct
-		return $model_file->children->{'MD3_surface'}[$mesh]->Name;
+		# TODO: Test me.
+		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
+		return $surface->children->{MD3_shader}->[$i]->Path;
 	} else {
-		die "unknown file extension for '", $filename, "'\n";
+		die "Unknown file extension for '", $filename, "'.\n";
 	}
 }
 
 sub model_set_skin ($$$$$) {
 	my ($filename, $model_file, $mesh, $i, $skin) = @_;
+	# $mesh ... MD3 only. Index of the MD3 surface in the file.
+	# $i ... Index of the Skin in the file (MD2) or the idnex of the skin in the surface (MD3).
+	# $skin ... New skin string.
+
 	if ($filename =~ /\.md2$/) {
 		$model_file->MD2_path->[$i][0] = $skin;
 	} elsif ($filename =~ /\.md3$/) {
-		# TODO: This isn't correct
-		$model_file->children->{'MD3_surface'}[$mesh]->Name = $skin;
+		# TODO: Test me.
+		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
+		$surface->children->{MD3_shader}->[$i]->Path = $skin;
 	} else {
-		die "unknown file extension for '", $filename, "'\n";
+		die "Unknown file extension for '", $filename, "'.\n";
 	}
 }
 
@@ -427,29 +436,33 @@ sub model_skins_list ($$) {
 	} elsif ($filename =~ /\.md3$/) {
 		md3_skins_list($model_file);
 	} else {
-		die "unknown file extension for '", $filename, "'\n";
+		die "Unknown file extension for '", $filename, "'.\n";
 	}
 }
 
 sub model_get_skins ($$$) {
 	my ($filename, $model_file, $mesh) = @_;
+	# $mesh ... MD3 only. Index of the MD3 surface in the file.
+
 	if ($filename =~ /\.md2$/) {
 		return $model_file->NumSkins;
 	} elsif ($filename =~ /\.md3$/) {
 		return $model_file->children->{'MD3_surface'}[$mesh]->NumShaders;
 	} else {
-		die "unknown file extension for '", $filename, "'\n";
+		die "Unknown file extension for '", $filename, "'.\n";
 	}
 }
 
 sub model_add_skinnum ($$$$) {
 	my ($filename, $model_file, $mesh, $num) = @_;
+	# $mesh ... MD3 only. Index of the MD3 surface in the file.
+
 	if ($filename =~ /\.md2$/) {
 		md2_add_skinnum($model_file, $num);
 	} elsif ($filename =~ /\.md3$/) {
 		# TODO:
 	} else {
-		die "unknown file extension for '", $filename, "'\n";
+		die "Unknown file extension for '", $filename, "'.\n";
 	}
 }
 
@@ -482,7 +495,7 @@ if ($#ARGV < 0) {
 		($param_action eq 'skinsize') ||
 		($param_action eq 'info')
 		) {
-		print "Unknown action: '", $param_action, "'\n";
+		print "Unknown action: '", $param_action, "'.\n";
 		die "Usage:\t$0 [skinedit|skinnum|skinsize|info] [options...]\n";
 	}
 }
@@ -691,7 +704,7 @@ if ($param_action eq 'skinedit') {
 } elsif ($param_action eq 'info') {
 	model_info($ARGV[1]);
 } else {
-	print "Unknown action: '", $param_action, "'\n";
+	print "Unknown action: '", $param_action, "'.\n";
 }
 
 
