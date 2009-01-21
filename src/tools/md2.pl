@@ -325,11 +325,15 @@ sub md3_skins_list ($) {
 		#use Data::Dumper;
 		#$Data::Dumper::Useqq = 1;
 		#print Dumper($surface);
-		print "Skins for surface \"", $surface->Name , "\" (", $i, ") \n";
-		for (my $j=0; $j < $surface->NumShaders; $j++) {
-			my $shader = $surface->children->{MD3_shader};
-			#print Dumper($shader);
-			print " Skin ", $j, " \"", $shader->[$j]->Path, "\"\n";
+		if ($surface->NumShaders > 0) {
+			print $surface->NumShaders, " skins for surface \"", $surface->Name , "\" (", $i, ") found:\n";
+			for (my $j=0; $j < $surface->NumShaders; $j++) {
+				my $shader = $surface->children->{MD3_shader};
+				#print Dumper($shader);
+				print " Skin ", $j, " \"", $shader->[$j]->Path, "\"\n";
+			}
+		} else {
+			print "No skins found for surface \"", $surface->Name , "\" (", $i, ").\n";
 		}
 	}
 }
@@ -455,8 +459,8 @@ sub model_skins_list ($) {
 	}
 }
 
-sub model_get_skins ($$$) {
-	my ($filename, $model_file, $mesh) = @_;
+sub model_get_skinnum ($$) {
+	my ($model_file, $mesh) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
 
 	if (ref($model_file) eq "MD2") {
@@ -464,12 +468,12 @@ sub model_get_skins ($$$) {
 	} elsif (ref($model_file) eq "MD3") {
 		return $model_file->children->{'MD3_surface'}[$mesh]->NumShaders;
 	} else {
-		die "Unknown filetype found in model_get_skins.\n";
+		die "Unknown filetype found in model_get_skinnum.\n";
 	}
 }
 
-sub model_add_skinnum ($$$$) {
-	my ($filename, $model_file, $mesh, $num) = @_;
+sub model_add_skinnum ($$$) {
+	my ($model_file, $mesh, $num) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
 
 	if (ref($model_file) eq "MD2") {
@@ -550,25 +554,25 @@ if ($param_action eq 'skinedit') {
 	# read model file
 	my $model_file = model_read($MODEL_IN);
 
-	print model_get_skins($MODEL_IN, $model_file, $mesh), " Skin(s) found\n";
+	print model_get_skinnum($model_file, $mesh), " Skin(s) found\n";
 
 	# If no texture parameters are given and no skins found inside the file we create one.
 	if ($#TextureString == 0) {
-		while (model_get_skins($MODEL_IN, $model_file, $mesh) == 0) {
+		while (model_get_skinnum($model_file, $mesh) == 0) {
 			print "No skins to edit found in this file - adding one. (Use the option 'skinnum' to increase this value.)\n";
-			$model_file = model_add_skinnum($MODEL_IN, $model_file, $mesh, 1);
+			$model_file = model_add_skinnum($model_file, $mesh, 1);
 		}
 	}
 
-	if (model_get_skins($MODEL_IN, $model_file, $mesh) > 0) {
+	if (model_get_skinnum($model_file, $mesh) > 0) {
 		#just to prevent warnings
-		if ($#TextureString < model_get_skins($MODEL_IN, $model_file, $mesh)) {
-			for (my $i = $#TextureString + 1; $i < model_get_skins($MODEL_IN, $model_file, $mesh); $i++ ) {
+		if ($#TextureString < model_get_skinnum($model_file, $mesh)) {
+			for (my $i = $#TextureString + 1; $i < model_get_skinnum($model_file, $mesh); $i++ ) {
 				$TextureString[$i] = '';
 			}
 		}
 
-		for (my $i=0; $i<model_get_skins($MODEL_IN, $model_file, $mesh); $i++) {
+		for (my $i=0; $i < model_get_skinnum($model_file, $mesh); $i++) {
 			print "Skin ",$i," old: \"", model_get_skin($model_file, $mesh, $i),"\"\n";
 
 			# get new texture-path from user if no filename was given per commandline parameter.
@@ -618,7 +622,7 @@ if ($param_action eq 'skinedit') {
 	# read model file
 	my $model_file = model_read($MODEL_IN);
 
-	print model_get_skins($MODEL_IN, $model_file, $mesh), " Skin(s) found\n";
+	print model_get_skinnum($model_file, $mesh), " Skin(s) found\n";
 
 	# DEBUG
 	#use Data::Dumper;
@@ -630,14 +634,14 @@ if ($param_action eq 'skinedit') {
 
 	# Ask for new skin-number
 	#use Scalar::Util::Numeric qw(isint);
-	my $NumSkins_new = model_get_skins($MODEL_IN, $model_file, $mesh);
+	my $NumSkins_new = model_get_skinnum($model_file, $mesh);
 	do { # TODO: as until we get a sane number (integer)
 		print "Enter new skin number:";
 		$NumSkins_new = getString();
 	#} while (!isint($NumSkins_new));
-	} while (($NumSkins_new == model_get_skins($MODEL_IN, $model_file, $mesh)) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
+	} while (($NumSkins_new == model_get_skinnum($model_file, $mesh)) || ($NumSkins_new <= 0) || ($NumSkins_new eq ''));
 
-	if ($NumSkins_new == model_get_skins($MODEL_IN, $model_file, $mesh)) {
+	if ($NumSkins_new == model_get_skinnum($model_file, $mesh)) {
 		print "No change in skin-number.\n";
 		return;
 	}
@@ -648,11 +652,11 @@ if ($param_action eq 'skinedit') {
 	}
 
 	# Add/remove skins and update offsets correctly
-	if ($NumSkins_new > model_get_skins($MODEL_IN, $model_file, $mesh)) {
+	if ($NumSkins_new > model_get_skinnum($model_file, $mesh)) {
 		# So the magic (add skins and update offsets correctly)
 		print "Adding skins and updating offsets ...\n";
 
-		$model_file = model_add_skinnum($MODEL_IN, $model_file, $mesh, $NumSkins_new);
+		$model_file = model_add_skinnum($model_file, $mesh, $NumSkins_new);
 	} else {
 		# TODO: do the magic (remove skins and update offsets correctly)
 		print "Removing skins and updating offsets ...\n";
