@@ -306,6 +306,22 @@ sub md3_read ($) {
 	return $model_file;
 }
 
+sub md3_skins_list ($) {
+	my ($model_file) = @_;
+	#print "vvvvv skinlist vvvvv\n";
+	for (my $i=0; $i < $model_file->NumSurfaces; $i++) {
+		my $mesh = $model_file->children->{'MD3_surface'}[$i];
+		#use Data::Dumper;
+		#$Data::Dumper::Useqq = 1;
+		#print Dumper($mesh->MD3_shader);
+		print "Skins for surface \"", $mesh->Name , "\" (", $i, ") \n";
+		for (my $j=0; $j < $mesh->NumShaders; $j++) {
+			print " Skin ", $j, " \"", @{$mesh->MD3_shader}[0]->[$j], "\"\n";
+		}
+	}
+	#print "^^^^^^^^^^ skinlist ^^^^^^^^^^\n";
+}
+
 #######################################
 # Generic model file functions
 #######################################
@@ -337,6 +353,7 @@ sub model_info ($) {
 		#use Data::Dumper;
 		#$Data::Dumper::Useqq = 1;
 		#print Dumper($model_file);
+		model_skins_list($filename, $model_file);	#debug
 		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
 			my $mesh = $model_file->children->{'MD3_surface'}[$i];
 			print "Name: ", $mesh->Name, "\n";
@@ -406,10 +423,7 @@ sub model_skins_list ($$) {
 	if ($filename =~ /\.md2$/) {
 		md2_skins_list($model_file);
 	} elsif ($filename =~ /\.md3$/) {
-		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
-			my $mesh = $model_file->children->{'MD3_surface'}[$i];
-			# TODO:
-		}
+		md3_skins_list($model_file);
 	} else {
 		die "unknown file extension for '", $filename, "'\n";
 	}
