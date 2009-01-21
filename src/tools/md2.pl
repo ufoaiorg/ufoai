@@ -35,14 +35,24 @@
 # Description
 #	The script currently just replaces the texture-path from an md2 file with new ones.
 # Usage
-#	md2.pl skinedit [in.md2 [out.md2 [texturefile(s)]]]
-#	md2.pl skinnum [in.md2 [out.md2]]
 #
-#	If [in.md2] is given it will also be used as outputfile.
+#	Change skin/shader paths
+#		md2.pl skinedit [in.md2 [out.md2 [texturefile(s)]]]
+#
+#	Change number of skins in the file.
+#		md2.pl skinnum [in.md2 [out.md2]]
+#
+#	Print model info
+#		md2.pl info in.md2
+#
+#	Change skin sizes (MD2 only)
+#		md2.pl skinsize in.md2
+#
+#	If [in.md2] is given it will also be used as outputfile by default.
 #	Right now providing a texture file is only possible if three or more arguments are given.
 #	You can provide multiple texture-files seperated by spaces.
 #	To not re-type the output-file if the name is the same as the input file just use - instead.
-#		e.g.: md2.pl skinedit model.md2 - texurefile
+#		e.g.: md2.pl skinedit model.md2 - texturefile
 #######################################
 use strict;
 use warnings;
@@ -114,7 +124,7 @@ use constant FORMAT => (
 #	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
 #);
 
-package MD3_1frame_2tag_3surface;
+package MD3;
 # This package always assumes the order of data like: frame->tag->surface (i.e. in the order the "num" values are defined)
 # @todo: If we ever encounter an md3 file that has a different order we might want to code a re-order function for sanitys sake.
 use base 'Parse::Binary';
@@ -296,7 +306,7 @@ sub md3_read ($) {
 	my ($filename) = @_;
 
 	# read model file
-	my $model_file = MD3_1frame_2tag_3surface->new($filename);
+	my $model_file = MD3->new($filename);
 
 	die "File has wrong magic number \"".$model_file->Magic."\".\n"
 		unless ($model_file->Magic == 860898377); # equals "IDP3"
@@ -341,21 +351,21 @@ sub model_info ($) {
 
 	my $model_file = model_read($filename);
 
-	if ($filename =~ /\.md2$/) {
+	if (ref($model_file) eq "MD2") {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 512)\n";
 		print "NumSkins: ", $model_file->NumSkins, " (max is 32)\n";
 		print "NumXYZ: ", $model_file->NumXYZ, " (max is 2048)\n";
 		print "NumST: ", $model_file->NumST, "\n";
 		print "NumTris: ", $model_file->NumTris, " (max is 4096)\n";
 		print "NumGLcmds: ", $model_file->NumGLcmds, "\n";
-	} elsif ($filename =~ /\.md3$/) {
+	} elsif (ref($model_file) eq "MD3") {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
 		print "NumSurfaces: ", $model_file->NumSurfaces, " (max is 32)\n";
 		#use Data::Dumper;
 		#$Data::Dumper::Useqq = 1;
 		#print Dumper($model_file);
-		model_skins_list($filename, $model_file);	#debug
+		model_skins_list($model_file);	#debug
 		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
 			my $surface = $model_file->children->{'MD3_surface'}[$i];
 			print "Name: ", $surface->Name, "\n";
@@ -396,47 +406,52 @@ sub model_read ($) {
 	}
 }
 
-sub model_get_skin ($$$$) {
-	my ($filename, $model_file, $mesh, $i) = @_;
+sub model_get_skin ($$$) {
+	my ($model_file, $mesh, $i) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
 	# $i ... Index of the Skin in the file (MD2) or the idnex of the skin in the surface (MD3).
 
-	if ($filename =~ /\.md2$/) {
+	if (ref($model_file) eq "MD2") {
 		return $model_file->MD2_path->[$i][0]
-	} elsif ($filename =~ /\.md3$/) {
+	} elsif (ref($model_file) eq "MD3") {
 		# TODO: Test me.
 		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
 		return $surface->children->{MD3_shader}->[$i]->Path;
 	} else {
-		die "Unknown file extension for '", $filename, "'.\n";
+		die "Unknown filetype found in model_get_skin.\n";
 	}
 }
 
-sub model_set_skin ($$$$$) {
-	my ($filename, $model_file, $mesh, $i, $skin) = @_;
+sub model_set_skin ($$$$) {
+	my ($model_file, $mesh, $i, $skin) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
 	# $i ... Index of the Skin in the file (MD2) or the idnex of the skin in the surface (MD3).
 	# $skin ... New skin string.
 
-	if ($filename =~ /\.md2$/) {
+	if (ref($model_file) eq "MD2") {
 		$model_file->MD2_path->[$i][0] = $skin;
-	} elsif ($filename =~ /\.md3$/) {
+	} elsif (ref($model_file) eq "MD3") {
 		# TODO: Test me.
 		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
-		$surface->children->{MD3_shader}->[$i]->Path = $skin;
+		my $s = $surface->children->{MD3_shader}->[$i];
+		#print "old" , $surface->children->{MD3_shader}->[$i]->Path, "\n";
+		$s->struct->{Path} = $skin;
+		#print "new" , $surface->children->{MD3_shader}->[$i]->Path, "\n";
+		
+		# TODO For some reason the modification seems to works, but the saved file gets corrupted.
 	} else {
-		die "Unknown file extension for '", $filename, "'.\n";
+		die "Unknown filetype found in model_set_skin.\n";
 	}
 }
 
-sub model_skins_list ($$) {
-	my ($filename, $model_file) = @_;
-	if ($filename =~ /\.md2$/) {
+sub model_skins_list ($) {
+	my ($model_file) = @_;
+	if (ref($model_file) eq "MD2") {
 		md2_skins_list($model_file);
-	} elsif ($filename =~ /\.md3$/) {
+	} elsif (ref($model_file) eq "MD3") {
 		md3_skins_list($model_file);
 	} else {
-		die "Unknown file extension for '", $filename, "'.\n";
+		die "Unknown filetype found in model_skins_list.\n";
 	}
 }
 
@@ -444,12 +459,12 @@ sub model_get_skins ($$$) {
 	my ($filename, $model_file, $mesh) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
 
-	if ($filename =~ /\.md2$/) {
+	if (ref($model_file) eq "MD2") {
 		return $model_file->NumSkins;
-	} elsif ($filename =~ /\.md3$/) {
+	} elsif (ref($model_file) eq "MD3") {
 		return $model_file->children->{'MD3_surface'}[$mesh]->NumShaders;
 	} else {
-		die "Unknown file extension for '", $filename, "'.\n";
+		die "Unknown filetype found in model_get_skins.\n";
 	}
 }
 
@@ -457,12 +472,12 @@ sub model_add_skinnum ($$$$) {
 	my ($filename, $model_file, $mesh, $num) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
 
-	if ($filename =~ /\.md2$/) {
+	if (ref($model_file) eq "MD2") {
 		md2_add_skinnum($model_file, $num);
-	} elsif ($filename =~ /\.md3$/) {
+	} elsif (ref($model_file) eq "MD3") {
 		# TODO:
 	} else {
-		die "Unknown file extension for '", $filename, "'.\n";
+		die "Unknown filetype found in model_add_skinnum.\n";
 	}
 }
 
@@ -554,7 +569,7 @@ if ($param_action eq 'skinedit') {
 		}
 
 		for (my $i=0; $i<model_get_skins($MODEL_IN, $model_file, $mesh); $i++) {
-			print "Skin ",$i," old: \"", model_get_skin($MODEL_IN, $model_file, $mesh, $i),"\"\n";
+			print "Skin ",$i," old: \"", model_get_skin($model_file, $mesh, $i),"\"\n";
 
 			# get new texture-path from user if no filename was given per commandline parameter.
 			if ($TextureString[$i] eq '') {
@@ -564,10 +579,10 @@ if ($param_action eq 'skinedit') {
 
 			# replace texture-path
 			if ($TextureString[$i] ne '') {
-				model_set_skin($MODEL_IN, $model_file, $mesh, $i, $TextureString[$i]);
+				model_set_skin($model_file, $mesh, $i, $TextureString[$i]);
 			}
 
-			print "Skin ",$i," new: \"", model_get_skin($MODEL_IN, $model_file, $mesh, $i),"\"\n";
+			print "Skin ",$i," new: \"", model_get_skin($model_file, $mesh, $i),"\"\n";
 		}
 
 		# save as another model file
@@ -611,7 +626,7 @@ if ($param_action eq 'skinedit') {
 	#print Dumper($model_file->struct);
 
 	# Print Skins
-	model_skins_list($MODEL_IN, $model_file);
+	model_skins_list($model_file);
 
 	# Ask for new skin-number
 	#use Scalar::Util::Numeric qw(isint);
@@ -645,7 +660,7 @@ if ($param_action eq 'skinedit') {
 	}
 
 	# Print Skins
-	model_skins_list($MODEL_IN, $model_file);
+	model_skins_list($model_file);
 	#$Data::Dumper::Useqq = 1;
 	#print Dumper($model_file);
 
