@@ -103,13 +103,13 @@ package MD2_path;
 use base 'Parse::Binary';
 use constant FORMAT => ('Z64');		# 64chars (Z = 0-terminated)
 
-package MD2_frame;
-use constant FORMAT => (
-	Scale			=> ['f', 3, 1 ],
-	Translate		=> ['f', 3, 1 ],
-	Name			=> 'Z16',	# 16chars (Z = 0-terminated)
-	VertexData		=> 'a*'		# The whole rest
-);
+#package MD2_frame;
+#use constant FORMAT => (
+#	Scale			=> ['f', 3, 1 ],
+#	Translate		=> ['f', 3, 1 ],
+#	Name			=> 'Z16',	# 16chars (Z = 0-terminated)
+#	TODO: the whole rest
+#);
 
 #######################################
 # For an overview of the MD3 spec see:
