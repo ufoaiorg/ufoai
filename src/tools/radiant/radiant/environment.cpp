@@ -51,7 +51,11 @@ const char* environment_get_app_path (void)
 void environment_init (void)
 {
 	StringOutputStream path(256);
+#ifdef _WIN32
+	path << DirectoryCleaned(g_get_user_config_dir()) << RADIANT_HOME << RADIANT_DIRECTORY;
+#else
 	path << DirectoryCleaned(g_get_home_dir()) << RADIANT_HOME << RADIANT_DIRECTORY;
+#endif
 	g_mkdir_with_parents(path.c_str(), 0775);
 	home_path = path.c_str();
 
