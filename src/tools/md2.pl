@@ -369,6 +369,11 @@ sub model_read ($) {
 		} else {
 			# MD3 file
 			print "MD3 file found.\n";
+			
+			if (!($filename =~ /\.md3$/)) {
+				print "Note: It is suggested to change the file extension to '.md3'.\n\n";
+			}
+			
 			# Sanity check of data order.
 			my $frames =	($model->NumFrames > 0);
 			my $tags = 	($model->NumTags > 0);
@@ -388,6 +393,9 @@ sub model_read ($) {
 	} else {
 		# MD2 file
 		print "MD2 file found.\n";
+		if (!($filename =~ /\.md2$/)) {
+			print "Note: It is suggested to change the file extension to '.md2'.\n";
+		}
 		return $model;
 	}
 }
