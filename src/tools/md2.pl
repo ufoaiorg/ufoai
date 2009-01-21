@@ -228,20 +228,20 @@ use constant FORMAT => (
 	OffsetST	=> 'l',		# Relative offset from the top of MD3_surface to where the list of St objects (Texture Coordinates, S-T vertices) starts.
 	OffsetVerts	=> 'l',		# offset to vertices
 	ShaderSize	=> 'l',		# Relative offset from the top of MD3_surface to where the Surface object ends.
-	MD3_shader	=> ['a68', '{$NumShaders}', 1 ],
-	MD3_triangle	=> ['a12', '{$NumTris}', 1 ],
-	MD3_TexCoord	=> ['a8', '{$NumTris}', 1 ],
+	MD3_Shader	=> ['a68', '{$NumShaders}', 1 ],
+	MD3_Triangle	=> ['a12', '{$NumTris}', 1 ],
+	MD3_TexCoord	=> ['a8', '{$NumVerts}', 1 ],
 	MD3_Vertex	=> ['a8', '{$NumVerts}', 1 ]
 );
 
-package MD3_shader;
+package MD3_Shader;
 use base 'Parse::Binary';
 use constant FORMAT => (
 	Path		=> 'Z64',	# Filename of the texture. 64chars (Z = 0-terminated)
 	ShaderIndex	=> 'l'		# Shader index number. unused
 );
 
-package MD3_triangle;
+package MD3_Triangle;
 use base 'Parse::Binary';
 use constant FORMAT => (
 	X	=> 'l',
@@ -354,7 +354,7 @@ sub md3_skins_list ($) {
 		if ($surface->NumShaders > 0) {
 			print $surface->NumShaders, " skins for surface \"", $surface->Name , "\" (", $i, ") found:\n";
 			for (my $j=0; $j < $surface->NumShaders; $j++) {
-				my $shader = $surface->children->{MD3_shader};
+				my $shader = $surface->children->{MD3_Shader};
 				#print Dumper($shader);
 				print " Skin ", $j, " \"", $shader->[$j]->Path, "\"\n";
 			}
@@ -439,9 +439,9 @@ sub model_info ($) {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
 		print "NumSurfaces: ", $model_file->NumSurfaces, " (max is 32)\n";
-		#use Data::Dumper;
-		#$Data::Dumper::Useqq = 1;
-		#print Dumper($model_file);
+		use Data::Dumper;
+		$Data::Dumper::Useqq = 1;
+		print Dumper($model_file);
 		model_skins_list($model_file);	#debug
 		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
 			my $surface = $model_file->children->{'MD3_surface'}[$i];
@@ -467,7 +467,7 @@ sub model_get_skin ($$$) {
 	} elsif (ref($model_file) eq "MD3") {
 		# TODO: Test me.
 		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
-		return $surface->children->{MD3_shader}->[$i]->Path;
+		return $surface->children->{MD3_Shader}->[$i]->Path;
 	} else {
 		die "Unknown filetype found in model_get_skin.\n";
 	}
@@ -484,10 +484,10 @@ sub model_set_skin ($$$$) {
 	} elsif (ref($model_file) eq "MD3") {
 		# TODO: Test me.
 		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
-		my $s = $surface->children->{MD3_shader}->[$i];
-		#print "old" , $surface->children->{MD3_shader}->[$i]->Path, "\n";
+		my $s = $surface->children->{MD3_Shader}->[$i];
+		#print "old" , $surface->children->{MD3_Shader}->[$i]->Path, "\n";
 		$s->struct->{Path} = $skin;
-		#print "new" , $surface->children->{MD3_shader}->[$i]->Path, "\n";
+		#print "new" , $surface->children->{MD3_Shader}->[$i]->Path, "\n";
 		
 		# TODO For some reason the modification seems to works, but the saved file gets corrupted.
 	} else {
