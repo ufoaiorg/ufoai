@@ -73,9 +73,13 @@ use constant FORMAT => (
 	OffsetFrames	=> 'l',		# offset to frame data
 	OffsetGLcmds	=> 'l',		# offset to opengl commands
 	OffsetEnd		=> 'l',		# offset to end of file
-	Path			=> ['a64', '{$NumSkins}', 1 ],	# 64chars * NumSkins -> see "package Path"
+	MD2_path		=> ['a64', '{$NumSkins}', 1 ],	# 64chars * NumSkins -> see "package Path"
 	Data			=> 'a*'		# TODO: The whole rest .. currently without structure.
 );
+
+package MD2_path;
+use base 'Parse::Binary';
+use constant FORMAT => ('Z64');		# 64chars (Z = 0-terminated)
 
 package MD2_frame;
 use constant FORMAT => (
@@ -227,9 +231,6 @@ use constant FORMAT => (
 #);
 
 #######################################
-package Path;
-use base 'Parse::Binary';
-use constant FORMAT => ('Z64');		# 64chars (Z = 0-terminated)
 
 #######################################
 package Model;
@@ -256,7 +257,7 @@ sub md2_skins_list ($) {
 	my ($model_file) = @_;
 
 	for (my $i=0; $i < $model_file->NumSkins; $i++ ) {
-		print "Skin ",$i," \"", $model_file->Path->[$i][0],"\"\n";
+		print "Skin ",$i," \"", $model_file->MD2_path->[$i][0],"\"\n";
 	}
 }
 
@@ -264,14 +265,14 @@ sub md2_add_skinnum ($$) {
 	my ($model_file, $newNumber) = @_;
 
 	# Create skin-list if it isn't there yet
-	if (!exists($model_file->{struct}->{Path})) {
+	if (!exists($model_file->{MD2_path})) {
 		# print "DEBUG: Creating skin list.\n";
-		$model_file->{struct}->{Path} = [];
+		$model_file->{MD2_path} = [];
 	}
 
 	# Append the new skin(s).
 	for (my $i = $model_file->NumSkins; $i < $newNumber; $i++) {
-		push (@{$model_file->Path}, ['dummy']);
+		push (@{$model_file->MD2_path}, ['dummy']);
 	}
 
 	# Update following offsets (after skin data) correctly.
@@ -308,18 +309,19 @@ sub md3_read ($) {
 
 sub md3_skins_list ($) {
 	my ($model_file) = @_;
-	#print "vvvvv skinlist vvvvv\n";
+
 	for (my $i=0; $i < $model_file->NumSurfaces; $i++) {
 		my $mesh = $model_file->children->{'MD3_surface'}[$i];
 		#use Data::Dumper;
 		#$Data::Dumper::Useqq = 1;
-		#print Dumper($mesh->MD3_shader);
+		#print Dumper($mesh);
 		print "Skins for surface \"", $mesh->Name , "\" (", $i, ") \n";
 		for (my $j=0; $j < $mesh->NumShaders; $j++) {
-			print " Skin ", $j, " \"", @{$mesh->MD3_shader}[0]->[$j], "\"\n";
+			my $shader = $mesh->children->{MD3_shader};
+			#print Dumper($shader);
+			print " Skin ", $j, " \"", $shader->[$j]->Path, "\"\n";
 		}
 	}
-	#print "^^^^^^^^^^ skinlist ^^^^^^^^^^\n";
 }
 
 #######################################
@@ -397,7 +399,7 @@ sub model_read ($) {
 sub model_get_skin ($$$$) {
 	my ($filename, $model_file, $mesh, $i) = @_;
 	if ($filename =~ /\.md2$/) {
-		return $model_file->Path->[$i][0]
+		return $model_file->MD2_path->[$i][0]
 	} elsif ($filename =~ /\.md3$/) {
 		# TODO: This isn't correct
 		return $model_file->children->{'MD3_surface'}[$mesh]->Name;
@@ -409,7 +411,7 @@ sub model_get_skin ($$$$) {
 sub model_set_skin ($$$$$) {
 	my ($filename, $model_file, $mesh, $i, $skin) = @_;
 	if ($filename =~ /\.md2$/) {
-		$model_file->Path->[$i][0] = $skin;
+		$model_file->MD2_path->[$i][0] = $skin;
 	} elsif ($filename =~ /\.md3$/) {
 		# TODO: This isn't correct
 		$model_file->children->{'MD3_surface'}[$mesh]->Name = $skin;
