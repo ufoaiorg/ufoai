@@ -27,7 +27,7 @@
 #include "igl.h"
 #include "preferencesystem.h"
 #include "qgl.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "autoptr.h"
 #include "texturelib.h"

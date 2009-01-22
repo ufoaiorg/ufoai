@@ -22,7 +22,7 @@
  */
 
 #include "jobinfo.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 #include "../exec.h"
 #include "gtkutil/window.h"
 #include "gtkutil/dialog.h"

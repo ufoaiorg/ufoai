@@ -62,7 +62,7 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 */
 
 #include "version.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "debugging/debugging.h"
 

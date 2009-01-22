@@ -1,10 +1,9 @@
 /**
  * @file colorscheme.cpp
- * @brief
  */
 
 
-#include "radiant.h"
+#include "radiant_i18n.h"
 #include "colorscheme.h"
 #include "mainframe.h"
 #include "camwindow.h"

@@ -25,7 +25,7 @@
  */
 
 #include "pathfinding.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "mainframe.h"
 #include "os/path.h"

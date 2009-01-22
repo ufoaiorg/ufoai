@@ -29,7 +29,7 @@
 # define xmlFree free
 #endif
 #include "preferences.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "debugging/debugging.h"
 

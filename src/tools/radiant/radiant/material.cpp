@@ -25,9 +25,8 @@
  */
 
 #include "material.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
-#include <gtk/gtk.h>
 #include "mainframe.h"
 #include "gtkmisc.h"
 #include "iselection.h"

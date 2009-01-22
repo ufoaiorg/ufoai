@@ -1,5 +1,5 @@
 /**
- * @file radiant.h
+ * @file radiant_i18n.h
  */
 
 /*
@@ -23,8 +23,8 @@ along with GtkRadiant; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef RADIANT_H
-#define RADIANT_H
+#ifndef RADIANT_I18N_H
+#define RADIANT_I18N_H
 
 #define GETTEXT_PACKAGE "uforadiant"
 #include <gtk/gtk.h>

@@ -25,12 +25,9 @@
  */
 
 #include "pluginmenu.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "stream/textstream.h"
-
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkmenuitem.h>
 
 #include "gtkutil/pointer.h"
 #include "gtkutil/menu.h"

@@ -39,7 +39,7 @@
 #include "map.h"
 #include "mainframe.h"
 #include "convert.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 QEGlobals_t g_qeglobals;
 

@@ -25,7 +25,7 @@
  */
 
 #include "autosave.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "os/file.h"
 #include "os/path.h"

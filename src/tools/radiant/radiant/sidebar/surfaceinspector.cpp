@@ -26,7 +26,7 @@
  */
 
 #include "surfaceinspector.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "debugging/debugging.h"
 
@@ -34,8 +34,6 @@
 #include "itexdef.h"
 #include "iundo.h"
 #include "iselection.h"
-
-#include <gtk/gtk.h>
 
 #include "signal/isignal.h"
 #include "generic/object.h"

@@ -34,10 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "gtkmisc.h"
-#include "radiant.h"
-
-#include <gtk/gtkcolorseldialog.h>
-#include <gtk/gtkentry.h>
+#include "radiant_i18n.h"
 
 #include "math/vector.h"
 #include "os/path.h"

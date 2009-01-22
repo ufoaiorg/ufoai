@@ -15,11 +15,9 @@
  */
 
 #include "sidebar.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 #include "../commands.h"
 #include "gtkutil/widget.h"
-
-#include <gtk/gtk.h>
 
 static void Sidebar_constructEntities (GtkWidget *notebook)
 {
