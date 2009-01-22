@@ -485,9 +485,8 @@ sub model_set_skin ($$$$) {
 		# TODO: Test me.
 		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
 		my $s = $surface->children->{MD3_Shader}->[$i];
-		#print "old" , $surface->children->{MD3_Shader}->[$i]->Path, "\n";
-		$s->struct->{Path} = $skin;
-		#print "new" , $surface->children->{MD3_Shader}->[$i]->Path, "\n";
+		$s->set_field('Path', $skin);
+		$s->refresh();
 		
 		# TODO For some reason the modification seems to works, but the saved file gets corrupted.
 	} else {
@@ -600,9 +599,9 @@ if ($param_action eq 'skinedit') {
 
 	# read model file
 	my $model_file = model_read($MODEL_IN);
-	use Data::Dumper;
-	$Data::Dumper::Useqq = 1;
-	print Dumper($model_file);
+	#use Data::Dumper;
+	#$Data::Dumper::Useqq = 1;
+	#print Dumper($model_file);
 
 	print model_get_skinnum($model_file, $mesh), " Skin(s) found\n";
 
