@@ -20,13 +20,12 @@
  */
 
 #include "filechooser.h"
-#include "radiant.h"
+#include "radiant_i18n.h"
 
 #include "ifiletypes.h"
 
 #include <list>
 #include <vector>
-#include <gtk/gtk.h>
 
 #include "string/string.h"
 #include "stream/stringstream.h"
@@ -178,6 +177,8 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), "unnamed");
 	}
 
+	// Set the Enter key to activate the default response
+	gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER_ON_PARENT);
 
