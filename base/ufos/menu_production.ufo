@@ -122,16 +122,23 @@ menu production
 	// list
 	// ==================
 
+	string txt_queuetitle
+	{
+		string 	"_Production queue/producible items"
+		pos 	"35 35"
+		size	"380 20"
+	}
+
 	string txt_queued
 	{
 		string 	"_Q"
-		pos 	"465 30"
+		pos 	"465 35"
 	}
 
 	string txt_amount
 	{
 		string 	"_Num"
-		pos		"505 30"
+		pos		"505 35"
 	}
 
 	text prodlist
