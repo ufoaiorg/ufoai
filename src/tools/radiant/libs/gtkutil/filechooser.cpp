@@ -20,6 +20,7 @@
  */
 
 #include "filechooser.h"
+#include "radiant.h"
 
 #include "ifiletypes.h"
 
@@ -163,7 +164,7 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 	GTKMasks masks(typelist);
 
 	if (title == 0)
-		title = open ? "Open File" : "Save File";
+		title = open ? _("Open File") : _("Save File");
 
 	GtkWidget* dialog;
 	if (open) {
@@ -211,6 +212,12 @@ static const char* file_dialog_show (GtkWidget* parent, bool open, const char* t
 		gtk_file_filter_set_name(filter, masks.m_masks[i].c_str());
 		gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
 	}
+
+	// Add a final mask for All Files (*.*)
+	GtkFileFilter* allFilter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(allFilter, "*.*");
+	gtk_file_filter_set_name(allFilter, _("All Files (*.*)"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), allFilter);
 
 	GtkWidget *preview = gtk_image_new();
 	gtk_file_chooser_set_preview_widget(GTK_FILE_CHOOSER(dialog), preview);
@@ -276,7 +283,7 @@ const char* file_dialog (GtkWidget* parent, bool open, const char* title, const 
 		const char* file = file_dialog_show(parent, open, title, path, pattern);
 
 		if (open || file == 0 || !file_exists(file) || gtk_MessageBox(parent,
-				"The file specified already exists.\nDo you want to replace it?", title, eMB_NOYES, eMB_ICONQUESTION)
+				_("The file specified already exists.\nDo you want to replace it?"), title, eMB_NOYES, eMB_ICONQUESTION)
 				== eIDYES) {
 			return file;
 		}

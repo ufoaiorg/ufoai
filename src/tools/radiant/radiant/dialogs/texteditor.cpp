@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "gtkutil/messagebox.h"
-#include "../radiant.h"
+#include "radiant.h"
 #include "texteditor.h"
 #include "string/string.h"
 #include "stream/stringstream.h"

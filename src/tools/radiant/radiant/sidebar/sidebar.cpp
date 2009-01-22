@@ -15,7 +15,7 @@
  */
 
 #include "sidebar.h"
-#include "../radiant.h"
+#include "radiant.h"
 #include "../commands.h"
 #include "gtkutil/widget.h"
 

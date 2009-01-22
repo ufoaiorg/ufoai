@@ -24,7 +24,7 @@
  */
 
 #include "entityinspector.h"
-#include "../radiant.h"
+#include "radiant.h"
 
 #include "debugging/debugging.h"
 

@@ -25,7 +25,7 @@
  */
 
 #include "mapinfo.h"
-#include "../radiant.h"
+#include "radiant.h"
 
 #include <map>
 

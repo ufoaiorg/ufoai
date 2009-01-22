@@ -25,6 +25,8 @@
  */
 
 #include "pathfinding.h"
+#include "radiant.h"
+
 #include "mainframe.h"
 #include "os/path.h"
 #include "os/file.h"
@@ -65,12 +67,12 @@ static int ParsePathfindingLogFile (const char *filename)
  */
 void ShowPathfinding (void)
 {
-	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, "Pathfinding log file", NULL, NULL);
+	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Pathfinding log file"), NULL, NULL);
 	if (!filename)
-	return;
+		return;
 	const int retVal = ParsePathfindingLogFile(filename);
 	if (retVal)
-	return;
+		return;
 
 	/** @todo render the parsed data */
 }

@@ -1,3 +1,8 @@
+/**
+ * @file gtkmisc.cpp
+ * @brief Small functions to help with GTK
+ */
+
 /*
 Copyright (c) 2001, Loki software, inc.
 All rights reserved.
@@ -28,11 +33,8 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-//
-// Small functions to help with GTK
-//
-
 #include "gtkmisc.h"
+#include "radiant.h"
 
 #include <gtk/gtkcolorseldialog.h>
 #include <gtk/gtkentry.h>
@@ -137,7 +139,7 @@ void button_clicked_entry_browse_file(GtkWidget* widget, GtkEntry* entry) {
 		bufPath[filename - file] = '\0';
 		file = bufPath;
 	}
-	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE, "Choose File", file);
+	const char *filename = file_dialog(gtk_widget_get_toplevel(widget), TRUE, _("Choose File"), file);
 
 	if (filename != 0) {
 		gchar* converted = g_filename_to_utf8(filename, -1, 0, 0, 0);

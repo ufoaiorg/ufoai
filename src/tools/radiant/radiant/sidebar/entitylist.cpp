@@ -25,7 +25,7 @@
  */
 
 #include "entitylist.h"
-#include "../radiant.h"
+#include "radiant.h"
 
 #include "iselection.h"
 #include "preferencesystem.h"

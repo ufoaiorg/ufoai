@@ -24,6 +24,7 @@
  */
 
 #include "shared.h"
+#include "radiant.h"
 
 #include "entity.h"
 
@@ -415,7 +416,7 @@ const char* misc_model_dialog (GtkWidget* parent)
 		buffer << g_qeglobals.m_userGamePath.c_str() << "/";
 	}
 
-	const char *filename = file_dialog(parent, TRUE, "Choose Model", buffer.c_str(), ModelLoader::Name());
+	const char *filename = file_dialog(parent, TRUE, _("Choose Model"), buffer.c_str(), ModelLoader::Name());
 	if (filename != 0) {
 		// use VFS to get the correct relative path
 		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
@@ -446,7 +447,7 @@ const char* misc_sound_dialog (GtkWidget* parent)
 		buffer << g_qeglobals.m_userGamePath.c_str() << "/";
 	}
 
-	const char* filename = file_dialog(parent, TRUE, "Open Wav File", buffer.c_str(), "sound");
+	const char* filename = file_dialog(parent, TRUE, _("Open Wav File"), buffer.c_str(), "sound");
 	if (filename != 0) {
 		const char* relative = path_make_relative(filename, GlobalFileSystem().findRoot(filename));
 		if (relative == filename) {
