@@ -33,8 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_game.h"
 #include "../menu/m_popup.h"
+#include "cl_research.h"
 #include "cl_research_callbacks.h"
-#include "cl_research_required.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *techHash[TECH_HASH_SIZE];
@@ -137,7 +137,7 @@ void RS_MarkOneResearchable (technology_t* tech)
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  * @todo Add support for the "delay" value.
  */
-qboolean RS_RequirementsMet (const requirements_t *required_AND, const requirements_t *required_OR, const base_t* base)
+qboolean RS_RequirementsMet (const requirements_t *required_AND, const requirements_t *required_OR, const struct base_s *base)
 {
 	int i;
 	qboolean met_AND = qfalse;

@@ -265,4 +265,6 @@ void UP_Article(technology_t* tech, eventMail_t *mail);
 void UP_AircraftDescription(const technology_t* t);
 void UP_UGVDescription(const ugv_t *ugvType);
 
+qboolean RS_RequirementsMet(const requirements_t *required_AND, const requirements_t *required_OR, const struct base_s *base);
+
 #endif /* CLIENT_CL_RESEARCH_H */
