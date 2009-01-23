@@ -187,7 +187,8 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 		}
 		break;
 	default:
-		assert(qfalse);
+		node = NULL;
+		Sys_Error("MN_ExecuteSetAction: Invalid actiontype");
 	}
 
 	value = action->data;
@@ -196,7 +197,7 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 	/* decode text value */
 	if (action->type.param2 == EA_VALUE) {
 		const char* v = MN_GenInjectedString(source, useCmdParam, (char*) value, qfalse);
-		MN_NodeSetProperty (node, action->scriptValues, v);
+		MN_NodeSetProperty(node, action->scriptValues, v);
 		return;
 	}
 
