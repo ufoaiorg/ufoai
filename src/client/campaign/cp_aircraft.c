@@ -1749,7 +1749,9 @@ void AII_ReloadWeapon (aircraft_t *aircraft)
 
 	/* Reload all ammos of aircraft */
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		if (aircraft->weapons[i].ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
+		if (aircraft->ufotype != UFO_MAX) {
+			aircraft->weapons[i].ammoLeft = AMMO_STATUS_UNLIMITED;
+		} else if (aircraft->weapons[i].ammo && !aircraft->weapons[i].ammo->craftitem.unlimitedAmmo) {
 			aircraft->weapons[i].ammoLeft = aircraft->weapons[i].ammo->ammo;
 		}
 	}

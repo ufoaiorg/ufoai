@@ -47,7 +47,6 @@ qboolean UFO_CampaignCheckEvents(void);
 void UFO_InitStartup(void);
 aircraft_t *UFO_AddToGeoscape(ufoType_t ufotype, vec2_t destination, mission_t *mission);
 void UFO_RemoveFromGeoscape(aircraft_t* ufo);
-qboolean UFO_CanShoot(const aircraft_t *ufo);
 void UFO_SendToDestination(aircraft_t* ufo, vec2_t dest);
 qboolean UFO_SendPursuingAircraft(aircraft_t* ufo, aircraft_t* aircraft);
 void UFO_NotifyPhalanxAircraftRemoved(const aircraft_t *const aircraft);

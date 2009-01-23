@@ -619,22 +619,6 @@ void UFO_CampaignRunUFOs (int dt)
 	}
 }
 
-/**
- * @brief Check if a UFO has weapons and ammo to shoot
- * @param[in] ufo Pointer to the UFO
- */
-qboolean UFO_CanShoot (const aircraft_t *ufo)
-{
-	int i;
-
-	for (i = 0; i < ufo->maxWeapons; i++) {
-		if (ufo->weapons[i].item && ufo->weapons[i].ammo && ufo->weapons[i].ammoLeft > 0)
-			return qtrue;
-	}
-
-	return qfalse;
-}
-
 #ifdef DEBUG
 /**
  * @brief Debug function to destroy all the UFOs that are currently on the geoscape
