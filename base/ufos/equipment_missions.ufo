@@ -122,12 +122,12 @@ equipment alien_workers1_explosive
 	// Primary
 
 	// Secondary
-	plaspistol			30
+	plaspistol			50
 		plaspistol_ammo		0
 
 	// Misc
 	kerrblade			20
-	plasmagrenade		20
+	plasmagrenade		70
 
 	// Armour
 	light_alien			6
