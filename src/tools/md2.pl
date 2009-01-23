@@ -321,8 +321,6 @@ sub md2_add_skinnum ($$) {
 	$model_file->struct->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
 
 	$model_file->struct->{NumSkins} = $newNumber;
-
-	return $model_file;
 }
 
 #######################################
@@ -356,12 +354,53 @@ sub md3_skins_list ($) {
 			for (my $j=0; $j < $surface->NumShaders; $j++) {
 				my $shader = $surface->children->{MD3_Shader};
 				#print Dumper($shader);
-				print " Skin ", $j, " \"", $shader->[$j]->Path, "\"\n";
+				if ($shader->[$j]) {
+					print " Skin ", $j, " \"", $shader->[$j]->Path, "\"\n";
+				} else {
+					print "Skin number set to ", $surface->NumShaders, ", but no entry found at ", $j, "!\n";
+				}
 			}
 		} else {
 			print "No skins found for surface \"", $surface->Name , "\" (", $i, ").\n";
 		}
 	}
+}
+
+sub md3_add_skinnum ($$$) {
+	my ($model_file, $mesh, $newNumber) = @_;
+	# $mesh ... MD3 only. Index of the MD3 surface in the file.
+	# $newNumber .. New amount of skins for this mesh.
+
+	my $surface = $model_file->children->{'MD3_surface'}[$mesh];
+
+	# Append the new skin(s).
+	for (my $i = $surface->NumShaders; $i < $newNumber; $i++) {
+		# TODO: finalize me
+#use Data::Dumper;
+#$Data::Dumper::Useqq = 1;
+#print Dumper($model_file);	# DEBUG
+		
+		my $skinEntry = MD3_Shader->new();
+		$skinEntry->set_field('Path', "dummy");
+
+#print "sstt".Dumper($skinEntry)."ss\n";	# DEBUG
+		push(@{$surface->children->{MD3_Shader}}, $skinEntry);
+		$surface->set_field('NumShaders', $surface->NumShaders+1);
+		$surface->refresh();
+#print "uuuu".Dumper($surface)."uuuu\n";	# DEBUG
+	}
+
+	# TODO: Fix all the MD3 data offsets!
+
+	# Update following offsets (after skin data) correctly.
+	#my $data_offset_delta = ($newNumber-$model_file->NumSkins) * 64;
+	#$model_file->struct->{OffsetST} += $data_offset_delta;		# update offset to s-t texture coordinates
+	#$model_file->struct->{OffsetTris} += $data_offset_delta;		# update offset to triangles
+	#$model_file->struct->{OffsetFrames} += $data_offset_delta;	# update offset to frame data
+	#$model_file->struct->{OffsetGLcmds} += $data_offset_delta;	# update offset to opengl commands
+	#$model_file->struct->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
+
+	#$model_file->struct->{NumSkins} = $newNumber;
 }
 
 #######################################
@@ -520,8 +559,8 @@ sub model_add_skinnum ($$$) {
 
 	if (ref($model_file) eq "MD2") {
 		md2_add_skinnum($model_file, $num);
-#	} elsif (ref($model_file) eq "MD3") {
-#		# TODO:
+	} elsif (ref($model_file) eq "MD3") {
+		md3_add_skinnum($model_file, $mesh, $num);
 	} else {
 		die "Unknown filetype (\"", ref($model_file), "\") found in model_add_skinnum.\n";
 	}
@@ -605,7 +644,7 @@ if ($param_action eq 'skinedit') {
 	if ($#TextureString == 0) {
 		while (model_get_skinnum($model_file, $mesh) == 0) {
 			print "No skins to edit found in this file - adding one. (Use the option 'skinnum' to increase this value.)\n";
-			$model_file = model_add_skinnum($model_file, $mesh, 1);
+			model_add_skinnum($model_file, $mesh, 1);
 		}
 	}
 
@@ -701,7 +740,7 @@ if ($param_action eq 'skinedit') {
 		# So the magic (add skins and update offsets correctly)
 		print "Adding skins and updating offsets ...\n";
 
-		$model_file = model_add_skinnum($model_file, $mesh, $NumSkins_new);
+		model_add_skinnum($model_file, $mesh, $NumSkins_new);
 	} else {
 		# TODO: do the magic (remove skins and update offsets correctly)
 		print "Removing skins and updating offsets ...\n";
