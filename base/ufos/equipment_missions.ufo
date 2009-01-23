@@ -131,7 +131,6 @@ equipment alien_workers1_explosive
 
 	// Armour
 	light_alien			6
-	medium_alien		2
 }
 
 equipment alien_workers2
