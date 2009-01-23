@@ -33,46 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_game.h"
 #include "../menu/m_popup.h"
+#include "cl_research_callbacks.h"
+#include "cl_research_required.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *techHash[TECH_HASH_SIZE];
 static technology_t *techHashProvided[TECH_HASH_SIZE];
-
-typedef enum {
-	RSGUI_NOTHING,
-	RSGUI_RESEARCH,
-	RSGUI_BASETITLE,
-	RSGUI_BASEINFO,
-	RSGUI_RESEARCHOUT,
-	RSGUI_MISSINGITEM,
-	RSGUI_MISSINGITEMTITLE,
-	RSGUI_UNRESEARCHABLEITEM,
-	RSGUI_UNRESEARCHABLEITEMTITLE
-} guiResearchElementType_t;
-
-/**
- */
-typedef struct {
-	base_t *base;
-	technology_t *tech;
-	guiResearchElementType_t type;
-} guiResearchElement_t;
-
-/**
- * @brief A (local) list of displayed technology-entries (the research list in the base)
- */
-static guiResearchElement_t researchList2[MAX_RESEARCHLIST + MAX_BASES + MAX_BASES];
-
-/* The number of entries in the above list. */
-static int researchListLength;
-
-/* The currently selected entry in the above list. */
-static int researchListPos;
-
-static stringlist_t curRequiredList;
-
-/* prototype */
-static void RS_InitGUI(base_t* base, qboolean update);
 
 /**
  * @brief Push a news about this tech when researched.
@@ -171,7 +137,7 @@ void RS_MarkOneResearchable (technology_t* tech)
  * @return Returns qtrue if all requirements are satisfied otherwise qfalse.
  * @todo Add support for the "delay" value.
  */
-static qboolean RS_RequirementsMet (const requirements_t *required_AND, const requirements_t *required_OR, const base_t* base)
+qboolean RS_RequirementsMet (const requirements_t *required_AND, const requirements_t *required_OR, const base_t* base)
 {
 	int i;
 	qboolean met_AND = qfalse;
@@ -807,164 +773,11 @@ void RS_InitTree (qboolean load)
 		}
 	}
 
-	memset(&curRequiredList, 0, sizeof(curRequiredList));
-
 	Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
 
-/**
- * @brief Displays the informations of the current selected technology in the description-area.
- * See menu_research.ufo for the layout/called functions.
- */
-static void RS_UpdateInfo (const base_t* base)
-{
-	char tmpbuf[128];
-	technology_t *tech;
-	int type;
-
-	/* reset cvars */
-	Cvar_Set("mn_research_imagetop", "");
-	Cvar_Set("mn_researchitemname", "");
-	Cvar_Set("mn_researchitem", "");
-	Cvar_Set("mn_researchweapon", "");	/**< @todo Do we even need/use mn_researchweapon and mn_researchammo (now or in the future?) */
-	Cvar_Set("mn_researchammo", "");
-	MN_MenuTextReset(TEXT_STANDARD);
-
-	if (researchListLength <= 0 || researchListPos >= researchListLength)
-		return;
-
-	/* selection is not a research */
-	/** @todo it can be an assert */
-	type = researchList2[researchListPos].type;
-	if (type != RSGUI_RESEARCH && type != RSGUI_RESEARCHOUT && type != RSGUI_UNRESEARCHABLEITEM)
-		return;
-
-	tech = researchList2[researchListPos].tech;
-	if (tech == NULL)
-		return;
-
-	/* Display laboratories limits. */
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (used/all): %i/%i"),
-		base->capacities[CAP_LABSPACE].cur,
-		base->capacities[CAP_LABSPACE].max);
-	Cvar_Set("mn_research_labs", tmpbuf);
-
-	/* Display scientists amounts. */
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (available/all): %i/%i"),
-		E_CountUnassigned(base, EMPL_SCIENTIST),
-		E_CountHired(base, EMPL_SCIENTIST));
-	Cvar_Set("mn_research_scis", tmpbuf);
-
-	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
-
-	/* Display the base this tech is researched in. */
-	if (tech->scientists > 0) {
-		assert(tech->base);
-		if (tech->base != base)
-			Cvar_Set("mn_research_selbase", va(_("Researched in %s"), tech->base->name));
-		else
-			Cvar_Set("mn_research_selbase", _("Researched in this base."));
-	}
-
-	Cvar_Set("mn_research_selname", _(tech->name));
-	if (tech->overalltime) {
-		if (tech->time > tech->overalltime) {
-			Com_Printf("RS_UpdateInfo: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", tech->id, tech->time,
-					tech->overalltime);
-			/* just in case the values got messed up */
-			tech->time = tech->overalltime;
-		}
-		Cvar_SetValue("mn_research_seltimebar", 100 - (tech->time * 100 / tech->overalltime));
-		Cvar_Set("mn_research_seltime", va(_("Progress: %.1f%%"), 100 - (tech->time * 100 / tech->overalltime)));
-	} else {
-		Cvar_SetValue("mn_research_seltimebar", 0);
-		Cvar_Set("mn_research_seltime", _("Progress: Not available."));
-	}
-
-	switch (tech->statusResearch) {
-	case RS_RUNNING:
-		Cvar_Set("mn_research_selstatus", _("Status: Under research"));
-		break;
-	case RS_PAUSED:
-		Cvar_Set("mn_research_selstatus", _("Status: Research paused"));
-		break;
-	case RS_FINISH:
-		Cvar_Set("mn_research_selstatus", _("Status: Research finished"));
-		break;
-	case RS_NONE:
-		if (tech->statusCollected && !tech->statusResearchable) {
-			/** @sa RS_UpdateData -> "--" */
-			Cvar_Set("mn_research_selstatus", _("Status: We don't currently have all the materials or background knowledge needed to research this topic."));
-		} else {
-			Cvar_Set("mn_research_selstatus", _("Status: Unknown technology"));
-		}
-		break;
-	default:
-		break;
-	}
-
-	/* Set image cvar. */
-	if (tech->image)
-		Cvar_Set("mn_research_imagetop", tech->image);
-
-	/** @todo Should we really show the model before it is researched? If not we'd need a pic/model to show a research proposal image.
-	else if (tech->provides)
-		switch (tech->type) {
-			case RS_WEAPON:
-			case RS_ARMOUR:
-				Cvar_Set("mn_researchitem", tech->provides);
-				break;
-			default:
-				break;
-		} * switch *
-	*/
-}
-
-/**
- * @brief Changes the active research-list entry to the currently selected.
- * See menu_research.ufo for the layout/called functions.
- */
-static void CL_ResearchSelect_f (void)
-{
-	int num;
-	int type;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= researchListLength) {
-		MN_MenuTextReset(TEXT_STANDARD);
-		return;
-	}
-
-	type = researchList2[num].type;
-
-	/* switch to another team */
-	if (type == RSGUI_BASETITLE) {
-		base_t *b = researchList2[num].base;
-		if (b != NULL && b != baseCurrent) {
-			MN_ExecuteConfunc("research_changebase %i %i", b->idx, researchListPos);
-			return;
-		}
-	}
-
-	if (type == RSGUI_RESEARCH || type == RSGUI_RESEARCHOUT || type == RSGUI_UNRESEARCHABLEITEM) {
-		/* update the selected row */
-		researchListPos = num;
-	} else {
-		return;
-	}
-
-	/** @todo improve that, dont need to update every thing */
-	/* need to set previous selected tech to proper color */
-	RS_InitGUI(baseCurrent, qtrue);
-}
+/* RS_UpdateInfo */
+/* RS_Resaerch_Select */
 
 /**
  * @brief Assigns scientist to the selected research-project.
@@ -1018,72 +831,8 @@ void RS_AssignScientist (technology_t* tech, base_t *base)
 	}
 }
 
-/**
- * @brief Script function to add and remove a scientist to  the technology entry in the research-list.
- * @sa RS_AssignScientist_f
- * @sa RS_RemoveScientist_f
- * @todo use the diff as a value, not only as a +1 or -1
- */
-static void RS_ChangeScientist_f ()
-{
-	int num;
-	float diff;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <num_in_list> <diff>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= researchListLength)
-		return;
-
-	diff = atof(Cmd_Argv(2));
-	if (diff == 0)
-		return;
-
-	Com_DPrintf(DEBUG_CLIENT, "RS_ChangeScientist_f: num %i, diff %i\n", num, (int) diff);
-	if (diff > 0) {
-		RS_AssignScientist(researchList2[num].tech, baseCurrent);
-	} else {
-		RS_RemoveScientist(researchList2[num].tech, NULL);
-	}
-
-	/* Update display-list and display-info. */
-	RS_InitGUI(baseCurrent, qtrue);
-}
-
-/**
- * @brief Script function to add a scientist to  the technology entry in the research-list.
- * @sa RS_AssignScientist
- * @sa RS_RemoveScientist_f
- */
-static void RS_AssignScientist_f (void)
-{
-	int num;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= researchListLength)
-		return;
-
-	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist_f: num %i\n", num);
-	RS_AssignScientist(researchList2[num].tech, baseCurrent);
-
-	/* Update display-list and display-info. */
-	RS_InitGUI(baseCurrent, qtrue);
-}
-
+/* RS_ChangeScientist */
+/* RS_AssignScientist */
 
 /**
  * @brief Remove a scientist from a technology.
@@ -1131,57 +880,8 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 	}
 }
 
-
-/**
- * @brief Assign as many scientists to the research project as possible.
- * @param[in] base The base the tech is researched in.
- * @param[in] tech The technology you want to max out.
- * @sa RS_AssignScientist
- */
-static void RS_MaxOutResearch (base_t *base, technology_t* tech)
-{
-	if (!base || !tech)
-		return;
-
-	assert(tech->scientists >= 0);
-
-	/* Add as many scientists as possible to this tech. */
-	do {
-		if (base->capacities[CAP_LABSPACE].cur < base->capacities[CAP_LABSPACE].max) {
-			const employee_t *employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
-			if (!employee)
-				break;
-			RS_AssignScientist(tech, base);
-		} else {
-			/* No free lab-space left. */
-			break;
-		}
-	} while (qtrue);
-}
-
-/**
- * @brief Script function to remove a scientist from the technology entry in the research-list.
- * @sa RS_AssignScientist_f
- * @sa RS_RemoveScientist
- */
-static void RS_RemoveScientist_f (void)
-{
-	int num;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= researchListLength)
-		return;
-
-	RS_RemoveScientist(researchList2[num].tech, NULL);
-
-	/* Update display-list and display-info. */
-	RS_InitGUI(baseCurrent, qtrue);
-}
+/* RS_MaxOutResearch */
+/* Rs_RemoveScientist_f */
 
 /**
  * @brief Remove one scientist from research project if needed.
@@ -1215,455 +915,17 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
 	RS_RemoveScientist(tech, employee);
 }
 
-/**
- * @brief Starts the research of the selected research-list entry.
- */
-static void RS_ResearchStart_f (void)
-{
-	technology_t *tech;
-
-	/* We are not in base view. */
-	if (!baseCurrent)
-		return;
-
-	if (researchListPos < 0 || researchListPos >= researchListLength)
-		return;
-
-	/* Check if laboratory is available. */
-	if (!B_GetBuildingStatus(baseCurrent, B_LAB))
-		return;
-
-	/* get the currently selected research-item */
-	tech = researchList2[researchListPos].tech;
-
-	/** @todo If there are enough items add them to the tech (i.e. block them from selling or for other research),
-	 * otherwise pop an errormessage telling the palyer what is missing */
-	if (!tech->statusResearchable) {
-		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n", tech->id);
-		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
-		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, baseCurrent))
-			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable(qfalse, baseCurrent);	/* Re-check all other techs in case they depend on the marked one. */
-	}
-
-	/* statusResearchable might have changed - check it again */
-	if (tech->statusResearchable) {
-		switch (tech->statusResearch) {
-		case RS_RUNNING:
-			if (tech->base == baseCurrent) {
-				/* Research already running in current base ... try to add max amount of scis. */
-				RS_MaxOutResearch(baseCurrent, tech);
-			}else {
-				/* Research already running in another base. */
-				MN_Popup(_("Notice"), _("This item is currently under research in another base."));
-			}
-			break;
-		case RS_PAUSED:
-		case RS_NONE:
-			if (tech->statusResearch == RS_PAUSED) {
-				/* MN_Popup(_("Notice"), _("The research on this item continues.")); Removed because it isn't really needed.*/
-				Com_Printf("RS_ResearchStart_f: The research on this item continues.\n");
-			}
-			/* Add as many scientists as possible to this tech. */
-			RS_MaxOutResearch(baseCurrent, tech);
-
-			if (tech->scientists > 0) {
-				tech->statusResearch = RS_RUNNING;
-			}
-			break;
-		case RS_FINISH:
-			/* Should never be executed. */
-			MN_Popup(_("Notice"), _("The research on this item is complete."));
-			break;
-		default:
-			break;
-		}
-	} else
-		MN_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
-
-	RS_InitGUI(baseCurrent, qtrue);
-}
-
-/**
- * @brief Removes all scientists from the selected research-list entry.
- */
-static void RS_ResearchStop_f (void)
-{
-	technology_t *tech;
-
-	/* we are not in base view */
-	if (!baseCurrent)
-		return;
-
-	if (researchListPos < 0 || researchListPos >= researchListLength)
-		return;
-
-	/* Check if laboratory is available. */
-	if (!B_GetBuildingStatus(baseCurrent, B_LAB))
-		return;
-
-	/* get the currently selected research-item */
-	tech = researchList2[researchListPos].tech;
-
-	switch (tech->statusResearch) {
-	case RS_RUNNING:
-		/* Remove all scis from it and set the status to paused (i.e. it's differnet from a RS_NONE since it may have a little bit of progress already). */
-		while (tech->scientists > 0)
-			RS_RemoveScientist(tech, NULL);
-		assert(tech->statusResearch == RS_PAUSED);
-		break;
-	case RS_PAUSED:
-		/** @todo remove? Popup info how much is already researched? */
-		/* tech->statusResearch = RS_RUNNING; */
-		break;
-	case RS_FINISH:
-		MN_Popup(_("Notice"), _("The research on this item is complete."));
-		break;
-	case RS_NONE:
-		Com_Printf("Can't pause research. Research not started.\n");
-		break;
-	default:
-		break;
-	}
-	RS_InitGUI(baseCurrent, qtrue);
-}
-
-/**
- * @brief Switches to the UFOpaedia entry of the currently selected research entry.
- */
-static void RS_ShowPedia_f (void)
-{
-	const technology_t *tech;
-
-	/* We are not in base view. */
-	if (!baseCurrent)
-		return;
-
-	if (researchListPos < 0 || researchListPos >= researchListLength)
-		return;
-
-	/* get the currently selected research-item */
-	tech = researchList2[researchListPos].tech;
-	if (tech->pre_description.numDescriptions > 0) {
-		UP_OpenCopyWith(tech->id);
-	} else {
-		MN_Popup(_("Notice"), _("No research proposal available for this project."));
-	}
-}
-
-/**
- * @brief Create a GUI view of the current research in a base
- * @param[in] base Pointer to the base where item list is updated
- * @note call when we open the GUI
- */
-static void RS_InitGUIData (base_t* base)
-{
-	int i, j;
-	int row;
-	int available[MAX_BASES];
-	qboolean first;
-
-	assert(base);
-
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *b = B_GetFoundedBaseByIDX(i);
-		if (!b)
-			continue;
-		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
-	}
-
-	RS_MarkResearchable(qfalse, base);
-
-	/* update tech of the base */
-	row = 0;
-	for (i = 0; i < gd.numTechnologies; i++) {
-		technology_t *tech = RS_GetTechByIDX(i);
-
-		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
-		if (tech->time == 0)
-			continue;
-
-		/* hide finished research */
-		if (tech->statusResearch == RS_FINISH)
-			continue;
-
-		/* hide tech we can't search */
-		if (!tech->statusResearchable)
-			continue;
-
-		/* In this base or nowhere */
-		if (tech->base != NULL && tech->base != base)
-			continue;
-
-		/* Assign the current tech in the global list to the correct entry in the displayed list. */
-		researchList2[row].tech = tech;
-		researchList2[row].base = base;
-		researchList2[row].type = RSGUI_RESEARCH;
-		row++;
-	}
-	researchList2[row].base = base;
-	researchList2[row].type = RSGUI_BASEINFO;
-	row++;
-
-	/* Items collected but not yet researchable. */
-	first = qtrue;
-	for (i = 0; i < gd.numTechnologies; i++) {
-		technology_t *tech = RS_GetTechByIDX(i);
-
-		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
-		if (tech->time == 0)
-			continue;
-
-		/* hide finished research */
-		if (tech->statusResearch == RS_FINISH)
-			continue;
-
-		/* Hide searchable or uncollected tech */
-		if (tech->statusResearchable || !tech->statusCollected)
-			continue;
-
-		/* title */
-		if (first) {
-			researchList2[row].type = RSGUI_NOTHING;
-			row++;
-			researchList2[row].base = base;
-			researchList2[row].type = RSGUI_UNRESEARCHABLEITEMTITLE;
-			row++;
-			first = qfalse;
-		}
-
-		/* Assign the current tech in the global list to the correct entry in the displayed list. */
-		researchList2[row].tech = tech;
-		researchList2[row].base = base;
-		researchList2[row].type = RSGUI_UNRESEARCHABLEITEM;
-		row++;
-	}
+/* RS_Research_Start */
+/* RS_Reserach_Stop */
+/* RS_ShowPedia */
+/* RS_InitGUIData */
+/* RS_UpdateResearchStatus */
 
 
-	/* research from another bases */
-	for (j = 0; j < MAX_BASES; j++) {
-		base_t *b = B_GetFoundedBaseByIDX(j);
-		if (!b || b == base)
-			continue;
+/* RS_InitGui */
+/* RS_UpdateData */
 
-		/* skip bases without labs */
-		if (B_GetBuildingInBaseByType(b, B_LAB, qtrue) == NULL)
-			continue;
-
-		researchList2[row].type = RSGUI_NOTHING;
-		row++;
-		researchList2[row].type = RSGUI_BASETITLE;
-		researchList2[row].base = b;
-		row++;
-
-		for (i = 0; i < gd.numTechnologies; i++) {
-			technology_t *tech = RS_GetTechByIDX(i);
-
-			/* Don't show technologies with time == 0 - those are NOT separate research topics. */
-			if (tech->time == 0)
-				continue;
-
-			if (tech->base != b)
-				continue;
-
-			/* hide finished research */
-			if (tech->statusResearch == RS_FINISH)
-				continue;
-
-			/* hide tech we can't search */
-			if (!tech->statusResearchable)
-				continue;
-
-			/* Assign the current tech in the global list to the correct entry in the displayed list. */
-			researchList2[row].tech = tech;
-			researchList2[row].base = b;
-			researchList2[row].type = RSGUI_RESEARCHOUT;
-
-			/* counting the numbers of display-list entries. */
-			row++;
-		}
-		researchList2[row].base = b;
-		researchList2[row].type = RSGUI_BASEINFO;
-		row++;
-	}
-
-	/** @todo add missingitem, unsearchableitem  */
-
-	researchListLength = row;
-}
-
-/**
- * @brief Update the research status of a row
- */
-static void RS_UpdateResearchStatus (int row)
-{
-	guiResearchElement_t *element = &researchList2[row];
-	assert(element->type == RSGUI_RESEARCH || element->type == RSGUI_RESEARCHOUT);
-
-	switch (element->tech->statusResearch) {
-	case RS_RUNNING:
-		/* Color the item with 'research running'-color. */
-		MN_ExecuteConfunc("research_running %i", row);
-		break;
-	case RS_PAUSED:
-		/* Color the item with 'research paused'-color. */
-		MN_ExecuteConfunc("research_paused %i", row);
-		break;
-	case RS_NONE:
-		/* Color the item with 'research normal'-color. */
-		MN_ExecuteConfunc("research_normal %i", row);
-		break;
-	case RS_FINISH:
-	default:
-		break;
-	}
-}
-
-/**
- * @brief Initialize/Update all the GUI according to the current view
- * @param[in] base Pointer to the base where item list is updated
- * @param[in] update If true, only update editable content
- * @note See menu_research.ufo for the layout/called functions.
- * @todo Display free space in all labs in the current base for each item.
- */
-static void RS_InitGUI (base_t* base, qboolean update)
-{
-	int i = 0;
-	int available[MAX_BASES];
-
-	assert(base);
-
-	for (i = 0; i < MAX_BASES; i++) {
-		const base_t const *b = B_GetFoundedBaseByIDX(i);
-		if (!b)
-			continue;
-		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
-	}
-
-	for (i = 0; i < MAX_RESEARCHDISPLAY && i < researchListLength; i++) {
-		guiResearchElement_t *element = &researchList2[i];
-
-		/* only element of the current base can change */
-		if (update && (element->base != base && element->type != RSGUI_RESEARCHOUT))
-			continue;
-
-		switch (element->type) {
-		case RSGUI_NOTHING:
-			MN_ExecuteConfunc("research_hide %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), "");
-			break;
-		case RSGUI_RESEARCH:
-			{
-				const int value = element->tech->scientists;
-				const int max = available[element->base->idx] + element->tech->scientists;
-				MN_ExecuteConfunc("research_research %i", i);
-				if (!update) {
-					Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
-				}
-				MN_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
-				/* How many scis are assigned to this tech. */
-				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
-
-				RS_UpdateResearchStatus(i);
-			}
-			break;
-		case RSGUI_BASETITLE:
-			MN_ExecuteConfunc("research_basetitle %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), element->base->name);
-			break;
-		case RSGUI_BASEINFO:
-			MN_ExecuteConfunc("research_baseinfo %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _("Unassigned scientists"));
-			/* How many scis are unassigned */
-			Cvar_SetValue(va("mn_researchassigned%i", i), available[element->base->idx]);
-			break;
-		case RSGUI_RESEARCHOUT:
-			MN_ExecuteConfunc("research_outterresearch %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
-			/* How many scis are assigned to this tech. */
-			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
-			RS_UpdateResearchStatus(i);
-			break;
-		case RSGUI_MISSINGITEM:
-			MN_ExecuteConfunc("research_missingitem %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
-			break;
-		case RSGUI_MISSINGITEMTITLE:
-			MN_ExecuteConfunc("research_missingitemtitle %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _("Missing an artifact"));
-			break;
-		case RSGUI_UNRESEARCHABLEITEM:
-			MN_ExecuteConfunc("research_unresearchableitem %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
-			break;
-		case RSGUI_UNRESEARCHABLEITEMTITLE:
-			MN_ExecuteConfunc("research_unresearchableitemtitle %i", i);
-			Cvar_Set(va("mn_researchitem%i", i), _("Unresearchable collected items"));
-			break;
-		default:
-			assert(qfalse);
-		}
-	}
-
-	/* Set rest of the list-entries to have no text at all. */
-	if (!update) {
-		for (; i < MAX_RESEARCHDISPLAY; i++) {
-			MN_ExecuteConfunc("research_hide %i", i);
-		}
-	}
-
-	/* Select last selected item if possible or the very first one if not. */
-	if (researchListLength) {
-		Com_DPrintf(DEBUG_CLIENT, "RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength);
-		if (researchListPos >= 0 && researchListPos < researchListLength && researchListLength < MAX_RESEARCHDISPLAY) {
-			int t = researchList2[researchListPos].type;
-			/* is it a tech row */
-			if (t == RSGUI_RESEARCH || t == RSGUI_RESEARCHOUT || t == RSGUI_UNRESEARCHABLEITEM) {
-				MN_ExecuteConfunc("research_selected %i", researchListPos);
-			}
-		}
-	}
-
-	/* Update the description field/area. */
-	RS_UpdateInfo(base);
-}
-
-/**
- * @brief Script binding for RS_UpdateData
- */
-static void RS_UpdateData_f (void)
-{
-	if (!baseCurrent)
-		return;
-	RS_InitGUI(baseCurrent, qtrue);
-}
-
-/**
- * @brief Checks whether there are items in the research list and there is a base
- * otherwise leave the research menu again
- * @note if there is a base but no lab a popup appears
- * @sa RS_UpdateData
- * @sa MN_ResearchInit_f
- * @todo wrong computation: researchListLength dont say if there are research on this base
- */
-static void CL_ResearchType_f (void)
-{
-	if (!baseCurrent)
-		return;
-
-	/* Update and display the list. */
-	RS_InitGUIData(baseCurrent);
-
-	/* Nothing to research here. */
-	if (!researchListLength || !gd.numBases) {
-		MN_PopMenu(qfalse);
-		if (!researchListLength)
-			MN_Popup(_("Notice"), _("Nothing to research"));
-	} else if (!B_GetBuildingStatus(baseCurrent, B_LAB)) {
-		MN_PopMenu(qfalse);
-		MN_Popup(_("Notice"), _("Build a laboratory first"));
-	}
-}
+/* CL_Research_Type */
 
 #if 0
 /**
@@ -1751,8 +1013,11 @@ void RS_ResearchRun (void)
 	int i, newResearch = 0;
 	base_t* checkBases[MAX_BASES];
 
+#if 0
+	/** what is this good for? researchListLength is counter for gui stating how many entries are displayed actually */
 	if (!researchListLength)
 		return;
+#endif
 
 	memset(checkBases, 0, sizeof(checkBases));
 
@@ -1777,8 +1042,11 @@ void RS_ResearchRun (void)
 							RS_RemoveScientist(tech, NULL);
 
 						RS_MarkResearched(tech, base);
+#if 0
+/* these two are only for gui, why shall we update them here? */
 						researchListLength = 0;
 						researchListPos = 0;
+#endif
 						newResearch++;
 						/* Add this base to the list that needs an update call.
 						 * tech->base was set to NULL with the last call of RS_RemoveScientist. */
@@ -1792,9 +1060,10 @@ void RS_ResearchRun (void)
 
 	/* now update the data in all affected bases -- we only need to update tech list and not research menu */
 	/** @todo CHECK THAT: very very strange */
+	/** rudolfo: please verify; I changed from RS_InitGuiData to RS_MarkResearchable */
 	for (i = 0; i < MAX_BASES; i++) {
 		if (checkBases[i])
-			RS_InitGUIData(checkBases[i]);
+			RS_MarkResearchable(qfalse, checkBases[i]);
 	}
 
 /*	if (newResearch)
@@ -1952,19 +1221,7 @@ static void RS_TechnologyList_f (void)
 }
 #endif /* DEBUG */
 
-/**
- * @brief Research menu init function binding
- * @note Command to call this: research_init
- *
- * @note Should be called whenever the research menu gets active
- * @sa CL_ResearchType_f
- */
-static void MN_ResearchInit_f (void)
-{
-	assert(baseCurrent);
-	CL_ResearchType_f();
-	RS_InitGUI(baseCurrent, qfalse);
-}
+/* MN_ResearchInit */
 
 /**
  * @brief Mark everything as researched
@@ -2034,25 +1291,6 @@ static void RS_DebugResearchableAll (void)
 #endif
 
 /**
- * @brief Opens UFOpedia by clicking dependency list
- */
-static void RS_DependenciesClick_f (void)
-{
-	int num;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num >= curRequiredList.numEntries)
-		return;
-
-	UP_OpenWith(curRequiredList.string[num]);
-}
-
-/**
  * @brief This is more or less the initial
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_InitStartup resp. CL_InitLocal
@@ -2060,22 +1298,12 @@ static void RS_DependenciesClick_f (void)
 void RS_InitStartup (void)
 {
 	/* add commands and cvars */
-	Cmd_AddCommand("research_init", MN_ResearchInit_f, "Research menu init function binding");
-	Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
-	Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");
-	Cmd_AddCommand("mn_start_research", RS_ResearchStart_f, "Start the research of the selected entry");
-	Cmd_AddCommand("mn_stop_research", RS_ResearchStop_f, "Pause the research of the selected entry");
-	Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the UFOpaedia for the selected research topic");
-	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
-	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
-	Cmd_AddCommand("mn_rs_change", RS_ChangeScientist_f, "Assign or remove scientist from this entry");
-	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
-	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listtech", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
 	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll, "Mark all techs as researched");
 	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll, "Mark all techs as researchable");
 #endif
+	RS_InitCallbacks();
 }
 
 /**
@@ -2937,13 +2165,15 @@ void RS_PostLoadInit (void)
 			continue;
 
 		/** @todo CHECK THAT: very very strange */
-		RS_InitGUIData(base);
+		/** rudolfo: please verify: changed from RS_InitGuiData to RS_MarkResearchable */
+		RS_MarkResearchable(qfalse, base);
 	}
 }
 
 /**
  * @brief Returns true if the current base is able to handle research
  * @sa B_BaseInit_f
+ * probably menu function, but not for research gui
  */
 qboolean RS_ResearchAllowed (const base_t* base)
 {

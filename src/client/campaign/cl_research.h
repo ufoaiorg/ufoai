@@ -229,7 +229,6 @@ typedef struct technology_s {
 void RS_InitStartup(void);
 void RS_ResetTechs(void);
 void RS_ResearchRun(void);
-void RS_UpdateGUI(struct base_s *base);
 void RS_ParseTechnologies(const char *name, const char **text);
 #if 0
 qboolean RS_ItemIsResearched(const char *idProvided);
@@ -247,16 +246,18 @@ void RS_MarkResearchable(qboolean init, const struct base_s *base);
 void RS_ResearchFinish(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
 void RS_MarkResearchedAll(void);
+
 void RS_AssignScientist(technology_t* tech, struct base_s *base);
 void RS_RemoveScientist(technology_t* tech, struct employee_s *employee);
 void RS_RemoveFiredScientist(struct base_s *base, struct employee_s *employee);
+void RS_RemoveScientistsExceedingCapacity(struct base_s *base);
+
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *idProvided);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(const struct base_s *base);
 int RS_GetTechIdxByName(const char *name);
 int RS_CountInBase(const struct base_s *base);
-void RS_RemoveScientistsExceedingCapacity(struct base_s *base);
 qboolean RS_ScriptSanityCheck(void);
 
 /* UFOpaedia function - but needs technology_t */

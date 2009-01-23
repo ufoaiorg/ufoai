@@ -478,6 +478,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_research.h" />
+		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cl_research_required.h" />
 		<Unit filename="..\..\src\client\cl_screen.c">
 			<Option compilerVar="CC" />
 		</Unit>
