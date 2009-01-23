@@ -465,11 +465,10 @@ sub model_get_skin ($$$) {
 	if (ref($model_file) eq "MD2") {
 		return $model_file->MD2_path->[$i][0]
 	} elsif (ref($model_file) eq "MD3") {
-		# TODO: Test me.
 		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
 		return $surface->children->{MD3_Shader}->[$i]->Path;
 	} else {
-		die "Unknown filetype found in model_get_skin.\n";
+		die "Unknown filetype (\"", ref($model_file), "\") found in model_get_skin.\n";
 	}
 }
 
@@ -482,15 +481,12 @@ sub model_set_skin ($$$$) {
 	if (ref($model_file) eq "MD2") {
 		$model_file->MD2_path->[$i][0] = $skin;
 	} elsif (ref($model_file) eq "MD3") {
-		# TODO: Test me.
 		my $surface = $model_file->children->{'MD3_surface'}[$mesh];
 		my $s = $surface->children->{MD3_Shader}->[$i];
 		$s->set_field('Path', $skin);
 		$s->refresh();
-		
-		# TODO For some reason the modification seems to works, but the saved file gets corrupted.
 	} else {
-		die "Unknown filetype found in model_set_skin.\n";
+		die "Unknown filetype (\"", ref($model_file), "\") found in model_set_skin.\n";
 	}
 }
 
@@ -501,7 +497,7 @@ sub model_skins_list ($) {
 	} elsif (ref($model_file) eq "MD3") {
 		md3_skins_list($model_file);
 	} else {
-		die "Unknown filetype found in model_skins_list.\n";
+		die "Unknown filetype (\"", ref($model_file), "\") found in model_skins_list.\n";
 	}
 }
 
@@ -514,7 +510,7 @@ sub model_get_skinnum ($$) {
 	} elsif (ref($model_file) eq "MD3") {
 		return $model_file->children->{'MD3_surface'}[$mesh]->NumShaders;
 	} else {
-		die "Unknown filetype found in model_get_skinnum.\n";
+		die "Unknown filetype (\"", ref($model_file), "\") found in model_get_skinnum.\n";
 	}
 }
 
@@ -524,10 +520,10 @@ sub model_add_skinnum ($$$) {
 
 	if (ref($model_file) eq "MD2") {
 		md2_add_skinnum($model_file, $num);
-	} elsif (ref($model_file) eq "MD3") {
-		# TODO:
+#	} elsif (ref($model_file) eq "MD3") {
+#		# TODO:
 	} else {
-		die "Unknown filetype found in model_add_skinnum.\n";
+		die "Unknown filetype (\"", ref($model_file), "\") found in model_add_skinnum.\n";
 	}
 }
 
