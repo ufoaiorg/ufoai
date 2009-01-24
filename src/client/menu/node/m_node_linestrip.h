@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct lineStripExtraData_s {
 	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes */
 	int numPoints[MAX_LINESTRIPS];	/**< Number of points in each list */
-	vec4_t color[MAX_LINESTRIPS];	/**< Color of the point-list. */
+	vec4_t *color;	/**< Color of the point-list. */
 	int numStrips;					/**< Number of point-lists. */
 } lineStripExtraData_t;
 

@@ -43,8 +43,17 @@ static void MN_LineStripNodeDraw (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief Called before loading. Used to set default attribute values
+ */
+static void MN_LineStripNodeLoading (menuNode_t *node)
+{
+	node->u.linestrip.color = MN_AllocColor(MAX_LINESTRIPS);
+}
+
 void MN_RegisterLineStripNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "linestrip";
 	behaviour->draw = MN_LineStripNodeDraw;
+	behaviour->loading = MN_LineStripNodeLoading;
 }

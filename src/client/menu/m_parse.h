@@ -35,7 +35,8 @@ const char *MN_GetReferenceString(const menu_t* const menu, const char *ref);
 struct value_s;
 const value_t* MN_FindPropertyByName(const struct value_s* propertyList, const char* name);
 char* MN_AllocString(const char* string, int size);
-float* MN_AllocFloat (int count);
+float* MN_AllocFloat(int count);
+vec4_t* MN_AllocColor(int count);
 
 qboolean MN_ScriptSanityCheck(void);
 

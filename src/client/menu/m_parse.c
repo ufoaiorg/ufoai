@@ -99,10 +99,10 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
 /**
  * @brief Allocate a float into the menu memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
- * @param[in] value Value use to initialize the float
  * @param[in] count number of element need to alloc
  * @todo use it every where its possible (search mn.curadata)
  * @todo Assert out when we are not in parsing/loading stage
+ * @todo Assert if no memory
  */
 float* MN_AllocFloat (int count)
 {
@@ -110,7 +110,24 @@ float* MN_AllocFloat (int count)
 	assert(count > 0);
 	mn.curadata = ALIGN(mn.curadata);
 	result = (float*) mn.curadata;
-	mn.curadata += sizeof(float);
+	mn.curadata += sizeof(float) * count;
+	return result;
+}
+
+/**
+ * @brief Allocate a color into the menu memory
+ * @note Its not a dynamic memory allocation. Please only use it at the loading time
+ * @param[in] count number of element need to alloc
+ * @todo Assert out when we are not in parsing/loading stage
+ * @todo Assert if no memory
+ */
+vec4_t* MN_AllocColor (int count)
+{
+	vec4_t *result;
+	assert(count > 0);
+	mn.curadata = ALIGN(mn.curadata);
+	result = (vec4_t*) mn.curadata;
+	mn.curadata += sizeof(float) * 4 * count;
 	return result;
 }
 
