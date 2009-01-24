@@ -2,7 +2,6 @@
 #define SHARED_TYPEDEFS_H
 
 #include "defines.h"
-#include "mathlib.h"
 
 /*
 ==============================================================
