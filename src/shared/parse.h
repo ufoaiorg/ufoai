@@ -28,11 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef PARSE_H
 #define PARSE_H
 
-/* flags for Com_Parse_O, could be expanded to specify other options */
-#define PARSE_NO_COMMENTS 0 /**< Com_Parse_O ignores all comments */
-#define PARSE_C_STYLE_COMMENTS 1 /**< Com_Parse_O does not ignore c-style comments */
-
-const char *COM_Parse_O(const char **data_p, const int options);
 const char *COM_Parse(const char **data_p);
 const char *COM_EParse(const char **text, const char *errhead, const char *errinfo);
 

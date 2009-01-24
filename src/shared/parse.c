@@ -32,12 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Parse a token out of a string
  * @param data_p Pointer to a string which is to be parsed
- * @param options wether to ignore comments or not
  * @pre @c data_p is expected to be null-terminated
  * @return The string result of parsing in a string.
  * @sa COM_EParse
  */
-const char *COM_Parse_O (const char *data_p[], const int options)
+const char *COM_Parse (const char *data_p[])
 {
 	static char com_token[4096];
 	int c;
@@ -63,8 +62,7 @@ skipwhite:
 		data++;
 	}
 
-	if (!(options & PARSE_C_STYLE_COMMENTS)
-	 && c == '/' && data[1] == '*') {
+	if (c == '/' && data[1] == '*') {
 		int clen = 0;
 		data += 2;
 		while (!((data[clen] && data[clen] == '*') && (data[clen + 1] && data[clen + 1] == '/'))) {
@@ -130,16 +128,6 @@ skipwhite:
 	*data_p = data;
 	return com_token;
 }
-
-/**
- * @brief Tokenizer function that skips comments
- * @see COM_Parse_O
- */
-const char *COM_Parse (const char *data_p[])
-{
-	return COM_Parse_O(data_p, PARSE_NO_COMMENTS);
-}
-
 
 /**
  * @brief Parsing function that prints an error message when there is no text in the buffer
