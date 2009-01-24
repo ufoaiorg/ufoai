@@ -595,7 +595,9 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	assert(item->craftitem.type >= 0);
 	assert(item->tech);
 	Cvar_Set("mn_itemname", _(item->tech->name));
-	Cvar_Set("mn_item", item->id);		/**< @todo Is this actually _used_ in the ufopedia? */
+	/** @todo Is this actually _used_ in the ufopedia?
+	 * No, but in buy and production - and they are using these functions, too, no? (mattn) */
+	Cvar_Set("mn_item", item->id);
 	Cvar_Set("mn_upmodel_top", item->tech->mdl);
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
@@ -893,7 +895,6 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 void UP_Article (technology_t* tech, eventMail_t *mail)
 {
 	int i;
-	const objDef_t *item;
 
 	MN_MenuTextReset(TEXT_UFOPEDIA);
 	MN_MenuTextReset(TEXT_LIST);
@@ -951,9 +952,11 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 					UP_AircraftDescription(tech);
 					break;
 				case RS_CRAFTITEM:
-					item = AII_GetAircraftItemByID(tech->provides);
+				{
+					const objDef_t *item = AII_GetAircraftItemByID(tech->provides);
 					UP_AircraftItemDescription(item);
 					break;
+				}
 				case RS_BUILDING:
 					UP_BuildingDescription(tech);
 					break;
@@ -988,7 +991,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
  */
 static void UP_DrawAssociatedAmmo (const technology_t* tech)
 {
-	objDef_t *od;
+	const objDef_t *od;
 
 	if (!tech)
 		return;
@@ -1051,8 +1054,7 @@ void UP_OpenEventMail (const char *eventMailID)
 	if (!mail)
 		return;
 
-	Cbuf_AddText("mn_push ufopedia\n");
-	Cbuf_Execute(); /* we have to execute the init node of the UFOpaedia menu here, too */
+	MN_PushMenu("mn_push ufopedia", NULL);
 	UP_DrawEntry(NULL, mail);
 }
 
@@ -1065,8 +1067,8 @@ void UP_OpenWith (const char *name)
 {
 	if (!name)
 		return;
-	Cbuf_AddText("mn_push ufopedia\n");
-	Cbuf_Execute(); /* we have to execute the init node of the UFOpaedia menu here, too */
+
+	MN_PushMenu("mn_push ufopedia", NULL);
 	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 
@@ -1131,14 +1133,13 @@ static void UP_FindEntry_f (void)
 static void UP_Content_f (void)
 {
 	int i;
-	qboolean researched_entries = qfalse;	/* Are there any researched or collected items in this chapter? */
-	numChapters_displaylist = 0;
 
+	numChapters_displaylist = 0;
 	upText[0] = 0;
 
 	for (i = 0; i < gd.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
-		researched_entries = qfalse;
+		qboolean researched_entries = qfalse;
 		upCurrentTech = gd.upChapters[i].first;
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
@@ -1180,7 +1181,7 @@ static void UP_Index_f (void)
 		Com_Printf("Usage: %s <chapter-id>\n", Cmd_Argv(0));
 		return;
 	} else if (Cmd_Argc() == 2) {
-		int chapter = atoi(Cmd_Argv(1));
+		const int chapter = atoi(Cmd_Argv(1));
 		if (chapter < gd.numChapters && chapter >= 0) {
 			currentChapter = &gd.upChapters[chapter];
 		}
@@ -1261,7 +1262,7 @@ static void UP_Prev_f (void)
 	}
 
 	/* Go to chapter index if no more previous entries available. */
-	Cbuf_AddText("mn_upindex;");
+	UP_Index_f();
 }
 
 /**
@@ -1294,7 +1295,7 @@ static void UP_Next_f (void)
 	}
 
 	/* Go to chapter index if no more previous entries available. */
-	Cbuf_AddText("mn_upindex;");
+	UP_Index_f();
 }
 
 
