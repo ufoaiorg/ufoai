@@ -29,7 +29,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "namespace.h"
 
 inline bool string_is_integer(const char* string) {
-	strtol(string, const_cast<char**>(&string), 10);
+	if (strtol(string, const_cast<char**>(&string), 10) == LONG_MAX)
+		return false;
 	return *string == '\0';
 }
 
