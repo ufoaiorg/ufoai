@@ -1,0 +1,284 @@
+
+entity info_player_start {
+	description	"Starting point for a player. Only for multiplayer teams."
+	color		"1 0 0"
+	size		"-16 -16 -24 16 16 32"
+
+	mandatory {
+		team	"The number of the team for this player starting point. 0 is reserved for civilians and critters (use info_civilian_start instead)"
+	}
+}
+
+entity info_human_start {
+	description	"Starting point for a single player human."
+	color		"0 1 0"
+	size		"-16 -16 -24 16 16 32"
+}
+
+entity info_alien_start {
+	description	"Starting point for a single player alien."
+	color		"0 0 1"
+	size		"-16 -16 -24 16 16 32"
+}
+
+entity info_alien_start {
+	description	"Starting point for a ugv 2x2 unit."
+	color		"0 0 1"
+	size		"-16 -16 -24 16 16 32"
+
+	optional {
+		team	"The number of the team for this player starting point. Only for multiplayer teams."
+	}
+}
+
+entity info_alien_start {
+	description	"Starting point for a civilian."
+	color		"0 1 1"
+	size		"-16 -16 -24 16 16 32"
+}
+
+entity info_null {
+	description	"Used as a positional target for spotlights, etc."
+	color		"0 0.5 0"
+	size		"-4 -4 -4 4 4 4"
+
+	mandatory {
+		targetname	"Name of the target entity"
+	}
+}
+
+entity info_null {
+	description	"Used as a target where civilians try to get in a mission."
+	color		"0.5 0.8 0.1"
+	size		"-16 -16 -24 16 16 32"
+
+	mandatory {
+		count	"The priority of this waypoint - the lower the number, the nearer the end-target"
+	}
+}
+
+entity misc_model {
+	description	"Displays a model. Set the level flags correctly! Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360]) and roll (fall over)"
+	color		"1 1 0"
+	size		"-16 -16 -16 16 16 16"
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8 server_solid pulse"
+
+	mandatory {
+		model		"Arbitrary model file to display"
+	}
+
+	optional {
+		angles		"Direction of the model [pitch yaw roll]"
+		angle		"Direction of the model [yaw]"
+		modelscale_vec	"Scale of the model (vector of 3 values)"
+		skin		"Skin number"
+		frame		"Frame number - use frame or anim - but not both"
+		anim		"If this is this an animated model you can set the animation name from the *.anm file here"
+	}
+
+	default {
+		skin		"0"
+		frame		"0"
+		modelscale_vec	"1.0 1.0 1.0"
+	}
+}
+
+entity misc_particle {
+	description	"Creates a particle. Particle properties can be set here with a preceding '-' or '+'. '-' property is set before calling the particle init function '+' does it afterwards. The 'noday' means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlights."
+	color		"0 0 1"
+	size		"-16 -16 -16 16 16 16"
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8 noday"
+
+	mandatory {
+		particle	"Name of the particle definition."
+		wait		"Wait times are of the format 'a b'. It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start."
+	}
+}
+
+entity light {
+	description	"All lights are for the night version. If you want them to show up in the day version, too - mark the day flag."
+	color		"0 1 0"
+	size		"-8 -8 -8 8 8 8"
+	flags		"day"
+
+	mandatory {
+		color		"Color for the light RGB"
+		light		"Intensity 0-255"
+	}
+
+	optional {
+		target		"Entity target name (e.g. info_null)"
+		cone		""
+	}
+
+	default {
+		cone		"10"
+	}
+}
+
+entity light_spot {
+	description	"All lights are for the night version. If you want them to show up in the day version, too - mark the day flag."
+	color		"0 1 0"
+	size		"-8 -8 -8 8 8 8"
+	flags		"day"
+
+	mandatory {
+		color		"Color for the light RGB"
+		light		"Intensity 0-255"
+	}
+
+	optional {
+		angle		"Special values: UP -1 and DOWN -2"
+		target		"Entity target name (e.g. info_null)"
+		cone		""
+	}
+
+	default {
+		cone		"10"
+	}
+}
+
+entity worldspawn {
+	description	"Only used for the world. Must be the first entity in a map. Pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360])"
+	optional {
+		maxteams		"Max. teams for multiplayer"
+		maxlevel		"Highest selectable level [1-8]"
+		nextmap			"The map that should be started after this one was finished"
+		randomspawn		"Use random spawn positions for the actors to spawn them"
+		light_night		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
+		angles_night	"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
+		color_night		"Controls sunlight color, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
+		ambient_night	"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb color, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
+		light_day		"Controls sunlight intensity. All positive values are valid, values from 80 to 300 typically produce good results."
+		angles_day		"Controls sunlight direction, specified as pitch and yaw in degrees, e.g. -80 220."
+		color_day		"Controls sunlight color, specified as rgb floating point values, e.g. 1.0 0.9 0.8."
+		ambient_day		"Specifies ambient light, or the minimum global lighting value for all light samples, as an rgb color, e.g. 0.07 0.06 0.06. A small ambient factor is recommended for most levels."
+		brightness		"Controls light intensity. This is used to uniformly brighten or darken your level. 1.0 is default, all positive floating point values are valid."
+		saturation		"Controls light saturation, or color influence. This can be used to make a level look more colorful, or more pale. The default value is 1.0. Values from 0.5 to 3.0 are most useful."
+		contrast		"Controls light contrast. This can be used to create darker dark areas and lighter light areas. The default value is 1.0. Values significantly higher than 1.0 are not recommended."
+		quant			"Controls lightmap resolution, which is relative to texture size. Default is 4 (1 << 4). A value of 3 will produce sharper lightmaps, but will dramatically lengthen your radiosity compile times. In fact, setting this to 5 during development is a nice trick for speeding up your level design process."
+		subdivide		"Controls maximum surface size for the bsp stage of the compile. Generally, the default value 1024 is recommended. Lower values may reduce artifacts, while higher values may reduce r_speeds."
+	}
+}
+
+entity misc_sound {
+	description	"Used to play ambient sounds (looped sounds)"
+	color		"0.5 1 0.5"
+	size		"-8 -8 -8 8 8 8"
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+
+	mandatory {
+		noise		"Sound file name relative to sound/ambience"
+	}
+
+	optional {
+		volume		"0 - 128"
+	}
+}
+
+entity misc_mission {
+	description	"Defines a mission target"
+	color		"0.1 0.6 0.3"
+	size		"-16 -16 -16 16 16 16"
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		particle	"Display a particle"
+		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity)"
+		time		"If set the entity has to be occupied x rounds to win the mission"
+		radius		"If the entity has to be occupied this defines the radius that is needed"
+		health		"If set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)"
+		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
+		target		"The target that is triggered once the round time was hit"
+		message		"A message that is show when the mission is completed"
+	}
+}
+
+
+entity misc_mission_alien {
+	description	"Defines the alien mission target"
+	color		"0.1 0.6 0.3"
+	size		"-16 -16 -16 16 16 16"
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		particle	"Display a particle"
+		time		"If set the entity has to be occupied x rounds to win the mission"
+		radius		"If the entity has to be occupied this defines the radius that is needed"
+		health		"If set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)"
+		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
+		target		"The target that is triggered once the round time was hit"
+		message		"A message that is show when the mission is completed"
+	}
+}
+
+entity func_door {
+	color		"0 .5 .8"
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8 opened"
+	optional {
+		angle		"Determines the opening direction"
+		health		"Define the needed damage to destroy the door"
+		group		"Multipart doors can be grouped to open together"
+		noise		"Soundfile to play when door opens"
+		particle	"Particle id to be spawned after object is destroyed"
+	}
+}
+
+
+entity func_group {
+	description	"Only for editor and terrain convenience."
+
+	optional {
+		terrain			""
+		gensurf			""
+		phongshading	""
+	}
+}
+
+entity func_breakable {
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		health		"Damage until destroyed"
+		particle	"Particle id to be spawned after object is destroyed"
+		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
+	}
+}
+
+entity func_rotating {
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	optional {
+		health		"Damage until destroyed"
+		particle	"Particle id to be spawned after object is destroyed"
+		speed		"Rotation speed"
+		angle		"Rotate around this angle - pitch = 0, yaw = 1, roll = 2"
+	}
+}
+
+entity trigger_hurt {
+	description	"Any entity that touches this will be hurt. It does dmg points of damage each step inside of such a trigger area"
+	flags		"KILL STUN DAZE"
+	optional {
+		dmg		"Damage per step (whole numbers only)"
+	}
+	default {
+		dmg		"5"
+	}
+}
+
+entity trigger_touch {
+	description	"Any entity that touches this will trigger the use function of the target entity."
+	mandatory {
+		target		"Target entity (must have its targetname set to the value given here)"
+	}
+}
+
+entity misc_item {
+	description	"-------- MODEL FOR RADIANT ONLY - DO NOT SET THIS AS A KEY --------"
+	color		".3 .3 1"
+	size		"-16 -16 -16 16 16 16"
+	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	model		"models/weapons/assault/assault.md2"
+
+	mandatory {
+		item		"The item to spawn - item id from ufo script definition"
+	}
+}
+
