@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/stat.h>
 #include "defines.h"
 #include "typedefs.h"
-#include "..\common\unzip.h"
+#include "../common/unzip.h"
 
 static pack_t *pak;
 
