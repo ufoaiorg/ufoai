@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 
-#include "../common/cmdlib.h"
+#include "../../../shared/cmdlib.h"
 
 typedef struct {
 	vec3_t verts[3];

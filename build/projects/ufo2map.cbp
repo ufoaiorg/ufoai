@@ -1,4 +1,4 @@
-	<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
@@ -73,15 +73,15 @@
 				</Linker>
 			</Target>
 		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DCOMPILE_MAP" />
+		</Compiler>
 		<Linker>
 			<Add library="SDL" />
 			<Add library="z" />
 			<Add library="libjpeg" />
 		</Linker>
-		<Compiler>
-			<Add option="-Wall" />
-			<Add option="-DCOMPILE_MAP" />
-		</Compiler>
 		<Unit filename="..\..\src\common\ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -102,18 +102,21 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\byte.h" />
+		<Unit filename="..\..\src\shared\entitiesdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\shared.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\parse.h" />
+		<Unit filename="..\..\src\shared\shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\tools\ufo2map\brushbsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -122,6 +125,9 @@
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\bsp.h" />
 		<Unit filename="..\..\src\tools\ufo2map\check.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\common\aselib.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\common\bspfile.c">
@@ -144,21 +150,25 @@
 		<Unit filename="..\..\src\tools\ufo2map\common\trace.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\common\aselib.c">
+		<Unit filename="..\..\src\tools\ufo2map\csg.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\csg.c">
+		<Unit filename="..\..\src\tools\ufo2map\entitiesdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\entitiesdef.h">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\faces.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\threads.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\levels.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\lighting.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\lighting.h" />
 		<Unit filename="..\..\src\tools\ufo2map\lightmap.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -171,14 +181,13 @@
 		<Unit filename="..\..\src\tools\ufo2map\portals.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\lighting.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\lighting.h" />
 		<Unit filename="..\..\src\tools\ufo2map\routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\textures.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\threads.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\tree.c">
@@ -188,10 +197,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\writebsp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\entitiesdef.c" />
-		<Unit filename="..\..\src\tools\ufo2map\entitiesdef.h">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

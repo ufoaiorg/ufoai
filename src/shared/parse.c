@@ -75,7 +75,8 @@ skipwhite:
 	}
 
 	/* skip // comments */
-	if (c == '/' && data[1] == '/') {
+	if (!(options & PARSE_CPP_STYLE_COMMENTS)
+	 && c == '/' && data[1] == '/') {
 		while (*data && *data != '\n')
 			data++;
 		goto skipwhite;

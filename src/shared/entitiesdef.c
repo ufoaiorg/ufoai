@@ -24,9 +24,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "common/shared.h"
-#include "common/cmdlib.h"
+#include "../common/common.h"
+#include "parse.h"
 #include "entitiesdef.h"
+#include "cmdlib.h"
 
 static char *defBuffer;
 static int defBuffSize;
@@ -38,7 +39,9 @@ static int defBuffSize;
 void ED_Load (void)
 {
 	const char *defPath = "./radiant/games/entities.def";
-	Verb_Printf(VERB_EXTRA, "Loading def: %s\n", defPath);
+#ifdef DEBUG
+	Com_Printf("Loading def: %s\n", defPath);
+#endif
 	defBuffSize = LoadFile(defPath, (void **)&defBuffer);
 }
 

@@ -27,12 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "../../../shared/defines.h"
-#include "../../../shared/typedefs.h"
+#include "defines.h"
+#include "typedefs.h"
+#include "..\common\unzip.h"
 
 static pack_t *pak;
 
 #include <zlib.h>
+
+#include "../tools/ufo2map/common/shared.h" /* required for config.verbosity for Verb_Printf */
+extern mapConfig_t config;
 
 #ifdef _WIN32
 # include <direct.h>
@@ -54,7 +58,6 @@ void Sys_Error (const char *error, ...)
 	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
-	/* removed #ifdef _WIN32 which showed modal dialog. console output is much preferred. blondandy. */
 	Com_Printf("\n************ ERROR ************\n");
 	Com_Printf("%s\n", text);
 

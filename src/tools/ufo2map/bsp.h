@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <assert.h>
 
 #include "common/shared.h"
-#include "common/cmdlib.h"
+#include "../../shared/cmdlib.h"
 #include "common/scriplib.h"
 #include "common/polylib.h"
 #include "common/bspfile.h"
