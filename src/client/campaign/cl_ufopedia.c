@@ -76,7 +76,7 @@ static qboolean UP_TechGetsDisplayed (const technology_t *tech)
 {
 	return (RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
 	 || RS_Collected_(tech)	/* ... has collected items OR ... */
-	 || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0)))
+	 || (tech->statusResearchable && tech->pre_description.numDescriptions > 0))
 	 && tech->type != RS_LOGIC	/* Is no logic block. */
 	 && !tech->redirect;		/* Another technology will get displayed instead of this one. */
 }
@@ -189,31 +189,22 @@ static const char* CL_AircraftStatToName (int stat)
 	switch (stat) {
 	case AIR_STATS_SPEED:
 		return _("Cruising speed");
-		break;
 	case AIR_STATS_MAXSPEED:
 		return _("Maximum speed");
-		break;
 	case AIR_STATS_SHIELD:
 		return _("Armour");
-		break;
 	case AIR_STATS_ECM:
 		return _("ECM");
-		break;
 	case AIR_STATS_DAMAGE:
 		return _("Aircraft damage");
-		break;
 	case AIR_STATS_ACCURACY:
 		return _("Accuracy");
-		break;
 	case AIR_STATS_FUELSIZE:
 		return _("Fuel size");
-		break;
 	case AIR_STATS_WRANGE:
 		return _("Weapon range");
-		break;
 	default:
 		return _("Unknown weapon skill");
-		break;
 	}
 }
 
@@ -226,13 +217,10 @@ static const char* CL_AircraftSizeToName (int aircraftSize)
 	switch (aircraftSize) {
 	case AIRCRAFT_SMALL:
 		return _("Small");
-		break;
 	case AIRCRAFT_LARGE:
 		return _("Large");
-		break;
 	default:
 		return _("Unknown aircraft size");
-		break;
 	}
 }
 
@@ -247,8 +235,6 @@ static void UP_DisplayTechTree (const technology_t* t)
 	int i;
 	static char up_techtree[1024];
 	const requirements_t *required;
-	const requirement_t *req;
-	technology_t *techRequired;
 
 	required = &t->require_AND;
 	up_techtree[0] = '\0';
@@ -257,10 +243,10 @@ static void UP_DisplayTechTree (const technology_t* t)
 		Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
 	else
 		for (i = 0; i < required->numLinks; i++) {
-			req = &required->links[i];
+			const requirement_t *req = &required->links[i];
 			if (req->type == RS_LINK_TECH) {
 				/** @todo support for RS_LINK_TECH_BEFORE and RS_LINK_TECH_XOR? */
-				techRequired = req->link;
+				technology_t *techRequired = req->link;
 				if (!techRequired)
 					Sys_Error("Could not find the tech for '%s'\n", req->id);
 
@@ -533,7 +519,7 @@ static void UP_ArmourDescription (const technology_t* t)
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upimage_top", t->image);
 		upBuffer[0] = '\0';
-		Q_strcat(upBuffer, va(_("Size:\t%i\n"),od->size), sizeof(upBuffer));
+		Q_strcat(upBuffer, va(_("Size:\t%i\n"), od->size), sizeof(upBuffer));
 		Q_strcat(upBuffer, "\n", sizeof(upBuffer));
 		for (i = 0; i < csi.numDTs; i++) {
 			if (!csi.dts[i].showInMenu)
@@ -560,7 +546,7 @@ static void UP_TechDescription (const technology_t* t)
  */
 static void UP_BuildingDescription (const technology_t* t)
 {
-	building_t* b = B_GetBuildingTemplate(t->provides);
+	const building_t* b = B_GetBuildingTemplate(t->provides);
 
 	if (!b) {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building"));
