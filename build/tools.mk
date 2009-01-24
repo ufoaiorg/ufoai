@@ -22,7 +22,6 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/tree.c \
 	tools/ufo2map/threads.c \
 	tools/ufo2map/writebsp.c \
-	tools/ufo2map/entitiesdef.c \
 	tools/ufo2map/common/aselib.c \
 	tools/ufo2map/common/bspfile.c \
 	tools/ufo2map/common/cmdlib.c \
