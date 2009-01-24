@@ -89,7 +89,7 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 
 static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data) {
 	gboolean in_recursion;
-	char buf[256];
+	StringOutputStream buf(256);
 
 	in_recursion = (log_level & G_LOG_FLAG_RECURSION) != 0;
 	const gboolean is_fatal = (log_level & G_LOG_FLAG_FATAL) != 0;
@@ -104,81 +104,78 @@ static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, c
 		message = "(0) message";
 
 	if (domain)
-		strcpy(buf, domain);
+		buf << domain;
 	else
-		strcpy(buf, "**");
-	strcat(buf, "-");
+		buf << "**";
+	buf << "-";
 
 	switch (log_level) {
 	case G_LOG_LEVEL_ERROR:
 		if (in_recursion)
-			strcat(buf, "ERROR (recursed) **: ");
+			buf << "ERROR (recursed) **: ";
 		else
-			strcat(buf, "ERROR **: ");
+			buf << "ERROR **: ";
 		break;
 	case G_LOG_LEVEL_CRITICAL:
 		if (in_recursion)
-			strcat(buf, "CRITICAL (recursed) **: ");
+			buf << "CRITICAL (recursed) **: ";
 		else
-			strcat(buf, "CRITICAL **: ");
+			buf << "CRITICAL **: ";
 		break;
 	case G_LOG_LEVEL_WARNING:
 		if (in_recursion)
-			strcat(buf, "WARNING (recursed) **: ");
+			buf << "WARNING (recursed) **: ";
 		else
-			strcat(buf, "WARNING **: ");
+			buf << "WARNING **: ";
 		break;
 	case G_LOG_LEVEL_MESSAGE:
 		if (in_recursion)
-			strcat(buf, "Message (recursed): ");
+			buf << "Message (recursed): ";
 		else
-			strcat(buf, "Message: ");
+			buf << "Message: ";
 		break;
 	case G_LOG_LEVEL_INFO:
 		if (in_recursion)
-			strcat(buf, "INFO (recursed): ");
+			buf << "INFO (recursed): ";
 		else
-			strcat(buf, "INFO: ");
+			buf << "INFO: ";
 		break;
 	case G_LOG_LEVEL_DEBUG:
 		if (in_recursion)
-			strcat(buf, "DEBUG (recursed): ");
+			buf << "DEBUG (recursed): ";
 		else
-			strcat(buf, "DEBUG: ");
+			buf << "DEBUG: ";
 		break;
 	default:
 		/* we are used for a log level that is not defined by GLib itself,
 		 * try to make the best out of it. */
 		if (in_recursion)
-			strcat(buf, "LOG (recursed:");
+			buf << "LOG (recursed:";
 		else
-			strcat(buf, "LOG (");
+			buf << "LOG (";
 		if (log_level) {
 			gchar string[] = "0x00): ";
 			gchar *p = string + 2;
-			guint i;
-
-			i = g_bit_nth_msf(log_level, -1);
-			*p = i >> 4;
-			p++;
+			const guint i = g_bit_nth_msf(log_level, -1);
+			*p++ = i >> 4;
 			*p = '0' + (i & 0xf);
 			if (*p > '9')
 				*p += 'A' - '9' - 1;
 
-			strncat(buf, string, sizeof(buf));
+			buf << string;
 		} else
-			strcat(buf, "): ");
+			buf << "): ";
 	}
 
-	strncat(buf, message, sizeof(buf));
+	buf << message;
 	if (is_fatal)
-		strncat(buf, "aborting...\n", sizeof(buf));
+		buf << "aborting...\n";
 
 	// spam it...
-	globalErrorStream() << buf;
+	globalErrorStream() << buf.c_str();
 
 	if (is_fatal)
-		ERROR_MESSAGE("GTK+ error: " << buf);
+		ERROR_MESSAGE("GTK+ error: " << buf.c_str());
 }
 
 class Lock {
