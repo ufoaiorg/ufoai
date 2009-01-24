@@ -9,6 +9,7 @@
 			<Target title="windows">
 				<Option platforms="Windows;" />
 				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
