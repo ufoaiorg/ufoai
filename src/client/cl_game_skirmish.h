@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_GAME_SKIRMISH_H
 #define CL_GAME_SKIRMISH_H
 
+const mapDef_t* GAME_SK_MapInfo(int step);
 void GAME_SK_InitStartup(void);
 void GAME_SK_Shutdown(void);
 void GAME_SK_Results(int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);

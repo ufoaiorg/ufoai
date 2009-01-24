@@ -415,6 +415,11 @@ void GAME_CP_InitStartup (void)
 	CP_InitStartup();
 }
 
+const mapDef_t* GAME_CP_MapInfo (int step)
+{
+	return &csi.mds[cls.currentSelectedMap];
+}
+
 void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");

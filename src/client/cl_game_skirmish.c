@@ -140,6 +140,11 @@ void GAME_SK_InitStartup (void)
 	Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
 }
 
+const mapDef_t* GAME_SK_MapInfo (int step)
+{
+	return &csi.mds[cls.currentSelectedMap];
+}
+
 void GAME_SK_Shutdown (void)
 {
 	/* shutdown any running tactical mission */

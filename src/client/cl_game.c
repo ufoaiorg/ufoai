@@ -33,14 +33,18 @@ typedef struct gameTypeList_s {
 	int gametype;
 	void (*init)(void);
 	void (*shutdown)(void);
+	/** soldier spawn functions may differ between the different gametypes */
 	qboolean (*spawn)(void);
+	/** some gametypes only support special maps */
+	const mapDef_t* (*mapinfo)(int step);
+	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
 	void (*results)(int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_Results},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_Results},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_Results},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_MapInfo, GAME_MP_Results},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_MapInfo, GAME_CP_Results},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_MapInfo, GAME_SK_Results},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -91,9 +95,9 @@ void GAME_SetMode (int gametype)
  */
 static void MN_MapInfo (int step)
 {
-	int i = 0;
-	const mapDef_t *md;
 	const char *mapname;
+	const mapDef_t *md;
+	const gameTypeList_t *list = gameTypeList;
 
 	if (!csi.numMDs)
 		return;
@@ -105,19 +109,17 @@ static void MN_MapInfo (int step)
 
 	cls.currentSelectedMap %= csi.numMDs;
 
-	if (GAME_IsMultiplayer()) {
-		while (!csi.mds[cls.currentSelectedMap].multiplayer) {
-			i++;
-			cls.currentSelectedMap += (step ? step : 1);
-			if (cls.currentSelectedMap < 0)
-				cls.currentSelectedMap = csi.numMDs - 1;
-			cls.currentSelectedMap %= csi.numMDs;
-			if (i >= csi.numMDs)
-				Sys_Error("MN_MapInfo: There is no multiplayer map in any mapdef\n");
+	md = NULL;
+	while (list->name) {
+		if (list->gametype == cls.gametype) {
+			md = list->mapinfo(step);
+			break;
 		}
+		list++;
 	}
 
-	md = &csi.mds[cls.currentSelectedMap];
+	if (!md)
+		return;
 
 	mapname = md->map;
 	/* skip random map char */
@@ -139,27 +141,6 @@ static void MN_MapInfo (int step)
 		Cvar_Set("mn_mappic3", va("maps/shots/%s_3", mapname));
 	else
 		Cvar_Set("mn_mappic3", va("maps/shots/default"));
-
-	if (GAME_IsMultiplayer()) {
-		if (md->gameTypes) {
-			const linkedList_t *list = md->gameTypes;
-			char buf[256] = "";
-			while (list) {
-				Q_strcat(buf, va("%s ", (const char *)list->data), sizeof(buf));
-				list = list->next;
-			}
-			Cvar_Set("mn_mapgametypes", buf);
-			list = LIST_ContainsString(md->gameTypes, sv_gametype->string);
-			/* the map doesn't support the current selected gametype - switch to the next valid */
-#if 0
-			/** @todo still needed? if yes - clean this up */
-			if (!list)
-				MN_ChangeGametype_f();
-#endif
-		} else {
-			Cvar_Set("mn_mapgametypes", _("all"));
-		}
-	}
 }
 
 static void MN_GetMaps_f (void)

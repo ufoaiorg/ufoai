@@ -287,6 +287,45 @@ void GAME_MP_InitStartup (void)
 	GAME_MP_GetEquipment();
 }
 
+const mapDef_t* GAME_MP_MapInfo (int step)
+{
+	const mapDef_t *md;
+	int i = 0;
+
+	while (!csi.mds[cls.currentSelectedMap].multiplayer) {
+		i++;
+		cls.currentSelectedMap += (step ? step : 1);
+		if (cls.currentSelectedMap < 0)
+			cls.currentSelectedMap = csi.numMDs - 1;
+		cls.currentSelectedMap %= csi.numMDs;
+		if (i >= csi.numMDs)
+			Sys_Error("GAME_MP_MapInfo: There is no multiplayer map in any mapdef\n");
+	}
+
+	md = &csi.mds[cls.currentSelectedMap];
+
+	if (md->gameTypes) {
+		const linkedList_t *list = md->gameTypes;
+		char buf[256] = "";
+		while (list) {
+			Q_strcat(buf, va("%s ", (const char *)list->data), sizeof(buf));
+			list = list->next;
+		}
+		Cvar_Set("mn_mapgametypes", buf);
+		list = LIST_ContainsString(md->gameTypes, sv_gametype->string);
+		/* the map doesn't support the current selected gametype - switch to the next valid */
+#if 0
+		/** @todo this is still needed! fix this and clean this up */
+		if (!list)
+			MN_ChangeGametype_f();
+#endif
+	} else {
+		Cvar_Set("mn_mapgametypes", _("all"));
+	}
+
+	return md;
+}
+
 void GAME_MP_Shutdown (void)
 {
 	/* shutdown server */
