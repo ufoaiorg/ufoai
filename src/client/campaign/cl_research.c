@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "cl_research.h"
 #include "cl_research_callbacks.h"
+#include "../../shared/parse.h"
 
 #define TECH_HASH_SIZE 64
 static technology_t *techHash[TECH_HASH_SIZE];

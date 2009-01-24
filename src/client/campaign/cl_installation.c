@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "cl_installation.h"
 #include "cp_geoscape_actions.h"
+#include "../../shared/parse.h"
 
 installation_t *installationCurrent;
 

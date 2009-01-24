@@ -102,7 +102,7 @@ skipwhite:
 				com_token[len] = c;
 				len++;
 			} else {
-				Com_Printf("Com_Parse len exceeded: "UFO_SIZE_T"/MAX_TOKEN_CHARS\n", len);
+				Com_Printf("COM_Parse_O len exceeded: "UFO_SIZE_T"/MAX_TOKEN_CHARS\n", len);
 			}
 		}
 	}
@@ -122,7 +122,7 @@ skipwhite:
 	} while (c > 32);
 
 	if (len == sizeof(com_token)) {
-		Com_Printf("Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
+		Com_Printf("COM_Parse_O: Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
 		len = 0;
 	}
 	com_token[len] = 0;
@@ -131,8 +131,33 @@ skipwhite:
 	return com_token;
 }
 
-/* @brief as Com_Parse_O, but does not parse comments */
+/**
+ * @brief Tokenizer function that skips comments
+ * @see COM_Parse_O
+ */
 const char *COM_Parse (const char *data_p[])
 {
 	return COM_Parse_O(data_p, PARSE_NO_COMMENTS);
+}
+
+
+/**
+ * @brief Parsing function that prints an error message when there is no text in the buffer
+ * @sa Com_Parse
+ */
+const char *COM_EParse (const char **text, const char *errhead, const char *errinfo)
+{
+	const char *token;
+
+	token = COM_Parse(text);
+	if (!*text) {
+		if (errinfo)
+			Com_Printf("%s \"%s\")\n", errhead, errinfo);
+		else
+			Com_Printf("%s\n", errhead);
+
+		return NULL;
+	}
+
+	return token;
 }

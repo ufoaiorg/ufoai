@@ -21,6 +21,7 @@
 
 #include "r_local.h"
 #include "r_error.h"
+#include "../../shared/parse.h"
 
 void R_UseProgram  (r_program_t *prog)
 {

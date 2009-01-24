@@ -23,6 +23,7 @@
 
 #include "common.h"
 #include "scripts.h"
+#include "../shared/parse.h"
 #include "../game/inv_shared.h"
 #ifndef DEDICATED_ONLY
 #include "../client/client.h"

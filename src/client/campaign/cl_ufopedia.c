@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "../menu/m_messages.h"
 #include "../menu/node/m_node_text.h"
+#include "../../shared/parse.h"
 
 static cvar_t *mn_uppretext = NULL;
 static cvar_t *mn_uppreavailable = NULL;

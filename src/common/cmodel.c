@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "pqueue.h"
 #include "tracing.h"
 #include "routing.h"
+#include "../shared/parse.h"
 
 /** @note holds all entity data as a single parsable string */
 char map_entitystring[MAX_MAP_ENTSTRING];

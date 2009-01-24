@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h"
 #include "../menu/m_popup.h"
 #include "../../shared/infostring.h"
+#include "../../shared/parse.h"
 
 #define MAX_SERVERLIST 128
 

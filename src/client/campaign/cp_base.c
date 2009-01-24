@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_geoscape_actions.h"
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
+#include "../../shared/parse.h"
 
 vec3_t newBasePos;
 building_t *buildingConstructionList[MAX_BUILDINGS];

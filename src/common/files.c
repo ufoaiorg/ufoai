@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 #include "../shared/defines.h"
 #include "../shared/typedefs.h"
+#include "../shared/parse.h"
 
 static cvar_t *fs_basedir;
 /** counter for opened files - used to check against missing close calls */

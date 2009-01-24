@@ -28,10 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ugv.h"
 #include "cl_team.h"
 #include "cl_actor.h"
+#include "../shared/parse.h"
 
 /**
- * @brief Adds an UGV.
- * @param[in] le
+ * @brief Adds an UGV to the render entities.
+ * @param[in] le The local entity the UGV should be created from
  * @param[in] ent
  * @sa CL_AddActor
  */

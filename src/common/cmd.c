@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "common.h"
 #include "msg.h"
+#include "../shared/parse.h"
 
 void Cmd_ForwardToServer(void);
 #define ALIAS_HASH_SIZE	32
