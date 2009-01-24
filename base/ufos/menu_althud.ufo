@@ -73,7 +73,7 @@ menu althud extends ahud
 
 	pic bar_chat
 	{
-		if	"sv_maxclients >= 2"
+		visiblewhen	"sv_maxclients >= 2"
 		image	hud/bar_chat
 		pos		"960 64"
 		size	"64 64"
@@ -90,7 +90,7 @@ menu althud extends ahud
 	}
 	pic bar_chat_all
 	{
-		if	"mn_showchatbuttons == 1"
+		visiblewhen	"mn_showchatbuttons == 1"
 		key "*binding messagesay"
 		tooltip	"_Chat"
 		image	hud/button_chat
@@ -104,7 +104,7 @@ menu althud extends ahud
 	}
 	pic bar_chat_team
 	{
-		if	"mn_showchatbuttons == 1"
+		visiblewhen	"mn_showchatbuttons == 1"
 		key "*binding messagesayteam"
 		tooltip	"_Teamchat"
 		image	hud/button_chat
@@ -118,7 +118,7 @@ menu althud extends ahud
 	}
 	pic bar_chat_show
 	{
-		if	"mn_showchatbuttons == 1"
+		visiblewhen	"mn_showchatbuttons == 1"
 		key "*binding showchat"
 		tooltip	"_Show chat history"
 		image	hud/button_chat
@@ -142,7 +142,7 @@ menu althud extends ahud
 
 	pic button_chat
 	{
-		if	"sv_maxclients >= 2"
+		visiblewhen	"sv_maxclients >= 2"
 		tooltip	"_Chat messages"
 		image	hud/event_log
 		texl	"0 0"

@@ -929,7 +929,7 @@ menu popup_intercept_ready
 
 	pic bt_auto_go
 	{
-		if	"cp_mission_autogo_available == 1"
+		visiblewhen	"cp_mission_autogo_available == 1"
 		tooltip	"_Automatically finish mission"
 		image	menu/multi_buttons3
 		pos		"266 148"
@@ -1209,14 +1209,14 @@ menu popup_newbase
 	// START WITH EMPLOYEES
 	string start_employees_str
 	{
-		if		"mn_base_count <= 0"
+		visiblewhen	"mn_base_count <= 0"
 		string	"_Start with employees:"
 		pos		"451 98"
 		align	ur
 	}
 	checkbox start_employees
 	{
-		if		"mn_base_count <= 0"
+		visiblewhen	"mn_base_count <= 0"
 		current	"*cvar cl_start_employees"
 		pos		"456 98"
 		image	"menu/checkbox_blue"
@@ -1227,14 +1227,14 @@ menu popup_newbase
 	// START WITH BUILDINGS
 	string start_buildings_str
 	{
-		if		"mn_base_count <= 0"
+		visiblewhen	"mn_base_count <= 0"
 		string	"_Start with buildings:"
 		pos		"451 123"
 		align	ur
 	}
 	checkbox start_building
 	{
-		if		"mn_base_count <= 0"
+		visiblewhen	"mn_base_count <= 0"
 		current	"*cvar cl_start_buildings"
 		pos		"456 123"
 		image	"menu/checkbox_blue"
