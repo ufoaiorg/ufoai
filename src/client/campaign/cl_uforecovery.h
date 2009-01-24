@@ -39,7 +39,6 @@ typedef struct ufoRecoveries_s {
 } ufoRecoveries_t;
 
 void UR_UpdateUFOHangarCapForAll(base_t *base);
-void UR_Prepare(base_t *base);
 void UR_ProcessActive(void);
 qboolean UR_ConditionsForStoring(const base_t *base, const aircraft_t *ufocraft);
 void UR_InitStartup(void);

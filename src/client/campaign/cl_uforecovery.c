@@ -207,6 +207,82 @@ static void CP_UFORecoveryDone (void)
 }
 
 /**
+ * @brief Prepares UFO recovery in global recoveries array.
+ * @param[in] base Pointer to the base, where the UFO recovery will be made.
+ * @sa UR_ProcessActive
+ * @sa UR_ConditionsForStoring
+ */
+static void UR_Prepare (base_t *base)
+{
+	int i;
+	ufoRecoveries_t *recovery = NULL;
+	aircraft_t *ufocraft = NULL;
+	date_t event;
+
+	assert(base);
+
+	/* Find ufo sample of given ufotype. */
+	for (i = 0; i < numAircraftTemplates; i++) {
+		ufocraft = &aircraftTemplates[i];
+		if (ufocraft->type != AIRCRAFT_UFO)
+			continue;
+		if (ufocraft->ufotype == ufoRecovery.ufoType)
+			break;
+	}
+	assert(ufocraft);
+
+	/* Find free uforecovery slot. */
+	for (i = 0; i < MAX_RECOVERIES; i++) {
+		if (!gd.recoveries[i].active) {
+			/* Make sure it is empty here. */
+			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
+			recovery = &gd.recoveries[i];
+			break;
+		}
+	}
+
+	if (!recovery) {
+		Com_Printf("UR_Prepare: free recovery slot not found.\n");
+		return;
+	}
+	assert(recovery);
+
+	/* Prepare date of the recovery event - always two days after mission. */
+	event = ccs.date;
+	/* if you change these 2 days to something other you
+	 * have to review all translations, too */
+	event.day += 2;
+	/* Prepare recovery. */
+	recovery->active = qtrue;
+	recovery->base = base;
+	recovery->ufoTemplate = ufocraft->tpl;
+	recovery->event = event;
+
+	/* Update base capacity. */
+	if (ufocraft->size == AIRCRAFT_LARGE) {
+		/* Large UFOs can only fit in large UFO hangars */
+		if (base->capacities[CAP_UFOHANGARS_LARGE].max > base->capacities[CAP_UFOHANGARS_LARGE].cur)
+			base->capacities[CAP_UFOHANGARS_LARGE].cur++;
+		else
+			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
+			Com_Printf("UR_Prepare: No room in large UFO hangars to store %s\n", ufocraft->name);
+	} else {
+		/* Small UFOs can only fit in small UFO hangars */
+		if (base->capacities[CAP_UFOHANGARS_SMALL].max > base->capacities[CAP_UFOHANGARS_SMALL].cur)
+			base->capacities[CAP_UFOHANGARS_SMALL].cur++;
+		else
+			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
+			Com_Printf("UR_Prepare: No room in small UFO hangars to store %s\n", ufocraft->name);
+	}
+
+	Com_DPrintf(DEBUG_CLIENT, "UR_Prepare: the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
+		base->name, recovery->ufoTemplate->id, recovery->event.day);
+
+	/* Send an email */
+	UR_SendMail(ufocraft, base);
+}
+
+/**
  * @brief Function to start UFO recovery process.
  * @note Command to call this: cp_uforecoverystart.
  * @note This needs the ufoRecovery base value set
@@ -560,7 +636,7 @@ void UR_UpdateUFOHangarCapForAll (base_t *base)
 #endif
 		return;
 	}
-	assert(base);
+
 	/* Reset current capacities for UFO hangar. */
 	base->capacities[CAP_UFOHANGARS_LARGE].cur = 0;
 	base->capacities[CAP_UFOHANGARS_SMALL].cur = 0;
@@ -575,8 +651,7 @@ void UR_UpdateUFOHangarCapForAll (base_t *base)
 			continue;
 
 		/* look for corresponding aircraft in global array */
-		ufocraft = AIR_GetAircraft (csi.ods[i].id);
-
+		ufocraft = AIR_GetAircraft(csi.ods[i].id);
 		if (!ufocraft) {
 			Com_Printf("UR_UpdateUFOHangarCapForAll: Did not find UFO %s\n", csi.ods[i].id);
 			continue;
@@ -590,82 +665,6 @@ void UR_UpdateUFOHangarCapForAll (base_t *base)
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "UR_UpdateUFOHangarCapForAll: base capacities.cur: small: %i big: %i\n", base->capacities[CAP_UFOHANGARS_SMALL].cur, base->capacities[CAP_UFOHANGARS_LARGE].cur);
-}
-
-/**
- * @brief Prepares UFO recovery in global recoveries array.
- * @param[in] base Pointer to the base, where the UFO recovery will be made.
- * @sa UR_ProcessActive
- * @sa UR_ConditionsForStoring
- */
-void UR_Prepare (base_t *base)
-{
-	int i;
-	ufoRecoveries_t *recovery = NULL;
-	aircraft_t *ufocraft = NULL;
-	date_t event;
-
-	assert(base);
-
-	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraftTemplates; i++) {
-		ufocraft = &aircraftTemplates[i];
-		if (ufocraft->type != AIRCRAFT_UFO)
-			continue;
-		if (ufocraft->ufotype == ufoRecovery.ufoType)
-			break;
-	}
-	assert(ufocraft);
-
-	/* Find free uforecovery slot. */
-	for (i = 0; i < MAX_RECOVERIES; i++) {
-		if (!gd.recoveries[i].active) {
-			/* Make sure it is empty here. */
-			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
-			recovery = &gd.recoveries[i];
-			break;
-		}
-	}
-
-	if (!recovery) {
-		Com_Printf("UR_Prepare: free recovery slot not found.\n");
-		return;
-	}
-	assert(recovery);
-
-	/* Prepare date of the recovery event - always two days after mission. */
-	event = ccs.date;
-	/* if you change these 2 days to something other you
-	 * have to review all translations, too */
-	event.day += 2;
-	/* Prepare recovery. */
-	recovery->active = qtrue;
-	recovery->base = base;
-	recovery->ufoTemplate = ufocraft->tpl;
-	recovery->event = event;
-
-	/* Update base capacity. */
-	if (ufocraft->size == AIRCRAFT_LARGE) {
-		/* Large UFOs can only fit in large UFO hangars */
-		if (base->capacities[CAP_UFOHANGARS_LARGE].max > base->capacities[CAP_UFOHANGARS_LARGE].cur)
-			base->capacities[CAP_UFOHANGARS_LARGE].cur++;
-		else
-			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
-			Com_Printf("UR_Prepare: No room in large UFO hangars to store %s\n", ufocraft->name);
-	} else {
-		/* Small UFOs can only fit in small UFO hangars */
-		if (base->capacities[CAP_UFOHANGARS_SMALL].max > base->capacities[CAP_UFOHANGARS_SMALL].cur)
-			base->capacities[CAP_UFOHANGARS_SMALL].cur++;
-		else
-			/* no more room -- this shouldn't happen as we've used UR_ConditionsForStoring */
-			Com_Printf("UR_Prepare: No room in small UFO hangars to store %s\n", ufocraft->name);
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "UR_Prepare: the recovery entry in global array is done; base: %s, ufotype: %s, date: %i\n",
-		base->name, recovery->ufoTemplate->id, recovery->event.day);
-
-	/* Send an email */
-	UR_SendMail(ufocraft, base);
 }
 
 /**
