@@ -49,6 +49,7 @@
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
 				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -91,6 +92,7 @@
 			<Target title="linux">
 				<Option platforms="Unix;" />
 				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -110,6 +112,7 @@
 			<Target title="macosx">
 				<Option platforms="Mac;" />
 				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
