@@ -52,18 +52,14 @@ void Error (const char *error, ...)
 	char text[4096];
 
 	va_start(argptr, error);
-	vsnprintf(text, sizeof(text) - 1, error, argptr);
+	g_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
-	strcat(text, "\n");
-
-	/** @todo this can still overflow - unlikely, but possible */
 	if (errno != 0) {
-		strcat(text, g_strerror(errno));
-		strcat(text, "\n");
+		ERROR_MESSAGE(text << "\n" << g_strerror(errno));
+	} else {
+		ERROR_MESSAGE(text);
 	}
-
-	ERROR_MESSAGE(text);
 
 	// force close logging if necessary
 	Sys_LogFile(false);
