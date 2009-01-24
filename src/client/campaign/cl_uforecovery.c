@@ -53,7 +53,7 @@ Campaign onwin functions
  * @sa CL_EventAddMail_f
  * @sa CL_NewEventMail
  */
-void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
+static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 {
 	int i;
 	components_t *comp;
