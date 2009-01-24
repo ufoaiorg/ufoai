@@ -32,10 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_VAR     64
 
-/** @sa CONTENTS_NODE - @todo replace this with CONTENTS_NODE? */
-#define LEAFNODE -1
-#define	PLANENUM_LEAF -1
-
 #include <errno.h>
 #include <assert.h>
 #include <math.h>
@@ -125,13 +121,15 @@ qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute_
 #else
 int Q_strncasecmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
 #endif
-int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
+
 #ifndef DEBUG
 void Q_strncpyz(char *dest, const char *src, size_t destsize) __attribute__((nonnull));
 #else
 #define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
 void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, const char *file, int line) __attribute__((nonnull));
 #endif
+
+int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
 const char *Q_stristr(const char *str, const char *substr) __attribute__((nonnull));

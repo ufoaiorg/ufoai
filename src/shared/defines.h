@@ -39,6 +39,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* common/tracing.c, ufo2map/brushbsp.c */
 #define	PLANESIDE_EPSILON	0.001
 
+/** @sa CONTENTS_NODE - @todo replace this with CONTENTS_NODE? */
+#define LEAFNODE -1
+#define	PLANENUM_LEAF -1
+
 /* bsp constants */
 /* ufo2map/csg.c, ufo2map/portals.c, ufo2map/brushbsp.c */
 #define	TEXINFO_NODE		-1		/* side is already on a node */
