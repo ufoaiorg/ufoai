@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct cvar_s;
 
-#define MAX_MENUCONDITIONS 256
+#define MAX_MENUCONDITIONS 512
 
 /**
  * @brief conditions for V_SPECIAL_IF
