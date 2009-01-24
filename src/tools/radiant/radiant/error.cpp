@@ -28,12 +28,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "console.h"
 #include "preferences.h"
 
+#include <errno.h>
+
 
 #ifdef WIN32
 #define UNICODE
 #include <windows.h>
 #else
-#include <errno.h>
 #include <unistd.h>
 #endif
 
@@ -51,44 +52,16 @@ void Error (const char *error, ...)
 	char text[4096];
 
 	va_start(argptr, error);
-	vsprintf(text, error, argptr);
+	vsnprintf(text, sizeof(text) - 1, error, argptr);
 	va_end(argptr);
 
 	strcat(text, "\n");
 
-#ifdef WIN32
-	if (GetLastError() != 0) {
-		LPVOID lpMsgBuf;
-		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-			0, GetLastError(),
-			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-			(LPTSTR) &lpMsgBuf, 0, 0
-		);
-		strcat(text, "GetLastError: ");
-		/* Gtk will only crunch 0<=char<=127
-		 * this is a bit hackish, but I didn't find useful functions in win32 API for this */
-		TCHAR *scan, *next = (TCHAR*)lpMsgBuf;
-		do {
-			scan = next;
-			text[strlen(text) + 1] = '\0';
-			if (scan[0] <= 127)
-				text[strlen(text)] = char(scan[0]);
-			else
-				text[strlen(text)] = '?';
-			next = CharNext(scan);
-		} while (next != scan);
-		strcat(text, "\n");
-		LocalFree(lpMsgBuf);
-	}
-#else
+	/** @todo this can still overflow - unlikely, but possible */
 	if (errno != 0) {
-		strcat(text, "errno: ");
-		strcat(text, strerror(errno));
+		strcat(text, g_strerror(errno));
 		strcat(text, "\n");
 	}
-#endif
-
-	strcat(text, "An unrecoverable error has occured.\n");
 
 	ERROR_MESSAGE(text);
 
