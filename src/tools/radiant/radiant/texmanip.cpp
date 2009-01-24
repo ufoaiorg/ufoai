@@ -110,7 +110,10 @@ void R_ResampleTexture (const void *indata, int inwidth, int inheight, void *out
 	}
 
 	if (bytesperpixel == 4) {
-		int i, j, yi, oldy, f, lerp, endy = (inheight - 1), inwidth4 = inwidth * 4, outwidth4 = outwidth * 4;
+		int i, j, oldy, f;
+		const int endy = inheight - 1;
+		const int inwidth4 = inwidth * 4;
+		const int outwidth4 = outwidth * 4;
 		byte *inrow, *out;
 		const int fstep = (int) (inheight * 65536.0f / outheight);
 		out = (byte *) outdata;
@@ -121,9 +124,9 @@ void R_ResampleTexture (const void *indata, int inwidth, int inheight, void *out
 		R_ResampleTextureLerpLine(inrow + inwidth4, row2, inwidth, outwidth, bytesperpixel);
 
 		for (i = 0, f = 0; i < outheight; i++, f += fstep) {
-			yi = f >> 16;
+			const int yi = f >> 16;
 			if (yi < endy) {
-				lerp = f & 0xFFFF;
+				const int lerp = f & 0xFFFF;
 				if (yi != oldy) {
 					inrow = (byte *) indata + inwidth4 * yi;
 					if (yi == oldy + 1)
@@ -195,7 +198,10 @@ void R_ResampleTexture (const void *indata, int inwidth, int inheight, void *out
 			}
 		}
 	} else if (bytesperpixel == 3) {
-		int i, j, yi, oldy, f, fstep, lerp, endy = (inheight - 1), inwidth3 = inwidth * 3, outwidth3 = outwidth * 3;
+		int i, j, oldy, f, fstep;
+		const int endy = inheight - 1;
+		const int inwidth3 = inwidth * 3;
+		const int outwidth3 = outwidth * 3;
 		byte *inrow, *out;
 		out = (byte *) outdata;
 		fstep = (int) (inheight * 65536.0f / outheight);
@@ -205,9 +211,9 @@ void R_ResampleTexture (const void *indata, int inwidth, int inheight, void *out
 		R_ResampleTextureLerpLine(inrow, row1, inwidth, outwidth, bytesperpixel);
 		R_ResampleTextureLerpLine(inrow + inwidth3, row2, inwidth, outwidth, bytesperpixel);
 		for (i = 0, f = 0; i < outheight; i++, f += fstep) {
-			yi = f >> 16;
+			const int yi = f >> 16;
 			if (yi < endy) {
-				lerp = f & 0xFFFF;
+				const int lerp = f & 0xFFFF;
 				if (yi != oldy) {
 					inrow = (byte *) indata + inwidth3 * yi;
 					if (yi == oldy + 1)
@@ -279,13 +285,13 @@ void R_ResampleTexture (const void *indata, int inwidth, int inheight, void *out
 // in can be the same as out
 void GL_MipReduce (byte *in, byte *out, int width, int height, int destwidth, int destheight)
 {
-	int x, y, width2, height2, nextrow;
+	int x, y;
 	if (width > destwidth) {
 		if (height > destheight) {
 			// reduce both
-			width2 = width >> 1;
-			height2 = height >> 1;
-			nextrow = width << 2;
+			const int width2 = width >> 1;
+			const int height2 = height >> 1;
+			const int nextrow = width << 2;
 			for (y = 0; y < height2; y++) {
 				for (x = 0; x < width2; x++) {
 					out[0] = (byte) ((in[0] + in[4] + in[nextrow] + in[nextrow + 4]) >> 2);
@@ -299,7 +305,7 @@ void GL_MipReduce (byte *in, byte *out, int width, int height, int destwidth, in
 			}
 		} else {
 			// reduce width
-			width2 = width >> 1;
+			const int width2 = width >> 1;
 			for (y = 0; y < height; y++) {
 				for (x = 0; x < width2; x++) {
 					out[0] = (byte) ((in[0] + in[4]) >> 1);
@@ -314,8 +320,8 @@ void GL_MipReduce (byte *in, byte *out, int width, int height, int destwidth, in
 	} else {
 		if (height > destheight) {
 			// reduce height
-			height2 = height >> 1;
-			nextrow = width << 2;
+			const int height2 = height >> 1;
+			const int nextrow = width << 2;
 			for (y = 0; y < height2; y++) {
 				for (x = 0; x < width; x++) {
 					out[0] = (byte) ((in[0] + in[nextrow]) >> 1);
