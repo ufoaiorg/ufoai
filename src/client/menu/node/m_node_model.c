@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #define ROTATE_SPEED	0.5
+#define MAX_OLDREFVALUE MAX_VAR
 
 static nodeBehaviour_t *modelBehaviour;
 
@@ -235,8 +236,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	}
 
 	/* check whether the cvar value changed */
-	if (Q_strncmp(node->u.model.oldRefValue, source, sizeof(node->u.model.oldRefValue))) {
-		Q_strncpyz(node->u.model.oldRefValue, source, sizeof(node->u.model.oldRefValue));
+	if (Q_strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
+		Q_strncpyz(node->u.model.oldRefValue, source, MAX_OLDREFVALUE);
 		updateModel = qtrue;
 	}
 
@@ -535,6 +536,7 @@ static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
 static void MN_ModelNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
+	node->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
 }
 
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)

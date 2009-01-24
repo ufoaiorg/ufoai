@@ -65,7 +65,7 @@ typedef struct menuModel_s {
  * @brief extradata for the model node
  */
 typedef struct modelExtraData_s {
-	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
+	char *oldRefValue;	/**< used for storing old reference values */
 	vec3_t angles;
 	vec3_t origin;
 	vec3_t center;
