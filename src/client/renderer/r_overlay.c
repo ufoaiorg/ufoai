@@ -230,7 +230,7 @@ void R_InitializeRadarOverlay (qboolean source)
  * @param[in] latMax Maximum latitude.
  * @param[in] y current row in radar overlay.
  * @param[in] source True if we must update the source of the radar coverage, false if the copy must be updated.
- * @pre We assume latMax - latMin <= 180 degrees.
+ * @pre We assume latMax - latMin <= 360 degrees.
  */
 static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qboolean source)
 {
@@ -238,6 +238,8 @@ static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qb
 	const int radarWidth = r_radarTexture->width;
 	const float radarWidthPerDegree = radarWidth / 360.0f;
 	int xMin, xMax, x;
+
+	assert(latMax - latMin <= 360);
 
 	if (latMin < -180.0f) {
 		xMin = 0;
@@ -247,7 +249,7 @@ static void R_DrawRadarOverlayRow (int latMin, int latMax, int y, byte alpha, qb
 			if (alpha < dest[3])
 				dest[3] = alpha;
 		}
-		xMin = bpp * floor((latMin - 180.0f) * radarWidthPerDegree);
+		xMin = bpp * floor((latMin + 540.0f) * radarWidthPerDegree);
 		xMax = bpp * radarWidth;
 		for (x = xMin; x < xMax; x += bpp) {
 			byte *dest = source ? &r_radarSourcePic[y * radarWidth + x] : &r_radarPic[y * radarWidth + x];
