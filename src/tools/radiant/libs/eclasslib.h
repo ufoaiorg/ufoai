@@ -121,10 +121,6 @@ public:
 
 	EntityClassAttributes m_attributes;
 
-	bool inheritanceResolved;
-	bool sizeSpecified;
-	bool colorSpecified;
-
 	const char* name() const {
 		return m_name.c_str();
 	}
@@ -226,10 +222,6 @@ inline EntityClass* Eclass_Alloc() {
 	e->mins = Vector3(1, 1, 1);
 
 	e->free = 0;
-
-	e->inheritanceResolved = true;
-	e->sizeSpecified = false;
-	e->colorSpecified = false;
 
 	return e;
 }
