@@ -26,7 +26,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #ifndef ENITIESDEF_H
-#define ENITIESDEF_H
+# define ENITIESDEF_H
+
+# define ED_MANDATORY	(1<<0)	/**< flag for entityKeyDef_t flags. entities of this type are not valid without this key. */
+
+typedef struct entityKeyDef_s {
+	char *name;
+	char *desc;
+	char *defaultVal;
+	int flags;
+} entityKeyDef_t;
+
+typedef struct entityDef_s {
+	entityKeyDef_t *keyDefs; /**< variable sized */
+	int numKeyDefs;
+} entityDef_t;
+
+int numEntityDefs;
+entityKeyDef_t *entityDefs;
 
 void ED_Parse(const char **data_p);
 
