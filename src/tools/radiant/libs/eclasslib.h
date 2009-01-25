@@ -102,7 +102,6 @@ public:
 	CopiedString m_name;
 	StringList m_parent;
 	bool	fixedsize;
-	bool	unknown;		// wasn't found in source
 	Vector3	mins;
 	Vector3 maxs;
 
@@ -114,7 +113,7 @@ public:
 	CopiedString m_comments;
 	char	flagnames[MAX_FLAGS][32];
 
-	CopiedString m_modelpath;
+	CopiedString m_modelpath;	/** model path - only for displaying in radiant */
 	CopiedString m_skin;
 
 	void (*free)(EntityClass*);
@@ -215,7 +214,6 @@ inline EntityClass* Eclass_Alloc() {
 	EntityClass* e = new EntityClass;
 
 	e->fixedsize = false;
-	e->unknown = false;
 	memset(e->flagnames, 0, MAX_FLAGS * 32);
 
 	e->maxs = Vector3(-1,-1,-1);

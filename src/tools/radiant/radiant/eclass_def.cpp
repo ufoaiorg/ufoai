@@ -95,6 +95,14 @@ static void Eclass_ParseOptional (EntityClass *e, const char **text)
 			break;
 		if (*token == '}')
 			break;
+
+		if (!strcmp(token, "model")) {
+			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model"));
+		} else if (!strcmp(token, "particle")) {
+			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
+		} else if (!strcmp(token, "noise")) {
+			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound"));
+		}
 	} while (*token != '}');
 }
 
@@ -107,6 +115,14 @@ static void Eclass_ParseMandatory (EntityClass *e, const char **text)
 			break;
 		if (*token == '}')
 			break;
+
+		if (!strcmp(token, "model")) {
+			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model"));
+		} else if (!strcmp(token, "particle")) {
+			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
+		} else if (!strcmp(token, "noise")) {
+			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound"));
+		}
 	} while (*token != '}');
 }
 
@@ -205,9 +221,6 @@ static EntityClass *Eclass_InitFromText (const char **text)
 	} else {
 		EntityClass_insertAttribute(*e, "angle", EntityClassAttribute("angle", "Yaw Angle", "0"));
 	}
-	EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model"));
-	EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
-	EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound"));
 
 	g_debug("...added\n");
 	return e;
