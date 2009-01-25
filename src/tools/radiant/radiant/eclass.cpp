@@ -117,78 +117,44 @@ const ListAttributeType* EntityClass_findListType (const char* name)
 class EntityClassesLoadFile
 {
 		const EntityClassScanner& scanner;
-		const char* m_directory;
+		const char *m_directory;
+		const char *m_filename;
 	public:
-		EntityClassesLoadFile (const EntityClassScanner& scanner, const char* directory) :
-			scanner(scanner), m_directory(directory)
-		{
-		}
-		void operator() (const char* name) const
+		EntityClassesLoadFile (const EntityClassScanner& scanner, const char* directory, const char *filename) :
+			scanner(scanner), m_directory(directory), m_filename(filename)
 		{
 			// for a given name, we grab the first .def in the vfs
 			// this allows to override base/entities.def for instance
 			StringOutputStream relPath(256);
-			relPath << m_directory << name;
+			relPath << m_directory << m_filename;
 
+			g_message("Load entity definition file from '%s'\n", relPath.c_str());
 			scanner.scanFile(g_collector, relPath.c_str());
 		}
 };
 
-struct PathLess
-{
-		bool operator() (const CopiedString& path, const CopiedString& other) const
-		{
-			return path_less(path.c_str(), other.c_str());
-		}
-};
-
-typedef std::map<CopiedString, const char*, PathLess> Paths;
-
-class PathsInsert
-{
-		Paths& m_paths;
-		const char* m_directory;
-	public:
-		PathsInsert (Paths& paths, const char* directory) :
-			m_paths(paths), m_directory(directory)
-		{
-		}
-		void operator() (const char* name) const
-		{
-			m_paths.insert(Paths::value_type(name, m_directory));
-		}
-};
-
-void EntityClassUFO_constructDirectory (const char* directory, const char* extension, Paths& paths)
-{
-	globalOutputStream() << "EntityClass: searching " << makeQuoted(directory) << " for *." << extension << '\n';
-	Directory_forEach(directory, matchFileExtension(extension, PathsInsert(paths, directory)));
-}
-
 void EntityClassUFO_Construct ()
 {
-	StringOutputStream appDirectory(256);
-	appDirectory << GlobalRadiant().getAppPath() << "games/";
+	StringOutputStream gameDir(256);
+	gameDir << GlobalRadiant().getEnginePath() << GlobalRadiant().getRequiredGameDescriptionKeyValue("basegame") << "/";
 
+	/** @todo remove this visitor - we only have one entity def parser */
 	class LoadEntityDefinitionsVisitor: public EClassModules::Visitor
 	{
-			const char* appDirectory;
+			const char* gameDir;
 		public:
-			LoadEntityDefinitionsVisitor (const char* appDirectory) :
-				appDirectory(appDirectory)
+			LoadEntityDefinitionsVisitor (const char* gameDir) :
+				gameDir(gameDir)
 			{
 			}
 			void visit (const char* name, const EntityClassScanner& table) const
 			{
-				Paths paths;
-				EntityClassUFO_constructDirectory(appDirectory, table.getExtension(), paths);
-				for (Paths::iterator i = paths.begin(); i != paths.end(); ++i) {
-					EntityClassesLoadFile(table, (*i).second)((*i).first.c_str());
-				}
+				g_message("Try to load '%s' from '%s'\n", table.getFilename(), gameDir);
+				EntityClassesLoadFile(table, gameDir, table.getFilename());
 			}
 	};
 
-	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor(appDirectory.c_str()));
+	EntityClassManager_getEClassModules().foreachModule(LoadEntityDefinitionsVisitor(gameDir.c_str()));
 }
 
 EntityClass *Eclass_ForName (const char *name, bool has_brushes)
@@ -301,8 +267,7 @@ class EclassManagerAPI
 		EntityClassManager m_eclassmanager;
 	public:
 		typedef EntityClassManager Type;
-		STRING_CONSTANT(Name, "ufo")
-		;
+		STRING_CONSTANT(Name, "ufo");
 
 		EclassManagerAPI ()
 		{

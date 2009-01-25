@@ -171,12 +171,6 @@ class MatchFileExtension {
 	}
 };
 
-/// \brief A functor which invokes its contained \p functor if the \p name argument matches its \p extension.
-template<typename Functor>
-inline MatchFileExtension<Functor> matchFileExtension(const char* extension, const Functor& functor) {
-	return MatchFileExtension<Functor>(extension, functor);
-}
-
 class PathCleaned {
 	public:
 	const char* m_path;

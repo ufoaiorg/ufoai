@@ -216,10 +216,11 @@ inline EntityClass* Eclass_Alloc() {
 
 	e->fixedsize = false;
 	e->unknown = false;
-	memset(e->flagnames, 0, MAX_FLAGS*32);
+	memset(e->flagnames, 0, MAX_FLAGS * 32);
 
 	e->maxs = Vector3(-1,-1,-1);
 	e->mins = Vector3(1, 1, 1);
+	e->color = Vector3(1, 1, 1);
 
 	e->free = 0;
 

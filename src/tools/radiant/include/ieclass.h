@@ -51,12 +51,13 @@ public:
 	}
 };
 
+/** @todo remove this - we will only support the entities.ufo from base/ufos */
 struct EntityClassScanner {
 	INTEGER_CONSTANT(Version, 1);
 	STRING_CONSTANT(Name, "eclass");
 
 	void (*scanFile)(EntityClassCollector& collector, const char* filename);
-	const char* (*getExtension)();
+	const char* (*getFilename)();
 };
 
 #include "modulesystem.h"

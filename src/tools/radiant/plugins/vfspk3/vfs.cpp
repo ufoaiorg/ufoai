@@ -99,6 +99,7 @@ static void AddSlash (char *str) {
 	}
 }
 
+/** @todo Use PathCleaned */
 static void FixDOSName (char *src) {
 	if (src == 0 || strchr(src, '\\') == 0)
 		return;
@@ -112,14 +113,15 @@ static void FixDOSName (char *src) {
 	}
 }
 
-
-
-const _QERArchiveTable* GetArchiveTable(ArchiveModules& archiveModules, const char* ext) {
+const _QERArchiveTable* GetArchiveTable(ArchiveModules& archiveModules, const char* ext)
+{
 	StringOutputStream tmp(16);
 	tmp << LowerCase(ext);
 	return archiveModules.findModule(tmp.c_str());
 }
-static void InitPakFile (ArchiveModules& archiveModules, const char *filename) {
+
+static void InitPK3File (ArchiveModules& archiveModules, const char *filename)
+{
 	const _QERArchiveTable* table = GetArchiveTable(archiveModules, path_get_extension(filename));
 
 	if (table != 0) {
@@ -129,11 +131,12 @@ static void InitPakFile (ArchiveModules& archiveModules, const char *filename) {
 		entry.archive = table->m_pfnOpenArchive(filename);
 		entry.is_pakfile = true;
 		g_archives.push_back(entry);
-		g_message("  pak file: %s\n", filename);
+		g_message("  pk3 file: %s\n", filename);
 	}
 }
 
-inline void pathlist_prepend_unique(GSList*& pathlist, char* path) {
+inline void pathlist_prepend_unique(GSList*& pathlist, char* path)
+{
 	if (g_slist_find_custom(pathlist, path, (GCompareFunc)path_compare) == 0) {
 		pathlist = g_slist_prepend(pathlist, path);
 	} else {
@@ -231,11 +234,13 @@ static int string_compare_nocase_upper(const char* a, const char* b) {
 	}
 }
 
-// Arnout: note - sort pakfiles in reverse order. This ensures that
-// later pakfiles override earlier ones. This because the vfs module
-// returns a filehandle to the first file it can find (while it should
-// return the filehandle to the file in the most overriding pakfile, the
-// last one in the list that is).
+/**
+ * @note sort pakfiles in reverse order. This ensures that
+ * later pakfiles override earlier ones. This because the vfs module
+ * returns a filehandle to the first file it can find (while it should
+ * return the filehandle to the file in the most overriding pakfile, the
+ * last one in the list that is).
+ */
 class PakLess {
 public:
 	bool operator()(const CopiedString& self, const CopiedString& other) const {
@@ -248,7 +253,7 @@ typedef std::set<CopiedString, PakLess> Archives;
 // =============================================================================
 // Global functions
 
-// reads all pak files from a dir
+/** @brief reads all pak files from a dir */
 void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 	if (g_numDirs == (VFS_MAXDIRS - 1))
 		return;
@@ -290,30 +295,28 @@ void InitDirectory(const char* directory, ArchiveModules& archiveModules) {
 				archives.insert(name);
 			}
 
-			g_dir_close (dir);
+			g_dir_close(dir);
 
 			// add the entries to the vfs
 			for (Archives::iterator i = archivesOverride.begin(); i != archivesOverride.end(); ++i) {
 				char filename[PATH_MAX];
 				strcpy(filename, path);
 				strcat(filename, (*i).c_str());
-				InitPakFile(archiveModules, filename);
+				InitPK3File(archiveModules, filename);
 			}
 			for (Archives::iterator i = archives.begin(); i != archives.end(); ++i) {
 				char filename[PATH_MAX];
 				strcpy(filename, path);
 				strcat(filename, (*i).c_str());
-				InitPakFile(archiveModules, filename);
+				InitPK3File(archiveModules, filename);
 			}
 		} else {
-			globalErrorStream() << "vfs directory not found: " << path << "\n";
+			g_message("vfs directory not found: '%s'\n", path);
 		}
 	}
 }
 
-// frees all memory that we allocated
-// FIXME TTimo this should be improved so that we can shutdown and restart the VFS without exiting Radiant?
-//   (for instance when modifying the project settings)
+/** @brief frees all memory that we allocated */
 void Shutdown() {
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
 		delete i->archive;
@@ -332,14 +335,13 @@ int GetFileCount (const char *filename, int flag) {
 
 	strncpy(fixed, filename, PATH_MAX);
 	fixed[PATH_MAX] = '\0';
-	FixDOSName (fixed);
+	FixDOSName(fixed);
 
 	if (!flag)
 		flag = (VFS_SEARCH_PAK | VFS_SEARCH_DIR);
 
 	for (archives_t::iterator i = g_archives.begin(); i != g_archives.end(); ++i) {
-		if (((*i).is_pakfile && (flag & VFS_SEARCH_PAK) != 0)
-		        || (!(*i).is_pakfile && (flag & VFS_SEARCH_DIR) != 0)) {
+		if (((*i).is_pakfile && (flag & VFS_SEARCH_PAK) != 0) || (!(*i).is_pakfile && (flag & VFS_SEARCH_DIR) != 0)) {
 			if ((*i).archive->containsFile(fixed))
 				++count;
 		}
@@ -372,13 +374,13 @@ ArchiveTextFile* OpenTextFile(const char* filename) {
 	return 0;
 }
 
-// NOTE: when loading a file, you have to allocate one extra byte and set it to \0
+/** @note when loading a file, you have to allocate one extra byte and set it to \0 */
 std::size_t LoadFile (const char *filename, void **bufferptr, int index) {
 	char fixed[PATH_MAX + 1];
 
 	strncpy (fixed, filename, PATH_MAX);
 	fixed[PATH_MAX] = '\0';
-	FixDOSName (fixed);
+	FixDOSName(fixed);
 
 	AutoPtr<ArchiveFile> file(OpenFile(fixed));
 	if (file) {

@@ -7,7 +7,7 @@ RADIANT_BASE = tools/radiant
 RADIANT_CFLAGS+=-Isrc/$(RADIANT_BASE)/libs -Isrc/$(RADIANT_BASE)/include
 RADIANT_LIBS+=-lgthread-2.0
 
-RADIANT_SRCS = \
+RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/radiant/autosave.cpp \
 	$(RADIANT_BASE)/radiant/brush.cpp \
 	$(RADIANT_BASE)/radiant/brushmanip.cpp \
@@ -98,9 +98,13 @@ RADIANT_SRCS = \
 	$(RADIANT_BASE)/libs/gtkutil/window.cpp \
 	\
 	$(RADIANT_BASE)/libs/profile/profile.cpp \
-	$(RADIANT_BASE)/libs/profile/file.cpp
+	$(RADIANT_BASE)/libs/profile/file.cpp \
 
-RADIANT_OBJS=$(RADIANT_SRCS:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
+RADIANT_SRCS_C = \
+	shared/parse.c
+
+RADIANT_CPP_OBJS=$(RADIANT_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
+RADIANT_C_OBJS=$(RADIANT_SRCS_C:%.c=$(BUILDDIR)/tools/radiant_c/%.o)
 RADIANT_TARGET=radiant/radiant$(EXE_EXT)
 
 # model plugin
@@ -203,7 +207,7 @@ RADIANT_PLUGIN_BRUSHEXPORT_TARGET=radiant/plugins/brushexport.$(SHARED_EXT)
 
 ifeq ($(BUILD_UFORADIANT),1)
 
-ALL_RADIANT_OBJS+=$(RADIANT_OBJS) $(RADIANT_PLUGIN_MODEL_C_OBJS) $(RADIANT_PLUGIN_MODEL_CPP_OBJS) \
+ALL_RADIANT_OBJS+=$(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) $(RADIANT_PLUGIN_MODEL_C_OBJS) $(RADIANT_PLUGIN_MODEL_CPP_OBJS) \
 	$(RADIANT_PLUGIN_IMAGE_CPP_OBJS) $(RADIANT_PLUGIN_MAP_CPP_OBJS) $(RADIANT_PLUGIN_ENTITY_CPP_OBJS) \
 	$(RADIANT_PLUGIN_SHADERS_CPP_OBJS) $(RADIANT_PLUGIN_VFSPK3_CPP_OBJS) $(RADIANT_PLUGIN_ARCHIVEZIP_CPP_OBJS) \
 	$(RADIANT_PLUGIN_UFOAI_CPP_OBJS) $(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS)
@@ -232,9 +236,12 @@ ALL_RADIANT_OBJS=""
 endif
 
 # Say how to build .o files from .cpp files for this module
+$(BUILDDIR)/tools/radiant_c/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+	@echo " * [RAD] $<"; \
+		$(CC) $(CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 $(BUILDDIR)/tools/radiant/%.o: $(SRCDIR)/%.cpp $(BUILDDIR)/.dirs
 	@echo " * [RAD] $<"; \
-		$(CC) $(CPPFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CPP) $(CPPFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 # Say how to build .o files from .cpp/.c files for this module
 $(BUILDDIR)/tools/radiant/plugins_c/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -242,7 +249,7 @@ $(BUILDDIR)/tools/radiant/plugins_c/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 $(BUILDDIR)/tools/radiant/plugins_cpp/%.o: $(SRCDIR)/%.cpp $(BUILDDIR)/.dirs
 	@echo " * [RAD] $<"; \
-		$(CC) $(CPPFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
+		$(CPP) $(CPPFLAGS) $(SHARED_CFLAGS) $(RADIANT_CFLAGS) -o $@ -c $< $(CFLAGS_M_OPTS)
 
 # Say how about to build the modules
 $(RADIANT_PLUGIN_MODEL_TARGET) : $(RADIANT_PLUGIN_MODEL_CPP_OBJS) $(RADIANT_PLUGIN_MODEL_C_OBJS) $(BUILDDIR)/.dirs
@@ -276,6 +283,6 @@ $(RADIANT_PLUGIN_BRUSHEXPORT_TARGET) : $(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS) $(
 		$(CPP) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(RADIANT_PLUGIN_BRUSHEXPORT_CPP_OBJS) $(RADIANT_LIBS) $(LNKFLAGS)
 
 # Say how to link the exe
-$(RADIANT_TARGET): $(RADIANT_OBJS) $(BUILDDIR)/.dirs
+$(RADIANT_TARGET): $(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [RAD] ... linking $(LNKFLAGS) ($(RADIANT_LIBS))"; \
-		$(CPP) $(LDFLAGS) -o $@ $(RADIANT_OBJS) $(RADIANT_LIBS) $(LNKFLAGS)
+		$(CPP) $(LDFLAGS) -o $@ $(RADIANT_CPP_OBJS) $(RADIANT_C_OBJS) $(RADIANT_LIBS) $(LNKFLAGS)

@@ -23,6 +23,7 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "radiant_i18n.h"
 #include "iscriplib.h"
 #include "ifilesystem.h"
 #include "iarchive.h"
@@ -30,15 +31,17 @@
 #include "eclasslib.h"
 #include "stream/stringstream.h"
 #include "stream/textfilestream.h"
+#include "gtkutil/messagebox.h"
 #include "modulesystem/moduleregistry.h"
 #include "os/path.h"
+#include "os/file.h"
+#include "../../../shared/parse.h"
 
-#define EXTENSION "def"
-
-static const char* EClass_GetExtension ()
+static const char* EClass_GetFilename ()
 {
-	return EXTENSION;
+	return "ufos/entities.ufo";
 }
+
 static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename);
 
 #include "modulesystem/singletonmodule.h"
@@ -52,13 +55,12 @@ class EclassDefAPI
 		EntityClassScanner m_eclassdef;
 	public:
 		typedef EntityClassScanner Type;
-		STRING_CONSTANT(Name, EXTENSION)
-		;
+		STRING_CONSTANT(Name, "def");
 
 		EclassDefAPI ()
 		{
 			m_eclassdef.scanFile = &Eclass_ScanFile;
-			m_eclassdef.getExtension = &EClass_GetExtension;
+			m_eclassdef.getFilename = &EClass_GetFilename;
 		}
 		EntityClassScanner* getTable ()
 		{
@@ -71,188 +73,132 @@ typedef Static<EclassDefModule> StaticEclassDefModule;
 StaticRegisterModule staticRegisterEclassDef (StaticEclassDefModule::instance ());
 
 #include "string/string.h"
-
 #include <stdlib.h>
-
-static char com_token[1024];
-static bool com_eof;
-static const char *debugname;
-
-/**
- * @brief Parse a token out of a string
- */
-static const char *COM_Parse (const char *data)
-{
-	int c;
-	int len = 0;
-
-	com_token[0] = 0;
-
-	if (!data)
-		return 0;
-
-	// skip whitespace
-	skipwhite: while ((c = *data) <= ' ') {
-		if (c == 0) {
-			com_eof = true;
-			return 0; // end of file;
-		}
-		data++;
-	}
-
-	// skip // comments
-	if (c == '/' && data[1] == '/') {
-		while (*data && *data != '\n')
-			data++;
-		goto skipwhite;
-	}
-
-	// handle quoted strings specially
-	if (c == '\"') {
-		data++;
-		do {
-			c = *data++;
-			if (c == '\"') {
-				com_token[len] = 0;
-				return data;
-			}
-			com_token[len] = c;
-			len++;
-		} while (1);
-	}
-
-	// parse single characters
-	if (c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ':') {
-		com_token[len] = c;
-		len++;
-		com_token[len] = 0;
-		return data + 1;
-	}
-
-	// parse a regular word
-	do {
-		com_token[len] = c;
-		data++;
-		len++;
-		c = *data;
-		if (c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ':')
-			break;
-	} while (c > 32);
-
-	com_token[len] = 0;
-	return data;
-}
-
-static void setSpecialLoad (EntityClass *e, const char* pWhat, CopiedString& p)
-{
-	const char *pText;
-	const char *where = strstr(e->comments(), pWhat);
-	if (!where)
-		return;
-
-	pText = where + strlen(pWhat);
-	if (*pText == '\"')
-		pText++;
-
-	where = strchr(pText, '\"');
-	if (where) {
-		p = StringRange(pText, where);
-	} else {
-		p = pText;
-	}
-}
-
 #include "eclasslib.h"
 
-/*
+static void Eclass_ParseFlags (EntityClass *e, const char **text)
+{
+	for (std::size_t i = 0; i < MAX_FLAGS; i++) {
+		const char *token = COM_Parse(text);
+		if (!*token)
+			break;
+		strcpy(e->flagnames[i], token);
+	}
+}
 
- the classname, color triple, and bounding box are parsed out of comments
- A ? size means take the exact brush size.
+static void Eclass_ParseOptional (EntityClass *e, const char **text)
+{
+	const char *token;
+	do {
+		token = COM_Parse(text);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+	} while (*token != '}');
+}
 
- / *QUAKED <classname> (0 0 0) ?
- / *QUAKED <classname> (0 0 0) (-8 -8 -8) (8 8 8)
+static void Eclass_ParseMandatory (EntityClass *e, const char **text)
+{
+	const char *token;
+	do {
+		token = COM_Parse(text);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+	} while (*token != '}');
+}
 
- Flag names can follow the size description:
+static void Eclass_ParseDefault (EntityClass *e, const char **text)
+{
+	const char *token;
+	do {
+		token = COM_Parse(text);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+	} while (*token != '}');
+}
 
- / *QUAKED func_door (0 .5 .8) ? START_OPEN STONE_SOUND DOOR_DONT_LINK GOLD_KEY SILVER_KEY
-
- */
-
-static EntityClass *Eclass_InitFromText (const char *text)
+static EntityClass *Eclass_InitFromText (const char **text)
 {
 	EntityClass* e = Eclass_Alloc();
+	const char *token;
 	e->free = &Eclass_Free;
 
 	// grab the name
-	text = COM_Parse(text);
-	e->m_name = com_token;
-	debugname = e->name();
-
-	{
-		// grab the color, reformat as texture name
-		const int r = sscanf(text, " (%f %f %f)", &e->color[0], &e->color[1], &e->color[2]);
-		if (r != 3)
-			return e;
-		eclass_capture_state(e);
+	e->m_name = COM_Parse(text);
+	if (!*text)
+		return 0;
+	token = COM_Parse(text);
+	if (*token != '{') {
+		g_message("Entity '%s' without body ignored\n", e->m_name.c_str());
+		return 0;
 	}
 
-	while (*text != ')') {
-		if (!*text) {
-			return 0;
-		}
-		text++;
-	}
-	text++;
+	g_debug("Parsing entity '%s'\n", e->m_name.c_str());
 
-	// get the size
-	text = COM_Parse(text);
-	if (com_token[0] == '(') { // parse the size as two vectors
-		e->fixedsize = true;
-		const int r = sscanf(text, "%f %f %f) (%f %f %f)", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
-				&e->maxs[1], &e->maxs[2]);
-		if (r != 6) {
+	do {
+		/* get the name type */
+		token = COM_Parse(text);
+		if (!*text)
 			return 0;
-		}
-
-		for (int i = 0; i < 2; i++) {
-			while (*text != ')') {
-				if (!*text) {
+		if (*token == '}')
+			break;
+		if (!strcmp(token, "mandatory")) {
+			Eclass_ParseMandatory(e, text);
+		} else if (!strcmp(token, "default")) {
+			Eclass_ParseDefault(e, text);
+		} else if (!strcmp(token, "optional")) {
+			Eclass_ParseOptional(e, text);
+		} else {
+			if (!strcmp(token, "color")) {
+				token = COM_Parse(text);
+				if (!*text)
+					return 0;
+				// grab the color, reformat as texture name
+				const int r = sscanf(token, "%f %f %f", &e->color[0], &e->color[1], &e->color[2]);
+				if (r != 3) {
+					g_message("Invalid color token given\n");
+					return e;
+				}
+			} else if (!strcmp(token, "size")) {
+				token = COM_Parse(text);
+				if (!*text)
+					return 0;
+				e->fixedsize = true;
+				const int r = sscanf(token, "%f %f %f %f %f %f", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
+						&e->maxs[1], &e->maxs[2]);
+				if (r != 6) {
+					g_message("Invalid size token given\n");
 					return 0;
 				}
-				text++;
+			} else if (!strcmp(token, "description")) {
+				token = COM_Parse(text);
+				if (!*text)
+					return 0;
+				e->m_comments = token;
+			} else if (!strcmp(token, "flags")) {
+				token = COM_Parse(text);
+				if (!*text)
+					return 0;
+				Eclass_ParseFlags(e, &token);
+			} else if (!strcmp(token, "model")) {
+				token = COM_Parse(text);
+				if (!*text)
+					return 0;
+				StringOutputStream buffer(string_length(token));
+				buffer << PathCleaned(e->m_modelpath.c_str());
+				e->m_modelpath = buffer.c_str();
+			} else {
+				g_message("Invalid token '%s'\n", token);
 			}
-			text++;
 		}
-	}
+	} while (*text);
 
-	char parms[256];
-	// get the flags that are shown in the entity inspector
-	{
-		// copy to the first /n
-		char* p = parms;
-		while (*text && *text != '\n')
-			*p++ = *text++;
-		*p = 0;
-		text++;
-	}
-
-	{
-		// any remaining words are parm flags
-		const char* p = parms;
-		for (std::size_t i = 0; i < MAX_FLAGS; i++) {
-			p = COM_Parse(p);
-			if (!p)
-				break;
-			strcpy(e->flagnames[i], com_token);
-		}
-	}
-
-	e->m_comments = text;
-
-	setSpecialLoad(e, "model=", e->m_modelpath);
-	StringOutputStream buffer(string_length(e->m_modelpath.c_str()));
-	buffer << PathCleaned(e->m_modelpath.c_str());
-	e->m_modelpath = buffer.c_str();
+	eclass_capture_state(e);
 
 	if (!e->fixedsize) {
 		EntityClass_insertAttribute(*e, "angle", EntityClassAttribute("direction", "Direction", "0"));
@@ -263,6 +209,7 @@ static EntityClass *Eclass_InitFromText (const char *text)
 	EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
 	EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound"));
 
+	g_debug("...added\n");
 	return e;
 }
 
@@ -270,79 +217,30 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 {
 	EntityClass *e;
 
-	TextFileInputStream inputFile(filename);
-	if (inputFile.failed()) {
-		g_warning("ScanFile: '%s' not found\n", filename);
+	TextFileInputStream file(filename);
+	if (file.failed()) {
+		StringOutputStream buffer;
+		buffer << "Could not load " << filename;
+		gtk_MessageBox(0, buffer.c_str(), _("Radiant - Error"), eMB_OK, eMB_ICONERROR);
 		return;
 	}
 	g_message("ScanFile: '%s'\n", filename);
 
-	enum EParserState
-	{
-		eParseDefault, eParseSolidus, eParseComment, eParseQuakeED, eParseEntityClass, eParseEntityClassEnd,
-	} state = eParseDefault;
-	const char* quakeEd = "QUAKED";
-	const char* p = 0;
-	StringBuffer buffer;
-	SingleCharacterInputStream<TextFileInputStream> bufferedInput(inputFile);
-	for (;;) {
-		char c;
-		if (!bufferedInput.readChar(c)) {
-			break;
-		}
+	const std::size_t size = file_size(filename);
+	char *entities = (char *)malloc(size);
+	file.read(entities, size);
+	const char **text = (const char **)&entities;
 
-		switch (state) {
-		case eParseDefault:
-			if (c == '/') {
-				state = eParseSolidus;
-			}
-			break;
-		case eParseSolidus:
-			if (c == '/') {
-				state = eParseComment;
-			} else if (c == '*') {
-				p = quakeEd;
-				state = eParseQuakeED;
-			}
-			break;
-		case eParseComment:
-			if (c == '\n') {
-				state = eParseDefault;
-			}
-			break;
-		case eParseQuakeED:
-			if (c == *p) {
-				if (*(++p) == '\0') {
-					state = eParseEntityClass;
-				}
-			} else {
-				state = eParseDefault;
-			}
-			break;
-		case eParseEntityClass:
-			if (c == '*') {
-				state = eParseEntityClassEnd;
-			} else {
-				buffer.push_back(c);
-			}
-			break;
-		case eParseEntityClassEnd:
-			if (c == '/') {
-				e = Eclass_InitFromText(buffer.c_str());
-				state = eParseDefault;
-				if (e)
-					collector.insert(e);
-				else
-					g_warning("Error parsing: '%s' in '%s'\n", debugname, filename);
+	do {
+		const char *token;
+		do {
+			token = COM_Parse(text);
+			if (!*token)
+				return;
+		} while (strcmp(token, "entity"));
 
-				buffer.clear();
-				state = eParseDefault;
-			} else {
-				buffer.push_back('*');
-				buffer.push_back(c);
-				state = eParseEntityClass;
-			}
-			break;
-		}
-	}
+		e = Eclass_InitFromText(text);
+		if (e)
+			collector.insert(e);
+	} while (*entities);
 }
