@@ -199,19 +199,9 @@ static void MN_ModelNodeDraw (menuNode_t *node)
  */
 void MN_DrawModelNode (menuNode_t *node, const char *source)
 {
-	const char *ref;
-	int i;
 	modelInfo_t mi;
-	modelInfo_t pmi;
-	animState_t *as;
-	const char *anim;					/* model anim state */
-	menuModel_t *menuModel, *menuModelParent = NULL;
-	/* if true we have to reset the anim state and make sure the correct model is shown */
-	qboolean updateModel = qfalse;
-	vec2_t nodepos;
+	menuModel_t *menuModel;
 	vec3_t nodeorigin;
-	vec3_t pmiorigin;
-	const menu_t* menu = node->menu;
 
 	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
 	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
@@ -231,16 +221,10 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 		}
 	}
 
-	MN_GetNodeAbsPos(node, nodepos);
-	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodepos[0];
-	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodepos[1];
+	MN_GetNodeAbsPos(node, nodeorigin);
+	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodeorigin[0];
+	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodeorigin[1];
 	nodeorigin[2] = node->u.model.origin[2];
-
-	/* check whether the cvar value changed */
-	if (Q_strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
-		Q_strncpyz(node->u.model.oldRefValue, source, MAX_OLDREFVALUE);
-		updateModel = qtrue;
-	}
 
 	mi.origin = nodeorigin;
 	mi.angles = node->u.model.angles;
@@ -266,9 +250,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			mi.model = R_RegisterModelShort(menuModel->model);
 			if (!mi.model) {
 				menuModel = menuModel->next;
-				/* list end */
-				if (!menuModel)
-					break;
 				continue;
 			}
 
@@ -284,9 +265,11 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 			/* no tag and no parent means - base model or single model */
 			if (!menuModel->tag && !menuModel->parent) {
+				const char *ref;
 				if (menuModel->menuTransformCnt) {
+					int i;
 					for (i = 0; i < menuModel->menuTransformCnt; i++) {
-						if (menu == menuModel->menuTransform[i].menuPtr) {
+						if (node->menu == menuModel->menuTransform[i].menuPtr) {
 							/* Use menu scale if defined. */
 							if (menuModel->menuTransform[i].useScale) {
 								VectorCopy(menuModel->menuTransform[i].scale, mi.scale);
@@ -326,15 +309,15 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 				/* get the animation given by menu node properties */
 				if (node->u.model.animation && *(char *) node->u.model.animation) {
-					ref = MN_GetReferenceString(menu, node->u.model.animation);
+					ref = MN_GetReferenceString(node->menu, node->u.model.animation);
 				/* otherwise use the standard animation from modelmenu defintion */
 				} else
 					ref = menuModel->anim;
 
 				/* only base models have animations */
 				if (ref && *ref) {
-					as = &menuModel->animState;
-					anim = R_AnimGetName(as, mi.model);
+					animState_t *as = &menuModel->animState;
+					const char *anim = R_AnimGetName(as, mi.model);
 					/* initial animation or animation change */
 					if (!anim || (anim && Q_strncmp(anim, ref, MAX_VAR)))
 						R_AnimChange(as, mi.model, ref);
@@ -348,6 +331,10 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 				R_DrawModelDirect(&mi, NULL, NULL);
 			/* tag and parent defined */
 			} else {
+				menuModel_t *menuModelParent;
+				modelInfo_t pmi;
+				vec3_t pmiorigin;
+				animState_t *as;
 				/* place this menumodel part on an already existing menumodel tag */
 				assert(menuModel->parent);
 				assert(menuModel->tag);
@@ -383,7 +370,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 				as = &menuModelParent->animState;
 				if (!as)
-					Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", pmi.name, ref);
+					Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", pmi.name, menuModelParent->anim);
 				pmi.frame = as->frame;
 				pmi.oldframe = as->oldframe;
 				pmi.backlerp = as->backlerp;
@@ -404,14 +391,19 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 		/* get skin */
 		if (node->dataModelSkinOrCVar && *(char *) node->dataModelSkinOrCVar)
-			mi.skin = atoi(MN_GetReferenceString(menu, node->dataModelSkinOrCVar));
+			mi.skin = atoi(MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar));
 		else
 			mi.skin = 0;
 
 		/* do animations */
 		if (node->u.model.animation && *(char *) node->u.model.animation) {
-			ref = MN_GetReferenceString(menu, node->u.model.animation);
-			if (updateModel) {
+			animState_t *as;
+			const char *ref;
+			ref = MN_GetReferenceString(node->menu, node->u.model.animation);
+
+			/* check whether the cvar value changed */
+			if (Q_strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
+				Q_strncpyz(node->u.model.oldRefValue, source, MAX_OLDREFVALUE);
 				/* model has changed but mem is already reserved in pool */
 				if (node->u.model.animationState) {
 					Mem_Free(node->u.model.animationState);
@@ -425,6 +417,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 				R_AnimChange(as, mi.model, ref);
 				node->u.model.animationState = as;
 			} else {
+				const char *anim;
 				/* change anim if needed */
 				as = node->u.model.animationState;
 				if (!as)
@@ -446,7 +439,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			char parent[MAX_VAR];
 			char *tag;
 
-			Q_strncpyz(parent, MN_GetReferenceString(menu, node->u.model.tag), MAX_VAR);
+			Q_strncpyz(parent, MN_GetReferenceString(node->menu, node->u.model.tag), MAX_VAR);
 			tag = parent;
 			/* tag "menuNodeName modelTag" */
 			while (*tag && *tag != ' ')
@@ -454,10 +447,13 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			/* split node name and tag */
 			*tag++ = 0;
 
-			for (search = menu->firstChild; search != node && search; search = search->next)
+			for (search = node->menu->firstChild; search != node && search; search = search->next) {
 				if (search->behaviour == modelBehaviour && !Q_strncmp(search->name, parent, sizeof(search->name))) {
+					modelInfo_t pmi;
+					vec3_t pmiorigin;
+					animState_t *as;
 					char modelName[MAX_VAR];
-					Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
+					Q_strncpyz(modelName, MN_GetReferenceString(node->menu, search->dataImageOrModel), sizeof(modelName));
 
 					pmi.model = R_RegisterModelShort(modelName);
 					if (!pmi.model)
@@ -491,6 +487,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 					R_DrawModelDirect(&mi, &pmi, tag);
 					break;
 				}
+			}
 		} else
 			R_DrawModelDirect(&mi, NULL, NULL);
 
