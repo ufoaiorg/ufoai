@@ -248,8 +248,6 @@ void SV_LinkEdict (edict_t * ent)
  * @brief fills in a table of edict pointers with edicts that have bounding boxes
  * that intersect the given area. It is possible for a non-axial bmodel
  * to be returned that doesn't actually intersect the area on an exact test.
- * @return the number of pointers filled in
- * @note ??? does this always return the world?
  * @sa SV_AreaEdicts
  */
 static void SV_AreaEdicts_r (areanode_t * node, int area_type)
@@ -302,6 +300,7 @@ static void SV_AreaEdicts_r (areanode_t * node, int area_type)
 
 /**
  * @sa SV_AreaEdicts_r
+ * @return the number of pointers filled in
  */
 int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int areatype)
 {
@@ -316,7 +315,6 @@ int SV_AreaEdicts (vec3_t mins, vec3_t maxs, edict_t ** list, int maxcount, int 
 	return area_count;
 }
 
-/*=========================================================================== */
 
 /** @brief Server side moveclip - see cmodel.c */
 typedef struct {
@@ -555,4 +553,16 @@ float SV_GetBounceFraction (const char *texture)
 {
 	const terrainType_t *t = Com_GetTerrainType(texture);
 	return t ? t->bounceFraction : 1.0f;
+}
+
+/**
+ * @brief Load the mins, maxs for the model on the serverside for pathfinding and clipping
+ * @param[in] model The relative model path to load the mins, maxs for
+ * @param[out] mins The mins vector of the model
+ * @param[out] maxs The maxs vector of the model
+ * @todo Implement the model loading
+ */
+qboolean SV_LoadModelMinsMaxs (const char *model, vec3_t mins, vec3_t maxs)
+{
+	return qfalse;
 }

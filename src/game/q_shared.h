@@ -341,8 +341,6 @@ typedef enum {
 
 extern const char *pa_format[128];
 
-/* =========================================================== */
-
 /** @brief Available shoot types */
 typedef enum {
 	ST_RIGHT,
