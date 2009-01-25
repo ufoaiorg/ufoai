@@ -1,8 +1,11 @@
 /**
- * @file cmdlib.h
+ * @file entitiesdef.c
+ * @brief Handles definition of entities, parsing them from entities.ufo
  */
 
 /*
+All original materal Copyright (C) 2002-2009 UFO: Alien Invasion team.
+
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -22,26 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef __CMDLIB__
-#define __CMDLIB__
+#include "parse.h"
+#include "entitiesdef.h"
 
-#include "../../../shared/byte.h"
-
-void FS_Init(const char *path);
-const char* FS_GameDir(void);
-
-char *COM_ExpandRelativePath(const char *path);	/* from cmd line */
-
-void SafeOpenWrite(const char *filename, qFILE *f);
-void SafeWrite(qFILE *f, void *buffer, int count);
-
-int LoadFile(const char *filename, void **bufferptr);
-void CloseFile(qFILE *f);
-void FreeFile(void *buffer);
-int TryLoadFile(const char *filename, void **bufferptr);
-char *FS_EntitiesDefUfoPath(void);
-
-qboolean AbortPrint(const verbosityLevel_t importance);
-void Verb_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(printf, 2, 3)));
-
+void ED_Parse(const char **data_p)
+{
+#if 0
+	Com_Printf("%s\n", *data_p);
 #endif
+}

@@ -34,6 +34,7 @@ UFO2MAP_SRCS = \
 	shared/byte.c \
 	shared/parse.c \
 	shared/shared.c \
+	shared/entitiesdef.c \
 	\
 	common/unzip.c \
 	common/tracing.c \

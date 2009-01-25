@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/shared.h"
 #include "common/bspfile.h"
 #include "common/scriplib.h"
+#include "../../shared/entitiesdef.h"
 #include "check.h"
 #include "bsp.h"
 #include "ufo2map.h"
@@ -677,6 +678,28 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
 void CheckEntities (void)
 {
 	int i;
+
+#if 0
+	int ufoLength;
+	void *newPointer;
+	void **entitiesUfoBuf; /* LoadFile calls malloc */
+	const char *entitiesUfoPath = FS_EntitiesDefUfoPath();
+
+	entitiesUfoBuf = &newPointer;
+
+	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
+
+	/** @todo do not assume trunk is current dir. also, the .ufo might be compressed */
+	ufoLength = TryLoadFile(entitiesUfoPath, entitiesUfoBuf);
+	if(ufoLength == -1)
+		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
+
+	ED_Parse((const char **)entitiesUfoBuf);
+
+	free(*entitiesUfoBuf);
+
+	return;
+#endif
 
 	/* include worldspawn, at entities[0] */
 	for (i = 0; i < num_entities; i++) {

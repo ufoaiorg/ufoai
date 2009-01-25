@@ -133,6 +133,8 @@ static pack_t *FS_LoadPackFile (const char *packfile)
  */
 static char gamedir[MAX_OSPATH];
 
+static char entitiesDefUfoFilename[MAX_OSPATH]; /**< path to entities.ufo */
+
 /**
  * @brief Get the current working dir and ensures that there is a trailing slash
  */
@@ -176,6 +178,15 @@ void FS_Init (const char *path)
 	pak = FS_LoadPackFile(va("%s0pics.pk3", gamedir));
 	if (!pak)
 		Verb_Printf(VERB_EXTRA, "Could not load image pk3, searching in directories for images instead\n");
+}
+
+char *FS_EntitiesDefUfoPath (void)
+{
+	const char *relPath = "ufos/entities.ufo";
+	strncpy(entitiesDefUfoFilename, gamedir, sizeof(gamedir) - 1);
+	assert(strlen(entitiesDefUfoFilename) + strlen(relPath) + 1 <= sizeof(entitiesDefUfoFilename));
+	strncat(entitiesDefUfoFilename, relPath, sizeof(entitiesDefUfoFilename) - strlen(entitiesDefUfoFilename) - 1);
+	return entitiesDefUfoFilename;
 }
 
 /**
