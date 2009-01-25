@@ -28,6 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef PARSE_H
 #define PARSE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 const char *COM_Parse(const char **data_p);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
