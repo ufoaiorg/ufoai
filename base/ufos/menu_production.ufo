@@ -206,6 +206,7 @@ menu production
 		pos	"793 288"
 		scale	"7 7 7"
 		origin	"793 288 0"
+		view	item
 	}
 
 	// ==================
