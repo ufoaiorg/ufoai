@@ -924,6 +924,18 @@ static void SP_misc_mission_aliens (edict_t *ent)
 	gi.LinkEdict(ent);
 }
 
+/**
+ * @brief Load the mins, maxs for the model on the serverside for pathfinding and clipping
+ * @param[in] model The relative model path to load the mins, maxs for
+ * @param[out] mins The mins vector of the model
+ * @param[out] maxs The maxs vector of the model
+ * @todo Implement the model loading
+ */
+static qboolean G_LoadModelMinsMaxs (const char *model, vec3_t mins, vec3_t maxs)
+{
+	return qfalse;
+}
+
 #define MISC_MODEL_SOLID 256
 /**
  * @brief Spawns a misc_model if there is a solid state
@@ -931,10 +943,15 @@ static void SP_misc_mission_aliens (edict_t *ent)
 static void SP_misc_model (edict_t *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
-		ent->solid = SOLID_BBOX;
-		/** @todo Handling some misc_models serverside
-		 * would be nice for pathfinding and clipping */
-		G_FreeEdict(ent);
+		vec3_t modelMins, modelMaxs;
+		if (G_LoadModelMinsMaxs(ent->model, modelMins, modelMaxs)) {
+			VectorCopy(ent->absmax, modelMaxs);
+			VectorCopy(ent->absmin, modelMins);
+			ent->solid = SOLID_BBOX;
+			gi.LinkEdict(ent);
+		} else {
+			G_FreeEdict(ent);
+		}
 	} else {
 		/* handled client side */
 		G_FreeEdict(ent);
