@@ -568,11 +568,11 @@ float SV_GetBounceFraction (const char *texture)
 
 /**
  * @brief Loads the mins/maxs for a md2 mesh model
- * @param mod The server side model struct to store the results in
- * @param buffer The mesh model buffer
- * @param bufferLength The mesh model buffer length
+ * @param mod[out] The server side model struct to store the results in
+ * @param buffer[in] The mesh model buffer
+ * @param bufferLength[in] The mesh model buffer length
  */
-static void SV_ModLoadAliasMD2Model (sv_model_t* mod, byte *buffer, int bufferLength)
+static void SV_ModLoadAliasMD2Model (sv_model_t* mod, const byte *buffer, int bufferLength)
 {
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
 	const int num_frames = LittleLong(md2->num_frames);
@@ -596,11 +596,11 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, byte *buffer, int bufferLe
 
 /**
  * @brief Loads the mins/maxs for a md3 mesh model
- * @param mod The server side model struct to store the results in
- * @param buffer The mesh model buffer
- * @param bufferLength The mesh model buffer length
+ * @param mod[out] The server side model struct to store the results in
+ * @param buffer[in] The mesh model buffer
+ * @param bufferLength[in] The mesh model buffer length
  */
-static void SV_ModLoadAliasMD3Model (sv_model_t* mod, byte *buffer, int bufferLength)
+static void SV_ModLoadAliasMD3Model (sv_model_t* mod, const byte *buffer, int bufferLength)
 {
 	const dmd3_t *md3 = (const dmd3_t *)buffer;
 	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
@@ -622,11 +622,11 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, byte *buffer, int bufferLe
 
 /**
  * @brief Loads the mins/maxs for a dpm mesh model
- * @param mod The server side model struct to store the results in
- * @param buffer The mesh model buffer
- * @param bufferLength The mesh model buffer length
+ * @param mod[out] The server side model struct to store the results in
+ * @param buffer[in] The mesh model buffer
+ * @param bufferLength[in] The mesh model buffer length
  */
-static void SV_ModLoadAliasDPMModel (sv_model_t* mod, byte *buffer, int bufferLength)
+static void SV_ModLoadAliasDPMModel (sv_model_t* mod, const byte *buffer, int bufferLength)
 {
 	const dpmheader_t *dpm = (const dpmheader_t *)buffer;
 	const int num_frames = BigLong(dpm->num_frames);
@@ -713,11 +713,13 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 		break;
 
 	default:
+		FS_FreeFile(buf);
 		return qfalse;
 	}
 
 	VectorCopy(mod->mins, mins);
 	VectorCopy(mod->maxs, maxs);
 
+	FS_FreeFile(buf);
 	return qtrue;
 }
