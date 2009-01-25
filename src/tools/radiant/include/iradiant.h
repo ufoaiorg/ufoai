@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define __QERPLUGIN_H__
 
 #include "generic/constant.h"
-
+#include "gtkutil/accelerator.h"
 
 // ========================================
 // GTK+ helper functions
@@ -119,6 +119,7 @@ struct _QERFuncTable_1 {
 	const char* (*getAppPath)();
 	const char* (*getSettingsPath)();
 	const char* (*getMapsPath)();
+	void (*commandInsert)(const char* name, const Callback& callback, const Accelerator& accelerator);
 
 	const char* (*getGameName)();
 	const char* (*getMapName)();

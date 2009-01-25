@@ -50,6 +50,7 @@
 #include "iplugin.h"
 #include "imap.h"
 #include "namespace.h"
+#include "commands.h"
 
 #include "gtkutil/messagebox.h"
 #include "gtkutil/filechooser.h"
@@ -131,6 +132,7 @@ class RadiantCoreAPI
 			m_radiantcore.getAppPath = &AppPath_get;
 			m_radiantcore.getSettingsPath = &SettingsPath_get;
 			m_radiantcore.getMapsPath = &getMapsPath;
+			m_radiantcore.commandInsert = &GlobalCommands_insert;
 
 			m_radiantcore.getGameName = &gamename_get;
 
