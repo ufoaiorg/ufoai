@@ -519,8 +519,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			}
 		} else
 			R_DrawModelDirect(&mi, NULL, NULL);
-
-
 	}
 }
 
@@ -575,6 +573,42 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 	node->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
 }
 
+static void MN_ModelNodeGetParentFromTag(const char* tag, char *parent, int bufferSize)
+{
+	char *c;
+	Q_strncpyz(parent, tag, bufferSize);
+	c = parent;
+	/* tag "menuNodeName modelTag" */
+	while (*c && *c != ' ')
+		c++;
+	/* split node name and tag */
+	*c++ = 0;
+}
+
+static void MN_ModelNodeLoaded (menuNode_t *node)
+{
+	/* link node with the parent */
+	if (node->u.model.tag) {
+		char parentName[MAX_VAR];
+		menuNode_t *parent;
+		menuNode_t *last;
+		const char *tag = MN_GetReferenceString(node->menu, node->u.model.tag);
+
+		/* find the parent node */
+		MN_ModelNodeGetParentFromTag(tag, parentName, MAX_VAR);
+		parent = MN_GetNode(node->menu, parentName);
+		if (parent == NULL) {
+			Sys_Error("MN_ModelNodeLoaded: Node '%s.%s' not found. Please define parent node before childs\n", node->menu->name, parentName);
+		}
+
+		/* find the last child, and like the new one */
+		last = parent;
+		while (last->u.model.next != NULL)
+			last = last->u.model.next;
+		last->u.model.next = node;
+	}
+}
+
 /** @brief valid properties for model */
 static const value_t properties[] = {
 	{"anim", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.animation), 0},
@@ -595,6 +629,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_ModelNodeMouseDown;
 	behaviour->mouseUp = MN_ModelNodeMouseUp;
 	behaviour->loading = MN_ModelNodeLoading;
+	behaviour->loaded = MN_ModelNodeLoaded;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
 
