@@ -990,7 +990,7 @@ static qboolean ParseMapEntity (const char *filename)
 	 * toss all brushes into the world entity */
 	entName = ValueForKey(mapent, "classname");
 	if (num_entities == 1 && strcmp("worldspawn", entName))
-		Sys_Error("The first entity must be worldspawn, it is:%s", entName);
+		Sys_Error("The first entity must be worldspawn, it is: %s", entName);
 	if (notCheckOrFix && !strcmp("func_group", entName)) {
 		MoveBrushesToWorld(mapent);
 		num_entities--;
