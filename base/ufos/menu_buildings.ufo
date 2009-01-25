@@ -195,11 +195,10 @@ menu popup_buildingpreview
 
 	custombutton ufopedia_link
 	{
-		image		menu/buttons_small
+		icon		bordered_magnifying_glass
 		tooltip		"_UFOpaedia"
 		pos			"320 190"
 		size		"16 16"
-		texl		"32 0"
 		click		{ cmd "building_ufopedia;" }
 	}
 }

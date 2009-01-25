@@ -246,3 +246,27 @@ icon soldier {
 	texl	"33 33"
 	size	"24 23"
 }
+
+icon bordered_magnifying_glass {
+	image "menu/icon_pack1"
+	texl	"1 46"
+	size	"16 16"
+}
+
+icon bordered_sleep {
+	image "menu/icon_pack1"
+	texl	"19 46"
+	size	"16 16"
+}
+
+icon bordered_question {
+	image "menu/icon_pack1"
+	texl	"37 46"
+	size	"16 16"
+}
+
+icon bordered_cross {
+	image "menu/icon_pack1"
+	texl	"55 46"
+	size	"16 16"
+}
