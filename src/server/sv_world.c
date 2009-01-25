@@ -571,24 +571,21 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, byte *buffer, int bufferLe
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
 	const int num_frames = LittleLong(md2->num_frames);
 	const int frameSize = LittleLong(md2->framesize);
-	int i;
+	const dMD2Frame_t *frame = (const dMD2Frame_t *) ((const byte *) md2 + LittleLong(md2->ofs_frames) + mod->frame * frameSize);
+	vec3_t scale, mins, maxs;
+	int j;
 
-	for (i = 0; i < num_frames; i++) {
-		const dMD2Frame_t *frame = (const dMD2Frame_t *) ((const byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
-		vec3_t scale, translate, mins, maxs;
-		int j;
+	if (mod->frame > num_frames)
+		return;
 
-		for (j = 0; j < 3; j++) {
-			scale[j] = LittleFloat(frame->scale[j]);
-			translate[j] = LittleFloat(frame->translate[j]);
-		}
-
-		VectorCopy(translate, mins);
-		VectorMA(translate, 255, scale, maxs);
-
-		AddPointToBounds(mins, mod->mins, mod->maxs);
-		AddPointToBounds(maxs, mod->mins, mod->maxs);
+	for (j = 0; j < 3; j++) {
+		scale[j] = LittleFloat(frame->scale[j]);
+		mins[j] = LittleFloat(frame->translate[j]);
 	}
+
+	VectorMA(mins, 255, scale, maxs);
+	AddPointToBounds(mins, mod->mins, mod->maxs);
+	AddPointToBounds(maxs, mod->mins, mod->maxs);
 }
 
 static void SV_ModLoadAliasMD3Model (sv_model_t* mod, byte *buffer, int bufferLength)
@@ -596,25 +593,39 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, byte *buffer, int bufferLe
 	const dmd3_t *md3 = (const dmd3_t *)buffer;
 	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
 	const int num_frames = LittleLong(md3->num_frames);
-	int i;
+	vec3_t mins, maxs;
+	int j;
 
-	for (i = 0; i < num_frames; i++, frame++) {
-		vec3_t mins, maxs;
-		int j;
+	if (mod->frame > num_frames)
+		return;
 
-		for (j = 0; j < 3; j++) {
-			mins[j] = LittleFloat(frame->mins[j]);
-			maxs[j] = LittleFloat(frame->maxs[j]);
-		}
-
-		AddPointToBounds(mins, mod->mins, mod->maxs);
-		AddPointToBounds(maxs, mod->mins, mod->maxs);
+	frame += mod->frame;
+	for (j = 0; j < 3; j++) {
+		mins[j] = LittleFloat(frame->mins[j]);
+		maxs[j] = LittleFloat(frame->maxs[j]);
 	}
+	AddPointToBounds(mins, mod->mins, mod->maxs);
+	AddPointToBounds(maxs, mod->mins, mod->maxs);
 }
 
 static void SV_ModLoadAliasDPMModel (sv_model_t* mod, byte *buffer, int bufferLength)
 {
+	const dpmheader_t *dpm = (const dpmheader_t *)buffer;
+	const int num_frames = BigLong(dpm->num_frames);
+	const int ofs_frames = BigLong(dpm->ofs_frames);
+	const dpmframe_t *frame = (const dpmframe_t *)((const byte *)dpm + ofs_frames);
 
+	if (mod->frame > num_frames)
+		return;
+
+	frame += mod->frame;
+
+	mod->mins[0] = BigFloat(frame->mins[0]);
+	mod->mins[1] = BigFloat(frame->mins[1]);
+	mod->mins[2] = BigFloat(frame->mins[2]);
+	mod->maxs[0] = BigFloat(frame->maxs[0]);
+	mod->maxs[1] = BigFloat(frame->maxs[1]);
+	mod->maxs[2] = BigFloat(frame->maxs[2]);
 }
 
 /**
@@ -682,7 +693,13 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	case IDMD3HEADER:
 		SV_ModLoadAliasMD3Model(mod, buf, modfilelen);
 		break;
+
+	default:
+		return qfalse;
 	}
 
-	return qfalse;
+	VectorCopy(mod->mins, mins);
+	VectorCopy(mod->maxs, maxs);
+
+	return qtrue;
 }
