@@ -1068,7 +1068,7 @@ void UP_OpenWith (const char *name)
 	if (!name)
 		return;
 
-	MN_PushMenu("mn_push ufopedia", NULL);
+	MN_PushMenu("ufopedia", NULL);
 	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 
