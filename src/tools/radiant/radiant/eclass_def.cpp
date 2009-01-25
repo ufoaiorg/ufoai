@@ -78,7 +78,7 @@ StaticRegisterModule staticRegisterEclassDef (StaticEclassDefModule::instance ()
 
 static void Eclass_ParseFlags (EntityClass *e, const char **text)
 {
-	for (std::size_t i = 0; i < MAX_FLAGS; i++) {
+	for (int i = 0; i < MAX_FLAGS; i++) {
 		const char *token = COM_Parse(text);
 		if (!*token)
 			break;
@@ -177,10 +177,13 @@ static EntityClass *Eclass_InitFromText (const char **text)
 					return 0;
 				e->m_comments = token;
 			} else if (!strcmp(token, "flags")) {
+				gchar *flags;
 				token = COM_Parse(text);
 				if (!*text)
 					return 0;
-				Eclass_ParseFlags(e, &token);
+				flags = g_strdup(token);
+				Eclass_ParseFlags(e, (const char **)&flags);
+				g_free(flags);
 			} else if (!strcmp(token, "model")) {
 				token = COM_Parse(text);
 				if (!*text)
