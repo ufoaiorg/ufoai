@@ -18,22 +18,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "ufoai_gtk.h"
 #include "ufoai_filters.h"
-
-#include "itoolbar.h"
 #include "iscenegraph.h"
-
-#include <gtk/gtk.h>
-
-/**
- * GTK callback functions
- */
-
-class UFOAIGtk {
-	GtkWindow* m_gtk_window;
-public:
-	UFOAIGtk(void* gtk_window) : m_gtk_window((GtkWindow*)gtk_window) {
-	}
-};
 
 #define NUM_TOOLBARBUTTONS 8
 

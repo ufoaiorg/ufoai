@@ -18,14 +18,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "ufoai_gtk.h"
 #include "ufoai_filters.h"
-
 #include "iplugin.h"
-
 #include "version.h"
 
 #include "modulesystem/singletonmodule.h"
-
-#include <gtk/gtk.h>
 
 #define PLUGIN_VERSION "0.5"
 
