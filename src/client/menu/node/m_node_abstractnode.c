@@ -73,7 +73,7 @@ static const value_t properties[] = {
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
 	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
 	{"roq", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
-	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},	/** @todo Rename into model */
+	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
 	{"cvar", V_SPECIAL_CVAR, offsetof(menuNode_t, dataModelSkinOrCVar), 0},	/* for selectbox */
 	{"skin", V_CVAR_OR_STRING, offsetof(menuNode_t, dataModelSkinOrCVar), 0},
 	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
@@ -82,15 +82,6 @@ static const value_t properties[] = {
 #if 0 /* never use */
 	{"weapon", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
 #endif
-
-	/* specific for model
-	 * @todo move it into the node behaviour
-	 */
-	{"anim", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.animation), 0},
-	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
-	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
-	{"tag", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.tag), 0},
 
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},

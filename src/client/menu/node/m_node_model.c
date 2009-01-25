@@ -1,6 +1,7 @@
 /**
  * @file m_node_model.c
  * @todo use MN_GetNodeAbsPos instead of menu->pos
+ * @todo cleanup old depandancy between menu->name and view (menuPtr...)
  */
 
 /*
@@ -52,9 +53,10 @@ void MN_LinkMenuModels (void)
 			m->menuTransform[j].menuPtr = MN_GetMenu(m->menuTransform[j].menuID);
 			if (m->menuTransform[j].menuPtr == NULL)
 				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'\n", m->menuTransform[j].menuID, m->id);
+
 			/* we don't need this anymore */
-			Mem_Free(m->menuTransform[j].menuID);
-			m->menuTransform[j].menuID = NULL;
+			/*Mem_Free(m->menuTransform[j].menuID);
+			m->menuTransform[j].menuID = NULL;*/
 		}
 	}
 }
@@ -209,8 +211,15 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 		int i;
 		/* search a menuTransforme */
 		for (i = 0; i < menuModel->menuTransformCnt; i++) {
-			if (node->menu == menuModel->menuTransform[i].menuPtr)
-				break;
+			if (node->u.model.viewName != NULL) {
+				/** @todo improve the test when its possible */
+				if (!Q_strcmp(node->u.model.viewName, menuModel->menuTransform[i].menuID))
+					break;
+			} else {
+				/** @todo remove it when its possible */
+				if (node->menu == menuModel->menuTransform[i].menuPtr)
+					break;
+			}
 		}
 
 		/* menuTransforme found */
@@ -566,6 +575,19 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 	node->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
 }
 
+/** @brief valid properties for model */
+static const value_t properties[] = {
+	{"anim", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.animation), 0},
+	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
+	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
+	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
+	{"tag", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.tag), 0},
+	/** @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar) */
+	{"view", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.viewName), 0},
+
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "model";
@@ -574,6 +596,7 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseUp = MN_ModelNodeMouseUp;
 	behaviour->loading = MN_ModelNodeLoading;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
+	behaviour->properties = properties;
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnscale", MN_SetModelTransform_f, "Transform model from command line.");
