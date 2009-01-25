@@ -73,9 +73,10 @@ public:
 	CopiedString m_name;
 	CopiedString m_value;
 	CopiedString m_description;
+	bool m_mandatory;			/**< if this is true, the value is needed for the entity to work */
 	EntityClassAttribute() {
 	}
-	EntityClassAttribute(const char* type, const char* name, const char* value = "", const char* description = "") : m_type(type), m_name(name), m_value(value), m_description(description) {
+	EntityClassAttribute(const char* type, const char* name, bool mandatory = false, const char* value = "", const char* description = "") : m_type(type), m_name(name), m_value(value), m_description(description), m_mandatory(mandatory) {
 	}
 };
 

@@ -86,7 +86,7 @@ static void Eclass_ParseFlags (EntityClass *e, const char **text)
 	}
 }
 
-static void Eclass_ParseOptional (EntityClass *e, const char **text)
+static void Eclass_ParseAttribute (EntityClass *e, const char **text, bool mandatory)
 {
 	const char *token;
 	do {
@@ -97,31 +97,11 @@ static void Eclass_ParseOptional (EntityClass *e, const char **text)
 			break;
 
 		if (!strcmp(token, "model")) {
-			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model"));
+			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model", mandatory));
 		} else if (!strcmp(token, "particle")) {
-			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
+			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle", mandatory));
 		} else if (!strcmp(token, "noise")) {
-			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound"));
-		}
-	} while (*token != '}');
-}
-
-static void Eclass_ParseMandatory (EntityClass *e, const char **text)
-{
-	const char *token;
-	do {
-		token = COM_Parse(text);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		if (!strcmp(token, "model")) {
-			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model"));
-		} else if (!strcmp(token, "particle")) {
-			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle"));
-		} else if (!strcmp(token, "noise")) {
-			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound"));
+			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound", mandatory));
 		}
 	} while (*token != '}');
 }
@@ -164,11 +144,11 @@ static EntityClass *Eclass_InitFromText (const char **text)
 		if (*token == '}')
 			break;
 		if (!strcmp(token, "mandatory")) {
-			Eclass_ParseMandatory(e, text);
+			Eclass_ParseAttribute(e, text, true);
+		} else if (!strcmp(token, "optional")) {
+			Eclass_ParseAttribute(e, text, false);
 		} else if (!strcmp(token, "default")) {
 			Eclass_ParseDefault(e, text);
-		} else if (!strcmp(token, "optional")) {
-			Eclass_ParseOptional(e, text);
 		} else {
 			if (!strcmp(token, "color")) {
 				token = COM_Parse(text);
