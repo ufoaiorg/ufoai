@@ -769,7 +769,7 @@ tech rs_weapon_machinegun_ammo
 	require_AND
 	{
 		tech rs_damage_normal
-		tech rs_weapon_assault
+		tech rs_weapon_machinegun
 	}
 	provides	machinegun_ammo
 	time	0
