@@ -194,6 +194,61 @@ static void MN_ModelNodeDraw (menuNode_t *node)
 }
 
 /**
+ * @brief Set the Model info view (angle,origin,scale) according to the node definition
+ */
+static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menuModel_t *menuModel)
+{
+	qboolean isInitialised = qfalse;
+	vec3_t nodeorigin;
+	MN_GetNodeAbsPos(node, nodeorigin);
+	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodeorigin[0];
+	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodeorigin[1];
+	nodeorigin[2] = node->u.model.origin[2];
+
+	if (menuModel->menuTransformCnt) {
+		int i;
+		/* search a menuTransforme */
+		for (i = 0; i < menuModel->menuTransformCnt; i++) {
+			if (node->menu == menuModel->menuTransform[i].menuPtr)
+				break;
+		}
+
+		/* menuTransforme found */
+		if (i != menuModel->menuTransformCnt) {
+			/* Use menu scale if defined. */
+			if (menuModel->menuTransform[i].useScale) {
+				VectorCopy(menuModel->menuTransform[i].scale, mi->scale);
+			} else {
+				VectorCopy(node->scale, mi->scale);
+			}
+
+			/* Use menu angles if defined. */
+			if (menuModel->menuTransform[i].useAngles) {
+				VectorCopy(menuModel->menuTransform[i].angles, mi->angles);
+			} else {
+				VectorCopy(node->u.model.angles, mi->angles);
+			}
+
+			/* Use menu origin if defined. */
+			if (menuModel->menuTransform[i].useOrigin) {
+				VectorAdd(nodeorigin, menuModel->menuTransform[i].origin, mi->origin);
+			} else {
+				VectorCopy(nodeorigin, mi->origin);
+			}
+			isInitialised = qtrue;
+		}
+	}
+
+	if (!isInitialised) {
+		VectorCopy(node->scale, mi->scale);
+		VectorCopy(node->u.model.angles, mi->angles);
+		VectorCopy(nodeorigin, mi->origin);
+	}
+
+	VectorCopy(node->u.model.center, mi->center);
+}
+
+/**
  * @todo Menu models should inherit the node values from their parent
  * @todo need to merge menuModel case, and the common case (look to be a copy-pasted code)
  */
@@ -266,46 +321,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			/* no tag and no parent means - base model or single model */
 			if (!menuModel->tag && !menuModel->parent) {
 				const char *ref;
-				if (menuModel->menuTransformCnt) {
-					int i;
-					for (i = 0; i < menuModel->menuTransformCnt; i++) {
-						if (node->menu == menuModel->menuTransform[i].menuPtr) {
-							/* Use menu scale if defined. */
-							if (menuModel->menuTransform[i].useScale) {
-								VectorCopy(menuModel->menuTransform[i].scale, mi.scale);
-							} else {
-								VectorCopy(node->scale, mi.scale);
-							}
-
-							/* Use menu angles if defined. */
-							if (menuModel->menuTransform[i].useAngles) {
-								VectorCopy(menuModel->menuTransform[i].angles, mi.angles);
-							} else {
-								VectorCopy(node->u.model.angles, mi.angles);
-							}
-
-							/* Use menu origin if defined. */
-							if (menuModel->menuTransform[i].useOrigin) {
-								VectorAdd(nodeorigin, menuModel->menuTransform[i].origin, mi.origin);
-							} else {
-								VectorCopy(nodeorigin, mi.origin);
-							}
-							break;
-						}
-					}
-					/* not for this menu */
-					if (i == menuModel->menuTransformCnt) {
-						VectorCopy(node->scale, mi.scale);
-						VectorCopy(node->u.model.angles, mi.angles);
-						VectorCopy(nodeorigin, mi.origin);
-					}
-				} else {
-					VectorCopy(node->scale, mi.scale);
-					VectorCopy(node->u.model.angles, mi.angles);
-					VectorCopy(nodeorigin, mi.origin);
-				}
+				MN_InitModelInfoView(node, &mi, menuModel);
 				Vector4Copy(node->color, mi.color);
-				VectorCopy(node->u.model.center, mi.center);
 
 				/* get the animation given by menu node properties */
 				if (node->u.model.animation && *(char *) node->u.model.animation) {
@@ -350,17 +367,19 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 				}
 
 				pmi.name = menuModelParent->model;
+
 				pmi.origin = pmiorigin;
+				pmi.angles = menuModelParent->angles;
+				pmi.scale = menuModelParent->scale;
+				pmi.center = menuModelParent->center;
+				pmi.color = menuModelParent->color;
+
 				pmi.origin[0] = menuModelParent->origin[0] + mi.origin[0];
 				pmi.origin[1] = menuModelParent->origin[1] + mi.origin[1];
 				pmi.origin[2] = menuModelParent->origin[2];
 				/* don't count menuoffset twice for tagged models */
 				mi.origin[0] -= node->menu->pos[0];
 				mi.origin[1] -= node->menu->pos[1];
-				pmi.angles = menuModelParent->angles;
-				pmi.scale = menuModelParent->scale;
-				pmi.center = menuModelParent->center;
-				pmi.color = menuModelParent->color;
 
 				/* autoscale? */
 				if (!mi.scale[0]) {
@@ -460,17 +479,18 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 						break;
 
 					pmi.name = modelName;
-					VectorCopy(search->u.model.origin, pmiorigin);
 					pmi.origin = pmiorigin;
+					pmi.angles = search->u.model.angles;
+					pmi.scale = search->scale;
+					pmi.center = search->u.model.center;
+					pmi.color = search->color;
+
+					VectorCopy(search->u.model.origin, mi.origin);
 					pmi.origin[0] += mi.origin[0];
 					pmi.origin[1] += mi.origin[1];
 					/* don't count menuoffset twice for tagged models */
 					mi.origin[0] -= node->menu->pos[0];
 					mi.origin[1] -= node->menu->pos[1];
-					pmi.angles = search->u.model.angles;
-					pmi.scale = search->scale;
-					pmi.center = search->u.model.center;
-					pmi.color = search->color;
 
 					/* autoscale? */
 					if (!node->scale[0]) {
