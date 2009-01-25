@@ -321,14 +321,14 @@ menu aircraft_equip
 	{
 		model	"*cvar mn_aircraft_model"
 		// @todo remove origin property when possible
-		origin	"228 318 0"
-		pos		"14 14"
+		origin	"796 370 0"
+		pos		"584 94"
 		size	"429 641"
 	}
 
 	zone wz_aircraftequip
 	{
-		pos		"14 14"
+		pos		"584 94"
 		size	"429 641"
 		whup	{
 			cmd "mn_next_aircraft;"
@@ -344,7 +344,7 @@ menu aircraft_equip
 	{
 		tooltip "_Previous aircraft"
 		image	menu/button_background	texl	"192 0"	blend true
-		pos	"10 665"	size	"64 37"
+		pos	"585 727"	size	"64 37"
 		icon prev
 
 		mousefx true
@@ -366,7 +366,7 @@ menu aircraft_equip
 	{
 		tooltip "_Next aircraft"
 		image	menu/button_background	texl	"192 0"	blend true
-		pos	"382 665"	size	"64 37"
+		pos	"954 727"	size	"64 37"
 		icon next
 		click	{
 			cmd "mn_next_aircraft;"
@@ -385,7 +385,7 @@ menu aircraft_equip
 	string aircraftname
 	{
 		string		"*cvar mn_aircraftname"
-		pos			"74 678"
+		pos			"649 737"
 		size		"300 16"
 		textalign	cc
 		whup {
@@ -401,7 +401,7 @@ menu aircraft_equip
 	string airequip_available
 	{
 		string		"_Available equipment:"
-		pos			"470 440"
+		pos			"28 104"
 		size		"250 25"
 		font		f_big
 		textalign	cc
@@ -409,11 +409,11 @@ menu aircraft_equip
 
 	text airequip_selected_description
 	{
-		pos			"760 630"
-		size		"240 60"
+		pos			"312 307"
+		size		"240 100"
 		lineheight	"20"
-		rows		"3"
-		tabwidth	120
+		rows		"5"
+		tabwidth	160
 		scrollbar	true
 	}
 
@@ -423,8 +423,8 @@ menu aircraft_equip
 		visiblewhen "mn_equip_pilot != 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
-		origin	"886 545 0"
-		pos		"760 500"
+		origin	"423 215 0"
+		pos		"312 177"
 		size	"241 120"
 		mousefx	true
 		click
@@ -435,8 +435,8 @@ menu aircraft_equip
 		visiblewhen "mn_equip_pilot == 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"15 60 100"
-		origin	"886 555 0"
-		pos		"760 500"
+		origin	"423 225 0"
+		pos		"312 177"
 		size	"241 120"
 		mousefx	true
 		click
@@ -445,7 +445,7 @@ menu aircraft_equip
 	string airequip_item_name
 	{
 		string		"*cvar mn_itemname"
-		pos			"750 480"
+		pos			"307 142"
 		size		"261 20"
 		textalign	cc
 	}
@@ -453,7 +453,7 @@ menu aircraft_equip
 	string airequip_selected
 	{
 		string		"_Selected item:"
-		pos			"750 440"
+		pos			"307 102"
 		size		"260 25"
 		font		f_big
 		textalign	cc
@@ -466,7 +466,7 @@ menu aircraft_equip
 		image		menu/button_background
 		texl		"192 0"
 		blend		true
-		pos			"10 712"
+		pos			"70 429"
 		size		"64 37"
 		icon		prev
 		click		{ cmd "mn_prev_equiptype;" }
@@ -480,7 +480,7 @@ menu aircraft_equip
 		image		menu/button_background
 		texl		"192 0"
 		blend		true
-		pos			"382 712"
+		pos			"452 429"
 		size		"64 37"
 		icon		next
 		click		{ cmd "mn_next_equiptype;" }
@@ -491,7 +491,7 @@ menu aircraft_equip
 	string craftitemtype
 	{
 		string		"*cvar mn_equip_itemtype_name"
-		pos			"74 722"
+		pos			"134 439"
 		size		"300 16"
 		textalign	cc
 		whup		{ cmd "mn_prev_equiptype;" }
@@ -500,7 +500,7 @@ menu aircraft_equip
 
 	text airequip_list
 	{
-		pos			"472 480"
+		pos			"29 145"
 		size		"252 220"
 		lineheight	"20"
 		rows		"11"
@@ -519,7 +519,7 @@ menu aircraft_equip
 		tooltip		"_Add selected item"
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
-		pos			"467 75"
+		pos			"16 500"
 		click		{ cmd "airequip_add_item 1;" }
 		icon		plus
 	}
@@ -529,7 +529,7 @@ menu aircraft_equip
 		tooltip		"_Remove item from slot"
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
-		pos			"467 125"
+		pos			"16 550"
 		click		{ cmd "airequip_del_item 1;" }
 		icon		del
 	}
@@ -539,7 +539,7 @@ menu aircraft_equip
 		tooltip		"_Add selected item"
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
-		pos			"467 259"
+		pos			"16 660"
 		click		{ cmd "airequip_add_item 2;" }
 		icon		plus
 	}
@@ -549,7 +549,7 @@ menu aircraft_equip
 		tooltip		"_Remove item from slot"
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
-		pos			"467 294"
+		pos			"16 695"
 		click		{ cmd "airequip_del_item 2;" }
 		icon		del
 	}
@@ -557,7 +557,7 @@ menu aircraft_equip
 	pic airequip_zone_select1
 	{
 		tooltip	"_Select this zone"
-		pos			"534 66"
+		pos			"82 491"
 		image		menu/button_big_menu
 		texl		"0 83"
 		texh		"458 190"
@@ -569,7 +569,7 @@ menu aircraft_equip
 	text airequip_text_zone1
 	{
 		tooltip		"_Select this zone"
-		pos			"546 105"
+		pos			"94 530"
 		size		"430 50"
 		lineheight	"16"
 		textid		TEXT_AIREQUIP_1
@@ -582,7 +582,7 @@ menu aircraft_equip
 		invis false
 		tooltip	"_Select this zone"
 		mousefx	true
-		pos	"534 254"
+		pos	"83 655"
 		image	menu/button_big_menu
 		texl	"0 0"
 		texh	"458 82"
@@ -592,7 +592,7 @@ menu aircraft_equip
 	text airequip_text_zone2
 	{
 		tooltip		"_Select this zone"
-		pos			"546 294"
+		pos			"95 695"
 		size		"430 35"
 		lineheight	"16"
 		textid		TEXT_AIREQUIP_2
@@ -603,7 +603,7 @@ menu aircraft_equip
 	string airequip_header1
 	{
 		string		"_Current item in slot"
-		pos			"545 75"
+		pos			"93 500"
 		size		"275 20"
 		font		f_small
 		color		"0 .78 0 1"
@@ -614,7 +614,7 @@ menu aircraft_equip
 	string airequip_header2
 	{
 		string		"_Ammo fitting this weapon"
-		pos			"545 263"
+		pos			"94 664"
 		size		"275 20"
 		font		f_small
 		color		"0 .78 0 1"
@@ -629,9 +629,9 @@ menu aircraft_equip
 	model airequip_model_slot0
 	{
 		model		"*cvar mn_aircraft_item_model_slot0"
-		pos			"40 40"
+		pos			"608 107"
 		size		"60 60"
-		origin		"68 68 0"
+		origin		"636 135 0"
 		angles		"0 0 180"
 	}
 	pic airequip_slot0
@@ -639,7 +639,7 @@ menu aircraft_equip
 		tooltip		"_Select this slot"
 		image		menu/button_square
 		mousefx		true
-		pos			"38 38"
+		pos			"606 105"
 		texl		"0 0"
 		texh		"64 64"
 		click		{ cmd "airequip_slot_select 0;" }
@@ -648,9 +648,9 @@ menu aircraft_equip
 	model airequip_model_slot1
 	{
 		model	"*cvar mn_aircraft_item_model_slot1"
-		pos		"198 40"
+		pos		"766 107"
 		size	"60 60"
-		origin	"226 68 0"
+		origin	"794 135 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot1
@@ -658,7 +658,7 @@ menu aircraft_equip
 		tooltip	"_Select this slot"
 		image	menu/button_square
 		mousefx	true
-		pos		"196 38"
+		pos		"764 105"
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 1;" }
@@ -667,9 +667,9 @@ menu aircraft_equip
 	model airequip_model_slot2
 	{
 		model	"*cvar mn_aircraft_item_model_slot2"
-		pos		"355 40"
+		pos		"923 107"
 		size	"60 60"
-		origin	"383 68 0"
+		origin	"951 135 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot2
@@ -677,7 +677,7 @@ menu aircraft_equip
 		tooltip	"_Select this slot"
 		image	menu/button_square
 		mousefx	true
-		pos		"353 38"
+		pos		"921 105"
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 2;" }
@@ -686,9 +686,9 @@ menu aircraft_equip
 	model airequip_model_slot3
 	{
 		model	"*cvar mn_aircraft_item_model_slot3"
-		pos		"40 303"
+		pos		"608 345"
 		size	"60 60"
-		origin	"68 331 0"
+		origin	"636 373 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot3
@@ -696,7 +696,7 @@ menu aircraft_equip
 		tooltip	"_Select this slot"
 		image	menu/button_square
 		mousefx	true
-		pos		"38 301"
+		pos		"606 343"
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 3;" }
@@ -705,9 +705,9 @@ menu aircraft_equip
 	model airequip_model_slot4
 	{
 		model	"*cvar mn_aircraft_item_model_slot4"
-		pos		"355 303"
+		pos		"923 345"
 		size	"60 60"
-		origin	"383 331 0"
+		origin	"951 373 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot4
@@ -715,7 +715,7 @@ menu aircraft_equip
 		tooltip	"_Select this slot"
 		image	menu/button_square
 		mousefx	true
-		pos		"353 301"
+		pos		"921 343"
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 4;" }
@@ -724,9 +724,9 @@ menu aircraft_equip
 	model airequip_model_slot5
 	{
 		model	"*cvar mn_aircraft_item_model_slot5"
-		pos		"40 566"
+		pos		"608 618"
 		size	"60 60"
-		origin	"68 594 0"
+		origin	"636 646 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot5
@@ -734,7 +734,7 @@ menu aircraft_equip
 		tooltip	"_Select this slot"
 		image	menu/button_square
 		mousefx	true
-		pos		"38 564"
+		pos		"606 646"
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 5;" }
@@ -743,9 +743,9 @@ menu aircraft_equip
 	model airequip_model_slot6
 	{
 		model	"*cvar mn_aircraft_item_model_slot6"
-		pos		"198 566"
+		pos		"766 618"
 		size	"60 60"
-		origin	"226 594 0"
+		origin	"794 646 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot6
@@ -753,7 +753,7 @@ menu aircraft_equip
 		tooltip	"_Select this slot"
 		image	menu/button_square
 		mousefx	true
-		pos		"196 564"
+		pos		"764 616"
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 6;" }
@@ -762,9 +762,9 @@ menu aircraft_equip
 	model airequip_model_slot7
 	{
 		model	"*cvar mn_aircraft_item_model_slot7"
-		pos		"355 566"
+		pos		"923 618"
 		size	"60 60"
-		origin	"383 594 0"
+		origin	"951 646 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot7
@@ -772,22 +772,20 @@ menu aircraft_equip
 		tooltip	"_Select this slot"
 		image	menu/button_square
 		mousefx	true
-		pos		"353 564"
+		pos		"921 616"
 		texl	"0 0"
 		texh	"64 64"
 		click	{ cmd "airequip_slot_select 7;" }
 	}
 
-	custombutton airequip_leave
+	custombutton bt_continue
 	{
-		tooltip		"_Back"
-		image		menu/button_background
-		blend		true
-		texl		"192 0"
-		size		"64 37"
-		pos			"940 720"
-		icon		return
-		click		{ cmd "mn_pop;" }
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		tooltip	"_Back"
+		pos		"950 20"
+		icon	"return"
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
