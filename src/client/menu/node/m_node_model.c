@@ -190,14 +190,16 @@ static void MN_ModelNodeDraw (menuNode_t *node)
 		source[0] = '\0';
 	else
 		Q_strncpyz(source, ref, sizeof(source));
-	MN_DrawModelNode(node, ref, source);
+	MN_DrawModelNode(node, source);
 }
 
 /**
  * @todo Menu models should inherit the node values from their parent
+ * @todo need to merge menuModel case, and the common case (look to be a copy-pasted code)
  */
-void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
+void MN_DrawModelNode (menuNode_t *node, const char *source)
 {
+	const char *ref;
 	int i;
 	modelInfo_t mi;
 	modelInfo_t pmi;
@@ -207,8 +209,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	/* if true we have to reset the anim state and make sure the correct model is shown */
 	qboolean updateModel = qfalse;
 	vec2_t nodepos;
-	static vec3_t nodeorigin;
-	static vec3_t pmiorigin;
+	vec3_t nodeorigin;
+	vec3_t pmiorigin;
 	const menu_t* menu = node->menu;
 
 	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
@@ -217,17 +219,10 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	if (source[0] == '\0')
 		return;
 
-	MN_GetNodeAbsPos(node, nodepos);
-	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodepos[0];
-	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodepos[1];
-	nodeorigin[2] = node->u.model.origin[2];
-
 	menuModel = node->u.model.menuModel = MN_GetMenuModel(source);
-
 	/* direct model name - no menumodel definition */
 	if (!menuModel) {
 		/* prevent the searching for a menumodel def in the next frame */
-		menuModel = NULL;
 		mi.model = R_RegisterModelShort(source);
 		mi.name = source;
 		if (!mi.model) {
@@ -235,6 +230,11 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 			return;
 		}
 	}
+
+	MN_GetNodeAbsPos(node, nodepos);
+	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodepos[0];
+	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodepos[1];
+	nodeorigin[2] = node->u.model.origin[2];
 
 	/* check whether the cvar value changed */
 	if (Q_strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
@@ -255,12 +255,13 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 		mi.center = node->size;
 	}
 
-	do {
-		/* no animation */
-		mi.frame = 0;
-		mi.oldframe = 0;
-		mi.backlerp = 0;
-		if (menuModel) {
+	if (menuModel) {
+		while (menuModel) {
+			/* no animation */
+			mi.frame = 0;
+			mi.oldframe = 0;
+			mi.backlerp = 0;
+
 			assert(menuModel->model);
 			mi.model = R_RegisterModelShort(menuModel->model);
 			if (!mi.model) {
@@ -389,104 +390,112 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 
 				R_DrawModelDirect(&mi, &pmi, menuModel->tag);
 			}
+
+			/* next */
 			menuModel = menuModel->next;
-		} else {
-			/* get skin */
-			if (node->dataModelSkinOrCVar && *(char *) node->dataModelSkinOrCVar)
-				mi.skin = atoi(MN_GetReferenceString(menu, node->dataModelSkinOrCVar));
-			else
-				mi.skin = 0;
+		}
 
-			/* do animations */
-			if (node->u.model.animation && *(char *) node->u.model.animation) {
-				ref = MN_GetReferenceString(menu, node->u.model.animation);
-				if (updateModel) {
-					/* model has changed but mem is already reserved in pool */
-					if (node->u.model.animationState) {
-						Mem_Free(node->u.model.animationState);
-						node->u.model.animationState = NULL;
-					}
+	/* menuModel == NULL */
+	} else {
+		/* no animation */
+		mi.frame = 0;
+		mi.oldframe = 0;
+		mi.backlerp = 0;
+
+		/* get skin */
+		if (node->dataModelSkinOrCVar && *(char *) node->dataModelSkinOrCVar)
+			mi.skin = atoi(MN_GetReferenceString(menu, node->dataModelSkinOrCVar));
+		else
+			mi.skin = 0;
+
+		/* do animations */
+		if (node->u.model.animation && *(char *) node->u.model.animation) {
+			ref = MN_GetReferenceString(menu, node->u.model.animation);
+			if (updateModel) {
+				/* model has changed but mem is already reserved in pool */
+				if (node->u.model.animationState) {
+					Mem_Free(node->u.model.animationState);
+					node->u.model.animationState = NULL;
 				}
-				if (!node->u.model.animationState) {
-					as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, CL_TAG_NONE);
-					if (!as)
-						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
+			}
+			if (!node->u.model.animationState) {
+				as = (animState_t *) Mem_PoolAlloc(sizeof(*as), cl_genericPool, CL_TAG_NONE);
+				if (!as)
+					Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
+				R_AnimChange(as, mi.model, ref);
+				node->u.model.animationState = as;
+			} else {
+				/* change anim if needed */
+				as = node->u.model.animationState;
+				if (!as)
+					Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
+				anim = R_AnimGetName(as, mi.model);
+				if (anim && Q_strncmp(anim, ref, MAX_VAR))
 					R_AnimChange(as, mi.model, ref);
-					node->u.model.animationState = as;
-				} else {
-					/* change anim if needed */
-					as = node->u.model.animationState;
-					if (!as)
-						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
-					anim = R_AnimGetName(as, mi.model);
-					if (anim && Q_strncmp(anim, ref, MAX_VAR))
-						R_AnimChange(as, mi.model, ref);
-					R_AnimRun(as, mi.model, cls.frametime * 1000);
-				}
-
-				mi.frame = as->frame;
-				mi.oldframe = as->oldframe;
-				mi.backlerp = as->backlerp;
+				R_AnimRun(as, mi.model, cls.frametime * 1000);
 			}
 
-			/* place on tag */
-			if (node->u.model.tag) {
-				menuNode_t *search;
-				char parent[MAX_VAR];
-				char *tag;
-
-				Q_strncpyz(parent, MN_GetReferenceString(menu, node->u.model.tag), MAX_VAR);
-				tag = parent;
-				/* tag "menuNodeName modelTag" */
-				while (*tag && *tag != ' ')
-					tag++;
-				/* split node name and tag */
-				*tag++ = 0;
-
-				for (search = menu->firstChild; search != node && search; search = search->next)
-					if (search->behaviour == modelBehaviour && !Q_strncmp(search->name, parent, sizeof(search->name))) {
-						char modelName[MAX_VAR];
-						Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
-
-						pmi.model = R_RegisterModelShort(modelName);
-						if (!pmi.model)
-							break;
-
-						pmi.name = modelName;
-						VectorCopy(search->u.model.origin, pmiorigin);
-						pmi.origin = pmiorigin;
-						pmi.origin[0] += mi.origin[0];
-						pmi.origin[1] += mi.origin[1];
-						/* don't count menuoffset twice for tagged models */
-						mi.origin[0] -= node->menu->pos[0];
-						mi.origin[1] -= node->menu->pos[1];
-						pmi.angles = search->u.model.angles;
-						pmi.scale = search->scale;
-						pmi.center = search->u.model.center;
-						pmi.color = search->color;
-
-						/* autoscale? */
-						if (!node->scale[0]) {
-							mi.scale = NULL;
-							mi.center = node->size;
-						}
-
-						as = search->u.model.animationState;
-						if (!as)
-							Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->u.model.animation);
-						pmi.frame = as->frame;
-						pmi.oldframe = as->oldframe;
-						pmi.backlerp = as->backlerp;
-						R_DrawModelDirect(&mi, &pmi, tag);
-						break;
-					}
-			} else
-				R_DrawModelDirect(&mi, NULL, NULL);
+			mi.frame = as->frame;
+			mi.oldframe = as->oldframe;
+			mi.backlerp = as->backlerp;
 		}
-	/* for normal models (normal = no menumodel definition) this
-	 * menuModel pointer is null - the do-while loop is only
-	 * ran once */
-	} while (menuModel != NULL);
+
+		/* place on tag */
+		if (node->u.model.tag) {
+			menuNode_t *search;
+			char parent[MAX_VAR];
+			char *tag;
+
+			Q_strncpyz(parent, MN_GetReferenceString(menu, node->u.model.tag), MAX_VAR);
+			tag = parent;
+			/* tag "menuNodeName modelTag" */
+			while (*tag && *tag != ' ')
+				tag++;
+			/* split node name and tag */
+			*tag++ = 0;
+
+			for (search = menu->firstChild; search != node && search; search = search->next)
+				if (search->behaviour == modelBehaviour && !Q_strncmp(search->name, parent, sizeof(search->name))) {
+					char modelName[MAX_VAR];
+					Q_strncpyz(modelName, MN_GetReferenceString(menu, search->dataImageOrModel), sizeof(modelName));
+
+					pmi.model = R_RegisterModelShort(modelName);
+					if (!pmi.model)
+						break;
+
+					pmi.name = modelName;
+					VectorCopy(search->u.model.origin, pmiorigin);
+					pmi.origin = pmiorigin;
+					pmi.origin[0] += mi.origin[0];
+					pmi.origin[1] += mi.origin[1];
+					/* don't count menuoffset twice for tagged models */
+					mi.origin[0] -= node->menu->pos[0];
+					mi.origin[1] -= node->menu->pos[1];
+					pmi.angles = search->u.model.angles;
+					pmi.scale = search->scale;
+					pmi.center = search->u.model.center;
+					pmi.color = search->color;
+
+					/* autoscale? */
+					if (!node->scale[0]) {
+						mi.scale = NULL;
+						mi.center = node->size;
+					}
+
+					as = search->u.model.animationState;
+					if (!as)
+						Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->u.model.animation);
+					pmi.frame = as->frame;
+					pmi.oldframe = as->oldframe;
+					pmi.backlerp = as->backlerp;
+					R_DrawModelDirect(&mi, &pmi, tag);
+					break;
+				}
+		} else
+			R_DrawModelDirect(&mi, NULL, NULL);
+
+
+	}
 }
 
 static int oldMousePosX = 0;

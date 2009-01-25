@@ -80,7 +80,7 @@ menuModel_t *MN_GetMenuModel(const char *menuModel);
 void MN_ListMenuModels_f(void);
 
 struct menuNode_s; /* prototype */
-void MN_DrawModelNode(struct menuNode_s *node, const char *ref, const char *source);
+void MN_DrawModelNode(struct menuNode_s *node, const char *source);
 
 struct nodeBehaviour_s; /* prototype */
 void MN_RegisterModelNode(struct nodeBehaviour_s *behaviour);

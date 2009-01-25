@@ -60,7 +60,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		const aircraft_t *aircraft = AIR_GetAircraft(ref);
 		if (aircraft) {
 			assert(aircraft->tech);
-			MN_DrawModelNode(node, ref, aircraft->tech->mdl);
+			MN_DrawModelNode(node, aircraft->tech->mdl);
 		} else {
 			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", ref);
 		}

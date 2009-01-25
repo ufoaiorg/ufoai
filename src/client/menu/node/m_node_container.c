@@ -258,8 +258,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 		}
 
 		if (menuModel && node) {
-			const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
-			MN_DrawModelNode(node, ref, modelName);
+			MN_DrawModelNode(node, modelName);
 		} else {
 			modelInfo_t mi;
 			vec3_t angles = {-10, 160, 70};
