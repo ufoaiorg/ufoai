@@ -39,6 +39,7 @@
 #include "math/frustum.h"
 #include "string/string.h"
 #include "generic/static.h"
+#include "entitylib.h"
 #include "shaderlib.h"
 #include "scenelib.h"
 #include "instancelib.h"
@@ -81,18 +82,19 @@ class PicoSurface: public OpenGLRenderable
 		AABB m_aabb_local;
 		CopiedString m_shader;
 		Shader* m_state;
+		RenderableWireframeAABB m_renderAABBWire;
 
 		Array<ArbitraryMeshVertex> m_vertices;
 		Array<RenderIndex> m_indices;
 
 	public:
 
-		PicoSurface ()
+		PicoSurface () : m_renderAABBWire(m_aabb_local)
 		{
 			constructNull();
 			CaptureShader();
 		}
-		PicoSurface (picoSurface_t* surface)
+		PicoSurface (picoSurface_t* surface) : m_renderAABBWire(m_aabb_local)
 		{
 			CopyPicoSurface(surface);
 			CaptureShader();
@@ -136,6 +138,9 @@ class PicoSurface: public OpenGLRenderable
 			ASSERT_NOTNULL(state);
 			renderer.SetState(state, Renderer::eFullMaterials);
 			renderer.addRenderable(*this, localToWorld);
+			if (g_showModelBoundingBoxes) {
+				renderer.addRenderable(m_renderAABBWire, localToWorld);
+			}
 		}
 
 		void render (Renderer& renderer, const Matrix4& localToWorld) const

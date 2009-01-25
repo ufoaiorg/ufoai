@@ -30,6 +30,6 @@ typedef struct picoModule_s picoModule_t;
 scene::Node& loadPicoModel(const picoModule_t* module, ArchiveFile& file);
 
 extern bool g_showModelNormals;
-
+extern bool g_showModelBoundingBoxes;
 
 #endif

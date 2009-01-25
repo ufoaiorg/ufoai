@@ -49,6 +49,7 @@ typedef unsigned char byte;
 #include "model.h"
 
 bool g_showModelNormals = false;
+bool g_showModelBoundingBoxes = false;
 
 static void PicoPrintFunc (int level, const char *str)
 {
@@ -138,6 +139,8 @@ class ModelPicoAPI: public TypeSystemRef
 
 			GlobalPreferenceSystem().registerPreference("ShowModelNormals", BoolImportStringCaller(g_showModelNormals),
 					BoolExportStringCaller(g_showModelNormals));
+			GlobalPreferenceSystem().registerPreference("ShowModelBoundingBoxes", BoolImportStringCaller(g_showModelBoundingBoxes),
+					BoolExportStringCaller(g_showModelBoundingBoxes));
 		}
 		ModelLoader* getTable ()
 		{
