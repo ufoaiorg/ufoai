@@ -556,7 +556,7 @@ const char *SV_GetFootstepSound (const char *texture)
 }
 
 /**
- * @brief
+ * @brief Different terrain types might have different bounce fraction
  * @sa Com_GetTerrainType
  * @sa GenerateFootstepList
  */
@@ -566,6 +566,12 @@ float SV_GetBounceFraction (const char *texture)
 	return t ? t->bounceFraction : 1.0f;
 }
 
+/**
+ * @brief Loads the mins/maxs for a md2 mesh model
+ * @param mod The server side model struct to store the results in
+ * @param buffer The mesh model buffer
+ * @param bufferLength The mesh model buffer length
+ */
 static void SV_ModLoadAliasMD2Model (sv_model_t* mod, byte *buffer, int bufferLength)
 {
 	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
@@ -588,6 +594,12 @@ static void SV_ModLoadAliasMD2Model (sv_model_t* mod, byte *buffer, int bufferLe
 	AddPointToBounds(maxs, mod->mins, mod->maxs);
 }
 
+/**
+ * @brief Loads the mins/maxs for a md3 mesh model
+ * @param mod The server side model struct to store the results in
+ * @param buffer The mesh model buffer
+ * @param bufferLength The mesh model buffer length
+ */
 static void SV_ModLoadAliasMD3Model (sv_model_t* mod, byte *buffer, int bufferLength)
 {
 	const dmd3_t *md3 = (const dmd3_t *)buffer;
@@ -608,6 +620,12 @@ static void SV_ModLoadAliasMD3Model (sv_model_t* mod, byte *buffer, int bufferLe
 	AddPointToBounds(maxs, mod->mins, mod->maxs);
 }
 
+/**
+ * @brief Loads the mins/maxs for a dpm mesh model
+ * @param mod The server side model struct to store the results in
+ * @param buffer The mesh model buffer
+ * @param bufferLength The mesh model buffer length
+ */
 static void SV_ModLoadAliasDPMModel (sv_model_t* mod, byte *buffer, int bufferLength)
 {
 	const dpmheader_t *dpm = (const dpmheader_t *)buffer;
