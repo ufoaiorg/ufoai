@@ -2235,17 +2235,17 @@ void Layout_constructPreferences (PreferencesPage& page)
 {
 	{
 		const char* layouts[] = { "window_regular.bmp", "window_split.bmp" };
-		page.appendRadioIcons("Window Layout", STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
+		page.appendRadioIcons(_("Window Layout"), STRING_ARRAY_RANGE(layouts), LatchedIntImportCaller(g_Layout_viewStyle), IntExportCaller(g_Layout_viewStyle.m_latched));
 	}
-	page.appendCheckBox("", "Detachable Menus", LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
+	page.appendCheckBox("", _("Detachable Menus"), LatchedBoolImportCaller(g_Layout_enableDetachableMenus),
 			BoolExportCaller(g_Layout_enableDetachableMenus.m_latched));
-	page.appendCheckBox("", "Plugin Toolbar", LatchedBoolImportCaller(g_Layout_enablePluginToolbar), BoolExportCaller(
+	page.appendCheckBox("", _("Plugin Toolbar"), LatchedBoolImportCaller(g_Layout_enablePluginToolbar), BoolExportCaller(
 			g_Layout_enablePluginToolbar.m_latched));
 }
 
 void Layout_constructPage (PreferenceGroup& group)
 {
-	PreferencesPage page(group.createPage("Layout", "Layout Preferences"));
+	PreferencesPage page(group.createPage(_("Layout"), _("Layout Preferences")));
 	Layout_constructPreferences(page);
 }
 
