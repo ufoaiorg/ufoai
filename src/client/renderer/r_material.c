@@ -139,7 +139,6 @@ static const float alphaValues[MAX_DIRTMAP_ENTRIES] = {
 		0.6, 0.5, 0.3, 0.4, 0.7, 0.3, 0.0, 0.4, 0.5, 0.2, 0.8, 0.5, 0.3, 0.2, 0.5, 0.3
 };
 
-
 static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
 {
 	if (stage->flags & STAGE_DIRTMAP) {

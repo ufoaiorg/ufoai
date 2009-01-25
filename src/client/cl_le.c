@@ -1006,10 +1006,8 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, float volume, i
 	sfx_t* sfx;
 
 	sfx = S_RegisterSound(sound);
-	if (!sfx) {
-		Com_Printf("LE_AddAmbientSound: can't cache %s\n", sound);
+	if (!sfx)
 		return;
-	}
 
 	le = LE_Add(0);
 	if (!le) {
