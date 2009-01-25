@@ -29,6 +29,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define PARSE_H
 
 const char *COM_Parse(const char **data_p);
-const char *COM_EParse(const char **text, const char *errhead, const char *errinfo);
 
 #endif

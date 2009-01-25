@@ -110,10 +110,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_STRING_CHARS    1024    /* max length of a string passed to Cmd_TokenizeString */
 /* common/cmd.c */
 #define	MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
-/* shared/chared.c, ufo2map/common.scriplib.c, ufo2map/common.scriplib.h, client/cl_parse.c,
- * client/client.h, common/common.c, server/server.h, server/sv_ccmds.c, server/sv_game.c,
- * server/sv_init.c */
-#define	MAX_TOKEN_CHARS     256 /* max length of an individual token */
 
 /* ALL */
 #define MAX_QPATH           64  /**< max length of the ufo virtual filesystem */

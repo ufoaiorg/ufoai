@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../common/common.h"
+#include "defines.h"
+#include "ufotypes.h"
 #include "parse.h"
-
 
 /**
  * @brief Parse a token out of a string
@@ -99,8 +99,6 @@ skipwhite:
 			if (len < sizeof(com_token)) {
 				com_token[len] = c;
 				len++;
-			} else {
-				Com_Printf("COM_Parse_O len exceeded: "UFO_SIZE_T"/MAX_TOKEN_CHARS\n", len);
 			}
 		}
 	}
@@ -120,32 +118,10 @@ skipwhite:
 	} while (c > 32);
 
 	if (len == sizeof(com_token)) {
-		Com_Printf("COM_Parse_O: Token exceeded %i chars, discarded.\n", MAX_TOKEN_CHARS);
 		len = 0;
 	}
 	com_token[len] = 0;
 
 	*data_p = data;
 	return com_token;
-}
-
-/**
- * @brief Parsing function that prints an error message when there is no text in the buffer
- * @sa Com_Parse
- */
-const char *COM_EParse (const char **text, const char *errhead, const char *errinfo)
-{
-	const char *token;
-
-	token = COM_Parse(text);
-	if (!*text) {
-		if (errinfo)
-			Com_Printf("%s \"%s\")\n", errhead, errinfo);
-		else
-			Com_Printf("%s\n", errhead);
-
-		return NULL;
-	}
-
-	return token;
 }

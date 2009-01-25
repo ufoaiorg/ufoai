@@ -30,6 +30,27 @@
 #endif
 
 /**
+ * @brief Parsing function that prints an error message when there is no text in the buffer
+ * @sa Com_Parse
+ */
+const char *COM_EParse (const char **text, const char *errhead, const char *errinfo)
+{
+	const char *token;
+
+	token = COM_Parse(text);
+	if (!*text) {
+		if (errinfo)
+			Com_Printf("%s \"%s\")\n", errhead, errinfo);
+		else
+			Com_Printf("%s\n", errhead);
+
+		return NULL;
+	}
+
+	return token;
+}
+
+/**
  * @brief possible values for parsing functions
  * @sa valueTypes_t
  */
