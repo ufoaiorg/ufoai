@@ -566,6 +566,57 @@ float SV_GetBounceFraction (const char *texture)
 	return t ? t->bounceFraction : 1.0f;
 }
 
+static void SV_ModLoadAliasMD2Model (sv_model_t* mod, byte *buffer, int bufferLength)
+{
+	const dMD2Model_t *md2 = (const dMD2Model_t *)buffer;
+	const int num_frames = LittleLong(md2->num_frames);
+	const int frameSize = LittleLong(md2->framesize);
+	int i;
+
+	for (i = 0; i < num_frames; i++) {
+		const dMD2Frame_t *frame = (const dMD2Frame_t *) ((const byte *) md2 + LittleLong(md2->ofs_frames) + i * frameSize);
+		vec3_t scale, translate, mins, maxs;
+		int j;
+
+		for (j = 0; j < 3; j++) {
+			scale[j] = LittleFloat(frame->scale[j]);
+			translate[j] = LittleFloat(frame->translate[j]);
+		}
+
+		VectorCopy(translate, mins);
+		VectorMA(translate, 255, scale, maxs);
+
+		AddPointToBounds(mins, mod->mins, mod->maxs);
+		AddPointToBounds(maxs, mod->mins, mod->maxs);
+	}
+}
+
+static void SV_ModLoadAliasMD3Model (sv_model_t* mod, byte *buffer, int bufferLength)
+{
+	const dmd3_t *md3 = (const dmd3_t *)buffer;
+	const dmd3frame_t *frame = (const dmd3frame_t *)((const byte *)md3 + LittleLong(md3->ofs_frames));
+	const int num_frames = LittleLong(md3->num_frames);
+	int i;
+
+	for (i = 0; i < num_frames; i++, frame++) {
+		vec3_t mins, maxs;
+		int j;
+
+		for (j = 0; j < 3; j++) {
+			mins[j] = LittleFloat(frame->mins[j]);
+			maxs[j] = LittleFloat(frame->maxs[j]);
+		}
+
+		AddPointToBounds(mins, mod->mins, mod->maxs);
+		AddPointToBounds(maxs, mod->mins, mod->maxs);
+	}
+}
+
+static void SV_ModLoadAliasDPMModel (sv_model_t* mod, byte *buffer, int bufferLength)
+{
+
+}
+
 /**
  * @brief Load the mins, maxs for the model on the serverside for pathfinding and clipping
  * @param[in] model The relative model path to load the mins, maxs for
@@ -605,6 +656,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 
 	memset(mod, 0, sizeof(*mod));
 	Q_strncpyz(mod->name, model, sizeof(mod->name));
+	mod->frame = frame;
 
 	VectorCopy(vec3_origin, mins);
 	VectorCopy(vec3_origin, maxs);
@@ -620,15 +672,15 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	/* call the apropriate loader */
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
-		/*R_ModLoadAliasMD2Model(mod, buf, modfilelen);*/
+		SV_ModLoadAliasMD2Model(mod, buf, modfilelen);
 		break;
 
 	case DPMHEADER:
-		/*R_ModLoadAliasDPMModel(mod, buf, modfilelen);*/
+		SV_ModLoadAliasDPMModel(mod, buf, modfilelen);
 		break;
 
 	case IDMD3HEADER:
-		/*R_ModLoadAliasMD3Model(mod, buf, modfilelen);*/
+		SV_ModLoadAliasMD3Model(mod, buf, modfilelen);
 		break;
 	}
 
