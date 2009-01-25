@@ -134,11 +134,25 @@ static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage
 	VectorCopy(in, out);
 }
 
+#define MAX_DIRTMAP_ENTRIES 16
+static const float alphaValues[MAX_DIRTMAP_ENTRIES] = {
+		0.6, 0.5, 0.3, 0.4, 0.7, 0.3, 0.0, 0.4, 0.5, 0.2, 0.8, 0.5, 0.3, 0.2, 0.5, 0.3
+};
+
+
 static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
 {
-	float a;
+	if (stage->flags & STAGE_DIRTMAP) {
+		const int index = (int)VectorLength(v) % MAX_DIRTMAP_ENTRIES;
 
-	if (stage->flags & STAGE_TERRAIN) {
+		if (stage->flags & STAGE_COLOR)  /* honor stage color */
+			VectorCopy(stage->color, color);
+		else  /* or use white */
+			VectorSet(color, 1.0, 1.0, 1.0);
+		color[3] = alphaValues[index];
+	} else if (stage->flags & STAGE_TERRAIN) {
+		float a;
+
 		if (stage->flags & STAGE_COLOR)  /* honor stage color */
 			VectorCopy(stage->color, color);
 		else  /* or use white */
@@ -186,7 +200,7 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 		R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	/* for terrain, enable the color array */
-	if (stage->flags & STAGE_TERRAIN)
+	if (stage->flags & (STAGE_TERRAIN | STAGE_DIRTMAP))
 		R_EnableColorArray(qtrue);
 	else
 		R_EnableColorArray(qfalse);
@@ -537,6 +551,11 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			}
 
 			s->flags |= STAGE_TERRAIN;
+			continue;
+		}
+
+		if (!strcmp(c, "dirtmap")) {
+			s->flags |= STAGE_DIRTMAP;
 			continue;
 		}
 
