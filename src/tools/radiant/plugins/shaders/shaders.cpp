@@ -356,6 +356,7 @@ float evaluateFloat(const ShaderValue& value, const ShaderParameters& params, co
 	return f;
 }
 
+#if 0 // useful for material stages, too
 static BlendFactor evaluateBlendFactor(const ShaderValue& value, const ShaderParameters& params, const ShaderArguments& args) {
 	const char* result = evaluateShaderValue(value.c_str(), params, args);
 
@@ -396,6 +397,7 @@ static BlendFactor evaluateBlendFactor(const ShaderValue& value, const ShaderPar
 	g_warning("parsing blend-factor value failed: '%s'\n", result);
 	return BLEND_ZERO;
 }
+#endif
 
 class CShader : public IShader {
 	std::size_t m_refcount;
