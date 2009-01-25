@@ -260,6 +260,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 		if (menuModel && node) {
 			const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 			MN_DrawModelNode(node, ref, modelName);
+			assert(qfalse); /**< @todo check that: i dont think it is used */
 		} else {
 			modelInfo_t mi;
 			vec3_t angles = {-10, 160, 70};

@@ -62,6 +62,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		if (aircraft) {
 			assert(aircraft->tech);
 			MN_DrawModelNode(node, ref, aircraft->tech->mdl);
+			assert(qfalse); /**< @todo check that: i dont think it is used */
 		} else {
 			Com_Printf("MN_DrawItemNode2: Unknown item: '%s'\n", ref);
 		}

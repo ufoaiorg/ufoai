@@ -182,7 +182,7 @@ static void MN_SetModelTransform_f (void)
 }
 #endif
 
-static void MN_DrawModelNode2 (menuNode_t *node)
+static void MN_ModelNodeDraw (menuNode_t *node)
 {
 	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
 	char source[MAX_VAR];
@@ -542,7 +542,7 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "model";
-	behaviour->draw = MN_DrawModelNode2;
+	behaviour->draw = MN_ModelNodeDraw;
 	behaviour->mouseDown = MN_ModelNodeMouseDown;
 	behaviour->mouseUp = MN_ModelNodeMouseUp;
 	behaviour->loading = MN_ModelNodeLoading;
