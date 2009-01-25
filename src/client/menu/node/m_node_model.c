@@ -407,7 +407,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	modelInfo_t mi;
 	menuModel_t *menuModel;
 	vec3_t nodeorigin;
-	menuNode_t *child;
 
 	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
 	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
@@ -510,7 +509,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 	/* draw all childs */
 	if (node->u.model.next) {
-		/* menuNode_t *parent = node;*/
+		menuNode_t *child;
 		modelInfo_t pmi = mi;
 		for (child = node->u.model.next; child; child = child->u.model.next) {
 			const char *tag;
