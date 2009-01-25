@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
-static int modfilelen;
-
 model_t r_models[MAX_MOD_KNOWN];
 int r_numModels;
 static int r_numModelsStatic;
@@ -92,6 +90,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 	model_t *mod;
 	byte *buf;
 	int i;
+	int modfilelen;
 
 	if (name[0] == '\0')
 		Sys_Error("R_ModForName: NULL name");

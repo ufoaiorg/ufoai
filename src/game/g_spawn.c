@@ -101,6 +101,7 @@ static const field_t fields[] = {
 	{"item", offsetof(edict_t, item), F_LSTRING, 0},
 	{"noise", offsetof(edict_t, noise), F_LSTRING, 0},
 	{"particle", offsetof(edict_t, particle), F_LSTRING, 0},
+	{"frame", offsetof(edict_t, frame), F_INT, 0},
 	{"team", offsetof(edict_t, team), F_INT, 0},
 	{"group", offsetof(edict_t, group), F_LSTRING, 0},
 	{"size", offsetof(edict_t, fieldSize), F_INT, 0},
@@ -932,7 +933,7 @@ static void SP_misc_model (edict_t *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
 		vec3_t modelMins, modelMaxs;
-		if (gi.LoadModelMinsMaxs(ent->model, modelMins, modelMaxs)) {
+		if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
 			VectorCopy(ent->absmax, modelMaxs);
 			VectorCopy(ent->absmin, modelMins);
 			ent->solid = SOLID_BBOX;

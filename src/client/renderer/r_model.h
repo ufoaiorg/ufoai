@@ -65,8 +65,6 @@ typedef struct model_s {
 
 /*============================================================================ */
 
-#define MAX_MOD_KNOWN   512
-
 void R_ModClearAll(void);
 void R_ModModellist_f(void);
 void R_ModDrawNullModel(entity_t *e);

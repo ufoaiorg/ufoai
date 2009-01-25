@@ -520,6 +520,7 @@ struct edict_s {
 	int body;
 	int head;
 	int skin;
+	int frame;					/**< frame of the model to show */
 
 	char *group;				/**< this can be used to trigger a group of entities
 								 * e.g. for two-part-doors - set the group to the same

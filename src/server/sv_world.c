@@ -29,6 +29,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "server.h"
 #include "../common/tracing.h"
 
+/** @brief static mesh models (none-animated) can have a server side flag set to be clipped for pathfinding */
+typedef struct sv_model_s {
+	vec3_t mins, maxs;	/**< the mins and maxs of the model bounding box */
+	int frame;			/**< the frame the mins and maxs were calculated for */
+	char *name;			/**< the model path (relative to base/ */
+} sv_model_t;
+
+static sv_model_t sv_models[MAX_MOD_KNOWN];
+static int sv_numModels;
+
 /*
 ===============================================================================
 ENTITY AREA CHECKING
@@ -133,6 +143,7 @@ void SV_ClearWorld (void)
 {
 	memset(sv_areanodes, 0, sizeof(sv_areanodes));
 	sv_numareanodes = 0;
+	sv_numModels = 0;
 	SV_CreateAreaNode(0, map_min, map_max);
 }
 
@@ -562,7 +573,64 @@ float SV_GetBounceFraction (const char *texture)
  * @param[out] maxs The maxs vector of the model
  * @todo Implement the model loading
  */
-qboolean SV_LoadModelMinsMaxs (const char *model, vec3_t mins, vec3_t maxs)
+qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t maxs)
 {
+	sv_model_t *mod;
+	byte *buf;
+	int i;
+	int modfilelen;
+
+	if (model[0] == '\0')
+		Com_Error(ERR_DROP, "SV_LoadModelMinsMaxs: NULL model");
+
+	/* search the currently loaded models */
+	for (i = 0, mod = sv_models; i < sv_numModels; i++, mod++)
+		if (mod->frame == frame && !Q_strcmp(mod->name, model)) {
+			VectorCopy(mod->mins, mins);
+			VectorCopy(mod->maxs, maxs);
+			return qtrue;
+		}
+
+	/* find a free model slot spot */
+	for (i = 0, mod = sv_models; i < sv_numModels; i++, mod++) {
+		if (!mod->name[0])
+			break;				/* free spot */
+	}
+
+	if (i == sv_numModels) {
+		if (sv_numModels == MAX_MOD_KNOWN)
+			Com_Error(ERR_DROP, "sv_numModels == MAX_MOD_KNOWN");
+		sv_numModels++;
+	}
+
+	memset(mod, 0, sizeof(*mod));
+	Q_strncpyz(mod->name, model, sizeof(mod->name));
+
+	VectorCopy(vec3_origin, mins);
+	VectorCopy(vec3_origin, maxs);
+
+	/* load the file */
+	modfilelen = FS_LoadFile(model, &buf);
+	if (!buf) {
+		memset(mod->name, 0, sizeof(mod->name));
+		sv_numModels--;
+		return qfalse;
+	}
+
+	/* call the apropriate loader */
+	switch (LittleLong(*(unsigned *) buf)) {
+	case IDALIASHEADER:
+		/*R_ModLoadAliasMD2Model(mod, buf, modfilelen);*/
+		break;
+
+	case DPMHEADER:
+		/*R_ModLoadAliasDPMModel(mod, buf, modfilelen);*/
+		break;
+
+	case IDMD3HEADER:
+		/*R_ModLoadAliasMD3Model(mod, buf, modfilelen);*/
+		break;
+	}
+
 	return qfalse;
 }
