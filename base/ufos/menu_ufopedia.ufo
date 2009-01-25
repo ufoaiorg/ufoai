@@ -100,7 +100,6 @@ menu ufopedia
 		lineheight	23
 		tabwidth	100
 		click rclick
-//		bgcolor " 0.5 1 0.5 0.3"
 		rows	"16"
 		wheel {
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
@@ -132,7 +131,6 @@ menu ufopedia
 		lineheight	24
 		tabwidth	100
 		click rclick wheel
-//		bgcolor " 0.5 1 0.5 0.3"
 		rows	"10"
 		wheel {
 			*(abstractscrollbar)ufopedia_mail_scroll current <text_scroll>
@@ -164,7 +162,6 @@ menu ufopedia
 		lineheight	"24"
 		rows	"5"
 		font	"f_small_bold"
-//		bgcolor " 0.5 1 0.5 0.3"
 	}
 
 	confunc mn_upfbig
@@ -199,49 +196,10 @@ menu ufopedia
 		size	"495 200"
 		lineheight	20
 		tabwidth	230
-//		bgcolor	" 1 0.5 0.5 0.3"
 		wheel
 		rows	"10"
 		scrollbar true
 	}
-
-/*
-	pic button_1
-	{
-		image	menu/button
-		mousefx	true
-		pos		"938 510"
-		texh	"310 123"
-		texl	"245 73"
-		click	{ }
-		out		{ *button_1 texl "245 73" *button_1 texh "310 123" }
-		in		{ *button_1 texl "8 73" *button_1 texh "73 123" }
-	}
-
-	pic button_2
-	{
-		image	menu/button
-		mousefx true
-		pos		"938 570"
-		texh	"310 123"
-		texl	"245 73"
-		click	{ }
-		out		{ *button_2 texl "245 73" *button_2 texh "310 123" }
-		in		{ *button_2 texl "8 73" *button_2 texh "73 123" }
-	}
-
-	pic button_3
-	{
-		image	menu/button
-		mousefx true
-		pos		"938 630"
-		texh	"310 123"
-		texl	"245 73"
-		click	{ }
-		out		{ *button_3 texl "245 73" *button_3 texh "310 123" }
-		in		{ *button_3 texl "8 73" *button_3 texh "73 123" }
-	}
-*/
 
 	text techtree
 	{
@@ -252,7 +210,6 @@ menu ufopedia
 		rows	"12"
 		click
 		mousefx true
-//		bgcolor "0.5 0.5 0.5 0.3"
 		wheel
 		scrollbar true
 	}
@@ -294,7 +251,6 @@ menu ufopedia
 		size	"120 120"
 		//scale	"6 6 6"		// Comment-out if autoscaling is wanted.
 		click
-//		bgcolor "1 1 0.5 0.3"
 	}
 
 	pic weapon_dec
