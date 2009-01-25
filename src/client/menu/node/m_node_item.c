@@ -56,15 +56,13 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		pos[1] += node->size[1] / 2.0;
 		pos[2] = 0;
 		MN_DrawItem(node, pos, &item, -1, -1, node->scale, color);
-
 	} else {
 		const aircraft_t *aircraft = AIR_GetAircraft(ref);
 		if (aircraft) {
 			assert(aircraft->tech);
 			MN_DrawModelNode(node, ref, aircraft->tech->mdl);
-			assert(qfalse); /**< @todo check that: i dont think it is used */
 		} else {
-			Com_Printf("MN_DrawItemNode2: Unknown item: '%s'\n", ref);
+			Com_Printf("MN_ItemNodeDraw: Unknown item: '%s'\n", ref);
 		}
 	}
 }
@@ -72,5 +70,6 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 void MN_RegisterItemNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "item";
+	behaviour->extends = "model";
 	behaviour->draw = MN_ItemNodeDraw;
 }

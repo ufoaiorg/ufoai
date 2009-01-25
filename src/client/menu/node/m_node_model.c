@@ -212,6 +212,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *ref, const char *source)
 	const menu_t* menu = node->menu;
 
 	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
+	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
 	if (source[0] == '\0')
 		return;
