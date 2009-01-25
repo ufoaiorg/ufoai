@@ -371,6 +371,32 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 
 }
 
+static void MN_ModelNodeGetParentFromTag(const char* tag, char *parent, int bufferSize)
+{
+	char *c;
+	Q_strncpyz(parent, tag, bufferSize);
+	c = parent;
+	/* tag "menuNodeName modelTag" */
+	while (*c && *c != ' ')
+		c++;
+	/* split node name and tag */
+	*c++ = 0;
+}
+
+/** @brief return the anchor name embeded in a tag
+ */
+static const char* MN_ModelNodeGetAnchorFromTag(const char* tag)
+{
+	const char *c = tag;
+	assert(tag);
+	while (*c != '\0' && *c != ' ')
+		c++;
+	/* split node name and tag */
+	assert(*c != '\0');
+	c++;
+	return c;
+}
+
 
 /**
  * @todo Menu models should inherit the node values from their parent
@@ -381,6 +407,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	modelInfo_t mi;
 	menuModel_t *menuModel;
 	vec3_t nodeorigin;
+	menuNode_t *child;
 
 	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
 	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
@@ -421,6 +448,11 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	/* special case to draw models with "menu model" */
 	if (menuModel) {
 		MN_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
+		return;
+	}
+
+	/* if the node is linked to a parent, the parent will display it */
+	if (node->u.model.tag) {
 		return;
 	}
 
@@ -473,64 +505,52 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 		mi.backlerp = as->backlerp;
 	}
 
-	/* place on tag */
-	if (node->u.model.tag) {
-		menuNode_t *search;
-		char parent[MAX_VAR];
-		char *tag;
+	/* draw the main model on the node */
+	R_DrawModelDirect(&mi, NULL, NULL);
 
-		Q_strncpyz(parent, MN_GetReferenceString(node->menu, node->u.model.tag), MAX_VAR);
-		tag = parent;
-		/* tag "menuNodeName modelTag" */
-		while (*tag && *tag != ' ')
-			tag++;
-		/* split node name and tag */
-		*tag++ = 0;
+	/* draw all childs */
+	if (node->u.model.next) {
+		/* menuNode_t *parent = node;*/
+		modelInfo_t pmi = mi;
+		for (child = node->u.model.next; child; child = child->u.model.next) {
+			const char *tag;
+			char childSource[MAX_VAR];
+			const char* childRef;
 
-		for (search = node->menu->firstChild; search != node && search; search = search->next) {
-			if (search->behaviour == modelBehaviour && !Q_strncmp(search->name, parent, sizeof(search->name))) {
-				modelInfo_t pmi;
-				vec3_t pmiorigin;
-				animState_t *as;
-				char modelName[MAX_VAR];
-				Q_strncpyz(modelName, MN_GetReferenceString(node->menu, search->dataImageOrModel), sizeof(modelName));
+			/* skip invisible child */
+			/** @todo add the 'visiblewhen' test */
+			if (child->invis)
+				continue;
 
-				pmi.model = R_RegisterModelShort(modelName);
-				if (!pmi.model)
-					break;
+			memset(&mi, 0, sizeof(mi));
+			mi.angles = child->u.model.angles;
+			mi.scale = child->scale;
+			mi.center = child->u.model.center;
+			mi.origin = child->u.model.origin;
+			mi.color = pmi.color;
 
-				pmi.name = modelName;
-				pmi.origin = pmiorigin;
-				pmi.angles = search->u.model.angles;
-				pmi.scale = search->scale;
-				pmi.center = search->u.model.center;
-				pmi.color = search->color;
+			/* get the anchor name to link the model into the parent */
+			tag = MN_GetReferenceString(child->menu, child->u.model.tag);
+			tag = MN_ModelNodeGetAnchorFromTag(tag);
 
-				VectorCopy(search->u.model.origin, mi.origin);
-				pmi.origin[0] += mi.origin[0];
-				pmi.origin[1] += mi.origin[1];
-				/* don't count menuoffset twice for tagged models */
-				mi.origin[0] -= node->menu->pos[0];
-				mi.origin[1] -= node->menu->pos[1];
+			/* init model name */
+			childRef = MN_GetReferenceString(child->menu, child->dataImageOrModel);
+			if (childRef == NULL || childRef[0] == '\0')
+				childSource[0] = '\0';
+			else
+				Q_strncpyz(childSource, childRef, sizeof(childSource));
+			mi.model = R_RegisterModelShort(childSource);
+			mi.name = childSource;
 
-				/* autoscale? */
-				if (!node->scale[0]) {
-					mi.scale = NULL;
-					mi.center = node->size;
-				}
+			/* init skin */
+			if (child->dataModelSkinOrCVar && *(char *) child->dataModelSkinOrCVar)
+				mi.skin = atoi(MN_GetReferenceString(child->menu, child->dataModelSkinOrCVar));
+			else
+				mi.skin = 0;
 
-				as = search->u.model.animationState;
-				if (!as)
-					Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", modelName, (char*)search->u.model.animation);
-				pmi.frame = as->frame;
-				pmi.oldframe = as->oldframe;
-				pmi.backlerp = as->backlerp;
-				R_DrawModelDirect(&mi, &pmi, tag);
-				break;
-			}
+			R_DrawModelDirect(&mi, &pmi, tag);
 		}
-	} else
-		R_DrawModelDirect(&mi, NULL, NULL);
+	}
 }
 
 static int oldMousePosX = 0;
@@ -582,18 +602,6 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	node->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
-}
-
-static void MN_ModelNodeGetParentFromTag(const char* tag, char *parent, int bufferSize)
-{
-	char *c;
-	Q_strncpyz(parent, tag, bufferSize);
-	c = parent;
-	/* tag "menuNodeName modelTag" */
-	while (*c && *c != ' ')
-		c++;
-	/* split node name and tag */
-	*c++ = 0;
 }
 
 static void MN_ModelNodeLoaded (menuNode_t *node)
