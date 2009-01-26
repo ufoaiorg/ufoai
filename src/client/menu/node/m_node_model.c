@@ -427,9 +427,10 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 		}
 	}
 
+	/* compute the absolute origin ('origin' property is relative to the node center) */
 	MN_GetNodeAbsPos(node, nodeorigin);
-	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodeorigin[0];
-	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodeorigin[1];
+	nodeorigin[0] += node->size[0] / 2 + node->u.model.origin[0];
+	nodeorigin[1] += node->size[1] / 2 + node->u.model.origin[1];
 	nodeorigin[2] = node->u.model.origin[2];
 
 	mi.origin = nodeorigin;

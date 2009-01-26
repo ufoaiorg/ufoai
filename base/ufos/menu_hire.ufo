@@ -281,13 +281,11 @@ menu employees
 		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand2"
-		origin	"580 520 0"
 		angles	"0 70 90"
-		// FIXME - use pos and size for autoscaling - doesn't work with tags atm
-//		pos		"480 100"
-//		size	"190 300"
-//		bgcolor	"1 1 1 0.5"
 		scale	"6.7 6.7 6.7"
+		pos		"469 382"
+		size	"235 355"
+		origin	"0 -40 0"
 	}
 
 	model head
