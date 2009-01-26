@@ -379,8 +379,8 @@ void S_SetVolume (sfx_t *sfx, int volume)
 	if (volume >= MIX_MAX_VOLUME)
 		return;
 
-	Com_DPrintf(DEBUG_SOUND, "Volume changed from %i to %i for sound '%s' on channel %i\n",
-		sfx->volume, volume, sfx->name, sfx->channel);
+	Com_DPrintf(DEBUG_SOUND, "Volume changed from %i to %i for sound '%s' on channel %i, volume rate %.2f\n",
+		sfx->volume, volume, sfx->name, sfx->channel, volRate);
 
 	/* only change the chunk volume if it has changed */
 	if (sfx->volume != volume) {
@@ -446,7 +446,7 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
 					volume *= dist;
 					le->hearTime = cls.realtime;
 				}
-				Com_DPrintf(DEBUG_SOUND, "S_StartSound: dist: %.2f\n", dist);
+				Com_DPrintf(DEBUG_SOUND, "S_StartSound: dist: %.2f volume: %i\n", dist, volume);
 			}
 		}
 	}
@@ -814,6 +814,9 @@ void S_Init (void)
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
 	snd_music_volume = Cvar_Get("snd_music_volume", "128", CVAR_ARCHIVE, "Music volume - default is 128");
 	snd_music_crackleWorkaround = Cvar_Get("snd_music_crackleWorkaround", "0", CVAR_ARCHIVE, "Set to 1 and issue \"music_stop; music_play\" if you experience crackling when background music loops");
+	/* set volumes to be changed so they are applied again for next sound/music playing */
+	snd_volume->modified = qtrue;
+	snd_music_volume->modified = qtrue;
 
 	Cmd_AddCommand("snd_play", S_Play_f, "Plays a sound fx file. Pass path relative to base/sound without file extension");
 	Cmd_AddCommand("music_play", S_Music_Play_f, "Plays a background sound track");
