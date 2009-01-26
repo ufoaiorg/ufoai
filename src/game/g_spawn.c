@@ -933,12 +933,18 @@ static void SP_misc_model (edict_t *ent)
 {
 	if (ent->spawnflags & MISC_MODEL_SOLID) {
 		vec3_t modelMins, modelMaxs;
-		if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
-			VectorCopy(ent->absmax, modelMaxs);
-			VectorCopy(ent->absmin, modelMins);
-			ent->solid = SOLID_BBOX;
-			gi.LinkEdict(ent);
+		if (ent->model && *ent->model) {
+			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
+				VectorCopy(ent->absmax, modelMaxs);
+				VectorCopy(ent->absmin, modelMins);
+				ent->solid = SOLID_BBOX;
+				gi.LinkEdict(ent);
+			} else {
+				Com_Printf("Could not get mins/maxs for model '%s'\n", ent->model);
+				G_FreeEdict(ent);
+			}
 		} else {
+			Com_Printf("server_solid misc_model with no model given\n");
 			G_FreeEdict(ent);
 		}
 	} else {
