@@ -162,7 +162,7 @@ use constant FORMAT => (
 	MD3_tag		=> ['a112', '{$NumTags}', 1 ],
 
 	#prelude_MD3_surface	=> 'a{xxxx}',
-	MD3_surface	=> ['a*', '{$NumSurfaces}', 1 ],
+	MD3_surface	=> ['a*', '{$NumSurfaces}', 1 ],	# I really hope the 'a*' part doesn't prevent parsing of more than one surface/mesh.
 
 	Data			=> 'a*'		# @todo: The whole rest .. currently without structure.
 );
@@ -284,7 +284,9 @@ sub md2_read ($) {
 
 	if (($mag->Magic == 844121161)	# Magic number. Equals "IDP2"
 	 && ($mag->Version == 8)) {		# File format version.
-		return MD2->new($filename);
+		my $md2 = MD2->new($filename);
+		# @todo: More sanity checks?
+		return $md2;
 	} else {
 		return 0;
 	}
@@ -335,7 +337,16 @@ sub md3_read ($) {
 
 	if (($mag->Magic == 860898377)	# Magic number. Equals "IDP3"
 	 && ($mag->Version == 15)) {	# File format version.
-		return MD3->new($filename);
+		my $md3 = MD3->new($filename);
+		# @todo: More sanity checks?
+		if (length($md3->Data) != 0) {
+			print "Error:\n",
+			"\tData found behind MD3 structure.\n",
+			"\tThis possibly indicates wrong offsets or number of entries\n",
+			"in the header(s) in the original MD3 file.\n";
+			return 0;
+		}
+		return $md3;
 	} else {
 		return 0;
 	}
