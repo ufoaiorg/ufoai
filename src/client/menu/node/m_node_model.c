@@ -51,12 +51,14 @@ void MN_LinkMenuModels (void)
 		menuModel_t *m = &mn.menuModels[i];
 		for (j = 0; j < m->menuTransformCnt; j++) {
 			m->menuTransform[j].menuPtr = MN_GetMenu(m->menuTransform[j].menuID);
+#if 0	/* should be check, but all this code will be soon removed and view ID is now not every time a menu name */
 			if (m->menuTransform[j].menuPtr == NULL)
 				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'\n", m->menuTransform[j].menuID, m->id);
 
 			/* we don't need this anymore */
-			/*Mem_Free(m->menuTransform[j].menuID);
-			m->menuTransform[j].menuID = NULL;*/
+			Mem_Free(m->menuTransform[j].menuID);
+			m->menuTransform[j].menuID = NULL;
+#endif
 		}
 	}
 }
@@ -626,6 +628,10 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 		while (last->u.model.next != NULL)
 			last = last->u.model.next;
 		last->u.model.next = node;
+	}
+
+	if (node->u.model.tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
+		Com_Printf("MN_ModelNodeLoaded: Please set a pos and size to the node '%s.%s'. Note: 'origin' is a relative value to the center of the node\n", node->menu->name, node->name);
 	}
 }
 
