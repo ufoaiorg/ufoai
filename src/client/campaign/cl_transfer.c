@@ -1819,8 +1819,6 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
 				const int emplIdx = MSG_ReadShort(sb);
 				transfer->trEmployees[j][k] = ((emplIdx >= 0) ? &gd.employees[j][emplIdx] : NULL);
-				/* Restore transfer flag if an employee is currently in progress. */
-				gd.employees[j][emplIdx].transfer = qtrue;
 			}
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
@@ -1839,6 +1837,19 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		transfer->hasAircraft = MSG_ReadByte(sb);
 		transfer->event.day = MSG_ReadLong(sb);
 		transfer->event.sec = MSG_ReadLong(sb);
+	}
+	/* Restore transfer flag if an employee is currently in progress. */
+	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
+		transfer_t *transfer = &gd.alltransfers[i];
+
+		if (!transfer->active)
+			continue;
+
+		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
+			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
+				gd.employees[j][k].transfer = (transfer->trEmployees[j][k]>=0) ? qtrue : qfalse;
+			}
+		}
 	}
 	return qtrue;
 }
