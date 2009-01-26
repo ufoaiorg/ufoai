@@ -64,33 +64,44 @@ menu aircraft
 		textalign	ur
 	}
 
+	// ==================
+	// tab
+	// ==================
+
+	tab aicraft_navigation {
+		pos		"47 396"
+		size	"938 39"
+		cvar	"*cvar mn_aircrafttab"
+		option description {
+			label	"_Description"
+			value	"0"
+			action "mn_pop;mn_push aircraft;"
+		}
+		option equip {
+			label	"_Equipment"
+			value	"1"
+			action "mn_pop;mn_push aircraft_equip;"
+		}
+		option soldier {
+			label	"_Soldiers"
+			value	"2"
+			action "mn_pop;mn_push team;"
+		}
+		option tank {
+			label	"_Tanks"
+			value	"3"
+			//action "mn_pop;mn_push foobar;"
+		}
+		option pilot {
+			label	"_Pilots"
+			value	"4"
+			//action "mn_pop;mn_push foobar;"
+		}
+	}
+
 	// ===============
 	// Buttons
 	// ===============
-	button button_squad
-	{
-		string		"_Assign Soldiers"
-		image		menu/button_green_small
-		color		"0 0.8 0 1"
-		pos			"271 386"
-		size		"207 48"
-		font		f_menu
-		blend		true
-		click		{ cmd "mn_push team;" }
-	}
-
-	button button_equip
-	{
-		string		"_Equip"
-		color		"0 0.8 0 1"
-		tooltip		"_Equip aircraft components"
-		image		menu/button_green_small
-		pos			"50 387"
-		size		"207 48"
-		font		f_menu
-		blend		true
-		click		{ cmd "mn_push aircraft_equip;" }
-	}
 
 	button button_buysell
 	{
@@ -272,7 +283,7 @@ menu aircraft
 
 	func init
 	{
-		cmd "aircraft_select;"
+		cmd "aircraft_select;set mn_aircrafttab 0"
 	}
 }
 
@@ -315,6 +326,41 @@ menu aircraft_equip
 	func airequip_zone2
 	{
 		cmd "airequip_zone_select 2;airequip_updatemenu 6;"
+	}
+
+	// ==================
+	// tab
+	// ==================
+
+	tab aicraft_navigation {
+		pos		"47 396"
+		size	"518 39"
+		cvar	"*cvar mn_aircrafttab"
+		option description {
+			label	"_Description"
+			value	"0"
+			action "mn_pop;mn_push aircraft;"
+		}
+		option equip {
+			label	"_Equipment"
+			value	"1"
+			action "mn_pop;mn_push aircraft_equip;"
+		}
+		option soldier {
+			label	"_Soldiers"
+			value	"2"
+			action "mn_pop;mn_push team;"
+		}
+		option tank {
+			label	"_Tanks"
+			value	"3"
+			//action "mn_pop;mn_push foobar;"
+		}
+		option pilot {
+			label	"_Pilots"
+			value	"4"
+			//action "mn_pop;mn_push foobar;"
+		}
 	}
 
 	// ==================
@@ -409,24 +455,14 @@ menu aircraft_equip
 		textalign	cc
 	}
 
-	text airequip_selected_description
-	{
-		pos			"312 307"
-		size		"240 100"
-		lineheight	"20"
-		rows		"5"
-		tabwidth	160
-		scrollbar	true
-	}
-
 	// @todo: merge: mdl_top and mdl_top_pilot
 	model mdl_top
 	{
 		visiblewhen "mn_equip_pilot != 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
-		pos		"312 177"
-		size	"241 120"
+		pos		"312 163"
+		size	"239 96"
 		mousefx	true
 		click
 	}
@@ -436,10 +472,20 @@ menu aircraft_equip
 		visiblewhen "mn_equip_pilot == 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"15 60 100"
-		pos		"312 177"
-		size	"241 120"
+		pos		"312 163"
+		size	"239 96"
 		mousefx	true
 		click
+	}
+
+	text airequip_selected_description
+	{
+		pos			"312 268"
+		size		"240 100"
+		lineheight	"20"
+		rows		"5"
+		tabwidth	160
+		scrollbar	true
 	}
 
 	string airequip_item_name
@@ -463,11 +509,8 @@ menu aircraft_equip
 	custombutton bt_prev_craftitemtype
 	{
 		tooltip		"_Previous category"
-		image		menu/button_background
-		texl		"192 0"
-		blend		true
-		pos			"70 429"
-		size		"64 37"
+		pos			"28 137"
+		size		"35 35"
 		icon		prev
 		click		{ cmd "mn_prev_equiptype;" }
 		whup		{ cmd "mn_next_equiptype;" }
@@ -477,11 +520,8 @@ menu aircraft_equip
 	custombutton bt_next_craftitemtype
 	{
 		tooltip		"_Next category"
-		image		menu/button_background
-		texl		"192 0"
-		blend		true
-		pos			"452 429"
-		size		"64 37"
+		pos			"238 135"
+		size		"35 35"
 		icon		next
 		click		{ cmd "mn_next_equiptype;" }
 		whup		{ cmd "mn_next_equiptype;" }
@@ -491,8 +531,8 @@ menu aircraft_equip
 	string craftitemtype
 	{
 		string		"*cvar mn_equip_itemtype_name"
-		pos			"134 439"
-		size		"300 16"
+		pos			"87 143"
+		size		"120 16"
 		textalign	cc
 		whup		{ cmd "mn_prev_equiptype;" }
 		whdown		{ cmd "mn_next_equiptype;" }
@@ -500,8 +540,8 @@ menu aircraft_equip
 
 	text airequip_list
 	{
-		pos			"29 145"
-		size		"252 220"
+		pos			"32 251"
+		size		"248 157"
 		lineheight	"20"
 		rows		"11"
 		textid		TEXT_LIST

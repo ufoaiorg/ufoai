@@ -44,7 +44,7 @@ menu team
 		tooltip	"_Back"
 		pos		"950 20"
 		icon	"return"
-		click	{ cmd "mn_pop;mn_push equipment;"  }
+		click	{ cmd "mn_pop;"  }
 	}
 
 	string txt_credits_caption
@@ -63,6 +63,41 @@ menu team
 		size		"130 30"
 		font		f_big
 		textalign	ur
+	}
+
+	// ==================
+	// tab
+	// ==================
+
+	tab aicraft_navigation {
+		pos		"47 396"
+		size	"938 39"
+		cvar	"*cvar mn_aircrafttab"
+		option description {
+			label	"_Description"
+			value	"0"
+			action "mn_pop;mn_push aircraft;"
+		}
+		option equip {
+			label	"_Equipment"
+			value	"1"
+			action "mn_pop;mn_push aircraft_equip;"
+		}
+		option soldier {
+			label	"_Soldiers"
+			value	"2"
+			action "mn_pop;mn_push team;"
+		}
+		option tank {
+			label	"_Tanks"
+			value	"3"
+			//action "mn_pop;mn_push foobar;"
+		}
+		option pilot {
+			label	"_Pilots"
+			value	"4"
+			//action "mn_pop;mn_push foobar;"
+		}
 	}
 
 	// ==================
@@ -428,6 +463,19 @@ menu team
 		tag		"body tag_head"
 		scale	"1.0 1.0 1.0"
 	}
+
+	button bt_equipsoldiers
+	{
+		tooltip	"_Equip"
+		string "_Equip"
+		pos		"395 621"
+		image	menu/button_blue	blend true
+		size	"128 60"
+		click	{ cmd "mn_push equipment" }
+		color "1 1 1 0.8"
+		selectcolor "1 1 1 1"
+	}
+
 	string	name { pos "380 700" string "*cvar mn_name" }
 	string	rank_lbl { pos "380 720" string "*cvar mn_chrrank" }
 
