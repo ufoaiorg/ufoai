@@ -212,7 +212,7 @@ use constant FORMAT => (
 );
 
 package MD3_surface;	# Equals MD2 "meshes"
-# This package always assumes the order of data like: shader->verts->tris (i.e. in the order the "num" values are defined)
+# This package always assumes the order of data like: shader->tris->texcoord->vertex (altough I'm not sure this is the preferred).
 # @todo: If we ever encounter an md3 file that has a different order we might want to code a re-order function for sanitys sake.
 use base 'Parse::Binary';
 use constant FORMAT => (
@@ -279,7 +279,7 @@ sub md2_read ($) {
 	my ($filename) = @_;
 
 	# read model file
-	
+
 	my $mag = Magic->new($filename);
 
 	if (($mag->Magic == 844121161)	# Magic number. Equals "IDP2"
@@ -366,6 +366,47 @@ sub md3_skins_list ($) {
 	}
 }
 
+sub md3_update_offsets ($) {
+	my ($model_file) = @_;
+
+	my $headerSize = (11 * 4) + 64;		# 108 = 11 * 'l'(4 byte) + Z64 (64 byte)
+	my $ofsTags = $headerSize;
+	my $ofsSurf = $headerSize;
+
+	$model_file->set_field('OffsetFrames', $headerSize);
+
+	# Calculate the size of the frames-array and add its size to the header-size (i.e. to the previous offset to the frames.)
+	# TODO: there may be a better way to get the size of this static "MD3_frame" struct
+	$ofsTags += ($model_file->NumFrames * length($model_file->MD3_frame->[0][0])) if ($model_file->NumFrames > 0);
+	$model_file->set_field('OffsetTags', $ofsTags);
+
+	# Calculate the size of the tags-array and add its size to the header-size (i.e. to the previous offset of )
+	$ofsSurf = $ofsTags;
+	$ofsSurf += ($model_file->NumTags *length($model_file->MD3_tag->[0][0])) if ($model_file->NumTags > 0);
+	$model_file->set_field('OffsetSurfaces', $ofsSurf);
+
+	# TODO update surface offsets.
+	#for (my $i = 0; $i < $model_file->NumSurfaces; $i++)
+	#	my $surface = $model_file->children->{'MD3_surface'}[$i];
+	#	update:
+	#	my $SurfaceHeaderSize = 11 * 4 + 64;	# 108 = 11 * 'l'(4 byte) + Z64 (64 byte)
+	#	my $ofsShader = $SurfaceHeaderSize;
+	#	my $ofsTris = $SurfaceHeaderSize;
+	#	my %ofsST = $SurfaceHeaderSize;
+	#	my %ofsVerts = $SurfaceHeaderSize;
+	#
+	#	OffsetShaders
+	#	OffsetTris
+	#	OffsetST
+	#	OffsetVerts
+	#}
+
+	$model_file->set_field('OffsetEnd', $model_file->size);
+
+	$model_file->refresh();
+}
+
+
 sub md3_add_skinnum ($$$) {
 	my ($model_file, $mesh, $newNumber) = @_;
 	# $mesh ... MD3 only. Index of the MD3 surface in the file.
@@ -375,32 +416,15 @@ sub md3_add_skinnum ($$$) {
 
 	# Append the new skin(s).
 	for (my $i = $surface->NumShaders; $i < $newNumber; $i++) {
-		# TODO: finalize me
-#use Data::Dumper;
-#$Data::Dumper::Useqq = 1;
-#print Dumper($model_file);	# DEBUG
-		
 		my $skinEntry = MD3_Shader->new();
 		$skinEntry->set_field('Path', "dummy");
 
-#print "sstt".Dumper($skinEntry)."ss\n";	# DEBUG
 		push(@{$surface->children->{MD3_Shader}}, $skinEntry);
 		$surface->set_field('NumShaders', $surface->NumShaders+1);
 		$surface->refresh();
-#print "uuuu".Dumper($surface)."uuuu\n";	# DEBUG
 	}
 
-	# TODO: Fix all the MD3 data offsets!
-
-	# Update following offsets (after skin data) correctly.
-	#my $data_offset_delta = ($newNumber-$model_file->NumSkins) * 64;
-	#$model_file->struct->{OffsetST} += $data_offset_delta;		# update offset to s-t texture coordinates
-	#$model_file->struct->{OffsetTris} += $data_offset_delta;		# update offset to triangles
-	#$model_file->struct->{OffsetFrames} += $data_offset_delta;	# update offset to frame data
-	#$model_file->struct->{OffsetGLcmds} += $data_offset_delta;	# update offset to opengl commands
-	#$model_file->struct->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
-
-	#$model_file->struct->{NumSkins} = $newNumber;
+	md3_update_offsets($model_file);
 }
 
 #######################################
@@ -423,11 +447,11 @@ sub model_read ($) {
 		} else {
 			# MD3 file
 			print "MD3 file found.\n";
-			
+
 			if (!($filename =~ /\.md3$/)) {
 				print "Note: It is suggested to change the file extension to '.md3'.\n\n";
 			}
-			
+
 			# Sanity check of data order.
 			my $frames =	($model->NumFrames > 0);
 			my $tags = 	($model->NumTags > 0);
@@ -442,7 +466,6 @@ sub model_read ($) {
 			}
 
 			return $model
-			
 		}
 	} else {
 		# MD2 file
@@ -478,9 +501,9 @@ sub model_info ($) {
 		print "NumFrames: ", $model_file->NumFrames, " (max is 1024)\n";
 		print "NumTags: ", $model_file->NumTags, " (max is 16 per frame)\n";
 		print "NumSurfaces: ", $model_file->NumSurfaces, " (max is 32)\n";
-		use Data::Dumper;
-		$Data::Dumper::Useqq = 1;
-		print Dumper($model_file);
+		#use Data::Dumper;
+		#$Data::Dumper::Useqq = 1;
+		#print Dumper($model_file);
 		model_skins_list($model_file);	#debug
 		for (my $i=0; $i<$model_file->NumSurfaces; $i++) {
 			my $surface = $model_file->children->{'MD3_surface'}[$i];
@@ -711,7 +734,7 @@ if ($param_action eq 'skinedit') {
 	# DEBUG
 	#use Data::Dumper;
 	#$Data::Dumper::Useqq = 1;
-	#print Dumper($model_file->struct);
+	#print Dumper($model_file);
 
 	# Print Skins
 	model_skins_list($model_file);
