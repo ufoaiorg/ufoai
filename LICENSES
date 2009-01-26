@@ -352,6 +352,8 @@ base/maps/village/vil_s07.map | GNU General Public License 2.0
 base/maps/village/vil_s08.map | GNU General Public License 2.0
 base/maps/village/vil_s15.map | GNU General Public License 2.0
 base/maps/wilderness.map | GNU General Public License 2.0 or later | Martin Gerhardy
+base/media/7th.ttf | Freely distributed and free for all non-commercial uses | 2002 Iconian Fonts - http://www.iconian.com/ - Daniel Zadorozny
+base/media/DejaVuSans.ttf | see http://dejavu-fonts.org/wiki/index.php?title=License | http://dejavu-fonts.org
 base/media/FreeMono.ttf | GNU General Public License | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSans.ttf | GNU General Public License | http://savannah.nongnu.org/projects/freefont/
 base/media/FreeSerif.ttf | GNU General Public License | http://savannah.nongnu.org/projects/freefont/
