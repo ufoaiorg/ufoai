@@ -1112,18 +1112,6 @@ void AIM_AircraftEquipAddItem_f (void)
 		slot = BDEF_SelectInstallationSlot(installation, airequipID);
 	}
 
-	if (airequipID == AC_ITEM_PILOT) {
-		aircraft->pilot = airequipSelectedPilot;
-
-		/* Update the values of aircraft stats */
-		AII_UpdateAircraftStats(aircraft);
-
-		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
-		AIM_AircraftEquipMenuUpdate_f();
-
-		return;
-	}
-
 	/* the clicked button doesn't correspond to the selected zone */
 	if (zone != airequipSelectedZone)
 		return;
@@ -1136,7 +1124,11 @@ void AIM_AircraftEquipAddItem_f (void)
 
 	switch (zone) {
 	case ZONE_MAIN:
-		if (!slot->nextItem) {
+		if (airequipID == AC_ITEM_PILOT) {
+			/* we are changing the pilot */
+			aircraft->pilot = airequipSelectedPilot;
+			break;
+		} else if (!slot->nextItem) {
 			/* we add the weapon, shield, item, or base defence if slot is free or the installation of
 			 * current item just began */
 			if (!slot->item || (slot->item && slot->installationTime == slot->item->craftitem.installationTime)) {
@@ -1237,27 +1229,17 @@ void AIM_AircraftEquipDeleteItem_f (void)
 		slot = BDEF_SelectInstallationSlot(installation, airequipID);
 	}
 
-	if (airequipID == AC_ITEM_PILOT) {
-		aircraft->pilot = NULL;
-
-		/* Update the values of aircraft stats */
-		AII_UpdateAircraftStats(aircraft);
-
-		noparams = qtrue; /* used for AIM_AircraftEquipMenuUpdate_f */
-		AIM_AircraftEquipMenuUpdate_f();
-
-		return;
-	}
-
 	/* no item in slot: nothing to remove */
-	if (!slot->item)
+	if (airequipID != AC_ITEM_PILOT && !slot->item)
 		return;
 
 	/* update the new item to slot */
 
 	switch (zone) {
 	case ZONE_MAIN:
-		if (!slot->nextItem) {
+		if (airequipID == AC_ITEM_PILOT) {
+			aircraft->pilot = NULL;
+		} else if (!slot->nextItem) {
 			/* we change the weapon, shield, item, or base defence that is already in the slot */
 			/* if the item has been installed since less than 1 hour, you don't need time to remove it */
 			if (slot->installationTime < slot->item->craftitem.installationTime) {
