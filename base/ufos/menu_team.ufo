@@ -23,6 +23,49 @@ menu team
 	}
 
 	// ==================
+	// base info
+	// ==================
+
+	string base_name
+	{
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
+	}
+
+	custombutton bt_continue
+	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		tooltip	"_Back"
+		pos		"950 20"
+		icon	"return"
+		click	{ cmd "mn_pop;mn_push equipment;"  }
+	}
+
+	string txt_credits_caption
+	{
+		string		"_CREDIT"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
+	}
+
+	string txt_credits
+	{
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
+	}
+
+	// ==================
 	// names list
 	// ==================
 
@@ -36,17 +79,6 @@ menu team
 		*txt_actor5 color "0 .78 0 1"
 		*txt_actor6 color "0 .78 0 1"
 		*txt_actor7 color "0 .78 0 1"
-		*txt_actor8 color "0 .78 0 1"
-		*txt_actor9 color "0 .78 0 1"
-		*txt_actor10 color "0 .78 0 1"
-		*txt_actor11 color "0 .78 0 1"
-		*txt_actor12 color "0 .78 0 1"
-		*txt_actor13 color "0 .78 0 1"
-		*txt_actor14 color "0 .78 0 1"
-		*txt_actor15 color "0 .78 0 1"
-		*txt_actor16 color "0 .78 0 1"
-		*txt_actor17 color "0 .78 0 1"
-		*txt_actor18 color "0 .78 0 1"
 	}
 
 	/**
@@ -104,17 +136,6 @@ menu team
 	confunc teamselect5 { *txt_actor5 color "1 1 1 1" }
 	confunc teamselect6 { *txt_actor6 color "1 1 1 1" }
 	confunc teamselect7 { *txt_actor7 color "1 1 1 1" }
-	confunc teamselect8 { *txt_actor8 color "1 1 1 1" }
-	confunc teamselect9 { *txt_actor9 color "1 1 1 1" }
-	confunc teamselect10 { *txt_actor10 color "1 1 1 1" }
-	confunc teamselect11 { *txt_actor11 color "1 1 1 1" }
-	confunc teamselect12 { *txt_actor12 color "1 1 1 1" }
-	confunc teamselect13 { *txt_actor13 color "1 1 1 1" }
-	confunc teamselect14 { *txt_actor14 color "1 1 1 1" }
-	confunc teamselect15 { *txt_actor15 color "1 1 1 1" }
-	confunc teamselect16 { *txt_actor16 color "1 1 1 1" }
-	confunc teamselect17 { *txt_actor17 color "1 1 1 1" }
-	confunc teamselect18 { *txt_actor18 color "1 1 1 1" }
 
 	confunc teamdeselect0 { *txt_actor0 color "0 .78 0 1" }
 	confunc teamdeselect1 { *txt_actor1 color "0 .78 0 1" }
@@ -124,21 +145,10 @@ menu team
 	confunc teamdeselect5 { *txt_actor5 color "0 .78 0 1" }
 	confunc teamdeselect6 { *txt_actor6 color "0 .78 0 1" }
 	confunc teamdeselect7 { *txt_actor7 color "0 .78 0 1" }
-	confunc teamdeselect8 { *txt_actor8 color "0 .78 0 1" }
-	confunc teamdeselect9 { *txt_actor9 color "0 .78 0 1" }
-	confunc teamdeselect10 { *txt_actor10 color "0 .78 0 1" }
-	confunc teamdeselect11 { *txt_actor11 color "0 .78 0 1" }
-	confunc teamdeselect12 { *txt_actor12 color "0 .78 0 1" }
-	confunc teamdeselect13 { *txt_actor13 color "0 .78 0 1" }
-	confunc teamdeselect14 { *txt_actor14 color "0 .78 0 1" }
-	confunc teamdeselect15 { *txt_actor15 color "0 .78 0 1" }
-	confunc teamdeselect16 { *txt_actor16 color "0 .78 0 1" }
-	confunc teamdeselect17 { *txt_actor17 color "0 .78 0 1" }
-	confunc teamdeselect18 { *txt_actor18 color "0 .78 0 1" }
 
 	pic bt_equip0
 	{
-		pos	"28 35"
+		pos	"28 470"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -149,7 +159,7 @@ menu team
 
 	pic bt_equip1
 	{
-		pos	"28 73"
+		pos	"28 505"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -160,7 +170,7 @@ menu team
 
 	pic bt_equip2
 	{
-		pos	"28 111"
+		pos	"28 540"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -171,7 +181,7 @@ menu team
 
 	pic bt_equip3
 	{
-		pos	"28 149"
+		pos	"28 575"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -182,7 +192,7 @@ menu team
 
 	pic bt_equip4
 	{
-		pos	"28 187"
+		pos	"28 610"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -193,7 +203,7 @@ menu team
 
 	pic bt_equip5
 	{
-		pos	"28 225"
+		pos	"28 645"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -204,7 +214,7 @@ menu team
 
 	pic bt_equip6
 	{
-		pos	"28 263"
+		pos	"28 680"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -215,128 +225,7 @@ menu team
 
 	pic bt_equip7
 	{
-		pos	"28 301"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip8
-	{
-		pos	"28 339"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip9
-	{
-		pos	"28 377"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip10
-	{
-		pos	"28 415"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip11
-	{
-		pos	"28 453"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip12
-	{
-		pos	"28 491"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip13
-	{
-		pos	"28 529"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip14
-	{
-		pos	"28 567"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip15
-	{
-		pos	"28 605"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip16
-	{
-		pos	"28 643"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip17
-	{
-		pos	"28 681"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
-		in
-		invis	true
-	}
-
-	pic bt_equip18
-	{
-		pos	"28 719"
+		pos	"28 715"
 		image menu/button_equip
 		mousefx false
 		texl	"0 0"
@@ -350,7 +239,7 @@ menu team
 	checkbox bt_actor0
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 30"
+		pos	"280 470"
 		change { cmd "team_hire 0;" }
 		current 0
 		image menu/checkbox_green
@@ -360,7 +249,7 @@ menu team
 	checkbox bt_actor1
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 68"
+		pos	"280 505"
 		change { cmd "team_hire 1;" }
 		current 0
 		image menu/checkbox_green
@@ -370,7 +259,7 @@ menu team
 	checkbox bt_actor2
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 106"
+		pos	"280 540"
 		change { cmd "team_hire 2;" }
 		current 0
 		image menu/checkbox_green
@@ -380,7 +269,7 @@ menu team
 	checkbox bt_actor3
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 144"
+		pos	"280 575"
 		change { cmd "team_hire 3;" }
 		current 0
 		image menu/checkbox_green
@@ -390,7 +279,7 @@ menu team
 	checkbox bt_actor4
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 182"
+		pos	"280 610"
 		change { cmd "team_hire 4;" }
 		current 0
 		image menu/checkbox_green
@@ -400,7 +289,7 @@ menu team
 	checkbox bt_actor5
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 220"
+		pos	"280 645"
 		change { cmd "team_hire 5;" }
 		current 0
 		image menu/checkbox_green
@@ -410,7 +299,7 @@ menu team
 	checkbox bt_actor6
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 258"
+		pos	"280 680"
 		change { cmd "team_hire 6;" }
 		current 0
 		image menu/checkbox_green
@@ -420,118 +309,8 @@ menu team
 	checkbox bt_actor7
 	{
 		tooltip	"_Add/remove this soldier"
-		pos	"362 296"
+		pos	"280 715"
 		change { cmd "team_hire 7;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor8
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 334"
-		change { cmd "team_hire 8;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor9
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 372"
-		change { cmd "team_hire 9;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor10
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 410"
-		change { cmd "team_hire 10;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor11
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 448"
-		change { cmd "team_hire 11;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor12
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 486"
-		change { cmd "team_hire 12;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor13
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 524"
-		change { cmd "team_hire 13;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor14
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 562"
-		change { cmd "team_hire 14;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor15
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 600"
-		change { cmd "team_hire 15;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor16
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 638"
-		change { cmd "team_hire 16;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor17
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 676"
-		change { cmd "team_hire 17;" }
-		current 0
-		image menu/checkbox_green
-		size "20 20"
-		invis	true
-	}
-	checkbox bt_actor18
-	{
-		tooltip	"_Add/remove this soldier"
-		pos	"362 714"
-		change { cmd "team_hire 18;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -541,8 +320,8 @@ menu team
 	string txt_actor0
 	{
 		string	"*cvar mn_ename0"
-		pos		"60 22"
-		size	"290 40"
+		pos		"60 460"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 0;" }
 		invis	true
@@ -550,8 +329,8 @@ menu team
 	string txt_actor1
 	{
 		string	"*cvar mn_ename1"
-		pos		"60 60"
-		size	"290 40"
+		pos		"60 495"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 1;" }
 		invis	true
@@ -559,8 +338,8 @@ menu team
 	string txt_actor2
 	{
 		string	"*cvar mn_ename2"
-		pos		"60 98"
-		size	"290 40"
+		pos		"60 530"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 2;" }
 		invis	true
@@ -568,8 +347,8 @@ menu team
 	string txt_actor3
 	{
 		string	"*cvar mn_ename3"
-		pos		"60 136"
-		size	"290 40"
+		pos		"60 565"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 3;" }
 		invis	true
@@ -577,8 +356,8 @@ menu team
 	string txt_actor4
 	{
 		string	"*cvar mn_ename4"
-		pos		"60 174"
-		size	"290 40"
+		pos		"60 600"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 4;" }
 		invis	true
@@ -586,8 +365,8 @@ menu team
 	string txt_actor5
 	{
 		string	"*cvar mn_ename5"
-		pos		"60 212"
-		size	"290 40"
+		pos		"60 635"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 5;" }
 		invis	true
@@ -595,8 +374,8 @@ menu team
 	string txt_actor6
 	{
 		string	"*cvar mn_ename6"
-		pos		"60 250"
-		size	"290 40"
+		pos		"60 670"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 6;" }
 		invis	true
@@ -604,142 +383,30 @@ menu team
 	string txt_actor7
 	{
 		string	"*cvar mn_ename7"
-		pos		"60 288"
-		size	"290 40"
+		pos		"60 705"
+		size	"190 35"
 		textalign cl
 		click { cmd "team_select 7;" }
 		invis	true
 	}
-	string txt_actor8
-	{
-		string	"*cvar mn_ename8"
-		pos		"60 326"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 8;" }
-		invis	true
-	}
-	string txt_actor9
-	{
-		string	"*cvar mn_ename9"
-		pos		"60 364"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 9;" }
-		invis	true
-	}
-	string txt_actor10
-	{
-		string	"*cvar mn_ename10"
-		pos		"60 402"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 10;" }
-		invis	true
-	}
-	string txt_actor11
-	{
-		string	"*cvar mn_ename11"
-		pos		"60 440"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 11;" }
-		invis	true
-	}
-	string txt_actor12
-	{
-		string	"*cvar mn_ename12"
-		pos		"60 478"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 12;" }
-		invis	true
-	}
-	string txt_actor13
-	{
-		string	"*cvar mn_ename13"
-		pos		"60 516"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 13;" }
-		invis	true
-	}
-	string txt_actor14
-	{
-		string	"*cvar mn_ename14"
-		pos		"60 554"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 14;" }
-		invis	true
-	}
-	string txt_actor15
-	{
-		string	"*cvar mn_ename15"
-		pos		"60 592"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 15;" }
-		invis	true
-	}
-	string txt_actor16
-	{
-		string	"*cvar mn_ename16"
-		pos		"60 630"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 16;" }
-		invis	true
-	}
-	string txt_actor17
-	{
-		string	"*cvar mn_ename17"
-		pos		"60 668"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 17;" }
-		invis	true
-	}
-	string txt_actor18
-	{
-		string	"*cvar mn_ename18"
-		pos		"60 706"
-		size	"290 40"
-		textalign cl
-		click { cmd "team_select 18;" }
-		invis	true
-	}
 
+	vscrollbar scroll_employees
+	{
+		image	menu/scrollbar_v_green	blend	true
+		pos "310 463"	height	"282"
+		current 0
+		viewsize 8
+		fullsize 50
+	}
 
 	// ==================
 	// actor info
 	// ==================
-	confunc changename {
-		if "sv_maxclients == 1" {
-			cmd	"employee_changename;"
-		}
-	}
 
-	textentry name
-	{
-		string	"*cvar mn_name"
-		pos		"475 12"
-		size	"400 32"
-		change { call changename }
-	}
-
-	pic bt_edit
-	{
-		visiblewhen "mn_team_hired == 1"
-		tooltip	"_Rename your soldier"
-		image	menu/buttons_small
-		pos	"875 20"
-		texl	"0 48"
-		texh	"16 64"
-		click
-		{
-			cmd "mn_edittextentry name;"
-		}
+	pic	rank_img {
+		pos "378 465"
+		size "50 50"
+		image "*cvar mn_chrrank_img"
 	}
 
 	model body
@@ -748,10 +415,10 @@ menu team
 		skin	"*cvar mn_skin"
 		anim	"stand2"
 		angles	"0 70 90"
-		scale	"6.7 6.7 6.7"
-		pos		"480 80"
-		size	"190 340"
-		origin	"0 -40 0"
+		scale	"5.5 5.5 5.5"
+		pos		"378 465"
+		size	"167 278"
+		origin	"0 -35 0"
 	}
 
 	model head
@@ -761,86 +428,78 @@ menu team
 		tag		"body tag_head"
 		scale	"1.0 1.0 1.0"
 	}
+	string	name { pos "380 700" string "*cvar mn_name" }
+	string	rank_lbl { pos "380 720" string "*cvar mn_chrrank" }
 
-	pic	rank_img { pos "475 370" image "*cvar mn_chrrank_img" }
-	string	rank_lbl { pos "475 75" string "*cvar mn_chrrank" }
+	pic pwr_bdr    { pos "650 478"  image menu/bar_border }
+	tbar pwr_bar   { pos "652 478"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string pwr_lbl { pos "600 470"  string "_Strength:" }
+	string pwr_val { pos "956 470"  string "*cvar mn_tpwr" align ur }
 
-	string pwr_lbl { pos "700 79"  string "_Strength:" }
-	string pwr_val { pos "975 79"  string "*cvar mn_tpwr" align ur }
-	pic pwr_bdr    { pos "704 94"  image menu/bar_border }
-	tbar pwr_bar   { pos "707 94"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic spd_bdr    { pos "650 501" image menu/bar_border }
+	tbar spd_bar   { pos "652 501" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string spd_lbl { pos "600 493" string "_Speed:" }
+	string spd_val { pos "956 493" string "*cvar mn_tspd" align ur }
 
-	string spd_lbl { pos "700 109" string "_Speed:" }
-	string spd_val { pos "975 109" string "*cvar mn_tspd" align ur }
-	pic spd_bdr    { pos "704 124" image menu/bar_border }
-	tbar spd_bar   { pos "707 124" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic acc_bdr    { pos "650 524" image menu/bar_border }
+	tbar acc_bar   { pos "652 524" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string acc_lbl { pos "600 516" string "_Accuracy:" }
+	string acc_val { pos "956 516" string "*cvar mn_tacc" align ur }
 
-	string acc_lbl { pos "700 139" string "_Accuracy:" }
-	string acc_val { pos "975 139" string "*cvar mn_tacc" align ur }
-	pic acc_bdr    { pos "704 154" image menu/bar_border }
-	tbar acc_bar   { pos "707 154" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic mnd_bdr    { pos "650 547" image menu/bar_border }
+	tbar mnd_bar   { pos "652 547" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string mnd_lbl { pos "600 539" string "_Mind:" }
+	string mnd_val { pos "956 539" string "*cvar mn_tmnd" align ur }
 
-	string mnd_lbl { pos "700 169" string "_Mind:" }
-	string mnd_val { pos "975 169" string "*cvar mn_tmnd" align ur }
-	pic mnd_bdr    { pos "704 184" image menu/bar_border }
-	tbar mnd_bar   { pos "707 184" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	pic cls_bdr    { pos "650 570" image menu/bar_border }
+	tbar cls_bar   { pos "652 570" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string cls_lbl { pos "600 562" string "_Close Combat:" }
+	string cls_val { pos "956 562" string "*cvar mn_tcls" align ur }
 
-	string cls_lbl { pos "700 204" string "_Close Combat:" }
-	string cls_val { pos "975 204" string "*cvar mn_tcls" align ur }
-	pic cls_bdr    { pos "704 219" image menu/bar_border }
-	tbar cls_bar   { pos "707 219" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic hvy_bdr    { pos "650 593" image menu/bar_border }
+	tbar hvy_bar   { pos "652 593" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string hvy_lbl { pos "600 585" string "_Heavy Weapons:" }
+	string hvy_val { pos "956 585" string "*cvar mn_thvy" align ur }
 
-	string hvy_lbl { pos "700 234" string "_Heavy Weapons:" }
-	string hvy_val { pos "975 234" string "*cvar mn_thvy" align ur }
-	pic hvy_bdr    { pos "704 249" image menu/bar_border }
-	tbar hvy_bar   { pos "707 249" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic ass_bdr    { pos "650 616" image menu/bar_border }
+	tbar ass_bar   { pos "652 616" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string ass_lbl { pos "600 608" string "_Assault Weapons:" }
+	string ass_val { pos "956 608" string "*cvar mn_tass" align ur }
 
-	string ass_lbl { pos "700 264" string "_Assault Weapons:" }
-	string ass_val { pos "975 264" string "*cvar mn_tass" align ur }
-	pic ass_bdr    { pos "704 279" image menu/bar_border }
-	tbar ass_bar   { pos "707 279" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic snp_bdr    { pos "650 639" image menu/bar_border }
+	tbar snp_bar   { pos "652 639" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string snp_lbl { pos "600 631" string "_Sniper Rifles:" }
+	string snp_val { pos "956 631" string "*cvar mn_tsnp" align ur }
 
-	string snp_lbl { pos "700 294" string "_Sniper Rifles:" }
-	string snp_val { pos "975 294" string "*cvar mn_tsnp" align ur }
-	pic snp_bdr    { pos "704 309" image menu/bar_border }
-	tbar snp_bar   { pos "707 309" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	pic exp_bdr    { pos "650 662" image menu/bar_border }
+	tbar exp_bar   { pos "652 662" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string exp_lbl { pos "600 654" string "_High-Explosives:" }
+	string exp_val { pos "956 654" string "*cvar mn_texp" align ur }
 
-	string exp_lbl { pos "700 324" string "_High-Explosives:" }
-	string exp_val { pos "975 324" string "*cvar mn_texp" align ur }
-	pic exp_bdr    { pos "704 339" image menu/bar_border }
-	tbar exp_bar   { pos "707 339" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
-
-	string hp_lbl { pos "700 359" string "_Health:" }
-	string hp_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "975 359" string "*cvar mn_thp" align ur
-	}
-
-	pic hp_bdr    { pos "704 374" image menu/bar_border }
+	pic hp_bdr    { pos "650 685" image menu/bar_border }
 	tbar hp_bar
 	{
 		visiblewhen "mn_show_employee == 1"
 		current	"*cvar mn_vhp"
 		max	"*cvar mn_vhpmax"
-		pos "707 374"
+		pos "652 685"
 		point_width 2.2
 		gap_width 3
 		texl "3 0"
 		image menu/bar_health
 	}
-
-	string	missions_lbl { pos "700 394" string "_Missions Performed:" }
-	string	missions_val
+	string hp_lbl { pos "600 677" string "_Health:" }
+	string hp_val
 	{
-		pos "975 394" string "*cvar mn_chrmis" align ur
+		visiblewhen "mn_show_employee == 1"
+		pos "956 677" string "*cvar mn_thp" align ur
 	}
 
-	string	kills_lbl { pos "700 414" string "_Enemies Killed:" }
-	string	kills_val
-	{
-		pos "975 414" string "*cvar mn_chrkillalien" align ur
-	}
+	string	missions_lbl { pos "600 700" string "_Missions Performed:" }
+	string	missions_val { pos "956 700" string "*cvar mn_chrmis" align ur }
+
+	string	kills_lbl { pos "600 723" string "_Enemies Killed:" }
+	string	kills_val { pos "956 723" string "*cvar mn_chrkillalien" align ur }
 
 	//mn_chrkillcivilian
 	//mn_chrkillteam
@@ -851,24 +510,27 @@ menu team
 
 	model aircraft
 	{
-		model	"*cvar mn_aircraft_model"
-		angles	"-20 -40 120"
-		scale	"1.1 1.1 1.1"
-		origin	"-45 35 0"
-		pos		"475 477"
-		size	"528 270"
+		model		"*cvar mn_aircraft_model"
+		pos			"478 107"
+		size		"529 260"
+		origin		"-45 25 0"
+		whup		{ cmd "mn_next_aircraft;" }
+		whdown		{ cmd "mn_prev_aircraft;" }
+		view		aircraft
 	}
 
 	string team_members
 	{
 		string	"_Team Members:"
-		pos		"480 486"
+		pos		"480 107"
+		size	"200 20"
 	}
 
 	string team_hired
 	{
 		string	"*cvar mn_hired"
-		pos		"480 508"
+		pos		"480 129"
+		size	"200 20"
 	}
 
 	// ==================
@@ -881,28 +543,6 @@ menu team
 	confunc toggle_show_soldiersbutton {
 		*bt_switch_list tooltip	"_Assign soldiers"
 		*bt_switch_list icon	soldier
-	}
-
-	custombutton bt_switch_list
-	{
-		tooltip		"_Assign tanks"
-		image		menu/button_background
-		blend		true
-		texl		"192 0"
-		size		"64 37"
-		pos			"874 720"
-		icon		uvc
-		click		{ cmd "team_toggle_list;" }
-	}
-
-	custombutton bt_go
-	{
-		tooltip	"_Done"
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos		"940 720"
-		icon return
-		click	{ cmd "mn_pop;mn_push equipment;"  }
 	}
 
 	func init

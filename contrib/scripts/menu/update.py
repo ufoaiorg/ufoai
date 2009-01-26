@@ -368,9 +368,42 @@ def moveEquipmentPanel():
 
 	root.save()
 
+def moveSoliderStats():
+	root = Root()
+	root.loadFile('base/ufos/menu_team.ufo')
+
+	print '-----'
+	
+	stats = ["pwr", "spd", "acc", "mnd", "cls", "hvy", "ass", "snp", "exp", "hp", "missions", "kills"]
+	# relative position of each element of stats
+	elements = {
+		"_lbl": (0, 0),
+		"_val": (356, 0),
+		"_bdr": (50, 8),
+		"_bar": (52, 8),
+	}
+	
+	pos = 600, 470
+	menu = root.nodes.childname["team"]
+	decy = 23
+	
+	for s in stats:
+		for e,dec in elements.iteritems():
+			name = s + e
+			if not (name in menu.childname):
+				continue
+			node = menu.childname[name]
+			x, y = pos[0] + dec[0], pos[1] + dec[1]
+			node.updateParam("pos", '"' + str(x) + " " + str(y) + '"')
+
+		# next stats
+		pos = pos[0], pos[1] + decy
+	
+	root.save()	
+	
 if __name__ == "__main__":
 	#fixStringNodeAlignProperty()
-	moveEquipmentPanel()
+	moveSoliderStats()
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')

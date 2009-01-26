@@ -1134,7 +1134,7 @@ static void CL_InitLocal (void)
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	/* only 19 soldiers in soldier selection list */
-	cl_numnames = Cvar_Get("cl_numnames", "15", CVAR_NOSET, NULL);
+	cl_numnames = Cvar_Get("cl_numnames", "8", CVAR_NOSET, NULL);
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
 	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "human_phalanx_initial", CVAR_ARCHIVE, "Start with assigned equipment - see cl_start_employees");
