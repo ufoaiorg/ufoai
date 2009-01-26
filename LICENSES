@@ -1077,6 +1077,8 @@ base/models/objects/vegi/water_lily/lily_bloom.md2 | GNU General Public License 
 base/models/objects/vegi/water_lily/lily_leaf.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
 base/models/objects/vegi/water_lily/lily_leaf.tga | GNU General Public License 2.0 or later | Martin Gerhardy
 base/models/objects/vegi/water_lily/lily_stem.md2 | GNU General Public License 2.0 | Werner "hoehrer" H?\195?\131?\194?\182hrer
+base/models/objects/vegi/water_lily2/lily.jpg | GNU General Public License 2.0 or later | Willem "Sitters"
+base/models/objects/vegi/water_lily2/lily.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/bicycle/bicycle.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/bicycle/bicycle.tga | GNU General Public License 2.0 or later | Willem "Sitters"
 base/models/objects/vehicles/forktruck/barrel1.md2 | GNU General Public License 2.0 or later | Willem "Sitters"
