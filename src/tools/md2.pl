@@ -162,7 +162,7 @@ use constant FORMAT => (
 	MD3_tag		=> ['a112', '{$NumTags}', 1 ],
 
 	#prelude_MD3_surface	=> 'a{xxxx}',
-	MD3_surface	=> ['a*', '{$NumSurfaces}', 1 ],	# I really hope the 'a*' part doesn't prevent parsing of more than one surface/mesh.
+	MD3_surface	=> ['a{$OffsetEnd - $OffsetSurfaces}', '{$NumSurfaces}', 1 ],
 
 	Data			=> 'a*'		# @todo: The whole rest .. currently without structure.
 );
