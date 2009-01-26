@@ -223,11 +223,11 @@ use constant FORMAT => (
 	NumShaders	=> 'l',		# Number of Shader objects defined in this Surface, with a limit of MD3_MAX_SHADERS. Current value of MD3_MAX_SHADERS is 256.
 	NumVerts	=> 'l',		# Number of Vertex objects defined in this Surface, up to MD3_MAX_VERTS. Current value of MD3_MAX_VERTS is 4096.
 	NumTris		=> 'l',		# Number of Triangle objects defined in this Surface, maximum of MD3_MAX_TRIANGLES. Current value of MD3_MAX_TRIANGLES is 8192.
-	OffsetTris	=> 'l',		# offset to tris
-	OffsetShaders	=> 'l',		# Relative offset from the top of MD3_surface to where the list of Shader objects starts.
+	OffsetTris	=> 'l',		# Offset to tris (faces/polygons).
+	OffsetShaders	=> 'l',		# Relative offset from the top of MD3_surface to where the list of Shader objects (texture paths) starts.
 	OffsetST	=> 'l',		# Relative offset from the top of MD3_surface to where the list of St objects (Texture Coordinates, S-T vertices) starts.
-	OffsetVerts	=> 'l',		# offset to vertices
-	ShaderSize	=> 'l',		# Relative offset from the top of MD3_surface to where the Surface object ends.
+	OffsetVerts	=> 'l',		# Relative offset from the top of MD3_surface to where the kist if vertex objects (x,y,z,n) starts.
+	OffsetEnd	=> 'l',		# Relative offset from the top of MD3_surface to where the Surface object ends. (i.e. The size of the whole surface object).
 	MD3_Shader	=> ['a68', '{$NumShaders}', 1 ],
 	MD3_Triangle	=> ['a12', '{$NumTris}', 1 ],
 	MD3_TexCoord	=> ['a8', '{$NumVerts}', 1 ],
@@ -344,6 +344,9 @@ sub md3_read ($) {
 sub md3_skins_list ($) {
 	my ($model_file) = @_;
 
+	die "md3_skins_list only supports MD3 files!.\n"
+		unless (ref($model_file) eq "MD3");
+
 	for (my $i=0; $i < $model_file->NumSurfaces; $i++) {
 		my $surface = $model_file->children->{'MD3_surface'}[$i];
 		#use Data::Dumper;
@@ -367,43 +370,56 @@ sub md3_skins_list ($) {
 }
 
 sub md3_update_offsets ($) {
-	my ($model_file) = @_;
+	my ($model) = @_;
 
 	my $headerSize = (11 * 4) + 64;		# 108 = 11 * 'l'(4 byte) + Z64 (64 byte)
 	my $ofsTags = $headerSize;
 	my $ofsSurf = $headerSize;
 
-	$model_file->set_field('OffsetFrames', $headerSize);
+	die "md3_update_offsets only supports MD3 files!.\n"
+		unless (ref($model) eq "MD3");
+	
+	$model->set_field('OffsetFrames', $headerSize);
 
 	# Calculate the size of the frames-array and add its size to the header-size (i.e. to the previous offset to the frames.)
 	# TODO: there may be a better way to get the size of this static "MD3_frame" struct
-	$ofsTags += ($model_file->NumFrames * length($model_file->MD3_frame->[0][0])) if ($model_file->NumFrames > 0);
-	$model_file->set_field('OffsetTags', $ofsTags);
+	$ofsTags += ($model->NumFrames * length($model->MD3_frame->[0][0])) if ($model->NumFrames > 0);
+	$model->set_field('OffsetTags', $ofsTags);
 
 	# Calculate the size of the tags-array and add its size to the header-size (i.e. to the previous offset of )
 	$ofsSurf = $ofsTags;
-	$ofsSurf += ($model_file->NumTags *length($model_file->MD3_tag->[0][0])) if ($model_file->NumTags > 0);
-	$model_file->set_field('OffsetSurfaces', $ofsSurf);
+	$ofsSurf += ($model->NumTags *length($model->MD3_tag->[0][0])) if ($model->NumTags > 0);
+	$model->set_field('OffsetSurfaces', $ofsSurf);
 
-	# TODO update surface offsets.
-	#for (my $i = 0; $i < $model_file->NumSurfaces; $i++)
-	#	my $surface = $model_file->children->{'MD3_surface'}[$i];
-	#	update:
-	#	my $SurfaceHeaderSize = 11 * 4 + 64;	# 108 = 11 * 'l'(4 byte) + Z64 (64 byte)
-	#	my $ofsShader = $SurfaceHeaderSize;
-	#	my $ofsTris = $SurfaceHeaderSize;
-	#	my %ofsST = $SurfaceHeaderSize;
-	#	my %ofsVerts = $SurfaceHeaderSize;
-	#
-	#	OffsetShaders
-	#	OffsetTris
-	#	OffsetST
-	#	OffsetVerts
-	#}
+	# Update offsets inside all the MD3 surfaces.
+	for (my $i = 0; $i < $model->NumSurfaces; $i++) {
+		my $surface = $model->children->{'MD3_surface'}[$i];
 
-	$model_file->set_field('OffsetEnd', $model_file->size);
+		my $SurfaceHeaderSize = 11 * 4 + 64;	# 108 = 11 * 'l'(4 byte) + Z64 (64 byte)
+		my $ofsShader = $SurfaceHeaderSize;
+		my $ofsTris = $SurfaceHeaderSize;
+		my $ofsST = $SurfaceHeaderSize;
+		my $ofsVerts = $SurfaceHeaderSize;
 
-	$model_file->refresh();
+		$surface->set_field('OffsetShaders', $SurfaceHeaderSize);
+		
+		$ofsTris += ($surface->NumShaders * length($surface->MD3_Shader->[0][0])) if ($surface->NumShaders > 0);
+		$surface->set_field('OffsetTris', $ofsTris);
+		$ofsST = $ofsVerts = $ofsTris;
+		
+		$ofsST += ($surface->NumTris * length($surface->MD3_Triangle->[0][0])) if ($surface->NumTris > 0);
+		$surface->set_field('OffsetST', $ofsST);
+		$ofsVerts = $ofsST;
+		
+		$ofsVerts += ($surface->NumVerts * length($surface->MD3_TexCoord->[0][0])) if ($surface->NumVerts > 0);
+		$surface->set_field('OffsetVerts', $ofsVerts);
+		
+		$surface->set_field('OffsetEnd', $surface->size);
+	}
+
+	$model->set_field('OffsetEnd', $model->size);
+
+	$model->refresh();
 }
 
 
