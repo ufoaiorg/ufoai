@@ -21,7 +21,7 @@ entity info_alien_start {
 	size		"-16 -16 -24 16 16 32"
 }
 
-entity info_alien_start {
+entity info_ugv_start {
 	description	"Starting point for a ugv 2x2 unit."
 	color		"0 0 1"
 	size		"-16 -16 -24 16 16 32"
@@ -31,7 +31,7 @@ entity info_alien_start {
 	}
 }
 
-entity info_alien_start {
+entity info_civilian_start {
 	description	"Starting point for a civilian."
 	color		"0 1 1"
 	size		"-16 -16 -24 16 16 32"
