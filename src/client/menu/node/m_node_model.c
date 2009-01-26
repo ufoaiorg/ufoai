@@ -205,8 +205,8 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 	qboolean isInitialised = qfalse;
 	vec3_t nodeorigin;
 	MN_GetNodeAbsPos(node, nodeorigin);
-	nodeorigin[0] = node->u.model.origin[0] - node->pos[0] + nodeorigin[0];
-	nodeorigin[1] = node->u.model.origin[1] - node->pos[1] + nodeorigin[1];
+	nodeorigin[0] += node->size[0] / 2 + node->u.model.origin[0];
+	nodeorigin[1] += node->size[1] / 2 + node->u.model.origin[1];
 	nodeorigin[2] = node->u.model.origin[2];
 
 	if (menuModel->menuTransformCnt) {

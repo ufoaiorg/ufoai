@@ -718,7 +718,7 @@ menu team
 		if "sv_maxclients == 1" {
 			cmd	"employee_changename;"
 		}
-	}	
+	}
 
 	textentry name
 	{
@@ -747,14 +747,11 @@ menu team
 		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand2"
-		origin	"580 215 0"
-//		origin	"580 230 0"
 		angles	"0 70 90"
-		// FIXME - use pos and size for autoscaling - doesn't work with tags atm
-//		pos		"480 100"
-//		size	"190 300"
-//		bgcolor	"1 1 1 0.5"
 		scale	"6.7 6.7 6.7"
+		pos		"480 80"
+		size	"190 340"
+		origin	"0 -40 0"
 	}
 
 	model head
@@ -855,9 +852,11 @@ menu team
 	model aircraft
 	{
 		model	"*cvar mn_aircraft_model"
-		origin	"690 640 0"
 		angles	"-20 -40 120"
 		scale	"1.1 1.1 1.1"
+		origin	"-45 35 0"
+		pos		"475 477"
+		size	"528 270"
 	}
 
 	string team_members
@@ -1553,9 +1552,12 @@ menu equipment
 		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand_menu"
-		origin	"785 173 0"
 		angles	"0 70 90"
 		scale	"5 5 5"
+
+		pos		"676 69"
+		size	"197 258"
+		origin	"0 -30 0"
 	}
 
 	model head

@@ -101,9 +101,9 @@ menu basedefence
 	{
 		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
-		origin	"886 545 0"
 		pos		"786 500"
 		size	"200 175"
+		origin	"0 -42 0"
 		mousefx	true
 		click
 	}

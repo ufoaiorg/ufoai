@@ -124,10 +124,9 @@ menu aircraft
 	model aircraft
 	{
 		model		"*cvar mn_aircraft_model"
-		// @todo remove origin property when possible
-		origin		"690 280 0"
 		pos			"470 114"
 		size		"536 324"
+		origin		"-45 0 0"
 	}
 
 	zone wz_aircraft
@@ -320,8 +319,6 @@ menu aircraft_equip
 	model aircraftequip
 	{
 		model	"*cvar mn_aircraft_model"
-		// @todo remove origin property when possible
-		origin	"796 370 0"
 		pos		"584 94"
 		size	"429 641"
 	}
@@ -423,7 +420,6 @@ menu aircraft_equip
 		visiblewhen "mn_equip_pilot != 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
-		origin	"423 215 0"
 		pos		"312 177"
 		size	"241 120"
 		mousefx	true
@@ -435,7 +431,6 @@ menu aircraft_equip
 		visiblewhen "mn_equip_pilot == 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"15 60 100"
-		origin	"423 225 0"
 		pos		"312 177"
 		size	"241 120"
 		mousefx	true
@@ -631,7 +626,6 @@ menu aircraft_equip
 		model		"*cvar mn_aircraft_item_model_slot0"
 		pos			"608 107"
 		size		"60 60"
-		origin		"636 135 0"
 		angles		"0 0 180"
 	}
 	pic airequip_slot0
@@ -650,7 +644,6 @@ menu aircraft_equip
 		model	"*cvar mn_aircraft_item_model_slot1"
 		pos		"766 107"
 		size	"60 60"
-		origin	"794 135 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot1
@@ -669,7 +662,6 @@ menu aircraft_equip
 		model	"*cvar mn_aircraft_item_model_slot2"
 		pos		"923 107"
 		size	"60 60"
-		origin	"951 135 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot2
@@ -688,7 +680,6 @@ menu aircraft_equip
 		model	"*cvar mn_aircraft_item_model_slot3"
 		pos		"608 345"
 		size	"60 60"
-		origin	"636 373 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot3
@@ -707,7 +698,6 @@ menu aircraft_equip
 		model	"*cvar mn_aircraft_item_model_slot4"
 		pos		"923 345"
 		size	"60 60"
-		origin	"951 373 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot4
@@ -726,7 +716,6 @@ menu aircraft_equip
 		model	"*cvar mn_aircraft_item_model_slot5"
 		pos		"608 618"
 		size	"60 60"
-		origin	"636 646 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot5
@@ -745,7 +734,6 @@ menu aircraft_equip
 		model	"*cvar mn_aircraft_item_model_slot6"
 		pos		"766 618"
 		size	"60 60"
-		origin	"794 646 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot6
@@ -764,7 +752,6 @@ menu aircraft_equip
 		model	"*cvar mn_aircraft_item_model_slot7"
 		pos		"923 618"
 		size	"60 60"
-		origin	"951 646 0"
 		angles	"0 0 180"
 	}
 	pic airequip_slot7

@@ -101,14 +101,11 @@ menu inventory
 		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand_menu"
-//		origin	"512 280 0"
-		origin	"512 270 0"
+		origin	"0 -40 0"
 		angles	"0 70 90"
 		scale	"5 5 5"
-		// FIXME - use pos and size for autoscaling - doesn't work with tags atm
-//		pos		"420 180"
-//		size	"190 240"
-//		bgcolor	"1 1 1 0.5"
+		pos		"420 180"
+		size	"190 240"
 	}
 
 	model head

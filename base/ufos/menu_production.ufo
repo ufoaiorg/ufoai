@@ -205,7 +205,6 @@ menu production
 		model	"*cvar mn_item"
 		pos	"793 288"
 		scale	"7 7 7"
-		origin	"793 288 0"
 		view	item
 	}
 

@@ -729,12 +729,11 @@ menu hud extends ahud
 	{
 		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
-		origin	"56 54 0"
 		angles	"0 60 90"
 //		scale	"8 8 8"
-		size	"74 66"
 		pos		"20 20"
-//		bgcolor	"1 1 1 0.5"
+		size	"74 66"
+		origin	"0 0 0"
 	}
 
 	container right

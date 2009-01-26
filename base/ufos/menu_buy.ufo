@@ -914,7 +914,6 @@ menu buy
 		pos		"600 175"
 		size	"385 200"
 		scale	"7 7 7"
-		origin	"793 250 0"
 		view	item
 	}
 
