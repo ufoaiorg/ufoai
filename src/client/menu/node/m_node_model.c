@@ -371,7 +371,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 
 }
 
-static void MN_ModelNodeGetParentFromTag(const char* tag, char *parent, int bufferSize)
+static void MN_ModelNodeGetParentFromTag (const char* tag, char *parent, int bufferSize)
 {
 	char *c;
 	Q_strncpyz(parent, tag, bufferSize);
@@ -383,9 +383,10 @@ static void MN_ModelNodeGetParentFromTag(const char* tag, char *parent, int buff
 	*c++ = 0;
 }
 
-/** @brief return the anchor name embeded in a tag
+/**
+ * @brief return the anchor name embeded in a tag
  */
-static const char* MN_ModelNodeGetAnchorFromTag(const char* tag)
+static const char* MN_ModelNodeGetAnchorFromTag (const char* tag)
 {
 	const char *c = tag;
 	assert(tag);
