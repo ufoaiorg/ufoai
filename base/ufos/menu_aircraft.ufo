@@ -72,7 +72,7 @@ menu aircraft
 		string		"_Assign Soldiers"
 		image		menu/button_green_small
 		color		"0 0.8 0 1"
-		pos			"60 190"
+		pos			"271 386"
 		size		"207 48"
 		font		f_menu
 		blend		true
@@ -85,7 +85,7 @@ menu aircraft
 		color		"0 0.8 0 1"
 		tooltip		"_Equip aircraft components"
 		image		menu/button_green_small
-		pos			"60 270"
+		pos			"50 387"
 		size		"207 48"
 		font		f_menu
 		blend		true
@@ -94,26 +94,26 @@ menu aircraft
 
 	button button_buysell
 	{
-		string		"_Buy/Sell Aircraft"
+		string		"_Buy/Sell Aircraft..."
 		tooltip		"_Buy or sell aircraft"
 		image		menu/button_green_small
-		pos			"60 470"
-		size		"207 48"
+		pos			"31 339"
+		size		"192 35"
 		blend		true
 		color		"0 0.8 0 1"
-		font		f_menu
+		font		f_small
 		click		{ cmd "set mn_itemtype 8; mn_push buy;" }
 	}
 
 	button button_produce
 	{
-		string		"_Produce"
+		string		"_Produce..."
 		tooltip		"_Produce aircraft or aircraft components"
 		image		menu/button_green_small
-		pos			"60 555"
-		size		"207 48"
+		pos			"233 339"
+		size		"206 35"
 		blend		true
-		font		f_menu
+		font		f_small
 		color		"0 0.8 0 1"
 		click		{ cmd "set mn_itemtype 8; mn_push production;" }
 	}
@@ -124,15 +124,9 @@ menu aircraft
 	model aircraft
 	{
 		model		"*cvar mn_aircraft_model"
-		pos			"470 114"
-		size		"536 324"
-		origin		"-45 0 0"
-	}
-
-	zone wz_aircraft
-	{
-		pos			"470 114"
-		size		"536 364"
+		pos			"478 107"
+		size		"529 260"
+		origin		"-45 25 0"
 		whup		{ cmd "mn_next_aircraft;" }
 		whdown		{ cmd "mn_prev_aircraft;" }
 	}
@@ -140,17 +134,34 @@ menu aircraft
 	string aircraft_name
 	{
 		string		"*cvar mn_aircraftname"
-		pos			"588 430"
-		size		"356 20"
+		pos			"46 114"
+		size		"317 21"
 		textalign	cc
+	}
+
+	string aircraft_name2
+	{
+		string		"*cvar mn_aircraftname"
+		pos			"505 480"
+		size		"317 21"
+		textalign	ul
+		padding		0
 	}
 
 	string aircraft_status
 	{
 		string		"*cvar mn_aircraftstatus"
-		pos			"588 450"
-		size		"356 20"
-		textalign	cc
+		pos			"770 510"
+		size		"229 20"
+		textalign	ul
+	}
+
+	custombutton aircraft_return
+	{
+		pos			"726 510"
+		image		menu/button_pack1
+		blend		true
+		size		"16 16"
 	}
 
 	//	icons below the aircraft
@@ -159,7 +170,7 @@ menu aircraft
 	{
 		image		menu/button_pack1
 		tooltip		"_Switch to the previous aircraft"
-		pos			"500 450"
+		pos			"381 117"
 		texl		"0 16"
 		size		"16 16"
 		blend		true
@@ -168,19 +179,11 @@ menu aircraft
 		whdown		{ cmd "mn_prev_aircraft;" }
 	}
 
-	custombutton aircraft_return
-	{
-		pos			"550 450"
-		image		menu/button_pack1
-		blend		true
-		size		"16 16"
-	}
-
 	custombutton next_aircraft
 	{
 		image		menu/button_pack1
 		tooltip		"_Switch to the next aircraft"
-		pos			"970 450"
+		pos			"409 117"
 		texl		"16 16"
 		size		"16 16"
 		blend		true
@@ -196,23 +199,25 @@ menu aircraft
 	string team_members
 	{
 		string		"_Team Members:"
-		pos			"480 526"
-		size		"520 20"
+		pos			"502 544"
+		size		"498 20"
 		textalign	cl
+		padding		0
 	}
 
 	string team_hired
 	{
 		string		"*cvar mn_hired"
-		pos			"480 548"
-		size		"520 20"
+		pos			"722 544"
+		size		"110 20"
 		textalign	cl
+		padding		0
 	}
 
 	text aircraftinfo
 	{
-		pos			"480 580"
-		size		"520 160"
+		pos			"505 580"
+		size		"495 160"
 		lineheight	20
 		tabwidth	220
 		textid		TEXT_AIRCRAFT_INFO
