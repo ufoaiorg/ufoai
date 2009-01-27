@@ -261,10 +261,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_event.h" />
-		<Unit filename="..\..\src\client\campaign\cl_hospital.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_hospital.h" />
 		<Unit filename="..\..\src\client\campaign\cl_installation.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -335,6 +331,14 @@
 		<Unit filename="..\..\src\client\campaign\cp_geoscape_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_hospital.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_hospital.h" />
+		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.c">
 			<Option compilerVar="CC" />
 		</Unit>

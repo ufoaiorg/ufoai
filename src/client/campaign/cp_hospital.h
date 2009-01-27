@@ -1,5 +1,5 @@
 /**
- * @file cl_hospital.h
+ * @file cp_hospital.h
  * @brief Header file for hospital related stuff
  */
 
@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CL_HOSPITAL_H
-#define CL_HOSPITAL_H
+#ifndef CP_HOSPITAL_H
+#define CP_HOSPITAL_H
 
 void HOS_InitStartup(void);
 qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);

@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ugv.h"
 #include "campaign/cl_basesummary.h"
 #include "campaign/cl_installation.h"
-#include "campaign/cl_hospital.h"
+#include "campaign/cp_hospital.h"
 #include "campaign/cl_map.h"
 #include "campaign/cl_mapfightequip.h"
 #include "campaign/cl_ufo.h"

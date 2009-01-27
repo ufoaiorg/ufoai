@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -29,7 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "cl_mapfightequip.h"
 #include "cl_airfightmap.h"
-#include "cl_hospital.h"
+#include "cp_hospital.h"
+#include "cp_hospital_callbacks.h"
 #include "../cl_actor.h"
 #include "cl_popup.h"
 #include "../cl_view.h"
@@ -2276,6 +2277,7 @@ static void CP_AddCampaignCallbackCommands (void)
 {
 	AIM_InitCallbacks();
 	AIR_InitCallbacks();
+	HOS_InitCallbacks();
 }
 
 static void CP_AddCampaignCommands (void)
@@ -2299,6 +2301,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 {
 	AIM_ShutdownCallbacks();
 	AIR_ShutdownCallbacks();
+	HOS_ShutdownCallbacks();
 }
 
 static void CP_RemoveCampaignCommands (void)

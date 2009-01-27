@@ -6,7 +6,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_mapfightequip.h"
 #include "cp_aircraft.h"
 #include "cp_aircraft_callbacks.h"
-#include "cl_hospital.h"
 #include "../cl_view.h"
 #include "cl_map.h"
 #include "cl_uforecovery.h"
@@ -43,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
 #include "../../shared/parse.h"
+#include "cp_hospital.h"
 
 vec3_t newBasePos;
 building_t *buildingConstructionList[MAX_BUILDINGS];
