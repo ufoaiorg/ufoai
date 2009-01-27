@@ -1346,6 +1346,10 @@ static void G_BuildForbiddenList (int team)
 		if (((ent->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
 			fb_list[fb_length++] = ent->pos;
 			fb_list[fb_length++] = (byte*)&ent->fieldSize;
+		} else if (ent->type == ET_SOLID) {
+			fb_list[fb_length++] = ent->pos;
+			/** @todo get fieldsize from bounding box (ent->mins, ent->maxs) */
+			fb_list[fb_length++] = (byte*)&ent->fieldSize;
 		}
 	}
 

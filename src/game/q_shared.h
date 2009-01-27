@@ -322,7 +322,8 @@ typedef enum {
 	ET_MISSION,
 	ET_ACTORHIDDEN,
 	ET_PARTICLE,
-	ET_SOUND
+	ET_SOUND,
+	ET_SOLID
 } entity_type_t;
 
 #define DOOR_ROTATION_ANGLE 90

@@ -141,9 +141,17 @@ static areanode_t *SV_CreateAreaNode (int depth, vec3_t mins, vec3_t maxs)
  */
 void SV_ClearWorld (void)
 {
+	int i;
+
+	for (i = 0; i < sv_numModels; i++)
+		if (sv_models[i].name)
+			Mem_Free(sv_models[i].name);
+
+	memset(sv_models, 0, sizeof(sv_models));
+	sv_numModels = 0;
+
 	memset(sv_areanodes, 0, sizeof(sv_areanodes));
 	sv_numareanodes = 0;
-	sv_numModels = 0;
 	SV_CreateAreaNode(0, map_min, map_max);
 }
 
@@ -673,7 +681,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 
 	/* find a free model slot spot */
 	for (i = 0, mod = sv_models; i < sv_numModels; i++, mod++) {
-		if (!mod->name[0])
+		if (!mod->name)
 			break;				/* free spot */
 	}
 
@@ -684,7 +692,7 @@ qboolean SV_LoadModelMinsMaxs (const char *model, int frame, vec3_t mins, vec3_t
 	}
 
 	memset(mod, 0, sizeof(*mod));
-	Q_strncpyz(mod->name, model, sizeof(mod->name));
+	mod->name = Mem_PoolStrDup(model, com_genericPool, 0);
 	mod->frame = frame;
 
 	VectorCopy(vec3_origin, mins);

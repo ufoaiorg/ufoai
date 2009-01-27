@@ -387,7 +387,6 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 		/* if this entity is an bbox (e.g. actor), then center its origin based on its position */
 		if (ent->solid == SOLID_BBOX)
 			gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
-
 	}
 
 	/* spawn ai players, if needed */
@@ -935,8 +934,10 @@ static void SP_misc_model (edict_t *ent)
 		vec3_t modelMins, modelMaxs;
 		if (ent->model && *ent->model) {
 			if (gi.LoadModelMinsMaxs(ent->model, ent->frame, modelMins, modelMaxs)) {
-				VectorCopy(ent->absmax, modelMaxs);
-				VectorCopy(ent->absmin, modelMins);
+				ent->classname = "model";
+				VectorCopy(modelMaxs, ent->absmax);
+				VectorCopy(modelMins, ent->absmin);
+				ent->type = ET_SOLID;
 				ent->solid = SOLID_BBOX;
 				gi.LinkEdict(ent);
 			} else {

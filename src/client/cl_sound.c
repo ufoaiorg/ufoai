@@ -410,7 +410,7 @@ void S_StopSound (const sfx_t* sfx)
 }
 
 /**
- * @brief Validates the parms and ques the sound up
+ * @brief Validates the parms and queues the sound up
  * @param[in] origin if is NULL, the sound will be dynamically sourced from the entity
  * @param[in] sfx The soundfile to play
  * @param[in] relVolume Max mixer volume factor (0.0 - 1.0)
