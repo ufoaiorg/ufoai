@@ -78,6 +78,8 @@ equipment campaign_initial_market
 	rpg_incendiary_ammo		20
 	grenl					2
 	grenl_ammo				20
+	grenl_incendiary_ammo	10
+	grenl_fle_ammo			10
 	fraggrenade				40
 	incgrenade				10
 	smokegrenade			10
