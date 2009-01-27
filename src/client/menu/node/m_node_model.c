@@ -248,6 +248,9 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 			}
 			isInitialised = qtrue;
 		}
+		mi->angles[0] += node->u.model.angles[0];
+		mi->angles[1] += node->u.model.angles[1];
+		mi->angles[2] += node->u.model.angles[2];
 	}
 
 	if (!isInitialised) {
