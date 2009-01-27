@@ -206,7 +206,7 @@ menu transfer
 	button bt_emptycraftstorage
 	{
 		tooltip	"_Empty the aircraft storage"
-		image	menu/button_blue
+		image	menu/button_blue	blend true
 		pos	"605 678"
 		size	"128 52"
 		click	{ cmd "trans_emptyairstorage;" }
@@ -219,7 +219,7 @@ menu transfer
 	button bt_starttrans
 	{
 		tooltip	"_Start the transfer"
-		image	menu/button_blue
+		image	menu/button_blue	blend true
 		pos	"750 678"
 		size	"128 52"
 		click	{ cmd "trans_start;" }
