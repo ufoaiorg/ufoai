@@ -168,12 +168,12 @@ static void HOS_UpdateMenu (void)
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
-					MN_ExecuteConfunc("hospitalserious%i", entry);
+					MN_ExecuteConfunc("hospitalserious %i", entry);
 				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
-					MN_ExecuteConfunc("hospitalmedium%i", entry);
+					MN_ExecuteConfunc("hospitalmedium %i", entry);
 				else
-					MN_ExecuteConfunc("hospitallight%i", entry);
+					MN_ExecuteConfunc("hospitallight %i", entry);
 
 				/* Display name in the correct list-entry. */
 				Cvar_Set(va("mn_hos_item%i", entry), name);
@@ -185,11 +185,9 @@ static void HOS_UpdateMenu (void)
 				/* Increase the counter of list entries. */
 				entry++;
 			}
-
 			j++;
 		}
 	}
-
 	hospitalNumEntries = j;
 
 	/* Set rest of the list-entries to have no text at all. */
