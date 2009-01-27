@@ -400,10 +400,52 @@ def moveSoliderStats():
 		pos = pos[0], pos[1] + decy
 	
 	root.save()	
+
+def moveAircrafteEquipSlots():
+	root = Root()
+	root.loadFile('base/ufos/menu_aircraft.ufo')
+
+	print '-----'
 	
+	slots = {
+		#first : -1 (left), 0 (middle), 1 (right) of the aircraft
+		# second : -1 (front), 0 (middle), 1 (back) of the aircraft
+		"slot0": (-1, -1),
+		"slot1": (0, -1),
+		"slot2": (1, -1),
+		"slot3": (-1, 0),
+		"slot4": (1, 0),
+		"slot5": (-1, 1),
+		"slot6": (0, 1),
+		"slot7": (1, 1),
+	}
+	# relative position of each element of stats
+	elements = {
+		"airequip_model_": (0, 0),
+		"airequip_": (-2, -2),
+	}
+	
+	pos = 743 - 64/2, 235 - 64/2	# center of the aircraft model (and  remove the half size of a slot)
+	menu = root.nodes.childname["aircraft_equip"]
+	leftToRightDec = 80
+	frontToBackDec = -200
+	
+	for s,slotPos in slots.iteritems():
+		for e,dec in elements.iteritems():
+			name = e + s
+			ltor, ftob = slotPos
+			if not (name in menu.childname):
+				continue
+			node = menu.childname[name]
+			x = pos[0] + ftob * frontToBackDec + dec[0]
+			y = pos[1] + ltor * leftToRightDec + dec[1]
+			node.updateParam("pos", '"' + str(x) + " " + str(y) + '"')
+
+	root.save()	
+
 if __name__ == "__main__":
 	#fixStringNodeAlignProperty()
-	moveSoliderStats()
+	moveAircrafteEquipSlots()
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')
