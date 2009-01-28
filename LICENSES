@@ -3297,6 +3297,9 @@ base/ufos/language.ufo | GNU General Public License 2.0
 base/ufos/maps.ufo | GNU General Public License 2.0
 base/ufos/medals.ufo | GNU General Public License 2.0
 base/ufos/menu_aircraft.ufo | GNU General Public License 2.0
+base/ufos/menu_aircraft_equip.ufo | GNU General Public License 2.0
+base/ufos/menu_aircraft_info.ufo | GNU General Public License 2.0
+base/ufos/menu_aircraft_soldiers.ufo | GNU General Public License 2.0
 base/ufos/menu_aliencont.ufo | GNU General Public License 2.0
 base/ufos/menu_althud.ufo | GNU General Public License 2.0
 base/ufos/menu_basedefence.ufo | GNU General Public License 2.0

@@ -156,6 +156,9 @@
 		<Unit filename="..\..\base\ufos\medals.ufo" />
 		<Unit filename="..\..\base\ufos\menu_ahud.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft.ufo" />
+		<Unit filename="..\..\base\ufos\menu_aircraft_equip.ufo" />
+		<Unit filename="..\..\base\ufos\menu_aircraft_info.ufo" />
+		<Unit filename="..\..\base\ufos\menu_aircraft_soldiers.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aliencont.ufo" />
 		<Unit filename="..\..\base\ufos\menu_althud.ufo" />
 		<Unit filename="..\..\base\ufos\menu_basedefence.ufo" />
@@ -257,10 +260,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_campaign.h" />
+		<Unit filename="..\..\src\client\campaign\cl_employee.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_employee.h" />
 		<Unit filename="..\..\src\client\campaign\cl_event.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_event.h" />
+		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_installation.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -273,18 +284,26 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_mapfightequip.h" />
-		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_fightequip_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_market.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_market.h" />
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions.h" />
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_nation.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_nation.h" />
+		<Unit filename="..\..\src\client\campaign\cl_popup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_popup.h" />
 		<Unit filename="..\..\src\client\campaign\cl_produce.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -293,6 +312,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_radar.h" />
+		<Unit filename="..\..\src\client\campaign\cl_research.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_research.h" />
+		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_save.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -305,6 +332,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_ufo.h" />
+		<Unit filename="..\..\src\client\campaign\cl_ufopedia.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_ufopedia.h" />
 		<Unit filename="..\..\src\client\campaign\cl_uforecovery.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -357,14 +388,6 @@
 		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions.h" />
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_messageoptions_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -401,10 +424,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_console.h" />
-		<Unit filename="..\..\src\client\campaign\cl_employee.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_employee.h" />
 		<Unit filename="..\..\src\client\cl_game.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -461,6 +480,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.h" />
+		<Unit filename="..\..\src\client\cl_messages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_messages.h" />
 		<Unit filename="..\..\src\client\cl_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -469,23 +492,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_particle.h" />
-		<Unit filename="..\..\src\client\campaign\cl_popup.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_popup.h" />
 		<Unit filename="..\..\src\client\cl_rank.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_rank.h" />
 		<Unit filename="..\..\src\client\cl_renderer.h" />
-		<Unit filename="..\..\src\client\campaign\cl_research.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_research.h" />
-		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_research_callbacks.h" />
 		<Unit filename="..\..\src\client\cl_screen.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -502,10 +513,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_team.h" />
-		<Unit filename="..\..\src\client\multiplayer\mp_team.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\mp_team.h" />
 		<Unit filename="..\..\src\client\cl_tip.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -514,10 +521,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_tutorials.h" />
-		<Unit filename="..\..\src\client\campaign\cl_ufopedia.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_ufopedia.h" />
 		<Unit filename="..\..\src\client\cl_ugv.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -531,10 +534,6 @@
 		</Unit>
 		<Unit filename="..\..\src\client\cl_view.h" />
 		<Unit filename="..\..\src\client\client.h" />
-		<Unit filename="..\..\src\client\cl_messages.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_messages.h" />
 		<Unit filename="..\..\src\client\menu\m_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -727,6 +726,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\multiplayer\mp_serverlist.h" />
+		<Unit filename="..\..\src\client\multiplayer\mp_team.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\multiplayer\mp_team.h" />
 		<Unit filename="..\..\src\client\renderer\anormtab.h" />
 		<Unit filename="..\..\src\client\renderer\r_array.c">
 			<Option compilerVar="CC" />
@@ -1002,14 +1005,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\mathlib.h" />
-		<Unit filename="..\..\src\shared\shared.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\shared\parse.h" />
+		<Unit filename="..\..\src\shared\shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\shared\shared.h" />
 		<Unit filename="..\..\src\shared\typedefs.h" />
 		<Unit filename="..\..\src\shared\ufotypes.h" />
 		<Unit filename="..\..\src\shared\vertex_normals.h" />

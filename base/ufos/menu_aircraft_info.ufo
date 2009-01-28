@@ -1,0 +1,189 @@
+// ==================
+// MAIN AIRCRAFT MENU
+// ==================
+
+menu aircraft extends iaircraft
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic background
+	{
+		image		menu/aircraft_bg
+	}
+
+	// ===============
+	// Buttons
+	// ===============
+
+	button button_buysell
+	{
+		string		"_Buy/Sell Aircraft..."
+		tooltip		"_Buy or sell aircraft"
+		image		menu/button_green_small
+		pos			"31 339"
+		size		"192 35"
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		click		{ cmd "set mn_itemtype 8; mn_push buy;" }
+	}
+
+	button button_produce
+	{
+		string		"_Produce..."
+		tooltip		"_Produce aircraft or aircraft components"
+		image		menu/button_green_small
+		pos			"233 339"
+		size		"206 35"
+		blend		true
+		font		f_small
+		color		"0 0.8 0 1"
+		click		{ cmd "set mn_itemtype 8; mn_push production;" }
+	}
+
+	// ==================
+	// aircraft
+	// ==================
+	model aircraft
+	{
+		model		"*cvar mn_aircraft_model"
+		pos			"478 107"
+		size		"529 260"
+		origin		"-45 25 0"
+		whup		{ cmd "mn_next_aircraft;" }
+		whdown		{ cmd "mn_prev_aircraft;" }
+	}
+
+	string aircraft_name
+	{
+		string		"*cvar mn_aircraftname"
+		pos			"505 480"
+		size		"317 21"
+		textalign	ul
+		padding		0
+	}
+
+	string aircraft_status
+	{
+		string		"*cvar mn_aircraftstatus"
+		pos			"770 510"
+		size		"229 20"
+		textalign	ul
+	}
+
+	custombutton aircraft_return
+	{
+		pos			"726 510"
+		image		menu/button_pack1
+		blend		true
+		size		"16 16"
+	}
+
+	//	icons below the aircraft
+
+	// ==================
+	// additional stuff
+	// ==================
+
+	string team_members
+	{
+		string		"_Team Members:"
+		pos			"502 544"
+		size		"498 20"
+		textalign	cl
+		padding		0
+	}
+
+	string team_hired
+	{
+		string		"*cvar mn_hired"
+		pos			"722 544"
+		size		"110 20"
+		textalign	cl
+		padding		0
+	}
+
+	text aircraftinfo
+	{
+		pos			"505 580"
+		size		"495 160"
+		lineheight	20
+		tabwidth	220
+		textid		TEXT_AIRCRAFT_INFO
+		rows		8
+	}
+
+	confunc aircraft_checkbuttons
+	{
+		/**
+		 * @todo (about button_equip) it should be more easy if the equip GUI manage itself that (hide some nodes, display a comment, manage when we change aircraft)
+		 */
+		if "mn_aircraftinbase > 0" {
+			*button_equip		disabled	false
+
+			*aircraft_return	tooltip		"_Start Aircraft"
+			*aircraft_return	click		{ cmd "aircraft_start;" }
+			*aircraft_return	texl		"0 32"
+		}
+		if "mn_aircraftinbase <= 0" {
+			*button_equip		disabled	true
+
+			*aircraft_return	tooltip		"_Call back"
+			*aircraft_return	click		{ cmd "aircraft_return;" }
+			*aircraft_return	texl		"0 0"
+		}
+
+		/**
+		 * @todo (about button_squad) it should be more easy if the assign solider GUI manage itself that (hide some nodes, display a comment, manage when we change aircraft)
+		 */
+		if "mn_equipsoldierstate == 3" {
+			*button_squad		tooltip		"_Assign your squad"
+			*button_squad		disabled	false
+		}
+		if "mn_equipsoldierstate == 2" {
+			*button_squad		tooltip		"_Hire your team first"
+			*button_squad		disabled	true
+		}
+		if "mn_equipsoldierstate == 1" {
+			*button_squad		tooltip		"_Aircraft absent from base"
+			*button_squad		disabled	true
+		}
+
+
+		if "mn_base_num_aircraft > 1" {
+			*prev_aircraft		disabled	false
+			*next_aircraft		disabled	false
+			*menu:aircraft_equip.prev_aircraft	disabled	false
+			*menu:aircraft_equip.next_aircraft	disabled	false
+		}
+		if "mn_base_num_aircraft <= 1" {
+			*prev_aircraft		disabled	true
+			*next_aircraft		disabled	true
+			*menu:aircraft_equip.prev_aircraft	disabled	true
+			*menu:aircraft_equip.next_aircraft	disabled	true
+		}
+	}
+
+	/**
+	 * @note iaircraft interface
+	 */
+	confunc aircraft_change
+	{
+	}
+
+	func init
+	{
+		cmd "aircraft_select;set mn_aircrafttab 0"
+	}
+}
