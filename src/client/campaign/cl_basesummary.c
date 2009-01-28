@@ -36,7 +36,7 @@ static void BaseSummary_SelectBase_f (void)
 	int i;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 
 	if (Cmd_Argc() != 2) {
@@ -65,9 +65,7 @@ static void BaseSummary_Init_f (void)
 		return;
 	} else {
 		baseCapacities_t cap;
-		building_t* b;
 		production_queue_t *queue;
-		technology_t *tech;
 		int totalEmployees = 0;
 		int tmp;
 
@@ -83,9 +81,9 @@ static void BaseSummary_Init_f (void)
 
 		Q_strcat(textInfoBuffer, _("^BEmployees\n"), sizeof(textInfoBuffer));
 		for (i = 0; i < MAX_EMPL; i++) {
-			tmp = E_CountHired(base, i);
-			totalEmployees += tmp;
-			Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(i), tmp), sizeof(textInfoBuffer));
+			const int hiredCount = E_CountHired(base, i);
+			totalEmployees += hiredCount;
+			Q_strcat(textInfoBuffer, va("\t%s:\t\t\t\t%i\n", E_GetEmployeeString(i), hiredCount), sizeof(textInfoBuffer));
 		}
 
 		/* link into the menu */
@@ -93,7 +91,7 @@ static void BaseSummary_Init_f (void)
 
 		Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
-			b = &gd.buildingTemplates[i];
+			const building_t *b = &gd.buildingTemplates[i];
 
 			/* only show already researched buildings */
 			if (!RS_IsResearched_ptr(b->tech))
@@ -145,7 +143,7 @@ static void BaseSummary_Init_f (void)
 		Q_strcat(textStatsBuffer, _("^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
 		tmp = 0;
 		for (i = 0; i < gd.numTechnologies; i++) {
-			tech = RS_GetTechByIDX(i);
+			const technology_t *tech = RS_GetTechByIDX(i);
 			if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
 				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"), _(tech->name),
 					tech->scientists, (1 - tech->time / tech->overalltime) * 100), sizeof(textStatsBuffer));
