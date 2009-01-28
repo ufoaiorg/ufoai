@@ -469,7 +469,7 @@ character_t *CL_GetActorChr (const le_t * le)
 /**
  * @brief Makes all entries of the firemode lists invisible.
  */
-static void HideFiremodes (void)
+static void HUD_HideFiremodes (void)
 {
 	int i;
 
@@ -1299,14 +1299,12 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	}
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
-	/* CL_SetReactionFiremode(actor, -1, NONE, -1); */
 	for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
 		if (ammo->fd[weapFdsIdx][i].reaction) {
 			if (i == firemodeActive) {
 				/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
-				if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][firemodeActive].time) {
+				if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][firemodeActive].time)
 					CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
-				}
 				return;
 			}
 		}
@@ -1361,7 +1359,7 @@ void CL_DisplayFiremodes_f (void)
 		return;
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
-		HideFiremodes();
+		HUD_HideFiremodes();
 		return;
 	}
 
@@ -1391,7 +1389,7 @@ void CL_DisplayFiremodes_f (void)
 
 	if (firemodes_change_display) {
 		/* Toggle firemode lists if needed. */
-		HideFiremodes();
+		HUD_HideFiremodes();
 		if (hand == ACTOR_HAND_CHAR_RIGHT) {
 			if (visible_firemode_list_right)
 				return;
@@ -1579,7 +1577,7 @@ void CL_FireWeapon_f (void)
 		else
 			cl.cmode = M_FIRE_L;
 		cl.cfiremode = firemode;	/* Store firemode. */
-		HideFiremodes();
+		HUD_HideFiremodes();
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
@@ -2447,7 +2445,7 @@ qboolean CL_ActorSelect (le_t * le)
 	/* Change to move-mode and hide firemodes.
 	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
 	if (!sameActor) {
-		HideFiremodes();
+		HUD_HideFiremodes();
 		cl.cmode = M_MOVE;
 	}
 
@@ -3073,7 +3071,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 			Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG left\n");
 			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_LEFT, -1);
 		}
-		HideFiremodes();
+		HUD_HideFiremodes();
 	}
 
 	if (CL_WorkingFiremode(le, qfalse)) {
@@ -3281,19 +3279,17 @@ void CL_ActorToggleCrouchReservation_f (void)
 	assert(selChr);
 
 	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH
-	||  selChr->reservedTus.reserveCrouch) {
+	 || selChr->reservedTus.reserveCrouch) {
 		/* Reset reserved TUs to 0 */
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
 		selChr->reservedTus.reserveCrouch = qfalse;
-		/* MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_CROUCH, selChr->reservedTus.reserveCrouch, selChr->reservedTus.crouch); Update server-side settings */
 	} else {
 		/* Reserve the exact amount for crouching/staning up (if we have enough to do so). */
-		if ((CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)) {
+		if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH)
 			CL_ReserveTUs(selActor, RES_CROUCH, TU_CROUCH);
-		}
+
 		/* Player wants to reserve Tus for crouching - remember this. */
 		selChr->reservedTus.reserveCrouch = qtrue;
-		/* MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_CROUCH, selChr->reservedTus.reserveCrouch, selChr->reservedTus.crouch); Update server-side settings */
 	}
 
 	/* Refresh checkbox and tooltip. */
@@ -3367,9 +3363,6 @@ void CL_ActorToggleReaction_f (void)
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 		selChr->reservedTus.reserveReaction = state;
 		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.wpIdx, selChr->RFmode.fmIdx); /**< Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
-		/** @todo remove me
-		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, selChr->reservedTus.reserveReaction, selChr->reservedTus.reaction); Update server-side settings
-		*/
 	} else {
 		/* No usable RF weapon. */
 		switch (selActorReactionState) {

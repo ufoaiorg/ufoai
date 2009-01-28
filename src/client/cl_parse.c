@@ -617,7 +617,6 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 			const character_t *chr = CL_GetActorChr(le);
 			if (!chr)
 				Com_Error(ERR_DROP, "No character struct assigned to actor");
-			assert(cls.missionaircraft);
 			CL_SetReactionFiremode(le, chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
 
 			/* Reserve Tus for crouching/standing up if player selected this previously. */
@@ -634,13 +633,6 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 		} else {
 			CL_SetDefaultReactionFiremode(le, ACTOR_HAND_CHAR_RIGHT);
 		}
-
-#if 0
-		/** @todo Check for changed settings here. */
-		if (CL_WorkingFiremode(le, qfalse)) {
-		} else {
-		}
-#endif
 	}
 }
 
