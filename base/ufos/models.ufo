@@ -287,7 +287,7 @@ menu_model inter_saracen
 	menutransform {
 		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"-50 0 0"
 		aircraft		"0.8 1.1 1.1"	"160 20 -120"	"-10 70 0"
-		aircraft_equip	"0.9 0.9 0.9"	"-90 0 180"		"0 -30 0"
+		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		"30 0 0"
 		item			"0.4 0.4 0.4"	"180 0 -120"	#
 	}
 }
@@ -299,7 +299,7 @@ menu_model inter_dragon
 	menutransform {
 		ufopedia		"0.4 0.4 0.4"	"180 0 -120"	"10 0 0"
 		aircraft		"0.8 1.1 1.1"	"160 20 -120"	"60 0 0"
-		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		"0 20 0"
+		aircraft_equip	"0.7 0.7 0.7"	"-90 0 180"		"-20 0 0"
 		item			"0.4 0.4 0.4"	"180 0 -120"	#
 	}
 }
