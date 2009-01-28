@@ -55,7 +55,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		pos[0] += node->size[0] / 2.0;
 		pos[1] += node->size[1] / 2.0;
 		pos[2] = 0;
-		MN_DrawItem(node, pos, &item, -1, -1, node->scale, color);
+		MN_DrawItem(node, pos, &item, -1, -1, node->u.model.scale, color);
 	} else {
 		const aircraft_t *aircraft = AIR_GetAircraft(ref);
 		if (aircraft) {

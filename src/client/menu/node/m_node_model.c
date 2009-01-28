@@ -176,7 +176,7 @@ static void MN_SetModelTransform_f (void)
 		}
 
 		if (!Q_strcmp(command, "debug_mnscale")) {
-			VectorCopy(value, node->scale);
+			VectorCopy(value, node->u.model.scale);
 		} else if (!Q_strcmp(command, "debug_mnangles")) {
 			VectorCopy(value, node->u.model.angles);
 		} else if (!Q_strcmp(command, "debug_mnorigin")) {
@@ -230,7 +230,7 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 			if (menuModel->menuTransform[i].useScale) {
 				VectorCopy(menuModel->menuTransform[i].scale, mi->scale);
 			} else {
-				VectorCopy(node->scale, mi->scale);
+				VectorCopy(node->u.model.scale, mi->scale);
 			}
 
 			/* Use menu angles if defined. */
@@ -254,7 +254,7 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 	}
 
 	if (!isInitialised) {
-		VectorCopy(node->scale, mi->scale);
+		VectorCopy(node->u.model.scale, mi->scale);
 		VectorCopy(node->u.model.angles, mi->angles);
 		VectorCopy(nodeorigin, mi->origin);
 	}
@@ -440,13 +440,13 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 	mi.origin = nodeorigin;
 	mi.angles = node->u.model.angles;
-	mi.scale = node->scale;
+	mi.scale = node->u.model.scale;
 	mi.center = node->u.model.center;
 	mi.color = node->color;
 	mi.mesh = 0;
 
 	/* autoscale? */
-	if (!node->scale[0]) {
+	if (!node->u.model.scale[0]) {
 		mi.scale = NULL;
 		mi.center = node->size;
 	}
@@ -530,7 +530,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 			memset(&mi, 0, sizeof(mi));
 			mi.angles = child->u.model.angles;
-			mi.scale = child->scale;
+			mi.scale = child->u.model.scale;
 			mi.center = child->u.model.center;
 			mi.origin = child->u.model.origin;
 			mi.color = pmi.color;
@@ -644,6 +644,7 @@ static const value_t properties[] = {
 	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
 	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
 	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
+	{"scale", V_VECTOR, offsetof(menuNode_t, u.model.scale), MEMBER_SIZEOF(menuNode_t, u.model.scale)},
 	{"tag", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.tag), 0},
 	/** @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar) */
 	{"view", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.viewName), 0},

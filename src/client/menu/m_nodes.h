@@ -114,7 +114,6 @@ typedef struct menuNode_s {
 	struct menuAction_s *onChange;	/**< called when the widget change from an user action */
 
 	/** @todo needs cleanup */
-	vec3_t scale;
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
