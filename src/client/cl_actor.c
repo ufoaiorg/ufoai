@@ -1364,8 +1364,6 @@ void CL_DisplayFiremodes_f (void)
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
 		HideFiremodes();
-		visible_firemode_list_right = qfalse;
-		visible_firemode_list_left = qfalse;
 		return;
 	}
 
@@ -1394,25 +1392,16 @@ void CL_DisplayFiremodes_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: displaying %c firemodes.\n", hand);
 
 	if (firemodes_change_display) {
-		/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
+		/* Toggle firemode lists if needed. */
+		HideFiremodes();
 		if (hand == ACTOR_HAND_CHAR_RIGHT) {
-			if (visible_firemode_list_right) {
-				HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
+			if (visible_firemode_list_right)
 				return;
-			} else {
-				HideFiremodes();
-				visible_firemode_list_left = qfalse;
-				visible_firemode_list_right = qtrue;
-			}
+			visible_firemode_list_right = qtrue;
 		} else { /* ACTOR_HAND_CHAR_LEFT */
-			if (visible_firemode_list_left) {
-				HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
+			if (visible_firemode_list_left)
 				return;
-			} else {
-				HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
-				visible_firemode_list_left = qtrue;
-				visible_firemode_list_right = qfalse;
-			}
+			visible_firemode_list_left = qtrue;
 		}
 	}
 	firemodes_change_display = qtrue;
