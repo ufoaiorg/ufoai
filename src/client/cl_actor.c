@@ -1217,7 +1217,6 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	int weapFdsIdx = -1;
-	int i;
 	character_t *chr;
 	const int handidx = ACTOR_GET_HAND_INDEX(hand);
 
@@ -1298,15 +1297,10 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	}
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
-	for (i = 0; i < ammo->numFiredefs[weapFdsIdx]; i++) {
-		if (ammo->fd[weapFdsIdx][i].reaction) {
-			if (i == firemodeActive) {
-				/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
-				if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][firemodeActive].time)
-					CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
-				return;
-			}
-		}
+	if (ammo->fd[weapFdsIdx][firemodeActive].reaction) {
+		/* Get the amount of usable TUs depending on the state (i.e. is RF on or off?) and abort if no use*/
+		if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][firemodeActive].time)
+			CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, firemodeActive);
 	}
 }
 
