@@ -38,8 +38,8 @@ menu radarmenu {
 
 	radar hudradar
 	{
-		pos	"512 384"
+		pos	"0 0"
+		size "1024 768"
 		blend	yes
-		align	cc
 	}
 }

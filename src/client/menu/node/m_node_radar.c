@@ -260,8 +260,8 @@ static void MN_InitRadar (const menuNode_t *node)
 	MN_BuildRadarImageList(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 
 	MN_GetNodeAbsPos(node, nodepos);
-	radar.x = nodepos[0];
-	radar.y = nodepos[1];
+	radar.x = nodepos[0] + node->size[0] / 2;
+	radar.y = nodepos[1] + node->size[1] / 2;
 
 	/* only check once per map whether all the needed images exist */
 	for (i = 0; i < PATHFINDING_HEIGHT; i++) {
@@ -320,28 +320,9 @@ static void MN_InitRadar (const menuNode_t *node)
 	}
 
 	/* now align the screen coordinates like it's given by the menu node */
-	if (node->align > 0 && node->align < ALIGN_LAST) {
-		/* x position */
-		switch (node->align % 3) {
-		/* center */
-		case 1:
-			radar.x -= (radar.w / 2);
-			break;
-		/* right */
-		case 2:
-			radar.x -= radar.w;
-			break;
-		}
-		/* y position */
-		switch (node->align / 3) {
-		case 1:
-			radar.y -= (radar.h / 2);
-			break;
-		case 2:
-			radar.y -= radar.h;
-			break;
-		}
-	}
+	radar.x -= (radar.w / 2);
+	radar.y -= (radar.h / 2);
+
 	cl.radarInited = qtrue;
 }
 
@@ -473,14 +454,8 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	}
 }
 
-static const value_t properties[] = {
-	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
-	{NULL, V_NULL, 0, 0}
-};
-
 void MN_RegisterRadarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "radar";
 	behaviour->draw = MN_RadarNodeDraw;
-	behaviour->properties = properties;
 }
