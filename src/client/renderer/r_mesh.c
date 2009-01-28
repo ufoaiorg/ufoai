@@ -190,12 +190,15 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	int i;
 	image_t *skin;
 
+	if (!mi->name || mi->name[0] == '\0')
+		return;
+
 	/* register the model */
 	mi->model = R_RegisterModelShort(mi->name);
 
 	/* check if the model exists */
 	if (!mi->model) {
-		Com_Printf("No model given '%s'\n", mi->name);
+		Com_Printf("No model found for '%s'\n", mi->name);
 		return;
 	}
 
