@@ -255,10 +255,6 @@ void CL_CharacterCvars (const character_t * chr)
 	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ALIENS]));
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
-	/* These two will be needed in Hire menu. */
-	if (chr->emplType >= 0 && chr->emplType < MAX_EMPL
-	 && chr->emplIdx >= 0 && chr->emplIdx < MAX_EMPLOYEES)
-		selectedEmployee = &gd.employees[chr->emplType][chr->emplIdx];
 
 	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
 	if (chr->score.rank >= 0 && gd.numRanks) {
