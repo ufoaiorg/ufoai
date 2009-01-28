@@ -82,12 +82,14 @@ menu iaircraft
 		option tank {
 			label	"_Tanks"
 			value	"3"
-			//action "mn_pop;mn_push foobar;"
+			action "mn_pop;mn_push foobar;"
+			disabled	true
 		}
 		option pilot {
 			label	"_Pilots"
 			value	"4"
-			//action "mn_pop;mn_push foobar;"
+			action "mn_pop;mn_push foobar;"
+			disabled	true
 		}
 	}
 

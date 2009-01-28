@@ -39,6 +39,7 @@ static const value_t selectBoxValues[] = {
 	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
 	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
 	{"icon", V_SPECIAL_ICONREF, offsetof(selectBoxOptions_t, icon), 0},
+	{"disabled", V_BOOL, offsetof(selectBoxOptions_t, disabled), MEMBER_SIZEOF(selectBoxOptions_t, disabled)},
 
 	{NULL, V_NULL, 0, 0},
 };

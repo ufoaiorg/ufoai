@@ -41,6 +41,7 @@ typedef struct selectBoxOptions_s {
 							 * NULL terminated for each node */
 	struct menuIcon_s *icon;	/**< Facultative icon */
 	qboolean hovered;		/**< current selected option entry selected? */
+	qboolean disabled;		/**< If true, the option is not selectable */
 } selectBoxOptions_t;
 
 typedef struct {

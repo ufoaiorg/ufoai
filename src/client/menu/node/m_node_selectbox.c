@@ -1,6 +1,7 @@
 /**
  * @file m_node_selectbox.c
  * @todo change to mouse behaviour. It better to click to dropdown the list
+ * @todo manage disabled option
  */
 
 /*

@@ -1,6 +1,5 @@
 /**
  * @file m_node_tab.c
- * @todo add disabled status into @c selectBoxOptions_t update parser and this code with it.
  * @todo auto tooltip for chopped options
  */
 
@@ -102,6 +101,9 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	if (newOption == NULL)
 		return;
 
+	if (newOption->disabled)
+		return;
+
 	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
 	/* Is we click on the already active tab? */
 	if (!Q_strcmp(newOption->value, ref))
@@ -193,7 +195,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 		/* Check the status of the current tab */
 		mn_tab_type_t status = MN_TAB_NORMAL;
-		if (!Q_strcmp(tabOption->value, ref)) {
+		if (tabOption->disabled) {
+			status = MN_TAB_DISABLED;
+		} else if (!Q_strcmp(tabOption->value, ref)) {
 			status = MN_TAB_SELECTED;
 		} else if (tabOption == overMouseOption) {
 			status = MN_TAB_HILIGHTED;
@@ -221,7 +225,11 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 		textPos = currentX;
 		if (drawIcon) {
-			MN_DrawIconInBox(tabOption->icon, 0, currentX, node->pos[1], tabOption->icon->size[0], TILE_HEIGHT);
+			int iconStatus = 0;
+			if (status == MN_TAB_DISABLED) {
+				iconStatus = 2;
+			}
+			MN_DrawIconInBox(tabOption->icon, iconStatus, currentX, node->pos[1], tabOption->icon->size[0], TILE_HEIGHT);
 			textPos += tabOption->icon->size[0];
 		}
 		R_FontDrawString(font, ALIGN_UL, textPos, node->pos[1] + ((node->size[1] - fontHeight) / 2),
