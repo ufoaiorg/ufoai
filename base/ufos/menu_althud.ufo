@@ -443,80 +443,72 @@ menu althud extends ahud
 		model	"*cvar mn_head0"
 		origin	"880 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"854 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 	model head1
 	{
 		model	"*cvar mn_head1"
 		origin	"800 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"774 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 	model head2
 	{
 		model	"*cvar mn_head2"
 		origin	"720 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"694 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 	model head3
 	{
 		model	"*cvar mn_head3"
 		origin	"640 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"614 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 	model head4
 	{
 		model	"*cvar mn_head4"
 		origin	"560 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"534 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 	model head5
 	{
 		model	"*cvar mn_head5"
 		origin	"480 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"454 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 	model head6
 	{
 		model	"*cvar mn_head6"
 		origin	"400 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"374 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 	model head7
 	{
 		model	"*cvar mn_head7"
 		origin	"320 710 0"
 		angles	"15 60 100"
-//		scale	"7 7 7"
+		autoscale	true
 		pos		"294 672"
 		size	"50 78"
-//		bgcolor	"1 1 1 0.5"
 	}
 
 	// ==================
