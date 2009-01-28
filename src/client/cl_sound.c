@@ -357,7 +357,7 @@ sfx_t *S_RegisterSound (const char *name)
 	sfx->data = mix;
 	sfx->channel = -1; /* just a free channel */
 	sfx->loops = 0; /* play once */
-	sfx->volume = snd_volume->integer; /* this is default for loaded chunks, must be adjusted later */
+	sfx->volume = sfx->data->volume; /* this is default for loaded chunks, must be adjusted later */
 	sfx->hash_next = sfx_hash[hash];
 	sfx_hash[hash] = sfx;
 	return sfx;
