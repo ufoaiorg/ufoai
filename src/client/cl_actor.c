@@ -1241,7 +1241,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	}
 
 	if (firemodeActive >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("CL_UpdateReactionFiremodes: Firemode index to big (%i). Highest possible number is %i.\n", firemodeActive, MAX_FIREDEFS_PER_WEAPON-1);
+		Com_Printf("CL_UpdateReactionFiremodes: Firemode index to big (%i). Highest possible number is %i.\n", firemodeActive, MAX_FIREDEFS_PER_WEAPON - 1);
 		return;
 	}
 
@@ -1316,23 +1316,11 @@ void CL_SetDefaultReactionFiremode (le_t *actor, const char hand)
 		return;
 	}
 
-	if (hand == ACTOR_HAND_CHAR_RIGHT) {
-		/* Set default firemode (try right hand first, then left hand). */
-		/* Try to set right hand */
-		CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_RIGHT, -1);
-		if (!CL_WorkingFiremode(actor, qtrue)) {
-			/* If that failed try to set left hand. */
-			CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_LEFT, -1);
-		}
-	} else {
-		/* Set default firemode (try left hand first, then right hand). */
-		/* Try to set left hand. */
-		CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_LEFT, -1);
-		if (!CL_WorkingFiremode(actor, qtrue)) {
-			/* If that failed try to set right hand. */
-			CL_UpdateReactionFiremodes(actor, ACTOR_HAND_CHAR_RIGHT, -1);
-		}
-	}
+	/* Set default firemode */
+	CL_UpdateReactionFiremodes(actor, hand, -1);
+	if (!CL_WorkingFiremode(actor, qtrue))
+		/* If that failed try to set the other hand. */
+		CL_UpdateReactionFiremodes(actor, ACTOR_SWAP_HAND(hand), -1);
 }
 
 /**
