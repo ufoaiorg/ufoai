@@ -79,10 +79,6 @@ void LIST_Remove(linkedList_t **list, linkedList_t *entry);
 int LIST_Count(const linkedList_t *list);
 void *LIST_GetByIdx(linkedList_t *list, int index);
 
-/*============================================= */
-
-struct cBspPlane_s;
-
 /*
 ==========================================================
 CVARS (console variables)
@@ -139,9 +135,6 @@ SYSTEM SPECIFIC
 ==============================================================
 */
 
-int Sys_Milliseconds(void);
-void Sys_Mkdir(const char *path);
-
 /* directory searching */
 #define SFF_ARCH    0x01
 #define SFF_HIDDEN  0x02
@@ -155,39 +148,16 @@ char *Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
 char *Sys_Cwd(void);
 void Sys_SetAffinityAndPriority(void);
+int Sys_Milliseconds(void);
+void Sys_Mkdir(const char *path);
 
-/* this is only here so the functions in q_shared.c and q_shwin.c can link */
+/* this is only here so the functions in q_shared.c can link */
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
 void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
 void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 2, 3)));
 
-extern cvar_t* sys_priority;
-extern cvar_t* sys_affinity;
-extern cvar_t* sys_os;
-
 #define AREA_SOLID			1
 #define AREA_TRIGGERS		2
-
-
-/** entity->flags (render flags) */
-#define RF_TRANSLUCENT      0x00000001
-#define RF_BOX              0x00000002	/**< actor selection box */
-#define RF_PATH             0x01000000	/**< pathing marker, debugging only */
-#define RF_ARROW            0x02000000	/**< arrow, debugging only */
-
-/** the following ent flags also draw entity effects */
-#define RF_SHADOW           0x00000004	/**< shadow (when living) for this entity */
-#define RF_BLOOD            0x00000008	/**< blood (when dead) for this entity */
-#define RF_SELECTED         0x00000010	/**< selected actor */
-#define RF_MEMBER           0x00000020	/**< actor in the same team */
-#define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
-#define RF_ACTOR            0x00000080	/**< this is an actor */
-#define RF_PULSE            0x00000100	/**< glowing entity */
-#define RF_HIGHLIGHT        0x00000200  /**< hightlight the actor with a marker */
-
-/* player_state_t->refdef bit flags */
-#define RDF_NOWORLDMODEL    1	/* e.g. used for sequences and particle editor */
-#define RDF_IRGOGGLES       2
 
 /* sound channels */
 /* channel 0 never willingly overrides */

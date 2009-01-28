@@ -264,6 +264,10 @@ extern cvar_t *sv_gametype;
 extern cvar_t *masterserver_url;
 extern cvar_t *port;
 
+extern cvar_t* sys_priority;
+extern cvar_t* sys_affinity;
+extern cvar_t* sys_os;
+
 extern const int con_fontHeight;
 extern const int con_fontWidth;
 extern const int con_fontShift;

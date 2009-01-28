@@ -34,6 +34,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL.h>
 
+/* e.g. used for sequences and particle editor */
+#define RDF_NOWORLDMODEL    1
+#define RDF_IRGOGGLES       2
+
+/** entity->flags (render flags) */
+#define RF_TRANSLUCENT      0x00000001
+#define RF_BOX              0x00000002	/**< actor selection box */
+#define RF_PATH             0x01000000	/**< pathing marker, debugging only */
+#define RF_ARROW            0x02000000	/**< arrow, debugging only */
+
+/** the following ent flags also draw entity effects */
+#define RF_SHADOW           0x00000004	/**< shadow (when living) for this entity */
+#define RF_BLOOD            0x00000008	/**< blood (when dead) for this entity */
+#define RF_SELECTED         0x00000010	/**< selected actor */
+#define RF_MEMBER           0x00000020	/**< actor in the same team */
+#define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
+#define RF_ACTOR            0x00000080	/**< this is an actor */
+#define RF_PULSE            0x00000100	/**< glowing entity */
+#define RF_HIGHLIGHT        0x00000200  /**< hightlight the actor with a marker */
+
 #define EARTH_RADIUS 8192.0f
 #define MOON_RADIUS 1024.0f
 
@@ -56,8 +76,6 @@ typedef struct animState_s {
 	byte lcur, ladd;
 	byte change;
 } animState_t;
-
-/*============================================================================= */
 
 #define MAX_GL_LIGHTS 8
 
