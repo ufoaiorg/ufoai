@@ -479,7 +479,6 @@ static void HideFiremodes (void)
 		MN_ExecuteConfunc("set_left_inv %i", i);
 		MN_ExecuteConfunc("set_right_inv %i", i);
 	}
-
 }
 
 /**
@@ -601,8 +600,7 @@ qboolean CL_WorkingFiremode (const le_t * actor, qboolean reaction)
 		return qfalse;
 	}
 
-	/** @todo Get weapon & firedef and compare with settings.
-	 * @todo remove magic numbers */
+	/** @todo Get weapon & firedef and compare with settings. */
 	/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
 	CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_INDEX(fmSettings->hand), NULL, &ammo, &weapFdsIdx);
 
