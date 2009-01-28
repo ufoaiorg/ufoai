@@ -231,6 +231,7 @@ menu ufopedia
 		size	"240 240"
 		mousefx	true
 		click
+		view	"ufopedia"
 	}
 
 	pic image_top
@@ -249,6 +250,7 @@ menu ufopedia
 		size	"120 120"
 		//scale	"6 6 6"		// Comment-out if autoscaling is wanted.
 		click
+		view	"ufopedia"
 	}
 
 	pic weapon_dec

@@ -57,6 +57,7 @@ menu aircraft_equip extends iaircraft
 		pos		"482 106"
 		size	"522 259"
 		angles	"90 0 0"
+		view	"aircraft_equip"
 
 		whup	{
 			cmd "mn_next_aircraft;"

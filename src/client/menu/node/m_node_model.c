@@ -45,22 +45,22 @@ static nodeBehaviour_t *modelBehaviour;
  */
 void MN_LinkMenuModels (void)
 {
+#if 0
 	int i, j;
 
 	for (i = 0; i < mn.numMenuModels; i++) {
 		menuModel_t *m = &mn.menuModels[i];
 		for (j = 0; j < m->menuTransformCnt; j++) {
 			m->menuTransform[j].menuPtr = MN_GetMenu(m->menuTransform[j].menuID);
-#if 0	/* should be check, but all this code will be soon removed and view ID is now not every time a menu name */
 			if (m->menuTransform[j].menuPtr == NULL)
 				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'\n", m->menuTransform[j].menuID, m->id);
 
 			/* we don't need this anymore */
 			Mem_Free(m->menuTransform[j].menuID);
 			m->menuTransform[j].menuID = NULL;
-#endif
 		}
 	}
+#endif
 }
 
 /**
@@ -217,11 +217,14 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 				/** @todo improve the test when its possible */
 				if (!Q_strcmp(node->u.model.viewName, menuModel->menuTransform[i].menuID))
 					break;
-			} else {
+			}
+#if 0
+			else {
 				/** @todo remove it when its possible */
 				if (node->menu == menuModel->menuTransform[i].menuPtr)
 					break;
 			}
+#endif
 		}
 
 		/* menuTransforme found */

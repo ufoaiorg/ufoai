@@ -63,6 +63,7 @@ menu aircraft extends iaircraft
 		origin		"-45 25 0"
 		whup		{ cmd "mn_next_aircraft;" }
 		whdown		{ cmd "mn_prev_aircraft;" }
+		view		"aircraft"
 	}
 
 	string aircraft_name
