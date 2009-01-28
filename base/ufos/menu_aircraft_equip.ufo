@@ -82,6 +82,7 @@ menu aircraft_equip extends iaircraft
 	{
 		visiblewhen "mn_equip_pilot != 1"
 		model	"*cvar mn_upmodel_top"
+		autoscale	true
 		angles	"0 0 120"
 		pos		"312 517"
 		size	"239 96"
@@ -94,6 +95,7 @@ menu aircraft_equip extends iaircraft
 		visiblewhen "mn_equip_pilot == 1"
 		model	"*cvar mn_upmodel_top"
 		angles	"15 60 100"
+		autoscale	true
 		pos		"312 517"
 		size	"239 96"
 		mousefx	true

@@ -260,6 +260,11 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 	}
 
 	VectorCopy(node->u.model.center, mi->center);
+
+	if (node->u.model.autoscale) {
+		mi->scale = NULL;
+		mi->center = node->size;
+	}
 }
 
 /**
@@ -355,7 +360,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			mi->origin[1] -= node->menu->pos[1];
 
 			/* autoscale? */
-			if (!mi->scale[0]) {
+			if (node->u.model.autoscale) {
 				mi->scale = NULL;
 				mi->center = node->size;
 			}
@@ -446,7 +451,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.mesh = 0;
 
 	/* autoscale? */
-	if (!node->u.model.scale[0]) {
+	if (node->u.model.autoscale) {
 		mi.scale = NULL;
 		mi.center = node->size;
 	}
@@ -608,6 +613,7 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	node->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
+	VectorSet(node->u.model.scale, 1, 1, 1);
 }
 
 static void MN_ModelNodeLoaded (menuNode_t *node)
@@ -648,6 +654,7 @@ static const value_t properties[] = {
 	{"tag", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.tag), 0},
 	/** @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar) */
 	{"view", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.viewName), 0},
+	{"autoscale", V_BOOL, offsetof(menuNode_t, u.model.autoscale), MEMBER_SIZEOF(menuNode_t, u.model.autoscale)},
 
 	{NULL, V_NULL, 0, 0}
 };

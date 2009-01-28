@@ -76,6 +76,7 @@ typedef struct modelExtraData_s {
 	void* animation;			/**< Anim string from the *.anm files */
 	char *viewName;				/**< view name to use, if it exists (item, ufopedia, buy...) @sa base/ufos/models.ufo */
 	struct menuNode_s *next;	/**< Next element of a composite model (example: body and next, head) */
+	qboolean autoscale;			/**< If true autoscale the model when we drw it */
 } modelExtraData_t;
 
 void MN_LinkMenuModels(void);
