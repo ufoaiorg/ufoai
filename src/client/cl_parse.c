@@ -1055,7 +1055,8 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 			/* message */
 			if (le->team != TEAM_CIVILIAN) {
-				if (curCampaign) {
+				/** @todo doesn't belong here */
+				if (GAME_IsCampaign()) {
 					if (le->teamDef) {
 						if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
 							Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Alien spotted: %s!"), _(le->teamDef->name));

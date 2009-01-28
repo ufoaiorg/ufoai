@@ -1217,7 +1217,7 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	int weapFdsIdx = -1;
-	int i = -1;
+	int i;
 	character_t *chr;
 	const int handidx = ACTOR_GET_HAND_INDEX(hand);
 
@@ -1248,13 +1248,13 @@ static void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firem
 
 	if (firemodeActive < 0) {
 		/* Set default reaction firemode for this hand (firemodeActive=-1) */
-		i = FIRESH_GetDefaultReactionFire(ammo, weapFdsIdx);
+		const int reactionFiremodeIndex = FIRESH_GetDefaultReactionFire(ammo, weapFdsIdx);
 
-		if (i >= 0) {
+		if (reactionFiremodeIndex >= 0) {
 			/* Found usable firemode for the weapon in _this_ hand. */
-			CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, i);
+			CL_SetReactionFiremode(actor, handidx, ammo->weapons[weapFdsIdx]->idx, reactionFiremodeIndex);
 
-			if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][i].time) {
+			if (CL_UsableReactionTUs(actor) >= ammo->fd[weapFdsIdx][reactionFiremodeIndex].time) {
 				/* Display 'usable" (blue) reaction buttons */
 				CL_DisplayPossibleReaction(actor);
 			} else {

@@ -1803,31 +1803,6 @@ qboolean RS_IsResearched_ptr (const technology_t * tech)
 	return qfalse;
 }
 
-#if 0
-/* Currently not used, but may be useful later on. */
-/**
- * @brief Checks if the item (as listed in "provides") has been researched.
- * @note This is mostly of use if the linked provided struct does not yet have a technology_t backlink. i.e. objDef_t can use RS_IsResearched_ptr(objDef_t->tech) directly.
- * @param[in] idProvided Unique id of an item/building/etc.. that is provided by a technology_t entry.
- * @return qboolean
- * @sa RS_IsResearched_ptr
- */
-qboolean RS_ItemIsResearched (const char *idProvided)
-{
-	technology_t *tech;
-
-	/* in multiplayer everyting is researched */
-	if (GAME_IsMultiplayer())
-		return qtrue;
-
-	tech = RS_GetTechByProvided(idProvided);
-	if (!tech)
-		return qtrue;
-
-	return RS_IsResearched_ptr(tech);
-}
-#endif
-
 /**
  * @sa RS_ItemCollected
  * Call this function if you already hold a tech pointer.

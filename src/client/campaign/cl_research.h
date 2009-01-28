@@ -230,9 +230,6 @@ void RS_InitStartup(void);
 void RS_ResetTechs(void);
 void RS_ResearchRun(void);
 void RS_ParseTechnologies(const char *name, const char **text);
-#if 0
-qboolean RS_ItemIsResearched(const char *idProvided);
-#endif
 qboolean RS_IsResearched_idx(int techIdx);
 qboolean RS_IsResearched_ptr(const technology_t *tech);
 int RS_Collected_(const technology_t * tech);
