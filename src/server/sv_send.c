@@ -155,19 +155,12 @@ FRAME UPDATES
  */
 void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, int channel, float volume)
 {
-	int sendchan, flags, i, ent;
+	int flags;
 	vec3_t origin_v;
 	struct dbuffer *msg;
 
 	if (volume < 0 || volume > 1.0)
 		Com_Error(ERR_FATAL, "SV_StartSound: volume = %f", volume);
-
-	ent = NUM_FOR_EDICT(entity);
-
-	if (channel & 8) /* no PHS flag */
-		channel &= 7;
-
-	sendchan = (ent << 3) | (channel & 7);
 
 	flags = 0;
 	if (volume != DEFAULT_SOUND_PACKET_VOLUME)
@@ -177,18 +170,15 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 	 * the client doesn't know that bmodels have weird origins
 	 * the origin can also be explicitly set
 	 */
-	if ((entity->solid == SOLID_BSP) || origin)
+	if (entity->solid == SOLID_BSP || origin)
 		flags |= SND_POS;
-
-	/* always send the entity number for channel overrides */
-	flags |= SND_ENT;
 
 	/* use the entity origin unless it is a bmodel or explicitly specified */
 	if (!origin) {
 		origin = origin_v;
 		if (entity->solid == SOLID_BSP) {
-			for (i = 0; i < 3; i++)
-				origin_v[i] = entity->origin[i] + 0.5 * (entity->mins[i] + entity->maxs[i]);
+			VectorCenterFromMinsMaxs(entity->mins, entity->maxs, origin_v);
+			VectorAdd(entity->origin, origin_v, origin_v);
 		} else {
 			VectorCopy(entity->origin, origin_v);
 		}
@@ -202,9 +192,6 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 
 	if (flags & SND_VOLUME)
 		NET_WriteByte(msg, volume * 128);
-
-	if (flags & SND_ENT)
-		NET_WriteShort(msg, sendchan);
 
 	if (flags & SND_POS)
 		NET_WritePos(msg, origin);

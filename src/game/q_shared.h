@@ -198,41 +198,6 @@ extern cvar_t* sys_os;
 #define	CHAN_ITEM               3
 #define	CHAN_BODY               4
 
-/* Time Constants */
-#define DAYS_PER_YEAR 365
-#define DAYS_PER_YEAR_AVG 365.25
-/** DAYS_PER_MONTH -> @sa monthLength[] array in campaign.c */
-#define MONTHS_PER_YEAR 12
-#define SECONDS_PER_DAY	86400	/**< (24 * 60 * 60) */
-#define SECONDS_PER_HOUR	3600	/**< (60 * 60) */
-
-/* Time information. */
-/**
- * @brief Engine-side time information in the game.
- * @note Use this in your custom structs that need to get saved or sent over the network.
- * @sa dateLong_t	For runtime use (human readable).
- * @sa CL_DateConvertLong
- */
-typedef struct date_s {
-	int day;	/**< Number of ellapsed days since 1st january of year 0 */
-	int sec;	/**< Number of ellapsed seconds since the begining of current day */
-} date_t;
-
-/**
- * @brief Human readable time information in the game.
- * @note Use this on runtime - please avoid for structs that get saved.
- * @sa date_t	For storage & network transmitting (engine only).
- * @sa CL_DateConvertLong
- */
-typedef struct dateLong_s {
-	short year;	/**< Year in yyyy notation. */
-	byte month;	/**< Number of month (starting with 1). */
-	byte day;	/**< Number of day (starting with 1). */
-	byte hour;	/**< Hour of the day. @todo check what number-range this gives) */
-	byte min;	/**< Minute of the hour. */
-	byte sec;	/**< Second of the minute. */
-} dateLong_t;
-
 /*
 ==========================================================
 ELEMENTS COMMUNICATED ACROSS THE NET

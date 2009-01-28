@@ -438,7 +438,7 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
 	vec3_t pos_v;
 	float *pos;
-	int channel, ent, flags;
+	int flags;
 	float volume;
 	const char *sound;
 	sfx_t *sfx;
@@ -451,19 +451,6 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	else
 		volume = DEFAULT_SOUND_PACKET_VOLUME;
 
-	/* entity relative */
-	if (flags & SND_ENT) {
-		channel = NET_ReadShort(msg);
-		ent = channel >> 3;
-		if (ent > MAX_EDICTS)
-			Com_Error(ERR_DROP,"CL_ParseStartSoundPacket: ent = %i", ent);
-
-		channel &= 7;
-	} else {
-		ent = 0;
-		channel = 0;
-	}
-
 	/* positioned in space */
 	if (flags & SND_POS) {
 		NET_ReadPos(msg, pos_v);
@@ -472,9 +459,8 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 	} else /* use entity number */
 		pos = NULL;
 
-	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.3f,"
-		" channel %d, ent %d, pos %.3f, %.3f, %.3f\n",
-		flags, sound, volume, channel, ent, pos[0], pos[1], pos[2]);
+	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.3f, pos %.3f, %.3f, %.3f\n",
+		flags, sound, volume, pos[0], pos[1], pos[2]);
 
 	sfx = S_RegisterSound(sound);
 	S_StartSound(pos, sfx, volume);

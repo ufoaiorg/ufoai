@@ -206,24 +206,15 @@ enum clc_ops_e {
 /* a sound without an ent or pos will be a local only sound */
 #define	SND_VOLUME		(1<<0)	/* a byte */
 #define	SND_POS			(1<<1)	/* three coordinates */
-#define	SND_ENT			(1<<2)	/* a short 0-2: channel, 3-12: entity */
 
 #define DEFAULT_SOUND_PACKET_VOLUME	0.8
 
-/*============================================== */
-
 #include "cmd.h"
-
 #include "cvar.h"
-
 #include "cmodel.h"
-
 #include "filesys.h"
-
 #include "scripts.h"
-
 #include "net.h"
-
 #include "netpack.h"
 
 /*
@@ -287,6 +278,25 @@ extern csi_t csi;
 
 extern char map_entitystring[MAX_MAP_ENTSTRING];
 
+/* Time information. */
+/**
+ * @brief Engine-side time information in the game.
+ * @note Use this in your custom structs that need to get saved or sent over the network.
+ * @sa dateLong_t	For runtime use (human readable).
+ * @sa CL_DateConvertLong
+ */
+typedef struct date_s {
+	int day;	/**< Number of ellapsed days since 1st january of year 0 */
+	int sec;	/**< Number of ellapsed seconds since the begining of current day */
+} date_t;
+
+/* Time Constants */
+#define DAYS_PER_YEAR 365
+#define DAYS_PER_YEAR_AVG 365.25
+/** DAYS_PER_MONTH -> @sa monthLength[] array in campaign.c */
+#define MONTHS_PER_YEAR 12
+#define SECONDS_PER_DAY	86400	/**< (24 * 60 * 60) */
+#define SECONDS_PER_HOUR	3600	/**< (60 * 60) */
 
 #define MAX_CVARLISTINGAMETYPE 16
 typedef struct cvarlist_s {

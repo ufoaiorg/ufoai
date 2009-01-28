@@ -28,9 +28,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_messages.h"
 #include "campaign/cl_messageoptions.h"
 
-
-#include "../game/q_shared.h"
-
+/**
+ * @brief Human readable time information in the game.
+ * @note Use this on runtime - please avoid for structs that get saved.
+ * @sa date_t	For storage & network transmitting (engine only).
+ * @sa CL_DateConvertLong
+ */
+typedef struct dateLong_s {
+	short year;	/**< Year in yyyy notation. */
+	byte month;	/**< Number of month (starting with 1). */
+	byte day;	/**< Number of day (starting with 1). */
+	byte hour;	/**< Hour of the day. @todo check what number-range this gives) */
+	byte min;	/**< Minute of the hour. */
+	byte sec;	/**< Second of the minute. */
+} dateLong_t;
 
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
 message_t *MN_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
