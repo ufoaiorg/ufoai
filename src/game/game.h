@@ -119,7 +119,7 @@ typedef struct {
 	/** sends message to only one entity */
 	void (IMPORT *cprintf) (const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
-	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, int channel, float volume);
+	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, float volume);
 
 	/** configstrings hold all the index strings.
 	 * All of the current configstrings are sent to clients when

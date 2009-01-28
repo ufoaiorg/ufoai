@@ -153,7 +153,7 @@ FRAME UPDATES
  * Timeofs can range from 0.0 to 0.1 to cause sounds to be started later in the frame than they normally would.
  * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, int channel, float volume)
+void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, float volume)
 {
 	int flags;
 	vec3_t origin_v;

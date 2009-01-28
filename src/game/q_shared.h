@@ -159,25 +159,16 @@ void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 
 #define AREA_SOLID			1
 #define AREA_TRIGGERS		2
 
-/* sound channels */
-/* channel 0 never willingly overrides */
-/* other channels (1-7) allways override a playing sound on that channel */
-#define	CHAN_AUTO               0
-#define	CHAN_WEAPON             1
-#define	CHAN_VOICE              2
-#define	CHAN_ITEM               3
-#define	CHAN_BODY               4
+#define TEAM_NONE      -1
+#define TEAM_CIVILIAN   0
+#define TEAM_PHALANX    1
+#define TEAM_ALIEN      7
 
 /*
 ==========================================================
 ELEMENTS COMMUNICATED ACROSS THE NET
 ==========================================================
 */
-
-#define TEAM_NONE      -1
-#define TEAM_CIVILIAN   0
-#define TEAM_PHALANX    1
-#define TEAM_ALIEN      7
 
 /** add this flag for instant event execution */
 #define EVENT_INSTANTLY   0x80
