@@ -679,7 +679,7 @@ void CheckEntities (void)
 {
 	int i;
 
-#if 0
+#ifdef DEBUG_ED
 	int ufoLength;
 	void *newPointer;
 	void **entitiesUfoBuf; /* LoadFile calls malloc */
@@ -694,7 +694,10 @@ void CheckEntities (void)
 	if(ufoLength == -1)
 		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
 
-	ED_Parse((const char **)entitiesUfoBuf);
+	if (ED_Parse((const char **)entitiesUfoBuf))
+		Sys_Error("Error while parsing entities.ufo: %s\n",ED_LastErr());
+
+	ED_Dump();
 
 	free(*entitiesUfoBuf);
 
