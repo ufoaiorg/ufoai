@@ -166,9 +166,9 @@ menu aircraft_equip extends iaircraft
 	text airequip_list
 	{
 		pos			"32 606"
-		size		"248 157"
+		size		"248 140"
 		lineheight	"20"
-		rows		"11"
+		rows		"7"
 		textid		TEXT_LIST
 		mousefx		true
 		click

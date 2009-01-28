@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_airfightmap.h"
 #include "cp_hospital.h"
 #include "cp_hospital_callbacks.h"
+#include "cp_base_callbacks.h"
 #include "../cl_actor.h"
 #include "cl_popup.h"
 #include "../cl_view.h"
@@ -2277,6 +2278,7 @@ static void CP_AddCampaignCallbackCommands (void)
 {
 	AIM_InitCallbacks();
 	AIR_InitCallbacks();
+	B_InitCallbacks();
 	HOS_InitCallbacks();
 }
 
@@ -2301,6 +2303,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 {
 	AIM_ShutdownCallbacks();
 	AIR_ShutdownCallbacks();
+	B_ShutdownCallbacks();
 	HOS_ShutdownCallbacks();
 }
 

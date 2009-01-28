@@ -252,10 +252,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_aliencont.h" />
-		<Unit filename="..\..\src\client\campaign\cl_basesummary.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_basesummary.h" />
 		<Unit filename="..\..\src\client\campaign\cl_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,8 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_BASE_CALLBACKS_H
 #define CP_BASE_CALLBACKS_H
 
+#define BASESUMMARY_MAX_CVARS_CONSTRUCTION 3
+#define BASESUMMARY_MAX_CVARS_RESEARCH 5
+
 void B_InitCallbacks(void);
 void B_ShutdownCallbacks(void);
 
 #endif
-

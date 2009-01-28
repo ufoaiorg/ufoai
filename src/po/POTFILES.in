@@ -1,6 +1,5 @@
 ./client/campaign/cl_airfight.c
 ./client/campaign/cl_aliencont.c
-./client/campaign/cl_basesummary.c
 ./client/campaign/cl_campaign.c
 ./client/campaign/cl_employee.c
 ./client/campaign/cl_event.c

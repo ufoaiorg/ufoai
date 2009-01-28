@@ -4,7 +4,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original materal Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/cl_main.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -38,7 +38,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_particle.h"
 #include "cl_actor.h"
 #include "cl_ugv.h"
-#include "campaign/cl_basesummary.h"
 #include "campaign/cl_installation.h"
 #include "campaign/cp_hospital.h"
 #include "campaign/cl_map.h"
@@ -1105,7 +1104,6 @@ static void CL_InitLocal (void)
 	TR_InitStartup();
 	AB_InitStartup();
 	AIRFIGHT_InitStartup();
-	BSUM_InitStartup();
 	TUT_InitStartup();
 	PTL_InitStartup();
 	CP_InitStartup();

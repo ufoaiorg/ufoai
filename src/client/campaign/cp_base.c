@@ -2680,10 +2680,6 @@ static void B_ResetAllStatusAndCapacities_f (void)
 void B_InitStartup (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Reset basemanagement\n");
-
-	/* add commands and cvars */
-	B_InitCallbacks();
-
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");
