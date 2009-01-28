@@ -110,7 +110,6 @@ static int popupNum;	/**< Number of entries in the popup list */
 /**
  * @brief Defines the various states of a button.
  * @note Not all buttons do have all of these states (e.g. "unusable" is not very common).
- * @todo What does -1 mean here? it is used quite a bit
  */
 typedef enum {
 	BT_STATE_DISABLE,		/**< 'Disabled' display (grey) */
@@ -401,7 +400,7 @@ static int CL_CalcReloadTime (const objDef_t *weapon)
 
 void CL_ResetWeaponButtons (void)
 {
-	memset(weaponButtonState, -1, sizeof(weaponButtonState));
+	memset(weaponButtonState, BT_STATE_DISABLE, sizeof(weaponButtonState));
 }
 
 /**
@@ -1521,7 +1520,6 @@ void CL_FireWeapon_f (void)
 {
 	char hand;
 	int firemode;
-
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	int weapFdsIdx = -1;
@@ -1575,8 +1573,8 @@ void CL_FireWeapon_f (void)
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
 		SCR_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
-		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%c, %s).\n", hand, ammo->fd[weapFdsIdx][firemode].name);
-		return;
+		Com_DPrintf(DEBUG_CLIENT, "CL_FireWeapon_f: Firemode not available (%c, %s).\n",
+			hand, ammo->fd[weapFdsIdx][firemode].name);
 	}
 }
 
@@ -1641,7 +1639,7 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* Crouch/stand button. */
 	if (selActor->state & STATE_CROUCHED) {
-		weaponButtonState[BT_STAND] = -1;
+		weaponButtonState[BT_STAND] = BT_STATE_DISABLE;
 		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
@@ -1650,7 +1648,7 @@ static void CL_RefreshWeaponButtons (int time)
 			SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 		}
 	} else {
-		weaponButtonState[BT_CROUCH] = -1;
+		weaponButtonState[BT_CROUCH] = BT_STATE_DISABLE;
 		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
@@ -2231,15 +2229,14 @@ void CL_ActorUpdateCvars (void)
 					MN_ExecuteConfunc("startreactiononce");
 					break;
 				case R_FIRE_OFF: /* let RefreshWeaponButtons work it out */
-					weaponButtonState[BT_REACTION] = -1;
+					weaponButtonState[BT_REACTION] = BT_STATE_DISABLE;
 					break;
 				}
 			}
 
 			cl.oldstate = selActor->state;
 			/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
-			if (actorMoveLength < ROUTING_NOT_REACHABLE
-				&& (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
+			if (actorMoveLength < ROUTING_NOT_REACHABLE && (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
 				CL_RefreshWeaponButtons(time);
 			else
 				CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
