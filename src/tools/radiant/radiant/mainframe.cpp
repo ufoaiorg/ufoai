@@ -1985,6 +1985,8 @@ void MainFrame::Create (void)
 		/* maximize will be done when window is shown */
 		gtk_window_maximize(window);
 	}
+	/* settle to default screen (first available) */
+	gtk_window_set_screen(window,gdk_screen_get_default());
 
 	m_window = window;
 
