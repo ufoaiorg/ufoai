@@ -772,7 +772,7 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 
 	usableTusForRF = CL_UsableReactionTUs(actor);
 
-	if (handidx < -1 || handidx > 1) {
+	if (handidx < -1 || handidx > ACTOR_HAND_LEFT) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Bad hand index given. Abort.\n");
 		return;
 	}
@@ -1412,21 +1412,14 @@ void CL_DisplayFiremodes_f (void)
 
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!CL_WorkingFiremode(selActor, qtrue)) {	/* No usable firemode selected. */
-		/** @todo TYPOS IN COMMENTS - I don't even understand what they are trying to explain here */
-		/* Make sure we use the same hand if it's defined */
-		if (selChr->RFmode.hand != 1) { /* No the left hand defined */
-			/* Set default firemode (try right hand first, then left hand). */
-			CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_RIGHT);
-		} else  if (selChr->RFmode.hand == 1) {
-			/* Set default firemode (try left hand first, then right hand). */
-			CL_SetDefaultReactionFiremode(selActor, ACTOR_HAND_CHAR_LEFT);
-		}
+		/* Set default firemode */
+		CL_SetDefaultReactionFiremode(selActor, ACTOR_GET_HAND_INDEX(selChr->RFmode.hand));
 	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if (i < ammo->numFiredefs[weapFdsIdx]) { /* We have a defined fd ... */
 			/* Display the firemode information (image + text). */
-			if (ammo->fd[weapFdsIdx][i].time <= CL_UsableTUs(selActor)) {	/* Enough timeunits for this firemode?*/
+			if (ammo->fd[weapFdsIdx][i].time <= CL_UsableTUs(selActor)) {	/* Enough timeunits for this firemode? */
 				CL_DisplayFiremodeEntry(&ammo->fd[weapFdsIdx][i], hand, qtrue);
 			} else{
 				CL_DisplayFiremodeEntry(&ammo->fd[weapFdsIdx][i], hand, qfalse);
@@ -1436,7 +1429,7 @@ void CL_DisplayFiremodes_f (void)
 			if (ammo->fd[weapFdsIdx][i].reaction) {
 				Com_DPrintf(DEBUG_CLIENT, "CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
 				if (hand == ACTOR_HAND_CHAR_RIGHT) {
-					if (THIS_FIREMODE(&selChr->RFmode, 0, i)) {
+					if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_RIGHT, i)) {
 						/* Set this checkbox visible+active. */
 						MN_ExecuteConfunc("set_right_cb_a %i", i);
 					} else {
@@ -1444,7 +1437,7 @@ void CL_DisplayFiremodes_f (void)
 						MN_ExecuteConfunc("set_right_cb_ina %i", i);
 					}
 				} else { /* hand[0] == ACTOR_HAND_CHAR_LEFT */
-					if (THIS_FIREMODE(&selChr->RFmode, 1, i)) {
+					if (THIS_FIREMODE(&selChr->RFmode, ACTOR_HAND_LEFT, i)) {
 						/* Set this checkbox visible+active. */
 						MN_ExecuteConfunc("set_left_cb_a %i", i);
 					} else {
