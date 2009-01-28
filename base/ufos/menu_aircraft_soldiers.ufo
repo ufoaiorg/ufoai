@@ -523,10 +523,14 @@ menu team extends iaircraft
 	 */
 	confunc aircraft_change
 	{
+		call team_clear
+		cmd "team_mark;team_select 0;set mn_show_employee 1;"
+		*aircraft_list lineselected <1>
 	}
 
 	func init
 	{
+		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		call team_clear
 		cmd "team_mark;team_select 0;set mn_show_employee 1;"
 	}

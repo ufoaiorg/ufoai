@@ -97,7 +97,41 @@ menu iaircraft
 	// aircraft list
 	// ==================
 
-	string aircraft_list
+	text aircraft_list
+	{
+		pos			"51 153"
+		size		"235 167"
+		rows		8
+		lineheight	20
+		textid		TEXT_AIRCRAFT_LIST
+		color	"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		wheel
+		mousefx		true
+		lineschange {
+			*(abstractscrollbar)aircraft_list_scroll fullsize <lines>
+			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>
+		}
+		click {
+			cmd "mn_select_aircraft"	// @note the node autocomplet the commant with the selected line
+		}
+	}
+
+	vscrollbar aircraft_list_scroll {
+		image			menu/scrollbar_v_green
+		blend			true
+		pos				"413 151"
+		height			"172"
+		current			0
+		viewsize		8
+		fullsize		19
+		hidewhenunused	true
+		change {
+			cmd "mn_textscroll aircraft_list <lastdiff>;"
+		}
+	}
+
+	string aircraft_list_foo
 	{
 		string		"*cvar mn_aircraftname"
 		pos			"46 114"
@@ -113,9 +147,9 @@ menu iaircraft
 		texl		"0 16"
 		size		"16 16"
 		blend		true
-		click		{ cmd "mn_prev_aircraft;aircraft_change" }
-		whup		{ cmd "mn_next_aircraft;aircraft_change" }
-		whdown		{ cmd "mn_prev_aircraft;aircraft_change" }
+		click		{ cmd "mn_prev_aircraft;" }
+		whup		{ cmd "mn_next_aircraft;" }
+		whdown		{ cmd "mn_prev_aircraft;" }
 	}
 
 	custombutton next_aircraft
@@ -126,9 +160,39 @@ menu iaircraft
 		texl		"16 16"
 		size		"16 16"
 		blend		true
-		click		{ cmd "mn_next_aircraft;aircraft_change" }
-		whup		{ cmd "mn_next_aircraft;aircraft_change" }
-		whdown		{ cmd "mn_prev_aircraft;aircraft_change" }
+		click		{ cmd "mn_next_aircraft;" }
+		whup		{ cmd "mn_next_aircraft;" }
+		whdown		{ cmd "mn_prev_aircraft;" }
+	}
+
+	// ===============
+	// Buttons
+	// ===============
+
+	button button_buysell
+	{
+		string		"_Buy/Sell Aircraft..."
+		tooltip		"_Buy or sell aircraft"
+		image		menu/button_green_small
+		pos			"31 339"
+		size		"192 35"
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		click		{ cmd "set mn_itemtype 8; mn_push buy;" }
+	}
+
+	button button_produce
+	{
+		string		"_Produce..."
+		tooltip		"_Produce aircraft or aircraft components"
+		image		menu/button_green_small
+		pos			"233 339"
+		size		"206 35"
+		blend		true
+		font		f_small
+		color		"0 0.8 0 1"
+		click		{ cmd "set mn_itemtype 8; mn_push production;" }
 	}
 
 	// ==================

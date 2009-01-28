@@ -22,36 +22,6 @@ menu aircraft extends iaircraft
 		image		menu/aircraft_bg
 	}
 
-	// ===============
-	// Buttons
-	// ===============
-
-	button button_buysell
-	{
-		string		"_Buy/Sell Aircraft..."
-		tooltip		"_Buy or sell aircraft"
-		image		menu/button_green_small
-		pos			"31 339"
-		size		"192 35"
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		click		{ cmd "set mn_itemtype 8; mn_push buy;" }
-	}
-
-	button button_produce
-	{
-		string		"_Produce..."
-		tooltip		"_Produce aircraft or aircraft components"
-		image		menu/button_green_small
-		pos			"233 339"
-		size		"206 35"
-		blend		true
-		font		f_small
-		color		"0 0.8 0 1"
-		click		{ cmd "set mn_itemtype 8; mn_push production;" }
-	}
-
 	// ==================
 	// aircraft
 	// ==================
@@ -181,10 +151,13 @@ menu aircraft extends iaircraft
 	 */
 	confunc aircraft_change
 	{
+		call aircraft_checkbuttons
+		*aircraft_list lineselected <1>
 	}
 
 	func init
 	{
-		cmd "aircraft_select;set mn_aircrafttab 0"
+		cmd "aircraft_update_list;set mn_aircrafttab 0"
+		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 	}
 }

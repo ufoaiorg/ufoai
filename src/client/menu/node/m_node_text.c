@@ -520,6 +520,7 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 				break;
 			case EA_CALL:
 				MN_ExecuteEventActions(node, node->onClick);
+				break;
 			default:
 				/* unsupported action type */
 				break;

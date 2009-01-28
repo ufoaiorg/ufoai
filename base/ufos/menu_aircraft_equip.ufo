@@ -39,14 +39,6 @@ menu aircraft_equip extends iaircraft
 		cmd "airequip_zone_select 2;airequip_updatemenu 6;"
 	}
 
-	/**
-	 * @note iaircraft interface
-	 */
-	confunc aircraft_change
-	{
-		call airequip_zone1
-	}
-
 	// ==================
 	// aircraft model
 	// ==================
@@ -447,11 +439,21 @@ menu aircraft_equip extends iaircraft
 	// init function
 	// ==================
 
+	/**
+	 * @note iaircraft interface
+	 */
+	confunc aircraft_change
+	{
+		*aircraft_list lineselected <1>
+		call airequip_zone1
+	}
+
 	func init
 	{
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
 		cmd "airequip_updatemenu 2;"
 		call airequip_zone1
+		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 	}
 	func close
 	{

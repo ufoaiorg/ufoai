@@ -69,6 +69,32 @@ static void AIM_ResetAircraftCvars_f (void)
 }
 
 /**
+ * @brief Select an aircraft from a base, by ID
+ * @sa AIR_AircraftSelect
+ * @sa AIM_PrevAircraft_f
+ * @sa AIM_NextAircraft_f
+ */
+static void AIM_SelectAircraft_f (void)
+{
+	base_t *base = baseCurrent;
+	int i;
+
+	if (!base || base->numAircraftInBase <= 0)
+		return;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <aircraftID>\n", Cmd_Argv(0));
+		return;
+	}
+
+	i = atoi(Cmd_Argv(1));
+	if (i < 0 || i >= base->numAircraftInBase)
+		return;
+
+	AIR_AircraftSelect(&base->aircraft[i]);
+}
+
+/**
  * @brief Switch to next aircraft in base.
  * @sa AIR_AircraftSelect
  * @sa AIM_PrevAircraft_f
@@ -201,6 +227,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	menuNode_t *node = NULL;
 	static char aircraftInfo[256];
 	base_t *base = NULL;
+	int id;
 
 	if (aircraft != NULL)
 		base = aircraft->homebase;
@@ -236,7 +263,39 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
 	mn.menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
-	MN_ExecuteConfunc("aircraft_checkbuttons");
+
+	/* compute the ID and */
+	for (id = 0; id < baseCurrent->numAircraftInBase; id++) {
+		if (aircraft == &baseCurrent->aircraft[id])
+			break;
+	}
+	assert(id != baseCurrent->numAircraftInBase);
+	Cvar_SetValue("mn_aircraft_id", id);
+
+	/* update the GUI */
+	MN_ExecuteConfunc("aircraft_change %i", id);
+}
+
+/**
+ * @brief Update TEXT_AIRCRAFT_LIST with the current base aircraft names
+ */
+static void AIR_AircraftUpdateList_f ()
+{
+	static char buffer[1024];
+	int i;
+
+	if (!baseCurrent)
+		return;
+
+	buffer[0] = '\0';
+
+	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
+		const aircraft_t * aircraft = &baseCurrent->aircraft[i];
+		Q_strcat(buffer, aircraft->name, sizeof(buffer));
+		Q_strcat(buffer, "\n", sizeof(buffer));
+	}
+
+	mn.menuText[TEXT_AIRCRAFT_LIST] = buffer;
 }
 
 void AIR_InitCallbacks (void)
@@ -248,10 +307,13 @@ void AIR_InitCallbacks (void)
 	/* menu aircraft_equip, aircraft */
 	Cmd_AddCommand("mn_next_aircraft", AIM_NextAircraft_f, NULL);
 	Cmd_AddCommand("mn_prev_aircraft", AIM_PrevAircraft_f, NULL);
+	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, NULL);
 	/* menu aircraft, popup_transferbaselist */
 	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
 	/* menu aircraft_equip, aircraft, buy, hangar destroy popup (B_MarkBuildingDestroy)*/
 	Cmd_AddCommand("aircraft_select", AIR_AircraftSelect_f, NULL);
+	/* menu aircraft, aircraft_equip, aircraft_soldier */
+	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, NULL);
 
 }
 
@@ -261,6 +323,8 @@ void AIR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("aircraft_start");
 	Cmd_RemoveCommand("mn_next_aircraft");
 	Cmd_RemoveCommand("mn_prev_aircraft");
+	Cmd_RemoveCommand("mn_select_aircraft");
 	Cmd_RemoveCommand("aircraft_return");
 	Cmd_RemoveCommand("aircraft_select");
+	Cmd_RemoveCommand("aircraft_update_list");
 }
