@@ -730,7 +730,7 @@ menu hud extends ahud
 		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		angles	"0 60 90"
-//		scale	"8 8 8"
+		autoscale	true
 		pos		"20 20"
 		size	"74 66"
 		origin	"0 0 0"
