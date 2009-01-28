@@ -94,19 +94,19 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
  */
 static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 {
-	selectBoxOptions_t* newOption;
+	selectBoxOptions_t* option;
 	const char *ref;
 
-	newOption = MN_TabNodeTabAtPosition(node, x, y);
-	if (newOption == NULL)
+	option = MN_TabNodeTabAtPosition(node, x, y);
+	if (option == NULL)
 		return;
 
-	if (newOption->disabled)
+	if (option->disabled)
 		return;
 
 	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
 	/* Is we click on the already active tab? */
-	if (!Q_strcmp(newOption->value, ref))
+	if (!Q_strcmp(option->value, ref))
 		return;
 
 	/* the cvar string is stored in dataModelSkinOrCVar
@@ -123,14 +123,14 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state) {
 		const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
-		MN_SetCvar(cvarName, newOption->value, 0);
-		if (newOption->action[0] != '\0') {
+		MN_SetCvar(cvarName, option->value, 0);
+		if (option->action[0] != '\0') {
 #ifdef DEBUG
-			if (newOption->action[strlen(newOption->action) - 1] != ';') {
+			if (option->action[strlen(option->action) - 1] != ';') {
 				Com_Printf("Selectbox option with none terminated action command (%s.%s)\n", node->menu->name, node->name);
 			}
 #endif
-			Cbuf_AddText(newOption->action);
+			Cbuf_AddText(option->action);
 		}
 	}
 }
@@ -167,7 +167,7 @@ static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_t
 static void MN_TabNodeDraw (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
-	selectBoxOptions_t* tabOption;
+	selectBoxOptions_t* option;
 	selectBoxOptions_t* overMouseOption = NULL;
 	const char *ref;
 	const char *font;
@@ -185,21 +185,21 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
 	}
 	currentX = node->pos[0];
-	tabOption = node->u.option.first;
+	option = node->u.option.first;
 	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
 
-	while (tabOption) {
+	while (option) {
 		int fontHeight, tabWidth;
 		int textPos;
 		qboolean drawIcon = qfalse;
 
 		/* Check the status of the current tab */
 		mn_tab_type_t status = MN_TAB_NORMAL;
-		if (tabOption->disabled) {
+		if (option->disabled) {
 			status = MN_TAB_DISABLED;
-		} else if (!Q_strcmp(tabOption->value, ref)) {
+		} else if (!Q_strcmp(option->value, ref)) {
 			status = MN_TAB_SELECTED;
-		} else if (tabOption == overMouseOption) {
+		} else if (option == overMouseOption) {
 			status = MN_TAB_HILIGHTED;
 		}
 
@@ -207,9 +207,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(tabOption->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, &fontHeight, NULL);
-		if (tabOption->icon && tabOption->icon->size[0] < allowedWidth) {
-			tabWidth += tabOption->icon->size[0];
+		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, &fontHeight, NULL);
+		if (option->icon && option->icon->size[0] < allowedWidth) {
+			tabWidth += option->icon->size[0];
 			drawIcon = qtrue;
 		}
 		if (tabWidth > allowedWidth) {
@@ -229,18 +229,18 @@ static void MN_TabNodeDraw (menuNode_t *node)
 			if (status == MN_TAB_DISABLED) {
 				iconStatus = 2;
 			}
-			MN_DrawIconInBox(tabOption->icon, iconStatus, currentX, node->pos[1], tabOption->icon->size[0], TILE_HEIGHT);
-			textPos += tabOption->icon->size[0];
+			MN_DrawIconInBox(option->icon, iconStatus, currentX, node->pos[1], option->icon->size[0], TILE_HEIGHT);
+			textPos += option->icon->size[0];
 		}
 		R_FontDrawString(font, ALIGN_UL, textPos, node->pos[1] + ((node->size[1] - fontHeight) / 2),
 			textPos, node->pos[1], tabWidth+1, TILE_HEIGHT,
-			0, _(tabOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
 
 		/* Next */
 		lastStatus = status;
-		tabOption = tabOption->next;
+		option = option->next;
 	}
 
 	/* Display last junction and end of header */
