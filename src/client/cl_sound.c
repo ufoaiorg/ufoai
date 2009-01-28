@@ -357,6 +357,7 @@ sfx_t *S_RegisterSound (const char *name)
 	sfx->data = mix;
 	sfx->channel = -1; /* just a free channel */
 	sfx->loops = 0; /* play once */
+	sfx->volume = 128; /* this is default for loaded chunks, must be adjusted later */
 	sfx->hash_next = sfx_hash[hash];
 	sfx_hash[hash] = sfx;
 	return sfx;
@@ -379,8 +380,8 @@ void S_SetVolume (sfx_t *sfx, int volume)
 	if (volume >= MIX_MAX_VOLUME)
 		return;
 
-	Com_DPrintf(DEBUG_SOUND, "Volume changed from %i to %i for sound '%s' on channel %i, volume rate %.2f\n",
-		sfx->volume, volume, sfx->name, sfx->channel, volRate);
+	Com_DPrintf(DEBUG_SOUND, "Volume changed from %i (chunk %i) to %i for sound '%s' on channel %i, volume rate %.2f\n",
+		sfx->volume,sfx->data->volume, volume, sfx->name, sfx->channel, volRate);
 
 	/* only change the chunk volume if it has changed */
 	if (sfx->volume != volume) {
