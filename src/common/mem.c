@@ -705,6 +705,6 @@ void Mem_Shutdown (void)
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 		if (!pool->inUse)
 			continue;
-		Mem_FreePool(pool);
+		Mem_DeletePool(pool);
 	}
 }
