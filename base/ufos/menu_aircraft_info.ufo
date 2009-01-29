@@ -128,20 +128,6 @@ menu aircraft extends iaircraft
 			*button_squad		tooltip		"_Aircraft absent from base"
 			*button_squad		disabled	true
 		}
-
-
-		if "mn_base_num_aircraft > 1" {
-			*prev_aircraft		disabled	false
-			*next_aircraft		disabled	false
-			*menu:aircraft_equip.prev_aircraft	disabled	false
-			*menu:aircraft_equip.next_aircraft	disabled	false
-		}
-		if "mn_base_num_aircraft <= 1" {
-			*prev_aircraft		disabled	true
-			*next_aircraft		disabled	true
-			*menu:aircraft_equip.prev_aircraft	disabled	true
-			*menu:aircraft_equip.next_aircraft	disabled	true
-		}
 	}
 
 	/**
