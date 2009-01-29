@@ -513,15 +513,3 @@ void SCR_Init (void)
 
 	scr_initialized = qtrue;
 }
-
-/**
- * @brief Displays a message on the hud.
- * @sa MN_DisplayNotice
- * @param[in] time is a ms values
- * @param[in] text text is already translated here
- */
-void HUD_DisplayMessage (const char *text, int time)
-{
-	cl.msgTime = cl.time + time;
-	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
-}

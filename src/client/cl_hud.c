@@ -26,6 +26,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_hud.h"
 
+/**
+ * @brief Displays a message on the hud.
+ * @sa MN_DisplayNotice
+ * @param[in] time is a ms values
+ * @param[in] text text is already translated here
+ */
+void HUD_DisplayMessage (const char *text, int time)
+{
+	cl.msgTime = cl.time + time;
+	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
+}
+
 void HUD_InitStartup (void)
 {
 }

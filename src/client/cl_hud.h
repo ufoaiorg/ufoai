@@ -27,5 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CL_HUD_H
 
 void HUD_InitStartup(void);
+void HUD_DisplayMessage(const char * text, int time);
 
 #endif
