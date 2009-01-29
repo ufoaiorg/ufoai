@@ -38,15 +38,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern const int MAX_POS_LOOP;
 
 void CP_SetMissionVars(const mission_t *mission);
+void CP_CreateBattleParameters(mission_t *mission);
 void CP_StartMissionMap(mission_t* mission);
+mission_t *CP_GetMissionById(const char *missionId);
+const char *CP_MissionToTypeString(const mission_t *mission);
+int MAP_GetIdxByMission(const mission_t *mis);
+mission_t* MAP_GetMissionByIdx(int id);
 void CP_MissionRemove(mission_t *mission);
 qboolean CP_MissionCreate(mission_t *mission);
 qboolean CP_CheckNewMissionDetectedOnGeoscape(void);
 qboolean CP_CheckMissionLimitedInTime(const mission_t *mission);
 void CP_MissionDisableTimeLimit(mission_t *mission);
+void CP_MissionNotifyBaseDestroyed(const base_t *base);
+void CP_MissionNotifyInstallationDestroyed(const installation_t const *installation);
+const char* MAP_GetMissionModel(const mission_t *mission);
 void CP_MissionRemoveFromGeoscape(mission_t *mission);
 void CP_MissionAddToGeoscape(mission_t *mission, qboolean force);
 void CP_UFORemoveFromGeoscape(mission_t *mission, qboolean destroyed);
+void CP_SpawnCrashSiteMission(aircraft_t *ufo);
 mission_t* CP_GetLastMissionAdded(void);
 int CP_MissionChooseUFO(const mission_t *mission);
 void CP_MissionStageEnd(mission_t *mission);
@@ -56,5 +65,6 @@ void CP_SpawnNewMissions(void);
 void CP_MissionIsOver(mission_t *mission);
 void CP_MissionIsOverByUFO(aircraft_t *ufocraft);
 void CP_MissionEnd(mission_t* mission, qboolean won);
+
 
 #endif

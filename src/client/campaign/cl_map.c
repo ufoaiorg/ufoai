@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_font.h"
 #include "cl_mapfightequip.h"
 #include "cl_map.h"
+#include "cp_missions.h"
 #include "cl_ufo.h"
 #include "cp_time.h"
 #include "cp_xvi.h"

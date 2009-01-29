@@ -415,25 +415,19 @@ void CP_CampaignInit(qboolean load);
 void CP_CampaignExit(void);
 
 /* Mission related functions */
-int MAP_GetIdxByMission(const mission_t *mis);
-mission_t* MAP_GetMissionByIdx(int id);
 int CP_CountMission(void);
 int CP_CountMissionActive(void);
 int CP_CountMissionOnGeoscape(void);
 void CP_UpdateMissionVisibleOnGeoscape(void);
-void CP_MissionNotifyBaseDestroyed(const base_t *base);
-void CP_MissionNotifyInstallationDestroyed(const installation_t const *installation);
-mission_t *CP_GetMissionById(const char *missionId);
-const char *CP_MissionToTypeString(const mission_t *mission);
 int CP_TerrorMissionAvailableUFOs(const mission_t const *mission, int *ufoTypes);
 qboolean AIR_SendAircraftToMission(aircraft_t *aircraft, mission_t *mission);
 void AIR_AircraftsNotifyMissionRemoved(const mission_t *mission);
-const char* MAP_GetMissionModel(const mission_t *mission);
+
 void CP_UFOProceedMission(aircraft_t *ufocraft);
 void CP_InitMarket(qboolean load);
 
 base_t *CP_GetMissionBase(void);
-void CP_SpawnCrashSiteMission(aircraft_t *ufo);
+
 struct alienBase_s;
 void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
 void CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
