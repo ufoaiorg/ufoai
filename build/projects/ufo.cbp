@@ -158,6 +158,7 @@
 		<Unit filename="..\..\base\ufos\menu_aircraft.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft_equip.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft_info.ufo" />
+		<Unit filename="..\..\base\ufos\menu_aircraft_pilots.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft_soldiers.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aliencont.ufo" />
 		<Unit filename="..\..\base\ufos\menu_althud.ufo" />
