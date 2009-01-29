@@ -246,27 +246,27 @@ menu hospital
 	string hos_rank19	{ string "*cvar mn_hos_rank19"		pos "360 630"	color "1 1 1 1"	size "220 16" }
 	string hos_rank20	{ string "*cvar mn_hos_rank20"		pos "680 630"	color "1 1 1 1"	size "220 16" }
 
-	bar hos_health0     { pos "47  90" 	current "*cvar mn_hos_hp0" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax0" align uc }
-	bar hos_health1     { pos "367  90" current "*cvar mn_hos_hp1" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax1" align uc }
-	bar hos_health2     { pos "687  90" current "*cvar mn_hos_hp2" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax2" align uc }
-	bar hos_health3     { pos "47 185" 	current "*cvar mn_hos_hp3" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax3" align uc }
-	bar hos_health4     { pos "367 185" current "*cvar mn_hos_hp4" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax4" align uc }
-	bar hos_health5     { pos "687 185" current "*cvar mn_hos_hp5" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax5" align uc }
-	bar hos_health6     { pos "47 280" 	current "*cvar mn_hos_hp6" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax6" align uc }
-	bar hos_health7     { pos "367 280" current "*cvar mn_hos_hp7" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax7" align uc }
-	bar hos_health8     { pos "687 280" current "*cvar mn_hos_hp8" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax8" align uc }
-	bar hos_health9     { pos "47 375" 	current "*cvar mn_hos_hp9" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax9" align uc }
-	bar hos_health10    { pos "367 375" current "*cvar mn_hos_hp10" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax10" align uc }
-	bar hos_health11    { pos "687 375" current "*cvar mn_hos_hp11" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax11" align uc }
-	bar hos_health12    { pos "47 470" 	current "*cvar mn_hos_hp12" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax12" align uc }
-	bar hos_health13    { pos "367 470" current "*cvar mn_hos_hp13" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax13" align uc }
-	bar hos_health14    { pos "687 470" current "*cvar mn_hos_hp14" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax14" align uc }
-	bar hos_health15    { pos "47 565" 	current "*cvar mn_hos_hp15" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax15" align uc }
-	bar hos_health16    { pos "367 565" current "*cvar mn_hos_hp16" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax16" align uc }
-	bar hos_health17	{ pos "687 565" current "*cvar mn_hos_hp17" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax17" align uc }
-	bar hos_health18    { pos "47 660" 	current "*cvar mn_hos_hp18" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax18" align uc }
-	bar hos_health19    { pos "367 660" current "*cvar mn_hos_hp19" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax19" align uc }
-	bar hos_health20	{ pos "687 660" current "*cvar mn_hos_hp20" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax20" align uc }
+	bar hos_health0     { pos "47  90" 	current "*cvar mn_hos_hp0" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax0" }
+	bar hos_health1     { pos "367  90" current "*cvar mn_hos_hp1" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax1" }
+	bar hos_health2     { pos "687  90" current "*cvar mn_hos_hp2" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax2" }
+	bar hos_health3     { pos "47 185" 	current "*cvar mn_hos_hp3" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax3" }
+	bar hos_health4     { pos "367 185" current "*cvar mn_hos_hp4" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax4" }
+	bar hos_health5     { pos "687 185" current "*cvar mn_hos_hp5" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax5" }
+	bar hos_health6     { pos "47 280" 	current "*cvar mn_hos_hp6" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax6" }
+	bar hos_health7     { pos "367 280" current "*cvar mn_hos_hp7" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax7" }
+	bar hos_health8     { pos "687 280" current "*cvar mn_hos_hp8" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax8" }
+	bar hos_health9     { pos "47 375" 	current "*cvar mn_hos_hp9" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax9" }
+	bar hos_health10    { pos "367 375" current "*cvar mn_hos_hp10" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax10" }
+	bar hos_health11    { pos "687 375" current "*cvar mn_hos_hp11" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax11" }
+	bar hos_health12    { pos "47 470" 	current "*cvar mn_hos_hp12" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax12" }
+	bar hos_health13    { pos "367 470" current "*cvar mn_hos_hp13" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax13" }
+	bar hos_health14    { pos "687 470" current "*cvar mn_hos_hp14" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax14" }
+	bar hos_health15    { pos "47 565" 	current "*cvar mn_hos_hp15" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax15" }
+	bar hos_health16    { pos "367 565" current "*cvar mn_hos_hp16" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax16" }
+	bar hos_health17	{ pos "687 565" current "*cvar mn_hos_hp17" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax17" }
+	bar hos_health18    { pos "47 660" 	current "*cvar mn_hos_hp18" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax18" }
+	bar hos_health19    { pos "367 660" current "*cvar mn_hos_hp19" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax19" }
+	bar hos_health20	{ pos "687 660" current "*cvar mn_hos_hp20" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax20" }
 
 	zone click_hos_button0 {
 		pos "25  25"
