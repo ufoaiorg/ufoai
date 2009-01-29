@@ -195,7 +195,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 		/* Check the status of the current tab */
 		mn_tab_type_t status = MN_TAB_NORMAL;
-		if (option->disabled) {
+		if (option->disabled || node->disabled) {
 			status = MN_TAB_DISABLED;
 		} else if (!Q_strcmp(option->value, ref)) {
 			status = MN_TAB_SELECTED;
