@@ -1148,49 +1148,19 @@ void R_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboo
 
 /**
  * @brief Force to draw only on a rect
+ * @note Don't forget to call @c R_EndClipRect
+ * @sa R_EndClipRect
  */
 void R_BeginClipRect (int x, int y, int width, int height)
 {
-	double eq[4];
-
-	/* top */
-	eq[0] = 0;
-	eq[1] = 1;
-	eq[2] = 0;
-	eq[3] = -y  * viddef.ry;
-	glClipPlane(GL_CLIP_PLANE0, eq);
-
-	/* bottom */
-	eq[0] = 0;
-	eq[1] = -1;
-	eq[2] = 0;
-	eq[3] = (y + height) * viddef.ry;
-	glClipPlane(GL_CLIP_PLANE1, eq);
-
-	/* left */
-	eq[0] = 1;
-	eq[1] = 0;
-	eq[2] = 0;
-	eq[3] = -x  * viddef.rx;
-	glClipPlane(GL_CLIP_PLANE2, eq);
-
-	/* right */
-	eq[0] = -1;
-	eq[1] = 0;
-	eq[2] = 0;
-	eq[3] = (x + width) * viddef.rx;
-	glClipPlane(GL_CLIP_PLANE3, eq);
-
-	glEnable(GL_CLIP_PLANE0);
-	glEnable(GL_CLIP_PLANE1);
-	glEnable(GL_CLIP_PLANE2);
-	glEnable(GL_CLIP_PLANE3);
+	glScissor(x, refdef.height - (y + height), width, height);
+	glEnable(GL_SCISSOR_TEST);
 }
 
+/**
+ * @sa R_BeginClipRect
+ */
 void R_EndClipRect (void)
 {
-	glDisable(GL_CLIP_PLANE0);
-	glDisable(GL_CLIP_PLANE1);
-	glDisable(GL_CLIP_PLANE2);
-	glDisable(GL_CLIP_PLANE3);
+	glDisable(GL_SCISSOR_TEST);
 }
