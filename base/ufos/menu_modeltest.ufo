@@ -33,10 +33,12 @@ menu model_test
 	model mdl
 	{
 		model	"*cvar mn_model"
-		origin	"400 300 0"
+		origin	"0 0 0"
 		scale	"1 1 1"
 		angles	"0 0 0"
 		center	"0 0 0"
+		pos		"0 0"
+		size	"1024 768"
 	}
 
 	func init

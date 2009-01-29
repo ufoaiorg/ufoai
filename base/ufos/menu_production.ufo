@@ -201,11 +201,12 @@ menu production
 
 	item itemmodel
 	{
-		visiblewhen "mn_itemtype != 5"
-		model	"*cvar mn_item"
-		pos	"793 288"
-		scale	"7 7 7"
-		view	item
+		visiblewhen	"mn_itemtype != 5"
+		model		"*cvar mn_item"
+		pos			"608 233"
+		size		"370 140"
+		scale		"7 7 7"
+		view		item
 	}
 
 	// ==================

@@ -771,23 +771,26 @@ menu research
 	item itemmodel
 	{
 		model	"*cvar mn_researchitem"
-		pos		"793 288"
-		scale	"7 7 7"
+		pos		"693 188"
+		size	"200 200"
+		autoscale	true
 	}
 
 	// @todo do we even use the weaponmodel and ammomodel nodes?
 	item weaponmodel
 	{
 		model	"*cvar mn_researchweapon"
-		pos		"750 288"
-		scale	"7 7 7"
+		pos		"650 188"
+		size	"200 200"
+		autoscale	true
 	}
 
 	item ammomodel
 	{
 		model	"*cvar mn_researchammo"
-		pos		"930 288"
-		scale	"7 7 7"
+		pos		"830 188"
+		size	"200 200"
+		autoscale	true
 	}
 
 	// ==================

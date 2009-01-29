@@ -27,12 +27,13 @@ menu physdata
 
 	model actor
 	{
-		model	"*cvar mn_body"
-		skin	"*cvar mn_skin"
-		anim	"stand2"
-		origin	"370 270 0"
-		angles	"0 70 90"
-		scale	"5 5 5"
+		model		"*cvar mn_body"
+		skin		"*cvar mn_skin"
+		anim		"stand2"
+		angles		"0 70 90"
+		pos			"270 170"
+		size		"200 200"
+		autoscale	true
 	}
 
 	model head
@@ -40,7 +41,6 @@ menu physdata
 		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"actor tag_head"
-		scale	"1.0 1.0 1.0"
 	}
 
 	// ==================

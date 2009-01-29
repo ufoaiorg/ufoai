@@ -442,6 +442,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 	/* compute the absolute origin ('origin' property is relative to the node center) */
 	MN_GetNodeAbsPos(node, nodeorigin);
+	if (node->u.model.clipOverflow)
+		R_BeginClipRect(nodeorigin[0], nodeorigin[1], node->size[0], node->size[1]);
 	nodeorigin[0] += node->size[0] / 2 + node->u.model.origin[0];
 	nodeorigin[1] += node->size[1] / 2 + node->u.model.origin[1];
 	nodeorigin[2] = node->u.model.origin[2];
@@ -462,11 +464,15 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	/* special case to draw models with "menu model" */
 	if (menuModel) {
 		MN_DrawModelNodeWithMenuModel(node, source, &mi, menuModel);
+		if (node->u.model.clipOverflow)
+			R_EndClipRect();
 		return;
 	}
 
 	/* if the node is linked to a parent, the parent will display it */
 	if (node->u.model.tag) {
+		if (node->u.model.clipOverflow)
+			R_EndClipRect();
 		return;
 	}
 
@@ -565,6 +571,9 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			R_DrawModelDirect(&mi, &pmi, tag);
 		}
 	}
+
+	if (node->u.model.clipOverflow)
+		R_EndClipRect();
 }
 
 static int oldMousePosX = 0;
@@ -597,6 +606,8 @@ static void MN_ModelNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
 		return;
+	if (!node->u.model.rotateWithMouse)
+		return;
 	MN_SetMouseCapture(node);
 	oldMousePosX = x;
 	oldMousePosY = y;
@@ -605,6 +616,8 @@ static void MN_ModelNodeMouseDown (menuNode_t *node, int x, int y, int button)
 static void MN_ModelNodeMouseUp (menuNode_t *node, int x, int y, int button)
 {
 	if (button != K_MOUSE1)
+		return;
+	if (MN_GetMouseCapture() != node)
 		return;
 	MN_MouseRelease();
 }
@@ -617,6 +630,7 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 	node->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
 	VectorSet(node->u.model.scale, 1, 1, 1);
+	node->u.model.clipOverflow = qtrue;
 }
 
 static void MN_ModelNodeLoaded (menuNode_t *node)
@@ -658,6 +672,8 @@ static const value_t properties[] = {
 	/** @todo use V_REF_OF_STRING when its possible ('viewName' is never a cvar) */
 	{"view", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.viewName), 0},
 	{"autoscale", V_BOOL, offsetof(menuNode_t, u.model.autoscale), MEMBER_SIZEOF(menuNode_t, u.model.autoscale)},
+	{"rotatewithmouse", V_BOOL, offsetof(menuNode_t, u.model.rotateWithMouse), MEMBER_SIZEOF(menuNode_t, u.model.rotateWithMouse)},
+	{"clipoverflow", V_BOOL, offsetof(menuNode_t, u.model.clipOverflow), MEMBER_SIZEOF(menuNode_t, u.model.clipOverflow)},
 
 	{NULL, V_NULL, 0, 0}
 };

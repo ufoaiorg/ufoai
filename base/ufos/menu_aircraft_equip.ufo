@@ -441,15 +441,16 @@ menu aircraft_equip extends iaircraft
 	confunc aircraft_change
 	{
 		*aircraft_list lineselected <1>
+		cmd "airequip_updatemenu 2;"
 		call airequip_zone1
 	}
 
 	func init
 	{
 		// default is weapons @sa aircraftItemType_t (inv_shared.h)
+		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		cmd "airequip_updatemenu 2;"
 		call airequip_zone1
-		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 	}
 	func close
 	{

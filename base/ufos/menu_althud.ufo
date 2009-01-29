@@ -404,16 +404,14 @@ menu althud extends ahud
 
 	model right_actor
 	{
-		model	"*cvar mn_body"
-		skin	"*cvar mn_skin"
-		anim	"*cvar mn_anim"
-		origin	"948 180 0"
-		angles	"0 80 90"
-		// FIXME - use pos and size for autoscaling - doesn't work with tags atm
-//		pos		"884 80"
-//		size	"120 260"
-//		bgcolor	"1 1 1 0.5"
-		scale	"4 4 4"
+		model		"*cvar mn_body"
+		skin		"*cvar mn_skin"
+		anim		"*cvar mn_anim"
+		origin		"948 180 0"
+		angles		"0 80 90"
+		pos			"884 80"
+		size		"120 260"
+		autoscale	true
 	}
 
 	model right_head
