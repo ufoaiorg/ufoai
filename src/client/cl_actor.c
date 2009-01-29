@@ -120,7 +120,7 @@ typedef enum {
 
 static weaponButtonState_t weaponButtonState[BT_NUM_TYPES];
 
-static void CL_RefreshWeaponButtons(int time);
+static void HUD_RefreshWeaponButtons(int time);
 /**
  * @brief Writes player action with its data
  * @param[in] player_action
@@ -346,7 +346,7 @@ static void CL_ActorGlobalCvars (void)
  * @return R_FIRE_MANY when STATE_REACTION_MANY.
  * @return R_FIRE_ONCE when STATE_REACTION_ONCE.
  * @return R_FIRE_OFF when no reaction fiR_
- * @sa CL_RefreshWeaponButtons
+ * @sa HUD_RefreshWeaponButtons
  * @sa CL_ActorUpdateCVars
  * @sa CL_ActorSelect
  */
@@ -367,7 +367,7 @@ static int HUD_GetReactionState (const le_t * le)
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
  * @todo Distinguish between LEFT(selActor) and RIGHT(selActor).
- * @sa CL_RefreshWeaponButtons
+ * @sa HUD_RefreshWeaponButtons
  * @sa CL_CheckMenuAction
  */
 static int CL_CalcReloadTime (const objDef_t *weapon)
@@ -866,7 +866,7 @@ static void CL_DisplayFiremodeEntry (const fireDef_t * fd, const char hand, cons
 /**
  * @brief Check if at least one firemode is available for reservation.
  * @return qtrue if there is at least one firemode - qfalse otherwise.
- * @sa CL_RefreshWeaponButtons
+ * @sa HUD_RefreshWeaponButtons
  * @sa CL_PopupFiremodeReservation_f
  */
 static qboolean CL_CheckFiremodeReservation (void)
@@ -936,7 +936,7 @@ static void CL_PopupFiremodeReservation (qboolean reset)
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
 
 		/* Refresh button and tooltip. */
-		CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+		HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		return;
 	}
 
@@ -1115,7 +1115,7 @@ void CL_ReserveShot_f (void)
 	}
 
 	/* Refresh button and tooltip. */
-	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+	HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
 
 /**
@@ -1595,7 +1595,7 @@ void CL_RemainingTus_f (void)
  * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa CL_ActorUpdateCvars
  */
-static void CL_RefreshWeaponButtons (int time)
+static void HUD_RefreshWeaponButtons (int time)
 {
 	invList_t *weaponr;
 	invList_t *weaponl;
@@ -2064,7 +2064,7 @@ void CL_ActorUpdateCvars (void)
 		 || displayRemainingTus[REMAINING_TU_RELOAD_LEFT]
 		 || displayRemainingTus[REMAINING_TU_CROUCH]) {
 			/* We are hovering over a "reload" button */
-			/** @sa CL_RefreshWeaponButtons */
+			/** @sa HUD_RefreshWeaponButtons */
 			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
 				const invList_t *weapon = RIGHT(selActor);
 				const int reloadtime = CL_CalcReloadTime(weapon->item.t);
@@ -2100,7 +2100,7 @@ void CL_ActorUpdateCvars (void)
 			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
-					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
+					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 					if (reserved_tus > 0)
 						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
 							selActor->morale, reserved_tus, moveModeDescriptions[CL_MoveMode(actorMoveLength)], actorMoveLength,
@@ -2114,7 +2114,7 @@ void CL_ActorUpdateCvars (void)
 					else
 						Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
 				} else {
-					CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 				}
 				lastHUDActor = selActor;
 				lastMoveLength = actorMoveLength;
@@ -2141,13 +2141,13 @@ void CL_ActorUpdateCvars (void)
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
 				if (CL_UsableTUs(selActor) < time || (selWeapon->item.t->reload && selWeapon->item.a <= 0)) {
 					cl.cmode = M_MOVE;
-					CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
+					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				}
 			} else if (selWeapon) {
 				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
 			} else {
 				cl.cmode = M_MOVE;
-				CL_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
+				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 			}
 		}
 
@@ -2219,9 +2219,9 @@ void CL_ActorUpdateCvars (void)
 			cl.oldstate = selActor->state;
 			/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
 			if (actorMoveLength < ROUTING_NOT_REACHABLE && (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
-				CL_RefreshWeaponButtons(time);
+				HUD_RefreshWeaponButtons(time);
 			else
-				CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		} else {
 			if (refresh)
 				MN_ExecuteConfunc("deselstand");
@@ -2248,7 +2248,7 @@ void CL_ActorUpdateCvars (void)
 	if (cl.oldcmode != cl.cmode || refresh) {
 		cl.oldcmode = cl.cmode;
 		if (selActor)
-			CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+			HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 	}
 
 	/* player bar */
@@ -3265,7 +3265,7 @@ void CL_ActorToggleCrouchReservation_f (void)
 	}
 
 	/* Refresh checkbox and tooltip. */
-	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+	HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 
 	/** @todo Update shot-reservation popup if it is currently displayed.
 	 * Alternatively just hide it. */
@@ -3363,7 +3363,7 @@ void CL_ActorToggleReaction_f (void)
 	}
 
 	/* Refresh button and tooltip. */
-	CL_RefreshWeaponButtons(CL_UsableTUs(selActor));
+	HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
 
 /**
