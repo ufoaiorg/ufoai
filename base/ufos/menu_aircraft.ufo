@@ -88,8 +88,7 @@ menu iaircraft
 		option pilot {
 			label	"_Pilots"
 			value	"4"
-			action "mn_pop;mn_push foobar;"
-			disabled	true
+			action "mn_pop;mn_push aircraft_pilots;"
 		}
 	}
 

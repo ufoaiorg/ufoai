@@ -1,0 +1,63 @@
+// ==================
+// AIRCRAFT PILOTS MENU
+// ==================
+
+menu aircraft_pilots extends iaircraft
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic background
+	{
+		image	menu/team_bg
+	}
+
+	// ==================
+	// aircraft
+	// ==================
+
+	model aircraft
+	{
+		model		"*cvar mn_aircraft_model"
+		pos			"478 107"
+		size		"529 260"
+		origin		"-45 25 0"
+		view		aircraft
+	}
+
+	// ==================
+	// pilots
+	// ==================
+
+	todo need_scroll_soldiers {
+		pos "150 500"
+		string "Not yet implemented. Please use the 'Aircraft equipment' tab to assign a Pilot"
+	}
+
+	// ==================
+	// additional stuff
+	// ==================
+
+	/**
+	 * @note iaircraft interface
+	 */
+	confunc aircraft_change
+	{
+		*aircraft_list lineselected <1>
+	}
+
+	func init
+	{
+		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
+	}
+}
