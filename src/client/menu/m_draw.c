@@ -291,7 +291,7 @@ void MN_DrawMenusInit (void)
 
 /**
  * @brief Displays a message over all menus.
- * @sa SCR_DisplayHudMessage
+ * @sa HUD_DisplayMessage
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
  */

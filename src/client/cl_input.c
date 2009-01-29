@@ -1654,13 +1654,13 @@ void IN_Init (void)
 	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
 	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
 
-	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
-	Cmd_AddCommand("switch_firemode_list", CL_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
-	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
-	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
-	Cmd_AddCommand("sel_shotreservation", CL_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
-	Cmd_AddCommand("reserve_shot", CL_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
-	Cmd_AddCommand("remaining_tus", CL_RemainingTus_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
+	Cmd_AddCommand("list_firemodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
+	Cmd_AddCommand("switch_firemode_list", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
+	Cmd_AddCommand("fireweap", HUD_FireWeapon_f, "Start aiming the weapon.");
+	Cmd_AddCommand("sel_reactmode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
+	Cmd_AddCommand("sel_shotreservation", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
+	Cmd_AddCommand("reserve_shot", HUD_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
+	Cmd_AddCommand("remaining_tus", HUD_RemainingTus_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
 
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
 	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));

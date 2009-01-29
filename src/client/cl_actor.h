@@ -73,20 +73,20 @@ extern int fb_length;
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void CL_CharacterCvars(const character_t *chr);
-void CL_ActorUpdateCvars(void);
+void HUD_ActorUpdateCvars(void);
 const char *CL_GetSkillString(const int skill);
 qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
-void HUD_ResetWeaponButtons(void);
 void CL_SetReactionFiremode(le_t *actor, const int handidx, const int obj_idx, const int fd_idx);
 void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
-void CL_DisplayFiremodes_f(void);
-void CL_SwitchFiremodeList_f(void);
-void CL_FireWeapon_f(void);
-void CL_SelectReactionFiremode_f(void);
-void CL_PopupFiremodeReservation_f(void);
-void CL_ReserveShot_f(void);
-void CL_RemainingTus_f(void);
+void HUD_ResetWeaponButtons(void);
+void HUD_DisplayFiremodes_f(void);
+void HUD_SwitchFiremodeList_f(void);
+void HUD_FireWeapon_f(void);
+void HUD_SelectReactionFiremode_f(void);
+void HUD_PopupFiremodeReservation_f(void);
+void HUD_ReserveShot_f(void);
+void HUD_RemainingTus_f(void);
 
 character_t *CL_GetActorChr(const le_t *le);
 qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);

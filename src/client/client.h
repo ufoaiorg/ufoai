@@ -118,8 +118,8 @@ typedef struct client_state_s {
 	cmodes_t oldcmode;
 	int oldstate;
 
-	int msgTime;	/**< @sa MN_DisplayNotice @sa SCR_DisplayHudMessage */
-	char msgText[256];	/**< @sa MN_DisplayNotice @sa SCR_DisplayHudMessage */
+	int msgTime;	/**< @sa MN_DisplayNotice @sa HUD_DisplayMessage */
+	char msgText[256];	/**< @sa MN_DisplayNotice @sa HUD_DisplayMessage */
 
 	struct le_s *teamList[MAX_TEAMLIST];
 	int numTeamList;

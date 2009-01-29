@@ -1046,15 +1046,15 @@ static void CL_ActorAppear (struct dbuffer *msg)
 					if (le->teamDef) {
 						if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
 							Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Alien spotted: %s!"), _(le->teamDef->name));
-							SCR_DisplayHudMessage(tmpbuf, 2000);
+							HUD_DisplayMessage(tmpbuf, 2000);
 						} else
-							SCR_DisplayHudMessage(_("Alien spotted!\n"), 2000);
+							HUD_DisplayMessage(_("Alien spotted!\n"), 2000);
 					} else
-						SCR_DisplayHudMessage(_("Alien spotted!\n"), 2000);
+						HUD_DisplayMessage(_("Alien spotted!\n"), 2000);
 				} else
-					SCR_DisplayHudMessage(_("Enemy spotted!\n"), 2000);
+					HUD_DisplayMessage(_("Enemy spotted!\n"), 2000);
 			} else
-				SCR_DisplayHudMessage(_("Civilian spotted!\n"), 2000);
+				HUD_DisplayMessage(_("Civilian spotted!\n"), 2000);
 
 			/* update pathing as new actor could block path */
 			if (newActor)
@@ -1764,7 +1764,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 			/* all game lib messages or server messages should be printed
 			 * untranslated with bprintf or cprintf */
 			/* see src/po/OTHER_STRINGS */
-			SCR_DisplayHudMessage(_(s), 2000);
+			HUD_DisplayMessage(_(s), 2000);
 		default:
 			break;
 		}

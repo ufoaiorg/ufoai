@@ -520,7 +520,7 @@ void SCR_Init (void)
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
  */
-void SCR_DisplayHudMessage (const char *text, int time)
+void HUD_DisplayMessage (const char *text, int time)
 {
 	cl.msgTime = cl.time + time;
 	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));

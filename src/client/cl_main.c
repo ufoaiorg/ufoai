@@ -1452,7 +1452,7 @@ void CL_SlowFrame (int now, void *data)
 {
 	CL_CvarCheck();
 
-	CL_ActorUpdateCvars();
+	HUD_ActorUpdateCvars();
 }
 
 /**

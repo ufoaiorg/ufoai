@@ -36,7 +36,7 @@ void SCR_EndLoadingPlaque(void);
 const char* SCR_SetLoadingBackground(const char *mapString);
 void SCR_RunConsole(void);
 void SCR_DrawPrecacheScreen(qboolean string);
-void SCR_DisplayHudMessage(const char * text, int time);
+void HUD_DisplayMessage(const char * text, int time);
 
 typedef struct {
 	int x, y;
