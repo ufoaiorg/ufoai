@@ -359,6 +359,11 @@ menu team extends iaircraft
 		fullsize 50
 	}
 
+	todo need_scroll_soldiers {
+		pos "60 460"
+		string "The scroll bar must be implemented. Here we only see the first 8 soldiers of the base"
+	}
+
 	// ==================
 	// actor info
 	// ==================
@@ -389,6 +394,11 @@ menu team extends iaircraft
 		scale	"1.0 1.0 1.0"
 	}
 
+	todo unassignable_soldier {
+		pos "378 435"
+		string "It need to hide content and display a message when we can't assign soldiers (because the aircraft can't use soldiers)"
+	}
+
 	button bt_equipsoldiers
 	{
 		tooltip	"_Equip"
@@ -399,6 +409,10 @@ menu team extends iaircraft
 		click	{ cmd "mn_push equipment" }
 		color "1 1 1 0.8"
 		selectcolor "1 1 1 1"
+	}
+	todo equip_soldiers_subtab {
+		pos "380 621"
+		string "It should be nice to create a mockup and prototype to equip soldiers with another aircraft tab. It should be a very nice short cut"
 	}
 
 	string	name { pos "380 700" string "*cvar mn_name" }
@@ -473,6 +487,11 @@ menu team extends iaircraft
 
 	string	kills_lbl { pos "600 723" string "_Enemies Killed:" }
 	string	kills_val { pos "956 723" string "*cvar mn_chrkillalien" align ur }
+
+	todo better_stats_layout {
+		pos "650 460"
+		string "It should be nice to find a better layout for this part of the GUI. Example: a button to switch between bar/value"
+	}
 
 	//mn_chrkillcivilian
 	//mn_chrkillteam

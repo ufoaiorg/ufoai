@@ -136,6 +136,11 @@ menu aircraft_equip extends iaircraft
 		whdown		{ cmd "mn_prev_equiptype;" }
 	}
 
+	todo better_stats_layout {
+		pos "238 480"
+		string "It need to move the pilot assignment into an own tab"
+	}
+
 	string craftitemtype
 	{
 		string		"*cvar mn_equip_itemtype_name"

@@ -127,6 +127,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_tbar.c \
 	client/menu/node/m_node_text.c \
 	client/menu/node/m_node_textentry.c \
+	client/menu/node/m_node_todo.c \
 	client/menu/node/m_node_vscrollbar.c \
 	client/menu/node/m_node_window.c \
 	client/menu/node/m_node_windowpanel.c \

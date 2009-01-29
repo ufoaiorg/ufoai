@@ -131,12 +131,24 @@ menu iaircraft
 		}
 	}
 
-	string aircraft_list_foo
+	string aircraft_selected
 	{
 		string		"*cvar mn_aircraftname"
 		pos			"46 114"
 		size		"317 21"
 		textalign	cc
+	}
+
+	todo aircraft_name_edition
+	{
+		pos			"346 114"
+		string		"It should be nice to allow to edit the aircraft name here"
+	}
+
+	todo aircraft_name_separator
+	{
+		pos			"146 134"
+		string		"Add a green line between selected name and list name"
 	}
 
 	// ===============
