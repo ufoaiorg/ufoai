@@ -60,7 +60,7 @@ menu iaircraft
 		click	{ cmd "mn_pop;" }
 	}
 
-	tab aicraft_navigation {
+	tab aircraft_navigation {
 		pos		"47 396"
 		size	"938 39"
 		cvar	"*cvar mn_aircrafttab"

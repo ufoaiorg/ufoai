@@ -96,38 +96,32 @@ menu aircraft extends iaircraft
 
 	confunc aircraft_checkbuttons
 	{
-		/**
-		 * @todo (about button_equip) it should be more easy if the equip GUI manage itself that (hide some nodes, display a comment, manage when we change aircraft)
-		 */
 		if "mn_aircraftinbase > 0" {
-			*button_equip		disabled	false
+			*aircraft_navigation	disabled	false
 
 			*aircraft_return	tooltip		"_Start Aircraft"
 			*aircraft_return	click		{ cmd "aircraft_start;" }
 			*aircraft_return	texl		"0 32"
 		}
 		if "mn_aircraftinbase <= 0" {
-			*button_equip		disabled	true
+			*aircraft_navigation	disabled	true
 
 			*aircraft_return	tooltip		"_Call back"
 			*aircraft_return	click		{ cmd "aircraft_return;" }
 			*aircraft_return	texl		"0 0"
 		}
 
-		/**
-		 * @todo (about button_squad) it should be more easy if the assign solider GUI manage itself that (hide some nodes, display a comment, manage when we change aircraft)
-		 */
-		if "mn_equipsoldierstate == 3" {
-			*button_squad		tooltip		"_Assign your squad"
-			*button_squad		disabled	false
-		}
-		if "mn_equipsoldierstate == 2" {
-			*button_squad		tooltip		"_Hire your team first"
-			*button_squad		disabled	true
-		}
+		// absent from base
 		if "mn_equipsoldierstate == 1" {
-			*button_squad		tooltip		"_Aircraft absent from base"
-			*button_squad		disabled	true
+			*aircraft_navigation	disabled	true
+		}
+		// no soldiers
+		if "mn_equipsoldierstate == 2" {
+			*aircraft_navigation	disabled	false
+		}
+		// normal
+		if "mn_equipsoldierstate == 3" {
+			*aircraft_navigation	disabled	false
 		}
 	}
 

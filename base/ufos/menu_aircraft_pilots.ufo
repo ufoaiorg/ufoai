@@ -54,6 +54,10 @@ menu aircraft_pilots extends iaircraft
 	confunc aircraft_change
 	{
 		*aircraft_list lineselected <1>
+		// absent from base, go back to the main GUI
+		if "mn_equipsoldierstate == 1" {
+			cmd "mn_pop;mn_push aircraft;"
+		}
 	}
 
 	func init
