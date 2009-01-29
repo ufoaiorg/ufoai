@@ -118,64 +118,58 @@ menu main
 menu checkcvars
 {
 	{
-		pos "124 192"
-		size	"777 402"
+		pos			"124 192"
+		size		"777 402"
 		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos		"0 0"
-		size	"777 402"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"777 402"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Initial settings"
-		pos	"388 18"
-		font	f_big
-		align	uc
+		string		"_Initial settings"
+		pos			"12 12"
+		size		"755 37"
+		font		f_big
+		textalign	cc
 	}
 
 	string name_label
 	{
-		string	"_Variable:"
-		pos	"26 48"
-		font	"f_normal"
+		string		"_Variable:"
+		pos			"26 48"
+		size		"300 30"
+		font		"f_normal"
 	}
 
 	string status_label
 	{
-		string	"_Value:"
-		pos	"376 48"
-		font	"f_normal"
+		string		"_Value:"
+		pos			"376 48"
+		size		"300 30"
+		font		"f_normal"
 	}
 
-	pic bt_ok
+	button bt_ok
 	{
-		tooltip	"_Save settings"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"566 338"
-		size	"176 32"
-		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
-		in	{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;saveconfig config.cfg;" }
-	}
-	string string_ok
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_OK"
-		pos	"654 354"
-		align	cc
+		string		"_OK"
+		tooltip		"_Save settings"
+		pos			"566 338"
+		size		"176 32"
+		image		menu/button_green_small
+		font		f_menu
+		color		"0 0.5 0 1"
+		click		{ cmd "mn_pop; saveconfig config.cfg;" }
 	}
 
 	// ===================
@@ -183,22 +177,23 @@ menu checkcvars
 	// ===================
 	string current_name
 	{
-		string  "_Name:"
-		pos	"41 88"
-		color "1 1 1 1"
+		string		"_Name:"
+		pos			"41 88"
+		size		"300 20"
+		color		"1 1 1 1"
 	}
 	textentry slot_name
 	{
-		image	menu/button_green_verysmall
-		blend	true
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
-		textalign cl
-		padding 8
-		font "f_verysmall"
-		pos     "376 82"
-		size	"256 34"
-		string "*cvar cl_name"
+		string		"*cvar cl_name"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"376 82"
+		size		"256 34"
 	}
 
 	// ===================
@@ -206,57 +201,60 @@ menu checkcvars
 	// ===================
 	string volume_str
 	{
-		string	"_Volume Control"
-		pos		"26 168"
-		font	"f_normal"
+		string		"_Volume Control"
+		pos			"26 168"
+		size		"300 30"
+		font		"f_normal"
 	}
 	string effects_str
 	{
-		string	"_Effects:"
-		pos		"41 198"
+		string		"_Effects:"
+		pos			"41 198"
+		size		"150 20"
 	}
 	pic effects_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"187 203"
+		image		menu/bar_rahmen
+		pos			"187 203"
 	}
 	bar effects_bar
 	{
-		pos		"196 208"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar snd_volume"
-		max		128
-		mousefx	true
-		click	{ }
+		current		"*cvar snd_volume"
+		pos			"196 208"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			128
+		mousefx		true
+		click
 	}
 	string music_str
 	{
-		string	"_Music:"
-		pos		"41 223"
+		string		"_Music:"
+		pos			"41 223"
+		size		"150 20"
 	}
 	pic music_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"187 228"
+		image		menu/bar_rahmen
+		pos			"187 228"
 	}
 	bar music_bar
 	{
-		pos		"196 233"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar snd_music_volume"
-		max		128
-		mousefx true
-		click	{ }
+		current		"*cvar snd_music_volume"
+		pos			"196 233"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			128
+		mousefx		true
+		click
 	}
 
 	string message
 	{
-		string	"_You have to set the playername and hit the 'OK' button:"
-		pos		"41 338"
-		size	"500 40"
-		color	"1 1 1 0.5"
+		string		"_You have to set the playername and hit the 'OK' button:"
+		pos			"41 338"
+		size		"500 40"
+		color		"1 1 1 0.5"
 	}
 
 	// ===================
@@ -265,22 +263,24 @@ menu checkcvars
 	// ===================
 	string language_str
 	{
-		string	"_Language"
-		pos		"26 258"
-		font	"f_normal"
+		string		"_Language"
+		pos			"26 258"
+		size		"300 30"
+		font		"f_normal"
 	}
 	string language_str2
 	{
-		string	"_Language:"
-		pos		"41 288"
+		string		"_Language:"
+		pos			"41 288"
+		size		"150 20"
 	}
 	selectbox select_language
 	{
-		pos		"196 288"
-		cvar	"*cvar s_language"
-		image	"menu/selectbox_green"
-		size	"130 20"
-		color	"0.6 0.6 0.6 0.3"
+		pos			"196 288"
+		cvar		"*cvar s_language"
+		image		"menu/selectbox_green"
+		size		"130 20"
+		color		"0.6 0.6 0.6 0.3"
 		// will be filled in CL_LanguageInit
 	}
 
@@ -303,19 +303,19 @@ menu sequence
 
 	zone render
 	{
-		pos		"0 0"
-		size	"1024 768"
+		pos			"0 0"
+		size		"1024 768"
 	}
 
 	zone click
 	{
-		size	"1024 768"
-		click	{ cmd "seq_click;" }
+		size		"1024 768"
+		click		{ cmd "seq_click;" }
 	}
 
 	func close
 	{
-		cmd		"seq_end;"
+		cmd			"seq_end;"
 	}
 }
 
@@ -325,65 +325,67 @@ menu sequence
 menu popup_tipoftheday
 {
 	{
-		pos "38 456"
-		size "496 247"
-		dragbutton true
+		pos			"38 456"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Tip of the day"
-		pos	"248 18"
-		font	f_big
-		align uc
+		string		"_Tip of the day"
+		pos			"12 12"
+		size		"474 35"
+		font		f_big
+		textalign	 cc
 	}
 
 	checkbox activate
 	{
-		current	"*cvar cl_showTipOfTheDay"
-		pos	"36 194"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-		change	{ cmd "check_nexttip;" }
+		current		"*cvar cl_showTipOfTheDay"
+		pos			"36 194"
+		image		"menu/checkbox_blue"
+		size		"20 18"
+		change		{ cmd "check_nexttip;" }
 	}
 	string activate_string
 	{
-		string	"_Show tip of the day"
-		pos	"58 194"
-		font	f_small
+		string		"_Show tip of the day"
+		pos			"58 194"
+		size		"200 25"
+		font		f_small
 	}
 
 	text popup_tipoftheday_text
 	{
-		pos	"26 58"
-		size	"444 120"
+		pos			"26 58"
+		size		"444 120"
 		lineheight	20
 		tabwidth	150
-		textid	TEXT_TIPOFTHEDAY
-		click	{ }
+		textid		TEXT_TIPOFTHEDAY
+		rows		6
+		click
 		wheel
-		rows	6
 	}
 
 	button bt_next
 	{
-		string	"_Next"
-		tooltip	"_Next tip"
-		image	menu/button_green_small
-		blend	true
-		width	"176"
-		pos	"266 188"
-		click	{ cmd "tipoftheday;" }
-		font	f_menu
-		color	"0 0.5 0 1"
+		string		"_Next"
+		tooltip		"_Next tip"
+		image		menu/button_green_small
+		blend		true
+		width		"176"
+		pos			"266 188"
+		font		f_menu
+		color		"0 0.5 0 1"
+		click		{ cmd "tipoftheday;" }
 	}
 
 	confunc check_nexttip
