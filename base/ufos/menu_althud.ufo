@@ -407,11 +407,10 @@ menu althud extends ahud
 		model		"*cvar mn_body"
 		skin		"*cvar mn_skin"
 		anim		"*cvar mn_anim"
-		origin		"948 180 0"
 		angles		"0 80 90"
 		pos			"884 80"
 		size		"120 260"
-		autoscale	true
+		scale		"4 4 4"
 	}
 
 	model right_head
@@ -419,27 +418,23 @@ menu althud extends ahud
 		model	"*cvar mn_head"
 		skin	"*cvar mn_skin"
 		tag		"right_actor tag_head"
-		scale	"1.0 1.0 1.0"
 	}
 
 	model right_rweapon
 	{
 		model	"*cvar mn_rweapon"
 		tag		"right_actor tag_rweapon"
-		scale	"1.0 1.0 1.0"
 	}
 
 	model right_lweapon
 	{
 		model	"*cvar mn_lweapon"
 		tag		"right_actor tag_lweapon"
-		scale	"1.0 1.0 1.0"
 	}
 
 	model head0
 	{
 		model	"*cvar mn_head0"
-		origin	"880 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"854 672"
@@ -448,7 +443,6 @@ menu althud extends ahud
 	model head1
 	{
 		model	"*cvar mn_head1"
-		origin	"800 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"774 672"
@@ -457,7 +451,6 @@ menu althud extends ahud
 	model head2
 	{
 		model	"*cvar mn_head2"
-		origin	"720 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"694 672"
@@ -466,7 +459,6 @@ menu althud extends ahud
 	model head3
 	{
 		model	"*cvar mn_head3"
-		origin	"640 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"614 672"
@@ -475,7 +467,6 @@ menu althud extends ahud
 	model head4
 	{
 		model	"*cvar mn_head4"
-		origin	"560 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"534 672"
@@ -484,7 +475,6 @@ menu althud extends ahud
 	model head5
 	{
 		model	"*cvar mn_head5"
-		origin	"480 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"454 672"
@@ -493,7 +483,6 @@ menu althud extends ahud
 	model head6
 	{
 		model	"*cvar mn_head6"
-		origin	"400 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"374 672"
@@ -502,7 +491,6 @@ menu althud extends ahud
 	model head7
 	{
 		model	"*cvar mn_head7"
-		origin	"320 710 0"
 		angles	"15 60 100"
 		autoscale	true
 		pos		"294 672"
