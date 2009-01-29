@@ -31,8 +31,6 @@ menu aircraft extends iaircraft
 		pos			"478 107"
 		size		"529 260"
 		origin		"-45 25 0"
-		whup		{ cmd "mn_next_aircraft;" }
-		whdown		{ cmd "mn_prev_aircraft;" }
 		view		"aircraft"
 	}
 

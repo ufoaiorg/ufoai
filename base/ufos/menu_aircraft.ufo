@@ -139,32 +139,6 @@ menu iaircraft
 		textalign	cc
 	}
 
-	custombutton prev_aircraft
-	{
-		image		menu/button_pack1
-		tooltip		"_Switch to the previous aircraft"
-		pos			"381 117"
-		texl		"0 16"
-		size		"16 16"
-		blend		true
-		click		{ cmd "mn_prev_aircraft;" }
-		whup		{ cmd "mn_next_aircraft;" }
-		whdown		{ cmd "mn_prev_aircraft;" }
-	}
-
-	custombutton next_aircraft
-	{
-		image		menu/button_pack1
-		tooltip		"_Switch to the next aircraft"
-		pos			"409 117"
-		texl		"16 16"
-		size		"16 16"
-		blend		true
-		click		{ cmd "mn_next_aircraft;" }
-		whup		{ cmd "mn_next_aircraft;" }
-		whdown		{ cmd "mn_prev_aircraft;" }
-	}
-
 	// ===============
 	// Buttons
 	// ===============

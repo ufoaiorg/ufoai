@@ -50,15 +50,6 @@ menu aircraft_equip extends iaircraft
 		size	"522 259"
 		angles	"90 0 0"
 		view	"aircraft_equip"
-
-		whup	{
-			cmd "mn_next_aircraft;"
-			call airequip_zone1
-		}
-		whdown	{
-			cmd "mn_prev_aircraft;"
-			call airequip_zone1
-		}
 	}
 
 	string airequip_available
