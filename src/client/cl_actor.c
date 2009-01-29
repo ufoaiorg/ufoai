@@ -2871,8 +2871,7 @@ void CL_ActorReload (int hand)
 
 	if (inv->c[hand]) {
 		weapon = inv->c[hand]->item.t;
-	} else if (hand == csi.idLeft
-		&& inv->c[csi.idRight]->item.t->holdTwoHanded) {
+	} else if (hand == csi.idLeft && inv->c[csi.idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = csi.idRight;
 		weapon = inv->c[hand]->item.t;
@@ -3014,7 +3013,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	int hand = -1;		/**< 0=right, 1=left -1=undef*/
 
 	NET_ReadFormat(msg, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
-	if ((entnum < 0) || (hand < 0)) {
+	if (entnum < 0 || hand < 0) {
 		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly. (number: %i)\n", entnum);
 	}
 
@@ -3027,7 +3026,8 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	actorIdx = CL_GetActorNumber(le);
 	if (actorIdx == -1) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
-		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
+		Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n",
+			le->team, le->teamDef ? le->teamDef->name : "No team", le->type, le->inuse);
 		return;
 	}
 
@@ -3035,7 +3035,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 	if (!CL_WorkingFiremode(le, qtrue)) {
 		/* Firemode for reaction not sane and/or not usable. */
 		/* Update the changed hand with default firemode. */
-		if (hand == 0) {
+		if (hand == ACTOR_HAND_RIGHT) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_InvCheckHands: DEBUG right\n");
 			CL_UpdateReactionFiremodes(le, ACTOR_HAND_CHAR_RIGHT, -1);
 		} else {
@@ -3096,9 +3096,9 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->newPos[0] = NET_ReadByte(msg);
 	le->newPos[1] = NET_ReadByte(msg);
 	le->newPos[2] = NET_ReadByte(msg);
-	Com_DPrintf(DEBUG_CLIENT, "EV_ACTOR_MOVE: %i steps, s:(%i %i %i) d:(%i %i %i)\n", le->pathLength
-		, le->pos[0], le->pos[1], le->pos[2]
-		, le->newPos[0], le->newPos[1], le->newPos[2]);
+	Com_DPrintf(DEBUG_CLIENT, "EV_ACTOR_MOVE: %i steps, s:(%i %i %i) d:(%i %i %i)\n", le->pathLength,
+		le->pos[0], le->pos[1], le->pos[2],
+		le->newPos[0], le->newPos[1], le->newPos[2]);
 
 	for (i = 0; i < le->pathLength; i++) {
 		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
@@ -3215,7 +3215,7 @@ void CL_ActorStandCrouch_f (void)
 void CL_ActorUseHeadgear_f (void)
 {
 	invList_t* headgear;
-	int tmp_mouseSpace= mouseSpace;
+	const int tmp_mouseSpace = mouseSpace;
 
 	/* this can be executed by a click on a hud button
 	 * but we need MS_WORLD mouse space to let the shooting
@@ -3333,7 +3333,8 @@ void CL_ActorToggleReaction_f (void)
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 		selChr->reservedTus.reserveReaction = state;
-		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.wpIdx, selChr->RFmode.fmIdx); /**< Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
+		/* Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
+		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.wpIdx, selChr->RFmode.fmIdx);
 	} else {
 		/* No usable RF weapon. */
 		switch (selActorReactionState) {
