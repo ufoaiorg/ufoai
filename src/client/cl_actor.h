@@ -77,7 +77,7 @@ void CL_ActorUpdateCvars(void);
 const char *CL_GetSkillString(const int skill);
 qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
-void CL_ResetWeaponButtons(void);
+void HUD_ResetWeaponButtons(void);
 void CL_SetReactionFiremode(le_t *actor, const int handidx, const int obj_idx, const int fd_idx);
 void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
 void CL_DisplayFiremodes_f(void);

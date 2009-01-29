@@ -350,7 +350,7 @@ static void CL_ActorGlobalCvars (void)
  * @sa CL_ActorUpdateCVars
  * @sa CL_ActorSelect
  */
-static int CL_GetReactionState (const le_t * le)
+static int HUD_GetReactionState (const le_t * le)
 {
 	if (le->state & STATE_REACTION_MANY)
 		return R_FIRE_MANY;
@@ -398,7 +398,7 @@ static int CL_CalcReloadTime (const objDef_t *weapon)
 	return tu;
 }
 
-void CL_ResetWeaponButtons (void)
+void HUD_ResetWeaponButtons (void)
 {
 	memset(weaponButtonState, BT_STATE_DISABLE, sizeof(weaponButtonState));
 }
@@ -406,7 +406,7 @@ void CL_ResetWeaponButtons (void)
 /**
  * @brief Sets the display for a single weapon/reload HUD button.
  */
-static void SetWeaponButton (int button, weaponButtonState_t state)
+static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 {
 	const weaponButtonState_t currentState = weaponButtonState[button];
 	const char const* prefix;
@@ -1162,7 +1162,7 @@ static void CL_DisplayPossibleReaction (const le_t * actor)
 
 	/* Display 'usable" (blue) reaction buttons
 	 * Code also used in CL_ActorToggleReaction_f */
-	switch (CL_GetReactionState(actor)) {
+	switch (HUD_GetReactionState(actor)) {
 	case R_FIRE_ONCE:
 		MN_ExecuteConfunc("startreactiononce");
 		break;
@@ -1190,7 +1190,7 @@ static qboolean CL_DisplayImpossibleReaction (const le_t * actor)
 	}
 
 	/* Display 'impossible" (red) reaction buttons */
-	switch (CL_GetReactionState(actor)) {
+	switch (HUD_GetReactionState(actor)) {
 	case R_FIRE_ONCE:
 		weaponButtonState[BT_REACTION] = BT_STATE_UNUSABLE;	/* Set but not used anywhere (yet) */
 		MN_ExecuteConfunc("startreactiononce_impos");
@@ -1624,19 +1624,19 @@ static void CL_RefreshWeaponButtons (int time)
 		weaponButtonState[BT_STAND] = BT_STATE_DISABLE;
 		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
-			SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
+			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		} else {
 			Cvar_Set("mn_crouchstand_tt", va(_("Stand up (%i TU)"), TU_CROUCH));
-			SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
+			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DESELECT);
 		}
 	} else {
 		weaponButtonState[BT_CROUCH] = BT_STATE_DISABLE;
 		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
-			SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
+			HUD_SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		} else {
 			Cvar_Set("mn_crouchstand_tt", va(_("Crouch (%i TU)"), TU_CROUCH));
-			SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
+			HUD_SetWeaponButton(BT_STAND, BT_STATE_DESELECT);
 		}
 	}
 
@@ -1702,21 +1702,21 @@ static void CL_RefreshWeaponButtons (int time)
 				}
 		}
 		if (time < minheadgeartime) {
-			SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
+			HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
 		} else {
-			SetWeaponButton(BT_HEADGEAR, BT_STATE_DESELECT);
+			HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DESELECT);
 		}
 	} else {
-		SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
+		HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
 	}
 
 	/* reaction-fire button */
-	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
+	if (HUD_GetReactionState(selActor) == R_FIRE_OFF) {
 		if ((time >= CL_ReservedTUs(selActor, RES_REACTION))
 		 && (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)))
-			SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
+			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
-			SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
+			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 
 	} else {
 		if ((CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT))) {
@@ -1730,20 +1730,20 @@ static void CL_RefreshWeaponButtons (int time)
 	if (weaponr)
 		reloadtime = CL_CalcReloadTime(weaponr->item.t);
 	if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime) {
-		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
+		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 		Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand."));
 	} else {
-		SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
+		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), reloadtime));
 	}
 
 	if (weaponl)
 		reloadtime = CL_CalcReloadTime(weaponl->item.t);
 	if (!weaponl || !weaponl->item.m || !weaponl->item.t->reload || time < reloadtime) {
-		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
+		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 		Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand."));
 	} else {
-		SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
+		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
 		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), reloadtime));
 	}
 
@@ -1785,11 +1785,11 @@ static void CL_RefreshWeaponButtons (int time)
 				}
 		}
 		if (time < minweaponrtime)
-			SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
+			HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 		else
-			SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DESELECT);
+			HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DESELECT);
 	} else {
-		SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
+		HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 	}
 
 	if (weaponl) {
@@ -1828,11 +1828,11 @@ static void CL_RefreshWeaponButtons (int time)
 				}
 		}
 		if (time < minweaponltime)
-			SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
+			HUD_SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 		else
-			SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DESELECT);
+			HUD_SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DESELECT);
 	} else {
-		SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
+		HUD_SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 	}
 
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
@@ -1955,7 +1955,7 @@ void CL_ActorUpdateCvars (void)
 	if (refresh) {
 		Cvar_Set("hud_refresh", "0");
 		Cvar_Set("cl_worldlevel", cl_worldlevel->string);
-		CL_ResetWeaponButtons();
+		HUD_ResetWeaponButtons();
 	}
 
 	/* set Cvars for all actors */
@@ -2200,7 +2200,7 @@ void CL_ActorUpdateCvars (void)
 
 		/* change stand-crouch & reaction button state */
 		if (cl.oldstate != selActor->state || refresh) {
-			selActorReactionState = CL_GetReactionState(selActor);
+			selActorReactionState = HUD_GetReactionState(selActor);
 			if (selActorOldReactionState != selActorReactionState) {
 				selActorOldReactionState = selActorReactionState;
 				switch (selActorReactionState) {
@@ -2380,7 +2380,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	selActor = le;
 	menuInventory = &selActor->i;
-	selActorReactionState = CL_GetReactionState(selActor);
+	selActorReactionState = HUD_GetReactionState(selActor);
 
 	actorIdx = CL_GetActorNumber(le);
 	if (actorIdx < 0)
