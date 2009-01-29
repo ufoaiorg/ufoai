@@ -246,7 +246,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
-	Cvar_Set("mn_aircraftname", va("%s", _(aircraft->name));	/**< @todo Comment on the "+1" part here. */
+	Cvar_Set("mn_aircraftname", _(aircraft->name));	/**< @todo Comment on the "+1" part here. */
 	if (!aircraft->tech)
 		Sys_Error("No technology assigned to aircraft '%s'", aircraft->id);
 	Cvar_Set("mn_aircraft_model", aircraft->tech->mdl);
