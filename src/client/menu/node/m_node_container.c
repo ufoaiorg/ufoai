@@ -1018,13 +1018,13 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 				/* check ammo (ammopos in on the left-lower corner) */
 				if (mouseX < ammopos[0] || mouseY >= ammopos[1])
 					break;
-				if (mouseX >= ammopos[0] && mouseX < ammopos[0] + obj->sx * C_UNIT
-				 && mouseY >= ammopos[1] - obj->sy * C_UNIT && mouseY < ammopos[1]) {
+				if (mouseX >= ammopos[0] && mouseX < ammopos[0] + objammo->sx * C_UNIT
+				 && mouseY >= ammopos[1] - objammo->sy * C_UNIT && mouseY < ammopos[1]) {
 					*contX = icItem->x;
 					*contY = icItem->y;
 					return icItem;
 				}
-				ammopos[0] += obj->sx * C_UNIT;
+				ammopos[0] += objammo->sx * C_UNIT;
 			}
 		}
 		cellHeight += 10;
