@@ -4975,7 +4975,7 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
 }
 
 /**
- * @brief
+ * @brief Useful for debugging pathfinding
  */
 void CL_DisplayFloorArrows (void)
 {
@@ -5001,11 +5001,12 @@ void CL_DisplayFloorArrows (void)
 }
 
 /**
- * @brief
+ * @brief Useful for debugging pathfinding
  */
 void CL_DisplayObstructionArrows (void)
 {
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+	/* Get size of selected actor or fall back to 1x1. */
+	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	int dir;
