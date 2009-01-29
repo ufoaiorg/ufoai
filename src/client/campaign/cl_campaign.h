@@ -117,6 +117,7 @@ typedef enum interestCategory_s {
 /** possible stage for campaign missions (i.e. possible actions for UFO) */
 typedef enum missionStage_s {
 	STAGE_NOT_ACTIVE,				/**< mission did not begin yet */
+	STAGE_CRASHED,					/**< UFO is crashed */
 	STAGE_COME_FROM_ORBIT,			/**< UFO is arriving */
 
 	STAGE_RECON_AIR,				/**< Aerial Recon */

@@ -293,6 +293,8 @@ void CP_UFOProceedMission (aircraft_t *ufocraft)
  */
 void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 {
+	const date_t minCrashDelay = {7, 0};
+	const date_t crashDelay = {14, 0};		/* How long the crash mission will stay before aliens leave / die */
 	const nation_t *nation;
 	mission_t *mission;
 
@@ -301,6 +303,8 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 		Sys_Error("CP_SpawnCrashSiteMission: No mission correspond to ufo '%s'", ufo->id);
 
 	assert(mission);
+
+	mission->stage = STAGE_CRASHED;
 
 	if (!CP_ChooseMap(mission, ufo->pos, qtrue)) {
 		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");
@@ -317,7 +321,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _("No nation"));
 	}
 
-	CP_MissionDisableTimeLimit(mission);
+	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array
 	  (may be used to know what items are collected from battlefield)*/
 	CP_UFORemoveFromGeoscape(mission, qfalse);
@@ -395,29 +399,6 @@ int MAP_GetIdxByMission (const mission_t *mis)
 /*****************************************************************************
 Set Battle
 *****************************************************************************/
-
-/**
- * @brief Check if UFO of selected mission is crashed.
- * @param[in] mission Pointer to the mission that generates the battle
- * @sa CP_CreateBattleParameters
- * @return true if the UFO is crashed, false if it's intact
- */
-static qboolean CP_UFOIsCrashed (const mission_t *mission)
-{
-	switch (mission->stage) {
-	case STAGE_RECON_GROUND:
-	case STAGE_TERROR_MISSION:
-	case STAGE_BUILD_BASE:
-	case STAGE_BASE_ATTACK:
-	case STAGE_SUBVERT_GOV:
-	case STAGE_SUPPLY:
-	case STAGE_SPREAD_XVI:
-	case STAGE_HARVEST:
-		return qfalse;
-	default:
-		return qtrue;
-	}
-}
 
 /**
  * @brief Check if an alien team category may be used for a mission category.
@@ -610,7 +591,7 @@ static void CP_CreateBattleParameters (mission_t *mission)
 	if (ccs.selectedMission->ufo) {
 		const char *shortUFOType;
 		const char *missionType;
-		if (CP_UFOIsCrashed(mission)) {
+		if (mission->stage == STAGE_CRASHED) {
 			shortUFOType = UFO_CrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
 			missionType = "cp_ufocrashed";
 			/* Set random map UFO if this is a random map */
@@ -647,7 +628,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	/* Mission shouldn't be drawn on geoscape if mapDef is not defined */
 	assert(mission->mapDef);
 
-	if (mission->ufo && CP_UFOIsCrashed(mission))
+	if (mission->stage == STAGE_CRASHED)
 		/** @todo Should be a special crashed UFO mission model */
 		return "geoscape/mission";
 

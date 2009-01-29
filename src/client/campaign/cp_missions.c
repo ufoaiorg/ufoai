@@ -219,9 +219,10 @@ static const char* CP_MissionCategoryToName (interestCategory_t category)
 		return "Alien base discovered";
 	case INTERESTCATEGORY_MAX:
 		return "Unknown mission category";
-	default:
-		Sys_Error("Invalid mission category given");
 	}
+
+	/* Can't reach this point */
+	return "";
 }
 
 /**
@@ -263,9 +264,12 @@ static const char* CP_MissionStageToName (const missionStage_t stage)
 		return "Harvesting";
 	case STAGE_OVER:
 		return "Mission over";
-	default:
-		Sys_Error("Unknown state type given: %i", stage);
+	case STAGE_CRASHED:
+		return "UFO crashed";
 	}
+
+	/* Can't reach this point */
+	return "";
 }
 #endif
 
@@ -362,19 +366,8 @@ static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_
 	switch (mission->stage) {
 	case STAGE_TERROR_MISSION:
 	case STAGE_BASE_DISCOVERED:
+	case STAGE_CRASHED:
 		return MISDET_ALWAYS_DETECTED;
-	/* Crash site mission */
-	case STAGE_COME_FROM_ORBIT:
-	case STAGE_MISSION_GOTO:
-	case STAGE_INTERCEPT:
-	case STAGE_RECON_AIR:
-	case STAGE_RETURN_TO_ORBIT:
-		if (mission->ufo && !mission->ufo->landed)
-			return MISDET_CANT_BE_DETECTED;
-		else {
-			/* UFO is crashed : always show crash site */
-			return MISDET_ALWAYS_DETECTED;
-		}
 	case STAGE_RECON_GROUND:
 	case STAGE_SUBVERT_GOV:
 	case STAGE_SPREAD_XVI:
@@ -382,6 +375,11 @@ static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_
 		if (RADAR_CheckRadarSensored(mission->pos))
 			return MISDET_MAY_BE_DETECTED;
 		break;
+	case STAGE_COME_FROM_ORBIT:
+	case STAGE_MISSION_GOTO:
+	case STAGE_INTERCEPT:
+	case STAGE_RECON_AIR:
+	case STAGE_RETURN_TO_ORBIT:
 	case STAGE_NOT_ACTIVE:
 	case STAGE_BUILD_BASE:
 	case STAGE_BASE_ATTACK:
@@ -742,6 +740,13 @@ void CP_MissionStageEnd (mission_t *mission)
 {
 	Com_DPrintf(DEBUG_CLIENT, "Ending mission category %i, stage %i (time: %i day, %i sec)\n",
 		mission->category, mission->stage, ccs.date.day, ccs.date.sec);
+
+	/* Crash mission is on the map for too long: aliens die or go away. End mission */
+	if (mission->stage == STAGE_CRASHED) {
+		CP_MissionIsOver(mission);
+		return;
+	}
+
 	switch (mission->category) {
 	case INTERESTCATEGORY_RECON:
 		CP_ReconMissionNextStage(mission);
