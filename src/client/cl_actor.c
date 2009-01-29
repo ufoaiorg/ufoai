@@ -3958,7 +3958,7 @@ void CL_ActorMouseTrace (void)
 {
 	int i, restingLevel, intersectionLevel;
 	float cur[2], frustumslope[2], projectiondistance = 2048;
-	float nDotP2minusP1, u;
+	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
 	vec3_t from, end, dir;
 	vec3_t mapNormal, P3, P2minusP1, P3minusP1;
@@ -3966,7 +3966,8 @@ void CL_ActorMouseTrace (void)
 	pos3_t testPos;
 	pos3_t actor2x2[3];
 
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+	/* Get size of selected actor or fall back to 1x1. */
+	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -4039,8 +4040,9 @@ void CL_ActorMouseTrace (void)
 
 	/* calculate intersection directly if angle is not parallel to the map plane */
 	if (nDotP2minusP1 > 0.01 || nDotP2minusP1 < -0.01) {
+		float u;
 		VectorSubtract(P3, from, P3minusP1);
-		u = DotProduct(mapNormal, P3minusP1)/nDotP2minusP1;
+		u = DotProduct(mapNormal, P3minusP1) / nDotP2minusP1;
 		VectorScale(P2minusP1, (vec_t)u, dir);
 		VectorAdd(from, dir, end);
 	} else { /* otherwise do a full trace */
@@ -4090,7 +4092,6 @@ void CL_ActorMouseTrace (void)
 	/* Set mousePos to the position that the actor will move to. */
 	testPos[2] = restingLevel;
 	VectorCopy(testPos, mousePos);
-
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
@@ -4228,7 +4229,7 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	/** Add actor special effects.
 	 * Only draw blood if the actor is dead or (if stunned) was damaged more than half its maximum HPs. */
 	/** @todo Better value for this?	*/
-	if (LE_IsStunned(le) && le->HP <= (le->maxHP / 2))
+	if (LE_IsStunned(le) && le->HP <= le->maxHP / 2)
 		ent->flags |= RF_BLOOD;
 	else if (LE_IsDead(le))
 		ent->flags |= RF_BLOOD;
@@ -4292,7 +4293,7 @@ static const float lookupdiff[30]= {
  * @param[in] z the number to calculate the erf of.
  * @return for posotive arg, returns approximate erf. for -ve arg returns 0.0f.
  */
-static float lookup_erf (float z)
+static inline float lookup_erf (float z)
 {
 	float ifloat;
 	int iint;
@@ -4375,47 +4376,39 @@ static float CL_TargetingToHit (pos3_t toPos)
 	target[1] += perpY;
 	perpY *= 2;
 	target[2] += 6 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] -= 6 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] += perpX;
 	target[1] += perpY;
 	target[2] += 4 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[2] += 4 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX * 3;
 	target[1] -= perpY * 3;
 	target[2] -= 12 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 6 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] -= 4 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 	target[0] -= perpX;
 	target[1] -= perpY;
 	target[2] += 10 * height;
-/*	CL_ParticleSpawn("inRangeTracer", 0, shooter, target, NULL); */
 	if (!TR_TestLine(shooter, target, TL_FLAG_NONE))
 		n++;
 
@@ -4475,7 +4468,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 		}
 
 	/* Determine the target's size. */
-	to_actor_size = target /**< Get size of selected actor or fall back to 1x1. */
+	to_actor_size = target
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -4502,7 +4495,6 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
 	oldLevel = cl_worldlevel->integer;
 	cl_worldlevel->integer = cl.map_maxlevel - 1;
-
 
 	tr = CL_Trace(start, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
 
@@ -4560,7 +4552,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 		}
 
 	/* Determine the target's size. */
-	to_actor_size = target /**< Get size of selected actor or fall back to 1x1. */
+	to_actor_size = target
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -4639,7 +4631,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 
 /**
  * @brief field marker box
- * @sa ModelOffset in cl_le.c
+ * @sa ModelOffset
  */
 static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEIGHT };
 #define BoxSize(i,source,target) (target[0]=i*source[0]+((i-1)*UNIT_SIZE),target[1]=i*source[1]+((i-1)*UNIT_SIZE),target[2]=source[2])
@@ -4664,11 +4656,9 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 
 	Grid_PosToVec(clMap, fieldSize, pos, ent.origin);
 
-	/**
-	 * Paint the green box if move is possible ...
+	/* Paint the green box if move is possible ...
 	 * OR paint a dark blue one if move is impossible or the
-	 * soldier does not have enough TimeUnits left.
-	 */
+	 * soldier does not have enough TimeUnits left. */
 	if (selActor && actorMoveLength < ROUTING_NOT_REACHABLE && actorMoveLength <= CL_UsableTUs(selActor))
 		VectorSet(ent.angles, 0, 1, 0); /* Green */
 	else
@@ -4887,10 +4877,11 @@ static const vec3_t boxShift = { PLAYER_WIDTH, PLAYER_WIDTH, UNIT_HEIGHT / 2 - D
 static void CL_AddPathingBox (pos3_t pos)
 {
 	entity_t ent;
-	int height; /**< The total opening size */
-	int base; /**< The floor relative to this cell */
+	int height; /* The total opening size */
+	int base; /* The floor relative to this cell */
 
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+ 	/* Get size of selected actor or fall back to 1x1. */
+	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -4906,25 +4897,19 @@ static void CL_AddPathingBox (pos3_t pos)
 
 	base = Grid_Floor(clMap, fieldSize, pos);
 
-	/**
-	 * Paint the box green if it is reachable,
+	/* Paint the box green if it is reachable,
 	 * yellow if it can be entered but is too far,
-	 * or red if it cannot be entered ever.
-	 */
+	 * or red if it cannot be entered ever. */
 	if (base < -PATHFINDING_MAX_FALL * QUANT) {
 		VectorSet(ent.angles, 0.0, 0.0, 0.0); /* Can't enter - black */
 	} else {
-		/**
-		 * Can reach - green
+		/* Can reach - green
 		 * Passable but unreachable - yellow
-		 * Not passable - red
-		 */
+		 * Not passable - red */
 		VectorSet(ent.angles, (TUneed > TUhave), (TUneed != ROUTING_NOT_REACHABLE), 0);
 	}
 
-	/**
-	 * Set the box height to the ceiling value of the cell.
-	 */
+	/* Set the box height to the ceiling value of the cell. */
 	height = 2 + min(TUneed * (UNIT_HEIGHT - 2) / ROUTING_NOT_REACHABLE, 16);
 	ent.oldorigin[2] = height;
 	ent.oldorigin[0] = TUneed;
@@ -4966,33 +4951,6 @@ void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 			S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME);
 		}
 	}
-}
-
-/**
- * @brief Shows a table of the TUs that would be used by the current actor to move
- * relative to its current location
- */
-void CL_DumpTUs_f (void)
-{
-	int x, y, crouching_state;
-	pos3_t pos, loc;
-
-	if (!selActor)
-		return;
-
-	crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
-	VectorCopy(selActor->pos, pos);
-
-	Com_Printf("TUs around (%i, %i, %i)\n", pos[0], pos[1], pos[2]);
-
-	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
-		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
-			VectorSet(loc, x, y, pos[2]);
-			Com_Printf("%3i ", Grid_MoveLength(&clPathMap, loc, crouching_state, qfalse));
-		}
-		Com_Printf("\n");
-	}
-	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse));
 }
 
 /**
@@ -5078,6 +5036,7 @@ void CL_DisplayObstructionArrows (void)
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Triggers @c Grid_MoveMark in every direction at the current truePos.
  */
@@ -5101,3 +5060,31 @@ void CL_DumpMoveMark_f (void)
 	CL_ConditionalMoveCalcForCurrentSelectedActor();
 	developer->integer = temp;
 }
+
+/**
+ * @brief Shows a table of the TUs that would be used by the current actor to move
+ * relative to its current location
+ */
+void CL_DumpTUs_f (void)
+{
+	int x, y, crouching_state;
+	pos3_t pos, loc;
+
+	if (!selActor)
+		return;
+
+	crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+	VectorCopy(selActor->pos, pos);
+
+	Com_Printf("TUs around (%i, %i, %i)\n", pos[0], pos[1], pos[2]);
+
+	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
+		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
+			VectorSet(loc, x, y, pos[2]);
+			Com_Printf("%3i ", Grid_MoveLength(&clPathMap, loc, crouching_state, qfalse));
+		}
+		Com_Printf("\n");
+	}
+	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse));
+}
+#endif

@@ -99,6 +99,8 @@ void CL_ListReactionAndReservations_f (void);
 void CL_DisplayBlockedPaths_f(void);
 void LE_List_f(void);
 void LM_List_f(void);
+void CL_DumpTUs_f(void);
+void CL_DumpMoveMark_f(void);
 #endif
 void CL_ConditionalMoveCalcForCurrentSelectedActor(void);
 qboolean CL_ActorSelect(le_t *le);
@@ -148,9 +150,6 @@ void CL_ActorInventoryOpen_f(void);
 
 void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
 void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
-
-void CL_DumpTUs_f(void);
-void CL_DumpMoveMark_f(void);
 
 void CL_DisplayFloorArrows(void);
 void CL_DisplayObstructionArrows(void);
