@@ -9,6 +9,7 @@ CLIENT_SRCS = \
 	client/cl_game_multiplayer.c \
 	client/cl_game_skirmish.c \
 	client/cl_http.c \
+	client/cl_hud.c \
 	client/cl_inventory.c \
 	client/cl_input.c \
 	client/cl_irc.c \

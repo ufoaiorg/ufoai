@@ -37,6 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_language.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
+#include "cl_hud.h"
 #include "cl_ugv.h"
 #include "campaign/cl_installation.h"
 #include "campaign/cp_hospital.h"
@@ -1116,6 +1117,7 @@ static void CL_InitLocal (void)
 	TEAM_MP_InitStartup();
 	TOTD_InitStartup();
 	AIM_InitStartup();
+	HUD_InitStartup();
 
 	/* register our variables */
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");

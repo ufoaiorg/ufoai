@@ -441,6 +441,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_http.h" />
+		<Unit filename="..\..\src\client\cl_hud.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_hud.h" />
 		<Unit filename="..\..\src\client\cl_input.c">
 			<Option compilerVar="CC" />
 		</Unit>
