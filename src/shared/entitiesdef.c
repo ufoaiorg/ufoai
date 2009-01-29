@@ -37,8 +37,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static char* lastErr = "No error found";
 
-/** counts the number of entity types defined in entities.ufo
- *  @return The number of entities. -1 if there is an error. call ED_LastErr to get the message */
+/**
+ * counts the number of entity types defined in entities.ufo
+ * @return The number of entities. -1 if there is an error. call ED_GetLastError to get the message
+ */
 static int ED_CountEntities (const char **data_p)
 {
 	int braceLevel = 0;
@@ -121,7 +123,8 @@ static void ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName, const c
 	keyDef->flags = newFlags;
 }
 
-static void ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex) {
+static void ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex)
+{
 	entityDef_t *eDef = &entityDefs[entityIndex];
 
 	/* now we know how many there are in this entity, malloc */
@@ -134,8 +137,10 @@ static void ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int e
 	memset(&eDef->keyDefs[numKeyDefs], 0, sizeof(entityKeyDef_t));/* set NULLs at the end, to enable looping through using a pointer */
 }
 
-/** Parses the defs, once the number of entity defs has been found
- *  @return 0. -1 if there is an error. call ED_LastErr to get the message */
+/**
+ * Parses the defs, once the number of entity defs has been found
+ * @return 0. -1 if there is an error. call ED_GetLastError to get the message
+ */
 static int ED_ParseEntities (const char **data_p)
 {
 	int braceLevel = 0;
@@ -206,16 +211,15 @@ static int ED_ParseEntities (const char **data_p)
 				}
 			}
 		}
-
-
-
 	}
 
 	return 0;
 }
 
-/** parses entity types defined in entities.ufo
- *  @return 0 if everything is OK. nonzero otherwise. then call ED_LastErr to get the message */
+/**
+ * parses entity types defined in entities.ufo
+ * @return 0 if everything is OK. nonzero otherwise. then call ED_GetLastError to get the message
+ */
 int ED_Parse (const char **data_p)
 {
 	const char *copy_data = *data_p;
@@ -234,8 +238,7 @@ int ED_Parse (const char **data_p)
 	return 0;
 }
 
-
-char *ED_LastErr (void)
+const char *ED_GetLastError (void)
 {
 	return lastErr;
 }
@@ -261,12 +264,14 @@ void ED_Free (void)
 }
 
 #ifdef DEBUG_ED
-/** @brief print all the parsed entity definitions */
+/**
+ * @brief print all the parsed entity definitions
+ */
 void ED_Dump (void)
 {
-	entityDef_t *ed;
+	const entityDef_t *ed;
 	for (ed = entityDefs; ed->numKeyDefs; ed++) {
-		entityKeyDef_t *kd;
+		const entityKeyDef_t *kd;
 		Com_Printf("*** >%s< >%s<\n", ed->keyDefs[0].name, ed->keyDefs[0].desc);
 		for (kd = &ed->keyDefs[1]; kd->name; kd++)
 			Com_Printf(">%s< mandatory:%i\n", kd->name, kd->flags & ED_MANDATORY);

@@ -45,7 +45,7 @@ typedef struct entityDef_s {
 } entityDef_t;
 
 int ED_Parse(const char **data_p);
-char *ED_LastErr(void);
+const char *ED_GetLastError(void);
 void ED_Free(void);
 
 int numEntityDefs;
