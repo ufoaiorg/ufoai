@@ -165,7 +165,7 @@ menu iaircraft
 		blend		true
 		color		"0 0.8 0 1"
 		font		f_small
-		click		{ cmd "set mn_itemtype 8; mn_push buy;" }
+		click		{ cmd "mn_pop; set mn_itemtype 8; mn_push buy;" }
 	}
 
 	button button_produce
@@ -178,7 +178,7 @@ menu iaircraft
 		blend		true
 		font		f_small
 		color		"0 0.8 0 1"
-		click		{ cmd "set mn_itemtype 8; mn_push production;" }
+		click		{ cmd "mn_pop; set mn_itemtype 8; mn_push production;" }
 	}
 
 	// ==================
