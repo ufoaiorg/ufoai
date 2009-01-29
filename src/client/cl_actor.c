@@ -296,7 +296,7 @@ void CL_CharacterCvars (const character_t * chr)
  * @note This is only called when we are in battlescape rendering mode
  * It's assumed that every living actor - @c le_t - has a character assigned, too
  */
-static void CL_ActorGlobalCvars (void)
+static void HUD_ActorGlobalCvars (void)
 {
 	int i;
 
@@ -1958,7 +1958,7 @@ void HUD_ActorUpdateCvars (void)
 	}
 
 	/* set Cvars for all actors */
-	CL_ActorGlobalCvars();
+	HUD_ActorGlobalCvars();
 
 	/* force them empty first */
 	Cvar_Set("mn_anim", "stand0");
