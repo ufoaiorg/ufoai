@@ -10,7 +10,7 @@ menu skirmish
 
 	zone render
 	{
-		invis	true
+		invis		true
 	}
 
 	// ==================
@@ -19,20 +19,20 @@ menu skirmish
 
 	pic background
 	{
-		image	menu/skirmish_bg
+		image		menu/skirmish_bg
 	}
 
 	button button_back
 	{
-		pos		"90 200"
-		size	"256 64"
-		click	{ cmd "mn_pop;" }
-		image	menu/button_green_big
-		blend	true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Back"
+		string		"_Back"
+		pos			"90 200"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;" }
 	}
 
 	// ====================
@@ -40,22 +40,23 @@ menu skirmish
 	// ====================
 	button button_start
 	{
-		pos		"90 80"
-		size	"256 64"
-		click	{ cmd "sk_start;" }
-		image	menu/button_green_big
-		blend	true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Start game"
+		string		"_Start game"
+		pos			"90 80"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "sk_start;" }
 	}
 
 	string settings
 	{
-		string	"_Skirmish game settings"
-		pos		"500 100"
-		font	f_big
+		string		"_Skirmish game settings"
+		pos			"500 100"
+		size		"450 30"
+		font		f_big
 	}
 
 	// ===================
@@ -63,11 +64,13 @@ menu skirmish
 	// ===================
 	string equipment
 	{
-		string	"_Equipment"
-		pos		"500 190"
+		string		"_Equipment"
+		pos			"500 190"
+		size		"450 20"
 	}
 	textentry slot_equipment
 	{
+		string		"*cvar cl_equip"
 		image		menu/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
@@ -77,32 +80,27 @@ menu skirmish
 		font		"f_verysmall"
 		pos			"500 210"
 		size		"256 34"
-		string		"*cvar cl_equip"
+		disabled	true
 		whup		{ cmd "sk_prevequip;" }
 		whdown		{ cmd "sk_nextequip;" }
-		disabled	true
 	}
-	pic prev_equipment
+	custombutton prev_equipment
 	{
-		image	menu/buttons_small
-		pos		"478 218"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		whup	{ cmd "sk_prevequip;" }
-		whdown	{ cmd "sk_nextequip;" }
-		click	{ cmd "sk_prevequip;" }
+		pos			"468 210"
+		size		"35 35"
+		icon		prev
+		whup		{ cmd "sk_prevequip;" }
+		whdown		{ cmd "sk_nextequip;" }
+		click		{ cmd "sk_prevequip;" }
 	}
-	pic next_equipment
+	custombutton next_equipment
 	{
-		image	menu/buttons_small
-		pos		"760 218"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		whup	{ cmd "sk_prevequip;" }
-		whdown	{ cmd "sk_nextequip;" }
-		click	{ cmd "sk_nextequip;" }
+		pos			"753 210"
+		size		"35 35"
+		icon		next
+		whup		{ cmd "sk_prevequip;" }
+		whdown		{ cmd "sk_nextequip;" }
+		click		{ cmd "sk_nextequip;" }
 	}
 
 	// ===================
@@ -110,15 +108,16 @@ menu skirmish
 	// ===================
 	string daynight_str
 	{
-		string	"_Day version:"
-		pos	"500 260"
+		string		"_Day version:"
+		pos			"500 260"
+		size		"300 20"
 	}
 	checkbox daynight_value
 	{
-		current	"*cvar mn_serverday"
-		pos	"825 260"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar mn_serverday"
+		pos			"825 260"
+		image		"menu/checkbox_blue"
+		size		"20 18"
 	}
 
 	// ===================
@@ -126,26 +125,28 @@ menu skirmish
 	// ===================
 	string ai_numactors_str
 	{
-		string	"_Max. AI actors:"
-		pos	"500 280"
-		tooltip	"_Max AI actors for this game"
+		string		"_Max. AI actors:"
+		pos			"500 280"
+		size		"300 20"
+		tooltip		"_Max AI actors for this game"
 	}
 	string ai_numactors_value
 	{
-		string	"*cvar ai_numaliens"
-		pos	"840 280"
-		align	ur
+		string		"*cvar ai_numaliens"
+		pos			"810 280"
+		size		"50 20"
+		textalign	cc
 	}
 	spinner ai_numactors_change
 	{
-		image	menu/spinner_blue
-		blend	true
-		pos		"868 279"
-		mousefx	true
-		min		1
-		max		30
-		delta	1
-		current	"*cvar ai_numaliens"
+		current		"*cvar ai_numaliens"
+		image		menu/spinner_blue
+		blend		true
+		pos			"868 279"
+		mousefx		true
+		min			1
+		max			30
+		delta		1
 	}
 
 	// ===================
@@ -153,11 +154,13 @@ menu skirmish
 	// ===================
 	string current_map
 	{
-		string	"_Map"
-		pos	"500 510"
+		string		"_Map"
+		pos			"500 510"
+		size		"450 20"
 	}
 	textentry slot_map
 	{
+		string		"*cvar mn_svmapname"
 		image		menu/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
@@ -167,66 +170,61 @@ menu skirmish
 		font		"f_verysmall"
 		pos			"500 530"
 		size		"256 34"
-		string		"*cvar mn_svmapname"
 		whup		{ cmd "mn_prevmap;" }
 		whdown		{ cmd "mn_nextmap;" }
 		disabled	true
 	}
 
-	pic prev_map
+	custombutton prev_map
 	{
-		image	menu/buttons_small
-		pos		"478 538"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		whup	{ cmd "mn_prevmap;" }
-		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_prevmap;" }
+		pos			"468 530"
+		size		"35 35"
+		icon		prev
+		whup		{ cmd "mn_prevmap;" }
+		whdown		{ cmd "mn_nextmap;" }
+		click		{ cmd "mn_prevmap;" }
 	}
-	pic next_map
+	custombutton next_map
 	{
-		image	menu/buttons_small
-		pos		"760 538"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		whup	{ cmd "mn_prevmap;" }
-		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_nextmap;" }
+		pos			"753 530"
+		size		"35 35"
+		icon		next
+		whup		{ cmd "mn_prevmap;" }
+		whdown		{ cmd "mn_nextmap;" }
+		click		{ cmd "mn_nextmap;" }
 	}
 	pic mappic
 	{
-		image	"*cvar mn_mappic"
-		pos	"500 330"
-		texl	"0 0"
-		texh	"128 96"
-		whup	{ cmd "mn_prevmap;" }
-		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_nextmap;" }
-		rclick	{ cmd "mn_prevmap;" }
+		image		"*cvar mn_mappic"
+		pos			"500 330"
+		texl		"0 0"
+		texh		"128 96"
+		whup		{ cmd "mn_prevmap;" }
+		whdown		{ cmd "mn_nextmap;" }
+		click		{ cmd "mn_nextmap;" }
+		rclick		{ cmd "mn_prevmap;" }
 	}
 	pic mappic2
 	{
-		image	"*cvar mn_mappic2"
-		pos	"650 330"
-		texl	"0 0"
-		texh	"128 96"
-		whup	{ cmd "mn_prevmap;" }
-		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_nextmap;" }
-		rclick	{ cmd "mn_prevmap;" }
+		image		"*cvar mn_mappic2"
+		pos			"650 330"
+		texl		"0 0"
+		texh		"128 96"
+		whup		{ cmd "mn_prevmap;" }
+		whdown		{ cmd "mn_nextmap;" }
+		click		{ cmd "mn_nextmap;" }
+		rclick		{ cmd "mn_prevmap;" }
 	}
 	pic mappic3
 	{
-		image	"*cvar mn_mappic3"
-		pos	"800 330"
-		texl	"0 0"
-		texh	"128 96"
-		whup	{ cmd "mn_prevmap;" }
-		whdown	{ cmd "mn_nextmap;" }
-		click	{ cmd "mn_nextmap;" }
-		rclick	{ cmd "mn_prevmap;" }
+		image		"*cvar mn_mappic3"
+		pos			"800 330"
+		texl		"0 0"
+		texh		"128 96"
+		whup		{ cmd "mn_prevmap;" }
+		whdown		{ cmd "mn_nextmap;" }
+		click		{ cmd "mn_nextmap;" }
+		rclick		{ cmd "mn_prevmap;" }
 	}
 
 	// ===================
