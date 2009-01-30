@@ -197,6 +197,8 @@ static void MN_ModelNodeDraw (menuNode_t *node)
 	MN_DrawModelNode(node, source);
 }
 
+static vec3_t nullVector = {0, 0, 0};
+
 /**
  * @brief Set the Model info view (angle,origin,scale) according to the node definition
  */
@@ -262,7 +264,7 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 		VectorCopy(nodeorigin, mi->origin);
 	}
 
-	VectorCopy(node->u.model.center, mi->center);
+	VectorCopy(nullVector, mi->center);
 
 	if (node->u.model.autoscale) {
 		mi->scale = NULL;
@@ -451,7 +453,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.origin = nodeorigin;
 	mi.angles = node->u.model.angles;
 	mi.scale = node->u.model.scale;
-	mi.center = node->u.model.center;
+	mi.center = nullVector;
 	mi.color = node->color;
 	mi.mesh = 0;
 
@@ -545,7 +547,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			memset(&mi, 0, sizeof(mi));
 			mi.angles = child->u.model.angles;
 			mi.scale = child->u.model.scale;
-			mi.center = child->u.model.center;
+			mi.center = nullVector;
 			mi.origin = child->u.model.origin;
 			mi.color = pmi.color;
 
@@ -665,7 +667,6 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 static const value_t properties[] = {
 	{"anim", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.animation), 0},
 	{"angles", V_VECTOR, offsetof(menuNode_t, u.model.angles), MEMBER_SIZEOF(menuNode_t, u.model.angles)},
-	{"center", V_VECTOR, offsetof(menuNode_t, u.model.center), MEMBER_SIZEOF(menuNode_t, u.model.center)},
 	{"origin", V_VECTOR, offsetof(menuNode_t, u.model.origin), MEMBER_SIZEOF(menuNode_t, u.model.origin)},
 	{"scale", V_VECTOR, offsetof(menuNode_t, u.model.scale), MEMBER_SIZEOF(menuNode_t, u.model.scale)},
 	{"tag", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.tag), 0},
