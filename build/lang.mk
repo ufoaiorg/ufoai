@@ -52,7 +52,7 @@ po-check:
 	    esac;							\
 	    files="$$files $$file";					\
 	  done;								\
-	  grep -E -l '\b(N?_|gettext *)\([^)"]*("|$$)' $$files		\
+	  grep -E -l '\b(N?_|gettext|ngettext *)\([^)"]*("|$$)' $$files		\
 	    | sort -u > ./po/POTFILES.in;						\
 	fi \
 	cd ..
