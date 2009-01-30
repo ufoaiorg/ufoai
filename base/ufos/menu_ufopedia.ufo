@@ -229,7 +229,7 @@ menu ufopedia
 		pos		"750 85"
 		size	"240 240"
 		autoscale true
-		mouvewithmouse	true
+		rotatewithmouse	true
 	}
 
 	pic image_top
@@ -246,8 +246,8 @@ menu ufopedia
 		angles	"0 0 120"
 		pos		"790 335"
 		size	"120 120"
-		mouvewithmouse	true
 		autoscale true
+		rotatewithmouse	true
 	}
 
 	pic weapon_dec
