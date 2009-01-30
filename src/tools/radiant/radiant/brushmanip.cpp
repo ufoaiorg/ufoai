@@ -1232,12 +1232,12 @@ void Brush_constructMenu (GtkMenu* menu)
 	create_menu_item_with_mnemonic(menu, _("Sphere..."), "BrushSphere");
 	menu_separator(menu);
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "CSG");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, C_("Constructive Solid Geometry", "CSG"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
 		create_menu_item_with_mnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow");
-		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract");
-		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge");
+		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract (SHIFT + U)"), "CSGSubtract");
+		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge (CTRL + U)"), "CSGMerge");
 	}
 	menu_separator(menu);
 	{
