@@ -25,9 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_font.h"
 #include "../m_parse.h"
+#include "../m_tooltip.h"
 #include "../../client.h"
 #include "m_node_string.h"
 #include "m_node_abstractnode.h"
+
 
 static void MN_StringNodeDraw (menuNode_t *node)
 {
@@ -52,6 +54,34 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	R_ColorBlend(NULL);
 }
 
+/**
+ * @brief Custom tooltip of string node
+ * @param[in] node Node we request to draw tooltip
+ * @param[in] x Position x of the mouse
+ * @param[in] y Position y of the mouse
+ */
+static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
+{
+	if (node->tooltip) {
+		MN_Tooltip(node->menu, node, x, y);
+	} else {
+		const char *font = MN_GetFont(node->menu, node);
+		const char* text = MN_GetReferenceString(node->menu, node->text);
+		qboolean isTruncated;
+		if (!text)
+			return;
+
+		R_FontTextSize(font, text, node->size[0] - node->padding - node->padding, node->longlines, NULL, NULL, NULL, &isTruncated);
+		if (isTruncated) {
+			const int tooltipWidth = 250;
+			static char tooltiptext[MAX_VAR * 4];
+			tooltiptext[0] = '\0';
+			Q_strcat(tooltiptext, text, sizeof(tooltiptext));
+			MN_DrawTooltip("f_small", tooltiptext, x, y, tooltipWidth, 0);
+		}
+	}
+}
+
 static void MN_StringNodeLoaded (menuNode_t *node)
 {
 	/* normalize node position */
@@ -72,6 +102,7 @@ static void MN_StringNodeLoaded (menuNode_t *node)
 static void MN_StringNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
+	node->longlines = LONGLINES_PRETTYCHOP;
 }
 
 static const value_t properties[] = {
@@ -84,6 +115,7 @@ void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "string";
 	behaviour->draw = MN_StringNodeDraw;
+	behaviour->drawTooltip = MN_StringNodeDrawTooltip;
 	behaviour->loading = MN_StringNodeLoading;
 	behaviour->loaded = MN_StringNodeLoaded;
 	behaviour->properties = properties;
