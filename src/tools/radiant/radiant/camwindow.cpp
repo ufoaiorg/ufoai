@@ -1278,8 +1278,6 @@ static gboolean camwindow_freemove_focusout (GtkWidget* widget, GdkEventFocus* e
 
 void CamWnd::EnableFreeMove ()
 {
-	//globalOutputStream() << "EnableFreeMove\n";
-
 	ASSERT_MESSAGE(!m_bFreeMove, "EnableFreeMove: free-move was already enabled");
 	m_bFreeMove = true;
 	Camera_clearMovementFlags(getCamera(), MOVE_ALL);
@@ -1297,8 +1295,6 @@ void CamWnd::EnableFreeMove ()
 
 void CamWnd::DisableFreeMove ()
 {
-	//globalOutputStream() << "DisableFreeMove\n";
-
 	ASSERT_MESSAGE(m_bFreeMove, "DisableFreeMove: free-move was not enabled");
 	m_bFreeMove = false;
 	Camera_clearMovementFlags(getCamera(), MOVE_ALL);
@@ -1647,7 +1643,7 @@ void Camera_ToggleFarClip ()
 
 void CamWnd_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_toggle_button(toolbar, "Cubic clip the camera view (\\)", "view_cubicclipping.bmp",
+	toolbar_append_toggle_button(toolbar, _("Cubic clip the camera view (\\)"), "view_cubicclipping.bmp",
 			"ToggleCubicClip");
 }
 

@@ -61,16 +61,16 @@ static void Select_constructToolbar (GtkToolbar* toolbar)
 
 static void CSG_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_button(toolbar, _("CSG Subtract (SHIFT + U)"), "selection_csgsubtract.bmp", "CSGSubtract");
-	toolbar_append_button(toolbar, _("CSG Merge (CTRL + U)"), "selection_csgmerge.bmp", "CSGMerge");
+	toolbar_append_button(toolbar, _("CSG Subtract"), "selection_csgsubtract.bmp", "CSGSubtract");
+	toolbar_append_button(toolbar, _("CSG Merge"), "selection_csgmerge.bmp", "CSGMerge");
 	toolbar_append_button(toolbar, _("Make Hollow"), "selection_makehollow.bmp", "CSGHollow");
 }
 
 static void ComponentModes_constructToolbar (GtkToolbar* toolbar)
 {
-	toolbar_append_toggle_button(toolbar, _("Select Vertices (V)"), "modify_vertices.bmp", "DragVertices");
-	toolbar_append_toggle_button(toolbar, _("Select Edges (E)"), "modify_edges.bmp", "DragEdges");
-	toolbar_append_toggle_button(toolbar, _("Select Faces (F)"), "modify_faces.bmp", "DragFaces");
+	toolbar_append_toggle_button(toolbar, _("Select _Vertices"), "modify_vertices.bmp", "DragVertices");
+	toolbar_append_toggle_button(toolbar, _("Select _Edges"), "modify_edges.bmp", "DragEdges");
+	toolbar_append_toggle_button(toolbar, _("Select _Faces"), "modify_faces.bmp", "DragFaces");
 }
 
 static void Clipper_constructToolbar (GtkToolbar* toolbar)

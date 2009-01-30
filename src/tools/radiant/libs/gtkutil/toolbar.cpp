@@ -1,3 +1,8 @@
+/**
+ * @file toolbar.cpp
+ * @todo Most of the used functions here are deprecated
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -36,6 +41,7 @@ void toolbar_append(GtkToolbar* toolbar, GtkButton* button, const char* descript
 	gtk_button_set_relief(button, GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(button), GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(button), GTK_CAN_DEFAULT);
+	/* gtk_toolbar_insert */
 	gtk_toolbar_append_element(toolbar, GTK_TOOLBAR_CHILD_WIDGET, GTK_WIDGET(button), "", description, "", 0, 0, 0);
 }
 
@@ -48,6 +54,7 @@ GtkButton* toolbar_append_button(GtkToolbar* toolbar, const char* description, c
 }
 
 GtkToggleButton* toolbar_append_toggle_button(GtkToolbar* toolbar, const char* description, const char* icon, const Callback& callback) {
+	/* gtk_tool_button_new */
 	GtkToggleButton* button = GTK_TOGGLE_BUTTON(gtk_toggle_button_new());
 	button_set_icon(GTK_BUTTON(button), icon);
 	toggle_button_connect_callback(button, callback);
