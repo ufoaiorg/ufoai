@@ -295,6 +295,7 @@ menu aircraft_equip extends iaircraft
 		pos			"911 123"
 		size		"60 60"
 		angles		"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
@@ -314,6 +315,7 @@ menu aircraft_equip extends iaircraft
 		pos		"911 203"
 		size	"60 60"
 		angles	"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
@@ -333,6 +335,7 @@ menu aircraft_equip extends iaircraft
 		pos		"911 283"
 		size	"60 60"
 		angles	"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
@@ -352,6 +355,7 @@ menu aircraft_equip extends iaircraft
 		pos		"711 123"
 		size	"60 60"
 		angles	"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
@@ -371,6 +375,7 @@ menu aircraft_equip extends iaircraft
 		pos		"711 283"
 		size	"60 60"
 		angles	"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
@@ -390,6 +395,7 @@ menu aircraft_equip extends iaircraft
 		pos		"511 123"
 		size	"60 60"
 		angles	"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
@@ -409,6 +415,7 @@ menu aircraft_equip extends iaircraft
 		pos		"511 203"
 		size	"60 60"
 		angles	"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
@@ -428,6 +435,7 @@ menu aircraft_equip extends iaircraft
 		pos		"511 283"
 		size	"60 60"
 		angles	"0 0 180"
+		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
 	}
 
