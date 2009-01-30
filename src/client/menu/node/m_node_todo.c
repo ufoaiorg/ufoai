@@ -33,15 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_todo.h"
 #include "m_node_abstractnode.h"
 
-static void MN_TodoNodeDraw (menuNode_t *node)
-{
-	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
-	vec2_t pos;
-
-	MN_GetNodeAbsPos(node, pos);
-	R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, red);
-}
-
 /**
  * @brief Custom tooltip of todo node
  * @param[in] node Node we request to draw tooltip
@@ -62,6 +53,17 @@ static void MN_TodoNodeDrawTooltip (menuNode_t *node, int x, int y)
 	MN_DrawTooltip("f_small", tooltiptext, x, y, tooltipWidth, 0);
 }
 
+static void MN_TodoNodeDraw (menuNode_t *node)
+{
+	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
+	vec2_t pos;
+
+	MN_GetNodeAbsPos(node, pos);
+	R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, red);
+
+	if (node->state)
+		MN_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
+}
 
 static void MN_TodoNodeLoading (menuNode_t *node)
 {
@@ -83,7 +85,6 @@ void MN_RegisterTodoNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "todo";
 	behaviour->extends = "string";
 	behaviour->draw = MN_TodoNodeDraw;
-	behaviour->drawTooltip = MN_TodoNodeDrawTooltip;
 	behaviour->loading = MN_TodoNodeLoading;
 	behaviour->loaded = MN_TodoNodeLoaded;
 }
