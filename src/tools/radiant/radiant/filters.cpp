@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "filters.h"
+#include "radiant_i18n.h"
 
 #include "ifilter.h"
 
@@ -161,28 +162,28 @@ void ResetFilters() {
 }
 
 void Filters_constructMenu(GtkMenu* menu_in_menu) {
-	create_check_menu_item_with_mnemonic(menu_in_menu, "World", "FilterWorldBrushes");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Entities", "FilterEntities");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Translucent", "FilterTranslucent");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Liquids", "FilterLiquids");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Caulk", "FilterCaulk");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Clips", "FilterClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "ActorClips", "FilterActorClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "WeaponClips", "FilterWeaponClips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Lights", "FilterLights");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "NoSurfLights", "FilterNoSurfLights");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "NoFootsteps", "FilterNoFootsteps");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Structural", "FilterStructural");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Nodraw", "FilterNodraw");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Phong", "FilterPhong");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Details", "FilterDetails");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Hints", "FilterHintsSkips");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Models", "FilterModels");
-	create_check_menu_item_with_mnemonic(menu_in_menu, "Triggers", "FilterTriggers");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "World"), "FilterWorldBrushes");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Entities"), "FilterEntities");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Translucent"), "FilterTranslucent");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Liquids"), "FilterLiquids");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Caulk"), "FilterCaulk");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Clips"), "FilterClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "ActorClips"), "FilterActorClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "WeaponClips"), "FilterWeaponClips");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Lights"), "FilterLights");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "NoSurfLights"), "FilterNoSurfLights");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "NoFootsteps"), "FilterNoFootsteps");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Structural"), "FilterStructural");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Nodraw"), "FilterNodraw");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Phong"), "FilterPhong");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Details"), "FilterDetails");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Hints"), "FilterHintsSkips");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Models"), "FilterModels");
+	create_check_menu_item_with_mnemonic(menu_in_menu, C_("Filter Menu", "Triggers"), "FilterTriggers");
 	// filter manipulation
 	menu_separator(menu_in_menu);
-	create_menu_item_with_mnemonic(menu_in_menu, "Invert filters", "InvertFilters");
-	create_menu_item_with_mnemonic(menu_in_menu, "Reset filters", "ResetFilters");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Invert filters"), "InvertFilters");
+	create_menu_item_with_mnemonic(menu_in_menu, _("Reset filters"), "ResetFilters");
 }
 
 

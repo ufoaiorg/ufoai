@@ -460,10 +460,10 @@ const char* misc_sound_dialog (GtkWidget* parent)
 
 void Entity_constructMenu (GtkMenu* menu)
 {
-	create_menu_item_with_mnemonic(menu, "_Regroup", "GroupSelection");
-	create_menu_item_with_mnemonic(menu, "_Ungroup", "UngroupSelection");
-	create_menu_item_with_mnemonic(menu, "_Connect", "ConnectSelection");
-	create_menu_item_with_mnemonic(menu, "_Select Color...", "EntityColor");
+	create_menu_item_with_mnemonic(menu, _("_Regroup"), "GroupSelection");
+	create_menu_item_with_mnemonic(menu, _("_Ungroup"), "UngroupSelection");
+	create_menu_item_with_mnemonic(menu, _("_Connect"), "ConnectSelection");
+	create_menu_item_with_mnemonic(menu, _("_Select Color..."), "EntityColor");
 }
 
 #include "preferencesystem.h"
