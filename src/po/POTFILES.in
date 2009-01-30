@@ -1,5 +1,6 @@
 ./client/campaign/cl_airfight.c
 ./client/campaign/cl_aliencont.c
+./client/campaign/cl_aliencont_callbacks.c
 ./client/campaign/cl_campaign.c
 ./client/campaign/cl_employee.c
 ./client/campaign/cl_event.c
@@ -13,6 +14,7 @@
 ./client/campaign/cl_popup.c
 ./client/campaign/cl_produce.c
 ./client/campaign/cl_research.c
+./client/campaign/cl_research_callbacks.c
 ./client/campaign/cl_save.c
 ./client/campaign/cl_transfer.c
 ./client/campaign/cl_ufo.c
@@ -23,8 +25,8 @@
 ./client/campaign/cp_base.c
 ./client/campaign/cp_base_callbacks.c
 ./client/campaign/cp_geoscape_actions.c
-./client/campaign/cp_missions.c
 ./client/campaign/cp_mission_triggers.c
+./client/campaign/cp_missions.c
 ./client/campaign/cp_nations.c
 ./client/campaign/cp_time.c
 ./client/campaign/missions/cp_mission_baseattack.c
@@ -32,7 +34,6 @@
 ./client/campaign/missions/cp_mission_recon.c
 ./client/cl_actor.c
 ./client/cl_console.c
-./client/cl_game.c
 ./client/cl_game_campaign.c
 ./client/cl_game_multiplayer.c
 ./client/cl_game_skirmish.c
@@ -48,6 +49,7 @@
 ./client/menu/m_input.c
 ./client/menu/m_main.c
 ./client/menu/m_tooltip.c
+./client/menu/node/m_node_base.c
 ./client/menu/node/m_node_container.c
 ./client/menu/node/m_node_window.c
 ./client/multiplayer/mp_callbacks.c
