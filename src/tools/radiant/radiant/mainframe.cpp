@@ -1986,6 +1986,7 @@ void MainFrame::Create (void)
 		gtk_window_maximize(window);
 	}
 	/* settle to default screen (first available) */
+	globalOutputStream() << "Found " << gdk_screen_get_n_monitors(gdk_screen_get_default()) << " monitors for default screen\n";
 	gtk_window_set_screen(window,gdk_screen_get_default());
 
 	m_window = window;
