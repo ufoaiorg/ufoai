@@ -1979,15 +1979,16 @@ void MainFrame::Create (void)
 	GtkToolbar* main_toolbar_v = create_main_toolbar_vertical(CurrentStyle());
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 
-	if (!(g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
+	if ((g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
+		/* set stored position and default height/width, otherwise problems with extended screens */
+		g_layout_globals.m_position.h=800;
+		g_layout_globals.m_position.w=600;
 		window_set_position(window, g_layout_globals.m_position);
-	} else {
 		/* maximize will be done when window is shown */
 		gtk_window_maximize(window);
+	} else {
+		window_set_position(window, g_layout_globals.m_position);
 	}
-	/* settle to default screen (first available) */
-	globalOutputStream() << "Found " << gdk_screen_get_n_monitors(gdk_screen_get_default()) << " monitors for default screen\n";
-	gtk_window_set_screen(window,gdk_screen_get_default());
 
 	m_window = window;
 
