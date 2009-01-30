@@ -231,6 +231,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 		case RSGUI_NOTHING:
 			MN_ExecuteConfunc("research_hide %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), "");
+			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_RESEARCH:
 			{
@@ -243,42 +244,81 @@ static void RS_InitGUI (base_t* base, qboolean update)
 				MN_ExecuteConfunc("research_updateitem %i %i %i", i, value, max);
 				/* How many scis are assigned to this tech. */
 				Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
-
+				if (element->tech->overalltime) {
+					float percentage;
+					if (element->tech->time > element->tech->overalltime) {
+						Com_Printf("RS_InitGUI: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", element->tech->id, element->tech->time,
+							element->tech->overalltime);
+						/* just in case the values got messed up */
+						element->tech->time = element->tech->overalltime;
+					}
+					percentage = 100 - (element->tech->time * 100 / element->tech->overalltime);
+					if (percentage > 0) {
+						Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
+					} else {
+						Cvar_Set(va("mn_rsstatus%i", i), "");
+					}
+				} else {
+					Cvar_Set(va("mn_rsstatus%i", i), "");
+				}
 				RS_UpdateResearchStatus(i);
 			}
 			break;
 		case RSGUI_BASETITLE:
 			MN_ExecuteConfunc("research_basetitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), element->base->name);
+			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_BASEINFO:
 			MN_ExecuteConfunc("research_baseinfo %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Unassigned scientists"));
 			/* How many scis are unassigned */
 			Cvar_SetValue(va("mn_researchassigned%i", i), available[element->base->idx]);
+			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_RESEARCHOUT:
 			MN_ExecuteConfunc("research_outterresearch %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
 			/* How many scis are assigned to this tech. */
 			Cvar_SetValue(va("mn_researchassigned%i", i), element->tech->scientists);
+			if (element->tech->overalltime) {
+				float percentage;
+				if (element->tech->time > element->tech->overalltime) {
+					Com_Printf("RS_InitGUI: \"%s\" - 'time' (%f) was larger than 'overall-time' (%f). Fixed. Please report this.\n", element->tech->id, element->tech->time,
+						element->tech->overalltime);
+					/* just in case the values got messed up */
+					element->tech->time = element->tech->overalltime;
+				}
+				percentage = 100 - (element->tech->time * 100 / element->tech->overalltime);
+				if (percentage > 0) {
+					Cvar_Set(va("mn_rsstatus%i", i), va("%.1f%%", percentage));
+				} else {
+					Cvar_Set(va("mn_rsstatus%i", i), "");
+				}
+			} else {
+				Cvar_Set(va("mn_rsstatus%i", i), "");
+			}
 			RS_UpdateResearchStatus(i);
 			break;
 		case RSGUI_MISSINGITEM:
 			MN_ExecuteConfunc("research_missingitem %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
+			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_MISSINGITEMTITLE:
 			MN_ExecuteConfunc("research_missingitemtitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Missing an artifact"));
+			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_UNRESEARCHABLEITEM:
 			MN_ExecuteConfunc("research_unresearchableitem %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _(element->tech->name));
+			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		case RSGUI_UNRESEARCHABLEITEMTITLE:
 			MN_ExecuteConfunc("research_unresearchableitemtitle %i", i);
 			Cvar_Set(va("mn_researchitem%i", i), _("Unresearchable collected items"));
+			Cvar_Set(va("mn_rsstatus%i", i), "");
 			break;
 		default:
 			assert(qfalse);
