@@ -20,6 +20,7 @@
  */
 
 #include "shared.h"
+#include "radiant_i18n.h"
 
 #include "brushmanip.h"
 
@@ -714,7 +715,7 @@ class FaceSelectByShader
 		}
 		void operator() (FaceInstance& face) const
 		{
-			printf("checking %s = %s\n", face.getFace().GetShader(), m_name);
+			g_debug("checking %s = %s\n", face.getFace().GetShader(), m_name);
 			if (shader_equal(face.getFace().GetShader(), m_name)) {
 				face.setSelected(SelectionSystem::eFace, true);
 			}
@@ -1226,36 +1227,36 @@ void Brush_registerCommands ()
 
 void Brush_constructMenu (GtkMenu* menu)
 {
-	create_menu_item_with_mnemonic(menu, "Cone...", "BrushCone");
-	create_menu_item_with_mnemonic(menu, "Prism...", "BrushPrism");
-	create_menu_item_with_mnemonic(menu, "Sphere...", "BrushSphere");
+	create_menu_item_with_mnemonic(menu, _("Cone..."), "BrushCone");
+	create_menu_item_with_mnemonic(menu, _("Prism..."), "BrushPrism");
+	create_menu_item_with_mnemonic(menu, _("Sphere..."), "BrushSphere");
 	menu_separator(menu);
 	{
 		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "CSG");
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
-		create_menu_item_with_mnemonic(menu_in_menu, "Make _Hollow", "CSGHollow");
-		create_menu_item_with_mnemonic(menu_in_menu, "CSG _Subtract", "CSGSubtract");
-		create_menu_item_with_mnemonic(menu_in_menu, "CSG _Merge", "CSGMerge");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Make Hollow"), "CSGHollow");
+		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Subtract"), "CSGSubtract");
+		create_menu_item_with_mnemonic(menu_in_menu, C_("Constructive Solid Geometry", "CSG Merge"), "CSGMerge");
 	}
 	menu_separator(menu);
 	{
-		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, "Clipper");
+		GtkMenu* menu_in_menu = create_sub_menu_with_mnemonic(menu, _("Clipper"));
 		if (g_Layout_enableDetachableMenus.m_value)
 			menu_tearoff(menu_in_menu);
 
-		create_menu_item_with_mnemonic(menu_in_menu, "Clip selection", "ClipSelected");
-		create_menu_item_with_mnemonic(menu_in_menu, "Split selection", "SplitSelected");
-		create_menu_item_with_mnemonic(menu_in_menu, "Flip Clip orientation", "FlipClip");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Clip selection"), "ClipSelected");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Split selection"), "SplitSelected");
+		create_menu_item_with_mnemonic(menu_in_menu, _("Flip Clip orientation"), "FlipClip");
 	}
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "Make detail", "MakeDetail");
-	create_menu_item_with_mnemonic(menu, "Make structural", "MakeStructural");
+	create_menu_item_with_mnemonic(menu, _("Make detail"), "MakeDetail");
+	create_menu_item_with_mnemonic(menu, _("Make structural"), "MakeStructural");
 
-	create_check_menu_item_with_mnemonic(menu, "Texture Lock", "TogTexLock");
+	create_check_menu_item_with_mnemonic(menu, _("Texture Lock"), "TogTexLock");
 	menu_separator(menu);
-	create_menu_item_with_mnemonic(menu, "Copy Face Texture", "FaceCopyTexture");
-	create_menu_item_with_mnemonic(menu, "Paste Face Texture", "FacePasteTexture");
+	create_menu_item_with_mnemonic(menu, _("Copy Face Texture"), "FaceCopyTexture");
+	create_menu_item_with_mnemonic(menu, _("Paste Face Texture"), "FacePasteTexture");
 
 	command_connect_accelerator("Brush3Sided");
 	command_connect_accelerator("Brush4Sided");

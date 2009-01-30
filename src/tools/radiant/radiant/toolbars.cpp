@@ -63,7 +63,7 @@ static void CSG_constructToolbar (GtkToolbar* toolbar)
 {
 	toolbar_append_button(toolbar, _("CSG Subtract (SHIFT + U)"), "selection_csgsubtract.bmp", "CSGSubtract");
 	toolbar_append_button(toolbar, _("CSG Merge (CTRL + U)"), "selection_csgmerge.bmp", "CSGMerge");
-	toolbar_append_button(toolbar, _("Hollow"), "selection_makehollow.bmp", "CSGHollow");
+	toolbar_append_button(toolbar, _("Make Hollow"), "selection_makehollow.bmp", "CSGHollow");
 }
 
 static void ComponentModes_constructToolbar (GtkToolbar* toolbar)
