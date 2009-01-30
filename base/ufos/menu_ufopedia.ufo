@@ -226,12 +226,10 @@ menu ufopedia
 	{
 		model	"*cvar mn_upmodel_top"
 		angles	"0 0 120"
-		//scale	"6 6 6"		// Comment-out if autoscaling is wanted.
 		pos		"750 85"
 		size	"240 240"
-		mousefx	true
-		click
-		view	"ufopedia"
+		autoscale true
+		mouvewithmouse	true
 	}
 
 	pic image_top
@@ -248,9 +246,8 @@ menu ufopedia
 		angles	"0 0 120"
 		pos		"790 335"
 		size	"120 120"
-		//scale	"6 6 6"		// Comment-out if autoscaling is wanted.
-		click
-		view	"ufopedia"
+		mouvewithmouse	true
+		autoscale true
 	}
 
 	pic weapon_dec
