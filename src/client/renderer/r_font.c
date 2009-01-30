@@ -74,6 +74,7 @@ typedef struct wrapCache_s {
 	int numChunks;		/**< number of (contiguous) chunks in chunkCache used */
 	int numLines;		/**< total line count of wrapped text */
 	int chunkIdx;		/**< first chunk in chunkCache for this text */
+	qboolean aborted;	/**< true if we can't finish the chunk generation */
 } wrapCache_t;
 
 static int numFonts = 0;
@@ -373,7 +374,7 @@ static int R_FontFindTruncFit (const font_t *f, const char *text, int maxlen, in
  * entries for those chunks.
  * @return number of chunks allocated in chunkCache.
  */
-static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, longlines_t method, int *lines)
+static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, longlines_t method, int *lines, qboolean *aborted)
 {
 	int lineno = 0;
 	int pos = 0;
@@ -419,8 +420,10 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 				skip = 0;
 				while (buf[pos + len + skip] == ' ')
 					skip++;
-				if (len + skip == 0)
+				if (len + skip == 0) {
+					*aborted = qtrue;
 					break; /* could not fit even one character */
+				}
 			} else {
 				truncated = (method == LONGLINES_PRETTYCHOP);
 				len = R_FontFindTruncFit(f, &buf[pos], len, maxWidth, truncated, &width);
@@ -433,7 +436,7 @@ static int R_FontMakeChunks (const font_t *f, const char *text, int maxWidth, lo
 				/* whoops, ran out of cache, wipe cache and start over */
 				R_FontCleanCache();
 				/** @todo check for infinite recursion here */
-				return R_FontMakeChunks(f, text, maxWidth, method, lines);
+				return R_FontMakeChunks(f, text, maxWidth, method, lines, aborted);
 			}
 			chunkCache[numChunks].pos = pos;
 			chunkCache[numChunks].len = len;
@@ -466,6 +469,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 	int hashValue = R_FontHash(text);
 	int chunksUsed;
 	int lines;
+	qboolean aborted = qfalse;
 
 	/* String is considered a match if the part that fit in entry->string
 	 * matches. Since the hash value also matches and the hash was taken
@@ -475,7 +479,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 		 && wrap->font == f
 		 && wrap->method == method
 		 && (wrap->maxWidth == maxWidth
-			|| (wrap->numChunks == 1
+			|| (wrap->numLines == 1 && !wrap->aborted
 				&& !chunkCache[wrap->chunkIdx].truncated
 				&& (chunkCache[wrap->chunkIdx].width <= maxWidth || maxWidth <= 0))))
 			return wrap;
@@ -485,13 +489,14 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 
 	/* It is possible that R_FontMakeChunks will wipe the cache,
 	 * so do not rely on numWraps until it completes. */
-	chunksUsed = R_FontMakeChunks(f, text, maxWidth, method, &lines);
+	chunksUsed = R_FontMakeChunks(f, text, maxWidth, method, &lines, &aborted);
 
 	wrap = &wrapCache[numWraps];
 	Q_strncpyz(wrap->text, text, sizeof(wrap->text));
 	wrap->font = f;
 	wrap->maxWidth = maxWidth;
 	wrap->method = method;
+	wrap->aborted = aborted;
 	wrap->numChunks = chunksUsed;
 	wrap->numLines = lines;
 	wrap->chunkIdx = numChunks - chunksUsed;

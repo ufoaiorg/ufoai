@@ -42,13 +42,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_TodoNodeDrawTooltip (menuNode_t *node, int x, int y)
 {
 	const int tooltipWidth = 250;
-	static char tooltiptext[MAX_VAR * 4];
+	static char tooltiptext[1024];
 
 	const char* text = MN_GetReferenceString(node->menu, node->text);
 	if (!text)
 		return;
 
 	tooltiptext[0] = '\0';
+	/** @todo remove me, just debug code */
+	if (!strncmp("It ", text, 3)) {
+		tooltiptext[0] = '\0';
+	}
+	/** @todo remove me, just debug code */
+	if (!strncmp("Not", text, 3)) {
+		tooltiptext[0] = '\0';
+	}
 	Q_strcat(tooltiptext, text, sizeof(tooltiptext));
 	MN_DrawTooltip("f_small", tooltiptext, x, y, tooltipWidth, 0);
 }
