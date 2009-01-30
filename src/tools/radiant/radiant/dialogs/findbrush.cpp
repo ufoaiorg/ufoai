@@ -96,7 +96,7 @@ void FindBrushOrEntity (void)
 	GtkEntry* entity;
 	GtkEntry* brush;
 
-	GtkWindow* window = create_dialog_window(MainFrame_getWindow(), "Find Brush", G_CALLBACK(dialog_delete_callback), &dialog);
+	GtkWindow* window = create_dialog_window(MainFrame_getWindow(), _("Find Brush"), G_CALLBACK(dialog_delete_callback), &dialog);
 
 	GtkAccelGroup* accel = gtk_accel_group_new();
 	gtk_window_add_accel_group(window, accel);
@@ -144,13 +144,13 @@ void FindBrushOrEntity (void)
 			GtkHBox* hbox = create_dialog_hbox(4);
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox), TRUE, TRUE, 0);
 			{
-				GtkButton* button = create_dialog_button("Find", G_CALLBACK(dialog_button_ok), &dialog);
+				GtkButton* button = create_dialog_button(_("Find"), G_CALLBACK(dialog_button_ok), &dialog);
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				widget_make_default(GTK_WIDGET(button));
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Return, (GdkModifierType)0, (GtkAccelFlags)0);
 			}
 			{
-				GtkButton* button = create_dialog_button("Close", G_CALLBACK(dialog_button_cancel), &dialog);
+				GtkButton* button = create_dialog_button(_("Close"), G_CALLBACK(dialog_button_cancel), &dialog);
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), FALSE, FALSE, 0);
 				gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel, GDK_Escape, (GdkModifierType)0, (GtkAccelFlags)0);
 			}
