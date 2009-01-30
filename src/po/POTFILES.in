@@ -25,8 +25,8 @@
 ./client/campaign/cp_base.c
 ./client/campaign/cp_base_callbacks.c
 ./client/campaign/cp_geoscape_actions.c
-./client/campaign/cp_mission_triggers.c
 ./client/campaign/cp_missions.c
+./client/campaign/cp_mission_triggers.c
 ./client/campaign/cp_nations.c
 ./client/campaign/cp_time.c
 ./client/campaign/missions/cp_mission_baseattack.c
@@ -49,7 +49,6 @@
 ./client/menu/m_input.c
 ./client/menu/m_main.c
 ./client/menu/m_tooltip.c
-./client/menu/node/m_node_base.c
 ./client/menu/node/m_node_container.c
 ./client/menu/node/m_node_window.c
 ./client/multiplayer/mp_callbacks.c
