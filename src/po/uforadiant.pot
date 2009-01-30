@@ -1950,3 +1950,117 @@ msgstr ""
 msgctxt "Constructive Solid Geometry"
 msgid "CSG Merge (CTRL + U)"
 msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:463
+msgid "_Regroup"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:464
+msgid "_Ungroup"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:465
+msgid "_Connect"
+msgstr ""
+
+#: src/tools/radiant/radiant/entity.cpp:466
+msgid "_Select Color..."
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:165
+msgctxt "Filter Menu"
+msgid "World"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:166
+msgctxt "Filter Menu"
+msgid "Entities"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:167
+msgctxt "Filter Menu"
+msgid "Translucent"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:168
+msgctxt "Filter Menu"
+msgid "Liquids"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:169
+msgctxt "Filter Menu"
+msgid "Caulk"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:170
+msgctxt "Filter Menu"
+msgid "Clips"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:171
+msgctxt "Filter Menu"
+msgid "ActorClips"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:172
+msgctxt "Filter Menu"
+msgid "WeaponClips"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:173
+msgctxt "Filter Menu"
+msgid "Lights"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:174
+msgctxt "Filter Menu"
+msgid "NoSurfLights"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:175
+msgctxt "Filter Menu"
+msgid "NoFootsteps"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:176
+msgctxt "Filter Menu"
+msgid "Structural"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:177
+msgctxt "Filter Menu"
+msgid "Nodraw"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:178
+msgctxt "Filter Menu"
+msgid "Phong"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:179
+msgctxt "Filter Menu"
+msgid "Details"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:180
+msgctxt "Filter Menu"
+msgid "Hints"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:181
+msgctxt "Filter Menu"
+msgid "Models"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:182
+msgctxt "Filter Menu"
+msgid "Triggers"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:185
+msgid "Invert filters"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:186
+msgid "Reset filters"
+msgstr ""

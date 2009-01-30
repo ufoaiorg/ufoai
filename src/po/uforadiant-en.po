@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-30 20:53+0100\n"
+"PO-Revision-Date: 2009-01-30 20:59+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team\n"
 "MIME-Version: 1.0\n"
@@ -1974,4 +1974,118 @@ msgstr "CSG Subtract (SHIFT + U)"
 msgctxt "Constructive Solid Geometry"
 msgid "CSG Merge (CTRL + U)"
 msgstr "CSG Merge (CTRL + U)"
+
+#: src/tools/radiant/radiant/entity.cpp:463
+msgid "_Regroup"
+msgstr "_Regroup"
+
+#: src/tools/radiant/radiant/entity.cpp:464
+msgid "_Ungroup"
+msgstr "_Ungroup"
+
+#: src/tools/radiant/radiant/entity.cpp:465
+msgid "_Connect"
+msgstr "_Connect"
+
+#: src/tools/radiant/radiant/entity.cpp:466
+msgid "_Select Color..."
+msgstr "_Select Color..."
+
+#: src/tools/radiant/radiant/filters.cpp:165
+msgctxt "Filter Menu"
+msgid "World"
+msgstr "World"
+
+#: src/tools/radiant/radiant/filters.cpp:166
+msgctxt "Filter Menu"
+msgid "Entities"
+msgstr "Entities"
+
+#: src/tools/radiant/radiant/filters.cpp:167
+msgctxt "Filter Menu"
+msgid "Translucent"
+msgstr "Translucent"
+
+#: src/tools/radiant/radiant/filters.cpp:168
+msgctxt "Filter Menu"
+msgid "Liquids"
+msgstr "Liquids"
+
+#: src/tools/radiant/radiant/filters.cpp:169
+msgctxt "Filter Menu"
+msgid "Caulk"
+msgstr "Caulk"
+
+#: src/tools/radiant/radiant/filters.cpp:170
+msgctxt "Filter Menu"
+msgid "Clips"
+msgstr "Clips"
+
+#: src/tools/radiant/radiant/filters.cpp:171
+msgctxt "Filter Menu"
+msgid "ActorClips"
+msgstr "ActorClips"
+
+#: src/tools/radiant/radiant/filters.cpp:172
+msgctxt "Filter Menu"
+msgid "WeaponClips"
+msgstr "WeaponClips"
+
+#: src/tools/radiant/radiant/filters.cpp:173
+msgctxt "Filter Menu"
+msgid "Lights"
+msgstr "Lights"
+
+#: src/tools/radiant/radiant/filters.cpp:174
+msgctxt "Filter Menu"
+msgid "NoSurfLights"
+msgstr "NoSurfLights"
+
+#: src/tools/radiant/radiant/filters.cpp:175
+msgctxt "Filter Menu"
+msgid "NoFootsteps"
+msgstr "NoFootsteps"
+
+#: src/tools/radiant/radiant/filters.cpp:176
+msgctxt "Filter Menu"
+msgid "Structural"
+msgstr "Structural"
+
+#: src/tools/radiant/radiant/filters.cpp:177
+msgctxt "Filter Menu"
+msgid "Nodraw"
+msgstr "Nodraw"
+
+#: src/tools/radiant/radiant/filters.cpp:178
+msgctxt "Filter Menu"
+msgid "Phong"
+msgstr "Phong"
+
+#: src/tools/radiant/radiant/filters.cpp:179
+msgctxt "Filter Menu"
+msgid "Details"
+msgstr "Details"
+
+#: src/tools/radiant/radiant/filters.cpp:180
+msgctxt "Filter Menu"
+msgid "Hints"
+msgstr "Hints"
+
+#: src/tools/radiant/radiant/filters.cpp:181
+msgctxt "Filter Menu"
+msgid "Models"
+msgstr "Models"
+
+#: src/tools/radiant/radiant/filters.cpp:182
+msgctxt "Filter Menu"
+msgid "Triggers"
+msgstr "Triggers"
+
+#: src/tools/radiant/radiant/filters.cpp:185
+msgid "Invert filters"
+msgstr "Invert filters"
+
+#: src/tools/radiant/radiant/filters.cpp:186
+msgid "Reset filters"
+msgstr "Reset filters"
 

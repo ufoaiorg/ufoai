@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFORadiant\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-01-30 20:51+0100\n"
+"PO-Revision-Date: 2009-01-30 21:08+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: UFO:AI Team <martin.gerhardy@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "Lade Model"
 #: src/tools/radiant/radiant/referencecache.cpp:621
 #: src/tools/radiant/radiant/referencecache.cpp:690
 msgid "Refreshing Models"
-msgstr ""
+msgstr "Modelle neu laden"
 
 #: src/tools/radiant/radiant/texwindow.cpp:1110
 #: src/tools/radiant/radiant/texwindow.cpp:1178
@@ -239,7 +239,7 @@ msgstr "Schwarz und Grün"
 #: src/tools/radiant/radiant/colorscheme.cpp:175
 #: src/tools/radiant/radiant/colorscheme.cpp:174
 msgid "Maya/Max/Lightwave Emulation"
-msgstr ""
+msgstr "Maya/Max/Lightwave Emulation"
 
 #: src/tools/radiant/radiant/colorscheme.cpp:179
 #: src/tools/radiant/radiant/colorscheme.cpp:178
@@ -658,24 +658,20 @@ msgid "Show"
 msgstr "Zeige"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1528
-#, fuzzy
 msgid "Toggle Grid"
-msgstr "Gitter Hintergrund..."
+msgstr "Gitter umschalten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1529
-#, fuzzy
 msgid "Toggle Crosshairs"
-msgstr "&Menü umschalten"
+msgstr "Fadenkreuz umschalten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1530
-#, fuzzy
 msgid "Toggle Sizeinfo"
-msgstr "&Menü umschalten"
+msgstr "Größeninformationen umschalten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1531
-#, fuzzy
 msgid "Show _Angles"
-msgstr "Zeigen _Namen"
+msgstr "Zeige Winkel"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1532
 msgid "Show _Names"
@@ -687,9 +683,8 @@ msgid "Show Blocks"
 msgstr "  Freie Blöcke: "
 
 #: src/tools/radiant/radiant/mainframe.cpp:1534
-#, fuzzy
 msgid "Show C_oordinates"
-msgstr "Zeigen _Namen"
+msgstr "Zeige Koordinaten"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1535
 #, fuzzy
@@ -706,9 +701,8 @@ msgid "Show Workzone"
 msgstr "Zeigen _Namen"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1538
-#, fuzzy
 msgid "Show Stats"
-msgstr "Anzeigestatus"
+msgstr "Zeige Statistik"
 
 #: src/tools/radiant/radiant/mainframe.cpp:1543
 msgid "Hide/Show"
@@ -1742,7 +1736,7 @@ msgstr ""
 #: src/tools/radiant/radiant/material.cpp:70
 #: src/tools/radiant/radiant/material.cpp:69
 msgid "You have to save your map before material generation can work"
-msgstr ""
+msgstr "Die Map muss gespeichert werden bevor die Materialien generiert werden können"
 
 #: src/tools/radiant/radiant/url.cpp:54
 msgid "Failed to launch browser!"
@@ -1750,7 +1744,7 @@ msgstr "Konnte Browser nicht starten!"
 
 #: src/tools/radiant/radiant/xywindow.cpp:1090
 msgid "There's already a worldspawn in your map!"
-msgstr ""
+msgstr "Es existiert bereits ein Worldspawn in der Map!"
 
 #: src/tools/radiant/radiant/xywindow.cpp:1554
 msgid "You have to select some brushes to get the bounding box for.\n"
@@ -1803,11 +1797,8 @@ msgid "Find"
 msgstr "Suchen"
 
 #: src/tools/radiant/radiant/eclass_def.cpp:220
-#, fuzzy
 msgid "Radiant - Error"
-msgstr ""
-"%s: Fehler beim Bearbeiten von %s (--%s):\n"
-" %s\n"
+msgstr "Radiant - Fehler"
 
 #: src/tools/radiant/radiant/entity.cpp:419
 #, fuzzy
@@ -2003,16 +1994,14 @@ msgid "Save Image"
 msgstr "Bild speichern"
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1230
-#, fuzzy
 msgid "Cone..."
 msgstr "Kegel..."
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1231
 msgid "Prism..."
-msgstr ""
+msgstr "Prisma..."
 
 #: src/tools/radiant/radiant/brushmanip.cpp:1232
-#, fuzzy
 msgid "Sphere..."
 msgstr "Kugel..."
 
@@ -2105,4 +2094,121 @@ msgstr "&Audio...\tCtrl+Shift+I"
 msgctxt "Constructive Solid Geometry"
 msgid "CSG Merge (CTRL + U)"
 msgstr "Ctrl+Linksziehen"
+
+#: src/tools/radiant/radiant/entity.cpp:463
+msgid "_Regroup"
+msgstr "Neu g_ruppieren"
+
+#: src/tools/radiant/radiant/entity.cpp:464
+#, fuzzy
+msgid "_Ungroup"
+msgstr "Rückgängig"
+
+#: src/tools/radiant/radiant/entity.cpp:465
+msgid "_Connect"
+msgstr "Verbinden"
+
+#: src/tools/radiant/radiant/entity.cpp:466
+msgid "_Select Color..."
+msgstr "Farbe au_swählen"
+
+#: src/tools/radiant/radiant/filters.cpp:165
+msgctxt "Filter Menu"
+msgid "World"
+msgstr "Welt"
+
+#: src/tools/radiant/radiant/filters.cpp:166
+msgctxt "Filter Menu"
+msgid "Entities"
+msgstr "Entities"
+
+#: src/tools/radiant/radiant/filters.cpp:167
+msgctxt "Filter Menu"
+msgid "Translucent"
+msgstr "Durchscheinendes"
+
+#: src/tools/radiant/radiant/filters.cpp:168
+msgctxt "Filter Menu"
+msgid "Liquids"
+msgstr "Flüssigkeiten"
+
+#: src/tools/radiant/radiant/filters.cpp:169
+msgctxt "Filter Menu"
+msgid "Caulk"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:170
+#, fuzzy
+msgctxt "Filter Menu"
+msgid "Clips"
+msgstr "Spiegeln"
+
+#: src/tools/radiant/radiant/filters.cpp:171
+msgctxt "Filter Menu"
+msgid "ActorClips"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:172
+msgctxt "Filter Menu"
+msgid "WeaponClips"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:173
+msgctxt "Filter Menu"
+msgid "Lights"
+msgstr "Lichter"
+
+#: src/tools/radiant/radiant/filters.cpp:174
+msgctxt "Filter Menu"
+msgid "NoSurfLights"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:175
+msgctxt "Filter Menu"
+msgid "NoFootsteps"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:176
+#, fuzzy
+msgctxt "Filter Menu"
+msgid "Structural"
+msgstr "_Hohlraum erstellen"
+
+#: src/tools/radiant/radiant/filters.cpp:177
+msgctxt "Filter Menu"
+msgid "Nodraw"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:178
+msgctxt "Filter Menu"
+msgid "Phong"
+msgstr "Phong"
+
+#: src/tools/radiant/radiant/filters.cpp:179
+msgctxt "Filter Menu"
+msgid "Details"
+msgstr "Details"
+
+#: src/tools/radiant/radiant/filters.cpp:180
+msgctxt "Filter Menu"
+msgid "Hints"
+msgstr ""
+
+#: src/tools/radiant/radiant/filters.cpp:181
+msgctxt "Filter Menu"
+msgid "Models"
+msgstr "Modelle"
+
+#: src/tools/radiant/radiant/filters.cpp:182
+msgctxt "Filter Menu"
+msgid "Triggers"
+msgstr "Trigger"
+
+#: src/tools/radiant/radiant/filters.cpp:185
+msgid "Invert filters"
+msgstr "Invertiere Filter"
+
+#: src/tools/radiant/radiant/filters.cpp:186
+msgid "Reset filters"
+msgstr "Deaktiviere Filter"
 
