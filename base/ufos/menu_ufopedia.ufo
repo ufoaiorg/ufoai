@@ -222,6 +222,14 @@ menu ufopedia
 		font	f_big
 	}
 
+	pic image_top
+	{
+		image	"*cvar mn_upimage_top"
+		pos		"750 85"
+		size	"240 380"
+		preventratio	true
+	}
+
 	model mdl_top
 	{
 		model	"*cvar mn_upmodel_top"
@@ -230,14 +238,6 @@ menu ufopedia
 		size	"240 240"
 		autoscale true
 		rotatewithmouse	true
-	}
-
-	pic image_top
-	{
-		image	"*cvar mn_upimage_top"
-		pos		"750 85"
-		size	"240 380"
-		preventratio	true
 	}
 
 	model mdl_bottom
