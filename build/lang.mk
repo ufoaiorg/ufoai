@@ -15,10 +15,10 @@ $(RADIANT_MOFILES) : radiant/i18n/%/LC_MESSAGES/uforadiant.mo : src/po/uforadian
 
 lang: $(UFOAI_MOFILES) $(RADIANT_MOFILES)
 
-update-po:
+update-po: po-check
 	$(MAKE) -C src/po update-po
 
-update-po-radiant:
+update-po-radiant: po-check
 	xgettext -j --keyword="_" --keyword="C_:1c,2" -C -o src/po/uforadiant.pot --omit-header \
 		src/tools/radiant/libs/*.h \
 		src/tools/radiant/libs/*/*.h \
