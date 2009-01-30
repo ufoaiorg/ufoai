@@ -49,6 +49,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_xvi.c \
 	client/campaign/cl_alienbase.c \
 	client/campaign/cl_aliencont.c \
+	client/campaign/cl_aliencont_callbacks.c \
 	client/campaign/cl_airfight.c \
 	client/campaign/cl_airfightmap.c \
 	client/campaign/cl_campaign.c \
