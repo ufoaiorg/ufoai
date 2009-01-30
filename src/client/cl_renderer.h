@@ -242,7 +242,7 @@ void R_FontInit(void);
 void R_FontRegister(const char *name, int size, const char *path, const char *style);
 void R_FontSetTruncationMarker(const char *marker);
 
-void R_FontTextSize(const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines);
+void R_FontTextSize(const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, qboolean *isTruncated);
 int R_FontGetHeight(const char *fontID);
 
 int R_FontDrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine, longlines_t method);

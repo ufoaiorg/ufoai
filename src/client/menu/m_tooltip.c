@@ -48,7 +48,7 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 	if (!string || string[0] == '\0' || !font)
 		return 0;
 
-	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, NULL);
+	R_FontTextSize(font, string, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
 
 	if (!width)
 		return 0;
@@ -112,7 +112,7 @@ int MN_DrawNotice (int x, int y)
 	int lines = 5;
 	int dx; /**< Delta-x position. Relative to original x position. */
 
-	R_FontTextSize(font, cl.msgText, maxWidth, LONGLINES_WRAP, &width, &height, NULL);
+	R_FontTextSize(font, cl.msgText, maxWidth, LONGLINES_WRAP, &width, &height, NULL, NULL);
 
 	if (!width)
 		return 0;

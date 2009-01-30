@@ -76,7 +76,7 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 		if (x < TILE_WIDTH / 2)
 			return prev;
 
-		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, NULL, NULL);
+		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &fontWidth, NULL, NULL, NULL);
 		if (option->icon) {
 			fontWidth += option->icon->size[0];
 		}
@@ -207,7 +207,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
-		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, &fontHeight, NULL);
+		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, &fontHeight, NULL, NULL);
 		if (option->icon && option->icon->size[0] < allowedWidth) {
 			tabWidth += option->icon->size[0];
 			drawIcon = qtrue;

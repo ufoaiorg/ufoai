@@ -512,7 +512,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
  * @param[out] height receives height in pixels when rendered with standard line height
  * @param[out] lines receives total number of lines in text, including blank ones
  */
-void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines)
+void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlines_t method, int *width, int *height, int *lines, qboolean *isTruncated)
 {
 	const font_t *font = R_FontGetFont(fontId);
 	const wrapCache_t *wrap = R_FontWrapText(font, text, maxWidth, method);
@@ -531,6 +531,9 @@ void R_FontTextSize (const char *fontId, const char *text, int maxWidth, longlin
 
 	if (lines)
 		*lines = wrap->numLines;
+
+	if (isTruncated)
+		*isTruncated = chunkCache[wrap->chunkIdx].truncated;
 }
 
 /**

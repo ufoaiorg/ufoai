@@ -622,7 +622,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
-				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
+				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
 			height += obj->sy * C_UNIT + 10;
 			if (height > rowHeight)
 				rowHeight = height;
@@ -957,7 +957,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
-				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
+				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
 			height += obj->sy * C_UNIT + 10;
 			if (height > rowHeight)
 				rowHeight = height;
@@ -997,7 +997,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 
 		/* draw the item name. */
 		R_FontTextSize("f_verysmall", _(obj->name),
-			cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL);
+			cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
 		cellHeight += height;
 
 		/* draw ammos of weapon */
