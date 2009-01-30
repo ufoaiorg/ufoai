@@ -274,6 +274,8 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/* update the GUI */
 	MN_ExecuteConfunc("aircraft_change %i", id);
+
+	baseCurrent->aircraftCurrent = aircraft;
 }
 
 /**
