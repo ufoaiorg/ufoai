@@ -45,6 +45,8 @@ CLIENT_SRCS = \
 	client/campaign/cp_mission_triggers.c \
 	client/campaign/cp_nations.c \
 	client/campaign/cp_parse.c \
+	client/campaign/cp_team.c \
+	client/campaign/cp_team_callbacks.c \
 	client/campaign/cp_time.c \
 	client/campaign/cp_xvi.c \
 	client/campaign/cl_alienbase.c \
