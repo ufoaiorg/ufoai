@@ -64,11 +64,6 @@ typedef struct employee_s {
 	ugv_t *ugv;	/**< if this is an employee of type EMPL_ROBOT then this is a pointer to the matching ugv_t struct. For normal emplyoees this is NULL. */
 } employee_t;
 
-/* List of (hired) emplyoees in the current category (employeeType). */
-extern linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
-/* How many employees in current list (changes on every category change, too) */
-extern int employeesInCurrentList;
-
 /* Currently selected employee. */
 extern employee_t *selectedEmployee;
 

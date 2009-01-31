@@ -33,13 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ugv.h"
 #include "menu/m_nodes.h"
 
-linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
-int employeesInCurrentList;
-
-static void CL_MarkTeam_f(void);
-
 /** @brief List of currently displayed or equipeable characters. */
-static chrList_t chrDisplayList;
+chrList_t chrDisplayList;
 
 /**
  * @brief Translate the skin id to skin name
@@ -63,34 +58,6 @@ const char* CL_GetTeamSkinName (int id)
 		return _("CCCP");
 	}
 	Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i\n", id, NUM_TEAMSKINS-1);
-}
-
-/**
- * @brief Returns the aircraft for the team and soldier selection menus
- * @note Multiplayer and skirmish are using @c cls.missionaircraft, campaign mode is
- * using the current selected aircraft in base
- */
-static aircraft_t *CL_GetTeamAircraft (base_t *base)
-{
-	if (!base)
-		Sys_Error("CL_GetTeamAircraft: Called without base");
-	return base->aircraftCurrent;
-}
-
-/**
- * @brief Returns the storage for the team and soldier selection menus
- * @note Multiplayer and skirmish are using @c ccs.eMission, campaign mode is
- * using the storage from the given base
- */
-static equipDef_t *CL_GetStorage (base_t *base)
-{
-	if (GAME_IsCampaign()) {
-		if (!base)
-			Sys_Error("CL_GetStorage: Called without base");
-		return &base->storage;
-	} else {
-		return &ccs.eMission;
-	}
 }
 
 /**
@@ -457,7 +424,7 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 /**
  * @sa CL_ReloadAndRemoveCarried
  */
-static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
+item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
 	int i;
 	objDef_t *type = item.t;
@@ -558,64 +525,6 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 }
 
 /**
- * @brief Reloads weapons and removes "not assigned" ones from containers.
- * @param[in] aircraft Pointer to an aircraft for given team.
- * @param[in] ed equipDef_t pointer to equipment of given character in a team.
- * @sa CL_AddWeaponAmmo
- * @todo campaign mode only function
- */
-void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
-{
-	invList_t *ic, *next;
-	int p, container;
-
-	/* Iterate through in container order (right hand, left hand, belt,
-	 * holster, backpack) at the top level, i.e. each squad member reloads
-	 * her right hand, then each reloads his left hand, etc. The effect
-	 * of this is that when things are tight, everyone has the opportunity
-	 * to get their preferred weapon(s) loaded before anyone is allowed
-	 * to keep her spares in the backpack or on the floor. We don't want
-	 * the first person in the squad filling their backpack with spare ammo
-	 * leaving others with unloaded guns in their hands... */
-
-	assert(aircraft);
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried:aircraft idx: %i, team size: %i\n",
-		aircraft->idx, aircraft->teamSize);
-
-	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
-	for (p = 0; p < aircraft->maxTeamSize; p++) {
-		if (aircraft->acTeam[p] && aircraft->acTeam[p]->ugv) {
-			/* This is an UGV */
-			character_t *chr = &aircraft->acTeam[p]->chr;
-			assert(chr);
-
-			/* Check if there is a weapon and add it if there isn't. */
-			if (!chr->inv.c[csi.idRight] || !chr->inv.c[csi.idRight]->item.t)
-				INVSH_EquipActorRobot(&chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
-		}
-	}
-
-	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < aircraft->maxTeamSize; p++) {
-			if (aircraft->acTeam[p]) {
-				character_t *chr = &aircraft->acTeam[p]->chr;
-				assert(chr);
-				for (ic = chr->inv.c[container]; ic; ic = next) {
-					next = ic->next;
-					if (ed->num[ic->item.t->idx] > 0) {
-						ic->item = CL_AddWeaponAmmo(ed, ic->item);
-					} else {
-						/* Drop ammo used for reloading and sold carried weapons. */
-						Com_RemoveFromInventory(&chr->inv, &csi.ids[container], ic);
-					}
-				}
-			}
-		}
-	}
-}
-
-/**
  * @brief Clears all containers that are temp containers (see script definition).
  * @sa CL_UpdateEquipmentMenuParameters_f
  * @sa MP_SaveTeamMultiplayerInfo
@@ -638,96 +547,6 @@ void CL_CleanTempInventory (base_t* base)
 		return;
 
 	INVSH_DestroyInventory(&base->bEquipment);
-}
-
-/**
- * @brief Displays actor equipment and unused items in proper (filter) category.
- * @note This function is called everytime the equipment screen for the team pops up.
- * @todo Do we allow EMPL_ROBOTs to be equipable? Or is simple buying of ammo enough (similar to original UFO/XCOM)?
- * In the first case the EMPL_SOLDIER stuff below needs to be changed.
- * @todo campaign mode only function
- */
-static void CL_UpdateEquipmentMenuParameters_f (void)
-{
-	equipDef_t unused;
-	int i, p;
-	aircraft_t *aircraft;
-	int team;
-
-	if (!GAME_IsCampaign() || !baseCurrent)
-		return;
-
-	aircraft = CL_GetTeamAircraft(baseCurrent);
-	if (!aircraft)
-		return;
-
-	/* no soldiers are assigned to the current aircraft. */
-	if (!aircraft->teamSize) {
-		MN_PopMenu(qfalse);
-		return;
-	}
-
-	/* Get team. */
-	if (strstr(Cvar_VariableString("team"), "alien")) {
-		team = TEAM_ALIEN;
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateEquipmentMenuParameters_f: team alien, id: %i\n", team);
-	} else {
-		team = TEAM_PHALANX;
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateEquipmentMenuParameters_f: team human, id: %i\n", team);
-	}
-
-	Cvar_ForceSet("cl_selected", "0");
-
-	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
-	p = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
-	for (; p < MAX_ACTIVETEAM; p++) {
-		Cvar_ForceSet(va("mn_name%i", p), "");
-		MN_ExecuteConfunc("equipdisable %i", p);
-	}
-
-	if (chrDisplayList.num > 0)
-		menuInventory = &chrDisplayList.chr[0]->inv;
-	else
-		menuInventory = NULL;
-	selActor = NULL;
-
-	/* reset description */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
-	MN_MenuTextReset(TEXT_STANDARD);
-
-	/* manage inventory */
-	unused = *CL_GetStorage(aircraft->homebase); /* copied, including arrays inside! */
-
-	CL_CleanTempInventory(aircraft->homebase);
-	CL_ReloadAndRemoveCarried(aircraft, &unused);
-
-	/* a 'tiny hack' to add the remaining equipment (not carried)
-	 * correctly into buy categories, reloading at the same time;
-	 * it is valid only due to the following property: */
-	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
-
-	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armour for other teams in the menu. */
-		if (!Q_strcmp(csi.ods[i].type, "armour") && csi.ods[i].useable != team)
-			continue;
-
-		/* Don't allow to show unresearched items. */
-		if (!RS_IsResearched_ptr(csi.ods[i].tech))
-			continue;
-
-		while (unused.num[i]) {
-			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
-			inventory_t *i = &aircraft->homebase->bEquipment;
-			if (!Com_AddToInventory(i, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
-				break; /* no space left in menu */
-		}
-	}
-
-	/* First-time linking of menuInventory. */
-	if (!menuInventory->c[csi.idEquip]) {
-		menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
-	}
 }
 
 static void CL_ActorEquipmentSelect_f (void)
@@ -791,9 +610,9 @@ static void CL_ActorSoldierSelect_f (void)
 	if (!Q_strcmp(activeMenu->name, "employees")) {
 		/* this is hire menu: we can select soldiers, worker, pilots, or researcher */
 		/** @todo remove this test, employee_list_click can do the same better */
-		if (num < employeesInCurrentList) {
+		/*if (num < employeesInCurrentList) {*/
 			Cmd_ExecuteString(va("employee_list_click %i", num));
-		}
+		/*}*/
 	} else if (!Q_strcmp(activeMenu->name, "team")) {
 		Cmd_ExecuteString(va("team_select %i", num));
 	} else if (!Q_strcmp(activeMenu->name, "equipment")) {
@@ -924,138 +743,6 @@ static void CL_UpdateSoldier_f (void)
 }
 
 /**
- * @brief Updates data about teams in aircraft.
- * @param[in] aircraft Pointer to an aircraft for a desired team.
- * @returns the number of employees that are in the aircraft and were added to
- * the character list
- */
-int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
-{
-	int i;
-
-	assert(aircraft);
-
-	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->maxTeamSize));
-
-	/* update chrDisplayList list (this is the one that is currently displayed) */
-	chrDisplayList.num = 0;
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		assert(chrDisplayList.num < MAX_ACTIVETEAM);
-		if (!aircraft->acTeam[i])
-			continue; /* Skip unused team-slot. */
-
-		if (aircraft->acTeam[i]->type != employeeType)
-			continue;
-
-		chrDisplayList.chr[chrDisplayList.num] = &aircraft->acTeam[i]->chr;
-
-		/* Sanity check(s) */
-		if (!chrDisplayList.chr[chrDisplayList.num])
-			Sys_Error("CL_UpdateActorAircraftVar: Could not get employee character with idx: %i\n", chrDisplayList.num);
-		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
-		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
-
-		/* Update number of displayed team-members. */
-		chrDisplayList.num++;
-	}
-
-	for (i = chrDisplayList.num; i < MAX_ACTIVETEAM; i++)
-		chrDisplayList.chr[i] = NULL;	/* Just in case */
-
-	return chrDisplayList.num;
-}
-
-/**
- * @brief Init the teamlist checkboxes
- * @sa CL_UpdateActorAircraftVar
- * @todo Make this function use a temporary list with all list-able employees
- * instead of using gd.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
- * @todo don't use employees here, directly but only the character_t data - maybe also make
- * this a callback in cl_game.c
- * @todo campaign mode only function
- */
-static void CL_MarkTeam_f (void)
-{
-	int j, k = 0;
-	qboolean alreadyInOtherShip = qfalse;
-	aircraft_t *aircraft;
-	linkedList_t *emplList;
-
-	const employeeType_t employeeType =
-		cls.displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
-
-	/* Check if we are allowed to be here.
-	 * We are only allowed to be here if we already set up a base. */
-	if (!baseCurrent) {
-		Com_Printf("No base set up\n");
-		MN_PopMenu(qfalse);
-		return;
-	}
-
-	aircraft = CL_GetTeamAircraft(baseCurrent);
-	if (!aircraft) {
-		MN_PopMenu(qfalse);
-		return;
-	}
-
-	CL_UpdateActorAircraftVar(aircraft, employeeType);
-
-	/* Populate employeeList - base might be NULL for none-campaign mode games */
-	E_GenerateHiredEmployeesList(aircraft->homebase);
-	emplList = employeeList;
-	while (emplList) {
-		const employee_t *employee = (employee_t*)emplList->data;
-		assert(employee->hired);
-		assert(!employee->transfer);
-
-		/* Search all aircraft except the current one. */
-		alreadyInOtherShip = qfalse;
-		for (j = 0; j < gd.numAircraft; j++) {
-			if (j == aircraft->idx)
-				continue;
-			/* already on another aircraft */
-			if (AIR_IsEmployeeInAircraft(employee, AIR_AircraftGetFromIDX(j)))
-				alreadyInOtherShip = qtrue;
-		}
-
-		/* Set name of the employee. */
-		Cvar_ForceSet(va("mn_ename%i", k), employee->chr.name);
-		/* Change the buttons */
-		MN_ExecuteConfunc("listdel %i", k);
-		if (!alreadyInOtherShip && AIR_IsEmployeeInAircraft(employee, aircraft))
-			MN_ExecuteConfunc("listadd %i", k);
-		else if (alreadyInOtherShip)
-			/* Disable the button - the soldier is already on another aircraft */
-			MN_ExecuteConfunc("listdisable %i", k);
-
-		/* Check if the employee has something equipped. */
-		for (j = 0; j < csi.numIDs; j++) {
-			/** @todo Wouldn't it be better here to check for temp containers */
-			if (j != csi.idFloor && j != csi.idEquip && employee->chr.inv.c[j])
-				break;
-		}
-		if (j < csi.numIDs)
-			MN_ExecuteConfunc("listholdsequip %i", k);
-		else
-			MN_ExecuteConfunc("listholdsnoequip %i", k);
-
-		k++;
-		if (k >= cl_numnames->integer)
-			break;
-
-		emplList = emplList->next;
-	}
-
-	for (;k < cl_numnames->integer; k++) {
-		MN_ExecuteConfunc("listdisable %i", k);
-		Cvar_ForceSet(va("mn_name%i", k), "");
-		MN_ExecuteConfunc("listholdsnoequip %i", k);
-	}
-}
-
-/**
  * @brief changes the displayed list from soldiers to heavy equipment (e.g. tanks)
  * @note console command: team_toggle_list
  */
@@ -1108,51 +795,9 @@ static void CL_TeamListDebug_f (void)
 }
 #endif
 
-/**
- * @brief Adds or removes a soldier to/from an aircraft.
- * @sa E_EmployeeHire_f
- * @todo campaign mode only function
- */
-static void CL_AssignSoldier_f (void)
-{
-	base_t *base = baseCurrent;
-	aircraft_t *aircraft;
-	int num;
-	const employeeType_t employeeType =
-		cls.displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
-
-	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-	num = atoi(Cmd_Argv(1));
-
-	/* In case we didn't populate the list with E_GenerateHiredEmployeesList before. */
-	if (!employeeList)
-		return;
-
-	/* baseCurrent is checked here */
-	if (num >= E_CountHired(base, employeeType) || num >= cl_numnames->integer) {
-		/*Com_Printf("num: %i, max: %i\n", num, E_CountHired(baseCurrent, employeeType));*/
-		return;
-	}
-
-	aircraft = CL_GetTeamAircraft(base);
-	if (!aircraft)
-		return;
-
-	AIM_AddEmployeeFromMenu(aircraft, num);
-}
-
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
-	Cmd_AddCommand("genequip", CL_UpdateEquipmentMenuParameters_f, NULL);
-	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
-	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");

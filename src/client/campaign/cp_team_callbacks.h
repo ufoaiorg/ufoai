@@ -29,6 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_TEAM_CALLBACKS_H
 #define CP_TEAM_CALLBACKS_H
 
+/* List of (hired) emplyoees in the current category (employeeType). */
+extern linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
+/* How many employees in current list (changes on every category change, too) */
+extern int employeesInCurrentList;
+
 void CP_TEAM_InitCallbacks(void);
 void CP_TEAM_ShutdownCallbacks(void);
 
