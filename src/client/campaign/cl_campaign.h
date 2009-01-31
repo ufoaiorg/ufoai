@@ -385,6 +385,21 @@ typedef enum mapAction_s {
 	MA_UFORADAR				/**< ufos are in our radar */
 } mapAction_t;
 
+/**
+ * @brief Human readable time information in the game.
+ * @note Use this on runtime - please avoid for structs that get saved.
+ * @sa date_t For storage & network transmitting (engine only).
+ * @sa CL_DateConvertLong
+ */
+typedef struct dateLong_s {
+	short year;	/**< Year in yyyy notation. */
+	byte month;	/**< Number of month (starting with 1). */
+	byte day;	/**< Number of day (starting with 1). */
+	byte hour;	/**< Hour of the day. @todo check what number-range this gives) */
+	byte min;	/**< Minute of the hour. */
+	byte sec;	/**< Second of the minute. */
+} dateLong_t;
+
 extern campaign_t *curCampaign;
 extern ccs_t ccs;
 extern const int DETECTION_INTERVAL;
