@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh.h"
 #include "../../cl_actor.h"
 #include "../../cl_team.h"
+#include "../m_main.h"
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_dragndrop.h"

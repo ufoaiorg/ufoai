@@ -25,6 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_INPUT_H
 #define CLIENT_MENU_M_INPUT_H
 
+/* prototype */
+struct menuNode_s;
+
 /* mouse input */
 void MN_LeftClick(int x, int y);
 void MN_RightClick(int x, int y);
@@ -36,12 +39,12 @@ void MN_MouseUp(int x, int y, int button);
 
 void MN_InvalidateMouse(void);
 qboolean MN_CheckMouseMove(void);
-menuNode_t *MN_GetHoveredNode(void);
-menuNode_t *MN_GetNodeByPosition (int x, int y);
+struct menuNode_s *MN_GetHoveredNode(void);
+struct menuNode_s *MN_GetNodeByPosition (int x, int y);
 
 /* mouse capture */
-menuNode_t* MN_GetMouseCapture(void);
-void MN_SetMouseCapture(menuNode_t* node);
+struct menuNode_s* MN_GetMouseCapture(void);
+void MN_SetMouseCapture(struct menuNode_s* node);
 void MN_MouseRelease(void);
 
 /** @todo move it somewhere */

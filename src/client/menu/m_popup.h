@@ -22,10 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "node/m_node_text.h"
-
 #ifndef CLIENT_MENU_M_POPUP_H
 #define CLIENT_MENU_M_POPUP_H
+
+#include "node/m_node_text.h"
+
+struct menuNode_s;	/* prototype */
 
 #define POPUPLIST_MENU_NAME "popup_list"
 #define POPUPLIST_NODE_NAME "popup_list"
@@ -36,7 +38,7 @@ extern char popupAction2[MAX_SMALLMENUTEXTLEN];
 extern char popupAction3[MAX_SMALLMENUTEXTLEN];
 
 void MN_Popup(const char *title, const char *text);
-menuNode_t *MN_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
+struct menuNode_s *MN_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);
 void MN_PopupButton(const char *title, const char *text,
 	const char *clickAction1, const char *clickText1, const char *tooltip1,
 	const char *clickAction2, const char *clickText2, const char *tooltip2,

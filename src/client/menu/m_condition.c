@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "m_condition.h"
+#include "m_main.h"
 
 static const char *const if_strings[] = {
 	"==",
