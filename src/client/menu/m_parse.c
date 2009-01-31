@@ -804,9 +804,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			return qfalse;
 		}
 
-		/** @todo check if its realy need */
-		node->scriptValues = val;
-
 		/* get parameter values */
 		result = MN_ParseProperty(node, val, node->name, text, token);
 		if (!result) {

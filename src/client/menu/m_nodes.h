@@ -118,7 +118,6 @@ typedef struct menuNode_s {
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
-	const value_t *scriptValues;
 
 	/* temporary, and/or for testing */
 	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
