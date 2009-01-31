@@ -149,13 +149,13 @@ void MN_ParseFont (const char *name, const char **text)
  * @param[in] n The node to get the font for - if NULL f_small is returned
  * @return char pointer with font name (default is f_small)
  */
-const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
+const char *MN_GetFont (const menu_t *menu, const menuNode_t *const node)
 {
-	if (!n || n->font) {
-		if (!m)
-			m = MN_GetActiveMenu();
+	if (!node || node->font) {
+		if (!menu)
+			menu = MN_GetActiveMenu();
 
-		return MN_GetReferenceString(m, n->font);
+		return MN_GetReferenceString(menu, node->font);
 	}
 	return "f_small";
 }
