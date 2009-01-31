@@ -41,7 +41,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
 	const float value = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
 	vec2_t pos;
-	const char *image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	const char *image = MN_GetReferenceString(node->menu, node->image);
 	int texx, texy;
 
 	/* image set? */

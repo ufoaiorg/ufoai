@@ -148,7 +148,7 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	int topTexX, topTexY;
 	int bottomTexX, bottomTexY;
-	const char* image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	const char* image = MN_GetReferenceString(node->menu, node->image);
 	const float delta = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.delta);
 
 	if (!image)

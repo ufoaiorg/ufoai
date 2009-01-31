@@ -75,7 +75,7 @@ static void MN_WindowPanelNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	const char* image;
 
-	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	image = MN_GetReferenceString(node->menu, node->image);
 	if (!image)
 		return;
 

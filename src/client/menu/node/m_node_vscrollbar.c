@@ -218,7 +218,7 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, pos);
 	y = pos[1];
 
-	texture = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	texture = MN_GetReferenceString(node->menu, node->image);
 	if (!texture) {
 		return;
 	}

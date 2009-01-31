@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_ItemNodeDraw (menuNode_t *node)
 {
 	const objDef_t *od;
-	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	const char* ref = MN_GetReferenceString(node->menu, node->model);
 
 	if (!ref || ref[0] == '\0')
 		return;

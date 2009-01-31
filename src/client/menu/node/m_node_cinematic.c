@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../m_nodes.h"
+#include "../m_parse.h"
 #include "m_node_model.h"
 #include "m_node_cinematic.h"
 #include "m_node_abstractnode.h"
@@ -32,10 +33,10 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 {
 	vec2_t nodepos;
 	MN_GetNodeAbsPos(node, nodepos);
-	if (node->dataImageOrModel) {
+	if (node->model) {
 		assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
 		if (cls.playingCinematic == CIN_STATUS_NONE)
-			CIN_PlayCinematic(node->dataImageOrModel);
+			CIN_PlayCinematic(node->model);
 		if (cls.playingCinematic) {
 			/* only set replay to true if video was found and is running */
 			CIN_SetParameters(nodepos[0], nodepos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
@@ -44,8 +45,14 @@ static void MN_CinematicNodeDraw (menuNode_t *node)
 	}
 }
 
+static const value_t properties[] = {
+	{"roq", V_CVAR_OR_STRING, offsetof(menuNode_t, model), 0},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterCinematicNode (nodeBehaviour_t* behaviour)
 {
 	behaviour->name = "cinematic";
 	behaviour->draw = MN_CinematicNodeDraw;
+	behaviour->properties = properties;
 }

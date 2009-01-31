@@ -87,7 +87,7 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	image = MN_GetReferenceString(node->menu, node->image);
 	if (image) {
 		R_DrawPanel(pos, node->size, image, node->blend, texX, texY, panelTemplate);
 	}

@@ -188,7 +188,7 @@ static void MN_SetModelTransform_f (void)
 
 static void MN_ModelNodeDraw (menuNode_t *node)
 {
-	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	const char* ref = MN_GetReferenceString(node->menu, node->model);
 	char source[MAX_VAR];
 	if (ref == NULL || ref[0] == '\0')
 		source[0] = '\0';
@@ -484,8 +484,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.backlerp = 0;
 
 	/* get skin */
-	if (node->dataModelSkinOrCVar && *(char *) node->dataModelSkinOrCVar)
-		mi.skin = atoi(MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar));
+	if (node->skin && *(char *) node->skin)
+		mi.skin = atoi(MN_GetReferenceString(node->menu, node->skin));
 	else
 		mi.skin = 0;
 
@@ -556,7 +556,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			tag = MN_ModelNodeGetAnchorFromTag(tag);
 
 			/* init model name */
-			childRef = MN_GetReferenceString(child->menu, child->dataImageOrModel);
+			childRef = MN_GetReferenceString(child->menu, child->model);
 			if (childRef == NULL || childRef[0] == '\0')
 				childSource[0] = '\0';
 			else
@@ -565,8 +565,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			mi.name = childSource;
 
 			/* init skin */
-			if (child->dataModelSkinOrCVar && *(char *) child->dataModelSkinOrCVar)
-				mi.skin = atoi(MN_GetReferenceString(child->menu, child->dataModelSkinOrCVar));
+			if (child->skin && *(char *) child->skin)
+				mi.skin = atoi(MN_GetReferenceString(child->menu, child->skin));
 			else
 				mi.skin = 0;
 

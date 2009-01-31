@@ -111,7 +111,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		menuNode_t *control = MN_AllocNode("controls");
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->menu = menu;
-		control->dataImageOrModel = NULL;
+		control->image = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		control->size[0] = menu->size[0];
 		control->size[1] = TOP_HEIGHT;
@@ -128,7 +128,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 		const char* command = MN_AllocString(va("mn_close %s;", menu->name), 0);
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->menu = menu;
-		button->dataImageOrModel = "menu/close";
+		button->image = "menu/close";
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;

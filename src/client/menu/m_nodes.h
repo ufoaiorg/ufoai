@@ -84,7 +84,6 @@ typedef struct menuNode_s {
 	const char* tooltip;		/**< holds the tooltip */
 	struct menuIcon_s *icon;	/**< Link to an icon */
 
-	/* not used a lot */
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
 	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
 
@@ -93,8 +92,10 @@ typedef struct menuNode_s {
 	byte align;					/** @todo delete it when its possible */
 
 	/** @todo needs cleanup */
-	void* dataImageOrModel;		/**< an image, or a model, this depends on the node type */
-	void* dataModelSkinOrCVar;	/**< a skin or a cvar, this depends on the node type */
+	void* image;
+	void* model;
+	void* skin;
+	void* cvar;
 
 	/* common color */
 	vec4_t color;				/**< rgba */

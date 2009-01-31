@@ -66,7 +66,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	image = MN_GetReferenceString(node->menu, node->image);
 	if (image) {
 		const int texX = rint(node->texl[0]);
 		texY += node->texl[1];

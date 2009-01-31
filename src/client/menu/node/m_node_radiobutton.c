@@ -47,7 +47,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
 	int status = 0;
-	const float current = MN_GetReferenceFloat(node->menu, node->dataModelSkinOrCVar);
+	const float current = MN_GetReferenceFloat(node->menu, node->cvar);
 
 	if (node->disabled) {
 		status = 2;
@@ -75,23 +75,23 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 
 	/* the cvar string is stored in dataModelSkinOrCVar
 	 * no cvar given? */
-	if (!node->dataModelSkinOrCVar || !*(char*)node->dataModelSkinOrCVar) {
+	if (!node->cvar || !*(char*)node->cvar) {
 		Com_Printf("MN_RadioButtonNodeClick: node '%s' doesn't have a valid cvar assigned (menu %s)\n", node->name, node->menu->name);
 		return;
 	}
 
 	/* its not a cvar! */
 	/** @todo must be checked by the property type */
-	if (Q_strncmp((const char *)node->dataModelSkinOrCVar, "*cvar", 5))
+	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
-	current = MN_GetReferenceFloat(node->menu, node->dataModelSkinOrCVar);
+	current = MN_GetReferenceFloat(node->menu, node->cvar);
 	/* Is we click on the actio button, we can continue */
 	if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON)
 		return;
 
 	{
-		const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
+		const char *cvarName = &((const char *)node->cvar)[6];
 		MN_SetCvar(cvarName, NULL, node->extraData1);
 		if (node->onChange) {
 			MN_ExecuteEventActions(node, node->onChange);

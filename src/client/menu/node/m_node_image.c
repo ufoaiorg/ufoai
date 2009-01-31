@@ -39,9 +39,9 @@ static void MN_ImageNodeLoaded (menuNode_t *node)
 		if (node->texl[0] != 0 || node->texh[0]) {
 			node->size[0] = node->texh[0] - node->texl[0];
 			node->size[1] = node->texh[1] - node->texl[1];
-		} else if (node->dataImageOrModel) {
+		} else if (node->image) {
 			int sx, sy;
-			R_DrawGetPicSize(&sx, &sy, node->dataImageOrModel);
+			R_DrawGetPicSize(&sx, &sy, node->image);
 			node->size[0] = sx;
 			node->size[1] = sy;
 		}
@@ -65,7 +65,7 @@ void MN_ImageNodeDraw(menuNode_t *node)
 	vec2_t nodepos;
 	const int time = cl.time;
 
-	const char* imageName = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	const char* imageName = MN_GetReferenceString(node->menu, node->image);
 	if (!imageName || imageName[0] == '\0')
 		return;
 

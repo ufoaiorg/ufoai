@@ -38,7 +38,7 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 	float shx;
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
-	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	const char* ref = MN_GetReferenceString(node->menu, node->image);
 	float pointWidth;
 	float width;
 	if (!ref || ref[0] == '\0')

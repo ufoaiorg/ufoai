@@ -104,25 +104,25 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	if (option->disabled)
 		return;
 
-	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
+	ref = MN_GetReferenceString(node->menu, node->cvar);
 	/* Is we click on the already active tab? */
 	if (!Q_strcmp(option->value, ref))
 		return;
 
 	/* the cvar string is stored in dataModelSkinOrCVar
 	 * no cvar given? */
-	if (!node->dataModelSkinOrCVar || !*(char*)node->dataModelSkinOrCVar) {
+	if (!node->cvar || !*(char*)node->cvar) {
 		Com_Printf("MN_TabNodeClick: node '%s' doesn't have a valid cvar assigned (menu %s)\n", node->name, node->menu->name);
 		return;
 	}
 
 	/* no cvar? */
-	if (Q_strncmp((const char *)node->dataModelSkinOrCVar, "*cvar", 5))
+	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state) {
-		const char *cvarName = &((const char *)node->dataModelSkinOrCVar)[6];
+		const char *cvarName = &((const char *)node->cvar)[6];
 		MN_SetCvar(cvarName, option->value, 0);
 		if (option->action[0] != '\0') {
 #ifdef DEBUG
@@ -174,11 +174,11 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	int currentX;
 	int allowedWidth;
 
-	const char* image = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	const char* image = MN_GetReferenceString(node->menu, node->image);
 	if (!image)
 		image = "menu/tab";
 
-	ref = MN_GetReferenceString(node->menu, node->dataModelSkinOrCVar);
+	ref = MN_GetReferenceString(node->menu, node->cvar);
 	font = MN_GetFont(node->menu, node);
 
 	if (node->state) {
