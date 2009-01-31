@@ -1,3 +1,7 @@
+/**
+ * @file timer.cpp
+ */
+
 /*
 Copyright (C) 2001-2006, William Joseph.
 All Rights Reserved.
@@ -20,7 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "timer.h"
-
 
 #if defined(WIN32)
 
@@ -74,8 +77,6 @@ MillisecondTime MillisecondTime::current() {
 	return MillisecondTime((time.tv_sec - cached.base()) * 1000 + time.tv_usec / 1000);
 }
 
-
-
 #else
 
 #include <ctime>
@@ -83,7 +84,5 @@ MillisecondTime MillisecondTime::current() {
 MillisecondTime MillisecondTime::current() {
 	return time_from_ticks<std::clock_t>(std::clock(), CLOCKS_PER_SEC);
 }
-
-
 
 #endif

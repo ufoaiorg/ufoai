@@ -1,6 +1,7 @@
 /**
  * @file lastused.cpp
  * @brief Handles last used files
+ * @todo I think there are gtk built-in functions for this
  */
 
 /*
@@ -25,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "lastused.h"
+#include "radiant_i18n.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -100,13 +102,12 @@ static void MRU_SetText(std::size_t index, const char *filename)
 void MRU_AddFile (const char *str)
 {
 	std::size_t i;
-	const char* text;
 
 	// check if file is already in our list
 	for (i = 0; i < MRU_used; i++) {
-		text = MRU_GetText(i);
+		const char *text = MRU_GetText(i);
 
-		if (strcmp(text, str) == 0) {
+		if (!strcmp(text, str)) {
 			// reorder menu
 			for (; i > 0; i--)
 				MRU_SetText(i, MRU_GetText(i - 1));
@@ -126,7 +127,7 @@ void MRU_AddFile (const char *str)
 
 	MRU_SetText(0, str);
 	gtk_widget_set_sensitive(GTK_WIDGET(MRU_items[0]), TRUE);
-	gtk_widget_show(GTK_WIDGET(MRU_items[MRU_used-1]));
+	gtk_widget_show(GTK_WIDGET(MRU_items[MRU_used - 1]));
 }
 
 static void MRU_Init(void)
@@ -165,7 +166,7 @@ static void MRU_Activate (std::size_t index)
 			MRU_SetText(i, MRU_GetText(i + 1));
 
 		if (MRU_used == 0) {
-			gtk_label_set_text(GTK_LABEL(GTK_BIN(MRU_items[0])->child), "Recent Files");
+			gtk_label_set_text(GTK_LABEL(GTK_BIN(MRU_items[0])->child), _("Recent Files"));
 			gtk_widget_set_sensitive(GTK_WIDGET(MRU_items[0]), FALSE);
 		} else {
 			gtk_widget_hide(GTK_WIDGET(MRU_items[MRU_used]));
@@ -181,7 +182,7 @@ public:
 			: m_number(number) {
 	}
 	void load() {
-		if (ConfirmModified("Open Map")) {
+		if (ConfirmModified(_("Open Map"))) {
 			MRU_Activate(m_number - 1);
 		}
 	}
@@ -223,7 +224,7 @@ void MRU_constructMenu (GtkMenu* menu)
 
 void MRU_Construct(void)
 {
-	GlobalPreferenceSystem().registerPreference("Count", SizeImportStringCaller(MRU_used), SizeExportStringCaller(MRU_used));
+	GlobalPreferenceSystem().registerPreference(C_("Last used files count", "Count"), SizeImportStringCaller(MRU_used), SizeExportStringCaller(MRU_used));
 
 	for (std::size_t i = 0; i != MRU_MAX; ++i) {
 		GlobalPreferenceSystem().registerPreference(MRU_keys[i], CopiedStringImportStringCaller(MRU_filenames[i]), CopiedStringExportStringCaller(MRU_filenames[i]));
@@ -231,6 +232,7 @@ void MRU_Construct(void)
 
 	MRU_Init();
 }
+
 void MRU_Destroy (void)
 {
 }
