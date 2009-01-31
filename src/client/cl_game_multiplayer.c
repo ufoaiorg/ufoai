@@ -44,7 +44,7 @@ static void GAME_MP_AutoTeam (void)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 
-		CL_GenerateCharacter(&multiplayerCharacters[i], Cvar_VariableString("cl_team"), EMPL_SOLDIER, NULL);
+		CL_GenerateCharacter(&multiplayerCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
 		/* pack equipment */
 		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &multiplayerCharacters[i]);
 	}

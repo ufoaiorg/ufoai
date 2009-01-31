@@ -295,6 +295,7 @@ menu mp_team
 		string	"_Auto"
 	}
 
+	// @todo Should be a selectbox
 	string race_str
 	{
 		string	"_Race:"
@@ -313,7 +314,7 @@ menu mp_team
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click	{ cmd "mn_modifystring team -1 human:ortnok:taman;" }
+		click	{ cmd "mn_modifystring team -1 phalanx:ortnok:taman;" }
 	}
 	pic race_inc
 	{
@@ -322,7 +323,7 @@ menu mp_team
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click	{ cmd "mn_modifystring team +1 human:ortnok:taman;" }
+		click	{ cmd "mn_modifystring team +1 phalanx:ortnok:taman;" }
 	}
 
 	string current_name
@@ -350,7 +351,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"mn_escpop 5;set mn_slot 0;team_comments;set team human;"
+		cmd	"mn_escpop 5;set mn_slot 0;team_comments;"
 	}
 }
 

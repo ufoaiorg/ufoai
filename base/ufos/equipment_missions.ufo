@@ -51,13 +51,13 @@
 // 4a. select an item:
 //    If several misc items are available, item is randomly chosen with the relative probability given
 //    by the last 2 numbers. If there is at least one item in the equipment definition, you will have an item.
-//    Example: item1 125	item2 250. 
+//    Example: item1 125	item2 250.
 //             item1 has 25/(25+50)*100 = 33 % probability to be selected.
 //             item2 has 50/(25+50)*100 = 67% probability to be selected.
 // 4b. get the number of items:
 //    there is a probability given by the last 2 numbers to get one item, plus
 //    the first number of the probability number.
-//    Example : with previous values, 
+//    Example : with previous values,
 //            you'll have 25% to have 2 item1 (else only 1 item1)
 //            you'll have 50% to have 3 item2 (else only 2 item2)
 //    Therefore, you can use probability greater than 100 to get several grenades.
@@ -482,7 +482,7 @@ equipment alien_base1
 
 // This is used to select items soldiers will have when starting a new game
 // Ne need to define min / max values, this is used only when game starts.
-equipment human_phalanx_initial
+equipment phalanx_initial
 {
 	// Primary
 	assault				25
@@ -519,7 +519,7 @@ equipment human_phalanx_initial
 // HUMAN EQUIPMENT
 // =======================
 
-equipment human_farmers // some will be weaponless
+equipment civilian_farmers // some will be weaponless
 {
 	mininterest			0
 	maxinterest			10000
@@ -531,7 +531,7 @@ equipment human_farmers // some will be weaponless
 	knife				2
 }
 
-equipment human_gang
+equipment civilian_gang
 {
 	mininterest			0
 	maxinterest			10000
@@ -551,7 +551,7 @@ equipment human_gang
 	knife				20
 }
 
-equipment human_police // some may be weaponless
+equipment civilian_police // some may be weaponless
 {
 	mininterest			0
 	maxinterest			10000
@@ -567,7 +567,7 @@ equipment human_police // some may be weaponless
 	light			    7
 }
 
-equipment human_antiterrorist
+equipment civilian_antiterrorist
 {
 	mininterest			0
 	maxinterest			10000
@@ -589,7 +589,7 @@ equipment human_antiterrorist
 	light			    35
 }
 
-equipment human_army
+equipment civilian_army
 {
 	mininterest			0
 	maxinterest			10000

@@ -1,5 +1,5 @@
 // List of researched items at campaign start
-researched rslist_human
+researched rslist_phalanx
 {
 	// BUILDINGS
 	rs_building_entrance
@@ -97,7 +97,7 @@ researched rslist_human
 }
 
 // mark these as researchable
-researchable rslist_human
+researchable rslist_phalanx
 {
 	rs_damage_normal
 	rs_damage_blast
@@ -116,7 +116,7 @@ researchable rslist_human
 }
 
 // mark these explicit as not researchable
-//notresearchable rslist_human
+//notresearchable rslist_phalanx
 //{
 //}
 

@@ -7,7 +7,7 @@
 //	writeme (used yet?)
 // actors <id>
 //	id as defined for "actors" in team_humans.ufo but without the "team" part.
-//	// e.g. human_ugv_ares_w  -> _ugv_ares_w
+//	// e.g. phalanx_ugv_ares_w  -> _ugv_ares_w
 //	todo: Used to get models + skins among other things.
 // ========================================================
 

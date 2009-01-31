@@ -2049,7 +2049,7 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("Campaign id: %s\n", curCampaign->id);
 	Com_Printf("..research list: %s\n", curCampaign->researched);
 	Com_Printf("..equipment: %s\n", curCampaign->equipment);
-	Com_Printf("..team: %s\n", curCampaign->team);
+	Com_Printf("..team: %i\n", curCampaign->team);
 
 	Com_Printf("..salaries:\n");
 	Com_Printf("...soldier_base: %i\n", SALARY_SOLDIER_BASE);

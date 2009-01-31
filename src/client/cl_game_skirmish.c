@@ -58,7 +58,7 @@ static void GAME_SK_Start_f (void)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 
-		CL_GenerateCharacter(&skirmishCharacters[i], Cvar_VariableString("cl_team"), EMPL_SOLDIER, NULL);
+		CL_GenerateCharacter(&skirmishCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
 		/* pack equipment */
 		INVSH_EquipActor(&skirmishCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &skirmishCharacters[i]);
 	}

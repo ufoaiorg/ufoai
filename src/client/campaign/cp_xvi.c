@@ -132,8 +132,8 @@ qboolean XVI_Save (sizebuf_t *sb, void *data)
 	MSG_WriteShort(sb, width);
 	MSG_WriteShort(sb, height);
 
-	for (y = 0; y < height; y++) {
-		for (x = 0; x < width; x++)
+	for (y = 0; y < width; y++) {
+		for (x = 0; x < height; x++)
 			MSG_WriteByte(sb, out[y * width + x]);
 	}
 	Mem_Free(out);

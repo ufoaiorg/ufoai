@@ -317,10 +317,10 @@ ugv_t *CL_GetUgvByID (const char *ugvID)
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t employeeType, const ugv_t *ugvType)
+void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeType, const ugv_t *ugvType)
 {
 	char teamDefName[MAX_VAR];
-	int teamValue;
+	const char *teamID = Com_ValueToStr(&team, V_TEAM, 0);
 
 	memset(chr, 0, sizeof(*chr));
 
@@ -329,14 +329,6 @@ void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t em
 
 	/* get ucn */
 	chr->ucn = gd.nextUCN++;
-
-	/* if not human - then we are TEAM_ALIEN */
-	if (strstr(team, "human"))
-		teamValue = TEAM_PHALANX;
-	else if (strstr(team, "alien"))
-		teamValue = TEAM_ALIEN;
-	else
-		teamValue = TEAM_CIVILIAN;
 
 	/* Set default reaction-mode for all character-types to "once".
 	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa G_SpawnAIPlayer */
@@ -349,26 +341,26 @@ void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t em
 	case EMPL_SOLDIER:
 		chr->score.rank = CL_GetRankIdx("rifleman");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
-		Q_strncpyz(teamDefName, team, sizeof(teamDefName));
+		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
+		Q_strncpyz(teamDefName, teamID, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
 		chr->score.rank = CL_GetRankIdx("scientist");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
+		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", teamID);
 		break;
 	case EMPL_PILOT:
 		chr->score.rank = CL_GetRankIdx("pilot");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", team);
+		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", teamID);
 		break;
 	case EMPL_WORKER:
 		chr->score.rank = CL_GetRankIdx("worker");
 		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
+		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", teamID);
 		break;
 	case EMPL_ROBOT:
 		if (!ugvType)
@@ -378,9 +370,9 @@ void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t em
 
 		/* Create attributes. */
 		/** @todo get the min/max values from ugv_t def? */
-		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
+		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
 
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", team, ugvType->actors);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");

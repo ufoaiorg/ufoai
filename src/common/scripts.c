@@ -254,6 +254,8 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = TEAM_PHALANX;
 		else if (!Q_strcmp(token, "alien"))
 			*(int *) b = TEAM_ALIEN;
+		else
+			Sys_Error("Unknown team string: '%s' found in script files", token);
 		break;
 
 	case V_INT:
@@ -570,6 +572,8 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			*(int *) b = TEAM_PHALANX;
 		else if (!Q_strcmp(set, "alien"))
 			*(int *) b = TEAM_ALIEN;
+		else
+			Sys_Error("Unknown team given: '%s'", (const char *)set);
 		return ALIGN(sizeof(int));
 
 	case V_MENUTEXTID:
@@ -703,7 +707,7 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		case TEAM_ALIEN:
 			return "alien";
 		default:
-			return "unknown";
+			Sys_Error("Unknown team id '%i'", *(const int *) b);
 		}
 
 	case V_BASEID:
@@ -1918,9 +1922,9 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
  * @return Alien race
  * @sa racetypes_t
  */
-static int CL_GetAlienRaceByID (const char *type)
+static int CL_GetRaceByID (const char *type)
 {
-	if (!Q_strncmp(type, "human", MAX_VAR))
+	if (!Q_strncmp(type, "phalanx", MAX_VAR))
 		return RACE_PHALANX_HUMAN;
 	else if (!Q_strncmp(type, "civilian", MAX_VAR))
 		return RACE_CIVILIAN;
@@ -1935,7 +1939,7 @@ static int CL_GetAlienRaceByID (const char *type)
 	else if (!Q_strncmp(type, "shevaar", MAX_VAR))
 		return RACE_SHEVAAR;
 	else {
-		Com_Printf("CL_GetAlienRaceByID: unknown alien race '%s'\n", type);
+		Com_Printf("CL_GetRaceByID: unknown alien race '%s'\n", type);
 		return RACE_PHALANX_HUMAN;
 	}
 }
@@ -2037,7 +2041,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					Sys_Error("Com_ParseTeam: race is not defined");
-				td->race = CL_GetAlienRaceByID(token);
+				td->race = CL_GetRaceByID(token);
 			} else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}

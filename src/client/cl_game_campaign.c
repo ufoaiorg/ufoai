@@ -198,7 +198,7 @@ static void GAME_CP_CampaignListClick_f (void)
 	}
 
 	Cvar_Set("cl_campaign", campaigns[num].id);
-	if (!Q_strcmp(campaigns[num].team, "human"))
+	if (campaigns[num].team == TEAM_PHALANX)
 		racetype = _("Human");
 	else
 		racetype = _("Aliens");

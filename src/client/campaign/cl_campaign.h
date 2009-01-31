@@ -249,7 +249,7 @@ typedef struct campaign_s {
 	int idx;					/**< own index in global campaign array */
 	char id[MAX_VAR];			/**< id of the campaign */
 	char name[MAX_VAR];			/**< name of the campaign */
-	char team[MAX_VAR];			/**< what team can play this campaign */
+	int team;					/**< what team can play this campaign */
 	char researched[MAX_VAR];	/**< name of the researched tech list to use on campaign start */
 	char equipment[MAX_VAR];	/**< name of the equipment list to use on campaign start */
 	char market[MAX_VAR];		/**< name of the market list containing initial items on market */

@@ -2,7 +2,7 @@
 
 	useable
 		Parameter that defines which team can use it:
-		human, alien, civilian
+		phalanx, alien, civilian
 
 	protection ("dmgweight" values)
 		See "damagetypes" below (the ones without the "_").
@@ -72,7 +72,7 @@ item light
 	scale		0.7
 	price		1400
 	size		60
-	useable		human
+	useable		phalanx
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -133,7 +133,7 @@ item lightadv
 	scale		0.7
 	price		1600
 	size		60
-	useable		human
+	useable		phalanx
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -194,7 +194,7 @@ item medium
 	scale		0.7
 	price		7500
 	size		120
-	useable		human
+	useable		phalanx
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -255,7 +255,7 @@ item power
 	scale		0.7
 	price		32000
 	size		150
-	useable		human
+	useable		phalanx
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -314,7 +314,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	useable		human
+//	useable		phalanx
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -371,7 +371,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	useable		human
+//	useable		phalanx
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -428,7 +428,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	useable		human
+//	useable		phalanx
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -485,7 +485,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
-//	useable		human
+//	useable		phalanx
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {

@@ -40,7 +40,7 @@
 // HUMANS
 //========================================================================
 
-team human
+team phalanx
 {
 	size 1
 	hit_particle blood
@@ -541,7 +541,7 @@ team human
 // SCIENTISTS
 // ======================
 
-team human_scientist
+team phalanx_scientist
 {
 	size 1
 	hit_particle blood
@@ -890,7 +890,7 @@ team human_scientist
 // PILOTS
 // ======================
 
-team human_pilot
+team phalanx_pilot
 {
 	size 1
 	hit_particle blood
@@ -1240,7 +1240,7 @@ team human_pilot
 // WORKERS
 // ======================
 
-team human_worker
+team phalanx_worker
 {
 	size 1
 	hit_particle blood
@@ -1586,7 +1586,7 @@ team human_worker
 // UGVs
 // ======================
 
-team human_ugv_phoenix
+team phalanx_ugv_phoenix
 {
 	size	2
 	race	robot
@@ -1610,7 +1610,7 @@ team human_ugv_phoenix
 }
 
 // wheeled ares ugv
-team human_ugv_ares_w
+team phalanx_ugv_ares_w
 {
 	size	2
 	race	robot

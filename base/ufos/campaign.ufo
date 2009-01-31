@@ -2,7 +2,7 @@ campaign veryhard
 {
 	name		"_Very Hard Campaign"
 	text		"_veryhard_campaign_txt"
-	team		human
+	team		phalanx
 	soldiers	6
 	scientists	2
 	workers		1
@@ -11,7 +11,7 @@ campaign veryhard
 	maxdebts	50000
 	xvirate		30
 	firstbase	balanced
-	researched rslist_human
+	researched	rslist_phalanx
 	equipment	campaign_player
 	market		campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
@@ -27,7 +27,7 @@ campaign hard
 {
 	name		"_Hard Campaign"
 	text		"_hard_campaign_txt"
-	team		human
+	team		phalanx
 	soldiers	7
 	scientists	3
 	workers		2
@@ -39,7 +39,7 @@ campaign hard
 		soldier_base 4000
 	}
 	firstbase	balanced
-	researched rslist_human
+	researched	rslist_phalanx
 	equipment	campaign_player
 	market		campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
@@ -55,7 +55,7 @@ campaign main
 {
 	name		"_Standard Campaign"
 	text		"_standard_campaign_txt"
-	team		human
+	team		phalanx
 	soldiers	9
 	scientists	6
 	workers		14
@@ -85,7 +85,7 @@ campaign main
 		debt_interest 0.005;
 	}
 	firstbase	balanced
-	researched rslist_human
+	researched	rslist_phalanx
 	ugvs	2
 	equipment	campaign_player
 	market		campaign_initial_market
@@ -102,7 +102,7 @@ campaign easy
 {
 	name		"_Easy Campaign"
 	text		"_easy_campaign_txt"
-	team		human
+	team		phalanx
 	soldiers	25
 	scientists	16
 	workers		10
@@ -114,7 +114,7 @@ campaign easy
 		soldier_base 3000
 	}
 	firstbase	balanced
-	researched rslist_human
+	researched	rslist_phalanx
 	equipment	campaign_player
 	market		campaign_initial_market
 	asymptotic_market	campaign_asymptotic_market
@@ -130,7 +130,7 @@ campaign veryeasy
 {
 	name		"_Very Easy Campaign"
 	text		"_veryeasy_campaign_txt"
-	team		human
+	team		phalanx
 	soldiers	35
 	scientists	26
 	workers		20
@@ -157,7 +157,7 @@ campaign veryeasy
 		admin_robot 50;
 	}
 	firstbase	balanced
-	researched rslist_human
+	researched	rslist_phalanx
 	equipment	campaign_player
 	market		campaign_initial_market
 	asymptotic_market		campaign_asymptotic_market

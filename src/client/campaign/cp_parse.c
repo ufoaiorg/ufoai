@@ -384,7 +384,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 /* =========================================================== */
 
 static const value_t campaign_vals[] = {
-	{"team", V_STRING, offsetof(campaign_t, team), 0},
+	{"team", V_TEAM, offsetof(campaign_t, team), 0},
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
 	{"workers", V_INT, offsetof(campaign_t, workers), MEMBER_SIZEOF(campaign_t, workers)},
 	{"xvirate", V_INT, offsetof(campaign_t, maxAllowedXVIRateUntilLost), MEMBER_SIZEOF(campaign_t, maxAllowedXVIRateUntilLost)},
@@ -443,7 +443,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
 
 	/* some default values */
-	Q_strncpyz(cp->team, "human", sizeof(cp->team));
+	cp->team = TEAM_PHALANX;
 	Q_strncpyz(cp->researched, "researched_human", sizeof(cp->researched));
 
 	/* get it's body */
