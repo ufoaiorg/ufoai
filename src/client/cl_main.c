@@ -203,9 +203,7 @@ void CL_Drop (void)
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
 
-	/** @todo remove this if, if no problem (2009-01-31) */
 	if (MN_GetActiveMenu() != NULL) {
-		assert(qfalse);
 		MN_PopMenu(qtrue);
 	}
 
