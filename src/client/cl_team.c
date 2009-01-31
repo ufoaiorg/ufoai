@@ -646,10 +646,8 @@ static void CL_ThisSoldier_f (void)
 static void CL_UpdateObject_f (void)
 {
 	int num;
-	objDef_t *obj;
-	int filter;
-	cvar_t *var;
-	qboolean mustWeChangeTab = qtrue;
+	const objDef_t *obj;
+	qboolean mustWeChangeTab;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -659,6 +657,8 @@ static void CL_UpdateObject_f (void)
 
 	if (Cmd_Argc() == 3)
 		mustWeChangeTab = atoi(Cmd_Argv(2)) >= 1;
+	else
+		mustWeChangeTab = qtrue;
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= csi.numODs) {
@@ -672,8 +672,8 @@ static void CL_UpdateObject_f (void)
 
 	/* update tab */
 	if (mustWeChangeTab) {
-		var = Cvar_FindVar("mn_equiptype");
-		filter = INV_GetFilterFromItem(obj);
+		const cvar_t *var = Cvar_FindVar("mn_equiptype");
+		const int filter = INV_GetFilterFromItem(obj);
 		if (var->integer != filter) {
 			Cvar_SetValue("mn_equiptype", filter);
 			MN_ExecuteConfunc("update_item_list\n");
