@@ -584,10 +584,7 @@ static void CL_ActorSoldierSelect_f (void)
 	/* we are still in the menu */
 	if (!Q_strcmp(activeMenu->name, "employees")) {
 		/* this is hire menu: we can select soldiers, worker, pilots, or researcher */
-		/** @todo remove this test, employee_list_click can do the same better */
-		/*if (num < employeesInCurrentList) {*/
-			Cmd_ExecuteString(va("employee_list_click %i", num));
-		/*}*/
+		Cmd_ExecuteString(va("employee_list_click %i", num));
 	} else if (!Q_strcmp(activeMenu->name, "team")) {
 		Cmd_ExecuteString(va("team_select %i", num));
 	} else if (!Q_strcmp(activeMenu->name, "equipment")) {
