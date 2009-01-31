@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 #include "cl_game.h"
 #include "cl_team.h"
-#include "multiplayer/mp_team.h"
 #include "cl_actor.h"
 #include "cl_rank.h"
 #include "cl_ugv.h"
@@ -503,8 +502,7 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	/** @todo We may want to change this to use the type->ammo[] info. */
 	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
-		if (INVSH_LoadableInWeapon(&csi.ods[i], type)
-		&& (ed->numLoose[i] > item.a)) {
+		if (INVSH_LoadableInWeapon(&csi.ods[i], type) && (ed->numLoose[i] > item.a)) {
 			if (item.a > 0) {
 				/* We previously found some ammo, but we've now found other
 				 * loose ammo of a different (but appropriate) type with
