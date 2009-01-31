@@ -187,10 +187,9 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 }
 
 /**
- * @brief Return a given ugv_t pointer
- * @param[in] ugvID Which base the employee should be hired in.
+ * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
+ * @param[in] ugvID The script id of the UGV definition you are looking for
  * @return ugv_t pointer or NULL if not found.
- * @note If there ever is a problem because an id with the name "NULL" isn't found then this is because NULL pointers in E_Save/Employee_t are stored like that (duh) ;).
  */
 ugv_t *CL_GetUgvByID (const char *ugvID)
 {
