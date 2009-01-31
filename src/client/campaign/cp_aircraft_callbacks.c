@@ -293,7 +293,7 @@ static void AIR_AircraftUpdateList_f ()
 
 	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
 		const aircraft_t * aircraft = &baseCurrent->aircraft[i];
-		Q_strcat(buffer, aircraft->name, sizeof(buffer));
+		Q_strcat(buffer, _(aircraft->name), sizeof(buffer));
 		Q_strcat(buffer, "\n", sizeof(buffer));
 	}
 
@@ -316,7 +316,6 @@ void AIR_InitCallbacks (void)
 	Cmd_AddCommand("aircraft_select", AIR_AircraftSelect_f, NULL);
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
 	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, NULL);
-
 }
 
 void AIR_ShutdownCallbacks (void)

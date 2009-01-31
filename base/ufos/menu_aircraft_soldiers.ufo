@@ -108,90 +108,90 @@ menu team extends iaircraft
 
 	pic bt_equip0
 	{
-		pos	"28 470"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 470"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	pic bt_equip1
 	{
-		pos	"28 505"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 505"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	pic bt_equip2
 	{
-		pos	"28 540"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 540"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	pic bt_equip3
 	{
-		pos	"28 575"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 575"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	pic bt_equip4
 	{
-		pos	"28 610"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 610"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	pic bt_equip5
 	{
-		pos	"28 645"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 645"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	pic bt_equip6
 	{
-		pos	"28 680"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 680"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	pic bt_equip7
 	{
-		pos	"28 715"
-		image menu/button_equip
-		mousefx false
-		texl	"0 0"
-		texh	"16 16"
+		pos			"38 715"
+		image		menu/button_equip
+		mousefx		false
+		texl		"0 0"
+		texh		"16 16"
+		invis		true
 		in
-		invis	true
 	}
 
 	// checkbox
@@ -415,78 +415,72 @@ menu team extends iaircraft
 		string "It should be nice to create a mockup and prototype to equip soldiers with another aircraft tab. It should be a very nice short cut"
 	}
 
-	string	name { pos "380 700" string "*cvar mn_name" }
-	string	rank_lbl { pos "380 720" string "*cvar mn_chrrank" }
+	string	name { pos "380 700" size "165 20" string "*cvar mn_name" }
+	string	rank_lbl { pos "380 720" size "165 20" string "*cvar mn_chrrank" }
 
-	pic pwr_bdr    { pos "650 478"  image menu/bar_border }
-	tbar pwr_bar   { pos "652 478"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
-	string pwr_lbl { pos "600 470"  string "_Strength:" }
-	string pwr_val { pos "956 470"  string "*cvar mn_tpwr" align ur }
+	pic pwr_bdr    { pos "750 472"  image menu/bar_border }
+	tbar pwr_bar   { pos "752 472"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string pwr_lbl { pos "585 470" size "200 20" string "_Strength:" }
+	string pwr_val { pos "850 470" size "150 20" string "*cvar mn_tpwr" textalign ur }
 
-	pic spd_bdr    { pos "650 501" image menu/bar_border }
-	tbar spd_bar   { pos "652 501" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
-	string spd_lbl { pos "600 493" string "_Speed:" }
-	string spd_val { pos "956 493" string "*cvar mn_tspd" align ur }
+	pic spd_bdr    { pos "750 495" image menu/bar_border }
+	tbar spd_bar   { pos "752 495" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string spd_lbl { pos "585 493" size "200 20" string "_Speed:" }
+	string spd_val { pos "850 493" size "150 20" string "*cvar mn_tspd" textalign ur }
 
-	pic acc_bdr    { pos "650 524" image menu/bar_border }
-	tbar acc_bar   { pos "652 524" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
-	string acc_lbl { pos "600 516" string "_Accuracy:" }
-	string acc_val { pos "956 516" string "*cvar mn_tacc" align ur }
+	pic acc_bdr    { pos "750 518" image menu/bar_border }
+	tbar acc_bar   { pos "752 518" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string acc_lbl { pos "585 516" size "200 20" string "_Accuracy:" }
+	string acc_val { pos "850 516" size "150 20" string "*cvar mn_tacc" textalign ur }
 
-	pic mnd_bdr    { pos "650 547" image menu/bar_border }
-	tbar mnd_bar   { pos "652 547" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
-	string mnd_lbl { pos "600 539" string "_Mind:" }
-	string mnd_val { pos "956 539" string "*cvar mn_tmnd" align ur }
+	pic mnd_bdr    { pos "750 541" image menu/bar_border }
+	tbar mnd_bar   { pos "752 541" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	string mnd_lbl { pos "585 539" size "200 20" string "_Mind:" }
+	string mnd_val { pos "850 539" size "150 20" string "*cvar mn_tmnd" textalign ur }
 
-	pic cls_bdr    { pos "650 570" image menu/bar_border }
-	tbar cls_bar   { pos "652 570" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
-	string cls_lbl { pos "600 562" string "_Close Combat:" }
-	string cls_val { pos "956 562" string "*cvar mn_tcls" align ur }
+	pic cls_bdr    { pos "750 564" image menu/bar_border }
+	tbar cls_bar   { pos "752 564" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string cls_lbl { pos "585 562" size "200 20" string "_Close Combat:" }
+	string cls_val { pos "850 562" size "150 20" string "*cvar mn_tcls" textalign ur }
 
-	pic hvy_bdr    { pos "650 593" image menu/bar_border }
-	tbar hvy_bar   { pos "652 593" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
-	string hvy_lbl { pos "600 585" string "_Heavy Weapons:" }
-	string hvy_val { pos "956 585" string "*cvar mn_thvy" align ur }
+	pic hvy_bdr    { pos "750 587" image menu/bar_border }
+	tbar hvy_bar   { pos "752 587" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string hvy_lbl { pos "585 585" size "200 20" string "_Heavy Weapons:" }
+	string hvy_val { pos "850 585" size "150 20" string "*cvar mn_thvy" textalign ur }
 
-	pic ass_bdr    { pos "650 616" image menu/bar_border }
-	tbar ass_bar   { pos "652 616" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
-	string ass_lbl { pos "600 608" string "_Assault Weapons:" }
-	string ass_val { pos "956 608" string "*cvar mn_tass" align ur }
+	pic ass_bdr    { pos "750 610" image menu/bar_border }
+	tbar ass_bar   { pos "752 610" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string ass_lbl { pos "585 608" size "200 20" string "_Assault Weapons:" }
+	string ass_val { pos "850 608" size "150 20" string "*cvar mn_tass" textalign ur }
 
-	pic snp_bdr    { pos "650 639" image menu/bar_border }
-	tbar snp_bar   { pos "652 639" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
-	string snp_lbl { pos "600 631" string "_Sniper Rifles:" }
-	string snp_val { pos "956 631" string "*cvar mn_tsnp" align ur }
+	pic snp_bdr    { pos "750 633" image menu/bar_border }
+	tbar snp_bar   { pos "752 633" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string snp_lbl { pos "585 631" size "200 20" string "_Sniper Rifles:" }
+	string snp_val { pos "850 631" size "150 20" string "*cvar mn_tsnp" textalign ur }
 
-	pic exp_bdr    { pos "650 662" image menu/bar_border }
-	tbar exp_bar   { pos "652 662" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
-	string exp_lbl { pos "600 654" string "_High-Explosives:" }
-	string exp_val { pos "956 654" string "*cvar mn_texp" align ur }
+	pic exp_bdr    { pos "750 656" image menu/bar_border }
+	tbar exp_bar   { pos "752 656" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	string exp_lbl { pos "585 654" size "200 20" string "_High-Explosives:" }
+	string exp_val { pos "850 654" size "150 20" string "*cvar mn_texp" textalign ur }
 
-	pic hp_bdr    { pos "650 685" image menu/bar_border }
-	tbar hp_bar
-	{
-		visiblewhen "mn_show_employee == 1"
+	pic hp_bdr { pos "750 679" image menu/bar_border }
+	tbar hp_bar { 
 		current	"*cvar mn_vhp"
 		max	"*cvar mn_vhpmax"
-		pos "652 685"
+		pos "752 679"
 		point_width 2.2
 		gap_width 3
 		texl "3 0"
 		image menu/bar_health
 	}
-	string hp_lbl { pos "600 677" string "_Health:" }
-	string hp_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "956 677" string "*cvar mn_thp" align ur
-	}
+	string hp_lbl { pos "585 677" size "200 20" string "_Health:" }
+	string hp_val { pos "850 677" size "150 20" string "*cvar mn_thp" textalign ur }
 
-	string	missions_lbl { pos "600 700" string "_Missions Performed:" }
-	string	missions_val { pos "956 700" string "*cvar mn_chrmis" align ur }
+	string	missions_lbl { pos "585 700" size "200 20" string "_Missions Performed:" }
+	string	missions_val { pos "850 700" size "150 20" string "*cvar mn_chrmis" textalign ur }
 
-	string	kills_lbl { pos "600 723" string "_Enemies Killed:" }
-	string	kills_val { pos "956 723" string "*cvar mn_chrkillalien" align ur }
+	string	kills_lbl { pos "585 723" size "200 20" string "_Enemies Killed:" }
+	string	kills_val { pos "850 723" size "150 20" string "*cvar mn_chrkillalien" textalign ur }
 
 	todo better_stats_layout {
 		pos "650 460"
