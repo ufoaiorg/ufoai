@@ -586,7 +586,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	invList_t *ic, *next;
 	int p, container;
 
-	/** Iterate through in container order (right hand, left hand, belt,
+	/* Iterate through in container order (right hand, left hand, belt,
 	 * holster, backpack) at the top level, i.e. each squad member reloads
 	 * her right hand, then each reloads his left hand, etc. The effect
 	 * of this is that when things are tight, everyone has the opportunity
@@ -603,7 +603,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	for (p = 0; p < aircraft->maxTeamSize; p++) {
 		if (aircraft->acTeam[p] && aircraft->acTeam[p]->ugv) {
-			/** This is an UGV */
+			/* This is an UGV */
 			character_t *chr = &aircraft->acTeam[p]->chr;
 			assert(chr);
 
@@ -699,7 +699,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	p = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
-		Cbuf_AddText(va("equipdisable%i\n", p));
+		MN_ExecuteConfunc("equipdisable%i", p);
 	}
 
 	if (chrDisplayList.num > 0)

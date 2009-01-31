@@ -80,7 +80,7 @@ static void E_EmployeeListClick_f (void)
 		return;
 
 	/* the + indicates, that values bigger than cl_numnames could be possible */
-	Cbuf_AddText(va("employee_select +%i\n", num));
+	Cmd_ExecuteString(va("employee_select +%i\n", num));
 }
 
 /**
