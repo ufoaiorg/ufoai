@@ -81,9 +81,7 @@ static const objDef_t *BS_GetObjectDefition (const buyListEntry_t *entry)
  */
 static int BS_GetBuySellFactor (void)
 {
-	const float NUM_CLICK_PARAMETER = 13.0f;		/**< The higher this value, the slowest buy/sell factor will change */
-	const int numItems = exp(mn.mouseRepeat.numClick / NUM_CLICK_PARAMETER);
-	return min(MAX_BS_FACTORS, numItems);
+	return 1;
 }
 
 /**
