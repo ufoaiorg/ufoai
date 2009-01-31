@@ -328,7 +328,7 @@ void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t em
 	/* get ucn */
 	chr->ucn = gd.nextUCN++;
 
-	/* if not human - then we TEAM_ALIEN */
+	/* if not human - then we are TEAM_ALIEN */
 	if (strstr(team, "human"))
 		teamValue = TEAM_PHALANX;
 	else if (strstr(team, "alien"))
@@ -336,8 +336,8 @@ void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t em
 	else
 		teamValue = TEAM_CIVILIAN;
 
-	/** Set default reaction-mode for all character-types to "once".
-	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa g_ai.c:G_SpawnAIPlayer */
+	/* Set default reaction-mode for all character-types to "once".
+	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa G_SpawnAIPlayer */
 	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
 	CL_CharacterSetShotSettings(chr, -1, -1, -1);
@@ -636,7 +636,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 
 /**
  * @brief Clears all containers that are temp containers (see script definition).
- * @sa CL_GenerateEquipment_f
+ * @sa CL_UpdateEquipmentMenuParameters_f
  * @sa MP_SaveTeamMultiplayerInfo
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @todo campaign mode only function
@@ -666,7 +666,7 @@ void CL_CleanTempInventory (base_t* base)
  * In the first case the EMPL_SOLDIER stuff below needs to be changed.
  * @todo campaign mode only function
  */
-static void CL_GenerateEquipment_f (void)
+static void CL_UpdateEquipmentMenuParameters_f (void)
 {
 	equipDef_t unused;
 	int i, p;
@@ -680,7 +680,7 @@ static void CL_GenerateEquipment_f (void)
 	if (!aircraft)
 		return;
 
-	/* Popup if no soldiers are assigned to the current aircraft. */
+	/* no soldiers are assigned to the current aircraft. */
 	if (!aircraft->teamSize) {
 		MN_PopMenu(qfalse);
 		return;
@@ -689,10 +689,10 @@ static void CL_GenerateEquipment_f (void)
 	/* Get team. */
 	if (strstr(Cvar_VariableString("team"), "alien")) {
 		team = TEAM_ALIEN;
-		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f: team alien, id: %i\n", team);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateEquipmentMenuParameters_f: team alien, id: %i\n", team);
 	} else {
 		team = TEAM_PHALANX;
-		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f: team human, id: %i\n", team);
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateEquipmentMenuParameters_f: team human, id: %i\n", team);
 	}
 
 	Cvar_ForceSet("cl_selected", "0");
@@ -1169,7 +1169,7 @@ static void CL_AssignSoldier_f (void)
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
-	Cmd_AddCommand("genequip", CL_GenerateEquipment_f, NULL);
+	Cmd_AddCommand("genequip", CL_UpdateEquipmentMenuParameters_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
