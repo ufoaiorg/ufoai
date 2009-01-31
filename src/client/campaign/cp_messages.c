@@ -32,37 +32,6 @@ message_t *cp_messageStack;
 chatMessage_t *cp_chatMessageStack;
 
 /**
- * @brief Script command to show all messages on the stack
- */
-static void MS_ShowMessagesOnStack_f (void)
-{
-	message_t *m = cp_messageStack;
-
-	while (m) {
-		Com_Printf("%s: %s\n", m->title, m->text);
-		m = m->next;
-	}
-}
-
-#ifdef DEBUG
-/**
- * @brief Script command to delete all messages
- */
-static void MS_DeleteMessages_f (void)
-{
-	message_t *m = cp_messageStack;
-	message_t *mtmp;
-
-	while (m) {
-		mtmp = m->next;
-		Mem_Free(m);
-		m = mtmp;
-	}
-	cp_messageStack = NULL;
-}
-#endif
-
-/**
  * @brief Returns formatted text of a message timestamp
  * @param[in] text Buffer to hold the final result
  * @param[in] message The message to convert into text
@@ -181,67 +150,6 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	return mess;
 }
 
-/**< @brief buffer that hold all printed chat messages for menu display */
-static char *chatBuffer = NULL;
-static menuNode_t* chatBufferNode = NULL;
-
-/**
- * @brief Displays a chat on the hud and add it to the chat buffer
- */
-void MS_AddChatMessage (const char *text)
-{
-	/* allocate memory for new chat message */
-	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(chatMessage_t), cl_genericPool, CL_TAG_NONE);
-
-	/* push the new chat message at the beginning of the stack */
-	chat->next = cp_chatMessageStack;
-	cp_chatMessageStack = chat;
-	chat->text = Mem_PoolStrDup(text, cl_genericPool, CL_TAG_NONE);
-
-	if (!chatBuffer) {
-		chatBuffer = (char*)Mem_PoolAlloc(sizeof(char) * MAX_MESSAGE_TEXT, cl_genericPool, CL_TAG_NONE);
-		if (!chatBuffer) {
-			Com_Printf("Could not allocate chat buffer\n");
-			return;
-		}
-		/* only link this once */
-		MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
-	}
-	if (!chatBufferNode) {
-		const menu_t* menu = MN_GetMenu(mn_hud->string);
-		if (!menu)
-			Sys_Error("Could not get hud menu: %s\n", mn_hud->string);
-		chatBufferNode = MN_GetNode(menu, "chatscreen");
-	}
-
-	*chatBuffer = '\0'; /* clear buffer */
-	do {
-		if (strlen(chatBuffer) + strlen(chat->text) >= MAX_MESSAGE_TEXT)
-			break;
-		Q_strcat(chatBuffer, chat->text, MAX_MESSAGE_TEXT); /* fill buffer */
-		chat = chat->next;
-	} while (chat);
-
-	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
-	if (chatBufferNode) {
-		Cmd_ExecuteString("unhide_chatscreen");
-		chatBufferNode->menu->eventTime = cls.realtime;
-	}
-}
-
-/**
- * @brief Script command to show all chat messages on the stack
- */
-static void MS_ShowChatMessagesOnStack_f (void)
-{
-	chatMessage_t *m = cp_chatMessageStack;
-
-	while (m) {
-		Com_Printf("%s", m->text);
-		m = m->next;
-	}
-}
-
 /**
  * @brief Saved the complete message stack
  * @sa SAV_GameSave
@@ -345,11 +253,5 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 
 void MS_MessageInit (void)
 {
-	Cmd_AddCommand("chatlist", MS_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
-	Cmd_AddCommand("messagelist", MS_ShowMessagesOnStack_f, "Print all messages to the game console");
-#ifdef DEBUG
-	Cmd_AddCommand("debug_clear_messagelist", MS_DeleteMessages_f, "Clears messagelist");
-#endif
-
 	MSO_Init();
 }

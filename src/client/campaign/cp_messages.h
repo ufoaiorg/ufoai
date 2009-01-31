@@ -71,7 +71,6 @@ typedef struct chatMessage_s {
 
 message_t *MS_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
 message_t *MS_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
-void MS_AddChatMessage(const char *text);
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];

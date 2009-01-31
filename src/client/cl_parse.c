@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "cl_hud.h"
 #include "menu/m_popup.h"
+#include "multiplayer/mp_chatmessages.h"
 
 /**
  * @brief see also svc_ops_e in common.h
@@ -830,14 +831,11 @@ static void CL_AddEdict (struct dbuffer * msg)
  */
 static void CL_EndRoundAnnounce (struct dbuffer * msg)
 {
-	int playerNum, team;
-	const char *playerName;
 	char buf[128];
-
 	/* get the needed values */
-	playerNum = NET_ReadByte(msg);
-	team = NET_ReadByte(msg);
-	playerName = cl.configstrings[CS_PLAYERNAMES + playerNum];
+	const int playerNum = NET_ReadByte(msg);
+	const int team = NET_ReadByte(msg);
+	const char *playerName = cl.configstrings[CS_PLAYERNAMES + playerNum];
 
 	/* not needed to announce this for singleplayer games */
 	if (!GAME_IsMultiplayer())
@@ -847,18 +845,11 @@ static void CL_EndRoundAnnounce (struct dbuffer * msg)
 	if (cl.pnum == playerNum) {
 		/* add translated message to chat buffer */
 		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
-		MS_AddChatMessage(buf);
-
-		/* don't translate on the game console */
-		Com_Printf("You've ended your round\n");
 	} else {
 		/* add translated message to chat buffer */
 		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
-		MS_AddChatMessage(buf);
-
-		/* don't translate on the game console */
-		Com_Printf("%s ended his round (team %i)\n", playerName, team);
 	}
+	MP_AddChatMessage(buf);
 }
 
 static le_t	*lastMoving;
@@ -1755,7 +1746,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		switch (i) {
 		case PRINT_CHAT:
 			S_StartLocalSound("misc/talk");
-			MS_AddChatMessage(s);
+			MP_AddChatMessage(s);
 			/* skip format strings */
 			if (s[0] == '^')
 				s += 2;

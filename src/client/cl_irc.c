@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_irc.h"
 #include "menu/m_popup.h"
+#include "multiplayer/mp_chatmessages.h"
 
 #ifdef _WIN32
 #	include <winerror.h>
@@ -449,7 +450,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg)
 	menu = MN_GetActiveMenu(); /* get current menu from stack */
 	if (irc_showIfNotInMenu->integer && Q_strncmp(menu->name, "irc", 4)) {
 		S_StartLocalSound("misc/talk");
-		MS_AddChatMessage(msg);
+		MP_AddChatMessage(msg);
 		return qtrue;
 	}
 	return qfalse;
@@ -745,10 +746,10 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			/* check whether this is no message to the channel - but to the user */
 			if (params && Q_strcmp(params, irc_defaultChannel->string)) {
 				S_StartLocalSound("misc/lobbyprivmsg");
-				MS_AddChatMessage(va("<%s> %s\n", nick, trailing));
+				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSound("misc/lobbyprivmsg");
-				MS_AddChatMessage(va("<%s> %s\n", nick, trailing));
+				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
 				if (Q_strcmp(menu->name, "irc") && Q_strcmp(menu->name, mn_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
 					MN_PushMenu("chat_popup", NULL);

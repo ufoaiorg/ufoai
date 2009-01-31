@@ -85,6 +85,7 @@ CLIENT_SRCS = \
 	\
 	client/multiplayer/mp_callbacks.c \
 	client/multiplayer/mp_serverlist.c \
+	client/multiplayer/mp_chatmessages.c \
 	client/multiplayer/mp_team.c \
 	\
 	client/menu/m_actions.c \
