@@ -509,52 +509,52 @@ menu hospital_employee
 	string pwr_lbl { pos "690 82" size "180 20" string "_Strength:" longlines prettychop }
 	string pwr_val { pos "860 82" size "130 20" string "*cvar mn_tpwr" textalign ur longlines prettychop }
 	pic pwr_bdr    { pos "707 98"  image menu/bar_border }
-	tbar pwr_bar   { pos "710 98"  max 100 current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	tbar pwr_bar   { pos "710 98"  max 100 current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
 	string spd_lbl { pos "690 112" size "180 20" string "_Speed:" longlines prettychop }
 	string spd_val { pos "860 112" size "130 20" string "*cvar mn_tspd" textalign ur longlines prettychop }
 	pic spd_bdr    { pos "707 128" image menu/bar_border }
-	tbar spd_bar   { pos "710 128" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	tbar spd_bar   { pos "710 128" current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
 	string acc_lbl { pos "690 142" size "180 20" string "_Accuracy:" longlines prettychop }
 	string acc_val { pos "860 142" size "130 20" string "*cvar mn_tacc" textalign ur longlines prettychop }
 	pic acc_brd    { pos "707 158" image menu/bar_border }
-	tbar acc_bar   { pos "710 158" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	tbar acc_bar   { pos "710 158" current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
 	string mnd_lbl { pos "690 172" size "180 20" string "_Mind:" longlines prettychop }
 	string mnd_val { pos "860 172" size "130 20" string "*cvar mn_tmnd" textalign ur longlines prettychop }
 	pic mnd_brd    { pos "707 188" image menu/bar_border }
-	tbar mnd_bar   { pos "710 188" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute }
+	tbar mnd_bar   { pos "710 188" current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
 	string cls_lbl { pos "690 212" size "180 20" string "_Close Combat:" longlines prettychop }
 	string cls_val { pos "860 212" size "130 20" string "*cvar mn_tcls" textalign ur longlines prettychop }
 	pic cls_brd    { pos "707 228" image menu/bar_border }
-	tbar cls_bar   { pos "710 228" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	tbar cls_bar   { pos "710 228" current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
 	string hvy_lbl { pos "690 242" size "180 20" string "_Heavy Weapons:" longlines prettychop }
 	string hvy_val { pos "860 242" size "130 20" string "*cvar mn_thvy" textalign ur longlines prettychop }
 	pic hvy_brd    { pos "707 258" image menu/bar_border }
-	tbar hvy_bar   { pos "710 258" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	tbar hvy_bar   { pos "710 258" current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
 	string ass_lbl { pos "690 272" size "180 20" string "_Assault Weapons:" longlines prettychop }
 	string ass_val { pos "860 272" size "130 20" string "*cvar mn_tass" textalign ur longlines prettychop }
 	pic ass_brd    { pos "707 288" image menu/bar_border }
-	tbar ass_bar   { pos "710 288" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	tbar ass_bar   { pos "710 288" current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
 	string snp_lbl { pos "690 302" size "180 20" string "_Sniper Rifles:" longlines prettychop }
 	string snp_val { pos "860 302" size "130 20" string "*cvar mn_tsnp" textalign ur longlines prettychop }
 	pic snp_brd    { pos "707 318" image menu/bar_border }
-	tbar snp_bar   { pos "710 318" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	tbar snp_bar   { pos "710 318" current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
 	string exp_lbl { pos "690 332" size "180 20" string "_High-Explosives:" longlines prettychop }
 	string exp_val { pos "860 332" size "130 20" string "*cvar mn_texp" textalign ur longlines prettychop }
 	pic exp_brd    { pos "707 348" image menu/bar_border }
-	tbar exp_bar   { pos "710 348" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill }
+	tbar exp_bar   { pos "710 348" current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
 	string health     { pos "690 376" size "180 30" string "_Health:" font f_normal longlines prettychop }
 	string health_val { pos "860 376" size "130 30" string "*cvar mn_hp" textalign ur font f_normal longlines prettychop }
 	pic health_brd    { pos "707 398" image menu/bar_border }
-	tbar health_bar   { pos "710 398" current "*cvar mn_hp" max "*cvar mn_hpmax" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health }
+	tbar health_bar   { pos "710 398" current "*cvar mn_hp" max "*cvar mn_hpmax" gap_width 3 texl "3 0" image menu/bar_health size "250 16" }
 
 
 	// ==================

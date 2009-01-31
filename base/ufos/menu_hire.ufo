@@ -327,7 +327,8 @@ menu employees
 	tbar pwr_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 398"  current "*cvar mn_vpwr" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 398"  current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute
+		size "250 16"	max 100
 	}
 
 	string spd_lbl
@@ -348,7 +349,8 @@ menu employees
 	tbar spd_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 428" current "*cvar mn_vspd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 428" current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute
+		size "250 16"	max 100
 	}
 
 	string acc_lbl
@@ -370,7 +372,8 @@ menu employees
 	tbar acc_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 458" current "*cvar mn_vacc" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 458" current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute
+		size "250 16"	max 100
 	}
 
 	string mnd_lbl
@@ -391,7 +394,8 @@ menu employees
 	tbar mnd_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 488" current "*cvar mn_vmnd" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_attribute
+		pos "717 488" current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute
+		size "250 16"	max 100
 	}
 
 	string cls_lbl
@@ -412,7 +416,8 @@ menu employees
 	tbar cls_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 523" current "*cvar mn_vcls" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 523" current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill
+		size "250 16"	max 100
 	}
 
 	string hvy_lbl
@@ -433,7 +438,8 @@ menu employees
 	tbar hvy_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 553" current "*cvar mn_vhvy" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 553" current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill
+		size "250 16"	max 100
 	}
 
 	string ass_lbl
@@ -454,7 +460,8 @@ menu employees
 	tbar ass_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 583" current "*cvar mn_vass" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 583" current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill
+		size "250 16"	max 100
 	}
 
 	string snp_lbl
@@ -475,7 +482,8 @@ menu employees
 	tbar snp_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 613" current "*cvar mn_vsnp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 613" current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill
+		size "250 16"	max 100
 	}
 
 	string exp_lbl
@@ -497,7 +505,8 @@ menu employees
 	tbar exp_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 643" current "*cvar mn_vexp" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_skill
+		pos "717 643" current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill
+		size "250 16"	max 100
 	}
 
 	string hp_lbl
@@ -518,7 +527,8 @@ menu employees
 	tbar hp_bar
 	{
 		visiblewhen "mn_show_employee == 1"
-		pos "717 678" current "*cvar mn_vhp" max "*cvar mn_vhpmax" point_width 2.2 gap_width 3 texl "3 0" image menu/bar_health
+		pos "717 678" current "*cvar mn_vhp" max "*cvar mn_vhpmax" gap_width 3 texl "3 0" image menu/bar_health
+		size "250 16"
 	}
 
 	string	missions_lbl

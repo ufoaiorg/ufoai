@@ -128,7 +128,6 @@ typedef struct menuNode_s {
 	qboolean preventRatio;
 
 	/* tbar */
-	float pointWidth;			/**< texture pixels per one point */
 	int gapWidth;				/**< tens separator width */
 
 	/* text */

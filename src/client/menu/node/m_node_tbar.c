@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
 
+#define TEXTURE_WIDTH 250.0
+
 static void MN_TBarNodeDraw (menuNode_t *node)
 {
 	/* dataImageOrModel is the texture name */
@@ -37,29 +39,68 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 	vec2_t nodepos;
 	menu_t *menu = node->menu;
 	const char* ref = MN_GetReferenceString(node->menu, node->dataImageOrModel);
+	float pointWidth;
+	float width;
 	if (!ref || ref[0] == '\0')
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	if (node->pointWidth) {
-		float ps = MN_GetReferenceFloat(menu, node->u.abstractvalue.value) - MN_GetReferenceFloat(menu,
-				node->u.abstractvalue.min);
-		const float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
-		/* if max is set (e.g. for hp), use this as 100% */
-		if (max != 0.0f)
-			ps = ps / max * 100;
-		shx = node->texl[0] + round(ps * node->pointWidth) + (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
-	} else
-		shx = node->texh[0];
+	pointWidth = TEXTURE_WIDTH / 100.0;	/* relative to the texture */
 
-	R_DrawNormPic(nodepos[0], nodepos[1], node->size[0], node->size[1],
+	{
+		float ps;
+		{
+			float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
+			float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
+			float value = MN_GetReferenceFloat(menu, node->u.abstractvalue.value);
+			if (value > max)
+				value = max;
+			if (value < min)
+				value = min;
+			ps = (value - min) / (max - min);
+		}
+		ps = ps * 100;
+		shx = node->texl[0];	/* left gap to the texture */
+		shx += round(ps * pointWidth); /* add size from 0..TEXTURE_WIDTH */
+#if 0	/** @todo understand that code */
+		shx += (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
+#endif
+	}
+
+	width = (shx * node->size[0]) / TEXTURE_WIDTH;
+
+	R_DrawNormPic(nodepos[0], nodepos[1], width, node->size[1],
 		shx, node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, ref);
 }
+
+static void MN_TBarNodeLoaded (menuNode_t *node)
+{
+	if (node->size[0] == 0 && node->size[1] == 0) {
+		Com_Printf("MN_TBarNodeLoaded: Please fix the size of the node %s.%s (it should be '250 16')", node->menu->name, node->name);
+		node->size[0] = 250;
+		node->size[1] = 16;
+	}
+	if (node->u.abstractvalue.max == NULL) {
+		float *f;
+		Com_Printf("MN_TBarNodeLoaded: Please fix a max value to the node %s.%s (it should be '100')", node->menu->name, node->name);
+		f = MN_AllocFloat(1);
+		*f = 100;
+		node->u.abstractvalue.max = (void*)f;
+	}
+}
+
+static const value_t properties[] = {
+	{"gap_width", V_INT, offsetof(menuNode_t, gapWidth), MEMBER_SIZEOF(menuNode_t, gapWidth)},
+
+	{NULL, V_NULL, 0, 0}
+};
 
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = MN_TBarNodeDraw;
+	behaviour->loaded = MN_TBarNodeLoaded;
+	behaviour->properties = properties;
 }
