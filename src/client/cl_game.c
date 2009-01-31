@@ -195,7 +195,7 @@ void GAME_HandleResults (int winner, int *numSpawned, int *numAlive, int numKill
 /**
  * @brief Stores a team-list (chr-list) info to buffer (which might be a network buffer, too).
  * @sa G_ClientTeamInfo
- * @sa CL_SaveTeamMultiplayerInfo
+ * @sa MP_SaveTeamMultiplayerInfo
  * @note Called in CL_Precache_f to send the team info to server
  */
 static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *team)

@@ -637,7 +637,7 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 /**
  * @brief Clears all containers that are temp containers (see script definition).
  * @sa CL_GenerateEquipment_f
- * @sa CL_SaveTeamMultiplayerInfo
+ * @sa MP_SaveTeamMultiplayerInfo
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @todo campaign mode only function
  */

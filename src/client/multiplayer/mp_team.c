@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Reads tha comments from team files
  */
-static void CL_MultiplayerTeamSlotComments_f (void)
+static void MP_MultiplayerTeamSlotComments_f (void)
 {
 	int i;
 
@@ -63,7 +63,7 @@ static void CL_MultiplayerTeamSlotComments_f (void)
 /**
  * @brief Call all the needed functions to generate a new initial team for multiplayer
  */
-static void CL_GenerateNewMultiplayerTeam_f (void)
+static void MP_GenerateNewMultiplayerTeam_f (void)
 {
 	Cvar_Set("mn_teamname", _("NewTeam"));
 
@@ -75,11 +75,11 @@ static void CL_GenerateNewMultiplayerTeam_f (void)
 
 /**
  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
- * @note Called by CL_SaveTeamMultiplayer to store the team info
+ * @note Called by MP_SaveTeamMultiplayer to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @sa CL_LoadTeamMultiplayerMember
+ * @sa MP_LoadTeamMultiplayerMember
  */
-static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf)
+static void MP_SaveTeamMultiplayerInfo (sizebuf_t *buf)
 {
 	int i, j;
 
@@ -138,11 +138,11 @@ static void CL_SaveTeamMultiplayerInfo (sizebuf_t *buf)
 
 /**
  * @brief Saves a multiplayer team
- * @sa CL_SaveTeamMultiplayerInfo
- * @sa CL_LoadTeamMultiplayer
+ * @sa MP_SaveTeamMultiplayerInfo
+ * @sa MP_LoadTeamMultiplayer
  * @todo Implement EMPL_ROBOT
  */
-static qboolean CL_SaveTeamMultiplayer (const char *filename)
+static qboolean MP_SaveTeamMultiplayer (const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -160,7 +160,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	MSG_WriteString(&sb, name);
 
 	/* store team */
-	CL_SaveTeamMultiplayerInfo(&sb);
+	MP_SaveTeamMultiplayerInfo(&sb);
 
 	/* store equipment in ccs.eMission so soldiers can be properly equipped */
 	MSG_WriteShort(&sb, csi.numODs);
@@ -184,7 +184,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 /**
  * @brief Stores a team in a specified teamslot (multiplayer)
  */
-static void CL_SaveTeamMultiplayerSlot_f (void)
+static void MP_SaveTeamMultiplayerSlot_f (void)
 {
 	if (!GAME_IsMultiplayer())
 		return;
@@ -196,7 +196,7 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
 		char filename[MAX_OSPATH];
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-		if (!CL_SaveTeamMultiplayer(filename))
+		if (!MP_SaveTeamMultiplayer(filename))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	} else {
 		Com_Printf("Nothing to safe - no team assigned to the aircraft\n");
@@ -205,10 +205,10 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
 
 /**
  * @brief Load a team member for multiplayer
- * @sa CL_LoadTeamMultiplayer
- * @sa CL_SaveTeamMultiplayerInfo
+ * @sa MP_LoadTeamMultiplayer
+ * @sa MP_SaveTeamMultiplayerInfo
  */
-static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int version)
+static void MP_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int version)
 {
 	int i, num;
 	int td; /**< Team-definition index. */
@@ -265,11 +265,11 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 
 /**
  * @brief Load a multiplayer team
- * @sa CL_LoadTeamMultiplayer
- * @sa CL_SaveTeamMultiplayer
+ * @sa MP_LoadTeamMultiplayer
+ * @sa MP_SaveTeamMultiplayer
  * @todo only EMPL_SOLDIERs are saved and loaded
  */
-static void CL_LoadTeamMultiplayer (const char *filename)
+static void MP_LoadTeamMultiplayer (const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -302,7 +302,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	num = MSG_ReadByte(&sb);
 	Com_DPrintf(DEBUG_CLIENT, "load %i teammembers\n", num);
 	for (i = 0; i < num; i++)
-		CL_LoadTeamMultiplayerMember(&sb, cl.chrList.chr[num], version);
+		MP_LoadTeamMultiplayerMember(&sb, cl.chrList.chr[num], version);
 
 	/* read equipment */
 	num = MSG_ReadShort(&sb);
@@ -322,7 +322,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 /**
  * @brief Loads the selected teamslot
  */
-static void CL_LoadTeamMultiplayerSlot_f (void)
+static void MP_LoadTeamMultiplayerSlot_f (void)
 {
 	char filename[MAX_OSPATH];
 
@@ -333,15 +333,15 @@ static void CL_LoadTeamMultiplayerSlot_f (void)
 
 	/* load */
 	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-	CL_LoadTeamMultiplayer(filename);
+	MP_LoadTeamMultiplayer(filename);
 
 	Com_Printf("Team 'team%s' loaded.\n", Cvar_VariableString("mn_slot"));
 }
 
 void TEAM_MP_InitStartup (void)
 {
-	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
-	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
-	Cmd_AddCommand("team_comments", CL_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
-	Cmd_AddCommand("team_new", CL_GenerateNewMultiplayerTeam_f, "Generates a new empty multiplayer team");
+	Cmd_AddCommand("saveteamslot", MP_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
+	Cmd_AddCommand("loadteamslot", MP_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
+	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
+	Cmd_AddCommand("team_new", MP_GenerateNewMultiplayerTeam_f, "Generates a new empty multiplayer team");
 }
