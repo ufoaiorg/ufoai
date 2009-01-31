@@ -93,6 +93,4 @@ void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *ai
 
 qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* installation, aircraft_t *aircraft, const technology_t *tech, const int airequipID);
 
-void AIM_InitStartup(void);
-
 #endif /* CLIENT_CL_MAPFIGHTEQUIP_H */

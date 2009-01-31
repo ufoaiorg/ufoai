@@ -1129,8 +1129,3 @@ const char* AII_WeightToName (itemWeight_t weight)
 		break;
 	}
 }
-
-void AIM_InitStartup (void)
-{
-	AIM_InitCallbacks();
-}

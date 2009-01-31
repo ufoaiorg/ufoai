@@ -1414,7 +1414,6 @@ static void AIM_PreviousItemtype_f (void)
 	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
 }
 
-
 void AIM_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_next_equiptype", AIM_NextItemtype_f, "Shows the next aircraft equip category.");

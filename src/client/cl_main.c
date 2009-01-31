@@ -1115,7 +1115,6 @@ static void CL_InitLocal (void)
 	TEAM_InitStartup();
 	TEAM_MP_InitStartup();
 	TOTD_InitStartup();
-	AIM_InitStartup();
 	HUD_InitStartup();
 
 	/* register our variables */
