@@ -37,10 +37,11 @@ static void MN_BarNodeDraw (menuNode_t *node)
 	vec4_t color;
 	float fac, bar_width;
 	vec2_t nodepos;
-	menu_t *menu = node->menu;
-	float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
-	float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
-	float value = MN_GetReferenceFloat(menu, node->u.abstractvalue.value);
+	const menu_t *menu = node->menu;
+	const float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
+	const float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
+	const float value = MN_GetReferenceFloat(menu, node->u.abstractvalue.value);
+
 	MN_GetNodeAbsPos(node, nodepos);
 	VectorScale(node->color, 0.8, color);
 	color[3] = node->color[3];

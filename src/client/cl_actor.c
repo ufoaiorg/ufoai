@@ -4979,7 +4979,8 @@ static void CL_AddArrow (vec3_t from, vec3_t to, float red, float green, float b
  */
 void CL_DisplayFloorArrows (void)
 {
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+	/* Get size of selected actor or fall back to 1x1. */
+	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	vec3_t base, start;
@@ -5043,7 +5044,8 @@ void CL_DisplayObstructionArrows (void)
  */
 void CL_DumpMoveMark_f (void)
 {
-	const int fieldSize = selActor /**< Get size of selected actor or fall back to 1x1. */
+	/* Get size of selected actor or fall back to 1x1. */
+	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 	const int crouching_state = selActor

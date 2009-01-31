@@ -1,3 +1,8 @@
+/**
+ * @file r_program.c
+ * @brief Shader (GLSL) backend functions
+ */
+
 /*
 * Copyright(c) 1997-2001 Id Software, Inc.
 * Copyright(c) 2002 The Quakeforge Project.

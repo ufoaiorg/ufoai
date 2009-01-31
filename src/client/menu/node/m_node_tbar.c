@@ -50,17 +50,15 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 
 	{
 		float ps;
-		{
-			float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
-			float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
-			float value = MN_GetReferenceFloat(menu, node->u.abstractvalue.value);
-			if (value > max)
-				value = max;
-			if (value < min)
-				value = min;
-			ps = (value - min) / (max - min);
-		}
-		ps = ps * 100;
+		const float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
+		const float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
+		float value = MN_GetReferenceFloat(menu, node->u.abstractvalue.value);
+		/* clamp the value */
+		if (value > max)
+			value = max;
+		if (value < min)
+			value = min;
+		ps = (value - min) / (max - min) * 100;
 		shx = node->texl[0];	/* left gap to the texture */
 		shx += round(ps * pointWidth); /* add size from 0..TEXTURE_WIDTH */
 #if 0	/** @todo understand that code */
