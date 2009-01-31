@@ -273,7 +273,7 @@ typedef struct objDef_s {
 	qboolean deplete;	/**< This weapon useless after all ("oneshot") ammo is used up.
 						 * If true this item will not be collected on mission-end. (see INV_CollectinItems). */
 
-	int useable;		/**< Defines which team can use this item: 0 - human, 1 - alien.
+	int useable;		/**< Defines which team can use this item: TEAM_*.
 						 * Used in checking the right team when filling the containers with available armour. */
 
 	struct objDef_s *ammos[MAX_AMMOS_PER_OBJDEF];		/**< List of ammo-object pointers that can be used in this one. */

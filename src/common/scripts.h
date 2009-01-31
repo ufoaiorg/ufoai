@@ -67,17 +67,18 @@ typedef enum {
 	V_BLEND,
 	V_STYLE = 15,
 	V_FADE,
-	V_SHAPE_SMALL,				/**< space a weapon allocates in the inventory shapes, w, h */
-	V_SHAPE_BIG,				/**< inventory shape, x, y, w, h */
+	V_SHAPE_SMALL,			/**< space a weapon allocates in the inventory shapes, w, h */
+	V_SHAPE_BIG,			/**< inventory shape, x, y, w, h */
 	V_DMGTYPE,
 	V_DMGWEIGHT = 20,
 	V_DATE,
-	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
+	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_CLIENT_HUNK,			/**< only for client side data - not handled in Com_EParseValue */
-	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
+	V_CLIENT_HUNK_STRING,	/**< same as for V_CLIENT_HUNK */
 	V_MENUTEXTID = 25,
 	V_BASEID,
 	V_LONGLINES,
+	V_TEAM,					/**< team string to int mapper */
 
 	V_NUM_TYPES
 } valueTypes_t;

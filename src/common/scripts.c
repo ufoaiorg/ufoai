@@ -82,7 +82,8 @@ const char *const vt_names[] = {
 	"client_hunk_string",
 	"num", /* 25 */
 	"baseid",
-	"longlines"
+	"longlines",
+	"team"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -156,7 +157,8 @@ static const size_t vt_sizes[] = {
 	0,	/* V_CLIENT_HUNK_STRING */
 	sizeof(int),	/* V_MENUTEXTID */
 	sizeof(int),	/* V_BASEID */
-	sizeof(byte) 	/* V_LONGLINES */
+	sizeof(byte), 	/* V_LONGLINES */
+	sizeof(int)		/* V_TEAM */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -243,6 +245,15 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN(sizeof(int));
+		break;
+
+	case V_TEAM:
+		if (!Q_strcmp(token, "civilian"))
+			*(int *) b = TEAM_CIVILIAN;
+		else if (!Q_strcmp(token, "phalanx"))
+			*(int *) b = TEAM_PHALANX;
+		else if (!Q_strcmp(token, "alien"))
+			*(int *) b = TEAM_ALIEN;
 		break;
 
 	case V_INT:
@@ -552,6 +563,15 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		*(char *) b = *(const char *) set;
 		return ALIGN(sizeof(char));
 
+	case V_TEAM:
+		if (!Q_strcmp(set, "civilian"))
+			*(int *) b = TEAM_CIVILIAN;
+		else if (!Q_strcmp(set, "phalanx"))
+			*(int *) b = TEAM_PHALANX;
+		else if (!Q_strcmp(set, "alien"))
+			*(int *) b = TEAM_ALIEN;
+		return ALIGN(sizeof(int));
+
 	case V_MENUTEXTID:
 	case V_BASEID:
 	case V_INT:
@@ -673,6 +693,18 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 		assert(*(const int *)b < MAX_MENUTEXTS);
 		Q_strncpyz(valuestr, menutextid_names[*(const int *)b], sizeof(valuestr));
 		return valuestr;
+
+	case V_TEAM:
+		switch (*(const int *) b) {
+		case TEAM_CIVILIAN:
+			return "civilian";
+		case TEAM_PHALANX:
+			return "phalanx";
+		case TEAM_ALIEN:
+			return "alien";
+		default:
+			return "unknown";
+		}
 
 	case V_BASEID:
 	case V_INT:
@@ -814,7 +846,7 @@ static const value_t od_vals[] = {
 	{"reload", V_INT, offsetof(objDef_t, reload), MEMBER_SIZEOF(objDef_t, reload)},
 	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
 	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
-	{"useable", V_INT, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
+	{"useable", V_TEAM, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
 	{"notonmarket", V_BOOL, offsetof(objDef_t, notOnMarket), MEMBER_SIZEOF(objDef_t, notOnMarket)},
 
 	{"installationTime", V_INT, offsetof(objDef_t, craftitem.installationTime), MEMBER_SIZEOF(objDef_t, craftitem.installationTime)},

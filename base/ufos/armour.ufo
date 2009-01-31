@@ -2,8 +2,7 @@
 
 	useable
 		Parameter that defines which team can use it:
-		0 - human
-		1 - alien
+		human, alien, civilian
 
 	protection ("dmgweight" values)
 		See "damagetypes" below (the ones without the "_").
@@ -73,7 +72,7 @@ item light
 	scale		0.7
 	price		1400
 	size		60
-	useable		0
+	useable		human
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -134,7 +133,7 @@ item lightadv
 	scale		0.7
 	price		1600
 	size		60
-	useable		0
+	useable		human
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -195,7 +194,7 @@ item medium
 	scale		0.7
 	price		7500
 	size		120
-	useable		0
+	useable		human
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -256,7 +255,7 @@ item power
 	scale		0.7
 	price		32000
 	size		150
-	useable		0
+	useable		human
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -315,6 +314,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	useable		human
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -371,6 +371,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	useable		human
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -427,6 +428,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	useable		human
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -483,6 +485,7 @@ item power
 //	center		"0 0 -5"
 //	scale		0.7
 //	price		32000
+//	useable		human
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -544,7 +547,7 @@ item light_alien
 	scale		0.7
 	price		1400
 	size		50
-	useable		1
+	useable		alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -604,7 +607,7 @@ item medium_alien
 	scale		0.7
 	price		7500
 	size		75
-	useable		1
+	useable		alien
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {

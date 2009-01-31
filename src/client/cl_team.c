@@ -673,7 +673,7 @@ static void CL_GenerateEquipment_f (void)
 	aircraft_t *aircraft;
 	int team;
 
-	if (GAME_IsCampaign() && !baseCurrent)
+	if (!GAME_IsCampaign() || !baseCurrent)
 		return;
 
 	aircraft = CL_GetTeamAircraft(baseCurrent);
@@ -688,14 +688,13 @@ static void CL_GenerateEquipment_f (void)
 
 	/* Get team. */
 	if (strstr(Cvar_VariableString("team"), "alien")) {
-		team = 1;
+		team = TEAM_ALIEN;
 		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f: team alien, id: %i\n", team);
 	} else {
-		team = 0;
+		team = TEAM_PHALANX;
 		Com_DPrintf(DEBUG_CLIENT, "CL_GenerateEquipment_f: team human, id: %i\n", team);
 	}
 
-	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
 
 	/** @todo Skip EMPL_ROBOT (i.e. ugvs) for now . */
@@ -722,33 +721,31 @@ static void CL_GenerateEquipment_f (void)
 	CL_CleanTempInventory(aircraft->homebase);
 	CL_ReloadAndRemoveCarried(aircraft, &unused);
 
-	if (GAME_IsCampaign()) {
-		/* a 'tiny hack' to add the remaining equipment (not carried)
-		 * correctly into buy categories, reloading at the same time;
-		 * it is valid only due to the following property: */
-		assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
+	/* a 'tiny hack' to add the remaining equipment (not carried)
+	 * correctly into buy categories, reloading at the same time;
+	 * it is valid only due to the following property: */
+	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
 
-		for (i = 0; i < csi.numODs; i++) {
-			/* Don't allow to show armour for other teams in the menu. */
-			if ((Q_strncmp(csi.ods[i].type, "armour", MAX_VAR) == 0) && (csi.ods[i].useable != team))
-				continue;
+	for (i = 0; i < csi.numODs; i++) {
+		/* Don't allow to show armour for other teams in the menu. */
+		if (!Q_strcmp(csi.ods[i].type, "armour") && csi.ods[i].useable != team)
+			continue;
 
-			/* Don't allow to show unresearched items. */
-			if (!RS_IsResearched_ptr(csi.ods[i].tech))
-				continue;
+		/* Don't allow to show unresearched items. */
+		if (!RS_IsResearched_ptr(csi.ods[i].tech))
+			continue;
 
-			while (unused.num[i]) {
-				const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
-				inventory_t *i = &aircraft->homebase->bEquipment;
-				if (!Com_AddToInventory(i, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
-					break; /* no space left in menu */
-			}
+		while (unused.num[i]) {
+			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+			inventory_t *i = &aircraft->homebase->bEquipment;
+			if (!Com_AddToInventory(i, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
+				break; /* no space left in menu */
 		}
 	}
 
 	/* First-time linking of menuInventory. */
-	if (baseCurrent && !menuInventory->c[csi.idEquip]) {
-			menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
+	if (!menuInventory->c[csi.idEquip]) {
+		menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
 	}
 }
 
