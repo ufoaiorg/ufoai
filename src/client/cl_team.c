@@ -620,50 +620,6 @@ static void CL_ActorSoldierSelect_f (void)
 	}
 }
 
-static void CL_ActorTeamSelect_f (void)
-{
-	employee_t *employee;
-	character_t *chr;
-	int num;
-	const employeeType_t employeeType = cls.displayHeavyEquipmentList
-			? EMPL_ROBOT : EMPL_SOLDIER;
-	base_t *base = GAME_IsCampaign() ? baseCurrent : NULL;
-
-	if (GAME_IsCampaign() && !base)
-		return;
-
-	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num >= E_CountHired(base, employeeType))
-		return;
-
-	employee = E_GetEmployeeByMenuIndex(num);
-	if (!employee)
-		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
-
-	chr = &employee->chr;
-	if (!chr)
-		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, base ? base->idx : -1);
-
-	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("teamdeselect%i", cl_selected->integer);
-	MN_ExecuteConfunc("teamselect%i", num);
-
-	/* now set the cl_selected cvar to the new actor id */
-	Cvar_ForceSet("cl_selected", va("%i", num));
-
-	/* set info cvars */
-	if (chr->emplType == EMPL_ROBOT)
-		CL_UGVCvars(chr);
-	else
-		CL_CharacterCvars(chr);
-}
-
 /**
  * @brief implements the "nextsoldier" command
  */
@@ -798,7 +754,6 @@ static void CL_TeamListDebug_f (void)
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
-	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinForWholeTeam_f, "Change the skin for the whole current team");

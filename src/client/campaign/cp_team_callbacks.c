@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_actor.h"
 #include "../cl_team.h"
+#include "../cl_ugv.h"
 #include "../menu/m_nodes.h"	/**< menuInventory */
 
 #include "cp_team_callbacks.h"
@@ -305,11 +306,55 @@ static void CL_AssignSoldier_f (void)
 	AIM_AddEmployeeFromMenu(aircraft, num);
 }
 
+static void CL_ActorTeamSelect_f (void)
+{
+	employee_t *employee;
+	character_t *chr;
+	int num;
+	const employeeType_t employeeType = cls.displayHeavyEquipmentList
+			? EMPL_ROBOT : EMPL_SOLDIER;
+
+	if (!baseCurrent)
+		return;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num >= E_CountHired(baseCurrent, employeeType))
+		return;
+
+	employee = E_GetEmployeeByMenuIndex(num);
+	if (!employee)
+		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+
+	chr = &employee->chr;
+	if (!chr)
+		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+
+	/* deselect current selected soldier and select the new one */
+	MN_ExecuteConfunc("teamdeselect%i", cl_selected->integer);
+	MN_ExecuteConfunc("teamselect%i", num);
+
+	/* now set the cl_selected cvar to the new actor id */
+	Cvar_ForceSet("cl_selected", va("%i", num));
+
+	/* set info cvars */
+	if (chr->emplType == EMPL_ROBOT)
+		CL_UGVCvars(chr);
+	else
+		CL_CharacterCvars(chr);
+}
+
 void CP_TEAM_InitCallbacks (void)
 {
 	Cmd_AddCommand("genequip", CL_UpdateEquipmentMenuParameters_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
+	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
 }
 
 void CP_TEAM_ShutdownCallbacks (void)
@@ -317,4 +362,5 @@ void CP_TEAM_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("genequip");
 	Cmd_RemoveCommand("team_mark");
 	Cmd_RemoveCommand("team_hire");
+	Cmd_RemoveCommand("team_select");
 }
