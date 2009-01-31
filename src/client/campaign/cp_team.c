@@ -110,3 +110,45 @@ void CL_CleanTempInventory (base_t* base)
 
 	INVSH_DestroyInventory(&base->bEquipment);
 }
+
+/**
+ * @brief Updates data about teams in aircraft.
+ * @param[in] aircraft Pointer to an aircraft for a desired team.
+ * @returns the number of employees that are in the aircraft and were added to
+ * the character list
+ */
+int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
+{
+	int i;
+
+	assert(aircraft);
+
+	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->maxTeamSize));
+
+	/* update chrDisplayList list (this is the one that is currently displayed) */
+	chrDisplayList.num = 0;
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		assert(chrDisplayList.num < MAX_ACTIVETEAM);
+		if (!aircraft->acTeam[i])
+			continue; /* Skip unused team-slot. */
+
+		if (aircraft->acTeam[i]->type != employeeType)
+			continue;
+
+		chrDisplayList.chr[chrDisplayList.num] = &aircraft->acTeam[i]->chr;
+
+		/* Sanity check(s) */
+		if (!chrDisplayList.chr[chrDisplayList.num])
+			Sys_Error("CL_UpdateActorAircraftVar: Could not get employee character with idx: %i\n", chrDisplayList.num);
+		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
+		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
+
+		/* Update number of displayed team-members. */
+		chrDisplayList.num++;
+	}
+
+	for (i = chrDisplayList.num; i < MAX_ACTIVETEAM; i++)
+		chrDisplayList.chr[i] = NULL;	/* Just in case */
+
+	return chrDisplayList.num;
+}

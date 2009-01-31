@@ -51,49 +51,6 @@ static inline aircraft_t *CL_GetTeamAircraft (base_t *base)
 	return base->aircraftCurrent;
 }
 
-
-/**
- * @brief Updates data about teams in aircraft.
- * @param[in] aircraft Pointer to an aircraft for a desired team.
- * @returns the number of employees that are in the aircraft and were added to
- * the character list
- */
-int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType)
-{
-	int i;
-
-	assert(aircraft);
-
-	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->maxTeamSize));
-
-	/* update chrDisplayList list (this is the one that is currently displayed) */
-	chrDisplayList.num = 0;
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		assert(chrDisplayList.num < MAX_ACTIVETEAM);
-		if (!aircraft->acTeam[i])
-			continue; /* Skip unused team-slot. */
-
-		if (aircraft->acTeam[i]->type != employeeType)
-			continue;
-
-		chrDisplayList.chr[chrDisplayList.num] = &aircraft->acTeam[i]->chr;
-
-		/* Sanity check(s) */
-		if (!chrDisplayList.chr[chrDisplayList.num])
-			Sys_Error("CL_UpdateActorAircraftVar: Could not get employee character with idx: %i\n", chrDisplayList.num);
-		Com_DPrintf(DEBUG_CLIENT, "add %s to chrDisplayList (pos: %i)\n", chrDisplayList.chr[chrDisplayList.num]->name, chrDisplayList.num);
-		Cvar_ForceSet(va("mn_name%i", chrDisplayList.num), chrDisplayList.chr[chrDisplayList.num]->name);
-
-		/* Update number of displayed team-members. */
-		chrDisplayList.num++;
-	}
-
-	for (i = chrDisplayList.num; i < MAX_ACTIVETEAM; i++)
-		chrDisplayList.chr[i] = NULL;	/* Just in case */
-
-	return chrDisplayList.num;
-}
-
 /***********************************************************
  * Bindings
  ***********************************************************/
@@ -350,12 +307,45 @@ static void CL_ActorTeamSelect_f (void)
 		CL_CharacterCvars(chr);
 }
 
+#ifdef DEBUG
+static void CL_TeamListDebug_f (void)
+{
+	int i;
+	base_t *base;
+	aircraft_t *aircraft;
+
+	base = CP_GetMissionBase();
+	aircraft = cls.missionaircraft;
+
+	if (!base) {
+		Com_Printf("Build and select a base first\n");
+		return;
+	}
+
+	if (!aircraft) {
+		Com_Printf("Buy/build an aircraft first.\n");
+		return;
+	}
+
+	Com_Printf("%i members in the current team", aircraft->teamSize);
+	for (i = 0; i < aircraft->maxTeamSize; i++) {
+		if (aircraft->acTeam[i]) {
+			const character_t *chr = &aircraft->acTeam[i]->chr;
+			Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, aircraft->acTeam[i]->idx);
+		}
+	}
+}
+#endif
+
 void CP_TEAM_InitCallbacks (void)
 {
 	Cmd_AddCommand("genequip", CL_UpdateEquipmentMenuParameters_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
+#endif
 }
 
 void CP_TEAM_ShutdownCallbacks (void)
@@ -364,4 +354,7 @@ void CP_TEAM_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("team_mark");
 	Cmd_RemoveCommand("team_hire");
 	Cmd_RemoveCommand("team_select");
+#ifdef DEBUG
+	Cmd_RemoveCommand("debug_teamlist");
+#endif
 }

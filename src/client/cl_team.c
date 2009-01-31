@@ -693,36 +693,6 @@ static void CL_ToggleTeamList_f (void)
 	Cbuf_AddText("team_mark;team_select 0\n");
 }
 
-#ifdef DEBUG
-static void CL_TeamListDebug_f (void)
-{
-	int i;
-	base_t *base;
-	aircraft_t *aircraft;
-
-	base = CP_GetMissionBase();
-	aircraft = cls.missionaircraft;
-
-	if (!base) {
-		Com_Printf("Build and select a base first\n");
-		return;
-	}
-
-	if (!aircraft) {
-		Com_Printf("Buy/build an aircraft first.\n");
-		return;
-	}
-
-	Com_Printf("%i members in the current team", aircraft->teamSize);
-	for (i = 0; i < aircraft->maxTeamSize; i++) {
-		if (aircraft->acTeam[i]) {
-			const character_t *chr = &aircraft->acTeam[i]->chr;
-			Com_Printf("ucn %i - employee->idx: %i\n", chr->ucn, aircraft->acTeam[i]->idx);
-		}
-	}
-}
-#endif
-
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
@@ -736,7 +706,4 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("object_update", CL_UpdateObject_f, _("Update a soldier"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
 	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");
-#ifdef DEBUG
-	Cmd_AddCommand("teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
-#endif
 }

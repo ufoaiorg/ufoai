@@ -32,9 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUM_TEAMSKINS	6
 #define NUM_TEAMSKINS_SINGLEPLAYER 4
 
-int CL_UpdateActorAircraftVar(aircraft_t *aircraft, employeeType_t employeeType);
-void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
-
 void CL_GenerateCharacter(character_t *chr, int team, employeeType_t employeeType, const ugv_t *ugvType);
 ugv_t *CL_GetUgvByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
