@@ -374,8 +374,8 @@ void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t em
 
 		chr->score.rank = CL_GetRankIdx("ugv");
 
-		/** Create attributes.
-		 * @todo get the min/max values from ugv_t def? */
+		/* Create attributes. */
+		/** @todo get the min/max values from ugv_t def? */
 		CHRSH_CharGenAbilitySkills(chr, teamValue, employeeType, GAME_IsMultiplayer());
 
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", team, ugvType->actors);
@@ -388,12 +388,12 @@ void CL_GenerateCharacter (character_t *chr, const char *team, employeeType_t em
 }
 
 static selectBoxOptions_t skinlist[] = {
-	{"urban", "Urban", "team_changeskin;", "0", NULL, NULL, qfalse},
-	{"jungle", "Jungle", "team_changeskin;", "1", NULL, NULL, qfalse},
-	{"desert", "Desert", "team_changeskin;", "2", NULL, NULL, qfalse},
-	{"arctic", "Arctic", "team_changeskin;", "3", NULL, NULL, qfalse},
-	{"multionly_yellow", "Yellow", "team_changeskin;", "4", NULL, NULL, qfalse},
-	{"multionly_cccp", "CCCP", "team_changeskin;", "5", NULL, NULL, qfalse},
+	{"urban", N_("Urban"), "team_changeskin;", "0", NULL, NULL, qfalse},
+	{"jungle", N_("Jungle"), "team_changeskin;", "1", NULL, NULL, qfalse},
+	{"desert", N_("Desert"), "team_changeskin;", "2", NULL, NULL, qfalse},
+	{"arctic", N_("Arctic"), "team_changeskin;", "3", NULL, NULL, qfalse},
+	{"multionly_yellow", N_("Yellow"), "team_changeskin;", "4", NULL, NULL, qfalse},
+	{"multionly_cccp", N_("CCCP"), "team_changeskin;", "5", NULL, NULL, qfalse},
 };
 
 /**
