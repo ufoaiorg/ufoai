@@ -450,7 +450,7 @@ static void CL_ChangeSkin_f (void)
 /**
  * @brief Use current skin for all team members onboard.
  */
-static void CL_ChangeSkinOnBoard_f (void)
+static void CL_ChangeSkinForWholeTeam_f (void)
 {
 	int newSkin, i;
 
@@ -463,10 +463,8 @@ static void CL_ChangeSkinOnBoard_f (void)
 	if (GAME_IsSingleplayer() && newSkin >= NUM_TEAMSKINS_SINGLEPLAYER)
 		newSkin = 0;
 
-	/**
-	 * Apply new skin to all (shown/dsiplayed) team-members.
-	 * @todo What happens if a model of a team member does not have the selected skin?
-	 */
+	/* Apply new skin to all (shown/dsiplayed) team-members. */
+	/** @todo What happens if a model of a team member does not have the selected skin? */
 	for (i = 0; i < chrDisplayList.num; i++) {
 		assert(chrDisplayList.chr[i]);
 		chrDisplayList.chr[i]->skin = newSkin;
@@ -1175,7 +1173,7 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
-	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, "Change the skin for the hole team in the current aircraft");
+	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinForWholeTeam_f, "Change the skin for the whole current team");
 	Cmd_AddCommand("equip_select", CL_ActorEquipmentSelect_f, "Select a soldier in the equipment menu");
 	Cmd_AddCommand("soldier_select", CL_ActorSoldierSelect_f, _("Select a soldier from list"));
 	Cmd_AddCommand("soldier_reselect", CL_ThisSoldier_f, _("Reselect the current soldier"));
