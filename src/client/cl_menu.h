@@ -28,7 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "menu/m_main.h"
 
-void MN_SetViewRect(const menu_t* menu);
+/* prototype */
+struct menu_s;
+
+void MN_SetViewRect(const struct menu_s* menu);
 
 void MN_InitStartup(void);
 

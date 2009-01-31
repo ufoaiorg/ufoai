@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_game.h"
 #include "../menu/m_popup.h"
+#include "../menu/m_nodes.h"
 
 /** Maximum number of produced/disassembled items. */
 #define MAX_PRODUCTION_AMOUNT 500

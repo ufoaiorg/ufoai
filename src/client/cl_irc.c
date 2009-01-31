@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_irc.h"
+#include "menu/m_nodes.h"
 #include "menu/m_popup.h"
 #include "multiplayer/mp_chatmessages.h"
 

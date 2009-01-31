@@ -28,6 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../game/q_shared.h"
 #include "../m_nodes.h"
 
+/* prototype */
+struct menuNode_s;
+struct menuAction_s;
+struct nodeBehaviour_s;
+
 /** @brief menu with all it's nodes linked in */
 typedef struct menu_s {
 	char name[MAX_VAR];
@@ -44,14 +49,14 @@ typedef struct menu_s {
 	qboolean preventTypingEscape;
 	qboolean modal;
 
-	menuNode_t *firstChild;	/**< first element of linked list of child */
-	menuNode_t *lastChild;	/**< last element of linked list of child */
+	struct menuNode_s *firstChild;	/**< first element of linked list of child */
+	struct menuNode_s *lastChild;	/**< last element of linked list of child */
 
-	menuNode_t *popupNode;
-	menuNode_t *renderNode;
+	struct menuNode_s *popupNode;
+	struct menuNode_s *renderNode;
 
 	/** @todo think about converting it to action instead of node */
-	menuNode_t *eventNode;	/**< single 'func' node, or NULL */
+	struct menuNode_s *eventNode;	/**< single 'func' node, or NULL */
 	struct menuAction_s *onInit; 	/**< Call when the menu is push */
 	struct menuAction_s *onClose;	/**< Call when the menu is pop */
 	struct menuAction_s *onTimeOut;	/**< Call when the own timer of the menu out */
@@ -59,11 +64,11 @@ typedef struct menu_s {
 
 } menu_t;
 
-void MN_RegisterWindowNode(nodeBehaviour_t *behaviour);
+void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
 
-menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
-void MN_InsertNode(menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNode);
-void MN_AppendNode(menu_t* const menu, menuNode_t *newNode);
+struct menuNode_s *MN_GetNode(const menu_t* const menu, const char *name);
+void MN_InsertNode(menu_t* const menu, struct menuNode_s *prevNode, struct menuNode_s *newNode);
+void MN_AppendNode(menu_t* const menu, struct menuNode_s *newNode);
 
 void MN_WindowNodeLoading(menu_t *menu);
 void MN_WindowNodeLoaded(menu_t *menu);

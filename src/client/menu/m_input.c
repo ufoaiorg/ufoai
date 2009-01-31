@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "m_main.h"
+#include "m_internal.h"
 #include "m_actions.h"
 #include "m_input.h"
 #include "m_nodes.h"

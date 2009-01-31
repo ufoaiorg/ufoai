@@ -26,11 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_AIRFIGHTMAP_H_
 #define CL_AIRFIGHTMAP_H_
 
+/* prototype */
+struct menuNode_s;
+
 void AFM_Init_f(void);
 void AFM_Exit_f(void);
-void AFM_DrawMap(const menuNode_t* node);
-qboolean AFM_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
-qboolean AFM_Draw3DMarkerIfVisible(const menuNode_t* node, const vec2_t pos, float theta, const char *model, int skin);
+void AFM_DrawMap(const struct menuNode_s* node);
+qboolean AFM_MapToScreen(const struct menuNode_s* node, const vec2_t pos, int *x, int *y);
+qboolean AFM_Draw3DMarkerIfVisible(const struct menuNode_s* node, const vec2_t pos, float theta, const char *model, int skin);
 void AFM_StopSmoothMovement(void);
 
 

@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_view.h"
 #include "renderer/r_mesh_anim.h"
 #include "menu/m_popup.h"
+#include "menu/m_nodes.h"
 #include "../common/routing.h"
 #include "cl_ugv.h"
 #include "menu/node/m_node_container.h"

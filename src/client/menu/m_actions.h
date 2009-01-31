@@ -73,10 +73,11 @@ void MN_ExecuteConfunc(const char *fmt, ...);
 
 /* prototype */
 struct menu_s;
+struct menuNode_s;
 
 void MN_ExecuteActions(const struct menu_s* const menu, const menuAction_t* const first);
-void MN_ExecuteEventActions(const menuNode_t* source, const menuAction_t* firstAction);
-void MN_ExecuteConFuncActions(const menuNode_t* source, const menuAction_t* firstAction);
+void MN_ExecuteEventActions(const struct menuNode_s* source, const menuAction_t* firstAction);
+void MN_ExecuteConFuncActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 qboolean MN_IsInjectedString(const char *string);
 
 qboolean MN_FocusNextActionNode(void);

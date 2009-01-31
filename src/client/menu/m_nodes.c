@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "m_main.h"
+#include "m_internal.h"
 #include "m_nodes.h"
 #include "m_parse.h"
 #include "m_input.h"
@@ -145,6 +146,20 @@ const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, co
 const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char* name)
 {
 	return MN_GetPropertyFromBehaviour(node->behaviour, name);
+}
+
+/**
+ * @brief Check the if conditions for a given node
+ * @sa MN_DrawMenus
+ * @sa V_SPECIAL_IF
+ * @returns qfalse if the node is not drawn due to not meet if conditions
+ * @todo move it into m_node_abstractnode.c
+ */
+qboolean MN_CheckVisibility (menuNode_t *node)
+{
+	if (!node->visibilityCondition)
+		return qtrue;
+	return MN_CheckCondition(node->visibilityCondition);
 }
 
 #if 0	/* not used */

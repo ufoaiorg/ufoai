@@ -31,7 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_rank.h"
 #include "cl_ugv.h"
+#include "menu/m_nodes.h"
 #include "menu/node/m_node_container.h"
+#include "menu/node/m_node_selectbox.h"
 
 linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cp_missions.h"
 #include "campaign/cp_mission_triggers.h"
 #include "campaign/cl_ufo.h"
+#include "menu/m_nodes.h"
 
 /**
  * @brief Checks whether a campaign mode game is running

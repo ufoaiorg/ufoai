@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "m_main.h"
+#include "m_internal.h"
 #include "m_draw.h"
 #include "m_input.h"
 #include "m_timer.h"
@@ -803,20 +804,6 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
 }
 #endif
-
-/**
- * @brief Check the if conditions for a given node
- * @sa MN_DrawMenus
- * @sa V_SPECIAL_IF
- * @returns qfalse if the node is not drawn due to not meet if conditions
- * @todo move it into m_node_abstractnode.c
- */
-qboolean MN_CheckVisibility (menuNode_t *node)
-{
-	if (!node->visibilityCondition)
-		return qtrue;
-	return MN_CheckCondition(node->visibilityCondition);
-}
 
 /**
  * @brief link a text to a menu text id

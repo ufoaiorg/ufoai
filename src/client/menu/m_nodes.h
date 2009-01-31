@@ -42,6 +42,7 @@ struct value_s;
 #include "node/m_node_selectbox.h"
 #include "node/m_node_text.h"
 #include "node/m_node_textentry.h"
+#include "node/m_node_window.h"
 
 /* exclude rect */
 #define MAX_EXLUDERECTS	32
@@ -209,5 +210,6 @@ menuNode_t* MN_GetNodeByPath (const char* path);
 
 void MN_InitNodes(void);
 menuNode_t* MN_CloneNode(const menuNode_t* node, struct menu_s *newMenu, qboolean recursive);
+qboolean MN_CheckVisibility(menuNode_t *node);
 
 #endif

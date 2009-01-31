@@ -25,13 +25,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../renderer/r_draw.h"
 #include "m_main.h"
+#include "m_nodes.h"
+#include "m_internal.h"
 #include "m_draw.h"
+#include "m_actions.h"
 #include "m_font.h"
 #include "m_input.h"
 #include "m_timer.h" /* define MN_HandleTimers */
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
-#include "m_nodes.h"
 #include "node/m_node_abstractnode.h"
 
 cvar_t *mn_debugmenu;

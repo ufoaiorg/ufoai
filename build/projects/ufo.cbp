@@ -567,6 +567,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_input.h" />
+		<Unit filename="..\..\src\client\menu\m_internal.h" />
 		<Unit filename="..\..\src\client\menu\m_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -727,10 +728,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\multiplayer\mp_callbacks.h" />
-		<Unit filename="..\..\src\client\multiplayer\mp_chatmessages.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\multiplayer\mp_chatmessages.h" />
 		<Unit filename="..\..\src\client\multiplayer\mp_serverlist.c">
 			<Option compilerVar="CC" />
 		</Unit>
