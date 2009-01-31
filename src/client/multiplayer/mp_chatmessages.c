@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../menu/m_nodes.h"
 #include "mp_chatmessages.h"
 
 /**< @brief buffer that hold all printed chat messages for menu display */
