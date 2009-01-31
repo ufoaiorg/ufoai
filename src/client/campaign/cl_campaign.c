@@ -1735,11 +1735,11 @@ static void CL_DebugNewEmployees_f (void)
 
 	for (j = 0; j < 5; j++)
 		/* Create a ares  ugv. */
-		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUgvByID("ugv_ares_w"));
+		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUGVByID("ugv_ares_w"));
 
 	for (j = 0; j < 5; j++)
 		/* Create a phoenix  ugv. */
-		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUgvByID("ugv_phoenix"));
+		E_CreateEmployee(EMPL_ROBOT, nation, CL_GetUGVByID("ugv_phoenix"));
 }
 
 /**

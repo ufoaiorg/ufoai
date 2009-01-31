@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUM_TEAMSKINS_SINGLEPLAYER 4
 
 void CL_GenerateCharacter(character_t *chr, int team, employeeType_t employeeType, const ugv_t *ugvType);
-ugv_t *CL_GetUgvByID(const char *ugvID);
+ugv_t *CL_GetUGVByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
 void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);

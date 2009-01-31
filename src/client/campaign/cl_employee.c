@@ -1738,7 +1738,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
 			string = MSG_ReadString(sb);
 			if (Q_strcmp(string, "NULL"))
-				e->ugv = CL_GetUgvByID(string);
+				e->ugv = CL_GetUGVByID(string);
 
 			/* Load the character data */
 			Q_strncpyz(e->chr.name, MSG_ReadStringRaw(sb), sizeof(e->chr.name));

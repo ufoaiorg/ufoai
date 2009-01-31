@@ -1911,9 +1911,9 @@ void B_ClearBase (base_t *const base)
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i robots\n", curCampaign->ugvs);
 		for (i = 0; i < curCampaign->ugvs; i++) {
 			if (frand() > 0.5)
-				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUgvByID("ugv_ares_w"));
+				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUGVByID("ugv_ares_w"));
 			else
-				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUgvByID("ugv_phoenix"));
+				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUGVByID("ugv_phoenix"));
 		}
 		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", curCampaign->workers);
 		for (i = 0; i < curCampaign->workers; i++)

@@ -191,7 +191,7 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
  * @param[in] ugvID The script id of the UGV definition you are looking for
  * @return ugv_t pointer or NULL if not found.
  */
-ugv_t *CL_GetUgvByID (const char *ugvID)
+ugv_t *CL_GetUGVByID (const char *ugvID)
 {
 	int i;
 
@@ -201,7 +201,7 @@ ugv_t *CL_GetUgvByID (const char *ugvID)
 		}
 	}
 
-	Com_Printf("CL_GetUgvByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, gd.numUGV);
+	Com_Printf("CL_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, gd.numUGV);
 	return NULL;
 }
 
