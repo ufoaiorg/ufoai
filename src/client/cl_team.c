@@ -524,31 +524,6 @@ item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	return item;
 }
 
-/**
- * @brief Clears all containers that are temp containers (see script definition).
- * @sa CL_UpdateEquipmentMenuParameters_f
- * @sa MP_SaveTeamMultiplayerInfo
- * @sa GAME_SendCurrentTeamSpawningInfo
- * @todo campaign mode only function
- */
-void CL_CleanTempInventory (base_t* base)
-{
-	int i, k;
-
-	for (i = 0; i < MAX_EMPLOYEES; i++)
-		for (k = 0; k < csi.numIDs; k++)
-			if (csi.ids[k].temp) {
-				/* idFloor and idEquip are temp */
-				gd.employees[EMPL_SOLDIER][i].chr.inv.c[k] = NULL;
-				gd.employees[EMPL_ROBOT][i].chr.inv.c[k] = NULL;
-			}
-
-	if (!base)
-		return;
-
-	INVSH_DestroyInventory(&base->bEquipment);
-}
-
 static void CL_ActorEquipmentSelect_f (void)
 {
 	int num;
@@ -622,6 +597,7 @@ static void CL_ActorSoldierSelect_f (void)
 
 /**
  * @brief implements the "nextsoldier" command
+ * @todo Move into cl_actor.c
  */
 static void CL_NextSoldier_f (void)
 {
@@ -632,6 +608,7 @@ static void CL_NextSoldier_f (void)
 
 /**
  * @brief implements the reselect command
+ * @todo Move into cl_actor.c
  */
 static void CL_ThisSoldier_f (void)
 {
@@ -676,7 +653,7 @@ static void CL_UpdateObject_f (void)
 		const int filter = INV_GetFilterFromItem(obj);
 		if (var->integer != filter) {
 			Cvar_SetValue("mn_equiptype", filter);
-			MN_ExecuteConfunc("update_item_list\n");
+			MN_ExecuteConfunc("update_item_list");
 		}
 	}
 }

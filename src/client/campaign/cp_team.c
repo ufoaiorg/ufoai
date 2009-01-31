@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_team.h"
+#include "../cl_global.h"
 #include "cp_team.h"
 
 /**
@@ -85,3 +86,27 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	}
 }
 
+/**
+ * @brief Clears all containers that are temp containers (see script definition).
+ * @sa CL_UpdateEquipmentMenuParameters_f
+ * @sa MP_SaveTeamMultiplayerInfo
+ * @sa GAME_SendCurrentTeamSpawningInfo
+ * @todo campaign mode only function
+ */
+void CL_CleanTempInventory (base_t* base)
+{
+	int i, k;
+
+	for (i = 0; i < MAX_EMPLOYEES; i++)
+		for (k = 0; k < csi.numIDs; k++)
+			if (csi.ids[k].temp) {
+				/* idFloor and idEquip are temp */
+				gd.employees[EMPL_SOLDIER][i].chr.inv.c[k] = NULL;
+				gd.employees[EMPL_ROBOT][i].chr.inv.c[k] = NULL;
+			}
+
+	if (!base)
+		return;
+
+	INVSH_DestroyInventory(&base->bEquipment);
+}

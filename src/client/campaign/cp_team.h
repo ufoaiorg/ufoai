@@ -26,6 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_TEAM_H
 #define CP_TEAM_H
 
-
+void CL_CleanTempInventory(base_t* base);
 
 #endif
