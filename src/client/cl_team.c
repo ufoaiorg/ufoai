@@ -699,7 +699,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	p = CL_UpdateActorAircraftVar(aircraft, EMPL_SOLDIER);
 	for (; p < MAX_ACTIVETEAM; p++) {
 		Cvar_ForceSet(va("mn_name%i", p), "");
-		MN_ExecuteConfunc("equipdisable%i", p);
+		MN_ExecuteConfunc("equipdisable %i", p);
 	}
 
 	if (chrDisplayList.num > 0)
@@ -772,8 +772,8 @@ static void CL_ActorEquipmentSelect_f (void)
 	chr = chrDisplayList.chr[num];
 
 	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("equipdeselect%i", cl_selected->integer);
-	MN_ExecuteConfunc("equipselect%i", num);
+	MN_ExecuteConfunc("equipdeselect %i", cl_selected->integer);
+	MN_ExecuteConfunc("equipselect %i", num);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));

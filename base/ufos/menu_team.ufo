@@ -112,32 +112,11 @@ menu equipment
 		*txt_actor7 color "0 .78 0 1"
 	}
 
-	confunc equipdeselect0 { *bt_actor0 image hud/buttons1 *txt_actor0 color "0 .78 0 1" }
-	confunc equipdeselect1 { *bt_actor1 image hud/buttons1 *txt_actor1 color "0 .78 0 1" }
-	confunc equipdeselect2 { *bt_actor2 image hud/buttons1 *txt_actor2 color "0 .78 0 1" }
-	confunc equipdeselect3 { *bt_actor3 image hud/buttons1 *txt_actor3 color "0 .78 0 1" }
-	confunc equipdeselect4 { *bt_actor4 image hud/buttons1 *txt_actor4 color "0 .78 0 1" }
-	confunc equipdeselect5 { *bt_actor5 image hud/buttons1 *txt_actor5 color "0 .78 0 1" }
-	confunc equipdeselect6 { *bt_actor6 image hud/buttons1 *txt_actor6 color "0 .78 0 1" }
-	confunc equipdeselect7 { *bt_actor7 image hud/buttons1 *txt_actor7 color "0 .78 0 1" }
+	confunc equipdeselect { *bt_actor<1> image hud/buttons1 *txt_actor<1> color "0 .78 0 1" }
 
-	confunc equipselect0 { *bt_actor0 image hud/buttons1a *txt_actor0 color "1 1 1 1" }
-	confunc equipselect1 { *bt_actor1 image hud/buttons1a *txt_actor1 color "1 1 1 1" }
-	confunc equipselect2 { *bt_actor2 image hud/buttons1a *txt_actor2 color "1 1 1 1" }
-	confunc equipselect3 { *bt_actor3 image hud/buttons1a *txt_actor3 color "1 1 1 1" }
-	confunc equipselect4 { *bt_actor4 image hud/buttons1a *txt_actor4 color "1 1 1 1" }
-	confunc equipselect5 { *bt_actor5 image hud/buttons1a *txt_actor5 color "1 1 1 1" }
-	confunc equipselect6 { *bt_actor6 image hud/buttons1a *txt_actor6 color "1 1 1 1" }
-	confunc equipselect7 { *bt_actor7 image hud/buttons1a *txt_actor7 color "1 1 1 1" }
+	confunc equipselect { *bt_actor<1> image hud/buttons1a *txt_actor<1> color "1 1 1 1" }
 
-	confunc equipdisable0 { *bt_actor0 image hud/buttons1g }
-	confunc equipdisable1 { *bt_actor1 image hud/buttons1g }
-	confunc equipdisable2 { *bt_actor2 image hud/buttons1g }
-	confunc equipdisable3 { *bt_actor3 image hud/buttons1g }
-	confunc equipdisable4 { *bt_actor4 image hud/buttons1g }
-	confunc equipdisable5 { *bt_actor5 image hud/buttons1g }
-	confunc equipdisable6 { *bt_actor6 image hud/buttons1g }
-	confunc equipdisable7 { *bt_actor7 image hud/buttons1g }
+	confunc equipdisable { *bt_actor<1> image hud/buttons1g }
 
 	pic bt_actor0
 	{
