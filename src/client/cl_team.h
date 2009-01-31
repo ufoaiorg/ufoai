@@ -44,7 +44,6 @@ void CL_SaveInventory(sizebuf_t * buf, const inventory_t * i);
 void CL_NetReceiveItem(struct dbuffer * buf, item_t * item, int * container, int * x, int * y);
 void CL_LoadInventory(sizebuf_t * buf, inventory_t * i);
 void TEAM_InitStartup(void);
-void CL_ParseResults(struct dbuffer *msg);
 void CL_ParseCharacterData(struct dbuffer *msg);
 void CL_NetSendInventory(struct dbuffer *buf, const inventory_t *i);
 
