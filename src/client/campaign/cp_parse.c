@@ -384,7 +384,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 /* =========================================================== */
 
 static const value_t campaign_vals[] = {
-	{"team", V_TEAM, offsetof(campaign_t, team), 0},
+	{"team", V_TEAM, offsetof(campaign_t, team), MEMBER_SIZEOF(campaign_t, team)},
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
 	{"workers", V_INT, offsetof(campaign_t, workers), MEMBER_SIZEOF(campaign_t, workers)},
 	{"xvirate", V_INT, offsetof(campaign_t, maxAllowedXVIRateUntilLost), MEMBER_SIZEOF(campaign_t, maxAllowedXVIRateUntilLost)},
