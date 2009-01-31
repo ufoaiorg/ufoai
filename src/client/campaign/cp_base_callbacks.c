@@ -689,7 +689,7 @@ static void BaseSummary_Init_f (void)
 		}
 
 		/* link into the menu */
-		mn.menuText[TEXT_STANDARD] = textInfoBuffer;
+		MN_RegisterText(TEXT_STANDARD, textInfoBuffer);
 
 		Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
@@ -756,7 +756,7 @@ static void BaseSummary_Init_f (void)
 			Q_strcat(textStatsBuffer, _("Nothing\n"), sizeof(textStatsBuffer));
 
 		/* link into the menu */
-		mn.menuText[TEXT_STATS_BASESUMMARY] = textStatsBuffer;
+		MN_RegisterText(TEXT_STATS_BASESUMMARY, textStatsBuffer);
 	}
 }
 

@@ -380,7 +380,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		Cmd_ExecuteString("multi_select_click");
 	} else if (multiSelect.nbSelect > 1) {
 		/* Display popup for multi selection */
-		mn.menuText[TEXT_MULTISELECTION] = multiSelect.popupText;
+		MN_RegisterText(TEXT_MULTISELECTION, multiSelect.popupText);
 		CL_GameTimeStop();
 		MN_PushMenu("popup_multi_selection", NULL);
 	} else {
@@ -1892,7 +1892,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 	}
 	if (showXVI)
-		mn.menuText[TEXT_XVI] = buffer;
+		MN_RegisterText(TEXT_XVI, buffer);
 	else
 		MN_MenuTextReset(TEXT_XVI);
 }
@@ -1932,25 +1932,25 @@ void MAP_DrawMap (const menuNode_t* node)
 	MN_MenuTextReset(TEXT_STANDARD);
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
-		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new base on the map.\n");
+		MN_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));
 		return;
 	case MA_NEWINSTALLATION:
-		mn.menuText[TEXT_STANDARD] = _("Select the desired location of the new installation on the map.\n");
+		MN_RegisterText(TEXT_STANDARD, _("Select the desired location of the new installation on the map.\n"));
 		return;
 	case MA_BASEATTACK:
 		if (ccs.selectedMission)
 			break;
-		mn.menuText[TEXT_STANDARD] = _("Aliens are attacking our base at this very moment.\n");
+		MN_RegisterText(TEXT_STANDARD, _("Aliens are attacking our base at this very moment.\n"));
 		return;
 	case MA_INTERCEPT:
 		if (ccs.selectedMission)
 			break;
-		mn.menuText[TEXT_STANDARD] = _("Select ufo or mission on map\n");
+		MN_RegisterText(TEXT_STANDARD, _("Select ufo or mission on map\n"));
 		return;
 	case MA_UFORADAR:
 		if (ccs.selectedMission)
 			break;
-		mn.menuText[TEXT_STANDARD] = _("UFO in radar range\n");
+		MN_RegisterText(TEXT_STANDARD, _("UFO in radar range\n"));
 		return;
 	case MA_NONE:
 		break;
@@ -1958,8 +1958,9 @@ void MAP_DrawMap (const menuNode_t* node)
 
 	/* Nothing is displayed yet */
 	if (ccs.selectedMission) {
-		mn.menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
+		const char *t = va(_("Location: %s\nType: %s\nObjective: %s"), ccs.selectedMission->location,
 			CP_MissionToTypeString(ccs.selectedMission), _(ccs.selectedMission->mapDef->description));
+		MN_RegisterText(TEXT_STANDARD, t);
 	} else if (selectedAircraft) {
 		switch (selectedAircraft->status) {
 		case AIR_HOME:
@@ -1976,7 +1977,7 @@ void MAP_DrawMap (const menuNode_t* node)
 			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), CL_AircraftMenuStatsValues(selectedAircraft->fuel, AIR_STATS_FUELSIZE),
 				CL_AircraftMenuStatsValues(selectedAircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
-			mn.menuText[TEXT_STANDARD] = text_standard;
+			MN_RegisterText(TEXT_STANDARD, text_standard);
 			break;
 		default:
 			Com_sprintf(text_standard, sizeof(text_standard), _("Name:\t%s (%i/%i)\n"), _(selectedAircraft->name), selectedAircraft->teamSize, selectedAircraft->maxTeamSize);
@@ -1989,15 +1990,15 @@ void MAP_DrawMap (const menuNode_t* node)
 					selectedAircraft->route.point[selectedAircraft->route.numPoints - 1]);
 				Q_strcat(text_standard, va(_("ETA:\t%sh\n"), CL_SecondConvert((float)SECONDS_PER_HOUR * distance / selectedAircraft->stats[AIR_STATS_SPEED])), sizeof(text_standard));
 			}
-			mn.menuText[TEXT_STANDARD] = text_standard;
+			MN_RegisterText(TEXT_STANDARD, text_standard);
 			break;
 		}
 	} else if (selectedUFO) {
 		Com_sprintf(text_standard, sizeof(text_standard), "%s\n", UFO_AircraftToIDOnGeoscape(selectedUFO));
 		Q_strcat(text_standard, va(_("Speed:\t%i km/h\n"), CL_AircraftMenuStatsValues(selectedUFO->stats[AIR_STATS_SPEED], AIR_STATS_SPEED)), sizeof(text_standard));
-		mn.menuText[TEXT_STANDARD] = text_standard;
+		MN_RegisterText(TEXT_STANDARD, text_standard);
 	} else {
-		mn.menuText[TEXT_STANDARD] = "";
+		MN_RegisterText(TEXT_STANDARD, "");
 	}
 }
 

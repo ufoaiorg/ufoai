@@ -632,39 +632,6 @@ static const value_t properties[] = {
 	{NULL, V_NULL, 0, 0}
 };
 
-#ifdef DEBUG
-
-static void MN_DebugTabWidth_f (void) {
-	static char buf[512];
-	buf[0] = '\0';
-	Q_strcat(buf, "a aaaaaaaaaaaaa aaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aa aaaaaaaaaaaaa aaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaa aaaaaaaaaaaaa aaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaa aaaaaaaaaaaaa aaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaa aaaaaaaaaaaaa aaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaa aaaaaaaaaaaaa aa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaa aaaaaaaaaaaaa a\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaa aaaaaaaaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaaa aaaaaaaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaaaa aaaaaaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaaaaa aaaaaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "a aaaaaaaaaaa aaaaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aa aaaaaaaaaaa aaaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaa aaaaaaaaaaa aaaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaa aaaaaaaaaaa aaaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaa aaaaaaaaaaa aaaaa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaa aaaaaaaaaaa aaaa\t\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaa aaaaaaaaaaa aaa\t\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaa aaaaaaaaaaa aa\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaaa aaaaaaaaaaa a\taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaaaa aaaaaaaaaaa \taaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaaaaa aaaaaaaaaa \t aaaa\n", sizeof(buf));
-	Q_strcat(buf, "aaaaaaaaaaaa aaaaaaaaa\t aaaa\n", sizeof(buf));
-	assert(strlen(buf) < sizeof(buf));
-	mn.menuText[TEXT_STANDARD] = buf;
-}
-#endif
-
 void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "text";
@@ -680,7 +647,4 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
 	Cmd_AddCommand("mn_textupdated", MN_TextUpdated_f, "Event to inform node the text is updated");
-#ifdef DEBUG
-	Cmd_AddCommand("debug_texttab", MN_DebugTabWidth_f, "Init TEXT_STANDARD with a tabed text");
-#endif
 }

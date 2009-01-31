@@ -355,10 +355,10 @@ static void BS_BuyType (const base_t *base)
 
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
 	MN_MenuTextReset(TEXT_STANDARD);
-	mn.menuText[TEXT_MARKET_NAMES] = bsMarketNames;
-	mn.menuText[TEXT_MARKET_STORAGE] = bsMarketStorage;
-	mn.menuText[TEXT_MARKET_MARKET] = bsMarketMarket;
-	mn.menuText[TEXT_MARKET_PRICES] = bsMarketPrices;
+	MN_RegisterText(TEXT_MARKET_NAMES, bsMarketNames);
+	MN_RegisterText(TEXT_MARKET_STORAGE, bsMarketStorage);
+	MN_RegisterText(TEXT_MARKET_MARKET, bsMarketMarket);
+	MN_RegisterText(TEXT_MARKET_PRICES, bsMarketPrices);
 
 	/* 'normal' items */
 	switch (buyCat) {

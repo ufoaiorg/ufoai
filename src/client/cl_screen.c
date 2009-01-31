@@ -280,29 +280,29 @@ static void SCR_DrawCursor (void)
 				icon_offset_y += icon_spacing;
 
 				/* Display weaponmode (text) heR_ */
-				if (mn.menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 16, mn.menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
+				if (MN_GetText(TEXT_MOUSECURSOR_RIGHT) && cl_show_cursor_tooltips->integer)
+					SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 16, MN_GetText(TEXT_MOUSECURSOR_RIGHT), qfalse);
 			}
 
 			/* playernames */
-			if (mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->integer) {
+			if (MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES) && cl_show_cursor_tooltips->integer) {
 				/** @todo activate this:
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				*/
-				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
+				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), qfalse);
 				MN_MenuTextReset(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
 
 			if (cl_mapDebug->integer & MAPDEBUG_TEXT) {
 				/* Display ceiling text */
-				if (mn.menuText[TEXT_MOUSECURSOR_TOP] && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX, mousePosY - 64, mn.menuText[TEXT_MOUSECURSOR_TOP], qfalse);
+				if (MN_GetText(TEXT_MOUSECURSOR_TOP) && cl_show_cursor_tooltips->integer)
+					SCR_DrawString(mousePosX, mousePosY - 64, MN_GetText(TEXT_MOUSECURSOR_TOP), qfalse);
 				/* Display floor text */
-				if (mn.menuText[TEXT_MOUSECURSOR_BOTTOM] && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX, mousePosY + 64, mn.menuText[TEXT_MOUSECURSOR_BOTTOM], qfalse);
+				if (MN_GetText(TEXT_MOUSECURSOR_BOTTOM) && cl_show_cursor_tooltips->integer)
+					SCR_DrawString(mousePosX, mousePosY + 64, MN_GetText(TEXT_MOUSECURSOR_BOTTOM), qfalse);
 				/* Display left text */
-				if (mn.menuText[TEXT_MOUSECURSOR_LEFT] && cl_show_cursor_tooltips->integer)
-					SCR_DrawString(mousePosX - 64, mousePosY, mn.menuText[TEXT_MOUSECURSOR_LEFT], qfalse);
+				if (MN_GetText(TEXT_MOUSECURSOR_LEFT) && cl_show_cursor_tooltips->integer)
+					SCR_DrawString(mousePosX - 64, mousePosY, MN_GetText(TEXT_MOUSECURSOR_LEFT), qfalse);
 			}
 		}
 	} else {

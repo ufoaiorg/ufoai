@@ -114,7 +114,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
-	mn.menuTextLinkedList[TEXT_LIST] = NULL;
+	MN_RegisterLinkedListText(TEXT_LIST, NULL);
 
 	LIST_Delete(&popupListData);
 
@@ -239,7 +239,7 @@ void CL_DisplayPopupAircraft (aircraft_t* aircraft)
 	popupAircraft.aircraft = aircraft;
 	popupAircraft.nbItems = 0;
 	memset(popupAircraft.text_popup, 0, sizeof(popupAircraft.text_popup));
-	mn.menuText[TEXT_POPUP] = popupAircraft.text_popup;
+	MN_RegisterText(TEXT_POPUP, popupAircraft.text_popup);
 
 	/* Set static datas in popup_aircraft */
 	popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_BACKTOBASE;
@@ -413,11 +413,11 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 	}	/* bases */
 
 	if (popupIntercept.numAircraft)
-		mn.menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
+		MN_RegisterText(TEXT_AIRCRAFT_LIST, aircraftListText);
 	else if (mission)
-		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no pilot assigned, or no tactical teams assigned to available craft.");
+		MN_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no tactical teams assigned to available craft."));
 	else if (ufo)
-		mn.menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, no pilot assigned, or no weapon or ammo equipped.");
+		MN_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
 
 	if (ufo) {
 		somethingWritten = qfalse;
@@ -449,9 +449,9 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			}
 		}
 		if (somethingWritten)
-			mn.menuText[TEXT_BASE_LIST] = baseListText;
+			MN_RegisterText(TEXT_BASE_LIST, baseListText);
 		else
-			mn.menuText[TEXT_BASE_LIST] = _("No defence system operational or no weapon or ammo equipped.");
+			MN_RegisterText(TEXT_BASE_LIST, _("No defence system operational or no weapon or ammo equipped."));
 	}
 
 	/* Stop time */

@@ -237,7 +237,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	Cvar_SetValue("mn_maxteams", teamData.maxteams);
 	Cvar_SetValue("mn_maxplayersperteam", teamData.maxplayersperteam);
 
-	mn.menuText[TEXT_LIST] = teamData.teamInfoText;
+	MN_RegisterText(TEXT_LIST, teamData.teamInfoText);
 	teamData.parsed = qtrue;
 
 	/* spawn multi-player death match soldiers here */
@@ -313,7 +313,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperplayer"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "sv_maxsoldiersperteam"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), _(Info_BoolForKey(s, "sv_needpass")));
-		mn.menuText[TEXT_STANDARD] = serverInfoText;
+		MN_RegisterText(TEXT_STANDARD, serverInfoText);
 		userInfoText[0] = '\0';
 		do {
 			token = COM_Parse(&users);
@@ -325,7 +325,7 @@ void CL_ParseServerInfoMessage (struct dbuffer *msg, const char *hostname)
 				break;
 			Com_sprintf(userInfoText + strlen(userInfoText), sizeof(userInfoText) - strlen(userInfoText), "%s\t%i\n", token, team);
 		} while (1);
-		mn.menuText[TEXT_LIST] = userInfoText;
+		MN_RegisterText(TEXT_LIST, userInfoText);
 		MN_PushMenu("serverinfo", NULL);
 	} else
 		Com_Printf("%c%s", COLORED_GREEN, s);
@@ -499,7 +499,7 @@ static void CL_ServerListClick_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	mn.menuText[TEXT_STANDARD] = serverInfoText;
+	MN_RegisterText(TEXT_STANDARD, serverInfoText);
 	if (num >= 0 && num < serverListLength)
 		for (i = 0; i < serverListLength; i++)
 			if (serverList[i].pinged && serverList[i].serverListPos == num) {
@@ -542,7 +542,7 @@ void CL_PingServers_f (void)
 		serverListLength = 0;
 		memset(serverList, 0, sizeof(serverList));
 	} else {
-		mn.menuText[TEXT_LIST] = serverText;
+		MN_RegisterText(TEXT_LIST, serverText);
 		return;
 	}
 
@@ -571,7 +571,7 @@ void CL_PingServers_f (void)
 		CL_AddServerToList(adrstring, service);
 	}
 
-	mn.menuText[TEXT_LIST] = serverText;
+	MN_RegisterText(TEXT_LIST, serverText);
 
 	/* don't query the masterservers with every call */
 	if (serversAlreadyQueried) {

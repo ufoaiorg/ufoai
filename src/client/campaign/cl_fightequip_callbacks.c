@@ -441,7 +441,7 @@ static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installati
 	}
 
 	/* copy buffer to mn.menuText to display it on screen */
-	mn.menuText[TEXT_LIST] = buffer;
+	MN_RegisterText(TEXT_LIST, buffer);
 
 	/* if there is at least one element, select the first one */
 	if (i)
@@ -704,7 +704,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: unknown airequipId.\n");
 		return;
 	}
-	mn.menuText[TEXT_BASEDEFENCE_LIST] = defBuffer;
+	MN_RegisterText(TEXT_BASEDEFENCE_LIST, defBuffer);
 
 	/* Fill the texts of each zone */
 	/* First slot: item currently assigned */
@@ -731,7 +731,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			Q_strcat(smallbuffer1, va(_("This defence system will be removed in %i hours.\n"),
 				-slot->installationTime), sizeof(smallbuffer1));
 	}
-	mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
+	MN_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);
 
 	/* Second slot: ammo slot (only used for weapons) */
 	if ((airequipID < AC_ITEM_WEAPON || airequipID > AC_ITEM_AMMO) && slot->item) {
@@ -747,7 +747,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	} else {
 		*smallbuffer2 = '\0';
 	}
-	mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+	MN_RegisterText(TEXT_AIREQUIP_2, smallbuffer2);
 
 	/* Draw selected zone */
 	AIM_DrawSelectedZone();
@@ -850,8 +850,8 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 			Q_strncpyz(smallbuffer1, _("No pilot assigned."), sizeof(smallbuffer1));
 		}
 		*smallbuffer2 = '\0';
-		mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
-		mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+		MN_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);
+		MN_RegisterText(TEXT_AIREQUIP_2, smallbuffer2);
 	} else {
 		/* First slot: item currently assigned */
 		if (!slot->item) {
@@ -877,7 +877,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 				Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours.\n"),
 					-slot->installationTime), sizeof(smallbuffer1));
 		}
-		mn.menuText[TEXT_AIREQUIP_1] = smallbuffer1;
+		MN_RegisterText(TEXT_AIREQUIP_1, smallbuffer1);
 
 		/* Second slot: ammo slot (only used for weapons) */
 		if ((airequipID == AC_ITEM_WEAPON || airequipID == AC_ITEM_AMMO) && slot->item) {
@@ -902,7 +902,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		} else {
 			*smallbuffer2 = '\0';
 		}
-		mn.menuText[TEXT_AIREQUIP_2] = smallbuffer2;
+		MN_RegisterText(TEXT_AIREQUIP_2, smallbuffer2);
 	}
 
 	/* Draw existing slots for this aircraft */
@@ -1375,7 +1375,7 @@ void AIM_ResetEquipAircraftMenu (void)
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
-	mn.menuText[TEXT_STANDARD] = "";
+	MN_RegisterText(TEXT_STANDARD, "");
 }
 
 /**

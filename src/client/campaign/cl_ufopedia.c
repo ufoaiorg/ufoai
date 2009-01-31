@@ -267,7 +267,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 			}
 		}
 	/* and now set the buffer to the right mn.menuText */
-	mn.menuText[TEXT_LIST] = up_techtree;
+	MN_RegisterText(TEXT_LIST, up_techtree);
 }
 
 /**
@@ -314,7 +314,7 @@ void UP_ItemDescription (const objDef_t *od)
 #ifdef DEBUG
 	if (!od->tech && GAME_IsCampaign()) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
-		mn.menuText[TEXT_STANDARD] = itemText;
+		MN_RegisterText(TEXT_STANDARD, itemText);
 		odAmmo = NULL;
 	} else
 #endif
@@ -486,10 +486,10 @@ void UP_ItemDescription (const objDef_t *od)
 				(odAmmo->fd[up_weapon_id][upFireMode].spread[0] + odAmmo->fd[up_weapon_id][upFireMode].spread[1]) / 2),  sizeof(itemText));
 		}
 
-		mn.menuText[TEXT_STANDARD] = itemText;
+		MN_RegisterText(TEXT_STANDARD, itemText);
 	} else { /* includes if (RS_Collected_(tech)) AFAIK*/
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		mn.menuText[TEXT_STANDARD] = itemText;
+		MN_RegisterText(TEXT_STANDARD, itemText);
 	}
 }
 
@@ -527,7 +527,7 @@ static void UP_ArmourDescription (const technology_t* t)
 			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
 		}
 	}
-	mn.menuText[TEXT_STANDARD] = upBuffer;
+	MN_RegisterText(TEXT_STANDARD, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -556,7 +556,7 @@ static void UP_BuildingDescription (const technology_t* t)
 		Q_strcat(upBuffer, va(_("Cost:\t%i c\n"), b->fixCosts), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), b->varCosts), sizeof(upBuffer));
 	}
-	mn.menuText[TEXT_STANDARD] = upBuffer;
+	MN_RegisterText(TEXT_STANDARD, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -609,7 +609,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 #ifdef DEBUG
 	if (!item->tech && GAME_IsCampaign()) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
-		mn.menuText[TEXT_STANDARD] = itemText;
+		MN_RegisterText(TEXT_STANDARD, itemText);
 	} else
 #endif
 	/* set description text */
@@ -646,7 +646,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		}
 	}
 
-	mn.menuText[TEXT_STANDARD] = itemText;
+	MN_RegisterText(TEXT_STANDARD, itemText);
 }
 
 /**
@@ -707,7 +707,7 @@ void UP_AircraftDescription (const technology_t* t)
 	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
-	mn.menuText[TEXT_STANDARD] = upBuffer;
+	MN_RegisterText(TEXT_STANDARD, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -743,14 +743,14 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	if (RS_IsResearched_ptr(tech)) {
 		/** @todo make me shiny */
 		Com_sprintf(itemText, sizeof(itemText), _("%s\n%s"), _(tech->name), ugvType->weapon);
-		mn.menuText[TEXT_STANDARD] = itemText;
+		MN_RegisterText(TEXT_STANDARD, itemText);
 	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		mn.menuText[TEXT_STANDARD] = itemText;
+		MN_RegisterText(TEXT_STANDARD, itemText);
 	} else {
 		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-		mn.menuText[TEXT_STANDARD] = itemText;
+		MN_RegisterText(TEXT_STANDARD, itemText);
 	}
 }
 
@@ -883,7 +883,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	}
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
 		_(from), _(to), dateBuf, subjectType, _(subject));
-	mn.menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
+	MN_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 	Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
 }
 
@@ -904,7 +904,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		Cvar_SetValue("mn_uppreavailable", 0);
 		Cvar_SetValue("mn_updisplay", UFOPEDIA_CHAPTERS);
 		UP_SetMailHeader(NULL, 0, mail);
-		mn.menuText[TEXT_UFOPEDIA] = _(mail->body);
+		MN_RegisterText(TEXT_UFOPEDIA, _(mail->body));
 		/* This allows us to use the index button in the UFOpaedia,
 		 * eventMails don't have any chapter to go back to. */
 		upDisplay = UFOPEDIA_INDEX;
@@ -914,11 +914,11 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		if (RS_IsResearched_ptr(tech)) {
 			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 			/* If researched -> display research text */
-			mn.menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->description));
+			MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->description)));
 			if (tech->pre_description.numDescriptions > 0) {
 				/* Display pre-research text and the buttons if a pre-research text is available. */
 				if (mn_uppretext->integer) {
-					mn.menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
+					MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->pre_description)));
 					UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 				} else {
 					UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
@@ -970,10 +970,10 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 			Cvar_Set("mn_uptitle", _(tech->name));
 			/* Not researched but some items collected -> display pre-research text if available. */
 			if (tech->pre_description.numDescriptions > 0) {
-				mn.menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
+				MN_RegisterText(TEXT_UFOPEDIA, _(RS_GetDescription(&tech->pre_description)));
 				UP_SetMailHeader(tech, TECHMAIL_PRE, NULL);
 			} else {
-				mn.menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
+				MN_RegisterText(TEXT_UFOPEDIA, _("No pre-research description available."));
 			}
 		} else {
 			Cvar_Set("mn_uptitle", _(tech->name));
@@ -1164,7 +1164,7 @@ static void UP_Content_f (void)
 
 	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 
-	mn.menuText[TEXT_UFOPEDIA] = upText;
+	MN_RegisterText(TEXT_UFOPEDIA, upText);
 	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
 }
 
@@ -1194,7 +1194,7 @@ static void UP_Index_f (void)
 
 	upIndex = upText;
 	*upIndex = '\0';
-	mn.menuText[TEXT_UFOPEDIA] = upIndex;
+	MN_RegisterText(TEXT_UFOPEDIA, upIndex);
 
 	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(currentChapter->name)));
 
@@ -1698,7 +1698,7 @@ static void UP_OpenMail_f (void)
 #endif
 		m = m->next;
 	}
-	mn.menuText[TEXT_UFOPEDIA_MAIL] = mailBuffer;
+	MN_RegisterText(TEXT_UFOPEDIA_MAIL, mailBuffer);
 
 	UP_SetMailButtons_f();
 }

@@ -44,8 +44,8 @@ char popupAction3[MAX_SMALLMENUTEXTLEN];
  */
 void MN_Popup (const char *title, const char *text)
 {
-	mn.menuText[TEXT_POPUP] = title;
-	mn.menuText[TEXT_POPUP_INFO] = text;
+	MN_RegisterText(TEXT_POPUP, title);
+	MN_RegisterText(TEXT_POPUP_INFO, text);
 	CL_GameTimeStop();
 	MN_PushMenu(POPUP_MENU_NAME, NULL);
 }
@@ -62,12 +62,12 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 	menu_t* popupListMenu;
 	menuNode_t* listNode;
 
-	mn.menuText[TEXT_POPUP] = title;
-	mn.menuText[TEXT_POPUP_INFO] = headline;
+	MN_RegisterText(TEXT_POPUP, title);
+	MN_RegisterText(TEXT_POPUP_INFO, headline);
 
 	/* make sure, that we are using the linked list */
 	MN_MenuTextReset(TEXT_LIST);
-	mn.menuTextLinkedList[TEXT_LIST] = entries;
+	MN_RegisterLinkedListText(TEXT_LIST, entries);
 	CL_GameTimeStop();
 
 	popupListMenu = MN_GetMenu(POPUPLIST_MENU_NAME);
@@ -154,11 +154,11 @@ void MN_PopupButton (const char *title, const char *text,
 {
 	menu_t* popupButtonMenu;
 
-	mn.menuText[TEXT_POPUP] = title;
+	MN_RegisterText(TEXT_POPUP, title);
 	if (text)
-		mn.menuText[TEXT_POPUP_INFO] = text;
+		MN_RegisterText(TEXT_POPUP_INFO, text);
 	else
-		mn.menuText[TEXT_POPUP_INFO] = popupText;
+		MN_RegisterText(TEXT_POPUP_INFO, popupText);
 
 	CL_GameTimeStop();
 

@@ -80,7 +80,7 @@ static void MN_InitKeyList_f (void)
 		if (battlekeybindings[i] && battlekeybindings[i][0])
 			Q_strcat(keylist, va("%s\t%s\n", Key_KeynumToString(i), Cmd_GetCommandDesc(battlekeybindings[i])), sizeof(keylist));
 
-	mn.menuText[TEXT_LIST] = keylist;
+	MN_RegisterText(TEXT_LIST, keylist);
 
 	/* @todo bad size computation, the text node only know the number of line */
 	MN_ExecuteConfunc("mn_textupdated keylist");

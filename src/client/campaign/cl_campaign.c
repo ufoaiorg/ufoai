@@ -272,7 +272,7 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 	assert(curCampaign);
 
 	if (!endCampaign && ccs.credits < -curCampaign->negativeCreditsUntilLost) {
-		mn.menuText[TEXT_STANDARD] = _("You've gone too far into debt.");
+		MN_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
 		endCampaign = qtrue;
 	}
 
@@ -280,18 +280,18 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
 	if (!gd.numBases && ccs.credits < curCampaign->basecost - curCampaign->negativeCreditsUntilLost) {
-		mn.menuText[TEXT_STANDARD] = _("You've lost your bases and don't have enough money to build new ones.");
+		MN_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
 
 	if (!endCampaign) {
 		if (CP_GetAverageXVIRate() > curCampaign->maxAllowedXVIRateUntilLost) {
-			mn.menuText[TEXT_STANDARD] = _("You have failed in your charter to protect Earth."
+			MN_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
 				" Our home and our people have fallen to the alien infection. Only a handful"
 				" of people on Earth remain human, and the remaining few no longer have a"
 				" chance to stem the tide. Your command is no more; PHALANX is no longer"
 				" able to operate as a functioning unit. Nothing stands between the aliens"
-				" and total victory.");
+				" and total victory."));
 			endCampaign = qtrue;
 		} else {
 			/* check for nation happiness */
@@ -304,13 +304,13 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 			}
 			if (nationBelowLimit >= nationBelowLimitPercentage * gd.numNations) {
 				/* lost the game */
-				mn.menuText[TEXT_STANDARD] = _("Under your command, PHALANX operations have"
+				MN_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
 					" consistently failed to protect nations."
 					" The UN, highly unsatisfied with your performance, has decided to remove"
 					" you from command and subsequently disbands the PHALANX project as an"
 					" effective task force. No further attempts at global cooperation are made."
 					" Earth's nations each try to stand alone against the aliens, and eventually"
-					" fall one by one.");
+					" fall one by one."));
 				endCampaign = qtrue;
 			}
 		}
@@ -789,18 +789,18 @@ static void CL_StatsUpdate_f (void)
 	pos = statsBuffer;
 
 	/* missions */
-	mn.menuText[TEXT_STATS_MISSION] = pos;
+	MN_RegisterText(TEXT_STATS_MISSION, pos);
 	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), campaignStats.missionsWon, campaignStats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_BASES] = pos;
+	MN_RegisterText(TEXT_STATS_BASES, pos);
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 		campaignStats.basesBuild, gd.numBases, campaignStats.basesAttacked),
 
 	/* installations */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_INSTALLATIONS] = pos;
+	MN_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
 	for (i = 0; i < gd.numInstallations; i++) {
 		const installation_t *inst = &gd.installations[i];
 		Q_strcat(pos, va(_("%s\n"), inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
@@ -808,7 +808,7 @@ static void CL_StatsUpdate_f (void)
 
 	/* nations */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_NATIONS] = pos;
+	MN_RegisterText(TEXT_STATS_NATIONS, pos);
 	for (i = 0; i < gd.numNations; i++) {
 		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), NAT_GetHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
@@ -847,14 +847,14 @@ static void CL_StatsUpdate_f (void)
 
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_EMPLOYEES] = pos;
+	MN_RegisterText(TEXT_STATS_EMPLOYEES, pos);
 	for (i = 0; i < MAX_EMPL; i++) {
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs - second part */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_STATS_COSTS] = pos;
+	MN_RegisterText(TEXT_STATS_COSTS, pos);
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -898,7 +898,7 @@ static void CL_StatsUpdate_f (void)
 
 	/* campaign */
 	pos += (strlen(pos) + 1);
-	mn.menuText[TEXT_GENERIC] = pos;
+	MN_RegisterText(TEXT_GENERIC, pos);
 	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), curCampaign->negativeCreditsUntilLost),
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 

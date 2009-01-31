@@ -214,7 +214,7 @@ static void HOS_EmployeeInit_f (void)
 	}
 
 	/** @todo */
-	mn.menuText[TEXT_STANDARD] = employeeDesc;
+	MN_RegisterText(TEXT_STANDARD, employeeDesc);
 	*employeeDesc = '\0';
 
 	c = &currentEmployeeInHospital->chr;

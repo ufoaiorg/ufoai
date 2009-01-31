@@ -396,7 +396,7 @@ static void TR_CargoList (void)
 	}
 
 	MN_MenuTextReset(TEXT_CARGO_LIST);
-	mn.menuTextLinkedList[TEXT_CARGO_LIST] = cargoList;
+	MN_RegisterLinkedListText(TEXT_CARGO_LIST, cargoList);
 }
 
 /**
@@ -601,7 +601,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 
 	currentTransferType = transferType;
 	Cvar_Set("mn_transcat_name", TR_CategoryName(currentTransferType));
-	mn.menuTextLinkedList[TEXT_TRANSFER_LIST] = transferList;
+	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST, transferList);
 }
 
 /**
@@ -981,7 +981,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 		Q_strcat(transferBaseSelectPopup, va("  %s ", base->name), sizeof(transferBaseSelectPopup));
 		Q_strcat(transferBaseSelectPopup, va(ngettext("(can host %i live alien)\n", "(can host %i live aliens)\n", num), num), sizeof(transferBaseSelectPopup));
 	}
-	mn.menuText[TEXT_LIST] = transferBaseSelectPopup;
+	MN_RegisterText(TEXT_LIST, transferBaseSelectPopup);
 	MN_PushMenu("popup_transferbaselist", NULL);
 }
 
@@ -1375,7 +1375,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	if (!powercomm)
 		Q_strcat(baseInfo, _("No power supplies in this base.\n"), sizeof(baseInfo));
 
-	mn.menuText[TEXT_BASE_INFO] = baseInfo;
+	MN_RegisterText(TEXT_BASE_INFO, baseInfo);
 
 	/* Set global pointer to current selected base. */
 	transferBase = destbase;

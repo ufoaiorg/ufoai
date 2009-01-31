@@ -140,6 +140,7 @@ static void E_EmployeeList_f (void)
 	int i, j;
 	employee_t* employee;
 	int hiredEmployeeIdx;
+	linkedList_t *employeeListName;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !GAME_CP_IsRunning())
@@ -177,6 +178,7 @@ static void E_EmployeeList_f (void)
 
 	/* make sure, that we are using the linked list */
 	MN_MenuTextReset(TEXT_LIST);
+	employeeListName = NULL;
 
 	/** @todo Use CL_GetTeamList and reduce code duplication */
 	for (j = 0, employee = gd.employees[employeeCategory]; j < gd.numEmployees[employeeCategory]; j++, employee++) {
@@ -184,7 +186,7 @@ static void E_EmployeeList_f (void)
 		if (employee->baseHired != baseCurrent && employee->hired)
 			continue;
 
-		LIST_AddPointer(&mn.menuTextLinkedList[TEXT_LIST], employee->chr.name);
+		LIST_AddPointer(&employeeListName, employee->chr.name);
 		LIST_AddPointer(&employeeList, employee);
 		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
 		/** @todo Check if the "textScroll % cl_numnames->integer" calculation
@@ -205,6 +207,7 @@ static void E_EmployeeList_f (void)
 		}
 		employeesInCurrentList++;
 	}
+	MN_RegisterLinkedListText(TEXT_LIST, employeeListName);
 
 	/* If the list is empty OR we are in pilots/scientists/workers-mode: don't show the model&stats. */
 	/** @note

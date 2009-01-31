@@ -264,7 +264,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
-	mn.menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
+	MN_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
 	/* compute the ID and... */
 	for (id = 0; id < base->numAircraftInBase; id++) {
@@ -301,7 +301,7 @@ static void AIR_AircraftUpdateList_f (void)
 		Q_strcat(buffer, "\n", sizeof(buffer));
 	}
 
-	mn.menuText[TEXT_AIRCRAFT_LIST] = buffer;
+	MN_RegisterText(TEXT_AIRCRAFT_LIST, buffer);
 }
 
 void AIR_InitCallbacks (void)

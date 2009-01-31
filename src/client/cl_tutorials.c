@@ -42,7 +42,7 @@ static void TUT_GetTutorials_f (void)
 {
 	int i;
 
-	mn.menuText[TEXT_LIST] = tutorialList;
+	MN_RegisterText(TEXT_LIST, tutorialList);
 	tutorialList[0] = 0;
 	for (i = 0; i < numTutorials; i++) {
 		const tutorial_t *t = &tutorials[i];

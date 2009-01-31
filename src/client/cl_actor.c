@@ -945,7 +945,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
-	mn.menuTextLinkedList[TEXT_LIST] = NULL;
+	MN_RegisterLinkedListText(TEXT_LIST, NULL);
 
 	LIST_Delete(&popupListData);
 
@@ -2118,7 +2118,7 @@ void HUD_ActorUpdateCvars (void)
 				lastHUDActor = selActor;
 				lastMoveLength = actorMoveLength;
 				lastTU = selActor->TU;
-				mn.menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;
+				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 			}
 			time = actorMoveLength;
 		} else {
@@ -2134,7 +2134,7 @@ void HUD_ActorUpdateCvars (void)
 				Com_sprintf(mouseText, lengthof(mouseText),
 							"%s: %s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, selToHit, selFD->time);
 
-				mn.menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;	/* Save the text for later display next to the cursor. */
+				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);	/* Save the text for later display next to the cursor. */
 
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
@@ -2163,18 +2163,18 @@ void HUD_ActorUpdateCvars (void)
 		/* Display the floor and ceiling values for the current cell. */
 		Com_sprintf(topText, lengthof(topText), "%u-(%i,%i,%i)\n", Grid_Ceiling(clMap, fieldSize, truePos), truePos[0], truePos[1], truePos[2]);
 		/* Save the text for later display next to the cursor. */
-		mn.menuText[TEXT_MOUSECURSOR_TOP] = topText;
+		MN_RegisterText(TEXT_MOUSECURSOR_TOP, topText);
 
 		/* Display the floor and ceiling values for the current cell. */
 		Com_sprintf(bottomText, lengthof(bottomText), "%i-(%i,%i,%i)\n", Grid_Floor(clMap, fieldSize, truePos), mousePos[0], mousePos[1], mousePos[2]);
 		/* Save the text for later display next to the cursor. */
-		mn.menuText[TEXT_MOUSECURSOR_BOTTOM] = bottomText;
+		MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
 
 		/* Display the floor and ceiling values for the current cell. */
 		dv = Grid_MoveNext(clMap, fieldSize, &clPathMap, mousePos, 0);
 		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
 		/* Save the text for later display next to the cursor. */
-		mn.menuText[TEXT_MOUSECURSOR_LEFT] = leftText;
+		MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);
 
 		/* Calculate remaining TUs. */
 		/* We use the full count of TUs since the "reserved" bar is overlaid over this one. */
@@ -2231,7 +2231,7 @@ void HUD_ActorUpdateCvars (void)
 				Q_strncpyz(infoText, cl.msgText, sizeof(infoText));
 			}
 		}
-		mn.menuText[TEXT_STANDARD] = infoText;
+		MN_RegisterText(TEXT_STANDARD, infoText);
 	/* This will stop the drawing of the bars over the whole screen when we test maps. */
 	} else if (!cl.numTeamList) {
 		Cvar_SetValue("mn_tu", 0);
@@ -4681,14 +4681,14 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				if (mouseActor->team == TEAM_ALIEN) {
 					if (mouseActor->teamDef) {
 						if (RS_IsResearched_ptr(RS_GetTechByID(mouseActor->teamDef->tech)))
-							mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _(mouseActor->teamDef->name);
+							MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 						else
-							mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = _("Unknown alien race");
+							MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
 					}
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */
-					mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
+					MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum]);
 				}
 				/* Aliens (and players not in our team [multiplayer]) are red */
 				VectorSet(ent.angles, 1, 0, 0); /* Red */
@@ -4697,12 +4697,12 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		} else {
 			/* coop multiplayer games */
 			if (mouseActor->pnum != cl.pnum) {
-				mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
+				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum]);
 			} else {
 				/* we know the names of our own actors */
 				character_t* chr = CL_GetActorChr(mouseActor);
 				assert(chr);
-				mn.menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = chr->name;
+				MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, chr->name);
 			}
 			/* Paint a light blue box if on our team */
 			VectorSet(ent.angles, 0.2, 0.3, 1); /* Light Blue */

@@ -222,7 +222,7 @@ void MN_AddChatMessage (const char *text)
 			return;
 		}
 		/* only link this once */
-		mn.menuText[TEXT_CHAT_WINDOW] = chatBuffer;
+		MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
 	}
 	if (!chatBufferNode) {
 		const menu_t* menu = MN_GetMenu(mn_hud->string);

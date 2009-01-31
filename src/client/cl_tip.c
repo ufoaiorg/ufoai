@@ -77,7 +77,7 @@ static void CL_GetTipOfTheDay_f (void)
 		rnd--;
 	}
 
-	mn.menuText[TEXT_TIPOFTHEDAY] = _(tip->tipString);
+	MN_RegisterText(TEXT_TIPOFTHEDAY, _(tip->tipString));
 }
 
 /**

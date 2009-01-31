@@ -158,8 +158,8 @@ static void GAME_CP_GetCampaigns_f (void)
 			Q_strcat(campaignText, va("%s\n", _(campaigns[i].name)), MAXCAMPAIGNTEXT);
 	}
 	/* default campaign */
-	mn.menuText[TEXT_STANDARD] = campaignDesc;
-	mn.menuText[TEXT_CAMPAIGN_LIST] = campaignText;
+	MN_RegisterText(TEXT_STANDARD, campaignDesc);
+	MN_RegisterText(TEXT_CAMPAIGN_LIST, campaignText);
 
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
@@ -213,7 +213,7 @@ static void GAME_CP_CampaignListClick_f (void)
 			campaigns[num].credits, CP_ToDifficultyName(campaigns[num].difficulty),
 			(int)(round(campaigns[num].minhappiness * 100.0f)), campaigns[num].negativeCreditsUntilLost,
 			_(campaigns[num].text));
-	mn.menuText[TEXT_STANDARD] = campaignDesc;
+	MN_RegisterText(TEXT_STANDARD, campaignDesc);
 
 	/* Highlight currently selected entry */
 	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
@@ -261,7 +261,7 @@ void GAME_CP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 	base_t *base = CP_GetMissionBase();
 
 	/* init result text */
-	mn.menuText[TEXT_STANDARD] = resultText;
+	MN_RegisterText(TEXT_STANDARD, resultText);
 
 	our_survivors = our_killed = our_stunned = 0;
 	their_survivors = their_killed = their_stunned = 0;

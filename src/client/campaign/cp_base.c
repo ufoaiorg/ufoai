@@ -1468,7 +1468,7 @@ void B_DrawBuilding (base_t* base, building_t* building)
 		Cvar_Set("mn_building_image", "base/empty");
 
 	/* link into menu text array */
-	mn.menuText[TEXT_BUILDING_INFO] = buildingText;
+	MN_RegisterText(TEXT_BUILDING_INFO, buildingText);
 }
 
 /**
@@ -1605,7 +1605,7 @@ void B_BuildingInit (base_t* base)
 	if (base->buildingCurrent)
 		B_DrawBuilding(base, base->buildingCurrent);
 
-	mn.menuTextLinkedList[TEXT_BUILDINGS] = base->buildingList;
+	MN_RegisterLinkedListText(TEXT_BUILDINGS, base->buildingList);
 }
 
 /**

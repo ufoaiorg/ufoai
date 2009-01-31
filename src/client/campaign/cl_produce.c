@@ -494,11 +494,11 @@ static void PR_UpdateProductionList (const base_t* base)
 	}
 
 	/* bind the menu text to our static char array */
-	mn.menuText[TEXT_PRODUCTION_LIST] = productionList;
+	MN_RegisterText(TEXT_PRODUCTION_LIST, productionList);
 	/* bind the amount of available items */
-	mn.menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
+	MN_RegisterText(TEXT_PRODUCTION_AMOUNT, productionAmount);
 	/* bind the amount of queued items */
-	mn.menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
+	MN_RegisterText(TEXT_PRODUCTION_QUEUED, productionQueued);
 }
 
 /**
@@ -794,7 +794,7 @@ static void PR_ItemProductionInfo (const base_t *base, const objDef_t *od, float
 		Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size), sizeof(productionInfo));
 		Cvar_Set("mn_item", od->id);
 	}
-	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
 
 /**
@@ -830,7 +830,7 @@ static void PR_DisassemblyInfo (const base_t *base, const objDef_t *od, const co
 	Q_strcat(productionInfo, "\n", sizeof(productionInfo));
 	Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time), sizeof(productionInfo));
 	Cvar_Set("mn_item", od->id);
-	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 }
 
 /**
@@ -848,7 +848,7 @@ static void PR_AircraftInfo (const aircraft_t *aircraftTemplate)
 		sizeof(productionInfo));
 	assert(aircraftTemplate->tech);
 	Q_strcat(productionInfo, va(_("Production time\t%ih\n"), aircraftTemplate->tech->produceTime), sizeof(productionInfo));
-	mn.menuText[TEXT_PRODUCTION_INFO] = productionInfo;
+	MN_RegisterText(TEXT_PRODUCTION_INFO, productionInfo);
 	Cvar_Set("mn_item", aircraftTemplate->id);
 }
 
@@ -886,9 +886,9 @@ static void PR_ProductionInfo (const base_t *base)
 		} else {
 			MN_ExecuteConfunc("prod_nothingselected");
 			if (produceCategory == FILTER_AIRCRAFT)
-				mn.menuText[TEXT_PRODUCTION_INFO] = _("No aircraft selected.");
+				MN_RegisterText(TEXT_PRODUCTION_INFO, _("No aircraft selected."));
 			else
-				mn.menuText[TEXT_PRODUCTION_INFO] = _("No item selected");
+				MN_RegisterText(TEXT_PRODUCTION_INFO, _("No item selected"));
 			Cvar_Set("mn_item", "");
 		}
 	}

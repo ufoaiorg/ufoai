@@ -223,7 +223,7 @@ qboolean GAME_MP_Spawn (void)
 
 	/* we are already connected and in this list */
 	if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
-		mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
+		MN_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
 		Com_Printf("GAME_MP_Spawn: Invalid or full team %i\n"
 			"  maxplayers per team: %i - players on team: %i",
 			n, teamData.maxplayersperteam, teamData.teamCount[n]);

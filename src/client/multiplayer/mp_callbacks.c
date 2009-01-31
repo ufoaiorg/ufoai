@@ -178,7 +178,7 @@ static void CL_SelectTeam_Init_f (void)
 	MN_MenuTextReset(TEXT_STANDARD);
 
 	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
-	mn.menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
+	MN_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));
 }
 
 /**
@@ -207,10 +207,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				mn.menuText[TEXT_STANDARD] = buf;
+				MN_RegisterText(TEXT_STANDARD, buf);
 				break;
 			} else {
-				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
+				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
 					i, teamData.teamCount[i], teamData.maxplayersperteam);
 			}
@@ -220,10 +220,10 @@ static void CL_TeamNum_f (void)
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);
 				Com_sprintf(buf, sizeof(buf), _("Current team: %i"), i);
-				mn.menuText[TEXT_STANDARD] = buf;
+				MN_RegisterText(TEXT_STANDARD, buf);
 				break;
 			} else {
-				mn.menuText[TEXT_STANDARD] = _("Team is already in use");
+				MN_RegisterText(TEXT_STANDARD, _("Team is already in use"));
 				Com_DPrintf(DEBUG_CLIENT, "team %i is already in use: %i (max: %i)\n",
 					i, teamData.teamCount[i], teamData.maxplayersperteam);
 			}
@@ -232,7 +232,7 @@ static void CL_TeamNum_f (void)
 
 #if 0
 	if (!teamnum->modified)
-		mn.menuText[TEXT_STANDARD] = _("Invalid or full team");
+		MN_RegisterText(TEXT_STANDARD, _("Invalid or full team"));
 #endif
 	CL_SelectTeam_Init_f();
 }
