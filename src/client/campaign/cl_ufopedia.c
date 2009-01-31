@@ -28,7 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h"
 #include "cl_mapfightequip.h"
 #include "cp_time.h"
-#include "../menu/m_messages.h"
 #include "../menu/node/m_node_text.h"
 #include "../../shared/parse.h"
 
@@ -762,7 +761,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
  */
 int UP_GetUnreadMails (void)
 {
-	const message_t *m = mn.messageStack;
+	const message_t *m = cp_messageStack;
 
 	if (gd.numUnreadMails != -1)
 		return gd.numUnreadMails;
@@ -1429,7 +1428,7 @@ static void UP_Update_f (void)
  */
 static void UP_MailClientClick_f (void)
 {
-	message_t *m = mn.messageStack;
+	message_t *m = cp_messageStack;
 	int num;
 	int cnt = -1;
 
@@ -1525,7 +1524,7 @@ static menuNode_t *mailClientListNode;
 static void UP_SetMailButtons_f (void)
 {
 	int i = 0, num;
-	const message_t *m = mn.messageStack;
+	const message_t *m = cp_messageStack;
 
 	/* maybe we called this from the console and UP_OpenMail_f wasn't called yet */
 	if (!mailClientListNode)
@@ -1604,7 +1603,7 @@ static void UP_SetMailButtons_f (void)
 static void UP_OpenMail_f (void)
 {
 	char tempBuf[MAIL_LENGTH] = "";
-	const message_t *m = mn.messageStack;
+	const message_t *m = cp_messageStack;
 	const menu_t* menu = MN_GetMenu("ufopedia_mail");
 	dateLong_t date;
 
@@ -1708,7 +1707,7 @@ static void UP_OpenMail_f (void)
  */
 static void UP_SetAllMailsRead_f (void)
 {
-	const message_t *m = mn.messageStack;
+	const message_t *m = cp_messageStack;
 
 	while (m) {
 		switch (m->type) {

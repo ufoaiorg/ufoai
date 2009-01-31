@@ -143,12 +143,12 @@ void CL_UpdateTime (void)
 	}
 
 	/* Update the date */
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
-	Cvar_Set("mn_mapdate", mn.messageBuffer);
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%i %s %02i"), date.year, Date_GetMonthName(date.month - 1), date.day);
+	Cvar_Set("mn_mapdate", cp_messageBuffer);
 
 	/* Update the time. */
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%02i:%02i"), date.hour, date.min);
-	Cvar_Set("mn_maptime", mn.messageBuffer);
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%02i:%02i"), date.hour, date.min);
+	Cvar_Set("mn_maptime", cp_messageBuffer);
 }
 
 /**

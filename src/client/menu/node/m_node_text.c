@@ -454,7 +454,7 @@ static void MN_TextNodeDraw (menuNode_t *node)
 		MN_TextNodeDrawText(NULL, mn.menuTextLinkedList[EXTRADATA(node).num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 	} else if (EXTRADATA(node).num == TEXT_MESSAGESYSTEM) {
 		font = MN_GetFont(menu, node);
-		MN_TextNodeDrawMessageList(mn.messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+		MN_TextNodeDrawMessageList(cp_messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 	}
 }
 

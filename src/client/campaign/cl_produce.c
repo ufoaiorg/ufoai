@@ -512,8 +512,8 @@ static void PR_QueueNext (base_t *base)
 	PR_QueueDelete(base, queue, 0);
 	if (queue->numItems == 0) {
 		PR_ClearSelected();
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production queue for base %s is empty"), base->name);
-		MSO_CheckAddNewMessage(NT_PRODUCTION_QUEUE_EMPTY,_("Production queue empty"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production queue for base %s is empty"), base->name);
+		MSO_CheckAddNewMessage(NT_PRODUCTION_QUEUE_EMPTY,_("Production queue empty"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 		return;
 	} else if (selectedProduction && selectedProduction->idx >= queue->numItems) {
 		PR_ClearSelected();
@@ -637,8 +637,8 @@ void PR_ProductionRun (void)
 				/* Not enough money to produce more items in this base. */
 				if (od->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
+						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->creditmessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
@@ -647,8 +647,8 @@ void PR_ProductionRun (void)
 				/* Not enough free space in base storage for this item. */
 				if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < od->size) {
 					if (!prod->spacemessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Production postponed.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in base %s. Production postponed.\n"), base->name);
+						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->spacemessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
@@ -658,8 +658,8 @@ void PR_ProductionRun (void)
 				/* Not enough money to produce more items in this base. */
 				if (aircraft->price * PRODUCE_FACTOR / PRODUCE_DIVISOR > ccs.credits) {
 					if (!prod->creditmessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough credits to finish production in base %s.\n"), base->name);
+						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->creditmessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
@@ -668,8 +668,8 @@ void PR_ProductionRun (void)
 				/* Not enough free space in hangars for this aircraft. */
 				if (AIR_CalculateHangarStorage(prod->aircraft, base, 0) <= 0) {
 					if (!prod->spacemessage) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free hangar space in base %s. Production postponed.\n"), base->name);
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free hangar space in base %s. Production postponed.\n"), base->name);
+						MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 						prod->spacemessage = qtrue;
 					}
 					PR_ProductionRollBottom_f();
@@ -679,8 +679,8 @@ void PR_ProductionRun (void)
 		} else {		/* This is disassembling. */
 			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, INV_GetComponentsByItem(prod->item), qtrue)) {
 				if (!prod->spacemessage) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Not enough free storage space in base %s. Disassembling postponed.\n"), base->name);
-					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in base %s. Disassembling postponed.\n"), base->name);
+					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 					prod->spacemessage = qtrue;
 				}
 				PR_ProductionRollBottom_f();
@@ -711,8 +711,8 @@ void PR_ProductionRun (void)
 
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), _(od->name));
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s has finished."), _(od->name));
+						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 						PR_QueueNext(base);
 					}
 				} else {
@@ -723,8 +723,8 @@ void PR_ProductionRun (void)
 					AIR_NewAircraft(base, aircraft->id);
 					/* queue the next production */
 					if (prod->amount <= 0) {
-						Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The production of %s has finished."), _(aircraft->name));
-						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+						Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The production of %s has finished."), _(aircraft->name));
+						MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 						PR_QueueNext(base);
 					}
 				}
@@ -753,8 +753,8 @@ void PR_ProductionRun (void)
 						}
 				}
 				if (prod->amount <= 0) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("The disassembling of %s has finished."), _(od->name));
-					MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("The disassembling of %s has finished."), _(od->name));
+					MSO_CheckAddNewMessage(NT_PRODUCTION_FINISHED, _("Production finished"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 					PR_QueueNext(base);
 				}
 			}
@@ -1390,11 +1390,11 @@ static void PR_ProductionIncrease_f (void)
 				}
 
 				if (!selectedDisassembly) {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(od->name));
-					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(od->name));
+					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 				} else {
-					Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Disassembling of %s started"), _(od->name));
-					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Disassembling of %s started"), _(od->name));
+					MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 				}
 
 				/* Now we select the item we just created. */
@@ -1414,8 +1414,8 @@ static void PR_ProductionIncrease_f (void)
 			assert(aircraftTemplate == aircraftTemplate->tpl);
 
 			Com_DPrintf(DEBUG_CLIENT, "Increasing %s\n", aircraftTemplate->name);
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Production of %s started"), _(aircraftTemplate->name));
-			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), mn.messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production of %s started"), _(aircraftTemplate->name));
+			MSO_CheckAddNewMessage(NT_PRODUCTION_STARTED, _("Production started"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 			/* Now we select the item we just created. */
 			PR_ClearSelected();
 			selectedProduction = &queue->items[queue->numItems - 1];

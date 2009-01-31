@@ -720,8 +720,8 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 
 		AIR_ResetAircraftTeam(aircraft);
 
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new (a %s) class craft is ready in base %s"), _(aircraft->name), base->name);
-		MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new (a %s) class craft is ready in base %s"), _(aircraft->name), base->name);
+		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
 		RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);

@@ -2728,8 +2728,8 @@ void B_UpdateBaseData (void)
 			if (!b)
 				continue;
 			if (B_CheckBuildingConstruction(b, base)) {
-				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[baseIdx].name);
-				MS_AddNewMessage(_("Building finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[baseIdx].name);
+				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
 
@@ -3868,10 +3868,10 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	assert(base);
 
 	if (!B_GetBuildingStatus(base, B_ANTIMATTER) && add) {
-		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
 			_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
 			base->name, amount);
-		MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 		return;
 	}
 

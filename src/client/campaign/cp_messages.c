@@ -24,16 +24,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_global.h"
 #include "../menu/m_main.h"
-#include "../menu/m_messages.h"
 #include "../menu/m_popup.h"
 #include "cp_time.h"
+
+char cp_messageBuffer[MAX_MESSAGE_TEXT];
+message_t *cp_messageStack;
+chatMessage_t *cp_chatMessageStack;
 
 /**
  * @brief Script command to show all messages on the stack
  */
 static void MS_ShowMessagesOnStack_f (void)
 {
-	message_t *m = mn.messageStack;
+	message_t *m = cp_messageStack;
 
 	while (m) {
 		Com_Printf("%s: %s\n", m->title, m->text);
@@ -47,7 +50,7 @@ static void MS_ShowMessagesOnStack_f (void)
  */
 static void MS_DeleteMessages_f (void)
 {
-	message_t *m = mn.messageStack;
+	message_t *m = cp_messageStack;
 	message_t *mtmp;
 
 	while (m) {
@@ -55,7 +58,7 @@ static void MS_DeleteMessages_f (void)
 		Mem_Free(m);
 		m = mtmp;
 	}
-	mn.messageStack = NULL;
+	cp_messageStack = NULL;
 }
 #endif
 
@@ -114,8 +117,8 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	mess = (message_t *) Mem_PoolAlloc(sizeof(message_t), cl_localPool, CL_TAG_NONE);
 
 	/* push the new message at the beginning of the stack */
-	mess->next = mn.messageStack;
-	mn.messageStack = mess;
+	mess->next = cp_messageStack;
+	cp_messageStack = mess;
 
 	mess->type = type;
 	mess->pedia = pedia;		/* pointer to UFOpaedia entry */
@@ -191,8 +194,8 @@ void MS_AddChatMessage (const char *text)
 	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(chatMessage_t), cl_genericPool, CL_TAG_NONE);
 
 	/* push the new chat message at the beginning of the stack */
-	chat->next = mn.chatMessageStack;
-	mn.chatMessageStack = chat;
+	chat->next = cp_chatMessageStack;
+	cp_chatMessageStack = chat;
 	chat->text = Mem_PoolStrDup(text, cl_genericPool, CL_TAG_NONE);
 
 	if (!chatBuffer) {
@@ -231,7 +234,7 @@ void MS_AddChatMessage (const char *text)
  */
 static void MS_ShowChatMessagesOnStack_f (void)
 {
-	chatMessage_t *m = mn.chatMessageStack;
+	chatMessage_t *m = cp_chatMessageStack;
 
 	while (m) {
 		Com_Printf("%s", m->text);
@@ -285,13 +288,13 @@ qboolean MS_Save (sizebuf_t* sb, void* data)
 	message_t* message;
 
 	/* store message system items */
-	for (message = mn.messageStack; message; message = message->next) {
+	for (message = cp_messageStack; message; message = message->next) {
 		if (message->type == MSG_INFO)
 			continue;
 		i++;
 	}
 	MSG_WriteLong(sb, i);
-	MS_MessageSave(sb, mn.messageStack);
+	MS_MessageSave(sb, cp_messageStack);
 	return qtrue;
 }
 

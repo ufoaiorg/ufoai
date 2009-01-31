@@ -321,10 +321,10 @@ static void INS_BuildInstallation_f (void)
 			Q_strncpyz(installationCurrent->name, mn_installation_title->string, sizeof(installationCurrent->name));
 			nation = MAP_GetNation(installationCurrent->pos);
 			if (nation)
-				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new installation has been built: %s (nation: %s)"), mn_installation_title->string, _(nation->name));
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), mn_installation_title->string, _(nation->name));
 			else
-				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new installation has been built: %s"), mn_installation_title->string);
-			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), mn_installation_title->string);
+			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
 			Cbuf_AddText(va("mn_select_installation %i;", installationCurrent->idx));
 			return;
@@ -451,8 +451,8 @@ void INS_DestroyInstallation (installation_t *installation)
 	installationCurrent = NULL;
 	installation->founded = qfalse;
 
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Installation %s was destroyed."), _(installation->name));
-	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), _(installation->name));
+	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 }
 
 /**
@@ -557,8 +557,8 @@ void INS_UpdateInstallationData (void)
 			installation->installationStatus = INSTALLATION_WORKING;
 			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
 
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of installation %s finished."), _(installation->name));
-				MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of installation %s finished."), _(installation->name));
+				MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 		}
 	}
 }

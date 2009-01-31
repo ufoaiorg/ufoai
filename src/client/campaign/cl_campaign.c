@@ -1555,8 +1555,8 @@ void CL_GameAutoGo (mission_t *mis)
 			/* fake an aircraft return to collect goods and aliens */
 			CL_AircraftReturnedToHomeBase(ccs.interceptAircraft);
 
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
-			MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
+			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(ccs.selectedMission);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
@@ -1621,10 +1621,10 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 						&& ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killed_others)) {
 						chr->score.rank = j;
 						if (chr->HP > 0)
-							Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
+							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
 						else
-							Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s has been awarded the posthumous rank of %s\nfor inspirational gallantry in the face of overwhelming odds.\n"), chr->name, _(rank->name));
-						MS_AddNewMessage(_("Soldier promoted"), mn.messageBuffer, qfalse, MSG_PROMOTION, NULL);
+							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been awarded the posthumous rank of %s\nfor inspirational gallantry in the face of overwhelming odds.\n"), chr->name, _(rank->name));
+						MS_AddNewMessage(_("Soldier promoted"), cp_messageBuffer, qfalse, MSG_PROMOTION, NULL);
 						break;
 					}
 				}
@@ -2015,7 +2015,7 @@ void CL_ResetSinglePlayerData (void)
 
 	LIST_Delete(&ccs.missions);
 	memset(&invList, 0, sizeof(invList));
-	mn.messageStack = NULL;
+	cp_messageStack = NULL;
 
 	/* cleanup dynamic mails */
 	CL_FreeDynamicEventMail();

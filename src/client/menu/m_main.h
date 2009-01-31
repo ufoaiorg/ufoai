@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "node/m_node_window.h"
 #include "m_actions.h"
-#include "m_messages.h"
 #include "m_nodes.h"
 #include "m_icon.h"
 #include "m_condition.h"
@@ -60,10 +59,6 @@ typedef struct menuGlobal_s {
 											* @sa mn.menuText */
 
 	mouseRepeat_t mouseRepeat;
-
-	char messageBuffer[MAX_MESSAGE_TEXT];
-	message_t *messageStack;
-	chatMessage_t *chatMessageStack;
 
 	selectBoxOptions_t menuSelectBoxes[MAX_SELECT_BOX_OPTIONS];
 	int numSelectBoxes;

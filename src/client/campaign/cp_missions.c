@@ -744,8 +744,8 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 #endif
 
 	/* Notify the player */
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Alien activity has been detected in %s."), mission->location);
-	MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Alien activity has been detected in %s."), mission->location);
+	MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	mission->onGeoscape = qtrue;
 	CL_GameTimeStop();
@@ -1174,8 +1174,8 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			/* fake an aircraft return to collect goods and aliens */
 			CL_AircraftReturnedToHomeBase(aircraft);
 
-			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
-			MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Defence of base: %s successful!"), base->name);
+			MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(mission);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else

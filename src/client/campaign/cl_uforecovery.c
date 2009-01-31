@@ -293,10 +293,10 @@ static void CP_UFORecoveredStart_f (void)
 	if (!base)
 		return;
 
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
 		UFO_TypeToName(ufoRecovery.ufoType), base->name);
-	MS_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	UR_Prepare(base);
 
 	/* UFO recovery process is done, disable buttons. */
@@ -451,9 +451,9 @@ static void CP_UFOSellStart_f (void)
 		Com_Printf("CP_UFOSellStart_f: Error: ufo price of -1 - nation: '%s'\n", nation->id);
 		return;
 	}
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
 		UFO_TypeToName(ufoRecovery.ufoType), _(nation->name), ufoRecovery.UFOprices[nation->idx]);
-	MS_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + ufoRecovery.UFOprices[nation->idx]);
 
 	/* update nation happiness */
@@ -533,9 +533,9 @@ static void CP_UFORecoveredDestroy_f (void)
 	if (ufoRecovery.recoveryDone)
 		return;
 
-	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Secured %s was destroyed."),
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Secured %s was destroyed."),
 		UFO_TypeToName(ufoRecovery.ufoType));
-	MS_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();

@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_GLOBAL_H
 #define CLIENT_CL_GLOBAL_H
 
+#include "campaign/cl_messageoptions.h" /**< msgCategory_t */
+
 #define MAX_PROJECTILESONGEOSCAPE 32
 
 /* Maximum alien team category defined in scripts */
