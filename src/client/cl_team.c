@@ -187,63 +187,6 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 }
 
 /**
- * @brief Test the names in team_*.ufo
- *
- * This is a console command to test the names that were defined in team_*.ufo
- * Usage: givename <gender> <teamid> [num]
- * valid genders are male, female, neutral
- */
-static void CL_GiveName_f (void)
-{
-	const char *name;
-	int i, j, num;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <gender> <teamid> [num]\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* get gender */
-	for (i = 0; i < NAME_LAST; i++)
-		if (!Q_strcmp(Cmd_Argv(1), name_strings[i]))
-			break;
-
-	if (i == NAME_LAST) {
-		Com_Printf("'%s' isn't a gender! (male and female are)\n", Cmd_Argv(1));
-		return;
-	}
-
-	if (Cmd_Argc() > 3) {
-		num = atoi(Cmd_Argv(3));
-		if (num < 1)
-			num = 1;
-		if (num > 20)
-			num = 20;
-	} else
-		num = 1;
-
-	for (j = 0; j < num; j++) {
-		/* get first name */
-		name = Com_GiveName(i, Cmd_Argv(2));
-		if (!name) {
-			Com_Printf("No first name in team '%s'\n", Cmd_Argv(2));
-			return;
-		}
-		Com_Printf("%s", name);
-
-		/* get last name */
-		name = Com_GiveName(i + LASTNAME, Cmd_Argv(2));
-		if (!name) {
-			Com_Printf("\nNo last name in team '%s'\n", Cmd_Argv(2));
-			return;
-		}
-
-		/* print out name */
-		Com_Printf(" %s\n", name);
-	}
-}
-
-/**
  * @brief Return a given ugv_t pointer
  * @param[in] ugvID Which base the employee should be hired in.
  * @return ugv_t pointer or NULL if not found.
@@ -695,7 +638,6 @@ static void CL_ToggleTeamList_f (void)
 
 void TEAM_InitStartup (void)
 {
-	Cmd_AddCommand("givename", CL_GiveName_f, "Give the team members names from the team_*.ufo files");
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, "Change the skin of the soldier");
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinForWholeTeam_f, "Change the skin for the whole current team");
