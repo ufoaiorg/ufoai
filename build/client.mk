@@ -31,7 +31,6 @@ CLIENT_SRCS = \
 	client/cl_ugv.c \
 	client/cl_video.c \
 	client/cl_view.c \
-	client/cl_messages.c \
 	\
 	client/campaign/cp_aircraft.c \
 	client/campaign/cp_aircraft_callbacks.c \
@@ -41,6 +40,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_hospital.c \
 	client/campaign/cp_hospital_callbacks.c \
+	client/campaign/cp_messages.c \
 	client/campaign/cp_missions.c \
 	client/campaign/cp_mission_triggers.c \
 	client/campaign/cp_nations.c \

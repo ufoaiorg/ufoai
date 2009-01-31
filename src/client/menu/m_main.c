@@ -898,6 +898,5 @@ void MN_Init (void)
 	mn.curadata = mn.adata;
 
 	MN_InitNodes();
-	MN_MessageInit();
 	MN_DrawMenusInit();
 }

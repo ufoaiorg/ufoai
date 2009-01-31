@@ -240,7 +240,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 	assert(tobase);
 
 	if (!B_GetBuildingStatus(tobase, B_ALIEN_CONTAINMENT)) {
-		MN_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
 	}
 
@@ -269,7 +269,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					AII_CollectItem(aircraft, alienBreathingObjDef, cargo[i].amount_alive);
 					/* only once */
 					if (!messageAlreadySet) {
-						MN_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
+						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
 						messageAlreadySet = qtrue;
 					}
 					if (!breathingMailSent) {
@@ -286,7 +286,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 							 * Display a message only when first one is killed */
 							if (!limit) {
 								tobase->capacities[CAP_ALIENS].cur = tobase->capacities[CAP_ALIENS].max;
-								MN_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
+								MS_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
 								limit = qtrue;
 							}
 							/* Just kill aliens which don't fit the limit. */
@@ -296,7 +296,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 					}
 					/* only once */
 					if (!messageAlreadySet) {
-						MN_AddNewMessage(_("Notice"), _("You've captured new aliens."), qfalse, MSG_STANDARD, NULL);
+						MS_AddNewMessage(_("Notice"), _("You've captured new aliens."), qfalse, MSG_STANDARD, NULL);
 						messageAlreadySet = qtrue;
 					}
 				}

@@ -52,7 +52,7 @@ qboolean CL_NewInstallation (installation_t* installation, installationTemplate_
 
 	if (MapIsWater(colorTerrain)) {
 		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
-		MN_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
+		MS_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "CL_NewInstallation: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));

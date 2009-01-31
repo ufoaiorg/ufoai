@@ -397,7 +397,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			shooter->aircraftTarget = NULL;		/* reset target */
 			CP_UFOProceedMission(shooter);
 		} else {
-			MN_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), _("Our aircraft has no more ammo left - returning to home base now."), qfalse, MSG_STANDARD, NULL);
 			AIR_AircraftReturnToBase(shooter);
 		}
 	}
@@ -476,7 +476,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 			CP_SpawnCrashSiteMission(aircraft);
 		} else {
 			Com_DPrintf(DEBUG_CLIENT, "AIRFIGHT_ActionsAfterAirfight: zone: %s (%i:%i:%i)\n", MAP_GetTerrainType(color), color[0], color[1], color[2]);
-			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
 			CP_MissionIsOverByUFO(aircraft);
 		}
 	} else {
@@ -499,7 +499,7 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t *shooter, aircraft_t* aircraft, q
 		if (shooter)
 			CP_UFOProceedMission(shooter);
 
-		MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 	}
 }
 
@@ -631,7 +631,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 
 		if (rnd == 0) {
 			/* Add message to message-system. */
-			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
+			MS_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENCE_MISSILE) {
 					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
@@ -643,7 +643,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 			}
 		} else if (rnd == 1) {
 			/* Add message to message-system. */
-			MN_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
+			MS_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
 			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
 				if (gd.buildings[base->idx][i].buildingType == B_DEFENCE_LASER) {
 					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
@@ -662,7 +662,7 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		rnd = frand() * gd.numBuildings[base->idx];
 		/* Add message to message-system. */
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("You've lost a base facility (%s)."), _(gd.buildings[base->idx][rnd].name));
-		MN_AddNewMessage(_("Base facility destroyed"), mn.messageBuffer, qfalse, MSG_BASEATTACK, NULL);
+		MS_AddNewMessage(_("Base facility destroyed"), mn.messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 		B_BuildingDestroy(base, &gd.buildings[base->idx][rnd]);
 		baseAttack = qtrue;
 	}

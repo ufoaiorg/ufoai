@@ -296,7 +296,7 @@ static void CP_UFORecoveredStart_f (void)
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
 		UFO_TypeToName(ufoRecovery.ufoType), base->name);
-	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 	UR_Prepare(base);
 
 	/* UFO recovery process is done, disable buttons. */
@@ -453,7 +453,7 @@ static void CP_UFOSellStart_f (void)
 	}
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."),
 		UFO_TypeToName(ufoRecovery.ufoType), _(nation->name), ufoRecovery.UFOprices[nation->idx]);
-	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + ufoRecovery.UFOprices[nation->idx]);
 
 	/* update nation happiness */
@@ -535,7 +535,7 @@ static void CP_UFORecoveredDestroy_f (void)
 
 	Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Secured %s was destroyed."),
 		UFO_TypeToName(ufoRecovery.ufoType));
-	MN_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("UFO Recovery"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
@@ -686,7 +686,7 @@ void UR_ProcessActive (void)
 				/* Destination base was destroyed meanwhile. */
 				/* UFO is lost, send proper message to the user.*/
 				recovery->active = qfalse;
-				/** @todo prepare MN_AddNewMessage() here */
+				/** @todo prepare MS_AddNewMessage() here */
 				return;
 			}
 			/* Get ufocraft. */

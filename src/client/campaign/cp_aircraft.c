@@ -721,7 +721,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		AIR_ResetAircraftTeam(aircraft);
 
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new (a %s) class craft is ready in base %s"), _(aircraft->name), base->name);
-		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		Com_DPrintf(DEBUG_CLIENT, "Setting aircraft to pos: %.0f:%.0f\n", base->pos[0], base->pos[1]);
 		Vector2Copy(base->pos, aircraft->pos);
 		RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
@@ -1178,7 +1178,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 							aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 							aircraft->status = AIR_HOME;
 							assert(aircraft->homebase);
-							MN_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+							MS_AddNewMessage(_("Notice"), va(_("Craft %s has refuelled at base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
 						}
 					}
 
@@ -1186,7 +1186,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 					if ((aircraft->status != AIR_RETURNING) && AIR_IsAircraftOnGeoscape(aircraft) &&
 						!AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 						/** @todo check if aircraft can go to a closer base with free space */
-						MN_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
+						MS_AddNewMessage(_("Notice"), va(_("Craft %s is low on fuel and must return to base."), _(aircraft->name)), qfalse, MSG_STANDARD, NULL);
 						AIR_AircraftReturnToBase(aircraft);
 					}
 
@@ -1317,7 +1317,7 @@ qboolean AIR_SendAircraftToMission (aircraft_t *aircraft, mission_t *mission)
 	}
 
 	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->pos)) {
-		MN_AddNewMessage(_("Notice"), _("Insufficient fuel."), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("Insufficient fuel."), qfalse, MSG_STANDARD, NULL);
 		return qfalse;
 	}
 

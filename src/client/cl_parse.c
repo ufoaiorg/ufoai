@@ -847,14 +847,14 @@ static void CL_EndRoundAnnounce (struct dbuffer * msg)
 	if (cl.pnum == playerNum) {
 		/* add translated message to chat buffer */
 		Com_sprintf(buf, sizeof(buf), _("You've ended your round\n"));
-		MN_AddChatMessage(buf);
+		MS_AddChatMessage(buf);
 
 		/* don't translate on the game console */
 		Com_Printf("You've ended your round\n");
 	} else {
 		/* add translated message to chat buffer */
 		Com_sprintf(buf, sizeof(buf), _("%s ended his round (team %i)\n"), playerName, team);
-		MN_AddChatMessage(buf);
+		MS_AddChatMessage(buf);
 
 		/* don't translate on the game console */
 		Com_Printf("%s ended his round (team %i)\n", playerName, team);
@@ -1755,7 +1755,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 		switch (i) {
 		case PRINT_CHAT:
 			S_StartLocalSound("misc/talk");
-			MN_AddChatMessage(s);
+			MS_AddChatMessage(s);
 			/* skip format strings */
 			if (s[0] == '^')
 				s += 2;

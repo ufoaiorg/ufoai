@@ -485,10 +485,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_menu.h" />
-		<Unit filename="..\..\src\client\cl_messages.c">
+		<Unit filename="..\..\src\client\campaign\cp_messages.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_messages.h" />
+		<Unit filename="..\..\src\client\campaign\cp_messages.h" />
 		<Unit filename="..\..\src\client\cl_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>

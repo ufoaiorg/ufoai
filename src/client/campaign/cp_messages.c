@@ -1,5 +1,5 @@
 /**
- * @file cl_messages.c
+ * @file cp_messages.c
  */
 
 /*
@@ -21,18 +21,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#include "client.h"
-#include "cl_global.h"
-#include "menu/m_main.h"
-#include "menu/m_messages.h"
-#include "menu/m_popup.h"
-#include "campaign/cp_time.h"
-
+#include "../client.h"
+#include "../cl_global.h"
+#include "../menu/m_main.h"
+#include "../menu/m_messages.h"
+#include "../menu/m_popup.h"
+#include "cp_time.h"
 
 /**
  * @brief Script command to show all messages on the stack
  */
-static void CL_ShowMessagesOnStack_f (void)
+static void MS_ShowMessagesOnStack_f (void)
 {
 	message_t *m = mn.messageStack;
 
@@ -46,7 +45,7 @@ static void CL_ShowMessagesOnStack_f (void)
 /**
  * @brief Script command to delete all messages
  */
-static void CL_DeleteMessages_f (void)
+static void MS_DeleteMessages_f (void)
 {
 	message_t *m = mn.messageStack;
 	message_t *mtmp;
@@ -65,7 +64,7 @@ static void CL_DeleteMessages_f (void)
  * @param[in] text Buffer to hold the final result
  * @param[in] message The message to convert into text
  */
-static void MN_TimestampedText (char *text, message_t *message, size_t textsize)
+static void MS_TimestampedText (char *text, message_t *message, size_t textsize)
 {
 	dateLong_t date;
 	CL_DateConvertLong(&message->date, &date);
@@ -84,11 +83,11 @@ static void MN_TimestampedText (char *text, message_t *message, size_t textsize)
  * @return message_t pointer
  * @sa UP_OpenMail_f
  * @sa CL_EventAddMail_f
- * @note this method forwards to @c MN_AddNewMessageSound with @code playSound = qtrue @endcode
+ * @note this method forwards to @c MS_AddNewMessageSound with @code playSound = qtrue @endcode
  */
-message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia)
+message_t *MS_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia)
 {
-	return MN_AddNewMessageSound(title, text, popup, type, pedia, qtrue);
+	return MS_AddNewMessageSound(title, text, popup, type, pedia, qtrue);
 }
 
 /**
@@ -104,7 +103,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
  * @sa UP_OpenMail_f
  * @sa CL_EventAddMail_f
  */
-message_t *MN_AddNewMessageSound (const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound)
+message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound)
 {
 	message_t *mess;
 	const char *sound = NULL;
@@ -128,7 +127,7 @@ message_t *MN_AddNewMessageSound (const char *title, const char *text, qboolean 
 	mess->text = Mem_PoolStrDup(text, cl_localPool, CL_TAG_NONE);
 
 	/* get formatted date text */
-	MN_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
+	MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 
 	/* they need to be translated already */
 	if (popup)
@@ -179,25 +178,6 @@ message_t *MN_AddNewMessageSound (const char *title, const char *text, qboolean 
 	return mess;
 }
 
-void MN_RemoveMessage (const char *title)
-{
-	message_t *m = mn.messageStack;
-	message_t *prev = NULL;
-
-	while (m) {
-		if (!Q_strncmp(m->title, title, MAX_VAR)) {
-			if (prev)
-				prev->next = m->next;
-			Mem_Free(m->text);
-			Mem_Free(m);
-			return;
-		}
-		prev = m;
-		m = m->next;
-	}
-	Com_Printf("Could not remove message from stack - %s was not found\n", title);
-}
-
 /**< @brief buffer that hold all printed chat messages for menu display */
 static char *chatBuffer = NULL;
 static menuNode_t* chatBufferNode = NULL;
@@ -205,7 +185,7 @@ static menuNode_t* chatBufferNode = NULL;
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
  */
-void MN_AddChatMessage (const char *text)
+void MS_AddChatMessage (const char *text)
 {
 	/* allocate memory for new chat message */
 	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(chatMessage_t), cl_genericPool, CL_TAG_NONE);
@@ -249,7 +229,7 @@ void MN_AddChatMessage (const char *text)
 /**
  * @brief Script command to show all chat messages on the stack
  */
-static void CL_ShowChatMessagesOnStack_f (void)
+static void MS_ShowChatMessagesOnStack_f (void)
 {
 	chatMessage_t *m = mn.chatMessageStack;
 
@@ -262,7 +242,7 @@ static void CL_ShowChatMessagesOnStack_f (void)
 /**
  * @brief Saved the complete message stack
  * @sa SAV_GameSave
- * @sa MN_AddNewMessage
+ * @sa MS_AddNewMessage
  */
 static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 {
@@ -296,7 +276,7 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 
 /**
  * @sa MS_Load
- * @sa MN_AddNewMessage
+ * @sa MS_AddNewMessage
  * @sa MS_MessageSave
  */
 qboolean MS_Save (sizebuf_t* sb, void* data)
@@ -317,7 +297,7 @@ qboolean MS_Save (sizebuf_t* sb, void* data)
 
 /**
  * @sa MS_Save
- * @sa MN_AddNewMessageSound
+ * @sa MS_AddNewMessageSound
  */
 qboolean MS_Load (sizebuf_t* sb, void* data)
 {
@@ -348,24 +328,24 @@ qboolean MS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadLong(sb);
 			MSG_ReadLong(sb);
 		} else {
-			mess = MN_AddNewMessageSound(title, text, qfalse, mtype, RS_GetTechByIDX(idx), qfalse);
+			mess = MS_AddNewMessageSound(title, text, qfalse, mtype, RS_GetTechByIDX(idx), qfalse);
 			mess->eventMail = mail;
 			mess->date.day = MSG_ReadLong(sb);
 			mess->date.sec = MSG_ReadLong(sb);
 			/* redo timestamp text after setting date */
-			MN_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
+			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
 		}
 	}
 	return qtrue;
 }
 
 
-void MN_MessageInit (void)
+void MS_MessageInit (void)
 {
-	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
-	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
+	Cmd_AddCommand("chatlist", MS_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
+	Cmd_AddCommand("messagelist", MS_ShowMessagesOnStack_f, "Print all messages to the game console");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_clear_messagelist", CL_DeleteMessages_f, "Clears messagelist");
+	Cmd_AddCommand("debug_clear_messagelist", MS_DeleteMessages_f, "Clears messagelist");
 #endif
 
 	MSO_Init();

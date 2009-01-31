@@ -1,5 +1,5 @@
 /**
- * @file cl_messages.h
+ * @file cp_messages.h
  */
 
 /*
@@ -22,11 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_MESSAGES_H
-#define CLIENT_CL_MESSAGES_H
+#ifndef CLIENT_CP_MESSAGES_H
+#define CLIENT_CP_MESSAGES_H
 
-#include "menu/m_messages.h"
-#include "campaign/cl_messageoptions.h"
+#include "../menu/m_messages.h"
+#include "cl_messageoptions.h"
 
 /**
  * @brief Human readable time information in the game.
@@ -43,11 +43,10 @@ typedef struct dateLong_s {
 	byte sec;	/**< Second of the minute. */
 } dateLong_t;
 
-message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
-message_t *MN_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
-void MN_RemoveMessage(const char *title);
-void MN_AddChatMessage(const char *text);
-void MN_MessageInit(void);
+message_t *MS_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
+message_t *MS_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
+void MS_AddChatMessage(const char *text);
+void MS_MessageInit(void);
 
 
-#endif /* CLIENT_CL_MESSAGES_H */
+#endif /* CLIENT_CP_MESSAGES_H */

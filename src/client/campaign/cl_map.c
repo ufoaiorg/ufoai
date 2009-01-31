@@ -284,11 +284,11 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 				Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
 				MN_PushMenu("popup_newbase", NULL);
 			} else {
-				MN_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
+				MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
 			}
 			return;
 		} else {
-			MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
+			MS_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 			if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 				MAP_SetOverlay("radar");
 		}
@@ -308,11 +308,11 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 				Cvar_Set("mn_installation_title", gd.installations[gd.numInstallations].name);
 				MN_PushMenu("popup_newinstallation", NULL);
 			} else {
-				MN_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
+				MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
 			}
 			return;
 		} else {
-			MN_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
+			MS_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
 			if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 				MAP_SetOverlay("radar");
 		}

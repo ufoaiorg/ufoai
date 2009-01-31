@@ -1464,7 +1464,7 @@ static void CL_AutoMissionAlienCollect (aircraft_t *aircraft)
 	if (!aliens)
 		return;
 
-	MN_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessage(_("Notice"), _("Collected dead alien bodies"), qfalse, MSG_STANDARD, NULL);
 
 	while (aliens > 0) {
 		for (i = 0; i < ccs.battleParameters.alienTeamGroup->numAlienTeams; i++) {
@@ -1509,7 +1509,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	if (mis->stage != STAGE_BASE_ATTACK) {
 		if (!mis->active) {
-			MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
 			return;
 		} else if (mis->mapDef->storyRelated) {
 			Com_DPrintf(DEBUG_CLIENT, "You have to play this mission, because it's story related\n");
@@ -1556,7 +1556,7 @@ void CL_GameAutoGo (mission_t *mis)
 			CL_AircraftReturnedToHomeBase(ccs.interceptAircraft);
 
 			Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Defence of base: %s successful!"), base->name);
-			MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+			MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 			CP_BaseAttackMissionIsFailure(ccs.selectedMission);
 			/** @todo @sa AIRFIGHT_ProjectileHitsBase notes */
 		} else
@@ -1568,9 +1568,9 @@ void CL_GameAutoGo (mission_t *mis)
 	}
 
 	if (won)
-		MN_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
 	else
-		MN_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 
 	MAP_ResetAction();
 }
@@ -1624,7 +1624,7 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 							Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
 						else
 							Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("%s has been awarded the posthumous rank of %s\nfor inspirational gallantry in the face of overwhelming odds.\n"), chr->name, _(rank->name));
-						MN_AddNewMessage(_("Soldier promoted"), mn.messageBuffer, qfalse, MSG_PROMOTION, NULL);
+						MS_AddNewMessage(_("Soldier promoted"), mn.messageBuffer, qfalse, MSG_PROMOTION, NULL);
 						break;
 					}
 				}
@@ -2211,4 +2211,5 @@ void CP_InitStartup (void)
 	Cmd_AddCommand("check_baseattacks", CP_CheckBaseAttacks_f, "Check if baseattack mission available and start it.");
 
 	CP_MissionsInit();
+	MS_MessageInit();
 }

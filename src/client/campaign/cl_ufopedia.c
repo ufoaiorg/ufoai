@@ -1599,7 +1599,7 @@ static void UP_SetMailButtons_f (void)
  * @note use TEXT_UFOPEDIA_MAIL in mn.menuText array (33)
  * @sa CP_GetUnreadMails
  * @sa CL_EventAddMail_f
- * @sa MN_AddNewMessage
+ * @sa MS_AddNewMessage
  */
 static void UP_OpenMail_f (void)
 {

@@ -239,14 +239,14 @@ static void MSO_SetCategoryState_f(void)
  * @param[in] type The message type
  * @param[in] pedia Pointer to technology (only if needed)
  * @return message_t pointer if message was added
- * @sa MN_AddNewMessageSound
+ * @sa MS_AddNewMessageSound
  */
 message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia)
 {
 	message_t *result = NULL;
 
 	if (messageSettings[messagecategory].doNotify)
-		result = MN_AddNewMessageSound(title, text, popup, type, pedia, messageSettings[messagecategory].doSound);
+		result = MS_AddNewMessageSound(title, text, popup, type, pedia, messageSettings[messagecategory].doSound);
 	if (messageSettings[messagecategory].doPause)
 		CL_GameTimeStop();
 	return result;

@@ -214,7 +214,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 
 /**
  * @sa UP_OpenMail_f
- * @sa MN_AddNewMessage
+ * @sa MS_AddNewMessage
  * @sa UP_SetMailHeader
  * @sa UP_OpenEventMail
  */
@@ -252,7 +252,7 @@ void CL_EventAddMail_f (void)
 	}
 
 	/* the subject double %s: see UP_SetMailHeader */
-	m = MN_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), qfalse, MSG_EVENT, NULL);
+	m = MS_AddNewMessage("", va(_("You've got a new mail: %s"), _(eventMail->subject)), qfalse, MSG_EVENT, NULL);
 	if (m)
 		m->eventMail = eventMail;
 	else

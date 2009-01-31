@@ -2729,7 +2729,7 @@ void B_UpdateBaseData (void)
 				continue;
 			if (B_CheckBuildingConstruction(b, base)) {
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[baseIdx].name);
-				MN_AddNewMessage(_("Building finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+				MS_AddNewMessage(_("Building finished"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
 
@@ -2861,12 +2861,12 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 	if (numitems > 0) {
 		Com_sprintf(str, sizeof(str), _("By selling %s you gathered %i credits."),
 			va(ngettext("%i collected item", "%i collected items", numitems), numitems), gained);
-		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	if (forcedsold > 0) {
 		Com_sprintf(str, sizeof(str), _("Not enough storage space in base %s. %s"),
 			base->name, va(ngettext("%i item was sold for %i credits.", "%i items were sold for %i credits.", forcedsold), forcedsold, forcedgained));
-		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	CL_UpdateCredits(ccs.credits + gained + forcedgained);
 
@@ -3871,7 +3871,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 		Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer),
 			_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
 			base->name, amount);
-		MN_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), mn.messageBuffer, qfalse, MSG_STANDARD, NULL);
 		return;
 	}
 

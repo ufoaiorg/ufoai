@@ -612,7 +612,7 @@ static void SAV_GameQuickSave_f (void)
 	if (!SAV_QuickSave())
 		Com_Printf("Could not save the campaign\n");
 	else
-		MN_AddNewMessage(_("Quicksave"), _("Campaign was successfully saved."), qfalse, MSG_INFO, NULL);
+		MS_AddNewMessage(_("Quicksave"), _("Campaign was successfully saved."), qfalse, MSG_INFO, NULL);
 }
 
 /**

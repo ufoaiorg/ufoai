@@ -421,7 +421,7 @@ const char *RS_GetDescription (descriptions_t *desc)
 /**
  * @brief Marks a give technology as collected
  * @sa CP_AddItemAsCollected_f
- * @sa MN_AddNewMessage
+ * @sa MS_AddNewMessage
  * @sa RS_MarkOneResearchable
  * @param[in] tech The technology pointer to mark collected
  */

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_radar.h"
 #include "cp_base.h"
+#include "cp_messages.h"
 #include "cl_transfer.h"
 #include "cl_nation.h"
 #include "cl_campaign.h"

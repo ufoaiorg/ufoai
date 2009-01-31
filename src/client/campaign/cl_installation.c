@@ -403,7 +403,7 @@ static void INS_SetInstallationTitle_f (void)
 	if (gd.numInstallations < MAX_INSTALLATIONS)
 		Cvar_Set("mn_installation_title", gd.installations[gd.numInstallations].name);
 	else {
-		MN_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
 		MN_PopMenu(qfalse);		/* remove the new installation popup */
 	}
 }

@@ -132,7 +132,7 @@ static qboolean B_NewBase (base_t* base, vec2_t pos)
 
 	if (MapIsWater(colorTerrain)) {
 		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
-		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
+		MS_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_NewBase: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));
@@ -186,7 +186,7 @@ static void B_BuildBase_f (void)
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
 			else
 				Com_sprintf(mn.messageBuffer, sizeof(mn.messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
-			MN_AddNewMessage(_("Base built"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+			MS_AddNewMessage(_("Base built"), mn.messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			B_ResetAllStatusAndCapacities(base, qtrue);
 			AL_FillInContainment(base);
 			PR_UpdateProductionCap(base);
