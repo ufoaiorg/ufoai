@@ -224,13 +224,15 @@ static void AIR_AircraftSelect_f (void)
  */
 void AIR_AircraftSelect (aircraft_t* aircraft)
 {
-	menuNode_t *node = NULL;
+	menuNode_t *node;
 	static char aircraftInfo[256];
-	base_t *base = NULL;
+	base_t *base;
 	int id;
 
 	if (aircraft != NULL)
 		base = aircraft->homebase;
+	else
+		base = NULL;
 
 	if (!base || !base->numAircraftInBase) {
 		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
@@ -264,24 +266,26 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	mn.menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 
-	/* compute the ID and */
-	for (id = 0; id < baseCurrent->numAircraftInBase; id++) {
-		if (aircraft == &baseCurrent->aircraft[id])
+	/* compute the ID and... */
+	for (id = 0; id < base->numAircraftInBase; id++) {
+		if (aircraft == &base->aircraft[id])
 			break;
 	}
-	assert(id != baseCurrent->numAircraftInBase);
+
+	/* the aircraft must really be in this base */
+	assert(id != base->numAircraftInBase);
+
+	base->aircraftCurrent = aircraft;
 	Cvar_SetValue("mn_aircraft_id", id);
 
-	/* update the GUI */
+	/* ...update the GUI */
 	MN_ExecuteConfunc("aircraft_change %i", id);
-
-	baseCurrent->aircraftCurrent = aircraft;
 }
 
 /**
  * @brief Update TEXT_AIRCRAFT_LIST with the current base aircraft names
  */
-static void AIR_AircraftUpdateList_f ()
+static void AIR_AircraftUpdateList_f (void)
 {
 	static char buffer[1024];
 	int i;
