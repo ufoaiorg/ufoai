@@ -51,27 +51,18 @@ const char* CL_GetTeamSkinName (int id)
 	switch(id) {
 	case 0:
 		return _("Urban");
-		break;
 	case 1:
 		return _("Jungle");
-		break;
 	case 2:
 		return _("Desert");
-		break;
 	case 3:
 		return _("Arctic");
-		break;
 	case 4:
 		return _("Yellow");
-		break;
 	case 5:
 		return _("CCCP");
-		break;
-	default:
-		Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i\n", id, NUM_TEAMSKINS-1);
-		break;
 	}
-	return NULL; /* never reached */
+	Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i\n", id, NUM_TEAMSKINS-1);
 }
 
 /**
