@@ -339,7 +339,7 @@ static void CL_TeamListDebug_f (void)
 
 void CP_TEAM_InitCallbacks (void)
 {
-	Cmd_AddCommand("genequip", CL_UpdateEquipmentMenuParameters_f, NULL);
+	Cmd_AddCommand("team_updateequip", CL_UpdateEquipmentMenuParameters_f, NULL);
 	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
@@ -350,7 +350,7 @@ void CP_TEAM_InitCallbacks (void)
 
 void CP_TEAM_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("genequip");
+	Cmd_RemoveCommand("team_updateequip");
 	Cmd_RemoveCommand("team_mark");
 	Cmd_RemoveCommand("team_hire");
 	Cmd_RemoveCommand("team_select");
