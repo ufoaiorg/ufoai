@@ -79,6 +79,7 @@ typedef enum {
 	V_BASEID,
 	V_LONGLINES,
 	V_TEAM,					/**< team string to int mapper */
+	V_RACE,
 
 	V_NUM_TYPES
 } valueTypes_t;

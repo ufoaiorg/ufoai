@@ -144,7 +144,8 @@ qboolean AL_AddAlienTypeToAircraftCargo (const aircraft_t *aircraft, const teamD
  */
 qboolean AL_IsTeamDefAlien (const teamDef_t const *td)
 {
-	return (td->race == RACE_TAMAN) || (td->race == RACE_ORTNOK) || (td->race == RACE_BLOODSPIDER) || (td->race == RACE_SHEVAAR);
+	return td->race == RACE_TAMAN || td->race == RACE_ORTNOK
+		|| td->race == RACE_BLOODSPIDER || td->race == RACE_SHEVAAR;
 }
 
 /**

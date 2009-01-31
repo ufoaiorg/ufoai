@@ -83,7 +83,8 @@ const char *const vt_names[] = {
 	"num", /* 25 */
 	"baseid",
 	"longlines",
-	"team"
+	"team",
+	"race"
 };
 CASSERT(lengthof(vt_names) == V_NUM_TYPES);
 
@@ -158,7 +159,8 @@ static const size_t vt_sizes[] = {
 	sizeof(int),	/* V_MENUTEXTID */
 	sizeof(int),	/* V_BASEID */
 	sizeof(byte), 	/* V_LONGLINES */
-	sizeof(int)		/* V_TEAM */
+	sizeof(int),		/* V_TEAM */
+	sizeof(int)		/* V_RACE */
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
@@ -256,6 +258,25 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
+		break;
+
+	case V_RACE:
+		if (!Q_strcmp(token, "phalanx"))
+			*(int *) b = RACE_PHALANX_HUMAN;
+		else if (!Q_strcmp(token, "civilian"))
+			*(int *) b = RACE_CIVILIAN;
+		else if (!Q_strcmp(token, "robot"))
+			*(int *) b = RACE_ROBOT;
+		else if (!Q_strcmp(token, "taman"))
+			*(int *) b = RACE_TAMAN;
+		else if (!Q_strcmp(token, "ortnok"))
+			*(int *) b = RACE_ORTNOK;
+		else if (!Q_strcmp(token, "bloodspider"))
+			*(int *) b = RACE_BLOODSPIDER;
+		else if (!Q_strcmp(token, "shevaar"))
+			*(int *) b = RACE_SHEVAAR;
+		else
+			Sys_Error("Unknown race type: '%s'", token);
 		break;
 
 	case V_INT:
@@ -576,6 +597,25 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			Sys_Error("Unknown team given: '%s'", (const char *)set);
 		return ALIGN(sizeof(int));
 
+	case V_RACE:
+		if (!Q_strcmp(set, "phalanx"))
+			*(int *) b = RACE_PHALANX_HUMAN;
+		else if (!Q_strcmp(set, "civilian"))
+			*(int *) b = RACE_CIVILIAN;
+		else if (!Q_strcmp(set, "robot"))
+			*(int *) b = RACE_ROBOT;
+		else if (!Q_strcmp(set, "taman"))
+			*(int *) b = RACE_TAMAN;
+		else if (!Q_strcmp(set, "ortnok"))
+			*(int *) b = RACE_ORTNOK;
+		else if (!Q_strcmp(set, "bloodspider"))
+			*(int *) b = RACE_BLOODSPIDER;
+		else if (!Q_strcmp(set, "shevaar"))
+			*(int *) b = RACE_SHEVAAR;
+		else
+			Sys_Error("Unknown race type: '%s'", (const char *)set);
+		return ALIGN(sizeof(int));
+
 	case V_MENUTEXTID:
 	case V_BASEID:
 	case V_INT:
@@ -708,6 +748,26 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			return "alien";
 		default:
 			Sys_Error("Unknown team id '%i'", *(const int *) b);
+		}
+
+	case V_RACE:
+		switch (*(const int *) b) {
+		case RACE_PHALANX_HUMAN:
+			return "phalanx";
+		case RACE_CIVILIAN:
+			return "civilian";
+		case RACE_ROBOT:
+			return "robot";
+		case RACE_TAMAN:
+			return "taman";
+		case RACE_ORTNOK:
+			return "ortnok";
+		case RACE_BLOODSPIDER:
+			return "bloodspider";
+		case RACE_SHEVAAR:
+			return "shevaar";
+		default:
+			Sys_Error("Unknown race type: '%i'", *(const int *) b);
 		}
 
 	case V_BASEID:
@@ -1918,32 +1978,6 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 	} while (*text);
 }
 
-/**
- * @return Alien race
- * @sa racetypes_t
- */
-static int CL_GetRaceByID (const char *type)
-{
-	if (!Q_strncmp(type, "phalanx", MAX_VAR))
-		return RACE_PHALANX_HUMAN;
-	else if (!Q_strncmp(type, "civilian", MAX_VAR))
-		return RACE_CIVILIAN;
-	else if (!Q_strncmp(type, "robot", MAX_VAR))
-		return RACE_ROBOT;
-	else if (!Q_strncmp(type, "taman", MAX_VAR))
-		return RACE_TAMAN;
-	else if (!Q_strncmp(type, "ortnok", MAX_VAR))
-		return RACE_ORTNOK;
-	else if (!Q_strncmp(type, "bloodspider", MAX_VAR))
-		return RACE_BLOODSPIDER;
-	else if (!Q_strncmp(type, "shevaar", MAX_VAR))
-		return RACE_SHEVAAR;
-	else {
-		Com_Printf("CL_GetRaceByID: unknown alien race '%s'\n", type);
-		return RACE_PHALANX_HUMAN;
-	}
-}
-
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDefValues[] = {
 	{"tech", V_STRING, offsetof(teamDef_t, tech), 0}, /**< tech id from research.ufo */
@@ -1952,7 +1986,9 @@ static const value_t teamDefValues[] = {
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons), MEMBER_SIZEOF(teamDef_t, weapons)}, /**< are these team members able to use weapons? */
 	{"size", V_INT, offsetof(teamDef_t, size), MEMBER_SIZEOF(teamDef_t, size)}, /**< What size is this unit on the field (1=1x1 or 2=2x2)? */
 	{"hit_particle", V_STRING, offsetof(teamDef_t, hitParticle), 0}, /**< What particle effect should be spawned if a unit of this type is hit? */
+	{"race", V_RACE, offsetof(teamDef_t, race), 0},
 	{"robot", V_BOOL, offsetof(teamDef_t, robot), MEMBER_SIZEOF(teamDef_t, robot)}, /**< Is this a robotic unit? */
+
 	{NULL, 0, 0, 0}
 };
 
@@ -2037,12 +2073,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 				Com_ParseActorNames(name, text, td);
 			else if (!Q_strcmp(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
-			else if (!Q_strcmp(token, "race")) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					Sys_Error("Com_ParseTeam: race is not defined");
-				td->race = CL_GetRaceByID(token);
-			} else
+			else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 		}
 	} while (*text);
