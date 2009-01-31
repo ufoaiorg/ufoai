@@ -503,33 +503,21 @@ static void CL_ActorEquipmentSelect_f (void)
 		CL_CharacterCvars(chr);
 }
 
+/**
+ * @brief Selects a soldier while we are on battlescape
+ */
 static void CL_ActorSoldierSelect_f (void)
 {
-	const menu_t *activeMenu = MN_GetActiveMenu();
-	int num;
-
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
-
 	/* check whether we are connected (tactical mission) */
 	if (CL_OnBattlescape()) {
+		const int num = atoi(Cmd_Argv(1));
 		CL_ActorSelectList(num);
-		return;
-	}
-
-	/* we are still in the menu */
-	if (!Q_strcmp(activeMenu->name, "employees")) {
-		/* this is hire menu: we can select soldiers, worker, pilots, or researcher */
-		Cmd_ExecuteString(va("employee_list_click %i", num));
-	} else if (!Q_strcmp(activeMenu->name, "team")) {
-		Cmd_ExecuteString(va("team_select %i", num));
-	} else if (!Q_strcmp(activeMenu->name, "equipment")) {
-		Cmd_ExecuteString(va("equip_select %i", num));
 	}
 }
 
