@@ -295,35 +295,10 @@ menu mp_team
 		string	"_Auto"
 	}
 
-	// @todo Should be a selectbox
 	string race_str
 	{
 		string	"_Race:"
 		pos	"85 570"
-	}
-	string race_value
-	{
-		string	"*cvar cl_team"
-		pos	"205 570"
-		align	ur
-	}
-	pic race_dec
-	{
-		image	menu/buttons_small
-		pos	"213 572"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_modifystring team -1 phalanx:ortnok:taman;" }
-	}
-	pic race_inc
-	{
-		image	menu/buttons_small
-		pos	"223 572"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_modifystring team +1 phalanx:ortnok:taman;" }
 	}
 
 	string current_name
@@ -345,9 +320,24 @@ menu mp_team
 		string		"*cvar mn_teamname"
 	}
 
-	// ==================
-	// buttons
-	// ==================
+	selectbox team_box
+	{
+		image	"menu/selectbox_green"
+		pos		"200 570"
+		size	"125 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar cl_team"
+		option low_value {
+			label	"_Human"
+			value	"1"
+			action	""
+		}
+		option medium_value {
+			label	"_Alien"
+			value	"7"
+			action	""
+		}
+	}
 
 	func init
 	{
