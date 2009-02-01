@@ -11,7 +11,7 @@ menu irc
 
 	zone render
 	{
-		invis true
+		invis		true
 	}
 
 	// ==================
@@ -20,67 +20,69 @@ menu irc
 
 	pic background
 	{
-		image	menu/irc_bg
+		image		menu/irc_bg
 	}
 
 	string title
 	{
-		string	"_Lobby"
-		pos		"512 22"
-		align	uc
-		font	f_big
+		string		"_Lobby"
+		pos			"45 17"
+		size		"933 35"
+		textalign	cc
+		font		f_big
 	}
 
 	button button_disconnect
 	{
-		tooltip	"_Close menu and disconnect"
-		image	menu/button_blue
-		pos		"780 720"
-		size	"160 37"
-		click	{ cmd "irc_disconnect; mn_pop;" }
-		string	"_Disconnect"
+		string		"_Disconnect"
+		tooltip		"_Close menu and disconnect"
+		image		menu/button_blue
+		pos			"780 720"
+		size		"160 37"
 		selectcolor "1 1 1 1"
-		font	f_normal
+		font		f_normal
+		click		{ cmd "irc_disconnect; mn_pop;" }
 	}
 
 	custombutton button_exit
 	{
-		tooltip	"_Close menu but stay connected"
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos		"950 720"
-		icon return
-		click	{ cmd "mn_pop;" }
+		tooltip		"_Close menu but stay connected"
+		image		menu/button_background
+		blend		true
+		texl		"192 0"
+		pos			"950 720"
+		size		"64 37"
+		icon		return
+		click		{ cmd "mn_pop;" }
 	}
 
 	string users_string
 	{
-		string	"_Users"
-		pos		"860 80"
-		align	uc
-		font	f_small
+		string		"_Users"
+		pos			"735 80"
+		size		"270 20"
+		textalign	uc
+		font		f_small
 	}
 	text irc_userlist
 	{
-		pos		"750 100"
-		size	"240 594"
-//		bgcolor	"0.5 0.5 0.5 0.2"
+		pos			"750 100"
+		size		"240 594"
 		lineheight	22
 		textid		TEXT_LIST
-		rows	"27"
-		wheel
+		rows		"27"
 		mousefx		true
 		scrollbar	true
 		click
 		rclick
+		wheel
 	}
 
 	text irc_data
 	{
-		pos		"30 168"
-		size	"680 528"
-//		bgcolor	"0.5 0.5 0.5 0.2"
-		rows	"24"
+		pos			"30 168"
+		size		"660 528"
+		rows		"24"
 		lineheight  "22"
 		textid		TEXT_STANDARD
 		wheel {
@@ -93,41 +95,46 @@ menu irc
 	}
 
 	vscrollbar irc_data_scroll {
-		image	menu/scrollbar_v_green	blend	true
-		pos	"701 168"	height	"528"
-		current 0
-		viewsize 24
-		fullsize 24
-		change {
-			cmd "mn_textscroll irc_data <lastdiff>;"
-		}
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"701 168"
+		height		"528"
+		current		0
+		viewsize	24
+		fullsize	24
+		change		{ cmd "mn_textscroll irc_data <lastdiff>;" }
 	}
 
 	string irc_server_string
 	{
-		string	"*cvar irc_server"
-		pos		"512 44"
-		font	f_verysmall
+		string		"*cvar irc_server"
+		pos			"412 44"
+		size		"200 16"
+		textalign	uc
+		font		f_verysmall
 	}
 
 	string irc_server_topic
 	{
-		string	"*cvar irc_topic"
+		string		"*cvar irc_topic"
+		pos			"84 80"
+		size		"512 16"
 		textalign	uc
-		size	"512 40"
-		pos		"84 80"
-		font	f_verysmall
+		font		f_verysmall
 	}
 
 	string irc_server_channel
 	{
-		string	"*cvar irc_channel"
-		pos		"756 44"
-		font	f_verysmall
+		string		"*cvar irc_channel"
+		pos			"730 44"
+		size		"240 16"
+		textalign	uc
+		font		f_verysmall
 	}
 
 	textentry slot_irc_send_buffer
 	{
+		string		"*cvar irc_send_buffer"
 		image		menu/button_green_verysmall
 		blend		true
 		color 		"0 .78 0 1"
@@ -137,9 +144,8 @@ menu irc
 		font		"f_verysmall"
 		pos			"30 710"
 		size		"690 34"
-		string		"*cvar irc_send_buffer"
-		click 		{ cmd "irc_activate;" }
 		bgcolor		"0.5 0.5 0.5 0.2"
+		click		{ cmd "irc_activate;" }
 	}
 
 	// ==================
@@ -165,83 +171,62 @@ menu irc
 menu irc_popup
 {
 	{
-		pos "264 262"
-		size	"496 247"
+		pos			"264 262"
+		size		"496 247"
 		dragbutton	true
 		closebutton	true
 	}
 
 	zone popup
 	{
-		invis true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
-	text title
+	string title
 	{
-		pos		"176 18"
-		textalign	uc
-		width	"446"
-		rows	"1"
-		textid	TEXT_POPUP
+		string		"_Not connected"
+		font		f_big
+		pos			"47 17"
+		size		"405 28"
+		textalign	cc
 	}
 
-	text popup_text
+	string popup_text
 	{
-		pos	"26 58"
-		lineheight 16
-		tabwidth 100
-		size	"446 128"
-		string "_You are not connected to the lobby. Do you want to connect?"
+		string		"_You are not connected to the lobby. Do you want to connect?"
+		pos			"26 58"
+		size		"446 128"
 	}
 
-	// @todo: convert to button node
-	pic bt_ok
+	button bt_ok
 	{
-		tooltip	"_Connect to the lobby"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"296 192"
-		size	"176 32"
-		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
-		in	{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
-		click	{ cmd "irc_connect;mn_pop;mn_push irc;" }
-	}
-	string string_ok
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Connect"
-		pos	"384 208"
-		align	cc
+		string		"_Connect"
+		tooltip		"_Connect to the lobby"
+		font		f_menu
+		color		"0 0.5 0 1"
+		image		menu/button_green_small
+		pos			"296 192"
+		size		"176 32"
+		click		{ cmd "irc_connect; mn_pop; mn_push irc;" }
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"36 192"
-		size	"176 32"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos	"124 208"
-		align	cc
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		font		f_menu
+		color		"0 0.5 0 1"
+		image		menu/button_green_small
+		pos			"36 192"
+		size		"176 32"
+		click		{ cmd "mn_pop;" }
 	}
 
 	func leave

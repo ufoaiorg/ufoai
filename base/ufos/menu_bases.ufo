@@ -282,11 +282,12 @@ menu bases
 	string base_status
 	{
 		visiblewhen "mn_base_status_id == 1"
-		string	"*cvar mn_base_status_name"
-		color	"1 1 1 1"
-		pos	"512 370"
-		font	f_menu
-		align	uc
+		string		"*cvar mn_base_status_name"
+		color		"1 1 1 1"
+		pos			"0 370"
+		size		"768 35"
+		font		f_menu
+		textalign	uc
 	}
 
 	confunc set_base_under_attack
