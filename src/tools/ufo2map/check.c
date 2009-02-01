@@ -695,9 +695,11 @@ void CheckEntities (void)
 		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
 
 	if (ED_Parse((const char **)entitiesUfoBuf))
-		Sys_Error("Error while parsing entities.ufo: %s\n",ED_LastErr());
+		Sys_Error("Error while parsing entities.ufo: %s\n",ED_GetLastError());
 
 	ED_Dump();
+
+	ED_Free();
 
 	free(*entitiesUfoBuf);
 

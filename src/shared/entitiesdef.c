@@ -28,14 +28,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include "parse.h"
 #include "entitiesdef.h"
 
 #define ED_MAX_KEYS_PER_ENT 32
 #define ED_MAX_TOKEN_LEN 512
+#define ED_MAX_ERR_LEN 512
 
-static char* lastErr = "No error found";
+static char lastErr[ED_MAX_ERR_LEN];
 
 /**
  * counts the number of entity types defined in entities.ufo
@@ -61,7 +63,7 @@ static int ED_CountEntities (const char **data_p)
 			tokensOnLevel0 = 0;
 			braceLevel++;
 			if (braceLevel > 2) {
-				lastErr = "Too many open braces";
+				snprintf(lastErr, sizeof(lastErr), "Too many open braces");
 				return -1;
 			}
 			continue;
@@ -70,7 +72,7 @@ static int ED_CountEntities (const char **data_p)
 		if (*parsedToken == '}') {
 			braceLevel--;
 			if (braceLevel < 0) {
-				lastErr = "Too many close braces";
+				snprintf(lastErr, sizeof(lastErr), "Too many close braces");
 				return -1;
 			}
 			continue;
@@ -80,12 +82,12 @@ static int ED_CountEntities (const char **data_p)
 		if (braceLevel != 0)
 			continue;
 
-		if (tokensOnLevel0 == 0) {
+		if (tokensOnLevel0 == 0 && *parsedToken != '\0') {
 			if (!strcmp(parsedToken, "entity")) {
 				tokensOnLevel0++;
 				continue;
 			}
-			lastErr = "Next entity expected";
+			snprintf(lastErr, sizeof(lastErr), "Next entity expected, found \"%s\" token", parsedToken);
 			return -1;
 		}
 
@@ -96,34 +98,55 @@ static int ED_CountEntities (const char **data_p)
 		}
 
 		if (tokensOnLevel0 > 1) {
-			lastErr = "'{' to start entity definition expected";
+			snprintf(lastErr, sizeof(lastErr), "'{' to start entity definition expected");
 			return -1;
 		}
 	}
 
 	if (numEntities == 0)
-		lastErr = "No entities found";
+		snprintf(lastErr, sizeof(lastErr), "No entities found");
 
 	return numEntities;
 }
 
-static void ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName, const char *newDesc, const int newFlags)
-{
-	const int nameLen = strlen(newName) + 1;
-	const int descLen = strlen(newDesc) + 1;
+/**
+ * @return a new string, or null if out of memory. sets lastErr, if out of memory
+ */
+static char *ED_AllocString (const char * string) {
+	const int len = strlen(string) + 1;
+	char *newString = (char *) malloc(len * sizeof(char));
 
-	keyDef->name = (char *) malloc(nameLen * sizeof(char));
-	strncpy(keyDef->name, newName, nameLen);
+	if (newString)
+		strncpy(newString, string, len);
+	else
+		snprintf(lastErr, sizeof(lastErr), "ED_AllocString: out of memory");
 
-	keyDef->desc = (char *) malloc(descLen * sizeof(char));
-	strncpy(keyDef->desc, newDesc, descLen);
-
-	keyDef->defaultVal = NULL; /* parsed later, if there is a default */
-
-	keyDef->flags = newFlags;
+	return newString;
 }
 
-static void ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex)
+/**
+ * @return -1 in case of an error (out of memory), else 0.
+ */
+static int ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName, const int newFlags)
+{
+	const int nameLen = strlen(newName) + 1;
+
+	keyDef->name = (char *) malloc(nameLen * sizeof(char));
+	if (!keyDef->name) {
+		snprintf(lastErr, sizeof(lastErr), "ED_AllocKeyDef: out of memory");
+		return -1;
+	}
+	strncpy(keyDef->name, newName, nameLen);
+
+	keyDef->flags = newFlags;
+
+	return 0;
+}
+
+/**
+ * @return -1 in case of an error (out of memory), else 0.
+ */
+static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex)
 {
 	entityDef_t *eDef = &entityDefs[entityIndex];
 
@@ -131,10 +154,86 @@ static void ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int e
 	eDef->keyDefs = (entityKeyDef_t *) malloc((numKeyDefs + 1) * sizeof(entityKeyDef_t));
 	eDef->numKeyDefs = numKeyDefs;
 
+	if (!eDef->keyDefs) {
+		snprintf(lastErr, sizeof(lastErr), "ED_AllocEntityDef: out of memory");
+		return -1;
+	}
+
 	/* and copy from temp buffer */
 	memcpy(eDef->keyDefs, newKeyDefs, numKeyDefs * sizeof(entityKeyDef_t));
 
-	memset(&eDef->keyDefs[numKeyDefs], 0, sizeof(entityKeyDef_t));/* set NULLs at the end, to enable looping through using a pointer */
+	/* set NULLs at the end, to enable looping through using a pointer */
+	memset(&eDef->keyDefs[numKeyDefs], 0, sizeof(entityKeyDef_t));
+
+	return 0;
+}
+
+/** @brief given two keys with the same name, are they unique when the flags are considered?
+ *  @return 0 if there is a conflict */
+static int ED_AreKeysUnique (int flags1, int flags2)
+{
+	if (flags1 & flags2 & ED_ABSTRACT)
+		return 0;
+
+	if ((flags1 & ED_CONCRETE) && (flags2 & ED_CONCRETE))
+		return 0;
+
+	return 1;
+}
+
+/** @brief search for key in an array
+ *  @return a pointer to the entity def or NULL if it is not found */
+static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDefs, const char *name, int flags)
+{
+	int i;
+	for (i = 0; i < numDefs; i++) {
+		entityKeyDef_t *keyDef = &keyDefs[i];
+		if (!strcmp(keyDef->name, name) && !ED_AreKeysUnique(keyDef->flags, flags)) {
+			return &keyDefs[i];
+		}
+	}
+	return NULL;
+}
+
+/**
+ * @return -1 in case of an error (too many keys for buffer), else 0.
+ */
+static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
+							const char *newName, const char *newVal, const int mode)
+{
+	entityKeyDef_t *keyDef = ED_FindKeyDefInArray(keyDefsBuf, *numKeyDefsSoFar_p, newName, mode);
+	int extantKey = 1;
+	if (!keyDef) {
+		keyDef = &keyDefsBuf[(*numKeyDefsSoFar_p)++];
+		if ((*numKeyDefsSoFar_p) >= ED_MAX_KEYS_PER_ENT) {
+			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: too many keys for buffer");
+			return -1;
+		}
+		if (-1 == ED_AllocKeyDef(keyDef, newName, mode))
+			return -1; /* lastErr already set */
+		extantKey = 0;
+	}
+	switch (mode) {
+		case ED_MANDATORY:
+		case ED_OPTIONAL:
+		case ED_ABSTRACT:/** @todo actually OK if one is abstract */
+			keyDef->desc = ED_AllocString(newVal);
+			if (!keyDef->desc)
+				return -1;
+			if (extantKey && !ED_AreKeysUnique(mode, keyDef->flags)) {
+				snprintf(lastErr, sizeof(lastErr), "Duplicate key: %s", newName);
+				return -1;
+			}
+			return 0;
+		case ED_DEFAULT:
+			keyDef->defaultVal = ED_AllocString(newVal);
+			if (!keyDef->defaultVal)
+				return -1;
+			return 0;
+		default:
+			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: parse mode not recognised");
+			return -1;
+	}
 }
 
 /**
@@ -162,14 +261,11 @@ static int ED_ParseEntities (const char **data_p)
 		if (*parsedToken == '{') {
 			braceLevel++;
 			if (!toggle) {
-				lastErr="Incorrect number of tokens before '{'";
+				snprintf(lastErr, sizeof(lastErr), "ED_ParseEntities: Incorrect number of tokens before '{'");
 				return -1;
 			}
 			toggle ^= 1; /* reset, as toggle is only for counting proper text tokens, not braces */
 			tokensOnLevel0 = 0;
-			if (braceLevel == 1) { /* started parsing entity def*/
-				mode = ED_OPTIONAL; /* set default mode */
-			}
 			continue;
 		}
 
@@ -178,17 +274,27 @@ static int ED_ParseEntities (const char **data_p)
 			toggle ^= 1; /* reset, as toggle is only for counting proper text tokens, not braces */
 			if (braceLevel == 0) { /* finished parsing entity def and prepare for the next one */
 				ED_AllocEntityDef(keyDefBuf, keyIndex, entityIndex);
-				keyIndex = 0;
 				entityIndex++;
 				if (entityIndex == numEntityDefs)
 					break;
+			}
+			if (braceLevel == 1) { /* ending a default, mandatory, etc block, go back to default parse mode */
+				mode = ED_ABSTRACT;
 			}
 			continue;
 		}
 
 		if (braceLevel == 0) {
-			if (tokensOnLevel0 == 1) { /* classname of entity */
-				ED_AllocKeyDef(&keyDefBuf[keyIndex++], "classname", parsedToken, ED_MANDATORY);
+			if (tokensOnLevel0 == 1) {/* classname of entity, start parsing new entity */
+				const entityDef_t *prevED = ED_GetEntityDef(parsedToken);
+				if (prevED) {
+					snprintf(lastErr, sizeof(lastErr), "ED_ParseEntities: duplicate entity definition name:%s", parsedToken);
+					return -1;
+				}
+				memset(keyDefBuf, 0, sizeof(keyDefBuf)); /* ensure pointers are not carried over from previous entity */
+				keyIndex = 0;
+				ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY);
+				mode = ED_ABSTRACT;
 			}
 			tokensOnLevel0++;
 			continue;
@@ -203,13 +309,14 @@ static int ED_ParseEntities (const char **data_p)
 				mode = ED_DEFAULT;
 				toggle ^= 1;
 			} else {/* must be a keyname or value */
-				if (toggle) { /* store key name til after next token is parsed */ /** @todo toggle or !toggle, that is the question */
+				if (toggle) { /* store key name til after next token is parsed */
 					strncpy(lastTokenBuf, parsedToken, ED_MAX_TOKEN_LEN);
-					/** @todo fix default parsing - should search for key already parsed */
-				} else {
-					ED_AllocKeyDef(&keyDefBuf[keyIndex++], lastTokenBuf, parsedToken, mode);
+				} else { /* store key-value pair in buffer until whole entity is parsed */
+					if (-1 == ED_PairParsed(keyDefBuf, &keyIndex, lastTokenBuf, parsedToken, mode))
+						return -1;
 				}
 			}
+			continue;
 		}
 	}
 
@@ -222,18 +329,39 @@ static int ED_ParseEntities (const char **data_p)
  */
 int ED_Parse (const char **data_p)
 {
-	const char *copy_data = *data_p;
+	/* this function should not change *data_p, as the calling function uses
+	 * it to free(). also, it is parsed twice, and Com_Parse changes *data_p.
+	 * hence the use of copies of the pointer*/
+	const char *copy_data_p = *data_p;
+	size_t ed_block_size;
 
-	numEntityDefs = ED_CountEntities(data_p);
-	if (numEntityDefs < 1)
+	snprintf(lastErr, sizeof(lastErr), "no error");
+
+	numEntityDefs = ED_CountEntities(&copy_data_p);
+	if (numEntityDefs < 1) {
+		if (numEntityDefs == 0)
+			snprintf(lastErr, sizeof(lastErr), "ED_Parse: no entity definitions found");
 		return -1;
+	}
 
-	entityDefs = (entityDef_t *)malloc((numEntityDefs + 1) * sizeof(entityDef_t));
+	/* make the block one larger than required, so when finished there are NULLs
+	 * at the end to allow looping through with pointers. */
+	ed_block_size = (numEntityDefs + 1) * sizeof(entityDef_t);
+	entityDefs = (entityDef_t *)malloc(ed_block_size);
 
-	if (ED_ParseEntities(&copy_data) == -1)
+	if (!entityDefs) {
+		snprintf(lastErr, sizeof(lastErr), "ED_Parse: out of memory");
 		return -1;
+	}
 
-	memset(&entityDefs[numEntityDefs], 0, sizeof(entityDef_t)); /* NULLs at the end to allow pointer looping */
+	/* memset to NULL now so that looping through the ones that have already
+	 * been parsed is possible while the rest are parsed */
+	memset(entityDefs, 0, ed_block_size);
+
+	copy_data_p = *data_p;
+	if (-1 == ED_ParseEntities(&copy_data_p)) {
+		return -1;
+	}
 
 	return 0;
 }
@@ -243,13 +371,26 @@ const char *ED_GetLastError (void)
 	return lastErr;
 }
 
+/** @brief searches for the parsed entity def by classname
+ *  @return NULL if the entity def is not found */
+const entityDef_t *ED_GetEntityDef (const char *classname)
+{
+	entityDef_t *ed;
+
+	for (ed = entityDefs; ed->numKeyDefs; ed++)
+		if(!strcmp(classname, ed->keyDefs->desc)) /* the classname is always the zeroth keyDef */
+			return ed;
+
+	return NULL;
+}
+
 void ED_Free (void)
 {
 	if (numEntityDefs > 0) {
 		entityDef_t *ed;
 		for (ed = entityDefs; ed->numKeyDefs; ed++) {
 			entityKeyDef_t *kd;
-			for (kd = &ed->keyDefs[1]; kd->name; kd++) {
+			for (kd = ed->keyDefs; kd->name; kd++) {
 				if (kd->name)
 					free(kd->name);
 				if (kd->desc)
@@ -269,12 +410,21 @@ void ED_Free (void)
  */
 void ED_Dump (void)
 {
+	Com_Printf("ED_Dump:\n");
 	const entityDef_t *ed;
 	for (ed = entityDefs; ed->numKeyDefs; ed++) {
 		const entityKeyDef_t *kd;
-		Com_Printf("*** >%s< >%s<\n", ed->keyDefs[0].name, ed->keyDefs[0].desc);
-		for (kd = &ed->keyDefs[1]; kd->name; kd++)
-			Com_Printf(">%s< mandatory:%i\n", kd->name, kd->flags & ED_MANDATORY);
+		Com_Printf("next ent:\n");
+		Com_Printf(">%s< >%s<\n", ed->keyDefs[0].name, ed->keyDefs[0].desc);
+		for (kd = &ed->keyDefs[1]; kd->name; kd++) {
+			Com_Printf("next key:\n");
+			Com_Printf("  >%s< mandatory:%i optional:%i abstract:%i\n", kd->name,
+				kd->flags & ED_MANDATORY ? 1 : 0,
+				kd->flags & ED_OPTIONAL ? 1 : 0,
+				kd->flags & ED_ABSTRACT ? 1 : 0);
+			if (kd->defaultVal)
+				Com_Printf("    >%s<",kd->defaultVal);
+		}
 	}
 }
 #endif

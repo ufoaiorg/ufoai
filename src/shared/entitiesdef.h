@@ -29,8 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define ENITIESDEF_H
 
 # define	ED_DEFAULT		-1		/**< parse mode */
-# define	ED_OPTIONAL		0		/**< parse mode */
-# define	ED_MANDATORY	(1<<0)	/**< flag for entityKeyDef_t flags. entities of this type are not valid without this key. also a parse mode */
+# define	ED_OPTIONAL		(1<<0)	/**< flag and parse mode */
+# define	ED_MANDATORY	(1<<1)	/**< flag and parse mode. for entityKeyDef_t flags. entities of this type are not valid without this key. also a parse mode */
+# define	ED_ABSTRACT		(1<<2)	/**< flag and parse mode, radiant use exclusively, should not be in .map file as a key */
+
+# define	ED_CONCRETE		(ED_OPTIONAL | ED_MANDATORY) /**< flags indicating that this is a real key for use in a map file */
 
 typedef struct entityKeyDef_s {
 	char *name;
@@ -44,6 +47,7 @@ typedef struct entityDef_s {
 	int numKeyDefs;
 } entityDef_t;
 
+const entityDef_t *ED_GetEntityDef (const char *classname);
 int ED_Parse(const char **data_p);
 const char *ED_GetLastError(void);
 void ED_Free(void);
