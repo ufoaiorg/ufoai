@@ -1939,7 +1939,7 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 		if (Q_strcmp(od->type, "armour"))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
-		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->body);
+		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->head);
 	} else
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s/%s", chr->path, chr->head);
 	Com_DPrintf(DEBUG_SHARED, "CHRSH_CharGetBody: use '%s' as head model path for character\n", CHRSH_returnModel);
