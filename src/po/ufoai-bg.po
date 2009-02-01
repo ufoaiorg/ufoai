@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-01-30 19:57+0100\n"
+"POT-Creation-Date: 2009-02-01 19:01+0100\n"
 "PO-Revision-Date: 2009-01-24 00:33+0200\n"
 "Last-Translator: Borislav Boyadzhiev <bvb@icamil.net>\n"
 "Language-Team: \n"
@@ -370,45 +370,45 @@ msgstr "AA51 установка"
 msgid "AA51 Cicada SAM"
 msgstr "AA51 Cicada SAM"
 
-#: ../base/ufos/armour.ufo:27
+#: ../base/ufos/armour.ufo:26
 msgid "normal"
 msgstr "Нормална"
 
-#: ../base/ufos/armour.ufo:35
+#: ../base/ufos/armour.ufo:34
 msgid "blast"
 msgstr "Взривна"
 
-#: ../base/ufos/armour.ufo:36
+#: ../base/ufos/armour.ufo:35
 msgid "fire"
 msgstr "Огнева"
 
-#: ../base/ufos/armour.ufo:41
+#: ../base/ufos/armour.ufo:40
 msgid "shock"
 msgstr "Шокова"
 
-#: ../base/ufos/armour.ufo:42
+#: ../base/ufos/armour.ufo:41
 msgid "laser"
 msgstr "Лазерна"
 
-#: ../base/ufos/armour.ufo:47
+#: ../base/ufos/armour.ufo:46
 msgid "plasma"
 msgstr "Плазмена"
 
-#: ../base/ufos/armour.ufo:52
+#: ../base/ufos/armour.ufo:51
 msgid "particlebeam"
 msgstr "Лъчева"
 
-#: ../base/ufos/armour.ufo:57
+#: ../base/ufos/armour.ufo:56
 #, fuzzy
 msgid "stun_electro"
 msgstr "stun_electro"
 
-#: ../base/ufos/armour.ufo:58
+#: ../base/ufos/armour.ufo:57
 #, fuzzy
 msgid "stun_gas"
 msgstr "stun_gas"
 
-#: ../base/ufos/armour.ufo:68
+#: ../base/ufos/armour.ufo:67
 msgid "Combat Armour"
 msgstr "Бойна броня"
 
@@ -416,19 +416,19 @@ msgstr "Бойна броня"
 msgid "Advanced Combat Armour"
 msgstr "Усъвършенствана бойна броня"
 
-#: ../base/ufos/armour.ufo:190
+#: ../base/ufos/armour.ufo:191
 msgid "Nanocomposite Armour"
 msgstr "Нанокомпозитна броня"
 
-#: ../base/ufos/armour.ufo:251
+#: ../base/ufos/armour.ufo:253
 msgid "Power Armour"
 msgstr "Енергийна броня"
 
-#: ../base/ufos/armour.ufo:539
+#: ../base/ufos/armour.ufo:492
 msgid "Alien Body Armour"
 msgstr "Извънземна телесна броня"
 
-#: ../base/ufos/armour.ufo:599
+#: ../base/ufos/armour.ufo:553
 msgid "Medium Alien Armour"
 msgstr "Средна извънземна броня"
 
@@ -1471,21 +1471,21 @@ msgstr "Кръстопът"
 msgid "Coin"
 msgstr "Монета"
 
-#: ../base/ufos/medals.ufo:30 client/campaign/cl_employee.c:370
+#: ../base/ufos/medals.ufo:30 client/campaign/cl_employee.c:375
 msgid "Scientist"
 msgstr "Учен"
 
-#: ../base/ufos/medals.ufo:38 client/campaign/cl_employee.c:374
+#: ../base/ufos/medals.ufo:38 client/campaign/cl_employee.c:379
 #: client/campaign/cl_fightequip_callbacks.c:382
 msgid "Pilot"
 msgstr "Пилот"
 
 #: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1598
-#: ../base/ufos/team_humans.ufo:1622 client/campaign/cl_employee.c:376
+#: ../base/ufos/team_humans.ufo:1622 client/campaign/cl_employee.c:381
 msgid "UGV"
 msgstr "UGV"
 
-#: ../base/ufos/medals.ufo:54 client/campaign/cl_employee.c:372
+#: ../base/ufos/medals.ufo:54 client/campaign/cl_employee.c:377
 msgid "Worker"
 msgstr "Работник"
 
@@ -1587,13 +1587,13 @@ msgstr "Полк."
 
 #: ../base/ufos/menu_aircraft.ufo:22 ../base/ufos/menu_bases.ufo:229
 #: ../base/ufos/menu_basesummary.ufo:209 ../base/ufos/menu_buildings.ufo:50
-#: ../base/ufos/menu_hire.ufo:678 ../base/ufos/menu_research.ufo:174
+#: ../base/ufos/menu_hire.ufo:688 ../base/ufos/menu_research.ufo:174
 msgid "Name of this base"
 msgstr "Име на тази база"
 
 #: ../base/ufos/menu_aircraft.ufo:33 ../base/ufos/menu_bases.ufo:210
 #: ../base/ufos/menu_basesummary.ufo:220 ../base/ufos/menu_buildings.ufo:79
-#: ../base/ufos/menu_buy.ufo:803 ../base/ufos/menu_hire.ufo:689
+#: ../base/ufos/menu_buy.ufo:803 ../base/ufos/menu_hire.ufo:699
 #: ../base/ufos/menu_production.ufo:30 ../base/ufos/menu_research.ufo:681
 msgid "CREDIT"
 msgstr "КРЕДИТ"
@@ -1601,7 +1601,7 @@ msgstr "КРЕДИТ"
 #: ../base/ufos/menu_aircraft.ufo:41 ../base/ufos/menu_airfight.ufo:62
 #: ../base/ufos/menu_bases.ufo:218 ../base/ufos/menu_basesummary.ufo:228
 #: ../base/ufos/menu_buildings.ufo:87 ../base/ufos/menu_geoscape.ufo:123
-#: ../base/ufos/menu_geoscape.ufo:590 ../base/ufos/menu_hire.ufo:697
+#: ../base/ufos/menu_geoscape.ufo:590 ../base/ufos/menu_hire.ufo:707
 #: ../base/ufos/menu_research.ufo:689
 msgid "Organisation capital"
 msgstr "Капитал на организацията"
@@ -1613,7 +1613,7 @@ msgstr "Капитал на организацията"
 #: ../base/ufos/menu_options.ufo:100 ../base/ufos/menu_production.ufo:433
 #: ../base/ufos/menu_research.ufo:738 ../base/ufos/menu_singleplayer.ufo:110
 #: ../base/ufos/menu_singleplayer.ufo:515
-#: ../base/ufos/menu_singleplayer.ufo:669 ../base/ufos/menu_skirmish.ufo:35
+#: ../base/ufos/menu_singleplayer.ufo:669 ../base/ufos/menu_skirmish.ufo:27
 #: ../base/ufos/menu_tutorials.ufo:41
 msgid "Back"
 msgstr "Обратно"
@@ -1623,20 +1623,20 @@ msgstr "Обратно"
 msgid "Description"
 msgstr "Описание:"
 
-#: ../base/ufos/menu_aircraft.ufo:73 ../base/ufos/menu_skirmish.ufo:66
-#: ../base/ufos/research.ufo:111 client/campaign/cl_transfer.c:428
+#: ../base/ufos/menu_aircraft.ufo:73 ../base/ufos/menu_skirmish.ufo:67
+#: ../base/ufos/research.ufo:111 client/campaign/cl_transfer.c:429
 msgid "Equipment"
 msgstr "Екипировка"
 
-#: ../base/ufos/menu_aircraft.ufo:78 ../base/ufos/menu_hire.ufo:641
+#: ../base/ufos/menu_aircraft.ufo:78 ../base/ufos/menu_hire.ufo:651
 msgid "Soldiers"
 msgstr "Войници"
 
-#: ../base/ufos/menu_aircraft.ufo:83 client/campaign/cl_market.c:598
+#: ../base/ufos/menu_aircraft.ufo:83 client/campaign/cl_market.c:597
 msgid "Tanks"
 msgstr "Резервоари"
 
-#: ../base/ufos/menu_aircraft.ufo:89 ../base/ufos/menu_hire.ufo:647
+#: ../base/ufos/menu_aircraft.ufo:89 ../base/ufos/menu_hire.ufo:657
 msgid "Pilots"
 msgstr "Пилоти"
 
@@ -1702,18 +1702,18 @@ msgid "Ammo fitting this weapon"
 msgstr "Амониции за това оръжие"
 
 #: ../base/ufos/menu_aircraft_equip.ufo:284
-#: ../base/ufos/menu_aircraft_equip.ufo:303
-#: ../base/ufos/menu_aircraft_equip.ufo:322
-#: ../base/ufos/menu_aircraft_equip.ufo:341
-#: ../base/ufos/menu_aircraft_equip.ufo:360
-#: ../base/ufos/menu_aircraft_equip.ufo:379
-#: ../base/ufos/menu_aircraft_equip.ufo:398
-#: ../base/ufos/menu_aircraft_equip.ufo:417
+#: ../base/ufos/menu_aircraft_equip.ufo:304
+#: ../base/ufos/menu_aircraft_equip.ufo:324
+#: ../base/ufos/menu_aircraft_equip.ufo:344
+#: ../base/ufos/menu_aircraft_equip.ufo:364
+#: ../base/ufos/menu_aircraft_equip.ufo:384
+#: ../base/ufos/menu_aircraft_equip.ufo:404
+#: ../base/ufos/menu_aircraft_equip.ufo:424
 msgid "Select this slot"
 msgstr "Избери тази позиция"
 
 #: ../base/ufos/menu_aircraft_info.ufo:71
-#: ../base/ufos/menu_aircraft_soldiers.ufo:514
+#: ../base/ufos/menu_aircraft_soldiers.ufo:43
 msgid "Team Members:"
 msgstr "Членове на екипа:"
 
@@ -1725,102 +1725,103 @@ msgstr "Стартирай самолет"
 msgid "Call back"
 msgstr "Извикай"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:70
+#: ../base/ufos/menu_aircraft_soldiers.ufo:58
+#: ../base/ufos/menu_aircraft_soldiers.ufo:59
+#, fuzzy
+msgid "Equip soldiers"
+msgstr "Екипирай този войник"
+
+#: ../base/ufos/menu_aircraft_soldiers.ufo:120
 msgid "Soldier carries equipment"
 msgstr "Войника носи екипировка"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:78
+#: ../base/ufos/menu_aircraft_soldiers.ufo:128
 msgid "Soldier carries no equipment"
 msgstr "Войника не носи екипировка"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:201
-#: ../base/ufos/menu_aircraft_soldiers.ufo:211
-#: ../base/ufos/menu_aircraft_soldiers.ufo:221
-#: ../base/ufos/menu_aircraft_soldiers.ufo:231
-#: ../base/ufos/menu_aircraft_soldiers.ufo:241
-#: ../base/ufos/menu_aircraft_soldiers.ufo:251
-#: ../base/ufos/menu_aircraft_soldiers.ufo:261
-#: ../base/ufos/menu_aircraft_soldiers.ufo:271
+#: ../base/ufos/menu_aircraft_soldiers.ufo:247
+#: ../base/ufos/menu_aircraft_soldiers.ufo:257
+#: ../base/ufos/menu_aircraft_soldiers.ufo:267
+#: ../base/ufos/menu_aircraft_soldiers.ufo:277
+#: ../base/ufos/menu_aircraft_soldiers.ufo:287
+#: ../base/ufos/menu_aircraft_soldiers.ufo:297
+#: ../base/ufos/menu_aircraft_soldiers.ufo:307
+#: ../base/ufos/menu_aircraft_soldiers.ufo:317
 msgid "Add/remove this soldier"
 msgstr "Добави/премахни този войник"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:404
-#: ../base/ufos/menu_aircraft_soldiers.ufo:405
-msgid "Equip"
-msgstr "Екипиране"
-
-#: ../base/ufos/menu_aircraft_soldiers.ufo:423 ../base/ufos/menu_hire.ufo:315
+#: ../base/ufos/menu_aircraft_soldiers.ufo:475 ../base/ufos/menu_hire.ufo:315
 #: ../base/ufos/menu_hospital.ufo:509 ../base/ufos/menu_physdat.ufo:50
-#: ../base/ufos/menu_team.ufo:509
+#: ../base/ufos/menu_team.ufo:485
 msgid "Strength:"
 msgstr "Сила:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:428 ../base/ufos/menu_hire.ufo:336
+#: ../base/ufos/menu_aircraft_soldiers.ufo:480 ../base/ufos/menu_hire.ufo:337
 #: ../base/ufos/menu_hospital.ufo:514 ../base/ufos/menu_options.ufo:1143
-#: ../base/ufos/menu_physdat.ufo:55 ../base/ufos/menu_team.ufo:514
+#: ../base/ufos/menu_physdat.ufo:55 ../base/ufos/menu_team.ufo:490
 msgid "Speed:"
 msgstr "Скорост:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:433 ../base/ufos/menu_hire.ufo:357
+#: ../base/ufos/menu_aircraft_soldiers.ufo:485 ../base/ufos/menu_hire.ufo:359
 #: ../base/ufos/menu_hospital.ufo:519 ../base/ufos/menu_physdat.ufo:60
-#: ../base/ufos/menu_team.ufo:519
+#: ../base/ufos/menu_team.ufo:495
 msgid "Accuracy:"
 msgstr "Точност:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:438 ../base/ufos/menu_hire.ufo:379
+#: ../base/ufos/menu_aircraft_soldiers.ufo:490 ../base/ufos/menu_hire.ufo:382
 #: ../base/ufos/menu_hospital.ufo:524 ../base/ufos/menu_physdat.ufo:65
-#: ../base/ufos/menu_team.ufo:524
+#: ../base/ufos/menu_team.ufo:500
 msgid "Mind:"
 msgstr "Психика:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:443 ../base/ufos/menu_hire.ufo:400
+#: ../base/ufos/menu_aircraft_soldiers.ufo:495 ../base/ufos/menu_hire.ufo:404
 #: ../base/ufos/menu_hospital.ufo:529 ../base/ufos/menu_physdat.ufo:70
-#: ../base/ufos/menu_team.ufo:529
+#: ../base/ufos/menu_team.ufo:505
 msgid "Close Combat:"
 msgstr "Близък бой:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:448 ../base/ufos/menu_hire.ufo:421
+#: ../base/ufos/menu_aircraft_soldiers.ufo:500 ../base/ufos/menu_hire.ufo:426
 #: ../base/ufos/menu_hospital.ufo:534 ../base/ufos/menu_physdat.ufo:75
-#: ../base/ufos/menu_team.ufo:534
+#: ../base/ufos/menu_team.ufo:510
 msgid "Heavy Weapons:"
 msgstr "Тежки оръжия:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:453 ../base/ufos/menu_hire.ufo:442
+#: ../base/ufos/menu_aircraft_soldiers.ufo:505 ../base/ufos/menu_hire.ufo:448
 #: ../base/ufos/menu_hospital.ufo:539 ../base/ufos/menu_physdat.ufo:80
-#: ../base/ufos/menu_team.ufo:539
+#: ../base/ufos/menu_team.ufo:515
 msgid "Assault Weapons:"
 msgstr "Щурмови оръжия:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:458 ../base/ufos/menu_hire.ufo:463
+#: ../base/ufos/menu_aircraft_soldiers.ufo:510 ../base/ufos/menu_hire.ufo:470
 #: ../base/ufos/menu_hospital.ufo:544 ../base/ufos/menu_physdat.ufo:85
-#: ../base/ufos/menu_team.ufo:544
+#: ../base/ufos/menu_team.ufo:520
 msgid "Sniper Rifles:"
 msgstr "Снайпери:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:463 ../base/ufos/menu_hire.ufo:484
+#: ../base/ufos/menu_aircraft_soldiers.ufo:515 ../base/ufos/menu_hire.ufo:492
 #: ../base/ufos/menu_hospital.ufo:549 ../base/ufos/menu_physdat.ufo:90
-#: ../base/ufos/menu_team.ufo:549
+#: ../base/ufos/menu_team.ufo:525
 msgid "High-Explosives:"
 msgstr "Силни експлозиви:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:478 ../base/ufos/menu_hire.ufo:506
+#: ../base/ufos/menu_aircraft_soldiers.ufo:528 ../base/ufos/menu_hire.ufo:515
 #: ../base/ufos/menu_hospital.ufo:554
 msgid "Health:"
 msgstr "Здраве:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:485 ../base/ufos/menu_hire.ufo:527
+#: ../base/ufos/menu_aircraft_soldiers.ufo:531 ../base/ufos/menu_hire.ufo:537
 msgid "Missions Performed:"
 msgstr "Изпълнени мисии:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:488 ../base/ufos/menu_hire.ufo:538
+#: ../base/ufos/menu_aircraft_soldiers.ufo:534 ../base/ufos/menu_hire.ufo:548
 msgid "Enemies Killed:"
 msgstr "Убити врагове:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:530
+#: ../base/ufos/menu_aircraft_soldiers.ufo:544
 msgid "Assign tanks"
 msgstr "Назначи танкове"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:534
+#: ../base/ufos/menu_aircraft_soldiers.ufo:548
 msgid "Assign soldiers"
 msgstr "Назначи войници"
 
@@ -1842,7 +1843,7 @@ msgid "Speed up time"
 msgstr "Забързай времето"
 
 #: ../base/ufos/menu_aliencont.ufo:29 ../base/ufos/menu_basesummary.ufo:238
-#: ../base/ufos/menu_buildings.ufo:64 ../base/ufos/menu_hire.ufo:709
+#: ../base/ufos/menu_buildings.ufo:64 ../base/ufos/menu_hire.ufo:719
 #: ../base/ufos/menu_transfer.ufo:234
 msgid "Back to baseview"
 msgstr "Обратно в базата"
@@ -2070,7 +2071,7 @@ msgstr "Текуща отбранителна система"
 msgid "Ammo to use with installed system"
 msgstr "Амуниции за инсталираната система"
 
-#: ../base/ufos/menu_basedefence.ufo:278 ../base/ufos/menu_team.ufo:768
+#: ../base/ufos/menu_basedefence.ufo:278 ../base/ufos/menu_team.ufo:721
 msgid "Done"
 msgstr "Готово"
 
@@ -2088,7 +2089,7 @@ msgstr "Стореж на сгради"
 
 #: ../base/ufos/menu_bases.ufo:80 ../base/ufos/menu_geoscape.ufo:2142
 #: ../base/ufos/research.ufo:108 client/campaign/cl_map.c:356
-#: client/campaign/cl_market.c:589 client/campaign/cl_transfer.c:434
+#: client/campaign/cl_market.c:588 client/campaign/cl_transfer.c:435
 msgid "Aircraft"
 msgstr "Самолет"
 
@@ -2170,7 +2171,7 @@ msgstr "Премини на следващата база"
 #: ../base/ufos/menu_geoscape.ufo:1516 ../base/ufos/menu_geoscape.ufo:1703
 #: ../base/ufos/menu_geoscape.ufo:1866 ../base/ufos/menu_geoscape.ufo:1975
 #: ../base/ufos/menu_geoscape.ufo:2075 ../base/ufos/menu_main.ufo:180
-#: ../base/ufos/menu_multiplayer.ufo:607 ../base/ufos/menu_options.ufo:940
+#: ../base/ufos/menu_multiplayer.ufo:598 ../base/ufos/menu_options.ufo:940
 msgid "Name:"
 msgstr "Име:"
 
@@ -2215,48 +2216,48 @@ msgstr "Купи или продай машини"
 msgid "Storage (used/all):"
 msgstr "Склад (използван/всичко):"
 
-#: ../base/ufos/menu_buy.ufo:942 ../base/ufos/menu_team.ufo:373
-#: ../base/ufos/menu_ufopedia.ufo:259
+#: ../base/ufos/menu_buy.ufo:942 ../base/ufos/menu_team.ufo:353
+#: ../base/ufos/menu_ufopedia.ufo:256
 msgid "Previous weapon chambered for this ammunition"
 msgstr "Предишно оръжие, съвместимо с тези амуниции"
 
-#: ../base/ufos/menu_buy.ufo:957 ../base/ufos/menu_team.ufo:388
-#: ../base/ufos/menu_ufopedia.ufo:274
+#: ../base/ufos/menu_buy.ufo:957 ../base/ufos/menu_team.ufo:368
+#: ../base/ufos/menu_ufopedia.ufo:271
 msgid "Previous ammunition compatible with this weapon"
 msgstr "Предишни амуниции, съвместими в това оръжие"
 
-#: ../base/ufos/menu_buy.ufo:973 ../base/ufos/menu_team.ufo:403
-#: ../base/ufos/menu_ufopedia.ufo:289
+#: ../base/ufos/menu_buy.ufo:973 ../base/ufos/menu_team.ufo:383
+#: ../base/ufos/menu_ufopedia.ufo:286
 msgid "Next weapon chambered for this ammunition"
 msgstr "Следващо оръжие, съвместимо с тези амуниции"
 
-#: ../base/ufos/menu_buy.ufo:988 ../base/ufos/menu_team.ufo:418
-#: ../base/ufos/menu_ufopedia.ufo:304
+#: ../base/ufos/menu_buy.ufo:988 ../base/ufos/menu_team.ufo:398
+#: ../base/ufos/menu_ufopedia.ufo:301
 msgid "Next ammunition compatible with this weapon"
 msgstr "Следващи амуниции, съвместими в това оръжие"
 
-#: ../base/ufos/menu_buy.ufo:1003 ../base/ufos/menu_team.ufo:434
-#: ../base/ufos/menu_ufopedia.ufo:319
+#: ../base/ufos/menu_buy.ufo:1003 ../base/ufos/menu_team.ufo:414
+#: ../base/ufos/menu_ufopedia.ufo:316
 msgid "With weapon:"
 msgstr "С оръжие:"
 
-#: ../base/ufos/menu_buy.ufo:1012 ../base/ufos/menu_team.ufo:443
-#: ../base/ufos/menu_ufopedia.ufo:328
+#: ../base/ufos/menu_buy.ufo:1012 ../base/ufos/menu_team.ufo:423
+#: ../base/ufos/menu_ufopedia.ufo:325
 msgid "With ammo:"
 msgstr "С амуниции:"
 
-#: ../base/ufos/menu_buy.ufo:1037 ../base/ufos/menu_team.ufo:460
-#: ../base/ufos/menu_ufopedia.ufo:361
+#: ../base/ufos/menu_buy.ufo:1037 ../base/ufos/menu_team.ufo:441
+#: ../base/ufos/menu_ufopedia.ufo:358
 msgid "Previous firemode"
 msgstr "Предишен режим на стрелба"
 
-#: ../base/ufos/menu_buy.ufo:1052 ../base/ufos/menu_team.ufo:475
-#: ../base/ufos/menu_ufopedia.ufo:376
+#: ../base/ufos/menu_buy.ufo:1052 ../base/ufos/menu_team.ufo:453
+#: ../base/ufos/menu_ufopedia.ufo:373
 msgid "Next firemode"
 msgstr "Следващ режим на стрелба"
 
-#: ../base/ufos/menu_buy.ufo:1067 ../base/ufos/menu_team.ufo:490
-#: ../base/ufos/menu_ufopedia.ufo:391
+#: ../base/ufos/menu_buy.ufo:1067 ../base/ufos/menu_team.ufo:465
+#: ../base/ufos/menu_ufopedia.ufo:388
 msgid "Firemode:"
 msgstr "Режим на стрелба"
 
@@ -2309,7 +2310,7 @@ msgid "INBOX (with unread mails)"
 msgstr "ВХОДЯЩИ (с непрочетените писма)"
 
 #: ../base/ufos/menu_geoscape.ufo:305 ../base/ufos/menu_geoscape.ufo:320
-#: ../base/ufos/menu_ufopedia.ufo:443
+#: ../base/ufos/menu_ufopedia.ufo:440
 msgid "Mailclient"
 msgstr "Поща"
 
@@ -2385,14 +2386,14 @@ msgstr "Превключи между пълен и половин мащаб"
 #: ../base/ufos/menu_geoscape.ufo:1654 ../base/ufos/menu_geoscape.ufo:1746
 #: ../base/ufos/menu_geoscape.ufo:1919 ../base/ufos/menu_geoscape.ufo:2014
 #: ../base/ufos/menu_geoscape.ufo:2095 ../base/ufos/menu_geoscape.ufo:2176
-#: ../base/ufos/menu_geoscape.ufo:2241 ../base/ufos/menu_irc.ufo:228
+#: ../base/ufos/menu_geoscape.ufo:2241 ../base/ufos/menu_irc.ufo:223
 #: ../base/ufos/menu_lostwon.ufo:315 ../base/ufos/menu_lostwon.ufo:432
 #: ../base/ufos/menu_options.ufo:564 ../base/ufos/menu_singleplayer.ufo:302
 msgid "Close this dialogue"
 msgstr "Затвори този диалог"
 
 #: ../base/ufos/menu_geoscape.ufo:752 ../base/ufos/menu_geoscape.ufo:2249
-#: ../base/ufos/menu_main.ufo:165 ../base/ufos/menu_multiplayer.ufo:1633
+#: ../base/ufos/menu_main.ufo:165 ../base/ufos/menu_multiplayer.ufo:1624
 msgid "OK"
 msgstr "OK"
 
@@ -2409,7 +2410,7 @@ msgstr "Самолета достигна желаната дестинация 
 #: ../base/ufos/menu_geoscape.ufo:1596 ../base/ufos/menu_geoscape.ufo:1933
 #: ../base/ufos/menu_geoscape.ufo:2028 ../base/ufos/menu_geoscape.ufo:2109
 #: ../base/ufos/menu_geoscape.ufo:2190 ../base/ufos/menu_geoscape.ufo:2319
-#: ../base/ufos/menu_irc.ufo:242 ../base/ufos/menu_lostwon.ufo:314
+#: ../base/ufos/menu_irc.ufo:222 ../base/ufos/menu_lostwon.ufo:314
 #: ../base/ufos/menu_lostwon.ufo:431 ../base/ufos/menu_options.ufo:590
 #: ../base/ufos/menu_singleplayer.ufo:316
 #: client/campaign/cl_installation.c:479
@@ -2680,15 +2681,15 @@ msgstr "Наеми/Освободи - Десен клик за премахва�
 msgid "Rename your employee"
 msgstr "Преименувай служителя"
 
-#: ../base/ufos/menu_hire.ufo:566
+#: ../base/ufos/menu_hire.ufo:576
 msgid "Occupation"
 msgstr "Занимание"
 
-#: ../base/ufos/menu_hire.ufo:653
+#: ../base/ufos/menu_hire.ufo:663
 msgid "Workers"
 msgstr "Работници"
 
-#: ../base/ufos/menu_hire.ufo:659
+#: ../base/ufos/menu_hire.ufo:669
 msgid "Scientists"
 msgstr "Учени"
 
@@ -2827,41 +2828,46 @@ msgstr "Колан"
 msgid "Floor"
 msgstr "Под"
 
-#: ../base/ufos/menu_irc.ufo:28 ../base/ufos/menu_multiplayer.ufo:665
-#: ../base/ufos/menu_multiplayer.ufo:1693
+#: ../base/ufos/menu_irc.ufo:28 ../base/ufos/menu_multiplayer.ufo:656
+#: ../base/ufos/menu_multiplayer.ufo:1684
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 msgid "Lobby"
 msgstr "Lobby"
 
-#: ../base/ufos/menu_irc.ufo:36
-msgid "Close menu and disconnect"
-msgstr "Затвори менюто и прекъсни"
-
-#: ../base/ufos/menu_irc.ufo:41
+#: ../base/ufos/menu_irc.ufo:37
 msgid "Disconnect"
 msgstr "Прекъсни"
 
-#: ../base/ufos/menu_irc.ufo:48
+#: ../base/ufos/menu_irc.ufo:38
+msgid "Close menu and disconnect"
+msgstr "Затвори менюто и прекъсни"
+
+#: ../base/ufos/menu_irc.ufo:49
 msgid "Close menu but stay connected"
 msgstr "Затвори менюто, но стой свързан"
 
-#: ../base/ufos/menu_irc.ufo:58
+#: ../base/ufos/menu_irc.ufo:61
 msgid "Users"
 msgstr "Потребители"
 
-#: ../base/ufos/menu_irc.ufo:201
+#: ../base/ufos/menu_irc.ufo:194
+#, fuzzy
+msgid "Not connected"
+msgstr "Няма свързан играч\n"
+
+#: ../base/ufos/menu_irc.ufo:203
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr "Нямаш връзка с Lobby-то. Искаш ли да се свържеш?"
 
-#: ../base/ufos/menu_irc.ufo:207
-msgid "Connect to the lobby"
-msgstr "Свържи се с Lobby-то"
-
-#: ../base/ufos/menu_irc.ufo:221 ../base/ufos/menu_multiplayer.ufo:447
-#: ../base/ufos/menu_multiplayer.ufo:710
-#: ../base/ufos/menu_multiplayer.ufo:1623
+#: ../base/ufos/menu_irc.ufo:210 ../base/ufos/menu_multiplayer.ufo:438
+#: ../base/ufos/menu_multiplayer.ufo:701
+#: ../base/ufos/menu_multiplayer.ufo:1614
 msgid "Connect"
 msgstr "Свържи се"
+
+#: ../base/ufos/menu_irc.ufo:211
+msgid "Connect to the lobby"
+msgstr "Свържи се с Lobby-то"
 
 #: ../base/ufos/menu_lostwon.ufo:53
 msgid "No UFO hangars or no power supply"
@@ -3031,7 +3037,7 @@ msgstr "Следващ"
 msgid "Next tip"
 msgstr "Следващ съвет"
 
-#: ../base/ufos/menu_main.ufo:398 client/campaign/cl_ufopedia.c:162
+#: ../base/ufos/menu_main.ufo:398 client/campaign/cl_ufopedia.c:161
 msgid "Close"
 msgstr "Затвори"
 
@@ -3039,7 +3045,7 @@ msgstr "Затвори"
 msgid "Close window"
 msgstr "Затвори прозореца"
 
-#: ../base/ufos/menu_multiplayer.ufo:38 ../base/ufos/menu_multiplayer.ufo:402
+#: ../base/ufos/menu_multiplayer.ufo:38 ../base/ufos/menu_multiplayer.ufo:393
 msgid "Team"
 msgstr "Отбор"
 
@@ -3098,211 +3104,222 @@ msgstr "Генерирай отбора автоматично"
 msgid "Auto"
 msgstr "Автоматично"
 
-#: ../base/ufos/menu_multiplayer.ufo:300
-msgid "Race:"
-msgstr "Раса:"
+#: ../base/ufos/menu_multiplayer.ufo:300 ../base/ufos/menu_skirmish.ufo:232
+#, fuzzy
+msgid "Team:"
+msgstr "Отбор"
 
-#: ../base/ufos/menu_multiplayer.ufo:330 ../base/ufos/menu_multiplayer.ufo:394
+#: ../base/ufos/menu_multiplayer.ufo:306 ../base/ufos/menu_multiplayer.ufo:385
 msgid "Name"
 msgstr "Име"
 
-#: ../base/ufos/menu_multiplayer.ufo:386
+#: ../base/ufos/menu_multiplayer.ufo:331 ../base/ufos/menu_skirmish.ufo:246
+#: client/cl_game_campaign.c:203
+msgid "Human"
+msgstr "Човешки"
+
+#: ../base/ufos/menu_multiplayer.ufo:336 ../base/ufos/menu_skirmish.ufo:251
+#, fuzzy
+msgid "Alien"
+msgstr "Извънземни"
+
+#: ../base/ufos/menu_multiplayer.ufo:377
 msgid "Userlist"
 msgstr "Списък с потребители"
 
-#: ../base/ufos/menu_multiplayer.ufo:452
+#: ../base/ufos/menu_multiplayer.ufo:443
 msgid "Leave Serverbrowser"
 msgstr "Излез от браузъра"
 
-#: ../base/ufos/menu_multiplayer.ufo:469
+#: ../base/ufos/menu_multiplayer.ufo:460
 msgid "Bookmark"
 msgstr "Маркирай"
 
-#: ../base/ufos/menu_multiplayer.ufo:495
+#: ../base/ufos/menu_multiplayer.ufo:486
 msgid "Serverfilter:"
 msgstr "Филтър:"
 
-#: ../base/ufos/menu_multiplayer.ufo:549 ../base/ufos/menu_multiplayer.ufo:766
+#: ../base/ufos/menu_multiplayer.ufo:540 ../base/ufos/menu_multiplayer.ufo:757
 msgid "Serverbrowser"
 msgstr "Браузър"
 
-#: ../base/ufos/menu_multiplayer.ufo:576 ../base/ufos/menu_multiplayer.ufo:774
-#: ../base/ufos/menu_multiplayer.ufo:783
+#: ../base/ufos/menu_multiplayer.ufo:567 ../base/ufos/menu_multiplayer.ufo:765
+#: ../base/ufos/menu_multiplayer.ufo:774
 msgid "Bookmarks"
 msgstr "Отметки"
 
-#: ../base/ufos/menu_multiplayer.ufo:644
+#: ../base/ufos/menu_multiplayer.ufo:635
 msgid "Refresh"
 msgstr "Опресни"
 
-#: ../base/ufos/menu_multiplayer.ufo:677
+#: ../base/ufos/menu_multiplayer.ufo:668
 msgid "Connect to IP"
 msgstr "Свържи се с IP-то"
 
-#: ../base/ufos/menu_multiplayer.ufo:789 ../base/ufos/menu_multiplayer.ufo:792
-#: ../base/ufos/menu_multiplayer.ufo:795 ../base/ufos/menu_multiplayer.ufo:798
-#: ../base/ufos/menu_multiplayer.ufo:801 ../base/ufos/menu_multiplayer.ufo:804
-#: ../base/ufos/menu_multiplayer.ufo:807 ../base/ufos/menu_multiplayer.ufo:810
-#: ../base/ufos/menu_multiplayer.ufo:813 ../base/ufos/menu_multiplayer.ufo:816
-#: ../base/ufos/menu_multiplayer.ufo:819 ../base/ufos/menu_multiplayer.ufo:822
-#: ../base/ufos/menu_multiplayer.ufo:825 ../base/ufos/menu_multiplayer.ufo:828
-#: ../base/ufos/menu_multiplayer.ufo:831 ../base/ufos/menu_multiplayer.ufo:834
+#: ../base/ufos/menu_multiplayer.ufo:780 ../base/ufos/menu_multiplayer.ufo:783
+#: ../base/ufos/menu_multiplayer.ufo:786 ../base/ufos/menu_multiplayer.ufo:789
+#: ../base/ufos/menu_multiplayer.ufo:792 ../base/ufos/menu_multiplayer.ufo:795
+#: ../base/ufos/menu_multiplayer.ufo:798 ../base/ufos/menu_multiplayer.ufo:801
+#: ../base/ufos/menu_multiplayer.ufo:804 ../base/ufos/menu_multiplayer.ufo:807
+#: ../base/ufos/menu_multiplayer.ufo:810 ../base/ufos/menu_multiplayer.ufo:813
+#: ../base/ufos/menu_multiplayer.ufo:816 ../base/ufos/menu_multiplayer.ufo:819
+#: ../base/ufos/menu_multiplayer.ufo:822 ../base/ufos/menu_multiplayer.ufo:825
 msgid "Delete this bookmark"
 msgstr "Премахни отметката"
 
-#: ../base/ufos/menu_multiplayer.ufo:859 ../base/ufos/menu_skirmish.ufo:113
+#: ../base/ufos/menu_multiplayer.ufo:850 ../base/ufos/menu_skirmish.ufo:111
 msgid "Day version:"
 msgstr "Версия:"
 
-#: ../base/ufos/menu_multiplayer.ufo:872 ../base/ufos/seq_tutorials.ufo:785
+#: ../base/ufos/menu_multiplayer.ufo:863 ../base/ufos/seq_tutorials.ufo:785
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "Провери дали TCP порт 27910 е отворен в защитната стена"
 
-#: ../base/ufos/menu_multiplayer.ufo:885
+#: ../base/ufos/menu_multiplayer.ufo:876
 msgid "Make this server public:"
 msgstr "Направи сървъра публичен:"
 
-#: ../base/ufos/menu_multiplayer.ufo:902
+#: ../base/ufos/menu_multiplayer.ufo:893
 msgid "Enable morale states:"
 msgstr "Позволи състояние на морала:"
 
-#: ../base/ufos/menu_multiplayer.ufo:918
+#: ../base/ufos/menu_multiplayer.ufo:909
 msgid "Gametype:"
 msgstr "Тип на играта:"
 
-#: ../base/ufos/menu_multiplayer.ufo:957
+#: ../base/ufos/menu_multiplayer.ufo:948
 msgid "Teamplay:"
 msgstr "Отборна игра:"
 
-#: ../base/ufos/menu_multiplayer.ufo:973
+#: ../base/ufos/menu_multiplayer.ufo:964
 msgid "Max. clients:"
 msgstr "Макс. клиенти:"
 
-#: ../base/ufos/menu_multiplayer.ufo:975
+#: ../base/ufos/menu_multiplayer.ufo:966
 msgid "Sets the max allowed clients to connect"
 msgstr "Задава максимално разрешения брой свързани клиенти"
 
-#: ../base/ufos/menu_multiplayer.ufo:1000
+#: ../base/ufos/menu_multiplayer.ufo:991
 msgid "Max. soldiers per team:"
 msgstr "Макс. войници за отбор:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1002
+#: ../base/ufos/menu_multiplayer.ufo:993
 msgid "Sets the max allowed soldiers per team"
 msgstr "Задава максимално разрешения брой войници за отбор"
 
-#: ../base/ufos/menu_multiplayer.ufo:1027
+#: ../base/ufos/menu_multiplayer.ufo:1018
 msgid "Max. soldiers per player:"
 msgstr "Макс. войници за играч:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1029
+#: ../base/ufos/menu_multiplayer.ufo:1020
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr "Задава максимално разрешения брой войници за играч при отборна игра"
 
-#: ../base/ufos/menu_multiplayer.ufo:1055
+#: ../base/ufos/menu_multiplayer.ufo:1046
 msgid "Max. human players per team:"
 msgstr "Макс. хора играчи за отбор:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1081 ../base/ufos/menu_skirmish.ufo:129
+#: ../base/ufos/menu_multiplayer.ufo:1072 ../base/ufos/menu_skirmish.ufo:128
 msgid "Max. AI actors:"
 msgstr "Мак. ИИ участници:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1083
+#: ../base/ufos/menu_multiplayer.ufo:1074
 msgid "Max AI actors for teamplay mode"
 msgstr "Задава макс. брой ИИ участници при отборна игра"
 
-#: ../base/ufos/menu_multiplayer.ufo:1108
+#: ../base/ufos/menu_multiplayer.ufo:1099
 msgid "AI autojoin:"
 msgstr "ИИ автом. присъединяване:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1110
+#: ../base/ufos/menu_multiplayer.ufo:1101
 msgid "AI autojoin on free teams"
 msgstr "ИИ авт. присъединяване при свободни отбори"
 
-#: ../base/ufos/menu_multiplayer.ufo:1125
+#: ../base/ufos/menu_multiplayer.ufo:1116
 msgid "Server-Password:"
 msgstr "Парола на сървъра:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1148
+#: ../base/ufos/menu_multiplayer.ufo:1139
 msgid "RCON-Password:"
 msgstr "RCON-парола:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1171
+#: ../base/ufos/menu_multiplayer.ufo:1162
 msgid "Hostname:"
 msgstr "Hostname:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1193 ../base/ufos/menu_skirmish.ufo:156
+#: ../base/ufos/menu_multiplayer.ufo:1184 ../base/ufos/menu_skirmish.ufo:157
 msgid "Map"
 msgstr "Карта"
 
-#: ../base/ufos/menu_multiplayer.ufo:1289
+#: ../base/ufos/menu_multiplayer.ufo:1280
 msgid "Start server"
 msgstr "Стартирай"
 
-#: ../base/ufos/menu_multiplayer.ufo:1338
+#: ../base/ufos/menu_multiplayer.ufo:1329
 msgid "Team selection"
 msgstr "Избор на отбора"
 
-#: ../base/ufos/menu_multiplayer.ufo:1347
+#: ../base/ufos/menu_multiplayer.ufo:1338
 msgid "Click the big button in the lower right corner when ready"
 msgstr "При готовност кликни големия бутон в долния десен ъгъл"
 
-#: ../base/ufos/menu_multiplayer.ufo:1385
+#: ../base/ufos/menu_multiplayer.ufo:1376
 msgid "Max. players per team"
 msgstr "Макс. играчи за отбор"
 
-#: ../base/ufos/menu_multiplayer.ufo:1397
+#: ../base/ufos/menu_multiplayer.ufo:1388
 msgid "Max. teams for this map"
 msgstr "Макс. отбори за тази карта"
 
-#: ../base/ufos/menu_multiplayer.ufo:1409
+#: ../base/ufos/menu_multiplayer.ufo:1400
 msgid "Team preference:"
 msgstr "Предпочитаност на отбор:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1420
+#: ../base/ufos/menu_multiplayer.ufo:1411
 msgid "Next free team"
 msgstr "Следващ свободен отбор"
 
-#: ../base/ufos/menu_multiplayer.ufo:1430
+#: ../base/ufos/menu_multiplayer.ufo:1421
 msgid "Previous free team"
 msgstr "Предишен свободен отбор"
 
-#: ../base/ufos/menu_multiplayer.ufo:1441
+#: ../base/ufos/menu_multiplayer.ufo:1432
 msgid "Finish the teamselection and start the game"
 msgstr "Приключи избора на отбор и стартирай играта"
 
-#: ../base/ufos/menu_multiplayer.ufo:1458
+#: ../base/ufos/menu_multiplayer.ufo:1449
 msgid "Activate chat"
 msgstr "Активирай чата"
 
-#: ../base/ufos/menu_multiplayer.ufo:1528
+#: ../base/ufos/menu_multiplayer.ufo:1519
 msgid "Please wait"
 msgstr "Моля почакайте"
 
-#: ../base/ufos/menu_multiplayer.ufo:1535
+#: ../base/ufos/menu_multiplayer.ufo:1526
 msgid "Players connected, waiting for others"
 msgstr "Играчите са свързани, изчакване за други"
 
-#: ../base/ufos/menu_multiplayer.ufo:1548
+#: ../base/ufos/menu_multiplayer.ufo:1539
 msgid "Start the game even if not all teams have joined"
 msgstr "Стартирай играта, въпреки че не всички отбори са се присъединили"
 
-#: ../base/ufos/menu_multiplayer.ufo:1557
+#: ../base/ufos/menu_multiplayer.ufo:1548
 msgid "Force start"
 msgstr "Форсиран старт"
 
-#: ../base/ufos/menu_multiplayer.ufo:1595
+#: ../base/ufos/menu_multiplayer.ufo:1586
 msgid "Enter server password"
 msgstr "Въведи парола на сървъра"
 
-#: ../base/ufos/menu_multiplayer.ufo:1603
+#: ../base/ufos/menu_multiplayer.ufo:1594
 msgid "Password:"
 msgstr "Парола:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1667
+#: ../base/ufos/menu_multiplayer.ufo:1658
 msgid "Personal message"
 msgstr "Лично съобщение"
 
-#: ../base/ufos/menu_multiplayer.ufo:1685
+#: ../base/ufos/menu_multiplayer.ufo:1676
 msgid "Go into the lobby"
 msgstr "Отиди в лобито"
 
@@ -3419,7 +3436,7 @@ msgid "Medium"
 msgstr "Средно"
 
 #: ../base/ufos/menu_options.ufo:453 ../base/ufos/menu_options.ufo:482
-#: client/cl_game_campaign.c:130
+#: client/cl_game_campaign.c:132
 msgid "Normal"
 msgstr "Нормално"
 
@@ -3427,7 +3444,7 @@ msgstr "Нормално"
 msgid "High"
 msgstr "Високо"
 
-#: ../base/ufos/menu_options.ufo:492 client/cl_actor.c:181
+#: ../base/ufos/menu_options.ufo:492 client/cl_actor.c:182
 msgid "Excellent"
 msgstr "Отлично"
 
@@ -3559,7 +3576,7 @@ msgstr "Праг:"
 msgid "Keys"
 msgstr "Клавиши"
 
-#: ../base/ufos/menu_options.ufo:1185 client/cl_actor.c:206
+#: ../base/ufos/menu_options.ufo:1185 client/cl_actor.c:207
 #, fuzzy
 msgid "Autostand"
 msgstr "Autostand"
@@ -3722,7 +3739,7 @@ msgstr "Кликни за да продължиш"
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Благодаря, че играхте UFO:Alien Invasion"
 
-#: ../base/ufos/menu_skirmish.ufo:51
+#: ../base/ufos/menu_skirmish.ufo:43
 msgid "Start game"
 msgstr "Стартирай играта"
 
@@ -3733,6 +3750,10 @@ msgstr "Настройки на битката"
 #: ../base/ufos/menu_skirmish.ufo:131
 msgid "Max AI actors for this game"
 msgstr "Задава макс. брой ИИ участници за тази игра"
+
+#: ../base/ufos/menu_skirmish.ufo:235
+msgid "Select which side you want to play with"
+msgstr ""
 
 #: ../base/ufos/menu_stats.ufo:44
 msgid "Missions"
@@ -3746,7 +3767,7 @@ msgstr "Бази"
 msgid "Installations"
 msgstr "Съоръжения"
 
-#: ../base/ufos/menu_stats.ufo:98 client/campaign/cl_transfer.c:430
+#: ../base/ufos/menu_stats.ufo:98 client/campaign/cl_transfer.c:431
 msgid "Employees"
 msgstr "Служители"
 
@@ -3790,46 +3811,42 @@ msgstr "Постъпления"
 msgid "max"
 msgstr "макс."
 
-#: ../base/ufos/menu_team.ufo:144 ../base/ufos/menu_team.ufo:153
-#: ../base/ufos/menu_team.ufo:162 ../base/ufos/menu_team.ufo:171
-#: ../base/ufos/menu_team.ufo:180 ../base/ufos/menu_team.ufo:189
-#: ../base/ufos/menu_team.ufo:198 ../base/ufos/menu_team.ufo:207
+#: ../base/ufos/menu_team.ufo:123 ../base/ufos/menu_team.ufo:132
+#: ../base/ufos/menu_team.ufo:141 ../base/ufos/menu_team.ufo:150
+#: ../base/ufos/menu_team.ufo:159 ../base/ufos/menu_team.ufo:168
+#: ../base/ufos/menu_team.ufo:177 ../base/ufos/menu_team.ufo:186
 msgid "Equip this soldier"
 msgstr "Екипирай този войник"
 
-#: ../base/ufos/menu_team.ufo:315
+#: ../base/ufos/menu_team.ufo:294
 msgid "Primary"
 msgstr "Основни"
 
-#: ../base/ufos/menu_team.ufo:320
+#: ../base/ufos/menu_team.ufo:299
 msgid "Secondary"
 msgstr "Вторични"
 
-#: ../base/ufos/menu_team.ufo:325 client/campaign/cl_ufopedia.c:165
+#: ../base/ufos/menu_team.ufo:304 client/campaign/cl_ufopedia.c:164
 msgid "Heavy"
 msgstr "Тежки"
 
-#: ../base/ufos/menu_team.ufo:330
+#: ../base/ufos/menu_team.ufo:309
 msgid "Misc"
 msgstr "Разни"
 
-#: ../base/ufos/menu_team.ufo:335
+#: ../base/ufos/menu_team.ufo:314
 #: client/campaign/cl_fightequip_callbacks.c:375
-#: client/campaign/cl_ufopedia.c:195
+#: client/campaign/cl_ufopedia.c:194
 msgid "Armour"
 msgstr "Брони"
 
-#: ../base/ufos/menu_team.ufo:619
+#: ../base/ufos/menu_team.ufo:595
 msgid "Actor Abilities"
 msgstr "Възможности"
 
-#: ../base/ufos/menu_team.ufo:624
+#: ../base/ufos/menu_team.ufo:600
 msgid "Object Info"
 msgstr "Инфо за обекта"
-
-#: ../base/ufos/menu_team.ufo:666
-msgid "Use current skin with every soldier aboard"
-msgstr "Използвай текущия екип за всеки войник на борда."
 
 #: ../base/ufos/menu_transfer.ufo:46
 msgid "Select previous base for transfer"
@@ -3887,19 +3904,19 @@ msgstr "Резултат от проучването"
 msgid "Leave UFOpaedia"
 msgstr "Напусни UFOpaedia"
 
-#: ../base/ufos/menu_ufopedia.ufo:452
+#: ../base/ufos/menu_ufopedia.ufo:449
 msgid "Time:"
 msgstr "Време:"
 
-#: ../base/ufos/menu_ufopedia.ufo:467
+#: ../base/ufos/menu_ufopedia.ufo:464
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../base/ufos/menu_ufopedia.ufo:483
+#: ../base/ufos/menu_ufopedia.ufo:480
 msgid "Mark all messages read"
 msgstr "Маркирай всички като прочетени"
 
-#: ../base/ufos/menu_ufopedia.ufo:875
+#: ../base/ufos/menu_ufopedia.ufo:872
 msgid "Leave mailclient"
 msgstr "Напусни пощата"
 
@@ -4374,7 +4391,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:239
+#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:241
 #: client/campaign/cp_missions.c:455
 msgid "Alien base"
 msgstr "Извънземна база"
@@ -11100,11 +11117,11 @@ msgid "A UFO is shooting at %s"
 msgstr "НЛО стреля по %s"
 
 #: client/campaign/cl_airfight.c:376 client/campaign/cl_airfight.c:400
-#: client/campaign/cl_aliencont.c:243 client/campaign/cl_aliencont.c:272
-#: client/campaign/cl_aliencont.c:289 client/campaign/cl_aliencont.c:299
-#: client/campaign/cl_campaign.c:1467 client/campaign/cl_campaign.c:1512
-#: client/campaign/cl_campaign.c:1559 client/campaign/cl_campaign.c:1571
-#: client/campaign/cl_campaign.c:1573 client/campaign/cl_installation.c:339
+#: client/campaign/cl_aliencont.c:234 client/campaign/cl_aliencont.c:263
+#: client/campaign/cl_aliencont.c:280 client/campaign/cl_aliencont.c:290
+#: client/campaign/cl_campaign.c:1469 client/campaign/cl_campaign.c:1514
+#: client/campaign/cl_campaign.c:1561 client/campaign/cl_campaign.c:1573
+#: client/campaign/cl_campaign.c:1575 client/campaign/cl_installation.c:339
 #: client/campaign/cl_installation.c:406 client/campaign/cl_map.c:287
 #: client/campaign/cl_map.c:291 client/campaign/cl_map.c:311
 #: client/campaign/cl_map.c:315 client/campaign/cl_mapfightequip.c:409
@@ -11113,11 +11130,11 @@ msgstr "НЛО стреля по %s"
 #: client/campaign/cl_mapfightequip.c:439
 #: client/campaign/cl_mapfightequip.c:445
 #: client/campaign/cl_mapfightequip.c:453
-#: client/campaign/cl_mapfightequip.c:458 client/campaign/cl_market.c:776
-#: client/campaign/cl_market.c:781 client/campaign/cl_popup.c:506
-#: client/campaign/cl_produce.c:641 client/campaign/cl_produce.c:651
-#: client/campaign/cl_produce.c:662 client/campaign/cl_produce.c:672
-#: client/campaign/cl_produce.c:683
+#: client/campaign/cl_mapfightequip.c:458 client/campaign/cl_market.c:775
+#: client/campaign/cl_market.c:780 client/campaign/cl_popup.c:507
+#: client/campaign/cl_produce.c:642 client/campaign/cl_produce.c:652
+#: client/campaign/cl_produce.c:663 client/campaign/cl_produce.c:673
+#: client/campaign/cl_produce.c:684
 #: client/campaign/cl_research_callbacks.c:566
 #: client/campaign/cl_research_callbacks.c:584
 #: client/campaign/cl_research_callbacks.c:590
@@ -11126,12 +11143,12 @@ msgstr "НЛО стреля по %s"
 #: client/campaign/cl_research_callbacks.c:825
 #: client/campaign/cl_research_callbacks.c:828 client/campaign/cl_ufo.c:478
 #: client/campaign/cl_ufo.c:835 client/campaign/cl_ufo.c:839
-#: client/campaign/cl_ufo.c:843 client/campaign/cp_aircraft.c:724
-#: client/campaign/cp_aircraft.c:1181 client/campaign/cp_aircraft.c:1189
-#: client/campaign/cp_aircraft.c:1296 client/campaign/cp_aircraft.c:1320
-#: client/campaign/cp_aircraft_callbacks.c:154
-#: client/campaign/cp_aircraft_callbacks.c:162
-#: client/campaign/cp_aircraft_callbacks.c:170 client/campaign/cp_base.c:811
+#: client/campaign/cl_ufo.c:843 client/campaign/cp_aircraft.c:725
+#: client/campaign/cp_aircraft.c:1182 client/campaign/cp_aircraft.c:1190
+#: client/campaign/cp_aircraft.c:1297 client/campaign/cp_aircraft.c:1321
+#: client/campaign/cp_aircraft_callbacks.c:156
+#: client/campaign/cp_aircraft_callbacks.c:164
+#: client/campaign/cp_aircraft_callbacks.c:172 client/campaign/cp_base.c:811
 #: client/campaign/cp_base.c:1357 client/campaign/cp_base.c:2864
 #: client/campaign/cp_base.c:2869 client/campaign/cp_base.c:3874
 #: client/campaign/cp_base_callbacks.c:135
@@ -11152,8 +11169,8 @@ msgstr "НЛО стреля по %s"
 #: client/campaign/cp_nations.c:137 client/campaign/cp_nations.c:153
 #: client/campaign/cp_nations.c:166 client/campaign/cp_nations.c:173
 #: client/campaign/cp_nations.c:181
-#: client/campaign/missions/cp_mission_baseattack.c:107 client/cl_main.c:453
-#: client/cl_parse.c:1740 client/multiplayer/mp_serverlist.c:449
+#: client/campaign/missions/cp_mission_baseattack.c:107 client/cl_main.c:452
+#: client/cl_parse.c:1867 client/multiplayer/mp_serverlist.c:449
 msgid "Notice"
 msgstr "Забележка"
 
@@ -11169,7 +11186,7 @@ msgstr "Преследване"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Преследването на НЛО успешно - НЛО-то изгубено в морето."
 
-#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1573
+#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1575
 msgid "You've lost the battle"
 msgstr "Битката е загубена"
 
@@ -11191,19 +11208,19 @@ msgstr "Изгуби лазерна батарея."
 msgid "You've lost a base facility (%s)."
 msgstr "Изгуби съоръжение(%s)."
 
-#: client/campaign/cl_aliencont.c:243
+#: client/campaign/cl_aliencont.c:234
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr "Все още не можеш да обработваш извънземни. Няма действащ Изолатор за извънземни в базата."
 
-#: client/campaign/cl_aliencont.c:272
+#: client/campaign/cl_aliencont.c:263
 msgid "You can't hold live aliens yet. Aliens died."
 msgstr "Все още не можеш да поддържаш живи извънземни - те умряха."
 
-#: client/campaign/cl_aliencont.c:289
+#: client/campaign/cl_aliencont.c:280
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
 msgstr "Няма достатъчно място в Изолатора за извънземни. Някои извънземни са мъртви."
 
-#: client/campaign/cl_aliencont.c:299
+#: client/campaign/cl_aliencont.c:290
 msgid "You've captured new aliens."
 msgstr "Заловени са нови извънземни."
 
@@ -11220,32 +11237,32 @@ msgid "Free slot"
 msgstr "Свободна позиция"
 
 #: client/campaign/cl_aliencont_callbacks.c:324
-#: client/campaign/cl_ufopedia.c:554
+#: client/campaign/cl_ufopedia.c:553
 msgid "None"
 msgstr "Никакви"
 
-#: client/campaign/cl_campaign.c:275
+#: client/campaign/cl_campaign.c:277
 msgid "You've gone too far into debt."
 msgstr "Имаш твърде много дългове."
 
-#: client/campaign/cl_campaign.c:283
+#: client/campaign/cl_campaign.c:285
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "Загубени са всички бази и нямаш пари за нови."
 
-#: client/campaign/cl_campaign.c:289
+#: client/campaign/cl_campaign.c:291
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Ти се провали в ръководството над защитата на Земята. Нашият дом и нашите хора са попаднали под извънземна инфекция. Само шепа хора на Земята остават човешки същества и те нямат шанс да разхлабят възела. Твоето командване приключи. PHALANX няма възможност да оперира като функционираща единица. Нищо не стои между извънземните и пълната победа."
 
-#: client/campaign/cl_campaign.c:307
+#: client/campaign/cl_campaign.c:309
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Под твое командване, операциите на PHALANX не успяваха да защитят нациите. ОН, силно неудовлетворени с представянето ти, решиха да ти отнемат командването и в последствие да разпуснат проекта PHALANX, като ефективна бойна единица. По-нататъшни опити за съвместна глобална инициатива не бяха направени. Нациите по Земята поотделно се противопоставят на извънземните и в крайна сметка падат една по една."
 
-#: client/campaign/cl_campaign.c:771 client/campaign/cp_base.c:2128
+#: client/campaign/cl_campaign.c:773 client/campaign/cp_base.c:2128
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cl_campaign.c:793
+#: client/campaign/cl_campaign.c:795
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -11256,7 +11273,7 @@ msgstr ""
 "Изгубени:\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:798
+#: client/campaign/cl_campaign.c:800
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -11267,47 +11284,47 @@ msgstr ""
 "Действащи:\t%i\n"
 "Атакувани:\t%i\n"
 
-#: client/campaign/cl_campaign.c:806
+#: client/campaign/cl_campaign.c:808
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: client/campaign/cl_campaign.c:813 client/campaign/cl_ufopedia.c:1687
+#: client/campaign/cl_campaign.c:815 client/campaign/cl_ufopedia.c:1686
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cl_campaign.c:852 client/campaign/cl_ufopedia.c:428
+#: client/campaign/cl_campaign.c:854 client/campaign/cl_ufopedia.c:427
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cl_campaign.c:858
+#: client/campaign/cl_campaign.c:860
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Служители:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:871
+#: client/campaign/cl_campaign.c:873
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Самолет:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:882
+#: client/campaign/cl_campaign.c:884
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "База (%s):\t%i c\n"
 
-#: client/campaign/cl_campaign.c:887
+#: client/campaign/cl_campaign.c:889
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Административни разходи:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:894
+#: client/campaign/cl_campaign.c:896
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Дългове:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:897
+#: client/campaign/cl_campaign.c:899
 #, c-format
 msgid ""
 "\n"
@@ -11318,12 +11335,12 @@ msgstr ""
 "\t-------\n"
 "Сума:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:902
+#: client/campaign/cl_campaign.c:904
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Макс. позволени дългове: %ic\n"
 
-#: client/campaign/cl_campaign.c:907
+#: client/campaign/cl_campaign.c:909
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -11332,53 +11349,53 @@ msgstr ""
 "Макс. позволена Извънземна вирусна инфекция: %i%%\n"
 "Текуща Извънземна вирусна инфекция: %i%%"
 
-#: client/campaign/cl_campaign.c:1467
+#: client/campaign/cl_campaign.c:1469
 msgid "Collected dead alien bodies"
 msgstr "Събрани извънземни тела"
 
-#: client/campaign/cl_campaign.c:1512
+#: client/campaign/cl_campaign.c:1514
 msgid "Your dropship is not near the landing zone"
 msgstr "Товарния самолет не е близо до зоната за кацане."
 
-#: client/campaign/cl_campaign.c:1558 client/campaign/cp_missions.c:1177
+#: client/campaign/cl_campaign.c:1560 client/campaign/cp_missions.c:1177
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Защитата на база: %s успешна!"
 
-#: client/campaign/cl_campaign.c:1571
+#: client/campaign/cl_campaign.c:1573
 msgid "You've won the battle"
 msgstr "Битката е спечелена"
 
-#: client/campaign/cl_campaign.c:1624
+#: client/campaign/cl_campaign.c:1626
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s беше повишен в %s.\n"
 
-#: client/campaign/cl_campaign.c:1626
+#: client/campaign/cl_campaign.c:1628
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s бе посмъртно възнаграден с ранга %s\\за вдъхновителна храброст в лицето на пагубните шансове.\n"
 
-#: client/campaign/cl_campaign.c:1627
+#: client/campaign/cl_campaign.c:1629
 msgid "Soldier promoted"
 msgstr "Повишен войник"
 
-#: client/campaign/cl_employee.c:197
+#: client/campaign/cl_employee.c:201
 #, c-format
 msgid "%s [Transferred]"
 msgstr "%s [Прехвърлени]"
 
-#: client/campaign/cl_employee.c:368
+#: client/campaign/cl_employee.c:373
 msgid "Soldier"
 msgstr "Войник"
 
-#: client/campaign/cl_employee.c:701
+#: client/campaign/cl_employee.c:706
 msgid "Not enough quarters"
 msgstr "Недостатъчно квартити"
 
-#: client/campaign/cl_employee.c:701
+#: client/campaign/cl_employee.c:706
 msgid ""
 "You don't have enough quarters for your employees.\n"
 "Build more quarters."
@@ -11386,17 +11403,17 @@ msgstr ""
 "Нямаш достатъчно квартири за служителите.\n"
 "Построй повече квартири."
 
-#: client/campaign/cl_employee.c:1490
+#: client/campaign/cl_employee.c:1494
 msgid "Could not fire employee"
 msgstr "Не може да уволниш служителя"
 
-#: client/campaign/cl_employee.c:1496
+#: client/campaign/cl_employee.c:1500
 msgid "Could not hire employee"
 msgstr "Не може да наемеш служителя"
 
 #: client/campaign/cl_event.c:249 client/campaign/cl_save.c:327
-#: client/campaign/cl_ufopedia.c:847 client/campaign/cl_ufopedia.c:852
-#: client/campaign/cp_time.c:146
+#: client/campaign/cl_ufopedia.c:846 client/campaign/cl_ufopedia.c:851
+#: client/campaign/cp_time.c:147
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -11659,34 +11676,34 @@ msgstr ""
 "Тип: %s\n"
 "Цел: %s"
 
-#: client/campaign/cl_map.c:1972 client/campaign/cl_map.c:1982
+#: client/campaign/cl_map.c:1973 client/campaign/cl_map.c:1983
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Име:\t%s (%i/%i)\n"
 
-#: client/campaign/cl_map.c:1973 client/campaign/cl_map.c:1983
+#: client/campaign/cl_map.c:1974 client/campaign/cl_map.c:1984
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Статус:\t%s\n"
 
-#: client/campaign/cl_map.c:1974
+#: client/campaign/cl_map.c:1975
 #, c-format
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Разстояние до целта:\t\t%.0f\n"
 
-#: client/campaign/cl_map.c:1975 client/campaign/cl_map.c:1984
-#: client/campaign/cl_map.c:1997 client/campaign/cp_aircraft_callbacks.c:255
+#: client/campaign/cl_map.c:1976 client/campaign/cl_map.c:1985
+#: client/campaign/cl_map.c:1998 client/campaign/cp_aircraft_callbacks.c:259
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Скорост:\t%i км/ч\n"
 
-#: client/campaign/cl_map.c:1976 client/campaign/cl_map.c:1985
-#: client/campaign/cp_aircraft_callbacks.c:257
+#: client/campaign/cl_map.c:1977 client/campaign/cl_map.c:1986
+#: client/campaign/cp_aircraft_callbacks.c:261
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Гориво:\t%i/%i\n"
 
-#: client/campaign/cl_map.c:1978 client/campaign/cl_map.c:1990
+#: client/campaign/cl_map.c:1979 client/campaign/cl_map.c:1991
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr "ETA:\t%sч\n"
@@ -11742,48 +11759,48 @@ msgstr "Тежко"
 msgid "Unknown weight"
 msgstr "Неизвестно тегло"
 
-#: client/campaign/cl_market.c:336
+#: client/campaign/cl_market.c:335
 #, c-format
 msgid "%i c\n"
 msgstr "%i c\n"
 
-#: client/campaign/cl_market.c:574
+#: client/campaign/cl_market.c:573
 msgid "Primary weapons"
 msgstr "Основни оръжия"
 
-#: client/campaign/cl_market.c:577
+#: client/campaign/cl_market.c:576
 msgid "Secondary weapons"
 msgstr "Вторични оръжия"
 
-#: client/campaign/cl_market.c:580
+#: client/campaign/cl_market.c:579
 msgid "Heavy weapons"
 msgstr "Тежки оръжия"
 
-#: client/campaign/cl_market.c:583
+#: client/campaign/cl_market.c:582
 msgid "Miscellaneous"
 msgstr "Разни"
 
-#: client/campaign/cl_market.c:586
+#: client/campaign/cl_market.c:585
 msgid "Personal Armour"
 msgstr "Телесна броня"
 
-#: client/campaign/cl_market.c:592
+#: client/campaign/cl_market.c:591
 msgid "Other"
 msgstr "Други"
 
-#: client/campaign/cl_market.c:595
+#: client/campaign/cl_market.c:594
 msgid "Aircraft equipment"
 msgstr "Екипитовка на самолета"
 
-#: client/campaign/cl_market.c:601
+#: client/campaign/cl_market.c:600
 msgid "Disassembling"
 msgstr "Разглобяване"
 
-#: client/campaign/cl_market.c:722 client/campaign/cl_market.c:940
+#: client/campaign/cl_market.c:721 client/campaign/cl_market.c:939
 msgid "Not enough storage space"
 msgstr "Няма достатъчно място в склада"
 
-#: client/campaign/cl_market.c:722 client/campaign/cl_market.c:940
+#: client/campaign/cl_market.c:721 client/campaign/cl_market.c:939
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -11793,7 +11810,7 @@ msgstr ""
 "Няма достатъчно място в склада.\n"
 "Построй повече складове."
 
-#: client/campaign/cl_market.c:758
+#: client/campaign/cl_market.c:757
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -11801,19 +11818,19 @@ msgstr ""
 "Няма електроснабдяване в тази база.\n"
 "Хангарите не функционират."
 
-#: client/campaign/cl_market.c:758 client/campaign/cl_market.c:763
-#: client/campaign/cl_market.c:882 client/campaign/cl_market.c:884
+#: client/campaign/cl_market.c:757 client/campaign/cl_market.c:762
+#: client/campaign/cl_market.c:881 client/campaign/cl_market.c:883
 #: client/campaign/cl_save.c:404 client/campaign/cp_base.c:2583
 #: client/campaign/cp_base.c:2585 client/multiplayer/mp_team.c:193
 #: client/multiplayer/mp_team.c:200
 msgid "Note"
 msgstr "Забележка"
 
-#: client/campaign/cl_market.c:763
+#: client/campaign/cl_market.c:762
 msgid "Build a hangar first."
 msgstr "Първо построй хангар."
 
-#: client/campaign/cl_market.c:776
+#: client/campaign/cl_market.c:775
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -11821,7 +11838,7 @@ msgstr ""
 "Не може да купиш този самолет.\n"
 "Няма достатъчно място в хангарите.\n"
 
-#: client/campaign/cl_market.c:781
+#: client/campaign/cl_market.c:780
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -11829,11 +11846,11 @@ msgstr ""
 "Не може да купиш този самолет.\n"
 "Нямаш достатъчно кредит.\n"
 
-#: client/campaign/cl_market.c:882
+#: client/campaign/cl_market.c:881
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Не може да продадеш самолет, към който е назначен екип"
 
-#: client/campaign/cl_market.c:884
+#: client/campaign/cl_market.c:883
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Не може да продадеш самолет, който е извън базата"
 
@@ -11962,116 +11979,116 @@ msgstr "<TODO>"
 msgid "ufo_attacking"
 msgstr ""
 
-#: client/campaign/cl_nation.c:114
+#: client/campaign/cl_nation.c:115
 msgid "Giving up"
 msgstr "Предаваща се"
 
-#: client/campaign/cl_nation.c:116
+#: client/campaign/cl_nation.c:117
 msgid "Furious"
 msgstr "Бясна"
 
-#: client/campaign/cl_nation.c:118
+#: client/campaign/cl_nation.c:119
 msgid "Angry"
 msgstr "Ядосана"
 
-#: client/campaign/cl_nation.c:120
+#: client/campaign/cl_nation.c:121
 msgid "Mad"
 msgstr "Яростна"
 
-#: client/campaign/cl_nation.c:122
+#: client/campaign/cl_nation.c:123
 msgid "Upset"
 msgstr "Разстроена"
 
-#: client/campaign/cl_nation.c:124
+#: client/campaign/cl_nation.c:125
 msgid "Tolerant"
 msgstr "Толерантна"
 
-#: client/campaign/cl_nation.c:126
+#: client/campaign/cl_nation.c:127
 msgid "Neutral"
 msgstr "Неутрална"
 
-#: client/campaign/cl_nation.c:128
+#: client/campaign/cl_nation.c:129
 msgid "Content"
 msgstr "Доволна"
 
-#: client/campaign/cl_nation.c:130
+#: client/campaign/cl_nation.c:131
 msgid "Pleased"
 msgstr "Удовлетворена"
 
-#: client/campaign/cl_nation.c:132
+#: client/campaign/cl_nation.c:133
 msgid "Happy"
 msgstr "Щастлива"
 
-#: client/campaign/cl_nation.c:134
+#: client/campaign/cl_nation.c:135
 msgid "Exuberant"
 msgstr "Радостна"
 
-#: client/campaign/cl_nation.c:160
+#: client/campaign/cl_nation.c:161
 #, c-format
 msgid "Nation %s changed happiness from %s to %s"
 msgstr "Нацията %s е с променн статус - от %s на %s"
 
-#: client/campaign/cl_nation.c:164
+#: client/campaign/cl_nation.c:165
 #, c-format
 msgid "Nation %s changed happiness to %s"
 msgstr "Нацията %s е с променен статус - %s"
 
-#: client/campaign/cl_nation.c:168
+#: client/campaign/cl_nation.c:169
 #, c-format
 msgid "Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"
 msgstr "Статуса на нация %s е %s и е по-нисък от минимално позволения в кампанията"
 
-#: client/campaign/cl_nation.c:174
+#: client/campaign/cl_nation.c:175
 msgid "Nation changed happiness"
 msgstr "Нацията е променила статуса си"
 
-#: client/campaign/cl_popup.c:132
+#: client/campaign/cl_popup.c:133
 msgid "current homebase of aircraft"
 msgstr "текущата база на самолета"
 
-#: client/campaign/cl_popup.c:138
+#: client/campaign/cl_popup.c:139
 msgid "base can hold aircraft"
 msgstr "базата може да поддържа самолет"
 
-#: client/campaign/cl_popup.c:152
+#: client/campaign/cl_popup.c:153
 msgid "Base\tStatus"
 msgstr "База\tСтатус"
 
-#: client/campaign/cl_popup.c:152
+#: client/campaign/cl_popup.c:153
 msgid "Change homebase of aircraft"
 msgstr "Промени началната база на самолета"
 
-#: client/campaign/cl_popup.c:246
+#: client/campaign/cl_popup.c:247
 #, c-format
 msgid "Back to base\t%s\n"
 msgstr "Към базата\t%s\n"
 
-#: client/campaign/cl_popup.c:248
+#: client/campaign/cl_popup.c:249
 msgid "Stop\n"
 msgstr "Спри\n"
 
-#: client/campaign/cl_popup.c:250
+#: client/campaign/cl_popup.c:251
 msgid "Change homebase\n"
 msgstr "Смени базата\n"
 
-#: client/campaign/cl_popup.c:262
+#: client/campaign/cl_popup.c:263
 #, c-format
 msgid "Mission\t%s (%s)\n"
 msgstr "Мисия\t%s (%s)\n"
 
-#: client/campaign/cl_popup.c:418
+#: client/campaign/cl_popup.c:419
 msgid "No craft available, no pilot assigned, or no tactical teams assigned to available craft."
 msgstr "Няма наличен самолет, няма назначен пилот или няма войници на наличен самолет."
 
-#: client/campaign/cl_popup.c:420
+#: client/campaign/cl_popup.c:421
 msgid "No craft available, no pilot assigned, or no weapon or ammo equipped."
 msgstr "Няма няличен самолет, няма определен пилот или няма екипирано оръжие или амуниции."
 
-#: client/campaign/cl_popup.c:454
+#: client/campaign/cl_popup.c:455
 msgid "No defence system operational or no weapon or ammo equipped."
 msgstr "Няма активна защитна система или няма екипирано оръжие или амуниции."
 
-#: client/campaign/cl_popup.c:506
+#: client/campaign/cl_popup.c:507
 msgid ""
 "No Command Centre operational in homebase\n"
 "of this aircraft.\n"
@@ -12083,11 +12100,11 @@ msgstr ""
 "\n"
 "Самолета не може да излети.\n"
 
-#: client/campaign/cl_produce.c:248
+#: client/campaign/cl_produce.c:249
 msgid "Not enough workers"
 msgstr "Няма достатъчно работници"
 
-#: client/campaign/cl_produce.c:248
+#: client/campaign/cl_produce.c:249
 msgid ""
 "You cannot queue productions without workers hired in this base.\n"
 "\n"
@@ -12097,11 +12114,11 @@ msgstr ""
 "\n"
 "Наеми работници."
 
-#: client/campaign/cl_produce.c:255
+#: client/campaign/cl_produce.c:256
 msgid "Not enough workshops"
 msgstr "Недостатъчно работилници"
 
-#: client/campaign/cl_produce.c:255
+#: client/campaign/cl_produce.c:256
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
@@ -12109,14 +12126,17 @@ msgstr ""
 "Не може да стартираш ново производство.\n"
 "Построй повече работилници.\n"
 
-#: client/campaign/cl_produce.c:273 client/campaign/cl_produce.c:276
-#: client/campaign/cl_produce.c:281 client/campaign/cl_produce.c:1302
-#: client/campaign/cl_produce.c:1343 client/campaign/cl_transfer.c:262
-#: client/campaign/cl_transfer.c:265 client/campaign/cl_transfer.c:268
+#: client/campaign/cl_produce.c:274 client/campaign/cl_produce.c:277
+#: client/campaign/cl_produce.c:282 client/campaign/cl_produce.c:1303
+#: client/campaign/cl_produce.c:1344
+#: client/campaign/cl_produce_callbacks.c:547
+#: client/campaign/cl_produce_callbacks.c:588
+#: client/campaign/cl_transfer.c:263 client/campaign/cl_transfer.c:266
+#: client/campaign/cl_transfer.c:269
 msgid "Hangars not ready"
 msgstr "Хангарите не са готови"
 
-#: client/campaign/cl_produce.c:273
+#: client/campaign/cl_produce.c:274
 msgid ""
 "You cannot queue aircraft.\n"
 "No command centre in this base.\n"
@@ -12124,7 +12144,7 @@ msgstr ""
 "Не може да произведеш самолет.\n"
 "Няма команден център в базата.\n"
 
-#: client/campaign/cl_produce.c:276
+#: client/campaign/cl_produce.c:277
 msgid ""
 "You cannot queue aircraft.\n"
 "No hangars in this base.\n"
@@ -12132,8 +12152,10 @@ msgstr ""
 "Не може да произведеш самолет.\n"
 "Няма хангари в базата.\n"
 
-#: client/campaign/cl_produce.c:281 client/campaign/cl_produce.c:1302
-#: client/campaign/cl_produce.c:1343
+#: client/campaign/cl_produce.c:282 client/campaign/cl_produce.c:1303
+#: client/campaign/cl_produce.c:1344
+#: client/campaign/cl_produce_callbacks.c:547
+#: client/campaign/cl_produce_callbacks.c:588
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -12141,130 +12163,143 @@ msgstr ""
 "Не може да произведеш самолет.\n"
 "Недостатъчно място в хангарите.\n"
 
-#: client/campaign/cl_produce.c:515
+#: client/campaign/cl_produce.c:516
 #, c-format
 msgid "Production queue for base %s is empty"
 msgstr "Производствения списък на база %s е празен"
 
-#: client/campaign/cl_produce.c:516
+#: client/campaign/cl_produce.c:517
 msgid "Production queue empty"
 msgstr "Производствения списък е празен"
 
-#: client/campaign/cl_produce.c:640 client/campaign/cl_produce.c:661
+#: client/campaign/cl_produce.c:641 client/campaign/cl_produce.c:662
 #, c-format
 msgid "Not enough credits to finish production in base %s.\n"
 msgstr "Недостатъчен кредит за завършване на производство в база %s.\n"
 
-#: client/campaign/cl_produce.c:650
+#: client/campaign/cl_produce.c:651
 #, c-format
 msgid "Not enough free storage space in base %s. Production postponed.\n"
 msgstr "Недостатъчно място в склада в база %s. Производството отложено.\n"
 
-#: client/campaign/cl_produce.c:671
+#: client/campaign/cl_produce.c:672
 #, c-format
 msgid "Not enough free hangar space in base %s. Production postponed.\n"
 msgstr "Недостатъчно място в хангара в база %s. Производството отложено.\n"
 
-#: client/campaign/cl_produce.c:682
+#: client/campaign/cl_produce.c:683
 #, c-format
 msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
 msgstr "Недостатъчно място в склада в база %s. Разглобяването отложено.\n"
 
-#: client/campaign/cl_produce.c:714 client/campaign/cl_produce.c:726
+#: client/campaign/cl_produce.c:715 client/campaign/cl_produce.c:727
 #, c-format
 msgid "The production of %s has finished."
 msgstr "Производството на %s завърши."
 
-#: client/campaign/cl_produce.c:715 client/campaign/cl_produce.c:727
-#: client/campaign/cl_produce.c:757
+#: client/campaign/cl_produce.c:716 client/campaign/cl_produce.c:728
+#: client/campaign/cl_produce.c:758
 msgid "Production finished"
 msgstr "Завършено производство"
 
-#: client/campaign/cl_produce.c:756
+#: client/campaign/cl_produce.c:757
 #, c-format
 msgid "The disassembling of %s has finished."
 msgstr "Разглобяването на %s приключи."
 
-#: client/campaign/cl_produce.c:782 client/campaign/cl_produce.c:891
+#: client/campaign/cl_produce.c:783 client/campaign/cl_produce.c:892
+#: client/campaign/cl_produce_callbacks.c:208
 msgid "No item selected"
 msgstr "Не е избрано устройство"
 
-#: client/campaign/cl_produce.c:791
+#: client/campaign/cl_produce.c:792
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Разходи за устройство\t%i c\n"
 
-#: client/campaign/cl_produce.c:793 client/campaign/cl_produce.c:850
+#: client/campaign/cl_produce.c:794 client/campaign/cl_produce.c:851
 #, c-format
 msgid "Production time\t%ih\n"
 msgstr "Производствено време\t%iч\n"
 
-#: client/campaign/cl_produce.c:794
+#: client/campaign/cl_produce.c:795
 #, c-format
 msgid "Item size\t%i\n"
 msgstr "Размер на устройството\t%i\n"
 
-#: client/campaign/cl_produce.c:821
+#: client/campaign/cl_produce.c:822
 #, c-format
 msgid "%s - disassembly\n"
 msgstr "%s - състав\n"
 
-#: client/campaign/cl_produce.c:822
+#: client/campaign/cl_produce.c:823
 msgid "Components: "
 msgstr "Компоненти: "
 
-#: client/campaign/cl_produce.c:827
+#: client/campaign/cl_produce.c:828
 #, c-format
 msgid "%s (%i) "
 msgstr "%s (%i) "
 
-#: client/campaign/cl_produce.c:831
+#: client/campaign/cl_produce.c:832
 #, c-format
 msgid "Disassembly time\t%ih\n"
 msgstr "Време за разглобяването\t%iч\n"
 
-#: client/campaign/cl_produce.c:847
+#: client/campaign/cl_produce.c:848
 #, c-format
 msgid "Production costs\t%i c\n"
 msgstr "Разходи за производство\t%i c\n"
 
-#: client/campaign/cl_produce.c:889
+#: client/campaign/cl_produce.c:890 client/campaign/cl_produce_callbacks.c:206
 msgid "No aircraft selected."
 msgstr "Не е избран самолет."
 
-#: client/campaign/cl_produce.c:1369
+#: client/campaign/cl_produce.c:1370
+#: client/campaign/cl_produce_callbacks.c:614
 msgid "Queue full!"
 msgstr "Списъка е пълен!"
 
-#: client/campaign/cl_produce.c:1369
+#: client/campaign/cl_produce.c:1370
+#: client/campaign/cl_produce_callbacks.c:614
 msgid "You cannot queue any more items!"
 msgstr "Не може да добавяш нови устройства в списъка за производство!"
 
-#: client/campaign/cl_produce.c:1389 client/campaign/cl_produce.c:1405
+#: client/campaign/cl_produce.c:1390 client/campaign/cl_produce.c:1406
+#: client/campaign/cl_produce_callbacks.c:634
+#: client/campaign/cl_produce_callbacks.c:650
 msgid "Not enough material!"
 msgstr "Няма достатъчно материали!"
 
-#: client/campaign/cl_produce.c:1389
+#: client/campaign/cl_produce.c:1390
+#: client/campaign/cl_produce_callbacks.c:634
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "Нямаш достатъчно материали за да произведеш всички (%i) устройства. Производството ще продължи в намален брой (%i)."
 
-#: client/campaign/cl_produce.c:1393 client/campaign/cl_produce.c:1417
+#: client/campaign/cl_produce.c:1394 client/campaign/cl_produce.c:1418
+#: client/campaign/cl_produce_callbacks.c:638
+#: client/campaign/cl_produce_callbacks.c:662
 #, c-format
 msgid "Production of %s started"
 msgstr "Производството на %s започна"
 
-#: client/campaign/cl_produce.c:1394 client/campaign/cl_produce.c:1397
-#: client/campaign/cl_produce.c:1418
+#: client/campaign/cl_produce.c:1395 client/campaign/cl_produce.c:1398
+#: client/campaign/cl_produce.c:1419
+#: client/campaign/cl_produce_callbacks.c:639
+#: client/campaign/cl_produce_callbacks.c:642
+#: client/campaign/cl_produce_callbacks.c:663
 msgid "Production started"
 msgstr "Започнато производство"
 
-#: client/campaign/cl_produce.c:1396
+#: client/campaign/cl_produce.c:1397
+#: client/campaign/cl_produce_callbacks.c:641
 #, c-format
 msgid "Disassembling of %s started"
 msgstr "Разглобяването на %s започна"
 
-#: client/campaign/cl_produce.c:1405
+#: client/campaign/cl_produce.c:1406
+#: client/campaign/cl_produce_callbacks.c:650
 msgid "You don't have enough of the needed material to produce this item."
 msgstr "Нямаш достатъчни количества от необходимия материал за да произведеш това устройство."
 
@@ -12469,9 +12504,9 @@ msgid "Error loading game."
 msgstr "Грешка при въвеждане на играта."
 
 #: client/campaign/cl_save.c:475 client/campaign/cl_save.c:498
-#: client/campaign/cl_save.c:637 client/cl_irc.c:993 client/cl_irc.c:1220
-#: client/cl_main.c:546 client/cl_main.c:551 client/cl_main.c:557
-#: client/cl_main.c:565 client/multiplayer/mp_callbacks.c:45
+#: client/campaign/cl_save.c:637 client/cl_irc.c:995 client/cl_irc.c:1222
+#: client/cl_main.c:545 client/cl_main.c:550 client/cl_main.c:556
+#: client/cl_main.c:564 client/multiplayer/mp_callbacks.c:45
 #: client/multiplayer/mp_callbacks.c:165
 msgid "Error"
 msgstr "Грешка"
@@ -12496,15 +12531,15 @@ msgstr "Кампанията от бърз-запис бе успешно във
 msgid "Saves to the quick save slot"
 msgstr "Записва в полето за бърз запис"
 
-#: client/campaign/cl_transfer.c:101
+#: client/campaign/cl_transfer.c:102
 msgid "Destination base does not have an Antimatter Storage.\n"
 msgstr "Желаната база няма Циклотрон.\n"
 
-#: client/campaign/cl_transfer.c:101
+#: client/campaign/cl_transfer.c:102
 msgid "Missing storage"
 msgstr "Необходим склад"
 
-#: client/campaign/cl_transfer.c:108
+#: client/campaign/cl_transfer.c:109
 msgid ""
 "Destination base does not have enough\n"
 "Antimatter Storage space to store more antimatter.\n"
@@ -12512,37 +12547,37 @@ msgstr ""
 "Желаната база няма достатъчно място\n"
 "в Циклотрона, за да складира още антиматерия.\n"
 
-#: client/campaign/cl_transfer.c:108 client/campaign/cl_transfer.c:147
-#: client/campaign/cl_transfer.c:178 client/campaign/cl_transfer.c:231
-#: client/campaign/cl_transfer.c:274
+#: client/campaign/cl_transfer.c:109 client/campaign/cl_transfer.c:148
+#: client/campaign/cl_transfer.c:179 client/campaign/cl_transfer.c:232
+#: client/campaign/cl_transfer.c:275
 msgid "Not enough space"
 msgstr "Няма достатъчно място"
 
-#: client/campaign/cl_transfer.c:119
+#: client/campaign/cl_transfer.c:120
 msgid "Destination base does not have functional Large UFO Hangar.\n"
 msgstr "Желаната база няма функционоращ Голям НЛО-хангар.\n"
 
-#: client/campaign/cl_transfer.c:119 client/campaign/cl_transfer.c:124
+#: client/campaign/cl_transfer.c:120 client/campaign/cl_transfer.c:125
 msgid "Missing Large UFO Hangar"
 msgstr "Няма Голям НЛО-хангар"
 
-#: client/campaign/cl_transfer.c:124
+#: client/campaign/cl_transfer.c:125
 msgid "Destination base does not have enough Large UFO Hangar.\n"
 msgstr "Желаната база няма достатъчно Големи НЛО-хангари.\n"
 
-#: client/campaign/cl_transfer.c:130
+#: client/campaign/cl_transfer.c:131
 msgid "Destination base does not have functional Small UFO Hangar.\n"
 msgstr "Желаната база няма функционоращ Малък НЛО-хангар.\n"
 
-#: client/campaign/cl_transfer.c:130 client/campaign/cl_transfer.c:135
+#: client/campaign/cl_transfer.c:131 client/campaign/cl_transfer.c:136
 msgid "Missing Small UFO Hangar"
 msgstr "Няма Малък НЛО-хангар"
 
-#: client/campaign/cl_transfer.c:135
+#: client/campaign/cl_transfer.c:136
 msgid "Destination base does not have enough Small UFO Hangar.\n"
 msgstr "Желаната база няма достатъчно Малки НЛО-хангари.\n"
 
-#: client/campaign/cl_transfer.c:147
+#: client/campaign/cl_transfer.c:148
 msgid ""
 "Destination base does not have enough\n"
 "Storage space to store this item.\n"
@@ -12550,7 +12585,7 @@ msgstr ""
 "Желаната база няма достатъчно\n"
 "място в Склада за да складира това устройство.\n"
 
-#: client/campaign/cl_transfer.c:178
+#: client/campaign/cl_transfer.c:179
 msgid ""
 "Destination base does not have enough space\n"
 "in Living Quarters.\n"
@@ -12558,7 +12593,7 @@ msgstr ""
 "Желаната база няма достатъчно място\n"
 "в Квартирите.\n"
 
-#: client/campaign/cl_transfer.c:186
+#: client/campaign/cl_transfer.c:187
 #, c-format
 msgid ""
 "%s %s is assigned to aircraft and cannot be\n"
@@ -12567,11 +12602,11 @@ msgstr ""
 "%s %s е част от екипа на самолет и не може\n"
 "да се прехвърли в друга база.\n"
 
-#: client/campaign/cl_transfer.c:188
+#: client/campaign/cl_transfer.c:189
 msgid "Soldier in aircraft"
 msgstr "Войника е в самолет"
 
-#: client/campaign/cl_transfer.c:195
+#: client/campaign/cl_transfer.c:196
 #, c-format
 msgid ""
 "%s is assigned to aircraft and cannot be\n"
@@ -12580,11 +12615,11 @@ msgstr ""
 "%s е част от екипа на самолет и не може да\n"
 "се прехвърли в друга база.\n"
 
-#: client/campaign/cl_transfer.c:197
+#: client/campaign/cl_transfer.c:198
 msgid "Pilot in aircraft"
 msgstr "Пилота е в самолета"
 
-#: client/campaign/cl_transfer.c:231
+#: client/campaign/cl_transfer.c:232
 msgid ""
 "Destination base does not have enough space\n"
 "in Alien Containment.\n"
@@ -12592,7 +12627,7 @@ msgstr ""
 "Желаната база няма достатъчно място\n"
 "в Изолатора за извънземни.\n"
 
-#: client/campaign/cl_transfer.c:262
+#: client/campaign/cl_transfer.c:263
 msgid ""
 "Destination base does not have hangars ready.\n"
 "Provide power supplies.\n"
@@ -12600,7 +12635,7 @@ msgstr ""
 "Желаната база няма активни хангари.\n"
 "Необходими са захранвания.\n"
 
-#: client/campaign/cl_transfer.c:265
+#: client/campaign/cl_transfer.c:266
 msgid ""
 "Destination base does not have command centre.\n"
 "Hangars not functional.\n"
@@ -12608,11 +12643,11 @@ msgstr ""
 "Желаната база няма команден център.\n"
 "Хангарите са неактивни.\n"
 
-#: client/campaign/cl_transfer.c:268
+#: client/campaign/cl_transfer.c:269
 msgid "Destination base does not have any hangar."
 msgstr "Желаната база няма нито един хангар."
 
-#: client/campaign/cl_transfer.c:274
+#: client/campaign/cl_transfer.c:275
 msgid ""
 "Destination base does not have enough space\n"
 "in hangars.\n"
@@ -12620,208 +12655,208 @@ msgstr ""
 "Желаната база няма достатъчно място\n"
 "в хангарите.\n"
 
-#: client/campaign/cl_transfer.c:301 client/campaign/cl_transfer.c:339
-#: client/campaign/cl_transfer.c:368
+#: client/campaign/cl_transfer.c:302 client/campaign/cl_transfer.c:340
+#: client/campaign/cl_transfer.c:369
 #, c-format
 msgid "%s (%i for transfer)"
 msgstr "%s (%i за прехвърляне)"
 
-#: client/campaign/cl_transfer.c:320 client/campaign/cl_transfer.c:518
+#: client/campaign/cl_transfer.c:321 client/campaign/cl_transfer.c:519
 #, c-format
 msgid "Pilot %s %s"
 msgstr "Пилот %s %s"
 
-#: client/campaign/cl_transfer.c:320 client/campaign/cl_transfer.c:518
+#: client/campaign/cl_transfer.c:321 client/campaign/cl_transfer.c:519
 #, c-format
 msgid "Soldier %s %s"
 msgstr "Войник %s %s"
 
-#: client/campaign/cl_transfer.c:354
+#: client/campaign/cl_transfer.c:355
 #, c-format
 msgid "Corpse of %s (%i for transfer)"
 msgstr "Тяло на %s (%i за прехвърляне)"
 
-#: client/campaign/cl_transfer.c:386 client/campaign/cl_transfer.c:582
+#: client/campaign/cl_transfer.c:387 client/campaign/cl_transfer.c:583
 #, c-format
 msgid "Aircraft %s"
 msgstr "Самолет %s"
 
-#: client/campaign/cl_transfer.c:432 client/cl_game_campaign.c:203
+#: client/campaign/cl_transfer.c:433 client/cl_game_campaign.c:205
 msgid "Aliens"
 msgstr "Извънземни"
 
-#: client/campaign/cl_transfer.c:493 client/campaign/cl_transfer.c:529
+#: client/campaign/cl_transfer.c:494 client/campaign/cl_transfer.c:530
 #, c-format
 msgid "%s (%i for transfer, %i left)"
 msgstr "%s (%i за прехвърляне, %i остават)"
 
-#: client/campaign/cl_transfer.c:495 client/campaign/cl_transfer.c:531
+#: client/campaign/cl_transfer.c:496 client/campaign/cl_transfer.c:532
 #, c-format
 msgid "%s (%i available)"
 msgstr "%s (%i налични)"
 
-#: client/campaign/cl_transfer.c:500
+#: client/campaign/cl_transfer.c:501
 msgid "Storage is empty."
 msgstr "Склада е празен."
 
-#: client/campaign/cl_transfer.c:502
+#: client/campaign/cl_transfer.c:503
 msgid "Transfer is not possible - the base doesn't have a Storage."
 msgstr "Трансфера невъзможен - базата няма Склад"
 
-#: client/campaign/cl_transfer.c:504 client/campaign/cl_transfer.c:573
+#: client/campaign/cl_transfer.c:505 client/campaign/cl_transfer.c:574
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr "Трансфера невъзможен - базата няма захранвания."
 
-#: client/campaign/cl_transfer.c:538
+#: client/campaign/cl_transfer.c:539
 msgid "Living Quarters empty."
 msgstr "Квартирите са празни."
 
-#: client/campaign/cl_transfer.c:540
+#: client/campaign/cl_transfer.c:541
 msgid "Transfer is not possible - the base doesn't have Living Quarters."
 msgstr "Трансфера невъзможен - базата няма Квартири"
 
-#: client/campaign/cl_transfer.c:547
+#: client/campaign/cl_transfer.c:548
 #, c-format
 msgid "Corpse of %s (%i for transfer, %i left)"
 msgstr "Тяло на %s (%i за прехвърляне, %i остават)"
 
-#: client/campaign/cl_transfer.c:551
+#: client/campaign/cl_transfer.c:552
 #, c-format
 msgid "Corpse of %s (%i available)"
 msgstr "Тяло на %s (%i налични)"
 
-#: client/campaign/cl_transfer.c:558
+#: client/campaign/cl_transfer.c:559
 #, c-format
 msgid "Alive %s (%i for transfer, %i left)"
 msgstr "Жив %s (%i за прехвърляне, %i остават)"
 
-#: client/campaign/cl_transfer.c:562
+#: client/campaign/cl_transfer.c:563
 #, c-format
 msgid "Alive %s (%i available)"
 msgstr "Жив %s (%i налични)"
 
-#: client/campaign/cl_transfer.c:569
+#: client/campaign/cl_transfer.c:570
 msgid "Alien Containment is empty."
 msgstr "Изолатора за извънземни е празен."
 
-#: client/campaign/cl_transfer.c:571
+#: client/campaign/cl_transfer.c:572
 msgid "Transfer is not possible - the base doesn't have an Alien Containment."
 msgstr "Трансфера е невъзможен - базата няма Изолатор за извънземни"
 
-#: client/campaign/cl_transfer.c:589
+#: client/campaign/cl_transfer.c:590
 msgid "No aircraft available for transfer."
 msgstr "Няма налични самолети за прехвърляне."
 
-#: client/campaign/cl_transfer.c:591
+#: client/campaign/cl_transfer.c:592
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Трансфера невъзможен - базата няма функциониращ хангар."
 
-#: client/campaign/cl_transfer.c:719
+#: client/campaign/cl_transfer.c:720
 #, c-format
 msgid "Base %s does not have Storage, items are removed!"
 msgstr "База %s няма Склад. Устройствата са премахнати!"
 
-#: client/campaign/cl_transfer.c:720 client/campaign/cl_transfer.c:751
-#: client/campaign/cl_transfer.c:787 client/campaign/cl_transfer.c:820
-#: client/campaign/cl_transfer.c:909 client/campaign/cl_transfer.c:999
-#: client/campaign/cl_transfer.c:1005 client/campaign/cl_transfer.c:1120
+#: client/campaign/cl_transfer.c:721 client/campaign/cl_transfer.c:752
+#: client/campaign/cl_transfer.c:788 client/campaign/cl_transfer.c:821
+#: client/campaign/cl_transfer.c:910 client/campaign/cl_transfer.c:1000
+#: client/campaign/cl_transfer.c:1006 client/campaign/cl_transfer.c:1121
 #, fuzzy
 msgid "Transport mission"
 msgstr "Transport mission"
 
-#: client/campaign/cl_transfer.c:750
+#: client/campaign/cl_transfer.c:751
 #, c-format
 msgid "Base %s does not have Living Quarters, employees got unhired!"
 msgstr "База %s няма Квартири! Служителите не са наети!"
 
-#: client/campaign/cl_transfer.c:786
+#: client/campaign/cl_transfer.c:787
 #, c-format
 msgid "Base %s does not have Alien Containment, Aliens are removed!"
 msgstr "База %s няма Изолатор за извънземни! Те са премахнати!"
 
-#: client/campaign/cl_transfer.c:819
+#: client/campaign/cl_transfer.c:820
 #, c-format
 msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
 msgstr "База %s няма достатъчно място в хангарите! Самолета е изгубен!"
 
-#: client/campaign/cl_transfer.c:908 client/campaign/cl_transfer.c:1119
+#: client/campaign/cl_transfer.c:909 client/campaign/cl_transfer.c:1120
 #, c-format
 msgid "Transport mission started, cargo is being transported to base %s"
 msgstr "Започната е транспортна мисия. Товарът се транспортира до база %s."
 
-#: client/campaign/cl_transfer.c:982
+#: client/campaign/cl_transfer.c:983
 #, c-format
 msgid "(can host %i live alien)\n"
 msgid_plural "(can host %i live aliens)\n"
 msgstr[0] "(може да поддържа %i жив извънземен)\n"
 msgstr[1] "(може да поддържа %i живи извънземни)\n"
 
-#: client/campaign/cl_transfer.c:999
+#: client/campaign/cl_transfer.c:1000
 msgid "The destination base no longer exists! Transfer cargo are lost, personel got unhired."
 msgstr "Желаната база вече не съществува! Товарът е изгубен, а персонала - разпуснат!"
 
-#: client/campaign/cl_transfer.c:1004
+#: client/campaign/cl_transfer.c:1005
 #, c-format
 msgid "Transport mission ended, unloading cargo in base %s"
 msgstr "Транспортната мисия е завършена. Товара се рзтоварва в база %s"
 
-#: client/campaign/cl_transfer.c:1154
+#: client/campaign/cl_transfer.c:1152
 msgid "No target base selected"
 msgstr "Не е избрана дестинация."
 
-#: client/campaign/cl_transfer.c:1154
+#: client/campaign/cl_transfer.c:1152
 msgid "Please select the target base from the list"
 msgstr "Моля, избери дестинацията от списъка"
 
-#: client/campaign/cl_transfer.c:1343
+#: client/campaign/cl_transfer.c:1341
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Може да извършиш трансфера - базата има Склад.\n"
 
-#: client/campaign/cl_transfer.c:1346
+#: client/campaign/cl_transfer.c:1344
 msgid "No Storage in this base.\n"
 msgstr "В тази база няма Склад.\n"
 
-#: client/campaign/cl_transfer.c:1350
+#: client/campaign/cl_transfer.c:1348
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Може да прехвърлиш служители - тази база има Квартири.\n"
 
-#: client/campaign/cl_transfer.c:1352
+#: client/campaign/cl_transfer.c:1350
 msgid "No Living Quarters in this base.\n"
 msgstr "В тази база няма Квартири.\n"
 
-#: client/campaign/cl_transfer.c:1356
+#: client/campaign/cl_transfer.c:1354
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Може да прехвърлиш извънземни - тази база има Изолатор.\n"
 
-#: client/campaign/cl_transfer.c:1358
+#: client/campaign/cl_transfer.c:1356
 msgid "No Alien Containment in this base.\n"
 msgstr "В тази база няма Изолатор.\n"
 
-#: client/campaign/cl_transfer.c:1362
+#: client/campaign/cl_transfer.c:1360
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Може да прехвърлиш антиматерия - базара има циклотрон.\n"
 
-#: client/campaign/cl_transfer.c:1364
+#: client/campaign/cl_transfer.c:1362
 msgid "No Antimatter Storage in this base.\n"
 msgstr "В тази база няма Циклотрон.\n"
 
-#: client/campaign/cl_transfer.c:1368
+#: client/campaign/cl_transfer.c:1366
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Можеш да прехвърлиш самолет - базата има хангар.\n"
 
-#: client/campaign/cl_transfer.c:1370
+#: client/campaign/cl_transfer.c:1368
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Трансфера на самолета е невъзможен - тази база няма Команден център.\n"
 
-#: client/campaign/cl_transfer.c:1372
+#: client/campaign/cl_transfer.c:1370
 msgid "No Hangar in this base.\n"
 msgstr "В тази база няма хангар.\n"
 
-#: client/campaign/cl_transfer.c:1376
+#: client/campaign/cl_transfer.c:1374
 msgid "No power supplies in this base.\n"
 msgstr "В тази база няма захранване.\n"
 
-#: client/campaign/cl_ufo.c:144 client/campaign/cp_aircraft.c:521
+#: client/campaign/cl_ufo.c:144 client/campaign/cp_aircraft.c:522
 msgid "UFO"
 msgstr "НЛО"
 
@@ -12838,239 +12873,239 @@ msgstr "Радара откри ново НЛО"
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Радара загуби проследяването на НЛО"
 
-#: client/campaign/cl_ufopedia.c:168
+#: client/campaign/cl_ufopedia.c:167
 msgid "Assault"
 msgstr "Щурмови"
 
-#: client/campaign/cl_ufopedia.c:171
+#: client/campaign/cl_ufopedia.c:170
 msgid "Sniper"
 msgstr "Снайпери"
 
-#: client/campaign/cl_ufopedia.c:174
+#: client/campaign/cl_ufopedia.c:173
 msgid "Explosive"
 msgstr "Експлозиви"
 
-#: client/campaign/cl_ufopedia.c:177 client/campaign/cl_ufopedia.c:207
+#: client/campaign/cl_ufopedia.c:176 client/campaign/cl_ufopedia.c:206
 msgid "Unknown weapon skill"
 msgstr "Неизвестно умение с оръжия"
 
-#: client/campaign/cl_ufopedia.c:191
+#: client/campaign/cl_ufopedia.c:190
 msgid "Cruising speed"
 msgstr "Стандартна скорост"
 
-#: client/campaign/cl_ufopedia.c:193
+#: client/campaign/cl_ufopedia.c:192
 msgid "Maximum speed"
 msgstr "Максимална скорост"
 
-#: client/campaign/cl_ufopedia.c:197
+#: client/campaign/cl_ufopedia.c:196
 msgid "ECM"
 msgstr "ECM"
 
-#: client/campaign/cl_ufopedia.c:199
+#: client/campaign/cl_ufopedia.c:198
 msgid "Aircraft damage"
 msgstr "Устойчивост"
 
-#: client/campaign/cl_ufopedia.c:201
+#: client/campaign/cl_ufopedia.c:200
 msgid "Accuracy"
 msgstr "Точност"
 
-#: client/campaign/cl_ufopedia.c:203
+#: client/campaign/cl_ufopedia.c:202
 msgid "Fuel size"
 msgstr "Горивен капацитет"
 
-#: client/campaign/cl_ufopedia.c:205
+#: client/campaign/cl_ufopedia.c:204
 msgid "Weapon range"
 msgstr "Обхват на оръжията"
 
-#: client/campaign/cl_ufopedia.c:219
+#: client/campaign/cl_ufopedia.c:218
 msgid "Small"
 msgstr "Малък"
 
-#: client/campaign/cl_ufopedia.c:221
+#: client/campaign/cl_ufopedia.c:220
 msgid "Large"
 msgstr "Голям"
 
-#: client/campaign/cl_ufopedia.c:223
+#: client/campaign/cl_ufopedia.c:222
 msgid "Unknown aircraft size"
 msgstr "Меопределен размер на самолета"
 
-#: client/campaign/cl_ufopedia.c:243
+#: client/campaign/cl_ufopedia.c:242
 msgid "No requirements"
 msgstr "Няма изисквания"
 
-#: client/campaign/cl_ufopedia.c:352 client/campaign/cl_ufopedia.c:406
+#: client/campaign/cl_ufopedia.c:351 client/campaign/cl_ufopedia.c:405
 #, c-format
 msgid "Go to '%s' UFOpaedia entry"
 msgstr "Отиди на раздел '%s' в UFOpaedia"
 
-#: client/campaign/cl_ufopedia.c:421 client/campaign/cl_ufopedia.c:432
-#: client/campaign/cl_ufopedia.c:437 client/campaign/cl_ufopedia.c:443
-#: client/campaign/cl_ufopedia.c:456 client/campaign/cl_ufopedia.c:522
+#: client/campaign/cl_ufopedia.c:420 client/campaign/cl_ufopedia.c:431
+#: client/campaign/cl_ufopedia.c:436 client/campaign/cl_ufopedia.c:442
+#: client/campaign/cl_ufopedia.c:455 client/campaign/cl_ufopedia.c:521
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "Размер:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:424
+#: client/campaign/cl_ufopedia.c:423
 msgid "Type:\tProtection:\n"
 msgstr "Тип:\tЗащита:\n"
 
-#: client/campaign/cl_ufopedia.c:435
+#: client/campaign/cl_ufopedia.c:434
 #, c-format
 msgid "%s weapon with\n"
 msgstr "с %s оръжие\n"
 
-#: client/campaign/cl_ufopedia.c:435 client/campaign/cl_ufopedia.c:441
-#: client/campaign/cl_ufopedia.c:454
+#: client/campaign/cl_ufopedia.c:434 client/campaign/cl_ufopedia.c:440
+#: client/campaign/cl_ufopedia.c:453
 msgid "One-handed"
 msgstr "One-handed"
 
-#: client/campaign/cl_ufopedia.c:435 client/campaign/cl_ufopedia.c:441
-#: client/campaign/cl_ufopedia.c:454
+#: client/campaign/cl_ufopedia.c:434 client/campaign/cl_ufopedia.c:440
+#: client/campaign/cl_ufopedia.c:453
 msgid "Two-handed"
 msgstr "Two-handed"
 
-#: client/campaign/cl_ufopedia.c:438
+#: client/campaign/cl_ufopedia.c:437
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Макс. амуниции:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:441
+#: client/campaign/cl_ufopedia.c:440
 #, c-format
 msgid "%s ammo-less weapon with\n"
 msgstr "с %s оръжие без амуниции\n"
 
-#: client/campaign/cl_ufopedia.c:447
+#: client/campaign/cl_ufopedia.c:446
 msgid "Weapon for base defence system\n"
 msgstr "Оръжие за защитната система на базата\n"
 
-#: client/campaign/cl_ufopedia.c:454
+#: client/campaign/cl_ufopedia.c:453
 #, c-format
 msgid "%s auxiliary equipment with\n"
 msgstr "с %s допълнителна екипировка\n"
 
-#: client/campaign/cl_ufopedia.c:457
+#: client/campaign/cl_ufopedia.c:456
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Действие:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:458 client/campaign/cl_ufopedia.c:483
+#: client/campaign/cl_ufopedia.c:457 client/campaign/cl_ufopedia.c:482
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Време (TUs):\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:459 client/campaign/cl_ufopedia.c:484
+#: client/campaign/cl_ufopedia.c:458 client/campaign/cl_ufopedia.c:483
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Обхват:\t%g\n"
 
-#: client/campaign/cl_ufopedia.c:479
+#: client/campaign/cl_ufopedia.c:478
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "Умение:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:480 client/campaign/cl_ufopedia.c:626
+#: client/campaign/cl_ufopedia.c:479 client/campaign/cl_ufopedia.c:625
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Поражение:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:485
+#: client/campaign/cl_ufopedia.c:484
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "Обсег:\t%g\n"
 
-#: client/campaign/cl_ufopedia.c:491 client/campaign/cl_ufopedia.c:706
-#: client/campaign/cl_ufopedia.c:708 client/campaign/cl_ufopedia.c:749
-#: client/campaign/cl_ufopedia.c:752
+#: client/campaign/cl_ufopedia.c:490 client/campaign/cl_ufopedia.c:705
+#: client/campaign/cl_ufopedia.c:707 client/campaign/cl_ufopedia.c:748
+#: client/campaign/cl_ufopedia.c:751
 msgid "Unknown - need to research this"
 msgstr "Неизвестно - необходимо е проучване"
 
-#: client/campaign/cl_ufopedia.c:527
+#: client/campaign/cl_ufopedia.c:526
 #, c-format
 msgid "%s:\tProtection: %i\n"
 msgstr "%s:\tЗащита: %i\n"
 
-#: client/campaign/cl_ufopedia.c:552
+#: client/campaign/cl_ufopedia.c:551
 msgid "Error - could not find building"
 msgstr "Грешка - сградата не е открита"
 
-#: client/campaign/cl_ufopedia.c:554 client/campaign/cp_base.c:1460
+#: client/campaign/cl_ufopedia.c:553 client/campaign/cp_base.c:1460
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Необходимо:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:555
+#: client/campaign/cl_ufopedia.c:554
 #, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "Време за изграждане:\t%i ден\n"
 msgstr[1] "Време за изграждане:\t%i дни\n"
 
-#: client/campaign/cl_ufopedia.c:556
+#: client/campaign/cl_ufopedia.c:555
 #, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Цена:\t%i c\n"
 
-#: client/campaign/cl_ufopedia.c:557 client/campaign/cp_base.c:1457
+#: client/campaign/cl_ufopedia.c:556 client/campaign/cp_base.c:1457
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Разходи по поддръжка:\t%i c\n"
 
-#: client/campaign/cl_ufopedia.c:620
+#: client/campaign/cl_ufopedia.c:619
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Тегло:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:624
+#: client/campaign/cl_ufopedia.c:623
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Амуниции:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:627
+#: client/campaign/cl_ufopedia.c:626
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Време за презареждане:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:643
+#: client/campaign/cl_ufopedia.c:642
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/campaign/cl_ufopedia.c:645
+#: client/campaign/cl_ufopedia.c:644
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/campaign/cl_ufopedia.c:675
+#: client/campaign/cl_ufopedia.c:674
 msgid "Error - could not find aircraft"
 msgstr "Грешка при откриване на самолета"
 
-#: client/campaign/cl_ufopedia.c:682 client/campaign/cl_ufopedia.c:687
+#: client/campaign/cl_ufopedia.c:681 client/campaign/cl_ufopedia.c:686
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i км/ч\n"
 
-#: client/campaign/cl_ufopedia.c:691
-#: client/campaign/cp_aircraft_callbacks.c:259
+#: client/campaign/cl_ufopedia.c:690
+#: client/campaign/cp_aircraft_callbacks.c:263
 #, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Оперативен обхват:\t%i км\n"
 
-#: client/campaign/cl_ufopedia.c:694
+#: client/campaign/cl_ufopedia.c:693
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:701
+#: client/campaign/cl_ufopedia.c:700
 #, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "Размер на самолета:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:702
+#: client/campaign/cl_ufopedia.c:701
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Макс. войници:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:745
+#: client/campaign/cl_ufopedia.c:744
 #, c-format
 msgid ""
 "%s\n"
@@ -13079,15 +13114,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cl_ufopedia.c:869
+#: client/campaign/cl_ufopedia.c:868
 msgid "Proposal: "
 msgstr "Предложение: "
 
-#: client/campaign/cl_ufopedia.c:872
+#: client/campaign/cl_ufopedia.c:871
 msgid "Re: "
 msgstr "Re: "
 
-#: client/campaign/cl_ufopedia.c:884
+#: client/campaign/cl_ufopedia.c:883
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -13100,50 +13135,50 @@ msgstr ""
 "ДАТА: %s\n"
 "ТЕМА: %s%s\n"
 
-#: client/campaign/cl_ufopedia.c:976
+#: client/campaign/cl_ufopedia.c:975
 msgid "No pre-research description available."
 msgstr "Няма предварително описание."
 
-#: client/campaign/cl_ufopedia.c:1168
+#: client/campaign/cl_ufopedia.c:1167
 msgid "UFOpaedia Content"
 msgstr "Съдържание на UFOpaedia"
 
-#: client/campaign/cl_ufopedia.c:1199
+#: client/campaign/cl_ufopedia.c:1198
 #, c-format
 msgid "UFOpaedia Index: %s"
 msgstr "Индекс в UFOpaedia: %s"
 
-#: client/campaign/cl_ufopedia.c:1627
+#: client/campaign/cl_ufopedia.c:1626
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BПредложение: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1631
+#: client/campaign/cl_ufopedia.c:1630
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Предложение: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1642
+#: client/campaign/cl_ufopedia.c:1641
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1646
+#: client/campaign/cl_ufopedia.c:1645
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Re: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1656 client/campaign/cl_ufopedia.c:1668
+#: client/campaign/cl_ufopedia.c:1655 client/campaign/cl_ufopedia.c:1667
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1660 client/campaign/cl_ufopedia.c:1672
+#: client/campaign/cl_ufopedia.c:1659 client/campaign/cl_ufopedia.c:1671
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1684
+#: client/campaign/cl_ufopedia.c:1683
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
@@ -13178,106 +13213,106 @@ msgstr "Осигурен %s кораб от бойното поле. НЛО-то
 msgid "Secured %s was destroyed."
 msgstr "Осигурения %s кораб беше разрушен."
 
-#: client/campaign/cp_aircraft.c:417
+#: client/campaign/cp_aircraft.c:418
 msgid "ON RED ALERT"
 msgstr "ЧЕРВЕНА ТРЕВОГА"
 
-#: client/campaign/cp_aircraft.c:421
+#: client/campaign/cp_aircraft.c:422
 msgid "Nothing - should not be displayed"
 msgstr "Нищо - не трябва да бъде показвано"
 
-#: client/campaign/cp_aircraft.c:423
+#: client/campaign/cp_aircraft.c:424
 msgid "at home base"
 msgstr "в базата"
 
-#: client/campaign/cp_aircraft.c:425
+#: client/campaign/cp_aircraft.c:426
 msgid "refuelling"
 msgstr "презарежда"
 
-#: client/campaign/cp_aircraft.c:427
+#: client/campaign/cp_aircraft.c:428
 msgid "idle"
 msgstr "чака"
 
-#: client/campaign/cp_aircraft.c:429
+#: client/campaign/cp_aircraft.c:430
 msgid "in transit"
 msgstr "в превоз"
 
-#: client/campaign/cp_aircraft.c:431
+#: client/campaign/cp_aircraft.c:432
 msgid "enroute to mission"
 msgstr "на път за мисия"
 
-#: client/campaign/cp_aircraft.c:433
+#: client/campaign/cp_aircraft.c:434
 msgid "pursuing a UFO"
 msgstr "преследва НЛО"
 
-#: client/campaign/cp_aircraft.c:435
+#: client/campaign/cp_aircraft.c:436
 msgid "ready to drop soldiers"
 msgstr "готов да спусне войниците"
 
-#: client/campaign/cp_aircraft.c:437
+#: client/campaign/cp_aircraft.c:438
 msgid "intercepting a UFO"
 msgstr "пресреща НЛО"
 
-#: client/campaign/cp_aircraft.c:439
+#: client/campaign/cp_aircraft.c:440
 msgid "enroute to new home base"
 msgstr "на път за нова база"
 
-#: client/campaign/cp_aircraft.c:441
+#: client/campaign/cp_aircraft.c:442
 msgid "returning to base"
 msgstr "връща се в базата"
 
-#: client/campaign/cp_aircraft.c:517
+#: client/campaign/cp_aircraft.c:518
 msgid "Interceptor"
 msgstr "Изтребител"
 
-#: client/campaign/cp_aircraft.c:519
+#: client/campaign/cp_aircraft.c:520
 msgid "Transporter"
 msgstr "Транспортер"
 
-#: client/campaign/cp_aircraft.c:723
+#: client/campaign/cp_aircraft.c:724
 #, c-format
 msgid "A new (a %s) class craft is ready in base %s"
 msgstr "Нов (%s) клас самолет е готов в база %s"
 
-#: client/campaign/cp_aircraft.c:789
+#: client/campaign/cp_aircraft.c:790
 msgid "No operational hangars at that base."
 msgstr "Няма работещи хангари в тази база."
 
-#: client/campaign/cp_aircraft.c:793
+#: client/campaign/cp_aircraft.c:794
 msgid "No free hangars at that base."
 msgstr "Няма свободни хангари в тази база"
 
-#: client/campaign/cp_aircraft.c:796
+#: client/campaign/cp_aircraft.c:797
 msgid "Insufficient free crew quarter space at that base."
 msgstr "Недостатъчно свободно място в квартирите в базата."
 
-#: client/campaign/cp_aircraft.c:799
+#: client/campaign/cp_aircraft.c:800
 msgid "Insufficient storage space at that base."
 msgstr "Недостатъчно място в складовете на базата."
 
-#: client/campaign/cp_aircraft.c:803
+#: client/campaign/cp_aircraft.c:804
 msgid "That base is beyond this aircraft's range."
 msgstr "Тази база е извън обсега на самолета."
 
-#: client/campaign/cp_aircraft.c:1181
+#: client/campaign/cp_aircraft.c:1182
 #, c-format
 msgid "Craft %s has refuelled at base %s."
 msgstr "Самолет %s в база %s е презареден."
 
-#: client/campaign/cp_aircraft.c:1189
+#: client/campaign/cp_aircraft.c:1190
 #, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Горивото на %s свършва и трябва да се върне в базата."
 
-#: client/campaign/cp_aircraft.c:1296
+#: client/campaign/cp_aircraft.c:1297
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr "Първо наеми един или повече войници в този самолет."
 
-#: client/campaign/cp_aircraft.c:1320
+#: client/campaign/cp_aircraft.c:1321
 msgid "Insufficient fuel."
 msgstr "Недостатъчно гориво."
 
-#: client/campaign/cp_aircraft_callbacks.c:154
+#: client/campaign/cp_aircraft_callbacks.c:156
 msgid ""
 "No operational Command Centre in this base.\n"
 "\n"
@@ -13287,7 +13322,7 @@ msgstr ""
 "\n"
 "Самолета не може да излети.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:162
+#: client/campaign/cp_aircraft_callbacks.c:164
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
 "\n"
@@ -13297,21 +13332,21 @@ msgstr ""
 "\n"
 "Не може да излети.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:170
+#: client/campaign/cp_aircraft_callbacks.c:172
 msgid "Aircraft started"
 msgstr "Стартиран самолет"
 
-#: client/campaign/cp_aircraft_callbacks.c:261
+#: client/campaign/cp_aircraft_callbacks.c:265
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "Оръжия:\t%i on %i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:262
+#: client/campaign/cp_aircraft_callbacks.c:266
 #, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Броня:\t%i към 1\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:263
+#: client/campaign/cp_aircraft_callbacks.c:267
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "Електроника:\t%i on %i"
@@ -13557,45 +13592,60 @@ msgid "Build a %s first."
 msgstr "Първо построй %s."
 
 #: client/campaign/cp_base_callbacks.c:677
+#: client/campaign/cp_basesummary_callbacks.c:77
 msgid "^BAircraft\n"
 msgstr "^BСамолет\n"
 
 #: client/campaign/cp_base_callbacks.c:684
+#: client/campaign/cp_basesummary_callbacks.c:84
 msgid "^BEmployees\n"
 msgstr "^BСлужители\n"
 
 #: client/campaign/cp_base_callbacks.c:694
+#: client/campaign/cp_basesummary_callbacks.c:94
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr "^BСгради\t\t\t\t\t\tКапацитет\t\t\t\tКоличество\n"
 
 #: client/campaign/cp_base_callbacks.c:715
+#: client/campaign/cp_basesummary_callbacks.c:115
 msgid "day"
 msgid_plural "days"
 msgstr[0] "ден"
 msgstr[1] "дни"
 
 #: client/campaign/cp_base_callbacks.c:725
+#: client/campaign/cp_basesummary_callbacks.c:125
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr "^BПроизводство\t\t\t\t\t\tКоличество\t\t\t\tПроцент\n"
 
 #: client/campaign/cp_base_callbacks.c:736
+#: client/campaign/cp_basesummary_callbacks.c:136
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
 #: client/campaign/cp_base_callbacks.c:740
 #: client/campaign/cp_base_callbacks.c:756
+#: client/campaign/cp_basesummary_callbacks.c:140
+#: client/campaign/cp_basesummary_callbacks.c:156
 msgid "Nothing\n"
 msgstr "Нищо\n"
 
 #: client/campaign/cp_base_callbacks.c:745
+#: client/campaign/cp_basesummary_callbacks.c:145
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr "^BПроучване\t\t\t\t\t\tУчени\t\t\t\tПроцент\n"
 
 #: client/campaign/cp_base_callbacks.c:750
+#: client/campaign/cp_basesummary_callbacks.c:150
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
+
+#: client/campaign/cp_messages.c:44
+#, c-format
+msgid "%i %s %02i, %02i:%02i: "
+msgstr "%i %s %02i, %02i:%02i: "
 
 #: client/campaign/cp_mission_triggers.c:120
 msgid ""
@@ -13661,19 +13711,19 @@ msgid_plural "credits"
 msgstr[0] "кредит"
 msgstr[1] "кредити"
 
-#: client/campaign/cp_nations.c:81 client/cl_game_campaign.c:211
+#: client/campaign/cp_nations.c:81 client/cl_game_campaign.c:213
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "учен"
 msgstr[1] "учени"
 
-#: client/campaign/cp_nations.c:82 client/cl_game_campaign.c:210
+#: client/campaign/cp_nations.c:82 client/cl_game_campaign.c:212
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "войник"
 msgstr[1] "войници"
 
-#: client/campaign/cp_nations.c:83 client/cl_game_campaign.c:212
+#: client/campaign/cp_nations.c:83 client/cl_game_campaign.c:214
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "работник"
@@ -13724,100 +13774,105 @@ msgstr "Платени %i кредити за административни р�
 msgid "Paid %i credits in interest on your debt."
 msgstr "Платени %i кредити по изплащане на дългове."
 
-#: client/campaign/cp_time.c:47
+#: client/campaign/cp_team.c:126
+#, c-format
+msgid "%i of %i"
+msgstr "%i от %i"
+
+#: client/campaign/cp_time.c:48
 msgid "stopped"
 msgstr "спряно"
 
-#: client/campaign/cp_time.c:48
+#: client/campaign/cp_time.c:49
 msgid "5 sec"
 msgstr "5 сек."
 
-#: client/campaign/cp_time.c:49
+#: client/campaign/cp_time.c:50
 msgid "10 sec"
 msgstr "10 сек."
 
-#: client/campaign/cp_time.c:50
+#: client/campaign/cp_time.c:51
 msgid "1 min"
 msgstr "1 мин."
 
-#: client/campaign/cp_time.c:51
+#: client/campaign/cp_time.c:52
 msgid "5 mins"
 msgstr "5 мин."
 
-#: client/campaign/cp_time.c:52
+#: client/campaign/cp_time.c:53
 msgid "10 mins"
 msgstr "10 мин."
 
-#: client/campaign/cp_time.c:53
+#: client/campaign/cp_time.c:54
 msgid "20 mins"
 msgstr "20 мин."
 
-#: client/campaign/cp_time.c:54
+#: client/campaign/cp_time.c:55
 msgid "1 hour"
 msgstr "1 час"
 
-#: client/campaign/cp_time.c:55
+#: client/campaign/cp_time.c:56
 msgid "12 hours"
 msgstr "12 часа"
 
-#: client/campaign/cp_time.c:56
+#: client/campaign/cp_time.c:57
 msgid "1 day"
 msgstr "1 ден"
 
-#: client/campaign/cp_time.c:57
+#: client/campaign/cp_time.c:58
 msgid "5 days"
 msgstr "5 дни"
 
-#: client/campaign/cp_time.c:150
+#: client/campaign/cp_time.c:151
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/campaign/cp_time.c:350
+#: client/campaign/cp_time.c:351
 msgid "Jan"
 msgstr "Януари"
 
-#: client/campaign/cp_time.c:352
+#: client/campaign/cp_time.c:353
 msgid "Feb"
 msgstr "Февруари"
 
-#: client/campaign/cp_time.c:354
+#: client/campaign/cp_time.c:355
 msgid "Mar"
 msgstr "Март"
 
-#: client/campaign/cp_time.c:356
+#: client/campaign/cp_time.c:357
 msgid "Apr"
 msgstr "Април"
 
-#: client/campaign/cp_time.c:358
+#: client/campaign/cp_time.c:359
 msgid "May"
 msgstr "Май"
 
-#: client/campaign/cp_time.c:360
+#: client/campaign/cp_time.c:361
 msgid "Jun"
 msgstr "Юни"
 
-#: client/campaign/cp_time.c:362
+#: client/campaign/cp_time.c:363
 msgid "Jul"
 msgstr "Юли"
 
-#: client/campaign/cp_time.c:364
+#: client/campaign/cp_time.c:365
 msgid "Aug"
 msgstr "Август"
 
-#: client/campaign/cp_time.c:366
+#: client/campaign/cp_time.c:367
 msgid "Sep"
 msgstr "Септември"
 
-#: client/campaign/cp_time.c:368
+#: client/campaign/cp_time.c:369
 msgid "Oct"
 msgstr "Октомври"
 
-#: client/campaign/cp_time.c:370
+#: client/campaign/cp_time.c:371
 msgid "Nov"
 msgstr "Ноември"
 
-#: client/campaign/cp_time.c:372
+#: client/campaign/cp_time.c:373
 msgid "Dec"
 msgstr "Декември"
 
@@ -13836,92 +13891,92 @@ msgstr "База '%s' е атакувана - може да влезеш в ба
 msgid "Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"
 msgstr "База '%s' е атакувана - може да влезеш в базата и да екипираш войниците или да убиеш извънземните в изолатора. Какво ще правиш?"
 
-#: client/cl_actor.c:167
+#: client/cl_actor.c:168
 msgid "Poor"
 msgstr "Бедно"
 
-#: client/cl_actor.c:169
+#: client/cl_actor.c:170
 msgid "Mediocre"
 msgstr "Слабо"
 
-#: client/cl_actor.c:171
+#: client/cl_actor.c:172
 msgid "Average"
 msgstr "Средно"
 
-#: client/cl_actor.c:173
+#: client/cl_actor.c:174
 msgid "Competent"
 msgstr "Компетентно"
 
-#: client/cl_actor.c:175
+#: client/cl_actor.c:176
 msgid "Proficient"
 msgstr "Опитно"
 
-#: client/cl_actor.c:177
+#: client/cl_actor.c:178
 msgid "Very Good"
 msgstr "Много добро"
 
-#: client/cl_actor.c:179
+#: client/cl_actor.c:180
 msgid "Highly Proficient"
 msgstr "Експертно"
 
-#: client/cl_actor.c:183
+#: client/cl_actor.c:184
 msgid "Outstanding"
 msgstr "Изключително"
 
-#: client/cl_actor.c:186
+#: client/cl_actor.c:187
 msgid "Superhuman"
 msgstr "Супер човешко"
 
-#: client/cl_actor.c:205 client/cl_actor.c:208
+#: client/cl_actor.c:206 client/cl_actor.c:209
 msgid "Crouch walk"
 msgstr "Клекнал ход"
 
-#: client/cl_actor.c:207
+#: client/cl_actor.c:208
 msgid "Walk"
 msgstr "Ходене"
 
-#: client/cl_actor.c:262
+#: client/cl_actor.c:278
 #, c-format
 msgid "Rank: %s"
 msgstr "Ранг: %s"
 
-#: client/cl_actor.c:855
+#: client/cl_actor.c:871
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "Оставащи TUs: %i"
 
-#: client/cl_actor.c:857
+#: client/cl_actor.c:873
 msgid "No remaining TUs left after shot."
 msgstr "Не са останали TUs след стрелба."
 
-#: client/cl_actor.c:862
+#: client/cl_actor.c:878
 #, c-format
 msgid "TU: %i"
 msgstr "TU: %i"
 
-#: client/cl_actor.c:864
+#: client/cl_actor.c:880
 #, fuzzy, c-format
 msgid "Shots: %i"
 msgstr "Изстрели:%i"
 
-#: client/cl_actor.c:956
+#: client/cl_actor.c:972
 msgid "[0 TU] No reservation"
 msgstr "[0 TU] Няма резервирани"
 
-#: client/cl_actor.c:979
+#: client/cl_actor.c:995
 #, c-format
 msgid "[%i TU] %s - %s"
 msgstr "[%i TU] %s - %s"
 
-#: client/cl_actor.c:1020
+#: client/cl_actor.c:1036
 msgid "Reserve TUs for firing/using."
 msgstr "Резервирай TUs стрелба/действие."
 
-#: client/cl_actor.c:1020
+#: client/cl_actor.c:1036
 msgid "Shot Reservation"
 msgstr "Резервиране за стрелба"
 
-#: client/cl_actor.c:1556 client/cl_actor.c:1910
+#: client/cl_actor.c:1572 client/cl_actor.c:1926
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -13929,25 +13984,25 @@ msgstr ""
 "Действието невъзможно:\n"
 "недостатъчни TUs.\n"
 
-#: client/cl_actor.c:1625
+#: client/cl_actor.c:1641
 msgid "Not enough TUs for standing up."
 msgstr "Няма достатъчни TUs за изправяне."
 
-#: client/cl_actor.c:1628
+#: client/cl_actor.c:1644
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "Стани (%i TU)"
 
-#: client/cl_actor.c:1634
+#: client/cl_actor.c:1650
 msgid "Not enough TUs for crouching."
 msgstr "Недостатъчни TUs за навеждане."
 
-#: client/cl_actor.c:1637
+#: client/cl_actor.c:1653
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "Клекни (%i TU)"
 
-#: client/cl_actor.c:1645
+#: client/cl_actor.c:1661
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -13956,16 +14011,16 @@ msgstr ""
 "%i TUs резервирани за клякане/ставане.\n"
 "Кликни за изчистване."
 
-#: client/cl_actor.c:1648
+#: client/cl_actor.c:1664
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Резервирай %i TUs за клякане/ставане."
 
-#: client/cl_actor.c:1651
+#: client/cl_actor.c:1667
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Няма достатъчно TUs за резервиране на клякане/ставане."
 
-#: client/cl_actor.c:1657
+#: client/cl_actor.c:1673
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -13976,32 +14031,32 @@ msgstr ""
 "Кликни за промяна.\n"
 "Десен клик за изчистване."
 
-#: client/cl_actor.c:1660
+#: client/cl_actor.c:1676
 msgid "Reserve TUs for shooting."
 msgstr "Резервирай TUs за стрелба"
 
-#: client/cl_actor.c:1663
+#: client/cl_actor.c:1679
 msgid "Reserving TUs for shooting not possible."
 msgstr "Резервиране на TUs за стрелба е невъзможно."
 
-#: client/cl_actor.c:1733
+#: client/cl_actor.c:1749
 msgid "No reload possible for right hand."
 msgstr "Невъзможно презареждане за дясната ръка."
 
-#: client/cl_actor.c:1736 client/cl_actor.c:1746
+#: client/cl_actor.c:1752 client/cl_actor.c:1762
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Презареди оръжието (%i TU)."
 
-#: client/cl_actor.c:1743
+#: client/cl_actor.c:1759
 msgid "No reload possible for left hand."
 msgstr "Невъзможно презареждане за лявата ръка."
 
-#: client/cl_actor.c:1873
+#: client/cl_actor.c:1889
 msgid "No item in hand.\n"
 msgstr "Няма нищо в ръката.\n"
 
-#: client/cl_actor.c:1886
+#: client/cl_actor.c:1902
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -14009,7 +14064,7 @@ msgstr ""
 "Действието невъзможно:\n"
 "недостатъчно амуниции.\n"
 
-#: client/cl_actor.c:1891
+#: client/cl_actor.c:1907
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -14017,7 +14072,7 @@ msgstr ""
 "Това оръжие не може да бъде\n"
 "ползвано с една ръка.\n"
 
-#: client/cl_actor.c:1900
+#: client/cl_actor.c:1916
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -14025,7 +14080,7 @@ msgstr ""
 "Действието невъзможно:\n"
 "устройството не е презареждаемо.\n"
 
-#: client/cl_actor.c:1905
+#: client/cl_actor.c:1921
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -14033,7 +14088,7 @@ msgstr ""
 "Действието невъзможно:\n"
 "няма амуниции.\n"
 
-#: client/cl_actor.c:1977
+#: client/cl_actor.c:1993
 #, c-format
 msgid ""
 "Time Units\n"
@@ -14046,17 +14101,17 @@ msgstr ""
 "- Резервирани:  %i\n"
 "- Оставащи: %i\n"
 
-#: client/cl_actor.c:2094
+#: client/cl_actor.c:2110
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "Морал  %i | Резервирани TUs: %i\n"
 
-#: client/cl_actor.c:2096
+#: client/cl_actor.c:2112
 #, c-format
 msgid "Morale  %i"
 msgstr "Морал %i"
 
-#: client/cl_actor.c:2104
+#: client/cl_actor.c:2120
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -14065,7 +14120,7 @@ msgstr ""
 "Морал  %i | Резервирани TUs: %i\n"
 "%s %i (%i|%i TU остават)\n"
 
-#: client/cl_actor.c:2108
+#: client/cl_actor.c:2124
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -14074,7 +14129,7 @@ msgstr ""
 "Морал  %i\n"
 "%s %i (%i TU остават)\n"
 
-#: client/cl_actor.c:2129
+#: client/cl_actor.c:2145
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -14082,7 +14137,7 @@ msgstr ""
 "Не можеш да използваш неразпознато устройство.\n"
 "Първо трябва да го проучиш.\n"
 
-#: client/cl_actor.c:2146
+#: client/cl_actor.c:2162
 #, c-format
 msgid ""
 "%s\n"
@@ -14091,19 +14146,19 @@ msgstr ""
 "%s\n"
 "(празно)\n"
 
-#: client/cl_actor.c:2155
+#: client/cl_actor.c:2171
 msgid "Currently panics!\n"
 msgstr "Изпада в паника!\n"
 
-#: client/cl_actor.c:2623
+#: client/cl_actor.c:2639
 msgid "Nobody selected\n"
 msgstr "Никой не е избран\n"
 
-#: client/cl_actor.c:2633
+#: client/cl_actor.c:2649
 msgid "This isn't your round\n"
 msgstr "Не е твой ред\n"
 
-#: client/cl_actor.c:2890
+#: client/cl_actor.c:2906
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -14111,65 +14166,65 @@ msgstr ""
 "Не може да презареждаш неразпознато устройство.\n"
 "Първо трябва да проучиш него и амунициите му.\n"
 
-#: client/cl_actor.c:3690
+#: client/cl_actor.c:3706
 #, c-format
 msgid "%s %s was stunned\n"
 msgstr "%s %s беше зашеметен\n"
 
-#: client/cl_actor.c:3694
+#: client/cl_actor.c:3710
 #, c-format
 msgid "%s %s was killed\n"
 msgstr "%s %s беше убит\n"
 
-#: client/cl_actor.c:3702
+#: client/cl_actor.c:3718
 msgid "A civilian was stunned.\n"
 msgstr "Зашеметен цивилен.\n"
 
-#: client/cl_actor.c:3704
+#: client/cl_actor.c:3720
 msgid "A civilian was killed.\n"
 msgstr "Убит цивилен.\n"
 
-#: client/cl_actor.c:3710
+#: client/cl_actor.c:3726
 #, c-format
 msgid "An alien was stunned: %s\n"
 msgstr "Зашеметен извънземен: %s\n"
 
-#: client/cl_actor.c:3713
+#: client/cl_actor.c:3729
 #, c-format
 msgid "An alien was killed: %s\n"
 msgstr "Убит извънземен: %s\n"
 
-#: client/cl_actor.c:3718 client/cl_actor.c:3724
+#: client/cl_actor.c:3734 client/cl_actor.c:3740
 msgid "An alien was stunned.\n"
 msgstr "Зашеметен извънземен.\n"
 
-#: client/cl_actor.c:3720 client/cl_actor.c:3726
+#: client/cl_actor.c:3736 client/cl_actor.c:3742
 msgid "An alien was killed.\n"
 msgstr "Убит извънземен.\n"
 
-#: client/cl_actor.c:3731
+#: client/cl_actor.c:3747
 msgid "A soldier was stunned.\n"
 msgstr "Зашеметен войник.\n"
 
-#: client/cl_actor.c:3733
+#: client/cl_actor.c:3749
 msgid "A soldier was killed.\n"
 msgstr "Убит войник.\n"
 
-#: client/cl_actor.c:3737
+#: client/cl_actor.c:3753
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Член на екип %i е зашеметен.\n"
 
-#: client/cl_actor.c:3739
+#: client/cl_actor.c:3755
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Член на екип %i е убит.\n"
 
-#: client/cl_actor.c:3923
+#: client/cl_actor.c:3939
 msgid "Your round started!\n"
 msgstr "Ти си на ход!\n"
 
-#: client/cl_actor.c:4686
+#: client/cl_actor.c:4705
 msgid "Unknown alien race"
 msgstr "Неразпозната извънземна раса"
 
@@ -14185,35 +14240,31 @@ msgstr "Изпрати съобщение на всички играчи."
 msgid "Send a message to allied team members"
 msgstr "Изпрати съобщение на всички съюзнически отбори"
 
-#: client/cl_game_campaign.c:123
+#: client/cl_game_campaign.c:125
 msgid "Chicken-hearted"
 msgstr "Елементарно"
 
-#: client/cl_game_campaign.c:125
+#: client/cl_game_campaign.c:127
 msgid "Very Easy"
 msgstr "Много лесно"
 
-#: client/cl_game_campaign.c:128
+#: client/cl_game_campaign.c:130
 msgid "Easy"
 msgstr "Лесно"
 
-#: client/cl_game_campaign.c:133
+#: client/cl_game_campaign.c:135
 msgid "Hard"
 msgstr "Трудно"
 
-#: client/cl_game_campaign.c:135
+#: client/cl_game_campaign.c:137
 msgid "Very Hard"
 msgstr "Много трудно"
 
-#: client/cl_game_campaign.c:137
+#: client/cl_game_campaign.c:139
 msgid "Insane"
 msgstr "Безумно трудно"
 
-#: client/cl_game_campaign.c:201
-msgid "Human"
-msgstr "Човешки"
-
-#: client/cl_game_campaign.c:205
+#: client/cl_game_campaign.c:207
 #, c-format
 msgid ""
 "%s\n"
@@ -14236,17 +14287,17 @@ msgstr ""
 "Макс. позволени дългове: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:313
+#: client/cl_game_campaign.c:315
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Убити извънземни\t%i\n"
 
-#: client/cl_game_campaign.c:316
+#: client/cl_game_campaign.c:318
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Заловени извънземни\t%i\n"
 
-#: client/cl_game_campaign.c:317
+#: client/cl_game_campaign.c:319
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -14255,22 +14306,22 @@ msgstr ""
 "Оцелели извънземни\t%i\n"
 "\n"
 
-#: client/cl_game_campaign.c:320
+#: client/cl_game_campaign.c:322
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Войници на PHALANX, убити от извънземни\t%i\n"
 
-#: client/cl_game_campaign.c:321
+#: client/cl_game_campaign.c:323
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Войници на PHALANX, изгубени на бойното поле\t%i\n"
 
-#: client/cl_game_campaign.c:322
+#: client/cl_game_campaign.c:324
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Загуби на PHALANX от приятелски огън\t%i\n"
 
-#: client/cl_game_campaign.c:323
+#: client/cl_game_campaign.c:325
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -14279,17 +14330,17 @@ msgstr ""
 "Оцелели войници на PHALANX\t%i\n"
 "\n"
 
-#: client/cl_game_campaign.c:325
+#: client/cl_game_campaign.c:327
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Цивилни, убити от извънземни\t%i\n"
 
-#: client/cl_game_campaign.c:326
+#: client/cl_game_campaign.c:328
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Цивилни, убити от приятелски огън\t%i\n"
 
-#: client/cl_game_campaign.c:327
+#: client/cl_game_campaign.c:329
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -14298,12 +14349,12 @@ msgstr ""
 "Спасени цивилни\t%i\n"
 "\n"
 
-#: client/cl_game_campaign.c:328
+#: client/cl_game_campaign.c:330
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Събрани оръжия (видове/общо)\t%i/%i\n"
 
-#: client/cl_game_campaign.c:346
+#: client/cl_game_campaign.c:348
 #, c-format
 msgid ""
 "\n"
@@ -14312,7 +14363,7 @@ msgstr ""
 "\n"
 "Обезопасени катастрофирали %s\n"
 
-#: client/cl_game_campaign.c:348
+#: client/cl_game_campaign.c:350
 #, c-format
 msgid ""
 "\n"
@@ -14517,7 +14568,7 @@ msgstr "Превключва мащабиращия режим (пълен ил�
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Избери first-person или third-person режим на камерата"
 
-#: client/cl_irc.c:1220
+#: client/cl_irc.c:1222
 msgid "Server closed connection"
 msgstr "Сървъра затвори връзката"
 
@@ -14525,128 +14576,122 @@ msgstr "Сървъра затвори връзката"
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:545
+#: client/cl_main.c:544
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Версията на тази игра (%s) е различна от версията на сървъра"
 
-#: client/cl_main.c:551
+#: client/cl_main.c:550
 msgid "Local map version differs from server"
 msgstr "Верията на локалната карта е различна от тази на сървъра"
 
-#: client/cl_main.c:557
+#: client/cl_main.c:556
 msgid "Script files are not the same"
 msgstr "Скриптовите файлове не са същите"
 
-#: client/cl_main.c:564
+#: client/cl_main.c:563
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Версията на тази игра (%s) е различна от версията на сървъра (%s)"
 
-#: client/cl_main.c:1163
+#: client/cl_main.c:1161
 msgid "Target your shot to the ground"
 msgstr "Насочи изстрела към земята"
 
-#: client/cl_main.c:1164
+#: client/cl_main.c:1162
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Отвори инвентара на войниците докато сме на мисия"
 
-#: client/cl_main.c:1293 client/cl_view.c:277
+#: client/cl_main.c:1291 client/cl_view.c:277
 msgid "Awaiting game start"
 msgstr "Изчакване за старт"
 
-#: client/cl_main.c:1347
+#: client/cl_main.c:1345
 msgid "Custom"
 msgstr "Потребителски"
 
-#: client/cl_messages.c:72
-#, c-format
-msgid "%i %s %02i, %02i:%02i: "
-msgstr "%i %s %02i, %02i:%02i: "
-
-#: client/cl_parse.c:849
+#: client/cl_parse.c:848
 msgid "You've ended your round\n"
 msgstr "Твоя ход завърши\n"
 
-#: client/cl_parse.c:856
+#: client/cl_parse.c:851
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr "%s завърши хода си (отбор %i)\n"
 
-#: client/cl_parse.c:1049
+#: client/cl_parse.c:1176
 #, c-format
 msgid "Alien spotted: %s!"
 msgstr "Забелязан извънземен: %s!"
 
-#: client/cl_parse.c:1052 client/cl_parse.c:1054
+#: client/cl_parse.c:1179 client/cl_parse.c:1181
 msgid "Alien spotted!\n"
 msgstr "Забелязан извънземен!\n"
 
-#: client/cl_parse.c:1056
+#: client/cl_parse.c:1183
 msgid "Enemy spotted!\n"
 msgstr "Забелязан враг!\n"
 
-#: client/cl_parse.c:1058
+#: client/cl_parse.c:1185
 msgid "Civilian spotted!\n"
 msgstr "Забелязан цивилен!\n"
 
-#: client/cl_parse.c:1740
+#: client/cl_parse.c:1867
 msgid "The server has disconnected.\n"
 msgstr "Сървъра се разкачи.\n"
 
-#: client/cl_screen.c:158
+#: client/cl_screen.c:159
 #, c-format
 msgid "Downloading [%s]"
 msgstr "Сваляне [%s]"
 
-#: client/cl_screen.c:197
+#: client/cl_screen.c:198
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "Въвеждане на картата [%s]"
 
-#: client/cl_team.c:53
+#: client/cl_team.c:47 client/cl_team.c:289
 msgid "Urban"
 msgstr "Градски"
 
-#: client/cl_team.c:56
+#: client/cl_team.c:49 client/cl_team.c:290
 msgid "Jungle"
 msgstr "Джунгла"
 
-#: client/cl_team.c:59
+#: client/cl_team.c:51 client/cl_team.c:291
 msgid "Desert"
 msgstr "Пустиня"
 
-#: client/cl_team.c:62
+#: client/cl_team.c:53 client/cl_team.c:292
 msgid "Arctic"
 msgstr "Полярен"
 
-#: client/cl_team.c:65
+#: client/cl_team.c:55 client/cl_team.c:293
 msgid "Yellow"
 msgstr "Жълт"
 
-#: client/cl_team.c:68
+#: client/cl_team.c:57 client/cl_team.c:294
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/cl_team.c:960
-#, c-format
-msgid "%i of %i"
-msgstr "%i от %i"
-
-#: client/cl_team.c:1183
+#: client/cl_team.c:639
 msgid "Select a soldier from list"
 msgstr "Избери войник от списъка"
 
-#: client/cl_team.c:1184
+#: client/cl_team.c:640
 msgid "Reselect the current soldier"
 msgstr "Преизбери текущия войник"
 
-#: client/cl_team.c:1185 client/cl_team.c:1186
+#: client/cl_team.c:641
 #, fuzzy
 msgid "Update a soldier"
 msgstr "Преименувай войника"
 
-#: client/cl_team.c:1187
+#: client/cl_team.c:642
+msgid "Update the GUI with the selected item"
+msgstr ""
+
+#: client/cl_team.c:643
 msgid "Toggle to next soldier"
 msgstr "Мини на следващия войник"
 
@@ -14659,15 +14704,15 @@ msgstr "зареждане %s"
 msgid "loading models..."
 msgstr "зареждане на моделите..."
 
-#: client/menu/m_input.c:41
+#: client/menu/m_input.c:42
 msgid "This change requires a restart"
 msgstr "Тази промяна изисква рестарт"
 
-#: client/menu/m_input.c:43
+#: client/menu/m_input.c:44
 msgid "This change might require a restart"
 msgstr "Тази промяна може да изисква рестарт"
 
-#: client/menu/m_main.c:867
+#: client/menu/m_main.c:877
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Скрии HUD-а (натисни ESC за да реактивираш HUD-а)"
 
@@ -14676,31 +14721,38 @@ msgstr "Скрии HUD-а (натисни ESC за да реактивираш H
 msgid "Key: %s"
 msgstr "Клавиш: %s"
 
-#: client/menu/node/m_node_container.c:312
-#: client/menu/node/m_node_container.c:317
+#: client/menu/node/m_node_base.c:191
+#, c-format
+msgid "%i day left"
+msgid_plural "%i days left"
+msgstr[0] "Остава %i ден"
+msgstr[1] "Остават %i дни"
+
+#: client/menu/node/m_node_container.c:313
+#: client/menu/node/m_node_container.c:318
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "Амуниции: %i\n"
 
-#: client/menu/node/m_node_container.c:316
+#: client/menu/node/m_node_container.c:317
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s заредени\n"
 
-#: client/menu/node/m_node_container.c:323
+#: client/menu/node/m_node_container.c:324
 msgid "Usable in:\n"
 msgstr "Използваеми в:\n"
 
-#: client/menu/node/m_node_container.c:364
+#: client/menu/node/m_node_container.c:365
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Вътре: %i Отвън: %i"
 
-#: client/menu/node/m_node_window.c:120
+#: client/menu/node/m_node_window.c:121
 msgid "Drag to move window"
 msgstr "Влачи, за да преместваш прозореца"
 
-#: client/menu/node/m_node_window.c:137
+#: client/menu/node/m_node_window.c:138
 msgid "Close the window"
 msgstr "Затвори прозореца"
 
@@ -14996,6 +15048,15 @@ msgstr "Свободен"
 msgid "Playing"
 msgstr ""
 
+#~ msgid "Equip"
+#~ msgstr "Екипиране"
+
+#~ msgid "Race:"
+#~ msgstr "Раса:"
+
+#~ msgid "Use current skin with every soldier aboard"
+#~ msgstr "Използвай текущия екип за всеки войник на борда."
+
 #~ msgid "Assign Soldiers"
 #~ msgstr "Наеми войници"
 
@@ -15046,11 +15107,6 @@ msgstr ""
 
 #~ msgid "Please choose and equip your team first"
 #~ msgstr "Първо избери и екипирай отбора си"
-
-#~ msgid "%i day left"
-#~ msgid_plural "%i days left"
-#~ msgstr[0] "Остава %i ден"
-#~ msgstr[1] "Остават %i дни"
 
 #~ msgid "Action"
 #~ msgstr "Действие"

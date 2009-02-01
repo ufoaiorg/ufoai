@@ -36,7 +36,7 @@ update-po-radiant: po-check
 # The idea is to run this before making pretests, as well as official
 # releases, so that
 po-check:
-	@cd src \
+	@cd src; \
 	if test -f ./po/POTFILES.in; then					\
 	  grep -E -v '^(#|$$)' ./po/POTFILES.in				\
 	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
@@ -54,7 +54,7 @@ po-check:
 	  done;								\
 	  grep -E -l '\b(N?_|gettext|ngettext *)\([^)"]*("|$$)' $$files		\
 	    | sort -u > ./po/POTFILES.in;						\
-	fi \
+	fi; \
 	cd ..
 
 po-sync:
