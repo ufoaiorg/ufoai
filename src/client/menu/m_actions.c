@@ -259,7 +259,12 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, const menu_t* me
 
 	case EA_IF:
 		if (MN_CheckCondition((menuDepends_t *) action->data)) {
-			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
+			/** @todo while menu and node are not merged, we need duplication like that */
+			if (source == NULL) {
+				MN_ExecuteActions(menu, (const menuAction_t* const) action->scriptValues);
+			} else {
+				MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
+			}
 		}
 		break;
 
