@@ -890,6 +890,7 @@ static const value_t od_vals[] = {
 	{"rating", V_NULL, 0, 0},
 
 	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
+	{"armourpath", V_STRING, offsetof(objDef_t, armourPath), 0},
 	{"model", V_STRING, offsetof(objDef_t, model), 0},
 	{"image", V_STRING, offsetof(objDef_t, image), 0},
 	{"type", V_STRING, offsetof(objDef_t, type), 0},

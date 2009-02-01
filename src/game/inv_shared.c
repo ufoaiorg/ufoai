@@ -1910,24 +1910,18 @@ static char CHRSH_returnModel[MAX_VAR];
  */
 char *CHRSH_CharGetBody (const character_t * const chr)
 {
-	char id[MAX_VAR];
-	char *underline;
-
-	assert(chr);
-
 	/* models of UGVs don't change - because they are already armoured */
+	/** @todo ACTOR_SIZE_NORMAL should not be an indicator for a soldier */
 	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
-		assert(!Q_strcmp(chr->inv.c[CSI->idArmour]->item.t->type, "armour"));
-
-		/* check for the underline */
-		Q_strncpyz(id, chr->inv.c[CSI->idArmour]->item.t->id, sizeof(id));
-		underline = strchr(id, '_');
-		if (underline)
-			*underline = '\0';
+		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
+		const char *id = od->armourPath;
+		if (Q_strcmp(od->type, "armour"))
+			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->body);
 	} else
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s/%s", chr->path, chr->body);
+	Com_DPrintf(DEBUG_SHARED, "CHRSH_CharGetBody: use '%s' as model path for character\n", CHRSH_returnModel);
 	return CHRSH_returnModel;
 }
 

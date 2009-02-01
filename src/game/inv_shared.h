@@ -236,6 +236,7 @@ typedef struct objDef_s {
 	char model[MAX_VAR];		/**< Model name - relative to game dir. */
 	char image[MAX_VAR];		/**< Object image file - relative to game dir. */
 	char type[MAX_VAR];		/**< melee, rifle, ammo, armour. e.g. used in the ufopedia */
+	char armourPath[MAX_VAR];
 	char extends_item[MAX_VAR];
 	uint32_t shape;			/**< The shape in inventory. */
 

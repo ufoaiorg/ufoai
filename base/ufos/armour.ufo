@@ -72,6 +72,7 @@ item armour_light
 	scale		0.7
 	price		1400
 	size		60
+	armourpath	"light"
 	useable		phalanx
 	//TODO: TU penalty value. No support for this yet.
 
@@ -134,6 +135,7 @@ item armour_lightadv
 	price		1600
 	size		60
 	useable		phalanx
+	armourpath	"lightadv"
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -195,6 +197,7 @@ item armour_medium
 	price		7500
 	size		120
 	useable		phalanx
+	armourpath	"medium"
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -256,6 +259,7 @@ item armour_power
 	price		32000
 	size		150
 	useable		phalanx
+	armourpath	"power"
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -315,6 +319,7 @@ item armour_power
 //	scale		0.7
 //	price		32000
 //	useable		phalanx
+//	armourpath	"medium2"
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -372,6 +377,7 @@ item armour_power
 //	scale		0.7
 //	price		32000
 //	useable		phalanx
+//	armourpath	"power2"
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -429,6 +435,7 @@ item armour_power
 //	scale		0.7
 //	price		32000
 //	useable		phalanx
+//	armourpath	"power3"
 //	//TODO: TU penalty value. No support for this yet.
 //
 //	protection {
@@ -491,6 +498,7 @@ item armour_light_alien
 	price		1400
 	size		50
 	useable		alien
+	armourpath	"light"
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
@@ -551,6 +559,7 @@ item armour_medium_alien
 	price		7500
 	size		75
 	useable		alien
+	armourpath	"medium"
 	//TODO: TU penalty value. No support for this yet.
 
 	protection {
