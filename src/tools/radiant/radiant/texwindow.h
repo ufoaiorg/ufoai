@@ -32,7 +32,7 @@ class TextureBrowser;
 TextureBrowser& GlobalTextureBrowser();
 
 typedef struct _GtkWindow GtkWindow;
-GtkWidget* TextureBrowser_constructWindow(GtkWindow* toplevel);
+GtkWidget* TextureBrowser_constructWindow(GtkWindow* toplevel, bool applySizeAndPosition);
 void TextureBrowser_destroyWindow();
 
 

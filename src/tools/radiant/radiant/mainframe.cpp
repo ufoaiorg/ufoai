@@ -2049,7 +2049,7 @@ void MainFrame::Create (void)
 				gtk_paned_add1(GTK_PANED(vsplit2), GTK_WIDGET(camera_window));
 
 				// textures
-				GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructWindow(window));
+				GtkFrame* texture_window = create_framed_widget(TextureBrowser_constructWindow(window,false));
 				gtk_paned_add2(GTK_PANED(vsplit2), GTK_WIDGET(texture_window));
 			}
 		}
@@ -2097,7 +2097,7 @@ void MainFrame::Create (void)
 		window_connect_focus_in_clear_focus_widget(g_window_textures);
 		GtkWidget *textureBox = gtk_hbox_new(FALSE, 0);
 		gtk_container_add(GTK_CONTAINER(g_window_textures), GTK_WIDGET(textureBox));
-		GtkWidget *table = TextureBrowser_constructWindow(g_window_textures);
+		GtkWidget *table = TextureBrowser_constructWindow(g_window_textures,true);
 		gtk_box_pack_start(GTK_BOX(textureBox), GTK_WIDGET(table), TRUE, TRUE, 2);
 		gtk_widget_show_all(textureBox);
 
@@ -2107,6 +2107,7 @@ void MainFrame::Create (void)
 
 		// set height of the upper split view (seperates the 4 views and the console)
 		gtk_paned_set_position(GTK_PANED(m_vSplit), g_layout_globals.nXYHeight);
+
 		break;
 	}
 	default:

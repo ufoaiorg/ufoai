@@ -1227,13 +1227,14 @@ static GtkMenuItem* TextureBrowser_constructToolsMenu (GtkMenu* menu)
 	return textures_menu_item;
 }
 
-GtkWidget* TextureBrowser_constructWindow (GtkWindow* toplevel)
+GtkWidget* TextureBrowser_constructWindow (GtkWindow* toplevel, bool applySizeAndPosition)
 {
 	GlobalShaderSystem().setActiveShadersChangedNotify(ReferenceCaller<TextureBrowser,
 			TextureBrowser_activeShadersChanged> (g_TextureBrowser));
 
 	g_TextureBrowser.m_parent = toplevel;
-	g_TextureBrowser.m_position_tracker.connect(toplevel);
+	if (applySizeAndPosition)
+		g_TextureBrowser.m_position_tracker.connect(toplevel);
 
 	GtkWidget* table = gtk_table_new(3, 3, FALSE);
 	GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
@@ -1262,49 +1263,61 @@ GtkWidget* TextureBrowser_constructWindow (GtkWindow* toplevel)
 		gtk_container_set_border_width(GTK_CONTAINER(g_TextureBrowser.m_scr_win_tree), 0);
 
 		// vertical only scrolling for treeview
-				gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(g_TextureBrowser.m_scr_win_tree), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(g_TextureBrowser.m_scr_win_tree), GTK_POLICY_NEVER,
+				GTK_POLICY_ALWAYS);
 
-				gtk_widget_show(g_TextureBrowser.m_scr_win_tree);
+		gtk_widget_show(g_TextureBrowser.m_scr_win_tree);
 
-				TextureBrowser_createTreeViewTree();
+		TextureBrowser_createTreeViewTree();
 
-				gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(g_TextureBrowser.m_scr_win_tree), GTK_WIDGET(g_TextureBrowser.m_treeViewTree));
-				gtk_widget_show(GTK_WIDGET(g_TextureBrowser.m_treeViewTree));
-			}
-			{ // gl_widget scrollbar
-					GtkWidget* w = gtk_vscrollbar_new(GTK_ADJUSTMENT(gtk_adjustment_new (0, 0, 0, 1, 1, 1)));
-					gtk_table_attach(GTK_TABLE (table), w, 2, 3, 1, 2, GTK_SHRINK, GTK_FILL, 0, 0);
-					gtk_widget_show(w);
-					g_TextureBrowser.m_texture_scroll = w;
+		gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(g_TextureBrowser.m_scr_win_tree), GTK_WIDGET(
+				g_TextureBrowser.m_treeViewTree));
+		gtk_widget_show(GTK_WIDGET(g_TextureBrowser.m_treeViewTree));
+	}
+	{ // gl_widget scrollbar
+		GtkWidget* w = gtk_vscrollbar_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 0, 1, 1, 1)));
+		gtk_table_attach(GTK_TABLE(table), w, 2, 3, 1, 2, GTK_SHRINK, GTK_FILL, 0, 0);
+		gtk_widget_show(w);
+		g_TextureBrowser.m_texture_scroll = w;
 
-					GtkAdjustment *vadjustment = gtk_range_get_adjustment (GTK_RANGE (g_TextureBrowser.m_texture_scroll));
-					g_signal_connect(G_OBJECT(vadjustment), "value_changed", G_CALLBACK(TextureBrowser_verticalScroll), &g_TextureBrowser);
+		GtkAdjustment *vadjustment = gtk_range_get_adjustment(GTK_RANGE(g_TextureBrowser.m_texture_scroll));
+		g_signal_connect(G_OBJECT(vadjustment), "value_changed", G_CALLBACK(TextureBrowser_verticalScroll),
+				&g_TextureBrowser);
 
-					widget_set_visible(g_TextureBrowser.m_texture_scroll, g_TextureBrowser.m_showTextureScrollbar);
-				}
-				{ // gl_widget
-					g_TextureBrowser.m_gl_widget = glwidget_new(FALSE);
-					// TODO: store these values in the config file and reuse them
-					gtk_widget_set_size_request(GTK_WIDGET(g_TextureBrowser.m_gl_widget), 800, 600);
-					gtk_widget_ref(g_TextureBrowser.m_gl_widget);
+		widget_set_visible(g_TextureBrowser.m_texture_scroll, g_TextureBrowser.m_showTextureScrollbar);
+	}
+	{ // gl_widget
+		g_TextureBrowser.m_gl_widget = glwidget_new(FALSE);
+		//gtk_widget_set_size_request(GTK_WIDGET(g_TextureBrowser.m_gl_widget), 200, 100);
+		gtk_widget_ref(g_TextureBrowser.m_gl_widget);
 
-					gtk_widget_set_events(g_TextureBrowser.m_gl_widget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK |GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
+		gtk_widget_set_events(g_TextureBrowser.m_gl_widget, GDK_DESTROY | GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
+				| GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_SCROLL_MASK);
 		GTK_WIDGET_SET_FLAGS(g_TextureBrowser.m_gl_widget, GTK_CAN_FOCUS);
 
 		gtk_table_attach_defaults(GTK_TABLE(table), g_TextureBrowser.m_gl_widget, 1, 2, 1, 2);
 		gtk_widget_show(g_TextureBrowser.m_gl_widget);
 
-		g_TextureBrowser.m_sizeHandler = g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "size_allocate", G_CALLBACK(TextureBrowser_size_allocate), &g_TextureBrowser);
-		g_TextureBrowser.m_exposeHandler = g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "expose_event", G_CALLBACK(TextureBrowser_expose), &g_TextureBrowser);
+		g_TextureBrowser.m_sizeHandler = g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "size_allocate",
+				G_CALLBACK(TextureBrowser_size_allocate), &g_TextureBrowser);
+		g_TextureBrowser.m_exposeHandler = g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "expose_event",
+				G_CALLBACK(TextureBrowser_expose), &g_TextureBrowser);
 
-		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "button_press_event", G_CALLBACK(TextureBrowser_button_press), &g_TextureBrowser);
-		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "button_release_event", G_CALLBACK(TextureBrowser_button_release), &g_TextureBrowser);
-		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "motion_notify_event", G_CALLBACK(TextureBrowser_motion), &g_TextureBrowser);
-		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "scroll_event", G_CALLBACK(TextureBrowser_scroll), &g_TextureBrowser);
+		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "button_press_event", G_CALLBACK(
+				TextureBrowser_button_press), &g_TextureBrowser);
+		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "button_release_event", G_CALLBACK(
+				TextureBrowser_button_release), &g_TextureBrowser);
+		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "motion_notify_event", G_CALLBACK(
+				TextureBrowser_motion), &g_TextureBrowser);
+		g_signal_connect(G_OBJECT(g_TextureBrowser.m_gl_widget), "scroll_event", G_CALLBACK(TextureBrowser_scroll),
+				&g_TextureBrowser);
 	}
 
 	gtk_box_pack_start(GTK_BOX(vbox), g_TextureBrowser.m_scr_win_tree, TRUE, TRUE, 0);
 
+	if (applySizeAndPosition) {
+		window_set_position(toplevel, g_TextureBrowser.m_position_tracker.getPosition());
+	}
 	return table;
 }
 
