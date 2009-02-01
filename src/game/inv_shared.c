@@ -1794,7 +1794,7 @@ static const int MPSoldier[][2] =
  */
 void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t type, qboolean multiplayer)
 {
-	int i, abilityWindow, temp;
+	int i;
 	const int (*soldierTemplate)[2] = MPSoldier;
 
 	assert(chr);
@@ -1822,14 +1822,13 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 			Sys_Error("CHRSH_CharGenAbilitySkills: unexpected race '%i'", chr->teamDef->race);
 		}
 	} else if (!multiplayer) {
-		float soldierRoll;
 		/* Determine which soldier template to use.
 		 * 25% of the soldiers will be specialists (5% chance each).
 		 * 1% of the soldiers will be elite.
 		 * 74% of the soldiers will be commmon. */
 		switch (type) {
-		case EMPL_SOLDIER:
-			soldierRoll = frand();
+		case EMPL_SOLDIER: {
+			const float soldierRoll = frand();
 			if (soldierRoll <= 0.01f)
 				soldierTemplate = eliteSoldier;
 			else if (soldierRoll <= 0.06)
@@ -1845,6 +1844,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 			else
 				soldierTemplate = commonSoldier;
 			break;
+		}
 		case EMPL_PILOT:
 		case EMPL_SCIENTIST:
 		case EMPL_WORKER:
@@ -1863,19 +1863,21 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 
 	/* Abilities and skills -- random within the range */
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
-		abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
+		const int abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
 		/* Reminder: In case if abilityWindow==0 the ability will get set to the lower limit. */
-		temp = (frand() * abilityWindow) + soldierTemplate[i][0];
+		const int temp = (frand() * abilityWindow) + soldierTemplate[i][0];
 		chr->score.skills[i] = temp;
 		chr->score.initialSkills[i] = temp;
 	}
 
-	/* Health. */
-	abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
-	temp = (frand() * abilityWindow) + soldierTemplate[i][0];
-	chr->score.initialSkills[SKILL_NUM_TYPES] = temp;
-	chr->maxHP = temp;
-	chr->HP = temp;
+	{
+		/* Health. */
+		const int abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
+		const int temp = (frand() * abilityWindow) + soldierTemplate[i][0];
+		chr->score.initialSkills[SKILL_NUM_TYPES] = temp;
+		chr->maxHP = temp;
+		chr->HP = temp;
+	}
 
 	/* Morale */
 	chr->morale = GET_MORALE(chr->score.skills[ABILITY_MIND]);
