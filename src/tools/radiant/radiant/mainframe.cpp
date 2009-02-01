@@ -2225,7 +2225,6 @@ void GlobalGL_sharedContextCreated (void)
 	g_object_get(settings, "gtk-font-name", &fontname, NULL);
 	g_font = glfont_create(fontname);
 
-
 	GlobalOpenGL().m_font = g_font.getDisplayList();
 	GlobalOpenGL().m_fontHeight = g_font.getPixelHeight();
 }
