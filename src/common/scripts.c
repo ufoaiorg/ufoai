@@ -1586,21 +1586,20 @@ const char *Com_GiveName (int gender, const char *team)
 const char *Com_GiveModel (int type, int gender, const char *teamID)
 {
 	teamDef_t *td;
-	int i, j, num;
-	linkedList_t* list;
+	int i, j;
 
 	/* search the name */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		if (!Q_strncmp(teamID, td->id, MAX_VAR)) {
+		if (!Q_strcmp(teamID, td->id)) {
+			const linkedList_t* list;
+			/* search one of the model definitions and (the +) go to the type entry from team_*.ufo  */
+			const int num = (rand() % td->numModels[gender]) * MODEL_NUM_TYPES + type;
+
 			/* found category */
 			if (!td->numModels[gender]) {
 				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, teamID);
 				return NULL;
 			}
-			/* search one of the model definitions */
-			num = (rand() % td->numModels[gender]) * MODEL_NUM_TYPES;
-			/* now go to the type entry from team_*.ufo */
-			num += type;
 
 			/* skip models and unwanted info */
 			list = td->models[gender];
