@@ -229,6 +229,8 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* 
 	}
 }
 
+static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
+
 /**
  * @todo remove 'menu' param when its possible
  */
@@ -257,7 +259,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, const menu_t* me
 
 	case EA_IF:
 		if (MN_CheckCondition((menuDepends_t *) action->data)) {
-			MN_ExecuteActions(menu, (const menuAction_t* const) action->scriptValues);
+			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
 		}
 		break;
 
