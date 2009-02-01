@@ -29,82 +29,91 @@ menu team extends iaircraft
 	// names list
 	// ==================
 
-	func team_clear
-	{
-		*txt_actor0 color "0 .78 0 1"
-		*txt_actor1 color "0 .78 0 1"
-		*txt_actor2 color "0 .78 0 1"
-		*txt_actor3 color "0 .78 0 1"
-		*txt_actor4 color "0 .78 0 1"
-		*txt_actor5 color "0 .78 0 1"
-		*txt_actor6 color "0 .78 0 1"
-		*txt_actor7 color "0 .78 0 1"
-	}
-
 	/**
-	 * @param[in] <1> number of employee in the list
+	 * @param[in] <1> id of employee in the list
 	 */
-	confunc listdel {
+	confunc aircraft_soldier_usedelsewhere
+	{
+		*txt_actor<1> color ".78 .78 .78 1"
 		*bt_actor<1> disabled false
 		*(checkbox)bt_actor<1> current 0
+		*(checkbox)bt_actor<1> disabled true
 		*bt_actor<1> invis false
 		*txt_actor<1> invis false
 		*bt_equip<1> invis false
 	}
 
 	/**
-	 * @param[in] <1> number of employee in the list
+	 * @param[in] <1> id of employee in the list
 	 */
-	confunc listadd {
+	confunc aircraft_soldier_unassigned {
+		*txt_actor<1> color "0 .78 0 1"
+		*bt_actor<1> disabled false
+		*(checkbox)bt_actor<1> current 0
+		*(checkbox)bt_actor<1> disabled false
+		*bt_actor<1> invis false
+		*txt_actor<1> invis false
+		*bt_equip<1> invis false
+	}
+
+	/**
+	 * @param[in] <1> id of employee in the list
+	 */
+	confunc aircraft_soldier_assigned {
+		*txt_actor<1> color "0 .78 0 1"
 		*bt_actor<1> disabled false
 		*(checkbox)bt_actor<1> current 1
+		*(checkbox)bt_actor<1> disabled false
 		*bt_actor<1> invis false
 		*txt_actor<1> invis false
 		*bt_equip<1> invis false
 	}
 
 	/**
-	 * @param[in] <1> number of employee in the list
+	 * @param[in] <1> id of employee in the list
 	 */
-	confunc listholdsequip {
+	confunc aircraft_soldier_holdsequip {
 		*bt_equip<1> tooltip "_Soldier carries equipment"
 		*bt_equip<1> texl "16 0" *bt_equip0 texh "32 16"
 	}
 
 	/**
-	 * @param[in] <1> number of employee in the list
+	 * @param[in] <1> id of employee in the list
 	 */
-	confunc listholdsnoequip {
+	confunc aircraft_soldier_holdsnoequip {
 		*bt_equip<1> tooltip "_Soldier carries no equipment"
 		*bt_equip<1> texl "0 0" *bt_equip0 texh "16 16"
 	}
 
 	/**
-	 * @param[in] <1> number of employee in the list
+	 * @param[in] <1> id of employee in the list
 	 */
-	confunc listdisable {
+	confunc aircraft_soldier_unusedslot {
 		*bt_equip<1> invis true
 		*bt_actor<1> invis true
 		*txt_actor<1> invis true
 	}
 
-	confunc teamselect0 { *txt_actor0 color "1 1 1 1" }
-	confunc teamselect1 { *txt_actor1 color "1 1 1 1" }
-	confunc teamselect2 { *txt_actor2 color "1 1 1 1" }
-	confunc teamselect3 { *txt_actor3 color "1 1 1 1" }
-	confunc teamselect4 { *txt_actor4 color "1 1 1 1" }
-	confunc teamselect5 { *txt_actor5 color "1 1 1 1" }
-	confunc teamselect6 { *txt_actor6 color "1 1 1 1" }
-	confunc teamselect7 { *txt_actor7 color "1 1 1 1" }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc aircraft_soldier_size {
+		*(abstractscrollbar)scroll_employees fullsize <1>
+	}
 
-	confunc teamdeselect0 { *txt_actor0 color "0 .78 0 1" }
-	confunc teamdeselect1 { *txt_actor1 color "0 .78 0 1" }
-	confunc teamdeselect2 { *txt_actor2 color "0 .78 0 1" }
-	confunc teamdeselect3 { *txt_actor3 color "0 .78 0 1" }
-	confunc teamdeselect4 { *txt_actor4 color "0 .78 0 1" }
-	confunc teamdeselect5 { *txt_actor5 color "0 .78 0 1" }
-	confunc teamdeselect6 { *txt_actor6 color "0 .78 0 1" }
-	confunc teamdeselect7 { *txt_actor7 color "0 .78 0 1" }
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc teamselect {
+		*txt_actor<1> color "1 1 1 1"
+	}
+
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc teamdeselect {
+		*txt_actor<1> color "0 .78 0 1"
+	}
 
 	pic bt_equip0
 	{
@@ -200,7 +209,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 470"
-		change { cmd "team_hire 0;" }
+		change { cmd "team_hire 0 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -210,7 +219,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 505"
-		change { cmd "team_hire 1;" }
+		change { cmd "team_hire 1 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -220,7 +229,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 540"
-		change { cmd "team_hire 2;" }
+		change { cmd "team_hire 2 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -230,7 +239,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 575"
-		change { cmd "team_hire 3;" }
+		change { cmd "team_hire 3 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -240,7 +249,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 610"
-		change { cmd "team_hire 4;" }
+		change { cmd "team_hire 4 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -250,7 +259,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 645"
-		change { cmd "team_hire 5;" }
+		change { cmd "team_hire 5 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -260,7 +269,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 680"
-		change { cmd "team_hire 6;" }
+		change { cmd "team_hire 6 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -270,7 +279,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 715"
-		change { cmd "team_hire 7;" }
+		change { cmd "team_hire 7 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -283,7 +292,7 @@ menu team extends iaircraft
 		pos		"60 460"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 0;" }
+		click { cmd "team_select 0 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 	string txt_actor1
@@ -292,7 +301,7 @@ menu team extends iaircraft
 		pos		"60 495"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 1;" }
+		click { cmd "team_select 1 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 	string txt_actor2
@@ -301,7 +310,7 @@ menu team extends iaircraft
 		pos		"60 530"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 2;" }
+		click { cmd "team_select 2 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 	string txt_actor3
@@ -310,7 +319,7 @@ menu team extends iaircraft
 		pos		"60 565"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 3;" }
+		click { cmd "team_select 3 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 	string txt_actor4
@@ -319,7 +328,7 @@ menu team extends iaircraft
 		pos		"60 600"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 4;" }
+		click { cmd "team_select 4 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 	string txt_actor5
@@ -328,7 +337,7 @@ menu team extends iaircraft
 		pos		"60 635"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 5;" }
+		click { cmd "team_select 5 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 	string txt_actor6
@@ -337,7 +346,7 @@ menu team extends iaircraft
 		pos		"60 670"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 6;" }
+		click { cmd "team_select 6 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 	string txt_actor7
@@ -346,7 +355,7 @@ menu team extends iaircraft
 		pos		"60 705"
 		size	"190 35"
 		textalign cl
-		click { cmd "team_select 7;" }
+		click { cmd "team_select 7 <cvar:mn_relative_id>;" }
 		invis	true
 	}
 
@@ -357,6 +366,10 @@ menu team extends iaircraft
 		current 0
 		viewsize 8
 		fullsize 50
+		change {
+			cmd "update_soldier_list 8 <current>"
+			*cvar:mn_relative_id <current>
+		}
 	}
 
 	todo need_scroll_soldiers {
@@ -534,8 +547,7 @@ menu team extends iaircraft
 	 */
 	confunc aircraft_change
 	{
-		call team_clear
-		cmd "team_mark;team_select 0;set mn_show_employee 1;"
+		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
 		*aircraft_list lineselected <1>
 		// absent from base, go back to the main GUI
 		if "mn_equipsoldierstate == 1" {
@@ -546,7 +558,6 @@ menu team extends iaircraft
 	func init
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
-		call team_clear
-		cmd "team_mark;team_select 0;set mn_show_employee 1;"
+		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
 	}
 }

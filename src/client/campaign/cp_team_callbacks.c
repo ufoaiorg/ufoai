@@ -61,17 +61,15 @@ static inline aircraft_t *CL_GetTeamAircraft (base_t *base)
  * @todo Make this function use a temporary list with all list-able employees
  * instead of using gd.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
  */
-static void CL_MarkTeam_f (void)
+static void CL_UpdateSoldierList_f (void)
 {
-	int j, k = 0;
-	qboolean alreadyInOtherShip = qfalse;
 	aircraft_t *aircraft;
 	linkedList_t *emplList;
+	int drawableListSize;
+	int beginIndex;
+	int id;
 
-	const employeeType_t employeeType =
-		cls.displayHeavyEquipmentList
-			? EMPL_ROBOT
-			: EMPL_SOLDIER;
+	const employeeType_t employeeType = EMPL_SOLDIER;
 
 	/* Check if we are allowed to be here.
 	 * We are only allowed to be here if we already set up a base. */
@@ -89,13 +87,41 @@ static void CL_MarkTeam_f (void)
 
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <drawableSize> <firstIndex>\n", Cmd_Argv(0));
+		return;
+	}
+
+	drawableListSize = atoi(Cmd_Argv(1));
+	beginIndex = atoi(Cmd_Argv(2));
+
 	/* Populate employeeList - base might be NULL for none-campaign mode games */
 	E_GenerateHiredEmployeesList(aircraft->homebase);
 	emplList = employeeList;
+	id = 0;
 	while (emplList) {
 		const employee_t *employee = (employee_t*)emplList->data;
+		qboolean alreadyInOtherShip;
+		int guiId = id - beginIndex;
+		int j = 0;
 		assert(employee->hired);
 		assert(!employee->transfer);
+
+		/* id lower than viewable item */
+		if (guiId < 0) {
+			emplList = emplList->next;
+			id++;
+			continue;
+		}
+		/* id bigger than viewable item */
+		if (guiId >= drawableListSize) {
+			emplList = emplList->next;
+			id++;
+			continue;
+		}
+
+		/* Set name of the employee. */
+		Cvar_ForceSet(va("mn_ename%i", guiId), employee->chr.name);
 
 		/* Search all aircraft except the current one. */
 		alreadyInOtherShip = qfalse;
@@ -107,15 +133,13 @@ static void CL_MarkTeam_f (void)
 				alreadyInOtherShip = qtrue;
 		}
 
-		/* Set name of the employee. */
-		Cvar_ForceSet(va("mn_ename%i", k), employee->chr.name);
-		/* Change the buttons */
-		MN_ExecuteConfunc("listdel %i", k);
-		if (!alreadyInOtherShip && AIR_IsEmployeeInAircraft(employee, aircraft))
-			MN_ExecuteConfunc("listadd %i", k);
-		else if (alreadyInOtherShip)
-			/* Disable the button - the soldier is already on another aircraft */
-			MN_ExecuteConfunc("listdisable %i", k);
+		/* Update status */
+		if (alreadyInOtherShip)
+			MN_ExecuteConfunc("aircraft_soldier_usedelsewhere %i", guiId);
+		if (AIR_IsEmployeeInAircraft(employee, aircraft))
+			MN_ExecuteConfunc("aircraft_soldier_assigned %i", guiId);
+		else
+			MN_ExecuteConfunc("aircraft_soldier_unassigned %i", guiId);
 
 		/* Check if the employee has something equipped. */
 		for (j = 0; j < csi.numIDs; j++) {
@@ -124,21 +148,23 @@ static void CL_MarkTeam_f (void)
 				break;
 		}
 		if (j < csi.numIDs)
-			MN_ExecuteConfunc("listholdsequip %i", k);
+			MN_ExecuteConfunc("aircraft_soldier_holdsequip %i", guiId);
 		else
-			MN_ExecuteConfunc("listholdsnoequip %i", k);
+			MN_ExecuteConfunc("aircraft_soldier_holdsnoequip %i", guiId);
 
-		k++;
-		if (k >= cl_numnames->integer)
-			break;
+		if (cl_selected->integer == id)
+			MN_ExecuteConfunc("teamselect %i", guiId);
 
 		emplList = emplList->next;
+		id++;
 	}
 
-	for (;k < cl_numnames->integer; k++) {
-		MN_ExecuteConfunc("listdisable %i", k);
-		Cvar_ForceSet(va("mn_name%i", k), "");
-		MN_ExecuteConfunc("listholdsnoequip %i", k);
+	MN_ExecuteConfunc("aircraft_soldier_size %i", id);
+
+	for (;id - beginIndex < drawableListSize; id++) {
+		int guiId = id - beginIndex;
+		MN_ExecuteConfunc("aircraft_soldier_unusedslot %i", guiId);
+		Cvar_ForceSet(va("mn_name%i", guiId), "");
 	}
 }
 
@@ -234,6 +260,7 @@ static void CL_AssignSoldier_f (void)
 {
 	base_t *base = baseCurrent;
 	aircraft_t *aircraft;
+	int relativeId = 0;
 	int num;
 	const employeeType_t employeeType =
 		cls.displayHeavyEquipmentList
@@ -241,27 +268,29 @@ static void CL_AssignSoldier_f (void)
 			: EMPL_SOLDIER;
 
 	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 2 || Cmd_Argc() > 3) {
+		Com_Printf("Usage: %s <num> <relative_id>\n", Cmd_Argv(0));
 		return;
 	}
-	num = atoi(Cmd_Argv(1));
+
+	if (Cmd_Argc() == 3)
+		relativeId = atoi(Cmd_Argv(2));
+
+	num = atoi(Cmd_Argv(1)) + relativeId;
+	if (num >= E_CountHired(baseCurrent, employeeType))
+		return;
 
 	/* In case we didn't populate the list with E_GenerateHiredEmployeesList before. */
 	if (!employeeList)
 		return;
-
-	/* baseCurrent is checked here */
-	if (num >= E_CountHired(base, employeeType) || num >= cl_numnames->integer) {
-		/*Com_Printf("num: %i, max: %i\n", num, E_CountHired(baseCurrent, employeeType));*/
-		return;
-	}
 
 	aircraft = CL_GetTeamAircraft(base);
 	if (!aircraft)
 		return;
 
 	AIM_AddEmployeeFromMenu(aircraft, num);
+
+	MN_ExecuteConfunc("team_select %i %i", num - relativeId, relativeId);
 }
 
 static void CL_ActorTeamSelect_f (void)
@@ -269,6 +298,7 @@ static void CL_ActorTeamSelect_f (void)
 	employee_t *employee;
 	character_t *chr;
 	int num;
+	int relativeId = 0;
 	const employeeType_t employeeType = cls.displayHeavyEquipmentList
 			? EMPL_ROBOT : EMPL_SOLDIER;
 
@@ -276,12 +306,15 @@ static void CL_ActorTeamSelect_f (void)
 		return;
 
 	/* check syntax */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+	if (Cmd_Argc() < 2 || Cmd_Argc() > 3) {
+		Com_Printf("Usage: %s <num> <relative_id>\n", Cmd_Argv(0));
 		return;
 	}
 
-	num = atoi(Cmd_Argv(1));
+	if (Cmd_Argc() == 3)
+		relativeId = atoi(Cmd_Argv(2));
+
+	num = atoi(Cmd_Argv(1)) + relativeId;
 	if (num >= E_CountHired(baseCurrent, employeeType))
 		return;
 
@@ -294,8 +327,8 @@ static void CL_ActorTeamSelect_f (void)
 		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
 
 	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("teamdeselect%i", cl_selected->integer);
-	MN_ExecuteConfunc("teamselect%i", num);
+	MN_ExecuteConfunc("teamdeselect %i", cl_selected->integer - relativeId);
+	MN_ExecuteConfunc("teamselect %i", num - relativeId);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
@@ -340,7 +373,7 @@ static void CL_TeamListDebug_f (void)
 void CP_TEAM_InitCallbacks (void)
 {
 	Cmd_AddCommand("team_updateequip", CL_UpdateEquipmentMenuParameters_f, NULL);
-	Cmd_AddCommand("team_mark", CL_MarkTeam_f, NULL);
+	Cmd_AddCommand("update_soldier_list", CL_UpdateSoldierList_f, NULL);
 	Cmd_AddCommand("team_hire", CL_AssignSoldier_f, "Add/remove already hired actor to the aircraft");
 	Cmd_AddCommand("team_select", CL_ActorTeamSelect_f, "Select a soldier in the team creation menu");
 #ifdef DEBUG
@@ -351,7 +384,7 @@ void CP_TEAM_InitCallbacks (void)
 void CP_TEAM_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("team_updateequip");
-	Cmd_RemoveCommand("team_mark");
+	Cmd_RemoveCommand("update_soldier_list");
 	Cmd_RemoveCommand("team_hire");
 	Cmd_RemoveCommand("team_select");
 #ifdef DEBUG
