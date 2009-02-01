@@ -512,7 +512,7 @@ equipment phalanx_initial
 	smokegrenade			40
 
 	// Armour
-	light	    		43
+	armour_light	    		43
 }
 
 // =======================
@@ -564,7 +564,7 @@ equipment civilian_police // some may be weaponless
 	fraggrenade			2
 	smokegrenade		2
 	stungrenade			2
-	light			    7
+	armour_light			    7
 }
 
 equipment civilian_antiterrorist
@@ -586,7 +586,7 @@ equipment civilian_antiterrorist
 	fraggrenade			25
 	smokegrenade		20
 	knife				40
-	light			    35
+	armour_light			    35
 }
 
 equipment civilian_army
@@ -606,5 +606,5 @@ equipment civilian_army
 	fraggrenade			55
 	smokegrenade		20
 	knife				40
-	light			    15
+	armour_light			    15
 }

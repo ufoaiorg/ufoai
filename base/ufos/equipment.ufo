@@ -107,8 +107,8 @@ equipment campaign_initial_market
 equipment campaign_asymptotic_market
 {
 //	armour_lightadv					3
-	medium							3
-	power							3
+	armour_medium							3
+	armour_power							3
 	coilgun							2
 	coilgun_ammo					20
 	rpg_incendiary_ammo				10
