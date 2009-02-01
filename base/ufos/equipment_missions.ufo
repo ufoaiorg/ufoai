@@ -111,7 +111,7 @@ equipment alien_workers1
 	kerrblade			100
 
 	// Armour
-	light_alien			2
+	armour_light_alien			2
 }
 
 equipment alien_workers1_explosive
@@ -130,7 +130,7 @@ equipment alien_workers1_explosive
 	plasmagrenade		70
 
 	// Armour
-	light_alien			6
+	armour_light_alien			6
 }
 
 equipment alien_workers2
@@ -151,8 +151,8 @@ equipment alien_workers2
 	plasblade			10
 
 	// Armour
-	light_alien			2
-	medium_alien		18
+	armour_light_alien			2
+	armour_medium_alien		18
 }
 
 equipment alien_workers3
@@ -174,8 +174,8 @@ equipment alien_workers3
 	plasmagrenade		50
 
 	// Armour
-	light_alien			2
-	medium_alien		38
+	armour_light_alien			2
+	armour_medium_alien		38
 }
 
 equipment alien_workers_explosive3
@@ -199,7 +199,7 @@ equipment alien_workers_explosive3
 	plasmagrenade		320
 
 	// Armour
-	medium_alien		50
+	armour_medium_alien		50
 //  heavy_alien			3
 }
 
@@ -230,8 +230,8 @@ equipment alien_workers4
 	plasmagrenade		40
 
 	// Armour
-	light_alien			2
-	medium_alien		70	// 30
+	armour_light_alien			2
+	armour_medium_alien		70	// 30
 //	heavy_alien         40
 }
 
@@ -266,7 +266,7 @@ equipment alien_soldiers1
 	plasblade			3
 
 	// Armour
-	light_alien			33
+	armour_light_alien			33
 }
 
 equipment alien_soldiers2
@@ -290,8 +290,8 @@ equipment alien_soldiers2
 	plasmagrenade		5
 
 	// Armour
-	light_alien			60
-	medium_alien		10
+	armour_light_alien			60
+	armour_medium_alien		10
 }
 
 equipment alien_soldiers2_melee
@@ -313,8 +313,8 @@ equipment alien_soldiers2_melee
 	plasmagrenade		5
 
 	// Armour
-	light_alien			40
-	medium_alien		20
+	armour_light_alien			40
+	armour_medium_alien		20
 //	heavy_alien			3
 }
 
@@ -343,8 +343,8 @@ equipment alien_soldiers3
 	plasmagrenade		30
 
 	// Armour
-	light_alien         38
-	medium_alien		50
+	armour_light_alien         38
+	armour_medium_alien		50
 //  heavy_alien			3
 }
 
@@ -375,8 +375,8 @@ equipment alien_soldiers4
 	plasmagrenade		30
 
 	// Armour
-	light_alien         38
-	medium_alien		50
+	armour_light_alien         38
+	armour_medium_alien		50
 //  heavy_alien			3
 }
 
@@ -411,8 +411,8 @@ equipment alien_soldiers99
 	plasmagrenade		250
 
 	// Armour
-	light_alien			2
-	medium_alien		95	// 10
+	armour_light_alien			2
+	armour_medium_alien		95	// 10
 //	heavy_alien			70
 }
 
@@ -437,8 +437,8 @@ equipment alien_soldiers99_plasma
 	plasmagrenade		360
 
 	// Armour
-	light_alien			2
-	medium_alien		95	// 10
+	armour_light_alien			2
+	armour_medium_alien		95	// 10
 //	heavy_alien         85
 }
 
@@ -471,8 +471,8 @@ equipment alien_base1
 	plasmagrenade		250
 
 	// Armour
-	light_alien			30
-	medium_alien		70
+	armour_light_alien			30
+	armour_medium_alien		70
 //	heavy_alien			70
 }
 

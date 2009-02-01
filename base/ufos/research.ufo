@@ -2489,7 +2489,7 @@ tech rs_combat_armour
 	}
 	// pre_description	"_combat_armour_pre_txt"
 
-	provides	light
+	provides	armour_light
 	time	0
 	producetime	72
 }
@@ -2504,7 +2504,7 @@ tech rs_advanced_combat_armour
 	}
 	// pre_description	"_advanced_combat_armour_pre_txt"
 
-	provides	lightadv
+	provides	armour_lightadv
 	time	0
 	producetime	72
 }
@@ -2542,7 +2542,7 @@ tech rs_nano_armour
 	{
 		tech rs_alien_body_armour
 	}
-	provides	medium
+	provides	armour_medium
 	time	2000
 	producetime	168
 }
@@ -2580,7 +2580,7 @@ tech rs_power_armour
 	{
 		tech rs_nano_armour
 	}
-	provides	power
+	provides	armour_power
 
 //	time	3000
 	time	-1
@@ -2618,9 +2618,9 @@ tech rs_alien_body_armour
 
 	require_AND
 	{
-		item light_alien 1
+		item armour_light_alien 1
 	}
-	provides	light_alien
+	provides	armour_light_alien
 	time	2500
 	producetime	-1
 }
@@ -2655,9 +2655,9 @@ tech rs_alien_medium_armour
 
 	require_AND
 	{
-		item medium_alien 1
+		item armour_medium_alien 1
 	}
-	provides	medium_alien
+	provides	armour_medium_alien
 	time	2500
 	producetime	-1
 }

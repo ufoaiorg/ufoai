@@ -38,7 +38,7 @@ equipment campaign_player
 	fraggrenade		12
 	smokegrenade	2
 	knife			2
-	light			0
+	armour_light	0
 	medikit			2
 	irgoggles		1
 	flashbang		5
@@ -87,7 +87,7 @@ equipment campaign_initial_market
 	irgoggles				2
 	medikit					4
 	flashbang				10
-	light					20
+	armour_light			20
 	craft_weapon_shiva	6
 	craft_ammo_shiva_API	100
 	craft_ammo_shiva_HEI	100
@@ -106,7 +106,7 @@ equipment campaign_initial_market
 
 equipment campaign_asymptotic_market
 {
-//	lightadv						3
+//	armour_lightadv					3
 	medium							3
 	power							3
 	coilgun							2
@@ -145,7 +145,7 @@ equipment campaign_player_aliens
 	rpg_ammo				4
 	fraggrenade				3
 	kerrblade				1
-	light_alien				0
+	armour_light_alien				0
 }
 
 equipment campaign_market_aliens
@@ -183,8 +183,8 @@ equipment campaign_market_aliens
 	medikit					2
 	stunrod					2
 	stungrenade				10
-	light_alien				20
-	medium_alien			5
+	armour_light_alien				20
+	armour_medium_alien			5
 //	heavy_alien				1
 }
 
@@ -261,11 +261,11 @@ equipment multiplayer_alien
 	plasmagrenade		3
 	kerrblade			2
 	plasblade			2
-	light				2
-	medium				2
-	light_alien			2
-	medium_alien			2
-//	heavy				1
+	armour_light		2
+	armour_medium		2
+	armour_light_alien	2
+	armour_medium_alien	2
+//	armour_heavy		1
 }
 
 equipment multiplayer
@@ -337,12 +337,12 @@ equipment multiplayer
 	plasmagrenade		3
 	kerrblade			2
 	plasblade			2
-	light				2
-	medium				2
-	light_alien			2
-	medium_alien			2
-//	heavy				1
-	power	2
+	armour_light		2
+	armour_medium		2
+	armour_light_alien	2
+	armour_medium_alien	2
+//	armour_heavy		1
+	armour_power	2
 }
 
 //=============================
@@ -401,9 +401,9 @@ equipment multiplayer_initial
 	plasmagrenade		3
 	kerrblade           2 // bulky, will rarely get into the backpack
 	plasblade			3
-	light				10
-	medium				10
-//	heavy				5
-//	power	2
+	armour_light		10
+	armour_medium		10
+//	armour_heavy		5
+//	armour_power	2
 	smokegrenade		3
 }
