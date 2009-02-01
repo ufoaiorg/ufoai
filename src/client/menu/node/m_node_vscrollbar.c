@@ -120,6 +120,60 @@ static inline void MN_VScrollbarNodeDiff (menuNode_t *node, int value)
 static int oldPos;
 static int oldMouseY;
 
+static inline void MN_VScrollbarNodeAction (menuNode_t *node, int houveredElement)
+{
+	switch (houveredElement) {
+	case 0:
+		MN_VScrollbarNodeDiff(node, -1);
+		break;
+	case 1:
+		MN_VScrollbarNodeDiff(node, -10);
+		break;
+	case 2:
+		MN_SetMouseCapture(node);
+		/* save start value */
+		oldMouseY = mousePosY;
+		oldPos = EXTRADATA(node).pos;
+		break;
+	case 3:
+		MN_VScrollbarNodeDiff(node, 10);
+		break;
+	case 4:
+		MN_VScrollbarNodeDiff(node, 1);
+		break;
+	default:
+		assert(qfalse);
+	}
+}
+
+/**
+ * @brief Active an element of a vscrollbarnode.
+ * @note This command work like an user, so, if need, change event are fired
+ */
+static void MN_ActiveVScrollbarNode_f ()
+{
+	menuNode_t *node;
+	int actionId;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <node-path> <action-id>\n", Cmd_Argv(0));
+		return;
+	}
+
+	node = MN_GetNodeByPath(Cmd_Argv(1));
+	if (node == NULL) {
+		Com_Printf("MN_ActiveVScrollbarNode_f: node '%s' not found\n", Cmd_Argv(1));
+		return;
+	}
+	if (!MN_NodeInstanceOf(node, "vscrollbar")) {
+		Com_Printf("MN_ActiveVScrollbarNode_f: node '%s' is not a 'vscrollbar'\n", Cmd_Argv(1));
+		return;
+	}
+
+	actionId = atoi(Cmd_Argv(2));
+	MN_VScrollbarNodeAction(node, actionId);
+}
+
 static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	int houveredElement = -1;
@@ -132,29 +186,7 @@ static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int butt
 
 	MN_VScrollbarNodeGetElementSize(node, description);
 	houveredElement = MN_VScrollbarNodeGetElement(node, description, x, y);
-
-	switch (houveredElement) {
-	case 0:
-		MN_VScrollbarNodeDiff(node, -1);
-		break;
-	case 1:
-		MN_VScrollbarNodeDiff(node, -10);
-		break;
-	case 2:
-		MN_SetMouseCapture(node);
-		/* save start value */
-		oldMouseY = y;
-		oldPos = EXTRADATA(node).pos;
-		break;
-	case 3:
-		MN_VScrollbarNodeDiff(node, 10);
-		break;
-	case 4:
-		MN_VScrollbarNodeDiff(node, 1);
-		break;
-	default:
-		assert(qfalse);
-	}
+	MN_VScrollbarNodeAction(node, houveredElement);
 }
 
 static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button)
@@ -347,4 +379,6 @@ void MN_RegisterVScrollbarNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_VScrollbarNodeDraw;
 	behaviour->loaded = MN_VScrollbarNodeLoaded;
 	behaviour->loading = MN_VScrollbarNodeLoading;
+
+	Cmd_AddCommand("mn_active_vscrollbar", MN_ActiveVScrollbarNode_f, "Active an element of a scrollbar node, (dummy mouse/user)");
 }
