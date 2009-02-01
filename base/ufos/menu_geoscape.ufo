@@ -10,7 +10,7 @@ menu map
 
 	zone render
 	{
-		invis	true
+		invis		true
 	}
 
 	// ==================
@@ -19,22 +19,24 @@ menu map
 
 	map themap
 	{
-		pos		"0 0"
-		size	"1024 768"
-		click	mclick wheel
-		rclick	{ cmd "mn_mapaction_reset;" }
+		pos			"0 0"
+		size		"1024 768"
+		click
+		mclick
+		rclick		{ cmd "mn_mapaction_reset;" }
+		wheel
 	}
 
 	text messagesystem
 	{
-		pos	"0 0"
-		size	"768 20"
-		bgcolor	"0 0 0 .5"
+		pos			"0 0"
+		size		"768 20"
+		bgcolor		"0 0 0 .5"
 		lineheight	"20"
-		rows	1
+		rows		1
 		textid		TEXT_MESSAGESYSTEM
+		scrollbar	false
 		wheel
-		scrollbar false
 	}
 
 	confunc messagesystem_changemode
@@ -69,9 +71,9 @@ menu map
 
 	pic back
 	{
-		image	menu/geo_menu
-		pos	"768 0"
-		blend	true
+		image		menu/geo_menu
+		pos			"768 0"
+		blend		true
 	}
 
 	// ==================
@@ -80,9 +82,10 @@ menu map
 
 	string daytime
 	{
-		string	"*cvar mn_mapdaytime"
-		pos			"900 304"
-		align	uc
+		string		"*cvar mn_mapdaytime"
+		pos			"799 304"
+		size		"195 20"
+		textalign	uc
 	}
 
 	text description
@@ -103,193 +106,195 @@ menu map
 
 	string date
 	{
-		string	"*cvar mn_mapdate *cvar mn_maptime"
-		pos	"896 30"
-		align	uc
-		color	"1 1 1 1"
-		font	f_small
+		string		"*cvar mn_mapdate *cvar mn_maptime"
+		pos			"799 30"
+		size		"195 20"
+		textalign	uc
+		color		"1 1 1 1"
+		font		f_small
 	}
 
 	string txt_credits_caption
 	{
-		string	"_CREDITS"
-		pos	"808 54"
-		size	"175 25"
-		font	f_small
+		string		"_CREDITS"
+		pos			"808 54"
+		size		"75 25"
+		font		f_small
 	}
 
 	string txt_credits
 	{
-		tooltip	"_Organisation capital"
-		string	"*cvar mn_credits"
-		pos	"808 54"
-		size	"175 25"
-		font	f_small
+		string		"*cvar mn_credits"
+		tooltip		"_Organisation capital"
+		pos			"880 54"
+		size		"100 25"
+		font		f_small
 		textalign	ur
-		in
 	}
 
 	radiobutton bt_timestop0
 	{
-		tooltip	"_Pause"
-		cvar	"*cvar mn_timelapse_id"	value "0"
-		icon	speed_stop
-		pos	"816 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Pause"
+		cvar		"*cvar mn_timelapse_id"	value "0"
+		icon		speed_stop
+		pos			"816 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 	radiobutton bt_timeplay1
 	{
-		tooltip "_Time lapse: 5 seconds"
-		cvar	"*cvar mn_timelapse_id"	value "1"
-		icon	speed_dot
-		pos	"836 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Time lapse: 5 seconds"
+		cvar		"*cvar mn_timelapse_id"	value "1"
+		icon		speed_dot
+		pos			"836 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 	radiobutton bt_timeplay2
 	{
-		tooltip "_Time lapse: 5 minutes"
-		cvar	"*cvar mn_timelapse_id"	value "4"
-		icon	speed_play1
-		pos	"856 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Time lapse: 5 minutes"
+		cvar		"*cvar mn_timelapse_id"	value "4"
+		icon		speed_play1
+		pos			"856 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 
 	radiobutton bt_timeplay3
 	{
-		tooltip "_Time lapse: 20 minutes"
-		cvar	"*cvar mn_timelapse_id"	value "6"
-		icon	speed_dot
-		pos	"876 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Time lapse: 20 minutes"
+		cvar		"*cvar mn_timelapse_id"	value "6"
+		icon		speed_dot
+		pos			"876 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 	radiobutton bt_timeplay4
 	{
-		tooltip "_Time lapse: 1 hour"
-		cvar	"*cvar mn_timelapse_id"	value "7"
-		icon	speed_play2
-		pos	"896 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Time lapse: 1 hour"
+		cvar		"*cvar mn_timelapse_id"	value "7"
+		icon		speed_play2
+		pos			"896 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 
 	radiobutton bt_timeplay5
 	{
-		tooltip "_Time lapse: 12 hours"
-		cvar	"*cvar mn_timelapse_id"	value "8"
-		icon	speed_dot
-		pos	"916 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Time lapse: 12 hours"
+		cvar		"*cvar mn_timelapse_id"	value "8"
+		icon		speed_dot
+		pos			"916 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 
 	radiobutton bt_timeplay6
 	{
-		tooltip "_Time lapse: 1 day"
-		cvar	"*cvar mn_timelapse_id"	value "9"
-		icon	speed_dot
-		pos	"936 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Time lapse: 1 day"
+		cvar		"*cvar mn_timelapse_id"	value "9"
+		icon		speed_dot
+		pos			"936 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 	radiobutton bt_timeplay7
 	{
-		tooltip "_Time lapse: 5 days"
-		cvar	"*cvar mn_timelapse_id"	value "10"
-		icon	speed_play3
-		pos	"956 100"
-		size	"20 20"
-		change	{ cmd "game_settimeid <value>;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Time lapse: 5 days"
+		cvar		"*cvar mn_timelapse_id"	value "10"
+		icon		speed_play3
+		pos			"956 100"
+		size		"20 20"
+		change		{ cmd "game_settimeid <value>;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 
 	string timelapse
 	{
-		string	"*cvar mn_timelapse"
-		pos		"865 122"
-		color	"0 .78 0 1"
+		string		"*cvar mn_timelapse"
+		pos			"799 122"
+		size		"195 20"
+		textalign	uc
+		color		"0 .78 0 1"
 	}
 
 	// geoscape controll buttons
 
 	zone panel_scroll_up
 	{
-		pos		"868 354"
-		size	"60 30"
-		repeat	true
+		pos			"868 354"
+		size		"60 30"
+		repeat		true
 		clickdelay	100
-		click	{ cmd "map_scroll down;" }
+		click		{ cmd "map_scroll down;" }
 	}
 
 	zone panel_scroll_down
 	{
-		pos		"868 484"
-		size	"60 30"
-		repeat	true
+		pos			"868 484"
+		size		"60 30"
+		repeat		true
 		clickdelay	100
-		click	{ cmd "map_scroll up;" }
+		click		{ cmd "map_scroll up;" }
 	}
 
 	zone panel_scroll_left
 	{
-		pos		"818 400"
-		size	"30 60"
-		repeat	true
+		pos			"818 400"
+		size		"30 60"
+		repeat		true
 		clickdelay	100
-		click	{ cmd "map_scroll right;" }
+		click		{ cmd "map_scroll right;" }
 	}
 
 	zone panel_scroll_right
 	{
-		pos		"950 400"
-		size	"30 60"
-		repeat	true
-		clickdelay	100
-		click	{ cmd "map_scroll left;" }
+		pos			"950 400"
+		size		"30 60"
+		repeat		true
+		clickdelay		100
+		click		{ cmd "map_scroll left;" }
 	}
 
 	zone panel_zoom_in
 	{
-		pos		"872 400"
-		size	"20 60"
-		repeat	true
+		pos			"872 400"
+		size		"20 60"
+		repeat		true
 		clickdelay	100
-		click	{ cmd "map_zoom in;" }
+		click		{ cmd "map_zoom in;" }
 	}
 
 	zone panel_zoom_out
 	{
-		pos		"898 400"
-		size	"20 60"
-		repeat	true
+		pos			"898 400"
+		size		"20 60"
+		repeat		true
 		clickdelay	100
-		click	{ cmd "map_zoom out;" }
+		click		{ cmd "map_zoom out;" }
 	}
 
 	// ==================
@@ -299,88 +304,96 @@ menu map
 	button bt_mailclient
 	{
 		visiblewhen "mn_upunreadmail != 0"
-		color	"0 0.5 0 1"
-		font 	f_small
-		tooltip	"_INBOX (with unread mails)"
-		string	"_Mailclient"
-		pos		"809 536"
-		size	"175 34"
-		click	{ cmd "mn_push ufopedia_mail;" }
+
+		string		"_Mailclient"
+		tooltip		"_INBOX (with unread mails)"
+		color		"0 0.5 0 1"
+		font	 	f_small
+		pos			"809 536"
+		size		"175 34"
 		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
+		image		menu/button_geoscape
+		blend		true
+
+		click		{ cmd "mn_push ufopedia_mail;" }
 	}
 
 	button bt_mailclient_nomail
 	{
 		visiblewhen "mn_upunreadmail == 0"
-		color	"0 0.5 0 1"
-		font 	f_small
-		tooltip	"_INBOX"
-		string	"_Mailclient"
-		pos		"809 536"
-		size	"175 34"
-		click	{ cmd "mn_push ufopedia_mail;" }
+
+		string		"_Mailclient"
+		tooltip		"_INBOX"
+		color		"0 0.5 0 1"
+		font	 	f_small
+		pos			"809 536"
+		size		"175 34"
 		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
+		image		menu/button_geoscape
+		blend		true
+
+		click		{ cmd "mn_push ufopedia_mail;" }
 	}
 
 	button bt_stats
 	{
-		tooltip	"_Organisation statistics"
-		pos		"809 577"
-		color	"0 0.5 0 1"
-		size	"175 34"
-		font 	f_small
-		string	"_Statistics"
-		click	{ cmd "mn_push stats;" }
+		string		"_Statistics"
+		tooltip		"_Organisation statistics"
+		pos			"809 577"
+		size		"175 34"
+		color		"0 0.5 0 1"
+		font	 	f_small
 		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
+		image		menu/button_geoscape
+		blend		true
+
+		click		{ cmd "mn_push stats;" }
 	}
 
 	button bt_ufopedia
 	{
-		tooltip	"_Open UFOpaedia"
-		pos		"809 618"
-		color	"0 0.5 0 1"
-		size	"175 34"
-		font 	f_small
-		string	"_UFOpaedia"
-		click	{ cmd "mn_push ufopedia;" }
+		string		"_UFOpaedia"
+		tooltip		"_Open UFOpaedia"
+		pos			"809 618"
+		size		"175 34"
+		color		"0 0.5 0 1"
+		font	 	f_small
 		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
+		image		menu/button_geoscape
+		blend		true
+
+		click		{ cmd "mn_push ufopedia;" }
 	}
 
 	button bt_base
 	{
 		visiblewhen "mn_base_count < 8"
-		tooltip	"_Create base"
-		color	"0 0.5 0 1"
-		size	"175 34"
-		font 	f_small
-		string	"_Create base"
-		pos		"809 659"
-		click	{ cmd "mn_select_base -1;" }
-		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
-	}
 
+		string		"_Create base"
+		tooltip		"_Create base"
+		color		"0 0.5 0 1"
+		size		"175 34"
+		font	 	f_small
+		pos			"809 659"
+		selectcolor	"1 1 1 1"
+		image		menu/button_geoscape
+		blend		true
+
+		click		{ cmd "mn_select_base -1;" }
+	}
 	button bt_base_nomore
 	{
 		visiblewhen "mn_base_count >= 8"
-		tooltip	"_Max. bases reached"
-		string	"_Create base"
-		font 	f_small
-		size	"175 34"
-		pos		"809 659"
-		color	"0.5 0.5 0.5 1"
+
+		string		"_Create base"
+		tooltip		"_Max. bases reached"
+		font	 	f_small
+		pos			"809 659"
+		size		"175 34"
+		color		"0.5 0.5 0.5 1"
 		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
+		image		menu/button_geoscape
+		blend		true
 		disabled	true
 	}
 
@@ -388,31 +401,33 @@ menu map
 	{
 		// visiblewhen "mn_installation_count < mn_installation_max"
 		visiblewhen "mn_installation_count < 10"
-		tooltip	"_Create installation"
-		color	"0 0.5 0 1"
-		size	"175 34"
-		font 	f_small
-		string	"_Create installation"
-		pos		"809 700"
-		click	{ cmd "mn_push popup_newinstallation_type;" }
-		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
-	}
 
+		string		"_Create installation"
+		tooltip		"_Create installation"
+		color		"0 0.5 0 1"
+		pos			"809 700"
+		size		"175 34"
+		font	 	f_small
+		selectcolor	"1 1 1 1"
+		image		menu/button_geoscape
+		blend		true
+
+		click		{ cmd "mn_push popup_newinstallation_type;" }
+	}
 	button bt_installation_nomore
 	{
 		// visiblewhen "mn_installation_count >= mn_installation_max"
 		visiblewhen "mn_installation_count >= 10"
-		tooltip	"_Max. installations reached"
-		string	"_Create installation"
-		font 	f_small
-		size	"175 34"
-		pos		"809 700"
-		color	"0.5 0.5 0.5 1"
+
+		tooltip		"_Max. installations reached"
+		string		"_Create installation"
+		font	 	f_small
+		pos			"809 700"
+		size		"175 34"
+		color		"0.5 0.5 0.5 1"
 		selectcolor	"1 1 1 1"
-		image	menu/button_geoscape
-		blend	true
+		image		menu/button_geoscape
+		blend		true
 		disabled	true
 	}
 
@@ -423,54 +438,53 @@ menu map
 
 	pic bt_show_overlay
 	{
-		tooltip	"_Highlight nation borders"
-		image	menu/geo_nations_highlight
-		pos		"808 320"
-		texl	"0 0"
-		texh	"32 32"
-		mousefx	false
-		click	{ cmd "map_overlay nations;" }
-		out		{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
-		in		{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
+		tooltip		"_Highlight nation borders"
+		image		menu/geo_nations_highlight
+		pos			"808 320"
+		texl		"0 0"
+		texh		"32 32"
+		mousefx		false
+		click		{ cmd "map_overlay nations;" }
+		out			{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
+		in			{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
 	}
 
 	pic bt_show_radar
 	{
-		tooltip	"_Show radar range"
-		image	menu/geo_radar
-		pos		"808 350"
-		texl	"0 0"
-		texh	"32 32"
-		mousefx	false
-		click	{ cmd "map_overlay radar;" }
-		out		{ *bt_show_radar texl "0 0" *bt_show_radar texh "32 32" }
-		in		{ *bt_show_radar texl "32 0" *bt_show_radar texh "64 32" }
+		tooltip		"_Show radar range"
+		image		menu/geo_radar
+		pos			"808 350"
+		texl		"0 0"
+		texh		"32 32"
+		mousefx		false
+		click		{ cmd "map_overlay radar;" }
+		out			{ *bt_show_radar texl "0 0" *bt_show_radar texh "32 32" }
+		in			{ *bt_show_radar texl "32 0" *bt_show_radar texh "64 32" }
 	}
 
 	pic bt_show_xvi
 	{
 		visiblewhen "mn_xvimap == 1"
-		tooltip	"_Show XVI map"
-		image	menu/geo_nations_highlight
-		pos		"950 350"
-		texl	"0 0"
-		texh	"32 32"
-		mousefx	false
-		click	{ cmd "map_overlay xvi;" }
-		out		{ *bt_show_xvi texl "0 0" *bt_show_xvi texh "32 32" }
-		in		{ *bt_show_xvi texl "32 0" *bt_show_xvi texh "64 32" }
+		tooltip		"_Show XVI map"
+		image		menu/geo_nations_highlight
+		pos			"950 350"
+		texl		"0 0"
+		texh		"32 32"
+		mousefx		false
+		click		{ cmd "map_overlay xvi;" }
+		out			{ *bt_show_xvi texl "0 0" *bt_show_xvi texh "32 32" }
+		in			{ *bt_show_xvi texl "32 0" *bt_show_xvi texh "64 32" }
 	}
 
 	custombutton bt_messagesystem
 	{
 		// @todo: better -more verbose- tooltip
-		tooltip	"_Open up messages"
-		image	menu/button_background	blend true
-		icon	geo_messagelog
-		pos		"850 324"
-		texl	"193 38"	size "28 25"
-		// out	{ cmd "bt_messagesystem_out" }
-		// in	{ cmd "bt_messagesystem_in" }
+		tooltip		"_Open up messages"
+		image		menu/button_background	blend true
+		icon		geo_messagelog
+		pos			"850 324"
+		size		"28 25"
+		texl		"193 38"
 		click	{
 			cmd "add mn_messagesystem 1;"
 			cmd "mod mn_messagesystem 4;"
@@ -484,32 +498,35 @@ menu map
 
 	custombutton bt_messagesettings
 	{
-		tooltip	"_Change message and pause settings"
-		image	menu/button_background	blend true
-		icon	geo_messageoption
-		pos		"850 354"
-		texl	"193 38"	size "28 25"
-		click	{ cmd "mn_push messageoptions;" }
+		tooltip		"_Change message and pause settings"
+		image		menu/button_background	blend true
+		icon		geo_messageoption
+		pos			"850 354"
+		size		"28 25"
+		texl		"193 38"
+		click		{ cmd "mn_push messageoptions;" }
 	}
 
 	custombutton bt_mapcenter
 	{
-		tooltip	"_Center objects on the map"
-		image	menu/button_background	blend true
-		icon	geo_center
-		pos		"892 324"
-		texl	"193 38"	size "28 25"
-		click	{ cmd "map_center;" }
+		tooltip		"_Center objects on the map"
+		image		menu/button_background	blend true
+		icon		geo_center
+		pos			"892 324"
+		size		"28 25"
+		texl		"193 38"
+		click		{ cmd "map_center;" }
 	}
 
 	custombutton bt_menu
 	{
-		tooltip	"_Go to Options"
-		image	menu/button_background	blend true
-		icon	geo_option
-		pos		"950 324"
-		texl	"193 38"	size "28 25"
-		click	{ cmd mn_pop; }
+		tooltip		"_Go to Options"
+		image		menu/button_background	blend true
+		icon		geo_option
+		pos			"950 324"
+		size		"28 25"
+		texl		"193 38"
+		click		{ cmd mn_pop; }
 	}
 
 	func init
@@ -532,7 +549,7 @@ menu map_combatzoom
 
 	zone render
 	{
-		invis	true
+		invis		true
 	}
 
 	// ==================
@@ -541,28 +558,30 @@ menu map_combatzoom
 
 	map themap
 	{
-		pos		"0 0"
-		size	"1024 768"
-		click	mclick wheel
-		rclick	{ cmd "mn_mapaction_reset;" }
+		pos			"0 0"
+		size		"1024 768"
+		click
+		mclick
+		rclick		{ cmd "mn_mapaction_reset;" }
+		wheel
 	}
 
 	text messagesystem
 	{
-		pos		"0 0"
-		size	"768 20"
-		bgcolor	"0 0 0 .5"
+		pos			"0 0"
+		size		"768 20"
+		bgcolor		"0 0 0 .5"
 		lineheight	"20"
-		rows	1
+		rows		1
 		textid		TEXT_MESSAGESYSTEM
 		wheel
 	}
 
 	pic back
 	{
-		image	menu/geo_menu_mini
-		pos		"768 0"
-		blend	true
+		image		menu/geo_menu_mini
+		pos			"768 0"
+		blend		true
 	}
 
 	// ==================
@@ -571,88 +590,91 @@ menu map_combatzoom
 
 	string date
 	{
-		string	"*cvar mn_mapdate *cvar mn_maptime"
-		pos		"896 30"
-		align	uc
-		color	"1 1 1 1"
-		font	f_small
+		string		"*cvar mn_mapdate *cvar mn_maptime"
+		pos			"799 30"
+		size		"195 20"
+		textalign	uc
+		color		"1 1 1 1"
+		font		f_small
 	}
 
 	string txt_credits_caption
 	{
-		string	"_CREDITS"
-		pos		"808 54"
-		font	f_small
+		string		"_CREDITS"
+		pos			"808 54"
+		size		"75 25"
+		font		f_small
 	}
 
 	string txt_credits
 	{
-		tooltip	"_Organisation capital"
-		string	"*cvar mn_credits"
-		size	"256 20"
-		pos		"734 54"
-		font	f_small
+		string		"*cvar mn_credits"
+		tooltip		"_Organisation capital"
+		pos			"880 54"
+		size		"100 25"
+		font		f_small
 		textalign	ur
-		in
 	}
 
 	pic bt_exitzoom
 	{
-		tooltip	"_Exit combat zoom mode"
-		image	menu/buttons_combatzoom
-		pos		"840 100"
-		texl	"41 0"
-		texh	"61 20"
-		out		{ *bt_exitzoom texl "41 0" *bt_exitzoom texh "61 20" }
-		in		{ *bt_exitzoom texl "61 0" *bt_exitzoom texh "81 20" }
-		click	{ cmd mn_pop; }
+		tooltip		"_Exit combat zoom mode"
+		image		menu/buttons_combatzoom
+		pos			"840 100"
+		texl		"41 0"
+		texh		"61 20"
+		out			{ *bt_exitzoom texl "41 0" *bt_exitzoom texh "61 20" }
+		in			{ *bt_exitzoom texl "61 0" *bt_exitzoom texh "81 20" }
+		click		{ cmd mn_pop; }
 	}
 
 	pic bt_timeslow
 	{
-		tooltip	"_Slow down time"
-		image	menu/buttons_time
-		pos		"871 100"
-		texl	"42 0"
-		texh	"52 20"
-		out		{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
-		in		{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
-		click	{ cmd "game_timeslow;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Slow down time"
+		image		menu/buttons_time
+		pos			"871 100"
+		texl		"42 0"
+		texh		"52 20"
+		out			{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
+		in			{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
+		click		{ cmd "game_timeslow;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 	pic bt_timefast
 	{
-		tooltip	"_Speed up time"
-		image	menu/buttons_time
-		pos		"891 100"
-		texl	"53 0"
-		texh	"63 20"
-		out		{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
-		in		{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
-		click	{ cmd "game_timefast;" }
-		whup	{ cmd "game_timefast;" }
-		whdown	{ cmd "game_timeslow;" }
+		tooltip		"_Speed up time"
+		image		menu/buttons_time
+		pos			"891 100"
+		texl		"53 0"
+		texh		"63 20"
+		out			{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
+		in			{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
+		click		{ cmd "game_timefast;" }
+		whup		{ cmd "game_timefast;" }
+		whdown		{ cmd "game_timeslow;" }
 	}
 
 	pic bt_zoomlevel
 	{
-		tooltip	"_Toggle between full zoom and half zoom"
-		image	menu/buttons_combatzoom
-		pos		"911 100"
-		texl	"0 0"
-		texh	"20 20"
-		out		{ *bt_zoomlevel texl "0 0" *bt_zoomlevel texh "20 20" }
-		in		{ *bt_zoomlevel texl "21 0" *bt_zoomlevel texh "41 20" }
-		click	{ cmd "togglecombatzoomlevel;" }
+		tooltip		"_Toggle between full zoom and half zoom"
+		image		menu/buttons_combatzoom
+		pos			"911 100"
+		texl		"0 0"
+		texh		"20 20"
+		out			{ *bt_zoomlevel texl "0 0" *bt_zoomlevel texh "20 20" }
+		in			{ *bt_zoomlevel texl "21 0" *bt_zoomlevel texh "41 20" }
+		click		{ cmd "togglecombatzoomlevel;" }
 	}
 
 	string timelapse
 	{
-		string	"*cvar mn_timelapse"
-		pos		"865 122"
-		color	"0 .78 0 1"
+		string		"*cvar mn_timelapse"
+		pos			"799 122"
+		size		"195 20"
+		textalign	uc
+		color		"0 .78 0 1"
 	}
 
 	func init
@@ -665,8 +687,8 @@ menu map_combatzoom
 
 	func close
 	{
-		cmd		"music_change geoscape;"
-		cmd		"combatzoom_exit;"
+		cmd	"music_change geoscape;"
+		cmd	"combatzoom_exit;"
 	}
 }
 
@@ -682,8 +704,8 @@ menu map_combatzoom
 menu popup_list
 {
 	{
-		pos "264 262"
-		size	"496 247"
+		pos			"264 262"
+		size		"496 247"
 		dragbutton	true
 		closebutton	true
 	}
@@ -693,65 +715,58 @@ menu popup_list
 	// have to readd the popup zone node
 //	zone popup
 //	{
-//		invis true
+//		invis		true
 //	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	text title
 	{
-		pos		"176 18"
+		pos			"176 18"
+		width		"446"
 		textalign	uc
-		width	"446"
-		rows	"1"
+		rows		"1"
 		textid		TEXT_POPUP
 	}
 
 	text popup_text
 	{
-		pos		"26 58"
+		pos			"26 58"
+		size		"446 32"
 		textid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
-		size	"446 32"
-		rows	2
+		rows		2
 	}
 	text popup_list
 	{
-		pos		"26 96"
+		pos			"26 96"
+		size		"446 96"
 		textid		TEXT_LIST
 		lineheight	16
 		tabwidth	100
-		size	"446 96"
-		rows	6
+		rows		6
+		scrollbar	true
 		wheel
-		scrollbar true
 	}
-	pic bt_ok
-	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"296 192"
-		size	"176 32"
-		out		{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
-		in		{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;" }
 
-	}
-	string string_ok
+	button bt_ok
 	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_OK"
-		pos		"384 208"
-		align	cc
+		string		"_OK"
+		tooltip		"_Close this dialogue"
+		image		menu/button_green_small
+		blend		true
+		pos			"296 192"
+		size		"176 32"
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		font		f_menu
+		click		{ cmd "mn_pop;" }
 	}
 }
 
@@ -762,80 +777,80 @@ menu popup_list
 menu popup_button
 {
 	{
-		pos "264 262"
-		size	"496 247"
+		pos			"264 262"
+		size		"496 247"
 		dragbutton	true
 		closebutton	true
 	}
 
 	zone popup
 	{
-		invis true
+		invis		true
 	}
 
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	text title
 	{
-		pos		"248 30"
+		pos			"248 30"
+		width		"446"
 		textalign	uc
-		width	"446"
-		rows	"1"
+		rows		"1"
 		textid		TEXT_POPUP
 	}
 
 	text popup_text
 	{
-		pos		"26 58"
+		pos			"26 58"
+		size		"446 128"
 		textid		TEXT_POPUP_INFO
 		lineheight	16
 		tabwidth	100
-		size	"446 128"
-		rows	8
+		rows		8
 		scrollbar	true
 		wheel
 	}
 
 	button popup_button_1
 	{
-		invis	true
-		tooltip	"*cvar mn_popup_button_tooltip1"
-		image	menu/button_green_small	blend true
-		pos		"26 192"
-		size	"176 32"
-		string	"*cvar mn_popup_button_text1"
-		font	f_menu
-		color	"0 0.5 0 1"
+		string		"*cvar mn_popup_button_text1"
+		tooltip		"*cvar mn_popup_button_tooltip1"
+		image		menu/button_green_small	blend true
+		pos			"26 192"
+		size		"176 32"
+		font		f_menu
+		color		"0 0.5 0 1"
+		invis		true
 	}
 
 	button popup_button_2
 	{
-		invis	true
-		tooltip	"*cvar mn_popup_button_tooltip2"
-		image	menu/button_green_small	blend true
-		size	"176 32"
-		pos		"296 192"
-		string	"*cvar mn_popup_button_text2"
-		font	f_menu
-		color	"0 0.5 0 1"
+		string		"*cvar mn_popup_button_text2"
+		tooltip		"*cvar mn_popup_button_tooltip2"
+		image		menu/button_green_small	blend true
+		size		"176 32"
+		pos			"296 192"
+		font		f_menu
+		color		"0 0.5 0 1"
+		invis		true
 	}
 
 	button popup_button_3
 	{
-		invis	true
-		tooltip	"*cvar mn_popup_button_tooltip3"
-		image	menu/button_green_small	blend true
-		pos		"296 156"
-		size	"176 32"
-		string	"*cvar mn_popup_button_text3"
-		font	f_menu
-		color	"0 0.5 0 1"
+		string		"*cvar mn_popup_button_text3"
+		tooltip		"*cvar mn_popup_button_tooltip3"
+		image		menu/button_green_small	blend true
+		pos			"296 156"
+		size		"176 32"
+		font		f_menu
+		color		"0 0.5 0 1"
+		invis		true
 	}
 
 	func init
@@ -844,7 +859,7 @@ menu popup_button
 
 	func leave
 	{
-		cmd		"mn_pop;"
+		cmd	"mn_pop;"
 	}
 }
 
@@ -855,104 +870,83 @@ menu popup_button
 menu popup_intercept_ready
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Ready"
-		pos		"26 18"
-		font	f_big
+		string		"_Ready"
+		pos			"26 18"
+		size		"400 25"
+		font		f_big
 	}
 
 	string name_label
 	{
-		string	"_Aircraft reached desired location - what to do?"
-		pos		"26 58"
+		string		"_Aircraft reached desired location - what to do?"
+		pos			"26 58"
+		size		"450 40"
+		longlines	wrap
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"46 188"
-		size	"176 32"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"134 204"
-		align	cc
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"46 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 
-	pic bt_go
+	button bt_go
 	{
-		tooltip	"_Enter the battlefield"
-		image	menu/multi_buttons3
-		pos		"266 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
-		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
-		click	{ cmd "game_go;" }
-	}
-	string string_go
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Enter"
-		pos	"354 204"
-		align	cc
+		string		"_Enter"
+		tooltip		"_Enter the battlefield"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"266 188"
+		size		"176 32"
+		click		{ cmd "game_go;" }
 	}
 
-	pic bt_auto_go
+	button bt_auto_go
 	{
 		visiblewhen	"cp_mission_autogo_available == 1"
-		tooltip	"_Automatically finish mission"
-		image	menu/multi_buttons3
-		pos		"266 148"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
-		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
-		click	{ cmd "cp_mission_autogo;" }
-	}
-	string string_auto_go
-	{
-		visiblewhen "cp_mission_autogo_available == 1"
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Auto mission"
-		pos		"354 164"
-		align	cc
+
+		string		"_Auto mission"
+		tooltip		"_Automatically finish mission"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"266 148"
+		size		"176 32"
+		click		{ cmd "cp_mission_autogo;" }
 	}
 
 	func init
 	{
-		cmd 	"cp_missionauto_check;"
+		cmd "cp_missionauto_check;"
 	}
 }
 
@@ -963,101 +957,79 @@ menu popup_intercept_ready
 menu popup_baseattack
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
-		modal	true				// we can't click out
-		preventtypingescape true	// we can't use ESC
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
+		modal		true				// we can't click out
+		preventtypingescape true		// we can't use ESC
 	}
 
 	zone popup
 	{
-		invis true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Base is under attack"
-		pos		"26 18"
-		font	f_big
+		string		"_Base is under attack"
+		pos			"26 18"
+		size		"400 25"
+		font		f_big
 	}
 
 	text description
 	{
-		pos	"26 58"
-		textid	TEXT_POPUP
-		width	"450"
-		rows	5
+		pos			"26 58"
+		textid		TEXT_POPUP
+		size		"450 80"
+		lineheight	16
+		rows		5
 	}
 
-	pic bt_go
+	button bt_go
 	{
-		tooltip	"_Enter the battlefield"
-		image	menu/multi_buttons3
-		pos		"266 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out		{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
-		in		{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
-		click	{ cmd "game_go;" }
-	}
-	string string_go
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Enter"
-		pos		"354 204"
-		align	cc
+		string		"_Enter"
+		tooltip		"_Enter the battlefield"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"266 188"
+		size		"176 32"
+		click		{ cmd "game_go;" }
 	}
 
-	pic bt_auto_go
+	button bt_auto_go
 	{
-		tooltip	"_Automatically finish mission"
-		image	menu/multi_buttons3
-		pos		"266 148"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out		{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
-		in		{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
-		click	{ cmd "cp_mission_autogo;" }
-	}
-	string string_auto_go
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Auto mission"
-		pos		"354 164"
-		align	cc
+		string		"_Auto mission"
+		tooltip		"_Automatically finish mission"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"266 148"
+		size		"176 32"
+		click		{ cmd "cp_mission_autogo;" }
 	}
 
-	pic bt_enter_base
+	button bt_enter_base
 	{
-		tooltip	"_Enter base before the battle"
-		image	menu/multi_buttons3
-		pos		"36 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out		{ *bt_enter_base image menu/multi_buttons3 *string_enter_base color "0 0.5 0 1" }
-		in		{ *bt_enter_base image menu/multi_buttons3a *string_enter_base color "1 1 1 1" }
-		click	{ cmd "mn_push bases;" }
-	}
-	string string_enter_base
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Enter base"
-		pos		"124 204"
-		align	cc
+		string		"_Enter base"
+		tooltip		"_Enter base before the battle"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"36 188"
+		size		"176 32"
+		click		{ cmd "mn_push bases;" }
 	}
 
 	func init
@@ -1072,69 +1044,63 @@ menu popup_baseattack
 menu popup_transferbaselist
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Select base to transfer to"
-		pos		"26 18"
-		font	f_big
+		string		"_Select base to transfer to"
+		pos			"26 18"
+		size		"400 25"
+		font		f_big
 	}
 
 	string info
 	{
-		string	"_Choose a base to host alien bodies:"
-		pos		"26 54"
+		string		"_Choose a base to host alien bodies:"
+		pos			"26 54"
+		size		"450 20"
 	}
 
 	text trans_baselist
 	{
 		textid		TEXT_LIST
-		pos		"26 74"
-		size	"450 144"
+		pos			"26 74"
+		size		"450 112"
 		lineheight	16
 		tabwidth	100
-		rows	9
+		rows		7
+		mousefx		true
 		wheel
 		click
-		rclick	{ cmd "mn_pop; aircraft_return;" }
-		mousefx	true
+		rclick		{ cmd "mn_pop; aircraft_return;" }
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		pos		"266 188"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;aircraft_return;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"354 204"
-		align	cc
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"266 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;aircraft_return;" }
 	}
 }
 
@@ -1144,149 +1110,137 @@ menu popup_transferbaselist
 menu popup_newbase
 {
 	{
-		pos "264 262"
-		size	"496 247"
+		pos			"264 262"
+		size		"496 247"
 		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_New base"
-		pos		"26 18"
-		font	f_big
+		string		"_New base"
+		pos			"26 18"
+		size		"400 25"
+		font		f_big
 	}
 
 	string name_label
 	{
-		string	"_Name:"
-		pos		"26 58"
+		string		"_Name:"
+		pos			"26 58"
+		size		"450 20"
 	}
 	textentry name
 	{
-		string	"*cvar mn_base_title"
-		pos		"46 73"
-		size	"440 32"
-		font	f_big
+		string		"*cvar mn_base_title"
+		pos			"46 73"
+		size		"420 25"
+		font		f_big
 	}
 
 	pic bt_nameedit
 	{
-		tooltip "_Rename your base"
-		image   menu/buttons_small
-		pos     "26 78"
-		texl    "0 48"
-		texh    "16 64"
-		mousefx false
-		click {
-			cmd "mn_edittextentry name;"
-		}
+		tooltip		"_Rename your base"
+		image		menu/buttons_small
+		pos			"26 78"
+		texl		"0 48"
+		texh		"16 64"
+		mousefx		false
+		click		{ cmd "mn_edittextentry name;" }
 	}
 
 	string cost_label
 	{
-		string	"_Cost:"
-		pos		"26 98"
+		string		"_Cost:"
+		pos			"26 98"
+		size		"200 20"
 	}
 	string cost
 	{
-		string	"*cvar mn_base_newbasecost"
-		pos		"26 113"
-		font	f_big
+		string		"*cvar mn_base_newbasecost"
+		pos			"26 113"
+		size		"200 25"
+		font		f_big
 	}
 
 	// START WITH EMPLOYEES
 	string start_employees_str
 	{
 		visiblewhen	"mn_base_count <= 0"
-		string	"_Start with employees:"
-		pos		"451 98"
-		align	ur
+		string		"_Start with employees:"
+		pos			"251 98"
+		size		"200 20"
+		textalign	ur
 	}
 	checkbox start_employees
 	{
 		visiblewhen	"mn_base_count <= 0"
-		current	"*cvar cl_start_employees"
-		pos		"456 98"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-		tooltip	"_Employees already hired at campaign start"
+		tooltip		"_Employees already hired at campaign start"
+		current		"*cvar cl_start_employees"
+		pos			"456 98"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	// START WITH BUILDINGS
 	string start_buildings_str
 	{
 		visiblewhen	"mn_base_count <= 0"
-		string	"_Start with buildings:"
-		pos		"451 123"
-		align	ur
+		string		"_Start with buildings:"
+		pos			"251 123"
+		size		"200 20"
+		textalign	ur
 	}
 	checkbox start_building
 	{
 		visiblewhen	"mn_base_count <= 0"
-		current	"*cvar cl_start_buildings"
-		pos		"456 123"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-		tooltip	"_Buildings already built in the initial base"
+		tooltip		"_Buildings already built in the initial base"
+		current		"*cvar cl_start_buildings"
+		pos			"456 123"
+		image		"menu/checkbox_blue"
+		size		"20 18"
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"26 188"
-		size	"176 32"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"26 188"
+		size		"176 32"
 		click	{
 			*name mousefx false
 			cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;"
 		}
 	}
-	pic bt_build
+	button bt_build
 	{
-		tooltip	"_Build the base"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"296 188"
-		size	"176 32"
-		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
-		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
+		string		"_Build"
+		tooltip		"_Build the base"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"296 188"
+		size		"176 32"
 		click	{
 			*name mousefx false
 			cmd "mn_pop;mn_build_base;"
 		}
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"114 204"
-		align	cc
-	}
-	string string_build
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Build"
-		pos		"384 204"
-		align	cc
 	}
 }
 
@@ -1296,314 +1250,312 @@ menu popup_newbase
 menu popup_newinstallation_type
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_New installation"
-		pos	"26 18"
-		font	f_big
+		string		"_New installation"
+		pos			"26 18"
+		size		"400 25"
+		font		f_big
 	}
 
 	string type_label
 	{
-		string	"_Type"
-		pos	"86 48"
-		font	f_normal
+		string		"_Type"
+		pos			"86 50"
+		size		"140 20"
+		font		f_normal
 	}
 	string buildtime_label
 	{
-		string	"_Build Time"
-		pos	"326 48"
-		align	uc
-		font	f_normal
+		string		"_Build Time"
+		pos			"226 50"
+		size		"130 20"
+		textalign	ur
+		font		f_normal
 	}
 	string cost_label
 	{
-		string	"_Cost"
-		pos	"421 48"
-		align	uc
-		font	f_normal
+		string		"_Cost"
+		pos			"356 50"
+		size		"100 20"
+		textalign	ur
+		font		f_normal
 	}
 
 	pic bt_highlight
 	{
-		image	"menu/popup_button_hl"
-		invis	true
+		image		"menu/popup_button_hl"
+		invis		true
 	}
 
 	pic radar_icon
 	{
-		image	"geoscape/radar"
-		pos	"46 78"
-		in	{ *bt_highlight invis false *bt_highlight pos "26 76" }
-		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
+		image		"geoscape/radar"
+		pos			"46 78"
 	}
 	string radar_type
 	{
-		string	"_Radar tower"
-		pos	"86 78"
-		size	"389 18"
-		font	f_small
-		in	{ *bt_highlight invis false *bt_highlight pos "26 76" }
-		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
+		string		"_Radar tower"
+		pos			"86 78"
+		size		"170 18"
+		font		f_small
 	}
 	string radar_buildtime
 	{
-		string	"*cvar mn_installation_radartower_buildtime"
-		pos	"351 78"
-		align	ur
-		font	f_small
+		string		"*cvar mn_installation_radartower_buildtime"
+		pos			"256 78"
+		size		"100 20"
+		textalign	ur
+		font		f_small
 	}
 	string radar_cost
 	{
-		string	"*cvar mn_installation_radartower_cost"
-		pos	"451 78"
-		align	ur
-		font	f_small
+		string		"*cvar mn_installation_radartower_cost"
+		pos			"356 78"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+	zone click_radar
+	{
+		pos			"30 78"
+		size		"440 20"
+		in			{ *bt_highlight invis false *bt_highlight pos "26 76" }
+		out			{ *bt_highlight invis true }
+		click		{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
 	}
 
 	pic sam_icon
 	{
-		image	"geoscape/defence"
-		pos	"46 98"
-		in	{ *bt_highlight invis false *bt_highlight pos "26 96" }
-		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
+		image		"geoscape/defence"
+		pos			"46 98"
 	}
 	string sam_type
 	{
-		string	"_SAM Site"
-		pos	"86 98"
-		size	"389 18"
-		font	f_small
-		in	{ *bt_highlight invis false *bt_highlight pos "26 96" }
-		out	{ *bt_highlight invis true }
-		click	{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
+		string		"_SAM Site"
+		pos			"86 98"
+		size		"170 18"
+		font		f_small
 	}
 	string sam_buildtime
 	{
-		string	"*cvar mn_installation_samsite_buildtime"
-		pos	"351 98"
-		align	ur
-		font	f_small
+		string		"*cvar mn_installation_samsite_buildtime"
+		pos			"256 98"
+		size		"100 20"
+		textalign	ur
+		font		f_small
 	}
 	string sam_cost
 	{
-		string	"*cvar mn_installation_samsite_cost"
-		pos	"451 98"
-		align	ur
-		font	f_small
+		string		"*cvar mn_installation_samsite_cost"
+		pos			"356 98"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+	zone click_sam
+	{
+		pos			"30 98"
+		size		"440 20"
+		in			{ *bt_highlight invis false *bt_highlight pos "26 96" }
+		out			{ *bt_highlight invis true }
+		click		{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
 	}
 
-	// disabled for 2.3
-	//pic ufoyard_icon
-	//{
-	//	image	"geoscape/ufoyard"
-	//	pos	"46 118"
-	//	in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
-	//	out	{ *bt_highlight invis true }
-	//	click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
-	//}
-	//string ufoyard_type
-	//{
-	//	string	"_UFO Yard"
-	//	pos	"86 118"
-	//	size	"389 18"
-	//	font	f_small
-	//	in	{ *bt_highlight invis false *bt_highlight pos "26 116" }
-	//	out	{ *bt_highlight invis true }
-	//	click	{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
-	//}
-	//string ufoyard_buildtime
-	//{
-	//	string	"*cvar mn_installation_ufoyard_buildtime"
-	//	pos	"351 118"
-	//	align	ur
-	//	font	f_small
-	//}
-	//string ufoyard_cost
-	//{
-	//	string	"*cvar mn_installation_ufoyard_cost"
-	//	pos	"451 118"
-	//	align	ur
-	//	font	f_small
-	//}
-
-	pic bt_cancel
+	pic ufoyard_icon
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		pos	"176 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;" }
+		image		"geoscape/ufoyard"
+		pos			"46 118"
 	}
-	string string_cancel
+	string ufoyard_type
 	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos	"264 204"
-		align	cc
+		string		"_UFO Yard"
+		pos			"86 118"
+		size		"170 18"
+		font		f_small
+	}
+	string ufoyard_buildtime
+	{
+		string		"*cvar mn_installation_ufoyard_buildtime"
+		pos			"256 118"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+	string ufoyard_cost
+	{
+		string		"*cvar mn_installation_ufoyard_cost"
+		pos			"356 118"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+	zone click_ufoyard
+	{
+		pos			"30 118"
+		size		"440 20"	
+		in			{ *bt_highlight invis false *bt_highlight pos "26 116" }
+		out			{ *bt_highlight invis true }
+		click		{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
+	}
+	
+	
+	button bt_cancel
+	{
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"176 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;" }
 	}
 }
 
 menu popup_newinstallation
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title_radar
 	{
 		visiblewhen "mn_installation_type eq radartower"
-		string	"_New radar tower"
-		pos	"26 18"
-		font	f_big
+		string		"_New radar tower"
+		pos			"26 18"
+		size		"420 25"
+		font		f_big
 	}
 	string title_samsite
 	{
 		visiblewhen "mn_installation_type eq samsite"
-		string	"_New SAM site"
-		pos	"26 18"
-		font	f_big
+		string		"_New SAM site"
+		pos			"26 18"
+		size		"420 25"
+		font		f_big
 	}
 	string title_ufoyard
 	{
 		visiblewhen "mn_installation_type eq ufoyard"
-		string	"_New UFO yard"
-		pos	"26 18"
-		font	f_big
+		string		"_New UFO yard"
+		pos			"26 18"
+		size		"420 25"
+		font		f_big
 	}
 
 	string name_label
 	{
-		string	"_Name:"
-		pos		"26 58"
+		string		"_Name:"
+		pos			"26 58"
+		size		"200 20"
 	}
 	textentry name
 	{
-		string	"*cvar mn_installation_title"
-		pos	"46 73"
-		size	"440 32"
-		font	f_big
+		string		"*cvar mn_installation_title"
+		pos			"46 73"
+		size		"420 32"
+		font		f_big
 	}
 
 	pic bt_nameedit
 	{
-		tooltip "_Rename installation"
-		image   menu/buttons_small
-		pos     "26 78"
-		texl    "0 48"
-		texh    "16 64"
-		mousefx false
-		click {
-			cmd "mn_edittextentry name;"
-		}
+		tooltip		"_Rename installation"
+		image		menu/buttons_small
+		pos			"26 78"
+		texl		"0 48"
+		texh		"16 64"
+		mousefx		false
+		click		{ cmd "mn_edittextentry name;" }
 	}
 
 	string cost_label
 	{
-		string	"_Cost:"
-		pos	"26 118"
+		string		"_Cost:"
+		pos			"26 118"
+		size		"200 20"
 	}
 
 	string cost_radartower
 	{
 		visiblewhen "mn_installation_type eq radartower"
-		string	"*cvar mn_installation_radartower_cost"
-		pos	"26 133"
-		font	f_big
+		string		"*cvar mn_installation_radartower_cost"
+		pos			"26 133"
+		size		"200 25"
+		font		f_big
 	}
 	string cost_samsite
 	{
 		visiblewhen "mn_installation_type eq samsite"
-		string	"*cvar mn_installation_samsite_cost"
-		pos	"26 133"
-		font	f_big
+		string		"*cvar mn_installation_samsite_cost"
+		pos			"26 133"
+		size		"200 25"
+		font		f_big
 	}
 	string cost_ufoyard
 	{
 		visiblewhen "mn_installation_type eq ufoyard"
-		string	"*cvar mn_installation_ufoyard_cost"
-		pos	"26 133"
-		font	f_big
+		string		"*cvar mn_installation_ufoyard_cost"
+		pos			"26 133"
+		size		"200 25"
+		font		f_big
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"26 188"
-		size	"176 32"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"26 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
 	}
-	pic bt_build
+	button bt_build
 	{
-		tooltip	"_Build the radar tower"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"296 188"
-		size	"176 32"
-		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
-		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos	"114 204"
-		align	cc
-	}
-	string string_build
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Build"
-		pos	"384 204"
-		align	cc
+		string		"_Build"
+		tooltip		"_Build the radar tower"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"296 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
 	}
 }
 
@@ -1618,191 +1570,158 @@ menu samsite
 menu radartower
 {
 	{
-		pos "284 282"
-		size	"496 247"
-		dragbutton true
+		pos			"284 282"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	textentry title
 	{
-		string	"*cvar mn_installation_title"
-		pos	"26 18"
-		size	"440 32"
-		font	f_big
+		string		"*cvar mn_installation_title"
+		pos			"26 17"
+		size		"420 30"
+		font		f_big
 	}
 
 	string info
 	{
-		string	"_No manangeable options for a radartower"
-		pos	"26 118"
+		string		"_No manangeable options for a radartower"
+		pos			"26 118"
+		size		"440 20"
 	}
 
-	pic bt_back
+	button bt_back
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		pos	"296 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *string_back color "0 0.5 0 1" *bt_back image menu/multi_buttons3 }
-		in	{ *string_back color "1 1 1 1" *bt_back image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;" }
-	}
-	string string_back
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Back"
-		pos	"384 204"
-		align	cc
+		string		"_Back"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"296 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
 
 menu popup_installationstatus
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Installation Status"
-		pos	"26 18"
-		font	f_big
+		string		"_Installation Status"
+		pos			"26 17"
+		size		"420 30"
+		font		f_big
 	}
 
 	string name_label
 	{
-		string	"_Name:"
-		pos		"26 58"
+		string		"_Name:"
+		pos			"26 58"
+		size		"150 20"
 	}
 	textentry name
 	{
-		string	"*cvar mn_installation_title"
-		pos	"46 73"
-		size	"440 32"
-		font	f_big
-		change {
-			cmd "mn_installation_changename;"
-		}
+		string		"*cvar mn_installation_title"
+		pos			"46 73"
+		size		"420 32"
+		font		f_big
+		change		{ cmd "mn_installation_changename;" }
 	}
 
 	pic bt_nameedit
 	{
-		tooltip "_Rename installation"
-		image   menu/buttons_small
-		pos     "26 78"
-		texl    "0 48"
-		texh    "16 64"
-		mousefx false
-		click {
-			cmd "mn_edittextentry name;"
-		}
+		tooltip		"_Rename installation"
+		image		menu/buttons_small
+		pos			"26 78"
+		texl		"0 48"
+		texh		"16 64"
+		mousefx		false
+		click		{ cmd "mn_edittextentry name;" }
 	}
 
 	string buildtime_label
 	{
 		visiblewhen "mn_installation_timetobuild ne -"
-		string	"_Time to build:"
-		pos	"26 118"
+		string		"_Time to build:"
+		pos			"26 118"
+		size		"100 20"
 	}
-
 	string buildtime
 	{
 		visiblewhen "mn_installation_timetobuild ne -"
-		string	"*cvar mn_installation_timetobuild"
-		pos	"126 118"
+		string		"*cvar mn_installation_timetobuild"
+		pos			"126 118"
+		size		"100 20"
+		textalign	uc
 	}
 
-	pic bt_back
+	button bt_back
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		pos	"26 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *string_back color "0 0.5 0 1" *bt_back image menu/multi_buttons3 }
-		in	{ *string_back color "1 1 1 1" *bt_back image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;" }
+		string		"_Back"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"26 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
-	pic bt_enter
-	{
-//		visiblewhen "mn_installation_type eq samsite"
-		visiblewhen "mn_installation_timetobuild eq -"
-		tooltip	"_Manage installation"
-		image	menu/multi_buttons3
-		pos	"296 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *string_enter color "0 0.5 0 1" *bt_enter image menu/multi_buttons3 }
-		in	{ *string_enter color "1 1 1 1" *bt_enter image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_push *mn_installation_type;" }
-	}
-	pic bt_destroy
-	{
-		tooltip	"_Destroy installation"
-		image	menu/multi_buttons3
-		pos	"296 149"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *string_destroy color "0 0.5 0 1" *bt_destroy image menu/multi_buttons3 }
-		in	{ *string_destroy color "1 1 1 1" *bt_destroy image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_destroyinstallation;" }
-	}
-	string string_back
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Back"
-		pos	"114 204"
-		align	cc
-	}
-	string string_enter
+	button bt_enter
 	{
 		visiblewhen "mn_installation_timetobuild eq -"
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Manage"
-		pos	"384 204"
-		align	cc
+		string		"_Manage"
+		tooltip		"_Manage installation"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"296 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_push *mn_installation_type;" }
 	}
-	string string_destroy
+	button bt_destroy
 	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Destroy"
-		pos	"384 164"
-		align	cc
+		string		"_Destroy"
+		tooltip		"_Destroy installation"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"296 149"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_destroyinstallation;" }
 	}
 
 	func init
@@ -1819,120 +1738,118 @@ menu popup_intercept
 {
 
 	{
-		pos "124 192"
-		size	"777 402"
-		dragbutton true
+		pos			"124 192"
+		size		"777 402"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos		"0 0"
-		size	"777 402"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"777 402"
+		blend		true
 	}
 
 	pic vertical_bar
 	{
-		mousefx	true
-		pos		"486 -6"
-		image	menu/vertical_bar
-		texl	"0 0"
-		texh	"2 512"
+		mousefx		true
+		pos			"486 0"
+		image		menu/vertical_bar
+		texl		"0 6"
+		texh		"2 512"
 	}
 
 	string title
 	{
-		string	"_Select aircraft"
-		pos		"246 18"
-		font	f_big
-		align	uc
+		string		"_Select aircraft"
+		pos			"27 17"
+		size		"449 28"
+		font		f_big
+		textalign	uc
 	}
 
 	string title2
 	{
-		string	"_Select base"
-		pos		"626 18"
-		font	f_big
-		align	uc
+		string		"_Select base"
+		pos			"500 17"
+		size		"250 28"
+		font		f_big
+		textalign	uc
 	}
 
 	string name_label
 	{
-		string	"_Name:"
-		pos		"26 48"
+		string		"_Name:"
+		pos			"26 48"
+		size		"140 20" 
 	}
 
 	string status_label
 	{
-		string	"_Status:"
-		pos		"176 48"
+		string		"_Status:"
+		pos			"176 48"
+		size		"140 20" 
+	}
+
+	string craft_base_label
+	{
+		string		"_Base:"
+		pos			"326 48"
+		size		"150 20" 
 	}
 
 	string base_label
 	{
-		string	"_Base:"
-		pos		"326 48"
-	}
-
-	string base2_label
-	{
-		string	"_Base:"
-		pos		"501 48"
+		string		"_Base:"
+		pos			"501 48"
+		size		"250 20" 
 	}
 
 	text ships
 	{
-		pos		"26 74"
-		size	"460 260"
+		textid		TEXT_AIRCRAFT_LIST
+		pos			"26 74"
+		size		"460 260"
 		lineheight	20
 		tabwidth	150
-		mousefx	true
-		textid		TEXT_AIRCRAFT_LIST
-		wheel
-		rows	"13"
+		mousefx		true
+		rows		"13"
+		longlines	prettychop
 		click
 		rclick
-		longlines prettychop
+		wheel
 	}
 
 	text bases
 	{
-		pos		"501 74"
-		size	"250 260"
+		textid		TEXT_BASE_LIST
+		pos			"501 74"
+		size		"250 260"
 		lineheight	20
 		tabwidth	175
-		mousefx	true
-		textid		TEXT_BASE_LIST
-		rows	"13"
+		mousefx		true
+		rows		"13"
 		wheel
 		click
 		rclick
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"566 338"
-		size	"176 32"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"654 354"
-		align	cc
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"566 338"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -1944,90 +1861,86 @@ menu popup_mission
 {
 
 	{
-		pos	"124 192"
-		size	"777 402"
-		dragbutton true
+		pos			"124 192"
+		size		"777 402"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos		"0 0"
-		size	"777 402"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"777 402"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Select aircraft"
-		pos		"246 18"
-		font	f_big
-		align	uc
+		string		"_Select aircraft"
+		pos			"27 17"
+		size		"700 28"
+		font		f_big
+		textalign	uc
 	}
 
 	string name_label
 	{
-		string	"_Name:"
-		pos		"26 48"
+		string		"_Name:"
+		pos			"26 48"
+		size		"180 25"
 	}
 
 	string status_label
 	{
-		string	"_Status:"
-		pos		"216 48"
+		string		"_Status:"
+		pos			"216 48"
+		size		"180 25"
 	}
 
 	string base_label
 	{
-		string	"_Base:"
-		pos		"406 48"
+		string		"_Base:"
+		pos			"406 48"
+		size		"180 25"
 	}
 
 	string ETA_label
 	{
-		string	"_ETA:"
-		pos		"596 48"
+		string		"_ETA:"
+		pos			"596 48"
+		size		"150 25"
 	}
 
 	text ships
 	{
-		pos		"26 74"
-		size	"640 260"
-//		bgcolor	"1 1 1 0.6"
+		textid		TEXT_AIRCRAFT_LIST
+		pos			"26 74"
+		size		"640 260"
 		lineheight	20
 		tabwidth	190
-		mousefx	true
-		textid		TEXT_AIRCRAFT_LIST
-		wheel
+		mousefx		true
 		rows	"13"
 		click
 		rclick
+		wheel
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"566 338"
-		size	"176 32"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"654 354"
-		align	cc
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"566 338"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -2038,77 +1951,72 @@ menu popup_mission
 menu popup_multi_selection
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
-		modal	true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
+		modal		true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Select item"
-		pos		"26 18"
-		font	f_big
+		string		"_Select item"
+		pos			"26 18"
+		size		"440 25"
+		font		f_big
 	}
 
 	string type_label
 	{
-		string	"_Type:"
-		pos		"26 48"
-		font	f_normal
+		string		"_Type:"
+		pos			"26 48"
+		size		"150 20"
+		font		f_normal
 	}
 
 	string name_label
 	{
-		string	"_Name:"
-		pos		"176 48"
-		font	f_normal
+		string		"_Name:"
+		pos			"176 48"
+		size		"150 20"
+		font		f_normal
 	}
 
 	text multi_select
 	{
-		pos		"26 78"
-		size	"420 100"
+		textid		TEXT_MULTISELECTION
+		pos			"26 78"
+		size		"420 100"
 		lineheight	20
 		tabwidth	150
-		textid		TEXT_MULTISELECTION
+		rows		5
+		mousefx		true
+		click		{ cmd "multi_select;" }
 		wheel
-		rows	5
-		mousefx	true
-		click	{ cmd "multi_select;" }
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"26 188"
-		size	"176 32"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;mn_mapaction_reset;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"114 204"
-		align	cc
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"26 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -2120,138 +2028,131 @@ menu popup_multi_selection
 menu popup_aircraft
 {
 	{
-		pos "264 262"
-		size	"496 247"
-		dragbutton true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	string title
 	{
-		string	"_Aircraft"
-		pos		"26 14"
-		font	f_big
+		string		"_Aircraft"
+		pos			"26 14"
+		size		"440 30"
+		font		f_big
 	}
 
 	string action_label
 	{
-		string	"_Action:"
-		pos		"26 48"
-		font	f_normal
+		string		"_Action:"
+		pos			"26 48"
+		size		"150 25"
+		font		f_normal
 	}
 
 	string description_label
 	{
-		string	"_Description:"
-		pos		"176 48"
-		font	f_normal
+		string		"_Description:"
+		pos			"176 48"
+		size		"200 25"
+		font		f_normal
 	}
 
 	text popup_aircraft_action
 	{
-		pos		"26 78"
-		size	"420 100"
+		textid		TEXT_POPUP
+		pos			"26 78"
+		size		"420 100"
 		lineheight	20
 		tabwidth	150
-		textid		TEXT_POPUP
-		rows	5
-		mousefx	true
+		rows		5
+		mousefx		true
 		click
 		wheel
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos		"26 188"
-		size	"176 32"
-		out		{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in		{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;" }
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"26 188"
+		size		"176 32"
+		click		{ cmd "mn_pop;" }
 	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos		"114 204"
-		align	cc
-	}
-
 }
 
 menu popup
 {
 	{
-		pos "264 262"
-		size	"496 247"
+		pos			"264 262"
+		size		"496 247"
 		dragbutton	true
 		closebutton	true
 	}
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 247"
+		blend		true
 	}
 
 	text title
 	{
-		pos		"176 18"
-		textalign	uc
-		width	"446"
-		rows	"1"
 		textid		TEXT_POPUP
+		pos			"176 18"
+		width		"446"
+		rows		"1"
+		textalign	uc
 	}
 
 	text popup_text
 	{
-		pos		"26 58"
 		textid		TEXT_POPUP_INFO
+		pos			"26 58"
+		size		"446 128"
 		lineheight	16
 		tabwidth	100
-		size	"446 128"
-//		bgcolor	"1 1 1 0.5"
-		rows	8
+		rows		8
 		scrollbar	true
 		wheel
 	}
 	button button_ok
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/button_green_small
-		blend	true
-		pos		"260 180"
-		width	"200"
-		click	{ cmd "mn_pop;" }
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_OK"
+		string		"_OK"
+		tooltip		"_Close this dialogue"
+		image		menu/button_green_small
+		blend		true
+		pos			"260 180"
+		width		"200"
+		font		f_menu
+		color		"0 0.5 0 1"
+		click		{ cmd "mn_pop;" }
 	}
 
 	func leave
 	{
-		cmd		"mn_pop;"
+		cmd 	"mn_pop;"
 	}
 }
 
@@ -2262,8 +2163,8 @@ menu popup
 menu messageoptions
 {
 	{
-		pos	"256 256"
-		size	"496 496"
+		pos			"256 256"
+		size		"496 496"
 		dragbutton	true
 		closebutton	true
 		modal		true
@@ -2271,110 +2172,102 @@ menu messageoptions
 
 	zone popup
 	{
-		invis	true
+		invis		true
 	}
 
 	windowpanel back
 	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 496"
-		blend	true
-	}
-
-	func init
-	{
-		cmd "game_timestop;msgoptions_init;msgoptions_backup;"
-	}
-
-	func close
-	{
-		cmd "msgoptions_restore;"
+		image		menu/popup_alpha_tile
+		pos			"0 0"
+		size		"496 496"
+		blend		true
 	}
 
 	button button_apply
 	{
-		pos	"30 400"
-		size "208 48"
-		click	{ cmd "mn_pop;msgoptions_backup;" }
-		image	menu/button_green_small
-		blend	true
-		font	f_menu
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Apply"
-		tooltip "_Apply changes"
+		string		"_Apply"
+		tooltip		"_Apply changes"
+		pos			"30 400"
+		size		"208 48"
+		image		menu/button_green_small
+		blend		true
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;msgoptions_backup;" }
 	}
 
 	button button_revert
 	{
-		pos	"256 400"
-		size "208 48"
-		click	{ cmd "mn_pop;" }
-		image	menu/button_green_small
-		blend	true
-		font	f_menu
-		color	"0 0.5 0 1"
+		string		"_Cancel"
+		tooltip		"_Revert changes"
+		pos			"256 400"
+		size		"208 48"
+		image		menu/button_green_small
+		blend		true
+		font		f_menu
+		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		string	"_Cancel"
-		tooltip "_Revert changes"
+		click		{ cmd "mn_pop;" }
 	}
 
 	string title
 	{
-		string	"_Pause/message settings"
-		pos	"34 20"
-		font	f_big
+		string		"_Pause/message settings"
+		pos			"34 18"
+		size		"420 25"
+		font		f_big
 	}
 
 	string header_messagetype
 	{
-		string	"_Notify type"
-		pos		"30 60"
-		font	f_big
+		string		"_Notify type"
+		pos			"30 60"
+		size		"300 25"
+		font		f_big
 	}
 
 	pic header_pause
 	{
-		tooltip	"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
-		pos		"356 60"
-		image	menu/notify_pause
-		click { cmd "msgoptions_setall pause 1;" }
-		rclick { cmd "msgoptions_setall pause 0;" }
+		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
+		pos			"356 60"
+		image		menu/notify_pause
+		click		{ cmd "msgoptions_setall pause 1;" }
+		rclick		{ cmd "msgoptions_setall pause 0;" }
 	}
 
 	pic header_notify
 	{
-		tooltip	"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
-		pos		"386 60"
-		image	menu/notify_notice
-		click { cmd "msgoptions_setall notify 1;" }
-		rclick { cmd "msgoptions_setall notify 0;" }
+		tooltip		"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
+		pos			"386 60"
+		image		menu/notify_notice
+		click		{ cmd "msgoptions_setall notify 1;" }
+		rclick		{ cmd "msgoptions_setall notify 0;" }
 	}
 
 	pic header_sound
 	{
-		tooltip	"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
-		pos		"416 60"
-		image	menu/notify_sound
-		click { cmd "msgoptions_setall sound 1;" }
-		rclick { cmd "msgoptions_setall sound 0;" }
+		tooltip		"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
+		pos			"416 60"
+		image		menu/notify_sound
+		click		{ cmd "msgoptions_setall sound 1;" }
+		rclick		{ cmd "msgoptions_setall sound 0;" }
 	}
 
 	text messagetypes
 	{
-		color	"0 .78 0 1"
 		textid		TEXT_MESSAGEOPTIONS
-		rows	"12"
+		color		"0 .78 0 1"
+		rows		"12"
 		lineheight	"25"
-		pos		"30 90"
-		size	"315 300"
-		wheel	{ cmd "msgoptions_scroll;" }
-		mousefx	true
-		longlines prettychop
-		click
+		pos			"30 90"
+		size		"315 300"
+		mousefx		true
+		longlines	prettychop
 		scrollbar	true
 		scrollbarleft true
+		click
+		wheel		{ cmd "msgoptions_scroll;" }
 	}
 
 	// ===================
@@ -2382,507 +2275,632 @@ menu messageoptions
 	// ===================
 
 	checkbox bt_pause0 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 90"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 0 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 90"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 0 pause;" }
 	}
 
 	checkbox bt_notify0 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 90"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 0 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 90"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 0 notify;" }
 	}
 
 	checkbox bt_sound0 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 90"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 0 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 90"
+		image		"menu/checkbox_blue"	size	"20 18"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 0 sound;" }
 	}
 
 	checkbox bt_pause1 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 115"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 1 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 115"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 1 pause;" }
 	}
 
 	checkbox bt_notify1 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 115"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 1 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 115"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 1 notify;" }
 	}
 
 	checkbox bt_sound1 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 115"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 1 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 115"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 1 sound;" }
 	}
 
 	checkbox bt_pause2 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 140"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 2 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 140"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 2 pause;" }
 	}
 
 	checkbox bt_notify2 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 140"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 2 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 140"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 2 notify;" }
 	}
 
 	checkbox bt_sound2 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 140"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 2 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 140"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 2 sound;" }
 	}
 
 	checkbox bt_pause3 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 165"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 3 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 165"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 3 pause;" }
 	}
 
 	checkbox bt_notify3 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 165"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 3 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 165"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 3 notify;" }
 	}
 
 	checkbox bt_sound3 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 165"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 3 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 165"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 3 sound;" }
 	}
 
 	checkbox bt_pause4 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 190"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 4 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 190"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 4 pause;" }
 	}
 
 	checkbox bt_notify4 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 190"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 4 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 190"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 4 notify;" }
 	}
 
 	checkbox bt_sound4 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 190"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 4 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 190"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 4 sound;" }
 	}
 
 	checkbox bt_pause5 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 215"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 5 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 215"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 5 pause;" }
 	}
 
 	checkbox bt_notify5 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 215"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 5 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 215"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 5 notify;" }
 	}
 
 	checkbox bt_sound5 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 215"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 5 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 215"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 5 sound;" }
 	}
 
 	checkbox bt_pause6 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 240"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 6 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 240"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0	
+		invis		true
+		change		{ cmd "msgoptions_toggle 6 pause;" }
 	}
 
 	checkbox bt_notify6 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 240"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 6 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 240"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 6 notify;" }
 	}
 
 	checkbox bt_sound6 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 240"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 6 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 240"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 6 sound;" }
 	}
 
 	checkbox bt_pause7 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 265"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 7 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 265"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 7 pause;" }
 	}
 
 	checkbox bt_notify7 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 265"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 7 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 265"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 7 notify;" }
 	}
 
 	checkbox bt_sound7 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 265"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 7 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 265"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 7 sound;" }
 	}
 
 	checkbox bt_pause8 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 290"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 8 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 290"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0	
+		invis		true
+		change		{ cmd "msgoptions_toggle 8 pause;" }
 	}
 
 	checkbox bt_notify8 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 290"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 8 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 290"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 8 notify;" }
 	}
 
 	checkbox bt_sound8 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 290"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 8 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 290"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 8 sound;" }
 	}
 
 	checkbox bt_pause9 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 315"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 9 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 315"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 9 pause;" }
 	}
 
 	checkbox bt_notify9 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 315"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 9 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 315"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 9 notify;" }
 	}
 
 	checkbox bt_sound9 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 315"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 9 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 315"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0	
+		invis		true
+		change		{ cmd "msgoptions_toggle 9 sound;" }
 	}
 
 	checkbox bt_pause10 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 340"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 10 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 340"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 10 pause;" }
 	}
 
 	checkbox bt_notify10 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 340"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 10 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 340"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		 true
+		change		{ cmd "msgoptions_toggle 10 notify;" }
 	}
 
 	checkbox bt_sound10 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 340"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 10 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 340"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 10 sound;" }
 	}
 
 	checkbox bt_pause11 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 365"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 11 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 365"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0	
+		invis		true
+		change		{ cmd "msgoptions_toggle 11 pause;" }
 	}
 
 	checkbox bt_notify11 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 365"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 11 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 365"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 11 notify;" }
 	}
 
 	checkbox bt_sound11 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 365"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 11 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 365"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 11 sound;" }
 	}
 
 	checkbox bt_pause12 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 390"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 12 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 390"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 12 pause;" }
 	}
 
 	checkbox bt_notify12 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 390"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 12 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 390"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 12 notify;" }
 	}
 
 	checkbox bt_sound12 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 390"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 12 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 390"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 12 sound;" }
 	}
 
 	checkbox bt_pause13 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 415"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 13 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 415"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 13 pause;" }
 	}
 
 	checkbox bt_notify13 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 415"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 13 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 415"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 13 notify;" }
 	}
 
 	checkbox bt_sound13 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 415"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 13 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 415"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 13 sound;" }
 	}
 
 	checkbox bt_pause14 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 440"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 14 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 440"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 14 pause;" }
 	}
 
 	checkbox bt_notify14 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 440"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 14 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 440"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 14 notify;" }
 	}
 
 	checkbox bt_sound14 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 440"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 14 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 440"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 14 sound;" }
 	}
 
 	checkbox bt_pause15 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 465"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 15 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 465"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 15 pause;" }
 	}
 
 	checkbox bt_notify15 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 465"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 15 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 465"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 15 notify;" }
 	}
 
 	checkbox bt_sound15 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 465"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 15 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 465"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 15 sound;" }
 	}
 
 	checkbox bt_pause16 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 490"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 16 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 490"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 16 pause;" }
 	}
 
 	checkbox bt_notify16 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 490"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 16 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 490"
+		image		"menu/checkbox_blue"
+		size		"20 18"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 16 notify;" }
 	}
 
 	checkbox bt_sound16 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 490"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 16 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 490"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 16 sound;" }
 	}
 
 	checkbox bt_pause17 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 515"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 17 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 515"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 17 pause;" }
 	}
 
 	checkbox bt_notify17 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 515"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 17 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 515"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0	
+		invis		true
+		change		{ cmd "msgoptions_toggle 17 notify;" }
 	}
 
 	checkbox bt_sound17 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 515"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 17 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 515"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 17 sound;" }
 	}
 
 	checkbox bt_pause18 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 540"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 18 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 540"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 18 pause;" }
 	}
 
 	checkbox bt_notify18 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 540"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 18 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 540"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 18 notify;" }
 	}
 
 	checkbox bt_sound18 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 540"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 18 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 540"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 18 sound;" }
 	}
 
 	checkbox bt_pause19 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 565"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 19 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 565"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 19 pause;" }
 	}
 
 	checkbox bt_notify19 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 565"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 19 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 565"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 19 notify;" }
 	}
 
 	checkbox bt_sound19 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 565"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 19 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 565"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 19 sound;" }
 	}
 
 	checkbox bt_pause20 {
-		tooltip "_enable or disable game stopping"
-		pos		"360 590"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change {	cmd "msgoptions_toggle 20 pause;" }
-		current 0	invis true
+		tooltip		"_enable or disable game stopping"
+		pos			"360 590"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 20 pause;" }
 	}
 
 	checkbox bt_notify20 {
-		tooltip	"_enable or disable displaying a notification message"
-		pos		"390 590"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 20 notify;" }
-		current 0	invis true
+		tooltip		"_enable or disable displaying a notification message"
+		pos			"390 590"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 20 notify;" }
 	}
 
 	checkbox bt_sound20 {
-		tooltip "_enable or disable playing sound"
-		pos		"420 590"
-		image	"menu/checkbox_blue"	size	"20 18"
-		change { cmd "msgoptions_toggle 20 sound;" }
-		current 0	invis true
+		tooltip		"_enable or disable playing sound"
+		pos			"420 590"
+		size		"20 18"
+		image		"menu/checkbox_blue"		
+		current		0
+		invis		true
+		change		{ cmd "msgoptions_toggle 20 sound;" }
 	}
 
 	// ===================
@@ -2923,4 +2941,13 @@ menu messageoptions
 		*bt_sound<1> invis true
 	}
 
+	func init
+	{
+		cmd "game_timestop;msgoptions_init;msgoptions_backup;"
+	}
+
+	func close
+	{
+		cmd "msgoptions_restore;"
+	}
 }
