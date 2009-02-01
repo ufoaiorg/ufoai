@@ -65,7 +65,6 @@ typedef struct aliensTmp_s {
  * Collecting aliens functions.
  */
 
-qboolean AL_IsTeamDefAlien(const struct teamDef_s const *td);
 void AL_FillInContainment(struct base_s *base);
 const char *AL_AlienTypeToName(int teamDescIdx);
 void AL_CollectingAliens(struct aircraft_s *aircraft);

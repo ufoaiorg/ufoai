@@ -1612,6 +1612,16 @@ int CHRSH_CharGetMaxExperiencePerMission (abilityskills_t skill)
 }
 
 /**
+ * @brief Check if a team definition is alien.
+ * @param[in] td Pointer to the team definition to check.
+ */
+qboolean CHRSH_IsTeamDefAlien (const teamDef_t const *td)
+{
+	return td->race == RACE_TAMAN || td->race == RACE_ORTNOK
+		|| td->race == RACE_BLOODSPIDER || td->race == RACE_SHEVAAR;
+}
+
+/**
  * @brief Templates for the different unit types. Each element of the array is a tuple that
  * indicates the minimum and the maximum value for the relevant ability or skill.
  */

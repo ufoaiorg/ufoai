@@ -2033,7 +2033,7 @@ void CL_ResetSinglePlayerData (void)
 	INVSH_InitInventory(invList);
 	/* Count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (AL_IsTeamDefAlien(&csi.teamDef[i]))
+		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			gd.numAliensTD++;
 	}
 }

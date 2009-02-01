@@ -878,7 +878,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	for (i = 0; i < alienCargoTypes; i++, cargo++) {		/* Aliens. */
 		if (cargo->amount_alive > 0) {
 			for (j = 0; j < gd.numAliensTD; j++) {
-				if (!AL_IsTeamDefAlien(&csi.teamDef[j]))
+				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer->hasAliens = qtrue;
@@ -890,7 +890,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 		}
 		if (cargo->amount_dead > 0) {
 			for (j = 0; j < gd.numAliensTD; j++) {
-				if (!AL_IsTeamDefAlien(&csi.teamDef[j]))
+				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
 					transfer->hasAliens = qtrue;
@@ -1086,7 +1086,7 @@ static void TR_TransferStart_f (void)
 		}
 	}
 	for (i = 0; i < gd.numAliensTD; i++) {		/* Aliens. */
-		if (!AL_IsTeamDefAlien(&csi.teamDef[i]))
+		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			transfer->hasAliens = qtrue;

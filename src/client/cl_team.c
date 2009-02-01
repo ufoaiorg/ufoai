@@ -217,7 +217,14 @@ ugv_t *CL_GetUGVByID (const char *ugvID)
 void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeType, const ugv_t *ugvType)
 {
 	char teamDefName[MAX_VAR];
-	const char *teamID = Com_ValueToStr(&team, V_TEAM, 0);
+	const char *teamID;
+
+	if (team != TEAM_ALIEN)
+		teamID = Com_ValueToStr(&team, V_TEAM, 0);
+	else {
+		/** @todo should not be hardcoded */
+		teamID = "taman";
+	}
 
 	memset(chr, 0, sizeof(*chr));
 

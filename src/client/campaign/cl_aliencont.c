@@ -139,16 +139,6 @@ qboolean AL_AddAlienTypeToAircraftCargo (const aircraft_t *aircraft, const teamD
  */
 
 /**
- * @brief Check if a team definition is alien.
- * @param[in] td Pointer to the team definition to check.
- */
-qboolean AL_IsTeamDefAlien (const teamDef_t const *td)
-{
-	return td->race == RACE_TAMAN || td->race == RACE_ORTNOK
-		|| td->race == RACE_BLOODSPIDER || td->race == RACE_SHEVAAR;
-}
-
-/**
  * @brief Prepares Alien Containment - names, states, and zeroed amount.
  * @param[in] base Pointer to the base with AC.
  * @sa B_BuildBase
@@ -163,7 +153,7 @@ void AL_FillInContainment (base_t *base)
 	containment = base->alienscont;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (!AL_IsTeamDefAlien(&csi.teamDef[i]))
+		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
 		if (counter >= MAX_ALIENCONT_CAP)
 			Sys_Error("Overflow in AL_FillInContainment");
@@ -456,7 +446,7 @@ static int AL_GetAlienIDX (const teamDef_t *alienType)
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (alienType == &csi.teamDef[i])
 			return index;
-		if (AL_IsTeamDefAlien(&csi.teamDef[i]))
+		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			index++;
 	}
 
@@ -475,7 +465,7 @@ int AL_GetAlienGlobalIDX (int idx)
 	int i, counter = 0;
 
 	for (i = 0; i < csi.numTeamDefs; i++) {
-		if (AL_IsTeamDefAlien(&csi.teamDef[i])) {
+		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i])) {
 			if (counter == idx)
 				return i;
 			counter++;

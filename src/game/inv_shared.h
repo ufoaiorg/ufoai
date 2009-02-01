@@ -734,6 +734,7 @@ int CHRSH_CharGetMaxExperiencePerMission(abilityskills_t skill);
 void CHRSH_CharGenAbilitySkills(character_t * chr, int team, employeeType_t type, qboolean multiplayer) __attribute__((nonnull));
 char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
 char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
+qboolean CHRSH_IsTeamDefAlien(const teamDef_t const *td) __attribute__((nonnull));
 
 /* ================================ */
 /*  INVENTORY MANAGEMENT FUNCTIONS  */
