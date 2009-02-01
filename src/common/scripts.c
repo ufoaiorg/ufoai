@@ -1681,8 +1681,7 @@ teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 int Com_GetCharacterValues (const char *team, character_t * chr)
 {
 	teamDef_t *td;
-	const char *str;
-	int i, gender;
+	int i;
 	int retry = 1000;
 
 	assert(chr);
@@ -1718,7 +1717,9 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 
 	/* get the models */
 	while (retry--) {
-		gender = rand() % NAME_LAST;
+		const char *str;
+		const int gender = rand() % NAME_LAST;
+
 		chr->gender = gender;
 
 		/* get name */
