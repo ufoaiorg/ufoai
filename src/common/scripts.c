@@ -1698,7 +1698,7 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	if (i < csi.numTeamDefs)
 		td = &csi.teamDef[i];
 	else {
-		Com_Printf("Com_GetCharacterValues: could not find team '%s' in team definitions\n", team);
+		Com_Error(ERR_DROP, "Com_GetCharacterValues: could not find team '%s' in team definitions", team);
 		return 0;
 	}
 
