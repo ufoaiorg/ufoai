@@ -244,6 +244,7 @@ static int CL_MoveMode (int length)
  */
 void CL_CharacterCvars (const character_t * chr)
 {
+	invList_t *weapon;
 	assert(chr);
 
 	Cvar_ForceSet("mn_name", chr->name);
@@ -251,6 +252,20 @@ void CL_CharacterCvars (const character_t * chr)
 	Cvar_ForceSet("mn_head", CHRSH_CharGetHead(chr));
 	Cvar_ForceSet("mn_skin", va("%i", chr->skin));
 	Cvar_ForceSet("mn_skinname", CL_GetTeamSkinName(chr->skin));
+
+	/* visible equipment */
+	weapon = chr->inv.c[csi.idRight];
+	if (weapon) {
+		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
+		Cvar_Set("mn_rweapon", weapon->item.t->model);
+	} else
+		Cvar_Set("mn_rweapon", "");
+	weapon = chr->inv.c[csi.idLeft];
+	if (weapon) {
+		assert(weapon->item.t >= &csi.ods[0] && weapon->item.t < &csi.ods[MAX_OBJDEFS]);
+		Cvar_Set("mn_lweapon", weapon->item.t->model);
+	} else
+		Cvar_Set("mn_lweapon", "");
 
 	Cvar_Set("mn_chrmis", va("%i", chr->score.assignedMissions));
 	Cvar_Set("mn_chrkillalien", va("%i", chr->score.kills[KILLED_ALIENS]));

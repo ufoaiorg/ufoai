@@ -26,6 +26,50 @@ menu team extends iaircraft
 	}
 
 	// ==================
+	// aircraft
+	// ==================
+
+	model aircraft
+	{
+		model		"*cvar mn_aircraft_model"
+		pos			"478 107"
+		size		"529 260"
+		origin		"-45 25 0"
+		view		aircraft
+	}
+
+	string team_members
+	{
+		string	"_Team Members:"
+		pos		"480 107"
+		size	"200 20"
+	}
+
+	string team_hired
+	{
+		string		"*cvar mn_hired"
+		pos			"619 107"
+		size		"62 20"
+		textalign	ur
+	}
+
+	button bt_equipsoldiers
+	{
+		tooltip	"_Equip soldiers"
+		string "_Equip soldiers"
+		pos		"483 129"
+		size	"198 43"
+		image	menu/button_blue	blend true
+		click	{ cmd "mn_push equipment" }
+		color	"1 1 1 0.8"
+		selectcolor "1 1 1 1"
+	}
+	todo equip_soldiers_subtab {
+		pos "463 135"
+		string "It should be nice to create a mockup and prototype to equip soldiers with another aircraft tab. It should be a very nice short cut"
+	}
+
+	// ==================
 	// names list
 	// ==================
 
@@ -34,11 +78,10 @@ menu team extends iaircraft
 	 */
 	confunc aircraft_soldier_usedelsewhere
 	{
-		*txt_actor<1> color ".78 .78 .78 1"
-		*bt_actor<1> disabled false
-		*(checkbox)bt_actor<1> current 0
-		*(checkbox)bt_actor<1> disabled true
-		*bt_actor<1> invis false
+		*txt_actor<1> color ".50 .50 .50 1"
+		*(checkbox)check_actor<1> current 0
+		*check_actor<1> disabled true
+		*check_actor<1> invis false
 		*txt_actor<1> invis false
 		*bt_equip<1> invis false
 	}
@@ -48,12 +91,14 @@ menu team extends iaircraft
 	 */
 	confunc aircraft_soldier_unassigned {
 		*txt_actor<1> color "0 .78 0 1"
-		*bt_actor<1> disabled false
-		*(checkbox)bt_actor<1> current 0
-		*(checkbox)bt_actor<1> disabled false
-		*bt_actor<1> invis false
+		*check_actor<1> disabled false
+		*(checkbox)check_actor<1> current 0
+		*check_actor<1> invis false
 		*txt_actor<1> invis false
 		*bt_equip<1> invis false
+		if "mn_hirable_count == 0" {
+			*(checkbox)check_actor<1> disabled true
+		}
 	}
 
 	/**
@@ -61,10 +106,9 @@ menu team extends iaircraft
 	 */
 	confunc aircraft_soldier_assigned {
 		*txt_actor<1> color "0 .78 0 1"
-		*bt_actor<1> disabled false
-		*(checkbox)bt_actor<1> current 1
-		*(checkbox)bt_actor<1> disabled false
-		*bt_actor<1> invis false
+		*check_actor<1> disabled false
+		*(checkbox)check_actor<1> current 1
+		*check_actor<1> invis false
 		*txt_actor<1> invis false
 		*bt_equip<1> invis false
 	}
@@ -90,14 +134,14 @@ menu team extends iaircraft
 	 */
 	confunc aircraft_soldier_unusedslot {
 		*bt_equip<1> invis true
-		*bt_actor<1> invis true
+		*check_actor<1> invis true
 		*txt_actor<1> invis true
 	}
 
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
-	confunc aircraft_soldier_size {
+	confunc aircraft_soldier_list_size {
 		*(abstractscrollbar)scroll_employees fullsize <1>
 	}
 
@@ -205,7 +249,7 @@ menu team extends iaircraft
 
 	// checkbox
 
-	checkbox bt_actor0
+	checkbox check_actor0
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 470"
@@ -215,7 +259,7 @@ menu team extends iaircraft
 		size "20 20"
 		invis	true
 	}
-	checkbox bt_actor1
+	checkbox check_actor1
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 505"
@@ -225,7 +269,7 @@ menu team extends iaircraft
 		size "20 20"
 		invis	true
 	}
-	checkbox bt_actor2
+	checkbox check_actor2
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 540"
@@ -235,7 +279,7 @@ menu team extends iaircraft
 		size "20 20"
 		invis	true
 	}
-	checkbox bt_actor3
+	checkbox check_actor3
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 575"
@@ -245,7 +289,7 @@ menu team extends iaircraft
 		size "20 20"
 		invis	true
 	}
-	checkbox bt_actor4
+	checkbox check_actor4
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 610"
@@ -255,7 +299,7 @@ menu team extends iaircraft
 		size "20 20"
 		invis	true
 	}
-	checkbox bt_actor5
+	checkbox check_actor5
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 645"
@@ -265,7 +309,7 @@ menu team extends iaircraft
 		size "20 20"
 		invis	true
 	}
-	checkbox bt_actor6
+	checkbox check_actor6
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 680"
@@ -275,7 +319,7 @@ menu team extends iaircraft
 		size "20 20"
 		invis	true
 	}
-	checkbox bt_actor7
+	checkbox check_actor7
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 715"
@@ -372,11 +416,6 @@ menu team extends iaircraft
 		}
 	}
 
-	todo need_scroll_soldiers {
-		pos "60 460"
-		string "The scroll bar must be implemented. Here we only see the first 8 soldiers of the base"
-	}
-
 	// ==================
 	// actor info
 	// ==================
@@ -407,25 +446,16 @@ menu team extends iaircraft
 		scale	"1.0 1.0 1.0"
 	}
 
-	todo unassignable_soldier {
-		pos "378 435"
-		string "It need to hide content and display a message when we can't assign soldiers (because the aircraft can't use soldiers)"
+	model right_rweapon
+	{
+		model	"*cvar mn_rweapon"
+		tag		"body tag_rweapon"
 	}
 
-	button bt_equipsoldiers
+	model right_lweapon
 	{
-		tooltip	"_Equip"
-		string "_Equip"
-		pos		"395 621"
-		image	menu/button_blue	blend true
-		size	"128 60"
-		click	{ cmd "mn_push equipment" }
-		color "1 1 1 0.8"
-		selectcolor "1 1 1 1"
-	}
-	todo equip_soldiers_subtab {
-		pos "380 621"
-		string "It should be nice to create a mockup and prototype to equip soldiers with another aircraft tab. It should be a very nice short cut"
+		model	"*cvar mn_lweapon"
+		tag		"body tag_lweapon"
 	}
 
 	string	name { pos "380 700" size "165 20" string "*cvar mn_name" }
@@ -495,40 +525,8 @@ menu team extends iaircraft
 	string	kills_lbl { pos "585 723" size "200 20" string "_Enemies Killed:" }
 	string	kills_val { pos "850 723" size "150 20" string "*cvar mn_chrkillalien" textalign ur }
 
-	todo better_stats_layout {
-		pos "650 460"
-		string "It should be nice to find a better layout for this part of the GUI. Example: a button to switch between bar/value"
-	}
-
 	//mn_chrkillcivilian
 	//mn_chrkillteam
-
-	// ==================
-	// aircraft
-	// ==================
-
-	model aircraft
-	{
-		model		"*cvar mn_aircraft_model"
-		pos			"478 107"
-		size		"529 260"
-		origin		"-45 25 0"
-		view		aircraft
-	}
-
-	string team_members
-	{
-		string	"_Team Members:"
-		pos		"480 107"
-		size	"200 20"
-	}
-
-	string team_hired
-	{
-		string	"*cvar mn_hired"
-		pos		"480 129"
-		size	"200 20"
-	}
 
 	// ==================
 	// additional stuff
@@ -543,6 +541,19 @@ menu team extends iaircraft
 	}
 
 	/**
+	 * @note call when the aircraft status change
+	 */
+	confunc aircraft_status_change
+	{
+		if "mn_hired_count > 0" {
+			*bt_equipsoldiers disabled false
+		}
+		if "mn_hired_count == 0" {
+			*bt_equipsoldiers disabled true
+		}
+	}
+
+	/**
 	 * @note iaircraft interface
 	 */
 	confunc aircraft_change
@@ -553,11 +564,13 @@ menu team extends iaircraft
 		if "mn_equipsoldierstate == 1" {
 			cmd "mn_pop;mn_push aircraft;"
 		}
+		cmd "aircraft_status_change"
 	}
 
 	func init
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
+		cmd "aircraft_status_change"
 	}
 }

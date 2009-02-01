@@ -55,6 +55,10 @@ static inline aircraft_t *CL_GetTeamAircraft (base_t *base)
  * Bindings
  ***********************************************************/
 
+/* cache soldier list */
+static int soldier_list_size = 0;
+static int soldier_list_pos = 0;
+
 /**
  * @brief Init the teamlist checkboxes
  * @sa CL_UpdateActorAircraftVar
@@ -94,6 +98,9 @@ static void CL_UpdateSoldierList_f (void)
 
 	drawableListSize = atoi(Cmd_Argv(1));
 	beginIndex = atoi(Cmd_Argv(2));
+
+	soldier_list_size = drawableListSize;
+	soldier_list_pos = beginIndex;
 
 	/* Populate employeeList - base might be NULL for none-campaign mode games */
 	E_GenerateHiredEmployeesList(aircraft->homebase);
@@ -136,7 +143,7 @@ static void CL_UpdateSoldierList_f (void)
 		/* Update status */
 		if (alreadyInOtherShip)
 			MN_ExecuteConfunc("aircraft_soldier_usedelsewhere %i", guiId);
-		if (AIR_IsEmployeeInAircraft(employee, aircraft))
+		else if (AIR_IsEmployeeInAircraft(employee, aircraft))
 			MN_ExecuteConfunc("aircraft_soldier_assigned %i", guiId);
 		else
 			MN_ExecuteConfunc("aircraft_soldier_unassigned %i", guiId);
@@ -159,7 +166,7 @@ static void CL_UpdateSoldierList_f (void)
 		id++;
 	}
 
-	MN_ExecuteConfunc("aircraft_soldier_size %i", id);
+	MN_ExecuteConfunc("aircraft_soldier_list_size %i", id);
 
 	for (;id - beginIndex < drawableListSize; id++) {
 		int guiId = id - beginIndex;
@@ -289,7 +296,9 @@ static void CL_AssignSoldier_f (void)
 		return;
 
 	AIM_AddEmployeeFromMenu(aircraft, num);
+	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
+	MN_ExecuteConfunc("aircraft_status_change");
 	MN_ExecuteConfunc("team_select %i %i", num - relativeId, relativeId);
 }
 
@@ -326,10 +335,6 @@ static void CL_ActorTeamSelect_f (void)
 	if (!chr)
 		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
 
-	/* deselect current selected soldier and select the new one */
-	MN_ExecuteConfunc("teamdeselect %i", cl_selected->integer - relativeId);
-	MN_ExecuteConfunc("teamselect %i", num - relativeId);
-
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
@@ -338,6 +343,7 @@ static void CL_ActorTeamSelect_f (void)
 		CL_UGVCvars(chr);
 	else
 		CL_CharacterCvars(chr);
+	MN_ExecuteConfunc("update_soldier_list %i %i", soldier_list_size, soldier_list_pos);
 }
 
 #ifdef DEBUG

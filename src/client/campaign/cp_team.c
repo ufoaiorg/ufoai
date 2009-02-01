@@ -124,6 +124,8 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	assert(aircraft);
 
 	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->maxTeamSize));
+	Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - aircraft->teamSize));
+	Cvar_Set("mn_hired_count", va("%i", aircraft->teamSize));
 
 	/* update chrDisplayList list (this is the one that is currently displayed) */
 	chrDisplayList.num = 0;
