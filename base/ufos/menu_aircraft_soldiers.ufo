@@ -152,13 +152,6 @@ menu team extends iaircraft
 		*txt_actor<1> color "1 1 1 1"
 	}
 
-	/**
-	 * @param[in] <1> number of employee in the list
-	 */
-	confunc teamdeselect {
-		*txt_actor<1> color "0 .78 0 1"
-	}
-
 	pic bt_equip0
 	{
 		pos			"38 470"
@@ -338,6 +331,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 0 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor1
 	{
@@ -347,6 +342,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 1 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor2
 	{
@@ -356,6 +353,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 2 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor3
 	{
@@ -365,6 +364,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 3 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor4
 	{
@@ -374,6 +375,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 4 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor5
 	{
@@ -383,6 +386,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 5 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor6
 	{
@@ -392,6 +397,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 6 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor7
 	{
@@ -401,6 +408,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 7 <cvar:mn_relative_id>;" }
 		invis	true
+		whup { cmd "mn_active_vscrollbar team.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar team.scroll_employees 4" } // 4: click on bottom
 	}
 
 	vscrollbar scroll_employees
@@ -559,6 +568,7 @@ menu team extends iaircraft
 	confunc aircraft_change
 	{
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
+		*scroll_employees current 0
 		*aircraft_list lineselected <1>
 		// absent from base, go back to the main GUI
 		if "mn_equipsoldierstate == 1" {
@@ -570,6 +580,7 @@ menu team extends iaircraft
 	func init
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
+		*scroll_employees current 0
 		cmd "update_soldier_list 8 0;team_select 0;set mn_show_employee 1;"
 		cmd "aircraft_status_change"
 	}
