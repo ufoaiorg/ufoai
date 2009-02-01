@@ -4176,7 +4176,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 			memset(&add, 0, sizeof(add));
 
 			add.model = cls.model_weapons[le->left];
-			assert(add.model);
+			if (!add.model)
+				Com_Error(ERR_DROP, "Actor model for left hand weapon wasn't found");
 
 			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2 + addRightHandWeapon;
@@ -4192,7 +4193,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 			add.alpha = le->alpha;
 			add.model = cls.model_weapons[le->right];
-			assert(add.model);
+			if (!add.model)
+				Com_Error(ERR_DROP, "Actor model for right hand weapon wasn't found");
 
 			/* point to the body ent which will be added last */
 			add.tagent = R_GetFreeEntity() + 2;
@@ -4217,7 +4219,8 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	add.alpha = le->alpha;
 	add.model = le->model2;
-	assert(add.model);
+	if (!add.model)
+		Com_Error(ERR_DROP, "Actor model wasn't found");
 	add.skinnum = le->skinnum;
 
 	/* point to the body ent which will be added last */
