@@ -35,11 +35,330 @@ menu aircraft_pilots extends iaircraft
 		view		aircraft
 	}
 
+	model assigned_pilot_body
+	{
+		model	"*cvar mn_pilot_body"
+		skin	"*cvar mn_pilot_skin"
+		anim	"stand_still"
+		angles	"0 90 90"
+		scale	"5.5 5.5 5.5"
+		pos		"481 106"
+		size	"82 108"
+		origin	"0 70 0"
+	}
+
+	model assigned_pilot_head
+	{
+		model	"*cvar mn_pilot_head"
+		skin	"*cvar mn_pilot_skin"
+		tag		"assigned_pilot_body tag_head"
+	}
+
+	string assigned_pilot_name
+	{
+		string		"*cvar mn_pilot_name"
+		pos			"474 215"
+		size		"200 20"
+		textalign	ul
+	}
+
+	todo green_border {
+		string	"Add a green border for the photo"
+		pos		"465 126"
+		size	"82 108"
+	}
+
 	// ==================
-	// pilots
+	// pilot selected
 	// ==================
 
-	todo need_scroll_soldiers {
+	pic	rank_img {
+		pos "378 465"
+		size "50 50"
+		image "*cvar mn_chrrank_img"
+	}
+
+	model body
+	{
+		model	"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand2"
+		angles	"0 70 90"
+		scale	"5.5 5.5 5.5"
+		pos		"378 465"
+		size	"167 278"
+		origin	"0 -35 0"
+	}
+
+	model head
+	{
+		model	"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"body tag_head"
+		scale	"1.0 1.0 1.0"
+	}
+
+	// ==================
+	// pilot list
+	// ==================
+
+	/**
+	 * @param[in] <1> id of employee in the list
+	 */
+	confunc aircraft_pilot_usedelsewhere
+	{
+		*txt_actor<1> color ".50 .50 .50 1"
+		*(checkbox)check_actor<1> current 0
+		*check_actor<1> disabled true
+		*check_actor<1> invis false
+		*txt_actor<1> invis false
+	}
+
+	/**
+	 * @param[in] <1> id of employee in the list
+	 */
+	confunc aircraft_pilot_unassigned {
+		*txt_actor<1> color "0 .78 0 1"
+		*check_actor<1> disabled false
+		*(checkbox)check_actor<1> current 0
+		*check_actor<1> invis false
+		*txt_actor<1> invis false
+		if "mn_pilotassigned == 1" {
+			*(checkbox)check_actor<1> disabled true
+		}
+	}
+
+	/**
+	 * @param[in] <1> id of employee in the list
+	 */
+	confunc aircraft_pilot_assigned {
+		*txt_actor<1> color "0 .78 0 1"
+		*check_actor<1> disabled false
+		*(checkbox)check_actor<1> current 1
+		*check_actor<1> invis false
+		*txt_actor<1> invis false
+	}
+
+	/**
+	 * @param[in] <1> id of employee in the list
+	 */
+	confunc aircraft_pilot_holdsequip {
+	}
+
+	/**
+	 * @param[in] <1> id of employee in the list
+	 */
+	confunc aircraft_pilot_holdsnoequip {
+	}
+
+	/**
+	 * @param[in] <1> id of employee in the list
+	 */
+	confunc aircraft_pilot_unusedslot {
+		*check_actor<1> invis true
+		*txt_actor<1> invis true
+	}
+
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc aircraft_pilot_list_size {
+		*(abstractscrollbar)scroll_employees fullsize <1>
+	}
+
+	/**
+	 * @param[in] <1> number of employee in the list
+	 */
+	confunc aircraft_pilot_selected {
+		*txt_actor<1> color "1 1 1 1"
+	}
+
+	// checkbox
+
+	checkbox check_actor0
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 470"
+		change { cmd "pilot_hire 0 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+	checkbox check_actor1
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 505"
+		change { cmd "pilot_hire 1 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+	checkbox check_actor2
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 540"
+		change { cmd "pilot_hire 2 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+	checkbox check_actor3
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 575"
+		change { cmd "pilot_hire 3 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+	checkbox check_actor4
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 610"
+		change { cmd "pilot_hire 4 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+	checkbox check_actor5
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 645"
+		change { cmd "pilot_hire 5 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+	checkbox check_actor6
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 680"
+		change { cmd "pilot_hire 6 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+	checkbox check_actor7
+	{
+		tooltip	"_Add/remove this soldier"
+		pos	"280 715"
+		change { cmd "pilot_hire 7 <cvar:mn_relative_id>;" }
+		current 0
+		image menu/checkbox_green
+		size "20 20"
+		invis	true
+	}
+
+	string txt_actor0
+	{
+		string	"*cvar mn_ename0"
+		pos		"60 460"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 0 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+	string txt_actor1
+	{
+		string	"*cvar mn_ename1"
+		pos		"60 495"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 1 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+	string txt_actor2
+	{
+		string	"*cvar mn_ename2"
+		pos		"60 530"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 2 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+	string txt_actor3
+	{
+		string	"*cvar mn_ename3"
+		pos		"60 565"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 3 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+	string txt_actor4
+	{
+		string	"*cvar mn_ename4"
+		pos		"60 600"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 4 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+	string txt_actor5
+	{
+		string	"*cvar mn_ename5"
+		pos		"60 635"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 5 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+	string txt_actor6
+	{
+		string	"*cvar mn_ename6"
+		pos		"60 670"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 6 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+	string txt_actor7
+	{
+		string	"*cvar mn_ename7"
+		pos		"60 705"
+		size	"190 35"
+		textalign cl
+		click { cmd "pilot_select 7 <cvar:mn_relative_id>;" }
+		invis	true
+		whup { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 0" } // 0: click on top
+		whdown { cmd "mn_active_vscrollbar aircraft_pilots.scroll_employees 4" } // 4: click on bottom
+	}
+
+	vscrollbar scroll_employees
+	{
+		image	menu/scrollbar_v_green	blend	true
+		pos "310 463"	height	"282"
+		current 0
+		viewsize 8
+		fullsize 50
+		change {
+			cmd "update_soldier_list 8 <current>"
+			*cvar:mn_relative_id <current>
+		}
+	}
+
+	todo not_implemented {
 		pos "150 500"
 		string "Not yet implemented. Please use the 'Aircraft equipment' tab to assign a Pilot"
 	}
@@ -53,6 +372,7 @@ menu aircraft_pilots extends iaircraft
 	 */
 	confunc aircraft_change
 	{
+		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"
 		*aircraft_list lineselected <1>
 		// absent from base, go back to the main GUI
 		if "mn_equipsoldierstate == 1" {
@@ -63,5 +383,6 @@ menu aircraft_pilots extends iaircraft
 	func init
 	{
 		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
+		cmd "update_pilot_list 8 0;pilot_select 0;set mn_show_employee 1;"
 	}
 }

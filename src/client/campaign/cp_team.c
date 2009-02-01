@@ -126,6 +126,19 @@ int CL_UpdateActorAircraftVar (aircraft_t *aircraft, employeeType_t employeeType
 	Cvar_Set("mn_hired", va(_("%i of %i"), aircraft->teamSize, aircraft->maxTeamSize));
 	Cvar_Set("mn_hirable_count", va("%i", aircraft->maxTeamSize - aircraft->teamSize));
 	Cvar_Set("mn_hired_count", va("%i", aircraft->teamSize));
+	Cvar_Set("mn_pilotassigned", va("%i", aircraft->pilot != NULL));
+
+	if (aircraft->pilot) {
+		Cvar_ForceSet("mn_pilot_name", aircraft->pilot->chr.name);
+		Cvar_ForceSet("mn_pilot_body", CHRSH_CharGetBody(&aircraft->pilot->chr));
+		Cvar_ForceSet("mn_pilot_head", CHRSH_CharGetHead(&aircraft->pilot->chr));
+		Cvar_ForceSet("mn_pilot_skin", va("%i", aircraft->pilot->chr.skin));
+	} else {
+		Cvar_ForceSet("mn_pilot_name", "");
+		Cvar_ForceSet("mn_pilot_body", "");
+		Cvar_ForceSet("mn_pilot_head", "");
+		Cvar_ForceSet("mn_pilot_skin", "");
+	}
 
 	/* update chrDisplayList list (this is the one that is currently displayed) */
 	chrDisplayList.num = 0;

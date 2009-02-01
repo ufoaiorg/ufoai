@@ -148,7 +148,7 @@ menu team extends iaircraft
 	/**
 	 * @param[in] <1> number of employee in the list
 	 */
-	confunc teamselect {
+	confunc aircraft_soldier_selected {
 		*txt_actor<1> color "1 1 1 1"
 	}
 

@@ -69,27 +69,35 @@ menu iaircraft
 			value	"0"
 			action "mn_pop;mn_push aircraft;"
 		}
-		option equip {
-			label	"_Equipment"
-			value	"1"
-			action "mn_pop;mn_push aircraft_equip;"
-		}
-		option soldier {
-			label	"_Soldiers"
-			value	"2"
-			action "mn_pop;mn_push team;"
-		}
-		option tank {
-			label	"_Tanks"
-			value	"3"
-			action "mn_pop;mn_push foobar;"
-			disabled	true
-		}
 		option pilot {
 			label	"_Pilots"
 			value	"4"
 			action "mn_pop;mn_push aircraft_pilots;"
 		}
+		option equip {
+			label	"_Equipment"
+			value	"1"
+			action "mn_pop;mn_push aircraft_equip;"
+		}
+/*		option tank {
+			label	"_Tanks"
+			value	"3"
+			action "mn_pop;mn_push foobar;"
+			disabled	true
+		}
+*/
+		option soldier {
+			label	"_Soldiers"
+			value	"2"
+			action "mn_pop;mn_push team;"
+		}
+/*		option soldier_equipment {
+			label	"_Soldier equipment"
+			value	"5"
+			action "mn_pop;mn_push foobar;"
+			disabled	true
+		}
+*/
 	}
 
 	// ==================
@@ -186,7 +194,11 @@ menu iaircraft
 
 	/**
 	 * @brief Callback to update the GUI after an aircraft change
-	 * @todo call it
 	 */
 	confunc aircraft_change { }
+
+	/**
+	 * @brief Callback to update the GUI when the aircraft status change
+	 */
+	confunc aircraft_status_change { }
 }
