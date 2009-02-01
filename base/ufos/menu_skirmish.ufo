@@ -196,7 +196,7 @@ menu skirmish
 	pic mappic
 	{
 		image		"*cvar mn_mappic"
-		pos			"500 330"
+		pos			"500 430"
 		texl		"0 0"
 		texh		"128 96"
 		whup		{ cmd "mn_prevmap;" }
@@ -207,7 +207,7 @@ menu skirmish
 	pic mappic2
 	{
 		image		"*cvar mn_mappic2"
-		pos			"650 330"
+		pos			"650 430"
 		texl		"0 0"
 		texh		"128 96"
 		whup		{ cmd "mn_prevmap;" }
@@ -218,13 +218,40 @@ menu skirmish
 	pic mappic3
 	{
 		image		"*cvar mn_mappic3"
-		pos			"800 330"
+		pos			"800 430"
 		texl		"0 0"
 		texh		"128 96"
 		whup		{ cmd "mn_prevmap;" }
 		whdown		{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
 		rclick		{ cmd "mn_prevmap;" }
+	}
+
+	string team_str
+	{
+		string		"_Team:"
+		pos			"500 300"
+		size		"300 20"
+		tooltip		"_Select which side you want to play with"
+	}
+
+	selectbox team_box
+	{
+		image	"menu/selectbox_green"
+		pos		"780 300"
+		size	"125 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar cl_team"
+		option low_value {
+			label	"_Human"
+			value	"1"
+			action	""
+		}
+		option medium_value {
+			label	"_Alien"
+			value	"7"
+			action	""
+		}
 	}
 
 	// ===================

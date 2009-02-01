@@ -295,9 +295,9 @@ menu mp_team
 		string	"_Auto"
 	}
 
-	string race_str
+	string team_str
 	{
-		string	"_Race:"
+		string	"_Team:"
 		pos	"85 570"
 	}
 
