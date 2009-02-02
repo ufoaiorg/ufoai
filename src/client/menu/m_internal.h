@@ -39,28 +39,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_condition.h"
 #include "node/m_node_model.h"
 
-typedef struct mouseRepeat_s {
-	menu_t *menu;				/**< where - the menu is it executed in (context) */
-	menuAction_t *action;		/**< what - the action node to be executed (the clicknode e.g.) */
-	unsigned nexttime;			/**< when (milliseconds) - calculated from cls.realtime + delay */
-	int lastclicked;			/**< when was the last recorded click? */
-	short clickDelay;			/**< milliseconds for the delay */
-	int numClick;				/**< number of click made since the begining of this click */
-	menuNode_t *node;			/**< node where action is repeated */
-	int textLine;				/**< line clicked for a text node */
-} mouseRepeat_t;
-
+/**
+ * @todo Merge menuText and menuTextLinkedList into an only one typed structure
+ * @todo Maybe merge cl_menuSysPool and mn.adata (same usage)
+ * @todo Menu must manage itself cl_menuSysPool (initialisation), if not possible, the outside must set it with a menu function. Anywhere it need a private access (menu only).
+ */
 typedef struct menuGlobal_s {
-	const char *menuText[MAX_MENUTEXTS];	/**< @brief Holds static array of characters to display
-											* @note The array id is given via num in the menuNode definitions
-											* @sa MN_MenuTextReset
-											* @sa mn.menuTextLinkedList */
-	linkedList_t *menuTextLinkedList[MAX_MENUTEXTS];	/**< @brief Holds a linked list for displaying in the menu
-											* @note The array id is given via num in the menuNode definitions
-											* @sa MN_MenuTextReset
-											* @sa mn.menuText */
 
-	mouseRepeat_t mouseRepeat;
+	/**
+	 * @brief Holds static array of characters to display
+	 * @note The array id is given via num in the menuNode definitions
+	 * @sa MN_MenuTextReset
+	 * @sa mn.menuTextLinkedList
+	 */
+	const char *menuText[MAX_MENUTEXTS];
+
+	/**
+	 * @brief Holds a linked list for displaying in the menu
+	 * @note The array id is given via num in the menuNode definitions
+	 * @sa MN_MenuTextReset
+	 * @sa mn.menuText
+	 */
+	linkedList_t *menuTextLinkedList[MAX_MENUTEXTS];
 
 	selectBoxOptions_t menuSelectBoxes[MAX_SELECT_BOX_OPTIONS];
 	int numSelectBoxes;
