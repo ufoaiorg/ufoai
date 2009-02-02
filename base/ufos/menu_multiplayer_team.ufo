@@ -209,7 +209,7 @@ menu mp_team
 		pos	"365 490"
 		tooltip	"_Generate a team automatically"
 		size "128 64"
-		click	{ cmd "mp_autoteam;" }
+		click	{ cmd "mp_autoteam;mn_push mp_equipment;" }
 		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"

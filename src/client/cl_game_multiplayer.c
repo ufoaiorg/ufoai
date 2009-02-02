@@ -48,7 +48,6 @@ static void GAME_MP_AutoTeam (void)
 		/* pack equipment */
 		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &multiplayerCharacters[i]);
 	}
-	MN_PushMenu("equip", NULL);
 	Cvar_Set("mn_teamname", _("NewTeam"));
 }
 
