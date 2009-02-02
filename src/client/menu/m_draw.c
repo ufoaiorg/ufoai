@@ -177,9 +177,9 @@ void MN_DrawMenus (void)
 	pp = 0;
 	sp = mn.menuStackPos;
 	while (sp > 0) {
-		if (mn.menuStack[--sp]->renderNode)
+		if (mn.menuStack[--sp]->u.window.renderNode)
 			break;
-		if (mn.menuStack[sp]->popupNode)
+		if (mn.menuStack[sp]->u.window.popupNode)
 			pp = sp;
 	}
 	if (pp < sp)
@@ -189,18 +189,18 @@ void MN_DrawMenus (void)
 		menuNode_t *node;
 		menu = mn.menuStack[sp++];
 		/* event node */
-		if (menu->onTimeOut) {
-			if (menu->eventNode->timeOut > 0 && (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)))) {
-				menu->eventTime = cls.realtime;
-				MN_ExecuteActions(menu, menu->onTimeOut);
+		if (menu->u.window.onTimeOut) {
+			if (menu->u.window.eventNode->timeOut > 0 && (menu->u.window.eventNode->timeOut == 1 || (!menu->u.window.eventTime || (menu->u.window.eventTime + menu->u.window.eventNode->timeOut < cls.realtime)))) {
+				menu->u.window.eventTime = cls.realtime;
+				MN_ExecuteActions(menu, menu->u.window.onTimeOut);
 #ifdef DEBUG
-				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->eventNode->name, menu->eventNode->timeOut);
+				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->u.window.eventNode->name, menu->u.window.eventNode->timeOut);
 #endif
 			}
 		}
 
 		/** draker background for the last modal */
-		if (menu->modal && sp == mn.menuStackPos) {
+		if (menu->u.window.modal && sp == mn.menuStackPos) {
 			R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
 		}
 
@@ -265,8 +265,8 @@ void MN_DrawMenus (void)
 	/* draw a special notice */
 	menu = MN_GetActiveMenu();
 	if (cl.time < cl.msgTime) {
-		if (menu && (menu->noticePos[0] || menu->noticePos[1]))
-			MN_DrawNotice(menu->noticePos[0], menu->noticePos[1]);
+		if (menu && (menu->u.window.noticePos[0] || menu->u.window.noticePos[1]))
+			MN_DrawNotice(menu->u.window.noticePos[0], menu->u.window.noticePos[1]);
 		else
 			MN_DrawNotice(500, 110);
 	}

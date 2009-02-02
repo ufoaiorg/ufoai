@@ -45,24 +45,24 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 {
 	menu_t * menu = node->menu;
 	if (!Q_strncmp(node->name, "init", 4)) {
-		if (!menu->onInit)
-			menu->onInit = node->onClick;
+		if (!menu->u.window.onInit)
+			menu->u.window.onInit = node->onClick;
 		else
 			Com_Printf("MN_FuncNodeLoaded: second init function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "close", 5)) {
-		if (!menu->onClose)
-			menu->onClose = node->onClick;
+		if (!menu->u.window.onClose)
+			menu->u.window.onClose = node->onClick;
 		else
 			Com_Printf("MN_FuncNodeLoaded: second close function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "event", 5)) {
-		if (!menu->onTimeOut) {
-			menu->eventNode = node;
-			menu->onTimeOut = node->onClick;
+		if (!menu->u.window.onTimeOut) {
+			menu->u.window.eventNode = node;
+			menu->u.window.onTimeOut = node->onClick;
 		} else
 			Com_Printf("MN_FuncNodeLoaded: second event function ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "leave", 5)) {
-		if (!menu->onLeave) {
-			menu->onLeave = node->onClick;
+		if (!menu->u.window.onLeave) {
+			menu->u.window.onLeave = node->onClick;
 		} else
 			Com_Printf("MN_FuncNodeLoaded: second leave function ignored (menu \"%s\")\n", menu->name);
 	}

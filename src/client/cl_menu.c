@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void MN_SetViewRect (const menu_t* menu)
 {
-	menuNode_t* menuNode = menu ? (menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL)): NULL;
+	menuNode_t* menuNode = menu ? (menu->u.window.renderNode ? menu->u.window.renderNode : (menu->u.window.popupNode ? menu->u.window.popupNode : NULL)): NULL;
 
 	if (!menuNode) {
 		/* render the full screen */

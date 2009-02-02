@@ -108,7 +108,7 @@ static const int CONTROLS_SPACING = 5;
 void MN_WindowNodeLoaded (menu_t *menu)
 {
 	/* if it need, construct the drag button */
-	if (menu->dragButton) {
+	if (menu->u.window.dragButton) {
 		menuNode_t *control = MN_AllocNode("controls");
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
 		control->menu = menu;
@@ -123,7 +123,7 @@ void MN_WindowNodeLoaded (menu_t *menu)
 	}
 
 	/* if the menu should have a close button, add it here */
-	if (menu->closeButton) {
+	if (menu->u.window.closeButton) {
 		menuNode_t *button = MN_AllocNode("pic");
 		const int positionFromRight = CONTROLS_PADDING;
 		const char* command = MN_AllocString(va("mn_close %s;", menu->name), 0);
@@ -145,17 +145,18 @@ void MN_WindowNodeLoaded (menu_t *menu)
  * @brief Valid properties for a window node (called yet 'menu')
  */
 static const value_t windowNodeProperties[] = {
-	{"noticepos", V_POS, offsetof(menu_t, noticePos), MEMBER_SIZEOF(menu_t, noticePos)},
 	{"pos", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
 	{"size", V_POS, offsetof(menu_t, size), MEMBER_SIZEOF(menu_t, size)},
-	{"dragbutton", V_BOOL, offsetof(menu_t, dragButton), MEMBER_SIZEOF(menu_t, dragButton)},
-	{"closebutton", V_BOOL, offsetof(menu_t, closeButton), MEMBER_SIZEOF(menu_t, closeButton)},
-	{"modal", V_BOOL, offsetof(menu_t, modal), MEMBER_SIZEOF(menu_t, modal)},
-	{"preventtypingescape", V_BOOL, offsetof(menu_t, preventTypingEscape), MEMBER_SIZEOF(menu_t, preventTypingEscape)},
 
-	{"init", V_SPECIAL_ACTION, offsetof(menu_t, onInit), MEMBER_SIZEOF(menu_t, onInit)},
-	{"close", V_SPECIAL_ACTION, offsetof(menu_t, onClose), MEMBER_SIZEOF(menu_t, onClose)},
-	{"leave", V_SPECIAL_ACTION, offsetof(menu_t, onLeave), MEMBER_SIZEOF(menu_t, onLeave)},
+	{"noticepos", V_POS, offsetof(menu_t, u.window.noticePos), MEMBER_SIZEOF(menu_t, u.window.noticePos)},
+	{"dragbutton", V_BOOL, offsetof(menu_t, u.window.dragButton), MEMBER_SIZEOF(menu_t, u.window.dragButton)},
+	{"closebutton", V_BOOL, offsetof(menu_t, u.window.closeButton), MEMBER_SIZEOF(menu_t, u.window.closeButton)},
+	{"modal", V_BOOL, offsetof(menu_t, u.window.modal), MEMBER_SIZEOF(menu_t, u.window.modal)},
+	{"preventtypingescape", V_BOOL, offsetof(menu_t, u.window.preventTypingEscape), MEMBER_SIZEOF(menu_t, u.window.preventTypingEscape)},
+
+	{"init", V_SPECIAL_ACTION, offsetof(menu_t, u.window.onInit), MEMBER_SIZEOF(menu_t, u.window.onInit)},
+	{"close", V_SPECIAL_ACTION, offsetof(menu_t, u.window.onClose), MEMBER_SIZEOF(menu_t, u.window.onClose)},
+	{"leave", V_SPECIAL_ACTION, offsetof(menu_t, u.window.onLeave), MEMBER_SIZEOF(menu_t, u.window.onLeave)},
 
 	{NULL, V_NULL, 0, 0}
 };

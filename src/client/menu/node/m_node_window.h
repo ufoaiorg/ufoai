@@ -33,24 +33,16 @@ struct menuNode_s;
 struct menuAction_s;
 struct nodeBehaviour_s;
 
-/** @brief menu with all it's nodes linked in */
-typedef struct menu_s {
-	char name[MAX_VAR];
+/**
+ * @brief extradata for the window node
+ */
+typedef struct {
 	int eventTime;
-
-	struct menu_s *super; 	/**< Menu inherited, else NULL */
-	struct menu_s *parent; 	/**< Parent menu inherited, else NULL */
-
-	vec2_t pos;				/**< the position of the menu */
-	vec2_t size;			/**< the size of the menu */
 	vec2_t noticePos; 		/**< the position where the cl.msgText messages are rendered */
 	qboolean dragButton;
 	qboolean closeButton;
 	qboolean preventTypingEscape;
 	qboolean modal;
-
-	struct menuNode_s *firstChild;	/**< first element of linked list of child */
-	struct menuNode_s *lastChild;	/**< last element of linked list of child */
 
 	struct menuNode_s *popupNode;
 	struct menuNode_s *renderNode;
@@ -61,6 +53,25 @@ typedef struct menu_s {
 	struct menuAction_s *onClose;	/**< Call when the menu is pop */
 	struct menuAction_s *onTimeOut;	/**< Call when the own timer of the menu out */
 	struct menuAction_s *onLeave;	/**< Call when mouse leave the window? call by cl_input */
+
+} windowExtraData_t;
+
+
+/** @brief menu with all it's nodes linked in */
+typedef struct menu_s {
+	char name[MAX_VAR];
+	vec2_t pos;				/**< the position of the menu */
+	vec2_t size;			/**< the size of the menu */
+
+	struct menu_s *super; 	/**< Menu inherited, else NULL */
+	struct menu_s *parent; 	/**< Parent menu, else NULL */
+
+	struct menuNode_s *firstChild;	/**< first element of linked list of child */
+	struct menuNode_s *lastChild;	/**< last element of linked list of child */
+
+	union {
+		windowExtraData_t window;
+	} u;
 
 } menu_t;
 

@@ -86,13 +86,13 @@ static void MN_ZoneNodeLoaded (menuNode_t *node)
 {
 	menu_t * menu = node->menu;
 	if (!Q_strncmp(node->name, "render", 6)) {
-		if (!menu->renderNode)
-			menu->renderNode = node;
+		if (!menu->u.window.renderNode)
+			menu->u.window.renderNode = node;
 		else
 			Com_Printf("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name);
 	} else if (!Q_strncmp(node->name, "popup", 5)) {
-		if (!menu->popupNode)
-			menu->popupNode = node;
+		if (!menu->u.window.popupNode)
+			menu->u.window.popupNode = node;
 		else
 			Com_Printf("MN_ParseMenuBody: second popup node ignored (menu \"%s\")\n", menu->name);
 	}

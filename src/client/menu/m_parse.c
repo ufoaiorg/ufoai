@@ -1247,13 +1247,13 @@ void MN_ParseMenu (const char *name, const char **text)
 			MN_AppendNode(menu, newNode);
 
 			/* update special links */
-			if (superMenu->renderNode == node)
-				menu->renderNode = newNode;
-			else if (superMenu->popupNode == node)
-				menu->popupNode = newNode;
-			else if (superMenu->onTimeOut == node->onClick) {
-				menu->onTimeOut = newNode->onClick;
-				menu->eventNode = newNode;
+			if (superMenu->u.window.renderNode == node)
+				menu->u.window.renderNode = newNode;
+			else if (superMenu->u.window.popupNode == node)
+				menu->u.window.popupNode = newNode;
+			else if (superMenu->u.window.onTimeOut == node->onClick) {
+				menu->u.window.onTimeOut = newNode->onClick;
+				menu->u.window.eventNode = newNode;
 			}
 		}
 

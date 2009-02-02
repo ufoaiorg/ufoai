@@ -43,7 +43,7 @@ int MN_GetVisibleMenuCount (void)
 	/* stack pos */
 	int sp = mn.menuStackPos;
 	while (sp > 0)
-		if (mn.menuStack[--sp]->renderNode)
+		if (mn.menuStack[--sp]->u.window.renderNode)
 			break;
 	/*Com_DPrintf(DEBUG_CLIENT, "visible menus on stacks: %i\n", sp);*/
 	return sp;
@@ -153,8 +153,8 @@ static menu_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean
 		Com_Printf("Menu stack overflow\n");
 
 	/* initialize it */
-	if (menu->onInit)
-		MN_ExecuteActions(menu, menu->onInit);
+	if (menu->u.window.onInit)
+		MN_ExecuteActions(menu, menu->u.window.onInit);
 
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
@@ -291,8 +291,8 @@ static void MN_CloseAllMenu (void)
 	for (i = mn.menuStackPos - 1; i >= 0; i--) {
 		menu_t *menu = mn.menuStack[i];
 
-		if (menu->onClose)
-			MN_ExecuteActions(menu, menu->onClose);
+		if (menu->u.window.onClose)
+			MN_ExecuteActions(menu, menu->u.window.onClose);
 
 		/* safe: unlink window */
 		menu->parent = NULL;
@@ -329,15 +329,15 @@ static void MN_CloseMenuByRef (menu_t *menu)
 		if (m->parent != menu) {
 			break;
 		}
-		if (m->onClose)
-			MN_ExecuteActions(m, m->onClose);
+		if (m->u.window.onClose)
+			MN_ExecuteActions(m, m->u.window.onClose);
 		m->parent = NULL;
 		MN_RemoveMenuAtPositionFromStack(i + 1);
 	}
 
 	/* close the menu */
-	if (menu->onClose)
-		MN_ExecuteActions(menu, menu->onClose);
+	if (menu->u.window.onClose)
+		MN_ExecuteActions(menu, menu->u.window.onClose);
 	menu->parent = NULL;
 	MN_RemoveMenuAtPositionFromStack(i);
 
@@ -430,7 +430,7 @@ static void MN_PopMenu_f (void)
 		/* some window can prevent escape */
 		menu_t *menu = mn.menuStack[mn.menuStackPos - 1];
 		assert(mn.menuStackPos);
-		if (!menu->preventTypingEscape) {
+		if (!menu->u.window.preventTypingEscape) {
 			MN_PopMenu(qfalse);
 		}
 	} else {
@@ -471,7 +471,7 @@ qboolean MN_CursorOnMenu (int x, int y)
 	const menuNode_t *hovered = MN_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
-		if (hovered == hovered->menu->renderNode) {
+		if (hovered == hovered->menu->u.window.renderNode) {
 			return qfalse;
 		}
 		return qtrue;
@@ -531,8 +531,8 @@ static void MN_ReinitCurrentMenu_f (void)
 	menu_t* menu = MN_GetActiveMenu();
 	/* initialize it */
 	if (menu) {
-		if (menu->onInit)
-			MN_ExecuteActions(menu, menu->onInit);
+		if (menu->u.window.onInit)
+			MN_ExecuteActions(menu, menu->u.window.onInit);
 		Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menu->name);
 	}
 }
