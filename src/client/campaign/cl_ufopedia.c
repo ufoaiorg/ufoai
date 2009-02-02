@@ -1604,13 +1604,9 @@ static void UP_OpenMail_f (void)
 {
 	char tempBuf[MAIL_LENGTH] = "";
 	const message_t *m = cp_messageStack;
-	const menu_t* menu = MN_GetMenu("ufopedia_mail");
 	dateLong_t date;
 
-	if (!menu)
-		Sys_Error("Could not find the ufopedia_mail menu\n");
-
-	mailClientListNode = MN_GetNode(menu, "mailclient");
+	mailClientListNode = MN_GetNodeByPath("ufopedia_mail.mailclient");
 	if (!mailClientListNode)
 		Sys_Error("Could not find the mailclient node in ufopedia_mail menu\n");
 

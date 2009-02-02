@@ -270,13 +270,9 @@ void IN_JoystickMove (void)
 void IN_JoystickInitMenu (void)
 {
 	int i, total;
-	menu_t* menu;
 	menuNode_t* joystickOptions;
 
-	menu = MN_GetMenu("options_input");
-	if (!menu)
-		Sys_Error("Could not find menu options_input\n");
-	joystickOptions = MN_GetNode(menu, "select_joystick");
+	joystickOptions = MN_GetNodeByPath("options_input.select_joystick");
 	if (!joystickOptions)
 		Sys_Error("Could not find node joystickOptions in menu options_input\n");
 

@@ -215,7 +215,6 @@ static qboolean CL_LanguageTest (const char *localeID)
 void CL_LanguageInit (void)
 {
 	int i;
-	menu_t* menu;
 	menuNode_t* languageOptions;
 	selectBoxOptions_t* selectBoxOption;
 	language_t* language;
@@ -239,10 +238,7 @@ void CL_LanguageInit (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
-	menu = MN_GetMenu("options_game");
-	if (!menu)
-		Sys_Error("Could not find menu options_game\n");
-	languageOptions = MN_GetNode(menu, "select_language");
+	languageOptions = MN_GetNodeByPath("options_game.select_language");
 	if (!languageOptions)
 		Sys_Error("Could not find node select_language in menu options_game\n");
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
@@ -262,10 +258,7 @@ void CL_LanguageInit (void)
 		}
 	}
 
-	menu = MN_GetMenu("checkcvars");
-	if (!menu)
-		Sys_Error("Could not find menu checkcvars\n");
-	languageOptions = MN_GetNode(menu, "select_language");
+	languageOptions = MN_GetNodeByPath("checkcvars.select_language");
 	if (!languageOptions)
 		Sys_Error("Could not find node select_language in menu checkcvars\n");
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {

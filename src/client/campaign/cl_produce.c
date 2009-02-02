@@ -1239,13 +1239,9 @@ void PR_ProductionInit (void)
  */
 void PR_Init (void)
 {
-	const menu_t* menu = MN_GetMenu("production");
-	if (!menu)
-		Sys_Error("Could not find the production menu\n");
-
-	prodlist = MN_GetNode(menu, "prodlist");
-	node1 = MN_GetNode(menu, "prodlist_amount");
-	node2 = MN_GetNode(menu, "prodlist_queued");
+	prodlist = MN_GetNodeByPath("production.prodlist");
+	node1 = MN_GetNodeByPath("production.prodlist_amount");
+	node2 = MN_GetNodeByPath("production.prodlist_queued");
 
 	if (!prodlist || !node1 || !node2)
 		Sys_Error("Could not find the needed menu nodes in production menu\n");

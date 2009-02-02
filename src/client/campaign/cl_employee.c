@@ -415,13 +415,9 @@ employeeType_t E_GetEmployeeType (const char* type)
  */
 void E_Init (void)
 {
-	menu_t* menu = MN_GetMenu("employees");
-	if (!menu)
-		Sys_Error("Could not find the employees menu\n");
-
-	employeeListNode = MN_GetNode(menu, "employee_list");
+	employeeListNode = MN_GetNodeByPath("employees.employee_list");
 	if (!employeeListNode)
-		Sys_Error("Could not find the employee_list node in employees menu\n");
+		Sys_Error("Could not find the 'employee_list' node in 'employees' menu\n");
 }
 
 /**

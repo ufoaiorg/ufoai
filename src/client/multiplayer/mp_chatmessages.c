@@ -53,10 +53,7 @@ void MP_AddChatMessage (const char *text)
 		MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
 	}
 	if (!chatBufferNode) {
-		const menu_t* menu = MN_GetMenu(mn_hud->string);
-		if (!menu)
-			Sys_Error("Could not get hud menu: %s\n", mn_hud->string);
-		chatBufferNode = MN_GetNode(menu, "chatscreen");
+		chatBufferNode = MN_GetNodeByPath(va("%s.chatscreen", mn_hud->string));
 	}
 
 	*chatBuffer = '\0'; /* clear buffer */
