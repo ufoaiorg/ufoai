@@ -127,7 +127,7 @@ static char *ED_AllocString (const char * string) {
 /**
  * @return -1 in case of an error (out of memory), else 0.
  */
-static int ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName, const int newFlags)
+static int ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName)
 {
 	const int nameLen = strlen(newName) + 1;
 
@@ -137,8 +137,6 @@ static int ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName, const in
 		return -1;
 	}
 	strncpy(keyDef->name, newName, nameLen);
-
-	keyDef->flags = newFlags;
 
 	return 0;
 }
@@ -168,27 +166,17 @@ static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int en
 	return 0;
 }
 
-/** @brief given two keys with the same name, are they unique when the flags are considered?
- *  @return 0 if there is a conflict */
-static int ED_AreKeysUnique (int flags1, int flags2)
-{
-	if (flags1 & flags2 & ED_ABSTRACT)
-		return 0;
-
-	if ((flags1 & ED_CONCRETE) && (flags2 & ED_CONCRETE))
-		return 0;
-
-	return 1;
-}
-
-/** @brief search for key in an array
- *  @return a pointer to the entity def or NULL if it is not found */
-static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDefs, const char *name, int flags)
+/**
+ * @brief search for an existing keyDef to add a new parsed pair info to.
+ * @return a pointer to the entity def or NULL if it is not found
+ */
+static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDefs, const char *name, int parseMode)
 {
 	int i;
 	for (i = 0; i < numDefs; i++) {
 		entityKeyDef_t *keyDef = &keyDefs[i];
-		if (!strcmp(keyDef->name, name) && !ED_AreKeysUnique(keyDef->flags, flags)) {
+		/* names equal. both abstract or both not abstract */
+		if (!strcmp(keyDef->name, name) && !((keyDef->flags ^ parseMode) & ED_ABSTRACT)) {
 			return &keyDefs[i];
 		}
 	}
@@ -196,39 +184,136 @@ static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDe
 }
 
 /**
- * @return -1 in case of an error (too many keys for buffer), else 0.
+ * @brief converts a string representation of a type (eg V_FLOAT) to
+ * the appropriate internal constant integer
+ * @return the constant, or -1 if strType is not recognised
+ */
+static int ED_Type2Constant (const char *strType)
+{
+	if (!strcmp(strType, "V_FLOAT"))
+		return ED_TYPE_FLOAT;
+	else if (!strcmp(strType, "V_INT"))
+		return ED_TYPE_INT;
+	else if (!strcmp(strType, "V_STRING"))
+		return ED_TYPE_STRING;
+
+	snprintf(lastErr, sizeof(lastErr), "ED_Type2Constant: type string not recognised: %s", strType);
+	return -1;
+}
+
+#ifdef DEBUG_ED
+/**
+ * @brief converts an internal constant integer to a string
+ * representation of a type (eg V_FLOAT)
+ * @return the string, or NULL if the integer is not recognised.
+ */
+static const char *ED_Constant2Type (int constInt)
+{
+	switch (constInt) {
+		case ED_TYPE_FLOAT:
+			return "V_FLOAT";
+		case ED_TYPE_INT:
+			return "V_INT";
+		case ED_TYPE_STRING:
+			return "V_STRING";
+		default:
+			snprintf(lastErr, sizeof(lastErr), "ED_Constant2Type: constant not recognised");
+			return NULL;
+	}
+}
+#endif
+
+/**
+ * @brief takes a type string (eg "V_FLOAT 6") and configures entity def
+ * @return -1 for an error, otherwise 0
+ */
+static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
+{
+	const char *copyToken = parsedToken;
+	int type = ED_Type2Constant(COM_Parse(&copyToken));
+	int vectorLen;
+	const char *vectorLenStr;
+	if (-1 == type)
+		return -1;
+
+	/** @todo parsing of vector length, and defualt could probably be tidied and optimised */
+	kd->flags |= type;
+	vectorLenStr = COM_Parse(&copyToken);
+	vectorLen = atoi(vectorLenStr);
+	kd->vLen = strlen(vectorLenStr) ? 1 : vectorLen;
+	return 0;
+}
+
+/**
+ * @brief converts an internal constant integer to a string
+ * representation of a type (eg V_FLOAT)
+ * @return the string, or NULL if the integer is not recognised.
+ */
+static const char *ED_Constant2Block (int constInt)
+{
+	switch (constInt) {
+		case ED_OPTIONAL:
+			return "optional";
+		case ED_MANDATORY:
+			return "mandatory";
+		case ED_ABSTRACT:
+			return "abstract";
+		case ED_DEFAULT:
+			return "default";
+		case ED_MODE_TYPE:
+			return "type";
+		default:
+			snprintf(lastErr, sizeof(lastErr), "ED_Constant2Block: constant not recognised");
+			return NULL;
+	}
+}
+
+/**
+ * @return -1 in case of an error, else 0.
  */
 static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 							const char *newName, const char *newVal, const int mode)
 {
+	/* check if there is already a key def */
 	entityKeyDef_t *keyDef = ED_FindKeyDefInArray(keyDefsBuf, *numKeyDefsSoFar_p, newName, mode);
-	int extantKey = 1;
+
+	/* create one if required */
 	if (!keyDef) {
 		keyDef = &keyDefsBuf[(*numKeyDefsSoFar_p)++];
 		if ((*numKeyDefsSoFar_p) >= ED_MAX_KEYS_PER_ENT) {
 			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: too many keys for buffer");
 			return -1;
 		}
-		if (-1 == ED_AllocKeyDef(keyDef, newName, mode))
+		if (-1 == ED_AllocKeyDef(keyDef, newName))
 			return -1; /* lastErr already set */
-		extantKey = 0;
 	}
+
+	if (keyDef->flags & mode) {
+		snprintf(lastErr, sizeof(lastErr), "Duplicate %s for %s key. second value: %s", ED_Constant2Block(mode), newName, newVal);
+		return -1;
+	}
+
+	keyDef->flags |= mode;
+
+	/* store information */
 	switch (mode) {
 		case ED_MANDATORY:
 		case ED_OPTIONAL:
-		case ED_ABSTRACT:/** @todo actually OK if one is abstract */
+		case ED_ABSTRACT:
 			keyDef->desc = ED_AllocString(newVal);
 			if (!keyDef->desc)
 				return -1;
-			if (extantKey && !ED_AreKeysUnique(mode, keyDef->flags)) {
-				snprintf(lastErr, sizeof(lastErr), "Duplicate key: %s", newName);
-				return -1;
-			}
 			return 0;
 		case ED_DEFAULT:
 			keyDef->defaultVal = ED_AllocString(newVal);
 			if (!keyDef->defaultVal)
 				return -1;
+			return 0;
+		case ED_MODE_TYPE:
+			/* only optional or abstract keys may have types, not possible to test for this here,
+			 * as the type block may come before the optional or mandatory block */
+			if (-1 == ED_ParseType(keyDef, newVal))
+				return -1; /* lastErr set in function call */
 			return 0;
 		default:
 			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: parse mode not recognised");
@@ -293,7 +378,8 @@ static int ED_ParseEntities (const char **data_p)
 				}
 				memset(keyDefBuf, 0, sizeof(keyDefBuf)); /* ensure pointers are not carried over from previous entity */
 				keyIndex = 0;
-				ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY);
+				if (-1 == ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY))
+					return -1;
 				mode = ED_ABSTRACT;
 			}
 			tokensOnLevel0++;
@@ -371,8 +457,10 @@ const char *ED_GetLastError (void)
 	return lastErr;
 }
 
-/** @brief searches for the parsed entity def by classname
- *  @return NULL if the entity def is not found */
+/**
+ * @brief searches for the parsed entity def by classname
+ * @return NULL if the entity def is not found
+ */
 const entityDef_t *ED_GetEntityDef (const char *classname)
 {
 	entityDef_t *ed;
@@ -414,10 +502,8 @@ void ED_Dump (void)
 	const entityDef_t *ed;
 	for (ed = entityDefs; ed->numKeyDefs; ed++) {
 		const entityKeyDef_t *kd;
-		Com_Printf("next ent:\n");
 		Com_Printf(">%s< >%s<\n", ed->keyDefs[0].name, ed->keyDefs[0].desc);
 		for (kd = &ed->keyDefs[1]; kd->name; kd++) {
-			Com_Printf("next key:\n");
 			Com_Printf("  >%s< mandatory:%i optional:%i abstract:%i\n", kd->name,
 				kd->flags & ED_MANDATORY ? 1 : 0,
 				kd->flags & ED_OPTIONAL ? 1 : 0,
