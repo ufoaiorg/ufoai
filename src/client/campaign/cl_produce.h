@@ -26,9 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_PROOUCE
 #define CLIENT_CL_PROOUCE
 
+#include "../cl_inventory.h"
+
 /** @brief Maximum number of productions queued in any one base. */
 #define MAX_PRODUCTIONS		256
 #define MAX_PRODUCTIONS_PER_WORKSHOP 5
+
+extern const int PRODUCE_FACTOR;
+extern const int PRODUCE_DIVISOR;
 
 /**
  * @brief Holds all information for the production of one item-type.
@@ -71,8 +76,11 @@ typedef struct production_queue_s
 void PR_InitStartup(void);
 void PR_ProductionRun(void);
 void PR_ProductionInit(void);
-void PR_Init(void);
 void PR_UpdateProductionCap(struct base_s *base);
 qboolean PR_ItemIsProduceable(const objDef_t const *item);
+void PR_QueueMove (production_queue_t *queue, int index, int dir);
+void PR_QueueDelete (base_t *base, production_queue_t *queue, int index);
+void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs);
+float PR_CalculateProductionPercentDone (const base_t *base, const technology_t *tech, const components_t *comp, qboolean disassembly);
 
 #endif /* CLIENT_CL_PROOUCE */

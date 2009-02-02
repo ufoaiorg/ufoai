@@ -63,6 +63,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_mapfightequip.c \
 	client/campaign/cl_nation.c \
 	client/campaign/cl_produce.c \
+	client/campaign/cl_produce_callbacks.c \
 	client/campaign/cl_radar.c \
 	client/campaign/cl_research.c \
 	client/campaign/cl_research_callbacks.c \

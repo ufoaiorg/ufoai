@@ -25,11 +25,10 @@
 ./client/campaign/cp_aircraft_callbacks.c
 ./client/campaign/cp_base.c
 ./client/campaign/cp_base_callbacks.c
-./client/campaign/cp_basesummary_callbacks.c
 ./client/campaign/cp_geoscape_actions.c
 ./client/campaign/cp_messages.c
-./client/campaign/cp_missions.c
 ./client/campaign/cp_mission_triggers.c
+./client/campaign/cp_missions.c
 ./client/campaign/cp_nations.c
 ./client/campaign/cp_team.c
 ./client/campaign/cp_time.c

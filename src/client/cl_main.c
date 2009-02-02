@@ -45,6 +45,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cl_mapfightequip.h"
 #include "campaign/cl_ufo.h"
 #include "campaign/cl_alienbase.h"
+#include "campaign/cl_produce_callbacks.h"
 #include "cl_sequence.h"
 #include "cl_view.h"
 #include "cl_joystick.h"
