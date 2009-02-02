@@ -627,7 +627,6 @@ static void CL_ToggleTeamList_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "No heavy equipment available.\n");
 		}
 	}
-	Cbuf_AddText("team_mark;team_select 0\n");
 }
 
 void TEAM_InitStartup (void)

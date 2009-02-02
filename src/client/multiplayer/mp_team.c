@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "mp_team.h"
 
+static inventory_t mp_inventory;
+
 /**
  * @brief Reads tha comments from team files
  */
@@ -58,19 +60,6 @@ static void MP_MultiplayerTeamSlotComments_f (void)
 		Cvar_Set(va("mn_slot%i", i), comment);
 		fclose(f);
 	}
-}
-
-/**
- * @brief Call all the needed functions to generate a new initial team for multiplayer
- */
-static void MP_GenerateNewMultiplayerTeam_f (void)
-{
-	Cvar_Set("mn_teamname", _("NewTeam"));
-
-	SV_Shutdown("Game exit", qfalse);
-	CL_Disconnect();
-
-	MN_PushMenu("team", NULL);
 }
 
 /**
@@ -186,20 +175,15 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename)
  */
 static void MP_SaveTeamMultiplayerSlot_f (void)
 {
-	if (!GAME_IsMultiplayer())
-		return;
-
-	if (!gd.numEmployees[EMPL_SOLDIER]) {
+	if (!chrDisplayList.num) {
 		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
-	} else if (cls.missionaircraft) {
+	} else {
 		char filename[MAX_OSPATH];
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
 		if (!MP_SaveTeamMultiplayer(filename))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
-	} else {
-		Com_Printf("Nothing to safe - no team assigned to the aircraft\n");
 	}
 }
 
@@ -326,11 +310,6 @@ static void MP_LoadTeamMultiplayerSlot_f (void)
 {
 	char filename[MAX_OSPATH];
 
-	if (!GAME_IsMultiplayer()) {
-		Com_Printf("Only for multiplayer\n");
-		return;
-	}
-
 	/* load */
 	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
 	MP_LoadTeamMultiplayer(filename);
@@ -338,10 +317,46 @@ static void MP_LoadTeamMultiplayerSlot_f (void)
 	Com_Printf("Team 'team%s' loaded.\n", Cvar_VariableString("mn_slot"));
 }
 
+
+/**
+ * @brief Displays actor equipment and unused items in proper (filter) category.
+ * @note This function is called everytime the equipment screen for the team pops up.
+ */
+static void MP_UpdateEquipmentMenuParameters_f (void)
+{
+	equipDef_t unused;
+	int i;
+
+	/* reset description */
+	Cvar_Set("mn_itemname", "");
+	Cvar_Set("mn_item", "");
+	MN_MenuTextReset(TEXT_STANDARD);
+
+	/* manage inventory */
+	unused = ccs.eMission; /* copied, including arrays inside! */
+
+	for (i = 0; i < csi.numODs; i++) {
+		/* Don't allow to show armour for other teams in the menu. */
+		if (!Q_strcmp(csi.ods[i].type, "armour") && csi.ods[i].useable != cl_team->integer)
+			continue;
+
+		while (unused.num[i]) {
+			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+			inventory_t *i = &mp_inventory;
+			if (!Com_AddToInventory(i, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
+				break; /* no space left in menu */
+		}
+	}
+}
+
+/**
+ * @todo Don't call this in CL_InitLocal but GAME_MP_InitStartup (or add the Cmd_AddCommand calls to GAME_MP_InitStartup)
+ * @todo Also add a TEAM_MP_Shutdown function
+ */
 void TEAM_MP_InitStartup (void)
 {
 	Cmd_AddCommand("saveteamslot", MP_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("loadteamslot", MP_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
 	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
-	Cmd_AddCommand("team_new", MP_GenerateNewMultiplayerTeam_f, "Generates a new empty multiplayer team");
+	Cmd_AddCommand("mp_team_updateequip", MP_UpdateEquipmentMenuParameters_f, "");
 }

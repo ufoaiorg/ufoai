@@ -41,13 +41,20 @@ static void GAME_MP_AutoTeam (void)
 	int i;
 	const char *name = Cvar_VariableString("cl_equip");
 
+	SV_Shutdown("Game exit", qfalse);
+	CL_Disconnect();
+
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 
 		CL_GenerateCharacter(&multiplayerCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
+		chrDisplayList.chr[i] = &multiplayerCharacters[i];
+		Cvar_ForceSet(va("mn_name%i", i), multiplayerCharacters[i].name);
 		/* pack equipment */
 		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &multiplayerCharacters[i]);
 	}
+	chrDisplayList.num = i;
+
 	Cvar_Set("mn_teamname", _("NewTeam"));
 }
 
@@ -65,10 +72,8 @@ static void GAME_MP_StartServer_f (void)
 	char map[MAX_VAR];
 	mapDef_t *md;
 
-	if (!sv_dedicated->integer && !cl.chrList.num) {
+	if (!sv_dedicated->integer && !cl.chrList.num)
 		GAME_MP_AutoTeam();
-		return;
-	}
 
 	if (Cvar_VariableInteger("sv_teamplay")
 	 && Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {
@@ -253,6 +258,7 @@ static void GAME_MP_GetEquipment (void)
 		Com_Printf("Equipment '%s' not found!\n", equipmentName);
 		return;
 	}
+	/** @todo use our own storage for multiplayer */
 	ccs.eMission = *ed; /* copied, including the arrays inside! */
 }
 

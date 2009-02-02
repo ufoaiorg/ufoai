@@ -2,7 +2,725 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
-menu mp_team_create {
+menu mp_team_edit
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic background
+	{
+		image	menu/mp_team_edit_bg
+	}
+
+	string s_backpack
+	{
+		pos "852 25"
+		textalign uc
+		string	"_Backpack"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_left
+	{
+		pos "852 150"
+		textalign uc
+		string	"_Left Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_right
+	{
+		pos "530 150"
+		textalign uc
+		string	"_Right Hand"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_extension
+	{
+		pos "530 76"
+		textalign uc
+		string	"_Extension"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_headgear
+	{
+		pos "620 76"
+		textalign uc
+		string	"_Headgear"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_holster
+	{
+		pos "852 245"
+		textalign uc
+		string	"_Holster"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	string s_belt
+	{
+		pos "530 245"
+		textalign uc
+		string	"_Belt"
+		color "0 0.6 0 1"
+		size "160 25"
+	}
+
+	// ==================
+	// checkbox list
+	// ==================
+
+	checkbox bt_actor0
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 23"
+		size "20 20"
+		change { }
+	}
+
+	checkbox bt_actor1
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 64"
+		size "20 20"
+		change { }
+	}
+
+	checkbox bt_actor2
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 105"
+		size "20 20"
+		change { }
+	}
+
+	checkbox bt_actor3
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 146"
+		size "20 20"
+		change { }
+	}
+
+	checkbox bt_actor4
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 187"
+		size "20 20"
+		change { }
+	}
+
+	checkbox bt_actor5
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 228"
+		size "20 20"
+		change { }
+	}
+
+	checkbox bt_actor6
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 269"
+		size "20 20"
+		change { }
+	}
+
+	checkbox bt_actor7
+	{
+		current 0
+		image menu/checkbox_green
+		pos	"60 310"
+		size "20 20"
+		change { }
+	}
+
+	// ==================
+	// names list
+	// ==================
+
+	func names_clear
+	{
+		*txt_actor0 color "0 .78 0 1"
+		*txt_actor1 color "0 .78 0 1"
+		*txt_actor2 color "0 .78 0 1"
+		*txt_actor3 color "0 .78 0 1"
+		*txt_actor4 color "0 .78 0 1"
+		*txt_actor5 color "0 .78 0 1"
+		*txt_actor6 color "0 .78 0 1"
+		*txt_actor7 color "0 .78 0 1"
+	}
+
+	string txt_actor0
+	{
+		string	"*cvar mn_name0"
+		pos		"90 13"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 0;" }
+	}
+	string txt_actor1
+	{
+		string	"*cvar mn_name1"
+		pos		"90 54"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 1;" }
+	}
+	string txt_actor2
+	{
+		string	"*cvar mn_name2"
+		pos		"90 95"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 2;" }
+	}
+	string txt_actor3
+	{
+		string	"*cvar mn_name3"
+		pos		"90 136"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 3;" }
+	}
+	string txt_actor4
+	{
+		string	"*cvar mn_name4"
+		pos		"90 177"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 4;" }
+	}
+	string txt_actor5
+	{
+		string	"*cvar mn_name5"
+		pos		"90 218"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 5;" }
+	}
+	string txt_actor6
+	{
+		string	"*cvar mn_name6"
+		pos		"90 259"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 6;" }
+	}
+	string txt_actor7
+	{
+		string	"*cvar mn_name7"
+		pos		"90 300"
+		size	"270 40"
+		textalign cl
+		click { cmd "equip_select 7;" }
+	}
+
+	// ==================
+	// category buttons
+	// ==================
+
+	confunc mp_update_item_list {
+		if "mn_equiptype == 0" {
+			*(container)equip filter 0
+			*(container)equip_ammo filter 0
+		}
+		if "mn_equiptype == 1" {
+			*(container)equip filter 1
+			*(container)equip_ammo filter 1
+		}
+		if "mn_equiptype == 2" {
+			*(container)equip filter 2
+			*(container)equip_ammo filter 2
+		}
+		if "mn_equiptype == 3" {
+			*(container)equip filter 3
+			*(container)equip_ammo filter 3
+		}
+		if "mn_equiptype == 4" {
+			*(container)equip filter 4
+			*(container)equip_ammo filter 4
+		}
+		*(container)equip scrollpos 0
+		*(container)equip_ammo scrollpos 0
+	}
+
+	tab equip_type
+	{
+		pos		"400 365"
+		size	"505 40"
+		cvar	"*cvar mn_equiptype"
+		option primary {
+			label	"_Primary"
+			value	"0"
+			action	"mp_update_item_list;"
+		}
+		option secondary {
+			label	"_Secondary"
+			value	"1"
+			action	"mp_update_item_list;"
+		}
+		option heavy {
+			label	"_Heavy"
+			value	"2"
+			action	"mp_update_item_list;"
+		}
+		option misc {
+			label	"_Misc"
+			value	"3"
+			action	"mp_update_item_list;"
+		}
+		option armour {
+			label	"_Armour"
+			value	"4"
+			action	"mp_update_item_list;"
+		}
+	}
+
+	// ==================
+	// item description
+	// ==================
+
+	string itemname
+	{
+		string	"*cvar mn_itemname"
+		pos		"40 426"
+		size	"326 20"
+		textalign	uc
+	}
+
+	item itemmodel
+	{
+		model	"*cvar mn_item"
+		pos		"103 408"
+		size	"200 200"
+		autoscale	true
+	}
+
+	text description
+	{
+		pos			"40 566"
+		size		"326 140"
+		lineheight	20
+		tabwidth	190
+		rows		"7"
+		scrollbar	true
+		wheel
+	}
+	pic weapon_dec
+	{
+		visiblewhen "mn_changeweapon == 1"
+		tooltip "_Previous weapon chambered for this ammunition"
+		image	menu/buttons_small
+		pos		"160 707"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_decreaseweapon;"
+		}
+	}
+
+	pic ammo_dec
+	{
+		visiblewhen "mn_changeweapon == 2"
+		tooltip "_Previous ammunition compatible with this weapon"
+		image	menu/buttons_small
+		pos		"160 707"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_decreaseweapon;"
+		}
+	}
+
+	pic weapon_inc
+	{
+		visiblewhen "mn_changeweapon == 1"
+		tooltip "_Next weapon chambered for this ammunition"
+		image	menu/buttons_small
+		pos		"367 707"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_increaseweapon;"
+		}
+	}
+
+	pic ammo_inc
+	{
+		visiblewhen "mn_changeweapon == 2"
+		tooltip "_Next ammunition compatible with this weapon"
+		image	menu/buttons_small
+		pos		"367 707"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_increaseweapon;"
+		}
+	}
+
+
+	string header_weapon
+	{
+		visiblewhen "mn_displayweapon == 1"
+		string	"_With weapon:"
+		pos		"30 708"
+		size	"130 16"
+		font	f_small
+	}
+
+	string header_ammo
+	{
+		visiblewhen "mn_displayweapon == 2"
+		string	"_With ammo:"
+		pos		"30 708"
+		size	"130 16"
+		font	f_small
+	}
+
+	string weapon_name
+	{
+		string	"*cvar mn_researchedlinkname"
+		pos		"170 707"
+		size	"200 16"
+		textalign	cc
+		font	f_small
+	}
+
+	pic firemode_dec
+	{
+		visiblewhen "mn_changefiremode == 1"
+		tooltip "_Previous firemode"
+		image	menu/buttons_small
+		pos		"160 725"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "mn_decreasefiremode;" }
+	}
+
+	pic firemode_inc
+	{
+		visiblewhen "mn_changefiremode == 1"
+		tooltip "_Next firemode"
+		image	menu/buttons_small
+		pos		"367 725"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click	{ cmd "mn_increasefiremode;" }
+	}
+
+	string header_firemode
+	{
+		visiblewhen "mn_displayfiremode == 1"
+		string	"_Firemode:"
+		pos		"30 725"
+		size	"120 16"
+		font	f_small
+	}
+
+	string firemode_name
+	{
+		visiblewhen "mn_displayfiremode == 1"
+		string	"*cvar mn_firemodename"
+		pos		"170 725"
+		size	"200 16"
+		textalign	cc
+		font	f_small
+	}
+
+	// ==================
+	// actor stats
+	// ==================
+
+	string pwr_lbl { pos "34 414" size "200 20" string "_Strength:" }
+	string pwr_val { pos "220 414" size "150 20" string "*cvar mn_tpwr" textalign ur }
+	pic pwr_bdr    { pos "67 431"  image menu/bar_border }
+	tbar pwr_bar   { pos "70 431"  current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute	size "250 16"	max 100 }
+
+	string spd_lbl { pos "34 449"  size "200 20" string "_Speed:" }
+	string spd_val { pos "220 449" size "150 20" string "*cvar mn_tspd" textalign ur }
+	pic spd_bdr    { pos "67 466"  image menu/bar_border }
+	tbar spd_bar   { pos "70 466"  current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+
+	string acc_lbl { pos "34 484"  size "200 20" string "_Accuracy:" }
+	string acc_val { pos "220 484" size "150 20" string "*cvar mn_tacc" textalign ur }
+	pic acc_bdr    { pos "67 501"  image menu/bar_border }
+	tbar acc_bar   { pos "70 501"  current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+
+	string mnd_lbl { pos "34 519"  size "200 20" string "_Mind:" }
+	string mnd_val { pos "220 519" size "150 20" string "*cvar mn_tmnd" textalign ur }
+	pic mnd_bdr    { pos "67 536"  image menu/bar_border }
+	tbar mnd_bar   { pos "70 536"  current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+
+	string cls_lbl { pos "34 562"  size "200 20" string "_Close Combat:" }
+	string cls_val { pos "220 562" size "150 20" string "*cvar mn_tcls" textalign ur }
+	pic cls_bdr    { pos "67 579"  image menu/bar_border }
+	tbar cls_bar   { pos "70 579"  current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+
+	string hvy_lbl { pos "34 597"  size "200 20" string "_Heavy Weapons:" }
+	string hvy_val { pos "220 597" size "150 20" string "*cvar mn_thvy" textalign ur }
+	pic hvy_bdr    { pos "67 614"  image menu/bar_border }
+	tbar hvy_bar   { pos "70 614"  current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+
+	string ass_lbl { pos "34 632" size "200 20" string "_Assault Weapons:" }
+	string ass_val { pos "220 632" size "150 20" string "*cvar mn_tass" textalign ur }
+	pic ass_bdr    { pos "67 649"  image menu/bar_border }
+	tbar ass_bar   { pos "70 649"  current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+
+	string snp_lbl { pos "34 667" size "200 20" string "_Sniper Rifles:" }
+	string snp_val { pos "220 667" size "150 20" string "*cvar mn_tsnp" textalign ur }
+	pic snp_bdr    { pos "67 684"  image menu/bar_border }
+	tbar snp_bar   { pos "70 684"  current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+
+	string exp_lbl { pos "34 702" size "200 20" string "_High-Explosives:" }
+	string exp_val { pos "220 702" size "150 20" string "*cvar mn_texp" textalign ur }
+	pic exp_bdr    { pos "67 719"  image menu/bar_border }
+	tbar exp_bar   { pos "70 719"  current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+
+	// ==================
+	// switch
+	// ==================
+
+	// @todo merge with confunc weapon_stats?
+	confunc mp_weapon_stats
+	{
+		*itemname invis false
+		*itemmodel invis false
+		*description invis false
+		*weapon_dec invis false
+		*ammo_dec invis false
+		*weapon_inc invis false
+		*ammo_inc invis false
+		*header_weapon invis false
+		*header_ammo invis false
+		*weapon_name invis false
+		*firemode_dec invis false
+		*firemode_inc invis false
+		*header_firemode invis false
+		*firemode_name invis false
+
+		*pwr_lbl invis true *pwr_val invis true *pwr_bdr invis true *pwr_bar invis true
+		*spd_lbl invis true *spd_val invis true *spd_bdr invis true *spd_bar invis true
+		*acc_lbl invis true *acc_val invis true *acc_bdr invis true *acc_bar invis true
+		*mnd_lbl invis true *mnd_val invis true *mnd_bdr invis true *mnd_bar invis true
+		*cls_lbl invis true *cls_val invis true *cls_bdr invis true *cls_bar invis true
+		*hvy_lbl invis true *hvy_val invis true *hvy_bdr invis true *hvy_bar invis true
+		*ass_lbl invis true *ass_val invis true *ass_bdr invis true *ass_bar invis true
+		*snp_lbl invis true *snp_val invis true *snp_bdr invis true *snp_bar invis true
+		*exp_lbl invis true *exp_val invis true *exp_bdr invis true *exp_bar invis true
+	}
+
+	// @todo merge with confunc actor_stats?
+	confunc mp_actor_stats
+	{
+		*itemname invis true
+		*itemmodel invis true
+		*description invis true
+		*weapon_dec invis true
+		*ammo_dec invis true
+		*weapon_inc invis true
+		*ammo_inc invis true
+		*header_weapon invis true
+		*header_ammo invis true
+		*weapon_name invis true
+		*firemode_dec invis true
+		*firemode_inc invis true
+		*header_firemode invis true
+		*firemode_name invis true
+
+		*pwr_lbl invis false *pwr_val invis false *pwr_bdr invis false *pwr_bar invis false
+		*spd_lbl invis false *spd_val invis false *spd_bdr invis false *spd_bar invis false
+		*acc_lbl invis false *acc_val invis false *acc_bdr invis false *acc_bar invis false
+		*mnd_lbl invis false *mnd_val invis false *mnd_bdr invis false *mnd_bar invis false
+		*cls_lbl invis false *cls_val invis false *cls_bdr invis false *cls_bar invis false
+		*hvy_lbl invis false *hvy_val invis false *hvy_bdr invis false *hvy_bar invis false
+		*ass_lbl invis false *ass_val invis false *ass_bdr invis false *ass_bar invis false
+		*snp_lbl invis false *snp_val invis false *snp_bdr invis false *snp_bar invis false
+		*exp_lbl invis false *exp_val invis false *exp_bdr invis false *exp_bar invis false
+	}
+
+	tab info {
+		pos		"20 365"
+		size	"355 40"
+		cvar	"*cvar mn_infotype"
+		option abilities {
+			label	"_Actor Abilities"
+			value	"0"
+			action "mp_actor_stats;"
+		}
+		option weaponinfo {
+			label	"_Object Info"
+			value	"1"
+			action "mp_weapon_stats;"
+		}
+	}
+
+	// ==================
+	// inventory
+	// ==================
+
+	string txt_actorname
+	{
+		string	"*cvar mn_name"
+		pos		"544 24"
+		size	"300 20"
+	}
+
+	model body
+	{
+		model	"*cvar mn_body"
+		skin	"*cvar mn_skin"
+		anim	"stand_menu"
+		angles	"0 70 90"
+		scale	"5 5 5"
+
+		pos		"676 69"
+		size	"197 258"
+		origin	"0 -30 0"
+	}
+
+	model head
+	{
+		model	"*cvar mn_head"
+		skin	"*cvar mn_skin"
+		tag		"body tag_head"
+		scale	"1.0 1.0 1.0"
+	}
+
+	/**
+	 * @sa CL_InitSkin_f
+	 * @sa team_initskin
+	 */
+	selectbox skins {
+		image	"menu/selectbox_green"
+		pos	"660 290"
+		size	"120 40"
+		cvar	"*cvar mn_skin"
+		color	"0.6 0.6 0.6 0.3"
+	}
+
+	// ==================
+	// Containers (see inventory.ufo for the definition)
+	// ==================
+
+	container extension	{ pos "548 104"	select { cmd "object_update <lastselectedid>;" } }
+	container right		{ pos "548 178"	select { cmd "object_update <lastselectedid>;" } }
+	container left		{ pos "872 178"	select { cmd "object_update <lastselectedid>;" } }
+	container backpack	{ pos "872 54"	select { cmd "object_update <lastselectedid>;" } }
+	container belt		{ pos "569 273"	select { cmd "object_update <lastselectedid>;" } }
+	container holster	{ pos "898 270"	select { cmd "object_update <lastselectedid>;" } }
+	container headgear	{ pos "678 104"	select { cmd "object_update <lastselectedid>;" } }
+
+	container armour	{
+		pos "735 100"
+		color "1 1 1 0"		// active, but display it transparent
+		change { cmd "soldier_updatecurrent;" }
+		select { cmd "object_update <lastselectedid>;" }
+	}
+
+	container equip		{
+		pos						"422 415"
+		size					"207 317"
+		displayweapon			true
+		displayammoofweapon		true
+		displayunavailableitem	true
+		columns					1
+		viewchange {
+			*(abstractscrollbar)equip_scroll current <scrollpos>
+			*(abstractscrollbar)equip_scroll viewsize <viewsize>
+			*(abstractscrollbar)equip_scroll fullsize <fullsize>
+		}
+		select { cmd "object_update <lastselectedid> 0;" }
+	}
+
+	container equip_ammo	{
+		pos				"702 418"
+		size			"207 317"
+		displayammo		true
+		columns			2
+		viewchange {
+			*(abstractscrollbar)equip_ammo_scroll current <scrollpos>
+			*(abstractscrollbar)equip_ammo_scroll viewsize <viewsize>
+			*(abstractscrollbar)equip_ammo_scroll fullsize <fullsize>
+		}
+		select { cmd "object_update <lastselectedid> 0;" }
+	}
+
+	vscrollbar equip_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos "629 405"	height	"339"
+		hidewhenunused true
+		change {
+			*equip scrollpos <current>
+		}
+	}
+
+	vscrollbar equip_ammo_scroll {
+		image	menu/scrollbar_v_green	blend	true
+		pos "892 405"	height	"339"
+		hidewhenunused true
+		change {
+			*equip_ammo scrollpos <current>
+		}
+	}
+
+	// ==================
+	// additional stuff
+	// ==================
+
+	custombutton bt_go
+	{
+		tooltip	"_Done"
+		image	menu/button_background blend true
+		texl	"192 0"	size "64 37"
+		pos		"940 720"
+		icon return
+		click	{ cmd "mn_pop;" }
+	}
+
+	func init
+	{
+		call names_clear
+		call mp_actor_stats
+		cmd "set mn_infotype 0;set mn_equiptype 0;"
+		cmd "team_initskin;mp_update_item_list;equip_select 0;mp_team_updateequip;"
+	}
 }
 
 
@@ -178,12 +896,13 @@ menu mp_team
 		font	f_big
 	}
 
+	// @todo should be only available when there is a team loaded or created already
 	button button_edit
 	{
 		pos	"85 490"
 		tooltip	"_Edit your team after loading"
 		size "128 64"
-		click	{ cmd "mn_push team;" }
+		click	{ cmd "mn_push mp_team_edit;" }
 		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
@@ -196,25 +915,12 @@ menu mp_team
 		pos	"225 490"
 		tooltip	"_Generate a new team"
 		size "128 64"
-		click	{ cmd "team_new;" }
+		click	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
 		image	menu/button_green_big	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_New"
-	}
-
-	button button_auto
-	{
-		pos	"365 490"
-		tooltip	"_Generate a team automatically"
-		size "128 64"
-		click	{ cmd "mp_autoteam;mn_push mp_equipment;" }
-		image	menu/button_green_big	blend	true
-		font	f_menusmall
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Auto"
 	}
 
 	string team_str
