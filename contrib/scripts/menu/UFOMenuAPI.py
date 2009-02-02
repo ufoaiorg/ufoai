@@ -17,7 +17,7 @@ removeEvents = re.compile('(\s)(click|change|rclick|mclick|wheel|in|out|whup|whd
 removeFunctions = re.compile('(\s)(confunc|func)(\s+)([a-zA-Z0-9_-]*)(\s*)\{.*?\}', re.DOTALL)
 removeOptions = re.compile('(\s)(option)(\s+)([a-zA-Z0-9_-]*)(\s*)\{.*?\}', re.DOTALL)
 
-mouseevent = ["click", "rclick", "mclick", "wheel", "in", "out", "whup", "whdown"]
+mouseevent = ["click", "viewchange", "rclick", "mclick", "wheel", "in", "out", "whup", "whdown"]
 
 parseNodes = re.compile('\s*([a-zA-Z0-9_-]+)\s+([a-zA-Z0-9_-]+)\s*\{(.*?)\}', re.DOTALL)
 matchParam = re.compile("(\".*?\"|(?!\")\S+)\s+", re.DOTALL)
