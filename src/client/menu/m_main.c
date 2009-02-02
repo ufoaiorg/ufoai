@@ -476,6 +476,9 @@ qboolean MN_CursorOnMenu (int x, int y)
 		}
 		return qtrue;
 	}
+	if (MN_GetMouseCapture() != NULL)
+		return qtrue;
+
 	return qfalse;
 }
 
