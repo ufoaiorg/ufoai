@@ -1268,7 +1268,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	/* parse it's body */
 	if (!MN_ParseMenuBody(menu, text)) {
-		Sys_Error("MN_ParseMenu: menu \"%s\" have a bad body\n", menu->name);
+		Sys_Error("MN_ParseMenu: menu \"%s\" has a bad body\n", menu->name);
 		return;	/* never reached */
 	}
 
