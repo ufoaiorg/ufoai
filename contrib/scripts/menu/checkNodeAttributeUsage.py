@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 #
 # @brief check the usage of menuNode_s attributes into all menu file (call it from the root of the trunk)

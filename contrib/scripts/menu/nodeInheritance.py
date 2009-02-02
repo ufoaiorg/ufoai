@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 #
 # @brief extract node inheritance from .h and .c files
