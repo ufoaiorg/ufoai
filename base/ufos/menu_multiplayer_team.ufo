@@ -1,0 +1,268 @@
+// ==============================
+// MULTIPLAYER TEAM CREATION MENU
+// ==============================
+
+menu mp_team_create {
+}
+
+
+// =====================
+// MULTIPLAYER TEAM MENU
+// =====================
+
+menu mp_team
+{
+	{
+		pos	"415 0"
+		size	"608 768"
+	}
+
+	// ==================
+	// slots
+	// ==================
+
+	textentry slot_team0
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 130"
+		size		"256 34"
+		string		"*cvar mn_slot0"
+		click		{ cmd "mn_slot 0;" }
+	}
+
+	textentry slot_team1
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 165"
+		size		"256 34"
+		string		"*cvar mn_slot1"
+		click		{ cmd "mn_slot 1;" }
+	}
+
+	textentry slot_team2
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 200"
+		size		"256 34"
+		string		"*cvar mn_slot2"
+		click		{ cmd "mn_slot 2;" }
+	}
+
+	textentry slot_team3
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 235"
+		size		"256 34"
+		string		"*cvar mn_slot3"
+		click		{ cmd "mn_slot 3;" }
+	}
+
+	textentry slot_team4
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 270"
+		size		"256 34"
+		string		"*cvar mn_slot4"
+		click		{ cmd "mn_slot 4;" }
+	}
+
+	textentry slot_team5
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 305"
+		size		"256 34"
+		string		"*cvar mn_slot5"
+		click		{ cmd "mn_slot 5;" }
+	}
+
+	textentry slot_team6
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 340"
+		size		"256 34"
+		string		"*cvar mn_slot6"
+		click		{ cmd "mn_slot 6;" }
+	}
+
+	textentry slot_team7
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 375"
+		size		"256 34"
+		string		"*cvar mn_slot7"
+		click		{ cmd "mn_slot 7;" }
+	}
+
+	button button_load
+	{
+		pos	"365 130"
+		size "128 64"
+		tooltip "_Load team from current selected slot"
+		click	{ cmd "loadteamslot;" }
+		image	menu/button_green_big	blend	true
+		font	f_menusmall
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Load"
+	}
+
+	button button_save
+	{
+		pos	"365 200"
+		tooltip	"_Save team to current selected slot"
+		size "128 64"
+		click	{ cmd "saveteamslot;team_comments;" }
+		image	menu/button_green_big	blend	true
+		font	f_menusmall
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Save"
+	}
+
+	// ==================
+	// current team
+	// ==================
+
+	string current_team
+	{
+		string	"_Current Team"
+		pos	"85 450"
+		font	f_big
+	}
+
+	button button_edit
+	{
+		pos	"85 490"
+		tooltip	"_Edit your team after loading"
+		size "128 64"
+		click	{ cmd "mn_push team;" }
+		image	menu/button_green_big	blend	true
+		font	f_menusmall
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Edit"
+	}
+
+	button button_new
+	{
+		pos	"225 490"
+		tooltip	"_Generate a new team"
+		size "128 64"
+		click	{ cmd "team_new;" }
+		image	menu/button_green_big	blend	true
+		font	f_menusmall
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_New"
+	}
+
+	button button_auto
+	{
+		pos	"365 490"
+		tooltip	"_Generate a team automatically"
+		size "128 64"
+		click	{ cmd "mp_autoteam;" }
+		image	menu/button_green_big	blend	true
+		font	f_menusmall
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Auto"
+	}
+
+	string team_str
+	{
+		string	"_Team:"
+		pos	"85 570"
+	}
+
+	string current_name
+	{
+		string	"_Name"
+		pos	"85 620"
+	}
+	textentry slot_teamname
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color 		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"85 640"
+		size		"256 34"
+		string		"*cvar mn_teamname"
+	}
+
+	selectbox team_box
+	{
+		image	"menu/selectbox_green"
+		pos		"200 570"
+		size	"125 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar cl_team"
+		option low_value {
+			label	"_Human"
+			value	"1"
+			action	""
+		}
+		option medium_value {
+			label	"_Alien"
+			value	"7"
+			action	""
+		}
+	}
+
+	func init
+	{
+		cmd	"mn_escpop 5;set mn_slot 0;team_comments;"
+	}
+}
