@@ -216,7 +216,7 @@ void CL_LanguageInit (void)
 {
 	int i;
 	menuNode_t* languageOptions;
-	selectBoxOptions_t* selectBoxOption;
+	menuNode_t* languageOptions2;
 	language_t* language;
 	char systemLanguage[MAX_VAR];
 
@@ -241,6 +241,7 @@ void CL_LanguageInit (void)
 	languageOptions = MN_GetNodeByPath("options_game.select_language");
 	if (!languageOptions)
 		Sys_Error("Could not find node select_language in menu options_game\n");
+
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 #ifndef DEBUG
 		/* No language option available only for DEBUG. */
@@ -249,7 +250,8 @@ void CL_LanguageInit (void)
 #endif
 
 		/* Test the locale first, add to list if setting given locale possible. */
-		if (CL_LanguageTest(language->localeID) || !Q_strcmp(language->localeID, "none")) {
+		if (CL_LanguageTest(language->localeID)) {
+			selectBoxOptions_t* selectBoxOption;
 			selectBoxOption = MN_NodeAddOption(languageOptions);
 			if (!selectBoxOption)
 				break;
@@ -258,24 +260,14 @@ void CL_LanguageInit (void)
 		}
 	}
 
-	languageOptions = MN_GetNodeByPath("checkcvars.select_language");
-	if (!languageOptions)
+	/* sort the list */
+	MN_OptionNodeSortOptions(languageOptions);
+
+	/* link this node to the same linked list */
+	languageOptions2 = MN_GetNodeByPath("checkcvars.select_language");
+	if (!languageOptions2)
 		Sys_Error("Could not find node select_language in menu checkcvars\n");
-	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-#ifndef DEBUG
-		/* No language option available only for DEBUG. */
-		if (!Q_strncmp(language->localeID, "none", 4))
-			continue;
-#endif
-		/* Test the locale first, add to list if setting given locale possible. */
-		if (CL_LanguageTest(language->localeID) || !Q_strcmp(language->localeID, "none")) {
-			selectBoxOption = MN_NodeAddOption(languageOptions);
-			if (!selectBoxOption)
-				break;
-			Q_strncpyz(selectBoxOption->label, language->localeString, sizeof(selectBoxOption->label));
-			Q_strncpyz(selectBoxOption->value, language->localeID, sizeof(selectBoxOption->value));
-		}
-	}
+	languageOptions2->u.option.first = languageOptions->u.option.first;
 
 	/* Set to the locale remembered previously. */
 	CL_LanguageTryToSet(systemLanguage);

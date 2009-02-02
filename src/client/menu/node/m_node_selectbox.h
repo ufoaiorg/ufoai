@@ -53,6 +53,8 @@ struct menuNode_s;
 struct nodeBehaviour_s;
 
 selectBoxOptions_t* MN_NodeAddOption(struct menuNode_s *node);
+void MN_OptionNodeSortOptions(struct menuNode_s *node);
 void MN_RegisterSelectBoxNode(struct nodeBehaviour_s *behaviour);
 void MN_RegisterAbstractOptionNode(struct nodeBehaviour_s *behaviour);
+
 #endif
