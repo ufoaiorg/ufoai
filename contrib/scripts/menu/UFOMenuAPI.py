@@ -72,7 +72,11 @@ class Root:
 			menu.root = self
 			m = m[1].strip()
 			m = m[0:len(m) - 1]
-			
+
+			# empty menu
+			if len(m) == 0:
+				return
+
 			# menu param
 			if m[0] == '{':
 				m = m.split('}', 1)
