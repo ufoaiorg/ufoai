@@ -193,7 +193,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		if (!Q_strcmp(selectBoxOption->value, ref)) {
 			R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
 				selBoxX, selBoxY, node->size[0] - 4, 0,
-				node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+				0, _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		}
 	}
 
@@ -224,7 +224,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		/* print the option label */
 		R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
 			selBoxX, nodepos[1] + node->size[1], node->size[0] - 4, 0,
-			node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			0, _(selectBoxOption->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		/* next entries' position */
 		selBoxY += node->size[1];
 	}
@@ -287,7 +287,7 @@ static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
 	if (selectBoxOption) {
 		const char *cvarName = &((const char *)node->cvar)[6];
 		MN_SetCvar(cvarName, selectBoxOption->value, 0);
-		if (*selectBoxOption->action) {
+		if (selectBoxOption->action[0] != '\0') {
 #ifdef DEBUG
 			if (selectBoxOption->action[strlen(selectBoxOption->action) - 1] != ';')
 				Com_Printf("Selectbox option with none terminated action command (%s.%s)\n", node->menu->name, node->name);
