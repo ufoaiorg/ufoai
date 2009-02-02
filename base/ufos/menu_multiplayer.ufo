@@ -262,69 +262,52 @@ menu mp_serverbrowser
 	// ====================
 	// lan / inet buttons
 	// ====================
-	pic button_serverbrowser
+	button button_serverbrowser
 	{
-		image	menu/multi_buttons3a
-		texh	"176 64"
-		texl	"0 32"
-		pos	"85 70"
-		size	"176 32"
+		string		"_Serverbrowser"
+		image		menu/button_green_small
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		pos			"85 70"
+		size		"176 32"
 	}
 
-	string string_serverbrowser
+	button button_bookmarks
 	{
-		font	f_menu
-		color	"1 1 1 1"
-		string	"_Serverbrowser"
-		pos	"173 86"
-		align	cc
-	}
-
-	pic button_bookmarks
-	{
-		image	menu/multi_buttons3
-		click
-		{
+		string		"_Bookmarks"
+		image		menu/button_green_small
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		pos			"311 70"
+		size		"176 32"
+		click		{
 			cmd "mn_escpop 1;"
 			cmd "mn_pop esc;"
 			cmd "mn_push mp_bookmarks;"
 			cmd "mn_escpop 3;"
 		}
-		texh	"176 64"
-		texl	"0 32"
-		pos	"311 70"
-		size	"176 32"
-		out	{ *string_bookmarks color "0 0.5 0 1" *button_bookmarks image menu/multi_buttons3 }
-		in	{ *string_bookmarks color "1 1 1 1" *button_bookmarks image menu/multi_buttons3a }
-	}
-
-	string string_bookmarks
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Bookmarks"
-		pos	"399 86"
-		align	cc
 	}
 
 	// servers_click is CL_ServerListClick_f in cl_main.c
 	text servers
 	{
-		pos	"85 140"
-		size	"420 340"
+		pos			"85 140"
+		size		"420 340"
 		lineheight	20
 		tabwidth	48
-		font	"f_verysmall"
-		mousefx	true
-		border 3
-		bordercolor "0 0.5 0 1"
-		padding 10
-		bgcolor	"0.3 0.3 0.3 0.4"
+		font		"f_verysmall"
+		mousefx		true
+		border		3
+		bordercolor	"0 0.5 0 1"
+		padding		10
+		bgcolor		"0.3 0.3 0.3 0.4"
+		rows		"17"
+		textid		TEXT_LIST
+		click		{ }
+		rclick		{ cmd "pingservers;" }
 		wheel
-		rows	"17"
-		textid	TEXT_LIST
-		click	{ }
-		rclick	{ cmd "pingservers;" }
 	}
 
 	// ==================
@@ -355,47 +338,31 @@ menu mp_serverbrowser
 	// preferences
 	// ==================
 
-	pic button_serverbrowser_refresh
+	button button_serverbrowser_refresh
 	{
-		image	menu/multi_buttons3
-		click	{ cmd "pingservers refresh;" }
-		texh	"176 64"
-		texl	"0 32"
-		pos	"311 650"
-		size	"176 32"
-		out	{ *string_refresh color "0 0.5 0 1" *button_serverbrowser_refresh image menu/multi_buttons3 }
-		in	{ *string_refresh color "1 1 1 1" *button_serverbrowser_refresh image menu/multi_buttons3a }
-	}
-	string string_refresh
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Refresh"
-		pos	"399 666"
-		align	cc
+		string		"_Refresh"
+		image		menu/button_green_small
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		pos			"311 650"
+		size		"176 32"
+		click		{ cmd "pingservers refresh;" }
 	}
 
 	// ====================
 	// lobby
 	// ====================
-	pic button_inet_lobby
+	button button_inet_lobby
 	{
-		image	menu/multi_buttons3
-		click	{ cmd "irc_connect; mn_push irc;" }
-		texh	"176 64"
-		texl	"0 32"
-		pos		"85 650"
-		size	"176 32"
-		out		{ *string_bookmarks_lobby color "0 0.5 0 1" *button_inet_lobby image menu/multi_buttons3 }
-		in		{ *string_bookmarks_lobby color "1 1 1 1" *button_inet_lobby image menu/multi_buttons3a }
-	}
-	string string_bookmarks_lobby
-	{
-		string	"_Lobby"
-		pos		"173 666"
-		font	f_menu
-		color	"0 0.5 0 1"
-		align	cc
+		string		"_Lobby"
+		pos			"85 650"
+		size		"176 32"
+		image		menu/button_green_small
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		click		{ cmd "irc_connect; mn_push irc;" }
 	}
 
 	// ===================
@@ -423,24 +390,16 @@ menu mp_serverbrowser
 	// ====================
 	// connect to ip button
 	// ====================
-	pic button_inet_connect_to_ip
+	button button_inet_connect_to_ip
 	{
-		image	menu/multi_buttons3
-		click	{ cmd "server_info *mn_server_ip;" }
-		texh	"176 64"
-		texl	"0 32"
-		pos	"335 520"
-		size	"176 32"
-		out	{ *string_inet_connect_to_ip color "0 0.5 0 1" *button_inet_connect_to_ip image menu/multi_buttons3 }
-		in	{ *string_inet_connect_to_ip color "1 1 1 1" *button_inet_connect_to_ip image menu/multi_buttons3a }
-	}
-	string string_inet_connect_to_ip
-	{
-		string	"_Connect"
-		pos	"423 536"
-		font	f_menu
-		color	"0 0.5 0 1"
-		align	cc
+		string		"_Connect"
+		image		menu/button_green_small
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		pos			"335 520"
+		size		"176 32"
+		click		{ cmd "server_info *mn_server_ip;" }
 	}
 
 	// ====================
@@ -469,48 +428,34 @@ menu mp_bookmarks
 	// ====================
 	// lan / inet buttons
 	// ====================
-	pic button_serverbrowser
+	button button_serverbrowser
 	{
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"500 70"
-		size	"176 32"
-		out	{ *string_serverbrowser color "0 0.5 0 1" *button_serverbrowser image menu/multi_buttons3 }
-		in	{ *string_serverbrowser color "1 1 1 1" *button_serverbrowser image menu/multi_buttons3a }
-		click	{ cmd "mn_escpop 1;mn_pop esc;mn_push multiplayer;pingservers;mn_escpop 3;" }
+		string		"_Serverbrowser"
+		image		menu/button_green_small
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		pos			"500 70"
+		size		"176 32"
+		click		{ cmd "mn_escpop 1;mn_pop esc;mn_push multiplayer;pingservers;mn_escpop 3;" }
 	}
-	pic button_bookmarks
+	button button_bookmarks
 	{
-		image	menu/multi_buttons3a
-		texh	"176 64"
-		texl	"0 32"
-		pos	"726 70"
-		size	"176 32"
-	}
-	string string_serverbrowser
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Serverbrowser"
-		pos	"588 86"
-		align	cc
-	}
-	string string_bookmarks
-	{
-		font	f_menu
-		color	"1 1 1 1"
-		string	"_Bookmarks"
-		pos	"814 86"
-		align	cc
+		string		"_Bookmarks"
+		image		menu/button_green_small
+		blend		true
+		color		"0 0.8 0 1"
+		font		f_small
+		pos			"726 70"
+		size		"176 32"
 	}
 
 	string inet_bookmarks
 	{
-		font	f_menubig
-		color	"0 0.5 0 1"
-		string	"_Bookmarks"
-		pos	"700 170"
+		font		f_menubig
+		color		"0 0.5 0 1"
+		string		"_Bookmarks"
+		pos			"700 170"
 		align	uc
 	}
 
