@@ -48,6 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_map.h"
 #include "node/m_node_airfightmap.h"
 #include "node/m_node_model.h"
+#include "node/m_node_optionlist.h"
 #include "node/m_node_radar.h"
 #include "node/m_node_radiobutton.h"
 #include "node/m_node_selectbox.h"
@@ -94,6 +95,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterMapNode,
 	MN_RegisterWindowNode,
 	MN_RegisterModelNode,
+	MN_RegisterOptionListNode,
 	MN_RegisterImageNode,
 	MN_RegisterRadarNode,
 	MN_RegisterRadioButtonNode,
