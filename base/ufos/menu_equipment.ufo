@@ -2,9 +2,6 @@
 // EQUIPMENT MENU
 // ==================
 
-/**
- * @todo rename the file according to the menu
- */
 menu equipment
 {
 	// ==================
