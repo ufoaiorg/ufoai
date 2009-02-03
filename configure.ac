@@ -88,6 +88,17 @@ AC_ARG_ENABLE(universal,
 	[], [enable_universal=no])
 
 #---------------------------------------------------------------------------------------------
+# defined some defaults for users (mac-users..) who might not have pkg-config.
+# actually, right now this is only required for the UFORadiant built 
+# this is kind-of a work-around,,,
+#---------------------------------------------------------------------------------------------
+m4_define_default([PKG_CHECK_MODULES],
+  #[AC_MSG_CHECKING([$1])
+  # $4])
+	[AC_MSG_ERROR([For build option, pkg-config is required. Did you maybe forget to run aclocal with the corrent include path?])])
+
+
+#---------------------------------------------------------------------------------------------
 # CHECK SED
 #---------------------------------------------------------------------------------------------
 
@@ -131,29 +142,37 @@ then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
+
 	# fix this darn SDL stuff....
-	if test -d /Library/Frameworks/SDL.framework
+	if test -x /opt/local/bin/sdl-config
 	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+		# SDL installed using MacPorts
+		sdl_mac_cflags=`/opt/local/bin/sdl-config --cflags`
+		sdl_mac_ldflags=`/opt/local/bin/sdl-config --libs`
 	else
-		# should test for different framework locations, like /System/Library/Frameworks
-		# and ~/Library/Frameworks..... later....
-		AC_MSG_ERROR([Could not find SDL Framework at /Library/Frameworks.])
-	fi
-	if test -d /Library/Frameworks/SDL_mixer.framework
-	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
-	else
-		AC_MSG_ERROR([Could not find SDL_mixer Framework at /Library/Frameworks.])
-	fi
-	if test -d /Library/Frameworks/SDL_ttf.framework
-	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
-	else
-		AC_MSG_ERROR([Could not find SDL_ttf Framework at /Library/Frameworks.])
+		if test -d /Library/Frameworks/SDL.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+		else
+			# should test for different framework locations, like /System/Library/Frameworks
+			# and ~/Library/Frameworks..... later....
+			AC_MSG_ERROR([Could not find SDL Framework at /Library/Frameworks.])
+		fi
+		if test -d /Library/Frameworks/SDL_mixer.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
+		else
+			AC_MSG_ERROR([Could not find SDL_mixer Framework at /Library/Frameworks.])
+		fi
+		if test -d /Library/Frameworks/SDL_ttf.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
+		else
+			AC_MSG_ERROR([Could not find SDL_ttf Framework at /Library/Frameworks.])
+		fi
 	fi
 	### most mac users will have their additional libs and headers under /opt/local,
 	### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
@@ -627,7 +646,7 @@ SERVER_LIBS="$SERVER_LIBS $LIBS"
 # Check for radiant
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_uforadiant" = "yes"
+if test "x$enable_uforadiant" = "xyes"
 then
 	LIBS=
 	OLD_RADIANT_LIBS="$RADIANT_LIBS"
@@ -649,6 +668,8 @@ then
 	fi
 
 	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
+else
+	AC_MSG_NOTICE([Without UFORadiant])
 fi
 
 #---------------------------------------------------------------------------------------------
