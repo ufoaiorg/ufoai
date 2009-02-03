@@ -407,7 +407,6 @@ menu mp_team_edit
 		}
 	}
 
-
 	string header_weapon
 	{
 		visiblewhen "mn_displayweapon == 1"
@@ -1007,18 +1006,11 @@ menu mp_team
 	// current team
 	// ==================
 
-	string current_team
-	{
-		string	"_Current Team"
-		pos		"85 450"
-		font	f_big
-	}
-
 	button button_new
 	{
-		pos	"225 490"
-		tooltip	"_Generate a new team"
-		size "128 64"
+		pos	"85 430"
+		tooltip	"_Generate a new random team"
+		size "256 34"
 		click	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
 		image	menu/button_green_big	blend	true
 		font	f_menusmall
@@ -1033,6 +1025,8 @@ menu mp_team
 		pos	"85 570"
 	}
 
+	// @todo Enter the name in the slots above (set disabled to false on save - until the player hits enter)
+/*
 	string current_name
 	{
 		string	"_Name"
@@ -1051,7 +1045,7 @@ menu mp_team
 		size		"256 34"
 		string		"*cvar mn_teamname"
 	}
-
+*/
 	selectbox team_box
 	{
 		image	"menu/selectbox_green"
