@@ -466,7 +466,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 					(GtkAttachOptions) (0), 0, 0);
 		}
 		{
-			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 0)), 0, 2));
 			m_hshiftIncrement.m_spin = spin;
 			m_hshiftSpinner.connect(spin);
 			gtk_widget_show(GTK_WIDGET(spin));
@@ -502,7 +502,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 					(GtkAttachOptions) (0), 0, 0);
 		}
 		{
-			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 0)), 0, 2));
 			m_vshiftIncrement.m_spin = spin;
 			m_vshiftSpinner.connect(spin);
 			gtk_widget_show(GTK_WIDGET(spin));
@@ -538,7 +538,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 					(GtkAttachOptions) (0), 0, 0);
 		}
 		{
-			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 0)), 0, 5));
 			m_hscaleIncrement.m_spin = spin;
 			m_hscaleSpinner.connect(spin);
 			gtk_widget_show(GTK_WIDGET(spin));
@@ -574,7 +574,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 					(GtkAttachOptions) (0), 0, 0);
 		}
 		{
-			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 5));
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 0)), 0, 5));
 			m_vscaleIncrement.m_spin = spin;
 			m_vscaleSpinner.connect(spin);
 			gtk_widget_show(GTK_WIDGET(spin));
@@ -610,7 +610,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 					(GtkAttachOptions) (0), 0, 0);
 		}
 		{
-			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 8)), 0, 2));
+			GtkSpinButton* spin = GTK_SPIN_BUTTON(gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, -8192, 8192, 2, 8, 0)), 0, 2));
 			m_rotateIncrement.m_spin = spin;
 			m_rotateSpinner.connect(spin);
 			gtk_widget_show(GTK_WIDGET(spin));
@@ -702,7 +702,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				widget_set_size (button, 60, 0);
 			}
 			{
-				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 10)), 0, 6);
+				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT (gtk_adjustment_new (1, 0, 1 << 16, 1, 10, 0)), 0, 6);
 				gtk_widget_show(spin);
 				gtk_table_attach(GTK_TABLE(table), spin, 2, 3, 1, 2,
 						(GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -711,7 +711,7 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 				//				AddDialogData(*GTK_SPIN_BUTTON(spin), m_fitHorizontal);
 		}
 			{
-				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(1, 0, 1 << 16, 1, 10, 10)), 0,
+				GtkWidget* spin = gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(1, 0, 1 << 16, 1, 10, 0)), 0,
 						6);
 				gtk_widget_show(spin);
 				gtk_table_attach(GTK_TABLE(table), spin, 3, 4, 1, 2, (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
