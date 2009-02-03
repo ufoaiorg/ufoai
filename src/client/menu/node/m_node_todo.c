@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "../m_font.h"
 #include "../m_parse.h"
+#include "../m_draw.h"
 #include "../../client.h"
 #include "../m_tooltip.h"
 #include "m_node_todo.h"
@@ -70,7 +71,12 @@ static void MN_TodoNodeDraw (menuNode_t *node)
 	R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], ALIGN_UL, red);
 
 	if (node->state)
-		MN_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
+		MN_CaptureDrawOver(node);
+}
+
+static void MN_TodoNodeDrawOverMenu (menuNode_t *node)
+{
+	MN_TodoNodeDrawTooltip(node, mousePosX, mousePosY);
 }
 
 static void MN_TodoNodeLoading (menuNode_t *node)
@@ -93,6 +99,7 @@ void MN_RegisterTodoNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "todo";
 	behaviour->extends = "string";
 	behaviour->draw = MN_TodoNodeDraw;
+	behaviour->drawOverMenu = MN_TodoNodeDrawOverMenu;
 	behaviour->loading = MN_TodoNodeLoading;
 	behaviour->loaded = MN_TodoNodeLoaded;
 }

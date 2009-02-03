@@ -175,6 +175,7 @@ typedef struct nodeBehaviour_s {
 	/* node functions */
 	void (*draw)(menuNode_t *node);							/**< how to draw a node */
 	void (*drawTooltip)(menuNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
+	void (*drawOverMenu)(menuNode_t *node);					/**< callback to draw content over the menu @sa MN_CaptureDrawOver */
 	void (*leftClick)(menuNode_t *node, int x, int y);		/**< left mouse click event in the node */
 	void (*rightClick)(menuNode_t *node, int x, int y);		/**< left mouse button click event in the node */
 	void (*middleClick)(menuNode_t *node, int x, int y);	/**< right mouse button click event in the node */

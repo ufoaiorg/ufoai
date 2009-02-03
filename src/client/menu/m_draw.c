@@ -43,6 +43,23 @@ static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip
 static qboolean tooltipVisible = qfalse;
 static menuTimer_t *tooltipTimer;
 
+/**
+ * @brief Node we will draw over
+ * @sa MN_CaptureDrawOver
+ * @sa nodeBehaviour_t.drawOverMenu
+ */
+static menuNode_t *drawOverNode = NULL;
+
+/**
+ * @brief Capture a node we will draw over all nodes per menu
+ * @note The node must be captured every frames
+ * @todo it can be better to capture the draw over only one time (need new event like mouseEnter, mouseLeave)
+ */
+void MN_CaptureDrawOver (menuNode_t *node)
+{
+	drawOverNode = node;
+}
+
 static void MN_DrawBorder (const menuNode_t *node)
 {
 	vec2_t nodepos;
@@ -204,6 +221,8 @@ void MN_DrawMenus (void)
 			R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
 		}
 
+		MN_CaptureDrawOver(NULL);
+
 		for (node = menu->firstChild; node; node = node->next) {
 			/* skip invisible, virtual, and undrawable nodes */
 			if (node->invis || node->behaviour->isVirtual || !node->behaviour->draw)
@@ -239,6 +258,12 @@ void MN_DrawMenus (void)
 			/** @todo remove it when its possible */
 			R_ColorBlend(NULL);
 		}	/* for */
+
+		/* draw the node */
+		if (drawOverNode && drawOverNode->behaviour->drawOverMenu) {
+			drawOverNode->behaviour->drawOverMenu(drawOverNode);
+		}
+
 	}
 
 	/* draw tooltip */

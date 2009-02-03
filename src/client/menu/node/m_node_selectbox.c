@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_input.h"
+#include "../m_draw.h"
 #include "m_node_selectbox.h"
 #include "m_node_abstractnode.h"
 
@@ -198,8 +199,32 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 	}
 
 	/* must we draw the drop-down list */
-	if (node != MN_GetMouseCapture())
+	if (MN_GetMouseCapture() == node) {
+		MN_CaptureDrawOver(node);
+	}
+}
+
+static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
+{
+	selectBoxOptions_t* selectBoxOption;
+	int selBoxX, selBoxY;
+	const char *ref;
+	const char *font;
+	vec2_t nodepos;
+	const char* image;
+
+	if (!node->cvar)
 		return;
+
+	MN_GetNodeAbsPos(node, nodepos);
+	image = MN_GetReferenceString(node->menu, node->image);
+	if (!image)
+		image = "menu/selectbox";
+
+	ref = MN_GetReferenceString(node->menu, node->cvar);
+	font = MN_GetFont(node->menu, node);
+	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
+	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
 	selBoxY += node->size[1];
 
@@ -245,7 +270,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 /**
  * @brief Handles selectboxes clicks
  */
-static void MN_SelectBoxNodeClick (menuNode_t * node, int x, int y)
+static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 {
 	selectBoxOptions_t* selectBoxOption;
 	int clickedAtOption;
@@ -330,6 +355,7 @@ void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "selectbox";
 	behaviour->extends = "abstractoption";
 	behaviour->draw = MN_SelectBoxNodeDraw;
+	behaviour->drawOverMenu = MN_SelectBoxNodeDrawOverMenu;
 	behaviour->leftClick = MN_SelectBoxNodeClick;
 	behaviour->mouseMove = MN_SelectBoxNodeMouseMove;
 	behaviour->loading = MN_SelectBoxNodeLoading;

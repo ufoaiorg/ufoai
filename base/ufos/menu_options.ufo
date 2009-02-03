@@ -855,11 +855,6 @@ menu options_game
 		}
 	}
 
-	todo dropdown_not_over {
-		string "The dropdown it not yet over the menu. Will be soon fix"
-		pos	"500 230"
-	}
-
 	// ===================
 	// LANGUAGE
 	// ===================
