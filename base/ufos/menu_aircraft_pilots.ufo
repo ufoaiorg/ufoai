@@ -353,14 +353,9 @@ menu aircraft_pilots extends iaircraft
 		viewsize 8
 		fullsize 50
 		change {
-			cmd "update_soldier_list 8 <current>"
+			cmd "update_pilot_list 8 <current>"
 			*cvar:mn_relative_id <current>
 		}
-	}
-
-	todo not_implemented {
-		pos "150 500"
-		string "Not yet implemented. Please use the 'Aircraft equipment' tab to assign a Pilot"
 	}
 
 	// ==================
