@@ -376,7 +376,7 @@ static void CL_AssignSoldier_f (void)
 	CL_UpdateActorAircraftVar(aircraft, employeeType);
 
 	MN_ExecuteConfunc("aircraft_status_change");
-	Cbuf_AddText(va("team_select %i %i", num - relativeId, relativeId));
+	Cbuf_AddText(va("team_select %i %i\n", num - relativeId, relativeId));
 }
 
 static void CL_ActorPilotSelect_f (void)
