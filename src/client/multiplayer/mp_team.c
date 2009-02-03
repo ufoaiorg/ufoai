@@ -31,11 +31,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mp_team.h"
 
 static inventory_t mp_inventory;
+character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
 
 /**
  * @brief Reads tha comments from team files
  */
-static void MP_MultiplayerTeamSlotComments_f (void)
+void MP_MultiplayerTeamSlotComments_f (void)
 {
 	int i;
 
@@ -73,9 +74,10 @@ static void MP_SaveTeamMultiplayerInfo (sizebuf_t *buf)
 	int i, j;
 
 	/* header */
-	MSG_WriteByte(buf, cl.chrList.num);
-	for (i = 0; i < cl.chrList.num; i++) {
-		const character_t *chr = cl.chrList.chr[i];
+	Com_DPrintf(DEBUG_CLIENT, "Saving %i teammembers\n", chrDisplayList.num);
+	MSG_WriteByte(buf, chrDisplayList.num);
+	for (i = 0; i < chrDisplayList.num; i++) {
+		const character_t *chr = chrDisplayList.chr[i];
 		/* send the fieldSize ACTOR_SIZE_* */
 		MSG_WriteByte(buf, chr->fieldSize);
 
@@ -173,7 +175,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename)
 /**
  * @brief Stores a team in a specified teamslot (multiplayer)
  */
-static void MP_SaveTeamMultiplayerSlot_f (void)
+void MP_SaveTeamMultiplayerSlot_f (void)
 {
 	if (!chrDisplayList.num) {
 		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
@@ -284,9 +286,13 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 
 	/* read whole team list */
 	num = MSG_ReadByte(&sb);
-	Com_DPrintf(DEBUG_CLIENT, "load %i teammembers\n", num);
-	for (i = 0; i < num; i++)
-		MP_LoadTeamMultiplayerMember(&sb, cl.chrList.chr[num], version);
+	Com_DPrintf(DEBUG_CLIENT, "Loading %i teammembers\n", num);
+	for (i = 0; i < num; i++) {
+		MP_LoadTeamMultiplayerMember(&sb, &multiplayerCharacters[i], version);
+		chrDisplayList.chr[i] = &multiplayerCharacters[i];
+	}
+
+	chrDisplayList.num = i;
 
 	/* read equipment */
 	num = MSG_ReadShort(&sb);
@@ -306,7 +312,7 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 /**
  * @brief Loads the selected teamslot
  */
-static void MP_LoadTeamMultiplayerSlot_f (void)
+void MP_LoadTeamMultiplayerSlot_f (void)
 {
 	char filename[MAX_OSPATH];
 
@@ -319,10 +325,10 @@ static void MP_LoadTeamMultiplayerSlot_f (void)
 
 
 /**
- * @brief Displays actor equipment and unused items in proper (filter) category.
- * @note This function is called everytime the equipment screen for the team pops up.
+ * @brief Displays actor info and equipment and unused items in proper (filter) category.
+ * @note This function is called everytime the multiplayer equipment screen for the team pops up.
  */
-static void MP_UpdateEquipmentMenuParameters_f (void)
+void MP_UpdateMenuParameters_f (void)
 {
 	equipDef_t unused;
 	int i;
@@ -334,6 +340,14 @@ static void MP_UpdateEquipmentMenuParameters_f (void)
 
 	/* manage inventory */
 	unused = ccs.eMission; /* copied, including arrays inside! */
+	for (i = 0; i < MAX_MULTIPLAYER_CHARACTERS; i++) {
+		const char *name;
+		if (i < chrDisplayList.num)
+			name = chrDisplayList.chr[i]->name;
+		else
+			name = "";
+		Cvar_ForceSet(va("mn_name%i", i), name);
+	}
 
 	for (i = 0; i < csi.numODs; i++) {
 		/* Don't allow to show armour for other teams in the menu. */
@@ -347,16 +361,4 @@ static void MP_UpdateEquipmentMenuParameters_f (void)
 				break; /* no space left in menu */
 		}
 	}
-}
-
-/**
- * @todo Don't call this in CL_InitLocal but GAME_MP_InitStartup (or add the Cmd_AddCommand calls to GAME_MP_InitStartup)
- * @todo Also add a TEAM_MP_Shutdown function
- */
-void TEAM_MP_InitStartup (void)
-{
-	Cmd_AddCommand("saveteamslot", MP_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
-	Cmd_AddCommand("loadteamslot", MP_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
-	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
-	Cmd_AddCommand("mp_team_updateequip", MP_UpdateEquipmentMenuParameters_f, "");
 }

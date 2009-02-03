@@ -1110,7 +1110,6 @@ static void CL_InitLocal (void)
 	BS_InitStartup();
 	SEQ_InitStartup();
 	TEAM_InitStartup();
-	TEAM_MP_InitStartup();
 	TOTD_InitStartup();
 	HUD_InitStartup();
 

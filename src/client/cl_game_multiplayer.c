@@ -32,10 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "multiplayer/mp_team.h"
 #include "menu/m_popup.h"
 
-#define MAX_MULTIPLAYER_CHARACTERS 32
-
-static character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
-
 static void GAME_MP_AutoTeam (void)
 {
 	int i;
@@ -48,10 +44,10 @@ static void GAME_MP_AutoTeam (void)
 		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 
 		CL_GenerateCharacter(&multiplayerCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
-		chrDisplayList.chr[i] = &multiplayerCharacters[i];
-		Cvar_ForceSet(va("mn_name%i", i), multiplayerCharacters[i].name);
 		/* pack equipment */
 		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &multiplayerCharacters[i]);
+
+		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}
 	chrDisplayList.num = i;
 
@@ -274,6 +270,10 @@ void GAME_MP_InitStartup (void)
 	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
 	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
 	Cmd_AddCommand("mp_autoteam", GAME_MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
+	Cmd_AddCommand("saveteamslot", MP_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
+	Cmd_AddCommand("loadteamslot", MP_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
+	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
+	Cmd_AddCommand("mp_team_update", MP_UpdateMenuParameters_f, "");
 	MP_CallbacksInit();
 	MP_ServerListInit();
 
@@ -343,6 +343,10 @@ void GAME_MP_Shutdown (void)
 	Cmd_RemoveCommand("mp_nextgametype");
 	Cmd_RemoveCommand("mp_prevgametype");
 	Cmd_RemoveCommand("mp_autoteam");
+	Cmd_RemoveCommand("saveteamslot");
+	Cmd_RemoveCommand("loadteamslot");
+	Cmd_RemoveCommand("team_comments");
+	Cmd_RemoveCommand("mp_team_update");
 	MP_CallbacksShutdown();
 	MP_ServerListShutdown();
 

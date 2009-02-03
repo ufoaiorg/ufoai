@@ -26,6 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_TEAM_MULTIPLAYER_H
 #define CL_TEAM_MULTIPLAYER_H
 
-void TEAM_MP_InitStartup(void);
+#define MAX_MULTIPLAYER_CHARACTERS 32
+
+extern character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
+
+void MP_SaveTeamMultiplayerSlot_f(void);
+void MP_LoadTeamMultiplayerSlot_f(void);
+void MP_MultiplayerTeamSlotComments_f(void);
+void MP_UpdateMenuParameters_f(void);
 
 #endif

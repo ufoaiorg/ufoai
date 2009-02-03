@@ -243,6 +243,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		MN_ExecuteConfunc("equipdisable %i", p);
 	}
 
+	/** @todo why is this needed? and why here? */
 	selActor = NULL;
 
 	/* reset description */

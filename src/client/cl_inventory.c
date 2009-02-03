@@ -358,7 +358,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 
 void INV_InitStartup (void)
 {
-	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, "Equipment that is used for none-campaign mode games");
+	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO, "Equipment that is used for none-campaign mode games");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listinventory", INV_InventoryList_f, "Print the current inventory to the game console");
 #endif
