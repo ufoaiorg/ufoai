@@ -34,5 +34,6 @@ void MP_SaveTeamMultiplayerSlot_f(void);
 void MP_LoadTeamMultiplayerSlot_f(void);
 void MP_MultiplayerTeamSlotComments_f(void);
 void MP_UpdateMenuParameters_f(void);
+void MP_TeamSelect_f(void);
 
 #endif

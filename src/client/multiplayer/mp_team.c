@@ -362,3 +362,23 @@ void MP_UpdateMenuParameters_f (void)
 		}
 	}
 }
+
+void MP_TeamSelect_f (void)
+{
+	const int old = cl_selected->integer;
+	int num;
+
+	/* check syntax */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	if (num < 0 || num >= chrDisplayList.num)
+		return;
+
+	MN_ExecuteConfunc("mp_soldier_select %i", num);
+	MN_ExecuteConfunc("mp_soldier_unselect %i", old);
+	Cmd_ExecuteString(va("equip_select %i", num));
+}

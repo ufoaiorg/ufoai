@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "mp_callbacks.h"
 #include "mp_serverlist.h"
+#include "mp_team.h"
 #include "../menu/m_popup.h"
 
 teamData_t teamData;
@@ -245,6 +246,11 @@ void MP_CallbacksInit (void)
 	Cmd_AddCommand("mp_wait_init", CL_WaitInit_f, "Function that inits some nodes");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
 	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
+	Cmd_AddCommand("saveteamslot", MP_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
+	Cmd_AddCommand("loadteamslot", MP_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
+	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
+	Cmd_AddCommand("mp_team_update", MP_UpdateMenuParameters_f, "");
+	Cmd_AddCommand("mp_team_select", MP_TeamSelect_f, "");
 }
 
 void MP_CallbacksShutdown (void)
@@ -253,4 +259,9 @@ void MP_CallbacksShutdown (void)
 	Cmd_RemoveCommand("mp_wait_init");
 	Cmd_RemoveCommand("teamnum_dec");
 	Cmd_RemoveCommand("teamnum_inc");
+	Cmd_RemoveCommand("saveteamslot");
+	Cmd_RemoveCommand("loadteamslot");
+	Cmd_RemoveCommand("team_comments");
+	Cmd_RemoveCommand("mp_team_update");
+	Cmd_RemoveCommand("mp_team_select");
 }

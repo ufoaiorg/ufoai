@@ -270,10 +270,6 @@ void GAME_MP_InitStartup (void)
 	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
 	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
 	Cmd_AddCommand("mp_autoteam", GAME_MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
-	Cmd_AddCommand("saveteamslot", MP_SaveTeamMultiplayerSlot_f, "Save a multiplayer team slot - see cvar mn_slot");
-	Cmd_AddCommand("loadteamslot", MP_LoadTeamMultiplayerSlot_f, "Load a multiplayer team slot - see cvar mn_slot");
-	Cmd_AddCommand("team_comments", MP_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
-	Cmd_AddCommand("mp_team_update", MP_UpdateMenuParameters_f, "");
 	MP_CallbacksInit();
 	MP_ServerListInit();
 
@@ -343,10 +339,6 @@ void GAME_MP_Shutdown (void)
 	Cmd_RemoveCommand("mp_nextgametype");
 	Cmd_RemoveCommand("mp_prevgametype");
 	Cmd_RemoveCommand("mp_autoteam");
-	Cmd_RemoveCommand("saveteamslot");
-	Cmd_RemoveCommand("loadteamslot");
-	Cmd_RemoveCommand("team_comments");
-	Cmd_RemoveCommand("mp_team_update");
 	MP_CallbacksShutdown();
 	MP_ServerListShutdown();
 

@@ -165,7 +165,21 @@ menu mp_team_edit
 	// names list
 	// ==================
 
-	func names_clear
+	/**
+	 * @param[in] <1> number of soldier in the list
+	 */
+	confunc mp_soldier_unselect {
+		*txt_actor<1> color "0 .78 0 1"
+	}
+
+	/**
+	 * @param[in] <1> number of soldier in the list
+	 */
+	confunc mp_soldier_select {
+		*txt_actor<1> color "1 1 1 1"
+	}
+
+	func mp_names_clear
 	{
 		*txt_actor0 color "0 .78 0 1"
 		*txt_actor1 color "0 .78 0 1"
@@ -183,7 +197,7 @@ menu mp_team_edit
 		pos		"90 13"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 0;" }
+		click { cmd "mp_team_select 0;" }
 	}
 	string txt_actor1
 	{
@@ -191,7 +205,7 @@ menu mp_team_edit
 		pos		"90 54"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 1;" }
+		click { cmd "mp_team_select 1;" }
 	}
 	string txt_actor2
 	{
@@ -199,7 +213,7 @@ menu mp_team_edit
 		pos		"90 95"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 2;" }
+		click { cmd "mp_team_select 2;" }
 	}
 	string txt_actor3
 	{
@@ -207,7 +221,7 @@ menu mp_team_edit
 		pos		"90 136"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 3;" }
+		click { cmd "mp_team_select 3;" }
 	}
 	string txt_actor4
 	{
@@ -215,7 +229,7 @@ menu mp_team_edit
 		pos		"90 177"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 4;" }
+		click { cmd "mp_team_select 4;" }
 	}
 	string txt_actor5
 	{
@@ -223,7 +237,7 @@ menu mp_team_edit
 		pos		"90 218"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 5;" }
+		click { cmd "mp_team_select 5;" }
 	}
 	string txt_actor6
 	{
@@ -231,7 +245,7 @@ menu mp_team_edit
 		pos		"90 259"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 6;" }
+		click { cmd "mp_team_select 6;" }
 	}
 	string txt_actor7
 	{
@@ -239,7 +253,7 @@ menu mp_team_edit
 		pos		"90 300"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 7;" }
+		click { cmd "mp_team_select 7;" }
 	}
 
 	// ==================
@@ -716,10 +730,10 @@ menu mp_team_edit
 
 	func init
 	{
-		call names_clear
+		call mp_names_clear
 		call mp_actor_stats
 		cmd "set mn_infotype 0;set mn_equiptype 0;"
-		cmd "team_initskin;mp_update_item_list;equip_select 0;mp_team_update;"
+		cmd "team_initskin;mp_update_item_list;mp_team_select 0;mp_team_update;"
 	}
 }
 
