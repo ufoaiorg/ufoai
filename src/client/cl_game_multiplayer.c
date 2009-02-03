@@ -246,6 +246,7 @@ qboolean GAME_MP_Spawn (void)
 static void GAME_MP_GetEquipment (void)
 {
 	const equipDef_t *ed;
+	/** @todo what about multiplayer_alien? */
 	const char *equipmentName = "multiplayer";
 
 	/* search equipment definition */
@@ -262,6 +263,9 @@ void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
 	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+
+	memset(multiplayerCharacters, 0, sizeof(multiplayerCharacters));
+	chrDisplayList.num = 0;
 
 	Cvar_ForceSet("sv_maxclients", "2");
 

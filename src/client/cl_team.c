@@ -299,8 +299,18 @@ static selectBoxOptions_t skinlist[] = {
  */
 static void CL_InitSkin_f (void)
 {
-	menuNode_t *node = MN_GetNodeByPath("equipment.skins");
-	assert(node);
+	menuNode_t *node;
+	const char *nodeName;
+
+	if (GAME_IsCampaign())
+		nodeName = "equipment.skins";
+	else
+		nodeName = "mp_team_edit.skins";
+
+	node = MN_GetNodeByPath(nodeName);
+
+	if (!node)
+		Sys_Error("CL_InitSkin_f: Could not find node '%s'", nodeName);
 
 	/** link all elements */
 	if (node->u.option.first == NULL) {
