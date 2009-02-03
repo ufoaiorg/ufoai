@@ -801,6 +801,12 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	if (length != targetLength)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has BAD routing lump; expected %i got %i", targetLength, length);
 
+	/* endian swap possibly necessary */
+	for (i=0; i<3; i++) {
+		curTile->wpMins[i] = LittleLong( curTile->wpMins[i] );
+		curTile->wpMaxs[i] = LittleLong( curTile->wpMaxs[i] );
+	}
+
 	Com_Printf("Map:%s  Offset:(%i, %i, %i)\n", name, sX, sY, sZ);
 	Com_Printf("wpMins:(%i, %i, %i) wpMaxs:(%i, %i, %i)\n", curTile->wpMins[0], curTile->wpMins[1], curTile->wpMins[2], curTile->wpMaxs[0], curTile->wpMaxs[1], curTile->wpMaxs[2]);
 
