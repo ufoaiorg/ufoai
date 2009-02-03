@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_mesh.h"
 #include "../../cl_actor.h"
 #include "../../cl_team.h"
+#include "../../cl_game.h"
 #include "../m_main.h"
 #include "../m_parse.h"
 #include "../m_font.h"
@@ -566,14 +567,19 @@ static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int di
 {
 	qboolean isAmmo;
 	qboolean isWeapon;
+	qboolean isArmour;
 
 	/* skip none researched objects */
 	if (!RS_IsResearched_ptr(obj->tech))
 		return qfalse;
 
 	/** @todo not sure its the right check */
+	isArmour = !Q_strcmp(obj->type, "armour");
 	isAmmo = obj->numWeapons != 0 && !Q_strncmp(obj->type, "ammo", 4);
-	isWeapon = obj->weapon || obj->isMisc || !Q_strncmp(obj->type, "armour", MAX_VAR);
+	isWeapon = obj->weapon || obj->isMisc || isArmour;
+
+	if (isArmour && obj->useable != GAME_GetCurrentTeam())
+		return qfalse;
 
 	if ((displayType == 0 && isAmmo) || (displayType == 1 && isWeapon))
 		return qfalse;
@@ -761,15 +767,15 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	if (EXTRADATA(node).displayAvailableOnTop) {
 		/* available items */
 		if (EXTRADATA(node).displayWeapon)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 0, 1);
+			MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 0, 1);
 		if (EXTRADATA(node).displayAmmo)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 1, 1);
+			MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 1, 1);
 		/* unavailable items */
 		if (EXTRADATA(node).displayUnavailableItem) {
 			if (EXTRADATA(node).displayWeapon)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 0, 0);
+				MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 0, 0);
 			if (EXTRADATA(node).displayAmmo)
-				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 1, 0);
+				MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 1, 0);
 		}
 	} else {
 		const int availableFilter = (EXTRADATA(node).displayUnavailableItem) ? -1 : 1;

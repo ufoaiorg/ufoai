@@ -422,6 +422,11 @@ const mapDef_t* GAME_CP_MapInfo (int step)
 	return &csi.mds[cls.currentSelectedMap];
 }
 
+int GAME_CP_GetTeam (void)
+{
+	return curCampaign->team;
+}
+
 void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");

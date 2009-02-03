@@ -259,6 +259,11 @@ static void GAME_MP_GetEquipment (void)
 	ccs.eMission = *ed; /* copied, including the arrays inside! */
 }
 
+int GAME_MP_GetTeam (void)
+{
+	return cl_team->integer;
+}
+
 void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");

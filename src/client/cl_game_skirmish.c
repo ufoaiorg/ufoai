@@ -131,6 +131,11 @@ qboolean GAME_SK_Spawn (void)
 	return qtrue;
 }
 
+int GAME_SK_GetTeam (void)
+{
+	return cl_team->integer;
+}
+
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");

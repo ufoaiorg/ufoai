@@ -36,6 +36,8 @@ typedef struct gameTypeList_s {
 	void (*shutdown)(void);
 	/** soldier spawn functions may differ between the different gametypes */
 	qboolean (*spawn)(void);
+	/** each gametype can handle the current team in a different way */
+	int (*getteam)(void);
 	/** some gametypes only support special maps */
 	const mapDef_t* (*mapinfo)(int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
@@ -43,9 +45,9 @@ typedef struct gameTypeList_s {
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_MapInfo, GAME_MP_Results},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_MapInfo, GAME_CP_Results},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_MapInfo, GAME_SK_Results},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -284,6 +286,19 @@ void GAME_SpawnSoldiers (void)
 		}
 		list++;
 	}
+}
+
+int GAME_GetCurrentTeam (void)
+{
+	const gameTypeList_t *list = gameTypeList;
+
+	while (list->name) {
+		if (list->gametype == cls.gametype) {
+			/* this callback is responsible to set up the cl.chrList */
+			return list->getteam();
+		}
+	}
+	Sys_Error("GAME_GetCurrentTeam: Could not determine gamemode");
 }
 
 /**
