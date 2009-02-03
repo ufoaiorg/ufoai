@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_DEFAULT_HEIGHT 20.0f
 
 struct menuIcon_s;
+struct menuAction_s;
 
 /** @brief Option definition */
 typedef struct selectBoxOptions_s {
@@ -37,16 +38,26 @@ typedef struct selectBoxOptions_s {
 	char label[SELECTBOX_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_STRING */
 	char action[MAX_VAR];	/**< execute this when the value is selected */
 	char value[MAX_VAR];	/**< the value the cvar should get */
-	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node
-							 * NULL terminated for each node */
 	struct menuIcon_s *icon;	/**< Facultative icon */
-	qboolean hovered;		/**< current selected option entry selected? */
 	qboolean disabled;		/**< If true, the option is not selectable */
+
+	/**
+	 * @frief True if the element is hovered
+	 * @todo remove it, deprecated, we should use optionExtraData_t->hovered
+	 */
+	qboolean hovered;
+
+	struct selectBoxOptions_s *next;	/**< Next element into a linked list of option */
+
 } selectBoxOptions_t;
 
 typedef struct {
-	selectBoxOptions_t *first;	/**< first option */
-	int count;
+	selectBoxOptions_t *first;			/**< first option */
+	selectBoxOptions_t *selected;		/**< current selected option */
+	selectBoxOptions_t *hovered;		/**< current hovered option */
+	int count;							/**< number of elements */
+	int pos;							/**< position of the view */
+	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
 } optionExtraData_t;
 
 struct menuNode_s;

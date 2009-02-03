@@ -286,12 +286,12 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 }
 
 static selectBoxOptions_t skinlist[] = {
-	{"urban", N_("Urban"), "team_changeskin;", "0", NULL, NULL, qfalse},
-	{"jungle", N_("Jungle"), "team_changeskin;", "1", NULL, NULL, qfalse},
-	{"desert", N_("Desert"), "team_changeskin;", "2", NULL, NULL, qfalse},
-	{"arctic", N_("Arctic"), "team_changeskin;", "3", NULL, NULL, qfalse},
-	{"multionly_yellow", N_("Yellow"), "team_changeskin;", "4", NULL, NULL, qfalse},
-	{"multionly_cccp", N_("CCCP"), "team_changeskin;", "5", NULL, NULL, qfalse},
+	{"urban", N_("Urban"), "team_changeskin;", "0", NULL, qfalse, qfalse, NULL},
+	{"jungle", N_("Jungle"), "team_changeskin;", "1", NULL, qfalse, qfalse, NULL},
+	{"desert", N_("Desert"), "team_changeskin;", "2", NULL, qfalse, qfalse, NULL},
+	{"arctic", N_("Arctic"), "team_changeskin;", "3", NULL, qfalse, qfalse, NULL},
+	{"multionly_yellow", N_("Yellow"), "team_changeskin;", "4", NULL, qfalse, qfalse, NULL},
+	{"multionly_cccp", N_("CCCP"), "team_changeskin;", "5", NULL, qfalse, qfalse, NULL},
 };
 
 /**

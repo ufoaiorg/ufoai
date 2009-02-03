@@ -1,5 +1,5 @@
 /**
- * @file m_node_selectbox.c
+ * @file m_node_optionlist.c
  * @todo change to mouse behaviour. It better to click to dropdown the list
  * @todo manage disabled option
  */
@@ -57,6 +57,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	int currentY;
 	const float *textColor;
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
+	int count = 0;
 
 	if (!node->cvar)
 		return;
@@ -72,11 +73,20 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	font = MN_GetFont(node->menu, node);
 	currentY = pos[1] + node->padding;
 
-	/* now draw all available options for this selectbox */
-	for (option = node->u.option.first; option; option = option->next) {
+	/* skip option over current position */
+	option = node->u.option.first;
+	while (option && count < node->u.option.pos) {
+		option = option->next;
+		count++;
+	}
+
+	/* draw all available options for this selectbox */
+	for (; option; option = option->next) {
 		/* outside the node */
-		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding)
+		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding) {
+			count++;
 			break;
+		}
 
 		/* draw the hover effect */
 		if (option->hovered)
@@ -99,8 +109,21 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 		/* next entries' position */
 		currentY += elementHeight;
+		count++;
 	}
 	R_ColorBlend(NULL);
+
+	/* count number of options (current architecture dont allow to know if the data change) */
+	for (; option; option = option->next) {
+		count++;
+	}
+
+	if (node->u.option.count != count) {
+		node->u.option.count = count;
+		if (node->u.option.onViewChange) {
+			MN_ExecuteEventActions(node, node->u.option.onViewChange);
+		}
+	}
 }
 
 static selectBoxOptions_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int x, int y)
@@ -109,12 +132,19 @@ static selectBoxOptions_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * no
 	vec2_t pos;
 	int elementHeight = ELEMENT_HEIGHT;	/**< fix it with text font */
 	int currentY;
+	int count = 0;
 
 	MN_GetNodeAbsPos(node, pos);
 	currentY = pos[1] + node->padding;
 
+	option = node->u.option.first;
+	while (option && count < node->u.option.pos) {
+		option = option->next;
+		count++;
+	}
+
 	/* now draw all available options for this selectbox */
-	for (option = node->u.option.first; option; option = option->next) {
+	for (; option; option = option->next) {
 		if (y < currentY + elementHeight)
 			return option;
 		if (currentY + elementHeight > pos[1] + node->size[1] - node->padding)
