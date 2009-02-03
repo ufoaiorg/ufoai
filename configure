@@ -2064,6 +2064,14 @@ fi
 
 
 #---------------------------------------------------------------------------------------------
+# defined some defaults for users (mac-users..) who might not have pkg-config.
+# actually, right now this is only required for the UFORadiant built
+# this is kind-of a work-around,,,
+#---------------------------------------------------------------------------------------------
+
+
+
+#---------------------------------------------------------------------------------------------
 # CHECK SED
 #---------------------------------------------------------------------------------------------
 
@@ -2190,35 +2198,46 @@ then
 
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
+	SERVER_LIBS="$SERVER_LIBS -framework Cocoa"
+
 	# fix this darn SDL stuff....
-	if test -d /Library/Frameworks/SDL.framework
+	if test -x /opt/local/bin/sdl-config
 	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+		# SDL installed using MacPorts
+		sdl_mac_cflags=`/opt/local/bin/sdl-config --cflags`
+		sdl_mac_ldflags=`/opt/local/bin/sdl-config --libs`
+		#sdl_mac_cflags="$sdl_mac_cflags"
+		#sdl_mac_ldflags="$sdl_mac_ldflags -lSDL"
 	else
-		# should test for different framework locations, like /System/Library/Frameworks
-		# and ~/Library/Frameworks..... later....
-		{ { echo "$as_me:$LINENO: error: Could not find SDL Framework at /Library/Frameworks." >&5
+		if test -d /Library/Frameworks/SDL.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL"
+		else
+			# should test for different framework locations, like /System/Library/Frameworks
+			# and ~/Library/Frameworks..... later....
+			{ { echo "$as_me:$LINENO: error: Could not find SDL Framework at /Library/Frameworks." >&5
 echo "$as_me: error: Could not find SDL Framework at /Library/Frameworks." >&2;}
    { (exit 1); exit 1; }; }
-	fi
-	if test -d /Library/Frameworks/SDL_mixer.framework
-	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
-	else
-		{ { echo "$as_me:$LINENO: error: Could not find SDL_mixer Framework at /Library/Frameworks." >&5
+		fi
+		if test -d /Library/Frameworks/SDL_mixer.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_mixer.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_mixer"
+		else
+			{ { echo "$as_me:$LINENO: error: Could not find SDL_mixer Framework at /Library/Frameworks." >&5
 echo "$as_me: error: Could not find SDL_mixer Framework at /Library/Frameworks." >&2;}
    { (exit 1); exit 1; }; }
-	fi
-	if test -d /Library/Frameworks/SDL_ttf.framework
-	then
-		sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
-		sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
-	else
-		{ { echo "$as_me:$LINENO: error: Could not find SDL_ttf Framework at /Library/Frameworks." >&5
+		fi
+		if test -d /Library/Frameworks/SDL_ttf.framework
+		then
+			sdl_mac_cflags="$sdl_mac_cflags -I/Library/Frameworks/SDL_ttf.framework/Headers"
+			sdl_mac_ldflags="$sdl_mac_ldflags -framework SDL_ttf"
+		else
+			{ { echo "$as_me:$LINENO: error: Could not find SDL_ttf Framework at /Library/Frameworks." >&5
 echo "$as_me: error: Could not find SDL_ttf Framework at /Library/Frameworks." >&2;}
    { (exit 1); exit 1; }; }
+		fi
 	fi
 	### most mac users will have their additional libs and headers under /opt/local,
 	### check for that, and if present, add to CFLAGS/LDFLAGS (really convenient!)
@@ -10373,7 +10392,7 @@ SERVER_LIBS="$SERVER_LIBS $LIBS"
 # Check for radiant
 #---------------------------------------------------------------------------------------------
 
-if test "$enable_uforadiant" = "yes"
+if test "x$enable_uforadiant" = "xyes"
 then
 	LIBS=
 	OLD_RADIANT_LIBS="$RADIANT_LIBS"
@@ -10664,6 +10683,9 @@ echo "$as_me: error: You must have the libxml2 development headers" >&2;}
 	fi
 
 	RADIANT_LIBS="$RADIANT_LIBS $OLD_RADIANT_LIBS"
+else
+	{ echo "$as_me:$LINENO: Without UFORadiant" >&5
+echo "$as_me: Without UFORadiant" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
