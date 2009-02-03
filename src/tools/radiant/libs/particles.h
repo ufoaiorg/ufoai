@@ -28,6 +28,7 @@ std::list<CopiedString> g_ufoFilenames;
 class ParticleDefinition {
 
 private:
+	bool m_copy;
 	void loadParticleTexture (void) {
 		if (m_image)
 			return;
@@ -48,22 +49,26 @@ private:
 	}
 
 	void freeParticleTexture (void) {
-		if (m_image) {
-#if 0
+		if (m_image && !m_copy) {
+#if 1
 			GlobalTexturesCache().release(m_image);
 #endif
 			m_image = NULL;
 		}
 	}
 public:
-	ParticleDefinition(const char *id) : m_id(id), m_modelName(NULL), m_imageName(NULL), m_image(NULL) {
+	ParticleDefinition(const char *id) : m_copy(false), m_id(id), m_modelName(NULL), m_imageName(NULL), m_image(NULL) {
 		reloadParticleTextureName();
 		loadParticleTexture();
 	}
 
 	ParticleDefinition(const char* id, const char *modelName, const char *imageName)
-		: m_id(id), m_modelName(modelName), m_imageName(imageName), m_image(NULL) {
+		: m_copy(false), m_id(id), m_modelName(modelName), m_imageName(imageName), m_image(NULL) {
 		loadParticleTexture();
+	}
+
+	ParticleDefinition(ParticleDefinition const& copy): m_copy(true), m_id(copy.m_id), m_modelName(copy.m_modelName), m_imageName(copy.m_imageName), m_image(copy.m_image) {
+		/* copy constructor */
 	}
 
 	~ParticleDefinition () {
@@ -120,7 +125,7 @@ void ParseUFOFile(Tokeniser& tokeniser, const char* filename) {
 			pID[sizeof(pID) - 1] = '\0';
 
 			if (!Tokeniser_parseToken(tokeniser, "{")) {
-				globalErrorStream() << "ERROR: expected {.\n";
+				globalErrorStream() << "ERROR: expected {. parsing file " << filename << "\n";
 				return;
 			}
 
