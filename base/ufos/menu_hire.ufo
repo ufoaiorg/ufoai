@@ -244,6 +244,10 @@ menu employees
 		click
 		whup	{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
 		whdown	{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
+		lineschange {
+			*(abstractscrollbar)scroll fullsize <lines>
+			*(abstractscrollbar)scroll current <text_scroll>
+		}
 	}
 
 	// ==================
