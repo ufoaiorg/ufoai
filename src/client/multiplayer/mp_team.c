@@ -38,12 +38,13 @@ character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
  */
 void MP_MultiplayerTeamSlotComments_f (void)
 {
+	byte buf[MAX_TEAMDATASIZE];
 	int i;
 
 	for (i = 0; i < 8; i++) {
-		byte version;
-		char comment[MAX_VAR];
-		const size_t size = sizeof(comment);
+		sizebuf_t sb;
+		int version, soldierCount;
+		const char *comment;
 
 		/* open file */
 		FILE *f = fopen(va("%s/save/team%i.mpt", FS_Gamedir(), i), "rb");
@@ -53,13 +54,15 @@ void MP_MultiplayerTeamSlotComments_f (void)
 		}
 
 		/* read data */
-		if (fread(&version, 1, 1, f) != 1)
-			Com_Printf("Warning: Teamfile may have corrupted version\n");
-
-		if (fread(comment, 1, size, f) != size)
-			Com_Printf("Warning: Teamfile may have corrupted comment\n");
-		Cvar_Set(va("mn_slot%i", i), comment);
+		SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
+		sb.cursize = fread(buf, 1, MAX_TEAMDATASIZE, f);
 		fclose(f);
+
+		version = MSG_ReadByte(&sb);
+		comment = MSG_ReadString(&sb);
+		soldierCount = MSG_ReadByte(&sb);
+
+		MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, soldierCount, comment);
 	}
 }
 

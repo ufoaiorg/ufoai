@@ -754,6 +754,15 @@ menu mp_team
 	// slots
 	// ==================
 
+	/**
+	 * @param[in] <1> id of the slot
+	 * @param[in] <2> amount of soldiers in the savegame
+	 * @param[in] <3> name of the savegame
+	 */
+	confunc set_slotname {
+		cmd "set mn_slot<1> \"<3> (<2>)\";"
+	}
+
 	textentry slot_team0
 	{
 		image		menu/button_green_verysmall
