@@ -567,8 +567,8 @@ static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int di
 	qboolean isAmmo;
 	qboolean isWeapon;
 
-	/* skip unusable ammo */
-	if (!obj->tech || !RS_IsResearched_ptr(obj->tech))
+	/* skip none researched objects */
+	if (!RS_IsResearched_ptr(obj->tech))
 		return qfalse;
 
 	/** @todo not sure its the right check */
