@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 
 #include "../../common/common.h"
-#include <Cocoa/Cocoa.h>
-//#include <SDL.h>
 #include "osx_main.h"
 
 @interface NSApplication(SDL_Missing_Methods)
@@ -48,11 +46,9 @@ typedef struct CPSProcessSerNum
 	UInt32		hi;
 } CPSProcessSerNum;
 
-extern OSErr	CPSGetCurrentProcess( CPSProcessSerNum *psn);
-extern OSErr 	CPSEnableForegroundOperation( CPSProcessSerNum *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
-extern OSErr	CPSSetFrontProcess( CPSProcessSerNum *psn);
-
-uid_t saved_euid;	/* extern in vid_so */
+extern OSErr CPSGetCurrentProcess(CPSProcessSerNum *psn);
+extern OSErr CPSEnableForegroundOperation(CPSProcessSerNum *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
+extern OSErr CPSSetFrontProcess(CPSProcessSerNum *psn);
 
 cvar_t* sys_priority;
 cvar_t* sys_affinity;
@@ -122,7 +118,6 @@ static void SetWorkingDirectory (const char **argv)
 #endif
 int main (int argc, const char **argv)
 {
-	printf("osx_main.m :: main\n");
 	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
@@ -132,11 +127,10 @@ int main (int argc, const char **argv)
 	{
 		CPSProcessSerNum PSN;
 		if (!CPSGetCurrentProcess(&PSN))
-            if (!CPSEnableForegroundOperation(&PSN,0x03,0x3C,0x2C,0x1103))
-                if (!CPSSetFrontProcess(&PSN))
-                    [SDLApplication sharedApplication];
-    }
-
+			if (!CPSEnableForegroundOperation(&PSN, 0x03, 0x3C, 0x2C, 0x1103))
+				if (!CPSSetFrontProcess(&PSN))
+					[SDLApplication sharedApplication];
+	}
 
 	SetWorkingDirectory(argv);
 
