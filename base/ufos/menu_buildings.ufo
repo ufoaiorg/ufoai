@@ -5,15 +5,6 @@
 menu buildings
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis		true
-	}
-
-	// ==================
 	// background
 	// ==================
 

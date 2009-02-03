@@ -5,15 +5,6 @@
 menu singleplayer
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -170,15 +161,6 @@ menu singleplayerInGame extends singleplayer
 
 menu singleplayermission
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
 	// ==================
 	// background
 	// ==================
@@ -351,15 +333,6 @@ menu quickload
 menu load
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -529,15 +502,6 @@ menu load
 menu save
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -681,15 +645,6 @@ menu save
 
 menu lostgame
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
 	pic background
 	{
 		image	menu/losegame_bg
@@ -743,15 +698,6 @@ menu lostgame
 
 menu endgame
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
 	// ==================
 	// background
 	// ==================

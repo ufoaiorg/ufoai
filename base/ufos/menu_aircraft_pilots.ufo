@@ -5,15 +5,6 @@
 menu aircraft_pilots extends iaircraft
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 

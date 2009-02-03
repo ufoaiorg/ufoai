@@ -5,15 +5,6 @@
 menu map
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis		true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -543,15 +534,6 @@ menu map
 
 menu map_combatzoom
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis		true
-	}
-
 	// ==================
 	// background
 	// ==================
@@ -1410,13 +1392,13 @@ menu popup_newinstallation_type
 	zone click_ufoyard
 	{
 		pos			"30 118"
-		size		"440 20"	
+		size		"440 20"
 		in			{ *bt_highlight invis false *bt_highlight pos "26 116" }
 		out			{ *bt_highlight invis true }
 		click		{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
 	}
-	
-	
+
+
 	button bt_cancel
 	{
 		string		"_Cancel"
@@ -1786,28 +1768,28 @@ menu popup_intercept
 	{
 		string		"_Name:"
 		pos			"26 48"
-		size		"140 20" 
+		size		"140 20"
 	}
 
 	string status_label
 	{
 		string		"_Status:"
 		pos			"176 48"
-		size		"140 20" 
+		size		"140 20"
 	}
 
 	string craft_base_label
 	{
 		string		"_Base:"
 		pos			"326 48"
-		size		"150 20" 
+		size		"150 20"
 	}
 
 	string base_label
 	{
 		string		"_Base:"
 		pos			"501 48"
-		size		"250 20" 
+		size		"250 20"
 	}
 
 	text ships
@@ -2458,7 +2440,7 @@ menu messageoptions
 		pos			"360 240"
 		size		"20 18"
 		image		"menu/checkbox_blue"
-		current		0	
+		current		0
 		invis		true
 		change		{ cmd "msgoptions_toggle 6 pause;" }
 	}
@@ -2518,7 +2500,7 @@ menu messageoptions
 		pos			"360 290"
 		size		"20 18"
 		image		"menu/checkbox_blue"
-		current		0	
+		current		0
 		invis		true
 		change		{ cmd "msgoptions_toggle 8 pause;" }
 	}
@@ -2568,7 +2550,7 @@ menu messageoptions
 		pos			"420 315"
 		size		"20 18"
 		image		"menu/checkbox_blue"
-		current		0	
+		current		0
 		invis		true
 		change		{ cmd "msgoptions_toggle 9 sound;" }
 	}
@@ -2608,7 +2590,7 @@ menu messageoptions
 		pos			"360 365"
 		size		"20 18"
 		image		"menu/checkbox_blue"
-		current		0	
+		current		0
 		invis		true
 		change		{ cmd "msgoptions_toggle 11 pause;" }
 	}
@@ -2798,7 +2780,7 @@ menu messageoptions
 		pos			"390 515"
 		size		"20 18"
 		image		"menu/checkbox_blue"
-		current		0	
+		current		0
 		invis		true
 		change		{ cmd "msgoptions_toggle 17 notify;" }
 	}
@@ -2897,7 +2879,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 590"
 		size		"20 18"
-		image		"menu/checkbox_blue"		
+		image		"menu/checkbox_blue"
 		current		0
 		invis		true
 		change		{ cmd "msgoptions_toggle 20 sound;" }

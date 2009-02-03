@@ -4,15 +4,6 @@
 menu production
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis false
-	}
-
-	// ==================
 	// background
 	// ==================
 

@@ -4,15 +4,6 @@
 menu aliencont
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis false
-	}
-
-	// ==================
 	// background
 	// ==================
 

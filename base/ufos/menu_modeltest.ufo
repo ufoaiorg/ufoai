@@ -21,15 +21,6 @@
 
 menu model_test
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis false
-	}
-
 	model mdl
 	{
 		model	"*cvar mn_model"

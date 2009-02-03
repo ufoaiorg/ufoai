@@ -5,15 +5,6 @@
 menu equipment
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 

@@ -26,16 +26,6 @@ menu bases
 		pos			"512 256"
 	}
 
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis		false
-	}
-
-
 	custombutton back_geo
 	{
 		tooltip		"_Back to geoscape"
@@ -230,7 +220,7 @@ menu bases
 		pos			"60 30"
 		size		"240 32"
 		font		f_big
-		change { 
+		change {
 			// stores the value of the cvar in the base structure
 			cmd	"base_changename"
 		}

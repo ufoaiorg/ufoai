@@ -5,15 +5,6 @@
 menu won
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -176,15 +167,6 @@ menu won
 
 menu lost
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
 	// ==================
 	// background
 	// ==================

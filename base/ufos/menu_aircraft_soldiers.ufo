@@ -8,15 +8,6 @@
 menu team extends iaircraft
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 

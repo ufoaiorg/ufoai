@@ -5,15 +5,6 @@
 menu ufopedia
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -413,15 +404,6 @@ menu ufopedia
 
 menu ufopedia_mail
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
 	// ==================
 	// background
 	// ==================

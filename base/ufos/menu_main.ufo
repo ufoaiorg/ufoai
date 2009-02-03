@@ -5,15 +5,6 @@
 menu main
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -314,16 +305,6 @@ menu checkcvars
 
 menu sequence
 {
-	// ==================
-	// render credits
-	// ==================
-
-	zone render
-	{
-		pos			"0 0"
-		size		"1024 768"
-	}
-
 	zone click
 	{
 		size		"1024 768"

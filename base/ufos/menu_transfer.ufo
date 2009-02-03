@@ -4,15 +4,6 @@
 menu transfer
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis false
-	}
-
-	// ==================
 	// background
 	// ==================
 

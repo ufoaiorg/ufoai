@@ -5,15 +5,6 @@
 menu multiplayer
 {
 	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis		true
-	}
-
-	// ==================
 	// background
 	// ==================
 
@@ -1010,15 +1001,6 @@ menu mp_create_server
 // ==========================
 menu multiplayer_selectteam
 {
-	// ==================
-	// don't render
-	// ==================
-
-	zone render
-	{
-		invis	true
-	}
-
 	// ==================
 	// background
 	// ==================
