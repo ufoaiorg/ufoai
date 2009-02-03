@@ -646,7 +646,6 @@ void CL_ReadSinglePlayerData (void)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	CL_ResetSinglePlayerData();
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptFirst(type, name, &text);
 

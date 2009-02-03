@@ -411,7 +411,7 @@ void GAME_CP_InitStartup (void)
 		Cvar_SetValue("sv_maxsoldiersperplayer", MAX_ACTIVETEAM);
 
 	/* reset campaign data */
-	memset(&ccs, 0, sizeof(ccs));
+	CL_ResetSinglePlayerData();
 	CL_ReadSinglePlayerData();
 
 	CP_InitStartup();
@@ -434,8 +434,7 @@ void GAME_CP_Shutdown (void)
 	/* exit running game */
 	CP_CampaignExit();
 
-	curCampaign = NULL;
-	baseCurrent = NULL;
+	CL_ResetSinglePlayerData();
 
 	/* shutdown any running tactical mission */
 	SV_Shutdown("Quitting campaign.", qfalse);

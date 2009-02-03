@@ -1898,10 +1898,6 @@ void CP_CampaignInit (qboolean load)
 	 * what about RS_InitTree? how often must this be done? */
 	RS_InitTree(load);		/**< Initialise all data in the research tree. */
 
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	if (!load)
-		CL_ScriptSanityCheck();
-
 	CP_AddCampaignCommands();
 
 	CL_GameTimeStop();
@@ -1964,6 +1960,10 @@ void CP_CampaignInit (qboolean load)
 
 	/* Spawn first missions of the game */
 	CP_InitializeSpawningDelay();
+
+	/* now check the parsed values for errors that are not catched at parsing stage */
+	if (!load)
+		CL_ScriptSanityCheck();
 }
 
 void CP_CampaignExit (void)
@@ -1977,9 +1977,6 @@ void CP_CampaignExit (void)
 	/* singleplayer commands are no longer available */
 	Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 	CP_RemoveCampaignCommands();
-
-	Com_Printf("Shutdown campaign\n");
-	CL_ResetSinglePlayerData();
 }
 
 /**
@@ -2012,8 +2009,12 @@ void CL_ResetSinglePlayerData (void)
 {
 	int i;
 
+	memset(&ccs, 0, sizeof(ccs));
 	memset(&gd, 0, sizeof(gd));
 	memset(&campaignStats, 0, sizeof(campaignStats));
+
+	curCampaign = NULL;
+	baseCurrent = NULL;
 
 	LIST_Delete(&ccs.missions);
 	memset(&invList, 0, sizeof(invList));
