@@ -177,7 +177,7 @@ static void MN_ScrollContainerScroll_f (void)
 
 #endif
 
-static inline qboolean MN_IsScrollContainerNode(const menuNode_t* const node)
+static inline qboolean MN_IsScrollContainerNode (const menuNode_t* const node)
 {
 	return EXTRADATA(node).container && EXTRADATA(node).container->scroll;
 }
@@ -474,7 +474,9 @@ static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
 static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look blueish */
 
 /**
- * @brief Draw a container can containe only one iten
+ * @brief Draw a container which only contains one item
+ * @param node
+ * @param hightlightType
  */
 static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightType)
 {
@@ -560,7 +562,7 @@ static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDe
  * @param[out] itemFound Item found in the container (can be null)
  * @return True is the object is allowed
  */
-static qboolean MN_ContainerNodeFilterItem(const menuNode_t const *node, int displayType, int displayAvailable, objDef_t *obj, invList_t **itemFound)
+static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int displayType, int displayAvailable, objDef_t *obj, invList_t **itemFound)
 {
 	qboolean isAmmo;
 	qboolean isWeapon;
@@ -770,7 +772,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 				MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 1, 0);
 		}
 	} else {
-		const int availableFilter = (EXTRADATA(node).displayUnavailableItem)?-1:1;
+		const int availableFilter = (EXTRADATA(node).displayUnavailableItem) ? -1 : 1;
 		if (EXTRADATA(node).displayWeapon)
 			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 0, availableFilter);
 		if (EXTRADATA(node).displayAmmo)
