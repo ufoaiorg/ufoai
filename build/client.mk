@@ -107,6 +107,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_abstractnode.c \
 	client/menu/node/m_node_abstractvalue.c \
 	client/menu/node/m_node_abstractscrollbar.c \
+	client/menu/node/m_node_airfightmap.c \
 	client/menu/node/m_node_bar.c \
 	client/menu/node/m_node_base.c \
 	client/menu/node/m_node_button.c \
@@ -120,8 +121,8 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_item.c \
 	client/menu/node/m_node_linestrip.c \
 	client/menu/node/m_node_map.c \
-	client/menu/node/m_node_airfightmap.c \
 	client/menu/node/m_node_model.c \
+	client/menu/node/m_node_optionlist.c \
 	client/menu/node/m_node_radar.c \
 	client/menu/node/m_node_radiobutton.c \
 	client/menu/node/m_node_selectbox.c \
