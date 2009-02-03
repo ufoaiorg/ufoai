@@ -26,9 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_PARSE_H
 #define CP_PARSE_H
 
-void CL_ParseAlienTeam(const char *name, const char **text);
-void CL_ParseResearchedCampaignItems(const char *name, const char **text);
-void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 void CL_ParseCampaign(const char *name, const char **text);
+void CL_ScriptSanityCheck(void);
 
 #endif

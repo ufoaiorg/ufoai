@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
+#include "cp_parse.h"
 #include "../cl_actor.h"
 #include "cl_popup.h"
 #include "../cl_view.h"
@@ -1963,9 +1964,6 @@ void CP_CampaignInit (qboolean load)
 
 	/* Spawn first missions of the game */
 	CP_InitializeSpawningDelay();
-
-	/* now check the parsed values for errors that are not catched at parsing stage */
-	CL_ScriptSanityCheckCampaign();
 }
 
 void CP_CampaignExit (void)

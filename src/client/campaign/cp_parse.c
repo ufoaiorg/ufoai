@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_global.h"
 #include "cp_parse.h"
+#include "../cl_rank.h"
+#include "../cl_ugv.h"
 #include "../../shared/parse.h"
 
 /**
@@ -68,7 +70,7 @@ static const value_t alien_group_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void CL_ParseAlienTeam (const char *name, const char **text)
+static void CL_ParseAlienTeam (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseAlienTeam: unexpected end of file (alienteam ";
 	const char *token;
@@ -195,7 +197,7 @@ void CL_ParseAlienTeam (const char *name, const char **text)
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  * @todo Implement the use of this function
  */
-void CL_ParseResearchedCampaignItems (const char *name, const char **text)
+static void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	const char *token;
@@ -250,7 +252,7 @@ void CL_ParseResearchedCampaignItems (const char *name, const char **text)
  * @param researchable Mark them researchable or not researchable
  * @sa CL_ParseScriptFirst
  */
-void CL_ParseResearchableCampaignStates (const char *name, const char **text, qboolean researchable)
+static void CL_ParseResearchableCampaignStates (const char *name, const char **text, qboolean researchable)
 {
 	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	const char *token;
@@ -509,4 +511,161 @@ void CL_ParseCampaign (const char *name, const char **text)
 		cp->difficulty = -4;
 	else if (cp->difficulty > 4)
 		cp->difficulty = 4;
+}
+
+/**
+ * @brief Parsing only for singleplayer
+ *
+ * parsed if we are no dedicated server
+ * first stage parses all the main data into their struct
+ * see CL_ParseScriptSecond for more details about parsing stages
+ * @sa CL_ReadSinglePlayerData
+ * @sa Com_ParseScripts
+ * @sa CL_ParseScriptSecond
+ * @note write into cl_localPool - free on every game restart and reparse
+ */
+static void CL_ParseScriptFirst (const char *type, const char *name, const char **text)
+{
+	/* check for client interpretable scripts */
+	if (!Q_strncmp(type, "up_chapters", 11))
+		UP_ParseChapters(name, text);
+	else if (!Q_strncmp(type, "building", 8))
+		B_ParseBuildings(name, text, qfalse);
+	else if (!Q_strncmp(type, "installation", 13))
+		INS_ParseInstallations(name, text);
+	else if (!Q_strncmp(type, "researched", 10))
+		CL_ParseResearchedCampaignItems(name, text);
+	else if (!Q_strncmp(type, "researchable", 12))
+		CL_ParseResearchableCampaignStates(name, text, qtrue);
+	else if (!Q_strncmp(type, "notresearchable", 15))
+		CL_ParseResearchableCampaignStates(name, text, qfalse);
+	else if (!Q_strncmp(type, "tech", 4))
+		RS_ParseTechnologies(name, text);
+	else if (!Q_strncmp(type, "basenames", 9))
+		B_ParseBaseNames(name, text);
+	else if (!Q_strncmp(type, "installationnames", 17))
+		INS_ParseInstallationNames(name, text);
+	else if (!Q_strncmp(type, "basetemplate", 10))
+		B_ParseBaseTemplate(name, text);
+	else if (!Q_strncmp(type, "nation", 6))
+		CL_ParseNations(name, text);
+	else if (!Q_strncmp(type, "city", 4))
+		CL_ParseCities(name, text);
+	else if (!Q_strncmp(type, "rank", 4))
+		CL_ParseRanks(name, text);
+	else if (!Q_strncmp(type, "mail", 4))
+		CL_ParseEventMails(name, text);
+	else if (!Q_strncmp(type, "components", 10))
+		INV_ParseComponents(name, text);
+	else if (!Q_strncmp(type, "alienteam", 9))
+		CL_ParseAlienTeam(name, text);
+	else if (!Q_strncmp(type, "msgoptions", 10))
+		MSO_ParseSettings(name, text);
+	else if (!Q_strncmp(type, "msgcategory", 11))
+		MSO_ParseCategories(name, text);
+#if 0
+	else if (!Q_strncmp(type, "medal", 5))
+		Com_ParseMedalsAndRanks(name, &text, qfalse);
+#endif
+}
+
+/**
+ * @brief Parsing only for singleplayer
+ *
+ * parsed if we are no dedicated server
+ * second stage links all the parsed data from first stage
+ * example: we need a techpointer in a building - in the second stage the buildings and the
+ * techs are already parsed - so now we can link them
+ * @sa CL_ReadSinglePlayerData
+ * @sa Com_ParseScripts
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
+ */
+static void CL_ParseScriptSecond (const char *type, const char *name, const char **text)
+{
+	/* check for client interpretable scripts */
+	if (!Q_strncmp(type, "building", 8))
+		B_ParseBuildings(name, text, qtrue);
+	else if (!Q_strncmp(type, "aircraft", 8))
+		AIR_ParseAircraft(name, text, qtrue);
+	else if (!Q_strncmp(type, "ugv", 3))
+		CL_ParseUGVs(name, text);
+
+	/* Add ammo<->weapon links to items.*/
+	Com_AddObjectLinks();
+}
+
+/** @brief struct that holds the sanity check data */
+typedef struct {
+	qboolean (*check)(void);	/**< function pointer to check function */
+	const char* name;			/**< name of the subsystem to check */
+} sanity_functions_t;
+
+/** @brief Data for sanity check of parsed script data */
+static const sanity_functions_t sanity_functions[] = {
+	{B_ScriptSanityCheck, "buildings"},
+	{RS_ScriptSanityCheck, "tech"},
+	{AIR_ScriptSanityCheck, "aircraft"},
+	{INV_ItemsSanityCheck, "items"},
+	{INV_EquipmentDefSanityCheck, "items"},
+	{NAT_ScriptSanityCheck, "nations"},
+
+	{NULL, NULL}
+};
+
+/**
+ * @brief Check the parsed script values for errors after parsing every script file
+ * @sa CL_ReadSinglePlayerData
+ */
+void CL_ScriptSanityCheck (void)
+{
+	qboolean status;
+	const sanity_functions_t *s;
+
+	Com_Printf("Sanity check for script data\n");
+	s = sanity_functions;
+	while (s->check) {
+		status = s->check();
+		Com_Printf("...%s %s\n", s->name, (status ? "ok" : "failed"));
+		s++;
+	}
+}
+
+/**
+ * @brief Read the data into gd for singleplayer campaigns
+ * @sa SAV_GameLoad
+ * @sa CL_GameNew_f
+ * @sa CL_ResetSinglePlayerData
+ */
+void CL_ReadSinglePlayerData (void)
+{
+	const char *type, *name, *text;
+
+	/* pre-stage parsing */
+	FS_BuildFileList("ufos/*.ufo");
+	FS_NextScriptHeader(NULL, NULL, NULL);
+	text = NULL;
+
+	CL_ResetSinglePlayerData();
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+		CL_ParseScriptFirst(type, name, &text);
+
+	/* fill in IDXs for required research techs */
+	RS_RequiredLinksAssign();
+
+	/* stage two parsing */
+	FS_NextScriptHeader(NULL, NULL, NULL);
+	text = NULL;
+
+	Com_DPrintf(DEBUG_CLIENT, "Second stage parsing started...\n");
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
+		CL_ParseScriptSecond(type, name, &text);
+
+	Com_Printf("Global data loaded - size "UFO_SIZE_T" bytes\n", sizeof(gd));
+	Com_Printf("...techs: %i\n", gd.numTechnologies);
+	Com_Printf("...buildings: %i\n", gd.numBuildingTemplates);
+	Com_Printf("...ranks: %i\n", gd.numRanks);
+	Com_Printf("...nations: %i\n", gd.numNations);
+	Com_Printf("...cities: %i\n", gd.numCities);
+	Com_Printf("\n");
 }

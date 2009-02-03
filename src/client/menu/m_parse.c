@@ -1383,12 +1383,3 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 		return *(float *) ref;
 	}
 }
-
-/**
- * @brief Checks the parsed menus for errors
- * @return false if there are errors - true otherwise
- */
-qboolean MN_ScriptSanityCheck (void)
-{
-	return qtrue;
-}
