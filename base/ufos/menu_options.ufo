@@ -807,132 +807,6 @@ menu options_game
 	}
 
 	// ===================
-	// TOOLTIPS
-	// ===================
-	string tooltip_str
-	{
-		string	"_Tooltips:"
-		pos		"85 280"
-	}
-	checkbox tooltip
-	{
-		current	"*cvar mn_show_tooltips"
-		pos		"425 280"
-		tooltip	"_Activates tooltips"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-	}
-
-	// ===================
-	// CENTER VIEW
-	// ===================
-	string centerview_str
-	{
-		string	"_Centre view:"
-		pos		"85 305"
-	}
-	checkbox centerview_value
-	{
-		current	"*cvar cl_centerview"
-		pos		"425 305"
-		tooltip	"_Centring at soldier selecting, shooting and appearing"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-	}
-
-	// ===================
-	// CURSOR TOOLTIPS
-	// ===================
-	string c_tooltip_str
-	{
-		string	"_Cursor tooltips:"
-		pos		"85 330"
-	}
-	checkbox c_tooltip
-	{
-		current	"*cvar cl_show_cursor_tooltips"
-		pos		"425 330"
-		tooltip	"_Activates cursor tooltips"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-	}
-
-	// =====================
-	// 3DMAP
-	// =====================
-	string 3dmap_str
-	{
-		string	"_3D Geoscape:"
-		pos		"85 355"
-	}
-	checkbox 3dmap
-	{
-		current	"*cvar cl_3dmap"
-		pos		"425 355"
-		tooltip	"_Use 3D geoscape"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-	}
-
-	// =====================
-	// TIP OF THE DAY
-	// =====================
-	string tipoftheday_string
-	{
-		string	"_Show tip of the day"
-		pos		"85 380"
-		font	f_small
-	}
-	checkbox tipoftheday
-	{
-		current	"*cvar cl_showTipOfTheDay"
-		pos	"425 380"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-	}
-
-	// ===================
-	// PRECACHE
-	// ===================
-	string precache_str
-	{
-		string	"_Precache models:"
-		pos	"85 405"
-	}
-	checkbox precache
-	{
-		current	"*cvar cl_precache"
-		pos	"425 405"
-		tooltip	"_Precache models (faster menus)"
-		image	"menu/checkbox_blue"
-		size	"20 18"
-	}
-
-	// ==================
-	// ACTOR SPEED
-	// ==================
-	string actorsspeed_str
-	{
-		string	"_Actor speed:"
-		pos		"85 430"
-	}
-	pic actorsspeed_rahmen
-	{
-		image	menu/bar_rahmen
-		pos		"230 435"
-	}
-	bar actorsspeed_bar
-	{
-		pos		"239 440"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar g_actorspeed"
-		max		9
-		mousefx	true
-		click	{ }
-	}
-
-	// ===================
 	// NAME
 	// ===================
 	string current_name
@@ -952,25 +826,6 @@ menu options_game
 		pos			"85 160"
 		size		"256 34"
 		string		"*cvar cl_name"
-	}
-
-	// ===================
-	// LANGUAGE
-	// selectbox must be last one
-	// ===================
-	string language_str
-	{
-		string "_Language"
-		pos     "85 255"
-	}
-	selectbox select_language
-	{
-		pos		"343 255"
-		cvar	"*cvar s_language"
-		image	"menu/selectbox_green"
-		size	"155 20"
-		color	"0.6 0.6 0.6 0.3"
-		// will be filled in CL_LanguageInit
 	}
 
 	// ===================
@@ -999,6 +854,175 @@ menu options_game
 			action	""
 		}
 	}
+
+	todo dropdown_not_over {
+		string "The dropdown it not yet over the menu. Will be soon fix"
+		pos	"500 230"
+	}
+
+	// ===================
+	// LANGUAGE
+	// ===================
+	string language_str
+	{
+		string "_Language:"
+		pos     "85 255"
+	}
+	optionlist select_language
+	{
+		pos		"343 255"
+		cvar	"*cvar s_language"
+		image	"menu/panel_green_slim"
+		blend	true
+		size	"155 220"
+		color	"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		padding	6
+		// will be filled in CL_LanguageInit
+	}
+
+	vscrollbar select_language_scroll {
+		image			menu/scrollbar_v_green
+		blend			true
+		pos				"500 255"
+		height			"220"
+		current			0
+		viewsize		8
+		fullsize		21
+		// change {	}
+	}
+
+	todo scroll_dont_work {
+		string "The scroll dont work yet"
+		pos	"530 255"
+	}
+
+	// ===================
+	// TOOLTIPS
+	// ===================
+	string tooltip_str
+	{
+		string	"_Tooltips:"
+		pos		"85 480"
+	}
+	checkbox tooltip
+	{
+		current	"*cvar mn_show_tooltips"
+		pos		"425 480"
+		tooltip	"_Activates tooltips"
+		image	"menu/checkbox_blue"
+		size	"20 18"
+	}
+
+	// ===================
+	// CENTER VIEW
+	// ===================
+	string centerview_str
+	{
+		string	"_Centre view:"
+		pos		"85 505"
+	}
+	checkbox centerview_value
+	{
+		current	"*cvar cl_centerview"
+		pos		"425 505"
+		tooltip	"_Centring at soldier selecting, shooting and appearing"
+		image	"menu/checkbox_blue"
+		size	"20 18"
+	}
+
+	// ===================
+	// CURSOR TOOLTIPS
+	// ===================
+	string c_tooltip_str
+	{
+		string	"_Cursor tooltips:"
+		pos		"85 530"
+	}
+	checkbox c_tooltip
+	{
+		current	"*cvar cl_show_cursor_tooltips"
+		pos		"425 530"
+		tooltip	"_Activates cursor tooltips"
+		image	"menu/checkbox_blue"
+		size	"20 18"
+	}
+
+	// =====================
+	// 3DMAP
+	// =====================
+	string 3dmap_str
+	{
+		string	"_3D Geoscape:"
+		pos		"85 555"
+	}
+	checkbox 3dmap
+	{
+		current	"*cvar cl_3dmap"
+		pos		"425 555"
+		tooltip	"_Use 3D geoscape"
+		image	"menu/checkbox_blue"
+		size	"20 18"
+	}
+
+	// =====================
+	// TIP OF THE DAY
+	// =====================
+	string tipoftheday_string
+	{
+		string	"_Show tip of the day:"
+		pos		"85 580"
+		font	f_small
+	}
+	checkbox tipoftheday
+	{
+		current	"*cvar cl_showTipOfTheDay"
+		pos	"425 580"
+		image	"menu/checkbox_blue"
+		size	"20 18"
+	}
+
+	// ===================
+	// PRECACHE
+	// ===================
+	string precache_str
+	{
+		string	"_Precache models:"
+		pos	"85 605"
+	}
+	checkbox precache
+	{
+		current	"*cvar cl_precache"
+		pos	"425 605"
+		tooltip	"_Precache models (faster menus)"
+		image	"menu/checkbox_blue"
+		size	"20 18"
+	}
+
+	// ==================
+	// ACTOR SPEED
+	// ==================
+	string actorsspeed_str
+	{
+		string	"_Actor speed:"
+		pos		"85 630"
+	}
+	pic actorsspeed_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"230 635"
+	}
+	bar actorsspeed_bar
+	{
+		pos		"239 640"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar g_actorspeed"
+		max		9
+		mousefx	true
+		click	{ }
+	}
+
 }
 
 
