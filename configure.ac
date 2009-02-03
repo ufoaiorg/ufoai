@@ -93,9 +93,7 @@ AC_ARG_ENABLE(universal,
 # this is kind-of a work-around,,,
 #---------------------------------------------------------------------------------------------
 m4_define_default([PKG_CHECK_MODULES],
-  #[AC_MSG_CHECKING([$1])
-  # $4])
-	[AC_MSG_ERROR([For build option, pkg-config is required. Did you maybe forget to run aclocal with the corrent include path?])])
+	[AC_MSG_ERROR([For current build options, pkg-config is required. Did you maybe forget to run aclocal with the corrent include path?])])
 
 
 #---------------------------------------------------------------------------------------------
@@ -142,6 +140,7 @@ then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
 	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
+	SERVER_LIBS="$SERVER_LIBS -framework Cocoa"
 
 	# fix this darn SDL stuff....
 	if test -x /opt/local/bin/sdl-config
@@ -149,6 +148,8 @@ then
 		# SDL installed using MacPorts
 		sdl_mac_cflags=`/opt/local/bin/sdl-config --cflags`
 		sdl_mac_ldflags=`/opt/local/bin/sdl-config --libs`
+		#sdl_mac_cflags="$sdl_mac_cflags"
+		#sdl_mac_ldflags="$sdl_mac_ldflags -lSDL"
 	else
 		if test -d /Library/Frameworks/SDL.framework
 		then
