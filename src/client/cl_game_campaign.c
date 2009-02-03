@@ -399,6 +399,8 @@ void GAME_CP_InitStartup (void)
 	Cmd_AddCommand("cp_exit", CP_CampaignExit, "Stop the current running campaign");
 	Cmd_AddCommand("cp_tryagain", GAME_CP_TryAgain_f, "Try again a mission");
 
+	CP_InitStartup();
+
 	/* cvars might have been changed by other gametypes */
 	Cvar_ForceSet("sv_maxclients", "1");
 	Cvar_ForceSet("sv_ai", "1");
@@ -413,8 +415,6 @@ void GAME_CP_InitStartup (void)
 	/* reset campaign data */
 	CL_ResetSinglePlayerData();
 	CL_ReadSinglePlayerData();
-
-	CP_InitStartup();
 }
 
 const mapDef_t* GAME_CP_MapInfo (int step)

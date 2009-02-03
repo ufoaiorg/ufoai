@@ -297,7 +297,7 @@ int GAME_GetCurrentTeam (void)
 			/* this callback is responsible to set up the cl.chrList */
 			return list->getteam();
 		}
-		list = list + 1;
+		list++;
 	}
 	Sys_Error("GAME_GetCurrentTeam: Could not determine gamemode");
 }

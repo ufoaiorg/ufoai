@@ -52,7 +52,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_xvi.h"
 #include "cp_aircraft_callbacks.h"
-#include  "cl_fightequip_callbacks.h"
+#include "cl_fightequip_callbacks.h"
+#include "cl_produce_callbacks.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
 
@@ -2201,10 +2202,16 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 	return qtrue;
 }
 
-/** @todo remove me */
+/** @todo remove me and move all the included stuff to proper places */
 void CP_InitStartup (void)
 {
 	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
+
+	/* this will init some more employee stuff */
+	E_Init();
+
+	/* init some production menu nodes */
+	PR_Init();
 
 	/* commands */
 #ifdef DEBUG
@@ -2215,4 +2222,22 @@ void CP_InitStartup (void)
 
 	CP_MissionsInit();
 	MS_MessageInit();
+
+	/* init UFOpaedia, basemanagement and other subsystems */
+	UP_InitStartup();
+	B_InitStartup();
+	INS_InitStartup();
+	RS_InitStartup();
+	PR_InitStartup();
+	E_InitStartup();
+	HOS_InitStartup();
+	AC_InitStartup();
+	MAP_InitStartup();
+	UFO_InitStartup();
+	TR_InitStartup();
+	AB_InitStartup();
+	AIRFIGHT_InitStartup();
+	UR_InitStartup();
+	NAT_InitStartup();
+	BS_InitStartup();
 }

@@ -32,20 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_tutorials.h"
 #include "cl_tip.h"
 #include "cl_team.h"
-#include "multiplayer/mp_team.h"
 #include "cl_rank.h"
 #include "cl_language.h"
 #include "cl_particle.h"
 #include "cl_actor.h"
 #include "cl_hud.h"
-#include "cl_ugv.h"
-#include "campaign/cl_installation.h"
-#include "campaign/cp_hospital.h"
-#include "campaign/cl_map.h"
-#include "campaign/cl_mapfightequip.h"
-#include "campaign/cl_ufo.h"
-#include "campaign/cl_alienbase.h"
-#include "campaign/cl_produce_callbacks.h"
 #include "cl_sequence.h"
 #include "cl_view.h"
 #include "cl_joystick.h"
@@ -56,10 +47,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_font.h"
 #include "menu/m_parse.h"
-#include "menu/node/m_node_selectbox.h"
 #include "campaign/cp_parse.h"
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
+#include "multiplayer/mp_team.h"
 
 cvar_t *cl_isometric;
 
@@ -652,12 +643,6 @@ void CL_InitAfter (void)
 	/* init irc commands and cvars */
 	Irc_Init();
 
-	/* this will init some more employee stuff */
-	E_Init();
-
-	/* init some production menu nodes */
-	PR_Init();
-
 	cls.loadingPercent = 5.0f;
 	SCR_DrawPrecacheScreen(qtrue);
 
@@ -901,33 +886,15 @@ static void CL_InitLocal (void)
 	IN_Init();
 	SAV_Init();
 
-	/* init menu, UFOpaedia, basemanagement and other subsystems */
 	MN_InitStartup();
-	UP_InitStartup();
-	B_InitStartup();
-	INV_InitStartup();
-	INS_InitStartup();
-	RS_InitStartup();
-	PR_InitStartup();
-	E_InitStartup();
-	HOS_InitStartup();
-	AC_InitStartup();
-	MAP_InitStartup();
-	UFO_InitStartup();
-	TR_InitStartup();
-	AB_InitStartup();
-	AIRFIGHT_InitStartup();
 	TUT_InitStartup();
 	PTL_InitStartup();
-	CP_InitStartup();
 	GAME_InitStartup();
-	UR_InitStartup();
-	NAT_InitStartup();
-	BS_InitStartup();
 	SEQ_InitStartup();
 	TEAM_InitStartup();
 	TOTD_InitStartup();
 	HUD_InitStartup();
+	INV_InitStartup();
 
 	/* register our variables */
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
