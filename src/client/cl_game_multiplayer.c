@@ -259,44 +259,6 @@ static void GAME_MP_GetEquipment (void)
 	ccs.eMission = *ed; /* copied, including the arrays inside! */
 }
 
-int GAME_MP_GetTeam (void)
-{
-	return cl_team->integer;
-}
-
-void GAME_MP_InitStartup (void)
-{
-	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
-	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
-
-	memset(multiplayerCharacters, 0, sizeof(multiplayerCharacters));
-	chrDisplayList.num = 0;
-
-	Cvar_ForceSet("sv_maxclients", "2");
-
-	Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, NULL);
-	Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
-	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
-	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
-	Cmd_AddCommand("mp_autoteam", GAME_MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
-	MP_CallbacksInit();
-	MP_ServerListInit();
-
-	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
-	 * cvars if values were previously set */
-	if (strlen(max_s))
-		Cvar_Set("sv_maxsoldiersperteam", max_s);
-	if (strlen(max_spp))
-		Cvar_Set("sv_maxsoldiersperplayer", max_spp);
-
-	/* disconnect already running session - when entering the
-	 * multiplayer menu while you are still connected */
-	if (cls.state >= ca_connecting)
-		CL_Disconnect();
-
-	GAME_MP_GetEquipment();
-}
-
 const mapDef_t* GAME_MP_MapInfo (int step)
 {
 	const mapDef_t *md;
@@ -334,6 +296,44 @@ const mapDef_t* GAME_MP_MapInfo (int step)
 	}
 
 	return md;
+}
+
+int GAME_MP_GetTeam (void)
+{
+	return cl_team->integer;
+}
+
+void GAME_MP_InitStartup (void)
+{
+	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
+	const char *max_spp = Cvar_VariableStringOld("sv_maxsoldiersperplayer");
+
+	memset(multiplayerCharacters, 0, sizeof(multiplayerCharacters));
+	chrDisplayList.num = 0;
+
+	Cvar_ForceSet("sv_maxclients", "2");
+
+	Cmd_AddCommand("mp_startserver", GAME_MP_StartServer_f, NULL);
+	Cmd_AddCommand("mp_updategametype", GAME_MP_UpdateGametype_f, "Update the menu values with current gametype values");
+	Cmd_AddCommand("mp_nextgametype", GAME_MP_ChangeGametype_f, "Switch to the next multiplayer game type");
+	Cmd_AddCommand("mp_prevgametype", GAME_MP_ChangeGametype_f, "Switch to the previous multiplayer game type");
+	Cmd_AddCommand("mp_autoteam", GAME_MP_AutoTeam_f, "Assign initial multiplayer equipment to soldiers");
+	MP_CallbacksInit();
+	MP_ServerListInit();
+
+	/* restore old sv_maxsoldiersperplayer and sv_maxsoldiersperteam
+	 * cvars if values were previously set */
+	if (strlen(max_s))
+		Cvar_Set("sv_maxsoldiersperteam", max_s);
+	if (strlen(max_spp))
+		Cvar_Set("sv_maxsoldiersperplayer", max_spp);
+
+	/* disconnect already running session - when entering the
+	 * multiplayer menu while you are still connected */
+	if (cls.state >= ca_connecting)
+		CL_Disconnect();
+
+	GAME_MP_GetEquipment();
 }
 
 void GAME_MP_Shutdown (void)
