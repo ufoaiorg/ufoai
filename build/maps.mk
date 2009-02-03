@@ -35,7 +35,9 @@ maps-ents:
 	$(MAKE) maps UFO2MAPFLAGS="$(ENTS_UFO2MAPFLAGS)"
 
 clean-maps:
-	find $(MAPSDIR) -name '*.bsp' | xargs --no-run-if-empty rm
+	@echo "Deleting maps..."
+	@find $(MAPSDIR) -name '*.bsp' -delete
+	@echo "done"
 
 $(BSPS): %.bsp: %.map
 	$(UFO2MAP) $(UFO2MAPFLAGS) $<
