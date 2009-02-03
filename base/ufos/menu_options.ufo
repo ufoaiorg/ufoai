@@ -877,7 +877,7 @@ menu options_game
 		viewchange {
 			*(vscrollbar)select_language_scroll current <viewpos>
 			*(vscrollbar)select_language_scroll fullsize <count>
-			*(vscrollbar)select_language_scroll viewsize 8
+			*(vscrollbar)select_language_scroll viewsize 10
 		}
 		whup { cmd "mn_active_vscrollbar options_game.select_language_scroll 0" } // 0: click on top
 		whdown { cmd "mn_active_vscrollbar options_game.select_language_scroll 4" } // 4: click on bottom
@@ -890,7 +890,7 @@ menu options_game
 		height			"220"
 		current			0
 		viewsize		8
-		fullsize		21
+		fullsize		22
 		change {
 			*select_language viewpos <current>
 		}

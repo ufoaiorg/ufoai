@@ -245,12 +245,12 @@ void CL_LanguageInit (void)
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 #ifndef DEBUG
 		/* No language option available only for DEBUG. */
-		if (!Q_strncmp(language->localeID, "none", 4))
+		if (!CL_LanguageTest(language->localeID))
 			continue;
 #endif
 
 		/* Test the locale first, add to list if setting given locale possible. */
-		if (CL_LanguageTest(language->localeID)) {
+		if (CL_LanguageTest(language->localeID) || !Q_strcmp(language->localeID, "none")) {
 			selectBoxOptions_t* selectBoxOption;
 			selectBoxOption = MN_NodeAddOption(languageOptions);
 			if (!selectBoxOption)

@@ -42,56 +42,57 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 
 /**
+ * @brief Remove the highter element (in alphabet) from a list
+ */
+static selectBoxOptions_t *MN_OptionNodeRemoveHighterOption (selectBoxOptions_t **option)
+{
+	selectBoxOptions_t *prev = NULL;
+	selectBoxOptions_t *prevfind = NULL;
+	selectBoxOptions_t *search = (*option)->next;
+	char *label = (*option)->label;
+
+	/* search the smaller element */
+	while (search) {
+		if (Q_strcmp(label, search->label) < 0) {
+			prevfind = prev;
+			label = search->label;
+		}
+		prev = search;
+		search = search->next;
+	}
+
+	/* remove the first element */
+	if (prevfind == NULL) {
+		selectBoxOptions_t *tmp = *option;
+		*option = (*option)->next;
+		return tmp;
+	} else {
+		selectBoxOptions_t *tmp = prevfind->next;
+		prevfind->next = tmp->next;
+		return tmp;
+	}
+}
+
+/**
  * @brief Sort options by alphabet
  */
 void MN_OptionNodeSortOptions (menuNode_t *node)
 {
 	selectBoxOptions_t *option;
-	selectBoxOptions_t *sorted = NULL;
 	assert(MN_NodeInstanceOf(node, "abstractoption"));
 
+	/* unlink the unsorted list */
 	option = node->u.option.first;
 	if (option == NULL)
 		return;
+	node->u.option.first = NULL;
 
-	/* invariant: list [...sorted] is sorted; list [option...] need to be sort */
-
-	while (option->next) {
-		selectBoxOptions_t *find = NULL;
-		selectBoxOptions_t *prev = option;
-		selectBoxOptions_t *search = option->next;
-		char *label = option->label;
-
-		/* search the smaller element */
-		while (search) {
-			if (0 < Q_strcmp(label, search->label)) {
-				find = prev;
-				label = search->label;
-			}
-			prev = search;
-			search = search->next;
-		}
-
-		/* link the element the the result list*/
-		if (find == NULL) {
-			/* find element is already at the right position */
-			find = option;
-		} else {
-			selectBoxOptions_t *tmp = find->next;
-			find->next = tmp->next;
-			find = tmp;
-			find->next = option;
-			if (sorted == NULL) {
-				node->u.option.first = find;
-			} else {
-				sorted->next = find;
-			}
-
-		}
-
-		/* next */
-		sorted = find;
-		option = find->next;
+	/* construct a sorted list */
+	while (option) {
+		selectBoxOptions_t *element;
+		element = MN_OptionNodeRemoveHighterOption(&option);
+		element->next = node->u.option.first;
+		node->u.option.first = element;
 	}
 }
 
