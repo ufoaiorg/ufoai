@@ -591,7 +591,7 @@ static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int di
 }
 
 static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType,
-	int *currentHeight, int displayType, qboolean displayAvailable)
+	int *currentHeight, int displayType, int displayAvailable)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
