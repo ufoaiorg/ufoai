@@ -760,9 +760,10 @@ menu mp_team
 	 */
 	confunc set_slotname {
 		cmd "set mn_slot<1> \"<3> (<2>)\";"
+		*slot_team<1> disabled false
 	}
 
-	textentry slot_team0
+	button slot_team0
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -775,24 +776,10 @@ menu mp_team
 		pos			"85 130"
 		size		"256 34"
 		string		"*cvar mn_slot0"
-	}
-	custombutton save_slot0 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 139"
-		size		"16 16"
-		click		{ cmd "saveteam 0;" }
-	}
-	custombutton load_slot0 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 139"
-		size		"16 16"
 		click		{ cmd "loadteam 0;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot0"
 	}
 
-	textentry slot_team1
+	button slot_team1
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -805,24 +792,10 @@ menu mp_team
 		pos			"85 165"
 		size		"256 34"
 		string		"*cvar mn_slot1"
-	}
-	custombutton save_slot1 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 174"
-		size		"16 16"
-		click		{ cmd "saveteam 1;" }
-	}
-	custombutton load_slot1 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 174"
-		size		"16 16"
 		click		{ cmd "loadteam 1;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot1"
 	}
 
-	textentry slot_team2
+	button slot_team2
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -835,24 +808,10 @@ menu mp_team
 		pos			"85 200"
 		size		"256 34"
 		string		"*cvar mn_slot2"
-	}
-	custombutton save_slot2 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 209"
-		size		"16 16"
-		click		{ cmd "saveteam 2;" }
-	}
-	custombutton load_slot2 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 209"
-		size		"16 16"
 		click		{ cmd "loadteam 2;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot2"
 	}
 
-	textentry slot_team3
+	button slot_team3
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -865,24 +824,10 @@ menu mp_team
 		pos			"85 235"
 		size		"256 34"
 		string		"*cvar mn_slot3"
-	}
-	custombutton save_slot3 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 244"
-		size		"16 16"
-		click		{ cmd "saveteam 3;" }
-	}
-	custombutton load_slot3 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 244"
-		size		"16 16"
 		click		{ cmd "loadteam 3;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot3"
 	}
 
-	textentry slot_team4
+	button slot_team4
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -895,24 +840,10 @@ menu mp_team
 		pos			"85 270"
 		size		"256 34"
 		string		"*cvar mn_slot4"
-	}
-	custombutton save_slot4 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 279"
-		size		"16 16"
-		click		{ cmd "saveteam 4;" }
-	}
-	custombutton load_slot4 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 279"
-		size		"16 16"
 		click		{ cmd "loadteam 4;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot4"
 	}
 
-	textentry slot_team5
+	button slot_team5
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -925,24 +856,10 @@ menu mp_team
 		pos			"85 305"
 		size		"256 34"
 		string		"*cvar mn_slot5"
-	}
-	custombutton save_slot5 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 314"
-		size		"16 16"
-		click		{ cmd "saveteam 5;" }
-	}
-	custombutton load_slot5 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 314"
-		size		"16 16"
 		click		{ cmd "loadteam 5;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot5"
 	}
 
-	textentry slot_team6
+	button slot_team6
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -955,24 +872,10 @@ menu mp_team
 		pos			"85 340"
 		size		"256 34"
 		string		"*cvar mn_slot6"
-	}
-	custombutton save_slot6 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 349"
-		size		"16 16"
-		click		{ cmd "saveteam 6;" }
-	}
-	custombutton load_slot6 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 349"
-		size		"16 16"
 		click		{ cmd "loadteam 6;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot6"
 	}
 
-	textentry slot_team7
+	button slot_team7
 	{
 		image		menu/button_green_verysmall
 		blend		true
@@ -985,21 +888,7 @@ menu mp_team
 		pos			"85 375"
 		size		"256 34"
 		string		"*cvar mn_slot7"
-	}
-	custombutton save_slot7 {
-		tooltip		"_Save the team to this slot"
-		icon		plus
-		pos			"350 384"
-		size		"16 16"
-		click		{ cmd "saveteam 7;" }
-	}
-	custombutton load_slot7 {
-		tooltip		"_Load the team from this slot"
-		icon		minus
-		pos			"376 384"
-		size		"16 16"
 		click		{ cmd "loadteam 7;mn_push mp_team_edit;" }
-		visiblewhen	"mn_slot7"
 	}
 
 	// ==================
@@ -1009,14 +898,27 @@ menu mp_team
 	button button_new
 	{
 		pos	"85 430"
+		size "256 40"
 		tooltip	"_Generate a new random team"
-		size "256 34"
 		click	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
-		image	menu/button_green_big	blend	true
+		image	menu/button_green_small	blend	true
 		font	f_menusmall
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		string	"_New"
+	}
+
+	button button_save
+	{
+		pos	"85 480"
+		size "256 40"
+		tooltip	"_Save the current team"
+		click	{ cmd "mn_push mp_team_save_popup;" }
+		image	menu/button_green_small	blend	true
+		font	f_menusmall
+		color	"0 0.5 0 1"
+		selectcolor "1 1 1 1"
+		string	"_Save"
 	}
 
 	string team_str
@@ -1068,5 +970,164 @@ menu mp_team
 	func init
 	{
 		cmd	"mn_escpop 5;team_comments;"
+	}
+}
+
+// ==========================
+// SAVE POPUP
+// ==========================
+
+/**
+ * @todo The mn_pop into the change event dont work
+ */
+menu mp_team_save_popup
+{
+	{
+		pos			"264 262"
+		size		"360 496"
+		dragbutton	true
+		closebutton	true
+		modal		true
+	}
+
+	windowpanel back
+	{
+		image	menu/popup_alpha_tile
+		pos		"0 0"
+		size	"360 496"
+		blend	true
+	}
+
+	string title
+	{
+		string	"_Save your team"
+		pos		"0 0"
+		size	"360 60"
+		textalign	cc
+		font	f_big
+	}
+
+	// ==========================
+	// SLOTS
+	// ==========================
+
+	textentry slot_team0
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 130"
+		size		"256 34"
+		string		"*cvar mn_slot0"
+		change		{ cmd "saveteam 0;mn_pop" }
+	}
+
+	textentry slot_team1
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 165"
+		size		"256 34"
+		string		"*cvar mn_slot1"
+		change		{ cmd "saveteam 1;mn_pop" }
+	}
+
+	textentry slot_team2
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 200"
+		size		"256 34"
+		string		"*cvar mn_slot2"
+		change		{ cmd "saveteam 2;mn_pop" }
+	}
+
+	textentry slot_team3
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 235"
+		size		"256 34"
+		string		"*cvar mn_slot3"
+		change		{ cmd "saveteam 3;mn_pop" }
+	}
+
+	textentry slot_team4
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 270"
+		size		"256 34"
+		string		"*cvar mn_slot4"
+		change		{ cmd "saveteam 4;mn_pop" }
+	}
+
+	textentry slot_team5
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 305"
+		size		"256 34"
+		string		"*cvar mn_slot5"
+		change		{ cmd "saveteam 5;mn_pop" }
+	}
+
+	textentry slot_team6
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 340"
+		size		"256 34"
+		string		"*cvar mn_slot6"
+		change		{ cmd "saveteam 6;mn_pop" }
+	}
+
+	textentry slot_team7
+	{
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		pos			"50 375"
+		size		"256 34"
+		string		"*cvar mn_slot7"
+		change		{ cmd "saveteam 7;mn_pop" }
 	}
 }
