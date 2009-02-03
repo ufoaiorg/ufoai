@@ -1252,31 +1252,15 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 			return;
 	}
 
-#if 0 /** #1 finally better to remove it, i dont think anybody need it */
-	/** Hack. We can say a right click on the base inventory container
-	 * is a selection, but, not the de-equipping.
-	 * Better way is to remove that. Every where we use right click,
-	 * its not a selection (IMHO better, but POV)
-	 */
-	if (MN_IsScrollContainerNode(node)) {
-		EXTRADATA(node).lastSelectedId = id;
-		if (EXTRADATA(node).onSelect) {
-			MN_ExecuteEventActions(node, EXTRADATA(node).onSelect);
-		}
-	}
-#endif
-
-	/** Hack. Hard to know where are the item now, but if its an armor
+	/** HACK: Hard to know where the item is located now, but if its an armor
 	 * we fire the change event of the armour container. At least to
 	 * update the actor skin.
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
 	if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
-		menuNode_t *armour = MN_GetNode(node->menu, "armour");
-		if (armour) {
-			if (armour->onChange)
-				MN_ExecuteEventActions(armour, armour->onChange);
-		}
+		const menuNode_t *armour = MN_GetNode(node->menu, "armour");
+		if (armour && armour->onChange)
+			MN_ExecuteEventActions(armour, armour->onChange);
 	}
 
 	/* Update display of scroll buttons. */
