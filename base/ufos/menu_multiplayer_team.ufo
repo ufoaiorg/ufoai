@@ -780,7 +780,7 @@ menu mp_team
 		icon		minus
 		pos			"376 139"
 		size		"16 16"
-		click		{ cmd "loadteam 0;" }
+		click		{ cmd "loadteam 0;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot0"
 	}
 
@@ -810,7 +810,7 @@ menu mp_team
 		icon		minus
 		pos			"376 174"
 		size		"16 16"
-		click		{ cmd "loadteam 1;" }
+		click		{ cmd "loadteam 1;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot1"
 	}
 
@@ -840,7 +840,7 @@ menu mp_team
 		icon		minus
 		pos			"376 209"
 		size		"16 16"
-		click		{ cmd "loadteam 2;" }
+		click		{ cmd "loadteam 2;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot2"
 	}
 
@@ -870,7 +870,7 @@ menu mp_team
 		icon		minus
 		pos			"376 244"
 		size		"16 16"
-		click		{ cmd "loadteam 3;" }
+		click		{ cmd "loadteam 3;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot3"
 	}
 
@@ -900,7 +900,7 @@ menu mp_team
 		icon		minus
 		pos			"376 279"
 		size		"16 16"
-		click		{ cmd "loadteam 4;" }
+		click		{ cmd "loadteam 4;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot4"
 	}
 
@@ -930,7 +930,7 @@ menu mp_team
 		icon		minus
 		pos			"376 314"
 		size		"16 16"
-		click		{ cmd "loadteam 5;" }
+		click		{ cmd "loadteam 5;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot5"
 	}
 
@@ -960,7 +960,7 @@ menu mp_team
 		icon		minus
 		pos			"376 349"
 		size		"16 16"
-		click		{ cmd "loadteam 6;" }
+		click		{ cmd "loadteam 6;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot6"
 	}
 
@@ -990,7 +990,7 @@ menu mp_team
 		icon		minus
 		pos			"376 384"
 		size		"16 16"
-		click		{ cmd "loadteam 7;" }
+		click		{ cmd "loadteam 7;mn_push mp_team_edit;" }
 		visiblewhen	"mn_slot7"
 	}
 
@@ -1003,20 +1003,6 @@ menu mp_team
 		string	"_Current Team"
 		pos		"85 450"
 		font	f_big
-	}
-
-	// @todo should be only available when there is a team loaded or created already
-	button button_edit
-	{
-		pos		"85 490"
-		tooltip	"_Edit your team after loading"
-		size	"128 64"
-		click	{ cmd "mn_push mp_team_edit;" }
-		image	menu/button_green_big	blend	true
-		font	f_menusmall
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Edit"
 	}
 
 	button button_new
