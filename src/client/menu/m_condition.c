@@ -90,7 +90,7 @@ qboolean MN_CheckCondition (menuDepends_t *condition)
 		break;
 	case IF_EXISTS:
 		assert(condition->cvar->string);
-		if (!*condition->cvar->string)
+		if (condition->cvar->string[0] == '\0')
 			return qfalse;
 		break;
 	case IF_STR_EQ:
@@ -155,7 +155,6 @@ qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 		condition->cond = MN_GetOperatorByName(operator_);
 		if (condition->cond == IF_INVALID)
 			Sys_Error("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator_, token);
-
 	} else {
 		Com_Printf("Illegal if statement '%s'\n", token);
 		return qfalse;

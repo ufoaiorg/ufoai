@@ -648,6 +648,7 @@ menu mp_team_edit
 		cvar	"*cvar mn_skin"
 		color	"0.6 0.6 0.6 0.3"
 	}
+	/** @todo add team_changeskinteam callback */
 
 	// ==================
 	// Containers (see inventory.ufo for the definition)
@@ -762,10 +763,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 130"
 		size		"256 34"
 		string		"*cvar mn_slot0"
-		click		{ cmd "mn_slot 0;" }
+	}
+	custombutton save_slot0 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 139"
+		size		"16 16"
+		click		{ cmd "saveteam 0;" }
+	}
+	custombutton load_slot0 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 139"
+		size		"16 16"
+		click		{ cmd "loadteam 0;" }
+		visiblewhen	"mn_slot0"
 	}
 
 	textentry slot_team1
@@ -777,10 +793,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 165"
 		size		"256 34"
 		string		"*cvar mn_slot1"
-		click		{ cmd "mn_slot 1;" }
+	}
+	custombutton save_slot1 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 174"
+		size		"16 16"
+		click		{ cmd "saveteam 1;" }
+	}
+	custombutton load_slot1 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 174"
+		size		"16 16"
+		click		{ cmd "loadteam 1;" }
+		visiblewhen	"mn_slot1"
 	}
 
 	textentry slot_team2
@@ -792,10 +823,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 200"
 		size		"256 34"
 		string		"*cvar mn_slot2"
-		click		{ cmd "mn_slot 2;" }
+	}
+	custombutton save_slot2 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 209"
+		size		"16 16"
+		click		{ cmd "saveteam 2;" }
+	}
+	custombutton load_slot2 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 209"
+		size		"16 16"
+		click		{ cmd "loadteam 2;" }
+		visiblewhen	"mn_slot2"
 	}
 
 	textentry slot_team3
@@ -807,10 +853,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 235"
 		size		"256 34"
 		string		"*cvar mn_slot3"
-		click		{ cmd "mn_slot 3;" }
+	}
+	custombutton save_slot3 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 244"
+		size		"16 16"
+		click		{ cmd "saveteam 3;" }
+	}
+	custombutton load_slot3 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 244"
+		size		"16 16"
+		click		{ cmd "loadteam 3;" }
+		visiblewhen	"mn_slot3"
 	}
 
 	textentry slot_team4
@@ -822,10 +883,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 270"
 		size		"256 34"
 		string		"*cvar mn_slot4"
-		click		{ cmd "mn_slot 4;" }
+	}
+	custombutton save_slot4 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 279"
+		size		"16 16"
+		click		{ cmd "saveteam 4;" }
+	}
+	custombutton load_slot4 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 279"
+		size		"16 16"
+		click		{ cmd "loadteam 4;" }
+		visiblewhen	"mn_slot4"
 	}
 
 	textentry slot_team5
@@ -837,10 +913,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 305"
 		size		"256 34"
 		string		"*cvar mn_slot5"
-		click		{ cmd "mn_slot 5;" }
+	}
+	custombutton save_slot5 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 314"
+		size		"16 16"
+		click		{ cmd "saveteam 5;" }
+	}
+	custombutton load_slot5 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 314"
+		size		"16 16"
+		click		{ cmd "loadteam 5;" }
+		visiblewhen	"mn_slot5"
 	}
 
 	textentry slot_team6
@@ -852,10 +943,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 340"
 		size		"256 34"
 		string		"*cvar mn_slot6"
-		click		{ cmd "mn_slot 6;" }
+	}
+	custombutton save_slot6 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 349"
+		size		"16 16"
+		click		{ cmd "saveteam 6;" }
+	}
+	custombutton load_slot6 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 349"
+		size		"16 16"
+		click		{ cmd "loadteam 6;" }
+		visiblewhen	"mn_slot6"
 	}
 
 	textentry slot_team7
@@ -867,36 +973,25 @@ menu mp_team
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
+		disabled	true
 		pos			"85 375"
 		size		"256 34"
 		string		"*cvar mn_slot7"
-		click		{ cmd "mn_slot 7;" }
 	}
-
-	button button_load
-	{
-		pos	"365 130"
-		size "128 64"
-		tooltip "_Load team from current selected slot"
-		click	{ cmd "loadteamslot;" }
-		image	menu/button_green_big	blend	true
-		font	f_menusmall
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Load"
+	custombutton save_slot7 {
+		tooltip		"_Save the team to this slot"
+		icon		plus
+		pos			"350 384"
+		size		"16 16"
+		click		{ cmd "saveteam 7;" }
 	}
-
-	button button_save
-	{
-		pos	"365 200"
-		tooltip	"_Save team to current selected slot"
-		size "128 64"
-		click	{ cmd "saveteamslot;team_comments;" }
-		image	menu/button_green_big	blend	true
-		font	f_menusmall
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Save"
+	custombutton load_slot7 {
+		tooltip		"_Load the team from this slot"
+		icon		minus
+		pos			"376 384"
+		size		"16 16"
+		click		{ cmd "loadteam 7;" }
+		visiblewhen	"mn_slot7"
 	}
 
 	// ==================
@@ -906,16 +1001,16 @@ menu mp_team
 	string current_team
 	{
 		string	"_Current Team"
-		pos	"85 450"
+		pos		"85 450"
 		font	f_big
 	}
 
 	// @todo should be only available when there is a team loaded or created already
 	button button_edit
 	{
-		pos	"85 490"
+		pos		"85 490"
 		tooltip	"_Edit your team after loading"
-		size "128 64"
+		size	"128 64"
 		click	{ cmd "mn_push mp_team_edit;" }
 		image	menu/button_green_big	blend	true
 		font	f_menusmall
@@ -983,6 +1078,6 @@ menu mp_team
 
 	func init
 	{
-		cmd	"mn_escpop 5;set mn_slot 0;team_comments;"
+		cmd	"mn_escpop 5;team_comments;"
 	}
 }

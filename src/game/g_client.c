@@ -2571,7 +2571,7 @@ static void G_ClientTeamAssign (const player_t * player)
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
 	if ((sv_teamplay->integer && teamCount >= sv_maxteams->integer) || playerCount >= sv_maxclients->integer) {
 		char buffer[MAX_VAR] = "";
-		G_PrintStats(va("Starting new game: %s", level.mapname));
+		G_PrintStats(va("Starting new game: %s with %i teams", level.mapname, teamCount));
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 		turnTeam = level.activeTeam;
 		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {

@@ -175,15 +175,24 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename)
 /**
  * @brief Stores a team in a specified teamslot (multiplayer)
  */
-void MP_SaveTeamMultiplayerSlot_f (void)
+void MP_SaveTeamMultiplayer_f (void)
 {
 	if (!chrDisplayList.num) {
 		MN_Popup(_("Note"), _("Error saving team. Nothing to save yet."));
 		return;
 	} else {
 		char filename[MAX_OSPATH];
+		int index;
+
+		if (Cmd_Argc() != 2) {
+			Com_Printf("Usage: %s <slotindex>\n", Cmd_Argv(0));
+			return;
+		}
+
+		index = atoi(Cmd_Argv(1));
+
 		/* save */
-		Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
+		Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mpt", FS_Gamedir(), index);
 		if (!MP_SaveTeamMultiplayer(filename))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
@@ -312,15 +321,23 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 /**
  * @brief Loads the selected teamslot
  */
-void MP_LoadTeamMultiplayerSlot_f (void)
+void MP_LoadTeamMultiplayer_f (void)
 {
 	char filename[MAX_OSPATH];
+	int index;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <slotindex>\n", Cmd_Argv(0));
+		return;
+	}
+
+	index = atoi(Cmd_Argv(1));
 
 	/* load */
-	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
+	Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mpt", FS_Gamedir(), index);
 	MP_LoadTeamMultiplayer(filename);
 
-	Com_Printf("Team 'team%s' loaded.\n", Cvar_VariableString("mn_slot"));
+	Com_Printf("Team 'team%i' loaded.\n", index);
 }
 
 

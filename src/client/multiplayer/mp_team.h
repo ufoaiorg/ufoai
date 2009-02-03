@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
 
-void MP_SaveTeamMultiplayerSlot_f(void);
-void MP_LoadTeamMultiplayerSlot_f(void);
+void MP_SaveTeamMultiplayer_f(void);
+void MP_LoadTeamMultiplayer_f(void);
 void MP_MultiplayerTeamSlotComments_f(void);
 void MP_UpdateMenuParameters_f(void);
 void MP_TeamSelect_f(void);
