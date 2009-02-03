@@ -280,8 +280,8 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	}
 
 	/* First-time linking of menuInventory. */
-	if (!menuInventory->c[csi.idEquip]) {
-		menuInventory->c[csi.idEquip] = baseCurrent->bEquipment.c[csi.idEquip];
+	if (menuInventory && !menuInventory->c[csi.idEquip]) {
+		menuInventory->c[csi.idEquip] = aircraft->homebase->bEquipment.c[csi.idEquip];
 	}
 }
 
