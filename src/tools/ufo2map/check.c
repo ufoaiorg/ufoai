@@ -697,7 +697,7 @@ void CheckEntities (void)
 	if (ED_Parse((const char **)entitiesUfoBuf))
 		Sys_Error("Error while parsing entities.ufo: %s\n",ED_GetLastError());
 
-	ED_Dump();
+	/* ED_Dump(); */
 
 	ED_Free();
 

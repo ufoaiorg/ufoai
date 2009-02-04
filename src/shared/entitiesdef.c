@@ -197,7 +197,7 @@ static int ED_Type2Constant (const char *strType)
 	else if (!strcmp(strType, "V_STRING"))
 		return ED_TYPE_STRING;
 
-	snprintf(lastErr, sizeof(lastErr), "ED_Type2Constant: type string not recognised: %s", strType);
+	snprintf(lastErr, sizeof(lastErr), "ED_Type2Constant: type string not recognised: \"%s\"", strType);
 	return -1;
 }
 
@@ -224,23 +224,91 @@ static const char *ED_Constant2Type (int constInt)
 #endif
 
 /**
+ * @brief tests if a value string matches the type for this key
+ * @param floatOrInt one of ED_TYPE_FLOAT or ED_TYPE_INT
+ * @return 1 if the value string matches the type, 0 if it does not and -1 if
+ * there is an error (call ED_GetLastError)
+ */
+static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value, const int floatOrInt)
+{
+	int i = -1; /* Com_Parse returns an empty string after the last token. start at -1 to compensate */
+	static char tokBuf[64];
+	const char *buf_p = tokBuf;
+	const char *tok;
+	strncpy(tokBuf, value, sizeof(tokBuf));
+	assert(floatOrInt & (ED_TYPE_INT | ED_TYPE_FLOAT));
+	while (buf_p) {
+		i++;
+		tok = COM_Parse(&buf_p);
+		/** @todo actually check number */
+	}
+	if (i != keyDef->vLen) {
+		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key", i, keyDef->vLen, keyDef->name);
+		return -1;
+	}
+	return 1;
+}
+
+/**
+ * @brief tests if a value string matches the type for this key
+ * @return 1 if the value string matches the type, 0 if it does not and -1 if
+ * there is an error (call ED_GetLastError)
+ */
+int ED_CheckType (const char *classname, const char *key, const char *value)
+{
+	const entityKeyDef_t *kd = ED_GetKeyDef(classname, key);
+	if (!kd)
+		return -1;
+	switch (kd->flags & ED_KEY_TYPE) {
+		case ED_TYPE_FLOAT:
+			return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
+		case ED_TYPE_INT:
+			return ED_CheckNumericType(kd, value, ED_TYPE_INT);
+		case ED_TYPE_STRING:
+		case 0: /* string is the default */
+			return 1; /* all strings are good */
+		default:
+			snprintf(lastErr, sizeof(lastErr), "ED_CheckType: type not recognised in key def");
+			return -1;
+	}
+
+}
+
+/**
  * @brief takes a type string (eg "V_FLOAT 6") and configures entity def
  * @return -1 for an error, otherwise 0
  */
 static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 {
-	const char *copyToken = parsedToken;
-	int type = ED_Type2Constant(COM_Parse(&copyToken));
+	static char tokBuf[64];
+	const char *buf_p;
+	int type;
 	int vectorLen;
 	const char *vectorLenStr;
-	if (-1 == type)
+	const char *firstPartOfParsedToken;
+	/* need a copy, as parsedToken is held in a static buffer in the
+	 * Com_Parse function */
+	if ((strlen(parsedToken) + 1) > sizeof(tokBuf)) {
+		snprintf(lastErr, sizeof(lastErr), "ED_ParseType: type string too long for buffer for key %s",kd->name);
 		return -1;
+	}
+	strncpy(tokBuf, parsedToken, sizeof(tokBuf));
+	buf_p = tokBuf;
 
-	/** @todo parsing of vector length, and defualt could probably be tidied and optimised */
+	firstPartOfParsedToken = COM_Parse(&buf_p);
+	if (strlen(firstPartOfParsedToken)) {
+		type = ED_Type2Constant(firstPartOfParsedToken);
+		if (-1 == type)
+			return -1;
+	} else {/* default is string */
+		type = ED_TYPE_STRING;
+	}
+
+	/** @todo test that the second element is a positive integer */
 	kd->flags |= type;
-	vectorLenStr = COM_Parse(&copyToken);
+	vectorLenStr = COM_Parse(&buf_p);
 	vectorLen = atoi(vectorLenStr);
-	kd->vLen = strlen(vectorLenStr) ? 1 : vectorLen;
+	kd->vLen = strlen(vectorLenStr) ? (vectorLen ? vectorLen : 1) : 1; /* default is 1 */
 	return 0;
 }
 
@@ -337,7 +405,6 @@ static int ED_ParseEntities (const char **data_p)
 	int keyIndex = 0;
 	int toggle = 0; /* many lines should have a pair of tokens on, this toggles 0, 1 to indicate progress */
 
-
 	/* less checking here, as a lot is done whilst counting the entities */
 	while (data_p) {
 		parsedToken = COM_Parse(data_p);
@@ -394,6 +461,9 @@ static int ED_ParseEntities (const char **data_p)
 			} else if (!strcmp("default", parsedToken)) {
 				mode = ED_DEFAULT;
 				toggle ^= 1;
+			} else if (!strcmp("type", parsedToken)) {
+				mode = ED_MODE_TYPE;
+				toggle ^= 1;
 			} else {/* must be a keyname or value */
 				if (toggle) { /* store key name til after next token is parsed */
 					strncpy(lastTokenBuf, parsedToken, ED_MAX_TOKEN_LEN);
@@ -406,6 +476,22 @@ static int ED_ParseEntities (const char **data_p)
 		}
 	}
 
+	return 0;
+}
+
+/**
+ * @return -1 if the defualt for a key does not meet the type definition, otherwise 0
+ * @todo write a function like ED_CheckType, but that does not search for the ents and keys,
+ * as we have the pointers available here
+ */
+static int ED_CheckDefaultTypes (void){
+	entityDef_t *ed;
+	entityKeyDef_t *kd;
+	for (ed = entityDefs; ed->numKeyDefs; ed++)
+		for (kd = ed->keyDefs; kd->name; kd++)
+			if (kd->defaultVal)
+				if (-1 == ED_CheckType(ed->keyDefs->desc, kd->name, kd->defaultVal))
+					return -1;
 	return 0;
 }
 
@@ -445,9 +531,11 @@ int ED_Parse (const char **data_p)
 	memset(entityDefs, 0, ed_block_size);
 
 	copy_data_p = *data_p;
-	if (-1 == ED_ParseEntities(&copy_data_p)) {
+	if (-1 == ED_ParseEntities(&copy_data_p))
 		return -1;
-	}
+
+	if (-1 == ED_CheckDefaultTypes ())
+		return -1;
 
 	return 0;
 }
@@ -458,17 +546,39 @@ const char *ED_GetLastError (void)
 }
 
 /**
+ * @brief searches for the parsed key def
+ * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
+ */
+const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname)
+{
+	const entityDef_t *ed = ED_GetEntityDef(classname);
+	entityKeyDef_t *kd;
+
+	if (!ed)
+		return NULL;
+
+	for (kd = ed->keyDefs; kd->name; kd++)
+		if (!strcmp(keyname, kd->name))
+			return kd;
+
+	snprintf(lastErr, sizeof(lastErr), "ED_GetKeyDef: no key definition for %s found in entity %s entities.ufo", keyname, classname);
+	return NULL;
+}
+
+/**
  * @brief searches for the parsed entity def by classname
- * @return NULL if the entity def is not found
+ * @return NULL if the entity def is not found. call ED_GetLastError to get a relevant message.
+ * @todo add a classname field to entityKeyDef_t to simplify this
  */
 const entityDef_t *ED_GetEntityDef (const char *classname)
 {
 	entityDef_t *ed;
 
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
-		if(!strcmp(classname, ed->keyDefs->desc)) /* the classname is always the zeroth keyDef */
+		if (!strcmp(classname, ed->keyDefs->desc)) /* the classname is always the zeroth keyDef */
 			return ed;
 
+	snprintf(lastErr, sizeof(lastErr), "ED_GetEntityDef: no entity definition for %s found in entities.ufo", classname);
 	return NULL;
 }
 
@@ -498,8 +608,8 @@ void ED_Free (void)
  */
 void ED_Dump (void)
 {
-	Com_Printf("ED_Dump:\n");
 	const entityDef_t *ed;
+	Com_Printf("ED_Dump:\n");
 	for (ed = entityDefs; ed->numKeyDefs; ed++) {
 		const entityKeyDef_t *kd;
 		Com_Printf(">%s< >%s<\n", ed->keyDefs[0].name, ed->keyDefs[0].desc);
@@ -509,7 +619,7 @@ void ED_Dump (void)
 				kd->flags & ED_OPTIONAL ? 1 : 0,
 				kd->flags & ED_ABSTRACT ? 1 : 0);
 			if (kd->defaultVal)
-				Com_Printf("    >%s<",kd->defaultVal);
+				Com_Printf("    default >%s<\n",kd->defaultVal);
 		}
 	}
 }
