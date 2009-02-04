@@ -738,21 +738,12 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
  */
 void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 {
-	int num;
-
 	/* Remove ufo from ufos list */
-	num = ufo - gd.ufos;
-	if (num < 0 || num >= gd.numUFOs) {
-		Com_DPrintf(DEBUG_CLIENT, "Cannot remove ufo: '%s'\n", ufo->name);
-		return;
-	}
+	const ptrdiff_t num = (ptrdiff_t)(ufo - gd.ufos);
+
 	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->name);
-	/* move other ufos if the deleted ufo was not the last one */
-	if (num < gd.numUFOs - 1)
-		memcpy(&gd.ufos[num], &gd.ufos[num + 1], (gd.numUFOs - num - 1) * sizeof(aircraft_t));
-	gd.numUFOs--;
-	/* wipe the now vacant last slot */
-	memset(&gd.ufos[gd.numUFOs], 0, sizeof(gd.ufos[gd.numUFOs]));
+
+	REMOVE_ELEM_ADJUST_IDX(gd.ufos, num, gd.numUFOs);
 }
 
 #ifdef DEBUG
