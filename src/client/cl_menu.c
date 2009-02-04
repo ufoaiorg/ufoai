@@ -35,6 +35,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void MN_SetViewRect (const menu_t* menu)
 {
+	viddef.x = viddef.y = 0;
+	viddef.viewWidth = viddef.width;
+	viddef.viewHeight = viddef.height;
+#if 0
+	/* It make no sens. If we open a popup over the battlefield,
+	 * we anyway can't read the right render node
+	 */
 	if (!menu) {
 		/* render the full screen */
 		viddef.x = viddef.y = 0;
@@ -47,6 +54,7 @@ void MN_SetViewRect (const menu_t* menu)
 		viddef.viewWidth = menu->size[0] * viddef.rx;
 		viddef.viewHeight = menu->size[1] * viddef.ry;
 	}
+#endif
 }
 
 /**
