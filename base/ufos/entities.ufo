@@ -9,7 +9,8 @@
  * concrete keys may have defaults defined in default blocks and
  * types declared in type blocks. if no type is given, V_STRING is
  * assumed. V_FLOAT and V_INT types may be made into vectors,
- * "V_FLOAT 3".
+ * "V_FLOAT 3". To insist that values are positive, you may use
+ * stuff like "UNSIGNED V_INT".
  */
 
 
