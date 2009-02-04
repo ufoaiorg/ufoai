@@ -35,6 +35,7 @@
 #include "iundo.h"
 #include "iimage.h"
 #include "ifilesystem.h"
+#include "ifiletypes.h"
 #include "os/path.h"
 #include "image.h"
 #include "gtkutil/messagebox.h"
@@ -2822,6 +2823,9 @@ void XYWindow_Construct (void)
 
 	XYWnd::captureStates();
 	GlobalEntityClassManager().attach(g_EntityClassMenu);
+
+	/* add screenshot filetype */
+	GlobalFiletypesModule::getTable().addType("bmp", "screenshow bitmap", filetype_t("bitmap", "*.bmp"));
 }
 
 void XYWindow_Destroy (void)
