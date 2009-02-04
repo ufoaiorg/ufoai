@@ -80,6 +80,7 @@ void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
 struct menuNode_s *MN_GetNode(const menu_t* const menu, const char *name);
 void MN_InsertNode(menu_t* const menu, struct menuNode_s *prevNode, struct menuNode_s *newNode);
 void MN_AppendNode(menu_t* const menu, struct menuNode_s *newNode);
+qboolean MN_WindowIsFullScreen(menu_t* const menu);
 
 void MN_WindowNodeLoading(menu_t *menu);
 void MN_WindowNodeLoaded(menu_t *menu);

@@ -406,6 +406,7 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
  * @note Action nodes are nodes with click defined
  * @sa Key_Event
  * @sa MN_FocusExecuteActionNode
+ * @todo understand the function; use for "i" an understandable name; should move in into global static.
  */
 qboolean MN_FocusNextActionNode (void)
 {
@@ -419,7 +420,7 @@ qboolean MN_FocusNextActionNode (void)
 		return qfalse;
 
 	if (i >= mn.menuStackPos)
-		i = MN_GetVisibleMenuCount();
+		i = MN_GetLastFullScreenWindow();
 
 	assert(i >= 0);
 
@@ -434,7 +435,7 @@ qboolean MN_FocusNextActionNode (void)
 		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstChild)))
 			return qtrue;
 	}
-	i = MN_GetVisibleMenuCount();
+	i = MN_GetLastFullScreenWindow();
 
 	/* no node to focus */
 	MN_FocusRemove();

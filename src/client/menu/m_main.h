@@ -38,7 +38,7 @@ struct menuNode_s;
 
 void MN_Init(void);
 void MN_Shutdown(void);
-int MN_GetVisibleMenuCount(void);
+int MN_GetLastFullScreenWindow(void);
 void MN_SetNewMenuPos(struct menu_s* menu, int x, int y);
 
 void MN_SetNewMenuPos_f (void);

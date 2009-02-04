@@ -86,6 +86,15 @@ void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
 }
 
 /**
+ * @brief Check if a window is fullscreen or not
+ */
+qboolean MN_WindowIsFullScreen (menu_t* const menu)
+{
+	return menu->pos[0] == 0 && menu->size[0] == VID_NORM_WIDTH
+		&& menu->pos[1] == 0 && menu->size[1] == VID_NORM_HEIGHT;
+}
+
+/**
  * @brief Called at the begin of the load from script
  */
 void MN_WindowNodeLoading (menu_t *menu)

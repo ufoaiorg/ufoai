@@ -170,7 +170,7 @@ void MN_DrawMenus (void)
 {
 	menuNode_t *hoveredNode;
 	menu_t *menu;
-	int sp, pp;
+	int windowId;
 	qboolean mouseMoved = qfalse;
 	vec2_t nodepos;
 	static const vec4_t modalBackground = {0, 0, 0, 0.6};
@@ -190,21 +190,13 @@ void MN_DrawMenus (void)
 
 	MN_HandleTimers();
 
-	/* render every menu on top of a menu with a render node */
-	pp = 0;
-	sp = mn.menuStackPos;
-	while (sp > 0) {
-		if (mn.menuStack[--sp]->u.window.renderNode)
-			break;
-		if (mn.menuStack[sp]->u.window.popupNode)
-			pp = sp;
-	}
-	if (pp < sp)
-		pp = sp;
+	/* under a fullscreen, menu should not be visible */
+	windowId = MN_GetLastFullScreenWindow();
 
-	while (sp < mn.menuStackPos) {
+	/* draw all visible menus */
+	for (;windowId < mn.menuStackPos; windowId++) {
 		menuNode_t *node;
-		menu = mn.menuStack[sp++];
+		menu = mn.menuStack[windowId];
 		/* event node */
 		if (menu->u.window.onTimeOut) {
 			if (menu->u.window.eventNode->timeOut > 0 && (menu->u.window.eventNode->timeOut == 1 || (!menu->u.window.eventTime || (menu->u.window.eventTime + menu->u.window.eventNode->timeOut < cls.realtime)))) {
@@ -216,8 +208,8 @@ void MN_DrawMenus (void)
 			}
 		}
 
-		/** draker background for the last modal */
-		if (menu->u.window.modal && sp == mn.menuStackPos) {
+		/** draker background if last window is a modal */
+		if (menu->u.window.modal && windowId == mn.menuStackPos - 1) {
 			R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
 		}
 

@@ -34,19 +34,20 @@ menuGlobal_t mn;
 static cvar_t *mn_escpop;
 
 /**
- * @brief Returns the number of currently renderer menus on the menustack
- * @note Checks for a render node - if invis is true there, it's the last
- * visible menu
+ * @brief Returns the ID of the last fullscreen ID. Before this, window should be hiden.
+ * @return The last full screen window on the screen, else 0. If the stack is empty, return -1
  */
-int MN_GetVisibleMenuCount (void)
+int MN_GetLastFullScreenWindow (void)
 {
 	/* stack pos */
-	int sp = mn.menuStackPos;
-	while (sp > 0)
-		if (mn.menuStack[--sp]->u.window.renderNode)
+	int windowId = mn.menuStackPos - 1;
+	while (windowId > 0) {
+		if (MN_WindowIsFullScreen(mn.menuStack[windowId]))
 			break;
-	/*Com_DPrintf(DEBUG_CLIENT, "visible menus on stacks: %i\n", sp);*/
-	return sp;
+		windowId--;
+	}
+	/* if we find nothing we return 0 */
+	return windowId;
 }
 
 /**
