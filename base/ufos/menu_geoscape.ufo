@@ -692,13 +692,6 @@ menu popup_list
 		closebutton	true
 	}
 
-	// NOTE: This is only used in battlefield on top of the hud right now
-	// If we will ever use this in other places (on geoscape e.g.) we maybe
-	// have to readd the popup zone node
-//	zone popup
-//	{
-//		invis		true
-//	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -763,11 +756,6 @@ menu popup_button
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-	}
-
-	zone popup
-	{
-		invis		true
 	}
 
 	windowpanel back
@@ -857,10 +845,6 @@ menu popup_intercept_ready
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -946,10 +930,6 @@ menu popup_baseattack
 		preventtypingescape true		// we can't use ESC
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1031,10 +1011,6 @@ menu popup_transferbaselist
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1097,10 +1073,6 @@ menu popup_newbase
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1237,10 +1209,6 @@ menu popup_newinstallation_type
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1421,10 +1389,6 @@ menu popup_newinstallation
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1557,10 +1521,6 @@ menu radartower
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1606,10 +1566,6 @@ menu popup_installationstatus
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1725,10 +1681,6 @@ menu popup_intercept
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1848,11 +1800,6 @@ menu popup_mission
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
-
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -1939,10 +1886,6 @@ menu popup_multi_selection
 		modal		true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -2015,10 +1958,6 @@ menu popup_aircraft
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -2087,10 +2026,6 @@ menu popup
 		closebutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -2150,11 +2085,6 @@ menu messageoptions
 		dragbutton	true
 		closebutton	true
 		modal		true
-	}
-
-	zone popup
-	{
-		invis		true
 	}
 
 	windowpanel back

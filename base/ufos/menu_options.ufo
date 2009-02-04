@@ -526,7 +526,7 @@ menu popup_maintain_resolution
 	zone popup
 	{
 		invis false
-		timeout 4000
+		timeout 4000	/**< @todo check if it work */
 	}
 
 	windowpanel back

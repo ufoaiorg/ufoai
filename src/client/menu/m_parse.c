@@ -1249,8 +1249,6 @@ void MN_ParseMenu (const char *name, const char **text)
 			/* update special links */
 			if (superMenu->u.window.renderNode == node)
 				menu->u.window.renderNode = newNode;
-			else if (superMenu->u.window.popupNode == node)
-				menu->u.window.popupNode = newNode;
 			else if (superMenu->u.window.onTimeOut == node->onClick) {
 				menu->u.window.onTimeOut = newNode->onClick;
 				menu->u.window.eventNode = newNode;

@@ -83,10 +83,6 @@ menu multiplayer
 // ==================
 menu serverinfo
 {
-	zone popup
-	{
-		invis		true
-	}
 	pic background
 	{
 		image		menu/multiplayer_bg
@@ -1184,11 +1180,6 @@ menu multiplayer_wait
 		pos 		"0 0"
 		size		"1024 768"
 	}
-
-	zone popup
-	{
-		invis	true
-	}
 	pic background
 	{
 		image	"*cvar mn_mappicbig"
@@ -1263,10 +1254,6 @@ menu serverpassword
 		closebutton	true
 	}
 
-	zone popup
-	{
-		invis	true
-	}
 	windowpanel back
 	{
 		image	menu/popup_alpha_tile
@@ -1332,11 +1319,6 @@ menu chat_popup
 		size	"496 247"
 		dragbutton	true
 		closebutton	true
-	}
-
-	zone popup
-	{
-		invis true
 	}
 
 	windowpanel back

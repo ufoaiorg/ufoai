@@ -168,10 +168,6 @@ menu irc_popup
 		closebutton	true
 	}
 
-	zone popup
-	{
-		invis		true
-	}
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile

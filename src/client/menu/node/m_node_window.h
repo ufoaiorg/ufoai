@@ -44,7 +44,7 @@ typedef struct {
 	qboolean preventTypingEscape;
 	qboolean modal;
 
-	struct menuNode_s *popupNode;
+	/** @todo we can remove it if we create a node for the battlescape */
 	struct menuNode_s *renderNode;
 
 	/** @todo think about converting it to action instead of node */

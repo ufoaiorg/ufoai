@@ -243,11 +243,6 @@ menu popup_recoverybaselist
 		dragbutton	true
 	}
 
-	zone popup
-	{
-		invis 		true
-	}
-
 	windowpanel back
 	{
 		image		menu/popup_alpha_tile
@@ -339,11 +334,6 @@ menu popup_recoverynationlist
 		size		"777 402"
 		dragbutton	true
 		modal		true
-	}
-
-	zone popup
-	{
-		invis		true
 	}
 
 	windowpanel back
