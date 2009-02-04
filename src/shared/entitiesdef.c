@@ -201,7 +201,6 @@ static int ED_Type2Constant (const char *strType)
 	return -1;
 }
 
-#ifdef DEBUG_ED
 /**
  * @brief converts an internal constant integer to a string
  * representation of a type (eg V_FLOAT)
@@ -221,7 +220,6 @@ static const char *ED_Constant2Type (int constInt)
 			return NULL;
 	}
 }
-#endif
 
 /**
  * @brief tests if a value string matches the type for this key
@@ -231,16 +229,41 @@ static const char *ED_Constant2Type (int constInt)
  */
 static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value, const int floatOrInt)
 {
-	int i = -1; /* Com_Parse returns an empty string after the last token. start at -1 to compensate */
+	int i = 0;
 	static char tokBuf[64];
 	const char *buf_p = tokBuf;
 	const char *tok;
 	strncpy(tokBuf, value, sizeof(tokBuf));
 	assert(floatOrInt & (ED_TYPE_INT | ED_TYPE_FLOAT));
 	while (buf_p) {
-		i++;
+		char *end_p;
 		tok = COM_Parse(&buf_p);
-		/** @todo actually check number */
+		if (*tok == '\0')
+			break; /* previous tok was the last real one, don't waste time */
+		i++;
+		if (*tok == 'i' || *tok == 'I' || *tok == 'n' || *tok == 'N'
+		 || tok[1] == 'x' || tok[1] == 'X') {
+		 	snprintf(lastErr, sizeof(lastErr), "infinity, NaN, hex (0x...) not allowed. found \"%s\" in %s", tok, keyDef->name);
+		 	return -1;
+		}
+		switch (floatOrInt) {
+			case ED_TYPE_FLOAT:
+				strtof(tok, &end_p);
+				break;
+			case ED_TYPE_INT:
+				strtol(tok, &end_p, 10);
+				break;
+			default:
+				snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: type to test against not recognised");
+				return -1;
+		}
+		if (strlen(tok) != (unsigned int)(end_p-tok)) { /* if strto* did not use the whole token, then there is some non-number part to it */
+			snprintf(lastErr, sizeof(lastErr), "problem with numeric value: %s for %s, declared as %s",
+				tok, keyDef->name, ED_Constant2Type(floatOrInt));
+			return -1;
+		}
+
+
 	}
 	if (i != keyDef->vLen) {
 		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key", i, keyDef->vLen, keyDef->name);
