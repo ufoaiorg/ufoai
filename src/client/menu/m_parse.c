@@ -970,8 +970,6 @@ static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 	const char *token;
 	qboolean result;
 
-	Vector2Set(menu->pos, 0, 0);
-
 	/* get new token */
 	token = COM_EParse(text, errhead, menu->name);
 	if (!*text)
