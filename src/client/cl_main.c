@@ -479,7 +479,6 @@ static void CL_UserInfo_f (void)
 
 /**
  * @brief Send the clc_teaminfo command to server
- * @todo Should really not depend on an aircraft
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
 static void CL_SpawnSoldiers_f (void)
