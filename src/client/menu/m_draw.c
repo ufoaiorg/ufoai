@@ -175,6 +175,8 @@ void MN_DrawMenus (void)
 	vec2_t nodepos;
 	static const vec4_t modalBackground = {0, 0, 0, 0.6};
 
+	assert(mn.menuStackPos >= 0);
+
 	mouseMoved = MN_CheckMouseMove();
 	hoveredNode = MN_GetHoveredNode();
 
@@ -192,6 +194,8 @@ void MN_DrawMenus (void)
 
 	/* under a fullscreen, menu should not be visible */
 	windowId = MN_GetLastFullScreenWindow();
+	if (windowId < 0)
+		return;
 
 	/* draw all visible menus */
 	for (;windowId < mn.menuStackPos; windowId++) {
