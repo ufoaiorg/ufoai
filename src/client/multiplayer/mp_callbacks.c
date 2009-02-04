@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mp_callbacks.h"
 #include "mp_serverlist.h"
 #include "mp_team.h"
+#include "../cl_team.h"
 #include "../menu/m_popup.h"
 
 teamData_t teamData;
@@ -42,7 +43,7 @@ void CL_Connect_f (void)
 		return;
 	}
 
-	if (!cl.chrList.num) {
+	if (!chrDisplayList.num) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
 	}

@@ -66,7 +66,7 @@ static void GAME_MP_StartServer_f (void)
 	char map[MAX_VAR];
 	mapDef_t *md;
 
-	if (!sv_dedicated->integer && !cl.chrList.num)
+	if (!sv_dedicated->integer && !chrDisplayList.num)
 		GAME_MP_AutoTeam();
 
 	if (Cvar_VariableInteger("sv_teamplay")
