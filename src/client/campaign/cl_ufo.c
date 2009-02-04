@@ -714,7 +714,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	assert(ufo->damage);
 
 	/* Every ufo on geoscape needs a mission assigned */
-	assert(ufo->mission);
+	assert(mission);
 
 	/* Initialise ufo data */
 	UFO_SetRandomPos(ufo);
