@@ -1352,7 +1352,8 @@ typedef enum {
 } equipPrimaryWeaponType_t;
 
 /**
- * @brief Fully equip one actor
+ * @brief Fully equip one actor. The equipment that is added to the inventory of the given actor
+ * is taken from the equipment script definition.
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] ed The equipment that is added from to the actors inventory
  * @param[in] chr Pointer to character data - to get the weapon and armour bools.

@@ -131,6 +131,11 @@ qboolean GAME_SK_Spawn (void)
 	return qtrue;
 }
 
+const mapDef_t* GAME_SK_MapInfo (int step)
+{
+	return &csi.mds[cls.currentSelectedMap];
+}
+
 int GAME_SK_GetTeam (void)
 {
 	return cl_team->integer;
@@ -144,11 +149,6 @@ void GAME_SK_InitStartup (void)
 	Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
 	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
 	Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
-}
-
-const mapDef_t* GAME_SK_MapInfo (int step)
-{
-	return &csi.mds[cls.currentSelectedMap];
 }
 
 void GAME_SK_Shutdown (void)
