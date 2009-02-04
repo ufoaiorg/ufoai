@@ -46,6 +46,8 @@ linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
 /* How many employees in current list (changes on every catergory change, too) */
 int employeesInCurrentList;
 
+static cvar_t *cl_numnames;
+
 /*****************************************************
 VISUAL/GUI STUFF
 *****************************************************/
@@ -418,6 +420,8 @@ void E_Init (void)
 	employeeListNode = MN_GetNodeByPath("employees.employee_list");
 	if (!employeeListNode)
 		Sys_Error("Could not find the 'employee_list' node in 'employees' menu\n");
+
+	cl_numnames = Cvar_Get("cl_numnames", "15", CVAR_NOSET, NULL);
 }
 
 /**
@@ -1468,12 +1472,12 @@ static void E_EmployeeHire_f (void)
 
 	/* check whether this is called with the text node click function
 	 * with values from 0 - #available employees (bigger values than
-	 * cl_numnames [19]) possible ... */
+	 * cl_numnames) possible ... */
 	if (arg[0] == '+') {
 		num = atoi(arg + 1);
 		button = num - employeeListNode->u.text.textScroll;
 	/* ... or with the hire pictures that are using only values from
-	 * 0 - cl_numnames [19] */
+	 * 0 - cl_numnames */
 	} else {
 		button = atoi(Cmd_Argv(1));
 		num = button + employeeListNode->u.text.textScroll;
