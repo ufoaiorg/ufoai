@@ -297,6 +297,47 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
 	aircraft->itemtypes++;
 }
 
+/**
+ * @brief Process items carried by soldiers.
+ * @param[in] soldier Pointer to le_t being a soldier from our team.
+ * @sa AII_CollectingItems
+ * @todo this is campaign mode only - doesn't belong here
+ */
+static void AII_CarriedItems (const le_t *soldier)
+{
+	int container;
+	invList_t *item;
+	technology_t *tech;
+
+	for (container = 0; container < csi.numIDs; container++) {
+		if (csi.ids[container].temp) /* Items collected as ET_ITEM */
+			continue;
+		for (item = soldier->i.c[container]; item; item = item->next) {
+			/* Fake item. */
+			assert(item->item.t);
+			/* Twohanded weapons and container is left hand container. */
+			/** @todo */
+			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdTwoHanded); */
+
+			ccs.eMission.num[item->item.t->idx]++;
+			tech = item->item.t->tech;
+			if (!tech)
+				Sys_Error("AII_CarriedItems: No tech for %s / %s\n", item->item.t->id, item->item.t->name);
+			RS_MarkCollected(tech);
+
+			if (!item->item.t->reload || item->item.a == 0)
+				continue;
+			ccs.eMission.numLoose[item->item.m->idx] += item->item.a;
+			if (ccs.eMission.numLoose[item->item.m->idx] >= item->item.t->ammo) {
+				ccs.eMission.numLoose[item->item.m->idx] -= item->item.t->ammo;
+				ccs.eMission.num[item->item.m->idx]++;
+			}
+			/* The guys keep their weapons (half-)loaded. Auto-reload
+			 * will happen at equip screen or at the start of next mission,
+			 * but fully loaded weapons will not be reloaded even then. */
+		}
+	}
+}
 
 /**
  * @brief Collect items from the battlefield.
@@ -307,8 +348,7 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
  * @note 4. Items carried by soldiers are processed nothing is being sold.
  * @sa CL_ParseResults
  * @sa AII_CollectingAmmo
- * @sa INV_SellorAddAmmo
- * @sa INV_CarriedItems
+ * @sa AII_CarriedItems
  */
 void AII_CollectingItems (aircraft_t *aircraft, int won)
 {
@@ -366,7 +406,7 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 				break;
 			}
 			/* Finally, the living actor from our team. */
-			INV_CarriedItems(le);
+			AII_CarriedItems(le);
 			break;
 		default:
 			break;

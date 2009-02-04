@@ -52,7 +52,6 @@ typedef struct components_s {
 extern cvar_t *cl_equip;
 
 void INV_ParseComponents(const char *name, const char **text);
-void INV_CarriedItems(const le_t *soldier);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
 qboolean INV_ItemsIsStoredInStorage(const objDef_t *obj);
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);

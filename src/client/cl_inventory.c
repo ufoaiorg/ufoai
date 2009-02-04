@@ -36,49 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 cvar_t *cl_equip;
 
-/**
- * @brief Process items carried by soldiers.
- * @param[in] soldier Pointer to le_t being a soldier from our team.
- * @sa AII_CollectingItems
- * @todo this is campaign mode only - doesn't belong here
- */
-void INV_CarriedItems (const le_t *soldier)
-{
-	int container;
-	invList_t *item;
-	technology_t *tech;
-
-	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].temp) /* Items collected as ET_ITEM */
-			continue;
-		for (item = soldier->i.c[container]; item; item = item->next) {
-			/* Fake item. */
-			assert(item->item.t);
-			/* Twohanded weapons and container is left hand container. */
-			/** @todo */
-			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdTwoHanded); */
-
-			ccs.eMission.num[item->item.t->idx]++;
-			/** @todo move techs away from here */
-			tech = item->item.t->tech;
-			if (!tech)
-				Sys_Error("INV_CarriedItems: No tech for %s / %s\n", item->item.t->id, item->item.t->name);
-			RS_MarkCollected(tech);
-
-			if (!item->item.t->reload || item->item.a == 0)
-				continue;
-			ccs.eMission.numLoose[item->item.m->idx] += item->item.a;
-			if (ccs.eMission.numLoose[item->item.m->idx] >= item->item.t->ammo) {
-				ccs.eMission.numLoose[item->item.m->idx] -= item->item.t->ammo;
-				ccs.eMission.num[item->item.m->idx]++;
-			}
-			/* The guys keep their weapons (half-)loaded. Auto-reload
-			 * will happen at equip screen or at the start of next mission,
-			 * but fully loaded weapons will not be reloaded even then. */
-		}
-	}
-}
-
 equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 {
 	int i;
