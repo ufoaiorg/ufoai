@@ -1530,12 +1530,9 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 		}
 
 		if (armour) {
-			item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
-
-			item.t = armour;
-			if (Com_TryAddToInventory(inv, item, &CSI->ids[CSI->idArmour])) {
+			const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
+			if (Com_TryAddToInventory(inv, item, &CSI->ids[CSI->idArmour]))
 				hasArmour++;
-			}
 		}
 	} while (!hasArmour && repeat--);
 }
