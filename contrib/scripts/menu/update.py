@@ -443,9 +443,31 @@ def moveAircrafteEquipSlots():
 
 	root.save()	
 
+def cropMenuContent(file, menuName, leftUpperNodeName):
+	root = Root()
+	root.loadFile(file)
+	print '-----'
+	menu = root.nodes.childname[menuName]
+	relative = menu.childname[leftUpperNodeName]
+
+	dx, dy = relative.pos
+	x, y = menu.pos
+	menu.updateParam("pos", '"' + str(x + dx) + " " + str(y + dy) + '"')
+
+	for node in menu.child:
+		if not node.existsParam("pos"):
+			continue
+
+		x, y = node.pos[0] - dx, node.pos[1] - dy
+		node.updateParam("pos", '"' + str(x) + " " + str(y) + '"')
+
+	root.save()
+
+	
 if __name__ == "__main__":
-	#fixStringNodeAlignProperty()
-	moveAircrafteEquipSlots()
+	#cropMenuContent("base/ufos/menu_inventory.ufo", "inventory", "bar_inventory")
+	cropMenuContent("base/ufos/menu_physdat.ufo", "physdata", "bar_physdata")
+	
 	#root = Root()
 	#root.loadAll()
 	#root.loadFile('base/ufos/menu_team.ufo')

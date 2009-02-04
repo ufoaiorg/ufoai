@@ -4,6 +4,11 @@
 
 menu inventory
 {
+	{
+		pos "256 96"
+		size "512 512"
+	}
+
 	// ==================
 	// background
 	// ==================
@@ -11,12 +16,12 @@ menu inventory
 	pic bar_inventory
 	{
 		image	hud/bar_inventory
-		pos		"256 96"
+		pos		"0 0"
 		click
 	}
 	string s_backpack
 	{
-		pos "596 121"
+		pos "340 25"
 		textalign uc
 		string	"_Backpack"
 		color "0 0.6 0 1"
@@ -25,7 +30,7 @@ menu inventory
 
 	string s_left
 	{
-		pos "596 246"
+		pos "340 150"
 		textalign uc
 		string	"_Left Hand"
 		color "0 0.6 0 1"
@@ -34,7 +39,7 @@ menu inventory
 
 	string s_right
 	{
-		pos "274 246"
+		pos "18 150"
 		textalign uc
 		string	"_Right Hand"
 		color "0 0.6 0 1"
@@ -43,7 +48,7 @@ menu inventory
 
 	string s_extension
 	{
-		pos "274 172"
+		pos "18 76"
 		textalign uc
 		string	"_Extension"
 		color "0 0.6 0 1"
@@ -52,7 +57,7 @@ menu inventory
 
 	string s_headgear
 	{
-		pos "364 172"
+		pos "108 76"
 		textalign uc
 		string	"_Headgear"
 		color "0 0.6 0 1"
@@ -61,7 +66,7 @@ menu inventory
 
 	string s_holster
 	{
-		pos "596 341"
+		pos "340 245"
 		textalign uc
 		string	"_Holster"
 		color "0 0.6 0 1"
@@ -70,7 +75,7 @@ menu inventory
 
 	string s_belt
 	{
-		pos "274 341"
+		pos "18 245"
 		textalign uc
 		string	"_Belt"
 		color "0 0.6 0 1"
@@ -79,7 +84,7 @@ menu inventory
 
 	string s_floor
 	{
-		pos "280 456"
+		pos "24 360"
 		textalign uc
 		string	"_Floor"
 		color "0 0.6 0 1"
@@ -89,7 +94,7 @@ menu inventory
 	string actorname
 	{
 		string	"*cvar mn_name"
-		pos		"290 120"
+		pos		"34 24"
 	}
 
 	// ==================
@@ -104,7 +109,7 @@ menu inventory
 		origin	"0 -40 0"
 		angles	"0 70 90"
 		scale	"5 5 5"
-		pos		"420 180"
+		pos		"164 84"
 		size	"190 240"
 	}
 
@@ -120,15 +125,15 @@ menu inventory
 	// Containers (see inventory.ufo for the definition)
 	// ==================
 
-	container extension	{ pos "289 203" }
-	container right		{ pos "289 277" }
-	container left		{ pos "613 277" }
+	container extension	{ pos "33 107" }
+	container right		{ pos "33 181" }
+	container left		{ pos "357 181" }
 	// Armour is not switchable in combat - thus no display of "container armour" needed.
-	container floor		{ pos "284 458" }
-	container backpack	{ pos "613 155" }
-	container belt		{ pos "310 372" }
-	container holster	{ pos "639 369" }
-	container headgear	{ pos "419 203" }
+	container floor		{ pos "28 362" }
+	container backpack	{ pos "357 59" }
+	container belt		{ pos "54 276" }
+	container holster	{ pos "383 273" }
+	container headgear	{ pos "163 107" }
 
 	// ==================
 	// buttons
@@ -138,7 +143,7 @@ menu inventory
 	{
 		image	menu/button_background blend true
 		texl	"192 0"	size "64 37"
-		pos		"684 554"
+		pos		"428 458"
 		icon return
 		click	{ cmd mn_pop }
 	}
