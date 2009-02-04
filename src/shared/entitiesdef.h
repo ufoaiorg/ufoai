@@ -53,6 +53,7 @@ typedef struct entityDef_s {
 	int numKeyDefs;
 } entityDef_t;
 
+int ED_CheckType (const char *classname, const char *key, const char *value);
 const entityDef_t *ED_GetEntityDef (const char *classname);
 const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname);
 int ED_Parse(const char **data_p);
