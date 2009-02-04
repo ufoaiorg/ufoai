@@ -969,7 +969,7 @@ menu mp_team
 // ==========================
 
 /**
- * @todo The mn_pop into the change event dont work
+ * @todo The mn_pop into the change event dont work - the workaround is the func close team_comments call
  */
 menu mp_team_save_popup
 {
@@ -1014,7 +1014,7 @@ menu mp_team_save_popup
 		pos			"50 130"
 		size		"256 34"
 		string		"*cvar mn_slot0"
-		change		{ cmd "saveteam 0;mn_pop" }
+		change		{ cmd "saveteam 0;mn_pop;" }
 	}
 
 	textentry slot_team1
@@ -1029,7 +1029,7 @@ menu mp_team_save_popup
 		pos			"50 165"
 		size		"256 34"
 		string		"*cvar mn_slot1"
-		change		{ cmd "saveteam 1;mn_pop" }
+		change		{ cmd "saveteam 1;mn_pop;" }
 	}
 
 	textentry slot_team2
@@ -1044,7 +1044,7 @@ menu mp_team_save_popup
 		pos			"50 200"
 		size		"256 34"
 		string		"*cvar mn_slot2"
-		change		{ cmd "saveteam 2;mn_pop" }
+		change		{ cmd "saveteam 2;mn_pop;" }
 	}
 
 	textentry slot_team3
@@ -1059,7 +1059,7 @@ menu mp_team_save_popup
 		pos			"50 235"
 		size		"256 34"
 		string		"*cvar mn_slot3"
-		change		{ cmd "saveteam 3;mn_pop" }
+		change		{ cmd "saveteam 3;mn_pop;" }
 	}
 
 	textentry slot_team4
@@ -1074,7 +1074,7 @@ menu mp_team_save_popup
 		pos			"50 270"
 		size		"256 34"
 		string		"*cvar mn_slot4"
-		change		{ cmd "saveteam 4;mn_pop" }
+		change		{ cmd "saveteam 4;mn_pop;" }
 	}
 
 	textentry slot_team5
@@ -1089,7 +1089,7 @@ menu mp_team_save_popup
 		pos			"50 305"
 		size		"256 34"
 		string		"*cvar mn_slot5"
-		change		{ cmd "saveteam 5;mn_pop" }
+		change		{ cmd "saveteam 5;mn_pop;" }
 	}
 
 	textentry slot_team6
@@ -1104,7 +1104,7 @@ menu mp_team_save_popup
 		pos			"50 340"
 		size		"256 34"
 		string		"*cvar mn_slot6"
-		change		{ cmd "saveteam 6;mn_pop" }
+		change		{ cmd "saveteam 6;mn_pop;" }
 	}
 
 	textentry slot_team7
@@ -1119,6 +1119,11 @@ menu mp_team_save_popup
 		pos			"50 375"
 		size		"256 34"
 		string		"*cvar mn_slot7"
-		change		{ cmd "saveteam 7;mn_pop" }
+		change		{ cmd "saveteam 7;mn_pop;" }
+	}
+
+	func close
+	{
+		cmd "team_comments;"
 	}
 }
