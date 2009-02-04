@@ -1,7 +1,8 @@
+
 #include <glib.h>
-#include <gtk/gtk.h>
 #include <set>
 
+#include "radiant_i18n.h"
 #include "iradiant.h"
 #include "debugging/debugging.h"
 #include "support.h"
