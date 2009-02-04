@@ -1153,7 +1153,7 @@ void R_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboo
  */
 void R_BeginClipRect (int x, int y, int width, int height)
 {
-	glScissor(x, VID_NORM_HEIGHT - (y + height), width, height);
+	glScissor(x * viddef.rx, (VID_NORM_HEIGHT - (y + height)) * viddef.ry, width * viddef.rx, height * viddef.ry);
 	glEnable(GL_SCISSOR_TEST);
 }
 
