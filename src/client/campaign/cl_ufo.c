@@ -428,9 +428,6 @@ static void UFO_SearchAircraftTarget (aircraft_t *ufo)
 	aircraft_t* phalanxAircraft;
 	float distance = 999999.;
 
-	/* Every UFO on geoscape should have a mission assigned */
-	assert(ufo->mission);
-
 	/* UFO never try to attack a PHALANX aircraft except if they came on earth in that aim */
 	if (ufo->mission->stage != STAGE_INTERCEPT) {
 		/* Check if UFO is defending itself */
@@ -577,6 +574,9 @@ void UFO_CampaignRunUFOs (int dt)
 		/* don't run a landed ufo */
 		if (ufo->landed)
 			continue;
+
+		/* Every UFO on geoscape should have a mission assigned */
+		assert(ufo->mission);
 
 #ifdef UFO_ATTACK_BASES
 		/* Check if the UFO found a new base */
