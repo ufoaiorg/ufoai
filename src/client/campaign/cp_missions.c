@@ -760,9 +760,9 @@ void CP_MissionAddToGeoscape (mission_t *mission, qboolean force)
 qboolean CP_CheckNewMissionDetectedOnGeoscape (void)
 {
 	const linkedList_t *list = ccs.missions;
-	/** @brief Probability to detect UFO each @c DETECTION_INTERVAL
-	 * @note This correspond to 40 percents each 30 minutes (coded this way to be able to
-	 * change @c DETECTION_INTERVAL without changing the way radar works) */
+	/* Probability to detect UFO each DETECTION_INTERVAL
+	 * This correspond to 40 percents each 30 minutes (coded this way to be able to
+	 * change DETECTION_INTERVAL without changing the way radar works) */
 	const float missionDetectionProbability = 0.000125f * DETECTION_INTERVAL;
 	qboolean newDetection = qfalse;
 

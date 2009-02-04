@@ -597,7 +597,7 @@ static void CL_CampaignRunMarket (void)
 	assert(curCampaign->asymptoticMarketDef);
 
 	for (i = 0; i < csi.numODs; i++) {
-		technology_t *tech = csi.ods[i].tech;
+		const technology_t *tech = csi.ods[i].tech;
 		const float TYPICAL_TIME = 10.f;			/**< Number of days to reach the asymptotic number of items */
 		const int RESEARCH_LIMIT_DELAY = 30;		/**< Numbers of days after end of research to wait in order to have
 													 * items added on market */
@@ -726,9 +726,9 @@ void CL_CampaignRun (void)
 			CL_CampaignRunMarket();
 		}
 
-		/** check for campaign events
-		 *  aircraft and UFO already moved during radar detection (see above),
-		 *  just make them move the missing part -- if any */
+		/* check for campaign events
+		 * aircraft and UFO already moved during radar detection (see above),
+		 * just make them move the missing part -- if any */
 		UFO_CampaignRunUFOs(dt - timeAlreadyFlied);
 		/* must be called even if dt = timeAlreadyFlied in order to update radar overlay */
 		CL_CampaignRunAircraft(dt - timeAlreadyFlied, qtrue);
