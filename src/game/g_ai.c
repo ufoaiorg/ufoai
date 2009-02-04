@@ -1915,7 +1915,7 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
 	/* Pack equipment. */
 	if (team != TEAM_CIVILIAN) { /** @todo Give civilians gear. */
 		if (ent->chr.weapons)   /* actor can handle equipment */
-			INVSH_EquipActor(&ent->i, ed->num, MAX_OBJDEFS, ed, &ent->chr);
+			INVSH_EquipActor(&ent->i, ed, &ent->chr);
 		else if (ent->chr.teamDef)
 			/* actor cannot handle equipment */
 			INVSH_EquipActorMelee(&ent->i, &ent->chr);

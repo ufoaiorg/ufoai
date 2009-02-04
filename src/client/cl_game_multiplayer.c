@@ -44,7 +44,7 @@ static void GAME_MP_AutoTeam (void)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&multiplayerCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
 		/* pack equipment */
-		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed, &multiplayerCharacters[i]);
+		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed, &multiplayerCharacters[i]);
 
 		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}

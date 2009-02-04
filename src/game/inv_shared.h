@@ -761,7 +761,7 @@ void Com_FindSpace(const inventory_t* const inv, const item_t *item, const invDe
 qboolean Com_TryAddToInventory(inventory_t* const inv, item_t item, const invDef_t * container) __attribute__((nonnull(1)));
 void INVSH_EquipActorMelee(inventory_t* const inv, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_EquipActorRobot(inventory_t* const inv, character_t* chr, objDef_t* weapon) __attribute__((nonnull(1)));
-void INVSH_EquipActor(inventory_t* const inv, const int *equip, int numEquip, const equipDef_t *ed, character_t* chr) __attribute__((nonnull(1)));
+void INVSH_EquipActor(inventory_t* const inv, const equipDef_t *ed, character_t* chr) __attribute__((nonnull(1)));
 void INVSH_PrintContainerToConsole(inventory_t* const i);
 qboolean INV_IsCraftItem(const objDef_t *obj);
 qboolean INV_IsBaseDefenceItem(const objDef_t *item);

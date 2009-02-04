@@ -59,7 +59,7 @@ static void GAME_SK_Start_f (void)
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&skirmishCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
 		/* pack equipment */
-		INVSH_EquipActor(&skirmishCharacters[i].inv, ed->num, MAX_OBJDEFS, ed, &skirmishCharacters[i]);
+		INVSH_EquipActor(&skirmishCharacters[i].inv, ed, &skirmishCharacters[i]);
 	}
 
 	/* prepare */

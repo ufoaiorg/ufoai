@@ -1169,12 +1169,11 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  * @brief Pack a weapon, possibly with some ammo
  * @param[in] inv The inventory that will get the weapon
  * @param[in] weapon The weapon type index in gi.csi->ods
- * @param[in] equip The equipment that shows how many clips to pack
  * @param[in] ed The equipment for debug messages
  * @param[in] missedPrimary if actor didn't get primary weapon, this is 0-100 number to increase ammo number.
  * @sa INVSH_LoadableInWeapon
  */
-static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, const int equip[MAX_OBJDEFS], int missedPrimary, const equipDef_t *ed)
+static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, int missedPrimary, const equipDef_t *ed)
 {
 	objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
@@ -1211,7 +1210,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			totalAvailableAmmo = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
-				if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+				if (ed->num[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 					totalAvailableAmmo++;
 				}
 			}
@@ -1219,7 +1218,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 				randNumber = rand() % totalAvailableAmmo;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
-					if (equip[i] && INVSH_LoadableInWeapon(obj, weapon)) {
+					if (ed->num[i] && INVSH_LoadableInWeapon(obj, weapon)) {
 						randNumber--;
 						if (randNumber < 0) {
 							ammo = obj;
@@ -1264,7 +1263,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 		int numpacked = 0;
 
 		/* how many clips? */
-		num = (1 + equip[ammo->idx])
+		num = (1 + ed->num[ammo->idx])
 			* (float) (1.0f + missedPrimary / 100.0);
 
 		/* pack some ammo */
@@ -1355,18 +1354,17 @@ typedef enum {
 /**
  * @brief Fully equip one actor
  * @param[in] inv The inventory that will get the weapon.
- * @param[in] equip The equipment that shows what is available - a list of obj ids.
- * @param[in] numEquip The number of object ids in the field.
- * @param[in] ed The equipment for debug messages.
+ * @param[in] ed The equipment that is added from to the actors inventory
  * @param[in] chr Pointer to character data - to get the weapon and armour bools.
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, const equipDef_t *ed, character_t* chr)
+void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t* chr)
 {
 	int i, sum;
+	const int numEquip = lengthof(ed->num);
 	int hasWeapon = 0, hasArmour = 0, repeat = 0, randNumber;
 	int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probabilty * 100
 							* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
@@ -1383,22 +1381,22 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		weapon = NULL;
 		for (i = 0; i < maxWeaponIdx; i++) {
 			obj = &CSI->ods[i];
-			if (equip[i] && obj->weapon && obj->fireTwoHanded && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))) {
-				randNumber -= equip[i];
-				missedPrimary += equip[i];
+			if (ed->num[i] && obj->weapon && obj->fireTwoHanded && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))) {
+				randNumber -= ed->num[i];
+				missedPrimary += ed->num[i];
 				if (!weapon && randNumber < 0)
 					weapon = obj;
 			}
 		}
 		/* See if a weapon has been selected. */
 		if (weapon) {
-			hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
+			hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, 0, ed);
 			if (hasWeapon) {
 				int ammo;
 
 				/* Find the first possible ammo to check damage type. */
 				for (ammo = 0; ammo < CSI->numODs; ammo++)
-					if (equip[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
+					if (ed->num[ammo] && INVSH_LoadableInWeapon(&CSI->ods[ammo], weapon))
 						break;
 				if (ammo < CSI->numODs) {
 					primary =
@@ -1424,9 +1422,9 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			weapon = NULL;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
-				if (equip[i] && obj->weapon && obj->reload && !obj->deplete
+				if (ed->num[i] && obj->weapon && obj->reload && !obj->deplete
 				 && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)) {
-					randNumber -= equip[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
+					randNumber -= ed->num[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
 						weapon = obj;
 						break;
@@ -1435,11 +1433,11 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			}
 
 			if (weapon) {
-				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missedPrimary, ed);
+				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, missedPrimary, ed);
 				if (hasWeapon) {
 					/* Try to get the second akimbo pistol if no primary weapon. */
 					if (primary == WEAPON_NO_PRIMARY && !weapon->fireTwoHanded && frand() < AKIMBO_CHANCE) {
-						INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
+						INVSH_PackAmmoAndWeapon(inv, weapon, 0, ed);
 					}
 				}
 			}
@@ -1455,12 +1453,12 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		sum = 0;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = &CSI->ods[i];
-			if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
+			if (ed->num[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
 				 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
-				/* if equip[i] is greater than 100, the first number is the number of items you'll get:
+				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
 				 * don't take it into account for propability
 				 * Make sure that the probability is at least one if an item can be selected */
-				sum += equip[i] ? max(equip[i] % 100,1) : 0;
+				sum += ed->num[i] ? max(ed->num[i] % 100,1) : 0;
 			}
 		}
 		if (sum)
@@ -1469,9 +1467,9 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				weapon = NULL;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = &CSI->ods[i];
-					if (equip[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
+					if (ed->num[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
 					 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
-						randNumber -= equip[i] ? max(equip[i] % 100,1) : 0;
+						randNumber -= ed->num[i] ? max(ed->num[i] % 100,1) : 0;
 						if (randNumber < 0) {
 							weapon = obj;
 							break;
@@ -1480,10 +1478,10 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				}
 
 				if (weapon) {
-					int num = equip[weapon->idx] / 100 + (equip[weapon->idx] % 100 >= 100 * frand());
+					int num = ed->num[weapon->idx] / 100 + (ed->num[weapon->idx] % 100 >= 100 * frand());
 					while (num--) {
-						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
-}
+						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, 0, ed);
+					}
 				}
 			} while (repeat--); /* Gives more if no serious weapons. */
 
@@ -1493,7 +1491,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", ed->name);
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
-				if (equip[i] && obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload) {
+				if (ed->num[i] && obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload) {
 					if (obj->price > maxPrice) {
 						maxPrice = obj->price;
 						weapon = obj;
@@ -1501,7 +1499,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				}
 			}
 			if (maxPrice)
-				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
+				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, 0, ed);
 		}
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
@@ -1524,8 +1522,8 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		randNumber = rand() % 100;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = &CSI->ods[i];
-			if (equip[i] && INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR)) {
-				randNumber -= equip[i];
+			if (ed->num[i] && INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR)) {
+				randNumber -= ed->num[i];
 				if (randNumber < 0) {
 					weapon = obj;
 					break;
