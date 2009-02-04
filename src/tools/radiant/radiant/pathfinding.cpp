@@ -67,7 +67,7 @@ static int ParsePathfindingLogFile (const char *filename)
  */
 void ShowPathfinding (void)
 {
-	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Pathfinding log file"), NULL, NULL);
+	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Pathfinding log file"), 0, 0);
 	if (!filename)
 		return;
 	const int retVal = ParsePathfindingLogFile(filename);

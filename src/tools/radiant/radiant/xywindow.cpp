@@ -552,7 +552,7 @@ void WXY_Print (void)
 
 	filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), FALSE, _("Save Image"), 0, "bmp");
 	if (!filename)
-	return;
+		return;
 
 	img = (unsigned char*)malloc (width * height * 3);
 	glReadPixels (0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, img);
@@ -1556,7 +1556,7 @@ void WXY_BackgroundSelect (void)
 		return;
 	}
 
-	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"), NULL, NULL);
+	const char *filename = file_dialog(GTK_WIDGET(MainFrame_getWindow()), TRUE, _("Background Image"), 0, 0);
 	g_pParentWnd->ActiveXY()->XY_DisableBackground();
 	if (filename)
 	g_pParentWnd->ActiveXY()->XY_LoadBackgroundImage(filename);
