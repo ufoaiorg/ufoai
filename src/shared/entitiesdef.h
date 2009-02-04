@@ -36,6 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define	ED_TYPE_STRING	(1<<5)
 # define	ED_DEFAULT		(1<<6)
 # define	ED_MODE_TYPE	(1<<7)	/**< flag parse mode indicating that a type is being parsed */
+# define	ED_INSIST_POSITIVE (1<<8) /**< the type insists that the values are unsigned */
 
 # define	ED_CONCRETE		(ED_OPTIONAL | ED_MANDATORY) /**< flags indicating that this is a real key for use in a map file */
 # define	ED_KEY_TYPE		(ED_TYPE_FLOAT | ED_TYPE_INT | ED_TYPE_STRING)

@@ -222,7 +222,52 @@ static const char *ED_Constant2Type (int constInt)
 }
 
 /**
- * @brief tests if a value string matches the type for this key
+ * @brief checks that a string represents a single number
+ * @param insistPositive if 1, then tests for the number being greater than or equal to zero.
+ * @sa ED_CheckNumericType
+ * @return 1 if the value string matches the type, -1 otherwise.
+ * (call ED_GetLastError)
+ */
+static int ED_CheckNumber (const char *value, const int floatOrInt, const int insistPositive)
+{
+	float fv;
+	int iv;
+	char *end_p;
+	if (*value == 'i' || *value == 'I' || *value == 'n' || *value == 'N'
+	 || value[1] == 'x' || value[1] == 'X') {
+		snprintf(lastErr, sizeof(lastErr), "infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
+		return -1;
+	}
+	switch (floatOrInt) {
+		case ED_TYPE_FLOAT:
+			fv = strtof(value, &end_p);
+			if (insistPositive && (fv < 0.0f)) {
+				snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
+				return -1;
+			}
+			break;
+		case ED_TYPE_INT:
+			iv = strtol(value, &end_p, 10);
+			if (insistPositive && (iv < 0)) {
+				snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
+				return -1;
+			}
+			break;
+		default:
+			snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: type to test against not recognised");
+			return -1;
+	}
+	if (strlen(value) != (unsigned int)(end_p-value)) { /* if strto* did not use the whole token, then there is some non-number part to it */
+		snprintf(lastErr, sizeof(lastErr), "problem with numeric value: %s declared as %s",
+			value, ED_Constant2Type(floatOrInt));
+		return -1;
+	}
+	return 1;
+}
+
+/**
+ * @brief tests if a value string matches the type for this key. this includes
+ * each element of a numeric array.
  * @param floatOrInt one of ED_TYPE_FLOAT or ED_TYPE_INT
  * @return 1 if the value string matches the type, 0 if it does not and -1 if
  * there is an error (call ED_GetLastError)
@@ -236,34 +281,12 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 	strncpy(tokBuf, value, sizeof(tokBuf));
 	assert(floatOrInt & (ED_TYPE_INT | ED_TYPE_FLOAT));
 	while (buf_p) {
-		char *end_p;
 		tok = COM_Parse(&buf_p);
 		if (*tok == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		i++;
-		if (*tok == 'i' || *tok == 'I' || *tok == 'n' || *tok == 'N'
-		 || tok[1] == 'x' || tok[1] == 'X') {
-		 	snprintf(lastErr, sizeof(lastErr), "infinity, NaN, hex (0x...) not allowed. found \"%s\" in %s", tok, keyDef->name);
-		 	return -1;
-		}
-		switch (floatOrInt) {
-			case ED_TYPE_FLOAT:
-				strtof(tok, &end_p);
-				break;
-			case ED_TYPE_INT:
-				strtol(tok, &end_p, 10);
-				break;
-			default:
-				snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: type to test against not recognised");
-				return -1;
-		}
-		if (strlen(tok) != (unsigned int)(end_p-tok)) { /* if strto* did not use the whole token, then there is some non-number part to it */
-			snprintf(lastErr, sizeof(lastErr), "problem with numeric value: %s for %s, declared as %s",
-				tok, keyDef->name, ED_Constant2Type(floatOrInt));
+		if (-1 == ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE))
 			return -1;
-		}
-
-
 	}
 	if (i != keyDef->vLen) {
 		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key", i, keyDef->vLen, keyDef->name);
@@ -307,8 +330,7 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	const char *buf_p;
 	int type;
 	int vectorLen;
-	const char *vectorLenStr;
-	const char *firstPartOfParsedToken;
+	const char *partToken;
 	/* need a copy, as parsedToken is held in a static buffer in the
 	 * Com_Parse function */
 	if ((strlen(parsedToken) + 1) > sizeof(tokBuf)) {
@@ -318,20 +340,32 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	strncpy(tokBuf, parsedToken, sizeof(tokBuf));
 	buf_p = tokBuf;
 
-	firstPartOfParsedToken = COM_Parse(&buf_p);
-	if (strlen(firstPartOfParsedToken)) {
-		type = ED_Type2Constant(firstPartOfParsedToken);
+	partToken = COM_Parse(&buf_p);
+
+	if (!strcmp("SIGNED", partToken)) {
+		partToken = COM_Parse(&buf_p);/* get next token */
+	} else if (!strcmp("UNSIGNED", partToken)) {
+		kd->flags |= ED_INSIST_POSITIVE;
+		partToken = COM_Parse(&buf_p);
+	}
+
+	if (strlen(partToken)) {
+		type = ED_Type2Constant(partToken);
 		if (-1 == type)
 			return -1;
 	} else {/* default is string */
 		type = ED_TYPE_STRING;
 	}
 
-	/** @todo test that the second element is a positive integer */
 	kd->flags |= type;
-	vectorLenStr = COM_Parse(&buf_p);
-	vectorLen = atoi(vectorLenStr);
-	kd->vLen = strlen(vectorLenStr) ? (vectorLen ? vectorLen : 1) : 1; /* default is 1 */
+	partToken = COM_Parse(&buf_p);
+	vectorLen = atoi(partToken);
+	if (vectorLen && (-1 == ED_CheckNumber(partToken, ED_TYPE_INT, 1))) {
+		snprintf(lastErr, sizeof(lastErr), "ED_ParseType: problem with vector length \"%s\" in key %s",
+			partToken, kd->name);
+		return -1;
+	}
+	kd->vLen = strlen(partToken) ? (vectorLen ? vectorLen : 1) : 1; /* default is 1 */
 	return 0;
 }
 

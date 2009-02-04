@@ -175,7 +175,7 @@ entity worldspawn {
 	}
 
 	type {
-		max_teams	"V_INT"
+		max_teams	"UNSIGNED V_INT"
 		angles_night	"V_FLOAT 2"
 	}
 
