@@ -713,6 +713,9 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	/* Check for 0 damage which cause invulerable UFOs */
 	assert(ufo->damage);
 
+	/* Every ufo on geoscape needs a mission assigned */
+	assert(ufo->mission);
+
 	/* Initialise ufo data */
 	UFO_SetRandomPos(ufo);
 	AII_ReloadWeapon(ufo);					/* Load its weapons */
