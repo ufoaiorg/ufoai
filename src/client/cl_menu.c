@@ -35,23 +35,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void MN_SetViewRect (const menu_t* menu)
 {
-	menuNode_t* menuNode = menu ? (menu->u.window.renderNode ? menu->u.window.renderNode : (menu->u.window.popupNode ? menu->u.window.popupNode : NULL)): NULL;
-
-	if (!menuNode) {
+	if (!menu) {
 		/* render the full screen */
 		viddef.x = viddef.y = 0;
 		viddef.viewWidth = viddef.width;
 		viddef.viewHeight = viddef.height;
-	} else if (menuNode->invis) {
-		/* don't draw the scene */
-		viddef.x = viddef.y = 0;
-		viddef.viewWidth = viddef.viewHeight = 0;
 	} else {
 		/* the menu has a view size specified */
-		viddef.x = menuNode->pos[0] * viddef.rx;
-		viddef.y = menuNode->pos[1] * viddef.ry;
-		viddef.viewWidth = menuNode->size[0] * viddef.rx;
-		viddef.viewHeight = menuNode->size[1] * viddef.ry;
+		viddef.x = menu->pos[0] * viddef.rx;
+		viddef.y = menu->pos[1] * viddef.ry;
+		viddef.viewWidth = menu->size[0] * viddef.rx;
+		viddef.viewHeight = menu->size[1] * viddef.ry;
 	}
 }
 
