@@ -1,3 +1,17 @@
+/* this file contains definitions of what map entities should contain.
+ * it is used in radiant and ufo2map check/fix mode.
+ * keys directly in entity definitions are for radiant (they are called
+ * abstract in entitiesdef.c).
+ * mandatory blocks contain keys that must be present in an entity.
+ * optional blocks contain keys that may be present in an entity.
+ * keys in mandatory or optional blocks may be in a map file and are
+ * called concrete keys (as opposed to abstract) in entitiesdef.c.
+ * concrete keys may have defaults defined in default blocks and
+ * types declared in type blocks. if no type is given, V_STRING is
+ * assumed. V_FLOAT and V_INT types may be made into vectors,
+ * "V_FLOAT 3".
+ */
+
 
 entity info_player_start {
 	description	"Starting point for a player. Only for multiplayer teams."
@@ -158,6 +172,16 @@ entity worldspawn {
 		contrast		"Controls light contrast. This can be used to create darker dark areas and lighter light areas. The default value is 1.0. Values significantly higher than 1.0 are not recommended."
 		quant			"Controls lightmap resolution, which is relative to texture size. Default is 4 (1 << 4). A value of 3 will produce sharper lightmaps, but will dramatically lengthen your radiosity compile times. In fact, setting this to 5 during development is a nice trick for speeding up your level design process."
 		subdivide		"Controls maximum surface size for the bsp stage of the compile. Generally, the default value 1024 is recommended. Lower values may reduce artifacts, while higher values may reduce r_speeds."
+	}
+
+	type {
+		max_teams	"V_INT"
+		angles_night	"V_FLOAT 2"
+	}
+
+	default {
+		max_teams	"2"
+		angles_night	"-80 220"
 	}
 }
 
