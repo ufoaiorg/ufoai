@@ -2063,8 +2063,9 @@ qboolean AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, const employee_t *emp
 	/* there must be a homebase when there are employees - otherwise this
 	 * functions should not be called */
 	assert(aircraft->homebase);
-	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' (type: %i) not on aircraft %i (base: %i) in base %i\n",
-		employee->idx, employee->type, aircraft->idx, AIR_GetAircraftIdxInBase(aircraft), aircraft->homebase->idx);
+	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' (type: %i) not on aircraft %i (size: %i) (base: %i) in base %i\n",
+		employee->idx, employee->type, aircraft->idx, aircraft->maxTeamSize,
+		AIR_GetAircraftIdxInBase(aircraft), aircraft->homebase->idx);
 	return qfalse;
 }
 
