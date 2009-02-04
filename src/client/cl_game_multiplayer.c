@@ -36,16 +36,15 @@ static void GAME_MP_AutoTeam (void)
 {
 	int i;
 	const char *name = Cvar_VariableString("cl_equip");
+	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 
 	SV_Shutdown("Game exit", qfalse);
 	CL_Disconnect();
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
-
 		CL_GenerateCharacter(&multiplayerCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
 		/* pack equipment */
-		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &multiplayerCharacters[i]);
+		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed->num, MAX_OBJDEFS, ed, &multiplayerCharacters[i]);
 
 		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}

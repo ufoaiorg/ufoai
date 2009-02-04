@@ -42,6 +42,7 @@ static void GAME_SK_Start_f (void)
 	mapDef_t *md;
 	int i;
 	const char *name = Cvar_VariableString("cl_equip");
+	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
 
 	assert(cls.currentSelectedMap >= 0);
 	assert(cls.currentSelectedMap < MAX_MAPDEFS);
@@ -56,11 +57,9 @@ static void GAME_SK_Start_f (void)
 	Com_sprintf(map, sizeof(map), "map %s %s %s;", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
-
 		CL_GenerateCharacter(&skirmishCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
 		/* pack equipment */
-		INVSH_EquipActor(&skirmishCharacters[i].inv, ed->num, MAX_OBJDEFS, ed->name, &skirmishCharacters[i]);
+		INVSH_EquipActor(&skirmishCharacters[i].inv, ed->num, MAX_OBJDEFS, ed, &skirmishCharacters[i]);
 	}
 
 	/* prepare */

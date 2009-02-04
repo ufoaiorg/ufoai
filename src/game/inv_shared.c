@@ -1170,11 +1170,11 @@ void INVSH_PrintContainerToConsole (inventory_t* const i)
  * @param[in] inv The inventory that will get the weapon
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] equip The equipment that shows how many clips to pack
- * @param[in] name The name of the equipment for debug messages
+ * @param[in] ed The equipment for debug messages
  * @param[in] missedPrimary if actor didn't get primary weapon, this is 0-100 number to increase ammo number.
  * @sa INVSH_LoadableInWeapon
  */
-static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, const int equip[MAX_OBJDEFS], int missedPrimary, const char *name)
+static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, const int equip[MAX_OBJDEFS], int missedPrimary, const equipDef_t *ed)
 {
 	objDef_t *ammo = NULL;
 	item_t item = {NONE_AMMO, NULL, NULL, 0, 0};
@@ -1204,7 +1204,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 			item.a = weapon->ammo;
 			item.m = weapon;
-			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", weapon->id, ed->name);
 		} else {
 			/* find some suitable ammo for the weapon (we will have at least one if there are ammos for this
 			 * weapon in equipment definition) */
@@ -1230,7 +1230,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			}
 
 			if (!ammo) {
-				Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, name);
+				Com_DPrintf(DEBUG_SHARED, "INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, ed->name);
 				return 0;
 			}
 			/* load ammo */
@@ -1240,7 +1240,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 	}
 
 	if (!item.m) {
-		Com_Printf("INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, name);
+		Com_Printf("INVSH_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", weapon->id, ed->name);
 		return 0;
 	}
 
@@ -1275,7 +1275,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, co
 			/* ammo to backpack; belt is for knives and grenades */
 			numpacked += Com_TryAddToInventory(inv, mun, &CSI->ids[CSI->idBackpack]);
 			/* no problem if no space left; one ammo already loaded */
-			if (numpacked > ammoMult || numpacked*weapon->ammo > 11)
+			if (numpacked > ammoMult || numpacked * weapon->ammo > 11)
 				break;
 		}
 	}
@@ -1357,14 +1357,14 @@ typedef enum {
  * @param[in] inv The inventory that will get the weapon.
  * @param[in] equip The equipment that shows what is available - a list of obj ids.
  * @param[in] numEquip The number of object ids in the field.
- * @param[in] name The name of the equipment for debug messages.
+ * @param[in] ed The equipment for debug messages.
  * @param[in] chr Pointer to character data - to get the weapon and armour bools.
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
  * Beware: If two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, const char *name, character_t* chr)
+void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, const equipDef_t *ed, character_t* chr)
 {
 	int i, sum;
 	int hasWeapon = 0, hasArmour = 0, repeat = 0, randNumber;
@@ -1383,7 +1383,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		weapon = NULL;
 		for (i = 0; i < maxWeaponIdx; i++) {
 			obj = &CSI->ods[i];
-			if (equip[i] && obj->weapon && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY)) && obj->fireTwoHanded) {
+			if (equip[i] && obj->weapon && obj->fireTwoHanded && (INV_ItemMatchesFilter(obj, FILTER_S_PRIMARY) || INV_ItemMatchesFilter(obj, FILTER_S_HEAVY))) {
 				randNumber -= equip[i];
 				missedPrimary += equip[i];
 				if (!weapon && randNumber < 0)
@@ -1392,7 +1392,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		}
 		/* See if a weapon has been selected. */
 		if (weapon) {
-			hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+			hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
 			if (hasWeapon) {
 				int ammo;
 
@@ -1410,7 +1410,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				/* reset missedPrimary: we got a primary weapon */
 				missedPrimary = 0;
 			} else {
-				Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: primary weapon '%s' couldn't be equiped in equipment '%s'.\n", weapon->id, name);
+				Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: primary weapon '%s' couldn't be equiped in equipment '%s'.\n", weapon->id, ed->name);
 			}
 		}
 
@@ -1424,8 +1424,8 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			weapon = NULL;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
-				if (equip[i] && obj->weapon
-				 && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && obj->reload && !obj->deplete) {
+				if (equip[i] && obj->weapon && obj->reload && !obj->deplete
+				 && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)) {
 					randNumber -= equip[i] / (primary == WEAPON_PARTICLE_OR_NORMAL ? 2 : 1);
 					if (randNumber < 0) {
 						weapon = obj;
@@ -1435,11 +1435,11 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 			}
 
 			if (weapon) {
-				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missedPrimary, name);
+				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, missedPrimary, ed);
 				if (hasWeapon) {
 					/* Try to get the second akimbo pistol if no primary weapon. */
 					if (primary == WEAPON_NO_PRIMARY && !weapon->fireTwoHanded && frand() < AKIMBO_CHANCE) {
-						INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+						INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
 					}
 				}
 			}
@@ -1482,7 +1482,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				if (weapon) {
 					int num = equip[weapon->idx] / 100 + (equip[weapon->idx] % 100 >= 100 * frand());
 					while (num--) {
-						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+						hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
 }
 				}
 			} while (repeat--); /* Gives more if no serious weapons. */
@@ -1490,7 +1490,7 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 		/* If no weapon at all, bad guys will always find a blade to wield. */
 		if (!hasWeapon) {
 			int maxPrice = 0;
-			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: no weapon picked in equipment '%s', defaulting to the most expensive secondary weapon without reload.\n", ed->name);
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = &CSI->ods[i];
 				if (equip[i] && obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY) && !obj->reload) {
@@ -1501,11 +1501,11 @@ void INVSH_EquipActor (inventory_t* const inv, const int *equip, int numEquip, c
 				}
 			}
 			if (maxPrice)
-				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
+				hasWeapon += INVSH_PackAmmoAndWeapon(inv, weapon, equip, 0, ed);
 		}
 		/* If still no weapon, something is broken, or no blades in equipment. */
 		if (!hasWeapon)
-			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", name);
+			Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: cannot add any weapon; no secondary weapon without reload detected for equipment '%s'.\n", ed->name);
 
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary > frand() * 100.0;
