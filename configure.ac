@@ -139,8 +139,8 @@ elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework"
-	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL"
-	SERVER_LIBS="$SERVER_LIBS -framework Cocoa"
+	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework OpenGL -framework Cocoa"
+	SERVER_LIBS="$SERVER_LIBS"
 
 	# fix this darn SDL stuff....
 	if test -x /opt/local/bin/sdl-config
@@ -148,8 +148,6 @@ then
 		# SDL installed using MacPorts
 		sdl_mac_cflags=`/opt/local/bin/sdl-config --cflags`
 		sdl_mac_ldflags=`/opt/local/bin/sdl-config --libs`
-		#sdl_mac_cflags="$sdl_mac_cflags"
-		#sdl_mac_ldflags="$sdl_mac_ldflags -lSDL"
 	else
 		if test -d /Library/Frameworks/SDL.framework
 		then
