@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 
 static character_t skirmishCharacters[MAX_ACTIVETEAM];
+static cvar_t *cl_equip;
 
 /**
  * @brief Starts a new skirmish game
@@ -138,6 +139,7 @@ int GAME_SK_GetTeam (void)
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");
+	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, "Equipment that is used for none-campaign mode games");
 
 	Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
 	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");

@@ -49,8 +49,6 @@ typedef struct components_s {
 /** Size of a UGV in hangar capacity */
 #define UGV_SIZE 300
 
-extern cvar_t *cl_equip;
-
 void INV_ParseComponents(const char *name, const char **text);
 components_t *INV_GetComponentsByItem(const objDef_t *item);
 qboolean INV_ItemsIsStoredInStorage(const objDef_t *obj);

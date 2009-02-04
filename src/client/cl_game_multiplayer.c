@@ -35,8 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void GAME_MP_AutoTeam (void)
 {
 	int i;
-	const char *name = Cvar_VariableString("cl_equip");
-	const equipDef_t *ed = INV_GetEquipmentDefinitionByID(name);
+	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
 
 	SV_Shutdown("Game exit", qfalse);
 	CL_Disconnect();

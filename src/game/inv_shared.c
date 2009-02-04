@@ -1365,7 +1365,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 {
 	int i, sum;
 	const int numEquip = lengthof(ed->num);
-	int hasWeapon = 0, hasArmour = 0, repeat = 0;
+	int hasWeapon = 0, repeat = 0;
 	int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probabilty * 100
 							* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
 	equipPrimaryWeaponType_t primary = WEAPON_NO_PRIMARY;
@@ -1505,9 +1505,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 		/* Armour; especially for those without primary weapons. */
 		repeat = (float) missedPrimary > frand() * 100.0;
 	} else {
-		/** @todo For melee actors we should not be able to get into this function, this can be removed. */
-		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
-		return;
+		Sys_Error("INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 	}
 
 	if (!chr->armour) {
@@ -1516,25 +1514,19 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 	}
 
 	do {
-		objDef_t *armour = NULL;
 		int randNumber = rand() % 100;
 		for (i = 0; i < CSI->numODs; i++) {
-			objDef_t *obj = &CSI->ods[i];
-			if (ed->num[i] && INV_ItemMatchesFilter(obj, FILTER_S_ARMOUR)) {
+			objDef_t *armour = &CSI->ods[i];
+			if (ed->num[i] && INV_ItemMatchesFilter(armour, FILTER_S_ARMOUR)) {
 				randNumber -= ed->num[i];
 				if (randNumber < 0) {
-					armour = obj;
-					break;
+					const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
+					if (Com_TryAddToInventory(inv, item, &CSI->ids[CSI->idArmour]))
+						return;
 				}
 			}
 		}
-
-		if (armour) {
-			const item_t item = {NONE_AMMO, NULL, armour, 0, 0};
-			if (Com_TryAddToInventory(inv, item, &CSI->ids[CSI->idArmour]))
-				hasArmour++;
-		}
-	} while (!hasArmour && repeat--);
+	} while (repeat--);
 }
 
 /*
