@@ -3254,6 +3254,7 @@
 "spawnflags" "514"
 "model" "models/objects/alien/battery/battery.md2"
 "origin" "1052 560 80"
+"angles" "0 90 0"
 }
 // entity 45
 {
@@ -3261,6 +3262,7 @@
 "spawnflags" "514"
 "model" "models/objects/alien/battery/battery.md2"
 "origin" "1052 528 80"
+"angles" "0 90 0"
 }
 // entity 46
 {
@@ -3268,6 +3270,7 @@
 "spawnflags" "514"
 "model" "models/objects/alien/battery/battery.md2"
 "origin" "1052 496 80"
+"angles" "0 90 0"
 }
 // entity 47
 {
@@ -3275,6 +3278,7 @@
 "spawnflags" "514"
 "origin" "1052 464 80"
 "model" "models/objects/alien/battery/battery.md2"
+"angles" "0 90 0"
 }
 // entity 48
 {
@@ -3282,6 +3286,7 @@
 "spawnflags" "514"
 "origin" "1052 432 80"
 "model" "models/objects/alien/battery/battery.md2"
+"angles" "0 90 0"
 }
 // entity 49
 {
@@ -3349,6 +3354,7 @@
 "model" "models/objects/alien/battery/battery.md2"
 "origin" "480 492 16"
 "spawnflags" "513"
+"angles" "0 90 0"
 }
 // entity 58
 {
@@ -3356,6 +3362,7 @@
 "origin" "480 432 16"
 "model" "models/objects/alien/battery/battery.md2"
 "spawnflags" "513"
+"angles" "0 90 0"
 }
 // entity 59
 {
@@ -3577,6 +3584,7 @@
 "origin" "1052 592 80"
 "model" "models/objects/alien/battery/battery.md2"
 "spawnflags" "514"
+"angles" "0 90 0"
 }
 // entity 68
 {
