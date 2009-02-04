@@ -8802,16 +8802,18 @@
 // entity 66
 {
 "classname" "misc_model"
-"spawnflags" "513"
+"spawnflags" "769"
 "origin" "1984 492 12"
 "model" "models/objects/alien/battery/battery.md2"
+"angles" "0 90 0"
 }
 // entity 67
 {
 "classname" "misc_model"
-"spawnflags" "513"
+"spawnflags" "769"
 "model" "models/objects/alien/battery/battery.md2"
 "origin" "1984 432 12"
+"angles" "0 90 0"
 }
 // entity 68
 {
