@@ -572,7 +572,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	/* back to the console */
 	MN_PopMenu(qtrue);
 
-	if (GAME_IsMultiplayer() && baseCurrent) {
+	if (GAME_IsMultiplayer()) {
 		if (team_play) {
 			MN_PushMenu("multiplayer_selectteam", NULL);
 			Cvar_Set("mn_active", "multiplayer_selectteam");
