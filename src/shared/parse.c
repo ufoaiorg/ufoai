@@ -34,6 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param data_p Pointer to a string which is to be parsed
  * @pre @c data_p is expected to be null-terminated
  * @return The string result of parsing in a string.
+ * @note if used to parse a quoted string that needs further parsing
+ * the returned string must be copied first, as Com_Parse returns a
+ * pointer to a static buffer that it holds. this will be re-used on
+ * the next call.
  * @sa COM_EParse
  */
 const char *COM_Parse (const char *data_p[])
