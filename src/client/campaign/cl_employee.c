@@ -38,6 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 employee_t *selectedEmployee = NULL;
 /* Holds the current active employee category */
 static int employeeCategory = 0;
+
+static const int maxEmployeesPerPage = 15;
+
 /* the menu node of the employee list */
 static menuNode_t *employeeListNode;
 
@@ -45,8 +48,6 @@ static menuNode_t *employeeListNode;
 linkedList_t *employeeList;	/** @sa E_GetEmployeeByMenuIndex */
 /* How many employees in current list (changes on every catergory change, too) */
 int employeesInCurrentList;
-
-static cvar_t *cl_numnames;
 
 /*****************************************************
 VISUAL/GUI STUFF
@@ -83,7 +84,7 @@ static void E_EmployeeListClick_f (void)
 	if (num < 0 || num >= employeesInCurrentList)
 		return;
 
-	/* the + indicates, that values bigger than cl_numnames could be possible */
+	/* the + indicates, that values bigger than maxEmployeesPerPage could be possible */
 	Cmd_ExecuteString(va("employee_select +%i\n", num));
 }
 
@@ -123,11 +124,11 @@ static void E_EmployeeListScroll_f (void)
 		cnt++;
 
 		/* only 19 buttons */
-		if (cnt >= cl_numnames->integer)
+		if (cnt >= maxEmployeesPerPage)
 			break;
 	}
 
-	for (;cnt < cl_numnames->integer; cnt++) {
+	for (;cnt < maxEmployeesPerPage; cnt++) {
 		Cvar_ForceSet(va("mn_name%i", cnt), "");
 		MN_ExecuteConfunc("employeedisable %i", cnt);
 	}
@@ -193,19 +194,19 @@ static void E_EmployeeList_f (void)
 		LIST_AddPointer(&employeeListName, employee->chr.name);
 		LIST_AddPointer(&employeeList, employee);
 		/* Change/Display the buttons if the employee is currently displayed (i.e. visible in the on-screen list) .*/
-		/** @todo Check if the "textScroll % cl_numnames->integer" calculation
+		/** @todo Check if the "textScroll % maxEmployeesPerPage" calculation
 		 * is still ok when _very_ long lists (i.e. more than 2x19 right now) are used. */
-		if ((employeesInCurrentList >= employeeListNode->u.text.textScroll)
-		 && (employeesInCurrentList < (employeeListNode->u.text.textScroll + cl_numnames->integer))) {
+		if (employeesInCurrentList >= employeeListNode->u.text.textScroll
+		 && employeesInCurrentList < employeeListNode->u.text.textScroll + maxEmployeesPerPage) {
 			if (employee->hired) {
 				if (employee->baseHired == baseCurrent) {
 					if (employee->transfer)
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"),employee->chr.name));
 					else
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
-					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % cl_numnames->integer)));
+					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % maxEmployeesPerPage)));
 				} else
-					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % cl_numnames->integer)));
+					Cbuf_AddText(va("employeedisable %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % maxEmployeesPerPage)));
 			} else
 				Cbuf_AddText(va("employeedel %i\n", employeesInCurrentList));
 		}
@@ -232,7 +233,7 @@ static void E_EmployeeList_f (void)
 	}
 
 	i = employeesInCurrentList;
-	for (;i < cl_numnames->integer;i++) {
+	for (;i < maxEmployeesPerPage;i++) {
 		Cvar_ForceSet(va("mn_name%i", i), "");
 		Cbuf_AddText(va("employeedisable %i\n", i));
 	}
@@ -420,8 +421,6 @@ void E_Init (void)
 	employeeListNode = MN_GetNodeByPath("employees.employee_list");
 	if (!employeeListNode)
 		Sys_Error("Could not find the 'employee_list' node in 'employees' menu\n");
-
-	cl_numnames = Cvar_Get("cl_numnames", "15", CVAR_NOSET, NULL);
 }
 
 /**
@@ -1450,6 +1449,7 @@ static void E_EmployeeDelete_f (void)
 
 /**
  * @brief Callback for employee_hire command
+ * @note a + as parameter indicates, that more than @c maxEmployeesPerPage are possible
  * @sa CL_AssignSoldier_f
  */
 static void E_EmployeeHire_f (void)
@@ -1472,12 +1472,12 @@ static void E_EmployeeHire_f (void)
 
 	/* check whether this is called with the text node click function
 	 * with values from 0 - #available employees (bigger values than
-	 * cl_numnames) possible ... */
+	 * maxEmployeesPerPage) possible ... */
 	if (arg[0] == '+') {
 		num = atoi(arg + 1);
 		button = num - employeeListNode->u.text.textScroll;
 	/* ... or with the hire pictures that are using only values from
-	 * 0 - cl_numnames */
+	 * 0 - maxEmployeesPerPage */
 	} else {
 		button = atoi(Cmd_Argv(1));
 		num = button + employeeListNode->u.text.textScroll;
