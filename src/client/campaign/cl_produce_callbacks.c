@@ -35,10 +35,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Maximum number of produced/disassembled items. */
 #define MAX_PRODUCTION_AMOUNT 500
 
-static int produceCategory = FILTER_S_PRIMARY;	/**< Holds the current active production category/filter type.
-												 * @sa itemFilterTypes_t */
+/**
+ * Holds the current active production category/filter type.
+ * @sa itemFilterTypes_t
+ */
+static int produceCategory = FILTER_S_PRIMARY;
 
-static production_t *selectedProduction = NULL;	/**< Holds the current active selected queue entry. */
+/** Holds the current active selected queue entry. */
+static production_t *selectedProduction = NULL;
 
 /** A list if all producable items. */
 static linkedList_t *productionItemList;
@@ -297,9 +301,9 @@ static void PR_UpdateProductionList (const base_t* base)
 			assert(od->tech);
 			/* We will not show items with producetime = -1 - these are not producible.
 			 * We can produce what was researched before. */
-			if (INV_ItemMatchesFilter(od, produceCategory)
-			 && RS_IsResearched_ptr(od->tech) && od->name[0] != '\0'
-			 && od->tech->produceTime > 0) {
+			if (od->name[0] != '\0' && od->tech->produceTime > 0
+			 && RS_IsResearched_ptr(od->tech)
+			 && INV_ItemMatchesFilter(od, produceCategory)) {
 				LIST_AddPointer(&productionItemList, od);
 
 				Q_strcat(productionList, va("%s\n", _(od->name)), sizeof(productionList));
@@ -427,7 +431,6 @@ static void PR_ProductionInfo (const base_t *base)
 			PR_DisassemblyInfo(base, prod->item, INV_GetComponentsByItem(prod->item), prod->percentDone);
 		}
 		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
-
 	} else {
 		if (!(selectedAircraft || selectedItem || selectedDisassembly)) {
 			MN_ExecuteConfunc("prod_nothingselected");
@@ -489,10 +492,9 @@ static void PR_ProductionListRightClick_f (void)
 
 		if (produceCategory == FILTER_AIRCRAFT) {
 			const aircraft_t *aircraftTemplate = (aircraft_t*)LIST_GetByIdx(productionItemList, idx);
-			/* aircraftTemplate may be empty if rclicked below real entry
-			 * ufo research definition must not have a tech assigned
-			 * only RS_CRAFT types have
-			 * @sa RS_InitTree */
+			/* aircraftTemplate may be empty if rclicked below real entry.
+			 * UFO research definition must not have a tech assigned,
+			 * only RS_CRAFT types have */
 			if (aircraftTemplate && aircraftTemplate->tech)
 				UP_OpenWith(aircraftTemplate->tech->id);
 		} else if (produceCategory == FILTER_DISASSEMBLY) {
@@ -513,7 +515,7 @@ static void PR_ProductionListRightClick_f (void)
 #endif
 
 			/* Open up UFOpaedia for this entry. */
-			if (INV_ItemMatchesFilter(od, produceCategory) && RS_IsResearched_ptr(od->tech)) {
+			if (RS_IsResearched_ptr(od->tech) && INV_ItemMatchesFilter(od, produceCategory)) {
 				PR_ClearSelected();
 				selectedItem = od;
 				UP_OpenWith(od->tech->id);
@@ -530,6 +532,7 @@ static void PR_ProductionListRightClick_f (void)
 /**
  * @brief Click function for production list.
  * @note "num" is the entry in the visible production list (includes queued entries and spaces).
+ * @todo left click on spacer should either delete current selection or do nothing, not update visible selection but show old info
  */
 static void PR_ProductionListClick_f (void)
 {
@@ -595,9 +598,9 @@ static void PR_ProductionListClick_f (void)
 			if (!od->tech)
 				Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
 			/* We can only produce items that fulfill the following conditions... */
-			if (INV_ItemMatchesFilter(od, produceCategory)	/* Item is in the current inventory-category */
-			 && RS_IsResearched_ptr(od->tech)		/* Tech is researched */
-			 && od->tech->produceTime >= 0) {		/* Item is producible */
+			if (RS_IsResearched_ptr(od->tech)		/* Tech is researched */
+			 && od->tech->produceTime >= 0			/* Item is producible */
+			 && INV_ItemMatchesFilter(od, produceCategory)) {	/* Item is in the current inventory-category */
 				assert(*od->name);
 
 				PR_ClearSelected();
@@ -609,7 +612,6 @@ static void PR_ProductionListClick_f (void)
 #ifdef DEBUG
 	else
 		Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: Click on spacer %i\n", num);
-	/**@todo left click on spacer should either delete current selection or do nothing, not update visible selection but show old info */
 #endif
 }
 
@@ -776,8 +778,7 @@ static void PR_ProductionIncrease_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!(selectedProduction || selectedAircraft || selectedItem
-			|| selectedDisassembly))
+	if (!(selectedProduction || selectedAircraft || selectedItem || selectedDisassembly))
 		return;
 
 	base = baseCurrent;
@@ -880,7 +881,8 @@ static void PR_ProductionIncrease_f (void)
 
 				if (producibleAmount < amount) {
 					/** @todo make the numbers work here. */
-					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."), amount, producibleAmount));
+					MN_Popup(_("Not enough material!"), va(_("You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."),
+						amount, producibleAmount));
 				}
 
 				if (!selectedDisassembly) {
@@ -995,8 +997,7 @@ static void PR_ProductionChange_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!(selectedProduction || selectedAircraft || selectedItem
-			|| selectedDisassembly))
+	if (!(selectedProduction || selectedAircraft || selectedItem || selectedDisassembly))
 		return;
 
 	if (Cmd_Argc() != 2) {
