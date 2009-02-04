@@ -80,7 +80,7 @@ static const objDef_t *BS_GetObjectDefition (const buyListEntry_t *entry)
 /**
  * @brief Set the number of item to buy or sell.
  */
-static int BS_GetBuySellFactor (void)
+static inline int BS_GetBuySellFactor (void)
 {
 	return 1;
 }
@@ -121,7 +121,7 @@ static int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboo
 
 	/* Get storage amount in baseCurrent. */
 	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-		if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
+		if (!Q_strcmp(aircraft->id, airCharId))
 			storage++;
 	}
 	/* Get supply amount (global). */
@@ -130,7 +130,7 @@ static int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboo
 		if (!base)
 			continue;
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
+			if (!Q_strcmp(aircraft->id, airCharId))
 				amount++;
 		}
 	}
@@ -245,7 +245,7 @@ static void BS_MarketScroll_f (void)
 		else {
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od && INV_ItemMatchesFilter(od, buyCat) && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx])) {
+			if (od && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
 				MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 				BS_UpdateItem(baseCurrent, i - buyList.scroll);
 				if (gd.autosell[od->idx])
@@ -394,9 +394,9 @@ static void BS_BuyType (const base_t *base)
 			if (od->notOnMarket)
 				continue;
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od->tech && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)
+			if (od->tech && (base->storage.num[i] || ccs.eMarket.num[i])
 			 && (RS_Collected_(od->tech) || RS_IsResearched_ptr(od->tech))
-			 && (base->storage.num[i] || ccs.eMarket.num[i])) {
+			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
 					if (gd.autosell[i])
@@ -421,7 +421,7 @@ static void BS_BuyType (const base_t *base)
 		/* Get item list. */
 		j = 0;
 		for (i = 0; i < gd.numUGV; i++) {
-			/**@todo Add this entry to the list */
+			/** @todo Add this entry to the list */
 			const technology_t* tech = RS_GetTechByProvided(gd.ugvs[i].id);
 			assert(tech);
 			if (RS_IsResearched_ptr(tech)) {
@@ -486,7 +486,7 @@ static void BS_BuyType (const base_t *base)
 				if (od->notOnMarket)
 					continue;
 				/* Check whether the item matches the proper filter, storage in current base and market. */
-				if (od->tech && INV_ItemMatchesFilter(od, buyCat) && (base->storage.num[i] || ccs.eMarket.num[i])) {
+				if (od->tech && (base->storage.num[i] || ccs.eMarket.num[i]) && INV_ItemMatchesFilter(od, buyCat)) {
 					BS_AddToList(od->name, base->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
@@ -563,7 +563,7 @@ static void BS_BuyType (const base_t *base)
 	}
 }
 
-/*
+/**
  * @brief Function gives the user friendly name of a buyCategory
  */
 char *BS_BuyTypeName(const int buyCat)
@@ -716,7 +716,7 @@ static qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int nu
 	if (item->size)
 		numItems = min(numItems, (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur) / item->size);
 	/* make sure that numItems is > 0 (can be negative because capacities.cur may be greater than
-		capacities.max if storage is disabled or if alien items have been collected on mission */
+	 * capacities.max if storage is disabled or if alien items have been collected on mission */
 	if (numItems <= 0) {
 		MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 		return qfalse;
@@ -917,14 +917,14 @@ static void BS_BuyItem_f (void)
 
 	Cbuf_AddText(va("buy_selectitem %i\n", num + buyList.scroll));
 
-	if ((buyCat == FILTER_UGVITEM) && (buyList.l[num + buyList.scroll].ugv)) {
+	if (buyCat == FILTER_UGVITEM && buyList.l[num + buyList.scroll].ugv) {
 		/* The list entry is an actual ugv/robot */
 		const ugv_t *ugv = buyList.l[num + buyList.scroll].ugv;
 		qboolean ugvWeaponBuyable;
 
 		UP_UGVDescription(ugv);
 
-		if ((ccs.credits >= ugv->price) && (E_CountUnhiredRobotsByType(ugv) > 0)) {
+		if (ccs.credits >= ugv->price && E_CountUnhiredRobotsByType(ugv) > 0) {
 			/* Check if we have a weapon for this ugv in the market and there is enough storage-room for it. */
 			const objDef_t *ugvWeapon = INVSH_GetItemByID(ugv->weapon);
 			if (!ugvWeapon)
