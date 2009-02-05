@@ -147,6 +147,7 @@ static int ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName)
 static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex)
 {
 	entityDef_t *eDef = &entityDefs[entityIndex];
+	int classnameLen;
 
 	/* now we know how many there are in this entity, malloc */
 	eDef->keyDefs = (entityKeyDef_t *) malloc((numKeyDefs + 1) * sizeof(entityKeyDef_t));
@@ -162,6 +163,11 @@ static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int en
 
 	/* set NULLs at the end, to enable looping through using a pointer */
 	memset(&eDef->keyDefs[numKeyDefs], 0, sizeof(entityKeyDef_t));
+
+	/* classname is commonly used, put it in its own field, copied from keyDefs[0] */
+	classnameLen = strlen(eDef->keyDefs->desc) + 1;
+	eDef->classname = malloc(classnameLen * sizeof(char));
+	strncpy(eDef->classname, eDef->keyDefs->desc, classnameLen);
 
 	return 0;
 }
@@ -318,6 +324,30 @@ int ED_CheckType (const char *classname, const char *key, const char *value)
 			return -1;
 	}
 
+}
+
+/**
+ * @brief as ED_CheckType, but where the entity and key are known, so takes
+ * different arguments.
+ */
+static int ED_CheckTypeKey (const entityKeyDef_t *kd, const char *value)
+{
+	if (!kd) {
+		snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: null key def");
+		return -1;
+	}
+	switch (kd->flags & ED_KEY_TYPE) {
+		case ED_TYPE_FLOAT:
+			return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
+		case ED_TYPE_INT:
+			return ED_CheckNumericType(kd, value, ED_TYPE_INT);
+		case ED_TYPE_STRING:
+		case 0: /* string is the default */
+			return 1; /* all strings are good */
+		default:
+			snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: type not recognised in key def");
+			return -1;
+	}
 }
 
 /**
@@ -538,7 +568,6 @@ static int ED_ParseEntities (const char **data_p)
 
 /**
  * @return -1 if the defualt for a key does not meet the type definition, otherwise 0
- * @todo write a function like ED_CheckType, but that does not search for the ents and keys,
  * as we have the pointers available here
  */
 static int ED_CheckDefaultTypes (void){
@@ -547,7 +576,7 @@ static int ED_CheckDefaultTypes (void){
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
 		for (kd = ed->keyDefs; kd->name; kd++)
 			if (kd->defaultVal)
-				if (-1 == ED_CheckType(ed->keyDefs->desc, kd->name, kd->defaultVal))
+				if (-1 == ED_CheckTypeKey(kd, kd->defaultVal))
 					return -1;
 	return 0;
 }
@@ -632,7 +661,7 @@ const entityDef_t *ED_GetEntityDef (const char *classname)
 	entityDef_t *ed;
 
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
-		if (!strcmp(classname, ed->keyDefs->desc)) /* the classname is always the zeroth keyDef */
+		if (!strcmp(classname, ed->classname))
 			return ed;
 
 	snprintf(lastErr, sizeof(lastErr), "ED_GetEntityDef: no entity definition for %s found in entities.ufo", classname);
@@ -645,6 +674,7 @@ void ED_Free (void)
 		entityDef_t *ed;
 		for (ed = entityDefs; ed->numKeyDefs; ed++) {
 			entityKeyDef_t *kd;
+			free(ed->classname);
 			for (kd = ed->keyDefs; kd->name; kd++) {
 				if (kd->name)
 					free(kd->name);
@@ -669,8 +699,8 @@ void ED_Dump (void)
 	Com_Printf("ED_Dump:\n");
 	for (ed = entityDefs; ed->numKeyDefs; ed++) {
 		const entityKeyDef_t *kd;
-		Com_Printf(">%s< >%s<\n", ed->keyDefs[0].name, ed->keyDefs[0].desc);
-		for (kd = &ed->keyDefs[1]; kd->name; kd++) {
+		Com_Printf("entity def >%s<\n", ed->classname);
+		for (kd = &ed->keyDefs[0]; kd->name; kd++) {
 			Com_Printf("  >%s< mandatory:%i optional:%i abstract:%i\n", kd->name,
 				kd->flags & ED_MANDATORY ? 1 : 0,
 				kd->flags & ED_OPTIONAL ? 1 : 0,

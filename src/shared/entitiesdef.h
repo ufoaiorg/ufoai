@@ -50,8 +50,9 @@ typedef struct entityKeyDef_s {
 } entityKeyDef_t;
 
 typedef struct entityDef_s {
-	entityKeyDef_t *keyDefs;
-	int numKeyDefs;
+	char 			*classname;
+	entityKeyDef_t 	*keyDefs;
+	int 			numKeyDefs;
 } entityDef_t;
 
 int ED_CheckType (const char *classname, const char *key, const char *value);
