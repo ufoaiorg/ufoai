@@ -2825,7 +2825,7 @@ void XYWindow_Construct (void)
 	GlobalEntityClassManager().attach(g_EntityClassMenu);
 
 	/* add screenshot filetype */
-	GlobalFiletypesModule::getTable().addType("bmp", "screenshow bitmap", filetype_t("bitmap", "*.bmp"));
+	GlobalFiletypesModule::getTable().addType("bmp", "screenshot bitmap", filetype_t("bitmap", "*.bmp"));
 }
 
 void XYWindow_Destroy (void)

@@ -1222,6 +1222,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 									} else {
 										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
 									}
+								} else {
+									Com_Printf("Unknown token '%s' - expected firedef\n", token);
 								}
 							} while (*text);
 							od->numWeapons++;
