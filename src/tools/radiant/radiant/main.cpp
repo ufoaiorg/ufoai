@@ -404,6 +404,8 @@ int main (int argc, char* argv[])
 
 	/** @todo support system wide locale dirs */
 	bindtextdomain(GETTEXT_PACKAGE, "i18n");
+	/* set encoding to utf-8 to prevent errors for Windows */
+	bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 
 	gtk_init(&argc, &argv);
 
