@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "stream/stringstream.h"
 #include "gtkutil/widget.h"
 #include "../exec.h"
+#include "os/file.h"
 #ifdef WIN32
 #include "../gtkmisc.h"
 #include "../mainframe.h"
@@ -69,11 +70,11 @@ static void editor_save (GtkWidget *widget, gpointer data)
 	gchar *str = gtk_text_buffer_get_text(text_buffer, &iterStart, &iterEnd, FALSE);
 	if (str) {
 		const int len = strlen(str);
-		fwrite(str, 1, len, f);
+		file_write(str, len, f);
 		g_message("Wrote %i bytes to file: '%s'\n", len, filename);
 		/* ensure newline at eof */
 		if (str[len - 1] != '\n')
-			fwrite("\n", 1, 1, f);
+			file_write("\n", 1, f);
 	}
 	fclose(f);
 }

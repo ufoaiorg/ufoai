@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/nonmodal.h"
 #include "stream/stringstream.h"
 #include "convert.h"
+#include "os/file.h"
 
 #include "version.h"
 #include "aboutmsg.h"
@@ -152,7 +153,7 @@ std::size_t Sys_Print(int level, const char* buf, std::size_t length) {
 	}
 
 	if (g_hLogFile != 0) {
-		fwrite(buf, 1, length, g_hLogFile);
+		file_write(buf, length, g_hLogFile);
 		if (contains_newline) {
 			fflush(g_hLogFile);
 		}

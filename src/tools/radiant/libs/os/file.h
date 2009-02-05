@@ -139,4 +139,47 @@ inline FileTime file_modified (const char* path)
 	return st.st_mtime;
 }
 
+typedef unsigned char byte;
+
+/**
+ * @brief Properly handles partial writes
+ */
+inline int file_write (const void *buffer, int len, FILE * f)
+{
+	int block, remaining;
+	int written;
+	byte *buf;
+	int tries;
+
+	if (!f)
+		return 0;
+
+	buf = (byte *) buffer;
+
+	remaining = len;
+	tries = 0;
+	while (remaining) {
+		block = remaining;
+		written = fwrite(buf, 1, block, f);
+		if (written == 0) {
+			if (!tries) {
+				tries = 1;
+			} else {
+				g_message("file_write: 0 bytes written\n");
+				return 0;
+			}
+		}
+
+		if (written == -1) {
+			g_message("file_write: -1 bytes written\n");
+			return 0;
+		}
+
+		remaining -= written;
+		buf += written;
+	}
+/* 	fflush(f->f); */
+	return len;
+}
+
 #endif
