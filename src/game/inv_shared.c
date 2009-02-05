@@ -61,11 +61,11 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
 	if (!obj)
 		Sys_Error("FIRESH_GetFiredef: no obj given.\n");
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
-		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i]\n", weapFdsIdx);
+		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i] for item '%s'\n", weapFdsIdx, obj->id);
 	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
-		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i]\n", fdIdx);
+		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i] for item '%s'\n", fdIdx, obj->id);
 #endif
-	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF-1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON-1)];
+	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF - 1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON - 1)];
 }
 
 /**

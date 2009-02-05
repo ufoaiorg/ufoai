@@ -2039,7 +2039,7 @@ void HUD_ActorUpdateCvars (void)
 					/* This item does not use ammo, check for existing firedefs in this item. */
 					/* This is supposed to be a weapon or other usable item. */
 					if (selWeapon->item.t->numWeapons > 0) {
-						if (selWeapon->item.t->weapon || (selWeapon->item.t->weapons[0] == selWeapon->item.t)) {
+						if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
 							/* Get firedef from the weapon (or other usable item) entry instead. */
 							selFD = FIRESH_GetFiredef(
 								selWeapon->item.t,
