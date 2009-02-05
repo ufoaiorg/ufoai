@@ -48,19 +48,14 @@
 /// O(n)
 inline const char* path_get_filename_start (const char* path)
 {
-	{
-		const char* last_forward_slash = strrchr(path, '/');
-		if (last_forward_slash != 0) {
-			return last_forward_slash + 1;
-		}
-	}
-
 	// not strictly necessary,since paths should not contain '\'
-	{
-		const char* last_backward_slash = strrchr(path, '\\');
-		if (last_backward_slash != 0) {
-			return last_backward_slash + 1;
-		}
+	// mixed paths on windows containing both '/' and '\', use last of both for this
+	const char* last_forward_slash = strrchr(path, '/');
+	const char* last_backward_slash = strrchr(path, '\\');
+	if (last_forward_slash > last_backward_slash) {
+		return last_forward_slash + 1;
+	} else if (last_forward_slash < last_backward_slash) {
+		return last_backward_slash + 1;
 	}
 
 	return path;
