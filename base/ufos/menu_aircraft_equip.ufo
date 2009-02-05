@@ -52,25 +52,11 @@ menu aircraft_equip extends iaircraft
 		textalign	cc
 	}
 
-	// @todo: merge: mdl_top and mdl_top_pilot
 	model mdl_top
 	{
-		visiblewhen "mn_equip_pilot != 1"
 		model	"*cvar mn_upmodel_top"
 		autoscale	true
 		angles	"0 0 120"
-		pos		"312 517"
-		size	"239 96"
-		mousefx	true
-		click
-	}
-
-	model mdl_top_pilot
-	{
-		visiblewhen "mn_equip_pilot == 1"
-		model	"*cvar mn_upmodel_top"
-		angles	"15 60 100"
-		autoscale	true
 		pos		"312 517"
 		size	"239 96"
 		mousefx	true
@@ -125,11 +111,6 @@ menu aircraft_equip extends iaircraft
 		click		{ cmd "mn_next_equiptype;" }
 		whup		{ cmd "mn_next_equiptype;" }
 		whdown		{ cmd "mn_prev_equiptype;" }
-	}
-
-	todo better_stats_layout {
-		pos "238 480"
-		string "It need to move the pilot assignment into an own tab"
 	}
 
 	string craftitemtype

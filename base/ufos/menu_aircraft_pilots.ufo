@@ -26,6 +26,15 @@ menu aircraft_pilots extends iaircraft
 		view		aircraft
 	}
 
+	pic aircraft_slot
+	{
+		image	menu/button_square
+		blend	true
+		pos		"494 120"
+		size	"64 64"
+		texh	"64 64"
+	}
+
 	model assigned_pilot_body
 	{
 		model	"*cvar mn_pilot_body"
@@ -33,8 +42,8 @@ menu aircraft_pilots extends iaircraft
 		anim	"stand_still"
 		angles	"0 90 90"
 		scale	"5.5 5.5 5.5"
-		pos		"481 106"
-		size	"82 108"
+		pos		"495 121"
+		size	"62 62"
 		origin	"0 70 0"
 	}
 
@@ -48,15 +57,9 @@ menu aircraft_pilots extends iaircraft
 	string assigned_pilot_name
 	{
 		string		"*cvar mn_pilot_name"
-		pos			"474 215"
+		pos			"480 185"
 		size		"200 20"
 		textalign	ul
-	}
-
-	todo green_border {
-		string	"Add a green border for the photo"
-		pos		"465 126"
-		size	"82 108"
 	}
 
 	// ==================

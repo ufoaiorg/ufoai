@@ -72,6 +72,7 @@ menu iaircraft
 		option pilot {
 			label	"_Pilots"
 			value	"4"
+			icon	smallhead_pilot
 			action "mn_pop;mn_push aircraft_pilots;"
 		}
 		option equip {
@@ -89,6 +90,7 @@ menu iaircraft
 		option soldier {
 			label	"_Soldiers"
 			value	"2"
+			icon	smallhead_soldier
 			action "mn_pop;mn_push team;"
 		}
 /*		option soldier_equipment {
