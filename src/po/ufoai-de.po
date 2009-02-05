@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-02-01 19:01+0100\n"
-"PO-Revision-Date: 2009-02-04 21:35+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2009-02-05 07:41+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13738,17 +13738,17 @@ msgstr "Flugzeug gestartet"
 #: client/campaign/cp_aircraft_callbacks.c:265
 #, c-format
 msgid "Weapons:\t%i on %i\n"
-msgstr "Bewaffnung:\t%i an %i\n"
+msgstr "Bewaffnung:\t%i von %i\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:266
 #, c-format
 msgid "Armour:\t%i on 1\n"
-msgstr "Rüstung:\t%i an 1\n"
+msgstr "Rüstung:\t%i von 1\n"
 
 #: client/campaign/cp_aircraft_callbacks.c:267
 #, c-format
 msgid "Electronics:\t%i on %i"
-msgstr "Elektronik:\t%i an %i"
+msgstr "Elektronik:\t%i von %i"
 
 #: client/campaign/cp_base.c:810
 msgid "Base is under attack, you can't destroy buildings !"
