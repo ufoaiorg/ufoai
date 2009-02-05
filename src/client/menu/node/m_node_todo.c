@@ -45,7 +45,7 @@ static void MN_TodoNodeDrawTooltip (menuNode_t *node, int x, int y)
 	const int tooltipWidth = 250;
 	static char tooltiptext[1024];
 
-	const char* text = MN_GetReferenceString(node->menu, node->text);
+	const char* text = MN_GetReferenceString(node, node->text);
 	if (!text)
 		return;
 

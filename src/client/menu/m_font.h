@@ -38,7 +38,7 @@ extern font_t *fontSmall;
 extern font_t *fontBig;
 
 /* will return the size and the path for each font */
-const char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
+const char *MN_GetFont(const menuNode_t *const node);
 /* this is the function where all the sdl_ttf fonts are parsed */
 void MN_ParseFont(const char *name, const char **text);
 void MN_InitFonts(void);

@@ -37,8 +37,7 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 	/* dataImageOrModel is the texture name */
 	float shx;
 	vec2_t nodepos;
-	menu_t *menu = node->menu;
-	const char* ref = MN_GetReferenceString(node->menu, node->image);
+	const char* ref = MN_GetReferenceString(node, node->image);
 	float pointWidth;
 	float width;
 	if (!ref || ref[0] == '\0')
@@ -50,9 +49,9 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 
 	{
 		float ps;
-		const float min = MN_GetReferenceFloat(menu, node->u.abstractvalue.min);
-		const float max = MN_GetReferenceFloat(menu, node->u.abstractvalue.max);
-		float value = MN_GetReferenceFloat(menu, node->u.abstractvalue.value);
+		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
+		const float max = MN_GetReferenceFloat(node, node->u.abstractvalue.max);
+		float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
 		/* clamp the value */
 		if (value > max)
 			value = max;

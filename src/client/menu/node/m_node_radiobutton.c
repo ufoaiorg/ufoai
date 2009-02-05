@@ -48,7 +48,7 @@ static void MN_RadioButtonNodeDraw (menuNode_t *node)
 {
 	vec2_t pos;
 	int status = 0;
-	const float current = MN_GetReferenceFloat(node->menu, node->cvar);
+	const float current = MN_GetReferenceFloat(node, node->cvar);
 
 	if (node->disabled) {
 		status = 2;
@@ -86,7 +86,7 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
-	current = MN_GetReferenceFloat(node->menu, node->cvar);
+	current = MN_GetReferenceFloat(node, node->cvar);
 	/* Is we click on the actio button, we can continue */
 	if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON)
 		return;

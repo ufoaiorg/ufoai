@@ -62,15 +62,15 @@ static void MN_ControlsNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	x -= deltaMouseX;
 	if (x < 0)
 		x = 0;
-	if (x + node->menu->size[0] > 1024)
-		x = 1024 - node->menu->size[0];
+	if (x + node->menu->size[0] > VID_NORM_WIDTH)
+		x = VID_NORM_WIDTH - node->menu->size[0];
 
 	/* compute new y position of the menu */
 	y -= deltaMouseY;
 	if (y < 0)
 		y = 0;
-	if (y + node->menu->size[1] > 768)
-		y = 768 - node->menu->size[1];
+	if (y + node->menu->size[1] > VID_NORM_HEIGHT)
+		y = VID_NORM_HEIGHT - node->menu->size[1];
 
 	MN_SetNewMenuPos(node->menu, x, y);
 }

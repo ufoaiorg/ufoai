@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 
 int MN_DrawTooltip(const char *font, char *string, int x, int y, int maxWidth, int maxHeight);
-void MN_Tooltip(menu_t *menu, menuNode_t *node, int x, int y);
+void MN_Tooltip(menuNode_t *node, int x, int y);
 int MN_DrawNotice(int x, int y);
 
 #endif

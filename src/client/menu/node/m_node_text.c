@@ -441,12 +441,11 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
  */
 static void MN_TextNodeDraw (menuNode_t *node)
 {
-	const menu_t *menu = node->menu;
 	const char *font;
 	vec2_t nodepos;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	font = MN_GetFont(menu, node);
+	font = MN_GetFont(node);
 
 	/** @todo Very special case, merge it with shared type, or split it into another node */
 	if (EXTRADATA(node).num == TEXT_MESSAGESYSTEM) {
@@ -599,7 +598,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 	if (lineheight == 0) {
 		/* the font is used */
 		/** @todo clean this up once font_t is known in the client */
-		const char *font = MN_GetFont(node->menu, node);
+		const char *font = MN_GetFont(node);
 		lineheight = R_FontGetHeight(font) / 2;
 	}
 

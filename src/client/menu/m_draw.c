@@ -267,7 +267,7 @@ void MN_DrawMenus (void)
 		if (hoveredNode->behaviour->drawTooltip) {
 			hoveredNode->behaviour->drawTooltip(hoveredNode, mousePosX, mousePosY);
 		} else {
-			MN_Tooltip(hoveredNode->menu, hoveredNode, mousePosX, mousePosY);
+			MN_Tooltip(hoveredNode, mousePosX, mousePosY);
 		}
 	}
 

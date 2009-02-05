@@ -190,7 +190,7 @@ static void MN_SetModelTransform_f (void)
 
 static void MN_ModelNodeDraw (menuNode_t *node)
 {
-	const char* ref = MN_GetReferenceString(node->menu, node->model);
+	const char* ref = MN_GetReferenceString(node, node->model);
 	char source[MAX_VAR];
 	if (ref == NULL || ref[0] == '\0')
 		source[0] = '\0';
@@ -311,7 +311,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 
 			/* get the animation given by menu node properties */
 			if (node->u.model.animation && *(char *) node->u.model.animation) {
-				ref = MN_GetReferenceString(node->menu, node->u.model.animation);
+				ref = MN_GetReferenceString(node, node->u.model.animation);
 			/* otherwise use the standard animation from modelmenu defintion */
 			} else
 				ref = menuModel->anim;
@@ -487,7 +487,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 	/* get skin */
 	if (node->skin && *(char *) node->skin)
-		mi.skin = atoi(MN_GetReferenceString(node->menu, node->skin));
+		mi.skin = atoi(MN_GetReferenceString(node, node->skin));
 	else
 		mi.skin = 0;
 
@@ -495,7 +495,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	if (node->u.model.animation && *(char *) node->u.model.animation) {
 		animState_t *as;
 		const char *ref;
-		ref = MN_GetReferenceString(node->menu, node->u.model.animation);
+		ref = MN_GetReferenceString(node, node->u.model.animation);
 
 		/* check whether the cvar value changed */
 		if (Q_strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
@@ -554,11 +554,11 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			mi.color = pmi.color;
 
 			/* get the anchor name to link the model into the parent */
-			tag = MN_GetReferenceString(child->menu, child->u.model.tag);
+			tag = MN_GetReferenceString(child, child->u.model.tag);
 			tag = MN_ModelNodeGetAnchorFromTag(tag);
 
 			/* init model name */
-			childRef = MN_GetReferenceString(child->menu, child->model);
+			childRef = MN_GetReferenceString(child, child->model);
 			if (childRef == NULL || childRef[0] == '\0')
 				childSource[0] = '\0';
 			else
@@ -568,7 +568,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 
 			/* init skin */
 			if (child->skin && *(char *) child->skin)
-				mi.skin = atoi(MN_GetReferenceString(child->menu, child->skin));
+				mi.skin = atoi(MN_GetReferenceString(child, child->skin));
 			else
 				mi.skin = 0;
 
@@ -644,7 +644,7 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 		char parentName[MAX_VAR];
 		menuNode_t *parent;
 		menuNode_t *last;
-		const char *tag = MN_GetReferenceString(node->menu, node->u.model.tag);
+		const char *tag = MN_GetReferenceString(node, node->u.model.tag);
 
 		/* find the parent node */
 		MN_ModelNodeGetParentFromTag(tag, parentName, MAX_VAR);

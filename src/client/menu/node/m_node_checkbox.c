@@ -39,9 +39,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void MN_CheckBoxNodeDraw (menuNode_t* node)
 {
-	const float value = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
+	const float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
 	vec2_t pos;
-	const char *image = MN_GetReferenceString(node->menu, node->image);
+	const char *image = MN_GetReferenceString(node, node->image);
 	int texx, texy;
 
 	/* image set? */
@@ -76,7 +76,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
  */
 static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 {
-	const float last = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
+	const float last = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
 	float value;
 
 	/* update value */

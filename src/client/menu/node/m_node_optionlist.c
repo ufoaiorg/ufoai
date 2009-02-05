@@ -64,13 +64,13 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node->menu, node->image);
+	image = MN_GetReferenceString(node, node->image);
 	if (image) {
 		R_DrawPanel(pos, node->size, image, node->blend, 0, 0, panelTemplate);
 	}
 
-	ref = MN_GetReferenceString(node->menu, node->cvar);
-	font = MN_GetFont(node->menu, node);
+	ref = MN_GetReferenceString(node, node->cvar);
+	font = MN_GetFont(node);
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */

@@ -67,7 +67,7 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
 	if (x > node->size[0] || y > node->size[1])
 		return NULL;
 
-	font = MN_GetFont(node->menu, node);
+	font = MN_GetFont(node);
 
 	/* Text box test */
 	for (option = node->u.option.first; option; option = option->next) {
@@ -104,7 +104,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	if (option->disabled)
 		return;
 
-	ref = MN_GetReferenceString(node->menu, node->cvar);
+	ref = MN_GetReferenceString(node, node->cvar);
 	/* Is we click on the already active tab? */
 	if (!Q_strcmp(option->value, ref))
 		return;
@@ -174,12 +174,12 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	int currentX;
 	int allowedWidth;
 
-	const char* image = MN_GetReferenceString(node->menu, node->image);
+	const char* image = MN_GetReferenceString(node, node->image);
 	if (!image)
 		image = "menu/tab";
 
-	ref = MN_GetReferenceString(node->menu, node->cvar);
-	font = MN_GetFont(node->menu, node);
+	ref = MN_GetReferenceString(node, node->cvar);
+	font = MN_GetFont(node);
 
 	if (node->state) {
 		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);

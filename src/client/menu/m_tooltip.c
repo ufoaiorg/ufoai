@@ -77,7 +77,7 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
 /**
  * @brief Wrapper for menu tooltips
  */
-void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
+void MN_Tooltip (menuNode_t *node, int x, int y)
 {
 	const char *tooltip;
 	int maxWidth = 200;
@@ -85,12 +85,12 @@ void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 	/* maybe no tooltip but a key entity? */
 	if (node->tooltip) {
 		char buf[256]; /** @todo @sa MN_DrawTooltip */
-		tooltip = MN_GetReferenceString(menu, node->tooltip);
+		tooltip = MN_GetReferenceString(node, node->tooltip);
 		Q_strncpyz(buf, tooltip, sizeof(buf));
 		MN_DrawTooltip("f_small", buf, x, y, maxWidth, 0);
 	} else if (node->key[0]) {
 		if (node->key[0] == '*') {
-			tooltip = MN_GetReferenceString(menu, node->key);
+			tooltip = MN_GetReferenceString(node, node->key);
 			if (tooltip)
 				Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), tooltip);
 		}

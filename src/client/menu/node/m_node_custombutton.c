@@ -67,7 +67,7 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node->menu, node->image);
+	image = MN_GetReferenceString(node, node->image);
 	if (image) {
 		const int texX = rint(node->texl[0]);
 		texY += node->texl[1];
@@ -79,9 +79,9 @@ static void MN_CustomButtonNodeDraw (menuNode_t *node)
 		MN_DrawIconInBox(node->icon, status, pos[0], pos[1], node->size[0], node->size[1]);
 	}
 
-	text = MN_GetReferenceString(node->menu, node->text);
+	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
-		const char *font = MN_GetFont(node->menu, node);
+		const char *font = MN_GetFont(node);
 		R_ColorBlend(textColor);
 		R_FontDrawStringInBox(font, node->textalign,
 			pos[0] + node->padding, pos[1] + node->padding,

@@ -1276,10 +1276,12 @@ void MN_ParseMenu (const char *name, const char **text)
 /**
  * @sa COM_MacroExpandString
  */
-const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
+const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref)
 {
 	if (!ref)
 		return NULL;
+
+	/* its a cvar */
 	if (*ref == '*') {
 		char ident[MAX_VAR];
 		const char *text, *token;
@@ -1315,7 +1317,7 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 			const value_t *val;
 
 			/* draw a reference to a node property */
-			refNode = MN_GetNode(menu, ident);
+			refNode = MN_GetNode(node->menu, ident);
 			if (!refNode)
 				return NULL;
 
@@ -1327,16 +1329,19 @@ const char *MN_GetReferenceString (const menu_t* const menu, const char *ref)
 			/* get the string */
 			return Com_ValueToStr(refNode, val->type & V_BASETYPEMASK, val->ofs);
 		}
+
+	/* traslatable string */
 	} else if (*ref == '_') {
 		ref++;
 		return _(ref);
+
+	/* just a string */
 	} else {
-		/* just get the data */
 		return ref;
 	}
 }
 
-float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
+float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
 {
 	if (!ref)
 		return 0.0;
@@ -1362,7 +1367,7 @@ float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 			const value_t *val;
 
 			/* draw a reference to a node property */
-			refNode = MN_GetNode(menu, ident);
+			refNode = MN_GetNode(node->menu, ident);
 			if (!refNode)
 				return 0.0;
 

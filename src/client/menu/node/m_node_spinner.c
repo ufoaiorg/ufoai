@@ -48,19 +48,19 @@ static const int BUTTON_BOTTOM_SIZE = 10;
  */
 static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 {
-	float value = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
+	float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
 	const float last = value;
-	const float delta = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.delta);
+	const float delta = MN_GetReferenceFloat(node, node->u.abstractvalue.delta);
 
 	if (!down) {
-		const float max = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.max);
+		const float max = MN_GetReferenceFloat(node, node->u.abstractvalue.max);
 		if (value + delta <= max) {
 			value += delta;
 		} else {
 			value = max;
 		}
 	} else {
-		const float min = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.min);
+		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
 		if (value - delta >= min) {
 			value -= delta;
 		} else {
@@ -148,8 +148,8 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 	vec2_t pos;
 	int topTexX, topTexY;
 	int bottomTexX, bottomTexY;
-	const char* image = MN_GetReferenceString(node->menu, node->image);
-	const float delta = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.delta);
+	const char* image = MN_GetReferenceString(node, node->image);
+	const float delta = MN_GetReferenceFloat(node, node->u.abstractvalue.delta);
 
 	if (!image)
 		return;
@@ -162,9 +162,9 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 		bottomTexX = TILE_SIZE;
 		bottomTexY = TILE_SIZE;
 	} else {
-		const float value = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.value);
-		const float min = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.min);
-		const float max = MN_GetReferenceFloat(node->menu, node->u.abstractvalue.max);
+		const float value = MN_GetReferenceFloat(node, node->u.abstractvalue.value);
+		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);
+		const float max = MN_GetReferenceFloat(node, node->u.abstractvalue.max);
 
 		/* top button status */
 		if (value >= max) {

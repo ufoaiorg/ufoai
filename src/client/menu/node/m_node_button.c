@@ -87,14 +87,14 @@ static void MN_ButtonNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node->menu, node->image);
+	image = MN_GetReferenceString(node, node->image);
 	if (image) {
 		R_DrawPanel(pos, node->size, image, node->blend, texX, texY, panelTemplate);
 	}
 
-	text = MN_GetReferenceString(node->menu, node->text);
+	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL && *text != '\0') {
-		font = MN_GetFont(node->menu, node);
+		font = MN_GetFont(node);
 		R_ColorBlend(textColor);
 		text = _(text);
 		R_FontDrawStringInBox(font, node->textalign,
@@ -124,7 +124,7 @@ static void MN_ButtonNodeLoaded (menuNode_t *node)
 	/* auto calc the size if none was given via script files */
 	if (node->size[1] == 0) {
 		/** @todo clean this up once font_t is known in the client */
-		const char *font = MN_GetFont(node->menu, node);
+		const char *font = MN_GetFont(node);
 		node->size[1] = (R_FontGetHeight(font) / 2) + (node->padding * 2);
 	}
 #ifdef DEBUG

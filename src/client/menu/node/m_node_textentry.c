@@ -218,12 +218,12 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 
-	image = MN_GetReferenceString(node->menu, node->image);
+	image = MN_GetReferenceString(node, node->image);
 	if (image) {
 		R_DrawPanel(pos, node->size, image, node->blend, texX, texY, panelTemplate);
 	}
 
-	text = MN_GetReferenceString(node->menu, node->text);
+	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL) {
 		/** @todo we dont need to edit the text to draw the cursor */
 		if (MN_GetMouseCapture() == node) {
@@ -249,7 +249,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 		}
 
 		if (*text != '\0') {
-			font = MN_GetFont(node->menu, node);
+			font = MN_GetFont(node);
 			R_ColorBlend(textColor);
 			R_FontDrawStringInBox(font, node->textalign,
 				pos[0] + node->padding, pos[1] + node->padding,

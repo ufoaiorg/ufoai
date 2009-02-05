@@ -172,12 +172,12 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	image = MN_GetReferenceString(node->menu, node->image);
+	image = MN_GetReferenceString(node, node->image);
 	if (!image)
 		image = "menu/selectbox";
 
-	ref = MN_GetReferenceString(node->menu, node->cvar);
-	font = MN_GetFont(node->menu, node);
+	ref = MN_GetReferenceString(node, node->cvar);
+	font = MN_GetFont(node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 
@@ -218,12 +218,12 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 		return;
 
 	MN_GetNodeAbsPos(node, nodepos);
-	image = MN_GetReferenceString(node->menu, node->image);
+	image = MN_GetReferenceString(node, node->image);
 	if (!image)
 		image = "menu/selectbox";
 
-	ref = MN_GetReferenceString(node->menu, node->cvar);
-	font = MN_GetFont(node->menu, node);
+	ref = MN_GetReferenceString(node, node->cvar);
+	font = MN_GetFont(node);
 	selBoxX = nodepos[0] + SELECTBOX_SIDE_WIDTH;
 	selBoxY = nodepos[1] + SELECTBOX_SPACER;
 

@@ -65,7 +65,7 @@ void MN_ImageNodeDraw(menuNode_t *node)
 	vec2_t nodepos;
 	const int time = cl.time;
 
-	const char* imageName = MN_GetReferenceString(node->menu, node->image);
+	const char* imageName = MN_GetReferenceString(node, node->image);
 	if (!imageName || imageName[0] == '\0')
 		return;
 

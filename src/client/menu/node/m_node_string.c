@@ -34,9 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_StringNodeDraw (menuNode_t *node)
 {
 	vec2_t nodepos;
-	menu_t *menu = node->menu;
-	const char *font = MN_GetFont(menu, node);
-	const char* ref = MN_GetReferenceString(node->menu, node->text);
+	const char *font = MN_GetFont(node);
+	const char* ref = MN_GetReferenceString(node, node->text);
 	if (!ref)
 		return;
 	MN_GetNodeAbsPos(node, nodepos);
@@ -63,10 +62,10 @@ static void MN_StringNodeDraw (menuNode_t *node)
 static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
 {
 	if (node->tooltip) {
-		MN_Tooltip(node->menu, node, x, y);
+		MN_Tooltip(node, x, y);
 	} else {
-		const char *font = MN_GetFont(node->menu, node);
-		const char* text = MN_GetReferenceString(node->menu, node->text);
+		const char *font = MN_GetFont(node);
+		const char* text = MN_GetReferenceString(node, node->text);
 		qboolean isTruncated;
 		if (!text)
 			return;
