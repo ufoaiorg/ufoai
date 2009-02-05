@@ -593,6 +593,10 @@ int ED_Parse (const char **data_p)
 	const char *copy_data_p = *data_p;
 	size_t ed_block_size;
 
+	/* only do this once, repeat calls are OK */
+	if (numEntityDefs)
+		return 0;
+
 	snprintf(lastErr, sizeof(lastErr), "no error");
 
 	numEntityDefs = ED_CountEntities(&copy_data_p);
@@ -654,7 +658,6 @@ const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname)
 /**
  * @brief searches for the parsed entity def by classname
  * @return NULL if the entity def is not found. call ED_GetLastError to get a relevant message.
- * @todo add a classname field to entityKeyDef_t to simplify this
  */
 const entityDef_t *ED_GetEntityDef (const char *classname)
 {
@@ -670,7 +673,7 @@ const entityDef_t *ED_GetEntityDef (const char *classname)
 
 void ED_Free (void)
 {
-	if (numEntityDefs > 0) {
+	if (numEntityDefs) {
 		entityDef_t *ed;
 		for (ed = entityDefs; ed->numKeyDefs; ed++) {
 			entityKeyDef_t *kd;

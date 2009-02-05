@@ -234,7 +234,37 @@ static void Check_MapSize (vec3_t mapSize) {
 }
 
 #define MIN_TILE_SIZE 256 /**< @todo take this datum from the correct place */
-#define NUM_ENT_TYPES 32
+
+/**
+ * @note Check_Free calls ED_Free, which frees all outstanding
+ * malloc'd space from this function
+ */
+static void Check_InitEntityDefs (void)
+{
+	void *newPointer;
+	void **entitiesUfoBuf; /* LoadFile calls malloc */
+	const char *entitiesUfoPath;
+
+	/* only do this once, may be called by different
+	 * check functions, depending on command-line */
+	if (numEntityDefs)
+		return;
+
+	entitiesUfoPath = FS_EntitiesDefUfoPath();
+
+	entitiesUfoBuf = &newPointer;
+
+	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
+
+	if(TryLoadFile(entitiesUfoPath, entitiesUfoBuf) == -1)
+		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
+
+	if (ED_Parse((const char **)entitiesUfoBuf))
+		Sys_Error("Error while parsing entities.ufo: %s\n",ED_GetLastError());
+
+	/* info has been copied to new malloc'd space in ED_Parse */
+	free(*entitiesUfoBuf);
+}
 
 /**
  * @brief print map stats on -stats
@@ -242,9 +272,12 @@ static void Check_MapSize (vec3_t mapSize) {
 void Check_Stats() {
 	vec3_t worldSize;
 	int i, j;
-	int entNums[NUM_ENT_TYPES];
+	int *entNums;
 
-	memset(entNums, '\0', NUM_ENT_TYPES * sizeof(int));
+	Check_InitEntityDefs();
+
+	entNums = (int *)malloc(numEntityDefs * sizeof(int));
+	memset(entNums, 0, numEntityDefs * sizeof(int));
 
 	Check_MapSize(worldSize);
 	Verb_Printf(VERB_NORMAL, "        Number of brushes: %i\n",nummapbrushes);
@@ -257,32 +290,25 @@ void Check_Stats() {
 
 	/* count number of each type of entity */
 	for (i = 0; i < num_entities; i++) {
-		entity_t *e = &entities[i];
-		const char *name = ValueForKey(e, "classname");
-		const entityCheck_t *v;
+		const char *name = ValueForKey(&entities[i], "classname");
 
-		for (v = checkArray, j = 0; v->name; v++, j++)
-			if (!strncmp(name, v->name, strlen(v->name))) {
+		for (j = 0; j < numEntityDefs; j++)
+			if (!strncmp(name, entityDefs[j].classname, strlen(entityDefs[j].classname))) {
 				entNums[j]++;
-#ifdef DEBUG
-			if (j >= NUM_ENT_TYPES)
-				Com_Printf("Check_Stats: buffer overflow");
-#endif
 				break;
 			}
-		if (!v->name) {
+		if (j == numEntityDefs) {
 			Com_Printf("Check_Stats: entity '%s' not recognised\n", name);
 		}
+
 	}
 
-	{
-		const entityCheck_t *v;
-		/* print number of each type of entity */
-		for (v = checkArray, j = 0; v->name; v++, j++)
-			if (entNums[j]) {
-				Com_Printf("%27s: %i\n", v->name, entNums[j]);
-			}
-	}
+	/* print number of each type of entity */
+	for (j = 0; j < numEntityDefs; j++)
+		if (entNums[j])
+			Com_Printf("%27s: %i\n", entityDefs[j].classname, entNums[j]);
+
+	free(entNums);
 }
 
 /**
@@ -679,33 +705,6 @@ void CheckEntities (void)
 {
 	int i;
 
-#ifdef DEBUG_ED
-	int ufoLength;
-	void *newPointer;
-	void **entitiesUfoBuf; /* LoadFile calls malloc */
-	const char *entitiesUfoPath = FS_EntitiesDefUfoPath();
-
-	entitiesUfoBuf = &newPointer;
-
-	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
-
-	/** @todo do not assume trunk is current dir. also, the .ufo might be compressed */
-	ufoLength = TryLoadFile(entitiesUfoPath, entitiesUfoBuf);
-	if(ufoLength == -1)
-		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
-
-	if (ED_Parse((const char **)entitiesUfoBuf))
-		Sys_Error("Error while parsing entities.ufo: %s\n",ED_GetLastError());
-
-	/* ED_Dump(); */
-
-	ED_Free();
-
-	free(*entitiesUfoBuf);
-
-	return;
-#endif
-
 	/* include worldspawn, at entities[0] */
 	for (i = 0; i < num_entities; i++) {
 		entity_t *e = &entities[i];
@@ -1075,11 +1074,14 @@ static void Check_FindCompositeSides (void)
 }
 
 /**
- * @brief free the mapbrush_t::nearBrushes and compositeSides
+ * @brief free the mapbrush_t::nearBrushes, compositeSides and entitiesdef.h stuff.
  */
 void Check_Free (void)
 {
 	int i;
+
+	ED_Free();
+
 	for (i = 0; i < nummapbrushes; i++) {
 		mapbrush_t *iBrush = &mapbrushes[i];
 		if (iBrush->numNear) {

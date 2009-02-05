@@ -180,6 +180,7 @@ void FS_Init (const char *path)
 		Verb_Printf(VERB_EXTRA, "Could not load image pk3, searching in directories for images instead\n");
 }
 
+/** @todo relative path is hardcoded here, is there a better way? */
 char *FS_EntitiesDefUfoPath (void)
 {
 	const char *relPath = "ufos/entities.ufo";
