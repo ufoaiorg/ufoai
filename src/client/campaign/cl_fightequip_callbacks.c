@@ -299,7 +299,8 @@ static technology_t **AII_GetCraftitemTechsByType (int type)
  */
 static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
 {
-	assert(slot);
+	if (!slot)
+		return;
 
 	if (airequipSelectedZone == ZONE_AMMO && (airequipID < AC_ITEM_AMMO) && (airequipID > AC_ITEM_WEAPON)) {
 		/* you can select ammo only for weapons and ammo */
@@ -333,7 +334,8 @@ static void AIM_CheckAirequipSelectedZone (aircraftSlot_t *slot)
  */
 static inline technology_t *AII_GetTechnologyToDisplay (const aircraftSlot_t const *slot)
 {
-	assert(slot);
+	if (!slot)
+		return NULL;
 
 	if (airequipSelectedZone == ZONE_MAIN) {
 		if (!slot->item)
