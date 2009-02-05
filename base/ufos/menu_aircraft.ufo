@@ -149,7 +149,7 @@ menu iaircraft
 	todo aircraft_name_edition
 	{
 		pos			"346 114"
-		string		"It should be nice to allow to edit the aircraft name here"
+		string		"It would be nice to allow to edit the aircraft name here"
 	}
 
 	// ===============
