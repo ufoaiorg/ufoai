@@ -815,7 +815,9 @@ static void MN_Memory_f (void)
  */
 void MN_RegisterText(int textId, const char *text)
 {
-	mn.menuText[textId] = text;
+	mn.sharedData[textId].type = MN_SHARED_TEXT;
+	mn.sharedData[textId].data.text = text;
+	mn.sharedData[textId].dataId++;
 }
 
 /**
@@ -824,12 +826,16 @@ void MN_RegisterText(int textId, const char *text)
  */
 void MN_RegisterLinkedListText(int textId, linkedList_t *text)
 {
-	mn.menuTextLinkedList[textId] = text;
+	mn.sharedData[textId].type = MN_SHARED_LINKEDLISTTEXT;
+	mn.sharedData[textId].data.linkedListText = text;
+	mn.sharedData[textId].dataId++;
 }
 
 const char *MN_GetText(int textId)
 {
-	return mn.menuText[textId];
+	if (mn.sharedData[textId].type != MN_SHARED_TEXT)
+		return NULL;
+	return mn.sharedData[textId].data.text;
 }
 
 /**

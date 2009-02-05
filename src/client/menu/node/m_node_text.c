@@ -446,29 +446,41 @@ static void MN_TextNodeDraw (menuNode_t *node)
 	vec2_t nodepos;
 
 	MN_GetNodeAbsPos(node, nodepos);
+	font = MN_GetFont(menu, node);
 
-	if (mn.menuText[EXTRADATA(node).num]) {
-		font = MN_GetFont(menu, node);
-		MN_TextNodeDrawText(mn.menuText[EXTRADATA(node).num], NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-	} else if (mn.menuTextLinkedList[EXTRADATA(node).num]) {
-		font = MN_GetFont(menu, node);
-		MN_TextNodeDrawText(NULL, mn.menuTextLinkedList[EXTRADATA(node).num], font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
-	} else if (EXTRADATA(node).num == TEXT_MESSAGESYSTEM) {
-		font = MN_GetFont(menu, node);
+	/** @todo Very special case, merge it with shared type, or split it into another node */
+	if (EXTRADATA(node).num == TEXT_MESSAGESYSTEM) {
 		MN_TextNodeDrawMessageList(cp_messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+		return;
+	}
+
+	switch (mn.sharedData[EXTRADATA(node).num].type) {
+	case MN_SHARED_TEXT:
+		MN_TextNodeDrawText(mn.sharedData[EXTRADATA(node).num].data.text, NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+		break;
+	case MN_SHARED_LINKEDLISTTEXT:
+		MN_TextNodeDrawText(NULL, mn.sharedData[EXTRADATA(node).num].data.linkedListText, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+		break;
+	case MN_SHARED_NONE:
+		break;
 	}
 }
 
 /**
  * @brief Resets the mn.menuText pointers and the mn.menuTextLinkedList lists
+ * @todo Move it out of this node
  */
 void MN_MenuTextReset (int menuTextID)
 {
 	assert(menuTextID < MAX_MENUTEXTS);
 	assert(menuTextID >= 0);
 
-	mn.menuText[menuTextID] = NULL;
-	LIST_Delete(&mn.menuTextLinkedList[menuTextID]);
+	if (mn.sharedData[menuTextID].type == MN_SHARED_LINKEDLISTTEXT)
+		LIST_Delete(&mn.sharedData[menuTextID].data.linkedListText);
+
+	mn.sharedData[menuTextID].type = MN_SHARED_NONE;
+	mn.sharedData[menuTextID].data.text = NULL;
+	mn.sharedData[menuTextID].dataId++;
 }
 
 

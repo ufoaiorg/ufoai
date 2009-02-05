@@ -39,28 +39,39 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_condition.h"
 #include "node/m_node_model.h"
 
+typedef enum {
+	MN_SHARED_NONE = 0,
+	MN_SHARED_TEXT,
+	MN_SHARED_LINKEDLISTTEXT,
+} menuSharedType_t;
+
+typedef struct menuSharedData_s {
+	menuSharedType_t type;		/**< Type of the shared data */
+	union {
+		/** @brief Holds static array of characters to display */
+		const char *text;
+		/** @brief Holds a linked list for displaying in the menu */
+		linkedList_t *linkedListText;
+	} data;						/**< The data */
+	int dataId;					/**< Id identify a value, to check changes */
+} menuSharedData_t;
+
+
 /**
- * @todo Merge menuText and menuTextLinkedList into an only one typed structure
  * @todo Maybe merge cl_menuSysPool and mn.adata (same usage)
  * @todo Menu must manage itself cl_menuSysPool (initialisation), if not possible, the outside must set it with a menu function. Anywhere it need a private access (menu only).
  */
 typedef struct menuGlobal_s {
 
 	/**
-	 * @brief Holds static array of characters to display
+	 * @brief Holds shared data
 	 * @note The array id is given via num in the menuNode definitions
 	 * @sa MN_MenuTextReset
-	 * @sa mn.menuTextLinkedList
+	 * @sa MN_RegisterText
+	 * @sa MN_GetText
+	 * @sa MN_RegisterLinkedListText
 	 */
-	const char *menuText[MAX_MENUTEXTS];
-
-	/**
-	 * @brief Holds a linked list for displaying in the menu
-	 * @note The array id is given via num in the menuNode definitions
-	 * @sa MN_MenuTextReset
-	 * @sa mn.menuText
-	 */
-	linkedList_t *menuTextLinkedList[MAX_MENUTEXTS];
+	menuSharedData_t sharedData[MAX_MENUTEXTS];
 
 	selectBoxOptions_t menuSelectBoxes[MAX_SELECT_BOX_OPTIONS];
 	int numSelectBoxes;
