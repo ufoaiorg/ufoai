@@ -131,7 +131,6 @@ static qboolean Com_CheckShapeCollision (const uint32_t *shape, const uint32_t i
 			/* This row (row "i" in itemShape) is outside of the max. bound and has bits in it. */
 			return qtrue;
 
-
 		/* Check for collisions of the item with the big mask. */
 		if (itemRowShifted & shape[y + i])
 			return qtrue;
@@ -2068,15 +2067,14 @@ int FIRESH_FiredefsIDXForWeapon (const objDef_t *od, const objDef_t *weapon)
 {
 	int i;
 
-	if (!od) {
-		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: object definition is NULL.\n");
-		return -1;
-	}
+	if (!od)
+		Sys_Error("FIRESH_FiredefsIDXForWeapon: Ammo definition is NULL.");
 
-	if (!weapon) {
-		Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: no weapon given (item '%s') using default weapon/firemodes.\n", od->id);
-		return 0;
-	}
+	if (!od->numWeapons)
+		Sys_Error("FIRESH_FiredefsIDXForWeapon: Ammo object has no weapons assigned.");
+
+	if (!weapon)
+		Sys_Error("FIRESH_FiredefsIDXForWeapon: No weapon given (item '%s').", od->id);
 
 	for (i = 0; i < od->numWeapons; i++) {
 		if (weapon == od->weapons[i])
@@ -2084,10 +2082,7 @@ int FIRESH_FiredefsIDXForWeapon (const objDef_t *od, const objDef_t *weapon)
 	}
 
 	/* No firedef index found for this weapon/ammo. */
-#ifdef DEBUG
-	Com_DPrintf(DEBUG_SHARED, "FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weapIdx:%i).\n", od->id, weapon->idx);
-#endif
-	return -1;
+	Sys_Error("FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon: '%s' with weapIdx: %i.", od->id, weapon->idx);
 }
 
 /**

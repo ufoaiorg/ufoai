@@ -1185,7 +1185,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 						/* Save the weapon id. */
 						token = COM_Parse(text);
 						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-							/** Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
+							/* Store the current item-pointer and the weapon id for later linking of the "weapon" pointers */
 							LIST_AddPointer(&parseItemWeapons, od);
 							LIST_Add(&parseItemWeapons, (byte *)&od->numWeapons, sizeof(int));
 							LIST_AddString(&parseItemWeapons, token);
@@ -1207,7 +1207,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 								if (*token == '}')
 									break;
 
-								if (!Q_strncmp(token, "firedef", MAX_VAR)) {
+								if (!Q_strcmp(token, "firedef")) {
 									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
 										fdIdx = od->numFiredefs[weapFdsIdx];
 										od->fd[weapFdsIdx][fdIdx].relFireVolume = DEFAULT_SOUND_PACKET_VOLUME;
