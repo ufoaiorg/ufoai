@@ -317,7 +317,7 @@ static void CL_AssignPilot_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_AssignPilot_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
 
 	aircraft = CL_GetTeamAircraft(base);
 	if (!aircraft)
@@ -400,16 +400,18 @@ static void CL_ActorPilotSelect_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(baseCurrent, employeeType))
+	if (num >= E_CountHired(baseCurrent, employeeType)) {
+		CL_ResertCharacterCvars();
 		return;
+	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
 
 	chr = &employee->chr;
 	if (!chr)
-		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_ActorPilotSelect_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
@@ -441,8 +443,10 @@ static void CL_ActorTeamSelect_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(baseCurrent, employeeType))
+	if (num >= E_CountHired(baseCurrent, employeeType)) {
+		CL_ResertCharacterCvars();
 		return;
+	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
