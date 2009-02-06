@@ -150,7 +150,7 @@ static EntityClass *Eclass_InitFromText (const char **text)
 		} else if (!strcmp(token, "default")) {
 			Eclass_ParseDefault(e, text);
 		} else {
-			if (!strcmp(token, "color")) {
+			if (!strcmp(token, "color") || !strcmp(token, "_color")) {
 				token = COM_Parse(text);
 				if (!*text)
 					return 0;
@@ -176,7 +176,7 @@ static EntityClass *Eclass_InitFromText (const char **text)
 				if (!*text)
 					return 0;
 				e->m_comments = token;
-			} else if (!strcmp(token, "flags")) {
+			} else if (!strcmp(token, "spawnflags")) {
 				gchar *flags;
 				token = COM_Parse(text);
 				if (!*text)

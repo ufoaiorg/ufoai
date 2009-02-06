@@ -351,7 +351,7 @@ void BuildLights (void)
 		if (!intensity)
 			intensity = 300.0;
 		color = ValueForKey(e, "_color");
-		if (color && color[0]){
+		if (color && color[0] != '\0'){
 			sscanf(color, "%f %f %f", &l->color[0], &l->color[1], &l->color[2]);
 			ColorNormalize(l->color, l->color);
 		} else
@@ -360,13 +360,13 @@ void BuildLights (void)
 		l->type = emit_point;
 
 		target = ValueForKey(e, "target");
-		if (!strcmp(name, "light_spot") || target[0]) {
+		if (target[0] != '\0' || !strcmp(name, "light_spot")) {
 			l->type = emit_spotlight;
 			l->stopdot = FloatForKey(e, "_cone");
 			if (!l->stopdot)
 				l->stopdot = 10;
 			l->stopdot = cos(l->stopdot / 180.0f * M_PI);
-			if (target[0]) {	/* point towards target */
+			if (target[0] != '\0') {	/* point towards target */
 				entity_t *e2 = FindTargetEntity(target);
 				if (!e2)
 					Com_Printf("WARNING: light at (%i %i %i) has missing target '%s' - e.g. create an info_null that has a 'targetname' set to '%s'\n",
