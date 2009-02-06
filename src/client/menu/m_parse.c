@@ -432,14 +432,46 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 	return firstAction;
 }
 
+/**
+ * @brief Parse an option into a node
+ * the options data can be defined like this
+ * @code
+ * option string {
+ *  value "value"
+ *  action "command string"
+ * }
+ * @endcode
+ * The strings will appear in the drop down list of the select box
+ * if you select the 'string', the 'cvarname' will be set to 'value'
+ * and if action is defined (which is a console/script command string)
+ * this one is executed on each selection
+ */
 static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char **token, const char *errhead)
 {
+	menuOption_t *option;
+
 	/* get parameters */
 	*token = COM_EParse(text, errhead, node->name);
 	if (!*text)
 		return qfalse;
+
+	option = MN_AllocOption(1);
+	if (option == NULL) {
+		Com_Printf("MN_ParseOption: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
+
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+		if (*token[0] != '{') {
+			Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+			return qfalse;
+		}
+		FS_SkipBlock(text);
+		return qfalse;
+	}
+
 	/** @todo mem corruption in case of too many select box options */
-	Q_strncpyz(mn.menuSelectBoxes[mn.numSelectBoxes].id, *token, sizeof(mn.menuSelectBoxes[mn.numSelectBoxes].id));
+	Q_strncpyz(option->id, *token, sizeof(option->id));
 	Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
 
 	*token = COM_EParse(text, errhead, node->name);
@@ -449,26 +481,6 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 		Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
 		return qfalse;
 	}
-
-	if (mn.numSelectBoxes >= MAX_MENUOPTIONS) {
-		FS_SkipBlock(text);
-		Com_Printf("MN_ParseOption: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
-		return qfalse;
-	}
-
-	/**
-	 * the options data can be defined like this
-	 * @code
-	 * option string {
-	 *  value "value"
-	 *  action "command string"
-	 * }
-	 * @endcode
-	 * The strings will appear in the drop down list of the select box
-	 * if you select the 'string', the 'cvarname' will be set to 'value'
-	 * and if action is defined (which is a console/script command string)
-	 * this one is executed on each selection
-	 */
 
 	*token = COM_EParse(text, errhead, node->name);
 	if (!*text)
@@ -488,14 +500,14 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 		}
 
 		/* get parameter values */
-		result = MN_ParseProperty(&mn.menuSelectBoxes[mn.numSelectBoxes], property, mn.menuSelectBoxes[mn.numSelectBoxes].id, text, token);
+		result = MN_ParseProperty(option, property, option->id, text, token);
 		if (!result) {
-			Com_Printf("MN_ParseOption: Parsing for option '%s'. See upper\n", mn.menuSelectBoxes[mn.numSelectBoxes].id);
+			Com_Printf("MN_ParseOption: Parsing for option '%s'. See upper\n", option->id);
 			return qfalse;
 		}
 
 	} while (**token != '}');
-	MN_NodeAddOption(node);
+	MN_NodeAppendOption(node, option);
 	return qtrue;
 }
 

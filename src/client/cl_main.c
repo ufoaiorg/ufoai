@@ -657,9 +657,10 @@ void CL_InitAfter (void)
 	if (!vidModesOptions)
 		Sys_Error("Could not find node select_res in menu options_video\n");
 	for (i = 0; i < VID_GetModeNums(); i++) {
-		menuOption_t *option = MN_NodeAddOption(vidModesOptions);
+		menuOption_t *option = MN_AllocOption(1);
 		if (!option)
 			return;
+		MN_NodeAppendOption(vidModesOptions, option);
 		Com_sprintf(option->label, sizeof(option->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);
 		Com_sprintf(option->value, sizeof(option->value), "%i", vid_modes[i].mode);
 	}

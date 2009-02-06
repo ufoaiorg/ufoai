@@ -76,59 +76,95 @@ static menuOption_t *MN_OptionNodeRemoveHighterOption (menuOption_t **option)
 /**
  * @brief Sort options by alphabet
  */
-void MN_OptionNodeSortOptions (menuNode_t *node)
+void MN_SortOptions (menuOption_t **first)
 {
 	menuOption_t *option;
-	assert(MN_NodeInstanceOf(node, "abstractoption"));
 
 	/* unlink the unsorted list */
-	option = node->u.option.first;
+	option = *first;
 	if (option == NULL)
 		return;
-	node->u.option.first = NULL;
+	*first = NULL;
 
 	/* construct a sorted list */
 	while (option) {
 		menuOption_t *element;
 		element = MN_OptionNodeRemoveHighterOption(&option);
-		element->next = node->u.option.first;
-		node->u.option.first = element;
+		element->next = *first;
+		*first = element;
 	}
 }
+
+/**
+ * @brief Sort options by alphabet
+ */
+void MN_OptionNodeSortOptions (menuNode_t *node)
+{
+	assert(MN_NodeInstanceOf(node, "abstractoption"));
+	MN_SortOptions(&node->u.option.first);
+}
+
+void MN_RegisterOption (int dataId, menuOption_t *option)
+{
+	mn.sharedData[dataId].type = MN_SHARED_OPTION;
+	mn.sharedData[dataId].data.option = option;
+	mn.sharedData[dataId].dataId++;
+}
+
+menuOption_t *MN_GetOption (int dataId)
+{
+	if (mn.sharedData[dataId].type == MN_SHARED_OPTION) {
+		return mn.sharedData[dataId].data.option;
+	}
+	return NULL;
+}
+
+/**
+ * @brief Alloc an array of option
+ */
+menuOption_t* MN_AllocOption (int count)
+{
+	menuOption_t* newOptions;
+	assert(count > 0);
+
+	if (mn.numOptions + count >= MAX_MENUOPTIONS) {
+		Com_Printf("MN_AllocOption: numOptions exceeded - increase MAX_MENUOPTIONS\n");
+		return NULL;
+	}
+	newOptions = &mn.menuOptions[mn.numOptions];
+	mn.numOptions += count;
+	return newOptions;
+}
+
 
 /**
  * @brief Adds a new selectbox option to a selectbox node
  * @return NULL if menuSelectBoxes is 'full' - otherwise pointer to the selectBoxOption
  * @param[in] node The abstractoption where you want to append the option
+ * @param[in] option The option to add
  * @note You have to add the values manually to the option pointer
  */
-menuOption_t* MN_NodeAddOption (menuNode_t *node)
+menuOption_t* MN_NodeAppendOption (menuNode_t *node, menuOption_t *newOption)
 {
-	menuOption_t *selectBoxOption;
-
+	assert(node);
+	assert(newOption);
 	assert(MN_NodeInstanceOf(node, "abstractoption"));
 
-	if (mn.numSelectBoxes >= MAX_MENUOPTIONS) {
-		Com_Printf("MN_AddSelectboxOption: numSelectBoxes exceeded - increase MAX_SELECT_BOX_OPTIONS\n");
-		return NULL;
-	}
-	/* initial options entry */
 	if (!node->u.option.first)
-		node->u.option.first = &mn.menuSelectBoxes[mn.numSelectBoxes];
+		node->u.option.first = newOption;
 	else {
 		/* link it in */
-		for (selectBoxOption = node->u.option.first; selectBoxOption->next; selectBoxOption = selectBoxOption->next) {}
-		selectBoxOption->next = &mn.menuSelectBoxes[mn.numSelectBoxes];
-		selectBoxOption->next->next = NULL;
+		menuOption_t *option = node->u.option.first;
+		while (option->next)
+			option = option->next;
+		option->next = newOption;
 	}
-	selectBoxOption = &mn.menuSelectBoxes[mn.numSelectBoxes];
 	node->u.option.count++;
-	mn.numSelectBoxes++;
-	return selectBoxOption;
+	return newOption;
 }
 
 static const value_t properties[] = {
-	/* very special attribute */
+	{"dataid", V_MENUTEXTID, offsetof(menuNode_t, u.option.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
 	{"option", V_SPECIAL_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
 	{"viewpos", V_INT, offsetof(menuNode_t, u.option.pos),  MEMBER_SIZEOF(menuNode_t, u.option.pos)},
 	{"count", V_INT, offsetof(menuNode_t, u.option.count),  MEMBER_SIZEOF(menuNode_t, u.option.count)},

@@ -251,10 +251,10 @@ void CL_LanguageInit (void)
 
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || !Q_strcmp(language->localeID, "none")) {
-			menuOption_t* option;
-			option = MN_NodeAddOption(languageOptions);
+			menuOption_t* option = MN_AllocOption(1);
 			if (!option)
 				break;
+			MN_NodeAppendOption(languageOptions, option);
 			Q_strncpyz(option->label, language->localeString, sizeof(option->label));
 			Q_strncpyz(option->value, language->localeID, sizeof(option->value));
 		}

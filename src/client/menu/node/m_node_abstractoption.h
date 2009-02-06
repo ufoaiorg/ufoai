@@ -34,7 +34,7 @@ struct menuIcon_s;
 struct menuAction_s;
 
 /** @brief Option definition */
-typedef struct menuOptions_s {
+typedef struct menuOption_s {
 	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION_STRING */
 	char label[OPTION_MAX_VALUE_LENGTH];	/**< text for the select box - V_TRANSLATION_STRING */
 	char action[MAX_VAR];	/**< execute this when the value is selected */
@@ -48,14 +48,21 @@ typedef struct menuOptions_s {
 	 */
 	qboolean hovered;
 
-	struct menuOptions_s *next;	/**< Next element into a linked list of option */
+	struct menuOption_s *next;	/**< Next element into a linked list of option */
 
 } menuOption_t;
 
 typedef struct {
-	menuOption_t *first;			/**< first option */
-	menuOption_t *selected;		/**< current selected option */
-	menuOption_t *hovered;		/**< current hovered option */
+	/* link to shared data (can be used if internal data is null) */
+	int dataId;							/**< Shared data id where we can find option */
+	int versionId;						/**< Cached version of the shared data, to check update */
+
+	/* link to internal data */
+	menuOption_t *first;				/**< first option */
+
+	/* information */
+	menuOption_t *selected;				/**< current selected option */
+	menuOption_t *hovered;				/**< current hovered option */
 	int count;							/**< number of elements */
 	int pos;							/**< position of the view */
 	struct menuAction_s *onViewChange;	/**< called when view change (number of elements...) */
@@ -64,8 +71,14 @@ typedef struct {
 struct menuNode_s;
 struct nodeBehaviour_s;
 
-menuOption_t* MN_NodeAddOption(struct menuNode_s *node);
+menuOption_t* MN_AllocOption(int count);
+menuOption_t* MN_NodeAppendOption(struct menuNode_s *node, menuOption_t* option);
+void MN_RegisterOption(int dataId, menuOption_t *option);
+menuOption_t *MN_GetOption(int dataId);
+
+void MN_SortOptions(menuOption_t **option);
 void MN_OptionNodeSortOptions(struct menuNode_s *node);
+
 void MN_RegisterAbstractOptionNode(struct nodeBehaviour_s *behaviour);
 
 #endif

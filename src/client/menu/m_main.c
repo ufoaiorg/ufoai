@@ -778,7 +778,7 @@ static void CL_MessageMenu_f (void)
 static void MN_Memory_f (void)
 {
 	Com_Printf("\tAllocation:\n");
-	Com_Printf("\t-Option allocation: %i/%i\n", mn.numSelectBoxes, MAX_MENUOPTIONS);
+	Com_Printf("\t-Option allocation: %i/%i\n", mn.numOptions, MAX_MENUOPTIONS);
 	Com_Printf("\t-Node allocation: %i/%i\n", mn.numNodes, MAX_MENUNODES);
 	Com_Printf("\t-Menu allocation: %i/%i\n", mn.numMenus, MAX_MENUS);
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);

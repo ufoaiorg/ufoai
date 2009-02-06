@@ -43,6 +43,7 @@ typedef enum {
 	MN_SHARED_NONE = 0,
 	MN_SHARED_TEXT,
 	MN_SHARED_LINKEDLISTTEXT,
+	MN_SHARED_OPTION,
 } menuSharedType_t;
 
 typedef struct menuSharedData_s {
@@ -52,6 +53,7 @@ typedef struct menuSharedData_s {
 		const char *text;
 		/** @brief Holds a linked list for displaying in the menu */
 		linkedList_t *linkedListText;
+		menuOption_t *option;
 	} data;						/**< The data */
 	int dataId;					/**< Id identify a value, to check changes */
 } menuSharedData_t;
@@ -73,8 +75,8 @@ typedef struct menuGlobal_s {
 	 */
 	menuSharedData_t sharedData[MAX_MENUTEXTS];
 
-	menuOption_t menuSelectBoxes[MAX_MENUOPTIONS];
-	int numSelectBoxes;
+	menuOption_t menuOptions[MAX_MENUOPTIONS];
+	int numOptions;
 
 	menuNode_t menuNodes[MAX_MENUNODES];
 	int numNodes;

@@ -460,6 +460,8 @@ static void MN_TextNodeDraw (menuNode_t *node)
 	case MN_SHARED_LINKEDLISTTEXT:
 		MN_TextNodeDrawText(NULL, mn.sharedData[EXTRADATA(node).num].data.linkedListText, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
 		break;
+	case MN_SHARED_OPTION:
+		break;
 	case MN_SHARED_NONE:
 		break;
 	}
