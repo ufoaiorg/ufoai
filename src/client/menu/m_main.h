@@ -59,5 +59,6 @@ int MN_CompletePushMenu(const char *partial, const char **match);
 void MN_RegisterText(int textId, const char *text);
 const char *MN_GetText(int textId);
 void MN_RegisterLinkedListText(int textId, linkedList_t *text);
+int MN_GetDataVersion(int textId);
 
 #endif

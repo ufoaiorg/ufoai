@@ -55,7 +55,7 @@ typedef struct menuSharedData_s {
 		linkedList_t *linkedListText;
 		menuOption_t *option;
 	} data;						/**< The data */
-	int dataId;					/**< Id identify a value, to check changes */
+	int versionId;				/**< Id identify the value, to check changes */
 } menuSharedData_t;
 
 

@@ -241,7 +241,7 @@ menu checkcvars
 		size		"155 226"
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		// will be filled in CL_LanguageInit
+		dataid		OPTION_LANGUAGES
 		viewchange {
 			*(vscrollbar)select_language_scroll current <viewpos>
 			*(vscrollbar)select_language_scroll fullsize <count>

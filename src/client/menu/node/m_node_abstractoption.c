@@ -108,7 +108,7 @@ void MN_RegisterOption (int dataId, menuOption_t *option)
 {
 	mn.sharedData[dataId].type = MN_SHARED_OPTION;
 	mn.sharedData[dataId].data.option = option;
-	mn.sharedData[dataId].dataId++;
+	mn.sharedData[dataId].versionId++;
 }
 
 menuOption_t *MN_GetOption (int dataId)

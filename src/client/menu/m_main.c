@@ -817,7 +817,7 @@ void MN_RegisterText(int textId, const char *text)
 {
 	mn.sharedData[textId].type = MN_SHARED_TEXT;
 	mn.sharedData[textId].data.text = text;
-	mn.sharedData[textId].dataId++;
+	mn.sharedData[textId].versionId++;
 }
 
 /**
@@ -828,7 +828,7 @@ void MN_RegisterLinkedListText(int textId, linkedList_t *text)
 {
 	mn.sharedData[textId].type = MN_SHARED_LINKEDLISTTEXT;
 	mn.sharedData[textId].data.linkedListText = text;
-	mn.sharedData[textId].dataId++;
+	mn.sharedData[textId].versionId++;
 }
 
 const char *MN_GetText(int textId)
@@ -836,6 +836,10 @@ const char *MN_GetText(int textId)
 	if (mn.sharedData[textId].type != MN_SHARED_TEXT)
 		return NULL;
 	return mn.sharedData[textId].data.text;
+}
+
+int MN_GetDataVersion(int textId) {
+	return mn.sharedData[textId].versionId;
 }
 
 /**

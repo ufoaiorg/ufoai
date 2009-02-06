@@ -481,7 +481,7 @@ void MN_MenuTextReset (int menuTextID)
 
 	mn.sharedData[menuTextID].type = MN_SHARED_NONE;
 	mn.sharedData[menuTextID].data.text = NULL;
-	mn.sharedData[menuTextID].dataId++;
+	mn.sharedData[menuTextID].versionId++;
 }
 
 

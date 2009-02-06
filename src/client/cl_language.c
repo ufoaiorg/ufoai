@@ -215,9 +215,8 @@ static qboolean CL_LanguageTest (const char *localeID)
 void CL_LanguageInit (void)
 {
 	int i;
-	menuNode_t* languageOptions;
-	menuNode_t* languageOptions2;
 	language_t* language;
+	menuOption_t *languageOption = NULL;
 	char systemLanguage[MAX_VAR];
 
 	if (s_language->string[0] != '\0') {
@@ -238,10 +237,6 @@ void CL_LanguageInit (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "CL_LanguageInit: system language is: '%s'\n", systemLanguage);
 
-	languageOptions = MN_GetNodeByPath("options_game.select_language");
-	if (!languageOptions)
-		Sys_Error("Could not find node select_language in menu options_game\n");
-
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 #ifndef DEBUG
 		/* No language option available only for DEBUG. */
@@ -254,20 +249,20 @@ void CL_LanguageInit (void)
 			menuOption_t* option = MN_AllocOption(1);
 			if (!option)
 				break;
-			MN_NodeAppendOption(languageOptions, option);
+
+			/* init content */
 			Q_strncpyz(option->label, language->localeString, sizeof(option->label));
 			Q_strncpyz(option->value, language->localeID, sizeof(option->value));
+
+			/* link to list */
+			option->next = languageOption;
+			languageOption = option;
 		}
 	}
 
-	/* sort the list */
-	MN_OptionNodeSortOptions(languageOptions);
-
-	/* link this node to the same linked list */
-	languageOptions2 = MN_GetNodeByPath("checkcvars.select_language");
-	if (!languageOptions2)
-		Sys_Error("Could not find node select_language in menu checkcvars\n");
-	languageOptions2->u.option.first = languageOptions->u.option.first;
+	/* sort the list, and register it to the menu */
+	MN_SortOptions(&languageOption);
+	MN_RegisterOption(OPTION_LANGUAGES, languageOption);
 
 	/* Set to the locale remembered previously. */
 	CL_LanguageTryToSet(systemLanguage);

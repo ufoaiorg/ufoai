@@ -41,6 +41,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define ELEMENT_HEIGHT 20	/**< todo remove it, whould not need */
 
+/**
+ * @brief Return the first option of the node
+ * @todo check versionId and update cached data, and fire events
+ */
+static menuOption_t*  MN_OptionListNodeGetFirstOption (menuNode_t * node)
+{
+	if (node->u.option.first) {
+		return node->u.option.first;
+	} else {
+		const int v = MN_GetDataVersion(node->u.option.dataId);
+		if (v != node->u.option.dataId) {
+			/* we should update and fire event here */
+			node->u.option.versionId = v;
+		}
+		return MN_GetOption(node->u.option.dataId);
+	}
+}
+
 static void MN_OptionListNodeDraw (menuNode_t *node)
 {
 	static const int panelTemplate[] = {
@@ -74,7 +92,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	currentY = pos[1] + node->padding;
 
 	/* skip option over current position */
-	option = node->u.option.first;
+	option = MN_OptionListNodeGetFirstOption(node);
 	while (option && count < node->u.option.pos) {
 		option = option->next;
 		count++;
@@ -137,7 +155,7 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
 	MN_GetNodeAbsPos(node, pos);
 	currentY = pos[1] + node->padding;
 
-	option = node->u.option.first;
+	option = MN_OptionListNodeGetFirstOption(node);
 	while (option && count < node->u.option.pos) {
 		option = option->next;
 		count++;
@@ -195,6 +213,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 static void MN_OptionListNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
+	node->u.option.versionId = -1;
 }
 
 static void MN_OptionListNodeLoaded (menuNode_t *node)
