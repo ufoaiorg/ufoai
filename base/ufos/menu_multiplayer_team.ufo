@@ -80,6 +80,12 @@ menu mp_team_edit
 	// checkbox list
 	// ==================
 
+	todo checkboxes_todo
+	{
+		pos			"40 23"
+		string		"These checkboxes should mark the soldiers you want in your team - this is not yet working"
+	}
+
 	checkbox bt_actor0
 	{
 		current 0
