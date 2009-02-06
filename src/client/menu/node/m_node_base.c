@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 /**
- * @brief Handled alfer the end and the load of the node from script (all data and/or child are set)
+ * @brief Called after the end of the node load from script (all data and/or child are set)
  */
 static void MN_BaseLayoutNodeLoaded (menuNode_t * node)
 {
