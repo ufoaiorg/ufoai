@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
+#include "../../cl_game.h"
 #include "../../cl_actor.h"
 #include "../../cl_team.h"
 #include "../../cl_game.h"
@@ -91,6 +92,48 @@ static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 static inline qboolean MN_IsScrollContainerNode (const menuNode_t* const node)
 {
 	return EXTRADATA(node).container && EXTRADATA(node).container->scroll;
+}
+
+/**
+ * @brief Fills the ground container of the menuInventory with unused items from a given
+ * equipment definition
+ * @note Keep in mind that @c ed is changed here - so items are removed and the ground container
+ * of a inventory definition is in general a temp container - that means you should make a copy
+ * of the @c equipDef_t you want to add to the temp ground container of the given @c inv
+ * @todo it's not obvious for the caller that @c menuInventory pointer must be set
+ * @param[in,out] inv The inventory to add the unused items from @c ed to
+ * @param[in,out] ed The equipment definition to get the used items from that should be added
+ * to the ground container of @c @inv
+ */
+void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
+{
+	int i;
+
+	/* a 'tiny hack' to add the remaining equipment (not carried)
+	 * correctly into buy categories, reloading at the same time;
+	 * it is valid only due to the following property: */
+	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
+
+	for (i = 0; i < csi.numODs; i++) {
+		/* Don't allow to show armour for other teams in the menu. */
+		if (!INVSH_UseableForTeam(&csi.ods[i], GAME_GetCurrentTeam()))
+			continue;
+
+		/* Don't allow to show unresearched items. */
+		if (!RS_IsResearched_ptr(csi.ods[i].tech))
+			continue;
+
+		while (ed->num[i]) {
+			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+			if (!Com_AddToInventory(inv, CL_AddWeaponAmmo(ed, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
+				break; /* no space left in menu */
+		}
+	}
+
+	/* First-time linking of menuInventory. */
+	if (menuInventory && !menuInventory->c[csi.idEquip]) {
+		menuInventory->c[csi.idEquip] = inv->c[csi.idEquip];
+	}
 }
 
 /**

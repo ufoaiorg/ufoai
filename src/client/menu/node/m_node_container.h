@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_CONTAINER_H
 #define CLIENT_MENU_M_NODE_CONTAINER_H
 
+#include "../../../game/inv_shared.h"
+
 /** @brief One unit in the containers is 25x25. */
 #define C_UNIT				25
 
@@ -50,6 +52,7 @@ void MN_RegisterContainerNode(struct nodeBehaviour_s *behaviour);
 struct invList_s *MN_GetItemFromScrollableContainer (const struct menuNode_s* const node, int mouseX, int mouseY, int* contX, int* contY);
 void MN_DrawItem(struct menuNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
 void MN_ContainerNodeSetFilter(struct menuNode_s* node, int num);
+void MN_ContainerNodeUpdateEquipment(inventory_t *inv, equipDef_t *ed);
 
 /**
  * @brief extradata for container widget

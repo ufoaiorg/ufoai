@@ -209,7 +209,7 @@ static void CL_UpdatePilotList_f (void)
 static void CL_UpdateEquipmentMenuParameters_f (void)
 {
 	equipDef_t unused;
-	int i, p;
+	int p;
 	aircraft_t *aircraft;
 
 	if (!baseCurrent)
@@ -250,32 +250,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	CL_CleanTempInventory(aircraft->homebase);
 	CL_ReloadAndRemoveCarried(aircraft, &unused);
 
-	/* a 'tiny hack' to add the remaining equipment (not carried)
-	 * correctly into buy categories, reloading at the same time;
-	 * it is valid only due to the following property: */
-	assert(MAX_CONTAINERS >= FILTER_AIRCRAFT);
-
-	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armour for other teams in the menu. */
-		if (!INVSH_UseableForTeam(&csi.ods[i], cl_team->integer))
-			continue;
-
-		/* Don't allow to show unresearched items. */
-		if (!RS_IsResearched_ptr(csi.ods[i].tech))
-			continue;
-
-		while (unused.num[i]) {
-			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
-			inventory_t *i = &aircraft->homebase->bEquipment;
-			if (!Com_AddToInventory(i, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
-				break; /* no space left in menu */
-		}
-	}
-
-	/* First-time linking of menuInventory. */
-	if (menuInventory && !menuInventory->c[csi.idEquip]) {
-		menuInventory->c[csi.idEquip] = aircraft->homebase->bEquipment.c[csi.idEquip];
-	}
+	MN_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }
 
 /**
