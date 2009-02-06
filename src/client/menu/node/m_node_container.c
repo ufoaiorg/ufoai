@@ -340,12 +340,11 @@ static void MN_ContainerNodeLoaded (menuNode_t* const node)
 
 	/** @todo find a better way to add more equip node, without this hack */
 	name = node->name;
-	if (!Q_strncmp(node->name, "equip_", 6)) {
+	if (!Q_strncmp(node->name, "equip_", 6))
 		name = "equip";
-	}
 
 	for (i = 0, container = csi.ids; i < csi.numIDs; container++, i++)
-		if (!Q_strncmp(name, container->name, sizeof(node->name)))
+		if (!Q_strcmp(name, container->name))
 			break;
 
 	/* not find */
@@ -488,7 +487,7 @@ static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int di
 
 	/** @todo not sure its the right check */
 	isArmour = !Q_strcmp(obj->type, "armour");
-	isAmmo = obj->numWeapons != 0 && !Q_strncmp(obj->type, "ammo", 4);
+	isAmmo = obj->numWeapons != 0 && !Q_strcmp(obj->type, "ammo");
 	isWeapon = obj->weapon || obj->isMisc || isArmour;
 
 	if ((displayType == 0 && isAmmo) || (displayType == 1 && isWeapon))
@@ -561,7 +560,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		pos[2] = 0;
 
 		if (highlightType) {
-			if (!Q_strncmp(obj->type, "ammo", MAX_VAR))
+			if (!Q_strcmp(obj->type, "ammo"))
 				isHilight = INVSH_LoadableInWeapon(obj, highlightType);
 			else
 				isHilight = INVSH_LoadableInWeapon(highlightType, obj);
@@ -770,7 +769,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 		return;
 
 	/* Hack, no preview for armour, we dont want it out of the armour container (and armour container is not visible) */
-	if (!Q_strncmp(previewItem.t->type, "armour", MAX_VAR))
+	if (!Q_strcmp(previewItem.t->type, "armour"))
 		return;
 
 	MN_GetNodeAbsPos(target, origine);
@@ -1105,10 +1104,10 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 		int px, py;
 		assert(ic->item.t);
 		/* armour can only have one target */
-		if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
+		if (!Q_strcmp(ic->item.t->type, "armour")) {
 			packed = INV_MoveItem(menuInventory, &csi.ids[csi.idArmour], 0, 0, EXTRADATA(node).container, ic);
 		/* ammo or item */
-		} else if (!Q_strncmp(ic->item.t->type, "ammo", MAX_VAR)) {
+		} else if (!Q_strcmp(ic->item.t->type, "ammo")) {
 			Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
 			packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
 			if (!packed) {
@@ -1175,7 +1174,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 	 * update the actor skin.
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
-	if (!Q_strncmp(ic->item.t->type, "armour", MAX_VAR)) {
+	if (!Q_strcmp(ic->item.t->type, "armour")) {
 		const menuNode_t *armour = MN_GetNode(node->menu, "armour");
 		if (armour && armour->onChange)
 			MN_ExecuteEventActions(armour, armour->onChange);
