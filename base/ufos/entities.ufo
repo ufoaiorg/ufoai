@@ -177,17 +177,19 @@ entity light {
 	flags		"day"
 
 	mandatory {
-		color		"Color for the light RGB"
+		_color		"Colour for the light RGB"
 		light		"Intensity 0-255"
 	}
 
 	optional {
 		target		"Entity target name (e.g. info_null)"
-		cone		""
+		_cone		""
+		origin		""
+		angle		"Special values: UP -1; DOWN -2"
 	}
 
 	default {
-		cone		"10"
+		_cone		"10"
 	}
 }
 
