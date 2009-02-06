@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-02-01 19:01+0100\n"
-"PO-Revision-Date: 2009-02-05 07:41+0100\n"
+"PO-Revision-Date: 2009-02-06 21:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -6505,7 +6505,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1801
 #: ../base/ufos/research.ufo:1881
 #: ../base/ufos/weapons_aliens.ufo:6
-#, fuzzy
 msgid "Needler Gun"
 msgstr "Nadler"
 
@@ -6538,7 +6537,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1841
 #: ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
-msgstr "schwerer Nadler"
+msgstr "Schwerer Nadler"
 
 #: ../base/ufos/research.ufo:1846
 #, fuzzy
