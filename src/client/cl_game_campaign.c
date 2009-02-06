@@ -426,6 +426,7 @@ const mapDef_t* GAME_CP_MapInfo (int step)
 
 int GAME_CP_GetTeam (void)
 {
+	assert(curCampaign);
 	return curCampaign->team;
 }
 

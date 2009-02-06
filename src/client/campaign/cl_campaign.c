@@ -1137,7 +1137,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		mission.onGeoscape = MSG_ReadByte(sb);
 
 		/* Add mission to global array */
-		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
+		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
 	}
 
 	/* read ccs.battleParameters */
