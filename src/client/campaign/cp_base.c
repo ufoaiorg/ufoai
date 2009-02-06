@@ -57,7 +57,7 @@ base_t* B_GetBaseByIDX (int baseIdx)
 {
 	if (baseIdx >= MAX_BASES || baseIdx < 0)
 		Com_Error(ERR_DROP, "Invalid base index of %i given", baseIdx);
-	return &gd.bases[baseIdx];
+	return &ccs.bases[baseIdx];
 }
 
 /**
@@ -619,7 +619,7 @@ void B_BaseMenuInit (const base_t *base)
 	else
 		MN_ExecuteConfunc("set_buysell_disabled");
 
-	if (gd.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK)
+	if (ccs.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK)
 		MN_ExecuteConfunc("set_transfer_enabled");
 	else
 		MN_ExecuteConfunc("set_transfer_disabled");
@@ -831,7 +831,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 				MN_PopupButton(_("Destroy Hangar"), _("If you destroy this hangar, you will also destroy the aircraft inside.\nAre you sure you want to destroy this building?"),
 					"mn_pop;mn_push aircraft;aircraft_select;", _("Go to hangar"), _("Go to hangar without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
-					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
+					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -841,7 +841,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 				MN_PopupButton(_("Destroy Quarter"), _("If you destroy this Quarters, every employee inside will be killed.\nAre you sure you want to destroy this building?"),
 					"mn_pop;mn_push employees;employee_list 0;", _("Dismiss"), _("Go to hiring menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
-					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
+					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -851,7 +851,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 				MN_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
 					"mn_pop;mn_push buy;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
-					(gd.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (gd.numBases > 1) ? _("Transfer") : NULL,
+					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
 				return;
 			}
@@ -1143,19 +1143,19 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 
 	/* this cvar is used for disabling the base build button on geoscape
 	 * if MAX_BASES was reached */
-	Cvar_Set("mn_base_count", va("%i", gd.numBases));
+	Cvar_Set("mn_base_count", va("%i", ccs.numBases));
 
 	base->numAircraftInBase = 0;
 
 	/* setup for first base */
 	/** @todo this will propably also be called if all player bases are
 	 * destroyed (mimics old behaviour), do we want this? */
-	if (gd.numBases == 1) {
+	if (ccs.numBases == 1) {
 		B_SetUpFirstBase(base, hire, buildings);
 	}
 
 	/* add auto build buildings if it's not the first base */
-	if (gd.numBases > 1 && buildings) {
+	if (ccs.numBases > 1 && buildings) {
 		for (i = 0; i < gd.numBuildingTemplates; i++) {
 			if (gd.buildingTemplates[i].autobuild) {
 				B_AddBuildingToBase(base, &gd.buildingTemplates[i], hire);
@@ -1242,9 +1242,9 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateName)
 	int i = 0;
 
 	assert(baseTemplateName);
-	for (i = 0; i < gd.numBaseTemplates; i++)
-		if (!Q_strcasecmp(gd.baseTemplates[i].name, baseTemplateName))
-			return &gd.baseTemplates[i];
+	for (i = 0; i < ccs.numBaseTemplates; i++)
+		if (!Q_strcasecmp(ccs.baseTemplates[i].name, baseTemplateName))
+			return &ccs.baseTemplates[i];
 
 	Com_Printf("Base Template %s not found\n", baseTemplateName);
 	return NULL;
@@ -1931,62 +1931,6 @@ void B_ClearBase (base_t *const base)
 }
 
 /**
- * @brief Reads information about bases.
- * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
- */
-void B_ParseBaseNames (const char *name, const char **text)
-{
-	const char *errhead = "B_ParseBaseNames: unexpected end of file (names ";
-	const char *token;
-	base_t *base;
-
-	gd.numBaseNames = 0;
-
-	/* get token */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBaseNames: base \"%s\" without body ignored\n", name);
-		return;
-	}
-	do {
-		/* add base */
-		if (gd.numBaseNames > MAX_BASES) {
-			Com_Printf("B_ParseBaseNames: too many bases\n");
-			return;
-		}
-
-		/* get the name */
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		base = B_GetBaseByIDX(gd.numBaseNames);
-		memset(base, 0, sizeof(*base));
-		base->idx = gd.numBaseNames;
-		memset(base->map, 0, sizeof(base->map));
-
-		/* get the title */
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		if (*token == '_')
-			token++;
-		Q_strncpyz(base->name, _(token), sizeof(base->name));
-		Com_DPrintf(DEBUG_CLIENT, "Found base %s\n", base->name);
-		B_ResetBuildingCurrent(base);
-		gd.numBaseNames++; /** @todo Use this value instead of MAX_BASES in the for loops */
-	} while (*text);
-
-	Cvar_Set("mn_base_title", "");
-}
-
-/**
  * @brief Reads a base layout template
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
@@ -2011,21 +1955,21 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		return;
 	}
 
-	if (gd.numBaseTemplates >= MAX_BASETEMPLATES) {
+	if (ccs.numBaseTemplates >= MAX_BASETEMPLATES) {
 		Com_Printf("B_ParseBaseTemplate: too many base templates\n");
 		gd.numBuildingTemplates = MAX_BASETEMPLATES;	/* just in case it's bigger. */
 		return;
 	}
 
 	/* create new Template */
-	template = &gd.baseTemplates[gd.numBaseTemplates];
+	template = &ccs.baseTemplates[ccs.numBaseTemplates];
 	template->name = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	/* clear map for checking duplicate positions and buildingnums for checking moreThanOne constraint */
 	memset(&map, qfalse, sizeof(map));
 	memset(&buildingnums, 0, sizeof(buildingnums));
 
-	gd.numBaseTemplates++;
+	ccs.numBaseTemplates++;
 
 	Com_DPrintf(DEBUG_CLIENT, "Found Base Template %s\n", name);
 	do {
@@ -2163,7 +2107,7 @@ void B_SelectBase (base_t *base)
 	if (gd.mapAction != MA_NEWBASE) {
 		assert(baseCurrent);
 		Cvar_Set("mn_base_title", baseCurrent->name);
-		Cvar_SetValue("mn_numbases", gd.numBases);
+		Cvar_SetValue("mn_numbases", ccs.numBases);
 		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
 	}
 }
@@ -2418,7 +2362,7 @@ void B_NewBases (void)
 	char title[MAX_VAR];
 
 	/* base setup */
-	gd.numBases = 0;
+	ccs.numBases = 0;
 	Cvar_Set("mn_base_count", "0");
 
 	for (i = 0; i < MAX_BASES; i++) {
@@ -2483,7 +2427,7 @@ static void B_BaseList_f (void)
 	int i, row, col, j;
 	base_t *base;
 
-	for (i = 0, base = gd.bases; i < MAX_BASES; i++, base++) {
+	for (i = 0, base = ccs.bases; i < MAX_BASES; i++, base++) {
 		if (!base->founded) {
 			Com_Printf("Base idx %i not founded\n\n", i);
 			continue;
@@ -2578,7 +2522,7 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 			} else {
 				MN_PushMenu("buyaircraft", NULL);
 				/* transfer is only possible when there are at least two bases */
-				if (gd.numBases > 1)
+				if (ccs.numBases > 1)
 					MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
 				else
 					MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
@@ -2614,7 +2558,7 @@ static void B_PrintCapacities_f (void)
 	}
 
 	i = atoi(Cmd_Argv(1));
-	if (i >= gd.numBases) {
+	if (i >= ccs.numBases) {
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
@@ -2699,7 +2643,7 @@ int B_GetFoundedBaseCount (void)
 	int i, cnt = 0;
 
 	for (i = 0; i < MAX_BASES; i++) {
-		if (!gd.bases[i].founded)
+		if (!ccs.bases[i].founded)
 			continue;
 		cnt++;
 	}
@@ -2727,21 +2671,21 @@ void B_UpdateBaseData (void)
 			if (!b)
 				continue;
 			if (B_CheckBuildingConstruction(b, base)) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), gd.bases[baseIdx].name);
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of %s building finished in base %s."), _(b->name), ccs.bases[baseIdx].name);
 				MS_AddNewMessage(_("Building finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}
 
 		/* Repair base buildings */
-		if (gd.bases[baseIdx].batteryDamage <= MAX_BATTERY_DAMAGE) {
-			gd.bases[baseIdx].batteryDamage += 20;
-			if (gd.bases[baseIdx].batteryDamage > MAX_BATTERY_DAMAGE)
-				gd.bases[baseIdx].batteryDamage = MAX_BATTERY_DAMAGE;
+		if (ccs.bases[baseIdx].batteryDamage <= MAX_BATTERY_DAMAGE) {
+			ccs.bases[baseIdx].batteryDamage += 20;
+			if (ccs.bases[baseIdx].batteryDamage > MAX_BATTERY_DAMAGE)
+				ccs.bases[baseIdx].batteryDamage = MAX_BATTERY_DAMAGE;
 		}
-		if (gd.bases[baseIdx].baseDamage <= MAX_BASE_DAMAGE) {
-			gd.bases[baseIdx].baseDamage += 20;
-			if (gd.bases[baseIdx].baseDamage > MAX_BASE_DAMAGE)
-				gd.bases[baseIdx].baseDamage = MAX_BASE_DAMAGE;
+		if (ccs.bases[baseIdx].baseDamage <= MAX_BASE_DAMAGE) {
+			ccs.bases[baseIdx].baseDamage += 20;
+			if (ccs.bases[baseIdx].baseDamage > MAX_BASE_DAMAGE)
+				ccs.bases[baseIdx].baseDamage = MAX_BASE_DAMAGE;
 		}
 	}
 }
@@ -3070,7 +3014,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 {
 	int i, k, l;
 
-	MSG_WriteShort(sb, gd.numAircraft);
+	MSG_WriteShort(sb, ccs.numAircraft);
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		const base_t *b = B_GetBaseByIDX(i);
 		MSG_WriteByte(sb, b->founded);
@@ -3341,8 +3285,8 @@ static void B_PostLoadInitCheckAircraft (void)
 		}
 	}
 
-	if (totalNumberOfAircraft != gd.numAircraft)
-		Com_Printf("Error in B_PostLoadInitCheckAircraft(): Total number of aircraft (%i) does not fit saved value (%i)\n", totalNumberOfAircraft, gd.numAircraft);
+	if (totalNumberOfAircraft != ccs.numAircraft)
+		Com_Printf("Error in B_PostLoadInitCheckAircraft(): Total number of aircraft (%i) does not fit saved value (%i)\n", totalNumberOfAircraft, ccs.numAircraft);
 }
 #endif
 
@@ -3375,7 +3319,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	int buildingIdx;
 	int pilotIdx;
 
-	gd.numAircraft = MSG_ReadShort(sb);
+	ccs.numAircraft = MSG_ReadShort(sb);
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		base_t *const b = B_GetBaseByIDX(i);
 		b->founded = MSG_ReadByte(sb);
@@ -3607,8 +3551,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 	}
-	gd.numBases = B_GetFoundedBaseCount();
-	Cvar_Set("mn_base_count", va("%i", gd.numBases));
+	ccs.numBases = B_GetFoundedBaseCount();
+	Cvar_Set("mn_base_count", va("%i", ccs.numBases));
 
 	return qtrue;
 }

@@ -388,6 +388,17 @@ typedef struct ccs_s {
 	technology_t technologies[MAX_TECHNOLOGIES];
 	/* Total nubmer of technologies. */
 	int numTechnologies;
+
+	/* == bases == */
+	/* A list of _all_ bases ... even unbuilt ones. */
+	base_t bases[MAX_BASES];
+	/* used for unique aircraft ids */
+	int numAircraft;
+	/* Total number of built bases (how many are enabled). */
+	int numBases;
+	/* a list of all templates for building bases */
+	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
+	int numBaseTemplates;
 } ccs_t;
 
 /** possible geoscape actions */

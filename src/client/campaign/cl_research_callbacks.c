@@ -819,7 +819,7 @@ static void CL_ResearchType_f (void)
 	RS_InitGUIData(baseCurrent);
 
 	/* Nothing to research here. */
-	if (!researchListLength || !gd.numBases) {
+	if (!researchListLength || !ccs.numBases) {
 		MN_PopMenu(qfalse);
 		if (!researchListLength)
 			MN_Popup(_("Notice"), _("Nothing to research"));

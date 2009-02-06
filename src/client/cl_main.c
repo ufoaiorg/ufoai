@@ -773,7 +773,6 @@ static void CL_GlobalDataSizes_f (void)
 {
 	Com_Printf(
 		"globalData_t size: %10Zu bytes\n"
-		"bases              %10Zu bytes\n"
 		"buildings          %10Zu bytes\n"
 		"nations            %10Zu bytes\n"
 		"ranks              %10Zu bytes\n"
@@ -784,7 +783,6 @@ static void CL_GlobalDataSizes_f (void)
 		"upChapters         %10Zu bytes\n"
 		,
 		sizeof(globalData_t),
-		sizeof(gd.bases),
 		sizeof(gd.buildings),
 		sizeof(gd.nations),
 		sizeof(gd.ranks),
@@ -793,23 +791,6 @@ static void CL_GlobalDataSizes_f (void)
 		sizeof(gd.buildingTemplates),
 		sizeof(gd.eventMails),
 		sizeof(gd.upChapters)
-	);
-
-	Com_Printf(
-		"bases:\n"
-		"alienscont         %10Zu bytes\n"
-		"capacities         %10Zu bytes\n"
-		"bEquipment         %10Zu bytes\n"
-		"aircraft           %10Zu bytes\n"
-		"aircraft (single)  %10Zu bytes\n"
-		"radar              %10Zu bytes\n"
-		,
-		sizeof(gd.bases[0].alienscont),
-		sizeof(gd.bases[0].capacities),
-		sizeof(gd.bases[0].bEquipment),
-		sizeof(gd.bases[0].aircraft),
-		sizeof(aircraft_t),
-		sizeof(gd.bases[0].radar)
 	);
 }
 

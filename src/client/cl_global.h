@@ -50,19 +50,6 @@ typedef struct globalData_s
 	eventMail_t eventMails[MAX_EVENTMAILS];	/**< holds all event mails (cl_event.c) */
 	int numEventMails;	/**< how many eventmails (script-id: mail) parsed */
 
-	/* == bases == */
-	/* A list of _all_ bases ... even unbuilt ones. */
-	base_t bases[MAX_BASES];
-	/* used for unique aircraft ids */
-	int numAircraft;
-	/* Total number of parsed base-names. */
-	int numBaseNames;
-	/* Total number of built bases (how many are enabled). */
-	int numBases;
-	/* a list of all templates for building bases */
-	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
-	int numBaseTemplates;
-
 	/* == buildings in bases == */
 	/* A list of all possible unique buldings. */
 	building_t buildingTemplates[MAX_BUILDINGS];

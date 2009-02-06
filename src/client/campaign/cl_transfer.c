@@ -1820,7 +1820,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
 			transfer->aircraftArray[j] = MSG_ReadShort(sb);
-		assert(gd.numBases);
+		assert(ccs.numBases);
 		destBase = MSG_ReadByte(sb);
 		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
 		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer

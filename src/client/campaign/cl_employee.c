@@ -1721,7 +1721,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->hired = MSG_ReadByte(sb);
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e->idx = MSG_ReadShort(sb);
-			assert(gd.numBases);	/**< Just in case the order is ever changed. */
+			assert(ccs.numBases);	/**< Just in case the order is ever changed. */
 			base = MSG_ReadShort(sb);
 			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
 			building = MSG_ReadShort(sb);

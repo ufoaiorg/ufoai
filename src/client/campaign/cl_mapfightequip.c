@@ -214,8 +214,8 @@ void BDEF_AddBattery_f (void)
 	}
 
 	/* Check that the baseIdx exists */
-	if (baseIdx < 0 || baseIdx >= gd.numBases) {
-		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, gd.numBases);
+	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
+		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
 		return;
 	}
 
@@ -283,8 +283,8 @@ void BDEF_RemoveBattery_f (void)
 	}
 
 	/* Check that the baseIdx exists */
-	if (baseIdx < 0 || baseIdx >= gd.numBases) {
-		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, gd.numBases);
+	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
+		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
 		return;
 	}
 

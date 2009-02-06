@@ -316,7 +316,7 @@ static void CP_UFORecoveredStore_f (void)
 	qboolean ufofound = qfalse;
 
 	/* Do nothing without any base. */
-	if (!gd.numBases)
+	if (!ccs.numBases)
 		return;
 
 	/* Do nothing if recovery process is finished. */

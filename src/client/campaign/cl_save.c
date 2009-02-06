@@ -283,7 +283,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 		return qfalse;
 	}
 
-	if (!gd.numBases) {
+	if (!ccs.numBases) {
 		*error = _("Nothing to save yet.");
 		Com_Printf("Error: Nothing to save yet.\n");
 		return qfalse;

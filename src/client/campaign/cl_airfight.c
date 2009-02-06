@@ -67,7 +67,7 @@ static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 
 /**
  * @brief Add a projectile in gd.projectiles
- * @param[in] attackingBase the attacking base in gd.bases[]. NULL is the attacker is an aircraft.
+ * @param[in] attackingBase the attacking base in ccs.bases[]. NULL is the attacker is an aircraft.
  * @param[in] attacker Pointer to the attacking aircraft
  * @param[in] aimedBase the aimed base (NULL if the target is an aircraft)
  * @param[in] target Pointer to the target aircraft

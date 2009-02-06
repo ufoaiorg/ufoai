@@ -384,18 +384,6 @@ building building_amstorage
 	ondestroy	""
 }
 
-basenames main
-{
-	base1		"_Home"
-	base2		"_Base #2"
-	base3		"_Base #3"
-	base4		"_Base #4"
-	base5		"_Base #5"
-	base6		"_Base #6"
-	base7		"_Base #7"
-	base8		"_Base #8"
-}
-
 basetemplate balanced {
 	building_entrance		"2 4"
 	building_quarters		"4 3"

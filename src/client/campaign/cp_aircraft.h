@@ -168,7 +168,7 @@ typedef enum aircraftStatus_s {
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;			/**< Global index of this aircraft. See also gd.numAircraft and AIRCRAFT_INVALID
+	int idx;			/**< Global index of this aircraft. See also ccs.numAircraft and AIRCRAFT_INVALID
 						 * this index is also updated when AIR_DeleteAircraft was called
 						 * for all the other aircraft.
 						 * For aircraftTemplates[] aicrafts this is the index in that array.

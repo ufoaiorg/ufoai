@@ -256,7 +256,6 @@ int B_CheckBuildingConstruction(building_t *b, base_t* base);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
 int B_GetNumOnTeam(const aircraft_t *aircraft);
 void B_ParseBuildings(const char *name, const char **text, qboolean link);
-void B_ParseBaseNames(const char *name, const char **text);
 void B_ParseBaseTemplate(const char *name, const char **text);
 void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingInBaseByType(const base_t* base, buildingType_t type, qboolean onlyWorking);

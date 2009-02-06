@@ -761,7 +761,7 @@ void RS_InitTree (qboolean load)
 		 * and installations don't have any tech assigned */
 		int k;
 
-		for (j = 0; j < gd.numBases; j++) {
+		for (j = 0; j < ccs.numBases; j++) {
 			base_t *b = B_GetFoundedBaseByIDX(j);
 			if (!b)
 				continue;

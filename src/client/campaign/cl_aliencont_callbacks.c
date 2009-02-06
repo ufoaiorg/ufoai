@@ -87,12 +87,12 @@ static void AC_NextAC_f (void)
 	qboolean found = qfalse;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
+	if (!baseCurrent || !aliencontCurrent)
 		return;
 
 	/* Get next base */
-	if (baseCurrent >= gd.bases + MAX_BASES - 1)
-		base = &gd.bases[0];
+	if (baseCurrent >= ccs.bases + MAX_BASES - 1)
+		base = &ccs.bases[0];
 	else
 		base = baseCurrent + 1;
 
@@ -105,8 +105,8 @@ static void AC_NextAC_f (void)
 		}
 
 		/* Get next base */
-		if (base >= gd.bases + MAX_BASES - 1)
-			base = &gd.bases[0];	/* Wrap around from last to first base. */
+		if (base >= ccs.bases + MAX_BASES - 1)
+			base = &ccs.bases[0];	/* Wrap around from last to first base. */
 		else
 			base++;
 	}
@@ -134,8 +134,8 @@ static void AC_PrevAC_f (void)
 		return;
 
 	/* Get previous base */
-	if (baseCurrent <= gd.bases)
-		base = &gd.bases[MAX_BASES - 1];
+	if (baseCurrent <= ccs.bases)
+		base = &ccs.bases[MAX_BASES - 1];
 	else
 		base = baseCurrent - 1;
 
@@ -148,8 +148,8 @@ static void AC_PrevAC_f (void)
 		}
 
 		/* Get next base */
-		if (base <= gd.bases)
-			base = &gd.bases[MAX_BASES - 1];	/* Wrap around from first to last base. */
+		if (base <= ccs.bases)
+			base = &ccs.bases[MAX_BASES - 1];	/* Wrap around from first to last base. */
 		else
 			base--;
 	}

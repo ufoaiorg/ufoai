@@ -187,7 +187,7 @@ void CL_GameTimeSlow (void)
 	const int minGameLapse = CP_MinGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
-	 * so the gd.numBases values is pointless here */
+	 * so the ccs.numBases values is pointless here */
 	if (!campaignStats.basesBuild)
 		return;
 
@@ -225,7 +225,7 @@ void CL_GameTimeFast (void)
 	const int maxGameLapse = CP_MaxGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
-	 * so the gd.numBases values is pointless here */
+	 * so the ccs.numBases values is pointless here */
 	if (!campaignStats.basesBuild)
 		return;
 
@@ -262,7 +262,7 @@ void CL_SetGameTime (int gameLapseValue)
 		return;
 
 	/* check the stats value - already build bases might have been destroyed
-	 * so the gd.numBases values is pointless here */
+	 * so the ccs.numBases values is pointless here */
 	if (!campaignStats.basesBuild)
 		return;
 

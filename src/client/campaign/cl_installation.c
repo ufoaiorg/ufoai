@@ -288,7 +288,7 @@ static void INS_BuildInstallation_f (void)
 	}
 
 	/* we should always have at least one base */
-	if (!gd.numBases)
+	if (!ccs.numBases)
 		return;
 
 	installationTemplate = INS_GetInstallationTemplateFromInstallationId(Cmd_Argv(1));

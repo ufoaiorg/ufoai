@@ -170,7 +170,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 	/* Execute action on element */
 	switch (multiSelect.selectType[selected]) {
 	case MULTISELECT_TYPE_BASE:	/* Select a base */
-		if (id >= gd.numBases)
+		if (id >= ccs.numBases)
 			break;
 		MAP_ResetAction();
 		B_SelectBase(B_GetFoundedBaseByIDX(id));
@@ -280,8 +280,8 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			CL_GameTimeStop();
 
-			if (gd.numBases < MAX_BASES) {
-				Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
+			if (ccs.numBases < MAX_BASES) {
+				Cvar_Set("mn_base_title", ccs.bases[ccs.numBases].name);
 				MN_PushMenu("popup_newbase", NULL);
 			} else {
 				MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
@@ -346,11 +346,11 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		const base_t *base = B_GetFoundedBaseByIDX(i);
 		if (!base)
 			continue;
-		if (MAP_IsMapPositionSelected(node, gd.bases[i].pos, x, y))
+		if (MAP_IsMapPositionSelected(node, ccs.bases[i].pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_BASE, i, _("Base"), base->name);
 
 		/* Get selected aircraft wich belong to the base */
-		aircraft = gd.bases[i].aircraft + base->numAircraftInBase - 1;
+		aircraft = ccs.bases[i].aircraft + base->numAircraftInBase - 1;
 		for (; aircraft >= base->aircraft; aircraft--)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), _(aircraft->name));
@@ -1001,7 +1001,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	aircraft_t *aircraft;
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
-	maxEventIdx = numMissions + gd.numBases + gd.numInstallations - 1;
+	maxEventIdx = numMissions + ccs.numBases + gd.numInstallations - 1;
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
@@ -1055,7 +1055,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	counter += numMissions;
 
 	/* Cycle through bases */
-	if (centerOnEventIdx < gd.numBases + counter) {
+	if (centerOnEventIdx < ccs.numBases + counter) {
 		for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 			const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 			if (!base)
@@ -1063,15 +1063,15 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 			if (counter == centerOnEventIdx) {
 				if (cl_3dmap->integer)
-					VectorSet(vector, gd.bases[baseIdx].pos[0], -gd.bases[baseIdx].pos[1], 0);
+					VectorSet(vector, ccs.bases[baseIdx].pos[0], -ccs.bases[baseIdx].pos[1], 0);
 				else
-					Vector2Set(vector, gd.bases[baseIdx].pos[0], gd.bases[baseIdx].pos[1]);
+					Vector2Set(vector, ccs.bases[baseIdx].pos[0], ccs.bases[baseIdx].pos[1]);
 				return;
 			}
 			counter++;
 		}
 	}
-	counter += gd.numBases;
+	counter += ccs.numBases;
 
 	/* Cycle through installations */
 	if (centerOnEventIdx < gd.numInstallations + counter) {
@@ -2013,7 +2013,7 @@ void MAP_ResetAction (void)
 		return;
 
 	/* don't allow a reset when no base is set up */
-	if (gd.numBases)
+	if (ccs.numBases)
 		gd.mapAction = MA_NONE;
 
 	ccs.interceptAircraft = NULL;
@@ -2707,7 +2707,7 @@ void MAP_SetOverlay (const char *overlayID)
 	}
 
 	/* do nothing while the first base/installation is not build */
-	if (gd.numBases + gd.numInstallations == 0)
+	if (ccs.numBases + gd.numInstallations == 0)
 		return;
 
 	if (!Q_strcmp(overlayID, "xvi")) {

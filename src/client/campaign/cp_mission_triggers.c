@@ -73,7 +73,7 @@ static void CP_AddItemAsCollected_f (void)
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *item = &csi.ods[i];
 		if (!Q_strncmp(id, item->id, MAX_VAR)) {
-			gd.bases[baseID].storage.num[i]++;
+			ccs.bases[baseID].storage.num[i]++;
 			Com_DPrintf(DEBUG_CLIENT, "add item: '%s'\n", item->id);
 			assert(item->tech);
 			RS_MarkCollected(item->tech);

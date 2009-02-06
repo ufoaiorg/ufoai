@@ -365,7 +365,7 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 	/** @todo Should we make the campaign lost when a player loses all his bases?
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
-	if (!gd.numBases && ccs.credits < curCampaign->basecost - curCampaign->negativeCreditsUntilLost) {
+	if (!ccs.numBases && ccs.credits < curCampaign->basecost - curCampaign->negativeCreditsUntilLost) {
 		MN_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
@@ -825,7 +825,7 @@ void CL_CampaignRun (void)
 		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
-		if (date.day == 1 && gd.fund && gd.numBases) {
+		if (date.day == 1 && gd.fund && ccs.numBases) {
 			CP_NationBackupMonthlyData();
 			CP_NationHandleBudget();
 			gd.fund = qfalse;
@@ -882,7 +882,7 @@ static void CL_StatsUpdate_f (void)
 	pos += (strlen(pos) + 1);
 	MN_RegisterText(TEXT_STATS_BASES, pos);
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-		campaignStats.basesBuild, gd.numBases, campaignStats.basesAttacked),
+		campaignStats.basesBuild, ccs.numBases, campaignStats.basesAttacked),
 
 	/* installations */
 	pos += (strlen(pos) + 1);
@@ -1735,7 +1735,7 @@ static void CL_DebugAllItems_f (void)
 	}
 
 	i = atoi(Cmd_Argv(1));
-	if (i >= gd.numBases) {
+	if (i >= ccs.numBases) {
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
@@ -1770,7 +1770,7 @@ static void CL_DebugShowItems_f (void)
 	}
 
 	i = atoi(Cmd_Argv(1));
-	if (i >= gd.numBases) {
+	if (i >= ccs.numBases) {
 		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
 		return;
 	}
@@ -2003,7 +2003,8 @@ void CP_CampaignInit (qboolean load)
 
 	MAP_Init();
 
-	gd.numAircraft = 0;
+	/** @todo remove this - ccs should be memset to 0 */
+	ccs.numAircraft = 0;
 
 	B_NewBases();
 	INS_NewInstallations();

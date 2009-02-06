@@ -744,7 +744,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		base->aircraft[base->numAircraftInBase] = *aircraftTemplate;
 		/* now lets use the aircraft array for the base to set some parameters */
 		aircraft = &base->aircraft[base->numAircraftInBase];
-		aircraft->idx = gd.numAircraft;	/**< set a unique index to this aircraft. */
+		aircraft->idx = ccs.numAircraft;	/**< set a unique index to this aircraft. */
 		aircraft->homebase = base;
 		/* Update the values of its stats */
 		AII_UpdateAircraftStats(aircraft);
@@ -766,7 +766,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 		Vector2Copy(base->pos, aircraft->pos);
 		RADAR_Initialise(&aircraft->radar, RADAR_AIRCRAFTRANGE, RADAR_AIRCRAFTTRACKINGRANGE, 1.0f, qfalse);
 
-		gd.numAircraft++;		/**< Increase the global number of aircraft. */
+		ccs.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		/* Update base capacities. */
 		Com_DPrintf(DEBUG_CLIENT, "idx_sample: %i name: %s weight: %i\n", aircraft->tpl->idx, aircraft->id, aircraft->size);
@@ -992,7 +992,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 		}
 	}
 
-	for (i = aircraft->idx + 1; i < gd.numAircraft; i++) {
+	for (i = aircraft->idx + 1; i < ccs.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
 		aircraft_t *aircraft_temp = AIR_AircraftGetFromIDX(i);
 		if (aircraft_temp) {
@@ -1003,7 +1003,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 		}
 	}
 
-	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
+	ccs.numAircraft--;	/**< Decrease the global number of aircraft. */
 
 	/* Finally remove the aircraft-struct itself from the base-array and update the order. */
 	/**
@@ -1293,13 +1293,13 @@ aircraft_t* AIR_AircraftGetFromIDX (int idx)
 	int baseIdx;
 	aircraft_t* aircraft;
 
-	if (idx == AIRCRAFT_INVALID || idx >= gd.numAircraft) {
+	if (idx == AIRCRAFT_INVALID || idx >= ccs.numAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: bad aircraft index: %i\n", idx);
 		return NULL;
 	}
 
 #ifdef PARANOID
-	if (gd.numBases < 1) {
+	if (ccs.numBases < 1) {
 		Com_DPrintf(DEBUG_CLIENT, "AIR_AircraftGetFromIDX: no base(s) found!\n");
 	}
 #endif
@@ -1473,7 +1473,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		/** @todo is this needed here? I think not, because the index of available aircraft
 		 * are set when we create these aircraft from the samples - but i might be wrong here
-		 * if i'm not wrong, the gd.numAircraft++ from a few lines below can go into trashbin, too */
+		 * if i'm not wrong, the ccs.numAircraft++ from a few lines below can go into trashbin, too */
 		aircraftTemplate->idx = numAircraftTemplates;
 		aircraftTemplate->tpl = aircraftTemplate;
 		aircraftTemplate->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
@@ -2697,7 +2697,7 @@ qboolean AIR_RemoveEmployee (employee_t *employee, aircraft_t *aircraft)
 	 * the aircraft pointer to it. */
 	if (!aircraft) {
 		int i;
-		for (i = 0; i < gd.numAircraft; i++) {
+		for (i = 0; i < ccs.numAircraft; i++) {
 			aircraft_t *acTemp = AIR_AircraftGetFromIDX(i);
 			if (AIR_IsEmployeeInAircraft(employee, acTemp)) {
 				aircraft = acTemp;
@@ -2734,7 +2734,7 @@ const aircraft_t *AIR_IsEmployeeInAircraft (const employee_t *employee, const ai
 
 	/* If no aircraft is given we search if he is in _any_ aircraft and return true if that's the case. */
 	if (!aircraft) {
-		for (i = 0; i < gd.numAircraft; i++) {
+		for (i = 0; i < ccs.numAircraft; i++) {
 			const aircraft_t *aircraftByIDX = AIR_AircraftGetFromIDX(i);
 			if (aircraftByIDX && AIR_IsEmployeeInAircraft(employee, aircraftByIDX))
 				return aircraftByIDX;

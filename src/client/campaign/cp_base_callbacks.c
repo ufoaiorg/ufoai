@@ -52,7 +52,7 @@ static void B_SelectBase_f (void)
 	}
 	baseID = atoi(Cmd_Argv(1));
 	/* check against MAX_BASES here! - only -1 will create a new base
-	 * if we would check against gd.numBases here, a click on the base summary
+	 * if we would check against ccs.numBases here, a click on the base summary
 	 * base nodes would try to select unfounded bases */
 	if (baseID >= 0 && baseID < MAX_BASES) {
 		base = B_GetFoundedBaseByIDX(baseID);
@@ -78,7 +78,7 @@ static void B_NextBase_f (void)
 	if (!base)
 		return;
 
-	baseID = (base->idx + 1) % gd.numBases;
+	baseID = (base->idx + 1) % ccs.numBases;
 	base = B_GetFoundedBaseByIDX(baseID);
 	if (base)
 		B_SelectBase(base);
@@ -101,7 +101,7 @@ static void B_PrevBase_f (void)
 	if (baseID > 0)
 		baseID--;
 	else
-		baseID = gd.numBases - 1;
+		baseID = ccs.numBases - 1;
 
 	base = B_GetFoundedBaseByIDX(baseID);
 	if (base)
@@ -123,7 +123,7 @@ static qboolean B_NewBase (base_t* base, vec2_t pos)
 	if (base->founded) {
 		Com_DPrintf(DEBUG_CLIENT, "B_NewBase: base already founded: %i\n", base->idx);
 		return qfalse;
-	} else if (gd.numBases == MAX_BASES) {
+	} else if (ccs.numBases == MAX_BASES) {
 		Com_DPrintf(DEBUG_CLIENT, "B_NewBase: max base limit hit\n");
 		return qfalse;
 	}
@@ -143,7 +143,7 @@ static qboolean B_NewBase (base_t* base, vec2_t pos)
 	/* build base */
 	Vector2Copy(pos, base->pos);
 
-	gd.numBases++;
+	ccs.numBases++;
 
 	/* set up the base with buildings that have the autobuild flag set */
 	B_SetUpBase(base, cl_start_employees->integer, cl_start_buildings->integer);
@@ -164,7 +164,6 @@ static void B_BuildBase_f (void)
 		return;
 
 	assert(!base->founded);
-	assert(GAME_IsCampaign());
 	assert(curCampaign);
 
 	if (ccs.credits - curCampaign->basecost > 0) {
@@ -173,14 +172,18 @@ static void B_BuildBase_f (void)
 		 * If we don't do this, any action that is done for this base has no
 		 * influence to any nation happiness/funding/supporting */
 		if (B_NewBase(base, newBasePos)) {
-			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", gd.numBases);
-			base->idx = gd.numBases - 1;
+			const char *baseName = mn_base_title->string;
+			if (baseName[0] == '\0') {
+				baseName = "Base";
+			}
+			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", ccs.numBases);
+			base->idx = ccs.numBases - 1;
 			base->founded = qtrue;
 			base->baseStatus = BASE_WORKING;
 			campaignStats.basesBuild++;
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - curCampaign->basecost);
-			Q_strncpyz(base->name, mn_base_title->string, sizeof(base->name));
+			Q_strncpyz(base->name, baseName, sizeof(base->name));
 			nation = MAP_GetNation(base->pos);
 			if (nation)
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
@@ -422,7 +425,7 @@ static void B_AssembleMap_f (void)
 		if (Cmd_Argc() == 3)
 			setUnderAttack = atoi(Cmd_Argv(2));
 		baseID = atoi(Cmd_Argv(1));
-		if (baseID < 0 || baseID >= gd.numBases) {
+		if (baseID < 0 || baseID >= ccs.numBases) {
 			Com_DPrintf(DEBUG_CLIENT, "Invalid baseID: %i\n", baseID);
 			return;
 		}
@@ -502,13 +505,13 @@ static void B_AssembleMap_f (void)
 static void B_AssembleRandomBase_f (void)
 {
 	int setUnderAttack = 0;
-	int randomBase = rand() % gd.numBases;
+	int randomBase = rand() % ccs.numBases;
 	if (Cmd_Argc() < 2)
 		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <setUnderAttack>\n", Cmd_Argv(0));
 	else
 		setUnderAttack = atoi(Cmd_Argv(1));
 
-	if (!gd.bases[randomBase].founded) {
+	if (!ccs.bases[randomBase].founded) {
 		Com_Printf("Base with id %i was not founded or already destroyed\n", randomBase);
 		return;
 	}

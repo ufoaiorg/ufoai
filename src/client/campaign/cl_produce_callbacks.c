@@ -234,7 +234,7 @@ static void PR_UpdateProductionList (const base_t* base)
 		} else {
 			const aircraft_t *aircraftTemplate = prod->aircraft;
 			Q_strcat(productionList, va("%s\n", _(aircraftTemplate->name)), sizeof(productionList));
-			for (j = 0, counter = 0; j < gd.numAircraft; j++) {
+			for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
 				const aircraft_t *aircraftBase = AIR_AircraftGetFromIDX(j);
 				assert(aircraftBase);
 				if (aircraftBase->homebase == base && aircraftBase->tpl == aircraftTemplate)
@@ -284,7 +284,7 @@ static void PR_UpdateProductionList (const base_t* base)
 				LIST_AddPointer(&productionItemList, aircraftTemplate);
 
 				Q_strcat(productionList, va("%s\n", _(aircraftTemplate->name)), sizeof(productionList));
-				for (j = 0, counter = 0; j < gd.numAircraft; j++) {
+				for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
 					const aircraft_t *aircraftBase = AIR_AircraftGetFromIDX(j);
 					assert(aircraftBase);
 					if (aircraftBase->homebase == base
