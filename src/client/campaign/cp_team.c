@@ -31,9 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Reloads weapons and removes "not assigned" ones from containers.
  * @param[in] aircraft Pointer to an aircraft for given team.
- * @param[in] ed equipDef_t pointer to equipment of given character in a team.
+ * @param[in] ed equipDef_t pointer to equipment
  * @sa CL_AddWeaponAmmo
- * @todo campaign mode only function
  */
 void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 {
@@ -91,7 +90,6 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
  * @sa CL_UpdateEquipmentMenuParameters_f
  * @sa MP_SaveTeamMultiplayerInfo
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @todo campaign mode only function
  */
 void CL_CleanTempInventory (base_t* base)
 {

@@ -301,7 +301,6 @@ void AII_CollectItem (aircraft_t *aircraft, const objDef_t *item, int amount)
  * @brief Process items carried by soldiers.
  * @param[in] soldier Pointer to le_t being a soldier from our team.
  * @sa AII_CollectingItems
- * @todo this is campaign mode only - doesn't belong here
  */
 static void AII_CarriedItems (const le_t *soldier)
 {
@@ -851,7 +850,6 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
  * @param[in] employee Pointer to employee.
  * @param[in] sourceBase Base where employee comes from.
  * @param[in] destBase Base where employee is going.
- * @todo this is campaign mode only - doesn't belong here
  */
 static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t *sourceBase, base_t* destBase)
 {
