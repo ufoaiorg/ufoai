@@ -1010,9 +1010,8 @@ void Qcommon_Init (int argc, const char **argv)
 
 #ifndef DEDICATED_ONLY
 	CL_InitAfter();
-#else
-	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 #endif
+	Com_AddObjectLinks();	/* Add ammo<->weapon links to items.*/
 
 	/* Check memory integrity */
 	Mem_CheckGlobalIntegrity();

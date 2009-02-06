@@ -1124,7 +1124,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 	objDef_t *od;
 	const char *token;
 	int i;
-	int weapFdsIdx, fdIdx;
+	int weapFdsIdx;
 
 	/* search for items with same name */
 	for (i = 0; i < csi.numODs; i++)
@@ -1209,7 +1209,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 
 								if (!Q_strcmp(token, "firedef")) {
 									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
-										fdIdx = od->numFiredefs[weapFdsIdx];
+										const int fdIdx = od->numFiredefs[weapFdsIdx];
 										od->fd[weapFdsIdx][fdIdx].relFireVolume = DEFAULT_SOUND_PACKET_VOLUME;
 										od->fd[weapFdsIdx][fdIdx].relImpactVolume = DEFAULT_SOUND_PACKET_VOLUME;
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */

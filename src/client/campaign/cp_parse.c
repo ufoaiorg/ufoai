@@ -590,9 +590,6 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		AIR_ParseAircraft(name, text, qtrue);
 	else if (!Q_strncmp(type, "ugv", 3))
 		CL_ParseUGVs(name, text);
-
-	/* Add ammo<->weapon links to items.*/
-	Com_AddObjectLinks();
 }
 
 /** @brief struct that holds the sanity check data */
