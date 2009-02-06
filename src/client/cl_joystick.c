@@ -269,31 +269,36 @@ void IN_JoystickMove (void)
  */
 void IN_JoystickInitMenu (void)
 {
-	int i, total;
-	menuNode_t* joystickOptions;
+	menuOption_t* joystickOptions = NULL;
+	const int total = SDL_NumJoysticks();
 
-	joystickOptions = MN_GetNodeByPath("options_input.select_joystick");
-	if (!joystickOptions)
-		Sys_Error("Could not find node joystickOptions in menu options_input\n");
-
-	total = SDL_NumJoysticks();
-	for (i = 0; i < total; i++) {
-		menuOption_t *option = MN_AllocOption(1);
-		if (!option)
-			break;
-		MN_NodeAppendOption(joystickOptions, option);
-		Q_strncpyz(option->label, SDL_JoystickName(i), sizeof(option->label));
-		Com_sprintf(option->value, sizeof(option->value), "%i", i);
-	}
-
-	if (!total) {
+	if (total == 0) {
 		menuOption_t *option = MN_AllocOption(1);
 		if (option) {
-			MN_NodeAppendOption(joystickOptions, option);
 			Q_strncpyz(option->label, "None", sizeof(option->label));
 			Q_strncpyz(option->value, "0", sizeof(option->value));
+			joystickOptions = option;
 		}
+	} else {
+		int i;
+		menuOption_t* optionArray;
+		optionArray = MN_AllocOption(total);
+		if (optionArray == NULL)
+			return;
+
+		for (i = 0; i < total; i++) {
+			menuOption_t *option = &optionArray[i];
+
+			/* link */
+			if (i > 0)
+				optionArray[i - 1].next = option;
+
+			Q_strncpyz(option->label, SDL_JoystickName(i), sizeof(option->label));
+			Com_sprintf(option->value, sizeof(option->value), "%i", i);
+		}
+		joystickOptions = &optionArray[0];
 	}
+	MN_RegisterOption(OPTION_JOYSTICKS, joystickOptions);
 }
 
 /**

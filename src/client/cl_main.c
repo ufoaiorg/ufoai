@@ -628,7 +628,7 @@ static void CL_PrecacheModels (void)
 void CL_InitAfter (void)
 {
 	int i;
-	menuNode_t* vidModesOptions;
+	menuOption_t* vidModesOptions;
 
 	/* start the music track already while precaching data */
 	S_Frame();
@@ -653,17 +653,18 @@ void CL_InitAfter (void)
 	/* link for faster access */
 	MN_LinkMenuModels();
 
-	vidModesOptions = MN_GetNodeByPath("options_video.select_res");
-	if (!vidModesOptions)
-		Sys_Error("Could not find node select_res in menu options_video\n");
+	vidModesOptions = MN_AllocOption(VID_GetModeNums());
+	if (vidModesOptions == 0)
+		return;
+
 	for (i = 0; i < VID_GetModeNums(); i++) {
-		menuOption_t *option = MN_AllocOption(1);
-		if (!option)
-			return;
-		MN_NodeAppendOption(vidModesOptions, option);
+		menuOption_t *option = &vidModesOptions[i];
+		if (i > 0)
+			(&vidModesOptions[i - 1])->next = option;
 		Com_sprintf(option->label, sizeof(option->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);
 		Com_sprintf(option->value, sizeof(option->value), "%i", vid_modes[i].mode);
 	}
+	MN_RegisterOption(OPTION_VIDEO_RESOLUTIONS, &vidModesOptions[0]);
 
 	IN_JoystickInitMenu();
 

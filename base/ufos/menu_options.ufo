@@ -422,7 +422,6 @@ menu options_video
 		click	{ }
 	}
 
-	/* must be the last one - otherwise other strings and images will shine through */
 	selectbox lightmapres_box
 	{
 		image	"menu/selectbox_green"
@@ -498,7 +497,7 @@ menu options_video
 		image	"menu/selectbox_green"
 		size	"125 20"
 		color	"0.6 0.6 0.6 0.3"
-		// will be filled in CL_InitAfter
+		dataid	OPTION_VIDEO_RESOLUTIONS
 	}
 
 	func init
@@ -1265,5 +1264,6 @@ menu options_input
 		size	"256 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar in_joystickNo"
+		dataid	OPTION_JOYSTICKS
 	}
 }

@@ -98,6 +98,9 @@ const char *const blend_names[] = {
 };
 CASSERT(lengthof(blend_names) == BLEND_LAST);
 
+/**
+ * @todo move it on the menu when its possible (move defines too)
+ */
 static const char *const menutextid_names[] = {
 	"TEXT_STANDARD", "TEXT_LIST", "TEXT_UFOPEDIA", "TEXT_BUILDINGS", "TEXT_BUILDING_INFO",
 	"TEXT_RESEARCH", "TEXT_POPUP", "TEXT_POPUP_INFO", "TEXT_AIRCRAFT_LIST",
@@ -111,7 +114,7 @@ static const char *const menutextid_names[] = {
 	"TEXT_MARKET_STORAGE", "TEXT_MARKET_MARKET", "TEXT_MARKET_PRICES", "TEXT_CHAT_WINDOW",
 	"TEXT_AIREQUIP_1", "TEXT_AIREQUIP_2", "TEXT_BASEDEFENCE_LIST", "TEXT_TIPOFTHEDAY",
 	"TEXT_GENERIC", "TEXT_XVI", "TEXT_MOUSECURSOR_TOP", "TEXT_MOUSECURSOR_BOTTOM", "TEXT_MOUSECURSOR_LEFT", "TEXT_MESSAGEOPTIONS",
-	"OPTION_LANGUAGES"
+	"OPTION_LANGUAGES", "OPTION_JOYSTICKS", "OPTION_VIDEO_RESOLUTIONS"
 };
 CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
 
