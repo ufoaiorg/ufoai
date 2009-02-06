@@ -294,9 +294,6 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 		return;
 	}
 
-	/* load the teamname */
-	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
-
 	/* read whole team list */
 	num = MSG_ReadByte(&sb);
 	Com_DPrintf(DEBUG_CLIENT, "Loading %i teammembers\n", num);

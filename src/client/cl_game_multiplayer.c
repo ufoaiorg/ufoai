@@ -48,8 +48,6 @@ static void GAME_MP_AutoTeam (void)
 		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}
 	chrDisplayList.num = i;
-
-	Cvar_Set("mn_teamname", _("NewTeam"));
 }
 
 static void GAME_MP_AutoTeam_f (void)

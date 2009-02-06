@@ -918,27 +918,6 @@ menu mp_team
 		pos	"85 570"
 	}
 
-	// @todo Enter the name in the slots above (set disabled to false on save - until the player hits enter)
-/*
-	string current_name
-	{
-		string	"_Name"
-		pos	"85 620"
-	}
-	textentry slot_teamname
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color 		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"85 640"
-		size		"256 34"
-		string		"*cvar mn_teamname"
-	}
-*/
 	selectbox team_box
 	{
 		image	"menu/selectbox_green"
