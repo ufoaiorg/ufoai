@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h"
 #include "../cl_team.h"
 #include "../menu/m_popup.h"
+#include "../menu/m_nodes.h"	/**< menuInventory */
 #include "mp_team.h"
 
 static inventory_t mp_inventory;
@@ -343,6 +344,39 @@ void MP_LoadTeamMultiplayer_f (void)
 	Com_Printf("Team 'team%i' loaded.\n", index);
 }
 
+/**
+ * @brief Get the equipment definition (from script files) for the current selected multiplayer team
+ * and updates the equipment inventory containers
+ * @todo Multiplayer is currently using the ccs.eMission - this should be
+ * changed - ccs is campaign mode only
+ */
+static void MP_GetEquipment (void)
+{
+	const equipDef_t *ed;
+	const char *teamID = Com_ValueToStr(&cl_team->integer, V_TEAM, 0);
+	char equipmentName[MAX_VAR];
+	equipDef_t unused;
+
+	Com_sprintf(equipmentName, sizeof(equipmentName), "multiplayer_%s", teamID);
+
+	/* search equipment definition */
+	ed = INV_GetEquipmentDefinitionByID(equipmentName);
+	if (ed == NULL) {
+		Com_Printf("Equipment '%s' not found!\n", equipmentName);
+		return;
+	}
+
+	if (chrDisplayList.num > 0)
+		menuInventory = &chrDisplayList.chr[0]->inv;
+	else
+		menuInventory = NULL;
+
+	ccs.eMission = *ed;
+
+	/* manage inventory */
+	unused = ccs.eMission;
+	MN_ContainerNodeUpdateEquipment(&mp_inventory, &unused);
+}
 
 /**
  * @brief Displays actor info and equipment and unused items in proper (filter) category.
@@ -350,7 +384,6 @@ void MP_LoadTeamMultiplayer_f (void)
  */
 void MP_UpdateMenuParameters_f (void)
 {
-	equipDef_t unused;
 	int i;
 
 	/* reset description */
@@ -358,8 +391,6 @@ void MP_UpdateMenuParameters_f (void)
 	Cvar_Set("mn_item", "");
 	MN_MenuTextReset(TEXT_STANDARD);
 
-	/* manage inventory */
-	unused = ccs.eMission; /* copied, including arrays inside! */
 	for (i = 0; i < MAX_MULTIPLAYER_CHARACTERS; i++) {
 		const char *name;
 		if (i < chrDisplayList.num)
@@ -369,18 +400,7 @@ void MP_UpdateMenuParameters_f (void)
 		Cvar_ForceSet(va("mn_name%i", i), name);
 	}
 
-	for (i = 0; i < csi.numODs; i++) {
-		/* Don't allow to show armour for other teams in the menu. */
-		if (!Q_strcmp(csi.ods[i].type, "armour") && csi.ods[i].useable != cl_team->integer)
-			continue;
-
-		while (unused.num[i]) {
-			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
-			inventory_t *i = &mp_inventory;
-			if (!Com_AddToInventory(i, CL_AddWeaponAmmo(&unused, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
-				break; /* no space left in menu */
-		}
-	}
+	MP_GetEquipment();
 }
 
 void MP_TeamSelect_f (void)
