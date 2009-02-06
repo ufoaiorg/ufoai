@@ -26,12 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CAMPAIGN_H
 #define CLIENT_CL_CAMPAIGN_H
 
+#include "cp_aircraft.h"
 #include "cl_radar.h"
 #include "cp_base.h"
+#include "cl_employee.h"
 #include "cp_messages.h"
 #include "cl_transfer.h"
 #include "cl_nation.h"
-#include "cl_campaign.h"
 #include "cl_uforecovery.h"
 #include "cl_produce.h"
 #include "cl_aliencont.h"
