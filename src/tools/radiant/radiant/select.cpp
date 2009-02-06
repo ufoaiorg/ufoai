@@ -874,7 +874,7 @@ static RotateDialog g_rotate_dialog;
 void DoRotateDlg (void)
 {
 	if (g_rotate_dialog.window == NULL) {
-		g_rotate_dialog.window = create_dialog_window(MainFrame_getWindow(), "Arbitrary rotation", G_CALLBACK(rotatedlg_delete), &g_rotate_dialog);
+		g_rotate_dialog.window = create_dialog_window(MainFrame_getWindow(), _("Arbitrary rotation"), G_CALLBACK(rotatedlg_delete), &g_rotate_dialog);
 
 		GtkAccelGroup* accel = gtk_accel_group_new();
 		gtk_window_add_accel_group(g_rotate_dialog.window, accel);

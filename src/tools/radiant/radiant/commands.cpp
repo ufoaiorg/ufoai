@@ -203,7 +203,7 @@ void DoCommandListDlg (void)
 {
 	command_list_dialog_t dialog;
 
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), "Mapped Commands", dialog, -1, 400);
+	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), _("Mapped Commands"), dialog, -1, 400);
 
 	GtkAccelGroup* accel = gtk_accel_group_new();
 	gtk_window_add_accel_group(window, accel);

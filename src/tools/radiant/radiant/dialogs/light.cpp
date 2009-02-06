@@ -36,7 +36,7 @@ EMessageBoxReturn DoLightIntensityDlg (int *intensity) {
 	ModalDialogButton ok_button(dialog, eIDOK);
 	ModalDialogButton cancel_button(dialog, eIDCANCEL);
 
-	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), "Light intensity", dialog, -1, -1);
+	GtkWindow* window = create_modal_dialog_window(MainFrame_getWindow(), _("Light intensity"), dialog, -1, -1);
 
 	GtkAccelGroup *accel_group = gtk_accel_group_new();
 	gtk_window_add_accel_group(window, accel_group);
