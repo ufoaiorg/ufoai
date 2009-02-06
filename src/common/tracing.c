@@ -1231,9 +1231,6 @@ static trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const 
 		 * are bitmasks of game levels 1-8.  0 is a special case repeat fo 255.
 		 * However a levelmask including 0x100 is usually included so the CLIP levels are
 		 * examined.
-		 * @todo @note that LEVEL_STEPON should not be available at this point, but may be erroneously
-		 * included in another level, requiring the addition ot the brushreject parameter.
-		 * @todo the above is no longer true - clean up here
 		 */
 		if (h->level && levelmask && !(h->level & levelmask))
 			continue;
