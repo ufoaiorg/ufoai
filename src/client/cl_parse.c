@@ -853,87 +853,6 @@ static void CL_EndRoundAnnounce (struct dbuffer * msg)
 	MP_AddChatMessage(buf);
 }
 
-typedef struct {
-	int ucn;
-	int HP;
-	int STUN;
-	int morale;
-
-	chrScoreGlobal_t chrscore;
-} updateCharacter_t;
-
-/**
- * @brief Parses the character data which was send by G_EndGame using G_SendCharacterData
- * @param[in] msg The network buffer message. If this is NULL the character is updated, if this
- * is not NULL the data is stored in a temp buffer because the player can choose to retry
- * the mission and we have to catch this situation to not update the character data in this case.
- * @sa G_SendCharacterData
- * @sa GAME_SendCurrentTeamSpawningInfo
- * @sa G_EndGame
- * @sa E_Save
- */
-void CL_ParseCharacterData (struct dbuffer *msg)
-{
-	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
-	static int num = 0;
-	int i, j;
-	character_t* chr;
-
-	if (!msg) {
-		for (i = 0; i < num; i++) {
-			employee_t *employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
-			if (!employee) {
-				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
-				continue;
-			}
-			chr = &employee->chr;
-			chr->HP = updateCharacterArray[i].HP;
-			chr->STUN = updateCharacterArray[i].STUN;
-			chr->morale = updateCharacterArray[i].morale;
-
-			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-			memcpy(chr->score.experience, updateCharacterArray[i].chrscore.experience, sizeof(chr->score.experience));
-			memcpy(chr->score.skills, updateCharacterArray[i].chrscore.skills, sizeof(chr->score.skills));
-			memcpy(chr->score.kills, updateCharacterArray[i].chrscore.kills, sizeof(chr->score.kills));
-			memcpy(chr->score.stuns, updateCharacterArray[i].chrscore.stuns, sizeof(chr->score.stuns));
-			chr->score.assignedMissions = updateCharacterArray[i].chrscore.assignedMissions;
-			chr->score.rank = updateCharacterArray[i].chrscore.rank;
-		}
-		num = 0;
-	} else {
-		/* invalidate ucn in the array first */
-		for (i = 0; i < MAX_WHOLETEAM; i++) {
-			updateCharacterArray[i].ucn = -1;
-		}
-		/* number of soldiers */
-		num = NET_ReadByte(msg);
-		if (num > MAX_WHOLETEAM)
-			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
-		else if (num < 0)
-			Sys_Error("CL_ParseCharacterData: NET_ReadShort error (%i)\n", num);
-
-		for (i = 0; i < num; i++) {
-			/* updateCharacter_t */
-			updateCharacterArray[i].ucn = NET_ReadShort(msg);
-			updateCharacterArray[i].HP = NET_ReadShort(msg);
-			updateCharacterArray[i].STUN = NET_ReadByte(msg);
-			updateCharacterArray[i].morale = NET_ReadByte(msg);
-
-			/** Scores @sa inv_shared.h:chrScoreGlobal_t */
-			for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-				updateCharacterArray[i].chrscore.experience[j] = NET_ReadLong(msg);
-			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.skills[j] = NET_ReadByte(msg);
-			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.kills[j] = NET_ReadShort(msg);
-			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				updateCharacterArray[i].chrscore.stuns[j] = NET_ReadShort(msg);
-			updateCharacterArray[i].chrscore.assignedMissions = NET_ReadShort(msg);
-			updateCharacterArray[i].chrscore.rank = NET_ReadByte(msg);
-		}
-	}
-}
-
 /**
  * @brief Reads mission result data from server
  * @sa EV_RESULTS
@@ -983,9 +902,7 @@ static void CL_ParseResults (struct dbuffer *msg)
 		for (j = 0; j < num; j++)
 			num_stuns[i][j] = NET_ReadByte(msg);
 
-	CL_ParseCharacterData(msg);
-
-	GAME_HandleResults(winner, num_spawned, num_alive, num_kills, num_stuns);
+	GAME_HandleResults(msg, winner, num_spawned, num_alive, num_kills, num_stuns);
 }
 
 static le_t	*lastMoving;

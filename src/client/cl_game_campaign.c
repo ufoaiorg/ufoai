@@ -88,7 +88,7 @@ static void GAME_CP_MissionAutoCheck_f (void)
 
 /**
  * @sa CL_ParseResults
- * @sa CL_ParseCharacterData
+ * @sa CP_ParseCharacterData
  * @sa CL_GameAbort_f
  */
 static void GAME_CP_Results_f (void)
@@ -253,7 +253,7 @@ static void GAME_CP_TryAgain_f (void)
 	MN_PopMenu(qfalse);
 }
 
-void GAME_CP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	static char resultText[MAX_SMALLMENUTEXTLEN];
 	int i, j;
@@ -261,6 +261,8 @@ void GAME_CP_Results (int winner, int *numSpawned, int *numAlive, int numKilled[
 	int their_survivors, their_killed, their_stunned;
 	int civilian_survivors, civilian_killed, civilian_stunned;
 	base_t *base = CP_GetMissionBase();
+
+	CP_ParseCharacterData(msg);
 
 	/* init result text */
 	MN_RegisterText(TEXT_STANDARD, resultText);

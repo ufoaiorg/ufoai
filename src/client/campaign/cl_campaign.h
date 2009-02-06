@@ -408,6 +408,7 @@ extern cvar_t *cl_campaign;
 void AIR_SaveAircraft(sizebuf_t * sb, base_t * base);
 void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 
+void CP_ParseCharacterData(struct dbuffer *msg);
 qboolean CP_CheckNextStageDestination(aircraft_t *ufo);
 
 void CP_InitStartup(void);

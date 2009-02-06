@@ -41,7 +41,7 @@ typedef struct gameTypeList_s {
 	/** some gametypes only support special maps */
 	const mapDef_t* (*mapinfo)(int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
-	void (*results)(int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
+	void (*results)(struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
@@ -182,13 +182,13 @@ static void GAME_SetMode_f (void)
 /**
  * @brief After a mission was finished this function is called
  */
-void GAME_HandleResults (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	const gameTypeList_t *list = gameTypeList;
 
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
-			list->results(winner, numSpawned, numAlive, numKilled, numStunned);
+			list->results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
 			break;
 		}
 		list++;

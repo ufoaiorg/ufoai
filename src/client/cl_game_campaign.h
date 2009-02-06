@@ -31,7 +31,7 @@ qboolean GAME_CP_IsRunning(void);
 const mapDef_t* GAME_CP_MapInfo(int step);
 void GAME_CP_InitStartup(void);
 void GAME_CP_Shutdown(void);
-void GAME_CP_Results(int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
+void GAME_CP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 qboolean GAME_CP_Spawn(void);
 int GAME_CP_GetTeam(void);
 

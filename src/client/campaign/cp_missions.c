@@ -1128,7 +1128,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	CP_CheckLostCondition(!won, mission, civilians_killed);
 
 	/* update the character stats */
-	CL_ParseCharacterData(NULL);
+	CP_ParseCharacterData(NULL);
 
 	/* update stats */
 	CL_UpdateCharacterStats(base, won, aircraft);

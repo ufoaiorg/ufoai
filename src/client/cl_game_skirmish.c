@@ -90,7 +90,7 @@ static void GAME_SK_ChangeEquip_f (void)
 	}
 }
 
-void GAME_SK_Results (int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
+void GAME_SK_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	char resultText[MAX_SMALLMENUTEXTLEN];
 	int their_killed, their_stunned;

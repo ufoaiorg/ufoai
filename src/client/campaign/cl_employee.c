@@ -1609,7 +1609,7 @@ employee_t* E_GetEmployeeFromChrUCN (int ucn)
  * @sa E_Load
  * @sa SAV_GameSave
  * @sa G_SendCharacterData
- * @sa CL_ParseCharacterData
+ * @sa CP_ParseCharacterData
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
 qboolean E_Save (sizebuf_t* sb, void* data)
