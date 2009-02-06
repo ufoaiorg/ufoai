@@ -1013,7 +1013,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	name = MSG_ReadString(sb);
 
 	for (i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++)
-		if (!Q_strncmp(name, curCampaign->id, MAX_VAR))
+		if (!Q_strcmp(name, curCampaign->id))
 			break;
 
 	if (i == numCampaigns) {
@@ -1026,8 +1026,6 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	/* init the map images and reset the map actions */
 	MAP_Init();
-
-	memset(&ccs, 0, sizeof(ccs));
 
 	gd.fund = MSG_ReadByte(sb);
 	gd.nextUCN = MSG_ReadShort(sb);

@@ -245,8 +245,6 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	loading = qfalse;
 
-	assert(GAME_IsCampaign());
-
 	CL_Drop();
 
 	Com_Printf("File '%s' loaded.\n", filename);
