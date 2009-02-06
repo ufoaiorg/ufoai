@@ -1217,7 +1217,7 @@ trace_t TR_HintedTransformedBoxTrace(TR_TILE_TYPE *tile, const vec3_t start, con
 static trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject, const float fraction)
 {
 	trace_t newtr, tr;
-	int tile, i;
+	int i;
 	cBspHead_t *h;
 
 	memset(&tr, 0, sizeof(tr));
@@ -1240,7 +1240,6 @@ static trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const 
 
 		assert(h->cnode < myTile->numnodes + 6); /* +6 => bbox */
 		newtr = TR_BoxTrace(myTile, start, end, mins, maxs, h->cnode, brushmask, brushreject, tr.fraction);
-		newtr.mapTile = tile;
 
 		/* memorize the trace with the minimal fraction */
 		if (newtr.fraction == 0.0)
