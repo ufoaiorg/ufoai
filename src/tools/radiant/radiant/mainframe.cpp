@@ -1394,7 +1394,7 @@ static LatchedInt g_Layout_viewStyle(MainFrame::eSplit, _("Window Layout"));
 LatchedBool g_Layout_enableDetachableMenus(false, _("Detachable Menus"));
 static LatchedBool g_Layout_enablePluginToolbar(true, _("Plugin Toolbar"));
 
-static GtkMenuItem* create_file_menu (void)
+static GtkMenuItem* create_file_menu (MainFrame *mainFrame)
 {
 	// File menu
 	GtkMenuItem* file_menu_item = new_sub_menu_item_with_mnemonic(_("_File"));
@@ -1406,7 +1406,7 @@ static GtkMenuItem* create_file_menu (void)
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, _("_Open..."), "OpenMap");
 	create_menu_item_with_mnemonic(menu, _("_Import..."), "ImportMap");
-	create_menu_item_with_mnemonic(menu, _("_Save"), "SaveMap");
+	mainFrame->SetSaveMenuItem(create_menu_item_with_mnemonic(menu, _("_Save"), "SaveMap"));
 	create_menu_item_with_mnemonic(menu, _("Save _as..."), "SaveMapAs");
 	create_menu_item_with_mnemonic(menu, _("Save s_elected..."), "SaveSelected");
 	menu_separator(menu);
@@ -1421,15 +1421,15 @@ static GtkMenuItem* create_file_menu (void)
 	return file_menu_item;
 }
 
-static GtkMenuItem* create_edit_menu (void)
+static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 {
 	// Edit menu
 	GtkMenuItem* edit_menu_item = new_sub_menu_item_with_mnemonic(_("_Edit"));
 	GtkMenu* menu = GTK_MENU(gtk_menu_item_get_submenu(edit_menu_item));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(menu);
-	create_menu_item_with_mnemonic(menu, _("_Undo"), "Undo");
-	create_menu_item_with_mnemonic(menu, _("_Redo"), "Redo");
+	mainFrame->SetUndoMenuItem(create_menu_item_with_mnemonic(menu, _("_Undo"), "Undo"));
+	mainFrame->SetRedoMenuItem(create_menu_item_with_mnemonic(menu, _("_Redo"), "Redo"));
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, _("_Copy"), "Copy");
 	create_menu_item_with_mnemonic(menu, _("_Paste"), "Paste");
@@ -1703,14 +1703,14 @@ static GtkMenuItem* create_help_menu (void)
 	return help_menu_item;
 }
 
-static GtkMenuBar* create_main_menu (MainFrame::EViewStyle style)
+static GtkMenuBar* create_main_menu (MainFrame *mainframe)
 {
 	GtkMenuBar* menu_bar = GTK_MENU_BAR(gtk_menu_bar_new());
 	gtk_widget_show(GTK_WIDGET(menu_bar));
 
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_file_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_edit_menu()));
-	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_view_menu(style)));
+	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_file_menu(mainframe)));
+	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_edit_menu(mainframe)));
+	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_view_menu(mainframe->CurrentStyle())));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_filter_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_selection_menu()));
 	gtk_container_add(GTK_CONTAINER(menu_bar), GTK_WIDGET(create_grid_menu()));
@@ -1957,10 +1957,10 @@ void MainFrame::Create (void)
 
 	register_shortcuts();
 
-	GtkMenuBar* main_menu = create_main_menu(CurrentStyle());
+	GtkMenuBar* main_menu = create_main_menu(this);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_menu), FALSE, FALSE, 0);
 
-	GtkToolbar* main_toolbar_h = create_main_toolbar_horizontal(CurrentStyle());
+	GtkToolbar* main_toolbar_h = create_main_toolbar_horizontal(this);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(main_toolbar_h), FALSE, FALSE, 0);
 
 	GtkToolbar* plugin_toolbar = create_plugin_toolbar();
@@ -2124,6 +2124,18 @@ void MainFrame::Create (void)
 	g_defaultToolMode();
 	SetStatusText(m_command_status, c_TranslateMode_status);
 
+	/* enable button state tracker, set default states for begin */
+	GlobalUndoSystem().trackerAttach(m_saveStateTracker);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->GetSaveMenuItem()), false);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->GetSaveButton()), false);
+
+	gtk_widget_set_sensitive(GTK_WIDGET(this->GetUndoMenuItem()), false);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->GetUndoButton()), false);
+
+	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoMenuItem()), false);
+	gtk_widget_set_sensitive(GTK_WIDGET(this->GetRedoButton()), false);
+
+
 	EverySecondTimer_enable();
 
 	GlobalShortcuts_reportUnregistered();
@@ -2147,6 +2159,7 @@ void MainFrame::Shutdown (void)
 {
 	EverySecondTimer_disable();
 
+	GlobalUndoSystem().trackerDetach(m_saveStateTracker);
 	delete m_pXYWnd;
 	m_pXYWnd = 0;
 	delete m_pYZWnd;
@@ -2470,4 +2483,67 @@ void GLWindow_Construct (void)
 
 void GLWindow_Destroy (void)
 {
+}
+
+/**
+ * Updates the sensitivity of save, undo and redo buttons and menu items according to actual state.
+ */
+void UndoSaveStateTracker::UpdateSensitiveStates (void)
+{
+	/* security, should not occur as tracker is attached while creation */
+	if (g_pParentWnd == 0)
+		return;
+
+	const bool saveEnabled = m_undoSteps > 0;
+	const bool undoEnabled = m_undoSteps > 0;
+	const bool redoEnabled = m_redoSteps > 0;
+
+	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetSaveMenuItem()), saveEnabled);
+	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetSaveButton()), saveEnabled);
+
+	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetUndoMenuItem()), undoEnabled);
+	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetUndoButton()), undoEnabled);
+
+	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoMenuItem()), redoEnabled);
+	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoButton()), redoEnabled);
+}
+
+/**
+ * Begin a new step, invalidates all other redo states
+ */
+void UndoSaveStateTracker::begin (void)
+{
+	m_undoSteps++;
+	m_redoSteps = 0;
+	UpdateSensitiveStates();
+}
+
+/**
+ * Reset all states, no save, redo and undo is available
+ */
+void UndoSaveStateTracker::clear (void)
+{
+	m_redoSteps = 0;
+	m_undoSteps = 0;
+	UpdateSensitiveStates();
+}
+
+/**
+ * Redo a step, one more undo is available
+ */
+void UndoSaveStateTracker::redo (void)
+{
+	m_redoSteps --;
+	m_undoSteps ++;
+	UpdateSensitiveStates();
+}
+
+/**
+ * Undo a step, on more redo is available
+ */
+void UndoSaveStateTracker::undo (void)
+{
+	m_redoSteps++;
+	m_undoSteps--;
+	UpdateSensitiveStates();
 }

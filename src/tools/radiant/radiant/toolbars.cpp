@@ -29,16 +29,16 @@
 #include "gtkmisc.h"
 #include "camwindow.h"
 
-static void File_constructToolbar (GtkToolbar* toolbar)
+static void File_constructToolbar (GtkToolbar* toolbar, MainFrame *mainframe)
 {
 	toolbar_append_button(toolbar, _("Open an existing map (CTRL + O)"), "file_open.bmp", "OpenMap");
-	toolbar_append_button(toolbar, _("Save the active map (CTRL + S)"), "file_save.bmp", "SaveMap");
+	mainframe->SetSaveButton(toolbar_append_button(toolbar, _("Save the active map (CTRL + S)"), "file_save.bmp", "SaveMap"));
 }
 
-static void UndoRedo_constructToolbar (GtkToolbar* toolbar)
+static void UndoRedo_constructToolbar (GtkToolbar* toolbar, MainFrame *mainframe)
 {
-	toolbar_append_button(toolbar, _("Undo (CTRL + Z)"), "undo.bmp", "Undo");
-	toolbar_append_button(toolbar, _("Redo (CTRL + Y)"), "redo.bmp", "Redo");
+	mainframe->SetUndoButton(toolbar_append_button(toolbar, _("Undo (CTRL + Z)"), "undo.bmp", "Undo"));
+	mainframe->SetRedoButton(toolbar_append_button(toolbar, _("Redo (CTRL + Y)"), "redo.bmp", "Redo"));
 }
 
 static void RotateFlip_constructToolbar (GtkToolbar* toolbar)
@@ -100,7 +100,7 @@ static void Manipulators_constructToolbar (GtkToolbar* toolbar)
 	Clipper_constructToolbar(toolbar);
 }
 
-GtkToolbar* create_main_toolbar_horizontal (MainFrame::EViewStyle style)
+GtkToolbar* create_main_toolbar_horizontal (MainFrame *mainframe)
 {
 	GtkToolbar* toolbar = GTK_TOOLBAR(gtk_toolbar_new());
 	gtk_toolbar_set_show_arrow(toolbar, TRUE);
@@ -109,11 +109,11 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame::EViewStyle style)
 
 	gtk_widget_show(GTK_WIDGET(toolbar));
 
-	File_constructToolbar(toolbar);
+	File_constructToolbar(toolbar, mainframe);
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 
-	UndoRedo_constructToolbar(toolbar);
+	UndoRedo_constructToolbar(toolbar, mainframe);
 
 	gtk_toolbar_append_space(GTK_TOOLBAR (toolbar));
 
@@ -127,7 +127,7 @@ GtkToolbar* create_main_toolbar_horizontal (MainFrame::EViewStyle style)
 
 	ComponentModes_constructToolbar(toolbar);
 
-	if (style == MainFrame::eRegular) {
+	if (mainframe->CurrentStyle() == MainFrame::eRegular) {
 		gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
 		XYWnd_constructToolbar(toolbar);

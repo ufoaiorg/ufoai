@@ -25,7 +25,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "gtkutil/window.h"
 #include "gtkutil/idledraw.h"
 #include "gtkutil/widget.h"
+#include "gtkutil/menu.h"
+#include "gtkutil/button.h"
 #include "string/string.h"
+#include "iundo.h"
 
 #include "iradiant.h"
 
@@ -43,6 +46,21 @@ const int c_position_status = 1;
 const int c_brushcount_status = 2;
 const int c_texture_status = 3;
 const int c_count_status = 4;
+
+class UndoSaveStateTracker : public UndoTracker {
+	int m_undoSteps;
+	int m_redoSteps;
+
+	void UpdateSensitiveStates (void);
+
+public:
+	UndoSaveStateTracker() : m_undoSteps(0),m_redoSteps(0) {
+	}
+	void clear();
+	void begin();
+	void undo();
+	void redo();
+};
 
 class MainFrame {
 public:
@@ -84,6 +102,16 @@ private:
 
 	IdleDraw m_idleRedrawStatusText;
 
+	GtkButton *m_toolBtnSave;
+	GtkButton *m_toolBtnUndo;
+	GtkButton *m_toolBtnRedo;
+
+	GtkMenuItem *m_menuSave;
+	GtkMenuItem *m_menuUndo;
+	GtkMenuItem *m_menuRedo;
+
+	UndoSaveStateTracker m_saveStateTracker;
+
 public:
 	void SetStatusText(CopiedString& status_text, const char* pText);
 	void UpdateStatusText();
@@ -111,6 +139,57 @@ public:
 	EViewStyle CurrentStyle() {
 		return m_nCurrentStyle;
 	};
+
+	void SetSaveButton(GtkButton *saveBtn)
+	{
+		m_toolBtnSave = saveBtn;
+	}
+	GtkButton* GetSaveButton() {
+		return m_toolBtnSave;
+	}
+
+	void SetUndoButton(GtkButton *undoBtn)
+	{
+		m_toolBtnUndo = undoBtn;
+	}
+	GtkButton* GetUndoButton() {
+		return m_toolBtnUndo;
+	}
+
+	void SetRedoButton(GtkButton *redoBtn)
+	{
+		m_toolBtnRedo = redoBtn;
+	}
+	GtkButton* GetRedoButton() {
+		return m_toolBtnRedo;
+	};
+
+	void SetSaveMenuItem (GtkMenuItem *saveMenuItem)
+	{
+		m_menuSave = saveMenuItem;
+	}
+	GtkMenuItem* GetSaveMenuItem ()
+	{
+		return m_menuSave;
+	}
+
+	void SetUndoMenuItem (GtkMenuItem *undoMenuItem)
+	{
+		m_menuUndo = undoMenuItem;
+	}
+	GtkMenuItem* GetUndoMenuItem ()
+	{
+		return m_menuUndo;
+	}
+
+	void SetRedoMenuItem (GtkMenuItem *redoMenuItem)
+	{
+		m_menuRedo = redoMenuItem;
+	}
+	GtkMenuItem* GetRedoMenuItem ()
+	{
+		return m_menuRedo;
+	}
 };
 
 extern MainFrame* g_pParentWnd;
