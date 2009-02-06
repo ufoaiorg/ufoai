@@ -29,15 +29,30 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "generic/constant.h"
 #include "generic/callbackfwd.h"
 
+/**
+ * @brief abstract object that should be stored to preserve actual state of an object
+ */
 class UndoMemento {
 public:
 	virtual ~UndoMemento() {}
 };
 
+
+/**
+ * @brief interface to implement to get an UndoMemento for the object implementing this interface to get its current state.
+ */
 class Undoable {
 public:
 	virtual ~Undoable() {}
+	/**
+	 * @brief export the current state via UndoMemento
+	 * @return a memento that represents current state
+	 */
 	virtual UndoMemento* exportState() const = 0;
+	/**
+	 * @brief restore a previously stored memento
+	 * @param state state that should be restored
+	 */
 	virtual void importState(const UndoMemento* state) = 0;
 };
 
@@ -50,9 +65,22 @@ public:
 class UndoTracker {
 public:
 	virtual ~UndoTracker() {}
+	/**
+	 * @brief called whenever tracker system should be reseted
+	 */
 	virtual void clear() = 0;
+	/**
+	 * @brief called right before a new action is called, should be used to save current state (e.g. in an UndoMememto)
+	 */
 	virtual void begin() = 0;
+	/**
+	 * @brief called whenever an older state should be retrieved
+	 */
 	virtual void undo() = 0;
+
+	/**
+	 * @brief called whenever a previously recorded action is about to be replayed to regenerate a state after undo
+	 */
 	virtual void redo() = 0;
 };
 
