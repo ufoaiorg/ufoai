@@ -941,7 +941,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 
 	/* select menu */
 	activeMenu = MN_GetActiveMenu();
-	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
+	aircraftMenu = !Q_strcmp(activeMenu->name, "aircraft_equip");
 
 	zone = atoi(Cmd_Argv(1));
 

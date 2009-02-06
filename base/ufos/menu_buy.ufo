@@ -1076,10 +1076,6 @@ menu buy
 	// init
 	// ==================
 
-	func close
-	{
-		cmd "aircraft_select;"
-	}
 	func init
 	{
 		cmd "buy_type *mn_itemtype;"
