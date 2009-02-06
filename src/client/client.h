@@ -317,8 +317,6 @@ struct employee_s;
 
 #include "cl_le.h"
 #include "cl_menu.h"
-#include "cl_inventory.h"
-#include "cl_parse.h"
 #include "campaign/cl_campaign.h"
 
 #endif /* CLIENT_CLIENT_H */
