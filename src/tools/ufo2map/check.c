@@ -720,7 +720,7 @@ void CheckEntities (void)
 		}
 
 		for (kvp = e->epairs; kvp; kvp = kvp->next) {
-			entityKeyDef_t *kd = ED_GetKeyDefEntity(ed, kvp->key);
+			const entityKeyDef_t *kd = ED_GetKeyDefEntity(ed, kvp->key);
 
 			if (!kd) {
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
