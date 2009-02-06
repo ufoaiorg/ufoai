@@ -18,14 +18,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef COMMON_MXML_UFOAI_H
-#define COMMON_MXML_UFOAI_H
+#ifndef CLIENT_MXML_UFOAI_H
+#define CLIENT_MXML_UFOAI_H
 
 #include "mxml.h"
 #include "../../shared/mathlib.h"
 #include "../../shared/ufotypes.h"
-
-
 
 void mxml_AddString(mxml_node_t *parent, const char *name, const char *value);
 void mxml_AddBool(mxml_node_t *parent, const char *name, qboolean value);
@@ -39,14 +37,13 @@ void mxml_AddPos3(mxml_node_t *parent, const char *name, const vec3_t pos);
 void mxml_AddPos2(mxml_node_t *parent, const char *name, const vec2_t pos);
 mxml_node_t * mxml_AddNode(mxml_node_t *parent, const char *name);
 
-
-qboolean mxml_GetBool (mxml_node_t *parent, const char *name, const qboolean defaultval);
-int mxml_GetInt (mxml_node_t *parent, const char *name, const int defaultval);
-short mxml_GetShort (mxml_node_t *parent, const char *name, const short defaultval);
-long mxml_GetLong (mxml_node_t *parent, const char *name, const long defaultval);
-const char * mxml_GetString (mxml_node_t *parent, const char *name);
-float mxml_GetFloat (mxml_node_t *parent, const char *name, const float defaultval);
-double mxml_GetDouble (mxml_node_t *parent, const char *name, const double defaultval);
+qboolean mxml_GetBool(mxml_node_t *parent, const char *name, const qboolean defaultval);
+int mxml_GetInt(mxml_node_t *parent, const char *name, const int defaultval);
+short mxml_GetShort(mxml_node_t *parent, const char *name, const short defaultval);
+long mxml_GetLong(mxml_node_t *parent, const char *name, const long defaultval);
+const char * mxml_GetString(mxml_node_t *parent, const char *name);
+float mxml_GetFloat(mxml_node_t *parent, const char *name, const float defaultval);
+double mxml_GetDouble(mxml_node_t *parent, const char *name, const double defaultval);
 mxml_node_t * mxml_GetPos2(mxml_node_t *parent, const char *name, vec2_t pos);
 mxml_node_t * mxml_GetNextPos2(mxml_node_t *actual, mxml_node_t *parent, const char *name, vec2_t pos);
 mxml_node_t * mxml_GetPos3(mxml_node_t *parent, const char *name, vec3_t pos);
@@ -66,11 +63,9 @@ mxml_node_t * mxml_GetLong(mxml_node_t *parent, const char *name, long * value, 
 mxml_node_t * mxml_GetNextLong(mxml_node_t *actual, mxml_node_t *parent, const char *name, long *value, const long defaultval);
 const char * mxml_GetString(mxml_node_t *parent, const char *name);
 
-mxml_node_t * mxml_GetDouble (mxml_node_t *parent, const char *name, double *value, const double defaultval);
-mxml_node_t * mxml_GetFloat (mxml_node_t *parent, const char *name, float *value, const float defaultval);
+mxml_node_t * mxml_GetDouble(mxml_node_t *parent, const char *name, double *value, const double defaultval);
+mxml_node_t * mxml_GetFloat(mxml_node_t *parent, const char *name, float *value, const float defaultval);
 #endif
-mxml_type_t    mxml_ufo_type_cb(mxml_node_t *node);
+mxml_type_t mxml_ufo_type_cb(mxml_node_t *node);
 
-
-
-#endif /*COMMON_MXML_UFOAI_H*/
+#endif

@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void mxml_AddString (mxml_node_t *parent, const char *name, const char *value)
 {
-#if 0	
+#if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
 	mxmlElementSetAttr(t,"type", "string");
@@ -34,7 +34,7 @@ void mxml_AddString (mxml_node_t *parent, const char *name, const char *value)
 
 void mxml_AddBool (mxml_node_t *parent, const char *name, qboolean value)
 {
-#if 0	
+#if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
 	mxmlElementSetAttr(t,"type", "int");
@@ -42,6 +42,7 @@ void mxml_AddBool (mxml_node_t *parent, const char *name, qboolean value)
 #endif
 	mxmlElementSetAttr(parent,name, value?"1":"0");
 }
+
 void mxml_AddFloat (mxml_node_t *parent, const char *name, float value)
 {
 	mxml_AddDouble(parent, name, value);
@@ -52,7 +53,7 @@ void mxml_AddDouble (mxml_node_t *parent, const char *name, double value)
 	char txt[50];
 	snprintf(txt, sizeof(txt), "%f", value);
 	mxmlElementSetAttr(parent, name, txt);
-#if 0	
+#if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
 	mxmlElementSetAttr(t,"type", "double");
@@ -63,7 +64,7 @@ void mxml_AddDouble (mxml_node_t *parent, const char *name, double value)
 void mxml_AddByte (mxml_node_t *parent, const char *name, byte value)
 {
 	mxml_AddLong(parent, name, value);
-#if 0	
+#if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
 	mxmlElementSetAttr(t,"type", "int");
@@ -116,23 +117,13 @@ mxml_node_t * mxml_AddNode(mxml_node_t *parent, const char *name)
 	return mxmlNewElement(parent,name);
 }
 
-
-
-
-
-
-
-
-
-
-
 qboolean mxml_GetBool (mxml_node_t *parent, const char *name, const qboolean defaultval)
 {
 	const char *txt;
 	txt = mxmlElementGetAttr(parent,name);
 	if (!txt)
 		return defaultval;
-	
+
 	return (atoi(txt)!=0);
 }
 
@@ -144,14 +135,16 @@ int mxml_GetInt (mxml_node_t *parent, const char *name, const int defaultval)
 		return defaultval;
 	return atoi(txt);
 }
+
 short mxml_GetShort (mxml_node_t *parent, const char *name, const short defaultval)
-{	
+{
 	const char *txt;
 	txt = mxmlElementGetAttr(parent,name);
 	if (!txt)
 		return defaultval;
 	return atoi(txt);
 }
+
 long mxml_GetLong (mxml_node_t *parent, const char *name, const long defaultval)
 {
 	const char *txt;
@@ -160,6 +153,7 @@ long mxml_GetLong (mxml_node_t *parent, const char *name, const long defaultval)
 		return defaultval;
 	return atol(txt);
 }
+
 const char * mxml_GetString (mxml_node_t *parent, const char *name)
 {
 	const char *str = mxmlElementGetAttr(parent,name);
@@ -185,6 +179,7 @@ double mxml_GetDouble (mxml_node_t *parent, const char *name, const double defau
 		return defaultval;
 	return atof(txt);
 }
+
 mxml_node_t * mxml_GetPos2(mxml_node_t *parent, const char *name, vec2_t pos)
 {
 	mxml_node_t *p = mxml_GetNode(parent, name);
@@ -194,6 +189,7 @@ mxml_node_t * mxml_GetPos2(mxml_node_t *parent, const char *name, vec2_t pos)
 	pos[1] = mxml_GetFloat(p, "y", 0);
 	return p;
 }
+
 mxml_node_t * mxml_GetNextPos2(mxml_node_t *actual,mxml_node_t *parent, const char *name, vec2_t pos)
 {
 	mxml_node_t *p = mxml_GetNextNode(actual,parent, name);
@@ -203,6 +199,7 @@ mxml_node_t * mxml_GetNextPos2(mxml_node_t *actual,mxml_node_t *parent, const ch
 	pos[1] = mxml_GetFloat(p, "y", 0);
 	return p;
 }
+
 mxml_node_t * mxml_GetPos3(mxml_node_t *parent, const char *name, vec3_t pos)
 {
 	mxml_node_t *p = mxml_GetNode(parent, name);
@@ -213,6 +210,7 @@ mxml_node_t * mxml_GetPos3(mxml_node_t *parent, const char *name, vec3_t pos)
 	pos[2] = mxml_GetFloat(p, "z", 0);
 	return p;
 }
+
 mxml_node_t * mxml_GetNextPos3(mxml_node_t *actual, mxml_node_t *parent, const char *name, vec3_t pos)
 {
 	mxml_node_t *p = mxml_GetNextNode(actual, parent, name);
@@ -233,16 +231,18 @@ mxml_node_t * mxml_GetNextNode (mxml_node_t *current, mxml_node_t *parent, const
 {
 	return mxmlFindElement(current, parent, name, NULL, NULL, MXML_NO_DESCEND);
 }
-#if 0
 
+#if 0
 mxml_node_t * mxml_GetBoolean(mxml_node_t *parent, const char *name, qboolean * value, const qboolean defaultval)
-{	/*Searching for the right node*/
+{
+	/*Searching for the right node*/
 	int s;
 	mxml_node_t *node = mxml_GetInt(parent, name, &s, defaultval?1:0);
-	*value = (s==1);
+	*value = (s == 1);
 	return node;
 }
-/** 
+
+/**
  * @brief reads an integer value from the actual parent node.
  */
 mxml_node_t * mxml_GetInt (mxml_node_t *parent, const char *name, int *value, const int defaultval)
@@ -256,8 +256,6 @@ mxml_node_t * mxml_GetInt (mxml_node_t *parent, const char *name, int *value, co
 	return node;
 }
 
-
-
 mxml_node_t * mxml_GetNextInt (mxml_node_t *actual, mxml_node_t *parent, const char * name, int *value, const int defaultval)
 {
 	mxml_node_t *node;
@@ -267,25 +265,22 @@ mxml_node_t * mxml_GetNextInt (mxml_node_t *actual, mxml_node_t *parent, const c
 	*value = i;
 	return node;
 }
-#if 0
+
 mxml_node_t * mxml_GetByte (mxml_node_t *parent, const char *name, byte *value, const byte defaultval)
 {
 	/*Searching for the right node*/
 	byte s;
 	mxml_node_t *node = mxmlFindElement(parent, parent, name, "type", "int", MXML_DESCEND_FIRST);
-	if (!node)
-	{
-		*value=defaultval;
+	if (!node) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (!node->child)
-	{
-		*value=defaultval;
+	if (!node->child) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (node->child->type != MXML_INTEGER)
-	{
-		*value=defaultval;
+	if (node->child->type != MXML_INTEGER) {
+		*value = defaultval;
 		return NULL;
 	}
 	s= node->child->value.integer;
@@ -298,30 +293,30 @@ mxml_node_t * mxml_GetNextByte (mxml_node_t *actual, mxml_node_t *parent, const 
 	mxml_node_t *node;
 	byte s;
 	node = mxmlFindElement(actual, parent, name, "type", "int", MXML_NO_DESCEND);
-	if (!node){
-		*value= defaultval;
+	if (!node) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (!node->child){
-		*value=defaultval;
+	if (!node->child) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (node->child->type != MXML_INTEGER)
-	{
-		*value=defaultval;
+	if (node->child->type != MXML_INTEGER) {
+		*value = defaultval;
 		return NULL;
 	}
 	s = node->child->value.integer;
-	*value=s;
+	*value = s;
 	return node;
 }
 #endif
+
 mxml_node_t * mxml_GetShort (mxml_node_t *parent, const char *name, short *value, const short defaultval)
 {
 	/*Searching for the right node*/
 	long s;
 	mxml_node_t *node = mxml_GetLong(parent, name, &s, defaultval);
-	*value=s;
+	*value = s;
 	return node;
 }
 
@@ -330,7 +325,7 @@ mxml_node_t * mxml_GetNextShort (mxml_node_t *actual, mxml_node_t *parent, const
 	mxml_node_t *node;
 	long s;
 	node = mxml_GetNextLong(actual, parent, name, &s, defaultval);
-	*value=s;
+	*value = s;
 	return node;
 }
 
@@ -338,19 +333,16 @@ mxml_node_t * mxml_GetLong(mxml_node_t *parent, const char *name, long * value, 
 {
 	/*Searching for the right node*/
 	mxml_node_t *node = mxmlFindElement(parent, parent, name, "type", "long", MXML_DESCEND_FIRST);
-	if (!node)
-	{
-		*value=defaultval;
+	if (!node) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (!node->child)
-	{
-		*value=defaultval;
+	if (!node->child) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (node->child->type != MXML_LONG)
-	{
-		*value=defaultval;
+	if (node->child->type != MXML_LONG) {
+		*value = defaultval;
 		return NULL;
 	}
 	*value = node->child->value.longint;
@@ -361,19 +353,16 @@ mxml_node_t * mxml_GetNextLong(mxml_node_t *actual, mxml_node_t *parent, const c
 {
 	mxml_node_t *node;
 	node = mxmlFindElement(actual, parent, name, "type", "int", MXML_NO_DESCEND);
-	if (!node)
-	{
-		*value=defaultval;
+	if (!node) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (!node->child)
-	{
-		*value=defaultval;
+	if (!node->child) {
+		*value = defaultval;
 		return NULL;
 	}
-	if (node->child->type != MXML_LONG)
-	{
-		*value=defaultval;
+	if (node->child->type != MXML_LONG) {
+		*value = defaultval;
 		return NULL;
 	}
 	*value = node->child->value.longint;
@@ -384,43 +373,35 @@ const char * mxml_GetString (mxml_node_t *parent, const char *name)
 {
 	/*Searching for the right node*/
 	mxml_node_t *node = mxmlFindElement(parent, parent, name, "type", "string", MXML_DESCEND_FIRST);
-	if (!node)
-	{
+	if (!node) {
 		/*printf("No Element found\n");*/
 		return NULL;
 	}
-	if (!node->child)
-	{
+	if (!node->child) {
 		/*printf("No Child defined\n");*/
 		return NULL;
 	}
-	if (node->child->type != MXML_OPAQUE)
-	{
+	if (node->child->type != MXML_OPAQUE) {
 		/*printf("Node is of Type %d\n", node->type);*/
 		return NULL;
 	}
 	return node->child->value.opaque;
 }
 
-
-
 mxml_node_t * mxml_GetDouble (mxml_node_t *parent, const char *name, double *value, const double defaultval)
 {
 	mxml_node_t *node = mxmlFindElement(parent, parent, name, "type", "double", MXML_DESCEND_FIRST);
-	if (!node)
-	{
+	if (!node) {
 		/*printf("No Element found\n");*/
 		*value = defaultval;
 		return NULL;
 	}
-	if (!node->child)
-	{
+	if (!node->child) {
 		/*printf("No Child defined\n");*/
 		*value = defaultval;
 		return NULL;
 	}
-	if (node->child->type != MXML_REAL)
-	{
+	if (node->child->type != MXML_REAL) {
 		/*printf("Node is of Type %d\n", node->type);*/
 		*value = defaultval;
 		return NULL;
@@ -428,41 +409,35 @@ mxml_node_t * mxml_GetDouble (mxml_node_t *parent, const char *name, double *val
 	*value = node->child->value.real;
 	return node;
 }
+
 mxml_node_t * mxml_GetFloat (mxml_node_t *parent, const char *name, float *value, const float defaultval)
 {
 	double f;
 	mxml_node_t *node = mxml_GetDouble(parent, name, &f, defaultval);
-	*value=f;
+	*value = f;
 	return node;
 }
 #endif
+
 /**
  * @brief callback function for parsing the node tree
  */
-mxml_type_t    mxml_ufo_type_cb(mxml_node_t *node)
+mxml_type_t mxml_ufo_type_cb(mxml_node_t *node)
 {
-	const char *type;
-
-     /*
-	* You can lookup attributes and/or use the
-	* element name, hierarchy, etc...
-     */
-
-	type = mxmlElementGetAttr(node, "type");
+	/* You can lookup attributes and/or use the
+	 * element name, hierarchy, etc... */
+	const char *type = mxmlElementGetAttr(node, "type");
 	if (type == NULL)
 		type = node->value.element.name;
 
 	if (!strcmp(type, "int"))
-		return (MXML_INTEGER);
+		return MXML_INTEGER;
 	else if (!strcmp(type, "opaque"))
-		return (MXML_OPAQUE);
+		return MXML_OPAQUE;
 	else if (!strcmp(type, "string"))
-		return (MXML_OPAQUE);
+		return MXML_OPAQUE;
 	else if (!strcmp(type, "double"))
-		return (MXML_REAL);
+		return MXML_REAL;
 	else
-		return (MXML_TEXT);
+		return MXML_TEXT;
 }
-
-
-
