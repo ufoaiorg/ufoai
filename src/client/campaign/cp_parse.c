@@ -228,7 +228,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 		if (!*text || *token == '}')
 			return;
 
-		for (i = 0; i < gd.numTechnologies; i++) {
+		for (i = 0; i < ccs.numTechnologies; i++) {
 			tech = RS_GetTechByIDX(i);
 			assert(tech);
 			if (!Q_strncmp(token, tech->id, MAX_VAR)) {
@@ -241,7 +241,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 			}
 		}
 
-		if (i == gd.numTechnologies)
+		if (i == ccs.numTechnologies)
 			Com_Printf("CL_ParseResearchedCampaignItems: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
@@ -285,7 +285,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 		if (!*text || *token == '}')
 			return;
 
-		for (i = 0; i < gd.numTechnologies; i++) {
+		for (i = 0; i < ccs.numTechnologies; i++) {
 			tech = RS_GetTechByIDX(i);
 			if (!Q_strncmp(token, tech->id, MAX_VAR)) {
 				if (researchable) {
@@ -298,7 +298,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 			}
 		}
 
-		if (i == gd.numTechnologies)
+		if (i == ccs.numTechnologies)
 			Com_Printf("CL_ParseResearchableCampaignStates: unknown token \"%s\" ignored (tech %s)\n", token, name);
 
 	} while (*text);
@@ -658,7 +658,7 @@ void CL_ReadSinglePlayerData (void)
 		CL_ParseScriptSecond(type, name, &text);
 
 	Com_Printf("Global data loaded - size "UFO_SIZE_T" bytes\n", sizeof(gd));
-	Com_Printf("...techs: %i\n", gd.numTechnologies);
+	Com_Printf("...techs: %i\n", ccs.numTechnologies);
 	Com_Printf("...buildings: %i\n", gd.numBuildingTemplates);
 	Com_Printf("...ranks: %i\n", gd.numRanks);
 	Com_Printf("...nations: %i\n", gd.numNations);

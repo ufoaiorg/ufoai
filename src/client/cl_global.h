@@ -40,12 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 typedef struct globalData_s
 {
-	/* == technolgies == */
-	/* A list of all research-topics resp. the research-tree. */
-	technology_t technologies[MAX_TECHNOLOGIES];
-	/* Total nubmer of technologies. */
-	int numTechnologies;
-
 	/* == pedia == */
 	/* A list of all UFOpaedia chapters. */
 	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];

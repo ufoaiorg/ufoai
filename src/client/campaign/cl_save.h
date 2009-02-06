@@ -70,7 +70,7 @@ typedef enum {
 	PRE_NATION,	/* gd.numNations */
 	PRE_KILLTP,	/* KILLED_NUM_TYPES in killtypes_t */
 	PRE_SKILTP,	/* SKILL_NUM_TYPES in abilityskills_t */
-	PRE_NMTECH,	/* gd.numTechnologies */
+	PRE_NMTECH,	/* ccs.numTechnologies */
 	PRE_TECHMA,	/* TECHMAIL_MAX in techMailType_t */
 	PRE_NUMTDS,	/* numTeamDesc */
 	PRE_NUMALI,	/* gd.numAliensTD */

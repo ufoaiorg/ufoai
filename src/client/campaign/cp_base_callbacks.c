@@ -744,7 +744,7 @@ static void BaseSummary_Init_f (void)
 
 		Q_strcat(textStatsBuffer, _("^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
 		tmp = 0;
-		for (i = 0; i < gd.numTechnologies; i++) {
+		for (i = 0; i < ccs.numTechnologies; i++) {
 			tech = RS_GetTechByIDX(i);
 			if (tech->base == base && (tech->statusResearch == RS_RUNNING || tech->statusResearch == RS_PAUSED)) {
 				Q_strcat(textStatsBuffer, va(_("%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"), _(tech->name),

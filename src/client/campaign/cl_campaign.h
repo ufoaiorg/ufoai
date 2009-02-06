@@ -382,6 +382,12 @@ typedef struct ccs_s {
 	employee_t employees[MAX_EMPL][MAX_EMPLOYEES];
 	/* Total number of employees. */
 	int numEmployees[MAX_EMPL];
+
+	/* == technolgies == */
+	/* A list of all research-topics resp. the research-tree. */
+	technology_t technologies[MAX_TECHNOLOGIES];
+	/* Total nubmer of technologies. */
+	int numTechnologies;
 } ccs_t;
 
 /** possible geoscape actions */

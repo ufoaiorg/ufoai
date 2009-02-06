@@ -685,7 +685,7 @@ static void RS_InitGUIData (base_t* base)
 
 	/* update tech of the base */
 	row = 0;
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
@@ -716,7 +716,7 @@ static void RS_InitGUIData (base_t* base)
 
 	/* Items collected but not yet researchable. */
 	first = qtrue;
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
@@ -765,7 +765,7 @@ static void RS_InitGUIData (base_t* base)
 		researchList2[row].base = b;
 		row++;
 
-		for (i = 0; i < gd.numTechnologies; i++) {
+		for (i = 0; i < ccs.numTechnologies; i++) {
 			technology_t *tech = RS_GetTechByIDX(i);
 
 			/* Don't show technologies with time == 0 - those are NOT separate research topics. */

@@ -461,12 +461,12 @@ void RS_MarkResearchable (qboolean init, const base_t* base)
 	const base_t *thisBase = base;
 
 	/* Set all entries to initial value. */
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 		tech->statusResearchable = qfalse;
 	}
 
-	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
+	for (i = 0; i < ccs.numTechnologies; i++) {	/* i = tech-index */
 		technology_t *tech = RS_GetTechByIDX(i);
 		if (!tech->statusResearchable) { /* In case we loopback we need to check for already marked techs. */
 			/* Check for collected items/aliens/etc... */
@@ -576,7 +576,7 @@ void RS_RequiredLinksAssign (void)
 	technology_t *redirectedTech;
 	int i;
 
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 		if (&tech->require_AND.numLinks)
 			RS_AssignTechLinks(&tech->require_AND);
@@ -629,7 +629,7 @@ void RS_InitTree (qboolean load)
 		}
 	}
 
-	for (i = 0, tech = gd.technologies; i < gd.numTechnologies; i++, tech++) {
+	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
 		if (GAME_IsCampaign()) {
 			assert(GAME_CP_IsRunning());
 			for (j = 0; j < tech->markResearched.numDefinitions; j++) {
@@ -1022,7 +1022,7 @@ void RS_ResearchRun (void)
 
 	memset(checkBases, 0, sizeof(checkBases));
 
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
 		if (tech->statusResearch == RS_RUNNING) {
 			/* the test hasBuilding[B_LAB] is needed to make sure that labs are active (their dependences are OK) */
@@ -1169,8 +1169,8 @@ static void RS_TechnologyList_f (void)
 	requirements_t *reqs;
 	dateLong_t date;
 
-	Com_Printf("#techs: %i\n", gd.numTechnologies);
-	for (i = 0; i < gd.numTechnologies; i++) {
+	Com_Printf("#techs: %i\n", ccs.numTechnologies);
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		tech = RS_GetTechByIDX(i);
 		Com_Printf("Tech: %s\n", tech->id);
 		Com_Printf("... time      -> %.2f\n", tech->time);
@@ -1234,7 +1234,7 @@ void RS_MarkResearchedAll (void)
 	int i;
 	technology_t *tech;
 
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		tech = RS_GetTechByIDX(i);
 		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 		RS_MarkOneResearchable(tech);
@@ -1274,7 +1274,7 @@ static void RS_DebugResearchableAll (void)
 	technology_t *tech;
 
 	if (Cmd_Argc() != 2) {
-		for (i = 0; i < gd.numTechnologies; i++) {
+		for (i = 0; i < ccs.numTechnologies; i++) {
 			tech = RS_GetTechByIDX(i);
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
@@ -1371,14 +1371,14 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	descriptions_t *descTemp;
 	int i;
 
-	for (i = 0; i < gd.numTechnologies; i++) {
-		if (!Q_strcmp(gd.technologies[i].id, name)) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
+		if (!Q_strcmp(ccs.technologies[i].id, name)) {
 			Com_Printf("RS_ParseTechnologies: Second tech with same name found (%s) - second ignored\n", name);
 			return;
 		}
 	}
 
-	if (gd.numTechnologies >= MAX_TECHNOLOGIES) {
+	if (ccs.numTechnologies >= MAX_TECHNOLOGIES) {
 		Com_Printf("RS_ParseTechnologies: too many technology entries. limit is %i.\n", MAX_TECHNOLOGIES);
 		return;
 	}
@@ -1391,15 +1391,15 @@ void RS_ParseTechnologies (const char *name, const char **text)
 	}
 
 	/* New technology (next free entry in global tech-list) */
-	tech = &gd.technologies[gd.numTechnologies];
-	gd.numTechnologies++;
+	tech = &ccs.technologies[ccs.numTechnologies];
+	ccs.numTechnologies++;
 
 	memset(tech, 0, sizeof(*tech));
 
 	/*
 	 * Set standard values
 	 */
-	tech->idx = gd.numTechnologies - 1;
+	tech->idx = ccs.numTechnologies - 1;
 	tech->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
 
@@ -1781,7 +1781,7 @@ qboolean RS_IsResearched_idx (int techIdx)
 	if (techIdx == TECH_INVALID)
 		return qfalse;
 
-	if ((gd.technologies[techIdx].statusResearch == RS_FINISH)
+	if ((ccs.technologies[techIdx].statusResearch == RS_FINISH)
 	&& (techIdx != TECH_INVALID)
 	&& (techIdx >= 0))
 		return qtrue;
@@ -1818,8 +1818,8 @@ int RS_Collected_ (const technology_t * tech)
 
 /**
  * @brief Returns the technology pointer fo a tech index.
- * You can use this instead of "&gd.technologies[techIdx]" to avoid having to check valid indices.
- * @param[in] techIdx Index in the global gd.technologies[] array.
+ * You can use this instead of "&ccs.technologies[techIdx]" to avoid having to check valid indices.
+ * @param[in] techIdx Index in the global ccs.technologies[] array.
  * @return technology_t pointer or NULL if an error occured.
  */
 technology_t* RS_GetTechByIDX (int techIdx)
@@ -1829,10 +1829,10 @@ technology_t* RS_GetTechByIDX (int techIdx)
 		return NULL;
 	}
 
-	if (techIdx == TECH_INVALID || techIdx >= gd.numTechnologies)
+	if (techIdx == TECH_INVALID || techIdx >= ccs.numTechnologies)
 		return NULL;
 	else
-		return &gd.technologies[techIdx];
+		return &ccs.technologies[techIdx];
 }
 
 
@@ -1896,8 +1896,8 @@ technology_t **RS_GetTechsByType (researchType_t type)
 	static technology_t *techList[MAX_TECHNOLOGIES];
 	int i, j = 0;
 
-	for (i = 0; i < gd.numTechnologies; i++) {
-		if (gd.technologies[i].type == type) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
+		if (ccs.technologies[i].type == type) {
 			techList[j] = RS_GetTechByIDX(i);
 			j++;
 			/* j+1 because last item have to be NULL */
@@ -1931,7 +1931,7 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 
 	tech = NULL;
 	max = 0;
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < ccs.numTechnologies; i++) {
 		tech_temp = RS_GetTechByIDX(i);
 		if (tech_temp->statusResearch == RS_RUNNING
 		 && tech_temp->base == base) {
@@ -1975,10 +1975,9 @@ int RS_GetTechIdxByName (const char *name)
 int RS_CountInBase (const base_t *base)
 {
 	int i, counter = 0;
-	technology_t *tech;
 
-	for (i = 0; i < gd.numTechnologies; i++) {
-		tech = gd.technologies + i;
+	for (i = 0; i < ccs.numTechnologies; i++) {
+		technology_t *tech = ccs.technologies + i;
 		assert(tech);
 		if (tech->base == base) {
 			/* Get a free lab from the base. */
@@ -2174,7 +2173,7 @@ qboolean RS_ScriptSanityCheck (void)
 	int i, error = 0;
 	technology_t *t;
 
-	for (i = 0, t = gd.technologies; i < gd.numTechnologies; i++, t++) {
+	for (i = 0, t = ccs.technologies; i < ccs.numTechnologies; i++, t++) {
 		if (!t->name) {
 			error++;
 			Com_Printf("...... technology '%s' has no name\n", t->id);

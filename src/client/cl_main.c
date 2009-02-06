@@ -782,7 +782,6 @@ static void CL_GlobalDataSizes_f (void)
 		"buildingTypes      %10Zu bytes\n"
 		"eventMails         %10Zu bytes\n"
 		"upChapters         %10Zu bytes\n"
-		"technologies       %10Zu bytes\n"
 		,
 		sizeof(globalData_t),
 		sizeof(gd.bases),
@@ -793,8 +792,7 @@ static void CL_GlobalDataSizes_f (void)
 		sizeof(gd.productions),
 		sizeof(gd.buildingTemplates),
 		sizeof(gd.eventMails),
-		sizeof(gd.upChapters),
-		sizeof(gd.technologies)
+		sizeof(gd.upChapters)
 	);
 
 	Com_Printf(
