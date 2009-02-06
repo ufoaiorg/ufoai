@@ -642,6 +642,15 @@ const char *ED_GetLastError (void)
 const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname)
 {
 	const entityDef_t *ed = ED_GetEntityDef(classname);
+	return ED_GetKeyDefEntity(ed, keyname);
+}
+
+/**
+ * @brief searches for the parsed key def, when the entity def is known
+ * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
+ */
+const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname)
+{
 	entityKeyDef_t *kd;
 
 	if (!ed)
@@ -651,7 +660,7 @@ const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname)
 		if (!strcmp(keyname, kd->name))
 			return kd;
 
-	snprintf(lastErr, sizeof(lastErr), "ED_GetKeyDef: no key definition for %s found in entity %s entities.ufo", keyname, classname);
+	snprintf(lastErr, sizeof(lastErr), "ED_GetKeyDefEntity: no key definition for %s found in entity %s entities.ufo", keyname, ed->classname);
 	return NULL;
 }
 

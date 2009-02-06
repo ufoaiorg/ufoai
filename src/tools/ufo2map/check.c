@@ -704,7 +704,33 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
 void CheckEntities (void)
 {
 	int i;
+/* new code */
 
+	Check_InitEntityDefs();
+
+	for (i = 0; i < num_entities; i++) {
+		entity_t *e = &entities[i];
+		const char *name = ValueForKey(e, "classname");
+		const entityDef_t *ed = ED_GetEntityDef(name);
+		epair_t *kvp;
+
+		if (!ed) {
+			Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s\n", name);
+			continue;
+		}
+
+		for (kvp = e->epairs; kvp; kvp = kvp->next) {
+			entityKeyDef_t *kd = ED_GetKeyDefEntity(ed, kvp->key);
+
+			if (!kd) {
+				Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
+				continue;
+			}
+		}
+
+	}
+
+/* old code */
 	/* include worldspawn, at entities[0] */
 	for (i = 0; i < num_entities; i++) {
 		entity_t *e = &entities[i];

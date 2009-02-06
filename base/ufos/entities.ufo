@@ -21,6 +21,16 @@ entity info_player_start {
 
 	mandatory {
 		team	"The number of the team for this player starting point. 0 is reserved for civilians and critters (use info_civilian_start instead)"
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+	}
+
+	type {
+		origin	"V_INT 3"
+		angle	"V_INT"
 	}
 }
 
@@ -28,12 +38,36 @@ entity info_human_start {
 	description	"Starting point for a single player human."
 	color		"0 1 0"
 	size		"-16 -16 -24 16 16 32"
+
+	mandatory {
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+	}
+
+	type {
+		origin	"V_INT 3"
+	}
 }
 
 entity info_alien_start {
 	description	"Starting point for a single player alien."
 	color		"0 0 1"
 	size		"-16 -16 -24 16 16 32"
+
+	mandatory {
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+	}
+
+	type {
+		origin	"V_INT 3"
+	}
 }
 
 entity info_ugv_start {
@@ -43,6 +77,15 @@ entity info_ugv_start {
 
 	optional {
 		team	"The number of the team for this player starting point. Only for multiplayer teams."
+		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+	}
+
+	mandatory {
+		origin	"position"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
@@ -50,6 +93,18 @@ entity info_civilian_start {
 	description	"Starting point for a civilian."
 	color		"0 1 1"
 	size		"-16 -16 -24 16 16 32"
+
+	mandatory {
+		origin	"position"
+	}
+
+	optional {
+		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+	}
+
+	type {
+		origin	"V_INT 3"
+	}
 }
 
 entity info_null {
@@ -80,6 +135,7 @@ entity misc_model {
 
 	mandatory {
 		model		"Arbitrary model file to display"
+		origin		"Position"
 	}
 
 	optional {
@@ -89,6 +145,10 @@ entity misc_model {
 		skin		"Skin number"
 		frame		"Frame number - use frame or anim - but not both"
 		anim		"If this is this an animated model you can set the animation name from the *.anm file here"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 
 	default {
@@ -215,6 +275,14 @@ entity misc_mission {
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
 		target		"The target that is triggered once the round time was hit"
 		message		"A message that is show when the mission is completed"
+	}
+	
+	mandatory {
+		origin	"position"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
