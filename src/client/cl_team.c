@@ -85,7 +85,8 @@ void CL_SaveInventory (sizebuf_t *buf, const inventory_t *i)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			nr++;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_SaveInventory: Send %i items\n", nr);
+	assert(nr < MAX_INVLIST);
+	Com_DPrintf(DEBUG_CLIENT, "CL_SaveInventory: Save %i items\n", nr);
 	MSG_WriteShort(buf, nr);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)

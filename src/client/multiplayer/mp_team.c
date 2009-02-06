@@ -103,7 +103,7 @@ static void MP_SaveTeamMultiplayerInfo (sizebuf_t *buf)
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->morale);
 
-		/** Scores @sa inv_shared.h:chrScoreGlobal_t */
+		/* Scores */
 		MSG_WriteByte(buf, SKILL_NUM_TYPES + 1);
 		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
 			MSG_WriteLong(buf, chr->score.experience[j]);
@@ -258,7 +258,7 @@ static void MP_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->reservedTus.reserveReaction = MSG_ReadShort(sb);
 
 	/* Inventory */
-	INVSH_DestroyInventory(&chr->inv);
+	INVSH_DestroyInventory(&chr->inv); /**< @todo really needed? */
 	CL_LoadInventory(sb, &chr->inv);
 }
 
@@ -293,6 +293,8 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 		Com_Printf("Could not load multiplayer team '%s' - version differs.\n", filename);
 		return;
 	}
+
+	MSG_ReadString(&sb);
 
 	/* read whole team list */
 	num = MSG_ReadByte(&sb);
