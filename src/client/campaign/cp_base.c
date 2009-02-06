@@ -3503,8 +3503,8 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < presaveArray[PRE_ACTTEA]; l++) {
 				if (teamIdxs[l] != BYTES_NONE) {
 					assert(teamTypes[l] != MAX_EMPL);
-					/** assert(gd.numEmployees[teamTypes[l]] > 0); @todo We currently seem to link to not yet parsed employees. */
-					aircraft->acTeam[l] = &gd.employees[teamTypes[l]][teamIdxs[l]];
+					/** assert(ccs.numEmployees[teamTypes[l]] > 0); @todo We currently seem to link to not yet parsed employees. */
+					aircraft->acTeam[l] = &ccs.employees[teamTypes[l]][teamIdxs[l]];
 					aircraft->teamSize++;
 				}
 			}
@@ -3514,7 +3514,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			 * this means, that the pilot pointer is not (really) valid until
 			 * E_Load was called, too */
 			if (pilotIdx != BYTES_NONE)
-				aircraft->pilot = &gd.employees[EMPL_PILOT][pilotIdx];
+				aircraft->pilot = &ccs.employees[EMPL_PILOT][pilotIdx];
 			else
 				aircraft->pilot = NULL;
 

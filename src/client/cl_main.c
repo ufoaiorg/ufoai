@@ -780,7 +780,6 @@ static void CL_GlobalDataSizes_f (void)
 		"ugv                %10Zu bytes\n"
 		"productions        %10Zu bytes\n"
 		"buildingTypes      %10Zu bytes\n"
-		"employees          %10Zu bytes\n"
 		"eventMails         %10Zu bytes\n"
 		"upChapters         %10Zu bytes\n"
 		"technologies       %10Zu bytes\n"
@@ -793,7 +792,6 @@ static void CL_GlobalDataSizes_f (void)
 		sizeof(gd.ugvs),
 		sizeof(gd.productions),
 		sizeof(gd.buildingTemplates),
-		sizeof(gd.employees),
 		sizeof(gd.eventMails),
 		sizeof(gd.upChapters),
 		sizeof(gd.technologies)

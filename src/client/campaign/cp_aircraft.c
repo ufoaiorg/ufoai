@@ -943,7 +943,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
  * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
  * @todo Return status of deletion for better error handling.
  * @note This function has the side effect, that the base aircraft number is
- * reduced by one, also the gd.employees pointers are
+ * reduced by one, also the ccs.employees pointers are
  * moved to fill the gap of the removed employee. Thus pointers like acTeam in
  * the aircraft can point to wrong employees now. This has to be taken into
  * account

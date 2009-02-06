@@ -86,9 +86,9 @@ void CP_NationHandleBudget (void)
 	}
 
 	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (gd.employees[EMPL_SOLDIER][i].hired)
-			cost += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
+		if (ccs.employees[EMPL_SOLDIER][i].hired)
+			cost += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
@@ -96,9 +96,9 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
 	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
-		if (gd.employees[EMPL_WORKER][i].hired)
-			cost += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
+		if (ccs.employees[EMPL_WORKER][i].hired)
+			cost += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
@@ -106,9 +106,9 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
 	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (gd.employees[EMPL_SCIENTIST][i].hired)
-			cost += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
+		if (ccs.employees[EMPL_SCIENTIST][i].hired)
+			cost += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
@@ -116,9 +116,9 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
 	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
-		if (gd.employees[EMPL_PILOT][i].hired)
-			cost += SALARY_PILOT_BASE + gd.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
+		if (ccs.employees[EMPL_PILOT][i].hired)
+			cost += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
 	}
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to pilots"), cost);
@@ -126,9 +126,9 @@ void CP_NationHandleBudget (void)
 	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 
 	cost = 0;
-	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		if (gd.employees[EMPL_ROBOT][i].hired)
-			cost += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
+		if (ccs.employees[EMPL_ROBOT][i].hired)
+			cost += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
 	}
 
 	if (cost != 0) {
@@ -167,7 +167,7 @@ void CP_NationHandleBudget (void)
 		CL_UpdateCredits(ccs.credits - cost);
 	}
 
-	cost = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	cost = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	CL_UpdateCredits(ccs.credits - cost);
 	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);

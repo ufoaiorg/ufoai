@@ -99,8 +99,8 @@ void CL_CleanTempInventory (base_t* base)
 		for (k = 0; k < csi.numIDs; k++)
 			if (csi.ids[k].temp) {
 				/* idFloor and idEquip are temp */
-				gd.employees[EMPL_SOLDIER][i].chr.inv.c[k] = NULL;
-				gd.employees[EMPL_ROBOT][i].chr.inv.c[k] = NULL;
+				ccs.employees[EMPL_SOLDIER][i].chr.inv.c[k] = NULL;
+				ccs.employees[EMPL_ROBOT][i].chr.inv.c[k] = NULL;
 			}
 
 	if (!base)

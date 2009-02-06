@@ -1133,9 +1133,9 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	/* update stats */
 	CL_UpdateCharacterStats(base, won, aircraft);
 
-	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
-	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
-		employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
+	/* Backward loop because ccs.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
+	for (i = ccs.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
+		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
 
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))
 			numberofsoldiers++;
@@ -1149,7 +1149,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			/* if employee is marked as dead */
 			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
 				/* Delete the employee. */
-				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
+				/* sideeffect: ccs.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
 				Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd: Delete this dead employee: %i (%s)\n", i, chr->name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
 			} /* if dead */

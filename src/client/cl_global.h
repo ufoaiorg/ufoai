@@ -56,12 +56,6 @@ typedef struct globalData_s
 	eventMail_t eventMails[MAX_EVENTMAILS];	/**< holds all event mails (cl_event.c) */
 	int numEventMails;	/**< how many eventmails (script-id: mail) parsed */
 
-	/* == employees == */
-	/* A list of all phalanx employees (soldiers, scies, workers, etc...) */
-	employee_t employees[MAX_EMPL][MAX_EMPLOYEES];
-	/* Total number of employees. */
-	int numEmployees[MAX_EMPL];
-
 	/* == bases == */
 	/* A list of _all_ bases ... even unbuilt ones. */
 	base_t bases[MAX_BASES];

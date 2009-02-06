@@ -168,7 +168,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 
 	/* Count amount of all employees already on the transfer list. */
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		for (i = 0; i < gd.numEmployees[emplType]; i++) {
+		for (i = 0; i < ccs.numEmployees[emplType]; i++) {
 			if (trEmployeesTmp[emplType][i])
 				intransfer++;
 		}
@@ -314,7 +314,7 @@ static void TR_CargoList (void)
 
 	/* Show employees. */
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-		for (i = 0; i < gd.numEmployees[emplType]; i++) {
+		for (i = 0; i < ccs.numEmployees[emplType]; i++) {
 			if (trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
@@ -509,8 +509,8 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		if (B_GetBuildingStatus(destbase, B_QUARTERS)) {
 			employeeType_t emplType;
 			for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-				for (i = 0; i < gd.numEmployees[emplType]; i++) {
-					const employee_t *employee = &gd.employees[emplType][i];
+				for (i = 0; i < ccs.numEmployees[emplType]; i++) {
+					const employee_t *employee = &ccs.employees[emplType][i];
 					if (!E_IsInBase(employee, srcbase))
 						continue;
 					if (trEmployeesTmp[emplType][i])	/* Already on transfer list. */
@@ -752,7 +752,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 				MSO_CheckAddNewMessage(NT_TRANSFER_LOST,_("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			}
 			for (i = 0; i < MAX_EMPL; i++) {
-				for (j = 0; j < gd.numEmployees[i]; j++) {
+				for (j = 0; j < ccs.numEmployees[i]; j++) {
 					if (transfer->trEmployees[i][j]) {
 						employee_t *employee = transfer->trEmployees[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
@@ -766,7 +766,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			}
 		} else {
 			for (i = 0; i < MAX_EMPL; i++) {
-				for (j = 0; j < gd.numEmployees[i]; j++) {
+				for (j = 0; j < ccs.numEmployees[i]; j++) {
 					if (transfer->trEmployees[i][j]) {
 						employee_t *employee = transfer->trEmployees[i][j];
 						employee->baseHired = transfer->srcBase;	/* Restore back the original baseid. */
@@ -1071,7 +1071,7 @@ static void TR_TransferStart_f (void)
 	/* Note that personel remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
-		for (j = 0; j < gd.numEmployees[i]; j++) {
+		for (j = 0; j < ccs.numEmployees[i]; j++) {
 			if (trEmployeesTmp[i][j]) {
 				employee_t *employee = trEmployeesTmp[i][j];
 				transfer->hasEmployees = qtrue;
@@ -1194,8 +1194,8 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_EMPLOYEE:
-		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-			employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
+		for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
+			employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
 			if (trEmployeesTmp[EMPL_SOLDIER][i])
@@ -1210,8 +1210,8 @@ static void TR_TransferListSelect_f (void)
 			}
 			cnt++;
 		}
-		for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
-			employee_t *employee = &gd.employees[EMPL_PILOT][i];
+		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
+			employee_t *employee = &ccs.employees[EMPL_PILOT][i];
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
 			if (trEmployeesTmp[EMPL_PILOT][i])
@@ -1247,8 +1247,8 @@ static void TR_TransferListSelect_f (void)
 				continue;
 			if (cnt == num) {
 				int amount = min(E_CountHired(baseCurrent, emplType), TR_GetTransferFactor());
-				for (i = 0; i < gd.numEmployees[emplType]; i++) {
-					employee_t *employee = &gd.employees[emplType][i];
+				for (i = 0; i < ccs.numEmployees[emplType]; i++) {
+					employee_t *employee = &ccs.employees[emplType][i];
 					if (!E_IsInBase(employee, baseCurrent))
 						continue;
 					if (trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
@@ -1520,7 +1520,7 @@ static void TR_CargoListSelect_f (void)
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
-		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
 			if (trEmployeesTmp[EMPL_SOLDIER][i]) {
 				if (cnt == num) {
 					trEmployeesTmp[EMPL_SOLDIER][i] = NULL;
@@ -1530,7 +1530,7 @@ static void TR_CargoListSelect_f (void)
 				cnt++;
 			}
 		}
-		for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
+		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
 			if (trEmployeesTmp[EMPL_PILOT][i]) {
 				if (cnt == num) {
 					trEmployeesTmp[EMPL_PILOT][i] = NULL;
@@ -1561,7 +1561,7 @@ static void TR_CargoListSelect_f (void)
 				int amount;
 				amount = TR_GetTransferFactor();
 				amount = min(amount, E_CountHired(baseCurrent, emplType));
-				for (j = 0; j < gd.numEmployees[emplType]; j++) {
+				for (j = 0; j < ccs.numEmployees[emplType]; j++) {
 					if (trEmployeesTmp[emplType][j]) {
 						trEmployeesTmp[emplType][j] = NULL;
 						amount--;
@@ -1815,7 +1815,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
 				const int emplIdx = MSG_ReadShort(sb);
-				transfer->trEmployees[j][k] = ((emplIdx >= 0) ? &gd.employees[j][emplIdx] : NULL);
+				transfer->trEmployees[j][k] = ((emplIdx >= 0) ? &ccs.employees[j][emplIdx] : NULL);
 			}
 		}
 		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
@@ -1844,7 +1844,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 
 		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-				gd.employees[j][k].transfer = (transfer->trEmployees[j][k]>=0) ? qtrue : qfalse;
+				ccs.employees[j][k].transfer = (transfer->trEmployees[j][k]>=0) ? qtrue : qfalse;
 			}
 		}
 	}

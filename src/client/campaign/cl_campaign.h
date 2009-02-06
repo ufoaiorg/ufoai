@@ -375,6 +375,13 @@ typedef struct ccs_s {
 	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
 	qboolean mission_tryagain;			/**< value to decide whether the try again button is
 										 * available after you played a campaign mission */
+
+
+	/* == employees == */
+	/* A list of all phalanx employees (soldiers, scies, workers, etc...) */
+	employee_t employees[MAX_EMPL][MAX_EMPLOYEES];
+	/* Total number of employees. */
+	int numEmployees[MAX_EMPL];
 } ccs_t;
 
 /** possible geoscape actions */

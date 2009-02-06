@@ -157,7 +157,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
  * @brief Init the teamlist checkboxes
  * @sa CL_UpdateActorAircraftVar
  * @todo Make this function use a temporary list with all list-able employees
- * instead of using gd.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
+ * instead of using ccs.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
  */
 static void CL_UpdateSoldierList_f (void)
 {
@@ -181,7 +181,7 @@ static void CL_UpdateSoldierList_f (void)
  * @brief Init the teamlist checkboxes
  * @sa CL_UpdateActorAircraftVar
  * @todo Make this function use a temporary list with all list-able employees
- * instead of using gd.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
+ * instead of using ccs.employees[][] directly. See also CL_Select_f->SELECT_MODE_TEAM
  */
 static void CL_UpdatePilotList_f (void)
 {

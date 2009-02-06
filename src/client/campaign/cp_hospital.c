@@ -70,8 +70,8 @@ void HOS_HospitalRun (void)
 	int type, i;
 
 	for (type = 0; type < MAX_EMPL; type++) {
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			employee_t *employee = &gd.employees[type][i];
+		for (i = 0; i < ccs.numEmployees[type]; i++) {
+			employee_t *employee = &ccs.employees[type][i];
 			if (!employee->baseHired || !employee->hired)
 				continue;
 
@@ -107,9 +107,9 @@ void HOS_HealAll (const base_t* const base)
 	assert(base);
 
 	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			if (E_IsInBase(&gd.employees[type][i], base))
-				HOS_HealEmployee(&gd.employees[type][i]);
+		for (i = 0; i < ccs.numEmployees[type]; i++) {
+			if (E_IsInBase(&ccs.employees[type][i], base))
+				HOS_HealEmployee(&ccs.employees[type][i]);
 		}
 }
 
@@ -127,8 +127,8 @@ static void HOS_HealAll_f (void)
 		return;
 
 	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			employee = &gd.employees[type][i];
+		for (i = 0; i < ccs.numEmployees[type]; i++) {
+			employee = &ccs.employees[type][i];
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
@@ -153,8 +153,8 @@ static void HOS_HurtAll_f (void)
 		amount = 1;
 
 	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			employee = &gd.employees[type][i];
+		for (i = 0; i < ccs.numEmployees[type]; i++) {
+			employee = &ccs.employees[type][i];
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;

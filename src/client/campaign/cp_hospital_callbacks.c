@@ -59,8 +59,8 @@ static void HOS_UpdateMenu (void)
 	MN_ExecuteConfunc("hospital_clear");
 
 	for (type = 0, j = 0, entry = 0; type < MAX_EMPL; type++) {
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			employee_t *employee = &gd.employees[type][i];
+		for (i = 0; i < ccs.numEmployees[type]; i++) {
+			employee_t *employee = &ccs.employees[type][i];
 			/* Only show those employees, that are in the current base. */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
@@ -176,8 +176,8 @@ static void HOS_ListClick_f (void)
 	num = atoi(Cmd_Argv(1)) + hospitalFirstEntry;
 
 	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			employee_t *employee = &gd.employees[type][i];
+		for (i = 0; i < ccs.numEmployees[type]; i++) {
+			employee_t *employee = &ccs.employees[type][i];
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= employee->chr.maxHP)
 				continue;

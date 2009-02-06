@@ -736,7 +736,7 @@ void CL_CampaignRun (void)
 	int timeAlreadyFlied = 0;	/**< Time already flied by UFO or aircraft due to detection each detectioninterval */
 
 	/* temporary check to find out bug: [1999099] no pilots available */
-	assert(gd.numEmployees[EMPL_PILOT]);
+	assert(ccs.numEmployees[EMPL_PILOT]);
 
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
@@ -900,33 +900,33 @@ static void CL_StatsUpdate_f (void)
 	}
 
 	/* costs */
-	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (gd.employees[EMPL_SCIENTIST][i].hired) {
-			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
+		if (ccs.employees[EMPL_SCIENTIST][i].hired) {
+			costs += SALARY_SCIENTIST_BASE + ccs.employees[EMPL_SCIENTIST][i].chr.score.rank * SALARY_SCIENTIST_RANKBONUS;
 			hired[EMPL_SCIENTIST]++;
 		}
 	}
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (gd.employees[EMPL_SOLDIER][i].hired) {
-			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
+		if (ccs.employees[EMPL_SOLDIER][i].hired) {
+			costs += SALARY_SOLDIER_BASE + ccs.employees[EMPL_SOLDIER][i].chr.score.rank * SALARY_SOLDIER_RANKBONUS;
 			hired[EMPL_SOLDIER]++;
 		}
 	}
-	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
-		if (gd.employees[EMPL_WORKER][i].hired) {
-			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
+		if (ccs.employees[EMPL_WORKER][i].hired) {
+			costs += SALARY_WORKER_BASE + ccs.employees[EMPL_WORKER][i].chr.score.rank * SALARY_WORKER_RANKBONUS;
 			hired[EMPL_WORKER]++;
 		}
 	}
-	for (i = 0; i < gd.numEmployees[EMPL_PILOT]; i++) {
-		if (gd.employees[EMPL_PILOT][i].hired) {
-			costs += SALARY_PILOT_BASE + gd.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
+		if (ccs.employees[EMPL_PILOT][i].hired) {
+			costs += SALARY_PILOT_BASE + ccs.employees[EMPL_PILOT][i].chr.score.rank * SALARY_PILOT_RANKBONUS;
 			hired[EMPL_PILOT]++;
 		}
 	}
-	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		if (gd.employees[EMPL_ROBOT][i].hired) {
-			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
+	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
+		if (ccs.employees[EMPL_ROBOT][i].hired) {
+			costs += SALARY_ROBOT_BASE + ccs.employees[EMPL_ROBOT][i].chr.score.rank * SALARY_ROBOT_RANKBONUS;
 			hired[EMPL_ROBOT]++;
 		}
 	}
@@ -969,7 +969,7 @@ static void CL_StatsUpdate_f (void)
 		sum += costs;
 	}
 
-	costs = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	costs = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Q_strcat(pos, va(_("Administrative costs:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -1677,15 +1677,15 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 	assert(aircraft);
 
 	/* only soldiers have stats and ranks, ugvs not */
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-		if (AIR_IsEmployeeInAircraft(&gd.employees[EMPL_SOLDIER][i], aircraft)) {
-			character_t *chr = &gd.employees[EMPL_SOLDIER][i].chr;
+	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++)
+		if (AIR_IsEmployeeInAircraft(&ccs.employees[EMPL_SOLDIER][i], aircraft)) {
+			character_t *chr = &ccs.employees[EMPL_SOLDIER][i].chr;
 			assert(chr);
-			if (!gd.employees[EMPL_SOLDIER][i].hired) {
+			if (!ccs.employees[EMPL_SOLDIER][i].hired) {
 				Sys_Error("Employee %s is reported as being on the aircraft (%s), but he is not hired (%i/%i)",
-					chr->name, aircraft->id, i, gd.numEmployees[EMPL_SOLDIER]);
+					chr->name, aircraft->id, i, ccs.numEmployees[EMPL_SOLDIER]);
 			}
-			assert(gd.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
+			assert(ccs.employees[EMPL_SOLDIER][i].baseHired == aircraft->homebase);
 
 			Com_DPrintf(DEBUG_CLIENT, "CL_UpdateCharacterStats: searching for soldier: %i\n", i);
 
@@ -1837,8 +1837,8 @@ static void CL_DebugChangeCharacterStats_f (void)
 	if (!baseCurrent)
 		return;
 
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		employee_t *employee = &gd.employees[EMPL_SOLDIER][i];
+	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
+		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
 
 		if (!employee->hired && employee->baseHired != baseCurrent)
 			continue;

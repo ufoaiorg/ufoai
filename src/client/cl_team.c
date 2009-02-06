@@ -630,7 +630,7 @@ static void CL_ToggleTeamList_f (void)
 		cls.displayHeavyEquipmentList = qfalse;
 		MN_ExecuteConfunc("toggle_show_heavybutton");
 	} else {
-		if (gd.numEmployees[EMPL_ROBOT] > 0) {
+		if (ccs.numEmployees[EMPL_ROBOT] > 0) {
 			Com_DPrintf(DEBUG_CLIENT, "Changing to heavy equipment (tank) list.\n");
 			cls.displayHeavyEquipmentList = qtrue;
 			MN_ExecuteConfunc("toggle_show_soldiersbutton");
