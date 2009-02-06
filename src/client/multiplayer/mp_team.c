@@ -136,20 +136,16 @@ static void MP_SaveTeamMultiplayerInfo (sizebuf_t *buf)
  * @sa MP_LoadTeamMultiplayer
  * @todo Implement EMPL_ROBOT
  */
-static qboolean MP_SaveTeamMultiplayer (const char *filename)
+static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
-	const char *name;
 	int i, res;
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
 	MSG_WriteByte(&sb, MPTEAM_SAVE_FILE_VERSION);
 
-	name = Cvar_VariableString("mn_teamname");
-	if (!strlen(name))
-		Cvar_Set("mn_teamname", _("NewTeam"));
 	/* store teamname */
 	MSG_WriteString(&sb, name);
 
@@ -186,6 +182,7 @@ void MP_SaveTeamMultiplayer_f (void)
 	} else {
 		char filename[MAX_OSPATH];
 		int index;
+		const char *name;
 
 		if (Cmd_Argc() != 2) {
 			Com_Printf("Usage: %s <slotindex>\n", Cmd_Argv(0));
@@ -194,9 +191,13 @@ void MP_SaveTeamMultiplayer_f (void)
 
 		index = atoi(Cmd_Argv(1));
 
+		name = Cvar_VariableString(va("mn_slot%i", index));
+		if (!strlen(name))
+			name = _("NewTeam");
+
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mpt", FS_Gamedir(), index);
-		if (!MP_SaveTeamMultiplayer(filename))
+		if (!MP_SaveTeamMultiplayer(filename, name))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
 }
