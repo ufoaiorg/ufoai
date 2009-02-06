@@ -278,6 +278,16 @@ char* dir_dialog (GtkWidget* parent, const char* title, const char* path)
 	return filename;
 }
 
+/**
+ * @brief Show a new file dialog with given parameters and returns the selected path in a clean manner.
+ * @note this will pop up new dialogs if an existing file was chosen and it was chosen to not overwrite it in save mode.
+ * @param parent parent window
+ * @param open flag indicating whether to open a file or to save a file
+ * @param title title to be shown in dialog
+ * @param path root path to show on start
+ * @param pattern filename pattern, actually a name for a registered file type
+ * @return a path to a file, all directory separators will be replaced by '/' (unix style) or NULL if no file was chosen.
+ */
 const char* file_dialog (GtkWidget* parent, bool open, const char* title, const char* path, const char* pattern)
 {
 	for (;;) {
@@ -286,7 +296,12 @@ const char* file_dialog (GtkWidget* parent, bool open, const char* title, const 
 		if (open || file == 0 || !file_exists(file) || gtk_MessageBox(parent,
 				_("The file specified already exists.\nDo you want to replace it?"), title, eMB_NOYES, eMB_ICONQUESTION)
 				== eIDYES) {
-			return file;
+			if (file == 0)
+				return file;
+			StringOutputStream fileCleaned(256);
+			fileCleaned << PathCleaned(file);
+			strcpy(g_file_dialog_file, fileCleaned.c_str());
+			return g_file_dialog_file;
 		}
 	}
 }
