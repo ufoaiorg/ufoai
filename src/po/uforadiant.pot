@@ -15,6 +15,7 @@
 #: src/tools/radiant/radiant/referencecache.cpp:667
 #: src/tools/radiant/radiant/referencecache.cpp:690
 #: src/tools/radiant/radiant/texwindow.cpp:1334
+#: src/tools/radiant/radiant/texwindow.cpp:1347
 msgid "Processing..."
 msgstr ""
 
@@ -61,6 +62,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1257
 #: src/tools/radiant/radiant/texwindow.cpp:1334
+#: src/tools/radiant/radiant/texwindow.cpp:1347
 msgid "Loading Shaders"
 msgstr ""
 
@@ -115,73 +117,89 @@ msgid "Brush Settings"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1787
+#: src/tools/radiant/radiant/camwindow.cpp:1783
 msgid "Movement Speed"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1789
+#: src/tools/radiant/radiant/camwindow.cpp:1785
 msgid "Link strafe speed to movement speed"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1790
+#: src/tools/radiant/radiant/camwindow.cpp:1786
 msgid "Rotation Speed"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1791
+#: src/tools/radiant/radiant/camwindow.cpp:1787
 msgid "Invert mouse vertical axis"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1792
+#: src/tools/radiant/radiant/camwindow.cpp:1788
 msgid "Discrete movement"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1794
+#: src/tools/radiant/radiant/camwindow.cpp:1790
 msgid "Enable far-clip plane"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1797
+#: src/tools/radiant/radiant/camwindow.cpp:1793
 msgctxt "Render Mode"
 msgid "Wireframe"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1797
+#: src/tools/radiant/radiant/camwindow.cpp:1793
 msgctxt "Render Mode"
 msgid "Flatshade"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1797
+#: src/tools/radiant/radiant/camwindow.cpp:1793
 msgctxt "Render Mode"
 msgid "Textured"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1798
+#: src/tools/radiant/radiant/camwindow.cpp:1794
 msgid "Render Mode"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1801
+#: src/tools/radiant/radiant/camwindow.cpp:1797
 msgctxt "Strafe Mode"
 msgid "Both"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1801
+#: src/tools/radiant/radiant/camwindow.cpp:1797
 msgctxt "Strafe Mode"
 msgid "Forward"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1801
+#: src/tools/radiant/radiant/camwindow.cpp:1797
 msgctxt "Strafe Mode"
 msgid "Up"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1802
+#: src/tools/radiant/radiant/camwindow.cpp:1798
 msgid "Strafe Mode"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1807
 #: src/tools/radiant/radiant/mainframe.cpp:1491
+#: src/tools/radiant/radiant/camwindow.cpp:1803
 msgid "Camera"
 msgstr ""
 
 #: src/tools/radiant/radiant/camwindow.cpp:1807
+#: src/tools/radiant/radiant/camwindow.cpp:1803
 msgid "Camera View Preferences"
 msgstr ""
 
@@ -301,6 +319,7 @@ msgstr ""
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:120
 #: src/tools/radiant/radiant/dialogs/maptools.cpp:191
 #: src/tools/radiant/radiant/dialogs/findbrush.cpp:153
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:121
 msgid "Close"
 msgstr ""
 
@@ -372,37 +391,44 @@ msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1330
 #: src/tools/radiant/radiant/texwindow.cpp:1409
+#: src/tools/radiant/radiant/texwindow.cpp:1422
 msgid "Texture Thumbnail Scale"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1336
 #: src/tools/radiant/radiant/texwindow.cpp:1412
+#: src/tools/radiant/radiant/texwindow.cpp:1425
 msgid "Mousewheel Increment"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1340
 #: src/tools/radiant/radiant/mainframe.cpp:1483
 #: src/tools/radiant/radiant/texwindow.cpp:1417
+#: src/tools/radiant/radiant/texwindow.cpp:1430
 msgid "Texture Browser"
 msgstr ""
 
 #: src/tools/radiant/radiant/texwindow.cpp:1340
 #: src/tools/radiant/radiant/texwindow.cpp:1417
+#: src/tools/radiant/radiant/texwindow.cpp:1430
 msgid "Texture Browser Preferences"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1393
 #: src/tools/radiant/radiant/mainframe.cpp:2242
+#: src/tools/radiant/radiant/mainframe.cpp:2257
 msgid "Window Layout"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1394
 #: src/tools/radiant/radiant/mainframe.cpp:2244
+#: src/tools/radiant/radiant/mainframe.cpp:2259
 msgid "Detachable Menus"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:1395
 #: src/tools/radiant/radiant/mainframe.cpp:2246
+#: src/tools/radiant/radiant/mainframe.cpp:2261
 msgid "Plugin Toolbar"
 msgstr ""
 
@@ -565,6 +591,7 @@ msgstr ""
 #: src/tools/radiant/radiant/mainframe.cpp:1507
 #: src/tools/radiant/radiant/xywindow.cpp:2710
 #: src/tools/radiant/radiant/xywindow.cpp:2708
+#: src/tools/radiant/radiant/xywindow.cpp:2692
 msgid "Orthographic"
 msgstr ""
 
@@ -1093,6 +1120,7 @@ msgid "Sides:"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:125
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:126
 msgid "Save"
 msgstr ""
 
@@ -1231,6 +1259,8 @@ msgstr ""
 #: src/tools/radiant/radiant/main.cpp:359
 #: src/tools/radiant/radiant/main.cpp:292
 #: src/tools/radiant/radiant/main.cpp:356
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:47
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:84
 msgid "UFORadiant"
 msgstr ""
 
@@ -1282,42 +1312,50 @@ msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2703
 #: src/tools/radiant/radiant/xywindow.cpp:2701
+#: src/tools/radiant/radiant/xywindow.cpp:2685
 msgid "Solid selection boxes"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2704
 #: src/tools/radiant/radiant/xywindow.cpp:2702
+#: src/tools/radiant/radiant/xywindow.cpp:2686
 msgid "Display size info"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2705
 #: src/tools/radiant/radiant/xywindow.cpp:2703
+#: src/tools/radiant/radiant/xywindow.cpp:2687
 msgid "Chase mouse during drags"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2706
 #: src/tools/radiant/radiant/xywindow.cpp:2704
+#: src/tools/radiant/radiant/xywindow.cpp:2688
 msgid "Update views on camera move"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2710
 #: src/tools/radiant/radiant/xywindow.cpp:2708
+#: src/tools/radiant/radiant/xywindow.cpp:2692
 msgid "Orthographic View Preferences"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2720
 #: src/tools/radiant/radiant/xywindow.cpp:2718
+#: src/tools/radiant/radiant/xywindow.cpp:2702
 msgid "Clipper tool uses nodraw"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2724
 #: src/tools/radiant/radiant/xywindow.cpp:2722
 #: src/tools/radiant/radiant/brushmanip.cpp:1244
+#: src/tools/radiant/radiant/xywindow.cpp:2706
 msgid "Clipper"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:2724
 #: src/tools/radiant/radiant/xywindow.cpp:2722
+#: src/tools/radiant/radiant/xywindow.cpp:2706
 msgid "Clipper Tool Settings"
 msgstr ""
 
@@ -1575,10 +1613,13 @@ msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:46
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:83
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:47
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:84
 msgid "Close the editor?"
 msgstr ""
 
 #: src/tools/radiant/radiant/dialogs/texteditor.cpp:61
+#: src/tools/radiant/radiant/dialogs/texteditor.cpp:62
 msgid "Error saving file."
 msgstr ""
 
@@ -1588,6 +1629,7 @@ msgstr ""
 
 #: src/tools/radiant/radiant/sidebar/entityinspector.cpp:1078
 #: src/tools/radiant/radiant/xywindow.cpp:1091
+#: src/tools/radiant/radiant/xywindow.cpp:1074
 msgid "Info"
 msgstr ""
 
@@ -1644,27 +1686,33 @@ msgid "Failed to launch browser!"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1090
+#: src/tools/radiant/radiant/xywindow.cpp:1073
 msgid "There's already a worldspawn in your map!"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1554
+#: src/tools/radiant/radiant/xywindow.cpp:1537
 msgid "You have to select some brushes to get the bounding box for.\n"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1554
+#: src/tools/radiant/radiant/xywindow.cpp:1537
 msgid "No selection"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1559
+#: src/tools/radiant/radiant/xywindow.cpp:1542
 msgid "Background Image"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1213
+#: src/tools/radiant/radiant/xywindow.cpp:1196
 msgctxt "Context Menu Action"
 msgid "Connect"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:1215
+#: src/tools/radiant/radiant/xywindow.cpp:1198
 msgctxt "Context Menu Action"
 msgid "Fit Face"
 msgstr ""
@@ -1682,6 +1730,7 @@ msgid "All Files (*.*)"
 msgstr ""
 
 #: src/tools/radiant/libs/gtkutil/filechooser.cpp:287
+#: src/tools/radiant/libs/gtkutil/filechooser.cpp:297
 msgid ""
 "The file specified already exists.\n"
 "Do you want to replace it?"
@@ -1712,10 +1761,12 @@ msgid "Choose File"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:2252
+#: src/tools/radiant/radiant/mainframe.cpp:2267
 msgid "Layout"
 msgstr ""
 
 #: src/tools/radiant/radiant/mainframe.cpp:2252
+#: src/tools/radiant/radiant/mainframe.cpp:2267
 msgid "Layout Preferences"
 msgstr ""
 
@@ -1860,6 +1911,7 @@ msgid "Texture Browser (T)"
 msgstr ""
 
 #: src/tools/radiant/radiant/xywindow.cpp:553
+#: src/tools/radiant/radiant/xywindow.cpp:555
 msgid "Save Image"
 msgstr ""
 
@@ -2063,4 +2115,61 @@ msgstr ""
 
 #: src/tools/radiant/radiant/filters.cpp:186
 msgid "Reset filters"
+msgstr ""
+
+#: src/tools/radiant/plugins/brushexport/callbacks.cpp:24
+msgid "Save as Obj"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/light.cpp:39
+msgid "Light intensity"
+msgstr ""
+
+#: src/tools/radiant/radiant/dialogs/prism.cpp:40
+msgid "Arbitrary sides"
+msgstr ""
+
+#: src/tools/radiant/radiant/camwindow.cpp:1646
+msgid "Cubic clip the camera view (\\)"
+msgstr ""
+
+#: src/tools/radiant/radiant/commands.cpp:206
+msgid "Mapped Commands"
+msgstr ""
+
+#: src/tools/radiant/radiant/lastused.cpp:169
+msgid "Recent Files"
+msgstr ""
+
+#: src/tools/radiant/radiant/lastused.cpp:185
+msgid "Open Map"
+msgstr ""
+
+#: src/tools/radiant/radiant/lastused.cpp:227
+msgctxt "Last used files count"
+msgid "Count"
+msgstr ""
+
+#: src/tools/radiant/radiant/select.cpp:877
+msgid "Arbitrary rotation"
+msgstr ""
+
+#: src/tools/radiant/radiant/toolbars.cpp:64
+msgid "CSG Subtract"
+msgstr ""
+
+#: src/tools/radiant/radiant/toolbars.cpp:65
+msgid "CSG Merge"
+msgstr ""
+
+#: src/tools/radiant/radiant/toolbars.cpp:71
+msgid "Select _Vertices"
+msgstr ""
+
+#: src/tools/radiant/radiant/toolbars.cpp:72
+msgid "Select _Edges"
+msgstr ""
+
+#: src/tools/radiant/radiant/toolbars.cpp:73
+msgid "Select _Faces"
 msgstr ""
