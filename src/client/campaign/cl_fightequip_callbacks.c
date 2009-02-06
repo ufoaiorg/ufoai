@@ -115,6 +115,7 @@ static void AIM_CheckAirequipID (void)
 		case AC_ITEM_WEAPON:
 		case AC_ITEM_SHIELD:
 		case AC_ITEM_ELECTRONICS:
+			return;
 		default:
 			airequipID = AC_ITEM_WEAPON;
 		}
