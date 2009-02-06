@@ -217,7 +217,11 @@ void DoRouting (void)
 
 	/* store the data */
 	data = curTile->routedata;
+	for (i = 0; i < 3; i++)
+		wpMins[i] = LittleLong(wpMins[i]);
 	data = CompressRouting((byte*)wpMins, data, sizeof(wpMins));
+	for (i = 0; i < 3; i++)
+		wpMaxs[i] = LittleLong(wpMaxs[i]);
 	data = CompressRouting((byte*)wpMaxs, data, sizeof(wpMaxs));
 	data = CompressRouting((byte*)Nmap, data, sizeof(Nmap));
 

@@ -789,13 +789,10 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 	source = cmod_base + l->fileofs;
 
 	i = CMod_DeCompressRouting(&source, (byte*)curTile->wpMins);
-	/* Com_Printf("wpMins: %i %i\n", i, sizeof(wpMins)); */
 	length = i;
 	i = CMod_DeCompressRouting(&source, (byte*)curTile->wpMaxs);
-	/* Com_Printf("wpMaxs: %i %i\n", i, sizeof(wpMaxs)); */
 	length += i;
 	i = CMod_DeCompressRouting(&source, (byte*)temp_map);
-	/* Com_Printf("temp_map: %i %i\n", i, sizeof(temp_map)); */
 	length += i;
 
 	if (length != targetLength)
