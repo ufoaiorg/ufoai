@@ -32,13 +32,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "multiplayer/mp_team.h"
 #include "menu/m_popup.h"
 
+/**
+ * @brief Fills the multiplayer equipment storage
+ * @todo Multiplayer is currently using the ccs.eMission - this should be
+ * changed - ccs is campaign mode only
+ */
+static void GAME_MP_GetEquipment (void)
+{
+	const equipDef_t *ed;
+	const char *teamID = Com_ValueToStr(&cl_team->integer, V_TEAM, 0);
+	char equipmentName[MAX_VAR];
+
+	Com_sprintf(equipmentName, sizeof(equipmentName), "multiplayer_%s", teamID);
+
+	/* search equipment definition */
+	ed = INV_GetEquipmentDefinitionByID(equipmentName);
+	if (ed == NULL) {
+		Com_Printf("Equipment '%s' not found!\n", equipmentName);
+		return;
+	}
+
+	ccs.eMission = *ed;
+}
+
 static void GAME_MP_AutoTeam (void)
 {
 	int i;
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
-
-	SV_Shutdown("Game exit", qfalse);
-	CL_Disconnect();
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&multiplayerCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
@@ -48,6 +68,8 @@ static void GAME_MP_AutoTeam (void)
 		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}
 	chrDisplayList.num = i;
+
+	GAME_MP_GetEquipment();
 }
 
 static void GAME_MP_AutoTeam_f (void)
@@ -234,27 +256,6 @@ qboolean GAME_MP_Spawn (void)
 	return qtrue;
 }
 
-/**
- * @brief Fills the multiplayer equipment storage
- * @todo Multiplayer is currently using the ccs.eMission - this should be
- * changed - ccs is campaign mode only
- */
-static void GAME_MP_GetEquipment (void)
-{
-	const equipDef_t *ed;
-	/** @todo what about multiplayer_alien? */
-	const char *equipmentName = "multiplayer";
-
-	/* search equipment definition */
-	ed = INV_GetEquipmentDefinitionByID(equipmentName);
-	if (ed == NULL) {
-		Com_Printf("Equipment '%s' not found!\n", equipmentName);
-		return;
-	}
-	/** @todo use our own storage for multiplayer */
-	ccs.eMission = *ed; /* copied, including the arrays inside! */
-}
-
 const mapDef_t* GAME_MP_MapInfo (int step)
 {
 	const mapDef_t *md;
@@ -328,8 +329,6 @@ void GAME_MP_InitStartup (void)
 	 * multiplayer menu while you are still connected */
 	if (cls.state >= ca_connecting)
 		CL_Disconnect();
-
-	GAME_MP_GetEquipment();
 }
 
 void GAME_MP_Shutdown (void)

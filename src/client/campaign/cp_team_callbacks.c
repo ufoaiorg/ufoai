@@ -211,7 +211,6 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	equipDef_t unused;
 	int i, p;
 	aircraft_t *aircraft;
-	int team;
 
 	if (!baseCurrent)
 		return;
@@ -225,9 +224,6 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 		MN_PopMenu(qfalse);
 		return;
 	}
-
-	/* Get team. */
-	team = cl_team->integer;
 
 	Cvar_ForceSet("cl_selected", "0");
 
@@ -264,7 +260,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {
 		/* Don't allow to show armour for other teams in the menu. */
-		if (!Q_strcmp(csi.ods[i].type, "armour") && csi.ods[i].useable != team)
+		if (!INVSH_UseableForTeam(&csi.ods[i], cl_team->integer))
 			continue;
 
 		/* Don't allow to show unresearched items. */

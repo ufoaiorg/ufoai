@@ -88,96 +88,6 @@ static void MN_ContainerNodeUpdateScroll (menuNode_t* node)
 	}
 }
 
-#if 0	/* maybe not need */
-
-/**
- * @brief Scrolls one item forward in a scrollable container.
- * @sa Console command "scrollcont_next"
- * @todo Add check so we do only increase if there are still hidden items after the last displayed one.
- */
-static void MN_ScrollContainerNext_f (void)
-{
-	menuNode_t* node = MN_GetNodeFromCurrentMenu("equip");
-
-	/* Can be called from everywhere. */
-	if (!node || !menuInventory)
-		return;
-
-	/* Check if the end of the currently visible items still is not the last of the displayable items. */
-	if (EXTRADATA(node).scrollCur < EXTRADATA(node).scrollTotalNum
-	 && EXTRADATA(node).scrollCur + EXTRADATA(node).scrollNum < EXTRADATA(node).scrollTotalNum) {
-		EXTRADATA(node).scrollCur++;
-		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Increased current scroll index: %i (num: %i, total: %i).\n",
-			EXTRADATA(node).scrollCur,
-			EXTRADATA(node).scrollNum,
-			EXTRADATA(node).scrollTotalNum);
-	} else
-		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Current scroll index already %i (num: %i, total: %i)).\n",
-			EXTRADATA(node).scrollCur,
-			EXTRADATA(node).scrollNum,
-			EXTRADATA(node).scrollTotalNum);
-
-	/* Update display of scroll buttons. */
-	MN_ContainerNodeUpdateScroll(node);
-}
-
-/**
- * @brief Scrolls one item backwards in a scrollable container.
- * @sa Console command "scrollcont_prev"
- */
-static void MN_ScrollContainerPrev_f (void)
-{
-	menuNode_t* node = MN_GetNodeFromCurrentMenu("equip");
-
-	/* Can be called from everywhere. */
-	if (!node || !menuInventory)
-		return;
-
-	if (EXTRADATA(node).scrollCur > 0) {
-		EXTRADATA(node).scrollCur--;
-		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Decreased current scroll index: %i (num: %i, total: %i).\n",
-			EXTRADATA(node).scrollCur,
-			EXTRADATA(node).scrollNum,
-			EXTRADATA(node).scrollTotalNum);
-	} else
-		Com_DPrintf(DEBUG_CLIENT, "MN_ScrollContainerNext_f: Current scroll index already %i (num: %i, total: %i).\n",
-			EXTRADATA(node).scrollCur,
-			EXTRADATA(node).scrollNum,
-			EXTRADATA(node).scrollTotalNum);
-
-	/* Update display of scroll buttons. */
-	MN_ContainerNodeUpdateScroll(node);
-}
-
-/**
- * @brief Scrolls items in a scrollable container.
- */
-static void MN_ScrollContainerScroll_f (void)
-{
-	int offset;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <+/-offset>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* Can be called from everywhere. */
-	if (!menuInventory)
-		return;
-
-	offset = atoi(Cmd_Argv(1));
-	while (offset > 0) {
-		MN_ScrollContainerNext_f();
-		offset--;
-	}
-	while (offset < 0) {
-		MN_ScrollContainerPrev_f();
-		offset++;
-	}
-}
-
-#endif
-
 static inline qboolean MN_IsScrollContainerNode (const menuNode_t* const node)
 {
 	return EXTRADATA(node).container && EXTRADATA(node).container->scroll;
@@ -412,8 +322,8 @@ static void MN_ContainerNodeDrawFreeSpace (menuNode_t *node, inventory_t *inv)
 						showTUs = qfalse;
 					}
 				}
-			}	/* for x */
-		}	/* for y */
+			}
+		}
 	}
 }
 
@@ -573,13 +483,13 @@ static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int di
 	if (!RS_IsResearched_ptr(obj->tech))
 		return qfalse;
 
+	if (!INVSH_UseableForTeam(obj, GAME_GetCurrentTeam()))
+		return qfalse;
+
 	/** @todo not sure its the right check */
 	isArmour = !Q_strcmp(obj->type, "armour");
 	isAmmo = obj->numWeapons != 0 && !Q_strncmp(obj->type, "ammo", 4);
 	isWeapon = obj->weapon || obj->isMisc || isArmour;
-
-	if (isArmour && obj->useable != GAME_GetCurrentTeam())
-		return qfalse;
 
 	if ((displayType == 0 && isAmmo) || (displayType == 1 && isWeapon))
 		return qfalse;
@@ -1548,10 +1458,4 @@ void MN_RegisterContainerNode (nodeBehaviour_t* behaviour)
 	behaviour->dndLeave = MN_ContainerNodeDNDLeave;
 	behaviour->mouseWheel = MN_ContainerNodeWheel;
 	behaviour->properties = properties;
-
-#if 0
-	Cmd_AddCommand("scrollcont_next", MN_ScrollContainerNext_f, "Scrolls the current container (forward).");
-	Cmd_AddCommand("scrollcont_prev", MN_ScrollContainerPrev_f, "Scrolls the current container (backward).");
-	Cmd_AddCommand("scrollcont_scroll", MN_ScrollContainerScroll_f, "Scrolls the current container.");
-#endif
 }

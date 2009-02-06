@@ -268,7 +268,7 @@ equipment multiplayer_alien
 //	armour_heavy		1
 }
 
-equipment multiplayer
+equipment multiplayer_phalanx
 {
 	assault				2
 	assault_ammo		6

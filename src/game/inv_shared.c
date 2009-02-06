@@ -1001,6 +1001,15 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		return IA_MOVE;
 }
 
+qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
+{
+	const qboolean isArmour = !Q_strcmp(od->type, "armour");
+	if (isArmour && od->useable != team)
+		return qfalse;
+
+	return qtrue;
+}
+
 /**
  * @brief Clears the linked list of a container - removes all items from this container.
  * @param[in] i The inventory where the container is located.

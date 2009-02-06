@@ -319,7 +319,7 @@ void UP_ItemDescription (const objDef_t *od)
 #endif
 
 	/* Write attached ammo or weapon even if item is not researched */
-	if (!Q_strncmp(od->type, "ammo", 4)) {
+	if (!Q_strcmp(od->type, "ammo")) {
 		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
 		upCurrentTech = od->tech;
 
@@ -414,8 +414,8 @@ void UP_ItemDescription (const objDef_t *od)
 	/* set description text if item as been researched or one of its ammo/weapon has been researched */
 	if (RS_IsResearched_ptr(od->tech) || up_numresearchedlink > 0) {
 		*itemText = '\0';
-		if (!Q_strncmp(od->type, "armour", 5)) {
-			if (Q_strncmp(activeMenu->name, "equipment", 9)) {
+		if (!Q_strcmp(od->type, "armour")) {
+			if (Q_strcmp(activeMenu->name, "equipment")) {
 				/* next two lines are not merge in one to avoid to have several entries in .po files (first line will be used again) */
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 				Q_strcat(itemText, "\n", sizeof(itemText));
@@ -426,19 +426,19 @@ void UP_ItemDescription (const objDef_t *od)
 					continue;
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
-		} else if (!Q_strncmp(od->type, "ammo", 4)) {
-			if (Q_strncmp(activeMenu->name, "equipment", 9))
+		} else if (!Q_strcmp(od->type, "ammo")) {
+			if (Q_strcmp(activeMenu->name, "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strncmp(activeMenu->name, "equipment", 9))
+			if (Q_strcmp(activeMenu->name, "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strncmp(activeMenu->name, "equipment", 9))
+			if (Q_strcmp(activeMenu->name, "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
@@ -451,7 +451,7 @@ void UP_ItemDescription (const objDef_t *od)
 			/* only primary definition */
 			/** @todo We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strncmp(activeMenu->name, "equipment", 9))
+			if (Q_strcmp(activeMenu->name, "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
@@ -507,7 +507,7 @@ static void UP_ArmourDescription (const technology_t* t)
 #ifdef DEBUG
 	if (od == NULL)
 		Com_sprintf(upBuffer, sizeof(upBuffer), "Could not find armour definition");
-	else if (Q_strncmp(od->type, "armour", MAX_VAR))
+	else if (Q_strcmp(od->type, "armour"))
 		Com_sprintf(upBuffer, sizeof(upBuffer), "Item %s is no armour but %s", od->id, od->type);
 	else
 #endif
@@ -606,7 +606,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 #ifdef DEBUG
-	if (!item->tech && GAME_IsCampaign()) {
+	if (!item->tech) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		MN_RegisterText(TEXT_STANDARD, itemText);
 	} else
@@ -1053,7 +1053,7 @@ void UP_OpenEventMail (const char *eventMailID)
 	if (!mail)
 		return;
 
-	MN_PushMenu("mn_push ufopedia", NULL);
+	MN_PushMenu("ufopedia", NULL);
 	UP_DrawEntry(NULL, mail);
 }
 
@@ -1078,8 +1078,7 @@ void UP_OpenWith (const char *name)
  */
 void UP_OpenCopyWith (const char *name)
 {
-	Cbuf_AddText("mn_push_copy ufopedia\n");
-	Cbuf_Execute();
+	Cmd_ExecuteString("mn_push_copy ufopedia");
 	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 

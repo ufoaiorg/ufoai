@@ -3660,12 +3660,6 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		return;
 	}
 
-	/* erase one-time weapons from storage --- which ones?
-	if (curCampaign && le->team == cls.team && !csi.ods[type].ammo) {
-		if (ccs.eMission.num[type])
-			ccs.eMission.num[type]--;
-	} */
-
 	/* ET_ACTORHIDDEN actors don't have a model yet */
 	if (le->type == ET_ACTORHIDDEN)
 		return;
@@ -3681,7 +3675,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(clientType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
-	/** no animation change for headgear - @see CL_ActorDoShoot */
+	/* no animation change for headgear - @see CL_ActorDoShoot */
 	} else if (!(HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(clientType))) {
 		/* We use the default (right) animation now. */
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));

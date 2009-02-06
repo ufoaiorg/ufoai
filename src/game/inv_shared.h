@@ -770,6 +770,7 @@ void INVSH_PrintItemDescription(const objDef_t *od);
 objDef_t *INVSH_GetItemByID(const char *id);
 objDef_t *INVSH_GetItemByIDSilent(const char *id);
 qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
+qboolean INVSH_UseableForTeam(const objDef_t *od, const int team);
 
 /* =============================== */
 /*  FIREMODE MANAGEMENT FUNCTIONS  */

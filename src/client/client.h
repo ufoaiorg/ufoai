@@ -117,6 +117,7 @@ typedef struct client_state_s {
 	cmodes_t oldcmode;
 	int oldstate;
 
+	/** @todo MN_DisplayNotice should use a different timer and buffer - this place is for tactical stuff only */
 	int msgTime;	/**< @sa MN_DisplayNotice @sa HUD_DisplayMessage */
 	char msgText[256];	/**< @sa MN_DisplayNotice @sa HUD_DisplayMessage */
 
@@ -143,7 +144,6 @@ typedef struct client_state_s {
 	int map_maxlevel;
 	int map_maxlevel_base;
 
-	/** @todo what about the teamList - should one of these be removed */
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 } client_state_t;
 
