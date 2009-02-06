@@ -585,6 +585,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
 			height += obj->sy * C_UNIT + 10;
+			Com_Printf("%d - %s\n", height, obj->name);
 			if (height > rowHeight)
 				rowHeight = height;
 
@@ -593,6 +594,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 					*currentHeight += rowHeight;
 					rowHeight = 0;
 				}
+				items++;
 				continue;
 			}
 		}
@@ -928,6 +930,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 					*currentHeight += rowHeight;
 					rowHeight = 0;
 				}
+				items++;
 				continue;
 			}
 		}
