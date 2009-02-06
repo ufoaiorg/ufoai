@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 
 #include "menu/m_font.h"
-#include "menu/node/m_node_selectbox.h"
+#include "menu/node/m_node_abstractoption.h"
 
 /**
  * @brief List of all mappings for a locale
@@ -251,12 +251,12 @@ void CL_LanguageInit (void)
 
 		/* Test the locale first, add to list if setting given locale possible. */
 		if (CL_LanguageTest(language->localeID) || !Q_strcmp(language->localeID, "none")) {
-			selectBoxOptions_t* selectBoxOption;
-			selectBoxOption = MN_NodeAddOption(languageOptions);
-			if (!selectBoxOption)
+			menuOption_t* option;
+			option = MN_NodeAddOption(languageOptions);
+			if (!option)
 				break;
-			Q_strncpyz(selectBoxOption->label, language->localeString, sizeof(selectBoxOption->label));
-			Q_strncpyz(selectBoxOption->value, language->localeID, sizeof(selectBoxOption->value));
+			Q_strncpyz(option->label, language->localeString, sizeof(option->label));
+			Q_strncpyz(option->value, language->localeID, sizeof(option->value));
 		}
 	}
 

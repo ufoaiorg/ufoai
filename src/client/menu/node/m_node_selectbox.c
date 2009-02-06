@@ -35,97 +35,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_selectbox.h"
 #include "m_node_abstractnode.h"
 
+#define SELECTBOX_DEFAULT_HEIGHT 20.0f
+
 #define SELECTBOX_SIDE_WIDTH 7.0f
 #define SELECTBOX_RIGHT_WIDTH 20.0f
 
 #define SELECTBOX_SPACER 2.0f
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
-
-/**
- * @brief Remove the highter element (in alphabet) from a list
- */
-static selectBoxOptions_t *MN_OptionNodeRemoveHighterOption (selectBoxOptions_t **option)
-{
-	selectBoxOptions_t *prev = NULL;
-	selectBoxOptions_t *prevfind = NULL;
-	selectBoxOptions_t *search = (*option)->next;
-	char *label = (*option)->label;
-
-	/* search the smaller element */
-	while (search) {
-		if (Q_strcmp(label, search->label) < 0) {
-			prevfind = prev;
-			label = search->label;
-		}
-		prev = search;
-		search = search->next;
-	}
-
-	/* remove the first element */
-	if (prevfind == NULL) {
-		selectBoxOptions_t *tmp = *option;
-		*option = (*option)->next;
-		return tmp;
-	} else {
-		selectBoxOptions_t *tmp = prevfind->next;
-		prevfind->next = tmp->next;
-		return tmp;
-	}
-}
-
-/**
- * @brief Sort options by alphabet
- */
-void MN_OptionNodeSortOptions (menuNode_t *node)
-{
-	selectBoxOptions_t *option;
-	assert(MN_NodeInstanceOf(node, "abstractoption"));
-
-	/* unlink the unsorted list */
-	option = node->u.option.first;
-	if (option == NULL)
-		return;
-	node->u.option.first = NULL;
-
-	/* construct a sorted list */
-	while (option) {
-		selectBoxOptions_t *element;
-		element = MN_OptionNodeRemoveHighterOption(&option);
-		element->next = node->u.option.first;
-		node->u.option.first = element;
-	}
-}
-
-/**
- * @brief Adds a new selectbox option to a selectbox node
- * @return NULL if menuSelectBoxes is 'full' - otherwise pointer to the selectBoxOption
- * @param[in] node The abstractoption where you want to append the option
- * @note You have to add the values manually to the option pointer
- */
-selectBoxOptions_t* MN_NodeAddOption (menuNode_t *node)
-{
-	selectBoxOptions_t *selectBoxOption;
-
-	assert(MN_NodeInstanceOf(node, "abstractoption"));
-
-	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
-		Com_Printf("MN_AddSelectboxOption: numSelectBoxes exceeded - increase MAX_SELECT_BOX_OPTIONS\n");
-		return NULL;
-	}
-	/* initial options entry */
-	if (!node->u.option.first)
-		node->u.option.first = &mn.menuSelectBoxes[mn.numSelectBoxes];
-	else {
-		/* link it in */
-		for (selectBoxOption = node->u.option.first; selectBoxOption->next; selectBoxOption = selectBoxOption->next) {}
-		selectBoxOption->next = &mn.menuSelectBoxes[mn.numSelectBoxes];
-		selectBoxOption->next->next = NULL;
-	}
-	selectBoxOption = &mn.menuSelectBoxes[mn.numSelectBoxes];
-	node->u.option.count++;
-	mn.numSelectBoxes++;
-	return selectBoxOption;
-}
 
 /**
  * @brief call when the mouse move over the node
@@ -141,7 +57,7 @@ static void MN_SelectBoxNodeMouseMove (menuNode_t *node, int x, int y)
  */
 static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 {
-	selectBoxOptions_t* selectBoxOption;
+	menuOption_t* selectBoxOption;
 	int posy;
 
 	MN_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -161,7 +77,7 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 
 static void MN_SelectBoxNodeDraw (menuNode_t *node)
 {
-	selectBoxOptions_t* selectBoxOption;
+	menuOption_t* selectBoxOption;
 	int selBoxX, selBoxY;
 	const char *ref;
 	const char *font;
@@ -207,7 +123,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 
 static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
 {
-	selectBoxOptions_t* selectBoxOption;
+	menuOption_t* selectBoxOption;
 	int selBoxX, selBoxY;
 	const char *ref;
 	const char *font;
@@ -273,7 +189,7 @@ static void MN_SelectBoxNodeDrawOverMenu (menuNode_t *node)
  */
 static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 {
-	selectBoxOptions_t* selectBoxOption;
+	menuOption_t* selectBoxOption;
 	int clickedAtOption;
 	vec2_t pos;
 
@@ -335,23 +251,6 @@ static void MN_SelectBoxNodeLoaded (menuNode_t *node)
 {
 	/* force a size (according to the texture) */
 	node->size[1] = SELECTBOX_DEFAULT_HEIGHT;
-}
-
-
-static const value_t properties[] = {
-	/* very special attribute */
-	{"option", V_SPECIAL_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
-	{"viewpos", V_INT, offsetof(menuNode_t, u.option.pos),  MEMBER_SIZEOF(menuNode_t, u.option.pos)},
-	{"count", V_INT, offsetof(menuNode_t, u.option.count),  MEMBER_SIZEOF(menuNode_t, u.option.count)},
-	{"viewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.option.onViewChange), MEMBER_SIZEOF(menuNode_t, u.option.onViewChange)},
-	{NULL, V_NULL, 0, 0}
-};
-
-void MN_RegisterAbstractOptionNode (nodeBehaviour_t *behaviour)
-{
-	behaviour->name = "abstractoption";
-	behaviour->isAbstract = qtrue;
-	behaviour->properties = properties;
 }
 
 void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)

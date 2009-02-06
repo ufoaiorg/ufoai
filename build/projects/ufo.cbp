@@ -608,6 +608,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_abstractnode.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractoption.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_abstractoption.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_abstractscrollbar.c">
 			<Option compilerVar="CC" />
 		</Unit>

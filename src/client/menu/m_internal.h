@@ -73,7 +73,7 @@ typedef struct menuGlobal_s {
 	 */
 	menuSharedData_t sharedData[MAX_MENUTEXTS];
 
-	selectBoxOptions_t menuSelectBoxes[MAX_SELECT_BOX_OPTIONS];
+	menuOption_t menuSelectBoxes[MAX_MENUOPTIONS];
 	int numSelectBoxes;
 
 	menuNode_t menuNodes[MAX_MENUNODES];

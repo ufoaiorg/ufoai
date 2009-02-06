@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_nodes.h"
 
-selectBoxOptions_t* MN_AddTabOption(menuNode_t *node);
 void MN_RegisterTabNode(nodeBehaviour_t *behaviour);
 
 #endif

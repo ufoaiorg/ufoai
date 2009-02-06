@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_font.h"
 #include "../m_input.h"
-#include "m_node_selectbox.h"
+#include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
 #include "m_node_optionlist.h"
 
@@ -48,7 +48,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 		CORNER_SIZE, MID_SIZE, CORNER_SIZE,
 		MARGE
 	};
-	selectBoxOptions_t* option;
+	menuOption_t* option;
 	const char *ref;
 	const char *font;
 	vec2_t pos;
@@ -126,9 +126,9 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	}
 }
 
-static selectBoxOptions_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int x, int y)
+static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, int x, int y)
 {
-	selectBoxOptions_t* option;
+	menuOption_t* option;
 	vec2_t pos;
 	int elementHeight = ELEMENT_HEIGHT;	/**< fix it with text font */
 	int currentY;
@@ -159,7 +159,7 @@ static selectBoxOptions_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * no
  */
 static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 {
-	selectBoxOptions_t* option;
+	menuOption_t* option;
 
 	/* the cvar string is stored in dataModelSkinOrCVar */
 	/* no cvar given? */

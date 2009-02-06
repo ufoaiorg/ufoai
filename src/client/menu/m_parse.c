@@ -36,11 +36,11 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 /** @brief valid properties for options of the selectbox and tab */
 static const value_t selectBoxValues[] = {
-	{"label", V_TRANSLATION_STRING, offsetof(selectBoxOptions_t, label), sizeof(char) * SELECTBOX_MAX_VALUE_LENGTH},
-	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
-	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
-	{"icon", V_SPECIAL_ICONREF, offsetof(selectBoxOptions_t, icon), 0},
-	{"disabled", V_BOOL, offsetof(selectBoxOptions_t, disabled), MEMBER_SIZEOF(selectBoxOptions_t, disabled)},
+	{"label", V_TRANSLATION_STRING, offsetof(menuOption_t, label), sizeof(char) * OPTION_MAX_VALUE_LENGTH},
+	{"action", V_STRING, offsetof(menuOption_t, action), 0},
+	{"value", V_STRING, offsetof(menuOption_t, value), 0},
+	{"icon", V_SPECIAL_ICONREF, offsetof(menuOption_t, icon), 0},
+	{"disabled", V_BOOL, offsetof(menuOption_t, disabled), MEMBER_SIZEOF(menuOption_t, disabled)},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -450,7 +450,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 		return qfalse;
 	}
 
-	if (mn.numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
+	if (mn.numSelectBoxes >= MAX_MENUOPTIONS) {
 		FS_SkipBlock(text);
 		Com_Printf("MN_ParseOption: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
 		return qfalse;

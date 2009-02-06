@@ -778,7 +778,7 @@ static void CL_MessageMenu_f (void)
 static void MN_Memory_f (void)
 {
 	Com_Printf("\tAllocation:\n");
-	Com_Printf("\t-Option allocation: %i/%i\n", mn.numSelectBoxes, MAX_SELECT_BOX_OPTIONS);
+	Com_Printf("\t-Option allocation: %i/%i\n", mn.numSelectBoxes, MAX_MENUOPTIONS);
 	Com_Printf("\t-Node allocation: %i/%i\n", mn.numNodes, MAX_MENUNODES);
 	Com_Printf("\t-Menu allocation: %i/%i\n", mn.numMenus, MAX_MENUS);
 	Com_Printf("\t-Rendering menu stack slot: %i\n", MAX_MENUSTACK);
@@ -788,7 +788,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Condition allocation: %i/%i\n", mn.numConditions, MAX_MENUCONDITIONS);
 	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", mn.curadata - mn.adata, mn.adataize);
 	Com_Printf("\tMemory:\n");
-	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(selectBoxOptions_t));
+	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(menuOption_t));
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
 	Com_Printf("\t-Extra data node structure size: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u));
 	Com_Printf("\t\t-abstractvalue: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.abstractvalue));

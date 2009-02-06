@@ -285,7 +285,7 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 	chr->skin = Com_GetCharacterValues(teamDefName, chr);
 }
 
-static selectBoxOptions_t skinlist[] = {
+static menuOption_t skinlist[] = {
 	{"urban", N_("Urban"), "team_changeskin;", "0", NULL, qfalse, qfalse, NULL},
 	{"jungle", N_("Jungle"), "team_changeskin;", "1", NULL, qfalse, qfalse, NULL},
 	{"desert", N_("Desert"), "team_changeskin;", "2", NULL, qfalse, qfalse, NULL},

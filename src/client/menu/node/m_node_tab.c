@@ -50,15 +50,15 @@ static const int TILE_SIZE = 40;
  * @param[in] node A tab node
  * @param[in] x The x position of the screen to test
  * @param[in] y The x position of the screen to test
- * @return A selectBoxOptions_t, or NULL if nothing.
+ * @return A menuOption_t, or NULL if nothing.
  * @todo improve test when we are on a junction
  * @todo improve test when we are on a chopped tab
  */
-static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y)
+static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int y)
 {
 	const char *font;
-	selectBoxOptions_t* option;
-	selectBoxOptions_t* prev = NULL;
+	menuOption_t* option;
+	menuOption_t* prev = NULL;
 
 	/* Bounded box test */
 	if (x < node->pos[0] || y < node->pos[1])
@@ -94,7 +94,7 @@ static selectBoxOptions_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int 
  */
 static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 {
-	selectBoxOptions_t* option;
+	menuOption_t* option;
 	const char *ref;
 
 	option = MN_TabNodeTabAtPosition(node, x, y);
@@ -167,8 +167,8 @@ static inline void MN_TabNodeDrawJunction (const char *image, int x, int y, mn_t
 static void MN_TabNodeDraw (menuNode_t *node)
 {
 	mn_tab_type_t lastStatus = MN_TAB_NOTHING;
-	selectBoxOptions_t* option;
-	selectBoxOptions_t* overMouseOption = NULL;
+	menuOption_t* option;
+	menuOption_t* overMouseOption = NULL;
 	const char *ref;
 	const char *font;
 	int currentX;

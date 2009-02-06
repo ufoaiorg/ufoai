@@ -34,12 +34,12 @@ struct menuDepends_s;
 struct value_s;
 
 /* extradata struct */
-#include "node/m_node_abstractvalue.h"
+#include "node/m_node_abstractoption.h"
 #include "node/m_node_abstractscrollbar.h"
+#include "node/m_node_abstractvalue.h"
 #include "node/m_node_container.h"
 #include "node/m_node_linestrip.h"
 #include "node/m_node_model.h"
-#include "node/m_node_selectbox.h"
 #include "node/m_node_text.h"
 #include "node/m_node_textentry.h"
 #include "node/m_node_window.h"

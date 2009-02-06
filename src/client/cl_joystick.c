@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_input.h"
 #include "cl_joystick.h"
 #include "menu/m_nodes.h"
-#include "menu/node/m_node_selectbox.h"
+#include "menu/node/m_node_abstractoption.h"
 
 static SDL_Joystick *stick = NULL;
 static cvar_t *in_joystick;
@@ -278,15 +278,15 @@ void IN_JoystickInitMenu (void)
 
 	total = SDL_NumJoysticks();
 	for (i = 0; i < total; i++) {
-		selectBoxOptions_t *selectBoxOption = MN_NodeAddOption(joystickOptions);
-		if (!selectBoxOption)
+		menuOption_t *option = MN_NodeAddOption(joystickOptions);
+		if (!option)
 			break;
-		Q_strncpyz(selectBoxOption->label, SDL_JoystickName(i), sizeof(selectBoxOption->label));
-		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", i);
+		Q_strncpyz(option->label, SDL_JoystickName(i), sizeof(option->label));
+		Com_sprintf(option->value, sizeof(option->value), "%i", i);
 	}
 
 	if (!total) {
-		selectBoxOptions_t *selectBoxOption = MN_NodeAddOption(joystickOptions);
+		menuOption_t *selectBoxOption = MN_NodeAddOption(joystickOptions);
 		if (selectBoxOption) {
 			Q_strncpyz(selectBoxOption->label, "None", sizeof(selectBoxOption->label));
 			Q_strncpyz(selectBoxOption->value, "0", sizeof(selectBoxOption->value));
