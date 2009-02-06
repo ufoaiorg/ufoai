@@ -167,7 +167,7 @@ aircraft craft_inter_stiletto
 	shortname	"_Stiletto I"
 	type		interceptor
 	model		"geoscape/inter_stiletto"
-	numteam		1
+	numteam		0
 	size		1
 	price		40000
 	building	building_intercept
@@ -212,7 +212,7 @@ aircraft craft_inter_saracen
 	shortname	"_Saracen I"
 	type		interceptor
 	model		"geoscape/inter_saracen"
-	numteam		1
+	numteam		0
 	size		2
 	price		100000
 	building	building_intercept
@@ -252,7 +252,7 @@ aircraft craft_inter_dragon
 	shortname	"_Dragon"
 	type		interceptor
 	model		"geoscape/inter_dragon"
-	numteam		1
+	numteam		0
 	size		1
 	price		100000
 	building	building_intercept
@@ -292,7 +292,7 @@ aircraft craft_inter_starchaser
 	shortname	"_Starchaser"
 	type		interceptor
 	model		"geoscape/inter_starchaser"
-	numteam		1
+	numteam		0
 	size		1
 	price		40000
 	building	building_intercept
@@ -337,7 +337,7 @@ aircraft craft_inter_stingray
 	shortname	"_Stingray"
 	type		interceptor
 	model		"geoscape/inter_stingray"
-	numteam		1
+	numteam		0
 	size		1
 	price		200000
 	building	building_intercept
