@@ -1,0 +1,8 @@
+{
+	material tex_nature/grass001
+	{
+		texture tex_nature/grass
+		dirtmap
+		lightmap
+	}
+}
