@@ -46,16 +46,20 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */
 		const vec4_t color = {1, 1, 1, 1};
 		vec3_t pos;
-
 		item.t = &csi.ods[od->idx];
 
-		/* We position the model of the item ourself (in the middle of the item
-		 * node). See the "-1, -1" parameter of MN_DrawItem. */
-		MN_GetNodeAbsPos(node, pos);
-		pos[0] += node->size[0] / 2.0;
-		pos[1] += node->size[1] / 2.0;
-		pos[2] = 0;
-		MN_DrawItem(node, pos, &item, -1, -1, node->u.model.scale, color);
+		if (!Q_strcmp(item.t->type, "armour")) {
+			/* We position the model of the item ourself (in the middle of the item
+			 * node). See the "-1, -1" parameter of MN_DrawItem. */
+			MN_GetNodeAbsPos(node, pos);
+			pos[0] += node->size[0] / 2.0;
+			pos[1] += node->size[1] / 2.0;
+			pos[2] = 0;
+			/** @todo we should not use DrawItem but draw the image with render function (remove dependancy with container) */
+			MN_DrawItem(node, pos, &item, -1, -1, node->u.model.scale, color);
+		} else {
+			MN_DrawModelNode(node, item.t->model);
+		}
 	} else {
 		const aircraft_t *aircraft = AIR_GetAircraft(ref);
 		if (aircraft) {

@@ -901,11 +901,12 @@ menu buy
 
 	item itemmodel
 	{
-		model	"*cvar mn_item"
-		pos		"600 175"
-		size	"385 200"
-		scale	"7 7 7"
-		view	item
+		model			"*cvar mn_item"
+		pos				"600 175"
+		size			"385 200"
+		angles			"0 0 120"
+		autoscale		true
+		rotatewithmouse	true
 	}
 
 	text description

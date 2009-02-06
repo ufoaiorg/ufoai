@@ -192,12 +192,13 @@ menu production
 
 	item itemmodel
 	{
-		visiblewhen	"mn_itemtype != 5"
-		model		"*cvar mn_item"
-		pos			"608 233"
-		size		"370 140"
-		scale		"7 7 7"
-		view		item
+		visiblewhen		"mn_itemtype != 5"
+		model			"*cvar mn_item"
+		pos				"608 233"
+		size			"370 140"
+		angles			"0 0 120"
+		autoscale		true
+		rotatewithmouse	true
 	}
 
 	// ==================
