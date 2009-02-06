@@ -1,10 +1,4 @@
 {
-	material tex_nature/water_dark
-	{
-		envmap 0
-	}
-}
-{
 	material tex_nature/grass001
 	{
 		texture tex_nature/grass
