@@ -2365,7 +2365,7 @@ MAIN SCRIPT PARSING FUNCTION
 /**
  * @brief Creates links to other items (i.e. ammo<->weapons)
  */
-void Com_AddObjectLinks (void)
+static void Com_AddObjectLinks (void)
 {
 	linkedList_t* ll = parseItemWeapons;	/**< Use this so we do not change the original popupListData pointer. */
 	objDef_t *od;
@@ -2614,6 +2614,8 @@ void Com_ParseScripts (void)
 		else if (!Q_strncmp(type, "team", 4))
 			Com_ParseTeam(name, &text);
 	}
+
+	Com_AddObjectLinks();	/* Add ammo<->weapon links to items.*/
 
 	/* sort the mapdef array */
 	qsort(csi.mds, csi.numMDs, sizeof(mapDef_t), Com_MapDefSort);
