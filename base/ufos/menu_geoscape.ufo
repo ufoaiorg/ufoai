@@ -983,15 +983,15 @@ menu popup_baseattack
 
 	button bt_enter_base
 	{
-		string		"_Enter base"
-		tooltip		"_Enter base before the battle"
+		string		"_Equip"
+		tooltip		"_Equip soldiers before the battle"
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
 		pos			"36 188"
 		size		"176 32"
-		click		{ cmd "mn_push bases;" }
+		click		{ cmd "mn_push equipment;" }
 	}
 
 	func init

@@ -68,6 +68,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	gd.mapAction = MA_NONE;
 
 	/* we really don't want to use the fake aircraft anywhere */
+	base->aircraftCurrent = &base->aircraft[0];
 	cls.missionaircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
@@ -109,6 +110,7 @@ void CP_BaseAttackMissionLeave (mission_t *mission)
 	CL_GameTimeStop();
 
 	/* we really don't want to use the fake aircraft anywhere */
+	base->aircraftCurrent = &base->aircraft[0];
 	cls.missionaircraft = NULL;
 
 	/* HACK This hack is only needed until base will be really destroyed
@@ -173,10 +175,18 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	/** @todo EMPL_ROBOT */
 	baseAttackFakeAircraft.maxTeamSize = MAX_ACTIVETEAM;			/* needed to spawn soldiers on map */
 	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredSoldiersInBase);
+
+	if (!hiredSoldiersInBase) {
+		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers: it can't defend itself. Destroy base.\n", base->name);
+		CP_BaseAttackMissionLeave(mission);
+		return;
+	}
+
 	for (i = 0, pos = hiredSoldiersInBase; i < MAX_ACTIVETEAM && pos; i++, pos = pos->next)
 		AIR_AddToAircraftTeam(&baseAttackFakeAircraft, (employee_t *)pos->data);
 
 	LIST_Delete(&hiredSoldiersInBase);
+	base->aircraftCurrent = &baseAttackFakeAircraft;
 	cls.missionaircraft = &baseAttackFakeAircraft;
 	ccs.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 
