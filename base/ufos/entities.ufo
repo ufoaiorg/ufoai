@@ -289,10 +289,10 @@ entity worldspawn {
 		max_teams		"2"
 		angles_night	"-80 220"
 		angles_day		"-75 100"
-		ambient_night	"0.07, 0.07, 0.08"
-		ambient_day		"0.26, 0.26, 0.26"
-		color_night		"0.65, 0.75, 0.95"
-		color_day		"0.90, 0.75, 0.65"
+		ambient_night	"0.07 0.07 0.08"
+		ambient_day		"0.26 0.26 0.26"
+		color_night		"0.65 0.75 0.95"
+		color_day		"0.90 0.75 0.65"
 		light_night		"70"
 		light_day		"280"
 		subdivide		"1024"
@@ -309,7 +309,6 @@ entity misc_sound {
 	color		"0.5 1 0.5"
 	size		"-8 -8 -8 8 8 8"
 	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
-
 
 	mandatory {
 		origin	"position"
@@ -386,6 +385,7 @@ entity func_door {
 		noise		"Soundfile to play when door opens"
 		particle	"Particle id to be spawned after object is destroyed"
 	}
+
 	mandatory {
 		spawnflags	"level flags"
 	}
@@ -410,6 +410,7 @@ entity func_breakable {
 		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
 		targetname	"todo"
 	}
+
 	mandatory {
 		spawnflags	"level flags"
 	}
@@ -423,6 +424,7 @@ entity func_rotating {
 		speed		"Rotation speed"
 		angle		"Rotate around this angle - pitch = 0, yaw = 1, roll = 2"
 	}
+
 	mandatory {
 		spawnflags	"level flags"
 	}
@@ -431,9 +433,11 @@ entity func_rotating {
 entity trigger_hurt {
 	description	"Any entity that touches this will be hurt. It does dmg points of damage each step inside of such a trigger area"
 	spawnflags	"KILL STUN DAZE"
+
 	optional {
 		dmg		"Damage per step (whole numbers only)"
 	}
+
 	default {
 		dmg		"5"
 	}
@@ -441,6 +445,7 @@ entity trigger_hurt {
 
 entity trigger_touch {
 	description	"Any entity that touches this will trigger the use function of the target entity."
+
 	mandatory {
 		target		"Target entity (must have its targetname set to the value given here)"
 	}
