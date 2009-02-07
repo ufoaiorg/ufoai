@@ -192,6 +192,64 @@ static void MN_UnHideNode_f (void)
 }
 
 /**
+ * @brief Search a child node by given name
+ * @node Only search with one depth
+ * @sa MN_GetNodeFromCurrentMenu
+ */
+menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
+{
+	menuNode_t *current = NULL;
+
+	if (!node)
+		return NULL;
+
+	for (current = node->firstChild; current; current = current->next)
+		if (!Q_strncmp(name, current->name, sizeof(current->name)))
+			break;
+
+	return current;
+}
+
+/**
+ * @brief Insert a node next another one into a node. If prevNode is NULL add the node on the heap of the menu
+ * @param[in] node Node where inserting a node
+ * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the node
+ * @param[in] newNode node we insert
+ */
+void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *newNode)
+{
+	assert(node);
+	assert(newNode);
+	/* insert only a single element */
+	assert(!newNode->next);
+	/* everything come from the same menu (force the dev to update himself this links) */
+	assert(!prevNode || (prevNode->menu == newNode->menu));
+	if (prevNode == NULL) {
+		newNode->next = node->firstChild;
+		node->firstChild = newNode;
+		if (node->lastChild == NULL) {
+			node->lastChild = newNode;
+		}
+		newNode->parent = node;
+		return;
+	}
+	newNode->next = prevNode->next;
+	prevNode->next = newNode;
+	if (prevNode == node->lastChild) {
+		node->lastChild = newNode;
+	}
+	newNode->parent = node;
+}
+
+/**
+ * @brief add a node at the end of the node child
+ */
+void MN_AppendNode (menuNode_t* const node, menuNode_t *newNode)
+{
+	MN_InsertNode(node, node->lastChild, newNode);
+}
+
+/**
  * @brief Sets new x and y coordinates for a given node
  */
 void MN_SetNewNodePos (menuNode_t* node, int x, int y)

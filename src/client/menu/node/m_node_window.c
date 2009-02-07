@@ -31,60 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "../m_nodes.h"
 #include "m_node_window.h"
-
-/**
- * @brief Searches all nodes in the given menu for a given nodename
- * @sa MN_GetNodeFromCurrentMenu
- */
-menuNode_t *MN_GetNode (const menuNode_t* const menu, const char *name)
-{
-	menuNode_t *node = NULL;
-
-	if (!menu)
-		return NULL;
-
-	for (node = menu->firstChild; node; node = node->next)
-		if (!Q_strncmp(name, node->name, sizeof(node->name)))
-			break;
-
-	return node;
-}
-
-/**
- * @brief Insert a node next another one into a menu. If prevNode is NULL add the node on the heap of the menu
- * @param[in] menu Menu where inserting a node
- * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the menu
- * @param[in] newNode node we insert
- */
-void MN_InsertNode (menuNode_t* const menu, menuNode_t *prevNode, menuNode_t *newNode)
-{
-	assert(menu);
-	assert(newNode);
-	assert(!newNode->next);	/*< insert only a single element */
-	assert(!prevNode || (prevNode->menu == menu && newNode->menu == menu));	/*< everything come from the same menu (force the dev to update himself this links) */
-	if (prevNode == NULL) {
-		newNode->next = menu->firstChild;
-		menu->firstChild = newNode;
-		if (menu->lastChild == NULL) {
-			menu->lastChild = newNode;
-		}
-		return;
-	}
-	newNode->next = prevNode->next;
-	prevNode->next = newNode;
-	if (prevNode == menu->lastChild) {
-		menu->lastChild = newNode;
-	}
-}
-
-/**
- * @brief add a node at the end of the menu child
- * @todo after an update of the linked list of nodes (next, +prev, firstChild, +lastChild), we can improve this function O(1)
- */
-void MN_AppendNode (menuNode_t* const menu, menuNode_t *newNode)
-{
-	MN_InsertNode(menu, menu->lastChild, newNode);
-}
+#include "m_node_abstractnode.h"
 
 /**
  * @brief Check if a window is fullscreen or not
@@ -98,7 +45,7 @@ qboolean MN_WindowIsFullScreen (menuNode_t* const menu)
 /**
  * @brief Called at the begin of the load from script
  */
-void MN_WindowNodeLoading (menuNode_t *menu)
+static void MN_WindowNodeLoading (menuNode_t *menu)
 {
 	menu->pos[0] = 0;
 	menu->pos[1] = 0;
@@ -115,7 +62,7 @@ static const int CONTROLS_SPACING = 5;
 /**
  * @brief Called at the end of the load from script
  */
-void MN_WindowNodeLoaded (menuNode_t *menu)
+static void MN_WindowNodeLoaded (menuNode_t *menu)
 {
 	/* if it need, construct the drag button */
 	if (menu->u.window.dragButton) {
@@ -175,8 +122,7 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "menu";
-	/** @todo waithing for the merge of menu and node */
-	/* behaviour->loading = MN_WindowNodeLoading; */
-	/* behaviour->loaded = MN_WindowNodeLoaded; */
+	behaviour->loading = MN_WindowNodeLoading;
+	behaviour->loaded = MN_WindowNodeLoaded;
 	behaviour->properties = windowNodeProperties;
 }

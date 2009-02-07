@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "m_timer.h"
 #include "m_condition.h"
+#include "node/m_node_abstractnode.h"
 #include "../client.h"
 
 menuGlobal_t mn;

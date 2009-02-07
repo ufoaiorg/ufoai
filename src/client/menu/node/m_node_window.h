@@ -57,12 +57,6 @@ typedef struct {
 
 void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
 
-struct menuNode_s *MN_GetNode(const struct menuNode_s* const menu, const char *name);
-void MN_InsertNode(struct menuNode_s* const menu, struct menuNode_s *prevNode, struct menuNode_s *newNode);
-void MN_AppendNode(struct menuNode_s* const menu, struct menuNode_s *newNode);
 qboolean MN_WindowIsFullScreen(struct menuNode_s* const menu);
-
-void MN_WindowNodeLoading(struct menuNode_s *menu);
-void MN_WindowNodeLoaded(struct menuNode_s *menu);
 
 #endif

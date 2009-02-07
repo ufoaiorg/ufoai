@@ -30,14 +30,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void MN_RegisterAbstractNode(nodeBehaviour_t *);
 
 struct menuNode_s;
+struct value_s;
+
+qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
+qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
+
+/* visibility */
 void MN_UnHideNode(struct menuNode_s* node);
 void MN_HideNode(struct menuNode_s* node);
+
+/* position */
 void MN_SetNewNodePos(struct menuNode_s* node, int x, int y);
 void MN_GetNodeAbsPos(const struct menuNode_s* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const struct menuNode_s* node, int *x, int *y);
-qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
 
-struct value_s;
-qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
+/* navigation */
+struct menuNode_s *MN_GetNode(const struct menuNode_s* const node, const char *name);
+void MN_InsertNode(struct menuNode_s* const node, struct menuNode_s *prevNode, struct menuNode_s *newNode);
+void MN_AppendNode(struct menuNode_s* const node, struct menuNode_s *newNode);
 
 #endif

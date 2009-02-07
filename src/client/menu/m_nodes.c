@@ -266,18 +266,31 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 menuNode_t* MN_GetNodeByPath (const char* path)
 {
 	char name[MAX_VAR];
-	menuNode_t* menu;
-	const char* nextName = strstr(path, ".");
-	assert(nextName);
+	menuNode_t* node = NULL;
+	const char* nextName;
 
-	Q_strncpyz(name, path, nextName - path + 1);
-	nextName++;
+	nextName = path;
+	while (nextName && nextName[0] != '\0') {
+		const char* begin = nextName;
+		nextName = strstr(begin, ".");
+		if (!nextName) {
+			Q_strncpyz(name, begin, sizeof(name));
+		} else {
+			assert(nextName - begin + 1 <= sizeof(name));
+			Q_strncpyz(name, begin, nextName - begin + 1);
+			nextName++;
+		}
 
-	menu = MN_GetMenu(name);
-	if (!menu)
-		return NULL;
+		if (node == NULL)
+			node = MN_GetMenu(name);
+		else
+			node = MN_GetNode(node, name);
 
-	return MN_GetNode(menu, nextName);
+		if (!node)
+			return NULL;
+	}
+
+	return node;
 }
 
 /**
@@ -331,11 +344,11 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
  * @todo remember to update this function when we allow a tree of nodes
  */
-menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *targetMenu, qboolean recursive)
+menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive)
 {
 	menuNode_t* newNode = MN_AllocNode(node->behaviour->name);
 	*newNode = *node;
-	newNode->menu = targetMenu;
+	newNode->menu = newMenu;
 	newNode->next = NULL;
 	return newNode;
 }

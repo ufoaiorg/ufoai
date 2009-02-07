@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_nodes.h"
 #include "m_popup.h"
+#include "node/m_node_abstractnode.h"
 #include "../campaign/cp_time.h"
 
 #define POPUPBUTTON_MENU_NAME "popup_button"

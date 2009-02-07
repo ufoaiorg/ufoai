@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_icon.h"
 #include "node/m_node_window.h"
 #include "node/m_node_selectbox.h"
+#include "node/m_node_abstractnode.h"
 #include "../../shared/parse.h"
 
 static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token);
@@ -1235,12 +1236,10 @@ void MN_ParseMenu (const char *name, const char **text)
 	/* initialize the menu */
 	menu = &mn.menus[mn.numMenus++];
 	memset(menu, 0, sizeof(*menu));
-
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
+	menu->behaviour = MN_GetNodeBehaviour("menu");
 
-	/** @todo waithing for the merge of menu and node */
-	/* menuBehaviour->loading(menu); */
-	MN_WindowNodeLoading(menu);
+	menu->behaviour->loading(menu);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1296,9 +1295,7 @@ void MN_ParseMenu (const char *name, const char **text)
 		return;	/* never reached */
 	}
 
-	/** @todo waithing for the merge of menu and node */
-	/* menuBehaviour->loaded(menu); */
-	MN_WindowNodeLoaded(menu);
+	menu->behaviour->loaded(menu);
 }
 
 /**
