@@ -9,3 +9,11 @@
 		lightmap
 	}
 }
+{
+	material tex_nature/grass001
+	{
+		texture tex_nature/dirt001
+		dirtmap
+		lightmap
+	}
+}
