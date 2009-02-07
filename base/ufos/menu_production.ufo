@@ -196,9 +196,8 @@ menu production
 		model			"*cvar mn_item"
 		pos				"608 233"
 		size			"370 140"
-		angles			"0 0 120"
+		angles			"-10 160 70"
 		autoscale		true
-		rotatewithmouse	true
 	}
 
 	// ==================

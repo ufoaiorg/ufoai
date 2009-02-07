@@ -904,9 +904,8 @@ menu buy
 		model			"*cvar mn_item"
 		pos				"600 175"
 		size			"385 200"
-		angles			"0 0 120"
+		angles			"-10 160 70"
 		autoscale		true
-		rotatewithmouse	true
 	}
 
 	text description

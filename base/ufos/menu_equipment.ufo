@@ -319,9 +319,10 @@ menu equipment
 
 	item itemmodel
 	{
-		model	"*cvar mn_item"
-		pos		"103 408"
-		size	"200 200"
+		pos 		"28 450"
+		size 		"346 91"
+		model		"*cvar mn_item"
+		angles		"-10 160 70"
 		autoscale	true
 	}
 
