@@ -55,7 +55,7 @@ int MN_GetLastFullScreenWindow (void)
  * @param[in] menu The menu to remove from the stack
  * @sa MN_PushMenuDelete
  */
-static void MN_DeleteMenuFromStack (menu_t * menu)
+static void MN_DeleteMenuFromStack (menuNode_t * menu)
 {
 	int i;
 
@@ -71,7 +71,7 @@ static void MN_DeleteMenuFromStack (menu_t * menu)
 		}
 }
 
-static inline menu_t* MN_FindMenuByName (const char *name)
+static inline menuNode_t* MN_FindMenuByName (const char *name)
 {
 	int i;
 	for (i = 0; i < mn.numMenus; i++) {
@@ -98,7 +98,7 @@ static inline int MN_GetMenuPositionFromStackByName (const char *name)
  * @param[in] menu The menu to insert
  * @param[in] position Where we want to add the menu (0 is the deeper element of the stack)
  */
-static inline void MN_InsertMenuIntoStack (menu_t *menu, int position)
+static inline void MN_InsertMenuIntoStack (menuNode_t *menu, int position)
 {
 	int i;
 	assert(position <= mn.menuStackPos);
@@ -118,13 +118,13 @@ static inline void MN_InsertMenuIntoStack (menu_t *menu, int position)
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
  * @param[in] delete Delete the menu from the menu stack before readd it
- * @return pointer to menu_t
- * @todo Replace "i" by a menu_t, more easy to read
+ * @return pointer to menuNode_t
+ * @todo Replace "i" by a menuNode_t, more easy to read
  */
-static menu_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean delete)
+static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean delete)
 {
 	menuNode_t *node;
-	menu_t *menu = NULL;
+	menuNode_t *menu = NULL;
 
 	MN_MouseRelease();
 	MN_FocusRemove();
@@ -214,9 +214,9 @@ int MN_CompletePushMenu (const char *partial, const char **match)
 /**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
- * @return pointer to menu_t
+ * @return pointer to menuNode_t
  */
-menu_t* MN_PushMenu (const char *name, const char *parentName)
+menuNode_t* MN_PushMenu (const char *name, const char *parentName)
 {
 	return MN_PushMenuDelete(name, parentName, qtrue);
 }
@@ -290,7 +290,7 @@ static void MN_CloseAllMenu (void)
 {
 	int i;
 	for (i = mn.menuStackPos - 1; i >= 0; i--) {
-		menu_t *menu = mn.menuStack[i];
+		menuNode_t *menu = mn.menuStack[i];
 
 		if (menu->u.window.onClose)
 			MN_ExecuteActions(menu, menu->u.window.onClose);
@@ -310,7 +310,7 @@ qboolean MN_MenuIsOnStack(const char* name)
 /**
  * @todo FInd  better name
  */
-static void MN_CloseMenuByRef (menu_t *menu)
+static void MN_CloseMenuByRef (menuNode_t *menu)
 {
 	int i;
 
@@ -326,7 +326,7 @@ static void MN_CloseMenuByRef (menu_t *menu)
 
 	/* close child */
 	while (i + 1 < mn.menuStackPos) {
-		menu_t *m = mn.menuStack[i + 1];
+		menuNode_t *m = mn.menuStack[i + 1];
 		if (m->parent != menu) {
 			break;
 		}
@@ -347,7 +347,7 @@ static void MN_CloseMenuByRef (menu_t *menu)
 
 void MN_CloseMenu (const char* name)
 {
-	menu_t *menu = MN_FindMenuByName(name);
+	menuNode_t *menu = MN_FindMenuByName(name);
 	if (menu == NULL) {
 		Com_Printf("Menu '%s' dont exists\n", name);
 		return;
@@ -364,7 +364,7 @@ void MN_CloseMenu (const char* name)
  */
 void MN_PopMenu (qboolean all)
 {
-	menu_t *oldfirst = mn.menuStack[0];
+	menuNode_t *oldfirst = mn.menuStack[0];
 	assert(mn.menuStackPos);
 
 	/* make sure that we end all input buffers */
@@ -374,7 +374,7 @@ void MN_PopMenu (qboolean all)
 	if (all) {
 		MN_CloseAllMenu();
 	} else {
-		menu_t *mainMenu = mn.menuStack[mn.menuStackPos - 1];
+		menuNode_t *mainMenu = mn.menuStack[mn.menuStackPos - 1];
 		if (mainMenu->parent)
 			mainMenu = mainMenu->parent;
 		MN_CloseMenuByRef(mainMenu);
@@ -429,7 +429,7 @@ static void MN_PopMenu_f (void)
 	if (Cmd_Argc() < 2 || !Q_strncmp(Cmd_Argv(1), "esc", 3)) {
 		/** @todo we can do the same in a better way: event returning agreement */
 		/* some window can prevent escape */
-		menu_t *menu = mn.menuStack[mn.menuStackPos - 1];
+		menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
 		assert(mn.menuStackPos);
 		if (!menu->u.window.preventTypingEscape) {
 			MN_PopMenu(qfalse);
@@ -446,10 +446,10 @@ static void MN_PopMenu_f (void)
 
 /**
  * @brief Returns the current active menu from the menu stack or NULL if there is none
- * @return menu_t pointer from menu stack
+ * @return menuNode_t pointer from menu stack
  * @sa MN_GetMenu
  */
-menu_t* MN_GetActiveMenu (void)
+menuNode_t* MN_GetActiveMenu (void)
 {
 	return (mn.menuStackPos > 0 ? mn.menuStack[mn.menuStackPos - 1] : NULL);
 }
@@ -461,7 +461,7 @@ menu_t* MN_GetActiveMenu (void)
  */
 const char* MN_GetActiveMenuName (void)
 {
-	menu_t* menu = MN_GetActiveMenu();
+	menuNode_t* menu = MN_GetActiveMenu();
 	if (menu == NULL)
 		return "";
 	return menu->name;
@@ -504,7 +504,7 @@ qboolean MN_CursorOnMenu (int x, int y)
  * @return NULL if not found or no menu on the stack
  * @sa MN_GetActiveMenu
  */
-menu_t *MN_GetMenu (const char *name)
+menuNode_t *MN_GetMenu (const char *name)
 {
 	int i;
 
@@ -520,7 +520,7 @@ menu_t *MN_GetMenu (const char *name)
 /**
  * @brief Sets new x and y coordinates for a given menu
  */
-void MN_SetNewMenuPos (menu_t* menu, int x, int y)
+void MN_SetNewMenuPos (menuNode_t* menu, int x, int y)
 {
 	if (menu)
 		Vector2Set(menu->pos, x, y);
@@ -531,7 +531,7 @@ void MN_SetNewMenuPos (menu_t* menu, int x, int y)
  */
 void MN_SetNewMenuPos_f (void)
 {
-	menu_t* menu = MN_GetActiveMenu();
+	menuNode_t* menu = MN_GetActiveMenu();
 
 	if (Cmd_Argc() < 3)
 		Com_Printf("Usage: %s <x> <y>\n", Cmd_Argv(0));
@@ -545,7 +545,7 @@ void MN_SetNewMenuPos_f (void)
  */
 static void MN_ReinitCurrentMenu_f (void)
 {
-	menu_t* menu = MN_GetActiveMenu();
+	menuNode_t* menu = MN_GetActiveMenu();
 	/* initialize it */
 	if (menu) {
 		if (menu->u.window.onInit)
@@ -813,7 +813,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t\t-option: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.option));
 	Com_Printf("\t\t-textentry: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.textentry));
 	Com_Printf("\t\t-text: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.text));
-	Com_Printf("\t-Menu structure size: "UFO_SIZE_T" B\n", sizeof(menu_t));
+	Com_Printf("\t-Menu structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
 	Com_Printf("\t-Condition structure size: "UFO_SIZE_T" B\n", sizeof(menuDepends_t));

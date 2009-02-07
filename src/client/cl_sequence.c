@@ -377,7 +377,7 @@ static void CL_SequenceStart_f (void)
 	sequence_t *sp;
 	const char *name, *menuName;
 	int i;
-	const menu_t* menu;
+	const menuNode_t* menu;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <name> [<menu>]\n", Cmd_Argv(0));

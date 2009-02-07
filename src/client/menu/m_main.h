@@ -34,28 +34,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_data.h"
 
 /* prototype */
-struct menu_s;
 struct menuNode_s;
 
 void MN_Init(void);
 void MN_Shutdown(void);
 int MN_GetLastFullScreenWindow(void);
-void MN_SetNewMenuPos(struct menu_s* menu, int x, int y);
+void MN_SetNewMenuPos(struct menuNode_s* menu, int x, int y);
 
 void MN_SetNewMenuPos_f (void);
 
 void MN_DragMenu(void);
 
-struct menu_s* MN_PushMenu(const char *name, const char *parentName);
+struct menuNode_s* MN_PushMenu(const char *name, const char *parentName);
 void MN_PopMenu(qboolean all);
 void MN_CloseMenu(const char* name);
 qboolean MN_MenuIsOnStack(const char* name);
-struct menu_s* MN_GetActiveMenu(void);
+struct menuNode_s* MN_GetActiveMenu(void);
 const char* MN_GetActiveMenuName(void);
 
 struct menuNode_s* MN_GetNodeFromCurrentMenu(const char *name);
 qboolean MN_CursorOnMenu(int x, int y);
-struct menu_s *MN_GetMenu(const char *name);
+struct menuNode_s *MN_GetMenu(const char *name);
 
 int MN_CompletePushMenu(const char *partial, const char **match);
 

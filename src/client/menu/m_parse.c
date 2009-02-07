@@ -856,7 +856,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
  * @node first token already read
  * @node dont read more than the need token (last right token is '}' of end of node)
  */
-static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **token, const char *errhead)
+static qboolean MN_ParseNode (menuNode_t * menu, const char **text, const char **token, const char *errhead)
 {
 	menuNode_t *node;
 	nodeBehaviour_t *behaviour;
@@ -937,7 +937,7 @@ static qboolean MN_ParseNode (menu_t * menu, const char **text, const char **tok
 	return qtrue;
 }
 
-static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const char **token, const char *errhead)
+static qboolean MN_ParseMenuProperties (menuNode_t * menu, const char **text, const char **token, const char *errhead)
 {
 	const nodeBehaviour_t* menuBehaviour = MN_GetNodeBehaviour("menu");
 
@@ -992,7 +992,7 @@ static qboolean MN_ParseMenuProperties (menu_t * menu, const char **text, const 
  * @sa MN_ParseNodeBody
  * @todo merge it with MN_ParseMenu
  */
-static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
+static qboolean MN_ParseMenuBody (menuNode_t * menu, const char **text)
 {
 	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	const char *token;
@@ -1213,7 +1213,7 @@ void MN_ParseIcon (const char *name, const char **text)
  */
 void MN_ParseMenu (const char *name, const char **text)
 {
-	menu_t *menu;
+	menuNode_t *menu;
 	menuNode_t *node;
 	const char *token;
 	int i;
@@ -1247,7 +1247,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	/* does this menu inherit data from another menu? */
 	if (!Q_strncmp(token, "extends", 7)) {
-		menu_t *superMenu;
+		menuNode_t *superMenu;
 		menuNode_t *newNode;
 
 		token = COM_Parse(text);

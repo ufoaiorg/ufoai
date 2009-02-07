@@ -25,13 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_PARSE_H
 #define CLIENT_MENU_M_PARSE_H
 
-#include "node/m_node_window.h"
+struct menuNode_s;
 
 void MN_ParseMenu(const char *name, const char **text);
 void MN_ParseIcon(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
-float MN_GetReferenceFloat(const menuNode_t* const node, void *ref);
-const char *MN_GetReferenceString(const menuNode_t* const node, const char *ref);
+float MN_GetReferenceFloat(const struct menuNode_s* const node, void *ref);
+const char *MN_GetReferenceString(const struct menuNode_s* const node, const char *ref);
 struct value_s;
 const value_t* MN_FindPropertyByName(const struct value_s* propertyList, const char* name);
 char* MN_AllocString(const char* string, int size);

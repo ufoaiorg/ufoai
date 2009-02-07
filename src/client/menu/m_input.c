@@ -200,7 +200,7 @@ static qboolean MN_IsInnerNode (const menuNode_t* const node, int x, int y)
  */
 menuNode_t *MN_GetNodeByPosition (int x, int y)
 {
-	menu_t *menu;
+	menuNode_t *menu;
 	int sp;
 	menuNode_t *node;
 	menuNode_t *find;
@@ -208,7 +208,7 @@ menuNode_t *MN_GetNodeByPosition (int x, int y)
 	/* find the first menu under the mouse */
 	menu = NULL;
 	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
-		menu_t *m = mn.menuStack[sp];
+		menuNode_t *m = mn.menuStack[sp];
 		/* check mouse vs menu boundedbox */
 		if (x >= m->pos[0] && x <= m->pos[0] + m->size[0]
 		 && y >= m->pos[1] && y <= m->pos[1] + m->size[1]) {

@@ -62,13 +62,13 @@ typedef struct menuGlobal_s {
 	menuNode_t menuNodes[MAX_MENUNODES];
 	int numNodes;
 
-	menu_t menus[MAX_MENUS];
+	menuNode_t menus[MAX_MENUS];
 	int numMenus;
 
 	byte *adata, *curadata;
 	int adataize;
 
-	menu_t *menuStack[MAX_MENUSTACK];
+	menuNode_t *menuStack[MAX_MENUSTACK];
 	int menuStackPos;
 
 	menuAction_t menuActions[MAX_MENUACTIONS];

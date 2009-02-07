@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_FONT_H
 #define CLIENT_MENU_M_FONT_H
 
-#include "node/m_node_window.h"
+struct menuNode_s;
 
 typedef struct font_s {
 	char *name;
@@ -38,7 +38,7 @@ extern font_t *fontSmall;
 extern font_t *fontBig;
 
 /* will return the size and the path for each font */
-const char *MN_GetFont(const menuNode_t *const node);
+const char *MN_GetFont(const struct menuNode_s *const node);
 /* this is the function where all the sdl_ttf fonts are parsed */
 void MN_ParseFont(const char *name, const char **text);
 void MN_InitFonts(void);

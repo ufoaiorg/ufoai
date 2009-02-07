@@ -147,7 +147,7 @@ static void MN_SetModelTransform_f (void)
 
 		if (model->menuTransformCnt) {
 #if 0	/** @todo model is no more linked to menu; this code need an update */
-			const menu_t *menu = MN_GetActiveMenu();
+			const menuNode_t *menu = MN_GetActiveMenu();
 			int i;
 
 			for (i = 0; i < model->menuTransformCnt; i++) {

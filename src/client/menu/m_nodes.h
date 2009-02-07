@@ -63,8 +63,11 @@ typedef struct menuNode_s {
 	struct menuNode_s *super;	/**< Node inherited, else NULL */
 
 	/* common navigation */
-	struct menuNode_s *next;
-	struct menu_s *menu;		/**< backlink */
+	struct menuNode_s *firstChild;	/**< first element of linked list of child */
+	struct menuNode_s *lastChild;	/**< last element of linked list of child */
+	struct menuNode_s *next;		/**< Next element into linked list */
+	struct menuNode_s *parent;		/**< Parent menu, else NULL */
+	struct menuNode_s *menu;		/**< Shortcut to the menu node */
 
 	/* common pos */
 	vec2_t pos;
@@ -152,6 +155,7 @@ typedef struct menuNode_s {
 		optionExtraData_t option;
 		textEntryExtraData_t textentry;
 		textExtraData_t text;
+		windowExtraData_t window;
 	} u;
 
 } menuNode_t;
@@ -210,7 +214,7 @@ const struct value_s *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behavi
 menuNode_t* MN_GetNodeByPath (const char* path);
 
 void MN_InitNodes(void);
-menuNode_t* MN_CloneNode(const menuNode_t* node, struct menu_s *newMenu, qboolean recursive);
+menuNode_t* MN_CloneNode(const menuNode_t* node, struct menuNode_s *targetMenu, qboolean recursive);
 qboolean MN_CheckVisibility(menuNode_t *node);
 
 #endif

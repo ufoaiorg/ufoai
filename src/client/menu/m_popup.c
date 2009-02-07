@@ -60,7 +60,7 @@ void MN_Popup (const char *title, const char *text)
  */
 menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t* entries, const char *clickAction)
 {
-	menu_t* popupListMenu;
+	menuNode_t* popupListMenu;
 	menuNode_t* listNode;
 
 	MN_RegisterText(TEXT_POPUP, title);
@@ -106,7 +106,7 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
  * @param[in] buttonText Name of the node of the string. NULL if nothing
  * @note clickAction may be NULL if button is not needed.
  */
-static void MN_SetOneButton (menu_t* menu, const char *button, const char *clickAction)
+static void MN_SetOneButton (menuNode_t* menu, const char *button, const char *clickAction)
 {
 	menuNode_t* buttonNode;
 
@@ -153,7 +153,7 @@ void MN_PopupButton (const char *title, const char *text,
 	const char *clickAction2, const char *clickText2, const char *tooltip2,
 	const char *clickAction3, const char *clickText3, const char *tooltip3)
 {
-	menu_t* popupButtonMenu;
+	menuNode_t* popupButtonMenu;
 
 	MN_RegisterText(TEXT_POPUP, title);
 	if (text)

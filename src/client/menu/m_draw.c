@@ -119,7 +119,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 	R_FontDrawString("f_small_bold", ALIGN_UL, 0, posy, 0, posy, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 	posy += 15;
 	for (sp = 0; sp < mn.menuStackPos; sp++) {
-		menu_t *menu = mn.menuStack[sp];
+		menuNode_t *menu = mn.menuStack[sp];
 		if (hoveredNode && menu == hoveredNode->menu) {
 			R_ColorBlend(red);
 		} else if (targetNode && menu == targetNode->menu) {
@@ -169,7 +169,7 @@ static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
 void MN_DrawMenus (void)
 {
 	menuNode_t *hoveredNode;
-	menu_t *menu;
+	menuNode_t *menu;
 	int windowId;
 	qboolean mouseMoved = qfalse;
 	vec2_t nodepos;

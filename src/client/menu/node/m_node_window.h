@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODE_WINDOW_H
 
 #include "../../../game/q_shared.h"
-#include "../m_nodes.h"
 
 /* prototype */
 struct menuNode_s;
@@ -56,33 +55,14 @@ typedef struct {
 
 } windowExtraData_t;
 
-
-/** @brief menu with all it's nodes linked in */
-typedef struct menu_s {
-	char name[MAX_VAR];
-	vec2_t pos;				/**< the position of the menu */
-	vec2_t size;			/**< the size of the menu */
-
-	struct menu_s *super; 	/**< Menu inherited, else NULL */
-	struct menu_s *parent; 	/**< Parent menu, else NULL */
-
-	struct menuNode_s *firstChild;	/**< first element of linked list of child */
-	struct menuNode_s *lastChild;	/**< last element of linked list of child */
-
-	union {
-		windowExtraData_t window;
-	} u;
-
-} menu_t;
-
 void MN_RegisterWindowNode(struct nodeBehaviour_s *behaviour);
 
-struct menuNode_s *MN_GetNode(const menu_t* const menu, const char *name);
-void MN_InsertNode(menu_t* const menu, struct menuNode_s *prevNode, struct menuNode_s *newNode);
-void MN_AppendNode(menu_t* const menu, struct menuNode_s *newNode);
-qboolean MN_WindowIsFullScreen(menu_t* const menu);
+struct menuNode_s *MN_GetNode(const struct menuNode_s* const menu, const char *name);
+void MN_InsertNode(struct menuNode_s* const menu, struct menuNode_s *prevNode, struct menuNode_s *newNode);
+void MN_AppendNode(struct menuNode_s* const menu, struct menuNode_s *newNode);
+qboolean MN_WindowIsFullScreen(struct menuNode_s* const menu);
 
-void MN_WindowNodeLoading(menu_t *menu);
-void MN_WindowNodeLoaded(menu_t *menu);
+void MN_WindowNodeLoading(struct menuNode_s *menu);
+void MN_WindowNodeLoaded(struct menuNode_s *menu);
 
 #endif

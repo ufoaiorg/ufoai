@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "menu/m_main.h"
 #include "menu/m_font.h"
+#include "menu/m_nodes.h"
 #include "menu/m_parse.h"
 #include "campaign/cp_parse.h"
 #include "multiplayer/mp_callbacks.h"

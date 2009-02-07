@@ -43,7 +43,7 @@ static void MN_FuncNodeLoading (menuNode_t *node)
  */
 static void MN_FuncNodeLoaded (menuNode_t *node)
 {
-	menu_t * menu = node->menu;
+	menuNode_t * menu = node->menu;
 	if (!Q_strncmp(node->name, "init", 4)) {
 		if (!menu->u.window.onInit)
 			menu->u.window.onInit = node->onClick;

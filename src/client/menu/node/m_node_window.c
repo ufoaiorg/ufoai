@@ -29,13 +29,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client.h"
 #include "../m_main.h"
 #include "../m_parse.h"
+#include "../m_nodes.h"
 #include "m_node_window.h"
 
 /**
  * @brief Searches all nodes in the given menu for a given nodename
  * @sa MN_GetNodeFromCurrentMenu
  */
-menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
+menuNode_t *MN_GetNode (const menuNode_t* const menu, const char *name)
 {
 	menuNode_t *node = NULL;
 
@@ -55,7 +56,7 @@ menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
  * @param[in] prevNode previous node, will became before the newNode; else NULL if newNode will become the first child of the menu
  * @param[in] newNode node we insert
  */
-void MN_InsertNode (menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNode)
+void MN_InsertNode (menuNode_t* const menu, menuNode_t *prevNode, menuNode_t *newNode)
 {
 	assert(menu);
 	assert(newNode);
@@ -80,7 +81,7 @@ void MN_InsertNode (menu_t* const menu, menuNode_t *prevNode, menuNode_t *newNod
  * @brief add a node at the end of the menu child
  * @todo after an update of the linked list of nodes (next, +prev, firstChild, +lastChild), we can improve this function O(1)
  */
-void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
+void MN_AppendNode (menuNode_t* const menu, menuNode_t *newNode)
 {
 	MN_InsertNode(menu, menu->lastChild, newNode);
 }
@@ -88,7 +89,7 @@ void MN_AppendNode (menu_t* const menu, menuNode_t *newNode)
 /**
  * @brief Check if a window is fullscreen or not
  */
-qboolean MN_WindowIsFullScreen (menu_t* const menu)
+qboolean MN_WindowIsFullScreen (menuNode_t* const menu)
 {
 	return menu->pos[0] == 0 && menu->size[0] == VID_NORM_WIDTH
 		&& menu->pos[1] == 0 && menu->size[1] == VID_NORM_HEIGHT;
@@ -97,7 +98,7 @@ qboolean MN_WindowIsFullScreen (menu_t* const menu)
 /**
  * @brief Called at the begin of the load from script
  */
-void MN_WindowNodeLoading (menu_t *menu)
+void MN_WindowNodeLoading (menuNode_t *menu)
 {
 	menu->pos[0] = 0;
 	menu->pos[1] = 0;
@@ -114,7 +115,7 @@ static const int CONTROLS_SPACING = 5;
 /**
  * @brief Called at the end of the load from script
  */
-void MN_WindowNodeLoaded (menu_t *menu)
+void MN_WindowNodeLoaded (menuNode_t *menu)
 {
 	/* if it need, construct the drag button */
 	if (menu->u.window.dragButton) {
@@ -154,18 +155,18 @@ void MN_WindowNodeLoaded (menu_t *menu)
  * @brief Valid properties for a window node (called yet 'menu')
  */
 static const value_t windowNodeProperties[] = {
-	{"pos", V_POS, offsetof(menu_t, pos), MEMBER_SIZEOF(menu_t, pos)},
-	{"size", V_POS, offsetof(menu_t, size), MEMBER_SIZEOF(menu_t, size)},
+	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
+	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
 
-	{"noticepos", V_POS, offsetof(menu_t, u.window.noticePos), MEMBER_SIZEOF(menu_t, u.window.noticePos)},
-	{"dragbutton", V_BOOL, offsetof(menu_t, u.window.dragButton), MEMBER_SIZEOF(menu_t, u.window.dragButton)},
-	{"closebutton", V_BOOL, offsetof(menu_t, u.window.closeButton), MEMBER_SIZEOF(menu_t, u.window.closeButton)},
-	{"modal", V_BOOL, offsetof(menu_t, u.window.modal), MEMBER_SIZEOF(menu_t, u.window.modal)},
-	{"preventtypingescape", V_BOOL, offsetof(menu_t, u.window.preventTypingEscape), MEMBER_SIZEOF(menu_t, u.window.preventTypingEscape)},
+	{"noticepos", V_POS, offsetof(menuNode_t, u.window.noticePos), MEMBER_SIZEOF(menuNode_t, u.window.noticePos)},
+	{"dragbutton", V_BOOL, offsetof(menuNode_t, u.window.dragButton), MEMBER_SIZEOF(menuNode_t, u.window.dragButton)},
+	{"closebutton", V_BOOL, offsetof(menuNode_t, u.window.closeButton), MEMBER_SIZEOF(menuNode_t, u.window.closeButton)},
+	{"modal", V_BOOL, offsetof(menuNode_t, u.window.modal), MEMBER_SIZEOF(menuNode_t, u.window.modal)},
+	{"preventtypingescape", V_BOOL, offsetof(menuNode_t, u.window.preventTypingEscape), MEMBER_SIZEOF(menuNode_t, u.window.preventTypingEscape)},
 
-	{"init", V_SPECIAL_ACTION, offsetof(menu_t, u.window.onInit), MEMBER_SIZEOF(menu_t, u.window.onInit)},
-	{"close", V_SPECIAL_ACTION, offsetof(menu_t, u.window.onClose), MEMBER_SIZEOF(menu_t, u.window.onClose)},
-	{"leave", V_SPECIAL_ACTION, offsetof(menu_t, u.window.onLeave), MEMBER_SIZEOF(menu_t, u.window.onLeave)},
+	{"init", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
+	{"close", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
+	{"leave", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onLeave), MEMBER_SIZEOF(menuNode_t, u.window.onLeave)},
 
 	{NULL, V_NULL, 0, 0}
 };

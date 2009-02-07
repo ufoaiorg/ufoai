@@ -145,7 +145,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 	return cmd;
 }
 
-inline static void MN_ExecuteSetAction (const menuNode_t* source, const menu_t* menu, qboolean useCmdParam, const menuAction_t* action)
+inline static void MN_ExecuteSetAction (const menuNode_t* source, const menuNode_t* menu, qboolean useCmdParam, const menuAction_t* action)
 {
 	const char* path;
 	byte *value;
@@ -234,7 +234,7 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 /**
  * @todo remove 'menu' param when its possible
  */
-static void MN_ExecuteInjectedAction (const menuNode_t* source, const menu_t* menu, qboolean useCmdParam, const menuAction_t* action)
+static void MN_ExecuteInjectedAction (const menuNode_t* source, const menuNode_t* menu, qboolean useCmdParam, const menuAction_t* action)
 {
 	switch (action->type.op) {
 
@@ -278,7 +278,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, const menu_t* me
 /**
  * @sa MN_ParseAction
  */
-void MN_ExecuteActions (const menu_t* const menu, const menuAction_t* const first)
+void MN_ExecuteActions (const menuNode_t* const menu, const menuAction_t* const first)
 {
 	const menuAction_t *action;
 	for (action = first; action; action = action->next) {
@@ -295,7 +295,7 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 		return;
 	}
 	for (action = firstAction; action; action = action->next) {
-		menu_t *menu = NULL;
+		menuNode_t *menu = NULL;
 		if (source) {
 			menu = source->menu;
 		}
@@ -410,7 +410,7 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
  */
 qboolean MN_FocusNextActionNode (void)
 {
-	menu_t* menu;
+	menuNode_t* menu;
 	static int i = MAX_MENUSTACK + 1;	/* to cycle between all menus */
 
 	if (mouseSpace != MS_MENU)

@@ -266,7 +266,7 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 menuNode_t* MN_GetNodeByPath (const char* path)
 {
 	char name[MAX_VAR];
-	menu_t* menu;
+	menuNode_t* menu;
 	const char* nextName = strstr(path, ".");
 	assert(nextName);
 
@@ -331,11 +331,11 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
  * @todo remember to update this function when we allow a tree of nodes
  */
-menuNode_t* MN_CloneNode (const menuNode_t* node, menu_t *newMenu, qboolean recursive)
+menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *targetMenu, qboolean recursive)
 {
 	menuNode_t* newNode = MN_AllocNode(node->behaviour->name);
 	*newNode = *node;
-	newNode->menu = newMenu;
+	newNode->menu = targetMenu;
 	newNode->next = NULL;
 	return newNode;
 }

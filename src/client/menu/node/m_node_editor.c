@@ -215,7 +215,7 @@ static void MN_EditorNodeStop_f (void)
 
 static void MN_EditorNodeExtract_f (void)
 {
-	menu_t* menu;
+	menuNode_t* menu;
 	menuNode_t* node;
 	FILE* fd;
 

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] menu : use its position and size properties
  * @todo understand if this function is realy need
  */
-void MN_SetViewRect (const menu_t* menu)
+void MN_SetViewRect (const menuNode_t* menu)
 {
 	viddef.x = viddef.y = 0;
 	viddef.viewWidth = viddef.width;
