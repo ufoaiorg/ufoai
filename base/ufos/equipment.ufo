@@ -258,7 +258,6 @@ equipment multiplayer_alien
 	knife				2
 	knifemono			3
 	stunrod				3
-	
 	irgoggles			2
 	medikit				3
 	incgrenade		3
@@ -283,6 +282,8 @@ equipment multiplayer_phalanx
 	sniper_ammo			3
 	pistol				2
 	pistol_ammo			5
+	pistol2				2
+	pistol2_ammo		5
 	smg				    2
 	smg_ammo			5
 	shotgun				2
@@ -335,6 +336,7 @@ equipment multiplayer_phalanx
 	flashbang			8
 	knife				2
 	knifemono			3
+	stunrod				3
 	irgoggles			2
 	medikit				3
 	incgrenade		3
