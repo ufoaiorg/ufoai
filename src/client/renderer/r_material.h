@@ -60,6 +60,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define UPDATE_THRESHOLD 0.02
 
+typedef struct dirt_s {
+	float intensity;		/**< 0.01 - 1.0 - factor for the dirt map blending (the alpha value of the color) */
+} dirt_t;
+
 typedef struct rotate_s {
 	float hz, deg;
 } rotate_t;
@@ -110,6 +114,7 @@ typedef struct materialStage_s {
 	scroll_t scroll;
 	scale_t scale;
 	terrain_t terrain;
+	dirt_t dirt;
 	anim_t anim;
 	struct materialStage_s *next;
 } materialStage_t;

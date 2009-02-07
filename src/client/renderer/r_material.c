@@ -148,7 +148,7 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 			VectorCopy(stage->color, color);
 		else  /* or use white */
 			VectorSet(color, 1.0, 1.0, 1.0);
-		color[3] = alphaValues[index];
+		color[3] = alphaValues[index] * stage->dirt.intensity;
 	} else if (stage->flags & STAGE_TERRAIN) {
 		float a;
 
@@ -554,6 +554,12 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 		}
 
 		if (!strcmp(c, "dirtmap")) {
+			c = COM_Parse(buffer);
+			s->dirt.intensity = atof(c);
+			if (s->dirt.intensity <= 0.0) {
+				Com_Printf("R_ParseStage: Invalid intensity value for dirt stage\n");
+				return -1;
+			}
 			s->flags |= STAGE_DIRTMAP;
 			continue;
 		}
