@@ -460,45 +460,46 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 
 	node = MN_GetNodeFromCurrentMenu("airequip_slot0");
 	for (i = 0; node && i < AIR_POSITIONS_MAX; node = node->next) {
-		if (!Q_strncmp(node->name, "airequip_slot", 13)) {
-			/* Default value */
-			MN_HideNode(node);
-			/* Draw available slots */
-			switch (airequipID) {
-			case AC_ITEM_AMMO:
-			case AC_ITEM_WEAPON:
-				max = aircraft->maxWeapons;
-				slot = aircraft->weapons;
-				break;
-			case AC_ITEM_ELECTRONICS:
-				max = aircraft->maxElectronics;
-				slot = aircraft->electronics;
-				break;
-			/* do nothing for shield: there is only one slot */
-			default:
-				continue;
-			}
-			for (j = 0; j < max; j++, slot++) {
-				/* check if one of the aircraft slots is at this position */
-				if (slot->pos == i) {
-					MN_UnHideNode(node);
-					/* draw in white if this is the selected slot */
-					if (j == airequipSelectedSlot) {
-						Vector2Set(node->texl, 64, 0);
-						Vector2Set(node->texh, 128, 64);
-					} else {
-						Vector2Set(node->texl, 0, 0);
-						Vector2Set(node->texh, 64, 64);
-					}
-					if (slot->item) {
-						assert(slot->item->tech);
-						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), slot->item->tech->mdl);
-					} else
-						Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
-				}
-			}
-			i++;
+		if (Q_strncmp(node->name, "airequip_slot", 13) != 0)
+			continue;
+
+		/* Default value */
+		MN_HideNode(node);
+		/* Draw available slots */
+		switch (airequipID) {
+		case AC_ITEM_AMMO:
+		case AC_ITEM_WEAPON:
+			max = aircraft->maxWeapons;
+			slot = aircraft->weapons;
+			break;
+		case AC_ITEM_ELECTRONICS:
+			max = aircraft->maxElectronics;
+			slot = aircraft->electronics;
+			break;
+		/* do nothing for shield: there is only one slot */
+		default:
+			continue;
 		}
+		for (j = 0; j < max; j++, slot++) {
+			/* check if one of the aircraft slots is at this position */
+			if (slot->pos == i) {
+				MN_UnHideNode(node);
+				/* draw in white if this is the selected slot */
+				if (j == airequipSelectedSlot) {
+					Vector2Set(node->texl, 64, 0);
+					Vector2Set(node->texh, 128, 64);
+				} else {
+					Vector2Set(node->texl, 0, 0);
+					Vector2Set(node->texh, 64, 64);
+				}
+				if (slot->item) {
+					assert(slot->item->tech);
+					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), slot->item->tech->mdl);
+				} else
+					Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
+			}
+		}
+		i++;
 	}
 }
 
@@ -1250,13 +1251,13 @@ void AIM_AircraftEquipMenuClick_f (void)
 	/* select menu */
 	activeMenu = MN_GetActiveMenu();
 	/* check in which menu we are */
-	if (!Q_strncmp(activeMenu->name, "aircraft_equip", 14)) {
+	if (!Q_strcmp(activeMenu->name, "aircraft_equip")) {
 		if (baseCurrent->aircraftCurrent == NULL)
 			return;
 		aircraft = baseCurrent->aircraftCurrent;
 		base = NULL;
 		installation = NULL;
-	} else if (!Q_strncmp(activeMenu->name, "basedefence", 11)) {
+	} else if (!Q_strcmp(activeMenu->name, "basedefence")) {
 		base = baseCurrent;
 		installation = installationCurrent;
 		aircraft = NULL;
