@@ -68,11 +68,14 @@ components craft_ufo_harvester {
 }
 
 // UFO -- Supply Transport
-// Note that there will never be landed missions for this UFO.
 components craft_ufo_supply {
 	time	3800
-	item	alienmaterials		0	400
-	item	craft_alien_propulsion	0	1
+	item	alienmaterials		600	400
+	item	antimatter		600	0
+	item	craft_alien_propulsion	2	1
+	item	craft_alien_astrogation	2	1
+	item	craft_alien_detection	1	0
+	item	craft_weapon_particle_beam	2	1
 }
 
 // UFO -- Lander
