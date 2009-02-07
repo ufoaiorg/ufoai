@@ -264,7 +264,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 			return -1;
 	}
 	if (strlen(value) != (unsigned int)(end_p-value)) { /* if strto* did not use the whole token, then there is some non-number part to it */
-		snprintf(lastErr, sizeof(lastErr), "problem with numeric value: %s declared as %s",
+		snprintf(lastErr, sizeof(lastErr), "problem with numeric value: \"%s\" declared as %s. only use whitespace to delimit values",
 			value, ED_Constant2Type(floatOrInt));
 		return -1;
 	}

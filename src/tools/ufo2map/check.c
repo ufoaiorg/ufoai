@@ -713,18 +713,29 @@ void CheckEntities (void)
 		const char *name = ValueForKey(e, "classname");
 		const entityDef_t *ed = ED_GetEntityDef(name);
 		epair_t *kvp;
+		const entityKeyDef_t *kd;
 
 		if (!ed) {
 			Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s\n", name);
 			continue;
 		}
 
+		/* check all keys in the entity - make sure they are OK */
 		for (kvp = e->epairs; kvp; kvp = kvp->next) {
-			const entityKeyDef_t *kd = ED_GetKeyDefEntity(ed, kvp->key);
+			kd = ED_GetKeyDefEntity(ed, kvp->key);
 
 			if (!kd) {
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
 				continue;
+			}
+		}
+
+		/* check keys in the entity definition - make sure mandatory ones are present */
+		for (kd = ed->keyDefs; kd->name; kd++) {
+			if (kd->flags & ED_MANDATORY) {
+				const char *keyNameInEnt = ValueForKey(e, kd->name);
+				if(*keyNameInEnt == '\0')
+					Check_Printf(VERB_NORMAL, qfalse, i, -1, "Mandatory key missing from entity: %s in %s\n", kd->name, name);
 			}
 		}
 
