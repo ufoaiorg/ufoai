@@ -142,7 +142,9 @@
 		<Unit filename="..\..\base\ufos\armour.ufo" />
 		<Unit filename="..\..\base\ufos\basemanagement.ufo" />
 		<Unit filename="..\..\base\ufos\campaign.ufo" />
+		<Unit filename="..\..\base\ufos\cities.ufo" />
 		<Unit filename="..\..\base\ufos\components.ufo" />
+		<Unit filename="..\..\base\ufos\entities.ufo" />
 		<Unit filename="..\..\base\ufos\equipment.ufo" />
 		<Unit filename="..\..\base\ufos\equipment_missions.ufo" />
 		<Unit filename="..\..\base\ufos\events.ufo" />
@@ -160,6 +162,7 @@
 		<Unit filename="..\..\base\ufos\menu_aircraft_info.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft_pilots.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft_soldiers.ufo" />
+		<Unit filename="..\..\base\ufos\menu_airfight.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aliencont.ufo" />
 		<Unit filename="..\..\base\ufos\menu_althud.ufo" />
 		<Unit filename="..\..\base\ufos\menu_basedefence.ufo" />
@@ -169,6 +172,7 @@
 		<Unit filename="..\..\base\ufos\menu_buy.ufo" />
 		<Unit filename="..\..\base\ufos\menu_campaign.ufo" />
 		<Unit filename="..\..\base\ufos\menu_debug.ufo" />
+		<Unit filename="..\..\base\ufos\menu_equipment.ufo" />
 		<Unit filename="..\..\base\ufos\menu_geoscape.ufo" />
 		<Unit filename="..\..\base\ufos\menu_hire.ufo" />
 		<Unit filename="..\..\base\ufos\menu_hospital.ufo" />
@@ -179,6 +183,7 @@
 		<Unit filename="..\..\base\ufos\menu_main.ufo" />
 		<Unit filename="..\..\base\ufos\menu_modeltest.ufo" />
 		<Unit filename="..\..\base\ufos\menu_multiplayer.ufo" />
+		<Unit filename="..\..\base\ufos\menu_multiplayer_team.ufo" />
 		<Unit filename="..\..\base\ufos\menu_multiplayeringame.ufo" />
 		<Unit filename="..\..\base\ufos\menu_nohud.ufo" />
 		<Unit filename="..\..\base\ufos\menu_options.ufo" />
@@ -188,7 +193,6 @@
 		<Unit filename="..\..\base\ufos\menu_singleplayer.ufo" />
 		<Unit filename="..\..\base\ufos\menu_skirmish.ufo" />
 		<Unit filename="..\..\base\ufos\menu_stats.ufo" />
-		<Unit filename="..\..\base\ufos\menu_team.ufo" />
 		<Unit filename="..\..\base\ufos\menu_transfer.ufo" />
 		<Unit filename="..\..\base\ufos\menu_tutorials.ufo" />
 		<Unit filename="..\..\base\ufos\menu_ufopedia.ufo" />
