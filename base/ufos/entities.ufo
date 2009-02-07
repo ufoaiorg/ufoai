@@ -132,7 +132,7 @@ entity misc_model {
 	description	"Displays a model. Set the level flags correctly! Use angles [pitch yaw roll] to rotate the model. pitch (up/down [-90 up to 90]), yaw (left/right [0 up to 360]) and roll (fall over)"
 	color		"1 1 0"
 	size		"-16 -16 -16 16 16 16"
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8 server_solid pulse"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 server_solid pulse"
 
 	mandatory {
 		model		"Arbitrary model file to display"
@@ -163,7 +163,7 @@ entity misc_particle {
 	description	"Creates a particle. Particle properties can be set here with a preceding '-' or '+'. '-' property is set before calling the particle init function '+' does it afterwards. The 'noday' means that the particle is not shown at the day version of the map. E.g. useful for flare particles around streetlights."
 	color		"0 0 1"
 	size		"-16 -16 -16 16 16 16"
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8 noday"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 noday"
 
 	mandatory {
 		particle	"Name of the particle definition."
@@ -176,7 +176,7 @@ entity light {
 	description	"All lights are for the night version. If you want them to show up in the day version, too - mark the day flag."
 	color		"0 1 0"
 	size		"-8 -8 -8 8 8 8"
-	flags		"day"
+	spawnflags	"day"
 
 	mandatory {
 		_color		"Colour for the light RGB"
@@ -199,7 +199,7 @@ entity light_spot {
 	description	"All lights are for the night version. If you want them to show up in the day version, too - mark the day flag."
 	color		"0 1 0"
 	size		"-8 -8 -8 8 8 8"
-	flags		"day"
+	spawnflags	"day"
 
 	mandatory {
 		color		"Color for the light RGB"
@@ -254,14 +254,20 @@ entity misc_sound {
 	description	"Used to play ambient sounds (looped sounds)"
 	color		"0.5 1 0.5"
 	size		"-8 -8 -8 8 8 8"
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
+
 
 	mandatory {
+		origin	"position"
 		noise		"Sound file name relative to sound/ambience"
 	}
 
 	optional {
 		volume		"0 - 128"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
@@ -269,7 +275,7 @@ entity misc_mission {
 	description	"Defines a mission target"
 	color		"0.1 0.6 0.3"
 	size		"-16 -16 -16 16 16 16"
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	optional {
 		particle	"Display a particle"
 		item		"Item that must be placed here to trigger the target (e.g. a bomb that will blast the target entity)"
@@ -280,7 +286,7 @@ entity misc_mission {
 		target		"The target that is triggered once the round time was hit"
 		message		"A message that is show when the mission is completed"
 	}
-	
+
 	mandatory {
 		origin	"position"
 	}
@@ -295,7 +301,7 @@ entity misc_mission_alien {
 	description	"Defines the alien mission target"
 	color		"0.1 0.6 0.3"
 	size		"-16 -16 -16 16 16 16"
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	optional {
 		particle	"Display a particle"
 		time		"If set the entity has to be occupied x rounds to win the mission"
@@ -305,11 +311,19 @@ entity misc_mission_alien {
 		target		"The target that is triggered once the round time was hit"
 		message		"A message that is show when the mission is completed"
 	}
+
+	mandatory {
+		origin	"position"
+	}
+
+	type {
+		origin	"V_INT 3"
+	}
 }
 
 entity func_door {
 	color		"0 .5 .8"
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8 opened"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8 opened"
 	optional {
 		angle		"Determines the opening direction"
 		health		"Define the needed damage to destroy the door"
@@ -331,7 +345,7 @@ entity func_group {
 }
 
 entity func_breakable {
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	optional {
 		health		"Damage until destroyed"
 		particle	"Particle id to be spawned after object is destroyed"
@@ -340,7 +354,7 @@ entity func_breakable {
 }
 
 entity func_rotating {
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	optional {
 		health		"Damage until destroyed"
 		particle	"Particle id to be spawned after object is destroyed"
@@ -351,7 +365,7 @@ entity func_rotating {
 
 entity trigger_hurt {
 	description	"Any entity that touches this will be hurt. It does dmg points of damage each step inside of such a trigger area"
-	flags		"KILL STUN DAZE"
+	spawnflags	"KILL STUN DAZE"
 	optional {
 		dmg		"Damage per step (whole numbers only)"
 	}
@@ -371,11 +385,16 @@ entity misc_item {
 	description	"-------- MODEL FOR RADIANT ONLY - DO NOT SET THIS AS A KEY --------"
 	color		".3 .3 1"
 	size		"-16 -16 -16 16 16 16"
-	flags		"level1 level2 level3 level4 level5 level6 level7 level8"
+	spawnflags	"level1 level2 level3 level4 level5 level6 level7 level8"
 	model		"models/weapons/assault/assault.md2"
 
 	mandatory {
 		item		"The item to spawn - item id from ufo script definition"
+		origin	"position"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
