@@ -239,6 +239,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 	float fv;
 	int iv;
 	char *end_p;
+	/** @todo octal starts 0, make a fuss */
 	if (*value == 'i' || *value == 'I' || *value == 'n' || *value == 'N'
 	 || value[1] == 'x' || value[1] == 'X') {
 		snprintf(lastErr, sizeof(lastErr), "infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
@@ -264,7 +265,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 			return -1;
 	}
 	if (strlen(value) != (unsigned int)(end_p-value)) { /* if strto* did not use the whole token, then there is some non-number part to it */
-		snprintf(lastErr, sizeof(lastErr), "problem with numeric value: \"%s\" declared as %s. only use whitespace to delimit values",
+		snprintf(lastErr, sizeof(lastErr), "problem with numeric value: \"%s\" declared as %s. (might be relevant: only use whitespace to delimit values)",
 			value, ED_Constant2Type(floatOrInt));
 		return -1;
 	}
@@ -305,32 +306,24 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
  * @brief tests if a value string matches the type for this key
  * @return 1 if the value string matches the type, 0 if it does not and -1 if
  * there is an error (call ED_GetLastError)
+ * @note abstract (radiant) keys may not have types. keys used here must be declared in entities.ufo in
+ * an optional or mandatory block.
  */
 int ED_CheckType (const char *classname, const char *key, const char *value)
 {
-	const entityKeyDef_t *kd = ED_GetKeyDef(classname, key);
+	const entityKeyDef_t *kd = ED_GetKeyDef(classname, key, 0);
 	if (!kd)
 		return -1;
-	switch (kd->flags & ED_KEY_TYPE) {
-		case ED_TYPE_FLOAT:
-			return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
-		case ED_TYPE_INT:
-			return ED_CheckNumericType(kd, value, ED_TYPE_INT);
-		case ED_TYPE_STRING:
-		case 0: /* string is the default */
-			return 1; /* all strings are good */
-		default:
-			snprintf(lastErr, sizeof(lastErr), "ED_CheckType: type not recognised in key def");
-			return -1;
-	}
 
+	return ED_CheckTypeKey(kd, value);
 }
 
 /**
  * @brief as ED_CheckType, but where the entity and key are known, so takes
  * different arguments.
+ * @return -1 if there is a problem (call ED_GetLastError). return 1 if OK.
  */
-static int ED_CheckTypeKey (const entityKeyDef_t *kd, const char *value)
+int ED_CheckTypeKey (const entityKeyDef_t *kd, const char *value)
 {
 	if (!kd) {
 		snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: null key def");
@@ -627,6 +620,8 @@ int ED_Parse (const char **data_p)
 	if (-1 == ED_CheckDefaultTypes ())
 		return -1;
 
+	/** @todo check for duplicate entity definitions */
+
 	return 0;
 }
 
@@ -637,19 +632,22 @@ const char *ED_GetLastError (void)
 
 /**
  * @brief searches for the parsed key def
+ * @param abstract send abstract to find an abstract key with this name
  * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
  */
-const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname)
+const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, const int abstract)
 {
 	const entityDef_t *ed = ED_GetEntityDef(classname);
-	return ED_GetKeyDefEntity(ed, keyname);
+	return ED_GetKeyDefEntity(ed, keyname, abstract);
 }
 
 /**
  * @brief searches for the parsed key def, when the entity def is known
+ * @param abstract send a nonzero value if the abstract (radiant - not in any block) version of the
+ * key is required
  * @return NULL if the entity def or key def is not found. call ED_GetLastError to get a relevant message.
  */
-const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname)
+const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname, const int abstract)
 {
 	entityKeyDef_t *kd;
 
@@ -657,8 +655,15 @@ const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *key
 		return NULL;
 
 	for (kd = ed->keyDefs; kd->name; kd++)
-		if (!strcmp(keyname, kd->name))
-			return kd;
+		if (!strcmp(keyname, kd->name)) {
+			if (abstract) {
+				if (kd->flags & ED_ABSTRACT)
+					return kd;
+			} else {
+				if (!(kd->flags & ED_ABSTRACT))
+					return kd;
+			}
+		}
 
 	snprintf(lastErr, sizeof(lastErr), "ED_GetKeyDefEntity: no key definition for %s found in entity %s entities.ufo", keyname, ed->classname);
 	return NULL;
@@ -702,6 +707,23 @@ void ED_Free (void)
 }
 
 #ifdef DEBUG_ED
+
+void ED_PrintKeyDef(const entityKeyDef_t *kd)
+{
+	Com_Printf("  >%s< mandatory:%i optional:%i abstract:%i type:%i", kd->name,
+		kd->flags & ED_MANDATORY ? 1 : 0,
+		kd->flags & ED_OPTIONAL ? 1 : 0,
+		kd->flags & ED_ABSTRACT ? 1 : 0,
+		kd->flags & ED_MODE_TYPE ? 1 : 0);
+	if (kd->flags & ED_MODE_TYPE)
+		Com_Printf(" type:%s[%i]", ED_Constant2Type(kd->flags & ED_KEY_TYPE), kd->vLen);
+
+	if (kd->defaultVal)
+		Com_Printf(" default >%s<",kd->defaultVal);
+
+	Com_Printf("\n");
+}
+
 /**
  * @brief print all the parsed entity definitions
  */
@@ -713,12 +735,7 @@ void ED_Dump (void)
 		const entityKeyDef_t *kd;
 		Com_Printf("entity def >%s<\n", ed->classname);
 		for (kd = &ed->keyDefs[0]; kd->name; kd++) {
-			Com_Printf("  >%s< mandatory:%i optional:%i abstract:%i\n", kd->name,
-				kd->flags & ED_MANDATORY ? 1 : 0,
-				kd->flags & ED_OPTIONAL ? 1 : 0,
-				kd->flags & ED_ABSTRACT ? 1 : 0);
-			if (kd->defaultVal)
-				Com_Printf("    default >%s<\n",kd->defaultVal);
+			ED_PrintKeyDef(kd);
 		}
 	}
 }

@@ -722,10 +722,15 @@ void CheckEntities (void)
 
 		/* check all keys in the entity - make sure they are OK */
 		for (kvp = e->epairs; kvp; kvp = kvp->next) {
-			kd = ED_GetKeyDefEntity(ed, kvp->key);
+			kd = ED_GetKeyDefEntity(ed, kvp->key, 0); /* zero means ignore abstract (radiant only) keys */
 
 			if (!kd) {
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
+				continue;
+			}
+
+			if (-1 == ED_CheckTypeKey(kd, kvp->value)) { /* check values against types declared in entities.ufo */
+				Check_Printf(VERB_NORMAL, qfalse, i, -1, "%s\n", ED_GetLastError());
 				continue;
 			}
 		}
