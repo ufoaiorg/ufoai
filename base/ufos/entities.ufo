@@ -113,7 +113,12 @@ entity info_null {
 	size		"-4 -4 -4 4 4 4"
 
 	mandatory {
+		origin	"position"
 		targetname	"Name of the target entity"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
@@ -124,7 +129,11 @@ entity info_civilian_target {
 
 	mandatory {
 		count	"The priority of this waypoint - the lower the number, the nearer the end-target"
-		origin	""
+		origin	"position"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
@@ -168,7 +177,11 @@ entity misc_particle {
 	mandatory {
 		particle	"Name of the particle definition."
 		wait		"Wait times are of the format 'a b'. It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start."
-		origin		""
+		origin		"position"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
@@ -181,17 +194,21 @@ entity light {
 	mandatory {
 		_color		"Colour for the light RGB"
 		light		"Intensity 0-255"
+		origin		"position"
 	}
 
 	optional {
 		target		"Entity target name (e.g. info_null)"
 		_cone		""
-		origin		""
 		angle		"Special values: UP -1; DOWN -2"
 	}
 
 	default {
 		_cone		"10"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
@@ -204,6 +221,7 @@ entity light_spot {
 	mandatory {
 		color		"Color for the light RGB"
 		light		"Intensity 0-255"
+		origin		"position"
 	}
 
 	optional {
@@ -214,6 +232,10 @@ entity light_spot {
 
 	default {
 		cone		"10"
+	}
+
+	type {
+		origin	"V_INT 3"
 	}
 }
 
