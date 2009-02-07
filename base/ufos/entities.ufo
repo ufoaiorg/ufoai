@@ -11,6 +11,8 @@
  * assumed. V_FLOAT and V_INT types may be made into vectors,
  * "V_FLOAT 3". To insist that values are positive, you may use
  * stuff like "UNSIGNED V_INT".
+ *
+ * note that 255 for spawnflags means levelflags 1-8 are all set.
  */
 
 
@@ -167,6 +169,7 @@ entity misc_model {
 		skin		"0"
 		frame		"0"
 		modelscale_vec	"1.0 1.0 1.0"
+		spawnflags	"255"
 	}
 }
 
@@ -185,6 +188,10 @@ entity misc_particle {
 
 	type {
 		origin	"V_INT 3"
+	}
+
+	default {
+		spawnflags	"255"
 	}
 }
 
@@ -323,6 +330,11 @@ entity misc_sound {
 	type {
 		origin	"V_INT 3"
 	}
+
+	default {
+		spawnflags	"255"
+	}
+
 }
 
 entity misc_mission {
@@ -349,6 +361,10 @@ entity misc_mission {
 	type {
 		origin	"V_INT 3"
 	}
+
+	default {
+		spawnflags	"255"
+	}
 }
 
 
@@ -374,6 +390,10 @@ entity misc_mission_alien {
 	type {
 		origin	"V_INT 3"
 	}
+
+	default {
+		spawnflags	"255"
+	}
 }
 
 entity func_door {
@@ -389,6 +409,10 @@ entity func_door {
 
 	mandatory {
 		spawnflags	"level flags"
+	}
+
+	default {
+		spawnflags	"255"
 	}
 }
 
@@ -415,6 +439,10 @@ entity func_breakable {
 	mandatory {
 		spawnflags	"level flags"
 	}
+
+	default {
+		spawnflags	"255"
+	}
 }
 
 entity func_rotating {
@@ -428,6 +456,10 @@ entity func_rotating {
 
 	mandatory {
 		spawnflags	"level flags"
+	}
+
+	default {
+		spawnflags	"255"
 	}
 }
 
@@ -467,6 +499,10 @@ entity misc_item {
 
 	type {
 		origin	"V_INT 3"
+	}
+
+	default {
+		spawnflags	"255"
 	}
 }
 
