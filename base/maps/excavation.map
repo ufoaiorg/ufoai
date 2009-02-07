@@ -7849,7 +7849,6 @@
 // entity 10
 {
 "classname" "info_alien_start"
-"_color" "0.6 0.7 1"
 "origin" "624 1040 92"
 }
 // entity 11
@@ -8790,7 +8789,6 @@
 // entity 42
 {
 "classname" "info_alien_start"
-"_color" "1 1 1"
 "origin" "240 1456 92"
 }
 // entity 43
@@ -10789,37 +10787,31 @@
 // entity 164
 {
 "classname" "info_alien_start"
-"_color" "1 1 1"
 "origin" "1008 1328 92"
 }
 // entity 165
 {
 "classname" "info_alien_start"
-"_color" "1 1 1"
 "origin" "912 1424 92"
 }
 // entity 166
 {
 "classname" "info_alien_start"
-"_color" "1 1 1"
 "origin" "1168 1424 92"
 }
 // entity 167
 {
 "classname" "info_alien_start"
-"_color" "1 1 1"
 "origin" "336 1424 92"
 }
 // entity 168
 {
 "classname" "info_alien_start"
-"_color" "1 1 1"
 "origin" "-112 1424 92"
 }
 // entity 169
 {
 "classname" "info_alien_start"
-"_color" "1 1 1"
 "origin" "-48 1264 92"
 }
 // entity 170
