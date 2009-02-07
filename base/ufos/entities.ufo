@@ -146,6 +146,7 @@ entity misc_model {
 	mandatory {
 		model		"Arbitrary model file to display"
 		origin		"Position"
+		spawnflags	"Level flags etc"
 	}
 
 	optional {
@@ -178,6 +179,7 @@ entity misc_particle {
 		particle	"Name of the particle definition."
 		wait		"Wait times are of the format 'a b'. It spawns particles in random intervals ranging from (a) to (a+b) seconds. If no wait time is specified one particle is created at map start."
 		origin		"position"
+		spawnflags	"Levelflags and noday"
 	}
 
 	type {
@@ -194,6 +196,7 @@ entity light {
 	mandatory {
 		_color		"Colour for the light RGB"
 		light		"Intensity 0-255"
+		spawnflags	"Wether the light is in the day version"
 		origin		"position"
 	}
 
@@ -311,6 +314,7 @@ entity misc_mission {
 
 	mandatory {
 		origin	"position"
+		spawnflags "Level flags"
 	}
 
 	type {
@@ -353,6 +357,9 @@ entity func_door {
 		noise		"Soundfile to play when door opens"
 		particle	"Particle id to be spawned after object is destroyed"
 	}
+	mandatory {
+		spawnflags	"level flags"
+	}
 }
 
 
@@ -372,6 +379,10 @@ entity func_breakable {
 		health		"Damage until destroyed"
 		particle	"Particle id to be spawned after object is destroyed"
 		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
+		targetname	"todo"
+	}
+	mandatory {
+		spawnflags	"level flags"
 	}
 }
 
@@ -382,6 +393,9 @@ entity func_rotating {
 		particle	"Particle id to be spawned after object is destroyed"
 		speed		"Rotation speed"
 		angle		"Rotate around this angle - pitch = 0, yaw = 1, roll = 2"
+	}
+	mandatory {
+		spawnflags	"level flags"
 	}
 }
 
@@ -412,7 +426,8 @@ entity misc_item {
 
 	mandatory {
 		item		"The item to spawn - item id from ufo script definition"
-		origin	"position"
+		spawnflags	"level flags"
+		origin		"Position"
 	}
 
 	type {
