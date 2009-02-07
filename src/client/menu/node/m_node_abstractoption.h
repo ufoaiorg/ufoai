@@ -71,14 +71,8 @@ typedef struct {
 struct menuNode_s;
 struct nodeBehaviour_s;
 
-menuOption_t* MN_AllocOption(int count);
 menuOption_t* MN_NodeAppendOption(struct menuNode_s *node, menuOption_t* option);
-void MN_RegisterOption(int dataId, menuOption_t *option);
-menuOption_t *MN_GetOption(int dataId);
-
-void MN_SortOptions(menuOption_t **option);
 void MN_OptionNodeSortOptions(struct menuNode_s *node);
-
 void MN_RegisterAbstractOptionNode(struct nodeBehaviour_s *behaviour);
 
 #endif

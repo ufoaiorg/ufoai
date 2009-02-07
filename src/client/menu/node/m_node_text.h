@@ -45,7 +45,6 @@ struct menuAction_s;
 
 void MN_TextScrollBottom(const char* nodeName);
 qboolean MN_TextScroll(struct menuNode_s *node, int offset);
-void MN_MenuTextReset(int menuTextID);
 int MN_TextNodeGetLine(const struct menuNode_s *node, int x, int y);
 void MN_TextNodeSelectLine(struct menuNode_s *node, int num);
 

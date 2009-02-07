@@ -37,27 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_icon.h"
 #include "m_condition.h"
+#include "m_data.h"
 #include "node/m_node_model.h"
-
-typedef enum {
-	MN_SHARED_NONE = 0,
-	MN_SHARED_TEXT,
-	MN_SHARED_LINKEDLISTTEXT,
-	MN_SHARED_OPTION,
-} menuSharedType_t;
-
-typedef struct menuSharedData_s {
-	menuSharedType_t type;		/**< Type of the shared data */
-	union {
-		/** @brief Holds static array of characters to display */
-		const char *text;
-		/** @brief Holds a linked list for displaying in the menu */
-		linkedList_t *linkedListText;
-		menuOption_t *option;
-	} data;						/**< The data */
-	int versionId;				/**< Id identify the value, to check changes */
-} menuSharedData_t;
-
 
 /**
  * @todo Maybe merge cl_menuSysPool and mn.adata (same usage)

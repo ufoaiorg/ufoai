@@ -810,39 +810,6 @@ static void MN_Memory_f (void)
 #endif
 
 /**
- * @brief link a text to a menu text id
- * @note The menu dont manage the text memory, only save a pointer
- */
-void MN_RegisterText(int textId, const char *text)
-{
-	mn.sharedData[textId].type = MN_SHARED_TEXT;
-	mn.sharedData[textId].data.text = text;
-	mn.sharedData[textId].versionId++;
-}
-
-/**
- * @brief link a text to a menu text id
- * @note The menu dont manage the text memory, only save a pointer
- */
-void MN_RegisterLinkedListText(int textId, linkedList_t *text)
-{
-	mn.sharedData[textId].type = MN_SHARED_LINKEDLISTTEXT;
-	mn.sharedData[textId].data.linkedListText = text;
-	mn.sharedData[textId].versionId++;
-}
-
-const char *MN_GetText(int textId)
-{
-	if (mn.sharedData[textId].type != MN_SHARED_TEXT)
-		return NULL;
-	return mn.sharedData[textId].data.text;
-}
-
-int MN_GetDataVersion(int textId) {
-	return mn.sharedData[textId].versionId;
-}
-
-/**
  * @brief Reset and free the menu data hunk
  * @note Even called in case of an error when CL_Shutdown was called - maybe even
  * before CL_InitLocal (and thus MN_InitStartup) was called

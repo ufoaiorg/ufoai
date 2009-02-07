@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_input.h"
 #include "../m_draw.h"
+#include "../m_data.h"
 #include "m_node_abstractoption.h"
 #include "m_node_abstractnode.h"
 
@@ -42,60 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 
 /**
- * @brief Remove the highter element (in alphabet) from a list
- */
-static menuOption_t *MN_OptionNodeRemoveHighterOption (menuOption_t **option)
-{
-	menuOption_t *prev = NULL;
-	menuOption_t *prevfind = NULL;
-	menuOption_t *search = (*option)->next;
-	char *label = (*option)->label;
-
-	/* search the smaller element */
-	while (search) {
-		if (Q_strcmp(label, search->label) < 0) {
-			prevfind = prev;
-			label = search->label;
-		}
-		prev = search;
-		search = search->next;
-	}
-
-	/* remove the first element */
-	if (prevfind == NULL) {
-		menuOption_t *tmp = *option;
-		*option = (*option)->next;
-		return tmp;
-	} else {
-		menuOption_t *tmp = prevfind->next;
-		prevfind->next = tmp->next;
-		return tmp;
-	}
-}
-
-/**
- * @brief Sort options by alphabet
- */
-void MN_SortOptions (menuOption_t **first)
-{
-	menuOption_t *option;
-
-	/* unlink the unsorted list */
-	option = *first;
-	if (option == NULL)
-		return;
-	*first = NULL;
-
-	/* construct a sorted list */
-	while (option) {
-		menuOption_t *element;
-		element = MN_OptionNodeRemoveHighterOption(&option);
-		element->next = *first;
-		*first = element;
-	}
-}
-
-/**
  * @brief Sort options by alphabet
  */
 void MN_OptionNodeSortOptions (menuNode_t *node)
@@ -103,39 +50,6 @@ void MN_OptionNodeSortOptions (menuNode_t *node)
 	assert(MN_NodeInstanceOf(node, "abstractoption"));
 	MN_SortOptions(&node->u.option.first);
 }
-
-void MN_RegisterOption (int dataId, menuOption_t *option)
-{
-	mn.sharedData[dataId].type = MN_SHARED_OPTION;
-	mn.sharedData[dataId].data.option = option;
-	mn.sharedData[dataId].versionId++;
-}
-
-menuOption_t *MN_GetOption (int dataId)
-{
-	if (mn.sharedData[dataId].type == MN_SHARED_OPTION) {
-		return mn.sharedData[dataId].data.option;
-	}
-	return NULL;
-}
-
-/**
- * @brief Alloc an array of option
- */
-menuOption_t* MN_AllocOption (int count)
-{
-	menuOption_t* newOptions;
-	assert(count > 0);
-
-	if (mn.numOptions + count >= MAX_MENUOPTIONS) {
-		Com_Printf("MN_AllocOption: numOptions exceeded - increase MAX_MENUOPTIONS\n");
-		return NULL;
-	}
-	newOptions = &mn.menuOptions[mn.numOptions];
-	mn.numOptions += count;
-	return newOptions;
-}
-
 
 /**
  * @brief Adds a new selectbox option to a selectbox node
@@ -164,7 +78,7 @@ menuOption_t* MN_NodeAppendOption (menuNode_t *node, menuOption_t *newOption)
 }
 
 static const value_t properties[] = {
-	{"dataid", V_MENUTEXTID, offsetof(menuNode_t, u.option.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
+	{"dataid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.option.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
 	{"option", V_SPECIAL_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
 	{"viewpos", V_INT, offsetof(menuNode_t, u.option.pos),  MEMBER_SIZEOF(menuNode_t, u.option.pos)},
 	{"count", V_INT, offsetof(menuNode_t, u.option.count),  MEMBER_SIZEOF(menuNode_t, u.option.count)},

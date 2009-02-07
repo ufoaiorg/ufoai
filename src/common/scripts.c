@@ -80,8 +80,7 @@ const char *const vt_names[] = {
 	"relabs",
 	"client_hunk",
 	"client_hunk_string",
-	"num", /* 25 */
-	"baseid",
+	"baseid",	/* 25 */
 	"longlines",
 	"team",
 	"race"
@@ -97,26 +96,6 @@ const char *const blend_names[] = {
 	"replace", "blend", "add", "filter", "invfilter"
 };
 CASSERT(lengthof(blend_names) == BLEND_LAST);
-
-/**
- * @todo move it on the menu when its possible (move defines too)
- */
-static const char *const menutextid_names[] = {
-	"TEXT_STANDARD", "TEXT_LIST", "TEXT_UFOPEDIA", "TEXT_BUILDINGS", "TEXT_BUILDING_INFO",
-	"TEXT_RESEARCH", "TEXT_POPUP", "TEXT_POPUP_INFO", "TEXT_AIRCRAFT_LIST",
-	"TEXT_AIRCRAFT_INFO", "TEXT_MESSAGESYSTEM", "TEXT_CAMPAIGN_LIST",
-	"TEXT_MULTISELECTION", "TEXT_PRODUCTION_LIST", "TEXT_PRODUCTION_AMOUNT", "TEXT_PRODUCTION_INFO",
-	"TEXT_EMPLOYEE", "TEXT_MOUSECURSOR_RIGHT", "TEXT_PRODUCTION_QUEUED", "TEXT_STATS_BASESUMMARY",
-	"TEXT_STATS_MISSION", "TEXT_STATS_BASES", "TEXT_STATS_NATIONS", "TEXT_STATS_EMPLOYEES", "TEXT_STATS_COSTS",
-	"TEXT_STATS_INSTALLATIONS", "TEXT_STATS_7", "TEXT_BASE_LIST", "TEXT_BASE_INFO",
-	"TEXT_TRANSFER_LIST", "TEXT_MOUSECURSOR_PLAYERNAMES",
-	"TEXT_CARGO_LIST", "TEXT_UFOPEDIA_MAILHEADER", "TEXT_UFOPEDIA_MAIL", "TEXT_MARKET_NAMES",
-	"TEXT_MARKET_STORAGE", "TEXT_MARKET_MARKET", "TEXT_MARKET_PRICES", "TEXT_CHAT_WINDOW",
-	"TEXT_AIREQUIP_1", "TEXT_AIREQUIP_2", "TEXT_BASEDEFENCE_LIST", "TEXT_TIPOFTHEDAY",
-	"TEXT_GENERIC", "TEXT_XVI", "TEXT_MOUSECURSOR_TOP", "TEXT_MOUSECURSOR_BOTTOM", "TEXT_MOUSECURSOR_LEFT", "TEXT_MESSAGEOPTIONS",
-	"OPTION_LANGUAGES", "OPTION_JOYSTICKS", "OPTION_VIDEO_RESOLUTIONS"
-};
-CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
 
 const char *const style_names[] = {
 	"facing", "rotated", "beam", "line", "axis", "circle"
@@ -160,7 +139,6 @@ static const size_t vt_sizes[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
-	sizeof(int),	/* V_MENUTEXTID */
 	sizeof(int),	/* V_BASEID */
 	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
@@ -230,18 +208,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_CHAR:
 		*(char *) b = *token;
 		*writedByte = ALIGN(sizeof(char));
-		break;
-
-	case V_MENUTEXTID:
-		for (num = 0; num < MAX_MENUTEXTS; num++)
-			if (!Q_strcmp(token, menutextid_names[num]))
-				break;
-		if (num == MAX_MENUTEXTS) {
-			snprintf(errorMessage, sizeof(errorMessage), "Could not find menutext id '%s'", token);
-			return RESULT_ERROR;
-		}
-		*(int *) b = num;
-		*writedByte = ALIGN(sizeof(int));
 		break;
 
 	case V_BASEID:
@@ -620,7 +586,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
 		return ALIGN(sizeof(int));
 
-	case V_MENUTEXTID:
 	case V_BASEID:
 	case V_INT:
 		*(int *) b = *(const int *) set;
@@ -736,11 +701,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 	case V_CHAR:
 		return (const char *) b;
 		break;
-
-	case V_MENUTEXTID:
-		assert(*(const int *)b < MAX_MENUTEXTS);
-		Q_strncpyz(valuestr, menutextid_names[*(const int *)b], sizeof(valuestr));
-		return valuestr;
 
 	case V_TEAM:
 		switch (*(const int *) b) {

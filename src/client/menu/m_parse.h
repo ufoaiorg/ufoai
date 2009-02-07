@@ -41,6 +41,7 @@ vec4_t* MN_AllocColor(int count);
 qboolean MN_ScriptSanityCheck(void);
 
 /* main special type */
+/** @todo we should split/flag parse type (type need only 1 lex; and other) */
 #define	V_SPECIAL_TYPE			0x8F00
 #define	V_SPECIAL				0x8000
 #define	V_SPECIAL_ACTION		(V_SPECIAL + 0)			/**< Identify an action type into the value_t structure */
@@ -48,6 +49,7 @@ qboolean MN_ScriptSanityCheck(void);
 #define V_SPECIAL_OPTIONNODE	(V_SPECIAL + 2) 		/**< Identify a special attribute, use special parse function */
 #define V_SPECIAL_ICONREF		(V_SPECIAL + 3) 		/**< Identify a special attribute, use special parse function */
 #define V_SPECIAL_IF			(V_SPECIAL + 4)			/**< Identify a special attribute, use special parse function */
+#define V_SPECIAL_DATAID		(V_SPECIAL + 5)
 #define V_SPECIAL_CVAR			(V_SPECIAL + 0x0100) 	/**< Property is a CVAR string */
 #define V_SPECIAL_REF			(V_SPECIAL + 0x0200) 	/**< Property is a ref into a value */
 

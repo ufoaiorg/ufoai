@@ -468,24 +468,6 @@ static void MN_TextNodeDraw (menuNode_t *node)
 }
 
 /**
- * @brief Resets the mn.menuText pointers and the mn.menuTextLinkedList lists
- * @todo Move it out of this node
- */
-void MN_MenuTextReset (int menuTextID)
-{
-	assert(menuTextID < MAX_MENUTEXTS);
-	assert(menuTextID >= 0);
-
-	if (mn.sharedData[menuTextID].type == MN_SHARED_LINKEDLISTTEXT)
-		LIST_Delete(&mn.sharedData[menuTextID].data.linkedListText);
-
-	mn.sharedData[menuTextID].type = MN_SHARED_NONE;
-	mn.sharedData[menuTextID].data.text = NULL;
-	mn.sharedData[menuTextID].versionId++;
-}
-
-
-/**
  * @brief Resets the mn.menuText pointers from a func node
  * @note You can give this function a parameter to only delete a specific list
  */
@@ -635,7 +617,7 @@ static const value_t properties[] = {
 	{"scrollbar", V_BOOL, offsetof(menuNode_t, u.text.scrollbar), MEMBER_SIZEOF(menuNode_t, u.text.scrollbar)},
 	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, u.text.scrollbarLeft), MEMBER_SIZEOF(menuNode_t, u.text.scrollbarLeft)},
 	{"lineselected", V_INT, offsetof(menuNode_t, u.text.textLineSelected), MEMBER_SIZEOF(menuNode_t, u.text.textLineSelected)},
-	{"textid", V_MENUTEXTID, offsetof(menuNode_t, u.text.num), MEMBER_SIZEOF(menuNode_t, u.text.num)},
+	{"textid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.text.num), MEMBER_SIZEOF(menuNode_t, u.text.num)},
 	{"rows", V_INT, offsetof(menuNode_t, u.text.rows), MEMBER_SIZEOF(menuNode_t, u.text.rows)},
 	{"text_scroll", V_INT, offsetof(menuNode_t, u.text.textScroll), MEMBER_SIZEOF(menuNode_t, u.text.textScroll)},
 	{"lineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},

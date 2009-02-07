@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MENUACTIONS		8192
 
 #include "m_actions.h"
+#include "m_data.h"
 
 /* prototype */
 struct menu_s;
@@ -55,10 +56,5 @@ qboolean MN_CursorOnMenu(int x, int y);
 struct menu_s *MN_GetMenu(const char *name);
 
 int MN_CompletePushMenu(const char *partial, const char **match);
-
-void MN_RegisterText(int textId, const char *text);
-const char *MN_GetText(int textId);
-void MN_RegisterLinkedListText(int textId, linkedList_t *text);
-int MN_GetDataVersion(int textId);
 
 #endif

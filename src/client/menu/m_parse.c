@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "m_parse.h"
 #include "m_main.h"
+#include "m_data.h"
 #include "m_internal.h"
 #include "m_actions.h"
 #include "m_icon.h"
@@ -741,6 +742,21 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				*condition = MN_AllocCondition(*token);
 				if (*condition == NULL)
 					return qfalse;
+			}
+			break;
+
+		case V_SPECIAL_DATAID:
+			{
+				int *dataId = (int*) ((byte *) object + property->ofs);
+				*token = COM_EParse(text, errhead, objectName);
+				if (!*text)
+					return qfalse;
+
+				*dataId = MN_GetIdByName(*token);
+				if (*dataId < 0) {
+					Com_Printf("MN_ParseProperty: Could not find menu dataId '%s' (%s@%s)", *token, objectName, property->string);
+					return qfalse;
+				}
 			}
 			break;
 
