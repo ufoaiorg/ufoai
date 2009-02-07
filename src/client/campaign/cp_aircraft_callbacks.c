@@ -205,18 +205,17 @@ static int CL_EquipSoldierState (const aircraft_t * aircraft)
 static void AIR_AircraftSelect_f (void)
 {
 	base_t *base = baseCurrent;
-	const menu_t menu = *MN_GetActiveMenu();
 
 	/* calling from console? with no baseCurrent? */
 	if (!base || !base->numAircraftInBase
 	 || (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
-		if (!Q_strncmp(menu.name, "aircraft", 8))
+		if (!Q_strncmp(MN_GetActiveMenuName(), "aircraft", 8))
 			MN_PopMenu(qfalse);
 		return;
 	}
 
 	AIR_AircraftSelect(base->aircraftCurrent);
-	if (!base->aircraftCurrent && !Q_strncmp(menu.name, "aircraft", 8))
+	if (!base->aircraftCurrent && !Q_strncmp(MN_GetActiveMenuName(), "aircraft", 8))
 		MN_PopMenu(qfalse);
 }
 

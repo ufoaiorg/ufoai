@@ -1896,11 +1896,12 @@ static void HUD_RefreshWeaponButtons (int time)
 
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
 	{
-		const menu_t* menu = MN_GetActiveMenu();
-		if (menu)
-			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: Active menu = %s\n", menu->name);
+		const char* menuName = MN_GetActiveMenuName();
+		if (menuName[0] != '\0')
+			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: Active menu = %s\n", menuName);
 
-		if (menu && strstr(menu->name, POPUPLIST_MENU_NAME)) {
+
+		if (menuName[0] != '\0' && strstr(MN_GetActiveMenuName(), POPUPLIST_MENU_NAME)) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_ActorToggleReaction_f: reload popup\n");
 
 			/* Prevent firemode reservation popup from being closed if
@@ -4802,8 +4803,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 void CL_ActorInventoryOpen_f (void)
 {
 	if (CL_OnBattlescape()) {
-		const menu_t* menu = MN_GetActiveMenu();
-		if (!strstr(menu->name, "hudinv")) {
+		if (!strstr(MN_GetActiveMenuName(), "hudinv")) {
 			if (!Q_strcmp(mn_hud->string, "althud"))
 				MN_PushMenu("ahudinv", NULL);
 			else

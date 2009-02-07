@@ -515,6 +515,7 @@ static void CL_SelectDown_f (void)
 	CL_ActorSelectMouse();
 	/* we clicked outside the world but not onto a menu */
 	/* get the current menu */
+	/** @todo should nothing to do here. Check use of leave event and move it into the menu (we should use focus) */
 	menu = MN_GetActiveMenu();
 	if (menu && menu->u.window.onLeave)
 		MN_ExecuteActions(menu, menu->u.window.onLeave);
@@ -637,6 +638,7 @@ static void CL_LeftClickDown_f (void)
 	} else if (cls.state == ca_active) {
 		/* we clicked outside the world but not onto a menu */
 		/* get the current menu */
+		/** @todo should nothing to do here. Check use of leave event and move it into the menu (we should use focus) */
 		const menu_t *menu = MN_GetActiveMenu();
 		if (menu && menu->u.window.onLeave)
 			MN_ExecuteActions(menu, menu->u.window.onLeave);

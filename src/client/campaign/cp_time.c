@@ -182,7 +182,6 @@ void CL_GameTimeStop (void)
  */
 void CL_GameTimeSlow (void)
 {
-	const menu_t *menu = MN_GetActiveMenu();
 	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int minGameLapse = CP_MinGameLapseForType(lapseType);
 
@@ -197,7 +196,7 @@ void CL_GameTimeSlow (void)
 	assert(gameLapse >= minGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && (!Q_strncmp(menu->name, "map", 3) || !Q_strncmp(menu->name, "airfight", 8))) {
+	if ((!Q_strncmp(MN_GetActiveMenuName(), "map", 3) || !Q_strncmp(MN_GetActiveMenuName(), "airfight", 8))) {
 		gameLapse--;
 		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse <= minGameLapse) {
@@ -220,7 +219,6 @@ void CL_GameTimeSlow (void)
  */
 void CL_GameTimeFast (void)
 {
-	const menu_t *menu = MN_GetActiveMenu();
 	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int maxGameLapse = CP_MaxGameLapseForType(lapseType);
 
@@ -235,7 +233,7 @@ void CL_GameTimeFast (void)
 	assert(gameLapse <= maxGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if (menu && (!Q_strncmp(menu->name, "map", 3) || !Q_strncmp(menu->name, "airfight", 8))) {
+	if ((!Q_strncmp(MN_GetActiveMenuName(), "map", 3) || !Q_strncmp(MN_GetActiveMenuName(), "airfight", 8))) {
 		gameLapse++;
 		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse >= maxGameLapse) {

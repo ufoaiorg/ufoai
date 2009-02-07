@@ -146,6 +146,7 @@ static void MN_SetModelTransform_f (void)
 		}
 
 		if (model->menuTransformCnt) {
+#if 0	/** @todo model is no more linked to menu; this code need an update */
 			const menu_t *menu = MN_GetActiveMenu();
 			int i;
 
@@ -161,6 +162,7 @@ static void MN_SetModelTransform_f (void)
 					break;
 				}
 			}
+#endif
 		} else {
 			Com_Printf("MN_SetModelTransform_f: no entry in menumodel '%s' for menu '%s'\n", menuModel, nodeOrMenuID);
 			return;

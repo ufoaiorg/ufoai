@@ -431,7 +431,6 @@ static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_co
 static qboolean Irc_AppendToBuffer (const char* const msg)
 {
 	char buf[IRC_RECV_BUF_SIZE];
-	menu_t* menu;
 
 	while (strlen(irc_buffer) + strlen(msg) + 1 >= sizeof(irc_buffer)) {
 		char *n;
@@ -448,8 +447,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg)
 		Com_Printf("IRC: %s\n", msg);
 
 	MN_TextScrollBottom("irc_data");
-	menu = MN_GetActiveMenu(); /* get current menu from stack */
-	if (irc_showIfNotInMenu->integer && Q_strncmp(menu->name, "irc", 4)) {
+	if (irc_showIfNotInMenu->integer && Q_strncmp(MN_GetActiveMenuName(), "irc", 4)) {
 		S_StartLocalSound("misc/talk");
 		MP_AddChatMessage(msg);
 		return qtrue;
@@ -713,7 +711,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 	char nick[MAX_VAR];
 	char * const emph = strchr(prefix, '!');
 	char * ctcp = strchr(trailing, IRC_CTCP_MARKER_CHR);
-	menu_t* menu;
 	memset(nick, 0, sizeof(nick));
 	if (emph)
 		memcpy(nick, prefix, emph - prefix);
@@ -741,7 +738,6 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
 		}
 	} else {
-		menu = MN_GetActiveMenu();
 
 		if (!Irc_AppendToBuffer(va("<%s> %s", nick, trailing))) {
 			/* check whether this is no message to the channel - but to the user */
@@ -751,14 +747,14 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSound("misc/lobbyprivmsg");
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (Q_strcmp(menu->name, "irc") && Q_strcmp(menu->name, mn_hud->string)) {
+				if (Q_strcmp(MN_GetActiveMenuName(), "irc") && Q_strcmp(MN_GetActiveMenuName(), mn_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
 					MN_PushMenu("chat_popup", NULL);
 				}
 			}
 		}
 
-		if (menu && Q_strcmp(menu->name, "irc")) {
+		if (MN_GetActiveMenu() && Q_strcmp(MN_GetActiveMenuName(), "irc")) {
 			Com_Printf("%c<%s@lobby> %s\n", COLORED_GREEN, nick, trailing);
 		}
 	}

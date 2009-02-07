@@ -289,7 +289,6 @@ void UP_ItemDescription (const objDef_t *od)
 	int i;
 	int up_numresearchedlink = 0;
 	int up_weapon_id = NONE;
-	const menu_t *activeMenu;
 
 	/* reset everything */
 	Cvar_Set("mn_itemname", "");
@@ -303,8 +302,6 @@ void UP_ItemDescription (const objDef_t *od)
 
 	if (!od)	/* If nothing selected return */
 		return;
-
-	activeMenu = MN_GetActiveMenu();
 
 	/* select item */
 	Cvar_Set("mn_itemname", _(od->name));
@@ -415,7 +412,7 @@ void UP_ItemDescription (const objDef_t *od)
 	if (RS_IsResearched_ptr(od->tech) || up_numresearchedlink > 0) {
 		*itemText = '\0';
 		if (!Q_strcmp(od->type, "armour")) {
-			if (Q_strcmp(activeMenu->name, "equipment")) {
+			if (Q_strcmp(MN_GetActiveMenuName(), "equipment")) {
 				/* next two lines are not merge in one to avoid to have several entries in .po files (first line will be used again) */
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 				Q_strcat(itemText, "\n", sizeof(itemText));
@@ -427,18 +424,18 @@ void UP_ItemDescription (const objDef_t *od)
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
 		} else if (!Q_strcmp(od->type, "ammo")) {
-			if (Q_strcmp(activeMenu->name, "equipment"))
+			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strcmp(activeMenu->name, "equipment"))
+			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strcmp(activeMenu->name, "equipment"))
+			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
@@ -451,7 +448,7 @@ void UP_ItemDescription (const objDef_t *od)
 			/* only primary definition */
 			/** @todo We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strcmp(activeMenu->name, "equipment"))
+			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));

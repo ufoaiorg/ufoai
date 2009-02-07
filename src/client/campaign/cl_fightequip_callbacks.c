@@ -106,8 +106,7 @@ void BDEF_ListClick_f (void)
  */
 static void AIM_CheckAirequipID (void)
 {
-	const menu_t *activeMenu = MN_GetActiveMenu();
-	const qboolean aircraftMenu = !Q_strcmp(activeMenu->name, "aircraft_equip");
+	const qboolean aircraftMenu = !Q_strcmp(MN_GetActiveMenuName(), "aircraft_equip");
 
 	if (aircraftMenu) {
 		switch (airequipID) {
@@ -930,7 +929,6 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	int zone;
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
-	const menu_t *activeMenu;
 	qboolean aircraftMenu;
 
 	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent))
@@ -942,8 +940,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	}
 
 	/* select menu */
-	activeMenu = MN_GetActiveMenu();
-	aircraftMenu = !Q_strcmp(activeMenu->name, "aircraft_equip");
+	aircraftMenu = !Q_strcmp(MN_GetActiveMenuName(), "aircraft_equip");
 
 	zone = atoi(Cmd_Argv(1));
 
@@ -1023,7 +1020,6 @@ void AIM_AircraftEquipAddItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft = NULL;
-	const menu_t *activeMenu;
 	qboolean aircraftMenu;
 	base_t* base = NULL;
 	installation_t* installation = NULL;
@@ -1041,8 +1037,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	zone = atoi(Cmd_Argv(1));
 
 	/* select menu */
-	activeMenu = MN_GetActiveMenu();
-	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
+	aircraftMenu = !Q_strncmp(MN_GetActiveMenuName(), "aircraft_equip", 14);
 
 	/* proceed only if an item has been selected */
 	if (!airequipSelectedTechnology)
@@ -1140,7 +1135,6 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	int zone;
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft = NULL;
-	const menu_t *activeMenu;
 	qboolean aircraftMenu;
 	base_t* base = NULL;
 	installation_t* installation = NULL;
@@ -1157,8 +1151,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	zone = atoi(Cmd_Argv(1));
 
 	/* select menu */
-	activeMenu = MN_GetActiveMenu();
-	aircraftMenu = !Q_strncmp(activeMenu->name, "aircraft_equip", 14);
+	aircraftMenu = !Q_strncmp(MN_GetActiveMenuName(), "aircraft_equip", 14);
 
 	/* check in which menu we are
 	 * and select the slot we are changing */
@@ -1238,7 +1231,6 @@ void AIM_AircraftEquipMenuClick_f (void)
 	installation_t *installation;
 	int num;
 	technology_t **list;
-	const menu_t *activeMenu;
 
 	if ((!baseCurrent && !installationCurrent) || (baseCurrent && installationCurrent) || airequipID == -1)
 		return;
@@ -1248,16 +1240,14 @@ void AIM_AircraftEquipMenuClick_f (void)
 		return;
 	}
 
-	/* select menu */
-	activeMenu = MN_GetActiveMenu();
 	/* check in which menu we are */
-	if (!Q_strcmp(activeMenu->name, "aircraft_equip")) {
+	if (!Q_strcmp(MN_GetActiveMenuName(), "aircraft_equip")) {
 		if (baseCurrent->aircraftCurrent == NULL)
 			return;
 		aircraft = baseCurrent->aircraftCurrent;
 		base = NULL;
 		installation = NULL;
-	} else if (!Q_strcmp(activeMenu->name, "basedefence")) {
+	} else if (!Q_strcmp(MN_GetActiveMenuName(), "basedefence")) {
 		base = baseCurrent;
 		installation = installationCurrent;
 		aircraft = NULL;

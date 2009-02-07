@@ -1145,11 +1145,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	const menu_t *activeMenu;
-
-	/* this function only concerns maps */
-	activeMenu = MN_GetActiveMenu();
-	if (Q_strncmp(activeMenu->name, "map", 3))
+	if (Q_strncmp(MN_GetActiveMenuName(), "map", 3))
 		return;
 
 	centerOnEventIdx++;
@@ -1192,13 +1188,8 @@ void MAP_CenterOnPoint_f (void)
  */
 static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration)
 {
-	const menu_t *activeMenu;
-
 	/* this function only concerns maps */
-	activeMenu = MN_GetActiveMenu();
-	if (!activeMenu)
-		return;
-	if (Q_strncmp(activeMenu->name, "map", 3))
+	if (Q_strncmp(MN_GetActiveMenuName(), "map", 3))
 		return;
 
 	if (cl_3dmap->integer) {
@@ -1221,7 +1212,7 @@ static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const
 		/** @todo check why disabling combatzoom moves the viewpoint to the southpole
 		 *	  then this can be re-enabled maybe for map menu too
 		 */
-		if (Q_strncmp(activeMenu->name, "map_combatzoom", 13))
+		if (Q_strncmp(MN_GetActiveMenuName(), "map_combatzoom", 13))
 			return;
 
 		Vector2Set(smoothFinal2DGeoscapeCenter, pointOnGeoscape[0], pointOnGeoscape[1]);

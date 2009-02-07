@@ -455,6 +455,19 @@ menu_t* MN_GetActiveMenu (void)
 }
 
 /**
+ * @brief Returns the name of the current menu
+ * @return Active menu name, else empty string
+ * @sa MN_GetActiveMenu
+ */
+const char* MN_GetActiveMenuName (void)
+{
+	menu_t* menu = MN_GetActiveMenu();
+	if (menu == NULL)
+		return "";
+	return menu->name;
+}
+
+/**
  * @brief Searches a given node in the current menu
  * @sa MN_GetNode
  */

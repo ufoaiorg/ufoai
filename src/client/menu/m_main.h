@@ -51,6 +51,8 @@ void MN_PopMenu(qboolean all);
 void MN_CloseMenu(const char* name);
 qboolean MN_MenuIsOnStack(const char* name);
 struct menu_s* MN_GetActiveMenu(void);
+const char* MN_GetActiveMenuName(void);
+
 struct menuNode_s* MN_GetNodeFromCurrentMenu(const char *name);
 qboolean MN_CursorOnMenu(int x, int y);
 struct menu_s *MN_GetMenu(const char *name);

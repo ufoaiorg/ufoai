@@ -164,14 +164,14 @@ static void MN_ChangeMap_f (void)
  */
 static void GAME_SetMode_f (void)
 {
-	const menu_t *menu = MN_GetActiveMenu();
+	const char *menuName = MN_GetActiveMenuName();
 	const gameTypeList_t *list = gameTypeList;
 
-	if (!menu)
+	if (menuName[0] == '\0')
 		return;
 
 	while (list->name) {
-		if (!Q_strcmp(list->menu, menu->name)) {
+		if (!Q_strcmp(list->menu, menuName)) {
 			GAME_SetMode(list->gametype);
 			return;
 		}
