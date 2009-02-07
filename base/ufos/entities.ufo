@@ -265,13 +265,39 @@ entity worldspawn {
 	}
 
 	type {
-		max_teams	"UNSIGNED V_INT"
+		max_teams		"UNSIGNED V_INT"
+		maxlevel		"UNSIGNED V_INT"
+		quant			"UNSIGNED V_INT"
+		subdivide		"UNSIGNED V_INT"
+		saturation		"UNSIGNED V_FLOAT"
+		contrast		"UNSIGNED V_FLOAT"
+		brightness		"UNSIGNED V_FLOAT"
 		angles_night	"V_FLOAT 2"
+		angles_day		"V_FLOAT 2"
+		ambient_night	"V_FLOAT 3"
+		ambient_day		"V_FLOAT 3"
+		color_night		"V_FLOAT 3"
+		color_day		"V_FLOAT 3"
+		light_night		"V_INT"
+		light_day		"V_INT"
 	}
 
 	default {
-		max_teams	"2"
+		max_teams		"2"
 		angles_night	"-80 220"
+		angles_day		"-75 100"
+		ambient_night	"0.07, 0.07, 0.08"
+		ambient_day		"0.26, 0.26, 0.26"
+		color_night		"0.65, 0.75, 0.95"
+		color_day		"0.90, 0.75, 0.65"
+		light_night		"70"
+		light_day		"280"
+		subdivide		"1024"
+		quant			"4"
+		saturation		"1.0"
+		contrast		"1.0"
+		brightness		"1.0"
+		maxlevel		"5"
 	}
 }
 
