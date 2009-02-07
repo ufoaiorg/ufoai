@@ -134,7 +134,6 @@ typedef struct ptlArt_s {
 } ptlArt_t;
 
 typedef struct ptl_s {
-	/* used by ref */
 	qboolean inuse;			/**< particle active? */
 	qboolean invis;			/**< is this particle invisible */
 
