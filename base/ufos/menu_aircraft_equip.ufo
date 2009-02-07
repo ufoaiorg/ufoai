@@ -56,16 +56,16 @@ menu aircraft_equip extends iaircraft
 	{
 		model	"*cvar mn_upmodel_top"
 		autoscale	true
-		angles	"0 0 120"
 		pos		"312 517"
 		size	"239 96"
 		mousefx	true
 		click
+		view aircraft_equip
 	}
 
 	text airequip_selected_description
 	{
-		pos			"312 623"
+		pos			"317 623"
 		size		"240 100"
 		lineheight	"20"
 		rows		"5"
@@ -125,7 +125,7 @@ menu aircraft_equip extends iaircraft
 
 	text airequip_list
 	{
-		pos			"32 606"
+		pos			"42 606"
 		size		"248 140"
 		lineheight	"20"
 		rows		"7"
@@ -133,6 +133,8 @@ menu aircraft_equip extends iaircraft
 		mousefx		true
 		click
 		wheel
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 	}
 
 	// ==================
@@ -266,9 +268,9 @@ menu aircraft_equip extends iaircraft
 		model		"*cvar mn_aircraft_item_model_slot0"
 		pos			"911 123"
 		size		"60 60"
-		angles		"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	pic airequip_slot1
@@ -286,9 +288,9 @@ menu aircraft_equip extends iaircraft
 		model	"*cvar mn_aircraft_item_model_slot1"
 		pos		"911 203"
 		size	"60 60"
-		angles	"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	pic airequip_slot2
@@ -306,9 +308,9 @@ menu aircraft_equip extends iaircraft
 		model	"*cvar mn_aircraft_item_model_slot2"
 		pos		"911 283"
 		size	"60 60"
-		angles	"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	pic airequip_slot3
@@ -326,9 +328,9 @@ menu aircraft_equip extends iaircraft
 		model	"*cvar mn_aircraft_item_model_slot3"
 		pos		"711 123"
 		size	"60 60"
-		angles	"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	pic airequip_slot4
@@ -346,9 +348,9 @@ menu aircraft_equip extends iaircraft
 		model	"*cvar mn_aircraft_item_model_slot4"
 		pos		"711 283"
 		size	"60 60"
-		angles	"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	pic airequip_slot5
@@ -366,9 +368,9 @@ menu aircraft_equip extends iaircraft
 		model	"*cvar mn_aircraft_item_model_slot5"
 		pos		"511 123"
 		size	"60 60"
-		angles	"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	pic airequip_slot6
@@ -386,9 +388,9 @@ menu aircraft_equip extends iaircraft
 		model	"*cvar mn_aircraft_item_model_slot6"
 		pos		"511 203"
 		size	"60 60"
-		angles	"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	pic airequip_slot7
@@ -406,9 +408,9 @@ menu aircraft_equip extends iaircraft
 		model	"*cvar mn_aircraft_item_model_slot7"
 		pos		"511 283"
 		size	"60 60"
-		angles	"0 0 180"
 		autoscale	true
 		excluderect { pos	"0 0"	size	"60 60" }
+		view		item
 	}
 
 	// ==================
