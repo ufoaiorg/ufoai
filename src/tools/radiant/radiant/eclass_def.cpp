@@ -184,6 +184,14 @@ static EntityClass *Eclass_InitFromText (const char **text)
 				if (!*text)
 					return 0;
 				e->m_comments = token;
+			} else if (!strcmp(token, "spawnflags")) {
+				gchar *flags;
+				token = COM_Parse(text);
+				if (!*text)
+					return 0;
+				flags = g_strdup(token);
+				Eclass_ParseFlags(e, (const char **)&flags);
+				g_free(flags);
 			} else if (!strcmp(token, "model")) {
 				token = COM_Parse(text);
 				if (!*text)
