@@ -196,7 +196,7 @@ entity light {
 	mandatory {
 		_color		"Colour for the light RGB"
 		light		"Intensity 0-255"
-		spawnflags	"Wether the light is in the day version"
+		spawnflags	"Whether the light is in the day version"
 		origin		"position"
 	}
 
@@ -212,6 +212,9 @@ entity light {
 
 	type {
 		origin	"V_INT 3"
+		light	"UNSIGNED V_INT"
+		_cone	"UNSIGNED V_INT"
+		angle	"V_FLOAT"
 	}
 }
 
