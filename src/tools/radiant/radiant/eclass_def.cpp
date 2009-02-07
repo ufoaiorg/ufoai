@@ -102,6 +102,14 @@ static void Eclass_ParseAttribute (EntityClass *e, const char **text, bool manda
 			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle", mandatory));
 		} else if (!strcmp(token, "noise")) {
 			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound", mandatory));
+		} else if (!strcmp(token, "spawnflags")) {
+			gchar *flags;
+			token = COM_Parse(text);
+			if (!*text)
+				return;
+			flags = g_strdup(token);
+			Eclass_ParseFlags(e, (const char **)&flags);
+			g_free(flags);
 		}
 	} while (*token != '}');
 }
@@ -176,14 +184,6 @@ static EntityClass *Eclass_InitFromText (const char **text)
 				if (!*text)
 					return 0;
 				e->m_comments = token;
-			} else if (!strcmp(token, "spawnflags")) {
-				gchar *flags;
-				token = COM_Parse(text);
-				if (!*text)
-					return 0;
-				flags = g_strdup(token);
-				Eclass_ParseFlags(e, (const char **)&flags);
-				g_free(flags);
 			} else if (!strcmp(token, "model")) {
 				token = COM_Parse(text);
 				if (!*text)
