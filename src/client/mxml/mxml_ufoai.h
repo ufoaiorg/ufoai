@@ -51,21 +51,6 @@ mxml_node_t * mxml_GetNextPos3(mxml_node_t *actual, mxml_node_t *parent, const c
 mxml_node_t * mxml_GetNode(mxml_node_t *parent, const char *name);
 mxml_node_t * mxml_GetNextNode(mxml_node_t *current, mxml_node_t *parent, const char *name);
 
-#if 0
-mxml_node_t * mxml_GetBoolean(mxml_node_t *parent, const char *name, qboolean * value, const qboolean defaultval);
-mxml_node_t * mxml_GetByte(mxml_node_t *parent, const char *name, byte * value, const byte defaultval);
-mxml_node_t * mxml_GetNextByte(mxml_node_t *actual, mxml_node_t *parent, const char *name, byte *value, const byte defaultval);
-mxml_node_t * mxml_GetShort(mxml_node_t *parent, const char *name, short * value, const short defaultval);
-mxml_node_t * mxml_GetNextShort(mxml_node_t *actual, mxml_node_t *parent, const char *name, short *value, const short defaultval);
-mxml_node_t * mxml_GetInt(mxml_node_t *parent, const char *name, int * value, const int defaultval);
-mxml_node_t * mxml_GetNextInt(mxml_node_t *actual, mxml_node_t *parent, const char *name, int *value, const int defaultval);
-mxml_node_t * mxml_GetLong(mxml_node_t *parent, const char *name, long * value, const long defaultval);
-mxml_node_t * mxml_GetNextLong(mxml_node_t *actual, mxml_node_t *parent, const char *name, long *value, const long defaultval);
-const char * mxml_GetString(mxml_node_t *parent, const char *name);
-
-mxml_node_t * mxml_GetDouble(mxml_node_t *parent, const char *name, double *value, const double defaultval);
-mxml_node_t * mxml_GetFloat(mxml_node_t *parent, const char *name, float *value, const float defaultval);
-#endif
 mxml_type_t mxml_ufo_type_cb(mxml_node_t *node);
 
 #endif
