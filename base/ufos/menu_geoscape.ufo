@@ -877,11 +877,14 @@ menu popup_intercept_ready
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"46 188"
+		pos			"266 188"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 
+	/**
+	 * @todo move the button on middle if cp_mission_autogo_available==0
+	 */
 	button bt_go
 	{
 		string		"_Enter"
@@ -890,8 +893,8 @@ menu popup_intercept_ready
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"266 188"
-		size		"176 32"
+		pos			"66 102"
+		size		"176 64"
 		click		{ cmd "game_go;" }
 	}
 
@@ -905,8 +908,8 @@ menu popup_intercept_ready
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"266 148"
-		size		"176 32"
+		pos			"259 102"
+		size		"176 64"
 		click		{ cmd "cp_mission_autogo;" }
 	}
 
@@ -1939,7 +1942,7 @@ menu popup_multi_selection
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"26 188"
+		pos			"266 188"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
