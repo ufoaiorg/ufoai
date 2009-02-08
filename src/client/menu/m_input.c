@@ -235,8 +235,8 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 		if (find)
 			return find;
 
+		/* we must not search anymore */
 		if (menu->u.window.modal) {
-			/* we must not search anymore */
 			break;
 		}
 	}
