@@ -331,10 +331,8 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 {
 	static char aircraftListText[1024];
 	static char baseListText[1024];
-	char *s;
+	const char *s;
 	int i, baseIdx, installationIdx;
-	aircraft_t *air;
-	qboolean somethingWritten, notEnoughFuel;
 
 	/* One parameter must be specified, mission or ufo */
 	if (!mission && !ufo)
@@ -351,8 +349,8 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			continue;
 
 		for (i = 0; i < base->numAircraftInBase; i++) {
-			air = &base->aircraft[i];
-			notEnoughFuel = qfalse;
+			aircraft_t *air = &base->aircraft[i];
+			qboolean notEnoughFuel = qfalse;
 
 			/* if dependencies of hangar are missing, you can't send aircraft */
 			switch (air->size) {
@@ -421,7 +419,7 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 		MN_RegisterText(TEXT_AIRCRAFT_LIST, _("No craft available, no pilot assigned, or no weapon or ammo equipped."));
 
 	if (ufo) {
-		somethingWritten = qfalse;
+		qboolean somethingWritten = qfalse;
 		memset(baseListText, 0, sizeof(baseListText));
 		/* Create the list of base, and write the text to display in popup
 		 * don't use the same loop than above, to avoid leaving the loop if popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT */
