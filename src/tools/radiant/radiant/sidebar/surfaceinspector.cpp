@@ -115,6 +115,10 @@ class SurfaceInspector
 		NonModalEntry m_valueEntry;
 		GtkEntry* m_valueEntryWidget;
 		bool m_valueInconsistent; // inconsistent marker for valueEntryWidget
+
+		void UpdateFlagButtons ();
+		static void UpdateValueStatus (GtkWidget *widget, SurfaceInspector *inspector);
+
 	public:
 		GtkWidget* BuildNotebook ();
 
@@ -722,73 +726,88 @@ GtkWidget* SurfaceInspector::BuildNotebook (void)
 		}
 	}
 	{
-		m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
-		gtk_widget_show( GTK_WIDGET (m_surfaceFlagsFrame));
-		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_surfaceFlagsFrame), TRUE, TRUE, 0);
+		const char* valueEnablingFields = g_pGameDescription->getKeyValue("surfaceinspector_enable_value");
 		{
-			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-			//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-			gtk_widget_show( GTK_WIDGET (vbox3));
-			gtk_container_add(GTK_CONTAINER(m_surfaceFlagsFrame), GTK_WIDGET(vbox3));
+			m_surfaceFlagsFrame = GTK_FRAME(gtk_frame_new(_("Surface Flags")));
+			gtk_widget_show( GTK_WIDGET (m_surfaceFlagsFrame));
+			gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_surfaceFlagsFrame), TRUE, TRUE, 0);
 			{
-				GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-				gtk_widget_show( GTK_WIDGET (table));
-				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-				gtk_table_set_row_spacings(table, 0);
-				gtk_table_set_col_spacings(table, 0);
-
-				GtkCheckButton** p = m_surfaceFlags;
-
-				for (int c = 0; c != 4; ++c) {
-					for (int r = 0; r != 8; ++r) {
-						const std::size_t id = c * 8 + r;
-						const char *name = getSurfaceFlagName(id);
-						GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
-						gtk_widget_show( GTK_WIDGET (check));
-						gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1, (GtkAttachOptions) (GTK_EXPAND
-								| GTK_FILL), (GtkAttachOptions) (0), 0, 0);
-						*p++ = check;
-						guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
-						g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-						if (!strncmp(name, "surf", 4))
-							gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show( GTK_WIDGET (vbox3));
+				gtk_container_add(GTK_CONTAINER(m_surfaceFlagsFrame), GTK_WIDGET(vbox3));
+				{
+					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+					gtk_widget_show( GTK_WIDGET (table));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+					gtk_table_set_row_spacings(table, 0);
+					gtk_table_set_col_spacings(table, 0);
+					GtkCheckButton** p = m_surfaceFlags;
+					for (int c = 0; c != 4; ++c) {
+						for (int r = 0; r != 8; ++r) {
+							const std::size_t id = c * 8 + r;
+							const char *name = getSurfaceFlagName(id);
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+							gtk_widget_show( GTK_WIDGET (check));
+							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (0), 0, 0);
+							*p++ = check;
+							guint handler_id = 0;
+							if (!strncmp(name, "surf", 4)) {
+								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+							} else if (strstr(valueEnablingFields, name) > 0) {
+								g_object_set_data(G_OBJECT(check), "valueEnabler", gint_to_pointer(true));
+								handler_id = g_signal_connect(G_OBJECT(check), "toggled", G_CALLBACK(
+										SurfaceInspector::UpdateValueStatus), this);
+							} else {
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+							}
+							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						}
 					}
 				}
 			}
 		}
-	}
-	{
-		m_contentFlagsFrame = GTK_FRAME(gtk_frame_new(_("Content Flags")));
-		gtk_widget_show( GTK_WIDGET (m_contentFlagsFrame));
-		gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_contentFlagsFrame), TRUE, TRUE, 0);
 		{
-			GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
-			//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
-			gtk_widget_show( GTK_WIDGET (vbox3));
-			gtk_container_add(GTK_CONTAINER(m_contentFlagsFrame), GTK_WIDGET(vbox3));
+			m_contentFlagsFrame = GTK_FRAME(gtk_frame_new(_("Content Flags")));
+			gtk_widget_show( GTK_WIDGET (m_contentFlagsFrame));
+			gtk_box_pack_start(GTK_BOX(surfaceDialogBox), GTK_WIDGET(m_contentFlagsFrame), TRUE, TRUE, 0);
 			{
-				GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
-				gtk_widget_show( GTK_WIDGET (table));
-				gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
-				gtk_table_set_row_spacings(table, 0);
-				gtk_table_set_col_spacings(table, 0);
-
-				GtkCheckButton** p = m_contentFlags;
-
-				for (int c = 0; c != 4; ++c) {
-					for (int r = 0; r != 8; ++r) {
-						const std::size_t id = c * 8 + r;
-						const char *name = getContentFlagName(id);
-						GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
-						gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
-						gtk_widget_show( GTK_WIDGET (check));
-						gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1, (GtkAttachOptions) (GTK_EXPAND
-								| GTK_FILL), (GtkAttachOptions) (0), 0, 0);
-						*p++ = check;
-						guint handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check),this);
-						g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
-						if (!strncmp(name, "cont", 4))
-							gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+				GtkVBox* vbox3 = GTK_VBOX(gtk_vbox_new(FALSE, 4));
+				//gtk_container_set_border_width(GTK_CONTAINER(vbox3), 4);
+				gtk_widget_show( GTK_WIDGET (vbox3));
+				gtk_container_add(GTK_CONTAINER(m_contentFlagsFrame), GTK_WIDGET(vbox3));
+				{
+					GtkTable* table = GTK_TABLE(gtk_table_new(8, 4, FALSE));
+					gtk_widget_show( GTK_WIDGET (table));
+					gtk_box_pack_start(GTK_BOX(vbox3), GTK_WIDGET(table), TRUE, TRUE, 0);
+					gtk_table_set_row_spacings(table, 0);
+					gtk_table_set_col_spacings(table, 0);
+					GtkCheckButton** p = m_contentFlags;
+					for (int c = 0; c != 4; ++c) {
+						for (int r = 0; r != 8; ++r) {
+							const std::size_t id = c * 8 + r;
+							const char *name = getContentFlagName(id);
+							GtkCheckButton* check = GTK_CHECK_BUTTON(gtk_check_button_new_with_label(name));
+							gtk_toggle_button_set_inconsistent(GTK_TOGGLE_BUTTON(check), FALSE);
+							gtk_widget_show( GTK_WIDGET (check));
+							gtk_table_attach(table, GTK_WIDGET(check), c, c + 1, r, r + 1,
+									(GtkAttachOptions) (GTK_EXPAND | GTK_FILL), (GtkAttachOptions) (0), 0, 0);
+							*p++ = check;
+							guint handler_id = 0;
+							if (!strncmp(name, "cont", 4)) {
+								gtk_widget_set_sensitive(GTK_WIDGET(check), FALSE);
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+							} else if (strstr(valueEnablingFields, name) > 0) {
+								g_object_set_data(G_OBJECT(check), "valueEnabler", gint_to_pointer(true));
+								handler_id = g_signal_connect(G_OBJECT(check), "toggled", G_CALLBACK(
+										SurfaceInspector::UpdateValueStatus), this);
+							} else {
+								handler_id = togglebutton_connect_toggled(GTK_TOGGLE_BUTTON(check), this);
+							}
+							g_object_set_data(G_OBJECT(check), "handler", gint_to_pointer(handler_id));
+						}
 					}
 				}
 			}
@@ -884,17 +903,18 @@ void SurfaceInspector::Update (void)
 		entry_set_float(m_rotateIncrement.m_entry, g_si_globals.rotate);
 	}
 
-	// FIXME: This is not yet working to fetch all the selected content
-	// and surface flags
-	ContentsFlagsValue flags(SurfaceInspector_GetSelectedFlags());
+	UpdateFlagButtons();
+}
 
-	if (!flags.m_valueDirty) {
-		entry_set_int(m_valueEntryWidget, flags.m_value);
-		m_valueInconsistent = false;
-	} else {
-		entry_set_string(m_valueEntryWidget, "");
-		m_valueInconsistent = true;
-	}
+/**
+ * @brief Updates check buttons based on actual content flags
+ * @param[in] flags content flags to set button states for
+ * @sa SurfaceInspector::Update
+ */
+void SurfaceInspector::UpdateFlagButtons()
+{
+	ContentsFlagsValue flags = SurfaceInspector_GetSelectedFlags();
+	bool enableValueField = false;
 
 	for (GtkCheckButton** p = m_surfaceFlags; p != m_surfaceFlags + 32; ++p) {
 		GtkToggleButton *b = GTK_TOGGLE_BUTTON(*p);
@@ -902,6 +922,10 @@ void SurfaceInspector::Update (void)
 		const unsigned int stateInconistent = flags.m_surfaceFlagsDirty & (1 << (p - m_surfaceFlags));
 		gtk_toggle_button_set_inconsistent(b, stateInconistent);
 		toggle_button_set_active_no_signal(b, state);
+		if (state && g_object_get_data(G_OBJECT(*p),"valueEnabler") != 0)
+		{
+			enableValueField = true;
+		}
 	}
 
 	if (!g_SelectedFaceInstances.empty()) {
@@ -915,8 +939,22 @@ void SurfaceInspector::Update (void)
 			const unsigned int stateInconistent = flags.m_contentFlagsDirty & (1 << (p - m_contentFlags));
 			gtk_toggle_button_set_inconsistent(b, stateInconistent);
 			toggle_button_set_active_no_signal(b, state);
+			if (state && g_object_get_data(G_OBJECT(*p),"valueEnabler") != 0)
+			{
+				enableValueField = true;
+			}
 		}
 	}
+
+	if (!flags.m_valueDirty) {
+		entry_set_int(m_valueEntryWidget, flags.m_value);
+		m_valueInconsistent = false;
+	} else {
+		entry_set_string(m_valueEntryWidget, "");
+		m_valueInconsistent = true;
+	}
+	gtk_widget_set_sensitive(GTK_WIDGET(m_valueEntryWidget),enableValueField);
+
 }
 
 /**
@@ -961,6 +999,21 @@ void SurfaceInspector::ApplyFlags( void )
 	ApplyFlagsWithIndicator(GTK_WIDGET(m_valueEntryWidget), this);
 }
 
+/**
+ * @brief extended callback used to update value field sensitivity based on activation state of button
+ * @param widget toggle button activated
+ * @param inspector reference to surface inspector
+ */
+void SurfaceInspector::UpdateValueStatus (GtkWidget *widget, SurfaceInspector *inspector)
+{
+	ApplyFlagsWithIndicator(widget,inspector);
+	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))) {
+		gtk_widget_set_sensitive(GTK_WIDGET(inspector->m_valueEntryWidget),true);
+	} else {
+		/* we don't know whether there are other flags that enable value field, so check them all */
+		inspector->UpdateFlagButtons();
+	}
+}
 
 /**
  * @brief Sets the flags for all selected faces/brushes
