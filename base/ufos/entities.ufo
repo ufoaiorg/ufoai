@@ -34,6 +34,7 @@ entity info_player_start {
 		origin	"V_INT 3"
 		angle	"V_INT"
 	}
+
 }
 
 entity info_human_start {
@@ -75,7 +76,7 @@ entity info_alien_start {
 entity info_2x2_start {
 	description	"Starting point for a ugv 2x2 unit."
 	color		"0 0 1"
-	size		"-16 -16 -24 16 16 32"
+	size		"-32 -32 -24 32 32 32"
 
 	optional {
 		team	"The number of the team for this player starting point. Only for multiplayer teams."
