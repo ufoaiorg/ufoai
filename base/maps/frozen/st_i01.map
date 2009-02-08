@@ -3221,13 +3221,13 @@
 "classname" "light"
 "origin" "736 130 46"
 "_color" "1 0.5 0.2"
-"_light" "120"
+"light" "120"
 "spawnflags" "1"
 }
 // entity 29
 {
 "classname" "light"
-"_light" "120"
+"light" "120"
 "_color" "1 0.5 0.2"
 "origin" "608 130 46"
 "spawnflags" "1"
