@@ -1229,6 +1229,12 @@ static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 	}
 }
 
+static const char *GetDefaultValueForParameter (const char *key)
+{
+	// TODO use g_current_attributes to get the default parameter for the key
+	return "value";
+}
+
 static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newValue)
 {
 	char *key, *value;
@@ -1268,9 +1274,8 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 		return;
 	}
 
-	// TODO: Add a sane default value
 	if (columnIndex == 0 && !keyConverted.empty() && valueConverted.empty())
-		valueConverted << "value";
+		valueConverted << GetDefaultValueForParameter(keyConverted.c_str());
 
 	g_message("change value for %s to %s\n", keyConverted.c_str(), valueConverted.c_str());
 	if (!strcmp(keyConverted.c_str(), "classname")) {
