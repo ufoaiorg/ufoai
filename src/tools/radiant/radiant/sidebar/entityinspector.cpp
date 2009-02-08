@@ -1303,7 +1303,7 @@ static void entityKeyEditCanceled(GtkCellRendererText *renderer, GtkTreeView *vi
 {
 	char *oldKey;
 
-	g_object_get(G_OBJECT(renderer), "text", &oldKey);
+	g_object_get(G_OBJECT(renderer), "text", &oldKey, NULL);
 	StringOutputStream keyConverted(64);
 	keyConverted << ConvertUTF8ToLocale(oldKey);
 	if (keyConverted.empty()) {
