@@ -57,6 +57,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_campaign.c \
 	client/campaign/cl_event.c \
 	client/campaign/cl_employee.c \
+	client/campaign/cp_employee_callbacks.c \
 	client/campaign/cl_installation.c \
 	client/campaign/cl_market.c \
 	client/campaign/cl_map.c \

@@ -56,6 +56,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_produce_callbacks.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
+#include "cp_employee_callbacks.h"
 
 /* public vars */
 campaign_t *curCampaign;			/**< Current running campaign */
@@ -1930,6 +1931,7 @@ static void CP_AddCampaignCallbackCommands (void)
 	AIR_InitCallbacks();
 	B_InitCallbacks();
 	CP_TEAM_InitCallbacks();
+	E_InitCallbacks();
 	HOS_InitCallbacks();
 }
 
@@ -1956,6 +1958,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	AIR_ShutdownCallbacks();
 	B_ShutdownCallbacks();
 	CP_TEAM_ShutdownCallbacks();
+	E_ShutdownCallbacks();
 	HOS_ShutdownCallbacks();
 }
 
@@ -2289,9 +2292,6 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 void CP_InitStartup (void)
 {
 	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
-
-	/* this will init some more employee stuff */
-	E_Init();
 
 	/* init some production menu nodes */
 	PR_Init();

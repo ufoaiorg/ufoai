@@ -269,6 +269,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_employee.h" />
+		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_event.c">
 			<Option compilerVar="CC" />
 		</Unit>
