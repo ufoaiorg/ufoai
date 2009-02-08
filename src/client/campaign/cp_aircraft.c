@@ -844,12 +844,12 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
  */
 static void AIR_TransferItemsCarriedByCharacterToBase (character_t *chr, base_t *sourceBase, base_t* destBase)
 {
-	invList_t *ic;
+	const invList_t *ic;
 	int container;
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (ic = chr->inv.c[container]; ic; ic = ic->next) {
-			objDef_t *obj = ic->item.t;
+			const objDef_t *obj = ic->item.t;
 			B_UpdateStorageAndCapacity(sourceBase, obj, -1, qfalse, qfalse);
 			B_UpdateStorageAndCapacity(destBase, obj, 1, qfalse, qfalse);
 
@@ -905,10 +905,12 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	base->capacities[capacity].cur++;
 	base->numAircraftInBase++;
 
+	/** @todo use REMOVE_ELEM_ADJUST_IDX here */
 	/* Remove aircraft from old base */
 	oldBase->numAircraftInBase--;
 	oldBase->capacities[capacity].cur--;
 	i = AIR_GetAircraftIdxInBase(aircraft);
+
 	/* move other aircraft if the deleted aircraft was not the last one of the base */
 	if (i != AIRCRAFT_INBASE_INVALID)
 		memmove(aircraft, aircraft + 1, (oldBase->numAircraftInBase - i) * sizeof(*aircraft));
@@ -1010,6 +1012,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 	if (base->aircraftCurrent >= aircraft && base->aircraftCurrent->homebase == aircraft->homebase && !(base->aircraftCurrent == &base->aircraft[0]))
 		base->aircraftCurrent--;
 
+	/** @todo use REMOVE_ELEM_ADJUST_IDX here */
 	/* rearrange the aircraft-list (in base) */
 	/* Find the index of aircraft in base */
 	i = AIR_GetAircraftIdxInBase(aircraft);
