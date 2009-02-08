@@ -40,14 +40,6 @@ menu althud extends ahud
 		size	"160 512"
 		click { }
 	}
-	zone zone_clickright
-	{
-		tooltip	"_Inventory and physical stats"
-		pos		"878 84"
-		size	"130 265"
-		click	{ cmd "mn_push ahudinv;" }
-		rclick	{ cmd "mn_push ahudphysdat;" }
-	}
 
 	// ==================
 	// CHAT BUTTONS
@@ -385,17 +377,21 @@ menu althud extends ahud
 	pic bar_selbox
 	{
 		image	althud/bar_selbox
-		pos		"849 628"
+		blend	true
+		pos		"849 666"
+		size	"78 90"
+		texl	"0 38"
+		texh	"78 90"
 	}
 
-	confunc hudselecta0 { *bar_selbox pos "849 628" }
-	confunc hudselecta1 { *bar_selbox pos "769 628" }
-	confunc hudselecta2 { *bar_selbox pos "689 628" }
-	confunc hudselecta3 { *bar_selbox pos "609 628" }
-	confunc hudselecta4 { *bar_selbox pos "529 628" }
-	confunc hudselecta5 { *bar_selbox pos "449 628" }
-	confunc hudselecta6 { *bar_selbox pos "369 628" }
-	confunc hudselecta7 { *bar_selbox pos "289 628" }
+	confunc hudselecta0 { *bar_selbox left "849" }
+	confunc hudselecta1 { *bar_selbox left "769" }
+	confunc hudselecta2 { *bar_selbox left "689" }
+	confunc hudselecta3 { *bar_selbox left "609" }
+	confunc hudselecta4 { *bar_selbox left "529" }
+	confunc hudselecta5 { *bar_selbox left "449" }
+	confunc hudselecta6 { *bar_selbox left "369" }
+	confunc hudselecta7 { *bar_selbox left "289" }
 
 
 	// ==================
@@ -411,6 +407,10 @@ menu althud extends ahud
 		pos			"884 80"
 		size		"120 260"
 		scale		"4 4 4"
+
+		tooltip	"_Inventory and physical stats"
+		click	{ cmd "mn_push ahudinv;" }
+		rclick	{ cmd "mn_push ahudphysdat;" }
 	}
 
 	model right_head
@@ -439,6 +439,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"854 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 	model head1
 	{
@@ -447,6 +448,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"774 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 	model head2
 	{
@@ -455,6 +457,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"694 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 	model head3
 	{
@@ -463,6 +466,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"614 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 	model head4
 	{
@@ -471,6 +475,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"534 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 	model head5
 	{
@@ -479,6 +484,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"454 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 	model head6
 	{
@@ -487,6 +493,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"374 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 	model head7
 	{
@@ -495,6 +502,7 @@ menu althud extends ahud
 		autoscale	true
 		pos		"294 672"
 		size	"50 78"
+		excluderect { pos	"0 0"	size	"50 78" }
 	}
 
 	// ==================
