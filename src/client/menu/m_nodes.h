@@ -212,6 +212,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
 const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const char* name);
 const struct value_s *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, const char* name);
 menuNode_t* MN_GetNodeByPath (const char* path);
+const char* MN_GetPath (const menuNode_t* node);
 
 void MN_InitNodes(void);
 menuNode_t* MN_CloneNode(const menuNode_t* node, struct menuNode_s *targetMenu, qboolean recursive);

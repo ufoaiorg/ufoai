@@ -679,6 +679,7 @@ static const value_t properties[] = {
 	{"autoscale", V_BOOL, offsetof(menuNode_t, u.model.autoscale), MEMBER_SIZEOF(menuNode_t, u.model.autoscale)},
 	{"rotatewithmouse", V_BOOL, offsetof(menuNode_t, u.model.rotateWithMouse), MEMBER_SIZEOF(menuNode_t, u.model.rotateWithMouse)},
 	{"clipoverflow", V_BOOL, offsetof(menuNode_t, u.model.clipOverflow), MEMBER_SIZEOF(menuNode_t, u.model.clipOverflow)},
+	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, model), 0},
 
 	{NULL, V_NULL, 0, 0}
 };

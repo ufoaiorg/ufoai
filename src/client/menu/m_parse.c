@@ -257,7 +257,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	} else if (val->type == V_SPECIAL_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
 		if (icon == NULL) {
-			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s.%s)\n", *token, menuNode->menu->name, menuNode->name);
+			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 			return qfalse;
 		}
 		mn.curadata = ALIGN(mn.curadata);
@@ -270,7 +270,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		} else {
 			const int baseType = val->type & V_SPECIAL_TYPE;
 			if (baseType != 0 && baseType != V_SPECIAL_CVAR) {
-				Com_Printf("MN_ParseSetAction: setter for property '%s' (type %d, 0x%X) is not supported (%s.%s)\n", val->string, val->type, val->type, menuNode->menu->name, menuNode->name);
+				Com_Printf("MN_ParseSetAction: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", val->string, val->type, val->type, MN_GetPath(menuNode));
 				return qfalse;
 			}
 			mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
@@ -333,7 +333,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 
 		/* unknown, we break the parsing */
 		if (type == EA_NULL) {
-			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s.%s)\n", *token, menuNode->menu->name, menuNode->name);
+			Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, MN_GetPath(menuNode));
 			return NULL;
 		}
 
@@ -383,7 +383,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 				*token = COM_EParse(text, errhead, NULL);
 				callNode = MN_GetNode(menuNode->menu, *token);
 				if (!callNode) {
-					Com_Printf("MN_ParseAction: function '%s' not found (%s.%s)\n", *token, menuNode->menu->name, menuNode->name);
+					Com_Printf("MN_ParseAction: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
 				}
 				action->data = mn.curadata;
@@ -412,7 +412,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			*token = COM_EParse(text, errhead, NULL);
 			/** @todo use scanef instead of atoi, no need to check '}' */
 			if (!*token || **token == '}') {
-				Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", menuNode->name);
+				Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
 			}
 			menuNode->timeOut = atoi(*token);
@@ -459,13 +459,13 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 
 	option = MN_AllocOption(1);
 	if (option == NULL) {
-		Com_Printf("MN_ParseOption: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
+		Com_Printf("MN_ParseOption: Too many option entries for node %s\n", MN_GetPath(node));
 
 		*token = COM_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
 		if (*token[0] != '{') {
-			Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+			Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\")\n", MN_GetPath(node));
 			return qfalse;
 		}
 		FS_SkipBlock(text);
@@ -480,7 +480,7 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 	if (!*text)
 		return qfalse;
 	if (*token[0] != '{') {
-		Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+		Com_Printf("MN_ParseOption: node with bad option definition ignored (node \"%s\")\n", MN_GetPath(node));
 		return qfalse;
 	}
 
@@ -522,7 +522,7 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 	if (!*text)
 		return qfalse;
 	if (**token != '{') {
-		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
+		Com_Printf("MN_ParseExcludeRect: node with bad excluderect ignored (node \"%s\")\n", MN_GetPath(node));
 		return qtrue;
 	}
 
@@ -566,8 +566,6 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, const char **text, const char **token, const char *errhead)
 {
 	menuAction_t **action;
-
-	/* Com_Printf("  %s\n", *token); */
 
 	/* add new actions to end of list */
 	action = (menuAction_t **) ((byte *) node + event->ofs);
@@ -768,7 +766,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		break;
 
 	default:
-		Com_Printf("MN_ParseNodeBody: unknown property type '%d' (0x%X) (%s@%s)\n", property->type, property->type, objectName, property->string);
+		Com_Printf("MN_ParseNodeProperties: unknown property type '%d' (0x%X) (%s@%s)\n", property->type, property->type, objectName, property->string);
 		return qfalse;
 	}
 
@@ -781,29 +779,48 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 	return qtrue;
 }
 
-/**
- * @sa MN_ParseMenuBody
- */
-static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const char **token)
+static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const char **token)
 {
-	const char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
+	menuAction_t **action;
+	assert (node->behaviour->isFunction);
+
+	/* add new actions to end of list */
+	action = &node->onClick;
+	for (; *action; action = &(*action)->next) {}
+
+	if (mn.numActions >= MAX_MENUACTIONS)
+		Sys_Error("MN_ParseFunction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+	*action = &mn.menuActions[mn.numActions++];
+	memset(*action, 0, sizeof(**action));
+
+	*action = MN_ParseAction(node, text, token);
+	return *token[0] == '}';
+}
+
+/**
+ * @sa MN_ParseNodeProperties
+ * @brief parse all sequencial properties into a block
+ * @note allow to use an extra block
+ * @code
+ * foobehaviour foonode {
+ *   { properties }
+ *   // the function stop reading here
+ *   nodes
+ * }
+ * foobehaviour foonode {
+ *   properties
+ *   // the function stop reading here
+ *   nodes
+ * }
+ * @endcode
+ */
+static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, const char **token)
+{
+	const char *errhead = "MN_ParseNodeProperties: unexpected end of file (node";
 	qboolean nextTokenAlreadyRead = qfalse;
 
-	/* functions are a special case */
-	if (node->behaviour->isFunction) {
-		menuAction_t **action;
-
-		/* add new actions to end of list */
-		action = &node->onClick;
-		for (; *action; action = &(*action)->next) {}
-
-		if (mn.numActions >= MAX_MENUACTIONS)
-			Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
-		*action = &mn.menuActions[mn.numActions++];
-		memset(*action, 0, sizeof(**action));
-
-		*action = MN_ParseAction(node, text, token);
-		return *token[0] == '}';
+	if (*token[0] != '{') {
+		nextTokenAlreadyRead = qtrue;
 	}
 
 	do {
@@ -820,24 +837,23 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		}
 
 		/* is finished */
-		if (**token == '}') {
-			return qtrue;
+		if (*token[0] == '}') {
+			break;
 		}
 
 		/* find the property */
 
 		val = MN_NodeGetPropertyDefinition(node, *token);
-
 		if (!val) {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseNodeBody: unknown property \"%s\", node ignored (node %s.%s)\n", *token, node->menu->name, node->name);
+			Com_Printf("MN_ParseNodeProperties: unknown property \"%s\", node ignored (node %s)\n", *token, MN_GetPath(node));
 			return qfalse;
 		}
 
 		/* get parameter values */
 		result = MN_ParseProperty(node, val, node->name, text, token);
 		if (!result) {
-			Com_Printf("MN_ParseNodeBody: Problem with parsing of node property '%s.%s@%s'. See upper\n", node->menu->name, node->name, val->string);
+			Com_Printf("MN_ParseNodeProperties: Problem with parsing of node property '%s@%s'. See upper\n", MN_GetPath(node), val->string);
 			return qfalse;
 		}
 
@@ -846,18 +862,112 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 
 	} while (*text);
 
-	return qfalse;
+	return qtrue;
+}
+
+static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char **token, const char *errhead);
+
+/**
+ * @brief Read a node body
+ * @note Node header already read, we are over the node name, or '{'
+ * @code
+ * Allowed syntaxe
+ * { properties }
+ * OR
+ * { nodes }
+ * OR
+ * { { properties } nodes }
+ * @endcode
+ */
+static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const char **token, const char *errhead)
+{
+	qboolean result = qtrue;
+
+	if (*token[0] != '{') {
+		/* read the body block start */
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+		if (*token[0] != '{') {
+			Com_Printf("MN_ParseNodeBody: node dont have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
+			/** @todo merge menu and node array */
+			if (MN_NodeInstanceOf(node, "menu")) {
+				mn.numMenus--;
+			} else {
+				mn.numNodes--;
+			}
+			return qfalse;
+		}
+	}
+
+	/* functions are a special case */
+	if (node->behaviour->isFunction) {
+		result = MN_ParseFunction(node, text, token);
+	} else {
+
+		/* check the content */
+		*token = COM_EParse(text, errhead, node->name);
+		if (!*text)
+			return qfalse;
+
+		if (*token[0] == '{') {
+			/* we have a special block for properties */
+			result = MN_ParseNodeProperties(node, text, token);
+			if (!result)
+				return qfalse;
+
+			/* move token over the next node behaviour */
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+
+			/* and then read all nodes */
+			while (*token[0] != '}') {
+				result = MN_ParseNode(node, text, token, errhead);
+				if (!result)
+					return qfalse;
+
+				*token = COM_EParse(text, errhead, node->name);
+				if (*text == NULL)
+					return qfalse;
+			}
+
+		} else if (MN_NodeGetPropertyDefinition(node, *token)) {
+			/* we should have a block with properties only */
+			result = MN_ParseNodeProperties(node, text, token);
+		} else {
+			/* we should have a block with nodes only */
+			while (*token[0] != '}') {
+				result = MN_ParseNode(node, text, token, errhead);
+				if (!result)
+					return qfalse;
+
+				*token = COM_EParse(text, errhead, node->name);
+				if (*text == NULL)
+					return qfalse;
+			}
+		}
+	}
+	if (!result) {
+		Com_Printf("MN_ParseNodeBody: node with bad body ignored (node \"%s\")\n", MN_GetPath(node));
+		mn.numNodes--;
+		return qfalse;
+	}
+
+	/* already check on MN_ParseNodeProperties */
+	assert(*token[0] == '}');
+	return qtrue;
 }
 
 /**
  * @brief parse a node and complet the menu with it
  * @sa MN_ParseMenuBody
- * @sa MN_ParseNodeBody
- * @todo we can think about merging MN_ParseNodeBody here
+ * @sa MN_ParseNodeProperties
+ * @todo we can think about merging MN_ParseNodeProperties here
  * @node first token already read
  * @node dont read more than the need token (last right token is '}' of end of node)
  */
-static qboolean MN_ParseNode (menuNode_t * menu, const char **text, const char **token, const char *errhead)
+static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char **token, const char *errhead)
 {
 	menuNode_t *node;
 	nodeBehaviour_t *behaviour;
@@ -865,7 +975,7 @@ static qboolean MN_ParseNode (menuNode_t * menu, const char **text, const char *
 
 	/* allow to begin with the identifier "node" before the behaviour name */
 	if (!Q_strcasecmp(*token, "node")) {
-		*token = COM_EParse(text, errhead, menu->name);
+		*token = COM_EParse(text, errhead, parent->name);
 		if (!*text)
 			return qfalse;
 	}
@@ -873,32 +983,33 @@ static qboolean MN_ParseNode (menuNode_t * menu, const char **text, const char *
 	/* get the behaviour */
 	behaviour = MN_GetNodeBehaviour(*token);
 	if (behaviour == NULL) {
-		Com_Printf("MN_ParseNode: node behaviour '%s' doesn't exist (menu \"%s\")\n", *token, menu->name);
+		Com_Printf("MN_ParseNode: node behaviour '%s' doesn't exist (menu \"%s\")\n", *token, MN_GetPath(parent));
 		return qfalse;
 	}
 
 	/* get the name */
-	*token = COM_EParse(text, errhead, menu->name);
+	*token = COM_EParse(text, errhead, parent->name);
 	if (!*text)
 		return qfalse;
 
 	/* test if node already exists */
-	node = MN_GetNode(menu, *token);
+	node = MN_GetNode(parent, *token);
 	if (node) {
 		if (node->behaviour != behaviour) {
-			Com_Printf("MN_ParseNode: we can't change node type (node \"%s.%s\")\n", menu->name, node->name);
+			Com_Printf("MN_ParseNode: we can't change node type (node \"%s\")\n", MN_GetPath(node));
 			return qfalse;
 		}
-		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s.%s\n", menu->name, node->name);
+		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", MN_GetPath(node));
 		/* reset action list of node */
 		node->onClick = NULL;	/**< @todo understand why this strange hack (there is a lot of over actions) */
 
 	/* else initialize node */
 	} else {
 		node = MN_AllocNode(behaviour->name);
-		node->menu = menu;
+		node->parent = parent;
+		node->menu = (parent->menu)?parent->menu:parent;
 		Q_strncpyz(node->name, *token, sizeof(node->name));
-		MN_AppendNode(menu, node);
+		MN_AppendNode(parent, node);
 	}
 
 	/* node default values */
@@ -910,116 +1021,14 @@ static qboolean MN_ParseNode (menuNode_t * menu, const char **text, const char *
 		node->behaviour->loading(node);
 
 	/* get body */
-	*token = COM_EParse(text, errhead, menu->name);
-	if (!*text)
+	result = MN_ParseNodeBody(node, text, token, errhead);
+	if (!result)
 		return qfalse;
-
-	/* node without body is out of spec */
-	if (*token[0] != '{') {
-		Com_Printf("MN_ParseNode: node dont have body, token '%s' read (node \"%s.%s\")\n", *token, menu->name, node->name);
-		mn.numNodes--;
-		return qfalse;
-	}
-
-	result = MN_ParseNodeBody(node, text, token);
-	if (!result) {
-		Com_Printf("MN_ParseNode: node with bad body ignored (node \"%s.%s\")\n", menu->name, node->name);
-		mn.numNodes--;
-		return qfalse;
-	}
-
-	/* already check on MN_ParseNodeBody */
-	assert(*token[0] == '}');
 
 	/* init the node according to his behaviour */
 	if (node->behaviour->loaded) {
 		node->behaviour->loaded(node);
 	}
-	return qtrue;
-}
-
-static qboolean MN_ParseMenuProperties (menuNode_t * menu, const char **text, const char **token, const char *errhead)
-{
-	const nodeBehaviour_t* menuBehaviour = MN_GetNodeBehaviour("menu");
-
-	/* there are no menu properties */
-	if (*token[0] != '{') {
-		return qtrue;
-	}
-
-	/* get new token */
-	*token = COM_EParse(text, errhead, menu->name);
-	if (!*text)
-		return qfalse;
-
-	while (*token[0] != '}') {
-		const value_t* property;
-		int result;
-		size_t bytes;
-
-		property = MN_FindPropertyByName(menuBehaviour->properties, *token);
-		if (!property) {
-			Com_Printf("Unknown menu property '%s' find\n", *token);
-			return qfalse;
-		}
-
-		/* get new token */
-		*token = COM_EParse(text, errhead, menu->name);
-		if (!*text)
-			return qfalse;
-
-		/* check value */
-		result = Com_ParseValue(menu, *token, property->type, property->ofs, property->size, &bytes);
-		if (result != RESULT_OK) {
-			Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
-			return qfalse;
-		}
-
-		/* get new token */
-		*token = COM_EParse(text, errhead, menu->name);
-		if (!*text)
-			return qfalse;
-	}
-
-	/* get new token */
-	*token = COM_EParse(text, errhead, menu->name);
-	if (!*text)
-		return qfalse;
-
-	return qtrue;
-}
-
-/**
- * @sa MN_ParseNodeBody
- * @todo merge it with MN_ParseMenu
- */
-static qboolean MN_ParseMenuBody (menuNode_t * menu, const char **text)
-{
-	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
-	const char *token;
-	qboolean result;
-
-	/* get new token */
-	token = COM_EParse(text, errhead, menu->name);
-	if (!*text)
-		return qfalse;
-
-	/* parse special menu values */
-	result = MN_ParseMenuProperties(menu, text, &token, errhead);
-	if (!result)
-		return qfalse;
-
-	/* for each nodes */
-	while (token[0] != '}') {
-		result = MN_ParseNode(menu, text, &token, errhead);
-		if (!result)
-			return qfalse;
-
-		token = COM_EParse(text, errhead, menu->name);
-		if (!*text)
-			return qfalse;
-	}
-
 	return qtrue;
 }
 
@@ -1214,9 +1223,11 @@ void MN_ParseIcon (const char *name, const char **text)
  */
 void MN_ParseMenu (const char *name, const char **text)
 {
+	const char *errhead = "MN_ParseMenu: unexpected end of file (menu";
 	menuNode_t *menu;
 	menuNode_t *node;
 	const char *token;
+	qboolean result;
 	int i;
 
 	/* search for menus with same name */
@@ -1283,14 +1294,9 @@ void MN_ParseMenu (const char *name, const char **text)
 		token = COM_Parse(text);
 	}
 
-	if (!*text || *token != '{') {
-		Com_Printf("MN_ParseMenu: menu \"%s\" without body ignored\n", menu->name);
-		mn.numMenus--;
-		return;
-	}
-
 	/* parse it's body */
-	if (!MN_ParseMenuBody(menu, text)) {
+	result = MN_ParseNodeBody(menu, text, &token, errhead);
+	if (!result) {
 		Sys_Error("MN_ParseMenu: menu \"%s\" has a bad body\n", menu->name);
 		return;	/* never reached */
 	}

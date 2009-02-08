@@ -261,6 +261,36 @@ qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 #endif
 
 /**
+ * @brief Return a path from a menu to a node
+ * @return A path "menuname.nodename.nodename.givennodename"
+ * @note Use a static buffer for the result
+ */
+const char* MN_GetPath (const menuNode_t* node)
+{
+	static char result[MAX_VAR];
+	const menuNode_t* nodes[8];
+	int i = 0;
+
+	while (node) {
+		assert(i < 8);
+		nodes[i] = node;
+		node = node->parent;
+		i++;
+	}
+
+	/** @todo we can use something faster than cat */
+	result[0] = '\0';
+	while (i) {
+		i--;
+		Q_strcat(result, nodes[i]->name, sizeof(result));
+		if (i > 0)
+			Q_strcat(result, ".", sizeof(result));
+	}
+
+	return result;
+}
+
+/**
  * @brief Return a node by a path name (names with dot separation)
  */
 menuNode_t* MN_GetNodeByPath (const char* path)
