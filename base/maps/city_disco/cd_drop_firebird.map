@@ -397,69 +397,61 @@
 }
 // entity 2
 {
-"classname" "func_group"
-}
-// entity 3
-{
 "classname" "light"
 "_color" "0.8 0.85 1"
 "origin" "468 536 108"
 "light" "250"
 }
-// entity 4
+// entity 3
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
 "light" "200"
 "origin" "534 536 36"
 }
-// entity 5
+// entity 4
 {
 "classname" "light"
 "light" "250"
 "origin" "516 536 108"
 "_color" "0.8 0.85 1"
 }
-// entity 6
+// entity 5
 {
 "classname" "light"
 "origin" "420 536 36"
 "light" "200"
 "_color" "0.8 0.85 1"
 }
-// entity 7
-{
-"classname" "func_group"
-}
-// entity 8
+// entity 6
 {
 "classname" "light"
 "light" "200"
 "origin" "468 716 108"
 "_color" "0.8 0.85 1"
 }
-// entity 9
+// entity 7
 {
 "classname" "light"
 "origin" "534 716 36"
 "light" "200"
 "_color" "0.8 0.85 1"
 }
-// entity 10
+// entity 8
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
 "origin" "516 716 108"
 "light" "200"
 }
-// entity 11
+// entity 9
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
 "light" "200"
 "origin" "420 716 36"
 }
-// entity 12
+// entity 10
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
@@ -467,7 +459,7 @@
 "origin" "304 188 144"
 "spawnflags" "1"
 }
-// entity 13
+// entity 11
 {
 "classname" "light"
 "origin" "304 368 144"
@@ -475,214 +467,206 @@
 "_color" "0.8 0.85 1"
 "spawnflags" "1"
 }
-// entity 14
+// entity 12
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "432 80 28"
 }
-// entity 15
+// entity 13
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "176 560 28"
 }
-// entity 16
+// entity 14
 {
 "classname" "info_player_start"
 "team" "1"
 "origin" "48 176 28"
 }
-// entity 17
+// entity 15
 {
 "classname" "info_player_start"
 "origin" "400 528 28"
 "team" "1"
 }
-// entity 18
+// entity 16
 {
 "classname" "info_player_start"
 "origin" "80 464 28"
 "team" "1"
 }
-// entity 19
+// entity 17
 {
 "classname" "info_player_start"
 "origin" "400 720 28"
 "team" "1"
 }
-// entity 20
+// entity 18
 {
 "classname" "info_player_start"
 "origin" "48 48 28"
 "team" "1"
 }
-// entity 21
+// entity 19
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "480 716 107"
 }
-// entity 22
+// entity 20
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "512 716 107"
 }
-// entity 23
+// entity 21
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "512 536 107"
 }
-// entity 24
+// entity 22
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "480 536 107"
 }
-// entity 25
+// entity 23
 {
 "classname" "info_civilian_start"
 "origin" "80 560 32"
 }
-// entity 26
+// entity 24
 {
 "classname" "info_human_start"
 "origin" "464 720 32"
 }
-// entity 27
+// entity 25
 {
 "classname" "info_human_start"
 "origin" "432 336 32"
 }
-// entity 28
+// entity 26
 {
 "classname" "info_human_start"
 "origin" "48 336 32"
 }
-// entity 29
+// entity 27
 {
 "classname" "info_human_start"
 "origin" "368 240 32"
 }
-// entity 30
+// entity 28
 {
 "classname" "info_human_start"
 "origin" "400 560 32"
 }
-// entity 31
+// entity 29
 {
 "classname" "info_human_start"
 "origin" "80 208 32"
 }
-// entity 32
+// entity 30
 {
 "classname" "info_human_start"
 "origin" "80 496 32"
 }
-// entity 33
+// entity 31
 {
 "classname" "info_human_start"
 "origin" "400 688 32"
 }
-// entity 34
-{
-"classname" "func_group"
-}
-// entity 35
+// entity 32
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
 "origin" "468 184 108"
 "light" "250"
 }
-// entity 36
+// entity 33
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
 "light" "200"
 "origin" "534 184 36"
 }
-// entity 37
+// entity 34
 {
 "classname" "light"
 "light" "250"
 "origin" "516 184 108"
 "_color" "0.8 0.85 1"
 }
-// entity 38
+// entity 35
 {
 "classname" "light"
 "origin" "420 184 36"
 "light" "200"
 "_color" "0.8 0.85 1"
 }
-// entity 39
-{
-"classname" "func_group"
-}
-// entity 40
+// entity 36
 {
 "classname" "light"
 "light" "200"
 "origin" "468 364 108"
 "_color" "0.8 0.85 1"
 }
-// entity 41
+// entity 37
 {
 "classname" "light"
 "origin" "534 364 36"
 "light" "200"
 "_color" "0.8 0.85 1"
 }
-// entity 42
+// entity 38
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
 "origin" "516 364 108"
 "light" "200"
 }
-// entity 43
+// entity 39
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
 "light" "200"
 "origin" "420 364 36"
 }
-// entity 44
+// entity 40
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "480 364 107"
 }
-// entity 45
+// entity 41
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "512 364 107"
 }
-// entity 46
+// entity 42
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "512 184 107"
 }
-// entity 47
+// entity 43
 {
 "classname" "misc_particle"
 "spawnflags" "510"
 "particle" "corona"
 "origin" "480 184 107"
 }
-// entity 48
+// entity 44
 {
 "classname" "light"
 "_color" "0.8 0.85 1"
@@ -690,14 +674,14 @@
 "origin" "304 540 144"
 "spawnflags" "1"
 }
-// entity 49
+// entity 45
 {
 "classname" "light"
 "origin" "304 720 144"
 "light" "200"
 "_color" "0.8 0.85 1"
 }
-// entity 50
+// entity 46
 {
 "classname" "misc_model"
 "origin" "256 416 36"
@@ -705,7 +689,7 @@
 "model" "models/aircraft/drop_firebird/firebird_top.md2"
 "angle" "-90"
 }
-// entity 51
+// entity 47
 {
 "classname" "misc_model"
 "spawnflags" "255"
@@ -713,7 +697,7 @@
 "model" "models/aircraft/drop_firebird/firebird_glass.md2"
 "angle" "-90"
 }
-// entity 52
+// entity 48
 {
 "classname" "misc_model"
 "origin" "256 416 36"
@@ -721,7 +705,7 @@
 "spawnflags" "255"
 "angle" "-90"
 }
-// entity 53
+// entity 49
 {
 "classname" "func_group"
 // brush 0
@@ -775,7 +759,7 @@
 ( 488 724 0 ) ( 488 724 16 ) ( 480 716 16 ) tex_material/metall002 32 50 0 -0.5 0.5 134283008 0 0
 }
 }
-// entity 54
+// entity 50
 {
 "classname" "func_group"
 // brush 0
@@ -829,7 +813,7 @@
 ( 488 544 0 ) ( 488 544 16 ) ( 480 536 16 ) tex_material/metall002 56 49 0 -0.5 0.5 134283008 0 0
 }
 }
-// entity 55
+// entity 51
 {
 "classname" "func_group"
 // brush 0
@@ -883,7 +867,7 @@
 ( 488 372 0 ) ( 488 372 16 ) ( 480 364 16 ) tex_material/metall002 32 50 0 -0.5 0.5 134283008 0 0
 }
 }
-// entity 56
+// entity 52
 {
 "classname" "func_group"
 // brush 0
