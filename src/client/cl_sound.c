@@ -454,6 +454,10 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
 
 	S_SetVolume(sfx, volume);
 
+	/* play sound on another channel if actual channel is occupied */
+	if (sfx->channel != -1 && Mix_Playing(sfx->channel))
+		sfx->channel = -1;
+
 	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
 	if (sfx->channel == -1) {
 		Com_Printf("S_StartSound: could not play '%s' (%s)\n", sfx->name, Mix_GetError());
@@ -636,6 +640,8 @@ static qboolean SND_Init (void)
 	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
 		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
 	Com_Printf("... driver: '%s'\n", drivername);
+
+	Com_Printf("... channels to mix sounds: %i\n",Mix_AllocateChannels(-1));
 
 	return qtrue;
 }
