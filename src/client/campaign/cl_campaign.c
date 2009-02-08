@@ -1087,6 +1087,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			mission.mapDef = NULL;
 		Q_strncpyz(mission.id, MSG_ReadString(sb), sizeof(mission.id));
 		mission.active = MSG_ReadByte(sb);
+		mission.crashed = MSG_ReadByte(sb);
 		Q_strncpyz(mission.onwin, MSG_ReadString(sb), sizeof(mission.onwin));
 		Q_strncpyz(mission.onlose, MSG_ReadString(sb), sizeof(mission.onlose));
 		mission.category = MSG_ReadShort(sb);
@@ -1271,6 +1272,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 			MSG_WriteString(sb, "");
 		MSG_WriteString(sb, mission->id);
 		MSG_WriteByte(sb, mission->active);
+		MSG_WriteByte(sb, mission->crashed);
 		MSG_WriteString(sb, mission->onwin);
 		MSG_WriteString(sb, mission->onlose);
 		MSG_WriteShort(sb, mission->category);

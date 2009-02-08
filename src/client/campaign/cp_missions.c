@@ -337,7 +337,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 	if (ccs.selectedMission->ufo) {
 		const char *shortUFOType;
 		const char *missionType;
-		if (mission->stage == STAGE_CRASHED) {
+		if (mission->crashed) {
 			shortUFOType = UFO_CrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
 			missionType = "cp_ufocrashed";
 			/* Set random map UFO if this is a random map */
@@ -534,8 +534,6 @@ static const char* CP_MissionStageToName (const missionStage_t stage)
 		return "Harvesting";
 	case STAGE_OVER:
 		return "Mission over";
-	case STAGE_CRASHED:
-		return "UFO crashed";
 	}
 
 	/* Can't reach this point */
@@ -639,7 +637,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	/* Mission shouldn't be drawn on geoscape if mapDef is not defined */
 	assert(mission->mapDef);
 
-	if (mission->stage == STAGE_CRASHED)
+	if (mission->crashed)
 		/** @todo Should be a special crashed UFO mission model */
 		return "geoscape/mission";
 
@@ -680,10 +678,12 @@ static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_
 	if (!mission->pos)
 		return qfalse;
 
+	if (mission->crashed)
+		return MISDET_ALWAYS_DETECTED;
+
 	switch (mission->stage) {
 	case STAGE_TERROR_MISSION:
 	case STAGE_BASE_DISCOVERED:
-	case STAGE_CRASHED:
 		return MISDET_ALWAYS_DETECTED;
 	case STAGE_RECON_GROUND:
 	case STAGE_SUBVERT_GOV:
@@ -991,7 +991,7 @@ void CP_MissionStageEnd (mission_t *mission)
 		mission->category, mission->stage, ccs.date.day, ccs.date.sec);
 
 	/* Crash mission is on the map for too long: aliens die or go away. End mission */
-	if (mission->stage == STAGE_CRASHED) {
+	if (mission->crashed) {
 		CP_MissionIsOver(mission);
 		return;
 	}
@@ -1257,7 +1257,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	assert(mission);
 
-	mission->stage = STAGE_CRASHED;
+	mission->crashed = qtrue;
 
 	if (!CP_ChooseMap(mission, ufo->pos, qtrue)) {
 		Com_Printf("CP_SpawnCrashSiteMission: No map found, remove mission.\n");

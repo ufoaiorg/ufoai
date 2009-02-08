@@ -120,7 +120,6 @@ typedef enum interestCategory_s {
 /** possible stage for campaign missions (i.e. possible actions for UFO) */
 typedef enum missionStage_s {
 	STAGE_NOT_ACTIVE,				/**< mission did not begin yet */
-	STAGE_CRASHED,					/**< UFO is crashed */
 	STAGE_COME_FROM_ORBIT,			/**< UFO is arriving */
 
 	STAGE_RECON_AIR,				/**< Aerial Recon */
@@ -195,6 +194,7 @@ typedef struct mission_s {
 	vec2_t pos;						/**< Position of the mission */
 	aircraft_t *ufo;				/**< UFO on geoscape fulfilling the mission (may be NULL) */
 	qboolean onGeoscape;			/**< Should the mission be displayed on geoscape */
+	qboolean crashed;				/**< is UFO crashed ? (only used if mission is spawned from a UFO */
 
 	char onwin[MAX_VAR];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
 	char onlose[MAX_VAR];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
