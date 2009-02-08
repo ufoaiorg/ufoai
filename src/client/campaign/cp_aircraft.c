@@ -619,12 +619,9 @@ qboolean AIR_AircraftHasEnoughFuel (const aircraft_t *aircraft, const vec2_t des
  */
 qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, const vec2_t destination)
 {
-	base_t *base;
-	float distance = 0;
+	float distance;
 
 	assert(aircraft);
-	base = (base_t *) aircraft->homebase;
-	assert(base);
 
 	/* Calculate the line that the aircraft should follow to go to destination */
 	distance = MAP_GetDistance(aircraft->pos, destination);
@@ -643,10 +640,8 @@ qboolean AIR_AircraftHasEnoughFuelOneWay (const aircraft_t const *aircraft, cons
  */
 void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 {
-	base_t *base;
-
 	if (aircraft && AIR_IsAircraftOnGeoscape(aircraft)) {
-		base = aircraft->homebase;
+		const base_t *base = aircraft->homebase;
 		assert(base);
 		Com_DPrintf(DEBUG_CLIENT, "return '%s' (%i) to base ('%s').\n", aircraft->name, aircraft->idx, base->name);
 		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
@@ -713,7 +708,7 @@ static void AII_SetAircraftInSlots (aircraft_t *aircraft)
 		aircraft->weapons[i].aircraft = aircraft;
 		aircraft->electronics[i].aircraft = aircraft;
 	}
-		aircraft->shield.aircraft = aircraft;
+	aircraft->shield.aircraft = aircraft;
 }
 
 /**
@@ -724,7 +719,6 @@ static void AII_SetAircraftInSlots (aircraft_t *aircraft)
  */
 aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 {
-	aircraft_t *aircraft;
 	const aircraft_t *aircraftTemplate = AIR_GetAircraft(name);
 
 	if (!aircraftTemplate) {
@@ -735,6 +729,7 @@ aircraft_t* AIR_NewAircraft (base_t *base, const char *name)
 	assert(base);
 
 	if (base->numAircraftInBase < MAX_AIRCRAFT) {
+		aircraft_t *aircraft;
 		/* copy generic aircraft description to individal aircraft in base */
 		/* we do this because every aircraft can have its own parameters */
 		base->aircraft[base->numAircraftInBase] = *aircraftTemplate;
@@ -805,7 +800,7 @@ static int AIR_GetStorageRoom (const aircraft_t *aircraft)
 			const employee_t const *employee = aircraft->acTeam[i];
 			for (container = 0; container < csi.numIDs; container++) {
 				for (ic = employee->chr.inv.c[container]; ic; ic = ic->next) {
-					objDef_t *obj = ic->item.t;
+					const objDef_t *obj = ic->item.t;
 					size += obj->size;
 
 					obj = ic->item.m;
