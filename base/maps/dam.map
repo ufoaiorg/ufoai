@@ -9631,7 +9631,7 @@
 "classname" "info_player_start"
 "team" "2"
 "origin" "80 -80 32"
-"angle" "-179.119"
+"angle" "-180"
 }
 // entity 29
 {
@@ -9684,7 +9684,7 @@
 "classname" "info_player_start"
 "team" "2"
 "origin" "-16 16 28"
-"angle" "-179.119"
+"angle" "-180"
 }
 // entity 37
 {
@@ -9698,7 +9698,7 @@
 "classname" "info_player_start"
 "team" "2"
 "origin" "48 -80 28"
-"angle" "-179.119"
+"angle" "-180"
 }
 // entity 39
 {
