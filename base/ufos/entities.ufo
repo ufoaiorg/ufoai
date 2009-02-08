@@ -117,7 +117,7 @@ entity info_null {
 
 	mandatory {
 		origin	"position"
-		targetname	"Name of the target entity"
+		targetname	"Name of the target entity - e.g. used in light_spot to determine the direction the light should shine into"
 	}
 
 	type {
@@ -212,7 +212,7 @@ entity light {
 	}
 
 	optional {
-		target		"Entity target name (e.g. info_null)"
+		target		"Entity target name (e.g. info_null) - target entity must have targetname set"
 		_cone		""
 		spawnflags	"Whether the light is in the day version"
 	}
@@ -243,7 +243,7 @@ entity light_spot {
 
 	optional {
 		angle		"Special values: UP -1 and DOWN -2"
-		target		"Entity target name (e.g. info_null)"
+		target		"Entity target name (e.g. info_null) - target entity must have targetname set"
 		_cone		""
 	}
 
@@ -353,7 +353,7 @@ entity misc_mission {
 		radius		"If the entity has to be occupied this defines the radius that is needed"
 		health		"If set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)"
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
-		target		"The target that is triggered once the round time was hit"
+		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
 	}
 
@@ -383,7 +383,7 @@ entity misc_mission_alien {
 		radius		"If the entity has to be occupied this defines the radius that is needed"
 		health		"If set the entity has to be destroyed to win the mission - otherwise is has just to be reached (see time)"
 		group		"Allows you to group mission entities - e.g. you have to occupy them all for x rounds to win the match"
-		target		"The target that is triggered once the round time was hit"
+		target		"The target that is triggered once the round time was hit - target trigger must have targetname set"
 		message		"A message that is show when the mission is completed"
 	}
 
@@ -437,7 +437,7 @@ entity func_breakable {
 		health		"Damage until destroyed"
 		particle	"Particle id to be spawned after object is destroyed"
 		material	"Material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3"
-		targetname	"todo"
+		targetname	"The name that is used when this should be e.g. destroyed by a trigger - see e.g. trigger_hurt target"
 	}
 
 	mandatory {
@@ -484,7 +484,7 @@ entity trigger_touch {
 	description	"Any entity that touches this will trigger the use function of the target entity."
 
 	mandatory {
-		target		"Target entity (must have its targetname set to the value given here)"
+		target		"Target entity - target entity must have targetname set (to the value given here)"
 	}
 }
 
