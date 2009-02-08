@@ -1294,6 +1294,28 @@ static void entityKeyEdited (GtkCellRendererText *renderer, gchar *path, gchar* 
 	entityKeyValueEdited(view, 0, new_text);
 }
 
+/**
+ * @brief callback invoked when key edit was canceled, used to remove newly added empty keys.
+ * @param renderer cell renderer used to edit
+ * @param view treeview that is edited
+ */
+static void entityKeyEditCanceled(GtkCellRendererText *renderer, GtkTreeView *view)
+{
+	char *oldKey;
+
+	g_object_get(G_OBJECT(renderer), "text", &oldKey);
+	StringOutputStream keyConverted(64);
+	keyConverted << ConvertUTF8ToLocale(oldKey);
+	if (keyConverted.empty()) {
+		GtkTreeModel* model;
+		GtkTreeIter iter;
+		/* retrieve current selection and iter*/
+		GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
+		gtk_tree_selection_get_selected(selection, &model, &iter);
+		gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+	}
+}
+
 GtkWidget* EntityInspector_constructNotebookTab (void)
 {
 	GtkWidget* pageframe = gtk_frame_new(_("Entity Inspector"));
@@ -1393,6 +1415,7 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
+				g_signal_connect(G_OBJECT(renderer), "editing-canceled", G_CALLBACK(entityKeyEditCanceled), (gpointer) view);
 			}
 
 			{
