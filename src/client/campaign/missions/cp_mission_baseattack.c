@@ -216,8 +216,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	MN_RegisterText(TEXT_POPUP, popupText);
 
 	CL_GameTimeStop();
-	B_SelectBase(base);
-	MN_PopMenu(qfalse);
+	baseCurrent = base;
 	MN_PushMenu("popup_baseattack", NULL);
 }
 
