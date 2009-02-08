@@ -428,7 +428,7 @@ qboolean MN_FocusNextActionNode (void)
 }
 
 /**
- * @brief Test if a string use an injection syntaxe
+ * @brief Test if a string use an injection syntax
  * @todo improve the test
  */
 qboolean MN_IsInjectedString(const char *string)

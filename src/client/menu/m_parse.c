@@ -365,7 +365,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			break;
 
 		case EA_SET:
-			/* if not short syntaxe */
+			/* if not short syntax */
 			if (Q_strcasecmp(*token, ea_strings[EA_SET]) == 0) {
 				*token = COM_EParse(text, errhead, NULL);
 				if (!*token)
@@ -871,7 +871,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
  * @brief Read a node body
  * @note Node header already read, we are over the node name, or '{'
  * @code
- * Allowed syntaxe
+ * Allowed syntax
  * { properties }
  * OR
  * { nodes }
