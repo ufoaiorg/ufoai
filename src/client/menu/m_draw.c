@@ -205,7 +205,7 @@ void MN_DrawMenus (void)
 		if (menu->u.window.onTimeOut) {
 			if (menu->u.window.eventNode->timeOut > 0 && (menu->u.window.eventNode->timeOut == 1 || (!menu->u.window.eventTime || (menu->u.window.eventTime + menu->u.window.eventNode->timeOut < cls.realtime)))) {
 				menu->u.window.eventTime = cls.realtime;
-				MN_ExecuteActions(menu, menu->u.window.onTimeOut);
+				MN_ExecuteEventActions(menu, menu->u.window.onTimeOut);
 #ifdef DEBUG
 				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->u.window.eventNode->name, menu->u.window.eventNode->timeOut);
 #endif

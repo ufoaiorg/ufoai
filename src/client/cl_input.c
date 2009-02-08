@@ -518,7 +518,7 @@ static void CL_SelectDown_f (void)
 	/** @todo should nothing to do here. Check use of leave event and move it into the menu (we should use focus) */
 	menu = MN_GetActiveMenu();
 	if (menu && menu->u.window.onLeave)
-		MN_ExecuteActions(menu, menu->u.window.onLeave);
+		MN_ExecuteEventActions(menu, menu->u.window.onLeave);
 }
 
 static void CL_SelectUp_f (void)
@@ -641,7 +641,7 @@ static void CL_LeftClickDown_f (void)
 		/** @todo should nothing to do here. Check use of leave event and move it into the menu (we should use focus) */
 		const menuNode_t *menu = MN_GetActiveMenu();
 		if (menu && menu->u.window.onLeave)
-			MN_ExecuteActions(menu, menu->u.window.onLeave);
+			MN_ExecuteEventActions(menu, menu->u.window.onLeave);
 	}
 }
 

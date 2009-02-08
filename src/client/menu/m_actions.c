@@ -108,7 +108,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 						int l;
 						/* only allow common type or cvar */
 						if ((property->type & V_SPECIAL_TYPE) != 0 && (property->type & V_SPECIAL_TYPE) != V_SPECIAL_CVAR) {
-							Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s.%s'", property->string, source->menu->name, source->name);
+							Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s'", property->string, MN_GetPath(source));
 						}
 						/* inject the property value */
 						value = Com_ValueToStr((const void*)source, property->type, property->ofs);
@@ -145,7 +145,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 	return cmd;
 }
 
-inline static void MN_ExecuteSetAction (const menuNode_t* source, const menuNode_t* menu, qboolean useCmdParam, const menuAction_t* action)
+inline static void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
 {
 	const char* path;
 	byte *value;
@@ -174,22 +174,25 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menuNode
 	path = MN_GenInjectedString(source, useCmdParam, action->data, qfalse);
 	switch (action->type.param1) {
 	case EA_THISMENUNODENAMEPROPERTY:
-		node = MN_GetNode(menu, path);
-		if (!node) {
-			Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist\n", menu->name, path);
-			return;
+		{
+			const menuNode_t *menu = (source->menu)?source->menu:source;
+			node = MN_GetNode(menu, path);
+			if (!node) {
+				Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist (source: %s)\n", menu->name, path, MN_GetPath(source));
+				return;
+			}
 		}
 		break;
 	case EA_PATHPROPERTY:
 		node = MN_GetNodeByPath(path);
 		if (!node) {
-			Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist\n", path);
+			Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
 			return;
 		}
 		break;
 	default:
 		node = NULL;
-		Sys_Error("MN_ExecuteSetAction: Invalid actiontype");
+		Sys_Error("MN_ExecuteSetAction: Invalid actiontype (source: %s)\n", MN_GetPath(source));
 	}
 
 	value = action->data;
@@ -232,9 +235,10 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, const menuNode
 static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
 
 /**
- * @todo remove 'menu' param when its possible
+ * @brief Execute an action from a source
+ * @param[in] useCmdParam If true, inject every where its possible command line param
  */
-static void MN_ExecuteInjectedAction (const menuNode_t* source, const menuNode_t* menu, qboolean useCmdParam, const menuAction_t* action)
+static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
 {
 	switch (action->type.op) {
 
@@ -250,21 +254,16 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, const menuNode_t
 
 	case EA_CALL:
 		/* call another function */
-		MN_ExecuteActions(menu, **(menuAction_t ***) action->data);
+		MN_ExecuteInjectedActions(source, qfalse, **(menuAction_t ***) action->data);
 		break;
 
 	case EA_SET:
-		MN_ExecuteSetAction(source, menu, useCmdParam, action);
+		MN_ExecuteSetAction(source, useCmdParam, action);
 		break;
 
 	case EA_IF:
 		if (MN_CheckCondition((menuDepends_t *) action->data)) {
-			/** @todo while menu and node are not merged, we need duplication like that */
-			if (source == NULL) {
-				MN_ExecuteActions(menu, (const menuAction_t* const) action->scriptValues);
-			} else {
-				MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
-			}
+			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
 		}
 		break;
 
@@ -273,17 +272,6 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, const menuNode_t
 		break;
 	}
 
-}
-
-/**
- * @sa MN_ParseAction
- */
-void MN_ExecuteActions (const menuNode_t* const menu, const menuAction_t* const first)
-{
-	const menuAction_t *action;
-	for (action = first; action; action = action->next) {
-		MN_ExecuteInjectedAction(NULL, menu, qfalse, action);
-	}
 }
 
 static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
@@ -295,11 +283,7 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 		return;
 	}
 	for (action = firstAction; action; action = action->next) {
-		menuNode_t *menu = NULL;
-		if (source) {
-			menu = source->menu;
-		}
-		MN_ExecuteInjectedAction(source, menu, useCmdParam, action);
+		MN_ExecuteInjectedAction(source, useCmdParam, action);
 	}
 	callnumber--;
 }
@@ -349,7 +333,7 @@ void MN_FocusRemove (void)
 		return;
 
 	if (focusNode)
-		MN_ExecuteActions(focusNode->menu, focusNode->onMouseOut);
+		MN_ExecuteEventActions(focusNode, focusNode->onMouseOut);
 	focusNode = NULL;
 }
 
@@ -369,9 +353,9 @@ qboolean MN_FocusExecuteActionNode (void)
 
 	if (focusNode) {
 		if (focusNode->onClick) {
-			MN_ExecuteActions(focusNode->menu, focusNode->onClick);
+			MN_ExecuteEventActions(focusNode, focusNode->onClick);
 		}
-		MN_ExecuteActions(focusNode->menu, focusNode->onMouseOut);
+		MN_ExecuteEventActions(focusNode, focusNode->onMouseOut);
 		focusNode = NULL;
 		return qtrue;
 	}
@@ -396,7 +380,7 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
 	MN_FocusRemove();
 
 	focusNode = node;
-	MN_ExecuteActions(node->menu, node->onMouseIn);
+	MN_ExecuteEventActions(node, node->onMouseIn);
 
 	return qtrue;
 }
@@ -454,11 +438,12 @@ qboolean MN_IsInjectedString(const char *string)
 }
 
 /**
- * @brief Set a new action to a node->menuAction_t pointer
+ * @brief Set a new action to a nodeAction_t pointer
  * @param[in] type EA_CMD
  * @param[in] data The data for this action - in case of EA_CMD this is the commandline
  * @note You first have to free existing node actions - only free those that are
  * not static in mn.menuActions array
+ * @todo check this code
  */
 menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *data)
 {

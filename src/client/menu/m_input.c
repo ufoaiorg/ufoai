@@ -260,12 +260,12 @@ void MN_MouseMove (int x, int y)
 	/* update nodes: send 'in' and 'out' event */
 	if (oldHoveredNode != hoveredNode) {
 		if (oldHoveredNode) {
-			MN_ExecuteActions(oldHoveredNode->menu, oldHoveredNode->onMouseOut);
+			MN_ExecuteEventActions(oldHoveredNode, oldHoveredNode->onMouseOut);
 			oldHoveredNode->state = qfalse;
 		}
 		if (hoveredNode) {
 			hoveredNode->state = qtrue;
-			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onMouseIn);
+			MN_ExecuteEventActions(hoveredNode, hoveredNode->onMouseIn);
 		}
 	}
 	oldHoveredNode = hoveredNode;
@@ -278,16 +278,7 @@ void MN_MouseMove (int x, int y)
 
 /**
  * @brief Is called everytime one clickes on a menu/screen. Then checks if anything needs to be executed in the earea of the click (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
- * @sa MN_ModelClick
- * @sa MN_TextRightClick
- * @sa MN_TextClick
- * @sa MN_Drag
- * @sa MN_BarClick
- * @sa MN_CheckboxClick
- * @sa MN_BaseMapClick
- * @sa MAP_3DMapClick
- * @sa MAP_MapClick
- * @sa MN_ExecuteActions
+ * @sa MN_ExecuteEventActions
  * @sa MN_RightClick
  * @sa Key_Message
  * @sa CL_MessageMenu_f
@@ -313,8 +304,7 @@ void MN_LeftClick (int x, int y)
 
 /**
  * @sa MAP_ResetAction
- * @sa MN_TextRightClick
- * @sa MN_ExecuteActions
+ * @sa MN_ExecuteEventActions
  * @sa MN_LeftClick
  * @sa MN_MiddleClick
  * @sa MN_MouseWheel
@@ -332,7 +322,7 @@ void MN_RightClick (int x, int y)
 		if (hoveredNode->behaviour->rightClick) {
 			hoveredNode->behaviour->rightClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onRightClick);
+			MN_ExecuteEventActions(hoveredNode, hoveredNode->onRightClick);
 		}
 	}
 }
@@ -355,7 +345,7 @@ void MN_MiddleClick (int x, int y)
 		if (hoveredNode->behaviour->middleClick) {
 			hoveredNode->behaviour->middleClick(hoveredNode, x, y);
 		} else {
-			MN_ExecuteActions(hoveredNode->menu, hoveredNode->onMiddleClick);
+			MN_ExecuteEventActions(hoveredNode, hoveredNode->onMiddleClick);
 		}
 		return;
 	}
@@ -364,11 +354,6 @@ void MN_MiddleClick (int x, int y)
 /**
  * @brief Called when we are in menu mode and scroll via mousewheel
  * @note The geoscape zooming code is here, too (also in @see CL_ParseInput)
- * @sa MN_LeftClick
- * @sa MN_RightClick
- * @sa MN_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  * @sa MN_LeftClick
  * @sa MN_RightClick
  * @sa MN_MiddleClick
@@ -389,20 +374,15 @@ void MN_MouseWheel (qboolean down, int x, int y)
 			hoveredNode->behaviour->mouseWheel(hoveredNode, down, x, y);
 		} else {
 			if (hoveredNode->onWheelUp && hoveredNode->onWheelDown)
-				MN_ExecuteActions(hoveredNode->menu, (down ? hoveredNode->onWheelDown : hoveredNode->onWheelUp));
+				MN_ExecuteEventActions(hoveredNode, (down ? hoveredNode->onWheelDown : hoveredNode->onWheelUp));
 			else
-				MN_ExecuteActions(hoveredNode->menu, hoveredNode->onWheel);
+				MN_ExecuteEventActions(hoveredNode, hoveredNode->onWheel);
 		}
 	}
 }
 
 /**
  * @brief Called when we are in menu mode and down a mouse button
- * @sa MN_LeftClick
- * @sa MN_RightClick
- * @sa MN_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  * @sa MN_LeftClick
  * @sa MN_RightClick
  * @sa MN_MiddleClick
@@ -425,11 +405,6 @@ void MN_MouseDown (int x, int y, int button)
 
 /**
  * @brief Called when we are in menu mode and up a mouse button
- * @sa MN_LeftClick
- * @sa MN_RightClick
- * @sa MN_MiddleClick
- * @sa CL_ZoomInQuant
- * @sa CL_ZoomOutQuant
  * @sa MN_LeftClick
  * @sa MN_RightClick
  * @sa MN_MiddleClick

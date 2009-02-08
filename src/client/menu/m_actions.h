@@ -75,7 +75,6 @@ void MN_ExecuteConfunc(const char *fmt, ...);
 /* prototype */
 struct menuNode_s;
 
-void MN_ExecuteActions(const struct menuNode_s* const menu, const menuAction_t* const first);
 void MN_ExecuteEventActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 void MN_ExecuteConFuncActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 qboolean MN_IsInjectedString(const char *string);

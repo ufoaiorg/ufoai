@@ -156,7 +156,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 
 	/* initialize it */
 	if (menu->u.window.onInit)
-		MN_ExecuteActions(menu, menu->u.window.onInit);
+		MN_ExecuteEventActions(menu, menu->u.window.onInit);
 
 	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
 		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
@@ -294,7 +294,7 @@ static void MN_CloseAllMenu (void)
 		menuNode_t *menu = mn.menuStack[i];
 
 		if (menu->u.window.onClose)
-			MN_ExecuteActions(menu, menu->u.window.onClose);
+			MN_ExecuteEventActions(menu, menu->u.window.onClose);
 
 		/* safe: unlink window */
 		menu->parent = NULL;
@@ -332,14 +332,14 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 			break;
 		}
 		if (m->u.window.onClose)
-			MN_ExecuteActions(m, m->u.window.onClose);
+			MN_ExecuteEventActions(m, m->u.window.onClose);
 		m->parent = NULL;
 		MN_RemoveMenuAtPositionFromStack(i + 1);
 	}
 
 	/* close the menu */
 	if (menu->u.window.onClose)
-		MN_ExecuteActions(menu, menu->u.window.onClose);
+		MN_ExecuteEventActions(menu, menu->u.window.onClose);
 	menu->parent = NULL;
 	MN_RemoveMenuAtPositionFromStack(i);
 
@@ -550,7 +550,7 @@ static void MN_ReinitCurrentMenu_f (void)
 	/* initialize it */
 	if (menu) {
 		if (menu->u.window.onInit)
-			MN_ExecuteActions(menu, menu->u.window.onInit);
+			MN_ExecuteEventActions(menu, menu->u.window.onInit);
 		Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menu->name);
 	}
 }

@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_ButtonNodeClick (menuNode_t * node, int x, int y)
 {
 	if (node->onClick && !node->disabled) {
-		MN_ExecuteActions(node->menu, node->onClick);
+		MN_ExecuteEventActions(node, node->onClick);
 	}
 }
 
