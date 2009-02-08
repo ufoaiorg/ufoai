@@ -471,7 +471,7 @@
 "model" "models/objects/vegi/tropic/tropic01.md2"
 "origin" "157 440 6"
 "angle" "40"
-"modelscale" "0.7"
+"modelscale_vec" "0.7 0.7 0.7"
 }
 // entity 7
 {

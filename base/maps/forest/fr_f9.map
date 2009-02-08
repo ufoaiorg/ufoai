@@ -1140,7 +1140,6 @@
 "origin" "400 400 0"
 "model" "models/objects/vegi/tree04/leafs.md2"
 "spawnflags" "254"
-"modelscale" "1.5"
 "modelscale_vec" "1.5 1.5 1.5"
 }
 // entity 17
@@ -1149,7 +1148,6 @@
 "origin" "400 400 0"
 "model" "models/objects/vegi/tree04/bark.md2"
 "spawnflags" "255"
-"modelscale" "1.5"
 "modelscale_vec" "1.5 1.5 1.5"
 }
 // entity 18

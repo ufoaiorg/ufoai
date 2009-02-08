@@ -1255,7 +1255,6 @@
 "origin" "106.317 204.94 34"
 "skin" "3"
 "angle" "15.5709"
-"modelscale" "0.5"
 "modelscale_vec" "0.5 0.5 0.5"
 }
 // entity 22
@@ -1265,7 +1264,7 @@
 "spawnflags" "255"
 "origin" "106.317 204.94 34"
 "angle" "15.5709"
-"modelscale" "0.5"
+"modelscale_vec" "0.5 0.5 0.5"
 }
 // entity 23
 {
@@ -1274,5 +1273,5 @@
 "spawnflags" "1"
 "origin" "106.317 204.94 34"
 "angle" "15.5709"
-"modelscale" "0.5"
+"modelscale_vec" "0.5 0.5 0.5"
 }
