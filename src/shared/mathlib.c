@@ -630,8 +630,6 @@ static inline void R_ConcatRotations (float in1[3][3], float in2[3][3], float ou
 	out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] + in1[2][2] * in2[2][2];
 }
 
-#define DEG2RAD( a ) (( a * M_PI ) / 180.0F)
-
 /**
  * @brief Rotate a point around a given vector
  * @param[in] dir The vector around which to rotate
@@ -682,10 +680,10 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 	memset(zrot, 0, sizeof(zrot));
 	zrot[0][0] = zrot[1][1] = zrot[2][2] = 1.0F;
 
-	zrot[0][0] = cos(DEG2RAD(degrees));
-	zrot[0][1] = sin(DEG2RAD(degrees));
-	zrot[1][0] = -sin(DEG2RAD(degrees));
-	zrot[1][1] = cos(DEG2RAD(degrees));
+	zrot[0][0] = cos(degrees * torad);
+	zrot[0][1] = sin(degrees * torad);
+	zrot[1][0] = -sin(degrees * torad);
+	zrot[1][1] = cos(degrees * torad);
 
 	R_ConcatRotations(m, zrot, tmpmat);
 	R_ConcatRotations(tmpmat, im, rot);
