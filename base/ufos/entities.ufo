@@ -213,7 +213,7 @@ entity light {
 
 	optional {
 		target		"Entity target name (e.g. info_null) - target entity must have targetname set"
-		_cone		""
+		_cone		"Defines the light cone in degrees"
 		spawnflags	"Whether the light is in the day version"
 	}
 
@@ -244,7 +244,7 @@ entity light_spot {
 	optional {
 		angle		"Special values: UP -1 and DOWN -2"
 		target		"Entity target name (e.g. info_null) - target entity must have targetname set"
-		_cone		""
+		_cone		"Defines the light cone in degrees"
 	}
 
 	default {
