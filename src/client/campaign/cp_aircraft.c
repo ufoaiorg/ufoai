@@ -1143,9 +1143,10 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 {
 	aircraft_t *aircraft;
 	int i, j, k;
-	static qboolean radarOverlayReset = qfalse;	/**< true if at least one aircraft moved: radar overlay must be updated
-												 * This is static because aircraft can move without radar beeing
-												 * updated (sa CL_CampaignRun) */
+	/* true if at least one aircraft moved: radar overlay must be updated
+	 * This is static because aircraft can move without radar beeing
+	 * updated (sa CL_CampaignRun) */
+	static qboolean radarOverlayReset = qfalse;
 
 	assert(dt >= 0);
 
@@ -1170,9 +1171,7 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						/* Aircraft is moving */
 						if (AIR_AircraftMakeMove(dt, aircraft)) {
 							/* aircraft reach its destination */
-							float *end;
-
-							end = aircraft->route.point[aircraft->route.numPoints - 1];
+							const float *end = aircraft->route.point[aircraft->route.numPoints - 1];
 							Vector2Copy(end, aircraft->pos);
 							MAP_CheckPositionBoundaries(aircraft->pos);
 
@@ -1237,8 +1236,8 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 						}
 					}
 				} else {
-					/** @todo Maybe even Sys_Error? */
-					Com_Printf("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')\n", j, aircraft->id);
+					Sys_Error("CL_CampaignRunAircraft: aircraft with no homebase (base: %i, aircraft '%s')",
+						j, aircraft->id);
 				}
 		}
 	}
@@ -1522,7 +1521,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 			/* blocks like param { [..] } - otherwise we would leave the loop too early */
 			if (*token == '{') {
 				FS_SkipBlock(text);
-			} else if (!Q_strncmp(token, "shield", 6)) {
+			} else if (!Q_strcmp(token, "shield")) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1530,7 +1529,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 				tech = RS_GetTechByID(token);
 				if (tech)
 					aircraftTemplate->shield.item = AII_GetAircraftItemByID(tech->provides);
-			} else if (!Q_strncmp(token, "slot", 4)) {
+			} else if (!Q_strcmp(token, "slot")) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
@@ -1617,16 +1616,16 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 							} else
 								Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 						}
-					} else if (!Q_strncmp(token, "size", MAX_VAR)) {
+					} else if (!Q_strcmp(token, "size")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 						if (itemType == AC_ITEM_WEAPON) {
-							if (!Q_strncmp(token, "light", MAX_VAR))
+							if (!Q_strcmp(token, "light"))
 								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].size = ITEM_LIGHT;
-							else if (!Q_strncmp(token, "medium", MAX_VAR))
+							else if (!Q_strcmp(token, "medium"))
 								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].size = ITEM_MEDIUM;
-							else if (!Q_strncmp(token, "heavy", MAX_VAR))
+							else if (!Q_strcmp(token, "heavy"))
 								aircraftTemplate->weapons[aircraftTemplate->maxWeapons - 1].size = ITEM_HEAVY;
 							else
 								Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
@@ -1661,31 +1660,31 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					break;
 				}
 
-			if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
+			if (vp->string && !Q_strcmp(vp->string, "size")) {
 				if (aircraftTemplate->maxTeamSize > MAX_ACTIVETEAM) {
 					Com_DPrintf(DEBUG_CLIENT, "AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
 					aircraftTemplate->maxTeamSize = MAX_ACTIVETEAM;
 				}
 			}
 
-			if (!Q_strncmp(token, "type", 4)) {
+			if (!Q_strcmp(token, "type")) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				if (!Q_strncmp(token, "transporter", 11))
+				if (!Q_strcmp(token, "transporter"))
 					aircraftTemplate->type = AIRCRAFT_TRANSPORTER;
-				else if (!Q_strncmp(token, "interceptor", 11))
+				else if (!Q_strcmp(token, "interceptor"))
 					aircraftTemplate->type = AIRCRAFT_INTERCEPTOR;
-				else if (!Q_strncmp(token, "ufo", 3))
+				else if (!Q_strcmp(token, "ufo"))
 					aircraftTemplate->type = AIRCRAFT_UFO;
-			} else if (!Q_strncmp(token, "slot", 5)) {
+			} else if (!Q_strcmp(token, "slot")) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
 					return;
 				}
 				FS_SkipBlock(text);
-			} else if (!Q_strncmp(token, "param", 5)) {
+			} else if (!Q_strcmp(token, "param")) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
 					Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
@@ -1698,7 +1697,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 					if (*token == '}')
 						break;
 
-					if (!Q_strncmp(token, "range", 5)) {
+					if (!Q_strcmp(token, "range")) {
 						/* this is the range of aircraft, must be translated into fuel */
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
@@ -1746,7 +1745,6 @@ void AIR_ListAircraftSamples_f (void)
 {
 	int i = 0, max = numAircraftTemplates;
 	const value_t *vp;
-	aircraft_t *aircraftTemplate;
 
 	Com_Printf("%i aircraft\n", max);
 	if (Cmd_Argc() == 2) {
@@ -1756,7 +1754,7 @@ void AIR_ListAircraftSamples_f (void)
 		i = max - 1;
 	}
 	for (; i < max; i++) {
-		aircraftTemplate = &aircraftTemplates[i];
+		aircraft_t *aircraftTemplate = &aircraftTemplates[i];
 		Com_Printf("aircraft: '%s'\n", aircraftTemplate->id);
 		for (vp = aircraft_vals; vp->string; vp++) {
 			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
