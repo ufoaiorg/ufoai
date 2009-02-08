@@ -157,22 +157,18 @@ void AIR_UpdateHangarCapForAll (base_t *base)
 void AIR_ListAircraft_f (void)
 {
 	int i, k, baseIdx;
-	base_t *base;
-	aircraft_t *aircraft;
-	employee_t *employee;
-	character_t *chr;
 
 	if (Cmd_Argc() == 2)
 		baseIdx = atoi(Cmd_Argv(1));
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base = B_GetFoundedBaseByIDX(baseIdx);
+		const base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
 			continue;
 
 		Com_Printf("Aircraft in base %s: %i\n", base->name, base->numAircraftInBase);
 		for (i = 0; i < base->numAircraftInBase; i++) {
-			aircraft = &base->aircraft[i];
+			const aircraft_t *aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
 			Com_Printf("...idx cur/global %i/%i\n", i, aircraft->idx);
 			Com_Printf("...homebase: %s\n", aircraft->homebase ? aircraft->homebase->name : "NO HOMEBASE");
@@ -242,9 +238,9 @@ void AIR_ListAircraft_f (void)
 			Com_Printf("...team: (%i/%i)\n", aircraft->teamSize, aircraft->maxTeamSize);
 			for (k = 0; k < aircraft->maxTeamSize; k++)
 				if (aircraft->acTeam[k]) {
-					employee = aircraft->acTeam[k];
+					const employee_t *employee = aircraft->acTeam[k];
+					const character_t *chr = &employee->chr;
 					Com_Printf("......idx (in global array): %i\n", employee->idx);
-					chr = &employee->chr;
 					if (chr)
 						Com_Printf(".........name: %s\n", chr->name);
 					else
