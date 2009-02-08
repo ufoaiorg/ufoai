@@ -193,7 +193,6 @@
 "model" "/models/objects/vegi/bush/bush01.md2"
 "origin" "174 16 18"
 "spawnflags" "255"
-"lightangles" "40 20 0"
 }
 // entity 9
 {
@@ -202,7 +201,6 @@
 "angles" "0 100 0"
 "model" "/models/objects/vegi/bush/bush01.md2"
 "origin" "174 16 42"
-"lightangles" "40 20 0"
 }
 // entity 10
 {
@@ -210,7 +208,6 @@
 "model" "/models/objects/vegi/bush/bush01.md2"
 "origin" "238 240 18"
 "spawnflags" "255"
-"lightangles" "40 20 0"
 }
 // entity 11
 {
@@ -219,7 +216,6 @@
 "angles" "0 30 0"
 "model" "/models/objects/vegi/bush/bush01.md2"
 "origin" "158 176 18"
-"lightangles" "40 20 0"
 }
 // entity 12
 {
@@ -228,7 +224,6 @@
 "angles" "0 300 0"
 "model" "/models/objects/vegi/bush/bush01.md2"
 "origin" "158 176 42"
-"lightangles" "40 20 0"
 }
 // entity 13
 {
@@ -237,7 +232,6 @@
 "model" "models/objects/vegi/tropic/tropic03.md2"
 "origin" "76 84 10"
 "angles" "0 140 0"
-"lightangles" "40 20 0"
 }
 // entity 14
 {

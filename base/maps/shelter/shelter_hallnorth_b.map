@@ -3100,7 +3100,6 @@
 {
 "classname" "info_alien_start"
 "origin" "496 368 160"
-"light" "180"
 }
 // entity 98
 {

@@ -12,19 +12,7 @@
 ( 924 768 8 ) ( 604 768 8 ) ( 604 768 0 ) tex_nature/desert004 128 0 0 0.25 0.25 65280 0 0
 ( 512 760 0 ) ( 512 760 8 ) ( 512 928 8 ) tex_nature/desert004 128 0 0 0.25 0.25 65280 0 0
 }
-}
-// entity 1
-{
-"classname" "misc_model"
-"origin" "258 436 36"
-"model" "models/aircraft/drop_herakles/herakles_pod.md2"
-"spawnflags" "255"
-"angle" "-90"
-}
-// entity 2
-{
-"classname" "func_group"
-// brush 0
+// brush 1
 {
 ( 352 96 120 ) ( 128 96 120 ) ( 352 608 120 ) tex_common/weaponclip 0 64 -90 1 1 33554432 0 0
 ( 368 96 64 ) ( 368 608 64 ) ( 368 96 32 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
@@ -41,11 +29,7 @@
 ( 260 960 120 ) ( 352 960 104 ) ( 260 832 120 ) tex_common/weaponclip 0 64 -90 1 1 33554432 0 0
 ( 352 960 104 ) ( 368 960 64 ) ( 352 832 104 ) tex_common/weaponclip 0 0 0 -1 1 33554432 0 0
 }
-}
-// entity 3
-{
-"classname" "func_group"
-// brush 0
+// brush 2
 {
 ( 352 96 120 ) ( 128 96 120 ) ( 352 608 120 ) tex_common/nodraw 0 64 -90 1 1 0 128 0
 ( 368 96 64 ) ( 368 608 64 ) ( 368 96 32 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
@@ -62,11 +46,7 @@
 ( 260 960 120 ) ( 352 960 104 ) ( 260 832 120 ) tex_common/nodraw 0 64 -90 1 1 0 128 0
 ( 352 960 104 ) ( 368 960 64 ) ( 352 832 104 ) tex_common/nodraw 0 0 0 -1 1 0 128 0
 }
-}
-// entity 4
-{
-"classname" "func_group"
-// brush 0
+// brush 3
 {
 ( 352 96 120 ) ( 128 96 120 ) ( 352 608 120 ) tex_common/actorclip 0 64 -90 1 1 65536 0 0
 ( 368 96 64 ) ( 368 608 64 ) ( 368 96 32 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
@@ -83,4 +63,12 @@
 ( 260 960 120 ) ( 352 960 104 ) ( 260 832 120 ) tex_common/actorclip 0 64 -90 1 1 65536 0 0
 ( 352 960 104 ) ( 368 960 64 ) ( 352 832 104 ) tex_common/actorclip 0 0 0 -1 1 65536 0 0
 }
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "258 436 36"
+"model" "models/aircraft/drop_herakles/herakles_pod.md2"
+"spawnflags" "255"
+"angle" "-90"
 }
