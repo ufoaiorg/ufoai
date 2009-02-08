@@ -207,7 +207,7 @@ entity light {
 
 	mandatory {
 		_color		"Colour for the light RGB"
-		light		"Intensity 0-255"
+		light		"Intensity (e.g. 300) - the entity_scale is applied to these values"
 		origin		"position"
 	}
 
@@ -219,6 +219,7 @@ entity light {
 
 	default {
 		_cone		"10"
+		light		"300"
 	}
 
 	type {
@@ -236,7 +237,7 @@ entity light_spot {
 
 	mandatory {
 		_color		"Color for the light RGB"
-		light		"Intensity 0-255"
+		light		"Intensity (e.g. 300) - the entity_scale is applied to these values"
 		origin		"position"
 	}
 
@@ -248,6 +249,7 @@ entity light_spot {
 
 	default {
 		_cone		"10"
+		light		"300"
 	}
 
 	type {
