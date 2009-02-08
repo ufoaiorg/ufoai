@@ -214,7 +214,6 @@ entity light {
 	optional {
 		target		"Entity target name (e.g. info_null)"
 		_cone		""
-		angle		"Special values: UP -1; DOWN -2"
 		spawnflags	"Whether the light is in the day version"
 	}
 
@@ -237,7 +236,7 @@ entity light_spot {
 	spawnflags	"day"
 
 	mandatory {
-		color		"Color for the light RGB"
+		_color		"Color for the light RGB"
 		light		"Intensity 0-255"
 		origin		"position"
 	}
@@ -245,11 +244,11 @@ entity light_spot {
 	optional {
 		angle		"Special values: UP -1 and DOWN -2"
 		target		"Entity target name (e.g. info_null)"
-		cone		""
+		_cone		""
 	}
 
 	default {
-		cone		"10"
+		_cone		"10"
 	}
 
 	type {
