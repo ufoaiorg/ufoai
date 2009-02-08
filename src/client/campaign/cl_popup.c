@@ -355,11 +355,11 @@ void CL_DisplayPopupIntercept (mission_t* mission, aircraft_t* ufo)
 			/* if dependencies of hangar are missing, you can't send aircraft */
 			switch (air->size) {
 			case AIRCRAFT_SMALL:
-				if (!base->hasBuilding[B_SMALL_HANGAR])
+				if (!B_GetBuildingStatus(base, B_SMALL_HANGAR))
 					continue;
 				break;
 			case AIRCRAFT_LARGE:
-				if (!base->hasBuilding[B_HANGAR])
+				if (!B_GetBuildingStatus(base, B_HANGAR))
 					continue;
 				break;
 			default:
