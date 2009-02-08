@@ -944,11 +944,12 @@ void CP_MissionNotifyBaseDestroyed (const base_t *base)
 
 	for (; list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
+		/* Check if this is a base attack mission attacking this base */
 		if (mission->category == INTERESTCATEGORY_BASE_ATTACK && mission->data) {
 			base_t *missionBase = (base_t *) mission->data;
 			if (base == missionBase) {
 				/* Aimed base has been destroyed, abort mission */
-				CP_MissionRemove(mission);
+				CP_BaseAttackMissionLeave(mission);
 			}
 		}
 	}

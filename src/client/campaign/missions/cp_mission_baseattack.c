@@ -97,9 +97,27 @@ void CP_BaseAttackMissionStart (mission_t *mission)
  */
 void CP_BaseAttackMissionLeave (mission_t *mission)
 {
-	base_t *base;
-
 	mission->stage = STAGE_RETURN_TO_ORBIT;
+
+	if (mission->ufo) {
+		CP_MissionDisableTimeLimit(mission);
+		UFO_SetRandomDest(mission->ufo);
+		/* Display UFO on geoscape if it is detected */
+		mission->ufo->landed = qfalse;
+	} else {
+		/* Go to next stage on next frame */
+		mission->finalDate = ccs.date;
+	}
+}
+
+/**
+ * @brief Base attack mission ends: UFO leave earth.
+ * @note Base attack mission -- Stage 3
+ * @note UFO attacking this base will be redirected when notify function will be called, don't set new destination here.
+ */
+static void CP_BaseAttackMissionDestroyBase (mission_t *mission)
+{
+	base_t *base;
 
 	base = (base_t *)mission->data;
 	assert(base);
@@ -149,7 +167,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, B_COMMAND)) {
 		/** @todo handle command centre properly */
 		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no Command Center: it can't defend itself. Destroy base.\n", base->name);
-		CP_BaseAttackMissionLeave(mission);
+		CP_BaseAttackMissionDestroyBase(mission);
 		return;
 	}
 
@@ -178,7 +196,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	if (!hiredSoldiersInBase) {
 		Com_DPrintf(DEBUG_CLIENT, "CP_BaseAttackStartMission: Base '%s' has no soldiers: it can't defend itself. Destroy base.\n", base->name);
-		CP_BaseAttackMissionLeave(mission);
+		CP_BaseAttackMissionDestroyBase(mission);
 		return;
 	}
 
@@ -354,7 +372,7 @@ void CP_BaseAttackMissionNextStage (mission_t *mission)
 		break;
 	case STAGE_BASE_ATTACK:
 		/* Leave earth */
-		CP_BaseAttackMissionLeave(mission);
+		CP_BaseAttackMissionDestroyBase(mission);
 		break;
 	case STAGE_RETURN_TO_ORBIT:
 		/* mission is over, remove mission */
