@@ -486,7 +486,7 @@ qboolean MN_CursorOnMenu (int x, int y)
 	const menuNode_t *hovered = MN_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
-		if (hovered == hovered->menu->u.window.renderNode) {
+		if (hovered->menu && hovered == hovered->menu->u.window.renderNode) {
 			return qfalse;
 		}
 		return qtrue;
