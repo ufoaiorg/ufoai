@@ -55,7 +55,6 @@ void CP_BaseAttackMissionIsSuccess (mission_t *mission)
 
 /**
  * @brief Base attack mission is over and is a failure (from an alien point of view): change interest values.
- * @note Base attack mission
  */
 void CP_BaseAttackMissionIsFailure (mission_t *mission)
 {
@@ -68,7 +67,8 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	gd.mapAction = MA_NONE;
 
 	/* we really don't want to use the fake aircraft anywhere */
-	base->aircraftCurrent = &base->aircraft[0];
+	if (base)
+		base->aircraftCurrent = &base->aircraft[0];
 	cls.missionaircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
