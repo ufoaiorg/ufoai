@@ -148,7 +148,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 				return NULL;
 			}
 			MN_InsertMenuIntoStack(menu, parentPos + 1);
-			menu->parent = mn.menuStack[parentPos];
+			menu->u.window.parent = mn.menuStack[parentPos];
 		} else
 			mn.menuStack[mn.menuStackPos++] = menu;
 	else
@@ -297,7 +297,7 @@ static void MN_CloseAllMenu (void)
 			MN_ExecuteEventActions(menu, menu->u.window.onClose);
 
 		/* safe: unlink window */
-		menu->parent = NULL;
+		menu->u.window.parent = NULL;
 		mn.menuStackPos--;
 		mn.menuStack[mn.menuStackPos] = NULL;
 	}
@@ -328,19 +328,19 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 	/* close child */
 	while (i + 1 < mn.menuStackPos) {
 		menuNode_t *m = mn.menuStack[i + 1];
-		if (m->parent != menu) {
+		if (m->u.window.parent != menu) {
 			break;
 		}
 		if (m->u.window.onClose)
 			MN_ExecuteEventActions(m, m->u.window.onClose);
-		m->parent = NULL;
+		m->u.window.parent = NULL;
 		MN_RemoveMenuAtPositionFromStack(i + 1);
 	}
 
 	/* close the menu */
 	if (menu->u.window.onClose)
 		MN_ExecuteEventActions(menu, menu->u.window.onClose);
-	menu->parent = NULL;
+	menu->u.window.parent = NULL;
 	MN_RemoveMenuAtPositionFromStack(i);
 
 	MN_InvalidateMouse();
@@ -376,8 +376,8 @@ void MN_PopMenu (qboolean all)
 		MN_CloseAllMenu();
 	} else {
 		menuNode_t *mainMenu = mn.menuStack[mn.menuStackPos - 1];
-		if (mainMenu->parent)
-			mainMenu = mainMenu->parent;
+		if (mainMenu->u.window.parent)
+			mainMenu = mainMenu->u.window.parent;
 		MN_CloseMenuByRef(mainMenu);
 	}
 

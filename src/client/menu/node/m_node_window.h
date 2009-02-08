@@ -43,6 +43,8 @@ typedef struct {
 	qboolean preventTypingEscape;
 	qboolean modal;
 
+	struct menuNode_s *parent;	/**< to create child window */
+
 	/** @todo we can remove it if we create a node for the battlescape */
 	struct menuNode_s *renderNode;
 
