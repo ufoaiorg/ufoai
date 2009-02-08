@@ -430,6 +430,36 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	glEnable(GL_TEXTURE_2D);
 }
 
+void R_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern)
+{
+	float nx, ny, nw, nh;
+
+	nx = x * viddef.rx;
+	ny = y * viddef.ry;
+	nw = w * viddef.rx;
+	nh = h * viddef.ry;
+
+	R_ColorBlend(color);
+
+	glDisable(GL_TEXTURE_2D);
+	glLineWidth(lineWidth);
+	glLineStipple(2, pattern);
+	glEnable(GL_LINE_STIPPLE);
+
+	glBegin(GL_LINE_LOOP);
+	glVertex2f(nx, ny);
+	glVertex2f(nx + nw, ny);
+	glVertex2f(nx + nw, ny + nh);
+	glVertex2f(nx, ny + nh);
+	glEnd();
+
+	glEnable(GL_TEXTURE_2D);
+	glLineWidth(1.0f);
+	glDisable(GL_LINE_STIPPLE);
+
+	R_ColorBlend(NULL);
+}
+
 /**
  * @brief Draw the day and night images of a flat geoscape
  * multitexture feature is used to blend the images
