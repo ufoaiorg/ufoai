@@ -106,6 +106,12 @@ static void Eclass_ParseAttribute (EntityClass *e, const char **text, bool manda
 	} while (*token != '}');
 }
 
+/**
+ * Parses default values for entity parameters
+ * @param e The entity class to add the default values to
+ * @param text The text to parse the default values from
+ * @sa GetDefaultValueForParameter
+ */
 static void Eclass_ParseDefault (EntityClass *e, const char **text)
 {
 	const char *token;
