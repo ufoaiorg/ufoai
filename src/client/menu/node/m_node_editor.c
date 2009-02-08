@@ -89,7 +89,7 @@ static void MN_EditorNodeDraw (menuNode_t *node)
 		if (anchoredNode)
 			MN_EditorNodeGetElementAtPosition(anchoredNode, mousePosX, mousePosY);
 		if (s == -1 || s == 4)
-			hovered = MN_GetNodeByPosition(mousePosX, mousePosY);
+			hovered = MN_GetNodeAtPosition(mousePosX, mousePosY);
 	}
 
 	if (hovered && hovered != anchoredNode)
@@ -162,7 +162,7 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 {
 	menuNode_t* hovered;
 
-	hovered = MN_GetNodeByPosition(mousePosX, mousePosY);
+	hovered = MN_GetNodeAtPosition(mousePosX, mousePosY);
 	if (hovered == anchoredNode)
 		hovered = NULL;
 

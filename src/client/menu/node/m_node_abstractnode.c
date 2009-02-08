@@ -112,16 +112,19 @@ static const value_t properties[] = {
  */
 void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 {
-	if (!node)
-		Sys_Error("MN_GetNodeAbsPos: No node given");
-	if (!node->menu)
-		Sys_Error("MN_GetNodeAbsPos: Node '%s' has no menu", node->name);
+	assert (node);
+	assert (pos);
 
 	/* if we request the position of an undrawable node, there is a problem */
 	if (node->behaviour->isVirtual)
-		Sys_Error("MN_GetNodeAbsPos: Node '%s' dont have position", node->name);
+		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
 
-	Vector2Set(pos, node->menu->pos[0] + node->pos[0], node->menu->pos[1] + node->pos[1]);
+	Vector2Set(pos, 0, 0);
+	while (node) {
+		pos[0] += node->pos[0];
+		pos[1] += node->pos[1];
+		node = node->parent;
+	}
 }
 
 /**
@@ -133,6 +136,8 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 {
 	assert(node != NULL);
+	/* if we request the position of an undrawable node, there is a problem */
+	assert (node->behaviour->isVirtual == qfalse);
 	assert(x != NULL);
 	assert(y != NULL);
 
@@ -140,8 +145,11 @@ void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 	if (node->behaviour->isVirtual)
 		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
 
-	*x -= node->menu->pos[0] + node->pos[0];
-	*y -= node->menu->pos[1] + node->pos[1];
+	while (node) {
+		*x -= node->pos[0];
+		*y -= node->pos[1];
+		node = node->parent;
+	}
 }
 
 /**

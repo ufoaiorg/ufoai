@@ -161,6 +161,50 @@ static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
 	tooltipVisible = qtrue;
 }
 
+static void MN_DrawNode (menuNode_t *node) {
+	vec2_t nodepos;
+	menuNode_t *child;
+
+	/* skip invisible, virtual, and undrawable nodes */
+	if (node->invis || node->behaviour->isVirtual)
+		return;
+	/* if construct */
+	if (!MN_CheckVisibility(node))
+		return;
+
+	/** @todo remove it when its possible */
+	MN_GetNodeAbsPos(node, nodepos);
+
+	/* check node size x and y value to check whether they are zero */
+	if (node->size[0] && node->size[1]) {
+		if (node->bgcolor) {
+			/** @todo remove it when its possible */
+			R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], 0, node->bgcolor);
+		}
+		if (node->border && node->bordercolor) {
+			/** @todo remove it when its possible */
+			MN_DrawBorder(node);
+		}
+	}
+
+	/** @todo remove it when its possible */
+	if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
+		MN_DrawBorder(node);
+
+	/* draw the node */
+	if (node->behaviour->draw) {
+		node->behaviour->draw(node);
+	}
+
+	/** @todo remove it when its possible */
+	R_ColorBlend(NULL);
+
+	/* draw all child */
+	for (child = node->firstChild; child; child = child->next) {
+		MN_DrawNode(child);
+	}
+}
+
 /**
  * @brief Draws the menu stack
  * @todo move DrawMenusTest here
@@ -172,7 +216,6 @@ void MN_DrawMenus (void)
 	menuNode_t *menu;
 	int windowId;
 	qboolean mouseMoved = qfalse;
-	vec2_t nodepos;
 	static const vec4_t modalBackground = {0, 0, 0, 0.6};
 
 	assert(mn.menuStackPos >= 0);
@@ -199,8 +242,9 @@ void MN_DrawMenus (void)
 
 	/* draw all visible menus */
 	for (;windowId < mn.menuStackPos; windowId++) {
-		menuNode_t *node;
 		menu = mn.menuStack[windowId];
+
+		/** @todo move it into the window behaviour */
 		/* event node */
 		if (menu->u.window.onTimeOut) {
 			if (menu->u.window.eventNode->timeOut > 0 && (menu->u.window.eventNode->timeOut == 1 || (!menu->u.window.eventTime || (menu->u.window.eventTime + menu->u.window.eventNode->timeOut < cls.realtime)))) {
@@ -212,6 +256,7 @@ void MN_DrawMenus (void)
 			}
 		}
 
+		/** @todo move it into the window behaviour */
 		/** draker background if last window is a modal */
 		if (menu->u.window.modal && windowId == mn.menuStackPos - 1) {
 			R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
@@ -219,47 +264,12 @@ void MN_DrawMenus (void)
 
 		MN_CaptureDrawOver(NULL);
 
-		for (node = menu->firstChild; node; node = node->next) {
-			/* skip invisible, virtual, and undrawable nodes */
-			if (node->invis || node->behaviour->isVirtual || !node->behaviour->draw)
-				continue;
-
-			/* if construct */
-			if (!MN_CheckVisibility(node))
-				continue;
-
-			/** @todo remove it when its possible */
-			MN_GetNodeAbsPos(node, nodepos);
-
-			/* check node size x and y value to check whether they are zero */
-			if (node->size[0] && node->size[1]) {
-				if (node->bgcolor) {
-					/** @todo remove it when its possible */
-					R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], 0, node->bgcolor);
-				}
-				if (node->border && node->bordercolor)
-					/** @todo remove it when its possible */
-					MN_DrawBorder(node);
-			}
-
-			/** @todo remove it when its possible */
-			if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
-				MN_DrawBorder(node);
-
-			/* draw the node */
-			if (node->behaviour->draw) {
-				node->behaviour->draw(node);
-			}
-
-			/** @todo remove it when its possible */
-			R_ColorBlend(NULL);
-		}	/* for */
+		MN_DrawNode(menu);
 
 		/* draw the node */
 		if (drawOverNode && drawOverNode->behaviour->drawOverMenu) {
 			drawOverNode->behaviour->drawOverMenu(drawOverNode);
 		}
-
 	}
 
 	/* draw tooltip */

@@ -163,79 +163,85 @@ qboolean MN_CheckMouseMove (void)
 /**
  * @brief Check if a position is inner a node
  * @param[in] node The node to test
- * @param[in] x absolute x position on the screen
- * @param[in] y absolute y position on the screen
+ * @param[in] rx Relative x position on the node
+ * @param[in] ry Relative y position to the node
  * @todo Move it on a better file.c
  */
-static qboolean MN_IsInnerNode (const menuNode_t* const node, int x, int y)
+static inline qboolean MN_IsInnerNode (const menuNode_t* const node, int rx, int ry)
 {
 	int i;
-	/* relative position */
-	x -= node->menu->pos[0];
-	y -= node->menu->pos[1];
 
 	/* check bounding box */
-	if (x < node->pos[0] || x >= node->pos[0] + node->size[0]
-	 || y < node->pos[1] || y >= node->pos[1] + node->size[1]) {
+	if (rx < 0 || ry < 0 || rx >= node->size[0] || ry >= node->size[1])
 		return qfalse;
-	}
-
-	/* relative to the node */
-	x -= node->pos[0];
-	y -= node->pos[1];
 
 	/* check excluded box */
 	for (i = 0; i < node->excludeRectNum; i++) {
-		if (x >= node->excludeRect[i].pos[0]
-		 && x < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
-		 && y >= node->excludeRect[i].pos[1]
-		 && y < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+		if (rx >= node->excludeRect[i].pos[0]
+		 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
+		 && ry >= node->excludeRect[i].pos[1]
+		 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
 			return qfalse;
 	}
 	return qtrue;
 }
 
 /**
- * @brief Return the first visible node at a possition
+ * @brief Return the first visible node at a position
+ * @param[in] node Node where we must search
+ * @param[in] rx Relative x position to the parent of the node
+ * @param[in] ry Relative y position to the parent of the node
+ * @return The first visible node at position, else NULL
  */
-menuNode_t *MN_GetNodeByPosition (int x, int y)
+static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
 {
-	menuNode_t *menu;
-	int sp;
-	menuNode_t *node;
 	menuNode_t *find;
+	menuNode_t *child;
+
+	if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
+		return NULL;
+
+	/* relative to the node */
+	rx -= node->pos[0];
+	ry -= node->pos[1];
+
+	if (!MN_IsInnerNode(node, rx, ry))
+		return NULL;
+
+	/** @todo we should improve the loop to search the right in first */
+	find = node;
+	for (child = node->firstChild; child; child = child->next) {
+		menuNode_t *tmp;
+		tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
+		if (tmp)
+			find = tmp;
+	}
+	return find;
+}
+
+/**
+ * @brief Return the first visible node at a position
+ */
+menuNode_t *MN_GetNodeAtPosition (int x, int y)
+{
+	int menuId;
 
 	/* find the first menu under the mouse */
-	menu = NULL;
-	for (sp = mn.menuStackPos-1; sp >= 0; sp--) {
-		menuNode_t *m = mn.menuStack[sp];
-		/* check mouse vs menu boundedbox */
-		if (x >= m->pos[0] && x <= m->pos[0] + m->size[0]
-		 && y >= m->pos[1] && y <= m->pos[1] + m->size[1]) {
-			menu = m;
-			break;
-		}
+	for (menuId = mn.menuStackPos - 1; menuId >= 0; menuId--) {
+		menuNode_t *menu = mn.menuStack[menuId];
+		menuNode_t *find;
 
-		if (m->u.window.modal) {
+		find = MN_GetNodeInTreeAtPosition(menu, x, y);
+		if (find)
+			return find;
+
+		if (menu->u.window.modal) {
 			/* we must not search anymore */
 			break;
 		}
 	}
 
-	/* find the first node under the mouse (last of the node list) */
-	find = NULL;
-	if (menu) {
-		/* check mouse vs node boundedbox */
-		for (node = menu->firstChild; node; node = node->next) {
-			if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
-				continue;
-			if (MN_IsInnerNode(node, x, y)) {
-				find = node;
-			}
-		}
-	}
-
-	return find;
+	return NULL;
 }
 
 /**
@@ -255,7 +261,7 @@ void MN_MouseMove (int x, int y)
 
 	MN_FocusRemove();
 
-	hoveredNode = MN_GetNodeByPosition(x, y);
+	hoveredNode = MN_GetNodeAtPosition(x, y);
 
 	/* update nodes: send 'in' and 'out' event */
 	if (oldHoveredNode != hoveredNode) {

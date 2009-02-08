@@ -179,7 +179,7 @@ item_t *MN_DNDGetItem (void)
  */
 static void MN_DNDMouseMove (int mousePosX, int mousePosY)
 {
-	menuNode_t *node = MN_GetNodeByPosition(mousePosX, mousePosY);
+	menuNode_t *node = MN_GetNodeAtPosition(mousePosX, mousePosY);
 
 	if (node != targetNode) {
 		if (nodeAcceptDND && targetNode) {

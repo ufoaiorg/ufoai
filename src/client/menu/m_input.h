@@ -40,7 +40,7 @@ void MN_MouseUp(int x, int y, int button);
 void MN_InvalidateMouse(void);
 qboolean MN_CheckMouseMove(void);
 struct menuNode_s *MN_GetHoveredNode(void);
-struct menuNode_s *MN_GetNodeByPosition (int x, int y);
+struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
 
 /* mouse capture */
 struct menuNode_s* MN_GetMouseCapture(void);
