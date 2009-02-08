@@ -728,6 +728,29 @@ static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e
 }
 
 /**
+ * @brief check targets exist (targetname), and check targetnames are targetted (target)
+ * @return qfalse if there is a problem.
+ */
+static qboolean Check_TargetExists(const epair_t *kvp)
+{
+	const char *thisKey = kvp->key;
+	const char *value = kvp->value;
+	const char *otherKey = !strcmp("target", thisKey) ? "targetname" : "target";
+	int i;
+
+	for (i = 0; i < num_entities; i++) {
+		entity_t *e = &entities[i];
+		const char *searchVal = ValueForKey(e, otherKey);
+
+		if (searchVal)
+			if (!strcmp(searchVal, value))
+				return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Perform an entity check
  */
 void CheckEntities (void)
@@ -767,6 +790,14 @@ void CheckEntities (void)
 			if (-1 == ED_CheckTypeKey(kd, kvp->value)) { /* check values against types declared in entities.ufo */
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "%s\n", ED_GetLastError());
 				continue;
+			}
+
+			if (!strcmp("target", kvp->key) || !strcmp("targetname", kvp->key)) {
+				if (!Check_TargetExists(kvp)) {
+					Check_Printf(VERB_NORMAL, qfalse, i, -1,
+						"%s with %s of %s: no corresponding entity with %s with matching value\n",
+						ed->classname, kvp->key, kvp->value, !strcmp("target", kvp->key) ? "targetname" : "target");
+				}
 			}
 
 		}
