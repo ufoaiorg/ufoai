@@ -228,6 +228,36 @@ static const char *ED_Constant2Type (int constInt)
 }
 
 /**
+ * @brief parses a value from the definition
+ * @param kd the key definition to parse from
+ * @param[out] v the array of int to put the answer in
+ * it must have enough space for n elements.
+ * @param n the number of elements expected in the vector
+ * @return -1 if n does not agree with the key def. call ED_GetLastError.
+ */
+int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
+{
+	int i;
+	const char *buf_p = kd->desc;
+	const char *tok;
+	for (i = 0; buf_p; i++) {
+		tok = COM_Parse (&buf_p);
+		if (*tok == '\0')
+			break; /* previous tok was the last real one, don't waste time */
+		if (i >= n) {
+			snprintf(lastErr, sizeof(lastErr), "ED_GetIntVector: supplied buffer v[%i] too small for the number of elements in key def \"%s\"", n, kd->name);
+			return -1;
+		}
+		v[i] = atoi(tok);
+	}
+	if (i != n) {
+			snprintf(lastErr, sizeof(lastErr), "ED_GetIntVector: supplied buffer v[%i] too large for the number of elements in key def \"%s\"", n, kd->name);
+			return -1;
+		}
+	return 0;
+}
+
+/**
  * @brief checks that a string represents a single number
  * @param insistPositive if 1, then tests for the number being greater than or equal to zero.
  * @sa ED_CheckNumericType

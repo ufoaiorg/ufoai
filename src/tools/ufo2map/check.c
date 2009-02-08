@@ -524,6 +524,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 
 static int checkStartPosition (entity_t *e, int entnum)
 {
+#if 0 /* this function will be properly removed when new ent check based on enties.ufo is finished */
 	int align = 16;
 	const char *val = ValueForKey(e, "classname");
 
@@ -534,6 +535,7 @@ static int checkStartPosition (entity_t *e, int entnum)
 		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "misaligned starting position - (%i: %i). The %s will be deleted\n", (int)e->origin[0], (int)e->origin[1], val);
 		return 1; /** @todo auto-align entity and check for intersection with brush */
 	}
+#endif
 	return 0;
 }
 
@@ -699,6 +701,33 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
 }
 
 /**
+ * @brief see if the entity is am actor start point
+ * @note starts with "info_" and contains "_start"
+ * @return qtrue if this is a start point
+ */
+static qboolean Check_IsInfoStart(const char *classname)
+{
+	return !strncmp(classname, "info_",5) && strstr(classname, "_start");
+}
+
+/**
+ * @brief check alignment using abstract size and mandatory origin
+ * @return qtrue if OK
+ * @todo check for brush intersection as well as alignment, and move
+ * to a good position if bad.
+ */
+static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e)
+{
+	static int size[6];
+	const entityKeyDef_t *sizeKd = ED_GetKeyDefEntity(ed, "size", 1); /* 1 means find abstract version of key */
+	if (-1 == ED_GetIntVector(sizeKd, size, (int)(sizeof(size)/sizeof(int))))
+		Sys_Error(ED_GetLastError());
+
+	return (((int)e->origin[0] - size[0]) % UNIT_SIZE == 0)
+		&& (((int)e->origin[1] - size[1]) % UNIT_SIZE == 0);
+}
+
+/**
  * @brief Perform an entity check
  */
 void CheckEntities (void)
@@ -720,11 +749,17 @@ void CheckEntities (void)
 			continue;
 		}
 
+		if (Check_IsInfoStart(name)) { /* check alignment of info_.+_start */
+				if (!Check_InfoStartAligned(ed, e)) {
+					Check_Printf(VERB_NORMAL, qfalse, i, -1, "Misaligned %s\n", name);
+				}
+		}
+
 		/* check all keys in the entity - make sure they are OK */
 		for (kvp = e->epairs; kvp; kvp = kvp->next) {
 			kd = ED_GetKeyDefEntity(ed, kvp->key, 0); /* zero means ignore abstract (radiant only) keys */
 
-			if (!kd) {
+			if (!kd) { /* make sure it has a definition */
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
 				continue;
 			}
@@ -733,6 +768,7 @@ void CheckEntities (void)
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "%s\n", ED_GetLastError());
 				continue;
 			}
+
 		}
 
 		/* check keys in the entity definition - make sure mandatory ones are present */

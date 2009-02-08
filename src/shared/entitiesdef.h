@@ -55,6 +55,7 @@ typedef struct entityDef_s {
 	int 			numKeyDefs;
 } entityDef_t;
 
+int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n);
 int ED_CheckType (const char *classname, const char *key, const char *value);
 int ED_CheckTypeKey (const entityKeyDef_t *kd, const char *value);
 const entityDef_t *ED_GetEntityDef (const char *classname);
