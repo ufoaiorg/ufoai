@@ -164,14 +164,14 @@
 {
 "classname" "light"
 "light" "300"
-"color" "0.9 0.95 1"
+"_color" "0.9 0.95 1"
 "origin" "140 320 116"
 }
 // entity 4
 {
 "classname" "light"
 "origin" "140 400 28"
-"color" "0.8 0.9 1"
+"_color" "0.8 0.9 1"
 "light" "250"
 }
 // entity 5
@@ -252,7 +252,7 @@
 {
 "classname" "light"
 "origin" "396 320 116"
-"color" "0.9 0.95 1"
+"_color" "0.9 0.95 1"
 "light" "300"
 }
 // entity 8
@@ -333,14 +333,14 @@
 {
 "classname" "light"
 "light" "300"
-"color" "0.9 0.95 1"
+"_color" "0.9 0.95 1"
 "origin" "652 320 116"
 }
 // entity 11
 {
 "classname" "light"
 "origin" "652 400 28"
-"color" "0.8 0.9 1"
+"_color" "0.8 0.9 1"
 "light" "250"
 }
 // entity 12
