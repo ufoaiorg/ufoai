@@ -102,19 +102,23 @@ static void Eclass_ParseAttribute (EntityClass *e, const char **text, bool manda
 			EntityClass_insertAttribute(*e, "particle", EntityClassAttribute("particle", "Particle", mandatory));
 		} else if (!strcmp(token, "noise")) {
 			EntityClass_insertAttribute(*e, "noise", EntityClassAttribute("noise", "Sound", mandatory));
-		} else if (!strcmp(token, "spawnflags")) {
-			gchar *flags;
-			token = COM_Parse(text);
-			if (!*text)
-				return;
-			flags = g_strdup(token);
-			Eclass_ParseFlags(e, (const char **)&flags);
-			g_free(flags);
 		}
 	} while (*token != '}');
 }
 
 static void Eclass_ParseDefault (EntityClass *e, const char **text)
+{
+	const char *token;
+	do {
+		token = COM_Parse(text);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+	} while (*token != '}');
+}
+
+static void Eclass_ParseType (EntityClass *e, const char **text)
 {
 	const char *token;
 	do {
@@ -155,6 +159,8 @@ static EntityClass *Eclass_InitFromText (const char **text)
 			Eclass_ParseAttribute(e, text, true);
 		} else if (!strcmp(token, "optional")) {
 			Eclass_ParseAttribute(e, text, false);
+		} else if (!strcmp(token, "type")) {
+			Eclass_ParseType(e, text);
 		} else if (!strcmp(token, "default")) {
 			Eclass_ParseDefault(e, text);
 		} else {
