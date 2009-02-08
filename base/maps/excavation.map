@@ -9794,6 +9794,7 @@
 "classname" "light"
 "light" "120"
 "origin" "190 99 198"
+"_color" "1 1 1"
 }
 // entity 108
 {

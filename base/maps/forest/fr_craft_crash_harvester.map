@@ -3285,7 +3285,7 @@
 // entity 1
 {
 "classname" "info_alien_start"
-"origin" "688 992 26"
+"origin" "688 1008 26"
 "angle" "-7.25714"
 }
 // entity 2
@@ -4010,7 +4010,7 @@
 // entity 68
 {
 "classname" "info_alien_start"
-"origin" "78.994 752.9 32"
+"origin" "80 752 32"
 "angle" "-175.197"
 }
 // entity 69
