@@ -7690,3 +7690,9 @@
 ( -363 -200 32 ) ( -363 -262 32 ) ( -367 -262 34 ) tex_nature/snow002 0 8 0 0.5 0.5 65282 0 0
 }
 }
+// entity 162
+{
+"classname" "misc_model"
+"origin" "-104 32 20"
+"model" "models/objects/snowman/snowman.md2"
+}
