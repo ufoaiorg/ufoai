@@ -386,13 +386,6 @@ static int checkFuncDoor (entity_t *e, int entnum)
 
 static int checkFuncBreakable (entity_t *e, int entnum)
 {
-	checkEntityLevelFlags(e, entnum);
-	checkEntityNotSet(e, entnum, "angles");
-	checkEntityNotSet(e, entnum, "angle");
-
-	if (e->numbrushes > 1) {
-		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
-	}
 
 	return 0;
 }
@@ -726,15 +719,17 @@ static qboolean Check_TargetExists(const epair_t *kvp)
 	return qfalse;
 }
 
-static void Check_EntityWithBrushes(entity_t *e, int entnum)
+static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entnum)
 {
 	if (!e->numbrushes) {
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", ValueForKey(e,"classname"));
+		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", classname);
 		e->skip = qtrue;
 		return;
 	}
 
-
+	if (!strcmp(classname, "func_breakable") && (e->numbrushes > 1)) {
+		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
+	}
 
 }
 
@@ -767,7 +762,7 @@ void CheckEntities (void)
 		}
 
 		if (!strncmp("func_", name, 5)) /* func_* entities should have brushes */
-			Check_EntityWithBrushes(e, i);
+			Check_EntityWithBrushes(e, name, i);
 
 		/* check all keys in the entity - make sure they are OK */
 		for (kvp = e->epairs; kvp; kvp = kvp->next) {
@@ -797,8 +792,10 @@ void CheckEntities (void)
 		for (kd = ed->keyDefs; kd->name; kd++) {
 			if (kd->flags & ED_MANDATORY) {
 				const char *keyNameInEnt = ValueForKey(e, kd->name);
-				if(*keyNameInEnt == '\0')
+				if(*keyNameInEnt == '\0') {
 					Check_Printf(VERB_NORMAL, qfalse, i, -1, "Mandatory key missing from entity: %s in %s\n", kd->name, name);
+					/** @todo supply default values */
+				}
 			}
 		}
 
