@@ -358,22 +358,8 @@ static int checkEntityNotSet (const entity_t *e, int entnum, const char *var)
 	return 0;
 }
 
-static int checkEntityZeroBrushes (const entity_t *e, int entnum)
-{
-	if (!e->numbrushes) {
-		const char *name = ValueForKey(e, "classname");
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", name);
-		return 1;
-	}
-	return 0;
-}
-
-/** @brief a slightly pointless test, but nice to have one, as it
- * stops a compiler warning */
 static int checkWorld (entity_t *e, int entnum)
 {
-	if (!e->numbrushes)
-		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "worldspawn with no brushes given - unusual, but may be OK if there are func_groups\n");
 	return 0;
 }
 
@@ -387,9 +373,6 @@ static int checkFuncRotating (entity_t *e, int entnum)
 	checkEntityLevelFlags(e, entnum);
 	checkEntityNotSet(e, entnum, "angles");
 
-	if (checkEntityZeroBrushes(e, entnum))
-		return 1;
-
 	return 0;
 }
 
@@ -397,9 +380,6 @@ static int checkFuncDoor (entity_t *e, int entnum)
 {
 	checkEntityLevelFlags(e, entnum);
 	checkEntityNotSet(e, entnum, "angles");
-
-	if (checkEntityZeroBrushes(e, entnum))
-		return 1;
 
 	return 0;
 }
@@ -410,9 +390,7 @@ static int checkFuncBreakable (entity_t *e, int entnum)
 	checkEntityNotSet(e, entnum, "angles");
 	checkEntityNotSet(e, entnum, "angle");
 
-	if (checkEntityZeroBrushes(e, entnum)) {
-		return 1;
-	} else if (e->numbrushes > 1) {
+	if (e->numbrushes > 1) {
 		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
 	}
 
@@ -478,8 +456,6 @@ static int checkFuncGroup (entity_t *e, int entnum)
 		/* the  map writer will check and tack them onto the end of the worldspawn */
 		return FUNC_GROUP_MOVE_TO_WORLD;
 	}
-	if (checkEntityZeroBrushes(e, entnum))
-		return FUNC_GROUP_EMPTY_DELETE;
 	return FUNC_GROUP_NO_PROBLEM;
 }
 
@@ -750,6 +726,18 @@ static qboolean Check_TargetExists(const epair_t *kvp)
 	return qfalse;
 }
 
+static void Check_EntityWithBrushes(entity_t *e, int entnum)
+{
+	if (!e->numbrushes) {
+		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", ValueForKey(e,"classname"));
+		e->skip = qtrue;
+		return;
+	}
+
+
+
+}
+
 /**
  * @brief Perform an entity check
  */
@@ -767,7 +755,7 @@ void CheckEntities (void)
 		epair_t *kvp;
 		const entityKeyDef_t *kd;
 
-		if (!ed) {
+		if (!ed) { /* check that a definition exists */
 			Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s\n", name);
 			continue;
 		}
@@ -777,6 +765,9 @@ void CheckEntities (void)
 					Check_Printf(VERB_NORMAL, qfalse, i, -1, "Misaligned %s\n", name);
 				}
 		}
+
+		if (!strncmp("func_", name, 5)) /* func_* entities should have brushes */
+			Check_EntityWithBrushes(e, i);
 
 		/* check all keys in the entity - make sure they are OK */
 		for (kvp = e->epairs; kvp; kvp = kvp->next) {
