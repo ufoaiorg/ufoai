@@ -113,23 +113,9 @@ menu checkcvars
 		size		"777 402"
 		dragbutton	true
 		modal		true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"777 402"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Initial settings"
-		pos			"12 12"
-		size		"755 37"
-		font		f_big
-		textalign	cc
 	}
 
 	string name_label
@@ -322,23 +308,9 @@ menu popup_tipoftheday
 		pos			"38 456"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Tip of the day"
-		pos			"12 12"
-		size		"474 35"
-		font		f_big
-		textalign	 cc
 	}
 
 	checkbox activate

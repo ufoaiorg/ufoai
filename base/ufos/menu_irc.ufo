@@ -166,23 +166,9 @@ menu irc_popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Not connected"
-		font		f_big
-		pos			"47 17"
-		size		"405 28"
-		textalign	cc
 	}
 
 	string popup_text

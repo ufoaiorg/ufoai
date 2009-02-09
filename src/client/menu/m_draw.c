@@ -216,7 +216,6 @@ void MN_DrawMenus (void)
 	menuNode_t *menu;
 	int windowId;
 	qboolean mouseMoved = qfalse;
-	static const vec4_t modalBackground = {0, 0, 0, 0.6};
 
 	assert(mn.menuStackPos >= 0);
 
@@ -244,29 +243,11 @@ void MN_DrawMenus (void)
 	for (;windowId < mn.menuStackPos; windowId++) {
 		menu = mn.menuStack[windowId];
 
-		/** @todo move it into the window behaviour */
-		/* event node */
-		if (menu->u.window.onTimeOut) {
-			if (menu->u.window.eventNode->timeOut > 0 && (menu->u.window.eventNode->timeOut == 1 || (!menu->u.window.eventTime || (menu->u.window.eventTime + menu->u.window.eventNode->timeOut < cls.realtime)))) {
-				menu->u.window.eventTime = cls.realtime;
-				MN_ExecuteEventActions(menu, menu->u.window.onTimeOut);
-#ifdef DEBUG
-				Com_DPrintf(DEBUG_CLIENT, "Event node '%s' '%i\n", menu->u.window.eventNode->name, menu->u.window.eventNode->timeOut);
-#endif
-			}
-		}
-
-		/** @todo move it into the window behaviour */
-		/** draker background if last window is a modal */
-		if (menu->u.window.modal && windowId == mn.menuStackPos - 1) {
-			R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
-		}
-
-		MN_CaptureDrawOver(NULL);
+		drawOverNode = NULL;
 
 		MN_DrawNode(menu);
 
-		/* draw the node */
+		/* draw a node over the menu */
 		if (drawOverNode && drawOverNode->behaviour->drawOverMenu) {
 			drawOverNode->behaviour->drawOverMenu(drawOverNode);
 		}

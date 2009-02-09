@@ -520,27 +520,15 @@ menu popup_maintain_resolution
 		pos	"264 262"
 		size	"496 247"
 		dragbutton true
+		image	menu/popup_alpha_tile
+		blend	true
+		string	"_Maintain resolution"
 	}
 
 	zone popup
 	{
 		invis false
 		timeout 4000	/**< @todo check if it work */
-	}
-
-	windowpanel back
-	{
-		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
-		blend	true
-	}
-
-	string title
-	{
-		string	"_Maintain resolution"
-		pos	"26 18"
-		font	f_big
 	}
 
 	string name_label

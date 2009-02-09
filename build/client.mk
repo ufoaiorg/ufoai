@@ -139,7 +139,6 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_todo.c \
 	client/menu/node/m_node_vscrollbar.c \
 	client/menu/node/m_node_window.c \
-	client/menu/node/m_node_windowpanel.c \
 	client/menu/node/m_node_zone.c \
 	\
 	common/cmd.c \

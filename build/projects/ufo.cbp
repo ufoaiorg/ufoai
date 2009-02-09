@@ -269,10 +269,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_employee.h" />
-		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_event.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -372,6 +368,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_base_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_employee_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_geoscape_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -748,10 +748,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_window.h" />
-		<Unit filename="..\..\src\client\menu\node\m_node_windowpanel.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\node\m_node_windowpanel.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_zone.c">
 			<Option compilerVar="CC" />
 		</Unit>

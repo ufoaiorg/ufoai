@@ -250,21 +250,9 @@ menu quickload
 	{
 		pos	"264 262"
 		size	"496 247"
-	}
-
-	windowpanel back
-	{
 		image	menu/popup_alpha_tile
-		pos	"0 0"
-		size	"496 247"
 		blend	true
-	}
-
-	string title
-	{
 		string	"_Reload campaign"
-		pos	"26 18"
-		font	f_big
 	}
 
 	string name_label

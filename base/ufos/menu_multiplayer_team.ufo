@@ -965,24 +965,11 @@ menu mp_team_save_popup
 		dragbutton	true
 		closebutton	true
 		modal		true
+		image		menu/popup_alpha_tile
+		blend		true
+		string		"_Save your team"
 	}
 
-	windowpanel back
-	{
-		image	menu/popup_alpha_tile
-		pos		"0 0"
-		size	"360 496"
-		blend	true
-	}
-
-	string title
-	{
-		string	"_Save your team"
-		pos		"0 0"
-		size	"360 60"
-		textalign	cc
-		font	f_big
-	}
 
 	// ==========================
 	// SLOTS

@@ -241,21 +241,9 @@ menu popup_recoverybaselist
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Select base for UFO recovery"
-		pos			"26 18"
-		font		f_big
 	}
 
 	text cp_uforecovery_baselist
@@ -334,23 +322,9 @@ menu popup_recoverynationlist
 		size		"777 402"
 		dragbutton	true
 		modal		true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"777 402"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Select nation for UFO recovery"
-		pos			"30 15"
-		size		"717 30"
-		font		f_big
-		textalign	cc
 	}
 
 	string name_label

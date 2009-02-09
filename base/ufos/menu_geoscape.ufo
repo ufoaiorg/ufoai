@@ -690,16 +690,11 @@ menu popup_list
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
 	}
 
+	/** @todo please use a cvar and move it into the "string" menu property */
 	text title
 	{
 		pos			"176 18"
@@ -756,16 +751,11 @@ menu popup_button
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
 	}
 
+	/** @todo please use a cvar and move it into the "string" menu property */
 	text title
 	{
 		pos			"248 30"
@@ -843,22 +833,9 @@ menu popup_intercept_ready
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Ready"
-		pos			"26 18"
-		size		"400 25"
-		font		f_big
 	}
 
 	string name_label
@@ -931,22 +908,9 @@ menu popup_baseattack
 		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Base is under attack"
-		pos			"26 18"
-		size		"400 25"
-		font		f_big
 	}
 
 	text description
@@ -1012,22 +976,9 @@ menu popup_transferbaselist
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Select base to transfer to"
-		pos			"26 18"
-		size		"400 25"
-		font		f_big
 	}
 
 	string info
@@ -1074,22 +1025,9 @@ menu popup_newbase
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_New base"
-		pos			"26 18"
-		size		"400 25"
-		font		f_big
 	}
 
 	string name_label
@@ -1210,22 +1148,9 @@ menu popup_newinstallation_type
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_New installation"
-		pos			"26 18"
-		size		"400 25"
-		font		f_big
 	}
 
 	string type_label
@@ -1390,13 +1315,7 @@ menu popup_newinstallation
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
 	}
 
@@ -1522,13 +1441,7 @@ menu radartower
 		pos			"284 282"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
 	}
 
@@ -1567,22 +1480,9 @@ menu popup_installationstatus
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Installation Status"
-		pos			"26 17"
-		size		"420 30"
-		font		f_big
 	}
 
 	string name_label
@@ -1682,13 +1582,7 @@ menu popup_intercept
 		pos			"124 192"
 		size		"777 402"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"777 402"
 		blend		true
 	}
 
@@ -1801,23 +1695,9 @@ menu popup_mission
 		pos			"124 192"
 		size		"777 402"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"777 402"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Select aircraft"
-		pos			"27 17"
-		size		"700 28"
-		font		f_big
-		textalign	uc
 	}
 
 	string name_label
@@ -1887,22 +1767,9 @@ menu popup_multi_selection
 		size		"496 247"
 		dragbutton	true
 		modal		true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Select item"
-		pos			"26 18"
-		size		"440 25"
-		font		f_big
 	}
 
 	string type_label
@@ -1959,22 +1826,9 @@ menu popup_aircraft
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Aircraft"
-		pos			"26 14"
-		size		"440 30"
-		font		f_big
 	}
 
 	string action_label
@@ -2027,16 +1881,11 @@ menu popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 247"
 		blend		true
 	}
 
+	/** @todo please use a cvar and move it into "string" menu property */
 	text title
 	{
 		textid		TEXT_POPUP
@@ -2088,14 +1937,9 @@ menu messageoptions
 		dragbutton	true
 		closebutton	true
 		modal		true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"496 496"
 		blend		true
+		string		"_Pause/message settings"
 	}
 
 	button button_apply
@@ -2124,14 +1968,6 @@ menu messageoptions
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
 		click		{ cmd "mn_pop;" }
-	}
-
-	string title
-	{
-		string		"_Pause/message settings"
-		pos			"34 18"
-		size		"420 25"
-		font		f_big
 	}
 
 	string header_messagetype

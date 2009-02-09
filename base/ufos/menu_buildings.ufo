@@ -126,23 +126,9 @@ menu popup_buildingpreview
 		pos			"38 456"
 		size		"526 237"
 		dragbutton	true
-	}
-
-	windowpanel back
-	{
 		image		menu/popup_alpha_tile
-		pos			"0 0"
-		size		"526 237"
 		blend		true
-	}
-
-	string title
-	{
 		string		"_Building preview"
-		pos			"13 13"
-		size		"500 34"
-		font		f_big
-		textalign	cc
 	}
 
 	// ==================
