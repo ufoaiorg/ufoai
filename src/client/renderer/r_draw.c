@@ -430,14 +430,26 @@ void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 	glEnable(GL_TEXTURE_2D);
 }
 
-void R_DrawRect(int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern)
+/**
+ * @brief Draws a rect to the screen. Also has support for stippled rendering of the rect.
+ *
+ * @param[in] x X-position of the rect
+ * @param[in] y Y-position of the rect
+ * @param[in] w Width of the rect
+ * @param[in] h Height of the rect
+ * @param[in] color RGBA color of the rect
+ * @param[in] lineWidth Line strength in pixel of the rect
+ * @param[in] pattern Specifies a 16-bit integer whose bit pattern determines
+ * which fragments of a line will be drawn when the line is rasterized.
+ * Bit zero is used first; the default pattern is all 1's
+ * @note The stipple factor is @c 2 for this function
+ */
+void R_DrawRect (int x, int y, int w, int h, const vec4_t color, float lineWidth, int pattern)
 {
-	float nx, ny, nw, nh;
-
-	nx = x * viddef.rx;
-	ny = y * viddef.ry;
-	nw = w * viddef.rx;
-	nh = h * viddef.ry;
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
 
 	R_ColorBlend(color);
 
