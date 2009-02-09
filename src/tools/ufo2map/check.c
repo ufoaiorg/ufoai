@@ -433,34 +433,21 @@ static int checkMiscMission (entity_t *e, int entnum)
 	return 0;
 }
 
-#define FUNC_GROUP_NO_PROBLEM 0
-#define FUNC_GROUP_MOVE_TO_WORLD 1
-#define FUNC_GROUP_EMPTY_DELETE 2
-
-/**
- * @return one of FUNC_GROUP_NO_PROBLEM, FUNC_GROUP_MOVE_TO_WORLD, FUNC_GROUP_EMPTY_DELETE
- */
 static int checkFuncGroup (entity_t *e, int entnum)
 {
-	const char *name = ValueForKey(e, "classname");
-	if (e->numbrushes == 1) {
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", name);
-		numToMoveToWorldspawn++;
-		/* the  map writer will check and tack them onto the end of the worldspawn */
-		return FUNC_GROUP_MOVE_TO_WORLD;
-	}
-	return FUNC_GROUP_NO_PROBLEM;
+
+	return 0;
 }
 
 /**
  * @brief single brushes in func_groups are moved to worldspawn. this function allocates space for
- * pointers to those brushes.
- * @return a pointer to the array of pointers
+ * pointers to those brushes. called when the .map is written back in map.c
+ * @return a pointer to the array of pointers to brushes to be included in worldspawn.
  * @param[out] the number of brushes
  */
 mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 {
-	int i, j, tmpVerb = config.verbosity;
+	int i, j;
 	mapbrush_t **brushesToMove = (mapbrush_t **)malloc(numToMoveToWorldspawn * sizeof(mapbrush_t *));
 
 	if (!brushesToMove)
@@ -471,22 +458,15 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 	if (!numToMoveToWorldspawn)
 		return brushesToMove;
 
-	/* temporarily drop verbosity as checkFuncGroup should not repeat messages */
-	config.verbosity = VERB_SILENT_EXCEPT_ERROR;
-
 	/* 0 is the world - start at 1 */
 	for (i = 1, j = 0; i < num_entities; i++) {
 		entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 
-		if (!strncmp(name, "func_group", 10)) {
-			if (checkFuncGroup(e, i) == FUNC_GROUP_MOVE_TO_WORLD)
-				brushesToMove[j++] = &mapbrushes[e->firstbrush];
-		}
-	}
+		if ((e->numbrushes == 1) && !strcmp(name, "func_group"))
+			brushesToMove[j++] = &mapbrushes[e->firstbrush];
 
-	/* restore */
-	config.verbosity = tmpVerb;
+	}
 
 	return brushesToMove;
 }
@@ -727,8 +707,14 @@ static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entn
 		return;
 	}
 
-	if (!strcmp(classname, "func_breakable") && (e->numbrushes > 1)) {
+	if ((e->numbrushes > 1) && !strcmp(classname, "func_breakable")) {
 		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
+	}
+
+	if ((e->numbrushes == 1) && !strcmp(classname, "func_group")) {
+		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", classname);
+		numToMoveToWorldspawn++;
+		e->skip = qtrue;
 	}
 
 }
