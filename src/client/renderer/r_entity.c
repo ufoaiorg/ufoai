@@ -349,12 +349,6 @@ static void R_DrawEntityEffects (void)
 
 			R_Color(color);
 
-#if 0
-			glLineWidth(10.0f);
-			glLineStipple(2, 0x00FF);
-			glEnable(GL_LINE_STIPPLE);
-#endif
-
 			/* circle points */
 			glBegin(GL_LINE_STRIP);
 			glVertex3f(10.0, 0.0, -27.0);
@@ -369,10 +363,6 @@ static void R_DrawEntityEffects (void)
 			glEnd();
 			R_CheckError();
 
-#if 0
-			glLineWidth(1.0f);
-			glDisable(GL_LINE_STIPPLE);
-#endif
 			glDisable(GL_LINE_SMOOTH);
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_DEPTH_TEST);
