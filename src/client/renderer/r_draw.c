@@ -664,6 +664,7 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 {
 	float theta;
 	const float accuracy = 5.0f;
+	const float step = M_PI / radius * accuracy;
 
 	glDisable(GL_TEXTURE_2D);
 	glEnable(GL_LINE_SMOOTH);
@@ -685,16 +686,16 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	if (thickness <= 1) {
 		glBegin(GL_LINE_STRIP);
-		for (theta = 0.0f; theta <= 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
+		for (theta = 0.0f; theta <= 2.0f * M_PI; theta += step) {
 			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
 		}
 		glEnd();
 	} else {
 		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
+		for (theta = 0; theta <= 2 * M_PI; theta += step) {
 			glVertex3f(radius * cos(theta), radius * sin(theta), 0);
-			glVertex3f(radius * cos(theta - M_PI / (radius * accuracy)), radius * sin(theta - M_PI / (radius * accuracy)), 0);
-			glVertex3f((radius - thickness) * cos(theta - M_PI / (radius * accuracy)), (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), 0);
+			glVertex3f(radius * cos(theta - step), radius * sin(theta - step), 0);
+			glVertex3f((radius - thickness) * cos(theta - step), (radius - thickness) * sin(theta - step), 0);
 			glVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0);
 		}
 		glEnd();
