@@ -82,7 +82,7 @@ void CP_NationHandleBudget (void)
 					new_soldiers, ngettext("soldier", "soldiers", new_soldiers),
 					new_workers, ngettext("worker", "workers", new_workers),
 					_(nation->name), NAT_GetHappinessString(nation));
-		MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
 	cost = 0;
@@ -93,7 +93,8 @@ void CP_NationHandleBudget (void)
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to soldiers"), cost);
 	CL_UpdateCredits(ccs.credits - cost);
-	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+	/* only this message is played with sound as previous are added for every nation */
+	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qtrue);
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_WORKER]; i++) {
@@ -103,7 +104,7 @@ void CP_NationHandleBudget (void)
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to workers"), cost);
 	CL_UpdateCredits(ccs.credits - cost);
-	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_SCIENTIST]; i++) {
@@ -113,7 +114,7 @@ void CP_NationHandleBudget (void)
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to scientists"), cost);
 	CL_UpdateCredits(ccs.credits - cost);
-	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
@@ -123,7 +124,7 @@ void CP_NationHandleBudget (void)
 
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to pilots"), cost);
 	CL_UpdateCredits(ccs.credits - cost);
-	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	cost = 0;
 	for (i = 0; i < ccs.numEmployees[EMPL_ROBOT]; i++) {
@@ -134,7 +135,7 @@ void CP_NationHandleBudget (void)
 	if (cost != 0) {
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for robots"), cost);
 		CL_UpdateCredits(ccs.credits - cost);
-		MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
 	cost = 0;
@@ -150,7 +151,7 @@ void CP_NationHandleBudget (void)
 	if (cost != 0) {
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for aircraft"), cost);
 		CL_UpdateCredits(ccs.credits - cost);
-		MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 
 	for (i = 0; i < MAX_BASES; i++) {
@@ -163,14 +164,14 @@ void CP_NationHandleBudget (void)
 		}
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of base %s"), cost, base->name);
-		MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 		CL_UpdateCredits(ccs.credits - cost);
 	}
 
 	cost = SALARY_ADMIN_INITIAL + ccs.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + ccs.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + ccs.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + ccs.numEmployees[EMPL_PILOT] * SALARY_ADMIN_PILOT + ccs.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
 	Com_sprintf(message, sizeof(message), _("Paid %i credits for administrative overhead."), cost);
 	CL_UpdateCredits(ccs.credits - cost);
-	MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+	MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 
 	if (initial_credits < 0) {
 		float interest = initial_credits * SALARY_DEBT_INTEREST;
@@ -178,7 +179,7 @@ void CP_NationHandleBudget (void)
 		cost = (int)ceil(interest);
 		Com_sprintf(message, sizeof(message), _("Paid %i credits in interest on your debt."), cost);
 		CL_UpdateCredits(ccs.credits - cost);
-		MS_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
+		MS_AddNewMessageSound(_("Notice"), message, qfalse, MSG_STANDARD, NULL, qfalse);
 	}
 	CL_GameTimeStop();
 }
