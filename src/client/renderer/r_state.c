@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* useful for particles, pics, etc.. */
 const float default_texcoords[] = {
-	0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0
+	0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
 };
 
 /**

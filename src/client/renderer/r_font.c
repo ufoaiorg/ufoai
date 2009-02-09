@@ -621,6 +621,10 @@ static void R_FontGenerateTexture (const font_t *font, const char *text, chunkCa
 	SDL_FreeSurface(openGLSurface);
 }
 
+static const float font_texcoords[] = {
+	0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0
+};
+
 static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 {
 	const float nx = x * viddef.rx;
@@ -633,7 +637,7 @@ static void R_FontDrawTexture (int texId, int x, int y, int w, int h)
 
 	glVertexPointer(2, GL_SHORT, 0, r_state.vertex_array_2d);
 
-	memcpy(&texunit_diffuse.texcoord_array, default_texcoords, sizeof(float) * 8);
+	memcpy(&texunit_diffuse.texcoord_array, font_texcoords, sizeof(float) * 8);
 
 	r_state.vertex_array_2d[0] = nx;
 	r_state.vertex_array_2d[1] = ny;
