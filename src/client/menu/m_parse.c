@@ -890,12 +890,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 			return qfalse;
 		if (*token[0] != '{') {
 			Com_Printf("MN_ParseNodeBody: node dont have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
-			/** @todo merge menu and node array */
-			if (MN_NodeInstanceOf(node, "menu")) {
-				mn.numMenus--;
-			} else {
-				mn.numNodes--;
-			}
+			mn.numNodes--;
 			return qfalse;
 		}
 	}
@@ -1232,7 +1227,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	/* search for menus with same name */
 	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strncmp(name, mn.menus[i].name, MAX_VAR))
+		if (!Q_strncmp(name, mn.menus[i]->name, MAX_VAR))
 			break;
 
 	if (i < mn.numMenus) {
@@ -1245,10 +1240,8 @@ void MN_ParseMenu (const char *name, const char **text)
 	}
 
 	/* initialize the menu */
-	menu = &mn.menus[mn.numMenus++];
-	memset(menu, 0, sizeof(*menu));
+	menu = MN_AllocNode("menu");
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
-	menu->behaviour = MN_GetNodeBehaviour("menu");
 
 	menu->behaviour->loading(menu);
 
@@ -1302,6 +1295,9 @@ void MN_ParseMenu (const char *name, const char **text)
 	}
 
 	menu->behaviour->loaded(menu);
+
+	/* add the menu to the list */
+	mn.menus[mn.numMenus++] = menu;
 }
 
 /**

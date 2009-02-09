@@ -74,13 +74,14 @@ static void MN_DeleteMenuFromStack (menuNode_t * menu)
 
 /**
  * @brief Searches a menu by id on the current menu stack
+ * @todo we can create a dicothomic search, if we sort menus[] by name
  */
 static inline menuNode_t* MN_FindMenuByName (const char *name)
 {
 	int i;
 	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strcmp(mn.menus[i].name, name))
-			return &mn.menus[i];
+		if (!Q_strcmp(mn.menus[i]->name, name))
+			return mn.menus[i];
 
 	return NULL;
 }
@@ -198,7 +199,7 @@ int MN_CompletePushMenu (const char *partial, const char **match)
 
 	if (!len) {
 		for (i = 0; i < mn.numMenus; i++)
-			Com_Printf("%s\n", mn.menus[i].name);
+			Com_Printf("%s\n", mn.menus[i]->name);
 		return 0;
 	}
 
@@ -206,9 +207,9 @@ int MN_CompletePushMenu (const char *partial, const char **match)
 
 	/* check for partial matches */
 	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strncmp(partial, mn.menus[i].name, len)) {
-			Com_Printf("%s\n", mn.menus[i].name);
-			localMatch[matches++] = mn.menus[i].name;
+		if (!Q_strncmp(partial, mn.menus[i]->name, len)) {
+			Com_Printf("%s\n", mn.menus[i]->name);
+			localMatch[matches++] = mn.menus[i]->name;
 			if (matches >= MAX_COMPLETE)
 				break;
 		}
@@ -508,6 +509,7 @@ qboolean MN_CursorOnMenu (int x, int y)
  * id name
  * @return NULL if not found or no menu on the stack
  * @sa MN_GetActiveMenu
+ * @todo merge it with FindMenuByName, its the same function
  */
 menuNode_t *MN_GetMenu (const char *name)
 {
@@ -516,8 +518,8 @@ menuNode_t *MN_GetMenu (const char *name)
 	assert(name);
 
 	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR))
-			return &mn.menus[i];
+		if (!Q_strcmp(mn.menus[i]->name, name))
+			return mn.menus[i];
 
 	return NULL;
 }
@@ -798,6 +800,7 @@ static void CL_MessageMenu_f (void)
 #ifdef DEBUG
 /**
  * @brief display info about menu memory
+ * @todo it can be nice to have number of nodes per behaviours
  */
 static void MN_Memory_f (void)
 {
@@ -823,7 +826,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t\t-option: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.option));
 	Com_Printf("\t\t-textentry: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.textentry));
 	Com_Printf("\t\t-text: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.text));
-	Com_Printf("\t-Menu structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
+	Com_Printf("\t\t-window: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.window));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
 	Com_Printf("\t-Condition structure size: "UFO_SIZE_T" B\n", sizeof(menuDepends_t));
