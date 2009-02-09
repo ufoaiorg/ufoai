@@ -14,8 +14,8 @@ UFO2MAP = 'ufo2map'
 if os.name == 'nt':
     UFO2MAP+= '.exe'
 
-URI = 'http://ufo.ludwigf.org/maps'
-__version__ = '0.0.3~rc1'
+URI = 'http://static.ufo.ludwigf.org/maps'
+__version__ = '0.0.3'
 
 """
 written by Florian Ludwig <dino@phidev.org>
@@ -23,6 +23,7 @@ written by Florian Ludwig <dino@phidev.org>
 Changelog
 
 0.0.3 windows work
+ * URI to maps changed.
  * check if ufo2map exists
  * use ufo2map.exe on windows systems
  * on windows always upgrade, generating is not supported anyway
