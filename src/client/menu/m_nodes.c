@@ -383,8 +383,8 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	return newNode;
 }
 
-/* position of virtual function into node behaviour */
-static const int virtualFunctions[] = {
+/** @brief position of virtual function into node behaviour */
+static const size_t virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, draw),
 	offsetof(nodeBehaviour_t, drawTooltip),
 	offsetof(nodeBehaviour_t, leftClick),
@@ -433,7 +433,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 		MN_InitializeNodeBehaviour(behaviour->super);
 
 		while (qtrue) {
-			const int pos = virtualFunctions[i];
+			const size_t pos = virtualFunctions[i];
 			size_t superFunc;
 			size_t func;
 			if (pos == 0)
@@ -442,9 +442,8 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 			/* cache super function if we dont overwrite it */
 			superFunc = *(size_t*)((char*)behaviour->super + pos);
 			func = *(size_t*)((char*)behaviour + pos);
-			if (func == 0 && superFunc != 0) {
+			if (func == 0 && superFunc != 0)
 				*(size_t*)((char*)behaviour + pos) = superFunc;
-			}
 
 			i++;
 		}

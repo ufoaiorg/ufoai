@@ -72,25 +72,30 @@ static void MN_DeleteMenuFromStack (menuNode_t * menu)
 		}
 }
 
+/**
+ * @brief Searches a menu by id on the current menu stack
+ */
 static inline menuNode_t* MN_FindMenuByName (const char *name)
 {
 	int i;
-	for (i = 0; i < mn.numMenus; i++) {
-		if (!Q_strncmp(mn.menus[i].name, name, MAX_VAR)) {
+	for (i = 0; i < mn.numMenus; i++)
+		if (!Q_strcmp(mn.menus[i].name, name))
 			return &mn.menus[i];
-		}
-	}
+
 	return NULL;
 }
 
+/**
+ * @brief Searches the position in the current menu stack for a given menu id
+ * @return -1 if the menu is not on the stack
+ */
 static inline int MN_GetMenuPositionFromStackByName (const char *name)
 {
 	int i;
-	for (i = 0; i < mn.menuStackPos; i++) {
-		if (!Q_strncmp(mn.menuStack[i]->name, name, MAX_VAR)) {
+	for (i = 0; i < mn.menuStackPos; i++)
+		if (!Q_strcmp(mn.menuStack[i]->name, name))
 			return i;
-		}
-	}
+
 	return -1;
 }
 
@@ -189,9 +194,8 @@ int MN_CompletePushMenu (const char *partial, const char **match)
 {
 	int i, matches = 0;
 	const char *localMatch[MAX_COMPLETE];
-	size_t len;
+	const size_t len = strlen(partial);
 
-	len = strlen(partial);
 	if (!len) {
 		for (i = 0; i < mn.numMenus; i++)
 			Com_Printf("%s\n", mn.menus[i].name);
@@ -430,7 +434,7 @@ static void MN_PopMenu_f (void)
 	if (Cmd_Argc() < 2 || !Q_strncmp(Cmd_Argv(1), "esc", 3)) {
 		/** @todo we can do the same in a better way: event returning agreement */
 		/* some window can prevent escape */
-		menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
+		const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
 		assert(mn.menuStackPos);
 		if (!menu->u.window.preventTypingEscape) {
 			MN_PopMenu(qfalse);
@@ -462,7 +466,7 @@ menuNode_t* MN_GetActiveMenu (void)
  */
 const char* MN_GetActiveMenuName (void)
 {
-	menuNode_t* menu = MN_GetActiveMenu();
+	const menuNode_t* menu = MN_GetActiveMenu();
 	if (menu == NULL)
 		return "";
 	return menu->name;
@@ -546,7 +550,7 @@ void MN_SetNewMenuPos_f (void)
  */
 static void MN_ReinitCurrentMenu_f (void)
 {
-	menuNode_t* menu = MN_GetActiveMenu();
+	const menuNode_t* menu = MN_GetActiveMenu();
 	/* initialize it */
 	if (menu) {
 		if (menu->u.window.onInit)
@@ -613,16 +617,18 @@ static void MN_ModifyString_f (void)
 
 	while (add) {
 		tp = token;
-		while (*list && *list != ':')
+		while (list[0] != '\0' && list[0] != ':') {
+			/** @todo overflow check */
 			*tp++ = *list++;
-		if (*list)
+		}
+		if (list[0] != '\0')
 			list++;
-		*tp = 0;
+		*tp = '\0';
 
-		if (*token && !first[0])
+		if (token[0] != '\0' && !first[0])
 			Q_strncpyz(first, token, MAX_VAR);
 
-		if (!*token) {
+		if (token[0] == '\0') {
 			if (add < 0 || next)
 				Cvar_Set(Cmd_Argv(1), last);
 			else
@@ -670,30 +676,34 @@ static void MN_Translate_f (void)
 	list = Cmd_Argv(3);
 	next = qfalse;
 
-	while (*list) {
+	while (list[0] != '\0') {
 		orig = original;
-		while (*list && *list != ':')
+		while (list[0] != '\0' && list[0] != ':') {
+			/** @todo overflow check */
 			*orig++ = *list++;
-		*orig = 0;
+		}
+		*orig = '\0';
 		list++;
 
 		trans = translation;
-		while (*list && *list != ',')
+		while (list[0] != '\0' && list[0] != ',') {
+			/** @todo overflow check */
 			*trans++ = *list++;
-		*trans = 0;
+		}
+		*trans = '\0';
 		list++;
 
-		if (!Q_strncmp(current, original, MAX_VAR)) {
+		if (!Q_strcmp(current, original)) {
 			Cvar_Set(Cmd_Argv(2), _(translation));
 			return;
 		}
 	}
 
-	if (*current) {
+	if (current[0] != '\0') {
 		/* nothing found, copy value */
 		Cvar_Set(Cmd_Argv(2), _(current));
 	} else {
-		Cvar_Set(Cmd_Argv(2), current);
+		Cvar_Set(Cmd_Argv(2), "");
 	}
 }
 
@@ -732,7 +742,7 @@ static void CL_MessageMenu_f (void)
 		msg_bufferlen = strlen(nameBackup);
 		break;
 	case '\'':
-		if (!*cvarName)
+		if (cvarName[0] == '\0')
 			break;
 		/* abort without doing anything */
 		nameBackup[0] = cvarName[0] = '\0';
@@ -740,7 +750,7 @@ static void CL_MessageMenu_f (void)
 
 	/* cancel the edition */
 	case '!':
-		if (!*cvarName)
+		if (cvarName[0] == '\0')
 			break;
 		/* cancel */
 		Cvar_ForceSet(cvarName, nameBackup);
@@ -756,7 +766,7 @@ static void CL_MessageMenu_f (void)
 
 	/* validate the current value */
 	case '.':
-		if (!*cvarName)
+		if (cvarName[0] == '\0')
 			break;
 		/* call trigger function */
 		if (Cmd_Exists(va("%s_changed", cvarName))) {
@@ -768,7 +778,7 @@ static void CL_MessageMenu_f (void)
 
 	/* change the value to a null string */
 	case ':':
-		if (!*cvarName)
+		if (cvarName[0] == '\0')
 			break;
 		/* end */
 		Cvar_ForceSet(cvarName, msg + 1);
@@ -777,7 +787,7 @@ static void CL_MessageMenu_f (void)
 		nameBackup[0] = cvarName[0] = '\0';
 		break;
 	default:
-		if (!*cvarName)
+		if (cvarName[0] == '\0')
 			break;
 		/* continue */
 		Cvar_ForceSet(cvarName, msg);
@@ -805,7 +815,6 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(menuOption_t));
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
 	Com_Printf("\t-Extra data node structure size: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u));
-	Com_Printf("\t\t-abstractvalue: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.abstractvalue));
 	Com_Printf("\t\t-abstractvalue: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.abstractvalue));
 	Com_Printf("\t\t-abstractscrollbar: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar));
 	Com_Printf("\t\t-container: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.container));
