@@ -1170,7 +1170,7 @@ void R_DrawPanel (const vec2_t pos, const vec2_t size, const char *texture, qboo
 
 	/* draw middle (from left to right) */
 	y = pos[1] + topHeight;
-	h = size[1] - topHeight - bottomHeight; /*< height of middle */
+	h = size[1] - topHeight - bottomHeight; /* height of middle */
 	R_DrawNormPic(pos[0], y, leftWidth, h, texX + firstPos + leftWidth, texY + secondPosY + midHeight,
 		texX + firstPos, texY + secondPosY, ALIGN_UL, blend, texture);
 	R_DrawNormPic(pos[0] + leftWidth, y, size[0] - leftWidth - rightWidth, h, texX + secondPos + midWidth, texY + secondPosY + midHeight,

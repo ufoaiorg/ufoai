@@ -148,7 +148,7 @@ static menuOption_t* MN_OptionListNodeGetOptionAtPosition (menuNode_t * node, in
 {
 	menuOption_t* option;
 	vec2_t pos;
-	int elementHeight = ELEMENT_HEIGHT;	/**< fix it with text font */
+	int elementHeight = ELEMENT_HEIGHT;	/**< @todo fix it with text font */
 	int currentY;
 	int count = 0;
 
