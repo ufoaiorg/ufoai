@@ -648,6 +648,7 @@ int main (int argc, const char **argv)
 			WriteMapFile(GetScriptFile());
 		}
 		Check_Free();
+		FreeEpairs();
 		return 0;
 	} else if (config.generateMaterialFile) {
 		/* start from scratch */

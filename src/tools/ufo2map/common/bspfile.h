@@ -62,6 +62,7 @@ const char *UnparseEntities(void);
 void SetKeyValue(entity_t *ent, const char *key, const char *value);
 /* will return "" if not present */
 const char *ValueForKey(const entity_t *ent, const char *key);
+void FreeEpairs(void);
 
 vec_t FloatForKey(const entity_t *ent, const char *key);
 void GetVectorFromString(const char *value, vec3_t vec);

@@ -581,3 +581,24 @@ void GetVectorForKey (const entity_t *ent, const char *key, vec3_t vec)
 	const char *k = ValueForKey(ent, key);
 	GetVectorFromString(k, vec);
 }
+
+static void FreeEpairsRecurse (epair_t *e)
+{
+	if (!e)
+		return;
+
+	if (e->next)
+		FreeEpairsRecurse(e->next);
+
+	free(e->key);
+	free(e->value);
+	free(e);
+}
+
+void FreeEpairs(void)
+{
+	int i;
+
+	for (i = 0; i < num_entities; i++)
+		FreeEpairsRecurse(entities[i].epairs);
+}

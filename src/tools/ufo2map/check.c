@@ -539,8 +539,14 @@ void CheckEntities (void)
 			if (kd->flags & ED_MANDATORY) {
 				const char *keyNameInEnt = ValueForKey(e, kd->name);
 				if(*keyNameInEnt == '\0') {
-					Check_Printf(VERB_NORMAL, qfalse, i, -1, "Mandatory key missing from entity: %s in %s\n", kd->name, name);
-					/** @todo supply default values */
+					const char *defaultVal = kd->defaultVal;
+					qboolean hasDefault = defaultVal ? qtrue : qfalse;
+					Check_Printf(VERB_NORMAL, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
+					if (defaultVal) {
+						Check_Printf(VERB_NORMAL, hasDefault, i, -1, ", supplying default: %s", defaultVal);
+						SetKeyValue(e, kd->name, defaultVal);
+					}
+					Check_Printf(VERB_NORMAL, hasDefault, i, -1, "\n");
 				}
 			}
 		}
