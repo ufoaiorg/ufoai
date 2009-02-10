@@ -1833,8 +1833,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	/** draws projectiles
 	 * @todo you should only draw projectile comming from base here: projectiles fired by missiles
 	 * are drawn only in airfight menu */
-	for (idx = 0; idx < gd.numProjectiles; idx++) {
-		aircraftProjectile_t *projectile = &gd.projectiles[idx];
+	for (idx = 0; idx < ccs.numProjectiles; idx++) {
+		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		vec3_t drawPos = {0, 0, 0};
 
 		if (projectile->attackingAircraft && !gd.combatZoomedUFO)

@@ -706,7 +706,7 @@ static void TR_TransferListClear_f (void)
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
  * @param[in,out] destination The destination base - might be NULL in case the base
  * is already destroyed
- * @param[in] transfer Pointer to transfer in gd.alltransfers.
+ * @param[in] transfer Pointer to transfer in ccs.alltransfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
  * @sa TR_TransferEnd
  */
@@ -850,8 +850,8 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transfer = NULL;
 	/* Find free transfer slot. */
 	for (i = 0; i < MAX_TRANSFERS; i++) {
-		if (!gd.alltransfers[i].active) {
-			transfer = &gd.alltransfers[i];
+		if (!ccs.alltransfers[i].active) {
+			transfer = &ccs.alltransfers[i];
 			break;
 		}
 	}
@@ -989,7 +989,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 
 /**
  * @brief Ends the transfer.
- * @param[in] transfer Pointer to transfer in gd.alltransfers
+ * @param[in] transfer Pointer to transfer in ccs.alltransfers
  */
 static void TR_TransferEnd (transfer_t *transfer)
 {
@@ -1039,8 +1039,8 @@ static void TR_TransferStart_f (void)
 	transfer = NULL;
 	/* Find free transfer slot. */
 	for (i = 0; i < MAX_TRANSFERS; i++) {
-		if (!gd.alltransfers[i].active) {
-			transfer = &gd.alltransfers[i];
+		if (!ccs.alltransfers[i].active) {
+			transfer = &ccs.alltransfers[i];
 			break;
 		}
 	}
@@ -1670,7 +1670,7 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 	assert(aircraft->idx >= 0 && aircraft->idx < MAX_AIRCRAFT);
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
-		transfer_t *transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &ccs.alltransfers[i];
 		size_t n = MAX_AIRCRAFT;
 
 		/* skip non active transfer */
@@ -1691,7 +1691,7 @@ void TR_TransferCheck (void)
 	int i;
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
-		transfer_t *transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &ccs.alltransfers[i];
 		if (!transfer->active)
 			continue;
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
@@ -1766,7 +1766,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		int j;
-		const transfer_t *transfer = &gd.alltransfers[i];
+		const transfer_t *transfer = &ccs.alltransfers[i];
 		mxml_node_t * s;
 		/*if (!transfer->active)
 			continue;*/
@@ -1837,7 +1837,7 @@ qboolean TR_Save (sizebuf_t* sb, void* data)
 	int i, j, k;
 
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		const transfer_t *transfer = &gd.alltransfers[i];
+		const transfer_t *transfer = &ccs.alltransfers[i];
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
 			MSG_WriteByte(sb, transfer->itemAmount[j]);
 		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
@@ -1884,7 +1884,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 	for (i = 0, s = mxml_GetNode(n, "transfer"); s && i < MAX_TRANSFERS; i++, s = mxml_GetNextNode(s, n, "transfer")) {
 		byte destBase, srcBase;
 		mxml_node_t *ss;
-		transfer_t *transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &ccs.alltransfers[i];
 
 		transfer->event.day = mxml_GetInt(s, "day", 0);
 		transfer->event.sec = mxml_GetInt(s, "sec", 0);
@@ -1959,7 +1959,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 	/* Restore transfer flag if an employee is currently in progress. */
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
 		int j, k;
-		transfer_t *transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &ccs.alltransfers[i];
 
 		if (!transfer->active)
 			continue;
@@ -1984,7 +1984,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 	byte destBase, srcBase;
 
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		transfer_t *transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &ccs.alltransfers[i];
 		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
 			transfer->itemAmount[j] = MSG_ReadByte(sb);
 		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
@@ -2016,7 +2016,7 @@ qboolean TR_Load (sizebuf_t* sb, void* data)
 	}
 	/* Restore transfer flag if an employee is currently in progress. */
 	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		transfer_t *transfer = &gd.alltransfers[i];
+		transfer_t *transfer = &ccs.alltransfers[i];
 
 		if (!transfer->active)
 			continue;

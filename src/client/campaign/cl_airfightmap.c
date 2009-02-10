@@ -452,7 +452,7 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 
 
 	/* draws projectiles */
-	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
+	for (projectile = ccs.projectiles + ccs.numProjectiles - 1; projectile >= ccs.projectiles; projectile --) {
 		vec3_t drawPos = {0, 0, 0};
 		qboolean newDraw = qtrue;
 

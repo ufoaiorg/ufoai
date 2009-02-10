@@ -233,10 +233,10 @@ static void UR_Prepare (base_t *base)
 
 	/* Find free uforecovery slot. */
 	for (i = 0; i < MAX_RECOVERIES; i++) {
-		if (!gd.recoveries[i].active) {
+		if (!ccs.recoveries[i].active) {
 			/* Make sure it is empty here. */
-			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
-			recovery = &gd.recoveries[i];
+			memset(&ccs.recoveries[i], 0, sizeof(ccs.recoveries[i]));
+			recovery = &ccs.recoveries[i];
 			break;
 		}
 	}
@@ -677,7 +677,7 @@ void UR_ProcessActive (void)
 	int i;
 
 	for (i = 0; i < MAX_RECOVERIES; i++) {
-		ufoRecoveries_t *recovery = &gd.recoveries[i];
+		ufoRecoveries_t *recovery = &ccs.recoveries[i];
 		if (recovery->active && recovery->event.day == ccs.date.day) {
 			objDef_t *od;
 			const aircraft_t *ufocraft;
@@ -702,7 +702,7 @@ void UR_ProcessActive (void)
 			base->storage.num[od->idx]++;	/* Add dummy UFO item to enable research topic. */
 			RS_MarkCollected(od->tech);	/* Enable research topic. */
 			/* Reset this recovery. */
-			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
+			memset(&ccs.recoveries[i], 0, sizeof(ccs.recoveries[i]));
 		}
 	}
 }

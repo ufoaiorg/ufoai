@@ -256,9 +256,9 @@ static void PR_UpdateProductionList (const base_t* base)
 
 	/* Then go through all object definitions ... */
 	if (produceCategory == FILTER_DISASSEMBLY) {
-		for (i = 0; i < gd.numComponents; i++) {
-			const objDef_t *asOd = gd.components[i].asItem;
-			components_t *comp = &gd.components[i];
+		for (i = 0; i < ccs.numComponents; i++) {
+			const objDef_t *asOd = ccs.components[i].asItem;
+			components_t *comp = &ccs.components[i];
 			if (!asOd)
 				continue;
 			if (PR_ConditionsDisassembly(base, comp)) {

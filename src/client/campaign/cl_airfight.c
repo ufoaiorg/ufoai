@@ -55,18 +55,18 @@ static void AIRFIGHT_RunBullets (aircraftProjectile_t *projectile, vec3_t ortogo
 #endif
 
 /**
- * @brief Remove a projectile from gd.projectiles
+ * @brief Remove a projectile from ccs.projectiles
  * @param[in] projectile The projectile to remove
  * @sa AIRFIGHT_AddProjectile
  */
 static qboolean AIRFIGHT_RemoveProjectile (aircraftProjectile_t *projectile)
 {
-	REMOVE_ELEM_ADJUST_IDX(gd.projectiles, projectile->idx, gd.numProjectiles);
+	REMOVE_ELEM_ADJUST_IDX(ccs.projectiles, projectile->idx, ccs.numProjectiles);
 	return qtrue;
 }
 
 /**
- * @brief Add a projectile in gd.projectiles
+ * @brief Add a projectile in ccs.projectiles
  * @param[in] attackingBase the attacking base in ccs.bases[]. NULL is the attacker is an aircraft.
  * @param[in] attacker Pointer to the attacking aircraft
  * @param[in] aimedBase the aimed base (NULL if the target is an aircraft)
@@ -80,12 +80,12 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 {
 	aircraftProjectile_t *projectile;
 
-	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
+	if (ccs.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_DPrintf(DEBUG_CLIENT, "Too many projectiles on map\n");
 		return qfalse;
 	}
 
-	projectile = &gd.projectiles[gd.numProjectiles];
+	projectile = &ccs.projectiles[ccs.numProjectiles];
 
 	if (!weaponSlot->ammo) {
 		Com_Printf("AIRFIGHT_AddProjectile: Error - no ammo assigned\n");
@@ -94,7 +94,7 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 
 	assert(weaponSlot->item);
 
-	projectile->idx = gd.numProjectiles;
+	projectile->idx = ccs.numProjectiles;
 	projectile->aircraftItem = weaponSlot->ammo;
 	if (attackingBase) {
 		projectile->attackingAircraft = NULL;
@@ -141,7 +141,7 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 	if (weaponSlot->ammoLeft != AMMO_STATUS_UNLIMITED)
 		weaponSlot->ammoLeft--;
 
-	gd.numProjectiles++;
+	ccs.numProjectiles++;
 
 	return qtrue;
 }
@@ -155,20 +155,20 @@ static void AIRFIGHT_ProjectileList_f (void)
 {
 	int i;
 
-	for (i = 0; i < gd.numProjectiles; i++) {
-		Com_Printf("%i. (idx: %i)\n", i, gd.projectiles[i].idx);
-		Com_Printf("... type '%s'\n", gd.projectiles[i].aircraftItem->id);
-		if (gd.projectiles[i].attackingAircraft)
-			Com_Printf("... shooting aircraft '%s'\n", gd.projectiles[i].attackingAircraft->id);
+	for (i = 0; i < ccs.numProjectiles; i++) {
+		Com_Printf("%i. (idx: %i)\n", i, ccs.projectiles[i].idx);
+		Com_Printf("... type '%s'\n", ccs.projectiles[i].aircraftItem->id);
+		if (ccs.projectiles[i].attackingAircraft)
+			Com_Printf("... shooting aircraft '%s'\n", ccs.projectiles[i].attackingAircraft->id);
 		else
 			Com_Printf("... base is shooting, or shooting aircraft is destroyed\n");
-		if (gd.projectiles[i].aimedAircraft)
-			Com_Printf("... aiming aircraft '%s'\n", gd.projectiles[i].aimedAircraft->id);
-		else if (gd.projectiles[i].aimedBase)
-			Com_Printf("... aiming base '%s'\n", gd.projectiles[i].aimedBase->name);
+		if (ccs.projectiles[i].aimedAircraft)
+			Com_Printf("... aiming aircraft '%s'\n", ccs.projectiles[i].aimedAircraft->id);
+		else if (ccs.projectiles[i].aimedBase)
+			Com_Printf("... aiming base '%s'\n", ccs.projectiles[i].aimedBase->name);
 		else
 			Com_Printf("... aiming iddle target at (%.02f, %.02f)\n",
-				gd.projectiles[i].idleTarget[0], gd.projectiles[i].idleTarget[1]);
+				ccs.projectiles[i].idleTarget[0], ccs.projectiles[i].idleTarget[1]);
 	}
 }
 #endif
@@ -364,7 +364,7 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 			/* will we miss the target ? */
 			probability = frand();
 			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, shooter->weapons + slotIdx))
-				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 
 			if (shooter->type != AIRCRAFT_UFO) {
 				/* Maybe UFO is going to shoot back ? */
@@ -417,7 +417,7 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (const aircraft_t * aircraft
 	if (!aircraft)
 		return;
 
-	for (projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+	for (projectile = ccs.projectiles; idx < ccs.numProjectiles; projectile++, idx++) {
 		if (projectile->aimedAircraft == aircraft)
 			AIRFIGHT_MissTarget(projectile, qtrue);
 	}
@@ -433,7 +433,7 @@ static void AIRFIGHT_UpdateProjectileForDestroyedAircraft (const aircraft_t * ai
 	aircraftProjectile_t *projectile;
 	int idx;
 
-	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+	for (idx = 0, projectile = ccs.projectiles; idx < ccs.numProjectiles; projectile++, idx++) {
 		const aircraft_t *attacker = projectile->attackingAircraft;
 
 		if (attacker == aircraft)
@@ -709,9 +709,9 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 {
 	int idx;
 
-	/* gd.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
-	for (idx = gd.numProjectiles - 1; idx >= 0; idx--) {
-		aircraftProjectile_t *projectile = &gd.projectiles[idx];
+	/* ccs.numProjectiles is changed in AIRFIGHT_RemoveProjectile */
+	for (idx = ccs.numProjectiles - 1; idx >= 0; idx--) {
+		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		const float movement = (float) dt * projectile->aircraftItem->craftitem.weaponSpeed / (float)SECONDS_PER_HOUR;
 		projectile->time += dt;
 		projectile->hasMoved = qtrue;
@@ -725,7 +725,7 @@ void AIRFIGHT_CampaignRunProjectiles (int dt)
 			else if (projectile->aimedAircraft)
 				AIRFIGHT_ProjectileHits(projectile);
 
-			/* remove the missile from gd.projectiles[] */
+			/* remove the missile from ccs.projectiles[] */
 			AIRFIGHT_RemoveProjectile(projectile);
 		} else {
 			float angle;
@@ -799,7 +799,7 @@ static void AIRFIGHT_BaseShoot (const base_t *base, baseWeapon_t *weapons, int m
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
-				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 		}
 	}
 }
@@ -854,7 +854,7 @@ static void AIRFIGHT_InstallationShoot (const installation_t *installation, base
 			weapons[i].slot.delayNextShot = weapons[i].slot.ammo->craftitem.weaponDelay;
 			/* will we miss the target ? */
 			if (frand() > AIRFIGHT_ProbabilityToHit(NULL, weapons[i].target, &weapons[i].slot + i))
-				AIRFIGHT_MissTarget(&gd.projectiles[gd.numProjectiles - 1], qfalse);
+				AIRFIGHT_MissTarget(&ccs.projectiles[ccs.numProjectiles - 1], qfalse);
 		}
 	}
 }

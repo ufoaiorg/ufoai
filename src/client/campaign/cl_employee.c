@@ -762,7 +762,7 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				}
 			}
 		}
-		for (i = 0, transfer = gd.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
+		for (i = 0, transfer = ccs.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
 			if (!transfer->active)
 				continue;
 			for (j = 0; j < MAX_EMPL; j++) {

@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "campaign/cl_messageoptions.h" /**< msgCategory_t */
 
-#define MAX_PROJECTILESONGEOSCAPE 32
-
 /* Maximum alien team category defined in scripts */
 #define ALIENCATEGORY_MAX	8
 
@@ -110,20 +108,6 @@ typedef struct globalData_s
 	aircraft_t *combatZoomedUFO;
 	qboolean combatZoomOn;
 	combatZoomLevel_t combatZoomLevel;
-
-	/* Projectiles on geoscape (during fights) */
-	aircraftProjectile_t projectiles[MAX_PROJECTILESONGEOSCAPE];
-	int numProjectiles;
-
-	/* All transfers. */
-	transfer_t alltransfers[MAX_TRANSFERS];
-
-	/* UFO recoveries. */
-	ufoRecoveries_t recoveries[MAX_RECOVERIES];
-
-	/* UFO components. */
-	int numComponents;
-	components_t components[MAX_ASSEMBLIES];
 
 	/* Alien Team Definitions. */
 	int numAliensTD;

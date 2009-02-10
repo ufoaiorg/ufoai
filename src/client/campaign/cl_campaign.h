@@ -41,6 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_installation.h"
 
 #define BID_FACTOR 0.9
+#define MAX_PROJECTILESONGEOSCAPE 32
 
 /* check for water */
 /* blue value is 64 */
@@ -407,6 +408,20 @@ typedef struct ccs_s {
 	/* == Cities == */
 	city_t cities[MAX_CITIES];
 	int numCities;
+
+	/* Projectiles on geoscape (during fights) */
+	aircraftProjectile_t projectiles[MAX_PROJECTILESONGEOSCAPE];
+	int numProjectiles;
+
+	/* All transfers. */
+	transfer_t alltransfers[MAX_TRANSFERS];
+
+	/* UFO recoveries. */
+	ufoRecoveries_t recoveries[MAX_RECOVERIES];
+
+	/* UFO components. */
+	int numComponents;
+	components_t components[MAX_ASSEMBLIES];
 } ccs_t;
 
 /** possible geoscape actions */

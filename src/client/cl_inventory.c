@@ -64,14 +64,14 @@ void INV_ParseComponents (const char *name, const char **text)
 		Com_Printf("INV_ParseComponents: \"%s\" components def without body ignored.\n", name);
 		return;
 	}
-	if (gd.numComponents >= MAX_ASSEMBLIES) {
+	if (ccs.numComponents >= MAX_ASSEMBLIES) {
 		Com_Printf("INV_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
 		return;
 	}
 
 	/* New components-entry (next free entry in global comp-list) */
-	comp = &gd.components[gd.numComponents];
-	gd.numComponents++;
+	comp = &ccs.components[ccs.numComponents];
+	ccs.numComponents++;
 
 	memset(comp, 0, sizeof(*comp));
 
@@ -129,8 +129,8 @@ components_t *INV_GetComponentsByItem (const objDef_t *item)
 {
 	int i;
 
-	for (i = 0; i < gd.numComponents; i++) {
-		components_t *comp = &gd.components[i];
+	for (i = 0; i < ccs.numComponents; i++) {
+		components_t *comp = &ccs.components[i];
 		if (comp->asItem == item) {
 			Com_DPrintf(DEBUG_CLIENT, "INV_GetComponentsByItem: found components id: %s\n", comp->asId);
 			return comp;

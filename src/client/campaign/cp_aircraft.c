@@ -971,7 +971,7 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 
 	/** @todo This might be duplicate, see TR_NotifyAircraftRemoved() call
 	 * on the top of this function */
-	for (i = 0, transfer = gd.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
+	for (i = 0, transfer = ccs.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
 		if (!transfer->active)
 			continue;
 		if (!transfer->hasAircraft)
@@ -2356,53 +2356,53 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 		AIR_SaveAircraftXML(ssnode, gd.ufos[i], qtrue);
 	}
 	/* Save projectiles. */
-	for (i = 0; i < gd.numProjectiles; i++) {
+	for (i = 0; i < ccs.numProjectiles; i++) {
 		int j;
 		snode = mxml_AddNode(node, "Projectile");
-		mxml_AddString(snode, "aircraftItemId", gd.projectiles[i].aircraftItem->id);
+		mxml_AddString(snode, "aircraftItemId", ccs.projectiles[i].aircraftItem->id);
 		for (j = 0; j < MAX_MULTIPLE_PROJECTILES; j++)
-			mxml_AddPos2(snode, "pos", gd.projectiles[i].pos[j]);
-		mxml_AddPos3(snode, "IdleTarget", gd.projectiles[i].idleTarget);
-		if (gd.projectiles[i].attackingAircraft) {
+			mxml_AddPos2(snode, "pos", ccs.projectiles[i].pos[j]);
+		mxml_AddPos3(snode, "IdleTarget", ccs.projectiles[i].idleTarget);
+		if (ccs.projectiles[i].attackingAircraft) {
 			mxml_AddBool(snode, "hasAttackingAircraft", qtrue);
-			mxml_AddBool(snode, "isUfo", gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
-			if (gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(snode, "attackingAircraft", gd.projectiles[i].attackingAircraft - gd.ufos);
+			mxml_AddBool(snode, "isUfo", ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
+			if (ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
+				mxml_AddInt(snode, "attackingAircraft", ccs.projectiles[i].attackingAircraft - gd.ufos);
 			else
-				mxml_AddInt(snode, "attackingAircraft", gd.projectiles[i].attackingAircraft->idx);
+				mxml_AddInt(snode, "attackingAircraft", ccs.projectiles[i].attackingAircraft->idx);
 		}
 		/* No attacking Aircraft */
-		if (gd.projectiles[i].aimedBase)
-			mxml_AddInt(snode, "aimedBaseIdx", gd.projectiles[i].aimedBase->idx);
-		if (gd.projectiles[i].aimedAircraft) {
+		if (ccs.projectiles[i].aimedBase)
+			mxml_AddInt(snode, "aimedBaseIdx", ccs.projectiles[i].aimedBase->idx);
+		if (ccs.projectiles[i].aimedAircraft) {
 			mxml_AddBool(snode, "hasAimedAircraft", qtrue);
-			mxml_AddBool(snode, "AimedAircraftIsUfo", gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
-			if (gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(snode, "AimedAircraft", gd.projectiles[i].aimedAircraft - gd.ufos);
+			mxml_AddBool(snode, "AimedAircraftIsUfo", ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
+			if (ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
+				mxml_AddInt(snode, "AimedAircraft", ccs.projectiles[i].aimedAircraft - gd.ufos);
 			else
-				mxml_AddInt(snode, "AimedAircraft", gd.projectiles[i].aimedAircraft->idx);
+				mxml_AddInt(snode, "AimedAircraft", ccs.projectiles[i].aimedAircraft->idx);
 		}
-		mxml_AddInt(snode, "time", gd.projectiles[i].time);
-		mxml_AddFloat(snode, "angle", gd.projectiles[i].angle);
-		mxml_AddBool(snode, "bullet", gd.projectiles[i].bullets);
-		mxml_AddBool(snode, "laser", gd.projectiles[i].laser);
+		mxml_AddInt(snode, "time", ccs.projectiles[i].time);
+		mxml_AddFloat(snode, "angle", ccs.projectiles[i].angle);
+		mxml_AddBool(snode, "bullet", ccs.projectiles[i].bullets);
+		mxml_AddBool(snode, "laser", ccs.projectiles[i].laser);
 	}
 
 	/* Save recoveries. */
 	for (i = 0; i < MAX_RECOVERIES; i++) {
 		/*check, if the transfer is active */
 		/** @todo Check if we can really ignore them if active is false */
-		if (!gd.recoveries[i].active)
+		if (!ccs.recoveries[i].active)
 			continue;
 		snode = mxml_AddNode(node, "recoverie");
-		/* mxml_AddBool(snode, "active", gd.recoveries[i].active); */
-		if (gd.recoveries[i].base)
-			mxml_AddInt(snode, "targetBase", gd.recoveries[i].base->idx);
+		/* mxml_AddBool(snode, "active", ccs.recoveries[i].active); */
+		if (ccs.recoveries[i].base)
+			mxml_AddInt(snode, "targetBase", ccs.recoveries[i].base->idx);
 		/** @todo At some point we really need to save a unique string here. */
-		if (gd.recoveries[i].ufoTemplate)
-			mxml_AddInt(snode, "ufoTemplateIdx", gd.recoveries[i].ufoTemplate->idx);
-		mxml_AddInt(snode, "day", gd.recoveries[i].event.day);
-		mxml_AddInt(snode, "sec", gd.recoveries[i].event.sec);
+		if (ccs.recoveries[i].ufoTemplate)
+			mxml_AddInt(snode, "ufoTemplateIdx", ccs.recoveries[i].ufoTemplate->idx);
+		mxml_AddInt(snode, "day", ccs.recoveries[i].event.day);
+		mxml_AddInt(snode, "sec", ccs.recoveries[i].event.sec);
 	}
 	return qtrue;
 }
@@ -2499,46 +2499,46 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	}
 
 	/* Save projectiles. */
-	MSG_WriteByte(sb, gd.numProjectiles);
-	for (i = 0; i < gd.numProjectiles; i++) {
-		MSG_WriteString(sb, gd.projectiles[i].aircraftItem->id);
+	MSG_WriteByte(sb, ccs.numProjectiles);
+	for (i = 0; i < ccs.numProjectiles; i++) {
+		MSG_WriteString(sb, ccs.projectiles[i].aircraftItem->id);
 		for (j = 0; j < presaveArray[PRE_MAXMPR]; j++)
-			MSG_Write2Pos(sb, gd.projectiles[i].pos[j]);
-		MSG_WritePos(sb, gd.projectiles[i].idleTarget);
-		if (gd.projectiles[i].attackingAircraft) {
-			MSG_WriteByte(sb, gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
-			if (gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
-				MSG_WriteShort(sb, gd.projectiles[i].attackingAircraft - gd.ufos);
+			MSG_Write2Pos(sb, ccs.projectiles[i].pos[j]);
+		MSG_WritePos(sb, ccs.projectiles[i].idleTarget);
+		if (ccs.projectiles[i].attackingAircraft) {
+			MSG_WriteByte(sb, ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
+			if (ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
+				MSG_WriteShort(sb, ccs.projectiles[i].attackingAircraft - gd.ufos);
 			else
-				MSG_WriteShort(sb, gd.projectiles[i].attackingAircraft->idx);
+				MSG_WriteShort(sb, ccs.projectiles[i].attackingAircraft->idx);
 		} else
 			MSG_WriteByte(sb, 2);
-		if (gd.projectiles[i].aimedBase)
-			MSG_WriteShort(sb, gd.projectiles[i].aimedBase->idx);
+		if (ccs.projectiles[i].aimedBase)
+			MSG_WriteShort(sb, ccs.projectiles[i].aimedBase->idx);
 		else
 			MSG_WriteShort(sb, -1);
-		if (gd.projectiles[i].aimedAircraft) {
-			MSG_WriteByte(sb, gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
-			if (gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
-				MSG_WriteShort(sb, gd.projectiles[i].aimedAircraft - gd.ufos);
+		if (ccs.projectiles[i].aimedAircraft) {
+			MSG_WriteByte(sb, ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
+			if (ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
+				MSG_WriteShort(sb, ccs.projectiles[i].aimedAircraft - gd.ufos);
 			else
-				MSG_WriteShort(sb, gd.projectiles[i].aimedAircraft->idx);
+				MSG_WriteShort(sb, ccs.projectiles[i].aimedAircraft->idx);
 		} else
 			MSG_WriteByte(sb, 2);
-		MSG_WriteLong(sb, gd.projectiles[i].time);
-		MSG_WriteFloat(sb, gd.projectiles[i].angle);
-		MSG_WriteByte(sb, gd.projectiles[i].bullets);
-		MSG_WriteByte(sb, gd.projectiles[i].laser);
+		MSG_WriteLong(sb, ccs.projectiles[i].time);
+		MSG_WriteFloat(sb, ccs.projectiles[i].angle);
+		MSG_WriteByte(sb, ccs.projectiles[i].bullets);
+		MSG_WriteByte(sb, ccs.projectiles[i].laser);
 	}
 
 	/* Save recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
-		MSG_WriteByte(sb, gd.recoveries[i].active);
-		MSG_WriteByte(sb, gd.recoveries[i].base ? gd.recoveries[i].base->idx : BYTES_NONE);
+		MSG_WriteByte(sb, ccs.recoveries[i].active);
+		MSG_WriteByte(sb, ccs.recoveries[i].base ? ccs.recoveries[i].base->idx : BYTES_NONE);
 		/** @todo At some point we really need to save a unique string here. */
-		MSG_WriteByte(sb, gd.recoveries[i].ufoTemplate ? gd.recoveries[i].ufoTemplate->idx : BYTES_NONE);
-		MSG_WriteLong(sb, gd.recoveries[i].event.day);
-		MSG_WriteLong(sb, gd.recoveries[i].event.sec);
+		MSG_WriteByte(sb, ccs.recoveries[i].ufoTemplate ? ccs.recoveries[i].ufoTemplate->idx : BYTES_NONE);
+		MSG_WriteLong(sb, ccs.recoveries[i].event.day);
+		MSG_WriteLong(sb, ccs.recoveries[i].event.sec);
 	}
 	return qtrue;
 }
@@ -2819,55 +2819,55 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		technology_t *tech = RS_GetTechByProvided(mxml_GetString(snode, "aircraftItemId"));
 		if (tech) {
 			int tmp_int, j;
-			gd.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
-			gd.projectiles[i].idx = i;
-			for (j = 0, ssnode=mxml_GetPos2(snode, "pos", gd.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
-			     ssnode = mxml_GetNextPos2(ssnode, snode, "pos", gd.projectiles[i].pos[j]), j++)
+			ccs.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
+			ccs.projectiles[i].idx = i;
+			for (j = 0, ssnode=mxml_GetPos2(snode, "pos", ccs.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
+			     ssnode = mxml_GetNextPos2(ssnode, snode, "pos", ccs.projectiles[i].pos[j]), j++)
 				;
-			mxml_GetPos3(snode, "IdleTarget", gd.projectiles[i].idleTarget);
+			mxml_GetPos3(snode, "IdleTarget", ccs.projectiles[i].idleTarget);
 			if (mxml_GetBool(snode, "hasAttackingAircraft", qfalse)) {
 				if (mxml_GetBool(snode, "isUfo", qfalse))
-					gd.projectiles[i].attackingAircraft = gd.ufos + mxml_GetInt(snode, "attackingAircraft", 0);
+					ccs.projectiles[i].attackingAircraft = gd.ufos + mxml_GetInt(snode, "attackingAircraft", 0);
 				else
-					gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "attackingAircraft", 0));
+					ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "attackingAircraft", 0));
 			} else
-				gd.projectiles[i].attackingAircraft = NULL;
+				ccs.projectiles[i].attackingAircraft = NULL;
 			tmp_int = mxml_GetInt(snode, "aimedBaseIdx", 0);
 			if (tmp_int > 0)
-				gd.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
+				ccs.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
 			else
-				gd.projectiles[i].aimedBase = NULL;
+				ccs.projectiles[i].aimedBase = NULL;
 			if (mxml_GetBool(snode, "hasAimedAircraft", qfalse)) {
 				if (mxml_GetBool(snode, "AimedAircraftIsUfo", qfalse))
-					gd.projectiles[i].aimedAircraft = gd.ufos + mxml_GetInt(snode, "AimedAircraft", 0);
+					ccs.projectiles[i].aimedAircraft = gd.ufos + mxml_GetInt(snode, "AimedAircraft", 0);
 				else
-					gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "AimedAircraft", 0));
+					ccs.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "AimedAircraft", 0));
 			} else
-				gd.projectiles[i].aimedAircraft = NULL;
+				ccs.projectiles[i].aimedAircraft = NULL;
 
-			gd.projectiles[i].time = mxml_GetInt(snode, "time", 0);
-			gd.projectiles[i].angle = mxml_GetFloat(snode, "angle", 0.0);
-			gd.projectiles[i].bullets = mxml_GetBool(snode, "bullet", qfalse);
-			gd.projectiles[i].laser = mxml_GetBool(snode, "laser", qfalse);
+			ccs.projectiles[i].time = mxml_GetInt(snode, "time", 0);
+			ccs.projectiles[i].angle = mxml_GetFloat(snode, "angle", 0.0);
+			ccs.projectiles[i].bullets = mxml_GetBool(snode, "bullet", qfalse);
+			ccs.projectiles[i].laser = mxml_GetBool(snode, "laser", qfalse);
 		} else {
 			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
 			return qfalse;
 		}
 	}
 
-	gd.numProjectiles = i;
+	ccs.numProjectiles = i;
 
 	for (i = 0, snode = mxml_GetNode(node, "recoverie"); snode && i < MAX_RECOVERIES;
 			snode = mxml_GetNextNode(snode, node, "recoverie"), i++) {
 		byte base, ufotype;
-		gd.recoveries[i].active = qtrue;
+		ccs.recoveries[i].active = qtrue;
 		base = mxml_GetInt(snode, "targetBase", BYTES_NONE);
-		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
+		ccs.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
 		assert(numAircraftTemplates);
 		ufotype = mxml_GetInt(snode, "ufoTemplateIdx", BYTES_NONE);
-		gd.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
-		gd.recoveries[i].event.day = mxml_GetInt(snode, "day", 0);
-		gd.recoveries[i].event.sec = mxml_GetInt(snode, "sec", 0);
+		ccs.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
+		ccs.recoveries[i].event.day = mxml_GetInt(snode, "day", 0);
+		ccs.recoveries[i].event.sec = mxml_GetInt(snode, "sec", 0);
 	}
 
 	for (i = gd.numUFOs - 1; i >= 0; i--) {
@@ -3048,44 +3048,44 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		Com_Printf("AIR_Load: loaded %i UFOs, but there should be %i\n", numUFOs, gd.numUFOs);
 
 	/* Load projectiles. */
-	gd.numProjectiles = MSG_ReadByte(sb);
-	if (gd.numProjectiles > MAX_PROJECTILESONGEOSCAPE) {
-		Com_Printf("AIR_Load: Too many projectiles on map (%i)\n", gd.numProjectiles);
+	ccs.numProjectiles = MSG_ReadByte(sb);
+	if (ccs.numProjectiles > MAX_PROJECTILESONGEOSCAPE) {
+		Com_Printf("AIR_Load: Too many projectiles on map (%i)\n", ccs.numProjectiles);
 		return qfalse;
 	}
 
 
-	for (i = 0; i < gd.numProjectiles; i++) {
+	for (i = 0; i < ccs.numProjectiles; i++) {
 		tech = RS_GetTechByProvided(MSG_ReadString(sb));
 		if (tech) {
-			gd.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
-			gd.projectiles[i].idx = i;
+			ccs.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
+			ccs.projectiles[i].idx = i;
 			for (j = 0; j < presaveArray[PRE_MAXMPR]; j++)
-				MSG_Read2Pos(sb, gd.projectiles[i].pos[j]);
-			MSG_ReadPos(sb, gd.projectiles[i].idleTarget);
+				MSG_Read2Pos(sb, ccs.projectiles[i].pos[j]);
+			MSG_ReadPos(sb, ccs.projectiles[i].idleTarget);
 			tmp_int = MSG_ReadByte(sb);
 			if (tmp_int == 2)
-				gd.projectiles[i].attackingAircraft = NULL;
+				ccs.projectiles[i].attackingAircraft = NULL;
 			else if (tmp_int == 1)
-				gd.projectiles[i].attackingAircraft = gd.ufos + MSG_ReadShort(sb);
+				ccs.projectiles[i].attackingAircraft = gd.ufos + MSG_ReadShort(sb);
 			else
-				gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
+				ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
 			tmp_int = MSG_ReadShort(sb);
 			if (tmp_int >= 0)
-				gd.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
+				ccs.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
 			else
-				gd.projectiles[i].aimedBase = NULL;
+				ccs.projectiles[i].aimedBase = NULL;
 			tmp_int = MSG_ReadByte(sb);
 			if (tmp_int == 2)
-				gd.projectiles[i].aimedAircraft = NULL;
+				ccs.projectiles[i].aimedAircraft = NULL;
 			else if (tmp_int == 1)
-				gd.projectiles[i].aimedAircraft = gd.ufos + MSG_ReadShort(sb);
+				ccs.projectiles[i].aimedAircraft = gd.ufos + MSG_ReadShort(sb);
 			else
-				gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
-			gd.projectiles[i].time = MSG_ReadLong(sb);
-			gd.projectiles[i].angle = MSG_ReadFloat(sb);
-			gd.projectiles[i].bullets = MSG_ReadByte(sb);
-			gd.projectiles[i].laser = MSG_ReadByte(sb);
+				ccs.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
+			ccs.projectiles[i].time = MSG_ReadLong(sb);
+			ccs.projectiles[i].angle = MSG_ReadFloat(sb);
+			ccs.projectiles[i].bullets = MSG_ReadByte(sb);
+			ccs.projectiles[i].laser = MSG_ReadByte(sb);
 		} else {
 			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
 			return qfalse;
@@ -3095,14 +3095,14 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	/* Load recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		byte base, ufotype;
-		gd.recoveries[i].active = MSG_ReadByte(sb);
+		ccs.recoveries[i].active = MSG_ReadByte(sb);
 		base = MSG_ReadByte(sb);
-		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
+		ccs.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
 		assert(numAircraftTemplates);
 		ufotype = MSG_ReadByte(sb);
-		gd.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
-		gd.recoveries[i].event.day = MSG_ReadLong(sb);
-		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
+		ccs.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
+		ccs.recoveries[i].event.day = MSG_ReadLong(sb);
+		ccs.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
 
 	for (i = gd.numUFOs - 1; i >= 0; i--) {
