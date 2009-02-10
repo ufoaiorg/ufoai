@@ -250,7 +250,7 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 	int j;
 
 	for (j = 0; j < csi.numIDs; j++) {
-		invList_t *ic= i->c[j];
+		invList_t *ic = i->c[j];
 		for (; ic; ic = ic->next) {
 			mxml_node_t *s = mxml_AddNode(p, "item");
 			CL_SaveItemXML(s, ic->item, j, ic->x, ic->y);

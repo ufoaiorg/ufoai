@@ -233,7 +233,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 			textPos += option->icon->size[0];
 		}
 		R_FontDrawString(font, ALIGN_UL, textPos, node->pos[1] + ((node->size[1] - fontHeight) / 2),
-			textPos, node->pos[1], tabWidth+1, TILE_HEIGHT,
+			textPos, node->pos[1], tabWidth + 1, TILE_HEIGHT,
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;

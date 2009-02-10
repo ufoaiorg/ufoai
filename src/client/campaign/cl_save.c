@@ -417,7 +417,6 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 
 	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.xml", FS_Gamedir(), filename);
 
-
 	top_node = mxmlNewXML("1.0");
 	node = mxml_AddNode(top_node, "savegame");
 	/* writing  Header */
@@ -426,7 +425,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	mxml_AddString(node, "version", UFO_VERSION);
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
-		    date.year, Date_GetMonthName(date.month - 1), date.day);
+		date.year, Date_GetMonthName(date.month - 1), date.day);
 	mxml_AddString(node, "gamedate", message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
@@ -437,7 +436,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 			Com_Printf("...subsystem '%s' - saved\n", saveSubsystemsXML[i].name);
 	}
 
-	/*calculate the needed buffer size */
+	/* calculate the needed buffer size */
 
 	memset(&header, 0, sizeof(header));
 	header.compressed = LittleLong(save_compressed->integer);
@@ -446,7 +445,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
-		    date.year, Date_GetMonthName(date.month - 1), date.day);
+		date.year, Date_GetMonthName(date.month - 1), date.day);
 	/** @todo fill real date string */
 
 	requiredbuflen = mxmlSaveString(top_node, dummy, 2, MXML_NO_CALLBACK);
@@ -477,7 +476,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 			return qfalse;
 		}
 	} else {
-		memcpy(fbuf + sizeof(header), buf, requiredbuflen+1);
+		memcpy(fbuf + sizeof(header), buf, requiredbuflen + 1);
 		Mem_Free(buf);
 	}
 
