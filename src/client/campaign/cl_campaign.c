@@ -1733,25 +1733,24 @@ qboolean STATS_LoadXML (mxml_node_t *tree)
 	mxml_node_t * stats;
 
 	stats = mxml_GetNode(tree, "stats");
-	if (!stats)
-	{
-		 Com_Printf("Did not find stats entry in xml!\n");
-		 return qfalse;
+	if (!stats) {
+		Com_Printf("Did not find stats entry in xml!\n");
+		return qfalse;
 	}
-	campaignStats.missionsWon 		= mxml_GetInt(stats, "missionswon", 0);
-	campaignStats.missionsLost 		= mxml_GetInt(stats, "missionslost", 0);
-	campaignStats.basesBuild 		= mxml_GetInt(stats, "basesbuild", 0);
-	campaignStats.basesAttacked 		= mxml_GetInt(stats, "basesattacked", 0);
-	campaignStats.interceptions 		= mxml_GetInt(stats, "interceptions", 0);
-	campaignStats.soldiersLost 		= mxml_GetInt(stats, "soldierslost", 0);
-	campaignStats.soldiersNew 		= mxml_GetInt(stats, "soldiersnew", 0);
-	campaignStats.killedAliens 		= mxml_GetInt(stats, "killedaliens", 0);
-	campaignStats.rescuedCivilians 		= mxml_GetInt(stats, "rescuedcivilians", 0);
-	campaignStats.researchedTechnologies 	= mxml_GetInt(stats, "researchedtechnologies", 0);
-	campaignStats.moneyInterceptions 	= mxml_GetInt(stats, "moneyinterceptions", 0);
-	campaignStats.moneyBases 		= mxml_GetInt(stats, "moneybases", 0);
-	campaignStats.moneyResearch		= mxml_GetInt(stats, "moneyresearch", 0);
-	campaignStats.moneyWeapons 		= mxml_GetInt(stats, "moneyweapons", 0);
+	campaignStats.missionsWon = mxml_GetInt(stats, "missionswon", 0);
+	campaignStats.missionsLost = mxml_GetInt(stats, "missionslost", 0);
+	campaignStats.basesBuild = mxml_GetInt(stats, "basesbuild", 0);
+	campaignStats.basesAttacked = mxml_GetInt(stats, "basesattacked", 0);
+	campaignStats.interceptions = mxml_GetInt(stats, "interceptions", 0);
+	campaignStats.soldiersLost = mxml_GetInt(stats, "soldierslost", 0);
+	campaignStats.soldiersNew = mxml_GetInt(stats, "soldiersnew", 0);
+	campaignStats.killedAliens = mxml_GetInt(stats, "killedaliens", 0);
+	campaignStats.rescuedCivilians = mxml_GetInt(stats, "rescuedcivilians", 0);
+	campaignStats.researchedTechnologies = mxml_GetInt(stats, "researchedtechnologies", 0);
+	campaignStats.moneyInterceptions = mxml_GetInt(stats, "moneyinterceptions", 0);
+	campaignStats.moneyBases = mxml_GetInt(stats, "moneybases", 0);
+	campaignStats.moneyResearch = mxml_GetInt(stats, "moneyresearch", 0);
+	campaignStats.moneyWeapons = mxml_GetInt(stats, "moneyweapons", 0);
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
 	return qtrue;
