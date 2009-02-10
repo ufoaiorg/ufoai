@@ -173,8 +173,8 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 	int numAvailableGroup = 0;
 
 	/* Find all available alien team groups */
-	for (i = 0; i < gd.numAlienCategories; i++) {
-		alienTeamCategory_t *cat = &gd.alienCategories[i];
+	for (i = 0; i < ccs.numAlienCategories; i++) {
+		alienTeamCategory_t *cat = &ccs.alienCategories[i];
 
 		/* Check if this alien team category may be used */
 		if (!CP_IsAlienTeamForCategory(cat, mission->category))
@@ -210,7 +210,7 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const equipDef_t *equip)
 {
 	const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
-	const linkedList_t const *equipPack = gd.alienCategories[group->categoryIdx].equipment;
+	const linkedList_t const *equipPack = ccs.alienCategories[group->categoryIdx].equipment;
 
 	if (mission->initialOverallInterest > equip->maxInterest ||
 		mission->initialOverallInterest <= equip->minInterest)

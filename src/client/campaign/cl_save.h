@@ -74,7 +74,7 @@ typedef enum {
 	PRE_NMTECH,	/* ccs.numTechnologies */
 	PRE_TECHMA,	/* TECHMAIL_MAX in techMailType_t */
 	PRE_NUMTDS,	/* numTeamDesc */
-	PRE_NUMALI,	/* gd.numAliensTD */
+	PRE_NUMALI,	/* ccs.numAliensTD */
 	PRE_NUMUFO,	/* gd.numUFOs */
 	PRE_MAXREC,	/* #define MAX_RECOVERIES */
 	PRE_MAXTRA, /* #define MAX_TRANSFERS */

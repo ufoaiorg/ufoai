@@ -245,7 +245,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 		Sys_Error("AL_AddAliens: Could not get brapparatus item definition");
 
 	for (i = 0; i < alienCargoTypes; i++) {
-		for (j = 0; j < gd.numAliensTD; j++) {
+		for (j = 0; j < ccs.numAliensTD; j++) {
 			assert(tobase->alienscont[j].teamDef);
 			assert(cargo[i].teamDef);
 			if (tobase->alienscont[j].teamDef == cargo[i].teamDef) {
@@ -297,7 +297,7 @@ void AL_AddAliens (aircraft_t *aircraft)
 		}
 	}
 
-	for (i = 0; i < gd.numAliensTD; i++) {
+	for (i = 0; i < ccs.numAliensTD; i++) {
 		technology_t *tech = tobase->alienscont[i].tech;
 #ifdef DEBUG
 		if (!tech)
@@ -347,7 +347,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 			 * in Alien Containment, then remove (amount). */
 			while (amount > 0) {
 				/* Find the type with maxamount. */
-				for (j = 0; j < gd.numAliensTD; j++) {
+				for (j = 0; j < ccs.numAliensTD; j++) {
 					if (maxamount < containment[j].amount_alive) {
 						maxamount = containment[j].amount_alive;
 						maxidx = j;
@@ -377,7 +377,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 		break;
 	case AL_KILL:
 		/* We ignore 2nd and 3rd parameter of AL_RemoveAliens() here. */
-		for (j = 0; j < gd.numAliensTD; j++) {
+		for (j = 0; j < ccs.numAliensTD; j++) {
 			if (containment[j].amount_alive > 0) {
 				containment[j].amount_dead += containment[j].amount_alive;
 				AL_ChangeAliveAlienNumber(base, &containment[j], -containment[j].amount_alive);
@@ -386,7 +386,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 		break;
 	case AL_KILLONE:
 		/* We ignore 3rd parameter of AL_RemoveAliens() here. */
-		for (j = 0; j < gd.numAliensTD; j++) {
+		for (j = 0; j < ccs.numAliensTD; j++) {
 			assert(containment[j].teamDef);
 			if (containment[j].teamDef == alienType) {
 				if (containment[j].amount_alive == 0)
@@ -404,7 +404,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 		if (!AL_CheckAliveFreeSpace(base, NULL, 1)) {
 			return; /* stop because we will else exceed the max of aliens */
 		}
-		for (j = 0; j < gd.numAliensTD; j++) {
+		for (j = 0; j < ccs.numAliensTD; j++) {
 			assert(containment[j].teamDef);
 			if (containment[j].teamDef == alienType) {
 				AL_ChangeAliveAlienNumber(base, &containment[j], 1);
@@ -415,7 +415,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 		/* aliencontCurrent = &containment[j]; */
 		break;
 	case AL_ADDDEAD:
-		for (j = 0; j < gd.numAliensTD; j++) {
+		for (j = 0; j < ccs.numAliensTD; j++) {
 			assert(containment[j].teamDef);
 			if (containment[j].teamDef == alienType) {
 				containment[j].amount_dead++;
@@ -433,7 +433,7 @@ void AL_RemoveAliens (base_t *base, const teamDef_t *alienType, int amount, cons
 /**
  * @brief Get index of alien.
  * @param[in] alienType Pointer to alien type.
- * @return Index of alien in alien containment (so less than @c gd.numAliensTD)
+ * @return Index of alien in alien containment (so less than @c ccs.numAliensTD)
  * @note It does NOT return the global team index from @c csi.teamDef array.
  * That would be @c alienType->idx
  * @sa RS_AssignTechLinks
@@ -521,7 +521,7 @@ int AL_CountInBase (const base_t *base)
 
 	assert(base);
 
-	for (j = 0; j < gd.numAliensTD; j++) {
+	for (j = 0; j < ccs.numAliensTD; j++) {
 		if (base->alienscont[j].teamDef)
 			amount += base->alienscont[j].amount_alive;
 	}
@@ -610,7 +610,7 @@ int AL_CountAll (void)
 			continue;
 		if (!B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT))
 			continue;
-		for (j = 0; j < gd.numAliensTD; j++) {
+		for (j = 0; j < ccs.numAliensTD; j++) {
 			if (base->alienscont[j].teamDef)
 				amount += base->alienscont[j].amount_alive;
 		}
@@ -637,7 +637,7 @@ void AC_KillAll (base_t *base)
 	assert(base);
 
 	/* Are there aliens here at all? */
-	for (i = 0; i < gd.numAliensTD; i++) {
+	for (i = 0; i < ccs.numAliensTD; i++) {
 		if (base->alienscont[i].amount_alive > 0) {
 			aliens = qtrue;
 			break;
@@ -688,14 +688,14 @@ static void AC_AddOne_f (void)
 
 	/* Check that alientType exists */
 	containment = baseCurrent->alienscont;
-	for (j = 0; j < gd.numAliensTD; j++) {
+	for (j = 0; j < ccs.numAliensTD; j++) {
 		assert(containment[j].teamDef);
 		if (containment[j].teamDef == alienType)
 			break;
 	}
-	if (j == gd.numAliensTD) {
+	if (j == ccs.numAliensTD) {
 		Com_Printf("AC_AddOne_f: Alien Type '%s' does not exist. Available choices are:\n", alienName);
-		for (j = 0; j < gd.numAliensTD; j++)
+		for (j = 0; j < ccs.numAliensTD; j++)
 			Com_Printf("\t* %s\n", containment[j].teamDef->name);
 		return;
 	}

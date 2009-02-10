@@ -222,7 +222,7 @@ static void AC_AlienClick (const base_t *base, int num)
 		const aliensCont_t *containment = base->alienscont;
 		int i, step;
 
-		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
+		for (i = 0, step = 0; i < ccs.numAliensTD; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;
 			if (step == num) {
@@ -280,7 +280,7 @@ static void AC_UpdateMenu (const base_t *base)
 	MN_ExecuteConfunc("aliencont_clear");
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
-		for (i = 0, j = 0; i < gd.numAliensTD; i++) {
+		for (i = 0, j = 0; i < ccs.numAliensTD; i++) {
 			if ((j >= alienContFirstEntry) && (j < AC_MENU_MAX_ENTRIES)) {
 				if (containment[i].teamDef) {
 					const technology_t *tech = containment[i].tech;
@@ -390,7 +390,7 @@ static void AC_KillOne_f (void)
 
 	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
 		aliensCont_t *containment = baseCurrent->alienscont;
-		for (i = 0, step = 0; i < gd.numAliensTD; i++) {
+		for (i = 0, step = 0; i < ccs.numAliensTD; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;
 			if (step == num) {

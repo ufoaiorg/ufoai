@@ -220,7 +220,7 @@ static qboolean TR_CheckAlien (int alienidx, base_t *destbase)
 	assert(destbase);
 
 	/* Count amount of live aliens already on the transfer list. */
-	for (i = 0; i < gd.numAliensTD; i++) {
+	for (i = 0; i < ccs.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 			intransfer += trAliensTmp[i][TRANS_ALIEN_ALIVE];
 	}
@@ -351,7 +351,7 @@ static void TR_CargoList (void)
 	}
 
 	/* Show aliens. */
-	for (i = 0; i < gd.numAliensTD; i++) {
+	for (i = 0; i < ccs.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)"),
 				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
@@ -365,7 +365,7 @@ static void TR_CargoList (void)
 			}
 		}
 	}
-	for (i = 0; i < gd.numAliensTD; i++) {
+	for (i = 0; i < ccs.numAliensTD; i++) {
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
@@ -543,7 +543,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		break;
 	case TRANS_TYPE_ALIEN:
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
-			for (i = 0; i < gd.numAliensTD; i++) {
+			for (i = 0; i < ccs.numAliensTD; i++) {
 				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_dead > 0) {
 					if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)"),
@@ -684,7 +684,7 @@ static void TR_TransferListClear_f (void)
 				B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], trItemsTmp[i], qfalse, qfalse);
 		}
 	}
-	for (i = 0; i < gd.numAliensTD; i++) {	/* Return aliens. */
+	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
@@ -789,7 +789,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 			MSO_CheckAddNewMessage(NT_TRANSFER_LOST, _("Transport mission"), cp_messageBuffer, qfalse, MSG_TRANSFERFINISHED, NULL);
 			/* Aliens cargo is not unloaded, will be destroyed in TR_TransferCheck(). */
 		} else {
-			for (i = 0; i < gd.numAliensTD; i++) {
+			for (i = 0; i < ccs.numAliensTD; i++) {
 				if (transfer->alienAmount[i][TRANS_ALIEN_ALIVE] > 0) {
 					AL_ChangeAliveAlienNumber(destination, &(destination->alienscont[i]), transfer->alienAmount[i][TRANS_ALIEN_ALIVE]);
 				}
@@ -878,7 +878,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	cargo = AL_GetAircraftAlienCargo(transferStartAircraft);
 	for (i = 0; i < alienCargoTypes; i++, cargo++) {		/* Aliens. */
 		if (cargo->amount_alive > 0) {
-			for (j = 0; j < gd.numAliensTD; j++) {
+			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
@@ -890,7 +890,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 			}
 		}
 		if (cargo->amount_dead > 0) {
-			for (j = 0; j < gd.numAliensTD; j++) {
+			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (!CHRSH_IsTeamDefAlien(&csi.teamDef[j]))
 					continue;
 				if (base->alienscont[j].teamDef == cargo->teamDef) {
@@ -1086,7 +1086,7 @@ static void TR_TransferStart_f (void)
 			}
 		}
 	}
-	for (i = 0; i < gd.numAliensTD; i++) {		/* Aliens. */
+	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
 		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
 		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
@@ -1269,7 +1269,7 @@ static void TR_TransferListSelect_f (void)
 	case TRANS_TYPE_ALIEN:
 		if (!B_GetBuildingStatus(transferBase, B_ALIEN_CONTAINMENT))
 			return;
-		for (i = 0; i < gd.numAliensTD; i++) {
+		for (i = 0; i < ccs.numAliensTD; i++) {
 			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][TRANS_ALIEN_DEAD]++;
@@ -1591,7 +1591,7 @@ static void TR_CargoListSelect_f (void)
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
-		for (i = 0; i < gd.numAliensTD; i++) {
+		for (i = 0; i < ccs.numAliensTD; i++) {
 			if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][TRANS_ALIEN_DEAD]--;
@@ -1616,7 +1616,7 @@ static void TR_CargoListSelect_f (void)
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
-		for (i = 0; i < gd.numAliensTD; i++) {
+		for (i = 0; i < ccs.numAliensTD; i++) {
 			if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 				if (cnt == num) {
 					trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
@@ -1781,7 +1781,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 			}
 		}
 		if (transfer->hasAliens){
-			for (j = 0; j < gd.numAliensTD; j++) {
+			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] >0 || transfer->alienAmount[j][TRANS_ALIEN_DEAD]> 0)
 				{
 					mxml_node_t *ss = mxml_AddNode(s, "alien");
@@ -1917,7 +1917,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				const int alive = mxml_GetInt(ss, "aliveAmount", 0);
 				const int dead  = mxml_GetInt(ss, "deadAmount", 0);
 				const int id = mxml_GetInt(ss, "AlienId", 0);
-				if (id >= 0 && id < gd.numAliensTD) {
+				if (id >= 0 && id < ccs.numAliensTD) {
 					transfer->alienAmount[id][TRANS_ALIEN_ALIVE] = alive;
 					transfer->alienAmount[id][TRANS_ALIEN_DEAD] = dead;
 				} else {

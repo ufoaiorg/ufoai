@@ -28,9 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "campaign/cl_messageoptions.h" /**< msgCategory_t */
 
-/* Maximum alien team category defined in scripts */
-#define ALIENCATEGORY_MAX	8
-
 /**
  * @brief This struct/variable holds the global data for a game.
  * @sa CL_ReadSinglePlayerData
@@ -89,14 +86,6 @@ typedef struct globalData_s
 	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUFOs;	/**< The current amount of UFOS on the geoscape. */
-
-	/* Alien Team Definitions. */
-	int numAliensTD;
-
-	/* Alien Team Package used during battle */
-	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
-														 * that will be used in mission */
-	int numAlienCategories;		/** number of alien team categories defined */
 
 	/* message categories */
 	msgCategory_t messageCategories[MAX_MESSAGECATEGORIES];

@@ -3130,7 +3130,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 
 		/* Alien Containment. */
 		node = mxml_AddNode(act_base, "aliensCont");
-		for (k = 0; k < MAX_ALIENCONT_CAP && k < gd.numAliensTD; k++) {
+		for (k = 0; k < MAX_ALIENCONT_CAP && k < ccs.numAliensTD; k++) {
 			mxml_node_t * snode = mxml_AddNode(node, "Alien");
 			assert(b->alienscont);
 			/*assert(b->alienscont[k]);*/

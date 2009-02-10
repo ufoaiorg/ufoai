@@ -40,9 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_airfight.h"
 #include "cl_installation.h"
 
-#define BID_FACTOR 0.9
-#define MAX_PROJECTILESONGEOSCAPE 32
-
 /* check for water */
 /* blue value is 64 */
 #define MapIsWater(color)        (color[0] ==   0 && color[1] ==   0 && color[2] ==  64)
@@ -82,6 +79,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* Maximum alien groups per alien team category */
 #define MAX_ALIEN_GROUP_PER_CATEGORY	4
+/* Maximum alien team category defined in scripts */
+#define ALIENCATEGORY_MAX	8
+#define BID_FACTOR 0.9
+#define MAX_PROJECTILESONGEOSCAPE 32
 
 /** possible map types */
 typedef enum mapType_s {
@@ -457,6 +458,14 @@ typedef struct ccs_s {
 	/* UFO components. */
 	int numComponents;
 	components_t components[MAX_ASSEMBLIES];
+
+	/* Alien Team Definitions. */
+	int numAliensTD;
+
+	/* Alien Team Package used during battle */
+	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
+														 * that will be used in mission */
+	int numAlienCategories;		/** number of alien team categories defined */
 } ccs_t;
 
 /**

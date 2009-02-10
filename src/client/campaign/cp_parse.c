@@ -86,21 +86,21 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 		return;
 	}
 
-	if (gd.numAlienCategories >= ALIENCATEGORY_MAX) {
+	if (ccs.numAlienCategories >= ALIENCATEGORY_MAX) {
 		Com_Printf("CL_ParseAlienTeam: maximum number of alien team category reached (%i)\n", ALIENCATEGORY_MAX);
 		return;
 	}
 
 	/* search for category with same name */
-	for (i = 0; i < gd.numAlienCategories; i++)
-		if (!Q_strncmp(name, gd.alienCategories[i].id, sizeof(gd.alienCategories[i].id)))
+	for (i = 0; i < ccs.numAlienCategories; i++)
+		if (!Q_strncmp(name, ccs.alienCategories[i].id, sizeof(ccs.alienCategories[i].id)))
 			break;
-	if (i < gd.numAlienCategories) {
+	if (i < ccs.numAlienCategories) {
 		Com_Printf("CL_ParseAlienTeam: alien category def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
-	alienCategory = &gd.alienCategories[gd.numAlienCategories++];
+	alienCategory = &ccs.alienCategories[ccs.numAlienCategories++];
 	Q_strncpyz(alienCategory->id, name, sizeof(alienCategory->id));
 
 	do {
@@ -155,7 +155,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 			group = &alienCategory->alienTeamGroups[alienCategory->numAlienTeamGroups];
 			group->idx = alienCategory->numAlienTeamGroups;
-			group->categoryIdx = alienCategory - gd.alienCategories;
+			group->categoryIdx = alienCategory - ccs.alienCategories;
 			alienCategory->numAlienTeamGroups++;
 
 			do {

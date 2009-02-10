@@ -1169,11 +1169,11 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		name = mxml_GetString(bparam, "alienCategories.id");
 
 		/* get corresponding category */
-		for (i = 0; i < gd.numAlienCategories; i++)
-			if (!Q_strncmp(name, gd.alienCategories[i].id, sizeof(gd.alienCategories[i].id)))
+		for (i = 0; i < ccs.numAlienCategories; i++)
+			if (!Q_strncmp(name, ccs.alienCategories[i].id, sizeof(ccs.alienCategories[i].id)))
 				break;
 
-		if (i >= gd.numAlienCategories) {
+		if (i >= ccs.numAlienCategories) {
 			Com_Printf("CP_Load: alien category def \"%s\" doesn't exist\n", name);
 			return qfalse;
 		}
@@ -1183,7 +1183,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			Com_Printf("CP_Load: Undefined alien team (category '%s', group '%i')\n", name, j);
 			return qfalse;
 		}
-		ccs.battleParameters.alienTeamGroup = &gd.alienCategories[i].alienTeamGroups[j];
+		ccs.battleParameters.alienTeamGroup = &ccs.alienCategories[i].alienTeamGroups[j];
 		name = mxml_GetString(bparam, "param");
 		if (name && name[0] != '\0')
 			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
@@ -1387,11 +1387,11 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		ccs.battleParameters.mission = CP_GetMissionById(missionId);
 		name = MSG_ReadString(sb);
 		/* get corresponding category */
-		for (i = 0; i < gd.numAlienCategories; i++)
-			if (!Q_strncmp(name, gd.alienCategories[i].id, sizeof(gd.alienCategories[i].id))) {
+		for (i = 0; i < ccs.numAlienCategories; i++)
+			if (!Q_strncmp(name, ccs.alienCategories[i].id, sizeof(ccs.alienCategories[i].id))) {
 				break;
 			}
-		if (i >= gd.numAlienCategories) {
+		if (i >= ccs.numAlienCategories) {
 			Com_Printf("CP_Load: alien category def \"%s\" doesn't exist\n", name);
 			return qfalse;
 		}
@@ -1400,7 +1400,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 			Com_Printf("CP_Load: Undefined alien team (category '%s', group '%i')\n", name, j);
 			return qfalse;
 		}
-		ccs.battleParameters.alienTeamGroup = &gd.alienCategories[i].alienTeamGroups[j];
+		ccs.battleParameters.alienTeamGroup = &ccs.alienCategories[i].alienTeamGroups[j];
 		name = MSG_ReadString(sb);
 		if (name[0] != '\0')
 			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
@@ -1561,7 +1561,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	if (ccs.battleParameters.mission) {
 		mxml_node_t *battleparam = mxml_AddNode(structure_ccs, "battleParameter");
 		mxml_AddString(battleparam, "mission.id", ccs.battleParameters.mission->id);
-		mxml_AddString(battleparam, "alienCategories.id", gd.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
+		mxml_AddString(battleparam, "alienCategories.id", ccs.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
 		mxml_AddShort(battleparam, "alienTeamGroupIdx", ccs.battleParameters.alienTeamGroup->idx);
 		mxml_AddString(battleparam, "param", (ccs.battleParameters.param ? ccs.battleParameters.param : ""));
 		mxml_AddString(battleparam, "alienEquipment", ccs.battleParameters.alienEquipment);
@@ -1686,7 +1686,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	/* store ccs.battleParameters */
 	if (ccs.battleParameters.mission) {
 		MSG_WriteString(sb, ccs.battleParameters.mission->id);
-		MSG_WriteString(sb, gd.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
+		MSG_WriteString(sb, ccs.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
 		MSG_WriteShort(sb, ccs.battleParameters.alienTeamGroup->idx);
 		MSG_WriteString(sb, (ccs.battleParameters.param ? ccs.battleParameters.param : ""));
 		MSG_WriteString(sb, ccs.battleParameters.alienEquipment);
@@ -2534,7 +2534,7 @@ void CL_ResetSinglePlayerData (void)
 	/* Count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
-			gd.numAliensTD++;
+			ccs.numAliensTD++;
 	}
 }
 
