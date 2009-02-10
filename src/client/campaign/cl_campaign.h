@@ -30,6 +30,7 @@ struct base_s;
 struct installation_s;
 struct employee_s;
 
+#include "cl_event.h"
 #include "cl_research.h"
 #include "cp_aircraft.h"
 #include "cl_radar.h"

@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
-#include "../cl_game.h" /* for CP_GameIsRunning */
 #include "cl_aliencont.h"
 #include "cl_aliencont_callbacks.h"
 
@@ -130,7 +128,7 @@ static void AC_PrevAC_f (void)
 	const base_t *base;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
+	if (!baseCurrent || !aliencontCurrent)
 		return;
 
 	/* Get previous base */
@@ -171,7 +169,7 @@ static void AC_OpenUFOpedia_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
+	if (!baseCurrent || !aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;
@@ -195,7 +193,7 @@ static void AC_ResearchAlien_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning() || !aliencontCurrent)
+	if (!baseCurrent || !aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;
@@ -357,7 +355,7 @@ static void AC_Init_f (void)
 static void AC_KillAll_f (void)
 {
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 
 	AC_KillAll(baseCurrent);
@@ -373,7 +371,7 @@ static void AC_KillOne_f (void)
 	int num, i, step;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 
 	if (Cmd_Argc() < 2) {
