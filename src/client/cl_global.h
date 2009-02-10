@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief This struct/variable holds the global data for a game.
  * @sa CL_ReadSinglePlayerData
  * @todo move everything campaign-mode only into the @c ccs_t structure
+ * @todo Remove this completely by moving all those struct to the proper places (most is indeed campaign related)
  */
 typedef struct globalData_s
 {
@@ -88,7 +89,7 @@ typedef struct globalData_s
 	int nextUCN;
 
 	/* == Aircraft == */
-	/* UFOs on geoscape: @todo update their inner pointers if needed */
+	/* UFOs on geoscape */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUFOs;	/**< The current amount of UFOS on the geoscape. */
 
