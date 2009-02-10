@@ -1,5 +1,6 @@
 /**
  * @file cl_rank.c
+ * @todo campaign mode only?
  */
 
 /*
