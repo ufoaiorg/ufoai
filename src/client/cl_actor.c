@@ -5081,7 +5081,7 @@ void CL_DisplayObstructionArrows (void)
 		start[1] += dvecs[dir][1] * QUANT;
 
 		/* Display floor arrow */
-		if (VectorNotEmpty(brushesHit.floor)){
+		if (VectorNotEmpty(brushesHit.floor)) {
 			if (brushesHit.obstructed) {
 				CL_AddArrow(start, brushesHit.floor, 1.0, 1.0, 1.0);
 			} else {
@@ -5090,7 +5090,7 @@ void CL_DisplayObstructionArrows (void)
 		}
 
 		/* Display ceiling arrow */
-		if (VectorNotEmpty(brushesHit.ceiling)){
+		if (VectorNotEmpty(brushesHit.ceiling)) {
 			CL_AddArrow(start, brushesHit.ceiling, 0.0, 1.0, 1.0);
 		}
 	}

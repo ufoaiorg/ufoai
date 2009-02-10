@@ -617,7 +617,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	if (type >= MAX_EMPL)
 		return NULL;
 
-	if (emplIdx >= 0){
+	if (emplIdx >= 0) {
 		curEmployeeIdx = emplIdx;
 	} else {
 		curEmployeeIdx = ccs.numEmployees[type];

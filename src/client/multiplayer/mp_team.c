@@ -474,7 +474,7 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	}
 
 	node = mxml_GetNode(top_node, "multiplayer");
-	if (!node){
+	if (!node) {
 		Com_Printf("Error: Failure in Loading the xml Data! (savegame node not found)");
 		Mem_Free(buf);
 		return qfalse;
@@ -579,7 +579,7 @@ void MP_LoadTeamMultiplayer_f (void)
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
 	Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mptx", FS_Gamedir(), index);
-	if (MP_LoadTeamMultiplayerXML(filename)){
+	if (MP_LoadTeamMultiplayerXML(filename)) {
 		Com_Printf("Team 'team%i' loaded from xml.\n", index);
 		return;
 	}

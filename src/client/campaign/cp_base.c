@@ -814,7 +814,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 	base->buildingCurrent = building;
 
 	/** @todo: make base destroyable by destroying entrance */
-	if (building->buildingType == B_ENTRANCE){
+	if (building->buildingType == B_ENTRANCE) {
 		MN_Popup(_("Destroy Entrance"), _("You cannot destroy the entrance of the base!"));
 		return;
 	}
@@ -3512,11 +3512,11 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			b->map[j][l].posY = mxml_GetInt(snode, "posy", 0);
 		}
 		node = mxml_GetNode(base, "buildings");
-		for (snode = mxml_GetNode(node, "building"); snode; snode = mxml_GetNextNode(snode, node, "building")){
+		for (snode = mxml_GetNode(node, "building"); snode; snode = mxml_GetNextNode(snode, node, "building")) {
 			const int buildId = mxml_GetInt(snode, "building_place", 0);
 			building_t *building;
 			byte buildingTpl;
-			if (buildId >= MAX_BUILDINGS){
+			if (buildId >= MAX_BUILDINGS) {
 				Com_Printf("building ID is greater than MAX buildings\n");
 				continue;
 			}

@@ -1771,16 +1771,16 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		/*if (!transfer->active)
 			continue;*/
 		s = mxml_AddNode(n, "transfer");
-		if (transfer->hasItems){
-			for (j = 0; j < MAX_OBJDEFS; j++){
-				if (transfer->itemAmount[j] >0){
+		if (transfer->hasItems) {
+			for (j = 0; j < MAX_OBJDEFS; j++) {
+				if (transfer->itemAmount[j] >0) {
 					mxml_node_t *ss = mxml_AddNode(s, "item");
 					mxml_AddInt(ss, "itemid", j);
 					mxml_AddInt(ss, "amount", transfer->itemAmount[j]);
 				}
 			}
 		}
-		if (transfer->hasAliens){
+		if (transfer->hasAliens) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] >0 || transfer->alienAmount[j][TRANS_ALIEN_DEAD]> 0)
 				{
@@ -1793,11 +1793,11 @@ qboolean TR_SaveXML (mxml_node_t *p)
 				}
 			}
 		}
-		if (transfer->hasEmployees){
+		if (transfer->hasEmployees) {
 			for (j = 0; j < MAX_EMPL; j++) {
 				int k;
-				for (k = 0; k < MAX_EMPLOYEES; k++){
-					if (transfer->trEmployees[j][k]){
+				for (k = 0; k < MAX_EMPLOYEES; k++) {
+					if (transfer->trEmployees[j][k]) {
 						mxml_node_t *ss = mxml_AddNode(s, "employee");
 						mxml_AddInt(ss, "group", j);
 						mxml_AddInt(ss, "empl", k);
@@ -1806,8 +1806,8 @@ qboolean TR_SaveXML (mxml_node_t *p)
 				}
 			}
 		}
-		if (transfer->hasAircraft){
-			for (j = 0; j < MAX_AIRCRAFT; j++){
+		if (transfer->hasAircraft) {
+			for (j = 0; j < MAX_AIRCRAFT; j++) {
 				mxml_node_t *ss = mxml_AddNode(s, "aircraft");
 				mxml_AddInt(ss, "id", j);
 				mxml_AddInt(ss, "air", transfer->aircraftArray[j]);
@@ -1932,7 +1932,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 				const int emplIdx = mxml_GetInt(ss, "idx", 0);
 				const int group = mxml_GetInt(ss, "group", 0);
 				const int empl = mxml_GetInt(ss, "empl", 0);
-				if (group >= 0 && group < MAX_EMPL && empl >= 0 && empl < MAX_EMPLOYEES){
+				if (group >= 0 && group < MAX_EMPL && empl >= 0 && empl < MAX_EMPLOYEES) {
 					transfer->trEmployees[group][empl] = ((emplIdx >= 0) ? &ccs.employees[group][emplIdx] : NULL);
 				}
 			}

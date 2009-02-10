@@ -350,7 +350,7 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 		return qfalse;
 	}
 
-	for (s = mxml_GetNode(n, "type"); s; s = mxml_GetNextNode(s,n, "type")){
+	for (s = mxml_GetNode(n, "type"); s; s = mxml_GetNextNode(s,n, "type")) {
 		const char *messagetype = mxml_GetString(s, "name");
 		notify_t type;
 
@@ -375,7 +375,7 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 		return qfalse;
 	}
 
-	for (s = mxml_GetNode(n, "category"); s; s = mxml_GetNextNode(s,n, "category")){
+	for (s = mxml_GetNode(n, "category"); s; s = mxml_GetNextNode(s,n, "category")) {
 		const char *categoryId = mxml_GetString(s, "name");
 		msgCategory_t *category = MSO_GetCategoryFromName(categoryId);
 		if (!category) {

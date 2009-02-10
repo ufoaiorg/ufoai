@@ -234,7 +234,7 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 
 	GAME_RestartMode(GAME_CAMPAIGN);
 	node = mxml_GetNode(top_node, "savegame");
-	if (!node){
+	if (!node) {
 		Com_Printf("Error: Failure in Loading the xml Data! (savegame node not found)");
 		Mem_Free(buf);
 		return qfalse;
@@ -688,7 +688,7 @@ static void SAV_GameReadGameComments_f (void)
 		}
 
 		/*If we have an error, we try to read the information from the _old_ savegame style */
-		if (error){
+		if (error) {
 			f = fopen(va("%s/save/slot%i.sav", FS_Gamedir(), i), "rb");
 			if (!f) {
 				Cvar_Set(va("mn_slot%i", i), "");

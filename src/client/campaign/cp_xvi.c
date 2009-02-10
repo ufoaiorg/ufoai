@@ -207,7 +207,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 
 	memset(out, defaultval, sizeof(out)); /*setting the whole array to the defaultval. That saves much memory in saving */
 
-	for (s = mxml_GetNode(n, "entry"); s; s = mxml_GetNextNode(s, n, "entry")){
+	for (s = mxml_GetNode(n, "entry"); s; s = mxml_GetNextNode(s, n, "entry")) {
 		const int x = mxml_GetInt(s, "x", 0);
 		const int y = mxml_GetInt(s, "y", 0);
 		if (x >= 0 && x < width && y >= 0 && y <= height)

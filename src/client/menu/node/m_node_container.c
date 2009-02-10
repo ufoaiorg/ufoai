@@ -313,7 +313,7 @@ static void MN_DrawFree (int container, const menuNode_t *node, int posx, int po
 
 	/* if showTUs is true (only the first time in none single containers)
 	 * and we are connected to a game */
-	if (showTUs && cls.state == ca_active){
+	if (showTUs && cls.state == ca_active) {
 		R_FontDrawString("f_verysmall", 0, nodepos[0] + 3, nodepos[1] + 3,
 			nodepos[0] + 3, nodepos[1] + 3, node->size[0] - 6, 0, 0,
 			va(_("In: %i Out: %i"), inv->in, inv->out), 0, 0, NULL, qfalse, 0);

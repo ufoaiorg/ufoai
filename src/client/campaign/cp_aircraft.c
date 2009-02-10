@@ -2176,7 +2176,7 @@ static void AIR_SaveRouteXML (mxml_node_t *node, const mapline_t route)
 {
 	int j;
 	mxml_AddFloat(node, "distance", route.distance);
-	for (j = 0; j < route.numPoints; j++){
+	for (j = 0; j < route.numPoints; j++) {
 		mxml_AddPos2(node, "point", route.point[j]);
 	}
 }
@@ -2261,7 +2261,7 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 	if (aircraft.installationTarget)
 		mxml_AddInt(node, "installationtarget", aircraft.installationTarget->idx);
 
-	if (aircraft.aircraftTarget){
+	if (aircraft.aircraftTarget) {
 		if (isUfo)
 			mxml_AddInt(node, "aircrafttarget", aircraft.aircraftTarget->idx);
 		else
@@ -2290,7 +2290,7 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 
 	subnode = mxml_AddNode(node, "aircraftteam");
 	for (l = 0; l < aircraft.teamSize; l++) {
-		if (aircraft.acTeam[l]){
+		if (aircraft.acTeam[l]) {
 			mxml_node_t *ssnode = mxml_AddNode(subnode, "member");
 			mxml_AddInt(ssnode, "idx", aircraft.acTeam[l]->idx);
 			mxml_AddInt(ssnode, "type", aircraft.acTeam[l]->type);
@@ -2347,7 +2347,7 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 
 	/* save the ufos on geoscape */
 	snode = mxml_AddNode(node, "ufos");
-	for (i = 0; i < MAX_UFOONGEOSCAPE; i++){
+	for (i = 0; i < MAX_UFOONGEOSCAPE; i++) {
 		mxml_node_t *ssnode;
 		if (ccs.ufos[i].id == NULL)
 			continue;

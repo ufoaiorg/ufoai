@@ -860,12 +860,12 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		BDEF_InitialiseInstallationSlots(inst);
 
 		ss = mxml_GetNode(s, "batteries");
-		if (!ss){
+		if (!ss) {
 			Com_Printf("INS_LoadXML: Batteries not defined!\n");
 			return qfalse;
 		}
 		inst->numBatteries = mxml_GetInt(ss, "num", 0);
-		if (inst->numBatteries > inst->installationTemplate->maxBatteries){
+		if (inst->numBatteries > inst->installationTemplate->maxBatteries) {
 			Com_Printf("Installation has more batteries than possible, using upper bound\n");
 			inst->numBatteries = inst->installationTemplate->maxBatteries;
 		}
@@ -914,7 +914,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		BDEF_InitialiseInstallationSlots(inst);
 
 		inst->numBatteries = MSG_ReadByte(sb);
-		if (inst->numBatteries > inst->installationTemplate->maxBatteries){
+		if (inst->numBatteries > inst->installationTemplate->maxBatteries) {
 			Com_Printf("Installation has more batteries than possible\n");
 			return qfalse;
 		}

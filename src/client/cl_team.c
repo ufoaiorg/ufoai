@@ -196,7 +196,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 				chr->score.initialSkills[k] = max(chr->HP, chr->maxHP);
 			}
 		}
-		if (k < KILLED_NUM_TYPES){
+		if (k < KILLED_NUM_TYPES) {
 			chr->score.kills[k] = mxml_GetInt(s, "kills", 0);
 			chr->score.stuns[k] = mxml_GetInt(s, "stuns", 0);
 		}
@@ -249,7 +249,7 @@ void CL_SaveInventoryXML (mxml_node_t *p, const inventory_t *i)
 {
 	int j;
 
-	for (j = 0; j < csi.numIDs; j++){
+	for (j = 0; j < csi.numIDs; j++) {
 		invList_t *ic= i->c[j];
 		for (; ic; ic = ic->next) {
 			mxml_node_t *s = mxml_AddNode(p, "item");

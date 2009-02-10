@@ -220,7 +220,7 @@ static void S_Music_RandomTrack_f (void)
 		return;
 
 	musicTrackCount = FS_BuildFileList("music/*.ogg");
-	if (musicTrackCount){
+	if (musicTrackCount) {
 		randomID = rand() % musicTrackCount;
 		Com_DPrintf(DEBUG_SOUND, "S_Music_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
