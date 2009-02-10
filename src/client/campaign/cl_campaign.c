@@ -1029,7 +1029,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	MAP_Init();
 
 	ccs.fund = mxml_GetBool(campaign, "fund", qfalse);
-	gd.nextUCN = mxml_GetInt(campaign, "nextUCN", 0);
+	cl.nextUniqueCharacterNnumber = mxml_GetInt(campaign, "nextUCN", 0);
 
 	/* read date */
 	n_ccs = mxml_GetNode(campaign, "ccs");
@@ -1267,7 +1267,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	MAP_Init();
 
 	ccs.fund = MSG_ReadByte(sb);
-	gd.nextUCN = MSG_ReadShort(sb);
+	cl.nextUniqueCharacterNnumber = MSG_ReadShort(sb);
 
 	/* read date */
 	ccs.date.day = MSG_ReadLong(sb);
@@ -1463,7 +1463,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 	mxml_AddString(campaign, "name", curCampaign->id);
 	mxml_AddShort(campaign, "fund", ccs.fund);
-	mxml_AddShort(campaign, "nextUCN", gd.nextUCN);
+	mxml_AddShort(campaign, "nextUniqueCharacterNnumber", cl.nextUniqueCharacterNnumber);
 
 
 	structure_ccs = mxml_AddNode(campaign, "ccs");
@@ -1590,7 +1590,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteString(sb, curCampaign->id);
 
 	MSG_WriteByte(sb, ccs.fund);
-	MSG_WriteShort(sb, gd.nextUCN);
+	MSG_WriteShort(sb, cl.nextUniqueCharacterNnumber);
 
 	/* store date */
 	MSG_WriteLong(sb, ccs.date.day);

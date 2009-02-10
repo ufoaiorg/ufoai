@@ -461,7 +461,7 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 	INVSH_DestroyInventory(&chr->inv);
 
 	/* get ucn */
-	chr->ucn = gd.nextUCN++;
+	chr->ucn = cl.nextUniqueCharacterNnumber++;
 
 	/* Set default reaction-mode for all character-types to "once".
 	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa G_SpawnAIPlayer */

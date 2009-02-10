@@ -145,6 +145,9 @@ typedef struct client_state_s {
 	int map_maxlevel_base;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
+
+	/* unique character id */
+	int nextUniqueCharacterNnumber;
 } client_state_t;
 
 extern client_state_t cl;
