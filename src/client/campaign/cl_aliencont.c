@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
-#include "../cl_game.h"
 #include "../mxml/mxml_ufoai.h"
 #include "cl_aliencont_callbacks.h"
 
@@ -668,7 +666,7 @@ static void AC_AddOne_f (void)
 	int j;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning()) {
+	if (!baseCurrent) {
 		return;
 	}
 

@@ -26,10 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
 #include "cl_mapfightequip.h"
-#include "../menu/node/m_node_text.h"
 #include "cl_fightequip_callbacks.h"
+#include "../menu/node/m_node_text.h"
 
 /**
  * @brief Returns craftitem weight based on size.
