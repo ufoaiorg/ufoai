@@ -66,8 +66,10 @@
  * Do we have threading support?
  */
 
-#define HAVE_PTHREAD_H 1
-
+#ifdef WIN32
+#else
+#  define HAVE_PTHREAD_H 1
+#endif /* WIN32 */
 
 /*
  * Define prototypes for string functions as needed...
