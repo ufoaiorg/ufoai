@@ -36,12 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_screen.h"
 #include "cl_input.h"
 #include "cl_keys.h"
-#include "cl_cinematic.h"
 #include "cl_console.h"
 #include "cl_http.h"
 #include "campaign/cl_event.h"
 #include "campaign/cl_save.h"
-#include "renderer/r_entity.h"
 
 /*============================================================================= */
 
@@ -295,10 +293,6 @@ extern cvar_t *confirm_actions;
 
 extern cvar_t* cl_mapDebug;
 
-
-/** limit the input for cvar editing (base name, save slots and so on) */
-#define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
-
 void CL_LoadMedia(void);
 
 /* cl_main.c */
@@ -310,10 +304,6 @@ void CL_ReadSinglePlayerData(void);
 void CL_RequestNextDownload(void);
 
 void CL_ClearState(void);
-
-struct base_s;
-struct installation_s;
-struct employee_s;
 
 #include "cl_le.h"
 #include "cl_menu.h"

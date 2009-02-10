@@ -30,6 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_MENUSTACK		32
 #define MAX_MENUACTIONS		8192
 
+/** limit the input for cvar editing (base name, save slots and so on) */
+#define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
+
 #include "m_actions.h"
 #include "m_data.h"
 
