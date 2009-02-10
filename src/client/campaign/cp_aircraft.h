@@ -98,12 +98,6 @@ typedef enum {
 	AIR_POSITIONS_MAX
 } itemPos_t;
 
-typedef enum {
-	COMBAT_ZOOM_FULL,	/**< Zoomed in at max weapons range */
-	COMBAT_ZOOM_HALF	/**< Zoomed out, but still tracking the combat zoomed ufo */
-} combatZoomLevel_t;
-
-
 #define MAX_AIRCRAFTSLOT 4
 
 /** @brief slot of aircraft */

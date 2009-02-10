@@ -64,7 +64,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 
 	if (base)
 		B_BaseResetStatus(base);
-	gd.mapAction = MA_NONE;
+	ccs.mapAction = MA_NONE;
 
 	/* we really don't want to use the fake aircraft anywhere */
 	if (base)
@@ -183,7 +183,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	MAP_SelectMission(mission);
 	ccs.selectedMission->active = qtrue;
-	gd.mapAction = MA_BASEATTACK;
+	ccs.mapAction = MA_BASEATTACK;
 	Com_DPrintf(DEBUG_CLIENT, "Base attack: %s at %.0f:%.0f\n", ccs.selectedMission->id, ccs.selectedMission->pos[0], ccs.selectedMission->pos[1]);
 
 	/* Fill the fake aircraft */

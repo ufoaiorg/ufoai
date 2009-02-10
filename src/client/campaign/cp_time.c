@@ -139,7 +139,7 @@ void CL_UpdateTime (void)
 	/* Update the timelapse text */
 	if (gameLapse >= 0 && gameLapse < NUM_TIMELAPSE) {
 		Cvar_Set("mn_timelapse", _(lapse[gameLapse].name));
-		gd.gameTimeScale = lapse[gameLapse].scale;
+		ccs.gameTimeScale = lapse[gameLapse].scale;
 		Cvar_SetValue("mn_timelapse_id", gameLapse);
 	}
 
@@ -157,7 +157,7 @@ void CL_UpdateTime (void)
  */
 void CL_GameTimeStop (void)
 {
-	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int lapseType = ccs.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 
 	if (!GAME_IsCampaign())
 		return;
@@ -182,7 +182,7 @@ void CL_GameTimeStop (void)
  */
 void CL_GameTimeSlow (void)
 {
-	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int lapseType = ccs.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int minGameLapse = CP_MinGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed
@@ -219,7 +219,7 @@ void CL_GameTimeSlow (void)
  */
 void CL_GameTimeFast (void)
 {
-	const int lapseType = gd.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
+	const int lapseType = ccs.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int maxGameLapse = CP_MaxGameLapseForType(lapseType);
 
 	/* check the stats value - already build bases might have been destroyed

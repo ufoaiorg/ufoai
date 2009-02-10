@@ -123,7 +123,7 @@ static void MN_MapNodeMouseDown (menuNode_t *node, int x, int y, int button)
 
 	switch (button) {
 	case K_MOUSE2:
-		if (!gd.combatZoomOn || !gd.combatZoomedUFO) {
+		if (!ccs.combatZoomOn || !ccs.combatZoomedUFO) {
 			MN_SetMouseCapture(node);
 			if (!cl_3dmap->integer)
 				mode = MODE_SHIFT2DMAP;
@@ -166,7 +166,7 @@ static void MN_MapNodeMouseUp (menuNode_t *node, int x, int y, int button)
 
 static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	if (gd.combatZoomOn  && gd.combatZoomedUFO) {
+	if (ccs.combatZoomOn  && ccs.combatZoomedUFO) {
 		return;
 	}
 

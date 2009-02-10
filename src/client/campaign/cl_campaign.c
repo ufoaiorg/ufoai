@@ -740,7 +740,7 @@ void CL_CampaignRun (void)
 	assert(ccs.numEmployees[EMPL_PILOT]);
 
 	/* advance time */
-	ccs.timer += cls.frametime * gd.gameTimeScale;
+	ccs.timer += cls.frametime * ccs.gameTimeScale;
 	checks = currentinterval + (int)floor(ccs.timer);
 	checks = (int)(checks / DETECTION_INTERVAL);
 	dt = DETECTION_INTERVAL - currentinterval;
@@ -826,12 +826,12 @@ void CL_CampaignRun (void)
 		/* set time cvars */
 		CL_DateConvertLong(&ccs.date, &date);
 		/* every first day of a month */
-		if (date.day == 1 && gd.fund && ccs.numBases) {
+		if (date.day == 1 && ccs.fund && ccs.numBases) {
 			CP_NationBackupMonthlyData();
 			CP_NationHandleBudget();
-			gd.fund = qfalse;
+			ccs.fund = qfalse;
 		} else if (date.day > 1)
-			gd.fund = qtrue;
+			ccs.fund = qtrue;
 
 		CP_UpdateXVIMapButton();
 		UP_GetUnreadMails();
@@ -1028,7 +1028,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	/* init the map images and reset the map actions */
 	MAP_Init();
 
-	gd.fund = mxml_GetBool(campaign, "fund", qfalse);
+	ccs.fund = mxml_GetBool(campaign, "fund", qfalse);
 	gd.nextUCN = mxml_GetInt(campaign, "nextUCN", 0);
 
 	/* read date */
@@ -1266,7 +1266,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* init the map images and reset the map actions */
 	MAP_Init();
 
-	gd.fund = MSG_ReadByte(sb);
+	ccs.fund = MSG_ReadByte(sb);
 	gd.nextUCN = MSG_ReadShort(sb);
 
 	/* read date */
@@ -1462,7 +1462,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	campaign = mxml_AddNode(parent, "campaign");
 
 	mxml_AddString(campaign, "name", curCampaign->id);
-	mxml_AddShort(campaign, "fund", gd.fund);
+	mxml_AddShort(campaign, "fund", ccs.fund);
 	mxml_AddShort(campaign, "nextUCN", gd.nextUCN);
 
 
@@ -1589,7 +1589,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 	/* store campaign name */
 	MSG_WriteString(sb, curCampaign->id);
 
-	MSG_WriteByte(sb, gd.fund);
+	MSG_WriteByte(sb, ccs.fund);
 	MSG_WriteShort(sb, gd.nextUCN);
 
 	/* store date */

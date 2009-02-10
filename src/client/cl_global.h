@@ -69,18 +69,6 @@ typedef struct globalData_s
 	/* Total number of built installations (how many are enabled). */
 	int numInstallations;
 
-	/* == misc == */
-	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
-	mapAction_t mapAction;
-	/* BA_NEWBUILDING ... */
-	baseAction_t baseAction;
-	/* how fast the game is running */
-	int gameTimeScale;
-	/* already paid in this month? */
-	qboolean fund;
-
-	qboolean autosell[MAX_OBJDEFS];		/**< True if this objDef_t has autosell enabled. */
-
 	/* == production == */
 	/* we will allow only one active production at the same time for each base */
 	/* NOTE The facility to produce equipment should have the once-flag set */
@@ -103,11 +91,6 @@ typedef struct globalData_s
 	/* UFOs on geoscape: @todo update their inner pointers if needed */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUFOs;	/**< The current amount of UFOS on the geoscape. */
-
-	/* UFO to follow while in combat zoom */
-	aircraft_t *combatZoomedUFO;
-	qboolean combatZoomOn;
-	combatZoomLevel_t combatZoomLevel;
 
 	/* Alien Team Definitions. */
 	int numAliensTD;

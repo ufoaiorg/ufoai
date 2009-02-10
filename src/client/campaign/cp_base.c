@@ -248,7 +248,7 @@ void B_ResetBuildingCurrent (base_t* base)
 {
 	if (base)
 		base->buildingCurrent = NULL;
-	gd.baseAction = BA_NONE;
+	ccs.baseAction = BA_NONE;
 }
 
 /**
@@ -2056,14 +2056,14 @@ void B_SelectBase (base_t *base)
 
 		/* if player hit the "create base" button while creating base mode is enabled
 		 * that means that player wants to quit this mode */
-		if (gd.mapAction == MA_NEWBASE) {
+		if (ccs.mapAction == MA_NEWBASE) {
 			MAP_ResetAction();
 			if (!radarOverlayWasSet)
 				MAP_DeactivateOverlay("radar");
 			return;
 		}
 
-		gd.mapAction = MA_NEWBASE;
+		ccs.mapAction = MA_NEWBASE;
 		baseID = B_GetFirstUnfoundedBase();
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
@@ -2081,13 +2081,13 @@ void B_SelectBase (base_t *base)
 			/* select the first base in list */
 			installationCurrent = NULL;
 			baseCurrent = B_GetBaseByIDX(0);
-			gd.mapAction = MA_NONE;
+			ccs.mapAction = MA_NONE;
 		}
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
 		installationCurrent = NULL;
 		baseCurrent = base;
-		gd.mapAction = MA_NONE;
+		ccs.mapAction = MA_NONE;
 		MN_PushMenu("bases", NULL);
 		AIR_AircraftSelect(base->aircraftCurrent);
 		switch (base->baseStatus) {
@@ -2105,7 +2105,7 @@ void B_SelectBase (base_t *base)
 	 * this is only needed when we are going to be show up the base
 	 * in our base view port
 	 */
-	if (gd.mapAction != MA_NEWBASE) {
+	if (ccs.mapAction != MA_NEWBASE) {
 		assert(baseCurrent);
 		Cvar_Set("mn_base_title", baseCurrent->name);
 		Cvar_SetValue("mn_numbases", ccs.numBases);
@@ -2348,8 +2348,8 @@ void B_BaseResetStatus (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_NOT_USED;
-	if (gd.mapAction == MA_BASEATTACK)
-		gd.mapAction = MA_NONE;
+	if (ccs.mapAction == MA_BASEATTACK)
+		ccs.mapAction = MA_NONE;
 }
 
 /**
@@ -2781,7 +2781,7 @@ static void B_SellOrAddItems (aircraft_t *aircraft)
 			continue;
 		} else {
 			/* If the related technology is researched, check the autosell option. */
-			if (gd.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
+			if (ccs.autosell[cargo[i].item->idx]) { /* Sell items if autosell is enabled. */
 				ccs.eMarket.num[cargo[i].item->idx] += cargo[i].amount;
 				gained += (cargo[i].item->price * cargo[i].amount);
 				numitems += cargo[i].amount;

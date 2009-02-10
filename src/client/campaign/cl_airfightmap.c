@@ -65,8 +65,8 @@ static void AFM_GetAircraftInCombatRange (float maxDistance)
 			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
 			if (AIR_IsAircraftOnGeoscape(aircraft)) {
 				/* const float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);*/
-				if (aircraft->aircraftTarget == gd.combatZoomedUFO || aircraft == gd.combatZoomedUFO->aircraftTarget) {
-					const float distanceToTarget = MAP_GetDistance(aircraft->pos, gd.combatZoomedUFO->pos);
+				if (aircraft->aircraftTarget == ccs.combatZoomedUFO || aircraft == ccs.combatZoomedUFO->aircraftTarget) {
+					const float distanceToTarget = MAP_GetDistance(aircraft->pos, ccs.combatZoomedUFO->pos);
 					if (distanceToTarget < maxDistance) {
 						assert(numAircraftList < MAX_AIRCRAFT);
 						aircraftList[numAircraftList++] = aircraft;
@@ -88,8 +88,8 @@ static void AFM_GetUFOsInCombatRange (float maxDistance)
 
 	for (ufoIdx = 0; ufoIdx < gd.numUFOs; ufoIdx++) {
 		aircraft_t *ufo = &gd.ufos[ufoIdx];
-		const float distance = MAP_GetDistance(ufo->pos, gd.combatZoomedUFO->pos);
-		if (distance < maxDistance || gd.combatZoomedUFO == ufo) {
+		const float distance = MAP_GetDistance(ufo->pos, ccs.combatZoomedUFO->pos);
+		if (distance < maxDistance || ccs.combatZoomedUFO == ufo) {
 			assert(numUFOList < MAX_AIRCRAFT);
 			ufoList[numUFOList++] = ufo;
 		}
@@ -102,7 +102,7 @@ static void AFM_GetUFOsInCombatRange (float maxDistance)
 void AFM_Init_f (void)
 {
 	const float MAXIMUM_COMBAT_RANGE = 4.0f;
-	Vector2Copy(gd.combatZoomedUFO->pos, airFightMapCenter);
+	Vector2Copy(ccs.combatZoomedUFO->pos, airFightMapCenter);
 
 	ccs.zoom = 1.2f;
 	Vector2Set(ccs.center, 0.5f, 0.5f);
@@ -125,9 +125,9 @@ void AFM_Init_f (void)
  */
 void AFM_Exit_f (void)
 {
-	if (gd.combatZoomedUFO) {
-		gd.combatZoomOn = qfalse;
-		gd.combatZoomedUFO = NULL;
+	if (ccs.combatZoomedUFO) {
+		ccs.combatZoomOn = qfalse;
+		ccs.combatZoomedUFO = NULL;
 		CL_EnsureValidGameLapseForGeoscape();
 	}
 }
@@ -339,14 +339,14 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 		VectorAdd(combatZoomAircraftInCombatPos[combatAirIdx], centroid, centroid);
 	}
 	if (combatAirIdx > 1) {
-		VectorScale(centroid, 1.0/(float)combatAirIdx, centroid);
+		VectorScale(centroid, 1.0 / (float)combatAirIdx, centroid);
 		AFM_CenterMapPosition(centroid);
 	} else {
-		AFM_CenterMapPosition(gd.combatZoomedUFO->pos);
+		AFM_CenterMapPosition(ccs.combatZoomedUFO->pos);
 	}
 
-	if (gd.gameTimeScale > 0)
-		maxInterpolationPoints = floor(1.0f/(cls.frametime * (float)gd.gameTimeScale));
+	if (ccs.gameTimeScale > 0)
+		maxInterpolationPoints = floor(1.0f / (cls.frametime * (float)ccs.gameTimeScale));
 	else
 		maxInterpolationPoints = 0;
 

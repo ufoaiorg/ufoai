@@ -149,7 +149,7 @@ static void MN_BaseMapDraw (menuNode_t * node)
 			if (node->state && mousePosX > x && mousePosX < x + width && mousePosY > y && mousePosY < y + height - 20) {
 				if (!baseCurrent->map[row][col].building
 				 && !baseCurrent->map[row][col].blocked) {
-					if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
+					if (ccs.baseAction == BA_NEWBUILDING && xHover == -1) {
 						assert(baseCurrent->buildingCurrent);
 						colSecond = col;
 						if (baseCurrent->buildingCurrent->needs) {
@@ -229,7 +229,7 @@ static void MN_BaseMapClick (menuNode_t *node, int x, int y)
 	assert(node);
 	assert(node->menu);
 
-	if (gd.baseAction == BA_NEWBUILDING) {
+	if (ccs.baseAction == BA_NEWBUILDING) {
 		assert(base->buildingCurrent);
 		for (row = 0; row < BASE_SIZE; row++)
 			for (col = 0; col < BASE_SIZE; col++) {
@@ -262,7 +262,7 @@ static void MN_BaseMapClick (menuNode_t *node, int x, int y)
 				assert(!base->map[row][col].blocked);
 
 				B_BuildingOpenAfterClick(base, entry);
-				gd.baseAction = BA_NONE;
+				ccs.baseAction = BA_NONE;
 				return;
 			}
 }

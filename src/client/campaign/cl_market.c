@@ -249,7 +249,7 @@ static void BS_MarketScroll_f (void)
 			if (od && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
 				MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
 				BS_UpdateItem(baseCurrent, i - buyList.scroll);
-				if (gd.autosell[od->idx])
+				if (ccs.autosell[od->idx])
 					MN_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
 				else
 					MN_ExecuteConfunc("buy_autoselld %i", i - buyList.scroll);
@@ -400,7 +400,7 @@ static void BS_BuyType (const base_t *base)
 			 && INV_ItemMatchesFilter(od, FILTER_CRAFTITEM)) {
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (gd.autosell[i])
+					if (ccs.autosell[i])
 						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 					else
 						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
@@ -462,7 +462,7 @@ static void BS_BuyType (const base_t *base)
 				/* Set state of Autosell button. */
 				if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 					MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-					if (gd.autosell[i])
+					if (ccs.autosell[i])
 						MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 					else
 						MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
@@ -492,7 +492,7 @@ static void BS_BuyType (const base_t *base)
 					/* Set state of Autosell button. */
 					if (j >= buyList.scroll && j < MAX_MARKET_MENU_ENTRIES) {
 						MN_ExecuteConfunc("buy_show %i", j - buyList.scroll);
-						if (gd.autosell[i])
+						if (ccs.autosell[i])
 							MN_ExecuteConfunc("buy_autoselle %i", j - buyList.scroll);
 						else
 							MN_ExecuteConfunc("buy_autoselld %i", j - buyList.scroll);
@@ -1092,14 +1092,14 @@ static void BS_Autosell_f (void)
 	item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 	assert(item);
 
-	if (gd.autosell[item->idx]) {
-		gd.autosell[item->idx] = qfalse;
+	if (ccs.autosell[item->idx]) {
+		ccs.autosell[item->idx] = qfalse;
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell false\n", item->name);
 	} else {
 		/* Don't allow to enable autosell for items not researched. */
 		if (!RS_IsResearched_ptr(item->tech))
 			return;
-		gd.autosell[item->idx] = qtrue;
+		ccs.autosell[item->idx] = qtrue;
 		Com_DPrintf(DEBUG_CLIENT, "item name: %s, autosell true\n", item->name);
 	}
 
@@ -1144,7 +1144,7 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 			mxml_AddInt(snode, "bid", ccs.eMarket.bid[i]);
 			mxml_AddInt(snode, "ask", ccs.eMarket.ask[i]);
 			mxml_AddDouble(snode, "evo", ccs.eMarket.currentEvolution[i]);
-			mxml_AddBool(snode, "autosell", gd.autosell[i]);
+			mxml_AddBool(snode, "autosell", ccs.autosell[i]);
 		}
 	}
 
@@ -1166,7 +1166,7 @@ qboolean BS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteLong(sb, ccs.eMarket.bid[i]);
 		MSG_WriteLong(sb, ccs.eMarket.ask[i]);
 		MSG_WriteFloat(sb, ccs.eMarket.currentEvolution[i]);
-		MSG_WriteByte(sb, gd.autosell[i]);
+		MSG_WriteByte(sb, ccs.autosell[i]);
 	}
 
 	return qtrue;
@@ -1195,7 +1195,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 				ccs.eMarket.bid[od->idx] = mxml_GetInt(snode, "bid", 0);
 				ccs.eMarket.ask[od->idx] = mxml_GetInt(snode, "ask", 0);
 				ccs.eMarket.currentEvolution[od->idx] = mxml_GetDouble(snode, "evo", 0.0);
-				gd.autosell[od->idx] = mxml_GetBool(snode, "autosell", qfalse);
+				ccs.autosell[od->idx] = mxml_GetBool(snode, "autosell", qfalse);
 			}
 		}
 	}
@@ -1227,7 +1227,7 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 			ccs.eMarket.bid[od->idx] = MSG_ReadLong(sb);
 			ccs.eMarket.ask[od->idx] = MSG_ReadLong(sb);
 			ccs.eMarket.currentEvolution[od->idx] = MSG_ReadFloat(sb);
-			gd.autosell[od->idx] = MSG_ReadByte(sb);
+			ccs.autosell[od->idx] = MSG_ReadByte(sb);
 		}
 	}
 

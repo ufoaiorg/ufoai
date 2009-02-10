@@ -181,7 +181,7 @@ static void B_BuildBase_f (void)
 			base->founded = qtrue;
 			base->baseStatus = BASE_WORKING;
 			campaignStats.basesBuild++;
-			gd.mapAction = MA_NONE;
+			ccs.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - curCampaign->basecost);
 			Q_strncpyz(base->name, baseName, sizeof(base->name));
 			nation = MAP_GetNation(base->pos);
@@ -200,8 +200,8 @@ static void B_BuildBase_f (void)
 	} else {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");
-		if (gd.mapAction == MA_NEWBASE)
-			gd.mapAction = MA_NONE;
+		if (ccs.mapAction == MA_NEWBASE)
+			ccs.mapAction = MA_NONE;
 
 		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new base."));
 		MN_Popup(_("Notice"), popupText);
@@ -368,7 +368,7 @@ static void B_BuildingClick_f (void)
 	baseCurrent->buildingCurrent = building;
 	B_DrawBuilding(baseCurrent, building);
 
-	gd.baseAction = BA_NEWBUILDING;
+	ccs.baseAction = BA_NEWBUILDING;
 }
 
 /**

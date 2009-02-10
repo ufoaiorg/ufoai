@@ -205,14 +205,14 @@ void INS_SelectInstallation (installation_t *installation)
 
 		/* if player hit the "create base" button while creating base mode is enabled
 		 * that means that player wants to quit this mode */
-		if (gd.mapAction == MA_NEWINSTALLATION) {
+		if (ccs.mapAction == MA_NEWINSTALLATION) {
 			MAP_ResetAction();
 			if (!radarOverlayWasSet)
 				MAP_DeactivateOverlay("radar");
 			return;
 		}
 
-		gd.mapAction = MA_NEWINSTALLATION;
+		ccs.mapAction = MA_NEWINSTALLATION;
 		installationID = INS_GetFirstUnfoundedInstallation();
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: new installationID is %i\n", installationID);
 		if (installationID < MAX_INSTALLATIONS) {
@@ -226,7 +226,7 @@ void INS_SelectInstallation (installation_t *installation)
 			Com_Printf("MaxInstallations reached\n");
 			/* select the first installation in list */
 			installationCurrent = INS_GetInstallationByIDX(0);
-			gd.mapAction = MA_NONE;
+			ccs.mapAction = MA_NONE;
 		}
 	} else {
 		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
@@ -234,7 +234,7 @@ void INS_SelectInstallation (installation_t *installation)
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: select installation with id %i\n", installation->idx);
 		installationCurrent = installation;
 		baseCurrent = NULL;
-		gd.mapAction = MA_NONE;
+		ccs.mapAction = MA_NONE;
 		Cvar_SetValue("mn_installation_id", installation->idx);
 		Cvar_Set("mn_installation_title", installation->name);
 		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
@@ -317,7 +317,7 @@ static void INS_BuildInstallation_f (void)
 			INS_SetUpInstallation(installationCurrent, installationTemplate);
 
 			campaignStats.installationsBuild++;
-			gd.mapAction = MA_NONE;
+			ccs.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
 			Q_strncpyz(installationCurrent->name, mn_installation_title->string, sizeof(installationCurrent->name));
 			nation = MAP_GetNation(installationCurrent->pos);
@@ -333,8 +333,8 @@ static void INS_BuildInstallation_f (void)
 	} else {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");
-		if (gd.mapAction == MA_NEWINSTALLATION)
-			gd.mapAction = MA_NONE;
+		if (ccs.mapAction == MA_NEWINSTALLATION)
+			ccs.mapAction = MA_NONE;
 
 		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new installation."));
 		MN_Popup(_("Notice"), popupText);

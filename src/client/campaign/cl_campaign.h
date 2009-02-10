@@ -336,6 +336,21 @@ typedef struct market_s {
 	double currentEvolution[MAX_OBJDEFS];	/**< evolution of the market */
 } market_t;
 
+typedef enum {
+	COMBAT_ZOOM_FULL,	/**< Zoomed in at max weapons range */
+	COMBAT_ZOOM_HALF	/**< Zoomed out, but still tracking the combat zoomed ufo */
+} combatZoomLevel_t;
+
+/** possible geoscape actions */
+typedef enum mapAction_s {
+	MA_NONE,
+	MA_NEWBASE,				/**< build a new base */
+	MA_NEWINSTALLATION,		/**< build a new installation */
+	MA_INTERCEPT,			/**< intercept */
+	MA_BASEATTACK,			/**< base attacking */
+	MA_UFORADAR				/**< ufos are in our radar */
+} mapAction_t;
+
 /**
  * @brief client campaign structure
  * @sa csi_t
@@ -377,6 +392,26 @@ typedef struct ccs_s {
 	qboolean mission_tryagain;			/**< value to decide whether the try again button is
 										 * available after you played a campaign mission */
 
+	/* UFO to follow while in combat zoom */
+	aircraft_t *combatZoomedUFO;
+	qboolean combatZoomOn;
+	combatZoomLevel_t combatZoomLevel;
+
+	/* == misc == */
+	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
+	mapAction_t mapAction;
+
+	/* BA_NEWBUILDING ... */
+	baseAction_t baseAction;
+
+	/* how fast the game is running */
+	int gameTimeScale;
+
+	/* True if this objDef_t has autosell enabled. */
+	qboolean autosell[MAX_OBJDEFS];
+
+	/* already paid in this month? */
+	qboolean fund;
 
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scies, workers, etc...) */
@@ -423,16 +458,6 @@ typedef struct ccs_s {
 	int numComponents;
 	components_t components[MAX_ASSEMBLIES];
 } ccs_t;
-
-/** possible geoscape actions */
-typedef enum mapAction_s {
-	MA_NONE,
-	MA_NEWBASE,				/**< build a new base */
-	MA_NEWINSTALLATION,		/**< build a new installation */
-	MA_INTERCEPT,			/**< intercept */
-	MA_BASEATTACK,			/**< base attacking */
-	MA_UFORADAR				/**< ufos are in our radar */
-} mapAction_t;
 
 /**
  * @brief Human readable time information in the game.

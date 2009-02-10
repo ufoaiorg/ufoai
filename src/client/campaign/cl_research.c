@@ -972,7 +972,7 @@ static void RS_EnableAutosell (const technology_t *tech)
 		for (i = 0; i < csi.numODs; i++) {
 			obj = &csi.ods[i];
 			if (!Q_strncmp(tech->provides, obj->id, MAX_VAR)) {
-				gd.autosell[i] = qtrue;
+				ccs.autosell[i] = qtrue;
 				break;
 			}
 		}
@@ -986,7 +986,7 @@ static void RS_EnableAutosell (const technology_t *tech)
 				const technology_t *ammotech = ammo->tech;
 				if (ammotech && (ammotech->produceTime < 0))
 					continue;
-				gd.autosell[ammo->idx] = qtrue;
+				ccs.autosell[ammo->idx] = qtrue;
 			}
 		}
 	}
