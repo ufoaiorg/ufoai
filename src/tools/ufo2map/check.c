@@ -904,6 +904,22 @@ static void Check_FindCompositeSides (void)
 	done = qtrue;
 }
 
+void FreeWindings (void)
+{
+	int i, j;
+
+	for (i = 0; i<nummapbrushes ;i++) {
+		const mapbrush_t *brush = &mapbrushes[i];
+		for (j = 0; j < brush->numsides; j++) {
+			const side_t *side = &brush->original_sides[j];
+			winding_t *winding = side->winding;
+			if (winding) {
+				FreeWinding(winding);
+			}
+		}
+	}
+}
+
 /**
  * @brief free the mapbrush_t::nearBrushes, compositeSides and entitiesdef.h stuff.
  */

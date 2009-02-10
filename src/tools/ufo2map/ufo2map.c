@@ -649,6 +649,7 @@ int main (int argc, const char **argv)
 		}
 		Check_Free();
 		FreeEpairs();
+		FreeWindings();
 		return 0;
 	} else if (config.generateMaterialFile) {
 		/* start from scratch */
@@ -700,6 +701,7 @@ int main (int argc, const char **argv)
 		size = WriteBSPFile(bspFilename);
 		end = time(NULL);
 	}
+	FreeWindings();
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 	return 0;
 }
