@@ -304,248 +304,109 @@ menu employees
 		pos "485 383" string "*cvar mn_chrrank"
 	}
 
-	string pwr_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 383"  string "_Strength:"
-	}
-	string pwr_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 383"  string "*cvar mn_tpwr" align ur
-	}
-	pic pwr_brd
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 398"  image menu/bar_border
-	}
-	tbar pwr_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 398"  current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute
-		size "250 16"	max 100
-	}
 
-	string spd_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 413" string "_Speed:"
-	}
-	string spd_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 413" string "*cvar mn_tspd" align ur
-	}
-	pic spd_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 428" image menu/bar_border
-	}
-	tbar spd_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 428" current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute
-		size "250 16"	max 100
-	}
+	panel soldier_info {
+		{
+			visiblewhen "mn_show_employee == 1"
+			pos "700 380"
+			size "300 400"
+		}
 
-	string acc_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 443" string "_Accuracy:"
-	}
-	string acc_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 443" string "*cvar mn_tacc" align ur
-	}
+		string pwr_lbl { pos "10 3"  string "_Strength:" }
+		string pwr_val { pos "285 3"  string "*cvar mn_tpwr" align ur }
+		pic pwr_brd { pos "14 18"  image menu/bar_border }
+		tbar pwr_bar
+		{
+			pos "17 18"  current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute
+			size "250 16"	max 100
+		}
 
-	pic acc_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 458" image menu/bar_border
-	}
-	tbar acc_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 458" current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute
-		size "250 16"	max 100
-	}
+		string spd_lbl { pos "010 33" string "_Speed:" }
+		string spd_val { pos "285 33" string "*cvar mn_tspd" align ur }
+		pic spd_bdr { pos "14 48" image menu/bar_border }
+		tbar spd_bar
+		{
+			pos "17 48" current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute
+			size "250 16"	max 100
+		}
 
-	string mnd_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 473" string "_Mind:"
-	}
-	string mnd_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 473" string "*cvar mn_tmnd" align ur
-	}
-	pic mnd_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 488" image menu/bar_border
-	}
-	tbar mnd_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 488" current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute
-		size "250 16"	max 100
-	}
+		string acc_lbl { pos "10 63" string "_Accuracy:" }
+		string acc_val { pos "285 63" string "*cvar mn_tacc" align ur }
+		pic acc_bdr { pos "14 78" image menu/bar_border }
+		tbar acc_bar
+		{
+			pos "17 78" current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute
+			size "250 16"	max 100
+		}
 
-	string cls_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 508" string "_Close Combat:"
-	}
-	string cls_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 508" string "*cvar mn_tcls" align ur
-	}
-	pic cls_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 523" image menu/bar_border
-	}
-	tbar cls_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 523" current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill
-		size "250 16"	max 100
-	}
+		string mnd_lbl { pos "10 93" string "_Mind:" }
+		string mnd_val { pos "285 93" string "*cvar mn_tmnd" align ur }
+		pic mnd_bdr { pos "14 108" image menu/bar_border }
+		tbar mnd_bar
+		{
+			pos "17 108" current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute
+			size "250 16"	max 100
+		}
 
-	string hvy_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 538" string "_Heavy Weapons:"
-	}
-	string hvy_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 538" string "*cvar mn_thvy" align ur
-	}
-	pic hvy_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 553" image menu/bar_border
-	}
-	tbar hvy_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 553" current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill
-		size "250 16"	max 100
-	}
+		string cls_lbl { pos "10 128" string "_Close Combat:" }
+		string cls_val { pos "285 128" string "*cvar mn_tcls" align ur }
+		pic cls_bdr { pos "14 143" image menu/bar_border }
+		tbar cls_bar
+		{
+			pos "17 143" current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill
+			size "250 16"	max 100
+		}
 
-	string ass_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 568" string "_Assault Weapons:"
-	}
-	string ass_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 568" string "*cvar mn_tass" align ur
-	}
-	pic ass_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 583" image menu/bar_border
-	}
-	tbar ass_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 583" current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill
-		size "250 16"	max 100
-	}
+		string hvy_lbl { pos "10 158" string "_Heavy Weapons:" }
+		string hvy_val { pos "285 158" string "*cvar mn_thvy" align ur }
+		pic hvy_bdr { pos "14 173" image menu/bar_border }
+		tbar hvy_bar
+		{
+			pos "17 173" current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill
+			size "250 16"	max 100
+		}
 
-	string snp_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 598" string "_Sniper Rifles:"
-	}
-	string snp_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 598" string "*cvar mn_tsnp" align ur
-	}
-	pic snp_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 613" image menu/bar_border
-	}
-	tbar snp_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 613" current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill
-		size "250 16"	max 100
-	}
+		string ass_lbl { pos "10 188" string "_Assault Weapons:" }
+		string ass_val { pos "285 188" string "*cvar mn_tass" align ur }
+		pic ass_bdr { pos "14 203" image menu/bar_border }
+		tbar ass_bar
+		{
+			pos "17 203" current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill
+			size "250 16"	max 100
+		}
 
-	string exp_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 628" string "_High-Explosives:"
-	}
-	string exp_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 628" string "*cvar mn_texp" align ur
-	}
+		string snp_lbl { pos "10 218" string "_Sniper Rifles:" }
+		string snp_val { pos "285 218" string "*cvar mn_tsnp" align ur }
+		pic snp_bdr { pos "14 233" image menu/bar_border }
+		tbar snp_bar
+		{
+			pos "17 233" current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill
+			size "250 16"	max 100
+		}
 
-	pic exp_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 643" image menu/bar_border
-	}
-	tbar exp_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 643" current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill
-		size "250 16"	max 100
-	}
+		string exp_lbl { pos "10 248" string "_High-Explosives:" }
+		string exp_val { pos "285 248" string "*cvar mn_texp" align ur }
+		pic exp_bdr { pos "14 263" image menu/bar_border }
+		tbar exp_bar
+		{
+			pos "17 263" current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill
+			size "250 16"	max 100
+		}
 
-	string hp_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 663" string "_Health:"
-	}
-	string hp_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 663" string "*cvar mn_thp" align ur
-	}
-	pic hp_bdr
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "714 678"  image menu/bar_border
-	}
-	tbar hp_bar
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "717 678" current "*cvar mn_vhp" max "*cvar mn_vhpmax" gap_width 3 texl "3 0" image menu/bar_health
-		size "250 16"
-	}
+		string hp_lbl { pos "10 283" string "_Health:" }
+		string hp_val { pos "285 283" string "*cvar mn_thp" align ur }
+		pic hp_bdr { pos "14 298"  image menu/bar_border }
+		tbar hp_bar
+		{
+			pos "17 298" current "*cvar mn_vhp" max "*cvar mn_vhpmax" gap_width 3 texl "3 0" image menu/bar_health
+			size "250 16"
+		}
 
-	string	missions_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 698" string "_Missions Performed:"
-	}
-	string	missions_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 698" string "*cvar mn_chrmis" align ur
-	}
+		string	missions_lbl { pos "10 318" string "_Missions Performed:" }
+		string	missions_val { pos "285 318" string "*cvar mn_chrmis" align ur }
 
-	string	kills_lbl
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "710 718" string "_Enemies Killed:"
-	}
-	string	kills_val
-	{
-		visiblewhen "mn_show_employee == 1"
-		pos "985 718" string "*cvar mn_chrkillalien" align ur
+		string	kills_lbl { pos "10 338" string "_Enemies Killed:" }
+		string	kills_val { pos "285 338" string "*cvar mn_chrkillalien" align ur }
 	}
 
 	// ====================
@@ -567,72 +428,76 @@ menu employees
 	// buttons
 	// ==================
 
-	string label_people {
-		string "_Occupation"
-		pos	"500 228"
-		size "100 30"
-		textalign	ur
-	}
-	string number_people {
-		string "*cvar mn_hirepeople"
-		pos	"500 248"
-		size "100 30"
-		textalign	ur
-	}
+	panel global_info {
+		{
+			pos		"483 180"
+			size	"455 111"
+			//image	"menu/panel_grey"	/**< @todo update the background */
+			blend	true
+		}
 
-	custombutton icon_soldier {
-		icon	bighead_soldier
-		pos	"670 208"
-		size "42 42"
-	}
-	string number_soldier {
-		string "*cvar mn_hiresoldiers"
-		pos	"670 248"
-		size "42 20"
-		textalign	ur
-	}
+		string label_people {
+			string "_Occupation"
+			pos	"20 48"
+			size "100 30"
+			textalign	ur
+		}
+		string number_people {
+			string "*cvar mn_hirepeople"
+			pos	"20 68"
+			size "100 30"
+			textalign	ur
+		}
 
-	custombutton icon_pilot {
-		icon	bighead_pilot
-		pos	"730 208"
-		size "42 42"
-	}
-	string number_pilot {
-		string "*cvar mn_hirepilots"
-		pos	"730 248"
-		size "42 20"
-		textalign	ur
-	}
+		custombutton icon_soldier {
+			icon	bighead_soldier
+			pos	"190 28"
+			size "42 42"
+		}
+		string number_soldier {
+			string "*cvar mn_hiresoldiers"
+			pos	"190 68"
+			size "42 20"
+			textalign	ur
+		}
 
-	custombutton icon_worker {
-		icon	bighead_worker
-		pos	"790 208"
-		size "42 42"
-	}
-	string number_worker {
-		string "*cvar mn_hireworkers"
-		pos	"790 248"
-		size "42 20"
-		textalign	ur
-	}
+		custombutton icon_pilot {
+			icon	bighead_pilot
+			pos	"250 28"
+			size "42 42"
+		}
+		string number_pilot {
+			string "*cvar mn_hirepilots"
+			pos	"250 68"
+			size "42 20"
+			textalign	ur
+		}
 
-	custombutton icon_scientist {
-		icon	bighead_scientist
-		pos	"850 208"
-		size "42 42"
-	}
-	string number_scientist {
-		string "*cvar mn_hirescientists"
-		pos	"850 248"
-		size "42 20"
-		textalign	ur
-	}
+		custombutton icon_worker {
+			icon	bighead_worker
+			pos	"310 28"
+			size "42 42"
+		}
+		string number_worker {
+			string "*cvar mn_hireworkers"
+			pos	"310 68"
+			size "42 20"
+			textalign	ur
+		}
 
-	//custombutton icon_medic {
-	//	icon	bighead_medic
-	//	pos	"850 208"
-	//	size "42 42"
-	//}
+		custombutton icon_scientist {
+			icon	bighead_scientist
+			pos	"370 28"
+			size "42 42"
+		}
+		string number_scientist {
+			string "*cvar mn_hirescientists"
+			pos	"370 68"
+			size "42 20"
+			textalign	ur
+		}
+
+	}
 
 	// ==================
 	// buttons
