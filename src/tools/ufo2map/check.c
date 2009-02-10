@@ -597,19 +597,20 @@ static qboolean Check_SurfProps (const int flags, const side_t *s)
 	const ptrdiff_t index = s - brushsides;
 	brush_texture_t *tex = &side_brushtextures[index];
 	char *texname = tex->name;
-	if (flags & SURF_NODRAW) {
-		if (!strcmp(texname, "tex_common/nodraw"))
+	assert(flags & (SURF_NODRAW | MASK_CLIP));
+
+	if ((flags & SURF_NODRAW) && !strcmp(texname, "tex_common/nodraw"))
 			return qtrue;
-	} else if (flags & CONTENTS_WEAPONCLIP) {
-		if (!strcmp(texname, "tex_common/weaponclip"))
+
+	if ((flags & CONTENTS_WEAPONCLIP) && !strcmp(texname, "tex_common/weaponclip"))
 			return qtrue;
-	} else if (flags & CONTENTS_ACTORCLIP) {
-		if (!strcmp(texname, "tex_common/actorclip"))
+
+	if ((flags & CONTENTS_ACTORCLIP) && !strcmp(texname, "tex_common/actorclip"))
 			return qtrue;
-	} else if (flags & CONTENTS_ORIGIN) {
-		if (!strcmp(texname, "tex_common/origin"))
+
+	if ((flags & CONTENTS_ORIGIN) && !strcmp(texname, "tex_common/origin"))
 			return qtrue;
-	}
+
 	return qfalse;
 }
 
