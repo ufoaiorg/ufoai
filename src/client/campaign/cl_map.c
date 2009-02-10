@@ -177,7 +177,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		B_SelectBase(B_GetFoundedBaseByIDX(id));
 		break;
 	case MULTISELECT_TYPE_INSTALLATION:	/* Select a installation */
-		if (id >= gd.numInstallations)
+		if (id >= ccs.numInstallations)
 			break;
 		MAP_ResetAction();
 		INS_SelectInstallation(INS_GetFoundedInstallationByIDX(id));
@@ -222,9 +222,9 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 	case MULTISELECT_TYPE_UFO : /* Selection of a UFO */
 		/* Get the ufo selected */
-		if (id < 0 || id >= gd.numUFOs)
+		if (id < 0 || id >= ccs.numUFOs)
 			return;
-		aircraft = gd.ufos + id;
+		aircraft = ccs.ufos + id;
 
 		if (aircraft == selectedUFO) {
 			/* Selection of an already selected ufo */
@@ -305,8 +305,8 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 
 			CL_GameTimeStop();
 
-			if (gd.numInstallations < MAX_INSTALLATIONS) {
-				Cvar_Set("mn_installation_title", gd.installations[gd.numInstallations].name);
+			if (ccs.numInstallations < MAX_INSTALLATIONS) {
+				Cvar_Set("mn_installation_title", ccs.installations[ccs.numInstallations].name);
 				MN_PushMenu("popup_newinstallation", NULL);
 			} else {
 				MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
@@ -362,19 +362,19 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		const installation_t *installation = INS_GetFoundedInstallationByIDX(i);
 		if (!installation)
 			continue;
-		if (MAP_IsMapPositionSelected(node, gd.installations[i].pos, x, y))
+		if (MAP_IsMapPositionSelected(node, ccs.installations[i].pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_INSTALLATION, i, _("Installation"), installation->name);
 	}
 
 	/* Get selected ufos */
-	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft--)
+	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft--)
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)
 #ifdef DEBUG
 		|| Cvar_VariableInteger("debug_showufos")
 #endif
 		)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
-				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - gd.ufos, _("UFO Sighting"), (RS_IsResearched_ptr(aircraft->tech)) ? _(aircraft->name) : _("Unknown"));
+				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_UFO, aircraft - ccs.ufos, _("UFO Sighting"), (RS_IsResearched_ptr(aircraft->tech)) ? _(aircraft->name) : _("Unknown"));
 
 	if (multiSelect.nbSelect == 1) {
 		/* Execute directly action for the only one element selected */
@@ -1002,7 +1002,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	aircraft_t *aircraft;
 
 	/* If the value of maxEventIdx is too big or to low, restart from begining */
-	maxEventIdx = numMissions + ccs.numBases + gd.numInstallations - 1;
+	maxEventIdx = numMissions + ccs.numBases + ccs.numInstallations - 1;
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
@@ -1012,7 +1012,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 				maxEventIdx++;
 		}
 	}
-	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			maxEventIdx++;
 		}
@@ -1075,7 +1075,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	counter += ccs.numBases;
 
 	/* Cycle through installations */
-	if (centerOnEventIdx < gd.numInstallations + counter) {
+	if (centerOnEventIdx < ccs.numInstallations + counter) {
 		int instIdx;
 		for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
 			const installation_t *inst = INS_GetFoundedInstallationByIDX(instIdx);
@@ -1084,15 +1084,15 @@ static void MAP_GetGeoscapeAngle (float *vector)
 
 			if (counter == centerOnEventIdx) {
 				if (cl_3dmap->integer)
-					VectorSet(vector, gd.installations[instIdx].pos[0], -gd.installations[instIdx].pos[1], 0);
+					VectorSet(vector, ccs.installations[instIdx].pos[0], -ccs.installations[instIdx].pos[1], 0);
 				else
-					Vector2Set(vector, gd.installations[instIdx].pos[0], gd.installations[instIdx].pos[1]);
+					Vector2Set(vector, ccs.installations[instIdx].pos[0], ccs.installations[instIdx].pos[1]);
 				return;
 			}
 			counter++;
 		}
 	}
-	counter += gd.numInstallations;
+	counter += ccs.numInstallations;
 
 	/* Cycle through aircraft (only those present on geoscape) */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
@@ -1117,7 +1117,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
 	}
 
 	/* Cycle through UFO (only those visible on geoscape) */
-	for (aircraft = gd.ufos + gd.numUFOs - 1; aircraft >= gd.ufos; aircraft --) {
+	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			if (centerOnEventIdx == counter) {
 				if (cl_3dmap->integer)
@@ -1668,8 +1668,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	font = MN_GetFont(node);
 
 	/* check if at least 1 UFO is visible */
-	for (aircraftIdx = 0; aircraftIdx < gd.numUFOs; aircraftIdx++) {
-		const aircraft_t const *aircraft = &gd.ufos[aircraftIdx];
+	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
+		const aircraft_t const *aircraft = &ccs.ufos[aircraftIdx];
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
 			oneUFOVisible = qtrue;
 			break;
@@ -1729,8 +1729,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	}
 
 	/* draws ufos */
-	for (aircraftIdx = 0; aircraftIdx < gd.numUFOs; aircraftIdx++) {
-		aircraft_t *aircraft = &gd.ufos[aircraftIdx];
+	for (aircraftIdx = 0; aircraftIdx < ccs.numUFOs; aircraftIdx++) {
+		aircraft_t *aircraft = &ccs.ufos[aircraftIdx];
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableInteger("debug_showufos")) {
@@ -2698,7 +2698,7 @@ void MAP_SetOverlay (const char *overlayID)
 	}
 
 	/* do nothing while the first base/installation is not build */
-	if (ccs.numBases + gd.numInstallations == 0)
+	if (ccs.numBases + ccs.numInstallations == 0)
 		return;
 
 	if (!Q_strcmp(overlayID, "xvi")) {

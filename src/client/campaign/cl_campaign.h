@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_aliencont.h"
 #include "cl_airfight.h"
 #include "cl_installation.h"
+#include "cl_messageoptions.h"
 
 /* check for water */
 /* blue value is 64 */
@@ -466,6 +467,56 @@ typedef struct ccs_s {
 	alienTeamCategory_t alienCategories[ALIENCATEGORY_MAX];	/**< different alien team available
 														 * that will be used in mission */
 	int numAlienCategories;		/** number of alien team categories defined */
+
+	/* == pedia == */
+	/* A list of all UFOpaedia chapters. */
+	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];
+	/* Total number uf UFOpaedia chapters */
+	int numChapters;
+	int numUnreadMails; /**< only for faster access (don't cycle all techs every frame) */
+
+	eventMail_t eventMails[MAX_EVENTMAILS];	/**< holds all event mails (cl_event.c) */
+	int numEventMails;	/**< how many eventmails (script-id: mail) parsed */
+
+	/* == buildings in bases == */
+	/* A list of all possible unique buldings. */
+	building_t buildingTemplates[MAX_BUILDINGS];
+	int numBuildingTemplates;
+	/*  A list of the building-list per base. (new buildings in a base get copied from buildingTypes) */
+	building_t buildings[MAX_BASES][MAX_BUILDINGS];
+	/* Total number of buildings per base. */
+	int numBuildings[MAX_BASES];
+
+	/* == installations == */
+	/* A template for each possible installation with configurable values */
+	installationTemplate_t installationTemplates[MAX_INSTALLATION_TEMPLATES];
+	int numInstallationTemplates;
+
+	/* A list of _all_ installations ... even unbuilt ones. */
+	installation_t installations[MAX_INSTALLATIONS];
+	/* Total number of parsed installation-names. */
+	int numInstallationNames;
+	/* Total number of built installations (how many are enabled). */
+	int numInstallations;
+
+	/* == production == */
+	/* we will allow only one active production at the same time for each base */
+	/* NOTE The facility to produce equipment should have the once-flag set */
+	/** @todo more_than_one is true in the scripts for the workshop - is the above NOTE comment still valid? */
+	production_queue_t productions[MAX_BASES];
+
+	/* == Aircraft == */
+	/* UFOs on geoscape */
+	aircraft_t ufos[MAX_UFOONGEOSCAPE];
+	int numUFOs;	/**< The current amount of UFOS on the geoscape. */
+
+	/* message categories */
+	msgCategory_t messageCategories[MAX_MESSAGECATEGORIES];
+	int numMsgCategories;
+
+	/* entries for message categories */
+	msgCategoryEntry_t msgCategoryEntries[NT_NUM_NOTIFYTYPE + MAX_MESSAGECATEGORIES];
+	int numMsgCategoryEntries;
 } ccs_t;
 
 /**

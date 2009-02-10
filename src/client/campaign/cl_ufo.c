@@ -395,8 +395,8 @@ void UFO_UpdateAlienInterestForAllBasesAndInstallations (void)
 {
 	int ufoIdx;
 
-	for (ufoIdx = 0; ufoIdx < gd.numUFOs; ufoIdx++) {
-		const aircraft_t const *ufo = &gd.ufos[ufoIdx];
+	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
+		const aircraft_t const *ufo = &ccs.ufos[ufoIdx];
 		int idx;
 
 		/* landed UFO can't detect any phalanx base or installation */
@@ -569,8 +569,8 @@ void UFO_CampaignRunUFOs (int dt)
 		return;
 
 	/* now the ufos are flying around, too - cycle backward - ufo might be destroyed */
-	for (ufoIdx = gd.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
-		aircraft_t *ufo = &gd.ufos[ufoIdx];
+	for (ufoIdx = ccs.numUFOs - 1; ufoIdx >= 0; ufoIdx--) {
+		aircraft_t *ufo = &ccs.ufos[ufoIdx];
 		/* don't run a landed ufo */
 		if (ufo->landed)
 			continue;
@@ -627,7 +627,7 @@ static void UFO_DestroyUFOs_f (void)
 {
 	aircraft_t* ufo;
 
-	for (ufo = gd.ufos; ufo < gd.ufos + gd.numUFOs; ufo++) {
+	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
 		AIRFIGHT_ActionsAfterAirfight(NULL, ufo, qtrue);
 	}
 }
@@ -641,8 +641,8 @@ static void UFO_ListOnGeoscape_f (void)
 	aircraft_t* ufo;
 	int k;
 
-	Com_Printf("There are %i UFOs in game\n", gd.numUFOs);
-	for (ufo = gd.ufos; ufo < gd.ufos + gd.numUFOs; ufo++) {
+	Com_Printf("There are %i UFOs in game\n", ccs.numUFOs);
+	for (ufo = ccs.ufos; ufo < ccs.ufos + ccs.numUFOs; ufo++) {
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
 		Com_Printf("...route length: %i (current: %i), time: %i, distance: %.2f, speed: %i\n",
 			ufo->route.numPoints, ufo->point, ufo->time, ufo->route.distance, ufo->stats[AIR_STATS_SPEED]);
@@ -684,7 +684,7 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	}
 
 	/* check max amount */
-	if (gd.numUFOs >= MAX_UFOONGEOSCAPE) {
+	if (ccs.numUFOs >= MAX_UFOONGEOSCAPE) {
 		Com_Printf("UFO_AddToGeoscape: Too many UFOs on geoscape\n");
 		return NULL;
 	}
@@ -701,10 +701,10 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 	}
 
 	/* Create ufo */
-	ufo = &gd.ufos[gd.numUFOs];
+	ufo = &ccs.ufos[ccs.numUFOs];
 	*ufo = aircraftTemplates[newUFONum];
-	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (gd.numUFOs: %i, newUFONum: %i)\n", ufo->id, gd.numUFOs, newUFONum);
-	gd.numUFOs++;
+	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (ccs.numUFOs: %i, newUFONum: %i)\n", ufo->id, ccs.numUFOs, newUFONum);
+	ccs.numUFOs++;
 
 	/* Update Stats of UFO */
 	AII_UpdateAircraftStats(ufo);
@@ -739,11 +739,11 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 void UFO_RemoveFromGeoscape (aircraft_t* ufo)
 {
 	/* Remove ufo from ufos list */
-	const ptrdiff_t num = (ptrdiff_t)(ufo - gd.ufos);
+	const ptrdiff_t num = (ptrdiff_t)(ufo - ccs.ufos);
 
 	Com_DPrintf(DEBUG_CLIENT, "Remove ufo from geoscape: '%s'\n", ufo->name);
 
-	REMOVE_ELEM_ADJUST_IDX(gd.ufos, num, gd.numUFOs);
+	REMOVE_ELEM_ADJUST_IDX(ccs.ufos, num, ccs.numUFOs);
 }
 
 #ifdef DEBUG
@@ -752,8 +752,8 @@ void UFO_RemoveFromGeoscape (aircraft_t* ufo)
   */
 static void UFO_RemoveFromGeoscape_f (void)
 {
-	if (gd.numUFOs > 0)
-		UFO_RemoveFromGeoscape(gd.ufos);
+	if (ccs.numUFOs > 0)
+		UFO_RemoveFromGeoscape(ccs.ufos);
 }
 #endif
 
@@ -784,7 +784,7 @@ qboolean UFO_CampaignCheckEvents (void)
 	newDetection = qfalse;
 
 	/* For each ufo in geoscape */
-	for (ufo = gd.ufos + gd.numUFOs - 1; ufo >= gd.ufos; ufo--) {
+	for (ufo = ccs.ufos + ccs.numUFOs - 1; ufo >= ccs.ufos; ufo--) {
 		/* don't update UFO status id UFO is landed or crashed */
 		if (ufo->landed)
 			continue;
@@ -859,8 +859,8 @@ void UFO_NotifyPhalanxAircraftRemoved (const aircraft_t *const aircraft)
 
 	assert(aircraft);
 
-	for (ufoIdx = 0; ufoIdx < gd.numUFOs; ufoIdx++) {
-		aircraft_t *ufo = &gd.ufos[ufoIdx];
+	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
+		aircraft_t *ufo = &ccs.ufos[ufoIdx];
 
 		if (ufo->aircraftTarget == aircraft)
 			ufo->aircraftTarget = NULL;

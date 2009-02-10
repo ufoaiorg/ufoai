@@ -106,7 +106,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_TECHMA] = TECHMAIL_MAX;	/* TECHMAIL_MAX in techMailType_t */
 	presaveArray[PRE_NUMTDS] = csi.numTeamDefs;	/* numTeamDefs */
 	presaveArray[PRE_NUMALI] = ccs.numAliensTD;	/* ccs.numAliensTD */
-	presaveArray[PRE_NUMUFO] = gd.numUFOs;		/* gd.numUFOs */
+	presaveArray[PRE_NUMUFO] = ccs.numUFOs;		/* ccs.numUFOs */
 	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */
 	presaveArray[PRE_MAXTRA] = MAX_TRANSFERS;	/* #define MAX_TRANSFERS */
 	presaveArray[PRE_MAXOBJ] = MAX_OBJDEFS;		/* #define MAX_OBJDEFS */
@@ -856,7 +856,7 @@ qboolean SAV_QuickSave (void)
 	result = SAV_GameSave("slotquick", "QuickSave", &error);
 	if (!result)
 		Com_Printf("Error saving the game: %s\n", error ? error : "");
-	
+
 	result = SAV_GameSaveXML("slotquick", "QuickSave", &error);
 	if (!result)
 		Com_Printf("Error saving the xml game: %s\n", error ? error : "");

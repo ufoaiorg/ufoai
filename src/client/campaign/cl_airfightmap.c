@@ -86,8 +86,8 @@ static void AFM_GetUFOsInCombatRange (float maxDistance)
 {
 	int ufoIdx;
 
-	for (ufoIdx = 0; ufoIdx < gd.numUFOs; ufoIdx++) {
-		aircraft_t *ufo = &gd.ufos[ufoIdx];
+	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
+		aircraft_t *ufo = &ccs.ufos[ufoIdx];
 		const float distance = MAP_GetDistance(ufo->pos, ccs.combatZoomedUFO->pos);
 		if (distance < maxDistance || ccs.combatZoomedUFO == ufo) {
 			assert(numUFOList < MAX_AIRCRAFT);

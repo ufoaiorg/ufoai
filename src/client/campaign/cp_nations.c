@@ -159,8 +159,8 @@ void CP_NationHandleBudget (void)
 		if (!base)
 			continue;
 		cost = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < gd.numBuildings[i]; j++) {
-			cost += gd.buildings[i][j].varCosts;
+		for (j = 0; j < ccs.numBuildings[i]; j++) {
+			cost += ccs.buildings[i][j].varCosts;
 		}
 
 		Com_sprintf(message, sizeof(message), _("Paid %i credits for upkeep of base %s"), cost, base->name);

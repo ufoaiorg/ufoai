@@ -46,7 +46,7 @@ enum {
 typedef struct radar_s {
 	int range;						/**< Range of radar */
 	int trackingRange;				/**< Tracking range of radar */
-	int ufos[MAX_UFOONGEOSCAPE];	/**< UFOs id sensored by radar (gd.ufos[id]). UFO_NOT_SENSORED if no UFO sensored. */
+	int ufos[MAX_UFOONGEOSCAPE];	/**< UFOs id sensored by radar (ccs.ufos[id]). UFO_NOT_SENSORED if no UFO sensored. */
 	int numUFOs;					/**< Num UFOs sensored by radar */
 } radar_t;
 

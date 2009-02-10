@@ -301,7 +301,7 @@ employee_t* E_GetUnhiredRobot (const ugv_t *ugvType)
  */
 int E_GetHiredEmployees (const base_t* const base, employeeType_t type, linkedList_t **hiredEmployees)
 {
-	int i;	/* Index in the gd.employee[type][i] array. */
+	int i;	/* Index in the ccs.employee[type][i] array. */
 	int j;	/* The number/index of found hired employees. */
 
 	if (type >= MAX_EMPL) {
@@ -1341,7 +1341,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
 
 			building = mxml_GetInt(ssnode, "building", -1);
-			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
+			e->building = (e->baseHired && building >= 0) ? &ccs.buildings[e->baseHired->idx][building] : NULL;
 
 			/* Read the nations identifier string, get the matching nation_t pointer.
 			 * We can do this because nations are already parsed .. will break if the parse-order is changed.
@@ -1392,7 +1392,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			base = MSG_ReadShort(sb);
 			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
 			building = MSG_ReadShort(sb);
-			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
+			e->building = (e->baseHired && building >= 0) ? &ccs.buildings[e->baseHired->idx][building] : NULL;
 
 			/* Read the nations identifier string, get the matching nation_t pointer.
 			 * We can do this because nations are already parsed .. will break if the parse-order is changed.

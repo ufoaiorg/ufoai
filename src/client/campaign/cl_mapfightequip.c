@@ -267,7 +267,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
  * @note 1st argument is the basedefence system type to destroy (sa basedefenceType_t).
  * @note 2nd argument is the idx of the base in which you want the battery to be destroyed.
  * @note if the first argument is BASEDEF_RANDOM, the type of the battery to destroy is randomly selected
- * @note the building must already be removed from gd.buildings[baseIdx][]
+ * @note the building must already be removed from ccs.buildings[baseIdx][]
  */
 void BDEF_RemoveBattery_f (void)
 {
@@ -328,9 +328,9 @@ void BDEF_RemoveBattery_f (void)
 			return;
 		}
 
-		for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-			if (gd.buildings[baseIdx][i].buildingType == type
-				&& gd.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
+		for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
+			if (ccs.buildings[baseIdx][i].buildingType == type
+				&& ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
 				workingNum++;
 		}
 

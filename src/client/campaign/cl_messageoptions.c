@@ -71,9 +71,9 @@ static msgCategory_t *MSO_GetCategoryFromName(const char* categoryid)
 	msgCategory_t *categoryEntry = NULL;
 	int idx;
 
-	for (idx = 0; idx < gd.numMsgCategories; idx++) {
-		if (!Q_strcmp(gd.messageCategories[idx].id, categoryid)) {
-			categoryEntry = &gd.messageCategories[idx];
+	for (idx = 0; idx < ccs.numMsgCategories; idx++) {
+		if (!Q_strcmp(ccs.messageCategories[idx].id, categoryid)) {
+			categoryEntry = &ccs.messageCategories[idx];
 			break;
 		}
 	}
@@ -262,7 +262,7 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 	notify_t type;
 	int idx;
 	const int optionsCount = NT_NUM_NOTIFYTYPE;
-	const int categoryCount = gd.numMsgCategories;
+	const int categoryCount = ccs.numMsgCategories;
 	mxml_node_t *n = mxml_AddNode(p, "MessageOptions");
 
 	/* save amount of available entries (forward compatible for additional types) */
@@ -280,7 +280,7 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 
 	mxml_AddInt(n, "categoryCount",categoryCount);
 	for (idx = 0; idx < categoryCount; idx++) {
-		msgCategory_t actualCategory = gd.messageCategories[idx];
+		msgCategory_t actualCategory = ccs.messageCategories[idx];
 		mxml_node_t *s = mxml_AddNode(n, "category");
 		mxml_AddString(s, "name", actualCategory.id);
 		mxml_AddBool(s, "folded", actualCategory.isFolded);
@@ -297,7 +297,7 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 	notify_t type;
 	int idx;
 	const int optionsCount = NT_NUM_NOTIFYTYPE;
-	const int categoryCount = gd.numMsgCategories;
+	const int categoryCount = ccs.numMsgCategories;
 
 	/* save amount of available entries (forward compatible for additional types) */
 	MSG_WriteLong(sb, optionsCount);
@@ -319,7 +319,7 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 	MSG_WriteLong(sb, categoryCount);
 	for (idx = 0; idx < categoryCount; idx++) {
 		byte bitmask = 0;
-		msgCategory_t actualCategory = gd.messageCategories[idx];
+		msgCategory_t actualCategory = ccs.messageCategories[idx];
 		if (actualCategory.isFolded)
 			bitmask |= MSGCATMASK_FOLDED;
 		MSG_WriteString(sb, actualCategory.id);
@@ -512,30 +512,30 @@ void MSO_ParseCategories (const char *name, const char **text)
 	}
 
 	/* add category */
-	if (gd.numMsgCategories >= MAX_MESSAGECATEGORIES) {
+	if (ccs.numMsgCategories >= MAX_MESSAGECATEGORIES) {
 		Com_Printf("MSO_ParseCategories: too many messagecategory defs\n");
 		return;
 	}
 
-	category = &gd.messageCategories[gd.numMsgCategories];
+	category = &ccs.messageCategories[ccs.numMsgCategories];
 
 	memset(category, 0, sizeof(*category));
 	category->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-	category->idx = gd.numMsgCategories;	/* set self-link */
+	category->idx = ccs.numMsgCategories;	/* set self-link */
 	category->isFolded = qtrue;
 
-	entry = &gd.msgCategoryEntries[gd.numMsgCategoryEntries];
+	entry = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
 
 	/* first entry is category */
 	memset(entry, 0, sizeof(*entry));
-	entry->category = &gd.messageCategories[gd.numMsgCategories];
-	category->last = category->first = &gd.msgCategoryEntries[gd.numMsgCategoryEntries];
+	entry->category = &ccs.messageCategories[ccs.numMsgCategories];
+	category->last = category->first = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
 	entry->previous = NULL;
 	entry->next = NULL;
 	entry->isCategory = qtrue;
 	entry->notifyType = category->id;
 
-	gd.numMsgCategoryEntries++;
+	ccs.numMsgCategoryEntries++;
 
 	do {
 		/* get entries and add them to category */
@@ -549,25 +549,25 @@ void MSO_ParseCategories (const char *name, const char **text)
 			for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
 				if (!Q_strncmp(token, nt_strings[idx],MAX_VAR)) {
 					/* prepare a new msgcategory entry */
-					msgCategoryEntry_t *old = gd.messageCategories[gd.numMsgCategories].last;
+					msgCategoryEntry_t *old = ccs.messageCategories[ccs.numMsgCategories].last;
 
-					memset(&gd.msgCategoryEntries[gd.numMsgCategoryEntries], 0, sizeof(gd.msgCategoryEntries[gd.numMsgCategoryEntries]));
-					gd.msgCategoryEntries[gd.numMsgCategoryEntries].category = &gd.messageCategories[gd.numMsgCategories];
+					memset(&ccs.msgCategoryEntries[ccs.numMsgCategoryEntries], 0, sizeof(ccs.msgCategoryEntries[ccs.numMsgCategoryEntries]));
+					ccs.msgCategoryEntries[ccs.numMsgCategoryEntries].category = &ccs.messageCategories[ccs.numMsgCategories];
 
-					gd.messageCategories[gd.numMsgCategories].last = &gd.msgCategoryEntries[gd.numMsgCategoryEntries];
-					old->next = &gd.msgCategoryEntries[gd.numMsgCategoryEntries];
-					gd.msgCategoryEntries[gd.numMsgCategoryEntries].previous = old;
-					gd.msgCategoryEntries[gd.numMsgCategoryEntries].next = NULL;
-					gd.msgCategoryEntries[gd.numMsgCategoryEntries].notifyType = nt_strings[idx];
-					gd.msgCategoryEntries[gd.numMsgCategoryEntries].settings = &messageSettings[idx];
-					gd.numMsgCategoryEntries++;
+					ccs.messageCategories[ccs.numMsgCategories].last = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
+					old->next = &ccs.msgCategoryEntries[ccs.numMsgCategoryEntries];
+					ccs.msgCategoryEntries[ccs.numMsgCategoryEntries].previous = old;
+					ccs.msgCategoryEntries[ccs.numMsgCategoryEntries].next = NULL;
+					ccs.msgCategoryEntries[ccs.numMsgCategoryEntries].notifyType = nt_strings[idx];
+					ccs.msgCategoryEntries[ccs.numMsgCategoryEntries].settings = &messageSettings[idx];
+					ccs.numMsgCategoryEntries++;
 					break;
 				}
 			}
 		}
 	} while (*text);
 
-	gd.numMsgCategories++;
+	ccs.numMsgCategories++;
 	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse,qfalse);
 }
 

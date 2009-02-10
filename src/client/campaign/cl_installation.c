@@ -69,7 +69,7 @@ installation_t* INS_GetInstallationByIDX (int instIdx)
 {
 	assert(instIdx < MAX_INSTALLATIONS);
 	assert(instIdx >= 0);
-	return &gd.installations[instIdx];
+	return &ccs.installations[instIdx];
 }
 
 /**
@@ -96,9 +96,9 @@ static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (co
 {
 	int idx;
 
-	for (idx = 0; idx < gd.numInstallationTemplates; idx++) {
-		if (Q_strncmp(gd.installationTemplates[idx].id, id, MAX_VAR) == 0) {
-			return &gd.installationTemplates[idx];
+	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
+		if (Q_strncmp(ccs.installationTemplates[idx].id, id, MAX_VAR) == 0) {
+			return &ccs.installationTemplates[idx];
 		}
 	}
 
@@ -116,7 +116,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	assert(installation);
 
-	installation->idx = gd.numInstallations - 1;
+	installation->idx = ccs.numInstallations - 1;
 	installation->founded = qtrue;
 	installation->installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
 	installation->installationTemplate = installationTemplate;
@@ -126,7 +126,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	installation->aircraftCapacity.cur = 0;
 
 	/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
-	Cvar_Set("mn_installation_count", va("%i", gd.numInstallations));
+	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 
 	/* this cvar is needed by INS_SetBuildingByClick below*/
 	Cvar_SetValue("mn_installation_id", installation->idx);
@@ -262,7 +262,7 @@ static void INS_SelectInstallation_f (void)
 	}
 	installationID = atoi(Cmd_Argv(1));
 
-	if (installationID >= 0 && installationID < gd.numInstallations)
+	if (installationID >= 0 && installationID < ccs.numInstallations)
 		installation = INS_GetFoundedInstallationByIDX(installationID);
 	else
 		/* create a new base */
@@ -311,7 +311,7 @@ static void INS_BuildInstallation_f (void)
 		 * If we don't do this, any action that is done for this installation has no
 		 * influence to any nation happiness/funding/supporting */
 		if (CL_NewInstallation(installationCurrent, installationTemplate, newInstallationPos)) {
-			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", gd.numInstallations);
+			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", ccs.numInstallations);
 
 			/* set up the installation */
 			INS_SetUpInstallation(installationCurrent, installationTemplate);
@@ -375,7 +375,7 @@ static void INS_InstallationList_f (void)
 	int i;
 	installation_t *installation;
 
-	for (i = 0, installation = gd.installations; i < MAX_INSTALLATIONS; i++, installation++) {
+	for (i = 0, installation = ccs.installations; i < MAX_INSTALLATIONS; i++, installation++) {
 		if (!installation->founded) {
 			Com_Printf("Installation idx %i not founded\n\n", i);
 			continue;
@@ -400,9 +400,9 @@ static void INS_InstallationList_f (void)
  */
 static void INS_SetInstallationTitle_f (void)
 {
-	Com_DPrintf(DEBUG_CLIENT, "INS_SetInstallationTitle_f: #installations: %i\n", gd.numInstallations);
-	if (gd.numInstallations < MAX_INSTALLATIONS)
-		Cvar_Set("mn_installation_title", gd.installations[gd.numInstallations].name);
+	Com_DPrintf(DEBUG_CLIENT, "INS_SetInstallationTitle_f: #installations: %i\n", ccs.numInstallations);
+	if (ccs.numInstallations < MAX_INSTALLATIONS)
+		Cvar_Set("mn_installation_title", ccs.installations[ccs.numInstallations].name);
 	else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
 		MN_PopMenu(qfalse);		/* remove the new installation popup */
@@ -430,7 +430,7 @@ static void INS_ChangeInstallationName_f (void)
  */
 static void INS_CheckMaxInstallations_f (void)
 {
-	if (gd.numInstallations >= MAX_INSTALLATIONS) {
+	if (ccs.numInstallations >= MAX_INSTALLATIONS) {
 		MN_PopMenu(qfalse);
 	}
 }
@@ -448,7 +448,7 @@ void INS_DestroyInstallation (installation_t *installation)
 
 	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
 	CP_MissionNotifyInstallationDestroyed(installation);
-	gd.numInstallations--;
+	ccs.numInstallations--;
 	installationCurrent = NULL;
 	installation->founded = qfalse;
 
@@ -496,14 +496,14 @@ void INS_InitStartup (void)
 
 	Cvar_SetValue("mn_installation_max", MAX_INSTALLATIONS);
 
-	for (idx = 0; idx < gd.numInstallationTemplates; idx++) {
-		gd.installationTemplates[idx].id = NULL;
-		gd.installationTemplates[idx].name = NULL;
-		gd.installationTemplates[idx].cost = 0;
-		gd.installationTemplates[idx].radarRange = 0.0f;
-		gd.installationTemplates[idx].trackingRange = 0.0f;
-		gd.installationTemplates[idx].maxUFOsStored = 0;
-		gd.installationTemplates[idx].maxBatteries = 0;
+	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
+		ccs.installationTemplates[idx].id = NULL;
+		ccs.installationTemplates[idx].name = NULL;
+		ccs.installationTemplates[idx].cost = 0;
+		ccs.installationTemplates[idx].radarRange = 0.0f;
+		ccs.installationTemplates[idx].trackingRange = 0.0f;
+		ccs.installationTemplates[idx].maxUFOsStored = 0;
+		ccs.installationTemplates[idx].maxBatteries = 0;
 	}
 
 	/* add commands and cvars */
@@ -531,7 +531,7 @@ int INS_GetFoundedInstallationCount (void)
 	int i, cnt = 0;
 
 	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		if (!gd.installations[i].founded)
+		if (!ccs.installations[i].founded)
 			continue;
 		cnt++;
 	}
@@ -568,6 +568,7 @@ void INS_UpdateInstallationData (void)
  * @brief Reads information about installations.
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
+ * @todo Remove this and give an automatically generated name
  */
 void INS_ParseInstallationNames (const char *name, const char **text)
 {
@@ -575,7 +576,7 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 	const char *token;
 	installation_t *installation;
 
-	gd.numInstallationNames = 0;
+	ccs.numInstallationNames = 0;
 
 	/* get token */
 	token = COM_Parse(text);
@@ -586,7 +587,7 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 	}
 	do {
 		/* add installation */
-		if (gd.numInstallationNames > MAX_INSTALLATIONS) {
+		if (ccs.numInstallationNames > MAX_INSTALLATIONS) {
 			Com_Printf("INS_ParseInstallationNames: too many installations\n");
 			return;
 		}
@@ -598,9 +599,9 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 		if (*token == '}')
 			break;
 
-		installation = INS_GetInstallationByIDX(gd.numInstallationNames);
+		installation = INS_GetInstallationByIDX(ccs.numInstallationNames);
 		memset(installation, 0, sizeof(*installation));
-		installation->idx = gd.numInstallationNames;
+		installation->idx = ccs.numInstallationNames;
 
 		/* get the title */
 		token = COM_EParse(text, errhead, name);
@@ -612,7 +613,7 @@ void INS_ParseInstallationNames (const char *name, const char **text)
 			token++;
 		Q_strncpyz(installation->name, _(token), sizeof(installation->name));
 		Com_DPrintf(DEBUG_CLIENT, "Found installation %s\n", installation->name);
-		gd.numInstallationNames++; /** @todo Use this value instead of MAX_INSTALLATIONS in the for loops */
+		ccs.numInstallationNames++; /** @todo Use this value instead of MAX_INSTALLATIONS in the for loops */
 	} while (*text);
 
 	mn_installation_title = Cvar_Get("mn_installation_title", "", 0, NULL);
@@ -657,27 +658,27 @@ void INS_ParseInstallations (const char *name, const char **text)
 		return;
 	}
 
-	if (gd.numInstallationTemplates >= MAX_INSTALLATION_TEMPLATES) {
+	if (ccs.numInstallationTemplates >= MAX_INSTALLATION_TEMPLATES) {
 		Com_Printf("INS_ParseInstallations: too many installation templates\n");
-		gd.numInstallationTemplates = MAX_INSTALLATION_TEMPLATES;	/* just in case it's bigger. */
+		ccs.numInstallationTemplates = MAX_INSTALLATION_TEMPLATES;	/* just in case it's bigger. */
 		return;
 	}
 
-	for (i = 0; i < gd.numInstallationTemplates; i++) {
-		if (!Q_strcmp(gd.installationTemplates[i].name, name)) {
+	for (i = 0; i < ccs.numInstallationTemplates; i++) {
+		if (!Q_strcmp(ccs.installationTemplates[i].name, name)) {
 			Com_Printf("INS_ParseInstallations: Second installation with same name found (%s) - second ignored\n", name);
 			return;
 		}
 	}
 
 	/* new entry */
-	installation = &gd.installationTemplates[gd.numInstallationTemplates];
+	installation = &ccs.installationTemplates[ccs.numInstallationTemplates];
 	memset(installation, 0, sizeof(*installation));
 	installation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	Com_DPrintf(DEBUG_CLIENT, "...found installation %s\n", installation->id);
 
-	gd.numInstallationTemplates++;
+	ccs.numInstallationTemplates++;
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
@@ -841,7 +842,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
 		}
-		gd.numInstallations++;
+		ccs.numInstallations++;
 		Q_strncpyz(inst->name, mxml_GetString(s, "name"), sizeof(inst->name));
 
 		mxml_GetPos3(s, "pos", inst->pos);
@@ -875,7 +876,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 	}
-	Cvar_SetValue("mn_installation_count", gd.numInstallations);
+	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 	return qtrue;
 }
 
@@ -899,7 +900,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
 		}
-		gd.numInstallations++;
+		ccs.numInstallations++;
 		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
 		MSG_ReadPos(sb, inst->pos);
 		inst->installationStatus = MSG_ReadByte(sb);
@@ -935,6 +936,6 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 	}
-	Cvar_SetValue("mn_installation_count", gd.numInstallations);
+	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 	return qtrue;
 }

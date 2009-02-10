@@ -1944,10 +1944,10 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
  */
 qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 {
-	const int num = ufo - gd.ufos;
+	const int num = ufo - ccs.ufos;
 	vec2_t dest;
 
-	if (num < 0 || num >= gd.numUFOs || ! aircraft || ! ufo)
+	if (num < 0 || num >= ccs.numUFOs || !aircraft || !ufo)
 		return qfalse;
 
 	/* if aircraft was in base */
@@ -2266,7 +2266,7 @@ void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean
 		if (isUfo)
 			mxml_AddInt(node, "AircraftTarget", aircraft.aircraftTarget->idx);
 		else
-			mxml_AddInt(node, "AircraftTarget", aircraft.aircraftTarget - gd.ufos);
+			mxml_AddInt(node, "AircraftTarget", aircraft.aircraftTarget - ccs.ufos);
 	}
 
 	for (l = 0; l < AIR_STATS_MAX; l++) {
@@ -2350,10 +2350,10 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 	snode = mxml_AddNode(node, "ufos");
 	for (i = 0; i < MAX_UFOONGEOSCAPE; i++){
 		mxml_node_t *ssnode;
-		if (gd.ufos[i].id == NULL)
+		if (ccs.ufos[i].id == NULL)
 			continue;
 		ssnode = mxml_AddNode(snode, "aircraft");
-		AIR_SaveAircraftXML(ssnode, gd.ufos[i], qtrue);
+		AIR_SaveAircraftXML(ssnode, ccs.ufos[i], qtrue);
 	}
 	/* Save projectiles. */
 	for (i = 0; i < ccs.numProjectiles; i++) {
@@ -2367,7 +2367,7 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 			mxml_AddBool(snode, "hasAttackingAircraft", qtrue);
 			mxml_AddBool(snode, "isUfo", ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
 			if (ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(snode, "attackingAircraft", ccs.projectiles[i].attackingAircraft - gd.ufos);
+				mxml_AddInt(snode, "attackingAircraft", ccs.projectiles[i].attackingAircraft - ccs.ufos);
 			else
 				mxml_AddInt(snode, "attackingAircraft", ccs.projectiles[i].attackingAircraft->idx);
 		}
@@ -2378,7 +2378,7 @@ qboolean AIR_SaveXML (mxml_node_t *parent)
 			mxml_AddBool(snode, "hasAimedAircraft", qtrue);
 			mxml_AddBool(snode, "AimedAircraftIsUfo", ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
 			if (ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
-				mxml_AddInt(snode, "AimedAircraft", ccs.projectiles[i].aimedAircraft - gd.ufos);
+				mxml_AddInt(snode, "AimedAircraft", ccs.projectiles[i].aimedAircraft - ccs.ufos);
 			else
 				mxml_AddInt(snode, "AimedAircraft", ccs.projectiles[i].aimedAircraft->idx);
 		}
@@ -2419,53 +2419,53 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 
 	/* save the ufos on geoscape */
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
-		MSG_WriteString(sb, gd.ufos[i].id);
-		MSG_WriteByte(sb, gd.ufos[i].detected);	/* must be saved because detection is random */
-		MSG_WriteByte(sb, gd.ufos[i].landed);
-		MSG_WritePos(sb, gd.ufos[i].pos);
-		MSG_WriteByte(sb, gd.ufos[i].status);
-		MSG_WriteLong(sb, gd.ufos[i].fuel);
-		MSG_WriteLong(sb, gd.ufos[i].damage);
-		MSG_WriteLong(sb, gd.ufos[i].time);
-		MSG_WriteShort(sb, gd.ufos[i].point);
-		MSG_WriteShort(sb, gd.ufos[i].route.numPoints);
-		MSG_WriteFloat(sb, gd.ufos[i].route.distance);
-		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
-			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
-		MSG_WritePos(sb, gd.ufos[i].direction);
+		MSG_WriteString(sb, ccs.ufos[i].id);
+		MSG_WriteByte(sb, ccs.ufos[i].detected);	/* must be saved because detection is random */
+		MSG_WriteByte(sb, ccs.ufos[i].landed);
+		MSG_WritePos(sb, ccs.ufos[i].pos);
+		MSG_WriteByte(sb, ccs.ufos[i].status);
+		MSG_WriteLong(sb, ccs.ufos[i].fuel);
+		MSG_WriteLong(sb, ccs.ufos[i].damage);
+		MSG_WriteLong(sb, ccs.ufos[i].time);
+		MSG_WriteShort(sb, ccs.ufos[i].point);
+		MSG_WriteShort(sb, ccs.ufos[i].route.numPoints);
+		MSG_WriteFloat(sb, ccs.ufos[i].route.distance);
+		for (j = 0; j < ccs.ufos[i].route.numPoints; j++)
+			MSG_Write2Pos(sb, ccs.ufos[i].route.point[j]);
+		MSG_WritePos(sb, ccs.ufos[i].direction);
 #ifdef DEBUG
-		if (!gd.ufos[i].mission)
-			Com_Printf("Error: UFO '%s' (#%i) is not linked to any mission\n", gd.ufos[i].id, i);
+		if (!ccs.ufos[i].mission)
+			Com_Printf("Error: UFO '%s' (#%i) is not linked to any mission\n", ccs.ufos[i].id, i);
 #endif
-		MSG_WriteString(sb, gd.ufos[i].mission->id);
+		MSG_WriteString(sb, ccs.ufos[i].mission->id);
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++) {
 #ifdef DEBUG
 			/* UFO HP can be < 0 if the UFO has been destroyed */
-			if (j != AIR_STATS_DAMAGE && gd.ufos[i].stats[j] < 0)
-				Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", gd.ufos[i].id, j, gd.ufos[i].stats[j]);
+			if (j != AIR_STATS_DAMAGE && ccs.ufos[i].stats[j] < 0)
+				Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", ccs.ufos[i].id, j, ccs.ufos[i].stats[j]);
 #endif
-			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
+			MSG_WriteLong(sb, ccs.ufos[i].stats[j]);
 		}
 		/* Save target of the ufo */
-		if (gd.ufos[i].baseTarget)
-			MSG_WriteShort(sb, gd.ufos[i].baseTarget->idx);
+		if (ccs.ufos[i].baseTarget)
+			MSG_WriteShort(sb, ccs.ufos[i].baseTarget->idx);
 		else
 			MSG_WriteShort(sb, -1);
-		if (gd.ufos[i].aircraftTarget)
-			MSG_WriteShort(sb, gd.ufos[i].aircraftTarget->idx);
+		if (ccs.ufos[i].aircraftTarget)
+			MSG_WriteShort(sb, ccs.ufos[i].aircraftTarget->idx);
 		else
 			MSG_WriteShort(sb, -1);
 
 		/* save weapon slots */
-		MSG_WriteByte(sb, gd.ufos[i].maxWeapons);
-		for (j = 0; j < gd.ufos[i].maxWeapons; j++) {
-			if (gd.ufos[i].weapons[j].item) {
-				MSG_WriteString(sb, gd.ufos[i].weapons[j].item->id);
-				MSG_WriteShort(sb, gd.ufos[i].weapons[j].ammoLeft);
-				MSG_WriteShort(sb, gd.ufos[i].weapons[j].delayNextShot);
-				MSG_WriteShort(sb, gd.ufos[i].weapons[j].installationTime);
+		MSG_WriteByte(sb, ccs.ufos[i].maxWeapons);
+		for (j = 0; j < ccs.ufos[i].maxWeapons; j++) {
+			if (ccs.ufos[i].weapons[j].item) {
+				MSG_WriteString(sb, ccs.ufos[i].weapons[j].item->id);
+				MSG_WriteShort(sb, ccs.ufos[i].weapons[j].ammoLeft);
+				MSG_WriteShort(sb, ccs.ufos[i].weapons[j].delayNextShot);
+				MSG_WriteShort(sb, ccs.ufos[i].weapons[j].installationTime);
 				/* if there is no ammo MSG_WriteString will write an empty string */
-				MSG_WriteString(sb, gd.ufos[i].weapons[j].ammo->id);
+				MSG_WriteString(sb, ccs.ufos[i].weapons[j].ammo->id);
 			} else {
 				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
@@ -2477,19 +2477,19 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		}
 		/* save shield slots - currently only one */
 		MSG_WriteByte(sb, 1);
-		if (gd.ufos[i].shield.item) {
-			MSG_WriteString(sb, gd.ufos[i].shield.item->id);
-			MSG_WriteShort(sb, gd.ufos[i].shield.installationTime);
+		if (ccs.ufos[i].shield.item) {
+			MSG_WriteString(sb, ccs.ufos[i].shield.item->id);
+			MSG_WriteShort(sb, ccs.ufos[i].shield.installationTime);
 		} else {
 			MSG_WriteString(sb, "");
 			MSG_WriteShort(sb, 0);
 		}
 		/* save electronics slots */
-		MSG_WriteByte(sb, gd.ufos[i].maxElectronics);
-		for (j = 0; j < gd.ufos[i].maxElectronics; j++) {
-			if (gd.ufos[i].electronics[j].item) {
-				MSG_WriteString(sb, gd.ufos[i].electronics[j].item->id);
-				MSG_WriteShort(sb, gd.ufos[i].electronics[j].installationTime);
+		MSG_WriteByte(sb, ccs.ufos[i].maxElectronics);
+		for (j = 0; j < ccs.ufos[i].maxElectronics; j++) {
+			if (ccs.ufos[i].electronics[j].item) {
+				MSG_WriteString(sb, ccs.ufos[i].electronics[j].item->id);
+				MSG_WriteShort(sb, ccs.ufos[i].electronics[j].installationTime);
 			} else {
 				MSG_WriteString(sb, "");
 				MSG_WriteShort(sb, 0);
@@ -2508,7 +2508,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		if (ccs.projectiles[i].attackingAircraft) {
 			MSG_WriteByte(sb, ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
 			if (ccs.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
-				MSG_WriteShort(sb, ccs.projectiles[i].attackingAircraft - gd.ufos);
+				MSG_WriteShort(sb, ccs.projectiles[i].attackingAircraft - ccs.ufos);
 			else
 				MSG_WriteShort(sb, ccs.projectiles[i].attackingAircraft->idx);
 		} else
@@ -2520,7 +2520,7 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 		if (ccs.projectiles[i].aimedAircraft) {
 			MSG_WriteByte(sb, ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
 			if (ccs.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
-				MSG_WriteShort(sb, ccs.projectiles[i].aimedAircraft - gd.ufos);
+				MSG_WriteShort(sb, ccs.projectiles[i].aimedAircraft - ccs.ufos);
 			else
 				MSG_WriteShort(sb, ccs.projectiles[i].aimedAircraft->idx);
 		} else
@@ -2698,7 +2698,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 	else if (isUfo)
 		craft->aircraftTarget = AIR_AircraftGetFromIDX(tmp_int);
 	else
-		craft->aircraftTarget = gd.ufos + tmp_int;
+		craft->aircraftTarget = ccs.ufos + tmp_int;
 
 	/*struct base_s *baseTarget;*/
 	/*if (aircraft.installationTarget)
@@ -2806,12 +2806,12 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		const char *s = mxml_GetString(ssnode, "Id");
 		aircraft_t *craft;
 		craft = AIR_GetAircraft(s);
-		gd.ufos[i] = *craft;
-		craft = &gd.ufos[i];	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
-		/* AIR_SaveAircraftXML(ssnode, gd.ufos[i], qtrue); */
+		ccs.ufos[i] = *craft;
+		craft = &ccs.ufos[i];	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
+		/* AIR_SaveAircraftXML(ssnode, ccs.ufos[i], qtrue); */
 		AIR_LoadAircraftXML(craft, qtrue, ssnode);
 	}
-	gd.numUFOs = i;
+	ccs.numUFOs = i;
 
 	/* Load projectiles. */
 	for (i = 0, snode = mxml_GetNode(node, "Projectile"); i < MAX_PROJECTILESONGEOSCAPE && snode;
@@ -2827,7 +2827,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 			mxml_GetPos3(snode, "IdleTarget", ccs.projectiles[i].idleTarget);
 			if (mxml_GetBool(snode, "hasAttackingAircraft", qfalse)) {
 				if (mxml_GetBool(snode, "isUfo", qfalse))
-					ccs.projectiles[i].attackingAircraft = gd.ufos + mxml_GetInt(snode, "attackingAircraft", 0);
+					ccs.projectiles[i].attackingAircraft = ccs.ufos + mxml_GetInt(snode, "attackingAircraft", 0);
 				else
 					ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "attackingAircraft", 0));
 			} else
@@ -2839,7 +2839,7 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 				ccs.projectiles[i].aimedBase = NULL;
 			if (mxml_GetBool(snode, "hasAimedAircraft", qfalse)) {
 				if (mxml_GetBool(snode, "AimedAircraftIsUfo", qfalse))
-					ccs.projectiles[i].aimedAircraft = gd.ufos + mxml_GetInt(snode, "AimedAircraft", 0);
+					ccs.projectiles[i].aimedAircraft = ccs.ufos + mxml_GetInt(snode, "AimedAircraft", 0);
 				else
 					ccs.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "AimedAircraft", 0));
 			} else
@@ -2870,11 +2870,11 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 		ccs.recoveries[i].event.sec = mxml_GetInt(snode, "sec", 0);
 	}
 
-	for (i = gd.numUFOs - 1; i >= 0; i--) {
-		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
+	for (i = ccs.numUFOs - 1; i >= 0; i--) {
+		if (ccs.ufos[i].time < 0 || ccs.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
 			Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
-				gd.ufos[i].time, gd.ufos[i].stats[AIR_STATS_SPEED]);
-			UFO_RemoveFromGeoscape(&gd.ufos[i]);
+				ccs.ufos[i].time, ccs.ufos[i].stats[AIR_STATS_SPEED]);
+			UFO_RemoveFromGeoscape(&ccs.ufos[i]);
 		}
 	}
 	return qtrue;
@@ -2898,7 +2898,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	technology_t *tech;
 
 	/* load the amount of ufos on geoscape */
-	gd.numUFOs = presaveArray[PRE_NUMUFO];
+	ccs.numUFOs = presaveArray[PRE_NUMUFO];
 	/* load the ufos on geoscape */
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		const char *s = MSG_ReadString(sb);
@@ -2907,7 +2907,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		if (!ufo) {
 			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);
 			/* Remove the UFO that couldn't be loaded */
-			gd.numUFOs--;
+			ccs.numUFOs--;
 
 			MSG_ReadByte(sb);			/* detected */
 			MSG_ReadByte(sb);			/* landed */
@@ -2952,8 +2952,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_ReadShort(sb);
 			}
 		} else {
-			gd.ufos[i] = *ufo;
-			ufo = &gd.ufos[i];					/* Copy all datas that don't need to be saved (tpl, hangar,...) */
+			ccs.ufos[i] = *ufo;
+			ufo = &ccs.ufos[i];					/* Copy all datas that don't need to be saved (tpl, hangar,...) */
 			ufo->detected = MSG_ReadByte(sb);
 			ufo->landed = MSG_ReadByte(sb);
 			MSG_ReadPos(sb, ufo->pos);
@@ -2971,7 +2971,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < ufo->route.numPoints; j++)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
 			MSG_ReadPos(sb, ufo->direction);
-			gd.ufos[i].mission = CP_GetMissionById(MSG_ReadString(sb));
+			ccs.ufos[i].mission = CP_GetMissionById(MSG_ReadString(sb));
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[j] = MSG_ReadLong(sb);
 			tmp_int = MSG_ReadShort(sb);
@@ -3044,8 +3044,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		/** @todo more? */
 	}
 
-	if (numUFOs != gd.numUFOs)
-		Com_Printf("AIR_Load: loaded %i UFOs, but there should be %i\n", numUFOs, gd.numUFOs);
+	if (numUFOs != ccs.numUFOs)
+		Com_Printf("AIR_Load: loaded %i UFOs, but there should be %i\n", numUFOs, ccs.numUFOs);
 
 	/* Load projectiles. */
 	ccs.numProjectiles = MSG_ReadByte(sb);
@@ -3067,7 +3067,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int == 2)
 				ccs.projectiles[i].attackingAircraft = NULL;
 			else if (tmp_int == 1)
-				ccs.projectiles[i].attackingAircraft = gd.ufos + MSG_ReadShort(sb);
+				ccs.projectiles[i].attackingAircraft = ccs.ufos + MSG_ReadShort(sb);
 			else
 				ccs.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
 			tmp_int = MSG_ReadShort(sb);
@@ -3079,7 +3079,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			if (tmp_int == 2)
 				ccs.projectiles[i].aimedAircraft = NULL;
 			else if (tmp_int == 1)
-				ccs.projectiles[i].aimedAircraft = gd.ufos + MSG_ReadShort(sb);
+				ccs.projectiles[i].aimedAircraft = ccs.ufos + MSG_ReadShort(sb);
 			else
 				ccs.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(MSG_ReadShort(sb));
 			ccs.projectiles[i].time = MSG_ReadLong(sb);
@@ -3105,11 +3105,11 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 		ccs.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
 
-	for (i = gd.numUFOs - 1; i >= 0; i--) {
-		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
+	for (i = ccs.numUFOs - 1; i >= 0; i--) {
+		if (ccs.ufos[i].time < 0 || ccs.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
 			Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
-				gd.ufos[i].time, gd.ufos[i].stats[AIR_STATS_SPEED]);
-			UFO_RemoveFromGeoscape(&gd.ufos[i]);
+				ccs.ufos[i].time, ccs.ufos[i].stats[AIR_STATS_SPEED]);
+			UFO_RemoveFromGeoscape(&ccs.ufos[i]);
 		}
 	}
 

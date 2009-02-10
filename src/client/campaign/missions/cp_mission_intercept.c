@@ -198,7 +198,7 @@ static void CP_InterceptMissionSet (mission_t *mission)
 	assert(mission->ufo);
 
 	/* Only harvesters can attack installations -- if there are installations to attack */
-	if (mission->ufo->ufotype == UFO_HARVESTER && gd.numInstallations) {
+	if (mission->ufo->ufotype == UFO_HARVESTER && ccs.numInstallations) {
 		CP_InterceptGoToInstallation(mission);
 	}
 

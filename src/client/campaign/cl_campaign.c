@@ -888,8 +888,8 @@ static void CL_StatsUpdate_f (void)
 	/* installations */
 	pos += (strlen(pos) + 1);
 	MN_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
-	for (i = 0; i < gd.numInstallations; i++) {
-		const installation_t *inst = &gd.installations[i];
+	for (i = 0; i < ccs.numInstallations; i++) {
+		const installation_t *inst = &ccs.installations[i];
 		Q_strcat(pos, va(_("%s\n"), inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
@@ -963,8 +963,8 @@ static void CL_StatsUpdate_f (void)
 		if (!base)
 			continue;
 		costs = SALARY_BASE_UPKEEP;	/* base cost */
-		for (j = 0; j < gd.numBuildings[i]; j++) {
-			costs += gd.buildings[i][j].varCosts;
+		for (j = 0; j < ccs.numBuildings[i]; j++) {
+			costs += ccs.buildings[i][j].varCosts;
 		}
 		Q_strcat(pos, va(_("Base (%s):\t%i c\n"), base->name, costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 		sum += costs;
@@ -1151,7 +1151,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		if (ufoIdx <= -1)
 			mission.ufo = NULL;
 		else
-			mission.ufo = gd.ufos + ufoIdx;
+			mission.ufo = ccs.ufos + ufoIdx;
 
 		mission.onGeoscape = mxml_GetBool(act_node, "onGeoscape", qfalse);
 
@@ -1373,7 +1373,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		if (ufoIdx <= -1)
 			mission.ufo = NULL;
 		else
-			mission.ufo = gd.ufos + ufoIdx;
+			mission.ufo = ccs.ufos + ufoIdx;
 		mission.onGeoscape = MSG_ReadByte(sb);
 
 		/* Add mission to global array */
@@ -1551,7 +1551,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 		mxml_AddLong(missions, "finalDate.sec", mission->finalDate.sec);
 		mxml_AddPos2(missions, "pos", mission->pos);
 		if (mission->ufo)
-			mxml_AddShort(missions, "ufo", mission->ufo - gd.ufos);
+			mxml_AddShort(missions, "ufo", mission->ufo - ccs.ufos);
 		else
 			mxml_AddShort(missions, "ufo", -1);
 		mxml_AddShort(missions, "onGeoscape", mission->onGeoscape);
@@ -1677,7 +1677,7 @@ qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteFloat(sb, mission->pos[0]);
 		MSG_WriteFloat(sb, mission->pos[1]);
 		if (mission->ufo)
-			MSG_WriteShort(sb, mission->ufo - gd.ufos);
+			MSG_WriteShort(sb, mission->ufo - ccs.ufos);
 		else
 			MSG_WriteShort(sb, -1);
 		MSG_WriteByte(sb, mission->onGeoscape);

@@ -570,11 +570,11 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		if (numUnderConstruction == num) {
 			int minDay = 99999;
 			/* Find the building whose construction will finish first */
-			for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-				if (gd.buildings[baseIdx][i].buildingType == building->buildingType
-					&& gd.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION
-					&& minDay > gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart))
-					minDay = gd.buildings[baseIdx][i].buildTime - (ccs.date.day - gd.buildings[baseIdx][i].timeStart);
+			for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
+				if (ccs.buildings[baseIdx][i].buildingType == building->buildingType
+					&& ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_UNDER_CONSTRUCTION
+					&& minDay > ccs.buildings[baseIdx][i].buildTime - (ccs.date.day - ccs.buildings[baseIdx][i].timeStart))
+					minDay = ccs.buildings[baseIdx][i].buildTime - (ccs.date.day - ccs.buildings[baseIdx][i].timeStart);
 			}
 			Com_sprintf(popupText, sizeof(popupText), ngettext("Construction of building will be over in %i day.\nPlease wait to enter.", "Construction of building will be over in %i days.\nPlease wait to enter.",
 				minDay), minDay);
@@ -594,9 +594,9 @@ static void B_CheckBuildingStatusForMenu_f (void)
 				/* maybe the dependence of the building is under construction
 				 * note that we can't use B_STATUS_UNDER_CONSTRUCTION here, because this value
 				 * is not use for every building (for exemple Command Centre) */
-				for (i = 0; i < gd.numBuildings[baseIdx]; i++) {
-					if (gd.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
-					 && gd.buildings[baseIdx][i].buildTime > (ccs.date.day - gd.buildings[baseIdx][i].timeStart)) {
+				for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
+					if (ccs.buildings[baseIdx][i].buildingType == dependenceBuilding->buildingType
+					 && ccs.buildings[baseIdx][i].buildTime > (ccs.date.day - ccs.buildings[baseIdx][i].timeStart)) {
 						Com_sprintf(popupText, sizeof(popupText), _("Building %s is not finished yet, and is needed to use building %s."),
 							_(dependenceBuilding->name), _(building->name));
 						MN_Popup(_("Notice"), popupText);
@@ -695,8 +695,8 @@ static void BaseSummary_Init_f (void)
 		MN_RegisterText(TEXT_STANDARD, textInfoBuffer);
 
 		Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
-		for (i = 0; i < gd.numBuildingTemplates; i++) {
-			b = &gd.buildingTemplates[i];
+		for (i = 0; i < ccs.numBuildingTemplates; i++) {
+			b = &ccs.buildingTemplates[i];
 
 			/* only show already researched buildings */
 			if (!RS_IsResearched_ptr(b->tech))
@@ -726,7 +726,7 @@ static void BaseSummary_Init_f (void)
 		Q_strcat(textStatsBuffer, "\n", sizeof(textStatsBuffer));
 
 		Q_strcat(textStatsBuffer, _("^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"), sizeof(textStatsBuffer));
-		queue = &gd.productions[base->idx];
+		queue = &ccs.productions[base->idx];
 		if (queue->numItems > 0) {
 			for (i = 0; i < queue->numItems; i++) {
 				const production_t *production = &queue->items[i];

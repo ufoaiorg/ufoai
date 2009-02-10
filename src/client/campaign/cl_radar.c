@@ -170,8 +170,8 @@ void RADAR_DrawInMap (const menuNode_t *node, const radar_t *radar, const vec2_t
 	for (i = 0; i < radar->numUFOs; i++) {
 		/* we really want to avoid buffer overflow: numUFO is supposed to be UFO idx */
 		assert(radar->ufos[i] < MAX_UFOONGEOSCAPE && radar->ufos[i] >= 0);
-		if (UFO_IsUFOSeenOnGeoscape(&gd.ufos[radar->ufos[i]])						/* Is UFO landed? */
-			&& MAP_AllMapToScreen(node, gd.ufos[radar->ufos[i]].pos, &x, &y, NULL)	/* UFO is on the screen */
+		if (UFO_IsUFOSeenOnGeoscape(&ccs.ufos[radar->ufos[i]])						/* Is UFO landed? */
+			&& MAP_AllMapToScreen(node, ccs.ufos[radar->ufos[i]].pos, &x, &y, NULL)	/* UFO is on the screen */
 			&& display) {															/* radar is on the screen */
 			pts[1].x = x;
 			pts[1].y = y;
@@ -265,7 +265,7 @@ static qboolean RADAR_AddUFO (radar_t* radar, int numUFO)
  */
 static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
 {
-	int i, numUFO = ufo - gd.ufos;
+	int i, numUFO = ufo - ccs.ufos;
 
 	assert(radar->numUFOs < MAX_UFOONGEOSCAPE && radar->numUFOs > 0);
 
@@ -288,7 +288,7 @@ static void RADAR_RemoveUFO (radar_t* radar, const aircraft_t* ufo)
  **/
 static void RADAR_NotifyUFORemovedFromOneRadar (radar_t* radar, const aircraft_t* ufo, qboolean destroyed)
 {
-	int i, numUFO = ufo - gd.ufos;
+	int i, numUFO = ufo - ccs.ufos;
 
 	for (i = 0; i < radar->numUFOs; i++)
 		if (radar->ufos[i] == numUFO) {
@@ -434,10 +434,10 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 		if (!base)
 			continue;
 
-		if (RADAR_IsUFOSensored(&base->radar, ufo - gd.ufos) == UFO_NOT_SENSORED) {
+		if (RADAR_IsUFOSensored(&base->radar, ufo - ccs.ufos) == UFO_NOT_SENSORED) {
 			const float dist = MAP_GetDistance(ufo->pos, base->pos);	/* Distance from radar to UFO */
 			if (dist <= base->radar.trackingRange)
-				RADAR_AddUFO(&base->radar, ufo - gd.ufos);
+				RADAR_AddUFO(&base->radar, ufo - ccs.ufos);
 		}
 
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
@@ -446,10 +446,10 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 			if (!AIR_IsAircraftOnGeoscape(aircraft))
 				continue;
 
-			if (RADAR_IsUFOSensored(&aircraft->radar, ufo - gd.ufos) == UFO_NOT_SENSORED) {
+			if (RADAR_IsUFOSensored(&aircraft->radar, ufo - ccs.ufos) == UFO_NOT_SENSORED) {
 				const float dist = MAP_GetDistance(ufo->pos, aircraft->pos);	/* Distance from radar to UFO */
 				if (dist <= aircraft->radar.trackingRange)
-					RADAR_AddUFO(&aircraft->radar, ufo - gd.ufos);
+					RADAR_AddUFO(&aircraft->radar, ufo - ccs.ufos);
 			}
 		}
 	}
@@ -464,10 +464,10 @@ void RADAR_AddDetectedUFOToEveryRadar (const aircraft_t const *ufo)
 		if (!installation->radar.trackingRange)
 			continue;
 
-		if (RADAR_IsUFOSensored(&installation->radar, ufo - gd.ufos) == UFO_NOT_SENSORED) {
+		if (RADAR_IsUFOSensored(&installation->radar, ufo - ccs.ufos) == UFO_NOT_SENSORED) {
 			const float dist = MAP_GetDistance(ufo->pos, installation->pos);	/* Distance from radar to UFO */
 			if (dist <= ufo->radar.trackingRange)
-				RADAR_AddUFO(&installation->radar, ufo - gd.ufos);
+				RADAR_AddUFO(&installation->radar, ufo - ccs.ufos);
 		}
 	}
 }
@@ -531,10 +531,10 @@ qboolean RADAR_CheckUFOSensored (radar_t *radar, vec2_t posRadar,
 	int num;
 	int numAircraftSensored;
 
-	/* Get num of ufo in gd.ufos */
+	/* Get num of ufo in ccs.ufos */
 	/** @todo why not ufo->idx? Is this only valid for aircraft in base? */
-	num = ufo - gd.ufos;
-	if (num < 0 || num >= gd.numUFOs)
+	num = ufo - ccs.ufos;
+	if (num < 0 || num >= ccs.numUFOs)
 		return qfalse;
 
 	numAircraftSensored = RADAR_IsUFOSensored(radar, num);	/* indice of ufo in radar list */
@@ -575,8 +575,8 @@ void RADAR_SetRadarAfterLoading (void)
 {
 	int ufoIdx;
 
-	for (ufoIdx = 0; ufoIdx < gd.numUFOs; ufoIdx++) {
-		const aircraft_t const *ufo = &gd.ufos[ufoIdx];
+	for (ufoIdx = 0; ufoIdx < ccs.numUFOs; ufoIdx++) {
+		const aircraft_t const *ufo = &ccs.ufos[ufoIdx];
 
 		if (!ufo->detected)
 			continue;

@@ -1643,7 +1643,7 @@ static void CP_MissionList_f (void)
 			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
 		Com_Printf("...pos (%.02f, %.02f) -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->onGeoscape ? "" : "not ");
 		if (mission->ufo)
-			Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - gd.ufos), gd.numUFOs - 1);
+			Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - ccs.ufos), ccs.numUFOs - 1);
 		else
 			Com_Printf("...UFO: no UFO\n");
 		noMission = qfalse;
@@ -1667,10 +1667,10 @@ static void CP_DeleteMissions_f (void)
 	}
 	Com_Printf("Removed %i mission(s) from global array\n", n);
 
-	if (gd.numUFOs != 0) {
-		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions. Force removal.\n", gd.numUFOs);
-		while (gd.numUFOs)
-			UFO_RemoveFromGeoscape(gd.ufos);
+	if (ccs.numUFOs != 0) {
+		Com_Printf("CP_DeleteMissions_f: Error, there are still %i UFO in game afer removing all missions. Force removal.\n", ccs.numUFOs);
+		while (ccs.numUFOs)
+			UFO_RemoveFromGeoscape(ccs.ufos);
 	}
 }
 

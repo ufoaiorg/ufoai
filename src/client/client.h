@@ -46,9 +46,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*============================================================================= */
 
-#define MAX_TEAMLIST	8
-#define MAX_CARGO		32
-
 /* Map debugging constants */
 /** @brief cvar debug_map options:
  * debug_map is a bit mask, like the developer cvar.  There is no ALL bit.
@@ -94,6 +91,7 @@ typedef struct {
 
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
 #define MAX_ACTIVETEAM	8
+#define MAX_TEAMLIST	8
 
 typedef struct chr_list_s {
 	character_t* chr[MAX_ACTIVETEAM];

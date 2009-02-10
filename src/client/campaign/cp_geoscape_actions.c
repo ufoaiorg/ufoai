@@ -43,7 +43,7 @@ qboolean CL_NewInstallation (installation_t* installation, installationTemplate_
 	if (installation->founded) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_NewInstallation: installation already founded: %i\n", installation->idx);
 		return qfalse;
-	} else if (gd.numInstallations == MAX_INSTALLATIONS) {
+	} else if (ccs.numInstallations == MAX_INSTALLATIONS) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_NewInstallation: max installation limit hit\n");
 		return qfalse;
 	}
@@ -63,7 +63,7 @@ qboolean CL_NewInstallation (installation_t* installation, installationTemplate_
 	/* build installation */
 	Vector2Copy(pos, installation->pos);
 
-	gd.numInstallations++;
+	ccs.numInstallations++;
 
 	return qtrue;
 }

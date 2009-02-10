@@ -41,7 +41,7 @@ messageSettings_t backupMessageSettings[NT_NUM_NOTIFYTYPE]; /**< array holding b
  * @brief Returns the category entry that is shown at given selection index.
  * @param selection index in visible list as returned by text list
  * @param visibleIndex flag indicating that index is from visible lines, not from text row
- * @return category entry from gd.msgCategoryEntries
+ * @return category entry from ccs.msgCategoryEntries
  * @note this method takes into account scroll index and folding state of categories.
  * @sa MSO_Toggle_f
  * @sa MSO_OptionsClick_f
@@ -51,7 +51,7 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selec
 	int entriesToCheck = visibleIndex ? selection + messageList_scroll : selection;
 	int realIndex = 0;
 	for (; entriesToCheck > 0; realIndex++) {
-		const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[realIndex];
+		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[realIndex];
 		entriesToCheck--;
 		if (entry->isCategory && entry->category->isFolded) {
 			/* first entry of category is category itself, count other entries */
@@ -62,9 +62,9 @@ static const msgCategoryEntry_t *MSO_GetEntryFromSelectionIndex (const int selec
 			}
 		}
 	}
-	if (realIndex >= gd.numMsgCategoryEntries)
+	if (realIndex >= ccs.numMsgCategoryEntries)
 		return NULL;
-	return &gd.msgCategoryEntries[realIndex];
+	return &ccs.msgCategoryEntries[realIndex];
 }
 
 /**
@@ -82,8 +82,8 @@ static void MSO_InitTextList (void)
 	MN_MenuTextReset(TEXT_MESSAGEOPTIONS);
 	visibleMSOEntries = 0;
 
-	for (idx = 0; idx < gd.numMsgCategoryEntries; idx++) {
-		const msgCategoryEntry_t *entry = &gd.msgCategoryEntries[idx];
+	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {
+		const msgCategoryEntry_t *entry = &ccs.msgCategoryEntries[idx];
 		if (!entry->isCategory && entry->category->isFolded)
 			continue;
 		if (entry->isCategory) {
@@ -114,7 +114,7 @@ static void MSO_UpdateVisibleButtons (void)
 	int visible = 0;/* visible lines*/
 
 	/* update visible button lines based on current displayed values */
-	for (idx = 0; visible < msoTextNode->u.text.rows && idx < gd.numMsgCategoryEntries; idx++) {
+	for (idx = 0; visible < msoTextNode->u.text.rows && idx < ccs.numMsgCategoryEntries; idx++) {
 		const msgCategoryEntry_t *entry = MSO_GetEntryFromSelectionIndex(idx,qtrue);
 		if (!entry)
 			break;
@@ -133,7 +133,7 @@ static void MSO_UpdateVisibleButtons (void)
 		}
 	}
 
-	for (; visible < msoTextNode->u.text.rows && idx < lengthof(gd.msgCategoryEntries); idx++) {
+	for (; visible < msoTextNode->u.text.rows && idx < lengthof(ccs.msgCategoryEntries); idx++) {
 		MN_ExecuteConfunc("ms_disable %i", visible);
 		visible++;
 	}
@@ -245,7 +245,7 @@ static void MSO_OptionsClick_f(void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num >= gd.numMsgCategoryEntries || num < 0)
+	if (num >= ccs.numMsgCategoryEntries || num < 0)
 		return;
 
 	category = MSO_GetEntryFromSelectionIndex(num, qfalse);

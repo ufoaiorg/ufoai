@@ -752,7 +752,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 
 /**
  * @brief Sets the amount of unread/new mails
- * @note This is called every campaign frame - to update gd.numUnreadMails
+ * @note This is called every campaign frame - to update ccs.numUnreadMails
  * just set it to -1 before calling this function
  * @sa CL_CampaignRun
  */
@@ -760,34 +760,34 @@ int UP_GetUnreadMails (void)
 {
 	const message_t *m = cp_messageStack;
 
-	if (gd.numUnreadMails != -1)
-		return gd.numUnreadMails;
+	if (ccs.numUnreadMails != -1)
+		return ccs.numUnreadMails;
 
-	gd.numUnreadMails = 0;
+	ccs.numUnreadMails = 0;
 
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
 			assert(m->pedia);
 			if (m->pedia->mail[TECHMAIL_PRE].from && !m->pedia->mail[TECHMAIL_PRE].read)
-				gd.numUnreadMails++;
+				ccs.numUnreadMails++;
 			break;
 		case MSG_RESEARCH_FINISHED:
 			assert(m->pedia);
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && RS_IsResearched_ptr(m->pedia) && !m->pedia->mail[TECHMAIL_RESEARCHED].read)
-				gd.numUnreadMails++;
+				ccs.numUnreadMails++;
 			break;
 		case MSG_NEWS:
 			assert(m->pedia);
 			if (m->pedia->mail[TECHMAIL_PRE].from && !m->pedia->mail[TECHMAIL_PRE].read)
-				gd.numUnreadMails++;
+				ccs.numUnreadMails++;
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && !m->pedia->mail[TECHMAIL_RESEARCHED].read)
-				gd.numUnreadMails++;
+				ccs.numUnreadMails++;
 			break;
 		case MSG_EVENT:
 			assert(m->eventMail);
 			if (!m->eventMail->read)
-				gd.numUnreadMails++;
+				ccs.numUnreadMails++;
 			break;
 		default:
 			break;
@@ -796,8 +796,8 @@ int UP_GetUnreadMails (void)
 	}
 
 	/* use strings here */
-	Cvar_Set("mn_upunreadmail", va("%i", gd.numUnreadMails));
-	return gd.numUnreadMails;
+	Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
+	return ccs.numUnreadMails;
 }
 
 /**
@@ -825,7 +825,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		Q_strncpyz(dateBuf, _(mail->date), sizeof(dateBuf));
 		mail->read = qtrue;
 		/* reread the unread mails in UP_GetUnreadMails */
-		gd.numUnreadMails = -1;
+		ccs.numUnreadMails = -1;
 	} else {
 		assert(tech);
 		assert(type < TECHMAIL_MAX);
@@ -856,7 +856,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 			if (!tech->mail[type].read) {
 				tech->mail[type].read = qtrue;
 				/* reread the unread mails in UP_GetUnreadMails */
-				gd.numUnreadMails = -1;
+				ccs.numUnreadMails = -1;
 			}
 			/* only if mail and mail_pre are available */
 			if (tech->numTechMails == TECHMAIL_MAX) {
@@ -1132,10 +1132,10 @@ static void UP_Content_f (void)
 	numChapters_displaylist = 0;
 	upText[0] = 0;
 
-	for (i = 0; i < gd.numChapters; i++) {
+	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
 		qboolean researched_entries = qfalse;
-		upCurrentTech = gd.upChapters[i].first;
+		upCurrentTech = ccs.upChapters[i].first;
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
 				researched_entries = qtrue;
@@ -1151,9 +1151,9 @@ static void UP_Content_f (void)
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researched_entries) {
 			assert(numChapters_displaylist<MAX_PEDIACHAPTERS);
-			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
+			upChapters_displaylist[numChapters_displaylist++] = &ccs.upChapters[i];
 			/** @todo integrate images into text better */
-			Q_strcat(upText, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", gd.upChapters[i].id, _(gd.upChapters[i].name)), sizeof(upText));
+			Q_strcat(upText, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", ccs.upChapters[i].id, _(ccs.upChapters[i].name)), sizeof(upText));
 		}
 	}
 
@@ -1177,8 +1177,8 @@ static void UP_Index_f (void)
 		return;
 	} else if (Cmd_Argc() == 2) {
 		const int chapter = atoi(Cmd_Argv(1));
-		if (chapter < gd.numChapters && chapter >= 0) {
-			currentChapter = &gd.upChapters[chapter];
+		if (chapter < ccs.numChapters && chapter >= 0) {
+			currentChapter = &ccs.upChapters[chapter];
 		}
 	}
 
@@ -1726,8 +1726,8 @@ static void UP_SetAllMailsRead_f (void)
 		m = m->next;
 	}
 
-	gd.numUnreadMails = 0;
-	Cvar_Set("mn_upunreadmail", va("%i", gd.numUnreadMails));
+	ccs.numUnreadMails = 0;
+	Cvar_Set("mn_upunreadmail", va("%i", ccs.numUnreadMails));
 	UP_OpenMail_f();
 }
 
@@ -1939,13 +1939,13 @@ void UP_ParseChapters (const char *name, const char **text)
 			break;
 
 		/* add chapter */
-		if (gd.numChapters >= MAX_PEDIACHAPTERS) {
+		if (ccs.numChapters >= MAX_PEDIACHAPTERS) {
 			Com_Printf("UP_ParseChapters: too many chapter defs\n");
 			return;
 		}
-		memset(&gd.upChapters[gd.numChapters], 0, sizeof(gd.upChapters[gd.numChapters]));
-		gd.upChapters[gd.numChapters].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
-		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
+		memset(&ccs.upChapters[ccs.numChapters], 0, sizeof(ccs.upChapters[ccs.numChapters]));
+		ccs.upChapters[ccs.numChapters].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+		ccs.upChapters[ccs.numChapters].idx = ccs.numChapters;	/* set self-link */
 
 		/* get the name */
 		token = COM_EParse(text, errhead, name);
@@ -1957,8 +1957,8 @@ void UP_ParseChapters (const char *name, const char **text)
 			token++;
 		if (!*token)
 			continue;
-		gd.upChapters[gd.numChapters].name = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+		ccs.upChapters[ccs.numChapters].name = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
-		gd.numChapters++;
+		ccs.numChapters++;
 	} while (*text);
 }

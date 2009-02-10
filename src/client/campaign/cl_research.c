@@ -690,8 +690,8 @@ void RS_InitTree (qboolean load)
 			break;
 		case RS_BUILDING:
 			found = qfalse;
-			for (j = 0; j < gd.numBuildingTemplates; j++) {
-				building_t *building = &gd.buildingTemplates[j];
+			for (j = 0; j < ccs.numBuildingTemplates; j++) {
+				building_t *building = &ccs.buildingTemplates[j];
 				/* This building has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
 					found = qtrue;
@@ -1645,26 +1645,26 @@ void RS_ParseTechnologies (const char *name, const char **text)
 
 				if (*token) {
 					/* find chapter */
-					for (i = 0; i < gd.numChapters; i++) {
-						if (!Q_strncmp(token, gd.upChapters[i].id, MAX_VAR)) {
+					for (i = 0; i < ccs.numChapters; i++) {
+						if (!Q_strncmp(token, ccs.upChapters[i].id, MAX_VAR)) {
 							/* add entry to chapter */
-							tech->upChapter = &gd.upChapters[i];
-							if (!gd.upChapters[i].first) {
-								gd.upChapters[i].first = tech;
-								gd.upChapters[i].last = tech;
+							tech->upChapter = &ccs.upChapters[i];
+							if (!ccs.upChapters[i].first) {
+								ccs.upChapters[i].first = tech;
+								ccs.upChapters[i].last = tech;
 								tech->upPrev = NULL;
 								tech->upNext = NULL;
 							} else {
 								/* get "last entry" in chapter */
-								technology_t *techOld = gd.upChapters[i].last;
-								gd.upChapters[i].last = tech;
+								technology_t *techOld = ccs.upChapters[i].last;
+								ccs.upChapters[i].last = tech;
 								techOld->upNext = tech;
-								gd.upChapters[i].last->upPrev = techOld;
-								gd.upChapters[i].last->upNext = NULL;
+								ccs.upChapters[i].last->upPrev = techOld;
+								ccs.upChapters[i].last->upNext = NULL;
 							}
 							break;
 						}
-						if (i == gd.numChapters)
+						if (i == ccs.numChapters)
 							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", name, token);
 					}
 				}

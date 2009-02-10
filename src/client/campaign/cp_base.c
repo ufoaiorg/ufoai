@@ -91,9 +91,9 @@ qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t typ
 {
 	int cntlocal = 0, i;
 
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		if (gd.buildings[base->idx][i].buildingType == type
-		 && gd.buildings[base->idx][i].buildingStatus == status) {
+	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		if (ccs.buildings[base->idx][i].buildingType == type
+		 && ccs.buildings[base->idx][i].buildingStatus == status) {
 			cntlocal++;
 			/* don't count any further - the caller doesn't want to know the value */
 			if (!cnt)
@@ -295,10 +295,10 @@ float B_GetMaxBuildingLevel (const base_t* base, const buildingType_t type)
 	float max = 0.0f;
 
 	if (B_GetBuildingStatus(base, type)) {
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (gd.buildings[base->idx][i].buildingType == type
-			 && gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
-				max = max(gd.buildings[base->idx][i].level, max);
+		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+			if (ccs.buildings[base->idx][i].buildingType == type
+			 && ccs.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING) {
+				max = max(ccs.buildings[base->idx][i].level, max);
 			}
 		}
 	}
@@ -401,21 +401,21 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 
 	/* Construction / destruction may have changed the status of other building
 	 * We check that, but only for buildings which needed building */
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		building_t *dependsBuilding = gd.buildings[base->idx][i].dependsBuilding;
+	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		building_t *dependsBuilding = ccs.buildings[base->idx][i].dependsBuilding;
 		if (dependsBuilding && buildingType == dependsBuilding->buildingType) {
-			/* gd.buildings[base->idx][i] needs built/removed building */
-			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+			/* ccs.buildings[base->idx][i] needs built/removed building */
+			if (onBuilt && !B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
 				/* we can only activate a non operationnal building */
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(ccs.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
 				}
-			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+			} else if (!onBuilt && B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
 				/* we can only deactivate an operationnal building */
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(ccs.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 					returnValue = qtrue;
 				}
@@ -426,17 +426,17 @@ static qboolean B_UpdateStatusBuilding (base_t* base, buildingType_t buildingTyp
 	 * So we check again, until nothing changes. (no condition here for check, it's too complex) */
 	while (test) {
 		test = qfalse;
-		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-			if (onBuilt && !B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+		for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+			if (onBuilt && !B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
 				/* we can only activate a non operationnal building */
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnEnable(gd.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnEnable(ccs.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 				}
-			} else if (!onBuilt && B_GetBuildingStatus(base, gd.buildings[base->idx][i].buildingType)) {
+			} else if (!onBuilt && B_GetBuildingStatus(base, ccs.buildings[base->idx][i].buildingType)) {
 				/* we can only deactivate an operationnal building */
-				if (B_CheckUpdateBuilding(&gd.buildings[base->idx][i], base)) {
-					B_UpdateOneBaseBuildingStatusOnDisable(gd.buildings[base->idx][i].buildingType, base);
+				if (B_CheckUpdateBuilding(&ccs.buildings[base->idx][i], base)) {
+					B_UpdateOneBaseBuildingStatusOnDisable(ccs.buildings[base->idx][i].buildingType, base);
 					test = qtrue;
 				}
 			}
@@ -486,8 +486,8 @@ void B_ResetAllStatusAndCapacities (base_t *base, qboolean firstEnable)
 	/* activate all buildings that needs to be activated */
 	while (test) {
 		test = qfalse;
-		for (buildingIdx = 0; buildingIdx < gd.numBuildings[base->idx]; buildingIdx++) {
-			building_t *building = &gd.buildings[base->idx][buildingIdx];
+		for (buildingIdx = 0; buildingIdx < ccs.numBuildings[base->idx]; buildingIdx++) {
+			building_t *building = &ccs.buildings[base->idx][buildingIdx];
 			if (!B_GetBuildingStatus(base, building->buildingType)
 			 && B_CheckUpdateBuilding(building, base)) {
 				if (firstEnable)
@@ -693,15 +693,15 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 
 	{
 		int         const base_idx  = base->idx;
-		building_t* const buildings = gd.buildings[base_idx];
+		building_t* const buildings = ccs.buildings[base_idx];
 		int         const idx       = building->idx;
 		int               cntBldgs;
 		int               i;
 
-		REMOVE_ELEM(buildings, idx, gd.numBuildings[base_idx]);
+		REMOVE_ELEM(buildings, idx, ccs.numBuildings[base_idx]);
 
 		/* Update the link of other buildings */
-		cntBldgs = gd.numBuildings[base_idx];
+		cntBldgs = ccs.numBuildings[base_idx];
 		for (i = 0; i < cntBldgs; i++)
 			if (buildings[i].idx >= idx) {
 				buildings[i].idx--;
@@ -760,8 +760,8 @@ void CL_BaseDestroy (base_t *base)
 	CP_MissionNotifyBaseDestroyed(base);
 
 	/* do a reverse loop as buildings are going to be destroyed */
-	for (buildingIdx = gd.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
-		B_BuildingDestroy(base, &gd.buildings[base->idx][buildingIdx]);
+	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
+		B_BuildingDestroy(base, &ccs.buildings[base->idx][buildingIdx]);
 	}
 }
 
@@ -1157,17 +1157,17 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 
 	/* add auto build buildings if it's not the first base */
 	if (ccs.numBases > 1 && buildings) {
-		for (i = 0; i < gd.numBuildingTemplates; i++) {
-			if (gd.buildingTemplates[i].autobuild) {
-				B_AddBuildingToBase(base, &gd.buildingTemplates[i], hire);
+		for (i = 0; i < ccs.numBuildingTemplates; i++) {
+			if (ccs.buildingTemplates[i].autobuild) {
+				B_AddBuildingToBase(base, &ccs.buildingTemplates[i], hire);
 			}
 		}
 	}
 
 	if (!buildings) {
 		/* we need to set up the entrance in case autobuild is off */
-		for (i = 0; i < gd.numBuildingTemplates; ++i) {
-			building_t* entrance = &gd.buildingTemplates[i];
+		for (i = 0; i < ccs.numBuildingTemplates; ++i) {
+			building_t* entrance = &ccs.buildingTemplates[i];
 			if (entrance->buildingType == B_ENTRANCE) {
 				/* set up entrance to base */
 				vec2_t pos;
@@ -1175,7 +1175,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 				B_AddBuildingToBasePos(base, entrance, hire, pos);
 
 				/* we are done here */
-				i = gd.numBuildingTemplates;
+				i = ccs.numBuildingTemplates;
 			}
 		}
 	}
@@ -1225,9 +1225,9 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 	int i = 0;
 
 	assert(buildingName);
-	for (i = 0; i < gd.numBuildingTemplates; i++)
-		if (!Q_strcasecmp(gd.buildingTemplates[i].id, buildingName))
-			return &gd.buildingTemplates[i];
+	for (i = 0; i < ccs.numBuildingTemplates; i++)
+		if (!Q_strcasecmp(ccs.buildingTemplates[i].id, buildingName))
+			return &ccs.buildingTemplates[i];
 
 	Com_Printf("Building %s not found\n", buildingName);
 	return NULL;
@@ -1364,14 +1364,14 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		/* new building in base (not a template) */
-		building_t *buildingNew = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
+		building_t *buildingNew = &ccs.buildings[base->idx][ccs.numBuildings[base->idx]];
 
 		/* copy building from template list to base-buildings-list */
 		*buildingNew = *template;
 
 		/* self-link to building-list in base */
-		buildingNew->idx = gd.numBuildings[base->idx];
-		gd.numBuildings[base->idx]++;
+		buildingNew->idx = ccs.numBuildings[base->idx];
+		ccs.numBuildings[base->idx]++;
 
 		/* Link to the base. */
 		buildingNew->base = base;
@@ -1497,7 +1497,7 @@ static void B_BuildingAddToList (base_t *base, building_t *building)
  * @brief Counts the number of buildings of a particular type in a base.
  *
  * @param[in] base Which base to count in.
- * @param[in] tpl The template type in the gd.buildingTemplates list.
+ * @param[in] tpl The template type in the ccs.buildingTemplates list.
  * @return The number of buildings.
  * @return -1 on error (e.g. base index out of range)
  */
@@ -1522,9 +1522,9 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 		return -1;
 	}
 
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		if (gd.buildings[base->idx][i].tpl == tpl
-		 && gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
+	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		if (ccs.buildings[base->idx][i].tpl == tpl
+		 && ccs.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
 			NumberOfBuildings++;
 	}
 	return NumberOfBuildings;
@@ -1553,9 +1553,9 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 		return -1;
 	}
 
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		if (gd.buildings[base->idx][i].buildingType == buildingType
-		 && gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
+	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		if (ccs.buildings[base->idx][i].buildingType == buildingType
+		 && ccs.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
 			NumberOfBuildings++;
 	}
 	return NumberOfBuildings;
@@ -1574,13 +1574,13 @@ void B_BuildingInit (base_t* base)
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", base->name, base->idx);
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", gd.numBuildings[base->idx]);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", ccs.numBuildings[base->idx]);
 
 	/* delete the whole linked list - it's rebuild in the loop below */
 	LIST_Delete(&base->buildingList);
 
-	for (i = 0; i < gd.numBuildingTemplates; i++) {
-		building_t *tpl = &gd.buildingTemplates[i];
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		building_t *tpl = &ccs.buildingTemplates[i];
 		/* make an entry in list for this building */
 
 		if (tpl->visible) {
@@ -1685,22 +1685,22 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
 		return;
 	}
-	if (gd.numBuildingTemplates >= MAX_BUILDINGS) {
+	if (ccs.numBuildingTemplates >= MAX_BUILDINGS) {
 		Com_Printf("B_ParseBuildings: too many buildings\n");
-		gd.numBuildingTemplates = MAX_BUILDINGS;	/* just in case it's bigger. */
+		ccs.numBuildingTemplates = MAX_BUILDINGS;	/* just in case it's bigger. */
 		return;
 	}
 
 	if (!link) {
-		for (i = 0; i < gd.numBuildingTemplates; i++) {
-			if (!Q_strcmp(gd.buildingTemplates[i].id, name)) {
+		for (i = 0; i < ccs.numBuildingTemplates; i++) {
+			if (!Q_strcmp(ccs.buildingTemplates[i].id, name)) {
 				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
 				return;
 			}
 		}
 
 		/* new entry */
-		building = &gd.buildingTemplates[gd.numBuildingTemplates];
+		building = &ccs.buildingTemplates[ccs.numBuildingTemplates];
 		memset(building, 0, sizeof(*building));
 		building->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
@@ -1714,7 +1714,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		building->dependsBuilding = NULL;
 		building->visible = qtrue;
 
-		gd.numBuildingTemplates++;
+		ccs.numBuildingTemplates++;
 		do {
 			/* get the name type */
 			token = COM_EParse(text, errhead, name);
@@ -1816,8 +1816,8 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildi
 	if (onlyWorking && !B_GetBuildingStatus(base, buildingType))
 		return NULL;
 
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		building = &gd.buildings[base->idx][i];
+	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		building = &ccs.buildings[base->idx][i];
 		if (building->buildingType == buildingType)
 			return building;
 	}
@@ -1958,7 +1958,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	if (ccs.numBaseTemplates >= MAX_BASETEMPLATES) {
 		Com_Printf("B_ParseBaseTemplate: too many base templates\n");
-		gd.numBuildingTemplates = MAX_BASETEMPLATES;	/* just in case it's bigger. */
+		ccs.numBuildingTemplates = MAX_BASETEMPLATES;	/* just in case it's bigger. */
 		return;
 	}
 
@@ -1983,7 +1983,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 		if (template->numBuildings >= MAX_BASEBUILDINGS) {
 			Com_Printf("B_ParseBaseTemplate: too many buildings\n");
-			gd.numBuildingTemplates = MAX_BASEBUILDINGS;	/* just in case it's bigger. */
+			ccs.numBuildingTemplates = MAX_BASEBUILDINGS;	/* just in case it's bigger. */
 			return;
 		}
 
@@ -1991,9 +1991,9 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		tile = &template->buildings[template->numBuildings];
 		template->numBuildings++;
 
-		for (i = 0; i < gd.numBuildingTemplates; i++)
-			if (!Q_strcasecmp(gd.buildingTemplates[i].id, token)) {
-				tile->building = &gd.buildingTemplates[i];
+		for (i = 0; i < ccs.numBuildingTemplates; i++)
+			if (!Q_strcasecmp(ccs.buildingTemplates[i].id, token)) {
+				tile->building = &ccs.buildingTemplates[i];
 				if (!tile->building->moreThanOne && buildingnums[i]++ > 0)
 					Sys_Error("B_ParseBaseTemplate: Found more %s than allowed in template %s\n", token, name);
 			}
@@ -2397,9 +2397,9 @@ static void B_BuildingList_f (void)
 		if (!base)
 			continue;
 
-		building = &gd.buildings[base->idx][baseIdx];
+		building = &ccs.buildings[base->idx][baseIdx];
 		Com_Printf("\nBase id %i: %s\n", baseIdx, base->name);
-		for (j = 0; j < gd.numBuildings[baseIdx]; j++) {
+		for (j = 0; j < ccs.numBuildings[baseIdx]; j++) {
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id,
 				B_GetNumberOfBuildingsInBaseByTemplate(baseCurrent, building->tpl), baseIdx);
 			Com_Printf("...image: %s\n", building->image);
@@ -2569,12 +2569,12 @@ static void B_PrintCapacities_f (void)
 		if (buildingType >= MAX_BUILDING_TYPE)
 			Com_Printf("B_PrintCapacities_f: Could not find building associated with capacity %i\n", i);
 		else {
-			for (j = 0; j < gd.numBuildingTemplates; j++) {
-				if (gd.buildingTemplates[j].buildingType == buildingType)
+			for (j = 0; j < ccs.numBuildingTemplates; j++) {
+				if (ccs.buildingTemplates[j].buildingType == buildingType)
 					break;
 			}
 			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-			gd.buildingTemplates[j].id, base->capacities[i].max, base->capacities[i].cur);
+			ccs.buildingTemplates[j].id, base->capacities[i].max, base->capacities[i].cur);
 		}
 	}
 }
@@ -2591,8 +2591,8 @@ static void B_BuildingConstructionFinished_f (void)
 		return;
 
 	base = baseCurrent;
-	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-		building_t *building = &gd.buildings[base->idx][i];
+	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+		building_t *building = &ccs.buildings[base->idx][i];
 		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 	}
 	/* update menu */
@@ -2667,8 +2667,8 @@ void B_UpdateBaseData (void)
 		if (!base)
 			continue;
 
-		for (j = 0; j < gd.numBuildings[baseIdx]; j++) {
-			building_t *b = &gd.buildings[baseIdx][j];
+		for (j = 0; j < ccs.numBuildings[baseIdx]; j++) {
+			building_t *b = &ccs.buildings[baseIdx][j];
 			if (!b)
 				continue;
 			if (B_CheckBuildingConstruction(b, base)) {
@@ -2907,24 +2907,24 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		/* Reset given capacity in current base. */
 		base->capacities[cap].max = 0;
 		/* Get building capacity. */
-		for (i = 0; i < gd.numBuildingTemplates; i++) {
-			if (gd.buildingTemplates[i].buildingType == buildingType) {
-				capacity = gd.buildingTemplates[i].capacity;
-				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", gd.buildingTemplates[i].id, capacity);
+		for (i = 0; i < ccs.numBuildingTemplates; i++) {
+			if (ccs.buildingTemplates[i].buildingType == buildingType) {
+				capacity = ccs.buildingTemplates[i].capacity;
+				Com_DPrintf(DEBUG_CLIENT, "Building: %s capacity: %i\n", ccs.buildingTemplates[i].id, capacity);
 				b_idx = i;
 				break;
 			}
 		}
 		/* Finally update capacity. */
-		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
-			if ((gd.buildings[base->idx][j].buildingType == buildingType)
-			&& (gd.buildings[base->idx][j].buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)) {
+		for (j = 0; j < ccs.numBuildings[base->idx]; j++) {
+			if ((ccs.buildings[base->idx][j].buildingType == buildingType)
+			&& (ccs.buildings[base->idx][j].buildingStatus >= B_STATUS_CONSTRUCTION_FINISHED)) {
 				base->capacities[cap].max += capacity;
 			}
 		}
 		if (b_idx != -1)
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: updated capacity of %s: %i\n",
-				gd.buildingTemplates[b_idx].id, base->capacities[cap].max);
+				ccs.buildingTemplates[b_idx].id, base->capacities[cap].max);
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf(DEBUG_CLIENT, "B_UpdateBaseCapacities: going to update ALL capacities.\n");
@@ -3060,7 +3060,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 	mxml_node_t * bases;
 
 	bases = mxml_AddNode(parent, "Bases");
-	mxml_AddInt(bases, "gd.numAircrafts", ccs.numAircraft);
+	mxml_AddInt(bases, "ccs.numAircrafts", ccs.numAircraft);
 
 	for (i = 0; i < MAX_BASES; i++) {
 		int k;
@@ -3091,11 +3091,11 @@ qboolean B_SaveXML (mxml_node_t *parent)
 		node = mxml_AddNode(act_base, "buildings");
 		for (k = 0; k < MAX_BUILDINGS; k++) {
 			mxml_node_t * snode;
-			const building_t *building = &gd.buildings[i][k];
+			const building_t *building = &ccs.buildings[i][k];
 			if (!building->tpl)
 				continue;
 			snode = mxml_AddNode(node, "building");
-			mxml_AddInt(snode, "building_tpl", building->tpl ? building->tpl - gd.buildingTemplates : BYTES_NONE);
+			mxml_AddInt(snode, "building_tpl", building->tpl ? building->tpl - ccs.buildingTemplates : BYTES_NONE);
 			mxml_AddInt(snode, "building_place", k);
 			mxml_AddInt(snode, "buildingStatus", building->buildingStatus);
 			mxml_AddInt(snode, "buildingTimeStart", building->timeStart);
@@ -3103,7 +3103,7 @@ qboolean B_SaveXML (mxml_node_t *parent)
 			mxml_AddFloat(snode, "buildingLevel", building->level);
 			mxml_AddPos2(snode, "pos", building->pos);
 		}
-		mxml_AddInt(act_base, "numBuildings", gd.numBuildings[i]);
+		mxml_AddInt(act_base, "numBuildings", ccs.numBuildings[i]);
 		mxml_AddShort(act_base, "baseStatus", b->baseStatus);
 		mxml_AddFloat(act_base, "alienInterest", b->alienInterest);
 
@@ -3170,15 +3170,15 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, b->map[k][l].posY);
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
-			const building_t *building = &gd.buildings[i][k];
-			MSG_WriteByte(sb, building->tpl ? building->tpl - gd.buildingTemplates : BYTES_NONE);
+			const building_t *building = &ccs.buildings[i][k];
+			MSG_WriteByte(sb, building->tpl ? building->tpl - ccs.buildingTemplates : BYTES_NONE);
 			MSG_WriteByte(sb, building->buildingStatus);
 			MSG_WriteLong(sb, building->timeStart);
 			MSG_WriteLong(sb, building->buildTime);
 			MSG_WriteByte(sb, building->level);
 			MSG_Write2Pos(sb, building->pos);
 		}
-		MSG_WriteShort(sb, gd.numBuildings[i]);
+		MSG_WriteShort(sb, ccs.numBuildings[i]);
 		MSG_WriteByte(sb, b->baseStatus);
 		MSG_WriteFloat(sb, b->alienInterest);
 
@@ -3202,7 +3202,7 @@ qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, aircraft->hangar);
 			/* Save target of the ufo */
 			if (aircraft->aircraftTarget)
-				MSG_WriteByte(sb, aircraft->aircraftTarget - gd.ufos);
+				MSG_WriteByte(sb, aircraft->aircraftTarget - ccs.ufos);
 			else
 				MSG_WriteByte(sb, BYTES_NONE);
 
@@ -3375,7 +3375,7 @@ void B_LoadBaseSlots (baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb)
 		B_LoadOneSlot(&weapons[i].slot, sb, qtrue);
 
 		target = MSG_ReadShort(sb);
-		weapons[i].target = (target >= 0) ? &gd.ufos[target] : NULL;
+		weapons[i].target = (target >= 0) ? &ccs.ufos[target] : NULL;
 	}
 }
 
@@ -3391,7 +3391,7 @@ int B_LoadBaseSlotsXML (baseWeapon_t* weapons, int max, mxml_node_t *p)
 	for (i = 0, s = mxml_GetNode(p, "Weapon"); s && i < max; i++, s = mxml_GetNextNode(s, p, "Weapon")) {
 		const int target = mxml_GetInt(s, "target", -1);
 		AIR_LoadOneSlotXML(&weapons[i].slot, s, qtrue);
-		weapons[i].target = (target >= 0) ? &gd.ufos[target] : NULL;
+		weapons[i].target = (target >= 0) ? &ccs.ufos[target] : NULL;
 	}
 	return i;
 }
@@ -3490,7 +3490,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		Com_Printf("Error: Base Node wasn't found in savegame\n");
 		return qfalse;
 	}
-	ccs.numAircraft = mxml_GetInt(bases, "gd.numAircrafts", 0);
+	ccs.numAircraft = mxml_GetInt(bases, "ccs.numAircrafts", 0);
 
 	for (base = mxml_GetNode(bases, "BASE"), i = 0; i < MAX_BASES && base; i++, base = mxml_GetNextNode(base, bases, "BASE")) {
 		mxml_node_t * node, * snode;
@@ -3511,7 +3511,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			const int l = mxml_GetInt(snode, "l", 0);
 			buildingIdx = mxml_GetInt(snode, "buildingidx", BYTES_NONE);
 			if (buildingIdx != BYTES_NONE)
-				b->map[j][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+				b->map[j][l].building = &ccs.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
 			else
 				b->map[j][l].building = NULL;
 			b->map[j][l].blocked = mxml_GetBool(snode, "blocked", qfalse);
@@ -3527,10 +3527,10 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				Com_Printf("building ID is greater than MAX buildings\n");
 				continue;
 			}
-			building = &gd.buildings[i][buildId];
+			building = &ccs.buildings[i][buildId];
 			buildingTpl = mxml_GetInt(snode, "building_tpl", BYTES_NONE);
 			if (buildingTpl != BYTES_NONE)
-				*building = gd.buildingTemplates[buildingTpl];
+				*building = ccs.buildingTemplates[buildingTpl];
 
 			building->idx = buildId;
 			building->base = b;
@@ -3541,7 +3541,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			mxml_GetPos2(snode, "pos", building->pos);
 		}
 
-		gd.numBuildings[i] = mxml_GetInt(base, "numBuildings", 0);
+		ccs.numBuildings[i] = mxml_GetInt(base, "numBuildings", 0);
 		b->baseStatus = mxml_GetShort(base, "baseStatus", 0);
 		b->alienInterest = mxml_GetFloat(base, "alienInterest", 0.0);
 		BDEF_InitialiseBaseSlots(b);
@@ -3632,7 +3632,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				buildingIdx = MSG_ReadByte(sb);
 				if (buildingIdx != BYTES_NONE)
-					b->map[k][l].building = &gd.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
+					b->map[k][l].building = &ccs.buildings[i][buildingIdx];	/** The buildings are actually parsed _below_. (See PRE_MAXBUI loop) */
 				else
 					b->map[k][l].building = NULL;
 				b->map[k][l].blocked = MSG_ReadByte(sb);
@@ -3640,11 +3640,11 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				b->map[k][l].posY = MSG_ReadShort(sb);
 			}
 		for (k = 0; k < presaveArray[PRE_MAXBUI]; k++) {
-			building_t *const building = &gd.buildings[i][k];
+			building_t *const building = &ccs.buildings[i][k];
 			byte buildingTpl;
 			buildingTpl = MSG_ReadByte(sb);
 			if (buildingTpl != BYTES_NONE)
-				*building = gd.buildingTemplates[buildingTpl];
+				*building = ccs.buildingTemplates[buildingTpl];
 			building->idx = k;
 			building->base = b;
 			building->buildingStatus = MSG_ReadByte(sb);
@@ -3653,7 +3653,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			building->level = MSG_ReadByte(sb);
 			MSG_Read2Pos(sb, building->pos);
 		}
-		gd.numBuildings[i] = MSG_ReadShort(sb);
+		ccs.numBuildings[i] = MSG_ReadShort(sb);
 		b->baseStatus = MSG_ReadByte(sb);
 		b->alienInterest = MSG_ReadFloat(sb);
 		BDEF_InitialiseBaseSlots(b);
@@ -3709,7 +3709,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 			if (ufoIdx == BYTES_NONE)
 				aircraft->aircraftTarget = NULL;
 			else
-				aircraft->aircraftTarget = gd.ufos + ufoIdx;
+				aircraft->aircraftTarget = ccs.ufos + ufoIdx;
 
 			/* read weapon slots */
 			amount = MSG_ReadByte(sb);
@@ -3916,7 +3916,7 @@ qboolean B_ScriptSanityCheck (void)
 	int i, error = 0;
 	building_t* b;
 
-	for (i = 0, b = gd.buildingTemplates; i < gd.numBuildingTemplates; i++, b++) {
+	for (i = 0, b = ccs.buildingTemplates; i < ccs.numBuildingTemplates; i++, b++) {
 		if (!b->mapPart && b->visible) {
 			error++;
 			Com_Printf("...... no mappart for building '%s' given\n", b->id);

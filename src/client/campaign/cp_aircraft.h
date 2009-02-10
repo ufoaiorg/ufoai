@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_radar.h"
 
+#define MAX_CARGO		32
 #define MAX_AIRCRAFT	64
 #define LINE_MAXSEG 64
 #define LINE_MAXPTS (LINE_MAXSEG + 2)

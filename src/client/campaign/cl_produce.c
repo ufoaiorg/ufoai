@@ -223,7 +223,7 @@ void PR_QueueMove (production_queue_t *queue, int index, int dir)
  */
 static void PR_QueueNext (base_t *base)
 {
-	production_queue_t *queue = &gd.productions[base->idx];
+	production_queue_t *queue = &ccs.productions[base->idx];
 
 	PR_QueueDelete(base, queue, 0);
 	if (queue->numItems == 0) {
@@ -242,7 +242,7 @@ static void PR_EmptyQueue (base_t *base)
 	if (!base)
 		return;
 
-	queue = &gd.productions[base->idx];
+	queue = &ccs.productions[base->idx];
 
 	/* #ifdef PARANOID ? */
 	if (!queue)
@@ -263,7 +263,7 @@ static void PR_ProductionRollBottom_f (void)
 	if (!baseCurrent)
 		return;
 
-	queue = &gd.productions[baseCurrent->idx];
+	queue = &ccs.productions[baseCurrent->idx];
 
 	if (queue->numItems < 2)
 		return;
@@ -322,14 +322,14 @@ void PR_ProductionRun (void)
 			continue;
 
 		/* not actually any active productions */
-		if (gd.productions[i].numItems <= 0)
+		if (ccs.productions[i].numItems <= 0)
 			continue;
 
 		/* Workshop is disabled because their dependences are disabled */
 		if (!PR_ProductionAllowed(base))
 			continue;
 
-		prod = &gd.productions[i].items[0];
+		prod = &ccs.productions[i].items[0];
 
 		if (prod->item) {
 			od = prod->item;
@@ -547,7 +547,7 @@ qboolean PR_SaveXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *node = mxml_AddNode(p, "Production");
 	for (i = 0; i < MAX_BASES; i++) {
-		const production_queue_t *pq = &gd.productions[i];
+		const production_queue_t *pq = &ccs.productions[i];
 		int j;
 		mxml_node_t * snode = mxml_AddNode(node, "queue");
 		mxml_AddInt(snode, "numItems", pq->numItems);
@@ -580,7 +580,7 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
 	int i, j;
 
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
-		const production_queue_t *pq = &gd.productions[i];
+		const production_queue_t *pq = &ccs.productions[i];
 		MSG_WriteByte(sb, pq->numItems);
 		for (j = 0; j < pq->numItems; j++) {
 			/** @todo This will crash */
@@ -614,7 +614,7 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			i++, snode = mxml_GetNextNode(snode, node, "queue")) {
 		int j;
 		mxml_node_t *ssnode;
-		production_queue_t *pq = &gd.productions[i];
+		production_queue_t *pq = &ccs.productions[i];
 		pq->numItems = mxml_GetInt(snode, "numItems", 0);
 		for (j = 0, ssnode = mxml_GetNode(snode, "item"); j < pq->numItems && ssnode;
 				j++, ssnode = mxml_GetNextNode(ssnode, snode, "item")) {
@@ -648,7 +648,7 @@ qboolean PR_Load (sizebuf_t *sb, void *data)
 	int i, j;
 
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
-		production_queue_t *pq = &gd.productions[i];
+		production_queue_t *pq = &ccs.productions[i];
 		pq->numItems = MSG_ReadByte(sb);
 
 		for (j = 0; j < pq->numItems; j++) {

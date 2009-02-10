@@ -221,7 +221,7 @@ static void PR_UpdateProductionList (const base_t* base)
 	assert(base);
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
-	queue = &gd.productions[base->idx];
+	queue = &ccs.productions[base->idx];
 
 	/* First add all the queue items ... */
 	for (i = 0; i < queue->numItems; i++) {
@@ -464,7 +464,7 @@ static void PR_ProductionListRightClick_f (void)
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
-	queue = &gd.productions[baseCurrent->idx];
+	queue = &ccs.productions[baseCurrent->idx];
 
 	/* not enough parameters */
 	if (Cmd_Argc() < 2) {
@@ -545,7 +545,7 @@ static void PR_ProductionListClick_f (void)
 		return;
 
 	base = baseCurrent;
-	queue = &gd.productions[base->idx];
+	queue = &ccs.productions[base->idx];
 
 	/* Break if there are not enough parameters. */
 	if (Cmd_Argc() < 2) {
@@ -664,7 +664,7 @@ static void PR_ProductionSelect_f (void)
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction) {
-		MN_TextNodeSelectLine(prodlist, gd.productions[baseCurrent->idx].numItems + QUEUE_SPACERS);
+		MN_TextNodeSelectLine(prodlist, ccs.productions[baseCurrent->idx].numItems + QUEUE_SPACERS);
 	}
 
 	/* Update displayed info about selected entry (if any). */
@@ -786,7 +786,7 @@ static void PR_ProductionIncrease_f (void)
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
 
-	queue = &gd.productions[base->idx];
+	queue = &ccs.productions[base->idx];
 
 	if (selectedProduction) {
 		prod = selectedProduction;
@@ -935,7 +935,7 @@ static void PR_ProductionStop_f (void)
 
 	base = baseCurrent;
 
-	queue = &gd.productions[base->idx];
+	queue = &ccs.productions[base->idx];
 
 	PR_QueueDelete(base, queue, selectedProduction->idx);
 
@@ -967,7 +967,7 @@ static void PR_ProductionDecrease_f (void)
 
 	base = baseCurrent;
 
-	queue = &gd.productions[base->idx];
+	queue = &ccs.productions[base->idx];
 	prod = selectedProduction;
 	if (prod->amount >= amount)
 		amountTemp = amount;
@@ -1027,7 +1027,7 @@ static void PR_ProductionUp_f (void)
 	if (selectedProduction->idx == 0)
 		return;
 
-	queue = &gd.productions[baseCurrent->idx];
+	queue = &ccs.productions[baseCurrent->idx];
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
@@ -1044,7 +1044,7 @@ static void PR_ProductionDown_f (void)
 	if (!baseCurrent || !selectedProduction)
 		return;
 
-	queue = &gd.productions[baseCurrent->idx];
+	queue = &ccs.productions[baseCurrent->idx];
 
 	if (selectedProduction->idx >= queue->numItems - 1)
 		return;

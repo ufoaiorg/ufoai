@@ -632,11 +632,11 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		if (rnd == 0) {
 			/* Add message to message-system. */
 			MS_AddNewMessage(_("Base facility destroyed"), _("You've lost a missile battery system."), qfalse, MSG_CRASHSITE, NULL);
-			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				if (gd.buildings[base->idx][i].buildingType == B_DEFENCE_MISSILE) {
+			for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+				if (ccs.buildings[base->idx][i].buildingType == B_DEFENCE_MISSILE) {
 					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defence station (a lot cheaper) */
-					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
+					B_BuildingDestroy(base, &ccs.buildings[base->idx][i]);
 					baseAttack = qtrue;
 					break;
 				}
@@ -644,11 +644,11 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 		} else if (rnd == 1) {
 			/* Add message to message-system. */
 			MS_AddNewMessage(_("Base facility destroyed"), _("You've lost a laser battery system."), qfalse, MSG_CRASHSITE, NULL);
-			for (i = 0; i < gd.numBuildings[base->idx]; i++) {
-				if (gd.buildings[base->idx][i].buildingType == B_DEFENCE_LASER) {
+			for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
+				if (ccs.buildings[base->idx][i].buildingType == B_DEFENCE_LASER) {
 					/** @todo Destroy a random one - otherwise the player might 'cheat' with this
 					 * e.g. just building an empty defence station (a lot cheaper) */
-					B_BuildingDestroy(base, &gd.buildings[base->idx][i]);
+					B_BuildingDestroy(base, &ccs.buildings[base->idx][i]);
 					baseAttack = qtrue;
 					break;
 				}
@@ -659,11 +659,11 @@ static void AIRFIGHT_ProjectileHitsBase (aircraftProjectile_t *projectile)
 	if (base->baseDamage <= 0) {
 		/* projectile destroyed a building */
 		base->baseDamage = MAX_BASE_DAMAGE;
-		rnd = frand() * gd.numBuildings[base->idx];
+		rnd = frand() * ccs.numBuildings[base->idx];
 		/* Add message to message-system. */
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("You've lost a base facility (%s)."), _(gd.buildings[base->idx][rnd].name));
+		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("You've lost a base facility (%s)."), _(ccs.buildings[base->idx][rnd].name));
 		MS_AddNewMessage(_("Base facility destroyed"), cp_messageBuffer, qfalse, MSG_BASEATTACK, NULL);
-		B_BuildingDestroy(base, &gd.buildings[base->idx][rnd]);
+		B_BuildingDestroy(base, &ccs.buildings[base->idx][rnd]);
 		baseAttack = qtrue;
 	}
 }

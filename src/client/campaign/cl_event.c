@@ -36,7 +36,7 @@ static linkedList_t *eventMails = NULL;
  * @note If you want to create mails that base on a script defintion but have differnet
  * body messages, set createCopy to true
  * @param[in] id The id from the script files
- * @param[in] createCopy Don't return the link to gd.eventMails but allocate memory
+ * @param[in] createCopy Don't return the link to ccs.eventMails but allocate memory
  * and copy the gd.eventMail memory over to the newly allocated. Don't use createCopy on
  * dynamic mails
  * @sa UP_SetMailHeader
@@ -49,9 +49,9 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 	eventMail_t* listMail;
 
 	if (!createCopy) {
-		for (i = 0; i < gd.numEventMails; i++)
-			if (!Q_strcmp(gd.eventMails[i].id, id))
-				return &gd.eventMails[i];
+		for (i = 0; i < ccs.numEventMails; i++)
+			if (!Q_strcmp(ccs.eventMails[i].id, id))
+				return &ccs.eventMails[i];
 
 		list = eventMails;
 		while (list) {
@@ -67,9 +67,9 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		eventMail_t *eventMail = NULL, *newEventMail;
 
 		/* search the static mails - and only the static ones! */
-		for (i = 0; i < gd.numEventMails; i++)
-			if (!Q_strcmp(gd.eventMails[i].id, id)) {
-				eventMail = &gd.eventMails[i];
+		for (i = 0; i < ccs.numEventMails; i++)
+			if (!Q_strcmp(ccs.eventMails[i].id, id)) {
+				eventMail = &ccs.eventMails[i];
 				break;
 			}
 
@@ -156,13 +156,13 @@ void CL_ParseEventMails (const char *name, const char **text)
 	const value_t *vp;
 	const char *token;
 
-	if (gd.numEventMails >= MAX_EVENTMAILS) {
+	if (ccs.numEventMails >= MAX_EVENTMAILS) {
 		Com_Printf("CL_ParseEventMails: mail def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	/* initialize the eventMail */
-	eventMail = &gd.eventMails[gd.numEventMails++];
+	eventMail = &ccs.eventMails[ccs.numEventMails++];
 	memset(eventMail, 0, sizeof(*eventMail));
 
 	Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
@@ -173,7 +173,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseEventMails: eventMail def \"%s\" without body ignored\n", name);
-		gd.numEventMails--;
+		ccs.numEventMails--;
 		return;
 	}
 

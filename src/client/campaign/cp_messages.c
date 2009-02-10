@@ -126,7 +126,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 	case MSG_EVENT:
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
-		gd.numUnreadMails = -1;
+		ccs.numUnreadMails = -1;
 		sound = "geoscape/mail";
 		break;
 	case MSG_UFOSPOTTED:
