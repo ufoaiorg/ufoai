@@ -1876,11 +1876,11 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
 
 	/* Draw nation names */
-	for (i = 0; i < gd.numNations; i++) {
-		if (MAP_AllMapToScreen(node, gd.nations[i].pos, &x, &y, NULL))
-			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(gd.nations[i].name), 0, 0, NULL, qfalse, 0);
+	for (i = 0; i < ccs.numNations; i++) {
+		if (MAP_AllMapToScreen(node, ccs.nations[i].pos, &x, &y, NULL))
+			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
 		if (showXVI) {
-			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(gd.nations[i].name), gd.nations[i].stats[0].xviInfection), sizeof(buffer));
+			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(ccs.nations[i].name), ccs.nations[i].stats[0].xviInfection), sizeof(buffer));
 		}
 	}
 	if (showXVI)
@@ -2095,8 +2095,8 @@ nation_t* MAP_GetNation (const vec2_t pos)
 #ifdef PARANOID
 	Com_DPrintf(DEBUG_CLIENT, "MAP_GetNation: color value for %.0f:%.0f is r:%i, g:%i, b: %i\n", pos[0], pos[1], color[0], color[1], color[2]);
 #endif
-	for (i = 0; i < gd.numNations; i++) {
-		nation_t *nation = &gd.nations[i];
+	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *nation = &ccs.nations[i];
 		/* compare the first three color values with color value at pos */
 		if (VectorCompare(nation->color, color))
 			return nation;

@@ -65,13 +65,13 @@ int CP_GetAverageXVIRate (void)
 	int i;
 	nation_t* nation;
 
-	assert(gd.numNations);
+	assert(ccs.numNations);
 
 	/* check for XVI infection rate */
-	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
+	for (i = 0, nation = ccs.nations; i < ccs.numNations; i++, nation++) {
 		XVIRate += nation->stats[0].xviInfection;
 	}
-	XVIRate /= gd.numNations;
+	XVIRate /= ccs.numNations;
 	return (int) XVIRate;
 }
 

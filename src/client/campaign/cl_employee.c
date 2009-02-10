@@ -639,8 +639,8 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	employee->type = type;
 	/* multiplayer doesn't have a nation ppinter */
 	if (nation) {
-		assert(nation >= gd.nations);
-		assert(nation <= &gd.nations[MAX_NATIONS]);
+		assert(nation >= ccs.nations);
+		assert(nation <= &ccs.nations[MAX_NATIONS]);
 	}
 	employee->nation = nation;
 
@@ -911,9 +911,9 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 	happyNations[0] = NULL;
 	/* get a list of nations,  if excludeHappyNations is qtrue then also exclude
 	 * unhappy nations (unhappy nation: happiness <= 0) from the list */
-	for (idx = 0; idx < gd.numNations; idx++) {
-		if (gd.nations[idx].stats[0].happiness > 0 || !excludeUnhappyNations) {
-			happyNations[numHappyNations] = &gd.nations[idx];
+	for (idx = 0; idx < ccs.numNations; idx++) {
+		if (ccs.nations[idx].stats[0].happiness > 0 || !excludeUnhappyNations) {
+			happyNations[numHappyNations] = &ccs.nations[idx];
 			numHappyNations++;
 		}
 	}

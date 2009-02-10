@@ -383,13 +383,13 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 		} else {
 			/* check for nation happiness */
 			int j, nationBelowLimit = 0;
-			for (j = 0; j < gd.numNations; j++) {
-				const nation_t *nation = &gd.nations[j];
+			for (j = 0; j < ccs.numNations; j++) {
+				const nation_t *nation = &ccs.nations[j];
 				if (nation->stats[0].happiness < curCampaign->minhappiness) {
 					nationBelowLimit++;
 				}
 			}
-			if (nationBelowLimit >= nationBelowLimitPercentage * gd.numNations) {
+			if (nationBelowLimit >= nationBelowLimitPercentage * ccs.numNations) {
 				/* lost the game */
 				MN_RegisterText(TEXT_STANDARD, _("Under your command, PHALANX operations have"
 					" consistently failed to protect nations."
@@ -438,8 +438,8 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 	} else
 		campaignStats.missionsWon++;
 
-	for (i = 0; i < gd.numNations; i++) {
-		nation_t *nation = &gd.nations[i];
+	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *nation = &ccs.nations[i];
 		const float difficultyModifier = (float)curCampaign->difficulty * 0.01f;
 		float delta_happiness = 0.0f;
 
@@ -896,8 +896,8 @@ static void CL_StatsUpdate_f (void)
 	/* nations */
 	pos += (strlen(pos) + 1);
 	MN_RegisterText(TEXT_STATS_NATIONS, pos);
-	for (i = 0; i < gd.numNations; i++) {
-		Q_strcat(pos, va(_("%s\t%s\n"), _(gd.nations[i].name), NAT_GetHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+	for (i = 0; i < ccs.numNations; i++) {
+		Q_strcat(pos, va(_("%s\t%s\n"), _(ccs.nations[i].name), NAT_GetHappinessString(&ccs.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* costs */
@@ -2214,7 +2214,7 @@ static void CL_DebugFullCredits_f (void)
 static void CL_DebugNewEmployees_f (void)
 {
 	int j;
-	nation_t *nation = &gd.nations[0];	/**< This is just a debuging function, nation does not matter */
+	nation_t *nation = &ccs.nations[0];	/**< This is just a debuging function, nation does not matter */
 
 	for (j = 0; j < 5; j++)
 		/* Create a scientist */
@@ -2275,16 +2275,16 @@ static void CL_DebugChangeCharacterStats_f (void)
 static void CL_NationList_f (void)
 {
 	int i;
-	for (i = 0; i < gd.numNations; i++) {
-		Com_Printf("Nation ID: %s\n", gd.nations[i].id);
-		Com_Printf("...max-funding %i c\n", gd.nations[i].maxFunding);
-		Com_Printf("...alienFriendly %0.2f\n", gd.nations[i].stats[0].alienFriendly);
-		Com_Printf("...happiness %0.2f\n", gd.nations[i].stats[0].happiness);
-		Com_Printf("...xviInfection %i\n", gd.nations[i].stats[0].xviInfection);
-		Com_Printf("...max-soldiers %i\n", gd.nations[i].maxSoldiers);
-		Com_Printf("...max-scientists %i\n", gd.nations[i].maxScientists);
-		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", gd.nations[i].color[0], gd.nations[i].color[1], gd.nations[i].color[2], gd.nations[i].color[3]);
-		Com_Printf("...pos x:%.0f y:%.0f\n", gd.nations[i].pos[0], gd.nations[i].pos[1]);
+	for (i = 0; i < ccs.numNations; i++) {
+		Com_Printf("Nation ID: %s\n", ccs.nations[i].id);
+		Com_Printf("...max-funding %i c\n", ccs.nations[i].maxFunding);
+		Com_Printf("...alienFriendly %0.2f\n", ccs.nations[i].stats[0].alienFriendly);
+		Com_Printf("...happiness %0.2f\n", ccs.nations[i].stats[0].happiness);
+		Com_Printf("...xviInfection %i\n", ccs.nations[i].stats[0].xviInfection);
+		Com_Printf("...max-soldiers %i\n", ccs.nations[i].maxSoldiers);
+		Com_Printf("...max-scientists %i\n", ccs.nations[i].maxScientists);
+		Com_Printf("...color r:%.2f g:%.2f b:%.2f a:%.2f\n", ccs.nations[i].color[0], ccs.nations[i].color[1], ccs.nations[i].color[2], ccs.nations[i].color[3]);
+		Com_Printf("...pos x:%.0f y:%.0f\n", ccs.nations[i].pos[0], ccs.nations[i].pos[1]);
 	}
 }
 #endif

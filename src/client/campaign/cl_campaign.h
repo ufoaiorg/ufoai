@@ -399,6 +399,14 @@ typedef struct ccs_s {
 	/* a list of all templates for building bases */
 	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
 	int numBaseTemplates;
+
+	/* == Nations == */
+	nation_t nations[MAX_NATIONS];
+	int numNations;
+
+	/* == Cities == */
+	city_t cities[MAX_CITIES];
+	int numCities;
 } ccs_t;
 
 /** possible geoscape actions */

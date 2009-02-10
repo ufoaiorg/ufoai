@@ -765,56 +765,6 @@ static void CL_ShowConfigstrings_f (void)
 	}
 }
 
-#ifdef DEBUG
-/**
- * @brief Shows the sizes some parts of globalData_t uses - this is only to
- * analyse where the most optimization potential is hiding
- */
-static void CL_GlobalDataSizes_f (void)
-{
-	Com_Printf(
-		"globalData_t size: %10Zu bytes\n"
-		"buildings          %10Zu bytes\n"
-		"nations            %10Zu bytes\n"
-		"ranks              %10Zu bytes\n"
-		"ugv                %10Zu bytes\n"
-		"productions        %10Zu bytes\n"
-		"buildingTypes      %10Zu bytes\n"
-		"eventMails         %10Zu bytes\n"
-		"upChapters         %10Zu bytes\n"
-		,
-		sizeof(globalData_t),
-		sizeof(gd.buildings),
-		sizeof(gd.nations),
-		sizeof(gd.ranks),
-		sizeof(gd.ugvs),
-		sizeof(gd.productions),
-		sizeof(gd.buildingTemplates),
-		sizeof(gd.eventMails),
-		sizeof(gd.upChapters)
-	);
-}
-
-/**
- * @brief Dumps the globalData_t structure to a file
- */
-static void CL_DumpGlobalDataToFile_f (void)
-{
-	qFILE f;
-
-	memset(&f, 0, sizeof(f));
-	FS_OpenFileWrite(va("%s/gd.dump", FS_Gamedir()), &f);
-	if (!f.f) {
-		Com_Printf("CL_DumpGlobalDataToFile_f: Error opening dump file for writing");
-		return;
-	}
-
-	FS_Write(&gd, sizeof(gd), &f);
-
-	FS_CloseFile(&f);
-}
-#endif
-
 /**
  * @brief Autocomplete function for some network functions
  * @sa Cmd_AddParamCompleteFunction
@@ -946,8 +896,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("players", NULL, "List of team and player name");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_aircraftsamplelist", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
-	Cmd_AddCommand("debug_gddump", CL_DumpGlobalDataToFile_f, "Dumps gd to a file");
-	Cmd_AddCommand("debug_gdstats", CL_GlobalDataSizes_f, "Show globalData_t sizes");
 	Cmd_AddCommand("debug_cgrid", Grid_DumpWholeClientMap_f, "Shows the whole client side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap_f, "Shows the whole server side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_croute", Grid_DumpClientRoutes_f, "Shows the whole client side pathfinding grid of the current loaded map");

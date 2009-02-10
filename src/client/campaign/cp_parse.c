@@ -659,7 +659,7 @@ void CL_ReadSinglePlayerData (void)
 	Com_Printf("...techs: %i\n", ccs.numTechnologies);
 	Com_Printf("...buildings: %i\n", gd.numBuildingTemplates);
 	Com_Printf("...ranks: %i\n", gd.numRanks);
-	Com_Printf("...nations: %i\n", gd.numNations);
-	Com_Printf("...cities: %i\n", gd.numCities);
+	Com_Printf("...nations: %i\n", ccs.numNations);
+	Com_Printf("...cities: %i\n", ccs.numCities);
 	Com_Printf("\n");
 }

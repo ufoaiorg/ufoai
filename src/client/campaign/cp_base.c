@@ -1830,8 +1830,8 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildi
  */
 static inline nation_t *B_RandomNation (void)
 {
-	int nationIndex = rand() % gd.numNations;
-	return &gd.nations[nationIndex];
+	const int nationIndex = rand() % ccs.numNations;
+	return &ccs.nations[nationIndex];
 }
 
 /**
@@ -1922,7 +1922,7 @@ void B_ClearBase (base_t *const base)
 
 		/* Fill the global data employee list with pilots, evenly distributed between nations */
 		for (i = 0; i < MAX_EMPLOYEES; i++) {
-			nation_t *nation = &gd.nations[++j % gd.numNations];
+			nation_t *nation = &ccs.nations[++j % ccs.numNations];
 			if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
 				break;
 		}

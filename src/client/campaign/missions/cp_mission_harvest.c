@@ -100,13 +100,13 @@ static qboolean CP_ChooseNation (const mission_t *mission, linkedList_t **nation
 		return qfalse;
 
 	/* favour mission with higher XVI level */
-	for (nation = gd.nations; nation < gd.nations + gd.numNations; nation++)
+	for (nation = ccs.nations; nation < ccs.nations + ccs.numNations; nation++)
 		max += OFFSET + nation->stats[0].xviInfection;
 
 	randomNumber = (int) (frand() * (float) max);
 
 	/* Select the corresponding nation */
-	for (nation = gd.nations; nation < gd.nations + gd.numNations; nation++) {
+	for (nation = ccs.nations; nation < ccs.nations + ccs.numNations; nation++) {
 		randomNumber -= OFFSET + nation->stats[0].xviInfection;
 		if (randomNumber < 0) {
 			LIST_AddString(nationList, nation->id);

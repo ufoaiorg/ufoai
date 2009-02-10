@@ -422,10 +422,10 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	/* don't do anything if index is higher than visible nations */
-	if (0 > num || num >= gd.numNations)
+	if (0 > num || num >= ccs.numNations)
 		return;
 
-	nation = &gd.nations[num];
+	nation = &ccs.nations[num];
 	ufoRecovery.nation = nation;
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
@@ -457,13 +457,13 @@ static void CP_UFOSellStart_f (void)
 	CL_UpdateCredits(ccs.credits + ufoRecovery.UFOprices[nation->idx]);
 
 	/* update nation happiness */
-	for (i = 0; i < gd.numNations; i++) {
-		if (gd.nations + i == nation)
+	for (i = 0; i < ccs.numNations; i++) {
+		if (ccs.nations + i == nation)
 			/* nation is happy because it got the UFO */
 			NAT_SetHappiness(nation, nation->stats[0].happiness + HAPPINESS_UFO_SALE_GAIN);
 		else
 			/* nation is unhappy because it wanted the UFO */
-			NAT_SetHappiness(&gd.nations[i], gd.nations[i].stats[0].happiness + HAPPINESS_UFO_SALE_LOSS);
+			NAT_SetHappiness(&ccs.nations[i], ccs.nations[i].stats[0].happiness + HAPPINESS_UFO_SALE_LOSS);
 	}
 
 	/* UFO recovery process is done, disable buttons. */
@@ -501,8 +501,8 @@ static void CP_UFORecoveredSell_f (void)
 
 	recoveryNationSelectPopup[0] = '\0';
 
-	for (i = 0; i < gd.numNations; i++) {
-		const nation_t *nation = &gd.nations[i];
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *nation = &ccs.nations[i];
 		nations++;
 		/* Calculate price offered by nation only if this is first popup opening. */
 		if (!ufoRecovery.nation) {

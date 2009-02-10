@@ -49,8 +49,8 @@ void CP_NationHandleBudget (void)
 	 * pilots are replaced.  The new pilots is evenly distributed between the nations that are happy (happiness > 0). */
 	E_RefreshUnhiredEmployeeGlobalList(EMPL_PILOT, qtrue);
 
-	for (i = 0; i < gd.numNations; i++) {
-		nation_t *nation = &gd.nations[i];
+	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *nation = &ccs.nations[i];
 		const int funding = NAT_GetFunding(nation, 0);
 		int new_scientists = 0, new_soldiers = 0, new_workers = 0;
 		CL_UpdateCredits(ccs.credits + funding);
@@ -198,8 +198,8 @@ void CP_NationBackupMonthlyData (void)
 	 * Back up nation relationship .
 	 * "inuse" is copied as well so we do not need to set it anywhere.
 	 */
-	for (nat = 0; nat < gd.numNations; nat++) {
-		nation_t *nation = &gd.nations[nat];
+	for (nat = 0; nat < ccs.numNations; nat++) {
+		nation_t *nation = &ccs.nations[nat];
 
 		for (i = MONTHS_PER_YEAR - 1; i > 0; i--) {	/* Reverse copy to not overwrite with wrong data */
 			nation->stats[i] = nation->stats[i - 1];

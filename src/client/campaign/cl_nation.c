@@ -42,8 +42,8 @@ nation_t *NAT_GetNationByID (const char *nationID)
 {
 	int i;
 
-	for (i = 0; i < gd.numNations; i++) {
-		nation_t *nation = &gd.nations[i];
+	for (i = 0; i < ccs.numNations; i++) {
+		nation_t *nation = &ccs.nations[i];
 		if (!Q_strcmp(nation->id, nationID))
 			return nation;
 	}
@@ -184,15 +184,15 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *n;
 	n = mxml_AddNode(p, "Nations");
-	for (i = 0; i < gd.numNations; i++) {
+	for (i = 0; i < ccs.numNations; i++) {
 		int j;
 		mxml_node_t *s = mxml_AddNode(n, "nation");
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
 			mxml_node_t *ss = mxml_AddNode(s, "month");
-			mxml_AddBool(ss, "inuse", gd.nations[i].stats[j].inuse);
-			mxml_AddFloat(ss, "happiness", gd.nations[i].stats[j].happiness);
-			mxml_AddInt(ss, "xvi", gd.nations[i].stats[j].xviInfection);
-			mxml_AddFloat(ss, "alienFriendly", gd.nations[i].stats[j].alienFriendly);
+			mxml_AddBool(ss, "inuse", ccs.nations[i].stats[j].inuse);
+			mxml_AddFloat(ss, "happiness", ccs.nations[i].stats[j].happiness);
+			mxml_AddInt(ss, "xvi", ccs.nations[i].stats[j].xviInfection);
+			mxml_AddFloat(ss, "alienFriendly", ccs.nations[i].stats[j].alienFriendly);
 		}
 	}
 	return qtrue;
@@ -206,10 +206,10 @@ qboolean NA_Save (sizebuf_t* sb, void* data)
 	int i, j;
 	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			MSG_WriteByte(sb, gd.nations[i].stats[j].inuse);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
-			MSG_WriteLong(sb, gd.nations[i].stats[j].xviInfection);
-			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
+			MSG_WriteByte(sb, ccs.nations[i].stats[j].inuse);
+			MSG_WriteFloat(sb, ccs.nations[i].stats[j].happiness);
+			MSG_WriteLong(sb, ccs.nations[i].stats[j].xviInfection);
+			MSG_WriteFloat(sb, ccs.nations[i].stats[j].alienFriendly);
 		}
 	}
 	return qtrue;
@@ -227,14 +227,14 @@ qboolean NAT_LoadXML (mxml_node_t * p)
 	if (!n)
 		return qfalse;
 
-	for (i = 0, s = mxml_GetNode(n, "nation"); s && i < gd.numNations; i++, s = mxml_GetNextNode(s, n, "nation")) {
+	for (i = 0, s = mxml_GetNode(n, "nation"); s && i < ccs.numNations; i++, s = mxml_GetNextNode(s, n, "nation")) {
 		mxml_node_t *ss;
 		int j;
 		for (j = 0, ss = mxml_GetNode(s, "month"); ss && j < MONTHS_PER_YEAR; j++, ss = mxml_GetNextNode(ss, s, "month")) {
-			gd.nations[i].stats[j].inuse = mxml_GetBool(ss, "inuse", qfalse);
-			gd.nations[i].stats[j].happiness = mxml_GetFloat(ss, "happiness", 0.0);
-			gd.nations[i].stats[j].xviInfection = mxml_GetInt(ss, "xvi", 0);
-			gd.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, "alienFriendly", 0.0);
+			ccs.nations[i].stats[j].inuse = mxml_GetBool(ss, "inuse", qfalse);
+			ccs.nations[i].stats[j].happiness = mxml_GetFloat(ss, "happiness", 0.0);
+			ccs.nations[i].stats[j].xviInfection = mxml_GetInt(ss, "xvi", 0);
+			ccs.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, "alienFriendly", 0.0);
 		}
 	}
 	return qtrue;
@@ -249,10 +249,10 @@ qboolean NA_Load (sizebuf_t* sb, void* data)
 
 	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
 		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			gd.nations[i].stats[j].inuse = MSG_ReadByte(sb);
-			gd.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
-			gd.nations[i].stats[j].xviInfection = MSG_ReadLong(sb);
-			gd.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
+			ccs.nations[i].stats[j].inuse = MSG_ReadByte(sb);
+			ccs.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
+			ccs.nations[i].stats[j].xviInfection = MSG_ReadLong(sb);
+			ccs.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
 		}
 	}
 	return qtrue;
@@ -291,25 +291,25 @@ void CL_ParseNations (const char *name, const char **text)
 	const char *token;
 	int i;
 
-	if (gd.numNations >= MAX_NATIONS) {
+	if (ccs.numNations >= MAX_NATIONS) {
 		Com_Printf("CL_ParseNations: nation number exceeding maximum number of nations: %i\n", MAX_NATIONS);
 		return;
 	}
 
 	/* search for nations with same name */
-	for (i = 0; i < gd.numNations; i++)
-		if (!Q_strncmp(name, gd.nations[i].id, sizeof(gd.nations[i].id)))
+	for (i = 0; i < ccs.numNations; i++)
+		if (!Q_strncmp(name, ccs.nations[i].id, sizeof(ccs.nations[i].id)))
 			break;
-	if (i < gd.numNations) {
+	if (i < ccs.numNations) {
 		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	/* initialize the nation */
-	nation = &gd.nations[gd.numNations];
+	nation = &ccs.nations[ccs.numNations];
 	memset(nation, 0, sizeof(*nation));
-	nation->idx = gd.numNations;
-	gd.numNations++;
+	nation->idx = ccs.numNations;
+	ccs.numNations++;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
 	nation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -321,7 +321,7 @@ void CL_ParseNations (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseNations: nation def \"%s\" without body ignored\n", name);
-		gd.numNations--;
+		ccs.numNations--;
 		return;
 	}
 
@@ -384,25 +384,25 @@ void CL_ParseCities (const char *name, const char **text)
 	const char *token;
 	int i;
 
-	if (gd.numCities >= MAX_CITIES) {
+	if (ccs.numCities >= MAX_CITIES) {
 		Com_Printf("CL_ParseCities: city number exceeding maximum number of cities: %i\n", MAX_CITIES);
 		return;
 	}
 
 	/* search for cities with same name */
-	for (i = 0; i < gd.numCities; i++)
-		if (!Q_strncmp(name, gd.cities[i].id, sizeof(gd.cities[i].id)))
+	for (i = 0; i < ccs.numCities; i++)
+		if (!Q_strncmp(name, ccs.cities[i].id, sizeof(ccs.cities[i].id)))
 			break;
-	if (i < gd.numCities) {
+	if (i < ccs.numCities) {
 		Com_Printf("CL_ParseCities: city def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
 	/* initialize the nation */
-	city = &gd.cities[gd.numCities];
+	city = &ccs.cities[ccs.numCities];
 	memset(city, 0, sizeof(*city));
-	city->idx = gd.numCities;
-	gd.numCities++;
+	city->idx = ccs.numCities;
+	ccs.numCities++;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
 	city->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -412,7 +412,7 @@ void CL_ParseCities (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseCities: city def \"%s\" without body ignored\n", name);
-		gd.numCities--;
+		ccs.numCities--;
 		return;
 	}
 
@@ -463,9 +463,9 @@ qboolean NAT_ScriptSanityCheck (void)
 	int error = 0;
 
 	/* Check if there is at least one map fitting city parameter for terror mission */
-	for (idx = 0; idx < gd.numCities; idx++) {
+	for (idx = 0; idx < ccs.numCities; idx++) {
 		int mapIdx;
-		city_t *city = &gd.cities[idx];
+		city_t *city = &ccs.cities[idx];
 		const vec2_t pos = {city->pos[0], city->pos[1]};
 		qboolean cityCanBeUsed = qfalse;
 		qboolean parametersFit = qfalse;
@@ -543,7 +543,7 @@ static void CP_NationStatsClick_f (void)
 
 	/* Which entry in the list? */
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= gd.numNations)
+	if (num < 0 || num >= ccs.numNations)
 		return;
 
 	MN_PushMenu("nations", NULL);
@@ -581,8 +581,8 @@ static int CL_NationsMaxFunding (void)
 	int m, n;
 	int max = 0;
 
-	for (n = 0; n < gd.numNations; n++) {
-		nation_t *nation = &gd.nations[n];
+	for (n = 0; n < ccs.numNations; n++) {
+		nation_t *nation = &ccs.nations[n];
 		for (m = 0; m < MONTHS_PER_YEAR; m++) {
 			if (nation->stats[m].inuse) {
 				const int funding = NAT_GetFunding(nation, m);
@@ -657,7 +657,7 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, int ma
 	node->u.linestrip.pointList[node->u.linestrip.numStrips] = (int*)fundingPts[usedFundPtslist];
 	node->u.linestrip.numPoints[node->u.linestrip.numStrips] = ptsNumber;
 	if (color < 0) {
-		Cvar_Set("mn_nat_symbol", va("nations/%s", gd.nations[selectedNation].id));
+		Cvar_Set("mn_nat_symbol", va("nations/%s", ccs.nations[selectedNation].id));
 		Vector4Copy(graphColorSelected, node->u.linestrip.color[node->u.linestrip.numStrips]);
 	} else {
 		Vector4Copy(graphColors[color], node->u.linestrip.color[node->u.linestrip.numStrips]);
@@ -688,15 +688,15 @@ static void CL_NationStatsUpdate_f (void)
 		colorNode->u.linestrip.numStrips = 0;
 	}
 
-	for (i = 0; i < gd.numNations; i++) {
-		funding = NAT_GetFunding(&(gd.nations[i]), 0);
+	for (i = 0; i < ccs.numNations; i++) {
+		funding = NAT_GetFunding(&(ccs.nations[i]), 0);
 
 		if (selectedNation == i) {
 			Cbuf_AddText(va("nation_marksel%i;",i));
 		} else {
 			Cbuf_AddText(va("nation_markdesel%i;",i));
 		}
-		Cvar_Set(va("mn_nat_name%i",i), _(gd.nations[i].name));
+		Cvar_Set(va("mn_nat_name%i",i), _(ccs.nations[i].name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
 
 		if (colorNode) {
@@ -720,7 +720,7 @@ static void CL_NationStatsUpdate_f (void)
 	}
 
 	/* Hide unused nation-entries. */
-	for (i = gd.numNations; i < MAX_NATIONS; i++) {
+	for (i = ccs.numNations; i < MAX_NATIONS; i++) {
 		Cbuf_AddText(va("nation_hide%i;",i));
 	}
 
@@ -746,11 +746,11 @@ static void CL_NationStatsUpdate_f (void)
 		graphNode->u.linestrip.numStrips++;
 
 		maxFunding = CL_NationsMaxFunding();
-		for (i = 0; i < gd.numNations; i++) {
+		for (i = 0; i < ccs.numNations; i++) {
 			if (i == selectedNation) {
-				CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, -1);
+				CL_NationDrawStats(&ccs.nations[i], graphNode, maxFunding, -1);
 			} else {
-				CL_NationDrawStats(&gd.nations[i], graphNode, maxFunding, i);
+				CL_NationDrawStats(&ccs.nations[i], graphNode, maxFunding, i);
 			}
 		}
 	}
@@ -769,7 +769,7 @@ static void CL_NationSelect_f (void)
 	}
 
 	nat = atoi(Cmd_Argv(1));
-	if (nat < 0 || nat >= gd.numNations) {
+	if (nat < 0 || nat >= ccs.numNations) {
 		Com_Printf("Invalid nation index: %is\n",nat);
 		return;
 	}
@@ -787,8 +787,8 @@ static void CL_ListCities_f (void)
 {
 	int idx;
 
-	for (idx = 0; idx < gd.numCities; idx++) {
-		const city_t const *city = &gd.cities[idx];
+	for (idx = 0; idx < ccs.numCities; idx++) {
+		const city_t const *city = &ccs.cities[idx];
 
 		Com_Printf("City '%s' -- position (%0.1f, %0.1f)\n", city->id, city->pos[0], city->pos[1]);
 		MAP_PrintParameterStringByPos(city->pos);

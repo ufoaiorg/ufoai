@@ -68,7 +68,7 @@ typedef enum {
 	PRE_MAXCAP,	/* MAX_CAP in baseCapacities_t */
 	PRE_EMPTYP,	/* MAX_EMPL in employeeType_t */
 	PRE_MAXBAS,	/* #define MAX_BASES */
-	PRE_NATION,	/* gd.numNations */
+	PRE_NATION,	/* ccs.numNations */
 	PRE_KILLTP,	/* KILLED_NUM_TYPES in killtypes_t */
 	PRE_SKILTP,	/* SKILL_NUM_TYPES in abilityskills_t */
 	PRE_NMTECH,	/* ccs.numTechnologies */

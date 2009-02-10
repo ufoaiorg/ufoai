@@ -79,19 +79,19 @@ void CP_TerrorMissionStart (mission_t *mission)
 
 /**
  * @brief Choose a city for terror mission.
- * @return chosen city in gd.cities
+ * @return chosen city in ccs.cities
  */
 static const city_t* CP_ChooseCity (void)
 {
-	const int randnumber = rand() % gd.numCities;
+	const int randnumber = rand() % ccs.numCities;
 
-	return &gd.cities[randnumber];
+	return &ccs.cities[randnumber];
 }
 
 /**
  * @brief Set Terror attack mission, and go to Terror attack mission pos.
  * @note Terror attack mission -- Stage 1
- * @note Terror missions can only take place in city: pick one in gd.cities.
+ * @note Terror missions can only take place in city: pick one in ccs.cities.
  */
 static void CP_TerrorMissionGo (mission_t *mission)
 {
