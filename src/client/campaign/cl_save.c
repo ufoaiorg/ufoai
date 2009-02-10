@@ -643,9 +643,9 @@ static void SAV_GameSave_f (void)
 	result = SAV_GameSaveXML(Cmd_Argv(1), comment, &error);
 	if (!result) {
 		if (error)
-			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving game."), error);
+			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving xml game."), error);
 		else
-			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error saving game."));
+			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error saving xml game."));
 		MN_Popup(_("Note"), popupText);
 	}
 }
@@ -856,6 +856,10 @@ qboolean SAV_QuickSave (void)
 	result = SAV_GameSave("slotquick", "QuickSave", &error);
 	if (!result)
 		Com_Printf("Error saving the game: %s\n", error ? error : "");
+	
+	result = SAV_GameSaveXML("slotquick", "QuickSave", &error);
+	if (!result)
+		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
 
 	return qtrue;
 }
