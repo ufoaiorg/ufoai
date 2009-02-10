@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_global.h"
-#include "../cl_game.h"
+#include "cl_market.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"
 #include "../mxml/mxml_ufoai.h"
@@ -1076,7 +1076,7 @@ static void BS_Autosell_f (void)
 	const objDef_t *item;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 
 	if (Cmd_Argc() < 2) {

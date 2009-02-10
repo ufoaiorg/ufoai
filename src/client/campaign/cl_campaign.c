@@ -54,6 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_aircraft_callbacks.h"
 #include "cl_fightequip_callbacks.h"
 #include "cl_produce_callbacks.h"
+#include "cl_market.h"
 #include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
 #include "cp_employee_callbacks.h"
