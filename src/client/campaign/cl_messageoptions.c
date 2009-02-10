@@ -388,6 +388,8 @@ void MSO_ParseSettings (const char *name, const char **text)
 		token = va("msgoptions_set %s %s 1",tmpCommand,COM_EParse(text, errhead, name));
 		Cmd_ExecuteString(token);
 	} while (*text);
+	/* reset menu state, was updated by msgoptions_set */
+	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse,qfalse);
 }
 
 /**
