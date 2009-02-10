@@ -263,10 +263,10 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 	int idx;
 	const int optionsCount = NT_NUM_NOTIFYTYPE;
 	const int categoryCount = ccs.numMsgCategories;
-	mxml_node_t *n = mxml_AddNode(p, "MessageOptions");
+	mxml_node_t *n = mxml_AddNode(p, "messageoptions");
 
 	/* save amount of available entries (forward compatible for additional types) */
-	mxml_AddInt(n, "optionsCount", optionsCount);
+	mxml_AddInt(n, "optionscount", optionsCount);
 
 	/* save positive values */
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
@@ -278,7 +278,7 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 		mxml_AddBool(s, "sound", actualSetting.doSound);
 	}
 
-	mxml_AddInt(n, "categoryCount",categoryCount);
+	mxml_AddInt(n, "categorycount",categoryCount);
 	for (idx = 0; idx < categoryCount; idx++) {
 		msgCategory_t actualCategory = ccs.messageCategories[idx];
 		mxml_node_t *s = mxml_AddNode(n, "category");
@@ -341,12 +341,12 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 	/* reset current message settings (default to set for undefined settings)*/
 	memset(messageSettings, 1, sizeof(messageSettings));
 
-	n = mxml_GetNode(p, "MessageOptions");
+	n = mxml_GetNode(p, "messageoptions");
 	if (!n)
 		return qfalse;
 
 	/* load all msgoptions settings */
-	optionsCount = mxml_GetInt(n, "optionsCount", 0);
+	optionsCount = mxml_GetInt(n, "optionscount", 0);
 	if (optionsCount < 0) {
 		Com_Printf("Can't load negative number of message settings, probably old savegame.\n");
 		return qfalse;
@@ -371,7 +371,7 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 		MSO_Set(0, type, MSO_SOUND, mxml_GetBool(s, "sound", qfalse), qfalse);
 	}
 
-	categoryCount = mxml_GetInt(n, "categoryCount",0);
+	categoryCount = mxml_GetInt(n, "categorycount",0);
 	if (categoryCount < 0) {
 		Com_Printf("Can't load negative number of message category settings, probably old savegame.\n");
 		return qfalse;

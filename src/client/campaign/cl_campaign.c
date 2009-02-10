@@ -1030,12 +1030,12 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	MAP_Init();
 
 	ccs.fund = mxml_GetBool(campaign, "fund", qfalse);
-	cl.nextUniqueCharacterNnumber = mxml_GetInt(campaign, "nextUCN", 0);
+	cl.nextUniqueCharacterNnumber = mxml_GetInt(campaign, "nextucn", 0);
 
 	/* read date */
 	n_ccs = mxml_GetNode(campaign, "ccs");
-	ccs.date.day = mxml_GetInt(n_ccs, "DateDay", 0);
-	ccs.date.sec = mxml_GetInt(n_ccs, "DateSec", 0);
+	ccs.date.day = mxml_GetInt(n_ccs, "dateday", 0);
+	ccs.date.sec = mxml_GetInt(n_ccs, "datesec", 0);
 
 	Com_Printf("CP_LoadXML: Getting position\n");
 	/* read map view */
@@ -1051,14 +1051,14 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	* value is 0 (and that's a problem if you're loading a game when r_geoscape_overlay is set to another value */
 	r_geoscape_overlay->integer = mxml_GetInt(campaign, "r_geoscape_overlay", 0);
 
-	radarOverlayWasSet = mxml_GetBool(campaign, "radarOverlayWasSet", qfalse);
+	radarOverlayWasSet = mxml_GetBool(campaign, "radaroverlaywasset", qfalse);
 
-	CL_UpdateCredits(mxml_GetLong(n_ccs, "Credits", 0));
+	CL_UpdateCredits(mxml_GetLong(n_ccs, "credits", 0));
 
 	/* read credits */
 	/* store interest values */
-	ccs.lastInterestIncreaseDelay = mxml_GetInt(n_ccs, "lastInterestIncreaseDelay", 0);
-	ccs.lastMissionSpawnedDelay = mxml_GetInt(n_ccs, "lastMissionSpawnedDelay", 0);
+	ccs.lastInterestIncreaseDelay = mxml_GetInt(n_ccs, "lastinterestincreasedelay", 0);
+	ccs.lastMissionSpawnedDelay = mxml_GetInt(n_ccs, "lastmissionspawneddelay", 0);
 
 	ccs.overallInterest = mxml_GetInt(n_ccs, "overall", 0);
 	/*mxml_GetInt(interest, "count", INTERESTCATEGORY_MAX);*/
@@ -1069,13 +1069,13 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	}
 
 	/* read other campaign data */
-	ccs.civiliansKilled = mxml_GetInt(n_ccs, "civiliansKilled", 0);
-	ccs.aliensKilled = mxml_GetInt(n_ccs, "aliensKilled", 0);
+	ccs.civiliansKilled = mxml_GetInt(n_ccs, "civilianskilled", 0);
+	ccs.aliensKilled = mxml_GetInt(n_ccs, "alienskilled", 0);
 
- 	ccs.XVISpreadActivated = mxml_GetBool(n_ccs, "XVISpreadActivated", qfalse);
- 	ccs.XVIShowMap = mxml_GetBool(n_ccs, "XVIShowMap", qfalse);
+ 	ccs.XVISpreadActivated = mxml_GetBool(n_ccs, "xvispreadactivated", qfalse);
+ 	ccs.XVIShowMap = mxml_GetBool(n_ccs, "xvishowmap", qfalse);
 
-	ccs.humansAttackActivated = mxml_GetBool(n_ccs, "humansAttackActivated", qfalse);
+	ccs.humansAttackActivated = mxml_GetBool(n_ccs, "humansattackactivated", qfalse);
 	CP_UpdateXVIMapButton();
 
 	/* read missions */
@@ -1092,7 +1092,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 				Com_Printf("......mapdef \"%s\" doesn't exist.\n", name);
 				return qfalse;
 			}
-			mission.mapDef->timesAlreadyUsed = mxml_GetInt(act_node, "mapDefTimes", 0);
+			mission.mapDef->timesAlreadyUsed = mxml_GetInt(act_node, "mapdeftimes", 0);
 		} else
 			mission.mapDef = NULL;
 
@@ -1107,7 +1107,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_BASE_ATTACK:
 			if (mission.stage == STAGE_MISSION_GOTO || mission.stage == STAGE_BASE_ATTACK) {
 				/* Load IDX of base under attack */
-				const int baseidx = mxml_GetInt(act_node, "BaseIndex", BYTES_NONE);
+				const int baseidx = mxml_GetInt(act_node, "baseindex", BYTES_NONE);
 				if (baseidx != BYTES_NONE) {
 					base_t *base = B_GetBaseByIDX(baseidx);
 					assert(base);
@@ -1121,7 +1121,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		case INTERESTCATEGORY_BUILDING:
 		case INTERESTCATEGORY_SUPPLY:
 			if (mission.stage >= STAGE_MISSION_GOTO) {
-				int baseidx = mxml_GetInt(act_node, "BaseIndex", BYTES_NONE);
+				int baseidx = mxml_GetInt(act_node, "baseindex", BYTES_NONE);
 				if (baseidx != BYTES_NONE) {
 					/* don't check baseidx value here: alien bases are not loaded yet */
 					alienBase_t *alienBase = AB_GetBase(baseidx, 0);
@@ -1138,13 +1138,13 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 		Q_strncpyz(mission.location, mxml_GetString(act_node, "location"), sizeof(mission.location));
 
-		mission.initialOverallInterest = mxml_GetInt(act_node, "initialOverallInterest", 0);
-		mission.initialIndividualInterest = mxml_GetInt(act_node, "initialIndividualInterest", 0);
+		mission.initialOverallInterest = mxml_GetInt(act_node, "initialoverallinterest", 0);
+		mission.initialIndividualInterest = mxml_GetInt(act_node, "initialindividualinterest", 0);
 
-		mission.startDate.day = mxml_GetInt(act_node, "startDate.day", 0);
-		mission.startDate.sec = mxml_GetInt(act_node, "startDate.sec", 0);
-		mission.finalDate.day = mxml_GetInt(act_node, "finalDate.day", 0);
-		mission.finalDate.sec = mxml_GetInt(act_node, "finalDate.sec", 0);
+		mission.startDate.day = mxml_GetInt(act_node, "startdate.day", 0);
+		mission.startDate.sec = mxml_GetInt(act_node, "startdate.sec", 0);
+		mission.finalDate.day = mxml_GetInt(act_node, "finaldate.day", 0);
+		mission.finalDate.sec = mxml_GetInt(act_node, "finaldate.sec", 0);
 
 		mxml_GetPos2(act_node, "pos", mission.pos);
 
@@ -1154,7 +1154,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		else
 			mission.ufo = ccs.ufos + ufoIdx;
 
-		mission.onGeoscape = mxml_GetBool(act_node, "onGeoscape", qfalse);
+		mission.onGeoscape = mxml_GetBool(act_node, "ongeoscape", qfalse);
 
 		/* Add mission to global array */
 		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
@@ -1164,10 +1164,10 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	/* read ccs.battleParameters */
 	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
 
-	if ((bparam = mxml_GetNode(n_ccs, "battleParameter"))) {
+	if ((bparam = mxml_GetNode(n_ccs, "battleparameter"))) {
 		int j;
 		ccs.battleParameters.mission = CP_GetMissionById(mxml_GetString(bparam, "mission.id"));
-		name = mxml_GetString(bparam, "alienCategories.id");
+		name = mxml_GetString(bparam, "aliencategories.id");
 
 		/* get corresponding category */
 		for (i = 0; i < ccs.numAlienCategories; i++)
@@ -1179,7 +1179,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			return qfalse;
 		}
 
-		j = mxml_GetInt(bparam, "alienTeamGroupIdx", 0);
+		j = mxml_GetInt(bparam, "alienteamgroupidx", 0);
 		if (j >= INTERESTCATEGORY_MAX) {
 			Com_Printf("CP_Load: Undefined alien team (category '%s', group '%i')\n", name, j);
 			return qfalse;
@@ -1191,8 +1191,8 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		else
 			ccs.battleParameters.param = NULL;
 
-		Q_strncpyz(ccs.battleParameters.alienEquipment, mxml_GetString(bparam, "alienEquipment"), sizeof(ccs.battleParameters.alienEquipment));
-		Q_strncpyz(ccs.battleParameters.civTeam, mxml_GetString(bparam, "civTeam"), sizeof(ccs.battleParameters.civTeam));
+		Q_strncpyz(ccs.battleParameters.alienEquipment, mxml_GetString(bparam, "alienequipment"), sizeof(ccs.battleParameters.alienEquipment));
+		Q_strncpyz(ccs.battleParameters.civTeam, mxml_GetString(bparam, "civteam"), sizeof(ccs.battleParameters.civTeam));
 
 		ccs.battleParameters.day = mxml_GetBool(bparam, "day", qfalse);
 		ccs.battleParameters.ugv = mxml_GetInt(bparam, "ugv", 0);
@@ -1200,7 +1200,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		ccs.battleParameters.civilians = mxml_GetInt(bparam, "civilians", 0);;
 	}
 
-	missionId = mxml_GetString(n_ccs, "selectedMission");
+	missionId = mxml_GetString(n_ccs, "selectedmission");
 	if (missionId && missionId[0] != '\0')
 		ccs.selectedMission = CP_GetMissionById(missionId);
 	else
@@ -1464,12 +1464,12 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 	mxml_AddString(campaign, "name", curCampaign->id);
 	mxml_AddShort(campaign, "fund", ccs.fund);
-	mxml_AddShort(campaign, "nextUniqueCharacterNnumber", cl.nextUniqueCharacterNnumber);
+	mxml_AddShort(campaign, "nextuniquecharacternnumber", cl.nextUniqueCharacterNnumber);
 
 
 	structure_ccs = mxml_AddNode(campaign, "ccs");
-	mxml_AddInt(structure_ccs, "DateDay", ccs.date.day);
-	mxml_AddInt(structure_ccs, "DateSec", ccs.date.sec);
+	mxml_AddInt(structure_ccs, "dateday", ccs.date.day);
+	mxml_AddInt(structure_ccs, "datesec", ccs.date.sec);
 
 	mxml_AddFloat(structure_ccs, "center0", ccs.center[0]);
 	mxml_AddFloat(structure_ccs, "center1", ccs.center[1]);
@@ -1479,12 +1479,12 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 
 	mxml_AddShort(campaign, "r_geoscape_overlay", r_geoscape_overlay->integer);
-	mxml_AddBool(campaign, "radarOverlayWasSet", radarOverlayWasSet);
+	mxml_AddBool(campaign, "radaroverlaywasset", radarOverlayWasSet);
 
-	mxml_AddLong(structure_ccs, "Credits", ccs.credits);
+	mxml_AddLong(structure_ccs, "credits", ccs.credits);
 
-	mxml_AddShort(structure_ccs, "lastInterestIncreaseDelay", ccs.lastInterestIncreaseDelay);
-	mxml_AddShort(structure_ccs, "lastMissionSpawnedDelay", ccs.lastMissionSpawnedDelay);
+	mxml_AddShort(structure_ccs, "lastinterestincreasedelay", ccs.lastInterestIncreaseDelay);
+	mxml_AddShort(structure_ccs, "lastmissionspawneddelay", ccs.lastMissionSpawnedDelay);
 
 
 	mxml_AddShort(structure_ccs, "overall", ccs.overallInterest);
@@ -1495,20 +1495,20 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	}
 
 	/* store other campaign data */
-	mxml_AddInt(structure_ccs, "civiliansKilled", ccs.civiliansKilled);
-	mxml_AddInt(structure_ccs, "aliensKilled", ccs.aliensKilled);
-	mxml_AddBool(structure_ccs, "XVISpreadActivated", ccs.XVISpreadActivated);
-	mxml_AddBool(structure_ccs, "XVIShowMap", ccs.XVIShowMap);
-	mxml_AddBool(structure_ccs, "humansAttackActivated", ccs.humansAttackActivated);
+	mxml_AddInt(structure_ccs, "civilianskilled", ccs.civiliansKilled);
+	mxml_AddInt(structure_ccs, "alienskilled", ccs.aliensKilled);
+	mxml_AddBool(structure_ccs, "xvispreadactivated", ccs.XVISpreadActivated);
+	mxml_AddBool(structure_ccs, "xvishowmap", ccs.XVIShowMap);
+	mxml_AddBool(structure_ccs, "humansattackactivated", ccs.humansAttackActivated);
 
 	/* store missions */
-	mxml_AddShort(campaign, "missionCount", CP_CountMission());
+	mxml_AddShort(campaign, "missioncount", CP_CountMission());
 	for (; list; list = list->next) {
 		const mission_t *mission = (mission_t *)list->data;
 		mxml_node_t * missions = mxml_AddNode(campaign, "mission");
 		if (mission->mapDef) {
 			mxml_AddString(missions, "mapDef_id", mission->mapDef->id);
-			mxml_AddInt(missions, "mapDefTimes", mission->mapDef->timesAlreadyUsed);
+			mxml_AddInt(missions, "mapdeftimes", mission->mapDef->timesAlreadyUsed);
 		}
 		mxml_AddString(missions, "id", mission->id);
 		mxml_AddShort(missions, "active", mission->active);
@@ -1523,7 +1523,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 				/* save IDX of base under attack if required */
 				base = (base_t*)mission->data;
 				assert(base);
-				mxml_AddShort(missions, "BaseIndex", base->idx);
+				mxml_AddShort(missions, "baseindex", base->idx);
 			}
 			break;
 		case INTERESTCATEGORY_BUILDING:
@@ -1533,10 +1533,10 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 				/* save IDX of base under attack if required */
 				base = (alienBase_t*)mission->data;
 				if (base)
-					mxml_AddShort(missions, "AlienBaseIndex", base->idx);
+					mxml_AddShort(missions, "alienbaseindex", base->idx);
 				else
 					/* there may be no base is the mission is a subverting government */
-					mxml_AddShort(missions, "BaseIndex", BYTES_NONE);
+					mxml_AddShort(missions, "baseindex", BYTES_NONE);
 					/*MSG_WriteByte(sb, BYTES_NONE);*/
 			}
 			break;
@@ -1544,36 +1544,36 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 			break;
 		}
 		mxml_AddString(missions, "location", mission->location);
-		mxml_AddShort(missions, "initialOverallInterest", mission->initialOverallInterest);
-		mxml_AddShort(missions, "initialIndividualInterest", mission->initialIndividualInterest);
-		mxml_AddLong(missions, "startDate.day", mission->startDate.day);
-		mxml_AddLong(missions, "startDate.sec", mission->startDate.sec);
-		mxml_AddLong(missions, "finalDate.day", mission->finalDate.day);
-		mxml_AddLong(missions, "finalDate.sec", mission->finalDate.sec);
+		mxml_AddShort(missions, "initialoverallinterest", mission->initialOverallInterest);
+		mxml_AddShort(missions, "initialindividualinterest", mission->initialIndividualInterest);
+		mxml_AddLong(missions, "startdate.day", mission->startDate.day);
+		mxml_AddLong(missions, "startdate.sec", mission->startDate.sec);
+		mxml_AddLong(missions, "finaldate.day", mission->finalDate.day);
+		mxml_AddLong(missions, "finaldate.sec", mission->finalDate.sec);
 		mxml_AddPos2(missions, "pos", mission->pos);
 		if (mission->ufo)
 			mxml_AddShort(missions, "ufo", mission->ufo - ccs.ufos);
 		else
 			mxml_AddShort(missions, "ufo", -1);
-		mxml_AddShort(missions, "onGeoscape", mission->onGeoscape);
+		mxml_AddShort(missions, "ongeoscape", mission->onGeoscape);
 	}
 
 	/* store ccs.battleParameters */
 	if (ccs.battleParameters.mission) {
-		mxml_node_t *battleparam = mxml_AddNode(structure_ccs, "battleParameter");
+		mxml_node_t *battleparam = mxml_AddNode(structure_ccs, "battleparameter");
 		mxml_AddString(battleparam, "mission.id", ccs.battleParameters.mission->id);
-		mxml_AddString(battleparam, "alienCategories.id", ccs.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
-		mxml_AddShort(battleparam, "alienTeamGroupIdx", ccs.battleParameters.alienTeamGroup->idx);
+		mxml_AddString(battleparam, "aliencategories.id", ccs.alienCategories[ccs.battleParameters.alienTeamGroup->categoryIdx].id);
+		mxml_AddShort(battleparam, "alienteamgroupidx", ccs.battleParameters.alienTeamGroup->idx);
 		mxml_AddString(battleparam, "param", (ccs.battleParameters.param ? ccs.battleParameters.param : ""));
-		mxml_AddString(battleparam, "alienEquipment", ccs.battleParameters.alienEquipment);
-		mxml_AddString(battleparam, "civTeam", ccs.battleParameters.civTeam);
+		mxml_AddString(battleparam, "alienequipment", ccs.battleParameters.alienEquipment);
+		mxml_AddString(battleparam, "civteam", ccs.battleParameters.civTeam);
 		mxml_AddBool(battleparam, "day", ccs.battleParameters.day);
 		mxml_AddInt(battleparam, "ugv", ccs.battleParameters.ugv);
 		mxml_AddInt(battleparam, "aliens", ccs.battleParameters.aliens);
 		mxml_AddInt(battleparam, "civilians", ccs.battleParameters.civilians);
 	}
 	/* stores the select mission on geoscape */
-	mxml_AddString(structure_ccs, "selectedMission", ccs.selectedMission ? ccs.selectedMission->id : "");
+	mxml_AddString(structure_ccs, "selectedmission", ccs.selectedMission ? ccs.selectedMission->id : "");
 	return qtrue;
 }
 
@@ -1711,20 +1711,20 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 
 	stats = mxml_AddNode(parent, "stats");
 
-	mxml_AddInt(stats, "missionsWon", campaignStats.missionsWon);
-	mxml_AddInt(stats, "missionsLost", campaignStats.missionsLost);
-	mxml_AddInt(stats, "basesBuild", campaignStats.basesBuild);
-	mxml_AddInt(stats, "basesAttacked", campaignStats.basesAttacked);
+	mxml_AddInt(stats, "missionswon", campaignStats.missionsWon);
+	mxml_AddInt(stats, "missionslost", campaignStats.missionsLost);
+	mxml_AddInt(stats, "basesbuild", campaignStats.basesBuild);
+	mxml_AddInt(stats, "basesattacked", campaignStats.basesAttacked);
 	mxml_AddInt(stats, "interceptions", campaignStats.interceptions);
-	mxml_AddInt(stats, "soldiersLost", campaignStats.soldiersLost);
-	mxml_AddInt(stats, "soldiersNew", campaignStats.soldiersNew);
-	mxml_AddInt(stats, "killedAliens", campaignStats.killedAliens);
-	mxml_AddInt(stats, "rescuedCivilians", campaignStats.rescuedCivilians);
-	mxml_AddInt(stats, "researchedTechnologies", campaignStats.researchedTechnologies);
-	mxml_AddInt(stats, "moneyInterceptions", campaignStats.moneyInterceptions);
-	mxml_AddInt(stats, "moneyBases", campaignStats.moneyBases);
-	mxml_AddInt(stats, "moneyResearch", campaignStats.moneyResearch);
-	mxml_AddInt(stats, "moneyWeapons", campaignStats.moneyWeapons);
+	mxml_AddInt(stats, "soldierslost", campaignStats.soldiersLost);
+	mxml_AddInt(stats, "soldiersnew", campaignStats.soldiersNew);
+	mxml_AddInt(stats, "killedaliens", campaignStats.killedAliens);
+	mxml_AddInt(stats, "rescuedcivilians", campaignStats.rescuedCivilians);
+	mxml_AddInt(stats, "researchedtechnologies", campaignStats.researchedTechnologies);
+	mxml_AddInt(stats, "moneyinterceptions", campaignStats.moneyInterceptions);
+	mxml_AddInt(stats, "moneybases", campaignStats.moneyBases);
+	mxml_AddInt(stats, "moneyresearch", campaignStats.moneyResearch);
+	mxml_AddInt(stats, "moneyweapons", campaignStats.moneyWeapons);
 	return qtrue;
 }
 
@@ -1738,20 +1738,20 @@ qboolean STATS_LoadXML (mxml_node_t *tree)
 		 Com_Printf("Did not find stats entry in xml!\n");
 		 return qfalse;
 	}
-	campaignStats.missionsWon 		= mxml_GetInt(stats, "missionsWon", 0);
-	campaignStats.missionsLost 		= mxml_GetInt(stats, "missionsLost", 0);
-	campaignStats.basesBuild 		= mxml_GetInt(stats, "basesBuild", 0);
-	campaignStats.basesAttacked 		= mxml_GetInt(stats, "basesAttacked", 0);
+	campaignStats.missionsWon 		= mxml_GetInt(stats, "missionswon", 0);
+	campaignStats.missionsLost 		= mxml_GetInt(stats, "missionslost", 0);
+	campaignStats.basesBuild 		= mxml_GetInt(stats, "basesbuild", 0);
+	campaignStats.basesAttacked 		= mxml_GetInt(stats, "basesattacked", 0);
 	campaignStats.interceptions 		= mxml_GetInt(stats, "interceptions", 0);
-	campaignStats.soldiersLost 		= mxml_GetInt(stats, "soldiersLost", 0);
-	campaignStats.soldiersNew 		= mxml_GetInt(stats, "soldiersNew", 0);
-	campaignStats.killedAliens 		= mxml_GetInt(stats, "killedAliens", 0);
-	campaignStats.rescuedCivilians 		= mxml_GetInt(stats, "rescuedCivilians", 0);
-	campaignStats.researchedTechnologies 	= mxml_GetInt(stats, "researchedTechnologies", 0);
-	campaignStats.moneyInterceptions 	= mxml_GetInt(stats, "moneyInterceptions", 0);
-	campaignStats.moneyBases 		= mxml_GetInt(stats, "moneyBases", 0);
-	campaignStats.moneyResearch		= mxml_GetInt(stats, "moneyResearch", 0);
-	campaignStats.moneyWeapons 		= mxml_GetInt(stats, "moneyWeapons", 0);
+	campaignStats.soldiersLost 		= mxml_GetInt(stats, "soldierslost", 0);
+	campaignStats.soldiersNew 		= mxml_GetInt(stats, "soldiersnew", 0);
+	campaignStats.killedAliens 		= mxml_GetInt(stats, "killedaliens", 0);
+	campaignStats.rescuedCivilians 		= mxml_GetInt(stats, "rescuedcivilians", 0);
+	campaignStats.researchedTechnologies 	= mxml_GetInt(stats, "researchedtechnologies", 0);
+	campaignStats.moneyInterceptions 	= mxml_GetInt(stats, "moneyinterceptions", 0);
+	campaignStats.moneyBases 		= mxml_GetInt(stats, "moneybases", 0);
+	campaignStats.moneyResearch		= mxml_GetInt(stats, "moneyresearch", 0);
+	campaignStats.moneyWeapons 		= mxml_GetInt(stats, "moneyweapons", 0);
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
 	return qtrue;

@@ -749,22 +749,22 @@ qboolean INS_SaveXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
-	n = mxml_AddNode(p, "Installations");
+	n = mxml_AddNode(p, "installations");
 	for (i = 0; i < MAX_INSTALLATIONS; i++) {
 		const installation_t *inst = INS_GetInstallationByIDX(i);
 		mxml_node_t *s, *ss;
 		if (!inst->founded)
 			continue;
 		s = mxml_AddNode(n, "installation");
-		mxml_AddInt(s, "Idx", inst->idx);
+		mxml_AddInt(s, "idx", inst->idx);
 		mxml_AddBool(s, "founded", inst->founded);
-		mxml_AddString(s, "templateId", inst->installationTemplate->id);
+		mxml_AddString(s, "templateid", inst->installationTemplate->id);
 		mxml_AddString(s, "name", inst->name);
 		mxml_AddPos3(s, "pos", inst->pos);
 		mxml_AddInt(s, "status", inst->installationStatus);
 		mxml_AddInt(s, "damage", inst->installationDamage);
-		mxml_AddFloat(s, "alienInterest", inst->alienInterest);
-		mxml_AddInt(s, "buildStart", inst->buildStart);
+		mxml_AddFloat(s, "alieninterest", inst->alienInterest);
+		mxml_AddInt(s, "buildstart", inst->buildStart);
 
 		ss = mxml_AddNode(s, "batteries");
 		mxml_AddInt(ss, "num", inst->numBatteries);
@@ -825,19 +825,19 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 qboolean INS_LoadXML (mxml_node_t *p)
 {
 	mxml_node_t *s;
-	mxml_node_t *n = mxml_GetNode(p, "Installations");
+	mxml_node_t *n = mxml_GetNode(p, "installations");
 	if (!n)
 		return qfalse;
 
 	for (s = mxml_GetNode(n, "installation"); s ; s = mxml_GetNextNode(s,n, "installation")) {
 		mxml_node_t *ss;
-		const int idx = mxml_GetInt(s, "Idx", 0);
+		const int idx = mxml_GetInt(s, "idx", 0);
 		installation_t *inst = INS_GetInstallationByIDX(idx);
 		inst->founded = mxml_GetBool(s, "founded", inst->founded);
 		/* should never happen, we only save founded installations */
 		if (!inst->founded)
 			continue;
-		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(mxml_GetString(s, "templateId"));
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(mxml_GetString(s, "templateid"));
 		if (!inst->installationTemplate) {
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
@@ -849,13 +849,13 @@ qboolean INS_LoadXML (mxml_node_t *p)
 
 		inst->installationStatus = mxml_GetInt(s, "status", 0);
 		inst->installationDamage = mxml_GetInt(s, "damage", 0);
-		inst->alienInterest = mxml_GetFloat(s, "alienInterest", 0.0);
+		inst->alienInterest = mxml_GetFloat(s, "alieninterest", 0.0);
 
 		RADAR_InitialiseUFOs(&inst->radar);
 		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
 		RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
 
-		inst->buildStart = mxml_GetInt(s, "buildStart", 0);
+		inst->buildStart = mxml_GetInt(s, "buildstart", 0);
 
 		/* read battery slots */
 		BDEF_InitialiseInstallationSlots(inst);

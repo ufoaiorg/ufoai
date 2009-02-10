@@ -114,7 +114,7 @@ static void MP_SaveTeamMultiplayerInfoXML (mxml_node_t *p)
 	Com_DPrintf(DEBUG_CLIENT, "Saving %i teammembers\n", chrDisplayList.num);
 	for (i = 0; i < chrDisplayList.num; i++) {
 		const character_t *chr = chrDisplayList.chr[i];
-		mxml_node_t *n = mxml_AddNode(p, "Character");
+		mxml_node_t *n = mxml_AddNode(p, "character");
 		CL_SaveCharacterXML(n, *chr);
 	}
 }
@@ -131,7 +131,7 @@ static void MP_LoadTeamMultiplayerInfoXML (mxml_node_t *p)
 	mxml_node_t *n;
 
 	/* header */
-	for (i = 0, n = mxml_GetNode(p, "Character"); n && i < MAX_MULTIPLAYER_CHARACTERS; i++, n = mxml_GetNextNode(n, p, "Character")) {
+	for (i = 0, n = mxml_GetNode(p, "character"); n && i < MAX_MULTIPLAYER_CHARACTERS; i++, n = mxml_GetNextNode(n, p, "character")) {
 		CL_LoadCharacterXML(n, &multiplayerCharacters[i]);
 		chrDisplayList.chr[i] = &multiplayerCharacters[i];
 	}
@@ -228,15 +228,15 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 	header.soldiercount = LittleLong(chrDisplayList.num);
 	Q_strncpyz(header.name, name, sizeof(header.name));
 
-	snode = mxml_AddNode(node, "Team");
+	snode = mxml_AddNode(node, "team");
 	MP_SaveTeamMultiplayerInfoXML(snode);
 
-	snode = mxml_AddNode(node, "Equipment");
+	snode = mxml_AddNode(node, "equipment");
 	for (i = 0; i < csi.numODs; i++) {
-		mxml_node_t *ssnode = mxml_AddNode(snode, "eMission");
+		mxml_node_t *ssnode = mxml_AddNode(snode, "emission");
 		mxml_AddString(ssnode, "id", csi.ods[i].id);
 		mxml_AddInt(ssnode, "num", ccs.eMission.num[i]);
-		mxml_AddInt(ssnode, "numLoose", ccs.eMission.numLoose[i]);
+		mxml_AddInt(ssnode, "numloose", ccs.eMission.numLoose[i]);
 	}
 	requiredbuflen = mxmlSaveString(top_node, dummy, 2, MXML_NO_CALLBACK);
 	/** @todo little/big endian */
@@ -482,20 +482,20 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	}
 	Cvar_Set("mn_teamname", header.name);
 
-	snode = mxml_GetNode(node, "Team");
+	snode = mxml_GetNode(node, "team");
 	if (!snode)
 		Com_Printf("Team Node not found\n");
 	MP_LoadTeamMultiplayerInfoXML(snode);
 
-	snode = mxml_GetNode(node, "Equipment");
+	snode = mxml_GetNode(node, "equipment");
 	if (!snode)
 		Com_Printf("Equipment Node not found\n");
-	for (i = 0, ssnode = mxml_GetNode(snode, "eMission"); ssnode && i < csi.numODs; i++, ssnode = mxml_GetNextNode(ssnode, snode, "eMissioN")) {
+	for (i = 0, ssnode = mxml_GetNode(snode, "emission"); ssnode && i < csi.numODs; i++, ssnode = mxml_GetNextNode(ssnode, snode, "emission")) {
 		const char *objID = mxml_GetString(ssnode, "id");
 		const objDef_t *od = INVSH_GetItemByID(objID);
 		if (od) {
 			ccs.eMission.num[od->idx] = mxml_GetInt(snode, "num", 0);
-			ccs.eMission.numLoose[od->idx] = mxml_GetInt(snode, "numLoose", 0);
+			ccs.eMission.numLoose[od->idx] = mxml_GetInt(snode, "numloose", 0);
 		}
 	}
 

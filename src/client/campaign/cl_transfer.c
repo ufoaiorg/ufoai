@@ -1762,7 +1762,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
-	n = mxml_AddNode(p, "Transfers");
+	n = mxml_AddNode(p, "transfers");
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		int j;
@@ -1775,7 +1775,7 @@ qboolean TR_SaveXML (mxml_node_t *p)
 			for (j = 0; j < MAX_OBJDEFS; j++){
 				if (transfer->itemAmount[j] >0){
 					mxml_node_t *ss = mxml_AddNode(s, "item");
-					mxml_AddInt(ss, "ItemId", j);
+					mxml_AddInt(ss, "itemid", j);
 					mxml_AddInt(ss, "amount", transfer->itemAmount[j]);
 				}
 			}
@@ -1785,11 +1785,11 @@ qboolean TR_SaveXML (mxml_node_t *p)
 				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] >0 || transfer->alienAmount[j][TRANS_ALIEN_DEAD]> 0)
 				{
 					mxml_node_t *ss = mxml_AddNode(s, "alien");
-					mxml_AddInt(ss, "AlienId", j);
+					mxml_AddInt(ss, "alienid", j);
 					if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] >0)
-						mxml_AddInt(ss, "aliveAmount", transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
+						mxml_AddInt(ss, "aliveamount", transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
 					if (transfer->alienAmount[j][TRANS_ALIEN_DEAD] >0)
-						mxml_AddInt(ss, "deadAmount", transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
+						mxml_AddInt(ss, "deadamount", transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
 				}
 			}
 		}
@@ -1809,14 +1809,14 @@ qboolean TR_SaveXML (mxml_node_t *p)
 		if (transfer->hasAircraft){
 			for (j = 0; j < MAX_AIRCRAFT; j++){
 				mxml_node_t *ss = mxml_AddNode(s, "aircraft");
-				mxml_AddInt(ss, "Id", j);
+				mxml_AddInt(ss, "id", j);
 				mxml_AddInt(ss, "air", transfer->aircraftArray[j]);
 			}
 		}
 		if (transfer->destBase)
-			mxml_AddInt(s, "destBase", transfer->destBase->idx);
+			mxml_AddInt(s, "destbase", transfer->destBase->idx);
 		if (transfer->srcBase)
-			mxml_AddInt(s, "srcBase", transfer->srcBase->idx);
+			mxml_AddInt(s, "srcbase", transfer->srcBase->idx);
 		if (transfer->active && !transfer->destBase) {
 			Com_Printf("Could not save transfer, active is true, but no destBase is set\n");
 			return qfalse;
@@ -1877,7 +1877,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n, *s;
-	n = mxml_GetNode(p, "Transfers");
+	n = mxml_GetNode(p, "transfers");
 	if (!n)
 		return qfalse;
 
@@ -1904,7 +1904,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		if (ss) {
 			transfer->hasItems=qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, "item")) {
-				const int itemId = mxml_GetInt(ss, "ItemId", 0);
+				const int itemId = mxml_GetInt(ss, "itemid", 0);
 				if (itemId < MAX_OBJDEFS)
 					transfer->itemAmount[itemId] = mxml_GetInt(ss, "amount", 1);
 			}
@@ -1914,9 +1914,9 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		if (ss) {
 			transfer->hasAliens = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, "alien")) {
-				const int alive = mxml_GetInt(ss, "aliveAmount", 0);
-				const int dead  = mxml_GetInt(ss, "deadAmount", 0);
-				const int id = mxml_GetInt(ss, "AlienId", 0);
+				const int alive = mxml_GetInt(ss, "aliveamount", 0);
+				const int dead  = mxml_GetInt(ss, "deadamount", 0);
+				const int id = mxml_GetInt(ss, "alienid", 0);
 				if (id >= 0 && id < ccs.numAliensTD) {
 					transfer->alienAmount[id][TRANS_ALIEN_ALIVE] = alive;
 					transfer->alienAmount[id][TRANS_ALIEN_DEAD] = dead;
@@ -1941,18 +1941,18 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		if (ss) {
 			transfer->hasAircraft = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, "aircraft")) {
-				const int j = mxml_GetInt(ss, "Id", 0);
+				const int j = mxml_GetInt(ss, "id", 0);
 				const int airc = mxml_GetInt(ss, "air",  0);
 				if (j >= 0 && j < MAX_AIRCRAFT)
 					transfer->aircraftArray[j] = airc;
 			}
 		}
 		assert(ccs.numBases);
-		destBase = mxml_GetInt(s, "destBase", BYTES_NONE);
+		destBase = mxml_GetInt(s, "destbase", BYTES_NONE);
 		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
 		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
 		 * for transfer->destbase and return qfalse here */
-		srcBase =  mxml_GetInt(s, "srcBase", BYTES_NONE);
+		srcBase =  mxml_GetInt(s, "srcbase", BYTES_NONE);
 		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
 	}
 		/* not sure, if this is needed anymore... */

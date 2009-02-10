@@ -2011,25 +2011,25 @@ qboolean RS_SaveXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t *node;
-	node = mxml_AddNode(parent, "Research");
+	node = mxml_AddNode(parent, "research");
 	mxml_AddInt(node, "count", ccs.numTechnologies);
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		int j;
 		const technology_t *t = RS_GetTechByIDX(i);
 		mxml_node_t * snode = mxml_AddNode(node, "tech");
-		mxml_AddString(snode, "Id", t->id);
-		mxml_AddBool(snode, "statusCollected", t->statusCollected);
+		mxml_AddString(snode, "id", t->id);
+		mxml_AddBool(snode, "statuscollected", t->statusCollected);
 		mxml_AddFloat(snode, "time", t->time);
-		mxml_AddShort(snode, "statusResearch", t->statusResearch);
+		mxml_AddShort(snode, "statusresearch", t->statusResearch);
 		if (t->base)
 			mxml_AddInt(snode, "base", t->base->idx);
-		mxml_AddInt(snode, "Scientists", t->scientists);
-		mxml_AddInt(snode, "statusResearchable", t->statusResearchable);
-		mxml_AddInt(snode, "preDay", t->preResearchedDate.day);
-		mxml_AddInt(snode, "preSec", t->preResearchedDate.sec);
-		mxml_AddInt(snode, "Day", t->researchedDate.day);
-		mxml_AddInt(snode, "Sec", t->researchedDate.sec);
-		mxml_AddInt(snode, "mailSent", t->mailSent);
+		mxml_AddInt(snode, "scientists", t->scientists);
+		mxml_AddInt(snode, "statusresearchable", t->statusResearchable);
+		mxml_AddInt(snode, "preday", t->preResearchedDate.day);
+		mxml_AddInt(snode, "presec", t->preResearchedDate.sec);
+		mxml_AddInt(snode, "day", t->researchedDate.day);
+		mxml_AddInt(snode, "sec", t->researchedDate.sec);
+		mxml_AddInt(snode, "mailsent", t->mailSent);
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			/* only save the already read mails */
 			if (t->mail[j].read) {
@@ -2080,14 +2080,14 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 {
 	int i, count;
 	mxml_node_t *topnode, *snode;
-	topnode = mxml_GetNode(parent, "Research");
+	topnode = mxml_GetNode(parent, "research");
 	if (!topnode)
 		return qfalse;
 	count = mxml_GetInt(topnode, "count", 0);
 	/* Clear linked list. */
 	LIST_Delete(&loadTechBases);
 	for (i = 0, snode = mxml_GetNode(topnode, "tech"); i < count && snode; i++, snode = mxml_GetNextNode(snode, topnode, "tech")) {
-		const char *techString = mxml_GetString(snode, "Id");
+		const char *techString = mxml_GetString(snode, "id");
 		mxml_node_t * ssnode;
 		int tempBaseIdx;
 		technology_t *t = RS_GetTechByID(techString);
@@ -2095,20 +2095,20 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
 			continue;
 		}
-		t->statusCollected = mxml_GetBool(snode, "statusCollected", qfalse);
+		t->statusCollected = mxml_GetBool(snode, "statuscollected", qfalse);
 		t->time = mxml_GetFloat(snode, "time", 0.0);
-		t->statusResearch = mxml_GetShort(snode, "statusResearch", 0);
+		t->statusResearch = mxml_GetShort(snode, "statusresearch", 0);
 		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
 		tempBaseIdx = mxml_GetInt(snode, "base", -1);
 		LIST_AddPointer(&loadTechBases, t);
 		LIST_Add(&loadTechBases, (byte *)&tempBaseIdx, sizeof(int));
-		t->scientists = mxml_GetInt(snode, "Scientists", 0);
-		t->statusResearchable = mxml_GetInt(snode, "statusResearchable", 0);
-		t->preResearchedDate.day = mxml_GetInt(snode, "preDay", 0);
-		t->preResearchedDate.sec = mxml_GetInt(snode, "preSec", 0);
-		t->researchedDate.day = mxml_GetInt(snode, "Day", 0);
-		t->researchedDate.sec = mxml_GetInt(snode, "Sec", 0);
-		t->mailSent = mxml_GetInt(snode, "mailSent", 0);
+		t->scientists = mxml_GetInt(snode, "scientists", 0);
+		t->statusResearchable = mxml_GetInt(snode, "statusresearchable", 0);
+		t->preResearchedDate.day = mxml_GetInt(snode, "preday", 0);
+		t->preResearchedDate.sec = mxml_GetInt(snode, "presec", 0);
+		t->researchedDate.day = mxml_GetInt(snode, "day", 0);
+		t->researchedDate.sec = mxml_GetInt(snode, "sec", 0);
+		t->mailSent = mxml_GetInt(snode, "mailsent", 0);
 
 		for (ssnode = mxml_GetNode(snode, "mail"); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, "mail")) {
 			int j= mxml_GetInt(ssnode, "id", TECHMAIL_MAX);

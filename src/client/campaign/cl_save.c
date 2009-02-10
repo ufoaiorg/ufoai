@@ -422,13 +422,13 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	top_node = mxmlNewXML("1.0");
 	node = mxml_AddNode(top_node, "savegame");
 	/* writing  Header */
-	mxml_AddInt(node, "Saveversion", SAVE_FILE_VERSION);
-	mxml_AddString(node, "Comment", comment);
-	mxml_AddString(node, "Version", UFO_VERSION);
+	mxml_AddInt(node, "saveversion", SAVE_FILE_VERSION);
+	mxml_AddString(node, "comment", comment);
+	mxml_AddString(node, "version", UFO_VERSION);
 	CL_DateConvertLong(&ccs.date, &date);
 	Com_sprintf(message, sizeof(message), _("%i %s %02i"),
 		    date.year, Date_GetMonthName(date.month - 1), date.day);
-	mxml_AddString(node, "GameDate", message);
+	mxml_AddString(node, "gamedate", message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
 	for (i = 0; i < saveSubsystemsXMLAmount; i++) {

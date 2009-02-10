@@ -81,29 +81,29 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 	mxml_AddBool(p, "armour", chr.armour);
 	mxml_AddBool(p, "weapons", chr.weapons);
 	if (chr.teamDef)
-		mxml_AddInt(p, "teamDefIdx", chr.teamDef->idx);
+		mxml_AddInt(p, "teamdefidx", chr.teamDef->idx);
 	mxml_AddInt(p, "gender", chr.gender);
 	mxml_AddInt(p, "ucn", chr.ucn);
-	mxml_AddInt(p, "maxHP", chr.maxHP);
-	mxml_AddInt(p, "HP", chr.HP);
-	mxml_AddInt(p, "STUN", chr.STUN);
+	mxml_AddInt(p, "maxhp", chr.maxHP);
+	mxml_AddInt(p, "hp", chr.HP);
+	mxml_AddInt(p, "stun", chr.STUN);
 	mxml_AddInt(p, "morale", chr.morale);
-	mxml_AddInt(p, "fieldSize", chr.fieldSize);
+	mxml_AddInt(p, "fieldsize", chr.fieldSize);
 
 	/* Store reaction-firemode */
-	mxml_AddInt(p, "RFmode.hand", chr.RFmode.hand);
-	mxml_AddInt(p, "RFmode.fmIdx", chr.RFmode.fmIdx);
-	mxml_AddInt(p, "RFmode.wpIdx", chr.RFmode.wpIdx);
+	mxml_AddInt(p, "rfmode.hand", chr.RFmode.hand);
+	mxml_AddInt(p, "rfmode.fmidx", chr.RFmode.fmIdx);
+	mxml_AddInt(p, "rfmode.wpidx", chr.RFmode.wpIdx);
 
 	/* Store reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
-	mxml_AddInt(p, "reservedTus.reserveReaction", chr.reservedTus.reserveReaction);
-	mxml_AddInt(p, "reservedTus.reaction", chr.reservedTus.reaction);
-	mxml_AddInt(p, "reservedTus.reserveCrouch", chr.reservedTus.reserveCrouch);
-	mxml_AddInt(p, "reservedTus.crouch", chr.reservedTus.crouch);
-	mxml_AddInt(p, "reservedTus.shot", chr.reservedTus.shot);
-	mxml_AddInt(p, "reservedTus.shotSettings.hand", chr.reservedTus.shotSettings.hand);
-	mxml_AddInt(p, "reservedTus.shotSettings.fmIdx", chr.reservedTus.shotSettings.fmIdx);
-	mxml_AddInt(p, "reservedTus.shotSettings.wpIdx", chr.reservedTus.shotSettings.wpIdx);
+	mxml_AddInt(p, "reservedtus.reservereaction", chr.reservedTus.reserveReaction);
+	mxml_AddInt(p, "reservedtus.reaction", chr.reservedTus.reaction);
+	mxml_AddInt(p, "reservedtus.reservecrouch", chr.reservedTus.reserveCrouch);
+	mxml_AddInt(p, "reservedtus.crouch", chr.reservedTus.crouch);
+	mxml_AddInt(p, "reservedtus.shot", chr.reservedTus.shot);
+	mxml_AddInt(p, "reservedtus.shotsettings.hand", chr.reservedTus.shotSettings.hand);
+	mxml_AddInt(p, "reservedtus.shotsettings.fmidx", chr.reservedTus.shotSettings.fmIdx);
+	mxml_AddInt(p, "reservedtus.shotsettings.wpidx", chr.reservedTus.shotSettings.wpIdx);
 
 	/* Store character stats/score */
 	for (k = 0; k < count; k++) {
@@ -113,7 +113,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 		if (k < SKILL_NUM_TYPES + 1) {
 			mxml_AddInt(s, "experience", chr.score.experience[k]);
 			/** @todo There is a Bug in storing the initial skills. Fix it in loading */
-			mxml_AddInt(s, "initSkill", chr.score.initialSkills[k]);
+			mxml_AddInt(s, "initskill", chr.score.initialSkills[k]);
 		}
 		if (k < KILLED_NUM_TYPES) {
 			mxml_AddInt(s, "kills", chr.score.kills[k]);
@@ -121,11 +121,11 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 		}
 	}
 
-	mxml_AddInt(p, "score.assignedMissions", chr.score.assignedMissions);
+	mxml_AddInt(p, "score.assignedmissions", chr.score.assignedMissions);
 	mxml_AddInt(p, "score.rank", chr.score.rank);
 
 	/* Store inventories */
-	s = mxml_AddNode(p, "Inventory");
+	s = mxml_AddNode(p, "inventory");
 	CL_SaveInventoryXML(s, &chr.inv);
 
 	return qtrue;
@@ -147,7 +147,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 
 	chr->teamDef = NULL;
 	/* Team-definition index */
-	td = mxml_GetInt(p, "teamDefIdx", BYTES_NONE);
+	td = mxml_GetInt(p, "teamdefidx", BYTES_NONE);
 
 	if (td != BYTES_NONE) {
 		assert(csi.numTeamDefs);
@@ -159,27 +159,27 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	/* Load the character data */
 	chr->gender = mxml_GetInt(p, "gender", 0);
 	chr->ucn = mxml_GetInt(p, "ucn", 0);
-	chr->maxHP = mxml_GetInt(p, "maxHP", 0);
-	chr->HP = mxml_GetInt(p, "HP", 0);
-	chr->STUN = mxml_GetInt(p, "STUN", 0);
+	chr->maxHP = mxml_GetInt(p, "maxhp", 0);
+	chr->HP = mxml_GetInt(p, "hp", 0);
+	chr->STUN = mxml_GetInt(p, "stun", 0);
 	chr->morale = mxml_GetInt(p, "morale", 0);
-	chr->fieldSize = mxml_GetInt(p, "fieldSize", 1);
+	chr->fieldSize = mxml_GetInt(p, "fieldsize", 1);
 
 	/* Load reaction-firemode */
-	CL_CharacterSetRFMode(chr, mxml_GetInt(p, "RFmode.hand", 0),
-		mxml_GetInt(p, "RFmode.fmIdx", 0), mxml_GetInt(p, "RFmode.wpIdx", 0));
+	CL_CharacterSetRFMode(chr, mxml_GetInt(p, "rfmode.hand", 0),
+		mxml_GetInt(p, "rfmode.fmidx", 0), mxml_GetInt(p, "rfmode.wpidx", 0));
 
 	/* Read reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
-	chr->reservedTus.reserveReaction = mxml_GetInt(p, "reservedTus.reserveReaction", 0);
-	chr->reservedTus.reaction = mxml_GetInt(p, "reservedTus.reaction", 0);
-	chr->reservedTus.reserveCrouch = mxml_GetInt(p, "reservedTus.reserveCrouch", 0);
-	chr->reservedTus.crouch = mxml_GetInt(p, "reservedTus.crouch", 0);
-	chr->reservedTus.shot = mxml_GetInt(p, "reservedTus.shot", 0);
+	chr->reservedTus.reserveReaction = mxml_GetInt(p, "reservedtus.reservereaction", 0);
+	chr->reservedTus.reaction = mxml_GetInt(p, "reservedtus.reaction", 0);
+	chr->reservedTus.reserveCrouch = mxml_GetInt(p, "reservedtus.reservecrouch", 0);
+	chr->reservedTus.crouch = mxml_GetInt(p, "reservedtus.crouch", 0);
+	chr->reservedTus.shot = mxml_GetInt(p, "reservedtus.shot", 0);
 	/** @todo Check for dummy value. I think it's save to remove this later on (e.g. before 2.3 release). */
 	if (chr->reservedTus.shot == -1)
 		chr->reservedTus.shot = 0;
-	CL_CharacterSetShotSettings(chr, mxml_GetInt(p, "reservedTus.shotSettings.hand", 0), mxml_GetInt(p, "reservedTus.shotSettings.fmIdx", 0),
-		mxml_GetInt(p, "reservedTus.shotSettings.wpIdx", 0));
+	CL_CharacterSetShotSettings(chr, mxml_GetInt(p, "reservedtus.shotsettings.hand", 0), mxml_GetInt(p, "reservedtus.shotsettings.fmidx", 0),
+		mxml_GetInt(p, "reservedtus.shotsettings.wpidx", 0));
 
 	/** Load character stats/score
 	 * @sa chrScoreGlobal_t */
@@ -190,7 +190,7 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 		if (k < SKILL_NUM_TYPES + 1) {
 			chr->score.experience[k] = mxml_GetInt(s, "experience", 0);
 			/** @todo There was a Bug in storing the initial skills. Zero Values will be set to max(hp,max_hp)*/
-			chr->score.initialSkills[k] = mxml_GetInt(s, "initSkill", 0);
+			chr->score.initialSkills[k] = mxml_GetInt(s, "initskill", 0);
 			if (k == SKILL_NUM_TYPES && chr->score.initialSkills[k] == 0) {
 				Com_DPrintf(DEBUG_CLIENT, "Skill was zero!");
 				chr->score.initialSkills[k] = max(chr->HP, chr->maxHP);
@@ -201,12 +201,12 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 			chr->score.stuns[k] = mxml_GetInt(s, "stuns", 0);
 		}
 	}
-	chr->score.assignedMissions = mxml_GetInt(p, "score.assignedMissions", 0);
+	chr->score.assignedMissions = mxml_GetInt(p, "score.assignedmissions", 0);
 	chr->score.rank = mxml_GetInt(p, "score.rank", 0);
 
 	/*memset(&chr->inv, 0, sizeof(inventory_t));*/
 	INVSH_DestroyInventory(&chr->inv);
-	s = mxml_GetNode(p, "Inventory");
+	s = mxml_GetNode(p, "inventory");
 	CL_LoadInventoryXML(s, &chr->inv);
 
 	return qtrue;
@@ -218,15 +218,15 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 static void CL_SaveItemXML (mxml_node_t *p, item_t item, int container, int x, int y)
 {
 	assert(item.t);
-	mxml_AddInt(p, "Ammo", item.a);
-	mxml_AddInt(p, "Container", container);
+	mxml_AddInt(p, "ammo", item.a);
+	mxml_AddInt(p, "container", container);
 	mxml_AddInt(p, "x", x);
 	mxml_AddInt(p, "y", y);
 	mxml_AddInt(p, "rotated", item.rotated);
 	mxml_AddInt(p, "amount", item.amount);
-	mxml_AddString(p, "weaponId", item.t->id);
+	mxml_AddString(p, "weaponid", item.t->id);
 	if (item.a > NONE_AMMO)
-		mxml_AddString(p, "munitionId", item.m->id);
+		mxml_AddString(p, "munitionid", item.m->id);
 }
 
 /**
@@ -287,16 +287,16 @@ static void CL_LoadItemXML (mxml_node_t *n, item_t *item, int *container, int *x
 
 	/* reset */
 	memset(item, 0, sizeof(*item));
-	item->a = mxml_GetInt(n, "Ammo", NONE_AMMO);
+	item->a = mxml_GetInt(n, "ammo", NONE_AMMO);
 	item->rotated = mxml_GetInt(n, "rotated", 0);
 	item->amount = mxml_GetInt(n, "amount", 1);
 	*x = mxml_GetInt(n, "x", 0);
 	*y = mxml_GetInt(n, "y", 0);
-	*container = mxml_GetInt(n, "Container", 0);
-	itemID = mxml_GetString(n, "weaponId");
+	*container = mxml_GetInt(n, "container", 0);
+	itemID = mxml_GetString(n, "weaponid");
 	item->t = INVSH_GetItemByID(itemID);
 	if (item->a > NONE_AMMO) {
-		itemID = mxml_GetString(n, "munitionId");
+		itemID = mxml_GetString(n, "munitionid");
 		item->m = INVSH_GetItemByID(itemID);
 	}
 }

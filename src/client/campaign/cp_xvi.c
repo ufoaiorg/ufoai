@@ -128,7 +128,7 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 	if (!out)
 		return qtrue;
 	/* ok, do the saving... */
-	n = mxml_AddNode(p, "XVI");
+	n = mxml_AddNode(p, "xvi");
 	mxml_AddInt(n, "width", width);
 	mxml_AddInt(n, "height", height);
 	mxml_AddInt(n, "default", defaultval);
@@ -193,7 +193,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 	int width, height;
 	mxml_node_t *s;
 	int defaultval;
-	mxml_node_t *n = mxml_GetNode(p, "XVI");
+	mxml_node_t *n = mxml_GetNode(p, "xvi");
 	/* If there is no XVI, it will not be saved */
 	if (!n)
 		return qtrue;

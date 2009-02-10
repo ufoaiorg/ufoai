@@ -183,7 +183,7 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n;
-	n = mxml_AddNode(p, "Nations");
+	n = mxml_AddNode(p, "nations");
 	for (i = 0; i < ccs.numNations; i++) {
 		int j;
 		mxml_node_t *s = mxml_AddNode(n, "nation");
@@ -192,7 +192,7 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 			mxml_AddBool(ss, "inuse", ccs.nations[i].stats[j].inuse);
 			mxml_AddFloat(ss, "happiness", ccs.nations[i].stats[j].happiness);
 			mxml_AddInt(ss, "xvi", ccs.nations[i].stats[j].xviInfection);
-			mxml_AddFloat(ss, "alienFriendly", ccs.nations[i].stats[j].alienFriendly);
+			mxml_AddFloat(ss, "alienfriendly", ccs.nations[i].stats[j].alienFriendly);
 		}
 	}
 	return qtrue;
@@ -223,7 +223,7 @@ qboolean NAT_LoadXML (mxml_node_t * p)
 	int i;
 	mxml_node_t *n, *s;
 
-	n = mxml_GetNode(p, "Nations");
+	n = mxml_GetNode(p, "nations");
 	if (!n)
 		return qfalse;
 
@@ -234,7 +234,7 @@ qboolean NAT_LoadXML (mxml_node_t * p)
 			ccs.nations[i].stats[j].inuse = mxml_GetBool(ss, "inuse", qfalse);
 			ccs.nations[i].stats[j].happiness = mxml_GetFloat(ss, "happiness", 0.0);
 			ccs.nations[i].stats[j].xviInfection = mxml_GetInt(ss, "xvi", 0);
-			ccs.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, "alienFriendly", 0.0);
+			ccs.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, "alienfriendly", 0.0);
 		}
 	}
 	return qtrue;

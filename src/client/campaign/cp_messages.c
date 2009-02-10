@@ -176,8 +176,8 @@ static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
 	mxml_AddInt(n, "type", message->type);
 	/* store script id of event mail */
 	if (message->type == MSG_EVENT) {
-		mxml_AddString(n, "EventMailId", message->eventMail->id);
-		mxml_AddBool(n, "EventMailRead", message->eventMail->read);
+		mxml_AddString(n, "eventmailid", message->eventMail->id);
+		mxml_AddBool(n, "eventmailread", message->eventMail->read);
 	}
 	if (message->pedia)
 		mxml_AddInt(n, "idx", message->pedia->idx);
@@ -228,7 +228,7 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
  */
 qboolean MS_SaveXML (mxml_node_t *p)
 {
-	mxml_node_t *n = mxml_AddNode(p, "Messages");
+	mxml_node_t *n = mxml_AddNode(p, "messages");
 
 	/* store message system items */
 	MS_MessageSaveXML(n, cp_messageStack);
@@ -264,7 +264,7 @@ qboolean MS_LoadXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n, *sn;
-	n = mxml_GetNode(p, "Messages");
+	n = mxml_GetNode(p, "messages");
 	if (!n)
 		return qfalse;
 
@@ -277,9 +277,9 @@ qboolean MS_LoadXML (mxml_node_t *p)
 		Q_strncpyz(text,  mxml_GetString(sn, "text"),  sizeof(text));
 		mtype = mxml_GetInt(sn, "type", MSG_DEBUG);
 		if (mtype == MSG_EVENT) {
-			mail = CL_GetEventMail(mxml_GetString(sn, "EventMailId"), qfalse);
+			mail = CL_GetEventMail(mxml_GetString(sn, "eventmailid"), qfalse);
 			if (mail)
-				mail->read = mxml_GetBool(sn, "EventMailRead", qfalse);
+				mail->read = mxml_GetBool(sn, "eventmailread", qfalse);
 		} else
 			mail = NULL;
 

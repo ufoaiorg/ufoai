@@ -545,12 +545,12 @@ void PR_InitStartup (void)
 qboolean PR_SaveXML (mxml_node_t *p)
 {
 	int i;
-	mxml_node_t *node = mxml_AddNode(p, "Production");
+	mxml_node_t *node = mxml_AddNode(p, "production");
 	for (i = 0; i < MAX_BASES; i++) {
 		const production_queue_t *pq = &ccs.productions[i];
 		int j;
 		mxml_node_t * snode = mxml_AddNode(node, "queue");
-		mxml_AddInt(snode, "numItems", pq->numItems);
+		mxml_AddInt(snode, "numitems", pq->numItems);
 		for (j = 0; j < pq->numItems; j++) {
 			/** @todo This will crash */
 			const objDef_t *item = pq->items[j].item;
@@ -558,12 +558,12 @@ qboolean PR_SaveXML (mxml_node_t *p)
 			mxml_node_t * ssnode = mxml_AddNode(snode, "item");
 			assert(item || aircraft);
 			if (item)
-				mxml_AddString(ssnode, "itemId", item->id);
+				mxml_AddString(ssnode, "itemid", item->id);
 			mxml_AddInt(ssnode, "amount", pq->items[j].amount);
-			mxml_AddFloat(ssnode, "percentDone", pq->items[j].percentDone);
+			mxml_AddFloat(ssnode, "percentdone", pq->items[j].percentDone);
 			mxml_AddBool(ssnode, "prod", pq->items[j].production);
 			if (aircraft)
-				mxml_AddString(ssnode, "aircraftId", aircraft->id);
+				mxml_AddString(ssnode, "aircraftid", aircraft->id);
 			mxml_AddBool(ssnode, "items_cached", pq->items[j].items_cached);
 		}
 	}
@@ -608,24 +608,24 @@ qboolean PR_LoadXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *node, *snode;
 
-	node = mxml_GetNode(p, "Production");
+	node = mxml_GetNode(p, "production");
 
 	for (i = 0, snode = mxml_GetNode(node, "queue"); i < MAX_BASES && snode;
 			i++, snode = mxml_GetNextNode(snode, node, "queue")) {
 		int j;
 		mxml_node_t *ssnode;
 		production_queue_t *pq = &ccs.productions[i];
-		pq->numItems = mxml_GetInt(snode, "numItems", 0);
+		pq->numItems = mxml_GetInt(snode, "numitems", 0);
 		for (j = 0, ssnode = mxml_GetNode(snode, "item"); j < pq->numItems && ssnode;
 				j++, ssnode = mxml_GetNextNode(ssnode, snode, "item")) {
-			const char *s1 = mxml_GetString(ssnode, "itemId");
+			const char *s1 = mxml_GetString(ssnode, "itemid");
 			const char *s2;
 			if (s1 && s1[0] != '\0')
 				pq->items[j].item = INVSH_GetItemByID(s1);
 			pq->items[j].amount = mxml_GetInt(ssnode, "amount", 0);
-			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentDone", 0.0);
+			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentdone", 0.0);
 			pq->items[j].production = mxml_GetBool(ssnode, "prod", qfalse);
-			s2 = mxml_GetString(ssnode, "aircraftId");
+			s2 = mxml_GetString(ssnode, "aircraftid");
 			if (s2 && s2[0] != '\0')
 				pq->items[j].aircraft = AIR_GetAircraft(s2);
 			pq->items[j].items_cached = mxml_GetBool(ssnode, "items_cached", qfalse);

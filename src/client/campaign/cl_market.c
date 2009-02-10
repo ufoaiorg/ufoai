@@ -1135,11 +1135,11 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 	int i;
 	mxml_node_t *node;
 	/* store market */
-	node = mxml_AddNode(parent, "Market");
+	node = mxml_AddNode(parent, "market");
 	for (i = 0; i < MAX_OBJDEFS; i++) {
 		if (csi.ods[i].id[0] != '\0') {
-			mxml_node_t * snode = mxml_AddNode(node, "Element");
-			mxml_AddString(snode, "Id", csi.ods[i].id);
+			mxml_node_t * snode = mxml_AddNode(node, "element");
+			mxml_AddString(snode, "id", csi.ods[i].id);
 			mxml_AddInt(snode, "num", ccs.eMarket.num[i]);
 			mxml_AddInt(snode, "bid", ccs.eMarket.bid[i]);
 			mxml_AddInt(snode, "ask", ccs.eMarket.ask[i]);
@@ -1181,12 +1181,12 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 {
 	int i;
 	mxml_node_t *node, *snode;
-	node = mxml_GetNode(parent, "Market");
+	node = mxml_GetNode(parent, "market");
 	if (!node)
 		return qfalse;
-	for(i = 0, snode = mxml_GetNode(node, "Element"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "Element")) {
+	for(i = 0, snode = mxml_GetNode(node, "element"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "element")) {
 		if (snode) {
-			const char *s = mxml_GetString(snode, "Id");
+			const char *s = mxml_GetString(snode, "id");
 			objDef_t *od = INVSH_GetItemByID(s);
 			if (!od) {
 				Com_Printf("BS_Load: Could not find item '%s'\n", s);

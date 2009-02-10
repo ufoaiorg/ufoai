@@ -361,7 +361,7 @@ qboolean AB_LoadXML (mxml_node_t *p)
 {
 	int i;
 	mxml_node_t *n, *s;
-	n = mxml_GetNode(p, "AlienBases");
+	n = mxml_GetNode(p, "alienbases");
 	if (!n)
 		return qfalse;
 	numAlienBases = mxml_GetInt(n, "num", 0);
@@ -404,7 +404,7 @@ qboolean AB_Load (sizebuf_t *sb, void *data)
 qboolean AB_SaveXML (mxml_node_t *p)
 {
 	int i;
-	mxml_node_t *n = mxml_AddNode(p, "AlienBases");
+	mxml_node_t *n = mxml_AddNode(p, "alienbases");
 
 	mxml_AddInt(n, "num", numAlienBases);
 	for (i = 0; i < MAX_ALIEN_BASES; i++) {
