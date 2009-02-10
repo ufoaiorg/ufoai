@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "m_node_abstractnode.h"
 
-#define CORNER_SIZE 17
+#define CORNER_SIZE 25
 #define MID_SIZE 1
 #define MARGE 3
 

@@ -35,11 +35,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "m_node_optionlist.h"
 
-#define CORNER_SIZE 17
+#define CORNER_SIZE 25
 #define MID_SIZE 1
 #define MARGE 3
 
-#define ELEMENT_HEIGHT 20	/**< todo remove it, whould not need */
+#define ELEMENT_HEIGHT 20	/**< todo remove it, whould be computed with the font */
 
 /**
  * @brief Return the first option of the node
