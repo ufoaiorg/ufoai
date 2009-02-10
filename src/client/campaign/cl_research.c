@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_game.h"
 #include "../menu/m_popup.h"
+#include "../mxml/mxml_ufoai.h"
 #include "cl_research.h"
 #include "cl_research_callbacks.h"
 #include "../../shared/parse.h"
@@ -435,7 +436,7 @@ void RS_MarkCollected (technology_t* tech)
 	if (tech->mailSent < MAILSENT_PROPOSAL) {
 		if (tech->statusResearch < RS_FINISH) {
 			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-			MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED,_("Unknown Technology found"), cp_messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+			MSO_CheckAddNewMessage(NT_RESEARCH_PROPOSED, _("Unknown Technology found"), cp_messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		}
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
@@ -1108,12 +1109,12 @@ static const char *RS_TechReqToName (requirement_t *req)
 	case RS_LINK_TECH:
 		return ((technology_t*)req->link)->id;
 	case RS_LINK_TECH_NOT:
-		return va("not %s",((technology_t*)req->link)->id);
+		return va("not %s", ((technology_t*)req->link)->id);
 #if 0
 	case RS_LINK_TECH_BEFORE:
-		return va("%s before %s",((technology_t*)req->link)->id, ((technology_t*)req->link2)->id);
+		return va("%s before %s", ((technology_t*)req->link)->id, ((technology_t*)req->link2)->id);
 	case RS_LINK_TECH_XOR:
-		return va("%s xor %s",((technology_t*)req->link)->id, ((technology_t*)req->link2)->id);
+		return va("%s xor %s", ((technology_t*)req->link)->id, ((technology_t*)req->link2)->id);
 #endif
 	case RS_LINK_ITEM:
 		return ((objDef_t*)req->link)->id;
@@ -2006,6 +2007,42 @@ void RS_RemoveScientistsExceedingCapacity (base_t *base)
 	}
 }
 
+qboolean RS_SaveXML (mxml_node_t *parent)
+{
+	int i;
+	mxml_node_t *node;
+	node = mxml_AddNode(parent, "Research");
+	mxml_AddInt(node, "count", ccs.numTechnologies);
+	for (i = 0; i < ccs.numTechnologies; i++) {
+		int j;
+		const technology_t *t = RS_GetTechByIDX(i);
+		mxml_node_t * snode = mxml_AddNode(node, "tech");
+		mxml_AddString(snode, "Id", t->id);
+		mxml_AddBool(snode, "statusCollected", t->statusCollected);
+		mxml_AddFloat(snode, "time", t->time);
+		mxml_AddShort(snode, "statusResearch", t->statusResearch);
+		if (t->base)
+			mxml_AddInt(snode, "base", t->base->idx);
+		mxml_AddInt(snode, "Scientists", t->scientists);
+		mxml_AddInt(snode, "statusResearchable", t->statusResearchable);
+		mxml_AddInt(snode, "preDay", t->preResearchedDate.day);
+		mxml_AddInt(snode, "preSec", t->preResearchedDate.sec);
+		mxml_AddInt(snode, "Day", t->researchedDate.day);
+		mxml_AddInt(snode, "Sec", t->researchedDate.sec);
+		mxml_AddInt(snode, "mailSent", t->mailSent);
+		for (j = 0; j < TECHMAIL_MAX; j++) {
+			/* only save the already read mails */
+			if (t->mail[j].read) {
+				mxml_node_t * ssnode = mxml_AddNode(snode, "mail");
+				mxml_AddInt(ssnode, "id", j);
+				mxml_AddBool(ssnode, "read", t->mail[j].read);
+			}
+		}
+	}
+
+	return qtrue;
+}
+
 qboolean RS_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;
@@ -2039,6 +2076,52 @@ qboolean RS_Save (sizebuf_t* sb, void* data)
 
 static linkedList_t *loadTechBases;
 
+qboolean RS_LoadXML (mxml_node_t *parent)
+{
+	int i, count;
+	mxml_node_t *topnode, *snode;
+	topnode = mxml_GetNode(parent, "Research");
+	if (!topnode)
+		return qfalse;
+	count = mxml_GetInt(topnode, "count", 0);
+	/* Clear linked list. */
+	LIST_Delete(&loadTechBases);
+	for (i = 0, snode = mxml_GetNode(topnode, "tech"); i < count && snode; i++, snode = mxml_GetNextNode(snode, topnode, "tech")) {
+		const char *techString = mxml_GetString(snode, "Id");
+		mxml_node_t * ssnode;
+		int tempBaseIdx;
+		technology_t *t = RS_GetTechByID(techString);
+		if (!t) {
+			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
+			continue;
+		}
+		t->statusCollected = mxml_GetBool(snode, "statusCollected", qfalse);
+		t->time = mxml_GetFloat(snode, "time", 0.0);
+		t->statusResearch = mxml_GetShort(snode, "statusResearch", 0);
+		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
+		tempBaseIdx = mxml_GetInt(snode, "base", -1);
+		LIST_AddPointer(&loadTechBases, t);
+		LIST_Add(&loadTechBases, (byte *)&tempBaseIdx, sizeof(int));
+		t->scientists = mxml_GetInt(snode, "Scientists", 0);
+		t->statusResearchable = mxml_GetInt(snode, "statusResearchable", 0);
+		t->preResearchedDate.day = mxml_GetInt(snode, "preDay", 0);
+		t->preResearchedDate.sec = mxml_GetInt(snode, "preSec", 0);
+		t->researchedDate.day = mxml_GetInt(snode, "Day", 0);
+		t->researchedDate.sec = mxml_GetInt(snode, "Sec", 0);
+		t->mailSent = mxml_GetInt(snode, "mailSent", 0);
+
+		for (ssnode = mxml_GetNode(snode, "mail"); ssnode; ssnode = mxml_GetNextNode(ssnode, snode, "mail")) {
+			int j= mxml_GetInt(ssnode, "id", TECHMAIL_MAX);
+			if (j  < TECHMAIL_MAX) {
+				const techMailType_t mailType = j;
+				t->mail[mailType].read = mxml_GetBool(ssnode, "read", qtrue);
+			} else
+				Com_Printf("......your save game contains unknown techmail ids... \n");
+		}
+	}
+
+	return qtrue;
+}
 qboolean RS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;

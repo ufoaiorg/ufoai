@@ -519,7 +519,7 @@ static void AFM_SmoothTranslate (void)
 	const float diff_zoom = smoothFinalZoom - ccs.zoom;
 	const float speed = 1.0f;
 
-	if (/*length < AF_SMOOTHING_STEP_2D  && */ fabs(diff_zoom) < AF_SMOOTHING_STEP_2D) {
+	if (/*length < AF_SMOOTHING_STEP_2D && */ fabs(diff_zoom) < AF_SMOOTHING_STEP_2D) {
 #if 0
 		ccs.center[0] = smoothFinalAirFightCenter[0];
 		ccs.center[1] = smoothFinalAirFightCenter[1];

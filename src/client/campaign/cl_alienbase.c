@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "cl_alienbase.h"
 #include "cl_map.h"
+#include "../mxml/mxml_ufoai.h"
 
 static alienBase_t alienBases[MAX_ALIEN_BASES];		/**< Alien bases spawned in game */
 static int numAlienBases;							/**< Number of alien bases in game */
@@ -354,6 +355,31 @@ void AB_InitStartup (void)
 
 /**
  * @brief Load callback for alien base data
+ * @sa AB_SaveXML
+ */
+qboolean AB_LoadXML (mxml_node_t *p)
+{
+	int i;
+	mxml_node_t *n, *s;
+	n = mxml_GetNode(p, "AlienBases");
+	if (!n)
+		return qfalse;
+	numAlienBases = mxml_GetInt(n, "num", 0);
+	for (i = 0, s = mxml_GetNode(n, "base"); i < MAX_ALIEN_BASES && s; i++, s = mxml_GetNextNode(s, n, "base")) {
+		alienBase_t *base = &alienBases[i];
+		base->idx = mxml_GetInt(s, "idx", 0);
+		if (!mxml_GetPos2(s, "pos", base->pos)) {
+			Com_Printf("Position is invalid for Alienbase %d (idx %d)\n", i, base->idx);
+			return qfalse;
+		}
+		base->supply = mxml_GetInt(s, "supply", 0);
+		base->stealth = mxml_GetFloat(s, "stealth", 0.0);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for alien base data
  * @sa AB_Save
  */
 qboolean AB_Load (sizebuf_t *sb, void *data)
@@ -367,6 +393,27 @@ qboolean AB_Load (sizebuf_t *sb, void *data)
 		MSG_Read2Pos(sb, base->pos);
 		base->supply = MSG_ReadShort(sb);
 		base->stealth = MSG_ReadFloat(sb);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Save callback for alien base data
+ * @sa AB_LoadXML
+ */
+qboolean AB_SaveXML (mxml_node_t *p)
+{
+	int i;
+	mxml_node_t *n = mxml_AddNode(p, "AlienBases");
+
+	mxml_AddInt(n, "num", numAlienBases);
+	for (i = 0; i < MAX_ALIEN_BASES; i++) {
+		const alienBase_t *base = &alienBases[i];
+		mxml_node_t *s = mxml_AddNode(n, "base");
+		mxml_AddInt(s, "idx", base->idx);
+		mxml_AddPos2(s, "pos", base->pos);
+		mxml_AddInt(s, "supply", base->supply);
+		mxml_AddFloat(s, "stealth", base->stealth);
 	}
 	return qtrue;
 }

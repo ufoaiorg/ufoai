@@ -645,7 +645,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		/** @todo Should be a special story related mission model */
 		return "geoscape/mission";
 	}
-
+	Com_Printf("Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
 	/** @todo each category should have a its own model */
 	case INTERESTCATEGORY_RECON:

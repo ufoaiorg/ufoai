@@ -663,7 +663,7 @@ void R_DrawAirFightBackground (int x, int y, int w, int h, float cx, float cy, f
 void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 {
 	float theta;
-	const float accuracy = 5.0f;
+	const float accuracy = 5.0;
 	const float step = M_PI / radius * accuracy;
 
 	glDisable(GL_TEXTURE_2D);
@@ -686,17 +686,17 @@ void R_DrawCircle (vec3_t mid, float radius, const vec4_t color, int thickness)
 
 	if (thickness <= 1) {
 		glBegin(GL_LINE_STRIP);
-		for (theta = 0.0f; theta <= 2.0f * M_PI; theta += step) {
+		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
 			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
 		}
 		glEnd();
 	} else {
 		glBegin(GL_TRIANGLE_STRIP);
-		for (theta = 0; theta <= 2 * M_PI; theta += step) {
-			glVertex3f(radius * cos(theta), radius * sin(theta), 0);
-			glVertex3f(radius * cos(theta - step), radius * sin(theta - step), 0);
-			glVertex3f((radius - thickness) * cos(theta - step), (radius - thickness) * sin(theta - step), 0);
-			glVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0);
+		for (theta = 0.0; theta <= 2.0 * M_PI; theta += step) {
+			glVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
+			glVertex3f(radius * cos(theta - step), radius * sin(theta - step), 0.0);
+			glVertex3f((radius - thickness) * cos(theta - step), (radius - thickness) * sin(theta - step), 0.0);
+			glVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0.0);
 		}
 		glEnd();
 	}
@@ -745,7 +745,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 	glVertex2f(x + radius, y);
 
 	for (i = 0; i < CIRCLE_LINE_COUNT; i++) {
-		const float angle = (i * 2 * M_PI) / CIRCLE_LINE_COUNT;
+		const float angle = (i * 2.0 * M_PI) / CIRCLE_LINE_COUNT;
 		glVertex2f(x + radius * cos(angle), y - radius * sin(angle));
 
 		/* When filling we're drawing triangles so we need to
@@ -755,7 +755,7 @@ void R_DrawCircle2D (int x, int y, float radius, qboolean fill, const vec4_t col
 			glVertex2f(x, y);
 	}
 
-	glVertex2f(x + radius * cos(2 * M_PI), y - radius * sin(2 * M_PI));
+	glVertex2f(x + radius * cos(2.0 * M_PI), y - radius * sin(2.0 * M_PI));
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
 	R_EnableBlend(qfalse);
@@ -999,7 +999,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	const float nw = w * viddef.rx;
 	const float nh = h * viddef.ry;
 
-	const vec3_t earthPos = {nx + nw / 2, ny + nh / 2, 0};	/* Earth center is in the middle of node.
+	const vec3_t earthPos = {nx + nw / 2.0, ny + nh / 2.0, 0.0};	/* Earth center is in the middle of node.
 								* Due to Orthographic view, this is also camera position */
 	vec3_t moonPos;
 
@@ -1009,7 +1009,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	const float q = (day % DAYS_PER_YEAR + (float) (second / (float)SECONDS_PER_DAY)) * 2 * M_PI / DAYS_PER_YEAR;	/* sun rotation (year) */
 	const float a = cos(q) * SIN_ALPHA;	/* due to earth obliquity */
 	const float sqrta = sqrt(0.5f * (1 - a * a));
-	p = (float) (second / (float)SECONDS_PER_DAY) * 2 * M_PI - 0.5f * M_PI;		/* earth rotation (day) */
+	p = (float) (second / (float)SECONDS_PER_DAY) * 2.0 * M_PI - 0.5f * M_PI;		/* earth rotation (day) */
 	Vector4Set(lightPos, cos(p) * sqrta, -sin(p) * sqrta, a, 0);
 
 	/* Then rotate it in the relative frame of player view, to get sun position (no need to rotate
@@ -1029,7 +1029,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	/* load sun image */
 	sun = R_FindImage("pics/geoscape/map_sun", it_pic);
 	if (sun != r_noTexture && v[2] < 0 && !disableSolarRender) {
-		R_DrawTexture(sun->texnum, earthPos[0] - 64 * viddef.rx + celestialDist * v[1] * viddef.rx , earthPos[1] - 64 * viddef.ry + celestialDist * v[0] * viddef.ry, 128 * viddef.rx, 128 * viddef.ry);
+		R_DrawTexture(sun->texnum, earthPos[0] - 64.0 * viddef.rx + celestialDist * v[1] * viddef.rx , earthPos[1] - 64.0 * viddef.ry + celestialDist * v[0] * viddef.ry, 128.0 * viddef.rx, 128.0 * viddef.ry);
 	}
 
 	/* Draw atmosphere */
@@ -1038,7 +1038,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 		const float bgZoom = zoom;
 		/* Force height to make sure the image is a circle (and not an ellipse) */
 		const int halfHeight = 768.0f * viddef.ry;
-		R_DrawTexture(background->texnum,  earthPos[0] - nw / 2 * bgZoom, earthPos[1] - halfHeight / 2 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
+		R_DrawTexture(background->texnum,  earthPos[0] - nw / 2.0 * bgZoom, earthPos[1] - halfHeight / 2.0 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
 	}
 
 	R_EnableBlend(qfalse);
@@ -1063,7 +1063,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	/* calculate position of the moon (it rotates around earth with a period of
 	 * about 24.9 h, and we must take day into account to avoid moon to "jump"
 	 * every time the day is changing) */
-	p = (float) ((day % 249) + second / (24.9f * (float)SECONDS_PER_HOUR)) * 2 * M_PI;
+	p = (float) ((day % 249) + second / (24.9f * (float)SECONDS_PER_HOUR)) * 2.0 * M_PI;
 	VectorSet(moonPos, cos(p) * sqrta, - sin(p) * sqrta, a);
 	VectorSet(v, moonPos[1], moonPos[0], moonPos[2]);
 	VectorSet(rotationAxis, 0, 0, 1);

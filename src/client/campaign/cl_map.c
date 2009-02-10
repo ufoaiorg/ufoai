@@ -2554,9 +2554,8 @@ void MAP_Zoom_f (void)
 		return;
 	}
 
-	if (gd.combatZoomOn  && gd.combatZoomedUFO) {
+	if (gd.combatZoomOn && gd.combatZoomedUFO)
 		return;
-	}
 
 	cmd = Cmd_Argv(1);
 	switch (cmd[0]) {

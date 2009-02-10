@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_missions.h"
 #include "../../shared/parse.h"
+#include "../mxml/mxml_ufoai.h"
 
 
 aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
@@ -2126,7 +2127,6 @@ void AIR_RemovePilotFromAssignedAircraft (base_t* base, const employee_t* pilot)
 			break;
 		}
 	}
-
 }
 
 /**
@@ -2171,6 +2171,240 @@ int AIR_GetAircraftWeaponRanges (const aircraftSlot_t *slot, int maxSlot, float 
 	}
 
 	return numUniqueWeaponRanges;
+}
+
+static void AIR_SaveRouteXML (mxml_node_t *node, const mapline_t route)
+{
+	int j;
+	mxml_AddFloat(node, "Distance", route.distance);
+	for (j = 0; j < route.numPoints; j++){
+		mxml_AddPos2(node, "point", route.point[j]);
+	}
+}
+
+static void AIR_SaveOneSlotXML (const aircraftSlot_t* slot, mxml_node_t *p, qboolean weapon)
+{
+	mxml_AddString(p, "ItemId", slot->item ? slot->item->id : "");
+	mxml_AddString(p, "NextItemId", slot->nextItem ? slot->nextItem->id : "");
+	mxml_AddInt(p, "InstallationTime", slot->installationTime);
+	/* everything below is only for weapon */
+	if (!weapon)
+		return;
+	mxml_AddString(p, "AmmoId", slot->ammo ? slot->ammo->id : "");
+	mxml_AddString(p, "NextAmmoId", slot->nextAmmo ? slot->nextAmmo->id : "");
+	mxml_AddInt(p, "AmmoLeft", slot->ammoLeft);
+	mxml_AddInt(p, "DelayNextShot", slot->delayNextShot);
+}
+
+/**
+ * @brief Saves an item slot
+ * @param[in] slot Pointer to the slot where item is.
+ * @param[in] num Number of slots for this aircraft.
+ * @param[in] node pointer where information are written.
+ * @param[in] weapon True if the slot is a weapon slot.
+ * @sa B_LoadAircraftSlots
+ * @sa B_Save
+ * @sa AII_InitialiseSlot
+ */
+static void AIR_SaveAircraftSlotsXML (const aircraftSlot_t* slot, const int num, mxml_node_t *p, qboolean weapon)
+{
+	int i;
+	mxml_node_t *sub;
+	/*MSG_WriteByte(sb, num);*/
+
+	for (i = 0; i < num; i++) {
+		sub = mxml_AddNode(p, "Slot");
+		AIR_SaveOneSlotXML(&slot[i], sub, weapon);
+	}
+}
+
+
+void AIR_SaveAircraftXML (mxml_node_t *node, aircraft_t const aircraft, qboolean const isUfo)
+{
+	mxml_node_t *subnode;
+	int l;
+
+	mxml_AddString(node, "Id", aircraft.id);
+
+	mxml_AddInt(node, "status", aircraft.status);
+	mxml_AddInt(node, "fuel", aircraft.fuel);
+	mxml_AddInt(node, "damage", aircraft.damage);
+	mxml_AddPos3(node, "pos", aircraft.pos);
+	mxml_AddPos3(node, "direction", aircraft.direction);
+	mxml_AddInt(node, "point", aircraft.point);
+	mxml_AddInt(node, "time", aircraft.time);
+
+	subnode = mxml_AddNode(node, "Weapons");
+	AIR_SaveAircraftSlotsXML(aircraft.weapons, aircraft.maxWeapons, subnode, qtrue);
+	subnode = mxml_AddNode(node, "Shields");
+	AIR_SaveAircraftSlotsXML(&aircraft.shield, 1, subnode, qfalse);
+	subnode = mxml_AddNode(node, "Electronics");
+	AIR_SaveAircraftSlotsXML(aircraft.electronics, aircraft.maxElectronics, subnode, qfalse);
+	subnode = mxml_AddNode(node, "Route");
+	AIR_SaveRouteXML(subnode, aircraft.route);
+
+	if (isUfo) {
+#ifdef DEBUG
+		if (!aircraft.mission)
+			Com_Printf("Error: UFO '%s'is not linked to any mission\n", aircraft.id);
+#endif
+		mxml_AddString(node, "MissionId", aircraft.mission->id);
+	} else {
+		if (aircraft.status == AIR_MISSION) {
+			assert(aircraft.mission);
+			mxml_AddString(node, "MissionId", aircraft.mission->id);
+		}
+	}
+
+	if (aircraft.baseTarget)
+		mxml_AddInt(node, "baseTarget", aircraft.baseTarget->idx);
+
+	if (aircraft.installationTarget)
+		mxml_AddInt(node, "installationTarget", aircraft.installationTarget->idx);
+
+	if (aircraft.aircraftTarget){
+		if (isUfo)
+			mxml_AddInt(node, "AircraftTarget", aircraft.aircraftTarget->idx);
+		else
+			mxml_AddInt(node, "AircraftTarget", aircraft.aircraftTarget - gd.ufos);
+	}
+
+	for (l = 0; l < AIR_STATS_MAX; l++) {
+#ifdef DEBUG
+		/* UFO HP can be < 0 if the UFO has been destroyed */
+		if (!(isUfo && l == AIR_STATS_DAMAGE) && aircraft.stats[l] < 0)
+			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", aircraft.id, l, aircraft.stats[l]);
+#endif
+		subnode = mxml_AddNode(node, "Airstats");
+		mxml_AddLong(subnode, "val", aircraft.stats[l]);
+	 }
+
+	mxml_AddBool(node, "detected", aircraft.detected);
+	mxml_AddBool(node, "landed", aircraft.landed);
+
+	/* All other informations are not needed for ufos */
+	if (isUfo)
+		return;
+
+	mxml_AddInt(node, "Idx", aircraft.idx);
+	mxml_AddInt(node, "Hangar", aircraft.hangar);
+
+	subnode = mxml_AddNode(node, "AircraftTeam");
+	for (l = 0; l < aircraft.teamSize; l++) {
+		if (aircraft.acTeam[l]){
+			mxml_node_t *ssnode = mxml_AddNode(subnode, "Member");
+			mxml_AddInt(ssnode, "Idx", aircraft.acTeam[l]->idx);
+			mxml_AddInt(ssnode, "Type", aircraft.acTeam[l]->type);
+		}
+	}
+
+	if (aircraft.pilot)
+		mxml_AddInt(node, "PilotIdx", aircraft.pilot->idx);
+
+	subnode = mxml_AddNode(node, "Cargo");
+	mxml_AddInt(subnode, "Types", aircraft.itemtypes);
+	/* itemcargo */
+	for (l = 0; l < aircraft.itemtypes; l++) {
+		mxml_node_t *ssnode = mxml_AddNode(subnode, "Item");
+		assert(aircraft.itemcargo[l].item);
+		mxml_AddString(ssnode, "ItemId", aircraft.itemcargo[l].item->id);
+		mxml_AddInt(ssnode, "amount", aircraft.itemcargo[l].amount);
+	}
+
+	/*int numUpgrades;*/
+	mxml_AddInt(node, "numUpgrades", aircraft.numUpgrades);
+	/*radar_t	radar;*/
+	mxml_AddInt(node, "radar.range", aircraft.radar.range);
+	mxml_AddInt(node, "radar.trackingRange", aircraft.radar.trackingRange);
+
+	{
+		const int alienCargoTypes = AL_GetAircraftAlienCargoTypes(&aircraft);
+		const aliensTmp_t *cargo  = AL_GetAircraftAlienCargo(&aircraft);
+		subnode = mxml_AddNode(node, "AlienCargo");
+		mxml_AddInt(subnode, "Types", alienCargoTypes);
+		/* aliencargo */
+		for (l = 0; l < alienCargoTypes; l++) {
+			mxml_node_t *ssnode = mxml_AddNode(subnode, "cargo");
+			assert(cargo[l].teamDef);
+			mxml_AddString(ssnode, "teamDefId", cargo[l].teamDef->id);
+			mxml_AddInt(ssnode, "alive", cargo[l].amount_alive);
+			mxml_AddInt(ssnode, "dead", cargo[l].amount_dead);
+		}
+	}
+}
+
+/**
+ * @brief Save callback for savegames in xml format
+ * @sa AIR_LoadXML
+ * @sa B_SaveXML
+ * @sa SAV_GameSaveXML
+ */
+qboolean AIR_SaveXML (mxml_node_t *parent)
+{
+	int i;
+	mxml_node_t * node, *snode;
+
+	node = mxml_AddNode(parent, "Save_Air");
+
+	/* save the ufos on geoscape */
+	snode = mxml_AddNode(node, "ufos");
+	for (i = 0; i < MAX_UFOONGEOSCAPE; i++){
+		mxml_node_t *ssnode;
+		if (gd.ufos[i].id == NULL)
+			continue;
+		ssnode = mxml_AddNode(snode, "aircraft");
+		AIR_SaveAircraftXML(ssnode, gd.ufos[i], qtrue);
+	}
+	/* Save projectiles. */
+	for (i = 0; i < gd.numProjectiles; i++) {
+		int j;
+		snode = mxml_AddNode(node, "Projectile");
+		mxml_AddString(snode, "aircraftItemId", gd.projectiles[i].aircraftItem->id);
+		for (j = 0; j < MAX_MULTIPLE_PROJECTILES; j++)
+			mxml_AddPos2(snode, "pos", gd.projectiles[i].pos[j]);
+		mxml_AddPos3(snode, "IdleTarget", gd.projectiles[i].idleTarget);
+		if (gd.projectiles[i].attackingAircraft) {
+			mxml_AddBool(snode, "hasAttackingAircraft", qtrue);
+			mxml_AddBool(snode, "isUfo", gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO);
+			if (gd.projectiles[i].attackingAircraft->type == AIRCRAFT_UFO)
+				mxml_AddInt(snode, "attackingAircraft", gd.projectiles[i].attackingAircraft - gd.ufos);
+			else
+				mxml_AddInt(snode, "attackingAircraft", gd.projectiles[i].attackingAircraft->idx);
+		}
+		/* No attacking Aircraft */
+		if (gd.projectiles[i].aimedBase)
+			mxml_AddInt(snode, "aimedBaseIdx", gd.projectiles[i].aimedBase->idx);
+		if (gd.projectiles[i].aimedAircraft) {
+			mxml_AddBool(snode, "hasAimedAircraft", qtrue);
+			mxml_AddBool(snode, "AimedAircraftIsUfo", gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO);
+			if (gd.projectiles[i].aimedAircraft->type == AIRCRAFT_UFO)
+				mxml_AddInt(snode, "AimedAircraft", gd.projectiles[i].aimedAircraft - gd.ufos);
+			else
+				mxml_AddInt(snode, "AimedAircraft", gd.projectiles[i].aimedAircraft->idx);
+		}
+		mxml_AddInt(snode, "time", gd.projectiles[i].time);
+		mxml_AddFloat(snode, "angle", gd.projectiles[i].angle);
+		mxml_AddBool(snode, "bullet", gd.projectiles[i].bullets);
+		mxml_AddBool(snode, "laser", gd.projectiles[i].laser);
+	}
+
+	/* Save recoveries. */
+	for (i = 0; i < MAX_RECOVERIES; i++) {
+		/*check, if the transfer is active */
+		/** @todo Check if we can really ignore them if active is false */
+		if (!gd.recoveries[i].active)
+			continue;
+		snode = mxml_AddNode(node, "recoverie");
+		/* mxml_AddBool(snode, "active", gd.recoveries[i].active); */
+		if (gd.recoveries[i].base)
+			mxml_AddInt(snode, "targetBase", gd.recoveries[i].base->idx);
+		/** @todo At some point we really need to save a unique string here. */
+		if (gd.recoveries[i].ufoTemplate)
+			mxml_AddInt(snode, "ufoTemplateIdx", gd.recoveries[i].ufoTemplate->idx);
+		mxml_AddInt(snode, "day", gd.recoveries[i].event.day);
+		mxml_AddInt(snode, "sec", gd.recoveries[i].event.sec);
+	}
+	return qtrue;
 }
 
 /**
@@ -2309,6 +2543,343 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+
+/**
+ * @brief Loads one slot (base, installation or aircraft)
+ * @param[in] slot Pointer to the slot where item should be added.
+ * @param[in] sb buffer where information are.
+ * @param[in] weapon True if the slot is a weapon slot.
+ * @sa B_Load
+ * @sa B_SaveAircraftSlots
+ */
+void AIR_LoadOneSlotXML (aircraftSlot_t* slot, mxml_node_t *node, qboolean weapon)
+{
+	const char *name;
+	name = mxml_GetString(node, "ItemId");
+	if (name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		/* base is NULL here to not check against the storage amounts - they
+		* are already loaded in the campaign load function and set to the value
+		* after the craftitem was already removed from the initial game - thus
+		* there might not be any of these items in the storage at this point.
+		* Furthermore, they have already be taken from storage during game. */
+		if (tech)
+			AII_AddItemToSlot(NULL, tech, slot, qfalse);
+	}
+
+	/* item to install after current one is removed */
+	name = mxml_GetString(node, "NextItemId");
+	if (name && name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		if (tech)
+			AII_AddItemToSlot(NULL, tech, slot, qtrue);
+	}
+
+	slot->installationTime = mxml_GetInt(node, "InstallationTime", 0);
+
+	/* everything below is weapon specific */
+	if (!weapon)
+		return;
+
+	/* current ammo */
+	name = mxml_GetString(node, "AmmoId");
+	if (name && name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		/* next Item must not be loaded yet in order to install ammo properly */
+		if (tech)
+			AII_AddAmmoToSlot(NULL, tech, slot);
+	}
+	/* ammo to install after current one is removed */
+	name = mxml_GetString(node, "NextAmmoId");
+	if (name && name[0] != '\0') {
+		technology_t *tech = RS_GetTechByProvided(name);
+		if (tech)
+			AII_AddAmmoToSlot(NULL, tech, slot);
+	}
+	slot->ammoLeft = mxml_GetInt(node, "AmmoLeft", 0);
+	slot->delayNextShot = mxml_GetInt(node, "DelayNextShot", 0);
+}
+
+/**
+ * @brief Loads the weapon slots of an aircraft.
+ * @param[in] aircraft Pointer to the aircraft.
+ * @param[in] slot Pointer to the slot where item should be added.
+ * @param[in] num Number of slots for this aircraft that should be loaded.
+ * @param[in] sb buffer where information are.
+ * @param[in] weapon True if the slot is a weapon slot.
+ * @sa B_Load
+ * @sa B_SaveAircraftSlots
+ */
+static void AIR_LoadAircraftSlotsXML (aircraft_t *aircraft, aircraftSlot_t* slot, mxml_node_t *p, qboolean weapon, const int max)
+{
+	mxml_node_t *act;
+	int i;
+	for (i = 0, act = mxml_GetNode(p, "Slot"); act && i <= max; act = mxml_GetNextNode(act, p, "Slot"), i++) {
+		slot[i].aircraft = aircraft;
+		AIR_LoadOneSlotXML(&slot[i], act, weapon);
+	}
+	if (i > max)
+		Com_Printf("Error: Trying to assign more than max (%d) Aircraft Slots (cur is %d)\n", max, i);
+
+}
+
+static qboolean AIR_LoadRouteXML (mapline_t *route, mxml_node_t *p)
+{
+	mxml_node_t *actual;
+	int count = 0;
+	for (actual = mxml_GetPos2(p, "point", route->point[count]); actual && count <= LINE_MAXPTS;
+			actual = mxml_GetNextPos2(actual, p, "point", route->point[++count]))
+		;
+	if (count > LINE_MAXPTS) {
+		Com_Printf("AIR_Load: number of points (%i) for UFO route exceed maximum value (%i)\n", count, LINE_MAXPTS);
+		return qfalse;
+	}
+	route->numPoints = count;
+	route->distance = mxml_GetFloat(p, "Distance", 0.0);
+	return qtrue;
+}
+
+/**
+ *@brief Loads an Aircraft from the savegame
+ *@param[in] aircraft Pointer to the aircraft
+ *@param[in] isUfo do we load a Alien craft instead of a phalanx craft?
+ *@param[in] p Node structur, where we get the information from
+*/
+qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
+{
+	mxml_node_t *snode, *ssnode;
+	const char *s;
+	/* vars, if aircraft wasn't found */
+	int tmp_int, l, alienCargoTypes;
+
+	craft->status = mxml_GetInt(p, "status", 0);
+	craft->fuel = mxml_GetInt(p, "fuel", 0);
+	craft->damage = mxml_GetInt(p, "damage", 0);
+	mxml_GetPos3(p, "pos", craft->pos);
+
+	mxml_GetPos3(p, "direction", craft->direction);
+	craft->point = mxml_GetInt(p, "point", 0);
+	craft->time = mxml_GetInt(p, "time", 0);
+	snode = mxml_GetNode(p, "Route");
+	if (!AIR_LoadRouteXML(&craft->route, snode))
+		return qfalse;
+
+	s = mxml_GetString(p, "MissionId");
+	if (!s || s[0] == '\0') {
+		if (isUfo)
+			Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
+	}
+	if (isUfo)
+		craft->mission = CP_GetMissionById(s);
+	else if (craft->status == AIR_MISSION)
+		craft->missionID = Mem_PoolStrDup(s, cl_localPool, 0);
+
+	for (l = 0, snode = mxml_GetNode(p, "Airstats"); snode && l < AIR_STATS_MAX; snode = mxml_GetNextNode(snode, p, "Airstats"), l++) {
+		craft->stats[l] = mxml_GetLong(snode, "val", 0);
+#ifdef DEBUG
+		/* UFO HP can be < 0 if the UFO has been destroyed */
+		if (!(isUfo && l == AIR_STATS_DAMAGE) && craft->stats[l] < 0)
+			Com_Printf("Warning: ufo '%s' stats %i: %i is smaller than 0\n", craft->id, l, craft->stats[l]);
+#endif
+	}
+
+	craft->detected = mxml_GetBool(p, "detected", qfalse);
+	craft->landed = mxml_GetBool(p, "landed", qfalse);
+
+	tmp_int = mxml_GetInt(p, "baseTarget", -1);
+	if (tmp_int == -1)
+		craft->baseTarget = NULL;
+	else
+		craft->baseTarget = B_GetBaseByIDX(tmp_int);
+
+	tmp_int = mxml_GetInt(p, "AircraftTarget", -1);
+	if (tmp_int == -1)
+		craft->aircraftTarget = NULL;
+	else if (isUfo)
+		craft->aircraftTarget = AIR_AircraftGetFromIDX(tmp_int);
+	else
+		craft->aircraftTarget = gd.ufos + tmp_int;
+
+	/*struct base_s *baseTarget;*/
+	/*if (aircraft.installationTarget)
+		mxml_AddInt(node, "installationTarget", aircraft.installationTarget->idx);*/
+
+	snode = mxml_GetNode(p, "Weapons");
+	AIR_LoadAircraftSlotsXML(craft, craft->weapons, snode, qtrue, craft->maxWeapons);
+
+	snode = mxml_GetNode(p, "Shields");
+	AIR_LoadAircraftSlotsXML(craft, &craft->shield, snode, qfalse, 1);
+	/* read electronics slot */
+	snode = mxml_GetNode(p, "Electronics");
+	AIR_LoadAircraftSlotsXML(craft, craft->electronics, snode, qfalse, craft->maxElectronics);
+
+	/* All other informations are not needed for ufos */
+	if (isUfo)
+		return qtrue;
+
+	craft->idx = mxml_GetInt(p, "Idx", 0);
+	craft->hangar = mxml_GetInt(p, "Hangar", 0);
+
+	craft->teamSize = 0;
+	snode = mxml_GetNode(p, "AircraftTeam");
+	for (l = 0, ssnode = mxml_GetNode(snode, "Member"); l < MAX_ACTIVETEAM && snode; l++,
+			ssnode = mxml_GetNextNode(ssnode, snode, "Member")) {
+		const int teamIdx = mxml_GetInt(ssnode, "Idx", BYTES_NONE);
+		if (teamIdx != BYTES_NONE) {
+			const int teamType = mxml_GetInt(ssnode, "Type", BYTES_NONE);
+			assert(teamType != MAX_EMPL);
+			/** assert(gd.numEmployees[teamTypes[l]] > 0); @todo We currently seem to link to not yet parsed employees. */
+			craft->acTeam[l] = &ccs.employees[teamType][teamIdx];
+			craft->teamSize++;
+		}
+	}
+
+	tmp_int = mxml_GetInt(p, "PilotIdx", BYTES_NONE);
+	/* the employee subsystem is loaded after the base subsystem
+	 * this means, that the pilot pointer is not (really) valid until
+	 * E_Load was called, too */
+	if (tmp_int != BYTES_NONE)
+		craft->pilot = &ccs.employees[EMPL_PILOT][tmp_int];
+	else
+		craft->pilot = NULL;
+
+	craft->numUpgrades = mxml_GetInt(p, "numUpgrades", 0);
+
+	RADAR_InitialiseUFOs(&craft->radar);
+
+	craft->radar.range = mxml_GetInt(p, "radar.range", 0);
+	craft->radar.trackingRange = mxml_GetInt(p, "radar.trackingRange", 0);
+
+	snode = mxml_GetNode(p, "AlienCargo");
+	alienCargoTypes = mxml_GetInt(snode, "Types", 0);
+	AL_SetAircraftAlienCargoTypes(craft, alienCargoTypes);
+	alienCargoTypes = AL_GetAircraftAlienCargoTypes(craft);
+	if (alienCargoTypes > MAX_CARGO) {
+		Com_Printf("B_Load: number of alien types (%i) exceed maximum value (%i)\n", alienCargoTypes, MAX_CARGO);
+		return qfalse;
+	}
+	/* aliencargo */
+	for (l = 0, ssnode = mxml_GetNode(snode, "cargo"); l < alienCargoTypes && snode;
+			l++, ssnode = mxml_GetNextNode(ssnode, snode, "cargo")) {
+		aliensTmp_t *cargo = AL_GetAircraftAlienCargo(craft);
+		cargo[l].teamDef = Com_GetTeamDefinitionByID(mxml_GetString(ssnode, "teamDefId"));
+		if (!cargo[l].teamDef)
+			return qfalse;
+		cargo[l].amount_alive = mxml_GetInt(ssnode, "alive", 0);
+		cargo[l].amount_dead  =	mxml_GetInt(ssnode, "dead", 0);
+	}
+
+	snode = mxml_GetNode(p, "Cargo");
+	craft->itemtypes = mxml_GetInt(snode, "Types", 0);
+	if (craft->itemtypes > MAX_CARGO) {
+		Com_Printf("B_Load: number of item types (%i) exceed maximum value (%i)\n", craft->itemtypes, MAX_CARGO);
+		return qfalse;
+	}
+
+	/* itemcargo */
+	for (l = 0, ssnode = mxml_GetNode(snode, "Item"); l < craft->itemtypes && snode;
+			l++, ssnode = mxml_GetNextNode(ssnode, snode, "Item")) {
+		const char *const str = mxml_GetString(ssnode, "ItemId");
+		const objDef_t *od = INVSH_GetItemByID(str);
+		if (!od) {
+			Com_Printf("B_Load: Could not find aircraftitem '%s'\n", str);
+		} else {
+			craft->itemcargo[l].item = od;
+			craft->itemcargo[l].amount = mxml_GetInt(ssnode, "amount", 0);
+		}
+	}
+	return qtrue;
+}
+
+qboolean AIR_LoadXML (mxml_node_t *parent)
+{
+	mxml_node_t *node, *snode, *ssnode;
+	int i;
+
+	/* load the ufos: */
+	node = mxml_GetNode(parent, "Save_Air");
+	/* save the ufos on geoscape */
+	snode = mxml_GetNode(node, "ufos");
+
+	for (i = 0, ssnode = mxml_GetNode(snode, "aircraft"); i < MAX_UFOONGEOSCAPE && ssnode;
+			ssnode = mxml_GetNextNode(ssnode, snode, "aircraft"), i++) {
+		const char *s = mxml_GetString(ssnode, "Id");
+		aircraft_t *craft;
+		craft = AIR_GetAircraft(s);
+		gd.ufos[i] = *craft;
+		craft = &gd.ufos[i];	/* Copy all datas that don't need to be saved (tpl, hangar,...) */
+		/* AIR_SaveAircraftXML(ssnode, gd.ufos[i], qtrue); */
+		AIR_LoadAircraftXML(craft, qtrue, ssnode);
+	}
+	gd.numUFOs = i;
+
+	/* Load projectiles. */
+	for (i = 0, snode = mxml_GetNode(node, "Projectile"); i < MAX_PROJECTILESONGEOSCAPE && snode;
+			snode = mxml_GetNextNode(snode, node, "Projectile"), i++) {
+		technology_t *tech = RS_GetTechByProvided(mxml_GetString(snode, "aircraftItemId"));
+		if (tech) {
+			int tmp_int, j;
+			gd.projectiles[i].aircraftItem = AII_GetAircraftItemByID(tech->provides);
+			gd.projectiles[i].idx = i;
+			for (j = 0, ssnode=mxml_GetPos2(snode, "pos", gd.projectiles[i].pos[0]); j < MAX_MULTIPLE_PROJECTILES && ssnode;
+			     ssnode = mxml_GetNextPos2(ssnode, snode, "pos", gd.projectiles[i].pos[j]), j++)
+				;
+			mxml_GetPos3(snode, "IdleTarget", gd.projectiles[i].idleTarget);
+			if (mxml_GetBool(snode, "hasAttackingAircraft", qfalse)) {
+				if (mxml_GetBool(snode, "isUfo", qfalse))
+					gd.projectiles[i].attackingAircraft = gd.ufos + mxml_GetInt(snode, "attackingAircraft", 0);
+				else
+					gd.projectiles[i].attackingAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "attackingAircraft", 0));
+			} else
+				gd.projectiles[i].attackingAircraft = NULL;
+			tmp_int = mxml_GetInt(snode, "aimedBaseIdx", 0);
+			if (tmp_int > 0)
+				gd.projectiles[i].aimedBase = B_GetBaseByIDX(tmp_int);
+			else
+				gd.projectiles[i].aimedBase = NULL;
+			if (mxml_GetBool(snode, "hasAimedAircraft", qfalse)) {
+				if (mxml_GetBool(snode, "AimedAircraftIsUfo", qfalse))
+					gd.projectiles[i].aimedAircraft = gd.ufos + mxml_GetInt(snode, "AimedAircraft", 0);
+				else
+					gd.projectiles[i].aimedAircraft = AIR_AircraftGetFromIDX(mxml_GetInt(snode, "AimedAircraft", 0));
+			} else
+				gd.projectiles[i].aimedAircraft = NULL;
+
+			gd.projectiles[i].time = mxml_GetInt(snode, "time", 0);
+			gd.projectiles[i].angle = mxml_GetFloat(snode, "angle", 0.0);
+			gd.projectiles[i].bullets = mxml_GetBool(snode, "bullet", qfalse);
+			gd.projectiles[i].laser = mxml_GetBool(snode, "laser", qfalse);
+		} else {
+			Com_Printf("AIR_Load: Could not get technology of projectile %i\n", i);
+			return qfalse;
+		}
+	}
+
+	gd.numProjectiles = i;
+
+	for (i = 0, snode = mxml_GetNode(node, "recoverie"); snode && i < MAX_RECOVERIES;
+			snode = mxml_GetNextNode(snode, node, "recoverie"), i++) {
+		byte base, ufotype;
+		gd.recoveries[i].active = qtrue;
+		base = mxml_GetInt(snode, "targetBase", BYTES_NONE);
+		gd.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
+		assert(numAircraftTemplates);
+		ufotype = mxml_GetInt(snode, "ufoTemplateIdx", BYTES_NONE);
+		gd.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
+		gd.recoveries[i].event.day = mxml_GetInt(snode, "day", 0);
+		gd.recoveries[i].event.sec = mxml_GetInt(snode, "sec", 0);
+	}
+
+	for (i = gd.numUFOs - 1; i >= 0; i--) {
+		if (gd.ufos[i].time < 0 || gd.ufos[i].stats[AIR_STATS_SPEED] <= 0) {
+			Com_Printf("AIR_Load: Found invalid ufo entry - remove it - time: %i - speed: %i\n",
+				gd.ufos[i].time, gd.ufos[i].stats[AIR_STATS_SPEED]);
+			UFO_RemoveFromGeoscape(&gd.ufos[i]);
+		}
+	}
+	return qtrue;
+}
+
 /**
  * @brief Load callback for savegames
  * @note employees and bases must have been loaded already
@@ -2318,10 +2889,8 @@ qboolean AIR_Save (sizebuf_t* sb, void* data)
  */
 qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
-	aircraft_t *ufo;
 	int i, j;
 	int numUFOs = 0;
-	const char *s;
 	/* vars, if aircraft wasn't found */
 	vec3_t tmp_vec3t;
 	vec2_t tmp_vec2t;
@@ -2332,8 +2901,8 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 	gd.numUFOs = presaveArray[PRE_NUMUFO];
 	/* load the ufos on geoscape */
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
-		s = MSG_ReadString(sb);
-		ufo = AIR_GetAircraft(s);
+		const char *s = MSG_ReadString(sb);
+		aircraft_t *ufo = AIR_GetAircraft(s);
 		/* maybe aircraft id in .ufo file changed? */
 		if (!ufo) {
 			Com_Printf("AIR_Load: Could not find ufo '%s'\n", s);

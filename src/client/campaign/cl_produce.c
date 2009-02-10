@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_game.h"
 #include "../menu/m_popup.h"
+#include "../mxml/mxml_ufoai.h"
 #include "../menu/m_nodes.h"
 #include "cl_produce_callbacks.h"
 
@@ -227,7 +228,7 @@ static void PR_QueueNext (base_t *base)
 	PR_QueueDelete(base, queue, 0);
 	if (queue->numItems == 0) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Production queue for base %s is empty"), base->name);
-		MSO_CheckAddNewMessage(NT_PRODUCTION_QUEUE_EMPTY,_("Production queue empty"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
+		MSO_CheckAddNewMessage(NT_PRODUCTION_QUEUE_EMPTY, _("Production queue empty"), cp_messageBuffer, qfalse, MSG_PRODUCTION, NULL);
 	}
 }
 
@@ -537,6 +538,39 @@ void PR_InitStartup (void)
 }
 
 /**
+ * @brief Save callback for savegames in XML Format
+ * @sa PR_LoadXML
+ * @sa SAV_GameSaveXML
+ */
+qboolean PR_SaveXML (mxml_node_t *p)
+{
+	int i;
+	mxml_node_t *node = mxml_AddNode(p, "Production");
+	for (i = 0; i < MAX_BASES; i++) {
+		const production_queue_t *pq = &gd.productions[i];
+		int j;
+		mxml_node_t * snode = mxml_AddNode(node, "queue");
+		mxml_AddInt(snode, "numItems", pq->numItems);
+		for (j = 0; j < pq->numItems; j++) {
+			/** @todo This will crash */
+			const objDef_t *item = pq->items[j].item;
+			const aircraft_t *aircraft = pq->items[j].aircraft;
+			mxml_node_t * ssnode = mxml_AddNode(snode, "item");
+			assert(item || aircraft);
+			if (item)
+				mxml_AddString(ssnode, "itemId", item->id);
+			mxml_AddInt(ssnode, "amount", pq->items[j].amount);
+			mxml_AddFloat(ssnode, "percentDone", pq->items[j].percentDone);
+			mxml_AddBool(ssnode, "prod", pq->items[j].production);
+			if (aircraft)
+				mxml_AddString(ssnode, "aircraftId", aircraft->id);
+			mxml_AddBool(ssnode, "items_cached", pq->items[j].items_cached);
+		}
+	}
+	return qtrue;
+}
+
+/**
  * @brief Save callback for savegames
  * @sa PR_Load
  * @sa SAV_GameSave
@@ -559,6 +593,46 @@ qboolean PR_Save (sizebuf_t *sb, void *data)
 			MSG_WriteByte(sb, pq->items[j].production);
 			MSG_WriteString(sb, (aircraft ? aircraft->id : ""));
 			MSG_WriteByte(sb, pq->items[j].items_cached);
+		}
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for xml savegames
+ * @sa PR_SaveXML
+ * @sa SAV_GameLoadXML
+ */
+qboolean PR_LoadXML (mxml_node_t *p)
+{
+	int i;
+	mxml_node_t *node, *snode;
+
+	node = mxml_GetNode(p, "Production");
+
+	for (i = 0, snode = mxml_GetNode(node, "queue"); i < MAX_BASES && snode;
+			i++, snode = mxml_GetNextNode(snode, node, "queue")) {
+		int j;
+		mxml_node_t *ssnode;
+		production_queue_t *pq = &gd.productions[i];
+		pq->numItems = mxml_GetInt(snode, "numItems", 0);
+		for (j = 0, ssnode = mxml_GetNode(snode, "item"); j < pq->numItems && ssnode;
+				j++, ssnode = mxml_GetNextNode(ssnode, snode, "item")) {
+			const char *s1 = mxml_GetString(ssnode, "itemId");
+			const char *s2;
+			if (s1 && s1[0] != '\0')
+				pq->items[j].item = INVSH_GetItemByID(s1);
+			pq->items[j].amount = mxml_GetInt(ssnode, "amount", 0);
+			pq->items[j].percentDone = mxml_GetFloat(ssnode, "percentDone", 0.0);
+			pq->items[j].production = mxml_GetBool(ssnode, "prod", qfalse);
+			s2 = mxml_GetString(ssnode, "aircraftId");
+			if (s2 && s2[0] != '\0')
+				pq->items[j].aircraft = AIR_GetAircraft(s2);
+			pq->items[j].items_cached = mxml_GetBool(ssnode, "items_cached", qfalse);
+			if (!pq->items[j].item && *s1)
+				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
+			if (!pq->items[j].aircraft && *s2)
+				Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
 		}
 	}
 	return qtrue;

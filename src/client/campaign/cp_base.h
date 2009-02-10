@@ -316,6 +316,10 @@ void B_UpdateStorageCap(base_t *base);
 
 void B_SaveBaseSlots(const baseWeapon_t *weapons, const int numWeapons, sizebuf_t* sb);
 void B_LoadBaseSlots(baseWeapon_t* weapons, int numWeapons, sizebuf_t* sb);
+void B_SaveBaseSlotsXML(const baseWeapon_t *weapons, const int numWeapons, mxml_node_t *p);
+int B_LoadBaseSlotsXML(baseWeapon_t* weapons, int numWeapons, mxml_node_t *p);
+qboolean B_SaveStorageXML(mxml_node_t *parent, const equipDef_t equip);
+qboolean B_LoadStorageXML(mxml_node_t *parent, equipDef_t *equip);
 
 qboolean B_ScriptSanityCheck(void);
 

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
 #include "cp_time.h"
+#include "../mxml/mxml_ufoai.h"
 
 char cp_messageBuffer[MAX_MESSAGE_TEXT];
 message_t *cp_messageStack;
@@ -152,11 +153,45 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 }
 
 /**
+ * @brief Saved the complete message stack in xml
+ * @sa SAV_GameSaveXML
+ * @sa MN_AddNewMessage
+ */
+static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
+{
+	mxml_node_t *n;
+
+	if (!message)
+		return;
+	/* bottom up */
+	MS_MessageSaveXML(p, message->next);
+
+	/* don't save these message types */
+	if (message->type == MSG_INFO)
+		return;
+
+	n = mxml_AddNode(p, "message");
+	mxml_AddString(n, "title", message->title);
+	mxml_AddString(n, "text", message->text);
+	mxml_AddInt(n, "type", message->type);
+	/* store script id of event mail */
+	if (message->type == MSG_EVENT) {
+		mxml_AddString(n, "EventMailId", message->eventMail->id);
+		mxml_AddBool(n, "EventMailRead", message->eventMail->read);
+	}
+	if (message->pedia)
+		mxml_AddInt(n, "idx", message->pedia->idx);
+	mxml_AddInt(n, "day", message->date.day);
+	mxml_AddInt(n, "sec", message->date.sec);
+}
+
+/**
  * @brief Saved the complete message stack
  * @sa SAV_GameSave
  * @sa MS_AddNewMessage
  */
 static void MS_MessageSave (sizebuf_t * sb, message_t * message)
+
 {
 	int idx = -1;
 
@@ -187,6 +222,20 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 }
 
 /**
+ * @sa MS_LoadXML
+ * @sa MN_AddNewMessage
+ * @sa MS_MessageSaveXML
+ */
+qboolean MS_SaveXML (mxml_node_t *p)
+{
+	mxml_node_t *n = mxml_AddNode(p, "Messages");
+
+	/* store message system items */
+	MS_MessageSaveXML(n, cp_messageStack);
+	return qtrue;
+}
+
+/**
  * @sa MS_Load
  * @sa MS_AddNewMessage
  * @sa MS_MessageSave
@@ -204,6 +253,47 @@ qboolean MS_Save (sizebuf_t* sb, void* data)
 	}
 	MSG_WriteLong(sb, i);
 	MS_MessageSave(sb, cp_messageStack);
+	return qtrue;
+}
+
+/**
+ * @sa MS_SaveXML
+ * @sa MN_AddNewMessageSound
+ */
+qboolean MS_LoadXML (mxml_node_t *p)
+{
+	int i;
+	mxml_node_t *n, *sn;
+	n = mxml_GetNode(p, "Messages");
+	if (!n)
+		return qfalse;
+
+	for (sn = mxml_GetNode(n, "message"), i = 0; sn; sn = mxml_GetNextNode(sn, n, "message"), i++) {
+		eventMail_t *mail = NULL;
+		int mtype;
+		char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
+		/* can contain high bits due to utf8 */
+		Q_strncpyz(title, mxml_GetString(sn, "title"), sizeof(title));
+		Q_strncpyz(text,  mxml_GetString(sn, "text"),  sizeof(text));
+		mtype = mxml_GetInt(sn, "type", MSG_DEBUG);
+		if (mtype == MSG_EVENT) {
+			mail = CL_GetEventMail(mxml_GetString(sn, "EventMailId"), qfalse);
+			if (mail)
+				mail->read = mxml_GetBool(sn, "EventMailRead", qfalse);
+		} else
+			mail = NULL;
+
+		/* event and not mail means, dynamic mail - we don't save or load them */
+		if (!((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1))) {
+			const int idx = mxml_GetInt(sn, "idx", -1);
+			message_t *mess = MS_AddNewMessageSound(title, text, qfalse, mtype, RS_GetTechByIDX(idx), qfalse);
+			mess->eventMail = mail;
+			mess->date.day = mxml_GetInt(sn, "day", 0);
+			mess->date.sec = mxml_GetInt(sn, "sec", 0);
+			/* redo timestamp text after setting date */
+			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
+		}
+	}
 	return qtrue;
 }
 

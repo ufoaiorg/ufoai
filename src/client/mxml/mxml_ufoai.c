@@ -1,3 +1,7 @@
+/**
+ * @file mxml_ufoai.c
+ */
+
 /*
 Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
@@ -25,11 +29,11 @@ void mxml_AddString (mxml_node_t *parent, const char *name, const char *value)
 #if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t,"type", "string");
-	/*mxmlElementSetAttr(t,"value", value);*/
+	mxmlElementSetAttr(t, "type", "string");
+	/*mxmlElementSetAttr(t, "value", value);*/
 	mxmlNewOpaque(t, value);
 #endif
-	mxmlElementSetAttr(parent,name, value);
+	mxmlElementSetAttr(parent, name, value);
 }
 
 void mxml_AddBool (mxml_node_t *parent, const char *name, qboolean value)
@@ -37,10 +41,10 @@ void mxml_AddBool (mxml_node_t *parent, const char *name, qboolean value)
 #if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t,"type", "int");
+	mxmlElementSetAttr(t, "type", "int");
 	mxmlNewInteger(t, value?1:0);
 #endif
-	mxmlElementSetAttr(parent,name, value?"1":"0");
+	mxmlElementSetAttr(parent, name, value?"1":"0");
 }
 
 void mxml_AddFloat (mxml_node_t *parent, const char *name, float value)
@@ -56,7 +60,7 @@ void mxml_AddDouble (mxml_node_t *parent, const char *name, double value)
 #if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t,"type", "double");
+	mxmlElementSetAttr(t, "type", "double");
 	mxmlNewReal(t, value);
 #endif
 }
@@ -67,7 +71,7 @@ void mxml_AddByte (mxml_node_t *parent, const char *name, byte value)
 #if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
-	mxmlElementSetAttr(t,"type", "int");
+	mxmlElementSetAttr(t, "type", "int");
 	mxmlNewInteger(t, value);
 #endif
 }
@@ -85,8 +89,8 @@ void mxml_AddInt (mxml_node_t *parent, const char *name, int value)
 void mxml_AddLong (mxml_node_t *parent, const char *name, long value)
 {
 	char txt[50];
-	snprintf(txt,sizeof(txt), "%ld", value);
-	mxmlElementSetAttr(parent,name, txt);
+	snprintf(txt, sizeof(txt), "%ld", value);
+	mxmlElementSetAttr(parent, name, txt);
 #if 0
 	mxml_node_t *t;
 	t = mxmlNewElement(parent, name);
@@ -120,17 +124,17 @@ mxml_node_t * mxml_AddNode(mxml_node_t *parent, const char *name)
 qboolean mxml_GetBool (mxml_node_t *parent, const char *name, const qboolean defaultval)
 {
 	const char *txt;
-	txt = mxmlElementGetAttr(parent,name);
+	txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 
-	return (atoi(txt)!=0);
+	return (atoi(txt) != 0);
 }
 
 int mxml_GetInt (mxml_node_t *parent, const char *name, const int defaultval)
 {
 	const char *txt;
-	txt = mxmlElementGetAttr(parent,name);
+	txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atoi(txt);
@@ -139,7 +143,7 @@ int mxml_GetInt (mxml_node_t *parent, const char *name, const int defaultval)
 short mxml_GetShort (mxml_node_t *parent, const char *name, const short defaultval)
 {
 	const char *txt;
-	txt = mxmlElementGetAttr(parent,name);
+	txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atoi(txt);
@@ -148,7 +152,7 @@ short mxml_GetShort (mxml_node_t *parent, const char *name, const short defaultv
 long mxml_GetLong (mxml_node_t *parent, const char *name, const long defaultval)
 {
 	const char *txt;
-	txt = mxmlElementGetAttr(parent,name);
+	txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atol(txt);
@@ -156,7 +160,7 @@ long mxml_GetLong (mxml_node_t *parent, const char *name, const long defaultval)
 
 const char * mxml_GetString (mxml_node_t *parent, const char *name)
 {
-	const char *str = mxmlElementGetAttr(parent,name);
+	const char *str = mxmlElementGetAttr(parent, name);
 	if (!str)
 		return "";
 	return str;
@@ -165,7 +169,7 @@ const char * mxml_GetString (mxml_node_t *parent, const char *name)
 float mxml_GetFloat (mxml_node_t *parent, const char *name, const float defaultval)
 {
 	const char *txt;
-	txt = mxmlElementGetAttr(parent,name);
+	txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atof(txt);
@@ -174,7 +178,7 @@ float mxml_GetFloat (mxml_node_t *parent, const char *name, const float defaultv
 double mxml_GetDouble (mxml_node_t *parent, const char *name, const double defaultval)
 {
 	const char *txt;
-	txt = mxmlElementGetAttr(parent,name);
+	txt = mxmlElementGetAttr(parent, name);
 	if (!txt)
 		return defaultval;
 	return atof(txt);
@@ -192,7 +196,7 @@ mxml_node_t * mxml_GetPos2(mxml_node_t *parent, const char *name, vec2_t pos)
 
 mxml_node_t * mxml_GetNextPos2(mxml_node_t *actual,mxml_node_t *parent, const char *name, vec2_t pos)
 {
-	mxml_node_t *p = mxml_GetNextNode(actual,parent, name);
+	mxml_node_t *p = mxml_GetNextNode(actual, parent, name);
 	if (!p)
 		return NULL;
 	pos[0] = mxml_GetFloat(p, "x", 0);

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"
+#include "../mxml/mxml_ufoai.h"
 
 #define MAX_BUYLIST		64
 
@@ -1124,7 +1125,31 @@ void BS_InitStartup (void)
 	memset(&buyList, 0, sizeof(buyList));
 	buyList.length = -1;
 }
+/**
+ * @brief Save callback for savegames
+ * @sa BS_LoadXML
+ * @sa SAV_GameSaveXML
+ */
+qboolean BS_SaveXML (mxml_node_t *parent)
+{
+	int i;
+	mxml_node_t *node;
+	/* store market */
+	node = mxml_AddNode(parent, "Market");
+	for (i = 0; i < MAX_OBJDEFS; i++) {
+		if (csi.ods[i].id[0] != '\0') {
+			mxml_node_t * snode = mxml_AddNode(node, "Element");
+			mxml_AddString(snode, "Id", csi.ods[i].id);
+			mxml_AddInt(snode, "num", ccs.eMarket.num[i]);
+			mxml_AddInt(snode, "bid", ccs.eMarket.bid[i]);
+			mxml_AddInt(snode, "ask", ccs.eMarket.ask[i]);
+			mxml_AddDouble(snode, "evo", ccs.eMarket.currentEvolution[i]);
+			mxml_AddBool(snode, "autosell", gd.autosell[i]);
+		}
+	}
 
+	return qtrue;
+}
 /**
  * @brief Save callback for savegames
  * @sa BS_Load
@@ -1147,6 +1172,36 @@ qboolean BS_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+/**
+ * @brief Load callback for savegames
+ * @sa BS_Save
+ * @sa SAV_GameLoad
+ */
+qboolean BS_LoadXML (mxml_node_t *parent)
+{
+	int i;
+	mxml_node_t *node, *snode;
+	node = mxml_GetNode(parent, "Market");
+	if (!node)
+		return qfalse;
+	for(i = 0, snode = mxml_GetNode(node, "Element"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "Element")) {
+		if (snode) {
+			const char *s = mxml_GetString(snode, "Id");
+			objDef_t *od = INVSH_GetItemByID(s);
+			if (!od) {
+				Com_Printf("BS_Load: Could not find item '%s'\n", s);
+			} else {
+				ccs.eMarket.num[od->idx] = mxml_GetInt(snode, "num", 0);
+				ccs.eMarket.bid[od->idx] = mxml_GetInt(snode, "bid", 0);
+				ccs.eMarket.ask[od->idx] = mxml_GetInt(snode, "ask", 0);
+				ccs.eMarket.currentEvolution[od->idx] = mxml_GetDouble(snode, "evo", 0.0);
+				gd.autosell[od->idx] = mxml_GetBool(snode, "autosell", qfalse);
+			}
+		}
+	}
+
+	return qtrue;
+}
 /**
  * @brief Load callback for savegames
  * @sa BS_Save

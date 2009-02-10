@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_actor.h"
 #include "cp_employee_callbacks.h"
 #include "../menu/m_popup.h"
+#include "../mxml/mxml_ufoai.h"
+
 
 /**
  * @brief Tells you if a employee is away from his home base (gone in mission).
@@ -1173,6 +1175,50 @@ employee_t* E_GetEmployeeFromChrUCN (int ucn)
 	return NULL;
 }
 
+
+/**
+ * @brief Save callback for savegames in XML Format
+ * @sa E_LoadXML
+ * @sa SAV_GameSaveXML
+ * @sa G_SendCharacterData
+ * @sa CL_ParseCharacterData
+ * @sa GAME_SendCurrentTeamSpawningInfo
+ */
+qboolean E_SaveXML (mxml_node_t *p)
+{
+	int j;
+	for (j = 0; j < MAX_EMPL; j++) {
+		int i;
+		mxml_node_t *snode = mxml_AddNode(p, "Employees");
+		mxml_AddInt(snode, "count", ccs.numEmployees[j]);
+		for (i = 0; i < ccs.numEmployees[j]; i++) {
+			const employee_t *e = &ccs.employees[j][i];
+			mxml_node_t *ssnode = mxml_AddNode(snode, "Employee");
+			mxml_AddInt(snode, "Type", e->type);
+			mxml_AddBool(ssnode, "Hired", e->hired);
+			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
+			mxml_AddInt(ssnode, "Idx", e->idx);
+			/** @todo Use BYTES_NONE here and use MSG_WriteByte */
+			if (e->baseHired)
+				mxml_AddInt(ssnode, "baseHired", e->baseHired->idx);
+			if (e->building)
+				mxml_AddInt(ssnode, "building", e->building->idx);
+			/* Store the nations identifier string. */
+			if (e->nation) {
+				assert(e->nation->id);
+				mxml_AddString(ssnode, "Nation", e->nation->id);
+			}
+
+			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
+			if (e->ugv)
+				mxml_AddString(ssnode, "ugv", e->ugv->id);
+			CL_SaveCharacterXML(ssnode, e->chr);
+		}
+	}
+
+	return qtrue;
+}
+
 /**
  * @brief Save callback for savegames
  * @sa E_Load
@@ -1265,6 +1311,58 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+qboolean E_LoadXML (mxml_node_t *p)
+{
+	int j;
+	mxml_node_t * snode;
+
+	/* load inventories */
+	for (snode = mxml_GetNode(p, "Employees"), j = 0; j < MAX_EMPL && snode;
+			snode = mxml_GetNextNode(snode, p , "Employees"), j++) {
+		const char *string;
+		mxml_node_t * ssnode;
+		int i;
+		ccs.numEmployees[j] = mxml_GetInt(snode, "count", 0);
+		for (ssnode = mxml_GetNode(snode, "Employee"), i = 0; i < ccs.numEmployees[j] && ssnode;
+				ssnode = mxml_GetNextNode(ssnode, snode, "Employee"), i++) {
+			int base, building;
+			employee_t *e = &ccs.employees[j][i];
+			memset(e, 0, sizeof(*e));
+
+			e->type = mxml_GetInt(snode, "Type", 0);
+			if (e->type != j)
+				Com_Printf("......error in loading employee - type values doesn't match (%d, %d)\n", e->type, j);
+			e->hired = mxml_GetBool(ssnode, "Hired", qfalse);
+
+			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
+			e->idx = mxml_GetInt(ssnode, "Idx", 0);
+			assert(ccs.numBases);	/* Just in case the order is ever changed. */
+			base = mxml_GetInt(ssnode, "baseHired", -1);
+			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
+
+			building = mxml_GetInt(ssnode, "building", -1);
+			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
+
+			/* Read the nations identifier string, get the matching nation_t pointer.
+			 * We can do this because nations are already parsed .. will break if the parse-order is changed.
+			 * Same for the ugv string below.
+			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
+			string = mxml_GetString(ssnode, "Nation");
+			if (string && Q_strcmp(string, "NULL"))
+				e->nation = NAT_GetNationByID(string);
+
+			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
+			string = mxml_GetString(ssnode, "ugv");
+			if (string[0]!='\0' && Q_strcmp(string, "NULL"))
+				e->ugv = CL_GetUGVByID(string);
+			e->chr.emplIdx = i;
+			e->chr.emplType = j;
+			CL_LoadCharacterXML(ssnode, &e->chr);
+		}
+	}
+	return qtrue;
+}
+
 /**
  * @brief Load callback for savegames
  * @sa E_Save
@@ -1274,7 +1372,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 {
 	int i, k;
 	employeeType_t j;
-	int td;	/**< Team-definition index */
+	int td;	/* Team-definition index */
 	int base, building;
 
 	/* load inventories */
@@ -1290,13 +1388,13 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->hired = MSG_ReadByte(sb);
 			/** @note e->transfer is restored in cl_transfer.c:TR_Load */
 			e->idx = MSG_ReadShort(sb);
-			assert(ccs.numBases);	/**< Just in case the order is ever changed. */
+			assert(ccs.numBases);	/* Just in case the order is ever changed. */
 			base = MSG_ReadShort(sb);
 			e->baseHired = (base >= 0) ? B_GetBaseByIDX(base) : NULL;
 			building = MSG_ReadShort(sb);
 			e->building = (e->baseHired && building >= 0) ? &gd.buildings[e->baseHired->idx][building] : NULL;
 
-			/** Read the nations identifier string, get the matching nation_t pointer.
+			/* Read the nations identifier string, get the matching nation_t pointer.
 			 * We can do this because nations are already parsed .. will break if the parse-order is changed.
 			 * Same for the ugv string below.
 			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
@@ -1379,8 +1477,7 @@ qboolean E_Load (sizebuf_t* sb, void* data)
  */
 qboolean E_HireAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetBuildingStatus(base, B_QUARTERS)) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_QUARTERS)) {
 		return qtrue;
 	} else {
 		return qfalse;

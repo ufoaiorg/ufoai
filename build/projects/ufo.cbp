@@ -876,6 +876,41 @@
 		<Unit filename="..\..\src\client\renderer\r_surface.c">
 			<Option compilerVar="CC" />
 		</Unit>
+
+		<Unit filename="..\..\src\client\mxml\mxml.h" />
+		<Unit filename="..\..\src\client\mxml\config.h" />
+		<Unit filename="..\..\src\client\mxml\mxml-private.h" />
+		<Unit filename="..\..\src\client\mxml\mxml_ufoai.h" />
+		<Unit filename="..\..\src\client\mxml\mxml-attr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml-entity.c">
+			<Option compilerVar="CC" />
+		</Unit>
+  		<Unit filename="..\..\src\client\mxml\mxml-file.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml-index.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml-node.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml-private.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml-search.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml-set.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml-string.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\mxml\mxml_ufoai.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\renderer\r_thread.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_game.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
+#include "../mxml/mxml_ufoai.h"
 #include "../../shared/parse.h"
 #include "../menu/m_nodes.h"
 
@@ -178,6 +179,28 @@ void NAT_SetHappiness (nation_t *nation, const float happiness)
 /**
  * @brief Nation saving callback
  */
+qboolean NAT_SaveXML (mxml_node_t *p)
+{
+	int i;
+	mxml_node_t *n;
+	n = mxml_AddNode(p, "Nations");
+	for (i = 0; i < gd.numNations; i++) {
+		int j;
+		mxml_node_t *s = mxml_AddNode(n, "nation");
+		for (j = 0; j < MONTHS_PER_YEAR; j++) {
+			mxml_node_t *ss = mxml_AddNode(s, "month");
+			mxml_AddBool(ss, "inuse", gd.nations[i].stats[j].inuse);
+			mxml_AddFloat(ss, "happiness", gd.nations[i].stats[j].happiness);
+			mxml_AddInt(ss, "xvi", gd.nations[i].stats[j].xviInfection);
+			mxml_AddFloat(ss, "alienFriendly", gd.nations[i].stats[j].alienFriendly);
+		}
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Nation saving callback
+ */
 qboolean NA_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;
@@ -187,6 +210,31 @@ qboolean NA_Save (sizebuf_t* sb, void* data)
 			MSG_WriteFloat(sb, gd.nations[i].stats[j].happiness);
 			MSG_WriteLong(sb, gd.nations[i].stats[j].xviInfection);
 			MSG_WriteFloat(sb, gd.nations[i].stats[j].alienFriendly);
+		}
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Nation loading xml callback
+ */
+qboolean NAT_LoadXML (mxml_node_t * p)
+{
+	int i;
+	mxml_node_t *n, *s;
+
+	n = mxml_GetNode(p, "Nations");
+	if (!n)
+		return qfalse;
+
+	for (i = 0, s = mxml_GetNode(n, "nation"); s && i < gd.numNations; i++, s = mxml_GetNextNode(s, n, "nation")) {
+		mxml_node_t *ss;
+		int j;
+		for (j = 0, ss = mxml_GetNode(s, "month"); ss && j < MONTHS_PER_YEAR; j++, ss = mxml_GetNextNode(ss, s, "month")) {
+			gd.nations[i].stats[j].inuse = mxml_GetBool(ss, "inuse", qfalse);
+			gd.nations[i].stats[j].happiness = mxml_GetFloat(ss, "happiness", 0.0);
+			gd.nations[i].stats[j].xviInfection = mxml_GetInt(ss, "xvi", 0);
+			gd.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, "alienFriendly", 0.0);
 		}
 	}
 	return qtrue;
@@ -721,7 +769,7 @@ static void CL_NationSelect_f (void)
 	}
 
 	nat = atoi(Cmd_Argv(1));
-	if (nat < 0 || nat >=  gd.numNations) {
+	if (nat < 0 || nat >= gd.numNations) {
 		Com_Printf("Invalid nation index: %is\n",nat);
 		return;
 	}

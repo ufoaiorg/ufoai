@@ -197,7 +197,7 @@ static void E_EmployeeList_f (void)
 			if (employee->hired) {
 				if (employee->baseHired == baseCurrent) {
 					if (employee->transfer)
-						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"),employee->chr.name));
+						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"), employee->chr.name));
 					else
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), employee->chr.name);
 					Cbuf_AddText(va("employeeadd %i\n", employeesInCurrentList - (employeeListNode->u.text.textScroll % maxEmployeesPerPage)));

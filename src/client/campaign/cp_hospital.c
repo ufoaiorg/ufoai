@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_team.h"
 #include "cp_hospital.h"
+#include "../mxml/mxml_ufoai.h"
 
 /**
  * @brief Heals character.
@@ -187,6 +188,16 @@ qboolean HOS_Save (sizebuf_t *sb, void* data)
 	/* nothing to save here */
 	return qtrue;
 }
+/**
+ * @brief Saving function for hospital related data
+ * @sa HOS_LoadXML
+ * @sa SAV_GameSaveXML
+ */
+qboolean HOS_SaveXML (mxml_node_t *p)
+{
+	/* nothing to save here */
+	return qtrue;
+}
 
 /**
  * @brief Saving function for hospital related data
@@ -194,6 +205,15 @@ qboolean HOS_Save (sizebuf_t *sb, void* data)
  * @sa SAV_GameLoad
  */
 qboolean HOS_Load (sizebuf_t *sb, void* data)
+{
+	return qtrue;
+}
+/**
+ * @brief Saving function for hospital related data
+ * @sa HOS_SaveXML
+ * @sa SAV_GameLoadXML
+ */
+qboolean HOS_LoadXML (mxml_node_t *p)
 {
 	return qtrue;
 }

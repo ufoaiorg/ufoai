@@ -430,7 +430,7 @@ void UP_ItemDescription (const objDef_t *od)
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
-				Q_strcat(itemText, va(_("Size:\t%i\n"),od->size), sizeof(itemText));
+				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon) {

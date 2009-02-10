@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "cl_installation.h"
 #include "cp_geoscape_actions.h"
+#include "../mxml/mxml_ufoai.h"
 #include "../../shared/parse.h"
 
 installation_t *installationCurrent;
@@ -738,6 +739,45 @@ void INS_ParseInstallations (const char *name, const char **text)
 	} while (*text);
 }
 
+/**
+ * @brief Save callback for savegames in xml
+ * @sa INS_LoadXML
+ * @sa SAV_GameSaveXML
+ */
+qboolean INS_SaveXML (mxml_node_t *p)
+{
+	int i;
+	mxml_node_t *n;
+	n = mxml_AddNode(p, "Installations");
+	for (i = 0; i < MAX_INSTALLATIONS; i++) {
+		const installation_t *inst = INS_GetInstallationByIDX(i);
+		mxml_node_t *s, *ss;
+		if (!inst->founded)
+			continue;
+		s = mxml_AddNode(n, "installation");
+		mxml_AddInt(s, "Idx", inst->idx);
+		mxml_AddBool(s, "founded", inst->founded);
+		mxml_AddString(s, "templateId", inst->installationTemplate->id);
+		mxml_AddString(s, "name", inst->name);
+		mxml_AddPos3(s, "pos", inst->pos);
+		mxml_AddInt(s, "status", inst->installationStatus);
+		mxml_AddInt(s, "damage", inst->installationDamage);
+		mxml_AddFloat(s, "alienInterest", inst->alienInterest);
+		mxml_AddInt(s, "buildStart", inst->buildStart);
+
+		ss = mxml_AddNode(s, "batteries");
+		mxml_AddInt(ss, "num", inst->numBatteries);
+		B_SaveBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
+
+		/* store equipments */
+		/* reducing redundant code */
+		B_SaveStorageXML(s, inst->storage);
+
+		/** @todo aircraft (don't save capacities, they should
+		 * be recalculated after loading) */
+	}
+	return qtrue;
+}
 
 /**
  * @brief Save callback for savegames
@@ -772,6 +812,70 @@ qboolean INS_Save (sizebuf_t* sb, void* data)
 		/** @todo aircraft (don't save capacities, they should
 		 * be recalculated after loading) */
 	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa INS_SaveXML
+ * @sa SAV_GameLoadXML
+ * @sa INS_LoadItemSlots
+ */
+qboolean INS_LoadXML (mxml_node_t *p)
+{
+	mxml_node_t *s;
+	mxml_node_t *n = mxml_GetNode(p, "Installations");
+	if (!n)
+		return qfalse;
+
+	for (s = mxml_GetNode(n, "installation"); s ; s = mxml_GetNextNode(s,n, "installation")) {
+		mxml_node_t *ss;
+		const int idx = mxml_GetInt(s, "Idx", 0);
+		installation_t *inst = INS_GetInstallationByIDX(idx);
+		inst->founded = mxml_GetBool(s, "founded", inst->founded);
+		/* should never happen, we only save founded installations */
+		if (!inst->founded)
+			continue;
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(mxml_GetString(s, "templateId"));
+		if (!inst->installationTemplate) {
+			Com_Printf("Could not find installation template\n");
+			return qfalse;
+		}
+		gd.numInstallations++;
+		Q_strncpyz(inst->name, mxml_GetString(s, "name"), sizeof(inst->name));
+
+		mxml_GetPos3(s, "pos", inst->pos);
+
+		inst->installationStatus = mxml_GetInt(s, "status", 0);
+		inst->installationDamage = mxml_GetInt(s, "damage", 0);
+		inst->alienInterest = mxml_GetFloat(s, "alienInterest", 0.0);
+
+		RADAR_InitialiseUFOs(&inst->radar);
+		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
+		RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
+
+		inst->buildStart = mxml_GetInt(s, "buildStart", 0);
+
+		/* read battery slots */
+		BDEF_InitialiseInstallationSlots(inst);
+
+		ss = mxml_GetNode(s, "batteries");
+		if (!ss){
+			Com_Printf("INS_LoadXML: Batteries not defined!\n");
+			return qfalse;
+		}
+		inst->numBatteries = mxml_GetInt(ss, "num", 0);
+		if (inst->numBatteries > inst->installationTemplate->maxBatteries){
+			Com_Printf("Installation has more batteries than possible, using upper bound\n");
+			inst->numBatteries = inst->installationTemplate->maxBatteries;
+		}
+		B_LoadBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
+
+		B_LoadStorageXML(s, &inst->storage);
+		/** @todo aircraft */
+		/** @todo don't forget to recalc the capacities like we do for bases */
+	}
+	Cvar_SetValue("mn_installation_count", gd.numInstallations);
 	return qtrue;
 }
 

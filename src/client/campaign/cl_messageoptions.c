@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_messageoptions_callbacks.h"
 #include "cp_time.h"
 #include "../../shared/parse.h"
+#include "../mxml/mxml_ufoai.h"
 
 /** @brief valid notification types that may cause pause / notice */
 const char *nt_strings[NT_NUM_NOTIFYTYPE] = {
@@ -254,6 +255,41 @@ message_t *MSO_CheckAddNewMessage (const notify_t messagecategory, const char *t
 
 /**
  * @brief saves current notification and pause settings
+ * @sa MSO_LoadXML
+ */
+qboolean MSO_SaveXML (mxml_node_t *p)
+{
+	notify_t type;
+	int idx;
+	const int optionsCount = NT_NUM_NOTIFYTYPE;
+	const int categoryCount = gd.numMsgCategories;
+	mxml_node_t *n = mxml_AddNode(p, "MessageOptions");
+
+	/* save amount of available entries (forward compatible for additional types) */
+	mxml_AddInt(n, "optionsCount", optionsCount);
+
+	/* save positive values */
+	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
+		messageSettings_t actualSetting = messageSettings[type];
+		mxml_node_t *s = mxml_AddNode(n, "type");
+		mxml_AddString(s, "name", nt_strings[type]);
+		mxml_AddBool(s, "notify", actualSetting.doNotify);
+		mxml_AddBool(s, "pause", actualSetting.doPause);
+		mxml_AddBool(s, "sound", actualSetting.doSound);
+	}
+
+	mxml_AddInt(n, "categoryCount",categoryCount);
+	for (idx = 0; idx < categoryCount; idx++) {
+		msgCategory_t actualCategory = gd.messageCategories[idx];
+		mxml_node_t *s = mxml_AddNode(n, "category");
+		mxml_AddString(s, "name", actualCategory.id);
+		mxml_AddBool(s, "folded", actualCategory.isFolded);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief saves current notification and pause settings
  * @sa MSO_Load
  */
 qboolean MSO_Save (sizebuf_t* sb, void* data)
@@ -270,15 +306,12 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
 		byte bitmask = 0;
 		messageSettings_t actualSetting = messageSettings[type];
-		if (actualSetting.doNotify) {
+		if (actualSetting.doNotify)
 			bitmask |= NTMASK_NOTIFY;
-		}
-		if (actualSetting.doPause) {
+		if (actualSetting.doPause)
 			bitmask |= NTMASK_PAUSE;
-		}
-		if (actualSetting.doSound) {
+		if (actualSetting.doSound)
 			bitmask |= NTMASK_SOUND;
-		}
 		MSG_WriteString(sb, nt_strings[type]);
 		MSG_WriteByte(sb, bitmask);
 	}
@@ -287,12 +320,74 @@ qboolean MSO_Save (sizebuf_t* sb, void* data)
 	for (idx = 0; idx < categoryCount; idx++) {
 		byte bitmask = 0;
 		msgCategory_t actualCategory = gd.messageCategories[idx];
-		if (actualCategory.isFolded) {
+		if (actualCategory.isFolded)
 			bitmask |= MSGCATMASK_FOLDED;
-		}
 		MSG_WriteString(sb, actualCategory.id);
 		MSG_WriteByte(sb, bitmask);
 	}
+
+	return qtrue;
+}
+
+/**
+ * @brief Restores the notification and pause settings from savegame
+ * @sa MSO_SaveXML
+ */
+qboolean MSO_LoadXML (mxml_node_t *p)
+{
+	int optionsCount;
+	int categoryCount;
+	mxml_node_t *n, *s;
+	/* reset current message settings (default to set for undefined settings)*/
+	memset(messageSettings, 1, sizeof(messageSettings));
+
+	n = mxml_GetNode(p, "MessageOptions");
+	if (!n)
+		return qfalse;
+
+	/* load all msgoptions settings */
+	optionsCount = mxml_GetInt(n, "optionsCount", 0);
+	if (optionsCount < 0) {
+		Com_Printf("Can't load negative number of message settings, probably old savegame.\n");
+		return qfalse;
+	}
+
+	for (s = mxml_GetNode(n, "type"); s; s = mxml_GetNextNode(s,n, "type")){
+		const char *messagetype = mxml_GetString(s, "name");
+		notify_t type;
+
+		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
+			if (Q_strcmp(nt_strings[type], messagetype) == 0)
+				break;
+		}
+
+		/** @todo (menu) check why this message is not shown anywhere in logs*/
+		if (type == NT_NUM_NOTIFYTYPE) {
+			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
+			continue;
+		}
+		MSO_Set(0, type, MSO_NOTIFY, mxml_GetBool(s, "notify", qfalse), qfalse);
+		MSO_Set(0, type, MSO_PAUSE, mxml_GetBool(s, "pause", qfalse), qfalse);
+		MSO_Set(0, type, MSO_SOUND, mxml_GetBool(s, "sound", qfalse), qfalse);
+	}
+
+	categoryCount = mxml_GetInt(n, "categoryCount",0);
+	if (categoryCount < 0) {
+		Com_Printf("Can't load negative number of message category settings, probably old savegame.\n");
+		return qfalse;
+	}
+
+	for (s = mxml_GetNode(n, "category"); s; s = mxml_GetNextNode(s,n, "category")){
+		const char *categoryId = mxml_GetString(s, "name");
+		msgCategory_t *category = MSO_GetCategoryFromName(categoryId);
+		if (!category) {
+			Com_Printf("Unrecognized messagecategoryid '%s' ignored while loading\n", categoryId);
+			continue;
+		}
+		MSO_SetCategoryState(category, mxml_GetBool(s, "folded", qfalse)?MSGCATMASK_FOLDED:0, qfalse);
+	}
+
+	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse, qfalse);
 	return qtrue;
 }
 
@@ -340,7 +435,7 @@ qboolean MSO_Load (sizebuf_t* sb, void* data)
 		return qfalse;
 	}
 
-	for (; categoryCount> 0; categoryCount--) {
+	for (; categoryCount > 0; categoryCount--) {
 		const char *categoryId = MSG_ReadString(sb);
 		const byte categoryState = MSG_ReadByte(sb);
 		msgCategory_t *category = MSO_GetCategoryFromName(categoryId);
@@ -383,9 +478,9 @@ void MSO_ParseSettings (const char *name, const char **text)
 		if (msgtype[0] == '}')
 			break;
 		/* temporarly store type */
-		tmpCommand = va("%s",msgtype);
+		tmpCommand = va("%s", msgtype);
 		/* build command from msgtype, settingstype (pause|notify|sound) */
-		token = va("msgoptions_set %s %s 1",tmpCommand,COM_EParse(text, errhead, name));
+		token = va("msgoptions_set %s %s 1", tmpCommand, COM_EParse(text, errhead, name));
 		Cmd_ExecuteString(token);
 	} while (*text);
 	/* reset menu state, was updated by msgoptions_set */

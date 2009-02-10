@@ -142,6 +142,17 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_window.c \
 	client/menu/node/m_node_zone.c \
 	\
+	client/mxml/mxml-attr.c \
+	client/mxml/mxml-entity.c \
+	client/mxml/mxml-file.c \
+	client/mxml/mxml-index.c \
+	client/mxml/mxml-node.c \
+	client/mxml/mxml-private.c \
+	client/mxml/mxml-search.c \
+	client/mxml/mxml-set.c \
+	client/mxml/mxml-string.c \
+	client/mxml/mxml_ufoai.c \
+	\
 	common/cmd.c \
 	common/http.c \
 	common/ioapi.c \

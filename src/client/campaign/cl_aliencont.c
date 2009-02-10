@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_global.h"
 #include "../cl_game.h"
+#include "../mxml/mxml_ufoai.h"
 #include "cl_aliencont_callbacks.h"
 
 /** status flag indicating that mail about died aliens due to missing breathing tech was sent */
@@ -748,6 +749,17 @@ void AC_InitStartup (void)
 }
 
 /**
+ * @brief Savecallback for saving in XML Format
+ * @sa AC_LoadXML
+ * @sa B_SaveXML
+ * @sa SAV_GameSaveXML
+ */
+qboolean AC_SaveXML (mxml_node_t * p)
+{
+	return qtrue;
+}
+
+/**
  * @brief Save callback for savegames
  * @sa AC_Load
  * @sa B_Save
@@ -755,6 +767,19 @@ void AC_InitStartup (void)
  */
 qboolean AC_Save (sizebuf_t* sb, void* data)
 {
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savin in XML Format
+ * @sa AC_LoadXML
+ * @sa B_SaveXML
+ * @sa SAV_GameLoadXML
+ */
+qboolean AC_LoadXML (mxml_node_t * p)
+{
+	/** @todo load and save state, perhaps integrate flag into ccs? */
+	breathingMailSent = qfalse;
 	return qtrue;
 }
 

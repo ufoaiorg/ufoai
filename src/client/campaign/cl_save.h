@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_SAVE_H
 
 #include "../../common/msg.h"
+#include "../mxml/mxml_ufoai.h"
 
 extern cvar_t *cl_lastsave;
 
@@ -99,7 +100,7 @@ extern int presaveArray[MAX_ARRAYINDEXES];
  */
 extern qboolean loading;
 
-/** and now the save and load prototypes for every subsystem */
+/* and now the save and load prototypes for every subsystem */
 qboolean CP_Save(sizebuf_t *sb, void *data);
 qboolean CP_Load(sizebuf_t *sb, void *data);
 qboolean B_Save(sizebuf_t* sb, void* data);
@@ -133,6 +134,42 @@ qboolean INS_Load(sizebuf_t* sb, void* data);
 qboolean MSO_Save(sizebuf_t* sb, void* data);
 qboolean MSO_Load(sizebuf_t* sb, void* data);
 
+qboolean B_SaveXML(mxml_node_t *parent);/*done*/
+qboolean B_LoadXML(mxml_node_t *parent);
+qboolean CP_SaveXML(mxml_node_t *parent);/*done*/
+qboolean CP_LoadXML(mxml_node_t *parent);/*done*/
+qboolean HOS_LoadXML(mxml_node_t *parent);
+qboolean HOS_SaveXML(mxml_node_t *parent);
+qboolean BS_SaveXML(mxml_node_t *parent);/*done*/
+qboolean BS_LoadXML(mxml_node_t *parent);/*done*/
+qboolean AIR_SaveXML(mxml_node_t *parent);/*done*/
+qboolean AIR_LoadXML(mxml_node_t *parent);/*done*/
+qboolean AC_SaveXML(mxml_node_t *parent);/* done in B_SaveXML */
+qboolean AC_LoadXML(mxml_node_t *parent);/* done in B_LoadXML */
+qboolean E_SaveXML(mxml_node_t *parent);/* done */
+qboolean E_LoadXML(mxml_node_t *parent);/* done */
+qboolean RS_SaveXML(mxml_node_t *parent);/* done */
+qboolean RS_LoadXML(mxml_node_t *parent);/* done */
+qboolean PR_SaveXML(mxml_node_t *parent);/* done */
+qboolean PR_LoadXML(mxml_node_t *parent);/* done */
+qboolean MS_SaveXML(mxml_node_t *parent);/* done*/
+qboolean MS_LoadXML(mxml_node_t *parent);/* done */
+qboolean STATS_SaveXML(mxml_node_t *parent);/*done*/
+qboolean STATS_LoadXML(mxml_node_t *parent);/*done*/
+qboolean NAT_SaveXML(mxml_node_t *parent);/* done */
+qboolean NAT_LoadXML(mxml_node_t *parent);/* done */
+qboolean TR_SaveXML(mxml_node_t *parent);/* done */
+qboolean TR_LoadXML(mxml_node_t *parent);/* done */
+qboolean AB_SaveXML(mxml_node_t *parent);/* done */
+qboolean AB_LoadXML(mxml_node_t *parent);/* done */
+qboolean XVI_SaveXML(mxml_node_t *parent);/* done */
+qboolean XVI_LoadXML(mxml_node_t *parent);/* done */
+qboolean INS_SaveXML(mxml_node_t *parent);/* done */
+qboolean INS_LoadXML(mxml_node_t *parent);/* done */
+qboolean MSO_SaveXML(mxml_node_t *parent);/* done */
+qboolean MSO_LoadXML(mxml_node_t *parent);/* done */
+
 void RS_PostLoadInit(void);
 void B_PostLoadInit(void);
+
 #endif /* CLIENT_CL_SAVE_H */

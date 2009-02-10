@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cp_xvi.h"
 #include "../renderer/r_overlay.h"
+#include "../mxml/mxml_ufoai.h"
 
 static technology_t *rsAlienXVI;
 
@@ -112,6 +113,46 @@ void CP_XVIInit (void)
  * @brief XVI map saving callback
  * @note Only save transparency
  * @sa Savegame callback
+ * @sa SAV_InitXML
+ * @sa XVI_LoadXML
+ */
+qboolean XVI_SaveXML (mxml_node_t *p)
+{
+	byte *out;
+	int y;
+	int width;
+	int height;
+	mxml_node_t *n;
+	int defaultval = 0; /* that value should be the value, which is the most used one in the array */
+	out = R_XVIMapCopy(&width, &height);
+	if (!out)
+		return qtrue;
+	/* ok, do the saving... */
+	n = mxml_AddNode(p, "XVI");
+	mxml_AddInt(n, "width", width);
+	mxml_AddInt(n, "height", height);
+	mxml_AddInt(n, "default", defaultval);
+
+	for (y = 0; y < height; y++) {
+		int x;
+		for (x = 0; x < width; x++) {
+			/* That saves many Bytes in the savegame */
+			if (out[y * width + x] != defaultval) {
+				mxml_node_t *s = mxml_AddNode(n, "entry");
+				mxml_AddInt(s, "x", x);
+				mxml_AddInt(s, "y", y);
+				mxml_AddInt(s, "xv", out[y * width + x]);
+			}
+		}
+	}
+	Mem_Free(out);
+	return qtrue;
+}
+
+/**
+ * @brief XVI map saving callback
+ * @note Only save transparency
+ * @sa Savegame callback
  * @sa SAV_Init
  * @sa XVI_Load
  */
@@ -136,6 +177,45 @@ qboolean XVI_Save (sizebuf_t *sb, void *data)
 		for (x = 0; x < height; x++)
 			MSG_WriteByte(sb, out[y * width + x]);
 	}
+	Mem_Free(out);
+	return qtrue;
+}
+
+/**
+ * @brief Load the XVI map from the savegame.
+ * @sa Savegame callback
+ * @sa SAV_InitXML
+ * @sa XVI_SaveXML
+ */
+qboolean XVI_LoadXML (mxml_node_t *p)
+{
+	byte *out;
+	int width, height;
+	mxml_node_t *s;
+	int defaultval;
+	mxml_node_t *n = mxml_GetNode(p, "XVI");
+	/* If there is no XVI, it will not be saved */
+	if (!n)
+		return qtrue;
+
+	width = mxml_GetInt(n, "width", 0);
+	height = mxml_GetInt(n, "height", 0);
+	defaultval = mxml_GetInt(n, "default", 0);
+
+	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
+	if (!out)
+		Sys_Error("TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
+
+	memset(out, defaultval, sizeof(out)); /*setting the whole array to the defaultval. That saves much memory in saving */
+
+	for (s = mxml_GetNode(n, "entry"); s; s = mxml_GetNextNode(s, n, "entry")){
+		const int x = mxml_GetInt(s, "x", 0);
+		const int y = mxml_GetInt(s, "y", 0);
+		if (x >= 0 && x < width && y >= 0 && y <= height)
+			out[y * width + x] = mxml_GetInt(s, "xv", 0);
+	}
+
+	R_InitializeXVIOverlay(curCampaign->map, out, width, height);
 	Mem_Free(out);
 	return qtrue;
 }
