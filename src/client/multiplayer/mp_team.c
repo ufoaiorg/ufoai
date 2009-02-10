@@ -363,8 +363,8 @@ static void MP_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	/* unique character number */
 	chr->fieldSize = MSG_ReadByte(sb);
 	chr->ucn = MSG_ReadShort(sb);
-	if (chr->ucn >= cl.nextUniqueCharacterNnumber)
-		cl.nextUniqueCharacterNnumber = chr->ucn + 1;
+	if (chr->ucn >= cl.nextUniqueCharacterNumber)
+		cl.nextUniqueCharacterNumber = chr->ucn + 1;
 
 	/* name and model */
 	Q_strncpyz(chr->name, MSG_ReadStringRaw(sb), sizeof(chr->name));

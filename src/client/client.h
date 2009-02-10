@@ -141,7 +141,7 @@ typedef struct client_state_s {
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
 
 	/* unique character id */
-	int nextUniqueCharacterNnumber;
+	int nextUniqueCharacterNumber;
 } client_state_t;
 
 extern client_state_t cl;
