@@ -243,6 +243,9 @@ void MN_DrawMenus (void)
 	for (;windowId < mn.menuStackPos; windowId++) {
 		menu = mn.menuStack[windowId];
 
+		/* update the layout */
+		menu->behaviour->doLayout(menu);
+
 		drawOverNode = NULL;
 
 		MN_DrawNode(menu);

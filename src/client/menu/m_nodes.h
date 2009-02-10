@@ -82,6 +82,7 @@ typedef struct menuNode_s {
 	qboolean invis;				/**< true if the node is invisible */
 	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */
 	qboolean disabled;			/**< true if the node is inactive */
+	qboolean invalidated;		/**< true if we need to update the layout */
 	int mousefx;
 	char* text;
 	const char* font;			/**< Font to draw text */
@@ -191,6 +192,7 @@ typedef struct nodeBehaviour_s {
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 	void (*init)(menuNode_t *node);			/**< call every time we push the parent menu */
+	void (*doLayout)(menuNode_t *node);		/**< call to update node layout */
 
 	/* drag and drop callback */
 	qboolean (*dndEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */

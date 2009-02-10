@@ -397,6 +397,7 @@ static const size_t virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, capturedMouseMove),
 	offsetof(nodeBehaviour_t, loading),
 	offsetof(nodeBehaviour_t, loaded),
+	offsetof(nodeBehaviour_t, doLayout),
 	offsetof(nodeBehaviour_t, dndEnter),
 	offsetof(nodeBehaviour_t, dndMove),
 	offsetof(nodeBehaviour_t, dndLeave),

@@ -324,6 +324,19 @@ static void MN_NodeSetProperty_f (void)
 	MN_NodeSetProperty(node, property, Cmd_Argv(3));
 }
 
+/**
+ * @brief Invalidate a node and all his parent to request a layout update
+ */
+void MN_Invalidate (menuNode_t *node)
+{
+	while (node) {
+		if (node->invalidated)
+			return;
+		node->invalidated = qtrue;
+		node = node->parent;
+	}
+}
+
 static qboolean MN_AbstractNodeDNDEnter (menuNode_t *node)
 {
 	return qfalse;
@@ -348,6 +361,22 @@ static qboolean MN_AbstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
 	return isDroped;
 }
 
+/**
+ * @brief Call to update the node layout. This common code revalidate the node tree.
+ */
+static void MN_AbstractNodeDoLayout (menuNode_t *node)
+{
+	menuNode_t *child;
+	if (!node->invalidated)
+		return;
+
+	for (child = node->firstChild; child; child = child->next) {
+		node->behaviour->doLayout(node);
+	}
+
+	node->invalidated = qfalse;
+}
+
 void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "abstractnode";
@@ -360,6 +389,7 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->dndLeave = MN_AbstractNodeDNDLeave;
 	behaviour->dndDrop = MN_AbstractNodeDNDDrop;
 	behaviour->dndFinished = MN_AbstractNodeDNDFinished;
+	behaviour->doLayout = MN_AbstractNodeDoLayout;
 
 	/* some commands */
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");

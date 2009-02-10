@@ -38,6 +38,7 @@ qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, co
 /* visibility */
 void MN_UnHideNode(struct menuNode_s* node);
 void MN_HideNode(struct menuNode_s* node);
+void MN_Invalidate(struct menuNode_s* node);
 
 /* position */
 void MN_SetNewNodePos(struct menuNode_s* node, int x, int y);
