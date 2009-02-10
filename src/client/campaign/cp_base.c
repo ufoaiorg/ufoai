@@ -2089,10 +2089,8 @@ void B_SelectBase (base_t *base)
 		baseCurrent = base;
 		ccs.mapAction = MA_NONE;
 		MN_PushMenu("bases", NULL);
-		AIR_AircraftSelect(base->aircraftCurrent);
 		switch (base->baseStatus) {
 		case BASE_UNDER_ATTACK:
-			Cvar_Set("mn_base_status_name", _("Base is under attack"));
 			Cmd_ExecuteString("set_base_under_attack");
 			break;
 		default:

@@ -1332,10 +1332,12 @@ void AIM_InitCallbacks (void)
 {
 	Cmd_AddCommand("mn_next_equiptype", AIM_NextItemtype_f, "Shows the next aircraft equip category.");
 	Cmd_AddCommand("mn_prev_equiptype", AIM_PreviousItemtype_f, "Shows the previous aircraft equip category.");
+	Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, NULL);
 }
 
 void AIM_ShutdownCallbacks (void)
 {
 	Cmd_RemoveCommand("mn_next_equiptype");
 	Cmd_RemoveCommand("mn_prev_equiptype");
+	Cmd_RemoveCommand("airequip_zone_select");
 }

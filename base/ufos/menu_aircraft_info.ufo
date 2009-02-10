@@ -23,7 +23,6 @@ menu aircraft extends iaircraft
 		size		"529 260"
 		origin		"-45 25 0"
 		view		"aircraft"
-		rotatewithmouse	true
 	}
 
 	string aircraft_name

@@ -2297,7 +2297,6 @@ static const cmdList_t game_commands[] = {
 	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},
 	{"airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL},
 	{"airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL},
-	{"airequip_zone_select", AIM_AircraftEquipZoneSelect_f, NULL},
 	{"airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot"},
 	{"airequip_del_item", AIM_AircraftEquipDeleteItem_f, "Remove item from slot"},
 	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},

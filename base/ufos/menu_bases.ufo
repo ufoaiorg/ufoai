@@ -76,7 +76,7 @@ menu bases
 		font		f_menu
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push aircraft;" }
+		click		{ cmd "aircraft_select; mn_push aircraft;" }
 	}
 
 	button buysell
@@ -271,8 +271,7 @@ menu bases
 
 	string base_status
 	{
-		visiblewhen "mn_base_status_id == 1"
-		string		"*cvar mn_base_status_name"
+		string		""
 		color		"1 1 1 1"
 		pos			"0 370"
 		size		"768 35"
@@ -282,6 +281,7 @@ menu bases
 
 	confunc set_base_under_attack
 	{
+		*base_status string "_Base is under attack"
 		*base_status color "1 0 0 1"
 		*buildings disabled true
 		*buysell disabled true
@@ -290,11 +290,10 @@ menu bases
 		*production disabled true
 		*hire disabled true
 		*hospital disabled true
-		*menu:aircraft.button_buysell disabled true
-		*menu:aircraft.button_produce disabled true
 	}
 	confunc set_base_to_normal
 	{
+		*base_status string ""
 		*base_status color "1 1 1 1"
 		*buildings disabled false
 		cmd "base_init;"
@@ -312,12 +311,10 @@ menu bases
 	confunc set_buysell_disabled
 	{
 		*buysell disabled true
-		*menu:aircraft.button_buysell disabled true
 	}
 	confunc set_buysell_enabled
 	{
 		*buysell disabled false
-		*menu:aircraft.button_buysell disabled false
 	}
 
 	confunc set_transfer_disabled
@@ -341,12 +338,10 @@ menu bases
 	confunc set_prod_disabled
 	{
 		*production disabled true
-		*menu:aircraft.button_produce disabled true
 	}
 	confunc set_prod_enabled
 	{
 		*production disabled false
-		*menu:aircraft.button_produce disabled false
 	}
 
 	confunc set_hire_disabled
