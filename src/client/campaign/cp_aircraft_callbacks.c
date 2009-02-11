@@ -84,7 +84,9 @@ static void AIM_SelectAircraft_f (void)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <aircraftID>\n", Cmd_Argv(0));
+		if (base->aircraftCurrent) {
+			AIR_AircraftSelect(base->aircraftCurrent);
+		}
 		return;
 	}
 
@@ -199,26 +201,6 @@ static int CL_EquipSoldierState (const aircraft_t * aircraft)
 }
 
 /**
- * @brief Console command binding for AIR_AircraftSelect().
- */
-static void AIR_AircraftSelect_f (void)
-{
-	base_t *base = baseCurrent;
-
-	/* calling from console? with no baseCurrent? */
-	if (!base || !base->numAircraftInBase
-	 || (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR))) {
-		if (!Q_strncmp(MN_GetActiveMenuName(), "aircraft", 8))
-			MN_PopMenu(qfalse);
-		return;
-	}
-
-	AIR_AircraftSelect(base->aircraftCurrent);
-	if (!base->aircraftCurrent && !Q_strncmp(MN_GetActiveMenuName(), "aircraft", 8))
-		MN_PopMenu(qfalse);
-}
-
-/**
  * @brief Sets aircraftCurrent and updates related cvars and menutexts.
  * @param[in] aircraft Pointer to given aircraft that should be selected in the menu.
  */
@@ -313,8 +295,6 @@ void AIR_InitCallbacks (void)
 	Cmd_AddCommand("mn_select_aircraft", AIM_SelectAircraft_f, NULL);
 	/* menu aircraft, popup_transferbaselist */
 	Cmd_AddCommand("aircraft_return", AIM_AircraftReturnToBase_f, "Sends the current aircraft back to homebase");
-	/* menu aircraft_equip, aircraft, buy, hangar destroy popup (B_MarkBuildingDestroy)*/
-	Cmd_AddCommand("aircraft_select", AIR_AircraftSelect_f, NULL);
 	/* menu aircraft, aircraft_equip, aircraft_soldier */
 	Cmd_AddCommand("aircraft_update_list", AIR_AircraftUpdateList_f, NULL);
 }
@@ -327,6 +307,5 @@ void AIR_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_prev_aircraft");
 	Cmd_RemoveCommand("mn_select_aircraft");
 	Cmd_RemoveCommand("aircraft_return");
-	Cmd_RemoveCommand("aircraft_select");
 	Cmd_RemoveCommand("aircraft_update_list");
 }

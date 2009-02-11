@@ -76,7 +76,7 @@ menu bases
 		font		f_menu
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "aircraft_select; mn_push aircraft;" }
+		click		{ cmd "mn_push aircraft;" }
 	}
 
 	button buysell
