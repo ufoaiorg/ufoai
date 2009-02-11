@@ -346,6 +346,50 @@ static void CL_AssignSoldier_f (void)
 	Cbuf_AddText(va("team_select %i %i\n", num - relativeId, relativeId));
 }
 
+/**
+ * @brief Resert the character cvars for a character.
+ * @todo Move into script?
+ */
+static void CL_ResertCharacterCvars (void)
+{
+	Cvar_ForceSet("mn_name", "");
+	Cvar_ForceSet("mn_body", "");
+	Cvar_ForceSet("mn_head", "");
+	Cvar_ForceSet("mn_skin", "");
+	Cvar_ForceSet("mn_skinname", "");
+	Cvar_Set("mn_rweapon", "");
+	Cvar_Set("mn_lweapon", "");
+	Cvar_Set("mn_chrmis", "");
+	Cvar_Set("mn_chrkillalien", "");
+	Cvar_Set("mn_chrkillcivilian", "");
+	Cvar_Set("mn_chrkillteam", "");
+	Cvar_Set("mn_chrrank", "");
+	Cvar_Set("mn_chrrank_img", "");
+
+	Cvar_Set("mn_vpwr", "");
+	Cvar_Set("mn_vspd", "");
+	Cvar_Set("mn_vacc", "");
+	Cvar_Set("mn_vmnd", "");
+	Cvar_Set("mn_vcls", "");
+	Cvar_Set("mn_vhvy", "");
+	Cvar_Set("mn_vass", "");
+	Cvar_Set("mn_vsnp", "");
+	Cvar_Set("mn_vexp", "");
+	Cvar_Set("mn_vhp", "");
+	Cvar_Set("mn_vhpmax", "");
+
+	Cvar_Set("mn_tpwr", "");
+	Cvar_Set("mn_tspd", "");
+	Cvar_Set("mn_tacc", "");
+	Cvar_Set("mn_tmnd", "");
+	Cvar_Set("mn_tcls", "");
+	Cvar_Set("mn_thvy", "");
+	Cvar_Set("mn_tass", "");
+	Cvar_Set("mn_tsnp", "");
+	Cvar_Set("mn_texp", "");
+	Cvar_Set("mn_thp", "");
+}
+
 static void CL_ActorPilotSelect_f (void)
 {
 	employee_t *employee;
