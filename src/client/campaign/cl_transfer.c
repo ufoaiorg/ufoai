@@ -319,8 +319,10 @@ static void TR_CargoList (void)
 			if (trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
-					Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s"),
-						_(gd.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+					if (emplType == EMPL_SOLDIER)
+						Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(gd.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+					else
+						Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 					LIST_AddString(&cargoList, str);
 					cargo[trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
 					cargo[trCargoCountTmp].itemidx = employee->idx;
@@ -517,7 +519,10 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 					if (trEmployeesTmp[emplType][i])	/* Already on transfer list. */
 						continue;
 					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
-						Com_sprintf(str, sizeof(str), (emplType == EMPL_SOLDIER) ? _("Soldier %s %s") : _("Pilot %s %s"), _(gd.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+						if (emplType == EMPL_SOLDIER)
+							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(gd.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+						else
+							Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 						LIST_AddString(&transferList, str);
 						cnt++;
 					}
