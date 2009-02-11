@@ -66,7 +66,7 @@
  * Do we have threading support?
  */
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 #else
 #  define HAVE_PTHREAD_H 1
 #endif /* WIN32 */
