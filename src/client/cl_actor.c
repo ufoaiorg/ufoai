@@ -107,6 +107,7 @@ static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"crouch\n",
 	"headgear\n"
 };
+CASSERT(lengthof(shoot_type_strings) == BT_NUM_TYPES);
 
 /** Reservation-popup info */
 static int popupNum;	/**< Number of entries in the popup list */
