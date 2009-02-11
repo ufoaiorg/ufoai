@@ -489,7 +489,12 @@ menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
  */
 qboolean MN_CursorOnMenu (int x, int y)
 {
-	const menuNode_t *hovered = MN_GetHoveredNode();
+	const menuNode_t *hovered;
+
+	if (MN_GetMouseCapture() != NULL)
+		return qtrue;
+
+	hovered = MN_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
 		if (hovered->menu && hovered == hovered->menu->u.window.renderNode) {
@@ -497,8 +502,6 @@ qboolean MN_CursorOnMenu (int x, int y)
 		}
 		return qtrue;
 	}
-	if (MN_GetMouseCapture() != NULL)
-		return qtrue;
 
 	return qfalse;
 }
