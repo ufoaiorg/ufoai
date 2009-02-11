@@ -237,7 +237,8 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 	} else if (list) {
 		Q_strncpyz(textCopy, (const char*)list->data, sizeof(textCopy));
 	} else
-		Sys_Error("MN_DrawTextNode: Called without text or linkedList pointer");
+		return;	/**< Nothing to draw */
+
 	cur = textCopy;
 
 	/* Hover darkening effect for normal text lines. */
