@@ -261,6 +261,7 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
  * @brief checks that a string represents a single number
  * @param insistPositive if 1, then tests for the number being greater than or equal to zero.
  * @sa ED_CheckNumericType
+ * @note disallows hex, inf, NaN, numbers with junk on the end (eg -0123junk)
  * @return 1 if the value string matches the type, -1 otherwise.
  * (call ED_GetLastError)
  */
@@ -269,9 +270,13 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 	float fv;
 	int iv;
 	char *end_p;
-	/** @todo octal starts 0, make a fuss */
+	/* V_INTs are protected from octal and hex as strtol with base 10 is used.
+	 * this test is useful for V_INT, as it gives a specific error message.
+	 * V_FLOATs are not protected from hex, inf, nan, so this check is here.
+	 * strstr is used for hex, as 0x may not be the start of the string.
+	 * eg -0x0.2 is a negative hex float  */
 	if (*value == 'i' || *value == 'I' || *value == 'n' || *value == 'N'
-	 || value[1] == 'x' || value[1] == 'X') {
+	 || strstr(value, "0x") || strstr(value, "0X")) {
 		snprintf(lastErr, sizeof(lastErr), "infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
 		return -1;
 	}
