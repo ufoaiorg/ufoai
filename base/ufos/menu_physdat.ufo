@@ -36,8 +36,8 @@ menu physdata
 		skin		"*cvar mn_skin"
 		anim		"stand2"
 		angles		"0 70 90"
-		pos			"14 74"
-		size		"200 200"
+		pos			"27 73"
+		size		"188 263"
 		autoscale	true
 	}
 
