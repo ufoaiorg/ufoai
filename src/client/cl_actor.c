@@ -98,14 +98,14 @@ static int lastTU; /**< keeps track of selActor->TU */
 
 /** @brief a cbuf string for each button_types_t */
 static const char *shoot_type_strings[BT_NUM_TYPES] = {
-	"pr\n",
-	"reaction\n",
-	"pl\n",
-	"rr\n",
-	"rl\n",
-	"stand\n",
-	"crouch\n",
-	"headgear\n"
+	"pr",
+	"reaction",
+	"pl",
+	"rr",
+	"rl",
+	"stand",
+	"crouch",
+	"headgear"
 };
 CASSERT(lengthof(shoot_type_strings) == BT_NUM_TYPES);
 
