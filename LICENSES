@@ -1810,12 +1810,10 @@ base/pics/geoscape/ufoyard.tga | GNU General Public License 2.0 or later | Tejay
 base/pics/hud/bar_chat.tga | GNU General Public License 2.0
 base/pics/hud/bar_chat_choice.tga | GNU General Public License 2.0
 base/pics/hud/bar_floor.tga | GNU General Public License 2.0
-base/pics/hud/bar_game.tga | GNU General Public License 2.0
 base/pics/hud/bar_head.tga | GNU General Public License 2.0
 base/pics/hud/bar_infoscreen.tga | GNU General Public License 2.0
 base/pics/hud/bar_inventory.tga | GNU General Public License 2.0
 base/pics/hud/bar_leftweapon.tga | GNU General Public License 2.0
-base/pics/hud/bar_name.tga | GNU General Public License 2.0
 base/pics/hud/bar_nextround.tga | GNU General Public License 2.0
 base/pics/hud/bar_phys.tga | GNU General Public License 2.0
 base/pics/hud/bar_popup.tga | GNU General Public License 2.0
