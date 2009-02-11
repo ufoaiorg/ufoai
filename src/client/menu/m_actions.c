@@ -176,7 +176,7 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	case EA_THISMENUNODENAMEPROPERTY:
 		{
 			const menuNode_t *menu = (source->menu)?source->menu:source;
-			node = MN_GetNode(menu, path);
+			node = MN_GetNodeByPath(va("%s.%s", menu->name, path));
 			if (!node) {
 				Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist (source: %s)\n", menu->name, path, MN_GetPath(source));
 				return;
