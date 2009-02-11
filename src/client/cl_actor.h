@@ -80,14 +80,6 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
 void CL_SetReactionFiremode(le_t *actor, const int handidx, const int obj_idx, const int fd_idx);
 void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
-void HUD_ResetWeaponButtons(void);
-void HUD_DisplayFiremodes_f(void);
-void HUD_SwitchFiremodeList_f(void);
-void HUD_FireWeapon_f(void);
-void HUD_SelectReactionFiremode_f(void);
-void HUD_PopupFiremodeReservation_f(void);
-void HUD_ReserveShot_f(void);
-void HUD_RemainingTus_f(void);
 
 character_t *CL_GetActorChr(const le_t *le);
 qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);

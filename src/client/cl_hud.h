@@ -28,5 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void HUD_InitStartup(void);
 void HUD_DisplayMessage(const char * text, int time);
+void HUD_ResetWeaponButtons(void);
+void HUD_DisplayFiremodes_f(void);
+void HUD_SwitchFiremodeList_f(void);
+void HUD_FireWeapon_f(void);
+void HUD_SelectReactionFiremode_f(void);
+void HUD_PopupFiremodeReservation_f(void);
+void HUD_ReserveShot_f(void);
+void HUD_RemainingTus_f(void);
 
 #endif
