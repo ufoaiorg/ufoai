@@ -13,6 +13,10 @@
  * stuff like "UNSIGNED V_INT".
  *
  * note that 255 for spawnflags means levelflags 1-8 are all set.
+ * 
+ * range block entries can be a list of discrete options, "0 45 90 135" or continuous "0.0 - 1.0"
+ * a key may have different numbers of range entries: zero, one or a number equal to the number of elements in the vector.
+ * only numeric types may have a range defined.
  */
 
 
@@ -27,12 +31,16 @@ entity info_player_start {
 	}
 
 	optional {
-		angle	"The direction that the actor faces at the start 0, 90, 180 or 270"
+		angle	"The direction that the actor faces at the start"
 	}
 
 	type {
 		origin	"V_FLOAT 3"
 		angle	"V_INT"
+	}
+
+	range {
+		angle "0 45 90 135 180 225 270 315 360"
 	}
 
 }
@@ -313,6 +321,12 @@ entity worldspawn {
 		contrast		"1.0"
 		brightness		"1.0"
 		maxlevel		"5"
+	}
+
+	range {
+		angles_day	"-90 - 90"
+		angles_day	"0 - 360"
+		ambient_day	"0.0 - 1.0"
 	}
 }
 

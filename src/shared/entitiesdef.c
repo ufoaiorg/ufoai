@@ -110,7 +110,8 @@ static int ED_CountEntities (const char **data_p)
 }
 
 /**
- * @return a new string, or null if out of memory. sets lastErr, if out of memory
+ * @return a new string, or null if out of memory.
+ * @note sets lastErr, if out of memory
  */
 static char *ED_AllocString (const char * string) {
 	const int len = strlen(string) + 1;
@@ -445,10 +446,34 @@ static const char *ED_Constant2Block (int constInt)
 			return "default";
 		case ED_MODE_TYPE:
 			return "type";
+		case ED_RANGE:
+			return "range";
 		default:
 			snprintf(lastErr, sizeof(lastErr), "ED_Constant2Block: constant not recognised");
 			return NULL;
 	}
+}
+
+static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
+{ /** @todo check mallocs and strdup for NULL returns */
+	entityKeyRange_t **newRanges;
+	/* start a new range */
+	entityKeyRange_t *newRange = (entityKeyRange_t *)malloc(sizeof(entityKeyRange_t));
+	memset(newRange, 0, sizeof(entityKeyRange_t));
+	newRange->str = strdup(rangeStr);
+	/* resize array of pointers */
+	newRanges = (entityKeyRange_t **)malloc((kd->numRanges + 1) * sizeof(entityKeyRange_t *));
+	newRanges[kd->numRanges] = newRange;
+	if (kd->ranges) {
+		int i;
+		for (i = 0; i < kd->numRanges; i++) {
+			newRanges[i] = kd->ranges[i];
+		}
+		free(kd->ranges);
+	}
+	(kd->numRanges)++;
+	kd->ranges = newRanges;
+	return 1;
 }
 
 /**
@@ -471,7 +496,7 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 			return -1; /* lastErr already set */
 	}
 
-	if (keyDef->flags & mode) {
+	if (keyDef->flags & mode & ~ED_RANGE) {/* multiple range defs are permitted, different elements can have different ranges */
 		snprintf(lastErr, sizeof(lastErr), "Duplicate %s for %s key. second value: %s", ED_Constant2Block(mode), newName, newVal);
 		return -1;
 	}
@@ -497,6 +522,13 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 			 * as the type block may come before the optional or mandatory block */
 			if (-1 == ED_ParseType(keyDef, newVal))
 				return -1; /* lastErr set in function call */
+			return 0;
+		case ED_RANGE:
+			/** @todo test only typed keys may have ranges, but this
+			 * may only be tested after the whole ent has been parsed, as the
+			 * blocks may come in any order. test that only */
+			if (-1 == ED_AllocRange(keyDef, newVal))
+				return -1;
 			return 0;
 		default:
 			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: parse mode not recognised");
@@ -578,6 +610,9 @@ static int ED_ParseEntities (const char **data_p)
 				toggle ^= 1;
 			} else if (!strcmp("type", parsedToken)) {
 				mode = ED_MODE_TYPE;
+				toggle ^= 1;
+			} else if (!strcmp("range", parsedToken)) {
+				mode = ED_RANGE;
 				toggle ^= 1;
 			} else {/* must be a keyname or value */
 				if (toggle) { /* store key name til after next token is parsed */
@@ -734,6 +769,15 @@ void ED_Free (void)
 					free(kd->desc);
 				if (kd->defaultVal)
 					free(kd->defaultVal);
+				if (kd->numRanges) {
+					int i;
+					for (i = 0; i < kd->numRanges ;i++) {
+						entityKeyRange_t *kr = kd->ranges[i];
+						free(kr->str);
+						free(kr);
+					}
+					free(kd->ranges);
+				}
 			}
 			free(kd = ed->keyDefs);
 		}
@@ -745,7 +789,7 @@ void ED_Free (void)
 
 void ED_PrintKeyDef(const entityKeyDef_t *kd)
 {
-	Com_Printf("  >%s< mandatory:%i optional:%i abstract:%i type:%i", kd->name,
+	Com_Printf("  >%s< mandtry:%i opt:%i abst:%i type:%i", kd->name,
 		kd->flags & ED_MANDATORY ? 1 : 0,
 		kd->flags & ED_OPTIONAL ? 1 : 0,
 		kd->flags & ED_ABSTRACT ? 1 : 0,
@@ -754,7 +798,14 @@ void ED_PrintKeyDef(const entityKeyDef_t *kd)
 		Com_Printf(" type:%s[%i]", ED_Constant2Type(kd->flags & ED_KEY_TYPE), kd->vLen);
 
 	if (kd->defaultVal)
-		Com_Printf(" default >%s<",kd->defaultVal);
+		Com_Printf(" default>%s<",kd->defaultVal);
+
+	if (kd->numRanges) {
+		int i;
+		for (i = 0; i < kd->numRanges; i++) {
+			Com_Printf(" rge>%s<",kd->ranges[i]->str);
+		}
+	}
 
 	Com_Printf("\n");
 }

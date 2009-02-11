@@ -36,10 +36,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define	ED_TYPE_STRING	(1<<5)
 # define	ED_DEFAULT		(1<<6)
 # define	ED_MODE_TYPE	(1<<7)	/**< flag parse mode indicating that a type is being parsed */
-# define	ED_INSIST_POSITIVE (1<<8) /**< the type insists that the values are unsigned */
+# define	ED_RANGE		(1<<8)
+# define	ED_INSIST_POSITIVE (1<<9) /**< the type insists that the values are unsigned */
 
 # define	ED_CONCRETE		(ED_OPTIONAL | ED_MANDATORY) /**< flags indicating that this is a real key for use in a map file */
 # define	ED_KEY_TYPE		(ED_TYPE_FLOAT | ED_TYPE_INT | ED_TYPE_STRING)
+
+typedef struct entityKeyRange_s {
+	char	*str;		/**< the range string is stored here until the whole ent def is parsed */
+	int		*iArr;		/**< this is used if the key is V_INT */
+	float	*fArr;		/**< this is used if the key is V_FLOAT */
+	int		continuous;	/**< boolean. two elements in the array, Arr[0] <= val <= Arr[1] */
+} entityKeyRange_t;
 
 typedef struct entityKeyDef_s {
 	char	*name;		/**< the name of the key (eg classname) */
@@ -47,6 +55,8 @@ typedef struct entityKeyDef_s {
 	char	*defaultVal;/**< a defualt value that may be provided by ufo2map -fix */
 	int		flags;		/**< optional, mandatory, etc, see @sa ED_OPTIONAL, ED_MANDATORY, ED_ABSTRACT */
 	int		vLen;		/**< for numeric types that may be vectors, the number of elements */
+	entityKeyRange_t **ranges; /**< store allowed values for this key. may be a different range for each element */
+	int		numRanges;	/**< may be 0, 1 or equal to the vLen. only for numeric types */
 } entityKeyDef_t;
 
 typedef struct entityDef_s {
