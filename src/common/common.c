@@ -564,7 +564,11 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 		} else
 			return qfalse;
 	} else {
+		/* Cmd_GenericCompleteFunction uses one static buffer for output, so backup one completion here if available */
+		static char cmdBackup[MAX_QPATH] ;
 		cntCmd = Cmd_CompleteCommand(s, &cmd);
+		if (cmd)
+			Q_strncpyz(cmdBackup, cmd, sizeof(cmdBackup));
 		cntCvar = Cvar_CompleteVariable(s, &cvar);
 
 		/* complete as much as possible, append only if one single match is found */
@@ -577,13 +581,13 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			if (cntCvar != 1)
 				append = qfalse;
 		} else if (cmd && cvar) {
-			int maxLength = min(strlen(cmd),strlen(cvar));
+			int maxLength = min(strlen(cmdBackup),strlen(cvar));
 			int idx = 0;
 			/* try to find similar content of cvar and cmd match */
-			Q_strncpyz(cmdLine,cmd,sizeof(cmdLine));
+			Q_strncpyz(cmdLine,cmdBackup,sizeof(cmdLine));
 			for (; idx < maxLength; idx++) {
-				if (cmd[idx] != cvar[idx]) {
-					cmdLine[idx+1] = '\0';
+				if (cmdBackup[idx] != cvar[idx]) {
+					cmdLine[idx] = '\0';
 					break;
 				}
 			}
