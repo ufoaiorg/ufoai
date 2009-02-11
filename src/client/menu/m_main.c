@@ -74,20 +74,6 @@ static void MN_DeleteMenuFromStack (menuNode_t * menu)
 }
 
 /**
- * @brief Searches a menu by id on the current menu stack
- * @todo we can create a dicothomic search, if we sort menus[] by name
- */
-static inline menuNode_t* MN_FindMenuByName (const char *name)
-{
-	int i;
-	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strcmp(mn.menus[i]->name, name))
-			return mn.menus[i];
-
-	return NULL;
-}
-
-/**
  * @brief Searches the position in the current menu stack for a given menu id
  * @return -1 if the menu is not on the stack
  */
@@ -137,7 +123,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 	MN_MouseRelease();
 	MN_FocusRemove();
 
-	menu = MN_FindMenuByName(name);
+	menu = MN_GetMenu(name);
 	if (menu == NULL) {
 		Com_Printf("Didn't find menu \"%s\"\n", name);
 		return NULL;
@@ -354,7 +340,7 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 
 void MN_CloseMenu (const char* name)
 {
-	menuNode_t *menu = MN_FindMenuByName(name);
+	menuNode_t *menu = MN_GetMenu(name);
 	if (menu == NULL) {
 		Com_Printf("Menu '%s' dont exists\n", name);
 		return;
