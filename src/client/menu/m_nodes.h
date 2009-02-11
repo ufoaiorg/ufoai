@@ -83,6 +83,7 @@ typedef struct menuNode_s {
 	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */
 	qboolean disabled;			/**< true if the node is inactive */
 	qboolean invalidated;		/**< true if we need to update the layout */
+	qboolean ghost;				/**< true if the node is not tangible */
 	int mousefx;
 	char* text;
 	const char* font;			/**< Font to draw text */

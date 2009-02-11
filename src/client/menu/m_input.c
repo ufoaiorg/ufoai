@@ -161,32 +161,6 @@ qboolean MN_CheckMouseMove (void)
 }
 
 /**
- * @brief Check if a position is inner a node
- * @param[in] node The node to test
- * @param[in] rx Relative x position on the node
- * @param[in] ry Relative y position to the node
- * @todo Move it on a better file.c
- */
-static inline qboolean MN_IsInnerNode (const menuNode_t* const node, int rx, int ry)
-{
-	int i;
-
-	/* check bounding box */
-	if (rx < 0 || ry < 0 || rx >= node->size[0] || ry >= node->size[1])
-		return qfalse;
-
-	/* check excluded box */
-	for (i = 0; i < node->excludeRectNum; i++) {
-		if (rx >= node->excludeRect[i].pos[0]
-		 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
-		 && ry >= node->excludeRect[i].pos[1]
-		 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
-			return qfalse;
-	}
-	return qtrue;
-}
-
-/**
  * @brief Return the first visible node at a position
  * @param[in] node Node where we must search
  * @param[in] rx Relative x position to the parent of the node
@@ -197,6 +171,7 @@ static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
 {
 	menuNode_t *find;
 	menuNode_t *child;
+	int i;
 
 	if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
 		return NULL;
@@ -205,18 +180,36 @@ static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
 	rx -= node->pos[0];
 	ry -= node->pos[1];
 
-	if (!MN_IsInnerNode(node, rx, ry))
+	/* check bounding box */
+	if (rx < 0 || ry < 0 || rx >= node->size[0] || ry >= node->size[1])
 		return NULL;
 
 	/** @todo we should improve the loop to search the right in first */
-	find = node;
+	find = NULL;
 	for (child = node->firstChild; child; child = child->next) {
 		menuNode_t *tmp;
 		tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
 		if (tmp)
 			find = tmp;
 	}
-	return find;
+	if (find)
+		return find;
+
+	/* is the node tangible */
+	if (node->ghost)
+		return NULL;
+
+	/* check excluded box */
+	for (i = 0; i < node->excludeRectNum; i++) {
+		if (rx >= node->excludeRect[i].pos[0]
+		 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
+		 && ry >= node->excludeRect[i].pos[1]
+		 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+			return NULL;
+	}
+
+	/* we are over the node */
+	return node;
 }
 
 /**
