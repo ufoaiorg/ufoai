@@ -109,32 +109,9 @@ menu hud extends ahud
 
 	}
 
-	confunc disfloor0 { *floor.bt1 image hud/buttons1g }
-	confunc disfloor1 { *floor.bt2 image hud/buttons1g }
-	confunc disfloor2 { *floor.bt3 image hud/buttons1g }
-	confunc disfloor3 { *floor.bt4 image hud/buttons1g }
-	confunc disfloor4 { *floor.bt5 image hud/buttons1g }
-	confunc disfloor5 { *floor.bt6 image hud/buttons1g }
-	confunc disfloor6 { *floor.bt7 image hud/buttons1g }
-	confunc disfloor7 { *floor.bt8 image hud/buttons1g }
-
-	confunc deselfloor0 { *floor.bt1 image hud/buttons1 }
-	confunc deselfloor1 { *floor.bt2 image hud/buttons1 }
-	confunc deselfloor2 { *floor.bt3 image hud/buttons1 }
-	confunc deselfloor3 { *floor.bt4 image hud/buttons1 }
-	confunc deselfloor4 { *floor.bt5 image hud/buttons1 }
-	confunc deselfloor5 { *floor.bt6 image hud/buttons1 }
-	confunc deselfloor6 { *floor.bt7 image hud/buttons1 }
-	confunc deselfloor7 { *floor.bt8 image hud/buttons1 }
-
-	confunc selfloor0 { *floor.bt1 image hud/buttons1a }
-	confunc selfloor1 { *floor.bt2 image hud/buttons1a }
-	confunc selfloor2 { *floor.bt3 image hud/buttons1a }
-	confunc selfloor3 { *floor.bt4 image hud/buttons1a }
-	confunc selfloor4 { *floor.bt5 image hud/buttons1a }
-	confunc selfloor5 { *floor.bt6 image hud/buttons1a }
-	confunc selfloor6 { *floor.bt7 image hud/buttons1a }
-	confunc selfloor7 { *floor.bt8 image hud/buttons1a }
+	confunc disfloor { *floor.bt<1> image hud/buttons1g }
+	confunc deselfloor { *floor.bt<1> image hud/buttons1 }
+	confunc selfloor { *floor.bt<1> image hud/buttons1a }
 
 	// ==================
 	// actor and team bar
@@ -317,32 +294,9 @@ menu hud extends ahud
 		}
 	}
 
-	confunc hudselects0 { *team_selection.bt_actor0 image hud/buttons1a }
-	confunc hudselects1 { *team_selection.bt_actor1 image hud/buttons1a }
-	confunc hudselects2 { *team_selection.bt_actor2 image hud/buttons1a }
-	confunc hudselects3 { *team_selection.bt_actor3 image hud/buttons1a }
-	confunc hudselects4 { *team_selection.bt_actor4 image hud/buttons1a }
-	confunc hudselects5 { *team_selection.bt_actor5 image hud/buttons1a }
-	confunc hudselects6 { *team_selection.bt_actor6 image hud/buttons1a }
-	confunc hudselects7 { *team_selection.bt_actor7 image hud/buttons1a }
-
-	confunc huddeselect0 { *team_selection.bt_actor0 image hud/buttons1 }
-	confunc huddeselect1 { *team_selection.bt_actor1 image hud/buttons1 }
-	confunc huddeselect2 { *team_selection.bt_actor2 image hud/buttons1 }
-	confunc huddeselect3 { *team_selection.bt_actor3 image hud/buttons1 }
-	confunc huddeselect4 { *team_selection.bt_actor4 image hud/buttons1 }
-	confunc huddeselect5 { *team_selection.bt_actor5 image hud/buttons1 }
-	confunc huddeselect6 { *team_selection.bt_actor6 image hud/buttons1 }
-	confunc huddeselect7 { *team_selection.bt_actor7 image hud/buttons1 }
-
-	confunc huddisable0 { *team_selection.bt_actor0 image hud/buttons1g }
-	confunc huddisable1 { *team_selection.bt_actor1 image hud/buttons1g }
-	confunc huddisable2 { *team_selection.bt_actor2 image hud/buttons1g }
-	confunc huddisable3 { *team_selection.bt_actor3 image hud/buttons1g }
-	confunc huddisable4 { *team_selection.bt_actor4 image hud/buttons1g }
-	confunc huddisable5 { *team_selection.bt_actor5 image hud/buttons1g }
-	confunc huddisable6 { *team_selection.bt_actor6 image hud/buttons1g }
-	confunc huddisable7 { *team_selection.bt_actor7 image hud/buttons1g }
+	confunc hudselect { *team_selection.bt_actor<1> image hud/buttons1a }
+	confunc huddeselect { *team_selection.bt_actor<1> image hud/buttons1 }
+	confunc huddisable { *team_selection.bt_actor<1> image hud/buttons1g }
 
 	// ==================
 	// round events

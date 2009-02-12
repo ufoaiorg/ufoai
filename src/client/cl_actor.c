@@ -2276,13 +2276,13 @@ void HUD_ActorUpdateCvars (void)
 
 		for (i = 0; i < MAX_TEAMLIST; i++) {
 			if (!cl.teamList[i] || LE_IsDead(cl.teamList[i])) {
-				MN_ExecuteConfunc("huddisable%i", i);
+				MN_ExecuteConfunc("huddisable %i", i);
 			} else if (i == cl_selected->integer) {
 				/* stored in menu_nohud.ufo - confunc that calls all the different
 				 * hud select confuncs */
-				MN_ExecuteConfunc("hudselect%i", i);
+				MN_ExecuteConfunc("hudselect %i", i);
 			} else {
-				MN_ExecuteConfunc("huddeselect%i", i);
+				MN_ExecuteConfunc("huddeselect %i", i);
 			}
 		}
 		cl_selected->modified = qfalse;
@@ -2321,7 +2321,7 @@ void CL_AddActorToTeamList (le_t * le)
 		i = cl.numTeamList;
 		cl.teamList[cl.numTeamList++] = le;
 		MN_ExecuteConfunc("numonteam%i", cl.numTeamList); /* althud */
-		MN_ExecuteConfunc("huddeselect%i", i);
+		MN_ExecuteConfunc("huddeselect %i", i);
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 	}
