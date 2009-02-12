@@ -106,11 +106,11 @@ menu inventory
 		model	"*cvar mn_body"
 		skin	"*cvar mn_skin"
 		anim	"stand_menu"
-		origin	"0 -40 0"
+		origin	"0 -25 0"
 		angles	"0 70 90"
 		scale	"5 5 5"
-		pos		"164 84"
-		size	"190 240"
+		pos		"163 72"
+		size	"191 262"
 	}
 
 	model head
