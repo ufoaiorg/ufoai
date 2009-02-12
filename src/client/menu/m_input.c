@@ -229,9 +229,10 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 			return find;
 
 		/* we must not search anymore */
-		if (menu->u.window.modal) {
+		if (menu->u.window.dropdown)
 			break;
-		}
+		if (menu->u.window.modal)
+			break;
 	}
 
 	return NULL;
@@ -290,6 +291,14 @@ void MN_LeftClick (int x, int y)
 		if (capturedNode->behaviour->leftClick)
 			capturedNode->behaviour->leftClick(capturedNode, x, y);
 		return;
+	}
+
+	/* if we click out side a dropdown menu, we close it */
+	/** @todo need to refactoring it with a the focus code (cleaner) */
+	if (!hoveredNode && mn.menuStackPos != 0) {
+		if (mn.menuStack[mn.menuStackPos - 1]->u.window.dropdown) {
+			MN_PopMenu(qfalse);
+		}
 	}
 
 	if (hoveredNode && !hoveredNode->disabled) {

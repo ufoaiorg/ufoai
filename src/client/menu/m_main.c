@@ -480,6 +480,11 @@ qboolean MN_CursorOnMenu (int x, int y)
 	if (MN_GetMouseCapture() != NULL)
 		return qtrue;
 
+	if (mn.menuStackPos != 0) {
+		if (mn.menuStack[mn.menuStackPos - 1]->u.window.dropdown)
+			return qtrue;
+	}
+
 	hovered = MN_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */

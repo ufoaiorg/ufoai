@@ -42,6 +42,7 @@ typedef struct {
 	qboolean closeButton;
 	qboolean preventTypingEscape;
 	qboolean modal;
+	qboolean dropdown;		/**< very special property force the menu to close if we click outside */
 
 	struct menuNode_s *parent;	/**< to create child window */
 
