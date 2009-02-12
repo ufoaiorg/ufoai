@@ -25,6 +25,7 @@
 ./client/campaign/cp_aircraft_callbacks.c
 ./client/campaign/cp_base.c
 ./client/campaign/cp_base_callbacks.c
+./client/campaign/cp_employee_callbacks.c
 ./client/campaign/cp_geoscape_actions.c
 ./client/campaign/cp_messages.c
 ./client/campaign/cp_missions.c
