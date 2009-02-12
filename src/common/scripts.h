@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 /* darwin defines this in /usr/include/ppc/param.h */
 #ifndef ALIGN
-#define ALIGN(size)  size
+#define ALIGN(size)  (size)
 /*((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))*/
 #endif
 

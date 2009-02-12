@@ -662,7 +662,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		/* a reference to data is handled like this */
 		*(byte **) ((byte *) object + property->ofs) = mn.curadata;
 		/* references are parsed as string */
-		if (**token == '*') {
+		if (*token[0] == '*') {
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
 				Com_Printf(": Value '%s' is too long (key %s)\n", *token, property->string);
