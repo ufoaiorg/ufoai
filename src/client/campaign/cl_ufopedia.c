@@ -1,6 +1,7 @@
 /**
  * @file cl_ufopedia.c
  * @brief UFOpaedia script interpreter.
+ * @todo Split the mail code into cl_mailclient.c/h
  */
 
 /*
