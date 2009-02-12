@@ -1979,7 +1979,9 @@ void MainFrame::Create (void)
 	GtkToolbar* main_toolbar_v = create_main_toolbar_vertical(CurrentStyle());
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 
+	g_message("recorded window state: %i\n",g_layout_globals.nState);
 	if ((g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
+		g_message("trying to maximize, recorded size was %ix%i (not used)\n",g_layout_globals.m_position.w,g_layout_globals.m_position.h);
 		/* set stored position and default height/width, otherwise problems with extended screens */
 		g_layout_globals.m_position.h=800;
 		g_layout_globals.m_position.w=600;
