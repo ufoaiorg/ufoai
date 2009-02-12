@@ -143,7 +143,7 @@ int GAME_SK_GetTeam (void)
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");
-	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, "Equipment that is used for skirmish mode games");
+	cl_equip = Cvar_Get("cl_equip", "multiplayer_initial", 0, "Equipment that is used for skirmish mode games");
 
 	Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
 	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
