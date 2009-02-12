@@ -705,6 +705,9 @@ static void BaseSummary_Init_f (void)
 			if (cap == MAX_CAP)
 				continue;
 
+			if (!B_GetNumberOfBuildingsInBaseByBuildingType(base, b->buildingType))
+				continue;
+
 			/* Check if building is functional (see comments in B_UpdateBaseCapacities) */
 			if (B_GetBuildingStatus(base, b->buildingType)) {
 				Q_strcat(textStatsBuffer, va("%s:\t\t\t\t\t\t%i/%i", _(b->name),
