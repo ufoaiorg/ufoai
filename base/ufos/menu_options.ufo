@@ -10,7 +10,7 @@ menu options
 
 	pic background
 	{
-		image	menu/options_bg
+		image		menu/options_bg
 	}
 
 	// ==================
@@ -19,76 +19,84 @@ menu options
 
 	button button_input
 	{
-		pos	"80 170"
-		size "256 64"
-		click	{ cmd "mn_pop;mn_push options_input;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Input"
+		string		"_Input"
+		pos			"80 170"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop; mn_push options_input;" }
 	}
 
 	button button_video
 	{
-		pos	"80 240"
-		size "256 64"
-		click	{ cmd "mn_pop;mn_push options_video;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Video"
+		string		"_Video"
+		pos			"80 240"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;mn_push options_video;" }
 	}
 
 	button button_sound
 	{
 		visiblewhen "snd_init == 1"
-		pos	"80 310"
-		size "256 64"
-		click	{ cmd "mn_pop;mn_push options_sound;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
+
+		string		"_Sound"
+		pos			"80 310"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		string	"_Sound"
+		click		{ cmd "mn_pop;mn_push options_sound;" }
 	}
 
 	button button_sound_na
 	{
 		visiblewhen "snd_init == 0"
-		tooltip	"_Sound is not activated"
-		pos	"80 310"
-		size "256 64"
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Sound"
+
+		string		"_Sound"
+		tooltip		"_Sound is not activated"
+		pos			"80 310"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
 	}
 
 	button button_game
 	{
-		pos	"80 380"
-		size "256 64"
-		click	{ cmd "mn_pop;mn_push options_game;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Game"
+		string		"_Game"
+		pos			"80 380"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;mn_push options_game;" }
 	}
 
 	button button_back
 	{
-		pos	"80 470"
-		size "256 64"
-		click	{ cmd "mn_pop;mn_pop;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Back"
+		string		"_Back"
+		pos			"80 470"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;mn_pop;" }
 	}
 
 	func init
@@ -106,329 +114,349 @@ menu options
 menu options_video
 {
 	{
-		pos	"415 0"
-		size	"608 768"
+		pos			"415 0"
+		size		"608 768"
 		noticepos	"85 110"
 	}
 
 	string videosettings
 	{
-		string	"_Video settings"
-		pos		"425 60"
-		align	ur
-		font	"f_menubig"
+		string		"_Video settings"
+		pos			"55 65"
+		size		"465 35"
+		font		"f_menubig"
+		textalign	cc
 	}
 
 	string res_str
 	{
-		string	"_Resolution:"
-		pos		"85 140"
+		string		"_Resolution:"
+		pos			"85 140"
+		size		"240 20"
 	}
 
 	pic res_test_pic
 	{
-		image	menu/buttons_small
-		pos	"335 140"
-		texl	"32 0"
-		texh	"47 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_push popup_maintain_resolution;"
-		}
+		image		menu/buttons_small
+		pos			"335 140"
+		texl		"32 0"
+		texh		"47 16"
+		mousefx		true
+		click		{ cmd "mn_push popup_maintain_resolution;" }
 	}
 
 	string texres_str
 	{
-		string	"_Texture resolution cap:"
-		pos		"85 165"
+		string		"_Texture resolution cap:"
+		pos			"85 165"
+		size		"240 20"
 	}
 	// select box is defined at the bottom - due to shine through on hovering
 
 	string lightmapres_str
 	{
-		string	"_Lightmap block size:"
-		pos		"85 190"
+		string		"_Lightmap block size:"
+		pos			"85 190"
+		size		"240 20"
 	}
 
 	string aniso_str
 	{
-		string	"_Texture anisotropy level:"
-		pos		"85 215"
+		string		"_Texture anisotropy level:"
+		pos			"85 215"
+		size		"240 20"
 	}
 	string aniso_value
 	{
-		string	"*cvar r_anisotropic"
-		pos		"425 215"
-		align	ur
+		string		"*cvar r_anisotropic"
+		pos			"360 215"
+		size		"100 20"
+		textalign	cc
 	}
 
 
 	/* @todo update max with GL max anisotropic */
 	spinner aniso_change
 	{
-		image	menu/spinner_blue
-		blend	true
-		pos		"453 214"
-		current	"*cvar r_anisotropic"
-		min	0
-		max	16
-		delta 1
+		current		"*cvar r_anisotropic"
+		image		menu/spinner_blue
+		blend		true
+		pos			"466 214"
+		min			0
+		max			16
+		delta		1
 	}
 
 	string fullscreen_str
 	{
-		string	"_Fullscreen:"
-		pos		"85 240"
+		string		"_Fullscreen:"
+		pos			"85 240"
+		size		"240 20"
 	}
 	checkbox fullscreen
 	{
-		current	"*cvar vid_fullscreen"
-		pos		"425 240"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar vid_fullscreen"
+		pos			"463 240"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string compression_str
 	{
-		string	"_Texture compression:"
-		pos		"85 265"
+		string		"_Texture compression:"
+		pos			"85 265"
+		size		"240 20"
 	}
 	checkbox compression
 	{
-		current	"*cvar r_ext_texture_compression"
-		pos		"425 265"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar r_ext_texture_compression"
+		pos			"463 265"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string fps_str
 	{
-		string	"_Show FPS:"
-		pos		"85 290"
+		string		"_Show FPS:"
+		pos			"85 290"
+		size		"240 20"
 	}
 	checkbox fps
 	{
-		current	"*cvar cl_fps"
-		pos		"425 290"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar cl_fps"
+		pos			"463 290"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string lod_str
 	{
-		string	"_Texture Lod:"
-		pos		"85 315"
+		string		"_Texture Lod:"
+		pos			"85 315"
+		size		"240 20"
 	}
 	checkbox lod
 	{
-		current	"*cvar r_texture_lod"
-		pos		"425 315"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar r_texture_lod"
+		pos			"463 315"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string isomode_str
 	{
-		string	"_Isometric Mode:"
-		pos		"85 340"
+		string		"_Isometric Mode:"
+		pos			"85 340"
+		size		"240 20"
 	}
 	checkbox isomode
 	{
-		current	"*cvar r_isometric"
-		pos		"425 340"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar r_isometric"
+		pos			"463 340"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string glsl_str
 	{
-		string	"_GLSL shaders:"
-		pos		"85 365"
+		string		"_GLSL shaders:"
+		pos			"85 365"
+		size		"240 20"
 	}
 	checkbox glsl
 	{
-		current	"*cvar r_programs"
-		pos		"425 365"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar r_programs"
+		pos			"463 365"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string light_str
 	{
-		string	"_Realtime lighting:"
-		pos		"85 390"
+		string		"_Realtime lighting:"
+		pos			"85 390"
+		size		"240 20"
 	}
 	checkbox light
 	{
-		current	"*cvar r_lighting"
-		pos		"425 390"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar r_lighting"
+		pos			"463 390"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string ptlweather_str
 	{
-		string	"_Weather effects:"
-		pos		"85 415"
+		string		"_Weather effects:"
+		pos			"85 415"
+		size		"240 20"
 	}
 	checkbox ptlweather
 	{
-		current	"*cvar cl_particleweather"
-		pos		"425 415"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar cl_particleweather"
+		pos			"463 415"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string vbo_str
 	{
-		string	"_Vertex buffers:"
-		pos		"85 440"
+		string		"_Vertex buffers:"
+		pos			"85 440"
+		size		"240 20"
 	}
 	checkbox vbo
 	{
-		current	"*cvar r_vertexbuffers"
-		pos		"425 440"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar r_vertexbuffers"
+		pos			"463 440"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	string samplebuf_str
 	{
-		string	"_Multisample buffers:"
-		pos		"85 465"
+		string		"_Multisample buffers:"
+		pos			"85 465"
+		size		"240 20"
 	}
 	string samplebuf_value
 	{
-		string	"*cvar r_multisample"
-		pos		"425 465"
-		align	ur
+		string		"*cvar r_multisample"
+		pos			"360 465"
+		size		"100 20"
+		textalign	cc
 	}
 	spinner samplebuf_change
 	{
-		image	menu/spinner_blue
-		blend	true
-		pos		"453 464"
-		current	"*cvar r_multisample"
-		min	0
-		max	4
-		delta 1
+		current		"*cvar r_multisample"
+		image		menu/spinner_blue
+		blend		true
+		pos			"466 464"
+		min			0
+		max			4
+		delta		1
 	}
 
 	string swapcontrol_str
 	{
-		string	"_Swap interval:"
-		pos		"85 485"
+		string		"_Swap interval:"
+		pos			"85 485"
+		size		"240 20"
 	}
 	string swapcontrol_value
 	{
-		string	"*cvar r_swapinterval"
-		pos		"425 485"
-		align	ur
+		string		"*cvar r_swapinterval"
+		pos			"360 485"
+		size		"100 20"
+		textalign	cc
 	}
 
 	spinner swapinterval_change
 	{
-		image	menu/spinner_blue
-		blend	true
-		pos		"453 484"
-		current	"*cvar r_swapinterval"
-		min	0
-		max	2
-		delta 1
+		current		"*cvar r_swapinterval"
+		image		menu/spinner_blue
+		blend		true
+		pos			"466 484"
+		min			0
+		max			2
+		delta		1
 	}
 
 	string gamma_str
 	{
-		string	"_Gamma:"
-		pos		"85 515"
+		string		"_Gamma:"
+		pos			"85 515"
+		size		"150 20"
 	}
 	pic gamma_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 520"
+		image		menu/bar_rahmen
+		pos			"244 520"
 	}
 	bar gamma_bar
 	{
-		pos		"253 525"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar vid_gamma"
-		max		3.0
-		mousefx	true
-		click	{ }
+		current		"*cvar vid_gamma"
+		pos			"253 525"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			3.0
+		mousefx		true
+		click		{ }
 	}
 
 	string contrast_str
 	{
-		string	"_Contrast:"
-		pos		"85 540"
+		string		"_Contrast:"
+		pos			"85 540"
+		size		"150 20"
 	}
 	pic contrast_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 545"
+		image		menu/bar_rahmen
+		pos			"244 545"
 	}
 	bar contrast_bar
 	{
-		pos		"253 550"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar r_contrast"
-		max		2.0
-		mousefx	true
-		click	{ }
+		current		"*cvar r_contrast"
+		pos			"253 550"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			2.0
+		mousefx		true
+		click		{ }
 	}
 
 	string brightness_str
 	{
-		string	"_Brightness:"
-		pos		"85 565"
+		string		"_Brightness:"
+		pos			"85 565"
+		size		"150 20"
 	}
 	pic brightness_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 570"
+		image		menu/bar_rahmen
+		pos			"244 570"
 	}
 	bar brightness_bar
 	{
-		pos		"253 575"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar r_brightness"
-		max		2.0
-		mousefx	true
-		click	{ }
+		current		"*cvar r_brightness"
+		pos			"253 575"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			2.0
+		mousefx		true
+		click		{ }
 	}
 
 	string lightmap_str
 	{
-		string	"_Lightmap scale:"
-		pos		"85 590"
+		string		"_Lightmap scale:"
+		pos			"85 590"
+		size		"150 20"
 	}
 	pic lightmap_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 595"
+		image		menu/bar_rahmen
+		pos			"244 595"
 	}
 	bar lightmap_bar
 	{
-		pos		"253 600"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar r_modulate"
-		max		4.0
-		mousefx	true
-		click	{ }
+		current		"*cvar r_modulate"
+		pos			"253 600"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			4.0
+		mousefx		true
+		click		{ }
 	}
 
 	selectbox lightmapres_box
 	{
-		image	"menu/selectbox_green"
-		pos	"359 192"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar r_maxlightmap"
+		cvar		"*cvar r_maxlightmap"
+		image		"menu/selectbox_green"
+		pos			"359 192"
+		size		"125 20"
+		color		"0.6 0.6 0.6 0.3"
 		option low_value {
 			label	"_Low"
 			value	"256"
@@ -453,11 +481,11 @@ menu options_video
 
 	selectbox texres_box
 	{
-		image	"menu/selectbox_green"
-		pos	"359 167"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar r_maxtexres"
+		cvar		"*cvar r_maxtexres"
+		image		"menu/selectbox_green"
+		pos			"359 167"
+		size		"125 20"
+		color		"0.6 0.6 0.6 0.3"
 		option low_value {
 			label	"_Low"
 			value	"256"
@@ -492,12 +520,12 @@ menu options_video
 
 	selectbox select_res
 	{
-		pos		"359 142"
-		cvar	"*cvar mn_vidmode"
-		image	"menu/selectbox_green"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		dataid	OPTION_VIDEO_RESOLUTIONS
+		cvar		"*cvar mn_vidmode"
+		pos			"359 142"
+		size		"125 20"
+		image		"menu/selectbox_green"
+		color		"0.6 0.6 0.6 0.3"
+		dataid		OPTION_VIDEO_RESOLUTIONS
 	}
 
 	func init
@@ -517,65 +545,50 @@ menu options_video
 menu popup_maintain_resolution
 {
 	{
-		pos	"264 262"
-		size	"496 247"
-		dragbutton true
-		image	menu/popup_alpha_tile
-		blend	true
-		string	"_Maintain resolution"
+		string		"_Maintain resolution"
+		image		menu/popup_alpha_tile
+		blend		true
+		pos			"264 262"
+		size		"496 247"
+		dragbutton	 true
 	}
 
 	zone popup
 	{
-		invis false
-		timeout 4000	/**< @todo check if it work */
+		invis		false
+		timeout		4000	/**< @todo check if it work */
 	}
 
 	string name_label
 	{
-		string	"_Want To Maintain resolution"
-		pos	"26 58"
+		string		"_Want To Maintain resolution"
+		pos			"26 58"
+		size		"450 60"
 	}
 
-	pic bt_cancel
+	button bt_cancel
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"26 188"
-		size	"176 32"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"26 188"
+		size		"176 32"
+		click		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
 	}
-	pic bt_change
+	button bt_change
 	{
-		tooltip	"_Change the resolution"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"296 188"
-		size	"176 32"
-		out	{ *string_accept color "0 0.5 0 1" *bt_change image menu/multi_buttons3 }
-		in	{ *string_accept color "1 1 1 1" *bt_change image menu/multi_buttons3a }
-		click	{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
-	}
-	string string_cancel
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos	"114 204"
-		align	cc
-	}
-	string string_accept
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Accept"
-		pos	"384 204"
-		align	cc
+		string		"_Accept"
+		tooltip		"_Change the resolution"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"296 188"
+		size		"176 32"
+		click		{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
 	}
 
 	func init
@@ -599,91 +612,93 @@ menu popup_maintain_resolution
 menu options_sound
 {
 	{
-		pos	"415 0"
-		size	"608 768"
+		pos			"415 0"
+		size		"608 768"
 	}
 
 	string soundsettings
 	{
-		string	"_Sound settings"
-		pos		"425 60"
-		align	ur
-		font	"f_menubig"
+		string		"_Sound settings"
+		pos			"55 65"
+		size		"465 35"
+		font		"f_menubig"
+		textalign	cc
 	}
 
 	string volume_str
 	{
-		string	"_Volume Control"
-		pos		"85 140"
+		string		"_Volume Control"
+		pos			"85 140"
+		size		"240 20"
 	}
 	string effects_str
 	{
-		string	"_Effects:"
-		pos		"105 170"
+		string		"_Effects:"
+		pos			"105 170"
+		size		"120 20"
 	}
 	pic effects_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"230 175"
+		image		menu/bar_rahmen
+		pos			"230 175"
 	}
 	bar effects_bar
 	{
-		pos		"239 180"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar snd_volume"
-		max		128
-		mousefx	true
-		click	{ }
+		current		"*cvar snd_volume"
+		pos			"239 180"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			128
+		mousefx		true
+		click		{ }
 	}
 
 	string music_str
 	{
-		string	"_Music:"
-		pos		"105 195"
+		string		"_Music:"
+		pos			"105 195"
+		size		"120 20"
 	}
 	pic music_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"230 200"
+		image		menu/bar_rahmen
+		pos			"230 200"
 	}
 	bar music_bar
 	{
-		pos		"239 205"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar snd_music_volume"
-		max		128
-		mousefx true
-		click	{ }
+		current		"*cvar snd_music_volume"
+		pos			"239 205"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			128
+		mousefx		true
+		click		{ }
 	}
 
 	string rate_str
 	{
-		string	"_Sound rate:"
-		pos		"85 245"
+		string		"_Sound rate:"
+		pos			"85 245"
+		size		"240 20"
 	}
 	pic rate_test_pic
 	{
-		tooltip	"_Restart sound to change the settings"
-		image	menu/buttons_small
-		pos	"335 245"
-		texl	"32 0"
-		texh	"47 16"
-		mousefx	true
-		click
-		{
-			cmd "snd_restart;"
-		}
+		tooltip		"_Restart sound to change the settings"
+		image		menu/buttons_small
+		pos			"335 245"
+		texl		"32 0"
+		texh		"47 16"
+		mousefx		true
+		click		{ cmd "snd_restart;" }
 	}
 
 	selectbox rate_box
 	{
-		image	"menu/selectbox_green"
-		pos	"359 245"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar snd_rate"
+		cvar		"*cvar snd_rate"
+		image		"menu/selectbox_green"
+		pos			"359 245"
+		size		"125 20"
+		color		"0.6 0.6 0.6 0.3"
 		option low_value {
 			label	"11025"
 			value	"11025"
@@ -705,10 +720,6 @@ menu options_sound
 			action	""
 		}
 	}
-
-	func init
-	{
-	}
 }
 
 // ==================
@@ -718,40 +729,41 @@ menu options_sound
 menu options_keys
 {
 	{
-		pos	"415 0"
-		size	"608 768"
+		pos			"415 0"
+		size		"608 768"
 	}
 
 	string showkeys
 	{
-		string	"_Show key bindings"
-		pos		"425 60"
-		align	ur
-		font	"f_menubig"
+		string		"_Show key bindings"
+		pos			"55 65"
+		size		"465 35"
+		font		"f_menubig"
+		textalign	cc
 	}
 
 	// only show the current binding - no support for changing them atm
 	text keylist
 	{
-		pos	"65 110"
-		size	"430 560"
-		//rows	"28"
-		textid	TEXT_LIST
+		textid		TEXT_LIST
+		pos			"65 110"
+		size		"430 560"
+		rows		"28"
 		lineheight	"20"
-		wheel	{
+		wheel		{
 			*(abstractscrollbar)keyscroll current <text_scroll>
 		}
 	}
 
 	vscrollbar keyscroll {
-		image	menu/scrollbar_v_green	blend	true
-		pos	"508 110"	height	"560"
-		current 0
-		viewsize 28
-		fullsize 50
-		change {
-			cmd "mn_textscroll keylist <lastdiff>;"
-		}
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"508 110"
+		height		"560"
+		current		0
+		viewsize	28
+		fullsize	50
+		change		{ cmd "mn_textscroll keylist <lastdiff>;" }
 	}
 
 	confunc optionkey_count
@@ -772,16 +784,17 @@ menu options_keys
 menu options_game
 {
 	{
-		pos	"415 0"
-		size	"608 768"
+		pos			"415 0"
+		size		"608 768"
 	}
 
 	string gamesettings
 	{
-		string	"_Game settings"
-		pos		"425 60"
-		align	ur
-		font	"f_menubig"
+		string		"_Game settings"
+		pos			"55 65"
+		size		"465 35"
+		font		"f_menubig"
+		textalign	cc
 	}
 
 	// ===================
@@ -789,11 +802,13 @@ menu options_game
 	// ===================
 	string current_name
 	{
-		string  "_Name:"
-		pos     "85 140"
+		string 		"_Name:"
+		pos			"85 140"
+		size		"256 20"
 	}
 	textentry slot_name
 	{
+		string		"*cvar cl_name"
 		image		menu/button_green_verysmall
 		blend		true
 		color 		"0 .78 0 1"
@@ -803,7 +818,6 @@ menu options_game
 		font		"f_verysmall"
 		pos			"85 160"
 		size		"256 34"
-		string		"*cvar cl_name"
 	}
 
 	// ===================
@@ -811,16 +825,17 @@ menu options_game
 	// ===================
 	string hud_str
 	{
-		string	"_HUD Design:"
-		pos		"85 230"
+		string		"_HUD Design:"
+		pos			"85 230"
+		size		"250 20"
 	}
 	selectbox select_hud
 	{
-		image	"menu/selectbox_green"
-		pos		"343 230"
-		size	"155 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar mn_hud"
+		cvar		"*cvar mn_hud"
+		image		"menu/selectbox_green"
+		pos			"343 230"
+		size		"155 20"
+		color		"0.6 0.6 0.6 0.3"
 		option hud_value {
 			label	"_Original HUD"
 			value	"hud"
@@ -838,11 +853,13 @@ menu options_game
 	// ===================
 	string language_str
 	{
-		string "_Language:"
-		pos     "85 255"
+		string		"_Language:"
+		pos			"85 255"
+		size		"250 20"
 	}
 	optionlist select_language
 	{
+		dataid		OPTION_LANGUAGES
 		pos			"343 255"
 		cvar		"*cvar s_language"
 		image		"menu/panel_green_slim"
@@ -851,8 +868,7 @@ menu options_game
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		padding		6
-		dataid		OPTION_LANGUAGES
-		viewchange {
+		viewchange	{
 			*(vscrollbar)select_language_scroll current <viewpos>
 			*(vscrollbar)select_language_scroll fullsize <count>
 			*(vscrollbar)select_language_scroll viewsize 10
@@ -862,14 +878,14 @@ menu options_game
 	}
 
 	vscrollbar select_language_scroll {
-		image			menu/scrollbar_v_green
-		blend			true
-		pos				"500 255"
-		height			"220"
-		current			0
-		viewsize		8
-		fullsize		22
-		change {
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"500 255"
+		height		"220"
+		current		0
+		viewsize	8
+		fullsize	22
+		change		{
 			*select_language viewpos <current>
 		}
 	}
@@ -879,16 +895,17 @@ menu options_game
 	// ===================
 	string tooltip_str
 	{
-		string	"_Tooltips:"
-		pos		"85 480"
+		string		"_Tooltips:"
+		pos			"85 480"
+		size		"250 20"
 	}
 	checkbox tooltip
 	{
-		current	"*cvar mn_show_tooltips"
-		pos		"425 480"
-		tooltip	"_Activates tooltips"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar mn_show_tooltips"
+		tooltip		"_Activates tooltips"
+		pos			"425 480"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	// ===================
@@ -896,16 +913,17 @@ menu options_game
 	// ===================
 	string centerview_str
 	{
-		string	"_Centre view:"
-		pos		"85 505"
+		string		"_Centre view:"
+		pos			"85 505"
+		size		"250 20"
 	}
 	checkbox centerview_value
 	{
-		current	"*cvar cl_centerview"
-		pos		"425 505"
-		tooltip	"_Centring at soldier selecting, shooting and appearing"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar cl_centerview"
+		tooltip		"_Centring at soldier selecting, shooting and appearing"
+		pos			"425 505"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	// ===================
@@ -913,16 +931,17 @@ menu options_game
 	// ===================
 	string c_tooltip_str
 	{
-		string	"_Cursor tooltips:"
-		pos		"85 530"
+		string		"_Cursor tooltips:"
+		pos			"85 530"
+		size		"250 20"
 	}
 	checkbox c_tooltip
 	{
-		current	"*cvar cl_show_cursor_tooltips"
-		pos		"425 530"
-		tooltip	"_Activates cursor tooltips"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar cl_show_cursor_tooltips"
+		tooltip		"_Activates cursor tooltips"
+		pos			"425 530"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	// =====================
@@ -930,16 +949,17 @@ menu options_game
 	// =====================
 	string 3dmap_str
 	{
-		string	"_3D Geoscape:"
-		pos		"85 555"
+		string		"_3D Geoscape:"
+		pos			"85 555"
+		size		"250 20"
 	}
 	checkbox 3dmap
 	{
-		current	"*cvar cl_3dmap"
-		pos		"425 555"
-		tooltip	"_Use 3D geoscape"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar cl_3dmap"
+		tooltip		"_Use 3D geoscape"
+		pos			"425 555"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	// =====================
@@ -947,16 +967,17 @@ menu options_game
 	// =====================
 	string tipoftheday_string
 	{
-		string	"_Show tip of the day:"
-		pos		"85 580"
-		font	f_small
+		string		"_Show tip of the day:"
+		pos			"85 580"
+		size		"250 20"
+		font		f_small
 	}
 	checkbox tipoftheday
 	{
-		current	"*cvar cl_showTipOfTheDay"
-		pos	"425 580"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar cl_showTipOfTheDay"
+		pos			"425 580"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	// ===================
@@ -964,16 +985,17 @@ menu options_game
 	// ===================
 	string precache_str
 	{
-		string	"_Precache models:"
-		pos	"85 605"
+		string		"_Precache models:"
+		pos			"85 605"
+		size		"250 20"
 	}
 	checkbox precache
 	{
-		current	"*cvar cl_precache"
-		pos	"425 605"
-		tooltip	"_Precache models (faster menus)"
-		image	"menu/checkbox_blue"
-		size	"20 18"
+		current		"*cvar cl_precache"
+		tooltip		"_Precache models (faster menus)"
+		pos			"425 605"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
 
 	// ==================
@@ -981,25 +1003,25 @@ menu options_game
 	// ==================
 	string actorsspeed_str
 	{
-		string	"_Actor speed:"
-		pos		"85 630"
+		string		"_Actor speed:"
+		pos			"85 630"
+		size		"150 20"
 	}
 	pic actorsspeed_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"230 635"
+		image		menu/bar_rahmen
+		pos			"240 635"
 	}
 	bar actorsspeed_bar
 	{
-		pos		"239 640"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar g_actorspeed"
-		max		9
-		mousefx	true
-		click	{ }
+		current		"*cvar g_actorspeed"
+		pos			"249 640"
+		size		"245 6"
+		color		"0 .8 0 1"
+		max			9
+		mousefx		true
+		click		{ }
 	}
-
 }
 
 
@@ -1010,16 +1032,17 @@ menu options_game
 menu options_input
 {
 	{
-		pos	"415 0"
-		size	"608 768"
+		pos			"415 0"
+		size		"608 768"
 	}
 
 	string gamesettings
 	{
-		string	"_Input settings"
-		pos		"425 60"
-		align	ur
-		font	"f_menubig"
+		string		"_Input settings"
+		pos			"55 65"
+		size		"465 35"
+		font		"f_menubig"
+		textalign	cc
 	}
 
 	// ===================
@@ -1027,29 +1050,31 @@ menu options_input
 	// ===================
 	string camera_str
 	{
-		string	"_Camera"
-		pos		"85 140"
+		string		"_Camera"
+		pos			"85 140"
+		size		"240 20"
 	}
 	string camspeed_str
 	{
-		string	"_Scroll Speed:"
-		pos		"105 170"
+		string		"_Scroll Speed:"
+		pos			"95 170"
+		size		"150 20"
 	}
 	pic camspeed_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 175"
+		image		menu/bar_rahmen
+		pos			"244 175"
 	}
 	bar camspeed_bar
 	{
-		pos		"253 180"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar cl_cammovespeed"
-		min		150
-		max		3000
-		mousefx	true
-		click	{ }
+		current		"*cvar cl_cammovespeed"
+		pos			"253 180"
+		size		"245 6"
+		color		"0 .8 0 1"
+		min			150
+		max			3000
+		mousefx		true
+		click		{ }
 	}
 
 	// ===================
@@ -1057,24 +1082,25 @@ menu options_input
 	// ===================
 	string camrot_str
 	{
-		string	"_Rotation Speed:"
-		pos		"105 195"
+		string		"_Rotation Speed:"
+		pos			"95 195"
+		size		"150 20"
 	}
 	pic camrot_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 200"
+		image		menu/bar_rahmen
+		pos			"244 200"
 	}
 	bar camrot_bar
 	{
-		pos		"253 205"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar cl_camrotspeed"
-		min		50
-		max		1000
-		mousefx	true
-		click	{ }
+		current		"*cvar cl_camrotspeed"
+		pos			"253 205"
+		size		"245 6"
+		color		"0 .8 0 1"
+		min			50
+		max			1000
+		mousefx		true
+		click		{ }
 	}
 
 	// ===================
@@ -1082,24 +1108,25 @@ menu options_input
 	// ===================
 	string cammoveaccel_str
 	{
-		string	"_Move Acceleration:"
-		pos		"105 245"
+		string		"_Move Acceleration:"
+		pos			"95 245"
+		size		"150 20"
 	}
 	pic cammoveaccel_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 250"
+		image		menu/bar_rahmen
+		pos			"244 250"
 	}
 	bar cammoveaccel_bar
 	{
-		pos		"253 255"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar cl_cammoveaccel"
-		min		150
-		max		3000
-		mousefx	true
-		click	{ }
+		current		"*cvar cl_cammoveaccel"
+		pos			"253 255"
+		size		"245 6"
+		color		"0 .8 0 1"
+		min			150
+		max			3000
+		mousefx		true
+		click		{ }
 	}
 
 	// ===================
@@ -1107,8 +1134,9 @@ menu options_input
 	// ===================
 	string joystick_settings_str
 	{
-		string	"_Joystick settings:"
-		pos		"85 505"
+		string		"_Joystick settings:"
+		pos			"85 505"
+		size		"240 20"
 	}
 
 	// ===================
@@ -1116,24 +1144,25 @@ menu options_input
 	// ===================
 	string joystick_threshold_str
 	{
-		string	"_Threshold:"
-		pos		"105 555"
+		string		"_Threshold:"
+		pos			"95 555"
+		size		"150 20"
 	}
 	pic joystick_threshold_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 560"
+		image		menu/bar_rahmen
+		pos			"244 560"
 	}
 	bar joystick_threshold_bar
 	{
-		pos		"253 565"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar in_joystickThreshold"
-		min		0.0
-		max		1.0
-		mousefx	true
-		click	{ }
+		current		"*cvar in_joystickThreshold"
+		pos			"253 565"
+		size		"245 6"
+		color		"0 .8 0 1"
+		min			0.0
+		max			1.0
+		mousefx		true
+		click		{ }
 	}
 
 	// ===================
@@ -1141,24 +1170,25 @@ menu options_input
 	// ===================
 	string joystick_speed_str
 	{
-		string	"_Speed:"
-		pos		"105 580"
+		string		"_Speed:"
+		pos			"95 580"
+		size		"150 20"
 	}
 	pic joystick_speed_rahmen
 	{
-		image	menu/bar_rahmen
-		pos		"244 585"
+		image		menu/bar_rahmen
+		pos			"244 585"
 	}
 	bar joystick_speed_bar
 	{
-		pos		"253 590"
-		size	"245 6"
-		color	"0 .8 0 1"
-		current	"*cvar in_joystickSpeed"
-		min		5
-		max		30
-		mousefx	true
-		click	{ }
+		current		"*cvar in_joystickSpeed"
+		pos			"253 590"
+		size		"245 6"
+		color		"0 .8 0 1"
+		min			5
+		max			30
+		mousefx		true
+		click		{ }
 	}
 
 	// ===================
@@ -1166,14 +1196,15 @@ menu options_input
 	// ===================
 	button button_keys
 	{
-		pos	"85 620"
-		size "256 64"
-		click	{ cmd "mn_pop;mn_push options_keys;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Keys"
+		string		"_Keys"
+		pos			"85 620"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;mn_push options_keys;" }
 	}
 
 	// selectboxes must be the last clickable nodes
@@ -1183,16 +1214,17 @@ menu options_input
 	// ===================
 	string autostand_str
 	{
-		string	"_Autostand"
-		pos		"85 310"
+		string		"_Autostand"
+		pos			"85 310"
+		size		"240 20"
 	}
 	selectbox select_autostand
 	{
-		image	"menu/selectbox_green"
-		pos		"343 310"
-		size	"155 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar cl_autostand"
+		cvar		"*cvar cl_autostand"
+		image		"menu/selectbox_green"
+		pos			"343 310"
+		size		"155 20"
+		color		"0.6 0.6 0.6 0.3"
 		option confirm_value {
 			label	"_Yes"
 			value	"1"
@@ -1210,16 +1242,17 @@ menu options_input
 	// ===================
 	string confirm_str
 	{
-		string	"_Confirm Actions:"
-		pos		"85 285"
+		string		"_Confirm Actions:"
+		pos			"85 285"
+		size		"240 20"
 	}
 	selectbox select_confirmactions
 	{
-		image	"menu/selectbox_green"
-		pos		"343 285"
-		size	"155 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar confirm_actions"
+		cvar		"*cvar confirm_actions"
+		image		"menu/selectbox_green"
+		pos			"343 285"
+		size		"155 20"
+		color		"0.6 0.6 0.6 0.3"
 		option confirm_value {
 			label	"_Yes"
 			value	"1"
@@ -1242,16 +1275,17 @@ menu options_input
 	// ===================
 	string joystick_str
 	{
-		string	"_Joystick:"
-		pos		"85 530"
+		string		"_Joystick:"
+		pos			"85 530"
+		size		"150 20"
 	}
 	selectbox select_joystick
 	{
-		image	"menu/selectbox_green"
-		pos		"243 530"
-		size	"256 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar in_joystickNo"
-		dataid	OPTION_JOYSTICKS
+		cvar		"*cvar in_joystickNo"
+		dataid		OPTION_JOYSTICKS
+		image		"menu/selectbox_green"
+		pos			"243 530"
+		size		"256 20"
+		color		"0.6 0.6 0.6 0.3"
 	}
 }
