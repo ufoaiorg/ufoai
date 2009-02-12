@@ -67,7 +67,7 @@ menu firemode_left {
 		texh	"255  63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 0;" }
+		click	{ cmd "fireweap l 0;mn_pop;" }
 		blend 1
 	}
 
@@ -79,7 +79,7 @@ menu firemode_left {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 1;" }
+		click	{ cmd "fireweap l 1;mn_pop;" }
 		blend 1
 	}
 
@@ -91,7 +91,7 @@ menu firemode_left {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 2;" }
+		click	{ cmd "fireweap l 2;mn_pop;" }
 		blend 1
 	}
 
@@ -103,7 +103,7 @@ menu firemode_left {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 3;" }
+		click	{ cmd "fireweap l 3;mn_pop;" }
 		blend 1
 	}
 
@@ -115,7 +115,7 @@ menu firemode_left {
 		texh	"255  63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 4;" }
+		click	{ cmd "fireweap l 4;mn_pop;" }
 		blend 1
 	}
 
@@ -127,7 +127,7 @@ menu firemode_left {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 5;" }
+		click	{ cmd "fireweap l 5;mn_pop;" }
 		blend 1
 	}
 
@@ -139,7 +139,7 @@ menu firemode_left {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 6;" }
+		click	{ cmd "fireweap l 6;mn_pop;" }
 		blend 1
 	}
 
@@ -151,7 +151,7 @@ menu firemode_left {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap l 7;" }
+		click	{ cmd "fireweap l 7;mn_pop;" }
 		blend 1
 	}
 
@@ -359,7 +359,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 0;" }
+		click	{ cmd "fireweap r 0;mn_pop;" }
 		blend 1
 	}
 
@@ -371,7 +371,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 1;" }
+		click	{ cmd "fireweap r 1;mn_pop;" }
 		blend 1
 	}
 
@@ -383,7 +383,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 2;" }
+		click	{ cmd "fireweap r 2;mn_pop;" }
 		blend 1
 	}
 
@@ -395,7 +395,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 3;" }
+		click	{ cmd "fireweap r 3;mn_pop;" }
 		blend 1
 	}
 
@@ -407,7 +407,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 4;" }
+		click	{ cmd "fireweap r 4;mn_pop;" }
 		blend 1
 	}
 
@@ -419,7 +419,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 5;" }
+		click	{ cmd "fireweap r 5;mn_pop;" }
 		blend 1
 	}
 
@@ -431,7 +431,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 6;" }
+		click	{ cmd "fireweap r 6;mn_pop;" }
 		blend 1
 	}
 
@@ -443,7 +443,7 @@ menu firemode_right {
 		texh	"255 63"
 		mousefx	false
 		invis true
-		click	{ cmd "fireweap r 7;" }
+		click	{ cmd "fireweap r 7;mn_pop;" }
 		blend 1
 	}
 
