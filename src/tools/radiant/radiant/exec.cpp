@@ -43,6 +43,9 @@
 # endif
 #define SIGKILL 0
 #define WNOHANG 0
+#elif defined (__APPLE__) || defined (MACOSX)
+#define waitpid(pid,exitcode,flags) 0
+#define WNOHANG 0
 #endif
 
 static gint child_child_pipe[2];
