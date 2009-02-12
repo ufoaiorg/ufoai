@@ -228,6 +228,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
+		*writedByte = ALIGN(sizeof(int));
 		break;
 
 	case V_RACE:
@@ -247,6 +248,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", token);
+		*writedByte = ALIGN(sizeof(int));
 		break;
 
 	case V_INT:
@@ -337,7 +339,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(1);
+		*writedByte = ALIGN(sizeof(byte));
 		break;
 
 	case V_BLEND:
@@ -348,7 +350,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(1);
+		*writedByte = ALIGN(sizeof(byte));
 		break;
 
 	case V_STYLE:
@@ -359,7 +361,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(1);
+		*writedByte = ALIGN(sizeof(byte));
 		break;
 
 	case V_FADE:
@@ -370,7 +372,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(1);
+		*writedByte = ALIGN(sizeof(byte));
 		break;
 
 	case V_SHAPE_SMALL:
@@ -420,7 +422,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(1);
+		*writedByte = ALIGN(sizeof(byte));
 		break;
 
 	case V_DATE:
@@ -462,7 +464,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(1);
+		*writedByte = ALIGN(sizeof(byte));
 		break;
 
 	default:

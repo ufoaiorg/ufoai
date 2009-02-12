@@ -249,9 +249,8 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		return qfalse;
 
 	if (val->type == V_SPECIAL_ACTION) {
-		void *mem = mn.curadata;
+		*(menuAction_t**)mn.curadata = MN_ParseAction(menuNode, text, token);
 		mn.curadata += ALIGN(sizeof(menuAction_t*));
-		*(menuAction_t**)mem = MN_ParseAction(menuNode, text, token);
 	} else if (val->type == V_SPECIAL_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
 		if (icon == NULL) {
@@ -651,7 +650,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
 			return qfalse;
 		}
-		mn.curadata += ALIGN(bytes);
+		mn.curadata += bytes;
 
 		break;
 
@@ -675,7 +674,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
 				return qfalse;
 			}
-			mn.curadata += ALIGN(bytes);
+			mn.curadata += bytes;
 		} else {
 			/* sanity check */
 			if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
@@ -688,7 +687,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
 				return qfalse;
 			}
-			mn.curadata += ALIGN(bytes);
+			mn.curadata += bytes;
 		}
 		break;
 
