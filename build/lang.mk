@@ -38,8 +38,6 @@ update-po-radiant: po-check
 po-check:
 	@cd src; \
 	if test -f ./po/POTFILES.in; then					\
-	  grep -E -v '^(#|$$)' ./po/POTFILES.in				\
-	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
 	  files="./po/OTHER_STRINGS";							\
 	  for file in `find ./client -name '*.[ch]'` `find ./game -name '*.[ch]'`; do \
 	    case $$file in						\
