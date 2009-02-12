@@ -106,15 +106,14 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
  * @param[in] count number of element need to alloc
  * @todo use it every where its possible (search mn.curadata)
  * @todo Assert out when we are not in parsing/loading stage
- * @todo Assert if no memory
  */
 float* MN_AllocFloat (int count)
 {
 	float *result;
 	assert(count > 0);
-	mn.curadata = ALIGN(mn.curadata);
 	result = (float*) mn.curadata;
-	mn.curadata += sizeof(float) * count;
+	mn.curadata += ALIGN(sizeof(float) * count);
+	assert(mn.curadata - mn.adata <= mn.adataize);
 	return result;
 }
 
@@ -123,15 +122,14 @@ float* MN_AllocFloat (int count)
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] count number of element need to alloc
  * @todo Assert out when we are not in parsing/loading stage
- * @todo Assert if no memory
  */
 vec4_t* MN_AllocColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
-	mn.curadata = ALIGN(mn.curadata);
 	result = (vec4_t*) mn.curadata;
-	mn.curadata += sizeof(float) * 4 * count;
+	mn.curadata += ALIGN(sizeof(float) * 4 * count);
+	assert(mn.curadata - mn.adata <= mn.adataize);
 	return result;
 }
 
@@ -260,9 +258,8 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 			return qfalse;
 		}
-		mn.curadata = ALIGN(mn.curadata);
 		*(menuIcon_t**)mn.curadata = icon;
-		mn.curadata += sizeof(menuIcon_t*);
+		mn.curadata += ALIGN(sizeof(menuIcon_t*));
 	} else {
 		if (MN_IsInjectedString(*token)) {
 			action->type.param2 = EA_VALUE;
