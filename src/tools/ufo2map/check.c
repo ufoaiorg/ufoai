@@ -146,7 +146,6 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 			prefix = (brushnum == NUM_NONE && entnum == NUM_NONE) ? "//" : prefix;
 
 			printf("%sent:%i brush:%i - %s", prefix, entnum, brushnum, out_buffer1);
-
 		} else {
 			printf("%s", out_buffer1);
 		}
@@ -160,7 +159,8 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
  * are only calculated on BSPing
  * @param[out] mapSize the returned size in map units
  */
-static void Check_MapSize (vec3_t mapSize) {
+static void Check_MapSize (vec3_t mapSize)
+{
 	int i, bi, vi;
 	vec3_t mins, maxs;
 
@@ -173,10 +173,8 @@ static void Check_MapSize (vec3_t mapSize) {
 		for (bi = 0; bi < brush->numsides; bi++) {
 			const winding_t *winding = brush->original_sides[bi].winding;
 
-			for (vi = 0; vi < winding->numpoints; vi++) {
-
+			for (vi = 0; vi < winding->numpoints; vi++)
 				AddPointToBounds(winding->p[vi], mins, maxs);
-			}
 		}
 	}
 
@@ -206,11 +204,11 @@ static void Check_InitEntityDefs (void)
 
 	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
 
-	if(TryLoadFile(entitiesUfoPath, entitiesUfoBuf) == -1)
+	if (TryLoadFile(entitiesUfoPath, entitiesUfoBuf) == -1)
 		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
 
 	if (ED_Parse((const char **)entitiesUfoBuf))
-		Sys_Error("Error while parsing entities.ufo: %s\n",ED_GetLastError());
+		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
 
 	/* info has been copied to new malloc'd space in ED_Parse */
 	free(*entitiesUfoBuf);
@@ -285,9 +283,8 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 		entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 
-		if ((e->numbrushes == 1) && !strcmp(name, "func_group"))
+		if (e->numbrushes == 1 && !strcmp(name, "func_group"))
 			brushesToMove[j++] = &mapbrushes[e->firstbrush];
-
 	}
 
 	return brushesToMove;
@@ -535,7 +532,7 @@ void CheckEntities (void)
 		for (kd = ed->keyDefs; kd->name; kd++) {
 			if (kd->flags & ED_MANDATORY) {
 				const char *keyNameInEnt = ValueForKey(e, kd->name);
-				if(*keyNameInEnt == '\0') {
+				if (keyNameInEnt[0] == '\0') {
 					const char *defaultVal = kd->defaultVal;
 					qboolean hasDefault = defaultVal ? qtrue : qfalse;
 					Check_Printf(VERB_NORMAL, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
