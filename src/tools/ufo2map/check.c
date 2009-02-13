@@ -416,7 +416,7 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
  */
 static qboolean Check_IsInfoStart(const char *classname)
 {
-	return !strncmp(classname, "info_",5) && strstr(classname, "_start");
+	return !strncmp(classname, "info_", 5) && strstr(classname, "_start");
 }
 
 /**
@@ -429,8 +429,8 @@ static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e
 {
 	static int size[6];
 	const entityKeyDef_t *sizeKd = ED_GetKeyDefEntity(ed, "size", 1); /* 1 means find abstract version of key */
-	if (-1 == ED_GetIntVector(sizeKd, size, (int)(sizeof(size)/sizeof(int))))
-		Sys_Error(ED_GetLastError());
+	if (ED_GetIntVector(sizeKd, size, (int)(sizeof(size) / sizeof(int))) == -1)
+		Sys_Error("%s", ED_GetLastError());
 
 	return (((int)e->origin[0] - size[0]) % UNIT_SIZE == 0)
 		&& (((int)e->origin[1] - size[1]) % UNIT_SIZE == 0);
@@ -467,11 +467,11 @@ static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entn
 		return;
 	}
 
-	if ((e->numbrushes > 1) && !strcmp(classname, "func_breakable")) {
+	if (e->numbrushes > 1 && !strcmp(classname, "func_breakable")) {
 		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
 	}
 
-	if ((e->numbrushes == 1) && !strcmp(classname, "func_group")) {
+	if (e->numbrushes == 1 && !strcmp(classname, "func_group")) {
 		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", classname);
 		numToMoveToWorldspawn++;
 		e->skip = qtrue;
@@ -501,11 +501,9 @@ void CheckEntities (void)
 			continue;
 		}
 
-		if (Check_IsInfoStart(name)) { /* check alignment of info_.+_start */
-				if (!Check_InfoStartAligned(ed, e)) {
-					Check_Printf(VERB_NORMAL, qfalse, i, -1, "Misaligned %s\n", name);
-				}
-		}
+		/* check alignment of info_.+_start */
+		if (Check_IsInfoStart(name) && !Check_InfoStartAligned(ed, e))
+			Check_Printf(VERB_NORMAL, qfalse, i, -1, "Misaligned %s\n", name);
 
 		if (!strncmp("func_", name, 5)) /* func_* entities should have brushes */
 			Check_EntityWithBrushes(e, name, i);
@@ -531,7 +529,6 @@ void CheckEntities (void)
 						ed->classname, kvp->key, kvp->value, !strcmp("target", kvp->key) ? "targetname" : "target");
 				}
 			}
-
 		}
 
 		/* check keys in the entity definition - make sure mandatory ones are present */
@@ -550,9 +547,7 @@ void CheckEntities (void)
 				}
 			}
 		}
-
 	}
-
 }
 
 /**
@@ -567,7 +562,7 @@ void CheckEntities (void)
 static qboolean Check_SurfProp (const int flag, const side_t *s)
 {
 	const ptrdiff_t index = s - brushsides;
-	brush_texture_t *tex = &side_brushtextures[index];
+	const brush_texture_t *tex = &side_brushtextures[index];
 	switch (flag) {
 		case SURF_NODRAW:
 			return !strcmp(tex->name, "tex_common/nodraw") ? qtrue : qfalse;
@@ -595,21 +590,21 @@ static qboolean Check_SurfProp (const int flag, const side_t *s)
 static qboolean Check_SurfProps (const int flags, const side_t *s)
 {
 	const ptrdiff_t index = s - brushsides;
-	brush_texture_t *tex = &side_brushtextures[index];
-	char *texname = tex->name;
+	const brush_texture_t *tex = &side_brushtextures[index];
+	const char *texname = tex->name;
 	assert(flags & (SURF_NODRAW | MASK_CLIP));
 
 	if ((flags & SURF_NODRAW) && !strcmp(texname, "tex_common/nodraw"))
-			return qtrue;
+		return qtrue;
 
 	if ((flags & CONTENTS_WEAPONCLIP) && !strcmp(texname, "tex_common/weaponclip"))
-			return qtrue;
+		return qtrue;
 
 	if ((flags & CONTENTS_ACTORCLIP) && !strcmp(texname, "tex_common/actorclip"))
-			return qtrue;
+		return qtrue;
 
 	if ((flags & CONTENTS_ORIGIN) && !strcmp(texname, "tex_common/origin"))
-			return qtrue;
+		return qtrue;
 
 	return qfalse;
 }
