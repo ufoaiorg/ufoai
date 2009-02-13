@@ -43,8 +43,6 @@ typedef struct mpSaveFileHeader_s {
 } mpSaveFileHeader_t;
 
 
-
-
 /**
  * @brief Reads tha comments from team files
  */
@@ -75,6 +73,7 @@ void MP_MultiplayerTeamSlotComments_f (void)
 			memcpy(&header, cbuf, sizeof(header));
 			version = header.version;
 			comment = header.name;
+			soldierCount = header.soldiercount;
 		}
 
 		if (error) {
