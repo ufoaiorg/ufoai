@@ -1978,16 +1978,35 @@ void MainFrame::Create (void)
 
 	GtkToolbar* main_toolbar_v = create_main_toolbar_vertical(CurrentStyle());
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
-
+#ifdef DEBUG
+	gint width, height,posx,posy;
 	g_message("recorded window state: %i\n",g_layout_globals.nState);
+#endif
 	if ((g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
-		g_message("trying to maximize, recorded size was %ix%i (not used)\n",g_layout_globals.m_position.w,g_layout_globals.m_position.h);
+#ifdef DEBUG
+		g_message("trying to maximize, recorded size was %ix%i@%ix%iy (not used)\n",g_layout_globals.m_position.w,g_layout_globals.m_position.h,g_layout_globals.m_position.x,g_layout_globals.m_position.y);
+#endif
 		/* set stored position and default height/width, otherwise problems with extended screens */
 		g_layout_globals.m_position.h=800;
 		g_layout_globals.m_position.w=600;
+#ifdef DEBUG
+		gtk_window_get_size(window, &width,&height);
+		gtk_window_get_position(window,&posx,&posy);
+		g_message("actual size: %ix%i@%ix%iy; setting size + position\n",width,height,posx,posy);
+#endif
 		window_set_position(window, g_layout_globals.m_position);
+#ifdef DEBUG
+		gtk_window_get_size(window, &width,&height);
+		gtk_window_get_position(window,&posx,&posy);
+		g_message("size after set: %ix%i@%ix%iy; maximize now\n",width,height,posx,posy);
+#endif
 		/* maximize will be done when window is shown */
 		gtk_window_maximize(window);
+#ifdef DEBUG
+		gtk_window_get_size(window, &width,&height);
+		gtk_window_get_position(window,&posx,&posy);
+		g_message("size after maximize call: %ix%i@%ix%iy;could be that this is same as previous\n",width,height,posx,posy);
+#endif
 	} else {
 		window_set_position(window, g_layout_globals.m_position);
 	}
@@ -1995,6 +2014,12 @@ void MainFrame::Create (void)
 	m_window = window;
 
 	gtk_widget_show(GTK_WIDGET(window));
+#ifdef DEBUG
+	gtk_window_get_size(window, &width,&height);
+	gtk_window_get_position(window,&posx,&posy);
+	g_message("size after show: %ix%i@%ix%iy;\n",width,height,posx,posy);
+#endif
+
 
 	GtkWidget* mainHBox = gtk_hbox_new(0, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), mainHBox, TRUE, TRUE, 0);
