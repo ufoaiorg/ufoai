@@ -455,20 +455,22 @@ static const char *ED_Constant2Block (int constInt)
 }
 
 static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
-{ /** @todo check mallocs and strdup for NULL returns */
+{
 	entityKeyRange_t **newRanges;
 	/* start a new range */
+	char *newStr = strdup(rangeStr);
 	entityKeyRange_t *newRange = (entityKeyRange_t *)malloc(sizeof(entityKeyRange_t));
 	memset(newRange, 0, sizeof(entityKeyRange_t));
-	newRange->str = strdup(rangeStr);
 	/* resize array of pointers */
 	newRanges = (entityKeyRange_t **)malloc((kd->numRanges + 1) * sizeof(entityKeyRange_t *));
+	if (!newRanges || !newStr || !newRange) {
+		snprintf(lastErr, sizeof(lastErr) - 1, "ED_AllocRange: out of memory");
+		return -1;
+	}
+	newRange->str = newStr;
 	newRanges[kd->numRanges] = newRange;
 	if (kd->ranges) {
-		int i;
-		for (i = 0; i < kd->numRanges; i++) {
-			newRanges[i] = kd->ranges[i];
-		}
+		memcpy(newRanges, kd->ranges, kd->numRanges * sizeof(entityKeyRange_t *));
 		free(kd->ranges);
 	}
 	(kd->numRanges)++;

@@ -482,7 +482,6 @@ static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entn
 void CheckEntities (void)
 {
 	int i;
-/* new code */
 
 	Check_InitEntityDefs();
 
