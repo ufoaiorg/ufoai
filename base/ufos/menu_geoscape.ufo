@@ -306,7 +306,7 @@ menu map
 		image		menu/button_geoscape
 		blend		true
 
-		click		{ cmd "mn_push ufopedia_mail;" }
+		click		{ cmd "mn_push mailclient;" }
 	}
 
 	button bt_mailclient_nomail
@@ -323,7 +323,7 @@ menu map
 		image		menu/button_geoscape
 		blend		true
 
-		click		{ cmd "mn_push ufopedia_mail;" }
+		click		{ cmd "mn_push mailclient;" }
 	}
 
 	button bt_stats

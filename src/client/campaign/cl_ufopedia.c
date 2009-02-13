@@ -108,7 +108,7 @@ static void UP_ChangeDisplay (int newDisplay)
 	 */
 	if (!ufopedia || !ufopediaMail) {
 		ufopedia = MN_GetNodeFromCurrentMenu("ufopedia");
-		ufopediaMail = MN_GetNodeFromCurrentMenu("ufopedia_mail");
+		ufopediaMail = MN_GetNodeFromCurrentMenu("mailclient");
 	}
 
 	/* maybe we call this function and the UFOpaedia is not on the menu stack */
@@ -122,8 +122,6 @@ static void UP_ChangeDisplay (int newDisplay)
 	MN_MenuTextReset(TEXT_LIST);
 	MN_MenuTextReset(TEXT_STANDARD);
 	MN_MenuTextReset(TEXT_UFOPEDIA);
-
-	Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
@@ -802,7 +800,6 @@ int UP_GetUnreadMails (void)
 
 /**
  * @brief Binds the mail header (if needed) to the mn.menuText array.
- * @note The cvar mn_up_mail is set to 1 (for activate mail nodes from menu_ufopedia.ufo)
  * @note if there is a mail header.
  * @param[in] tech The tech to generate a header for.
  * @param[in] type The type of mail (research proposal or finished research)
@@ -873,14 +870,12 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 			}
 		} else {
 			MN_MenuTextReset(TEXT_UFOPEDIA_MAILHEADER);
-			Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
 			return;
 		}
 	}
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
 		_(from), _(to), dateBuf, subjectType, _(subject));
 	MN_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
-	Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
 }
 
 /**
@@ -1050,8 +1045,22 @@ void UP_OpenEventMail (const char *eventMailID)
 	if (!mail)
 		return;
 
-	MN_PushMenu("ufopedia", NULL);
+	MN_PushMenu("mail", NULL);
 	UP_DrawEntry(NULL, mail);
+}
+
+/**
+ * @brief Opens the mail view from everywhere with the entry given through name
+ * @param name mail entry id
+ * @sa UP_FindEntry_f
+ */
+static void UP_OpenMailWith (const char *name)
+{
+	if (!name)
+		return;
+
+	MN_PushMenu("mail", NULL);
+	Cbuf_AddText(va("ufopedia %s\n", name));
 }
 
 /**
@@ -1441,7 +1450,7 @@ static void UP_MailClientClick_f (void)
 			cnt++;
 			if (cnt == num) {
 				Cvar_SetValue("mn_uppretext", 1);
-				UP_OpenWith(m->pedia->id);
+				UP_OpenMailWith(m->pedia->id);
 				return;
 			}
 			break;
@@ -1451,7 +1460,7 @@ static void UP_MailClientClick_f (void)
 			cnt++;
 			if (cnt == num) {
 				Cvar_SetValue("mn_uppretext", 0);
-				UP_OpenWith(m->pedia->id);
+				UP_OpenMailWith(m->pedia->id);
 				return;
 			}
 			break;
@@ -1459,7 +1468,7 @@ static void UP_MailClientClick_f (void)
 			if (m->pedia->mail[TECHMAIL_PRE].from || m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				cnt++;
 				if (cnt >= num) {
-					UP_OpenWith(m->pedia->id);
+					UP_OpenMailWith(m->pedia->id);
 					return;
 				}
 			}
@@ -1602,9 +1611,9 @@ static void UP_OpenMail_f (void)
 	const message_t *m = cp_messageStack;
 	dateLong_t date;
 
-	mailClientListNode = MN_GetNodeByPath("ufopedia_mail.mailclient");
+	mailClientListNode = MN_GetNodeByPath("mailclient.mailclient");
 	if (!mailClientListNode)
-		Sys_Error("Could not find the mailclient node in ufopedia_mail menu\n");
+		Sys_Error("Could not find the mailclient node in mailclient menu\n");
 
 	mailBuffer[0] = '\0';
 
