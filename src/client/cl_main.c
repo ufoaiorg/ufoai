@@ -1021,10 +1021,10 @@ static void CL_CvarCheck (void)
 		else if (cl_worldlevel->integer < 0)
 			Cvar_SetValue("cl_worldlevel", 0);
 		for (i = 0; i < cl.map_maxlevel; i++)
-			MN_ExecuteConfunc(va("deselfloor %i\n", i + 1));
+			MN_ExecuteConfunc("deselfloor %i", i + 1);
 		for (; i < PATHFINDING_HEIGHT; i++)
-			MN_ExecuteConfunc(va("disfloor %i\n", i + 1));
-		MN_ExecuteConfunc(va("selfloor %i\n", cl_worldlevel->integer + 1));
+			MN_ExecuteConfunc("disfloor %i", i + 1);
+		MN_ExecuteConfunc("selfloor %i", cl_worldlevel->integer + 1);
 		cl_worldlevel->modified = qfalse;
 	}
 
