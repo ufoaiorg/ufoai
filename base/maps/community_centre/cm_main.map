@@ -5760,7 +5760,6 @@
 "classname" "info_player_start"
 "origin" "48 592 32"
 "team" "2"
-"angle" "-1.40334e-14"
 }
 // entity 57
 {
