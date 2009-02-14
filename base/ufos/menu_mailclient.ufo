@@ -65,6 +65,7 @@ menu mail
 
 	model sender_body
 	{
+		visiblewhen "mn_sender_head"
 		model	"civilians/male/body01"
 		anim	"stand_still"
 		angles	"0 85 90"
