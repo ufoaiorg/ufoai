@@ -253,6 +253,8 @@ menu quickload
 		image	menu/popup_alpha_tile
 		blend	true
 		string	"_Reload campaign"
+		dragbutton	true
+		closebutton	true
 	}
 
 	string name_label
@@ -263,47 +265,19 @@ menu quickload
 		longlines wrap
 	}
 
-	pic bt_cancel
+	button button_go
 	{
-		tooltip	"_Close this dialogue"
-		image	menu/multi_buttons3
-		texh	"176 64"
-		texl	"0 32"
-		pos	"46 188"
+		string	"_Load"
+		tooltip	"_Reload the last automatically saved campaign state"
+		image	menu/button_green_small	blend true
+		pos		"266 188"
 		size	"176 32"
-		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
-		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
-		click	{ cmd "mn_pop;" }
-	}
-	string string_cancel
-	{
 		font	f_menu
 		color	"0 0.5 0 1"
-		string	"_Cancel"
-		pos	"134 204"
-		align	cc
-	}
-
-	pic bt_go
-	{
-		tooltip	"_Reload the last automatically saved campaign state"
-		image	menu/multi_buttons3
-		pos	"266 188"
-		size	"176 32"
-		texh	"176 64"
-		texl	"0 32"
-		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
-		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
+		selectcolor "1 1 1 1"
 		click	{ cmd "game_quickload;" }
 	}
-	string string_go
-	{
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Reload"
-		pos	"354 204"
-		align	cc
-	}
+
 	func init
 	{
 		cmd "game_quickloadinit;"
@@ -348,7 +322,7 @@ menu load
 		image	menu/button_green_verysmall
 		pos		"640 200"
 		click	{ cmd "game_load slot0; game_timestop;" }
-		size	"256 34"
+		size	"176 32"
 		blend	true
 		font "f_verysmall"
 		string "*cvar mn_slot0"
