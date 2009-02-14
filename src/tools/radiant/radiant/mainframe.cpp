@@ -1980,6 +1980,7 @@ void MainFrame::Create (void)
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(main_toolbar_v), FALSE, FALSE, 0);
 #ifdef DEBUG
 	gint width, height,posx,posy;
+	int stateBackup = g_layout_globals.nState;
 	g_message("recorded window state: %i\n",g_layout_globals.nState);
 #endif
 	if ((g_layout_globals.nState & GDK_WINDOW_STATE_MAXIMIZED)) {
@@ -2017,7 +2018,15 @@ void MainFrame::Create (void)
 #ifdef DEBUG
 	gtk_window_get_size(window, &width,&height);
 	gtk_window_get_position(window,&posx,&posy);
-	g_message("size after show: %ix%i@%ix%iy;\n",width,height,posx,posy);
+	int state = gdk_window_get_state(GTK_WIDGET(window)->window);
+	g_message("size after show: %ix%i@%ix%iy state %i;\n",width,height,posx,posy,state);
+	if (state != stateBackup)
+		if (stateBackup & GDK_WINDOW_STATE_MAXIMIZED) {
+			gtk_window_maximize(window);
+			g_message("another try to maximize\n");
+		}
+	state = gdk_window_get_state(GTK_WIDGET(window)->window);
+	g_message("state after retry maximize: %i;\n",state);
 #endif
 
 
