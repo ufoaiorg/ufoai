@@ -812,12 +812,13 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	static char mailHeader[8 * MAX_VAR] = ""; /* bigger as techMail_t (utf8) */
 	char dateBuf[MAX_VAR] = "";
 	const char *subjectType = "";
-	const char *from, *to, *subject;
+	const char *from, *to, *subject, *model;
 	dateLong_t date;
 
 	if (mail) {
 		from = mail->from;
 		to = mail->to;
+		model = mail->model;
 		subject = mail->subject;
 		Q_strncpyz(dateBuf, _(mail->date), sizeof(dateBuf));
 		mail->read = qtrue;
@@ -830,6 +831,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		from = tech->mail[type].from;
 		to = tech->mail[type].to;
 		subject = tech->mail[type].subject;
+		model = tech->mail[type].model;
 
 		if (tech->mail[type].date) {
 			Q_strncpyz(dateBuf, _(tech->mail[type].date), sizeof(dateBuf));
@@ -849,7 +851,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
 			}
 		}
-		if (tech->mail[type].from) {
+		if (from != NULL) {
 			if (!tech->mail[type].read) {
 				tech->mail[type].read = qtrue;
 				/* reread the unread mails in UP_GetUnreadMails */
@@ -875,7 +877,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	}
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
 		_(from), _(to), dateBuf, subjectType, _(subject));
-	Cvar_Set("mn_sender_header", "characters/al_kuhar");
+	Cvar_Set("mn_sender_header", model ? model : "");
 	MN_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 }
 

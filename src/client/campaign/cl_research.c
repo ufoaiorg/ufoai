@@ -1348,6 +1348,7 @@ static const value_t valid_techmail_vars[] = {
 	{"subject", V_TRANSLATION_STRING, offsetof(techMail_t, subject), 0},
 	{"date", V_TRANSLATION_STRING, offsetof(techMail_t, date), 0},
 	{"icon", V_CLIENT_HUNK_STRING, offsetof(techMail_t, icon), 0},
+	{"model", V_CLIENT_HUNK_STRING, offsetof(techMail_t, model), 0},
 
 	{NULL, 0, 0, 0}
 };

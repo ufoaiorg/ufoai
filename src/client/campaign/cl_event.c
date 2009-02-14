@@ -140,6 +140,7 @@ static const value_t eventMail_vals[] = {
 	{"date", V_TRANSLATION_STRING, offsetof(eventMail_t, date), 0},
 	{"body", V_TRANSLATION_STRING, offsetof(eventMail_t, body), 0},
 	{"icon", V_CLIENT_HUNK_STRING, offsetof(eventMail_t, icon), 0},
+	{"model", V_CLIENT_HUNK_STRING, offsetof(eventMail_t, model), 0},
 
 	{NULL, 0, 0, 0}
 };

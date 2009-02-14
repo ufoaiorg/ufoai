@@ -46,6 +46,7 @@ typedef struct eventMail_s {
 	char *date;			/**< date string, if empty use the date of research */
 	char *body;			/**< the body of the event mail */
 	char *icon;			/**< icon in the mailclient */
+	char *model;		/**< model name of the sender */
 	qboolean read;		/**< already read the mail? */
 } eventMail_t;
 
