@@ -280,7 +280,7 @@ mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 
 	/* 0 is the world - start at 1 */
 	for (i = 1, j = 0; i < num_entities; i++) {
-		entity_t *e = &entities[i];
+		const entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 
 		if (e->numbrushes == 1 && !strcmp(name, "func_group"))
@@ -445,12 +445,11 @@ static qboolean Check_TargetExists(const epair_t *kvp)
 	int i;
 
 	for (i = 0; i < num_entities; i++) {
-		entity_t *e = &entities[i];
+		const entity_t *e = &entities[i];
 		const char *searchVal = ValueForKey(e, otherKey);
 
-		if (searchVal)
-			if (!strcmp(searchVal, value))
-				return qtrue;
+		if (searchVal && !strcmp(searchVal, value))
+			return qtrue;
 	}
 
 	return qfalse;
@@ -473,7 +472,6 @@ static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entn
 		numToMoveToWorldspawn++;
 		e->skip = qtrue;
 	}
-
 }
 
 /**
@@ -489,7 +487,7 @@ void CheckEntities (void)
 		entity_t *e = &entities[i];
 		const char *name = ValueForKey(e, "classname");
 		const entityDef_t *ed = ED_GetEntityDef(name);
-		epair_t *kvp;
+		const epair_t *kvp;
 		const entityKeyDef_t *kd;
 
 		if (!ed) { /* check that a definition exists */
@@ -513,7 +511,7 @@ void CheckEntities (void)
 				continue;
 			}
 
-			if (-1 == ED_CheckKey(kd, kvp->value)) { /* check values against type and range definitions in entities.ufo */
+			if (ED_CheckKey(kd, kvp->value) == -1) { /* check values against type and range definitions in entities.ufo */
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "%s\n", ED_GetLastError());
 				continue;
 			}
@@ -533,7 +531,7 @@ void CheckEntities (void)
 				const char *keyNameInEnt = ValueForKey(e, kd->name);
 				if (keyNameInEnt[0] == '\0') {
 					const char *defaultVal = kd->defaultVal;
-					qboolean hasDefault = defaultVal ? qtrue : qfalse;
+					const qboolean hasDefault = defaultVal ? qtrue : qfalse;
 					Check_Printf(VERB_NORMAL, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
 					if (defaultVal) {
 						Check_Printf(VERB_NORMAL, hasDefault, i, -1, ", supplying default: %s", defaultVal);
@@ -560,16 +558,16 @@ static qboolean Check_SurfProp (const int flag, const side_t *s)
 	const ptrdiff_t index = s - brushsides;
 	const brush_texture_t *tex = &side_brushtextures[index];
 	switch (flag) {
-		case SURF_NODRAW:
-			return !strcmp(tex->name, "tex_common/nodraw") ? qtrue : qfalse;
-		case CONTENTS_WEAPONCLIP:
-			return !strcmp(tex->name, "tex_common/weaponclip") ? qtrue : qfalse;
-		case CONTENTS_ACTORCLIP:
-			return !strcmp(tex->name, "tex_common/actorclip") ? qtrue : qfalse;
-		case CONTENTS_ORIGIN:
-			return !strcmp(tex->name, "tex_common/origin") ? qtrue : qfalse;
-		default:
-			return qfalse;
+	case SURF_NODRAW:
+		return !strcmp(tex->name, "tex_common/nodraw") ? qtrue : qfalse;
+	case CONTENTS_WEAPONCLIP:
+		return !strcmp(tex->name, "tex_common/weaponclip") ? qtrue : qfalse;
+	case CONTENTS_ACTORCLIP:
+		return !strcmp(tex->name, "tex_common/actorclip") ? qtrue : qfalse;
+	case CONTENTS_ORIGIN:
+		return !strcmp(tex->name, "tex_common/origin") ? qtrue : qfalse;
+	default:
+		return qfalse;
 	}
 }
 
