@@ -59,7 +59,7 @@ static int ED_CountEntities (const char **data_p)
 		if (strlen(parsedToken) == 0 && braceLevel == 0)
 			break;
 
-		if (*parsedToken == '{') {
+		if (parsedToken[0] == '{') {
 			tokensOnLevel0 = 0;
 			braceLevel++;
 			if (braceLevel > 2) {
@@ -69,7 +69,7 @@ static int ED_CountEntities (const char **data_p)
 			continue;
 		}
 
-		if (*parsedToken == '}') {
+		if (parsedToken[0] == '}') {
 			braceLevel--;
 			if (braceLevel < 0) {
 				snprintf(lastErr, sizeof(lastErr), "Too many close braces");
@@ -82,7 +82,7 @@ static int ED_CountEntities (const char **data_p)
 		if (braceLevel != 0)
 			continue;
 
-		if (tokensOnLevel0 == 0 && *parsedToken != '\0') {
+		if (tokensOnLevel0 == 0 && parsedToken[0] != '\0') {
 			if (!strcmp(parsedToken, "entity")) {
 				tokensOnLevel0++;
 				continue;
@@ -181,7 +181,7 @@ static entityKeyDef_t *ED_FindKeyDefInArray (entityKeyDef_t keyDefs[], int numDe
 {
 	int i;
 	for (i = 0; i < numDefs; i++) {
-		entityKeyDef_t *keyDef = &keyDefs[i];
+		const entityKeyDef_t *keyDef = &keyDefs[i];
 		/* names equal. both abstract or both not abstract */
 		if (!strcmp(keyDef->name, name) && !((keyDef->flags ^ parseMode) & ED_ABSTRACT)) {
 			return &keyDefs[i];
@@ -216,15 +216,15 @@ static int ED_Type2Constant (const char *strType)
 static const char *ED_Constant2Type (int constInt)
 {
 	switch (constInt) {
-		case ED_TYPE_FLOAT:
-			return "V_FLOAT";
-		case ED_TYPE_INT:
-			return "V_INT";
-		case ED_TYPE_STRING:
-			return "V_STRING";
-		default:
-			snprintf(lastErr, sizeof(lastErr), "ED_Constant2Type: constant not recognised");
-			return NULL;
+	case ED_TYPE_FLOAT:
+		return "V_FLOAT";
+	case ED_TYPE_INT:
+		return "V_INT";
+	case ED_TYPE_STRING:
+		return "V_STRING";
+	default:
+		snprintf(lastErr, sizeof(lastErr), "ED_Constant2Type: constant not recognised");
+		return NULL;
 	}
 }
 
@@ -240,10 +240,10 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
 {
 	int i;
 	const char *buf_p = kd->desc;
-	const char *tok;
+
 	for (i = 0; buf_p; i++) {
-		tok = COM_Parse (&buf_p);
-		if (*tok == '\0')
+		const char *tok = COM_Parse (&buf_p);
+		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		if (i >= n) {
 			snprintf(lastErr, sizeof(lastErr), "ED_GetIntVector: supplied buffer v[%i] too small for the number of elements in key def \"%s\"", n, kd->name);
@@ -252,9 +252,9 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
 		v[i] = atoi(tok);
 	}
 	if (i != n) {
-			snprintf(lastErr, sizeof(lastErr), "ED_GetIntVector: supplied buffer v[%i] too large for the number of elements in key def \"%s\"", n, kd->name);
-			return -1;
-		}
+		snprintf(lastErr, sizeof(lastErr), "ED_GetIntVector: supplied buffer v[%i] too large for the number of elements in key def \"%s\"", n, kd->name);
+		return -1;
+	}
 	return 0;
 }
 
@@ -276,7 +276,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 	 * V_FLOATs are not protected from hex, inf, nan, so this check is here.
 	 * strstr is used for hex, as 0x may not be the start of the string.
 	 * eg -0x0.2 is a negative hex float  */
-	if (*value == 'i' || *value == 'I' || *value == 'n' || *value == 'N'
+	if (value[0] == 'i' || value[0] == 'I' || value[0] == 'n' || value[0] == 'N'
 	 || strstr(value, "0x") || strstr(value, "0X")) {
 		snprintf(lastErr, sizeof(lastErr), "infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
 		return -1;
@@ -320,19 +320,20 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 	int i = 0;
 	static char tokBuf[64];
 	const char *buf_p = tokBuf;
-	const char *tok;
+
 	strncpy(tokBuf, value, sizeof(tokBuf));
 	assert(floatOrInt & (ED_TYPE_INT | ED_TYPE_FLOAT));
 	while (buf_p) {
-		tok = COM_Parse(&buf_p);
-		if (*tok == '\0')
+		const char *tok = COM_Parse(&buf_p);
+		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		i++;
-		if (-1 == ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE))
+		if (ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE) == -1)
 			return -1;
 	}
 	if (i != keyDef->vLen) {
-		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key", i, keyDef->vLen, keyDef->name);
+		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key",
+			i, keyDef->vLen, keyDef->name);
 		return -1;
 	}
 	return 1;
@@ -367,16 +368,16 @@ int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 		return -1;
 	}
 	switch (kd->flags & ED_KEY_TYPE) {
-		case ED_TYPE_FLOAT:
-			return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
-		case ED_TYPE_INT:
-			return ED_CheckNumericType(kd, value, ED_TYPE_INT);
-		case ED_TYPE_STRING:
-		case 0: /* string is the default */
-			return 1; /* all strings are good */
-		default:
-			snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: type not recognised in key def");
-			return -1;
+	case ED_TYPE_FLOAT:
+		return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
+	case ED_TYPE_INT:
+		return ED_CheckNumericType(kd, value, ED_TYPE_INT);
+	case ED_TYPE_STRING:
+	case 0: /* string is the default */
+		return 1; /* all strings are good */
+	default:
+		snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: type not recognised in key def");
+		return -1;
 	}
 }
 
@@ -437,21 +438,21 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 static const char *ED_Constant2Block (int constInt)
 {
 	switch (constInt) {
-		case ED_OPTIONAL:
-			return "optional";
-		case ED_MANDATORY:
-			return "mandatory";
-		case ED_ABSTRACT:
-			return "abstract";
-		case ED_DEFAULT:
-			return "default";
-		case ED_MODE_TYPE:
-			return "type";
-		case ED_RANGE:
-			return "range";
-		default:
-			snprintf(lastErr, sizeof(lastErr), "ED_Constant2Block: constant not recognised");
-			return NULL;
+	case ED_OPTIONAL:
+		return "optional";
+	case ED_MANDATORY:
+		return "mandatory";
+	case ED_ABSTRACT:
+		return "abstract";
+	case ED_DEFAULT:
+		return "default";
+	case ED_MODE_TYPE:
+		return "type";
+	case ED_RANGE:
+		return "range";
+	default:
+		snprintf(lastErr, sizeof(lastErr), "ED_Constant2Block: constant not recognised");
+		return NULL;
 	}
 }
 
@@ -483,7 +484,7 @@ static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
  * @return -1 in case of an error, else 0.
  */
 static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
-							const char *newName, const char *newVal, const int mode)
+		const char *newName, const char *newVal, const int mode)
 {
 	/* check if there is already a key def */
 	entityKeyDef_t *keyDef = ED_FindKeyDefInArray(keyDefsBuf, *numKeyDefsSoFar_p, newName, mode);
@@ -491,11 +492,11 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 	/* create one if required */
 	if (!keyDef) {
 		keyDef = &keyDefsBuf[(*numKeyDefsSoFar_p)++];
-		if ((*numKeyDefsSoFar_p) >= ED_MAX_KEYS_PER_ENT) {
+		if (*numKeyDefsSoFar_p >= ED_MAX_KEYS_PER_ENT) {
 			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: too many keys for buffer");
 			return -1;
 		}
-		if (-1 == ED_AllocKeyDef(keyDef, newName))
+		if (ED_AllocKeyDef(keyDef, newName) == -1)
 			return -1; /* lastErr already set */
 	}
 
@@ -508,34 +509,34 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 
 	/* store information */
 	switch (mode) {
-		case ED_MANDATORY:
-		case ED_OPTIONAL:
-		case ED_ABSTRACT:
-			keyDef->desc = ED_AllocString(newVal);
-			if (!keyDef->desc)
-				return -1;
-			return 0;
-		case ED_DEFAULT:
-			keyDef->defaultVal = ED_AllocString(newVal);
-			if (!keyDef->defaultVal)
-				return -1;
-			return 0;
-		case ED_MODE_TYPE:
-			/* only optional or abstract keys may have types, not possible to test for this here,
-			 * as the type block may come before the optional or mandatory block */
-			if (-1 == ED_ParseType(keyDef, newVal))
-				return -1; /* lastErr set in function call */
-			return 0;
-		case ED_RANGE:
-			/** @todo test only typed keys may have ranges, but this
-			 * may only be tested after the whole ent has been parsed, as the
-			 * blocks may come in any order. test that only */
-			if (-1 == ED_AllocRange(keyDef, newVal))
-				return -1;
-			return 0;
-		default:
-			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: parse mode not recognised");
+	case ED_MANDATORY:
+	case ED_OPTIONAL:
+	case ED_ABSTRACT:
+		keyDef->desc = ED_AllocString(newVal);
+		if (!keyDef->desc)
 			return -1;
+		return 0;
+	case ED_DEFAULT:
+		keyDef->defaultVal = ED_AllocString(newVal);
+		if (!keyDef->defaultVal)
+			return -1;
+		return 0;
+	case ED_MODE_TYPE:
+		/* only optional or abstract keys may have types, not possible to test for this here,
+			* as the type block may come before the optional or mandatory block */
+		if (ED_ParseType(keyDef, newVal) == -1)
+			return -1; /* lastErr set in function call */
+		return 0;
+	case ED_RANGE:
+		/** @todo test only typed keys may have ranges, but this
+			* may only be tested after the whole ent has been parsed, as the
+			* blocks may come in any order. test that only */
+		if (ED_AllocRange(keyDef, newVal) == -1)
+			return -1;
+		return 0;
+	default:
+		snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: parse mode not recognised");
+		return -1;
 	}
 }
 
@@ -547,7 +548,6 @@ static int ED_ParseEntities (const char **data_p)
 {
 	int braceLevel = 0;
 	int tokensOnLevel0 = 0;
-	const char *parsedToken;
 	int mode = ED_OPTIONAL;
 	int entityIndex = 0;
 	entityKeyDef_t keyDefBuf[ED_MAX_KEYS_PER_ENT];
@@ -557,10 +557,10 @@ static int ED_ParseEntities (const char **data_p)
 
 	/* less checking here, as a lot is done whilst counting the entities */
 	while (data_p) {
-		parsedToken = COM_Parse(data_p);
+		const char *parsedToken = COM_Parse(data_p);
 		toggle ^= 1;
 
-		if (*parsedToken == '{') {
+		if (parsedToken[0] == '{') {
 			braceLevel++;
 			if (!toggle) {
 				snprintf(lastErr, sizeof(lastErr), "ED_ParseEntities: Incorrect number of tokens before '{'");
@@ -571,7 +571,7 @@ static int ED_ParseEntities (const char **data_p)
 			continue;
 		}
 
-		if (*parsedToken == '}') {
+		if (parsedToken[0] == '}') {
 			braceLevel--;
 			toggle ^= 1; /* reset, as toggle is only for counting proper text tokens, not braces */
 			if (braceLevel == 0) { /* finished parsing entity def and prepare for the next one */
@@ -595,12 +595,11 @@ static int ED_ParseEntities (const char **data_p)
 				}
 				memset(keyDefBuf, 0, sizeof(keyDefBuf)); /* ensure pointers are not carried over from previous entity */
 				keyIndex = 0;
-				if (-1 == ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY))
+				if (ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY) == -1)
 					return -1;
 				mode = ED_ABSTRACT;
 			}
 			tokensOnLevel0++;
-			continue;
 		} else { /* braceLevel > 0 */
 			if (!strcmp("mandatory", parsedToken)) {
 				mode = ED_MANDATORY;
@@ -621,11 +620,10 @@ static int ED_ParseEntities (const char **data_p)
 				if (toggle) { /* store key name til after next token is parsed */
 					strncpy(lastTokenBuf, parsedToken, ED_MAX_TOKEN_LEN);
 				} else { /* store key-value pair in buffer until whole entity is parsed */
-					if (-1 == ED_PairParsed(keyDefBuf, &keyIndex, lastTokenBuf, parsedToken, mode))
+					if (ED_PairParsed(keyDefBuf, &keyIndex, lastTokenBuf, parsedToken, mode) == -1)
 						return -1;
 				}
 			}
-			continue;
 		}
 	}
 
@@ -636,13 +634,14 @@ static int ED_ParseEntities (const char **data_p)
  * @return -1 if the defualt for a key does not meet the type definition, otherwise 0
  * as we have the pointers available here
  */
-static int ED_CheckDefaultTypes (void) {
-	entityDef_t *ed;
-	entityKeyDef_t *kd;
+static int ED_CheckDefaultTypes (void)
+{
+	const entityDef_t *ed;
+	const entityKeyDef_t *kd;
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
 		for (kd = ed->keyDefs; kd->name; kd++)
 			if (kd->defaultVal)
-				if (-1 == ED_CheckKey(kd, kd->defaultVal))
+				if (ED_CheckKey(kd, kd->defaultVal) == -1)
 					return -1;
 	return 0;
 }
@@ -652,7 +651,8 @@ static int ED_CheckDefaultTypes (void) {
  * types and defaults. parses values in ranges into ints or floats and tests ranges against types
  * and defaults against ranges.
  */
-static int ED_ProcessRanges (void) {
+static int ED_ProcessRanges (void)
+{
 	static int ibuf[32];
 	static float fbuf[32];
 
@@ -660,12 +660,11 @@ static int ED_ProcessRanges (void) {
 	for (ed = entityDefs; ed->numKeyDefs; ed++) {
 		entityKeyDef_t *kd;
 		for (kd = ed->keyDefs; kd->name; kd++) {
-			int keyType = kd->flags & ED_KEY_TYPE;
+			const int keyType = kd->flags & ED_KEY_TYPE;
 			int i;
 			for (i = 0; i < kd->numRanges ;i++) {
 				int numElements = 0;
 				entityKeyRange_t *kr = kd->ranges[i];
-				const char *tok;
 				const char *tmpRange_p = kr->str;
 				if (!keyType || (keyType & ED_TYPE_STRING)) {
 					snprintf(lastErr, sizeof(lastErr),
@@ -674,7 +673,7 @@ static int ED_ProcessRanges (void) {
 					return -1;
 				}
 				while (tmpRange_p) {
-					tok = COM_Parse(&tmpRange_p);
+					const char *tok = COM_Parse(&tmpRange_p);
 					if('\0' == *tok)
 						break;
 					if (!strcmp("-", tok)) {
@@ -687,19 +686,19 @@ static int ED_ProcessRanges (void) {
 						}
 						continue;
 					}
-					if (-1 == ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE))
+					if (ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE) == -1)
 						return -1;
 					switch (keyType) {
-						case ED_TYPE_INT:
-							ibuf[numElements++] = atoi(tok);
-							break;
-						case ED_TYPE_FLOAT:
-							fbuf[numElements++] = atof(tok);
-							break;
-						default:
-							snprintf(lastErr, sizeof(lastErr),
-								"ED_ProcessRanges: unexpected type");
-							return -1;
+					case ED_TYPE_INT:
+						ibuf[numElements++] = atoi(tok);
+						break;
+					case ED_TYPE_FLOAT:
+						fbuf[numElements++] = atof(tok);
+						break;
+					default:
+						snprintf(lastErr, sizeof(lastErr),
+							"ED_ProcessRanges: unexpected type");
+						return -1;
 					}
 				}
 				kr->numElements = numElements;
@@ -710,7 +709,7 @@ static int ED_ProcessRanges (void) {
 					return -1;
 				}
 				if (ED_TYPE_INT == keyType) {
-					size_t size = numElements * sizeof(int);
+					const size_t size = numElements * sizeof(int);
 					kr->iArr = (int *)malloc(size);
 					if (!kr->iArr) {
 						snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: out of memory");
@@ -718,7 +717,7 @@ static int ED_ProcessRanges (void) {
 					}
 					memcpy(kr->iArr, ibuf, size);
 				} else { /* ED_TYPE_FLOAT */
-					size_t size = numElements * sizeof(float);
+					const size_t size = numElements * sizeof(float);
 					kr->fArr = (float *)malloc(size);
 					if (!kr->fArr) {
 						snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: out of memory");
@@ -773,13 +772,13 @@ int ED_Parse (const char **data_p)
 	memset(entityDefs, 0, ed_block_size);
 
 	copy_data_p = *data_p;
-	if (-1 == ED_ParseEntities(&copy_data_p))
+	if (ED_ParseEntities(&copy_data_p) == -1)
 		return -1;
 
-	if (-1 == ED_CheckDefaultTypes())
+	if (ED_CheckDefaultTypes() == -1)
 		return -1;
 
-	if (-1 == ED_ProcessRanges())
+	if (ED_ProcessRanges() == -1)
 		return -1;
 
 	return 0;
@@ -809,7 +808,7 @@ const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, 
  */
 const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname, const int abstract)
 {
-	entityKeyDef_t *kd;
+	const entityKeyDef_t *kd;
 
 	if (!ed)
 		return NULL;
