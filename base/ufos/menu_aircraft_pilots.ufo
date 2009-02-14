@@ -8,9 +8,25 @@ menu aircraft_pilots extends iaircraft
 	// background
 	// ==================
 
-	pic background
-	{
-		image	menu/team_bg
+	panel actors_background {
+		pos		"18 443"
+		size	"329 321"
+		blend	true
+		image	"menu/panel_grey_green_large"
+	}
+
+	panel actormodel_background {
+		pos		"358 443"
+		size	"205 321"
+		blend	true
+		image	"menu/panel_grey_green_large"
+	}
+
+	panel actorstats_background {
+		pos		"564 443"
+		size	"458 321"
+		blend	true
+		image	"menu/panel_grey_green_large"
 	}
 
 	// ==================

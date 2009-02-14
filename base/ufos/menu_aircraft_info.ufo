@@ -8,9 +8,11 @@ menu aircraft extends iaircraft
 	// background
 	// ==================
 
-	pic background
-	{
-		image		menu/aircraft_bg
+	panel info_background {
+		pos		"461 444"
+		size	"561 320"
+		blend	true
+		image	"menu/panel_grey_green_large"
 	}
 
 	// ==================

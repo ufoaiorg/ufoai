@@ -11,7 +11,30 @@ menu iaircraft
 	// background
 	// ==================
 
-	pic background	{ }
+	pic background	{
+		image	menu/base_bg
+	}
+
+	panel model_background {
+		pos		"461 88"
+		size	"563 298"
+		blend	true
+		image	"menu/panel_grey_green_large"
+	}
+
+	panel aircraftlist_background1 {
+		pos		"19 88"
+		size	"433 298"
+		blend	true
+		image	"menu/panel_grey_black"
+	}
+
+	panel aircraftlist_background2 {
+		pos		"33 100"
+		size	"409 232"
+		blend	true
+		image	"menu/panel_green"
+	}
 
 	// ==================
 	// base info
@@ -58,6 +81,13 @@ menu iaircraft
 		pos		"950 20"
 		icon	"return"
 		click	{ cmd "mn_pop;" }
+	}
+
+	panel tab_background {
+		pos		"24 386"
+		size	"986 56"
+		blend	true
+		image	"menu/panel_tab"
 	}
 
 	tab aircraft_navigation {
