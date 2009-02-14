@@ -513,7 +513,7 @@ void CheckEntities (void)
 				continue;
 			}
 
-			if (-1 == ED_CheckKey(kd, kvp->value)) { /* check values against types declared in entities.ufo */
+			if (-1 == ED_CheckKey(kd, kvp->value)) { /* check values against type and range definitions in entities.ufo */
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "%s\n", ED_GetLastError());
 				continue;
 			}
