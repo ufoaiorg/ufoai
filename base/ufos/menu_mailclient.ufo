@@ -10,7 +10,7 @@ menu mail
 
 	pic background
 	{
-		image		menu/ufopedia_bg
+		image		menu/mailclient_bg
 	}
 
 	// ==================
@@ -37,10 +37,10 @@ menu mail
 	{
 		textid		TEXT_UFOPEDIA
 		pos			"50 208"
-		size		"640 240"
+		size		"904 480"
 		lineheight	24
 		tabwidth	100
-		rows		"10"
+		rows		"20"
 		click
 		rclick
 		wheel		{
@@ -55,36 +55,46 @@ menu mail
 	vscrollbar mail_scroll {
 		image		menu/scrollbar_v_green
 		blend		true
-		pos			"704 208"
-		height		"240"
+		pos			"960 208"
+		height		"470"
 		current		0
-		viewsize	10
+		viewsize	20
 		fullsize	50
 		change		{ cmd "mn_textscroll mail <lastdiff>;" }
+	}
+
+	pic sender_slot
+	{
+		image	menu/button_square
+		blend	true
+		pos		"62 82"
+		size	"64 64"
+		texh	"64 64"
+	}
+
+	model sender_head
+	{
+		model	"*cvar mn_sender_header"
+		angles	"0 90 90"
+		scale	"5.5 5.5 5.5"
+		pos		"63 83"
+		size	"62 62"
+		origin	"0 70 0"
 	}
 
 	text mail_header
 	{
 		textid		TEXT_UFOPEDIA_MAILHEADER
-		pos			"50 80"
-		size		"660 134"
+		pos			"150 70"
+		size		"824 134"
 		lineheight	"24"
 		rows		"5"
 		font		"f_small_bold"
 	}
 
-	string title
-	{
-		string		"*cvar mn_uptitle"
-		pos			"205 19"
-		size		"671 46"
-		textalign	cc
-		font		f_big
-	}
-
 	func close
 	{
-		cmd "mn_reinit;"
+		cmd "mn_reinit;del mn_sender_header;"
 	}
 }
 

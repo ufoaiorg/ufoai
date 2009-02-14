@@ -836,12 +836,12 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 		} else {
 			switch (type) {
 			case TECHMAIL_PRE:
-				CL_DateConvertLong (&tech->preResearchedDate, &date);
+				CL_DateConvertLong(&tech->preResearchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
 			case TECHMAIL_RESEARCHED:
-				CL_DateConvertLong (&tech->researchedDate, &date);
+				CL_DateConvertLong(&tech->researchedDate, &date);
 				Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
@@ -875,6 +875,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	}
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
 		_(from), _(to), dateBuf, subjectType, _(subject));
+	Cvar_Set("mn_sender_header", "characters/al_kuhar");
 	MN_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 }
 
