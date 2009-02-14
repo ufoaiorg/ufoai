@@ -40,7 +40,11 @@ entity info_player_start {
 	}
 
 	range {
-		angle "0 45 90 135 180 225 270 315 360"
+		angle	"0 45 90 135 180 225 270 315 360"
+	}
+
+	default {
+		angle	"0"
 	}
 
 }
@@ -237,6 +241,7 @@ entity light {
 		_cone	"UNSIGNED V_INT"
 		angle	"SIGNED V_INT"
 	}
+
 	range {
 		angle "-1 -2"
 	}

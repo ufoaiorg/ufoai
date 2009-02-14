@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "parse.h"
 #include "entitiesdef.h"
@@ -38,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ED_MAX_ERR_LEN 512
 
 static char lastErr[ED_MAX_ERR_LEN];
+static int lastCheckedInt; /**< @sa ED_CheckNumber */
+static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 
 /**
  * counts the number of entity types defined in entities.ufo
@@ -265,11 +268,10 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
  * @note disallows hex, inf, NaN, numbers with junk on the end (eg -0123junk)
  * @return 1 if the value string matches the type, -1 otherwise.
  * (call ED_GetLastError)
+ * @note the parsed numbers are stored for later use in lastCheckedInt and lastCheckedFloat
  */
 static int ED_CheckNumber (const char *value, const int floatOrInt, const int insistPositive)
 {
-	float fv;
-	int iv;
 	char *end_p;
 	/* V_INTs are protected from octal and hex as strtol with base 10 is used.
 	 * this test is useful for V_INT, as it gives a specific error message.
@@ -282,23 +284,23 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 		return -1;
 	}
 	switch (floatOrInt) {
-		case ED_TYPE_FLOAT:
-			fv = strtof(value, &end_p);
-			if (insistPositive && (fv < 0.0f)) {
-				snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
-				return -1;
-			}
-			break;
-		case ED_TYPE_INT:
-			iv = strtol(value, &end_p, 10);
-			if (insistPositive && (iv < 0)) {
-				snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
-				return -1;
-			}
-			break;
-		default:
-			snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: type to test against not recognised");
+	case ED_TYPE_FLOAT:
+		lastCheckedFloat = strtof(value, &end_p);
+		if (insistPositive && (lastCheckedFloat < 0.0f)) {
+			snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
 			return -1;
+		}
+		break;
+	case ED_TYPE_INT:
+		lastCheckedInt = (int)strtol(value, &end_p, 10);
+		if (insistPositive && (lastCheckedInt < 0)) {
+			snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
+			return -1;
+		}
+		break;
+	default:
+		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: type to test against not recognised");
+		return -1;
 	}
 	if (strlen(value) != (unsigned int)(end_p-value)) { /* if strto* did not use the whole token, then there is some non-number part to it */
 		snprintf(lastErr, sizeof(lastErr), "problem with numeric value: \"%s\" declared as %s. (might be relevant: only use whitespace to delimit values)",
@@ -309,8 +311,66 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 }
 
 /**
+ * @brief check a value against the range for the key
+ * @param index the index of the number being checked in the value. eg angles "90 180", 90 is at 0, 180 is at 1.
+ * @note checks lastCheckedInt or lastCheckedFloat against the range in the supplied keyDef.
+ * @return -1 if there is an error
+ */
+static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, const int index)
+{
+	/* there may be a range for each element of the value, or there may only be one */
+	int useRangeIndex = (keyDef->numRanges == 1) ? 0 : index;
+	entityKeyRange_t *kr;
+	const float discreteFloatEpsilon = 0.0001f;
+	if (0 == keyDef->numRanges)
+		return 0; /* if no range defined, that is OK */
+	assert(useRangeIndex < keyDef->numRanges);
+	kr = keyDef->ranges[useRangeIndex];
+	switch (floatOrInt) {
+	case ED_TYPE_FLOAT:
+		if (kr->continuous) {
+			if (lastCheckedFloat < kr->fArr[0] || lastCheckedFloat > kr->fArr[1]) {
+				snprintf(lastErr, sizeof(lastErr), "ED_CheckRange: %.1f out of range, \"%s\" in %s",
+					lastCheckedFloat, kr->str, keyDef->name);
+				return -1;
+			}
+			return 0;
+		} else {
+			int j;
+			for (j = 0; j < kr->numElements; j++)
+				if (fabs(lastCheckedFloat - kr->fArr[j]) < discreteFloatEpsilon)
+					return 0;
+		}
+		break;
+	case ED_TYPE_INT:
+		if (kr->continuous) {
+			if (lastCheckedInt < kr->iArr[0] || lastCheckedInt > kr->iArr[1]) {
+				snprintf(lastErr, sizeof(lastErr),
+					"ED_CheckRange: %i out of range, \"%s\" in %s",
+					lastCheckedInt, kr->str, keyDef->name);
+				return -1;
+			}
+			return 0;
+		} else {
+			int j;
+			for (j = 0; j < kr->numElements; j++)
+				if (kr->iArr[j] == lastCheckedInt)
+					return 0;
+		}
+		break;
+	default:
+		snprintf(lastErr, sizeof(lastErr), "ED_CheckRange: type to test against not recognised");
+		return -1;
+	}
+	snprintf(lastErr, sizeof(lastErr),
+		"ED_CheckRange: value not specified in range definition, \"%s\" in %s",
+		kr->str, keyDef->name);
+	return -1;
+}
+
+/**
  * @brief tests if a value string matches the type for this key. this includes
- * each element of a numeric array.
+ * each element of a numeric array. Also checks value against range def, if one exists.
  * @param floatOrInt one of ED_TYPE_FLOAT or ED_TYPE_INT
  * @return 1 if the value string matches the type, 0 if it does not and -1 if
  * there is an error (call ED_GetLastError)
@@ -327,15 +387,21 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 		const char *tok = COM_Parse(&buf_p);
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
-		i++;
+
 		if (ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE) == -1)
 			return -1;
+
+		if (-1 == ED_CheckRange(keyDef, floatOrInt, i))
+			return -1;
+
+		i++;
 	}
 	if (i != keyDef->vLen) {
 		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key",
 			i, keyDef->vLen, keyDef->name);
 		return -1;
 	}
+
 	return 1;
 }
 
@@ -631,7 +697,7 @@ static int ED_ParseEntities (const char **data_p)
 }
 
 /**
- * @return -1 if the defualt for a key does not meet the type definition, otherwise 0
+ * @return -1 if the default for a key does not meet the type definition, otherwise 0
  * as we have the pointers available here
  */
 static int ED_CheckDefaultTypes (void)
@@ -726,6 +792,14 @@ static int ED_ProcessRanges (void)
 					memcpy(kr->fArr, fbuf, size);
 				}
 			}
+			if (kd->numRanges && (1 != kd->numRanges) && (kd->vLen != kd->numRanges)) {
+				snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: if range definitions are supplied, "
+					"there must be one (which is applied to each element of a vector), "
+					"or one for each element of the vector. "
+					"%s in %s has %i elements in vector and %i range definitions",
+					ed->classname, kd->name, kd->vLen, kd->numRanges);
+				return -1;
+			}
 		}
 	}
 	/** @todo test defaults against ranges */
@@ -775,10 +849,10 @@ int ED_Parse (const char **data_p)
 	if (ED_ParseEntities(&copy_data_p) == -1)
 		return -1;
 
-	if (ED_CheckDefaultTypes() == -1)
+	if (ED_ProcessRanges() == -1)
 		return -1;
 
-	if (ED_ProcessRanges() == -1)
+	if (ED_CheckDefaultTypes() == -1)
 		return -1;
 
 	return 0;
