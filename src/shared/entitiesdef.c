@@ -740,7 +740,7 @@ static int ED_ProcessRanges (void)
 				}
 				while (tmpRange_p) {
 					const char *tok = COM_Parse(&tmpRange_p);
-					if('\0' == *tok)
+					if (tok[0] == '\0')
 						break;
 					if (!strcmp("-", tok)) {
 						kr->continuous = 1;
@@ -792,7 +792,7 @@ static int ED_ProcessRanges (void)
 					memcpy(kr->fArr, fbuf, size);
 				}
 			}
-			if (kd->numRanges && (1 != kd->numRanges) && (kd->vLen != kd->numRanges)) {
+			if (kd->numRanges && kd->numRanges != 1 && kd->vLen != kd->numRanges) {
 				snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: if range definitions are supplied, "
 					"there must be one (which is applied to each element of a vector), "
 					"or one for each element of the vector. "
