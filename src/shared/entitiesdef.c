@@ -339,27 +339,28 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 }
 
 /**
- * @brief tests if a value string matches the type for this key
+ * @brief tests if a value string matches the type for this key. Also checks the value against the
+ * range, if one was defined.
  * @return 1 if the value string matches the type, 0 if it does not and -1 if
  * there is an error (call ED_GetLastError)
  * @note abstract (radiant) keys may not have types. keys used here must be declared in entities.ufo in
  * an optional or mandatory block.
  */
-int ED_CheckType (const char *classname, const char *key, const char *value)
+int ED_Check (const char *classname, const char *key, const char *value)
 {
 	const entityKeyDef_t *kd = ED_GetKeyDef(classname, key, 0);
 	if (!kd)
 		return -1;
 
-	return ED_CheckTypeKey(kd, value);
+	return ED_CheckKey(kd, value);
 }
 
 /**
- * @brief as ED_CheckType, but where the entity and key are known, so takes
+ * @brief as ED_Check, but where the entity and key are known, so takes
  * different arguments.
  * @return -1 if there is a problem (call ED_GetLastError). return 1 if OK.
  */
-int ED_CheckTypeKey (const entityKeyDef_t *kd, const char *value)
+int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 {
 	if (!kd) {
 		snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: null key def");
@@ -635,14 +636,100 @@ static int ED_ParseEntities (const char **data_p)
  * @return -1 if the defualt for a key does not meet the type definition, otherwise 0
  * as we have the pointers available here
  */
-static int ED_CheckDefaultTypes (void){
+static int ED_CheckDefaultTypes (void) {
 	entityDef_t *ed;
 	entityKeyDef_t *kd;
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
 		for (kd = ed->keyDefs; kd->name; kd++)
 			if (kd->defaultVal)
-				if (-1 == ED_CheckTypeKey(kd, kd->defaultVal))
+				if (-1 == ED_CheckKey(kd, kd->defaultVal))
 					return -1;
+	return 0;
+}
+
+/**
+ * @brief finish parsing ranges. Could not be done earlier as would not have necessarily known
+ * types and defaults. parses values in ranges into ints or floats and tests ranges against types
+ * and defaults against ranges.
+ */
+static int ED_ProcessRanges (void) {
+	static int ibuf[32];
+	static float fbuf[32];
+
+	entityDef_t *ed;
+	for (ed = entityDefs; ed->numKeyDefs; ed++) {
+		entityKeyDef_t *kd;
+		for (kd = ed->keyDefs; kd->name; kd++) {
+			int keyType = kd->flags & ED_KEY_TYPE;
+			int i;
+			for (i = 0; i < kd->numRanges ;i++) {
+				int numElements = 0;
+				entityKeyRange_t *kr = kd->ranges[i];
+				const char *tok;
+				const char *tmpRange_p = kr->str;
+				if (!keyType || (keyType & ED_TYPE_STRING)) {
+					snprintf(lastErr, sizeof(lastErr),
+						"ED_ProcessRanges: ranges may not be specified for strings. note that V_STRING is the default type. %s in %s",
+						kd->name, ed->classname);
+					return -1;
+				}
+				while (tmpRange_p) {
+					tok = COM_Parse(&tmpRange_p);
+					if('\0' == *tok)
+						break;
+					if (!strcmp("-", tok)) {
+						kr->continuous = 1;
+						if (numElements != 1) {
+							snprintf(lastErr, sizeof(lastErr),
+								"ED_ProcessRanges: problem with continuous range, \"%s\" in %s in %s",
+								kr->str, kd->name, ed->classname);
+							return -1;
+						}
+						continue;
+					}
+					if (-1 == ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE))
+						return -1;
+					switch (keyType) {
+						case ED_TYPE_INT:
+							ibuf[numElements++] = atoi(tok);
+							break;
+						case ED_TYPE_FLOAT:
+							fbuf[numElements++] = atof(tok);
+							break;
+						default:
+							snprintf(lastErr, sizeof(lastErr),
+								"ED_ProcessRanges: unexpected type");
+							return -1;
+					}
+				}
+				kr->numElements = numElements;
+				if (kr->continuous && numElements != 2) {
+					snprintf(lastErr, sizeof(lastErr),
+						"ED_ProcessRanges: continuous range should only have 2 elements, upper and lower bounds, \"%s\" in %s in %s",
+						kr->str, kd->name, ed->classname);
+					return -1;
+				}
+				if (ED_TYPE_INT == keyType) {
+					size_t size = numElements * sizeof(int);
+					kr->iArr = (int *)malloc(size);
+					if (!kr->iArr) {
+						snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: out of memory");
+						return -1;
+					}
+					memcpy(kr->iArr, ibuf, size);
+				} else { /* ED_TYPE_FLOAT */
+					size_t size = numElements * sizeof(float);
+					kr->fArr = (float *)malloc(size);
+					if (!kr->fArr) {
+						snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: out of memory");
+						return -1;
+					}
+					memcpy(kr->fArr, fbuf, size);
+				}
+			}
+		}
+	}
+	/** @todo test defaults against ranges */
 	return 0;
 }
 
@@ -689,10 +776,11 @@ int ED_Parse (const char **data_p)
 	if (-1 == ED_ParseEntities(&copy_data_p))
 		return -1;
 
-	if (-1 == ED_CheckDefaultTypes ())
+	if (-1 == ED_CheckDefaultTypes())
 		return -1;
 
-	/** @todo check for duplicate entity definitions */
+	if (-1 == ED_ProcessRanges())
+		return -1;
 
 	return 0;
 }
@@ -775,6 +863,10 @@ void ED_Free (void)
 					int i;
 					for (i = 0; i < kd->numRanges ;i++) {
 						entityKeyRange_t *kr = kd->ranges[i];
+						if (kr->iArr)
+							free(kr->iArr);
+						if (kr->fArr)
+							free(kr->fArr);
 						free(kr->str);
 						free(kr);
 					}
@@ -789,27 +881,40 @@ void ED_Free (void)
 
 #ifdef DEBUG_ED
 
-void ED_PrintKeyDef(const entityKeyDef_t *kd)
+void ED_PrintRange (const entityKeyRange_t *kr)
 {
-	Com_Printf("  >%s< mandtry:%i opt:%i abst:%i type:%i", kd->name,
+	int i;
+	printf(" rge:%c:%c>", kr->continuous ? 'c' : 'd', kr->iArr ? 'i' : 'f');
+	for (i = 0; i < kr->numElements; i++) {
+		if (kr->iArr)
+			printf("%i ", kr->iArr[i]);
+		else
+			printf("%.1f ",kr->fArr[i]);
+	}
+	printf("\b<");
+}
+
+void ED_PrintKeyDef (const entityKeyDef_t *kd)
+{
+	printf("  >%s< mandtry:%i opt:%i abst:%i type:%i", kd->name,
 		kd->flags & ED_MANDATORY ? 1 : 0,
 		kd->flags & ED_OPTIONAL ? 1 : 0,
 		kd->flags & ED_ABSTRACT ? 1 : 0,
 		kd->flags & ED_MODE_TYPE ? 1 : 0);
 	if (kd->flags & ED_MODE_TYPE)
-		Com_Printf(" type:%s[%i]", ED_Constant2Type(kd->flags & ED_KEY_TYPE), kd->vLen);
+		printf(" type:%s[%i]", ED_Constant2Type(kd->flags & ED_KEY_TYPE), kd->vLen);
 
 	if (kd->defaultVal)
-		Com_Printf(" default>%s<",kd->defaultVal);
+		printf(" default>%s<",kd->defaultVal);
 
 	if (kd->numRanges) {
 		int i;
 		for (i = 0; i < kd->numRanges; i++) {
-			Com_Printf(" rge>%s<",kd->ranges[i]->str);
+			ED_PrintRange(kd->ranges[i]);
 		}
 	}
 
-	Com_Printf("\n");
+	printf("\n");
 }
 
 /**
@@ -818,10 +923,10 @@ void ED_PrintKeyDef(const entityKeyDef_t *kd)
 void ED_Dump (void)
 {
 	const entityDef_t *ed;
-	Com_Printf("ED_Dump:\n");
+	printf("ED_Dump:\n");
 	for (ed = entityDefs; ed->numKeyDefs; ed++) {
 		const entityKeyDef_t *kd;
-		Com_Printf("entity def >%s<\n", ed->classname);
+		printf("entity def >%s<\n", ed->classname);
 		for (kd = &ed->keyDefs[0]; kd->name; kd++) {
 			ED_PrintKeyDef(kd);
 		}

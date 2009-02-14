@@ -46,6 +46,7 @@ typedef struct entityKeyRange_s {
 	char	*str;		/**< the range string is stored here until the whole ent def is parsed */
 	int		*iArr;		/**< this is used if the key is V_INT */
 	float	*fArr;		/**< this is used if the key is V_FLOAT */
+	int		numElements;/**< number of discrete options for the value, or two for continuous ranges */
 	int		continuous;	/**< boolean. two elements in the array, Arr[0] <= val <= Arr[1] */
 } entityKeyRange_t;
 
@@ -66,8 +67,8 @@ typedef struct entityDef_s {
 } entityDef_t;
 
 int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n);
-int ED_CheckType (const char *classname, const char *key, const char *value);
-int ED_CheckTypeKey (const entityKeyDef_t *kd, const char *value);
+int ED_Check (const char *classname, const char *key, const char *value);
+int ED_CheckKey (const entityKeyDef_t *kd, const char *value);
 const entityDef_t *ED_GetEntityDef (const char *classname);
 const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, const int abstract);
 const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname, const int abstract);

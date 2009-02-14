@@ -235,6 +235,7 @@ entity light {
 		origin	"V_FLOAT 3"
 		light	"UNSIGNED V_INT"
 		_cone	"UNSIGNED V_INT"
+		angle	"SIGNED V_INT"
 	}
 	range {
 		angle "-1 -2"
