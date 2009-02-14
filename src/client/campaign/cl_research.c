@@ -1718,6 +1718,9 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					if (!*text)
 						return;
 				} while (*text && *token != '}');
+				/* default model is navarre */
+				if (mail->model == NULL)
+					mail->model = "characters/navarre";
 			} else {
 				for (vp = valid_tech_vars; vp->string; vp++)
 					if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
