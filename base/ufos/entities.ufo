@@ -223,6 +223,7 @@ entity light {
 		target		"Entity target name (e.g. info_null) - target entity must have targetname set"
 		_cone		"Defines the light cone in degrees"
 		spawnflags	"Whether the light is in the day version"
+		angle		"Special values: UP -1; DOWN -2"
 	}
 
 	default {
@@ -234,6 +235,9 @@ entity light {
 		origin	"V_FLOAT 3"
 		light	"UNSIGNED V_INT"
 		_cone	"UNSIGNED V_INT"
+	}
+	range {
+		angle "-1 -2"
 	}
 }
 
