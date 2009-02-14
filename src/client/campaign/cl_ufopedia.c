@@ -877,7 +877,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 	}
 	Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
 		_(from), _(to), dateBuf, subjectType, _(subject));
-	Cvar_Set("mn_sender_header", model ? model : "");
+	Cvar_Set("mn_sender_head", model ? model : "");
 	MN_RegisterText(TEXT_UFOPEDIA_MAILHEADER, mailHeader);
 }
 

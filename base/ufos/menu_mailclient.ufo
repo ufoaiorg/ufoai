@@ -63,6 +63,23 @@ menu mail
 		change		{ cmd "mn_textscroll mail <lastdiff>;" }
 	}
 
+	model sender_body
+	{
+		model	"civilians/male/body01"
+		anim	"stand_still"
+		angles	"0 85 90"
+		scale	"7.5 7.5 7.5"
+		pos		"63 83"
+		size	"62 62"
+		origin	"5 125 0"
+	}
+
+	model sender_head
+	{
+		model	"*cvar mn_sender_head"
+		tag		"sender_body tag_head"
+	}
+
 	pic sender_slot
 	{
 		image	menu/button_square
@@ -70,16 +87,6 @@ menu mail
 		pos		"62 82"
 		size	"64 64"
 		texh	"64 64"
-	}
-
-	model sender_head
-	{
-		model	"*cvar mn_sender_header"
-		angles	"0 90 90"
-		scale	"5.5 5.5 5.5"
-		pos		"63 83"
-		size	"62 62"
-		origin	"0 70 0"
 	}
 
 	text mail_header
@@ -94,7 +101,7 @@ menu mail
 
 	func close
 	{
-		cmd "mn_reinit;del mn_sender_header;"
+		cmd "mn_reinit;del mn_sender_head;"
 	}
 }
 
