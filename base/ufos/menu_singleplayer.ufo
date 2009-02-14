@@ -10,13 +10,14 @@ menu singleplayer
 
 	pic background
 	{
-		image	menu/main_bg
+		image		menu/main_bg
 	}
 
 	string version
 	{
-		string	"*cvar version"
-		pos		"10 744"
+		string		"*cvar version"
+		pos			"10 744"
+		size		"550 20"
 	}
 
 	// ==================
@@ -25,80 +26,89 @@ menu singleplayer
 
 	button button_new
 	{
-		pos	"640 170"
-		size "256 64"
-		click	{ cmd "game_exit; mn_push campaigns;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_New game"
+		string		"_New game"
+		pos			"640 170"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_exit; mn_push campaigns;" }
 	}
 
 	button button_load
 	{
-		pos	"640 240"
-		size "256 64"
-		click	{ cmd "mn_push load;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Load"
+		string		"_Load"
+		pos			"640 240"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push load;" }
 	}
 
 	button button_save_na
 	{
 		// only if we have no game started yet
 		visiblewhen "mn_main ne singleplayerInGame"
-		tooltip	"_No game to save"
-		pos	"640 310"
-		size "256 64"
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Save"
+
+		string		"_Save"
+		tooltip		"_No game to save"
+		pos			"640 310"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
 	}
 
 	button button_save
 	{
 		// only if we already have a game started
 		visiblewhen "mn_main eq singleplayerInGame"
-		pos	"640 310"
-		size "256 64"
-		click	{ cmd "mn_push save;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Save"
+
+		string		"_Save"
+		pos			"640 310"
+		size		"256 64"
+		click		{ cmd "mn_push save;" }
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
 	}
 
 	button button_continue
 	{
 		visiblewhen "mn_lastsave"
-		tooltip	"_Load last saved game or continue playing"
-		pos	"640 380"
-		size "256 64"
-		click	{ cmd "game_continue;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Continue"
+
+		string		"_Continue"
+		tooltip		"_Load last saved game or continue playing"
+		pos			"640 380"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_continue;" }
 	}
 
 	button button_back
 	{
-		pos	"640 520"
-		size "256 64"
-		click	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Back"
+		string		"_Back"
+		pos			"640 520"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_exit;mn_pop;" }
 	}
 }
 
@@ -107,51 +117,55 @@ menu singleplayerInGame extends singleplayer
 	// over-ride button_new with a continue button
 	button button_new
 	{
-		pos	"640 170"
-		size "256 64"
-		click	{ cmd "game_continue;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Continue"
+		string		"_Continue"
+		pos			"640 170"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_continue;" }
 	}
 
 	// over-ride button_continue with a continue button
 	button button_continue
 	{
-		pos	"640 170"
-		size "256 64"
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		invis	true
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Continue"
+		string		"_Continue"
+		pos			"640 170"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		invis		true
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
 	}
 
 	button button_options
 	{
-		pos	"640 380"
-		size "256 64"
-		click	{ cmd "mn_push options;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Options"
+		string		"_Options"
+		pos			"640 380"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push options;" }
 	}
 
 	button button_back
 	{
-		pos	"640 520"
-		size "256 64"
-		click	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Exit"
+		string		"_Exit"
+		pos			"640 520"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_exit;mn_pop;" }
 	}
 }
 
@@ -167,13 +181,14 @@ menu singleplayermission
 
 	pic background
 	{
-		image	menu/main_bg
+		image		menu/main_bg
 	}
 
 	string version
 	{
-		string	"*cvar version"
-		pos		"10 744"
+		string		"*cvar version"
+		pos			"10 744"
+		size		"550 20"
 	}
 
 	// ==================
@@ -182,62 +197,67 @@ menu singleplayermission
 
 	button button_continue
 	{
-		pos	"640 170"
-		size "256 64"
-		click	{ cmd "game_continue;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Continue"
+		string		"_Continue"
+		pos			"640 170"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_continue;" }
 	}
 
 	button button_abort
 	{
-		pos	"640 240"
-		size "256 64"
-		click	{ cmd "game_abort;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Abort"
+		string		"_Abort"
+		pos			"640 240"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_abort;" }
 	}
 
 	button button_retry
 	{
-		pos	"640 310"
-		size "256 64"
-		click	{ cmd "game_go;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Retry"
+		string		"_Retry"
+		pos			"640 310"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_go;" }
 	}
 
 	button button_options
 	{
-		pos	"640 380"
-		size "256 64"
-		click	{ cmd "mn_push options;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Options"
+		string		"_Options"
+		pos			"640 380"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push options;" }
 	}
 
 	button button_exit
 	{
-		pos	"640 520"
-		size "256 64"
-		click	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Exit"
+		string		"_Exit"
+		pos			"640 520"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_exit;mn_pop;" }
 	}
 }
 
@@ -248,34 +268,34 @@ menu singleplayermission
 menu quickload
 {
 	{
-		pos	"264 262"
-		size	"496 247"
-		image	menu/popup_alpha_tile
-		blend	true
-		string	"_Reload campaign"
+		string		"_Reload campaign"
+		pos			"264 262"
+		size		"496 247"
+		image		menu/popup_alpha_tile
+		blend		true
 		dragbutton	true
 		closebutton	true
 	}
 
 	string name_label
 	{
-		string	"_Are you sure that you really want to reload the last automatically saved campaign state?"
-		pos		"26 58"
-		size	"440 104"
-		longlines wrap
+		string		"_Are you sure that you really want to reload the last automatically saved campaign state?"
+		pos			"26 58"
+		size		"440 104"
+		longlines	wrap
 	}
 
 	button button_go
 	{
-		string	"_Load"
-		tooltip	"_Reload the last automatically saved campaign state"
-		image	menu/button_green_small	blend true
-		pos		"266 188"
-		size	"176 32"
-		font	f_menu
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		click	{ cmd "game_quickload;" }
+		string		"_Load"
+		tooltip		"_Reload the last automatically saved campaign state"
+		image		menu/button_green_small	blend true
+		pos			"266 188"
+		size		"176 32"
+		font		f_menu
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_quickload;" }
 	}
 
 	func init
@@ -296,21 +316,23 @@ menu load
 
 	pic background
 	{
-		image	menu/main_bg
+		image		menu/main_bg
 	}
 
 	string version
 	{
-		string	"*cvar version"
-		pos		"10 744"
+		string		"*cvar version"
+		pos			"10 744"
+		size		"550 20"
 	}
 
 	string headline
 	{
-		string  "_Load"
-		pos             "758 170"
-		align	uc
-		font f_big
+		string		"_Load"
+		pos			"610 170"
+		size		"310 30"
+		textalign	uc
+		font		f_big
 	}
 
 	// ==================
@@ -319,115 +341,115 @@ menu load
 
 	button slot0
 	{
-		image	menu/button_green_verysmall
-		pos		"640 200"
-		click	{ cmd "game_load slot0; game_timestop;" }
-		size	"176 32"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot0"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot0"
+		image		menu/button_green_verysmall
+		pos			"640 200"
+		size		"256 32"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot0; game_timestop;" }
 	}
 	button slot1
 	{
-		image	menu/button_green_verysmall
-		pos		"640 235"
-		click	{ cmd "game_load slot1; game_timestop;" }
-		size	"256 34"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot1"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot1"
+		image		menu/button_green_verysmall
+		pos			"640 235"
+		size		"256 34"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot1; game_timestop;" }
 	}
 	button slot2
 	{
-		image	menu/button_green_verysmall
-		pos		"640 270"
-		click	{ cmd "game_load slot2; game_timestop;" }
-		size	"256 34"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot2"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot2"
+		image		menu/button_green_verysmall
+		pos			"640 270"
+		size		"256 34"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot2; game_timestop;" }
 	}
 	button slot3
 	{
-		image	menu/button_green_verysmall
-		pos		"640 305"
-		click	{ cmd "game_load slot3; game_timestop;" }
-		size	"256 34"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot3"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot3"
+		image		menu/button_green_verysmall
+		pos			"640 305"
+		size		"256 34"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot3; game_timestop;" }
 	}
 	button slot4
 	{
-		image	menu/button_green_verysmall
-		pos		"640 340"
-		click	{ cmd "game_load slot4; game_timestop;" }
-		size	"256 34"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot4"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot4"
+		image		menu/button_green_verysmall
+		pos			"640 340"
+		size		"256 34"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot4; game_timestop;" }
 	}
 	button slot5
 	{
-		image	menu/button_green_verysmall
-		pos		"640 375"
-		click	{ cmd "game_load slot5; game_timestop;" }
-		size	"256 34"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot5"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot5"
+		image		menu/button_green_verysmall
+		pos			"640 375"
+		size		"256 34"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot5; game_timestop;" }
 	}
 	button slot6
 	{
-		image	menu/button_green_verysmall
-		pos		"640 410"
-		click	{ cmd "game_load slot6; game_timestop;" }
-		size	"256 34"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot6"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot6"
+		image		menu/button_green_verysmall
+		pos			"640 410"
+		size		"256 34"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot6; game_timestop;" }
 	}
 	button slot7
 	{
-		image	menu/button_green_verysmall
-		pos		"640 445"
-		click	{ cmd "game_load slot7; game_timestop;" }
-		size	"256 34"
-		blend	true
-		font "f_verysmall"
-		string "*cvar mn_slot7"
-		color "0 .78 0 1"
-		selectcolor "1 1 1 1"
+		string		"*cvar mn_slot7"
+		image		menu/button_green_verysmall
+		pos			"640 445"
+		size		"256 34"
+		blend		true
+		font		"f_verysmall"
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
 		textalign	cl
-		padding 8
+		padding		8
+		click		{ cmd "game_load slot7; game_timestop;" }
 	}
 
 	// ==================
@@ -436,14 +458,15 @@ menu load
 
 	button button_back
 	{
-		pos	"640 520"
-		size "256 64"
-		click	{ cmd "mn_pop;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Back"
+		string		"_Back"
+		pos			"640 520"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;" }
 	}
 
 	func init
@@ -465,21 +488,23 @@ menu save
 
 	pic background
 	{
-		image	menu/main_bg
+		image		menu/main_bg
 	}
 
 	string version
 	{
-		string	"*cvar version"
-		pos		"10 744"
+		string		"*cvar version"
+		pos			"10 744"
+		size		"550 20"
 	}
 
 	string headline
 	{
-		string  "_Save"
-		pos             "758 170"
-		align	uc
-		font f_big
+		string		"_Save"
+		pos			"610 170"
+		size		"310 30"
+		textalign	uc
+		font		f_big
 	}
 
 	// ==================
@@ -488,91 +513,131 @@ menu save
 
 	textentry slot0
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 200" size	"256 34"
-		string "*cvar mn_slot0"
-		click	{ cmd "game_comments;game_savenamecleanup 0;" }
-		change	{ cmd "game_save slot0 *mn_slot0;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot0"
+		pos			"640 200"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 0;" }
+		change		{ cmd "game_save slot0 *mn_slot0;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 	textentry slot1
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 235" size	"256 34"
-		string "*cvar mn_slot1"
-		click	{ cmd "game_comments;game_savenamecleanup 1;" }
-		change	{ cmd "game_save slot1 *mn_slot1;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot1"
+		pos			"640 235"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 1;" }
+		change		{ cmd "game_save slot1 *mn_slot1;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 	textentry slot2
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 270" size	"256 34"
-		string "*cvar mn_slot2"
-		click	{ cmd "game_comments;game_savenamecleanup 2;" }
-		change	{ cmd "game_save slot2 *mn_slot2;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot2"
+		pos			"640 270"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 2;" }
+		change		{ cmd "game_save slot2 *mn_slot2;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 	textentry slot3
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 305" size	"256 34"
-		string "*cvar mn_slot3"
-		click	{ cmd "game_comments;game_savenamecleanup 3;" }
-		change	{ cmd "game_save slot3 *mn_slot3;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot3"
+		pos			"640 305"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 3;" }
+		change		{ cmd "game_save slot3 *mn_slot3;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 	textentry slot4
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 340" size	"256 34"
-		string "*cvar mn_slot4"
-		click	{ cmd "game_comments;game_savenamecleanup 4;" }
-		change	{ cmd "game_save slot4 *mn_slot4;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot4"
+		pos			"640 340"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 4;" }
+		change		{ cmd "game_save slot4 *mn_slot4;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 	textentry slot5
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 375" size	"256 34"
-		string "*cvar mn_slot5"
-		click	{ cmd "game_comments;game_savenamecleanup 5;" }
-		change	{ cmd "game_save slot5 *mn_slot5;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot5"
+		pos			"640 375"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 5;" }
+		change		{ cmd "game_save slot5 *mn_slot5;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 	textentry slot6
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 410" size	"256 34"
-		string "*cvar mn_slot6"
-		click	{ cmd "game_comments;game_savenamecleanup 6;" }
-		change	{ cmd "game_save slot6 *mn_slot6;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot6"
+		pos			"640 410"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 6;" }
+		change		{ cmd "game_save slot6 *mn_slot6;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 	textentry slot7
 	{
-		image	menu/button_green_verysmall	blend	true
-		color "0 .78 0 1" selectcolor "1 1 1 1"
-		textalign cl	padding 8	font "f_verysmall"
-		pos		"640 445" size	"256 34"
-		string "*cvar mn_slot7"
-		click	{ cmd "game_comments;game_savenamecleanup 7;" }
-		change	{ cmd "game_save slot7 *mn_slot7;game_comments;" }
-		abort	{ cmd "game_comments;" }
+		string		"*cvar mn_slot7"
+		pos			"640 445"
+		size		"256 34"
+		image		menu/button_green_verysmall
+		blend		true
+		color		"0 .78 0 1"
+		selectcolor	"1 1 1 1"
+		textalign	cl
+		padding		8
+		font		"f_verysmall"
+		click		{ cmd "game_comments;game_savenamecleanup 7;" }
+		change		{ cmd "game_save slot7 *mn_slot7;game_comments;" }
+		abort		{ cmd "game_comments;" }
 	}
 
 	// ==================
@@ -581,14 +646,15 @@ menu save
 
 	button button_back
 	{
-		pos	"640 520"
-		size "256 64"
-		click	{ cmd "mn_pop;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Back"
+		string		"_Back"
+		pos			"640 520"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;" }
 	}
 
 	func init
@@ -605,38 +671,41 @@ menu lostgame
 {
 	pic background
 	{
-		image	menu/losegame_bg
+		image		menu/losegame_bg
 	}
 
 	string lostgame
 	{
-		pos	"512 20"
-		string	"_You've lost the game"
-		font "f_menubig"
-		align	uc
-		color	"0 0.8 0 1"
+		string		"_You've lost the game"
+		pos			"12 20"
+		size		"1000 35"
+		font		"f_menubig"
+		textalign	uc
+		color		"0 0.8 0 1"
 	}
 
 	// reason why you've lost
-	text reason {
-		color	"0 0.8 0 0.9"
+	text reason
+	{
+		color		"0 0.8 0 0.9"
 		textalign	uc
-		pos		"512 640"
-		size	"900 100"
+		pos			"512 640"
+		size		"512 100"
 		lineheight	"20"
-		rows	"5"
+		rows		"5"
+		font		"f_normal"
+		scrollbar	 true
 		wheel
-		font	"f_normal"
-		scrollbar true
 	}
 
 	string lostgame_click
 	{
-		pos	"1014 750"
-		string	"_Click to continue"
-		font "f_verysmall"
-		align	ur
-		color	"0 0.8 0 0.9"
+		string		"_Click to continue"
+		pos			"814 750"
+		size		"200 20"
+		font		"f_verysmall"
+		textalign	ur
+		color		"0 0.8 0 0.9"
 	}
 
 	// ==================
@@ -645,8 +714,8 @@ menu lostgame
 
 	zone leave
 	{
-		size	"1024 768"
-		click	{ cmd "mn_pop;" }
+		size		"1024 768"
+		click		{ cmd "mn_pop;" }
 	}
 }
 
@@ -662,38 +731,41 @@ menu endgame
 
 	pic background
 	{
-		image	menu/wingame_bg
+		image		menu/wingame_bg
 	}
 
 	string endgame
 	{
-		pos	"512 20"
-		string	"_Thank you for playing UFO:Alien Invasion"
-		font "f_menubig"
-		align	uc
+		string		"_Thank you for playing UFO:Alien Invasion"
+		pos			"12 20"
+		size		"1000 35"
+		font		"f_menubig"
+		textalign	uc
 		color	"0 0.8 0 1"
 	}
 
 	// reason why you've won
-	text reason {
-		color	"0 0.8 0 0.9"
+	text reason
+	{
+		color		"0 0.8 0 0.9"
 		textalign	uc
-		pos		"512 640"
-		size	"900 100"
+		pos			"512 640"
+		size		"512 100"
 		lineheight	"20"
-		rows	"5"
+		rows		"5"
+		font		"f_normal"
+		scrollbar	true
 		wheel
-		font	"f_normal"
-		scrollbar true
 	}
 
 	string endgame_click
 	{
-		pos	"1014 750"
-		string	"_Click to continue"
-		font "f_verysmall"
-		align	ur
-		color	"0 0.8 0 0.9"
+		string		"_Click to continue"
+		pos			"814 750"
+		size		"200 20"
+		font		"f_verysmall"
+		textalign	ur
+		color		"0 0.8 0 0.9"
 	}
 
 	func init {
@@ -706,7 +778,7 @@ menu endgame
 
 	zone leave
 	{
-		size	"1024 768"
-		click	{ cmd "mn_pop;mn_push main;seq_start credits;" }
+		size		"1024 768"
+		click		{ cmd "mn_pop; mn_push main; seq_start credits;" }
 	}
 }
