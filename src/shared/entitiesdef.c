@@ -43,8 +43,28 @@ static int lastCheckedInt; /**< @sa ED_CheckNumber */
 static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 
 /**
+ * @brief a macro to test a condition write an error
+ * message and exit the current function returning ED_ERROR
+ */
+#define ED_TEST_ERROR(condition,msg,...) \
+	if (condition) { \
+		snprintf(lastErr, sizeof(lastErr), msg, __VA_ARGS__); \
+		return ED_ERROR; \
+	}
+
+/**
+ * @brief if the function returns ED_ERROR, then the function that the
+ * macro is in also returns ED_ERROR. Note that the called function is expected
+ * to set lastErr, probably by using the ED_TEST_ERROR macro
+ */
+#define ED_PASS_ERROR(function_call) \
+	if ((function_call) == ED_ERROR) { \
+		return ED_ERROR; \
+	}
+
+/**
  * counts the number of entity types defined in entities.ufo
- * @return The number of entities. -1 if there is an error. call ED_GetLastError to get the message
+ * @return The number of entities. or ED_ERROR (which is -1) if there is an error. call ED_GetLastError to get the message
  */
 static int ED_CountEntities (const char **data_p)
 {
@@ -65,19 +85,13 @@ static int ED_CountEntities (const char **data_p)
 		if (parsedToken[0] == '{') {
 			tokensOnLevel0 = 0;
 			braceLevel++;
-			if (braceLevel > 2) {
-				snprintf(lastErr, sizeof(lastErr), "Too many open braces");
-				return -1;
-			}
+			ED_TEST_ERROR(braceLevel > 2, "Too many open braces, nested %i deep", braceLevel);
 			continue;
 		}
 
 		if (parsedToken[0] == '}') {
 			braceLevel--;
-			if (braceLevel < 0) {
-				snprintf(lastErr, sizeof(lastErr), "Too many close braces");
-				return -1;
-			}
+			ED_TEST_ERROR(braceLevel < 0, "Too many close braces. after %i entities", numEntities);
 			continue;
 		}
 
@@ -90,8 +104,7 @@ static int ED_CountEntities (const char **data_p)
 				tokensOnLevel0++;
 				continue;
 			}
-			snprintf(lastErr, sizeof(lastErr), "Next entity expected, found \"%s\" token", parsedToken);
-			return -1;
+			ED_TEST_ERROR(1, "Next entity expected, found \"%s\" token", parsedToken);
 		}
 
 		if (tokensOnLevel0 == 1) { /* classname of entity */
@@ -100,32 +113,13 @@ static int ED_CountEntities (const char **data_p)
 			continue;
 		}
 
-		if (tokensOnLevel0 > 1) {
-			snprintf(lastErr, sizeof(lastErr), "'{' to start entity definition expected");
-			return -1;
-		}
+		ED_TEST_ERROR(tokensOnLevel0 > 1, "'{' to start entity definition expected. \"%s\" found.", parsedToken)
 	}
 
 	if (numEntities == 0)
 		snprintf(lastErr, sizeof(lastErr), "No entities found");
 
 	return numEntities;
-}
-
-/**
- * @return a new string, or null if out of memory.
- * @note sets lastErr, if out of memory
- */
-static char *ED_AllocString (const char * string) {
-	const int len = strlen(string) + 1;
-	char *newString = (char *) malloc(len * sizeof(char));
-
-	if (newString)
-		strncpy(newString, string, len);
-	else
-		snprintf(lastErr, sizeof(lastErr), "ED_AllocString: out of memory");
-
-	return newString;
 }
 
 /**
@@ -266,7 +260,7 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
  * @param insistPositive if 1, then tests for the number being greater than or equal to zero.
  * @sa ED_CheckNumericType
  * @note disallows hex, inf, NaN, numbers with junk on the end (eg -0123junk)
- * @return 1 if the value string matches the type, -1 otherwise.
+ * @return ED_OK if the value string matches the type, ED_ERROR otherwise.
  * (call ED_GetLastError)
  * @note the parsed numbers are stored for later use in lastCheckedInt and lastCheckedFloat
  */
@@ -278,43 +272,33 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 	 * V_FLOATs are not protected from hex, inf, nan, so this check is here.
 	 * strstr is used for hex, as 0x may not be the start of the string.
 	 * eg -0x0.2 is a negative hex float  */
-	if (value[0] == 'i' || value[0] == 'I' || value[0] == 'n' || value[0] == 'N'
-	 || strstr(value, "0x") || strstr(value, "0X")) {
-		snprintf(lastErr, sizeof(lastErr), "infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
-		return -1;
-	}
+	ED_TEST_ERROR(value[0] == 'i' || value[0] == 'I' || value[0] == 'n' || value[0] == 'N'
+		|| strstr(value, "0x") || strstr(value, "0X"),
+		"infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
 	switch (floatOrInt) {
 	case ED_TYPE_FLOAT:
 		lastCheckedFloat = strtof(value, &end_p);
-		if (insistPositive && (lastCheckedFloat < 0.0f)) {
-			snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
-			return -1;
-		}
+		ED_TEST_ERROR(insistPositive && lastCheckedFloat < 0.0f, "ED_CheckNumber: not positive %s", value);
 		break;
 	case ED_TYPE_INT:
 		lastCheckedInt = (int)strtol(value, &end_p, 10);
-		if (insistPositive && (lastCheckedInt < 0)) {
-			snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: not positive %s", value);
-			return -1;
-		}
+		ED_TEST_ERROR(insistPositive && lastCheckedInt < 0, "ED_CheckNumber: not positive %s", value);
 		break;
 	default:
-		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumber: type to test against not recognised");
-		return -1;
+		ED_TEST_ERROR(1, "ED_CheckNumber: type to test against not recognised %s", "");
 	}
-	if (strlen(value) != (unsigned int)(end_p-value)) { /* if strto* did not use the whole token, then there is some non-number part to it */
-		snprintf(lastErr, sizeof(lastErr), "problem with numeric value: \"%s\" declared as %s. (might be relevant: only use whitespace to delimit values)",
-			value, ED_Constant2Type(floatOrInt));
-		return -1;
-	}
-	return 1;
+	/* if strto* did not use the whole token, then there is some non-number part to it */
+	ED_TEST_ERROR(strlen(value) != (unsigned int)(end_p-value),
+		"problem with numeric value: \"%s\" declared as %s. (might be relevant: only use whitespace to delimit values)",
+		value, ED_Constant2Type(floatOrInt));
+	return ED_OK;
 }
 
 /**
  * @brief check a value against the range for the key
  * @param index the index of the number being checked in the value. eg angles "90 180", 90 is at 0, 180 is at 1.
  * @note checks lastCheckedInt or lastCheckedFloat against the range in the supplied keyDef.
- * @return -1 if there is an error
+ * @return ED_ERROR or ED_OK
  */
 static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, const int index)
 {
@@ -323,57 +307,48 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, co
 	entityKeyRange_t *kr;
 	const float discreteFloatEpsilon = 0.0001f;
 	if (0 == keyDef->numRanges)
-		return 0; /* if no range defined, that is OK */
+		return ED_OK; /* if no range defined, that is OK */
 	assert(useRangeIndex < keyDef->numRanges);
 	kr = keyDef->ranges[useRangeIndex];
 	switch (floatOrInt) {
 	case ED_TYPE_FLOAT:
 		if (kr->continuous) {
-			if (lastCheckedFloat < kr->fArr[0] || lastCheckedFloat > kr->fArr[1]) {
-				snprintf(lastErr, sizeof(lastErr), "ED_CheckRange: %.1f out of range, \"%s\" in %s",
-					lastCheckedFloat, kr->str, keyDef->name);
-				return -1;
-			}
-			return 0;
+			ED_TEST_ERROR(lastCheckedFloat < kr->fArr[0] || lastCheckedFloat > kr->fArr[1],
+				"ED_CheckRange: %.1f out of range, \"%s\" in %s",
+				lastCheckedFloat, kr->str, keyDef->name);
+			return ED_OK;
 		} else {
 			int j;
 			for (j = 0; j < kr->numElements; j++)
 				if (fabs(lastCheckedFloat - kr->fArr[j]) < discreteFloatEpsilon)
-					return 0;
+					return ED_OK;
 		}
 		break;
 	case ED_TYPE_INT:
 		if (kr->continuous) {
-			if (lastCheckedInt < kr->iArr[0] || lastCheckedInt > kr->iArr[1]) {
-				snprintf(lastErr, sizeof(lastErr),
-					"ED_CheckRange: %i out of range, \"%s\" in %s",
-					lastCheckedInt, kr->str, keyDef->name);
-				return -1;
-			}
-			return 0;
+			ED_TEST_ERROR(lastCheckedInt < kr->iArr[0] || lastCheckedInt > kr->iArr[1],
+				"ED_CheckRange: %i out of range, \"%s\" in %s",
+				lastCheckedInt, kr->str, keyDef->name);
+			return ED_OK;
 		} else {
 			int j;
 			for (j = 0; j < kr->numElements; j++)
 				if (kr->iArr[j] == lastCheckedInt)
-					return 0;
+					return ED_OK;
 		}
 		break;
 	default:
-		snprintf(lastErr, sizeof(lastErr), "ED_CheckRange: type to test against not recognised");
-		return -1;
+		ED_TEST_ERROR(1, "ED_CheckRange: type to test against not recognised in %s", keyDef->name);
 	}
-	snprintf(lastErr, sizeof(lastErr),
-		"ED_CheckRange: value not specified in range definition, \"%s\" in %s",
+	ED_TEST_ERROR(1, "ED_CheckRange: value not specified in range definition, \"%s\" in %s",
 		kr->str, keyDef->name);
-	return -1;
 }
 
 /**
  * @brief tests if a value string matches the type for this key. this includes
  * each element of a numeric array. Also checks value against range def, if one exists.
  * @param floatOrInt one of ED_TYPE_FLOAT or ED_TYPE_INT
- * @return 1 if the value string matches the type, 0 if it does not and -1 if
- * there is an error (call ED_GetLastError)
+ * @return ED_OK or ED_ERROR (call ED_GetLastError)
  */
 static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value, const int floatOrInt)
 {
@@ -547,7 +522,7 @@ static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
 }
 
 /**
- * @return -1 in case of an error, else 0.
+ * @return ED_ERROR or ED_OK.
  */
 static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 		const char *newName, const char *newVal, const int mode)
@@ -578,15 +553,13 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 	case ED_MANDATORY:
 	case ED_OPTIONAL:
 	case ED_ABSTRACT:
-		keyDef->desc = ED_AllocString(newVal);
-		if (!keyDef->desc)
-			return -1;
-		return 0;
+		keyDef->desc = strdup(newVal);
+		ED_TEST_ERROR(!keyDef->desc, "ED_PairParsed: out of memory while storing string.%s","");
+		return ED_OK;
 	case ED_DEFAULT:
-		keyDef->defaultVal = ED_AllocString(newVal);
-		if (!keyDef->defaultVal)
-			return -1;
-		return 0;
+		keyDef->defaultVal = strdup(newVal);
+		ED_TEST_ERROR(!keyDef->defaultVal, "ED_PairParsed: out of memory while storing string.%s","");
+		return ED_OK;
 	case ED_MODE_TYPE:
 		/* only optional or abstract keys may have types, not possible to test for this here,
 			* as the type block may come before the optional or mandatory block */

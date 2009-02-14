@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef ENITIESDEF_H
 # define ENITIESDEF_H
 
+# define	ED_ERROR		-1
+# define	ED_OK			1
+
 # define	ED_OPTIONAL		(1<<0)	/**< flag and parse mode */
 # define	ED_MANDATORY	(1<<1)	/**< flag and parse mode. for entityKeyDef_t flags. entities of this type are not valid without this key. also a parse mode */
 # define	ED_ABSTRACT		(1<<2)	/**< flag and parse mode, radiant use exclusively, should not be in .map file as a key */
