@@ -542,6 +542,7 @@ tech rs_alien_origins
 		from	"_mail_from_col_falkland"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/falkland"
 		icon	icons/intelligence
 	}
 
@@ -550,6 +551,7 @@ tech rs_alien_origins
 		from	"_mail_from_col_falkland"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/falkland"
 		icon	icons/intelligence
 	}
 
@@ -4700,6 +4702,7 @@ tech rs_xvi_census
 		from	"_mail_from_col_falkland"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/falkland"
 		icon	icons/intelligence
 	}
 
@@ -4708,6 +4711,7 @@ tech rs_xvi_census
 		from	"_mail_from_col_falkland"
 		to	"_mail_to_base_commander"
 		// subject	defined by "name"
+		model	"characters/falkland"
 		icon	icons/intelligence
 	}
 
