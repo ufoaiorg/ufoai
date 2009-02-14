@@ -189,7 +189,7 @@ def gen(args):
         os.unlink(test_map)
 
         # taken from build/maps.mk
-        UFO2MAPFLAGS = '-nice 19 -extra'
+        UFO2MAPFLAGS = ' -v 2 -nice 19 -extra'
         os.system('./ufo2map %s %s' % (UFO2MAPFLAGS, test_map[:-3] + 'map'))
         if md5sum(test_map) != old_md5:
             sys.stderr.write('Compiler must have changed significant! Compiling all maps again.\n')

@@ -1,0 +1,9 @@
+This generates an overview about the used licenses in ufo:ai. It
+is based on the information stored via svn porperties (svn:copyright,
+svn:licenses and svn:source).
+
+It runs right now (but will move to another URL sometime) on:
+ http://ludwigf.org:8080
+
+
+
