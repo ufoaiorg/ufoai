@@ -55,7 +55,7 @@ CASSERT(lengthof(menutextid_names) == MAX_MENUTEXTS);
  * @brief Return a dataId by name
  * @return A dataId if data found, else -1
  */
-int MN_GetIdByName (const char* name)
+int MN_GetDataIDByName (const char* name)
 {
 	int num;
 	for (num = 0; num < MAX_MENUTEXTS; num++)

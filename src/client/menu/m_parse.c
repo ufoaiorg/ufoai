@@ -747,7 +747,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 				if (!*text)
 					return qfalse;
 
-				*dataId = MN_GetIdByName(*token);
+				*dataId = MN_GetDataIDByName(*token);
 				if (*dataId < 0) {
 					Com_Printf("MN_ParseProperty: Could not find menu dataId '%s' (%s@%s)", *token, objectName, property->string);
 					return qfalse;

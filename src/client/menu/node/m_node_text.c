@@ -487,9 +487,10 @@ static void MN_TextNodeDraw (menuNode_t *node)
 static void MN_MenuTextReset_f (void)
 {
 	if (Cmd_Argc() == 2) {
-		int id = MN_GetIdByName(Cmd_Argv(1));
+		const char *menuTextID = Cmd_Argv(1);
+		const int id = MN_GetDataIDByName(menuTextID);
 		if (id < 0)
-			Com_Printf("%s: invalid mn.menuText ID: %s\n", Cmd_Argv(0), Cmd_Argv(1));
+			Com_Printf("%s: invalid mn.menuText ID: %s\n", Cmd_Argv(0), menuTextID);
 		else
 			MN_MenuTextReset(id);
 	} else {
