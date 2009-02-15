@@ -75,7 +75,11 @@ static char irc_names_buffer[1024];
 static void Irc_Logic_RemoveChannelName(irc_channel_t *channel, const char *nick);
 static void Irc_Logic_AddChannelName(irc_channel_t *channel, irc_nick_prefix_t prefix, const char *nick);
 static void Irc_Client_Names_f(void);
+static qboolean Irc_Client_Join(const char *channel, const char *password);
 static void Irc_Logic_Disconnect(const char *reason);
+
+static qboolean Irc_Proto_ParseServerMsg(const char *txt, size_t txt_len, irc_server_msg_t *msg);
+static qboolean Irc_Proto_Enqueue(const char *msg, size_t msg_len);
 
 /*
 ===============================================================
@@ -86,7 +90,7 @@ Common functions
 static inline qboolean Irc_IsChannel (const char *target)
 {
 	assert(target);
-	return (*target == '#' || *target == '&');
+	return (target[0] == '#' || target[0] == '&');
 }
 
 /**
@@ -95,7 +99,7 @@ static inline qboolean Irc_IsChannel (const char *target)
 static void Irc_ParseName (const char *mask, char *nick, irc_nick_prefix_t *prefix)
 {
 	const char *emph;
-	if (*mask == IRC_NICK_PREFIX_OP || *mask == IRC_NICK_PREFIX_VOICE) {
+	if (mask[0] == IRC_NICK_PREFIX_OP || mask[0] == IRC_NICK_PREFIX_VOICE) {
 		*prefix = (irc_nick_prefix_t) *mask;	/* read prefix */
 		++mask;									/* crop prefix from mask */
 	} else
@@ -116,11 +120,11 @@ Protokoll functions
 ===============================================================
 */
 
-static cvar_t *irc_messageBucketSize = NULL;
-static cvar_t *irc_messageBucketBurst = NULL;
-static cvar_t *irc_characterBucketSize = NULL;
-static cvar_t *irc_characterBucketBurst = NULL;
-static cvar_t *irc_characterBucketRate = NULL;
+static cvar_t *irc_messageBucketSize;
+static cvar_t *irc_messageBucketBurst;
+static cvar_t *irc_characterBucketSize;
+static cvar_t *irc_characterBucketBurst;
+static cvar_t *irc_characterBucketRate;
 
 typedef struct irc_bucket_message_s {
 	char *msg;
@@ -135,12 +139,6 @@ typedef struct irc_bucket_s {
 	int last_refill;				/**< last refill timestamp */
 	double character_token;
 } irc_bucket_t;
-
-static qboolean Irc_Proto_ParseServerMsg(const char *txt, size_t txt_len, irc_server_msg_t *msg);
-
-static qboolean Irc_Proto_Enqueue(const char *msg, size_t msg_len);
-static void Irc_Proto_RefillBucket(void);
-static void Irc_Proto_DrainBucket(void);
 
 static irc_bucket_t irc_bucket;
 
@@ -246,8 +244,10 @@ static qboolean Irc_Proto_Join (const char *channel, const char *password)
 	msg[sizeof(msg) - 1] = '\0';
 
 	/* only one channel allowed */
-	if (chan)
+	if (chan) {
+		Com_Printf("Already in a channel\n");
 		return qfalse;
+	}
 
 	chan = &ircChan;
 	memset(chan, 0, sizeof(*chan));
@@ -1017,7 +1017,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 	}
 	if (c < end && *c != '\r') {
 		/* parse command */
-		if (*c >= '0' && *c <= '9') {
+		if (c < end && *c >= '0' && *c <= '9') {
 			/* numeric command */
 			char command[4];
 			int i;
@@ -1031,7 +1031,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 			command[3] = '\0';
 			msg->type = IRC_COMMAND_NUMERIC;
 			msg->id.numeric = atoi(command);
-		} else { /* != \r */
+		} else if (c < end && *c != '\r') {
 			/* string command */
 			char *command = msg->id.string;
 			while (c < end && *c != '\r' && *c != ' ') {
@@ -1041,7 +1041,8 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 			}
 			*command = '\0';
 			msg->type = IRC_COMMAND_STRING;
-		}
+		} else
+			return qtrue;
 		if (c < end && *c == ' ') {
 			/* parse params and trailing */
 			char *params = msg->params;
@@ -1232,6 +1233,8 @@ static void Irc_Logic_Connect (const char *server, const char *port)
 		Irc_Proto_Nick(irc_nick->string);
 		Irc_Proto_User(user, IRC_INVISIBLE, user);
 		irc_connected = qtrue;
+	} else {
+		Com_Printf("Could not connect to the irc server %s:%s\n", server, port);
 	}
 }
 
@@ -1262,7 +1265,7 @@ void Irc_Logic_Frame (void)
 			Irc_Logic_Disconnect("Switched to another channel");
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (irc_connected)
-				Cbuf_AddText(va("irc_join %s\n", irc_channel->string));
+				Irc_Client_Join(irc_channel->string, NULL);
 		}
 		Irc_Logic_SendMessages();
 		Irc_Logic_ReadMessages();
@@ -1381,10 +1384,10 @@ static void Irc_Connect_f (void)
 				Cvar_Set("irc_server", Cmd_Argv(1));
 			if (argc >= 3)
 				Cvar_Set("irc_port", Cmd_Argv(2));
-			Com_Printf("Connect to %s:%s\n", irc_server->string, irc_port->string);
+			Com_Printf("Connecting to %s:%s\n", irc_server->string, irc_port->string);
 			Irc_Logic_Connect(irc_server->string, irc_port->string);
 			if (irc_connected && argc >= 4)
-				Cbuf_AddText(va("irc_join %s\n", Cmd_Argv(3)));
+				Irc_Client_Join(Cmd_Argv(3), NULL);
 		} else
 			Com_Printf("Already connected.\n");
 
@@ -1402,6 +1405,23 @@ static void Irc_Disconnect_f (void)
 	Irc_Logic_Disconnect("normal exit");
 }
 
+static qboolean Irc_Client_Join (const char *channel, const char *password)
+{
+	if (!Irc_IsChannel(channel)) {
+		Com_Printf("No valid channel name\n");
+		return qfalse;
+	}
+	/* join desired channel */
+	if (!Irc_Proto_Join(channel, password)) {
+		Cvar_ForceSet("irc_defaultChannel", channel);
+		Com_Printf("Joined channel: '%s'\n", channel);
+		return qtrue;
+	} else {
+		Com_Printf("Could not join channel: '%s'\n", channel);
+		return qfalse;
+	}
+}
+
 static void Irc_Client_Join_f (void)
 {
 	const int argc = Cmd_Argc();
@@ -1409,12 +1429,7 @@ static void Irc_Client_Join_f (void)
 		const char * const channel = Cmd_Argv(1);
 		/* password is optional */
 		const char * const channel_pass = (argc == 3) ? Cmd_Argv(2) : NULL;
-		if (!Irc_IsChannel(channel)) {
-			Com_Printf("No valid channel name\n");
-			return;
-		}
-		Irc_Proto_Join(channel, channel_pass);	/* join desired channel */
-		Cvar_ForceSet("irc_defaultChannel", channel);
+		Irc_Client_Join(channel, channel_pass);
 	} else
 		Com_Printf("Usage: %s <channel> [<password>]\n", Cmd_Argv(0));
 }
