@@ -50,36 +50,17 @@ menu singleplayer
 		click		{ cmd "mn_push load;" }
 	}
 
-	button button_save_na
-	{
-		// only if we have no game started yet
-		visiblewhen "mn_main ne singleplayerInGame"
-
-		string		"_Save"
-		tooltip		"_No game to save"
-		pos			"640 310"
-		size		"256 64"
-		image		menu/button_green_big
-		blend		true
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-	}
-
 	button button_save
 	{
-		// only if we already have a game started
-		visiblewhen "mn_main eq singleplayerInGame"
-
 		string		"_Save"
 		pos			"640 310"
 		size		"256 64"
-		click		{ cmd "mn_push save;" }
 		image		menu/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push save;" }
 	}
 
 	button button_continue
@@ -109,6 +90,18 @@ menu singleplayer
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		click		{ cmd "game_exit;mn_pop;" }
+	}
+
+	func init
+	{
+		if "mn_main ne singleplayerInGame" {
+			*button_save tooltip "_No game to save"
+			*button_save disabled true
+		}
+		if "mn_main eq singleplayerInGame" {
+			*button_save tooltip ""
+			*button_save disabled false
+		}
 	}
 }
 
