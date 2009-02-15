@@ -486,15 +486,14 @@ static void MN_TextNodeDraw (menuNode_t *node)
  */
 static void MN_MenuTextReset_f (void)
 {
-	int i;
-
 	if (Cmd_Argc() == 2) {
-		i = atoi(Cmd_Argv(1));
-		if (i >= 0 && i < MAX_MENUTEXTS)
-			MN_MenuTextReset(i);
+		int id = MN_GetIdByName(Cmd_Argv(1));
+		if (id < 0)
+			Com_Printf("%s: invalid mn.menuText ID: %s\n", Cmd_Argv(0), Cmd_Argv(1));
 		else
-			Com_Printf("%s: invalid mn.menuText ID: %i\n", Cmd_Argv(0), i);
+			MN_MenuTextReset(id);
 	} else {
+		int i;
 		for (i = 0; i < MAX_MENUTEXTS; i++)
 			MN_MenuTextReset(i);
 	}

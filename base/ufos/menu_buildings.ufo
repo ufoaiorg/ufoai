@@ -104,7 +104,7 @@ menu buildings
 		*cvar:mn_building_image	""
 		*cvar:mn_building_info	""
 		*cvar:mn_building_status ""
-		cmd "mn_textreset 4;" // TEXT_BUILDING_INFO
+		cmd "mn_textreset TEXT_BUILDING_INFO;"
 	}
 
 	func init
