@@ -2,6 +2,7 @@
 
 #include "fog_vs.glsl"
 
+uniform int FOG;
 
 /*
 main
@@ -17,5 +18,6 @@ void main(void){
 	// and primary color
 	gl_FrontColor = gl_Color;
 
-	FogVertex();
+	if(FOG > 0)
+		FogVertex();
 }

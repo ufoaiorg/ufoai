@@ -6,6 +6,7 @@ uniform vec4 OFFSET;
 
 uniform sampler2D SAMPLER0;
 uniform sampler2D SAMPLER1;
+uniform int FOG;
 
 
 /*
@@ -22,5 +23,6 @@ void main(void){
 	// sample the diffuse texture, factoring in primary color as well
 	gl_FragColor = gl_Color * texture2D(SAMPLER0, coord);
 
-	FogFragment();  // lastly add fog
+	if(FOG > 0)
+		FogFragment();  // lastly add fog
 }
