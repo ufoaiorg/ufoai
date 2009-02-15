@@ -2,15 +2,22 @@
  * it is used in radiant and ufo2map check/fix mode.
  * keys directly in entity definitions are for radiant (they are called
  * abstract in entitiesdef.c).
+ *
  * mandatory blocks contain keys that must be present in an entity.
+ *
  * optional blocks contain keys that may be present in an entity.
+ *
  * keys in mandatory or optional blocks may be in a map file and are
  * called concrete keys (as opposed to abstract) in entitiesdef.c.
  * concrete keys may have defaults defined in default blocks and
- * types declared in type blocks. if no type is given, V_STRING is
+ * types declared in type blocks.
+ *
+ * if no type is given, V_STRING is
  * assumed. V_FLOAT and V_INT types may be made into vectors,
  * "V_FLOAT 3". To insist that values are positive, you may use
- * stuff like "UNSIGNED V_INT".
+ * stuff like "UNSIGNED V_INT". if a type is given, then the
+ * default will be tested for consistency when entities.ufo
+ * is parsed.
  *
  * note that 255 for spawnflags means levelflags 1-8 are all set.
  * 
@@ -176,6 +183,7 @@ entity misc_model {
 	type {
 		origin		"V_FLOAT 3"
 		spawnflags	"V_INT"
+		skin		"UNSIGNED V_INT"
 	}
 
 	default {
