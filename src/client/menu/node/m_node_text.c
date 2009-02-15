@@ -256,6 +256,18 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
 	}
 
+	/* fix position of the start of the draw according to the align */
+	switch (node->textalign % 3) {
+	case 0:	/* left */
+		break;
+	case 1:	/* middle */
+		x += width / 2;
+		break;
+	case 2:	/* right */
+		x += width;
+		break;
+	}
+
 	R_ColorBlend(node->color);
 
 	/*Com_Printf("\n\n\nEXTRADATA(node).textLines: %i \n", EXTRADATA(node).textLines);*/

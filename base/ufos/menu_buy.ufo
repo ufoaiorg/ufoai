@@ -36,7 +36,7 @@ menu buy
 		textid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		textalign	ur
-		pos			"370 40"
+		pos			"330 40"
 		rows		"28"
 		size		"40 700"
 		lineheight	"25"
@@ -47,7 +47,7 @@ menu buy
 		textid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
 		textalign	ur
-		pos			"446 40"
+		pos			"406 40"
 		rows		"28"
 		size		"40 700"
 		lineheight	"25"
@@ -61,7 +61,7 @@ menu buy
 		rows		"28"
 		size		"80 700"
 		lineheight	"25"
-		pos			"542 40"
+		pos			"462 40"
 		wheel		{ cmd "market_scroll;" }
 	}
 
