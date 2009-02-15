@@ -58,6 +58,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 #include "../renderer/r_overlay.h"
 #include "cp_employee_callbacks.h"
+#include "cp_market_callbacks.h"
 
 /* public vars */
 campaign_t *curCampaign;			/**< Current running campaign */
@@ -2343,6 +2344,7 @@ static void CP_AddCampaignCallbackCommands (void)
 	AIM_InitCallbacks();
 	AIR_InitCallbacks();
 	B_InitCallbacks();
+	BS_InitCallbacks();
 	CP_TEAM_InitCallbacks();
 	E_InitCallbacks();
 	HOS_InitCallbacks();
@@ -2370,6 +2372,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	AIM_ShutdownCallbacks();
 	AIR_ShutdownCallbacks();
 	B_ShutdownCallbacks();
+	BS_ShutdownCallbacks();
 	CP_TEAM_ShutdownCallbacks();
 	E_ShutdownCallbacks();
 	HOS_ShutdownCallbacks();
@@ -2735,5 +2738,4 @@ void CP_InitStartup (void)
 	AIRFIGHT_InitStartup();
 	UR_InitStartup();
 	NAT_InitStartup();
-	BS_InitStartup();
 }

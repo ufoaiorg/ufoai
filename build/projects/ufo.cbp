@@ -293,6 +293,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_market.h" />
+		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_messageoptions.c">
 			<Option compilerVar="CC" />
 		</Unit>

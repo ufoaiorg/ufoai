@@ -60,6 +60,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_employee_callbacks.c \
 	client/campaign/cl_installation.c \
 	client/campaign/cl_market.c \
+	client/campaign/cp_market_callbacks.c \
 	client/campaign/cl_map.c \
 	client/campaign/cl_mapfightequip.c \
 	client/campaign/cl_nation.c \

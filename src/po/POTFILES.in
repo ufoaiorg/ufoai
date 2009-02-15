@@ -27,6 +27,7 @@
 ./client/campaign/cp_base_callbacks.c
 ./client/campaign/cp_employee_callbacks.c
 ./client/campaign/cp_geoscape_actions.c
+./client/campaign/cp_market_callbacks.c
 ./client/campaign/cp_messages.c
 ./client/campaign/cp_missions.c
 ./client/campaign/cp_mission_triggers.c

@@ -1,6 +1,6 @@
 /**
- * @file cl_market.h
- * @brief Header for single player market stuff.
+ * @file cp_market_callbacks.h
+ * @brief Header file for menu related console command callbacks
  */
 
 /*
@@ -23,12 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CL_MARKET_H
-#define CLIENT_CL_MARKET_H
+#ifndef CP_MERKET_CALLBACKS_H
+#define CP_MARKET_CALLBACKS_H
 
-char *BS_BuyTypeName(const int buyCat);
-int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean inbase);
-qboolean BS_CheckAndDoBuyItem (base_t* base, const objDef_t *item, int number);
-void BS_ProcessCraftItemSale (const base_t *base, const objDef_t *craftitem, const int numItems);
+void BS_InitCallbacks(void);
+void BS_ShutdownCallbacks(void);
 
-#endif /* CLIENT_CL_MARKET_H */
+#endif
