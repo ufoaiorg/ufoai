@@ -203,8 +203,7 @@ static int ED_Type2Constant (const char *strType)
 	else if (!strcmp(strType, "V_STRING"))
 		return ED_TYPE_STRING;
 
-	snprintf(lastErr, sizeof(lastErr), "ED_Type2Constant: type string not recognised: \"%s\"", strType);
-	return ED_ERROR;
+	ED_RETURN_ERROR("ED_Type2Constant: type string not recognised: \"%s\"", strType);
 }
 
 /**
@@ -233,7 +232,8 @@ static const char *ED_Constant2Type (int constInt)
  * @param[out] v the array of int to put the answer in
  * it must have enough space for n elements.
  * @param n the number of elements expected in the vector
- * @return ED_ERROR if n does not agree with the key def. call ED_GetLastError.
+ * @return ED_ERROR or ED_OK
+ * @sa ED_GetLastError.
  */
 int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
 {
@@ -244,17 +244,11 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
 		const char *tok = COM_Parse (&buf_p);
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
-		if (i >= n) {
-			snprintf(lastErr, sizeof(lastErr), "ED_GetIntVector: supplied buffer v[%i] too small for the number of elements in key def \"%s\"", n, kd->name);
-			return ED_ERROR;
-		}
+		ED_TEST_RETURN_ERROR(i >= n, "ED_GetIntVector: v[%i] too small for key def \"%s\"", n, kd->name);
 		v[i] = atoi(tok);
 	}
-	if (i != n) {
-		snprintf(lastErr, sizeof(lastErr), "ED_GetIntVector: supplied buffer v[%i] too large for the number of elements in key def \"%s\"", n, kd->name);
-		return ED_ERROR;
-	}
-	return 0;
+	ED_TEST_RETURN_ERROR(i != n, "ED_GetIntVector: v[%i] wrong size for key def \"%s\"", n, kd->name);
+	return ED_OK;
 }
 
 /**
@@ -368,8 +362,7 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 		ED_PASS_ERROR_EXTRAMSG(ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE),
 			" in key \"%s\"", keyDef->name);
 
-		if (ED_ERROR == ED_CheckRange(keyDef, floatOrInt, i))
-			return ED_ERROR;
+		ED_PASS_ERROR(ED_CheckRange(keyDef, floatOrInt, i));
 
 		i++;
 	}
@@ -377,7 +370,7 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 	ED_TEST_RETURN_ERROR(i != keyDef->vLen, "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key",
 			i, keyDef->vLen, keyDef->name);
 
-	return 1;
+	return ED_OK;
 }
 
 /**
@@ -400,7 +393,8 @@ int ED_Check (const char *classname, const char *key, const char *value)
 /**
  * @brief as ED_Check, but where the entity and key are known, so takes
  * different arguments.
- * @return ED_ERROR if there is a problem (call ED_GetLastError). return 1 if OK.
+ * @return ED_ERROR or ED_OK
+ * @sa ED_GetLastError
  */
 int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 {
@@ -414,14 +408,13 @@ int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 	case 0: /* string is the default */
 		return ED_OK; /* all strings are good */
 	default:
-		snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: type not recognised in key def");
-		return ED_ERROR;
+		ED_RETURN_ERROR("ED_CheckTypeEntityKey: type not recognised in key def");
 	}
 }
 
 /**
  * @brief takes a type string (eg "V_FLOAT 6") and configures entity def
- * @return ED_ERROR for an error, otherwise 0
+ * @return ED_ERROR or ED_OK
  */
 static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 {
@@ -432,10 +425,8 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	const char *partToken;
 	/* need a copy, as parsedToken is held in a static buffer in the
 	 * Com_Parse function */
-	if ((strlen(parsedToken) + 1) > sizeof(tokBuf)) {
-		snprintf(lastErr, sizeof(lastErr), "ED_ParseType: type string too long for buffer for key %s",kd->name);
-		return ED_ERROR;
-	}
+	ED_TEST_RETURN_ERROR((strlen(parsedToken) + 1) > sizeof(tokBuf),
+		"ED_ParseType: type string too long for buffer for key %s",kd->name);
 	strncpy(tokBuf, parsedToken, sizeof(tokBuf));
 	buf_p = tokBuf;
 
@@ -463,7 +454,7 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 			"ED_ParseType: problem with vector length \"%s\" in key %s",
 			partToken, kd->name);
 	kd->vLen = strlen(partToken) ? (vectorLen ? vectorLen : 1) : 1; /* default is 1 */
-	return 0;
+	return ED_OK;
 }
 
 /**
@@ -510,7 +501,7 @@ static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
 	}
 	(kd->numRanges)++;
 	kd->ranges = newRanges;
-	return 1;
+	return ED_OK;
 }
 
 /**
@@ -585,10 +576,7 @@ static int ED_ParseEntities (const char **data_p)
 
 		if (parsedToken[0] == '{') {
 			braceLevel++;
-			if (!toggle) {
-				snprintf(lastErr, sizeof(lastErr), "ED_ParseEntities: Incorrect number of tokens before '{'");
-				return ED_ERROR;
-			}
+			ED_TEST_RETURN_ERROR(!toggle, "ED_ParseEntities: Incorrect number of tokens before '{'");
 			toggle ^= 1; /* reset, as toggle is only for counting proper text tokens, not braces */
 			tokensOnLevel0 = 0;
 			continue;
@@ -612,14 +600,10 @@ static int ED_ParseEntities (const char **data_p)
 		if (braceLevel == 0) {
 			if (tokensOnLevel0 == 1) {/* classname of entity, start parsing new entity */
 				const entityDef_t *prevED = ED_GetEntityDef(parsedToken);
-				if (prevED) {
-					snprintf(lastErr, sizeof(lastErr), "ED_ParseEntities: duplicate entity definition name:%s", parsedToken);
-					return ED_ERROR;
-				}
+				ED_TEST_RETURN_ERROR(prevED, "ED_ParseEntities: duplicate entity definition \"%s\"", parsedToken);
 				memset(keyDefBuf, 0, sizeof(keyDefBuf)); /* ensure pointers are not carried over from previous entity */
 				keyIndex = 0;
-				if (ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY) == ED_ERROR)
-					return ED_ERROR;
+				ED_PASS_ERROR(ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY));
 				mode = ED_ABSTRACT;
 			}
 			tokensOnLevel0++;
@@ -643,8 +627,7 @@ static int ED_ParseEntities (const char **data_p)
 				if (toggle) { /* store key name til after next token is parsed */
 					strncpy(lastTokenBuf, parsedToken, ED_MAX_TOKEN_LEN);
 				} else { /* store key-value pair in buffer until whole entity is parsed */
-					if (ED_PairParsed(keyDefBuf, &keyIndex, lastTokenBuf, parsedToken, mode) == ED_ERROR)
-						return ED_ERROR;
+					ED_PASS_ERROR(ED_PairParsed(keyDefBuf, &keyIndex, lastTokenBuf, parsedToken, mode));
 				}
 			}
 		}
@@ -654,8 +637,9 @@ static int ED_ParseEntities (const char **data_p)
 }
 
 /**
- * @return ED_ERROR if the default for a key does not meet the type definition, otherwise 0
- * as we have the pointers available here
+ * @brief checks if the default block entries meet the type and range definitions.
+ * @return ED_ERROR or ED_OK
+ * @sa CheckLastError
  */
 static int ED_CheckDefaultTypes (void)
 {
@@ -674,6 +658,7 @@ static int ED_CheckDefaultTypes (void)
  * @brief finish parsing ranges. Could not be done earlier as would not have necessarily known
  * types and defaults. parses values in ranges into ints or floats and tests ranges against types
  * and defaults against ranges.
+ * @return ED_ERROR or ED_OK
  */
 static int ED_ProcessRanges (void)
 {
@@ -698,16 +683,11 @@ static int ED_ProcessRanges (void)
 						break;
 					if (!strcmp("-", tok)) {
 						kr->continuous = 1;
-						if (numElements != 1) {
-							snprintf(lastErr, sizeof(lastErr),
-								"ED_ProcessRanges: problem with continuous range, \"%s\" in %s in %s",
-								kr->str, kd->name, ed->classname);
-							return ED_ERROR;
-						}
+						ED_TEST_RETURN_ERROR(numElements != 1, "ED_ProcessRanges: problem with continuous range, \"%s\" in %s in %s",
+							kr->str, kd->name, ed->classname);
 						continue;
 					}
-					if (ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE) == ED_ERROR)
-						return ED_ERROR;
+					ED_PASS_ERROR(ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE));
 					switch (keyType) {
 					case ED_TYPE_INT:
 						ibuf[numElements++] = atoi(tok);
@@ -716,48 +696,34 @@ static int ED_ProcessRanges (void)
 						fbuf[numElements++] = atof(tok);
 						break;
 					default:
-						snprintf(lastErr, sizeof(lastErr),
-							"ED_ProcessRanges: unexpected type");
-						return ED_ERROR;
+						ED_RETURN_ERROR("ED_ProcessRanges: unexpected type");
 					}
 				}
 				kr->numElements = numElements;
-				if (kr->continuous && numElements != 2) {
-					snprintf(lastErr, sizeof(lastErr),
-						"ED_ProcessRanges: continuous range should only have 2 elements, upper and lower bounds, \"%s\" in %s in %s",
-						kr->str, kd->name, ed->classname);
-					return ED_ERROR;
-				}
+				ED_TEST_RETURN_ERROR(kr->continuous && numElements != 2,
+					"ED_ProcessRanges: continuous range should only have 2 elements, upper and lower bounds, \"%s\" in %s in %s",
+					kr->str, kd->name, ed->classname);
 				if (ED_TYPE_INT == keyType) {
 					const size_t size = numElements * sizeof(int);
 					kr->iArr = (int *)malloc(size);
-					if (!kr->iArr) {
-						snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: out of memory");
-						return ED_ERROR;
-					}
+					ED_TEST_RETURN_ERROR(!kr->iArr, "ED_ProcessRanges: out of memory");
 					memcpy(kr->iArr, ibuf, size);
 				} else { /* ED_TYPE_FLOAT */
 					const size_t size = numElements * sizeof(float);
 					kr->fArr = (float *)malloc(size);
-					if (!kr->fArr) {
-						snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: out of memory");
-						return ED_ERROR;
-					}
+					ED_TEST_RETURN_ERROR(!kr->fArr, "ED_ProcessRanges: out of memory");
 					memcpy(kr->fArr, fbuf, size);
 				}
 			}
-			if (kd->numRanges && kd->numRanges != 1 && kd->vLen != kd->numRanges) {
-				snprintf(lastErr, sizeof(lastErr), "ED_ProcessRanges: if range definitions are supplied, "
-					"there must be one (which is applied to each element of a vector), "
-					"or one for each element of the vector. "
-					"%s in %s has %i elements in vector and %i range definitions",
-					ed->classname, kd->name, kd->vLen, kd->numRanges);
-				return ED_ERROR;
-			}
+			ED_TEST_RETURN_ERROR(kd->numRanges && kd->numRanges != 1 && kd->vLen != kd->numRanges,
+				"ED_ProcessRanges: if range definitions are supplied, "
+				"there must be one (which is applied to each element of a vector), "
+				"or one for each element of the vector. "
+				"%s in %s has %i elements in vector and %i range definitions",
+				ed->classname, kd->name, kd->vLen, kd->numRanges);
 		}
 	}
-	/** @todo test defaults against ranges */
-	return 0;
+	return ED_OK;
 }
 
 /**
@@ -775,40 +741,31 @@ int ED_Parse (const char **data_p)
 
 	/* only do this once, repeat calls are OK */
 	if (numEntityDefs)
-		return 0;
+		return ED_OK;
 
 	snprintf(lastErr, sizeof(lastErr), "no error");
 
 	numEntityDefs = ED_CountEntities(&copy_data_p);
-	if (numEntityDefs < 1) {
-		if (numEntityDefs == 0)
-			snprintf(lastErr, sizeof(lastErr), "ED_Parse: no entity definitions found");
-		return ED_ERROR;
-	}
+	ED_PASS_ERROR(numEntityDefs);
+	ED_TEST_RETURN_ERROR(numEntityDefs == 0, "ED_Parse: no entity definitions found");
 
 	/* make the block one larger than required, so when finished there are NULLs
 	 * at the end to allow looping through with pointers. */
 	ed_block_size = (numEntityDefs + 1) * sizeof(entityDef_t);
 	entityDefs = (entityDef_t *)malloc(ed_block_size);
 
-	if (!entityDefs) {
-		snprintf(lastErr, sizeof(lastErr), "ED_Parse: out of memory");
-		return ED_ERROR;
-	}
+	ED_TEST_RETURN_ERROR(!entityDefs, "ED_Parse: out of memory");
 
 	/* memset to NULL now so that looping through the ones that have already
 	 * been parsed is possible while the rest are parsed */
 	memset(entityDefs, 0, ed_block_size);
 
 	copy_data_p = *data_p;
-	if (ED_ParseEntities(&copy_data_p) == ED_ERROR)
-		return ED_ERROR;
+	ED_PASS_ERROR(ED_ParseEntities(&copy_data_p));
 
-	if (ED_ProcessRanges() == ED_ERROR)
-		return ED_ERROR;
+	ED_PASS_ERROR(ED_ProcessRanges());
 
-	if (ED_CheckDefaultTypes() == ED_ERROR)
-		return ED_ERROR;
+	ED_PASS_ERROR(ED_CheckDefaultTypes());
 
 	return ED_OK;
 }
