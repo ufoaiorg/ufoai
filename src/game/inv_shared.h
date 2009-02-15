@@ -194,8 +194,6 @@ typedef struct craftitem_s {
  * @brief A list of filter types in the market and production view.
  * @note Run-time only, please do not use this in savegame/structures and the like.
  * Please also do not use hardcoded numbers to access this (e.g. in a .ufo script).
- * @todo There are some legacy uses of hardcoded numbers (see the usage of "buy_type"/BS_BuyType_f in the .ufo files).
- * We better change that so something like in cl_team.c:CL_EquipType_f)
  * @sa inv_shared.c:INV_ItemMatchesFilter
  * @sa inv_shared.c:INV_GetFilterTypeID
  */
@@ -748,6 +746,7 @@ qboolean Com_CompareItem(item_t *item1, item_t *item2);
 void Com_GetFirstShapePosition(const invList_t *ic, int* const x, int* const y);
 qboolean Com_ExistsInInventory(const inventory_t* const inv, const invDef_t * container, item_t item);
 itemFilterTypes_t INV_GetFilterTypeID(const char * filterTypeID);
+const char *INV_GetFilterType(const int id);
 qboolean INV_ItemMatchesFilter(const objDef_t *obj, const itemFilterTypes_t filterType);
 itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj);
 invList_t *Com_SearchInInventory(const inventory_t* const i, const invDef_t * container, const int x, const int y) __attribute__((nonnull(1)));

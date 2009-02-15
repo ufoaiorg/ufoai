@@ -165,7 +165,7 @@ static void BS_MarketScroll_f (void)
 	menuNode_t* node;
 	int i;
 
-	if (!baseCurrent || buyCat == MAX_FILTERTYPES || buyCat < 0)
+	if (!baseCurrent || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
 	node = MN_GetNodeFromCurrentMenu("market");
@@ -308,7 +308,7 @@ static void BS_BuyType (const base_t *base)
 	int i, j = 0;
 	char tmpbuf[MAX_VAR];
 
-	if (!base || buyCat == MAX_FILTERTYPES || buyCat < 0)
+	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
 	CL_UpdateCredits(ccs.credits);
@@ -532,10 +532,7 @@ static void BS_BuyType_f (void)
 	if (Cmd_Argc() == 2) {
 		menuNode_t* node = MN_GetNodeFromCurrentMenu("market");
 
-		buyCat = atoi(Cmd_Argv(1));
-		/** @todo
 		buyCat = INV_GetFilterTypeID(Cmd_Argv(1));
-		*/
 
 		if (buyCat == FILTER_DISASSEMBLY)
 			buyCat--;
@@ -547,8 +544,8 @@ static void BS_BuyType_f (void)
 			buyCat = 0;
 		}
 
-		Cvar_Set("mn_itemtype", va("%d", buyCat));	/**< @todo use a better identifier (i.e. filterTypeNames[]) for mn_itemtype @sa menu_buy.ufo */
-		Cvar_Set("mn_itemtypename", _(BS_BuyTypeName(buyCat)));
+		Cvar_Set("mn_itemtype", INV_GetFilterType(buyCat));
+		Cvar_Set("mn_itemtypename", BS_BuyTypeName(buyCat));
 		buyList.scroll = 0;
 		if (node) {
 			node->u.text.textScroll = 0;
@@ -580,7 +577,7 @@ static void BS_Prev_BuyType_f (void)
 		buyCat = 0;
 	}
 	currentSelectedMenuEntry = NULL;
-	Cmd_ExecuteString(va("buy_type %i", buyCat));
+	Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(buyCat)));
 }
 
 /**
@@ -603,7 +600,7 @@ static void BS_Next_BuyType_f (void)
 		buyCat = 0;
 	}
 	currentSelectedMenuEntry = NULL;
-	Cmd_ExecuteString(va("buy_type %i", buyCat));
+	Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(buyCat)));
 }
 
 /**
@@ -659,7 +656,7 @@ static void BS_BuyAircraft_f (void)
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
 				CL_UpdateCredits(ccs.credits - aircraftTemplate->price);
 				AIR_NewAircraft(baseCurrent, aircraftTemplate->id);
-				Cmd_ExecuteString(va("buy_type %i", FILTER_AIRCRAFT));
+				Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(FILTER_AIRCRAFT)));
 			}
 		}
 	}

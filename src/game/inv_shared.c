@@ -363,23 +363,24 @@ qboolean Com_ExistsInInventory (const inventory_t* const inv, const invDef_t * c
 
 /** Names of the filter types as used in console fucntion. e.g. in .ufo files.
  * @sa inv_shared.h:itemFilterTypes_t */
-static const char *fiterTypeNames[MAX_FILTERTYPES] = {
+static const char *filterTypeNames[MAX_FILTERTYPES] = {
 	"primary",		/**< FILTER_S_PRIMARY */
 	"secondary",	/**< FILTER_S_SECONDARY */
 	"heavy",		/**< FILTER_S_HEAVY */
 	"misc",			/**< FILTER_S_MISC */
 	"armour",		/**< FILTER_S_ARMOUR */
-	NULL,			/**< MAX_SOLDIER_FILTERTYPES */
+	"",				/**< MAX_SOLDIER_FILTERTYPES */
 	"craftitem",	/**< FILTER_CRAFTITEM */
 	"ugvitem",		/**< FILTER_UGVITEM */
 	"aircraft",		/**< FILTER_AIRCRAFT */
 	"dummy"			/**< FILTER_DUMMY */
 	"disassembly"	/**< FILTER_DISASSEMBLY */
 };
+CASSERT(lengthof(filterTypeNames) == MAX_FILTERTYPES);
 
 /**
  * @brief Searches for a filter type name (as used in console functions) and returns the matching itemFilterTypes_t enum.
- * @param[in] filterTypeID Filter type name so search for. @sa fiterTypeNames.
+ * @param[in] filterTypeID Filter type name so search for. @sa filterTypeNames.
  */
 itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 {
@@ -389,12 +390,23 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 		return MAX_FILTERTYPES;
 
 	for (i = 0; i < MAX_FILTERTYPES; i++) {
-		if (fiterTypeNames[i] && !Q_strncmp(fiterTypeNames[i], filterTypeID, MAX_VAR))
+		if (filterTypeNames[i] && !Q_strcmp(filterTypeNames[i], filterTypeID))
 			return i;
 	}
 
 	/* No matching filter type found, returning max value. */
 	return MAX_FILTERTYPES;
+}
+
+
+/**
+ * @param[in] id The filter type index
+ */
+const char *INV_GetFilterType (const int id)
+{
+	assert(id >= 0);
+	assert(id < MAX_FILTERTYPES);
+	return filterTypeNames[id];
 }
 
 /**

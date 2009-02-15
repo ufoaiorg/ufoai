@@ -194,6 +194,8 @@ void R_DrawBspNormals (int tile)
 
 	R_EnableTexture(&texunit_diffuse, qfalse);
 
+	R_ResetArrayState();  /* default arrays */
+
 	R_Color(color);
 
 	k = 0;

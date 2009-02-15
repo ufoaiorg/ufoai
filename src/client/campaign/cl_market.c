@@ -77,7 +77,7 @@ int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean in
 /**
  * @brief Function gives the user friendly name of a buyCategory
  */
-char *BS_BuyTypeName(const int buyCat)
+const char *BS_BuyTypeName (const int buyCat)
 {
 	switch (buyCat) {
 	case FILTER_S_PRIMARY:

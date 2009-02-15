@@ -455,6 +455,8 @@ void R_DrawAliasModel (entity_t *e)
 	/* the values are sane here already - see R_DrawEntities */
 	R_BindTexture(mod->meshes[e->as.mesh].skins[e->skinnum].skin->texnum);
 
+	R_ResetArrayState();
+
 	for (i = 0; i < mod->num_meshes; i++) {
 		const mAliasMesh_t *mesh = &mod->meshes[i];
 		refdef.alias_count += mesh->num_tris;
