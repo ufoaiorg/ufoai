@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_internal.h"
 #include "m_draw.h"
+#include "m_data.h"
 #include "m_input.h"
 #include "m_timer.h"
 #include "m_condition.h"
@@ -879,6 +880,8 @@ void MN_Init (void)
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
 
 	Cmd_AddCommand("mn_move", MN_SetNewMenuPos_f, "Moves the menu to a new position.");
+
+	MN_InitData();
 
 	/* 256kb */
 	/** @todo (menu) Get rid of adata, curadata and adataize */

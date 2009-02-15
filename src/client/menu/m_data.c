@@ -200,3 +200,32 @@ menuOption_t* MN_AllocOption (int count)
 	mn.numOptions += count;
 	return newOptions;
 }
+
+/**
+ * @brief Resets the mn.menuText pointers from a func node
+ * @note You can give this function a parameter to only delete a specific list
+ */
+static void MN_MenuTextReset_f (void)
+{
+	if (Cmd_Argc() == 2) {
+		const char *menuTextID = Cmd_Argv(1);
+		const int id = MN_GetDataIDByName(menuTextID);
+		if (id < 0)
+			Com_Printf("%s: invalid mn.menuText ID: %s\n", Cmd_Argv(0), menuTextID);
+		else
+			MN_MenuTextReset(id);
+	} else {
+		int i;
+		for (i = 0; i < MAX_MENUTEXTS; i++)
+			MN_MenuTextReset(i);
+	}
+}
+
+/**
+ * @brief Init console command about shared menu data
+ * @note called by MN_Init
+ */
+void MN_InitData (void)
+{
+	Cmd_AddCommand("mn_textreset", MN_MenuTextReset_f, "Resets the mn.menuText pointers");
+}

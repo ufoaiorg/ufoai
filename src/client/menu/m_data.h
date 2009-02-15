@@ -113,6 +113,7 @@ typedef struct menuSharedData_s {
 int MN_GetDataVersion(int textId);
 void MN_MenuTextReset(int menuTextID);
 int MN_GetDataIDByName(const char* name);
+void MN_InitData(void);
 
 /* text */
 void MN_RegisterText(int textId, const char *text);
