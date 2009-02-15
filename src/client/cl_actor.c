@@ -899,7 +899,7 @@ qboolean CL_ActorSelect (le_t * le)
 
 	selActor = le;
 	menuInventory = &selActor->i;
-	/**@todo remove this here */
+	/** @todo remove this here */
 	HUD_UpdateSelectedActorReactionState();
 
 	actorIdx = CL_GetActorNumber(le);
@@ -937,7 +937,7 @@ qboolean CL_ActorSelect (le_t * le)
 	/* Change to move-mode and hide firemodes.
 	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
 	if (!sameActor) {
-		HUD_HideFiremodes();
+		HUD_HideFiremodes(); /**< @todo remove this here */
 		cl.cmode = M_MOVE;
 	}
 
