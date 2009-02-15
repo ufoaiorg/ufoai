@@ -3490,6 +3490,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		int k;
 		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
+		b->idx = i;
 		b->founded = mxml_GetBool(base, "founded", qfalse);
 		if (!b->founded)
 			continue;
@@ -3615,6 +3616,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 	ccs.numAircraft = MSG_ReadShort(sb);
 	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		base_t *const b = B_GetBaseByIDX(i);
+		b->idx = i;
 		b->founded = MSG_ReadByte(sb);
 		if (!b->founded)
 			continue;
