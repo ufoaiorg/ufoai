@@ -46,6 +46,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define STAGE_ANIM			(1 << 13)
 #define STAGE_DIRTMAP		(1 << 14)
 
+/* set on stages eligible for static, dynamic, and per-pixel lighting */
+#define STAGE_LIGHTING		(1 << 30)
+
 /* set on stages with valid render passes */
 #define STAGE_RENDER		(1 << 31)
 

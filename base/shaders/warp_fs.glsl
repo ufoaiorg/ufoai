@@ -1,5 +1,7 @@
 // warp fragment shader
 
+#include "fog_fs.glsl"
+
 uniform vec4 OFFSET;
 
 uniform sampler2D SAMPLER0;
@@ -19,4 +21,6 @@ void main(void){
 
 	// sample the diffuse texture, factoring in primary color as well
 	gl_FragColor = gl_Color * texture2D(SAMPLER0, coord);
+
+	FogFragment();  // lastly add fog
 }

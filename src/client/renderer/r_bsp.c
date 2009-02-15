@@ -113,11 +113,15 @@ static void R_DrawBspModelSurfaces (const entity_t *e, const vec3_t modelorg)
 
 	R_EnableBlend(qtrue);
 
+	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
+
+	R_EnableFog(qfalse);
+
 	R_DrawBlendSurfaces(e->model->bsp.blend_surfaces);
 
 	R_DrawBlendWarpSurfaces(e->model->bsp.blend_warp_surfaces);
 
-	R_DrawMaterialSurfaces(e->model->bsp.material_surfaces);
+	R_EnableFog(qtrue);
 
 	R_EnableBlend(qfalse);
 }

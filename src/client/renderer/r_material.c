@@ -71,6 +71,49 @@ static void R_UpdateMaterial (material_t *m)
 }
 
 /**
+ * @brief Manages state for stages supporting static, dynamic, and per-pixel lighting.
+ */
+static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *stage)
+{
+	/* if the surface has a lightmap, and the stage specifies lighting.. */
+
+	if (surf->flags & MSURF_LIGHTMAP &&
+			(stage->flags & (STAGE_LIGHTMAP | STAGE_LIGHTING))) {
+		R_EnableTexture(&texunit_lightmap, qtrue);
+		R_BindLightmapTexture(surf->lightmap_texnum);
+
+		/* hardware lighting */
+		if (stage->flags & STAGE_LIGHTING) {
+			R_EnableLighting(r_state.default_program, qtrue);
+
+			if (r_state.lighting_enabled) {
+				if (r_bumpmap->value && stage->image->normalmap){
+					R_BindDeluxemapTexture(surf->deluxemap_texnum);
+					R_BindNormalmapTexture(stage->image->normalmap->texnum);
+
+					R_EnableBumpmap(&stage->image->material, qtrue);
+				} else if (r_state.bumpmap_enabled)
+					R_EnableBumpmap(NULL, qfalse);
+			}
+		} else
+			R_EnableLighting(NULL, qfalse);
+	} else {
+		R_EnableLighting(NULL, qfalse);
+
+		R_EnableTexture(&texunit_lightmap, qfalse);
+	}
+}
+
+/**
+ * @brief Vertex deformation
+ * @todo implement this
+ */
+static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
+{
+	VectorCopy(in, out);
+}
+
+/**
  * @brief Manages texture matrix manipulations for stages supporting rotations,
  * scrolls, and stretches (rotate, translate, scale).
  */
@@ -135,17 +178,8 @@ static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const
 	}
 }
 
-/**
- * @brief Vertex deformation
- * @todo implement this
- */
-static inline void R_StageVertex (const mBspSurface_t *surf, const materialStage_t *stage, const vec3_t in, vec3_t out)
-{
-	VectorCopy(in, out);
-}
-
-#define MAX_DIRTMAP_ENTRIES 16
-static const float alphaValues[MAX_DIRTMAP_ENTRIES] = {
+#define NUM_DIRTMAP_ENTRIES 16
+static const float dirtmap[NUM_DIRTMAP_ENTRIES] = {
 		0.6, 0.5, 0.3, 0.4, 0.7, 0.3, 0.0, 0.4,
 		0.5, 0.2, 0.8, 0.5, 0.3, 0.2, 0.5, 0.3
 };
@@ -155,15 +189,7 @@ static const float alphaValues[MAX_DIRTMAP_ENTRIES] = {
  */
 static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
 {
-	if (stage->flags & STAGE_DIRTMAP) {
-		const int index = (int)VectorLength(v) % MAX_DIRTMAP_ENTRIES;
-
-		if (stage->flags & STAGE_COLOR)  /* honor stage color */
-			VectorCopy(stage->color, color);
-		else  /* or use white */
-			VectorSet(color, 1.0, 1.0, 1.0);
-		color[3] = alphaValues[index] * stage->dirt.intensity;
-	} else if (stage->flags & STAGE_TERRAIN) {
+	if (stage->flags & STAGE_TERRAIN) {
 		float a;
 
 		if (stage->flags & STAGE_COLOR)  /* honor stage color */
@@ -180,6 +206,15 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 			a = (v[2] - stage->terrain.floor) / stage->terrain.height;
 
 		color[3] = a;
+	} else if (stage->flags & STAGE_DIRTMAP) {
+		/* resolve dirtmap based on vertex position */
+		const int index = (int)(v[0] + v[1]) % NUM_DIRTMAP_ENTRIES;
+
+		if (stage->flags & STAGE_COLOR)  /* honor stage color */
+			VectorCopy(stage->color, color);
+		else  /* or use white */
+			VectorSet(color, 1.0, 1.0, 1.0);
+		color[3] = dirtmap[index] * stage->dirt.intensity;
 	} else {  /* simply use white */
 		Vector4Set(color, 1.0, 1.0, 1.0, 1.0);
 	}
@@ -197,11 +232,7 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 	R_BindTexture(stage->image->texnum);
 
 	/* and optionally the lightmap */
-	if (stage->flags & STAGE_LIGHTMAP) {
-		R_EnableTexture(&texunit_lightmap, qtrue);
-		R_BindLightmapTexture(surf->lightmap_texnum);
-	} else
-		R_EnableTexture(&texunit_lightmap, qfalse);
+	R_StageLighting(surf, stage);
 
 	/* load the texture matrix for rotations, stretches, etc.. */
 	R_StageTextureMatrix(surf, stage);
@@ -231,8 +262,12 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 
 		/* modulate the alpha value for pulses */
 		if (stage->flags & STAGE_PULSE) {
+			/* disable fog, since it also sets alpha */
+			R_EnableFog(qfalse);
 			color[3] = stage->pulse.dhz;
 		} else {
+			/* ensure fog is available */
+			R_EnableFog(qtrue);
 			color[3] = 1.0;
 		}
 
@@ -258,13 +293,25 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 		R_StageVertex(surf, stage, v, &r_state.vertex_array_3d[i * 3]);
 
 		R_StageTexCoord(stage, v, st, &texunit_diffuse.texcoord_array[i * 2]);
-		if (r_state.color_array_enabled)
-			R_StageColor(stage, v, &r_state.color_array[i * 4]);
 
 		if (texunit_lightmap.enabled) {
 			st = &r_mapTiles[surf->tile]->bsp.lmtexcoords[surf->index * 2 + i * 2];
 			texunit_lightmap.texcoord_array[i * 2 + 0] = st[0];
 			texunit_lightmap.texcoord_array[i * 2 + 1] = st[1];
+		}
+
+		if (r_state.color_array_enabled)
+			R_StageColor(stage, v, &r_state.color_array[i * 4]);
+
+		/* normals and tangents */
+		if (r_state.lighting_enabled) {
+			const float *n = &r_mapTiles[surf->tile]->bsp.normals[surf->index * 3 + i * 3];
+			memcpy(&r_state.normal_array[i * 3], n, sizeof(vec3_t));
+
+			if (r_state.bumpmap_enabled) {
+				const float *t = &r_mapTiles[surf->tile]->bsp.tangents[surf->index * 4 + i * 4];
+				memcpy(&r_state.tangent_array[i * 4], t, sizeof(vec3_t));
+			}
 		}
 	}
 
@@ -290,6 +337,20 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 		return;
 
 	assert(r_state.blend_enabled);
+
+	R_EnableTexture(&texunit_lightmap, qtrue);
+
+	R_EnableLighting(r_state.default_program, qtrue);
+
+	R_EnableColorArray(qtrue);
+
+	R_ResetArrayState();
+
+	R_EnableColorArray(qfalse);
+
+	R_EnableLighting(NULL, qfalse);
+
+	R_EnableTexture(&texunit_lightmap, qfalse);
 
 	glEnable(GL_POLYGON_OFFSET_FILL);  /* all stages use depth offset */
 	glMatrixMode(GL_TEXTURE);  /* some stages will manipulate texcoords */
@@ -328,9 +389,17 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	R_EnableTexture(&texunit_lightmap, qfalse);
+	R_EnableFog(qtrue);
 
 	R_EnableColorArray(qfalse);
+
+	R_EnableTexture(&texunit_lightmap, qfalse);
+
+	R_EnableBumpmap(NULL, qfalse);
+
+	R_EnableLighting(NULL, qfalse);
+
+	R_Color(NULL);
 }
 
 /**
@@ -649,6 +718,9 @@ static int R_ParseStage (materialStage_t *s, const char **buffer)
 			if (s->flags & (STAGE_TEXTURE | STAGE_ENVMAP))
 				s->flags |= STAGE_RENDER;
 
+			if (s->flags & (STAGE_TERRAIN | STAGE_DIRTMAP))
+				s->flags |= STAGE_LIGHTING;
+
 			return 0;
 		}
 
@@ -728,20 +800,6 @@ void R_LoadMaterials (const char *map)
 			}
 		}
 
-		if (!strcmp(c, "hardness")) {
-			m->hardness = atof(COM_Parse(&buffer));
-			if (m->hardness < 0.0) {
-				Com_Printf("R_LoadMaterials: Invalid hardness value for %s\n", image->name);
-				m->hardness = DEFAULT_HARDNESS;
-			}
-		}
-		if (!strcmp(c, "specular")) {
-			m->specular = atof(COM_Parse(&buffer));
-			if (m->specular < 0.0) {
-				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
-				m->specular = DEFAULT_SPECULAR;
-			}
-		}
 		if (!strcmp(c, "parallax")) {
 			m->parallax = atof(COM_Parse(&buffer));
 			if (m->parallax < 0.0) {
@@ -750,8 +808,24 @@ void R_LoadMaterials (const char *map)
 			}
 		}
 
+		if (!strcmp(c, "hardness")) {
+			m->hardness = atof(COM_Parse(&buffer));
+			if (m->hardness < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid hardness value for %s\n", image->name);
+				m->hardness = DEFAULT_HARDNESS;
+			}
+		}
+
+		if (!strcmp(c, "specular")) {
+			m->specular = atof(COM_Parse(&buffer));
+			if (m->specular < 0.0) {
+				Com_Printf("R_LoadMaterials: Invalid specular value for %s\n", image->name);
+				m->specular = DEFAULT_SPECULAR;
+			}
+		}
+
 		if (*c == '{' && inmaterial) {
-			s = (materialStage_t *)Mem_PoolAlloc(sizeof(materialStage_t), vid_imagePool, 0);
+			s = (materialStage_t *)Mem_PoolAlloc(sizeof(*s), vid_imagePool, 0);
 
 			if (R_ParseStage(s, &buffer) == -1) {
 				Mem_Free(s);

@@ -87,6 +87,7 @@ cvar_t *r_bumpmap;
 cvar_t *r_specular;
 cvar_t *r_hardness;
 cvar_t *r_parallax;
+cvar_t *r_fog;
 
 /**
  * @brief Prints some OpenGL strings
@@ -273,13 +274,19 @@ void R_RenderFrame (void)
 		R_CheckError();
 
 		for (tile = 0; tile < r_numMapTiles; tile++) {
+			R_EnableFog(qtrue);
+
 			R_DrawOpaqueSurfaces(r_mapTiles[tile]->bsp.opaque_surfaces);
 			R_DrawOpaqueWarpSurfaces(r_mapTiles[tile]->bsp.opaque_warp_surfaces);
+
 			R_DrawAlphaTestSurfaces(r_mapTiles[tile]->bsp.alpha_test_surfaces);
 
 			R_EnableBlend(qtrue);
 
 			R_DrawMaterialSurfaces(r_mapTiles[tile]->bsp.material_surfaces);
+
+			R_EnableFog(qfalse);
+
 			R_DrawBlendSurfaces(r_mapTiles[tile]->bsp.blend_surfaces);
 			R_DrawBlendWarpSurfaces(r_mapTiles[tile]->bsp.blend_warp_surfaces);
 
@@ -306,6 +313,8 @@ void R_RenderFrame (void)
 	/* leave wire mode again */
 	if (r_wire->integer)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	R_ResetArrayState();
 
 	/* go back into 2D mode for hud and the like */
 	R_SetupGL2D();
@@ -404,6 +413,7 @@ static void R_RegisterSystemVars (void)
 	r_specular = Cvar_Get("r_specular", "1.0", CVAR_ARCHIVE, "Controls specular parameters");
 	r_hardness = Cvar_Get("r_hardness", "1.0", CVAR_ARCHIVE, "Hardness controll for GLSL shaders (specular, bump, ...)");
 	r_parallax = Cvar_Get("r_parallax", "1.0", CVAR_ARCHIVE, "Controls parallax parameters");
+	r_fog = Cvar_Get("r_fog", "1", CVAR_ARCHIVE, "Activate or deactivate fog");
 
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);

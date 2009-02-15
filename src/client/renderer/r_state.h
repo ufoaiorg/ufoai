@@ -90,6 +90,7 @@ typedef struct {
 	qboolean lighting_enabled;
 	qboolean bumpmap_enabled;
 	qboolean warp_enabled;
+	qboolean fog_enabled;
 } rstate_t;
 
 extern rstate_t r_state;
@@ -120,5 +121,6 @@ void R_EnableColorArray(qboolean enable);
 void R_EnableLighting(r_program_t *program, qboolean enable);
 void R_EnableBumpmap(material_t *material, qboolean enable);
 void R_EnableWarp(r_program_t *program, qboolean enable);
+void R_EnableFog(qboolean enable);
 
 #endif

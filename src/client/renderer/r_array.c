@@ -1,5 +1,7 @@
 /**
  * @file r_array.c
+ * @brief Arrays are "lazily" managed to reduce glArrayPointer calls. Drawing routines
+ * should call R_SetArrayState or R_ResetArrayState somewhat early-on.
  */
 
 /*
@@ -25,28 +27,92 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "r_local.h"
 
+#define R_ARRAY_VERTEX			0x1
+#define R_ARRAY_COLOR			0x2
+#define R_ARRAY_NORMAL			0x4
+#define R_ARRAY_TANGENT			0x8
+#define R_ARRAY_TEX_DIFFUSE		0x10
+#define R_ARRAY_TEX_LIGHTMAP	0x20
+
+typedef struct r_array_state_s {
+	const model_t *model;
+	int arrays;
+} r_array_state_t;
+
+static r_array_state_t r_array_state;
+
+
+/*
+ * @brief This function is consulted to determine whether or not array
+ * bindings are up to date.
+ * @return Returns a bitmask representing the arrays which should be enabled according
+ * to r_state.
+ */
+static int R_ArraysMask (void)
+{
+	int mask;
+
+	mask = R_ARRAY_VERTEX;
+
+	if (r_state.color_array_enabled)
+		mask |= R_ARRAY_COLOR;
+
+	if (r_state.lighting_enabled) {
+		mask |= R_ARRAY_NORMAL;
+
+		if (r_bumpmap->value)
+			mask |= R_ARRAY_TANGENT;
+	}
+
+	if (texunit_diffuse.enabled)
+		mask |= R_ARRAY_TEX_DIFFUSE;
+
+	if (texunit_lightmap.enabled)
+		mask |= R_ARRAY_TEX_LIGHTMAP;
+
+	return mask;
+}
+
 /**
  * @sa R_SetVertexBufferState
  * @param[in] mod The loaded maptile (more than one bsp loaded at the same time)
  */
-static inline void R_SetVertexArrayState (const model_t* mod)
+static inline void R_SetVertexArrayState (const model_t* mod, int mask)
 {
-	R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.verts);
+	/* vertex array */
+	if (mask & R_ARRAY_VERTEX)
+		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.verts);
 
-	R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoords);
-
-	if (texunit_lightmap.enabled) {  /* lightmap texcoords */
-		R_SelectTexture(&texunit_lightmap);
-		R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoords);
-		R_SelectTexture(&texunit_diffuse);
+#if 0
+	/* color array */
+	if (r_state.color_array_enabled) {
+		if (mask & R_ARRAY_COLOR)
+			R_BindArray(GL_COLOR_ARRAY, GL_FLOAT, mod->bsp.colors);
 	}
+#endif
 
-	if (r_state.lighting_enabled) { /* normal vectors for lighting */
-		R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
+	/* normals and tangents for lighting */
+	if (r_state.lighting_enabled) {
+		if (mask & R_ARRAY_NORMAL)
+			R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value)
+		if (r_bumpmap->value && (mask & R_ARRAY_TANGENT))
 			R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
+	}
+
+	/* diffuse texcoords */
+	if (texunit_diffuse.enabled) {
+		if (mask & R_ARRAY_TEX_DIFFUSE)
+			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoords);
+	}
+
+	if (texunit_lightmap.enabled) {  /* lightmap texcoords */
+		if (mask & R_ARRAY_TEX_LIGHTMAP) {
+			R_SelectTexture(&texunit_lightmap);
+			R_BindArray(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoords);
+			R_SelectTexture(&texunit_diffuse);
+		}
 	}
 }
 
@@ -55,59 +121,83 @@ static inline void R_SetVertexArrayState (const model_t* mod)
  * @param[in] mod The loaded maptile (more than one bsp loaded at the same time)
  * @note r_vertexbuffers must be set to 1 to use this
  */
-static inline void R_SetVertexBufferState (const model_t* mod)
+static inline void R_SetVertexBufferState (const model_t* mod, int mask)
 {
-	R_BindBuffer(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.vertex_buffer);
+	/* vertex array */
+	if (mask & R_ARRAY_VERTEX)
+		R_BindBuffer(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.vertex_buffer);
 
-	R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoord_buffer);
-
-	if (texunit_lightmap.enabled) {  /* lightmap texcoords */
-		R_SelectTexture(&texunit_lightmap);
-		R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoord_buffer);
-		R_SelectTexture(&texunit_diffuse);
-	}
-
-	if (r_state.lighting_enabled) { /* normal vectors for lighting */
-		R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
+	if (r_state.lighting_enabled) { /* normals and tangents for lighting */
+		if (mask & R_ARRAY_NORMAL)
+			R_BindBuffer(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normal_buffer);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value)
+		if (r_bumpmap->value && (mask & R_ARRAY_TANGENT))
 			R_BindBuffer(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangent_buffer);
+	}
+
+	/* diffuse texcoords */
+	if (texunit_diffuse.enabled) {
+		if (mask & R_ARRAY_TEX_DIFFUSE)
+			R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.texcoord_buffer);
+	}
+
+	/* lightmap texcoords */
+	if (texunit_lightmap.enabled) {
+		if (mask & R_ARRAY_TEX_LIGHTMAP) {
+			R_SelectTexture(&texunit_lightmap);
+			R_BindBuffer(GL_TEXTURE_COORD_ARRAY, GL_FLOAT, mod->bsp.lmtexcoord_buffer);
+			R_SelectTexture(&texunit_diffuse);
+		}
 	}
 }
 
 void R_SetArrayState (const model_t *mod)
 {
-	if (r_locals.bufferMapTile != mod) {
-		r_locals.bufferMapTile = mod;
+	int arrays, mask;
 
-		if (qglBindBuffer && r_vertexbuffers->integer)
-			R_SetVertexBufferState(mod);
-		else
-			R_SetVertexArrayState(mod);
+	if (r_vertexbuffers->modified) {  /* force a full re-bind */
+		r_array_state.model = NULL;
+		r_array_state.arrays = 0xFFFF;
+		r_vertexbuffers->modified = qfalse;
 	}
+
+	/* resolve the desired arrays mask */
+	mask = 0xFFFF, arrays = R_ArraysMask();
+
+	/* try to save some binds */
+	if (r_array_state.model == mod) {
+		const int xor = r_array_state.arrays ^ arrays;
+		if(!xor)  /* no changes, we're done */
+			return;
+
+		/* resolve what's left to turn on */
+		mask = arrays & xor;
+	}
+
+	if (r_vertexbuffers->integer && qglGenBuffers)  /* use vbo */
+		R_SetVertexBufferState(mod, mask);
+	else  /* or arrays */
+		R_SetVertexArrayState(mod, mask);
+
+	r_array_state.model = mod;
+	r_array_state.arrays = arrays;
 }
 
 void R_ResetArrayState (void)
 {
+	r_array_state.model = NULL;
+	r_array_state.arrays = 0;
+
 	/* vbo */
 	R_BindBuffer(0, 0, 0);
 
 	/* vertex array */
 	R_BindDefaultArray(GL_VERTEX_ARRAY);
 
-	R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-
-	/* lightmap texcoords */
-	if (texunit_lightmap.enabled) {
-		R_SelectTexture(&texunit_lightmap);
-		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
-		R_SelectTexture(&texunit_diffuse);
-	}
-
-	/* diffuse texcoords */
-	if (texunit_diffuse.enabled)
-		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+	/* color array */
+	if (r_state.color_array_enabled)
+		R_BindDefaultArray(GL_COLOR_ARRAY);
 
 	/* normals and tangents */
 	if (r_state.lighting_enabled) {
@@ -117,5 +207,15 @@ void R_ResetArrayState (void)
 		if (r_bumpmap->value)
 			R_BindDefaultArray(GL_TANGENT_ARRAY);
 	}
-	r_locals.bufferMapTile = NULL;
+
+	/* diffuse texcoords */
+	if (texunit_diffuse.enabled)
+		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+
+	/* lightmap texcoords */
+	if (texunit_lightmap.enabled) {
+		R_SelectTexture(&texunit_lightmap);
+		R_BindDefaultArray(GL_TEXTURE_COORD_ARRAY);
+		R_SelectTexture(&texunit_diffuse);
+	}
 }

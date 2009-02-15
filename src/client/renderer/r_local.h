@@ -103,6 +103,7 @@ extern cvar_t *r_bumpmap;
 extern cvar_t *r_specular;
 extern cvar_t *r_hardness;
 extern cvar_t *r_parallax;
+extern cvar_t *r_fog;
 
 /* private renderer variables */
 typedef struct rlocals_s {

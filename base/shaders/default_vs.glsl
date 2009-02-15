@@ -2,9 +2,11 @@
 
 #include "light_vs.glsl"
 #include "bump_vs.glsl"
+#include "fog_vs.glsl"
 
 uniform int LIGHTMAP;
 uniform int BUMPMAP;
+uniform int FOG;
 
 
 /*
@@ -27,4 +29,7 @@ void main(void){
 
 	if(BUMPMAP > 0)
 		BumpVertex();
+
+	if(FOG > 0)
+		FogVertex();
 }

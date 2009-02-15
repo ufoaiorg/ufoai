@@ -1,5 +1,8 @@
 // warp vertex shader
 
+#include "fog_vs.glsl"
+
+
 /*
 main
 */
@@ -13,4 +16,6 @@ void main(void){
 
 	// and primary color
 	gl_FrontColor = gl_Color;
+
+	FogVertex();
 }

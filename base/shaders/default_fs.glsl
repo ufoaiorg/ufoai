@@ -2,9 +2,11 @@
 
 #include "light_fs.glsl"
 #include "bump_fs.glsl"
+#include "fog_fs.glsl"
 
 uniform int LIGHTMAP;
 uniform int BUMPMAP;
+uniform int FOG;
 
 uniform sampler2D SAMPLER0;
 uniform sampler2D SAMPLER1;
@@ -52,4 +54,7 @@ void main(void){
 	// add in bump and parallax mapping
 	if(BUMPMAP > 0)
 		BumpFragment(deluxemap, normalmap.rgb);
+
+	if(FOG > 0)
+		FogFragment();
 }

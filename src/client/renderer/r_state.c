@@ -354,6 +354,28 @@ void R_EnableWarp (r_program_t *program, qboolean enable)
 	R_SelectTexture(&texunit_diffuse);
 }
 
+#define FOG_START	300.0
+#define FOG_END		2500.0
+
+void R_EnableFog (qboolean enable)
+{
+	if (!r_fog->integer || r_state.fog_enabled == enable)
+		return;
+
+	r_state.fog_enabled = qfalse;
+
+	if (enable) {
+		if ((refdef.weather & WEATHER_FOG) || r_fog->integer == 2) {
+			r_state.fog_enabled = qtrue;
+
+			glFogfv(GL_FOG_COLOR, refdef.fog_color);
+			glEnable(GL_FOG);
+		}
+	} else {
+		glDisable(GL_FOG);
+	}
+}
+
 /**
  * @sa R_SetupGL3D
  */
@@ -543,6 +565,11 @@ void R_SetDefaultState (void)
 	R_SelectTexture(&texunit_diffuse);
 	/* alpha test parameters */
 	glAlphaFunc(GL_GREATER, 0.01f);
+
+	/* fog parameters */
+	glFogi(GL_FOG_MODE, GL_LINEAR);
+	glFogf(GL_FOG_START, FOG_START);
+	glFogf(GL_FOG_END, FOG_END);
 
 	/* polygon offset parameters */
 	glPolygonOffset(1, 1);

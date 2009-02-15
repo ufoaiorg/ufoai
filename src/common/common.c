@@ -970,7 +970,7 @@ void Qcommon_Init (int argc, const char **argv)
 
 	s_language = Cvar_Get("s_language", "", CVAR_ARCHIVE, "Game language - full language string e.g. en_EN.UTF-8");
 	s_language->modified = qfalse;
-	cl_maxfps = Cvar_Get("cl_maxfps", "50", 0, NULL);
+	cl_maxfps = Cvar_Get("cl_maxfps", "50", CVAR_ARCHIVE, NULL);
 	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 #endif
 

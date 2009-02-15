@@ -57,6 +57,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EARTH_RADIUS 8192.0f
 #define MOON_RADIUS 1024.0f
 
+#define WEATHER_NONE	0
+#define WEATHER_FOG 	1
+
 #define VID_NORM_WIDTH		1024
 #define VID_NORM_HEIGHT		768
 
@@ -197,6 +200,9 @@ typedef struct {
 	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
 	int brush_count, alias_count;
+
+	int weather;				/**< weather effects */
+	vec4_t fog_color;
 
 	vec3_t ambient_light;		/**< from static lighting */
 

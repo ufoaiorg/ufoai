@@ -302,6 +302,8 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	sh->type = type;
 
 	sh->id = qglCreateShader(sh->type);
+	if(!sh->id)
+		return NULL;
 	qglShaderSource(sh->id, 1, src, length);
 
 	/* compile it and check for errors */
@@ -392,6 +394,7 @@ static void R_InitDefaultProgram (void)
 
 	R_ProgramParameter1i("LIGHTMAP", 0);
 	R_ProgramParameter1i("BUMPMAP", 0);
+	R_ProgramParameter1i("FOG", 0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
@@ -405,20 +408,32 @@ static void R_UseDefaultProgram (void)
 		R_ProgramParameter1i("LIGHTMAP", 1);
 	else
 		R_ProgramParameter1i("LIGHTMAP", 0);
+
+	if (r_state.fog_enabled)
+		R_ProgramParameter1i("FOG", 1);
+	else
+		R_ProgramParameter1i("FOG", 0);
 }
 
 static void R_InitWarpProgram (void)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
+
+	R_ProgramParameter1i("FOG", 0);
 }
 
 static void R_UseWarpProgram (void)
 {
-	static vec4_t offset = {0, 0, 0, 0};
+	static vec4_t offset;
 
 	offset[0] = offset[1] = refdef.time / 8.0;
 	R_ProgramParameter4fv("OFFSET", offset);
+
+	if (r_state.fog_enabled)
+		R_ProgramParameter1i("FOG", 1);
+	else
+		R_ProgramParameter1i("FOG", 0);
 }
 
 void R_InitPrograms (void)

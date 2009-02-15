@@ -1,4 +1,4 @@
-// bumpmap vertex shader, requires light.vs
+// bumpmap vertex shader, requires light_vs.glsl
 
 attribute vec4 TANGENT;
 
