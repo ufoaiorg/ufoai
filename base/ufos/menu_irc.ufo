@@ -55,6 +55,7 @@ menu irc
 		textalign	uc
 		font		f_small
 	}
+
 	text irc_userlist
 	{
 		pos			"750 100"
@@ -63,10 +64,27 @@ menu irc
 		textid		TEXT_LIST
 		rows		"27"
 		mousefx		true
-		scrollbar	true
 		click
 		rclick
-		wheel
+		wheel {
+			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
+		}
+		lineschange {
+			*(abstractscrollbar)irc_userlist_scroll fullsize <lines>
+			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
+		}
+	}
+
+	vscrollbar irc_userlist_scroll {
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"980 100"
+		height		"594"
+		current		0
+		viewsize	27
+		fullsize	27
+		hidewhenunused	true
+		change		{ cmd "mn_textscroll irc_userlist <lastdiff>;" }
 	}
 
 	text irc_data
