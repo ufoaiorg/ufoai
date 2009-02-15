@@ -414,7 +414,9 @@ int main (int argc, char* argv[])
 	setlocale(LC_NUMERIC, "C");
 	setlocale(LC_TIME, "C");
 
-	g_thread_init(NULL);
+	if (!g_thread_supported()) {
+		g_thread_init(NULL);
+	}
 
 	// redirect Gtk warnings to the console
 	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING |
