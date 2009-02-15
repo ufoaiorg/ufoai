@@ -51,19 +51,23 @@ typedef enum {
 	R_FIRE_MANY
 } reactionmode_t;
 
-typedef enum {
-	BT_RIGHT_FIRE,
-	BT_REACTION,
-	BT_LEFT_FIRE,
-	BT_RIGHT_RELOAD,
-	BT_LEFT_RELOAD,
-	BT_STAND,
-	BT_CROUCH,
-	BT_HEADGEAR,
-	BT_NUM_TYPES
-} button_types_t;
 
+/** @sa moveModeDescriptions */
+typedef enum {
+	WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH,
+	WALKTYPE_AUTOSTAND_BEING_USED,
+	WALKTYPE_WALKING,
+	WALKTYPE_CROUCH_WALKING,
+
+	WALKTYPE_MAX
+} walkType_t;
+
+extern character_t *selChr;
+extern const fireDef_t *selFD;
 extern le_t *selActor;
+extern pos3_t truePos;
+extern pos3_t mousePos;
+extern int mousePosTargettingAlign;
 extern int actorMoveLength;
 extern invList_t invList[MAX_INVLIST];
 
@@ -73,18 +77,26 @@ extern int fb_length;
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 
 void CL_CharacterCvars(const character_t *chr);
-void HUD_ActorUpdateCvars(void);
 const char *CL_GetSkillString(const int skill);
-qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
+void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weapFdsIdx);
+int CL_GetActorNumber (const le_t * le);
+int CL_CheckAction (void);
+qboolean CL_WeaponWithReaction (const le_t * actor, const char hand);
+
+int CL_UsableReactionTUs (const le_t * le);
 void CL_SetReactionFiremode(le_t *actor, const int handidx, const int obj_idx, const int fd_idx);
 void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
+void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActive);
 
 character_t *CL_GetActorChr(const le_t *le);
 qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);
 int CL_UsableTUs(const le_t *le);
 int CL_ReservedTUs(const le_t *le, reservation_types_t type);
 void CL_ReserveTUs(const le_t *le, reservation_types_t type, int tus);
+
+int CL_MoveMode (int length);
+int CL_CalcReloadTime (const objDef_t *weapon);
 
 #ifdef DEBUG
 void CL_ListReactionAndReservations_f (void);
@@ -106,7 +118,6 @@ void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
 void CL_ActorToggleCrouchReservation_f(void);
-void CL_ActorToggleReaction_f(void);
 void CL_ActorUseHeadgear_f(void);
 void CL_ActorStartMove(const le_t *le, pos3_t to);
 void CL_ActorShoot(const le_t *le, pos3_t at);

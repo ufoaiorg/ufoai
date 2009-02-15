@@ -444,22 +444,6 @@ static void CL_ZoomOutQuant_f (void)
 }
 
 /**
- * @brief returns the weapon the actor's left hand is touching
- */
-static invList_t* CL_GetLeftHandWeapon (le_t *actor)
-{
-	invList_t *weapon = LEFT(actor);
-
-	if (!weapon || !weapon->item.m) {
-		weapon = RIGHT(actor);
-		if (!weapon->item.t->holdTwoHanded)
-			weapon = NULL;
-	}
-
-	return weapon;
-}
-
-/**
  * @brief Executes "pending" actions such as walking and firing.
  * @note Manually triggered by the player when hitting the "confirm" button.
  */
@@ -482,28 +466,6 @@ static void CL_ConfirmAction_f (void)
 		break;
 	}
 }
-
-
-/**
- * @brief Reload left weapon.
- */
-static void CL_ReloadLeft_f (void)
-{
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
-		return;
-	CL_ActorReload(csi.idLeft);
-}
-
-/**
- * @brief Reload right weapon.
- */
-static void CL_ReloadRight_f (void)
-{
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_RELOAD))
-		 return;
-	CL_ActorReload(csi.idRight);
-}
-
 
 /**
  * @brief Left mouse click
@@ -1651,23 +1613,12 @@ void IN_Init (void)
 	Cmd_AddCommand("-hudradar", CL_HudRadarUp_f, NULL);
 
 	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
-	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
-	Cmd_AddCommand("togglecrouchreserve", CL_ActorToggleCrouchReservation_f, _("Toggle reservation for crouching."));
 	Cmd_AddCommand("useheadgear", CL_ActorUseHeadgear_f, _("Toggle the headgear"));
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toggle to next alien"));
 	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
 	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
 
-	Cmd_AddCommand("list_firemodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
-	Cmd_AddCommand("switch_firemode_list", HUD_SwitchFiremodeList_f, "Switch firemode-list to one for the given hand, but only if the list is visible already.");
-	Cmd_AddCommand("fireweap", HUD_FireWeapon_f, "Start aiming the weapon.");
-	Cmd_AddCommand("sel_reactmode", HUD_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
-	Cmd_AddCommand("sel_shotreservation", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
-	Cmd_AddCommand("reserve_shot", HUD_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
-	Cmd_AddCommand("remaining_tus", HUD_RemainingTus_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
 
-	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
-	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
 	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
 	Cmd_AddCommand("dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));
 	Cmd_AddCommand("levelup", CL_LevelUp_f, _("Slice through terrain at a higher level"));
