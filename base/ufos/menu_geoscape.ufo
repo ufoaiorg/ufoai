@@ -700,7 +700,7 @@ menu popup_list
 	{
 		pos			"176 18"
 		width		"446"
-		textalign	uc
+		textalign	ul
 		rows		"1"
 		textid		TEXT_POPUP
 	}
@@ -761,7 +761,7 @@ menu popup_button
 	{
 		pos			"248 30"
 		width		"446"
-		textalign	uc
+		textalign	ul
 		rows		"1"
 		textid		TEXT_POPUP
 	}
@@ -1893,7 +1893,7 @@ menu popup
 		pos			"176 18"
 		width		"446"
 		rows		"1"
-		textalign	uc
+		textalign	ul
 	}
 
 	text popup_text

@@ -689,7 +689,7 @@ menu lostgame
 	{
 		color		"0 0.8 0 0.9"
 		textalign	uc
-		pos			"512 640"
+		pos			"256 640"
 		size		"512 100"
 		lineheight	"20"
 		rows		"5"
@@ -750,7 +750,7 @@ menu endgame
 	{
 		color		"0 0.8 0 0.9"
 		textalign	uc
-		pos			"512 640"
+		pos			"256 640"
 		size		"512 100"
 		lineheight	"20"
 		rows		"5"

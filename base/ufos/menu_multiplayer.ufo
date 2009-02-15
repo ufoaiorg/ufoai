@@ -542,7 +542,8 @@ menu mp_create_server
 	text firewall_str
 	{
 		string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
-		pos			"-207 150"
+		/** @todo check the position */
+		pos			"-480 150"
 		size		"256 40"
 		longlines	wrap
 		textalign	uc
