@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mBspSurfaces_t r_material_surfaces;
 
 #define UPDATE_THRESHOLD 0.02
+/**
+ * @brief Materials "think" every few milliseconds to advance animations.
+ */
 static void R_UpdateMaterial (material_t *m)
 {
 	materialStage_t *s;
@@ -67,6 +70,10 @@ static void R_UpdateMaterial (material_t *m)
 	}
 }
 
+/**
+ * @brief Manages texture matrix manipulations for stages supporting rotations,
+ * scrolls, and stretches (rotate, translate, scale).
+ */
 static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materialStage_t *stage)
 {
 	static qboolean identity = qtrue;
@@ -112,7 +119,9 @@ static inline void R_StageTextureMatrix (const mBspSurface_t *surf, const materi
 	identity = qfalse;
 }
 
-
+/**
+ * @brief Generates a single texture coordinate for the specified stage and vertex.
+ */
 static void R_StageTexCoord (const materialStage_t *stage, const vec3_t v, const vec2_t in, vec2_t out)
 {
 	vec3_t tmp;
@@ -141,6 +150,9 @@ static const float alphaValues[MAX_DIRTMAP_ENTRIES] = {
 		0.5, 0.2, 0.8, 0.5, 0.3, 0.2, 0.5, 0.3
 };
 
+/**
+ * @brief Generates a single color for the specified stage and vertex.
+ */
 static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t color)
 {
 	if (stage->flags & STAGE_DIRTMAP) {
@@ -174,7 +186,7 @@ static void R_StageColor (const materialStage_t *stage, const vec3_t v, vec4_t c
 }
 
 /**
- * @brief Set the correct states for the material stage
+ * @brief Manages all state for the specified surface and stage.
  * @sa R_DrawMaterialSurfaces
  */
 static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialStage_t *stage)
@@ -228,6 +240,10 @@ static void R_SetSurfaceStageState (const mBspSurface_t *surf, const materialSta
 	}
 }
 
+/**
+ * @brief Render the specified stage for the surface. Resolve vertex attributes via
+ * helper functions, outputting to the default vertex arrays.
+ */
 static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 {
 	int i;
@@ -257,6 +273,12 @@ static void R_DrawSurfaceStage (mBspSurface_t *surf, materialStage_t *stage)
 	R_CheckError();
 }
 
+/**
+ * @brief Iterates the specified surfaces list, updating materials as they are
+ * encountered, and rendering all visible stages. State is lazily managed
+ * throughout the iteration, so there is a concerted effort to restore the
+ * state after all surface stages have been rendered.
+ */
 void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 {
 	int i;

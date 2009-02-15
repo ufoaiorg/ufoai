@@ -81,6 +81,9 @@ void R_EntityComputeBoundingBox (const vec3_t mins, const vec3_t maxs, vec3_t bb
 	}
 }
 
+/**
+ * @brief Applies translation and rotation for the specified entity.
+ */
 void R_TransformForEntity (const entity_t *e)
 {
 	glTranslatef(e->origin[0], e->origin[1], e->origin[2]);
@@ -604,7 +607,7 @@ static qboolean R_CullEntity (entity_t *e)
 }
 
 /**
- * @brief Draw entities like models and cursor box
+ * @brief Primary entry point for drawing all entities.
  * @sa R_RenderFrame
  */
 void R_DrawEntities (void)
@@ -695,6 +698,7 @@ entity_t *R_GetEntity (int id)
 }
 
 /**
+ * @brief Adds a copy of the specified entity to the list of all known render entities.
  * @sa R_GetFreeEntity
  */
 void R_AddEntity (entity_t *ent)

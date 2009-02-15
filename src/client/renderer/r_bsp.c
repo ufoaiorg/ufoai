@@ -37,7 +37,8 @@ BRUSH MODELS
 
 
 /**
- * @brief Returns true if the box is completely outside the frustum
+ * @brief Returns true if the specified bounding box is completely culled by the
+ * view frustum, false otherwise.
  */
 static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 {
@@ -53,7 +54,8 @@ static qboolean R_CullBox (const vec3_t mins, const vec3_t maxs)
 }
 
 /**
- * @brief Checks whether the model is inside the view
+ * @brief Returns true if the specified entity is completely culled by the view
+ * frustum, false otherwise.
  * @sa R_CullBox
  */
 qboolean R_CullBspModel (const entity_t *e)
@@ -173,7 +175,8 @@ WORLD MODEL
 */
 
 /**
- * @brief Draw normals for bsp surfaces
+ * @brief  Developer tool for viewing BSP vertex normals. Only Phong interpolated
+ * surfaces show their normals when r_shownormals > 1.
  */
 void R_DrawBspNormals (int tile)
 {
