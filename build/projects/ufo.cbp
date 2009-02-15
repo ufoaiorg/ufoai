@@ -361,6 +361,7 @@
 		<Unit filename="..\..\src\client\campaign\cp_alien_interest.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_alien_interest.h" />
 		<Unit filename="..\..\src\client\campaign\cp_base.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -376,6 +377,7 @@
 		<Unit filename="..\..\src\client\campaign\cp_geoscape_actions.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_geoscape_actions.h" />
 		<Unit filename="..\..\src\client\campaign\cp_hospital.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -384,6 +386,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_hospital_callbacks.h" />
+		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_market_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_messages.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -391,15 +397,19 @@
 		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_mission_triggers.h" />
 		<Unit filename="..\..\src\client\campaign\cp_missions.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_missions.h" />
 		<Unit filename="..\..\src\client\campaign\cp_nations.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_nations.h" />
 		<Unit filename="..\..\src\client\campaign\cp_parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_parse.h" />
 		<Unit filename="..\..\src\client\campaign\cp_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -411,9 +421,11 @@
 		<Unit filename="..\..\src\client\campaign\cp_time.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_time.h" />
 		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_xvi.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.c">
 			<Option compilerVar="CC" />
 		</Unit>
