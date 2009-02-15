@@ -1031,7 +1031,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	MAP_Init();
 
 	ccs.fund = mxml_GetBool(campaign, "fund", qfalse);
-	cl.nextUniqueCharacterNumber = mxml_GetInt(campaign, "nextucn", 0);
+	cl.nextUniqueCharacterNumber = mxml_GetInt(campaign, "nextuniquecharacternumber", 0);
 
 	/* read date */
 	n_ccs = mxml_GetNode(campaign, "ccs");
