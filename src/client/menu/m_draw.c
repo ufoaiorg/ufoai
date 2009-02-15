@@ -80,21 +80,51 @@ static void MN_DrawBorder (const menuNode_t *node)
 		node->size[0] + (node->padding*2), node->border, ALIGN_UL, node->bordercolor);
 }
 
-static void MN_HilightNode (menuNode_t *node, vec4_t color, int textPositionY)
+static int debugTextPositionY = 0;
+
+static void MN_HilightNode (menuNode_t *node, vec4_t color)
 {
-	const int size = 20;
-	const int weigth = 5;
+	static vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 	vec2_t pos;
+	int width;
+	int lineDefinition[4];
+	const char* text;
+
+	if (node->parent) {
+		MN_HilightNode (node->parent, grey);
+	}
+
 	MN_GetNodeAbsPos(node, pos);
 
+	text = va("%s (%s)", node->name, node->behaviour->name);
+	R_FontTextSize("f_small_bold", text, 400, LONGLINES_PRETTYCHOP, &width, NULL, NULL, NULL);
+
 	R_ColorBlend(color);
-	R_FontDrawString("f_small_bold", ALIGN_UL, 20, textPositionY, 20, textPositionY, 400, 400, 0, va("%s (%s)", node->name, node->behaviour->name), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	R_FontDrawString("f_small_bold", ALIGN_UL, 20, debugTextPositionY, 20, debugTextPositionY, 400, 400, 0, text, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
+
+	lineDefinition[0] = 20 + width;
+	lineDefinition[1] = debugTextPositionY - 5;
+	lineDefinition[2] = pos[0];
+	lineDefinition[3] = pos[1];
+	R_DrawLine(lineDefinition, 1);
 	R_ColorBlend(NULL);
 
-	R_DrawFill(pos[0], pos[1], size, weigth, ALIGN_UL, color);
-	R_DrawFill(pos[0], pos[1], weigth, size, ALIGN_UL, color);
-	R_DrawFill(pos[0] + node->size[0] - size, pos[1]+node->size[1] - weigth, size, weigth, ALIGN_UL, color);
-	R_DrawFill(pos[0] + node->size[0] - weigth, pos[1]+node->size[1] - size, weigth, size, ALIGN_UL, color);
+	/* exclude rect */
+	if (node->excludeRectNum) {
+		int i;
+		vec4_t trans = {1, 1, 1, 1};
+		Vector4Copy(color, trans);
+		trans[3] = trans[3] / 2;
+		for (i = 0; i < node->excludeRectNum; i++) {
+			const int x = pos[0] + node->excludeRect[i].pos[0];
+			const int y = pos[1] + node->excludeRect[i].pos[1];
+			R_DrawFill(x, y, node->excludeRect[i].size[0], node->excludeRect[i].size[1], ALIGN_UL, trans);
+		}
+	}
+
+	/* bounded box */
+	R_DrawRect(pos[0] - 1, pos[1] - 1, node->size[0] + 2, node->size[1] + 2, color, 2.0, 0x3333);
 }
 
 /**
@@ -104,53 +134,49 @@ static void MN_DrawDebugMenuNodeNames (void)
 {
 	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
 	static vec4_t green = {0.0, 0.5, 0.0, 1.0};
-	static vec4_t redalpha = {1, 0.0, 0.0, 0.4};
 	static vec4_t white = {1, 1.0, 1.0, 1.0};
-	menuNode_t *hoveredNode = MN_GetHoveredNode();
-	menuNode_t *targetNode = NULL;
-	int sp;
-	int posy = 15;
-	if (MN_DNDIsDragging())
-		targetNode = MN_DNDGetTargetNode();
+	menuNode_t *hoveredNode;
+	int stackPosition;
 
+	debugTextPositionY = 100;
 
 	/* menu stack */
 	R_ColorBlend(white);
-	R_FontDrawString("f_small_bold", ALIGN_UL, 0, posy, 0, posy, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-	posy += 15;
-	for (sp = 0; sp < mn.menuStackPos; sp++) {
-		menuNode_t *menu = mn.menuStack[sp];
-		if (hoveredNode && menu == hoveredNode->menu) {
-			R_ColorBlend(red);
-		} else if (targetNode && menu == targetNode->menu) {
-			R_ColorBlend(green);
-		} else {
-			R_ColorBlend(white);
-		}
-		R_FontDrawString("f_small_bold", ALIGN_UL, 20, posy, 20, posy, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-		posy += 15;
+	R_FontDrawString("f_small_bold", ALIGN_UL, 0, debugTextPositionY, 0, debugTextPositionY, 200, 200, 0, "menu stack:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+	debugTextPositionY += 15;
+	for (stackPosition = 0; stackPosition < mn.menuStackPos; stackPosition++) {
+		menuNode_t *menu = mn.menuStack[stackPosition];
+		R_ColorBlend(white);
+		R_FontDrawString("f_small_bold", ALIGN_UL, 20, debugTextPositionY, 20, debugTextPositionY, 200, 200, 0, menu->name, 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		debugTextPositionY += 15;
 	}
-	posy += 15;
 
-	/* nodes */
-	R_ColorBlend(white);
-	R_FontDrawString("f_small_bold", ALIGN_UL, 0, posy, 0, posy, 200, 200, 0, "nodes:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
-	posy += 15;
-	R_ColorBlend(NULL);
-
-	if (targetNode) {
-		MN_HilightNode(MN_DNDGetTargetNode(), green, posy);
-		posy += 15;
-	}
+	/* hovered node */
+	hoveredNode = MN_GetHoveredNode();
 	if (hoveredNode) {
-		int i;
-		for (i = 0; i < hoveredNode->excludeRectNum; i++) {
-			int x = hoveredNode->menu->pos[0] + hoveredNode->pos[0] + hoveredNode->excludeRect[i].pos[0];
-			int y = hoveredNode->menu->pos[1] + hoveredNode->pos[1] + hoveredNode->excludeRect[i].pos[1];
-			R_DrawFill(x, y, hoveredNode->excludeRect[i].size[0], hoveredNode->excludeRect[i].size[1], ALIGN_UL, redalpha);
+		R_ColorBlend(white);
+		R_FontDrawString("f_small_bold", ALIGN_UL, 0, debugTextPositionY, 0, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		debugTextPositionY += 15;
+
+		R_ColorBlend(white);
+		R_FontDrawString("f_small_bold", ALIGN_UL, 0, debugTextPositionY, 0, debugTextPositionY, 200, 200, 0, "hovered node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+		debugTextPositionY += 15;
+		MN_HilightNode(hoveredNode, red);
+	}
+
+	/* target node */
+	if (MN_DNDIsDragging()) {
+		menuNode_t *targetNode = MN_DNDGetTargetNode();
+		if (targetNode) {
+			R_ColorBlend(white);
+			R_FontDrawString("f_small_bold", ALIGN_UL, 0, debugTextPositionY, 0, debugTextPositionY, 200, 200, 0, "-----------------------", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			debugTextPositionY += 15;
+
+			R_ColorBlend(green);
+			R_FontDrawString("f_small_bold", ALIGN_UL, 0, debugTextPositionY, 0, debugTextPositionY, 200, 200, 0, "drag and drop target node:", 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
+			debugTextPositionY += 15;
+			MN_HilightNode(targetNode, green);
 		}
-		MN_HilightNode(hoveredNode, red, posy);
-		posy += 15;
 	}
 	R_ColorBlend(NULL);
 }
