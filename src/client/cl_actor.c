@@ -236,10 +236,6 @@ void CL_CharacterCvars (const character_t * chr)
 	Cvar_Set("mn_thp", va("%i (%i)", chr->HP, chr->maxHP));
 }
 
-/* HUD_ActorGlobalCvars */
-/* HUD_GetReactionState */
-
-
 /**
  * @brief Calculate total reload time for selected actor.
  * @param[in] weapon Item in (currently only right) hand.
@@ -278,8 +274,6 @@ int CL_CalcReloadTime (const objDef_t *weapon)
 	return tu;
 }
 
-/* HUD_SetWeaponButton */
-
 /**
  * @brief Returns the number of the actor in the teamlist.
  * @param[in] le The actor to search.
@@ -314,8 +308,6 @@ character_t *CL_GetActorChr (const le_t * le)
 
 	return cl.chrList.chr[actorIdx];
 }
-
-/* HUD_HideFiremodes */
 
 /**
  * @brief Returns the weapon its ammo and the firemodes-index inside the ammo for a given hand.
@@ -652,12 +644,6 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const int objIdx, 
 	MSG_Write_PA(PA_RESERVE_STATE, actor->entnum, RES_REACTION, chr->reservedTus.reserveReaction, chr->reservedTus.reaction);
 }
 
-/* HUD_DisplayFiremodeEntry */
-/* CL_CheckFiremodeReservation */
-/* HUD_PopupFiremodeReservation */
-/* HUD_PopupFiremodeReservation_f */
-/* HUD_ReserveShot_f */
-
 /**
  * @brief Checks if there is a weapon in the hand that can be used for reaction fire.
  * @param[in] actor What actor to check.
@@ -685,10 +671,6 @@ qboolean CL_WeaponWithReaction (const le_t * actor, const char hand)
 
 	return qfalse;
 }
-
-/* HUD_DisplayPossibleReaction */
-/* CL_DisplayImpossibleReaction */
-
 
 /**
  * @brief Updates the information in RFmode for the selected actor with the given data from the parameters.
@@ -806,15 +788,6 @@ void CL_SetDefaultReactionFiremode (le_t *actor, const char hand)
 		/* If that failed try to set the other hand. */
 		CL_UpdateReactionFiremodes(actor, ACTOR_SWAP_HAND(hand), -1);
 }
-
-/* HUD_DisplayFiremodes_f */
-/* HUD_SwitchFiremodeList_f */
-/* HUD_SelectReactionFiremode_f */
-/* HUD_FireWeapon_f */
-/* HUD_RemainingTUs_f */
-/* HUD_RefreshWeaponButtons */
-/* CL_CheckMenuAction */
-/* HUD_ActorUpdateCVars */
 
 /*
 ==============================================================
@@ -1786,9 +1759,6 @@ void CL_ActorUseHeadgear_f (void)
 	mouseSpace = tmp_mouseSpace;
 }
 
-/* CL_ActorToggleCrouchReservation_f */
-/* CL_ActorToggleReaction_f */
-
 /**
  * @brief Spawns particle effects for a hit actor.
  * @param[in] le The actor to spawn the particles for.
@@ -2358,7 +2328,6 @@ void CL_DoEndRound (struct dbuffer *msg)
 		}
 	}
 }
-
 
 /*
 ==============================================================
