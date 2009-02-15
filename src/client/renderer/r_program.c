@@ -78,7 +78,8 @@ static r_progvar_t *R_ProgramVariable (int type, const char *name)
 		v->location = qglGetAttribLocation(r_state.active_program->id, name);
 
 	if (v->location == -1) {
-		Com_Printf("R_ProgramVariable: Could not find %s in shader\n", name);
+		Com_Printf("R_ProgramVariable: Could not find %s in program %s\n",
+			name, r_state.active_program->name);
 		return NULL;
 	}
 
@@ -438,18 +439,16 @@ static void R_UseWarpProgram (void)
 
 void R_InitPrograms (void)
 {
-	if (!qglCreateProgram) {
-		Com_Printf("R_InitPrograms: glCreateProgram not found\n");
+	if (!qglCreateProgram)
 		return;
-	}
+
+	memset(r_state.shaders, 0, sizeof(r_state.shaders));
+	memset(r_state.programs, 0, sizeof(r_state.programs));
 
 	/* shaders are deactivated - don't try to load them - some cards
 	 * even have problems with this */
 	if (!r_programs->integer)
 		return;
-
-	memset(r_state.shaders, 0, sizeof(r_state.shaders));
-	memset(r_state.programs, 0, sizeof(r_state.programs));
 
 	r_state.default_program = R_LoadProgram("default", R_InitDefaultProgram, R_UseDefaultProgram);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
