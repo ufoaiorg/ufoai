@@ -366,20 +366,38 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 	return NULL;
 }
 
-
 /**
  * @brief Clone a node
  * @param[in] node to clone
  * @param[in] recursive True if we also must clone subnodeas
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
- * @todo remember to update this function when we allow a tree of nodes
+ * @todo Properties like CVAR_OR_FLOAT and using a value dont embbed the value, but point to a value.
+ * As a result, the new node will share the value with the "base" node.
+ * We can embbed this values into node.
+ * @todo exclude rect is node safe cloned.
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive)
 {
 	menuNode_t* newNode = MN_AllocNode(node->behaviour->name);
+
+	/* clone all data */
 	*newNode = *node;
+
+	/* clean up node navigation */
 	newNode->menu = newMenu;
+	newNode->parent = NULL;
+	newNode->firstChild = NULL;
+	newNode->lastChild = NULL;
 	newNode->next = NULL;
+
+	/* clone child */
+	if (recursive) {
+		menuNode_t* childNode;
+		for (childNode = node->firstChild; childNode; childNode = childNode->next) {
+			menuNode_t* newChildNode = MN_CloneNode(childNode, newMenu, recursive);
+			MN_AppendNode(newNode, newChildNode);
+		}
+	}
 	return newNode;
 }
 
