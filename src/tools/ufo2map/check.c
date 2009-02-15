@@ -426,7 +426,7 @@ static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e
 {
 	static int size[6];
 	const entityKeyDef_t *sizeKd = ED_GetKeyDefEntity(ed, "size", 1); /* 1 means find abstract version of key */
-	if (ED_GetIntVector(sizeKd, size, (int)(sizeof(size) / sizeof(int))) == -1)
+	if (ED_GetIntVector(sizeKd, size, (int)(sizeof(size) / sizeof(int))) == ED_ERROR)
 		Sys_Error("%s", ED_GetLastError());
 
 	return (((int)e->origin[0] - size[0]) % UNIT_SIZE == 0)
