@@ -46,9 +46,9 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
  * @brief a macro to test a condition write an error
  * message and exit the current function returning ED_ERROR
  */
-#define ED_TEST_ERROR(condition,msg,...) \
+#define ED_TEST_ERROR(condition,...) \
 	if (condition) { \
-		snprintf(lastErr, sizeof(lastErr), msg, __VA_ARGS__); \
+		snprintf(lastErr, sizeof(lastErr), __VA_ARGS__); \
 		return ED_ERROR; \
 	}
 
@@ -285,7 +285,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 		ED_TEST_ERROR(insistPositive && lastCheckedInt < 0, "ED_CheckNumber: not positive %s", value);
 		break;
 	default:
-		ED_TEST_ERROR(1, "ED_CheckNumber: type to test against not recognised %s", "");
+		ED_TEST_ERROR(1, "ED_CheckNumber: type to test against not recognised");
 	}
 	/* if strto* did not use the whole token, then there is some non-number part to it */
 	ED_TEST_ERROR(strlen(value) != (unsigned int)(end_p-value),
@@ -554,11 +554,11 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 	case ED_OPTIONAL:
 	case ED_ABSTRACT:
 		keyDef->desc = strdup(newVal);
-		ED_TEST_ERROR(!keyDef->desc, "ED_PairParsed: out of memory while storing string.%s","");
+		ED_TEST_ERROR(!keyDef->desc, "ED_PairParsed: out of memory while storing string.");
 		return ED_OK;
 	case ED_DEFAULT:
 		keyDef->defaultVal = strdup(newVal);
-		ED_TEST_ERROR(!keyDef->defaultVal, "ED_PairParsed: out of memory while storing string.%s","");
+		ED_TEST_ERROR(!keyDef->defaultVal, "ED_PairParsed: out of memory while storing string.");
 		return ED_OK;
 	case ED_MODE_TYPE:
 		/* only optional or abstract keys may have types, not possible to test for this here,
