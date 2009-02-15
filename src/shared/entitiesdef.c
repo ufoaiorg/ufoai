@@ -150,23 +150,6 @@ static int ED_CountEntities (const char **data_p)
 /**
  * @return ED_ERROR in case of an error (out of memory), else 0.
  */
-static int ED_AllocKeyDef (entityKeyDef_t *keyDef, const char *newName)
-{
-	const int nameLen = strlen(newName) + 1;
-
-	keyDef->name = (char *) malloc(nameLen * sizeof(char));
-	if (!keyDef->name) {
-		snprintf(lastErr, sizeof(lastErr), "ED_AllocKeyDef: out of memory");
-		return ED_ERROR;
-	}
-	strncpy(keyDef->name, newName, nameLen);
-
-	return 0;
-}
-
-/**
- * @return ED_ERROR in case of an error (out of memory), else 0.
- */
 static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex)
 {
 	entityDef_t *eDef = &entityDefs[entityIndex];
@@ -473,8 +456,7 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 
 	if (strlen(partToken)) {
 		type = ED_Type2Constant(partToken);
-		if (ED_ERROR == type)
-			return ED_ERROR;
+		ED_PASS_ERROR(type);
 	} else {/* default is string */
 		type = ED_TYPE_STRING;
 	}
@@ -482,11 +464,10 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	kd->flags |= type;
 	partToken = COM_Parse(&buf_p);
 	vectorLen = atoi(partToken);
-	if (vectorLen && (ED_ERROR == ED_CheckNumber(partToken, ED_TYPE_INT, 1))) {
-		snprintf(lastErr, sizeof(lastErr), "ED_ParseType: problem with vector length \"%s\" in key %s",
+	if (vectorLen)
+		ED_TEST_RETURN_ERROR(ED_ERROR == ED_CheckNumber(partToken, ED_TYPE_INT, 1),
+			"ED_ParseType: problem with vector length \"%s\" in key %s",
 			partToken, kd->name);
-		return ED_ERROR;
-	}
 	kd->vLen = strlen(partToken) ? (vectorLen ? vectorLen : 1) : 1; /* default is 1 */
 	return 0;
 }
@@ -526,10 +507,7 @@ static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
 	memset(newRange, 0, sizeof(entityKeyRange_t));
 	/* resize array of pointers */
 	newRanges = (entityKeyRange_t **)malloc((kd->numRanges + 1) * sizeof(entityKeyRange_t *));
-	if (!newRanges || !newStr || !newRange) {
-		snprintf(lastErr, sizeof(lastErr) - 1, "ED_AllocRange: out of memory");
-		return ED_ERROR;
-	}
+	ED_TEST_RETURN_ERROR(!newRanges || !newStr || !newRange, "ED_AllocRange: out of memory");
 	newRange->str = newStr;
 	newRanges[kd->numRanges] = newRange;
 	if (kd->ranges) {
@@ -557,8 +535,8 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: too many keys for buffer");
 			return ED_ERROR;
 		}
-		if (ED_AllocKeyDef(keyDef, newName) == ED_ERROR)
-			return ED_ERROR; /* lastErr already set */
+		keyDef->name = strdup(newName);
+		ED_TEST_RETURN_ERROR(!keyDef->name, "ED_PairParsed: out of memory");
 	}
 
 	if (keyDef->flags & mode & ~ED_RANGE) {/* multiple range defs are permitted, different elements can have different ranges */
@@ -581,8 +559,9 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 		ED_TEST_RETURN_ERROR(!keyDef->defaultVal, "ED_PairParsed: out of memory while storing string.");
 		return ED_OK;
 	case ED_MODE_TYPE:
-		/* only optional or abstract keys may have types, not possible to test for this here,
-			* as the type block may come before the optional or mandatory block */
+		/* only optional or mandatory keys may have types, not possible to test for this here,
+		 * as the type block may come before the optional or mandatory block */
+
 		if (ED_ParseType(keyDef, newVal) == ED_ERROR)
 			return ED_ERROR; /* lastErr set in function call */
 		return 0;
@@ -796,8 +775,9 @@ static int ED_ProcessRanges (void)
 }
 
 /**
- * parses entity types defined in entities.ufo
- * @return 0 if everything is OK. nonzero otherwise. then call ED_GetLastError to get the message
+ * parses entity definitions from entities.ufo
+ * @return ED_OK or ED_ERR
+ * @sa ED_GetLastErr
  */
 int ED_Parse (const char **data_p)
 {
@@ -844,7 +824,7 @@ int ED_Parse (const char **data_p)
 	if (ED_CheckDefaultTypes() == ED_ERROR)
 		return ED_ERROR;
 
-	return 0;
+	return ED_OK;
 }
 
 const char *ED_GetLastError (void)

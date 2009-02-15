@@ -207,7 +207,7 @@ static void Check_InitEntityDefs (void)
 	if (TryLoadFile(entitiesUfoPath, entitiesUfoBuf) == -1)
 		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
 
-	if (ED_Parse((const char **)entitiesUfoBuf))
+	if (ED_Parse((const char **)entitiesUfoBuf) == ED_ERROR)
 		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
 
 	/* info has been copied to new malloc'd space in ED_Parse */
@@ -511,7 +511,7 @@ void CheckEntities (void)
 				continue;
 			}
 
-			if (ED_CheckKey(kd, kvp->value) == -1) { /* check values against type and range definitions in entities.ufo */
+			if (ED_CheckKey(kd, kvp->value) == ED_ERROR) { /* check values against type and range definitions in entities.ufo */
 				Check_Printf(VERB_NORMAL, qfalse, i, -1, "%s\n", ED_GetLastError());
 				continue;
 			}
