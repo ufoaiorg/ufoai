@@ -69,7 +69,7 @@ static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
 static irc_channel_t ircChan;
 static irc_channel_t *chan = NULL;
 
-static char irc_buffer[4048];
+static char irc_buffer[4096];
 static char irc_names_buffer[1024];
 
 static void Irc_Logic_RemoveChannelName(irc_channel_t *channel, const char *nick);
@@ -1462,16 +1462,19 @@ static void Irc_Client_Part_f (void)
 static void Irc_Client_Msg_f (void)
 {
 	char cropped_msg[IRC_SEND_BUF_SIZE];
-	const char *msg = NULL;
+	const char *msg;
+
 	if (Cmd_Argc() >= 2)
 		msg = Cmd_Args();
-	else if (*irc_send_buffer->string)
+	else if (irc_send_buffer->string[0] != '\0')
 		msg = irc_send_buffer->string;
+	else
+		return;
 
-	if (msg && *msg) {
-		if (*irc_defaultChannel->string) {
-			if (*msg == '"') {
-				size_t msg_len = strlen(msg);
+	if (msg[0] != '\0') {
+		if (irc_defaultChannel->string[0] != '\0') {
+			if (msg[0] == '"') {
+				const size_t msg_len = strlen(msg);
 				memcpy(cropped_msg, msg + 1, msg_len - 2);
 				cropped_msg[msg_len - 2] = '\0';
 				msg = cropped_msg;
@@ -1734,7 +1737,7 @@ void Irc_Input_Activate (void)
 {
 	/* in case of a failure we need this in MN_PopMenu */
 	msg_mode = MSG_IRC;
-	if (irc_connected && *irc_defaultChannel->string) {
+	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
 		MN_RegisterText(TEXT_STANDARD, irc_buffer);
 		MN_RegisterText(TEXT_LIST, irc_names_buffer);
 		Key_SetDest(key_input);
