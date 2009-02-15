@@ -43,6 +43,16 @@ static int lastCheckedInt; /**< @sa ED_CheckNumber */
 static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 
 /**
+ * @brief write an error message and exit the current function returning ED_ERROR
+ * @sa ED_TEST_ERROR
+ */
+#define ED_RETURN_ERROR(...) \
+	{ \
+		snprintf(lastErr, sizeof(lastErr), __VA_ARGS__); \
+		return ED_ERROR; \
+	}
+
+/**
  * @brief a macro to test a condition write an error
  * message and exit the current function returning ED_ERROR
  */
@@ -104,7 +114,7 @@ static int ED_CountEntities (const char **data_p)
 				tokensOnLevel0++;
 				continue;
 			}
-			ED_TEST_ERROR(1, "Next entity expected, found \"%s\" token", parsedToken);
+			ED_RETURN_ERROR( "Next entity expected, found \"%s\" token", parsedToken);
 		}
 
 		if (tokensOnLevel0 == 1) { /* classname of entity */
@@ -285,7 +295,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 		ED_TEST_ERROR(insistPositive && lastCheckedInt < 0, "ED_CheckNumber: not positive %s", value);
 		break;
 	default:
-		ED_TEST_ERROR(1, "ED_CheckNumber: type to test against not recognised");
+		ED_RETURN_ERROR("ED_CheckNumber: type to test against not recognised");
 	}
 	/* if strto* did not use the whole token, then there is some non-number part to it */
 	ED_TEST_ERROR(strlen(value) != (unsigned int)(end_p-value),
@@ -338,9 +348,9 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, co
 		}
 		break;
 	default:
-		ED_TEST_ERROR(1, "ED_CheckRange: type to test against not recognised in %s", keyDef->name);
+		ED_RETURN_ERROR( "ED_CheckRange: type to test against not recognised in %s", keyDef->name);
 	}
-	ED_TEST_ERROR(1, "ED_CheckRange: value not specified in range definition, \"%s\" in %s",
+	ED_RETURN_ERROR("ED_CheckRange: value not specified in range definition, \"%s\" in %s",
 		kr->str, keyDef->name);
 }
 
@@ -402,10 +412,7 @@ int ED_Check (const char *classname, const char *key, const char *value)
  */
 int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 {
-	if (!kd) {
-		snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: null key def");
-		return ED_ERROR;
-	}
+	ED_TEST_ERROR(!kd, "ED_CheckTypeEntityKey: null key def");
 	switch (kd->flags & ED_KEY_TYPE) {
 	case ED_TYPE_FLOAT:
 		return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
