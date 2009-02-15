@@ -402,6 +402,9 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	int i;
 	dateLong_t date;
 	char message[30];
+#ifdef DEBUG
+	char savegame_debug[MAX_OSPATH];
+#endif
 
 	if (!GAME_CP_IsRunning()) {
 		*error = _("No campaign active.");
@@ -416,7 +419,9 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	}
 
 	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.xml", FS_Gamedir(), filename);
-
+#ifdef DEBUG
+	Com_sprintf(savegame_debug, sizeof(savegame_debug), "%s/save/%s.lint", FS_Gamedir(), filename);
+#endif
 	top_node = mxmlNewXML("1.0");
 	node = mxml_AddNode(top_node, "savegame");
 	/* writing  Header */
@@ -465,6 +470,10 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, CL_TAG_NONE);
 	memcpy(fbuf, &header, sizeof(header));
 
+#ifdef DEBUG
+	/* In debugmode we will also write a uncompressed {filename}.lint file without header information */
+	res = FS_WriteFile(buf, requiredbuflen+1, savegame_debug);
+#endif
 	if (header.compressed) {
 		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredbuflen+1);
 		Mem_Free(buf);
