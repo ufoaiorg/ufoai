@@ -891,7 +891,7 @@ menu buy
 
 	string itemname
 	{
-		visiblewhen "mn_itemtype != aircraft"	// for everything except aircraft
+		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
 		string		"*cvar mn_itemname"
 		pos			"610 155"
 		size		"365 20"
@@ -899,7 +899,7 @@ menu buy
 	}
 	string aircraftname
 	{
-		visiblewhen "mn_itemtype == aircraft"	// Only for aircraft.
+		visiblewhen "mn_itemtype eq aircraft"	// Only for aircraft.
 		string		"*cvar mn_aircraftname"
 		pos			"610 155"
 		size		"365 20"
