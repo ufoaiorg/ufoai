@@ -44,30 +44,30 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DOUBLEQUOTE(x) STRINGIFY(x)
 #define IRC_MAX_INPUTLENGTH 128
 
-static cvar_t *irc_server = NULL;
-static cvar_t *irc_port = NULL;
-static cvar_t *irc_channel = NULL;
-static cvar_t *irc_nick = NULL;
-static cvar_t *irc_user = NULL;
-static cvar_t *irc_password = NULL;
-static cvar_t *irc_topic = NULL;
-static cvar_t *irc_defaultChannel = NULL;
-static cvar_t *irc_logConsole = NULL;
-static cvar_t *irc_showIfNotInMenu = NULL;
+static cvar_t *irc_server;
+static cvar_t *irc_port;
+static cvar_t *irc_channel;
+static cvar_t *irc_nick;
+static cvar_t *irc_user;
+static cvar_t *irc_password;
+static cvar_t *irc_topic;
+static cvar_t *irc_defaultChannel;
+static cvar_t *irc_logConsole;
+static cvar_t *irc_showIfNotInMenu;
 /* menu cvar */
-static cvar_t *irc_send_buffer = NULL;
+static cvar_t *irc_send_buffer;
 
 static int inputLengthBackup;
 
-static qboolean irc_connected = qfalse;
+static qboolean irc_connected;
 
-static struct net_stream *irc_stream = NULL;
+static struct net_stream *irc_stream;
 
 static const qboolean IRC_INVISIBLE = qtrue;
 static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
 
 static irc_channel_t ircChan;
-static irc_channel_t *chan = NULL;
+static irc_channel_t *chan;
 
 static char irc_buffer[4096];
 static char irc_names_buffer[1024];
