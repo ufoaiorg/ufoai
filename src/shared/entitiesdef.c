@@ -44,7 +44,7 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 
 /**
  * @brief write an error message and exit the current function returning ED_ERROR
- * @sa ED_TEST_ERROR
+ * @sa ED_TEST_RETURN_ERROR
  */
 #define ED_RETURN_ERROR(...) \
 	{ \
@@ -56,7 +56,7 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
  * @brief a macro to test a condition write an error
  * message and exit the current function returning ED_ERROR
  */
-#define ED_TEST_ERROR(condition,...) \
+#define ED_TEST_RETURN_ERROR(condition,...) \
 	if (condition) { \
 		snprintf(lastErr, sizeof(lastErr), __VA_ARGS__); \
 		return ED_ERROR; \
@@ -65,7 +65,7 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 /**
  * @brief if the function returns ED_ERROR, then the function that the
  * macro is in also returns ED_ERROR. Note that the called function is expected
- * to set lastErr, probably by using the ED_TEST_ERROR macro
+ * to set lastErr, probably by using the ED_TEST_RETURN_ERROR macro
  */
 #define ED_PASS_ERROR(function_call) \
 	if ((function_call) == ED_ERROR) { \
@@ -95,13 +95,13 @@ static int ED_CountEntities (const char **data_p)
 		if (parsedToken[0] == '{') {
 			tokensOnLevel0 = 0;
 			braceLevel++;
-			ED_TEST_ERROR(braceLevel > 2, "Too many open braces, nested %i deep", braceLevel);
+			ED_TEST_RETURN_ERROR(braceLevel > 2, "Too many open braces, nested %i deep", braceLevel);
 			continue;
 		}
 
 		if (parsedToken[0] == '}') {
 			braceLevel--;
-			ED_TEST_ERROR(braceLevel < 0, "Too many close braces. after %i entities", numEntities);
+			ED_TEST_RETURN_ERROR(braceLevel < 0, "Too many close braces. after %i entities", numEntities);
 			continue;
 		}
 
@@ -123,7 +123,7 @@ static int ED_CountEntities (const char **data_p)
 			continue;
 		}
 
-		ED_TEST_ERROR(tokensOnLevel0 > 1, "'{' to start entity definition expected. \"%s\" found.", parsedToken)
+		ED_TEST_RETURN_ERROR(tokensOnLevel0 > 1, "'{' to start entity definition expected. \"%s\" found.", parsedToken)
 	}
 
 	if (numEntities == 0)
@@ -282,23 +282,23 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 	 * V_FLOATs are not protected from hex, inf, nan, so this check is here.
 	 * strstr is used for hex, as 0x may not be the start of the string.
 	 * eg -0x0.2 is a negative hex float  */
-	ED_TEST_ERROR(value[0] == 'i' || value[0] == 'I' || value[0] == 'n' || value[0] == 'N'
+	ED_TEST_RETURN_ERROR(value[0] == 'i' || value[0] == 'I' || value[0] == 'n' || value[0] == 'N'
 		|| strstr(value, "0x") || strstr(value, "0X"),
 		"infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
 	switch (floatOrInt) {
 	case ED_TYPE_FLOAT:
 		lastCheckedFloat = strtof(value, &end_p);
-		ED_TEST_ERROR(insistPositive && lastCheckedFloat < 0.0f, "ED_CheckNumber: not positive %s", value);
+		ED_TEST_RETURN_ERROR(insistPositive && lastCheckedFloat < 0.0f, "ED_CheckNumber: not positive %s", value);
 		break;
 	case ED_TYPE_INT:
 		lastCheckedInt = (int)strtol(value, &end_p, 10);
-		ED_TEST_ERROR(insistPositive && lastCheckedInt < 0, "ED_CheckNumber: not positive %s", value);
+		ED_TEST_RETURN_ERROR(insistPositive && lastCheckedInt < 0, "ED_CheckNumber: not positive %s", value);
 		break;
 	default:
 		ED_RETURN_ERROR("ED_CheckNumber: type to test against not recognised");
 	}
 	/* if strto* did not use the whole token, then there is some non-number part to it */
-	ED_TEST_ERROR(strlen(value) != (unsigned int)(end_p-value),
+	ED_TEST_RETURN_ERROR(strlen(value) != (unsigned int)(end_p-value),
 		"problem with numeric value: \"%s\" declared as %s. (might be relevant: only use whitespace to delimit values)",
 		value, ED_Constant2Type(floatOrInt));
 	return ED_OK;
@@ -323,7 +323,7 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, co
 	switch (floatOrInt) {
 	case ED_TYPE_FLOAT:
 		if (kr->continuous) {
-			ED_TEST_ERROR(lastCheckedFloat < kr->fArr[0] || lastCheckedFloat > kr->fArr[1],
+			ED_TEST_RETURN_ERROR(lastCheckedFloat < kr->fArr[0] || lastCheckedFloat > kr->fArr[1],
 				"ED_CheckRange: %.1f out of range, \"%s\" in %s",
 				lastCheckedFloat, kr->str, keyDef->name);
 			return ED_OK;
@@ -336,7 +336,7 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, co
 		break;
 	case ED_TYPE_INT:
 		if (kr->continuous) {
-			ED_TEST_ERROR(lastCheckedInt < kr->iArr[0] || lastCheckedInt > kr->iArr[1],
+			ED_TEST_RETURN_ERROR(lastCheckedInt < kr->iArr[0] || lastCheckedInt > kr->iArr[1],
 				"ED_CheckRange: %i out of range, \"%s\" in %s",
 				lastCheckedInt, kr->str, keyDef->name);
 			return ED_OK;
@@ -382,7 +382,7 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 		i++;
 	}
 
-	ED_TEST_ERROR(i != keyDef->vLen, "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key",
+	ED_TEST_RETURN_ERROR(i != keyDef->vLen, "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key",
 			i, keyDef->vLen, keyDef->name);
 
 	return 1;
@@ -412,7 +412,7 @@ int ED_Check (const char *classname, const char *key, const char *value)
  */
 int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 {
-	ED_TEST_ERROR(!kd, "ED_CheckTypeEntityKey: null key def");
+	ED_TEST_RETURN_ERROR(!kd, "ED_CheckTypeEntityKey: null key def");
 	switch (kd->flags & ED_KEY_TYPE) {
 	case ED_TYPE_FLOAT:
 		return ED_CheckNumericType(kd, value, ED_TYPE_FLOAT);
@@ -559,11 +559,11 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 	case ED_OPTIONAL:
 	case ED_ABSTRACT:
 		keyDef->desc = strdup(newVal);
-		ED_TEST_ERROR(!keyDef->desc, "ED_PairParsed: out of memory while storing string.");
+		ED_TEST_RETURN_ERROR(!keyDef->desc, "ED_PairParsed: out of memory while storing string.");
 		return ED_OK;
 	case ED_DEFAULT:
 		keyDef->defaultVal = strdup(newVal);
-		ED_TEST_ERROR(!keyDef->defaultVal, "ED_PairParsed: out of memory while storing string.");
+		ED_TEST_RETURN_ERROR(!keyDef->defaultVal, "ED_PairParsed: out of memory while storing string.");
 		return ED_OK;
 	case ED_MODE_TYPE:
 		/* only optional or abstract keys may have types, not possible to test for this here,
