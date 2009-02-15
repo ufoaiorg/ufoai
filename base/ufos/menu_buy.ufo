@@ -812,7 +812,7 @@ menu buy
 
 	string txt_storage_caption
 	{
-		visiblewhen "mn_itemtype != aircraft"	// for everything except aircraft
+		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
 		string 		"_Storage (used/all):"
 		pos			"650 80"
 		size		"200 20"
@@ -821,7 +821,7 @@ menu buy
 
 	string txt_storage_value
 	{
-		visiblewhen "mn_itemtype != aircraft"	// for everything except aircraft
+		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
 		string 		"*cvar mn_bs_storage"
 		pos			"855 80"
 		size		"100 20"
