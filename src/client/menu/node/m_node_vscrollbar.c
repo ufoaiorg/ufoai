@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../renderer/r_draw.h"
 #include "../m_nodes.h"
 #include "../m_parse.h"
+#include "../m_timer.h"
 #include "../m_actions.h"
 #include "../m_input.h"
 #include "../../cl_input.h"
@@ -119,27 +120,68 @@ static inline void MN_VScrollbarNodeDiff (menuNode_t *node, int value)
 
 static int oldPos;
 static int oldMouseY;
+static menuTimer_t *capturedTimer = NULL;
+static int capturedElement;
 
-static inline void MN_VScrollbarNodeAction (menuNode_t *node, int houveredElement)
+static inline void MN_VScrollbarNodeAction (menuNode_t *node, int houveredElement, qboolean allowCapture);
+
+static void MN_VScrollbarNodeRepeat (menuNode_t *node, menuTimer_t *timer)
+{
+	MN_VScrollbarNodeAction(node, capturedElement, qfalse);
+	switch (timer->calledTime) {
+	case 1:
+		timer->delay = 50;
+		break;
+	}
+}
+
+static inline void MN_VScrollbarNodeAction (menuNode_t *node, int houveredElement, qboolean allowCapture)
 {
 	switch (houveredElement) {
 	case 0:
 		MN_VScrollbarNodeDiff(node, -1);
+		if (allowCapture) {
+			MN_SetMouseCapture(node);
+			capturedElement = houveredElement;
+			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
+			MN_TimerStart (capturedTimer);
+		}
 		break;
 	case 1:
 		MN_VScrollbarNodeDiff(node, -10);
+		if (allowCapture) {
+			MN_SetMouseCapture(node);
+			capturedElement = houveredElement;
+			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
+			MN_TimerStart (capturedTimer);
+		}
 		break;
 	case 2:
-		MN_SetMouseCapture(node);
-		/* save start value */
-		oldMouseY = mousePosY;
-		oldPos = EXTRADATA(node).pos;
+		if (allowCapture) {
+			MN_SetMouseCapture(node);
+			/* save start value */
+			oldMouseY = mousePosY;
+			oldPos = EXTRADATA(node).pos;
+			capturedElement = houveredElement;
+		}
 		break;
 	case 3:
 		MN_VScrollbarNodeDiff(node, 10);
+		if (allowCapture) {
+			MN_SetMouseCapture(node);
+			capturedElement = houveredElement;
+			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
+			MN_TimerStart (capturedTimer);
+		}
 		break;
 	case 4:
 		MN_VScrollbarNodeDiff(node, 1);
+		if (allowCapture) {
+			MN_SetMouseCapture(node);
+			capturedElement = houveredElement;
+			capturedTimer = MN_AllocTimer(node, 500, MN_VScrollbarNodeRepeat);
+			MN_TimerStart (capturedTimer);
+		}
 		break;
 	default:
 		assert(qfalse);
@@ -171,7 +213,7 @@ static void MN_ActiveVScrollbarNode_f ()
 	}
 
 	actionId = atoi(Cmd_Argv(2));
-	MN_VScrollbarNodeAction(node, actionId);
+	MN_VScrollbarNodeAction(node, actionId, qfalse);
 }
 
 static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int button)
@@ -186,7 +228,7 @@ static void MN_VScrollbarNodeMouseDown (menuNode_t *node, int x, int y, int butt
 
 	MN_VScrollbarNodeGetElementSize(node, description);
 	houveredElement = MN_VScrollbarNodeGetElement(node, description, x, y);
-	MN_VScrollbarNodeAction(node, houveredElement);
+	MN_VScrollbarNodeAction(node, houveredElement, qtrue);
 }
 
 static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button)
@@ -197,6 +239,10 @@ static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button
 		return;
 
 	if (MN_GetMouseCapture() == node) {
+		if (capturedTimer) {
+			MN_TimerRelease(capturedTimer);
+			capturedTimer = NULL;
+		}
 		MN_MouseRelease();
 	}
 }
@@ -226,6 +272,9 @@ static void MN_VScrollbarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	const int posSize = EXTRADATA(node).fullsize;
 	const int graphicSize = node->size[1] - (4 * ELEMENT_HEIGHT);
 	int pos = 0;
+
+	if (capturedElement != 2)
+		return;
 
 	/* compute mouse mouse */
 	y -= oldMouseY;
