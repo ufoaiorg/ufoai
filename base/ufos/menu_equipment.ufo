@@ -335,6 +335,7 @@ menu equipment
 		rows		"7"
 		scrollbar	true
 		wheel
+		textid		TEXT_STANDARD
 	}
 	pic weapon_dec
 	{

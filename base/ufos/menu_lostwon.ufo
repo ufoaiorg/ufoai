@@ -24,6 +24,7 @@ menu won
 		lineheight	20
 		tabwidth	350
 		rows		"23"
+		textid		TEXT_STANDARD
 	}
 
 	// ==================
@@ -187,6 +188,7 @@ menu lost
 		lineheight	20
 		tabwidth	350
 		rows		"23"
+		textid		TEXT_STANDARD
 	}
 
 	// ==================

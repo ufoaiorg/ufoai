@@ -146,6 +146,7 @@ menu ufopedia
 		wheel
 		rows	"10"
 		scrollbar true
+		textid	TEXT_STANDARD
 	}
 
 	text techtree

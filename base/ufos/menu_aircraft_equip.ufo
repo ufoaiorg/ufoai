@@ -92,6 +92,7 @@ menu aircraft_equip extends iaircraft
 		rows		"5"
 		tabwidth	160
 		scrollbar	true
+		textid		TEXT_STANDARD
 	}
 
 	string airequip_item_name

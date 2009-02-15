@@ -616,6 +616,7 @@ menu hud extends ahud
 			lineheight	20
 			tabwidth	100
 			rows		"2"
+			textid		TEXT_STANDARD
 		}
 	}
 

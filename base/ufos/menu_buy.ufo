@@ -916,6 +916,7 @@ menu buy
 		lineheight 15
 		tabwidth 168
 		font	"f_verysmall"
+		textid	TEXT_STANDARD
 	}
 
 	zone weapon_wz

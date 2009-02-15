@@ -1108,6 +1108,7 @@ menu althud extends ahud
 	text infoscreen
 	{
 		pos		"5 722"
+		textid	TEXT_STANDARD
 		size	"275 50"
 		lineheight	20
 		tabwidth	100

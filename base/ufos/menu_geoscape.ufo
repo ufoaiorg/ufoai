@@ -89,6 +89,7 @@ menu map
 		wheel
 //		bgcolor		"1 1 1 0.6"
 		scrollbar	true
+		textid		TEXT_STANDARD
 	}
 
 	// ==================

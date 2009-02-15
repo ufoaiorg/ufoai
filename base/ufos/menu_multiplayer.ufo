@@ -547,6 +547,7 @@ menu mp_create_server
 		longlines	wrap
 		textalign	uc
 		font		"f_small"
+		textid		TEXT_STANDARD
 	}
 
 	// =====================

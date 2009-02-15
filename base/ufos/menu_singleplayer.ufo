@@ -696,6 +696,7 @@ menu lostgame
 		font		"f_normal"
 		scrollbar	 true
 		wheel
+		textid	TEXT_STANDARD
 	}
 
 	string lostgame_click
@@ -756,6 +757,7 @@ menu endgame
 		font		"f_normal"
 		scrollbar	true
 		wheel
+		textid	TEXT_STANDARD
 	}
 
 	string endgame_click
