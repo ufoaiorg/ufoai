@@ -703,7 +703,7 @@ static int ED_CheckDefaultTypes (void)
 				ED_PASS_ERROR_EXTRAMSG(ED_CheckKey(kd, kd->defaultVal),
 					" while checking default block entry agrees with type")
 
-	return 0;
+	return ED_OK;
 }
 
 /**
@@ -726,12 +726,8 @@ static int ED_ProcessRanges (void)
 				int numElements = 0;
 				entityKeyRange_t *kr = kd->ranges[i];
 				const char *tmpRange_p = kr->str;
-				if (!keyType || (keyType & ED_TYPE_STRING)) {
-					snprintf(lastErr, sizeof(lastErr),
-						"ED_ProcessRanges: ranges may not be specified for strings. note that V_STRING is the default type. %s in %s",
-						kd->name, ed->classname);
-					return ED_ERROR;
-				}
+				ED_TEST_RETURN_ERROR(!keyType || (keyType & ED_TYPE_STRING), "ED_ProcessRanges: ranges may not be specified for strings. note that V_STRING is the default type. %s in %s",
+					kd->name, ed->classname);
 				while (tmpRange_p) {
 					const char *tok = COM_Parse(&tmpRange_p);
 					if (tok[0] == '\0')
