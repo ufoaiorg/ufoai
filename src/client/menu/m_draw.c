@@ -196,9 +196,6 @@ static void MN_DrawNode (menuNode_t *node) {
 		node->behaviour->draw(node);
 	}
 
-	/** @todo remove it when its possible */
-	R_ColorBlend(NULL);
-
 	/* draw all child */
 	for (child = node->firstChild; child; child = child->next) {
 		MN_DrawNode(child);
@@ -290,9 +287,6 @@ void MN_DrawMenus (void)
 	if (mn_debugmenu->integer == 2) {
 		MN_DrawDebugMenuNodeNames();
 	}
-
-	/** @todo better to use an assert(blend==NULL) to cleanup the code */
-	R_ColorBlend(NULL);
 }
 
 void MN_DrawCursor (void)
