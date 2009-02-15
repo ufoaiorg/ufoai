@@ -148,21 +148,16 @@ static int ED_CountEntities (const char **data_p)
 }
 
 /**
- * @return ED_ERROR in case of an error (out of memory), else 0.
+ * @return ED_ERROR or ED_OK.
  */
 static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex)
 {
 	entityDef_t *eDef = &entityDefs[entityIndex];
-	int classnameLen;
 
 	/* now we know how many there are in this entity, malloc */
 	eDef->keyDefs = (entityKeyDef_t *) malloc((numKeyDefs + 1) * sizeof(entityKeyDef_t));
+	ED_TEST_RETURN_ERROR(!eDef->keyDefs, "ED_AllocEntityDef: out of memory");
 	eDef->numKeyDefs = numKeyDefs;
-
-	if (!eDef->keyDefs) {
-		snprintf(lastErr, sizeof(lastErr), "ED_AllocEntityDef: out of memory");
-		return ED_ERROR;
-	}
 
 	/* and copy from temp buffer */
 	memcpy(eDef->keyDefs, newKeyDefs, numKeyDefs * sizeof(entityKeyDef_t));
@@ -171,11 +166,10 @@ static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int en
 	memset(&eDef->keyDefs[numKeyDefs], 0, sizeof(entityKeyDef_t));
 
 	/* classname is commonly used, put it in its own field, copied from keyDefs[0] */
-	classnameLen = strlen(eDef->keyDefs->desc) + 1;
-	eDef->classname = malloc(classnameLen * sizeof(char));
-	strncpy(eDef->classname, eDef->keyDefs->desc, classnameLen);
+	eDef->classname = strdup(eDef->keyDefs->desc);
+	ED_TEST_RETURN_ERROR(!eDef->classname, "ED_AllocEntityDef: out of memory");
 
-	return 0;
+	return ED_OK;
 }
 
 /**
@@ -531,18 +525,14 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 	/* create one if required */
 	if (!keyDef) {
 		keyDef = &keyDefsBuf[(*numKeyDefsSoFar_p)++];
-		if (*numKeyDefsSoFar_p >= ED_MAX_KEYS_PER_ENT) {
-			snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: too many keys for buffer");
-			return ED_ERROR;
-		}
+		ED_TEST_RETURN_ERROR(*numKeyDefsSoFar_p >= ED_MAX_KEYS_PER_ENT, "ED_PairParsed: too many keys for buffer");
 		keyDef->name = strdup(newName);
 		ED_TEST_RETURN_ERROR(!keyDef->name, "ED_PairParsed: out of memory");
 	}
 
-	if (keyDef->flags & mode & ~ED_RANGE) {/* multiple range defs are permitted, different elements can have different ranges */
-		snprintf(lastErr, sizeof(lastErr), "Duplicate %s for %s key. second value: %s", ED_Constant2Block(mode), newName, newVal);
-		return ED_ERROR;
-	}
+	/* multiple range defs are permitted, different elements can have different ranges */
+	ED_TEST_RETURN_ERROR(keyDef->flags & mode & ~ED_RANGE,
+		"Duplicate %s for %s key. second value: %s", ED_Constant2Block(mode), newName, newVal);
 
 	keyDef->flags |= mode;
 
@@ -550,7 +540,7 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 	switch (mode) {
 	case ED_MANDATORY:
 	case ED_OPTIONAL:
-	case ED_ABSTRACT:
+	case ED_ABSTRACT: /* intentional fall-through */
 		keyDef->desc = strdup(newVal);
 		ED_TEST_RETURN_ERROR(!keyDef->desc, "ED_PairParsed: out of memory while storing string.");
 		return ED_OK;
@@ -561,17 +551,13 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 	case ED_MODE_TYPE:
 		/* only optional or mandatory keys may have types, not possible to test for this here,
 		 * as the type block may come before the optional or mandatory block */
-
-		if (ED_ParseType(keyDef, newVal) == ED_ERROR)
-			return ED_ERROR; /* lastErr set in function call */
-		return 0;
+		ED_PASS_ERROR(ED_ParseType(keyDef, newVal));
+		return ED_OK;
 	case ED_RANGE:
-		/** @todo test only typed keys may have ranges, but this
-			* may only be tested after the whole ent has been parsed, as the
-			* blocks may come in any order. test that only */
-		if (ED_AllocRange(keyDef, newVal) == ED_ERROR)
-			return ED_ERROR;
-		return 0;
+		/* only typed keys may have ranges, this may only be tested after
+		 * the whole ent has been parsed: the blocks may come in any order */
+		ED_PASS_ERROR(ED_AllocRange(keyDef, newVal));
+		return ED_OK;
 	default:
 		ED_RETURN_ERROR("ED_PairParsed: parse mode not recognised");
 	}
@@ -579,7 +565,7 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 
 /**
  * Parses the defs, once the number of entity defs has been found
- * @return 0. ED_ERROR if there is an error. call ED_GetLastError to get the message
+ * @return ED_ERROR or ED_OK
  */
 static int ED_ParseEntities (const char **data_p)
 {
@@ -612,7 +598,7 @@ static int ED_ParseEntities (const char **data_p)
 			braceLevel--;
 			toggle ^= 1; /* reset, as toggle is only for counting proper text tokens, not braces */
 			if (braceLevel == 0) { /* finished parsing entity def and prepare for the next one */
-				ED_AllocEntityDef(keyDefBuf, keyIndex, entityIndex);
+				ED_PASS_ERROR(ED_AllocEntityDef(keyDefBuf, keyIndex, entityIndex));
 				entityIndex++;
 				if (entityIndex == numEntityDefs)
 					break;
@@ -664,7 +650,7 @@ static int ED_ParseEntities (const char **data_p)
 		}
 	}
 
-	return 0;
+	return ED_OK;
 }
 
 /**
