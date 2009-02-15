@@ -1401,9 +1401,9 @@ static void Irc_Connect_f (void)
 		} else
 			Com_Printf("Already connected.\n");
 
-	} else if (*irc_server->string && irc_port->value) {
+	} else if (irc_server->string[0] != '\0' && irc_port->integer) {
 		if (!irc_connected)
-			Cbuf_AddText(va("irc_connect %s %s %s\n", irc_server->string, irc_port->string, irc_channel->string));
+			Cbuf_AddText(va("irc_connect %s %i %s\n", irc_server->string, irc_port->integer, irc_channel->string));
 		else
 			Com_Printf("Already connected.\n");
 	} else
