@@ -594,8 +594,7 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 			return ED_ERROR;
 		return 0;
 	default:
-		snprintf(lastErr, sizeof(lastErr), "ED_PairParsed: parse mode not recognised");
-		return ED_ERROR;
+		ED_RETURN_ERROR("ED_PairParsed: parse mode not recognised");
 	}
 }
 
