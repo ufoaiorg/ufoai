@@ -82,39 +82,27 @@ const char *BS_BuyTypeName (const int buyCat)
 	switch (buyCat) {
 	case FILTER_S_PRIMARY:
 		return _("Primary weapons");
-		break;
 	case FILTER_S_SECONDARY:
 		return _("Secondary weapons");
-		break;
 	case FILTER_S_HEAVY:
 		return _("Heavy weapons");
-		break;
 	case FILTER_S_MISC:
 		return _("Miscellaneous");
-		break;
 	case FILTER_S_ARMOUR:
 		return _("Personal Armour");
-		break;
 	case FILTER_AIRCRAFT:
 		return _("Aircraft");
-		break;
 	case FILTER_DUMMY:
 		return _("Other");
-		break;
 	case FILTER_CRAFTITEM:
 		return _("Aircraft equipment");
-		break;
 	case FILTER_UGVITEM:
 		return _("Tanks");
-		break;
 	case FILTER_DISASSEMBLY:
 		return _("Disassembling");
-		break;
 	default:
 		return "Unknown";
-		break;
 	}
-	return "Unknown";
 }
 
 /**
