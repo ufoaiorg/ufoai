@@ -86,29 +86,6 @@ qboolean MN_TextScroll (menuNode_t *node, int offset)
 }
 
 /**
- * @brief Call to say to the node the text is updated
- */
-static void MN_TextUpdated_f (void)
-{
-	menuNode_t *node;
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <nodename>\n", Cmd_Argv(0));
-		return;
-	}
-
-	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
-	if (!node) {
-		Com_DPrintf(DEBUG_CLIENT, "MN_TextUpdateLines_f: Node '%s.%s' not found.\n", MN_GetActiveMenu()->name, Cmd_Argv(1));
-		return;
-	}
-
-	/** @todo fix it better */
-	/* bad hack to compute the lines */
-	MN_TextNodeDraw(node);
-}
-
-/**
  * @brief Scriptfunction that gets the wanted text node and scrolls the text.
  */
 static void MN_TextScroll_f (void)
@@ -637,5 +614,4 @@ void MN_RegisterTextNode (nodeBehaviour_t *behaviour)
 	behaviour->properties = properties;
 
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
-	Cmd_AddCommand("mn_textupdated", MN_TextUpdated_f, "Event to inform node the text is updated");
 }
