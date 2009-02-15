@@ -674,7 +674,7 @@ static void HUD_DisplayFiremodes_f (void)
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!CL_WorkingFiremode(selActor, qtrue)) {	/* No usable firemode selected. */
 		/* Set default firemode */
-		CL_SetDefaultReactionFiremode(selActor, ACTOR_GET_HAND_INDEX(selChr->RFmode.hand));
+		CL_SetDefaultReactionFiremode(selActor, ACTOR_GET_HAND_CHAR(selChr->RFmode.hand));
 	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
