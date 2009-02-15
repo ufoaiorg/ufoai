@@ -371,11 +371,9 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 
 		i++;
 	}
-	if (i != keyDef->vLen) {
-		snprintf(lastErr, sizeof(lastErr), "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key",
+
+	ED_TEST_ERROR(i != keyDef->vLen, "ED_CheckNumericType: %i elements in vector that should have %i for \"%s\" key",
 			i, keyDef->vLen, keyDef->name);
-		return ED_ERROR;
-	}
 
 	return 1;
 }
@@ -383,8 +381,8 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 /**
  * @brief tests if a value string matches the type for this key. Also checks the value against the
  * range, if one was defined.
- * @return 1 if the value string matches the type, 0 if it does not and ED_ERROR if
- * there is an error (call ED_GetLastError)
+ * @return ED_OK or ED_ERROR
+ * @sa ED_GetLastError
  * @note abstract (radiant) keys may not have types. keys used here must be declared in entities.ufo in
  * an optional or mandatory block.
  */
@@ -415,7 +413,7 @@ int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 		return ED_CheckNumericType(kd, value, ED_TYPE_INT);
 	case ED_TYPE_STRING:
 	case 0: /* string is the default */
-		return 1; /* all strings are good */
+		return ED_OK; /* all strings are good */
 	default:
 		snprintf(lastErr, sizeof(lastErr), "ED_CheckTypeEntityKey: type not recognised in key def");
 		return ED_ERROR;
