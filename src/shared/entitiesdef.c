@@ -38,7 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ED_MAX_TOKEN_LEN 512
 #define ED_MAX_ERR_LEN 512
 
-static char lastErr[ED_MAX_ERR_LEN];
+static char lastErr[ED_MAX_ERR_LEN]; /**< for storing last error message */
+static char lastErrExtra[ED_MAX_ERR_LEN]; /**< temporary storage for extra information to be added to lastErr */
 static int lastCheckedInt; /**< @sa ED_CheckNumber */
 static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 
@@ -69,6 +70,20 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
  */
 #define ED_PASS_ERROR(function_call) \
 	if ((function_call) == ED_ERROR) { \
+		return ED_ERROR; \
+	}
+
+/**
+ * @brief if the function returns ED_ERROR, then the function that the
+ * macro is in also returns ED_ERROR. Note that the called function is expected
+ * to set lastErr, probably by using the ED_TEST_RETURN_ERROR macro. this macro then
+ * appends extra detail to the message to give context
+ */
+#define ED_PASS_ERROR_EXTRAMSG(function_call,...) \
+	if ((function_call) == ED_ERROR) { \
+		snprintf(lastErrExtra, sizeof(lastErr), __VA_ARGS__); \
+		strncat(lastErr, lastErrExtra, sizeof(lastErr)); \
+		lastErr[ED_MAX_ERR_LEN-1] = '\0'; \
 		return ED_ERROR; \
 	}
 
@@ -373,8 +388,8 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 
-		if (ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE) == ED_ERROR)
-			return ED_ERROR;
+		ED_PASS_ERROR_EXTRAMSG(ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE),
+			" in key \"%s\"", keyDef->name);
 
 		if (ED_ERROR == ED_CheckRange(keyDef, floatOrInt, i))
 			return ED_ERROR;
@@ -685,8 +700,9 @@ static int ED_CheckDefaultTypes (void)
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
 		for (kd = ed->keyDefs; kd->name; kd++)
 			if (kd->defaultVal)
-				if (ED_CheckKey(kd, kd->defaultVal) == ED_ERROR)
-					return ED_ERROR;
+				ED_PASS_ERROR_EXTRAMSG(ED_CheckKey(kd, kd->defaultVal),
+					" while checking default block entry agrees with type")
+
 	return 0;
 }
 
