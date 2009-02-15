@@ -49,10 +49,12 @@ qboolean MN_CheckCondition (menuDepends_t *condition)
 	if (!condition->var)
 		return qtrue;
 
-	/** @todo we can't update if at run time, is Q_strcmp really need? */
-	if (!condition->cvar || Q_strcmp(condition->cvar->name, condition->var)) {
+	/** @todo we can't update it at the run time */
+#if 0	/**< this code cache the result; it make problem when we delete/create cvar */
+	if (!condition->cvar || Q_strcmp(condition->cvar->name, condition->var))
+#endif
 		condition->cvar = Cvar_Get(condition->var, condition->value ? condition->value : "", 0, "Menu if condition cvar");
-	}
+
 
 	assert(condition->cvar);
 
