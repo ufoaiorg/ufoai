@@ -593,7 +593,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 			EXTRADATA(node).rows = node->size[1] / lineheight;
 		} else {
 			EXTRADATA(node).rows = 1;
-			Com_Printf("MN_TextNodeLoaded: node '%s.%s' has no rows value\n", node->menu->name, node->name);
+			Com_Printf("MN_TextNodeLoaded: node '%s' has no rows value\n", MN_GetPath(node));
 		}
 	}
 
@@ -604,14 +604,17 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 
 	/* is text slot exists */
 	if (EXTRADATA(node).num >= MAX_MENUTEXTS)
-		Sys_Error("Error in node %s.%s - max menu num exeeded (num: %i, max: %i)", node->menu->name, node->name, EXTRADATA(node).num, MAX_MENUTEXTS);
+		Sys_Error("Error in node %s - max menu num exeeded (num: %i, max: %i)", MN_GetPath(node), EXTRADATA(node).num, MAX_MENUTEXTS);
 
 #ifdef DEBUG
 	if (EXTRADATA(node).rows != (int)(node->size[1] / lineheight)) {
-		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s.%s' differs from size (%.0f) and format (%i) values\n",
-			EXTRADATA(node).rows, node->menu->name, node->name, node->size[1], lineheight);
+		Com_Printf("MN_TextNodeLoaded: rows value (%i) of node '%s' differs from size (%.0f) and format (%i) values\n",
+			EXTRADATA(node).rows, MN_GetPath(node), node->size[1], lineheight);
 	}
 #endif
+
+	if (EXTRADATA(node).num == TEXT_NULL)
+		Com_Printf("MN_TextNodeLoaded: 'textid' property of node '%s' is not set\n", MN_GetPath(node));
 }
 
 static const value_t properties[] = {

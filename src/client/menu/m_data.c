@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief
  */
 static const char *const menutextid_names[] = {
+	"", /**< NULL value */
 	"TEXT_STANDARD", "TEXT_LIST", "TEXT_UFOPEDIA", "TEXT_BUILDINGS", "TEXT_BUILDING_INFO",
 	"TEXT_RESEARCH", "TEXT_POPUP", "TEXT_POPUP_INFO", "TEXT_AIRCRAFT_LIST",
 	"TEXT_AIRCRAFT_INFO", "TEXT_MESSAGESYSTEM", "TEXT_CAMPAIGN_LIST",

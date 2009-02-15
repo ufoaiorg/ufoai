@@ -33,6 +33,7 @@ struct menuOption_s;
 
 /** @brief linked into mn.menuText - defined in menu scripts via num */
 typedef enum {
+	TEXT_NULL,		/**< default value, should not be used */
 	TEXT_STANDARD,
 	TEXT_LIST,
 	TEXT_UFOPEDIA,
