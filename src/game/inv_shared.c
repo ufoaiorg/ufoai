@@ -389,6 +389,10 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 	if (!filterTypeID)
 		return MAX_FILTERTYPES;
 
+	/* default filter type is primary */
+	if (filterTypeID[0] == '\0')
+		return FILTER_S_PRIMARY;
+
 	for (i = 0; i < MAX_FILTERTYPES; i++) {
 		if (filterTypeNames[i] && !Q_strcmp(filterTypeNames[i], filterTypeID))
 			return i;
