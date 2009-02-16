@@ -28782,13 +28782,13 @@
 {
 "classname" "info_alien_start"
 "origin" "1136 1744 92"
-"angle" "-1.4033e-014"
+"angle" "0"
 }
 // entity 436
 {
 "classname" "info_alien_start"
 "origin" "304 16 92"
-"angle" "-1.4033e-014"
+"angle" "0"
 }
 // entity 437
 {
