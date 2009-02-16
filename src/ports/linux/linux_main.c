@@ -29,6 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 #include "../unix/unix_curses.h"
 
+#ifdef HAVE_EXECINFO
+#include <execinfo.h>
+#define MAX_BACKTRACE_SYMBOLS 50
+#endif
+
 cvar_t* sys_priority;
 cvar_t* sys_affinity;
 cvar_t* sys_os;
@@ -37,6 +42,18 @@ cvar_t* sys_os;
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
+
+/**
+ * @brief On platforms supporting it, print a backtrace.
+ */
+static void Sys_Backtrace (void)
+{
+#ifdef HAVE_EXECINFO
+	void *symbols[MAX_BACKTRACE_SYMBOLS];
+	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
+	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+#endif
+}
 
 void Sys_Init (void)
 {
@@ -65,6 +82,7 @@ static void Sys_Signal (int s)
 		break;
 #endif
 	default:
+		Sys_Backtrace();
 		Sys_Error("Received signal %d.\n", s);
 		break;
 	}
