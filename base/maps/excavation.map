@@ -9716,7 +9716,7 @@
 "_color" "1 1 1"
 "light" "120"
 "origin" "18 367 114"
-"angle" "180"
+"angle" "-2"
 "spawnflags" "1"
 }
 // entity 98
@@ -9725,7 +9725,7 @@
 "_color" "1 1 1"
 "origin" "19 206 114"
 "light" "120"
-"angle" "180"
+"angle" "-2"
 "spawnflags" "1"
 }
 // entity 99
@@ -9734,7 +9734,7 @@
 "_color" "1 1 1"
 "light" "120"
 "origin" "22 46 114"
-"angle" "180"
+"angle" "-2"
 "spawnflags" "1"
 }
 // entity 100
@@ -9743,7 +9743,7 @@
 "_color" "1 1 1"
 "origin" "22 -115 114"
 "light" "120"
-"angle" "180"
+"angle" "-2"
 "spawnflags" "1"
 }
 // entity 101
