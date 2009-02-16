@@ -31,14 +31,16 @@ ifeq ($(BUILD_DEBUG),1)
 # -fvar-tracking
 else
 	BUILDDIR=release-$(TARGET_OS)-$(TARGET_CPU)
-	CFLAGS+=-DNDEBUG $(RELEASE_CFLAGS) -O2
-	CPPFLAGS+=-DNDEBUG -O2
+	CFLAGS+=-ggdb -DNDEBUG $(RELEASE_CFLAGS) -O2
+	CPPFLAGS+=-ggdb -DNDEBUG -O2
 endif
 
 ifeq ($(PROFILING),1)
 	CFLAGS+=-pg
 	LNKFLAGS+=-pg
 endif
+
+LNKFLAGS+=-rdynamic
 
 ifeq ($(PARANOID),1)
 	CFLAGS+=-DPARANOID
