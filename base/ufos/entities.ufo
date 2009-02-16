@@ -47,7 +47,7 @@ entity info_player_start {
 	}
 
 	range {
-		angle	"0 45 90 135 180 225 270 315 360"
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
 	}
 
 	default {
@@ -71,7 +71,13 @@ entity info_human_start {
 
 	type {
 		origin	"V_FLOAT 3"
+		angle	"V_INT"
 	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+	}
+
 }
 
 entity info_alien_start {
@@ -89,7 +95,13 @@ entity info_alien_start {
 
 	type {
 		origin	"V_FLOAT 3"
+		angle	"V_INT"
 	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+	}
+
 }
 
 entity info_2x2_start {
@@ -108,7 +120,13 @@ entity info_2x2_start {
 
 	type {
 		origin	"V_FLOAT 3"
+		angle	"V_INT"
 	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+	}
+
 }
 
 entity info_civilian_start {
@@ -126,7 +144,13 @@ entity info_civilian_start {
 
 	type {
 		origin	"V_FLOAT 3"
+		angle	"V_INT"
 	}
+
+	range {
+		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
+	}
+
 }
 
 entity info_null {
