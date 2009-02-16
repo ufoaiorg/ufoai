@@ -88,66 +88,7 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 	}
 
 /**
- * counts the number of entity types defined in entities.ufo
- * @return The number of entities. or ED_ERROR (which is -1) if there is an error. call ED_GetLastError to get the message
- */
-static int ED_CountEntities (const char **data_p)
-{
-	int braceLevel = 0;
-	int tokensOnLevel0 = 0;
-	const char *parsedToken;
-	int numEntities = 0;
-
-	while (data_p) {
-		parsedToken = COM_Parse(data_p);
-
-		/* zero length tokens are returned at the end of data
-		 * they are also returned by valid values "" in the file,
-		 * hence the brace level check */
-		if (strlen(parsedToken) == 0 && braceLevel == 0)
-			break;
-
-		if (parsedToken[0] == '{') {
-			tokensOnLevel0 = 0;
-			braceLevel++;
-			ED_TEST_RETURN_ERROR(braceLevel > 2, "Too many open braces, nested %i deep", braceLevel);
-			continue;
-		}
-
-		if (parsedToken[0] == '}') {
-			braceLevel--;
-			ED_TEST_RETURN_ERROR(braceLevel < 0, "Too many close braces. after %i entities", numEntities);
-			continue;
-		}
-
-		/* ignore everything inside the entity defs, as we are only counting them now */
-		if (braceLevel != 0)
-			continue;
-
-		if (tokensOnLevel0 == 0 && parsedToken[0] != '\0') {
-			if (!strcmp(parsedToken, "entity")) {
-				tokensOnLevel0++;
-				continue;
-			}
-			ED_RETURN_ERROR( "Next entity expected, found \"%s\" token", parsedToken);
-		}
-
-		if (tokensOnLevel0 == 1) { /* classname of entity */
-			tokensOnLevel0++;
-			numEntities++;
-			continue;
-		}
-
-		ED_TEST_RETURN_ERROR(tokensOnLevel0 > 1, "'{' to start entity definition expected. \"%s\" found.", parsedToken)
-	}
-
-	if (numEntities == 0)
-		snprintf(lastErr, sizeof(lastErr), "No entities found");
-
-	return numEntities;
-}
-
-/**
+ * @brief allocate space for key defs etc, pointers for which are stored in the entityDef_t
  * @return ED_ERROR or ED_OK.
  */
 static int ED_AllocEntityDef (entityKeyDef_t *newKeyDefs, int numKeyDefs, int entityIndex)
@@ -563,7 +504,6 @@ static int ED_ParseEntities (const char **data_p)
 	int braceLevel = 0;
 	int tokensOnLevel0 = 0;
 	int mode = ED_OPTIONAL;
-	int entityIndex = 0;
 	entityKeyDef_t keyDefBuf[ED_MAX_KEYS_PER_ENT];
 	char lastTokenBuf[ED_MAX_TOKEN_LEN];
 	int keyIndex = 0;
@@ -574,8 +514,12 @@ static int ED_ParseEntities (const char **data_p)
 		const char *parsedToken = COM_Parse(data_p);
 		toggle ^= 1;
 
+		if (parsedToken[0] == '\0' && braceLevel == 0)
+			break;
+
 		if (parsedToken[0] == '{') {
 			braceLevel++;
+			ED_TEST_RETURN_ERROR(braceLevel > 2, "Too many open braces, nested %i deep", braceLevel);
 			ED_TEST_RETURN_ERROR(!toggle, "ED_ParseEntities: Incorrect number of tokens before '{'");
 			toggle ^= 1; /* reset, as toggle is only for counting proper text tokens, not braces */
 			tokensOnLevel0 = 0;
@@ -584,20 +528,23 @@ static int ED_ParseEntities (const char **data_p)
 
 		if (parsedToken[0] == '}') {
 			braceLevel--;
+			ED_TEST_RETURN_ERROR(braceLevel < 0, "Too many close braces. after %i entities", numEntityDefs);
 			toggle ^= 1; /* reset, as toggle is only for counting proper text tokens, not braces */
 			if (braceLevel == 0) { /* finished parsing entity def and prepare for the next one */
-				ED_PASS_ERROR(ED_AllocEntityDef(keyDefBuf, keyIndex, entityIndex));
-				entityIndex++;
-				if (entityIndex == numEntityDefs)
-					break;
+				ED_PASS_ERROR(ED_AllocEntityDef(keyDefBuf, keyIndex, numEntityDefs));
+				numEntityDefs++;
+				ED_TEST_RETURN_ERROR(numEntityDefs >= ED_MAX_DEFS, "ED_ParseEntities: too many entity defs for buffer");
 			}
-			if (braceLevel == 1) { /* ending a default, mandatory, etc block, go back to default parse mode */
+			if (braceLevel == 1) /* ending a default, mandatory, etc block, go back to default parse mode */
 				mode = ED_ABSTRACT;
-			}
+
 			continue;
 		}
 
 		if (braceLevel == 0) {
+			if (tokensOnLevel0 == 0 && strcmp(parsedToken, "entity"))
+				ED_RETURN_ERROR( "Next entity expected, found \"%s\"", parsedToken);
+
 			if (tokensOnLevel0 == 1) {/* classname of entity, start parsing new entity */
 				const entityDef_t *prevED = ED_GetEntityDef(parsedToken);
 				ED_TEST_RETURN_ERROR(prevED, "ED_ParseEntities: duplicate entity definition \"%s\"", parsedToken);
@@ -606,6 +553,10 @@ static int ED_ParseEntities (const char **data_p)
 				ED_PASS_ERROR(ED_PairParsed(keyDefBuf, &keyIndex, "classname", parsedToken, ED_MANDATORY));
 				mode = ED_ABSTRACT;
 			}
+
+			if (tokensOnLevel0 > 1)
+				ED_RETURN_ERROR( "Start of entity block expected found \"%s\"", parsedToken);
+
 			tokensOnLevel0++;
 		} else { /* braceLevel > 0 */
 			if (!strcmp("mandatory", parsedToken)) {
@@ -737,35 +688,26 @@ int ED_Parse (const char **data_p)
 	 * it to free(). also, it is parsed twice, and Com_Parse changes *data_p.
 	 * hence the use of copies of the pointer*/
 	const char *copy_data_p = *data_p;
-	size_t ed_block_size;
+	static int done = 0;
 
 	/* only do this once, repeat calls are OK */
-	if (numEntityDefs)
+	if (done)
 		return ED_OK;
 
 	snprintf(lastErr, sizeof(lastErr), "no error");
-
-	numEntityDefs = ED_CountEntities(&copy_data_p);
-	ED_PASS_ERROR(numEntityDefs);
-	ED_TEST_RETURN_ERROR(numEntityDefs == 0, "ED_Parse: no entity definitions found");
-
-	/* make the block one larger than required, so when finished there are NULLs
-	 * at the end to allow looping through with pointers. */
-	ed_block_size = (numEntityDefs + 1) * sizeof(entityDef_t);
-	entityDefs = (entityDef_t *)malloc(ed_block_size);
-
-	ED_TEST_RETURN_ERROR(!entityDefs, "ED_Parse: out of memory");
-
 	/* memset to NULL now so that looping through the ones that have already
 	 * been parsed is possible while the rest are parsed */
-	memset(entityDefs, 0, ed_block_size);
+	memset(entityDefs, 0, (ED_MAX_DEFS + 1) * sizeof(entityDef_t));
+	numEntityDefs = 0;
 
-	copy_data_p = *data_p;
 	ED_PASS_ERROR(ED_ParseEntities(&copy_data_p));
+	ED_TEST_RETURN_ERROR(numEntityDefs == 0, "ED_Parse: Zero entity definitions found");
 
 	ED_PASS_ERROR(ED_ProcessRanges());
 
 	ED_PASS_ERROR(ED_CheckDefaultTypes());
+
+	done = 1; /* do not do it again */
 
 	return ED_OK;
 }
@@ -860,7 +802,6 @@ void ED_Free (void)
 			}
 			free(kd = ed->keyDefs);
 		}
-		free(entityDefs);
 	}
 }
 

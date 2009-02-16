@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef ENITIESDEF_H
 # define ENITIESDEF_H
 
+# define	ED_MAX_DEFS		64
+
 # define	ED_ERROR		-1
 # define	ED_OK			1
 
@@ -80,6 +82,6 @@ const char *ED_GetLastError(void);
 void ED_Free(void);
 
 int numEntityDefs;
-entityDef_t *entityDefs;
+entityDef_t entityDefs[ED_MAX_DEFS + 1];
 
 #endif
