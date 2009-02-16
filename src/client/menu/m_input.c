@@ -81,7 +81,7 @@ void MN_RequestFocus (menuNode_t* node)
 	if (node == focusNode)
 		return;
 
-	/* invalidte the data before calling the event */
+	/* invalidate the data before calling the event */
 	tmp = focusNode;
 	focusNode = NULL;
 
@@ -100,7 +100,7 @@ void MN_RequestFocus (menuNode_t* node)
 /**
  * @brief check if a node got the focus
  */
-qboolean MN_HasFocus (menuNode_t* node)
+qboolean MN_HasFocus (const menuNode_t* node)
 {
 	return node == focusNode;
 }
@@ -114,13 +114,14 @@ qboolean MN_HasFocus (menuNode_t* node)
 void MN_RemoveFocus (void)
 {
 	menuNode_t* tmp;
+
 	if (MN_GetMouseCapture())
 		return;
 
 	if (!focusNode)
 		return;
 
-	/* invalidte the data before calling the event */
+	/* invalidate the data before calling the event */
 	tmp = focusNode;
 	focusNode = NULL;
 
@@ -128,7 +129,6 @@ void MN_RemoveFocus (void)
 	if (tmp->behaviour->lostFocus) {
 		tmp->behaviour->lostFocus(tmp);
 	}
-
 }
 
 /**

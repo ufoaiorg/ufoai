@@ -588,7 +588,6 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 
 static const value_t properties[] = {
 	{"scrollbar", V_BOOL, offsetof(menuNode_t, u.text.scrollbar), MEMBER_SIZEOF(menuNode_t, u.text.scrollbar)},
-	{"scrollbarleft", V_BOOL, offsetof(menuNode_t, u.text.scrollbarLeft), MEMBER_SIZEOF(menuNode_t, u.text.scrollbarLeft)},
 	{"lineselected", V_INT, offsetof(menuNode_t, u.text.textLineSelected), MEMBER_SIZEOF(menuNode_t, u.text.textLineSelected)},
 	{"textid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.text.num), MEMBER_SIZEOF(menuNode_t, u.text.num)},
 	{"rows", V_INT, offsetof(menuNode_t, u.text.rows), MEMBER_SIZEOF(menuNode_t, u.text.rows)},

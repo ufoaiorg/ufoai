@@ -76,7 +76,7 @@ static inline void MN_TextEntryNodeFireAbort (menuNode_t *node)
 /**
  * @brief callback from the keyboard
  */
-static void MN_TextEntryNodeKeyboardChanged_f ()
+static void MN_TextEntryNodeKeyboardChanged_f (void)
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
 	MN_TextEntryNodeFireChange(node);
@@ -92,12 +92,12 @@ static void MN_TextEntryNodeKeyboardChanged_f ()
 /**
  * @brief callback from the keyboard
  */
-static void MN_TextEntryNodeKeyboardAborted_f ()
+static void MN_TextEntryNodeKeyboardAborted_f (void)
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
 	MN_TextEntryNodeFireAbort(node);
 
-	/* remove the focus to show chnges */
+	/* remove the focus to show changes */
 	if (MN_HasFocus(node)) {
 		Cmd_RemoveCommand(cmdChanged);
 		Cmd_RemoveCommand(cmdAborted);
