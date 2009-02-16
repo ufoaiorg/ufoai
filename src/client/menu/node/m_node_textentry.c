@@ -158,7 +158,7 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 /**
  * @brief Called when the node got the focus
  */
-static void MN_TextEntryGotFocus (menuNode_t *node)
+static void MN_TextEntryFocusGained (menuNode_t *node)
 {
 	/* register keyboard callback */
 	snprintf(cmdChanged, sizeof(cmdChanged), "%s_changed", &((char*)node->text)[6]);
@@ -181,7 +181,7 @@ static void MN_TextEntryGotFocus (menuNode_t *node)
 /**
  * @brief Called when the node lost the focus
  */
-static void MN_TextEntryLostFocus (menuNode_t *node)
+static void MN_TextEntryFocusLost (menuNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
 	if (cmdChanged[0] == '\0') {
@@ -295,8 +295,8 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
 	behaviour->leftClick = MN_TextEntryNodeClick;
-	behaviour->gotFocus = MN_TextEntryGotFocus;
-	behaviour->lostFocus = MN_TextEntryLostFocus;
+	behaviour->focusGained = MN_TextEntryFocusGained;
+	behaviour->focusLost = MN_TextEntryFocusLost;
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;

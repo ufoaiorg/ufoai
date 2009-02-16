@@ -208,8 +208,8 @@ typedef struct nodeBehaviour_s {
 	qboolean (*dndFinished)(menuNode_t *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
 
 	/* focus event */
-	void (*gotFocus)(menuNode_t *node);
-	void (*lostFocus)(menuNode_t *node);
+	void (*focusGained)(menuNode_t *node);
+	void (*focusLost)(menuNode_t *node);
 
 	/* Planned */
 #if 0

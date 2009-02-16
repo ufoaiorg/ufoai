@@ -113,8 +113,6 @@ const static registerFunction_t registerFunctions[] = {
 };
 #define NUMBER_OF_BEHAVIOURS lengthof(registerFunctions)
 
-extern menuNode_t *focusNode;
-
 /**
  * @brief List of all node behaviours, indexes by nodetype num.
  */
@@ -209,54 +207,6 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 
 	/* Image is transparent at this position. */
 	return qfalse;
-}
-#endif
-
-#if 0 /* not used */
-/**
- */
-qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
-{
-	int sx, sy, tx, ty, i;
-	vec2_t nodepos;
-
-	/* skip all unactive nodes */
-	if (node->behaviour->isVirtual)
-		return qfalse;
-
-	if (focusNode && mouseSpace != MS_NULL)
-		return qfalse;
-
-	if (MN_GetMouseCapture())
-		return qfalse;
-
-	if (node->invis || !MN_CheckVisibility(node))
-		return qfalse;
-
-	MN_GetNodeAbsPos(node, nodepos);
-
-	/* check for click action */
-	if (!node->behaviour->leftClick && !node->behaviour->rightClick && !node->behaviour->middleClick && !node->behaviour->mouseWheel && !node->onClick && !node->onRightClick && !node->onMiddleClick && !node->onWheel && !node->onMouseIn && !node->onMouseOut && !node->onWheelUp && !node->onWheelDown)
-		return qfalse;
-
-	if (node->size[0] == 0 || node->size[1] == 0)
-		return qfalse;
-
-	sx = node->size[0];
-	sy = node->size[1];
-	tx = x - nodepos[0];
-	ty = y - nodepos[1];
-
-	if (tx < 0 || ty < 0 || tx > sx || ty > sy)
-		return qfalse;
-
-	for (i = 0; i < node->excludeRectNum; i++) {
-		if (x >= node->menu->pos[0] + node->excludeRect[i].pos[0] && x <= node->menu->pos[0] + node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
-		 && y >= node->menu->pos[1] + node->excludeRect[i].pos[1] && y <= node->menu->pos[1] + node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
-			return qfalse;
-	}
-
-	return qtrue;
 }
 #endif
 
@@ -421,8 +371,8 @@ static const size_t virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, dndLeave),
 	offsetof(nodeBehaviour_t, dndDrop),
 	offsetof(nodeBehaviour_t, dndFinished),
-	offsetof(nodeBehaviour_t, gotFocus),
-	offsetof(nodeBehaviour_t, lostFocus),
+	offsetof(nodeBehaviour_t, focusGained),
+	offsetof(nodeBehaviour_t, focusLost),
 	0
 };
 

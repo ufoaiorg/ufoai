@@ -72,6 +72,95 @@ void MN_SetCvar (const char *name, const char *str, float value)
 static menuNode_t* focusNode = NULL;
 
 /**
+ * @brief Execute the current focused action node
+ * @note Action nodes are nodes with click defined
+ * @sa Key_Event
+ * @sa MN_FocusNextActionNode
+ */
+qboolean MN_FocusExecuteActionNode (void)
+{
+#if 0	/**< @todo need a cleanup */
+	if (mouseSpace != MS_MENU)
+		return qfalse;
+
+	if (MN_GetMouseCapture())
+		return qfalse;
+
+	if (focusNode) {
+		if (focusNode->onClick) {
+			MN_ExecuteEventActions(focusNode, focusNode->onClick);
+		}
+		MN_ExecuteEventActions(focusNode, focusNode->onMouseOut);
+		focusNode = NULL;
+		return qtrue;
+	}
+#endif
+	return qfalse;
+}
+
+#if 0	/**< @todo need a cleanup */
+/**
+ * @sa MN_FocusExecuteActionNode
+ * @note node must not be in menu
+ */
+static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
+{
+	if (node)
+		node = node->next;
+	while (node) {
+		if (MN_CheckVisibility(node) && !node->invis
+		 && ((node->onClick && node->onMouseIn) || node->onMouseIn))
+			return node;
+		node = node->next;
+	}
+	return NULL;
+}
+#endif
+
+/**
+ * @brief Set the focus to the next action node
+ * @note Action nodes are nodes with click defined
+ * @sa Key_Event
+ * @sa MN_FocusExecuteActionNode
+ * @todo understand the function; use for "i" an understandable name; should move in into global static.
+ */
+qboolean MN_FocusNextActionNode (void)
+{
+#if 0	/**< @todo need a cleanup */
+	menuNode_t* menu;
+	static int i = MAX_MENUSTACK + 1;	/* to cycle between all menus */
+
+	if (mouseSpace != MS_MENU)
+		return qfalse;
+
+	if (MN_GetMouseCapture())
+		return qfalse;
+
+	if (i >= mn.menuStackPos)
+		i = MN_GetLastFullScreenWindow();
+
+	assert(i >= 0);
+
+	if (focusNode) {
+		menuNode_t *node = MN_GetNextActionNode(focusNode);
+		if (node)
+			return MN_FocusSetNode(node);
+	}
+
+	while (i < mn.menuStackPos) {
+		menu = mn.menuStack[i++];
+		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstChild)))
+			return qtrue;
+	}
+	i = MN_GetLastFullScreenWindow();
+
+	/* no node to focus */
+	MN_RemoveFocus();
+#endif
+	return qfalse;
+}
+
+/**
  * @brief request the focus for a node
  */
 void MN_RequestFocus (menuNode_t* node)
@@ -86,14 +175,14 @@ void MN_RequestFocus (menuNode_t* node)
 	focusNode = NULL;
 
 	/* lost the focus */
-	if (tmp && tmp->behaviour->lostFocus) {
-		tmp->behaviour->lostFocus(tmp);
+	if (tmp && tmp->behaviour->focusLost) {
+		tmp->behaviour->focusLost(tmp);
 	}
 
 	/* get the focus */
 	focusNode = node;
-	if (focusNode->behaviour->gotFocus) {
-		focusNode->behaviour->gotFocus(focusNode);
+	if (focusNode->behaviour->focusGained) {
+		focusNode->behaviour->focusGained(focusNode);
 	}
 }
 
@@ -126,8 +215,8 @@ void MN_RemoveFocus (void)
 	focusNode = NULL;
 
 	/* callback the lost of the focus */
-	if (tmp->behaviour->lostFocus) {
-		tmp->behaviour->lostFocus(tmp);
+	if (tmp->behaviour->focusLost) {
+		tmp->behaviour->focusLost(tmp);
 	}
 }
 

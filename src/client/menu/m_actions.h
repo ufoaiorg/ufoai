@@ -79,9 +79,6 @@ void MN_ExecuteEventActions(const struct menuNode_s* source, const menuAction_t*
 void MN_ExecuteConFuncActions(const struct menuNode_s* source, const menuAction_t* firstAction);
 qboolean MN_IsInjectedString(const char *string);
 
-qboolean MN_FocusNextActionNode(void);
-qboolean MN_FocusExecuteActionNode(void);
-
 menuAction_t *MN_SetMenuAction(menuAction_t** action, int type, const void *data);
 
 #endif

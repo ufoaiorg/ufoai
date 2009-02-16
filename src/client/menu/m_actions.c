@@ -300,99 +300,10 @@ void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* first
 }
 
 /**
- * @sa MN_FocusExecuteActionNode
- * @note node must not be in menu
- */
-static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
-{
-#if 0	/**< @todo need a cleanup */
-	if (node)
-		node = node->next;
-	while (node) {
-		if (MN_CheckVisibility(node) && !node->invis
-		 && ((node->onClick && node->onMouseIn) || node->onMouseIn))
-			return node;
-		node = node->next;
-	}
-#endif
-	return NULL;
-}
-
-/**
- * @brief Execute the current focused action node
- * @note Action nodes are nodes with click defined
- * @sa Key_Event
- * @sa MN_FocusNextActionNode
- */
-qboolean MN_FocusExecuteActionNode (void)
-{
-#if 0	/**< @todo need a cleanup */
-	if (mouseSpace != MS_MENU)
-		return qfalse;
-
-	if (MN_GetMouseCapture())
-		return qfalse;
-
-	if (focusNode) {
-		if (focusNode->onClick) {
-			MN_ExecuteEventActions(focusNode, focusNode->onClick);
-		}
-		MN_ExecuteEventActions(focusNode, focusNode->onMouseOut);
-		focusNode = NULL;
-		return qtrue;
-	}
-#endif
-	return qfalse;
-}
-
-/**
- * @brief Set the focus to the next action node
- * @note Action nodes are nodes with click defined
- * @sa Key_Event
- * @sa MN_FocusExecuteActionNode
- * @todo understand the function; use for "i" an understandable name; should move in into global static.
- */
-qboolean MN_FocusNextActionNode (void)
-{
-#if 0	/**< @todo need a cleanup */
-	menuNode_t* menu;
-	static int i = MAX_MENUSTACK + 1;	/* to cycle between all menus */
-
-	if (mouseSpace != MS_MENU)
-		return qfalse;
-
-	if (MN_GetMouseCapture())
-		return qfalse;
-
-	if (i >= mn.menuStackPos)
-		i = MN_GetLastFullScreenWindow();
-
-	assert(i >= 0);
-
-	if (focusNode) {
-		menuNode_t *node = MN_GetNextActionNode(focusNode);
-		if (node)
-			return MN_FocusSetNode(node);
-	}
-
-	while (i < mn.menuStackPos) {
-		menu = mn.menuStack[i++];
-		if (MN_FocusSetNode(MN_GetNextActionNode(menu->firstChild)))
-			return qtrue;
-	}
-	i = MN_GetLastFullScreenWindow();
-
-	/* no node to focus */
-	MN_RemoveFocus();
-#endif
-	return qfalse;
-}
-
-/**
  * @brief Test if a string use an injection syntax
  * @todo improve the test
  */
-qboolean MN_IsInjectedString(const char *string)
+qboolean MN_IsInjectedString (const char *string)
 {
 	assert(string);
 	return string[0] == '<';
