@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_cinematic.h"
 #include "cl_console.h"
+#include "menu/m_input.h"
 
 char key_lines[MAXKEYLINES][MAXCMDLINE];
 int key_linepos;
@@ -937,9 +938,6 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 
 	if (cls.key_dest != key_console && down) {
 		switch (key) {
-		case K_ESCAPE:
-			MN_FocusRemove();
-			break;
 		case K_TAB:
 			if (MN_FocusNextActionNode())
 				return;

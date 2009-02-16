@@ -81,7 +81,6 @@ qboolean MN_IsInjectedString(const char *string);
 
 qboolean MN_FocusNextActionNode(void);
 qboolean MN_FocusExecuteActionNode(void);
-void MN_FocusRemove(void);
 
 menuAction_t *MN_SetMenuAction(menuAction_t** action, int type, const void *data);
 

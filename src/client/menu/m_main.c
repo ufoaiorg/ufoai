@@ -122,7 +122,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 	menuNode_t *menu = NULL;
 
 	MN_MouseRelease();
-	MN_FocusRemove();
+	MN_RemoveFocus();
 
 	menu = MN_GetMenu(name);
 	if (menu == NULL) {
@@ -309,7 +309,7 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 	int i;
 
 	MN_MouseRelease();
-	MN_FocusRemove();
+	MN_RemoveFocus();
 
 	assert(mn.menuStackPos);
 	i = MN_GetMenuPositionFromStackByName(menu->name);
@@ -754,9 +754,9 @@ static void CL_MessageMenu_f (void)
 		Cvar_ForceSet(cvarName, nameBackup);
 		/* call trigger function */
 		if (Cmd_Exists(va("%s_aborted", cvarName))) {
-			Cbuf_AddText(va("%s_aborted\n", cvarName));
+			Cmd_ExecuteString(va("%s_aborted\n", cvarName));
 		} else {
-			Cbuf_AddText(va("%s_changed\n", cvarName));
+			Cmd_ExecuteString(va("%s_changed\n", cvarName));
 		}
 		/* don't restore this the next time */
 		nameBackup[0] = cvarName[0] = '\0';
@@ -768,7 +768,7 @@ static void CL_MessageMenu_f (void)
 			break;
 		/* call trigger function */
 		if (Cmd_Exists(va("%s_changed", cvarName))) {
-			Cbuf_AddText(va("%s_changed\n", cvarName));
+			Cmd_ExecuteString(va("%s_changed\n", cvarName));
 		}
 		/* don't restore this the next time */
 		nameBackup[0] = cvarName[0] = '\0';
@@ -781,7 +781,7 @@ static void CL_MessageMenu_f (void)
 		/* end */
 		Cvar_ForceSet(cvarName, msg + 1);
 		/* call trigger function */
-		Cbuf_AddText(va("%s_changed\n", cvarName));
+		Cmd_ExecuteString(va("%s_changed\n", cvarName));
 		nameBackup[0] = cvarName[0] = '\0';
 		break;
 	default:

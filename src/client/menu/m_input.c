@@ -67,6 +67,71 @@ void MN_SetCvar (const char *name, const char *str, float value)
 }
 
 /**
+ * @brief save the node with the focus
+ */
+static menuNode_t* focusNode = NULL;
+
+/**
+ * @brief request the focus for a node
+ */
+void MN_RequestFocus (menuNode_t* node)
+{
+	menuNode_t* tmp;
+	assert(node);
+	if (node == focusNode)
+		return;
+
+	/* invalidte the data before calling the event */
+	tmp = focusNode;
+	focusNode = NULL;
+
+	/* lost the focus */
+	if (tmp && tmp->behaviour->lostFocus) {
+		tmp->behaviour->lostFocus(tmp);
+	}
+
+	/* get the focus */
+	focusNode = node;
+	if (focusNode->behaviour->gotFocus) {
+		focusNode->behaviour->gotFocus(focusNode);
+	}
+}
+
+/**
+ * @brief check if a node got the focus
+ */
+qboolean MN_HasFocus (menuNode_t* node)
+{
+	return node == focusNode;
+}
+
+/**
+ * @sa MN_FocusExecuteActionNode
+ * @sa MN_FocusNextActionNode
+ * @sa IN_Frame
+ * @sa Key_Event
+ */
+void MN_RemoveFocus (void)
+{
+	menuNode_t* tmp;
+	if (MN_GetMouseCapture())
+		return;
+
+	if (!focusNode)
+		return;
+
+	/* invalidte the data before calling the event */
+	tmp = focusNode;
+	focusNode = NULL;
+
+	/* callback the lost of the focus */
+	if (tmp->behaviour->lostFocus) {
+		tmp->behaviour->lostFocus(tmp);
+	}
+
+}
+
+/**
  * @brief save the captured node
  * @sa MN_SetMouseCapture
  * @sa MN_GetMouseCapture
@@ -101,7 +166,6 @@ void MN_SetMouseCapture (menuNode_t* node)
 void MN_MouseRelease (void)
 {
 	capturedNode = NULL;
-	MN_FocusRemove();
 	MN_InvalidateMouse();
 }
 
@@ -252,8 +316,6 @@ void MN_MouseMove (int x, int y)
 			capturedNode->behaviour->capturedMouseMove(capturedNode, x, y);
 		return;
 	}
-
-	MN_FocusRemove();
 
 	hoveredNode = MN_GetNodeAtPosition(x, y);
 

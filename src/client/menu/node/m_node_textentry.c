@@ -46,14 +46,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
 static const char HIDECHAR = '*';	/**< use as a mask for password */
 
-/* prototype */
-static void MN_TextEntryNodeRemoveFocus(menuNode_t *node);
-static void MN_TextEntryNodeSetFocus(menuNode_t *node);
-static void MN_TextEntryNodeSetFocus (menuNode_t *node);
-
 /* global data */
 static char cmdChanged[MAX_VAR];
 static char cmdAborted[MAX_VAR];
+static qboolean gotFocus = qfalse;
 
 /**
  * @brief fire the change event
@@ -83,8 +79,14 @@ static inline void MN_TextEntryNodeFireAbort (menuNode_t *node)
 static void MN_TextEntryNodeKeyboardChanged_f ()
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
-	MN_TextEntryNodeRemoveFocus(node);
 	MN_TextEntryNodeFireChange(node);
+	gotFocus = qfalse;
+	if (MN_HasFocus(node)) {
+		Cmd_RemoveCommand(cmdChanged);
+		Cmd_RemoveCommand(cmdAborted);
+		cmdChanged[0] = '\0';
+		MN_RemoveFocus();
+	}
 }
 
 /**
@@ -93,8 +95,15 @@ static void MN_TextEntryNodeKeyboardChanged_f ()
 static void MN_TextEntryNodeKeyboardAborted_f ()
 {
 	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
-	MN_TextEntryNodeRemoveFocus(node);
 	MN_TextEntryNodeFireAbort(node);
+
+	/* remove the focus to show chnges */
+	if (MN_HasFocus(node)) {
+		Cmd_RemoveCommand(cmdChanged);
+		Cmd_RemoveCommand(cmdAborted);
+		cmdChanged[0] = '\0';
+		MN_RemoveFocus();
+	}
 }
 
 /**
@@ -117,16 +126,40 @@ static void MN_EditTextEntry_f (void)
 		Com_Printf("MN_EditTextEntry_f: node '%s' dont exists on the current active menu '%s'\n", name, MN_GetActiveMenu()->name);
 		return;
 	}
-	MN_TextEntryNodeSetFocus(node);
+
+	/* remove the focus to show changes */
+	if (!MN_HasFocus(node)) {
+		MN_RequestFocus(node);
+	}
 }
 
 /**
- * @todo save last existing commands, to restitute it
+ * @brief Called when the user click with the right mouse button
  */
-static void MN_TextEntryNodeSetFocus (menuNode_t *node)
+static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 {
-	MN_SetMouseCapture(node);
+	if (node->disabled)
+		return;
 
+	/* no cvar */
+	if (!node->text)
+		return;
+	if (Q_strncmp(node->text, "*cvar", 5))
+		return;
+
+	if (!MN_HasFocus(node)) {
+		if (node->onClick) {
+			MN_ExecuteEventActions(node, node->onClick);
+		}
+		MN_RequestFocus(node);
+	}
+}
+
+/**
+ * @brief Called when the node got the focus
+ */
+static void MN_TextEntryGotFocus (menuNode_t *node)
+{
 	/* register keyboard callback */
 	snprintf(cmdChanged, sizeof(cmdChanged), "%s_changed", &((char*)node->text)[6]);
 	if (Cmd_Exists(cmdChanged)) {
@@ -145,45 +178,24 @@ static void MN_TextEntryNodeSetFocus (menuNode_t *node)
 	Cbuf_AddText(va("mn_msgedit ?%s\n", &((char*)node->text)[6]));
 }
 
-static void MN_TextEntryNodeRemoveFocus (menuNode_t *node)
+/**
+ * @brief Called when the node lost the focus
+ */
+static void MN_TextEntryLostFocus (menuNode_t *node)
 {
+	/* already aborted/changed with the keyboard */
+	if (cmdChanged[0] == '\0') {
+		return;
+	}
+
+	/* relese the keyboard */
+	if (node->u.textentry.clickOutAbort) {
+		Cmd_ExecuteString("mn_msgedit !\n");
+	} else {
+		Cmd_ExecuteString("mn_msgedit .\n");
+	}
 	Cmd_RemoveCommand(cmdChanged);
 	Cmd_RemoveCommand(cmdAborted);
-	MN_MouseRelease();
-}
-
-/**
- * @todo remove the "mouse capture" for a "focus", maybe better
- */
-static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
-{
-	if (node->disabled)
-		return;
-
-	/* no cvar */
-	if (!node->text)
-		return;
-	if (Q_strncmp(node->text, "*cvar", 5))
-		return;
-
-	if (!MN_GetMouseCapture()) {
-		if (node->onClick) {
-			MN_ExecuteEventActions(node, node->onClick);
-		}
-		MN_TextEntryNodeSetFocus(node);
-	} else {
-		int x = mousePosX;
-		int y = mousePosY;
-		MN_NodeAbsoluteToRelativePos(node, &x, &y);
-		if (x < 0 || y < 0 || x > node->pos[0] || y > node->pos[1]) {
-			/* keyboard, please stop */
-			if (node->u.textentry.clickOutAbort) {
-				Cbuf_AddText("mn_msgedit !\n");
-			} else {
-				Cbuf_AddText("mn_msgedit .\n");
-			}
-		}
-	}
 }
 
 static void MN_TextEntryNodeDraw (menuNode_t *node)
@@ -206,7 +218,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 		textColor = disabledColor;
 		texX = TILE_SIZE;
 		texY = TILE_SIZE;
-	} else if (node->state || MN_GetMouseCapture() == node) {
+	} else if (MN_HasFocus(node)) {
 		textColor = node->selectedColor;
 		texX = TILE_SIZE;
 		texY = 0;
@@ -226,7 +238,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL) {
 		/** @todo we dont need to edit the text to draw the cursor */
-		if (MN_GetMouseCapture() == node) {
+		if (MN_HasFocus(node)) {
 			if (cl.time % 1000 < 500) {
 				text = va("%s%c", text, CURSOR);
 			}
@@ -236,7 +248,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 			char *c = va("%s", text);
 			text = c;
 			/* hide the text */
-			/** @todo does it work with Unicode :/ dont we create to char? */
+			/** @todo does it work with Unicode :/ dont we create to much char? */
 			while (*c != '\0') {
 				*c++ = HIDECHAR;
 			}
@@ -283,6 +295,8 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "textentry";
 	behaviour->leftClick = MN_TextEntryNodeClick;
+	behaviour->gotFocus = MN_TextEntryGotFocus;
+	behaviour->lostFocus = MN_TextEntryLostFocus;
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;

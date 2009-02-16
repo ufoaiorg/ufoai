@@ -174,14 +174,17 @@ typedef struct nodeBehaviour_s {
 	qboolean isFunction;			/**< true, if the node is a function */
 	qboolean isAbstract;			/**< true, if we can't instanciate the behaviour */
 	qboolean isInitialized;			/**< cache if we already have initialized the node behaviour */
+	qboolean focusEnabled;			/**< true if the node can win the focus (should be use when type TAB) */
 	const value_t* properties;		/**< list of properties of the node */
 	int propertyCount;				/**< number of the properties into the propertiesList. Cache value to speedup search */
 	struct nodeBehaviour_s *super;	/**< link to the extended node */
 
-	/* node functions */
+	/* draw callback */
 	void (*draw)(menuNode_t *node);							/**< how to draw a node */
 	void (*drawTooltip)(menuNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
 	void (*drawOverMenu)(menuNode_t *node);					/**< callback to draw content over the menu @sa MN_CaptureDrawOver */
+
+	/* mouse event */
 	void (*leftClick)(menuNode_t *node, int x, int y);		/**< left mouse click event in the node */
 	void (*rightClick)(menuNode_t *node, int x, int y);		/**< left mouse button click event in the node */
 	void (*middleClick)(menuNode_t *node, int x, int y);	/**< right mouse button click event in the node */
@@ -190,6 +193,8 @@ typedef struct nodeBehaviour_s {
 	void (*mouseDown)(menuNode_t *node, int x, int y, int button);	/**< mouse button down event in the node */
 	void (*mouseUp)(menuNode_t *node, int x, int y, int button);	/**< mouse button up event in the node */
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
+
+	/* system callback */
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 	void (*init)(menuNode_t *node);			/**< call every time we push the parent menu */
@@ -201,6 +206,10 @@ typedef struct nodeBehaviour_s {
 	void (*dndLeave)(menuNode_t *node);								/**< Send to the target when the DND is cancelled */
 	qboolean (*dndDrop)(menuNode_t *node, int x, int y);			/**< Send to the target to finalize the drop */
 	qboolean (*dndFinished)(menuNode_t *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
+
+	/* focus event */
+	void (*gotFocus)(menuNode_t *node);
+	void (*lostFocus)(menuNode_t *node);
 
 	/* Planned */
 #if 0

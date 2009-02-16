@@ -1155,9 +1155,6 @@ static void IN_Parse (void)
 	 * (MN_CursorOnMenu failed) and we have the cursor in the world */
 	if (cl.cmode > M_PEND_MOVE)
 		mouseSpace = MS_WORLD;
-
-	/* we are in tactical missions here - no focus needed */
-	MN_FocusRemove();
 }
 
 /**

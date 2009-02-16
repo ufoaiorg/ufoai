@@ -421,6 +421,8 @@ static const size_t virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, dndLeave),
 	offsetof(nodeBehaviour_t, dndDrop),
 	offsetof(nodeBehaviour_t, dndFinished),
+	offsetof(nodeBehaviour_t, gotFocus),
+	offsetof(nodeBehaviour_t, lostFocus),
 	0
 };
 

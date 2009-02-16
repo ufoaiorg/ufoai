@@ -42,6 +42,11 @@ qboolean MN_CheckMouseMove(void);
 struct menuNode_s *MN_GetHoveredNode(void);
 struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
 
+/* focus */
+void MN_RequestFocus(struct menuNode_s* node);
+qboolean MN_HasFocus(struct menuNode_s* node);
+void MN_RemoveFocus(void);
+
 /* mouse capture */
 struct menuNode_s* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(struct menuNode_s* node);

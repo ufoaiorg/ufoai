@@ -31,8 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "node/m_node_abstractnode.h"
 
-menuNode_t *focusNode;
-
 #define MAX_CONFUNC_SIZE 512
 /**
  * @brief Executes confunc - just to identify those confuncs in the code - in
@@ -307,6 +305,7 @@ void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* first
  */
 static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
 {
+#if 0	/**< @todo need a cleanup */
 	if (node)
 		node = node->next;
 	while (node) {
@@ -315,26 +314,8 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
 			return node;
 		node = node->next;
 	}
+#endif
 	return NULL;
-}
-
-/**
- * @sa MN_FocusExecuteActionNode
- * @sa MN_FocusNextActionNode
- * @sa IN_Frame
- * @sa Key_Event
- */
-void MN_FocusRemove (void)
-{
-	if (mouseSpace != MS_MENU)
-		return;
-
-	if (MN_GetMouseCapture())
-		return;
-
-	if (focusNode)
-		MN_ExecuteEventActions(focusNode, focusNode->onMouseOut);
-	focusNode = NULL;
 }
 
 /**
@@ -345,6 +326,7 @@ void MN_FocusRemove (void)
  */
 qboolean MN_FocusExecuteActionNode (void)
 {
+#if 0	/**< @todo need a cleanup */
 	if (mouseSpace != MS_MENU)
 		return qfalse;
 
@@ -359,30 +341,8 @@ qboolean MN_FocusExecuteActionNode (void)
 		focusNode = NULL;
 		return qtrue;
 	}
-
+#endif
 	return qfalse;
-}
-
-/**
- * @sa MN_FocusRemove
- */
-static qboolean MN_FocusSetNode (menuNode_t* node)
-{
-	if (!node) {
-		MN_FocusRemove();
-		return qfalse;
-	}
-
-	if (MN_GetMouseCapture())
-		return qfalse;
-
-	/* reset already focused node */
-	MN_FocusRemove();
-
-	focusNode = node;
-	MN_ExecuteEventActions(node, node->onMouseIn);
-
-	return qtrue;
 }
 
 /**
@@ -394,6 +354,7 @@ static qboolean MN_FocusSetNode (menuNode_t* node)
  */
 qboolean MN_FocusNextActionNode (void)
 {
+#if 0	/**< @todo need a cleanup */
 	menuNode_t* menu;
 	static int i = MAX_MENUSTACK + 1;	/* to cycle between all menus */
 
@@ -422,8 +383,8 @@ qboolean MN_FocusNextActionNode (void)
 	i = MN_GetLastFullScreenWindow();
 
 	/* no node to focus */
-	MN_FocusRemove();
-
+	MN_RemoveFocus();
+#endif
 	return qfalse;
 }
 
