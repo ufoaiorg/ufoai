@@ -89,7 +89,7 @@ AC_ARG_ENABLE(universal,
 
 #---------------------------------------------------------------------------------------------
 # defined some defaults for users (mac-users..) who might not have pkg-config.
-# actually, right now this is only required for the UFORadiant built 
+# actually, right now this is only required for the UFORadiant built
 # this is kind-of a work-around,,,
 #---------------------------------------------------------------------------------------------
 m4_define_default([PKG_CHECK_MODULES],
@@ -306,6 +306,8 @@ then
 	AC_CHECK_HEADERS([winsock2.h])
 	AC_CHECK_LIB(ws2_32, main, , AC_MSG_ERROR([Winsock2 is needed for a Windows mingw build.]))
 fi
+
+AC_CHECK_HEADERS([execinfo.h])
 
 #---------------------------------------------------------------------------------------------
 # CHECK NETWORKING
