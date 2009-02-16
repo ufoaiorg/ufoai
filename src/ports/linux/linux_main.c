@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../common/common.h"
 #include "../unix/unix_curses.h"
 
-#ifdef HAVE_EXECINFO
+#ifdef HAVE_EXECINFO_H
 #include <execinfo.h>
 #define MAX_BACKTRACE_SYMBOLS 50
 #endif
@@ -48,7 +48,7 @@ cvar_t* sys_os;
  */
 static void Sys_Backtrace (void)
 {
-#ifdef HAVE_EXECINFO
+#ifdef HAVE_EXECINFO_H
 	void *symbols[MAX_BACKTRACE_SYMBOLS];
 	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
 	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
