@@ -307,8 +307,8 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 {
 	int i;
 
-	MN_MouseRelease();
-	MN_RemoveFocus();
+	/** @todo If the focus is not on the menu we close, we dont need to remove it */
+	MN_ReleaseInput();
 
 	assert(mn.menuStackPos);
 	i = MN_GetMenuPositionFromStackByName(menu->name);
