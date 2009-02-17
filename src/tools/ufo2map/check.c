@@ -1710,7 +1710,7 @@ void DisplayContentFlags (const int flags)
 	M(DEADACTOR);
 	M(DETAIL);
 	M(TRANSLUCENT);
-#undef x
+#undef M
 }
 
 /**
