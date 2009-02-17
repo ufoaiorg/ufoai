@@ -188,7 +188,7 @@ static void MN_TextEntryFocusLost (menuNode_t *node)
 		return;
 	}
 
-	/* relese the keyboard */
+	/* release the keyboard */
 	if (node->u.textentry.clickOutAbort) {
 		Cmd_ExecuteString("mn_msgedit !\n");
 	} else {

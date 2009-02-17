@@ -937,17 +937,8 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		return;
 
 	if (cls.key_dest != key_console && down) {
-		switch (key) {
-		case K_TAB:
-			if (MN_FocusNextActionNode())
-				return;
-			break;
-		case K_ENTER:
-		case K_KP_ENTER:
-			if (MN_FocusExecuteActionNode())
-				return;
-			break;
-		}
+		if (MN_KeyPressed(key, unicode))
+			return;
 	}
 
 	/* any key (except F1-F12) during the sequence mode will bring up the menu */

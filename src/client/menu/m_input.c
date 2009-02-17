@@ -77,7 +77,7 @@ static menuNode_t* focusNode = NULL;
  * @sa Key_Event
  * @sa MN_FocusNextActionNode
  */
-qboolean MN_FocusExecuteActionNode (void)
+static qboolean MN_FocusExecuteActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
 	if (mouseSpace != MS_MENU)
@@ -124,7 +124,7 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
  * @sa MN_FocusExecuteActionNode
  * @todo understand the function; use for "i" an understandable name; should move in into global static.
  */
-qboolean MN_FocusNextActionNode (void)
+static qboolean MN_FocusNextActionNode (void)
 {
 #if 0	/**< @todo need a cleanup */
 	menuNode_t* menu;
@@ -218,6 +218,36 @@ void MN_RemoveFocus (void)
 	if (tmp->behaviour->focusLost) {
 		tmp->behaviour->focusLost(tmp);
 	}
+}
+
+/**
+ * @brief Called by the client when the user type a key
+ * @param[in] key key code, either K_ value or lowercase ascii
+ * @param[in] unicode translated meaning of keypress in unicode
+ * @return qtrue, if we used the event
+ */
+qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
+{
+	/* translate event into the node with focus */
+	if (focusNode && focusNode->behaviour->keyPressed) {
+		if (focusNode->behaviour->keyPressed(focusNode, key, unicode))
+			return qtrue;
+	}
+
+	/* else use common behaviour */
+	switch (key) {
+	case K_TAB:
+		if (MN_FocusNextActionNode())
+			return qtrue;
+		break;
+	case K_ENTER:
+	case K_KP_ENTER:
+		if (MN_FocusExecuteActionNode())
+			return qtrue;
+		break;
+	}
+
+	return qfalse;
 }
 
 /**

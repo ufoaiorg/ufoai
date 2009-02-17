@@ -184,7 +184,7 @@ typedef struct nodeBehaviour_s {
 	void (*drawTooltip)(menuNode_t *node, int x, int y);	/**< allow to draw a custom tooltip */
 	void (*drawOverMenu)(menuNode_t *node);					/**< callback to draw content over the menu @sa MN_CaptureDrawOver */
 
-	/* mouse event */
+	/* mouse events */
 	void (*leftClick)(menuNode_t *node, int x, int y);		/**< left mouse click event in the node */
 	void (*rightClick)(menuNode_t *node, int x, int y);		/**< left mouse button click event in the node */
 	void (*middleClick)(menuNode_t *node, int x, int y);	/**< right mouse button click event in the node */
@@ -207,9 +207,10 @@ typedef struct nodeBehaviour_s {
 	qboolean (*dndDrop)(menuNode_t *node, int x, int y);			/**< Send to the target to finalize the drop */
 	qboolean (*dndFinished)(menuNode_t *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
 
-	/* focus event */
+	/* focus and keyboard events */
 	void (*focusGained)(menuNode_t *node);
 	void (*focusLost)(menuNode_t *node);
+	qboolean (*keyPressed)(menuNode_t *node, unsigned int key, unsigned short unicode);
 
 	/* Planned */
 #if 0
