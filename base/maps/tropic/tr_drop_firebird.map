@@ -921,12 +921,12 @@
 // entity 57
 {
 "classname" "info_human_start"
-"angle" "360"
+"angle" "0"
 "origin" "496 336 32"
 }
 // entity 58
 {
 "classname" "info_human_start"
 "origin" "272 464 32"
-"angle" "360"
+"angle" "0"
 }

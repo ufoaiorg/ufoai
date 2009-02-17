@@ -453,7 +453,7 @@
 {
 "classname" "info_human_start"
 "origin" "304 336 28"
-"angle" "360"
+"angle" "0"
 }
 // entity 2
 {
@@ -625,13 +625,13 @@
 // entity 26
 {
 "classname" "info_human_start"
-"angle" "360"
+"angle" "0"
 "origin" "304 208 28"
 }
 // entity 27
 {
 "classname" "info_human_start"
-"angle" "360"
+"angle" "0"
 "origin" "400 80 28"
 }
 // entity 28

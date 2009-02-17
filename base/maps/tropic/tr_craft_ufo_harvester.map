@@ -3696,13 +3696,13 @@
 {
 "classname" "info_alien_start"
 "origin" "720 1072 32"
-"angle" "-1.4033e-014"
+"angle" "0"
 }
 // entity 79
 {
 "classname" "info_alien_start"
 "origin" "816 176 32"
-"angle" "-1.4033e-014"
+"angle" "0"
 }
 // entity 80
 {
