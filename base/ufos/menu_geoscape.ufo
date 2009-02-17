@@ -1917,12 +1917,7 @@ menu popup
 		width		"200"
 		font		f_menu
 		color		"0 0.5 0 1"
-		click		{ cmd "mn_pop;" }
-	}
-
-	func leave
-	{
-		cmd 	"mn_pop;"
+		click		{ cmd "mn_close popup;" }
 	}
 }
 
