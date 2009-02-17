@@ -1185,7 +1185,7 @@ static void SV_InitGame (void)
 	/* init network stuff */
 	if (sv_maxclients->integer > 1) {
 		svs.initialized = SV_Start(NULL, port->string, &SV_ReadPacket);
-		svs.netDatagramSocket = NET_DatagramSocketNew(NULL, Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_DiscoveryCallback);
+		svs.netDatagramSocket = NET_DatagramSocketNew(NULL, Cvar_Get("port", DOUBLEQUOTE(PORT_SERVER), CVAR_NOSET, NULL)->string, &SV_DiscoveryCallback);
 	} else
 		svs.initialized = SV_Start(NULL, NULL, &SV_ReadPacket);
 

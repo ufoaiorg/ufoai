@@ -547,7 +547,7 @@ void CL_PingServers_f (void)
 	}
 
 	if (!cls.netDatagramSocket)
-		cls.netDatagramSocket = NET_DatagramSocketNew(NULL, va("%d", PORT_CLIENT), &CL_ServerListDiscoveryCallback);
+		cls.netDatagramSocket = NET_DatagramSocketNew(NULL, DOUBLEQUOTE(PORT_CLIENT), &CL_ServerListDiscoveryCallback);
 
 	/* broadcast search for all the servers int the local network */
 	if (cls.netDatagramSocket) {
