@@ -705,6 +705,7 @@ static void MN_Translate_f (void)
 	}
 }
 
+#if 0	/**< @todo remove it if not used */
 /**
  * @brief Calls script function on cvar change
  * @note This is for inline editing of cvar values
@@ -792,6 +793,7 @@ static void CL_MessageMenu_f (void)
 		break;
 	}
 }
+#endif
 
 #ifdef DEBUG
 /**
@@ -869,7 +871,9 @@ void MN_Init (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
 #endif
+#if 0	/**< @todo remove it if not used */
 	Cmd_AddCommand("mn_msgedit", CL_MessageMenu_f, "Activates the inline cvar editing");
+#endif
 
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);

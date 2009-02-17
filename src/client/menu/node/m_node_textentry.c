@@ -1,6 +1,5 @@
 /**
  * @file m_node_textentry.c
- * @todo must we need to use command to interact with keyboard?
  * @todo allow to edit text without any cvar
  * @todo add a custom max size
  */
@@ -47,15 +46,19 @@ static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
 static const char HIDECHAR = '*';	/**< use as a mask for password */
 
 /* global data */
-static char cmdChanged[MAX_VAR];
-static char cmdAborted[MAX_VAR];
-static qboolean gotFocus = qfalse;
+static char cvarValueBackup[MAX_CVAR_EDITING_LENGTH];
+static cvar_t *editedCvar = NULL;
+static qboolean isAborted = qfalse;
 
 /**
- * @brief fire the change event
+ * @brief callback from the keyboard
  */
-static inline void MN_TextEntryNodeFireChange (menuNode_t *node)
+static void MN_TextEntryNodeValidateEdition (menuNode_t *node)
 {
+	/* invalidate cache */
+	editedCvar = NULL;
+	cvarValueBackup[0] = '\0';
+
 	/* fire change event */
 	if (node->onChange) {
 		MN_ExecuteEventActions(node, node->onChange);
@@ -63,46 +66,20 @@ static inline void MN_TextEntryNodeFireChange (menuNode_t *node)
 }
 
 /**
- * @brief fire the abort event
+ * @brief callback from the keyboard
  */
-static inline void MN_TextEntryNodeFireAbort (menuNode_t *node)
+static void MN_TextEntryNodeAbortEdition (menuNode_t *node)
 {
-	/* fire change event */
+	/* set the old cvar value */
+	Cvar_ForceSet(editedCvar->name, cvarValueBackup);
+
+	/* invalidate cache */
+	editedCvar = NULL;
+	cvarValueBackup[0] = '\0';
+
+	/* fire abort event */
 	if (node->u.textentry.onAbort) {
 		MN_ExecuteEventActions(node, node->u.textentry.onAbort);
-	}
-}
-
-/**
- * @brief callback from the keyboard
- */
-static void MN_TextEntryNodeKeyboardChanged_f (void)
-{
-	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
-	MN_TextEntryNodeFireChange(node);
-	gotFocus = qfalse;
-	if (MN_HasFocus(node)) {
-		Cmd_RemoveCommand(cmdChanged);
-		Cmd_RemoveCommand(cmdAborted);
-		cmdChanged[0] = '\0';
-		MN_RemoveFocus();
-	}
-}
-
-/**
- * @brief callback from the keyboard
- */
-static void MN_TextEntryNodeKeyboardAborted_f (void)
-{
-	menuNode_t *node = (menuNode_t *) Cmd_Userdata();
-	MN_TextEntryNodeFireAbort(node);
-
-	/* remove the focus to show changes */
-	if (MN_HasFocus(node)) {
-		Cmd_RemoveCommand(cmdChanged);
-		Cmd_RemoveCommand(cmdAborted);
-		cmdChanged[0] = '\0';
-		MN_RemoveFocus();
 	}
 }
 
@@ -160,22 +137,11 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
  */
 static void MN_TextEntryFocusGained (menuNode_t *node)
 {
-	/* register keyboard callback */
-	snprintf(cmdChanged, sizeof(cmdChanged), "%s_changed", &((char*)node->text)[6]);
-	if (Cmd_Exists(cmdChanged)) {
-		Sys_Error("MN_TextEntryNodeSetFocus: '%s' already used, code down yet allow context restitution. Plese clean up your script.\n", cmdChanged);
-	}
-	Cmd_AddCommand(cmdChanged, MN_TextEntryNodeKeyboardChanged_f, "Text entry callback");
-	Cmd_AddUserdata(cmdChanged, node);
-	snprintf(cmdAborted, sizeof(cmdAborted), "%s_aborted", &((char*)node->text)[6]);
-	if (Cmd_Exists(cmdAborted)) {
-		Sys_Error("MN_TextEntryNodeSetFocus: '%s' already used, code down yet allow context restitution. Plese clean up your script.\n", cmdAborted);
-	}
-	Cmd_AddCommand(cmdAborted, MN_TextEntryNodeKeyboardAborted_f, "Text entry callback");
-	Cmd_AddUserdata(cmdAborted, node);
-
-	/* start typing */
-	Cbuf_AddText(va("mn_msgedit ?%s\n", &((char*)node->text)[6]));
+	assert(editedCvar == NULL);
+	editedCvar = Cvar_Get(&((char*)node->text)[6], "", 0, NULL);
+	assert(editedCvar);
+	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
+	isAborted = qfalse;
 }
 
 /**
@@ -184,18 +150,76 @@ static void MN_TextEntryFocusGained (menuNode_t *node)
 static void MN_TextEntryFocusLost (menuNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
-	if (cmdChanged[0] == '\0') {
+	/** @todo should not be need */
+	if (editedCvar == NULL)
 		return;
-	}
 
 	/* release the keyboard */
-	if (node->u.textentry.clickOutAbort) {
-		Cmd_ExecuteString("mn_msgedit !\n");
+	if (isAborted || node->u.textentry.clickOutAbort) {
+		MN_TextEntryNodeAbortEdition(node);
 	} else {
-		Cmd_ExecuteString("mn_msgedit .\n");
+		MN_TextEntryNodeValidateEdition(node);
 	}
-	Cmd_RemoveCommand(cmdChanged);
-	Cmd_RemoveCommand(cmdAborted);
+}
+
+/**
+ * @brief edit the current cvar with a char
+ */
+static void MN_TextEntryNodeEdit (menuNode_t *node, unsigned int key)
+{
+	char buffer[MAX_CVAR_EDITING_LENGTH];
+	int length;
+
+	/* copy the cvar */
+	Q_strncpyz(buffer, editedCvar->string, sizeof(buffer));
+	length = strlen(buffer);
+
+	/* compute result */
+	if (key == K_BACKSPACE) {
+		length = UTF8_delete_char(buffer, length - 1);
+	} else {
+		int charLength = UTF8_encoded_len(key);
+		/* is buffer full? */
+		if (length + charLength >= sizeof(buffer))
+			return;
+
+		length += UTF8_insert_char(buffer, sizeof(buffer), length, key);
+	}
+
+	/* update the cvar */
+	Cvar_ForceSet(editedCvar->name, buffer);
+}
+
+/**
+ * @brief Called when we press a key when the node got the focus
+ * @return True, if we use the event
+ */
+static qboolean MN_TextEntryNodeKeyPressed (menuNode_t *node, unsigned int key, unsigned short unicode)
+{
+	switch (key) {
+	/* remove the last char */
+	case K_BACKSPACE:
+		MN_TextEntryNodeEdit(node, K_BACKSPACE);
+		return qtrue;
+	/* cancel the edition */
+	case K_ESCAPE:
+		isAborted = qtrue;
+		MN_RemoveFocus();
+		return qtrue;
+	/* validate the edition */
+	case K_ENTER:
+	case K_KP_ENTER:
+		MN_RemoveFocus();
+		return qtrue;
+	}
+
+	/* non printable */
+	if (unicode < 32 || (unicode >= 127 && unicode < 192))
+		return qfalse;
+
+	/* add a char */
+	MN_TextEntryNodeEdit(node, unicode);
+	return qtrue;
 }
 
 static void MN_TextEntryNodeDraw (menuNode_t *node)
@@ -297,6 +321,7 @@ void MN_RegisterTextEntryNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_TextEntryNodeClick;
 	behaviour->focusGained = MN_TextEntryFocusGained;
 	behaviour->focusLost = MN_TextEntryFocusLost;
+	behaviour->keyPressed = MN_TextEntryNodeKeyPressed;
 	behaviour->draw = MN_TextEntryNodeDraw;
 	behaviour->loading = MN_TextEntryNodeLoading;
 	behaviour->properties = properties;

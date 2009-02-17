@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_game.h"
 #include "renderer/r_draw.h"
+#include "menu/m_input.h"
 
 #define CONSOLE_CHAR_ALIGN 4
 #define NUM_CON_TIMES 8
@@ -90,6 +91,8 @@ void Con_ToggleConsole_f (void)
 	} else {
 		Key_SetDest(key_console);
 		/* make sure that we end all input buffers when opening the console */
+		MN_RemoveFocus();
+		/** @todo mn_msgedit should not be used, this function need a clean up */
 		if (msg_mode == MSG_MENU)
 			Cbuf_AddText("mn_msgedit !\n");
 	}

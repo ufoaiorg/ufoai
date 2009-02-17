@@ -154,7 +154,11 @@ menu irc
 		pos			"30 710"
 		size		"690 34"
 		bgcolor		"0.5 0.5 0.5 0.2"
-		click		{ cmd "irc_activate;" }
+		change	{
+			cmd "irc_chanmsg"
+			//cmd "set irc_send_buffer \"\""
+			cmd "mn_edittextentry slot_irc_send_buffer"
+		}
 	}
 
 	// ==================
@@ -162,6 +166,7 @@ menu irc
 	// ==================
 	func init
 	{
+		cmd "irc_activate;"
 		cmd "mn_escpop 3;"
 	}
 

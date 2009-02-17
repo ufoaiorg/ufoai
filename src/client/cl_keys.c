@@ -466,6 +466,7 @@ static void Key_Message (int key)
 			break;
 		case MSG_MENU:
 			/* end the editing (don't cancel) */
+			/** @todo mn_msgedit should not be used, this function need a clean up */
 			Cbuf_AddText("mn_msgedit \":");
 			break;
 		default:
@@ -504,6 +505,7 @@ static void Key_Message (int key)
 			/* fall through */
 			Irc_Input_Deactivate();
 		case MSG_MENU:
+			/** @todo mn_msgedit should not be used, this function need a clean up */
 			Cbuf_AddText("mn_msgedit !\n");
 			break;
 		}
@@ -514,6 +516,7 @@ static void Key_Message (int key)
 	if (key == K_BACKSPACE) {
 		if (msg_bufferlen) {
 			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
+			/** @todo mn_msgedit should not be used, this function need a clean up */
 			if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 				Cbuf_AddText(va("mn_msgedit \"%s\"\n", msg_buffer));
 		}
@@ -538,6 +541,7 @@ static void Key_Message (int key)
 
 	msg_bufferlen += UTF8_insert_char(msg_buffer, sizeof(msg_buffer),  msg_bufferlen, key);
 
+	/** @todo mn_msgedit should not be used, this function need a clean up */
 	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 		Cbuf_AddText(va("mn_msgedit \"%s\"\n", msg_buffer));
 }
