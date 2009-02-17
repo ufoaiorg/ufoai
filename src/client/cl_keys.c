@@ -438,19 +438,11 @@ static void Key_Console (int key, int unicode)
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
  * @sa MN_LeftClick
+ * @todo By using a textentry (like we do for IRC) for chat and team chat, we can remove this function
  */
 static void Key_Message (int key)
 {
-#if 0
 	int utf8len;
-#endif
-
-	/**
-	 * @todo remove of mn_msgedit break the chat and team chat
-	 * this unremoved code only allow to stop chat edition with "return"
-	 * We should update the GUI to use a textentry to allow to
-	 * type text and use it to chat.
-	 */
 
 	if (key == K_ENTER || key == K_KP_ENTER) {
 		qboolean send = qtrue;
@@ -462,24 +454,11 @@ static void Key_Message (int key)
 			else
 				send = qfalse;
 			break;
-		case MSG_IRC:
-#if 0 /* textentry already do the same */
-			/* end the editing (don't cancel) */
-			Cbuf_AddText("irc_chanmsg \"");
-#endif
-			break;
 		case MSG_SAY_TEAM:
 			if (msg_buffer[0])
 				Cbuf_AddText("say_team \"");
 			else
 				send = qfalse;
-			break;
-		case MSG_MENU:
-#if 0 /* textentry already do the same */
-			/* end the editing (don't cancel) */
-			/** @todo mn_msgedit should not be used, this function need a clean up */
-			Cbuf_AddText("mn_msgedit \":");
-#endif
 			break;
 		default:
 			Com_Printf("Invalid msg_mode\n");
@@ -498,7 +477,6 @@ static void Key_Message (int key)
 		return;
 	}
 
-#if 0 /* textentry already do the same */
 	if (key == K_ESCAPE) {
 		if (cls.state != ca_active) {
 			/* If connecting or loading a level, disconnect */
@@ -509,60 +487,26 @@ static void Key_Message (int key)
 		Key_SetDest(key_game);
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
-		/* cancel the inline cvar editing */
-		switch (msg_mode) {
-		case MSG_IRC:
-			/** @todo Why not use MN_PopMenu directly here? Is there a need to
-			 * execute this in the next frame? And pending command before it? */
-			Cbuf_AddText("mn_pop esc;");
-			/* fall through */
-			Irc_Input_Deactivate();
-		case MSG_MENU:
-			/** @todo mn_msgedit should not be used, this function need a clean up */
-			Cbuf_AddText("mn_msgedit !\n");
-			break;
-		}
-
 		return;
 	}
-#endif
 
-#if 0 /* textentry do the same */
 	if (key == K_BACKSPACE) {
 		if (msg_bufferlen) {
 			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
-			/** @todo mn_msgedit should not be used, this function need a clean up */
-			if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
-				Cbuf_AddText(va("mn_msgedit \"%s\"\n", msg_buffer));
 		}
 		return;
 	}
-#endif
 
-#if 0 /* textentry do the same */
 	utf8len = UTF8_encoded_len(key);
 
 	/** @todo figure out which unicode codes to accept */
 	if (utf8len == 0 || key < 32 || (key >= 127 && key < 192))
 		return;					/* non printable */
 
-
 	if (msg_bufferlen + utf8len >= sizeof(msg_buffer))
 		return;					/* all full */
 
-	/* limit the length for cvar inline editing */
-	if ((msg_mode == MSG_MENU || msg_mode == MSG_IRC) && msg_bufferlen + utf8len > mn_inputlength->integer) {
-		Com_Printf("Input buffer length exceeded\n");
-		return;
-	}
-
 	msg_bufferlen += UTF8_insert_char(msg_buffer, sizeof(msg_buffer),  msg_bufferlen, key);
-
-	/** @todo mn_msgedit should not be used, this function need a clean up */
-	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
-		Cbuf_AddText(va("mn_msgedit \"%s\"\n", msg_buffer));
-#endif
-
 }
 
 
