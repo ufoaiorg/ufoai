@@ -121,8 +121,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 	menuNode_t *node;
 	menuNode_t *menu = NULL;
 
-	MN_MouseRelease();
-	MN_RemoveFocus();
+	MN_ReleaseInput();
 
 	menu = MN_GetMenu(name);
 	if (menu == NULL) {
@@ -705,96 +704,6 @@ static void MN_Translate_f (void)
 	}
 }
 
-#if 0	/**< @todo remove it if not used */
-/**
- * @brief Calls script function on cvar change
- * @note This is for inline editing of cvar values
- * The cvarname_changed and cvarname_aborted function are called,
- * the editing is activated and ended here
- * @note If you want to differ between a changed value of a cvar and
- * the abort of a cvar value change (e.g. for singleplayer savegames
- * you don't want to save the game when the player hits esc) you can
- * define the cvarname_aborted confunc to handle this case, too.
- * Done by the script command mn_msgedit [?|!|:][cvarname]
- * @sa Key_Message
- * @sa CL_ChangeName_f
- */
-static void CL_MessageMenu_f (void)
-{
-	static char nameBackup[MAX_CVAR_EDITING_LENGTH];
-	static char cvarName[MAX_VAR];
-	const char *msg;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <msg>[cvarname]: msg is a cvarname prefix - one of [?|!|:]\n", Cmd_Argv(0));
-		return;
-	}
-
-	msg = Cmd_Argv(1);
-	switch (msg[0]) {
-	case '?':
-		/* start */
-		Cbuf_AddText("messagemenu\n");
-		Q_strncpyz(cvarName, msg + 1, sizeof(cvarName));
-		Q_strncpyz(nameBackup, Cvar_VariableString(cvarName), mn_inputlength->integer);
-		Q_strncpyz(msg_buffer, nameBackup, sizeof(msg_buffer));
-		msg_bufferlen = strlen(nameBackup);
-		break;
-	case '\'':
-		if (cvarName[0] == '\0')
-			break;
-		/* abort without doing anything */
-		nameBackup[0] = cvarName[0] = '\0';
-		break;
-
-	/* cancel the edition */
-	case '!':
-		if (cvarName[0] == '\0')
-			break;
-		/* cancel */
-		Cvar_ForceSet(cvarName, nameBackup);
-		/* call trigger function */
-		if (Cmd_Exists(va("%s_aborted", cvarName))) {
-			Cmd_ExecuteString(va("%s_aborted\n", cvarName));
-		} else {
-			Cmd_ExecuteString(va("%s_changed\n", cvarName));
-		}
-		/* don't restore this the next time */
-		nameBackup[0] = cvarName[0] = '\0';
-		break;
-
-	/* validate the current value */
-	case '.':
-		if (cvarName[0] == '\0')
-			break;
-		/* call trigger function */
-		if (Cmd_Exists(va("%s_changed", cvarName))) {
-			Cmd_ExecuteString(va("%s_changed\n", cvarName));
-		}
-		/* don't restore this the next time */
-		nameBackup[0] = cvarName[0] = '\0';
-		break;
-
-	/* change the value to a null string */
-	case ':':
-		if (cvarName[0] == '\0')
-			break;
-		/* end */
-		Cvar_ForceSet(cvarName, msg + 1);
-		/* call trigger function */
-		Cmd_ExecuteString(va("%s_changed\n", cvarName));
-		nameBackup[0] = cvarName[0] = '\0';
-		break;
-	default:
-		if (cvarName[0] == '\0')
-			break;
-		/* continue */
-		Cvar_ForceSet(cvarName, msg);
-		break;
-	}
-}
-#endif
-
 #ifdef DEBUG
 /**
  * @brief display info about menu memory
@@ -871,10 +780,6 @@ void MN_Init (void)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
 #endif
-#if 0	/**< @todo remove it if not used */
-	Cmd_AddCommand("mn_msgedit", CL_MessageMenu_f, "Activates the inline cvar editing");
-#endif
-
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);
 	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");

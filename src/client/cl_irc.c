@@ -1733,11 +1733,9 @@ void Irc_Shutdown (void)
 void Irc_Input_Activate (void)
 {
 	/* in case of a failure we need this in MN_PopMenu */
-	msg_mode = MSG_IRC;
 	if (irc_connected && irc_defaultChannel->string[0] != '\0') {
 		MN_RegisterText(TEXT_STANDARD, irc_buffer);
 		MN_RegisterText(TEXT_LIST, irc_names_buffer);
-		Key_SetDest(key_input);
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "Irc_Input_Activate: Warning - IRC not connected\n");
 		MN_PopMenu(qfalse);

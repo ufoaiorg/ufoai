@@ -251,6 +251,16 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 }
 
 /**
+ * @brief Release all captured input (keyboard or mouse)
+ * @todo need to fix mouse release with a callback to nodes
+ */
+void MN_ReleaseInput (void)
+{
+	MN_RemoveFocus();
+	MN_MouseRelease();
+}
+
+/**
  * @brief save the captured node
  * @sa MN_SetMouseCapture
  * @sa MN_GetMouseCapture
@@ -462,8 +472,6 @@ void MN_MouseMove (int x, int y)
  * @sa MN_ExecuteEventActions
  * @sa MN_RightClick
  * @sa Key_Message
- * @sa CL_MessageMenu_f
- * @note inline editing of cvars (e.g. save dialog) is done in Key_Message
  */
 void MN_LeftClick (int x, int y)
 {

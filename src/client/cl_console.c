@@ -90,11 +90,8 @@ void Con_ToggleConsole_f (void)
 		Key_SetDest(key_game);
 	} else {
 		Key_SetDest(key_console);
-		/* make sure that we end all input buffers when opening the console */
-		MN_RemoveFocus();
-		/** @todo mn_msgedit should not be used, this function need a clean up */
-		if (msg_mode == MSG_MENU)
-			Cbuf_AddText("mn_msgedit !\n");
+		/* make sure the menu no more capture inputs */
+		MN_ReleaseInput();
 	}
 }
 
@@ -216,17 +213,6 @@ static void Con_MessageModeSayTeam_f (void)
 
 	msg_mode = MSG_SAY_TEAM;
 	Key_SetDest(key_message);
-}
-
-/**
- * @brief Activated the inline cvar editing
- * @note E.g. used in our saving dialog to enter the save game comment
- */
-static void Con_MessageModeMenu_f (void)
-{
-	if (msg_mode != MSG_IRC)
-		msg_mode = MSG_MENU;
-	Key_SetDest(key_input);
 }
 
 /**
@@ -364,7 +350,6 @@ void Con_Init (void)
 	Cmd_AddCommand("togglechat", Con_ToggleChat_f, NULL);
 	Cmd_AddCommand("messagesay", Con_MessageModeSay_f, _("Send a message to all players"));
 	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f, _("Send a message to allied team members"));
-	Cmd_AddCommand("messagemenu", Con_MessageModeMenu_f, NULL);
 	Cmd_AddCommand("clear", Con_Clear_f, "Clear console text");
 	Cmd_AddCommand("condump", Con_Dump_f, "Dump console text to textfile");
 

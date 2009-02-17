@@ -48,6 +48,8 @@ qboolean MN_HasFocus(const struct menuNode_s* node);
 void MN_RemoveFocus(void);
 qboolean MN_KeyPressed(unsigned int key, unsigned short unicode);
 
+void MN_ReleaseInput(void);
+
 /* mouse capture */
 struct menuNode_s* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(struct menuNode_s* node);

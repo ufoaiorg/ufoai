@@ -438,11 +438,19 @@ static void Key_Console (int key, int unicode)
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
  * @sa MN_LeftClick
- * @sa CL_MessageMenu_f
  */
 static void Key_Message (int key)
 {
+#if 0
 	int utf8len;
+#endif
+
+	/**
+	 * @todo remove of mn_msgedit break the chat and team chat
+	 * this unremoved code only allow to stop chat edition with "return"
+	 * We should update the GUI to use a textentry to allow to
+	 * type text and use it to chat.
+	 */
 
 	if (key == K_ENTER || key == K_KP_ENTER) {
 		qboolean send = qtrue;
@@ -455,8 +463,10 @@ static void Key_Message (int key)
 				send = qfalse;
 			break;
 		case MSG_IRC:
+#if 0 /* textentry already do the same */
 			/* end the editing (don't cancel) */
 			Cbuf_AddText("irc_chanmsg \"");
+#endif
 			break;
 		case MSG_SAY_TEAM:
 			if (msg_buffer[0])
@@ -465,9 +475,11 @@ static void Key_Message (int key)
 				send = qfalse;
 			break;
 		case MSG_MENU:
+#if 0 /* textentry already do the same */
 			/* end the editing (don't cancel) */
 			/** @todo mn_msgedit should not be used, this function need a clean up */
 			Cbuf_AddText("mn_msgedit \":");
+#endif
 			break;
 		default:
 			Com_Printf("Invalid msg_mode\n");
@@ -486,6 +498,7 @@ static void Key_Message (int key)
 		return;
 	}
 
+#if 0 /* textentry already do the same */
 	if (key == K_ESCAPE) {
 		if (cls.state != ca_active) {
 			/* If connecting or loading a level, disconnect */
@@ -512,7 +525,9 @@ static void Key_Message (int key)
 
 		return;
 	}
+#endif
 
+#if 0 /* textentry do the same */
 	if (key == K_BACKSPACE) {
 		if (msg_bufferlen) {
 			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
@@ -522,7 +537,9 @@ static void Key_Message (int key)
 		}
 		return;
 	}
+#endif
 
+#if 0 /* textentry do the same */
 	utf8len = UTF8_encoded_len(key);
 
 	/** @todo figure out which unicode codes to accept */
@@ -544,6 +561,8 @@ static void Key_Message (int key)
 	/** @todo mn_msgedit should not be used, this function need a clean up */
 	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 		Cbuf_AddText(va("mn_msgedit \"%s\"\n", msg_buffer));
+#endif
+
 }
 
 

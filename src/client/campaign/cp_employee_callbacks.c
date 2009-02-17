@@ -247,7 +247,6 @@ static void E_EmployeeList_f (void)
 
 /**
  * @brief Change the name of the selected actor.
- * @sa CL_MessageMenu_f
  */
 static void E_ChangeName_f (void)
 {
