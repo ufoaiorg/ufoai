@@ -14838,18 +14838,18 @@
 {
 "classname" "info_human_start"
 "origin" "-624 -528 32"
-"angle" "-1.4033e-14"
+"angle" "0"
 }
 // entity 117
 {
 "classname" "info_human_start"
-"angle" "-1.4033e-14"
+"angle" "0"
 "origin" "-752 -688 32"
 }
 // entity 118
 {
 "classname" "info_human_start"
-"angle" "-1.4033e-14"
+"angle" "0"
 "origin" "-784 -976 32"
 }
 // entity 119

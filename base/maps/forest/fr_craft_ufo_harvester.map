@@ -3909,19 +3909,19 @@
 {
 "classname" "info_alien_start"
 "origin" "976 464 32"
-"angle" "-1.4033e-014"
+"angle" "0"
 }
 // entity 82
 {
 "classname" "info_alien_start"
 "origin" "880 432 96"
-"angle" "-1.4033e-014"
+"angle" "0"
 }
 // entity 83
 {
 "classname" "info_alien_start"
 "origin" "464 496 96"
-"angle" "-1.4033e-014"
+"angle" "0"
 }
 // entity 84
 {
