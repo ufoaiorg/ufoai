@@ -204,7 +204,7 @@ static void SVC_Info (struct net_stream *s)
 
 		infostring[0] = '\0';
 
-		Info_SetValueForKey(infostring, "sv_protocol", va("%i", PROTOCOL_VERSION));
+		Info_SetValueForKey(infostring, "sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION));
 		Info_SetValueForKey(infostring, "sv_hostname", sv_hostname->string);
 		Info_SetValueForKey(infostring, "sv_dedicated", sv_dedicated->string);
 		Info_SetValueForKey(infostring, "sv_gametype", sv_gametype->string);
@@ -815,7 +815,7 @@ void SV_Init (void)
 
 	rcon_password = Cvar_Get("rcon_password", "", 0, NULL);
 	Cvar_Get("sv_cheats", "0", CVAR_SERVERINFO | CVAR_LATCH, NULL);
-	Cvar_Get("sv_protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
+	Cvar_Get("sv_protocol", DOUBLEQUOTE(PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
 	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	sv_hostname = Cvar_Get("sv_hostname", "noname", CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
