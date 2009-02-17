@@ -116,8 +116,6 @@ void MN_InitStartup (void)
 	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
 	mn_serverday = Cvar_Get("mn_serverday", "1", CVAR_ARCHIVE, "Decides whether the server starts the day or the night version of the selected map");
-	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
-	mn_inputlength->modified = qfalse;
 
 	MN_Init();
 }

@@ -75,7 +75,6 @@ cvar_t *mn_afterdrop;
 cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
 cvar_t *mn_serverday;
-cvar_t *mn_inputlength;
 
 cvar_t *cl_lastsave;
 cvar_t *cl_start_employees;
@@ -1031,11 +1030,6 @@ static void CL_CvarCheck (void)
 	/* language */
 	if (s_language->modified)
 		CL_LanguageTryToSet(s_language->string);
-
-	if (mn_inputlength->modified) {
-		if (mn_inputlength->integer >= MAX_CVAR_EDITING_LENGTH)
-			Cvar_SetValue("mn_inputlength", MAX_CVAR_EDITING_LENGTH);
-	}
 
 	/* r_mode and fullscreen */
 	v = Cvar_VariableInteger("mn_vidmode");

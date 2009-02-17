@@ -283,7 +283,6 @@ extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;
 extern cvar_t *mn_serverday;
-extern cvar_t *mn_inputlength;
 
 extern cvar_t *s_language;
 extern cvar_t *confirm_actions;

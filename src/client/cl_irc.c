@@ -42,7 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define STRINGIFY(x) #x
 #define DOUBLEQUOTE(x) STRINGIFY(x)
-#define IRC_MAX_INPUTLENGTH 128
 
 static cvar_t *irc_server;
 static cvar_t *irc_port;
@@ -56,8 +55,6 @@ static cvar_t *irc_logConsole;
 static cvar_t *irc_showIfNotInMenu;
 /* menu cvar */
 static cvar_t *irc_send_buffer;
-
-static int inputLengthBackup;
 
 static qboolean irc_connected;
 
@@ -1743,9 +1740,6 @@ void Irc_Input_Activate (void)
 		/* cancel any active editing */
 		return;
 	}
-	/* store this value to be able to reset it in Irc_Input_Deactivate */
-	inputLengthBackup = Cvar_VariableValue("mn_inputlength");
-	Cvar_SetValue("mn_inputlength", IRC_MAX_INPUTLENGTH);
 }
 
 /**
@@ -1755,11 +1749,6 @@ void Irc_Input_Deactivate (void)
 {
 	irc_send_buffer->modified = qfalse;
 
-	/* if this is set - the command is called after Irc_Input_Activate call */
-	if (inputLengthBackup) {
-		Cvar_SetValue("mn_inputlength", inputLengthBackup);
-		inputLengthBackup = 0;
-		MN_MenuTextReset(TEXT_STANDARD);
-		MN_MenuTextReset(TEXT_LIST);
-	}
+	MN_MenuTextReset(TEXT_STANDARD);
+	MN_MenuTextReset(TEXT_LIST);
 }

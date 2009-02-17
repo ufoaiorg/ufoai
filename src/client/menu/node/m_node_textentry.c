@@ -45,6 +45,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const char CURSOR = '|';		/**< Use as the cursor when we edit the text */
 static const char HIDECHAR = '*';	/**< use as a mask for password */
 
+/* limit the input for cvar editing (base name, save slots and so on) */
+#define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
+
 /* global data */
 static char cvarValueBackup[MAX_CVAR_EDITING_LENGTH];
 static cvar_t *editedCvar = NULL;
