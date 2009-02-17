@@ -54,8 +54,8 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 	}
 
 /**
- * @brief a macro to test a condition write an error
- * message and exit the current function returning ED_ERROR
+ * @brief test a condition, write an error
+ * message and exit the current function with ED_ERROR
  */
 #define ED_TEST_RETURN_ERROR(condition,...) \
 	if (condition) { \
@@ -82,8 +82,7 @@ static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 #define ED_PASS_ERROR_EXTRAMSG(function_call,...) \
 	if ((function_call) == ED_ERROR) { \
 		snprintf(lastErrExtra, sizeof(lastErr), __VA_ARGS__); \
-		strncat(lastErr, lastErrExtra, sizeof(lastErr)); \
-		lastErr[ED_MAX_ERR_LEN-1] = '\0'; \
+		strncat(lastErr, lastErrExtra, sizeof(lastErr) - strlen(lastErr) -1); \
 		return ED_ERROR; \
 	}
 
@@ -197,8 +196,8 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
  * @param insistPositive if 1, then tests for the number being greater than or equal to zero.
  * @sa ED_CheckNumericType
  * @note disallows hex, inf, NaN, numbers with junk on the end (eg -0123junk)
- * @return ED_OK if the value string matches the type, ED_ERROR otherwise.
- * (call ED_GetLastError)
+ * @return ED_OK or ED_ERROR
+ * @sa ED_GetLastError
  * @note the parsed numbers are stored for later use in lastCheckedInt and lastCheckedFloat
  */
 static int ED_CheckNumber (const char *value, const int floatOrInt, const int insistPositive)
@@ -294,7 +293,7 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 	const char *buf_p = tokBuf;
 
 	strncpy(tokBuf, value, sizeof(tokBuf));
-	assert(floatOrInt & (ED_TYPE_INT | ED_TYPE_FLOAT));
+	assert(!(floatOrInt & ED_TYPE_INT) != !(floatOrInt & ED_TYPE_FLOAT));/* logical exclusive or */
 	while (buf_p) {
 		const char *tok = COM_Parse(&buf_p);
 		if (tok[0] == '\0')
