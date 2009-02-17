@@ -59,7 +59,7 @@ void CL_Connect_f (void)
 
 	if (Cmd_Argc() == 2) {
 		server = Cmd_Argv(1);
-		serverport = va("%d", PORT_SERVER);
+		serverport = DOUBLEQUOTE(PORT_SERVER);
 	} else {
 		assert(selectedServer);
 		server = selectedServer->node;

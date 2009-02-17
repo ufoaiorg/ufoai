@@ -40,9 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #	include <fcntl.h>
 #endif
 
-#define STRINGIFY(x) #x
-#define DOUBLEQUOTE(x) STRINGIFY(x)
-
 static cvar_t *irc_server;
 static cvar_t *irc_port;
 static cvar_t *irc_channel;

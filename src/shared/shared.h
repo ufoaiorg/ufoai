@@ -79,6 +79,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	BASEDIRNAME	"base"
 
+#define STRINGIFY(x) #x
+#define DOUBLEQUOTE(x) STRINGIFY(x)
+
 const char *COM_SkipPath(const char *pathname);
 void COM_StripExtension(const char *in, char *out, size_t size);
 void COM_FilePath(const char *in, char *out);

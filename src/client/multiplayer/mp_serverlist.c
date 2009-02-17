@@ -461,7 +461,7 @@ static void CL_ServerInfo_f (void)
 	switch (Cmd_Argc()) {
 	case 2:
 		host = Cmd_Argv(1);
-		port = va("%d", PORT_SERVER);
+		port = DOUBLEQUOTE(PORT_SERVER);
 		break;
 	case 3:
 		host = Cmd_Argv(1);
@@ -473,7 +473,7 @@ static void CL_ServerInfo_f (void)
 			port = selectedServer->service;
 		} else {
 			host = Cvar_VariableString("mn_server_ip");
-			port = va("%d", PORT_SERVER);
+			port = DOUBLEQUOTE(PORT_SERVER);
 		}
 		break;
 	}
@@ -556,7 +556,7 @@ void CL_PingServers_f (void)
 	}
 
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		char service[256];
+		const char *service;
 		const char *p;
 		Com_sprintf(name, sizeof(name), "adr%i", i);
 		adrstring = Cvar_VariableString(name);
@@ -565,9 +565,9 @@ void CL_PingServers_f (void)
 
 		p = strrchr(adrstring, ':');
 		if (p)
-			Q_strncpyz(service, p + 1, sizeof(service));
+			service = p + 1;
 		else
-			Com_sprintf(service, sizeof(service), "%d", PORT_SERVER);
+			service = DOUBLEQUOTE(PORT_SERVER);
 		CL_AddServerToList(adrstring, service);
 	}
 
