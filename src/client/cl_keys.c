@@ -438,7 +438,6 @@ static void Key_Console (int key, int unicode)
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
  * @sa MN_LeftClick
- * @todo By using a textentry (like we do for IRC) for chat and team chat, we can remove this function
  */
 static void Key_Message (int key)
 {
@@ -470,8 +469,7 @@ static void Key_Message (int key)
 			Cbuf_AddText("\"\n");
 		}
 
-		if (msg_mode != MSG_IRC)
-			Key_SetDest(key_game);
+		Key_SetDest(key_game);
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
 		return;
@@ -491,9 +489,8 @@ static void Key_Message (int key)
 	}
 
 	if (key == K_BACKSPACE) {
-		if (msg_bufferlen) {
+		if (msg_bufferlen)
 			msg_bufferlen = UTF8_delete_char(msg_buffer, msg_bufferlen - 1);
-		}
 		return;
 	}
 
@@ -522,11 +519,11 @@ static int Key_StringToKeynum (const char *str)
 {
 	const keyname_t *kn;
 
-	if (!str || !str[0])
+	if (!str || str[0] == '\0')
 		return -1;
 
 	/* single char? */
-	if (!str[1])
+	if (str[1] == '\0')
 		return str[0];
 
 	for (kn = keynames; kn->name; kn++) {
@@ -921,7 +918,6 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 			CIN_StopCinematic();
 
 		switch (cls.key_dest) {
-		case key_input:
 		case key_message:
 			Key_Message(unicode);
 			break;
@@ -967,8 +963,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 	}
 
 	/* if not a consolekey, send to the interpreter no matter what mode is */
-	if (cls.key_dest == key_game ||
-		(cls.key_dest == key_input && key >= K_MOUSE1 && key <= K_MWHEELUP)) {
+	if (cls.key_dest == key_game || (key >= K_MOUSE1 && key <= K_MWHEELUP)) {
 		/* Some keyboards need modifiers to access key values that are
 		 * present as bare keys on other keyboards. Smooth over the difference
 		 * here by using the translated value if there is a binding for it. */
@@ -1003,7 +998,6 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		return;	/* other systems only care about key down events */
 
 	switch (cls.key_dest) {
-	case key_input:
 	case key_message:
 		Key_Message(unicode);
 		break;

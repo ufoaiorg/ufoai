@@ -172,9 +172,7 @@ typedef enum {
 
 typedef enum {
 	MSG_SAY,
-	MSG_SAY_TEAM,
-	MSG_IRC,
-	MSG_MENU
+	MSG_SAY_TEAM
 } msg_mode_t;
 
 typedef enum {

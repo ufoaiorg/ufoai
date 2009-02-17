@@ -1755,9 +1755,6 @@ void Irc_Input_Deactivate (void)
 {
 	irc_send_buffer->modified = qfalse;
 
-	/* allow setting to other modes in next messagemode call */
-	msg_mode = MSG_MENU;
-
 	/* if this is set - the command is called after Irc_Input_Activate call */
 	if (inputLengthBackup) {
 		Cvar_SetValue("mn_inputlength", inputLengthBackup);

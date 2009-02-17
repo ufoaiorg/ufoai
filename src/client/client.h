@@ -156,7 +156,6 @@ typedef enum {
 
 typedef enum {
 	key_game,
-	key_input,
 	key_console,
 	key_message
 } keydest_t;

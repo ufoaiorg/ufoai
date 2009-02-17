@@ -151,8 +151,6 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 	if (menu->u.window.onInit)
 		MN_ExecuteEventActions(menu, menu->u.window.onInit);
 
-	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
-		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
 	Key_SetDest(key_game);
 
 	/* if there is a timeout value set, init the menu with current client time */
@@ -360,10 +358,6 @@ void MN_PopMenu (qboolean all)
 	menuNode_t *oldfirst = mn.menuStack[0];
 	assert(mn.menuStackPos);
 
-	/* make sure that we end all input buffers */
-	if (cls.key_dest == key_input && msg_mode == MSG_MENU)
-		Key_Event(K_ENTER, 0, qtrue, cls.realtime);
-
 	if (all) {
 		MN_CloseAllMenu();
 	} else {
@@ -419,7 +413,7 @@ static void MN_CloseMenu_f (void)
  */
 static void MN_PopMenu_f (void)
 {
-	if (Cmd_Argc() < 2 || !Q_strncmp(Cmd_Argv(1), "esc", 3)) {
+	if (Cmd_Argc() < 2 || !Q_strcmp(Cmd_Argv(1), "esc")) {
 		/** @todo we can do the same in a better way: event returning agreement */
 		/* some window can prevent escape */
 		const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
