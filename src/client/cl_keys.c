@@ -187,7 +187,7 @@ static const keyname_t keynames[] = {
 
 	{"SEMICOLON", ';'},			/* because a raw semicolon seperates commands */
 
-	M(WINDOWS),
+	M(SUPER),
 	M(COMPOSE),
 	M(MODE),
 	M(HELP),
@@ -683,7 +683,7 @@ static void Key_Unbindall_f (void)
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i]) {
-			if (!Q_strncmp(Cmd_Argv(0), "unbindallmenu", MAX_VAR))
+			if (!Q_strcmp(Cmd_Argv(0), "unbindallmenu"))
 				Key_SetBinding(i, "", KEYSPACE_MENU);
 			else
 				Key_SetBinding(i, "", KEYSPACE_GAME);
