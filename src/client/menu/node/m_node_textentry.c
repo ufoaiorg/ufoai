@@ -73,6 +73,8 @@ static void MN_TextEntryNodeValidateEdition (menuNode_t *node)
  */
 static void MN_TextEntryNodeAbortEdition (menuNode_t *node)
 {
+	assert(editedCvar);
+
 	/* set the old cvar value */
 	Cvar_ForceSet(editedCvar->name, cvarValueBackup);
 
@@ -141,6 +143,7 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 static void MN_TextEntryFocusGained (menuNode_t *node)
 {
 	assert(editedCvar == NULL);
+	/* skip '*cvar ' */
 	editedCvar = Cvar_Get(&((char*)node->text)[6], "", 0, NULL);
 	assert(editedCvar);
 	Q_strncpyz(cvarValueBackup, editedCvar->string, sizeof(cvarValueBackup));
