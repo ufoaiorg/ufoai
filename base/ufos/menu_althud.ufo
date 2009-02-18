@@ -616,7 +616,7 @@ menu althud extends ahud
 	pic bt_reaction_a
 	{
 		key "*binding togglereaction"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		mousefx true
 		pos		"900 497"
 		texl	"81 37"
@@ -630,7 +630,7 @@ menu althud extends ahud
 	pic althud_bt_use_headgear
 	{
 		tooltip	"_Use headgear"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		mousefx true
 		pos		"930 497"
 		texl	"108 37"
@@ -641,7 +641,7 @@ menu althud extends ahud
 	pic bt_reloadright
 	{
 		tooltip	"*cvar mn_reloadright_tt"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		pos		"991 497"
 		texl	"0 37"
 		texh	"25 70"
@@ -654,7 +654,7 @@ menu althud extends ahud
 	pic bt_reloadleft
 	{
 		tooltip	"*cvar mn_reloadleft_tt"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		pos		"991 497"
 		texl	"0 37"
 		texh	"25 70"
@@ -674,7 +674,7 @@ menu althud extends ahud
 	{
 		key "*binding standcrouch"
 		tooltip	"*cvar mn_crouchstand_tt"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		mousefx true
 		pos		"991 536"
 		texl	"27 37"
@@ -1131,7 +1131,7 @@ menu althud extends ahud
 	pic bt_primaryright
 	{
 		tooltip	"_Use Item"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		pos		"870 497"
 		texl	"0 74"
 		texh	"25 107"
@@ -1141,7 +1141,7 @@ menu althud extends ahud
 	pic bt_primaryleft
 	{
 		tooltip	"_Use Item"
-		image	althud/buttons_althud1
+		image	althud/buttons_althud1g
 		pos		"870 497"
 		texl	"0 74"
 		texh	"25 107"

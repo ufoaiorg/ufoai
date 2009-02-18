@@ -347,7 +347,7 @@ menu hud extends ahud
 		pic bt_reload
 		{
 			tooltip	"*cvar mn_reloadright_tt"
-			image	hud/buttons2
+			image	hud/buttons2g
 			blend true
 			mousefx true
 			pos	"103 104"
@@ -373,7 +373,7 @@ menu hud extends ahud
 		pic hud_bt_use_headgear
 		{
 			tooltip	"_Use headgear"
-			image	hud/buttons2
+			image	hud/buttons2g
 			blend	true
 			mousefx true
 			pos	"180 104"
@@ -414,7 +414,7 @@ menu hud extends ahud
 		pic bt_reload
 		{
 			tooltip	"*cvar mn_reloadleft_tt"
-			image	hud/buttons2
+			image	hud/buttons2g
 			blend true
 			mousefx true
 			pos	"89 104"

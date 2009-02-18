@@ -1069,24 +1069,36 @@ static void HUD_RefreshWeaponButtons (int time)
 	}
 
 	/** Reload buttons @sa HUD_ActorUpdateCvars */
-	if (weaponr)
-		reloadtime = CL_CalcReloadTime(weaponr->item.t);
-	if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime) {
-		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
-		Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand."));
-	} else {
-		HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
-		Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), reloadtime));
+	{
+		const qboolean fullyLoadedR = (weaponr && weaponr->item.t && (weaponr->item.t->ammo == weaponr->item.a));
+		if (weaponr)
+			reloadtime = CL_CalcReloadTime(weaponr->item.t);
+		if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime || fullyLoadedR) {
+			HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
+			if (fullyLoadedR)
+				Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand, already fully loaded."));
+			else
+				Cvar_Set("mn_reloadright_tt", _("No reload possible for right hand."));
+		} else {
+			HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DESELECT);
+			Cvar_Set("mn_reloadright_tt", va(_("Reload weapon (%i TU)."), reloadtime));
+		}
 	}
 
-	if (weaponl)
-		reloadtime = CL_CalcReloadTime(weaponl->item.t);
-	if (!weaponl || !weaponl->item.m || !weaponl->item.t->reload || time < reloadtime) {
-		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
-		Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand."));
-	} else {
-		HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
-		Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), reloadtime));
+	{
+		const qboolean fullyLoadedL = (weaponl && weaponl->item.t && (weaponl->item.t->ammo == weaponl->item.a));
+		if (weaponl)
+			reloadtime = CL_CalcReloadTime(weaponl->item.t);
+		if (!weaponl || !weaponl->item.m || !weaponl->item.t->reload || time < reloadtime || fullyLoadedL) {
+			HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
+			if (fullyLoadedL)
+				Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand, already fully loaded."));
+			else
+				Cvar_Set("mn_reloadleft_tt", _("No reload possible for left hand."));
+		} else {
+			HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DESELECT);
+			Cvar_Set("mn_reloadleft_tt", va(_("Reload weapon (%i TU)."), reloadtime));
+		}
 	}
 
 	/* Weapon firing buttons. (nearly the same code as for headgear buttons above).*/
