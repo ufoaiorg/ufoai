@@ -681,12 +681,8 @@ static int ED_ProcessRanges (void)
  * @return ED_OK or ED_ERR
  * @sa ED_GetLastErr
  */
-int ED_Parse (const char **data_p)
+int ED_Parse (const char *data_p)
 {
-	/* this function should not change *data_p, as the calling function uses
-	 * it to free(). also, it is parsed twice, and Com_Parse changes *data_p.
-	 * hence the use of copies of the pointer*/
-	const char *copy_data_p = *data_p;
 	static int done = 0;
 
 	/* only do this once, repeat calls are OK */
@@ -699,7 +695,7 @@ int ED_Parse (const char **data_p)
 	memset(entityDefs, 0, (ED_MAX_DEFS + 1) * sizeof(entityDef_t));
 	numEntityDefs = 0;
 
-	ED_PASS_ERROR(ED_ParseEntities(&copy_data_p));
+	ED_PASS_ERROR(ED_ParseEntities(&data_p));
 	ED_TEST_RETURN_ERROR(numEntityDefs == 0, "ED_Parse: Zero entity definitions found");
 
 	ED_PASS_ERROR(ED_ProcessRanges());

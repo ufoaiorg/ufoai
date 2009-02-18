@@ -77,7 +77,7 @@ int ED_CheckKey (const entityKeyDef_t *kd, const char *value);
 const entityDef_t *ED_GetEntityDef (const char *classname);
 const entityKeyDef_t *ED_GetKeyDef (const char *classname, const char *keyname, const int abstract);
 const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *keyname, const int abstract);
-int ED_Parse(const char **data_p);
+int ED_Parse(const char *data_p);
 const char *ED_GetLastError(void);
 void ED_Free(void);
 

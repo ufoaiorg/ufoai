@@ -189,8 +189,7 @@ static void Check_MapSize (vec3_t mapSize)
  */
 static void Check_InitEntityDefs (void)
 {
-	void *newPointer;
-	void **entitiesUfoBuf; /* LoadFile calls malloc */
+	char *entitiesUfoBuf; /* LoadFile calls malloc */
 	const char *entitiesUfoPath;
 
 	/* only do this once, may be called by different
@@ -200,18 +199,16 @@ static void Check_InitEntityDefs (void)
 
 	entitiesUfoPath = FS_EntitiesDefUfoPath();
 
-	entitiesUfoBuf = &newPointer;
-
 	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
 
-	if (TryLoadFile(entitiesUfoPath, entitiesUfoBuf) == -1)
+	if (TryLoadFile(entitiesUfoPath, (void **)&entitiesUfoBuf) == -1)
 		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
 
-	if (ED_Parse((const char **)entitiesUfoBuf) == ED_ERROR)
+	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
 		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
 
 	/* info has been copied to new malloc'd space in ED_Parse */
-	free(*entitiesUfoBuf);
+	free(entitiesUfoBuf);
 }
 
 /**
