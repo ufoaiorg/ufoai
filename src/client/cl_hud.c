@@ -905,8 +905,7 @@ static void HUD_FireWeapon_f (void)
 
 /**
  * @brief Remember if we hover over a button that would cost some TUs when pressed.
- * @note tis is used in HUD_ActorUpdateCvars to update the "remaining TUs" bar correctly.
- * @note commandline:remaining_tus
+ * @note this is used in HUD_ActorUpdateCvars to update the "remaining TUs" bar correctly.
  */
 static void HUD_RemainingTus_f (void)
 {
