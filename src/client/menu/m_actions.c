@@ -164,7 +164,7 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		if (textValue[0] == '_') {
 			textValue = gettext(textValue + 1);
 		}
-		Cvar_Set(cvarName, textValue);
+		Cvar_ForceSet(cvarName, textValue);
 		return;
 	}
 
