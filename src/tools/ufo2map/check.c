@@ -809,10 +809,11 @@ static void Check_FindCompositeSides (void)
 			numMembers = 1;
 
 			/* add neighbouring brushes to the list to check for composite propagation */
-			numTodo = iBrush->numNear;
+			numTodo = 0;
 			for (j = 0; j < iBrush->numNear; j++)
-				if (Check_IsOptimisable(iBrush->nearBrushes[j]))
-					bTodo[j] = iBrush->nearBrushes[j];
+				if (Check_IsOptimisable(iBrush->nearBrushes[j])) {
+					bTodo[numTodo++] = iBrush->nearBrushes[j];
+				}
 
 			/* this brush's nearlist is listed for checking, so it is done */
 			bDone[numDone++] = iBrush;
