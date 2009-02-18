@@ -706,6 +706,11 @@ static void HUD_DisplayFiremodes_f (void)
 						MN_ExecuteConfunc("set_left_cb_ina %i", i);
 					}
 				}
+			} else {
+				if (hand == ACTOR_HAND_CHAR_RIGHT)
+					MN_ExecuteConfunc("set_right_cb_invis %i", i);
+				else
+					MN_ExecuteConfunc("set_left_cb_invis %i", i);
 			}
 
 		} else { /* No more fd left in the list or weapon not researched. */

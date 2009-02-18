@@ -334,6 +334,10 @@ menu firemode_left {
 		*bt_left_cb<1> texh "31 63"
 		*bt_left_cb<1> invis false
 	}
+
+	confunc set_left_cb_invis {
+		*bt_left_cb<1> invis true
+	}
 }
 
 menu firemode_right {
@@ -624,5 +628,9 @@ menu firemode_right {
 		*bt_right_cb<1>	texl "0 32"
 		*bt_right_cb<1> texh "31 63"
 		*bt_right_cb<1> invis false
+	}
+
+	confunc set_right_cb_invis {
+		*bt_right_cb<1> invis true
 	}
 }
