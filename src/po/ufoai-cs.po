@@ -1404,7 +1404,7 @@ msgid "An office complex under constuction."
 msgstr "Kancelářský komplex ve výstavbě."
 
 #: ../base/ufos/maps.ufo:1980
-msgid "A local harbor."
+msgid "A local harbour."
 msgstr "Místní přístav."
 
 #: ../base/ufos/maps.ufo:2020

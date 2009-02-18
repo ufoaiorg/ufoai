@@ -1974,10 +1974,10 @@ mapdef construction
 	}
 }
 
-mapdef harbor
+mapdef harbour
 {
-	map				harbor
-	description		"_A local harbor."
+	map				harbour
+	description		"_A local harbour."
 	multiplayer		true
 	teams			2
 	gametypes {

@@ -192,7 +192,7 @@ base/maps/frozen/st_n04.map | GNU General Public License 2.0
 base/maps/frozen/st_n05.map | GNU General Public License 2.0
 base/maps/fueldump.map | GNU General Public License 2.0 or later | Martin Gerhardy
 base/maps/gasstation/gas_main.map | GNU General Public License 2.0 | "SparX" Beyeler
-base/maps/harbor.map | GNU General Public License 2.0 | "SparX" Beyeler
+base/maps/harbour.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/harvester_crash.map | GNU General Public License 2.0 | "SparX" Beyeler
 base/maps/ice.ump | GNU General Public License 2.0
 base/maps/ice/ice_drop_firebird.map | GNU General Public License 2.0

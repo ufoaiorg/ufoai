@@ -1411,7 +1411,7 @@ msgid "An office complex under constuction."
 msgstr "Un complesso di uffici in contruzione."
 
 #: ../base/ufos/maps.ufo:1980
-msgid "A local harbor."
+msgid "A local harbour."
 msgstr ""
 
 #: ../base/ufos/maps.ufo:2020

@@ -1282,7 +1282,7 @@ msgid "An office complex under constuction."
 msgstr "Egy épülő irodaház."
 
 #: ../base/ufos/maps.ufo:1980
-msgid "A local harbor."
+msgid "A local harbour."
 msgstr "Egy helyi kikötő."
 
 #: ../base/ufos/maps.ufo:2020
