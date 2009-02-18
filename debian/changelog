@@ -1,3 +1,11 @@
+ufoai (2.3~~svn22761) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Added homepage and link to svn
+  * Fixed configure flag
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 18 Feb 2009 19:49:00 -0100
+
 ufoai (2.3~~svn21498) intrepid; urgency=low
 
   [ Martin Gerhardy ]

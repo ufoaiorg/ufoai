@@ -44,7 +44,7 @@ debtar: clean
 
 config.status:
 	dh_testdir
-	./configure --without-curses --enable-gtkradiant --prefix=/usr
+	./configure --without-curses --prefix=/usr
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
