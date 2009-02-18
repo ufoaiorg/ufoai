@@ -398,6 +398,28 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 }
 
 /**
+ * @brief converts a block name (eg "optional") to an constant (eg ED_OPTIONAL).
+ * @return the parse mode or ED_ERROR
+ */
+static int ED_Block2Constant (const char *blockName)
+{
+	if (!strcmp("optional", blockName))
+		return ED_OPTIONAL;
+	else if (!strcmp("mandatory", blockName))
+		return ED_MANDATORY;
+	else if (!strcmp("abstract", blockName))
+		return ED_ABSTRACT;
+	else if (!strcmp("default", blockName))
+		return ED_DEFAULT;
+	else if (!strcmp("type", blockName))
+		return ED_MODE_TYPE;
+	else if (!strcmp("range", blockName))
+		return ED_RANGE;
+	else
+		ED_RETURN_ERROR("parse mode not recognised");
+}
+
+/**
  * @brief converts an internal constant integer to a string
  * representation of a type (eg V_FLOAT)
  * @return the string, or NULL if the integer is not recognised.
@@ -495,20 +517,18 @@ static int ED_PairParsed (entityKeyDef_t keyDefsBuf[], int *numKeyDefsSoFar_p,
 }
 
 /**
- * Parses the defs, once the number of entity defs has been found
  * @return ED_ERROR or ED_OK
  */
 static int ED_ParseEntities (const char **data_p)
 {
 	int braceLevel = 0;
 	int tokensOnLevel0 = 0;
-	int mode = ED_OPTIONAL;
+	int mode = ED_ABSTRACT;
 	entityKeyDef_t keyDefBuf[ED_MAX_KEYS_PER_ENT];
 	char lastTokenBuf[ED_MAX_TOKEN_LEN];
 	int keyIndex = 0;
 	int toggle = 0; /* many lines should have a pair of tokens on, this toggles 0, 1 to indicate progress */
 
-	/* less checking here, as a lot is done whilst counting the entities */
 	while (data_p) {
 		const char *parsedToken = COM_Parse(data_p);
 		toggle ^= 1;
@@ -558,30 +578,21 @@ static int ED_ParseEntities (const char **data_p)
 
 			tokensOnLevel0++;
 		} else { /* braceLevel > 0 */
-			if (!strcmp("mandatory", parsedToken)) {
-				mode = ED_MANDATORY;
-				toggle ^= 1; /* start of a mode changing block is the only time that only one non-brace token is on a line */
-			} else if (!strcmp("optional", parsedToken)) {
-				mode = ED_OPTIONAL;
-				toggle ^= 1;
-			} else if (!strcmp("default", parsedToken)) {
-				mode = ED_DEFAULT;
-				toggle ^= 1;
-			} else if (!strcmp("type", parsedToken)) {
-				mode = ED_MODE_TYPE;
-				toggle ^= 1;
-			} else if (!strcmp("range", parsedToken)) {
-				mode = ED_RANGE;
-				toggle ^= 1;
-			} else {/* must be a keyname or value */
+			int newMode = ED_Block2Constant(parsedToken);
+			if (ED_ERROR == newMode ) { /* must be a key name or value */
 				if (toggle) { /* store key name til after next token is parsed */
 					strncpy(lastTokenBuf, parsedToken, ED_MAX_TOKEN_LEN);
 				} else { /* store key-value pair in buffer until whole entity is parsed */
 					ED_PASS_ERROR(ED_PairParsed(keyDefBuf, &keyIndex, lastTokenBuf, parsedToken, mode));
 				}
+			} else {
+				mode = newMode;
+				toggle ^= 1; /* start of a mode changing block is the only time that only one non-brace token is on a line */
 			}
 		}
 	}
+
+	/** @todo test for closed braces }*/
 
 	return ED_OK;
 }
@@ -683,9 +694,8 @@ static int ED_ProcessRanges (void)
  */
 int ED_Parse (const char *data_p)
 {
-	static int done = 0;
-
 	/* only do this once, repeat calls are OK */
+	static int done = 0;
 	if (done)
 		return ED_OK;
 
