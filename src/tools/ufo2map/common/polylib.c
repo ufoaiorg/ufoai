@@ -45,8 +45,7 @@ winding_t *AllocWinding (int points)
 
 	if (threadstate.numthreads == 1) {
 		c_active_windings++;
-		if (c_active_windings > c_peak_windings)
-			c_peak_windings = c_active_windings;
+		c_peak_windings = c_active_windings > c_peak_windings ? c_active_windings : c_peak_windings;
 	}
 	s = sizeof(vec3_t) * points + sizeof(int);
 	w = malloc(s);

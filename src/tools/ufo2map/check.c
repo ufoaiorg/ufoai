@@ -1086,6 +1086,7 @@ static qboolean Check_EdgeEdgeIntersection (const vec3_t e1p1, const vec3_t e1p2
 	return qtrue;
 }
 
+#if 0 /* not used since z-fight test changed to calculate area of overlap instead */
 /**
  * @brief test if three points are in a straight line in a robust way
  * @note if 2 points are very close, then there are essentially only 2 points, which must be in a straight line
@@ -1123,13 +1124,16 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 
 	return offLineDist < CH_DIST_EPSILON_COLLINEAR_POINTS;
 }
+#endif
 
 #define VERT_BUF_SIZE_DISJOINT_SIDES 21
+#define OVERLAP_AREA_TOL 0.2f
 
 /**
  * @brief tests if sides overlap, for z-fighting check
  * @note the sides must be on a common plane. if they are not, the result is unspecified
  * @note http://mathworld.wolfram.com/Collinear.html
+ * @sa CheckZFighting
  */
 static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 {
@@ -1175,6 +1179,18 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 		return qfalse; /* must be at least 3 points to be not in a line */
 
 	{
+		/* make a winding, so WindingArea can be used */
+		float overlapArea;
+		winding_t *overlap = AllocWinding(numVert);
+		overlap->numpoints = numVert;
+		memcpy(overlap->p, vertbuf, numVert * sizeof(vec3_t));
+		overlapArea = WindingArea(overlap);
+		free(overlap);
+		return overlapArea > OVERLAP_AREA_TOL;
+	}
+
+#if 0
+	{
 		vec3_t from0to1, one, zero;
 
 		/* skip past elements 0, 1, ... if they are coincident - to avoid division by zero */
@@ -1190,18 +1206,14 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 
 		for (i++; i < numVert; i++) {
 			if (!Check_PointsAreCollinear(zero, one, vertbuf[i])) {
-#if 0
-				Com_Printf("\non-collinear points\n");
-				Print3Vector(zero);
-				Print3Vector(one);
-				Print3Vector(vertbuf[i]);
-#endif
+
 				return qtrue; /* 3 points not in a line, there is overlap */
 			}
 		}
 	}
 
 	return qfalse; /* all points are collinear */
+#endif
 }
 
 /**
