@@ -248,8 +248,8 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 		textColor = disabledColor;
 		texX = TILE_SIZE;
 		texY = TILE_SIZE;
-	} else if (MN_HasFocus(node)) {
-		textColor = node->selectedColor;
+	} else if (node->state) {
+		textColor = node->color;
 		texX = TILE_SIZE;
 		texY = 0;
 	} else {
@@ -257,6 +257,8 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 		texX = 0;
 		texY = 0;
 	}
+	if (MN_HasFocus(node))
+		textColor = node->selectedColor;
 
 	MN_GetNodeAbsPos(node, pos);
 
