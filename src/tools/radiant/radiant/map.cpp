@@ -1051,6 +1051,8 @@ bool Map_Save (void)
 {
 	ScopeTimer timer("map save");
 	SaveReferences();
+	// notify about complete save process
+	g_pParentWnd->SaveComplete();
 	return true; // assume success..
 }
 

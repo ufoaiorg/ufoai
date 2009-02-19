@@ -2530,7 +2530,7 @@ void UndoSaveStateTracker::UpdateSensitiveStates (void)
 	if (g_pParentWnd == 0)
 		return;
 
-	const bool saveEnabled = m_undoSteps > 0;
+	const bool saveEnabled = m_undoSteps != m_savedStep;
 	const bool undoEnabled = m_undoSteps > 0;
 	const bool redoEnabled = m_redoSteps > 0;
 
@@ -2542,6 +2542,22 @@ void UndoSaveStateTracker::UpdateSensitiveStates (void)
 
 	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoMenuItem()), redoEnabled);
 	gtk_widget_set_sensitive(GTK_WIDGET(g_pParentWnd->GetRedoButton()), redoEnabled);
+}
+
+/**
+ * Called whenever save was completed. This causes the UndoSaveTracker to mark this point as saved.
+ */
+void MainFrame::SaveComplete()
+{
+	m_saveStateTracker.storeState();
+}
+
+/**
+ * This stores actual step as the saved step.
+ */
+void UndoSaveStateTracker::storeState (void)
+{
+	m_savedStep = m_undoSteps;
 }
 
 /**
@@ -2561,6 +2577,7 @@ void UndoSaveStateTracker::clear (void)
 {
 	m_redoSteps = 0;
 	m_undoSteps = 0;
+	m_savedStep = 0;
 	UpdateSensitiveStates();
 }
 

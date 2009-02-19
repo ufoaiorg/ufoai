@@ -50,16 +50,17 @@ const int c_count_status = 4;
 class UndoSaveStateTracker : public UndoTracker {
 	int m_undoSteps;
 	int m_redoSteps;
+	int m_savedStep;
 
 	void UpdateSensitiveStates (void);
-
 public:
-	UndoSaveStateTracker() : m_undoSteps(0),m_redoSteps(0) {
+	UndoSaveStateTracker() : m_undoSteps(0),m_redoSteps(0),m_savedStep(0) {
 	}
 	void clear();
 	void begin();
 	void undo();
 	void redo();
+	void storeState (void);
 };
 
 class MainFrame {
@@ -190,6 +191,8 @@ public:
 	{
 		return m_menuRedo;
 	}
+
+	void SaveComplete (void);
 };
 
 extern MainFrame* g_pParentWnd;
