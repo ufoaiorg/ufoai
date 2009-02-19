@@ -237,6 +237,74 @@ static void MN_PushMenu_f (void)
 }
 
 /**
+ * @brief Console function to push a dropdown menu at a position. It work like MN_PushMenu but move the menu at the right position
+ * @sa MN_PushMenu
+ * @note The usage is "mn_push_dropdown sourcenode pointposition destinationnode pointposition"
+ * sourcenode must be a node into the menu we want to push,
+ * we will move the menu to have sourcenode over destinationnode
+ * pointposition select for each node a position (like a corner).
+ */
+static void MN_PushDropDownMenu_f (void)
+{
+	vec2_t source;
+	vec2_t destination;
+	menuNode_t *node;
+	byte pointPosition;
+	int writedByte;
+	int result;
+
+	if (Cmd_Argc() != 4 && Cmd_Argc() != 5)
+		Com_Printf("Usage: %s <source-anchor> <point-in-source-anchor> <dest-anchor> <point-in-dest-anchor>\n", Cmd_Argv(0));
+
+	/* get the source anchor */
+	node = MN_GetNodeByPath(Cmd_Argv(1));
+	if (node == NULL) {
+		Com_Printf("MN_PushDropDownMenu_f: Node '%s' dont exists\n", Cmd_Argv(1));
+		return;
+	}
+	result = Com_ParseValue (&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
+	if (result != RESULT_OK) {
+		Com_Printf("MN_PushDropDownMenu_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
+		return;
+	}
+	MN_NodeGetPoint(node, source, pointPosition);
+	MN_NodeRelativeToAbsolutePoint(node, source);
+
+	/* get the destination anchor */
+	if (!strcmp(Cmd_Argv(4), "mouse")) {
+		destination[0] = mousePosX;
+		destination[1] = mousePosY;
+	} else {
+		/* get the source anchor */
+		node = MN_GetNodeByPath(Cmd_Argv(3));
+		if (node == NULL) {
+			Com_Printf("MN_PushDropDownMenu_f: Node '%s' dont exists\n", Cmd_Argv(3));
+			return;
+		}
+		result = Com_ParseValue (&pointPosition, Cmd_Argv(4), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
+		if (result != RESULT_OK) {
+			Com_Printf("MN_PushDropDownMenu_f: '%s' in not a V_ALIGN\n", Cmd_Argv(4));
+			return;
+		}
+		MN_NodeGetPoint(node, destination, pointPosition);
+		MN_NodeRelativeToAbsolutePoint(node, destination);
+	}
+
+	/* update the menu and push it */
+	node = MN_GetNodeByPath(Cmd_Argv(1));
+	if (node == NULL) {
+		Com_Printf("MN_PushDropDownMenu_f: Node '%s' dont exists\n", Cmd_Argv(1));
+		return;
+	}
+	/** @todo Every node should have a menu; menu too */
+	if (node->menu)
+		node = node->menu;
+	node->pos[0] += destination[0] - source[0];
+	node->pos[1] += destination[1] - source[1];
+	MN_PushMenu(node->name, NULL);
+}
+
+/**
  * @brief Console function to hide the HUD in battlescape mode
  * Note: relies on a "nohud" menu existing
  * @sa MN_PushMenu
@@ -776,6 +844,7 @@ void MN_Init (void)
 #endif
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
 	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);
+	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownMenu_f, "Push a dropdown menu at a position");
 	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");

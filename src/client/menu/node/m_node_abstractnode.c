@@ -107,6 +107,39 @@ static const value_t properties[] = {
 };
 
 /**
+ * @brief return a relative position of a point into a node.
+ * @param [in] node Requested node
+ * @param [out] pos Result position
+ * @param [in] pointDirection
+ * @note For example we can requerst the right-bottom corner with ALIGN_LR (low, right)
+ */
+void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
+{
+	switch (pointDirection % 3) {
+	case 0:	/* left */
+		break;
+	case 1:	/* middle */
+		pos[0] += node->size[0] / 2;
+		break;
+	case 2:	/* right */
+		pos[0] += node->size[0];
+		break;
+	}
+
+	/* vertical (0 is upper) */
+	switch ((pointDirection % 9) / 3) {
+	case 0:	/* top */
+		break;
+	case 1: /* middle */
+		pos[1] += node->size[1] / 2;
+		break;
+	case 2: /* bottom */
+		pos[1] += node->size[1];
+		break;
+	}
+}
+
+/**
  * @brief Returns the absolute position of a menunode
  * @param[in] menunode
  * @param[out] pos
@@ -121,6 +154,22 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
 		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
 
 	Vector2Set(pos, 0, 0);
+	while (node) {
+		pos[0] += node->pos[0];
+		pos[1] += node->pos[1];
+		node = node->parent;
+	}
+}
+
+/**
+ * @brief Update a relative point to an absolute one
+ * @param[in] node The requested node
+ * @param[inout] pos A point to transform
+ */
+void MN_NodeRelativeToAbsolutePoint (const menuNode_t* node, vec2_t pos)
+{
+	assert (node);
+	assert (pos);
 	while (node) {
 		pos[0] += node->pos[0];
 		pos[1] += node->pos[1];

@@ -341,7 +341,7 @@ menu hud extends ahud
 			pos	"174 34"
 			texl	"0 76"
 			texh	"75 128"
-			click	{ cmd "list_firemodes r;mn_push firemode_right;" }
+			click	{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
 		}
 
 		pic bt_reload
@@ -408,7 +408,7 @@ menu hud extends ahud
 			pos	"8 34"
 			texl	"0 76"
 			texh	"75 128"
-			click	{ cmd "list_firemodes l;mn_push firemode_left;" }
+			click	{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
 		}
 
 		pic bt_reload

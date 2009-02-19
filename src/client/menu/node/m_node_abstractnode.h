@@ -44,6 +44,8 @@ void MN_Invalidate(struct menuNode_s* node);
 void MN_SetNewNodePos(struct menuNode_s* node, int x, int y);
 void MN_GetNodeAbsPos(const struct menuNode_s* node, vec2_t pos);
 void MN_NodeAbsoluteToRelativePos(const struct menuNode_s* node, int *x, int *y);
+void MN_NodeRelativeToAbsolutePoint(const menuNode_t* node, vec2_t pos);
+void MN_NodeGetPoint(const menuNode_t* node, vec2_t pos, byte pointDirection);
 
 /* navigation */
 struct menuNode_s *MN_GetNode(const struct menuNode_s* const node, const char *name);

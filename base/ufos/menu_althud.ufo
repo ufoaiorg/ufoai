@@ -1136,7 +1136,7 @@ menu althud extends ahud
 		texl	"0 74"
 		texh	"25 107"
 		mousefx	true
-		click { cmd "list_firemodes r;mn_push firemode_right;" }
+		click { cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
 	}
 	pic bt_primaryleft
 	{
@@ -1146,6 +1146,6 @@ menu althud extends ahud
 		texl	"0 74"
 		texh	"25 107"
 		mousefx	true
-		click { cmd "list_firemodes l;mn_push firemode_left;" }
+		click { cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
 	}
 }

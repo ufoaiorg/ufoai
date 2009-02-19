@@ -53,6 +53,12 @@ menu firemode_left {
 		ghost		true
 	}
 
+	zone anchor
+	{
+		pos		"23 640"
+		size	"192 0"
+	}
+
 	/* images */
 	/*
 		Some helpful info:
@@ -346,6 +352,12 @@ menu firemode_right {
 		size		"255 700"
 		dropdown	true
 		ghost		true
+	}
+
+	zone anchor
+	{
+		pos		"23 640"
+		size	"192 0"
 	}
 
 	/* images */
