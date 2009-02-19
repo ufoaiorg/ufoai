@@ -193,6 +193,7 @@ typedef struct nodeBehaviour_s {
 	void (*mouseDown)(menuNode_t *node, int x, int y, int button);	/**< mouse button down event in the node */
 	void (*mouseUp)(menuNode_t *node, int x, int y, int button);	/**< mouse button up event in the node */
 	void (*capturedMouseMove)(menuNode_t *node, int x, int y);
+	void (*capturedMouseLost)(menuNode_t *node);
 
 	/* system callback */
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */

@@ -252,12 +252,13 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 
 /**
  * @brief Release all captured input (keyboard or mouse)
- * @todo need to fix mouse release with a callback to nodes
  */
 void MN_ReleaseInput (void)
 {
 	MN_RemoveFocus();
 	MN_MouseRelease();
+	if (MN_DNDIsDragging())
+		MN_DNDAbort();
 }
 
 /**
@@ -294,7 +295,15 @@ void MN_SetMouseCapture (menuNode_t* node)
  */
 void MN_MouseRelease (void)
 {
+	menuNode_t *tmp = capturedNode;
+
+	if (capturedNode == NULL)
+		return;
+
 	capturedNode = NULL;
+	if (tmp->behaviour->capturedMouseLost)
+		tmp->behaviour->capturedMouseLost(tmp);
+
 	MN_InvalidateMouse();
 }
 
