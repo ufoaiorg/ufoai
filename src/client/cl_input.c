@@ -1536,6 +1536,12 @@ void IN_Frame (void)
 			EVENT_ENQUEUE(key, unicode, qfalse);
 			break;
 
+		case SDL_ACTIVEEVENT:
+			/* make sure menu no more capture input when the game window lose the focus */
+			if (event.active.state == SDL_APPINPUTFOCUS && event.active.gain == 0)
+				MN_ReleaseInput();
+			break;
+
 		case SDL_QUIT:
 			Cmd_ExecuteString("quit");
 			break;
