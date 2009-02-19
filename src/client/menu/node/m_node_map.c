@@ -150,17 +150,24 @@ static void MN_MapNodeMouseUp (menuNode_t *node, int x, int y, int button)
 	switch (button) {
 	case K_MOUSE2:
 		if (mode == MODE_SHIFT3DMAP || mode == MODE_SHIFT2DMAP) {
-			mode = MODE_NULL;
 			MN_MouseRelease();
 		}
 		break;
 	case K_MOUSE3:
 		if (mode == MODE_ZOOMMAP) {
-			mode = MODE_NULL;
 			MN_MouseRelease();
 		}
 		break;
 	}
+}
+
+/**
+ * @brief Called when the node have lost the captured node
+ * We clean cached data
+ */
+static void MN_MapNodeCapturedMouseLost (menuNode_t *node)
+{
+	mode = MODE_NULL;
 }
 
 static void MN_MapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)
@@ -204,6 +211,7 @@ void MN_RegisterMapNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_MapNodeMouseDown;
 	behaviour->mouseUp = MN_MapNodeMouseUp;
 	behaviour->capturedMouseMove = MN_MapNodeCapturedMouseMove;
+	behaviour->capturedMouseLost = MN_MapNodeCapturedMouseLost;
 	behaviour->mouseWheel = MN_MapNodeMouseWheel;
 	behaviour->loading = MN_MapNodeLoading;
 }

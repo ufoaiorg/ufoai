@@ -63,11 +63,19 @@ static void MN_ZoneNodeUp (menuNode_t *node, int x, int y, int button)
 	if (!node->repeat)
 		return;
 	if (button == K_MOUSE1) {
-		if (capturedTimer) {
-			MN_TimerRelease(capturedTimer);
-			capturedTimer = NULL;
-		}
 		MN_MouseRelease();
+	}
+}
+
+/**
+ * @brief Called when the node have lost the captured node
+ * We clean cached data
+ */
+static void MN_ZoneNodeCapturedMouseLost (menuNode_t *node)
+{
+	if (capturedTimer) {
+		MN_TimerRelease(capturedTimer);
+		capturedTimer = NULL;
 	}
 }
 
@@ -107,5 +115,6 @@ void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_ZoneNodeLoaded;
 	behaviour->mouseDown = MN_ZoneNodeDown;
 	behaviour->mouseUp = MN_ZoneNodeUp;
+	behaviour->capturedMouseLost = MN_ZoneNodeCapturedMouseLost;
 	behaviour->properties = properties;
 }

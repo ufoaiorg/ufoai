@@ -239,11 +239,19 @@ static void MN_VScrollbarNodeMouseUp (menuNode_t *node, int x, int y, int button
 		return;
 
 	if (MN_GetMouseCapture() == node) {
-		if (capturedTimer) {
-			MN_TimerRelease(capturedTimer);
-			capturedTimer = NULL;
-		}
 		MN_MouseRelease();
+	}
+}
+
+/**
+ * @brief Called when the node have lost the captured node
+ * We clean cached data
+ */
+static void MN_VScrollbarNodeCapturedMouseLost (menuNode_t *node)
+{
+	if (capturedTimer) {
+		MN_TimerRelease(capturedTimer);
+		capturedTimer = NULL;
 	}
 }
 
@@ -425,6 +433,7 @@ void MN_RegisterVScrollbarNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_VScrollbarNodeMouseDown;
 	behaviour->mouseUp = MN_VScrollbarNodeMouseUp;
 	behaviour->capturedMouseMove = MN_VScrollbarNodeCapturedMouseMove;
+	behaviour->capturedMouseLost = MN_VScrollbarNodeCapturedMouseLost;
 	behaviour->draw = MN_VScrollbarNodeDraw;
 	behaviour->loaded = MN_VScrollbarNodeLoaded;
 	behaviour->loading = MN_VScrollbarNodeLoading;

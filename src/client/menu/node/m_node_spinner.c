@@ -120,11 +120,19 @@ static void MN_SpinnerNodeUp (menuNode_t *node, int x, int y, int button)
 	if (node->disabled)
 		return;
 	if (button == K_MOUSE1) {
-		if (capturedTimer) {
-			MN_TimerRelease(capturedTimer);
-			capturedTimer = NULL;
-		}
 		MN_MouseRelease();
+	}
+}
+
+/**
+ * @brief Called when the node have lost the captured node
+ * We clean cached data
+ */
+static void MN_SpinnerNodeCapturedMouseLost (menuNode_t *node)
+{
+	if (capturedTimer) {
+		MN_TimerRelease(capturedTimer);
+		capturedTimer = NULL;
 	}
 }
 
@@ -206,6 +214,7 @@ void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseWheel = MN_SpinnerNodeWheel;
 	behaviour->mouseDown = MN_SpinnerNodeDown;
 	behaviour->mouseUp = MN_SpinnerNodeUp;
+	behaviour->capturedMouseLost = MN_SpinnerNodeCapturedMouseLost;
 	behaviour->draw = MN_SpinnerNodeDraw;
 	behaviour->loaded = MN_SpinnerNodeLoaded;
 }
