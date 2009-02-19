@@ -250,7 +250,7 @@ static void MN_PushDropDownMenu_f (void)
 	vec2_t destination;
 	menuNode_t *node;
 	byte pointPosition;
-	int writedByte;
+	size_t writedByte;
 	int result;
 
 	if (Cmd_Argc() != 4 && Cmd_Argc() != 5)
@@ -262,7 +262,7 @@ static void MN_PushDropDownMenu_f (void)
 		Com_Printf("MN_PushDropDownMenu_f: Node '%s' dont exists\n", Cmd_Argv(1));
 		return;
 	}
-	result = Com_ParseValue (&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
+	result = Com_ParseValue(&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
 	if (result != RESULT_OK) {
 		Com_Printf("MN_PushDropDownMenu_f: '%s' in not a V_ALIGN\n", Cmd_Argv(2));
 		return;
