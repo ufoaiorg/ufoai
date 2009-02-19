@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_condition.h"
 #include "m_main.h"
 #include "m_internal.h"
+#include "m_parse.h"
 
 static const char *const if_strings[] = {
 	"==",
@@ -141,10 +142,10 @@ static int MN_GetOperatorByName (const char* operatorName)
  */
 qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 {
-	condition->cvar = NULL;
+	memset(condition, 0, sizeof(menuDepends_t));
 	if (!strstr(token, " ")) {
 		/* cvar exists? (not null) */
-		Mem_PoolStrDupTo(token, &condition->var, cl_menuSysPool, CL_TAG_MENU);
+		condition->var = MN_AllocString(token, 0);
 		condition->cond = IF_EXISTS;
 	} else if (strstr(strstr(token, " "), " ")) {
 		char param1[MAX_VAR];
@@ -152,8 +153,9 @@ qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 		char operator_[MAX_VAR];
 		sscanf(token, "%s %s %s", param1, operator_, param2);
 
-		Mem_PoolStrDupTo(param1, &condition->var, cl_menuSysPool, CL_TAG_MENU);
-		Mem_PoolStrDupTo(param2, &condition->value, cl_menuSysPool, CL_TAG_MENU);
+		condition->var = MN_AllocString(param1, 0);
+		condition->value = MN_AllocString(param2, 0);
+
 		condition->cond = MN_GetOperatorByName(operator_);
 		if (condition->cond == IF_INVALID)
 			Sys_Error("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator_, token);
