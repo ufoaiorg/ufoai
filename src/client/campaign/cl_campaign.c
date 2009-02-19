@@ -1099,6 +1099,8 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 		Q_strncpyz(mission.id, mxml_GetString(act_node, "id"), sizeof(mission.id));
 		mission.active = mxml_GetBool(act_node, "active", qfalse);
+		/* qtrue is here as a debug helper */
+		mission.crashed = mxml_GetBool(act_node,"crashed", qtrue);
 		Q_strncpyz(mission.onwin, mxml_GetString(act_node, "onwin"), sizeof(mission.onwin));
 		Q_strncpyz(mission.onlose, mxml_GetString(act_node, "onlose"), sizeof(mission.onlose));
 		mission.category = mxml_GetInt(act_node, "category", 0);
@@ -1513,6 +1515,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 		}
 		mxml_AddString(missions, "id", mission->id);
 		mxml_AddShort(missions, "active", mission->active);
+		mxml_AddBool(missions,"crashed", mission->crashed);
 		mxml_AddString(missions, "onwin", mission->onwin);
 		mxml_AddString(missions, "onlose", mission->onlose);
 		mxml_AddShort(missions, "category", mission->category);
@@ -1554,9 +1557,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 		mxml_AddPos2(missions, "pos", mission->pos);
 		if (mission->ufo)
 			mxml_AddShort(missions, "ufo", mission->ufo - ccs.ufos);
-		else
-			mxml_AddShort(missions, "ufo", -1);
-		mxml_AddShort(missions, "ongeoscape", mission->onGeoscape);
+		mxml_AddBool(missions, "ongeoscape", mission->onGeoscape);
 	}
 
 	/* store ccs.battleParameters */
