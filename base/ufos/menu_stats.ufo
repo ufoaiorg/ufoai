@@ -210,32 +210,9 @@ menu nations
 	}
 
 	// Number of nations (0-7) defined by MAX_NATIONS in cl_campaign.h
-	confunc nation_marksel0 { *nation0 invis false	*nation0 color "1 1 1 1"	*nat_fund0 invis false	*nat_fund0 color "1 1 1 1" }
-	confunc nation_marksel1 { *nation1 invis false	*nation1 color "1 1 1 1"	*nat_fund1 invis false	*nat_fund1 color "1 1 1 1" }
-	confunc nation_marksel2 { *nation2 invis false	*nation2 color "1 1 1 1"	*nat_fund2 invis false	*nat_fund2 color "1 1 1 1" }
-	confunc nation_marksel3 { *nation3 invis false	*nation3 color "1 1 1 1"	*nat_fund3 invis false	*nat_fund3 color "1 1 1 1" }
-	confunc nation_marksel4 { *nation4 invis false	*nation4 color "1 1 1 1"	*nat_fund4 invis false	*nat_fund4 color "1 1 1 1" }
-	confunc nation_marksel5 { *nation5 invis false	*nation5 color "1 1 1 1"	*nat_fund5 invis false	*nat_fund5 color "1 1 1 1" }
-	confunc nation_marksel6 { *nation6 invis false	*nation6 color "1 1 1 1"	*nat_fund6 invis false	*nat_fund6 color "1 1 1 1" }
-	confunc nation_marksel7 { *nation7 invis false	*nation7 color "1 1 1 1"	*nat_fund7 invis false	*nat_fund7 color "1 1 1 1" }
-
-	confunc nation_markdesel0 { *nation0 invis false	*nation0 color "0 .78 0 1"	 *nat_fund0 invis false	*nat_fund0 color "0 .78 0 1" }
-	confunc nation_markdesel1 { *nation1 invis false	*nation1 color "0 .78 0 1"	 *nat_fund1 invis false	*nat_fund1 color "0 .78 0 1" }
-	confunc nation_markdesel2 { *nation2 invis false	*nation2 color "0 .78 0 1"	 *nat_fund2 invis false	*nat_fund2 color "0 .78 0 1" }
-	confunc nation_markdesel3 { *nation3 invis false	*nation3 color "0 .78 0 1"	 *nat_fund3 invis false	*nat_fund3 color "0 .78 0 1" }
-	confunc nation_markdesel4 { *nation4 invis false	*nation4 color "0 .78 0 1"	 *nat_fund4 invis false	*nat_fund4 color "0 .78 0 1" }
-	confunc nation_markdesel5 { *nation5 invis false	*nation5 color "0 .78 0 1"	 *nat_fund5 invis false	*nat_fund5 color "0 .78 0 1" }
-	confunc nation_markdesel6 { *nation6 invis false	*nation6 color "0 .78 0 1"	 *nat_fund6 invis false	*nat_fund6 color "0 .78 0 1" }
-	confunc nation_markdesel7 { *nation7 invis false	*nation7 color "0 .78 0 1"	 *nat_fund7 invis false	*nat_fund7 color "0 .78 0 1" }
-
-	confunc nation_hide0 { *nation0 invis true	*nat_fund0 invis true }
-	confunc nation_hide1 { *nation1 invis true	*nat_fund1 invis true }
-	confunc nation_hide2 { *nation2 invis true	*nat_fund2 invis true }
-	confunc nation_hide3 { *nation3 invis true	*nat_fund3 invis true }
-	confunc nation_hide4 { *nation4 invis true	*nat_fund4 invis true }
-	confunc nation_hide5 { *nation5 invis true	*nat_fund5 invis true }
-	confunc nation_hide6 { *nation6 invis true	*nat_fund6 invis true }
-	confunc nation_hide7 { *nation7 invis true	*nat_fund7 invis true }
+	confunc nation_marksel { *nation<1> invis false	*nation<1> color "1 1 1 1"	*nat_fund<1> invis false	*nat_fund<1> color "1 1 1 1" }
+	confunc nation_markdesel { *nation<1> invis false	*nation<1> color "0 .78 0 1"	 *nat_fund<1> invis false	*nat_fund<1> color "0 .78 0 1" }
+	confunc nation_hide { *nation<1> invis true	*nat_fund<1> invis true }
 
 	string nation {
 		string		"_Nation"
