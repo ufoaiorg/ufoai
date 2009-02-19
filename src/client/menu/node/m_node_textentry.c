@@ -215,6 +215,7 @@ static qboolean MN_TextEntryNodeKeyPressed (menuNode_t *node, unsigned int key, 
 	/* validate the edition */
 	case K_ENTER:
 	case K_KP_ENTER:
+		MN_TextEntryNodeValidateEdition(node);
 		MN_RemoveFocus();
 		return qtrue;
 	}
