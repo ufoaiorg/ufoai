@@ -156,9 +156,55 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
 	return qtrue;
 }
 
+/**
+ * @brief Tries to verify the Header of the Xml File
+ * @param[in] header a pointer to the header to verify
+ */
+static qboolean SAV_VerifyXMLHeader (saveFileHeaderXML_t const * const header)
+{
+	int len;
+	/*check the length of the string*/
+	len = strlen(header->name);
+	if (len <0 || len > sizeof(header->name)) {
+		Com_DPrintf(DEBUG_CLIENT, "Name is %d Bytes long, max is %ld\n", len, sizeof(header->name));
+		return qfalse;
+	}
+	len = strlen(header->gameVersion);
+	if (len <0 || len > sizeof(header->gameVersion)) {
+		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is %ld\n", len, sizeof(header->gameVersion));
+		return qfalse;
+	}
+	len = strlen(header->gameDate);
+	if (len <0 || len > sizeof(header->gameDate)) {
+		Com_DPrintf(DEBUG_CLIENT, "gameDate is %d Bytes long, max is %ld\n", len, sizeof(header->gameDate));
+		return qfalse;
+	}
+	len = strlen(header->realDate);
+	if (len <0 || len > sizeof(header->realDate)) {
+		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is %ld\n", len, sizeof(header->realDate));
+		return qfalse;
+	}
+	
+	/* saved games should not be bigger than 15MB */
+	if (header->xml_size < 0 || header->xml_size > 15*1024*1024) {
+		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %ld.\n", header->xml_size);
+		return qfalse;
+	}
+	if (header->version < 0) {
+		Com_DPrintf(DEBUG_CLIENT, "Version is less than zero!\n");
+		return qfalse;
+	}
+	if (header->version > SAVE_FILE_VERSION) {
+		Com_Printf("Savefile is newer than the game!\n");
+	}
+	return qtrue;
+}
 
 /**
- * @brief Currently it's only a test
+ * @brief Loads the given savegame from an xml File.
+ * @return true on load success false on failures
+ * @param[in] file The Filename to load from (without extension)
+ * @param[out] error On failure an errormessage may be set.
  */
 static qboolean SAV_GameLoadXML (const char *file, char **error)
 {
@@ -190,6 +236,14 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 	/* swap all int values if needed */
 	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
+	/* doing some header verification */
+	if (!SAV_VerifyXMLHeader(&header)) {
+		/* our header is not valid, we MUST abort loading the game! */
+		Com_Printf("The Header of the savegame '%s.xml' is corrupted. Loading aborted\n", filename);
+		Mem_Free(cbuf);
+		return qfalse;		
+	}
+	
 	Com_Printf("Loading savegame\n"
 			"...version: %i\n"
 			"...game version: %s\n"
@@ -687,12 +741,17 @@ static void SAV_GameReadGameComments_f (void)
 		f = fopen(va("%s/save/slot%i.xml", FS_Gamedir(), i), "rb");
 		if (!f) {
 			error=qtrue;
-		}else{
+		} else {
 			if (fread(&headerXML, 1, sizeof(headerXML), f) != sizeof(headerXML))
 				Com_Printf("Warning: SaveXMLfile header may be corrupted\n");
-			Com_sprintf(comment, sizeof(comment), "%s - %s", headerXML.name, headerXML.gameDate);
-			Cvar_Set(va("mn_slot%i", i), comment);
-			fclose(f);
+			if (!SAV_VerifyXMLHeader(&headerXML)) {
+				error=qtrue;
+				Com_Printf("XMLSavegameheader for slot%d is corrupted!\n", i);
+			} else {
+				Com_sprintf(comment, sizeof(comment), "%s - %s", headerXML.name, headerXML.gameDate);
+				Cvar_Set(va("mn_slot%i", i), comment);
+				fclose(f);
+			}
 		}
 
 		/*If we have an error, we try to read the information from the _old_ savegame style */
