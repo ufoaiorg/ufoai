@@ -166,25 +166,25 @@ static qboolean SAV_VerifyXMLHeader (saveFileHeaderXML_t const * const header)
 	/*check the length of the string*/
 	len = strlen(header->name);
 	if (len <0 || len > sizeof(header->name)) {
-		Com_DPrintf(DEBUG_CLIENT, "Name is %d Bytes long, max is %ld\n", len, sizeof(header->name));
+		Com_DPrintf(DEBUG_CLIENT, "Name is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->name));
 		return qfalse;
 	}
 	len = strlen(header->gameVersion);
 	if (len <0 || len > sizeof(header->gameVersion)) {
-		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is %ld\n", len, sizeof(header->gameVersion));
+		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameVersion));
 		return qfalse;
 	}
 	len = strlen(header->gameDate);
 	if (len <0 || len > sizeof(header->gameDate)) {
-		Com_DPrintf(DEBUG_CLIENT, "gameDate is %d Bytes long, max is %ld\n", len, sizeof(header->gameDate));
+		Com_DPrintf(DEBUG_CLIENT, "gameDate is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameDate));
 		return qfalse;
 	}
 	len = strlen(header->realDate);
 	if (len <0 || len > sizeof(header->realDate)) {
-		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is %ld\n", len, sizeof(header->realDate));
+		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
 		return qfalse;
 	}
-	
+
 	/* saved games should not be bigger than 15MB */
 	if (header->xml_size < 0 || header->xml_size > 15*1024*1024) {
 		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %ld.\n", header->xml_size);
@@ -241,9 +241,9 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 		/* our header is not valid, we MUST abort loading the game! */
 		Com_Printf("The Header of the savegame '%s.xml' is corrupted. Loading aborted\n", filename);
 		Mem_Free(cbuf);
-		return qfalse;		
+		return qfalse;
 	}
-	
+
 	Com_Printf("Loading savegame\n"
 			"...version: %i\n"
 			"...game version: %s\n"
