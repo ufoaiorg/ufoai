@@ -1124,16 +1124,33 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 }
 #endif
 
+static float Check_LongestEdge(const winding_t *w) {
+	float longestSqr = 0;
+	//const vect3_t p[] = w->p;
+	int i;
+	for (i = 0; i < w->numpoints; i++) {
+		int j = (i + 1) % w->numpoints;
+		//const vec3_t v1 = p[i], v2 = ;
+		float lengthSqr= VectorDistSqr(w->p[i], w->p[j]);
+		longestSqr = longestSqr > lengthSqr ? longestSqr : lengthSqr ;
+	}
+	return sqrt(longestSqr);
+}
+
 #define VERT_BUF_SIZE_DISJOINT_SIDES 21
 #define OVERLAP_AREA_TOL 0.2f
+#define OVERLAP_WIDTH_TOL 0.1f
 
 /**
  * @brief tests if sides overlap, for z-fighting check
  * @note the sides must be on a common plane. if they are not, the result is unspecified
  * @note http://mathworld.wolfram.com/Collinear.html
  * @sa CheckZFighting
+ * @note the width of the overlap is defined here as the area divided by the length of
+ * the longest edge
+ * @return the width of overlap or -1.0f
  */
-static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
+static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
 {
 	vec3_t vertbuf[VERT_BUF_SIZE_DISJOINT_SIDES];/* vertices of intersection of sides. arbitrary choice of size: more than 4 is unusual */
 	int numVert = 0, i, j, k;
@@ -1150,7 +1167,7 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 			if (Check_IsPointInsideBrush(w[i]->p[j], b[i ^ 1], PIB_INCL_SURF)) {
 				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
 					Check_Printf(VERB_NORMAL, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
-					return qfalse;
+					return -1.0f;
 				}
 				VectorCopy(w[i]->p[j], vertbuf[numVert]);
 				numVert++;
@@ -1167,24 +1184,40 @@ static qboolean Check_SidesOverlap (const side_t *s1, const side_t *s2)
 				numVert++; /* if intersection, keep it */
 				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
 					Check_Printf(VERB_NORMAL, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
-					return qfalse;
+					return -1.0f;
 				}
 			}
 		}
 	}
 
 	if (numVert < 3)
-		return qfalse; /* must be at least 3 points to be not in a line */
+		return -1.0f; /* must be at least 3 points to be not in a line */
 
 	{
 		/* make a winding, so WindingArea can be used */
-		float overlapArea;
+		float overlapArea, longestEdge, width;
 		winding_t *overlap = AllocWinding(numVert);
 		overlap->numpoints = numVert;
 		memcpy(overlap->p, vertbuf, numVert * sizeof(vec3_t));
 		overlapArea = WindingArea(overlap);
+#if 0
+		if (overlapArea > OVERLAP_AREA_TOL) {
+			int i;
+			for (i = 0; i < numVert; i++) {
+				Print3Vector(vertbuf[i]);
+			}
+		}
+#endif
+		/* small area, do not waste time calculating width */
+		if (overlapArea < OVERLAP_AREA_TOL) {
+			free(overlap);
+			return -1.0f;
+		}
+
+		longestEdge = Check_LongestEdge(overlap);
+		width = overlapArea / longestEdge;
 		free(overlap);
-		return overlapArea > OVERLAP_AREA_TOL;
+		return width > OVERLAP_WIDTH_TOL ? width : -1.0f;
 	}
 
 #if 0
@@ -1269,9 +1302,11 @@ void CheckZFighting (void)
 #endif
 
 					if (ParallelAndCoincidentTo(iSide, jSide) ) {
-						if (Check_SidesOverlap(iSide, jSide)) {
+						float overlapWidth = Check_SidesOverlap(iSide, jSide);
+						if ( overlapWidth > 0.0f) {
 							Check_Printf(VERB_CHECK, qfalse, iBrush->entitynum, iBrush->brushnum,
-								"z-fighting with brush %i (entity %i)\n", jBrush->brushnum, jBrush->entitynum);
+								"z-fighting with brush %i (entity %i). overlap width: %.3g units\n",
+								jBrush->brushnum, jBrush->entitynum, overlapWidth);
 #if 0
 							Check_SetError(iSide);
 							Check_SetError(jSide);
