@@ -110,22 +110,22 @@ typedef struct menuSharedData_s {
 } menuSharedData_t;
 
 /* common */
-int MN_GetDataVersion(int textId);
+int MN_GetDataVersion(int textId) __attribute__ ((warn_unused_result));
 void MN_MenuTextReset(int menuTextID);
-int MN_GetDataIDByName(const char* name);
+int MN_GetDataIDByName(const char* name) __attribute__ ((warn_unused_result));
 void MN_InitData(void);
 
 /* text */
 void MN_RegisterText(int textId, const char *text);
-const char *MN_GetText(int textId);
+const char *MN_GetText(int textId) __attribute__ ((warn_unused_result));
 
 /* linked list */
 void MN_RegisterLinkedListText(int textId, struct linkedList_s *text);
 
 /* option */
-struct menuOption_s* MN_AllocOption(int count);
+struct menuOption_s* MN_AllocOption(int count) __attribute__ ((warn_unused_result));
 void MN_RegisterOption(int dataId, struct menuOption_s *option);
-struct menuOption_s *MN_GetOption(int dataId);
+struct menuOption_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void MN_SortOptions(struct menuOption_s **option);
 
 #endif
