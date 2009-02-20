@@ -103,6 +103,16 @@ static void R_AddSustainedLights (void)
 	}
 }
 
+static vec3_t lights_offset;
+
+/**
+ * Light sources must be translated for bsp submodel entities.
+ */
+void R_ShiftLights (const vec3_t offset)
+{
+	VectorCopy(offset, lights_offset);
+}
+
 void R_EnableLights (void)
 {
 	light_t *l;
@@ -115,7 +125,7 @@ void R_EnableLights (void)
 	position[3] = diffuse[3] = 1.0;
 
 	for (i = 0, l = r_lightsArray; i < r_numLights; i++, l++) {
-		VectorCopy(l->origin, position);
+		VectorSubtract(l->origin, lights_offset, position);
 		glLightfv(GL_LIGHT0 + i, GL_POSITION, position);
 		VectorCopy(l->color, diffuse);
 		glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, diffuse);

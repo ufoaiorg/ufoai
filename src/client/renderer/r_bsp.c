@@ -149,6 +149,8 @@ void R_DrawBrushModel (const entity_t * e)
 		modelorg[2] = DotProduct(temp, up);
 	}
 
+	R_ShiftLights(e->origin);
+
 	glPushMatrix();
 	R_TransformForEntity(e);
 
@@ -169,6 +171,8 @@ void R_DrawBrushModel (const entity_t * e)
 	}
 
 	glPopMatrix();
+
+	R_ShiftLights(vec3_origin);
 }
 
 
