@@ -48,7 +48,7 @@ pos3_t truePos; /**< The cell at the current worldlevel under the mouse cursor. 
 pos3_t mousePos; /**< The cell that an actor will move to when directed to move. */
 
 /**
- * @brief If you want to change the z level of targetting and shooting,
+ * @brief If you want to change the z level of targeting and shooting,
  * use this value. Negative and positive offsets are possible
  * @sa CL_ActorTargetAlign_f
  * @sa G_ClientShoot
@@ -242,7 +242,6 @@ void CL_CharacterCvars (const character_t * chr)
  * @return Time needed to reload or >= 999 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
- * @todo Distinguish between LEFT(selActor) and RIGHT(selActor).
  * @sa HUD_RefreshWeaponButtons
  * @sa CL_CheckMenuAction
  */
@@ -698,7 +697,7 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 		return;
 	}
 
-	/* "ammo" is definitly set here - otherwise the check above
+	/* "ammo" is definitely set here - otherwise the check above
 	 * would have left this function already. */
 	assert(ammo);
 	if (!RS_IsResearched_ptr(ammo->weapons[weapFdsIdx]->tech)) {
@@ -1335,7 +1334,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 /**
  * @brief Shoot with actor.
  * @param[in] le Who is shooting
- * @param[in] at Position you are targetting to
+ * @param[in] at Position you are targeting to
  */
 void CL_ActorShoot (const le_t * le, pos3_t at)
 {
@@ -1720,7 +1719,7 @@ void CL_ActorStandCrouch_f (void)
 		return;
 
 	if (selActor->fieldSize == ACTOR_SIZE_2x2)
-		/** @todo future thoughs: maybe define this in team_*.ufo files instead? */
+		/** @todo future thoughts: maybe define this in team_*.ufo files instead? */
 		return;
 
 	/* Check if we should even try to send this command (no TUs left or). */
@@ -1979,7 +1978,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	/* first shot */
 	firstShot = qtrue;
 
-	/* actor dependant stuff following */
+	/* actor dependent stuff following */
 	if (!le)
 		/* it's OK, the actor not visible */
 		return;
@@ -2408,7 +2407,7 @@ void CL_ActorMouseTrace (void)
 	 *     mapNormal dot (end - P3) = 0
 	 *     where mapNormal is the vector normal to the plane,
 	 *         P3 is any point on the plane and
-	 *         end is the point where the line interesects the plane
+	 *         end is the point where the line intersects the plane
 	 *   All points on the line can be calculated using:
 	 *     P1 + u*(P2 - P1)
 	 *     where P1 and P2 are points that define the line and
@@ -2444,7 +2443,7 @@ void CL_ActorMouseTrace (void)
 	/* ensure that the cursor is in the world, if this is not done, the tracer box is
 	 * drawn in the void on the first level and the menu key bindings might get executed
 	 * this could result in different problems like the zooming issue (where you can't zoom
-	 * in again, because in_zoomout->state is not resetted). */
+	 * in again, because in_zoomout->state is not reseted). */
 	if (CL_OutsideMap(pA, MAP_SIZE_OFFSET))
 		return;
 
@@ -2680,7 +2679,7 @@ static const float lookupdiff[30]= {
  * approximation good to around 0.001.
  * easily good enough for the job.
  * @param[in] z the number to calculate the erf of.
- * @return for posotive arg, returns approximate erf. for -ve arg returns 0.0f.
+ * @return for positive arg, returns approximate erf. for -ve arg returns 0.0f.
  */
 static inline float lookup_erf (float z)
 {
@@ -2912,7 +2911,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 #define GRENADE_PARTITIONS	20
 
 /**
- * @brief Shows targetting for a grenade.
+ * @brief Shows targeting for a grenade.
  * @param[in] fromPos The (grid-) position of the aiming actor.
  * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @sa CL_TargetingStraight
@@ -3000,7 +2999,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 			CL_ParticleSpawn("inRangeTracer", 0, from, next, NULL);
 		VectorCopy(next, from);
 	}
-	/* draw targetting cross */
+	/* draw targeting cross */
 	if (obstructed || VectorLength(at) > selFD->range)
 		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 	else
