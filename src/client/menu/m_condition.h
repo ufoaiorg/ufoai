@@ -65,6 +65,6 @@ typedef struct menuDepends_s {
 
 qboolean MN_CheckCondition(menuDepends_t *condition);
 qboolean MN_InitCondition(menuDepends_t *condition, const char *token);
-menuDepends_t *MN_AllocCondition(const char *description);
+menuDepends_t *MN_AllocCondition(const char *description) __attribute__ ((warn_unused_result));
 
 #endif

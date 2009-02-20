@@ -46,7 +46,7 @@ typedef struct menuTimer_s {
 	void *userData;				/**< free to use data, not used by the core functions */
 } menuTimer_t;
 
-menuTimer_t* MN_AllocTimer(struct menuNode_s *node, int firstDelay, timerCallback_t callback);
+menuTimer_t* MN_AllocTimer(struct menuNode_s *node, int firstDelay, timerCallback_t callback) __attribute__ ((warn_unused_result));
 void MN_TimerStart(menuTimer_t *timer);
 void MN_TimerStop(menuTimer_t *timer);
 void MN_TimerRelease(menuTimer_t *timer);

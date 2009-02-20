@@ -201,7 +201,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 
 	/* check cast */
 	if (nodeName[0] == '(') {
-		char *end = strchr(nodeName, ')');
+		const char *end = strchr(nodeName, ')');
 		assert(end != NULL);
 		assert(end - nodeName < sizeof(cast));
 

@@ -38,7 +38,7 @@ typedef struct menuIcon_s {
 extern const value_t mn_iconProperties[];
 
 menuIcon_t* MN_GetIconByName(const char* name);
-menuIcon_t* MN_AllocIcon(const char* name);
+menuIcon_t* MN_AllocIcon(const char* name) __attribute__ ((warn_unused_result));
 void MN_DrawIconInBox(menuIcon_t* icon, int status, int posX, int posY, int sizeX, int sizeY);
 
 #endif

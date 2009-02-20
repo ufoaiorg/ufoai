@@ -34,9 +34,9 @@ float MN_GetReferenceFloat(const struct menuNode_s* const node, void *ref);
 const char *MN_GetReferenceString(const struct menuNode_s* const node, const char *ref);
 struct value_s;
 const value_t* MN_FindPropertyByName(const struct value_s* propertyList, const char* name);
-char* MN_AllocString(const char* string, int size);
-float* MN_AllocFloat(int count);
-vec4_t* MN_AllocColor(int count);
+char* MN_AllocString(const char* string, int size) __attribute__ ((warn_unused_result));
+float* MN_AllocFloat(int count) __attribute__ ((warn_unused_result));
+vec4_t* MN_AllocColor(int count) __attribute__ ((warn_unused_result));
 
 qboolean MN_ScriptSanityCheck(void);
 
