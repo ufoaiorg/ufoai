@@ -113,7 +113,8 @@ float* MN_AllocFloat (int count)
 	assert(count > 0);
 	result = (float*) mn.curadata;
 	mn.curadata += ALIGN(sizeof(float) * count);
-	assert(mn.curadata - mn.adata <= mn.adataize);
+	if (mn.curadata - mn.adata > mn.adataize)
+		Sys_Error("MN_AllocFloat: Menu memory hunk exceeded - increase the size");
 	return result;
 }
 
@@ -129,7 +130,8 @@ vec4_t* MN_AllocColor (int count)
 	assert(count > 0);
 	result = (vec4_t*) mn.curadata;
 	mn.curadata += ALIGN(sizeof(float) * 4 * count);
-	assert(mn.curadata - mn.adata <= mn.adataize);
+	if (mn.curadata - mn.adata > mn.adataize)
+		Sys_Error("MN_AllocColor: Menu memory hunk exceeded - increase the size");
 	return result;
 }
 
@@ -145,11 +147,13 @@ char* MN_AllocString (const char* string, int size)
 {
 	char* result = (char *)mn.curadata;
 	if (size != 0) {
-		assert(mn.curadata - mn.adata + size <= mn.adataize);
+		if (mn.curadata - mn.adata + size > mn.adataize)
+			Sys_Error("MN_AllocString: Menu memory hunk exceeded - increase the size");
 		strncpy((char *)mn.curadata, string, size);
 		mn.curadata += ALIGN(size);
 	} else {
-		assert(mn.curadata - mn.adata + strlen(string) + 1 <= mn.adataize);
+		if (mn.curadata - mn.adata + strlen(string) + 1 > mn.adataize)
+			Sys_Error("MN_AllocString: Menu memory hunk exceeded - increase the size");
 		mn.curadata += ALIGN(sprintf((char *)mn.curadata, "%s", string) + 1);
 	}
 	return result;

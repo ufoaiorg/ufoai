@@ -282,7 +282,7 @@ menuNode_t* MN_AllocNode (const char* type)
 {
 	menuNode_t* node = &mn.menuNodes[mn.numNodes++];
 	if (mn.numNodes >= MAX_MENUNODES)
-		Sys_Error("MAX_MENUNODES hit");
+		Sys_Error("MN_AllocNode: MAX_MENUNODES hit");
 	memset(node, 0, sizeof(*node));
 	node->behaviour = MN_GetNodeBehaviour(type);
 	return node;
@@ -312,8 +312,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 			min = mid + 1;
 	}
 
-	Sys_Error("Node behaviour '%s' doesn't exist\n", name);
-	return NULL;
+	Sys_Error("Node behaviour '%s' doesn't exist", name);
 }
 
 /**

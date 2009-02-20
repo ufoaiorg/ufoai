@@ -67,7 +67,7 @@ menuIcon_t* MN_AllocIcon (const char* name)
 	menuIcon_t* result;
 	assert(MN_GetIconByName(name) == NULL);
 	if (mn.numIcons >= MAX_MENUICONS)
-		Sys_Error("MAX_MENUICONS hit");
+		Sys_Error("MN_AllocIcon: MAX_MENUICONS hit");
 
 	result = &mn.menuIcons[mn.numIcons];
 	mn.numIcons++;

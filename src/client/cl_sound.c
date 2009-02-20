@@ -115,7 +115,7 @@ static void S_Music_Start (const char *file)
 	byte *musicBuf;
 	int size;
 
-	if (!file || !*file)
+	if (!file || file[0] == '\0')
 		return;
 
 	if (!sound_started) {
@@ -255,7 +255,7 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 	Mix_Chunk *mix = NULL;
 	const char **extension = soundExtensions;
 
-	if (!sound || *sound == '*')
+	if (!sound || sound[0] == '*')
 		return NULL;
 
 	len = strlen(sound);

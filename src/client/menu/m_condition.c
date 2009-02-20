@@ -127,7 +127,7 @@ static int MN_GetOperatorByName (const char* operatorName)
 {
 	int i;
 	for (i = 0; i < IF_SIZE; i++) {
-		if (!Q_strncmp(if_strings[i], operatorName, 2)) {
+		if (!Q_strcmp(if_strings[i], operatorName)) {
 			return i;
 		}
 	}
@@ -176,7 +176,10 @@ menuDepends_t *MN_AllocCondition (const char *description)
 {
 	menuDepends_t condition;
 	qboolean result;
-	assert(mn.numConditions < MAX_MENUCONDITIONS);
+
+	if (mn.numConditions >= MAX_MENUCONDITIONS)
+		Sys_Error("MN_AllocCondition: Too many menu conditions");
+
 	result = MN_InitCondition(&condition, description);
 	if (!result)
 		return NULL;

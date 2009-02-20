@@ -75,10 +75,11 @@ typedef struct menuNode_s {
 
 	/* common attributes */
 	char key[MAX_VAR];			/**< key bindings - used as tooltip */
-	byte state;					/**< e.g. the line number for text nodes to highlight due to cursor hovering */
-	byte textalign;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
+	byte state;					/**< e.g. the line number for text nodes to highlight due to cursor hovering */
+	byte align;					/** @todo delete it when its possible */
+	byte textalign;
 	qboolean invis;				/**< true if the node is invisible */
 	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */
 	qboolean disabled;			/**< true if the node is inactive */
@@ -94,8 +95,6 @@ typedef struct menuNode_s {
 	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
 
 	struct menuDepends_s* visibilityCondition;	/**< cvar condition to display/hide the node */
-
-	byte align;					/** @todo delete it when its possible */
 
 	/** @todo needs cleanup */
 	void* image;
