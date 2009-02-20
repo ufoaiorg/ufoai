@@ -162,7 +162,7 @@ char* MN_AllocString (const char* string, int size)
 /* prototype */
 static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
 
-static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const const char **token, const char *errhead)
+static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	char cast[32] = "abstractnode";
 	char path[MAX_VAR];

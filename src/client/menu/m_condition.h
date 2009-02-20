@@ -57,8 +57,8 @@ typedef enum menuIfCondition_s {
  * @sa menuIfCondition_t
  */
 typedef struct menuDepends_s {
-	char *var;
-	char *value;
+	const char *var;
+	const char *value;
 	struct cvar_s *cvar;
 	int cond;
 } menuDepends_t;
