@@ -914,12 +914,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
-#if 0
 	MN_PopMenu(qfalse);
-#else
-	/** @todo Why don't we use MN_PopMenu directly here? */
-	Cbuf_AddText("mn_pop\n");
-#endif
 }
 
 /**

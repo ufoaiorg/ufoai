@@ -62,6 +62,7 @@ static void AIM_ResetAircraftCvars_f (void)
 	/* Maybe we sold displayed aircraft ? */
 	if (baseCurrent->numAircraftInBase == 0) {
 		/* no more aircraft in base */
+		/** @todo Why don't we use MN_PopMenu(qfalse) here directly? */
 		Cbuf_AddText("mn_pop\n");
 		return;
 	}
