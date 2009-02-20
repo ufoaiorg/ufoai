@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_container.h"
 #include "node/m_node_abstractnode.h"
 
-/** @todo add commend for all this var
- */
+/** @todo add commend for all this var */
 static int oldMousePosX = -1;				/**< Save position X of the mouse to know when it move */
 static int oldMousePosY = -1;				/**< Save position Y of the mouse to know when it move */
 
@@ -44,7 +43,7 @@ static menuNode_t *targetNode;				/**< Current node under the mouse */
 
 
 /**
- * @brief Retrun true if we are dragging something
+ * @brief Return true if we are dragging something
  */
 qboolean MN_DNDIsDragging (void)
 {
@@ -52,7 +51,7 @@ qboolean MN_DNDIsDragging (void)
 }
 
 /**
- * @brief Retrun true if the requested node is the current target of the DND
+ * @brief Return true if the requested node is the current target of the DND
  */
 qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
 {
@@ -62,7 +61,7 @@ qboolean MN_DNDIsTargetNode (struct menuNode_s *node)
 }
 
 /**
- * @brief Retrun true if the requested node is the source of the DND
+ * @brief Return true if the requested node is the source of the DND
  */
 qboolean MN_DNDIsSourceNode (struct menuNode_s *node)
 {
@@ -72,7 +71,7 @@ qboolean MN_DNDIsSourceNode (struct menuNode_s *node)
 }
 
 /**
- * @brief Retrun the current type of the dragging object, else DND_NOTHING
+ * @brief Return the current type of the dragging object, else DND_NOTHING
  */
 int MN_DNDGetType (void)
 {
@@ -86,7 +85,7 @@ menuNode_t *MN_DNDGetTargetNode (void)
 }
 
 /**
- * @brief Private function to init a the start of a DND
+ * @brief Private function to initialize a the start of a DND
  * @sa MN_DNDDragItem
  * @sa MN_DNDDrop
  * @sa MN_DNDAbort
@@ -222,7 +221,7 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 		MN_DNDMouseMove(mousePosX, mousePosY);
 	}
 
-	/* draw the draging item */
+	/* draw the dragging item */
 
 	VectorSet(orgine, mousePosX, mousePosY, -50);
 

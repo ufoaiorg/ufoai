@@ -38,13 +38,13 @@ static menuTimer_t mn_timerSlots[MN_TIMER_SLOT_NUMBER];
 
 /**
  * @brief First timer from the timer list.
- * This list is sorded from smaller to bigger nextTime value
+ * This list is ordered from smaller to bigger nextTime value
  */
 static menuTimer_t *mn_firstTimer;
 
 /**
- * @brief remove a timer from the active linked list
- * @note the function dont set to null next and prev attributes of the timer
+ * @brief Remove a timer from the active linked list
+ * @note The function doesn't set to null next and previous attributes of the timer
  */
 static inline void MN_RemoveTimerFromActiveList (menuTimer_t *timer)
 {
@@ -61,7 +61,7 @@ static inline void MN_RemoveTimerFromActiveList (menuTimer_t *timer)
 
 /**
  * @brief Insert a timer in a sorted linked list of timers.
- * List are sorded from smaller to bigger nextTime value
+ * List are ordered from smaller to bigger nextTime value
  */
 static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTimer)
 {
@@ -79,7 +79,7 @@ static void MN_InsertTimerInActiveList (menuTimer_t* first, menuTimer_t* newTime
 		current = current->next;
 	}
 
-	/* insert between prev and current */
+	/* insert between previous and current */
 	newTimer->prev = prev;
 	newTimer->next = current;
 	if (current != NULL) {
@@ -113,7 +113,7 @@ void MN_HandleTimers (void)
 }
 
 /**
- * @brief Alloc a new time for a node
+ * @brief Allocate a new time for a node
  * @param[in] node node parent of the timer
  * @param[in] firstDelay millisecond delay to wait the callback
  * @param[in] callback callback function to call every delay

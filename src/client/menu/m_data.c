@@ -67,9 +67,9 @@ int MN_GetDataIDByName (const char* name)
 
 /**
  * @brief link a text to a menu text id
- * @note The menu dont manage the text memory, only save a pointer
+ * @note The menu doesn't manage the text memory, only save a pointer
  */
-void MN_RegisterText(int textId, const char *text)
+void MN_RegisterText (int textId, const char *text)
 {
 	mn.sharedData[textId].type = MN_SHARED_TEXT;
 	mn.sharedData[textId].data.text = text;
@@ -78,23 +78,24 @@ void MN_RegisterText(int textId, const char *text)
 
 /**
  * @brief link a text to a menu text id
- * @note The menu dont manage the text memory, only save a pointer
+ * @note The menu doesn't manage the text memory, only save a pointer
  */
-void MN_RegisterLinkedListText(int textId, linkedList_t *text)
+void MN_RegisterLinkedListText (int textId, linkedList_t *text)
 {
 	mn.sharedData[textId].type = MN_SHARED_LINKEDLISTTEXT;
 	mn.sharedData[textId].data.linkedListText = text;
 	mn.sharedData[textId].versionId++;
 }
 
-const char *MN_GetText(int textId)
+const char *MN_GetText (int textId)
 {
 	if (mn.sharedData[textId].type != MN_SHARED_TEXT)
 		return NULL;
 	return mn.sharedData[textId].data.text;
 }
 
-int MN_GetDataVersion(int textId) {
+int MN_GetDataVersion (int textId)
+{
 	return mn.sharedData[textId].versionId;
 }
 
@@ -185,7 +186,7 @@ menuOption_t *MN_GetOption (int dataId)
 }
 
 /**
- * @brief Alloc an array of option
+ * @brief Allocates an array of option
  */
 menuOption_t* MN_AllocOption (int count)
 {
@@ -222,7 +223,7 @@ static void MN_MenuDataReset_f (void)
 }
 
 /**
- * @brief Init console command about shared menu data
+ * @brief Initialize console command about shared menu data
  * @note called by MN_Init
  */
 void MN_InitData (void)

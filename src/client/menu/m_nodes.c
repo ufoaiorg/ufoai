@@ -166,7 +166,7 @@ qboolean MN_CheckVisibility (menuNode_t *node)
 /** @todo (menu) to be integrated into MN_CheckNodeZone */
 /**
  * @brief Check if the node is an image and if it is transparent on the given (global) position.
- * @param[in] node A menunode pointer to be checked.
+ * @param[in] node A menu node pointer to be checked.
  * @param[in] x X position on screen.
  * @param[in] y Y position on screen.
  * @return qtrue if an image is used and it is on transparent on the current position.
@@ -187,7 +187,8 @@ static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
 
 	if (!picture || !width || !height) {
 		Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
-		/* We return true here because we do not know if there is another image (withouth transparency) or another reason it might still be valid. */
+		/* We return true here because we do not know if there is another image (without transparency)
+		 * or another reason it might still be valid. */
 		return qtrue;
 	}
 
@@ -290,7 +291,7 @@ menuNode_t* MN_AllocNode (const char* type)
 
 /**
  * @brief Return a node behaviour by name
- * @note Use a dicotomic search. nodeBehaviourList must be sorted by name.
+ * @note Use a dichotomic search. nodeBehaviourList must be sorted by name.
  */
 nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 {
@@ -318,11 +319,11 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 /**
  * @brief Clone a node
  * @param[in] node to clone
- * @param[in] recursive True if we also must clone subnodeas
+ * @param[in] recursive True if we also must clone subnodes
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
- * @todo Properties like CVAR_OR_FLOAT and using a value dont embbed the value, but point to a value.
+ * @todo Properties like CVAR_OR_FLOAT that are using a value don't embed the value, but point to a value.
  * As a result, the new node will share the value with the "base" node.
- * We can embbed this values into node.
+ * We can embed this values into node.
  * @todo exclude rect is node safe cloned.
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive)
@@ -392,7 +393,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 		behaviour->propertyCount = num;
 	}
 
-	/* everything inherite 'abstractnode' */
+	/* everything inherits 'abstractnode' */
 	if (behaviour->extends == NULL && Q_strcmp(behaviour->name, "abstractnode") != 0) {
 		behaviour->extends = "abstractnode";
 	}
@@ -409,7 +410,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 			if (pos == 0)
 				break;
 
-			/* cache super function if we dont overwrite it */
+			/* cache super function if we don't overwrite it */
 			superFunc = *(size_t*)((char*)behaviour->super + pos);
 			func = *(size_t*)((char*)behaviour + pos);
 			if (func == 0 && superFunc != 0)
@@ -450,7 +451,7 @@ void MN_InitNodes (void)
 		current++;
 	}
 
-	/* finalyse node behaviour initialization */
+	/* finalize node behaviour initialization */
 	current = nodeBehaviourList;
 	for (i = 0; i < NUMBER_OF_BEHAVIOURS; i++) {
 		MN_InitializeNodeBehaviour(current);

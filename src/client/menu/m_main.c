@@ -37,7 +37,7 @@ menuGlobal_t mn;
 static cvar_t *mn_escpop;
 
 /**
- * @brief Returns the ID of the last fullscreen ID. Before this, window should be hiden.
+ * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
  * @return The last full screen window on the screen, else 0. If the stack is empty, return -1
  */
 int MN_GetLastFullScreenWindow (void)
@@ -112,7 +112,7 @@ static inline void MN_InsertMenuIntoStack (menuNode_t *menu, int position)
 /**
  * @brief Push a menu onto the menu stack
  * @param[in] name Name of the menu to push onto menu stack
- * @param[in] delete Delete the menu from the menu stack before readd it
+ * @param[in] delete Delete the menu from the menu stack before adding it again
  * @return pointer to menuNode_t
  * @todo Replace "i" by a menuNode_t, more easy to read
  */
@@ -153,7 +153,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 
 	Key_SetDest(key_game);
 
-	/* if there is a timeout value set, init the menu with current client time */
+	/* if there is a timeout value set, initialize the menu with current client time */
 	for (node = menu->firstChild; node; node = node->next) {
 		if (node->timeOut)
 			node->timePushed = cl.time;
@@ -253,13 +253,15 @@ static void MN_PushDropDownMenu_f (void)
 	size_t writedByte;
 	int result;
 
-	if (Cmd_Argc() != 4 && Cmd_Argc() != 5)
+	if (Cmd_Argc() != 4 && Cmd_Argc() != 5) {
 		Com_Printf("Usage: %s <source-anchor> <point-in-source-anchor> <dest-anchor> <point-in-dest-anchor>\n", Cmd_Argv(0));
+		return;
+	}
 
 	/* get the source anchor */
 	node = MN_GetNodeByPath(Cmd_Argv(1));
 	if (node == NULL) {
-		Com_Printf("MN_PushDropDownMenu_f: Node '%s' dont exists\n", Cmd_Argv(1));
+		Com_Printf("MN_PushDropDownMenu_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 	result = Com_ParseValue(&pointPosition, Cmd_Argv(2), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
@@ -278,7 +280,7 @@ static void MN_PushDropDownMenu_f (void)
 		/* get the source anchor */
 		node = MN_GetNodeByPath(Cmd_Argv(3));
 		if (node == NULL) {
-			Com_Printf("MN_PushDropDownMenu_f: Node '%s' dont exists\n", Cmd_Argv(3));
+			Com_Printf("MN_PushDropDownMenu_f: Node '%s' doesn't exist\n", Cmd_Argv(3));
 			return;
 		}
 		result = Com_ParseValue (&pointPosition, Cmd_Argv(4), V_ALIGN, 0, sizeof(pointPosition), &writedByte);
@@ -293,7 +295,7 @@ static void MN_PushDropDownMenu_f (void)
 	/* update the menu and push it */
 	node = MN_GetNodeByPath(Cmd_Argv(1));
 	if (node == NULL) {
-		Com_Printf("MN_PushDropDownMenu_f: Node '%s' dont exists\n", Cmd_Argv(1));
+		Com_Printf("MN_PushDropDownMenu_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
 	/** @todo Every node should have a menu; menu too */
@@ -373,7 +375,7 @@ static void MN_CloseMenuByRef (menuNode_t *menu)
 {
 	int i;
 
-	/** @todo If the focus is not on the menu we close, we dont need to remove it */
+	/** @todo If the focus is not on the menu we close, we don't need to remove it */
 	MN_ReleaseInput();
 
 	assert(mn.menuStackPos);
@@ -408,7 +410,7 @@ void MN_CloseMenu (const char* name)
 {
 	menuNode_t *menu = MN_GetMenu(name);
 	if (menu == NULL) {
-		Com_Printf("Menu '%s' dont exists\n", name);
+		Com_Printf("Menu '%s' doesn't exist\n", name);
 		return;
 	}
 
@@ -604,7 +606,7 @@ void MN_SetNewMenuPos_f (void)
 }
 
 /**
- * @brief This will reinit the current visible menu
+ * @brief This will reinitialize the current visible menu
  * @note also available as script command mn_reinit
  */
 static void MN_ReinitCurrentMenu_f (void)
@@ -614,7 +616,7 @@ static void MN_ReinitCurrentMenu_f (void)
 	if (menu) {
 		if (menu->u.window.onInit)
 			MN_ExecuteEventActions(menu, menu->u.window.onInit);
-		Com_DPrintf(DEBUG_CLIENT, "Reinit %s\n", menu->name);
+		Com_DPrintf(DEBUG_CLIENT, "Reinitialize %s\n", menu->name);
 	}
 }
 
@@ -833,7 +835,7 @@ void MN_Init (void)
 	/* add cvars */
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
 
-	/* add menu comamnds */
+	/* add menu commands */
 	Cmd_AddCommand("mn_reinit", MN_ReinitCurrentMenu_f, "This will reinit the current menu (recall the init function)");
 	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);

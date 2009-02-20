@@ -441,7 +441,7 @@ menuNode_t *MN_GetNodeAtPosition (int x, int y)
 }
 
 /**
- * @brief Is called everytime the mouse position change
+ * @brief Is called every time the mouse position change
  */
 void MN_MouseMove (int x, int y)
 {
@@ -477,7 +477,8 @@ void MN_MouseMove (int x, int y)
 }
 
 /**
- * @brief Is called everytime one clickes on a menu/screen. Then checks if anything needs to be executed in the earea of the click (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
+ * @brief Is called every time one clicks on a menu/screen. Then checks if anything needs to be executed in the area of the click
+ * (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
  * @sa MN_ExecuteEventActions
  * @sa MN_RightClick
  * @sa Key_Message

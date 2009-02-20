@@ -103,7 +103,7 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
 /**
  * @brief Allocate a float into the menu memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
- * @param[in] count number of element need to alloc
+ * @param[in] count number of element need to allocate
  * @todo use it every where its possible (search mn.curadata)
  * @todo Assert out when we are not in parsing/loading stage
  */
@@ -121,7 +121,7 @@ float* MN_AllocFloat (int count)
 /**
  * @brief Allocate a color into the menu memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
- * @param[in] count number of element need to alloc
+ * @param[in] count number of element need to allocate
  * @todo Assert out when we are not in parsing/loading stage
  */
 vec4_t* MN_AllocColor (int count)
@@ -163,7 +163,7 @@ char* MN_AllocString (const char* string, int size)
 static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
 
 /**
- * @todo We should update menuNode_t to make every data accessible, and not use sequencial memory (it make the code harder to understand)
+ * @todo We should update menuNode_t to make every data accessible, and not use sequential memory (it make the code harder to understand)
  */
 static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
@@ -186,7 +186,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		*token = COM_EParse(text, errhead, NULL);
 		if (!*text)
 			return qfalse;
-		/** @todo We should not use sequencial memory, it make the code harder to understand */
+		/** @todo We should not use sequential memory, it make the code harder to understand */
 		foo = MN_AllocString(*token, 0);
 		return qtrue;
 	}
@@ -272,7 +272,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		if (MN_IsInjectedString(*token)) {
 			char *foo;
 			action->type.param2 = EA_VALUE;
-			/** @todo We should not use sequencial memory, it make the code harder to understand */
+			/** @todo We should not use sequential memory, it make the code harder to understand */
 			foo = MN_AllocString(*token, 0);
 		} else {
 			const int baseType = val->type & V_SPECIAL_TYPE;
@@ -287,7 +287,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 }
 
 /**
- * @brief Prse actions and return action list
+ * @brief Parse actions and return action list
  * @return The first element from a list of action
  * @sa ea_t
  * @todo need cleanup, compute action out of the final memory; reduce number of var
@@ -420,7 +420,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 		case EA_SPECIAL_TIMEOUT:
 			/* get new token */
 			*token = COM_EParse(text, errhead, NULL);
-			/** @todo use scanef instead of atoi, no need to check '}' */
+			/** @todo use scanf instead of atoi, no need to check '}' */
 			if (!*token || **token == '}') {
 				Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
@@ -593,7 +593,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 		if (!*text)
 			return qfalse;
 	} else {
-		/** @todo dummy action, look at if its realy need */
+		/** @todo dummy action, check whether this is really needed */
 		if (mn.numActions >= MAX_MENUACTIONS)
 			Sys_Error("MN_ParseEventProperty: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
 		*action = &mn.menuActions[mn.numActions++];
@@ -604,7 +604,7 @@ static qboolean MN_ParseEventProperty (menuNode_t * node, const value_t *event, 
 
 /**
  * @brief Parse a property value
- * @todo dont read the next token (need to change the script language)
+ * @todo don't read the next token (need to change the script language)
  */
 static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token)
 {
@@ -799,7 +799,7 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	for (; *action; action = &(*action)->next) {}
 
 	if (mn.numActions >= MAX_MENUACTIONS)
-		Sys_Error("MN_ParseFunction: MAX_MENUACTIONS exceeded (%i)\n", mn.numActions);
+		Sys_Error("MN_ParseFunction: MAX_MENUACTIONS exceeded (%i)", mn.numActions);
 	*action = &mn.menuActions[mn.numActions++];
 	memset(*action, 0, sizeof(**action));
 
@@ -899,7 +899,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 		if (!*text)
 			return qfalse;
 		if (*token[0] != '{') {
-			Com_Printf("MN_ParseNodeBody: node dont have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
+			Com_Printf("MN_ParseNodeBody: node doesn't have body, token '%s' read (node \"%s\")\n", *token, MN_GetPath(node));
 			mn.numNodes--;
 			return qfalse;
 		}
@@ -1006,7 +1006,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 		}
 		Com_DPrintf(DEBUG_CLIENT, "... over-riding node %s\n", MN_GetPath(node));
 		/* reset action list of node */
-		node->onClick = NULL;	/**< @todo understand why this strange hack (there is a lot of over actions) */
+		node->onClick = NULL;	/**< @todo understand why this strange hack exists (there is a lot of over actions) */
 
 	/* else initialize node */
 	} else {
@@ -1030,7 +1030,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 	if (!result)
 		return qfalse;
 
-	/* init the node according to his behaviour */
+	/* initialize the node according to its behaviour */
 	if (node->behaviour->loaded) {
 		node->behaviour->loaded(node);
 	}

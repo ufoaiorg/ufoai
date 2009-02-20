@@ -43,7 +43,7 @@ CASSERT(lengthof(if_strings) == IF_SIZE);
 
 /**
  * @brief Check the if conditions for a given node
- * @returns True is the condition is qfalse if the node is not drawn due to not meet if conditions
+ * @returns True if the condition is qfalse if the node is not drawn
  */
 qboolean MN_CheckCondition (menuDepends_t *condition)
 {
@@ -135,10 +135,10 @@ static int MN_GetOperatorByName (const char* operatorName)
 
 #define BUF_SIZE MAX_VAR - 1
 /**
- * @brief Initilize a condition according to a string
- * @param[out] condition Condition to init
- * @param[in] token String describ a condition
- * @return True if the contition is initialised
+ * @brief Initialize a condition according to a string
+ * @param[out] condition Condition to initialize
+ * @param[in] token String describing a condition
+ * @return True if the condition is initialized
  */
 qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 {
@@ -169,10 +169,10 @@ qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 }
 
 /**
- * @brief Alloc and init a condition according to a string
- * @param[in] token String describ a condition
- * @param[out] condition Contition to init
- * @return The condition if every thing is ok, NULL otherwise
+ * @brief Allocate and initialize a condition according to a string
+ * @param[in] token String describing a condition
+ * @param[out] condition Condition to initialize
+ * @return The condition if everything is ok, NULL otherwise
  */
 menuDepends_t *MN_AllocCondition (const char *description)
 {
@@ -186,7 +186,7 @@ menuDepends_t *MN_AllocCondition (const char *description)
 	if (!result)
 		return NULL;
 
-	/* alloc memory */
+	/* allocates memory */
 	mn.menuConditions[mn.numConditions] = condition;
 	mn.numConditions++;
 

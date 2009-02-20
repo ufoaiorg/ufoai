@@ -99,14 +99,14 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 
 				/* source property injection */
 				} else if (source) {
-					/* find peroperty definition */
+					/* find property definition */
 					const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);
 					if (property) {
 						const char* value;
 						int l;
 						/* only allow common type or cvar */
 						if ((property->type & V_SPECIAL_TYPE) != 0 && (property->type & V_SPECIAL_TYPE) != V_SPECIAL_CVAR) {
-							Sys_Error("MN_GenCommand: Unsuported type injection for property '%s', node '%s'", property->string, MN_GetPath(source));
+							Sys_Error("MN_GenCommand: Unsupported type injection for property '%s', node '%s'", property->string, MN_GetPath(source));
 						}
 						/* inject the property value */
 						value = Com_ValueToStr((const void*)source, property->type, property->ofs);
@@ -190,7 +190,7 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		break;
 	default:
 		node = NULL;
-		Sys_Error("MN_ExecuteSetAction: Invalid actiontype (source: %s)\n", MN_GetPath(source));
+		Sys_Error("MN_ExecuteSetAction: Invalid actiontype (source: %s)", MN_GetPath(source));
 	}
 
 	value = action->data;
@@ -239,7 +239,6 @@ static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean
 static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
 {
 	switch (action->type.op) {
-
 	case EA_NULL:
 		/* do nothing */
 		break;
@@ -266,10 +265,9 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	default:
-		Sys_Error("unknown action type\n");
+		Sys_Error("unknown action type");
 		break;
 	}
-
 }
 
 static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
@@ -320,7 +318,7 @@ qboolean MN_IsInjectedString (const char *string)
 menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *data)
 {
 	if (*action)
-		Sys_Error("There is already an action assigned\n");
+		Sys_Error("There is already an action assigned");
 	*action = (menuAction_t *)Mem_PoolAlloc(sizeof(**action), cl_menuSysPool, CL_TAG_MENU);
 	(*action)->type.op = type;
 	switch (type) {

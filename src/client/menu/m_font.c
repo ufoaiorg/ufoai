@@ -46,7 +46,7 @@ static const value_t fontValues[] = {
 
 /**
  * @brief Registers a new TTF font
- * @note The TTF font path is translated via gettext to be able to use differnet
+ * @note The TTF font path is translated via gettext to be able to use different
  * fonts for every translation
  * @param[in] font
  */
@@ -159,7 +159,7 @@ const char *MN_GetFont (const menuNode_t *const node)
 }
 
 /**
- * @brief after a vid restart we have to reinit the fonts
+ * @brief after a video restart we have to reinitialize the fonts
  */
 void MN_InitFonts (void)
 {

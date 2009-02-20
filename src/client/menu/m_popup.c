@@ -40,7 +40,7 @@ char popupAction2[MAX_SMALLMENUTEXTLEN];
 char popupAction3[MAX_SMALLMENUTEXTLEN];
 
 /**
- * @brief Popup in geoscape
+ * @brief Popup on geoscape
  * @note Only use static strings here - or use popupText if you really have to
  * build the string
  */
