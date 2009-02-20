@@ -134,6 +134,7 @@ static int MN_GetOperatorByName (const char* operatorName)
 	return IF_INVALID;
 }
 
+#define BUF_SIZE MAX_VAR - 1
 /**
  * @brief Initilize a condition according to a string
  * @param[in] token String describ a condition
@@ -142,23 +143,23 @@ static int MN_GetOperatorByName (const char* operatorName)
  */
 qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 {
-	memset(condition, 0, sizeof(menuDepends_t));
+	memset(condition, 0, sizeof(*condition));
 	if (!strstr(token, " ")) {
 		/* cvar exists? (not null) */
 		condition->var = MN_AllocString(token, 0);
 		condition->cond = IF_EXISTS;
 	} else if (strstr(strstr(token, " "), " ")) {
-		char param1[MAX_VAR];
-		char param2[MAX_VAR];
-		char operator_[MAX_VAR];
-		sscanf(token, "%s %s %s", param1, operator_, param2);
+		char param1[BUF_SIZE + 1];
+		char operator[BUF_SIZE + 1];
+		char param2[BUF_SIZE + 1];
+		sscanf(token, "%"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s", param1, operator, param2);
 
 		condition->var = MN_AllocString(param1, 0);
 		condition->value = MN_AllocString(param2, 0);
 
-		condition->cond = MN_GetOperatorByName(operator_);
+		condition->cond = MN_GetOperatorByName(operator);
 		if (condition->cond == IF_INVALID)
-			Sys_Error("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator_, token);
+			Sys_Error("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator, token);
 	} else {
 		Com_Printf("Illegal if statement '%s'\n", token);
 		return qfalse;
