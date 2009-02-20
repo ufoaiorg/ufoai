@@ -140,7 +140,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
  * @param[in] image The normalized tab texture to use
  * @param[in] x The upper-left position of the screen to draw the texture
  * @param[in] y The upper-left position of the screen to draw the texture
- * @param[in] width The width size of the screen to use (strech)
+ * @param[in] width The width size of the screen to use (stretch)
  * @param[in] type The status of the tab we display
  */
 static inline void MN_TabNodeDrawPlain (const char *image, int x, int y, int width, mn_tab_type_t type)

@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MID_SIZE 1
 #define MARGE 3
 
-#define ELEMENT_HEIGHT 20	/**< todo remove it, whould be computed with the font */
+#define ELEMENT_HEIGHT 20	/**< todo remove it, should be computed with the font */
 
 /**
  * @brief Return the first option of the node
@@ -131,7 +131,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 	}
 	R_ColorBlend(NULL);
 
-	/* count number of options (current architecture dont allow to know if the data change) */
+	/* count number of options (current architecture doesn't allow to know if the data change) */
 	for (; option; option = option->next) {
 		count++;
 	}

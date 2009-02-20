@@ -87,7 +87,7 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 		return;
 
 	current = MN_GetReferenceFloat(node, node->cvar);
-	/* Is we click on the actio button, we can continue */
+	/* Is we click on the action button, we can continue */
 	if (current > node->extraData1 - EPSILON && current < node->extraData1 + EPSILON)
 		return;
 

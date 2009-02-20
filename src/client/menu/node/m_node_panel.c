@@ -57,7 +57,7 @@ static void MN_PanelNodeDraw (menuNode_t *node)
 }
 
 /**
- * @brief Handled alfer the end of the load of the node from script (all data and/or child are set)
+ * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
 static void MN_PanelNodeLoaded (menuNode_t *node)
 {

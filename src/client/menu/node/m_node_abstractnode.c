@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Check the node inheritance
  * @param[in] node Requested node
  * @param[in] behaviourName Property name we search
- * @return True if the node inherite from the behaviour
+ * @return True if the node inherits from the behaviour
  */
 qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
 {
@@ -77,9 +77,6 @@ static const value_t properties[] = {
 	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	/** @todo use V_REF_OF_STRING when its possible ('font' is never a cvar) */
 	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},
-#if 0 /* never use */
-	{"weapon", V_CVAR_OR_STRING, offsetof(menuNode_t, dataImageOrModel), 0},
-#endif
 
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"selectcolor", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
@@ -111,7 +108,7 @@ static const value_t properties[] = {
  * @param [in] node Requested node
  * @param [out] pos Result position
  * @param [in] pointDirection
- * @note For example we can requerst the right-bottom corner with ALIGN_LR (low, right)
+ * @note For example we can request the right-bottom corner with ALIGN_LR (low, right)
  */
 void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
 {
@@ -168,8 +165,8 @@ void MN_GetNodeAbsPos (const menuNode_t* node, vec2_t pos)
  */
 void MN_NodeRelativeToAbsolutePoint (const menuNode_t* node, vec2_t pos)
 {
-	assert (node);
-	assert (pos);
+	assert(node);
+	assert(pos);
 	while (node) {
 		pos[0] += node->pos[0];
 		pos[1] += node->pos[1];
@@ -187,13 +184,13 @@ void MN_NodeAbsoluteToRelativePos (const menuNode_t* node, int *x, int *y)
 {
 	assert(node != NULL);
 	/* if we request the position of an undrawable node, there is a problem */
-	assert (node->behaviour->isVirtual == qfalse);
+	assert(node->behaviour->isVirtual == qfalse);
 	assert(x != NULL);
 	assert(y != NULL);
 
 	/* if we request the position of an undrawable node, there is a problem */
 	if (node->behaviour->isVirtual)
-		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' dont have position", node->name);
+		Sys_Error("MN_NodeAbsoluteToRelativePos: Node '%s' doesn't have a position", node->name);
 
 	while (node) {
 		*x -= node->pos[0];
@@ -367,7 +364,7 @@ static void MN_NodeSetProperty_f (void)
 
 	property = MN_NodeGetPropertyDefinition(node, Cmd_Argv(2));
 	if (!property) {
-		Com_Printf("Property '%s.%s@%s' dont exists\n", node->menu->name, node->name, Cmd_Argv(2));
+		Com_Printf("Property '%s.%s@%s' doesn't exist\n", node->menu->name, node->name, Cmd_Argv(2));
 		return;
 	}
 
@@ -412,7 +409,7 @@ static qboolean MN_AbstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
 }
 
 /**
- * @brief Call to update the node layout. This common code revalidate the node tree.
+ * @brief Call to update the node layout. This common code revalidates the node tree.
  */
 static void MN_AbstractNodeDoLayout (menuNode_t *node)
 {

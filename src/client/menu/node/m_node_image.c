@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 /**
- * @brief Handled alfer the end of the load of the node from the script (all data and/or child are set)
+ * @brief Handled after the end of the load of the node from the script (all data and/or child are set)
  */
 static void MN_ImageNodeLoaded (menuNode_t *node)
 {
@@ -110,7 +110,7 @@ void MN_ImageNodeDraw(menuNode_t *node)
 		Vector2Set(size, w / scale, node->size[1]);
 	} else {
 		if (node->preventRatio) {
-			/* maximise the image into the bounding box */
+			/* maximize the image into the bounding box */
 			float ratio;
 			int w, h;
 			R_DrawGetPicSize(&w, &h, imageName);

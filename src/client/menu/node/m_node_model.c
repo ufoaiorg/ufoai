@@ -107,7 +107,7 @@ static void MN_SetModelTransform_f (void)
 	float x, y ,z;
 	vec3_t value;
 
-	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
+	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code doesn't move the behaviours */
 
 	/* not initialized yet - commandline? */
 	if (mn.menuStackPos <= 0)
@@ -314,7 +314,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			/* get the animation given by menu node properties */
 			if (node->u.model.animation && *(char *) node->u.model.animation) {
 				ref = MN_GetReferenceString(node, node->u.model.animation);
-			/* otherwise use the standard animation from modelmenu defintion */
+			/* otherwise use the standard animation from modelmenu definition */
 			} else
 				ref = menuModel->anim;
 
@@ -403,7 +403,7 @@ static void MN_ModelNodeGetParentFromTag (const char* tag, char *parent, int buf
 }
 
 /**
- * @brief return the anchor name embeded in a tag
+ * @brief return the anchor name embedded in a tag
  */
 static const char* MN_ModelNodeGetAnchorFromTag (const char* tag)
 {
@@ -428,7 +428,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	menuModel_t *menuModel;
 	vec3_t nodeorigin;
 
-	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code dont move the behaviours */
+	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code doesn't move the behaviours */
 	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
 	if (source[0] == '\0')

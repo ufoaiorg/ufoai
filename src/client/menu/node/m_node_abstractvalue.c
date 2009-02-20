@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "m_node_abstractvalue.h"
 
-inline static void MN_InitCvarOrFloat (float** adress, float defaultValue)
+static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
 {
 	if (*adress == NULL) {
 		*adress = MN_AllocFloat(1);

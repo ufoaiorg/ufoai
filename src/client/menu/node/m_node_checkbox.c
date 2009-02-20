@@ -48,7 +48,7 @@ static void MN_CheckBoxNodeDraw (menuNode_t* node)
 	if (!image || image[0] == '\0')
 		return;
 
-	/* outter status */
+	/* outer status */
 	if (node->disabled) {
 		texy = 96;
 	} else if (node->state) {

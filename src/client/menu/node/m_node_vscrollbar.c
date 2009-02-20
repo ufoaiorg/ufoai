@@ -2,7 +2,7 @@
  * @file m_node_vscrollbar.c
  * @todo implement click on bottom and top element of the scroll
  * @todo implement click on bottom-to-slider and top-to-slider element of the scroll
- * @todo implement hilight
+ * @todo implement highlighting
  * @todo implement disabled
  * @todo robustness
  */

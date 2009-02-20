@@ -43,7 +43,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 
 	od = INVSH_GetItemByIDSilent(ref);
 	if (od) {
-		item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not red-ish; fake item anyway */
+		item_t item = {1, NULL, NULL, 0, 0}; /* 1 so it's not reddish; fake item anyway */
 		const vec4_t color = {1, 1, 1, 1};
 		vec3_t pos;
 		item.t = &csi.ods[od->idx];
@@ -55,7 +55,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 			pos[0] += node->size[0] / 2.0;
 			pos[1] += node->size[1] / 2.0;
 			pos[2] = 0;
-			/** @todo we should not use DrawItem but draw the image with render function (remove dependancy with container) */
+			/** @todo we should not use DrawItem but draw the image with render function (remove dependency with container) */
 			MN_DrawItem(node, pos, &item, -1, -1, node->u.model.scale, color);
 		} else {
 			MN_DrawModelNode(node, item.t->model);

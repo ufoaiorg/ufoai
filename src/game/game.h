@@ -126,6 +126,7 @@ typedef struct {
 	 * they connect, and changes are sent to all connected clients. */
 	void (IMPORT *ConfigString) (int num, const char *string);
 
+	/* @note The error message should not have a newline - it's added inside of this function */
 	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */

@@ -82,6 +82,7 @@ static void SV_cprintf (const player_t * player, int level, const char *fmt, ...
 static void SV_error (const char *fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
+ * @note The error message should not have a newline - it's added inside of this function
  */
 static void SV_error (const char *fmt, ...)
 {

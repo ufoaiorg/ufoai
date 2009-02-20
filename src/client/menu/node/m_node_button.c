@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Handles Button clicks
  * @todo node->disabled is not need, a disabled node must not receive
- * any input event; but it dont work like that for the moment
+ * any input event; but it doesn't work like that for the moment
  */
 static void MN_ButtonNodeClick (menuNode_t * node, int x, int y)
 {
@@ -117,7 +117,7 @@ static void MN_ButtonNodeLoading (menuNode_t *node)
 }
 
 /**
- * @brief Handled alfer the end of the load of the node from script (all data and/or child are set)
+ * @brief Handled after the end of the load of the node from script (all data and/or child are set)
  */
 static void MN_ButtonNodeLoaded (menuNode_t *node)
 {

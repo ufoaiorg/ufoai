@@ -76,7 +76,7 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, pos);
 
-	/* draker background if last window is a modal */
+	/* darker background if last window is a modal */
 	if (node->u.window.modal && mn.menuStack[mn.menuStackPos - 1] == node)
 		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
 

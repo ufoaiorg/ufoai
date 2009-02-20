@@ -116,9 +116,9 @@ void MN_MenuTextReset (int menuTextID)
 }
 
 /**
- * @brief Remove the highter element (in alphabet) from a list
+ * @brief Remove the higher element (in alphabet) from a list
  */
-static menuOption_t *MN_OptionNodeRemoveHighterOption (menuOption_t **option)
+static menuOption_t *MN_OptionNodeRemoveHigherOption (menuOption_t **option)
 {
 	menuOption_t *prev = NULL;
 	menuOption_t *prevfind = NULL;
@@ -163,7 +163,7 @@ void MN_SortOptions (menuOption_t **first)
 	/* construct a sorted list */
 	while (option) {
 		menuOption_t *element;
-		element = MN_OptionNodeRemoveHighterOption(&option);
+		element = MN_OptionNodeRemoveHigherOption(&option);
 		element->next = *first;
 		*first = element;
 	}

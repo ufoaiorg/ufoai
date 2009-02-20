@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_actions.h"
 #include "../m_parse.h"
-#include "../../cl_video.h" /**< @todo Clean this up and remove this include */
 #include "../../../common/scripts.h"
 #include "m_node_text.h"
 #include "m_node_abstractnode.h"
@@ -299,7 +298,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 		}
 
 		if (node->state && node->mousefx && lines == EXTRADATA(node).lineUnderMouse) {
-			/* Hightlight line if mousefx is true. */
+			/* Highlight line if mousefx is true. */
 			/** @todo what about multiline text that should be highlighted completely? */
 			if (lines == EXTRADATA(node).textLineSelected && EXTRADATA(node).textLineSelected >= 0) {
 				R_ColorBlend(colorSelectedHover);
@@ -338,7 +337,7 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 
 		/*Com_Printf("until newline - lines: %i\n", lines);*/
 		/* the conditional expression at the end is a hack to draw "/n/n" as a blank line */
-		/* prevent line from being drawn if there is nothing that should be drawn afer it */
+		/* prevent line from being drawn if there is nothing that should be drawn after it */
 		if (cur && (cur[0] || end || list)) {
 			/* is it a white line? */
 			if (!cur) {
@@ -427,7 +426,7 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 }
 
 /**
- * @note need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
+ * @todo need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
  */
 static void MN_TextNodeDraw (menuNode_t *node)
 {
@@ -476,20 +475,19 @@ static void MN_TextNodeClick (menuNode_t * node, int x, int y)
 	if (Cmd_Exists(cmd)) {
 		MN_TextNodeSelectLine(node, line);
 		Cbuf_AddText(va("%s %i\n", cmd, line));
-	}
-	else if (node->onClick) {
+	} else if (node->onClick) {
 		switch (node->onClick->type.op) {
-			case EA_CMD:
-				assert(node->onClick->data);
-				MN_TextNodeSelectLine(node, line);
-				Cbuf_AddText(va("%s %i\n", (const char *)node->onClick->data, line));
-				break;
-			case EA_CALL:
-				MN_ExecuteEventActions(node, node->onClick);
-				break;
-			default:
-				/* unsupported action type */
-				break;
+		case EA_CMD:
+			assert(node->onClick->data);
+			MN_TextNodeSelectLine(node, line);
+			Cbuf_AddText(va("%s %i\n", (const char *)node->onClick->data, line));
+			break;
+		case EA_CALL:
+			MN_ExecuteEventActions(node, node->onClick);
+			break;
+		default:
+			/* unsupported action type */
+			break;
 		}
 	}
 }
@@ -512,16 +510,16 @@ static void MN_TextNodeRightClick (menuNode_t * node, int x, int y)
 		Cbuf_AddText(va("%s %i\n", cmd, line));
 	else if (node->onRightClick) {
 		switch (node->onRightClick->type.op) {
-			case EA_CMD:
-				assert(node->onRightClick->data);
-				MN_TextNodeSelectLine(node, line);
-				Cbuf_AddText(va("%s %i\n", (const char *)node->onRightClick->data, line));
-				break;
-			case EA_CALL:
-				MN_ExecuteEventActions(node, node->onRightClick);
-			default:
-				/* unsupported action type */
-				break;
+		case EA_CMD:
+			assert(node->onRightClick->data);
+			MN_TextNodeSelectLine(node, line);
+			Cbuf_AddText(va("%s %i\n", (const char *)node->onRightClick->data, line));
+			break;
+		case EA_CALL:
+			MN_ExecuteEventActions(node, node->onRightClick);
+		default:
+			/* unsupported action type */
+			break;
 		}
 	}
 }
@@ -548,7 +546,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 {
 	int lineheight = node->u.text.lineHeight;
 	/* auto compute lineheight */
-	/* we dont overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw fonction */
+	/* we don't overwrite node->u.text.lineHeight, because "0" is dynamically replaced by font height on draw function */
 	if (lineheight == 0) {
 		/* the font is used */
 		/** @todo clean this up once font_t is known in the client */
@@ -573,7 +571,7 @@ static void MN_TextNodeLoaded (menuNode_t *node)
 
 	/* is text slot exists */
 	if (EXTRADATA(node).num >= MAX_MENUTEXTS)
-		Sys_Error("Error in node %s - max menu num exeeded (num: %i, max: %i)", MN_GetPath(node), EXTRADATA(node).num, MAX_MENUTEXTS);
+		Sys_Error("Error in node %s - max menu num exceeded (num: %i, max: %i)", MN_GetPath(node), EXTRADATA(node).num, MAX_MENUTEXTS);
 
 #ifdef DEBUG
 	if (EXTRADATA(node).rows != (int)(node->size[1] / lineheight)) {

@@ -86,8 +86,7 @@ static void MN_TodoNodeLoading (menuNode_t *node)
 
 static void MN_TodoNodeLoaded (menuNode_t *node)
 {
-#if DEBUG
-#else
+#ifndef DEBUG
 	node->invis = qtrue;
 #endif
 	node->size[0] = 10;

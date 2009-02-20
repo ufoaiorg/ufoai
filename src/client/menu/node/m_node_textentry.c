@@ -105,7 +105,7 @@ static void MN_EditTextEntry_f (void)
 	name = Cmd_Argv(1);
 	node = MN_GetNode(MN_GetActiveMenu(), name);
 	if (!node) {
-		Com_Printf("MN_EditTextEntry_f: node '%s' dont exists on the current active menu '%s'\n", name, MN_GetActiveMenu()->name);
+		Com_Printf("MN_EditTextEntry_f: node '%s' doesn't exist on the current active menu '%s'\n", name, MN_GetActiveMenu()->name);
 		return;
 	}
 
@@ -270,7 +270,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 
 	text = MN_GetReferenceString(node, node->text);
 	if (text != NULL) {
-		/** @todo we dont need to edit the text to draw the cursor */
+		/** @todo we don't need to edit the text to draw the cursor */
 		if (MN_HasFocus(node)) {
 			if (cl.time % 1000 < 500) {
 				text = va("%s%c", text, CURSOR);
@@ -281,7 +281,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 			char *c = va("%s", text);
 			text = c;
 			/* hide the text */
-			/** @todo does it work with Unicode :/ dont we create to much char? */
+			/** @todo does it work with Unicode :/ don't we create to much char? */
 			while (*c != '\0') {
 				*c++ = HIDECHAR;
 			}
@@ -307,7 +307,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 }
 
 /**
- * @brief Call before the script initialisation of the node
+ * @brief Call before the script initialization of the node
  */
 static void MN_TextEntryNodeLoading (menuNode_t *node)
 {

@@ -135,7 +135,7 @@ static void MN_BaseMapDraw (menuNode_t * node)
 				} else if (building->needs) {
 					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
-						Sys_Error("Error in ufo-scriptfile - could not find the needed building\n");
+						Sys_Error("Error in ufo-scriptfile - could not find the needed building");
 					Q_strncpyz(image, secondBuilding->image, sizeof(image));
 					building->used = 0;
 				}
@@ -256,7 +256,7 @@ static void MN_BaseMapClick (menuNode_t *node, int x, int y)
 			 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
 				const building_t *entry = base->map[row][col].building;
 				if (!entry)
-					Sys_Error("MN_BaseMapClick: no entry at %i:%i\n", x, y);
+					Sys_Error("MN_BaseMapClick: no entry at %i:%i", x, y);
 
 				assert(!base->map[row][col].blocked);
 

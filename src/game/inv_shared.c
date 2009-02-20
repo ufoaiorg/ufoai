@@ -49,7 +49,7 @@ void INVSH_InitCSI (csi_t * import)
 }
 
 /**
- * @brief Get the fire defintion for a given object
+ * @brief Get the fire definition for a given object
  * @param[in] obj The object to get the firedef for
  * @param[in] weapFdsIdx
  * @param[in] fdIdx
@@ -69,8 +69,8 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
 }
 
 /**
- * @brief Inits the inventory definition by linking the ->next pointers properly.
- * @param[in] invList Pointer to invList_t definition being inited.
+ * @brief Initializes the inventory definition by linking the ->next pointers properly.
+ * @param[in] invList Pointer to invList_t definition being initialized.
  * @sa G_Init
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
@@ -194,7 +194,7 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
 /**
  * @param[in] i The inventory to check the item in.
  * @param[in] od The item to check in the inventory.
- * @param[in] container The index of the container in the inventory to theck the item in.
+ * @param[in] container The index of the container in the inventory to check the item in.
  * @param[in] x The x value in the container (1 << x in the shape bitmask)
  * @param[in] y The y value in the container (SHAPE_BIG_MAX_HEIGHT is the max)
  * @param[in] ignoredItem You can ignore one item in the container (most often the currently dragged one). Use NULL if you want to check against all items in the container.
@@ -361,7 +361,7 @@ qboolean Com_ExistsInInventory (const inventory_t* const inv, const invDef_t * c
 	return qfalse;
 }
 
-/** Names of the filter types as used in console fucntion. e.g. in .ufo files.
+/** Names of the filter types as used in console function. e.g. in .ufo files.
  * @sa inv_shared.h:itemFilterTypes_t */
 static const char *filterTypeNames[MAX_FILTERTYPES] = {
 	"primary",		/**< FILTER_S_PRIMARY */
@@ -461,7 +461,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 }
 
 /**
- * @brief Checks if the given object/item matched the giben filter type.
+ * @brief Checks if the given object/item matched the given filter type.
  * @param[in] obj A pointer to an objDef_t item.
  * @param[in] filterType Filter type to check against.
  * @return qtrue if obj is in filterType
@@ -702,7 +702,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
  * @param[in] container The container where the item should be removed.
  * @param[in] fItem The item to be removed.
  * @return qtrue If removal was successful.
- * @return qfalse If nothing was removed or an error occured.
+ * @return qfalse If nothing was removed or an error occurred.
  * @sa Com_AddToInventory
  */
 qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * container, invList_t *fItem)
@@ -723,8 +723,8 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 
 	/** @todo the problem here is, that in case of a move inside the same container
 	 * the item don't just get updated x and y values but it is tried to remove
-	 * one of the items => crap - maybe we have to change the inv move function
-	 * to check for this case of move and only update the x and y coords instead
+	 * one of the items => crap - maybe we have to change the inventory move function
+	 * to check for this case of move and only update the x and y coordinates instead
 	 * of calling the add and remove functions */
 	if (container->single || ic == fItem) {
 		cacheItem = ic->item;
@@ -1070,7 +1070,7 @@ void INVSH_EmptyContainer (inventory_t* const i, const invDef_t * container)
 
 /**
  * @brief Destroys inventory.
- * @param[in] i Pointer to the invetory which should be erased.
+ * @param[in] i Pointer to the inventory which should be erased.
  * @note Loops through all containers in inventory, NULL for temp containers and INVSH_EmptyContainer() call for real containers.
  * @sa INVSH_EmptyContainer
  */
@@ -1392,7 +1392,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 	int i, sum;
 	const int numEquip = lengthof(ed->num);
 	int hasWeapon = 0, repeat = 0;
-	int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probabilty * 100
+	int missedPrimary = 0; /**< If actor has a primary weapon, this is zero. Otherwise, this is the probability * 100
 							* that the actor had to get a primary weapon (used to compensate the lack of primary weapon) */
 	equipPrimaryWeaponType_t primary = WEAPON_NO_PRIMARY;
 	const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
@@ -1477,7 +1477,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 			if (ed->num[i] && ((obj->weapon && INV_ItemMatchesFilter(obj, FILTER_S_SECONDARY)
 			 && (!obj->reload || obj->deplete)) || INV_ItemMatchesFilter(obj, FILTER_S_MISC))) {
 				/* if ed->num[i] is greater than 100, the first number is the number of items you'll get:
-				 * don't take it into account for propability
+				 * don't take it into account for probability
 				 * Make sure that the probability is at least one if an item can be selected */
 				sum += ed->num[i] ? max(ed->num[i] % 100, 1) : 0;
 			}
@@ -1846,7 +1846,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 		/* Determine which soldier template to use.
 		 * 25% of the soldiers will be specialists (5% chance each).
 		 * 1% of the soldiers will be elite.
-		 * 74% of the soldiers will be commmon. */
+		 * 74% of the soldiers will be common. */
 		switch (type) {
 		case EMPL_SOLDIER: {
 			const float soldierRoll = frand();

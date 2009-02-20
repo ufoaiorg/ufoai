@@ -67,6 +67,11 @@ char *Sys_Cwd (void)
 	return cwd;
 }
 
+/**
+ * @brief Errors out of the game.
+ * @note The error message should not have a newline - it's added inside of this function
+ * @note This function does never return
+ */
 void Sys_Error (const char *error, ...)
 {
 	va_list argptr;

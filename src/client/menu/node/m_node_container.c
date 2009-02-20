@@ -1,7 +1,7 @@
 /**
  * @file m_node_container.c
  * @todo move container list code out
- * @todo improve the code genericity
+ * @todo improve the code in general
  * @todo rename 'visibleRows' and 'EXTRADATA(node).scrollNum' into 'heightCache' or something like that
  */
 
@@ -47,19 +47,22 @@ inventory_t *menuInventory = NULL;
 
 #define EXTRADATA(node) (node->u.container)
 
-/** self cache for drag item
- * @note we can use a global var because we only can have 1 source node at a time
+/**
+ * self cache for drag item
+ * @note we can use a global variable because we only can have 1 source node at a time
  */
 static int dragInfoFromX = -1;
 static int dragInfoFromY = -1;
 
-/** self cache for the preview and dropped item
- * @note we can use a global var because we only can have 1 target node at a time
+/**
+ * self cache for the preview and dropped item
+ * @note we can use a global variable because we only can have 1 target node at a time
  */
 static int dragInfoToX = -1;
 static int dragInfoToY = -1;
 
-/** The current invList pointer (only used for ignoring the dragged item
+/**
+ * The current invList pointer (only used for ignoring the dragged item
  * for finding free space right now)
  */
 static const invList_t *dragInfoIC;
@@ -424,12 +427,12 @@ static const vec4_t colorLoadable = {0.5, 1, 0.5, 1};
 static const vec4_t colorDisabled = {0.5, 0.5, 0.5, 1};
 static const vec4_t colorDisabledHiden = {0.5, 0.5, 0.5, 0.5};
 static const vec4_t colorDisabledLoadable = {0.5, 0.25, 0.25, 1.0};
-static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look blueish */
+static const vec4_t colorPreview = { 0.5, 0.5, 1, 1 };	/**< Make the preview item look bluish */
 
 /**
  * @brief Draw a container which only contains one item
  * @param node
- * @param hightlightType
+ * @param highlightType
  */
 static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightType)
 {
@@ -662,7 +665,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 				if (!tempItem.t->tech || !RS_IsResearched_ptr(tempItem.t->tech))
 					continue;
 
-				/* find and skip unexisting ammo */
+				/* find and skip none existing ammo */
 				icItem = MN_ContainerNodeGetExistingItem(node, tempItem.t, EXTRADATA(node).filterEquipType);
 				if (!icItem)
 					continue;
@@ -812,7 +815,7 @@ static void MN_ContainerNodeDrawDropPreview (menuNode_t *target)
 	if (!checkedTo)
 		return;
 
-	/* Hack, no preview for armour, we dont want it out of the armour container (and armour container is not visible) */
+	/* Hack, no preview for armour, we don't want it out of the armour container (and armour container is not visible) */
 	if (!Q_strcmp(previewItem.t->type, "armour"))
 		return;
 
@@ -973,7 +976,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 				if (!objammo->tech || !RS_IsResearched_ptr(objammo->tech))
 					continue;
 
-				/* find and skip unexisting ammo */
+				/* find and skip none existing ammo */
 				icItem = MN_ContainerNodeGetExistingItem(node, objammo, EXTRADATA(node).filterEquipType);
 				if (!icItem)
 					continue;
@@ -996,7 +999,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 			rowHeight = cellHeight;
 		}
 
-		/* add a marge between rows */
+		/* add a margin between rows */
 		if (col == EXTRADATA(node).columns - 1) {
 			*currentHeight += rowHeight;
 			rowHeight = 0;
@@ -1020,11 +1023,11 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 
 /**
  * @brief Gets location of the item the mouse is over
- * @param[in] node	The container-node.
- * @param[in] mouseX	X location of the mouse.
- * @param[in] mouseY	Y location of the mouse.
- * @param[out] contX	X location in the container (index of item in row).
- * @param[out] contY	Y location in the container (row).
+ * @param[in] node The container-node.
+ * @param[in] mouseX X location of the mouse.
+ * @param[in] mouseY Y location of the mouse.
+ * @param[out] contX X location in the container (index of item in row).
+ * @param[out] contY Y location in the container (row).
  * @sa MN_ContainerNodeSearchInScrollableContainer
  */
 static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const node, int mouseX, int mouseY, int* contX, int* contY)
@@ -1108,7 +1111,7 @@ static void MN_ContainerNodeDrawTooltip (menuNode_t *node, int x, int y)
  * @param[in] base The base we are in.
  * @param[in] mouseX/mouseY Mouse coordinates.
  * @param[in] rightClick If we want to auto-assign items instead of dragging them this has to be qtrue.
- * @todo Ungeneric function, Not sure we can do it in a generic way
+ * @todo None generic function. Not sure we can do it in a generic way
  */
 static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 {
@@ -1339,7 +1342,7 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	int checkedTo = INV_DOES_NOT_FIT;
 	item_t *dragItem = MN_DNDGetItem();
 
-	/* we already check it when the node accepte the DND */
+	/* we already check it when the node accept the DND */
 	assert(EXTRADATA(target).container);
 
 	MN_GetNodeAbsPos(target, nodepos);
@@ -1408,7 +1411,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 {
 	item_t *dragItem = MN_DNDGetItem();
 
-	/* if the target can't finalyse the DND we stop */
+	/* if the target can't finalize the DND we stop */
 	if (!isDroped) {
 		return qfalse;
 	}
@@ -1425,9 +1428,9 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 	} else {
 		menuNode_t *target;
 
-#if 0 /* is it realy need? */
+#if 0 /* is it really needed? */
 		if (EXTRADATA(source).container->id == csi.idArmour) {
-			/** hackhack @todo This is only because armour containers (and their nodes) are
+			/** HACK @todo This is only because armour containers (and their nodes) are
 			 * handled differently than normal containers somehow.
 			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
 			 * In a perfect world EXTRADATA(node).container would always be the same as dragInfo.to here. */
@@ -1449,7 +1452,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 			} else
 				fItem = Com_SearchInInventory(menuInventory, EXTRADATA(source).container, dragInfoFromX, dragInfoFromY);
 
-			/** @todo We must split the move in two. Here, we sould not know how to add the item to the target (see dndDrop) */
+			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			assert(EXTRADATA(target).container);
 			INV_MoveItem(menuInventory,
 				EXTRADATA(target).container, dragInfoToX, dragInfoToY,

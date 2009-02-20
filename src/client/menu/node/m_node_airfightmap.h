@@ -1,5 +1,5 @@
 /**
- * @file m_node_aitfightmap.h
+ * @file m_node_airfightmap.h
  */
 
 /*
