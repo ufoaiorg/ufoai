@@ -141,7 +141,7 @@ static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 		}
 
 		if (startOfLine) {
-			char *prefix;
+			const char *prefix;
 			prefix = change ? "* " : "  ";
 			prefix = (brushnum == NUM_NONE && entnum == NUM_NONE) ? "//" : prefix;
 
@@ -1124,15 +1124,14 @@ static qboolean Check_PointsAreCollinear (const vec3_t a, const vec3_t b, const 
 }
 #endif
 
-static float Check_LongestEdge(const winding_t *w) {
+static float Check_LongestEdge (const winding_t *w)
+{
 	float longestSqr = 0;
-	//const vect3_t p[] = w->p;
 	int i;
 	for (i = 0; i < w->numpoints; i++) {
-		int j = (i + 1) % w->numpoints;
-		//const vec3_t v1 = p[i], v2 = ;
-		float lengthSqr= VectorDistSqr(w->p[i], w->p[j]);
-		longestSqr = longestSqr > lengthSqr ? longestSqr : lengthSqr ;
+		const int j = (i + 1) % w->numpoints;
+		const float lengthSqr = VectorDistSqr(w->p[i], w->p[j]);
+		longestSqr = longestSqr > lengthSqr ? longestSqr : lengthSqr;
 	}
 	return sqrt(longestSqr);
 }
@@ -1237,7 +1236,6 @@ static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
 
 		for (i++; i < numVert; i++) {
 			if (!Check_PointsAreCollinear(zero, one, vertbuf[i])) {
-
 				return qtrue; /* 3 points not in a line, there is overlap */
 			}
 		}
