@@ -87,7 +87,7 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 			R_EnableLighting(r_state.default_program, qtrue);
 
 			if (r_state.lighting_enabled) {
-				if (r_bumpmap->value && stage->image->normalmap){
+				if (r_bumpmap->value && stage->image->normalmap) {
 					R_BindDeluxemapTexture(surf->deluxemap_texnum);
 					R_BindNormalmapTexture(stage->image->normalmap->texnum);
 

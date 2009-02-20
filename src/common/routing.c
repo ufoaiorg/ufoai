@@ -502,7 +502,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 	/* Com_Printf("At (%i, %i, %i) looking in direction %i with size %i\n", x, y, z, dir, actor_size); */
 
 	/* test if the unit is blocked by a loaded model */
-	if (RT_FLOOR(map, actor_size, x, y, z) >= CELL_HEIGHT || RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING){
+	if (RT_FLOOR(map, actor_size, x, y, z) >= CELL_HEIGHT || RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING) {
 		/* We can't go this way. */
 		RT_CONN(map, actor_size, x, y, z, dir) = 0;
 		/* Zero the debugging data */
@@ -804,7 +804,8 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 }
 
 
-void RT_WriteCSVFiles(struct routing_s *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs){
+void RT_WriteCSVFiles (struct routing_s *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
+{
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
 	FILE *handle;
 	int i, x, y, z;

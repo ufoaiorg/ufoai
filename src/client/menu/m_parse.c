@@ -1339,7 +1339,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 				Q_strncpyz(command, token, sizeof(command));
 				token = COM_Parse(&text);
 				Q_strncpyz(param, token, sizeof(param));
-				/*Com_sprintf(token, MAX_VAR, "%s %s", command, param);*/
+				/*Com_sprintf(token, sizeof(token), "%s %s", command, param);*/
 			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
@@ -1375,12 +1375,12 @@ float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
 {
 	if (!ref)
 		return 0.0;
-	if (*(char *) ref == '*') {
+	if (*(const char *) ref == '*') {
 		char ident[MAX_VAR];
 		const char *token, *text;
 
 		/* get the reference and the name */
-		text = (char *) ref + 1;
+		text = (const char *) ref + 1;
 		token = COM_Parse(&text);
 		if (!text)
 			return 0.0;

@@ -1645,7 +1645,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
 	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
-	if (dir >= FLYING_DIRECTIONS){
+	if (dir >= FLYING_DIRECTIONS) {
 		if (dz > 0) {
 			/* If the actor is moving up, check the passage at the current cell.
 			 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
@@ -1719,7 +1719,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 		}
 
 		/* The actor can't fall it there is ladder support. */
-		if (dir == DIRECTION_FALL && has_ladder_support){
+		if (dir == DIRECTION_FALL && has_ladder_support) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall because of ladder.\n");
 			return;
 		}
