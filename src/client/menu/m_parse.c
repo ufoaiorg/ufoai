@@ -398,7 +398,10 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			*token = COM_EParse(text, errhead, NULL);
 			if (!*text)
 				return NULL;
+
 			action->data = MN_AllocCondition(*token);
+			if (action->data == NULL)
+				return NULL;
 
 			/* get the action block */
 			*token = COM_EParse(text, errhead, NULL);

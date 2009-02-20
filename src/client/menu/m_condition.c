@@ -138,8 +138,9 @@ static int MN_GetOperatorByName (const char* operatorName)
  * @brief Initilize a condition according to a string
  * @param[out] condition Condition to init
  * @param[in] token String describ a condition
+ * @return True if the contition is initialised
  */
-void MN_InitCondition (menuDepends_t *condition, const char *token)
+qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 {
 	memset(condition, 0, sizeof(*condition));
 	if (!strstr(token, " ")) {
@@ -150,32 +151,40 @@ void MN_InitCondition (menuDepends_t *condition, const char *token)
 		char param1[BUF_SIZE + 1];
 		char operator[BUF_SIZE + 1];
 		char param2[BUF_SIZE + 1];
-		if (sscanf(token, "%"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s", param1, operator, param2) != 3)
-			Sys_Error("MN_InitCondition: Could not parse node condition.");
+		if (sscanf(token, "%"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s %"DOUBLEQUOTE(MAX_VAR)"s", param1, operator, param2) != 3) {
+			Com_Printf("MN_InitCondition: Could not parse node condition.\n");
+			return qfalse;
+		}
 
 		condition->var = MN_AllocString(param1, 0);
 		condition->value = MN_AllocString(param2, 0);
 
 		condition->cond = MN_GetOperatorByName(operator);
-		if (condition->cond == IF_INVALID)
-			Sys_Error("Invalid 'if' statement. Unknown '%s' operator from token: '%s'", operator, token);
+		if (condition->cond == IF_INVALID) {
+			Com_Printf("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator, token);
+			return qfalse;
+		}
 	}
+	return qtrue;
 }
 
 /**
  * @brief Alloc and init a condition according to a string
  * @param[in] token String describ a condition
  * @param[out] condition Contition to init
- * @return The condition if every thing is ok, Sys_Error otherwise
+ * @return The condition if every thing is ok, NULL otherwise
  */
 menuDepends_t *MN_AllocCondition (const char *description)
 {
 	menuDepends_t condition;
+	qboolean result;
 
 	if (mn.numConditions >= MAX_MENUCONDITIONS)
 		Sys_Error("MN_AllocCondition: Too many menu conditions");
 
-	MN_InitCondition(&condition, description);
+	result = MN_InitCondition(&condition, description);
+	if (!result)
+		return NULL;
 
 	/* alloc memory */
 	mn.menuConditions[mn.numConditions] = condition;
