@@ -13,25 +13,25 @@ AC_CANONICAL_TARGET
 AC_MSG_CHECKING(system)
 case "$host_os" in
 	linux*)
-		AC_MSG_RESULT(UNIX (GNU/Linux))
+		AC_MSG_RESULT([UNIX (GNU/Linux)])
 		;;
-	mingw32* )
-		AC_MSG_RESULT(Win32 (mingw32))
+	mingw32*)
+		AC_MSG_RESULT([Win32 (mingw32)])
 		;;
-	cygwin* )
-		AC_MSG_RESULT(Win32 (cygwin))
+	cygwin*)
+		AC_MSG_RESULT([Win32 (cygwin)])
 		;;
-	openbsd* )
-		AC_MSG_RESULT(UNIX (OpenBSD))
+	openbsd*)
+		AC_MSG_RESULT([UNIX (OpenBSD)])
 		;;
-	solaris* )
-		AC_MSG_RESULT(UNIX (Solaris))
+	solaris*)
+		AC_MSG_RESULT([UNIX (Solaris)])
 		;;
 	darwin*)
-		AC_MSG_RESULT(Mac OS X)
+		AC_MSG_RESULT([Mac OS X])
 		;;
 	*)
-		AC_MSG_RESULT(not sure... guessing a unix variant)
+		AC_MSG_RESULT([not sure... guessing a unix variant])
 		;;
 esac
 
@@ -93,7 +93,7 @@ AC_ARG_ENABLE(universal,
 # this is kind-of a work-around,,,
 #---------------------------------------------------------------------------------------------
 m4_define_default([PKG_CHECK_MODULES],
-	[AC_MSG_ERROR([For current build options, pkg-config is required. Did you maybe forget to run aclocal with the corrent include path?])])
+	[AC_MSG_ERROR([For current build options, pkg-config is required. Did you maybe forget to run aclocal with the current include path?])])
 
 
 #---------------------------------------------------------------------------------------------
@@ -200,10 +200,7 @@ AC_MSG_CHECKING([target CPU])
 if test "$target_cpu" = "x86_64"
 then
 	AC_SUBST([TARGET_CPU],[x86_64])
-elif test "$target_cpu" = "i386" ||
-	 test "$target_cpu" = "i486" ||
-	 test "$target_cpu" = "i586" ||
-	 test "$target_cpu" = "i686"
+elif test "$target_cpu" = "i386" || test "$target_cpu" = "i486" || test "$target_cpu" = "i586" || test "$target_cpu" = "i686"
 then
 	AC_SUBST([TARGET_CPU],[i386])
 elif test "$target_cpu" = "powerpc"
@@ -560,12 +557,10 @@ then
 	# Check for opengl headers
 	#---------------------------------------------------------------------------------------------
 	AC_CHECK_HEADERS([GL/gl.h GL/glu.h])
-	if test "$ac_cv_header_GL_gl_h" != "yes" || \
-		test "$ac_cv_header_GL_glu_h" != "yes"
+	if test "$ac_cv_header_GL_gl_h" != "yes" || test "$ac_cv_header_GL_glu_h" != "yes"
 	then
 		AC_CHECK_HEADERS([OpenGL/gl.h OpenGL/glu.h])
-		if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
-			test "$ac_cv_header_OpenGL_glu_h" != "yes"
+		if test "$ac_cv_header_OpenGL_gl_h" != "yes" || test "$ac_cv_header_OpenGL_glu_h" != "yes"
 		then
 			AC_MSG_ERROR([Could not find OpenGL development headers!])
 		else
