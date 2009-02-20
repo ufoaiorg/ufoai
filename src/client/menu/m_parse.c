@@ -162,6 +162,9 @@ char* MN_AllocString (const char* string, int size)
 /* prototype */
 static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
 
+/**
+ * @todo We should update menuNode_t to make every data accessible, and not use sequencial memory (it make the code harder to understand)
+ */
 static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	char cast[32] = "abstractnode";
@@ -174,6 +177,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 
 	/* cvar setter */
 	if (Q_strncmp(nodeName, "cvar:", 5) == 0) {
+		char *foo;	/**< @todo remove a warning, see the todo bellow */
 		action->data = MN_AllocString(nodeName + 5, 0);
 		action->type.param1 = EA_CVARNAME;
 		action->type.param2 = EA_VALUE;
@@ -182,7 +186,8 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		*token = COM_EParse(text, errhead, NULL);
 		if (!*text)
 			return qfalse;
-		MN_AllocString(*token, 0);
+		/** @todo We should not use sequencial memory, it make the code harder to understand */
+		foo = MN_AllocString(*token, 0);
 		return qtrue;
 	}
 
@@ -265,8 +270,10 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		mn.curadata += ALIGN(sizeof(menuIcon_t*));
 	} else {
 		if (MN_IsInjectedString(*token)) {
+			char *foo;
 			action->type.param2 = EA_VALUE;
-			MN_AllocString(*token, 0);
+			/** @todo We should not use sequencial memory, it make the code harder to understand */
+			foo = MN_AllocString(*token, 0);
 		} else {
 			const int baseType = val->type & V_SPECIAL_TYPE;
 			if (baseType != 0 && baseType != V_SPECIAL_CVAR) {
