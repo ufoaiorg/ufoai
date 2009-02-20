@@ -310,8 +310,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = (int)strlen(token) + 1;
-		if (w > MAX_VAR)
-			w = MAX_VAR;
 		*writedByte = ALIGN(w);
 		break;
 
