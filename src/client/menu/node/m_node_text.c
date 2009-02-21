@@ -197,7 +197,7 @@ static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
  * @param[in] x The fixed x position every new line starts
  * @param[in] y The fixed y position the text node starts
  */
-static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, const char* font, menuNode_t* node, int x, int y, int width, int height)
+static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linkedList_t* list)
 {
 	char textCopy[MAX_MENUTEXTLEN];
 	char newFont[MAX_VAR];
@@ -207,6 +207,17 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
 	char *cur, *tab, *end;
 	int lines;
 	int x1; /* variable x position */
+	const char *font = MN_GetFont(node);
+	vec2_t pos;
+	int x, y, width, height;
+
+	MN_GetNodeAbsPos(node, pos);
+
+	/* text box */
+	x = pos[0] + node->padding;
+	y = pos[1] + node->padding;
+	width = node->size[0] - node->padding - node->padding;
+	height = node->size[1] - node->padding - node->padding;
 
 	if (text) {
 		Q_strncpyz(textCopy, text, sizeof(textCopy));
@@ -385,13 +396,24 @@ static void MN_TextNodeDrawText (const char *text, const linkedList_t* list, con
  * scrolling of the message window scrolls message by message,
  * which looks better anyway.
  */
-static void MN_TextNodeDrawMessageList (const message_t *messageStack, const char *font, menuNode_t *node, int x, int y, int width, int height)
+static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messageStack)
 {
 	char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
 	const message_t *message;
 	int skip_messages;
 	int screenLines;
-	int addTextLines = 0;					/**< Number of wraped lines after n-lines */
+	int addTextLines = 0;			/**< Number of wraped lines after n-lines */
+	const char *font = MN_GetFont(node);
+	vec2_t pos;
+	int x, y, width, height;
+
+	MN_GetNodeAbsPos(node, pos);
+
+	/* text box */
+	x = pos[0] + node->padding;
+	y = pos[1] + node->padding;
+	width = node->size[0] - node->padding - node->padding;
+	height = node->size[1] - node->padding - node->padding;
 
 	/* scrollbar space */
 	if (EXTRADATA(node).scrollbar) {
@@ -426,34 +448,24 @@ static void MN_TextNodeDrawMessageList (const message_t *messageStack, const cha
 }
 
 /**
- * @todo need a cleanup/merge/rearchitecture between MN_DrawTextNode2 and MN_DrawTextNode
+ * @brief Draw a text node
  */
 static void MN_TextNodeDraw (menuNode_t *node)
 {
-	const char *font;
-	vec2_t nodepos;
-
-	MN_GetNodeAbsPos(node, nodepos);
-	font = MN_GetFont(node);
-
 	/** @todo Very special case, merge it with shared type, or split it into another node */
 	if (EXTRADATA(node).num == TEXT_MESSAGESYSTEM) {
-		MN_TextNodeDrawMessageList(cp_messageStack, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+		MN_TextNodeDrawMessageList(node, cp_messageStack);
 		return;
 	}
 
 	switch (mn.sharedData[EXTRADATA(node).num].type) {
 	case MN_SHARED_TEXT:
-		MN_TextNodeDrawText(mn.sharedData[EXTRADATA(node).num].data.text, NULL, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+		MN_TextNodeDrawText(node, mn.sharedData[EXTRADATA(node).num].data.text, NULL);
 		break;
 	case MN_SHARED_LINKEDLISTTEXT:
-		MN_TextNodeDrawText(NULL, mn.sharedData[EXTRADATA(node).num].data.linkedListText, font, node, nodepos[0], nodepos[1], node->size[0], node->size[1]);
+		MN_TextNodeDrawText(node, NULL, mn.sharedData[EXTRADATA(node).num].data.linkedListText);
 		break;
-	case MN_SHARED_OPTION:
-		break;
-	case MN_SHARED_NONE:
-		break;
-	case MN_SHARED_LINESTRIP:
+	default:
 		break;
 	}
 }

@@ -100,6 +100,7 @@ static void MN_StringNodeLoaded (menuNode_t *node)
 
 static void MN_StringNodeLoading (menuNode_t *node)
 {
+	node->padding = 3;
 	Vector4Set(node->color, 1.0, 1.0, 1.0, 1.0);
 	node->longlines = LONGLINES_PRETTYCHOP;
 }

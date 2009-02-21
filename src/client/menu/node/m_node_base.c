@@ -303,6 +303,7 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
  */
 static void MN_BaseLayoutNodeLoading (menuNode_t *node)
 {
+	node->padding = 3;
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 

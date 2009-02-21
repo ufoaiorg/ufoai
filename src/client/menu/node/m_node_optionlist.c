@@ -214,6 +214,7 @@ static void MN_OptionListNodeLoading (menuNode_t *node)
 {
 	Vector4Set(node->color, 1, 1, 1, 1);
 	node->u.option.versionId = -1;
+	node->padding = 3;
 }
 
 static void MN_OptionListNodeLoaded (menuNode_t *node)

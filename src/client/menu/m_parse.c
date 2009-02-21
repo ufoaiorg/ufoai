@@ -1017,10 +1017,6 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 		MN_AppendNode(parent, node);
 	}
 
-	/* node default values */
-	/** @todo move it into the respective "loading" function (for those nodes, that need it) */
-	node->padding = 3;
-
 	/* throw to the node, we begin to read attributes */
 	if (node->behaviour->loading)
 		node->behaviour->loading(node);
