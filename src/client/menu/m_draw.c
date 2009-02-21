@@ -63,26 +63,6 @@ void MN_CaptureDrawOver (menuNode_t *node)
 	drawOverNode = node;
 }
 
-static void MN_DrawBorder (const menuNode_t *node)
-{
-	vec2_t nodepos;
-
-	MN_GetNodeAbsPos(node, nodepos);
-	/** @todo use GL_LINE_LOOP + array here */
-	/* left */
-	R_DrawFill(nodepos[0] - node->padding - node->border, nodepos[1] - node->padding - node->border,
-		node->border, node->size[1] + (node->padding*2) + (node->border*2), ALIGN_UL, node->bordercolor);
-	/* right */
-	R_DrawFill(nodepos[0] + node->size[0] + node->padding, nodepos[1] - node->padding - node->border,
-		node->border, node->size[1] + (node->padding*2) + (node->border*2), ALIGN_UL, node->bordercolor);
-	/* top */
-	R_DrawFill(nodepos[0] - node->padding, nodepos[1] - node->padding - node->border,
-		node->size[0] + (node->padding*2), node->border, ALIGN_UL, node->bordercolor);
-	/* down */
-	R_DrawFill(nodepos[0] - node->padding, nodepos[1] + node->size[1] + node->padding,
-		node->size[0] + (node->padding*2), node->border, ALIGN_UL, node->bordercolor);
-}
-
 #ifdef DEBUG
 
 static int debugTextPositionY = 0;
@@ -226,19 +206,18 @@ static void MN_DrawNode (menuNode_t *node) {
 
 	/* check node size x and y value to check whether they are zero */
 	if (node->size[0] && node->size[1]) {
-		if (node->bgcolor) {
-			/** @todo remove it when its possible */
+		/** @todo remove it when its possible */
+		if (node->bgcolor)
 			R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], 0, node->bgcolor);
-		}
+
+		/** @todo remove it when its possible */
 		if (node->border && node->bordercolor) {
-			/** @todo remove it when its possible */
-			MN_DrawBorder(node);
+			vec2_t pos;
+			MN_GetNodeAbsPos(node, pos);
+			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
+				node->bordercolor, node->border, 0xFFFF);
 		}
 	}
-
-	/** @todo remove it when its possible */
-	if (node->border && node->bordercolor && node->size[0] && node->size[1] && node->pos)
-		MN_DrawBorder(node);
 
 	/* draw the node */
 	if (node->behaviour->draw) {
