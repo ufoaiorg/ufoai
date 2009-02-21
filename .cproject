@@ -23,7 +23,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry excluding="base/videos|base/sound|base/shaders|base/i18n|base/ai|base/textures|base/maps|base/mapcycle.txt|base/keys.cfg|base/irc_motd.txt|base/default.cfg|base/dedicated.cfg|base/autoexec.cfg|base/materials|base/media|base/models|base/music|base/pics|base/ufos|debug-linux-gnu-x86_64" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+<entry excluding="release-linux-gnu-x86_64|debian|contrib|autom4te.cache|base/videos|base/sound|base/shaders|base/i18n|base/ai|base/textures|base/maps|base/mapcycle.txt|base/keys.cfg|base/irc_motd.txt|base/default.cfg|base/dedicated.cfg|base/autoexec.cfg|base/materials|base/media|base/models|base/music|base/pics|base/ufos|debug-linux-gnu-x86_64" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 </sourceEntries>
 </configuration>
 </storageModule>
