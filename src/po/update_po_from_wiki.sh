@@ -86,7 +86,7 @@ find_line()
 				fi
 				j=$j+1
 			done
-				echo "   there are no translation available for this language in this section"
+				echo "   there are no translations available for this language in this section"
 			return 255
 		fi
 	done < Language_List_${language0}
