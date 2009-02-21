@@ -190,8 +190,8 @@ static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
 	tooltipVisible = qtrue;
 }
 
-static void MN_DrawNode (menuNode_t *node) {
-	vec2_t nodepos;
+static void MN_DrawNode (menuNode_t *node)
+{
 	menuNode_t *child;
 
 	/* skip invisible, virtual, and undrawable nodes */
@@ -202,18 +202,16 @@ static void MN_DrawNode (menuNode_t *node) {
 		return;
 
 	/** @todo remove it when its possible */
-	MN_GetNodeAbsPos(node, nodepos);
-
 	/* check node size x and y value to check whether they are zero */
 	if (node->size[0] && node->size[1]) {
+		vec2_t pos;
+		MN_GetNodeAbsPos(node, pos);
 		/** @todo remove it when its possible */
 		if (node->bgcolor)
-			R_DrawFill(nodepos[0], nodepos[1], node->size[0], node->size[1], 0, node->bgcolor);
+			R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], 0, node->bgcolor);
 
 		/** @todo remove it when its possible */
 		if (node->border && node->bordercolor) {
-			vec2_t pos;
-			MN_GetNodeAbsPos(node, pos);
 			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
 				node->bordercolor, node->border, 0xFFFF);
 		}
