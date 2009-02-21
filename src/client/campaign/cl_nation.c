@@ -554,8 +554,6 @@ static int usedFundPtslist = 0;
 static screenPoint_t colorLinePts[MAX_NATIONS][2]; /* Space for 1 line (2 points) for each nation. */
 static int usedColPtslists = 0;
 
-static screenPoint_t coordAxesPts[3];	/* Space for 2 lines (3 points) */
-
 static const vec4_t graphColors[MAX_NATIONS] = {
 	{1.0, 0.5, 0.5, 1.0},
 	{0.5, 1.0, 0.5, 1.0},
@@ -614,6 +612,7 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineSt
 	int m;
 	int minFunding = 0;
 	int ptsNumber = 0;
+	float dy;
 
 	if (!nation || !node)
 		return;
@@ -628,13 +627,15 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineSt
 		return;
 	}
 
+	dy = (float) height / (maxFunding - minFunding);
+
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
 	for (m = 0; m < MONTHS_PER_YEAR; m++) {
 		if (nation->stats[m].inuse) {
 			const int funding = NAT_GetFunding(nation, m);
 			fundingPts[usedFundPtslist][m].x = (m * dx);
-			fundingPts[usedFundPtslist][m].y = height - height * (funding - minFunding) / (maxFunding - minFunding);
+			fundingPts[usedFundPtslist][m].y = height - dy * (funding - minFunding);
 			ptsNumber++;
 		} else {
 			break;
