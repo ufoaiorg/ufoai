@@ -558,7 +558,7 @@ qboolean MN_CursorOnMenu (int x, int y)
 		return qtrue;
 	}
 
-	return qfalse;
+	return qtrue;
 }
 
 /**
