@@ -451,7 +451,7 @@ static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
 	/* start a new range */
 	char *newStr = strdup(rangeStr);
 	entityKeyRange_t *newRange = (entityKeyRange_t *)malloc(sizeof(entityKeyRange_t));
-	memset(newRange, 0, sizeof(entityKeyRange_t));
+	memset(newRange, 0, sizeof(*newRange));
 	/* resize array of pointers */
 	newRanges = (entityKeyRange_t **)malloc((kd->numRanges + 1) * sizeof(entityKeyRange_t *));
 	ED_TEST_RETURN_ERROR(!newRanges || !newStr || !newRange, "ED_AllocRange: out of memory");
