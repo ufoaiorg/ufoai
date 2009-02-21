@@ -2017,7 +2017,7 @@ void CheckTexturesBasedOnFlags (void)
 				Q_strncpyz(tex->name, "tex_common/weaponclip", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_ACTORCLIP && Q_strcmp(tex->name, "tex_common/actorclip")) {
-				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "*set actorclip texture for CONTENTS_ACTORCLIP\n");
+				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum,  "set actorclip texture for CONTENTS_ACTORCLIP\n");
 				Q_strncpyz(tex->name, "tex_common/actorclip", sizeof(tex->name));
 			}
 			if (side->contentFlags & CONTENTS_ORIGIN && Q_strcmp(tex->name, "tex_common/origin")) {
