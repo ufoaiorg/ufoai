@@ -44,6 +44,7 @@ cvar_t *mn_show_tooltips;
 
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
 static qboolean tooltipVisible = qfalse;
+static qboolean tooltipTimerStoped = qfalse;	/**< @todo should have a getter into the allocated timer for that */
 static menuTimer_t *tooltipTimer;
 
 /**
@@ -246,13 +247,13 @@ void MN_DrawMenus (void)
 	hoveredNode = MN_GetHoveredNode();
 
 	/* handle delay time for tooltips */
-	if (mouseMoved && tooltipTimer != NULL) {
-		MN_TimerRelease(tooltipTimer);
-		tooltipTimer = NULL;
+	if (mouseMoved && !tooltipTimerStoped) {
+		MN_TimerStop(tooltipTimer);
 		tooltipVisible = qfalse;
-	} else if (!mouseMoved && tooltipTimer == NULL && mn_show_tooltips->integer && hoveredNode) {
-		tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
+		tooltipTimerStoped = qtrue;
+	} else if (!mouseMoved && tooltipTimerStoped && mn_show_tooltips->integer && hoveredNode) {
 		MN_TimerStart(tooltipTimer);
+		tooltipTimerStoped = qfalse;
 	}
 
 	MN_HandleTimers();
@@ -328,6 +329,7 @@ void MN_DrawMenusInit (void)
 	mn_debug = Cvar_Get("debug_menu", "0", 0, "Prints node names for debugging purposes - valid values are 1 and 2");
 #endif
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
+	tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
 }
 
 /**
