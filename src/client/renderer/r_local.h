@@ -131,13 +131,11 @@ extern rlocals_t r_locals;
 
 qboolean R_CullMeshModel(entity_t *e);
 
-void R_ScreenShot_f(void);
 void R_DrawModelParticle(modelInfo_t *mi);
 void R_DrawBrushModel(const entity_t *e);
 void R_DrawBspNormals(int tile);
 qboolean R_CullBspModel(const entity_t *e);
 void R_GetLevelSurfaceLists(void);
-void R_InitMiscTexture(void);
 void R_DrawEntities(void);
 void R_DrawInitLocal(void);
 void R_DrawParticles(void);

@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "r_local.h"
+#include "r_misc.h"
 #include "r_error.h"
 
 static const byte gridtexture[8][8] = {
@@ -66,7 +67,6 @@ void R_InitMiscTexture (void)
 	/* empty pic in the texture chain for cinematic frames */
 	R_LoadImageData("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_effect);
 }
-
 
 /*
 ==============================================================================
@@ -191,4 +191,46 @@ void R_ScreenShot_f (void)
 	Mem_Free(buffer);
 
 	Com_Printf("Wrote %s\n", checkName);
+}
+
+/**
+ * @brief Perform translate, rotate and scale operations on the current matrix
+ * @note Every parameter may be @c NULL and is ignored then
+ * @param[in] transform Translation vector
+ * @param[in] rotate Rotation vector
+ * @param[in] scale Scale vector (keep in mind to not set this to @c vec3_origin or zero)
+ * @sa R_PushMatrix
+ * @sa R_PopMatrix
+ */
+void R_Transform (const vec3_t transform, const vec3_t rotate, const vec3_t scale)
+{
+	if (transform != NULL) {
+		glTranslatef(transform[0], transform[1], transform[2]);
+	}
+
+	if (rotate != NULL) {
+		glRotatef(rotate[0], 0, 0, 1);
+		glRotatef(rotate[1], 0, 1, 0);
+		glRotatef(rotate[2], 1, 0, 0);
+	}
+
+	if (scale != NULL) {
+		glScalef(scale[0], scale[1], scale[2]);
+	}
+}
+
+/**
+ * @brief Push a new matrix to the stack
+ */
+void R_PushMatrix (void)
+{
+	glPushMatrix();
+}
+
+/**
+ * @brief Removes the current matrix from the stack
+ */
+void R_PopMatrix (void)
+{
+	glPopMatrix();
 }
