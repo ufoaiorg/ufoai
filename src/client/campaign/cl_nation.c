@@ -661,7 +661,7 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineSt
 	usedFundPtslist++;
 }
 
-lineStrip_t colorLineStrip[MAX_NATIONS];
+static lineStrip_t colorLineStrip[MAX_NATIONS];
 
 /**
  * @brief Shows the current nation list + statistics.
