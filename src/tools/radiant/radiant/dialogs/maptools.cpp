@@ -113,6 +113,7 @@ static void selectBrushesViaTreeView (GtkCellRendererToggle *widget, gchar *path
 	GtkTreeIter iter;
 	GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeViewWidget));
 	gboolean enabled = TRUE;
+	char *entnumStr, *brushnumStr;
 	int entnum, brushnum;
 
 	if (!gtk_tree_model_get_iter_from_string(model, &iter, path))
@@ -120,8 +121,10 @@ static void selectBrushesViaTreeView (GtkCellRendererToggle *widget, gchar *path
 
 	// get the values from the tree view model list
 	gtk_tree_model_get(model, &iter, CHECK_SELECT, &enabled, -1);
-	gtk_tree_model_get(model, &iter, CHECK_ENTITY, &entnum, -1);
-	gtk_tree_model_get(model, &iter, CHECK_BRUSH, &brushnum, -1);
+	gtk_tree_model_get(model, &iter, CHECK_ENTITY, &entnumStr, -1);
+	gtk_tree_model_get(model, &iter, CHECK_BRUSH, &brushnumStr, -1);
+	brushnum = atoi(brushnumStr);
+	entnum = atoi(entnumStr);
 
 	// correct brush and ent values
 	if (brushnum < 0)
@@ -179,7 +182,7 @@ static void CreateCheckDialog (void)
 		gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(treeViewWidget));
 		gtk_container_add(GTK_CONTAINER(vbox), GTK_WIDGET(scr));
 
-		store = gtk_list_store_new(CHECK_COLUMNS, G_TYPE_INT, G_TYPE_INT, G_TYPE_STRING, G_TYPE_BOOLEAN);
+		store = gtk_list_store_new(CHECK_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN);
 		gtk_tree_view_set_model(GTK_TREE_VIEW(treeViewWidget), GTK_TREE_MODEL(store));
 		/* unreference the list so that is will be deleted along with the tree view */
 		g_object_unref(store);
@@ -261,6 +264,7 @@ void ToolsCheckErrors (void)
 						// the next should be a brush
 						if (!strncmp(line, " brush:", 7)) {
 							const char *color;
+							int entnum, brushnum;
 
 							line += 7;
 
@@ -269,7 +273,7 @@ void ToolsCheckErrors (void)
 								*bufPos++ = *line++;
 							*bufPos = '\0';
 
-							// skip seperator
+							// skip separator
 							line += 3;
 							if (*line == '*') {
 								// automatically fixable
@@ -278,10 +282,10 @@ void ToolsCheckErrors (void)
 								// show red - manually
 								color = "#ff0000";
 							}
-
+							brushnum = atoi(brushnumbuf);
+							entnum = atoi(entnumbuf);
 							gtk_list_store_append(store, &iter);
-//							gtk_list_store_set(store, &iter, CHECK_ENTITY, atoi(entnumbuf), CHECK_BRUSH, atoi(brushnumbuf), CHECK_MESSAGE, line, CHECK_SELECT, NULL, -1);
-							gtk_list_store_set(store, &iter, CHECK_ENTITY, atoi(entnumbuf), CHECK_BRUSH, atoi(brushnumbuf), CHECK_MESSAGE, line, -1);
+							gtk_list_store_set(store, &iter, CHECK_ENTITY, entnum < 0 ? "" : entnumbuf, CHECK_BRUSH, brushnum < 0 ? "" : brushnumbuf, CHECK_MESSAGE, line, -1);
 
 							rows++;
 						} else
