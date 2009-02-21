@@ -35,10 +35,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 {
 	lineStrip_t *lineStrip;
 	const int dataId = node->u.linechart.dataId;
-
 	vec3_t pos;
-	static const vec3_t noRotation = {0, 0, 0};
-	static const vec3_t noScale = {1, 1, 1};
 
 	if (dataId == 0)
 		return;
@@ -53,7 +50,7 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 	pos[2] = 0;
 
 	R_PushMatrix();
-	R_Transform(pos, noRotation, noScale);
+	R_Transform(pos, NULL, NULL);
 
 	/* Draw axes */
 	if (node->u.linechart.displayAxes) {
