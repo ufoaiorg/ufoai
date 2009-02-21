@@ -691,9 +691,9 @@ static void CL_NationStatsUpdate_f (void)
 		funding = NAT_GetFunding(&(ccs.nations[i]), 0);
 
 		if (selectedNation == i) {
-			MN_ExecuteConfunc(va("nation_marksel %i",i));
+			MN_ExecuteConfunc("nation_marksel %i", i);
 		} else {
-			MN_ExecuteConfunc(va("nation_markdesel %i",i));
+			MN_ExecuteConfunc("nation_markdesel %i", i);
 		}
 		Cvar_Set(va("mn_nat_name%i",i), _(ccs.nations[i].name));
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
@@ -720,7 +720,7 @@ static void CL_NationStatsUpdate_f (void)
 
 	/* Hide unused nation-entries. */
 	for (i = ccs.numNations; i < MAX_NATIONS; i++) {
-		MN_ExecuteConfunc(va("nation_hide %i",i));
+		MN_ExecuteConfunc("nation_hide %i", i);
 	}
 
 	/** @todo Display summary of nation info */
