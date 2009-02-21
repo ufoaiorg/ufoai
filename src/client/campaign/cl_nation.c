@@ -622,12 +622,10 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineSt
 	height	= (int)node->size[1];
 	dx = (int)(width / MONTHS_PER_YEAR);
 
-	if (minFunding == maxFunding) {
-		Com_Printf("CL_NationDrawStats: Given maxFunding value is the same as minFunding (min=%i, max=%i) - abort.\n", minFunding, maxFunding);
-		return;
-	}
-
-	dy = (float) height / (maxFunding - minFunding);
+	if (minFunding != maxFunding)
+		dy = (float) height / (maxFunding - minFunding);
+	else
+		dy = 0;
 
 	/* Generate pointlist. */
 	/** @todo Sort this in reverse? -> Having current month on the right side? */
