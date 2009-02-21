@@ -161,7 +161,7 @@ static void R_LoadPNG (const char *name, byte **pic, int *width, int *height)
 	pngBuf_t PngFileBuffer = {NULL, 0};
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadPNG\n");
+		Sys_Error("possible mem leak in LoadPNG");
 
 	/* Load the file */
 	FS_LoadFile(name, (byte **)&PngFileBuffer.buffer);
@@ -356,7 +356,7 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	targaHeader_t targaHeader;
 
 	if (*pic != NULL)
-		Sys_Error("R_LoadTGA: possible mem leak\n");
+		Sys_Error("R_LoadTGA: possible mem leak");
 
 	/* Load the file */
 	length = FS_LoadFile(name, &buffer);
@@ -527,7 +527,7 @@ void R_LoadTGA (const char *name, byte ** pic, int *width, int *height)
 					alpha = 255;
 					break;
 				default:
-					Sys_Error("R_LoadTGA: Unknown tga image type: %i\n", targaHeader.imageType);
+					Sys_Error("R_LoadTGA: Unknown tga image type: %i", targaHeader.imageType);
 				}
 			}
 
@@ -772,7 +772,7 @@ static void R_LoadJPG (const char *filename, byte ** pic, int *width, int *heigh
 	int rawsize, i, components;
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadJPG\n");
+		Sys_Error("possible mem leak in LoadJPG");
 
 	/* Load JPEG file into memory */
 	rawsize = FS_LoadFile(filename, &rawdata);

@@ -186,7 +186,7 @@ static font_t *R_FontAnalyze (const char *name, const char *path, int renderStyl
 
 	f->font = TTF_OpenFontRW(f->rw, 0, size);
 	if (!f->font)
-		Sys_Error("...could not load font file %s\n", path);
+		Sys_Error("...could not load font file %s", path);
 
 	/* font style */
 	f->style = renderStyle;
@@ -212,7 +212,7 @@ static font_t *R_FontGetFont (const char *name)
 		if (!Q_strncmp(name, fonts[i].name, MAX_FONTNAME))
 			return &fonts[i];
 
-	Com_Error(ERR_FATAL, "Could not find font: %s\n", name);
+	Com_Error(ERR_FATAL, "Could not find font: %s", name);
 }
 
 
@@ -788,7 +788,7 @@ void R_FontInit (void)
 
 	/* init the truetype font engine */
 	if (TTF_Init() == -1)
-		Sys_Error("SDL_ttf error: %s\n", TTF_GetError());
+		Sys_Error("SDL_ttf error: %s", TTF_GetError());
 }
 
 void R_FontRegister (const char *name, int size, const char *path, const char *style)

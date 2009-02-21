@@ -242,7 +242,7 @@ const mapDef_t* GAME_MP_MapInfo (int step)
 			cls.currentSelectedMap = csi.numMDs - 1;
 		cls.currentSelectedMap %= csi.numMDs;
 		if (i >= csi.numMDs)
-			Sys_Error("GAME_MP_MapInfo: There is no multiplayer map in any mapdef\n");
+			Sys_Error("GAME_MP_MapInfo: There is no multiplayer map in any mapdef");
 	}
 
 	md = &csi.mds[cls.currentSelectedMap];

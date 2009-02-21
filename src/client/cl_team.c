@@ -58,7 +58,7 @@ const char* CL_GetTeamSkinName (int id)
 	case 5:
 		return _("CCCP");
 	}
-	Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i\n", id, NUM_TEAMSKINS-1);
+	Sys_Error("CL_GetTeamSkinName: Unknown skin id %i - max is %i", id, NUM_TEAMSKINS - 1);
 }
 
 /**
@@ -497,7 +497,7 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 		break;
 	case EMPL_ROBOT:
 		if (!ugvType)
-			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.\n");
+			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.");
 
 		chr->score.rank = CL_GetRankIdx("ugv");
 

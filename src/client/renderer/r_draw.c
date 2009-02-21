@@ -56,7 +56,7 @@ void R_DrawInitLocal (void)
 
 	draw_chars = R_FindImage("pics/conchars", it_chars);
 	if (draw_chars == r_noTexture)
-		Sys_Error("Could not find conchars image in game pics directory!\n");
+		Sys_Error("Could not find conchars image in game pics directory!");
 }
 
 #define MAX_CHARS 8192
@@ -150,7 +150,7 @@ int R_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 
 	img = R_FindImage(name, it_pic);
 	if (img == r_noTexture)
-		Sys_Error("Could not find the searched image: %s\n", name);
+		Sys_Error("Could not find the searched image: %s", name);
 
 	R_BindTexture(img->texnum);
 

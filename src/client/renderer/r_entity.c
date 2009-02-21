@@ -518,7 +518,7 @@ static float *R_CalcTransform (entity_t * e)
 	t = &e->transform;
 
 	if (t->processing)
-		Sys_Error("Ring in entity transformations!\n");
+		Sys_Error("Ring in entity transformations!");
 
 	if (t->done)
 		return t->matrix;

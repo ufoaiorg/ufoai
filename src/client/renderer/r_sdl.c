@@ -69,17 +69,17 @@ qboolean Rimp_Init (void)
 
 	Com_Printf("\n------- video initialization -------\n");
 
-	if (*r_driver->string) {
+	if (r_driver->string[0] != '\0') {
 		Com_Printf("using driver: %s\n", r_driver->string);
 		SDL_GL_LoadLibrary(r_driver->string);
 	}
 
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0)
-			Sys_Error("Video SDL_Init failed: %s\n", SDL_GetError());
+			Sys_Error("Video SDL_Init failed: %s", SDL_GetError());
 	} else if (SDL_WasInit(SDL_INIT_VIDEO) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
-			Sys_Error("Video SDL_InitSubsystem failed: %s\n", SDL_GetError());
+			Sys_Error("Video SDL_InitSubsystem failed: %s", SDL_GetError());
 	}
 
 	SDL_VERSION(&version)
