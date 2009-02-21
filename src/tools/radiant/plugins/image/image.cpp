@@ -141,7 +141,7 @@ public:
 
 typedef SingletonModule<ImagePNGAPI> ImagePNGModule;
 
-ImageTGAModule g_ImagePNGModule;
+ImagePNGModule g_ImagePNGModule;
 
 extern "C" void RADIANT_DLLEXPORT Radiant_RegisterModules(ModuleServer& server) {
 	initialiseModule(server);
