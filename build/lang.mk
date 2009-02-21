@@ -63,6 +63,7 @@ po-sync:
 	read enter; cd src/po; \
 	for po in $$pofiles; do \
 	  po=`basename $$po .po`; \
+	  po=`echo $$po | cut -b 7-`; \
 	  echo $$po; \
 	  ./update_po_from_wiki.sh $$po; \
 	done
