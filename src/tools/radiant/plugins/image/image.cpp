@@ -45,23 +45,25 @@ static Image* LoadImage(ArchiveFile& file, const char *extension)
 	GdkPixbufLoader *loader = gdk_pixbuf_loader_new_with_type(extension, (GError**)0);
 
 	if (gdk_pixbuf_loader_write(loader, (const guchar *)buffer.buffer, static_cast<gsize>(buffer.length), (GError**)0)) {
-		int i, pos;
+		int pos = 0;
 		GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
 		const int width = gdk_pixbuf_get_width(pixbuf);
 		const int height = gdk_pixbuf_get_height(pixbuf);
 		const gboolean hasAlpha = gdk_pixbuf_get_has_alpha(pixbuf);
-		const int stepWidth = hasAlpha ? 4 : 3;
-		const int size = width * height * stepWidth;
+		const int stepWidth = gdk_pixbuf_get_n_channels(pixbuf);
 		const guchar *pixels = gdk_pixbuf_get_pixels(pixbuf);
 
 		image = new RGBAImage(width, height);
 		byte *rgba = image->getRGBAPixels();
+		const int rowextra = gdk_pixbuf_get_rowstride(pixbuf) - width * stepWidth;
 
-		for (i = 0, pos = 0; i < size; i += stepWidth) {
-			rgba[pos++] = pixels[i + 0];
-			rgba[pos++] = pixels[i + 1];
-			rgba[pos++] = pixels[i + 2];
-			rgba[pos++] = hasAlpha ? pixels[i + 3] : 255;
+		for (int y = 0; y < height; ++y, pixels += rowextra) {
+			for (int x = 0; x < width; ++x) {
+				rgba[pos++] = *(pixels++);
+				rgba[pos++] = *(pixels++);
+				rgba[pos++] = *(pixels++);
+				rgba[pos++] =  hasAlpha ? *(pixels++) : 255;
+			}
 		}
 
 		g_object_unref(pixbuf);
