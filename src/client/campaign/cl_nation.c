@@ -684,7 +684,7 @@ static void CL_NationStatsUpdate_f (void)
 
 	for (i = 0; i < ccs.numNations; i++) {
 		lineStrip_t *color = &colorLineStrip[i];
-		memset(color, 0, sizeof(color));
+		memset(color, 0, sizeof(*color));
 		if (i > 0)
 			colorLineStrip[i - 1].next = color;
 
