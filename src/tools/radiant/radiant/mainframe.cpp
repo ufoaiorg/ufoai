@@ -2558,6 +2558,7 @@ void MainFrame::SaveComplete()
 void UndoSaveStateTracker::storeState (void)
 {
 	m_savedStep = m_undoSteps;
+	UpdateSensitiveStates();
 }
 
 /**
