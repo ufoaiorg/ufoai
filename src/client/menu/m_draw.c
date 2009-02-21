@@ -207,11 +207,11 @@ static void MN_DrawNode (menuNode_t *node)
 		vec2_t pos;
 		MN_GetNodeAbsPos(node, pos);
 		/** @todo remove it when its possible */
-		if (node->bgcolor)
+		if (node->bgcolor[3] != 0)
 			R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], 0, node->bgcolor);
 
 		/** @todo remove it when its possible */
-		if (node->border && node->bordercolor) {
+		if (node->border && node->bordercolor[3] != 0) {
 			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
 				node->bordercolor, node->border, 0xFFFF);
 		}
