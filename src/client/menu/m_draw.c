@@ -189,6 +189,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
 {
 	tooltipVisible = qtrue;
+	MN_TimerStop(timer);
 }
 
 static void MN_DrawNode (menuNode_t *node)
