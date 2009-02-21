@@ -38,7 +38,7 @@ struct value_s;
 #include "node/m_node_abstractscrollbar.h"
 #include "node/m_node_abstractvalue.h"
 #include "node/m_node_container.h"
-#include "node/m_node_linestrip.h"
+#include "node/m_node_linechart.h"
 #include "node/m_node_model.h"
 #include "node/m_node_text.h"
 #include "node/m_node_textentry.h"
@@ -151,7 +151,7 @@ typedef struct menuNode_s {
 		abstractValueExtraData_t abstractvalue;
 		abstractScrollbarExtraData_t abstractscrollbar;
 		containerExtraData_t container;
-		lineStripExtraData_t linestrip;
+		lineChartExtraData_t linechart;
 		modelExtraData_t model;
 		optionExtraData_t option;
 		textEntryExtraData_t textentry;

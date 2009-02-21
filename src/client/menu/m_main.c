@@ -792,7 +792,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t\t-abstractvalue: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.abstractvalue));
 	Com_Printf("\t\t-abstractscrollbar: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.abstractscrollbar));
 	Com_Printf("\t\t-container: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.container));
-	Com_Printf("\t\t-linestrip: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.linestrip));
+	Com_Printf("\t\t-linechart: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.linechart));
 	Com_Printf("\t\t-model: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.model));
 	Com_Printf("\t\t-option: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.option));
 	Com_Printf("\t\t-textentry: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.textentry));

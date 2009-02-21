@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_editor.h"
 #include "node/m_node_image.h"
 #include "node/m_node_item.h"
-#include "node/m_node_linestrip.h"
+#include "node/m_node_linechart.h"
 #include "node/m_node_map.h"
 #include "node/m_node_airfightmap.h"
 #include "node/m_node_model.h"
@@ -91,7 +91,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterEditorNode,
 	MN_RegisterFuncNode,
 	MN_RegisterItemNode,
-	MN_RegisterLineStripNode,
+	MN_RegisterLineChartNode,
 	MN_RegisterMapNode,
 	MN_RegisterWindowNode,	/* menu */
 	MN_RegisterModelNode,

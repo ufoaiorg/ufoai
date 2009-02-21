@@ -83,9 +83,13 @@ typedef enum {
 	TEXT_MOUSECURSOR_BOTTOM,
 	TEXT_MOUSECURSOR_LEFT,
 	TEXT_MESSAGEOPTIONS,
+
 	OPTION_LANGUAGES,
 	OPTION_JOYSTICKS,
 	OPTION_VIDEO_RESOLUTIONS,
+
+	LINESTRIP_FUNDING,
+	LINESTRIP_COLOR,
 
 	MAX_MENUTEXTS
 } menuTextIDs_t;
@@ -95,6 +99,7 @@ typedef enum {
 	MN_SHARED_TEXT,
 	MN_SHARED_LINKEDLISTTEXT,
 	MN_SHARED_OPTION,
+	MN_SHARED_LINESTRIP
 } menuSharedType_t;
 
 typedef struct menuSharedData_s {
@@ -104,7 +109,10 @@ typedef struct menuSharedData_s {
 		const char *text;
 		/** @brief Holds a linked list for displaying in the menu */
 		struct linkedList_s *linkedListText;
+		/** @brief Holds a linked list for option (label, action, icon...) */
 		struct menuOption_s *option;
+		/** @brief Holds a line strip, a list of point */
+		struct lineStrip_s	*lineStrip;
 	} data;						/**< The data */
 	int versionId;				/**< Id identify the value, to check changes */
 } menuSharedData_t;
@@ -127,5 +135,8 @@ struct menuOption_s* MN_AllocOption(int count) __attribute__ ((warn_unused_resul
 void MN_RegisterOption(int dataId, struct menuOption_s *option);
 struct menuOption_s *MN_GetOption(int dataId) __attribute__ ((warn_unused_result));
 void MN_SortOptions(struct menuOption_s **option);
+
+/* line strip */
+void MN_RegisterLineStrip(int dataId, struct lineStrip_s *text);
 
 #endif

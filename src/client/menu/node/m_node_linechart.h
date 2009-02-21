@@ -1,5 +1,5 @@
 /**
- * @file m_node_linestrip.h
+ * @file m_node_linechart.h
  */
 
 /*
@@ -22,22 +22,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_MENU_M_NODE_LINESTRIP_H
-#define CLIENT_MENU_M_NODE_LINESTRIP_H
+#ifndef CLIENT_MENU_M_NODE_LINECHART_H
+#define CLIENT_MENU_M_NODE_LINECHART_H
 
 #define MAX_LINESTRIPS 16
 
 /**
- * @brief extradata for the linestrip node
+ * @brief an element of the line chart
+ * @todo need review, add info about unit if it need
  */
-typedef struct lineStripExtraData_s {
-	int *pointList[MAX_LINESTRIPS];	/**< Pointers to lists of 2d coordiantes */
-	int numPoints[MAX_LINESTRIPS];	/**< Number of points in each list */
-	vec4_t *color;	/**< Color of the point-list. */
-	int numStrips;					/**< Number of point-lists. */
-} lineStripExtraData_t;
+typedef struct lineStrip_s {
+	int *pointList;				/**< list of value */
+	int numPoints;				/**< number of values */
+	vec4_t color;				/**< color of the line strip */
+	struct lineStrip_s *next;	/**< next line strip */
+} lineStrip_t;
+
+/**
+ * @brief extradata for the linechart node
+ * @todo add info about axes min-max...
+ */
+typedef struct lineChartExtraData_s {
+	int dataId;
+} lineChartExtraData_t;
 
 struct nodeBehaviour_s; /* prototype */
-void MN_RegisterLineStripNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterLineChartNode(struct nodeBehaviour_s *behaviour);
 
 #endif

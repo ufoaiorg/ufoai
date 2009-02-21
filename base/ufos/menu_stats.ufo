@@ -242,16 +242,18 @@ menu nations
 	string nat_fund6 { string "*cvar mn_nat_fund6"	pos "340 265" size "100 20" invis false }
 	string nat_fund7 { string "*cvar mn_nat_fund7"	pos "340 290" size "100 20" invis false }
 
-	linestrip nation_graph_colors
+	linechart nation_graph_colors
 	{
 		pos			"310 324"
 		size		"20 200"	// 8 x 25 -> (8 x entry-height)
+		dataid		LINESTRIP_COLOR
 	}
 
-	linestrip nation_graph_funding
+	linechart nation_graph_funding
 	{
 		pos			"600 300"
 		size		"300 200"
+		dataid		LINESTRIP_FUNDING
 	}
 
 	string graph_time {

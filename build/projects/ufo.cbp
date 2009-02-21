@@ -693,10 +693,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_item.h" />
-		<Unit filename="..\..\src\client\menu\node\m_node_linestrip.c">
+		<Unit filename="..\..\src\client\menu\node\m_node_linechart.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\client\menu\node\m_node_linestrip.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_linechart.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_map.c">
 			<Option compilerVar="CC" />
 		</Unit>

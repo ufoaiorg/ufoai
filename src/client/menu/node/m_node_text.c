@@ -453,6 +453,8 @@ static void MN_TextNodeDraw (menuNode_t *node)
 		break;
 	case MN_SHARED_NONE:
 		break;
+	case MN_SHARED_LINESTRIP:
+		break;
 	}
 }
 

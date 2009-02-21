@@ -598,6 +598,8 @@ static int CL_NationsMaxFunding (void)
 
 static int selectedNation = 0;
 
+lineStrip_t fundingLineStrip[MAX_NATIONS + 2];
+
 /**
  * @brief Draws a graph for the funding values over time.
  * @param[in] nation The nation to draw the graph for.
@@ -606,7 +608,7 @@ static int selectedNation = 0;
  * @param[in] color If this is -1 draw the line for the current selected nation
  * @todo Somehow the display of the months isnt really correct right now (straight line :-/)
  */
-static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, int maxFunding, int color)
+static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineStrip_t *funding, int maxFunding, int color)
 {
 	int width, height, x, y, dx;
 	int m;
@@ -616,6 +618,7 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, int ma
 	if (!nation || !node)
 		return;
 
+	/** @todo should be into the chart node code */
 	width	= (int)node->size[0];
 	height	= (int)node->size[1];
 	x = node->pos[0];
@@ -648,23 +651,20 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, int ma
 		ptsNumber++;
 	}
 
-	/* Break if we reached the max strip number. */
-	if (node->u.linestrip.numStrips >= MAX_LINESTRIPS - 1)
-		return;
-
 	/* Link graph to node */
-	node->u.linestrip.pointList[node->u.linestrip.numStrips] = (int*)fundingPts[usedFundPtslist];
-	node->u.linestrip.numPoints[node->u.linestrip.numStrips] = ptsNumber;
+	funding->pointList = (int*)fundingPts[usedFundPtslist];
+	funding->numPoints = ptsNumber;
 	if (color < 0) {
 		Cvar_Set("mn_nat_symbol", va("nations/%s", ccs.nations[selectedNation].id));
-		Vector4Copy(graphColorSelected, node->u.linestrip.color[node->u.linestrip.numStrips]);
+		Vector4Copy(graphColorSelected, funding->color);
 	} else {
-		Vector4Copy(graphColors[color], node->u.linestrip.color[node->u.linestrip.numStrips]);
+		Vector4Copy(graphColors[color], funding->color);
 	}
-	node->u.linestrip.numStrips++;
 
 	usedFundPtslist++;
 }
+
+lineStrip_t colorLineStrip[MAX_NATIONS];
 
 /**
  * @brief Shows the current nation list + statistics.
@@ -684,10 +684,14 @@ static void CL_NationStatsUpdate_f (void)
 	colorNode = MN_GetNodeFromCurrentMenu("nation_graph_colors");
 	if (colorNode) {
 		dy = (int)(colorNode->size[1] / MAX_NATIONS);
-		colorNode->u.linestrip.numStrips = 0;
 	}
 
 	for (i = 0; i < ccs.numNations; i++) {
+		lineStrip_t *color = &colorLineStrip[i];
+		memset(color, 0, sizeof(color));
+		if (i > 0)
+			colorLineStrip[i - 1].next = color;
+
 		funding = NAT_GetFunding(&(ccs.nations[i]), 0);
 
 		if (selectedNation == i) {
@@ -704,19 +708,20 @@ static void CL_NationStatsUpdate_f (void)
 			colorLinePts[usedColPtslists][1].x = colorNode->pos[0] + (int)colorNode->size[0];
 			colorLinePts[usedColPtslists][1].y = colorLinePts[usedColPtslists][0].y;
 
-			colorNode->u.linestrip.pointList[colorNode->u.linestrip.numStrips] = (int*)colorLinePts[usedColPtslists];
-			colorNode->u.linestrip.numPoints[colorNode->u.linestrip.numStrips] = 2;
+			color->pointList = (int*)colorLinePts[usedColPtslists];
+			color->numPoints = 2;
 
 			if (i == selectedNation) {
-				Vector4Copy(graphColorSelected, colorNode->u.linestrip.color[colorNode->u.linestrip.numStrips]);
+				Vector4Copy(graphColorSelected, color->color);
 			} else {
-				Vector4Copy(graphColors[i], colorNode->u.linestrip.color[colorNode->u.linestrip.numStrips]);
+				Vector4Copy(graphColors[i], color->color);
 			}
 
 			usedColPtslists++;
-			colorNode->u.linestrip.numStrips++;
 		}
 	}
+
+	MN_RegisterLineStrip(LINESTRIP_COLOR, &colorLineStrip[0]);
 
 	/* Hide unused nation-entries. */
 	for (i = ccs.numNations; i < MAX_NATIONS; i++) {
@@ -728,30 +733,39 @@ static void CL_NationStatsUpdate_f (void)
 	/* Display graph of nations-values so far. */
 	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
 	if (graphNode) {
+		lineStrip_t *axes = &fundingLineStrip[0];
 		usedFundPtslist = 0;
-		graphNode->u.linestrip.numStrips = 0;
 
 		/* Generate axes & link to node. */
 		/** @todo Maybe create a margin toward the axes? */
+		/** @todo Axes must be managed by the node, note like that */
 		coordAxesPts[0].x = graphNode->pos[0];	/* x */
 		coordAxesPts[0].y = graphNode->pos[1] - (int)graphNode->size[1];	/* y - height */
 		coordAxesPts[1].x = graphNode->pos[0];	/* x */
 		coordAxesPts[1].y = graphNode->pos[1];	/* y */
 		coordAxesPts[2].x = graphNode->pos[0] + (int)graphNode->size[0];	/* x + width */
 		coordAxesPts[2].y = graphNode->pos[1];	/* y */
-		graphNode->u.linestrip.pointList[graphNode->u.linestrip.numStrips] = (int*)coordAxesPts;
-		graphNode->u.linestrip.numPoints[graphNode->u.linestrip.numStrips] = 3;
-		Vector4Copy(colorAxes, graphNode->u.linestrip.color[graphNode->u.linestrip.numStrips]);
-		graphNode->u.linestrip.numStrips++;
+
+		memset(axes, 0, sizeof(axes));
+		axes->pointList = (int*)coordAxesPts;
+		axes->numPoints = 3;
+		Vector4Copy(colorAxes, axes->color);
 
 		maxFunding = CL_NationsMaxFunding();
 		for (i = 0; i < ccs.numNations; i++) {
+			/* init the structure */
+			lineStrip_t *funding = &fundingLineStrip[i + 1];
+			memset(funding, 0, sizeof(funding));
+			fundingLineStrip[i].next = funding;
+
 			if (i == selectedNation) {
-				CL_NationDrawStats(&ccs.nations[i], graphNode, maxFunding, -1);
+				CL_NationDrawStats(&ccs.nations[i], graphNode, funding, maxFunding, -1);
 			} else {
-				CL_NationDrawStats(&ccs.nations[i], graphNode, maxFunding, i);
+				CL_NationDrawStats(&ccs.nations[i], graphNode, funding, maxFunding, i);
 			}
 		}
+
+		MN_RegisterLineStrip(LINESTRIP_FUNDING, &fundingLineStrip[0]);
 	}
 }
 
