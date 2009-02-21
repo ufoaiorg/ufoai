@@ -343,6 +343,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 	return qtrue;
 }
 
+#ifdef DEBUG
 /**
  * @brief set a node property from the command line
  */
@@ -352,11 +353,11 @@ static void MN_NodeSetProperty_f (void)
 	const value_t *property;
 
 	if (Cmd_Argc() != 4) {
-		Com_Printf("Usage: %s <node> <prop> <value>\n", Cmd_Argv(0));
+		Com_Printf("Usage: %s <nodepath> <prop> <value>\n", Cmd_Argv(0));
 		return;
 	}
 
-	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
+	node = MN_GetNodeByPath(Cmd_Argv(1));
 	if (!node) {
 		Com_Printf("MN_NodeSetProperty_f: Node '%s' not found\n", Cmd_Argv(1));
 		return;
@@ -370,6 +371,7 @@ static void MN_NodeSetProperty_f (void)
 
 	MN_NodeSetProperty(node, property, Cmd_Argv(3));
 }
+#endif
 
 /**
  * @brief Invalidate a node and all his parent to request a layout update
@@ -441,5 +443,7 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	/* some commands */
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
-	Cmd_AddCommand("mn_setnodeproperty", MN_NodeSetProperty_f, "Set a node property");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_mnsetnodeproperty", MN_NodeSetProperty_f, "Set a node property");
+#endif
 }
