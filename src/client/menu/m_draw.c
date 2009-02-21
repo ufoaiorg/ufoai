@@ -36,7 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_tooltip.h"
 #include "node/m_node_abstractnode.h"
 
-cvar_t *mn_debugmenu;
+#ifdef DEBUG
+static cvar_t *mn_debug;
+#endif
+
 cvar_t *mn_show_tooltips;
 
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
@@ -79,6 +82,8 @@ static void MN_DrawBorder (const menuNode_t *node)
 	R_DrawFill(nodepos[0] - node->padding, nodepos[1] + node->size[1] + node->padding,
 		node->size[0] + (node->padding*2), node->border, ALIGN_UL, node->bordercolor);
 }
+
+#ifdef DEBUG
 
 static int debugTextPositionY = 0;
 static int debugPositionX = 0;
@@ -197,6 +202,7 @@ static void MN_DrawDebugMenuNodeNames (void)
 	}
 	R_ColorBlend(NULL);
 }
+#endif
 
 
 static void MN_CheckTooltipDelay (menuNode_t *node, menuTimer_t *timer)
@@ -326,10 +332,12 @@ void MN_DrawMenus (void)
 			MN_DrawNotice(500, 110);
 	}
 
+#ifdef DEBUG
 	/* debug information */
-	if (mn_debugmenu->integer == 2) {
+	if (mn_debug->integer == 2) {
 		MN_DrawDebugMenuNodeNames();
 	}
+#endif
 }
 
 void MN_DrawCursor (void)
@@ -339,7 +347,9 @@ void MN_DrawCursor (void)
 
 void MN_DrawMenusInit (void)
 {
-	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes - valid values are 1 and 2");
+#ifdef DEBUG
+	mn_debug = Cvar_Get("debug_menu", "0", 0, "Prints node names for debugging purposes - valid values are 1 and 2");
+#endif
 	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 }
 

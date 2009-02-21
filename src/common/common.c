@@ -665,7 +665,7 @@ static void Com_DebugHelp_f (void)
 			" * g_aidebug\n"
 			" * g_nodamage\n"
 			" * g_notu\n"
-			" * mn_debugmenu\n"
+			" * debug_menu\n"
 			"------------------------------\n"
 			"\n");
 	Com_Printf("Listing commands:\n"
