@@ -58,12 +58,14 @@
 					<Add option="`pkg-config gtk+-2.0 --cflags`" />
 					<Add option="`pkg-config gtkglext-1.0 --cflags`" />
 					<Add option="`pkg-config glib-2.0 --cflags`" />
+					<Add option="`pkg-config gdk-2.0 --cflags`" />
 					<Add option="-fPIC" />
 				</Compiler>
 				<Linker>
 					<Add option="`pkg-config gtk+-2.0 --libs`" />
 					<Add option="`pkg-config gtkglext-1.0 --libs`" />
 					<Add option="`pkg-config glib-2.0 --libs`" />
+					<Add option="`pkg-config gdk-2.0 --libs`" />
 				</Linker>
 			</Target>
 			<Target title="macosx">
