@@ -35,6 +35,7 @@ typedef struct _GtkRadioMenuItem GtkRadioMenuItem;
 typedef struct _GtkTearoffMenuItem GtkTearoffMenuItem;
 
 void menu_add_item(GtkMenu* menu, GtkMenuItem* item);
+void menu_remove_item(GtkMenu* menu, GtkMenuItem* item);
 GtkMenuItem* menu_separator(GtkMenu* menu);
 GtkTearoffMenuItem* menu_tearoff(GtkMenu* menu);
 GtkMenuItem* new_sub_menu_item_with_mnemonic(const char* mnemonic);

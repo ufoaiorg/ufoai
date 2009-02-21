@@ -35,6 +35,11 @@ void menu_add_item(GtkMenu* menu, GtkMenuItem* item) {
 	gtk_container_add(GTK_CONTAINER(menu), GTK_WIDGET(item));
 }
 
+void menu_remove_item(GtkMenu *menu, GtkMenuItem* item) {
+	gtk_container_remove(GTK_CONTAINER(menu), GTK_WIDGET(item));
+	gtk_widget_destroy(GTK_WIDGET(item));
+}
+
 GtkMenuItem* menu_separator(GtkMenu* menu) {
 	GtkMenuItem* menu_item = GTK_MENU_ITEM(gtk_menu_item_new());
 	container_add_widget(GTK_CONTAINER(menu), GTK_WIDGET(menu_item));

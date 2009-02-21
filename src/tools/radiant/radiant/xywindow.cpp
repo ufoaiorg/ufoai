@@ -806,6 +806,9 @@ XYWnd::XYWnd () :
 	m_entityCreate = false;
 
 	m_mnuDrop = 0;
+	m_mnitem_connect = 0;
+	m_mnitem_fitface = 0;
+	m_mnitem_separator = 0;
 
 	GlobalWindowObservers_add(m_window_observer);
 	GlobalWindowObservers_connectWidget(m_gl_widget);
@@ -1091,12 +1094,12 @@ static void EntityClassMenu_addItem (GtkMenu* menu, const char* name)
 /**
  * @brief Adds a context sensitive action to the entity drop down menu
  */
-static void EntityClassMenu_addAction (GtkMenu* menu, const char* name, void (*callback)(gpointer data))
+static GtkMenuItem* EntityClassMenu_addAction (GtkMenu* menu, const char* name, void (*callback)(gpointer data))
 {
 	GtkMenuItem* item = GTK_MENU_ITEM(gtk_menu_item_new_with_label(name));
 	g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(callback), item);
 	gtk_widget_show(GTK_WIDGET(item));
-	menu_add_item(menu, item);
+	return item;
 }
 
 class EntityClassMenuInserter: public EntityClassVisitor
@@ -1189,14 +1192,54 @@ void XYWnd::OnContextMenu (void)
 		GlobalEntityClassManager().forEach(inserter);
 	}
 
-	/** @todo seperator to split entities and actions */
-
-	if (GlobalSelectionSystem().countSelected() > 0) {
-		if (GlobalSelectionSystem().countSelected() == 2) {
-			EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Connect"), Entity_connectSelectedCallback);
+	//create or destroy (un)needed menu items
+	int menuActionCount = 0;
+	bool connectStillAdded = false, fitfaceStillAdded = false;
+	int countSelected = GlobalSelectionSystem().countSelected();
+	if (countSelected == 2) {
+		menuActionCount++;
+		if (m_mnitem_connect == 0)
+			m_mnitem_connect = EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Connect"),
+					Entity_connectSelectedCallback);
+		else
+			connectStillAdded = true;
+	} else {
+		if (m_mnitem_connect) {
+			menu_remove_item(m_mnuDrop, m_mnitem_connect);
+			m_mnitem_connect = 0;
 		}
-		EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Fit Face"), Texture_FitFace);
 	}
+
+	if (countSelected > 0) {
+		menuActionCount++;
+		if (m_mnitem_fitface == 0)
+			m_mnitem_fitface = EntityClassMenu_addAction(m_mnuDrop, C_("Context Menu Action", "Fit Face"),
+					Texture_FitFace);
+		else
+			fitfaceStillAdded = true;
+	} else {
+		if (m_mnitem_fitface) {
+			menu_remove_item(m_mnuDrop, m_mnitem_fitface);
+			m_mnitem_fitface = 0;
+		}
+	}
+
+	//add separator if needed, add other items
+	if (menuActionCount > 0) {
+		if (m_mnitem_separator == 0) {
+			m_mnitem_separator = menu_separator(m_mnuDrop);
+		}
+	} else {
+		if (m_mnitem_separator) {
+			/** @todo check whether this is a memory leak, menu_remove_item sigsegvs here if used; is separator object destroyed? */
+			gtk_container_remove(GTK_CONTAINER(m_mnuDrop), GTK_WIDGET(m_mnitem_separator));
+			m_mnitem_separator = 0;
+		}
+	}
+	if (m_mnitem_connect && !connectStillAdded)
+		menu_add_item(m_mnuDrop, m_mnitem_connect);
+	if (m_mnitem_fitface && !fitfaceStillAdded)
+		menu_add_item(m_mnuDrop, m_mnitem_fitface);
 
 	/** @todo remove connection if already connected */
 	/** @todo group and ungroup */

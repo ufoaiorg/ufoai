@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "view.h"
 #include "map.h"
 #include "texturelib.h"
+#include <gtk/gtkmenuitem.h>
 
 // Constants
 const int XYWND_MINSIZE_X = 200;
@@ -188,6 +189,9 @@ private:
 	void OriginalButtonUp(guint32 nFlags, int point, int pointy);
 	void OriginalButtonDown(guint32 nFlags, int point, int pointy);
 
+	GtkMenuItem* m_mnitem_separator;
+	GtkMenuItem* m_mnitem_connect;
+	GtkMenuItem* m_mnitem_fitface;
 	void OnContextMenu();
 	void PaintSizeInfo(int nDim1, int nDim2, Vector3& vMinBounds, Vector3& vMaxBounds);
 
