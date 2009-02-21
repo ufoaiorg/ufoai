@@ -244,14 +244,14 @@ menu nations
 
 	linechart nation_graph_colors
 	{
-		pos			"310 324"
+		pos			"310 124"
 		size		"20 200"	// 8 x 25 -> (8 x entry-height)
 		dataid		LINESTRIP_COLOR
 	}
 
 	linechart nation_graph_funding
 	{
-		pos			"600 300"
+		pos			"600 100"
 		size		"300 200"
 		dataid		LINESTRIP_FUNDING
 	}

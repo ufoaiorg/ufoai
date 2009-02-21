@@ -873,6 +873,7 @@
 		<Unit filename="..\..\src\client\renderer\r_misc.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\renderer\r_misc.h" />
 		<Unit filename="..\..\src\client\renderer\r_model.c">
 			<Option compilerVar="CC" />
 		</Unit>

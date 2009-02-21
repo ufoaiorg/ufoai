@@ -610,7 +610,7 @@ static lineStrip_t fundingLineStrip[MAX_NATIONS + 2];
  */
 static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineStrip_t *funding, int maxFunding, int color)
 {
-	int width, height, x, y, dx;
+	int width, height, dx;
 	int m;
 	int minFunding = 0;
 	int ptsNumber = 0;
@@ -621,8 +621,6 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineSt
 	/** @todo should be into the chart node code */
 	width	= (int)node->size[0];
 	height	= (int)node->size[1];
-	x = node->pos[0];
-	y = node->pos[1];
 	dx = (int)(width / MONTHS_PER_YEAR);
 
 	if (minFunding == maxFunding) {
@@ -635,8 +633,8 @@ static void CL_NationDrawStats (const nation_t *nation, menuNode_t *node, lineSt
 	for (m = 0; m < MONTHS_PER_YEAR; m++) {
 		if (nation->stats[m].inuse) {
 			const int funding = NAT_GetFunding(nation, m);
-			fundingPts[usedFundPtslist][m].x = x + (m * dx);
-			fundingPts[usedFundPtslist][m].y = y - height * (funding - minFunding) / (maxFunding - minFunding);
+			fundingPts[usedFundPtslist][m].x = (m * dx);
+			fundingPts[usedFundPtslist][m].y = height - height * (funding - minFunding) / (maxFunding - minFunding);
 			ptsNumber++;
 		} else {
 			break;
@@ -703,9 +701,9 @@ static void CL_NationStatsUpdate_f (void)
 		Cvar_Set(va("mn_nat_fund%i",i), va("%i", funding));
 
 		if (colorNode) {
-			colorLinePts[usedColPtslists][0].x = colorNode->pos[0];
-			colorLinePts[usedColPtslists][0].y = colorNode->pos[1] - (int)colorNode->size[1] + dy * i;
-			colorLinePts[usedColPtslists][1].x = colorNode->pos[0] + (int)colorNode->size[0];
+			colorLinePts[usedColPtslists][0].x = 0;
+			colorLinePts[usedColPtslists][0].y = (int)colorNode->size[1] - (int)colorNode->size[1] + dy * i;
+			colorLinePts[usedColPtslists][1].x = (int)colorNode->size[0];
 			colorLinePts[usedColPtslists][1].y = colorLinePts[usedColPtslists][0].y;
 
 			color->pointList = (int*)colorLinePts[usedColPtslists];
@@ -738,13 +736,13 @@ static void CL_NationStatsUpdate_f (void)
 
 		/* Generate axes & link to node. */
 		/** @todo Maybe create a margin toward the axes? */
-		/** @todo Axes must be managed by the node, note like that */
-		coordAxesPts[0].x = graphNode->pos[0];	/* x */
-		coordAxesPts[0].y = graphNode->pos[1] - (int)graphNode->size[1];	/* y - height */
-		coordAxesPts[1].x = graphNode->pos[0];	/* x */
-		coordAxesPts[1].y = graphNode->pos[1];	/* y */
-		coordAxesPts[2].x = graphNode->pos[0] + (int)graphNode->size[0];	/* x + width */
-		coordAxesPts[2].y = graphNode->pos[1];	/* y */
+		/** @todo Axes must be managed by the node, not like that */
+		coordAxesPts[0].x = 0;
+		coordAxesPts[0].y = 0;
+		coordAxesPts[1].x = 0;
+		coordAxesPts[1].y = (int)graphNode->size[1];
+		coordAxesPts[2].x = (int)graphNode->size[0];
+		coordAxesPts[2].y = (int)graphNode->size[1];
 
 		memset(axes, 0, sizeof(axes));
 		axes->pointList = (int*)coordAxesPts;

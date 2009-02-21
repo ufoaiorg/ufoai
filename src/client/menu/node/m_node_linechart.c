@@ -24,15 +24,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
+#include "../../renderer/r_misc.h"
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_internal.h"
+#include "m_node_abstractnode.h"
 #include "m_node_linechart.h"
 
 static void MN_LineChartNodeDraw (menuNode_t *node)
 {
 	lineStrip_t *lineStrip;
 	const int dataId = node->u.linechart.dataId;
+
+	vec3_t pos;
+	static const vec3_t noRotation = {0, 0, 0};
+	static const vec3_t noScale = {1, 1, 1};
+
 	if (dataId == 0)
 		return;
 
@@ -41,6 +48,12 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 		node->u.linechart.dataId = 0;
 		return;
 	}
+
+	MN_GetNodeAbsPos(node, pos);
+	pos[2] = 0;
+
+	R_PushMatrix();
+	R_Transform(pos, noRotation, noScale);
 
 	/* Draw all linestrips. */
 	lineStrip = mn.sharedData[dataId].data.lineStrip;
@@ -51,6 +64,8 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 			R_DrawLineStrip(lineStrip->numPoints, lineStrip->pointList);
 		}
 	}
+
+	R_PopMatrix();
 }
 
 static const value_t properties[] = {
