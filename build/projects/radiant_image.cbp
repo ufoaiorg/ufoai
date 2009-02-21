@@ -95,12 +95,6 @@
 		<Unit filename="..\..\src\tools\radiant\plugins\image\image.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\image\jpeg.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\radiant\plugins\image\tga.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

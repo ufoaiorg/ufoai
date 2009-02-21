@@ -143,9 +143,7 @@ RADIANT_PLUGIN_ENTITY_TARGET=radiant/modules/entity.$(SHARED_EXT)
 
 #image plugin
 RADIANT_PLUGIN_IMAGE_SRCS_CPP = \
-	$(RADIANT_BASE)/plugins/image/image.cpp \
-	$(RADIANT_BASE)/plugins/image/jpeg.cpp \
-	$(RADIANT_BASE)/plugins/image/tga.cpp
+	$(RADIANT_BASE)/plugins/image/image.cpp
 
 RADIANT_PLUGIN_IMAGE_CPP_OBJS=$(RADIANT_PLUGIN_IMAGE_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/plugins_cpp/%.o)
 RADIANT_PLUGIN_IMAGE_TARGET=radiant/modules/image.$(SHARED_EXT)
