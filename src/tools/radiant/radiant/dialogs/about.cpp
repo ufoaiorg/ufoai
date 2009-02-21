@@ -89,7 +89,7 @@ void DoAbout (void)
 			gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(frame), FALSE, FALSE, 0);
 			gtk_widget_show(GTK_WIDGET(frame));
 			{
-				GtkTable* table = create_dialog_table(3, 2, 4, 4, 4);
+				GtkTable* table = create_dialog_table(4, 2, 4, 4, 4);
 				gtk_container_add(GTK_CONTAINER(frame), GTK_WIDGET(table));
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new(_("GTK version:")));
@@ -97,7 +97,7 @@ void DoAbout (void)
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 0, 1,
 									(GtkAttachOptions) (GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 				}
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new(_("GTKGL version:")));
@@ -105,7 +105,7 @@ void DoAbout (void)
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 1, 2,
 									(GtkAttachOptions) (GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 				}
 				{
 					GtkLabel* label = GTK_LABEL(gtk_label_new(_("GLib version:")));
@@ -113,7 +113,15 @@ void DoAbout (void)
 					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 2, 3,
 									(GtkAttachOptions) (GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+				}
+				{
+					GtkLabel* label = GTK_LABEL(gtk_label_new(_("Image formats:")));
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 0, 1, 3, 4,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 				}
 				{
 					char versionString[16];
@@ -123,7 +131,7 @@ void DoAbout (void)
 					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 0, 1,
 									(GtkAttachOptions) (GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 				}
 				{
 					char versionString[16];
@@ -133,7 +141,7 @@ void DoAbout (void)
 					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 1, 2,
 									(GtkAttachOptions) (GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
-					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 				}
 				{
 					char versionString[16];
@@ -141,6 +149,56 @@ void DoAbout (void)
 					GtkLabel* label = GTK_LABEL(gtk_label_new(versionString));
 					gtk_widget_show(GTK_WIDGET(label));
 					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 2, 3,
+									(GtkAttachOptions) (GTK_FILL),
+									(GtkAttachOptions) (0), 0, 0);
+					gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+				}
+				{
+					/** @todo somehow query this info from the registered image types */
+					GSList *formats = gdk_pixbuf_get_formats();
+					GSList *format;
+					gchar *list = (gchar *)0;
+					for (format = formats; format; format = g_slist_next(format)) {
+						GdkPixbufFormat *pixbuf_format = (GdkPixbufFormat*)format->data;
+						gchar *name = gdk_pixbuf_format_get_name(pixbuf_format);
+						if (!list) {
+							if (!g_strcmp0(name, "jpeg") || !g_strcmp0(name, "tga") || !g_strcmp0(name, "png")) {
+								list = g_strconcat("<b>", name, "</b> ", (void *)0);
+							} else {
+								list = g_strconcat(name, " ", (void *)0);
+							}
+						} else {
+							gchar *tmp;
+							if (!g_strcmp0(name, "jpeg") || !g_strcmp0(name, "tga") || !g_strcmp0(name, "png")) {
+								tmp = g_strconcat(list, "<b>", name, "</b> ", (void *)0);
+							} else {
+								tmp = g_strconcat(list, name, " ", (void *)0);
+							}
+							g_free(list);
+							list = tmp;
+						}
+					}
+					if (!strstr(list, "jpeg")) {
+						gchar *tmp =  g_strconcat(list, "\n<b>No JPEG support</b>\n", (void *)0);
+						g_free(list);
+						list = tmp;
+					}
+					if (!strstr(list, "png")) {
+						gchar *tmp =  g_strconcat(list, "\n<b>No PNG support</b>\n", (void *)0);
+						g_free(list);
+						list = tmp;
+					}
+					if (!strstr(list, "tga")) {
+						gchar *tmp =  g_strconcat(list, "\n<b>No TGA support</b>\n", (void *)0);
+						g_free(list);
+						list = tmp;
+					}
+					g_slist_free(formats);
+
+					GtkLabel* label = GTK_LABEL(gtk_label_new((const gchar*) 0));
+					gtk_label_set_markup(label, list);
+					gtk_widget_show(GTK_WIDGET(label));
+					gtk_table_attach(table, GTK_WIDGET(label), 1, 2, 3, 4,
 									(GtkAttachOptions) (GTK_FILL),
 									(GtkAttachOptions) (0), 0, 0);
 					gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);

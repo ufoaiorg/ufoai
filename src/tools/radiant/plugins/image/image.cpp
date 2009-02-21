@@ -39,6 +39,7 @@ static Image* LoadImage(ArchiveFile& file, const char *extension)
 {
 	RGBAImage* image = (RGBAImage *)0;
 
+	/* load the buffer from pk3 or filesystem */
 	ScopedArchiveBuffer buffer(file);
 
 	GdkPixbufLoader *loader = gdk_pixbuf_loader_new_with_type(extension, (GError**)0);
