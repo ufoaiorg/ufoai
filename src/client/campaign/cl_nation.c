@@ -598,7 +598,7 @@ static int CL_NationsMaxFunding (void)
 
 static int selectedNation = 0;
 
-static lineStrip_t fundingLineStrip[MAX_NATIONS + 2];
+static lineStrip_t fundingLineStrip[MAX_NATIONS];
 
 /**
  * @brief Draws a graph for the funding values over time.
@@ -674,7 +674,6 @@ static void CL_NationStatsUpdate_f (void)
 	int funding, maxFunding;
 	menuNode_t *colorNode;
 	menuNode_t *graphNode;
-	const vec4_t colorAxes = {1, 1, 1, 0.5};
 	int dy = 10;
 
 	usedColPtslists = 0;
@@ -731,30 +730,15 @@ static void CL_NationStatsUpdate_f (void)
 	/* Display graph of nations-values so far. */
 	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
 	if (graphNode) {
-		lineStrip_t *axes = &fundingLineStrip[0];
 		usedFundPtslist = 0;
-
-		/* Generate axes & link to node. */
-		/** @todo Maybe create a margin toward the axes? */
-		/** @todo Axes must be managed by the node, not like that */
-		coordAxesPts[0].x = 0;
-		coordAxesPts[0].y = 0;
-		coordAxesPts[1].x = 0;
-		coordAxesPts[1].y = (int)graphNode->size[1];
-		coordAxesPts[2].x = (int)graphNode->size[0];
-		coordAxesPts[2].y = (int)graphNode->size[1];
-
-		memset(axes, 0, sizeof(axes));
-		axes->pointList = (int*)coordAxesPts;
-		axes->numPoints = 3;
-		Vector4Copy(colorAxes, axes->color);
 
 		maxFunding = CL_NationsMaxFunding();
 		for (i = 0; i < ccs.numNations; i++) {
 			/* init the structure */
-			lineStrip_t *funding = &fundingLineStrip[i + 1];
+			lineStrip_t *funding = &fundingLineStrip[i];
 			memset(funding, 0, sizeof(funding));
-			fundingLineStrip[i].next = funding;
+			if (i > 0)
+				fundingLineStrip[i - 1].next = funding;
 
 			if (i == selectedNation) {
 				CL_NationDrawStats(&ccs.nations[i], graphNode, funding, maxFunding, -1);

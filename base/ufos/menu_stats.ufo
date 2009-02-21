@@ -254,6 +254,8 @@ menu nations
 		pos			"600 100"
 		size		"300 200"
 		dataid		LINESTRIP_FUNDING
+		displayaxes	true
+		axescolor	"1 1 1 0.5"
 	}
 
 	string graph_time {

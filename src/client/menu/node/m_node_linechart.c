@@ -55,6 +55,19 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 	R_PushMatrix();
 	R_Transform(pos, noRotation, noScale);
 
+	/* Draw axes */
+	if (node->u.linechart.displayAxes) {
+		int axes[6];
+		axes[0] = 0;
+		axes[1] = 0;
+		axes[2] = 0;
+		axes[3] = (int) node->size[1];
+		axes[4] = (int) node->size[0];
+		axes[5] = (int) node->size[1];
+		R_ColorBlend(node->u.linechart.axesColor);
+		R_DrawLineStrip(3, axes);
+	}
+
 	/* Draw all linestrips. */
 	lineStrip = mn.sharedData[dataId].data.lineStrip;
 	for (; lineStrip; lineStrip = lineStrip->next) {
@@ -64,12 +77,15 @@ static void MN_LineChartNodeDraw (menuNode_t *node)
 			R_DrawLineStrip(lineStrip->numPoints, lineStrip->pointList);
 		}
 	}
+	R_ColorBlend(NULL);
 
 	R_PopMatrix();
 }
 
 static const value_t properties[] = {
-	{"dataid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.linechart.dataId), MEMBER_SIZEOF(menuNode_t, u.option.dataId)},
+	{"dataid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.linechart.dataId), MEMBER_SIZEOF(menuNode_t, u.linechart.dataId)},
+	{"displayaxes", V_BOOL, offsetof(menuNode_t, u.linechart.displayAxes), MEMBER_SIZEOF(menuNode_t, u.linechart.displayAxes)},
+	{"axescolor", V_COLOR, offsetof(menuNode_t, u.linechart.axesColor), MEMBER_SIZEOF(menuNode_t, u.linechart.axesColor)},
 	{NULL, V_NULL, 0, 0}
 };
 
