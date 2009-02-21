@@ -598,7 +598,7 @@ static int CL_NationsMaxFunding (void)
 
 static int selectedNation = 0;
 
-lineStrip_t fundingLineStrip[MAX_NATIONS + 2];
+static lineStrip_t fundingLineStrip[MAX_NATIONS + 2];
 
 /**
  * @brief Draws a graph for the funding values over time.
