@@ -1,7 +1,5 @@
 /**
  * @file m_node_custombutton.c
- * @todo add an icon if possible.
- * @todo implement click button when its possible.
  */
 
 /*

@@ -101,9 +101,6 @@ static void MN_SpinnerNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 
 static void MN_SpinnerNodeDown (menuNode_t *node, int x, int y, int button)
 {
-	/** @todo remove that when the input handler is updated */
-	if (node->disabled)
-		return;
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
 		MN_NodeAbsoluteToRelativePos(node, &x, &y);
@@ -116,9 +113,6 @@ static void MN_SpinnerNodeDown (menuNode_t *node, int x, int y, int button)
 
 static void MN_SpinnerNodeUp (menuNode_t *node, int x, int y, int button)
 {
-	/** @todo remove that when the input handler is updated */
-	if (node->disabled)
-		return;
 	if (button == K_MOUSE1) {
 		MN_MouseRelease();
 	}
@@ -138,9 +132,6 @@ static void MN_SpinnerNodeCapturedMouseLost (menuNode_t *node)
 
 static void MN_SpinnerNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
-	/** @todo remove that when the input handler is updated */
-	if (node->disabled)
-		return;
 	MN_SpinnerNodeStep(node, down);
 }
 

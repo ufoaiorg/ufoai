@@ -42,13 +42,10 @@ static void MN_StringNodeDraw (menuNode_t *node)
 
 	/* blinking */
 	R_ColorBlend(node->color);
-	if (node->size[0] == 0) {
-		/** @todo (menu) should this wrap or chop long lines? */
+	if (node->size[0] == 0)
 		R_FontDrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, 0, ref, 0, 0, NULL, qfalse, 0);
-	}
-	else {
+	else
 		R_FontDrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, node->longlines);
-	}
 
 	R_ColorBlend(NULL);
 }

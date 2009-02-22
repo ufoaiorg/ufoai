@@ -144,7 +144,7 @@ int MN_GetDataVersion (int textId)
 
 /**
  * @brief Resets the mn.menuText pointers and the mn.menuTextLinkedList lists
- * @todo Move it out of this node
+ * @todo Rename the function
  */
 void MN_MenuTextReset (int menuTextID)
 {

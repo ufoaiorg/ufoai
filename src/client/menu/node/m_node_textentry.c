@@ -156,7 +156,6 @@ static void MN_TextEntryFocusGained (menuNode_t *node)
 static void MN_TextEntryFocusLost (menuNode_t *node)
 {
 	/* already aborted/changed with the keyboard */
-	/** @todo should not be need */
 	if (editedCvar == NULL)
 		return;
 
@@ -245,7 +244,7 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
 
 	if (node->disabled) {
-		/** @todo need custom color when button is disabled */
+		/** @todo need custom color when node is disabled */
 		textColor = disabledColor;
 		texX = TILE_SIZE;
 		texY = TILE_SIZE;

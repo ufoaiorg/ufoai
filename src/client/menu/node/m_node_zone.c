@@ -43,9 +43,6 @@ static void MN_ZoneNodeRepeat (menuNode_t *node, menuTimer_t *timer)
 
 static void MN_ZoneNodeDown (menuNode_t *node, int x, int y, int button)
 {
-	/** @todo remove that when the input handler is updated */
-	if (node->disabled)
-		return;
 	if (!node->repeat)
 		return;
 	if (button == K_MOUSE1) {
@@ -57,9 +54,6 @@ static void MN_ZoneNodeDown (menuNode_t *node, int x, int y, int button)
 
 static void MN_ZoneNodeUp (menuNode_t *node, int x, int y, int button)
 {
-	/** @todo remove that when the input handler is updated */
-	if (node->disabled)
-		return;
 	if (!node->repeat)
 		return;
 	if (button == K_MOUSE1) {

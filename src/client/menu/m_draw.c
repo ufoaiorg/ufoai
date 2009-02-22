@@ -232,7 +232,6 @@ static void MN_DrawNode (menuNode_t *node)
 
 /**
  * @brief Draws the menu stack
- * @todo move DrawMenusTest here
  * @sa SCR_UpdateScreen
  */
 void MN_DrawMenus (void)

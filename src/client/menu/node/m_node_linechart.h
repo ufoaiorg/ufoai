@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief an element of the line chart
- * @todo need review, add info about unit if it need
  */
 typedef struct lineStrip_s {
 	int *pointList;				/**< list of value */

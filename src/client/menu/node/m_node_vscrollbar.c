@@ -1,7 +1,5 @@
 /**
  * @file m_node_vscrollbar.c
- * @todo implement click on bottom and top element of the scroll
- * @todo implement click on bottom-to-slider and top-to-slider element of the scroll
  * @todo implement highlighting
  * @todo implement disabled
  * @todo robustness
@@ -261,10 +259,6 @@ static void MN_VScrollbarNodeCapturedMouseLost (menuNode_t *node)
 static void MN_VScrollbarNodeWheel (menuNode_t *node, qboolean down, int x, int y)
 {
 	const int diff = (down)?1:-1;
-
-	/** @todo remove that when the input handler is updated */
-	if (node->disabled)
-		return;
 
 	if (EXTRADATA(node).fullsize == 0 || EXTRADATA(node).fullsize < EXTRADATA(node).viewsize)
 		return;

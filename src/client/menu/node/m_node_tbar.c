@@ -60,9 +60,6 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 		ps = (value - min) / (max - min) * 100;
 		shx = node->texl[0];	/* left gap to the texture */
 		shx += round(ps * pointWidth); /* add size from 0..TEXTURE_WIDTH */
-#if 0	/** @todo understand that code */
-		shx += (ps > 0 ? floor((ps - 1) / 10) * node->gapWidth : 0);
-#endif
 	}
 
 	width = (shx * node->size[0]) / TEXTURE_WIDTH;
