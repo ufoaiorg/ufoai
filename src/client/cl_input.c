@@ -1626,7 +1626,6 @@ void IN_Init (void)
 	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));
 	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
 	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
-	Cmd_AddCommand("togglecombatzoomlevel", MAP_ToggleCombatZoomLevel_f, _("Toggle the combat zoom level (full zoom or half zoom)."));
 
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listreservations", CL_ListReactionAndReservations_f, "Prints all reaction- and reservation-info for the team.");

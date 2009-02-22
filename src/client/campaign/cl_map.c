@@ -1282,7 +1282,7 @@ void MAP_CombatZoomExit_f (void)
  * @brief Toggles the level of "combat zoom" in the interception framework.  This will cause the zoom to
  * move between close up combat (if in combat range) and a half zoom.
  */
-void MAP_ToggleCombatZoomLevel_f (void)
+static void MAP_ToggleCombatZoomLevel_f (void)
 {
 	if (ccs.combatZoomLevel == COMBAT_ZOOM_FULL)
 		ccs.combatZoomLevel = COMBAT_ZOOM_HALF;
@@ -2785,6 +2785,7 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
+	Cmd_AddCommand("togglecombatzoomlevel", MAP_ToggleCombatZoomLevel_f, _("Toggle the combat zoom level (full zoom or half zoom)."));
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");

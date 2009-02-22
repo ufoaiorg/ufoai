@@ -58,7 +58,6 @@ void MAP_StopSmoothMovement(void);
 void MAP_SetSmoothZoom(float finalZoomLevel, qboolean useSafeAcceleration);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
-void MAP_ToggleCombatZoomLevel_f(void);
 void MAP_Scroll_f(void);
 void MAP_Zoom_f(void);
 void MAP_MapClick(struct menuNode_s * node, int x, int y);
