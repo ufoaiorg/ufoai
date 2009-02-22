@@ -467,6 +467,13 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	if (lib)
 		return lib;
 
+#ifdef PKGLIBDIR
+	Com_sprintf(path, sizeof(path), PKGLIBDIR"%s.dll", name);
+	lib = LoadLibrary(path);
+	if (lib)
+		return lib;
+#endif
+
 	Com_Printf("Could not load %s\n", name);
 	return NULL;
 }

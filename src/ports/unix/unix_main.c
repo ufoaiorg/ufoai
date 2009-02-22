@@ -396,6 +396,17 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	else
 		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 
+#ifdef PKGLIBDIR
+	/* then use s_libdir cvar or current dir */
+	Com_sprintf(libName, sizeof(libName), "%s/%s."SHARED_EXT, PKGLIBDIR, name);
+	Com_DPrintf(DEBUG_SYSTEM, "Sys_LoadLibrary: try %s\n", libName);
+	lib = dlopen(libName, flags|RTLD_LAZY);
+	if (lib)
+		return lib;
+	else
+		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
+#endif
+
 	Com_Printf("Could not load %s."SHARED_EXT" and %s_"CPUSTRING"."SHARED_EXT"\n", name, name);
 	return NULL;
 }
