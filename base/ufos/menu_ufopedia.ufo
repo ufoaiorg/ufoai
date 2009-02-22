@@ -10,7 +10,7 @@ menu ufopedia
 
 	pic background
 	{
-		image	menu/ufopedia_bg
+		image		menu/ufopedia_bg
 	}
 
 	// ==================
@@ -19,63 +19,76 @@ menu ufopedia
 
 	custombutton bt_prev
 	{
-		tooltip "_Previous entry"
-		image	menu/button_background	texl	"192 0"	blend true
-		pos	"10 10"	size	"64 37"
-		icon prev
-		click	{ cmd mn_upprev; }
+		tooltip		"_Previous entry"
+		image		menu/button_background
+		texl		"192 0"
+		blend		true
+		pos			"10 10"
+		size		"64 37"
+		icon		prev
+		click		{ cmd mn_upprev; }
 	}
 
 	custombutton bt_next
 	{
-		tooltip "_Next entry"
-		image	menu/button_background	texl	"192 0"	blend true
-		pos	"950 10"	size	"64 37"
-		icon next
-		click	{ cmd mn_upnext; }
+		tooltip		"_Next entry"
+		image		menu/button_background
+		texl		"192 0"
+		blend		true
+		pos			"950 10"
+		size		"64 37"
+		icon		next
+		click		{ cmd mn_upnext; }
 	}
 
 	custombutton button_content
 	{
-		tooltip "_Back to content"
-		image	menu/button_background	texl	"192 0"	blend true
-		pos	"10 720"	size	"64 37"
-		icon list
-		click	{ cmd "mn_upback;" }
+		tooltip		"_Back to content"
+		image		menu/button_background
+		texl		"192 0"
+		blend		true
+		pos			"10 720"
+		size		"64 37"
+		icon		list
+		click		{ cmd "mn_upback;" }
 	}
 
 	custombutton button_text_pre
 	{
-		visiblewhen	"mn_uppreavailable == 1"
-		tooltip "_Pre research text"
-		image	menu/button_background	texl	"128 0"	blend true
-		pos	"90 14"	size	"37 32"
-		icon prev
-		click	{
-			cmd "set mn_uppretext 1; mn_upupdate;"
-		}
+		visiblewhen "mn_uppreavailable == 1"
+		tooltip		"_Pre research text"
+		image		menu/button_background
+		texl		"128 0"
+		blend		true
+		pos			"90 14"
+		size		"37 32"
+		icon		prev
+		click		{ cmd "set mn_uppretext 1; mn_upupdate;" }
 	}
 
 	custombutton button_text_normal
 	{
-		visiblewhen	"mn_updisplay == 2"
-		tooltip "_Research results"
-		image	menu/button_background	texl	"128 0"	blend true
-		pos	"140 14"	size	"37 32"
-		icon next
-		click	{
-			cmd "set mn_uppretext 0; mn_upupdate;"
-		}
+		visiblewhen "mn_updisplay == 2"
+		tooltip		"_Research results"
+		image		menu/button_background
+		texl		"128 0"
+		blend		true
+		pos			"140 14"
+		size		"37 32"
+		icon		next
+		click		{ cmd "set mn_uppretext 0; mn_upupdate;" }
 	}
 
 	custombutton button_exit
 	{
-		tooltip "_Leave UFOpaedia"
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos		"950 720"
-		icon return
-		click	{ cmd "mn_pop;" }
+		tooltip		"_Leave UFOpaedia"
+		image		menu/button_background
+		blend		true
+		texl		"192 0"
+		pos			"950 720"
+		size		"64 37"
+		icon		return
+		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -84,31 +97,32 @@ menu ufopedia
 
 	text ufopedia
 	{
-		pos		"40 85"
-		size	"640 368"
 		textid		TEXT_UFOPEDIA
+		pos			"40 85"
+		size		"640 368"
 		lineheight	23
 		tabwidth	100
-		click rclick
-		rows	"16"
-		wheel {
+		rows		16
+		click
+		rclick
+		wheel		{
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
-		lineschange {
+		lineschange	{
 			*(abstractscrollbar)ufopedia_scroll fullsize <lines>
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
 	}
 
 	vscrollbar ufopedia_scroll {
-		image	menu/scrollbar_v_green	blend	true
-		pos	"704 85"	height	"368"
-		current 0
-		viewsize 16
-		fullsize 50
-		change {
-			cmd "mn_textscroll ufopedia <lastdiff>;"
-		}
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"704 85"
+		height		"368"
+		current		0
+		viewsize	16
+		fullsize	50
+		change		{ cmd "mn_textscroll ufopedia <lastdiff>;" }
 	}
 
 	confunc mn_upfbig
@@ -139,213 +153,198 @@ menu ufopedia
 
 	text description
 	{
-		pos		"30 495"
-		size	"495 200"
+		textid		TEXT_STANDARD
+		pos			"30 495"
+		size		"495 200"
 		lineheight	20
 		tabwidth	230
+		rows		"10"
+		scrollbar	true
 		wheel
-		rows	"10"
-		scrollbar true
-		textid	TEXT_STANDARD
 	}
 
 	text techtree
 	{
-		pos		"550 495"
-		size	"354 246"
+		textid		TEXT_LIST
+		pos			"550 495"
+		size		"354 246"
 		lineheight	"20"
-		textid	TEXT_LIST
-		rows	"12"
+		rows		"12"
+		mousefx		true
+		scrollbar	true
 		click
-		mousefx true
 		wheel
-		scrollbar true
 	}
 
 	string title
 	{
-		string	"*cvar mn_uptitle"
-		pos		"512 25"
-		align	uc
-		font	f_big
+		string		"*cvar mn_uptitle"
+		pos			"205 20"
+		size		"669 43"
+		textalign	cc
+		font		f_big
 	}
 
 	pic image_top
 	{
-		image	"*cvar mn_upimage_top"
-		pos		"750 85"
-		size	"240 380"
+		image		"*cvar mn_upimage_top"
+		pos			"750 85"
+		size		"240 380"
 		preventratio	true
 	}
 
 	model mdl_top
 	{
-		model	"*cvar mn_upmodel_top"
-		angles	"0 0 120"
-		pos		"750 85"
-		size	"240 240"
-		autoscale true
+		model		"*cvar mn_upmodel_top"
+		angles		"0 0 120"
+		pos			"750 85"
+		size		"240 240"
+		autoscale	true
 		rotatewithmouse	true
 	}
 
 	model mdl_bottom
 	{
-		model	"*cvar mn_upmodel_bottom"
-		angles	"0 0 120"
-		pos		"790 335"
-		size	"120 120"
-		autoscale true
+		model		"*cvar mn_upmodel_bottom"
+		angles		"0 0 120"
+		pos			"790 335"
+		size		"120 120"
+		autoscale	true
 		rotatewithmouse	true
 	}
 
 	pic weapon_dec
 	{
 		visiblewhen "mn_changeweapon == 1"
-		tooltip "_Previous weapon chambered for this ammunition"
-		image	menu/buttons_small
-		pos		"270 704"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_decreaseweapon;"
-		}
+		tooltip		"_Previous weapon chambered for this ammunition"
+		image		menu/buttons_small
+		pos			"270 704"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_decreaseweapon;" }
 	}
 
 	pic ammo_dec
 	{
 		visiblewhen "mn_changeweapon == 2"
-		tooltip "_Previous ammunition compatible with this weapon"
-		image	menu/buttons_small
-		pos		"270 704"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_decreaseweapon;"
-		}
+		tooltip		"_Previous ammunition compatible with this weapon"
+		image		menu/buttons_small
+		pos			"270 704"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_decreaseweapon;" }
 	}
 
 	pic weapon_inc
 	{
 		visiblewhen "mn_changeweapon == 1"
-		tooltip "_Next weapon chambered for this ammunition"
-		image	menu/buttons_small
-		pos		"510 704"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_increaseweapon;"
-		}
+		tooltip		"_Next weapon chambered for this ammunition"
+		image		menu/buttons_small
+		pos			"510 704"
+		texl		"16 0"
+		texh		"32 16"
+		mousefx		true
+		click		{ cmd "mn_increaseweapon;" }
 	}
 
 	pic ammo_inc
 	{
 		visiblewhen "mn_changeweapon == 2"
-		tooltip "_Next ammunition compatible with this weapon"
-		image	menu/buttons_small
-		pos		"510 704"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_increaseweapon;"
-		}
+		tooltip		"_Next ammunition compatible with this weapon"
+		image		menu/buttons_small
+		pos			"510 704"
+		texl		"16 0"
+		texh		"32 16"
+		mousefx		true
+		click		{ cmd "mn_increaseweapon;" }
 	}
 
 	string header_weapon
 	{
 		visiblewhen "mn_displayweapon == 1"
-		string	"_With weapon:"
-		pos		"115 712"
-		align	cl
-		font	f_small
+		string		"_With weapon:"
+		pos			"115 704"
+		size		"150 20"
+		textalign	cl
+		font		f_small
 	}
 
 	string header_ammo
 	{
 		visiblewhen "mn_displayweapon == 2"
-		string	"_With ammo:"
-		pos		"115 712"
-		align	cl
-		font	f_small
+		string		"_With ammo:"
+		pos			"115 704"
+		size		"150 20"
+		textalign	cl
+		font		f_small
 	}
 
 
 	string weapon_name
 	{
 		visiblewhen "mn_displayweapon > 0"
-		tooltip "*cvar mn_upresearchedlinknametooltip"
-		in
-		size	"240 20"
-		string	"*cvar mn_researchedlinkname"
-		pos		"275 704"
+		tooltip		"*cvar mn_upresearchedlinknametooltip"
+		string		"*cvar mn_researchedlinkname"
+		pos			"285 704"
+		size		"230 20"
 		textalign	uc
-		font	f_small
+		font		f_small
+		in
 	}
 
 	zone weapon_name_click
 	{
 		visiblewhen "mn_displayweapon > 0"
-		pos		"285 702"
-		size	"220 20"
-		click
-		{
-			cmd "mn_upgotoresearchedlink;"
-		}
+		pos			"285 702"
+		size		"230 20"
+		click		{ cmd "mn_upgotoresearchedlink;" }
+	}
+
+	/** Firemodes */
+	string header_firemode
+	{
+		visiblewhen "mn_displayfiremode == 1"
+		string		"_Firemode:"
+		pos			"115 724"
+		size		"150 20"
+		textalign	cl
+		font		f_small
 	}
 
 	pic firemode_dec
 	{
 		visiblewhen "mn_changefiremode == 1"
-		tooltip "_Previous firemode"
-		image	menu/buttons_small
-		pos		"270 724"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_decreasefiremode;"
-		}
-	}
-
-	pic firemode_inc
-	{
-		visiblewhen "mn_changefiremode == 1"
-		tooltip "_Next firemode"
-		image	menu/buttons_small
-		pos		"510 724"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_increasefiremode;"
-		}
-	}
-
-	string header_firemode
-	{
-		visiblewhen "mn_displayfiremode == 1"
-		string	"_Firemode:"
-		pos		"115 732"
-		align	cl
-		font	f_small
+		tooltip		"_Previous firemode"
+		image		menu/buttons_small
+		pos			"270 724"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_decreasefiremode;" }
 	}
 
 	string firemode_name
 	{
 		visiblewhen "mn_displayfiremode == 1"
-		string	"*cvar mn_firemodename"
-		pos		"395 732"
-		align	cc
-		font	f_small
+		string		"*cvar mn_firemodename"
+		pos			"285 724"
+		size		"230 20"
+		textalign	cc
+		font		f_small
+	}
+
+	pic firemode_inc
+	{
+		visiblewhen "mn_changefiremode == 1"
+		tooltip		"_Next firemode"
+		image		menu/buttons_small
+		pos			"510 724"
+		texl		"16 0"
+		texh		"32 16"
+		mousefx		true
+		click		{ cmd "mn_increasefiremode;" }
 	}
 
 	func init

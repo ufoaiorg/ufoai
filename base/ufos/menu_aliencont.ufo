@@ -9,7 +9,7 @@ menu aliencont
 
 	pic background
 	{
-		image	menu/aliencont_bg
+		image		menu/aliencont_bg
 	}
 
 	// ================================================================================
@@ -17,12 +17,14 @@ menu aliencont
 	// ================================================================================
 	custombutton bt_continue
 	{
-		tooltip	"_Back to baseview"
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos		"940 720"
-		icon return
-		click	{ cmd mn_pop }
+		tooltip		"_Back to baseview"
+		image		menu/button_background
+		blend		true
+		pos			"940 720"
+		size		"64 37"
+		texl		"192 0"
+		icon		return
+		click		{ cmd mn_pop }
 	}
 
 	// ==================
@@ -31,18 +33,21 @@ menu aliencont
 
 	zone wz_alc_base
 	{
-		pos	"10 669"
-		size	"915 88"
-		whup	{ cmd "aliencont_nextbase;" }
-		whdown	{ cmd "aliencont_prevbase;" }
+		pos			"10 669"
+		size		"915 88"
+		whup		{ cmd "aliencont_nextbase;" }
+		whdown		{ cmd "aliencont_prevbase;" }
 	}
 
 	custombutton bt_alc_prevbase
 	{
-		image menu/button_pack1	texl	"32 0"	blend	true
-		tooltip	"_Previous alien containment"
-		pos	"620 689"	size	"32 50"
-		click	{ cmd "aliencont_prevbase;" }
+		tooltip		"_Previous alien containment"
+		image		menu/button_pack1
+		texl		"32 0"
+		blend		true
+		pos			"620 689"
+		size		"32 50"
+		click		{ cmd "aliencont_prevbase;" }
 	}
 
 	confunc aliencont_killb { *bt_alc_killaliens disabled false }
@@ -50,19 +55,22 @@ menu aliencont
 
 	custombutton bt_alc_killaliens
 	{
-		tooltip	"_Kill all aliens in this base"
-		pos	"800 680"	size "64 64"
-		icon	killalien
-		click	{ cmd "aliencont_killall;" }
+		tooltip		"_Kill all aliens in this base"
+		pos			"800 680"
+		size		"64 64"
+		icon		killalien
+		click		{ cmd "aliencont_killall;" }
 	}
 
 	custombutton bt_alc_nextbase
 	{
-		image menu/button_pack1	texl	"64 0"	blend	true
-		size	"32 50"
-		tooltip	"_Next alien containment"
-		pos	"870 689"
-		click	{ cmd "aliencont_nextbase;" }
+		tooltip		"_Next alien containment"
+		image		menu/button_pack1
+		texl		"64 0"
+		blend		true
+		pos			"870 689"
+		size		"32 50"
+		click		{ cmd "aliencont_nextbase;" }
 	}
 
 	// ==================
@@ -178,83 +186,83 @@ menu aliencont
 
 	zone ac_scroll_zone
 	{
-		pos "0 0"
-		size "1024 700"
-		whup { cmd "aliencont_list_up;" }
-		whdown { cmd "aliencont_list_down;" }
+		pos			"0 0"
+		size		"1024 700"
+		whup		{ cmd "aliencont_list_up;" }
+		whdown		{ cmd "aliencont_list_down;" }
 	}
 
 	pic ac_button0 {
-		image menu/hosp_button_green
-		pos "25  25"
-		click { cmd "aliencont_click 0;" }
-		rclick { cmd "aliencont_pedia 0;" }
+		image		menu/hosp_button_green
+		pos			"25  25"
+		click		{ cmd "aliencont_click 0;" }
+		rclick		{ cmd "aliencont_pedia 0;" }
 	}
 	pic ac_button1 {
-		image menu/hosp_button_green
-		pos "345  25"
-		click { cmd "aliencont_click 1;" }
-		rclick { cmd "aliencont_pedia 1;" }
+		image		menu/hosp_button_green
+		pos			"345  25"
+		click		{ cmd "aliencont_click 1;" }
+		rclick		{ cmd "aliencont_pedia 1;" }
 	}
 	pic ac_button2 {
-		image menu/hosp_button_green
-		pos "25 120"
-		click { cmd "aliencont_click 2;" }
-		rclick { cmd "aliencont_pedia 2;" }
+		image		menu/hosp_button_green
+		pos			"25 120"
+		click		{ cmd "aliencont_click 2;" }
+		rclick		{ cmd "aliencont_pedia 2;" }
 	}
 	pic ac_button3 {
-		image menu/hosp_button_green
-		pos "345 120"
-		click { cmd "aliencont_click 3;" }
-		rclick { cmd "aliencont_pedia 3;" }
+		image		menu/hosp_button_green
+		pos			"345 120"
+		click		{ cmd "aliencont_click 3;" }
+		rclick		{ cmd "aliencont_pedia 3;" }
 	}
 	pic ac_button4 {
-		image menu/hosp_button_green
-		pos "25 215"
-		click { cmd "aliencont_click 4;" }
-		rclick { cmd "aliencont_pedia 4;" }
+		image		menu/hosp_button_green
+		pos			"25 215"
+		click		{ cmd "aliencont_click 4;" }
+		rclick		{ cmd "aliencont_pedia 4;" }
 	}
 	pic ac_button5 {
-		image menu/hosp_button_green
-		pos "345 215"
-		click { cmd "aliencont_click 5;" }
-		rclick { cmd "aliencont_pedia 5;" }
+		image		menu/hosp_button_green
+		pos			"345 215"
+		click		{ cmd "aliencont_click 5;" }
+		rclick		{ cmd "aliencont_pedia 5;" }
 	}
 	pic ac_button6 {
-		image menu/hosp_button_green
-		pos "25 310"
-		click { cmd "aliencont_click 6;" }
-		rclick { cmd "aliencont_pedia 6;" }
+		image		menu/hosp_button_green
+		pos			"25 310"
+		click		{ cmd "aliencont_click 6;" }
+		rclick		{ cmd "aliencont_pedia 6;" }
 	}
 	pic ac_button7 {
-		image menu/hosp_button_green
-		pos "345 310"
-		click { cmd "aliencont_click 7;" }
-		rclick { cmd "aliencont_pedia 7;" }
+		image		menu/hosp_button_green
+		pos			"345 310"
+		click		{ cmd "aliencont_click 7;" }
+		rclick		{ cmd "aliencont_pedia 7;" }
 	}
 	pic ac_button8 {
-		image menu/hosp_button_green
-		pos "25 405"
-		click { cmd "aliencont_click 8;" }
-		rclick { cmd "aliencont_pedia 8;" }
+		image		menu/hosp_button_green
+		pos			"25 405"
+		click		{ cmd "aliencont_click 8;" }
+		rclick		{ cmd "aliencont_pedia 8;" }
 	}
 	pic ac_button9 {
-		image menu/hosp_button_green
-		pos "345 405"
-		click { cmd "aliencont_click 9;" }
-		rclick { cmd "aliencont_pedia 9;" }
+		image		menu/hosp_button_green
+		pos			"345 405"
+		click		{ cmd "aliencont_click 9;" }
+		rclick		{ cmd "aliencont_pedia 9;" }
 	}
 	pic ac_button10 {
-		image menu/hosp_button_green
-		pos "25 500"
-		click { cmd "aliencont_click 10;" }
-		rclick { cmd "aliencont_pedia 10;" }
+		image		menu/hosp_button_green
+		pos			"25 500"
+		click		{ cmd "aliencont_click 10;" }
+		rclick		{ cmd "aliencont_pedia 10;" }
 	}
 	pic ac_button11 {
-		image menu/hosp_button_green
-		pos "345 500"
-		click { cmd "aliencont_click 11;" }
-		rclick { cmd "aliencont_pedia 11;" }
+		image		menu/hosp_button_green
+		pos			"345 500"
+		click		{ cmd "aliencont_click 11;" }
+		rclick		{ cmd "aliencont_pedia 11;" }
 	}
 
 	pic ac_icon0	{ image icons/health_unused 	pos "272  36" }
@@ -337,28 +345,28 @@ menu aliencont
 
 	pic ac_button_scrollup
 	{
-		tooltip "_Scroll up"
-		image	menu/buttons_small
-		mousefx true
-		pos		"980 25"
-		texh	"48 48"
-		texl	"32 32"
-		click	{ cmd "aliencont_list_up;" }
-		out		{ *ac_button_scrollup texl "32 32" *ac_button_scrollup texh "48 48" }
-		in		{ *ac_button_scrollup texl "48 32" *ac_button_scrollup texh "64 48" }
+		tooltip		"_Scroll up"
+		image		menu/buttons_small
+		mousefx		true
+		pos			"980 25"
+		texh		"48 48"
+		texl		"32 32"
+		click		{ cmd "aliencont_list_up;" }
+		out			{ *ac_button_scrollup texl "32 32" *ac_button_scrollup texh "48 48" }
+		in			{ *ac_button_scrollup texl "48 32" *ac_button_scrollup texh "64 48" }
 	}
 
 	pic ac_button_scrolldown
 	{
-		tooltip "_Scroll down"
-		image	menu/buttons_small
-		mousefx true
-		pos		"980 623"
-		texl	"32 48"
-		texh	"48 64"
-		click	{ cmd "aliencont_list_down;" }
-		out		{ *ac_button_scrolldown texl "32 48" *ac_button_scrolldown texh "48 64" }
-		in		{ *ac_button_scrolldown texl "48 48" *ac_button_scrolldown texh "64 64" }
+		tooltip		"_Scroll down"
+		image		menu/buttons_small
+		mousefx		true
+		pos			"980 623"
+		texl		"32 48"
+		texh		"48 64"
+		click		{ cmd "aliencont_list_down;" }
+		out			{ *ac_button_scrolldown texl "32 48" *ac_button_scrolldown texh "48 64" }
+		in			{ *ac_button_scrolldown texl "48 48" *ac_button_scrolldown texh "64 64" }
 	}
 
 	// ================================================================================
@@ -367,17 +375,17 @@ menu aliencont
 
 	string txt_alc_race
 	{
-		string "*cvar mn_al_alientype"
-		pos "805 65"
-		font	f_small
-		align	uc
+		string		"*cvar mn_al_alientype"
+		pos			"685 65"
+		size		"240 20"
+		font		f_small
+		textalign	uc
 	}
 
 	pic alc_alien_image
 	{
 		image	"*cvar mn_al_alienimage"
 		pos		"685 90"
-//		bgcolor	"1 1 1 0.5"
 		size	"240 440"
 	}
 
@@ -391,9 +399,10 @@ menu aliencont
 
 	string txt_alien_amount
 	{
-		string "_Amounts"
-		pos "430 680"
-		font	f_small_bold
+		string		"_Amounts"
+		pos			"430 680"
+		size		"150 20"
+		font		f_small_bold
 	}
 
 	// ==================
@@ -402,17 +411,19 @@ menu aliencont
 
 	string txt_alc_alice
 	{
-		string "_Alive:"
-		pos "440 705"
-		font	f_small
+		string		"_Alive:"
+		pos			"440 705"
+		size		"100 20"
+		font		f_small
 	}
 
 	string txt_alc_alice_v
 	{
-		string "*cvar mn_al_alive"
-		pos "540 705"
-		font	f_small
-		align	ur
+		string		"*cvar mn_al_alive"
+		pos			"540 705"
+		size		"50 20"
+		font		f_small
+		textalign	ur
 	}
 
 	// ==================
@@ -421,17 +432,19 @@ menu aliencont
 
 	string txt_alc_dead
 	{
-		string "_Dead:"
-		pos "440 730"
+		string		"_Dead:"
+		pos			"440 730"
+		size		"100 20"
 		font	f_small
 	}
 
 	string txt_alc_dead_v
 	{
-		string "*cvar mn_al_dead"
-		pos "540 730"
-		font	f_small
-		align	ur
+		string		"*cvar mn_al_dead"
+		pos			"540 730"
+		size		"50 20"
+		font		f_small
+		textalign	ur
 	}
 
 	// ==================
@@ -440,9 +453,10 @@ menu aliencont
 
 	string txt_base_name
 	{
-		string "_Base info"
-		pos "30 680"
-		font	f_small_bold
+		string		"_Base info"
+		pos			"30 680"
+		size		"200 20"
+		font		f_small_bold
 	}
 
 	// ==================
@@ -451,17 +465,18 @@ menu aliencont
 
 	string txt_alc_currentbase
 	{
-		string "_Current base:"
-		pos "40 705"
-		font	f_small
+		string		"_Current base:"
+		pos			"40 705"
+		size		"150 20"
+		font		f_small
 	}
 
 	string txt_alc_currentbase_v
 	{
-		string "*cvar mn_base_title"
-		pos "240 705"
-		font	f_small
-		align	ur
+		string		"*cvar mn_base_title"
+		pos			"200 705"
+		size		"150 20"
+		font		f_small
 	}
 
 	// ==================
@@ -470,17 +485,18 @@ menu aliencont
 
 	string txt_alc_limit
 	{
-		string "_Base capacity:"
-		pos	"40 730"
-		font	f_small
+		string		"_Base capacity:"
+		pos			"40 730"
+		size		"150 20"
+		font		f_small
 	}
 
 	string txt_alc_limit_v
 	{
-		font	f_small
-		string "*cvar mn_al_capacity / *cvar mn_al_capacity_max"
-		pos		"240 730"
-		align	ur
+		string		"*cvar mn_al_capacity / *cvar mn_al_capacity_max"
+		pos			"200 730"
+		size		"150 20"
+		font		f_small
 	}
 
 	// ================================================================================
