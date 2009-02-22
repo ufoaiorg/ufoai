@@ -22,14 +22,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../renderer/r_draw.h"
-#include "../renderer/r_local.h"
-#include "../renderer/r_font.h"
 #include "node/m_node_window.h"
 #include "m_tooltip.h"
 #include "m_nodes.h"
 #include "m_parse.h"
+
+#include "../client.h"
+#include "../renderer/r_draw.h"
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };

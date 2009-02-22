@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_nodes.h"
 #include "m_parse.h"
 #include "m_input.h"
-#include "../cl_input.h"
-#include "../../game/q_shared.h"
 
 #include "node/m_node_abstractnode.h"
 #include "node/m_node_abstractscrollbar.h"

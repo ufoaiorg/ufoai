@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_window.h"
 #include "node/m_node_selectbox.h"
 #include "node/m_node_abstractnode.h"
+
 #include "../../shared/parse.h"
 
 static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token);

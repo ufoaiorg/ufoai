@@ -22,8 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client.h"
-#include "../renderer/r_draw.h"
 #include "m_main.h"
 #include "m_nodes.h"
 #include "m_internal.h"
@@ -35,6 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_dragndrop.h"
 #include "m_tooltip.h"
 #include "node/m_node_abstractnode.h"
+
+#include "../client.h"
+#include "../renderer/r_draw.h"
 
 #ifdef DEBUG
 static cvar_t *mn_debug;
