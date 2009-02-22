@@ -36,14 +36,11 @@ static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
 /**
  * @brief Generic tooltip function
- * @todo R_FontLength can change the string - which is very very bad for reference values and item names.
- * @todo Check for max height as well? (multi-line tooltips)
  */
 int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxWidth, int maxHeight)
 {
 	int height = 0, width = 0;
 	int lines = 5;
-	int dx; /**< Delta-x position. Relative to original x position. */
 
 	if (!string || string[0] == '\0' || !font)
 		return 0;
@@ -57,18 +54,14 @@ int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxW
 	y += 5;
 
 	if (x + width + 3 > VID_NORM_WIDTH)
-		dx = -(width + 10);
-	else
-		dx = 0;
+		x -= width + 10;
 
-/** @todo
 	if (y + height + 3 > VID_NORM_HEIGHT)
-		dy = -(height + 10);
-*/
+		y -= height + 10;
 
-	R_DrawFill(x - 1 + dx, y - 1, width + 4, height + 4, 0, tooltipBG);
+	R_DrawFill(x - 1, y - 1, width + 4, height + 4, 0, tooltipBG);
 	R_ColorBlend(tooltipColor);
-	R_FontDrawString(font, 0, x + 1 + dx, y + 1, x + 1 + dx, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
+	R_FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, maxHeight, 0, string, lines, 0, NULL, qfalse, LONGLINES_WRAP);
 
 	R_ColorBlend(NULL);
 	return width;
