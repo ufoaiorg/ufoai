@@ -22,14 +22,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../game/q_shared.h"
-#include "../client.h"
-#include "../cl_input.h"
 #include "m_main.h"
 #include "m_internal.h"
 #include "m_parse.h"
 #include "m_input.h"
 #include "node/m_node_abstractnode.h"
+
+#include "../client.h"
 
 #define MAX_CONFUNC_SIZE 512
 /**
