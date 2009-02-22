@@ -34,5 +34,6 @@ void CL_RunHTTPDownloads(void);
 qboolean CL_PendingHTTPDownloads(void);
 void CL_SetHTTPServer(const char *URL);
 void CL_HTTP_Cleanup(void);
+void CL_RequestNextDownload(void);
 
 #endif /* __CLIENT_HTTP_H__ */

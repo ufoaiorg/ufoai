@@ -245,6 +245,7 @@ static void CL_Connect (void)
 }
 
 /**
+ * @brief Called after tatical missions to wipe away the tactical-mission-only data.
  * @sa CL_ParseServerData
  * @sa CL_Disconnect
  * @sa R_ClearScene

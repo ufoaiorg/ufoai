@@ -274,8 +274,6 @@ qboolean CL_OnBattlescape(void);
 void CL_SetClientState(int state);
 void CL_Disconnect(void);
 void CL_Init(void);
-void CL_ReadSinglePlayerData(void);
-void CL_RequestNextDownload(void);
 
 void CL_ClearState(void);
 
