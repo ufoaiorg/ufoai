@@ -47,65 +47,64 @@ CASSERT(lengthof(if_strings) == IF_SIZE);
  */
 qboolean MN_CheckCondition (menuDepends_t *condition)
 {
+	cvar_t *cvar = NULL;
+
 	if (!condition->var)
 		return qtrue;
 
-	/** @todo we can't update it at the run time */
 #if 0	/**< this code cache the result; it make problem when we delete/create cvar */
 	if (!condition->cvar || Q_strcmp(condition->cvar->name, condition->var))
 #endif
-		condition->cvar = Cvar_Get(condition->var, condition->value ? condition->value : "", 0, "Menu if condition cvar");
-
-
-	assert(condition->cvar);
+	cvar = Cvar_Get(condition->var, condition->value ? condition->value : "", 0, "Menu if condition cvar");
+	assert(cvar);
 
 	/* menuIfCondition_t */
 	switch (condition->cond) {
 	case IF_EQ:
 		assert(condition->value);
-		if (atof(condition->value) != condition->cvar->value)
+		if (atof(condition->value) != cvar->value)
 			return qfalse;
 		break;
 	case IF_LE:
 		assert(condition->value);
-		if (condition->cvar->value > atof(condition->value))
+		if (cvar->value > atof(condition->value))
 			return qfalse;
 		break;
 	case IF_GE:
 		assert(condition->value);
-		if (condition->cvar->value < atof(condition->value))
+		if (cvar->value < atof(condition->value))
 			return qfalse;
 		break;
 	case IF_GT:
 		assert(condition->value);
-		if (condition->cvar->value <= atof(condition->value))
+		if (cvar->value <= atof(condition->value))
 			return qfalse;
 		break;
 	case IF_LT:
 		assert(condition->value);
-		if (condition->cvar->value >= atof(condition->value))
+		if (cvar->value >= atof(condition->value))
 			return qfalse;
 		break;
 	case IF_NE:
 		assert(condition->value);
-		if (condition->cvar->value == atof(condition->value))
+		if (cvar->value == atof(condition->value))
 			return qfalse;
 		break;
 	case IF_EXISTS:
-		assert(condition->cvar->string);
-		if (condition->cvar->string[0] == '\0')
+		assert(cvar->string);
+		if (cvar->string[0] == '\0')
 			return qfalse;
 		break;
 	case IF_STR_EQ:
 		assert(condition->value);
-		assert(condition->cvar->string);
-		if (Q_strcmp(condition->cvar->string, condition->value))
+		assert(cvar->string);
+		if (Q_strcmp(cvar->string, condition->value))
 			return qfalse;
 		break;
 	case IF_STR_NE:
 		assert(condition->value);
-		assert(condition->cvar->string);
-		if (!Q_strcmp(condition->cvar->string, condition->value))
+		assert(cvar->string);
+		if (!Q_strcmp(cvar->string, condition->value))
 			return qfalse;
 		break;
 	default:

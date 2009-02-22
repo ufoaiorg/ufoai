@@ -59,7 +59,9 @@ typedef enum menuIfCondition_s {
 typedef struct menuDepends_s {
 	const char *var;
 	const char *value;
+#if 0	/**< cvar cache make problems */
 	struct cvar_s *cvar;
+#endif
 	int cond;
 } menuDepends_t;
 
