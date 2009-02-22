@@ -78,18 +78,20 @@ extern int fb_length;
 
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 
+void ACTOR_InitStartup(void);
+
 void CL_CharacterCvars(const character_t *chr);
 const char *CL_GetSkillString(const int skill);
 
-void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weapFdsIdx);
-int CL_GetActorNumber (const le_t * le);
-int CL_CheckAction (void);
-qboolean CL_WeaponWithReaction (const le_t * actor, const char hand);
+void CL_GetWeaponAndAmmo(const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weapFdsIdx);
+int CL_GetActorNumber(const le_t * le);
+int CL_CheckAction(void);
+qboolean CL_WeaponWithReaction(const le_t * actor, const char hand);
 
-int CL_UsableReactionTUs (const le_t * le);
+int CL_UsableReactionTUs(const le_t * le);
 void CL_SetReactionFiremode(le_t *actor, const int handidx, const int obj_idx, const int fd_idx);
 void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
-void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActive);
+void CL_UpdateReactionFiremodes(le_t * actor, const char hand, int firemodeActive);
 
 character_t *CL_GetActorChr(const le_t *le);
 qboolean CL_WorkingFiremode(const le_t *actor, qboolean reaction);

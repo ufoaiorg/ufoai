@@ -40,6 +40,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/node/m_node_container.h"
 #include "cl_game.h"
 
+/** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
+static cvar_t *confirm_actions;
+/** @brief Player preference: should the server make guys stand for long walks, to save TU. */
+static cvar_t *cl_autostand;
+
 /* public */
 le_t *selActor;
 const fireDef_t *selFD;
@@ -3478,3 +3483,9 @@ void CL_DumpTUs_f (void)
 	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse));
 }
 #endif
+
+void ACTOR_InitStartup (void)
+{
+	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
+	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
+}

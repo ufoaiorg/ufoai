@@ -71,7 +71,7 @@ campaign_t campaigns[MAX_CAMPAIGNS];
 int numCampaigns;
 salary_t salaries[MAX_CAMPAIGNS];
 cvar_t *cl_campaign;
-
+cvar_t *cl_start_employees;
 
 typedef struct {
 	int ucn;
@@ -2709,6 +2709,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 void CP_InitStartup (void)
 {
 	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
+	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 
 	/* init some production menu nodes */
 	PR_Init();

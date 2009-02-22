@@ -259,7 +259,6 @@ extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 extern cvar_t *cl_3dmap;
-extern cvar_t *cl_start_employees;
 extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
 extern cvar_t *cl_team;
@@ -268,10 +267,8 @@ extern cvar_t *cl_camzoommin;
 extern cvar_t *cl_mapzoommax;
 extern cvar_t *cl_mapzoommin;
 extern cvar_t *cl_showCoords;
-extern cvar_t *cl_autostand;
 
 extern cvar_t *s_language;
-extern cvar_t *confirm_actions;
 
 extern cvar_t* cl_mapDebug;
 

@@ -65,20 +65,14 @@ cvar_t *cl_centerview;
 cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
-/** Player preference: should the server make guys stand for long walks, to save TU. */
-cvar_t *cl_autostand;
 
 cvar_t *cl_lastsave;
-cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
 cvar_t* cl_showCoords;
 cvar_t* cl_mapDebug;
 
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
-
-/** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
-cvar_t *confirm_actions;
 
 static cvar_t *cl_shownet;
 static cvar_t *cl_precache;
@@ -812,6 +806,7 @@ static void CL_InitLocal (void)
 	PTL_InitStartup();
 	GAME_InitStartup();
 	SEQ_InitStartup();
+	ACTOR_InitStartup();
 	TEAM_InitStartup();
 	TOTD_InitStartup();
 	HUD_InitStartup();
@@ -831,12 +826,9 @@ static void CL_InitLocal (void)
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
-	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");
-	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "phalanx_initial", 0, "Start with assigned equipment - see cl_start_employees");
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "8000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
-	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
 	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 	/* userinfo */
 	cl_name = Cvar_Get("cl_name", Sys_GetCurrentUser(), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
