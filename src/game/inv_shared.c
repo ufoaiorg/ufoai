@@ -173,7 +173,7 @@ static qboolean Com_CheckToInventory_shape (const inventory_t * const i, const i
 
 		/* Add other items to mask. (i.e. merge their shapes at their location into the generated mask) */
 		for (ic = i->c[container->id]; ic; ic = ic->next) {
-			if (ignoredItem && ignoredItem == ic)
+			if (ignoredItem == ic)
 				continue;
 
 			if (ic->item.rotated)
