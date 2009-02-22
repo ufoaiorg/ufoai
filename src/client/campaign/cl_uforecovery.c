@@ -73,7 +73,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 			Sys_Error("UR_SendMail: ufo_crashed_report has no mail body");
 
 		/* Find components definition. */
-		comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
+		comp = CL_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
 		assert(comp);
 
 		/* List all components of crashed UFO. */
@@ -93,7 +93,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 			Sys_Error("UR_SendMail: ufo_recovery_report has no mail body");
 
 		/* Find components definition. */
-		comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
+		comp = CL_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
 		assert(comp);
 
 		/* List all components of crashed UFO. */
@@ -594,7 +594,7 @@ static void CP_UFOCrashed_f (void)
 	cargo = aircraft->itemcargo;
 
 	/* Find components definition. */
-	comp = INV_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
+	comp = CL_GetComponentsByItem(INVSH_GetItemByID(ufocraft->id));
 	assert(comp);
 
 	/* Add components of crashed UFO to dropship. */

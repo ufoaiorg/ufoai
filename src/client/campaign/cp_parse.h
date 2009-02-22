@@ -26,7 +26,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_PARSE_H
 #define CP_PARSE_H
 
+#define MAX_COMP	32
+
+/**
+ * @brief The definition of a "components" entry (i.e. an assembly of several items) parsed from a ufo-file.
+ * @sa CL_ParseComponents
+ */
+typedef struct components_s {
+	char asId[MAX_VAR];	/**< The name of the assemly (i.e. the UFO) */
+	objDef_t *asItem;	/**< Index of object (that is an assembly) in csi.ods.*/
+
+	int time;	/**< The time (in hours) until the disassembly is finished. */
+
+	int numItemtypes;				/**< Number of item-types listed below. (max is MAX_COMP) */
+	objDef_t *items[MAX_COMP];		/**< List of parts (item-types). */
+	int item_amount[MAX_COMP];		/**< How many items of this type are in this assembly. */
+	int item_amount2[MAX_COMP];		/**< How many items of this type are in this assembly when it crashed (max-value?). */
+} components_t;
+
 void CL_ParseCampaign(const char *name, const char **text);
 void CL_ScriptSanityCheck(void);
+components_t *CL_GetComponentsByItem(const objDef_t *item);
 
 #endif

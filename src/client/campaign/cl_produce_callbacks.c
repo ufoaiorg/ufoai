@@ -428,7 +428,7 @@ static void PR_ProductionInfo (const base_t *base)
 		} else if (prod->production) {
 			PR_ItemProductionInfo(base, prod->item, prod->percentDone);
 		} else {
-			PR_DisassemblyInfo(base, prod->item, INV_GetComponentsByItem(prod->item), prod->percentDone);
+			PR_DisassemblyInfo(base, prod->item, CL_GetComponentsByItem(prod->item), prod->percentDone);
 		}
 		Cvar_SetValue("mn_production_amount", selectedProduction->amount);
 	} else {

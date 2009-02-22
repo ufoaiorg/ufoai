@@ -514,6 +514,99 @@ void CL_ParseCampaign (const char *name, const char **text)
 }
 
 /**
+ * @brief Parses one "components" entry in a .ufo file and writes it into the next free entry in xxxxxxxx (components_t).
+ * @param[in] name The unique id of a components_t array entry.
+ * @param[in] text the whole following text after the "components" definition.
+ * @sa CL_ParseScriptFirst
+ */
+static void CL_ParseComponents (const char *name, const char **text)
+{
+	components_t *comp;
+	const char *errhead = "CL_ParseComponents: unexpected end of file.";
+	const char *token;
+
+	/* get body */
+	token = COM_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("CL_ParseComponents: \"%s\" components def without body ignored.\n", name);
+		return;
+	}
+	if (ccs.numComponents >= MAX_ASSEMBLIES) {
+		Com_Printf("CL_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
+		return;
+	}
+
+	/* New components-entry (next free entry in global comp-list) */
+	comp = &ccs.components[ccs.numComponents];
+	ccs.numComponents++;
+
+	memset(comp, 0, sizeof(*comp));
+
+	/* set standard values */
+	Q_strncpyz(comp->asId, name, sizeof(comp->asId));
+	comp->asItem = INVSH_GetItemByID(comp->asId);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ParseComponents: linked item: %s with components: %s\n", name, comp->asId);
+
+	do {
+		/* get the name type */
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		/* get values */
+		if (!Q_strcmp(token, "item")) {
+			/* Defines what items need to be collected for this item to be researchable. */
+			if (comp->numItemtypes < MAX_COMP) {
+				/* Parse item name */
+				token = COM_Parse(text);
+
+				comp->items[comp->numItemtypes] = INVSH_GetItemByID(token);	/* item id -> item pointer */
+
+				/* Parse number of items. */
+				token = COM_Parse(text);
+				comp->item_amount[comp->numItemtypes] = atoi(token);
+				token = COM_Parse(text);
+				comp->item_amount2[comp->numItemtypes] = atoi(token);
+
+				/** @todo Set item links to NONE if needed */
+				/* comp->item_idx[comp->numItemtypes] = xxx */
+
+				comp->numItemtypes++;
+			} else {
+				Com_Printf("CL_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
+			}
+		} else if (!Q_strcmp(token, "time")) {
+			/* Defines how long disassembly lasts. */
+			token = COM_Parse(text);
+			comp->time = atoi(token);
+		} else {
+			Com_Printf("CL_ParseComponents: Error in \"%s\" - unknown token: \"%s\".\n", name, token);
+		}
+	} while (*text);
+}
+
+/**
+ * @brief Returns components definition for an item.
+ * @param[in] item Item to search the components for.
+ * @return comp Pointer to components_t definition.
+ */
+components_t *CL_GetComponentsByItem (const objDef_t *item)
+{
+	int i;
+
+	for (i = 0; i < ccs.numComponents; i++) {
+		components_t *comp = &ccs.components[i];
+		if (comp->asItem == item) {
+			Com_DPrintf(DEBUG_CLIENT, "CL_GetComponentsByItem: found components id: %s\n", comp->asId);
+			return comp;
+		}
+	}
+	Sys_Error("CL_GetComponentsByItem: could not find components id for: %s", item->id);
+}
+
+/**
  * @brief Parsing only for singleplayer
  *
  * parsed if we are no dedicated server
@@ -556,7 +649,7 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 	else if (!Q_strcmp(type, "mail"))
 		CL_ParseEventMails(name, text);
 	else if (!Q_strcmp(type, "components"))
-		INV_ParseComponents(name, text);
+		CL_ParseComponents(name, text);
 	else if (!Q_strcmp(type, "alienteam"))
 		CL_ParseAlienTeam(name, text);
 	else if (!Q_strcmp(type, "msgoptions"))

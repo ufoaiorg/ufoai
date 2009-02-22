@@ -30,6 +30,10 @@ struct base_s;
 struct installation_s;
 struct employee_s;
 
+#define MAX_ASSEMBLIES	16
+#define ANTIMATTER_SIZE 10
+
+#include "cp_parse.h"
 #include "cl_event.h"
 #include "cl_research.h"
 #include "cp_aircraft.h"

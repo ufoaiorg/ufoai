@@ -384,7 +384,7 @@ void PR_ProductionRun (void)
 				}
 			}
 		} else {		/* This is disassembling. */
-			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, INV_GetComponentsByItem(prod->item), qtrue)) {
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < PR_DisassembleItem(NULL, CL_GetComponentsByItem(prod->item), qtrue)) {
 				if (!prod->spacemessage) {
 					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Not enough free storage space in base %s. Disassembling postponed.\n"), base->name);
 					MSO_CheckAddNewMessage(NT_PRODUCTION_FAILED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -405,7 +405,7 @@ void PR_ProductionRun (void)
 			else
 				prod->percentDone += PR_CalculateProductionPercentDone(base, aircraft->tech, NULL, qfalse);
 		} else /* This is disassembling. */
-			prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, INV_GetComponentsByItem(prod->item), qtrue);
+			prod->percentDone += PR_CalculateProductionPercentDone(base, od->tech, CL_GetComponentsByItem(prod->item), qtrue);
 
 		if (prod->percentDone >= 1.0f) {
 			if (prod->production) {	/* This is production, not disassembling. */
@@ -436,7 +436,7 @@ void PR_ProductionRun (void)
 					}
 				}
 			} else {	/* This is disassembling. */
-				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, INV_GetComponentsByItem(prod->item), qfalse);
+				base->capacities[CAP_ITEMS].cur += PR_DisassembleItem(base, CL_GetComponentsByItem(prod->item), qfalse);
 				prod->percentDone = 0.0f;
 				prod->amount--;
 				/* If this is aircraft dummy item, update UFO hangars capacity. */
