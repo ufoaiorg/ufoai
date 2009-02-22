@@ -36,7 +36,7 @@ static menuNode_t* chatBufferNode = NULL;
 void MP_AddChatMessage (const char *text)
 {
 	/* allocate memory for new chat message */
-	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(chatMessage_t), cl_genericPool, CL_TAG_NONE);
+	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(*chat), cl_genericPool, CL_TAG_NONE);
 
 	/* push the new chat message at the beginning of the stack */
 	chat->next = cp_chatMessageStack;
@@ -53,14 +53,15 @@ void MP_AddChatMessage (const char *text)
 		MN_RegisterText(TEXT_CHAT_WINDOW, chatBuffer);
 	}
 	if (!chatBufferNode) {
+		/** @todo What if we change mn_hud after finishing a match? The wrong node would get updated. */
 		chatBufferNode = MN_GetNodeByPath(va("%s.chatscreen", mn_hud->string));
 	}
 
 	*chatBuffer = '\0'; /* clear buffer */
 	do {
-		if (strlen(chatBuffer) + strlen(chat->text) >= MAX_MESSAGE_TEXT)
+		if (strlen(chatBuffer) + strlen(chat->text) >= sizeof(chatBuffer))
 			break;
-		Q_strcat(chatBuffer, chat->text, MAX_MESSAGE_TEXT); /* fill buffer */
+		Q_strcat(chatBuffer, chat->text, sizeof(chatBuffer)); /* fill buffer */
 		chat = chat->next;
 	} while (chat);
 
