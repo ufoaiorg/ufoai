@@ -504,7 +504,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		break;
 
 	case FILTER_S_ARMOUR:
-		return !Q_strncmp(obj->type, "armour", MAX_VAR);
+		return !Q_strcmp(obj->type, "armour");
 
 	case FILTER_S_MISC:
 		return obj->isMisc;
@@ -520,7 +520,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		return obj->isDummy;
 
 	case FILTER_AIRCRAFT:
-		return !Q_strncmp(obj->type, "aircraft", MAX_VAR);
+		return !Q_strcmp(obj->type, "aircraft");
 
 	case FILTER_DISASSEMBLY:
 		/** @todo I guess we should search for components matching this item here. */
@@ -899,17 +899,10 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 		 * scroll because checkedTo is always true here. */
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
-		if (ic && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t) && to->id != CSI->idEquip) {
+		if (ic && to->id != CSI->idEquip && INVSH_LoadableInWeapon(fItem->item.t, ic->item.t)) {
 			/* A target-item was found and the dragged item (implicitly ammo)
 			 * can be loaded in it (implicitly weapon). */
-
-			/** @todo (or do this in two places in cl_menu.c):
-			if (!RS_IsResearched_ptr(ic->item.t->tech)
-			 || !RS_IsResearched_ptr(cacheItem.t->tech)) {
-				return IA_NORELOAD;
-			} */
-			if (ic->item.a >= ic->item.t->ammo
-			 && ic->item.m == fItem->item.t) {
+			if (ic->item.a >= ic->item.t->ammo && ic->item.m == fItem->item.t) {
 				/* Weapon already fully loaded with the same ammunition -> abort */
 				return IA_NORELOAD;
 			}
