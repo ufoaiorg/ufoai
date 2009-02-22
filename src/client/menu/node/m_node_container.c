@@ -127,8 +127,9 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 			continue;
 
 		while (ed->num[i]) {
-			const item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
-			if (!Com_AddToInventory(inv, CL_AddWeaponAmmo(ed, item), &csi.ids[csi.idEquip], NONE, NONE, 1))
+			item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
+			item = CL_AddWeaponAmmo(ed, item);
+			if (!Com_AddToInventory(inv, item, &csi.ids[csi.idEquip], NONE, NONE, 1))
 				break; /* no space left in menu */
 		}
 	}
