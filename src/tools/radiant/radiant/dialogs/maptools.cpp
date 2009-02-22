@@ -54,6 +54,7 @@ enum {
 
 // master window widget
 static GtkWidget *checkDialog = NULL;
+static GtkWidget *checkRepairButton = NULL;
 static GtkWidget *treeViewWidget; // slave, text widget from the gtk editor
 
 static gint editorHideCallback (GtkWidget *widget, gpointer data)
@@ -138,6 +139,24 @@ static void selectBrushesViaTreeView (GtkCellRendererToggle *widget, gchar *path
 	SelectBrush(entnum, brushnum, !enabled);
 }
 
+/**
+ * Callback used for select column to update renderer state based on current line content. If brushnum and entitynum for that line are empty, select box is hidden.
+ * @param column the column the renderer is associated with
+ * @param renderer the renderer that shows content
+ * @param model underlying model
+ * @param iter pointer to actual line
+ * @param user_data unused
+ */
+static void updateSelectVisibility (GtkTreeViewColumn *column, GtkCellRenderer *renderer, GtkTreeModel *model,
+		GtkTreeIter *iter, gpointer user_data)
+{
+	char *entnumStr, *brushnumStr;
+	gtk_tree_model_get(model, iter, CHECK_ENTITY, &entnumStr, CHECK_BRUSH, &brushnumStr, -1);
+	if (entnumStr[0] == '\0' && brushnumStr[0] == '\0')
+		g_object_set(renderer, "visible", FALSE, (const char*)0);
+	else
+		g_object_set(renderer, "visible", TRUE, (const char*)0);
+}
 
 static void CreateCheckDialog (void)
 {
@@ -177,6 +196,7 @@ static void CreateCheckDialog (void)
 		g_signal_connect(G_OBJECT(renderer), "toggled", G_CALLBACK(selectBrushesViaTreeView), NULL);
 		column = gtk_tree_view_column_new_with_attributes(_("Select"), renderer, "active", CHECK_SELECT, (const char*)0);
 		gtk_tree_view_column_set_alignment(column, 0.5);
+		gtk_tree_view_column_set_cell_data_func(column, renderer, updateSelectVisibility, NULL, NULL);
 		gtk_tree_view_append_column(GTK_TREE_VIEW(treeViewWidget), column);
 
 		gtk_container_add(GTK_CONTAINER(scr), GTK_WIDGET(treeViewWidget));
@@ -201,6 +221,7 @@ static void CreateCheckDialog (void)
 #endif
 	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(fixCallback), NULL);
+	checkRepairButton = button;
 }
 
 void ToolsCheckErrors (void)
@@ -301,6 +322,9 @@ void ToolsCheckErrors (void)
 				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, _("No problems in your map found. Output was:"), CHECK_SELECT, NULL, -1);
 				gtk_list_store_append(store, &iter);
 				gtk_list_store_set(store, &iter, CHECK_ENTITY, "", CHECK_BRUSH, "", CHECK_MESSAGE, output, CHECK_SELECT, NULL, -1);
+				gtk_widget_set_sensitive(checkRepairButton, false);
+			} else {
+				gtk_widget_set_sensitive(checkRepairButton, true);
 			}
 
 			/* trying to show later */
