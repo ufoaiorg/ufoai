@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_hud.h"
 #include "cl_sequence.h"
 #include "cl_parse.h"
+#include "cl_inventory.h"
 #include "cl_view.h"
 #include "cl_joystick.h"
 #include "cl_cinematic.h"
