@@ -614,6 +614,7 @@ void MN_SetNewMenuPos_f (void)
 /**
  * @brief This will reinitialize the current visible menu
  * @note also available as script command mn_reinit
+ * @todo replace that by a common action "call *ufopedia.init"
  */
 static void MN_FireInit_f (void)
 {
