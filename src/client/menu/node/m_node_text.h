@@ -52,8 +52,6 @@ void MN_RegisterTextNode(struct nodeBehaviour_s *behaviour);
 
 typedef struct {
 	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
-	qboolean scrollbarLeft;		/**< true if the scrollbar should be on the left side of the text node */
-	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled, @todo implement me */
 	int textScroll;				/**< textfields - current scroll position */
 	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
 	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/

@@ -149,7 +149,7 @@ static void MN_DrawScrollBar (const menuNode_t *node)
 		float scrollbarY;
 
 		MN_GetNodeAbsPos(node, nodepos);
-		scrollbarX = nodepos[0] + (EXTRADATA(node).scrollbarLeft ? 0 : node->size[0] - MN_SCROLLBAR_WIDTH);
+		scrollbarX = nodepos[0] + node->size[0] - MN_SCROLLBAR_WIDTH;
 		scrollbarY = node->size[1] * EXTRADATA(node).rows / EXTRADATA(node).textLines * MN_SCROLLBAR_HEIGHT;
 
 		R_DrawFill(scrollbarX, nodepos[1],
@@ -237,11 +237,8 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 	colorSelectedHover[3] = node->selectedColor[3];
 
 	/* scrollbar space */
-	if (EXTRADATA(node).scrollbar) {
+	if (EXTRADATA(node).scrollbar)
 		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
-		if (EXTRADATA(node).scrollbarLeft)
-			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
-	}
 
 	/* fix position of the start of the draw according to the align */
 	switch (node->textalign % 3) {
@@ -416,11 +413,8 @@ static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messa
 	height = node->size[1] - node->padding - node->padding;
 
 	/* scrollbar space */
-	if (EXTRADATA(node).scrollbar) {
+	if (EXTRADATA(node).scrollbar)
 		width -= MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
-		if (EXTRADATA(node).scrollbarLeft)
-			x += MN_SCROLLBAR_WIDTH + MN_SCROLLBAR_PADDING;
-	}
 
 	message       = messageStack;
 	skip_messages = EXTRADATA(node).textScroll;
