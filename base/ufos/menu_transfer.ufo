@@ -9,185 +9,186 @@ menu transfer
 
 	pic background
 	{
-		image	menu/transfer_bg
-	}
-
-	pic transtypebox
-	{
-		pos	"657 610"
-		image	menu/transtypebox
-		whup	{
-			cmd "trans_prevcat;"
-		}
-		whdown	{
-			cmd "trans_nextcat;"
-		}
-	}
-
-	zone wz_base
-	{
-		pos	"576 12"
-		size	"434 81"
-		whup	{ cmd "trans_nextbase;" }
-		whdown	{ cmd "trans_prevbase;" }
+		image		menu/transfer_bg
 	}
 
 	pic prev_base
 	{
-		tooltip	"_Select previous base for transfer"
-		image	menu/buttons_small
-		pos	"710 30"
-		mousefx true
-		texl	"0 0"
-		texh	"16 16"
-		click	{ cmd "trans_prevbase;" }
+		tooltip		"_Select previous base for transfer"
+		image		menu/buttons_small
+		pos			"710 30"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "trans_prevbase;" }
 	}
 
 	pic next_base
 	{
-		tooltip	"_Select next base for transfer"
-		image	menu/buttons_small
-		pos	"870 30"
-		mousefx	true
-		texl	"16 0"
-		texh	"32 16"
-		click	{ cmd "trans_nextbase;" }
+		tooltip		"_Select next base for transfer"
+		image		menu/buttons_small
+		pos			"870 30"
+		texl		"16 0"
+		texh		"32 16"
+		mousefx		true
+		click		{ cmd "trans_nextbase;" }
 	}
 
 	string s_current_base
 	{
-		pos	"800 30"
-		align	uc
-		color "0.7 0.7 0.7 1"
-		font	"f_small"
-		string	"_Selected base"
+		string		"_Selected base"
+		pos			"725 30"
+		size		"145 20"
+		textalign	uc
+		color		"0.7 0.7 0.7 1"
+		font		f_small
 	}
 
 	string s_current_base_var
 	{
-		pos	"800 60"
-		align	uc
-		color "1 1 1 1"
-		font	"f_small"
-		string	"*cvar mn_trans_base_name"
+		string		"*cvar mn_trans_base_name"
+		pos			"700 60"
+		size		"170 20"
+		textalign	uc
+		color		"1 1 1 1"
+		font		f_small
+	}
+
+	zone wz_base
+	{
+		pos			"576 12"
+		size		"434 81"
+		whup		{ cmd "trans_nextbase;" }
+		whdown		{ cmd "trans_prevbase;" }
 	}
 
 	string s_baseinfo
 	{
-		pos		"290 50"
-		align	uc
-		color 	"1 1 1 1"
-		font	"f_normal"
-		string	"_Baseinfo"
+		string		"_Baseinfo"
+		pos			"60 50"
+		size		"460 20"
+		textalign	uc
+		color	 	"1 1 1 1"
+		font		f_normal
 	}
 
 	text t_baseinfo
 	{
 		textid		TEXT_BASE_INFO
-		pos		"60 80"
-		size	"460 240"
+		pos			"60 80"
+		size		"460 240"
 		lineheight	"20"
-		rows	"12"
-//		bgcolor	"1 1 1 0.5"
+		rows		"12"
 	}
 
 	string s_transferlist
 	{
-		pos		"290 340"
-		align	uc
-		color	"1 1 1 1"
-		font	"f_normal"
-		string	"_Transfer"
+		string		"_Transfer"
+		pos			"60 340"
+		size		"460 20"
+		textalign	uc
+		color		"1 1 1 1"
+		font		f_normal
 	}
 
 	text trans_list
 	{
-		textid 	TEXT_TRANSFER_LIST
-		pos		"60 370"
-		size	"460 360"
-		mousefx	true
-		longlines prettychop
-		click
+		textid		TEXT_TRANSFER_LIST
+		pos			"60 370"
+		size		"460 360"
+		mousefx		true
+		longlines	prettychop
 		lineheight	"20"
-		rows	"18"
-//		bgcolor	"1 1 1 0.5"
-//		repeat	true
-		wheel {
+		rows		"18"
+		click
+		wheel		{
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
-		lineschange {
+		lineschange	{
 			*(abstractscrollbar)trans_list_scroll fullsize <lines>
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
 	}
 
 	vscrollbar trans_list_scroll {
-		image	menu/scrollbar_v_green	blend	true
-		pos		"522 370"	height	"360"
-		current 0
-		viewsize 18
-		fullsize 18
-		change {
-			cmd "mn_textscroll trans_list <lastdiff>;"
-		}
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"522 370"
+		height		"360"
+		current		0
+		viewsize	18
+		fullsize	18
+		change		{ cmd "mn_textscroll trans_list <lastdiff>;" }
 	}
 
 	string s_trans_cargolist
 	{
-		pos		"790 130"
-		align	uc
-		color	"1 1 1 1"
-		font	"f_normal"
-		string	"_Cargo onboard"
+		string		"_Cargo onboard"
+		pos			"595 130"
+		size		"400 25"
+		textalign	uc
+		color		"1 1 1 1"
+		font		f_normal
 	}
 
 	text trans_cargolist
 	{
 		textid		TEXT_CARGO_LIST
-		pos		"607 150"
-		size	"400 400"
-		mousefx	true
-		click
+		pos			"595 160"
+		size		"400 400"
+		mousefx		true
 		lineheight	"20"
-		longlines prettychop
+		longlines	prettychop
+		rows		"20"
+		click
 		wheel
-		rows	"20"
-//		bgcolor	"1 1 1 0.5"
-//		repeat	true
 	}
 
 	// ==================
 	// category selector
 	// =================
 
+	pic transtypebox
+	{
+		pos			"657 610"
+		image		menu/transtypebox
+		whup		{ cmd "trans_prevcat;" }
+		whdown		{ cmd "trans_nextcat;" }
+	}
+
 	string txt_category
 	{
-		font	"f_small"
-		string	"*cvar mn_transcat_name"
-		pos	"786 627"
-		align	cc
+		string		"*cvar mn_transcat_name"
+		pos			"660 613"
+		size		"273 26"
+		textalign	cc
+		font		f_small
 	}
 
 	custombutton bt_previtemtype
 	{
-		image menu/button_pack1	texl	"32 0"	blend	true
-		size	"32 50"
-		tooltip	"_Previous category"
-		pos	"620 602"
-		click	{ cmd "trans_prevcat;" }
-		whup	{ cmd "trans_prevcat;" }
-		whdown	{ cmd "trans_nextcat;" }
+		tooltip		"_Previous category"
+		image		menu/button_pack1
+		blend		true
+		pos			"620 602"
+		size		"32 50"
+		texl		"32 0"
+		click		{ cmd "trans_prevcat;" }
+		whup		{ cmd "trans_prevcat;" }
+		whdown		{ cmd "trans_nextcat;" }
 	}
 
 	custombutton bt_nextitemtype
 	{
-		image menu/button_pack1	texl	"64 0"	blend	true
-		size	"32 50"
-		tooltip	"_Next category"
-		pos	"940 602"
-		click	{ cmd "trans_nextcat;" }
-		whup	{ cmd "trans_prevcat;" }
-		whdown	{ cmd "trans_nextcat;" }
+		tooltip		"_Next category"
+		image		menu/button_pack1
+		blend		true
+		pos			"940 602"
+		size		"32 50"
+		texl		"64 0"
+		click		{ cmd "trans_nextcat;" }
+		whup		{ cmd "trans_prevcat;" }
+		whdown		{ cmd "trans_nextcat;" }
 	}
 
 	// ==================
@@ -196,38 +197,42 @@ menu transfer
 
 	button bt_emptycraftstorage
 	{
-		tooltip	"_Empty the aircraft storage"
-		image	menu/button_blue	blend true
-		pos	"605 678"
-		size	"128 52"
-		click	{ cmd "trans_emptyairstorage;" }
-		color "1 1 1 0.6"
-		selectcolor "1 1 1 1"
-		font	"f_normal"
-		string	"_Unload"
+		string		"_Unload"
+		tooltip		"_Empty the aircraft storage"
+		image		menu/button_blue
+		blend		true
+		pos			"605 678"
+		size		"128 52"
+		color		"1 1 1 0.6"
+		selectcolor	"1 1 1 1"
+		font		f_normal
+		click		{ cmd "trans_emptyairstorage;" }
 	}
 
 	button bt_starttrans
 	{
-		tooltip	"_Start the transfer"
-		image	menu/button_blue	blend true
-		pos	"750 678"
-		size	"128 52"
-		click	{ cmd "trans_start;" }
-		color	"1 1 1 0.6"
+		string		"_Transfer"
+		tooltip		"_Start the transfer"
+		image		menu/button_blue
+		blend		true
+		pos			"750 678"
+		size		"128 52"
+		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 0.6"
-		font	"f_normal"
-		string	"_Transfer"
+		font		f_normal
+		click		{ cmd "trans_start;" }
 	}
 
 	custombutton bt_continue
 	{
-		tooltip	"_Back to baseview"
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos	"933 710"
-		icon return
-		click	{ cmd "mn_pop;" }
+		tooltip		"_Back to baseview"
+		image		menu/button_background
+		blend		true
+		pos			"933 710"
+		size		"64 37"
+		texl		"192 0"
+		icon		return
+		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================

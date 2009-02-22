@@ -9,7 +9,7 @@ menu production
 
 	pic background
 	{
-		image	menu/production_bg
+		image		menu/production_bg
 	}
 
 	// ==================
@@ -18,17 +18,20 @@ menu production
 
 	string txt_credits_caption
 	{
-		string	"_CREDITS"
-		pos	"610 30"
-		font	f_big
+		string		"_CREDITS"
+		pos			"610 30"
+		size		"150 30"
+		font		f_big
 	}
 
 	string txt_credits
 	{
-		font	"f_big"
-		string	"*cvar mn_credits"
-		pos		"975 30"
-		align	ur
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"825 30"
+		size		"150 30"
+		font		f_big
+		textalign	ur
 	}
 
 	// ==================
@@ -37,17 +40,19 @@ menu production
 
 	string txt_prod_limit_caption
 	{
-		string	"_Production limit:"
-		pos	"610 70"
-		font	f_small
+		string		"_Production limit:"
+		pos			"610 70"
+		size		"250 20"
+		font		f_small
 	}
 
 	string txt_prod_limit
 	{
-		font	"f_small"
-		string	"*cvar mn_production_limit"
-		pos		"975 70"
-		align	ur
+		string		"*cvar mn_production_limit"
+		pos			"875 70"
+		size		"100 20"
+		textalign	ur
+		font		f_small
 	}
 
 	// ==================
@@ -56,17 +61,19 @@ menu production
 
 	string txt_prod_workers_caption
 	{
-		string	"_Workers (ready/all):"
-		pos	"610 95"
-		font	f_small
+		string		"_Workers (ready/all):"
+		pos			"610 95"
+		size		"250 20"
+		font		f_small
 	}
 
 	string txt_prod_workers
 	{
-		font	f_small
-		string	"*cvar mn_production_workers"
-		pos		"975 95"
-		align	ur
+		string		"*cvar mn_production_workers"
+		pos			"875 95"
+		size		"100 20"
+		textalign	ur
+		font		f_small
 	}
 
 	// ==================
@@ -75,17 +82,19 @@ menu production
 
 	string txt_prod_basecap_caption
 	{
-		string	"_Workshop capacity:"
-		pos	"610 120"
-		font	f_small
+		string		"_Workshop capacity:"
+		pos			"610 120"
+		size		"250 20"
+		font		f_small
 	}
 
 	string txt_prod_basecap
 	{
-		font	f_small
-		string	"*cvar mn_production_basecap"
-		pos	"975 120"
-		align	ur
+		string		"*cvar mn_production_basecap"
+		pos			"875 120"
+		size		"100 20"
+		textalign	ur
+		font		f_small
 	}
 
 	// ==================
@@ -95,18 +104,20 @@ menu production
 	string txt_prod_storage_caption
 	{
 		visiblewhen "mn_itemtype"
-		string	"_Storage capacity:"
-		pos	"610 145"
-		font	f_small
+		string		"_Storage capacity:"
+		pos			"610 145"
+		size		"250 20"
+		font		f_small
 	}
 
 	string txt_prod_storage
 	{
 		visiblewhen "mn_itemtype"
-		font	f_small
-		string	"*cvar mn_production_storage"
-		pos	"975 145"
-		align	ur
+		string		"*cvar mn_production_storage"
+		pos			"875 145"
+		size		"100 20"
+		textalign	ur
+		font		f_small
 	}
 
 	// ==================
@@ -115,39 +126,41 @@ menu production
 
 	string txt_queuetitle
 	{
-		string 	"_Production queue/producible items"
-		pos 	"35 35"
-		size	"380 20"
+		string	 	"_Production queue/producible items"
+		pos 		"35 35"
+		size		"380 20"
 	}
 
 	string txt_queued
 	{
-		string 	"_Q"
-		pos 	"465 35"
+		string 		"_Q"
+		pos 		"465 35"
+		size		"20 20"
 	}
 
 	string txt_amount
 	{
-		string 	"_Num"
-		pos		"505 35"
+		string	 	"_Num"
+		pos			"505 35"
+		size		"40 20"
 	}
 
 	text prodlist
 	{
-		pos		"40 70"
-		size	"376 670"
-		color	"0 .78 0 1"
-		lineheight	"22"
 		textid		TEXT_PRODUCTION_LIST
+		pos			"40 70"
+		size		"376 670"
+		color		"0 .78 0 1"
+		lineheight	"22"
+		rows		"30"
+		mousefx		true
 		click
 		rclick
-		rows "30"
-		mousefx	true
-		wheel {
+		wheel		{
 			*(abstractscrollbar)prodlist_scroll current <text_scroll>
 			cmd "prod_scroll;"
 		}
-		lineschange {
+		lineschange	{
 			*(abstractscrollbar)prodlist_scroll fullsize <lines>
 			*(abstractscrollbar)prodlist_scroll current <text_scroll>
 		}
@@ -155,35 +168,37 @@ menu production
 
 	text prodlist_amount
 	{
-		pos		"505 70"
-		size	"30 670"
-		color	"0 .78 0 1"
-		lineheight	"22"
 		textid		TEXT_PRODUCTION_AMOUNT
-		rows "30"
-		mousefx	true
+		pos			"505 70"
+		size		"30 670"
+		color		"0 .78 0 1"
+		lineheight	"22"
+		rows		"30"
+		mousefx		true
 	}
 
 	vscrollbar prodlist_scroll {
-		image	menu/scrollbar_v_green	blend	true
-		pos	"428 70"	height	"660"
-		current 0
-		viewsize 30
-		fullsize 30
-		change {
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"428 70"
+		height		"660"
+		current		0
+		viewsize	30
+		fullsize	30
+		change		{
 			cmd "mn_textscroll prodlist <lastdiff>;mn_textscroll prodlist_amount <lastdiff>;"
 		}
 	}
 
 	text prodlist_queued
 	{
-		pos		"465 70"
-		size	"30 670"
-		color	"0 .78 0 1"
-		lineheight	"22"
 		textid		TEXT_PRODUCTION_QUEUED
-		rows	"30"
-		mousefx true
+		pos			"465 70"
+		size		"30 670"
+		color		"0 .78 0 1"
+		lineheight	"22"
+		rows		"30"
+		mousefx		true
 	}
 
 	// ==================
@@ -192,12 +207,12 @@ menu production
 
 	item itemmodel
 	{
-		visiblewhen		"mn_itemtype"
-		model			"*cvar mn_item"
-		pos				"608 233"
-		size			"370 140"
-		angles			"-10 160 70"
-		autoscale		true
+		visiblewhen "mn_itemtype"
+		model		"*cvar mn_item"
+		pos			"608 233"
+		size		"370 140"
+		angles		"-10 160 70"
+		autoscale	true
 	}
 
 	// ==================
@@ -205,92 +220,101 @@ menu production
 	// ==================
 
 	string prod_amount {
-		pos		"730 355"	size "40 20"
-		string	"*cvar mn_production_amount"
-		color	"0 .78 0 1"
-		font	"f_small"
+		string		"*cvar mn_production_amount"
+		pos			"730 355"
+		size		"40 20"
+		color		"0 .78 0 1"
+		font		f_small
 		textalign	ur
 	}
 
 	string label_1 {
-		pos		"786 355"	size "24 20"
-		string	"x1"
-		color	"0 .78 0 1"
-		font	"f_small"
+		string		"x1"
+		pos			"786 355"
+		size		"24 20"
+		color		"0 .78 0 1"
+		font		f_small
 		textalign	ur
 	}
 
 	string label_10 {
-		pos		"824 355"	size "36 20"
-		string	"x10"
-		color	"0 .78 0 1"
-		font	"f_small"
+		string		"x10"
+		pos			"824 355"
+		size		"36 20"
+		color		"0 .78 0 1"
+		font		f_small
 		textalign	ur
 	}
 
 	spinner prod_change {
-		tooltip	"_Change the production amount"
-		image	menu/spinner_blue blend true
-		pos		"810 355"
-		min 1 current "*cvar mn_production_amount" max 1000 delta 1
-		change {
-			cmd "prod_change <lastdiff>;"
-		}
+		tooltip		"_Change the production amount"
+		image		menu/spinner_blue
+		blend		true
+		pos			"810 355"
+		min			1
+		current		"*cvar mn_production_amount"
+		max			1000
+		delta		1
+		change		{ cmd "prod_change <lastdiff>;" }
 	}
 
 
 	spinner prod_change_10 {
-		tooltip	"_Change the production amount"
-		image	menu/spinner_blue blend true
-		pos		"860 355"
-		min 1 current "*cvar mn_production_amount" max 1000 delta 10
-		change {
-			cmd "prod_change <lastdiff>;"
-		}
+		tooltip		"_Change the production amount"
+		image		menu/spinner_blue
+		blend		true
+		pos			"860 355"
+		min			1
+		current		"*cvar mn_production_amount"
+		max			1000
+		delta		10
+		change		{ cmd "prod_change <lastdiff>;" }
 	}
 
 	button prod_new
 	{
-		image	menu/button_green_small	blend true
-		pos		"670 330" size	"250 32"
-		string	"_Start this production"
-		font    "f_small"
-		click	{ cmd "prod_inc;" }
-		color	"0 .78 0 1"
+		string		"_Start this production"
+		image		menu/button_green_small
+		blend		true
+		pos			"670 330"
+		size		"250 32"
+		font		f_small
+		color		"0 .78 0 1"
+		click		{ cmd "prod_inc;" }
 	}
 
 	pic prod_stop
 	{
-		image	menu/buttons_small
-		pos		"900 355"
-		tooltip "_Stop production"
-		texl	"48 16"
-		texh	"64 32"
-		click	{ cmd "prod_stop;" }
+		tooltip		"_Stop production"
+		image		menu/buttons_small
+		pos			"900 355"
+		texl		"48 16"
+		texh		"64 32"
+		click		{ cmd "prod_stop;" }
 	}
 
 	pic prod_up
 	{
-		image	menu/button_produce
-		pos		"615 300"
-		tooltip "_Increase priority"
-		texl	"0 0"
-		texh	"16 16"
-		click	{ cmd "prod_up;" }
-		whup	{ cmd "prod_up;" }
-		whdown	{ cmd "prod_down;" }
+		tooltip		"_Increase priority"
+		image		menu/button_produce
+		pos			"615 300"
+		texl		"0 0"
+		texh		"16 16"
+		click		{ cmd "prod_up;" }
+		whup		{ cmd "prod_up;" }
+		whdown		{ cmd "prod_down;" }
 	}
 
 	pic prod_down
 	{
-		image	menu/button_produce
-		pos		"615 320"
-		tooltip "_Decrease priority"
-		texl	"0 16"
-		texh	"16 32"
-		click	{ cmd "prod_down;" }
-		whup	{ cmd "prod_up;" }
-		whdown	{ cmd "prod_down;" }
+		tooltip		"_Decrease priority"
+		image		menu/button_produce
+		pos			"615 320"
+		texl		"0 16"
+		texh		"16 32"
+		click		{ cmd "prod_down;" }
+		whup		{ cmd "prod_up;" }
+		whdown		{ cmd "prod_down;" }
 	}
 
 	// ==========================================
@@ -368,14 +392,14 @@ menu production
 
 	text description
 	{
-		pos		"610 428"
-		size	"366 100"
+		textid		TEXT_PRODUCTION_INFO
+		pos			"610 428"
+		size		"366 100"
 		lineheight	20
 		tabwidth	260
-		textid		TEXT_PRODUCTION_INFO
-		rows	"5"
+		rows		"5"
+		scrollbar	true
 		wheel
-		scrollbar true
 	}
 
 	// ==================
@@ -384,39 +408,40 @@ menu production
 
 	string txt_category
 	{
-		font    "f_small"
-		string  "*cvar mn_itemtypename"
-		pos     "785 647"
-		align   uc
+		string		"*cvar mn_itemtypename"
+		pos			"700 647"
+		size		"170 20"
+		textalign	uc
+		font		f_small
 	}
 
 	zone zone_category {
-		pos     "650 627"
-		size    "270 59"
-		whup    {
-			cmd "prev_prod_type;"
-		}
-		whdown  {
-			cmd "next_prod_type;"
-		}
+		pos			"650 627"
+		size		"270 59"
+		whup		{ cmd "prev_prod_type;" }
+		whdown		{ cmd "next_prod_type;" }
 	}
 
 	custombutton bt_previtemtype
 	{
-		image menu/button_pack1	texl	"32 0"	blend	true
-		size	"32 50"
-		tooltip "_Previous category"
-		pos     "650 630"
-		click   { cmd "prev_prod_type;" }
+		tooltip		"_Previous category"
+		image		menu/button_pack1
+		blend		true
+		pos			"650 630"
+		size		"32 50"
+		texl		"32 0"
+		click		{ cmd "prev_prod_type;" }
 	}
 
 	custombutton bt_nextitemtype
 	{
-		image menu/button_pack1	texl	"64 0"	blend	true
-		size	"32 50"
-		tooltip "_Next category"
-		pos     "882 630"
-		click   { cmd "next_prod_type;" }
+		tooltip		"_Next category"
+		image		menu/button_pack1
+		blend		true
+		pos			"882 630"
+		size		"32 50"
+		texl		"64 0"
+		click		{ cmd "next_prod_type;" }
 	}
 
 	custombutton production_leave
@@ -425,8 +450,8 @@ menu production
 		image		menu/button_background
 		blend		true
 		texl		"192 0"
-		size		"64 37"
 		pos			"920 715"
+		size		"64 37"
 		icon		return
 		click		{ cmd "mn_pop;" }
 	}
