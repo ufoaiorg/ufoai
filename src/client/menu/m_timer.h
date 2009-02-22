@@ -31,14 +31,15 @@ struct menuTimer_s;
 typedef void (*timerCallback_t)(struct menuNode_s *node, struct menuTimer_s *timer);
 
 /**
- * @todo rename "menuNode_s *node" into "void* source/target" like that client code can use it easier
+ * @todo We can use void* for the owner type, and allow to use it outside nodes
+ * @todo Add a "isWorking" property to know if a timer is start/stop
  */
 typedef struct menuTimer_s {
 	struct menuTimer_s *next;	/**< next timer in the ordered list of active timers */
 	struct menuTimer_s *prev;	/**< previous timer in the ordered list of active timers */
 	int nextTime;				/**< next time we must call the callback function. Must node be edited, it used to sort linkedlist of timers */
 
-	struct menuNode_s *node;	/**< parent node of the timer */
+	struct menuNode_s *owner;	/**< owner node of the timer */
 	timerCallback_t callback;	/**< function called every delay */
 	int calledTime;				/**< time we call the function. For the first call the value is 1 */
 

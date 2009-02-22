@@ -138,17 +138,6 @@ const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, co
 }
 
 /**
- * @brief Get a property definition from a node
- * @param[in] node Requested node
- * @param[in] name Property name we search
- * @todo We can delete it
- */
-const value_t *MN_NodeGetPropertyDefinition (const menuNode_t* node, const char* name)
-{
-	return MN_GetPropertyFromBehaviour(node->behaviour, name);
-}
-
-/**
  * @brief Check the if conditions for a given node
  * @sa MN_DrawMenus
  * @sa V_SPECIAL_IF

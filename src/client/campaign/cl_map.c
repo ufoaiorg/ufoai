@@ -1885,7 +1885,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	if (showXVI)
 		MN_RegisterText(TEXT_XVI, buffer);
 	else
-		MN_MenuTextReset(TEXT_XVI);
+		MN_ResetData(TEXT_XVI);
 }
 
 /**
@@ -1920,7 +1920,7 @@ void MAP_DrawMap (const menuNode_t* node)
 	MAP_DrawMapMarkers(node);
 
 	/* display text */
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_STANDARD);
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
 		MN_RegisterText(TEXT_STANDARD, _("Select the desired location of the new base on the map.\n"));

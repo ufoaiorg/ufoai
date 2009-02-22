@@ -68,7 +68,7 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 	MN_RegisterText(TEXT_POPUP_INFO, headline);
 
 	/* make sure, that we are using the linked list */
-	MN_MenuTextReset(TEXT_LIST);
+	MN_ResetData(TEXT_LIST);
 	MN_RegisterLinkedListText(TEXT_LIST, entries);
 	CL_GameTimeStop();
 

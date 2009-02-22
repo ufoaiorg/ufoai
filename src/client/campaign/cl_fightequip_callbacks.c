@@ -543,10 +543,10 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	menuNode_t *node;
 
 	/* don't let old links appear on this menu */
-	MN_MenuTextReset(TEXT_BASEDEFENCE_LIST);
-	MN_MenuTextReset(TEXT_AIREQUIP_1);
-	MN_MenuTextReset(TEXT_AIREQUIP_2);
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_BASEDEFENCE_LIST);
+	MN_ResetData(TEXT_AIREQUIP_1);
+	MN_ResetData(TEXT_AIREQUIP_2);
+	MN_ResetData(TEXT_STANDARD);
 
 	/* baseCurrent or installationCurrent should be non NULL because we are in the menu of this base or installation */
 	if (!baseCurrent && !installationCurrent)
@@ -741,10 +741,10 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 		return;
 
 	/* don't let old links appear on this menu */
-	MN_MenuTextReset(TEXT_STANDARD);
-	MN_MenuTextReset(TEXT_AIREQUIP_1);
-	MN_MenuTextReset(TEXT_AIREQUIP_2);
-	MN_MenuTextReset(TEXT_LIST);
+	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_AIREQUIP_1);
+	MN_ResetData(TEXT_AIREQUIP_2);
+	MN_ResetData(TEXT_LIST);
 
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {

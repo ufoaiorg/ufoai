@@ -634,7 +634,7 @@ void MP_UpdateMenuParameters_f (void)
 	/* reset description */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_STANDARD);
 
 	for (i = 0; i < MAX_MULTIPLAYER_CHARACTERS; i++) {
 		const char *name;

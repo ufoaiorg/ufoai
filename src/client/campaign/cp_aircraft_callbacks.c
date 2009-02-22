@@ -217,7 +217,7 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 		base = NULL;
 
 	if (!base || !base->numAircraftInBase) {
-		MN_MenuTextReset(TEXT_AIRCRAFT_INFO);
+		MN_ResetData(TEXT_AIRCRAFT_INFO);
 		return;
 	}
 

@@ -55,7 +55,7 @@ struct menuNode_s* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(struct menuNode_s* node);
 void MN_MouseRelease(void);
 
-/** @todo move it somewhere */
+/* cvar */
 void MN_SetCvar(const char *name, const char *str, float value);
 
 #endif

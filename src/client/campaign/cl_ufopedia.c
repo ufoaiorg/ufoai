@@ -117,11 +117,11 @@ static void UP_ChangeDisplay (int newDisplay)
 	}
 
 	/* make sure, that we leave the mail header space */
-	MN_MenuTextReset(TEXT_UFOPEDIA_MAILHEADER);
-	MN_MenuTextReset(TEXT_UFOPEDIA_MAIL);
-	MN_MenuTextReset(TEXT_LIST);
-	MN_MenuTextReset(TEXT_STANDARD);
-	MN_MenuTextReset(TEXT_UFOPEDIA);
+	MN_ResetData(TEXT_UFOPEDIA_MAILHEADER);
+	MN_ResetData(TEXT_UFOPEDIA_MAIL);
+	MN_ResetData(TEXT_LIST);
+	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_UFOPEDIA);
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
@@ -568,7 +568,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	int i;
 
 	/* Set menu text node content to null. */
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_STANDARD);
 
 	/* no valid item id given */
 	if (!item) {
@@ -871,7 +871,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 				}
 			}
 		} else {
-			MN_MenuTextReset(TEXT_UFOPEDIA_MAILHEADER);
+			MN_ResetData(TEXT_UFOPEDIA_MAILHEADER);
 			return;
 		}
 	}
@@ -890,8 +890,8 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 {
 	int i;
 
-	MN_MenuTextReset(TEXT_UFOPEDIA);
-	MN_MenuTextReset(TEXT_LIST);
+	MN_ResetData(TEXT_UFOPEDIA);
+	MN_ResetData(TEXT_LIST);
 
 	if (mail) {
 		/* event mail */
@@ -971,7 +971,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 			}
 		} else {
 			Cvar_Set("mn_uptitle", _(tech->name));
-			MN_MenuTextReset(TEXT_UFOPEDIA);
+			MN_ResetData(TEXT_UFOPEDIA);
 		}
 	}
 }

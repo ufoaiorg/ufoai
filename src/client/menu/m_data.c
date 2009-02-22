@@ -143,20 +143,19 @@ int MN_GetDataVersion (int textId)
 }
 
 /**
- * @brief Resets the mn.menuText pointers and the mn.menuTextLinkedList lists
- * @todo Rename the function
+ * @brief Reset a shared data. Type became NONE and value became NULL
  */
-void MN_MenuTextReset (int menuTextID)
+void MN_ResetData (int dataId)
 {
-	assert(menuTextID < MAX_MENUTEXTS);
-	assert(menuTextID >= 0);
+	assert(dataId < MAX_MENUTEXTS);
+	assert(dataId >= 0);
 
-	if (mn.sharedData[menuTextID].type == MN_SHARED_LINKEDLISTTEXT)
-		LIST_Delete(&mn.sharedData[menuTextID].data.linkedListText);
+	if (mn.sharedData[dataId].type == MN_SHARED_LINKEDLISTTEXT)
+		LIST_Delete(&mn.sharedData[dataId].data.linkedListText);
 
-	mn.sharedData[menuTextID].type = MN_SHARED_NONE;
-	mn.sharedData[menuTextID].data.text = NULL;
-	mn.sharedData[menuTextID].versionId++;
+	mn.sharedData[dataId].type = MN_SHARED_NONE;
+	mn.sharedData[dataId].data.text = NULL;
+	mn.sharedData[dataId].versionId++;
 }
 
 /**
@@ -256,7 +255,7 @@ menuOption_t* MN_AllocOption (int count)
  * @note You can give this function a parameter to only delete a specific data
  * @sa menutextid_names
  */
-static void MN_MenuDataReset_f (void)
+static void MN_ResetData_f (void)
 {
 	if (Cmd_Argc() == 2) {
 		const char *menuTextID = Cmd_Argv(1);
@@ -264,11 +263,11 @@ static void MN_MenuDataReset_f (void)
 		if (id < 0)
 			Com_Printf("%s: invalid mn.menuText ID: %s\n", Cmd_Argv(0), menuTextID);
 		else
-			MN_MenuTextReset(id);
+			MN_ResetData(id);
 	} else {
 		int i;
 		for (i = 0; i < MAX_MENUTEXTS; i++)
-			MN_MenuTextReset(i);
+			MN_ResetData(i);
 	}
 }
 
@@ -278,5 +277,5 @@ static void MN_MenuDataReset_f (void)
  */
 void MN_InitData (void)
 {
-	Cmd_AddCommand("mn_datareset", MN_MenuDataReset_f, "Resets the menu data pointers");
+	Cmd_AddCommand("mn_datareset", MN_ResetData_f, "Resets a menu data pointers");
 }

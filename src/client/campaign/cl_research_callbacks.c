@@ -79,7 +79,7 @@ static void RS_UpdateInfo (const base_t* base)
 	Cvar_Set("mn_researchitem", "");
 	Cvar_Set("mn_researchweapon", "");	/**< @todo Do we even need/use mn_researchweapon and mn_researchammo (now or in the future?) */
 	Cvar_Set("mn_researchammo", "");
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_STANDARD);
 
 	if (researchListLength <= 0 || researchListPos >= researchListLength)
 		return;
@@ -366,7 +366,7 @@ static void CL_ResearchSelect_f (void)
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= researchListLength) {
-		MN_MenuTextReset(TEXT_STANDARD);
+		MN_ResetData(TEXT_STANDARD);
 		return;
 	}
 

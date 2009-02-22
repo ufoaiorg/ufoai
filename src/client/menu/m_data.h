@@ -119,7 +119,7 @@ typedef struct menuSharedData_s {
 
 /* common */
 int MN_GetDataVersion(int textId) __attribute__ ((warn_unused_result));
-void MN_MenuTextReset(int menuTextID);
+void MN_ResetData(int dataId);
 int MN_GetDataIDByName(const char* name) __attribute__ ((warn_unused_result));
 void MN_InitData(void);
 

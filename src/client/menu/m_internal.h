@@ -48,7 +48,7 @@ typedef struct menuGlobal_s {
 	/**
 	 * @brief Holds shared data
 	 * @note The array id is given via num in the menuNode definitions
-	 * @sa MN_MenuTextReset
+	 * @sa MN_ResetData
 	 * @sa MN_RegisterText
 	 * @sa MN_GetText
 	 * @sa MN_RegisterLinkedListText

@@ -437,7 +437,7 @@ static void B_AssembleMap_f (void)
 	}
 
 	/* reset menu text */
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_STANDARD);
 
 	*maps = '\0';
 	*coords = '\0';

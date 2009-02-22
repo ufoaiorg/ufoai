@@ -314,7 +314,7 @@ static void BS_BuyType (const base_t *base)
 	CL_UpdateCredits(ccs.credits);
 
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_STANDARD);
 	MN_RegisterText(TEXT_MARKET_NAMES, bsMarketNames);
 	MN_RegisterText(TEXT_MARKET_STORAGE, bsMarketStorage);
 	MN_RegisterText(TEXT_MARKET_MARKET, bsMarketMarket);
@@ -520,7 +520,7 @@ static void BS_BuyType (const base_t *base)
 		/* reset description */
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
-		MN_MenuTextReset(TEXT_STANDARD);
+		MN_ResetData(TEXT_STANDARD);
 	}
 }
 

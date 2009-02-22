@@ -1746,6 +1746,6 @@ void Irc_Input_Deactivate (void)
 {
 	irc_send_buffer->modified = qfalse;
 
-	MN_MenuTextReset(TEXT_STANDARD);
-	MN_MenuTextReset(TEXT_LIST);
+	MN_ResetData(TEXT_STANDARD);
+	MN_ResetData(TEXT_LIST);
 }

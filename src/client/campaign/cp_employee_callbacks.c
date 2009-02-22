@@ -177,7 +177,7 @@ static void E_EmployeeList_f (void)
 	}
 
 	/* make sure, that we are using the linked list */
-	MN_MenuTextReset(TEXT_LIST);
+	MN_ResetData(TEXT_LIST);
 	employeeListName = NULL;
 
 	/** @todo Use CL_GetTeamList and reduce code duplication */

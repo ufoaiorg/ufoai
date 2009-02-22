@@ -292,7 +292,7 @@ static void SCR_DrawCursor (void)
 				R_DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				*/
 				SCR_DrawString(mousePosX + icon_offset_x, mousePosY - 32, MN_GetText(TEXT_MOUSECURSOR_PLAYERNAMES), qfalse);
-				MN_MenuTextReset(TEXT_MOUSECURSOR_PLAYERNAMES);
+				MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
 
 			if (cl_mapDebug->integer & MAPDEBUG_TEXT) {

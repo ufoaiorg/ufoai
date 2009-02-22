@@ -76,7 +76,7 @@ static void MSO_InitTextList (void)
 
 	linkedList_t *messageSettingsList = NULL;
 
-	MN_MenuTextReset(TEXT_MESSAGEOPTIONS);
+	MN_ResetData(TEXT_MESSAGEOPTIONS);
 	visibleMSOEntries = 0;
 
 	for (idx = 0; idx < ccs.numMsgCategoryEntries; idx++) {

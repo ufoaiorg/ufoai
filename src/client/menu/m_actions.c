@@ -100,7 +100,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 				/* source property injection */
 				} else if (source) {
 					/* find property definition */
-					const value_t *property = MN_NodeGetPropertyDefinition(source, propertyName);
+					const value_t *property = MN_GetPropertyFromBehaviour(source->behaviour, propertyName);
 					if (property) {
 						const char* value;
 						int l;

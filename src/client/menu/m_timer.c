@@ -103,7 +103,7 @@ void MN_HandleTimers (void)
 
 		/* throw event */
 		timer->calledTime++;
-		timer->callback(timer->node, timer);
+		timer->callback(timer->owner, timer);
 
 		/* update the sorted list */
 		MN_RemoveTimerFromActiveList(timer);
@@ -133,7 +133,7 @@ menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t ca
 	if (timer == NULL)
 		Sys_Error("MN_AllocTimer: No more timer slot");
 
-	timer->node = node;
+	timer->owner = node;
 	timer->delay = firstDelay;
 	timer->callback = callback;
 	timer->calledTime = 0;
@@ -170,7 +170,7 @@ void MN_TimerRelease (menuTimer_t *timer)
 	MN_RemoveTimerFromActiveList(timer);
 	timer->prev = NULL;
 	timer->next = NULL;
-	timer->node = NULL;
+	timer->owner = NULL;
 	timer->callback = NULL;
 }
 
@@ -202,7 +202,7 @@ void MN_UnittestTimer (void)
 
 	MN_TimerStop(a);
 	MN_TimerStop(b);
-	assert(a->node != NULL);
+	assert(a->owner != NULL);
 	assert(mn_firstTimer == c);
 	assert(mn_firstTimer->next == NULL);
 
@@ -224,7 +224,7 @@ void MN_UnittestTimer (void)
 
 	MN_TimerRelease(c);
 	assert(mn_firstTimer == NULL);
-	assert(c->node == NULL);
+	assert(c->owner == NULL);
 }
 
 #endif

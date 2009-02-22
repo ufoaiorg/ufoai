@@ -236,7 +236,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		/* do we ALREADY know this node? and his type */
 		const menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
 		if (node) {
-			val = MN_NodeGetPropertyDefinition(node, *token);
+			val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
 		} else {
 			Com_Printf("MN_ParseSetAction: node \"%s\" not already know (in event), you can cast it\n", *token);
 		}
@@ -853,7 +853,7 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 
 		/* find the property */
 
-		val = MN_NodeGetPropertyDefinition(node, *token);
+		val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
 		if (!val) {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeProperties: unknown property \"%s\", node ignored (node %s)\n", *token, MN_GetPath(node));
@@ -937,7 +937,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 					return qfalse;
 			}
 
-		} else if (MN_NodeGetPropertyDefinition(node, *token)) {
+		} else if (MN_GetPropertyFromBehaviour(node->behaviour, *token)) {
 			/* we should have a block with properties only */
 			result = MN_ParseNodeProperties(node, text, token);
 		} else {
@@ -1355,7 +1355,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 				return NULL;
 
 			/* get the property */
-			val = MN_NodeGetPropertyDefinition(refNode, token);
+			val = MN_GetPropertyFromBehaviour(refNode->behaviour, token);
 			if (!val)
 				return NULL;
 
@@ -1405,7 +1405,7 @@ float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
 				return 0.0;
 
 			/* get the property */
-			val = MN_NodeGetPropertyDefinition(refNode, token);
+			val = MN_GetPropertyFromBehaviour(refNode->behaviour, token);
 			if (!val || val->type != V_FLOAT)
 				return 0.0;
 

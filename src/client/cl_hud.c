@@ -366,7 +366,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 		return;
 	}
 
-	/** @todo Why not using the MN_MenuTextReset function here? */
+	/** @todo Why not using the MN_ResetData function here? */
 	LIST_Delete(&popupListText);
 	/* also reset mn.menuTextLinkedList here - otherwise the
 	 * pointer is no longer valid (because the list was freed) */
@@ -1391,7 +1391,7 @@ void HUD_ActorUpdateCvars (void)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
 				else
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
-				MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
+				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
@@ -1419,7 +1419,7 @@ void HUD_ActorUpdateCvars (void)
 			}
 			time = actorMoveLength;
 		} else {
-			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
+			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			/* in multiplayer RS_ItemIsResearched always returns true,
 			 * so we are able to use the aliens weapons */
 			if (selWeapon && !RS_IsResearched_ptr(selWeapon->item.t->tech)) {
@@ -1450,7 +1450,7 @@ void HUD_ActorUpdateCvars (void)
 		/* handle actor in a panic */
 		if (selActor->state & STATE_PANIC) {
 			Com_sprintf(infoText, lengthof(infoText), _("Currently panics!\n"));
-			MN_MenuTextReset(TEXT_MOUSECURSOR_RIGHT);
+			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 		}
 
 		/* Find the coordiantes of the ceiling and floor we want. */

@@ -177,7 +177,7 @@ static void CL_WaitInit_f (void)
 static void CL_SelectTeam_Init_f (void)
 {
 	/* reset menu text */
-	MN_MenuTextReset(TEXT_STANDARD);
+	MN_ResetData(TEXT_STANDARD);
 
 	NET_OOB_Printf(cls.netStream, "teaminfo %i", PROTOCOL_VERSION);
 	MN_RegisterText(TEXT_STANDARD, _("Select a free team or your coop team"));

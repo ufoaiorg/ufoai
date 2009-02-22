@@ -185,7 +185,7 @@ void CL_ParseTeamInfoMessage (struct dbuffer *msg)
 	int cnt = 0, n;
 
 	if (!s) {
-		MN_MenuTextReset(TEXT_LIST);
+		MN_ResetData(TEXT_LIST);
 		Com_DPrintf(DEBUG_CLIENT, "CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
 	}

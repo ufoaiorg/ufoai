@@ -399,7 +399,7 @@ static void TR_CargoList (void)
 		}
 	}
 
-	MN_MenuTextReset(TEXT_CARGO_LIST);
+	MN_ResetData(TEXT_CARGO_LIST);
 	MN_RegisterLinkedListText(TEXT_CARGO_LIST, cargoList);
 }
 
@@ -477,7 +477,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	char str[128];
 
 	/* reset for every new call */
-	MN_MenuTextReset(TEXT_TRANSFER_LIST);
+	MN_ResetData(TEXT_TRANSFER_LIST);
 
 	/* Reset and fill temp employees arrays. */
 	for (i = 0; i < MAX_EMPL; i++) {
