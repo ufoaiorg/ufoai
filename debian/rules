@@ -44,7 +44,7 @@ debtar: clean
 
 config.status:
 	dh_testdir
-	./configure --with-curses=no --prefix=/usr
+	./configure --with-curses=no --datadir=/usr/share/games --libdir=/usr/lib/games --prefix=/usr
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
