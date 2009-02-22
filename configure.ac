@@ -1,4 +1,4 @@
-^AC_INIT()
+^AC_INIT(ufoai, 2.3-dev, tlh2000@users.sourceforge.net)
 
 AC_CONFIG_SRCDIR([src/server/sv_main.c])
 
@@ -775,6 +775,10 @@ AC_DEFINE_UNQUOTED(PKGDATADIR, "$PKGDATADIR",
 AC_SUBST(PKGDATADIR)
 
 eval BINDIR="$bindir"
+AC_DEFINE_UNQUOTED(BINDIR, "$BINDIR",
+	[Define this to the path containing the game binary.]
+)
+AC_SUBST(BINDIR)
 
 #---------------------------------------------------------------------------------------------
 
