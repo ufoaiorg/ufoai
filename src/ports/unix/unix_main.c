@@ -300,11 +300,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
 
-	Sys_LoadLibrary("game", RTLD_LAZY);
-	game_library = dlopen(name, RTLD_LAZY);
-	if (game_library)
-		Com_Printf("LoadLibrary (%s)\n", name);
-
 	/* now run through the search paths */
 	path = NULL;
 	while (!game_library) {
