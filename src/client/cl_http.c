@@ -35,9 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_http.h"
 #include "cl_parse.h"
 
-cvar_t	*cl_http_downloads;
-cvar_t	*cl_http_filelists;
-cvar_t	*cl_http_max_connections;
+static cvar_t *cl_http_downloads;
+static cvar_t *cl_http_filelists;
+static cvar_t *cl_http_max_connections;
 
 enum {
 	HTTPDL_ABORT_NONE,
@@ -801,4 +801,11 @@ void CL_RunHTTPDownloads (void)
 	if (pendingCount && abortDownloads == HTTPDL_ABORT_NONE &&
 		!downloading_pak && handleCount < cl_http_max_connections->integer)
 		CL_StartNextHTTPDownload();
+}
+
+void HTTP_InitStartup (void)
+{
+	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
+	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
+	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
 }

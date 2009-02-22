@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern const char *ev_format[128];
 extern qboolean blockEvents;
+extern cvar_t *cl_logevents;
+
 void CL_BlockEvents(void);
 void CL_UnblockEvents(void);
 

@@ -55,13 +55,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "multiplayer/mp_serverlist.h"
 #include "multiplayer/mp_team.h"
 
-cvar_t *cl_isometric;
-
 cvar_t *cl_fps;
 cvar_t *cl_particleweather;
 cvar_t *cl_leshowinvis;
-cvar_t *cl_logevents;
-cvar_t *cl_centerview;
 cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
@@ -808,9 +804,9 @@ static void CL_InitLocal (void)
 	TOTD_InitStartup();
 	HUD_InitStartup();
 	INV_InitStartup();
+	HTTP_InitStartup();
 
 	/* register our variables */
-	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
@@ -832,12 +828,7 @@ static void CL_InitLocal (void)
 
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
-	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
-	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
-	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
-
 	cl_mapDebug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
-
 
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");

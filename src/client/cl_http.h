@@ -35,5 +35,6 @@ qboolean CL_PendingHTTPDownloads(void);
 void CL_SetHTTPServer(const char *URL);
 void CL_HTTP_Cleanup(void);
 void CL_RequestNextDownload(void);
+void HTTP_InitStartup(void);
 
 #endif /* __CLIENT_HTTP_H__ */

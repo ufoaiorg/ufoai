@@ -39,6 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "multiplayer/mp_chatmessages.h"
 
+cvar_t *cl_logevents;
+
 /**
  * @brief see also svc_ops_e in common.h
  * @note don't change the array size - a NET_ReadByte can

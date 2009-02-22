@@ -66,6 +66,9 @@ extern int mouseSpace;
 extern int mousePosX, mousePosY;
 extern const float MIN_ZOOM, MAX_ZOOM;
 
+extern cvar_t *cl_centerview;
+extern cvar_t *cl_camzoommin;
+
 void IN_Init(void);
 void IN_Frame(void);
 void IN_SendKeyEvents(void);

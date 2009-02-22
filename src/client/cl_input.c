@@ -344,6 +344,8 @@ static cvar_t *cl_campitchmin;
 static cvar_t *cl_camzoomquant;
 static cvar_t *cl_camzoommax;
 cvar_t *cl_camzoommin;
+cvar_t *cl_centerview;
+cvar_t *cl_isometric;
 
 #define MIN_CAMROT_SPEED	50
 #define MIN_CAMROT_ACCEL	50
@@ -1572,6 +1574,7 @@ void IN_Init (void)
 	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
 	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
+	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
 
 	/* commands */
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
@@ -1615,7 +1618,6 @@ void IN_Init (void)
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toggle to next alien"));
 	Cmd_AddCommand("drawspottedlines", CL_DrawSpottedLines_f, _("Draw a line to each alien visible to the current actor."));
 	Cmd_AddCommand("nextalienactor", CL_NextAlienVisibleFromActor_f, _("Toggle to next alien visible from selected actor."));
-
 
 	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
 	Cmd_AddCommand("dooraction", CL_ActorDoorAction_f, _("Opens or closes a door"));

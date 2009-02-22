@@ -247,20 +247,13 @@ typedef enum {
 #define N_(String) gettext_noop (String)
 
 /* cvars */
-extern cvar_t *cl_http_downloads;
-extern cvar_t *cl_http_filelists;
-extern cvar_t *cl_http_max_connections;
-extern cvar_t *cl_isometric;
 extern cvar_t *cl_particleweather;
 extern cvar_t *cl_leshowinvis;
 extern cvar_t *cl_fps;
-extern cvar_t *cl_logevents;
-extern cvar_t *cl_centerview;
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
 extern cvar_t *cl_team;
 extern cvar_t *cl_teamnum;
-extern cvar_t *cl_camzoommin;
 
 extern cvar_t *s_language;
 

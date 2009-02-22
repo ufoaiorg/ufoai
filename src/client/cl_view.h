@@ -31,4 +31,6 @@ void V_CenterView(const pos3_t pos);
 void V_CalcFovX(void);
 void V_LoadMedia(void);
 
+extern cvar_t *cl_isometric;
+
 #endif
