@@ -109,3 +109,14 @@ Description: UFO: Alien Invasion - map-building tool
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
  This package includes the map-building tool.
+
+Package: ufoai-map-sources
+Section: games
+Priority: optional
+Architecture: any
+Depends: ${shlibs:Depends}, ufoai-tools
+Recommends: ufoai-radiant
+Description: UFO: Alien Invasion - map-sources
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ This package includes the map-sources. Edit them with UFORadiant.
