@@ -313,9 +313,9 @@ qboolean MN_IsInjectedString (const char *string)
  * @param[in] data The data for this action - in case of EA_CMD this is the commandline
  * @note You first have to free existing node actions - only free those that are
  * not static in mn.menuActions array
- * @todo check this code
+ * @todo we should create a function to free the memory
  */
-menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *data)
+void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 {
 	if (*action)
 		Sys_Error("There is already an action assigned");
@@ -328,6 +328,4 @@ menuAction_t *MN_SetMenuAction (menuAction_t** action, int type, const void *dat
 	default:
 		Sys_Error("Action type %i is not yet implemented", type);
 	}
-
-	return *action;
 }

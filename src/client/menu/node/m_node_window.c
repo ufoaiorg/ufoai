@@ -142,7 +142,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		button->pos[0] = node->size[0] - positionFromRight - button->size[0];
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
-		MN_SetMenuAction(&button->onClick, EA_CMD, command);
+		MN_PoolAllocAction(&button->onClick, EA_CMD, command);
 		MN_AppendNode(node, button);
 	}
 

@@ -41,8 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_model.h"
 
 /**
- * @todo Maybe merge cl_menuSysPool and mn.adata (same usage)
- * @todo Menu must manage itself cl_menuSysPool (initialisation), if not possible, the outside must set it with a menu function. Anywhere it need a private access (menu only).
+ * @todo Menu should manage itself cl_menuSysPool (initialisation), or provide a setter
  */
 typedef struct menuGlobal_s {
 
