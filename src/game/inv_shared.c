@@ -729,18 +729,17 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 			return qtrue;
 		}
 
+		if (container->single && ic->next)
+			Com_Printf("Com_RemoveFromInventory: Error: single container %s has many items.\n", container->name);
+
 		/* An item in other containers than idFloor or idEquip should
 		 * always have an amount value of 1.
 		 * The other container types do not support stacking.*/
 		assert(ic->item.amount == 1);
-		oldUnused = invUnused;
-		invUnused = ic;
+
 		i->c[container->id] = ic->next;
-
-		if (container->single && ic->next)
-			Com_Printf("Com_RemoveFromInventory: Error: single container %s has many items.\n", container->name);
-
-		invUnused->next = oldUnused;
+		ic->next = invUnused;
+		invUnused = ic;
 		return qtrue;
 	}
 
