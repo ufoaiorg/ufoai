@@ -5,8 +5,8 @@
 menu physdata
 {
 	{
-		pos "256 96"
-		size "512 512"
+		pos			"256 96"
+		size		"512 512"
 	}
 
 	// ==================
@@ -15,15 +15,16 @@ menu physdata
 
 	pic bar_physdata
 	{
-		image	hud/bar_phys
-		pos		"0 0"
+		image		hud/bar_phys
+		pos			"0 0"
 		click
 	}
 
 	string actorname
 	{
-		string	"*cvar mn_name"
-		pos		"27 27"
+		string		"*cvar mn_name"
+		pos			"26 25"
+		size		"165 20"
 	}
 
 	// ==================
@@ -43,57 +44,57 @@ menu physdata
 
 	model head
 	{
-		model	"*cvar mn_head"
-		skin	"*cvar mn_skin"
-		tag		"actor tag_head"
+		model		"*cvar mn_head"
+		skin		"*cvar mn_skin"
+		tag			"actor tag_head"
 	}
 
 	// ==================
 	// abilities
 	// ==================
 
-	string pwr_lbl { pos "224 32"  string "_Strength:" }
-	string pwr_val { pos "488 32"  string "*cvar mn_tpwr" align ur }
+	string pwr_lbl { pos "220 32" size "150 20" string "_Strength:" }
+	string pwr_val { pos "365 32" size "120 20"  string "*cvar mn_tpwr" textalign ur }
 	pic pwr_bdr    { pos "222 48"  image menu/bar_border }
 	tbar pwr_bar   { pos "226 48"  current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string spd_lbl { pos "224 64" string "_Speed:" }
-	string spd_val { pos "488 64" string "*cvar mn_tspd" align ur }
+	string spd_lbl { pos "220 64" size "150 20" string "_Speed:" }
+	string spd_val { pos "365 64" size "120 20" string "*cvar mn_tspd" textalign ur }
 	pic spd_bdr    { pos "222 80" image menu/bar_border }
 	tbar spd_bar   { pos "226 80" current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string acc_lbl { pos "224 96" string "_Accuracy:" }
-	string acc_val { pos "488 96" string "*cvar mn_tacc" align ur }
+	string acc_lbl { pos "220 96" size "150 20" string "_Accuracy:" }
+	string acc_val { pos "365 96" size "120 20" string "*cvar mn_tacc" textalign ur }
 	pic acc_bdr    { pos "222 112" image menu/bar_border }
 	tbar acc_bar   { pos "226 112" current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string mnd_lbl { pos "224 128" string "_Mind:" }
-	string mnd_val { pos "488 128" string "*cvar mn_tmnd" align ur }
+	string mnd_lbl { pos "220 128" size "150 20" string "_Mind:" }
+	string mnd_val { pos "365 128" size "120 20" string "*cvar mn_tmnd" textalign ur }
 	pic mnd_bdr    { pos "222 144" image menu/bar_border }
 	tbar mnd_bar   { pos "226 144" current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string cls_lbl { pos "224 166" string "_Close Combat:" }
-	string cls_val { pos "488 166" string "*cvar mn_tcls" align ur }
+	string cls_lbl { pos "220 166" size "150 20" string "_Close Combat:" }
+	string cls_val { pos "365 166" size "120 20" string "*cvar mn_tcls" textalign ur }
 	pic cls_bdr    { pos "222 182" image menu/bar_border }
 	tbar cls_bar   { pos "226 182" current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string hvy_lbl { pos "224 198" string "_Heavy Weapons:" }
-	string hvy_val { pos "488 198" string "*cvar mn_thvy" align ur }
+	string hvy_lbl { pos "220 198" size "150 20" string "_Heavy Weapons:" }
+	string hvy_val { pos "365 198" size "120 20" string "*cvar mn_thvy" textalign ur }
 	pic hvy_bdr    { pos "222 214" image menu/bar_border }
 	tbar hvy_bar   { pos "226 214" current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string ass_lbl { pos "224 230" string "_Assault Weapons:" }
-	string ass_val { pos "488 230" string "*cvar mn_tass" align ur }
+	string ass_lbl { pos "220 230" size "150 20" string "_Assault Weapons:" }
+	string ass_val { pos "365 230" size "120 20" string "*cvar mn_tass" textalign ur }
 	pic ass_bdr    { pos "222 246" image menu/bar_border }
 	tbar ass_bar   { pos "226 246" current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string snp_lbl { pos "224 262" string "_Sniper Rifles:" }
-	string snp_val { pos "488 262" string "*cvar mn_tsnp" align ur }
+	string snp_lbl { pos "220 262" size "150 20" string "_Sniper Rifles:" }
+	string snp_val { pos "365 262" size "120 20" string "*cvar mn_tsnp" textalign ur }
 	pic snp_bdr    { pos "222 278" image menu/bar_border }
 	tbar snp_bar   { pos "226 278" current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string exp_lbl { pos "224 296" string "_High-Explosives:" }
-	string exp_val { pos "488 296" string "*cvar mn_texp" align ur }
+	string exp_lbl { pos "220 296" size "150 20" string "_High-Explosives:" }
+	string exp_val { pos "365 296" size "120 20" string "*cvar mn_texp" textalign ur }
 	pic exp_bdr    { pos "222 312" image menu/bar_border }
 	tbar exp_bar   { pos "226 312" current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
@@ -103,28 +104,30 @@ menu physdata
 
 	string hp_val
 	{
-		string	"*cvar mn_hp"
-		pos		"440 376"
-		align	uc
+		string		"*cvar mn_hp"
+		pos			"415 376"
+		size		"50 20"
+		textalign	uc
 	}
 	pic ekg_hp
 	{
-		image	hud/phys_ekg_noclamp
-		pos		"78 369"
-		size	"324 32"
+		image		hud/phys_ekg_noclamp
+		pos			"78 369"
+		size		"324 32"
 	}
 
 	string morale_val
 	{
-		string	"*cvar mn_morale"
-		pos		"440 416"
-		align	uc
+		string		"*cvar mn_morale"
+		pos			"415 416"
+		size		"50 20"
+		textalign	uc
 	}
 	pic ekg_morale
 	{
-		image	hud/phys_mor_noclamp
-		pos		"78 408"
-		size	"324 32"
+		image		hud/phys_mor_noclamp
+		pos			"78 408"
+		size		"324 32"
 	}
 
 	// ==================
@@ -133,11 +136,13 @@ menu physdata
 
 	custombutton button_exit
 	{
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos		"428 458"
-		icon return
-		click	{ cmd "mn_pop;" }
+		image		menu/button_background
+		blend		true
+		pos			"428 458"
+		size		"64 37"
+		texl		"192 0"
+		icon		return
+		click		{ cmd "mn_pop;" }
 	}
 }
 
@@ -149,20 +154,20 @@ menu hudphysdat extends physdata
 {
 	zone bt_physdata
 	{
-		image	hud/buttons1
-		mousefx true
-		pos		"983 266"
-		size	"36 75"
-		click	{ cmd "mn_pop;" }
+		image		hud/buttons1
+		mousefx		true
+		pos			"983 266"
+		size		"36 75"
+		click		{ cmd "mn_pop;" }
 	}
 
 	zone bt_inventory
 	{
-		image	hud/buttons1
-		mousefx true
-		pos		"983 376"
-		size	"36 75"
-		click	{ cmd "mn_pop;" }
+		image		hud/buttons1
+		mousefx		true
+		pos			"983 376"
+		size		"36 75"
+		click		{ cmd "mn_pop;" }
 	}
 	func leave
 	{
@@ -178,11 +183,11 @@ menu ahudphysdat extends physdata
 {
 	zone zone_clickright
 	{
-		tooltip "_Inventory and physical stats"
-		pos     "878 84"
-		size    "130 265"
-		click   { cmd "mn_pop;" }
-		rclick  { cmd "mn_pop;" }
+		tooltip		"_Inventory and physical stats"
+		pos			"878 84"
+		size		"130 265"
+		click		{ cmd "mn_pop;" }
+		rclick		{ cmd "mn_pop;" }
 	}
 	func leave
 	{
