@@ -44,7 +44,7 @@ debtar: clean
 
 config.status:
 	dh_testdir
-	./configure --without-curses --prefix=/usr
+	./configure --with-curses=no --prefix=/usr
 
 build-arch: stamps/build-arch
 stamps/build-arch: config.status
@@ -76,8 +76,6 @@ really_clean:
 	# WARNING: building maps takes ages
 	# find base/maps -name '*.bsp' | xargs --no-run-if-empty rm
 	-rm base/*.pk3
-
-	-rm debian/ufoai-i18n-*.install
 	-rm Makefile config.h config.log config.status
 	-rm -rf base/i18n
 	dh_clean
