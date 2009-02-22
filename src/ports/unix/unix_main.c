@@ -300,9 +300,14 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	Com_Printf("------- Loading game.%s -------\n", SHARED_EXT);
 
+	Sys_LoadLibrary("game", RTLD_LAZY);
+	game_library = dlopen(name, RTLD_LAZY);
+	if (game_library)
+		Com_Printf("LoadLibrary (%s)\n", name);
+
 	/* now run through the search paths */
 	path = NULL;
-	while (1) {
+	while (!game_library) {
 		path = FS_NextPath(path);
 		if (!path) {
 			Com_Printf("LoadLibrary failed (game."SHARED_EXT")\n");
@@ -372,7 +377,7 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	else
 		Com_DPrintf(DEBUG_SYSTEM, "%s\n", dlerror());
 
-	/* and not both again but without CPUSTRING */
+	/* and now both again but without CPUSTRING */
 	/* system wide */
 	Com_sprintf(libName, sizeof(libName), "%s.%s", name, SHARED_EXT);
 	Com_DPrintf(DEBUG_SYSTEM, "Sys_LoadLibrary: try %s\n", libName);
