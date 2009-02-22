@@ -192,7 +192,7 @@ static void MN_SetModelTransform_f (void)
 
 static void MN_ModelNodeDraw (menuNode_t *node)
 {
-	const char* ref = MN_GetReferenceString(node, node->model);
+	const char* ref = MN_GetReferenceString(node, node->u.model.model);
 	char source[MAX_VAR];
 	if (ref == NULL || ref[0] == '\0')
 		source[0] = '\0';
@@ -278,7 +278,6 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 
 /**
  * @brief Draw a model using "menu model" definition
- * @note "menu model" should be deprecated
  */
 static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
 {
@@ -419,7 +418,7 @@ static const char* MN_ModelNodeGetAnchorFromTag (const char* tag)
 
 
 /**
- * @todo Menu models should inherit the node values from their parent
+ * @todo Menu models should inherite the node values from their parent
  * @todo need to merge menuModel case, and the common case (look to be a copy-pasted code)
  */
 void MN_DrawModelNode (menuNode_t *node, const char *source)
@@ -434,7 +433,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	if (source[0] == '\0')
 		return;
 
-	menuModel = node->u.model.menuModel = MN_GetMenuModel(source);
+	menuModel = MN_GetMenuModel(source);
 	/* direct model name - no menumodel definition */
 	if (!menuModel) {
 		/* prevent the searching for a menumodel def in the next frame */
@@ -488,8 +487,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	mi.backlerp = 0;
 
 	/* get skin */
-	if (node->skin && *(char *) node->skin)
-		mi.skin = atoi(MN_GetReferenceString(node, node->skin));
+	if (node->u.model.skin && *(char *) node->u.model.skin)
+		mi.skin = atoi(MN_GetReferenceString(node, node->u.model.skin));
 	else
 		mi.skin = 0;
 
@@ -560,7 +559,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			tag = MN_ModelNodeGetAnchorFromTag(tag);
 
 			/* init model name */
-			childRef = MN_GetReferenceString(child, child->model);
+			childRef = MN_GetReferenceString(child, child->u.model.model);
 			if (childRef == NULL || childRef[0] == '\0')
 				childSource[0] = '\0';
 			else
@@ -569,8 +568,8 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			mi.name = childSource;
 
 			/* init skin */
-			if (child->skin && *(char *) child->skin)
-				mi.skin = atoi(MN_GetReferenceString(child, child->skin));
+			if (child->u.model.skin && *(char *) child->u.model.skin)
+				mi.skin = atoi(MN_GetReferenceString(child, child->u.model.skin));
 			else
 				mi.skin = 0;
 
@@ -679,7 +678,8 @@ static const value_t properties[] = {
 	{"autoscale", V_BOOL, offsetof(menuNode_t, u.model.autoscale), MEMBER_SIZEOF(menuNode_t, u.model.autoscale)},
 	{"rotatewithmouse", V_BOOL, offsetof(menuNode_t, u.model.rotateWithMouse), MEMBER_SIZEOF(menuNode_t, u.model.rotateWithMouse)},
 	{"clipoverflow", V_BOOL, offsetof(menuNode_t, u.model.clipOverflow), MEMBER_SIZEOF(menuNode_t, u.model.clipOverflow)},
-	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, model), 0},
+	{"model", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.model), 0},
+	{"skin", V_CVAR_OR_STRING, offsetof(menuNode_t, u.model.skin), 0},
 
 	{NULL, V_NULL, 0, 0}
 };

@@ -74,7 +74,6 @@ static const value_t properties[] = {
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
 	{"image", V_CVAR_OR_STRING, offsetof(menuNode_t, image), 0},
 	{"cvar", V_SPECIAL_CVAR, offsetof(menuNode_t, cvar), 0},
-	{"skin", V_CVAR_OR_STRING, offsetof(menuNode_t, skin), 0},
 	{"string", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, text), 0},	/* no gettext here - this can be a cvar, too */
 	/** @todo use V_REF_OF_STRING when its possible ('font' is never a cvar) */
 	{"font", V_CVAR_OR_STRING, offsetof(menuNode_t, font), 0},

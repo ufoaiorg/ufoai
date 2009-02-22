@@ -98,8 +98,6 @@ typedef struct menuNode_s {
 
 	/** @todo needs cleanup */
 	void* image;
-	void* model;
-	void* skin;
 	void* cvar;
 
 	/* common color */

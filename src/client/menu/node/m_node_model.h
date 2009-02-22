@@ -69,7 +69,8 @@ typedef struct modelExtraData_s {
 	vec3_t angles;
 	vec3_t origin;
 	vec3_t scale;
-	struct menuModel_s *menuModel;		/**< pointer to menumodel definition from models.ufo */
+	void* skin;
+	void* model;
 	void* tag;					/**< the tag to place the model onto */
 	void* animationState;		/**< holds then anim state for the current model */
 	void* animation;			/**< Anim string from the *.anm files */
