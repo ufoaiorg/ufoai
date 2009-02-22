@@ -102,6 +102,7 @@ CLIENT_SRCS = \
 	client/menu/m_icon.c \
 	client/menu/m_input.c \
 	client/menu/m_main.c \
+	client/menu/m_menus.c \
 	client/menu/m_nodes.c \
 	client/menu/m_parse.c \
 	client/menu/m_popup.c \

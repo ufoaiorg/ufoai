@@ -609,6 +609,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\m_main.h" />
+		<Unit filename="..\..\src\client\menu\m_menus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\m_menus.h" />
 		<Unit filename="..\..\src\client\menu\m_nodes.c">
 			<Option compilerVar="CC" />
 		</Unit>
