@@ -439,7 +439,7 @@ size_t UTF8_strlen (const char *str)
 	assert(str);
 
 	while (str[0] != '\0') {
-		const byte n = UTF8_char_len((unsigned char)*str);
+		const int n = UTF8_char_len((unsigned char)*str);
 		assert(n > 0);
 		str += n;
 		result++;
