@@ -1308,6 +1308,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 /**
  * @sa COM_MacroExpandString
+ * @todo should review this code, '*' dont check very well every things
  */
 const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref)
 {
@@ -1318,8 +1319,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 	if (*ref == '*') {
 		char ident[MAX_VAR];
 		const char *text, *token;
-		char command[MAX_VAR];
-		char param[MAX_VAR];
+		char command[MAX_VAR] = "\0";
 
 		/* get the reference and the name */
 		text = COM_MacroExpandString(ref);
@@ -1331,23 +1331,23 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 		if (!text)
 			return NULL;
 		Q_strncpyz(ident, token, sizeof(ident));
-		token = COM_Parse(&text);
-		if (!text)
-			return NULL;
 
 		if (!Q_strncmp(ident, "binding", 7)) {
 			/* get the cvar value */
-			if (*text && *text <= ' ') {
-				/* check command and param */
-				Q_strncpyz(command, token, sizeof(command));
-				token = COM_Parse(&text);
-				Q_strncpyz(param, token, sizeof(param));
-				/*Com_sprintf(token, sizeof(token), "%s %s", command, param);*/
+			if (*text) {
+				if (*text == ' ')
+					text++;
+				/* copy the comand and params */
+				Q_strncpyz(command, text, sizeof(command));
 			}
-			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
+			return Key_GetBinding(command, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else {
 			menuNode_t *refNode;
 			const value_t *val;
+
+			token = COM_Parse(&text);
+			if (!text)
+				return NULL;
 
 			/* draw a reference to a node property */
 			refNode = MN_GetNode(node->menu, ident);

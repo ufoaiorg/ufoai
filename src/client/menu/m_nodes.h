@@ -74,7 +74,6 @@ typedef struct menuNode_s {
 	vec2_t size;
 
 	/* common attributes */
-	char key[MAX_VAR];			/**< key bindings - used as tooltip */
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	qboolean state;				/**< is node hovered */
@@ -89,6 +88,7 @@ typedef struct menuNode_s {
 	char* text;
 	const char* font;			/**< Font to draw text */
 	const char* tooltip;		/**< holds the tooltip */
+	const char *key;			/**< key bindings - used as tooltip */
 	struct menuIcon_s *icon;	/**< Link to an icon */
 
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */

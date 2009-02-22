@@ -1,6 +1,5 @@
 /**
  * @file m_dragndrop.h
- * @todo create generic function usable by every nodes
  */
 
 /*

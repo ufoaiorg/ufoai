@@ -39,7 +39,7 @@ static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
  * @todo R_FontLength can change the string - which is very very bad for reference values and item names.
  * @todo Check for max height as well? (multi-line tooltips)
  */
-int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, int maxHeight)
+int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxWidth, int maxHeight)
 {
 	int height = 0, width = 0;
 	int lines = 5;
@@ -79,23 +79,37 @@ int MN_DrawTooltip (const char *font, char *string, int x, int y, int maxWidth, 
  */
 void MN_Tooltip (menuNode_t *node, int x, int y)
 {
-	const char *tooltip;
-	int maxWidth = 200;
+	const char *string;
+	const char *key = NULL;
+	const char *tooltip = NULL;
+	static const int maxWidth = 200;
 
-	/* maybe no tooltip but a key entity? */
-	if (node->tooltip) {
-		char buf[256]; /** @todo @sa MN_DrawTooltip */
+	/* check values */
+	if (node->key)
+		key = MN_GetReferenceString(node, node->key);
+	if (node->tooltip)
 		tooltip = MN_GetReferenceString(node, node->tooltip);
-		Q_strncpyz(buf, tooltip, sizeof(buf));
-		MN_DrawTooltip("f_small", buf, x, y, maxWidth, 0);
-	} else if (node->key[0]) {
-		if (node->key[0] == '*') {
-			tooltip = MN_GetReferenceString(node, node->key);
-			if (tooltip)
-				Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), tooltip);
-		}
-		MN_DrawTooltip("f_verysmall", node->key, x, y, maxWidth, 0);
+
+	/* normalize */
+	if (tooltip && tooltip[0] == '\0')
+		tooltip = NULL;
+	if (key && key[0] == '\0')
+		key = NULL;
+
+	/* create tooltip */
+	if (key && tooltip) {
+		char buf[MAX_VAR];
+		Com_sprintf(buf, sizeof(buf), _("Key: %s"), key);
+		string = va("%s\n%s", tooltip, buf);
+	} else if (tooltip) {
+		string = tooltip;
+	} else if (key) {
+		string = va(_("Key: %s"), key);
+	} else {
+		return;
 	}
+
+	MN_DrawTooltip("f_verysmall", string, x, y, maxWidth, 0);
 }
 
 /**
