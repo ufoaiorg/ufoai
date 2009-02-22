@@ -36,23 +36,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int CL_GetAlienMissionTypeByID (const char *type)
 {
-	if (!Q_strncmp(type, "recon", MAX_VAR))
+	if (!Q_strcmp(type, "recon"))
 		return INTERESTCATEGORY_RECON;
-	else if (!Q_strncmp(type, "terror", MAX_VAR))
+	else if (!Q_strcmp(type, "terror"))
 		return INTERESTCATEGORY_TERROR_ATTACK;
-	else if (!Q_strncmp(type, "baseattack", MAX_VAR))
+	else if (!Q_strcmp(type, "baseattack"))
 		return INTERESTCATEGORY_BASE_ATTACK;
-	else if (!Q_strncmp(type, "building", MAX_VAR))
+	else if (!Q_strcmp(type, "building"))
 		return INTERESTCATEGORY_BUILDING;
-	else if (!Q_strncmp(type, "supply", MAX_VAR))
+	else if (!Q_strcmp(type, "supply"))
 		return INTERESTCATEGORY_SUPPLY;
-	else if (!Q_strncmp(type, "xvi", MAX_VAR))
+	else if (!Q_strcmp(type, "xvi"))
 		return INTERESTCATEGORY_XVI;
-	else if (!Q_strncmp(type, "intercept", MAX_VAR))
+	else if (!Q_strcmp(type, "intercept"))
 		return INTERESTCATEGORY_INTERCEPT;
-	else if (!Q_strncmp(type, "harvest", MAX_VAR))
+	else if (!Q_strcmp(type, "harvest"))
 		return INTERESTCATEGORY_HARVEST;
-	else if (!Q_strncmp(type, "alienbase", MAX_VAR))
+	else if (!Q_strcmp(type, "alienbase"))
 		return INTERESTCATEGORY_ALIENBASE;
 	else {
 		Com_Printf("CL_GetAlienMissionTypeByID: unknown alien mission category '%s'\n", type);
@@ -527,42 +527,44 @@ void CL_ParseCampaign (const char *name, const char **text)
 static void CL_ParseScriptFirst (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "up_chapters", 11))
+	if (!Q_strcmp(type, "up_chapters"))
 		UP_ParseChapters(name, text);
-	else if (!Q_strncmp(type, "building", 8))
+	else if (!Q_strcmp(type, "building"))
 		B_ParseBuildings(name, text, qfalse);
-	else if (!Q_strncmp(type, "installation", 13))
+	else if (!Q_strcmp(type, "installation"))
 		INS_ParseInstallations(name, text);
-	else if (!Q_strncmp(type, "researched", 10))
+	else if (!Q_strcmp(type, "researched"))
 		CL_ParseResearchedCampaignItems(name, text);
-	else if (!Q_strncmp(type, "researchable", 12))
+	else if (!Q_strcmp(type, "researchable"))
 		CL_ParseResearchableCampaignStates(name, text, qtrue);
-	else if (!Q_strncmp(type, "notresearchable", 15))
+	else if (!Q_strcmp(type, "notresearchable"))
 		CL_ParseResearchableCampaignStates(name, text, qfalse);
-	else if (!Q_strncmp(type, "tech", 4))
+	else if (!Q_strcmp(type, "tech"))
 		RS_ParseTechnologies(name, text);
-	else if (!Q_strncmp(type, "installationnames", 17))
+	else if (!Q_strcmp(type, "installationnames"))
 		INS_ParseInstallationNames(name, text);
-	else if (!Q_strncmp(type, "basetemplate", 10))
+	else if (!Q_strcmp(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
-	else if (!Q_strncmp(type, "nation", 6))
+	else if (!Q_strcmp(type, "nation"))
 		CL_ParseNations(name, text);
-	else if (!Q_strncmp(type, "city", 4))
+	else if (!Q_strcmp(type, "city"))
 		CL_ParseCities(name, text);
-	else if (!Q_strncmp(type, "rank", 4))
+	else if (!Q_strcmp(type, "rank"))
 		CL_ParseRanks(name, text);
-	else if (!Q_strncmp(type, "mail", 4))
+	else if (!Q_strcmp(type, "aircraft"))
+		AIR_ParseAircraft(name, text, qfalse);
+	else if (!Q_strcmp(type, "mail"))
 		CL_ParseEventMails(name, text);
-	else if (!Q_strncmp(type, "components", 10))
+	else if (!Q_strcmp(type, "components"))
 		INV_ParseComponents(name, text);
-	else if (!Q_strncmp(type, "alienteam", 9))
+	else if (!Q_strcmp(type, "alienteam"))
 		CL_ParseAlienTeam(name, text);
-	else if (!Q_strncmp(type, "msgoptions", 10))
+	else if (!Q_strcmp(type, "msgoptions"))
 		MSO_ParseSettings(name, text);
-	else if (!Q_strncmp(type, "msgcategory", 11))
+	else if (!Q_strcmp(type, "msgcategory"))
 		MSO_ParseCategories(name, text);
 #if 0
-	else if (!Q_strncmp(type, "medal", 5))
+	else if (!Q_strcmp(type, "medal"))
 		Com_ParseMedalsAndRanks(name, &text, qfalse);
 #endif
 }
@@ -582,11 +584,11 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 static void CL_ParseScriptSecond (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
-	if (!Q_strncmp(type, "building", 8))
+	if (!Q_strcmp(type, "building"))
 		B_ParseBuildings(name, text, qtrue);
-	else if (!Q_strncmp(type, "aircraft", 8))
+	else if (!Q_strcmp(type, "aircraft"))
 		AIR_ParseAircraft(name, text, qtrue);
-	else if (!Q_strncmp(type, "ugv", 3))
+	else if (!Q_strcmp(type, "ugv"))
 		CL_ParseUGVs(name, text);
 }
 

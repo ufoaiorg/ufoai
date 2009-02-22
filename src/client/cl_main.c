@@ -690,8 +690,6 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		CL_ParseParticle(name, text);
 	else if (!Q_strncmp(type, "sequence", 8))
 		CL_ParseSequence(name, text);
-	else if (!Q_strncmp(type, "aircraft", 8))
-		AIR_ParseAircraft(name, text, qfalse);
 	else if (!Q_strncmp(type, "campaign", 8))
 		CL_ParseCampaign(name, text);
 	else if (!Q_strncmp(type, "music", 5))
