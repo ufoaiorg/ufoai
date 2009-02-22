@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <game
   name="UFO:Alien Invasion"
-  enginepath_win32="c:/ufoai/"
-  enginepath_linux="/usr/local/games/ufoai/"
-  enginepath_macos="/Applications/UFOAI/"
-  engine_win32="ufo.exe"
-  engine_linux="ufo"
-  engine_macos="Ufo"
   basegame="base"
   basegamename="UFO:Alien Invasion"
   archivetypes="pk3"
