@@ -179,7 +179,7 @@ void CL_Drop (void)
 
 	/* make sure that we are in the correct menus in singleplayer after
 	 * dropping the game due to a failure */
-	if (GAME_IsSingleplayer() && curCampaign) {
+	if (GAME_IsCampaign()) {
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
 		MN_PushMenu("map", NULL);
@@ -191,11 +191,11 @@ void CL_Drop (void)
 		Cbuf_Execute();
 	}
 
-	if (*mn_afterdrop->string) {
+	if (mn_afterdrop->string[0] != '\0') {
 		MN_PushMenu(mn_afterdrop->string, NULL);
 		Cvar_Set("mn_afterdrop", "");
 	}
-	if (*mn_main_afterdrop->string) {
+	if (mn_main_afterdrop->string[0] != '\0') {
 		Cvar_Set("mn_main", mn_main_afterdrop->string);
 		Cvar_Set("mn_main_afterdrop", "");
 	}
