@@ -22,14 +22,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../renderer/r_draw.h"
-#include "../../cl_view.h"
-#include "../../cl_actor.h"
 #include "../m_main.h"
 #include "../m_font.h"
 #include "m_node_radar.h"
 #include "m_node_abstractnode.h"
+
+#include "../../client.h"
+#include "../../renderer/r_draw.h"
+#include "../../cl_view.h"
+#include "../../cl_actor.h"
 #include "../../../shared/parse.h"
 
 /** @brief Each maptile must have an entry in the images array */

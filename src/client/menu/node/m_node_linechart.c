@@ -22,14 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../renderer/r_draw.h"
-#include "../../renderer/r_misc.h"
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_internal.h"
 #include "m_node_abstractnode.h"
 #include "m_node_linechart.h"
+
+#include "../../renderer/r_draw.h"
+#include "../../renderer/r_misc.h"
 
 static void MN_LineChartNodeDraw (menuNode_t *node)
 {

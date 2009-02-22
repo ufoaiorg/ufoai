@@ -22,8 +22,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../campaign/cl_airfightmap.h"
 #include "../m_main.h"
 #include "../m_draw.h"
 #include "../m_parse.h"
@@ -31,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_nodes.h"
 #include "m_node_model.h"
 #include "m_node_airfightmap.h"
+
+#include "../../client.h"
+#include "../../campaign/cl_airfightmap.h"
 
 #define MAX_AIRFIGHT_ZOOM	35.0
 #define MIN_AIRFIGHT_ZOOM	5.0

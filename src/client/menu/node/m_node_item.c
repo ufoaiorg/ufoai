@@ -22,13 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../m_parse.h"
 #include "../m_nodes.h"
+#include "../m_parse.h"
 #include "m_node_model.h"
 #include "m_node_item.h"
 #include "m_node_container.h"
 #include "m_node_abstractnode.h"
+
+#include "../../client.h" /* aircraft_t */
 
 /**
  * @brief Draw an item node
@@ -61,6 +62,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 			MN_DrawModelNode(node, item.t->model);
 		}
 	} else {
+		/** @todo remove this - this is campaign mode only */
 		const aircraft_t *aircraft = AIR_GetAircraft(ref);
 		if (aircraft) {
 			assert(aircraft->tech);

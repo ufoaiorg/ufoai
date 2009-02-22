@@ -23,8 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../renderer/r_draw.h"
 #include "../m_main.h"
 #include "../m_internal.h"
 #include "../m_font.h"
@@ -32,6 +30,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_parse.h"
 #include "m_node_text.h"
 #include "m_node_abstractnode.h"
+
+#include "../../client.h"
+#include "../../renderer/r_draw.h"
 #include "../../../shared/parse.h"
 
 #define EXTRADATA(node) (node->u.text)
@@ -391,6 +392,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
  * rather than a count of linewrapped lines. The result is that
  * scrolling of the message window scrolls message by message,
  * which looks better anyway.
+ * @todo Campaign mode only function
  */
 static void MN_TextNodeDrawMessageList (menuNode_t *node, const message_t *messageStack)
 {

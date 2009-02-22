@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../renderer/r_draw.h"
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "../m_timer.h"
@@ -35,6 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "m_node_abstractscrollbar.h"
 #include "m_node_vscrollbar.h"
+
+#include "../../cl_input.h"
+#include "../../cl_keys.h"
+#include "../../renderer/r_draw.h"
 
 static const int TILE_WIDTH = 32;
 static const int TILE_HEIGHT = 18;

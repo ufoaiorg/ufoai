@@ -24,10 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../renderer/r_draw.h"
-#include "../../renderer/r_mesh.h"
-#include "../../renderer/r_mesh_anim.h"
 #include "../m_main.h"
 #include "../m_internal.h"
 #include "../m_nodes.h"
@@ -35,6 +31,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "m_node_model.h"
 #include "m_node_abstractnode.h"
+
+#include "../../client.h"
+#include "../../renderer/r_draw.h"
+#include "../../renderer/r_mesh.h"
+#include "../../renderer/r_mesh_anim.h"
 
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR

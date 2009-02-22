@@ -27,9 +27,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "../m_timer.h"
 #include "../m_actions.h"
-#include "../../cl_keys.h"
 #include "m_node_zone.h"
 #include "m_node_window.h"
+
+#include "../../cl_keys.h"
 
 static menuTimer_t *capturedTimer = NULL;
 

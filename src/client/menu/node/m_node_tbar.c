@@ -22,13 +22,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../../client.h"
-#include "../../renderer/r_draw.h"
 #include "../m_nodes.h"
 #include "../m_parse.h"
 #include "m_node_tbar.h"
 #include "m_node_abstractvalue.h"
 #include "m_node_abstractnode.h"
+
+#include "../../renderer/r_draw.h"
 
 #define TEXTURE_WIDTH 250.0
 
