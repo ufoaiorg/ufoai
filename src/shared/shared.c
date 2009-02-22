@@ -435,10 +435,12 @@ int UTF8_encoded_len (int c)
 size_t UTF8_strlen (const char *str)
 {
 	size_t result = 0;
-	assert (str);
-	while (*str != '\0') {
-		byte n = UTF8_char_len((unsigned char)*str);
-		assert(n > 0);	/* trust */
+
+	assert(str);
+
+	while (str[0] != '\0') {
+		const byte n = UTF8_char_len((unsigned char)*str);
+		assert(n > 0);
 		str += n;
 		result++;
 	}
