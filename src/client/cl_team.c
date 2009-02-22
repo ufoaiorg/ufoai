@@ -846,28 +846,6 @@ static void CL_UpdateSoldier_f (void)
 	}
 }
 
-/**
- * @brief changes the displayed list from soldiers to heavy equipment (e.g. tanks)
- * @note console command: team_toggle_list
- */
-static void CL_ToggleTeamList_f (void)
-{
-	if (cls.displayHeavyEquipmentList) {
-		Com_DPrintf(DEBUG_CLIENT, "Changing to soldier-list.\n");
-		cls.displayHeavyEquipmentList = qfalse;
-		MN_ExecuteConfunc("toggle_show_heavybutton");
-	} else {
-		if (ccs.numEmployees[EMPL_ROBOT] > 0) {
-			Com_DPrintf(DEBUG_CLIENT, "Changing to heavy equipment (tank) list.\n");
-			cls.displayHeavyEquipmentList = qtrue;
-			MN_ExecuteConfunc("toggle_show_soldiersbutton");
-		} else {
-			/* Nothing to display/assign - staying in soldier-list. */
-			Com_DPrintf(DEBUG_CLIENT, "No heavy equipment available.\n");
-		}
-	}
-}
-
 void TEAM_InitStartup (void)
 {
 	Cmd_AddCommand("team_initskin", CL_InitSkin_f, "Init skin according to the game mode");
@@ -879,5 +857,4 @@ void TEAM_InitStartup (void)
 	Cmd_AddCommand("soldier_updatecurrent", CL_UpdateSoldier_f, _("Update a soldier"));
 	Cmd_AddCommand("object_update", CL_UpdateObject_f, _("Update the GUI with the selected item"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
-	Cmd_AddCommand("team_toggle_list", CL_ToggleTeamList_f, "Changes between assignment-list for soldiers and heavy equipment (e.g. Tanks)");
 }
