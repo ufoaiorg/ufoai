@@ -77,7 +77,7 @@ typedef struct menuNode_s {
 	char key[MAX_VAR];			/**< key bindings - used as tooltip */
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
-	byte state;					/**< e.g. the line number for text nodes to highlight due to cursor hovering */
+	qboolean state;				/**< is node hovered */
 	byte align;					/** @todo delete it when its possible */
 	byte textalign;
 	qboolean invis;				/**< true if the node is invisible */
