@@ -35,6 +35,12 @@ typedef enum {
 	MS_WORLD,		/**< we are in tactical mode */
 } mouseSpace_t;
 
+typedef enum {
+	key_game,
+	key_console,
+	key_message
+} keydest_t;
+
 #define FOV				75.0
 #define FOV_FPS			90.0
 #define CAMERA_START_DIST   600

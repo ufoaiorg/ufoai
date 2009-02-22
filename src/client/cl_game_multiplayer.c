@@ -74,7 +74,7 @@ static void GAME_MP_StartServer_f (void)
 		return;
 	assert(md->map);
 
-	Com_sprintf(map, sizeof(map), "map %s %s %s", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
+	Com_sprintf(map, sizeof(map), "map %s %s %s", Cvar_VariableInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = md;

@@ -29,5 +29,6 @@ void V_RenderView(void);
 void V_UpdateRefDef(void);
 void V_CenterView(const pos3_t pos);
 void V_CalcFovX(void);
+void V_LoadMedia(void);
 
 #endif

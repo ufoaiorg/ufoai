@@ -54,7 +54,7 @@ static void GAME_SK_Start_f (void)
 	memset(&skirmishCharacters, 0, sizeof(skirmishCharacters));
 
 	assert(md->map);
-	Com_sprintf(map, sizeof(map), "map %s %s %s;", mn_serverday->integer ? "day" : "night", md->map, md->param ? md->param : "");
+	Com_sprintf(map, sizeof(map), "map %s %s %s;", Cvar_VariableInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
 		CL_GenerateCharacter(&skirmishCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);

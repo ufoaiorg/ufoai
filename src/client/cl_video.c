@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_view.h"
 #include "renderer/r_main.h"
 #include "menu/m_font.h"
 
@@ -100,7 +101,7 @@ void VID_Restart_f (void)
 	R_Init();
 	MN_InitFonts();
 
-	CL_LoadMedia();
+	V_LoadMedia();
 }
 
 static qboolean CL_CvarCheckVidGamma (cvar_t *cvar)

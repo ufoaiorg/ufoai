@@ -154,12 +154,6 @@ typedef enum {
 	ca_active					/**< game views should be displayed */
 } connstate_t;
 
-typedef enum {
-	key_game,
-	key_console,
-	key_message
-} keydest_t;
-
 /**
  * @brief Not cleared on a map change (static data)
  * @note Only some data is set to new values on a map change
@@ -276,20 +270,10 @@ extern cvar_t *cl_mapzoommin;
 extern cvar_t *cl_showCoords;
 extern cvar_t *cl_autostand;
 
-extern cvar_t *mn_active;
-extern cvar_t *mn_afterdrop;
-extern cvar_t *mn_main_afterdrop;
-extern cvar_t *mn_main;
-extern cvar_t *mn_sequence;
-extern cvar_t *mn_hud;
-extern cvar_t *mn_serverday;
-
 extern cvar_t *s_language;
 extern cvar_t *confirm_actions;
 
 extern cvar_t* cl_mapDebug;
-
-void CL_LoadMedia(void);
 
 /* cl_main.c */
 qboolean CL_OnBattlescape(void);

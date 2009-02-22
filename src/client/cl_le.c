@@ -259,7 +259,7 @@ void LE_Explode (struct dbuffer *msg)
 
 /**
  * @brief Register misc_models
- * @sa CL_LoadMedia
+ * @sa V_LoadMedia
  */
 void LM_Register (void)
 {

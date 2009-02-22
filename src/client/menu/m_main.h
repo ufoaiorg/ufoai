@@ -36,6 +36,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* prototype */
 struct menuNode_s;
 
+extern cvar_t *mn_active;
+extern cvar_t *mn_afterdrop;
+extern cvar_t *mn_main_afterdrop;
+extern cvar_t *mn_main;
+extern cvar_t *mn_sequence;
+extern cvar_t *mn_hud;
+
 void MN_Init(void);
 void MN_Shutdown(void);
 int MN_GetLastFullScreenWindow(void);

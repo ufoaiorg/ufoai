@@ -68,14 +68,6 @@ cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
 /** Player preference: should the server make guys stand for long walks, to save TU. */
 cvar_t *cl_autostand;
 
-cvar_t *mn_main;
-cvar_t *mn_sequence;
-cvar_t *mn_active;
-cvar_t *mn_afterdrop;
-cvar_t *mn_main_afterdrop;
-cvar_t *mn_hud;
-cvar_t *mn_serverday;
-
 cvar_t *cl_lastsave;
 cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
@@ -559,7 +551,7 @@ void CL_RequestNextDownload (void)
 		}
 	}
 
-	CL_LoadMedia();
+	V_LoadMedia();
 
 	cl.servercount = atoi(Cmd_Argv(1));
 
