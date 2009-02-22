@@ -619,7 +619,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 		return NULL;
 
 	if (!invUnused)
-		Sys_Error("Com_AddToInventory: No free inventory space!\n");
+		Sys_Error("Com_AddToInventory: No free inventory space!");
 
 	if (amount <= 0)
 		return NULL;

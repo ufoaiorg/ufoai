@@ -88,7 +88,7 @@ void INV_ParseComponents (const char *name, const char **text)
 			break;
 
 		/* get values */
-		if (!Q_strncmp(token, "item", MAX_VAR)) {
+		if (!Q_strcmp(token, "item")) {
 			/* Defines what items need to be collected for this item to be researchable. */
 			if (comp->numItemtypes < MAX_COMP) {
 				/* Parse item name */
@@ -109,7 +109,7 @@ void INV_ParseComponents (const char *name, const char **text)
 			} else {
 				Com_Printf("INV_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
 			}
-		} else if (!Q_strncmp(token, "time", MAX_VAR)) {
+		} else if (!Q_strcmp(token, "time")) {
 			/* Defines how long disassembly lasts. */
 			token = COM_Parse(text);
 			comp->time = atoi(token);
@@ -136,7 +136,6 @@ components_t *INV_GetComponentsByItem (const objDef_t *item)
 		}
 	}
 	Sys_Error("INV_GetComponentsByItem: could not find components id for: %s", item->id);
-	return NULL;
 }
 
 /**
@@ -147,7 +146,7 @@ components_t *INV_GetComponentsByItem (const objDef_t *item)
 qboolean INV_ItemsIsStoredInStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
-	if (!Q_strncmp(obj->id, "antimatter", 10))
+	if (!Q_strcmp(obj->id, "antimatter"))
 		return qfalse;
 
 	/* aircraft are stored in hangars */
@@ -235,6 +234,7 @@ qboolean INV_ItemsSanityCheck (void)
 			Com_Printf("INV_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}
 
+		/** @todo production is campaign mode only - shouldn't be here */
 		if (item->price > 0 && item->notOnMarket && !PR_ItemIsProduceable(item)) {
 			result = qfalse;
 			Com_Printf("INV_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
