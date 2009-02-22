@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client.h"
 #include "../../renderer/r_draw.h"
-#include "../../client.h"
 #include "../m_main.h"
 #include "../m_parse.h"
 #include "../m_font.h"
