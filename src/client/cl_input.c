@@ -345,9 +345,6 @@ static cvar_t *cl_camzoomquant;
 static cvar_t *cl_camzoommax;
 cvar_t *cl_camzoommin;
 
-cvar_t *cl_mapzoommax;
-cvar_t *cl_mapzoommin;
-
 #define MIN_CAMROT_SPEED	50
 #define MIN_CAMROT_ACCEL	50
 #define MAX_CAMROT_SPEED	1000
@@ -1575,8 +1572,6 @@ void IN_Init (void)
 	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
 	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
-	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
-	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 
 	/* commands */
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));

@@ -257,13 +257,13 @@ static void SCR_DrawCursor (void)
 		return;
 
 	if (!MN_DNDIsDragging()) {
+		const char *pic;
 		if (cls.state == ca_active && cls.team != cl.actTeam)
-			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "cursors/wait");
-		else {
-			R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
-			if (cl_showCoords->integer)
-				SCR_DrawString(mousePosX * viddef.rx, mousePosY * viddef.rx, va("%i:%i", mousePosX, mousePosY), qtrue);
-		}
+			pic = "cursors/wait";
+		else
+			pic = cursor_pic;
+
+		R_DrawNormPic(mousePosX, mousePosY, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, pic);
 
 		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
 			if (selActor) {

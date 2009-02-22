@@ -261,9 +261,6 @@ extern cvar_t *cl_selected;
 extern cvar_t *cl_team;
 extern cvar_t *cl_teamnum;
 extern cvar_t *cl_camzoommin;
-extern cvar_t *cl_mapzoommax;
-extern cvar_t *cl_mapzoommin;
-extern cvar_t *cl_showCoords;
 
 extern cvar_t *s_language;
 

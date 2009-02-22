@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 extern aircraft_t *selectedAircraft;
 extern aircraft_t *selectedUFO;
 
+extern cvar_t *cl_mapzoommax;
+extern cvar_t *cl_mapzoommin;
 extern cvar_t *cl_3dmap;
 
 /* prototype */

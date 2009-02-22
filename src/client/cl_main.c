@@ -66,7 +66,6 @@ cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
 cvar_t *cl_lastsave;
-cvar_t* cl_showCoords;
 cvar_t* cl_mapDebug;
 
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
@@ -812,7 +811,6 @@ static void CL_InitLocal (void)
 
 	/* register our variables */
 	cl_isometric = Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
-	cl_showCoords = Cvar_Get("cl_showcoords", "0", 0, "Show geoscape coords on console (for mission placement) and shows menu coord besides the cursor");
 	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache character models at startup - more memory usage but smaller loading times in the game");
 	cl_introshown = Cvar_Get("cl_introshown", "0", CVAR_ARCHIVE, "Only show the intro once at the initial start");
 	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");

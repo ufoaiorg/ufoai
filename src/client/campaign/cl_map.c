@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_xvi.h"
 
 cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
+cvar_t *cl_mapzoommax;
+cvar_t *cl_mapzoommin;
 
 void R_UploadRadarCoverage(qboolean smooth);
 void R_InitializeRadarOverlay(qboolean source);
@@ -262,10 +264,6 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		MAP3D_ScreenToMap(node, x, y, pos);
 	} else {
 		MAP_ScreenToMap(node, x, y, pos);
-	}
-	if (cl_showCoords->integer) {
-		Com_Printf("Clicked at %.1f %.1f\n", pos[0], pos[1]);
-		MAP_PrintParameterStringByPos(pos);
 	}
 
 	/* new base construction */
@@ -2789,4 +2787,6 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
+	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");
+	cl_mapzoommin = Cvar_Get("cl_mapzoommin", "1.0", CVAR_ARCHIVE, "Minimum geoscape zooming value");
 }
