@@ -26,6 +26,9 @@
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "../../../../config.h"
+#endif
 #include "mainframe.h"
 #include "radiant_i18n.h"
 
@@ -2462,26 +2465,15 @@ void MainFrame_Construct (void)
 	GlobalPreferenceSystem().registerPreference("Height", IntImportStringCaller(g_layout_globals.m_position.h),
 			IntExportStringCaller(g_layout_globals.m_position.h));
 
-	{
-		/// @todo this should not be used - radiant is installed in the ufo dir
-		/// get the exe path (we have a function for this already) and substract
-		/// the radiant dir to get the engine path
-		/// @todo Also use PKGDATADIR
-		const char* ENGINEPATH_ATTRIBUTE =
-#if defined(WIN32)
-				"enginepath_win32"
-#elif defined(__linux__) || defined (__FreeBSD__)
-				"enginepath_linux"
-#elif defined(__APPLE__)
-				"enginepath_macos"
-#else
-#error "unknown platform"
+#ifdef PKGDATADIR
+	StringOutputStream path(256);
+	path << DirectoryCleaned(PKGDATADIR);
+	g_strEnginePath = path.c_str();
 #endif
-;
-		StringOutputStream path(256);
-		path << DirectoryCleaned(g_pGameDescription->getRequiredKeyValue(ENGINEPATH_ATTRIBUTE));
-		g_strEnginePath = path.c_str();
-	}
+
+#ifdef BINDIR
+	g_strCompilerBinaryWithPath = DirectoryCleaned(BINDIR) << "ufo2map"
+#endif
 
 	GlobalPreferenceSystem().registerPreference("EnginePath", CopiedStringImportStringCaller(g_strEnginePath), CopiedStringExportStringCaller(g_strEnginePath));
 	GlobalPreferenceSystem().registerPreference("CompilerBinary", CopiedStringImportStringCaller(g_strCompilerBinaryWithPath), CopiedStringExportStringCaller(g_strCompilerBinaryWithPath));
