@@ -212,7 +212,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 	assert(od);
 
 	/* armour vs item */
-	if (!Q_strncmp(od->type, "armour", MAX_VAR)) {
+	if (!Q_strcmp(od->type, "armour")) {
 		if (!container->armour && !container->all) {
 			return INV_DOES_NOT_FIT;
 		}
@@ -226,8 +226,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 
 	/* twohanded item */
 	if (od->holdTwoHanded) {
-		if ((container->id == CSI->idRight && i->c[CSI->idLeft])
-			 || container->id == CSI->idLeft)
+		if ((container->id == CSI->idRight && i->c[CSI->idLeft]) || container->id == CSI->idLeft)
 			return INV_DOES_NOT_FIT;
 	}
 
@@ -271,8 +270,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 	if (Com_CheckToInventory_shape(i, container, od->shape, x, y, ignoredItem))
 		fits |= INV_FITS;
 	if (Com_CheckToInventory_shape(i, container, Com_ShapeRotate(od->shape), x, y, ignoredItem)
-		&& container->id != CSI->idEquip
-		&& container->id != CSI->idFloor)
+	 && container->id != CSI->idEquip && container->id != CSI->idFloor)
 		fits |= INV_FITS_ONLY_ROTATED;
 
 	return fits;	/**< Return INV_FITS_BOTH if both if statements where true above. */
@@ -286,9 +284,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
  */
 qboolean Com_CompareItem (item_t *item1, item_t *item2)
 {
-	if ((item1->t == item2->t)
-	 && (item1->m == item2->m)
-	 && (item1->a == item2->a))
+	if (item1->t == item2->t && item1->m == item2->m && item1->a == item2->a)
 		return qtrue;
 
 	return qfalse;
