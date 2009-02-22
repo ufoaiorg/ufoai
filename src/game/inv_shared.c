@@ -663,22 +663,19 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 			}
 	}
 
-	/* Temporary store the pointer to the first item in this list. */
 	/* not found - add a new one */
-	ic = i->c[container->id];
-
-	/* Set/overwrite first item-entry in the container to a yet empty one. */
-	i->c[container->id] = invUnused;
+	/* Get empty container */
+	ic = invUnused;
 
 	/* Ensure, that for later usage in other (or this) function(s) invUnused will be the next empty/free slot.
 	 * It is not used _here_ anymore. */
-	invUnused = invUnused->next;
+	invUnused = ic->next;
 
-	/* Set the "next" link of the new "first item"  to the original "first item" we stored previously. */
-	i->c[container->id]->next = ic;
+	/* Set the "next" link of the new "first item" to the original "first item". */
+	ic->next = i->c[container->id];
 
-	/* Set point ic to the new "first item" (i.e. the yet empty entry). */
-	ic = i->c[container->id];
+	/* Remember the new "first item" (i.e. the yet empty entry). */
+	i->c[container->id] = ic;
 /*	Com_Printf("Add to container %i: %s\n", container, item.t->id);*/
 
 	/* Set the data in the new entry to the data we got via function-parameters.*/
