@@ -257,8 +257,6 @@ extern cvar_t *cl_teamnum;
 
 extern cvar_t *s_language;
 
-extern cvar_t* cl_mapDebug;
-
 /* cl_main.c */
 qboolean CL_OnBattlescape(void);
 void CL_SetClientState(int state);

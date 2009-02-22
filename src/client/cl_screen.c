@@ -295,7 +295,7 @@ static void SCR_DrawCursor (void)
 				MN_ResetData(TEXT_MOUSECURSOR_PLAYERNAMES);
 			}
 
-			if (cl_mapDebug->integer & MAPDEBUG_TEXT) {
+			if (cl_map_debug->integer & MAPDEBUG_TEXT) {
 				/* Display ceiling text */
 				if (MN_GetText(TEXT_MOUSECURSOR_TOP) && cl_show_cursor_tooltips->integer)
 					SCR_DrawString(mousePosX, mousePosY - 64, MN_GetText(TEXT_MOUSECURSOR_TOP), qfalse);

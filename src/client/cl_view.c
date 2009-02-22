@@ -41,6 +41,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MISC_MODEL_GLOW 9
 #define SPAWNFLAG_NO_DAY 8
 
+cvar_t* cl_map_debug;
+
 /**
  * @brief Parse the map entity string and spawns those entities that are client-side only
  * @sa G_SendEdictsAndBrushModels
@@ -362,13 +364,13 @@ void V_RenderView (void)
 		/* add local entities to the renderer chain */
 		LE_AddToScene();
 		/* adds pathing data */
-		if (cl_mapDebug->integer & MAPDEBUG_PATHING)
+		if (cl_map_debug->integer & MAPDEBUG_PATHING)
 			CL_AddPathing();
 		/* adds floor arrows */
-		if (cl_mapDebug->integer & MAPDEBUG_CELLS)
+		if (cl_map_debug->integer & MAPDEBUG_CELLS)
 			CL_DisplayFloorArrows();
 		/* adds wall arrows */
-		if (cl_mapDebug->integer & MAPDEBUG_WALLS)
+		if (cl_map_debug->integer & MAPDEBUG_WALLS)
 			CL_DisplayObstructionArrows();
 		/* adds target cursor */
 		CL_AddTargeting();

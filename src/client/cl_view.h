@@ -32,5 +32,6 @@ void V_CalcFovX(void);
 void V_LoadMedia(void);
 
 extern cvar_t *cl_isometric;
+extern cvar_t* cl_map_debug;
 
 #endif

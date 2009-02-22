@@ -62,7 +62,6 @@ cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
 
 cvar_t *cl_lastsave;
-cvar_t* cl_mapDebug;
 
 static cvar_t *cl_connecttimeout; /* multiplayer connection timeout value (ms) */
 
@@ -828,7 +827,7 @@ static void CL_InitLocal (void)
 
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
-	cl_mapDebug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
+	cl_map_debug = Cvar_Get("debug_map", "0", 0, "Activate realtime map debugging options - bitmask. Valid values are 0, 1, 3 and 7");
 
 	/* register our commands */
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
