@@ -98,7 +98,7 @@ install-indep: stamps/build-indep
 	dh_installdirs
 	dh_install
 
-  # add links to fonts
+	# add links to fonts
 	mkdir -p $(FONTDIR)
 	#From ttf-freefont
 	ln -s /usr/share/fonts/truetype/freefont/FreeSans.ttf $(FONTDIR)

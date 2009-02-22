@@ -22,6 +22,7 @@ set -e
 BINDIR=/usr/lib/games/ufoai
 BASEDIR=/usr/share/games/ufoai
 
+LD_PATH=/usr/lib/games/ufoai:$LD_PATH
 cd $BASEDIR
 
 ${BINDIR}/ufoded "$@"
