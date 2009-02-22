@@ -299,12 +299,28 @@ void MN_ExecuteEventActions (const menuNode_t* source, const menuAction_t* first
 
 /**
  * @brief Test if a string use an injection syntax
- * @todo improve the test
+ * @return True if we find in the string a syntaxe "<" {thing without space} ">"
  */
 qboolean MN_IsInjectedString (const char *string)
 {
+	const char *c = string;
 	assert(string);
-	return string[0] == '<';
+	while (*c != '\0') {
+		if (*c == '<') {
+			const char *d = c + 1;
+			if (*d != '>') {
+				while (*d) {
+					if (*d == '>')
+						return qtrue;
+					if (*d == ' ' || *d == '\t' || *d == '\n' || *d == '\r')
+						break;
+					d++;
+				}
+			}
+		}
+		c++;
+	}
+	return qfalse;
 }
 
 /**
