@@ -860,7 +860,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("say_team", NULL, "Team chat command");
 	Cmd_AddCommand("players", NULL, "List of team and player name");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_aircraftsamplelist", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
 	Cmd_AddCommand("debug_cgrid", Grid_DumpWholeClientMap_f, "Shows the whole client side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_sgrid", Grid_DumpWholeServerMap_f, "Shows the whole server side pathfinding grid of the current loaded map");
 	Cmd_AddCommand("debug_croute", Grid_DumpClientRoutes_f, "Shows the whole client side pathfinding grid of the current loaded map");

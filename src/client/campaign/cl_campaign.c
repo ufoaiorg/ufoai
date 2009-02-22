@@ -2323,6 +2323,7 @@ static const cmdList_t game_commands[] = {
 	{"map_scroll", MAP_Scroll_f, NULL},
 	{"cp_start_xvi_spreading", CP_StartXVISpreading_f, "Start XVI spreading"},
 #ifdef DEBUG
+	{"debug_aircraftsamplelist", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console"},
 	{"debug_listnation", CL_NationList_f, "List all nations on the game console"},
 	{"debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
