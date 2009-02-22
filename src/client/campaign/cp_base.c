@@ -42,6 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 vec3_t newBasePos;
 building_t *buildingConstructionList[MAX_BUILDINGS];
+static cvar_t *cl_initial_equipment;
 
 static void B_AssignInitial(aircraft_t *aircraft, const equipDef_t *ed);
 
@@ -2617,7 +2618,6 @@ static void B_ResetAllStatusAndCapacities_f (void)
  */
 void B_InitStartup (void)
 {
-	Com_DPrintf(DEBUG_CLIENT, "Reset basemanagement\n");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listbase", B_BaseList_f, "Print base information to the game console");
 	Cmd_AddCommand("debug_listbuilding", B_BuildingList_f, "Print building information to the game console");
@@ -2626,6 +2626,8 @@ void B_InitStartup (void)
 	Cmd_AddCommand("debug_destroybase", CL_BaseDestroy_f, "Destroy a base");
 	Cmd_AddCommand("debug_buildingfinished", B_BuildingConstructionFinished_f, "Finish construction for every building in the current base");
 #endif
+
+	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "phalanx_initial", 0, "Start with assigned equipment - see cl_start_employees");
 }
 
 /**

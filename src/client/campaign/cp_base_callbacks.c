@@ -35,6 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CREATE_NEW_BASE_ID -1
 
 static cvar_t *mn_base_title;
+static cvar_t *cl_start_buildings;
 
 /**
  * @brief Called when a base is opened or a new base is created on geoscape.
@@ -771,6 +772,8 @@ static void BaseSummary_Init_f (void)
 void B_InitCallbacks (void)
 {
 	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
+	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
+
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");

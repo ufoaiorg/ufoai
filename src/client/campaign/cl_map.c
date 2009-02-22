@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_xvi.h"
 
+cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
+
 void R_UploadRadarCoverage(qboolean smooth);
 void R_InitializeRadarOverlay(qboolean source);
 
@@ -2785,4 +2787,6 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
+
+	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 }

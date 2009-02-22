@@ -64,11 +64,8 @@ cvar_t *cl_logevents;
 cvar_t *cl_centerview;
 cvar_t *cl_worldlevel;
 cvar_t *cl_selected;
-cvar_t *cl_3dmap;				/**< 3D geoscape or flat geoscape */
 
 cvar_t *cl_lastsave;
-cvar_t *cl_initial_equipment;
-cvar_t *cl_start_buildings;
 cvar_t* cl_showCoords;
 cvar_t* cl_mapDebug;
 
@@ -825,9 +822,6 @@ static void CL_InitLocal (void)
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
-	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
-	cl_initial_equipment = Cvar_Get("cl_initial_equipment", "phalanx_initial", 0, "Start with assigned equipment - see cl_start_employees");
-	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 	cl_connecttimeout = Cvar_Get("cl_connecttimeout", "8000", CVAR_ARCHIVE, "Connection timeout for multiplayer connects");
 	cl_lastsave = Cvar_Get("cl_lastsave", "", CVAR_ARCHIVE, "Last saved slot - use for the continue-campaign function");
 	/* userinfo */
