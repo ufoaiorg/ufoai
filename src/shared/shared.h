@@ -102,6 +102,7 @@ int UTF8_delete_char(char *s, int pos);
 int UTF8_insert_char(char *s, int n, int pos, int codepoint);
 int UTF8_char_len(unsigned char c);
 int UTF8_encoded_len(int codepoint);
+size_t UTF8_strlen(const char *str);
 
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 int Q_FloatSort(const void *float1, const void *float2);

@@ -413,7 +413,7 @@ int UTF8_char_len (unsigned char c)
  * Calculate how long a Unicode code point (such as returned by
  * SDL key events in unicode mode) would be in UTF-8 encoding.
  */
-int UTF8_encoded_len(int c)
+int UTF8_encoded_len (int c)
 {
 	if (c <= 0x7F)
 		return 1;
@@ -424,4 +424,23 @@ int UTF8_encoded_len(int c)
 	if (c <= 0x10FFFF)  /* highest defined Unicode code */
 		return 4;
 	return 0;
+}
+
+/**
+ * @brief Count the number of character (not the number of bytes) of a zero termination string
+ * @note the '\0' termination characted is not counted
+ * @note to count the number of bytes, use strlen
+ * @sa strlen
+ */
+size_t UTF8_strlen (const char *str)
+{
+	size_t result = 0;
+	assert (str);
+	while (*str != '\0') {
+		byte n = UTF8_char_len((unsigned char)*str);
+		assert(n > 0);	/* trust */
+		str += n;
+		result++;
+	}
+	return result;
 }

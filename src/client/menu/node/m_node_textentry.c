@@ -278,18 +278,22 @@ static void MN_TextEntryNodeDraw (menuNode_t *node)
 
 		if (node->u.textentry.isPassword) {
 			char *c = va("%s", text);
+			int size = UTF8_strlen(c);
 			text = c;
-			/* hide the text */
-			/** @todo does it work with Unicode :/ don't we create to much char? */
-			while (*c != '\0') {
+			/* hide the text with a special char */
+			assert(strlen(c) >= size);	/* trustable, but it can't be false */
+			while (size) {
 				*c++ = HIDECHAR;
+				size--;
 			}
-			/* replace the cursor */
-			if (MN_GetMouseCapture() == node) {
+			/* readd the cursor */
+			if (MN_HasFocus(node)) {
 				if (cl.time % 1000 < 500) {
-					*--c = CURSOR;
+					c--;
+					*c++ = CURSOR;
 				}
 			}
+			*c = '\0';
 		}
 
 		if (*text != '\0') {
