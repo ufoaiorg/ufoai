@@ -41,7 +41,7 @@ const value_t mn_iconProperties[] = {
  * @brief Return an icon by is name
  * @param[in] name Name of the icon
  * @return The requested icon, else NULL
- * @todo not very fast; if we use it often we should improve it
+ * @note not very fast; if we use it often we should improve the search
  */
 menuIcon_t* MN_GetIconByName (const char* name)
 {

@@ -102,7 +102,7 @@ menu mail
 
 	func close
 	{
-		cmd "mn_reinit;"
+		cmd "mn_fireinit mail;"
 	}
 }
 

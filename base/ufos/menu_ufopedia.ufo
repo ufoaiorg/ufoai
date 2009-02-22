@@ -355,6 +355,6 @@ menu ufopedia
 
 	func close
 	{
-		cmd "mn_reinit;"
+		cmd "mn_fireinit ufopedia;"
 	}
 }

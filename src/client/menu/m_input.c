@@ -122,7 +122,6 @@ static menuNode_t *MN_GetNextActionNode (menuNode_t* node)
  * @note Action nodes are nodes with click defined
  * @sa Key_Event
  * @sa MN_FocusExecuteActionNode
- * @todo understand the function; use for "i" an understandable name; should move in into global static.
  */
 static qboolean MN_FocusNextActionNode (void)
 {
@@ -386,7 +385,7 @@ static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
 	if (rx < 0 || ry < 0 || rx >= node->size[0] || ry >= node->size[1])
 		return NULL;
 
-	/** @todo we should improve the loop to search the right in first */
+	/** @todo we should improve the loop (last-to-first) */
 	find = NULL;
 	for (child = node->firstChild; child; child = child->next) {
 		menuNode_t *tmp;

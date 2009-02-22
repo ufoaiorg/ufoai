@@ -568,7 +568,6 @@ qboolean MN_CursorOnMenu (int x, int y)
  * id name
  * @return NULL if not found or no menu on the stack
  * @sa MN_GetActiveMenu
- * @todo merge it with FindMenuByName, its the same function
  */
 menuNode_t *MN_GetMenu (const char *name)
 {
@@ -609,9 +608,26 @@ void MN_SetNewMenuPos_f (void)
  * @brief This will reinitialize the current visible menu
  * @note also available as script command mn_reinit
  */
-static void MN_ReinitCurrentMenu_f (void)
+static void MN_FireInit_f (void)
 {
-	const menuNode_t* menu = MN_GetActiveMenu();
+	const menuNode_t* menu;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <menu>\n", Cmd_Argv(0));
+		return;
+	}
+
+	menu = MN_GetNodeByPath(Cmd_Argv(1));
+	if (menu == NULL) {
+		Com_Printf("MN_FireInit_f: Node '%s' not found\n", Cmd_Argv(1));
+		return;
+	}
+
+	if (!MN_NodeInstanceOf(menu, "menu")) {
+		Com_Printf("MN_FireInit_f: Node '%s' is not a 'menu'\n", Cmd_Argv(1));
+		return;
+	}
+
 	/* initialize it */
 	if (menu) {
 		if (menu->u.window.onInit)
@@ -836,7 +852,7 @@ void MN_Init (void)
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
 
 	/* add menu commands */
-	Cmd_AddCommand("mn_reinit", MN_ReinitCurrentMenu_f, "This will reinit the current menu (recall the init function)");
+	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
 	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);

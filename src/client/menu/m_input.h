@@ -36,11 +36,9 @@ void MN_MouseWheel(qboolean down, int x, int y);
 void MN_MouseMove(int x, int y);
 void MN_MouseDown(int x, int y, int button);
 void MN_MouseUp(int x, int y, int button);
-
 void MN_InvalidateMouse(void);
 qboolean MN_CheckMouseMove(void);
 struct menuNode_s *MN_GetHoveredNode(void);
-struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
 
 /* focus */
 void MN_RequestFocus(struct menuNode_s* node);
@@ -48,14 +46,16 @@ qboolean MN_HasFocus(const struct menuNode_s* node);
 void MN_RemoveFocus(void);
 qboolean MN_KeyPressed(unsigned int key, unsigned short unicode);
 
-void MN_ReleaseInput(void);
-
 /* mouse capture */
 struct menuNode_s* MN_GetMouseCapture(void);
 void MN_SetMouseCapture(struct menuNode_s* node);
 void MN_MouseRelease(void);
 
-/* cvar */
+/* all inputs */
+void MN_ReleaseInput(void);
+
+/* misc */
 void MN_SetCvar(const char *name, const char *str, float value);
+struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
 
 #endif

@@ -142,7 +142,6 @@ const value_t *MN_GetPropertyFromBehaviour (const nodeBehaviour_t *behaviour, co
  * @sa MN_DrawMenus
  * @sa V_SPECIAL_IF
  * @returns qfalse if the node is not drawn due to not meet if conditions
- * @todo move it into m_node_abstractnode.c
  */
 qboolean MN_CheckVisibility (menuNode_t *node)
 {
@@ -150,55 +149,6 @@ qboolean MN_CheckVisibility (menuNode_t *node)
 		return qtrue;
 	return MN_CheckCondition(node->visibilityCondition);
 }
-
-#if 0	/* not used */
-/** @todo (menu) to be integrated into MN_CheckNodeZone */
-/**
- * @brief Check if the node is an image and if it is transparent on the given (global) position.
- * @param[in] node A menu node pointer to be checked.
- * @param[in] x X position on screen.
- * @param[in] y Y position on screen.
- * @return qtrue if an image is used and it is on transparent on the current position.
- */
-static qboolean MN_NodeWithVisibleImage (menuNode_t* const node, int x, int y)
-{
-	byte *picture = NULL;	/**< Pointer to image (4 bytes == 1 pixel) */
-	int width, height;	/**< Width and height for the pic. */
-	int pic_x, pic_y;	/**< Position inside image */
-	byte *color = NULL;	/**< Pointer to specific pixel in image. */
-	vec2_t nodepos;
-
-	if (!node || node->type != MN_PIC || !node->dataImageOrModel)
-		return qfalse;
-
-	MN_GetNodeAbsPos(node, nodepos);
-	R_LoadImage(va("pics/menu/%s", path), &picture, &width, &height);
-
-	if (!picture || !width || !height) {
-		Com_DPrintf(DEBUG_CLIENT, "Couldn't load image %s in pics/menu\n", path);
-		/* We return true here because we do not know if there is another image (without transparency)
-		 * or another reason it might still be valid. */
-		return qtrue;
-	}
-
-	/** @todo (menu) Get current location _inside_ image from global position. CHECKME */
-	pic_x = x - nodepos[0];
-	pic_y = y - nodepos[1];
-
-	if (pic_x < 0 || pic_y < 0)
-		return qfalse;
-
-	/* Get pixel at current location. */
-	color = picture + (4 * height * pic_y + 4 * pic_x); /* 4 means 4 values for each point */
-
-	/* Return qtrue if pixel is visible (we check the alpha value here). */
-	if (color[3] != 0)
-		return qtrue;
-
-	/* Image is transparent at this position. */
-	return qfalse;
-}
-#endif
 
 /**
  * @brief Return a path from a menu to a node
@@ -313,7 +263,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
  * @todo Properties like CVAR_OR_FLOAT that are using a value don't embed the value, but point to a value.
  * As a result, the new node will share the value with the "base" node.
  * We can embed this values into node.
- * @todo exclude rect is node safe cloned.
+ * @todo exclude rect is not safe cloned.
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive)
 {
