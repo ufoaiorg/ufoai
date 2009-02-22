@@ -25,14 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_internal.h"
 #include "m_draw.h"
-#include "m_data.h"
-#include "m_input.h"
 #include "m_timer.h"
-#include "m_condition.h"
-#include "node/m_node_abstractnode.h"
 
 #include "../client.h"
-#include "../cl_cinematic.h"
 
 menuGlobal_t mn;
 cvar_t *mn_main;
