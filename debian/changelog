@@ -1,3 +1,11 @@
+ufoai (2.3~~svn22876) intrepid; urgency=low
+
+  [ Martin Gerhardy ]
+  * Menu entries and desktop files
+  * Updated icons
+
+ -- Martin Gerhardy <martin.gerhardy@gmail.com>  Wed, 22 Feb 2009 12:01:00 -0100
+
 ufoai (2.3~~svn22761) intrepid; urgency=low
 
   [ Martin Gerhardy ]
@@ -82,7 +90,7 @@ ufoai (2.3~~svn14428) unstable; urgency=low
   * ufoai-tools: Install ufo2map to /usr/games/, install blender
     script to a correct directory in Debian
   * Add build-dep to quilt
-  * rules: 
+  * rules:
       + add get-orig-source target to fetch source from upstream svn
       + add genpatches target to generate patch stack from git branches
       + add debtar target to pack the debian-dir to a wig and pen

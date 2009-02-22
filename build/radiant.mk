@@ -105,7 +105,7 @@ RADIANT_SRCS_C = \
 
 RADIANT_CPP_OBJS=$(RADIANT_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
 RADIANT_C_OBJS=$(RADIANT_SRCS_C:%.c=$(BUILDDIR)/tools/radiant_c/%.o)
-RADIANT_TARGET=radiant/radiant$(EXE_EXT)
+RADIANT_TARGET=radiant/uforadiant$(EXE_EXT)
 
 # model plugin
 RADIANT_PLUGIN_MODEL_SRCS_CPP = \

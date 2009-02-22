@@ -8,7 +8,7 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
@@ -48,12 +48,12 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option host_application="../../radiant/radiant.exe" />
+				<Option host_application="../../radiant/uforadiant.exe" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-pg" />
@@ -91,7 +91,7 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />
@@ -111,7 +111,7 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="../../radiant/radiant" prefix_auto="1" extension_auto="1" />
+				<Option output="../../radiant/uforadiant" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../../radiant" />
 				<Option object_output=".objs/radiant" />
 				<Option type="0" />

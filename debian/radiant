@@ -25,4 +25,4 @@ INSTDIR=/usr/share/games/ufoai/radiant/
 
 cd $INSTDIR
 
-${INSTDIR}/radiant "$@"
+${INSTDIR}/uforadiant "$@"
