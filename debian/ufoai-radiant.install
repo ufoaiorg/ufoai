@@ -5,6 +5,7 @@ radiant/i18n/*			/usr/share/games/ufoai/radiant/i18n/
 radiant/modules/*		/usr/share/games/ufoai/radiant/modules/
 radiant/plugins/*		/usr/share/games/ufoai/radiant/plugins/
 radiant/shaders/*		/usr/share/games/ufoai/radiant/shaders/
+radiant/uforadiant		/usr/games/games/ufoai/radiant/
 debian/uforadiant		/usr/games/
 debian/uforadiant.xpm		/usr/share/pixmaps/
 debian/uforadiant.desktop	/usr/share/applications
