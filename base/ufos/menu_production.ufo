@@ -18,7 +18,7 @@ menu production
 
 	string txt_credits_caption
 	{
-		string	"_CREDIT"
+		string	"_CREDITS"
 		pos	"610 30"
 		font	f_big
 	}

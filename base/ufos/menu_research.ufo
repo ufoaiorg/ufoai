@@ -669,7 +669,7 @@ menu research
 
 	string txt_credits_caption
 	{
-		string		"_CREDIT"
+		string		"_CREDITS"
 		pos			"675 30"
 		size		"100 30"
 		font		f_big

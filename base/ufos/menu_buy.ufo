@@ -791,7 +791,7 @@ menu buy
 
 	string txt_credits_caption
 	{
-		string		"_CREDIT"
+		string		"_CREDITS"
 		pos			"650 50"
 		size		"130 30"
 		font		f_big
