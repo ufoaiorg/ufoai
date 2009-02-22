@@ -1442,13 +1442,14 @@ static GtkMenuItem* create_edit_menu (MainFrame *mainFrame)
 	menu_separator(menu);
 	create_menu_item_with_mnemonic(menu, _("C_lear Selection"), "UnSelectSelection");
 	create_menu_item_with_mnemonic(menu, _("_Invert Selection"), "InvertSelection");
-	create_menu_item_with_mnemonic(menu, _("Select i_nside"), "SelectInside");
-	create_menu_item_with_mnemonic(menu, _("Select _touching"), "SelectTouching");
 
 	GtkMenu* convert_menu = create_sub_menu_with_mnemonic(menu, _("E_xpand Selection"));
 	if (g_Layout_enableDetachableMenus.m_value)
 		menu_tearoff(convert_menu);
+	create_menu_item_with_mnemonic(convert_menu, _("Select i_nside"), "SelectInside");
+	create_menu_item_with_mnemonic(convert_menu, _("Select _touching"), "SelectTouching");
 	create_menu_item_with_mnemonic(convert_menu, _("To Whole _Entities"), "ExpandSelectionToEntities");
+	create_menu_item_with_mnemonic(convert_menu, _("Select all of _same type"), "SelectAllOfType");
 
 	menu_separator(menu);
 
