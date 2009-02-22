@@ -1446,7 +1446,8 @@ static void CL_InvAmmo (struct dbuffer *msg)
 
 /**
  * @sa CL_InvReload
- * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
+ * @todo This can never work with scroll container (we don't know a filter type here).
+ * @todo It this ever used in the base screen? No, it is not - this is for reloading a weapon from hud (battlescape/network event)
  */
 static void CL_InvReload (struct dbuffer *msg)
 {
@@ -1475,9 +1476,10 @@ static void CL_InvReload (struct dbuffer *msg)
 	if (!ic)
 		return;
 
+	/** @todo Campaign mode only stuff - doesn't belong here */
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
-	if (curCampaign && ic->item.a > 0 && ic->item.a != ic->item.t->ammo) {
+	if (GAME_IsCampaign() && ic->item.a > 0 && ic->item.a != ic->item.t->ammo) {
 		assert(ammo == ic->item.t->ammo);
 		ccs.eMission.numLoose[ic->item.m->idx] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
