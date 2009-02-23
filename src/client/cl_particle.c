@@ -33,6 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_MAPPARTICLES	1024
 
+static cvar_t *cl_particleweather;
+
 static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
@@ -1325,4 +1327,5 @@ void CL_InitParticles (void)
 	pd = &ptlDef[numPtlDefs++];
 	memset(pd, 0, sizeof(*pd));
 	Q_strncpyz(pd->name, "*circle", sizeof(pd->name));
+	cl_particleweather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 }

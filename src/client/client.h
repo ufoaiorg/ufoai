@@ -31,13 +31,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_renderer.h"
 #include "cl_video.h"
-#include "../game/inv_shared.h"
 #include "cl_sound.h"
 #include "cl_screen.h"
 #include "cl_input.h"
 #include "cl_keys.h"
 #include "cl_console.h"
-#include "campaign/cl_save.h"
 
 /*============================================================================= */
 
@@ -247,7 +245,6 @@ typedef enum {
 #define N_(String) gettext_noop (String)
 
 /* cvars */
-extern cvar_t *cl_particleweather;
 extern cvar_t *cl_leshowinvis;
 extern cvar_t *cl_fps;
 extern cvar_t *cl_worldlevel;
