@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_console.h"
+#include "cl_screen.h"
 #include "cl_game.h"
 #include "cl_tutorials.h"
 #include "cl_tip.h"

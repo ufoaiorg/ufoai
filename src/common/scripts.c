@@ -2595,7 +2595,7 @@ void Com_ParseScripts (void)
 
 /** @todo a mess - but i don't want to make the variables non static */
 #ifndef DEDICATED_ONLY
-#include "../client/client.h"
+#include "../client/cl_screen.h"
 /**
  * @brief Precache all menu models for faster access
  * @sa CL_PrecacheModels

@@ -32,10 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_renderer.h"
 #include "cl_video.h"
 #include "cl_sound.h"
-#include "cl_screen.h"
 #include "cl_input.h"
 #include "cl_keys.h"
-#include "cl_console.h"
+
+/** @todo get rid of these */
+#include "cl_le.h"
+#include "cl_menu.h"
+#include "campaign/cl_campaign.h"
 
 /*============================================================================= */
 
@@ -261,9 +264,5 @@ void CL_Disconnect(void);
 void CL_Init(void);
 
 void CL_ClearState(void);
-
-#include "cl_le.h"
-#include "cl_menu.h"
-#include "campaign/cl_campaign.h"
 
 #endif /* CLIENT_CLIENT_H */

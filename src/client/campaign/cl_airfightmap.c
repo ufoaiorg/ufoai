@@ -24,15 +24,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../cl_screen.h"
+#include "../renderer/r_draw.h"
+#include "../menu/m_popup.h"
+#include "../menu/m_font.h"
+#include "../menu/m_nodes.h"
 #include "cl_mapfightequip.h"
 #include "cl_popup.h"
 #include "cl_airfightmap.h"
 #include "cl_ufo.h"
-#include "../renderer/r_draw.h"
 #include "cl_map.h"
-#include "../menu/m_popup.h"
-#include "../menu/m_font.h"
-#include "../menu/m_nodes.h"
 #include "cp_time.h"
 
 static aircraft_t *aircraftList[MAX_AIRCRAFT];

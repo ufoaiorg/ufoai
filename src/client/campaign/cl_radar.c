@@ -24,10 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "cl_map.h"
-#include "cl_ufo.h"
+#include "../cl_screen.h"
 #include "../renderer/r_draw.h"
 #include "../menu/m_nodes.h"
+#include "cl_map.h"
+#include "cl_ufo.h"
 
 void R_AddRadarCoverage(const vec2_t pos, float innerRadius, float outerRadius, qboolean source);
 void R_InitializeRadarOverlay(qboolean source);

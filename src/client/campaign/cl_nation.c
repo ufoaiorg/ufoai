@@ -26,11 +26,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_game.h"
-#include "cl_map.h"
-#include "cl_ufo.h"
+#include "../cl_screen.h"
 #include "../mxml/mxml_ufoai.h"
 #include "../../shared/parse.h"
 #include "../menu/m_nodes.h"
+#include "cl_map.h"
+#include "cl_ufo.h"
 
 /**
  * @brief Return a nation-pointer by the nations id (nation_t->id) text.
