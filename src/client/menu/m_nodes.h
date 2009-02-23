@@ -218,15 +218,19 @@ typedef struct nodeBehaviour_s {
 #endif
 } nodeBehaviour_t;
 
-menuNode_t* MN_AllocNode(const char* type) __attribute__ ((warn_unused_result));
-nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
-const struct value_s *MN_NodeGetPropertyDefinition(const menuNode_t* node, const char* name);
-const struct value_s *MN_GetPropertyFromBehaviour(const nodeBehaviour_t *behaviour, const char* name);
-menuNode_t* MN_GetNodeByPath (const char* path);
-const char* MN_GetPath(const menuNode_t* node);
-
+/* module initialization */
 void MN_InitNodes(void);
+
+/* nodes */
+menuNode_t* MN_AllocNode(const char* type) __attribute__ ((warn_unused_result));
+menuNode_t* MN_GetNodeByPath (const char* path);
+struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
+const char* MN_GetPath(const menuNode_t* node);
 menuNode_t* MN_CloneNode(const menuNode_t* node, struct menuNode_s *targetMenu, qboolean recursive);
 qboolean MN_CheckVisibility(menuNode_t *node);
+
+/* behaviours */
+nodeBehaviour_t* MN_GetNodeBehaviour(const char* name);
+const struct value_s *MN_GetPropertyFromBehaviour(const nodeBehaviour_t *behaviour, const char* name);
 
 #endif

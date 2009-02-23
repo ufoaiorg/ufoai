@@ -41,7 +41,11 @@ extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;
 
+/* initialization */
 void MN_Init(void);
 void MN_Shutdown(void);
+
+/* misc */
+void MN_SetCvar(const char *name, const char *str, float value);
 
 #endif

@@ -33,41 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 
 /**
- * @sa MN_DisplayNotice
- * @todo move it into a better file
- */
-static void MN_CheckCvar (const cvar_t *cvar)
-{
-	if (cvar->modified) {
-		if (cvar->flags & CVAR_CONTEXT) {
-			MN_DisplayNotice(_("This change requires a restart"), 2000);
-		} else if (cvar->flags & CVAR_IMAGES) {
-			MN_DisplayNotice(_("This change might require a restart"), 2000);
-		}
-	}
-}
-
-/**
- * @param[in] str Might be NULL if you want to set a float value
- * @todo move it into a better file
- */
-void MN_SetCvar (const char *name, const char *str, float value)
-{
-	const cvar_t *cvar;
-	cvar = Cvar_FindVar(name);
-	if (!cvar) {
-		Com_Printf("Could not find cvar '%s'\n", name);
-		return;
-	}
-	/* strip '*cvar ' from data[0] - length is already checked above */
-	if (str)
-		Cvar_Set(cvar->name, str);
-	else
-		Cvar_SetValue(cvar->name, value);
-	MN_CheckCvar(cvar);
-}
-
-/**
  * @brief save the node with the focus
  */
 static menuNode_t* focusNode = NULL;
@@ -363,84 +328,6 @@ qboolean MN_CheckMouseMove (void)
 }
 
 /**
- * @brief Return the first visible node at a position
- * @param[in] node Node where we must search
- * @param[in] rx Relative x position to the parent of the node
- * @param[in] ry Relative y position to the parent of the node
- * @return The first visible node at position, else NULL
- */
-static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
-{
-	menuNode_t *find;
-	menuNode_t *child;
-	int i;
-
-	if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
-		return NULL;
-
-	/* relative to the node */
-	rx -= node->pos[0];
-	ry -= node->pos[1];
-
-	/* check bounding box */
-	if (rx < 0 || ry < 0 || rx >= node->size[0] || ry >= node->size[1])
-		return NULL;
-
-	/** @todo we should improve the loop (last-to-first) */
-	find = NULL;
-	for (child = node->firstChild; child; child = child->next) {
-		menuNode_t *tmp;
-		tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
-		if (tmp)
-			find = tmp;
-	}
-	if (find)
-		return find;
-
-	/* is the node tangible */
-	if (node->ghost)
-		return NULL;
-
-	/* check excluded box */
-	for (i = 0; i < node->excludeRectNum; i++) {
-		if (rx >= node->excludeRect[i].pos[0]
-		 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
-		 && ry >= node->excludeRect[i].pos[1]
-		 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
-			return NULL;
-	}
-
-	/* we are over the node */
-	return node;
-}
-
-/**
- * @brief Return the first visible node at a position
- */
-menuNode_t *MN_GetNodeAtPosition (int x, int y)
-{
-	int menuId;
-
-	/* find the first menu under the mouse */
-	for (menuId = mn.menuStackPos - 1; menuId >= 0; menuId--) {
-		menuNode_t *menu = mn.menuStack[menuId];
-		menuNode_t *find;
-
-		find = MN_GetNodeInTreeAtPosition(menu, x, y);
-		if (find)
-			return find;
-
-		/* we must not search anymore */
-		if (menu->u.window.dropdown)
-			break;
-		if (menu->u.window.modal)
-			break;
-	}
-
-	return NULL;
-}
-
-/**
  * @brief Is called every time the mouse position change
  */
 void MN_MouseMove (int x, int y)
@@ -483,7 +370,7 @@ void MN_MouseMove (int x, int y)
  * @sa MN_RightClick
  * @sa Key_Message
  */
-void MN_LeftClick (int x, int y)
+static void MN_LeftClick (int x, int y)
 {
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -494,6 +381,7 @@ void MN_LeftClick (int x, int y)
 
 	/* if we click out side a dropdown menu, we close it */
 	/** @todo need to refactoring it with a the focus code (cleaner) */
+	/** @todo at least should be moved on the mouse down event (when the focus should change) */
 	if (!hoveredNode && mn.menuStackPos != 0) {
 		if (mn.menuStack[mn.menuStackPos - 1]->u.window.dropdown) {
 			MN_PopMenu(qfalse);
@@ -516,7 +404,7 @@ void MN_LeftClick (int x, int y)
  * @sa MN_MiddleClick
  * @sa MN_MouseWheel
  */
-void MN_RightClick (int x, int y)
+static void MN_RightClick (int x, int y)
 {
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -539,7 +427,7 @@ void MN_RightClick (int x, int y)
  * @sa MN_RightClick
  * @sa MN_MouseWheel
  */
-void MN_MiddleClick (int x, int y)
+static void MN_MiddleClick (int x, int y)
 {
 	/* send it to the captured mouse node */
 	if (capturedNode) {
@@ -608,6 +496,20 @@ void MN_MouseDown (int x, int y, int button)
 
 	if (node->behaviour->mouseDown)
 		node->behaviour->mouseDown(node, x, y, button);
+
+	/* click event */
+	/** @todo should be send we the mouse up (after a down on the same node) */
+	switch (button) {
+	case K_MOUSE1:
+		MN_LeftClick(x, y);
+		break;
+	case K_MOUSE2:
+		MN_RightClick(x, y);
+		break;
+	case K_MOUSE3:
+		MN_MiddleClick(x, y);
+		break;
+	}
 }
 
 /**

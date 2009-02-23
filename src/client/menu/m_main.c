@@ -37,6 +37,44 @@ cvar_t *mn_afterdrop;
 cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
 
+/**
+ * @sa MN_DisplayNotice
+ * @todo move it into a better file
+ */
+static void MN_CheckCvar (const cvar_t *cvar)
+{
+	if (cvar->modified) {
+		if (cvar->flags & CVAR_CONTEXT) {
+			MN_DisplayNotice(_("This change requires a restart"), 2000);
+		} else if (cvar->flags & CVAR_IMAGES) {
+			MN_DisplayNotice(_("This change might require a restart"), 2000);
+		}
+	}
+}
+
+/**
+ * @param[in] str Might be NULL if you want to set a float value
+ * @todo move it into a better file
+ */
+void MN_SetCvar (const char *name, const char *str, float value)
+{
+	const cvar_t *cvar;
+	cvar = Cvar_FindVar(name);
+	if (!cvar) {
+		Com_Printf("Could not find cvar '%s'\n", name);
+		return;
+	}
+	/* strip '*cvar ' from data[0] - length is already checked above */
+	if (str)
+		Cvar_Set(cvar->name, str);
+	else
+		Cvar_SetValue(cvar->name, value);
+	MN_CheckCvar(cvar);
+}
+
+/**
+ * @todo add a brief
+ */
 static void MN_Modify_f (void)
 {
 	float value;
@@ -54,7 +92,9 @@ static void MN_Modify_f (void)
 	Cvar_SetValue(Cmd_Argv(1), value);
 }
 
-
+/**
+ * @todo add a brief
+ */
 static void MN_ModifyWrap_f (void)
 {
 	float value;
@@ -74,7 +114,9 @@ static void MN_ModifyWrap_f (void)
 	Cvar_SetValue(Cmd_Argv(1), value);
 }
 
-
+/**
+ * @todo add a brief
+ */
 static void MN_ModifyString_f (void)
 {
 	qboolean next;

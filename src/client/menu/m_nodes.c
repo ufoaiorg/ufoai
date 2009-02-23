@@ -226,6 +226,84 @@ menuNode_t* MN_AllocNode (const char* type)
 }
 
 /**
+ * @brief Return the first visible node at a position
+ * @param[in] node Node where we must search
+ * @param[in] rx Relative x position to the parent of the node
+ * @param[in] ry Relative y position to the parent of the node
+ * @return The first visible node at position, else NULL
+ */
+static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
+{
+	menuNode_t *find;
+	menuNode_t *child;
+	int i;
+
+	if (node->invis || node->behaviour->isVirtual || !MN_CheckVisibility(node))
+		return NULL;
+
+	/* relative to the node */
+	rx -= node->pos[0];
+	ry -= node->pos[1];
+
+	/* check bounding box */
+	if (rx < 0 || ry < 0 || rx >= node->size[0] || ry >= node->size[1])
+		return NULL;
+
+	/** @todo we should improve the loop (last-to-first) */
+	find = NULL;
+	for (child = node->firstChild; child; child = child->next) {
+		menuNode_t *tmp;
+		tmp = MN_GetNodeInTreeAtPosition(child, rx, ry);
+		if (tmp)
+			find = tmp;
+	}
+	if (find)
+		return find;
+
+	/* is the node tangible */
+	if (node->ghost)
+		return NULL;
+
+	/* check excluded box */
+	for (i = 0; i < node->excludeRectNum; i++) {
+		if (rx >= node->excludeRect[i].pos[0]
+		 && rx < node->excludeRect[i].pos[0] + node->excludeRect[i].size[0]
+		 && ry >= node->excludeRect[i].pos[1]
+		 && ry < node->excludeRect[i].pos[1] + node->excludeRect[i].size[1])
+			return NULL;
+	}
+
+	/* we are over the node */
+	return node;
+}
+
+/**
+ * @brief Return the first visible node at a position
+ */
+menuNode_t *MN_GetNodeAtPosition (int x, int y)
+{
+	int menuId;
+
+	/* find the first menu under the mouse */
+	for (menuId = mn.menuStackPos - 1; menuId >= 0; menuId--) {
+		menuNode_t *menu = mn.menuStack[menuId];
+		menuNode_t *find;
+
+		find = MN_GetNodeInTreeAtPosition(menu, x, y);
+		if (find)
+			return find;
+
+		/* we must not search anymore */
+		if (menu->u.window.dropdown)
+			break;
+		if (menu->u.window.modal)
+			break;
+	}
+
+	return NULL;
+}
+
+/**
  * @brief Return a node behaviour by name
  * @note Use a dichotomic search. nodeBehaviourList must be sorted by name.
  */

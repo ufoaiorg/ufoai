@@ -29,9 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct menuNode_s;
 
 /* mouse input */
-void MN_LeftClick(int x, int y);
-void MN_RightClick(int x, int y);
-void MN_MiddleClick(int x, int y);
 void MN_MouseWheel(qboolean down, int x, int y);
 void MN_MouseMove(int x, int y);
 void MN_MouseDown(int x, int y, int button);
@@ -53,9 +50,5 @@ void MN_MouseRelease(void);
 
 /* all inputs */
 void MN_ReleaseInput(void);
-
-/* misc */
-void MN_SetCvar(const char *name, const char *str, float value);
-struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
 
 #endif

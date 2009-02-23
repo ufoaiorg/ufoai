@@ -552,7 +552,6 @@ static void CL_RightClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU) {
 		MN_MouseDown(mousePosX, mousePosY, K_MOUSE2);
-		MN_RightClick(mousePosX, mousePosY);
 	}
 }
 
@@ -573,7 +572,6 @@ static void CL_MiddleClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU) {
 		MN_MouseDown(mousePosX, mousePosY, K_MOUSE3);
-		MN_MiddleClick(mousePosX, mousePosY);
 	}
 }
 
@@ -594,7 +592,6 @@ static void CL_LeftClickDown_f (void)
 {
 	if (mouseSpace == MS_MENU) {
 		MN_MouseDown(mousePosX, mousePosY, K_MOUSE1);
-		MN_LeftClick(mousePosX, mousePosY);
 	} else if (cls.state == ca_active) {
 		/* we clicked outside the world but not onto a menu */
 		/* get the current menu */
