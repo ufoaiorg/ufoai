@@ -107,8 +107,8 @@ static void UP_ChangeDisplay (int newDisplay)
 	 * current menu)
 	 */
 	if (!ufopedia || !ufopediaMail) {
-		ufopedia = MN_GetNodeFromCurrentMenu("ufopedia");
-		ufopediaMail = MN_GetNodeFromCurrentMenu("mailclient");
+		ufopedia = MN_GetNodeByPath("ufopedia.ufopedia");
+		ufopediaMail = MN_GetNodeByPath("ufopedia.mailclient");
 	}
 
 	/* maybe we call this function and the UFOpaedia is not on the menu stack */

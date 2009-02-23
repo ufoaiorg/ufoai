@@ -30,8 +30,10 @@ extern cvar_t *mn_show_tooltips;
 /* prototype */
 struct menuNode_s;
 
+/* module initialization */
 void MN_InitDraw(void);
 
+/* draw */
 void MN_Draw(void);
 void MN_DisplayNotice(const char *text, int time);
 void MN_DrawCursor(void);

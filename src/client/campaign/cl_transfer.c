@@ -454,10 +454,10 @@ static void TR_ResetScrolling_f (void)
 	static menuNode_t *trans_list_scroll = NULL;
 
 	if (!trans_list) {
-		trans_list = MN_GetNodeFromCurrentMenu("trans_list");
+		trans_list = MN_GetNodeByPath("transfer.trans_list");
 	}
 	if (!trans_list_scroll) {
-		trans_list_scroll = MN_GetNodeFromCurrentMenu("trans_list_scroll");
+		trans_list_scroll = MN_GetNodeByPath("transfer.trans_list_scroll");
 	}
 
 	/* maybe we call this function and transfer menu is not on the menu stack */

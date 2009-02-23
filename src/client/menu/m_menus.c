@@ -522,7 +522,10 @@ const char* MN_GetActiveMenuName (void)
 
 /**
  * @brief Searches a given node in the current menu
+ * @todo deprecated, we should not use it because its hard to predict result of "current" (we use popups...)
+ * plus, if we need, we can use MN_GetActiveMenu and MN_GetNode
  * @sa MN_GetNode
+ * @sa MN_GetActiveMenu
  */
 menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
 {

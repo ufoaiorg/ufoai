@@ -677,7 +677,7 @@ static void CL_NationStatsUpdate_f (void)
 
 	usedColPtslists = 0;
 
-	colorNode = MN_GetNodeFromCurrentMenu("nation_graph_colors");
+	colorNode = MN_GetNodeByPath("nations.nation_graph_colors");
 	if (colorNode) {
 		dy = (int)(colorNode->size[1] / MAX_NATIONS);
 	}
@@ -727,7 +727,7 @@ static void CL_NationStatsUpdate_f (void)
 	/** @todo Display summary of nation info */
 
 	/* Display graph of nations-values so far. */
-	graphNode = MN_GetNodeFromCurrentMenu("nation_graph_funding");
+	graphNode = MN_GetNodeByPath("nations.nation_graph_funding");
 	if (graphNode) {
 		usedFundPtslist = 0;
 

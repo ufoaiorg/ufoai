@@ -146,7 +146,7 @@ static void MSO_UpdateVisibleButtons (void)
 static void MSO_Init_f (void)
 {
 	if (!msoTextNode)
-		msoTextNode = MN_GetNodeFromCurrentMenu("messagetypes");
+		msoTextNode = MN_GetNodeByPath("messageoptions.messagetypes");
 	if (msoMenuState < MSO_MSTATE_PREPARED) {
 		MSO_InitTextList();
 		msoMenuState = MSO_MSTATE_PREPARED;

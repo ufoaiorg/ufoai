@@ -217,7 +217,7 @@ static void GAME_CP_CampaignListClick_f (void)
 	MN_RegisterText(TEXT_STANDARD, campaignDesc);
 
 	/* Highlight currently selected entry */
-	campaignlist = MN_GetNodeFromCurrentMenu("campaignlist");
+	campaignlist = MN_GetNodeByPath("campaigns.campaignlist");
 	MN_TextNodeSelectLine(campaignlist, num);
 }
 

@@ -168,7 +168,7 @@ static void BS_MarketScroll_f (void)
 	if (!baseCurrent || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
-	node = MN_GetNodeFromCurrentMenu("market");
+	node = MN_GetNodeByPath("buy.market");
 	if (!node)
 		return;
 
@@ -180,13 +180,13 @@ static void BS_MarketScroll_f (void)
 	}
 
 	/* the following nodes must exist */
-	node = MN_GetNodeFromCurrentMenu("market_market");
+	node = MN_GetNodeByPath("buy.market_market");
 	assert(node);
 	node->u.text.textScroll = buyList.scroll;
-	node = MN_GetNodeFromCurrentMenu("market_storage");
+	node = MN_GetNodeByPath("buy.market_storage");
 	assert(node);
 	node->u.text.textScroll = buyList.scroll;
-	node = MN_GetNodeFromCurrentMenu("market_prices");
+	node = MN_GetNodeByPath("buy.market_prices");
 	assert(node);
 	node->u.text.textScroll = buyList.scroll;
 
@@ -530,7 +530,7 @@ static void BS_BuyType (const base_t *base)
 static void BS_BuyType_f (void)
 {
 	if (Cmd_Argc() == 2) {
-		menuNode_t* node = MN_GetNodeFromCurrentMenu("market");
+		menuNode_t* node = MN_GetNodeByPath("buy.market");
 
 		buyCat = INV_GetFilterTypeID(Cmd_Argv(1));
 
