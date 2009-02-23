@@ -498,7 +498,7 @@ void MN_MouseDown (int x, int y, int button)
 		node->behaviour->mouseDown(node, x, y, button);
 
 	/* click event */
-	/** @todo should be send we the mouse up (after a down on the same node) */
+	/** @todo should be send this event when the mouse up (after a down on the same node) */
 	switch (button) {
 	case K_MOUSE1:
 		MN_LeftClick(x, y);
