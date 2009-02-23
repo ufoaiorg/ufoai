@@ -530,7 +530,7 @@ static void CL_TurnUp_f (void)
  */
 static void CL_HudRadarDown_f (void)
 {
-	if (!MN_MenuIsOnStack(mn_hud->string))
+	if (!MN_IsMenuOnStack(mn_hud->string))
 		return;
 	MN_PushMenu("radarmenu", NULL);
 }
@@ -540,7 +540,7 @@ static void CL_HudRadarDown_f (void)
  */
 static void CL_HudRadarUp_f (void)
 {
-	if (!MN_MenuIsOnStack(mn_hud->string))
+	if (!MN_IsMenuOnStack(mn_hud->string))
 		return;
 	MN_CloseMenu("radarmenu");
 }
@@ -1133,7 +1133,7 @@ static void IN_Parse (void)
 	mouseSpace = MS_NULL;
 
 	/* standard menu and world mouse handling */
-	if (MN_CursorOnMenu(mousePosX, mousePosY)) {
+	if (MN_IsPointOnMenu(mousePosX, mousePosY)) {
 		mouseSpace = MS_MENU;
 		return;
 	}

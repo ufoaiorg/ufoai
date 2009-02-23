@@ -36,10 +36,10 @@ int MN_GetLastFullScreenWindow(void);
 struct menuNode_s* MN_PushMenu(const char *name, const char *parentName);
 void MN_PopMenu(qboolean all);
 void MN_CloseMenu(const char* name);
-qboolean MN_MenuIsOnStack(const char* name);
 struct menuNode_s* MN_GetActiveMenu(void);
-qboolean MN_CursorOnMenu(int x, int y);
 int MN_CompletePushMenu(const char *partial, const char **match);
+qboolean MN_IsMenuOnStack(const char* name);
+qboolean MN_IsPointOnMenu(int x, int y);
 /* deprecated */
 const char* MN_GetActiveMenuName(void);
 struct menuNode_s* MN_GetNodeFromCurrentMenu(const char *name);

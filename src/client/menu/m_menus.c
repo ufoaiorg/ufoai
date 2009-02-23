@@ -359,7 +359,10 @@ static void MN_CloseAllMenu (void)
 	}
 }
 
-qboolean MN_MenuIsOnStack(const char* name)
+/**
+ * @brief Check if a named menu is on the stack if active menus
+ */
+qboolean MN_IsMenuOnStack(const char* name)
 {
 	return MN_GetMenuPositionFromStackByName(name) != -1;
 }
@@ -533,10 +536,10 @@ menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
 }
 
 /**
+ * @brief Check if a point is over a menu from the stack
  * @sa IN_Parse
- * @todo cleanup this function
  */
-qboolean MN_CursorOnMenu (int x, int y)
+qboolean MN_IsPointOnMenu (int x, int y)
 {
 	const menuNode_t *hovered;
 
