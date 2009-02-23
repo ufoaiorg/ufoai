@@ -105,7 +105,6 @@ const value_t* MN_FindPropertyByName (const value_t* propertyList, const char* n
  * @brief Allocate a float into the menu memory
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] count number of element need to allocate
- * @todo use it every where its possible (search mn.curadata)
  * @todo Assert out when we are not in parsing/loading stage
  */
 float* MN_AllocFloat (int count)
@@ -114,6 +113,23 @@ float* MN_AllocFloat (int count)
 	assert(count > 0);
 	result = (float*) mn.curadata;
 	mn.curadata += ALIGN(sizeof(float) * count);
+	if (mn.curadata - mn.adata > mn.adataize)
+		Sys_Error("MN_AllocFloat: Menu memory hunk exceeded - increase the size");
+	return result;
+}
+
+/**
+ * @brief Allocate pointer into the menu memory
+ * @note Its not a dynamic memory allocation. Please only use it at the loading time
+ * @param[in] count number of element need to allocate
+ * @todo Assert out when we are not in parsing/loading stage
+ */
+static void** MN_AllocPointer (int count)
+{
+	void **result;
+	assert(count > 0);
+	result = (void**) mn.curadata;
+	mn.curadata += ALIGN(sizeof(void*) * count);
 	if (mn.curadata - mn.adata > mn.adataize)
 		Sys_Error("MN_AllocFloat: Menu memory hunk exceeded - increase the size");
 	return result;
@@ -141,7 +157,6 @@ vec4_t* MN_AllocColor (int count)
  * @note Its not a dynamic memory allocation. Please only use it at the loading time
  * @param[in] string Use to initialize the string
  * @param[in] size request a fixed memory size, if 0 the string size is used
- * @todo use it every where its possible (search mn.curadata)
  * @todo Assert out when we are not in parsing/loading stage
  */
 char* MN_AllocString (const char* string, int size)
@@ -259,16 +274,17 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		return qfalse;
 
 	if (val->type == V_SPECIAL_ACTION) {
-		*(menuAction_t**)mn.curadata = MN_ParseAction(menuNode, text, token);
-		mn.curadata += ALIGN(sizeof(menuAction_t*));
+		menuAction_t** actionRef = (menuAction_t**) MN_AllocPointer(1);
+		*actionRef = MN_ParseAction(menuNode, text, token);
 	} else if (val->type == V_SPECIAL_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
+		menuIcon_t** icomRef;
 		if (icon == NULL) {
 			Com_Printf("MN_ParseSetAction: icon '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 			return qfalse;
 		}
-		*(menuIcon_t**)mn.curadata = icon;
-		mn.curadata += ALIGN(sizeof(menuIcon_t*));
+		icomRef = (menuIcon_t**) MN_AllocPointer(1);
+		*icomRef = icon;
 	} else {
 		if (MN_IsInjectedString(*token)) {
 			char *foo;
@@ -394,9 +410,9 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 					Com_Printf("MN_ParseAction: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
 				}
-				action->data = mn.curadata;
-				*(menuAction_t ***) mn.curadata = &callNode->onClick;
-				mn.curadata += ALIGN(sizeof(menuAction_t *));
+				/** @todo we dont need to alloc a pointer */
+				action->data = MN_AllocPointer(1);
+				*(menuAction_t ***) action->data = &callNode->onClick;
 				lastAction = action;
 			}
 			break;

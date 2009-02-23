@@ -41,7 +41,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Handles RadioButton draw
- * @todo need to implement image. We can't do everything with only one icon
+ * @todo need to implement image. We can't do everything with only one icon (or use nother icon)
  */
 static void MN_RadioButtonNodeDraw (menuNode_t *node)
 {
@@ -81,7 +81,7 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 	}
 
 	/* its not a cvar! */
-	/** @todo must be checked by the property type */
+	/** @todo the parser should already check that the property value is a right cvar */
 	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
