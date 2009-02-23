@@ -35,13 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_input.h"
 #include "cl_keys.h"
 
-/** @todo get rid of these */
-#include "cl_le.h"
-#include "cl_menu.h"
-#include "campaign/cl_campaign.h"
-
-/*============================================================================= */
-
 /* Map debugging constants */
 /** @brief cvar debug_map options:
  * debug_map is a bit mask, like the developer cvar.  There is no ALL bit.
@@ -264,5 +257,10 @@ void CL_Disconnect(void);
 void CL_Init(void);
 
 void CL_ClearState(void);
+
+/** @todo get rid of these */
+#include "cl_le.h"
+#include "cl_menu.h"
+#include "campaign/cl_campaign.h"
 
 #endif /* CLIENT_CLIENT_H */
