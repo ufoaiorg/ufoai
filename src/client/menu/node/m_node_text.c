@@ -190,7 +190,6 @@ static void MN_TextNodeMouseMove (menuNode_t *node, int x, int y) {
 
 /**
  * @brief Handles line breaks and drawing for MN_TEXT menu nodes
- * @sa MN_DrawMenus
  * @param[in] text Text to draw
  * @param[in] font Font string to use
  * @param[in] node The current menu node
@@ -383,7 +382,6 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 
 /**
  * @brief Draws the TEXT_MESSAGESYSTEM node
- * @sa MN_DrawMenus
  * @param[in] font Font string to use
  * @param[in] node The current menu node
  * @param[in] x The fixed x position every new line starts

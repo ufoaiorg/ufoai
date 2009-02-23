@@ -30,8 +30,9 @@ extern cvar_t *mn_show_tooltips;
 /* prototype */
 struct menuNode_s;
 
-void MN_DrawMenus(void);
-void MN_DrawMenusInit(void);
+void MN_InitDraw(void);
+
+void MN_Draw(void);
 void MN_DisplayNotice(const char *text, int time);
 void MN_DrawCursor(void);
 void MN_CaptureDrawOver(struct menuNode_s *node);

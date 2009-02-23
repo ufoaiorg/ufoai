@@ -266,15 +266,13 @@ void MN_Init (void)
 	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
 #endif
 
-	MN_InitData();
-
 	/* 256kb */
-	/** @todo (menu) Get rid of adata, curadata and adataize */
 	mn.adataize = MENU_HUNK_SIZE;
 	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, cl_menuSysPool, CL_TAG_MENU);
 	mn.curadata = mn.adata;
 
+	MN_InitData();
 	MN_InitNodes();
 	MN_InitMenus();
-	MN_DrawMenusInit();
+	MN_InitDraw();
 }

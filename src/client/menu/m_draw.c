@@ -235,7 +235,7 @@ static void MN_DrawNode (menuNode_t *node)
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
-void MN_DrawMenus (void)
+void MN_Draw (void)
 {
 	menuNode_t *hoveredNode;
 	menuNode_t *menu;
@@ -324,7 +324,7 @@ void MN_DrawCursor (void)
 	MN_DrawDragAndDrop(mousePosX, mousePosY);
 }
 
-void MN_DrawMenusInit (void)
+void MN_InitDraw (void)
 {
 #ifdef DEBUG
 	mn_debug = Cvar_Get("debug_menu", "0", 0, "Prints node names for debugging purposes - valid values are 1 and 2");

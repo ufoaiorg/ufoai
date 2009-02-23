@@ -518,7 +518,7 @@ static qboolean CIN_DecodeChunk (void)
 }
 
 /**
- * @sa MN_DrawMenus
+ * @sa MN_Draw
  * @note Coordinates should be relative to VID_NORM_WIDTH and VID_NORM_HEIGHT
  * they are normalized inside this function
  */

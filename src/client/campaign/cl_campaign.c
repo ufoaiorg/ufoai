@@ -726,7 +726,6 @@ const int DETECTION_INTERVAL = (SECONDS_PER_HOUR / 2);
 /**
  * @brief Called every frame when we are in geoscape view
  * @note Called for node types MN_MAP and MN_3DMAP
- * @sa MN_DrawMenus
  * @sa CP_NationHandleBudget
  * @sa B_UpdateBaseData
  * @sa CL_CampaignRunAircraft

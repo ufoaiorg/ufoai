@@ -51,7 +51,7 @@ void MN_RegisterTextNode(struct nodeBehaviour_s *behaviour);
 typedef struct {
 	qboolean scrollbar;			/**< if you want to add a scrollbar to a text node, set this to true */
 	int textScroll;				/**< textfields - current scroll position */
-	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
+	int textLines;				/**< How many lines there are */
 	int textLineSelected;		/**< Which line is currenlty selected? This counts only visible lines). Add textScroll to this value to get total linecount. @sa selectedColor below.*/
 	int lineUnderMouse;			/**< MN_TEXT: The line under the mouse, when the mouse is over the node */
 	int num;					/**< textfields: menutexts-id - baselayouts: baseID */

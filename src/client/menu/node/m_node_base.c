@@ -90,7 +90,6 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 
 /**
  * @brief Draws a base.
- * @sa MN_DrawMenus
  */
 static void MN_BaseMapDraw (menuNode_t * node)
 {
