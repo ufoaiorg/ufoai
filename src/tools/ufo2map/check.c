@@ -1338,6 +1338,9 @@ void Check_ContainedBrushes (void)
 			mapbrush_t *jBrush = iBrush->nearBrushes[j];
 			int numSidesInside = 0;
 
+			if (jBrush->contentFlags & CONTENTS_ORIGIN)
+				continue; /* origin brushes are allowed inside others */
+
 			for (js = 0; js < jBrush->numsides; js++) {
 				const side_t *jSide = &jBrush->original_sides[js];
 
