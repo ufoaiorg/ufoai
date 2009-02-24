@@ -21,7 +21,6 @@ CLIENT_SRCS = \
 	client/cl_menu.c \
 	client/cl_parse.c \
 	client/cl_particle.c \
-	client/cl_rank.c \
 	client/cl_screen.c \
 	client/cl_sound.c \
 	client/cl_sequence.c \
@@ -45,6 +44,7 @@ CLIENT_SRCS = \
 	client/campaign/cp_mission_triggers.c \
 	client/campaign/cp_nations.c \
 	client/campaign/cp_parse.c \
+	client/campaign/cp_rank.c \
 	client/campaign/cp_team.c \
 	client/campaign/cp_team_callbacks.c \
 	client/campaign/cp_time.c \

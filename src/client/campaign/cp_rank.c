@@ -1,6 +1,5 @@
 /**
- * @file cl_rank.c
- * @todo campaign mode only?
+ * @file cp_rank.c
  */
 
 /*
@@ -23,11 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "client.h"
-#include "cl_global.h"
-#include "cl_game.h"
-#include "cl_rank.h"
-#include "../shared/parse.h"
+#include "../client.h"
+#include "../cl_global.h"
+#include "../cl_game.h"
+#include "../../shared/parse.h"
+#include "cp_rank.h"
+#include "cl_campaign.h"
 
 /**
  * @brief Get the index number of the given rankID
