@@ -205,11 +205,6 @@ void V_LoadMedia (void)
 	int i, max;
 	char name[32];
 
-	/* HACK Prepare environment. This is needed hack to allow /devmap and /map usage.
-	 * When an user has base built and calls /devmap or /map, cls.missionaircraft has to be set. */
-	if (!cls.missionaircraft)
-		cls.missionaircraft = AIR_AircraftGetFromIDX(0);
-
 	V_UpdateRefDef();
 
 	if (!cl.configstrings[CS_TILES][0])

@@ -791,12 +791,14 @@ static void CL_ThisSoldier_f (void)
 
 /**
  * @brief Update the GUI with the selected item
+ * @todo Doesn't belong into cl_team.c
+ * @todo function is used for multiplayer, too - should be splitted
  */
 static void CL_UpdateObject_f (void)
 {
 	int num;
 	const objDef_t *obj;
-	qboolean mustWeChangeTab;
+	qboolean changeTab;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -805,9 +807,9 @@ static void CL_UpdateObject_f (void)
 	}
 
 	if (Cmd_Argc() == 3)
-		mustWeChangeTab = atoi(Cmd_Argv(2)) >= 1;
+		changeTab = atoi(Cmd_Argv(2)) >= 1;
 	else
-		mustWeChangeTab = qtrue;
+		changeTab = qtrue;
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= csi.numODs) {
@@ -820,7 +822,7 @@ static void CL_UpdateObject_f (void)
 	UP_ItemDescription(obj);
 
 	/* update tab */
-	if (mustWeChangeTab) {
+	if (changeTab) {
 		const cvar_t *var = Cvar_FindVar("mn_equiptype");
 		const int filter = INV_GetFilterFromItem(obj);
 		if (var->integer != filter) {

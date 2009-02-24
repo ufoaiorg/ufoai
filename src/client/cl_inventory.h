@@ -33,7 +33,6 @@ qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, in
 equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);
 
-qboolean INV_ItemsSanityCheck(void);
 qboolean INV_EquipmentDefSanityCheck(void);
 
 #endif /* CLIENT_CL_INVENTORY_H */

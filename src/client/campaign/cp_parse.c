@@ -687,6 +687,45 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		CL_ParseUGVs(name, text);
 }
 
+/**
+ * @brief Make sure values of items after parsing are proper.
+ */
+static qboolean CP_ItemsSanityCheck (void)
+{
+	int i;
+	qboolean result = qtrue;
+
+	for (i = 0; i < csi.numODs; i++) {
+		const objDef_t *item = &csi.ods[i];
+
+		/* Warn if item has no size set. */
+		if (item->size <= 0 && !(item->notOnMarket && INV_ItemMatchesFilter(item, FILTER_DUMMY))) {
+			result = qfalse;
+			Com_Printf("CP_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
+		}
+
+		/* Warn if no price is set. */
+		if (item->price <= 0 && !item->notOnMarket) {
+			result = qfalse;
+			Com_Printf("CP_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
+		}
+
+		/** @todo production is campaign mode only - shouldn't be here */
+		if (item->price > 0 && item->notOnMarket && !PR_ItemIsProduceable(item)) {
+			result = qfalse;
+			Com_Printf("CP_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
+		}
+
+		/* extension and headgear are mutual exclusive */
+		if (item->extension && item->headgear) {
+			result = qfalse;
+			Com_Printf("CP_ItemsSanityCheck: Item %s has both extension and headgear set.\n",  item->id);
+		}
+	}
+
+	return result;
+}
+
 /** @brief struct that holds the sanity check data */
 typedef struct {
 	qboolean (*check)(void);	/**< function pointer to check function */
@@ -698,7 +737,7 @@ static const sanity_functions_t sanity_functions[] = {
 	{B_ScriptSanityCheck, "buildings"},
 	{RS_ScriptSanityCheck, "tech"},
 	{AIR_ScriptSanityCheck, "aircraft"},
-	{INV_ItemsSanityCheck, "items"},
+	{CP_ItemsSanityCheck, "items"},
 	{INV_EquipmentDefSanityCheck, "items"},
 	{NAT_ScriptSanityCheck, "nations"},
 

@@ -101,45 +101,6 @@ static void INV_InventoryList_f (void)
 #endif
 
 /**
- * @brief Make sure values of items after parsing are proper.
- */
-qboolean INV_ItemsSanityCheck (void)
-{
-	int i;
-	qboolean result = qtrue;
-
-	for (i = 0; i < csi.numODs; i++) {
-		const objDef_t *item = &csi.ods[i];
-
-		/* Warn if item has no size set. */
-		if (item->size <= 0 && !(item->notOnMarket && INV_ItemMatchesFilter(item, FILTER_DUMMY))) {
-			result = qfalse;
-			Com_Printf("INV_ItemsSanityCheck: Item %s has zero size set.\n", item->id);
-		}
-
-		/* Warn if no price is set. */
-		if (item->price <= 0 && !item->notOnMarket) {
-			result = qfalse;
-			Com_Printf("INV_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
-		}
-
-		/** @todo production is campaign mode only - shouldn't be here */
-		if (item->price > 0 && item->notOnMarket && !PR_ItemIsProduceable(item)) {
-			result = qfalse;
-			Com_Printf("INV_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);
-		}
-
-		/* extension and headgear are mutual exclusive */
-		if (item->extension && item->headgear) {
-			result = qfalse;
-			Com_Printf("INV_ItemsSanityCheck: Item %s has both extension and headgear set.\n",  item->id);
-		}
-	}
-
-	return result;
-}
-
-/**
  * @brief Make sure equipment definitions used to generate teams are proper.
  * @note Check that the sum of all proabilities is smaller or equal to 100 for a weapon type.
  * @sa INVSH_EquipActor
