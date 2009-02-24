@@ -157,8 +157,7 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		assert(action->type.param2 == EA_VALUE);
 		Q_strncpyz(cvarName, MN_GenInjectedString(source, useCmdParam, action->data, qfalse), MAX_VAR);
 
-		textValue = action->data;
-		textValue += ALIGN(strlen(action->data) + 1);
+		textValue = action->data2;
 		textValue = MN_GenInjectedString(source, useCmdParam, textValue, qfalse);
 		if (textValue[0] == '_') {
 			textValue = gettext(textValue + 1);
@@ -192,8 +191,7 @@ inline static void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		Sys_Error("MN_ExecuteSetAction: Invalid actiontype (source: %s)", MN_GetPath(source));
 	}
 
-	value = action->data;
-	value += ALIGN(strlen(action->data) + 1);
+	value = action->data2;
 
 	/* decode text value */
 	if (action->type.param2 == EA_VALUE) {

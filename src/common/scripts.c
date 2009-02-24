@@ -146,6 +146,40 @@ static const size_t vt_sizes[] = {
 };
 CASSERT(lengthof(vt_sizes) == V_NUM_TYPES);
 
+/** @brief natural align for each targets */
+static const size_t vt_aligns[] = {
+	0,	/* V_NULL */
+	sizeof(qboolean),	/* V_BOOL */
+	sizeof(char),	/* V_CHAR */
+	sizeof(int),	/* V_INT */
+	sizeof(int),	/* V_INT2 */
+	sizeof(float),	/* V_FLOAT */
+	sizeof(vec_t),	/* V_POS */
+	sizeof(vec_t),	/* V_VECTOR */
+	sizeof(vec_t),	/* V_COLOR */
+	sizeof(vec_t),	/* V_RGBA */
+	sizeof(char),	/* V_STRING */
+	sizeof(char),	/* V_TRANSLATION_STRING */
+	sizeof(char),	/* V_LONGSTRING */
+	sizeof(byte),	/* V_ALIGN */
+	sizeof(byte),	/* V_BLEND */
+	sizeof(byte),	/* V_STYLE */
+	sizeof(byte),	/* V_FADE */
+	sizeof(int),	/* V_SHAPE_SMALL */
+	sizeof(uint32_t),	/* V_SHAPE_BIG */
+	sizeof(byte),	/* V_DMGTYPE */
+	sizeof(byte),	/* V_DMGWEIGHT */
+	sizeof(date_t),	/* V_DATE */
+	sizeof(float),	/* V_RELABS */
+	0,	/* V_CLIENT_HUNK */
+	sizeof(char),	/* V_CLIENT_HUNK_STRING */
+	sizeof(int),	/* V_BASEID */
+	sizeof(byte), 	/* V_LONGLINES */
+	sizeof(int),		/* V_TEAM */
+	sizeof(int)		/* V_RACE */
+};
+CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
+
 static char errorMessage[256];
 
 /**
@@ -155,6 +189,16 @@ static char errorMessage[256];
 const char* Com_GetError ()
 {
 	return errorMessage;
+}
+
+/**
+ * @brief Align a memory to use a natural adress for the next type
+ */
+void* Com_AlignPtr (void *memory, valueTypes_t type)
+{
+	int align = vt_aligns[type];
+	assert (align);
+	return ALIGN_PTR(memory, align);
 }
 
 /**

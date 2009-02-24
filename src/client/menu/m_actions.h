@@ -56,6 +56,7 @@ typedef struct menuAction_s {
 	ea_opcode type;
 
 	void *data;
+	void *data2;
 	struct menuAction_s *next;
 	const value_t *scriptValues;
 } menuAction_t;

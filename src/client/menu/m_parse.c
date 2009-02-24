@@ -176,9 +176,6 @@ char* MN_AllocString (const char* string, int size)
 			Sys_Error("MN_AllocString: Menu memory hunk exceeded - increase the size");
 		mn.curadata += sprintf((char *)mn.curadata, "%s", string) + 1;
 	}
-
-	/** @todo while we use both (code align before, and code aling after) we can't remove that */
-	mn.curadata = ALIGN(mn.curadata);
 	return result;
 }
 
@@ -186,7 +183,6 @@ char* MN_AllocString (const char* string, int size)
 static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
 
 /**
- * @todo We should update menuNode_t to make every data accessible, and not use sequential memory (it make the code harder to understand)
  */
 static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
@@ -200,7 +196,6 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 
 	/* cvar setter */
 	if (Q_strncmp(nodeName, "cvar:", 5) == 0) {
-		char *foo;	/**< @todo remove a warning, see the todo bellow */
 		action->data = MN_AllocString(nodeName + 5, 0);
 		action->type.param1 = EA_CVARNAME;
 		action->type.param2 = EA_VALUE;
@@ -209,8 +204,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		*token = COM_EParse(text, errhead, NULL);
 		if (!*text)
 			return qfalse;
-		/** @todo We should not use sequential memory, it make the code harder to understand */
-		foo = MN_AllocString(*token, 0);
+		action->data2 = MN_AllocString(*token, 0);
 		return qtrue;
 	}
 
@@ -283,6 +277,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	if (val->type == V_SPECIAL_ACTION) {
 		menuAction_t** actionRef = (menuAction_t**) MN_AllocPointer(1);
 		*actionRef = MN_ParseAction(menuNode, text, token);
+		action->data2 = actionRef;
 	} else if (val->type == V_SPECIAL_ICONREF) {
 		menuIcon_t* icon = MN_GetIconByName(*token);
 		menuIcon_t** icomRef;
@@ -292,18 +287,19 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 		}
 		icomRef = (menuIcon_t**) MN_AllocPointer(1);
 		*icomRef = icon;
+		action->data2 = icomRef;
 	} else {
 		if (MN_IsInjectedString(*token)) {
-			char *foo;
 			action->type.param2 = EA_VALUE;
-			/** @todo We should not use sequential memory, it make the code harder to understand */
-			foo = MN_AllocString(*token, 0);
+			action->data2 = MN_AllocString(*token, 0);
 		} else {
 			const int baseType = val->type & V_SPECIAL_TYPE;
 			if (baseType != 0 && baseType != V_SPECIAL_CVAR) {
 				Com_Printf("MN_ParseSetAction: setter for property '%s' (type %d, 0x%X) is not supported (%s)\n", val->string, val->type, val->type, MN_GetPath(menuNode));
 				return qfalse;
 			}
+			mn.curadata = Com_AlignPtr(mn.curadata, val->type & V_BASETYPEMASK);
+			action->data2 = mn.curadata;
 			mn.curadata += Com_EParseValue(mn.curadata, *token, val->type & V_BASETYPEMASK, 0, val->size);
 		}
 	}
@@ -391,8 +387,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 				return NULL;
 
 			/* get the value */
-			action->data = mn.curadata;
-			mn.curadata += Com_EParseValue(mn.curadata, *token, V_LONGSTRING, 0, 0);
+			action->data = MN_AllocString(*token, 0);
 			break;
 
 		case EA_SET:
@@ -672,6 +667,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			return qfalse;
 
 		/* a reference to data is handled like this */
+		mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
 		*(byte **) ((byte *) object + property->ofs) = mn.curadata;
 
 		/** @todo check for the moment its not a cvar */
@@ -697,10 +693,12 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		if (!*text)
 			return qfalse;
 
-		/* a reference to data is handled like this */
-		*(byte **) ((byte *) object + property->ofs) = mn.curadata;
 		/* references are parsed as string */
 		if (*token[0] == '*') {
+			/* a reference to data */
+			mn.curadata = Com_AlignPtr(mn.curadata, V_STRING);
+			*(byte **) ((byte *) object + property->ofs) = mn.curadata;
+
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
 				Com_Printf(": Value '%s' is too long (key %s)\n", *token, property->string);
@@ -714,6 +712,10 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 			}
 			mn.curadata += bytes;
 		} else {
+			/* a reference to data */
+			mn.curadata = Com_AlignPtr(mn.curadata, property->type & V_BASETYPEMASK);
+			*(byte **) ((byte *) object + property->ofs) = mn.curadata;
+
 			/* sanity check */
 			if ((property->type & V_BASETYPEMASK) == V_STRING && strlen(*token) > MAX_VAR - 1) {
 				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
