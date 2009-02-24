@@ -664,8 +664,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 	case INTERESTCATEGORY_MAX:			/* Should not be reached, this mission category is not drawn on geoscape */
 		break;
 	}
-	assert(0);
-	return "";
+	Sys_Error("Unknown mission interest category");
 }
 
 /**

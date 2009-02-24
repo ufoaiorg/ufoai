@@ -523,8 +523,7 @@ qboolean AIR_IsAircraftOnGeoscape (const aircraft_t * aircraft)
 		return qfalse;
 	}
 
-	assert(0);
-	return qfalse;
+	Sys_Error("Unknown aircraft status");
 }
 
 /**
@@ -1267,13 +1266,9 @@ objDef_t *AII_GetAircraftItemByID (const char *id)
 	}
 #endif
 
-	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
-		if (!Q_strncmp(id, csi.ods[i].id, MAX_VAR)) {
-			if (csi.ods[i].craftitem.type < 0)
-				Sys_Error("Same name for a none aircraft item object or not the correct filter-type for this object (%s)\n", id);
+	for (i = 0; i < csi.numODs; i++)	/* i = item index */
+		if (!Q_strcmp(id, csi.ods[i].id))
 			return &csi.ods[i];
-		}
-	}
 
 	Com_Printf("AII_GetAircraftItemByID: Aircraft Item \"%s\" not found.\n", id);
 	return NULL;

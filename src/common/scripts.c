@@ -707,7 +707,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 
 	default:
 		Sys_Error("Com_SetValue: unknown value type\n");
-		return -1;
 	}
 }
 
@@ -862,7 +861,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 
 	default:
 		Sys_Error("Com_ValueToStr: unknown value type %i\n", type);
-		return NULL;
 	}
 }
 
@@ -1704,12 +1702,10 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 	/* If no team was found this should be NULL for error checking. */
 	chr->teamDef = NULL;
 
-	if (i < csi.numTeamDefs)
-		td = &csi.teamDef[i];
-	else {
+	if (i >= csi.numTeamDefs)
 		Com_Error(ERR_DROP, "Com_GetCharacterValues: could not find team '%s' in team definitions", team);
-		return 0;
-	}
+
+	td = &csi.teamDef[i];
 
 	/* default values for human characters */
 	switch (td->size) {

@@ -81,7 +81,6 @@ static const objDef_t *BS_GetObjectDefition (const buyListEntry_t *entry)
 		return NULL;
 
 	Sys_Error("You should not check an empty buy list entry");
-	return NULL;
 }
 
 

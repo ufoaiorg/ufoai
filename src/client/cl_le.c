@@ -1053,7 +1053,6 @@ le_t *LE_Add (int entnum)
 		if (numLEs >= MAX_EDICTS) {
 			/* no free LEs */
 			Com_Error(ERR_DROP, "Too many LEs");
-			return NULL;
 		}
 
 		/* list isn't too long */

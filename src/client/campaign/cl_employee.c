@@ -149,7 +149,6 @@ const char* E_GetEmployeeString (employeeType_t type)
 		return _("UGV");
 	default:
 		Sys_Error("Unknown employee type '%i'\n", type);
-		return "";
 	}
 }
 
@@ -161,20 +160,18 @@ const char* E_GetEmployeeString (employeeType_t type)
 employeeType_t E_GetEmployeeType (const char* type)
 {
 	assert(type);
-	if (!Q_strncmp(type, "EMPL_SCIENTIST", 14))
+	if (!Q_strcmp(type, "EMPL_SCIENTIST"))
 		return EMPL_SCIENTIST;
-	else if (!Q_strncmp(type, "EMPL_SOLDIER", 12))
+	else if (!Q_strcmp(type, "EMPL_SOLDIER"))
 		return EMPL_SOLDIER;
-	else if (!Q_strncmp(type, "EMPL_WORKER", 11))
+	else if (!Q_strcmp(type, "EMPL_WORKER"))
 		return EMPL_WORKER;
-	else if (!Q_strncmp(type, "EMPL_PILOT", 10))
+	else if (!Q_strcmp(type, "EMPL_PILOT"))
 		return EMPL_PILOT;
-	else if (!Q_strncmp(type, "EMPL_ROBOT", 10))
+	else if (!Q_strcmp(type, "EMPL_ROBOT"))
 		return EMPL_ROBOT;
-	else {
-		Sys_Error("Unknown employee type '%s'\n", type);
-		return MAX_EMPL; /* never reached */
-	}
+
+	Sys_Error("Unknown employee type '%s'\n", type);
 }
 
 /**

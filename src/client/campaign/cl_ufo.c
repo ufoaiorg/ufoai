@@ -92,7 +92,6 @@ const char* UFO_TypeToShortName (ufoType_t type)
 		list++;
 	}
 	Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
-	return NULL; /* never reached */
 }
 
 /**
@@ -109,7 +108,6 @@ const char* UFO_CrashedTypeToShortName (ufoType_t type)
 		list++;
 	}
 	Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
-	return NULL; /* never reached */
 }
 
 /**
@@ -126,7 +124,6 @@ const char* UFO_TypeToName (ufoType_t type)
 	if (tech)
 		return _(tech->name);
 	Sys_Error("UFO_TypeToName(): Unknown UFO type %i - no tech for '%s'\n", type, id);
-	return NULL; /* never reached */
 }
 /**
  * @brief Returns names of the UFO is UFO has been reseached.

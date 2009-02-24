@@ -229,7 +229,6 @@ int FS_Seek (qFILE * f, long offset, int origin)
 		if (offset < 0 || origin == FS_SEEK_END) {
 			Com_Error(ERR_FATAL, "Negative offsets and FS_SEEK_END not implemented "
 					"for FS_Seek on pk3 file contents\n");
-			return -1;
 		}
 
 		switch (origin) {
@@ -248,7 +247,6 @@ int FS_Seek (qFILE * f, long offset, int origin)
 		default:
 			Com_Error(ERR_FATAL, "Bad origin in FS_Seek");
 		}
-		return -1;
 	} else if (f->f) {
 		switch (origin) {
 		case FS_SEEK_CUR:

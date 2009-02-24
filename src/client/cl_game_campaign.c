@@ -141,9 +141,7 @@ static inline const char* CP_ToDifficultyName (int difficulty)
 		return _("Insane");
 	default:
 		Sys_Error("Unknown difficulty id %i\n", difficulty);
-		break;
 	}
-	return NULL;
 }
 
 #define MAXCAMPAIGNTEXT 4096

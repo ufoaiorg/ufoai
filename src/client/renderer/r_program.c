@@ -199,7 +199,7 @@ void R_ShutdownPrograms (void)
 	}
 }
 
-static size_t R_ShaderIncludes (const char *name, const char *in, char *out, size_t len)
+static size_t R_ShaderIncludes (const char *name, const char *in, char *out, int len)
 {
 	char path[MAX_QPATH];
 	byte *buf;

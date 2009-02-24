@@ -2230,10 +2230,9 @@ int MAP_GetCivilianNumberByPosition (const vec2_t pos)
 {
 	const byte* color = MAP_GetColor(pos, MAPTYPE_POPULATION);
 
-	if (MapIsWater(color)) {
+	if (MapIsWater(color))
 		Sys_Error("MAP_GetPopulationType: Trying to get number of civilian in a position on water");
-		return 0;
-	} else if (MapIsUrban(color))
+	else if (MapIsUrban(color))
 		return 10;
 	else if (MapIsSuburban(color))
 		return 8;
