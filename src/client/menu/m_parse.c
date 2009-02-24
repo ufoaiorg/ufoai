@@ -111,8 +111,9 @@ float* MN_AllocFloat (int count)
 {
 	float *result;
 	assert(count > 0);
+	mn.curadata = ALIGN_PTR(mn.curadata, sizeof(float));
 	result = (float*) mn.curadata;
-	mn.curadata += ALIGN(sizeof(float) * count);
+	mn.curadata += sizeof(float) * count;
 	if (mn.curadata - mn.adata > mn.adataize)
 		Sys_Error("MN_AllocFloat: Menu memory hunk exceeded - increase the size");
 	return result;
@@ -128,8 +129,9 @@ static void** MN_AllocPointer (int count)
 {
 	void **result;
 	assert(count > 0);
+	mn.curadata = ALIGN_PTR(mn.curadata, sizeof(void*));
 	result = (void**) mn.curadata;
-	mn.curadata += ALIGN(sizeof(void*) * count);
+	mn.curadata += sizeof(void*) * count;
 	if (mn.curadata - mn.adata > mn.adataize)
 		Sys_Error("MN_AllocPointer: Menu memory hunk exceeded - increase the size");
 	return result;
@@ -145,8 +147,9 @@ vec4_t* MN_AllocColor (int count)
 {
 	vec4_t *result;
 	assert(count > 0);
+	mn.curadata = ALIGN_PTR(mn.curadata, sizeof(vec_t));
 	result = (vec4_t*) mn.curadata;
-	mn.curadata += ALIGN(sizeof(float) * 4 * count);
+	mn.curadata += sizeof(vec_t) * 4 * count;
 	if (mn.curadata - mn.adata > mn.adataize)
 		Sys_Error("MN_AllocColor: Menu memory hunk exceeded - increase the size");
 	return result;
@@ -162,16 +165,20 @@ vec4_t* MN_AllocColor (int count)
 char* MN_AllocString (const char* string, int size)
 {
 	char* result = (char *)mn.curadata;
+	mn.curadata = ALIGN_PTR(mn.curadata, sizeof(char));
 	if (size != 0) {
 		if (mn.curadata - mn.adata + size > mn.adataize)
 			Sys_Error("MN_AllocString: Menu memory hunk exceeded - increase the size");
 		strncpy((char *)mn.curadata, string, size);
-		mn.curadata += ALIGN(size);
+		mn.curadata += size;
 	} else {
 		if (mn.curadata - mn.adata + strlen(string) + 1 > mn.adataize)
 			Sys_Error("MN_AllocString: Menu memory hunk exceeded - increase the size");
-		mn.curadata += ALIGN(sprintf((char *)mn.curadata, "%s", string) + 1);
+		mn.curadata += sprintf((char *)mn.curadata, "%s", string) + 1;
 	}
+
+	/** @todo while we use both (code align before, and code aling after) we can't remove that */
+	mn.curadata = ALIGN(mn.curadata);
 	return result;
 }
 

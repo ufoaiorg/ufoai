@@ -35,6 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))*/
 #endif
 
+#ifndef ALIGN_PTR
+#define ALIGN_PTR(value,size) (void*)(((unsigned int)value + (size - 1)) & (~(size - 1)))
+#endif
+
 #define MEMBER_SIZEOF(TYPE, MEMBER) sizeof(((TYPE *)0)->MEMBER)
 
 /**
