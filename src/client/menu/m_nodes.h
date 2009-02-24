@@ -77,7 +77,6 @@ typedef struct menuNode_s {
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	qboolean state;				/**< is node hovered */
-	byte align;					/** @todo delete it when its possible */
 	byte textalign;
 	qboolean invis;				/**< true if the node is invisible */
 	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */
@@ -129,9 +128,6 @@ typedef struct menuNode_s {
 	vec2_t texh;				/**< lower right texture coordinates, for text nodes texh[0] is the line height and texh[1] tabs width */
 	vec2_t texl;				/**< upper left texture coordinates */
 	qboolean preventRatio;
-
-	/* tbar */
-	int gapWidth;				/**< tens separator width */
 
 	/* text */
 	/** @todo remove it  from 'string node', need to full implement R_FontDrawStringInBox */

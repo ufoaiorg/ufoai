@@ -76,23 +76,6 @@ static void MN_StringNodeDrawTooltip (menuNode_t *node, int x, int y)
 	}
 }
 
-static void MN_StringNodeLoaded (menuNode_t *node)
-{
-	/* normalize node position */
-	if (node->align != ALIGN_UL) {
-		const int horiz_align = node->align % 3; /* left, center, right */
-		const int vert_align = node->align / 3;  /* top, center, bottom */
-
-		node->textalign = node->align;
-
-		node->pos[0] -= ((node->size[0] * horiz_align) / 2);
-		node->pos[1] -= ((node->size[1] * vert_align) / 2);
-
-		node->align = ALIGN_UL;
-		/** @todo in few time, we can add a warning to request an update of the node */
-	}
-}
-
 static void MN_StringNodeLoading (menuNode_t *node)
 {
 	node->padding = 3;
@@ -102,7 +85,6 @@ static void MN_StringNodeLoading (menuNode_t *node)
 
 static const value_t properties[] = {
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
-	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
 	{NULL, V_NULL, 0, 0}
 };
 
@@ -112,6 +94,5 @@ void MN_RegisterStringNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_StringNodeDraw;
 	behaviour->drawTooltip = MN_StringNodeDrawTooltip;
 	behaviour->loading = MN_StringNodeLoading;
-	behaviour->loaded = MN_StringNodeLoaded;
 	behaviour->properties = properties;
 }

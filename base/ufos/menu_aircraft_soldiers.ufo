@@ -478,47 +478,47 @@ menu team extends iaircraft
 	string	rank_lbl { pos "380 720" size "165 20" string "*cvar mn_chrrank" }
 
 	pic pwr_bdr    { pos "750 472"  image menu/bar_border }
-	tbar pwr_bar   { pos "752 472"  current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	tbar pwr_bar   { pos "752 472"  current "*cvar mn_vpwr" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 	string pwr_lbl { pos "585 470" size "200 20" string "_Strength:" }
 	string pwr_val { pos "850 470" size "150 20" string "*cvar mn_tpwr" textalign ur }
 
 	pic spd_bdr    { pos "750 495" image menu/bar_border }
-	tbar spd_bar   { pos "752 495" current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	tbar spd_bar   { pos "752 495" current "*cvar mn_vspd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 	string spd_lbl { pos "585 493" size "200 20" string "_Speed:" }
 	string spd_val { pos "850 493" size "150 20" string "*cvar mn_tspd" textalign ur }
 
 	pic acc_bdr    { pos "750 518" image menu/bar_border }
-	tbar acc_bar   { pos "752 518" current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	tbar acc_bar   { pos "752 518" current "*cvar mn_vacc" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 	string acc_lbl { pos "585 516" size "200 20" string "_Accuracy:" }
 	string acc_val { pos "850 516" size "150 20" string "*cvar mn_tacc" textalign ur }
 
 	pic mnd_bdr    { pos "750 541" image menu/bar_border }
-	tbar mnd_bar   { pos "752 541" current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	tbar mnd_bar   { pos "752 541" current "*cvar mn_vmnd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 	string mnd_lbl { pos "585 539" size "200 20" string "_Mind:" }
 	string mnd_val { pos "850 539" size "150 20" string "*cvar mn_tmnd" textalign ur }
 
 	pic cls_bdr    { pos "750 564" image menu/bar_border }
-	tbar cls_bar   { pos "752 564" current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	tbar cls_bar   { pos "752 564" current "*cvar mn_vcls" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 	string cls_lbl { pos "585 562" size "200 20" string "_Close Combat:" }
 	string cls_val { pos "850 562" size "150 20" string "*cvar mn_tcls" textalign ur }
 
 	pic hvy_bdr    { pos "750 587" image menu/bar_border }
-	tbar hvy_bar   { pos "752 587" current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	tbar hvy_bar   { pos "752 587" current "*cvar mn_vhvy" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 	string hvy_lbl { pos "585 585" size "200 20" string "_Heavy Weapons:" }
 	string hvy_val { pos "850 585" size "150 20" string "*cvar mn_thvy" textalign ur }
 
 	pic ass_bdr    { pos "750 610" image menu/bar_border }
-	tbar ass_bar   { pos "752 610" current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	tbar ass_bar   { pos "752 610" current "*cvar mn_vass" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 	string ass_lbl { pos "585 608" size "200 20" string "_Assault Weapons:" }
 	string ass_val { pos "850 608" size "150 20" string "*cvar mn_tass" textalign ur }
 
 	pic snp_bdr    { pos "750 633" image menu/bar_border }
-	tbar snp_bar   { pos "752 633" current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	tbar snp_bar   { pos "752 633" current "*cvar mn_vsnp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 	string snp_lbl { pos "585 631" size "200 20" string "_Sniper Rifles:" }
 	string snp_val { pos "850 631" size "150 20" string "*cvar mn_tsnp" textalign ur }
 
 	pic exp_bdr    { pos "750 656" image menu/bar_border }
-	tbar exp_bar   { pos "752 656" current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	tbar exp_bar   { pos "752 656" current "*cvar mn_vexp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 	string exp_lbl { pos "585 654" size "200 20" string "_High-Explosives:" }
 	string exp_val { pos "850 654" size "150 20" string "*cvar mn_texp" textalign ur }
 
@@ -527,7 +527,6 @@ menu team extends iaircraft
 		current	"*cvar mn_vhp"
 		max	"*cvar mn_vhpmax"
 		pos "752 679"
-		gap_width 3
 		texl "3 0"
 		image menu/bar_health
 		size "250 16"

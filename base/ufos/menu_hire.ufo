@@ -314,7 +314,7 @@ menu employees
 		pic pwr_brd { pos "30 18"  image menu/bar_border }
 		tbar pwr_bar
 		{
-			pos "33 18"  current "*cvar mn_vpwr" gap_width 3 texl "3 0" image menu/bar_attribute
+			pos "33 18"  current "*cvar mn_vpwr" texl "3 0" image menu/bar_attribute
 			size "250 16"	max 100
 		}
 
@@ -323,7 +323,7 @@ menu employees
 		pic spd_bdr { pos "30 48" image menu/bar_border }
 		tbar spd_bar
 		{
-			pos "33 48" current "*cvar mn_vspd" gap_width 3 texl "3 0" image menu/bar_attribute
+			pos "33 48" current "*cvar mn_vspd" texl "3 0" image menu/bar_attribute
 			size "250 16"	max 100
 		}
 
@@ -332,7 +332,7 @@ menu employees
 		pic acc_bdr { pos "30 78" image menu/bar_border }
 		tbar acc_bar
 		{
-			pos "33 78" current "*cvar mn_vacc" gap_width 3 texl "3 0" image menu/bar_attribute
+			pos "33 78" current "*cvar mn_vacc" texl "3 0" image menu/bar_attribute
 			size "250 16"	max 100
 		}
 
@@ -341,7 +341,7 @@ menu employees
 		pic mnd_bdr { pos "30 108" image menu/bar_border }
 		tbar mnd_bar
 		{
-			pos "33 108" current "*cvar mn_vmnd" gap_width 3 texl "3 0" image menu/bar_attribute
+			pos "33 108" current "*cvar mn_vmnd" texl "3 0" image menu/bar_attribute
 			size "250 16"	max 100
 		}
 
@@ -350,7 +350,7 @@ menu employees
 		pic cls_bdr { pos "30 143" image menu/bar_border }
 		tbar cls_bar
 		{
-			pos "33 143" current "*cvar mn_vcls" gap_width 3 texl "3 0" image menu/bar_skill
+			pos "33 143" current "*cvar mn_vcls" texl "3 0" image menu/bar_skill
 			size "250 16"	max 100
 		}
 
@@ -359,7 +359,7 @@ menu employees
 		pic hvy_bdr { pos "30 173" image menu/bar_border }
 		tbar hvy_bar
 		{
-			pos "33 173" current "*cvar mn_vhvy" gap_width 3 texl "3 0" image menu/bar_skill
+			pos "33 173" current "*cvar mn_vhvy" texl "3 0" image menu/bar_skill
 			size "250 16"	max 100
 		}
 
@@ -368,7 +368,7 @@ menu employees
 		pic ass_bdr { pos "30 203" image menu/bar_border }
 		tbar ass_bar
 		{
-			pos "33 203" current "*cvar mn_vass" gap_width 3 texl "3 0" image menu/bar_skill
+			pos "33 203" current "*cvar mn_vass" texl "3 0" image menu/bar_skill
 			size "250 16"	max 100
 		}
 
@@ -377,7 +377,7 @@ menu employees
 		pic snp_bdr { pos "30 233" image menu/bar_border }
 		tbar snp_bar
 		{
-			pos "33 233" current "*cvar mn_vsnp" gap_width 3 texl "3 0" image menu/bar_skill
+			pos "33 233" current "*cvar mn_vsnp" texl "3 0" image menu/bar_skill
 			size "250 16"	max 100
 		}
 
@@ -386,7 +386,7 @@ menu employees
 		pic exp_bdr { pos "30 263" image menu/bar_border }
 		tbar exp_bar
 		{
-			pos "33 263" current "*cvar mn_vexp" gap_width 3 texl "3 0" image menu/bar_skill
+			pos "33 263" current "*cvar mn_vexp" texl "3 0" image menu/bar_skill
 			size "250 16"	max 100
 		}
 
@@ -395,7 +395,7 @@ menu employees
 		pic hp_bdr { pos "30 298"  image menu/bar_border }
 		tbar hp_bar
 		{
-			pos "33 298" current "*cvar mn_vhp" max "*cvar mn_vhpmax" gap_width 3 texl "3 0" image menu/bar_health
+			pos "33 298" current "*cvar mn_vhp" max "*cvar mn_vhpmax" texl "3 0" image menu/bar_health
 			size "250 16"
 		}
 

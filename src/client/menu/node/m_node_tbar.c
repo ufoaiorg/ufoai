@@ -84,17 +84,10 @@ static void MN_TBarNodeLoaded (menuNode_t *node)
 	}
 }
 
-static const value_t properties[] = {
-	{"gap_width", V_INT, offsetof(menuNode_t, gapWidth), MEMBER_SIZEOF(menuNode_t, gapWidth)},
-
-	{NULL, V_NULL, 0, 0}
-};
-
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = MN_TBarNodeDraw;
 	behaviour->loaded = MN_TBarNodeLoaded;
-	behaviour->properties = properties;
 }
