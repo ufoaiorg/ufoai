@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MP_CALLBACKS_H
 
 #include "../client.h"
+#include "../menu/node/m_node_text.h"
 
 typedef struct teamData_s {
 	int teamCount[MAX_TEAMS];	/**< team counter - parsed from server data 'teaminfo' */

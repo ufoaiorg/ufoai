@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ugv.h"
 #include "cl_parse.h"
 #include "menu/m_nodes.h"
-#include "mxml/mxml_ufoai.h"
 
 /** @brief List of currently displayed or equipeable characters. */
 chrList_t chrDisplayList;

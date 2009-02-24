@@ -25,10 +25,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../menu/node/m_node_text.h"
+#include "cl_campaign.h"
 #include "cl_ufo.h"
 #include "cl_uforecovery.h"
 #include "cp_aircraft.h"
-#include "../menu/node/m_node_text.h"
 
 /** @sa ufoRecoveries_t */
 typedef struct ufoRecovery_s {

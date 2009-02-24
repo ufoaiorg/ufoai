@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TEXT_IMAGETAG "img:"
 
+#define MAX_MESSAGE_TEXT 256
+
 /* bar and background have the same width */
 #define MN_SCROLLBAR_WIDTH 10
 /* actual height: node height * displayed lines / all lines * this multiplier, must be less than or equal one */

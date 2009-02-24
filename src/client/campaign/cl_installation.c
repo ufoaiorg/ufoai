@@ -27,19 +27,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_team.h"
+#include "../cl_view.h"
+#include "../renderer/r_draw.h"
+#include "../menu/m_popup.h"
+#include "../mxml/mxml_ufoai.h"
+#include "../../shared/parse.h"
+#include "cl_campaign.h"
 #include "cl_mapfightequip.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
-#include "../cl_view.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
 #include "cl_popup.h"
-#include "../renderer/r_draw.h"
-#include "../menu/m_popup.h"
 #include "cl_installation.h"
 #include "cp_geoscape_actions.h"
-#include "../mxml/mxml_ufoai.h"
-#include "../../shared/parse.h"
 
 installation_t *installationCurrent;
 

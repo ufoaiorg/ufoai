@@ -24,13 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../cl_team.h" /* for CL_UpdateActorAircraftVar */
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
+#include "cl_campaign.h"
 #include "cl_map.h"
 #include "cp_aircraft_callbacks.h"
 #include "cp_aircraft.h"
 #include "cp_team.h"
-#include "../cl_team.h" /* for CL_UpdateActorAircraftVar */
 #include "cl_mapfightequip.h" /* for AII_GetSlotItems */
 
 /**

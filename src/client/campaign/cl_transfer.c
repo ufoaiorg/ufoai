@@ -29,10 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_team.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"
+#include "../mxml/mxml_ufoai.h"
+#include "cl_campaign.h"
 #include "cl_uforecovery.h"
 #include "cl_map.h"
 #include "cl_aliencont.h"
-#include "../mxml/mxml_ufoai.h"
 
 /** @brief Current selected aircraft for transfer (if transfer started from mission). */
 static aircraft_t *transferStartAircraft = NULL;

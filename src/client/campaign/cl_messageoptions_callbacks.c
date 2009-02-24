@@ -23,9 +23,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../menu/m_nodes.h"
+#include "cl_campaign.h"
 #include "cl_messageoptions.h"
 #include "cl_messageoptions_callbacks.h"
-#include "../menu/m_nodes.h"
 
 static msoMenuState_t msoMenuState = MSO_MSTATE_REINIT;
 int messageList_scroll = 0; /**< actual messageSettings list begin index due to scrolling */

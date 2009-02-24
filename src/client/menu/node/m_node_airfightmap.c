@@ -31,19 +31,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_airfightmap.h"
 
 #include "../../client.h"
+#include "../../campaign/cl_campaign.h"
 #include "../../campaign/cl_airfightmap.h"
 
 #define MAX_AIRFIGHT_ZOOM	35.0
 #define MIN_AIRFIGHT_ZOOM	5.0
 
+/**
+ * @todo Do we have to check that the campaign is running here? I think this belongs in @c CL_CampaignRun.
+ */
 static void MN_AirfightmapNodeDraw (menuNode_t *node)
 {
-	if (curCampaign) {
-		/* don't run the campaign in console mode */
-		if (cls.key_dest != key_console)
-			CL_CampaignRun();	/* advance time */
-		AFM_DrawMap(node); /* Draw airfight map */
-	}
+	/* don't run the campaign in console mode */
+	if (cls.key_dest != key_console)
+		CL_CampaignRun();	/* advance time */
+	AFM_DrawMap(node); /* Draw airfight map */
 }
 
 static void MN_AirfightmapNodeRightClick (menuNode_t *node, int x, int y)

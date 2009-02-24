@@ -30,6 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_nodes.h"	/**< menuInventory */
 #include "mp_team.h"
 
+/** @todo Remove this once the ccs struct is no longer needed here */
+#include "../campaign/cl_campaign.h" /**< ccs */
+
+#define MPTEAM_SAVE_FILE_VERSION 2
+
 static inventory_t mp_inventory;
 character_t multiplayerCharacters[MAX_MULTIPLAYER_CHARACTERS];
 
@@ -233,6 +238,7 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 	for (i = 0; i < csi.numODs; i++) {
 		mxml_node_t *ssnode = mxml_AddNode(snode, "emission");
 		mxml_AddString(ssnode, "id", csi.ods[i].id);
+		/** @todo ccs is campaign mode only */
 		mxml_AddInt(ssnode, "num", ccs.eMission.num[i]);
 		mxml_AddInt(ssnode, "numloose", ccs.eMission.numLoose[i]);
 	}
@@ -297,6 +303,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	MSG_WriteShort(&sb, csi.numODs);
 	for (i = 0; i < csi.numODs; i++) {
 		MSG_WriteString(&sb, csi.ods[i].id);
+		/** @todo ccs is campaign mode only */
 		MSG_WriteLong(&sb, ccs.eMission.num[i]);
 		MSG_WriteByte(&sb, ccs.eMission.numLoose[i]);
 	}

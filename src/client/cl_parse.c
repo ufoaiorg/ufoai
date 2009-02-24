@@ -40,6 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "multiplayer/mp_chatmessages.h"
 
+/** @todo campaign mode only stuff - remove this from here */
+#include "campaign/cl_campaign.h" /**< ccs */
+
 cvar_t *cl_logevents;
 
 /**

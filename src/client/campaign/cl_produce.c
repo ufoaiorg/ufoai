@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "../mxml/mxml_ufoai.h"
 #include "../menu/m_nodes.h"
+#include "cl_campaign.h"
 #include "cl_produce_callbacks.h"
 
 /** @brief Used in production costs (to allow reducing prices below 1x). */

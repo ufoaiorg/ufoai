@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CP_MESSAGES_H
 #define CLIENT_CP_MESSAGES_H
 
+#include "../menu/node/m_node_text.h"
+
 /* message systems */
 typedef enum {
 	MSG_DEBUG,			/**< only save them in debug mode */
@@ -47,9 +49,6 @@ typedef enum {
 	MSG_MAX
 } messagetype_t;
 
-/** @brief also used for chat message buffer */
-#define MAX_MESSAGE_TEXT 256
-
 /* Russian timestamp (with UTF-8) is 23 bytes long */
 #define TIMESTAMP_TEXT 24
 typedef struct message_s {
@@ -63,18 +62,11 @@ typedef struct message_s {
 	date_t date;
 } message_t;
 
-/** @brief Stores all chat messages from a multiplayer game */
-typedef struct chatMessage_s {
-	char *text;
-	struct chatMessage_s *next;
-} chatMessage_t;
-
 message_t *MS_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia);
 message_t *MS_AddNewMessageSound(const char *title, const char *text, qboolean popup, messagetype_t type, void *pedia, qboolean playSound);
 void MS_MessageInit(void);
 
 extern char cp_messageBuffer[MAX_MESSAGE_TEXT];
 extern message_t *cp_messageStack;
-extern chatMessage_t *cp_chatMessageStack;
 
 #endif /* CLIENT_CP_MESSAGES_H */

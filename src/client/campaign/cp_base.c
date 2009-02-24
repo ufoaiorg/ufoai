@@ -28,17 +28,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_game.h"
 #include "../cl_team.h"
+#include "../renderer/r_draw.h"
+#include "../menu/m_popup.h"
+#include "../../shared/parse.h"
+#include "../mxml/mxml_ufoai.h"
+#include "cl_campaign.h"
 #include "cl_mapfightequip.h"
 #include "cp_aircraft.h"
 #include "cp_missions.h"
 #include "cl_map.h"
 #include "cl_popup.h"
-#include "../renderer/r_draw.h"
-#include "../menu/m_popup.h"
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
-#include "../../shared/parse.h"
-#include "../mxml/mxml_ufoai.h"
 
 vec3_t newBasePos;
 building_t *buildingConstructionList[MAX_BUILDINGS];
@@ -3855,6 +3856,25 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 }
 
 /**
+ * @brief Check if an item is stored in storage.
+ * @param[in] obj Pointer to the item to check.
+ * @return True if item is stored in storage.
+ */
+static qboolean B_ItemsIsStoredInBaseStorage (const objDef_t *obj)
+{
+	/* antimatter is stored in antimatter storage */
+	if (!Q_strcmp(obj->id, "antimatter"))
+		return qfalse;
+
+	/* aircraft are stored in hangars */
+	assert(obj->tech);
+	if (obj->tech->type == RS_CRAFT)
+		return qfalse;
+
+	return qtrue;
+}
+
+/**
  * @brief Update the storage amount and the capacities for the storages in the base
  * @param[in] base The base which storage and capacity should be updated
  * @param[in] obj The item.
@@ -3873,7 +3893,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 		base->storage.numLoose[obj->idx] = 0; /** @todo needed? */
 		base->capacities[CAP_ITEMS].cur = 0;
 	} else {
-		if (!INV_ItemsIsStoredInStorage(obj)) {
+		if (!B_ItemsIsStoredInBaseStorage(obj)) {
 			Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Item '%s' is not stored in storage: skip\n", obj->id);
 			return qfalse;
 		}
@@ -3957,7 +3977,7 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 	for (i = 0, numObj = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
 
-		if (!INV_ItemsIsStoredInStorage(obj))
+		if (!B_ItemsIsStoredInBaseStorage(obj))
 			continue;
 
 		/* Don't count item that we don't have in base */
@@ -4082,7 +4102,7 @@ void B_UpdateStorageCap (base_t *base)
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
 
-		if (!INV_ItemsIsStoredInStorage(obj))
+		if (!B_ItemsIsStoredInBaseStorage(obj))
 			continue;
 
 		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * obj->size;

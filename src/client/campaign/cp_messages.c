@@ -25,12 +25,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_main.h"
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
-#include "cp_time.h"
 #include "../mxml/mxml_ufoai.h"
+#include "cl_campaign.h"
+#include "cp_messages.h"
+#include "cp_time.h"
 
 char cp_messageBuffer[MAX_MESSAGE_TEXT];
 message_t *cp_messageStack;
-chatMessage_t *cp_chatMessageStack;
 
 /**
  * @brief Returns formatted text of a message timestamp

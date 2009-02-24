@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../mxml/mxml_ufoai.h"
+#include "cl_campaign.h"
 #include "cl_aliencont_callbacks.h"
 
 /** status flag indicating that mail about died aliens due to missing breathing tech was sent */

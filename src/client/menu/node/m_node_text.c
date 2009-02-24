@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
+/** @todo remove this dependency from the text node */
+#include "../../campaign/cl_campaign.h" /**< message_t */
 #include "../../renderer/r_draw.h"
 #include "../../../shared/parse.h"
 

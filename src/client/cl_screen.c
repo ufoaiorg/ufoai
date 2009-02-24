@@ -191,7 +191,8 @@ static void SCR_DrawLoading (void)
 	}
 
 	if (!loadingPic)
-		loadingPic = SCR_SetLoadingBackground(ccs.selectedMission ? ccs.selectedMission->mapDef->map : cl.configstrings[CS_MAPTITLE]);
+		/** @todo ccs struct is campaign mode only - doesn't belong here */
+		loadingPic = SCR_SetLoadingBackground(/*ccs.selectedMission ? ccs.selectedMission->mapDef->map :*/ cl.configstrings[CS_MAPTITLE]);
 	if (!loadingPic)
 		return;
 	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);

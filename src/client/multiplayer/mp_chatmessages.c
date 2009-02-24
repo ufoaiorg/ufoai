@@ -30,6 +30,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static char *chatBuffer = NULL;
 static menuNode_t* chatBufferNode = NULL;
 
+/** @brief Stores all chat messages from a multiplayer game */
+typedef struct chatMessage_s {
+	char *text;
+	struct chatMessage_s *next;
+} chatMessage_t;
+
+static chatMessage_t *mp_chatMessageStack;
+
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
  */
@@ -39,8 +47,8 @@ void MP_AddChatMessage (const char *text)
 	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(*chat), cl_genericPool, CL_TAG_NONE);
 
 	/* push the new chat message at the beginning of the stack */
-	chat->next = cp_chatMessageStack;
-	cp_chatMessageStack = chat;
+	chat->next = mp_chatMessageStack;
+	mp_chatMessageStack = chat;
 	chat->text = Mem_PoolStrDup(text, cl_genericPool, CL_TAG_NONE);
 
 	if (!chatBuffer) {

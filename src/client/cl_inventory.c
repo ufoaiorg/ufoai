@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "cl_inventory.h"
 #include "cl_game.h"
 #include "../shared/parse.h"
 
@@ -43,25 +44,6 @@ equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 
 	Com_DPrintf(DEBUG_CLIENT, "INV_GetEquipmentDefinitionByID: equipment %s not found.\n", name);
 	return NULL;
-}
-
-/**
- * @brief Check if an item is stored in storage.
- * @param[in] obj Pointer to the item to check.
- * @return True if item is stored in storage.
- */
-qboolean INV_ItemsIsStoredInStorage (const objDef_t *obj)
-{
-	/* antimatter is stored in antimatter storage */
-	if (!Q_strcmp(obj->id, "antimatter"))
-		return qfalse;
-
-	/* aircraft are stored in hangars */
-	assert(obj->tech);
-	if (obj->tech->type == RS_CRAFT)
-		return qfalse;
-
-	return qtrue;
 }
 
 /**

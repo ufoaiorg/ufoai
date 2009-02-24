@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** Size of a UGV in hangar capacity */
 #define UGV_SIZE 300
 
-qboolean INV_ItemsIsStoredInStorage(const objDef_t *obj);
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
 equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);

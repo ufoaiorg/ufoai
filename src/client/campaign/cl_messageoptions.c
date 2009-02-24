@@ -23,11 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
+#include "../../shared/parse.h"
+#include "../mxml/mxml_ufoai.h"
+#include "cl_campaign.h"
 #include "cl_messageoptions.h"
 #include "cl_messageoptions_callbacks.h"
 #include "cp_time.h"
-#include "../../shared/parse.h"
-#include "../mxml/mxml_ufoai.h"
 
 /** @brief valid notification types that may cause pause / notice */
 const char *nt_strings[NT_NUM_NOTIFYTYPE] = {

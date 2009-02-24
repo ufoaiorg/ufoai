@@ -26,8 +26,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_team.h"
-#include "cp_hospital.h"
 #include "../mxml/mxml_ufoai.h"
+#include "cl_campaign.h"
+#include "cp_hospital.h"
 
 /**
  * @brief Heals character.

@@ -24,10 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_global.h"
-#include "cl_market.h"
-#include "cp_market_callbacks.h"
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
+#include "cl_campaign.h"
+#include "cl_market.h"
+#include "cp_market_callbacks.h"
 
 #define MAX_BUYLIST		64
 

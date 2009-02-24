@@ -26,10 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 #include "../client.h"
+#include "../menu/node/m_node_abstractnode.h"
+#include "cl_campaign.h"
 #include "cl_fightequip_callbacks.h"
 #include "cl_mapfightequip.h"
-#include "../menu/node/m_node_abstractnode.h"
-
 
 static int airequipID = -1;				/**< value of aircraftItemType_t that defines what item we are installing. */
 
