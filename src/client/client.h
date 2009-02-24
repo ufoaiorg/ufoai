@@ -78,6 +78,7 @@ typedef struct {
 	char cinfo[MAX_QPATH];
 } clientinfo_t;
 
+/** @todo There should be better places for these two macros */
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
 #define MAX_ACTIVETEAM	8
 #define MAX_TEAMLIST	8
@@ -257,8 +258,5 @@ void CL_Disconnect(void);
 void CL_Init(void);
 
 void CL_ClearState(void);
-
-/** @todo get rid of these */
-#include "cl_menu.h"
 
 #endif /* CLIENT_CLIENT_H */

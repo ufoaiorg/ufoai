@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 struct base_s;
 struct installation_s;
 struct employee_s;
+struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned up */
 
 #define MAX_ASSEMBLIES	16
 #define ANTIMATTER_SIZE 10

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_global.h"
 #include "../cl_rank.h"
 #include "../cl_ugv.h"
+#include "../cl_menu.h"
 #include "../../shared/parse.h"
 #include "cl_campaign.h"
 #include "cp_parse.h"

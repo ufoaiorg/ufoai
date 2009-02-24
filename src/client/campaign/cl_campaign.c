@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_le.h"	/**< cl_actor.h needs this */
 #include "../cl_actor.h"
 #include "../cl_view.h"
+#include "../cl_menu.h"
 #include "../menu/m_popup.h"
 #include "../menu/node/m_node_container.h"
 #include "../renderer/r_draw.h"

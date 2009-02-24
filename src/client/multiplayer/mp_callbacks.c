@@ -23,11 +23,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../client.h"
+#include "../cl_team.h"
+#include "../cl_menu.h"
+#include "../menu/m_popup.h"
 #include "mp_callbacks.h"
 #include "mp_serverlist.h"
 #include "mp_team.h"
-#include "../cl_team.h"
-#include "../menu/m_popup.h"
 
 teamData_t teamData;
 static cvar_t *rcon_client_password;

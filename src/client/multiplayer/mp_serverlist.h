@@ -26,7 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef MP_SERVERLIST_H
 #define MP_SERVERLIST_H
 
-#include "../client.h"
 #define MAX_BOOKMARKS 16
 
 typedef struct serverList_s {

@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_language.h"
+#include "cl_menu.h"
 #include "../shared/parse.h"
 
 #include "menu/m_font.h"
