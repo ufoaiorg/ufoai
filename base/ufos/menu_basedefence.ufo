@@ -9,7 +9,7 @@ menu basedefence
 
 	pic background
 	{
-		image	menu/basedefence_bg
+		image		menu/basedefence_bg
 	}
 
 	// ==================
@@ -18,12 +18,12 @@ menu basedefence
 
 	func basedef_reset
 	{
-		*basedef_header2				invis true
+		*basedef_header2 invis true
 	}
 
 	func basedef_initnodevalues
 	{
-		*basedef_header2				invis false
+		*basedef_header2 invis false
 	}
 
 	func basedef_missile
@@ -50,108 +50,111 @@ menu basedefence
 
 	text basedef_slot_list
 	{
-		pos	"40 30"
-		size	"400 600"
-//		bgcolor	"1 1 1 0.5"
-		lineheight	"22"
-		wheel
-		rows	"27"
 		textid		TEXT_BASEDEFENCE_LIST
-		mousefx	true
+		pos			"40 30"
+		size		"390 600"
+		lineheight	"22"
+		rows		"27"
+		mousefx		true
 		click
+		wheel
 	}
 
 	pic basedef_selected_slot
 	{
-		tooltip	"_Your are changing this defence system"
-		mousefx	true
-		pos		"25 30"
-		image	menu/buttons_small
-		texl	"23 16"
-		texh	"31 32"
+		tooltip		"_Your are changing this defence system"
+		image		menu/buttons_small
+		pos			"25 30"
+		texl		"23 16"
+		texh		"31 32"
+		mousefx		true
 	}
 
 	string basedef_available
 	{
-		string	"_Available defence:"
-		pos		"594 441"
-		font	f_big
-		align	uc
+		string		"_Available defence:"
+		pos			"469 441"
+		size		"250 25"
+		font		f_big
+		textalign	cc
+
 	}
 
 	text basedef_selected_description
 	{
-		pos	"760 630"
-		size	"400 120"
+		textid		TEXT_STANDARD
+		pos			"760 630"
+		size		"250 120"
 		lineheight	"20"
-//		bgcolor	"1 1 1 0.5"
-		rows	"6"
-		textid	TEXT_STANDARD
+		rows		"6"
 	}
 
 	model mdl_top
 	{
-		model	"*cvar mn_upmodel_top"
-		angles	"0 0 120"
-		pos		"786 500"
-		size	"200 175"
-		origin	"0 -42 0"
-		mousefx	true
+		model		"*cvar mn_upmodel_top"
+		angles		"0 0 120"
+		pos			"786 500"
+		size		"200 175"
+		origin		"0 -42 0"
+		mousefx		true
 		click
 	}
 
 	string basedef_item_name
 	{
-		string	"*cvar mn_itemname"
-		pos		"880 475"
-		align	uc
+		string		"*cvar mn_itemname"
+		pos			"750 475"
+		size		"261 20"
+		textalign	cc
 	}
 
 	string basedef_description
 	{
-		string	"_Selected defence:"
-		pos		"880 441"
-		font	f_big
-		align	uc
+		string		"_Selected defence:"
+		pos			"750 441"
+		size		"260 25"
+		font		f_big
+		textalign	cc
 	}
 
 	button basedef_button_missile
 	{
-		tooltip	"_Choose missile battery"
-		invis	true
-		pos		"50 710"
-		image	menu/button_blue
-		size	"128 52"
-		click	{ call basedef_missile }
-		string "_Missile"
-		color "1 1 1 1"
-		selectcolor "1 1 1 1"
+		invis		true
+
+		string		"_Missile"
+		tooltip		"_Choose missile battery"
+		image		menu/button_blue
+		pos			"50 710"
+		size		"128 52"
+		color		"1 1 1 1"
+		selectcolor	"1 1 1 1"
+		click		{ call basedef_missile }
 	}
 
 	button basedef_button_laser
 	{
-		tooltip	"_Choose laser battery"
-		invis	true
-		pos		"288 710"
-		image	menu/button_blue
-		size	"128 52"
-		click	{ call basedef_laser }
-		string "_Laser"
-		color "1 1 1 1"
-		selectcolor "1 1 1 1"
+		invis		true
+
+		string		"_Laser"
+		tooltip		"_Choose laser battery"
+		image		menu/button_blue
+		pos			"288 710"
+		size		"128 52"
+		color		"1 1 1 1"
+		selectcolor	"1 1 1 1"
+		click		{ call basedef_laser }
 	}
 
 	text basedef_list
 	{
-		pos	"472 480"
-		size	"252 220"
-//		bgcolor	"1 1 1 0.5"
+		textid		TEXT_LIST
+		pos			"472 480"
+		size		"245 220"
 		lineheight	"20"
-		wheel
-		rows	"11"
-		textid TEXT_LIST
-		mousefx	true
+		rows		"11"
+		mousefx		true
 		click
+		wheel
 	}
 
 	// ==================
@@ -160,104 +163,114 @@ menu basedefence
 
 	custombutton basedef_button_add1
 	{
-		tooltip	"_Install selected defence system"
-		image menu/button_background	blend true
-		texl "128 0"	size "37 32"
+		tooltip		"_Install selected defence system"
+		image		menu/button_background
+		blend		true
 		pos			"467 75"
-		click		{ cmd "airequip_add_item 1;" }
+		size		"37 32"
+		texl		"128 0"
 		icon		plus
+		click		{ cmd "airequip_add_item 1;" }
 	}
 
 	custombutton basedef_button_remove1
 	{
-		tooltip	"_Remove this defence system"
-		image menu/button_background	blend true
-		texl "128 0"	size "37 32"
+		tooltip		"_Remove this defence system"
+		image		menu/button_background
+		blend		true
 		pos			"467 125"
-		click		{ cmd "airequip_del_item 1;" }
+		size		"37 32"
+		texl		"128 0"
 		icon		del
+		click		{ cmd "airequip_del_item 1;" }
 	}
 
 	custombutton basedef_button_add2
 	{
-		tooltip	"_Install selected defence system"
-		image menu/button_background	blend true
-		texl "128 0"	size "37 32"
+		tooltip		"_Install selected defence system"
+		image		menu/button_background
+		blend		true
 		pos			"467 259"
-		click		{ cmd "airequip_add_item 2;" }
+		size		"37 32"
+		texl		"128 0"
 		icon		plus
+		click		{ cmd "airequip_add_item 2;" }
 	}
 
 	custombutton basedef_button_remove2
 	{
-		tooltip	"_Remove this defence system"
-		image menu/button_background	blend true
-		texl "128 0"	size "37 32"
+		tooltip		"_Remove this defence system"
+		image		menu/button_background
+		blend		true
 		pos			"467 294"
-		click 		{ cmd "airequip_del_item 2;" }
+		size		"37 32"
+		texl		"128 0"
 		icon		del
+		click 		{ cmd "airequip_del_item 2;" }
 	}
 
 	pic airequip_zone_select1
 	{
-		invis false
-		tooltip	"_Choose defence system to build"
-		mousefx	true
-		pos		"534 66"
-		image	menu/button_big_menu
-		texl	"0 83"
-		texh	"458 190"
-		click	{ call basedef_zone1 }
+		invis		false
+
+		tooltip		"_Choose defence system to build"
+		image		menu/button_big_menu
+		pos			"534 66"
+		texl		"0 83"
+		texh		"458 190"
+		mousefx		true
+		click		{ call basedef_zone1 }
 	}
 
 	text basedef_text_zone1
 	{
-		pos		"546 105"
-		size	"430 50"
-		lineheight	"16"
-//		bgcolor	"1 1 1 0.5"
 		textid		TEXT_AIREQUIP_1
-		rows	"3"
+		pos			"546 105"
+		size		"430 50"
+		lineheight	"16"
+		rows		"3"
 	}
 
 	pic airequip_zone_select2
 	{
-		invis	false
-		tooltip	"_Change ammo in the defence system"
-		mousefx	true
-		pos		"534 254"
-		image	menu/button_big_menu
-		texl	"0 0"
-		texh	"458 82"
-		click	{ call basedef_zone2 }
+		invis		false
+
+		tooltip		"_Change ammo in the defence system"
+		image		menu/button_big_menu
+		pos			"534 254"
+		texl		"0 0"
+		texh		"458 82"
+		mousefx		true
+		click		{ call basedef_zone2 }
 	}
 
 	text basedef_text_zone2
 	{
-		pos		"546 294"
-		size	"430 35"
-		lineheight	"16"
-//		bgcolor	"1 1 1 0.5"
 		textid		TEXT_AIREQUIP_2
-		rows	"2"
+		pos			"546 294"
+		size		"430 35"
+		lineheight	"16"
+		rows		"2"
 	}
 
 	string basedef_header1
 	{
-		string	"_Current defence system"
-		pos		"545 85"
-		font	f_small
-		color	"0 .78 0 1"
-		align	cl
+		string		"_Current defence system"
+		pos			"545 75"
+		size		"275 20"
+		color		"0 .78 0 1"
+		textalign	cl
+		font		f_small
 	}
 
 	string basedef_header2
 	{
-		string	"_Ammo to use with installed system"
-		pos		"545 273"
-		font	f_small
-		color	"0 .78 0 1"
-		align	cl
+		string		"_Ammo to use with installed system"
+		pos			"545 263"
+		size		"275 20"
+		color		"0 .78 0 1"
+		textalign	cl
+		font		f_small
 	}
 
 
@@ -267,12 +280,14 @@ menu basedefence
 
 	custombutton button_leave
 	{
-		tooltip	"_Done"
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos		"940 720"
-		icon return
-		click	{ cmd mn_pop }
+		tooltip		"_Done"
+		image		menu/button_background
+		blend		true
+		pos			"940 720"
+		size		"64 37"
+		texl		"192 0"
+		icon		return
+		click		{ cmd mn_pop }
 	}
 
 	func init

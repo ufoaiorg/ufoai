@@ -917,9 +917,6 @@ menu mp_create_server
 	{
 		pos			"63 538"
 		size		"16 16"
-//		texl	"0 0"
-	//	texh	"16 16"
-		//mousefx	true
 		icon		prev
 		whup		{ cmd "mn_prevmap;" }
 		whdown		{ cmd "mn_nextmap;" }
@@ -927,12 +924,8 @@ menu mp_create_server
 	}
 	custombutton next_map
 	{
-//		image	menu/buttons_small
 		pos			"345 538"
 		size		"16 16"
-	//	texl	"16 0"
-		//texh	"32 16"
-//		mousefx	true
 		icon		next
 		whup		{ cmd "mn_prevmap;" }
 		whdown		{ cmd "mn_nextmap;" }
@@ -1010,130 +1003,138 @@ menu multiplayer_selectteam
 
 	pic background
 	{
-		image	"*cvar mn_mappicbig"
-		pos	"0 0"
-		size	"1024 768"
+		image		"*cvar mn_mappicbig"
+		pos			"0 0"
+		size		"1024 768"
 	}
 
 	pic back_ul
 	{
-		image	menu/multiplayer_teamsel
-		pos	"256 28"
+		image		menu/multiplayer_teamsel
+		pos			"256 28"
 	}
 
 	string teamselection
 	{
-		font	f_big
-		color	"1 1 1 1"
-		string	"_Team selection"
-		pos	"512 50"
-		align	uc
+		string		"_Team selection"
+		font		f_big
+		color		"1 1 1 1"
+		pos			"305 50"
+		size		"415 30"
+		textalign	uc
 	}
 
 	string info
 	{
-		font	f_small
-		color	"1 1 1 1"
-		string	"_Click the big button in the lower right corner when ready"
-		pos	"512 10"
-		align	uc
+		string		"_Click the big button in the lower right corner when ready"
+		font		f_small
+		color		"1 1 1 1"
+		pos			"256 10"
+		size		"512 20"
+		textalign	uc
 	}
 
 	string mapname
 	{
-		font	f_small
-		color	"1 1 1 1"
-		string	"*cvar mn_svmapname"
-		pos	"512 72"
-		align	uc
+		string		"*cvar mn_svmapname"
+		font		f_small
+		color		"1 1 1 1"
+		pos			"305 72"
+		size		"415 20"
+		textalign	uc
 	}
 
 	text team_info
 	{
-		pos		"300 100"
-		size	"422 320"
+		textid		TEXT_LIST
+		pos			"300 100"
+		size		"422 320"
 		lineheight	16
 		tabwidth	60
-//		bgcolor	"1 1 1 0.5"
-		rows	20
-		textid		TEXT_LIST
+		rows		20
 	}
 
 	text teamnum_status
 	{
-		pos		"300 430"
-		size	"422 16"
+		textid		TEXT_STANDARD
+		pos			"300 430"
+		size		"422 16"
 		lineheight	16
 		tabwidth	60
-//		bgcolor	"1 1 1 0.5"
-		textid		TEXT_STANDARD
-		rows	1
+		rows		1
 	}
 
 	string maxplayersperteams_str
 	{
-		string	"_Max. players per team"
-		pos		"300 460"
+		string		"_Max. players per team"
+		pos			"300 460"
+		size		"240 20"
 	}
 
 	string maxplayersperteams_value
 	{
-		string	"*cvar mn_maxplayersperteam"
-		pos	"550 460"
+		string		"*cvar mn_maxplayersperteam"
+		pos			"550 460"
+		size		"50 20"
 	}
 
 	string maxteams_str
 	{
-		string	"_Max. teams for this map"
-		pos		"300 480"
+		string		"_Max. teams for this map"
+		pos			"300 480"
+		size		"240 20"
 	}
 
 	string maxteams_value
 	{
-		string	"*cvar mn_maxteams"
-		pos	"550 480"
+		string		"*cvar mn_maxteams"
+		pos			"550 480"
+		size		"50 20"
 	}
 
 	string teamnum_str
 	{
-		string	"_Team preference:"
-		pos		"400 500"
+		string		"_Team preference:"
+		pos			"325 500"
+		size		"185 20"
 	}
 	string teamnum_value
 	{
-		string	"*cvar cl_teamnum"
-		pos		"550 500"
-		align	ur
+		string		"*cvar cl_teamnum"
+		pos			"510 500"
+		size		"40 20"
+		textalign	ur
 	}
 	pic teamnum_inc
 	{
-		tooltip	"_Next free team"
-		image	menu/buttons_small
-		pos		"568 502"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "teamnum_inc;" }
+		tooltip		"_Next free team"
+		image		menu/buttons_small
+		pos			"568 502"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "teamnum_inc;" }
 	}
 	pic teamnum_dec
 	{
-		tooltip	"_Previous free team"
-		image	menu/buttons_small
-		pos		"584 502"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "teamnum_dec;" }
+		tooltip		"_Previous free team"
+		image		menu/buttons_small
+		pos			"584 502"
+		texl		"16 0"
+		texh		"32 16"
+		mousefx		true
+		click		{ cmd "teamnum_dec;" }
 	}
 
 	custombutton button_exit
 	{
-		tooltip	"_Finish the teamselection and start the game"
-		image	menu/button_background blend true
-		texl	"192 0"	size "64 37"
-		pos		"684 494"
-		icon return
-		click	{ cmd "spawnsoldiers;" }
+		tooltip		"_Finish the teamselection and start the game"
+		image		menu/button_background blend true
+		pos			"684 494"
+		size		"64 37"
+		texl		"192 0"	
+		icon		return
+		click		{ cmd "spawnsoldiers;" }
 	}
 
 	// update every 2 sec
@@ -1145,28 +1146,27 @@ menu multiplayer_selectteam
 
 	pic chat_button
 	{
-		tooltip	"_Activate chat"
-		image	hud/button_chat2
-		mousefx	true
-		pos		"96 580"
-		texl	"0 0"
-		texh	"64 64"
-		click	{ cmd "messagesay;" }
+		tooltip		"_Activate chat"
+		image		hud/button_chat2
+		mousefx		true
+		pos			"96 580"
+		texl		"0 0"
+		texh		"64 64"
+		click		{ cmd "messagesay;" }
 	}
 
 	text chatscreen
 	{
-		pos		"167 580"
-		size	"690 160"
-		font	"f_verysmall"
-		wheel
 		textid		TEXT_CHAT_WINDOW
-		rows	"10"
+		pos			"167 580"
+		size		"690 160"
+		font		"f_verysmall"
+		rows		"10"
 		lineheight	"16"
-		padding	5
+		padding		5
 		bordercolor	"0.5 0.5 0.5 1"
-		border	2
-		bgcolor	"0 0.1 0 0.7"
+		border		2
+		bgcolor		"0 0.1 0 0.7"
 	}
 
 	// ===================
@@ -1184,52 +1184,55 @@ menu multiplayer_selectteam
 menu multiplayer_wait
 {
 	{
+		string		"_Please wait"
 		pos 		"0 0"
 		size		"1024 768"
-		image	menu/popup_alpha_tile
-		blend	true
-		string	"_Please wait"
+		image		menu/popup_alpha_tile
+		blend		true
 	}
 	pic background
 	{
-		image	"*cvar mn_mappicbig"
-		pos		"0 0"
-		size	"1024 768"
+		image		"*cvar mn_mappicbig"
+		pos			"0 0"
+		size		"1024 768"
 	}
 	string mapname
 	{
-		font	f_small
-		color	"1 1 1 1"
-		string	"*cvar mn_svmapname"
-		pos		"512 72"
-		align	uc
+		font		f_small
+		color		"1 1 1 1"
+		string		"*cvar mn_svmapname"
+		pos			"256 72"
+		size		"512 20"
+		textalign	uc
 	}
 
 	string teams_str
 	{
-		string	"_Players connected, waiting for others"
-		pos		"335 370"
+		string		"_Players connected, waiting for others"
+		pos			"335 370"
+		size		"300 20"
 	}
 	string teams_val
 	{
-		string	"*cvar mp_wait_init_players"
-		color	"0 0.5 0 1"
-		pos		"300 370"
+		string		"*cvar mp_wait_init_players"
+		color		"0 0.5 0 1"
+		pos			"300 370"
+		size		"30 20"
 	}
 
 	button bt_force
 	{
 		visiblewhen "mp_wait_init_show_force == 1"
-		tooltip	"_Start the game even if not all teams have joined"
-		image	menu/button_green_small
-		blend	true
-		width	"200"
-		pos		"520 446"
-		click	{ cmd "sv startgame;" }
-		font	f_menu
-		color	"0 0.5 0 1"
+		string		"_Force start"
+		tooltip		"_Start the game even if not all teams have joined"
+		image		menu/button_green_small
+		blend		true
+		width		"200"
+		pos			"520 446"
+		font		f_menu
+		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		string	"_Force start"
+		click		{ cmd "sv startgame;" }
 	}
 
 	func event
@@ -1245,13 +1248,13 @@ menu multiplayer_wait
 menu serverpassword
 {
 	{
+		string		"_Enter server password"
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image	menu/popup_alpha_tile
-		blend	true
-		string	"_Enter server password"
+		image		menu/popup_alpha_tile
+		blend		true
 	}
 
 	// ===================
@@ -1259,8 +1262,9 @@ menu serverpassword
 	// ===================
 	string current_password
 	{
-		string  "_Password:"
-		pos     "66 58"
+		string		"_Password:"
+		pos			"66 58"
+		size		"256 20"
 	}
 	textentry slot_password
 	{
@@ -1279,18 +1283,16 @@ menu serverpassword
 
 	button set_password
 	{
-		tooltip	"_Connect"
-		image	menu/button_green_small
-		pos		"260 170"
-		width	"200"
-		blend	true
-		click	{
-			cmd "mn_server_need_password 0;mn_pop;connect;"
-		}
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_OK"
+		string		"_OK"
+		tooltip		"_Connect"
+		image		menu/button_green_small
+		pos			"260 170"
+		width		"200"
+		blend		true
+		font		f_menu
+		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_server_need_password 0;mn_pop;connect;" }
 	}
 }
 
@@ -1300,39 +1302,38 @@ menu serverpassword
 menu chat_popup
 {
 	{
-		pos "264 262"
-		size	"496 247"
+		string		"_Personal message"
+		pos			"264 262"
+		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image	menu/popup_alpha_tile
-		blend	true
-		string	"_Personal message"
+		image		menu/popup_alpha_tile
+		blend		true
 	}
 
 	text chatscreen
 	{
-		pos		"26 58"
-		size	"444 120"
+		textid			TEXT_CHAT_WINDOW
+		pos			"26 58"
+		size		"444 100"
 		lineheight	20
+		rows		5
 		tabwidth	150
-		font	"f_verysmall"
+		font		f_verysmall
 		wheel
-		textid		TEXT_CHAT_WINDOW
-		wheel
-		rows	6
 	}
 
 	button enter_lobby
 	{
-		tooltip	"_Go into the lobby"
-		image	menu/button_green_small
-		pos		"260 170"
-		width	"200"
-		blend	true
-		click	{ cmd "mn_pop;mn_push irc;" }
-		font	f_menu
-		color	"0 0.5 0 1"
-		string	"_Lobby"
+		string		"_Lobby"
+		tooltip		"_Go into the lobby"
+		image		menu/button_green_small
+		blend		true
+		pos			"260 170"
+		width		"200"
+		font		f_menu
+		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;mn_push irc;" }
 	}
 }

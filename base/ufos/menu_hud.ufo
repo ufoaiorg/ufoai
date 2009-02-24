@@ -9,8 +9,8 @@ menu hud extends ahud
 	// ==================
 	zone render
 	{
-		pos	"0 0"
-		size	"1024 768"
+		pos			"0 0"
+		size		"1024 768"
 	}
 
 	// ==================
@@ -21,7 +21,10 @@ menu hud extends ahud
 		{
 			pos		"0 128"
 			size	"40 369"
-			excluderect { pos	"33 336"	size	"7 34" }
+			excluderect	{
+				pos		"33 336"
+				size	"7 34"
+			}
 		}
 
 		pic bar_floor
@@ -29,82 +32,82 @@ menu hud extends ahud
 			image	hud/bar_floor
 			blend	true
 			pos		"0 0"
-			texh	"40 369"
 			size	"40 369"
+			texh	"40 369"
 			ghost	true
 		}
 
 		pic bt1
 		{
 			tooltip	"_Level 1"
-			pos	"6 289"
+			pos		"6 289"
 			texl	"0 0"
 			texh	"28 36"
-			mousefx true
-			click { cmd "cl_worldlevel 0;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 0;" }
 		}
 		pic bt2
 		{
 			tooltip	"_Level 2"
-			pos	"6 249"
+			pos		"6 249"
 			texl	"32 0"
 			texh	"60 36"
-			mousefx true
-			click { cmd "cl_worldlevel 1;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 1;" }
 		}
 		pic bt3
 		{
 			tooltip	"_Level 3"
-			pos	"6 209"
+			pos		"6 209"
 			texl	"64 0"
 			texh	"92 36"
-			mousefx true
-			click { cmd "cl_worldlevel 2;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 2;" }
 		}
 		pic bt4
 		{
 			tooltip	"_Level 4"
-			pos	"6 169"
+			pos		"6 169"
 			texl	"96 0"
 			texh	"124 36"
-			mousefx true
-			click { cmd "cl_worldlevel 3;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 3;" }
 		}
 		pic bt5
 		{
 			tooltip	"_Level 5"
-			pos	"6 129"
+			pos		"6 129"
 			texl	"0 38"
 			texh	"28 74"
-			mousefx true
-			click { cmd "cl_worldlevel 4;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 4;" }
 		}
 		pic bt6
 		{
 			tooltip	"_Level 6"
-			pos	"6 89"
+			pos		"6 89"
 			texl	"32 38"
 			texh	"60 74"
-			mousefx true
-			click { cmd "cl_worldlevel 5;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 5;" }
 		}
 		pic bt7
 		{
 			tooltip	"_Level 7"
-			pos	"6 49"
+			pos		"6 49"
 			texl	"64 38"
 			texh	"92 74"
-			mousefx true
-			click { cmd "cl_worldlevel 6;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 6;" }
 		}
 		pic bt8
 		{
 			tooltip	"_Level 8"
-			pos	"6 9"
+			pos		"6 9"
 			texl	"96 38"
 			texh	"124 74"
-			mousefx true
-			click { cmd "cl_worldlevel 7;" }
+			mousefx	true
+			click	{ cmd "cl_worldlevel 7;" }
 		}
 
 	}
@@ -119,8 +122,8 @@ menu hud extends ahud
 
 	panel soldier_selected {
 		{
-			pos "0 0"
-			size "504 104"
+			pos		"0 0"
+			size	"504 104"
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"407 39"	size	"97 9" }
 			excluderect { pos	"112 48"	size	"400 56" }
@@ -130,10 +133,10 @@ menu hud extends ahud
 		{
 			image	hud/bar_head
 			blend	true
-			pos	"0 0"
-			size "504 104"
-			texh "504 104"
-			ghost true
+			pos		"0 0"
+			size	"504 104"
+			texh	"504 104"
+			ghost	true
 		}
 
 		model head
@@ -150,14 +153,15 @@ menu hud extends ahud
 		string actorname
 		{
 			string	"*cvar mn_name"
-			pos	"130 14"
+			pos		"130 16"
+			size	"255 20"
 		}
 	}
 
 	panel team_selection {
 		{
-			pos "415 0"
-			size "264 56"
+			pos		"415 0"
+			size	"264 56"
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"264 17"	size	"44 40" }
 			excluderect { pos	"308 28"	size	"193 28" }
@@ -167,98 +171,98 @@ menu hud extends ahud
 		{
 			image	hud/bar_teammember
 			blend	true
-			pos	"0 0"
-			size "501 56"
-			texh "501 56"
-			ghost true
+			pos		"0 0"
+			size	"501 56"
+			texh	"501 56"
+			ghost	true
 		}
 
 		pic bt_actor0
 		{
-			key "*binding soldier_select 0"
+			key		"*binding soldier_select 0"
 			tooltip	"*cvar mn_soldier0_tt"
-			pos	"11 10"
+			pos		"11 10"
 			texl	"0 0"
 			texh	"28 36"
-			mousefx true
-			click { cmd "soldier_select 0;" }
+			mousefx	true
+			click	{ cmd "soldier_select 0;" }
 		}
 		pic bt_actor1
 		{
-			key "*binding soldier_select 1"
+			key		"*binding soldier_select 1"
 			tooltip	"*cvar mn_soldier1_tt"
-			pos	"42 10"
+			pos		"42 10"
 			texl	"32 0"
 			texh	"60 36"
-			mousefx true
-			click { cmd "soldier_select 1;" }
+			mousefx	true
+			click	{ cmd "soldier_select 1;" }
 		}
 		pic bt_actor2
 		{
-			key "*binding soldier_select 2"
+			key		"*binding soldier_select 2"
 			tooltip	"*cvar mn_soldier2_tt"
-			pos	"73 10"
+			pos		"73 10"
 			texl	"64 0"
 			texh	"92 36"
-			mousefx true
-			click { cmd "soldier_select 2;" }
+			mousefx	true
+			click	{ cmd "soldier_select 2;" }
 		}
 		pic bt_actor3
 		{
-			key "*binding soldier_select 3"
+			key		"*binding soldier_select 3"
 			tooltip	"*cvar mn_soldier3_tt"
-			pos	"104 10"
+			pos		"104 10"
 			texl	"96 0"
 			texh	"124 36"
-			mousefx true
-			click { cmd "soldier_select 3;" }
+			mousefx	true
+			click	{ cmd "soldier_select 3;" }
 		}
 		pic bt_actor4
 		{
-			key "*binding soldier_select 4"
+			key		"*binding soldier_select 4"
 			tooltip	"*cvar mn_soldier4_tt"
-			pos	"135 10"
+			pos		"135 10"
 			texl	"0 38"
 			texh	"28 74"
-			mousefx true
-			click { cmd "soldier_select 4;" }
+			mousefx	true
+			click	{ cmd "soldier_select 4;" }
 		}
 		pic bt_actor5
 		{
-			key "*binding soldier_select 5"
+			key		"*binding soldier_select 5"
 			tooltip	"*cvar mn_soldier5_tt"
-			pos	"166 10"
+			pos		"166 10"
 			texl	"32 38"
 			texh	"60 74"
-			mousefx true
-			click { cmd "soldier_select 5;" }
+			mousefx	true
+			click	{ cmd "soldier_select 5;" }
 		}
 		pic bt_actor6
 		{
-			key "*binding soldier_select 6"
+			key		"*binding soldier_select 6"
 			tooltip	"*cvar mn_soldier6_tt"
-			pos	"197 10"
+			pos		"197 10"
 			texl	"64 38"
 			texh	"92 74"
-			mousefx true
-			click { cmd "soldier_select 6;" }
+			mousefx	true
+			click	{ cmd "soldier_select 6;" }
 		}
 		pic bt_actor7
 		{
-			key "*binding soldier_select 7"
+			key		"*binding soldier_select 7"
 			tooltip	"*cvar mn_soldier7_tt"
-			pos	"228 10"
+			pos		"228 10"
 			texl	"96 38"
 			texh	"124 74"
-			mousefx true
-			click { cmd "soldier_select 7;" }
+			mousefx	true
+			click	{ cmd "soldier_select 7;" }
 		}
 	}
 
 	panel next {
 		{
-			pos "808 0"
-			size "216 56"
+			pos		"808 0"
+			size	"216 56"
 		}
 
 		pic bar_nextround
@@ -273,23 +277,24 @@ menu hud extends ahud
 
 		custombutton bt_nextround
 		{
-			key "*binding nextround"
+			key		"*binding nextround"
 			tooltip	"_Finish round"
 			image	menu/button_background blend true
-			texl	"192 0"	size "64 37"
 			pos		"142 10"
+			size	"64 37"
+			texl	"192 0"
 			icon	return
 			click	{ cmd "nextround;" }
 		}
 
 		string numspotted
 		{
-			key "*binding nextalien"
 			string	"*cvar mn_numaliensspotted"
-			pos	"8 11"
+			tooltip	"_Click to cycle through spotted enemies"
+			pos		"8 11"
 			size	"48 34"
 			textalign	cc
-			tooltip "_Click to cycle through spotted enemies"
+			key		"*binding nextalien"
 			click	{ cmd "nextalien;" }
 		}
 	}
@@ -337,10 +342,10 @@ menu hud extends ahud
 		pic bt_pfire
 		{
 			tooltip	"_Primary fire mode"
-			mousefx true
-			pos	"174 34"
+			pos		"174 34"
 			texl	"0 76"
 			texh	"75 128"
+			mousefx	true
 			click	{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
 		}
 
@@ -348,26 +353,27 @@ menu hud extends ahud
 		{
 			tooltip	"*cvar mn_reloadright_tt"
 			image	hud/buttons2g
-			blend true
-			mousefx true
-			pos	"103 104"
+			blend	true
+			pos		"103 104"
 			texl	"0 38"
 			texh	"64 74"
+			mousefx	true
 			click	{ cmd "reloadright;" }
-			in	{ cmd "remaining_tus reload_r 1;" }
-			out	{ cmd "remaining_tus reload_r 0;" }
+			in		{ cmd "remaining_tus reload_r 1;" }
+			out		{ cmd "remaining_tus reload_r 0;" }
 		}
 
 		string ammoright
 		{
 			string	"*cvar mn_ammoright"
-			pos	"52 116"
-			align	uc
+			pos		"17 113"
+			size	"65 20"
+			textalign	uc
 		}
 
 		container right
 		{
-			pos "26 32"
+			pos		"26 32"
 		}
 
 		pic hud_bt_use_headgear
@@ -375,10 +381,10 @@ menu hud extends ahud
 			tooltip	"_Use headgear"
 			image	hud/buttons2g
 			blend	true
-			mousefx true
-			pos	"180 104"
+			pos		"180 104"
 			texl	"64 0"
 			texh	"128 37"
+			mousefx	true
 			click	{ cmd "useheadgear;" }
 		}
 	}
@@ -404,10 +410,10 @@ menu hud extends ahud
 		pic bt_pfire
 		{
 			tooltip	"_Use Item"
-			mousefx true
-			pos	"8 34"
+			pos		"8 34"
 			texl	"0 76"
 			texh	"75 128"
+			mousefx	true
 			click	{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
 		}
 
@@ -415,50 +421,52 @@ menu hud extends ahud
 		{
 			tooltip	"*cvar mn_reloadleft_tt"
 			image	hud/buttons2g
-			blend true
-			mousefx true
-			pos	"89 104"
+			blend	true
+			pos		"89 104"
 			texl	"0 38"
 			texh	"64 74"
+			mousefx	true
 			click	{ cmd "reloadleft;" }
-			in	{ cmd "remaining_tus reload_l 1;" }
-			out	{ cmd "remaining_tus reload_l 0;" }
+			in		{ cmd "remaining_tus reload_l 1;" }
+			out		{ cmd "remaining_tus reload_l 0;" }
 		}
 
 		string ammoleft
 		{
 			string	"*cvar mn_ammoleft"
-			pos	"206 116"
-			align	uc
+			pos		"171 116"
+			size	"65 20"
+			textalign	uc
 		}
 
 		container left
 		{
-			pos "108 32"
+			pos		"108 32"
 		}
 
 		pic bt_duck
 		{
-			key "*binding standcrouch"
+			key		"*binding standcrouch"
 			tooltip	"*cvar mn_crouchstand_tt"
 
-			image hud/buttons2g
-			blend true
-			pos	"8 107"
+			image	hud/buttons2g
+			blend	true
+			pos		"8 107"
 			texl	"0 75"
 			texh	"52 112"
 			click	{ cmd "standcrouch;" }
-			in	{ cmd "remaining_tus crouch 1;" }
-			out	{ cmd "remaining_tus crouch 0;" }
+			in		{ cmd "remaining_tus crouch 1;" }
+			out		{ cmd "remaining_tus crouch 0;" }
 		}
 
 		checkbox bt_crouch_reservation
 		{
 			tooltip	"*cvar mn_crouch_reservation_tt"
-			image	"menu/checkbox_blue"	size	"20 18"
-			pos	"60 107"
-			current 0
-			change { cmd "togglecrouchreserve;" }
+			image	"menu/checkbox_blue"
+			pos		"60 107"
+			size	"20 18"
+			current	0
+			change	{ cmd "togglecrouchreserve;" }
 		}
 	}
 
@@ -505,44 +513,46 @@ menu hud extends ahud
 			// key "*binding sel_shotreservation"
 			image hud/button_reserve_shot
 			blend true
-			pos	"11 32"
+			pos		"11 32"
 			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
 			texh	"115 64"
-			mousefx true
+			mousefx	true
 			click	{ cmd "sel_shotreservation;" }
 			rclick	{ cmd "sel_shotreservation 0;" }
 		}
 
 		pic bt_reaction_s
 		{
-			image hud/button_guard
-			blend true
-			key "*binding togglereaction"
-			mousefx true
-			pos	"11 74"
+			image	hud/button_guard
+			blend	true
+			key		"*binding togglereaction"
+			pos		"11 74"
 			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
 			texh	"31 63"
+			mousefx	true
 			click	{ cmd "togglereaction;" }
 		}
 
 		string tus
 		{
 			string	"*cvar mn_tu"
-			pos		"105 14"
-			align	uc
+			pos		"85 11"
+			size	"40 20"
+			textalign	uc
 		}
 
 		string hp
 		{
 			string	"*cvar mn_hp"
-			pos		"105 28"
-			align	uc
+			pos		"85 25"
+			size	"40 20"
+			textalign	uc
 		}
 
 		//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_althud.
 		string tu_tooltips
 		{
-			string " "
+			string	" "
 			tooltip	"*cvar mn_tu_tooltips"
 			pos		"130 21"
 			size	"305 6"
@@ -577,7 +587,7 @@ menu hud extends ahud
 
 		bar health
 		{
-			pos	"130 34"
+			pos		"130 34"
 			size	"305 6"
 			color	"1 0 0 1"
 			current	"*cvar mn_hp"
@@ -596,27 +606,28 @@ menu hud extends ahud
 		string moral_text
 		{
 			string	"*cvar mn_morale"
-			pos	"105 41"
-			align	uc
+			pos		"85 38"
+			size	"40 20"
+			textalign	uc
 		}
 
 		bar morale
 		{
-			pos	"130 46"
+			pos		"130 46"
 			size	"305 6"
 			color	"1 1 0.5 1"
 			current	"*cvar mn_morale"
-			max	"*cvar mn_moralemax"
+			max		"*cvar mn_moralemax"
 		}
 
 		text infoscreen
 		{
+			textid		TEXT_STANDARD
 			pos			"118 61"
 			size		"290 50"
 			lineheight	20
 			tabwidth	100
 			rows		"2"
-			textid		TEXT_STANDARD
 		}
 	}
 
@@ -698,8 +709,8 @@ menu hud extends ahud
 
 	panel popup {
 		{
-			pos "977 129"
-			size "47 335"
+			pos		"977 129"
+			size	"47 335"
 			excluderect { pos	"0 95"	size	"8 33" }
 			excluderect { pos	"0 223"	size	"16 16" }
 		}
@@ -754,99 +765,95 @@ menu hud extends ahud
 	// the name must be the same in all huds
 	text chatscreen
 	{
-		pos		"130 70"
-		size	"690 48"
-		font	"f_verysmall"
-		wheel
 		textid		TEXT_CHAT_WINDOW
-		rows	"3"
+		pos			"130 70"
+		size		"690 48"
+		font		f_verysmall
+		rows		"3"
 		lineheight	"16"
-		padding	5
+		padding		5
 		bordercolor	"0.5 0.5 0.5 1"
-		border	2
-		bgcolor	"0 0.1 0 0.8"
-		in	{
-			cmd "unhide_chatscreen;"
-		}
+		border		2
+		bgcolor		"0 0.1 0 0.8"
+		wheel
+		in			{ cmd "unhide_chatscreen;" }
 	}
 	pic bar_chat
 	{
 		visiblewhen	"sv_maxclients >= 2"
-		image	hud/bar_chat
-		pos		"960 64"
-		size	"64 64"
-		out	{
-				*bar_chat image hud/bar_chat
-				*bar_chat size "64 64"
-				cmd "mn_showchatbuttons 0;"
-			}
-		in	{
-				*bar_chat image hud/bar_chat_choice
-				*bar_chat size "256 64"
-				cmd "mn_showchatbuttons 1;"
-			}
+
+		image		hud/bar_chat
+		pos			"960 64"
+		size		"64 64"
+		out			{
+			*bar_chat image hud/bar_chat
+			*bar_chat size "64 64"
+			cmd "mn_showchatbuttons 0;"
+		}
+		in			{
+			*bar_chat image hud/bar_chat_choice
+			*bar_chat size "256 64"
+			cmd "mn_showchatbuttons 1;"
+		}
 	}
 	pic bar_chat_all
 	{
 		visiblewhen	"mn_showchatbuttons == 1"
-		key "*binding messagesay"
-		tooltip	"_Chat"
-		image	hud/button_chat
-		pos		"944 76"
-		texl	"0 0"
-		texh	"32 32"
-		size	"32 32"
-		click {
-				cmd	"messagesay;"
-			}
+
+		tooltip		"_Chat"
+		key			"*binding messagesay"
+		image		hud/button_chat
+		pos			"944 76"
+		size		"32 32"
+		texl		"0 0"
+		texh		"32 32"
+		click		{ cmd "messagesay;" }
 	}
 	pic bar_chat_team
 	{
 		visiblewhen	"mn_showchatbuttons == 1"
-		key "*binding messagesayteam"
-		tooltip	"_Teamchat"
-		image	hud/button_chat
-		pos		"906 76"
-		texl	"32 0"
-		texh	"64 32"
-		size	"32 32"
-		click {
-				cmd	"messagesayteam;"
-			}
+		tooltip		"_Teamchat"
+		key			"*binding messagesayteam"
+		image		hud/button_chat
+		pos			"906 76"
+		size		"32 32"
+		texl		"32 0"
+		texh		"64 32"
+		click		{ cmd "messagesayteam;" }
 	}
 	pic bar_chat_show
 	{
 		visiblewhen	"mn_showchatbuttons == 1"
-		key "*binding showchat"
-		tooltip	"_Show chat history"
-		image	hud/button_chat
-		pos		"868 76"
-		texl	"64 0"
-		texh	"96 32"
-		size	"32 32"
-		mousefx false
-		out	{
-				*chatscreen size "690 48"
-				*chatscreen rows "3"
-				*event timeout 10000
-			}
-		in	{
-				*chatscreen size "690 400"
-				*chatscreen rows "25"
-				*event timeout 0
-				cmd "mn_unhidenode chatscreen;"
-			}
+		tooltip		"_Show chat history"
+		key			"*binding showchat"
+		image		hud/button_chat
+		pos			"868 76"
+		size		"32 32"
+		texl		"64 0"
+		texh		"96 32"
+		mousefx		false
+		out			{
+			*chatscreen size "690 48"
+			*chatscreen rows "3"
+			*event timeout 10000
+		}
+		in			{
+			*chatscreen size "690 400"
+			*chatscreen rows "25"
+			*event timeout 0
+			cmd "mn_unhidenode chatscreen;"
+		}
 	}
 
 	pic button_chat
 	{
 		visiblewhen	"sv_maxclients >= 2"
-		tooltip	"_Chat messages"
-		image	hud/event_log
-		texl	"0 0"
-		texh	"32 36"
-		pos	"985 70"
-		mousefx false
+		tooltip		"_Chat messages"
+		image		hud/event_log
+		texl		"0 0"
+		texh		"32 36"
+		pos			"985 70"
+		mousefx		false
 		in
 	}
 

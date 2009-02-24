@@ -9,8 +9,8 @@ menu althud extends ahud
 	// ==================
 	zone render
 	{
-		pos		"0 0"
-		size	"1024 768"
+		pos			"0 0"
+		size		"1024 768"
 	}
 
 	// ==================
@@ -19,26 +19,26 @@ menu althud extends ahud
 
 	pic bar_top
 	{
-		image	althud/bar_top
-		pos		"768 0"
+		image		althud/bar_top
+		pos			"768 0"
 	}
 	zone zone_top
 	{
-		pos		"832 0"
-		size	"192 56"
-		click { }
+		pos			"832 0"
+		size		"192 56"
+		click		{ }
 	}
 
 	pic bar_right
 	{
-		image	althud/bar_right
-		pos		"768 64"
+		image		althud/bar_right
+		pos			"768 64"
 	}
 	zone zone_right
 	{
-		pos		"864 64"
-		size	"160 512"
-		click { }
+		pos			"864 64"
+		size		"160 512"
+		click		{ }
 	}
 
 	// ==================
@@ -47,100 +47,98 @@ menu althud extends ahud
 	// the name must be the same in all huds
 	text chatscreen
 	{
-		pos		"130 2"
-		size	"690 48"
-		font	"f_verysmall"
-		wheel
 		textid		TEXT_CHAT_WINDOW
-		rows	"3"
+		pos			"130 2"
+		size		"690 48"
+		font		"f_verysmall"
+		rows		"3"
 		lineheight	"16"
-		padding	5
+		padding		5
 		bordercolor	"0.5 0.5 0.5 1"
-		border	2
-		bgcolor	"0 0.1 0 0.8"
-		in	{
-			cmd "unhide_chatscreen;"
-		}
+		border		2
+		bgcolor		"0 0.1 0 0.8"
+		wheel
+		in			{ cmd "unhide_chatscreen;" }
 	}
 
 	pic bar_chat
 	{
 		visiblewhen	"sv_maxclients >= 2"
-		image	hud/bar_chat
-		pos		"960 64"
-		size	"64 64"
-		out	{
-				*bar_chat image hud/bar_chat
-				*bar_chat size "64 64"
-				cmd "mn_showchatbuttons 0;"
-			}
-		in	{
-				*bar_chat image hud/bar_chat_choice
-				*bar_chat size "256 64"
-				cmd "mn_showchatbuttons 1;"
-			}
+		image		hud/bar_chat
+		pos			"960 64"
+		size		"64 64"
+		out			{
+			*bar_chat image hud/bar_chat
+			*bar_chat size "64 64"
+			cmd "mn_showchatbuttons 0;"
+		}
+		in			{
+			*bar_chat image hud/bar_chat_choice
+			*bar_chat size "256 64"
+			cmd "mn_showchatbuttons 1;"
+		}
 	}
 	pic bar_chat_all
 	{
 		visiblewhen	"mn_showchatbuttons == 1"
-		key "*binding messagesay"
-		tooltip	"_Chat"
-		image	hud/button_chat
-		pos		"944 76"
-		texl	"0 0"
-		texh	"32 32"
-		size	"32 32"
-		click {
-				cmd	"messagesay;"
-			}
+		tooltip		"_Chat"
+		key			"*binding messagesay"
+		image		hud/button_chat
+		pos			"944 76"
+		size		"32 32"
+		texl		"0 0"
+		texh		"32 32"
+		click		{
+			cmd	"messagesay;"
+		}
 	}
 	pic bar_chat_team
 	{
 		visiblewhen	"mn_showchatbuttons == 1"
-		key "*binding messagesayteam"
-		tooltip	"_Teamchat"
-		image	hud/button_chat
-		pos		"906 592"
-		texl	"32 0"
-		texh	"64 32"
-		size	"32 32"
-		click {
-				cmd	"messagesayteam;"
-			}
+		tooltip		"_Teamchat"
+		key			"*binding messagesayteam"
+		image		hud/button_chat
+		pos			"906 592"
+		texl		"32 0"
+		texh		"64 32"
+		size		"32 32"
+		click		{
+			cmd	"messagesayteam;"
+		}
 	}
 	pic bar_chat_show
 	{
 		visiblewhen	"mn_showchatbuttons == 1"
-		key "*binding showchat"
-		tooltip	"_Show chat history"
-		image	hud/button_chat
-		pos		"868 592"
-		texl	"64 0"
-		texh	"96 32"
-		size	"32 32"
-		mousefx false
-		out	{
-				*chatscreen size "690 48"
-				*chatscreen rows "3"
-				*event timeout 10000
-			}
-		in	{
-				*chatscreen size "690 400"
-				*chatscreen rows "25"
-				*event timeout 0
-				cmd "mn_unhidenode chatscreen;"
-			}
+		tooltip		"_Show chat history"
+		key			"*binding showchat"
+		image		hud/button_chat
+		pos			"868 592"
+		size		"32 32"
+		texl		"64 0"
+		texh		"96 32"
+		mousefx		false
+		out			{
+			*chatscreen size "690 48"
+			*chatscreen rows "3"
+			*event timeout 10000
+		}
+		in			{
+			*chatscreen size "690 400"
+			*chatscreen rows "25"
+			*event timeout 0
+			cmd "mn_unhidenode chatscreen;"
+		}
 	}
 
 	pic button_chat
 	{
 		visiblewhen	"sv_maxclients >= 2"
-		tooltip	"_Chat messages"
-		image	hud/event_log
-		texl	"0 0"
-		texh	"32 36"
-		pos	"985 590"
-		mousefx false
+		tooltip		"_Chat messages"
+		image		hud/event_log
+		texl		"0 0"
+		texh		"32 36"
+		pos			"985 590"
+		mousefx		false
 		in
 	}
 
@@ -152,137 +150,137 @@ menu althud extends ahud
 
 	pic bar_floor
 	{
-		image	althud/bar_floor
-		pos		"960 630"
-		click { }
+		image		althud/bar_floor
+		pos			"960 630"
+		click		{ }
 	}
 
 	pic bar_teamright
 	{
-		image	althud/bar_teamright
-		pos		"920 640"
-		click { }
+		image		althud/bar_teamright
+		pos			"920 640"
+		click		{ }
 	}
 
 	pic bar_teambox0
 	{
-		key "*binding soldier_select 0"
-		image	althud/bar_teambox
-		pos		"856 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 0;" }
+		key			"*binding soldier_select 0"
+		image		althud/bar_teambox
+		pos			"856 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 0;" }
 	}
 
 	pic bar_teamsep1
 	{
-		image	althud/bar_teamsep
-		pos		"840 640"
-		click { }
+		image		althud/bar_teamsep
+		pos			"840 640"
+		click		{ }
 	}
 	pic bar_teambox1
 	{
-		key "*binding soldier_select 1"
-		image	althud/bar_teambox
-		pos		"776 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 1;" }
+		key			"*binding soldier_select 1"
+		image		althud/bar_teambox
+		pos			"776 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 1;" }
 	}
 
 	pic bar_teamsep2
 	{
-		image	althud/bar_teamsep
-		pos		"760 640"
-		click { }
+		image		althud/bar_teamsep
+		pos			"760 640"
+		click		{ }
 	}
 	pic bar_teambox2
 	{
-		key "*binding soldier_select 2"
-		image	althud/bar_teambox
-		pos		"696 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 2;" }
+		key			"*binding soldier_select 2"
+		image		althud/bar_teambox
+		pos			"696 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 2;" }
 	}
 
 	pic bar_teamsep3
 	{
-		image	althud/bar_teamsep
-		pos		"680 640"
-		click { }
+		image		althud/bar_teamsep
+		pos			"680 640"
+		click 		{ }
 	}
 	pic bar_teambox3
 	{
-		key "*binding soldier_select 3"
-		image	althud/bar_teambox
-		pos		"616 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 3;" }
+		key			"*binding soldier_select 3"
+		image		althud/bar_teambox
+		pos			"616 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 3;" }
 	}
 
 	pic bar_teamsep4
 	{
-		image	althud/bar_teamsep
-		pos		"600 640"
-		click { }
+		image		althud/bar_teamsep
+		pos			"600 640"
+		click		{ }
 	}
 	pic bar_teambox4
 	{
-		key "*binding soldier_select 4"
-		image	althud/bar_teambox
-		pos		"536 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 4;" }
+		key			"*binding soldier_select 4"
+		image		althud/bar_teambox
+		pos			"536 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 4;" }
 	}
 
 	pic bar_teamsep5
 	{
-		image	althud/bar_teamsep
-		pos		"520 640"
-		click { }
+		image		althud/bar_teamsep
+		pos			"520 640"
+		click		{ }
 	}
 	pic bar_teambox5
 	{
-		key "*binding soldier_select 5"
-		image	althud/bar_teambox
-		pos		"456 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 5;" }
+		key			"*binding soldier_select 5"
+		image		althud/bar_teambox
+		pos			"456 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 5;" }
 	}
 
 	pic bar_teamsep6
 	{
-		image	althud/bar_teamsep
-		pos		"440 640"
-		click { }
+		image		althud/bar_teamsep
+		pos			"440 640"
+		click		{ }
 	}
 	pic bar_teambox6
 	{
-		key "*binding soldier_select 6"
-		image	althud/bar_teambox
-		pos		"376 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 6;" }
+		key			"*binding soldier_select 6"
+		image		althud/bar_teambox
+		pos			"376 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 6;" }
 	}
 
 	pic bar_teamsep7
 	{
-		image	althud/bar_teamsep
-		pos		"360 640"
-		click { }
+		image		althud/bar_teamsep
+		pos			"360 640"
+		click		{ }
 	}
 	pic bar_teambox7
 	{
-		key "*binding soldier_select 7"
-		image	althud/bar_teambox
-		pos		"296 640"
-		size	"64 128"
-		click	{ cmd "soldier_select 7;" }
+		key			"*binding soldier_select 7"
+		image		althud/bar_teambox
+		pos			"296 640"
+		size		"64 128"
+		click		{ cmd "soldier_select 7;" }
 	}
 
 	pic bar_teamleft
 	{
-		image	althud/bar_teamleft
-		pos		"264 640"
-		click { }
+		image		althud/bar_teamleft
+		pos			"264 640"
+		click		{ }
 	}
 
 	confunc numonteam1
@@ -376,12 +374,12 @@ menu althud extends ahud
 
 	pic bar_selbox
 	{
-		image	althud/bar_selbox
-		blend	true
-		pos		"849 666"
-		size	"78 90"
-		texl	"0 38"
-		texh	"78 90"
+		image		althud/bar_selbox
+		blend		true
+		pos			"849 666"
+		size		"78 90"
+		texl		"0 38"
+		texh		"78 90"
 	}
 
 	confunc hudselecta0 { *bar_selbox left "849" }
@@ -400,6 +398,8 @@ menu althud extends ahud
 
 	model right_actor
 	{
+		tooltip		"_Inventory and physical stats"
+
 		model		"*cvar mn_body"
 		skin		"*cvar mn_skin"
 		anim		"*cvar mn_anim"
@@ -408,101 +408,100 @@ menu althud extends ahud
 		size		"120 260"
 		scale		"4 4 4"
 
-		tooltip	"_Inventory and physical stats"
-		click	{ cmd "mn_push ahudinv;" }
-		rclick	{ cmd "mn_push ahudphysdat;" }
+		click		{ cmd "mn_push ahudinv;" }
+		rclick		{ cmd "mn_push ahudphysdat;" }
 	}
 
 	model right_head
 	{
-		model	"*cvar mn_head"
-		skin	"*cvar mn_skin"
-		tag		"right_actor tag_head"
+		model		"*cvar mn_head"
+		skin		"*cvar mn_skin"
+		tag			"right_actor tag_head"
 	}
 
 	model right_rweapon
 	{
-		model	"*cvar mn_rweapon"
-		tag		"right_actor tag_rweapon"
+		model		"*cvar mn_rweapon"
+		tag			"right_actor tag_rweapon"
 	}
 
 	model right_lweapon
 	{
-		model	"*cvar mn_lweapon"
-		tag		"right_actor tag_lweapon"
+		model		"*cvar mn_lweapon"
+		tag			"right_actor tag_lweapon"
 	}
 
 	model head0
 	{
-		model	"*cvar mn_head0"
-		angles	"15 60 100"
+		model		"*cvar mn_head0"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"854 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"854 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 	model head1
 	{
-		model	"*cvar mn_head1"
-		angles	"15 60 100"
+		model		"*cvar mn_head1"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"774 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"774 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 	model head2
 	{
-		model	"*cvar mn_head2"
-		angles	"15 60 100"
+		model		"*cvar mn_head2"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"694 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"694 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 	model head3
 	{
-		model	"*cvar mn_head3"
-		angles	"15 60 100"
+		model		"*cvar mn_head3"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"614 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"614 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 	model head4
 	{
-		model	"*cvar mn_head4"
-		angles	"15 60 100"
+		model		"*cvar mn_head4"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"534 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"534 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 	model head5
 	{
-		model	"*cvar mn_head5"
-		angles	"15 60 100"
+		model		"*cvar mn_head5"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"454 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"454 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 	model head6
 	{
-		model	"*cvar mn_head6"
-		angles	"15 60 100"
+		model		"*cvar mn_head6"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"374 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"374 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 	model head7
 	{
-		model	"*cvar mn_head7"
-		angles	"15 60 100"
+		model		"*cvar mn_head7"
+		angles		"15 60 100"
 		autoscale	true
-		pos		"294 672"
-		size	"50 78"
-		excluderect { pos	"0 0"	size	"50 78" }
+		pos			"294 672"
+		size		"50 78"
+		excluderect	{ pos	"0 0"	size	"50 78" }
 	}
 
 	// ==================
@@ -511,50 +510,50 @@ menu althud extends ahud
 
 	zone spotted
 	{
-		key "*binding nextalien"
-		tooltip	"_Enemy spotted"
-		pos		"841 12"
-		size	"48 34"
-		click	{ cmd "nextalien;" }
+		tooltip		"_Enemy spotted"
+		key			"*binding nextalien"
+		pos			"841 12"
+		size		"48 34"
+		click		{ cmd "nextalien;" }
 	}
 	string numspotted
 	{
-		key "*binding nextalien"
-		tooltip "_Click to cycle through spotted enemies"
-		string	"*cvar mn_numaliensspotted"
-		pos		"841 13"
-		size    "48 34"
+		string		"*cvar mn_numaliensspotted"
+		tooltip		"_Click to cycle through spotted enemies"
+		key			"*binding nextalien"
+		pos			"841 13"
+		size	    "48 34"
 		textalign	cc
 		in
 	}
 	pic nextround
 	{
-		key "*binding nextround"
-		tooltip	"_Finish round"
-		image	althud/buttons_althud1g
-		pos		"888 11"
-		texl	"0 0"
-		texh	"40 34"
-		mousefx	true
-		click	{ cmd "nextround;" }
+		tooltip		"_Finish round"
+		key			"*binding nextround"
+		image		althud/buttons_althud1g
+		pos			"888 11"
+		texl		"0 0"
+		texh		"40 34"
+		mousefx		true
+		click		{ cmd "nextround;" }
 	}
 	pic messagelog
 	{
-		image	althud/buttons_althud1g
-		pos		"932 11"
-		texl	"43 0"
-		texh	"83 34"
-		mousefx	true
-		click	{  }
+		image		althud/buttons_althud1g
+		pos			"932 11"
+		texl		"43 0"
+		texh		"83 34"
+		mousefx		true
+		click		{ }
 	}
 	pic menu
 	{
-		image	althud/buttons_althud1
-		pos		"976 11"
-		texl	"86 0"
-		texh	"126 34"
-		mousefx	true
-		click	{ cmd "mn_pop;" }
+		image		althud/buttons_althud1
+		pos			"976 11"
+		texl		"86 0"
+		texh		"126 34"
+		mousefx		true
+		click		{ cmd "mn_pop;" }
 	}
 
 	confunc selpla { *bt_primaryleft    image althud/buttons_althud1a }
@@ -615,13 +614,13 @@ menu althud extends ahud
 
 	pic bt_reaction_a
 	{
-		key "*binding togglereaction"
-		image	althud/buttons_althud1g
-		mousefx true
-		pos		"900 497"
-		texl	"81 37"
-		texh	"106 70"
-		click	{ cmd "togglereaction;" }
+		key			"*binding togglereaction"
+		image		althud/buttons_althud1g
+		pos			"900 497"
+		texl		"81 37"
+		texh		"106 70"
+		mousefx		true
+		click		{ cmd "togglereaction;" }
 	}
 
 	confunc althud_deselheadgear { *althud_bt_use_headgear image althud/buttons_althud1g }
@@ -629,39 +628,39 @@ menu althud extends ahud
 
 	pic althud_bt_use_headgear
 	{
-		tooltip	"_Use headgear"
-		image	althud/buttons_althud1g
-		mousefx true
-		pos		"930 497"
-		texl	"108 37"
-		texh	"134 70"
-		click	{ cmd "useheadgear;" }
+		tooltip		"_Use headgear"
+		image		althud/buttons_althud1g
+		mousefx		true
+		pos			"930 497"
+		texl		"108 37"
+		texh		"134 70"
+		click		{ cmd "useheadgear;" }
 	}
 
 	pic bt_reloadright
 	{
-		tooltip	"*cvar mn_reloadright_tt"
-		image	althud/buttons_althud1g
-		pos		"991 497"
-		texl	"0 37"
-		texh	"25 70"
-		mousefx	true
-		click	{ cmd "reloadright;" }
-		in	{ cmd "remaining_tus reload_r 1;" }
-		out	{ cmd "remaining_tus reload_r 0;" }
+		tooltip		"*cvar mn_reloadright_tt"
+		image		althud/buttons_althud1g
+		pos			"991 497"
+		texl		"0 37"
+		texh		"25 70"
+		mousefx		true
+		click		{ cmd "reloadright;" }
+		in			{ cmd "remaining_tus reload_r 1;" }
+		out			{ cmd "remaining_tus reload_r 0;" }
 	}
 
 	pic bt_reloadleft
 	{
-		tooltip	"*cvar mn_reloadleft_tt"
-		image	althud/buttons_althud1g
-		pos		"991 497"
-		texl	"0 37"
-		texh	"25 70"
-		mousefx	true
-		click	{ cmd "reloadleft;" }
-		in	{ cmd "remaining_tus reload_l 1;" }
-		out	{ cmd "remaining_tus reload_l 0;" }
+		tooltip		"*cvar mn_reloadleft_tt"
+		image		althud/buttons_althud1g
+		pos			"991 497"
+		texl		"0 37"
+		texh		"25 70"
+		mousefx		true
+		click		{ cmd "reloadleft;" }
+		in			{ cmd "remaining_tus reload_l 1;" }
+		out			{ cmd "remaining_tus reload_l 0;" }
 	}
 
 	// CROUCH/STAND UP BUTTON
@@ -672,25 +671,26 @@ menu althud extends ahud
 
 	pic bt_duck
 	{
-		key "*binding standcrouch"
-		tooltip	"*cvar mn_crouchstand_tt"
-		image	althud/buttons_althud1g
-		mousefx true
-		pos		"991 536"
-		texl	"27 37"
-		texh	"52 70"
-		click	{ cmd "standcrouch;" }
-		in	{ cmd "remaining_tus crouch 1;" }
-		out	{ cmd "remaining_tus crouch 0;" }
+		key			"*binding standcrouch"
+		tooltip		"*cvar mn_crouchstand_tt"
+		image		althud/buttons_althud1g
+		mousefx		true
+		pos			"991 536"
+		texl		"27 37"
+		texh		"52 70"
+		click		{ cmd "standcrouch;" }
+		in			{ cmd "remaining_tus crouch 1;" }
+		out			{ cmd "remaining_tus crouch 0;" }
 	}
 
 	checkbox bt_crouch_reservation
 	{
-		tooltip	"*cvar mn_crouch_reservation_tt"
-		image	"menu/checkbox_blue"	size	"20 18"
-		pos	"969 536"
-		current 0
-		change { cmd "togglecrouchreserve;" }
+		tooltip		"*cvar mn_crouch_reservation_tt"
+		image		"menu/checkbox_blue"
+		pos			"969 536"
+		size		"20 18"
+		current		0
+		change		{ cmd "togglecrouchreserve;" }
 	}
 
 	confunc crouch_checkbox_disable_s {
@@ -725,55 +725,57 @@ menu althud extends ahud
 	{
 		tooltip	"*cvar mn_shot_reservation_tt"
 		// key "*binding sel_shotreservation"
-		image hud/button_reserve_shot	// fixme
-		pos	"965 497"
-		texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
-		texh	"127 64"
-		mousefx true
-		click	{ cmd "sel_shotreservation;" }
-		rclick	{ cmd "sel_shotreservation 0;" }
+		image		hud/button_reserve_shot	// fixme
+		pos			"965 497"
+		texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
+		texh		"127 64"
+		mousefx		true
+		click		{ cmd "sel_shotreservation;" }
+		rclick		{ cmd "sel_shotreservation 0;" }
 	}
 
 	pic bt_floorup
 	{
-		key "*binding levelup"
-		tooltip	"_Level up"
-		image	althud/buttons_althud1
-		mousefx true
-		pos		"991 648"
-		texl	"54 74"
-		texh	"79 107"
-		click	{ cmd "mn_modify cl_worldlevel +1 0 7;" }
+		key			"*binding levelup"
+		tooltip		"_Level up"
+		image		althud/buttons_althud1
+		mousefx		true
+		pos			"991 648"
+		texl		"54 74"
+		texh		"79 107"
+		click		{ cmd "mn_modify cl_worldlevel +1 0 7;" }
 	}
 	pic bt_floordown
 	{
-		key "*binding leveldown"
-		tooltip	"_Level down"
-		image	althud/buttons_althud1
-		mousefx true
-		pos		"991 723"
-		texl	"81 74"
-		texh	"106 107"
-		click	{ cmd "mn_modify cl_worldlevel -1 0 7;" }
+		key			"*binding leveldown"
+		tooltip		"_Level down"
+		image		althud/buttons_althud1
+		mousefx		true
+		pos			"991 723"
+		texl		"81 74"
+		texh		"106 107"
+		click		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
 	}
 
 	container right
 	{
-		pos "882 404"
+		pos			"882 404"
 	}
 	container left
 	{
-		pos "882 404"
+		pos			"882 404"
 	}
 	string ammoright
 	{
-		string	"*cvar mn_ammoright"
-		pos		"885 470"
+		string		"*cvar mn_ammoright"
+		pos			"885 465"
+		size		"40 20"
 	}
 	string ammoleft
 	{
-		string	"*cvar mn_ammoleft"
-		pos		"885 470"
+		string		"*cvar mn_ammoleft"
+		pos			"885 465"
+		size		"40 20"
 	}
 
 	func show_rightweapon
@@ -797,25 +799,27 @@ menu althud extends ahud
 
 	pic switch_to_right_hand
 	{
-		tooltip	"_Switch to right hand weapon"
-		image	menu/buttons_small
-		pos		"964 464"
-		texl	"0 0"		texh	"16 16"
-		mousefx	true
-		whup	{ call show_rightweapon cmd "switch_firemode_list r;" }
-		whdown	{ call show_leftweapon cmd "switch_firemode_list l;" }
-		click	{ call show_rightweapon cmd "switch_firemode_list r;" }
+		tooltip		"_Switch to right hand weapon"
+		image		menu/buttons_small
+		pos			"964 464"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		whup		{ call show_rightweapon cmd "switch_firemode_list r;" }
+		whdown		{ call show_leftweapon cmd "switch_firemode_list l;" }
+		click		{ call show_rightweapon cmd "switch_firemode_list r;" }
 	}
 	pic switch_to_left_hand
 	{
-		tooltip	"_Switch to left hand weapon"
-		image	menu/buttons_small
-		pos		"980 464"
-		texl	"16 0"		texh	"32 16"
-		mousefx	true
-		whup	{ call show_rightweapon cmd "switch_firemode_list r;" }
-		whdown	{ call show_leftweapon cmd "switch_firemode_list l;" }
-		click	{ call show_leftweapon cmd "switch_firemode_list l;" }
+		tooltip		"_Switch to left hand weapon"
+		image		menu/buttons_small
+		pos			"980 464"
+		texl		"16 0"
+		texh		"32 16"
+		mousefx		true
+		whup		{ call show_rightweapon cmd "switch_firemode_list r;" }
+		whdown		{ call show_leftweapon cmd "switch_firemode_list l;" }
+		click		{ call show_leftweapon cmd "switch_firemode_list l;" }
 	}
 
 	// ==================
@@ -824,34 +828,39 @@ menu althud extends ahud
 
 	string str_name
 	{
-		string	"*cvar mn_name"
-		pos		"883 84"
+		string		"*cvar mn_name"
+		pos			"883 84"
+		size		"125 20"
 	}
 
 	string str_hp
 	{
-		string	"*cvar mn_hp"
-		pos		"901 369"
-		align	uc
+		string		"*cvar mn_hp"
+		pos			"881 365"
+		size		"40 20"
+		textalign	uc
 	}
 	string str_tu
 	{
-		string	"*cvar mn_tu"
-		pos		"929 369"
-		align	uc
+		string		"*cvar mn_tu"
+		pos			"909 365"
+		size		"40 20"
+		textalign	uc
 	}
 	string str_crg
 	{
-		string	"*cvar mn_morale"
-		pos		"958 369"
-		align	uc
+		string		"*cvar mn_morale"
+		pos			"938 365"
+		size		"40 20"
+		textalign	uc
 	}
 
 	string str_floor
 	{
-		string	"*cvar cl_worldlevel"
-		pos		"1005 700"
-		align	cc
+		string		"*cvar cl_worldlevel"
+		pos			"985 690"
+		size		"40 20"
+		textalign	cc
 	}
 
 	// ==================
@@ -860,260 +869,281 @@ menu althud extends ahud
 
 	bar health
 	{
-		pos		"886 324"
-		size	"120 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp"
-		max		"*cvar mn_hpmax"
+		pos			"886 324"
+		size		"120 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp"
+		max			"*cvar mn_hpmax"
 	}
 
 	//todo: make this into a "zone" node (which currently doesn't seem to support tooltips) See also menu_hud.
 	string tu_tooltips
 	{
-		string " "
-		tooltip	"*cvar mn_tu_tooltips"
-		pos		"886 332"
-		size	"120 4"
+		string		" "
+		tooltip		"*cvar mn_tu_tooltips"
+		pos			"886 332"
+		size		"120 4"
 		in
 	}
 
 	bar timeall
 	{
-		pos		"886 332"
-		size	"120 4"
-		color	".1 .1 .5 1"
-		current	"*cvar mn_tu"
-		max		"*cvar mn_tumax"
+		pos			"886 332"
+		size		"120 4"
+		color		".1 .1 .5 1"
+		current		"*cvar mn_tu"
+		max			"*cvar mn_tumax"
 	}
 	bar timeremain
 	{
-		pos		"886 332"
-		size	"120 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_turemain"
-		max		"*cvar mn_tumax"
+		pos			"886 332"
+		size		"120 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_turemain"
+		max			"*cvar mn_tumax"
 	}
 
 	bar timereserved
 	{
-		pos		"886 332"
-		size	"120 2"
-		color	"0 .5 0 1"
-		current	"*cvar mn_tureserved"
-		max		"*cvar mn_tumax"
+		pos			"886 332"
+		size		"120 2"
+		color		"0 .5 0 1"
+		current		"*cvar mn_tureserved"
+		max			"*cvar mn_tumax"
 	}
 
 	bar morale
 	{
-		pos		"886 340"
-		size	"120 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale"
-		max		"*cvar mn_moralemax"
+		pos			"886 340"
+		size		"120 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale"
+		max			"*cvar mn_moralemax"
 	}
 
 	bar morale0
 	{
-		pos		"907 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale0"
-		max		"*cvar mn_moralemax0"
+		pos			"907 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale0"
+		max			"*cvar mn_moralemax0"
 	}
 	bar health0
 	{
-		pos		"913 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp0"
-		max		"*cvar mn_hpmax0"
+		pos			"913 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp0"
+		max			"*cvar mn_hpmax0"
 	}
 	bar time0
 	{
-		pos		"919 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu0"
-		max		"*cvar mn_tumax0"
+		pos			"919 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu0"
+		max			"*cvar mn_tumax0"
 	}
 	bar morale1
 	{
-		pos		"827 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale1"
-		max		"*cvar mn_moralemax1"
+		pos			"827 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale1"
+		max			"*cvar mn_moralemax1"
 	}
 	bar health1
 	{
-		pos		"833 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp1"
-		max		"*cvar mn_hpmax1"
+		pos			"833 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp1"
+		max			"*cvar mn_hpmax1"
 	}
 	bar time1
 	{
-		pos		"839 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu1"
-		max		"*cvar mn_tumax1"
+		pos			"839 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu1"
+		max			"*cvar mn_tumax1"
 	}
 	bar morale2
 	{
-		pos		"747 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale2"
-		max		"*cvar mn_moralemax2"
+		pos			"747 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale2"
+		max			"*cvar mn_moralemax2"
 	}
 	bar health2
 	{
-		pos		"753 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp2"
-		max		"*cvar mn_hpmax2"
+		pos			"753 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp2"
+		max			"*cvar mn_hpmax2"
 	}
 	bar time2
 	{
-		pos		"759 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu2"
-		max		"*cvar mn_tumax2"
+		pos			"759 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu2"
+		max			"*cvar mn_tumax2"
 	}
 	bar morale3
 	{
-		pos		"667 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale3"
-		max		"*cvar mn_moralemax3"
+		pos			"667 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale3"
+		max			"*cvar mn_moralemax3"
 	}
 	bar health3
 	{
-		pos		"673 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp3"
-		max		"*cvar mn_hpmax3"
+		pos			"673 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp3"
+		max			"*cvar mn_hpmax3"
 	}
 	bar time3
 	{
-		pos		"679 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu3"
-		max		"*cvar mn_tumax3"
+		pos			"679 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu3"
+		max			"*cvar mn_tumax3"
 	}
 	bar morale4
 	{
-		pos		"587 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale4"
-		max		"*cvar mn_moralemax4"
+		pos			"587 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale4"
+		max			"*cvar mn_moralemax4"
 	}
 	bar health4
 	{
-		pos		"593 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp4"
-		max		"*cvar mn_hpmax4"
+		pos			"593 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp4"
+		max			"*cvar mn_hpmax4"
 	}
 	bar time4
 	{
-		pos		"599 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu4"
-		max		"*cvar mn_tumax4"
+		pos			"599 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu4"
+		max			"*cvar mn_tumax4"
 	}
 	bar morale5
 	{
-		pos		"507 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale5"
-		max		"*cvar mn_moralemax5"
+		pos			"507 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale5"
+		max			"*cvar mn_moralemax5"
 	}
 	bar health5
 	{
-		pos		"513 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp5"
-		max		"*cvar mn_hpmax5"
+		pos			"513 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp5"
+		max			"*cvar mn_hpmax5"
 	}
 	bar time5
 	{
-		pos		"519 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu5"
-		max		"*cvar mn_tumax5"
+		pos			"519 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu5"
+		max			"*cvar mn_tumax5"
 	}
 	bar morale6
 	{
-		pos		"427 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale6"
-		max		"*cvar mn_moralemax6"
+		pos			"427 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale6"
+		max			"*cvar mn_moralemax6"
 	}
 	bar health6
 	{
-		pos		"433 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp6"
-		max		"*cvar mn_hpmax6"
+		pos			"433 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp6"
+		max			"*cvar mn_hpmax6"
 	}
 	bar time6
 	{
-		pos		"439 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu6"
-		max		"*cvar mn_tumax6"
+		pos			"439 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu6"
+		max			"*cvar mn_tumax6"
 	}
 	bar morale7
 	{
-		pos		"347 753"
-		size	"78 4"
-		color	".7 .7 0 1"
-		current	"*cvar mn_morale7"
-		max		"*cvar mn_moralemax7"
+		pos			"347 753"
+		size		"78 4"
+		color		".7 .7 0 1"
+		current		"*cvar mn_morale7"
+		max			"*cvar mn_moralemax7"
 	}
 	bar health7
 	{
-		pos		"353 753"
-		size	"78 4"
-		color	".7 0 0 1"
-		current	"*cvar mn_hp7"
-		max		"*cvar mn_hpmax7"
+		pos			"353 753"
+		size		"78 4"
+		color		".7 0 0 1"
+		current		"*cvar mn_hp7"
+		max			"*cvar mn_hpmax7"
 	}
 	bar time7
 	{
-		pos		"359 753"
-		size	"78 4"
-		color	".2 .2 1 1"
-		current	"*cvar mn_tu7"
-		max		"*cvar mn_tumax7"
+		pos			"359 753"
+		size		"78 4"
+		color		".2 .2 1 1"
+		current		"*cvar mn_tu7"
+		max			"*cvar mn_tumax7"
 	}
 
 	text infoscreen
 	{
-		pos		"5 722"
-		textid	TEXT_STANDARD
-		size	"275 50"
+		textid		TEXT_STANDARD
+		pos			"5 722"
+		size		"265 50"
 		lineheight	20
 		tabwidth	100
-		color	"0 1 0 1"
-		rows	"2"
+		color		"0 1 0 1"
+		rows		"2"
+	}
+
+	pic bt_primaryright
+	{
+		tooltip		"_Use Item"
+		image		althud/buttons_althud1g
+		pos			"870 497"
+		texl		"0 74"
+		texh		"25 107"
+		mousefx		true
+		click		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
+	}
+	pic bt_primaryleft
+	{
+		tooltip		"_Use Item"
+		image		althud/buttons_althud1g
+		pos			"870 497"
+		texl		"0 74"
+		texh		"25 107"
+		mousefx		true
+		click		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
 	}
 
 	// ==================
@@ -1126,26 +1156,5 @@ menu althud extends ahud
 		cmd "set hud_refresh 1;"
 		call show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
-	}
-
-	pic bt_primaryright
-	{
-		tooltip	"_Use Item"
-		image	althud/buttons_althud1g
-		pos		"870 497"
-		texl	"0 74"
-		texh	"25 107"
-		mousefx	true
-		click { cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
-	}
-	pic bt_primaryleft
-	{
-		tooltip	"_Use Item"
-		image	althud/buttons_althud1g
-		pos		"870 497"
-		texl	"0 74"
-		texh	"25 107"
-		mousefx	true
-		click { cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
 	}
 }
