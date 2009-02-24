@@ -29,8 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_team.h"
+#include "../cl_le.h"
 #include "../menu/m_popup.h"
 #include "../renderer/r_draw.h"
+#include "../../shared/parse.h"
+#include "../mxml/mxml_ufoai.h"
 #include "cl_campaign.h"
 #include "cl_mapfightequip.h"
 #include "cl_map.h"
@@ -39,8 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 #include "cp_time.h"
 #include "cp_missions.h"
-#include "../../shared/parse.h"
-#include "../mxml/mxml_ufoai.h"
 
 
 aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */

@@ -24,10 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "menu/m_popup.h"
-#include "menu/m_nodes.h"
+#include "cl_le.h"
 #include "cl_actor.h"
 #include "cl_hud.h"
+#include "menu/m_popup.h"
+#include "menu/m_nodes.h"
 #include "renderer/r_mesh_anim.h"
 
 /** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */

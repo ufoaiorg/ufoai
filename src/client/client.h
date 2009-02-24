@@ -259,7 +259,6 @@ void CL_Init(void);
 void CL_ClearState(void);
 
 /** @todo get rid of these */
-#include "cl_le.h"
 #include "cl_menu.h"
 
 #endif /* CLIENT_CLIENT_H */
