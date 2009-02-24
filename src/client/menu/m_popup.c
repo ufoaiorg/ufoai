@@ -27,7 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_popup.h"
 #include "node/m_node_abstractnode.h"
 
-#include "../campaign/cp_time.h"
+/** @todo This code should not know anything about the time in campaign mode
+ * maybe we need a wrapper for the campaign mode popups in the src/client/campaign domain.
+ * Something like CP_Popup which is stopping the time and then calls MN_Popup.
+ * The same is true for MN_PopupList (see cl_popup.c in src/client/campaign)s */
+#include "../campaign/cp_time.h" /**< CL_GameTimeStop */
 
 #define POPUPBUTTON_MENU_NAME "popup_button"
 #define POPUPBUTTON_NODE_NAME "popup_button_"
