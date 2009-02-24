@@ -4,7 +4,7 @@ SRCDIR=src
 GENERIC_FLAGS+=-Wall
 CPPFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS)
 CFLAGS+=-DHAVE_CONFIG_H $(GENERIC_FLAGS) -pipe -Winline -Wcast-qual -Wcast-align -std=c99\
-	-Wdeclaration-after-statement -Wmissing-prototypes -Wmissing-declarations
+	-Wdeclaration-after-statement -Wmissing-prototypes -Wmissing-declarations -Wunreachable-code
 #	-Wpointer-arith -Wcast-align -Wunsafe-loop-optimizations \
 #	-Wimplicit-int -Wpacked -Wparentheses \
 #	-Wunused -Wunused-function -Wunused-label -Wunused-value -Wunused-variable -Wvariadic-macros
