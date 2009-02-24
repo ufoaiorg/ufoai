@@ -207,7 +207,7 @@ menu aircraft_equip extends iaircraft
 	{
 		tooltip	"_Select this zone"
 		pos			"654 485"
-		image		menu/button_big_menu	blend true
+		image		menu/airequip_selected_element	blend true
 		texl		"0 83"
 		texh		"458 190"
 		invis		false
@@ -232,7 +232,7 @@ menu aircraft_equip extends iaircraft
 		tooltip	"_Select this zone"
 		mousefx	true
 		pos	"654 648"
-		image	menu/button_big_menu	blend true
+		image	menu/airequip_selected_element	blend true
 		texl	"0 0"
 		texh	"458 82"
 		click	{ call airequip_zone2 }
