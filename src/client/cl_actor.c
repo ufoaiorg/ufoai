@@ -707,8 +707,8 @@ void CL_UpdateReactionFiremodes (le_t * actor, const char hand, int firemodeActi
 	/* "ammo" is definitely set here - otherwise the check above
 	 * would have left this function already. */
 	assert(ammo);
-	if (!RS_IsResearched_ptr(ammo->weapons[weapFdsIdx]->tech)) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", ammo->weapons[weapFdsIdx]->id);
+	if (!GAME_ItemIsUseable(ammo->weapons[weapFdsIdx])) {
+		Com_DPrintf(DEBUG_CLIENT, "CL_UpdateReactionFiremodes: Weapon '%s' not useable in current gamemode, can't use for reaction fire.\n", ammo->weapons[weapFdsIdx]->id);
 		return;
 	}
 
@@ -1413,8 +1413,8 @@ void CL_ActorReload (int hand)
 	if (!weapon->reload)
 		return;
 
-	if (!RS_IsResearched_ptr(weapon->tech)) {
-		HUD_DisplayMessage(_("You cannot reload this unknown item.\nYou need to research it and its ammunition first.\n"), 2000);
+	if (!GAME_ItemIsUseable(weapon)) {
+		HUD_DisplayMessage(_("You cannot reload this unknown item.\n"), 2000);
 		return;
 	}
 
@@ -1426,7 +1426,7 @@ void CL_ActorReload (int hand)
 			 * we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)
-				 && RS_IsResearched_ptr(ic->item.t->tech)) {
+				 && GAME_ItemIsUseable(ic->item.t)) {
 					Com_GetFirstShapePosition(ic, &x, &y);
 					x += ic->x;
 					y += ic->y;

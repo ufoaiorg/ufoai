@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_actor.h"
 #include "cl_hud.h"
 #include "cl_menu.h"
+#include "cl_game.h"
 #include "menu/m_popup.h"
 #include "menu/m_nodes.h"
 #include "renderer/r_mesh_anim.h"
@@ -1422,9 +1423,7 @@ void HUD_ActorUpdateCvars (void)
 			time = actorMoveLength;
 		} else {
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
-			/* in multiplayer RS_ItemIsResearched always returns true,
-			 * so we are able to use the aliens weapons */
-			if (selWeapon && !RS_IsResearched_ptr(selWeapon->item.t->tech)) {
+			if (selWeapon && !GAME_ItemIsUseable(selWeapon->item.t)) {
 				HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {

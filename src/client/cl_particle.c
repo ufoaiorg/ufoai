@@ -121,6 +121,7 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 	0,
 	PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING
 };
+CASSERT(lengthof(pc_types) == PC_NUM_PTLCMDS);
 
 /** @brief particle script values */
 static const value_t pps[] = {

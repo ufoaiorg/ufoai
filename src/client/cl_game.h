@@ -43,6 +43,7 @@ void GAME_InitStartup(void);
 void GAME_SetMode(int gametype);
 void GAME_RestartMode(int gametype);
 void GAME_Init(qboolean load);
+qboolean GAME_ItemIsUseable(const objDef_t *od);
 void GAME_HandleResults(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 void GAME_SpawnSoldiers(void);
 int GAME_GetCurrentTeam(void);

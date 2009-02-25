@@ -424,6 +424,11 @@ const mapDef_t* GAME_CP_MapInfo (int step)
 	return &csi.mds[cls.currentSelectedMap];
 }
 
+qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
+{
+	return RS_IsResearched_ptr(od->tech);
+}
+
 int GAME_CP_GetTeam (void)
 {
 	assert(curCampaign);
