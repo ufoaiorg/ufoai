@@ -904,6 +904,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* basic 'physics' for particles */
 	if (p->physics) {
+		/** @todo don't do this every frame */
 		trace_t tr;
 		const int oldLevel = cl_worldlevel->integer;
 
