@@ -39,7 +39,7 @@ static cvar_t *cl_particleweather;
 static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
-#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*)pcmdData + x)
+#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*)x)
 #define RSTACK		-0xFFF0
 #define F(x)		(1<<x)
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
@@ -189,8 +189,9 @@ static int numPtlCmds;
 
 #define		MAX_PCMD_DATA	(MAX_PTLCMDS * 8)
 
+/** @todo check pcmdData overflow */
 static byte pcmdData[MAX_PCMD_DATA];
-static int pcmdPos;
+static byte *pcmdPos;
 
 #define		MAX_STACK_DEPTH	8
 #define		MAX_STACK_DATA	512
@@ -318,7 +319,7 @@ void PTL_InitStartup (void)
 	numPtlDefs = 0;
 
 	r_numParticlesArt = 0;
-	pcmdPos = 0;
+	pcmdPos = pcmdData;
 }
 
 
@@ -1190,8 +1191,10 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 
 				/* set the values */
 				pc->type = j;
-				pc->ref = pcmdPos;
-				pcmdPos += Com_EParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
+
+				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
+				pc->ref = (int)pcmdPos;
+				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
 
 /*				Com_Printf("%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref); */
 				break;
@@ -1213,8 +1216,10 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
-				pc->ref = pcmdPos;
-				pcmdPos += Com_EParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
+
+				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
+				pc->ref = (int) pcmdPos;
+				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
 
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_POP;
