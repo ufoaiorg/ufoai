@@ -54,13 +54,10 @@ static qboolean	downloading_pak = qfalse;
 
 static void StripHighBits (char *string)
 {
-	byte c;
-	char *p;
-
-	p = string;
+	char *p = string;
 
 	while (string[0]) {
-		c = *(string++);
+		const char c = *(string++);
 
 		if (c >= 32 && c <= 127)
 			*p++ = c;
@@ -69,7 +66,7 @@ static void StripHighBits (char *string)
 	p[0] = '\0';
 }
 
-static qboolean isvalidchar (int c)
+static inline qboolean isvalidchar (int c)
 {
 	if (!isalnum(c) && c != '_' && c != '-')
 		return qfalse;
@@ -189,7 +186,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	Com_sprintf(dl->URL, sizeof(dl->URL), "%s%s", cls.downloadServer, escapedFilePath);
 
 	curl_easy_setopt(dl->curl, CURLOPT_ENCODING, "");
-#if 0
+#ifdef PARANOID
 	curl_easy_setopt(dl->curl, CURLOPT_VERBOSE, 1);
 #endif
 	curl_easy_setopt(dl->curl, CURLOPT_NOPROGRESS, 0);
