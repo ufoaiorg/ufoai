@@ -488,13 +488,13 @@ void CheckEntities (void)
 		const entityKeyDef_t *kd;
 
 		if (!ed) { /* check that a definition exists */
-			Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s\n", name);
+			Check_Printf(VERB_CHECK, qfalse, i, -1, "Not defined in entities.ufo: %s\n", name);
 			continue;
 		}
 
 		/* check alignment of info_.+_start */
 		if (Check_IsInfoStart(name) && !Check_InfoStartAligned(ed, e))
-			Check_Printf(VERB_NORMAL, qfalse, i, -1, "Misaligned %s\n", name);
+			Check_Printf(VERB_CHECK, qfalse, i, -1, "Misaligned %s\n", name);
 
 		if (!strncmp("func_", name, 5)) /* func_* entities should have brushes */
 			Check_EntityWithBrushes(e, name, i);
@@ -504,18 +504,18 @@ void CheckEntities (void)
 			kd = ED_GetKeyDefEntity(ed, kvp->key, 0); /* zero means ignore abstract (radiant only) keys */
 
 			if (!kd) { /* make sure it has a definition */
-				Check_Printf(VERB_NORMAL, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
+				Check_Printf(VERB_CHECK, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
 				continue;
 			}
 
 			if (ED_CheckKey(kd, kvp->value) == ED_ERROR) { /* check values against type and range definitions in entities.ufo */
-				Check_Printf(VERB_NORMAL, qfalse, i, -1, "%s\n", ED_GetLastError());
+				Check_Printf(VERB_CHECK, qfalse, i, -1, "%s\n", ED_GetLastError());
 				continue;
 			}
 
 			if (!strcmp("target", kvp->key) || !strcmp("targetname", kvp->key)) {
 				if (!Check_TargetExists(kvp)) {
-					Check_Printf(VERB_NORMAL, qfalse, i, -1,
+					Check_Printf(VERB_CHECK, qfalse, i, -1,
 						"%s with %s of %s: no corresponding entity with %s with matching value\n",
 						ed->classname, kvp->key, kvp->value, !strcmp("target", kvp->key) ? "targetname" : "target");
 				}
@@ -529,12 +529,12 @@ void CheckEntities (void)
 				if (keyNameInEnt[0] == '\0') {
 					const char *defaultVal = kd->defaultVal;
 					const qboolean hasDefault = defaultVal ? qtrue : qfalse;
-					Check_Printf(VERB_NORMAL, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
+					Check_Printf(VERB_CHECK, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
 					if (defaultVal) {
-						Check_Printf(VERB_NORMAL, hasDefault, i, -1, ", supplying default: %s", defaultVal);
+						Check_Printf(VERB_CHECK, hasDefault, i, -1, ", supplying default: %s", defaultVal);
 						SetKeyValue(e, kd->name, defaultVal);
 					}
-					Check_Printf(VERB_NORMAL, hasDefault, i, -1, "\n");
+					Check_Printf(VERB_CHECK, hasDefault, i, -1, "\n");
 				}
 			}
 		}
@@ -1165,7 +1165,7 @@ static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
 		for (j = 0; j < w[i]->numpoints ; j++) {
 			if (Check_IsPointInsideBrush(w[i]->p[j], b[i ^ 1], PIB_INCL_SURF)) {
 				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
-					Check_Printf(VERB_NORMAL, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
+					Check_Printf(VERB_CHECK, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
 					return -1.0f;
 				}
 				VectorCopy(w[i]->p[j], vertbuf[numVert]);
@@ -1182,7 +1182,7 @@ static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
 			if (Check_EdgeEdgeIntersection(w[0]->p[i], w[0]->p[pointIndex], w[1]->p[k], w[1]->p[pointIndex2], vertbuf[numVert])) {
 				numVert++; /* if intersection, keep it */
 				if (numVert == VERT_BUF_SIZE_DISJOINT_SIDES) {
-					Check_Printf(VERB_NORMAL, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
+					Check_Printf(VERB_CHECK, qfalse, b[i]->entitynum, b[i]->brushnum, "warning: Check_SidesAreDisjoint buffer too small");
 					return -1.0f;
 				}
 			}
