@@ -1517,10 +1517,10 @@ void HUD_ActorUpdateCvars (void)
 
 			cl.oldstate = selActor->state;
 			/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
-			if (actorMoveLength < ROUTING_NOT_REACHABLE && (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
-				HUD_RefreshWeaponButtons(time);
-			else
-				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
+			if (actorMoveLength >= ROUTING_NOT_REACHABLE || (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE))
+				time = CL_UsableTUs(selActor);
+
+			HUD_RefreshWeaponButtons(time);
 		} else {
 			if (refresh)
 				MN_ExecuteConfunc("deselstand");
@@ -1581,8 +1581,7 @@ void CL_ActorToggleCrouchReservation_f (void)
 	selChr = CL_GetActorChr(selActor);
 	assert(selChr);
 
-	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH
-	 || selChr->reservedTus.reserveCrouch) {
+	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH || selChr->reservedTus.reserveCrouch) {
 		/* Reset reserved TUs to 0 */
 		CL_ReserveTUs(selActor, RES_CROUCH, 0);
 		selChr->reservedTus.reserveCrouch = qfalse;
@@ -1730,7 +1729,7 @@ static void CL_ReloadLeft_f (void)
 static void CL_ReloadRight_f (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_RELOAD))
-		 return;
+		return;
 	CL_ActorReload(csi.idRight);
 }
 
