@@ -39,7 +39,7 @@ static cvar_t *cl_particleweather;
 static mapParticle_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
-#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*)x)
+#define RADR(x)		((x < 0) ? (byte*)p - x : (byte*) pcmdData + x)
 #define RSTACK		-0xFFF0
 #define F(x)		(1<<x)
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
@@ -1193,7 +1193,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				pc->type = j;
 
 				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
-				pc->ref = (int)pcmdPos;
+				pc->ref = (int) (pcmdPos - pcmdData);
 				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
 
 /*				Com_Printf("%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref); */
@@ -1218,7 +1218,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				pc->type = pp->type;
 
 				pcmdPos = Com_AlignPtr(pcmdPos, pc->type);
-				pc->ref = (int) pcmdPos;
+				pc->ref = (int) (pcmdPos - pcmdData);
 				pcmdPos += Com_EParseValue(pcmdPos, token, pc->type, 0, 0);
 
 				pc = &ptlCmd[numPtlCmds++];
