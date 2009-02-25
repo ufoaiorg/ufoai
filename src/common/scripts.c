@@ -192,7 +192,8 @@ const char* Com_GetError ()
 }
 
 /**
- * @brief Align a memory to use a natural adress for the next type
+ * @brief Align a memory to use a natural adress for the data type we will write
+ * @note it speed up data read, and fix crash on PPC processors
  */
 void* Com_AlignPtr (void *memory, valueTypes_t type)
 {
