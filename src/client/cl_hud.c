@@ -47,6 +47,7 @@ static reactionmode_t selActorOldReactionState = R_FIRE_OFF;
 static le_t *lastHUDActor; /**< keeps track of selActor */
 static int lastMoveLength; /**< keeps track of actorMoveLength */
 static int lastTU; /**< keeps track of selActor->TU */
+static cvar_t *cl_hud_message_timeout;
 int selToHit;
 
 enum {
@@ -116,11 +117,12 @@ static qboolean popupReload = qfalse;
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
  */
-void HUD_DisplayMessage (const char *text, int time)
+void HUD_DisplayMessage (const char *text)
 {
-	cl.msgTime = cl.time + time;
+	cl.msgTime = cl.time + cl_hud_message_timeout->integer;
 	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
 }
+
 static void HUD_RefreshWeaponButtons(int time);
 /**
  * @brief Updates the global character cvars for battlescape.
@@ -796,7 +798,7 @@ static qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 	/* No item in hand. */
 	/** @todo Ignore this condition when ammo in hand. */
 	if (!weapon || !weapon->item.t) {
-		HUD_DisplayMessage(_("No item in hand.\n"), 2000);
+		HUD_DisplayMessage(_("No item in hand.\n"));
 		return qfalse;
 	}
 
@@ -809,12 +811,12 @@ static qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 
 		/* Cannot shoot because of lack of ammo. */
 		if (weapon->item.a <= 0 && weapon->item.t->reload) {
-			HUD_DisplayMessage(_("Can't perform action:\nout of ammo.\n"), 2000);
+			HUD_DisplayMessage(_("Can't perform action:\nout of ammo.\n"));
 			return qfalse;
 		}
 		/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
 		if (weapon->item.t->fireTwoHanded && LEFT(selActor)) {
-			HUD_DisplayMessage(_("This weapon cannot be fired\none handed.\n"), 2000);
+			HUD_DisplayMessage(_("This weapon cannot be fired\none handed.\n"));
 			return qfalse;
 		}
 		break;
@@ -823,17 +825,17 @@ static qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 
 		/* Cannot reload because this item is not reloadable. */
 		if (!weapon->item.t->reload) {
-			HUD_DisplayMessage(_("Can't perform action:\nthis item is not reloadable.\n"), 2000);
+			HUD_DisplayMessage(_("Can't perform action:\nthis item is not reloadable.\n"));
 			return qfalse;
 		}
 		/* Cannot reload because of no ammo in inventory. */
 		if (CL_CalcReloadTime(weapon->item.t) >= 999) {
-			HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"), 2000);
+			HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"));
 			return qfalse;
 		}
 		/* Cannot reload because of not enough TUs. */
 		if (time < CL_CalcReloadTime(weapon->item.t)) {
-			HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
+			HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
 			return qfalse;
 		}
 		break;
@@ -905,7 +907,7 @@ static void HUD_FireWeapon_f (void)
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
 		 * case should be checked previously in this function. */
-		HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
+		HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
 		Com_DPrintf(DEBUG_CLIENT, "HUD_FireWeapon_f: Firemode not available (%c, %s).\n",
 			hand, ammo->fd[weapFdsIdx][firemode].name);
 	}
@@ -1424,7 +1426,7 @@ void HUD_ActorUpdateCvars (void)
 		} else {
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			if (selWeapon && !GAME_ItemIsUseable(selWeapon->item.t)) {
-				HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
+				HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
 				Com_sprintf(infoText, lengthof(infoText),
@@ -1746,4 +1748,6 @@ void HUD_InitStartup (void)
 	Cmd_AddCommand("list_firemodes", HUD_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("fireweap", HUD_FireWeapon_f, "Start aiming the weapon.");
+
+	cl_hud_message_timeout = Cvar_Get("cl_hud_message_timeout", "2000", CVAR_ARCHIVE, "Timeout for HUD messages (milliseconds)");
 }

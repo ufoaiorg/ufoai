@@ -1157,7 +1157,7 @@ int CL_CheckAction (void)
 	}
 */
 	if (cls.team != cl.actTeam) {
-		HUD_DisplayMessage(_("This isn't your round\n"), 2000);
+		HUD_DisplayMessage(_("This isn't your round\n"));
 		return qfalse;
 	}
 
@@ -1414,7 +1414,7 @@ void CL_ActorReload (int hand)
 		return;
 
 	if (!GAME_ItemIsUseable(weapon)) {
-		HUD_DisplayMessage(_("You cannot reload this unknown item.\n"), 2000);
+		HUD_DisplayMessage(_("You cannot reload this unknown item.\n"));
 		return;
 	}
 
@@ -2082,54 +2082,54 @@ void CL_ActorDie (struct dbuffer *msg)
 		if (chr && LE_IsStunned(le)) {
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was stunned\n"),
 			chr->score.rank >= 0 ? _(gd.ranks[chr->score.rank].shortname) : "", chr->name);
-			HUD_DisplayMessage(tmpbuf, 2000);
+			HUD_DisplayMessage(tmpbuf);
 		} else if (chr) {
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was killed\n"),
 			chr->score.rank >= 0 ? _(gd.ranks[chr->score.rank].shortname) : "", chr->name);
-			HUD_DisplayMessage(tmpbuf, 2000);
+			HUD_DisplayMessage(tmpbuf);
 		}
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
 			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("A civilian was stunned.\n"), 2000);
+				HUD_DisplayMessage(_("A civilian was stunned.\n"));
 			else
-				HUD_DisplayMessage(_("A civilian was killed.\n"), 2000);
+				HUD_DisplayMessage(_("A civilian was killed.\n"));
 			break;
 		case (TEAM_ALIEN):
 			if (le->teamDef) {
 				if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
 					if (LE_IsStunned(le)) {
 						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
-						HUD_DisplayMessage(tmpbuf, 2000);
+						HUD_DisplayMessage(tmpbuf);
 					} else {
 						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was killed: %s\n"), _(le->teamDef->name));
-						HUD_DisplayMessage(tmpbuf, 2000);
+						HUD_DisplayMessage(tmpbuf);
 					}
 				} else {
 					if (LE_IsStunned(le))
-						HUD_DisplayMessage(_("An alien was stunned.\n"), 2000);
+						HUD_DisplayMessage(_("An alien was stunned.\n"));
 					else
-						HUD_DisplayMessage(_("An alien was killed.\n"), 2000);
+						HUD_DisplayMessage(_("An alien was killed.\n"));
 				}
 			} else {
 				if (LE_IsStunned(le))
-					HUD_DisplayMessage(_("An alien was stunned.\n"), 2000);
+					HUD_DisplayMessage(_("An alien was stunned.\n"));
 				else
-					HUD_DisplayMessage(_("An alien was killed.\n"), 2000);
+					HUD_DisplayMessage(_("An alien was killed.\n"));
 			}
 			break;
 		case (TEAM_PHALANX):
 			if (LE_IsStunned(le))
-				HUD_DisplayMessage(_("A soldier was stunned.\n"), 2000);
+				HUD_DisplayMessage(_("A soldier was stunned.\n"));
 			else
-				HUD_DisplayMessage(_("A soldier was killed.\n"), 2000);
+				HUD_DisplayMessage(_("A soldier was killed.\n"));
 			break;
 		default:
 			if (LE_IsStunned(le))
-				HUD_DisplayMessage(va(_("A member of team %i was stunned.\n"), le->team), 2000);
+				HUD_DisplayMessage(va(_("A member of team %i was stunned.\n"), le->team));
 			else
-				HUD_DisplayMessage(va(_("A member of team %i was killed.\n"), le->team), 2000);
+				HUD_DisplayMessage(va(_("A member of team %i was killed.\n"), le->team));
 			break;
 		}
 	}
@@ -2313,7 +2313,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
 		MN_ExecuteConfunc("startround");
-		HUD_DisplayMessage(_("Your round started!\n"), 2000);
+		HUD_DisplayMessage(_("Your round started!\n"));
 		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalcForCurrentSelectedActor();
 
