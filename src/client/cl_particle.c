@@ -74,6 +74,7 @@ static const size_t pf_values[PF_NUM_PTLFUNCS] = {
 	offsetof(ptlDef_t, round),
 	offsetof(ptlDef_t, physics)
 };
+CASSERT(lengthof(pf_values) == PF_NUM_PTLFUNCS);
 
 /** @brief particle commands - see pc_strings */
 typedef enum pc_s {
@@ -106,6 +107,7 @@ static const char *pc_strings[PC_NUM_PTLCMDS] = {
 	"kill",
 	"spawn", "nspawn", "child"
 };
+CASSERT(lengthof(pc_strings) == PC_NUM_PTLCMDS);
 
 /** @brief particle commands parameter and types */
 static const int pc_types[PC_NUM_PTLCMDS] = {
