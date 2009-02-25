@@ -49,10 +49,9 @@ winding_t *AllocWinding (int points)
 	}
 	s = sizeof(vec3_t) * points + sizeof(int);
 	w = malloc(s);
-	if (!w) {
+	if (!w)
 		Sys_Error("could not allocate winding of size: "UFO_SIZE_T"\n", s);
-		return NULL;
-	}
+
 	memset(w, 0, s);
 	return w;
 }

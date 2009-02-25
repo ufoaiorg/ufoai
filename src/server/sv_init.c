@@ -799,7 +799,6 @@ static qboolean SV_AddMissingTiles (void)
 			}
 		}
 	}
-	return qfalse;
 }
 
 /**
