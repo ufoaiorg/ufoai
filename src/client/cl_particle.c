@@ -252,6 +252,7 @@ static inline void CL_ParticleLoadArt (ptlArt_t *a, byte type)
 		}
 		break;
 	case ART_MODEL:
+		/** @todo Support the frame data from ptlArt_t for models, too */
 		a->art.model = (char *) R_RegisterModelShort(a->name);
 		break;
 	default:
@@ -741,12 +742,12 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 
 	/* read data */
 	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &levelflags, &autohide, &origin, &particle);
-	Com_Printf("Spawn particle '%s'\n", particle);
+	Com_DPrintf(DEBUG_CLIENT, "Spawn particle '%s'\n", particle);
 
 	if (Q_strcmp(particle, "null")) {
 		le = LE_Add(0);
 		if (!le) {
-			Com_Printf("CL_ParticleSpawnFromSizeBuf: Could not add le\n");
+			Com_DPrintf(DEBUG_CLIENT, "CL_ParticleSpawnFromSizeBuf: Could not add le\n");
 			return;
 		}
 		le->type = ET_PARTICLE;
@@ -1005,7 +1006,7 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 					break;
 				}
 				if (!Q_strcmp(pp->string, "model")) {
-					ptl->model = CL_ParticleGetArt(token, 0, ART_MODEL);
+					ptl->model = CL_ParticleGetArt(token, ptl->frame, ART_MODEL);
 					break;
 				}
 
