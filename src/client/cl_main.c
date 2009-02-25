@@ -722,7 +722,7 @@ static void CL_CheckCvars_f (void)
 			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
 		if (checkcvar[i].var->string[0] == '\0') {
 			Com_Printf("%s has no value\n", checkcvar[i].var->name);
-			Cbuf_AddText("mn_push checkcvars;");
+			MN_PushMenu("checkcvars", NULL);
 			break;
 		}
 		i++;
