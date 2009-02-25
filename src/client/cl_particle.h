@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief map particles */
 typedef struct mp_s {
-	char ptl[MAX_QPATH];
+	char ptl[MAX_VAR];
 	const char *info;
 	vec3_t origin;
 	vec2_t wait;

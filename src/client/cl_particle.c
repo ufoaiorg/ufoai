@@ -220,7 +220,7 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 	}
 	numMPs++;
 
-	Q_strncpyz(mp->ptl, ptl, MAX_QPATH);
+	Q_strncpyz(mp->ptl, ptl, sizeof(mp->ptl));
 	VectorCopy(origin, mp->origin);
 	mp->info = info;
 	mp->levelflags = levelflags;
@@ -968,7 +968,7 @@ void CL_ParticleRun (void)
  */
 static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterwards)
 {
-	char keyname[MAX_QPATH];
+	char keyname[MAX_VAR];
 	const char *token;
 	char *key;
 	const value_t *pp;
@@ -982,7 +982,7 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 		if (!es)
 			Com_Error(ERR_DROP, "ED_ParseEntity: EOF without closing brace");
 
-		Q_strncpyz(keyname, token, MAX_QPATH);
+		Q_strncpyz(keyname, token, sizeof(keyname));
 
 		/* parse value */
 		token = COM_Parse(&es);
@@ -998,13 +998,13 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 			continue;
 
 		for (pp = pps; pp->string; pp++)
-			if (!Q_strncmp(key, pp->string, MAX_QPATH - 1)) {
+			if (!Q_strcmp(key, pp->string)) {
 				/* register art */
-				if (!Q_strncmp(pp->string, "image", 5)) {
+				if (!Q_strcmp(pp->string, "image")) {
 					ptl->pic = CL_ParticleGetArt(token, ptl->frame, ART_PIC);
 					break;
 				}
-				if (!Q_strncmp(pp->string, "model", 5)) {
+				if (!Q_strcmp(pp->string, "model")) {
 					ptl->model = CL_ParticleGetArt(token, 0, ART_MODEL);
 					break;
 				}
