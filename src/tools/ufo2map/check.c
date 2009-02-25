@@ -2005,6 +2005,8 @@ void CheckTexturesBasedOnFlags (void)
 			}
 			if (tex->surfaceFlags & SURF_NODRAW && Q_strcmp(tex->name, "tex_common/nodraw")) {
 				Check_Printf(VERB_CHECK, qtrue, brush->entitynum, brush->brushnum, "set nodraw texture for SURF_NODRAW\n");
+				tex->surfaceFlags &= ~SURF_PHONG;
+				side->surfaceFlags &= ~SURF_PHONG;
 				Q_strncpyz(tex->name, "tex_common/nodraw", sizeof(tex->name));
 			}
 			if (tex->surfaceFlags & SURF_HINT && Q_strcmp(tex->name, "tex_common/hint")) {
