@@ -67,11 +67,9 @@ void CL_CompleteRecalcRouting (void)
 	LE_GenerateInlineModelList();
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		/**
-		 * We ALWAYS check against a model, even if it isn't in use.
+		/* We ALWAYS check against a model, even if it isn't in use.
 		 * An unused model is NOT included in the inline list, so it doesn't get
-		 * traced against.
-		 */
+		 * traced against. */
 		if (le->model1 && le->inlineModelName[0] == '*')
 			Grid_RecalcRouting(clMap, le->inlineModelName, leInlineModelList);
 }
@@ -82,11 +80,9 @@ void CL_CompleteRecalcRouting (void)
 void CL_RecalcRouting (const le_t* le)
 {
 	LE_GenerateInlineModelList();
-	/**
-	 * We ALWAYS check against a model, even if it isn't in use.
+	/* We ALWAYS check against a model, even if it isn't in use.
 	 * An unused model is NOT included in the inline list, so it doesn't get
-	 * traced against.
-	 */
+	 * traced against. */
 	if (le->model1 && le->inlineModelName[0] == '*')
 		Grid_RecalcRouting(clMap, le->inlineModelName, leInlineModelList);
 
@@ -294,7 +290,7 @@ localModel_t *LM_AddModel (const char *model, const char *particle, const vec3_t
 	lm = &LMs[numLMs++];
 
 	if (numLMs >= MAX_LOCALMODELS)
-		Sys_Error("Too many local models\n");
+		Com_Error(ERR_DROP, "Too many local models\n");
 
 	memset(lm, 0, sizeof(*lm));
 	Q_strncpyz(lm->name, model, sizeof(lm->name));
@@ -405,14 +401,14 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 			type = "item";
 		else {
 			/* left hand grenades look OK with default anim; others don't */
-			if (Q_strncmp(csi.ods[left].type, "grenade", 7))
+			if (Q_strcmp(csi.ods[left].type, "grenade"))
 				akimbo = qtrue;
 			type = csi.ods[left].type;
 		}
 	} else {
 		animationIndex = csi.ods[right].animationIndex;
 		type = csi.ods[right].type;
-		if (left != NONE && !Q_strncmp(csi.ods[right].type, "pistol", 6) && !Q_strncmp(csi.ods[left].type, "pistol", 6))
+		if (left != NONE && !Q_strcmp(csi.ods[right].type, "pistol") && !Q_strcmp(csi.ods[left].type, "pistol"))
 			akimbo = qtrue;
 	}
 
@@ -861,15 +857,13 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 	le->state = normal;
 	le->fd = fd;
 
+	/* infinite speed projectile? */
 	if (!fd->speed) {
-		/* infinite speed projectile */
-		ptl_t *ptl;
-
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
 		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
-			ptl = NULL;
+			ptl_t *ptl = NULL;
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					sfx_t *sfx = S_RegisterSound(fd->hitBodySound);
@@ -993,8 +987,8 @@ void LET_BrushModel (le_t *le)
 	}
 
 	if (le->type == ET_ROTATING) {
-		float angle = le->angles[le->dir] + (1.0 / le->rotationSpeed);
-		le->angles[le->dir] = (angle >= 360 ? angle - 360 : angle);
+		const float angle = le->angles[le->dir] + (1.0 / le->rotationSpeed);
+		le->angles[le->dir] = (angle >= 360.0 ? angle - 360.0 : angle);
 	}
 }
 
@@ -1017,7 +1011,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, float volume, i
 		return;
 	}
 	le->type = ET_SOUND;
-	/** @todo What if we call a snd_restart during this is played? */
+	/** @todo What if we call a snd_restart while this is played? */
 	le->sfx = sfx;
 	le->sfx->channel = -1;
 	le->sfx->volume = -1; /* at least one volume change */
