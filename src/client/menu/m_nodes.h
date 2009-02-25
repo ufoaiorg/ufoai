@@ -75,22 +75,20 @@ typedef struct menuNode_s {
 	vec2_t size;
 
 	/* common attributes */
-	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
-	qboolean state;				/**< is node hovered */
 	byte textalign;
 	qboolean invis;				/**< true if the node is invisible */
 	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */
 	qboolean disabled;			/**< true if the node is inactive */
 	qboolean invalidated;		/**< true if we need to update the layout */
 	qboolean ghost;				/**< true if the node is not tangible */
-	int mousefx;
 	char* text;
 	const char* font;			/**< Font to draw text */
 	const char* tooltip;		/**< holds the tooltip */
 	const char *key;			/**< key bindings - used as tooltip */
 	struct menuIcon_s *icon;	/**< Link to an icon */
 
+	/** @todo use a linked list of excluderect? */
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
 	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
 
@@ -99,11 +97,17 @@ typedef struct menuNode_s {
 	/** @todo needs cleanup */
 	void* image;
 	void* cvar;
+	qboolean state;				/**< is node hovered */
+	int mousefx;
+	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
+	vec4_t bgcolor;				/**< rgba */
+	vec4_t bordercolor;			/**< rgba - see border and padding */
+	int timeOut;				/**< ms value until invis is set (see cl.time) */
+	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
+	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
 
 	/* common color */
 	vec4_t color;				/**< rgba */
-	vec4_t bgcolor;				/**< rgba */
-	vec4_t bordercolor;			/**< rgba - see border and padding */
 	vec4_t selectedColor;		/**< rgba The color to draw the line specified by textLineSelected in. */
 
 	/* common events */
@@ -116,11 +120,6 @@ typedef struct menuNode_s {
 	struct menuAction_s *onWheelUp;
 	struct menuAction_s *onWheelDown;
 	struct menuAction_s *onChange;	/**< called when the widget change from an user action */
-
-	/** @todo needs cleanup */
-	int timeOut;				/**< ms value until invis is set (see cl.time) */
-	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
-	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
 
 	/* temporary, and/or for testing */
 	float extraData1;			/**< allow behaviour to use it, how it need (before creating a real extradata structure) */
