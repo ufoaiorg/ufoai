@@ -153,7 +153,7 @@ static void GAME_MP_ChangeGametype_f (void)
 	} else {
 		for (i = 0; i < numGTs; i++) {
 			const gametype_t *gt = &gts[i];
-			if (!Q_strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
+			if (!Q_strcmp(gt->id, sv_gametype->string)) {
 				if (next) {
 					newType = (i + 1);
 					if (newType >= numGTs)

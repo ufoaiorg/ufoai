@@ -225,7 +225,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
 	int i;
 
 	for (i = 0, s2d = seq2Ds; i < numSeq2Ds; i++, s2d++)
-		if (s2d->inuse && !Q_strncmp(s2d->name, name, MAX_VAR))
+		if (s2d->inuse && !Q_strcmp(s2d->name, name))
 			break;
 	if (i < numSeq2Ds)
 		return s2d;
@@ -389,7 +389,7 @@ static void CL_SequenceStart_f (void)
 
 	/* find sequence */
 	for (i = 0, sp = sequences; i < numSequences; i++, sp++)
-		if (!Q_strncmp(name, sp->name, MAX_VAR))
+		if (!Q_strcmp(name, sp->name))
 			break;
 	if (i >= numSequences) {
 		Com_Printf("Couldn't find sequence '%s'\n", name);
@@ -518,13 +518,13 @@ int SEQ_Wait (const char *name, char *data)
  */
 int SEQ_Precache (const char *name, char *data)
 {
-	if (!Q_strncmp(name, "models", 6)) {
+	if (!Q_strcmp(name, "models")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching model: %s\n", data);
 			R_RegisterModelShort(data);
 			data += strlen(data) + 1;
 		}
-	} else if (!Q_strncmp(name, "pics", 4)) {
+	} else if (!Q_strcmp(name, "pics")) {
 		while (*data) {
 			Com_DPrintf(DEBUG_CLIENT, "Precaching image: %s\n", data);
 			R_RegisterPic(data);
@@ -597,11 +597,11 @@ int SEQ_Model (const char *name, char *data)
 				break;
 			}
 		if (!vp->string) {
-			if (!Q_strncmp(data, "model", 5)) {
+			if (!Q_strcmp(data, "model")) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Registering model: %s\n", data);
 				se->model = R_RegisterModelShort(data);
-			} else if (!Q_strncmp(data, "anim", 4)) {
+			} else if (!Q_strcmp(data, "anim")) {
 				data += strlen(data) + 1;
 				Com_DPrintf(DEBUG_CLIENT, "Change anim to: %s\n", data);
 				R_AnimChange(&se->as, se->model, data);
@@ -730,7 +730,7 @@ void CL_ParseSequence (const char *name, const char **text)
 
 	/* search for sequences with same name */
 	for (i = 0; i < numSequences; i++)
-		if (!Q_strncmp(name, sequences[i].name, MAX_VAR))
+		if (!Q_strcmp(name, sequences[i].name))
 			break;
 
 	if (i < numSequences) {

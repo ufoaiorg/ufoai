@@ -165,7 +165,7 @@ static void GAME_CP_GetCampaigns_f (void)
 
 	/* select main as default */
 	for (i = 0; i < numCampaigns; i++)
-		if (!Q_strncmp("main", campaigns[i].id, MAX_VAR)) {
+		if (!Q_strcmp(campaigns[i].id, "main")) {
 			Cmd_ExecuteString(va("campaignlist_click %i", i));
 			return;
 		}

@@ -679,27 +679,27 @@ void CL_InitAfter (void)
  */
 void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
-	if (!Q_strncmp(type, "font", 4))
+	if (!Q_strcmp(type, "font"))
 		MN_ParseFont(name, text);
-	else if (!Q_strncmp(type, "tutorial", 8))
+	else if (!Q_strcmp(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
-	else if (!Q_strncmp(type, "menu_model", 10))
+	else if (!Q_strcmp(type, "menu_model"))
 		MN_ParseMenuModel(name, text);
-	else if (!Q_strncmp(type, "menu", 4))
+	else if (!Q_strcmp(type, "menu"))
 		MN_ParseMenu(name, text);
-	else if (!Q_strncmp(type, "icon", 4))
+	else if (!Q_strcmp(type, "icon"))
 		MN_ParseIcon(name, text);
-	else if (!Q_strncmp(type, "particle", 8))
+	else if (!Q_strcmp(type, "particle"))
 		CL_ParseParticle(name, text);
-	else if (!Q_strncmp(type, "sequence", 8))
+	else if (!Q_strcmp(type, "sequence"))
 		CL_ParseSequence(name, text);
-	else if (!Q_strncmp(type, "campaign", 8))
+	else if (!Q_strcmp(type, "campaign"))
 		CL_ParseCampaign(name, text);
-	else if (!Q_strncmp(type, "music", 5))
+	else if (!Q_strcmp(type, "music"))
 		CL_ParseMusic(name, text);
-	else if (!Q_strncmp(type, "tips", 4))
+	else if (!Q_strcmp(type, "tips"))
 		CL_ParseTipsOfTheDay(name, text);
-	else if (!Q_strncmp(type, "language", 8))
+	else if (!Q_strcmp(type, "language"))
 		CL_ParseLanguages(name, text);
 }
 
