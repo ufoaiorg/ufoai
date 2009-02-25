@@ -287,7 +287,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 
 	/* search for the pic in the list */
 	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
-		if (a->type == type && !Q_strncmp(name, a->name, MAX_VAR) && a->frame == frame)
+		if (a->type == type && a->frame == frame && !Q_strcmp(name, a->name))
 			break;
 
 	if (i < r_numParticlesArt)
@@ -636,7 +636,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* find the particle definition */
 	for (i = 0; i < numPtlDefs; i++)
-		if (!Q_strncmp(name, ptlDef[i].name, MAX_VAR))
+		if (!Q_strcmp(name, ptlDef[i].name))
 			break;
 
 	if (i == numPtlDefs) {
@@ -1254,7 +1254,7 @@ int CL_ParseParticle (const char *name, const char **text)
 
 	/* search for particles with same name */
 	for (i = 0; i < numPtlDefs; i++)
-		if (!Q_strncmp(name, ptlDef[i].name, MAX_VAR))
+		if (!Q_strcmp(name, ptlDef[i].name))
 			break;
 
 	if (i < numPtlDefs) {
