@@ -94,11 +94,8 @@ static void MN_InitKeyList_f (void)
 
 /**
  * @brief Initialize the menu data hunk, add cvars and commands
- * @note Also calls the 'reset' functions for production, basemanagement,
- * aliencontainmenu, employee, hospital and a lot more subfunctions
  * @note This function is called once
  * @sa MN_Shutdown
- * @sa B_InitStartup
  * @sa CL_InitLocal
  */
 void MN_InitStartup (void)
