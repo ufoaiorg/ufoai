@@ -1,6 +1,7 @@
 /**
  * @file m_node_base.c
  * @todo use MN_GetNodeAbsPos instead of menu->pos
+ * @todo We can remove baseCurrent if we use and update baseid
  */
 
 /*
@@ -39,11 +40,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Called after the end of the node load from script (all data and/or child are set)
  */
-static void MN_BaseLayoutNodeLoaded (menuNode_t * node)
+static void MN_AbstractBaseNodeLoaded (menuNode_t * node)
 {
-	/* if it exists a better size that the size requested on the .ufo
-	 * (for example: rounding error) we can force a better size here
-	 */
+	const int id = node->u.base.baseid;
+	if (id < 0 || id >= MAX_BASES) {
+		Com_Printf("MN_AbstractBaseNodeLoaded: Invalid baseid given %i", id);
+	}
 }
 
 /**
@@ -58,7 +60,7 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 	vec2_t nodepos;
 	int totalMarge;
 
-	if (node->baseid >= MAX_BASES || node->baseid < 0)
+	if (node->u.base.baseid >= MAX_BASES || node->u.base.baseid < 0)
 		return;
 
 	totalMarge = node->padding * (BASE_SIZE + 1);
@@ -67,7 +69,7 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	base = B_GetBaseByIDX(node->baseid);
+	base = B_GetBaseByIDX(node->u.base.baseid);
 
 	y = nodepos[1] + node->padding;
 	for (row = 0; row < BASE_SIZE; row++) {
@@ -308,9 +310,23 @@ static void MN_BaseLayoutNodeLoading (menuNode_t *node)
 	Vector4Set(node->color, 1, 1, 1, 1);
 }
 
+static const value_t properties[] = {
+	{"baseid", V_INT, offsetof(menuNode_t, u.base.baseid), MEMBER_SIZEOF(menuNode_t, u.base.baseid)},
+	{NULL, V_NULL, 0, 0}
+};
+
+void MN_RegisterAbstractBaseNode (nodeBehaviour_t *behaviour)
+{
+	behaviour->name = "abstractbase";
+	behaviour->isAbstract = qtrue;
+	behaviour->properties = properties;
+	behaviour->loaded = MN_AbstractBaseNodeLoaded;
+}
+
 void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
+	behaviour->extends = "abstractbase";
 	behaviour->draw = MN_BaseMapDraw;
 	behaviour->leftClick = MN_BaseMapClick;
 	behaviour->rightClick = MN_BaseMapRightClick;
@@ -319,7 +335,7 @@ void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "baselayout";
+	behaviour->extends = "abstractbase";
 	behaviour->draw = MN_BaseLayoutNodeDraw;
-	behaviour->loaded = MN_BaseLayoutNodeLoaded;
 	behaviour->loading = MN_BaseLayoutNodeLoading;
 }

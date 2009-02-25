@@ -70,6 +70,7 @@ typedef void (*registerFunction_t)(nodeBehaviour_t *node);
  */
 const static registerFunction_t registerFunctions[] = {
 	MN_RegisterNullNode,
+	MN_RegisterAbstractBaseNode,
 	MN_RegisterAbstractNode,
 	MN_RegisterAbstractOptionNode,
 	MN_RegisterAbstractScrollbarNode,

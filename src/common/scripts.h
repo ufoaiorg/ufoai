@@ -79,8 +79,7 @@ typedef enum {
 	V_RELABS,				/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_CLIENT_HUNK,			/**< only for client side data - not handled in Com_EParseValue */
 	V_CLIENT_HUNK_STRING,	/**< same as for V_CLIENT_HUNK */
-	V_BASEID = 25,
-	V_LONGLINES,
+	V_LONGLINES = 25,
 	V_TEAM,					/**< team string to int mapper */
 	V_RACE,
 

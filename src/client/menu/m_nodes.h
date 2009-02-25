@@ -37,6 +37,7 @@ struct value_s;
 #include "node/m_node_abstractoption.h"
 #include "node/m_node_abstractscrollbar.h"
 #include "node/m_node_abstractvalue.h"
+#include "node/m_node_base.h"
 #include "node/m_node_container.h"
 #include "node/m_node_linechart.h"
 #include "node/m_node_model.h"
@@ -137,13 +138,11 @@ typedef struct menuNode_s {
 	qboolean repeat;			/**< repeat action when "click" is holded */
 	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
 
-	/* BaseLayout */
-	int baseid;					/**< the baseid - e.g. for baselayout nodes */
-
 	/** union will contain all extradata for a node */
 	union {
 		abstractValueExtraData_t abstractvalue;
 		abstractScrollbarExtraData_t abstractscrollbar;
+		baseExtraData_t base;
 		containerExtraData_t container;
 		lineChartExtraData_t linechart;
 		modelExtraData_t model;

@@ -80,8 +80,7 @@ const char *const vt_names[] = {
 	"relabs",
 	"client_hunk",
 	"client_hunk_string",
-	"baseid",	/* 25 */
-	"longlines",
+	"longlines",	/* 25 */
 	"team",
 	"race"
 };
@@ -139,7 +138,6 @@ static const size_t vt_sizes[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	0,	/* V_CLIENT_HUNK_STRING */
-	sizeof(int),	/* V_BASEID */
 	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int)		/* V_RACE */
@@ -173,7 +171,6 @@ static const size_t vt_aligns[] = {
 	sizeof(float),	/* V_RELABS */
 	0,	/* V_CLIENT_HUNK */
 	sizeof(char),	/* V_CLIENT_HUNK_STRING */
-	sizeof(int),	/* V_BASEID */
 	sizeof(byte), 	/* V_LONGLINES */
 	sizeof(int),		/* V_TEAM */
 	sizeof(int)		/* V_RACE */
@@ -253,15 +250,6 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_CHAR:
 		*(char *) b = *token;
 		*writedByte = ALIGN(sizeof(char));
-		break;
-
-	case V_BASEID:
-		*(int *) b = atoi(token);
-		if (*(int *) b < 0 || *(int *) b >= MAX_BASES) {
-			snprintf(errorMessage, sizeof(errorMessage), "Invalid baseid given %i", *(int *) b);
-			return RESULT_ERROR;
-		}
-		*writedByte = ALIGN(sizeof(int));
 		break;
 
 	case V_TEAM:
@@ -631,7 +619,6 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
 		return ALIGN(sizeof(int));
 
-	case V_BASEID:
 	case V_INT:
 		*(int *) b = *(const int *) set;
 		return ALIGN(sizeof(int));
@@ -778,7 +765,6 @@ const char *Com_ValueToStr (const void *base, const valueTypes_t type, const int
 			Sys_Error("Unknown race type: '%i'", *(const int *) b);
 		}
 
-	case V_BASEID:
 	case V_INT:
 		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(const int *) b);
 		return valuestr;

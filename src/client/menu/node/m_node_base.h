@@ -25,9 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_BASE_H
 #define CLIENT_MENU_M_NODE_BASE_H
 
-#include "../m_nodes.h"
+typedef struct baseExtraData_s {
+	int baseid;		/**< the baseid */
+} baseExtraData_t;
 
-void MN_RegisterBaseMapNode(nodeBehaviour_t *behaviour);
-void MN_RegisterBaseLayoutNode(nodeBehaviour_t *behaviour);
+struct nodeBehaviour_s;
+
+void MN_RegisterAbstractBaseNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterBaseMapNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterBaseLayoutNode(struct nodeBehaviour_s *behaviour);
 
 #endif
