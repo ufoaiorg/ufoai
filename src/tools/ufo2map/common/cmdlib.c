@@ -151,12 +151,28 @@ static inline void FS_getwd (char *out, size_t size)
 
 /**
  * @sa FS_Init
+ * @return the full path to the base directory, with a trailing "/"
  */
 const char* FS_GameDir (void)
 {
 	if (gamedir[0] == '\0') {
 		FS_getwd(gamedir, sizeof(gamedir));
-		strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir));
+		strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir) - strlen(gamedir) - 1);
+#ifndef _WIN32 /* unistd.h is included above for all but _WIN32 */
+		if (0 != access(gamedir, R_OK)) {
+			char *lastDir;
+			Verb_Printf(VERB_NORMAL, "gamedir not found at: %s\n", gamedir);
+			FS_getwd(gamedir, sizeof(gamedir));
+			strrchr(gamedir,'/')[0] = '\0'; /* strip trailing "/" */
+			lastDir = strrchr(gamedir,'/');
+			strncpy(lastDir, "/"BASEDIRNAME"/",sizeof(gamedir) - (lastDir - gamedir) - 1);
+			if (0 != access(gamedir, R_OK)) {
+				Verb_Printf(VERB_NORMAL, "gamedir not found at: %s\n", gamedir);
+			} else {
+				Verb_Printf(VERB_NORMAL, "gamedir found at: %s\n", gamedir);
+			}
+		}
+#endif
 		Verb_Printf(VERB_NORMAL, "gamedir: %s\n", gamedir);
 	}
 	return gamedir;
