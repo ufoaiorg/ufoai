@@ -143,8 +143,7 @@ static void HUD_ActorGlobalCvars (void)
 			assert(chr);
 
 			/* the model name is the first entry in model_t */
-			/** @todo fix this once model_t is known in the client */
-			Cvar_Set(va("mn_head%i", i), (char *) le->model2);
+			Cvar_Set(va("mn_head%i", i), le->model2->name);
 			Cvar_SetValue(va("mn_hp%i", i), le->HP);
 			Cvar_SetValue(va("mn_hpmax%i", i), le->maxHP);
 			Cvar_SetValue(va("mn_tu%i", i), le->TU);

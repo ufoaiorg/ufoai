@@ -253,18 +253,13 @@ static inline void CL_ParticleLoadArt (ptlArt_t *a, byte type)
 		break;
 	case ART_MODEL:
 		/** @todo Support the frame data from ptlArt_t for models, too */
-		a->art.model = (char *) R_RegisterModelShort(a->name);
+		a->art.model = R_RegisterModelShort(a->name);
 		break;
 	default:
 		Sys_Error("CL_ParticleLoadArt: Unknown art type\n");
 	}
 }
 
-/**
- * @note We can use the @c char* cast here because @c model_t
- * has its name at the beginning of the struct
- * @todo Fix this once model_t is known everywhere
- */
 void CL_ParticleRegisterArt (void)
 {
 	ptlArt_t *a;

@@ -1245,7 +1245,7 @@ void LE_List_f (void)
 			else
 				Com_Printf("no ptl\n");
 		} else if (le->model1)
-			Com_Printf("%s\n", (char*)le->model1);
+			Com_Printf("%s\n", le->model1->name);
 		else
 			Com_Printf("no mdl\n");
 	}

@@ -84,7 +84,7 @@ typedef struct mBspSurface_s {
 	int light_s, light_t;		/**< gl lightmap coordinates */
 	int lightmap_scale;
 
-	GLuint index;
+	unsigned int index;
 
 	int tracenum;
 
@@ -187,18 +187,18 @@ typedef struct mBspModel_s {
 	int *surfedges;
 
 	/* vertex arrays */
-	GLfloat *verts;
-	GLfloat *texcoords;
-	GLfloat *lmtexcoords;
-	GLfloat *tangents;
-	GLfloat *normals;
+	float *verts;
+	float *texcoords;
+	float *lmtexcoords;
+	float *tangents;
+	float *normals;
 
 	/* vertex buffer objects */
-	GLuint vertex_buffer;
-	GLuint texcoord_buffer;
-	GLuint lmtexcoord_buffer;
-	GLuint tangent_buffer;
-	GLuint normal_buffer;
+	unsigned int vertex_buffer;
+	unsigned int texcoord_buffer;
+	unsigned int lmtexcoord_buffer;
+	unsigned int tangent_buffer;
+	unsigned int normal_buffer;
 
 	byte lightquant;
 	byte *lightdata;

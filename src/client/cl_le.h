@@ -65,11 +65,9 @@ typedef struct le_s {
 	int modelnum1;	/**< the number of the body model in the cl.model_draw array */
 	int modelnum2;	/**< the number of the head model in the cl.model_draw array */
 	int skinnum;	/**< the skin number of the body and head model */
-	struct model_s *model1, *model2;	/**< pointers to the cl.model_draw array
+	model_t *model1, *model2;	/**< pointers to the cl.model_draw array
 					 * that holds the models for body and head - model1 is body,
 					 * model2 is head */
-
-/* 	character_t	*chr; */
 
 	/** is called every frame */
 	void (*think) (struct le_s * le);
@@ -106,7 +104,7 @@ typedef struct le_s {
 
 	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);
-} le_t;							/* local entity */
+} le_t;
 
 #define MAX_LOCALMODELS		512
 

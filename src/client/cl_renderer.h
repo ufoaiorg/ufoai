@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/common.h"
 #include "renderer/r_material.h"
 #include "renderer/r_image.h"
+#include "renderer/r_model.h"
 
 #include <SDL.h>
 
@@ -67,19 +68,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_PTL_ART		512
 #define MAX_PTLS		2048
 
-#define MAX_ANIMLIST	8
-
-typedef struct animState_s {
-	int frame, oldframe;
-	float backlerp;				/**< linear interpolation from previous frame */
-	int time, dt;
-	int mesh;
-
-	byte list[MAX_ANIMLIST];
-	byte lcur, ladd;
-	byte change;
-} animState_t;
-
 #define MAX_GL_LIGHTS 8
 
 typedef struct {
@@ -97,8 +85,8 @@ typedef struct sustain_s {
 } sustain_t;
 
 typedef struct {
-	struct model_s *model;	/**< @todo Fix this once model_t is known everywhere */
-	const char *name;				/**< model path */
+	model_t *model;			/**< the loaded model */
+	const char *name;		/**< model path (resolved in the renderer on model loading time) */
 
 	float *origin;			/**< pointer to node/menumodel origin */
 	float *angles;			/**< pointer to node/menumodel angles */
@@ -112,7 +100,6 @@ typedef struct {
 	int mesh;				/**< which mesh? @note md2 models only have one mesh */
 	float *color;
 } modelInfo_t;
-
 
 typedef struct ptlCmd_s {
 	byte cmd;
@@ -132,7 +119,7 @@ typedef struct ptlArt_s {
 	int skin;
 	union {
 		const image_t *image;
-		char *model;
+		model_t *model;
 	} art;
 } ptlArt_t;
 

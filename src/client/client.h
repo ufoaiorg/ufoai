@@ -121,7 +121,7 @@ typedef struct client_state_s {
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 
 	/** locally derived information from server state */
-	struct model_s *model_draw[MAX_MODELS];
+	model_t *model_draw[MAX_MODELS];
 	struct cBspModel_s *model_clip[MAX_MODELS];
 
 	qboolean skipRadarNodes;	/**< maybe the current map doesn't have a radar image */

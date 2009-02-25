@@ -25,6 +25,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef R_ENTITY_H
 #define R_ENTITY_H
 
+#define MAX_ANIMLIST	8
+
+typedef struct animState_s {
+	int frame, oldframe;
+	float backlerp;				/**< linear interpolation from previous frame */
+	int time, dt;
+	int mesh;
+
+	byte list[MAX_ANIMLIST];
+	byte lcur, ladd;
+	byte change;
+} animState_t;
+
 typedef struct static_lighting_s {
 	vec3_t point;		/**< impact point, shadow origin */
 	vec3_t normal;		/**< shadow direction */
