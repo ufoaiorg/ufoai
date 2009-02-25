@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_console.h"
+#include "cl_keys.h"
 #include "cl_game.h"
 #include "renderer/r_draw.h"
 #include "menu/m_input.h"
@@ -62,10 +63,6 @@ static cvar_t *con_background;
 const int con_fontHeight = 12;
 const int con_fontWidth = 10;
 const int con_fontShift = 3;
-
-extern char key_lines[MAXKEYLINES][MAXCMDLINE];
-extern int edit_line;
-extern int key_linepos;
 
 static void Con_DisplayString (int x, int y, const char *s)
 {
