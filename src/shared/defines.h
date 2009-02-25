@@ -276,9 +276,11 @@ COLLISION DETECTION
 */
 
 /**
- * @note contents flags are seperate bits
+ * @note contents flags are separate bits
  * a given brush can contribute multiple content bits
- * multiple brushes can be in a single leaf
+ * multiple brushes can be in a single leaf.
+ * Please update DisplayContentFlags, if these are updated.
+ * @sa DisplayContentFlags
  */
 
 /** lower bits are stronger, and will eat weaker brushes completely */

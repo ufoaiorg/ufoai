@@ -4,6 +4,8 @@
  */
 
 /*
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -30,9 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "check.h"
 #include "bsp.h"
 #include "ufo2map.h"
-
-#define MANDATORY_KEY 1
-#define NON_MANDATORY_KEY 0
 
 /** how close faces have to be in order for one to be hidden and set to SURF_NODRAW. Also
  *  the margin for abutting brushes to be considered not intersecting */
@@ -1247,7 +1246,6 @@ static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
 
 /**
  * @brief check all brushes for overlapping shared faces
- *  @todo maybe too fussy. perhaps should ignore small overlaps.
  */
 void CheckZFighting (void)
 {
@@ -1391,7 +1389,6 @@ static void Check_SetNodraw (side_t *s)
  * @brief check for
  * faces which can safely be set to SURF_NODRAW because they are pressed against
  * the faces of other brushes. Also set faces pointing near straight down nodraw.
- * @todo test for sides hidden by composite faces
  * @note probably cannot warn about faces which are nodraw, but might be visible, as there will
  * always be planty of optimisations beyond faces being hidden by one brush, or composite faces.
  */
@@ -1727,8 +1724,7 @@ void CheckMapMicro (void)
 
 /**
  * @brief prints a list of the names of the set content flags or "no contentflags" if all bits are 0
- * @todo make this use names like CONTENTS_STEPON, so it is found when the code is searched.
- * @todo check list of content flags is up to date
+ * @sa defines.h
  */
 void DisplayContentFlags (const int flags)
 {
@@ -1739,6 +1735,7 @@ void DisplayContentFlags (const int flags)
 #define M(x) if (flags & CONTENTS_##x) Check_Printf(VERB_CHECK, qfalse, NUM_SAME, NUM_SAME, " " #x)
 	M(SOLID);
 	M(WINDOW);
+	M(LADDER);
 	M(WATER);
 	M(LEVEL_1);
 	M(LEVEL_2);
