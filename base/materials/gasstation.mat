@@ -1,0 +1,20 @@
+/*{
+	material tex_nature/desert004
+	{
+		texture tex_dirt/dirt001
+		dirtmap 0.1
+		lightmap
+	}
+}*/
+{
+	material tex_buildings/window012
+	{
+		specular 2.0
+	}
+}
+{
+	material tex_buildings/roof006
+	{
+		specular 2.0
+	}
+}
