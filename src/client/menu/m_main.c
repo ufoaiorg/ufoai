@@ -115,68 +115,6 @@ static void MN_ModifyWrap_f (void)
 }
 
 /**
- * @todo add a brief
- */
-static void MN_ModifyString_f (void)
-{
-	qboolean next;
-	const char *current, *list;
-	char *tp;
-	char token[MAX_VAR], last[MAX_VAR], first[MAX_VAR];
-	int add;
-
-	if (Cmd_Argc() < 4)
-		Com_Printf("Usage: %s <name> <amount> <list>\n", Cmd_Argv(0));
-
-	current = Cvar_VariableString(Cmd_Argv(1));
-	add = atoi(Cmd_Argv(2));
-	list = Cmd_Argv(3);
-	last[0] = 0;
-	first[0] = 0;
-	next = qfalse;
-
-	while (add) {
-		tp = token;
-		while (list[0] != '\0' && list[0] != ':') {
-			/** @todo overflow check */
-			*tp++ = *list++;
-		}
-		if (list[0] != '\0')
-			list++;
-		*tp = '\0';
-
-		if (token[0] != '\0' && !first[0])
-			Q_strncpyz(first, token, MAX_VAR);
-
-		if (token[0] == '\0') {
-			if (add < 0 || next)
-				Cvar_Set(Cmd_Argv(1), last);
-			else
-				Cvar_Set(Cmd_Argv(1), first);
-			return;
-		}
-
-		if (next) {
-			Cvar_Set(Cmd_Argv(1), token);
-			return;
-		}
-
-		if (!Q_strncmp(token, current, MAX_VAR)) {
-			if (add < 0) {
-				if (last[0])
-					Cvar_Set(Cmd_Argv(1), last);
-				else
-					Cvar_Set(Cmd_Argv(1), first);
-				return;
-			} else
-				next = qtrue;
-		}
-		Q_strncpyz(last, token, MAX_VAR);
-	}
-}
-
-
-/**
  * @brief Shows the corresponding strings in menu
  * Example: Optionsmenu - fullscreen: yes
  */
@@ -302,7 +240,6 @@ void MN_Init (void)
 	/* add menu commands */
 	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
-	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnmemory", MN_Memory_f, "Display info about menu memory allocation");
