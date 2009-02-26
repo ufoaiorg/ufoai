@@ -107,9 +107,11 @@ void MN_HandleTimers (void)
 		timer->callback(timer->owner, timer);
 
 		/* update the sorted list */
-		MN_RemoveTimerFromActiveList(timer);
-		timer->nextTime += timer->delay;
-		MN_InsertTimerInActiveList(timer->next, timer);
+		if (timer->isRunning) {
+			MN_RemoveTimerFromActiveList(timer);
+			timer->nextTime += timer->delay;
+			MN_InsertTimerInActiveList(timer->next, timer);
+		}
 	}
 }
 
@@ -140,6 +142,7 @@ menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t ca
 	timer->calledTime = 0;
 	timer->prev = NULL;
 	timer->next = NULL;
+	timer->isRunning = qfalse;
 	return timer;
 }
 
@@ -148,8 +151,11 @@ menuTimer_t* MN_AllocTimer (menuNode_t *node, int firstDelay, timerCallback_t ca
  */
 void MN_TimerStart (menuTimer_t *timer)
 {
+	if (timer->isRunning)
+		return;
 	assert(mn_firstTimer != timer && timer->prev == NULL && timer->next == NULL);
 	timer->nextTime = cls.realtime + timer->delay;
+	timer->isRunning = qtrue;
 	MN_InsertTimerInActiveList(mn_firstTimer, timer);
 }
 
@@ -158,9 +164,12 @@ void MN_TimerStart (menuTimer_t *timer)
  */
 void MN_TimerStop (menuTimer_t *timer)
 {
+	if (!timer->isRunning)
+		return;
 	MN_RemoveTimerFromActiveList(timer);
 	timer->prev = NULL;
 	timer->next = NULL;
+	timer->isRunning = qfalse;
 }
 
 /**

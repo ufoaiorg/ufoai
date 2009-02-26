@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_DRAW_H
 #define CLIENT_MENU_M_DRAW_H
 
-extern cvar_t *mn_show_tooltips;
-
 /* prototype */
 struct menuNode_s;
 

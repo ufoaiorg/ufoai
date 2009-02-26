@@ -41,11 +41,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *mn_debug;
 #endif
 
-cvar_t *mn_show_tooltips;
-
+static cvar_t *mn_show_tooltips;
 static const int TOOLTIP_DELAY = 500; /* delay that msecs before showing tooltip */
 static qboolean tooltipVisible = qfalse;
-static qboolean tooltipTimerStoped = qfalse;	/**< @todo should have a getter into the allocated timer for that */
 static menuTimer_t *tooltipTimer;
 
 /**
@@ -204,16 +202,16 @@ static void MN_DrawNode (menuNode_t *node)
 	if (!MN_CheckVisibility(node))
 		return;
 
-	/** @todo remove it when its possible */
+	/** @todo remove it when its possible:
+	 * we can create a 'box' node with this properties,
+	 * but we often dont need it */
 	/* check node size x and y value to check whether they are zero */
 	if (node->size[0] && node->size[1]) {
 		vec2_t pos;
 		MN_GetNodeAbsPos(node, pos);
-		/** @todo remove it when its possible */
 		if (node->bgcolor[3] != 0)
 			R_DrawFill(pos[0], pos[1], node->size[0], node->size[1], 0, node->bgcolor);
 
-		/** @todo remove it when its possible */
 		if (node->border && node->bordercolor[3] != 0) {
 			R_DrawRect(pos[0], pos[1], node->size[0], node->size[1],
 				node->bordercolor, node->border, 0xFFFF);
@@ -242,22 +240,20 @@ void MN_Draw (void)
 	int windowId;
 	qboolean mouseMoved = qfalse;
 
+	MN_HandleTimers();
+
 	assert(mn.menuStackPos >= 0);
 
 	mouseMoved = MN_CheckMouseMove();
 	hoveredNode = MN_GetHoveredNode();
 
 	/* handle delay time for tooltips */
-	if (mouseMoved && !tooltipTimerStoped) {
+	if (mouseMoved && tooltipVisible) {
 		MN_TimerStop(tooltipTimer);
 		tooltipVisible = qfalse;
-		tooltipTimerStoped = qtrue;
-	} else if (!mouseMoved && tooltipTimerStoped && mn_show_tooltips->integer && hoveredNode) {
+	} else if (!tooltipVisible && !mouseMoved && !tooltipTimer->isRunning && mn_show_tooltips->integer && hoveredNode) {
 		MN_TimerStart(tooltipTimer);
-		tooltipTimerStoped = qfalse;
 	}
-
-	MN_HandleTimers();
 
 	/* under a fullscreen, menu should not be visible */
 	windowId = MN_GetLastFullScreenWindow();
@@ -312,15 +308,6 @@ void MN_DrawCursor (void)
 	MN_DrawDragAndDrop(mousePosX, mousePosY);
 }
 
-void MN_InitDraw (void)
-{
-#ifdef DEBUG
-	mn_debug = Cvar_Get("debug_menu", "0", 0, "Prints node names for debugging purposes - valid values are 1 and 2");
-#endif
-	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
-	tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
-}
-
 /**
  * @brief Displays a message over all menus.
  * @sa HUD_DisplayMessage
@@ -331,4 +318,13 @@ void MN_DisplayNotice (const char *text, int time)
 {
 	cl.msgTime = cl.time + time;
 	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
+}
+
+void MN_InitDraw (void)
+{
+#ifdef DEBUG
+	mn_debug = Cvar_Get("debug_menu", "0", 0, "Prints node names for debugging purposes - valid values are 1 and 2");
+#endif
+	mn_show_tooltips = Cvar_Get("mn_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
+	tooltipTimer = MN_AllocTimer(NULL, TOOLTIP_DELAY, MN_CheckTooltipDelay);
 }
