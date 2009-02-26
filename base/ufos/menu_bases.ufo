@@ -277,6 +277,7 @@ menu bases
 		size		"768 35"
 		font		f_menu
 		textalign	uc
+		ghost		true
 	}
 
 	confunc set_base_under_attack
