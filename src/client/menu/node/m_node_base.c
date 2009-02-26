@@ -1,6 +1,5 @@
 /**
  * @file m_node_base.c
- * @todo use MN_GetNodeAbsPos instead of menu->pos
  * @todo We can remove baseCurrent if we use and update baseid
  */
 
@@ -112,11 +111,13 @@ static void MN_BaseMapDraw (menuNode_t * node)
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
-			const int x = node->pos[0] + col * width;
-			const int y = node->pos[1] + row * height - row * BASE_IMAGE_OVERLAY;
+			vec2_t pos;
+			MN_GetNodeAbsPos(node, pos);
+			pos[0] += col * width;
+			pos[1] += row * height - row * BASE_IMAGE_OVERLAY;
 
-			baseCurrent->map[row][col].posX = x;
-			baseCurrent->map[row][col].posY = y;
+			baseCurrent->map[row][col].posX = pos[0];
+			baseCurrent->map[row][col].posY = pos[1];
 			image[0] = '\0';
 
 			if (baseCurrent->map[row][col].blocked) {
@@ -145,10 +146,10 @@ static void MN_BaseMapDraw (menuNode_t * node)
 			}
 
 			if (image[0] != '\0')
-				R_DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
+				R_DrawNormPic(pos[0], pos[1], width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* check for hovering building name or outline border */
-			if (node->state && mousePosX > x && mousePosX < x + width && mousePosY > y && mousePosY < y + height - 20) {
+			if (node->state && mousePosX > pos[0] && mousePosX < pos[0] + width && mousePosY > pos[1] && mousePosY < pos[1] + height - 20) {
 				if (!baseCurrent->map[row][col].building
 				 && !baseCurrent->map[row][col].blocked) {
 					if (ccs.baseAction == BA_NEWBUILDING && xHover == -1) {
@@ -170,12 +171,12 @@ static void MN_BaseMapDraw (menuNode_t * node)
 								if (colSecond < col)
 									xHover = node->pos[0] + colSecond * width;
 								else
-									xHover = x;
+									xHover = pos[0];
 								widthHover = 2;
 							}
 						} else
-							xHover = x;
-						yHover = y;
+							xHover = pos[0];
+						yHover = pos[1];
 					}
 				} else {
 					hoverBuilding = building;
@@ -190,7 +191,7 @@ static void MN_BaseMapDraw (menuNode_t * node)
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
 					time = building->buildTime - (ccs.date.day - building->timeStart);
-					R_FontDrawString("f_small", 0, x + 10, y + 10, x + 10, y + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
+					R_FontDrawString("f_small", 0, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
 					break;
 				default:
 					break;
