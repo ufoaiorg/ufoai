@@ -33,9 +33,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <fcntl.h>
 #include <sys/file.h>
 #include <locale.h>
+#include <signal.h>
 
 #include "../../common/common.h"
-#include "../unix/unix_glob.h"
+#include "unix_glob.h"
+#include "unix_curses.h"
+
+#ifdef HAVE_EXECINFO_H
+#include <execinfo.h>
+#define MAX_BACKTRACE_SYMBOLS 50
+#endif
 
 static void *game_library;
 
@@ -461,4 +468,56 @@ void Sys_SetAffinityAndPriority (void)
 	if (sys_priority->modified) {
 		sys_priority->modified = qfalse;
 	}
+}
+
+/**
+ * @brief On platforms supporting it, print a backtrace.
+ */
+static void Sys_Backtrace (void)
+{
+#ifdef HAVE_EXECINFO_H
+	void *symbols[MAX_BACKTRACE_SYMBOLS];
+	const int i = backtrace(symbols, MAX_BACKTRACE_SYMBOLS);
+	backtrace_symbols_fd(symbols, i, STDERR_FILENO);
+#endif
+}
+
+/**
+ * @brief Catch kernel interrupts and dispatch the appropriate exit routine.
+ */
+static void Sys_Signal (int s)
+{
+	switch (s) {
+	case SIGHUP:
+	case SIGINT:
+	case SIGQUIT:
+	case SIGTERM:
+		Com_Printf("Received signal %d, quitting..\n", s);
+		Sys_Quit();
+		break;
+#ifdef HAVE_CURSES
+	case SIGWINCH:
+		Curses_Resize();
+		break;
+#endif
+	default:
+		Sys_Backtrace();
+		Sys_Error("Received signal %d.\n", s);
+		break;
+	}
+}
+
+void Sys_InitSignals (void)
+{
+#ifdef HAVE_CURSES
+	signal(SIGWINCH, Sys_Signal);
+#endif
+	signal(SIGHUP, Sys_Signal);
+	signal(SIGINT, Sys_Signal);
+	signal(SIGQUIT, Sys_Signal);
+	signal(SIGILL, Sys_Signal);
+	signal(SIGABRT, Sys_Signal);
+	signal(SIGFPE, Sys_Signal);
+	signal(SIGSEGV, Sys_Signal);
+	signal(SIGTERM, Sys_Signal);
 }

@@ -896,6 +896,8 @@ void Qcommon_Init (int argc, const char **argv)
 {
 	char *s;
 
+	Sys_InitSignals();
+
 	/* random seed */
 	srand(time(NULL));
 

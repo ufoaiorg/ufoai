@@ -203,6 +203,10 @@ void Sys_Init (void)
 #endif
 }
 
+void Sys_InitSignals (void)
+{
+}
+
 /*
 ========================================================================
 GAME DLL

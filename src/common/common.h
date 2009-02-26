@@ -348,6 +348,7 @@ void Sys_NormPath(char *path);
 void Sys_Sleep(int milliseconds);
 const char *Sys_GetCurrentUser(void);
 int Sys_Setenv(const char *name, const char *value);
+void Sys_InitSignals(void);
 const char *Sys_SetLocale(const char *localeID);
 const char *Sys_GetLocale(void);
 
