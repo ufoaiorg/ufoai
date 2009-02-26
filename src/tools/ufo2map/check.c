@@ -1,6 +1,7 @@
 /**
  * @file check.c
  * @brief Some checks during compile, warning on -check and changes .map on -fix
+ * @callgraph
  */
 
 /*
@@ -76,6 +77,7 @@ static void Check_Printf(const verbosityLevel_t msgVerbLevel, qboolean change, i
  * call, and prefixes this message with a string depending on wether the message indicates a change and the entity and brush number.
  * @note if entnum is set to NUM_SAME, then msgVerbLevel is carried over from the previous call.
  * @sa Com_Printf, Verb_Printf, DisplayContentFlags
+ * @callergraph
  */
 static void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 							int entnum, int brushnum, const char *format, ...)

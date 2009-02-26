@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static char lastErr[ED_MAX_ERR_LEN]; /**< for storing last error message */
 static char lastErrExtra[ED_MAX_ERR_LEN]; /**< temporary storage for extra information to be added to lastErr */
-static int lastCheckedInt; /**< @sa ED_CheckNumber */
-static float lastCheckedFloat; /**< @sa ED_CheckNumber */
 
 /**
  * @brief write an error message and exit the current function returning ED_ERROR
@@ -200,7 +198,7 @@ int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
  * @sa ED_GetLastError
  * @note the parsed numbers are stored for later use in lastCheckedInt and lastCheckedFloat
  */
-static int ED_CheckNumber (const char *value, const int floatOrInt, const int insistPositive)
+static int ED_CheckNumber (const char *value, const int floatOrInt, const int insistPositive, int_float_tu *parsedNumber)
 {
 	char *end_p;
 	/* V_INTs are protected from octal and hex as strtol with base 10 is used.
@@ -213,12 +211,12 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 		"infinity, NaN, hex (0x...) not allowed. found \"%s\"", value);
 	switch (floatOrInt) {
 	case ED_TYPE_FLOAT:
-		lastCheckedFloat = strtof(value, &end_p);
-		ED_TEST_RETURN_ERROR(insistPositive && lastCheckedFloat < 0.0f, "ED_CheckNumber: not positive %s", value);
+		parsedNumber->f = strtof(value, &end_p);
+		ED_TEST_RETURN_ERROR(insistPositive && parsedNumber->f < 0.0f, "ED_CheckNumber: not positive %s", value);
 		break;
 	case ED_TYPE_INT:
-		lastCheckedInt = (int)strtol(value, &end_p, 10);
-		ED_TEST_RETURN_ERROR(insistPositive && lastCheckedInt < 0, "ED_CheckNumber: not positive %s", value);
+		parsedNumber->i = (int)strtol(value, &end_p, 10);
+		ED_TEST_RETURN_ERROR(insistPositive && parsedNumber->i < 0, "ED_CheckNumber: not positive %s", value);
 		break;
 	default:
 		ED_RETURN_ERROR("ED_CheckNumber: type to test against not recognised");
@@ -236,7 +234,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
  * @note checks lastCheckedInt or lastCheckedFloat against the range in the supplied keyDef.
  * @return ED_ERROR or ED_OK
  */
-static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, const int index)
+static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, const int index, int_float_tu parsedNumber)
 {
 	/* there may be a range for each element of the value, or there may only be one */
 	int useRangeIndex = (keyDef->numRanges == 1) ? 0 : index;
@@ -249,27 +247,27 @@ static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, co
 	switch (floatOrInt) {
 	case ED_TYPE_FLOAT:
 		if (kr->continuous) {
-			ED_TEST_RETURN_ERROR(lastCheckedFloat < kr->fArr[0] || lastCheckedFloat > kr->fArr[1],
+			ED_TEST_RETURN_ERROR(parsedNumber.f < kr->fArr[0] || parsedNumber.f > kr->fArr[1],
 				"ED_CheckRange: %.1f out of range, \"%s\" in %s",
-				lastCheckedFloat, kr->str, keyDef->name);
+				parsedNumber.f, kr->str, keyDef->name);
 			return ED_OK;
 		} else {
 			int j;
 			for (j = 0; j < kr->numElements; j++)
-				if (fabs(lastCheckedFloat - kr->fArr[j]) < discreteFloatEpsilon)
+				if (fabs(parsedNumber.f - kr->fArr[j]) < discreteFloatEpsilon)
 					return ED_OK;
 		}
 		break;
 	case ED_TYPE_INT:
 		if (kr->continuous) {
-			ED_TEST_RETURN_ERROR(lastCheckedInt < kr->iArr[0] || lastCheckedInt > kr->iArr[1],
+			ED_TEST_RETURN_ERROR(parsedNumber.i < kr->iArr[0] || parsedNumber.i > kr->iArr[1],
 				"ED_CheckRange: %i out of range, \"%s\" in %s",
-				lastCheckedInt, kr->str, keyDef->name);
+				parsedNumber.i, kr->str, keyDef->name);
 			return ED_OK;
 		} else {
 			int j;
 			for (j = 0; j < kr->numElements; j++)
-				if (kr->iArr[j] == lastCheckedInt)
+				if (kr->iArr[j] == parsedNumber.i)
 					return ED_OK;
 		}
 		break;
@@ -296,13 +294,14 @@ static int ED_CheckNumericType (const entityKeyDef_t *keyDef, const char *value,
 	assert(!(floatOrInt & ED_TYPE_INT) != !(floatOrInt & ED_TYPE_FLOAT));/* logical exclusive or */
 	while (buf_p) {
 		const char *tok = COM_Parse(&buf_p);
+		int_float_tu parsedNumber;
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 
-		ED_PASS_ERROR_EXTRAMSG(ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE),
+		ED_PASS_ERROR_EXTRAMSG(ED_CheckNumber(tok, floatOrInt, keyDef->flags & ED_INSIST_POSITIVE, &parsedNumber),
 			" in key \"%s\"", keyDef->name);
 
-		ED_PASS_ERROR(ED_CheckRange(keyDef, floatOrInt, i));
+		ED_PASS_ERROR(ED_CheckRange(keyDef, floatOrInt, i, parsedNumber));
 
 		i++;
 	}
@@ -363,6 +362,8 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	int type;
 	int vectorLen;
 	const char *partToken;
+	int_float_tu parsedNumber;
+
 	/* need a copy, as parsedToken is held in a static buffer in the
 	 * Com_Parse function */
 	ED_TEST_RETURN_ERROR((strlen(parsedToken) + 1) > sizeof(tokBuf),
@@ -390,7 +391,7 @@ static int ED_ParseType (entityKeyDef_t *kd, const char *parsedToken)
 	partToken = COM_Parse(&buf_p);
 	vectorLen = atoi(partToken);
 	if (vectorLen)
-		ED_TEST_RETURN_ERROR(ED_ERROR == ED_CheckNumber(partToken, ED_TYPE_INT, 1),
+		ED_TEST_RETURN_ERROR(ED_ERROR == ED_CheckNumber(partToken, ED_TYPE_INT, 1, &parsedNumber),
 			"ED_ParseType: problem with vector length \"%s\" in key %s",
 			partToken, kd->name);
 	kd->vLen = strlen(partToken) ? (vectorLen ? vectorLen : 1) : 1; /* default is 1 */
@@ -639,6 +640,7 @@ static int ED_ProcessRanges (void)
 				ED_TEST_RETURN_ERROR(!keyType || (keyType & ED_TYPE_STRING), "ED_ProcessRanges: ranges may not be specified for strings. note that V_STRING is the default type. %s in %s",
 					kd->name, ed->classname);
 				while (tmpRange_p) {
+					int_float_tu parsedNumber;
 					const char *tok = COM_Parse(&tmpRange_p);
 					if (tok[0] == '\0')
 						break;
@@ -648,7 +650,7 @@ static int ED_ProcessRanges (void)
 							kr->str, kd->name, ed->classname);
 						continue;
 					}
-					ED_PASS_ERROR(ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE));
+					ED_PASS_ERROR(ED_CheckNumber(tok, keyType, kd->flags & ED_INSIST_POSITIVE, &parsedNumber));
 					switch (keyType) {
 					case ED_TYPE_INT:
 						ibuf[numElements++] = atoi(tok);

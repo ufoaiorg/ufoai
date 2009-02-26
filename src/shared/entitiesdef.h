@@ -47,6 +47,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define	ED_CONCRETE		(ED_OPTIONAL | ED_MANDATORY) /**< flags indicating that this is a real key for use in a map file */
 # define	ED_KEY_TYPE		(ED_TYPE_FLOAT | ED_TYPE_INT | ED_TYPE_STRING)
 
+typedef union int_float_u {
+	int i;
+	float f;
+} int_float_tu;
+
 typedef struct entityKeyRange_s {
 	char	*str;		/**< the range string is stored here until the whole ent def is parsed */
 	int		*iArr;		/**< this is used if the key is V_INT */
