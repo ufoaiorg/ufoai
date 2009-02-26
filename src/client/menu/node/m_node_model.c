@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
 
-static nodeBehaviour_t *modelBehaviour;
-
 /**
  * @brief Add a menu link to menumodel definition for faster access
  * @note Called after all menus are parsed - only once
@@ -107,8 +105,7 @@ static void MN_SetModelTransform_f (void)
 	const char *command, *nodeOrMenuID, *menuModel;
 	float x, y ,z;
 	vec3_t value;
-
-	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code doesn't move the behaviours */
+	const nodeBehaviour_t *modelBehaviour = MN_GetNodeBehaviour("model");
 
 	/* not initialized yet - commandline? */
 	if (mn.menuStackPos <= 0)
@@ -428,7 +425,6 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 	menuModel_t *menuModel;
 	vec3_t nodeorigin;
 
-	assert(!Q_strcmp(modelBehaviour->name, "model"));	/**< Make sure the code doesn't move the behaviours */
 	assert(MN_NodeInstanceOf(node, "model"));			/**< We use model extradata */
 
 	if (source[0] == '\0')
@@ -702,7 +698,4 @@ void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 	Cmd_AddCommand("debug_mnorigin", MN_SetModelTransform_f, "Transform model from command line.");
 #endif
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
-
-	/* save the behaviour */
-	modelBehaviour = behaviour;
 }
