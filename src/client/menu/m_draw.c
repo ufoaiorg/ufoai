@@ -295,9 +295,6 @@ void MN_Draw (void)
 		if (hoveredNode->timePushed + hoveredNode->timeOut < cls.realtime) {
 			hoveredNode->timePushed = 0;
 			hoveredNode->invis = qtrue;
-			/* only timeout this once, otherwise there is a new timeout after every new stack push */
-			if (hoveredNode->timeOutOnce)
-				hoveredNode->timeOut = 0;
 			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", hoveredNode->name);
 		}
 	}

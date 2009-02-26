@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void MN_FuncNodeLoading (menuNode_t *node)
 {
-	if (!Q_strncmp(node->name, "event", 5)) {
+	if (!Q_strcmp(node->name, "event")) {
 		node->timeOut = 2000; /* default value */
 	}
 }
@@ -44,23 +44,23 @@ static void MN_FuncNodeLoading (menuNode_t *node)
 static void MN_FuncNodeLoaded (menuNode_t *node)
 {
 	menuNode_t * menu = node->menu;
-	if (!Q_strncmp(node->name, "init", 4)) {
+	if (!Q_strcmp(node->name, "init")) {
 		if (!menu->u.window.onInit)
 			menu->u.window.onInit = node->onClick;
 		else
 			Com_Printf("MN_FuncNodeLoaded: second init function ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "close", 5)) {
+	} else if (!Q_strcmp(node->name, "close")) {
 		if (!menu->u.window.onClose)
 			menu->u.window.onClose = node->onClick;
 		else
 			Com_Printf("MN_FuncNodeLoaded: second close function ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "event", 5)) {
+	} else if (!Q_strcmp(node->name, "event")) {
 		if (!menu->u.window.onTimeOut) {
 			menu->u.window.eventNode = node;
 			menu->u.window.onTimeOut = node->onClick;
 		} else
 			Com_Printf("MN_FuncNodeLoaded: second event function ignored (menu \"%s\")\n", menu->name);
-	} else if (!Q_strncmp(node->name, "leave", 5)) {
+	} else if (!Q_strcmp(node->name, "leave")) {
 		if (!menu->u.window.onLeave) {
 			menu->u.window.onLeave = node->onClick;
 		} else

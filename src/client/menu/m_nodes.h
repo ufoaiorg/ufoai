@@ -104,7 +104,6 @@ typedef struct menuNode_s {
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
-	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
 
 	/* common color */
 	vec4_t color;				/**< rgba */
