@@ -265,7 +265,7 @@ void CL_ClearState (void)
  * @brief Sets the cls.state to ca_disconnected and informs the server
  * @sa CL_Disconnect_f
  * @sa CL_Drop
- * @note Goes from a connected state to full screen console state
+ * @note Goes from a connected state to disconnected state
  * Sends a disconnect message to the server
  * This is also called on Com_Error, so it shouldn't cause any errors
  */
@@ -339,7 +339,7 @@ static void CL_Packet_f (void)
 	}
 	*out = 0;
 
-	NET_OOB_Printf(s, va("%s %i", out, PROTOCOL_VERSION));
+	NET_OOB_Printf(s, "%s %i", out, PROTOCOL_VERSION);
 }
 #endif
 
