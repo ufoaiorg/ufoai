@@ -675,8 +675,11 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_t const *mission)
 {
 	/* This function could be called before position of the mission is defined */
+	/** @todo Create a check for the position */
+	/* pos is a type. (and no pointer) So this is always true
 	if (!mission->pos)
 		return qfalse;
+	*/
 
 	if (mission->crashed)
 		return MISDET_ALWAYS_DETECTED;
