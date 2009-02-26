@@ -71,6 +71,7 @@ qboolean MN_WindowIsFullScreen (menuNode_t* const node)
 
 static void MN_WindowNodeDraw (menuNode_t *node)
 {
+	menuNode_t *eventNode;
 	const char* image;
 	const char* text;
 	vec2_t pos;
@@ -94,6 +95,17 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 		R_FontDrawStringInBox(font, ALIGN_CC, pos[0] + node->padding, pos[1] + node->padding, node->size[0] - node->padding - node->padding, TOP_HEIGHT + 10 - node->padding - node->padding, text, LONGLINES_PRETTYCHOP);
 	}
 
+	/** @todo we should use and event, and not a node */
+	eventNode = node->u.window.eventNode;
+	if (eventNode && eventNode->timePushed) {
+		if (eventNode->timePushed + eventNode->timeOut < cls.realtime) {
+			eventNode->timePushed = 0;
+			eventNode->invis = qtrue;
+			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", eventNode->name);
+			if (eventNode->onClick)
+				MN_ExecuteEventActions(eventNode, eventNode->onClick);
+		}
+	}
 }
 
 /**

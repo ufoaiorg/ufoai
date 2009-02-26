@@ -290,15 +290,6 @@ void MN_Draw (void)
 		}
 	}
 
-	/** @todo remove it (or clean up) when it possible. timeout? */
-	if (hoveredNode && hoveredNode->timePushed) {
-		if (hoveredNode->timePushed + hoveredNode->timeOut < cls.realtime) {
-			hoveredNode->timePushed = 0;
-			hoveredNode->invis = qtrue;
-			Com_DPrintf(DEBUG_CLIENT, "MN_DrawMenus: timeout for node '%s'\n", hoveredNode->name);
-		}
-	}
-
 	/* draw a special notice */
 	menu = MN_GetActiveMenu();
 	if (cl.time < cl.msgTime) {
