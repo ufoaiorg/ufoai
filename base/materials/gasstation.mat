@@ -8,13 +8,9 @@
 }*/
 {
 	material tex_buildings/window012
-	{
-		specular 2.0
-	}
+	specular 2.0
 }
 {
 	material tex_buildings/roof006
-	{
-		specular 2.0
-	}
+	specular 2.0
 }
