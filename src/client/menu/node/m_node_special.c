@@ -22,11 +22,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../client.h"
 #include "../m_nodes.h"
 #include "../m_actions.h"
 #include "m_node_window.h"
 #include "m_node_special.h"
 #include "m_node_abstractnode.h"
+
+
+/**
+ * @brief Called when we init the node on the screen
+ */
+static void MN_FuncNodeInit (menuNode_t *node)
+{
+	/* if timeout exists, initialize the menu with current client time */
+	if (node->timeOut)
+		node->timePushed = cl.time;
+}
 
 /**
  * @brief Call before the script initializes the node
@@ -77,6 +89,7 @@ void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 	behaviour->isFunction = qtrue;
 	behaviour->loading = MN_FuncNodeLoading;
 	behaviour->loaded = MN_FuncNodeLoaded;
+	behaviour->init = MN_FuncNodeInit;
 }
 
 void MN_RegisterNullNode (nodeBehaviour_t *behaviour)

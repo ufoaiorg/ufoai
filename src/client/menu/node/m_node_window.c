@@ -97,6 +97,26 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 }
 
 /**
+ * @brief Called when we init the node on the screen
+ * @todo Very generic function; we can move it into abstract node
+ */
+static void MN_WindowNodeInit (menuNode_t *node)
+{
+	menuNode_t *child;
+
+	/* init child */
+	for (child = node->firstChild; child; child = child->next) {
+		if (child->behaviour->init) {
+			child->behaviour->init(child);
+		}
+	}
+
+	/* script callback */
+	if (node->u.window.onInit)
+		MN_ExecuteEventActions(node, node->u.window.onInit);
+}
+
+/**
  * @brief Called at the begin of the load from script
  */
 static void MN_WindowNodeLoading (menuNode_t *node)
@@ -180,6 +200,7 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->name = "menu";
 	behaviour->loading = MN_WindowNodeLoading;
 	behaviour->loaded = MN_WindowNodeLoaded;
+	behaviour->init = MN_WindowNodeInit;
 	behaviour->draw = MN_WindowNodeDraw;
 	behaviour->properties = windowNodeProperties;
 }

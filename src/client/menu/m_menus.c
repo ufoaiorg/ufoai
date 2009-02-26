@@ -143,24 +143,12 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 	else
 		Com_Printf("Menu stack overflow\n");
 
-	/* initialize it */
-	if (menu->u.window.onInit)
-		MN_ExecuteEventActions(menu, menu->u.window.onInit);
+	if (menu->behaviour->init) {
+		menu->behaviour->init(menu);
+	}
 
+	/** @todo what does it mean? why here? */
 	Key_SetDest(key_game);
-
-	/* if there is a timeout value set, initialize the menu with current client time */
-	for (node = menu->firstChild; node; node = node->next) {
-		if (node->timeOut)
-			node->timePushed = cl.time;
-	}
-
-	/* callback into nodes */
-	for (node = menu->firstChild; node; node = node->next) {
-		if (node->behaviour->init) {
-			node->behaviour->init(node);
-		}
-	}
 
 	MN_InvalidateMouse();
 	return menu;
