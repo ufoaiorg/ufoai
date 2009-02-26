@@ -81,6 +81,11 @@ static void MN_FuncNodeLoaded (menuNode_t *node)
 
 }
 
+static const value_t properties[] = {
+	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
+	{NULL, V_NULL, 0, 0}
+};
+
 void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 {
 	memset(behaviour, 0, sizeof(behaviour));
@@ -90,6 +95,7 @@ void MN_RegisterFuncNode (nodeBehaviour_t *behaviour)
 	behaviour->loading = MN_FuncNodeLoading;
 	behaviour->loaded = MN_FuncNodeLoaded;
 	behaviour->init = MN_FuncNodeInit;
+	behaviour->properties = properties;
 }
 
 void MN_RegisterNullNode (nodeBehaviour_t *behaviour)

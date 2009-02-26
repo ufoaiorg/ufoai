@@ -835,12 +835,12 @@ menu hud extends ahud
 		out			{
 			*chatscreen size "690 48"
 			*chatscreen rows "3"
-			*event timeout 10000
+			*(func)event timeout 10000
 		}
 		in			{
 			*chatscreen size "690 400"
 			*chatscreen rows "25"
-			*event timeout 0
+			*(func)event timeout 0
 			cmd "mn_unhidenode chatscreen;"
 		}
 	}
