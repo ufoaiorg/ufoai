@@ -69,9 +69,9 @@ static int debugTextPositionY = 0;
 static int debugPositionX = 0;
 #define DEBUG_PANEL_WIDTH 300
 
-static void MN_HilightNode (menuNode_t *node, vec4_t color)
+static void MN_HilightNode (const menuNode_t *node, const vec4_t color)
 {
-	static vec4_t grey = {0.7, 0.7, 0.7, 1.0};
+	static const vec4_t grey = {0.7, 0.7, 0.7, 1.0};
 	vec2_t pos;
 	int width;
 	int lineDefinition[4];
@@ -124,10 +124,10 @@ static void MN_HilightNode (menuNode_t *node, vec4_t color)
  */
 static void MN_DrawDebugMenuNodeNames (void)
 {
-	static vec4_t red = {1.0, 0.0, 0.0, 1.0};
-	static vec4_t green = {0.0, 0.5, 0.0, 1.0};
-	static vec4_t white = {1, 1.0, 1.0, 1.0};
-	static vec4_t background = {0.0, 0.0, 0.0, 0.5};
+	static const vec4_t red = {1.0, 0.0, 0.0, 1.0};
+	static const vec4_t green = {0.0, 0.5, 0.0, 1.0};
+	static const vec4_t white = {1, 1.0, 1.0, 1.0};
+	static const vec4_t background = {0.0, 0.0, 0.0, 0.5};
 	menuNode_t *hoveredNode;
 	int stackPosition;
 
@@ -237,7 +237,7 @@ void MN_Draw (void)
 {
 	menuNode_t *hoveredNode;
 	menuNode_t *menu;
-	int windowId;
+	int pos;
 	qboolean mouseMoved = qfalse;
 
 	MN_HandleTimers();
@@ -256,13 +256,13 @@ void MN_Draw (void)
 	}
 
 	/* under a fullscreen, menu should not be visible */
-	windowId = MN_GetLastFullScreenWindow();
-	if (windowId < 0)
+	pos = MN_GetLastFullScreenWindow();
+	if (pos < 0)
 		return;
 
 	/* draw all visible menus */
-	for (;windowId < mn.menuStackPos; windowId++) {
-		menu = mn.menuStack[windowId];
+	for (;pos < mn.menuStackPos; pos++) {
+		menu = mn.menuStack[pos];
 
 		/* update the layout */
 		menu->behaviour->doLayout(menu);
