@@ -116,10 +116,12 @@ static void MN_BaseMapDraw (menuNode_t * node)
 			pos[0] += col * width;
 			pos[1] += row * height - row * BASE_IMAGE_OVERLAY;
 
+			/** @todo we should not merge model and view */
 			baseCurrent->map[row][col].posX = pos[0];
 			baseCurrent->map[row][col].posY = pos[1];
-			image[0] = '\0';
 
+			/* base tile */
+			image[0] = '\0';
 			if (baseCurrent->map[row][col].blocked) {
 				building = NULL;
 				Q_strncpyz(image, "base/invalid", sizeof(image));
@@ -137,6 +139,7 @@ static void MN_BaseMapDraw (menuNode_t * node)
 					if (building->image)
 						Q_strncpyz(image, building->image, sizeof(image));
 				} else if (building->needs) {
+					/** @todo Understand this code */
 					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
 						Sys_Error("Error in ufo-scriptfile - could not find the needed building");
@@ -145,9 +148,11 @@ static void MN_BaseMapDraw (menuNode_t * node)
 				}
 			}
 
+			/* draw tile */
 			if (image[0] != '\0')
 				R_DrawNormPic(pos[0], pos[1], width, height, 0, 0, 0, 0, 0, qfalse, image);
 
+			/** @todo We should move it outside the loop */
 			/* check for hovering building name or outline border */
 			if (node->state && mousePosX > pos[0] && mousePosX < pos[0] + width && mousePosY > pos[1] && mousePosY < pos[1] + height - 20) {
 				if (!baseCurrent->map[row][col].building
