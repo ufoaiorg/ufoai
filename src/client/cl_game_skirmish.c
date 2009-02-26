@@ -156,6 +156,7 @@ void GAME_SK_Shutdown (void)
 {
 	/* shutdown any running tactical mission */
 	SV_Shutdown("Quitting skirmish.", qfalse);
+	CL_Disconnect();
 
 	Cvar_Delete("cl_equip");
 

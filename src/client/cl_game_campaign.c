@@ -446,4 +446,5 @@ void GAME_CP_Shutdown (void)
 
 	/* shutdown any running tactical mission */
 	SV_Shutdown("Quitting campaign.", qfalse);
+	CL_Disconnect();
 }

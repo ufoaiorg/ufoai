@@ -887,6 +887,7 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
 	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);
+	Com_Printf("Shutdown server: %s\n", finalmsg);
 
 	Master_Shutdown();
 	SV_ShutdownGameProgs();
