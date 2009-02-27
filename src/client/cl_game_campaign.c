@@ -299,12 +299,11 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 		their_stunned = 0;
 
 	/* we won, and we're not the dirty aliens */
-	if (winner == cls.team && curCampaign)
+	if (winner == cls.team)
 		civilian_survivors += civilian_stunned;
 	else
 		civilian_killed += civilian_stunned;
 
-	/* the mission was in singleplayer */
 	/* loot the battlefield */
 	AII_CollectingItems(cls.missionaircraft, winner == cls.team);				/**< Collect items from the battlefield. */
 	if (winner == cls.team)
@@ -340,11 +339,12 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	ccs.mission_tryagain = qtrue;
 	if (ccs.selectedMission && base)
 		CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
-	else if (GAME_CP_IsRunning())
-		Com_Printf("CL_ParseResults: Error - no mission triggers, because ccs.selectedMission or base are not valid\n");
+	else
+		Com_Printf("CL_ParseResults: Error - no mission triggers, because ccs.selectedMission (%p) or base (%p) are not valid\n",
+				ccs.selectedMission, base);
 
 	if (winner == cls.team) {
-		/* We need to update Menu Won with UFO recovery stuff. */
+		/* We need to update menu 'won' with UFO recovery stuff. */
 		if (missionresults.recovery) {
 			if (missionresults.crashsite)
 				Q_strcat(resultText, va(_("\nSecured crashed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
@@ -355,8 +355,6 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	} else
 		MN_PushMenu("lost", NULL);
 
-	/* on singleplayer we disconnect the game and shutdown the server
-	 * we can safely wipe all mission data now */
 	SV_Shutdown("Mission end", qfalse);
 	CL_Disconnect();
 }
