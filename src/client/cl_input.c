@@ -69,20 +69,11 @@ static struct {
 static int keyq_head = 0;
 static int keyq_tail = 0;
 
-camera_mode_t camera_mode;
-
 static cvar_t *in_debug;
 
 int mouseSpace;
 int mousePosX, mousePosY;
 static int oldMousePosX, oldMousePosY;
-
-/**
- * rotate angles for menu models - pointer to menu node angles vec3_t
- * modify the node->angles values to rotate a model
- */
-static qboolean wasCrouched = qfalse, doCrouch = qfalse;
-static float crouchHt = 0.;
 
 static qboolean cameraRoute = qfalse;
 static vec3_t routeFrom, routeDelta;
@@ -110,7 +101,6 @@ static kbutton_t in_turnup, in_turndown;
  * @brief
  * @sa IN_KeyUp
  * @sa CL_GetKeyMouseState
- * @sa CL_CameraMoveFirstPerson
  */
 static void IN_KeyDown (kbutton_t * b)
 {
@@ -154,7 +144,6 @@ static void IN_KeyDown (kbutton_t * b)
  * @brief
  * @sa IN_KeyDown
  * @sa CL_GetKeyMouseState
- * @sa CL_CameraMoveFirstPerson
  */
 static void IN_KeyUp (kbutton_t * b)
 {
@@ -279,61 +268,6 @@ static void IN_ZoomOutUp_f (void)
 	IN_KeyUp(&in_zoomout);
 }
 
-/**
- * @brief Switches camera mode between remote and firstperson
- */
-static void CL_CameraMode_f (void)
-{
-	if (!selActor)
-		return;
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		CL_CameraModeChange(CAMERA_MODE_REMOTE);
-	else
-		CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
-}
-
-void CL_CameraModeChange (camera_mode_t new_camera_mode)
-{
-	static vec3_t save_camorg, save_camangles;
-	static float save_camzoom;
-	static int save_level;
-
-	/* no camera change if this is not our round */
-	if (cls.team != cl.actTeam)
-		return;
-
-	/* save remote camera position, angles, zoom */
-	if (camera_mode == CAMERA_MODE_REMOTE) {
-		VectorCopy(cl.cam.camorg, save_camorg);
-		VectorCopy(cl.cam.angles, save_camangles);
-		save_camzoom = cl.cam.zoom;
-		save_level = cl_worldlevel->value;
-	}
-
-	/* toggle camera mode */
-	if (new_camera_mode == CAMERA_MODE_REMOTE) {
-		Com_Printf("Changed camera mode to remote.\n");
-		camera_mode = CAMERA_MODE_REMOTE;
-		VectorCopy(save_camorg, cl.cam.camorg);
-		VectorCopy(save_camangles, cl.cam.angles);
-		cl.cam.zoom = save_camzoom;
-		V_CalcFovX();
-		Cvar_SetValue("cl_worldlevel", save_level);
-	} else if (!cl_isometric->integer) {
-		Com_Printf("Changed camera mode to first-person.\n");
-		camera_mode = CAMERA_MODE_FIRSTPERSON;
-		VectorCopy(selActor->origin, cl.cam.camorg);
-		Cvar_SetValue("cl_worldlevel", cl.map_maxlevel);
-		VectorCopy(selActor->angles, cl.cam.angles);
-		refdef.fov_x = FOV_FPS;
-		cl.cam.zoom = 1.0;
-		wasCrouched = selActor->state & STATE_CROUCHED;
-		crouchHt = 0.;
-	} else {
-		Com_Printf("You can't change to first person mode in isometric mode\n");
-	}
-}
-
 const float MIN_ZOOM = 0.5;
 const float MAX_ZOOM = 32.0;
 
@@ -371,8 +305,7 @@ static void CL_LevelUp_f (void)
 {
 	if (!CL_OnBattlescape())
 		return;
-	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
-		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer < cl.map_maxlevel - 1) ? cl_worldlevel->integer + 1 : cl.map_maxlevel - 1);
+	Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer < cl.map_maxlevel - 1) ? cl_worldlevel->integer + 1 : cl.map_maxlevel - 1);
 }
 
 /**
@@ -382,8 +315,7 @@ static void CL_LevelDown_f (void)
 {
 	if (!CL_OnBattlescape())
 		return;
-	if (camera_mode != CAMERA_MODE_FIRSTPERSON)
-		Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer > 0) ? cl_worldlevel->integer - 1 : 0);
+	Cvar_SetValue("cl_worldlevel", (cl_worldlevel->integer > 0) ? cl_worldlevel->integer - 1 : 0);
 }
 
 
@@ -393,10 +325,6 @@ static void CL_ZoomInQuant_f (void)
 		MN_MouseWheel(qfalse, mousePosX, mousePosY);
 	else {
 		float quant;
-
-		/* no zooming in first person mode */
-		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-			return;
 
 		/* check zoom quant */
 		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
@@ -421,10 +349,6 @@ static void CL_ZoomOutQuant_f (void)
 		MN_MouseWheel(qtrue, mousePosX, mousePosY);
 	else {
 		float quant;
-
-		/* no zooming in first person mode */
-		if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-			return;
 
 		/* check zoom quant */
 		if (cl_camzoomquant->value < MIN_CAMZOOM_QUANT)
@@ -632,9 +556,6 @@ static void CL_DrawSpottedLines_f (void)
 
 	watcher = selActor;
 
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		CL_CameraModeChange(CAMERA_MODE_REMOTE);
-
 	for (i = 0; i < numLEs; i++) {
 		const le_t *le = &LEs[i];
 		if (le->inuse && LE_IsLivingAndVisibleActor(le) && le->team != cls.team
@@ -685,9 +606,6 @@ static void CL_NextAlienVisibleFromActor_f (void)
 
 	watcher = selActor;
 
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		CL_CameraModeChange(CAMERA_MODE_REMOTE);
-
 	if (lastAlien >= numLEs)
 		lastAlien = 0;
 
@@ -734,8 +652,6 @@ static void CL_NextAlien_f (void)
 	le_t *le;
 	int i;
 
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		CL_CameraModeChange(CAMERA_MODE_REMOTE);
 	if (lastAlien >= numLEs)
 		lastAlien = 0;
 
@@ -858,72 +774,6 @@ static float CL_GetKeyMouseState (int dir)
 }
 
 /**
- * @sa CL_CameraMove
- */
-static void CL_CameraMoveFirstPerson (void)
-{
-	const float rotation_speed =
-		(cl_camrotspeed->value > MIN_CAMROT_SPEED) ? ((cl_camrotspeed->value < MAX_CAMROT_SPEED) ? cl_camrotspeed->value : MAX_CAMROT_SPEED) : MIN_CAMROT_SPEED;
-
-	/* look left */
-	if ((in_turnleft.state & 1) && ((cl.cam.angles[YAW] - selActor->angles[YAW]) < 90))
-		cl.cam.angles[YAW] += cls.frametime * rotation_speed;
-
-	/* look right */
-	if ((in_turnright.state & 1) && ((selActor->angles[YAW] - cl.cam.angles[YAW]) < 90))
-		cl.cam.angles[YAW] -= cls.frametime * rotation_speed;
-
-	/* look down */
-	if ((in_turndown.state & 1) && (cl.cam.angles[PITCH] < 45))
-		cl.cam.angles[PITCH] += cls.frametime * rotation_speed;
-
-	/* look up */
-	if ((in_turnup.state & 1) && (cl.cam.angles[PITCH] > -45))
-		cl.cam.angles[PITCH] -= cls.frametime * rotation_speed;
-
-	/* ensure camera position matches actors origin */
-	VectorCopy(selActor->origin, cl.cam.camorg);
-
-	/* check if actor is starting a crouch/stand action */
-	if (wasCrouched != (selActor->state & STATE_CROUCHED)) {
-		doCrouch = qtrue;
-		crouchHt = 0.;
-		wasCrouched = selActor->state & STATE_CROUCHED;
-	}
-
-	/* adjust camera if actor is standing vs crouching */
-	if (doCrouch) {
-		if (selActor->state & STATE_CROUCHED) {
-			cl.cam.camorg[2] += EYE_HT_STAND;
-			crouchHt += 8. * cls.frametime;
-			cl.cam.camorg[2] -= crouchHt;
-			if (cl.cam.camorg[2] < selActor->origin[2] + EYE_HT_CROUCH) {
-				cl.cam.camorg[2] = selActor->origin[2] + EYE_HT_CROUCH;
-				doCrouch = qfalse;
-			}
-		} else {
-			cl.cam.camorg[2] += EYE_HT_CROUCH;
-			crouchHt += 8. * cls.frametime;
-			cl.cam.camorg[2] += crouchHt;
-			if (cl.cam.camorg[2] > selActor->origin[2] + EYE_HT_STAND) {
-				cl.cam.camorg[2] = selActor->origin[2] + EYE_HT_STAND;
-				doCrouch = qfalse;
-			}
-		}
-	} else {
-		if (selActor->state & STATE_CROUCHED)
-			cl.cam.camorg[2] += EYE_HT_CROUCH;
-		else
-			cl.cam.camorg[2] += EYE_HT_STAND;
-	}
-
-	/* move camera forward horizontally to where soldier eyes are */
-	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-	cl.cam.axis[0][2] = 0.0;
-	VectorMA(cl.cam.camorg, 5.0, cl.cam.axis[0], cl.cam.camorg);
-}
-
-/**
  * @brief forces the camera to stay within the horizontal bounds of the
  * map plus some border
  */
@@ -940,10 +790,7 @@ static inline void CL_ClampCamToMap (const float border)
 		cl.cam.origin[1] = map_max[1] + border;
 }
 
-/**
- * @sa CL_CameraMove
- */
-static void CL_CameraMoveRemote (void)
+void CL_CameraMove (void)
 {
 	float frac;
 	vec3_t g_forward, g_right, g_up;
@@ -959,6 +806,12 @@ static void CL_CameraMoveRemote (void)
 	const float moveaccel =
 		(cl_cammoveaccel->value > MIN_CAMMOVE_ACCEL) ?
 		((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value / cl.cam.zoom : MAX_CAMMOVE_ACCEL / cl.cam.zoom) : MIN_CAMMOVE_ACCEL / cl.cam.zoom;
+
+	if (cls.state != ca_active)
+		return;
+
+	if (!viddef.viewWidth || !viddef.viewHeight)
+		return;
 
 	/* calculate camera omega */
 	/* stop acceleration */
@@ -1079,24 +932,6 @@ static void CL_CameraMoveRemote (void)
 		VectorMA(cl.cam.origin, -CAMERA_START_DIST / cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
 		cl.cam.camorg[2] += CAMERA_START_HEIGHT / cl.cam.zoom + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 	}
-}
-
-/**
- * @sa CL_CameraMoveRemote
- * @sa CL_CameraMoveFirstPerson
- */
-void CL_CameraMove (void)
-{
-	if (cls.state != ca_active)
-		return;
-
-	if (!viddef.viewWidth || !viddef.viewHeight)
-		return;
-
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		CL_CameraMoveFirstPerson();
-	else
-		CL_CameraMoveRemote();
 }
 
 /**
@@ -1634,9 +1469,7 @@ void IN_Init (void)
 	Cmd_AddCommand("camsetzoom", CL_CamSetZoom_f, "Set camera zoom level");
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
 
-	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 	Cmd_AddCommand("bindingstoggle", CL_InputBindingsToggle_f, "Toggle the use of bind keys - useful for some popup menus");
-	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 
 	mousePosX = mousePosY = 0.0;
 

@@ -59,9 +59,6 @@ typedef struct {
 	float zoom;			/**< the current zoom level (see MIN_ZOOM and MAX_ZOOM) */
 } camera_t;
 
-typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
-
-extern camera_mode_t camera_mode;
 extern int mouseSpace;
 extern int mousePosX, mousePosY;
 extern const float MIN_ZOOM, MAX_ZOOM;
@@ -77,6 +74,5 @@ void IN_EventEnqueue(unsigned int key, unsigned short, qboolean down);
 
 void CL_CameraMove(void);
 void CL_CameraRoute(pos3_t from, pos3_t target);
-void CL_CameraModeChange(camera_mode_t newcameramode);
 
 #endif /* CLIENT_INPUT_H */

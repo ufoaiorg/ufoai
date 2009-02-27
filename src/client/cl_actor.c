@@ -936,10 +936,6 @@ qboolean CL_ActorSelect (le_t * le)
 
 	CL_ConditionalMoveCalcForCurrentSelectedActor();
 
-	/* move first person camera to new actor */
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
-
 	/* Change to move-mode and hide firemodes.
 	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
 	if (!sameActor) {
@@ -2283,10 +2279,6 @@ void CL_NextRound_f (void)
 	msg = new_dbuffer();
 	NET_WriteByte(msg, clc_endround);
 	NET_WriteMsg(cls.netStream, msg);
-
-	/* change back to remote view */
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON)
-		CL_CameraModeChange(CAMERA_MODE_REMOTE);
 }
 
 /**
@@ -2349,7 +2341,7 @@ MOUSE SCANNING
  */
 void CL_ActorMouseTrace (void)
 {
-	int i, restingLevel, intersectionLevel;
+	int i, restingLevel;
 	float cur[2], frustumslope[2], projectiondistance = 2048;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
@@ -2371,28 +2363,10 @@ void CL_ActorMouseTrace (void)
 	cur[1] = (mousePosY * viddef.ry - viddef.viewHeight * 0.5 - viddef.y) / (viddef.viewHeight * 0.5);
 
 	/* get trace vectors */
-	if (camera_mode == CAMERA_MODE_FIRSTPERSON) {
-		VectorCopy(selActor->origin, from);
-		/* trace from eye-height */
-		if (selActor->state & STATE_CROUCHED)
-			from[2] += EYE_HT_CROUCH;
-		else
-			from[2] += EYE_HT_STAND;
-		AngleVectors(cl.cam.angles, forward, right, up);
-		/* set the intersection level to that of the selected actor */
-		VecToPos(from, testPos);
-		intersectionLevel = Grid_Fall(clMap, fieldSize, testPos);
-
-		/* if looking up, raise the intersection level */
-		if (cur[1] < 0.0f)
-			intersectionLevel++;
-	} else {
-		VectorCopy(cl.cam.camorg, from);
-		VectorCopy(cl.cam.axis[0], forward);
-		VectorCopy(cl.cam.axis[1], right);
-		VectorCopy(cl.cam.axis[2], up);
-		intersectionLevel = cl_worldlevel->integer;
-	}
+	VectorCopy(cl.cam.camorg, from);
+	VectorCopy(cl.cam.axis[0], forward);
+	VectorCopy(cl.cam.axis[1], right);
+	VectorCopy(cl.cam.axis[2], up);
 
 	if (cl_isometric->integer)
 		frustumslope[0] = 10.0 * refdef.fov_x;
@@ -2426,7 +2400,7 @@ void CL_ActorMouseTrace (void)
 	 *     u = (mapNormal dot (P3 - P1))/(mapNormal dot (P2 - P1))
 	 * Note: in the code below from & stop represent P1 and P2 respectively
 	 */
-	VectorSet(P3, 0., 0., intersectionLevel * UNIT_HEIGHT + CURSOR_OFFSET);
+	VectorSet(P3, 0., 0., cl_worldlevel->integer * UNIT_HEIGHT + CURSOR_OFFSET);
 	VectorSet(mapNormal, 0., 0., 1.);
 	VectorSubtract(stop, from, P2minusP1);
 	nDotP2minusP1 = DotProduct(mapNormal, P2minusP1);
@@ -2466,7 +2440,7 @@ void CL_ActorMouseTrace (void)
 	restingLevel = min(restingLevel, Grid_Fall(clMap, fieldSize, testPos));
 
 	/* if grid below intersection level, start a trace from the intersection */
-	if (restingLevel < intersectionLevel) {
+	if (restingLevel < cl_worldlevel->integer) {
 		VectorCopy(end, from);
 		from[2] -= CURSOR_OFFSET;
 		TR_TestLineDM(from, stop, end, TL_FLAG_ACTORCLIP);
@@ -2480,7 +2454,7 @@ void CL_ActorMouseTrace (void)
 
 	/* Set truePos- test pos is under the cursor. */
 	VectorCopy(testPos, truePos);
-	truePos[2] = intersectionLevel;
+	truePos[2] = cl_worldlevel->integer;
 
 	/* Set mousePos to the position that the actor will move to. */
 	testPos[2] = restingLevel;

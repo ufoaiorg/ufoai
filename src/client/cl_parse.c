@@ -555,7 +555,6 @@ static void CL_StartGame (struct dbuffer *msg)
 	VectorSet(cl.cam.omega, 0.0, 0.0, 0.0);
 	cl.cam.zoom = 1.25;
 	V_CalcFovX();
-	camera_mode = CAMERA_MODE_REMOTE;
 
 	SCR_SetLoadingBackground(NULL);
 
