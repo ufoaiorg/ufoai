@@ -41,7 +41,7 @@ int CL_GetRankIdx (const char* rankID)
 		return -1;
 
 	for (i = 0; i < gd.numRanks; i++) {
-		if (!Q_strncmp(gd.ranks[i].id, rankID, MAX_VAR))
+		if (!Q_strcmp(gd.ranks[i].id, rankID))
 			return i;
 	}
 	Com_Printf("Could not find rank '%s'\n", rankID);
@@ -105,7 +105,7 @@ void CL_ParseRanks (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		for (v = rankValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+			if (!Q_strcmp(token, v->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)

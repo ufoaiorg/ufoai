@@ -213,7 +213,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 		return;
 	}
 	/* Don't parse if it is not definition for current type of campaign. */
-	if ((Q_strncmp(campaign->researched, name, MAX_VAR)) != 0)
+	if ((Q_strcmp(campaign->researched, name)) != 0)
 		return;
 
 	/* get it's body */
@@ -233,7 +233,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 		for (i = 0; i < ccs.numTechnologies; i++) {
 			tech = RS_GetTechByIDX(i);
 			assert(tech);
-			if (!Q_strncmp(token, tech->id, MAX_VAR)) {
+			if (!Q_strcmp(token, tech->id)) {
 				tech->mailSent = MAILSENT_FINISHED;
 				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = qtrue;
 				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
@@ -276,7 +276,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 		return;
 	}
 
-	if (Q_strncmp(campaign->researched, name, MAX_VAR)) {
+	if (Q_strcmp(campaign->researched, name)) {
 		Com_DPrintf(DEBUG_CLIENT, "..don't use '%s' as researchable list\n", name);
 		return;
 	}
@@ -289,7 +289,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 
 		for (i = 0; i < ccs.numTechnologies; i++) {
 			tech = RS_GetTechByIDX(i);
-			if (!Q_strncmp(token, tech->id, MAX_VAR)) {
+			if (!Q_strcmp(token, tech->id)) {
 				if (researchable) {
 					tech->mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(tech);
