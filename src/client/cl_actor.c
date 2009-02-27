@@ -2098,6 +2098,7 @@ void CL_ActorDie (struct dbuffer *msg)
 			break;
 		case (TEAM_ALIEN):
 			if (le->teamDef) {
+				/** @todo campaign mode only - doesn't belong here */
 				if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
 					if (LE_IsStunned(le)) {
 						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
@@ -3074,6 +3075,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				break;
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
+					/** @todo campaign mode only - doesn't belong here */
 					if (mouseActor->teamDef) {
 						if (!GAME_IsCampaign() || RS_IsResearched_ptr(RS_GetTechByID(mouseActor->teamDef->tech)))
 							MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));

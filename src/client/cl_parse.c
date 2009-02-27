@@ -1093,7 +1093,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 			/* message */
 			if (le->team != TEAM_CIVILIAN) {
-				/** @todo doesn't belong here */
+				/** @todo campaign mode only - doesn't belong here */
 				if (GAME_IsCampaign()) {
 					if (le->teamDef) {
 						if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
