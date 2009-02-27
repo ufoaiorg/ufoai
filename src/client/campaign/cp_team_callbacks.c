@@ -40,18 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 linkedList_t *employeeList;	/* @sa E_GetEmployeeByMenuIndex */
 int employeesInCurrentList;
 
-/**
- * @brief Returns the aircraft for the team and soldier selection menus
- * @note Multiplayer and skirmish are using @c cls.missionaircraft, campaign mode is
- * using the current selected aircraft in base
- */
-static inline aircraft_t *CL_GetTeamAircraft (base_t *base)
-{
-	if (!base)
-		Sys_Error("CL_GetTeamAircraft: Called without base");
-	return base->aircraftCurrent;
-}
-
 /***********************************************************
  * Bindings
  ***********************************************************/
@@ -73,7 +61,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 		return qfalse;
 	}
 
-	aircraft = CL_GetTeamAircraft(baseCurrent);
+	aircraft = baseCurrent->aircraftCurrent;
 	if (!aircraft) {
 		return qfalse;
 	}
@@ -83,7 +71,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 	soldier_list_size = drawableListSize;
 	soldier_list_pos = beginIndex;
 
-	/* Populate employeeList - base might be NULL for none-campaign mode games */
+	/* Populate employeeList */
 	employeesInCurrentList = E_GetHiredEmployees(aircraft->homebase, employeeType, &employeeList);
 	emplList = employeeList;
 	id = 0;
@@ -216,7 +204,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	if (!baseCurrent)
 		return;
 
-	aircraft = CL_GetTeamAircraft(baseCurrent);
+	aircraft = baseCurrent->aircraftCurrent;
 	if (!aircraft)
 		return;
 
@@ -288,7 +276,7 @@ static void CL_AssignPilot_f (void)
 	if (!employee)
 		Sys_Error("CL_AssignPilot_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
 
-	aircraft = CL_GetTeamAircraft(base);
+	aircraft = base->aircraftCurrent;
 	if (!aircraft)
 		return;
 
@@ -337,7 +325,7 @@ static void CL_AssignSoldier_f (void)
 	if (!employeeList)
 		return;
 
-	aircraft = CL_GetTeamAircraft(base);
+	aircraft = base->aircraftCurrent;
 	if (!aircraft)
 		return;
 

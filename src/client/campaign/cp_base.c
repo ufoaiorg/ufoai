@@ -2325,7 +2325,8 @@ static void B_AssignInitial (aircraft_t *aircraft, const equipDef_t *ed)
 	}
 
 	base = aircraft->homebase;
-	/* homebase is only set in campaign mode */
+	assert(base);
+
 	num = E_GenerateHiredEmployeesList(base);
 	num = min(num, MAX_TEAMLIST);
 	for (i = 0; i < num; i++)

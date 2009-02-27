@@ -710,7 +710,6 @@ static qboolean CP_ItemsSanityCheck (void)
 			Com_Printf("CP_ItemsSanityCheck: Item %s has zero price set.\n", item->id);
 		}
 
-		/** @todo production is campaign mode only - shouldn't be here */
 		if (item->price > 0 && item->notOnMarket && !PR_ItemIsProduceable(item)) {
 			result = qfalse;
 			Com_Printf("CP_ItemsSanityCheck: Item %s has a price set though it is neither available on the market and production.\n", item->id);

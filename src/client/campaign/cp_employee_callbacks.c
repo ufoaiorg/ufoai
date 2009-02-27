@@ -256,7 +256,7 @@ static void E_ChangeName_f (void)
 	employee_t *employee = selectedEmployee;
 
 	/* Maybe called without base initialized or active. */
-	if (!baseCurrent || !GAME_IsCampaign())
+	if (!baseCurrent)
 		return;
 
 	if (employee)
@@ -267,7 +267,6 @@ static void E_ChangeName_f (void)
  * @brief Fill employeeList with a list of employees in the current base (i.e. they are hired and not transferred)
  * @note Depends on cls.displayHeavyEquipmentList to be set correctly.
  * @sa E_GetEmployeeByMenuIndex - It is used to get a specific entry from the generated employeeList.
- * @note If base is NULL all employees of all bases are added to the list - especially useful for none-campaign mode games
  */
 int E_GenerateHiredEmployeesList (const base_t *base)
 {
@@ -276,6 +275,7 @@ int E_GenerateHiredEmployeesList (const base_t *base)
 			? EMPL_ROBOT
 			: EMPL_SOLDIER;
 
+	assert(base);
 	employeesInCurrentList = E_GetHiredEmployees(base, employeeType, &employeeList);
 	return employeesInCurrentList;
 }
