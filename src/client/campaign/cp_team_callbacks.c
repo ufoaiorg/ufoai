@@ -146,7 +146,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 	MN_ExecuteConfunc("aircraft_%s_list_size %i", nodeTag, id);
 
 	for (;id - beginIndex < drawableListSize; id++) {
-		int guiId = id - beginIndex;
+		const int guiId = id - beginIndex;
 		MN_ExecuteConfunc("aircraft_%s_unusedslot %i", nodeTag, guiId);
 		Cvar_ForceSet(va("mn_name%i", guiId), "");
 	}
@@ -162,7 +162,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
  */
 static void CL_UpdateSoldierList_f (void)
 {
-	qboolean resukt;
+	qboolean result;
 	int drawableListSize;
 	int beginIndex;
 
@@ -173,8 +173,8 @@ static void CL_UpdateSoldierList_f (void)
 	drawableListSize = atoi(Cmd_Argv(1));
 	beginIndex = atoi(Cmd_Argv(2));
 
-	resukt = CL_UpdateEmployeeList(EMPL_SOLDIER, "soldier", beginIndex, drawableListSize);
-	if (!resukt)
+	result = CL_UpdateEmployeeList(EMPL_SOLDIER, "soldier", beginIndex, drawableListSize);
+	if (!result)
 		MN_PopMenu(qfalse);
 }
 
@@ -186,7 +186,7 @@ static void CL_UpdateSoldierList_f (void)
  */
 static void CL_UpdatePilotList_f (void)
 {
-	qboolean resukt;
+	qboolean result;
 	int drawableListSize;
 	int beginIndex;
 	if (Cmd_Argc() != 3) {
@@ -196,8 +196,8 @@ static void CL_UpdatePilotList_f (void)
 	drawableListSize = atoi(Cmd_Argv(1));
 	beginIndex = atoi(Cmd_Argv(2));
 
-	resukt = CL_UpdateEmployeeList(EMPL_PILOT, "pilot", beginIndex, drawableListSize);
-	if (!resukt)
+	result = CL_UpdateEmployeeList(EMPL_PILOT, "pilot", beginIndex, drawableListSize);
+	if (!result)
 		MN_PopMenu(qfalse);
 }
 
@@ -330,7 +330,7 @@ static void CL_AssignSoldier_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(baseCurrent, employeeType))
+	if (num >= E_CountHired(base, employeeType))
 		return;
 
 	/* In case we didn't populate the list with E_GenerateHiredEmployeesList before. */
