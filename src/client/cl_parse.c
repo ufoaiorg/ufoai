@@ -264,6 +264,7 @@ typedef struct evTimes_s {
 static evTimes_t *events = NULL;
 
 qboolean blockEvents;	/**< block network events - see CL_Events */
+cvar_t *cl_block_events;
 
 /** @brief CL_ParseEvent timers and vars */
 static int nextTime;	/**< time when the next event should be executed */
@@ -1564,10 +1565,13 @@ static void CL_ScheduleEvent (evTimes_t *event)
 
 /**
  * @sa CL_UnblockEvents
+ * @todo Get rid of the blocking for actor selection and actor movement - we should
+ * really be able to move more than one actor at the same time
  */
 void CL_BlockEvents (void)
 {
-	blockEvents = qtrue;
+	if (cl_block_events->integer)
+		blockEvents = qtrue;
 }
 
 /**
