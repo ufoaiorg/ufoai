@@ -313,6 +313,7 @@ static void CP_BaseAttackGoToBase (mission_t *mission)
 	}
 
 	Vector2Copy(base->pos, mission->pos);
+	mission->posAssigned = qtrue;
 
 	Com_sprintf(mission->location, sizeof(mission->location), "%s", base->name);
 

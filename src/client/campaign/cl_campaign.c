@@ -327,6 +327,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
 		Sys_Error("Could not find mapdef alienbase");
 
 	Vector2Copy(alienBase->pos, mission->pos);
+	mission->posAssigned = qtrue;
 
 	Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
 
@@ -1086,6 +1087,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			act_node = mxml_GetNextNode(act_node, campaign, "mission"), i++) {
 		mission_t mission;
 		int ufoIdx;
+		qboolean defaultAssigned=qfalse;
 
 		memset(&mission, 0, sizeof(mission));
 		name = mxml_GetString(act_node, "mapDef_id");
@@ -1101,8 +1103,6 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 		Q_strncpyz(mission.id, mxml_GetString(act_node, "id"), sizeof(mission.id));
 		mission.active = mxml_GetBool(act_node, "active", qfalse);
-		/* qtrue is here as a debug helper */
-		mission.crashed = mxml_GetBool(act_node,"crashed", qtrue);
 		Q_strncpyz(mission.onwin, mxml_GetString(act_node, "onwin"), sizeof(mission.onwin));
 		Q_strncpyz(mission.onlose, mxml_GetString(act_node, "onlose"), sizeof(mission.onlose));
 		mission.category = mxml_GetInt(act_node, "category", 0);
@@ -1159,8 +1159,12 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		else
 			mission.ufo = ccs.ufos + ufoIdx;
 
+		mission.crashed = mxml_GetBool(act_node,"crashed", qfalse);
 		mission.onGeoscape = mxml_GetBool(act_node, "ongeoscape", qfalse);
 
+		if (mission.pos[0] > 0.001 || mission.pos[1] > 0.001)
+			defaultAssigned = qtrue;
+		mission.posAssigned = mxml_GetBool(act_node, "posassigned", defaultAssigned);
 		/* Add mission to global array */
 		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
 	}
@@ -1516,8 +1520,9 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 			mxml_AddInt(missions, "mapdeftimes", mission->mapDef->timesAlreadyUsed);
 		}
 		mxml_AddString(missions, "id", mission->id);
-		mxml_AddShort(missions, "active", mission->active);
-		mxml_AddBool(missions,"crashed", mission->crashed);
+		mxml_AddBool(missions, "active", mission->active);
+		mxml_AddBool(missions, "posassigned", mission->posAssigned);
+		mxml_AddBool(missions, "crashed", mission->crashed);
 		mxml_AddString(missions, "onwin", mission->onwin);
 		mxml_AddString(missions, "onlose", mission->onlose);
 		mxml_AddShort(missions, "category", mission->category);

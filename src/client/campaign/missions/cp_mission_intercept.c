@@ -182,6 +182,7 @@ void CP_InterceptGoToInstallation (mission_t *mission)
 	mission->data = (void *)installation;
 
 	Vector2Copy(installation->pos, mission->pos);
+	mission->posAssigned = qtrue;
 
 	Com_sprintf(mission->location, sizeof(mission->location), "%s", installation->name);
 

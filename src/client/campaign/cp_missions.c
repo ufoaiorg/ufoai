@@ -275,7 +275,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
 {
 	int numAliens;
 
-	assert(mission->pos);
+	assert(mission->posAssigned);
 
 	numAliens = 4 + (int) ccs.overallInterest / 50;
 	if (numAliens > mission->mapDef->maxAliens)
@@ -295,7 +295,7 @@ static void CP_CreateCivilianTeam (mission_t *mission)
 {
 	nation_t *nation;
 
-	assert(mission->pos);
+	assert(mission->posAssigned);
 
 	ccs.battleParameters.civilians = MAP_GetCivilianNumberByPosition(mission->pos);
 
@@ -320,7 +320,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 	const char *zoneType;
 	const byte *color;
 
-	assert(mission->pos);
+	assert(mission->posAssigned);
 
 	CP_CreateAlienTeam(mission);
 	CP_CreateCivilianTeam(mission);
@@ -676,11 +676,8 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 static missionDetectionStatus_t CP_CheckMissionVisibleOnGeoscape (const mission_t const *mission)
 {
 	/* This function could be called before position of the mission is defined */
-	/** @todo Create a check for the position */
-	/* pos is a type. (and no pointer) So this is always true
-	if (!mission->pos)
+	if (!mission->posAssigned)
 		return qfalse;
-	*/
 
 	if (mission->crashed)
 		return MISDET_ALWAYS_DETECTED;
@@ -1268,6 +1265,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 	}
 
 	Vector2Copy(ufo->pos, mission->pos);
+	mission->posAssigned = qtrue;
 
 	nation = MAP_GetNation(mission->pos);
 	if (nation) {
@@ -1643,7 +1641,7 @@ static void CP_MissionList_f (void)
 		Com_Printf("...location: '%s'\n", mission->location);
 		Com_Printf("...start (day = %i, sec = %i), ends (day = %i, sec = %i)\n",
 			mission->startDate.day, mission->startDate.sec, mission->finalDate.day, mission->finalDate.sec);
-		Com_Printf("...pos (%.02f, %.02f) -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->onGeoscape ? "" : "not ");
+		Com_Printf("...pos (%.02f, %.02f)%s -- mission %son Geoscape\n", mission->pos[0], mission->pos[1], mission->posAssigned ? "(assigned Pos)" : "", mission->onGeoscape ? "" : "not ");
 		if (mission->ufo)
 			Com_Printf("...UFO: %s (%i/%i)\n", mission->ufo->id, (int) (mission->ufo - ccs.ufos), ccs.numUFOs - 1);
 		else

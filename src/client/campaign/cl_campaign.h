@@ -212,6 +212,7 @@ typedef struct mission_s {
 
 	char onwin[MAX_VAR];			/**< trigger command after you've won a battle, @sa CP_ExecuteMissionTrigger */
 	char onlose[MAX_VAR];			/**< trigger command after you've lost a battle, @sa CP_ExecuteMissionTrigger */
+	qboolean posAssigned;			/**< is the position of this mission already set? */
 } mission_t;
 
 /** battlescape parameters that were used */

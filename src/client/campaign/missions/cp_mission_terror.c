@@ -110,7 +110,8 @@ static void CP_TerrorMissionGo (mission_t *mission)
 		if (!CP_ChooseMap(mission, city->pos, qfalse))
 			continue;
 
-		Vector2Set(mission->pos, city->pos[0], city->pos[1]);
+		Vector2Copy(city->pos, mission->pos);
+		mission->posAssigned = qtrue;
 		Com_sprintf(mission->location, sizeof(mission->location), "%s", _(city->name));
 		break;
 	}
