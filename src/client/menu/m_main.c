@@ -230,12 +230,12 @@ void MN_Init (void)
 	memset(&mn, 0, sizeof(mn));
 
 	/* add cvars */
-	mn_main = Cvar_Get("mn_main", "main", 0, "Which is the main menu id to return to - also see mn_active");
-	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "Which is the sequence menu to render the sequence in");
-	mn_active = Cvar_Get("mn_active", "", 0, "The active menu can will return to when hitting esc - also see mn_main");
+	mn_main = Cvar_Get("mn_main", "main", 0, "This is the main menu id that is at the very first menu stack - also see mn_active");
+	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
+	mn_active = Cvar_Get("mn_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_main");
 	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
 	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
-	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "Which is the current selected hud");
+	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "This is the current selected hud");
 
 	/* add menu commands */
 	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
