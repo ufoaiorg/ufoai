@@ -45,12 +45,14 @@ typedef struct gameTypeList_s {
 	void (*results)(struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
 	/** check whether the given item is useable in the current game mode */
 	qboolean (*itemIsUseable)(const objDef_t *od);
+	/** returns the equipment definition the game mode is using */
+	equipDef_t * (*getequipdef)(void);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -310,12 +312,26 @@ int GAME_GetCurrentTeam (void)
 
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
-			/* this callback is responsible to set up the cl.chrList */
 			return list->getteam();
 		}
 		list++;
 	}
 	Sys_Error("GAME_GetCurrentTeam: Could not determine gamemode");
+}
+
+equipDef_t *GAME_GetEquipmentDefinition (void)
+{
+	const gameTypeList_t *list = gameTypeList;
+
+	while (list->name) {
+		if (list->gametype == cls.gametype) {
+			if (list->getequipdef == NULL)
+				return NULL;
+			return list->getequipdef();
+		}
+		list++;
+	}
+	Sys_Error("GAME_GetEquipmentDefinition: Could not determine gamemode");
 }
 
 /**

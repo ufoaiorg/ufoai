@@ -276,6 +276,13 @@ int GAME_MP_GetTeam (void)
 	return cl_team->integer;
 }
 
+static equipDef_t equipDefMultiplayer;
+
+equipDef_t *GAME_MP_GetEquipmentDefinition (void)
+{
+	return &equipDefMultiplayer;
+}
+
 void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");

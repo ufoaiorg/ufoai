@@ -428,6 +428,11 @@ int GAME_CP_GetTeam (void)
 	return curCampaign->team;
 }
 
+equipDef_t *GAME_CP_GetEquipmentDefinition (void)
+{
+	return &ccs.eMission;
+}
+
 void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");

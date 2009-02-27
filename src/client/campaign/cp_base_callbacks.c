@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 #include "cp_base.h"
 #include "cl_map.h"
+#include "cl_popup.h"
 
 /** @brief Used from menu scripts as parameter for mn_select_base */
 #define CREATE_NEW_BASE_ID -1

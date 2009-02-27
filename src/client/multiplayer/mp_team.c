@@ -25,14 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client.h"
 #include "../cl_game.h"
+#include "../cl_inventory.h"
 #include "../cl_team.h"
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"	/**< menuInventory */
 #include "mp_team.h"
-
-/** @todo Remove this once the ccs struct is no longer needed here */
-#include "../campaign/cl_campaign.h" /**< ccs */
 
 #define MPTEAM_SAVE_FILE_VERSION 2
 
@@ -223,6 +221,7 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 	char dummy[2];
 	int i;
 	mxml_node_t *top_node, *node, *snode;
+	equipDef_t *ed = GAME_GetEquipmentDefinition();
 
 	top_node = mxmlNewXML("1.0");
 	node = mxml_AddNode(top_node, "multiplayer");
@@ -239,9 +238,8 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 	for (i = 0; i < csi.numODs; i++) {
 		mxml_node_t *ssnode = mxml_AddNode(snode, "emission");
 		mxml_AddString(ssnode, "id", csi.ods[i].id);
-		/** @todo ccs is campaign mode only */
-		mxml_AddInt(ssnode, "num", ccs.eMission.num[i]);
-		mxml_AddInt(ssnode, "numloose", ccs.eMission.numLoose[i]);
+		mxml_AddInt(ssnode, "num", ed->num[i]);
+		mxml_AddInt(ssnode, "numloose", ed->numLoose[i]);
 	}
 	requiredbuflen = mxmlSaveString(top_node, dummy, 2, MXML_NO_CALLBACK);
 	/** @todo little/big endian */
@@ -289,6 +287,7 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	int i, res;
+	equipDef_t *ed = GAME_GetEquipmentDefinition();
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
@@ -300,13 +299,12 @@ static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
 	/* store team */
 	MP_SaveTeamMultiplayerInfo(&sb);
 
-	/* store equipment in ccs.eMission so soldiers can be properly equipped */
+	/* store equipment so soldiers can be properly equipped */
 	MSG_WriteShort(&sb, csi.numODs);
 	for (i = 0; i < csi.numODs; i++) {
 		MSG_WriteString(&sb, csi.ods[i].id);
-		/** @todo ccs is campaign mode only */
-		MSG_WriteLong(&sb, ccs.eMission.num[i]);
-		MSG_WriteByte(&sb, ccs.eMission.numLoose[i]);
+		MSG_WriteLong(&sb, ed->num[i]);
+		MSG_WriteByte(&sb, ed->numLoose[i]);
 	}
 
 	/* write data */
@@ -431,6 +429,7 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	int i, clen;
 	mxml_node_t *top_node, *node, *snode, *ssnode;
 	mpSaveFileHeader_t header;
+	equipDef_t *ed;
 
 	/* open file */
 	f.f = fopen(filename, "rb");
@@ -496,12 +495,14 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	snode = mxml_GetNode(node, "equipment");
 	if (!snode)
 		Com_Printf("Equipment Node not found\n");
+
+	ed = GAME_GetEquipmentDefinition();
 	for (i = 0, ssnode = mxml_GetNode(snode, "emission"); ssnode && i < csi.numODs; i++, ssnode = mxml_GetNextNode(ssnode, snode, "emission")) {
 		const char *objID = mxml_GetString(ssnode, "id");
 		const objDef_t *od = INVSH_GetItemByID(objID);
 		if (od) {
-			ccs.eMission.num[od->idx] = mxml_GetInt(snode, "num", 0);
-			ccs.eMission.numLoose[od->idx] = mxml_GetInt(snode, "numloose", 0);
+			ed->num[od->idx] = mxml_GetInt(snode, "num", 0);
+			ed->numLoose[od->idx] = mxml_GetInt(snode, "numloose", 0);
 		}
 	}
 
@@ -523,6 +524,7 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 	FILE *f;
 	int version;
 	int i, num;
+	equipDef_t *ed;
 
 	/* open file */
 	f = fopen(filename, "rb");
@@ -556,6 +558,7 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 
 	/* read equipment */
 	num = MSG_ReadShort(&sb);
+	ed = GAME_GetEquipmentDefinition();
 	for (i = 0; i < num; i++) {
 		const char *objID = MSG_ReadString(&sb);
 		const objDef_t *od = INVSH_GetItemByID(objID);
@@ -563,8 +566,8 @@ static void MP_LoadTeamMultiplayer (const char *filename)
 			MSG_ReadLong(&sb);
 			MSG_ReadByte(&sb);
 		} else {
-			ccs.eMission.num[od->idx] = MSG_ReadLong(&sb);
-			ccs.eMission.numLoose[od->idx] = MSG_ReadByte(&sb);
+			ed->num[od->idx] = MSG_ReadLong(&sb);
+			ed->numLoose[od->idx] = MSG_ReadByte(&sb);
 		}
 	}
 }
@@ -600,21 +603,20 @@ void MP_LoadTeamMultiplayer_f (void)
 /**
  * @brief Get the equipment definition (from script files) for the current selected multiplayer team
  * and updates the equipment inventory containers
- * @todo Multiplayer is currently using the ccs.eMission - this should be
- * changed - ccs is campaign mode only
  */
 static void MP_GetEquipment (void)
 {
-	const equipDef_t *ed;
+	const equipDef_t *edFromScript;
 	const char *teamID = Com_ValueToStr(&cl_team->integer, V_TEAM, 0);
 	char equipmentName[MAX_VAR];
 	equipDef_t unused;
+	equipDef_t *ed;
 
 	Com_sprintf(equipmentName, sizeof(equipmentName), "multiplayer_%s", teamID);
 
 	/* search equipment definition */
-	ed = INV_GetEquipmentDefinitionByID(equipmentName);
-	if (ed == NULL) {
+	edFromScript = INV_GetEquipmentDefinitionByID(equipmentName);
+	if (edFromScript == NULL) {
 		Com_Printf("Equipment '%s' not found!\n", equipmentName);
 		return;
 	}
@@ -624,10 +626,12 @@ static void MP_GetEquipment (void)
 	else
 		menuInventory = NULL;
 
-	ccs.eMission = *ed;
+	ed = GAME_GetEquipmentDefinition();
+	*ed = *edFromScript;
 
+	/* we don't want to lose anything from ed - so we copy it and screw the copied stuff afterwards */
+	unused = *edFromScript;
 	/* manage inventory */
-	unused = ccs.eMission;
 	MN_ContainerNodeUpdateEquipment(&mp_inventory, &unused);
 }
 

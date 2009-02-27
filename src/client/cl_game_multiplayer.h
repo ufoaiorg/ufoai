@@ -32,5 +32,6 @@ void GAME_MP_Shutdown(void);
 void GAME_MP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 qboolean GAME_MP_Spawn(void);
 int GAME_MP_GetTeam(void);
+equipDef_t *GAME_MP_GetEquipmentDefinition(void);
 
 #endif

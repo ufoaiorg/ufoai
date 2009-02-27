@@ -42,9 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "multiplayer/mp_chatmessages.h"
 
-/** @todo campaign mode only stuff - remove this from here */
-#include "campaign/cl_campaign.h" /**< ccs */
-
 cvar_t *cl_logevents;
 
 /**
@@ -1461,6 +1458,7 @@ static void CL_InvReload (struct dbuffer *msg)
 	le_t	*le;
 	int		number;
 	int		ammo, type, container, x, y;
+	equipDef_t *ed;
 
 	NET_ReadFormat(msg, ev_format[EV_INV_RELOAD],
 		&number, &ammo, &type, &container, &x, &y);
@@ -1482,16 +1480,16 @@ static void CL_InvReload (struct dbuffer *msg)
 	if (!ic)
 		return;
 
-	/** @todo Campaign mode only stuff - doesn't belong here */
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */
-	if (GAME_IsCampaign() && ic->item.a > 0 && ic->item.a != ic->item.t->ammo) {
+	ed = GAME_GetEquipmentDefinition();
+	if (ed && ic->item.a > 0 && ic->item.a != ic->item.t->ammo) {
 		assert(ammo == ic->item.t->ammo);
-		ccs.eMission.numLoose[ic->item.m->idx] += ic->item.a;
+		ed->numLoose[ic->item.m->idx] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
-		if (ccs.eMission.numLoose[ic->item.m->idx] >= ic->item.t->ammo) {
-			ccs.eMission.numLoose[ic->item.m->idx] -= ic->item.t->ammo;
-			ccs.eMission.num[ic->item.m->idx]++;
+		if (ed->numLoose[ic->item.m->idx] >= ic->item.t->ammo) {
+			ed->numLoose[ic->item.m->idx] -= ic->item.t->ammo;
+			ed->num[ic->item.m->idx]++;
 		}
 	}
 
