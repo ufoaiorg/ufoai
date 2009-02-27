@@ -1048,7 +1048,6 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
  */
 static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 {
-	assert(curCampaign);
 	assert(curCampaign->firstBaseTemplate[0]);
 
 	RS_MarkResearchable(qtrue, base);

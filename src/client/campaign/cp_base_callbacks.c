@@ -493,8 +493,7 @@ static void B_AssembleMap_f (void)
 	/* set maxlevel for base attacks */
 	cl.map_maxlevel_base = 6;
 
-	if (curCampaign)
-		SAV_QuickSave();
+	SAV_QuickSave();
 
 	Cbuf_AddText(va("map day \"%s\" \"%s\"\n", maps, coords));
 }

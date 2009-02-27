@@ -362,8 +362,6 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 	/* fraction of nation that can be below min happiness before the game is lost */
 	const float nationBelowLimitPercentage = 0.5f;
 
-	assert(curCampaign);
-
 	if (!endCampaign && ccs.credits < -curCampaign->negativeCreditsUntilLost) {
 		MN_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
 		endCampaign = qtrue;
@@ -637,8 +635,6 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 void CP_InitMarket (qboolean load)
 {
 	int i;
-
-	assert(curCampaign);
 
 	/* find the relevant markets */
 	curCampaign->marketDef = INV_GetEquipmentDefinitionByID(curCampaign->market);
@@ -1087,7 +1083,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 			act_node = mxml_GetNextNode(act_node, campaign, "mission"), i++) {
 		mission_t mission;
 		int ufoIdx;
-		qboolean defaultAssigned=qfalse;
+		qboolean defaultAssigned = qfalse;
 
 		memset(&mission, 0, sizeof(mission));
 		name = mxml_GetString(act_node, "mapDef_id");
@@ -1159,7 +1155,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		else
 			mission.ufo = ccs.ufos + ufoIdx;
 
-		mission.crashed = mxml_GetBool(act_node,"crashed", qfalse);
+		mission.crashed = mxml_GetBool(act_node, "crashed", qfalse);
 		mission.onGeoscape = mxml_GetBool(act_node, "ongeoscape", qfalse);
 
 		if (mission.pos[0] > 0.001 || mission.pos[1] > 0.001)
@@ -2480,9 +2476,6 @@ void CP_CampaignInit (qboolean load)
 
 void CP_CampaignExit (void)
 {
-	if (!curCampaign)
-		return;
-
 	SV_Shutdown("Game exit", qfalse);
 	CL_Disconnect();
 

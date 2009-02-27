@@ -916,8 +916,6 @@ qboolean SAV_QuickSave (void)
 	char *error = NULL;
 	qboolean result;
 
-	assert(curCampaign);
-
 	if (CL_OnBattlescape())
 		return qfalse;
 

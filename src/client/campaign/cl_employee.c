@@ -687,7 +687,6 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
  */
 employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
 {
-	assert(curCampaign);
 	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
 	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1, curCampaign->team);
 }

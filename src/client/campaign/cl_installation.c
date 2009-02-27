@@ -281,9 +281,6 @@ static void INS_BuildInstallation_f (void)
 	const nation_t *nation;
 	installationTemplate_t *installationTemplate;
 
-	if (!curCampaign)
-		return;
-
 	if (Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
 		return;
