@@ -302,6 +302,7 @@ static void CP_CreateCivilianTeam (mission_t *mission)
 	nation = MAP_GetNation(mission->pos);
 	ccs.battleParameters.nation = nation;
 	if (nation) {
+		/** @todo There should always be a nation, no? Otherwise the mission was placed wrong. */
 		Q_strncpyz(ccs.battleParameters.civTeam, nation->id, sizeof(ccs.battleParameters.civTeam));
 	} else {
 		Q_strncpyz(ccs.battleParameters.civTeam, "europe", sizeof(ccs.battleParameters.civTeam));
@@ -380,7 +381,7 @@ mission_t* CP_GetMissionById (const char *missionId)
 
 	for (;list; list = list->next) {
 		mission_t *mission = (mission_t *)list->data;
-		if (!Q_strncmp(mission->id, missionId, MAX_VAR))
+		if (!Q_strcmp(mission->id, missionId))
 			return mission;
 	}
 
@@ -646,7 +647,7 @@ const char* MAP_GetMissionModel (const mission_t *mission)
 		/** @todo Should be a special story related mission model */
 		return "geoscape/mission";
 	}
-	Com_Printf("Mission is %s, %d\n", mission->id, mission->category);
+	Com_DPrintf(DEBUG_CLIENT, "Mission is %s, %d\n", mission->id, mission->category);
 	switch (mission->category) {
 	/** @todo each category should have a its own model */
 	case INTERESTCATEGORY_RECON:
@@ -1114,10 +1115,8 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		assert(base);
 	} else {
 		/* note that ccs.interceptAircraft is baseAttackFakeAircraft in case of base Attack */
-		assert(ccs.interceptAircraft);
 		aircraft = ccs.interceptAircraft;
-		base = aircraft->homebase;
-		assert(base);
+		base = CP_GetMissionBase();
 	}
 
 	/* add the looted goods to base storage and market */
@@ -1279,7 +1278,7 @@ void CP_SpawnCrashSiteMission (aircraft_t *ufo)
 
 	mission->finalDate = Date_Add(ccs.date, Date_Random(minCrashDelay, crashDelay));
 	/* ufo becomes invisible on geoscape, but don't remove it from ufo global array
-	  (may be used to know what items are collected from battlefield)*/
+	 * (may be used to know what items are collected from battlefield)*/
 	CP_UFORemoveFromGeoscape(mission, qfalse);
 	/* mission appear on geoscape, player can go there */
 	CP_MissionAddToGeoscape(mission, qfalse);
@@ -1374,8 +1373,8 @@ int CP_MissionChooseUFO (const mission_t *mission)
 	case INTERESTCATEGORY_NONE:
 	case INTERESTCATEGORY_MAX:
 		Sys_Error("CP_MissionChooseUFO: Wrong mission category %i\n", mission->category);
-		break;
 	}
+
 	if (numTypes > UFO_MAX)
 		Sys_Error("CP_MissionChooseUFO: Too many values UFOs (%i/%i)\n", numTypes, UFO_MAX);
 
@@ -1470,7 +1469,7 @@ void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 		CP_BaseAttackMissionStart(&mission);
 
 	/* Add mission to global array */
-	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission_t));
+	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
 }
 
 /**
