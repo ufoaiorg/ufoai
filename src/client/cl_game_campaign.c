@@ -337,11 +337,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 
 	/* Make sure that at this point we are able to 'Try Again' a mission. */
 	ccs.mission_tryagain = qtrue;
-	if (ccs.selectedMission && base)
-		CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
-	else
-		Com_Printf("CL_ParseResults: Error - no mission triggers, because ccs.selectedMission (%p) or base (%p) are not valid\n",
-				ccs.selectedMission, base);
+	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
 	if (winner == cls.team) {
 		/* We need to update menu 'won' with UFO recovery stuff. */

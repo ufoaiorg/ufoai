@@ -169,6 +169,12 @@ void CP_ExecuteMissionTrigger (mission_t *m, qboolean won)
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
 	Com_DPrintf(DEBUG_CLIENT, "Execute mission triggers\n");
+
+	if (m == NULL) {
+		Com_Printf("CL_ParseResults: Error - no mission triggers, because ccs.selectedMission is not set\n");
+		return;
+	}
+
 	if (won) {
 		if (m->onwin[0] != '\0') {
 			Com_DPrintf(DEBUG_CLIENT, "...won - executing '%s'\n", m->onwin);
