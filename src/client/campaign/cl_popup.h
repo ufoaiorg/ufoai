@@ -29,5 +29,6 @@ qboolean CL_DisplayHomebasePopup(aircraft_t *aircraft, qboolean alwaysDisplay);
 void CL_PopupInit(void);
 void CL_DisplayPopupAircraft(aircraft_t* aircraft);
 void CL_DisplayPopupIntercept(mission_t* mission, aircraft_t* ufo);
+void CP_PopupList(const char *title, const char *text);
 
 #endif

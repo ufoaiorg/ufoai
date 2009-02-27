@@ -105,7 +105,7 @@ message_t *MS_AddNewMessageSound (const char *title, const char *text, qboolean 
 
 	/* they need to be translated already */
 	if (popup)
-		MN_Popup(mess->title, mess->text);
+		CP_PopupList(mess->title, mess->text);
 
 	switch (type) {
 	case MSG_DEBUG:

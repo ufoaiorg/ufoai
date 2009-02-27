@@ -27,12 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_popup.h"
 #include "node/m_node_abstractnode.h"
 
-/** @todo This code should not know anything about the time in campaign mode
- * maybe we need a wrapper for the campaign mode popups in the src/client/campaign domain.
- * Something like CP_Popup which is stopping the time and then calls MN_Popup.
- * The same is true for MN_PopupList (see cl_popup.c in src/client/campaign)s */
-#include "../campaign/cp_time.h" /**< CL_GameTimeStop */
-
 #define POPUPBUTTON_MENU_NAME "popup_button"
 #define POPUPBUTTON_NODE_NAME "popup_button_"
 #define POPUP_MENU_NAME "popup"
@@ -52,7 +46,6 @@ void MN_Popup (const char *title, const char *text)
 {
 	MN_RegisterText(TEXT_POPUP, title);
 	MN_RegisterText(TEXT_POPUP_INFO, text);
-	CL_GameTimeStop();
 	MN_PushMenu(POPUP_MENU_NAME, NULL);
 }
 
@@ -74,7 +67,6 @@ menuNode_t *MN_PopupList (const char *title, const char *headline, linkedList_t*
 	/* make sure, that we are using the linked list */
 	MN_ResetData(TEXT_LIST);
 	MN_RegisterLinkedListText(TEXT_LIST, entries);
-	CL_GameTimeStop();
 
 	popupListMenu = MN_GetMenu(POPUPLIST_MENU_NAME);
 	if (!popupListMenu)
@@ -165,8 +157,6 @@ void MN_PopupButton (const char *title, const char *text,
 		MN_RegisterText(TEXT_POPUP_INFO, text);
 	else
 		MN_RegisterText(TEXT_POPUP_INFO, popupText);
-
-	CL_GameTimeStop();
 
 	popupButtonMenu = MN_GetMenu(POPUPBUTTON_MENU_NAME);
 	if (!popupButtonMenu)

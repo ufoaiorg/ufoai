@@ -468,7 +468,8 @@ static void INS_DestroyInstallation_f (void)
 		installation = INS_GetFoundedInstallationByIDX(atoi(Cmd_Argv(1)));
 		Cvar_SetValue("mn_installation_id", installation->idx);
 	}
-	/** Ask 'Are you sure?' by default */
+
+	/* Ask 'Are you sure?' by default */
 	if (Cmd_Argc() < 3) {
 		char command[MAX_VAR];
 

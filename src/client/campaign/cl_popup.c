@@ -151,6 +151,7 @@ qboolean CL_DisplayHomebasePopup (aircraft_t *aircraft, qboolean alwaysDisplay)
 	}
 
 	if (alwaysDisplay || numAvailableBase > 0) {
+		CL_GameTimeStop();
 		popupListNode = MN_PopupList(_("Change homebase of aircraft"), _("Base\tStatus"), popupListText, "change_homebase");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
@@ -627,4 +628,14 @@ void CL_PopupInit (void)
 
 	memset(&popupIntercept, 0, sizeof(popupIntercept));
 	memset(&popupAircraft, 0, sizeof(popupAircraft));
+}
+
+/**
+ * @brief Wrapper around @c MN_Popup which also stops the time
+ */
+void CP_PopupList (const char *title, const char *text)
+{
+	CL_GameTimeStop();
+
+	MN_Popup(title, text);
 }
