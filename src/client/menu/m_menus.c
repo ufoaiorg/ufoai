@@ -114,8 +114,7 @@ static inline void MN_InsertMenuIntoStack (menuNode_t *menu, int position)
  */
 static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean delete)
 {
-	menuNode_t *node;
-	menuNode_t *menu = NULL;
+	menuNode_t *menu;
 
 	MN_ReleaseInput();
 
