@@ -830,8 +830,7 @@ void E_DeleteAllEmployees (base_t* base)
  */
 void E_DeleteEmployeesExceedingCapacity (base_t *base)
 {
-	employeeType_t type;
-	int i;
+	int type, i;
 
 	/* Check if there are too many employees */
 	if (base->capacities[CAP_EMPLOYEES].cur <= base->capacities[CAP_EMPLOYEES].max)
@@ -846,7 +845,7 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 		/* Warning:
 		 * ccs.numEmployees[type] is changed in E_DeleteAllEmployees! (it's decreased by 1 per call)
 		 * For this reason we start this loop from the back of the empl-list. toward 0. */
-		for (i = ccs.numEmployees[type] - 1; ccs.numEmployees[type] >= 0; i--) {
+		for (i = ccs.numEmployees[type] - 1; i >= 0 && ccs.numEmployees[type] >= 0; i--) {
 			employee_t *employee = &ccs.employees[type][i];
 
 			/* check if the employee is hired on this base */
