@@ -36,6 +36,9 @@
 #include "os/path.h"
 #include "os/file.h"
 #include "../../../shared/parse.h"
+#include "../../../shared/entitiesdef.h"
+
+#define OLDPARSING 1
 
 static const char* EClass_GetFilename ()
 {
@@ -86,6 +89,7 @@ static void Eclass_ParseFlags (EntityClass *e, const char **text)
 	}
 }
 
+#if OLDPARSING
 static void Eclass_ParseAttribute (EntityClass *e, const char **text, bool mandatory)
 {
 	const char *token;
@@ -228,6 +232,114 @@ static EntityClass *Eclass_InitFromText (const char **text)
 	g_debug("...added\n");
 	return e;
 }
+#endif
+
+#if !OLDPARSING
+
+/**
+ * Add a new EntityClassAttribute to entity class based on given definition
+ * @param e entity class to add attribute to
+ * @param keydef definition parsed from entities.ufo with information about type,
+ * default values and mandatory state.
+ * @note opposed to old parsing code this adds attributes for all definitions,
+ * not only for the ones that get special treatment in gui.
+ */
+static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t keydef)
+{
+	bool mandatory = (keydef.flags & ED_MANDATORY);
+	/* we use attribute key as its type, only for some types this is really used */
+	const char *attributeName = keydef.name;
+	char* value = "";
+	char* desc = "";
+	if (keydef.defaultVal)
+		value = keydef.defaultVal;
+	if (keydef.desc)
+		desc = keydef.desc;
+	EntityClassAttribute attribute =  EntityClassAttribute(attributeName, _(attributeName), mandatory, value, desc);
+	EntityClass_insertAttribute(*e, attributeName, attribute);
+}
+
+/**
+ * Creates a new entityclass for given parsed definition
+ * @param entityDef parsed definition information to use
+ * @return a new entity class or 0 if something was wrong with definition
+ */
+static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
+{
+	g_debug("Creating entity class for entity definition '%s'\n", definition->classname);
+
+	EntityClass* e = Eclass_Alloc();
+	e->free = &Eclass_Free;
+	e->m_name = definition->classname;
+
+	for (int idx = 0; idx < definition->numKeyDefs; idx++) {
+		entityKeyDef_t keydef = definition->keyDefs[idx];
+		const char *keyName = keydef.name;
+
+		if (!strcmp(keyName, "color")) {
+			//not using _color as this is a valid attribute flag
+			// grab the color, reformat as texture name
+			const int r = sscanf(keydef.desc, "%f %f %f", &e->color[0], &e->color[1], &e->color[2]);
+			if (r != 3) {
+				g_message("Invalid color token given\n");
+				return 0;
+			}
+		} else if (!strcmp(keyName, "size")) {
+			e->fixedsize = true;
+			const int r = sscanf(keydef.desc, "%f %f %f %f %f %f", &e->mins[0], &e->mins[1], &e->mins[2], &e->maxs[0],
+					&e->maxs[1], &e->maxs[2]);
+			if (r != 6) {
+				g_message("Invalid size token given\n");
+				return 0;
+			}
+		} else if (!strcmp(keyName, "description")) {
+			e->m_comments = keydef.desc;
+		} else if (!strcmp(keyName, "spawnflags")) {
+			if (keydef.flags & ED_ABSTRACT) {
+				/* there are two keydefs, abstract holds the valid levelflags, the other one default value and type */
+				gchar *flags = g_strdup(keydef.desc);
+				Eclass_ParseFlags(e, (const char **) &flags);
+				g_free(flags);
+			} else {
+				Eclass_ParseAttribute(e, keydef);
+			}
+		} else if (!strcmp(keyName, "classname")) {
+			/* ignore, read from head */
+			continue;
+		} else if (!strcmp(keyName, "model")) {
+			/** @todo what does that modelpath stuff do? it does not read anything from keydef */
+			StringOutputStream buffer(string_length(keydef.desc));
+			buffer << PathCleaned(e->m_modelpath.c_str());
+			e->m_modelpath = buffer.c_str();
+			bool mandatory = (keydef.flags & ED_MANDATORY);
+			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model", mandatory));
+		} else {
+			/* all other keys are valid attribute keys */
+			Eclass_ParseAttribute(e, keydef);
+		}
+	}
+
+	/**
+	 *  @todo direction and angle are 2 types used for different display
+	 *  (see entityinspector DirectionAttribute and AngleAttribute)
+	 *  the problem is that different entities have "angle" property, but different defines what values are valid
+	 *  which is actually not reflected by this code. Perhaps we should introduce different types for these representations.
+	 */
+	EntityClassAttribute *angle = e->getAttribute("angle");
+	if (angle) {
+		if (e->fixedsize) {
+			angle->m_name = _("Yaw Angle");
+		} else {
+			angle->m_name = _("Direction");
+			angle->m_type = "direction";
+		}
+	}
+	eclass_capture_state(e);
+
+	return e;
+
+}
+#endif
 
 static void Eclass_ScanFile (EntityClassCollector& collector, const char *filename)
 {
@@ -245,6 +357,7 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 	const std::size_t size = file_size(filename);
 	char *entities = (char *)malloc(size);
 	file.read(entities, size);
+#if OLDPARSING
 	const char **text = (const char **)&entities;
 
 	do {
@@ -259,4 +372,15 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 		if (e)
 			collector.insert(e);
 	} while (*entities);
+#else
+	if (ED_Parse(entities) == ED_ERROR) {
+		g_message("Parsing of entities definition file failed, returned error was %s\n", ED_GetLastError());
+		return;
+	}
+	for (int i = 0; i < numEntityDefs; i++) {
+		e = Eclass_InitFromDefinition(&entityDefs[i]);
+		if (e)
+			collector.insert(e);
+	}
+#endif
 }
