@@ -260,7 +260,6 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	int our_survivors, our_killed, our_stunned;
 	int their_survivors, their_killed, their_stunned;
 	int civilian_survivors, civilian_killed, civilian_stunned;
-	base_t *base = CP_GetMissionBase();
 
 	CP_ParseCharacterData(msg);
 

@@ -130,7 +130,8 @@ void MSO_Set (const int listIndex, const notify_t type, const int optionType, co
  * @param callInit @code qtrue @endcode to trigger initialization of messageoptions text
  * @sa MSO_Init_f
  */
-static void MSO_SetCategoryState (msgCategory_t *categoryEntry, const byte state, const qboolean callInit) {
+static void MSO_SetCategoryState (msgCategory_t *categoryEntry, const byte state, const qboolean callInit)
+{
 	if ((state & MSGCATMASK_FOLDED) == MSGCATMASK_FOLDED)
 		categoryEntry->isFolded = qtrue;
 	else
@@ -158,7 +159,7 @@ static void MSO_Set_f (void)
 				break;
 		}
 		if (type == NT_NUM_NOTIFYTYPE) {
-			Sys_ConsoleOutput(va("Unrecognized messagetype during set '%s' ignored\n", messagetype));
+			Com_Printf("Unrecognized messagetype during set '%s' ignored\n", messagetype);
 			return;
 		}
 
@@ -169,7 +170,7 @@ static void MSO_Set_f (void)
 		else if (!Q_strcmp(Cmd_Argv(2), "sound"))
 			optionsType = MSO_SOUND;
 		else {
-			Sys_ConsoleOutput(va("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2)));
+			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
 			return;
 		}
 		MSO_Set(0, type, optionsType, atoi(Cmd_Argv(3)), qfalse);
@@ -196,7 +197,7 @@ static void MSO_SetAll_f(void)
 		else if (!Q_strcmp(Cmd_Argv(1), "sound"))
 			optionsType = MSO_SOUND;
 		else {
-			Sys_ConsoleOutput(va("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2)));
+			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
 			return;
 		}
 		/* update settings for chosen type */
@@ -223,7 +224,7 @@ static void MSO_SetCategoryState_f(void)
 		msgCategory_t *categoryEntry = MSO_GetCategoryFromName(categoryId);
 
 		if (!categoryEntry) {
-			Sys_ConsoleOutput(va("Unrecognized categoryid during setCategoryState '%s' ignored\n", categoryId));
+			Com_Printf("Unrecognized categoryid during setCategoryState '%s' ignored\n", categoryId);
 			return;
 		}
 		MSO_SetCategoryState(categoryEntry, state, qtrue);
