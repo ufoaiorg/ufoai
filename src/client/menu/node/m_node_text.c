@@ -379,6 +379,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 		}
 	}
 
+	R_ColorBlend(NULL);
 	MN_DrawScrollBar(node);
 }
 
