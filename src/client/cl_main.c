@@ -340,6 +340,7 @@ static void CL_Packet_f (void)
 	*out = 0;
 
 	NET_OOB_Printf(s, "%s %i", out, PROTOCOL_VERSION);
+	NET_StreamFinished(s);
 }
 #endif
 
