@@ -69,10 +69,10 @@ public:
 
 class EntityClassAttribute {
 public:
-	CopiedString m_type;
-	CopiedString m_name;
-	CopiedString m_value;
-	CopiedString m_description;
+	CopiedString m_type; /**< type used to decide how gui representation will look like @sa EntityAttributeFactory */
+	CopiedString m_name; /**< name used for display in entityinspector */
+	CopiedString m_value; /**< current attribute value */
+	CopiedString m_description; /**< actually not used, could be used as a tooltip @todo use this as tooltip in entityinspector?*/
 	bool m_mandatory;			/**< if this is true, the value is needed for the entity to work */
 	EntityClassAttribute() {
 	}
@@ -132,6 +132,15 @@ public:
 	}
 	const char* skin() const {
 		return m_skin.c_str();
+	}
+
+	EntityClassAttribute *getAttribute(const char* type) {
+		for (EntityClassAttributes::iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
+			if (string_equal(type, (*i).first.c_str())) {
+				return &(*i).second;
+			}
+		}
+		return NULL;
 	}
 };
 
