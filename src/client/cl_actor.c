@@ -1104,12 +1104,8 @@ void CL_DisplayBlockedPaths_f (void)
 		ptl->t = 0;
 		if (le->fieldSize == ACTOR_SIZE_2x2) {
 			/* If this actor blocks 4 fields draw them as well. */
-			ptl_t *ptl2;
-			vec3_t temp;
 			for (j = 0; j < 3; j++) {
-				VectorCopy(s, temp);
-				temp[j] += UNIT_SIZE;
-				ptl2 = CL_ParticleSpawn("blocked_field", 0, s, NULL, NULL);
+				ptl_t *ptl2 = CL_ParticleSpawn("blocked_field", 0, s, NULL, NULL);
 				ptl2->rounds = ptl->rounds;
 				ptl2->roundsCnt = ptl->roundsCnt;
 				ptl2->life = ptl->life;
