@@ -28,34 +28,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_main.h"
 #include "menu/m_nodes.h"
 #include "menu/m_popup.h"
+#include "menu/node/m_node_abstractnode.h"
 
 /**
  * @brief Determine the position and size of render
  * @param[in] menu : use its position and size properties
- * @todo understand if this function is realy need
  */
 void MN_SetViewRect (const menuNode_t* menu)
 {
-	viddef.x = viddef.y = 0;
-	viddef.viewWidth = viddef.width;
-	viddef.viewHeight = viddef.height;
-#if 0
-	/* It make no sens. If we open a popup over the battlefield,
-	 * we anyway can't read the right render node
-	 */
-	if (!menu) {
-		/* render the full screen */
-		viddef.x = viddef.y = 0;
-		viddef.viewWidth = viddef.width;
-		viddef.viewHeight = viddef.height;
+	if (menu && menu->u.window.renderNode) {
+		menuNode_t* node = menu->u.window.renderNode;
+		vec2_t pos;
+		MN_GetNodeAbsPos(node, pos);
+		viddef.x = pos[0] * viddef.rx;
+		viddef.y = pos[1] * viddef.ry;
+		viddef.viewWidth = node->size[0] * viddef.rx;
+		viddef.viewHeight = node->size[1] * viddef.ry;
 	} else {
-		/* the menu has a view size specified */
-		viddef.x = menu->pos[0] * viddef.rx;
-		viddef.y = menu->pos[1] * viddef.ry;
-		viddef.viewWidth = menu->size[0] * viddef.rx;
-		viddef.viewHeight = menu->size[1] * viddef.ry;
+		viddef.x = viddef.y = 0;
+		viddef.viewWidth = 0;
+		viddef.viewHeight = 0;
 	}
-#endif
 }
 
 /**

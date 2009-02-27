@@ -59,14 +59,14 @@ static const int windowTemplate[] = {
 };
 
 static const vec4_t modalBackground = {0, 0, 0, 0.6};
+static const vec4_t anamorphicBorder = {0, 0, 0, 1};
 
 /**
  * @brief Check if a window is fullscreen or not
  */
 qboolean MN_WindowIsFullScreen (menuNode_t* const node)
 {
-	return node->pos[0] == 0 && node->size[0] == VID_NORM_WIDTH
-		&& node->pos[1] == 0 && node->size[1] == VID_NORM_HEIGHT;
+	return node->u.window.isFullScreen;
 }
 
 static void MN_WindowNodeDraw (menuNode_t *node)
@@ -77,6 +77,22 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	vec2_t pos;
 
 	MN_GetNodeAbsPos(node, pos);
+
+	/* black border for anamorphic mode */
+	/** @todo it should be over the window */
+	if (node->u.window.isFullScreen) {
+		/* top */
+		if (pos[1] != 0)
+			R_DrawFill(0, 0, viddef.virtualWidth, pos[1], ALIGN_UL, anamorphicBorder);
+		/* left-right */
+		if (pos[0] != 0)
+			R_DrawFill(0, pos[1], pos[0], node->size[1], ALIGN_UL, anamorphicBorder);
+		if (pos[0] + node->size[0] < viddef.virtualWidth)
+			R_DrawFill(viddef.virtualWidth, pos[1], viddef.virtualWidth - (pos[0] + node->size[0]), node->size[1], ALIGN_UR, anamorphicBorder);
+		/* bottom */
+		if (pos[1] + node->size[1] < viddef.virtualHeight)
+			R_DrawFill(0, viddef.virtualHeight, viddef.virtualWidth, viddef.virtualHeight - (pos[1] + node->size[1]), ALIGN_LL, anamorphicBorder);
+	}
 
 	/* darker background if last window is a modal */
 	if (node->u.window.modal && mn.menuStack[mn.menuStackPos - 1] == node)
@@ -110,11 +126,21 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 
 /**
  * @brief Called when we init the node on the screen
- * @todo Very generic function; we can move it into abstract node
+ * @todo we can move generic code into abstract node
  */
 static void MN_WindowNodeInit (menuNode_t *node)
 {
 	menuNode_t *child;
+
+	/* move fullscreen menu on the center of the screen */
+	if (node->u.window.isFullScreen) {
+		/* horisontal */
+		if (node->size[0] != viddef.virtualWidth)
+			node->pos[0] = (viddef.virtualWidth - node->size[0]) / 2;
+		/* vertical */
+		if (node->size[1] != viddef.virtualHeight)
+			node->pos[1] = (viddef.virtualHeight - node->size[1]) / 2;
+	}
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
@@ -133,8 +159,6 @@ static void MN_WindowNodeInit (menuNode_t *node)
  */
 static void MN_WindowNodeLoading (menuNode_t *node)
 {
-	node->pos[0] = 0;
-	node->pos[1] = 0;
 	node->size[0] = VID_NORM_WIDTH;
 	node->size[1] = VID_NORM_HEIGHT;
 	node->font = "f_big";
@@ -177,6 +201,10 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		button->tooltip = _("Close the window");
 		MN_PoolAllocAction(&button->onClick, EA_CMD, command);
 		MN_AppendNode(node, button);
+	}
+
+	if (node->size[0] == VID_NORM_WIDTH && node->size[1] == VID_NORM_HEIGHT) {
+		node->u.window.isFullScreen = qtrue;
 	}
 
 #ifdef DEBUG

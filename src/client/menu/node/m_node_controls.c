@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_controls.h"
 #include "m_node_abstractnode.h"
 
-#include "../../cl_keys.h"
+#include "../../client.h"
 
 static int deltaMouseX;
 static int deltaMouseY;
@@ -62,15 +62,15 @@ static void MN_ControlsNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	x -= deltaMouseX;
 	if (x < 0)
 		x = 0;
-	if (x + node->menu->size[0] > VID_NORM_WIDTH)
-		x = VID_NORM_WIDTH - node->menu->size[0];
+	if (x + node->menu->size[0] > viddef.virtualWidth)
+		x = viddef.virtualWidth - node->menu->size[0];
 
 	/* compute new y position of the menu */
 	y -= deltaMouseY;
 	if (y < 0)
 		y = 0;
-	if (y + node->menu->size[1] > VID_NORM_HEIGHT)
-		y = VID_NORM_HEIGHT - node->menu->size[1];
+	if (y + node->menu->size[1] > viddef.virtualHeight)
+		y = viddef.virtualHeight - node->menu->size[1];
 
 	MN_SetNewMenuPos(node->menu, x, y);
 }
