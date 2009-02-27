@@ -436,8 +436,4 @@ void GAME_CP_Shutdown (void)
 	CP_CampaignExit();
 
 	CL_ResetSinglePlayerData();
-
-	/* shutdown any running tactical mission */
-	SV_Shutdown("Quitting campaign.", qfalse);
-	CL_Disconnect();
 }
