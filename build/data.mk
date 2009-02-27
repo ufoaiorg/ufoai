@@ -40,7 +40,7 @@ $(PAK_FILES_OUT) :
 $(BASE_DIR)/0pics.pk3 : $(filter %.jpg %.tga %.png, $(shell $(call FIND, pics))) \
 	$(filter %.jpg %.tga %.png, $(shell $(call FIND, textures)))
 
-$(BASE_DIR)/0models.pk3 : $(filter %.md2 %.md3 %.jpg %.png %.tga %.anm %.txt %.tag, $(shell $(call FIND, models)))
+$(BASE_DIR)/0models.pk3 : $(filter %.md2 %.md3 %.dpm %.jpg %.png %.tga %.anm %.txt %.tag, $(shell $(call FIND, models)))
 
 $(BASE_DIR)/0snd.pk3 : $(filter %.txt %.ogg %.wav, $(shell $(call FIND, sound)))
 
@@ -57,4 +57,4 @@ $(BASE_DIR)/0ufos.pk3 : $(filter %.ufo, $(shell $(call FIND, ufos)))
 
 $(BASE_DIR)/0materials.pk3 : $(filter %.mat, $(shell $(call FIND, materials)))
 
-$(BASE_DIR)/0base.pk3 : $(wildcard base/*.cfg) base/irc_motd.txt $(wildcard base/shaders/*.glsl)
+$(BASE_DIR)/0base.pk3 : $(wildcard base/*.cfg) base/irc_motd.txt $(wildcard base/shaders/*.glsl)  $(wildcard base/ai/*.lua)
