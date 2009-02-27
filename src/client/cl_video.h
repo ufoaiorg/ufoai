@@ -51,15 +51,19 @@ typedef struct {
 	unsigned height;	/**< game screen/window height */
 	int mode;			/**< resolution mode - see vidmode_t */
 	qboolean fullscreen;	/**< currently in fullscreen mode? */
+	qboolean strech;		/**< currently strech mode? */
 
 	/** safe values for restoring a failed vid change */
 	unsigned prev_width;
 	unsigned prev_height;
 	int prev_mode;
 	qboolean prev_fullscreen;
+	qboolean prev_strech;
 
 	float rx;		/**< horizontal screen scale factor */
 	float ry;		/**< vertical screen scale factor */
+
+	int virtualWidth, virtualHeight;		/**< size of the virtual screen */
 
 	int x, y, viewWidth, viewHeight;	/**< The menu system may define a rendering view port
 			* on the screen. The values defines the properties of this view port
@@ -81,6 +85,7 @@ extern const vidmode_t vid_modes[];
 extern viddef_t viddef;			/* global video state */
 
 extern cvar_t *vid_fullscreen;
+extern cvar_t *vid_strech;
 extern cvar_t *vid_mode;
 extern cvar_t *vid_gamma;
 extern cvar_t *vid_grabmouse;

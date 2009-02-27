@@ -138,6 +138,7 @@ qboolean R_InitGraphics (void)
 	uint32_t flags;
 	int i;
 
+	vid_strech->modified = qfalse;
 	vid_fullscreen->modified = qfalse;
 	vid_mode->modified = qfalse;
 	r_ext_texture_compression->modified = qfalse;

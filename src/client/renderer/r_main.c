@@ -98,7 +98,7 @@ static void R_Strings_f (void)
 	Com_Printf("GL_VENDOR: %s\n", r_config.vendorString);
 	Com_Printf("GL_RENDERER: %s\n", r_config.rendererString);
 	Com_Printf("GL_VERSION: %s\n", r_config.versionString);
-	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i\n", vid_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer);
+	Com_Printf("MODE: %i, %d x %d FULLSCREEN: %i STRECH %i\n", vid_mode->integer, viddef.width, viddef.height, vid_fullscreen->integer, vid_strech->integer);
 	Com_Printf("GL_EXTENSIONS: %s\n", r_config.extensionsString);
 	Com_Printf("GL_MAX_TEXTURE_SIZE: %d\n", r_config.maxTextureSize);
 }
@@ -177,7 +177,7 @@ static inline void R_ClearScene (void)
 void R_BeginFrame (void)
 {
 	/* change modes if necessary */
-	if (vid_mode->modified || vid_fullscreen->modified) {
+	if (vid_mode->modified || vid_fullscreen->modified || vid_strech->modified) {
 		R_SetMode();
 #if defined(_WIN32) || defined(__APPLE__)
 		VID_Restart_f();
@@ -438,6 +438,33 @@ static void R_RegisterImageVars (void)
 	r_soften = Cvar_Get("r_soften", "0", CVAR_ARCHIVE | CVAR_IMAGES, "Apply blur to lightmap");
 }
 
+static void R_UpdateVidDef (void)
+{
+	if (viddef.strech) {
+		viddef.virtualWidth = VID_NORM_WIDTH;
+		viddef.virtualHeight = VID_NORM_HEIGHT;
+	} else {
+		float normRatio = (float) VID_NORM_WIDTH / (float) VID_NORM_HEIGHT;
+		float screenRatio = (float) viddef.width / (float) viddef.height;
+
+		/* wide screen */
+		if (screenRatio > normRatio) {
+			viddef.virtualWidth = VID_NORM_HEIGHT * screenRatio;
+			viddef.virtualHeight = VID_NORM_HEIGHT;
+		/* 5:4 or low */
+		} else if (screenRatio < normRatio) {
+			viddef.virtualWidth = VID_NORM_WIDTH;
+			viddef.virtualHeight = VID_NORM_WIDTH / screenRatio;
+		/* 4:3 */
+		} else if (screenRatio == normRatio) {
+			viddef.virtualWidth = VID_NORM_WIDTH;
+			viddef.virtualHeight = VID_NORM_HEIGHT;
+		}
+	}
+	viddef.rx = (float)viddef.width / viddef.virtualWidth;
+	viddef.ry = (float)viddef.height / viddef.virtualHeight;
+}
+
 qboolean R_SetMode (void)
 {
 	Com_Printf("I: setting mode %d:", vid_mode->integer);
@@ -446,17 +473,18 @@ qboolean R_SetMode (void)
 	viddef.prev_width = viddef.width;
 	viddef.prev_height = viddef.height;
 	viddef.prev_fullscreen = viddef.fullscreen;
+	viddef.prev_strech = viddef.strech;
 	viddef.prev_mode = viddef.mode;
 
 	/* new values */
 	viddef.mode = vid_mode->integer;
 	viddef.fullscreen = vid_fullscreen->integer;
+	viddef.strech = vid_strech->integer;
 	if (!VID_GetModeInfo()) {
 		Com_Printf(" invalid mode\n");
 		return qfalse;
 	}
-	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
-	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
+	R_UpdateVidDef();
 	Com_Printf(" %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
 
 	if (R_InitGraphics())
@@ -470,14 +498,14 @@ qboolean R_SetMode (void)
 	Cvar_SetValue("vid_height", viddef.prev_height);
 	Cvar_SetValue("vid_mode", viddef.prev_mode);
 	Cvar_SetValue("vid_fullscreen", viddef.prev_fullscreen);
+	Cvar_SetValue("vid_strech", viddef.prev_strech);
 
 	viddef.mode = vid_mode->integer;
 	viddef.fullscreen = vid_fullscreen->integer;
 	if (!VID_GetModeInfo())
 		return qfalse;
-	viddef.rx = (float)viddef.width / VID_NORM_WIDTH;
-	viddef.ry = (float)viddef.height / VID_NORM_HEIGHT;
 
+	R_UpdateVidDef();
 	return R_InitGraphics();
 }
 
