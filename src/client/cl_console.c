@@ -566,7 +566,7 @@ void Con_DrawConsole (float frac)
 
 	/* draw the background */
 	if (con_background->integer)
-		R_DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
+		R_DrawNormPic(0, lines - (int) viddef.height, viddef.virtualWidth, viddef.virtualHeight, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
 
 	Com_sprintf(consoleMessage, sizeof(consoleMessage), "Hit esc to close - v%s", UFO_VERSION);
 	{
