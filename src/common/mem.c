@@ -106,7 +106,7 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 
 	/* Check name */
 	if (!name || !name[0])
-		Com_Error(ERR_FATAL, "Mem_CreatePool: NULL name %s:#%i", fileName, fileLine);
+		Sys_Error("Mem_CreatePool: NULL name %s:#%i", fileName, fileLine);
 	if (strlen(name) + 1 >= MEM_MAX_POOLNAME)
 		Com_Printf("Mem_CreatePoole: name '%s' too long, truncating!\n", name);
 
@@ -122,7 +122,7 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 	}
 	if (i == m_numPools) {
 		if (m_numPools + 1 >= MEM_MAX_POOLCOUNT)
-			Com_Error(ERR_FATAL, "Mem_CreatePool: MEM_MAX_POOLCOUNT");
+			Sys_Error("Mem_CreatePool: MEM_MAX_POOLCOUNT");
 		pool = &m_poolList[m_numPools++];
 	}
 
@@ -134,8 +134,6 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 	pool->createLine = fileLine;
 	pool->inUse = qtrue;
 	Q_strncpyz(pool->name, name, sizeof(pool->name));
-
-	Com_DPrintf(DEBUG_ENGINE, "Created memory pool '%s'\n", pool->name);
 
 	return pool;
 }
@@ -183,25 +181,19 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 	/* Check sentinels */
 	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
 	if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
-		Com_Error(ERR_FATAL,
-			"Mem_Free: bad memory header top sentinel [buffer underflow]\n"
-			"free: %s:#%i",
-			fileName, fileLine);
+		Sys_Error("Mem_Free: bad memory header top sentinel [buffer underflow]\n"
+			"free: %s:#%i", fileName, fileLine);
 	} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
-		Com_Error(ERR_FATAL,
-			"Mem_Free: bad memory header bottom sentinel [buffer underflow]\n"
-			"free: %s:#%i",
-			fileName, fileLine);
+		Sys_Error("Mem_Free: bad memory header bottom sentinel [buffer underflow]\n"
+			"free: %s:#%i", fileName, fileLine);
 	} else if (!mem->footer) {
-		Com_Error(ERR_FATAL,
-			"Mem_Free: bad memory footer [buffer overflow]\n"
+		Sys_Error("Mem_Free: bad memory footer [buffer overflow]\n"
 			"pool: %s\n"
 			"alloc: %s:#%i\n"
 			"free: %s:#%i",
 			mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
 	} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
-		Com_Error(ERR_FATAL,
-			"Mem_Free: bad memory footer sentinel [buffer overflow]\n"
+		Sys_Error("Mem_Free: bad memory footer sentinel [buffer overflow]\n"
 			"pool: %s\n"
 			"alloc: %s:#%i\n"
 			"free: %s:#%i",
@@ -298,13 +290,13 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 		return NULL;
 	}
 	if (size > 0x40000000)
-		Com_Error(ERR_FATAL, "Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+		Sys_Error("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
 	mem = malloc(size);
 	if (!mem)
-		Com_Error(ERR_FATAL, "Mem_Alloc: failed on allocation of '"UFO_SIZE_T"' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
+		Sys_Error("Mem_Alloc: failed on allocation of '"UFO_SIZE_T"' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
 
 	/* Zero fill */
 	if (zeroFill)
@@ -344,10 +336,10 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	memBlock_t **prev;
 
 	if (!size)
-		Com_Error(ERR_FATAL, "Use Mem_Free instead");
+		Sys_Error("Use Mem_Free instead");
 
 	if (!ptr)
-		Com_Error(ERR_FATAL, "Use Mem_Alloc instead");
+		Sys_Error("Use Mem_Alloc instead");
 
 	mem = (memBlock_t *)((byte *)ptr - sizeof(memBlock_t));
 	mem = realloc(mem, size);
@@ -532,9 +524,9 @@ void _Mem_CheckPoolIntegrity (struct memPool_s *pool, const char *fileName, cons
 
 	/* Check block/byte counts */
 	if (pool->blockCount != blocks)
-		Com_Error(ERR_FATAL, "Mem_CheckPoolIntegrity: bad block count\n" "check: %s:#%i", fileName, fileLine);
+		Sys_Error("Mem_CheckPoolIntegrity: bad block count\n" "check: %s:#%i", fileName, fileLine);
 	if (pool->byteCount != size)
-		Com_Error(ERR_FATAL, "Mem_CheckPoolIntegrity: bad pool size\n" "check: %s:#%i", fileName, fileLine);
+		Sys_Error("Mem_CheckPoolIntegrity: bad pool size\n" "check: %s:#%i", fileName, fileLine);
 }
 
 
@@ -599,6 +591,7 @@ void _Mem_TouchGlobal (const char *fileName, const int fileLine)
 	Com_DPrintf(DEBUG_ENGINE, "Mem_TouchGlobal: %u pools touched in %ims\n", num, Sys_Milliseconds()-startTime);
 }
 
+#ifdef COMPILE_UFO
 /*==============================================================================
 CONSOLE COMMANDS
 ==============================================================================*/
@@ -607,7 +600,6 @@ static void Mem_Check_f (void)
 {
 	Mem_CheckGlobalIntegrity();
 }
-
 
 static void Mem_Stats_f (void)
 {
@@ -689,6 +681,7 @@ void Mem_Init (void)
 	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Prints out current internal memory statistics");
 	Cmd_AddCommand("mem_check", Mem_Check_f, "Checks global memory integrity");
 }
+#endif
 
 /**
  * @sa Mem_Init
