@@ -50,10 +50,6 @@ entity info_player_start {
 		angle	"0 45 90 135 180 225 270 315 -45 -90 -135 -180 -225 -270 -315"
 	}
 
-	default {
-		angle	"0"
-	}
-
 }
 
 entity info_human_start {
