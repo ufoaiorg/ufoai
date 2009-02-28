@@ -2205,8 +2205,7 @@ void RS_PostLoadInit (void)
 qboolean RS_ResearchAllowed (const base_t* base)
 {
 	assert(base);
-	if (base->baseStatus != BASE_UNDER_ATTACK
-	 && B_GetBuildingStatus(base, B_LAB)
+	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_LAB)
 	 && E_CountHired(base, EMPL_SCIENTIST) > 0) {
 		MN_ExecuteConfunc("set_research_enabled");
 		return qtrue;
@@ -2252,13 +2251,12 @@ qboolean RS_ScriptSanityCheck (void)
 			case RS_ALIEN:
 				break;
 			default:
-				/* error++; TODO: Crafts still give errors - are there any definitions missing? */
+				/** @todo error++; Crafts still give errors - are there any definitions missing? */
 				Com_Printf("...... technology '%s' has zero (0) produceTime, is this on purpose?\n", t->id);
 			}
 		}
 
-		if ((t->type != RS_LOGIC)
-		&&  ((!t->description.text[0]) || (t->description.text[0][0] == '_'))) {
+		if (t->type != RS_LOGIC && (!t->description.text[0] || t->description.text[0][0] == '_')) {
 			if (!t->description.text[0])
 				Com_Printf("...... technology '%s' has a strange 'description' value '%s'.\n", t->id, t->description.text[0]);
 			else
