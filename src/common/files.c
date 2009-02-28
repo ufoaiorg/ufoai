@@ -650,7 +650,6 @@ const char *FS_NextPath (const char *prevpath)
 	return NULL;
 }
 
-#ifdef COMPILE_UFO
 /**
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
@@ -675,6 +674,7 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
 	}
 }
 
+#ifdef COMPILE_UFO
 /**
  * @brief Adds the execution of the autoexec.cfg to the command buffer
  */
@@ -866,6 +866,9 @@ void FS_InitFilesystem (void)
 
 #ifdef COMPILE_UFO
 	FS_InitCommandsAndCvars();
+#elif COMPILE_MAP
+	FS_AddGameDirectory("./" BASEDIRNAME);
+	FS_AddHomeAsGameDirectory(BASEDIRNAME);
 #endif
 
 	/* any set gamedirs will be freed up to here */
