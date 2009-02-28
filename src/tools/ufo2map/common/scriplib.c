@@ -54,7 +54,6 @@ int GetScriptLine (void)
 }
 
 /**
- * @brief
  * @sa LoadScriptFile
  */
 static void AddScriptToStack (const char *filename)
@@ -86,15 +85,11 @@ const char *GetScriptFile (void)
 	return script->filename;
 }
 
-/**
- * @brief
- */
 void LoadScriptFile (const char *filename)
 {
 	script = scriptstack;
 	AddScriptToStack(filename);
 }
-
 
 /**
  * @brief Parses e.g. the entity string that is already stored in memory

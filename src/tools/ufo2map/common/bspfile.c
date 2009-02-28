@@ -194,9 +194,6 @@ static void SwapBSPFile (void)
 
 static dBspHeader_t *header;
 
-/**
- * @brief
- */
 static int CopyLump (int lump, void *dest, int size)
 {
 	const int length = header->lumps[lump].filelen;
@@ -213,7 +210,6 @@ static int CopyLump (int lump, void *dest, int size)
 }
 
 /**
- * @brief
  * @sa WriteBSPFile
  */
 void LoadBSPFile (const char *filename)
@@ -274,7 +270,6 @@ void LoadBSPFile (const char *filename)
 }
 
 /**
- * @brief
  * @sa WriteBSPFile
  * @todo Implement this without the ftell stuff - don't write the bsp file twice
  */
@@ -421,7 +416,6 @@ epair_t *ParseEpair (void)
 
 
 /**
- * @brief
  * @sa ParseEntities
  */
 static entity_t* ParseEntity (void)
@@ -513,9 +507,6 @@ const char *UnparseEntities (void)
 	return curTile->entdata;
 }
 
-/**
- * @brief
- */
 void SetKeyValue (entity_t *ent, const char *key, const char *value)
 {
 	epair_t *ep;
@@ -533,9 +524,6 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 	ep->value = Mem_StrDup(value);
 }
 
-/**
- * @brief
- */
 const char *ValueForKey (const entity_t *ent, const char *key)
 {
 	const epair_t *ep;
@@ -546,9 +534,6 @@ const char *ValueForKey (const entity_t *ent, const char *key)
 	return "";
 }
 
-/**
- * @brief
- */
 vec_t FloatForKey (const entity_t *ent, const char *key)
 {
 	const char *k;

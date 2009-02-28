@@ -48,7 +48,6 @@ winding_t *AllocWinding (int points)
 }
 
 /**
- * @brief
  * @sa AllocWinding
  */
 void FreeWinding (winding_t *w)
@@ -62,9 +61,6 @@ void FreeWinding (winding_t *w)
 	Mem_Free(w);
 }
 
-/**
- * @brief
- */
 void RemoveColinearPoints (winding_t *w)
 {
 	int i, nump = 0;
@@ -91,9 +87,6 @@ void RemoveColinearPoints (winding_t *w)
 	memcpy(w->p, p, nump * sizeof(p[0]));
 }
 
-/**
- * @brief
- */
 vec_t WindingArea (const winding_t *w)
 {
 	int i;
@@ -110,9 +103,6 @@ vec_t WindingArea (const winding_t *w)
 	return total * 0.5f;
 }
 
-/**
- * @brief
- */
 void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 {
 	int i, j;
@@ -131,9 +121,6 @@ void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 	}
 }
 
-/**
- * @brief
- */
 void WindingCenter (const winding_t *w, vec3_t center)
 {
 	int i;
@@ -147,9 +134,6 @@ void WindingCenter (const winding_t *w, vec3_t center)
 	VectorScale(center, scale, center);
 }
 
-/**
- * @brief
- */
 winding_t *BaseWindingForPlane (const vec3_t normal, const vec_t dist)
 {
 	int i, x;
@@ -228,9 +212,6 @@ winding_t *CopyWinding (const winding_t *w)
 	return c;
 }
 
-/**
- * @brief
- */
 winding_t *ReverseWinding (const winding_t *w)
 {
 	int i;
@@ -243,9 +224,6 @@ winding_t *ReverseWinding (const winding_t *w)
 	return c;
 }
 
-/**
- * @brief
- */
 void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t dist,
 		const vec_t epsilon, winding_t **front, winding_t **back)
 {
@@ -344,10 +322,6 @@ void ClipWindingEpsilon (const winding_t *in, const vec3_t normal, const vec_t d
 		Sys_Error("ClipWinding: MAX_POINTS_ON_WINDING");
 }
 
-
-/**
- * @brief
- */
 void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dist, const vec_t epsilon)
 {
 	winding_t *in;
@@ -445,7 +419,6 @@ void ChopWindingInPlace (winding_t **inout, const vec3_t normal, const vec_t dis
 
 
 /**
- * @brief
  * @return the fragment of in that is on the front side of the cliping plane.
  * @note The original is freed.
  */

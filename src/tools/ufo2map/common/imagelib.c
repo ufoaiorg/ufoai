@@ -40,9 +40,6 @@ typedef struct _TargaHeader {
 	unsigned char	pixel_size, attributes;
 } TargaHeader;
 
-/**
- * @brief
- */
 static void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
@@ -268,25 +265,16 @@ By Robert 'Heffo' Heffernan
 =================================================================
 */
 
-/**
- * @brief
- */
 static void jpg_null (j_decompress_ptr cinfo)
 {
 }
 
-/**
- * @brief
- */
 static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
 {
 	Verb_Printf(VERB_EXTRA, "Premature end of JPEG data\n");
 	return 1;
 }
 
-/**
- * @brief
- */
 static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
@@ -296,9 +284,6 @@ static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 	cinfo->src->bytes_in_buffer -= (size_t) num_bytes;
 }
 
-/**
- * @brief
- */
 static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 {
 	cinfo->src = (struct jpeg_source_mgr *) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
@@ -312,7 +297,6 @@ static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 }
 
 /**
- * @brief
  * @sa LoadTGA
  * @sa LoadPNG
  * @sa R_FindImage
