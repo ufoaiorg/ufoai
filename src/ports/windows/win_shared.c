@@ -153,12 +153,12 @@ void Sys_Quit (void)
 #ifdef COMPILE_UFO
 	CL_Shutdown();
 	Qcommon_Shutdown();
-#elif COMPILE_MAP
-	Mem_Shutdown();
-#endif
 
 	if (procShell_NotifyIcon)
 		procShell_NotifyIcon(NIM_DELETE, &pNdata);
+#elif COMPILE_MAP
+	Mem_Shutdown();
+#endif
 
 	/* exit(0) */
 	ExitProcess(0);
