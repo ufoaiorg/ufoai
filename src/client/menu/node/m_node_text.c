@@ -93,14 +93,20 @@ static void MN_TextScroll_f (void)
 {
 	int offset = 0;
 	menuNode_t *node;
+	menuNode_t *menu;
 
 	if (Cmd_Argc() < 3) {
 		Com_Printf("Usage: %s <nodename> <+/-offset>\n", Cmd_Argv(0));
 		return;
 	}
 
-	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
+	menu = MN_GetActiveMenu();
+	if (!menu) {
+		Com_Printf("MN_TextScroll_f: No active menu\n");
+		return;
+	}
 
+	node = MN_GetNodeByPath(va("%s.%s", menu->name, Cmd_Argv(1)));
 	if (!node) {
 		Com_DPrintf(DEBUG_CLIENT, "MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
 		return;

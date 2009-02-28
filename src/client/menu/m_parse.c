@@ -251,7 +251,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	val = MN_GetPropertyFromBehaviour(castedBehaviour, *token);
 	if (!val && action->type.param1 != EA_PATHPROPERTY) {
 		/* do we ALREADY know this node? and his type */
-		const menuNode_t *node = MN_GetNode(menuNode->menu, action->data);
+		const menuNode_t *node = MN_GetNodeByPath(va("%s.%s", menuNode->menu->name, (char*)action->data));
 		if (node) {
 			val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
 		} else {
@@ -407,7 +407,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 				menuNode_t* callNode = NULL;
 				/* get the function name */
 				*token = COM_EParse(text, errhead, NULL);
-				callNode = MN_GetNode(menuNode->menu, *token);
+				callNode = MN_GetNodeByPath(va("%s.%s", menuNode->menu->name, *token));
 				if (!callNode) {
 					Com_Printf("MN_ParseAction: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
@@ -830,6 +830,12 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 	memset(*action, 0, sizeof(**action));
 
 	*action = MN_ParseAction(node, text, token);
+
+#if 0 /* emplty function also return NULL */
+	if (*action == NULL)
+		return qfalse;
+#endif
+
 	return *token[0] == '}';
 }
 
@@ -1286,6 +1292,9 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	menu->behaviour->loading(menu);
 
+	/* add the menu to the list */
+	mn.menus[mn.numMenus++] = menu;
+
 	/* get it's body */
 	token = COM_Parse(text);
 
@@ -1336,9 +1345,6 @@ void MN_ParseMenu (const char *name, const char **text)
 	}
 
 	menu->behaviour->loaded(menu);
-
-	/* add the menu to the list */
-	mn.menus[mn.numMenus++] = menu;
 }
 
 /**
