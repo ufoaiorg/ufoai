@@ -2078,17 +2078,10 @@ void CL_ActorDie (struct dbuffer *msg)
 				HUD_DisplayMessage(_("A civilian was killed.\n"));
 			break;
 		case (TEAM_ALIEN):
-			if (le->teamDef) {
-				if (LE_IsStunned(le))
-					HUD_DisplayMessage(_("An alien was stunned.\n"));
-				else
-					HUD_DisplayMessage(_("An alien was killed.\n"));
-			} else {
-				if (LE_IsStunned(le))
-					HUD_DisplayMessage(_("An alien was stunned.\n"));
-				else
-					HUD_DisplayMessage(_("An alien was killed.\n"));
-			}
+			if (LE_IsStunned(le))
+				HUD_DisplayMessage(_("An alien was stunned.\n"));
+			else
+				HUD_DisplayMessage(_("An alien was killed.\n"));
 			break;
 		case (TEAM_PHALANX):
 			if (LE_IsStunned(le))
