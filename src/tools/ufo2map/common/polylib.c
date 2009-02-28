@@ -124,7 +124,7 @@ void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 void WindingCenter (const winding_t *w, vec3_t center)
 {
 	int i;
-	float scale;
+	vec_t scale;
 
 	VectorCopy(vec3_origin, center);
 	for (i = 0; i < w->numpoints; i++)

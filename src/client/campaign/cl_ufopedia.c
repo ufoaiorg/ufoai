@@ -308,7 +308,7 @@ void UP_ItemDescription (const objDef_t *od)
 	Cvar_Set("mn_item", od->id);
 
 #ifdef DEBUG
-	if (!od->tech && GAME_IsCampaign()) {
+	if (!od->tech) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		MN_RegisterText(TEXT_STANDARD, itemText);
 		odAmmo = NULL;
