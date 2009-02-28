@@ -32,8 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_sound.h"
 #include "renderer/r_draw.h"
 
-#include <assert.h>
-
 #define ROQ_IDENT					0x1084
 
 #define ROQ_QUAD_INFO				0x1001

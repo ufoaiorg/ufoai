@@ -146,7 +146,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 {
 	size_t len;
 	char tempFile[MAX_OSPATH];
-	char escapedFilePath[MAX_QPATH*4];
+	char escapedFilePath[MAX_QPATH * 4];
 
 	/* yet another hack to accomodate filelists, how i wish i could push :(
 	 * NULL file handle indicates filelist. */

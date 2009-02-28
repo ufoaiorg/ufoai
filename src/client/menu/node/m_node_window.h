@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_WINDOW_H
 #define CLIENT_MENU_M_NODE_WINDOW_H
 
-#include "../../../game/q_shared.h"
+#include "../../../shared/mathlib.h"
 
 /* prototype */
 struct menuNode_s;
