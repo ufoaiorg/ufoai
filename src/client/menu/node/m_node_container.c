@@ -719,8 +719,10 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	int currentHeight = 0;
 	int visibleRows = 0;
 	int totalRows = 0;
+	vec2_t pos;
 
-	R_BeginClipRect(node->pos[0], node->pos[1], node->size[0], node->size[1]);
+	MN_GetNodeAbsPos(node, pos);
+	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 	currentHeight = 0;
 
 	if (EXTRADATA(node).displayAvailableOnTop) {
