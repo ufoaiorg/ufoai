@@ -403,11 +403,11 @@ epair_t *ParseEpair (void)
 
 	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
-	e->key = strdup(parsedToken);
+	e->key = Mem_StrDup(parsedToken);
 	GetToken(qfalse);
 	if (strlen(parsedToken) >= MAX_VALUE - 1)
 		Sys_Error("ParseEpar: token too long");
-	e->value = strdup(parsedToken);
+	e->value = Mem_StrDup(parsedToken);
 
 	/* strip trailing spaces */
 	StripTrailingWhitespaces(e->key);
@@ -520,7 +520,7 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 	for (ep = ent->epairs; ep; ep = ep->next)
 		if (!strcmp(ep->key, key)) {
 			Mem_Free(ep->value);
-			ep->value = strdup(value);
+			ep->value = Mem_StrDup(value);
 			return;
 		}
 	ep = Mem_Alloc(sizeof(*ep));
