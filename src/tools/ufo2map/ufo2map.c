@@ -557,13 +557,13 @@ int main (int argc, const char **argv)
 
 	start = time(NULL);
 
-	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
-	FS_Init(argv[argc - 1]);
-
 	com_genericPool = Mem_CreatePool("ufo2map");
 	com_fileSysPool = Mem_CreatePool("ufo2map filesys");
 
-	COM_StripExtension(COM_ExpandRelativePath(argv[argc - 1]), mapFilename, sizeof(mapFilename));
+	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
+	FS_InitFilesystem();
+
+	COM_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);
 	strncpy(bspFilename, mapFilename, sizeof(bspFilename) - 1);
 	COM_DefaultExtension(mapFilename, sizeof(mapFilename), ".map");

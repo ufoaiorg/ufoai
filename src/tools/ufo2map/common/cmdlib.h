@@ -28,18 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/byte.h"
 #include "shared.h"
 
-void FS_Init(const char *path);
-const char* FS_GameDir(void);
-
 char *COM_ExpandRelativePath(const char *path);	/* from cmd line */
 
 void SafeOpenWrite(const char *filename, qFILE *f);
-void SafeWrite(qFILE *f, void *buffer, int count);
 
-int LoadFile(const char *filename, void **bufferptr);
-void CloseFile(qFILE *f);
-void FreeFile(void *buffer);
-int TryLoadFile(const char *filename, void **bufferptr);
 const char *FS_EntitiesDefinitionPath(void);
 
 qboolean AbortPrint(const verbosityLevel_t importance);

@@ -60,8 +60,8 @@ void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 		Sys_Error("possible mem leak in LoadTGA\n");
 
 	/* load the file */
-	length = TryLoadFile(name, (void **) &buffer);
-	if (!buffer)
+	length = FS_LoadFile(name, (byte **) &buffer);
+	if (length == -1)
 		return;
 
 	buf_p = buffer;
@@ -228,7 +228,7 @@ void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 		}
 	}
 
-	FreeFile(buffer);
+	FS_FreeFile(buffer);
 }
 
 /**
@@ -329,9 +329,8 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 		Sys_Error("possible mem leak in LoadJPG\n");
 
 	/* Load JPEG file into memory */
-	rawsize = TryLoadFile(filename, (void **) &rawdata);
-
-	if (!rawdata)
+	rawsize = FS_LoadFile(filename, (byte **) &rawdata);
+	if (rawsize == -1)
 		return;
 
 	/* Knightmare- check for bad data */

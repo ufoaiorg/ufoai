@@ -41,7 +41,7 @@ void CalcTextureReflectivity (void)
 	int color[3];
 	miptex_t *mt;
 	qboolean loaded = qfalse;
-	const char *gamedir = FS_GameDir();
+	const char *gamedir = FS_Gamedir();
 
 	/* always set index 0 even if no textures */
 	VectorSet(texture_reflectivity[0], 0.5, 0.5, 0.5);

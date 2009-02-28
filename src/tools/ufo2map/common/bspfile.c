@@ -219,7 +219,7 @@ static int CopyLump (int lump, void *dest, int size)
  */
 void LoadBSPFile (const char *filename)
 {
-	int i;
+	int i, size;
 
 	/* Create this shortcut to mapTiles[0] */
 	curTile = &mapTiles[0];
@@ -227,7 +227,9 @@ void LoadBSPFile (const char *filename)
 	numTiles = 1;
 
 	/* load the file header */
-	LoadFile(filename, (void **)&header);
+	size = FS_LoadFile(filename, (byte **)&header);
+	if (size == -1)
+		Sys_Error("'%s' doesn't exists", filename);
 
 	/* swap the header */
 	for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
@@ -266,7 +268,7 @@ void LoadBSPFile (const char *filename)
 	}
 
 	/* everything has been copied out */
-	FreeFile(header);
+	FS_FreeFile(header);
 
 	/* swap everything */
 	SwapBSPFile();
@@ -286,7 +288,7 @@ static inline void AddLump (qFILE *bspfile, dBspHeader_t *header, int lumpnum, v
 	lump->fileofs = LittleLong(ftell(bspfile->f));
 	lump->filelen = LittleLong(len);
 	/* 4 byte align */
-	SafeWrite(bspfile, data, (len + 3) &~ 3);
+	FS_Write(data, (len + 3) &~ 3, bspfile);
 }
 
 /**
@@ -308,7 +310,7 @@ long WriteBSPFile (const char *filename)
 	outheader.version = LittleLong(BSPVERSION);
 
 	SafeOpenWrite(filename, &bspfile);
-	SafeWrite(&bspfile, &outheader, sizeof(dBspHeader_t));	/* overwritten later */
+	FS_Write(&outheader, sizeof(dBspHeader_t), &bspfile);	/* overwritten later */
 
 	AddLump(&bspfile, &outheader, LUMP_PLANES, curTile->planes, curTile->numplanes * sizeof(dBspPlane_t));
 	AddLump(&bspfile, &outheader, LUMP_LEAFS, curTile->leafs, curTile->numleafs * sizeof(dBspLeaf_t));
@@ -330,8 +332,8 @@ long WriteBSPFile (const char *filename)
 	size = ftell(bspfile.f);
 
 	fseek(bspfile.f, 0L, SEEK_SET);
-	SafeWrite(&bspfile, &outheader, sizeof(outheader));
-	CloseFile(&bspfile);
+	FS_Write(&outheader, sizeof(outheader), &bspfile);
+	FS_CloseFile(&bspfile);
 	SwapBSPFile();
 	return size;
 }

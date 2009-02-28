@@ -107,7 +107,7 @@ static void Check_InitEntityDefs (void)
 
 	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
 
-	if (TryLoadFile(entitiesUfoPath, (void **)&entitiesUfoBuf) == -1)
+	if (FS_LoadFile(entitiesUfoPath, (byte **)&entitiesUfoBuf) == -1)
 		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
 
 	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
