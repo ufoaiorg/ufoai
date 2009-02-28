@@ -86,6 +86,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/ioapi.h" />
+		<Unit filename="../../src/common/mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/mem.h" />
 		<Unit filename="../../src/common/routing.c">
 			<Option compilerVar="CC" />
 		</Unit>

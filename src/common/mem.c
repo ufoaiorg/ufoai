@@ -496,25 +496,19 @@ void _Mem_CheckPoolIntegrity (struct memPool_s *pool, const char *fileName, cons
 	for (mem = pool->blocks, blocks = 0, size = 0; mem; blocks++, mem = mem->next) {
 		size += mem->size;
 		if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
-			Com_Error(ERR_FATAL,
-				"Mem_CheckPoolIntegrity: bad memory head top sentinel [buffer underflow]\n"
-				"check: %s:#%i",
-				fileName, fileLine);
+			Sys_Error("Mem_CheckPoolIntegrity: bad memory head top sentinel [buffer underflow]\n"
+				"check: %s:#%i", fileName, fileLine);
 		} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
-			Com_Error(ERR_FATAL,
-				"Mem_CheckPoolIntegrity: bad memory head bottom sentinel [buffer underflow]\n"
-				"check: %s:#%i",
-				fileName, fileLine);
+			Sys_Error("Mem_CheckPoolIntegrity: bad memory head bottom sentinel [buffer underflow]\n"
+				"check: %s:#%i", fileName, fileLine);
 		} else if (!mem->footer) {
-			Com_Error(ERR_FATAL,
-				"Mem_CheckPoolIntegrity: bad memory footer [buffer overflow]\n"
+			Sys_Error("Mem_CheckPoolIntegrity: bad memory footer [buffer overflow]\n"
 				"pool: %s\n"
 				"alloc: %s:#%i\n"
 				"check: %s:#%i",
 				mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
 		} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
-			Com_Error(ERR_FATAL,
-				"Mem_CheckPoolIntegrity: bad memory foot sentinel [buffer overflow]\n"
+			Sys_Error("Mem_CheckPoolIntegrity: bad memory foot sentinel [buffer overflow]\n"
 				"pool: %s\n"
 				"alloc: %s:#%i\n"
 				"check: %s:#%i",
@@ -533,17 +527,12 @@ void _Mem_CheckPoolIntegrity (struct memPool_s *pool, const char *fileName, cons
 void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
 {
 	memPool_t *pool;
-	uint32_t startTime;
 	uint32_t i;
-
-	startTime = Sys_Milliseconds();
 
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 		if (pool->inUse)
 			_Mem_CheckPoolIntegrity(pool, fileName, fileLine);
 	}
-
-	Com_DPrintf(DEBUG_ENGINE, "Mem_CheckGlobalIntegrity: %ims\n", Sys_Milliseconds() - startTime);
 }
 
 
@@ -553,13 +542,11 @@ void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fil
 	uint32_t blocks;
 	uint32_t i;
 	int sum;
-	uint32_t startTime;
 
 	if (!pool)
 		return;
 
 	sum = 0;
-	startTime = Sys_Milliseconds();
 
 	/* Cycle through the blocks */
 	for (mem = pool->blocks, blocks = 0; mem; blocks++, mem = mem->next) {
@@ -574,10 +561,7 @@ void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fil
 void _Mem_TouchGlobal (const char *fileName, const int fileLine)
 {
 	memPool_t *pool;
-	uint32_t startTime;
 	uint32_t i, num;
-
-	startTime = Sys_Milliseconds();
 
 	/* Touch every pool */
 	num = 0;
@@ -587,8 +571,6 @@ void _Mem_TouchGlobal (const char *fileName, const int fileLine)
 			num++;
 		}
 	}
-
-	Com_DPrintf(DEBUG_ENGINE, "Mem_TouchGlobal: %u pools touched in %ims\n", num, Sys_Milliseconds()-startTime);
 }
 
 #ifdef COMPILE_UFO
