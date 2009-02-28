@@ -134,10 +134,10 @@ public:
 		return m_skin.c_str();
 	}
 
-	EntityClassAttribute *getAttribute(const char* type) {
-		for (EntityClassAttributes::iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
+	EntityClassAttribute *getAttribute(const char* type) const{
+		for (EntityClassAttributes::const_iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
 			if (string_equal(type, (*i).first.c_str())) {
-				return &(*i).second;
+				return const_cast<EntityClassAttribute*>(&(*i).second);
 			}
 		}
 		return NULL;
