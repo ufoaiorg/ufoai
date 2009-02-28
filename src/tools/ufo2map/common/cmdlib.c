@@ -44,7 +44,7 @@ static pack_t *pak;
 #endif
 
 /**
- * @brief For abnormal program terminations in windowed apps
+ * @brief For abnormal program terminations
  */
 void Sys_Error (const char *error, ...)
 {
@@ -54,7 +54,6 @@ void Sys_Error (const char *error, ...)
 	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
-	/* removed #ifdef _WIN32 which showed modal dialog. console output is much preferred. blondandy. */
 	Com_Printf("\n************ ERROR ************\n");
 	Com_Printf("%s\n", text);
 
@@ -158,7 +157,34 @@ const char* FS_GameDir (void)
 	if (gamedir[0] == '\0') {
 		FS_getwd(gamedir, sizeof(gamedir));
 		strncat(gamedir, BASEDIRNAME"/", sizeof(gamedir) - strlen(gamedir) - 1);
-#ifndef _WIN32 /* unistd.h is included above for all but _WIN32 */
+#ifdef _WIN32
+		{
+			char *lastDir;
+			WIN32_FIND_DATA FindFileData;
+			HANDLE hFind;
+			strrchr(gamedir,'/')[0] = '\0'; /* strip trailing "/", FindFirstFile does not work with trailing slash */
+			if (INVALID_HANDLE_VALUE == (hFind = FindFirstFile(gamedir, &FindFileData))) {
+				Verb_Printf(VERB_NORMAL, "gamedir not found at: %s\n", gamedir);
+				FS_getwd(gamedir, sizeof(gamedir));
+				strrchr(gamedir,'/')[0] = '\0'; /* strip trailing "/" */
+				lastDir = strrchr(gamedir,'/');
+				if (!lastDir)
+					lastDir = strrchr(gamedir, '\\');
+				else
+					printf("lastDir %s\n",lastDir);
+				strncpy(lastDir, "/"BASEDIRNAME, sizeof(gamedir) - (lastDir - gamedir) - 1);
+				if (INVALID_HANDLE_VALUE == (hFind = FindFirstFile(gamedir, &FindFileData))) {
+					Verb_Printf(VERB_NORMAL, "gamedir not found at: %s\n", gamedir);
+				} else {
+					FindClose(hFind);
+					Verb_Printf(VERB_NORMAL, "gamedir found at: %s\n", gamedir);
+				}
+			} else {
+				FindClose(hFind);
+			}
+			strcat(gamedir,"/");/* replace trailing slash */
+		}
+#else /* unistd.h is included above for all but _WIN32 */
 		if (0 != access(gamedir, R_OK)) {
 			char *lastDir;
 			Verb_Printf(VERB_NORMAL, "gamedir not found at: %s\n", gamedir);
