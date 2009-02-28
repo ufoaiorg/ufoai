@@ -244,7 +244,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 			if (req->type == RS_LINK_TECH) {
 				technology_t *techRequired = req->link;
 				if (!techRequired)
-					Sys_Error("Could not find the tech for '%s'\n", req->id);
+					Sys_Error("Could not find the tech for '%s'", req->id);
 
 				/** Only display tech if it is ok to do so.
 				 * @todo If it is one (a logic tech) we may want to re-iterate from its requirements? */
@@ -463,47 +463,31 @@ void UP_ItemDescription (const objDef_t *od)
 /**
  * @brief Prints the UFOpaedia description for armour
  * @sa UP_DrawEntry
+ * @todo This is not ufopedia only - no? We could use it in the equip menu, too (object info tab)
  */
 static void UP_ArmourDescription (const technology_t* t)
 {
-	objDef_t *od;
 	int i;
+	const objDef_t *od = INVSH_GetItemByID(t->provides);
+	if (!od)
+		Sys_Error("Could not find armour definition '%s' which should have been provided by '%s'", t->provides, t->id);
 
 	/* select item */
-	od = INVSH_GetItemByID(t->provides);
+	Cvar_Set("mn_upmodel_top", "");
+	Cvar_Set("mn_upmodel_bottom", "");
+	Cvar_Set("mn_upimage_top", t->image);
 
-#ifdef DEBUG
-	if (od == NULL)
-		Com_sprintf(upBuffer, sizeof(upBuffer), "Could not find armour definition");
-	else if (Q_strcmp(od->type, "armour"))
-		Com_sprintf(upBuffer, sizeof(upBuffer), "Item %s is no armour but %s", od->id, od->type);
-	else
-#endif
-	{
-		if (!od)
-			Sys_Error("Could not find armour definition '%s' which should have been provided by '%s'\n", t->provides, t->id);
-		Cvar_Set("mn_upmodel_top", "");
-		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upimage_top", t->image);
-		upBuffer[0] = '\0';
-		Q_strcat(upBuffer, va(_("Size:\t%i\n"), od->size), sizeof(upBuffer));
-		Q_strcat(upBuffer, "\n", sizeof(upBuffer));
-		for (i = 0; i < csi.numDTs; i++) {
-			if (!csi.dts[i].showInMenu)
-				continue;
-			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
-		}
+	upBuffer[0] = '\0';
+	Com_sprintf(upBuffer, sizeof(upBuffer), _("Size:\t%i\n"), od->size);
+	Q_strcat(upBuffer, "\n", sizeof(upBuffer));
+
+	for (i = 0; i < csi.numDTs; i++) {
+		if (!csi.dts[i].showInMenu)
+			continue;
+		Q_strcat(upBuffer, va(_("%s:\tProtection: %i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(upBuffer));
 	}
-	MN_RegisterText(TEXT_STANDARD, upBuffer);
-	UP_DisplayTechTree(t);
-}
 
-/**
- * @brief Prints the UFOpaedia description for technologies
- * @sa UP_DrawEntry
- */
-static void UP_TechDescription (const technology_t* t)
-{
+	MN_RegisterText(TEXT_STANDARD, upBuffer);
 	UP_DisplayTechTree(t);
 }
 
@@ -807,7 +791,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 					date.year, Date_GetMonthName(date.month - 1), date.day);
 				break;
 			default:
-				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
+				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.", type);
 			}
 		}
 		if (from != NULL) {
@@ -826,7 +810,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 					subjectType = _("Re: ");
 					break;
 				default:
-					Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for subject.\n", type);
+					Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for subject.", type);
 				}
 			}
 		} else {
@@ -899,7 +883,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 					}
 					break;
 				case RS_TECH:
-					UP_TechDescription(tech);
+					UP_DisplayTechTree(tech);
 					break;
 				case RS_CRAFT:
 					UP_AircraftDescription(tech);
@@ -966,7 +950,6 @@ static void UP_DrawAssociatedAmmo (const technology_t* tech)
  * @param tech technology_t pointer for the tech to display the information about
  * @sa UP_AircraftDescription
  * @sa UP_BuildingDescription
- * @sa UP_TechDescription
  * @sa UP_ArmourDescription
  * @sa UP_ItemDescription
  */
@@ -1217,7 +1200,7 @@ static void UP_Prev_f (void)
 			t = t->upPrev;
 			assert(t);
 			if (t == t->upPrev)
-				Sys_Error("UP_Prev_f: The 'prev':%s entry is equal to '%s'.\n", t->upPrev->id, t->id);
+				Sys_Error("UP_Prev_f: The 'prev':%s entry is equal to '%s'.", t->upPrev->id, t->id);
 		} while (t->upPrev && !UP_TechGetsDisplayed(t));
 
 		if (UP_TechGetsDisplayed(t)) {
@@ -1250,7 +1233,7 @@ static void UP_Next_f (void)
 		do {
 			t = t->upNext;
 			if (t == t->upNext)
-				Sys_Error("UP_Next_f: The 'next':%s entry is equal to '%s'.\n", t->upNext->id, t->id);
+				Sys_Error("UP_Next_f: The 'next':%s entry is equal to '%s'.", t->upNext->id, t->id);
 		} while (t->upNext && !UP_TechGetsDisplayed(t));
 
 		if (UP_TechGetsDisplayed(t)) {
@@ -1364,7 +1347,7 @@ static void UP_TechTreeClick_f (void)
 
 	techRequired = required_AND->links[num].link;
 	if (!techRequired)
-		Sys_Error("Could not find the tech for '%s'\n", required_AND->links[num].id);
+		Sys_Error("Could not find the tech for '%s'", required_AND->links[num].id);
 
 	/* maybe there is no UFOpaedia chapter assigned - this tech should not be opened at all */
 	if (!techRequired->upChapter)
@@ -1568,7 +1551,7 @@ static void UP_OpenMail_f (void)
 
 	mailClientListNode = MN_GetNodeByPath("mailclient.mailclient");
 	if (!mailClientListNode)
-		Sys_Error("Could not find the mailclient node in mailclient menu\n");
+		Sys_Error("Could not find the mailclient node in mailclient menu");
 
 	mailBuffer[0] = '\0';
 
