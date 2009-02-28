@@ -132,13 +132,11 @@ static void UP_ChangeDisplay (int newDisplay)
 		upCurrentTech = NULL;
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upmodel_big", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
 		break;
 	case UFOPEDIA_INDEX:
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upmodel_big", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
 		/* no break here */
 	case UFOPEDIA_ARTICLE:
