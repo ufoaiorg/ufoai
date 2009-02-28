@@ -1,6 +1,6 @@
 /**
  * @file scriplib.c
- * @brief
+ * @todo Remove this and use parse.c
  */
 
 /*
@@ -113,9 +113,6 @@ void ParseFromMemory (char *buffer, int size)
 	script->end_p = script->buffer + size;
 }
 
-/**
- * @brief
- */
 static qboolean EndOfScript (qboolean crossline)
 {
 	assert(script);
