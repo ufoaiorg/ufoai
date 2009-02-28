@@ -28,8 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/byte.h"
 #include "shared.h"
 
-char *COM_ExpandRelativePath(const char *path);	/* from cmd line */
-
 qboolean AbortPrint(const verbosityLevel_t importance);
 void Verb_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(printf, 2, 3)));
 

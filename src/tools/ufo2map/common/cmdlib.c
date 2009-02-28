@@ -27,27 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 
 /**
- * @brief prefixes relative path with working dir, leaves full path unchanged
- */
-char *COM_ExpandRelativePath (const char *path)
-{
-	static char full[MAX_OSPATH];
-
-	if (path[0] != '/' && path[0] != '\\' && path[1] != ':')
-		Com_sprintf(full, sizeof(full), "%s%s", FS_GetCwd(), path);
-	else
-		Q_strncpyz(full, path, sizeof(full));
-
-	return full;
-}
-
-/*
-=============================================================================
-MISC FUNCTIONS
-=============================================================================
-*/
-
-/**
  * @brief
  */
 void Com_Printf (const char *format, ...)

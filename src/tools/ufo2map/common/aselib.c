@@ -25,11 +25,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "../bsp.h"
+#include "shared.h"
 #include "aselib.h"
-
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #define MAX_ASE_MATERIALS			32
 #define MAX_ASE_OBJECTS				64
@@ -102,42 +99,22 @@ typedef struct {
 
 static char s_token[1024];
 static ase_t ase;
-static char gl_filename[MAX_OSPATH];
 
 static void ASE_Process(void);
 static void ASE_FreeGeomObject(int ndx);
 
-static int ASE_FileLength (FILE* f)
-{
-	int pos;
-	int end;
-
-	if (!f)
-		return 0;
-
-	pos = ftell(f);
-	fseek(f, 0, SEEK_END);
-	end = ftell(f);
-	fseek(f, pos, SEEK_SET);
-
-	return end;
-}
-
 void ASE_Load (const char *filename, qboolean verbose)
 {
-	char *aseFilename;
-	FILE *fp;
+	qFILE file;
 
-	aseFilename = COM_ExpandRelativePath(va(BASEDIRNAME"/%s", filename));
-
-	fp = fopen(aseFilename, "rb");
-	if (!fp)
-		Sys_Error("File not found '%s' (%s)", filename, aseFilename);
+	FS_OpenFile(filename, &file, FILE_READ);
+	if (!file.f && !file.z)
+		Sys_Error("File not found '%s'", filename);
 
 	memset(&ase, 0, sizeof(ase));
 
 	ase.verbose = verbose;
-	ase.len = ASE_FileLength(fp);
+	ase.len = FS_FileLength(&file);
 
 	ase.curpos = ase.buffer = Mem_Alloc(ase.len);
 	if (!ase.curpos)
@@ -145,14 +122,12 @@ void ASE_Load (const char *filename, qboolean verbose)
 
 	Verb_Printf(VERB_EXTRA, "Processing '%s'\n", filename);
 
-	if (fread(ase.buffer, ase.len, 1, fp) != 1) {
-		fclose(fp);
+	if (FS_Read(ase.buffer, ase.len, &file) != 1) {
+		FS_CloseFile(&file);
 		Sys_Error("fread() != -1 for '%s'", filename);
 	}
 
-	fclose(fp);
-
-	strcpy(gl_filename, aseFilename);
+	FS_CloseFile(&file);
 
 	ASE_Process();
 }
@@ -348,10 +323,6 @@ static void ASE_SkipRestOfLine (void)
 
 static void ASE_KeyMAP_DIFFUSE (const char *token)
 {
-	char filename[MAX_OSPATH];
-
-	strcpy(filename, gl_filename);
-
 	if (!strcmp(token, "*BITMAP")) {
 		const char *bitmap;
 		size_t len;
