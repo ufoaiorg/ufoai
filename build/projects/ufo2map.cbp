@@ -82,6 +82,9 @@
 			<Add library="z" />
 			<Add library="libjpeg" />
 		</Linker>
+		<Unit filename="../../src/ports/windows/win_shared.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../../src/common/ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -90,6 +93,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/mem.h" />
+		<Unit filename="../../src/common/files.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/common/files.h" />
 		<Unit filename="../../src/common/routing.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../../shared/ufotypes.h"
 #include "../../../common/unzip.h"
 #include "../../../common/mem.h"
+#include "../../../common/filesys.h"
 #include "../../../shared/shared.h"
 #include "../../../shared/mathlib.h"
 
@@ -144,6 +145,7 @@ typedef struct threadstate_s {
 extern threadstate_t threadstate;
 
 extern struct memPool_s *com_genericPool;
+extern struct memPool_s *com_fileSysPool;
 
 void ThreadLock(void);
 void ThreadUnlock(void);

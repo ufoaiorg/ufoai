@@ -37,11 +37,24 @@ UFO2MAP_SRCS = \
 	shared/shared.c \
 	shared/entitiesdef.c \
 	\
+	common/files.c \
 	common/mem.c \
 	common/unzip.c \
 	common/tracing.c \
 	common/routing.c \
 	common/ioapi.c
+
+
+ifneq ($(findstring $(TARGET_OS), solaris darwin netbsd freebsd linux-gnu),)
+	UFO2MAP_SRCS+= \
+		ports/unix/unix_main.c \
+		ports/unix/unix_glob.c
+endif
+
+ifeq ($(TARGET_OS),mingw32)
+	UFO2MAP_SRCS+=\
+		ports/windows/win_shared.c
+endif
 
 UFO2MAP_OBJS=$(UFO2MAP_SRCS:%.c=$(BUILDDIR)/tools/ufo2map/%.o)
 UFO2MAP_TARGET=ufo2map$(EXE_EXT)

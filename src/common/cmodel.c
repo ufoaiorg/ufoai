@@ -490,46 +490,6 @@ static int CMod_DeCompressRouting (byte ** source, byte * dataStart)
 	return data_p - dataStart;
 }
 
-/**
- * @brief Checks for valid BSP-file
- *
- * @param[in] filename BSP-file to check
- *
- * @return 0 if valid
- * @return 1 could not open file
- * @return 2 if magic number is bad
- * @return 3 if version of bsp-file is bad
- */
-int CheckBSPFile (const char *filename)
-{
-	int i;
-	int header[2];
-	qFILE file;
-	char name[MAX_QPATH];
-
-	/* load the file */
-	Com_sprintf(name, MAX_QPATH, "maps/%s.bsp", filename);
-
-	FS_OpenFile(name, &file);
-	if (!file.f && !file.z)
-		return 1;
-
-	FS_Read(header, sizeof(header), &file);
-
-	FS_CloseFile(&file);
-
-	for (i = 0; i < 2; i++)
-		header[i] = LittleLong(header[i]);
-
-	if (header[0] != IDBSPHEADER)
-		return 2;
-	if (header[1] != BSPVERSION)
-		return 3;
-
-	/* valid BSP-File */
-	return 0;
-}
-
 /*
 ===============================================================================
 TRACING NODES

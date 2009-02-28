@@ -50,6 +50,7 @@ mapConfig_t config;
 static char mapFilename[MAX_OSPATH];
 
 struct memPool_s *com_genericPool;
+struct memPool_s *com_fileSysPool;
 
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
@@ -560,6 +561,7 @@ int main (int argc, const char **argv)
 	FS_Init(argv[argc - 1]);
 
 	com_genericPool = Mem_CreatePool("ufo2map");
+	com_fileSysPool = Mem_CreatePool("ufo2map filesys");
 
 	COM_StripExtension(COM_ExpandRelativePath(argv[argc - 1]), mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);

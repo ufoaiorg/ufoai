@@ -33,7 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/typedefs.h"
 #include "../shared/parse.h"
 
+#ifdef COMPILE_UFO
 static cvar_t *fs_basedir;
+#endif
+
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
 
@@ -157,7 +160,6 @@ static int FS_OpenFileSingle (const char *filename, qFILE * file)
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
 			file->f = fopen(netpath, "rb");
 			if (file->f) {
-				Com_DPrintf(DEBUG_ENGINE, "link file: %s\n", netpath);
 				fs_openedFiles++;
 				return FS_FileLength(file);
 			}
@@ -174,14 +176,12 @@ static int FS_OpenFileSingle (const char *filename, qFILE * file)
 			for (i = 0; i < pak->numfiles; i++)
 				/* found it! */
 				if (!Q_strcasecmp(pak->files[i].name, filename)) {
-					Com_DPrintf(DEBUG_ENGINE, "PackFile: %s : %s\n", pak->filename, filename);
 					/* open a new file on the pakfile */
 					if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
 						if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
 							unz_file_info info;
-							Com_DPrintf(DEBUG_ENGINE, "PackFile: %s : %s\n", pak->filename, filename);
 							if (unzGetCurrentFileInfo(pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
-								Com_Error(ERR_FATAL, "Couldn't get size of %s in %s", filename, pak->filename);
+								Sys_Error("Couldn't get size of %s in %s", filename, pak->filename);
 							unzGetCurrentFileInfoPosition(pak->handle.z, &file->filepos);
 							file->z = pak->handle.z;
 							fs_openedFiles++;
@@ -227,7 +227,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 		int remainder = offset;
 
 		if (offset < 0 || origin == FS_SEEK_END) {
-			Com_Error(ERR_FATAL, "Negative offsets and FS_SEEK_END not implemented "
+			Sys_Error("Negative offsets and FS_SEEK_END not implemented "
 					"for FS_Seek on pk3 file contents\n");
 		}
 
@@ -245,7 +245,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 			return offset;
 
 		default:
-			Com_Error(ERR_FATAL, "Bad origin in FS_Seek");
+			Sys_Error("Bad origin in FS_Seek");
 		}
 	} else if (f->f) {
 		switch (origin) {
@@ -273,16 +273,8 @@ int FS_Seek (qFILE * f, long offset, int origin)
  */
 int FS_OpenFile (const char *filename, qFILE * file)
 {
-	int result;
-
 	/* open file */
-	result = FS_OpenFileSingle(filename, file);
-
-	/* nothing corresponding found */
-	if (result == -1)
-		Com_DPrintf(DEBUG_ENGINE, "FS_OpenFile: can't find %s\n", filename);
-
-	return result;
+	return FS_OpenFileSingle(filename, file);
 }
 
 /**
@@ -299,9 +291,7 @@ void FS_OpenFileWrite (const char *filename, qFILE *f)
 		return;
 
 	f->f = fopen(filename, "wb");
-	if (!f->f)
-		Com_DPrintf(DEBUG_ENGINE, "Could not open %s for writing\n", filename);
-	else
+	if (f->f)
 		fs_openedFiles++;
 }
 
@@ -352,12 +342,9 @@ int FS_Read (void *buffer, int len, qFILE * f)
 
 	if (f->z) {
 		read = unzReadCurrentFile(f->z, buf, len);
-		if (read == -1) {
-#ifdef DEBUG
-			Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);
-#endif
-			Com_Error(ERR_FATAL, "FS_Read (zipfile): -1 bytes read");
-		}
+		if (read == -1)
+			Sys_Error("FS_Read (zipfile): -1 bytes read");
+
 		return read;
 	}
 
@@ -375,22 +362,14 @@ int FS_Read (void *buffer, int len, qFILE * f)
 
 		if (read == 0) {
 			/* we might have been trying to read from a CD */
-			if (!tries) {
+			if (!tries)
 				tries = 1;
-			} else {
-#ifdef DEBUG
-				Com_DPrintf(DEBUG_ENGINE, "FS_Read: %s:%i (%s)\n", file, line, f->name);
-#endif
-				Com_Error(ERR_FATAL, "FS_Read: 0 bytes read");
-			}
+			else
+				Sys_Error("FS_Read: 0 bytes read");
 		}
 
-		if (read == -1) {
-#ifdef DEBUG
-			Com_DPrintf(DEBUG_ENGINE, "FS_Read: %s:%i (%s)\n", file, line, f->name);
-#endif
-			Com_Error(ERR_FATAL, "FS_Read: -1 bytes read");
-		}
+		if (read == -1)
+			Sys_Error("FS_Read: -1 bytes read");
 
 		/* do some progress bar thing here... */
 		remaining -= read;
@@ -416,7 +395,6 @@ int FS_LoadFile (const char *path, byte **buffer)
 	/* look for it in the filesystem or pack files */
 	len = FS_OpenFile(path, &h);
 	if (!h.f && !h.z) {
-		Com_DPrintf(DEBUG_ENGINE, "FS_LoadFile: Could not open %s\n", path);
 		if (buffer)
 			*buffer = NULL;
 		return -1;
@@ -592,6 +570,88 @@ static void FS_AddGameDirectory (const char *dir)
 }
 
 /**
+ * @brief Builds a qsorted filelist
+ * @sa Sys_FindFirst
+ * @sa Sys_FindNext
+ * @sa Sys_FindClose
+ * @note Don't forget to free the filelist array and the file itself
+ */
+char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
+{
+	char *s;
+	int nfiles = 0, i;
+	char **list = NULL;
+	char tempList[MAX_FILES][MAX_OSPATH];
+
+	*numfiles = 0;
+
+	s = Sys_FindFirst(findname, musthave, canthave);
+	while (s) {
+		if (s[strlen(s) - 1] != '.')
+			nfiles++;
+		s = Sys_FindNext(musthave, canthave);
+	}
+	Sys_FindClose();
+
+	if (!nfiles)
+		return NULL;
+
+	nfiles++; /* add space for a guard */
+	*numfiles = nfiles;
+
+	list = Mem_PoolAlloc(sizeof(char*) * nfiles, com_fileSysPool, 0);
+	memset(tempList, 0, sizeof(tempList));
+
+	s = Sys_FindFirst(findname, musthave, canthave);
+	nfiles = 0;
+	while (s) {
+		if (s[strlen(s) - 1] != '.') {
+			Q_strncpyz(tempList[nfiles], s, sizeof(tempList[nfiles]));
+#ifdef _WIN32
+			Q_strlwr(tempList[nfiles]);
+#endif
+			nfiles++;
+			if (nfiles >= MAX_FILES)
+				break;
+		}
+		s = Sys_FindNext(musthave, canthave);
+	}
+	Sys_FindClose();
+
+	qsort(tempList, nfiles, MAX_OSPATH, Q_StringSort);
+	for (i = 0; i < nfiles; i++) {
+		list[i] = Mem_PoolStrDup(tempList[i], com_fileSysPool, 0);
+	}
+
+	return list;
+}
+
+/**
+ * @brief Allows enumerating all of the directories in the search path
+ * @note ignore pk3 here
+ */
+const char *FS_NextPath (const char *prevpath)
+{
+	searchpath_t *s;
+	char *prev;
+
+	if (!prevpath)
+		return FS_Gamedir();
+
+	prev = NULL;
+	for (s = fs_searchpaths; s; s = s->next) {
+		if (s->pack)
+			continue;
+		if (prev && !Q_strcmp(prevpath, prev))
+			return s->filename;
+		prev = s->filename;
+	}
+
+	return NULL;
+}
+
+#ifdef COMPILE_UFO
+/**
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
  */
@@ -683,64 +743,6 @@ static void FS_Link_f (void)
 	l->to = Mem_PoolStrDup(Cmd_Argv(2), com_fileSysPool, 0);
 }
 
-
-/**
- * @brief Builds a qsorted filelist
- * @sa Sys_FindFirst
- * @sa Sys_FindNext
- * @sa Sys_FindClose
- * @note Don't forget to free the filelist array and the file itself
- */
-char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
-{
-	char *s;
-	int nfiles = 0, i;
-	char **list = NULL;
-	char tempList[MAX_FILES][MAX_OSPATH];
-
-	*numfiles = 0;
-
-	s = Sys_FindFirst(findname, musthave, canthave);
-	while (s) {
-		if (s[strlen(s) - 1] != '.')
-			nfiles++;
-		s = Sys_FindNext(musthave, canthave);
-	}
-	Sys_FindClose();
-
-	if (!nfiles)
-		return NULL;
-
-	nfiles++; /* add space for a guard */
-	*numfiles = nfiles;
-
-	list = Mem_PoolAlloc(sizeof(char*) * nfiles, com_fileSysPool, 0);
-	memset(tempList, 0, sizeof(tempList));
-
-	s = Sys_FindFirst(findname, musthave, canthave);
-	nfiles = 0;
-	while (s) {
-		if (s[strlen(s) - 1] != '.') {
-			Q_strncpyz(tempList[nfiles], s, sizeof(tempList[nfiles]));
-#ifdef _WIN32
-			Q_strlwr(tempList[nfiles]);
-#endif
-			nfiles++;
-			if (nfiles >= MAX_FILES)
-				break;
-		}
-		s = Sys_FindNext(musthave, canthave);
-	}
-	Sys_FindClose();
-
-	qsort(tempList, nfiles, MAX_OSPATH, Q_StringSort);
-	for (i = 0; i < nfiles; i++) {
-		list[i] = Mem_PoolStrDup(tempList[i], com_fileSysPool, 0);
-	}
-
-	return list;
-}
-
 /**
  * @brief Show the filesystem contents - also supports wildcarding
  * @sa FS_NextPath
@@ -783,30 +785,6 @@ static void FS_Dir_f (void)
 }
 
 /**
- * @brief Allows enumerating all of the directories in the search path
- * @note ignore pk3 here
- */
-const char *FS_NextPath (const char *prevpath)
-{
-	searchpath_t *s;
-	char *prev;
-
-	if (!prevpath)
-		return FS_Gamedir();
-
-	prev = NULL;
-	for (s = fs_searchpaths; s; s = s->next) {
-		if (s->pack)
-			continue;
-		if (prev && !Q_strcmp(prevpath, prev))
-			return s->filename;
-		prev = s->filename;
-	}
-
-	return NULL;
-}
-
-/**
  * @brief Print all searchpaths
  */
 static void FS_Info_f (void)
@@ -842,16 +820,18 @@ static const cmdList_t fs_commands[] = {
 	{NULL, NULL, NULL}
 };
 
-/**
- * @sa FS_Shutdown
- * @sa FS_RestartFilesystem
- */
-void FS_InitFilesystem (void)
+static void FS_RemoveCommands (void)
 {
-	cvar_t* fs_usehomedir;
 	const cmdList_t *commands;
 
-	Com_Printf("\n---- filesystem initialization -----\n");
+	for (commands = fs_commands; commands->name; commands++)
+		Cmd_RemoveCommand(commands->name);
+}
+
+static void FS_InitCommandsAndCvars (void)
+{
+	const cmdList_t *commands;
+	cvar_t* fs_usehomedir;
 
 	for (commands = fs_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
@@ -861,18 +841,32 @@ void FS_InitFilesystem (void)
 	/* allows the game to run from outside the data tree */
 	fs_basedir = Cvar_Get("fs_basedir", ".", CVAR_NOSET, "Allows the game to run from outside the data tree");
 
-#ifdef PKGDATADIR
-	/* add the system search path */
-	FS_AddGameDirectory(PKGLIBDIR"/"BASEDIRNAME);
-	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME);
-#endif
-
 	/* start up with base by default */
 	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
 
 	/* then add a '.ufoai/VERSION/base' directory in home directory by default */
 	if (fs_usehomedir->integer)
 		FS_AddHomeAsGameDirectory(BASEDIRNAME);
+}
+#endif
+
+/**
+ * @sa FS_Shutdown
+ * @sa FS_RestartFilesystem
+ */
+void FS_InitFilesystem (void)
+{
+	Com_Printf("\n---- filesystem initialization -----\n");
+
+#ifdef PKGDATADIR
+	/* add the system search path */
+	FS_AddGameDirectory(PKGLIBDIR"/"BASEDIRNAME);
+	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME);
+#endif
+
+#ifdef COMPILE_UFO
+	FS_InitCommandsAndCvars();
+#endif
 
 	/* any set gamedirs will be freed up to here */
 	fs_base_searchpaths = fs_searchpaths;
@@ -1293,6 +1287,46 @@ static int FS_MapDefSort (const void *map1, const void *map2)
 }
 
 /**
+ * @brief Checks for valid BSP-file
+ *
+ * @param[in] filename BSP-file to check
+ *
+ * @return 0 if valid
+ * @return 1 could not open file
+ * @return 2 if magic number is bad
+ * @return 3 if version of bsp-file is bad
+ */
+static int CheckBSPFile (const char *filename)
+{
+	int i;
+	int header[2];
+	qFILE file;
+	char name[MAX_QPATH];
+
+	/* load the file */
+	Com_sprintf(name, MAX_QPATH, "maps/%s.bsp", filename);
+
+	FS_OpenFile(name, &file);
+	if (!file.f && !file.z)
+		return 1;
+
+	FS_Read(header, sizeof(header), &file);
+
+	FS_CloseFile(&file);
+
+	for (i = 0; i < 2; i++)
+		header[i] = LittleLong(header[i]);
+
+	if (header[0] != IDBSPHEADER)
+		return 2;
+	if (header[1] != BSPVERSION)
+		return 3;
+
+	/* valid BSP-File */
+	return 0;
+}
+
+/**
  * @brief File the fs_maps array with valid maps
  * @param[in] reset If true the directory is scanned everytime for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
@@ -1313,7 +1347,6 @@ void FS_GetMaps (qboolean reset)
 	if (!reset && fs_mapsInstalledInit)
 		return;
 	else if (fs_mapsInstalledInit) {
-		Com_DPrintf(DEBUG_ENGINE, "Free old list with %i entries\n", fs_numInstalledMaps);
 		for (i = 0; i <= fs_numInstalledMaps; i++)
 			Mem_Free(fs_maps[i]);
 	}
@@ -1366,7 +1399,6 @@ void FS_GetMaps (qboolean reset)
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != NULL) {
 				for (i = 0; i < ndirs - 1; i++) {
-					Com_DPrintf(DEBUG_ENGINE, "... found map: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
 					baseMapName = COM_SkipPath(dirnames[i]);
 					COM_StripExtension(baseMapName, filename, sizeof(filename));
 					status = CheckBSPFile(filename);
@@ -1396,7 +1428,6 @@ void FS_GetMaps (qboolean reset)
 			dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM);
 			if (dirnames != NULL) {
 				for (i = 0; i < ndirs - 1; i++) {
-					Com_DPrintf(DEBUG_ENGINE, "... found rma: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
 					baseMapName = COM_SkipPath(dirnames[i]);
 					COM_StripExtension(baseMapName, filename, sizeof(filename));
 					if (fs_numInstalledMaps + 1 >= MAX_MAPS) {
@@ -1527,7 +1558,6 @@ qboolean FS_FileExists (const char *filename)
 void FS_Shutdown (void)
 {
 	searchpath_t *p, *next;
-	const cmdList_t *commands;
 
 	if (fs_openedFiles != 0) {
 		Com_Printf("There are still %i opened files\n", fs_openedFiles);
@@ -1551,8 +1581,9 @@ void FS_Shutdown (void)
 	fs_mapsInstalledInit = qfalse;
 	fs_numInstalledMaps = -1;
 
-	for (commands = fs_commands; commands->name; commands++)
-		Cmd_RemoveCommand(commands->name);
+#ifdef COMPILE_UFO
+	FS_RemoveCommands();
+#endif
 
 	Mem_FreePool(com_fileSysPool);
 }
@@ -1577,7 +1608,7 @@ void FS_RestartFilesystem (void)
 	 * graphics screen when the font fails to load
 	 */
 	if (FS_CheckFile("default.cfg") < 0) {
-		Com_Error(ERR_FATAL, "Couldn't load default.cfg");
+		Sys_Error("Couldn't load default.cfg");
 	}
 }
 
@@ -1592,7 +1623,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	byte *buf;
 
 	if (!fs_searchpaths)
-		Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+		Sys_Error("Filesystem call made without initialization");
 
 	Com_Printf("FS_CopyFile: copy %s to %s\n", fromOSPath, toOSPath);
 
@@ -1606,7 +1637,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 
 	buf = Mem_PoolAlloc(len, com_fileSysPool, 0);
 	if (fread(buf, 1, len, f) != len)
-		Com_Error(ERR_FATAL, "Short read in FS_CopyFile");
+		Sys_Error("Short read in FS_CopyFile");
 	fclose(f);
 
 	FS_CreatePath(toOSPath);
@@ -1618,7 +1649,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	}
 
 	if (fwrite(buf, 1, len, f) != len)
-		Com_Error(ERR_FATAL, "Short write in FS_CopyFile()");
+		Sys_Error("Short write in FS_CopyFile()");
 
 	fclose(f);
 	Mem_Free(buf);
@@ -1630,7 +1661,7 @@ void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 void FS_RemoveFile (const char *osPath)
 {
 	if (!fs_searchpaths)
-		Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+		Sys_Error("Filesystem call made without initialization");
 
 	Com_Printf("FS_RemoveFile: remove %s\n", osPath);
 	remove(osPath);
@@ -1650,7 +1681,7 @@ qboolean FS_RenameFile (const char *from, const char *to, qboolean relative)
 	char to_buf[MAX_OSPATH];
 
 	if (!fs_searchpaths)
-		Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+		Sys_Error("Filesystem call made without initialization");
 
 	if (relative) {
 		Com_sprintf(from_buf, sizeof(from_buf), "%s/%s", FS_Gamedir(), from);

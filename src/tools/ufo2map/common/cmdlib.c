@@ -44,25 +44,6 @@ static pack_t *pak;
 #endif
 
 /**
- * @brief For abnormal program terminations
- */
-void Sys_Error (const char *error, ...)
-{
-	va_list argptr;
-	char text[2048];
-
-	va_start(argptr, error);
-	Q_vsnprintf(text, sizeof(text), error, argptr);
-	va_end(argptr);
-	Com_Printf("\n************ ERROR ************\n");
-	Com_Printf("%s\n", text);
-
-	Mem_Shutdown();
-
-	exit(1);
-}
-
-/**
  * @brief Takes an explicit (not game tree related) path to a pak file.
  * Adding the files at the beginning of the list so they override previous pack files.
  */

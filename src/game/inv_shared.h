@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 #include "lua/lua.h"
+#include "../common/filesys.h" /**< MAX_QPATH @todo remove once all those 'doesn't belong here' are fixed */
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS		128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
@@ -633,6 +634,7 @@ typedef enum {
 /**
  * @brief The types of employees.
  * @note If you will change order, make sure personel transfering still works.
+ * @todo doesn't belong here
  */
 typedef enum {
 	EMPL_SOLDIER,
@@ -643,14 +645,16 @@ typedef enum {
 	MAX_EMPL		/**< For counting over all available enums. */
 } employeeType_t;
 
-/** @brief Artificial intelligence of a character */
+/** @brief Artificial intelligence of a character
+ * @todo doesn't belong here  */
 typedef struct AI_s {
 	char type[MAX_QPATH];	/**< Lua file used by the AI. */
 	char subtype[MAX_VAR];	/**< Subtype to be used by AI. */
 	lua_State* L;			/**< The lua state used by the AI. */
 } AI_t;
 
-/** @brief Describes a character with all its attributes */
+/** @brief Describes a character with all its attributes
+ * @todo doesn't belong here */
 typedef struct character_s {
 	int ucn;
 	char name[MAX_VAR];			/**< Character name (as in: soldier name). */

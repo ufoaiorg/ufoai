@@ -49,10 +49,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* ufo2map/faces.c, shared/typedefs.h (face_t) */
 #define	MAXEDGES		20
 
-/* Maximum maps constant */
-/* common/files.c, common/filesys.h (extern fs_maps) */
-#define	MAX_MAPS 400
-
 /* client/cl_campaign.c, client/cl_mapfightequip.c, client/cl_ufopedia.c */
 #define	UFO_EPSILON 0.00001f
 
@@ -112,13 +108,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAX_STRING_TOKENS   80  /* max tokens resulting from Cmd_TokenizeString */
 
 /* ALL */
-#define MAX_QPATH           64  /**< max length of the ufo virtual filesystem */
 #define MAX_TEXPATH         32  /**< max length of filename relative to gamedir, any longer makes the bsp files unecessarily long */
-
-/* windows + linux 256, macosx 32 */
-#define	MAX_OSPATH          256 /* max length of a filesystem pathname */
-/* common/flies.c */
-#define	MAX_FILES           512 /* max files in a directory */
 
 /* per-level limits */
 /* 25 - bases are 5*5 - see BASE_SIZE*/

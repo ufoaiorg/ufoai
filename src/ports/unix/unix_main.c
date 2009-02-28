@@ -31,7 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <pwd.h>
 #include <dlfcn.h>
 #include <fcntl.h>
-#include <sys/file.h>
 #include <locale.h>
 #include <signal.h>
 
@@ -43,8 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <execinfo.h>
 #define MAX_BACKTRACE_SYMBOLS 50
 #endif
-
-static void *game_library;
 
 const char *Sys_GetCurrentUser (void)
 {
@@ -87,8 +84,12 @@ void Sys_Error (const char *error, ...)
 	/* change stdin to non blocking */
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
+#ifdef COMPILE_UFO
 	CL_Shutdown();
 	Qcommon_Shutdown();
+#elif COMPILE_MAP
+	Mem_Shutdown();
+#endif
 
 	va_start(argptr,error);
 	Q_vsnprintf(string, sizeof(string), error, argptr);
@@ -105,9 +106,13 @@ void Sys_Error (const char *error, ...)
  */
 void Sys_Quit (void)
 {
+#ifdef COMPILE_UFO
 	CL_Shutdown();
 	Qcommon_Shutdown();
 	Sys_ConsoleShutdown();
+#elif COMPILE_MAP
+	Mem_Shutdown();
+#endif
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	exit(0);
@@ -120,6 +125,7 @@ void Sys_Sleep (int milliseconds)
 	usleep(milliseconds * 1000);
 }
 
+#ifdef COMPILE_UFO
 const char *Sys_SetLocale (const char *localeID)
 {
 	const char *locale;
@@ -162,6 +168,7 @@ const char *Sys_GetLocale (void)
 	else
 		return "C";
 }
+#endif
 
 int Sys_Setenv (const char *name, const char *value)
 {
@@ -281,6 +288,9 @@ void Sys_FindClose (void)
 		closedir(fdir);
 	fdir = NULL;
 }
+
+#ifdef COMPILE_UFO
+static void *game_library;
 
 void Sys_UnloadGame (void)
 {
@@ -419,9 +429,9 @@ void *Sys_LoadLibrary (const char *name, int flags)
 void Sys_FreeLibrary (void *libHandle)
 {
 	if (!libHandle)
-		Com_Error(ERR_DROP, "Sys_FreeLibrary: No valid handle given");
+		Sys_Error("Sys_FreeLibrary: No valid handle given");
 	if (dlclose(libHandle) != 0)
-		Com_Error(ERR_DROP, "Sys_FreeLibrary: dlclose() failed - %s", dlerror());
+		Sys_Error("Sys_FreeLibrary: dlclose() failed - %s", dlerror());
 }
 
 /**
@@ -430,9 +440,11 @@ void Sys_FreeLibrary (void *libHandle)
 void *Sys_GetProcAddress (void *libHandle, const char *procName)
 {
 	if (!libHandle)
-		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given");
+		Sys_Error("Sys_GetProcAddress: No valid libHandle given");
 	return dlsym(libHandle, procName);
 }
+#endif
+
 
 int Sys_Milliseconds (void)
 {
@@ -459,6 +471,7 @@ void Sys_Mkdir (const char *thePath)
 		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
 
+#ifdef COMPILE_UFO
 void Sys_SetAffinityAndPriority (void)
 {
 	if (sys_affinity->modified) {
@@ -469,6 +482,7 @@ void Sys_SetAffinityAndPriority (void)
 		sys_priority->modified = qfalse;
 	}
 }
+#endif
 
 /**
  * @brief On platforms supporting it, print a backtrace.
