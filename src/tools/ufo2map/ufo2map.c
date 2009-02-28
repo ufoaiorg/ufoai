@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mapConfig_t config;
 static char mapFilename[MAX_OSPATH];
 
-struct memPool_s *ufo2mapPool;
+struct memPool_s *com_genericPool;
 
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
@@ -559,7 +559,7 @@ int main (int argc, const char **argv)
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
 	FS_Init(argv[argc - 1]);
 
-	ufo2mapPool = Mem_CreatePool("ufo2map");
+	com_genericPool = Mem_CreatePool("ufo2map");
 
 	COM_StripExtension(COM_ExpandRelativePath(argv[argc - 1]), mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);

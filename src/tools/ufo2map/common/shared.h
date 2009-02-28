@@ -143,7 +143,7 @@ typedef struct threadstate_s {
 
 extern threadstate_t threadstate;
 
-extern struct memPool_s *ufo2mapPool;
+extern struct memPool_s *com_genericPool;
 
 void ThreadLock(void);
 void ThreadUnlock(void);
