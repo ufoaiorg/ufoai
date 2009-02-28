@@ -145,3 +145,130 @@ void Sys_FindClose (void)
 		_findclose(findhandle);
 	findhandle = 0;
 }
+
+void Sys_Quit (void)
+{
+	timeEndPeriod(1);
+
+#ifdef COMPILE_UFO
+	CL_Shutdown();
+	Qcommon_Shutdown();
+#elif COMPILE_MAP
+	Mem_Shutdown();
+#endif
+
+	if (procShell_NotifyIcon)
+		procShell_NotifyIcon(NIM_DELETE, &pNdata);
+
+	/* exit(0) */
+	ExitProcess(0);
+}
+
+/**
+ * @brief Get current user
+ */
+const char *Sys_GetCurrentUser (void)
+{
+	static char s_userName[1024];
+	unsigned long size = sizeof(s_userName);
+
+	if (!GetUserName(s_userName, &size))
+		Q_strncpyz(s_userName, "", sizeof(s_userName));
+
+	return s_userName;
+}
+
+/**
+ * @brief Get current working dir
+ */
+char *Sys_Cwd (void)
+{
+	static char cwd[MAX_OSPATH];
+
+	if (_getcwd(cwd, sizeof(cwd) - 1) == NULL)
+		return NULL;
+	cwd[MAX_OSPATH-1] = 0;
+
+	return cwd;
+}
+
+/**
+ * @brief Normalize path (remove all \\ )
+ */
+void Sys_NormPath (char* path)
+{
+	char *tmp = path;
+
+	while (*tmp) {
+		if (*tmp == '\\')
+			*tmp = '/';
+		else
+			*tmp = tolower(*tmp);
+		tmp++;
+	}
+}
+
+/**
+ * @brief Get the home directory in Application Data
+ * @note Forced for Windows Vista
+ * @note Use the cvar fs_usehomedir if you want to use the homedir for other
+ * Windows versions, too
+ */
+char *Sys_GetHomeDirectory (void)
+{
+	TCHAR szPath[MAX_PATH];
+	static char path[MAX_OSPATH];
+	FARPROC qSHGetFolderPath;
+	HMODULE shfolder;
+
+	shfolder = LoadLibrary("shfolder.dll");
+
+	if (shfolder == NULL) {
+		Com_Printf("Unable to load SHFolder.dll\n");
+		return NULL;
+	}
+
+	qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
+	if (qSHGetFolderPath == NULL) {
+		Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
+		FreeLibrary(shfolder);
+		return NULL;
+	}
+
+	if (!SUCCEEDED(qSHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
+		Com_Printf("Unable to detect CSIDL_APPDATA\n");
+		FreeLibrary(shfolder);
+		return NULL;
+	}
+
+	Q_strncpyz(path, szPath, sizeof(path));
+	Q_strcat(path, "\\UFOAI", sizeof(path));
+	FreeLibrary(shfolder);
+
+	if (!CreateDirectory(path, NULL)) {
+		if (GetLastError() != ERROR_ALREADY_EXISTS) {
+			Com_Printf("Unable to create directory \"%s\"\n", path);
+			return NULL;
+		}
+	}
+	return path;
+}
+
+/**
+ * @brief Calls the win32 sleep function
+ */
+void Sys_Sleep (int milliseconds)
+{
+	if (milliseconds < 1)
+		milliseconds = 1;
+	Sleep(milliseconds);
+}
+
+int Sys_Setenv (const char *name, const char *value)
+{
+	/* Windows does not have setenv, but its putenv is safe to use.
+	 * It does not keep a pointer to the string. */
+	char str[256];
+	Com_sprintf(str, sizeof(str), "%s=%s", name, value);
+	return putenv(str);
+}

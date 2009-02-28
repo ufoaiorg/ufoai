@@ -53,7 +53,6 @@ endif
 
 ifeq ($(TARGET_OS),mingw32)
 	UFO2MAP_SRCS+=\
-		ports/windows/win_main.c \
 		ports/windows/win_shared.c
 endif
 
