@@ -49,6 +49,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 mapConfig_t config;
 static char mapFilename[MAX_OSPATH];
 
+struct memPool_s *ufo2mapPool;
+
 char baseFilename[MAX_OSPATH]; /**< This is used for extra file output functions */
 
 typedef struct usagePair_s {
@@ -557,6 +559,8 @@ int main (int argc, const char **argv)
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
 	FS_Init(argv[argc - 1]);
 
+	ufo2mapPool = Mem_CreatePool("ufo2map");
+
 	COM_StripExtension(COM_ExpandRelativePath(argv[argc - 1]), mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);
 	strncpy(bspFilename, mapFilename, sizeof(bspFilename) - 1);
@@ -566,6 +570,7 @@ int main (int argc, const char **argv)
 	if (config.info) {
 		LoadBSPFile(bspFilename);
 		PrintBSPFileSizes();
+		Mem_Shutdown();
 		return 0;
 	}
 
@@ -579,6 +584,7 @@ int main (int argc, const char **argv)
 #if defined (HAVE_SYS_STAT_H) || defined (_WIN32)
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
 		Verb_Printf(VERB_LESS, "bsp file is up-to-date\n");
+		Mem_Shutdown();
 		return 0;
 	}
 #endif
@@ -637,6 +643,8 @@ int main (int argc, const char **argv)
 			UnparseEntities();
 			WriteMapFile(GetScriptFile());
 		}
+		Mem_Shutdown();
+		/** @todo remove these once they all use the memory pool */
 		Check_Free();
 		FreeEpairs();
 		FreeWindings();
@@ -691,7 +699,10 @@ int main (int argc, const char **argv)
 		size = WriteBSPFile(bspFilename);
 		end = time(NULL);
 	}
-	FreeWindings();
+	FreeWindings(); /** @todo remove this once the windings are using the memory pool */
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
+
+	Mem_Shutdown();
+
 	return 0;
 }

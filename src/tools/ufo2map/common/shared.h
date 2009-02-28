@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../shared/ufotypes.h"
 #include "../../../common/unzip.h"
+#include "../../../common/mem.h"
 #include "../../../shared/shared.h"
 #include "../../../shared/mathlib.h"
 
@@ -141,6 +142,8 @@ typedef struct threadstate_s {
 } threadstate_t;
 
 extern threadstate_t threadstate;
+
+extern struct memPool_s *ufo2mapPool;
 
 void ThreadLock(void);
 void ThreadUnlock(void);

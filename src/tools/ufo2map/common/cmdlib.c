@@ -57,6 +57,8 @@ void Sys_Error (const char *error, ...)
 	Com_Printf("\n************ ERROR ************\n");
 	Com_Printf("%s\n", text);
 
+	Mem_Shutdown();
+
 	exit(1);
 }
 
