@@ -153,9 +153,6 @@ void Sys_Quit (void)
 #ifdef COMPILE_UFO
 	CL_Shutdown();
 	Qcommon_Shutdown();
-
-	if (procShell_NotifyIcon)
-		procShell_NotifyIcon(NIM_DELETE, &pNdata);
 #elif COMPILE_MAP
 	Mem_Shutdown();
 #endif
@@ -163,6 +160,19 @@ void Sys_Quit (void)
 	/* exit(0) */
 	ExitProcess(0);
 }
+
+#ifdef COMPILE_MAP
+void Sys_Error (const char *error, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	/** @todo messageBox */
+
+	/* exit(0) */
+	ExitProcess(1);
+}
+#endif
 
 /**
  * @brief Get current user

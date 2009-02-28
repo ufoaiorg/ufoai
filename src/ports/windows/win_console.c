@@ -68,13 +68,19 @@ int SV_CountPlayers(void);
 /**
  * @brief Dispatch window messages
  */
-static void Sys_ConsoleLoop (void)
+static void Sys_ConsoleLoop (qboolean error)
 {
 	MSG msg;
 
 	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-		if (!GetMessage(&msg, NULL, 0, 0))
-			Sys_Quit();
+		if (!GetMessage(&msg, NULL, 0, 0)) {
+			if (procShell_NotifyIcon)
+				procShell_NotifyIcon(NIM_DELETE, &pNdata);
+			if (error)
+				ExitProcess(1);
+			else
+				Sys_Quit();
+		}
 
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -92,7 +98,7 @@ const char *Sys_ConsoleInput (void)
 #ifdef DEDICATED_ONLY
 	/* the client console is not visible after init stage and thus this is only
 	 * needed for the server */
-	Sys_ConsoleLoop();
+	Sys_ConsoleLoop(qfalse);
 #endif
 
 	/* empty command buffer? */
@@ -183,7 +189,7 @@ void Sys_Error (const char *error, ...)
 
 	/* Wait for the user to quit */
 	while (1) {
-		Sys_ConsoleLoop();
+		Sys_ConsoleLoop(qtrue);
 		/* Don't hog the CPU */
 		Sys_Sleep(25);
 	}
