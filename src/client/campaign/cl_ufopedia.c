@@ -97,10 +97,10 @@ static void UP_ChangeDisplay (int newDisplay)
 		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
 
 	Cvar_SetValue("mn_uppreavailable", 0);
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayweapon", "0");
+	Cvar_Set("mn_displayfiremode", "0");
+	Cvar_Set("mn_changeweapon", "0");
+	Cvar_Set("mn_changefiremode", "0");
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
@@ -306,7 +306,7 @@ void UP_ItemDescription (const objDef_t *od)
 				up_numresearchedlink++;
 		}
 		if (up_numresearchedlink > 1)
-			Cvar_Set("mn_changeweapon", "1"); /* use strings here - no int */
+			Cvar_Set("mn_changeweapon", "1");
 
 		/* Only display weapons if at least one has been researched */
 		if (up_numresearchedlink > 0) {
@@ -322,7 +322,7 @@ void UP_ItemDescription (const objDef_t *od)
 			up_weapon_id = upResearchedLink;
 
 			/* Display the name of the associated weapon */
-			Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
+			Cvar_Set("mn_displayweapon", "1");
 			Cvar_Set("mn_researchedlinkname", _(od->weapons[upResearchedLink]->name));
 			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), _(od->weapons[upResearchedLink]->name)));
 
@@ -356,7 +356,7 @@ void UP_ItemDescription (const objDef_t *od)
 				up_numresearchedlink++;
 		}
 		if (up_numresearchedlink > 1)
-			Cvar_Set("mn_changeweapon", "2"); /* use strings here - no int */
+			Cvar_Set("mn_changeweapon", "2");
 
 		/* Only display ammos if at least one has been researched */
 		if (up_numresearchedlink > 0) {
@@ -376,7 +376,7 @@ void UP_ItemDescription (const objDef_t *od)
 					up_weapon_id = i;
 			}
 
-			Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
+			Cvar_Set("mn_displayweapon", "2");
 			Cvar_Set("mn_researchedlinkname", _(odAmmo->name));
 			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), _(odAmmo->name)));
 		} else {
@@ -444,11 +444,11 @@ void UP_ItemDescription (const objDef_t *od)
 				upFireMode = odAmmo->numFiredefs[up_weapon_id] - 1;
 
 			/* We always display the name of the firemode for an ammo */
-			Cvar_Set("mn_displayfiremode", "1"); /* use strings here - no int */
+			Cvar_Set("mn_displayfiremode", "1");
 			Cvar_Set("mn_firemodename", _(odAmmo->fd[up_weapon_id][upFireMode].name));
 			/* We display the pre/next buttons for changing firemode only if there are more than one */
 			if (odAmmo->numFiredefs[up_weapon_id] > 1)
-				Cvar_Set("mn_changefiremode", "1"); /* use strings here - no int */
+				Cvar_Set("mn_changefiremode", "1");
 
 			/* We display the characteristics of this firemode */
 			Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(odAmmo->fd[up_weapon_id][upFireMode].weaponSkill)), sizeof(itemText));
@@ -557,10 +557,10 @@ void UP_AircraftItemDescription (const objDef_t *item)
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
 		Cvar_Set("mn_upmodel_top", "");
-		Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-		Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
-		Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-		Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+		Cvar_Set("mn_displayweapon", "0");
+		Cvar_Set("mn_changeweapon", "0");
+		Cvar_Set("mn_displayfiremode", "0");
+		Cvar_Set("mn_changefiremode", "0");
 		Cvar_Set("mn_researchedlinkname", "");
 		Cvar_Set("mn_upresearchedlinknametooltip", "");
 		return;
@@ -574,10 +574,10 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	 * No, but in buy and production - and they are using these functions, too, no? (mattn) */
 	Cvar_Set("mn_item", item->id);
 	Cvar_Set("mn_upmodel_top", item->tech->mdl);
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayweapon", "0");
+	Cvar_Set("mn_changeweapon", "0");
+	Cvar_Set("mn_displayfiremode", "0");
+	Cvar_Set("mn_changefiremode", "0");
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
@@ -635,10 +635,10 @@ void UP_AircraftDescription (const technology_t* t)
 	/* Reset all sort of info for normal items */
 	/** @todo Check if this is all needed. Any better way? */
 	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayfiremode", "0");
+	Cvar_Set("mn_displayweapon", "0");
+	Cvar_Set("mn_changefiremode", "0");
+	Cvar_Set("mn_changeweapon", "0");
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 	/* ensure that the buffer is emptied in every case */
@@ -708,10 +708,10 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	/* Reset all sort of info for normal items */
 	/** @todo Check if this is all needed. Any better way? */
 	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayfiremode", "0");
+	Cvar_Set("mn_displayweapon", "0");
+	Cvar_Set("mn_changefiremode", "0");
+	Cvar_Set("mn_changeweapon", "0");
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
@@ -1896,10 +1896,10 @@ void UP_InitStartup (void)
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayweapon", "0");
+	Cvar_Set("mn_displayfiremode", "0");
+	Cvar_Set("mn_changeweapon", "0");
+	Cvar_Set("mn_changefiremode", "0");
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
 }
