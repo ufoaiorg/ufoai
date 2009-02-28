@@ -34,9 +34,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Determine the position and size of render
  * @param[in] menu : use its position and size properties
  */
-void MN_SetViewRect (const menuNode_t* menu)
+void MN_SetViewRect (void)
 {
-	if (menu && menu->u.window.renderNode) {
+	menuNode_t *menu = MN_GetActiveMenu();
+
+	/** @todo the better way is to add a 'battlescape' node */
+	if (!menu || !menu->u.window.renderNode)
+		if (MN_IsMenuOnStack(mn_hud->string))
+			menu = MN_GetMenu(mn_hud->string);
+
+	if (menu && menu->u.window.renderNode)
+	{
 		menuNode_t* node = menu->u.window.renderNode;
 		vec2_t pos;
 		MN_GetNodeAbsPos(node, pos);
