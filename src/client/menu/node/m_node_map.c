@@ -23,22 +23,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../m_nodes.h"
-#include "../m_parse.h"
 #include "../m_input.h"
-#include "m_node_model.h"
+#include "m_node_abstractnode.h"
 #include "m_node_map.h"
 
 #include "../../client.h"
 #include "../../campaign/cl_campaign.h"
 #include "../../campaign/cl_map.h"
+#include "../../renderer/r_draw.h"
 
 static void MN_MapNodeDraw (menuNode_t *node)
 {
 	if (curCampaign) {
+		vec2_t pos;
 		/* don't run the campaign in console mode */
 		if (cls.key_dest != key_console)
 			CL_CampaignRun();	/* advance time */
-		MAP_DrawMap(node); /* Draw geoscape */
+
+		MN_GetNodeAbsPos(node, pos);
+
+		/* Draw geoscape */
+		R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
+		MAP_DrawMap(node);
+		R_EndClipRect();
 	}
 }
 

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "../menu/m_font.h"
 #include "../menu/m_nodes.h"
+#include "../menu/node/m_node_abstractnode.h"
 #include "cl_campaign.h"
 #include "cl_popup.h"
 #include "cl_mapfightequip.h"
@@ -456,7 +457,7 @@ static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
 	}
 
 	/* smaller size is height of the screen */
-	zoom = (node->size[1] / 2.0f) * STANDARD_3D_ZOOM / distance;
+	zoom = (ccs.mapSize[1] / 2.0f) * STANDARD_3D_ZOOM / distance;
 
 	if (zoom > MAX_AUTO_ZOOM)
 		zoom = MAX_AUTO_ZOOM;
@@ -495,7 +496,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	RotatePointAroundVector(v, rotationAxis, v1, - ccs.angles[YAW]);
 
 	/* set mid to the coordinates of the center of the globe */
-	Vector2Set(mid, node->pos[0] + node->size[0] / 2.0f, node->pos[1] + node->size[1] / 2.0f);
+	Vector2Set(mid, ccs.mapPos[0] + ccs.mapSize[0] / 2.0f, ccs.mapPos[1] + ccs.mapSize[1] / 2.0f);
 
 	/* We now convert those coordinates relative to the center of the globe to coordinates of the screen
 	 * (which are relative to the upper left side of the screen) */
@@ -511,7 +512,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 		return qfalse;
 
 	/* if the point is outside the screen, the player cannot see it */
-	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
+	if (*x < ccs.mapPos[0] && *y < ccs.mapPos[1] && *x > ccs.mapPos[0] + ccs.mapSize[0] && *y > ccs.mapPos[1] + ccs.mapSize[1])
 		return qfalse;
 
 	return qtrue;
@@ -541,12 +542,12 @@ qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
 	else if (sx > +0.5)
 		sx -= 1.0;
 
-	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom;
-	*y = node->pos[1] + 0.5 * node->size[1] -
-		(pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
+	*x = ccs.mapPos[0] + 0.5 * ccs.mapSize[0] - sx * ccs.mapSize[0] * ccs.zoom;
+	*y = ccs.mapPos[1] + 0.5 * ccs.mapSize[1] -
+		(pos[1] / 180 + ccs.center[1] - 0.5) * ccs.mapSize[1] * ccs.zoom;
 
-	if (*x < node->pos[0] && *y < node->pos[1] &&
-		*x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
+	if (*x < ccs.mapPos[0] && *y < ccs.mapPos[1] &&
+		*x > ccs.mapPos[0] + ccs.mapSize[0] && *y > ccs.mapPos[1] + ccs.mapSize[1])
 		return qfalse;
 	return qtrue;
 }
@@ -598,8 +599,8 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
 		if (cl_3dmap->integer) {
 			/* Set angles of the model */
 			VectorCopy(screenPos, v);
-			v[0] -= node->pos[0] + node->size[0] / 2.0f;
-			v[1] -= node->pos[1] + node->size[1] / 2.0f;
+			v[0] -= ccs.mapPos[0] + ccs.mapSize[0] / 2.0f;
+			v[1] -= ccs.mapPos[1] + ccs.mapSize[1] / 2.0f;
 
 			angles[0] = theta;
 			costheta = cos(angles[0] * torad);
@@ -630,8 +631,8 @@ qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, fl
  */
 static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 {
-	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
-	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
+	pos[0] = (((ccs.mapPos[0] - x) / ccs.mapSize[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
+	pos[1] = (((ccs.mapPos[1] - y) / ccs.mapSize[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
 
 	while (pos[0] > 180.0)
 		pos[0] -= 360.0;
@@ -655,7 +656,7 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 	const float radius = GLOBE_RADIUS;
 
 	/* set mid to the coordinates of the center of the globe */
-	Vector2Set(mid, node->pos[0] + node->size[0] / 2.0f, node->pos[1] + node->size[1] / 2.0f);
+	Vector2Set(mid, ccs.mapPos[0] + ccs.mapSize[0] / 2.0f, ccs.mapPos[1] + ccs.mapSize[1] / 2.0f);
 
 	/* stop if we click outside the globe (distance is the distance of the point to the center of the globe) */
 	dist = sqrt((x - mid[0]) * (x - mid[0]) + (y - mid[1]) * (y - mid[1]));
@@ -800,19 +801,19 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	/* draw */
 	R_Color(color);
 	start = 0;
-	old = node->size[0] / 2;
+	old = ccs.mapSize[0] / 2;
 	for (i = 0, p = pts; i < line->numPoints; i++, p++) {
 		MAP_MapToScreen(node, line->point[i], &p->x, &p->y);
 
 		/* If we cross longitude 180 degree (right/left edge of the screen), draw the first part of the path */
-		if (i > start && abs(p->x - old) > node->size[0] / 2) {
+		if (i > start && abs(p->x - old) > ccs.mapSize[0] / 2) {
 			/* shift last point */
 			int diff;
 
-			if (p->x - old > node->size[0] / 2)
-				diff = -node->size[0] * ccs.zoom;
+			if (p->x - old > ccs.mapSize[0] / 2)
+				diff = -ccs.mapSize[0] * ccs.zoom;
 			else
-				diff = node->size[0] * ccs.zoom;
+				diff = ccs.mapSize[0] * ccs.zoom;
 			p->x += diff;
 
 			/* wrap around screen border */
@@ -1468,7 +1469,7 @@ static void MAP_DrawMapOneMission (const menuNode_t* node, const mission_t *ms)
 	} else
 		R_DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "geoscape/mission");
 
-	R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1],  _(ms->location), 0, 0, NULL, qfalse, 0);
+	R_FontDrawString("f_verysmall", ALIGN_UL, x + 10, y, ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.mapSize[1],  _(ms->location), 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1513,7 +1514,7 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 
 	/* Draw installation names */
 	if (MAP_AllMapToScreen(node, installation->pos, &x, &y, NULL))
-		R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], installation->name, 0, 0, NULL, qfalse, 0);
+		R_FontDrawString(font, ALIGN_UL, x, y + 10, ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.mapSize[1], installation->name, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1563,7 +1564,7 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 
 	/* Draw base names */
 	if (MAP_AllMapToScreen(node, base->pos, &x, &y, NULL))
-		R_FontDrawString(font, ALIGN_UL, x, y + 10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse, 0);
+		R_FontDrawString(font, ALIGN_UL, x, y + 10, ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.mapSize[1], base->name, 0, 0, NULL, qfalse, 0);
 }
 
 /**
@@ -1880,7 +1881,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* Draw nation names */
 	for (i = 0; i < ccs.numNations; i++) {
 		if (MAP_AllMapToScreen(node, ccs.nations[i].pos, &x, &y, NULL))
-			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
+			R_FontDrawString("f_verysmall", ALIGN_UC, x , y, ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], ccs.mapSize[1], _(ccs.nations[i].name), 0, 0, NULL, qfalse, 0);
 		if (showXVI) {
 			Q_strcat(buffer, va(_("%s\t%i%%\n"), _(ccs.nations[i].name), ccs.nations[i].stats[0].xviInfection), sizeof(buffer));
 		}
@@ -1899,10 +1900,12 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 void MAP_DrawMap (const menuNode_t* node)
 {
 	float distance;
+	vec2_t pos;
 	qboolean disableSolarRender = qfalse;
 
 	/* store these values in ccs struct to be able to handle this even in the input code */
-	Vector2Copy(node->pos, ccs.mapPos);
+	MN_GetNodeAbsPos(node, pos);
+	Vector2Copy(pos, ccs.mapPos);
 	Vector2Copy(node->size, ccs.mapSize);
 
 	/* Draw the map and markers */
@@ -1911,13 +1914,13 @@ void MAP_DrawMap (const menuNode_t* node)
 			disableSolarRender = qtrue;
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
-		R_Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
+		R_Draw3DGlobe(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1],
 			ccs.date.day, ccs.date.sec, ccs.angles, ccs.zoom, curCampaign->map, disableSolarRender);
 	} else {
 		const float q = (ccs.date.day % DAYS_PER_YEAR + (float)(ccs.date.sec / (SECONDS_PER_HOUR * 6)) / 4) * 2 * M_PI / DAYS_PER_YEAR - M_PI;
 		if (smoothRotation)
 			MAP_SmoothTranslate();
-		R_DrawFlatGeoscape(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
+		R_DrawFlatGeoscape(ccs.mapPos[0], ccs.mapPos[1], ccs.mapSize[0], ccs.mapSize[1], (float) ccs.date.sec / SECONDS_PER_DAY, q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
 	}
 	MAP_DrawMapMarkers(node);
