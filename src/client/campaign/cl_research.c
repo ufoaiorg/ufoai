@@ -1309,7 +1309,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", name, token);
 		} else {
-			if ((!Q_strcmp(token, "description")) || (!Q_strcmp(token, "pre_description"))) {
+			if (!Q_strcmp(token, "description") || !Q_strcmp(token, "pre_description")) {
 				/* Parse the available descriptions for this tech */
 
 				/* Link to correct list. */
@@ -1490,7 +1490,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", name, token);
 					}
 				}
-			} else if (!Q_strcmp(token, "mail")) { /* also mail_pre */
+			} else if (!Q_strcmp(token, "mail") || !Q_strcmp(token, "mail_pre")) {
 				techMail_t* mail;
 
 				/* how many mails found for this technology

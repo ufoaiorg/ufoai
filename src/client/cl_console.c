@@ -263,17 +263,14 @@ void Con_CheckResize (void)
 void Con_LoadConsoleHistory (void)
 {
 	qFILE f;
-	char filename[MAX_OSPATH];
 	char line[MAXCMDLINE];
 
 	if (!con_history->integer)
 		return;
 
-	Com_sprintf(filename, sizeof(filename), "%s", CONSOLE_HISTORY_FILENAME);
-
 	memset(&f, 0, sizeof(f));
 
-	FS_OpenFile(filename, &f, FILE_READ);
+	FS_OpenFile(CONSOLE_HISTORY_FILENAME, &f, FILE_READ);
 	if (!f.f)
 		return;
 

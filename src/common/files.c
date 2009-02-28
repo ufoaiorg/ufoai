@@ -144,6 +144,8 @@ static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mod
 	int i;
 	filelink_t *link;
 
+	file->z = file->f = NULL;
+
 	/* open for write or append in gamedir and return */
 	if (mode == FILE_WRITE || mode == FILE_APPEND) {
 		Com_sprintf(netpath, sizeof(netpath), "%s/%s", FS_Gamedir(), filename);
@@ -157,8 +159,6 @@ static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mod
 
 		return -1;
 	}
-
-	file->z = file->f = NULL;
 
 	Q_strncpyz(file->name, filename, sizeof(file->name));
 
