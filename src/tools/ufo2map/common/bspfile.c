@@ -309,6 +309,8 @@ long WriteBSPFile (const char *filename)
 	outheader.version = LittleLong(BSPVERSION);
 
 	FS_OpenFile(filename, &bspfile, FILE_WRITE);
+	if (!bspfile.f)
+		Sys_Error("Could not write bsp file");
 	FS_Write(&outheader, sizeof(dBspHeader_t), &bspfile);	/* overwritten later */
 
 	AddLump(&bspfile, &outheader, LUMP_PLANES, curTile->planes, curTile->numplanes * sizeof(dBspPlane_t));
