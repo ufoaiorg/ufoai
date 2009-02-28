@@ -443,8 +443,19 @@ void *Sys_GetProcAddress (void *libHandle, const char *procName)
 		Sys_Error("Sys_GetProcAddress: No valid libHandle given");
 	return dlsym(libHandle, procName);
 }
-#endif
 
+
+void Sys_SetAffinityAndPriority (void)
+{
+	if (sys_affinity->modified) {
+		sys_affinity->modified = qfalse;
+	}
+
+	if (sys_priority->modified) {
+		sys_priority->modified = qfalse;
+	}
+}
+#endif
 
 int Sys_Milliseconds (void)
 {
@@ -470,19 +481,6 @@ void Sys_Mkdir (const char *thePath)
 	if (errno != EEXIST)
 		Com_Printf("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
-
-#ifdef COMPILE_UFO
-void Sys_SetAffinityAndPriority (void)
-{
-	if (sys_affinity->modified) {
-		sys_affinity->modified = qfalse;
-	}
-
-	if (sys_priority->modified) {
-		sys_priority->modified = qfalse;
-	}
-}
-#endif
 
 /**
  * @brief On platforms supporting it, print a backtrace.
