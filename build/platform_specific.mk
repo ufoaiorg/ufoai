@@ -27,7 +27,7 @@ ifeq ($(TARGET_OS),mingw32)
 	# Windows XP is the minimum we need
 	CFLAGS+=-DWINVER=0x501
 #	GAME_LIBS+=
-#	TOOLS_LIBS=
+	TOOLS_LIBS+=-lwinmm
 else
 	ifneq ($(TARGET_OS),darwin)
 		CLIENT_LIBS+=-lGL
