@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "../m_icon.h"
 #include "m_node_tab.h"
+#include "m_node_abstractnode.h"
 
 #include "../../client.h" /* gettext _() */
 #include "../../cl_input.h"
@@ -61,11 +62,10 @@ static menuOption_t* MN_TabNodeTabAtPosition (const menuNode_t *node, int x, int
 	menuOption_t* option;
 	menuOption_t* prev = NULL;
 
-	/* Bounded box test */
-	if (x < node->pos[0] || y < node->pos[1])
-		return NULL;
-	x -= node->pos[0], y -= node->pos[1];
-	if (x > node->size[0] || y > node->size[1])
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+
+	/* Bounded box test (shound not need, but there are problem) */
+	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1])
 		return NULL;
 
 	font = MN_GetFont(node);
@@ -174,6 +174,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	const char *font;
 	int currentX;
 	int allowedWidth;
+	vec2_t pos;
 
 	const char* image = MN_GetReferenceString(node, node->image);
 	if (!image)
@@ -185,7 +186,9 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	if (node->state) {
 		overMouseOption = MN_TabNodeTabAtPosition(node, mousePosX, mousePosY);
 	}
-	currentX = node->pos[0];
+
+	MN_GetNodeAbsPos(node, pos);
+	currentX = pos[0];
 	option = node->u.option.first;
 	allowedWidth = node->size[0] - TILE_WIDTH * (node->u.option.count + 1);
 
@@ -205,7 +208,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		}
 
 		/* Display */
-		MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, status);
+		MN_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, status);
 		currentX += TILE_WIDTH;
 
 		R_FontTextSize(font, _(option->label), 0, LONGLINES_PRETTYCHOP, &tabWidth, &fontHeight, NULL, NULL);
@@ -221,7 +224,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 		}
 
 		if (tabWidth > 0) {
-			MN_TabNodeDrawPlain(image, currentX, node->pos[1], tabWidth, status);
+			MN_TabNodeDrawPlain(image, currentX, pos[1], tabWidth, status);
 		}
 
 		textPos = currentX;
@@ -230,11 +233,11 @@ static void MN_TabNodeDraw (menuNode_t *node)
 			if (status == MN_TAB_DISABLED) {
 				iconStatus = 2;
 			}
-			MN_DrawIconInBox(option->icon, iconStatus, currentX, node->pos[1], option->icon->size[0], TILE_HEIGHT);
+			MN_DrawIconInBox(option->icon, iconStatus, currentX, pos[1], option->icon->size[0], TILE_HEIGHT);
 			textPos += option->icon->size[0];
 		}
-		R_FontDrawString(font, ALIGN_UL, textPos, node->pos[1] + ((node->size[1] - fontHeight) / 2),
-			textPos, node->pos[1], tabWidth + 1, TILE_HEIGHT,
+		R_FontDrawString(font, ALIGN_UL, textPos, pos[1] + ((node->size[1] - fontHeight) / 2),
+			textPos, pos[1], tabWidth + 1, TILE_HEIGHT,
 			0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
 		currentX += tabWidth;
 		allowedWidth -= tabWidth;
@@ -245,10 +248,10 @@ static void MN_TabNodeDraw (menuNode_t *node)
 	}
 
 	/* Display last junction and end of header */
-	MN_TabNodeDrawJunction(image, currentX, node->pos[1], lastStatus, MN_TAB_NOTHING);
+	MN_TabNodeDrawJunction(image, currentX, pos[1], lastStatus, MN_TAB_NOTHING);
 	currentX += TILE_WIDTH;
-	if (currentX < node->pos[0] + node->size[0])
-		MN_TabNodeDrawPlain(image, currentX, node->pos[1], node->pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
+	if (currentX < pos[0] + node->size[0])
+		MN_TabNodeDrawPlain(image, currentX, pos[1], pos[0] + node->size[0] - currentX, MN_TAB_NOTHING);
 }
 
 void MN_RegisterTabNode (nodeBehaviour_t *behaviour)
