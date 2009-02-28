@@ -56,7 +56,7 @@ static void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	byte tmp[2];
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadTGA\n");
+		Sys_Error("possible mem leak in LoadTGA");
 
 	/* load the file */
 	length = FS_LoadFile(name, (byte **) &buffer);
@@ -90,10 +90,10 @@ static void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	targa_header.attributes = *buf_p++;
 
 	if (targa_header.image_type != 2 && targa_header.image_type != 10)
-		Sys_Error("LoadTGA: Only type 2 and 10 targa RGB images supported (%s) (type: %i)\n", name, targa_header.image_type);
+		Sys_Error("LoadTGA: Only type 2 and 10 targa RGB images supported (%s) (type: %i)", name, targa_header.image_type);
 
 	if (targa_header.colormap_type != 0 || (targa_header.pixel_size != 32 && targa_header.pixel_size != 24))
-		Sys_Error("LoadTGA: Only 32 or 24 bit images supported (no colormaps) (%s) (pixel_size: %i)\n", name, targa_header.pixel_size);
+		Sys_Error("LoadTGA: Only 32 or 24 bit images supported (no colormaps) (%s) (pixel_size: %i)", name, targa_header.pixel_size);
 
 	columns = targa_header.width;
 	rows = targa_header.height;
@@ -325,7 +325,7 @@ static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	int rawsize, i;
 
 	if (*pic != NULL)
-		Sys_Error("possible mem leak in LoadJPG\n");
+		Sys_Error("possible mem leak in LoadJPG");
 
 	/* Load JPEG file into memory */
 	rawsize = FS_LoadFile(filename, (byte **) &rawdata);
