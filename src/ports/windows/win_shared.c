@@ -173,7 +173,6 @@ void Sys_Error (const char *error, ...)
 
 	MessageBox(NULL, text, "Error!", MB_OK + MB_ICONEXCLAMATION);
 
-	/* exit(0) */
 	ExitProcess(1);
 }
 #endif

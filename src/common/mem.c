@@ -670,9 +670,10 @@ void Mem_Init (void)
  * @sa Mem_CreatePool
  * @sa Qcommon_Shutdown
  */
-void Mem_Shutdown (void)
+uint32_t Mem_Shutdown (void)
 {
 	memPool_t *pool;
+	uint32_t size = 0;
 	int i;
 
 	/* don't use cvars, debug print or anything else inside of this loop
@@ -680,6 +681,8 @@ void Mem_Shutdown (void)
 	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
 		if (!pool->inUse)
 			continue;
-		Mem_DeletePool(pool);
+		size += Mem_DeletePool(pool);
 	}
+
+	return size;
 }

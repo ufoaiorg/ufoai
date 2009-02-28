@@ -33,10 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/typedefs.h"
 #include "../shared/parse.h"
 
-#ifdef COMPILE_UFO
-static cvar_t *fs_basedir;
-#endif
-
 /** counter for opened files - used to check against missing close calls */
 static int fs_openedFiles;
 
@@ -831,22 +827,9 @@ static void FS_RemoveCommands (void)
 static void FS_InitCommandsAndCvars (void)
 {
 	const cmdList_t *commands;
-	cvar_t* fs_usehomedir;
 
 	for (commands = fs_commands; commands->name; commands++)
 		Cmd_AddCommand(commands->name, commands->function, commands->description);
-	fs_usehomedir = Cvar_Get("fs_usehomedir", "1", CVAR_ARCHIVE, "Use the homedir to store files like savegames and screenshots");
-
-	/* basedir <path> */
-	/* allows the game to run from outside the data tree */
-	fs_basedir = Cvar_Get("fs_basedir", ".", CVAR_NOSET, "Allows the game to run from outside the data tree");
-
-	/* start up with base by default */
-	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
-
-	/* then add a '.ufoai/VERSION/base' directory in home directory by default */
-	if (fs_usehomedir->integer)
-		FS_AddHomeAsGameDirectory(BASEDIRNAME);
 }
 #endif
 
@@ -864,11 +847,11 @@ void FS_InitFilesystem (void)
 	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME);
 #endif
 
-#ifdef COMPILE_UFO
-	FS_InitCommandsAndCvars();
-#elif COMPILE_MAP
 	FS_AddGameDirectory("./" BASEDIRNAME);
 	FS_AddHomeAsGameDirectory(BASEDIRNAME);
+
+#ifdef COMPILE_UFO
+	FS_InitCommandsAndCvars();
 #endif
 
 	/* any set gamedirs will be freed up to here */
