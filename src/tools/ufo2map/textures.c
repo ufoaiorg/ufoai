@@ -40,7 +40,6 @@ int FindMiptex (const char *name)
 	char path[1024];
 	qboolean loaded = qfalse;
 	miptex_t *mt;
-	const char *gamedir = FS_Gamedir();
 
 	/* search through textures that have already been loaded. */
 	for (i = 0; i < nummiptex; i++)
@@ -52,7 +51,7 @@ int FindMiptex (const char *name)
 	Q_strncpyz(textureref[i].name, name, sizeof(textureref[i].name));
 
 	/* load the miptex to get the flags and values */
-	Com_sprintf(path, sizeof(path), "%stextures/%s.tga", gamedir, name);
+	Com_sprintf(path, sizeof(path), "textures/%s.tga", name);
 	if (TryLoadTGA(path, &mt) != -1) {
 		textureref[i].value = LittleLong(mt->value);
 		textureref[i].surfaceFlags = 0;
@@ -62,7 +61,7 @@ int FindMiptex (const char *name)
 	}
 
 	if (!loaded) {	/* fall back to jpg */
-		Com_sprintf(path, sizeof(path), "%stextures/%s.jpg", gamedir, name);
+		Com_sprintf(path, sizeof(path), "textures/%s.jpg", name);
 		if (TryLoadJPG(path, &mt) != -1) {
 			textureref[i].value = LittleLong(mt->value);
 			textureref[i].surfaceFlags = 0;
