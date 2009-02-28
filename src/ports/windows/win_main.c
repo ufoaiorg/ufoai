@@ -425,8 +425,6 @@ void *Sys_GetProcAddress (void *libHandle, const char *procName)
 	return GetProcAddress((HMODULE)libHandle, procName);
 }
 
-#endif
-
 static void ParseCommandLine (LPSTR lpCmdLine)
 {
 	argc = 1;
@@ -493,6 +491,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	/* never gets here */
 	return FALSE;
 }
+#endif
+
 
 /**
  * @brief Calls the win32 sleep function
