@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../common/common.h"
 
-static qboolean bigendien = qfalse;
-
 /* can't just use function pointers, or dll linkage can */
 /* mess up when common is included in multiple places */
 static short (*_BigShort)(short l);
@@ -139,7 +137,6 @@ void Swap_Init (void)
 
 	/* set the byte swapping variables in a portable manner */
 	if (*(short *) swaptest == 1) {
-		bigendien = qfalse;
 		_BigShort = ShortSwap;
 		_LittleShort = ShortNoSwap;
 		_BigLong = LongSwap;
@@ -147,7 +144,6 @@ void Swap_Init (void)
 		_BigFloat = FloatSwap;
 		_LittleFloat = FloatNoSwap;
 	} else {
-		bigendien = qtrue;
 		_BigShort = ShortNoSwap;
 		_LittleShort = ShortSwap;
 		_BigLong = LongNoSwap;
