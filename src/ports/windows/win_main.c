@@ -40,9 +40,11 @@ qboolean s_win95, s_win2k, s_winxp, s_vista;
 static int argc;
 static const char *argv[MAX_NUM_ARGVS];
 
+#ifdef COMPILE_UFO
 cvar_t* sys_priority;
 cvar_t* sys_affinity;
 cvar_t* sys_os;
+#endif
 
 /*
 ===============================================================================
@@ -54,8 +56,12 @@ void Sys_Quit (void)
 {
 	timeEndPeriod(1);
 
+#ifdef COMPILE_UFO
 	CL_Shutdown();
 	Qcommon_Shutdown();
+#elif COMPILE_MAP
+	Mem_Shutdown();
+#endif
 
 	if (procShell_NotifyIcon)
 		procShell_NotifyIcon(NIM_DELETE, &pNdata);
@@ -366,15 +372,6 @@ const char *Sys_GetLocale (void)
 		return "en";
 }
 
-int Sys_Setenv (const char *name, const char *value)
-{
-	/* Windows does not have setenv, but its putenv is safe to use.
-	 * It does not keep a pointer to the string. */
-	char str[256];
-	Com_sprintf(str, sizeof(str), "%s=%s", name, value);
-	return putenv(str);
-}
-
 /**
  * @sa Sys_FreeLibrary
  * @sa Sys_GetProcAddress
@@ -505,4 +502,13 @@ void Sys_Sleep (int milliseconds)
 	if (milliseconds < 1)
 		milliseconds = 1;
 	Sleep(milliseconds);
+}
+
+int Sys_Setenv (const char *name, const char *value)
+{
+	/* Windows does not have setenv, but its putenv is safe to use.
+	 * It does not keep a pointer to the string. */
+	char str[256];
+	Com_sprintf(str, sizeof(str), "%s=%s", name, value);
+	return putenv(str);
 }
