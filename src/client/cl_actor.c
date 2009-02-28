@@ -3004,7 +3004,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	VectorAdd(ent.origin, boxSize, ent.oldorigin);
 
 	/* color */
-	if (mouseActor && (mouseActor != selActor)) {
+	if (mouseActor && mouseActor != selActor) {
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
 		/* Paint the box red if the soldiers under the cursor is
 		 * not in our team and no civilian either. */
@@ -3017,6 +3017,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
 					/** @todo campaign mode only - doesn't belong here */
+					/** @todo cache the technology_t pointer */
 					if (mouseActor->teamDef && (!GAME_IsCampaign() || RS_IsResearched_ptr(RS_GetTechByID(mouseActor->teamDef->tech))))
 						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else

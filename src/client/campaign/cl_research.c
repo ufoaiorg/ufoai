@@ -1852,7 +1852,7 @@ technology_t *RS_GetTechByID (const char *id)
 	unsigned hash;
 	technology_t *tech;
 
-	if (!id || !*id)
+	if (!id || id[0] == '\0')
 		return NULL;
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);
@@ -1876,7 +1876,7 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 
 	assert(idProvided);
 	/* catch empty strings */
-	if (!*idProvided)
+	if (idProvided[0] == '\0')
 		return NULL;
 
 	hash = Com_HashKey(idProvided, TECH_HASH_SIZE);
@@ -1890,36 +1890,6 @@ technology_t *RS_GetTechByProvided (const char *idProvided)
 	return NULL;
 }
 
-#if 0
-/* Not really used anywhere, but I'll just leave it in here if it is needed again*/
- /**
- * @brief Returns a list of technologies for the given type
- * @note This list is terminated by a NULL pointer.
-* @sa * AC_GetTechsByType
- */
-technology_t **RS_GetTechsByType (researchType_t type)
-{
-	static technology_t *techList[MAX_TECHNOLOGIES];
-	int i, j = 0;
-
-	for (i = 0; i < ccs.numTechnologies; i++) {
-		if (ccs.technologies[i].type == type) {
-			techList[j] = RS_GetTechByIDX(i);
-			j++;
-			/* j+1 because last item have to be NULL */
-			if (j + 1 >= MAX_TECHNOLOGIES) {
-				Com_Printf("RS_GetTechsByType: MAX_TECHNOLOGIES limit hit\n");
-				break;
-			}
-		}
-	}
-	techList[j] = NULL;
-	Com_DPrintf(DEBUG_CLIENT, "techlist with %i entries\n", j);
-	return techList;
-}
-#endif
-
-
 /**
  * @brief Searches for the technology that has the most scientists assigned in a given base.
  * @param[in] base In what base the tech should be researched.
@@ -1928,9 +1898,7 @@ technology_t **RS_GetTechsByType (researchType_t type)
 technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 {
 	technology_t *tech;
-	technology_t *tech_temp;
-	int i;
-	int max;
+	int i, max;
 
 	if (!base)
 		return NULL;
@@ -1938,9 +1906,8 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 	tech = NULL;
 	max = 0;
 	for (i = 0; i < ccs.numTechnologies; i++) {
-		tech_temp = RS_GetTechByIDX(i);
-		if (tech_temp->statusResearch == RS_RUNNING
-		 && tech_temp->base == base) {
+		technology_t *tech_temp = RS_GetTechByIDX(i);
+		if (tech_temp->statusResearch == RS_RUNNING && tech_temp->base == base) {
 			if (tech_temp->scientists > max) {
 				tech = tech_temp;
 				max = tech->scientists;
@@ -1960,15 +1927,13 @@ technology_t *RS_GetTechWithMostScientists (const struct base_s *base)
 int RS_GetTechIdxByName (const char *name)
 {
 	technology_t *tech;
-	unsigned hash;
+	const unsigned hash = Com_HashKey(name, TECH_HASH_SIZE);
 
-	hash = Com_HashKey(name, TECH_HASH_SIZE);
 	for (tech = techHash[hash]; tech; tech = tech->hashNext)
 		if (!Q_strcasecmp(name, tech->id))
 			return tech->idx;
 
 	Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);
-	/* return TECH_INVALID if not found */
 	return TECH_INVALID;
 }
 
@@ -1983,8 +1948,7 @@ int RS_CountInBase (const base_t *base)
 	int i, counter = 0;
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
-		technology_t *tech = ccs.technologies + i;
-		assert(tech);
+		const technology_t *tech = &ccs.technologies[i];
 		if (tech->base == base) {
 			/* Get a free lab from the base. */
 			counter += tech->scientists;
