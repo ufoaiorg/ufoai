@@ -25,7 +25,6 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/check/check.c \
 	tools/ufo2map/common/aselib.c \
 	tools/ufo2map/common/bspfile.c \
-	tools/ufo2map/common/cmdlib.c \
 	tools/ufo2map/common/polylib.c \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
