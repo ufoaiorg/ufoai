@@ -70,7 +70,7 @@ void CalcTextureReflectivity (void)
 				color[1] += *pos++; /* g */
 				color[2] += *pos++; /* b */
 			}
-			free(mt);
+			Mem_Free(mt);
 			loaded = qtrue;
 			Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use tga colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
 		}
@@ -89,7 +89,7 @@ void CalcTextureReflectivity (void)
 					color[1] += *pos++; /* g */
 					color[2] += *pos++; /* b */
 				}
-				free(mt);
+				Mem_Free(mt);
 				loaded = qtrue;
 				Verb_Printf(VERB_EXTRA, "...path: %s (%i) - use jpeg colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
 			}
@@ -162,8 +162,7 @@ static void BuildPatch (int fn, winding_t *w)
 	patch_t *patch;
 	dBspPlane_t *plane;
 
-	patch = (patch_t *)malloc(sizeof(*patch));
-	memset(patch, 0, sizeof(*patch));
+	patch = (patch_t *)Mem_Alloc(sizeof(*patch));
 
 	face_patches[fn] = patch;
 
@@ -312,8 +311,7 @@ static void SubdividePatch(patch_t *patch)
 	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
 
 	/* create a new patch */
-	newp = (patch_t *)malloc(sizeof(patch_t));
-	memset(newp, 0, sizeof(*newp));
+	newp = (patch_t *)Mem_Alloc(sizeof(*newp));
 
 	newp->next = patch->next;
 	patch->next = newp;
@@ -354,7 +352,7 @@ void FreePatches (void)
 		patch_t *p = face_patches[i];
 		while (p) {
 			patch_t *pnext = p->next;
-			free(p);
+			Mem_Free(p);
 			p = pnext;
 		}
 	}

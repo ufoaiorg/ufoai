@@ -105,7 +105,7 @@ void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	if (height)
 		*height = rows;
 
-	targa_rgba = malloc(numPixels * 4);
+	targa_rgba = Mem_Alloc(numPixels * 4);
 	*pic = targa_rgba;
 
 	if (targa_header.id_length != 0)
@@ -247,13 +247,11 @@ int TryLoadTGA (const char *path, miptex_t **mt)
 		return -1;
 
 	size = sizeof(miptex_t) + width * height * 4;
-	*mt = (miptex_t *)malloc(size);
-
-	memset(*mt, 0, size);
+	*mt = (miptex_t *)Mem_Alloc(size);
 
 	dest = (byte*)(*mt) + sizeof(miptex_t);
 	memcpy(dest, pic, width * height * 4);  /* stuff RGBA into this opaque space */
-	free(pic);
+	Mem_Free(pic);
 
 	/* copy relevant header fields to miptex_t */
 	(*mt)->width = width;
@@ -339,7 +337,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	/* Knightmare- check for bad data */
 	if (rawdata[6] != 'J' || rawdata[7] != 'F' || rawdata[8] != 'I' || rawdata[9] != 'F') {
 		Com_Printf("Bad jpg file %s\n", filename);
-		free(rawdata);
+		Mem_Free(rawdata);
 		return;
 	}
 
@@ -360,16 +358,16 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	if (cinfo.output_components != 3 && cinfo.output_components != 4) {
 		Com_Printf("Invalid JPEG colour components\n");
 		jpeg_destroy_decompress(&cinfo);
-		free(rawdata);
+		Mem_Free(rawdata);
 		return;
 	}
 
 	/* Allocate Memory for decompressed image */
-	rgbadata = malloc(cinfo.output_width * cinfo.output_height * 4);
+	rgbadata = Mem_Alloc(cinfo.output_width * cinfo.output_height * 4);
 	if (!rgbadata) {
 		Com_Printf("Insufficient RAM for JPEG buffer\n");
 		jpeg_destroy_decompress(&cinfo);
-		free(rawdata);
+		Mem_Free(rawdata);
 		return;
 	}
 
@@ -378,12 +376,12 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	*height = cinfo.output_height;
 
 	/* Allocate Scanline buffer */
-	scanline = malloc(cinfo.output_width * 4);
+	scanline = Mem_Alloc(cinfo.output_width * 4);
 	if (!scanline) {
 		Com_Printf("Insufficient RAM for JPEG scanline buffer\n");
-		free(rgbadata);
+		Mem_Free(rgbadata);
 		jpeg_destroy_decompress(&cinfo);
-		free(rawdata);
+		Mem_Free(rawdata);
 		return;
 	}
 
@@ -405,7 +403,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	}
 
 	/* Free the scanline buffer */
-	free(scanline);
+	Mem_Free(scanline);
 
 	/* Finish Decompression */
 	jpeg_finish_decompress(&cinfo);
@@ -415,7 +413,7 @@ void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 
 	/* Return the 'rgbadata' */
 	*pic = rgbadata;
-	free(rawdata);
+	Mem_Free(rawdata);
 }
 
 /**
@@ -434,13 +432,11 @@ int TryLoadJPG (const char *path, miptex_t **mt)
 		return -1;
 
 	size = sizeof(miptex_t) + width * height * 4;
-	*mt = (miptex_t *)malloc(size);
-
-	memset(*mt, 0, size);
+	*mt = (miptex_t *)Mem_Alloc(size);
 
 	dest = (byte*)(*mt) + sizeof(miptex_t);
 	memcpy(dest, pic, width * height * 4);  /* stuff RGBA into this opaque space */
-	free(pic);
+	Mem_Free(pic);
 
 	/* copy relevant header fields to miptex_t */
 	(*mt)->width = width;

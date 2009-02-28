@@ -51,7 +51,7 @@ void MakeTracingNodes (int levels)
 	/* 32 byte align the structs */
 	size = (size + 31) &~ 31;
 	/* allocate memory for the tnodes structure */
-	curTile->tnodes = malloc(size);
+	curTile->tnodes = Mem_Alloc(size);
 	tnode_p = curTile->tnodes;
 	curTile->numtheads = 0;
 
@@ -74,6 +74,6 @@ void MakeTracingNodes (int levels)
 void CloseTracingNodes (void)
 {
 	if (curTile->tnodes)
-		free(curTile->tnodes);
+		Mem_Free(curTile->tnodes);
 	curTile->tnodes = NULL;
 }

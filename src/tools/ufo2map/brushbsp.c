@@ -264,10 +264,8 @@ int CountBrushList (bspbrush_t *brushes)
  */
 static tree_t *AllocTree (void)
 {
-	tree_t *tree;
+	tree_t *tree = Mem_Alloc(sizeof(*tree));
 
-	tree = malloc(sizeof(*tree));
-	memset(tree, 0, sizeof(*tree));
 	ClearBounds(tree->mins, tree->maxs);
 
 	return tree;
@@ -279,12 +277,7 @@ static tree_t *AllocTree (void)
  */
 static node_t *AllocNode (void)
 {
-	node_t *node;
-
-	node = malloc(sizeof(*node));
-	memset(node, 0, sizeof(*node));
-
-	return node;
+	return Mem_Alloc(sizeof(node_t));
 }
 
 /**
@@ -293,14 +286,10 @@ static node_t *AllocNode (void)
  */
 bspbrush_t *AllocBrush (int numsides)
 {
-	bspbrush_t *bb;
-	size_t c = offsetof(bspbrush_t, sides[numsides]);
-
-	bb = malloc(c);
-	memset(bb, 0, c);
 	if (threadstate.numthreads == 1)
 		c_active_brushes++;
-	return bb;
+
+	return Mem_Alloc(offsetof(bspbrush_t, sides[numsides]));
 }
 
 /**
@@ -313,7 +302,7 @@ void FreeBrush (bspbrush_t *brushes)
 	for (i = 0; i < brushes->numsides; i++)
 		if (brushes->sides[i].winding)
 			FreeWinding(brushes->sides[i].winding);
-	free(brushes);
+	Mem_Free(brushes);
 	if (threadstate.numthreads == 1)
 		c_active_brushes--;
 }

@@ -139,7 +139,7 @@ void ASE_Load (const char *filename, qboolean verbose)
 	ase.verbose = verbose;
 	ase.len = ASE_FileLength(fp);
 
-	ase.curpos = ase.buffer = malloc(ase.len);
+	ase.curpos = ase.buffer = Mem_Alloc(ase.len);
 	if (!ase.curpos)
 		Sys_Error("Could not allocate memory for ase loading");
 
@@ -195,7 +195,7 @@ polyset_t *ASE_GetSurfaceAnimation (int whichSurface)
 
 	numFramesInAnimation = pObject->anim.numFrames;
 
-	psets = malloc(sizeof(polyset_t) * numFramesInAnimation);
+	psets = Mem_Alloc(sizeof(polyset_t) * numFramesInAnimation);
 
 	for (f = 0, i = 0; i < numFramesInAnimation; i++) {
 		int t;
@@ -237,13 +237,13 @@ static void ASE_FreeGeomObject (int ndx)
 
 	for (i = 0; i < pObject->anim.numFrames; i++) {
 		if (pObject->anim.frames[i].vertexes)
-			free(pObject->anim.frames[i].vertexes);
+			Mem_Free(pObject->anim.frames[i].vertexes);
 		if (pObject->anim.frames[i].tvertexes)
-			free(pObject->anim.frames[i].tvertexes);
+			Mem_Free(pObject->anim.frames[i].tvertexes);
 		if (pObject->anim.frames[i].faces)
-			free(pObject->anim.frames[i].faces);
+			Mem_Free(pObject->anim.frames[i].faces);
 		if (pObject->anim.frames[i].tfaces)
-			free(pObject->anim.frames[i].tfaces);
+			Mem_Free(pObject->anim.frames[i].tfaces);
 	}
 
 	memset(pObject, 0, sizeof(*pObject));

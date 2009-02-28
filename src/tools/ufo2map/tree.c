@@ -72,7 +72,7 @@ static void FreeTree_r (node_t *node)
 
 	if (threadstate.numthreads == 1)
 		c_nodes--;
-	free(node);
+	Mem_Free(node);
 }
 
 
@@ -80,7 +80,7 @@ void FreeTree (tree_t *tree)
 {
 	FreeTreePortals_r(tree->headnode);
 	FreeTree_r(tree->headnode);
-	free(tree);
+	Mem_Free(tree);
 }
 
 /*=========================================================

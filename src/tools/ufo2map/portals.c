@@ -38,17 +38,12 @@ static int c_tinyportals = 0;
  */
 static portal_t *AllocPortal (void)
 {
-	portal_t *p;
-
 	if (threadstate.numthreads == 1)
 		c_active_portals++;
 	if (c_active_portals > c_peak_portals)
 		c_peak_portals = c_active_portals;
 
-	p = malloc(sizeof(*p));
-	memset(p, 0, sizeof(*p));
-
-	return p;
+	return Mem_Alloc(sizeof(portal_t));
 }
 
 /**
@@ -60,7 +55,7 @@ void FreePortal (portal_t *p)
 		FreeWinding(p->winding);
 	if (threadstate.numthreads == 1)
 		c_active_portals--;
-	free(p);
+	Mem_Free(p);
 }
 
 /**

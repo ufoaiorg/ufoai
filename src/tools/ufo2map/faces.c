@@ -114,13 +114,9 @@ static int GetVertexnum (const vec3_t in)
 
 static face_t *AllocFace (void)
 {
-	face_t *f;
-
-	f = malloc(sizeof(*f));
-	memset(f, 0, sizeof(*f));
 	c_faces++;
 
-	return f;
+	return Mem_Alloc(sizeof(face_t));
 }
 
 static face_t *NewFaceFromFace (const face_t *f)
@@ -139,7 +135,7 @@ void FreeFace (face_t *f)
 {
 	if (f->w)
 		FreeWinding(f->w);
-	free(f);
+	Mem_Free(f);
 	c_faces--;
 }
 

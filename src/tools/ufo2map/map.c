@@ -858,8 +858,8 @@ static void MoveBrushesToWorld (entity_t *mapent)
 	newbrushes = mapent->numbrushes;
 	worldbrushes = entities[0].numbrushes;
 
-	temp = malloc(newbrushes * sizeof(mapbrush_t));
-	memcpy(temp, mapbrushes + mapent->firstbrush, newbrushes * sizeof(mapbrush_t));
+	temp = Mem_Alloc(newbrushes * sizeof(*temp));
+	memcpy(temp, mapbrushes + mapent->firstbrush, newbrushes * sizeof(*temp));
 
 	/* make space to move the brushes (overlapped copy) */
 	memmove(mapbrushes + worldbrushes + newbrushes,
@@ -867,13 +867,13 @@ static void MoveBrushesToWorld (entity_t *mapent)
 		sizeof(mapbrush_t) * (nummapbrushes - worldbrushes - newbrushes));
 
 	/* copy the new brushes down */
-	memcpy(mapbrushes + worldbrushes, temp, sizeof(mapbrush_t) * newbrushes);
+	memcpy(mapbrushes + worldbrushes, temp, sizeof(*temp) * newbrushes);
 
 	/* fix up indexes */
 	entities[0].numbrushes += newbrushes;
 	for (i = 1; i < num_entities; i++)
 		entities[i].firstbrush += newbrushes;
-	free(temp);
+	Mem_Free(temp);
 
 	mapent->numbrushes = 0;
 }
@@ -1098,7 +1098,7 @@ void WriteMapFile (const char *filename)
 					continue;
 				WriteMapBrush(brushesToAdd[k], j++, f);
 			}
-			free(brushesToAdd);
+			Mem_Free(brushesToAdd);
 		}
 		fprintf(f, "}\n");
 	}

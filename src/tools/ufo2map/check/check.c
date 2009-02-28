@@ -95,7 +95,7 @@ static void Check_MapSize (vec3_t mapSize)
  */
 static void Check_InitEntityDefs (void)
 {
-	char *entitiesUfoBuf; /* LoadFile calls malloc */
+	char *entitiesUfoBuf;
 	const char *entitiesUfoPath;
 
 	/* only do this once, may be called by different
@@ -110,13 +110,11 @@ static void Check_InitEntityDefs (void)
 	if (TryLoadFile(entitiesUfoPath, (void **)&entitiesUfoBuf) == -1)
 		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
 
-	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR) {
-		free(entitiesUfoBuf);
+	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
 		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
-	}
 
 	/* info has been copied to new malloc'd space in ED_Parse */
-	free(entitiesUfoBuf);
+	Mem_Free(entitiesUfoBuf);
 }
 
 /**
@@ -129,8 +127,7 @@ void Check_Stats() {
 
 	Check_InitEntityDefs();
 
-	entNums = (int *)malloc(numEntityDefs * sizeof(int));
-	memset(entNums, 0, numEntityDefs * sizeof(int));
+	entNums = (int *)Mem_Alloc(numEntityDefs * sizeof(int));
 
 	Check_MapSize(worldSize);
 	Verb_Printf(VERB_NORMAL, "        Number of brushes: %i\n",nummapbrushes);
@@ -161,7 +158,7 @@ void Check_Stats() {
 		if (entNums[j])
 			Com_Printf("%27s: %i\n", entityDefs[j].classname, entNums[j]);
 
-	free(entNums);
+	Mem_Free(entNums);
 }
 
 /**
@@ -173,7 +170,7 @@ void Check_Stats() {
 mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
 {
 	int i, j;
-	mapbrush_t **brushesToMove = (mapbrush_t **)malloc(numToMoveToWorldspawn * sizeof(mapbrush_t *));
+	mapbrush_t **brushesToMove = (mapbrush_t **)Mem_Alloc(numToMoveToWorldspawn * sizeof(*brushesToMove));
 
 	if (!brushesToMove)
 		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
@@ -587,7 +584,7 @@ static void Check_NearList (void)
 			continue;
 
 		/* now we know how many, we can malloc. then copy the pointers */
-		iBrush->nearBrushes = (mapbrush_t **)malloc(numNear * sizeof(mapbrush_t *));
+		iBrush->nearBrushes = (mapbrush_t **)Mem_Alloc(numNear * sizeof(mapbrush_t *));
 
 		if (!iBrush->nearBrushes)
 			Sys_Error("Check_Nearlist: out of memory");
@@ -776,7 +773,7 @@ static void Check_FindCompositeSides (void)
 			}
 
 			if (numMembers > 1) { /* composite found */
-				side_t **sidesInNewComposite = (side_t **)malloc(numMembers * sizeof(side_t *));
+				side_t **sidesInNewComposite = (side_t **)Mem_Alloc(numMembers * sizeof(*sidesInNewComposite));
 
 				if (!sidesInNewComposite)
 					Sys_Error("Check_FindCompositeSides: out of memory");
@@ -829,7 +826,7 @@ void Check_Free (void)
 		mapbrush_t *iBrush = &mapbrushes[i];
 		if (iBrush->numNear) {
 			assert(iBrush->nearBrushes);
-			free(iBrush->nearBrushes);
+			Mem_Free(iBrush->nearBrushes);
 			iBrush->numNear = 0;
 			iBrush->nearBrushes = NULL;
 		}
@@ -839,7 +836,7 @@ void Check_Free (void)
 		compositeSide_t *cs = &compositeSides[i];
 		if (cs->numMembers) {
 			assert(cs->memberSides);
-			free(cs->memberSides);
+			Mem_Free(cs->memberSides);
 			cs->numMembers = 0;
 			cs->memberSides = NULL;
 		}
@@ -1117,13 +1114,13 @@ static float Check_SidesOverlap (const side_t *s1, const side_t *s2)
 #endif
 		/* small area, do not waste time calculating width */
 		if (overlapArea < OVERLAP_AREA_TOL) {
-			free(overlap);
+			Mem_Free(overlap);
 			return -1.0f;
 		}
 
 		longestEdge = Check_LongestEdge(overlap);
 		width = overlapArea / longestEdge;
-		free(overlap);
+		Mem_Free(overlap);
 		return width > OVERLAP_WIDTH_TOL ? width : -1.0f;
 	}
 

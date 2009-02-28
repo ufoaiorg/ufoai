@@ -102,7 +102,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		unzGoToNextFile(uf);
 	}
 
-	pack = malloc(sizeof(pack_t));
+	pack = Mem_Alloc(sizeof(*pack));
 	strncpy(pack->filename, packfile, sizeof(pack->filename) - 1);
 	pack->handle.z = uf;
 	pack->handle.f = NULL;
@@ -110,7 +110,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	unzGoToFirstFile(uf);
 
 	/* Allocate space for array of packfile structures (filename, offset, length) */
-	newfiles = malloc(i * sizeof(packfile_t));
+	newfiles = Mem_Alloc(i * sizeof(packfile_t));
 
 	for (i = 0; i < gi.number_entry; i++) {
 		err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
@@ -358,7 +358,7 @@ void SafeWrite (qFILE *f, void *buffer, int count)
  */
 void FreeFile (void *buffer)
 {
-	free(buffer);
+	Mem_Free(buffer);
 }
 
 /**
@@ -375,7 +375,7 @@ int LoadFile (const char *filename, void **bufferptr)
 	if (!f.f && !f.z)
 		Sys_Error("Could not load %s", filename);
 	length = FS_filelength(&f);
-	buffer = malloc(length + 1);
+	buffer = Mem_Alloc(length + 1);
 	((char *)buffer)[length] = 0;
 	SafeRead(&f, buffer, length);
 	CloseFile(&f);
@@ -414,7 +414,7 @@ int TryLoadFile (const char *filename, void **bufferptr)
 	if (!f.f && !f.z)
 		return -1;
 	length = FS_filelength(&f);
-	buffer = malloc(length + 1);
+	buffer = Mem_Alloc(length + 1);
 	((char *)buffer)[length] = 0;
 	SafeRead(&f, buffer, length);
 	CloseFile(&f);

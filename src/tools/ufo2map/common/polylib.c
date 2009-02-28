@@ -40,20 +40,12 @@ static int c_peak_windings;
  */
 winding_t *AllocWinding (int points)
 {
-	winding_t *w;
-	size_t s;
-
 	if (threadstate.numthreads == 1) {
 		c_active_windings++;
 		c_peak_windings = c_active_windings > c_peak_windings ? c_active_windings : c_peak_windings;
 	}
-	s = sizeof(vec3_t) * points + sizeof(int);
-	w = malloc(s);
-	if (!w)
-		Sys_Error("could not allocate winding of size: "UFO_SIZE_T"\n", s);
 
-	memset(w, 0, s);
-	return w;
+	return Mem_Alloc(sizeof(vec3_t) * points + sizeof(int));
 }
 
 /**
@@ -68,7 +60,7 @@ void FreeWinding (winding_t *w)
 
 	if (threadstate.numthreads == 1)
 		c_active_windings--;
-	free(w);
+	Mem_Free(w);
 }
 
 /**

@@ -126,7 +126,7 @@ static qboolean EndOfScript (qboolean crossline)
 	if (!strcmp(script->filename, "memory buffer"))
 		return qfalse;
 
-	free(script->buffer);
+	Mem_Free(script->buffer);
 	if (script == scriptstack + 1)
 		return qfalse;
 

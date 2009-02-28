@@ -399,8 +399,7 @@ epair_t *ParseEpair (void)
 {
 	epair_t	*e;
 
-	e = malloc(sizeof(*e));
-	memset(e, 0, sizeof(*e));
+	e = Mem_Alloc(sizeof(*e));
 
 	if (strlen(parsedToken) >= MAX_KEY - 1)
 		Sys_Error("ParseEpar: token too long");
@@ -520,15 +519,15 @@ void SetKeyValue (entity_t *ent, const char *key, const char *value)
 
 	for (ep = ent->epairs; ep; ep = ep->next)
 		if (!strcmp(ep->key, key)) {
-			free(ep->value);
+			Mem_Free(ep->value);
 			ep->value = strdup(value);
 			return;
 		}
-	ep = malloc(sizeof(*ep));
+	ep = Mem_Alloc(sizeof(*ep));
 	ep->next = ent->epairs;
 	ent->epairs = ep;
-	ep->key = strdup(key);
-	ep->value = strdup(value);
+	ep->key = Mem_StrDup(key);
+	ep->value = Mem_StrDup(value);
 }
 
 /**
@@ -590,9 +589,9 @@ static void FreeEpairsRecurse (epair_t *e)
 	if (e->next)
 		FreeEpairsRecurse(e->next);
 
-	free(e->key);
-	free(e->value);
-	free(e);
+	Mem_Free(e->key);
+	Mem_Free(e->value);
+	Mem_Free(e);
 }
 
 void FreeEpairs(void)

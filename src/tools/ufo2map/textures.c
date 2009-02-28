@@ -57,7 +57,7 @@ int FindMiptex (const char *name)
 		textureref[i].value = LittleLong(mt->value);
 		textureref[i].surfaceFlags = 0;
 		textureref[i].contentFlags = 0;
-		free(mt);
+		Mem_Free(mt);
 		loaded = qtrue;
 	}
 
@@ -67,7 +67,7 @@ int FindMiptex (const char *name)
 			textureref[i].value = LittleLong(mt->value);
 			textureref[i].surfaceFlags = 0;
 			textureref[i].contentFlags = 0;
-			free(mt);
+			Mem_Free(mt);
 			loaded = qtrue;
 		}
 	}

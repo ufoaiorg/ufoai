@@ -213,7 +213,7 @@ static void CalcLightinfoVectors (lightinfo_t *l)
 
 	/* total sample count */
 	l->numsurfpt = (l->texsize[0] + 1) * (l->texsize[1] + 1);
-	l->surfpt = malloc(l->numsurfpt * sizeof(vec3_t));
+	l->surfpt = Mem_Alloc(l->numsurfpt * sizeof(vec3_t));
 	if (!l->surfpt)
 		Sys_Error("Surface too large to light ("UFO_SIZE_T")", l->numsurfpt * sizeof(*l->surfpt));
 }
@@ -303,8 +303,7 @@ void BuildLights (void)
 				continue;
 
 			numlights[config.compile_for_day]++;
-			l = malloc(sizeof(*l));
-			memset(l, 0, sizeof(*l));
+			l = Mem_Alloc(sizeof(*l));
 
 			VectorCopy(p->origin, l->origin);
 
@@ -338,8 +337,7 @@ void BuildLights (void)
 		}
 
 		numlights[config.compile_for_day]++;
-		l = malloc(sizeof(*l));
-		memset(l, 0, sizeof(*l));
+		l = Mem_Alloc(sizeof(*l));
 
 		GetVectorForKey(e, "origin", l->origin);
 
@@ -766,18 +764,17 @@ void BuildFacelights (unsigned int facenum)
 	fl = &facelight[config.compile_for_day][facenum];
 	fl->numsamples = l[0].numsurfpt;
 
-	fl->origins = malloc(fl->numsamples * sizeof(vec3_t));
+	fl->origins = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 	memcpy(fl->origins, l[0].surfpt, fl->numsamples * sizeof(vec3_t));
-	fl->samples = malloc(fl->numsamples * sizeof(vec3_t));
+	fl->samples = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 	memset(fl->samples, 0, fl->numsamples * sizeof(vec3_t));
-	fl->directions = malloc(fl->numsamples * sizeof(vec3_t));
+	fl->directions = Mem_Alloc(fl->numsamples * sizeof(vec3_t));
 	memset(fl->directions, 0, fl->numsamples * sizeof(vec3_t));
 
 	center = face_extents[facenum].center;  /* center of the face */
 
 	/* Also setup the hints.  Each hint is specific to each light source, including sunlight. */
-	headhints = malloc((numlights[config.compile_for_day] + 1) * sizeof(int));
-	memset(headhints, 0, (numlights[config.compile_for_day] + 1) * sizeof(int));
+	headhints = Mem_Alloc((numlights[config.compile_for_day] + 1) * sizeof(int));
 
 	/* calculate light for each sample */
 	for (i = 0; i < fl->numsamples; i++) {
@@ -816,7 +813,7 @@ void BuildFacelights (unsigned int facenum)
 	}
 
 	/* Free the hints. */
-	free(headhints);
+	Mem_Free(headhints);
 
 	for (i = 0; i < l[0].numsurfpt; i++) {  /* pad them */
 		float *direction = fl->directions + i * 3;
@@ -826,7 +823,7 @@ void BuildFacelights (unsigned int facenum)
 
 	/* free the sample positions for the face */
 	for (i = 0; i < numsamples; i++)
-		free(l[i].surfpt);
+		Mem_Free(l[i].surfpt);
 }
 
 static const vec3_t luminosity = {0.2125, 0.7154, 0.0721};
