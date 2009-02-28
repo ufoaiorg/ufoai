@@ -40,7 +40,6 @@ static cBspSurface_t nullsurface;
 /**
  * @note used as a shortcut so the tile being processed does not need to be repeatedly passed between functions.
  * @sa TR_MakeTracingNode (tracing.c)
- * @sa TR_MakeTracingNodes (tracing.c)
  * @sa TR_BuildTracingNode_r (tracing.c)
  * @sa TR_TestLine_r (tracing.c)
  * @sa TR_TestLineDist_r (tracing.c)
