@@ -593,7 +593,7 @@ void CIN_PlayCinematic (const char *name)
 	memset(&cin, 0, sizeof(cin));
 
 	/* Open the file */
-	size = FS_OpenFile(name, &cin.file);
+	size = FS_OpenFile(name, &cin.file, FILE_READ);
 	if (!cin.file.f && !cin.file.z) {
 		Com_Printf("Cinematic %s not found\n", name);
 		return;

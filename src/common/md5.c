@@ -277,7 +277,7 @@ char *Com_MD5File (const char *fn, int length)
 	int r = 0;
 	int total = 0;
 
-	filelen = FS_OpenFile(fn, &f);
+	filelen = FS_OpenFile(fn, &f, FILE_READ);
 	if (filelen < 1)
 		return final;
 

@@ -260,13 +260,11 @@ void Con_CheckResize (void)
  * @brief Load the console history
  * @sa Con_SaveConsoleHistory
  */
-void Con_LoadConsoleHistory (const char* path)
+void Con_LoadConsoleHistory (void)
 {
 	qFILE f;
 	char filename[MAX_OSPATH];
 	char line[MAXCMDLINE];
-
-	assert(path);
 
 	if (!con_history->integer)
 		return;
@@ -275,7 +273,7 @@ void Con_LoadConsoleHistory (const char* path)
 
 	memset(&f, 0, sizeof(f));
 
-	FS_OpenFile(filename, &f);
+	FS_OpenFile(filename, &f, FILE_READ);
 	if (!f.f)
 		return;
 
@@ -297,16 +295,13 @@ void Con_LoadConsoleHistory (const char* path)
  * @param[in] path path to store the history
  * @sa Con_LoadConsoleHistory
  */
-void Con_SaveConsoleHistory (const char *path)
+void Con_SaveConsoleHistory (void)
 {
 	int i;
 	qFILE f;
 	char filename[MAX_OSPATH];
 	const char *lastLine = NULL;
-
-	/* in case of a very early sys error */
-	if (!path)
-		return;
+	const char *path = FS_Gamedir();
 
 	/* maybe con_history is not initialized here (early Sys_Error) */
 	if (!con_history || !con_history->integer)
@@ -316,7 +311,7 @@ void Con_SaveConsoleHistory (const char *path)
 
 	memset(&f, 0, sizeof(f));
 
-	FS_OpenFileWrite(filename, &f);
+	FS_OpenFile(filename, &f, FILE_WRITE);
 	if (!f.f) {
 		Com_Printf("Can not open %s/%s for writing\n", path, CONSOLE_HISTORY_FILENAME);
 		return;
@@ -352,7 +347,7 @@ void Con_Init (void)
 	Cmd_AddCommand("condump", Con_Dump_f, "Dump console text to textfile");
 
 	/* load console history if con_history is true */
-	Con_LoadConsoleHistory(FS_Gamedir());
+	Con_LoadConsoleHistory();
 
 	memset(&con, 0, sizeof(con));
 	con.lineWidth = VID_NORM_WIDTH / con_fontWidth;

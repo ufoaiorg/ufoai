@@ -44,7 +44,6 @@ static searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 /**
  * @brief Called to find where to write a file (savegames, etc)
  * @note We will use the searchpath that isn't a pack and has highest priority
- * @sa FS_OpenFileWrite
  */
 const char *FS_Gamedir (void)
 {
@@ -114,7 +113,6 @@ void FS_CreatePath (const char *path)
 /**
  * @brief For some reason, other dll's can't just call fclose()
  * on files returned by FS_OpenFile...
- * @sa FS_OpenFileWrite
  * @sa FS_OpenFile
  */
 void FS_CloseFile (qFILE * f)
@@ -139,12 +137,26 @@ void FS_CloseFile (qFILE * f)
  * @note Used for streaming data out of either a pak file or a seperate file.
  * @sa FS_OpenFile
  */
-static int FS_OpenFileSingle (const char *filename, qFILE * file)
+static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mode)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
 	int i;
 	filelink_t *link;
+
+	/* open for write or append in gamedir and return */
+	if (mode == FILE_WRITE || mode == FILE_APPEND) {
+		Com_sprintf(netpath, sizeof(netpath), "%s/%s", FS_Gamedir(), filename);
+		FS_CreatePath(netpath);
+
+		file->f = fopen(netpath, (mode == FILE_WRITE ? "wb" : "ab"));
+		if (file->f) {
+			fs_openedFiles++;
+			return 0;
+		}
+
+		return -1;
+	}
 
 	file->z = file->f = NULL;
 
@@ -267,30 +279,11 @@ int FS_Seek (qFILE * f, long offset, int origin)
  * @sa FS_OpenFileSingle
  * @sa FS_LoadFile
  */
-int FS_OpenFile (const char *filename, qFILE * file)
+int FS_OpenFile (const char *filename, qFILE * file, filemode_t mode)
 {
 	/* open file */
-	return FS_OpenFileSingle(filename, file);
+	return FS_OpenFileSingle(filename, file, mode);
 }
-
-/**
- * @brief Opens a given file for writing
- * @note This should only be called for files in FS_Gamedir()
- * @param[in] filename The filename to open for writing
- * @param[out] f The file handle of the opened file
- * @note No support for zip file writing (intended)
- * @sa FS_Gamedir()
- */
-void FS_OpenFileWrite (const char *filename, qFILE *f)
-{
-	if (f->z)
-		return;
-
-	f->f = fopen(filename, "wb");
-	if (f->f)
-		fs_openedFiles++;
-}
-
 
 /**
  * @brief Just returns the filelength and -1 if the file wasn't found
@@ -301,7 +294,7 @@ int FS_CheckFile (const char *filename)
 	int result;
 	qFILE file;
 
-	result = FS_OpenFileSingle(filename, &file);
+	result = FS_OpenFileSingle(filename, &file, FILE_READ);
 	if (result != -1)
 		FS_CloseFile(&file);
 
@@ -389,7 +382,7 @@ int FS_LoadFile (const char *path, byte **buffer)
 	int len;
 
 	/* look for it in the filesystem or pack files */
-	len = FS_OpenFile(path, &h);
+	len = FS_OpenFile(path, &h, FILE_READ);
 	if (!h.f && !h.z) {
 		if (buffer)
 			*buffer = NULL;
@@ -1292,7 +1285,7 @@ static int CheckBSPFile (const char *filename)
 	/* load the file */
 	Com_sprintf(name, MAX_QPATH, "maps/%s.bsp", filename);
 
-	FS_OpenFile(name, &file);
+	FS_OpenFile(name, &file, FILE_READ);
 	if (!file.f && !file.z)
 		return 1;
 

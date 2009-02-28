@@ -142,7 +142,7 @@ void R_ScreenShot_f (void)
 	memset(&f, 0, sizeof(f));
 
 	/* Open it */
-	FS_OpenFileWrite(checkName, &f);
+	FS_OpenFile(checkName, &f, FILE_WRITE);
 
 	if (!f.f) {
 		Com_Printf("R_ScreenShot_f: Couldn't create file: %s\n", checkName);

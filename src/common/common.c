@@ -848,7 +848,7 @@ void Com_WriteConfigToFile (const char *filename)
 	qFILE f;
 
 	memset(&f, 0, sizeof(f));
-	FS_OpenFileWrite(va("%s/%s", FS_Gamedir(), filename), &f);
+	FS_OpenFile(filename, &f, FILE_WRITE);
 	if (!f.f) {
 		Com_Printf("Couldn't write %s.\n", filename);
 		return;

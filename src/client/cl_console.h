@@ -40,8 +40,8 @@ void Con_ClearNotify(void);
 void Con_ToggleConsole_f(void);
 void Con_Close(void);
 
-void Con_SaveConsoleHistory(const char* path);
-void Con_LoadConsoleHistory(const char* path);
+void Con_SaveConsoleHistory(void);
+void Con_LoadConsoleHistory(void);
 
 #define CONSOLE_COLORED_TEXT_MASK 128
 #define CONSOLE_PROMPT_CHAR ']'
