@@ -69,7 +69,7 @@ static void AddScriptToStack (const char *filename)
 
 	size = FS_LoadFile(script->filename, (byte **)&script->buffer);
 	if (size == -1)
-		Sys_Error("script file '%s' doesn't exists", script->filename);
+		Sys_Error("file '%s' doesn't exist", script->filename);
 
 	Verb_Printf(VERB_LESS, "entering %s\n", script->filename);
 

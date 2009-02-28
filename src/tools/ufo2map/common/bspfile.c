@@ -224,7 +224,7 @@ void LoadBSPFile (const char *filename)
 	/* load the file header */
 	size = FS_LoadFile(filename, (byte **)&header);
 	if (size == -1)
-		Sys_Error("'%s' doesn't exists", filename);
+		Sys_Error("'%s' doesn't exist", filename);
 
 	/* swap the header */
 	for (i = 0; i < sizeof(dBspHeader_t) / 4; i++)
