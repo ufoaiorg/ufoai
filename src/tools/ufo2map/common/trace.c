@@ -26,11 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "shared.h"
-#include "cmdlib.h"
 #include "../bsp.h"
 #include "bspfile.h"
-#include <stddef.h>
-
 
 /**
  * @brief Use the bsp node structure to reconstruct efficient tracing structures

@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../shared/defines.h"
 #include "../../../shared/typedefs.h"
-
+#include "../../../shared/byte.h"
 
 #ifndef errno
 extern int errno;
@@ -66,6 +66,9 @@ typedef enum {
 	VERB_DUMP, /**< the highest verbosity level */
 	VERB_NUM /**< the number of verbosity levels */
 } verbosityLevel_t;
+
+qboolean AbortPrint(const verbosityLevel_t importance);
+void Verb_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(printf, 2, 3)));
 
 typedef struct mapConfig_s {
 	float subdivideSize;

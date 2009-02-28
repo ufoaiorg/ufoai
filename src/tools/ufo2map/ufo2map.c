@@ -165,6 +165,54 @@ static void Usage (void)
 }
 
 /**
+ * @brief
+ */
+void Com_Printf (const char *format, ...)
+{
+	char out_buffer[4096];
+	va_list argptr;
+
+	va_start(argptr, format);
+	Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
+	va_end(argptr);
+
+	printf("%s", out_buffer);
+}
+
+/**
+ * @brief return nonzero if printing should be aborted based on the command line verbosity
+ * level and the importance of the message
+ * @param msgVerbLevel insignificance of the message. Larger numbers mean the message is
+ * less important. The message will first be printed if the msgVerbLevel is equal to the config.verbosity.
+ * @sa verbosityLevel_t
+ */
+qboolean AbortPrint (const verbosityLevel_t msgVerbLevel)
+{
+	return (msgVerbLevel > config.verbosity);
+}
+
+/**
+ * @brief decides wether to proceed with output based on verbosity level
+ * @sa Com_Printf, Check_Printf, AbortPrint
+ */
+void Verb_Printf (const verbosityLevel_t msgVerbLevel, const char *format, ...)
+{
+	if (AbortPrint(msgVerbLevel))
+		return;
+
+	{
+		char out_buffer[4096];
+		va_list argptr;
+
+		va_start(argptr, format);
+		Q_vsnprintf(out_buffer, sizeof(out_buffer), format, argptr);
+		va_end(argptr);
+
+		printf("%s", out_buffer);
+	}
+}
+
+/**
  * @brief Check for bsping, lighting and checking/fixing command line parameters
  */
 static void U2M_Parameter (int argc, const char **argv)
