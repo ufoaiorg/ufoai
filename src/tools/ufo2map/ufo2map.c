@@ -691,13 +691,11 @@ int main (int argc, const char **argv)
 		if (config.fixMap) {
 			/* update dentdata */
 			UnparseEntities();
-			WriteMapFile(GetScriptFile());
+			WriteMapFile(mapFilename);
 		}
+
 		Mem_Shutdown();
-		/** @todo remove these once they all use the memory pool */
-		Check_Free();
-		FreeEpairs();
-		FreeWindings();
+
 		return 0;
 	} else if (config.generateMaterialFile) {
 		/* start from scratch */
@@ -749,7 +747,7 @@ int main (int argc, const char **argv)
 		size = WriteBSPFile(bspFilename);
 		end = time(NULL);
 	}
-	FreeWindings(); /** @todo remove this once the windings are using the memory pool */
+
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 
 	Mem_Shutdown();
