@@ -152,6 +152,10 @@
 		<Unit filename="../../src/tools/ufo2map/check/check.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/ufo2map/check/checkentities.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/ufo2map/check/checkentities.h" />
 		<Unit filename="../../src/tools/ufo2map/check/checklib.c">
 			<Option compilerVar="CC" />
 		</Unit>

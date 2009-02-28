@@ -1,10 +1,10 @@
 /**
- * @file checklib.h
- * @brief Performs check on a loaded mapfile, and makes changes
- * that can be saved back to the source map.
+ * @file checkentities.h
  */
 
 /*
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -24,16 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef _CHECKLIB_H
-#define _CHECKLIB_H
+#ifndef _CHECKENTITIES_H
+#define _CHECKENTITIES_H
 
-/** constants that may be passed to Check_Printf in lieu of entity/brush numbers */
-#define NUM_NONE -1
-#define NUM_DIFF -2
-#define NUM_SAME -3
+void Check_Stats(void);
 
-void Check_Printf(const verbosityLevel_t msgVerbLevel, qboolean change, int entnum, int brushnum, const char *format, ...) __attribute__((format(printf, 5, 6)));
-void Check_InitEntityDefs (void);
-void Check_Free (void);
-
-#endif /* _CHECKLIB_H */
+#endif /* _CHECKENTITIES_H */

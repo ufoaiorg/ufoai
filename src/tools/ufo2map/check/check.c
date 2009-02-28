@@ -61,101 +61,6 @@ typedef enum {
 	PIB_ON_SURFACE_ONLY			/**< point on the surface, and the inside of the brush is excluded */
 } pointInBrush_t;
 
-/** needs to be done here, on map brushes as worldMins and worldMaxs from levels.c
- * are only calculated on BSPing
- * @param[out] mapSize the returned size in map units
- */
-static void Check_MapSize (vec3_t mapSize)
-{
-	int i, bi, vi;
-	vec3_t mins, maxs;
-
-	VectorSet(mins, 0, 0, 0);
-	VectorSet(maxs, 0, 0, 0);
-
-	for (i = 0; i < nummapbrushes; i++) {
-		const mapbrush_t *brush = &mapbrushes[i];
-
-		for (bi = 0; bi < brush->numsides; bi++) {
-			const winding_t *winding = brush->original_sides[bi].winding;
-
-			for (vi = 0; vi < winding->numpoints; vi++)
-				AddPointToBounds(winding->p[vi], mins, maxs);
-		}
-	}
-
-	VectorSubtract(maxs, mins, mapSize);
-}
-
-#define MIN_TILE_SIZE 256 /**< @todo take this datum from the correct place */
-
-/**
- * @note Check_Free calls ED_Free, which frees all outstanding
- * malloc'd space from this function
- */
-static void Check_InitEntityDefs (void)
-{
-	char *entitiesUfoBuf;
-
-	/* only do this once, may be called by different
-	 * check functions, depending on command-line */
-	if (numEntityDefs)
-		return;
-
-	if (FS_LoadFile("ufos/entities.ufo", (byte **)&entitiesUfoBuf) == -1)
-		Sys_Error("CheckEntities: Unable to read entities.ufo\n");
-
-	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
-		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
-
-	/* info has been copied to new malloc'd space in ED_Parse */
-	Mem_Free(entitiesUfoBuf);
-}
-
-/**
- * @brief print map stats on -stats
- */
-void Check_Stats() {
-	vec3_t worldSize;
-	int i, j;
-	int *entNums;
-
-	Check_InitEntityDefs();
-
-	entNums = (int *)Mem_Alloc(numEntityDefs * sizeof(int));
-
-	Check_MapSize(worldSize);
-	Verb_Printf(VERB_NORMAL, "        Number of brushes: %i\n",nummapbrushes);
-	Verb_Printf(VERB_NORMAL, "         Number of planes: %i\n",nummapplanes);
-	Verb_Printf(VERB_NORMAL, "    Number of brush sides: %i\n",nummapbrushsides);
-	Verb_Printf(VERB_NORMAL, "         Map size (units): %.0f %.0f %.0f\n", worldSize[0], worldSize[1], worldSize[2]);
-	Verb_Printf(VERB_NORMAL, "        Map size (fields): %.0f %.0f %.0f\n", worldSize[0] / UNIT_SIZE, worldSize[1] / UNIT_SIZE, worldSize[2] / UNIT_HEIGHT);
-	Verb_Printf(VERB_NORMAL, "         Map size (tiles): %.0f %.0f %.0f\n", worldSize[0] / (MIN_TILE_SIZE), worldSize[1] / (MIN_TILE_SIZE), worldSize[2] / UNIT_HEIGHT);
-	Verb_Printf(VERB_NORMAL, "       Number of entities: %i\n", num_entities);
-
-	/* count number of each type of entity */
-	for (i = 0; i < num_entities; i++) {
-		const char *name = ValueForKey(&entities[i], "classname");
-
-		for (j = 0; j < numEntityDefs; j++)
-			if (!strncmp(name, entityDefs[j].classname, strlen(entityDefs[j].classname))) {
-				entNums[j]++;
-				break;
-			}
-		if (j == numEntityDefs) {
-			Com_Printf("Check_Stats: entity '%s' not recognised\n", name);
-		}
-
-	}
-
-	/* print number of each type of entity */
-	for (j = 0; j < numEntityDefs; j++)
-		if (entNums[j])
-			Com_Printf("%27s: %i\n", entityDefs[j].classname, entNums[j]);
-
-	Mem_Free(entNums);
-}
-
 /**
  * @brief single brushes in func_groups are moved to worldspawn. this function allocates space for
  * pointers to those brushes. called when the .map is written back in map.c
@@ -804,36 +709,6 @@ void FreeWindings (void)
 			if (winding) {
 				FreeWinding(winding);
 			}
-		}
-	}
-}
-
-/**
- * @brief free the mapbrush_t::nearBrushes, compositeSides and entitiesdef.h stuff.
- */
-void Check_Free (void)
-{
-	int i;
-
-	ED_Free();
-
-	for (i = 0; i < nummapbrushes; i++) {
-		mapbrush_t *iBrush = &mapbrushes[i];
-		if (iBrush->numNear) {
-			assert(iBrush->nearBrushes);
-			Mem_Free(iBrush->nearBrushes);
-			iBrush->numNear = 0;
-			iBrush->nearBrushes = NULL;
-		}
-	}
-
-	for (i = 0; i < numCompositeSides; i++) {
-		compositeSide_t *cs = &compositeSides[i];
-		if (cs->numMembers) {
-			assert(cs->memberSides);
-			Mem_Free(cs->memberSides);
-			cs->numMembers = 0;
-			cs->memberSides = NULL;
 		}
 	}
 }

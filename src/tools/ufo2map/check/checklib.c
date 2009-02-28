@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../common/shared.h"
 #include "../ufo2map.h"
 #include "checklib.h"
+#include "../../../shared/entitiesdef.h"
+#include "../bsp.h"
 
 /**
  * @brief decides wether to proceed with output based on verbosity and ufo2map's mode: check/fix/compile
@@ -117,4 +119,58 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 
 	/* ensure next call gets brushnum and entnum printed if this is the end of the previous*/
 	startOfLine = containsNewline ? qtrue : qfalse;
+}
+
+
+/**
+ * @note Check_Free calls ED_Free, which frees all outstanding
+ * malloc'd space from this function
+ */
+void Check_InitEntityDefs (void)
+{
+	char *entitiesUfoBuf;
+
+	/* only do this once, may be called by different
+	 * check functions, depending on command-line */
+	if (numEntityDefs)
+		return;
+
+	if (FS_LoadFile("ufos/entities.ufo", (byte **)&entitiesUfoBuf) == -1)
+		Sys_Error("CheckEntities: Unable to read entities.ufo\n");
+
+	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
+		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
+
+	/* info has been copied to new malloc'd space in ED_Parse */
+	Mem_Free(entitiesUfoBuf);
+}
+
+/**
+ * @brief free the mapbrush_t::nearBrushes, compositeSides and entitiesdef.h stuff.
+ */
+void Check_Free (void)
+{
+	int i;
+
+	ED_Free();
+
+	for (i = 0; i < nummapbrushes; i++) {
+		mapbrush_t *iBrush = &mapbrushes[i];
+		if (iBrush->numNear) {
+			assert(iBrush->nearBrushes);
+			Mem_Free(iBrush->nearBrushes);
+			iBrush->numNear = 0;
+			iBrush->nearBrushes = NULL;
+		}
+	}
+
+	for (i = 0; i < numCompositeSides; i++) {
+		compositeSide_t *cs = &compositeSides[i];
+		if (cs->numMembers) {
+			assert(cs->memberSides);
+			Mem_Free(cs->memberSides);
+			cs->numMembers = 0;
+			cs->memberSides = NULL;
+		}
+	}
 }
