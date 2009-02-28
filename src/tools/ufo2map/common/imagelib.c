@@ -245,17 +245,17 @@ int TryLoadTGA (const char *path, miptex_t **mt)
 	if (pic == NULL)
 		return -1;
 
-	size = sizeof(miptex_t) + width * height * 4;
+	size = sizeof(*mt) + width * height * 4;
 	*mt = (miptex_t *)Mem_Alloc(size);
 
-	dest = (byte*)(*mt) + sizeof(miptex_t);
+	dest = (byte*)(*mt) + sizeof(*mt);
 	memcpy(dest, pic, width * height * 4);  /* stuff RGBA into this opaque space */
 	Mem_Free(pic);
 
 	/* copy relevant header fields to miptex_t */
 	(*mt)->width = width;
 	(*mt)->height = height;
-	(*mt)->offsets[0] = sizeof(miptex_t);
+	(*mt)->offsets[0] = sizeof(*mt);
 
 	return 0;
 }
@@ -429,17 +429,17 @@ int TryLoadJPG (const char *path, miptex_t **mt)
 	if (pic == NULL)
 		return -1;
 
-	size = sizeof(miptex_t) + width * height * 4;
+	size = sizeof(*mt) + width * height * 4;
 	*mt = (miptex_t *)Mem_Alloc(size);
 
-	dest = (byte*)(*mt) + sizeof(miptex_t);
+	dest = (byte*)(*mt) + sizeof(*mt);
 	memcpy(dest, pic, width * height * 4);  /* stuff RGBA into this opaque space */
 	Mem_Free(pic);
 
 	/* copy relevant header fields to miptex_t */
 	(*mt)->width = width;
 	(*mt)->height = height;
-	(*mt)->offsets[0] = sizeof(miptex_t);
+	(*mt)->offsets[0] = sizeof(*mt);
 
 	return 0;
 }
