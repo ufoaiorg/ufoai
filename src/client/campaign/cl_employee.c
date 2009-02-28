@@ -1173,7 +1173,7 @@ employee_t* E_GetEmployeeFromChrUCN (int ucn)
  * @sa E_LoadXML
  * @sa SAV_GameSaveXML
  * @sa G_SendCharacterData
- * @sa CL_ParseCharacterData
+ * @sa CP_ParseCharacterData
  * @sa GAME_SendCurrentTeamSpawningInfo
  */
 qboolean E_SaveXML (mxml_node_t *p)

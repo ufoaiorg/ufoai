@@ -2658,7 +2658,6 @@ static void G_ClientSkipActorInfo (void)
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.ReadShort(); /* score.stuns */
 	gi.ReadShort(); /* score.assigned missions */
-	gi.ReadByte(); /* score.rank */
 
 	gi.ReadShort(); /* reservedTus.reserveReaction */
 
@@ -2767,9 +2766,7 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();
 
-			/** Scores
-			 * @sa G_ClientSkipActorInfo
-			 * @sa inv_shared.h:chrScoreGlobal_t */
+			/** Scores @sa G_ClientSkipActorInfo */
 			for (k = 0; k < SKILL_NUM_TYPES + 1; k++)	/* new attributes */
 				ent->chr.score.experience[k] = gi.ReadLong();
 			for (k = 0; k < SKILL_NUM_TYPES; k++)	/* new attributes */
@@ -2781,7 +2778,6 @@ void G_ClientTeamInfo (player_t * player)
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				ent->chr.score.stuns[k] = gi.ReadShort();
 			ent->chr.score.assignedMissions = gi.ReadShort();
-			ent->chr.score.rank = gi.ReadByte();
 
 			/* Read user-defined reaction-state. */
 			ent->chr.reservedTus.reserveReaction = gi.ReadShort();

@@ -368,8 +368,7 @@ static void CheckNeedPass (void)
  * @brief Sends character stats like assigned missions and kills back to client
  *
  * @note first short is the ucn to allow the client to identify the character
- * @note parsed in CL_ParseCharacterData
- * @sa CL_ParseCharacterData
+ * @note parsed in GAME_CP_Results
  * @sa G_EndGame
  * @sa GAME_SendCurrentTeamSpawningInfo
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
@@ -397,7 +396,6 @@ static void G_SendCharacterData (const edict_t* ent)
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(ent->chr.score.stuns[k]);
 	gi.WriteShort(ent->chr.score.assignedMissions);
-	gi.WriteByte(ent->chr.score.rank);
 }
 
 /**

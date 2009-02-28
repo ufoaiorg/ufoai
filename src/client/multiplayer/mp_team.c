@@ -195,7 +195,6 @@ static void MP_SaveTeamMultiplayerInfo (sizebuf_t *buf)
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			MSG_WriteShort(buf, chr->score.stuns[j]);
 		MSG_WriteShort(buf, chr->score.assignedMissions);
-		MSG_WriteShort(buf, chr->score.rank);
 
 		/* Save user-defined (default) reaction-state. */
 		MSG_WriteShort(buf, chr->reservedTus.reserveReaction);
@@ -404,7 +403,6 @@ static void MP_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	for (i = 0; i < num; i++)
 		chr->score.stuns[i] = MSG_ReadShort(sb);
 	chr->score.assignedMissions = MSG_ReadShort(sb);
-	chr->score.rank = MSG_ReadShort(sb);
 
 	/* Load user-defined (default) reaction-state. */
 	chr->reservedTus.reserveReaction = MSG_ReadShort(sb);

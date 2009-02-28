@@ -268,7 +268,6 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			NET_WriteShort(buf, chr->score.stuns[j]);
 		NET_WriteShort(buf, chr->score.assignedMissions);
-		NET_WriteByte(buf, chr->score.rank);
 
 		/* Send user-defined (default) reaction-state. */
 		NET_WriteShort(buf, chr->reservedTus.reserveReaction);

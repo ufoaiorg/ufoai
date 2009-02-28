@@ -287,6 +287,9 @@ void UP_ItemDescription (const objDef_t *od)
 	int up_numresearchedlink = 0;
 	int up_weapon_id = NONE;
 
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
 	INV_ItemDescription(od);
 
 	if (!od->tech) {

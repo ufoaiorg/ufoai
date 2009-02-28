@@ -172,12 +172,10 @@ void INV_ItemDescription (const objDef_t *od)
 	/* reset everything */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_researchedlinkname", "");
-	Cvar_Set("mn_upresearchedlinknametooltip", "");
+	Cvar_Set("mn_displayfiremode", "0");
+	Cvar_Set("mn_displayweapon", "0");
+	Cvar_Set("mn_changefiremode", "0");
+	Cvar_Set("mn_changeweapon", "0");
 
 	if (!od)	/* If nothing selected return */
 		return;
@@ -185,6 +183,23 @@ void INV_ItemDescription (const objDef_t *od)
 	/* select item */
 	Cvar_Set("mn_itemname", _(od->name));
 	Cvar_Set("mn_item", od->id);
+
+	/** @todo see UP_ItemDescription */
+#if 0
+	if (!Q_strcmp(od->type, "ammo")) {
+		/* We display the pre/next buttons for changing weapon only if there are at least 2 weapons for this ammo */
+		if (od->numWeapons > 1)
+			Cvar_Set("mn_changeweapon", "1");
+	} else if (od->weapon && od->reload) {
+		/* We have a weapon that uses ammos */
+
+		/* We display the pre/next buttons for changing ammo only if there are at least 2 ammo types for this weapon */
+		if (od->numAmmos > 1)
+			Cvar_Set("mn_changeweapon", "2");
+
+		Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
+	}
+#endif
 }
 
 void INV_InitStartup (void)

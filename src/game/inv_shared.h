@@ -569,7 +569,7 @@ typedef struct chrScoreMission_s {
  * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase
  * @note This information is stored in savegames (in contract to chrScoreMission_t).
  * @note WARNING: if you change something here you'll have to make sure all the network and savegame stuff is updated as well!
- * Additionally you have to check the size of the network-transfer in g_main.c:G_SendCharacterData and cl_team.c:CL_ParseCharacterData (updateCharacter_t)
+ * Additionally you have to check the size of the network-transfer in G_SendCharacterData and GAME_CP_Results
  */
 typedef struct chrScoreGlobal_s {
 	int experience[SKILL_NUM_TYPES + 1]; /**< Array of experience values for all skills, and health. @todo What are the mins and maxs for these values */

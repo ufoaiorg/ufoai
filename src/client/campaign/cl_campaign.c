@@ -119,7 +119,6 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 			memcpy(chr->score.kills, updateCharacterArray[i].chrscore.kills, sizeof(chr->score.kills));
 			memcpy(chr->score.stuns, updateCharacterArray[i].chrscore.stuns, sizeof(chr->score.stuns));
 			chr->score.assignedMissions = updateCharacterArray[i].chrscore.assignedMissions;
-			chr->score.rank = updateCharacterArray[i].chrscore.rank;
 		}
 		num = 0;
 	} else {
@@ -151,7 +150,6 @@ void CP_ParseCharacterData (struct dbuffer *msg)
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				updateCharacterArray[i].chrscore.stuns[j] = NET_ReadShort(msg);
 			updateCharacterArray[i].chrscore.assignedMissions = NET_ReadShort(msg);
-			updateCharacterArray[i].chrscore.rank = NET_ReadByte(msg);
 		}
 	}
 }
