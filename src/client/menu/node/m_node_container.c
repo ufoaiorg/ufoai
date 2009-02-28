@@ -109,6 +109,7 @@ static inline qboolean MN_IsScrollContainerNode (const menuNode_t* const node)
  * @param[in,out] inv The inventory to add the unused items from @c ed to
  * @param[in,out] ed The equipment definition to get the used items from that should be added
  * to the ground container of @c inv
+ * @todo dont use, and dont called by the container node; should we move it outside?
  */
 void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 {
