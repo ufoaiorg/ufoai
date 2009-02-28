@@ -30,7 +30,6 @@ JPEG
 ==============================================================================*/
 #include <jpeglib.h>
 
-void LoadJPG(const char *filename, byte ** pic, int *width, int *height);
 int TryLoadJPG(const char *path, miptex_t **mt);
 
 /*==============================================================================
@@ -52,6 +51,5 @@ typedef struct targa_header_s {
 } targa_header_t;
 
 int TryLoadTGA(const char *path, miptex_t **mt);
-void LoadTGA(const char *filename, byte **pixels, int *width, int *height);
 
 #endif /* _IMAGELIB_HEADER_H */
