@@ -934,7 +934,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 					break;
 				case RS_WEAPON:
 					for (i = 0; i < csi.numODs; i++) {
-						if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
+						if (!Q_strcmp(tech->provides, csi.ods[i].id)) {
 							UP_ItemDescription(&csi.ods[i]);
 							UP_DisplayTechTree(tech);
 							break;
@@ -1505,7 +1505,7 @@ static void UP_ResearchedLinkClick_f (void)
 	od = INVSH_GetItemByID(upCurrentTech->provides);
 	assert(od);
 
-	if (!Q_strncmp(od->type, "ammo", 4)) {
+	if (!Q_strcmp(od->type, "ammo")) {
 		const technology_t *t = od->weapons[upResearchedLink]->tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);

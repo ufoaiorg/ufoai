@@ -94,7 +94,7 @@ static void CL_ParseAlienTeam (const char *name, const char **text)
 
 	/* search for category with same name */
 	for (i = 0; i < ccs.numAlienCategories; i++)
-		if (!Q_strncmp(name, ccs.alienCategories[i].id, sizeof(ccs.alienCategories[i].id)))
+		if (!Q_strcmp(name, ccs.alienCategories[i].id))
 			break;
 	if (i < ccs.numAlienCategories) {
 		Com_Printf("CL_ParseAlienTeam: alien category def \"%s\" with same name found, second ignored\n", name);
@@ -425,7 +425,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 	/* search for campaigns with same name */
 	for (i = 0; i < numCampaigns; i++)
-		if (!Q_strncmp(name, campaigns[i].id, sizeof(campaigns[i].id)))
+		if (!Q_strcmp(name, campaigns[i].id))
 			break;
 
 	if (i < numCampaigns) {
@@ -500,7 +500,7 @@ void CL_ParseCampaign (const char *name, const char **text)
 				Com_EParseValue(cp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
-		if (!Q_strncmp(token, "salary", MAX_VAR)) {
+		if (!Q_strcmp(token, "salary")) {
 			CL_ParseSalary(token, text, cp->idx);
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);

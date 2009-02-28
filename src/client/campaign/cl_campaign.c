@@ -2494,7 +2494,7 @@ campaign_t* CL_GetCampaign (const char* name)
 	int i;
 
 	for (i = 0, campaign = campaigns; i < numCampaigns; i++, campaign++)
-		if (!Q_strncmp(name, campaign->id, MAX_VAR))
+		if (!Q_strcmp(name, campaign->id))
 			break;
 
 	if (i == numCampaigns) {

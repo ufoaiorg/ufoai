@@ -36,6 +36,5 @@ float BigFloat(float l);
 float LittleFloat(float l);
 
 void Swap_Init(void);
-qboolean Q_IsBigEndian(void);
 
 #endif /* __BYTE_H__ */

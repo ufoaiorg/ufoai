@@ -83,7 +83,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	/* Count size of all items already on the transfer list. */
 	for (i = 0; i < csi.numODs; i++) {
 		if (trItemsTmp[i] > 0) {
-			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+			if (!Q_strcmp(csi.ods[i].id, "antimatter"))
 				amtransfer = ANTIMATTER_SIZE * trItemsTmp[i];
 			if (od->tech->type == RS_CRAFT) {
 				aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
@@ -98,7 +98,7 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 	}
 
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
-	if (!Q_strncmp(od->id, "antimatter", 10)) {
+	if (!Q_strcmp(od->id, "antimatter")) {
 		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
 		if (!B_GetBuildingStatus(destbase, B_ANTIMATTER) && B_GetBuildingStatus(destbase, B_STORAGE)) {
 			MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
@@ -675,7 +675,7 @@ static void TR_TransferListClear_f (void)
 
 	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
 		if (trItemsTmp[i] > 0) {
-			if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+			if (!Q_strcmp(csi.ods[i].id, "antimatter"))
 				B_ManageAntimatter(baseCurrent, trItemsTmp[i], qtrue);
 			else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 				const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
@@ -730,7 +730,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 		} else {
 			for (i = 0; i < csi.numODs; i++) {
 				if (transfer->itemAmount[i] > 0) {
-					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+					if (!Q_strcmp(csi.ods[i].id, "antimatter"))
 						B_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
@@ -1491,7 +1491,7 @@ static void TR_CargoListSelect_f (void)
 					/* you can't transfer more item than there are in current tranfer */
 					amount = min(amount, trItemsTmp[i]);
 					trItemsTmp[i] -= amount;
-					if (!Q_strncmp(csi.ods[i].id, "antimatter", 10))
+					if (!Q_strcmp(csi.ods[i].id, "antimatter"))
 						B_ManageAntimatter(baseCurrent, amount, qfalse);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);

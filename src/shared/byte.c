@@ -155,14 +155,4 @@ void Swap_Init (void)
 		_BigFloat = FloatNoSwap;
 		_LittleFloat = FloatSwap;
 	}
-
-}
-
-/**
- * @brief Returns true if this is a big endian machine
- * @sa Swap_Init
- */
-qboolean Q_IsBigEndian (void)
-{
-	return bigendien;
 }
