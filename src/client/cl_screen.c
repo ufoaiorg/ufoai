@@ -43,6 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_menu.h"
 #include "renderer/r_main.h"
 #include "renderer/r_draw.h"
+#include "renderer/r_misc.h"
 #include "menu/m_draw.h"
 #include "menu/m_nodes.h"
 #include "menu/m_dragndrop.h"
@@ -102,7 +103,16 @@ static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  */
 void SCR_DrawPrecacheScreen (qboolean string)
 {
+	vec3_t pos;
 	R_BeginFrame();
+
+	/* center loading screen */
+	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) * viddef.rx / 2;
+	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) * viddef.ry / 2;
+	pos[2] = 0;
+	R_PushMatrix();
+	R_Transform(pos, NULL, NULL);
+
 	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
 	if (string) {
 		/* Not used with gettext because it would make removing it too easy. */
@@ -112,6 +122,9 @@ void SCR_DrawPrecacheScreen (qboolean string)
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, "Download this game for free at http://ufoai.sf.net", 0, 0, NULL, qfalse, 0);
 	}
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
+
+	R_PopMatrix();
+
 	R_EndFrame();
 }
 
@@ -181,6 +194,7 @@ static void SCR_DrawLoading (void)
 	static const char *loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	char *mapmsg;
+	vec3_t pos;
 
 	if (cls.downloadName[0]) {
 		SCR_DrawDownloading();
@@ -196,6 +210,14 @@ static void SCR_DrawLoading (void)
 		loadingPic = SCR_SetLoadingBackground(cl.configstrings[CS_MAPTITLE]);
 	if (!loadingPic)
 		return;
+
+	/* center loading screen */
+	pos[0] = (viddef.virtualWidth - VID_NORM_WIDTH) * viddef.rx / 2;
+	pos[1] = (viddef.virtualHeight - VID_NORM_HEIGHT) * viddef.ry / 2;
+	pos[2] = 0;
+	R_PushMatrix();
+	R_Transform(pos, NULL, NULL);
+
 	R_DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
 	R_Color(color);
 
@@ -217,6 +239,8 @@ static void SCR_DrawLoading (void)
 		VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 1, 0, NULL, qfalse, 0);
 
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
+
+	R_PopMatrix();
 }
 
 /**
