@@ -565,7 +565,7 @@ static int footstepsCnt = 0;
  */
 static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 {
-	FILE *file;
+	qFILE file;
 	char fileBase[MAX_OSPATH];
 
 	if (!config.generateFootstepFile)
@@ -578,18 +578,18 @@ static inline void GenerateFootstepList (const char *filename, int mipTexIndex)
 
 	COM_StripExtension(filename, fileBase, sizeof(fileBase));
 
-	file = fopen(va("%s.footsteps", fileBase), "a");
-	if (!file) {
+	FS_OpenFile(va("%s.footsteps", fileBase), &file, FILE_APPEND);
+	if (!file.f) {
 		Com_Printf("Could not open footstep file '%s.footsteps' for writing\n", fileBase);
 		config.generateFootstepFile = qfalse;
 		return;
 	}
 #ifdef _WIN32
-	fprintf(file, "terrain %s {\n}\n\n", textureref[mipTexIndex].name);
+	fprintf(file.f, "terrain %s {\n}\n\n", textureref[mipTexIndex].name);
 #else
-	fprintf(file, "%s\n", textureref[mipTexIndex].name);
+	fprintf(file.f, "%s\n", textureref[mipTexIndex].name);
 #endif
-	fclose(file);
+	FS_CloseFile(&file);
 	footstepsCnt++;
 	textureref[mipTexIndex].footstepMarked = qtrue;
 }

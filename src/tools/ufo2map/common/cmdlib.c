@@ -62,18 +62,6 @@ MISC FUNCTIONS
 /**
  * @brief
  */
-void SafeOpenWrite (const char *filename, qFILE* f)
-{
-	assert(!f->f);
-	assert(!f->z);
-	f->f = fopen(filename, "wb");
-	if (!f->f)
-		Sys_Error("Error opening %s for writing: %s", filename, strerror(errno));
-}
-
-/**
- * @brief
- */
 void Com_Printf (const char *format, ...)
 {
 	char out_buffer[4096];

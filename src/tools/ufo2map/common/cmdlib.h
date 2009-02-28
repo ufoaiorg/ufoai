@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 char *COM_ExpandRelativePath(const char *path);	/* from cmd line */
 
-void SafeOpenWrite(const char *filename, qFILE *f);
-
 const char *FS_EntitiesDefinitionPath(void);
 
 qboolean AbortPrint(const verbosityLevel_t importance);

@@ -309,7 +309,7 @@ long WriteBSPFile (const char *filename)
 	outheader.ident = LittleLong(IDBSPHEADER);
 	outheader.version = LittleLong(BSPVERSION);
 
-	SafeOpenWrite(filename, &bspfile);
+	FS_OpenFile(filename, &bspfile, FILE_WRITE);
 	FS_Write(&outheader, sizeof(dBspHeader_t), &bspfile);	/* overwritten later */
 
 	AddLump(&bspfile, &outheader, LUMP_PLANES, curTile->planes, curTile->numplanes * sizeof(dBspPlane_t));
