@@ -543,6 +543,7 @@ menu team extends iaircraft
 	//mn_chrkillcivilian
 	//mn_chrkillteam
 
+	/** @todo Activate this again - used for UGVs */
 	// ==================
 	// additional stuff
 	// ==================

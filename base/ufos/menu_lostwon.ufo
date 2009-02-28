@@ -145,9 +145,9 @@ menu won
 
 	confunc won_check
 	{
-			if "mission_uforecovered == 1" {
-					*bt_continue	disabled	true
-			}
+		if "mission_uforecovered == 1" {
+			*bt_continue	disabled	true
+		}
 	}
 
 	func init
