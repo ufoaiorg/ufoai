@@ -84,9 +84,10 @@
 			<Add library="z" />
 			<Add library="libjpeg" />
 		</Linker>
-		<Unit filename="../../src/ports/windows/win_shared.c">
+		<Unit filename="../../src/common/files.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/common/files.h" />
 		<Unit filename="../../src/common/ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -95,10 +96,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/mem.h" />
-		<Unit filename="../../src/common/files.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../../src/common/files.h" />
 		<Unit filename="../../src/common/routing.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -111,6 +108,21 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/common/unzip.h" />
+		<Unit filename="../../src/ports/unix/unix_glob.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="../../src/ports/unix/unix_main.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="../../src/ports/windows/win_shared.c">
+			<Option compilerVar="CC" />
+			<Option target="windows" />
+			<Option target="windows_debug" />
+		</Unit>
 		<Unit filename="../../src/shared/byte.c">
 			<Option compilerVar="CC" />
 		</Unit>

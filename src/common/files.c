@@ -58,8 +58,8 @@ const char *FS_Gamedir (void)
 }
 
 /**
- * @brief Convert operating systems path seperators to ufo virtuell filesystem
- * seperators (/)
+ * @brief Convert operating systems path seperators to ufo virtual filesystem
+ * separators (/)
  * @sa Sys_NormPath
  */
 void FS_NormPath (char *path)
@@ -368,7 +368,7 @@ int FS_Read (void *buffer, int len, qFILE * f)
 }
 
 /**
- * @brief Filename are reletive to the quake search path
+ * @brief Filenames are relative to the quake search path
  * @param[in] buffer a null buffer will just return the file length without loading
  * @param[in] path
  * @return a -1 length means that the file is not present
