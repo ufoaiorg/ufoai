@@ -91,7 +91,7 @@ void Check_Printf (verbosityLevel_t msgVerbLevel, qboolean change,
 	}
 
 	if (firstSuccessfulPrint && config.verbosity == VERB_MAPNAME) {
-		PrintName();
+		PrintMapName();
 		firstSuccessfulPrint = qfalse;
 	}
 

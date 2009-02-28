@@ -514,7 +514,7 @@ static int CheckTimeDiff (const char *map, const char *bsp)
  * @brief print name in concise form for lower verbosity levels.
  * verbosity check done before calling this function.
  */
-void PrintName (void)
+void PrintMapName (void)
 {
 	const char *mode = NULL;
 
@@ -537,7 +537,7 @@ int main (int argc, const char **argv)
 
 	memset(&config, 0, sizeof(config));
 	/* init thread state */
-	memset(&threadstate, 0, sizeof(threadstate_t));
+	memset(&threadstate, 0, sizeof(threadstate));
 
 	U2M_SetDefaultConfigValues();
 
@@ -574,7 +574,7 @@ int main (int argc, const char **argv)
 		Verb_Printf(VERB_NORMAL, "...bsp: '%s'\n", bspFilename);
 
 	if (config.verbosity == VERB_MAPNAME && !(config.performMapCheck || config.fixMap))
-		PrintName();
+		PrintMapName();
 
 #if defined (HAVE_SYS_STAT_H) || defined (_WIN32)
 	if (config.onlynewer && CheckTimeDiff(mapFilename, bspFilename)) {
