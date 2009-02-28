@@ -287,6 +287,11 @@ menu checkcvars
 
 menu sequence
 {
+	zone render
+	{
+		size		"1024 768"
+	}
+
 	zone click
 	{
 		size		"1024 768"
