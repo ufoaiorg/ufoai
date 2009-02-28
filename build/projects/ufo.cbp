@@ -27,7 +27,6 @@
 					<Add library="intl" />
 					<Add library="winmm" />
 					<Add library="ws2_32" />
-					<Add library="gdi32" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="..\..\contrib\scripts\compile_po.bat /ufoai" />
@@ -410,6 +409,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_parse.h" />
+		<Unit filename="..\..\src\client\campaign\cp_rank.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_rank.h" />
 		<Unit filename="..\..\src\client\campaign\cp_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -426,10 +429,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_xvi.h" />
-		<Unit filename="..\..\src\client\campaign\cp_rank.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_rank.h" />
 		<Unit filename="..\..\src\client\campaign\missions\cp_mission_baseattack.c">
 			<Option compilerVar="CC" />
 		</Unit>
