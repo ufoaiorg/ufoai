@@ -26,18 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "shared.h"
 #include "cmdlib.h"
 
-static char entitiesDefUfoFilename[MAX_OSPATH]; /**< path to entities.ufo */
-
-/** @todo relative path is hardcoded here, is there a better way? */
-const char *FS_EntitiesDefinitionPath (void)
-{
-	const char *relPath = "ufos/entities.ufo";
-	strncpy(entitiesDefUfoFilename, FS_Gamedir(), sizeof(entitiesDefUfoFilename) - 1);
-	assert(strlen(entitiesDefUfoFilename) + strlen(relPath) + 1 <= sizeof(entitiesDefUfoFilename));
-	strncat(entitiesDefUfoFilename, relPath, sizeof(entitiesDefUfoFilename) - strlen(entitiesDefUfoFilename) - 1);
-	return entitiesDefUfoFilename;
-}
-
 /**
  * @brief prefixes relative path with working dir, leaves full path unchanged
  */

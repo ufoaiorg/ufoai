@@ -96,19 +96,14 @@ static void Check_MapSize (vec3_t mapSize)
 static void Check_InitEntityDefs (void)
 {
 	char *entitiesUfoBuf;
-	const char *entitiesUfoPath;
 
 	/* only do this once, may be called by different
 	 * check functions, depending on command-line */
 	if (numEntityDefs)
 		return;
 
-	entitiesUfoPath = FS_EntitiesDefinitionPath();
-
-	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
-
-	if (FS_LoadFile(entitiesUfoPath, (byte **)&entitiesUfoBuf) == -1)
-		Sys_Error("CheckEntities: Unable to read %s\n", entitiesUfoPath);
+	if (FS_LoadFile("ufos/entities.ufo", (byte **)&entitiesUfoBuf) == -1)
+		Sys_Error("CheckEntities: Unable to read entities.ufo\n");
 
 	if (ED_Parse((const char *)entitiesUfoBuf) == ED_ERROR)
 		Sys_Error("Error while parsing entities.ufo: %s\n", ED_GetLastError());
