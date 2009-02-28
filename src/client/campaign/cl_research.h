@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_RESEARCH
 
 #include "cl_ufopedia.h"
+#include "../cl_ugv.h"
 
 #define MAX_RESEARCHDISPLAY 25	/**< Number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32

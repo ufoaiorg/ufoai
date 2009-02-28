@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_le.h"
-#include "cl_global.h"
 #include "cl_team.h"
 #include "cl_sound.h"
 #include "cl_particle.h"
@@ -41,6 +40,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_ugv.h"
 #include "menu/node/m_node_container.h"
 #include "cl_game.h"
+
+/** @todo campaign mode only */
+#include "campaign/cl_campaign.h" /**< ccs */
 
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 static cvar_t *confirm_actions;
@@ -208,12 +210,13 @@ void CL_CharacterCvars (const character_t * chr)
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 
-	/* Display rank if not in multiplayer (numRanks==0) and the character has one. */
-	if (chr->score.rank >= 0 && gd.numRanks) {
+	/* Display rank if the character has one. */
+	/** @todo ranks are campaign mode only */
+	if (chr->score.rank >= 0 && GAME_IsCampaign()) {
 		char buf[MAX_VAR];
-		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(gd.ranks[chr->score.rank].name));
+		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(ccs.ranks[chr->score.rank].name));
 		Cvar_Set("mn_chrrank", buf);
-		Cvar_Set("mn_chrrank_img", gd.ranks[chr->score.rank].image);
+		Cvar_Set("mn_chrrank_img", ccs.ranks[chr->score.rank].image);
 	} else {
 		Cvar_Set("mn_chrrank", "");
 		Cvar_Set("mn_chrrank_img", "");
@@ -2071,13 +2074,14 @@ void CL_ActorDie (struct dbuffer *msg)
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
 		character_t *chr = CL_GetActorChr(le);
+		/** @todo ranks are campaign mode only */
 		if (chr && LE_IsStunned(le)) {
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was stunned\n"),
-			chr->score.rank >= 0 ? _(gd.ranks[chr->score.rank].shortname) : "", chr->name);
+				chr->score.rank >= 0 ? _(ccs.ranks[chr->score.rank].shortname) : "", chr->name);
 			HUD_DisplayMessage(tmpbuf);
 		} else if (chr) {
 			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was killed\n"),
-			chr->score.rank >= 0 ? _(gd.ranks[chr->score.rank].shortname) : "", chr->name);
+				chr->score.rank >= 0 ? _(ccs.ranks[chr->score.rank].shortname) : "", chr->name);
 			HUD_DisplayMessage(tmpbuf);
 		}
 	} else {

@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
 #include "../cl_ugv.h"
 #include "../cl_menu.h"
 #include "../../shared/parse.h"
@@ -762,7 +761,7 @@ void CL_ScriptSanityCheck (void)
 }
 
 /**
- * @brief Read the data into gd for singleplayer campaigns
+ * @brief Read the data for singleplayer campaigns
  * @sa SAV_GameLoad
  * @sa CL_GameNew_f
  * @sa CL_ResetSinglePlayerData
@@ -790,10 +789,10 @@ void CL_ReadSinglePlayerData (void)
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
 		CL_ParseScriptSecond(type, name, &text);
 
-	Com_Printf("Global data loaded - size "UFO_SIZE_T" bytes\n", sizeof(gd));
+	Com_Printf("Campaign data loaded - size "UFO_SIZE_T" bytes\n", sizeof(ccs));
 	Com_Printf("...techs: %i\n", ccs.numTechnologies);
 	Com_Printf("...buildings: %i\n", ccs.numBuildingTemplates);
-	Com_Printf("...ranks: %i\n", gd.numRanks);
+	Com_Printf("...ranks: %i\n", ccs.numRanks);
 	Com_Printf("...nations: %i\n", ccs.numNations);
 	Com_Printf("...cities: %i\n", ccs.numCities);
 	Com_Printf("\n");

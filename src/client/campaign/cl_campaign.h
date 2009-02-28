@@ -34,6 +34,7 @@ struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned u
 #define MAX_ASSEMBLIES	16
 #define ANTIMATTER_SIZE 10
 
+#include "cp_rank.h"
 #include "cl_save.h"
 #include "cp_parse.h"
 #include "cl_event.h"
@@ -526,6 +527,12 @@ typedef struct ccs_s {
 	/* entries for message categories */
 	msgCategoryEntry_t msgCategoryEntries[NT_NUM_NOTIFYTYPE + MAX_MESSAGECATEGORIES];
 	int numMsgCategoryEntries;
+
+	/* == Ranks == */
+	/* Global list of all ranks defined in medals.ufo. */
+	rank_t ranks[MAX_RANKS];
+	/* The number of entries in the list above. */
+	int numRanks;
 } ccs_t;
 
 /**

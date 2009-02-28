@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
 #include "../cl_game.h"
 #include "../../shared/parse.h"
 #include "cp_rank.h"
@@ -36,12 +35,8 @@ int CL_GetRankIdx (const char* rankID)
 {
 	int i;
 
-	/* only check in singleplayer */
-	if (!GAME_IsCampaign())
-		return -1;
-
-	for (i = 0; i < gd.numRanks; i++) {
-		if (!Q_strcmp(gd.ranks[i].id, rankID))
+	for (i = 0; i < ccs.numRanks; i++) {
+		if (!Q_strcmp(ccs.ranks[i].id, rankID))
 			return i;
 	}
 	Com_Printf("Could not find rank '%s'\n", rankID);
@@ -80,20 +75,20 @@ void CL_ParseRanks (const char *name, const char **text)
 		return;
 	}
 
-	for (i = 0; i < gd.numRanks; i++) {
-		if (!Q_strcmp(name, gd.ranks[i].name)) {
+	for (i = 0; i < ccs.numRanks; i++) {
+		if (!Q_strcmp(name, ccs.ranks[i].name)) {
 			Com_Printf("CL_ParseRanks: Rank with same name '%s' already loaded.\n", name);
 			return;
 		}
 	}
 	/* parse ranks */
-	if (gd.numRanks >= MAX_RANKS) {
+	if (ccs.numRanks >= MAX_RANKS) {
 		Com_Printf("CL_ParseRanks: Too many rank descriptions, '%s' ignored.\n", name);
-		gd.numRanks = MAX_RANKS;
+		ccs.numRanks = MAX_RANKS;
 		return;
 	}
 
-	rank = &gd.ranks[gd.numRanks++];
+	rank = &ccs.ranks[ccs.numRanks++];
 	memset(rank, 0, sizeof(*rank));
 	rank->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
@@ -121,7 +116,7 @@ void CL_ParseRanks (const char *name, const char **text)
 				break;
 			}
 
-		if (!Q_strncmp(token, "type", 4)) {
+		if (!Q_strcmp(token, "type")) {
 			/* employeeType_t */
 			token = COM_EParse(text, errhead, name);
 			if (!*text)

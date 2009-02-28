@@ -24,12 +24,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "cl_global.h"
 #include "cl_ugv.h"
 #include "cl_team.h"
 #include "cl_le.h"
 #include "cl_actor.h"
 #include "../shared/parse.h"
+
+ugv_t ugvs[MAX_UGV];
+int numUGV;
+
+/**
+ * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
+ * @param[in] ugvID The script id of the UGV definition you are looking for
+ * @return ugv_t pointer or NULL if not found.
+ */
+ugv_t *CL_GetUGVByID (const char *ugvID)
+{
+	int i;
+
+	for (i = 0; i < numUGV; i++) {
+		if (!Q_strcmp(ugvs[i].id, ugvID)) {
+			return &ugvs[i];
+		}
+	}
+
+	Com_Printf("CL_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, numUGV);
+	return NULL;
+}
 
 /**
  * @brief Adds an UGV to the render entities.
@@ -181,20 +202,20 @@ void CL_ParseUGVs (const char *name, const char **text)
 		return;
 	}
 
-	for (i = 0; i < gd.numUGV; i++) {
-		if (!Q_strcmp(name, gd.ugvs[i].id)) {
+	for (i = 0; i < numUGV; i++) {
+		if (!Q_strcmp(name, ugvs[i].id)) {
 			Com_Printf("CL_ParseUGVs: ugv \"%s\" with same name already loaded\n", name);
 			return;
 		}
 	}
 
 	/* parse ugv */
-	if (gd.numUGV >= MAX_UGV) {
+	if (numUGV >= MAX_UGV) {
 		Com_Printf("Too many UGV descriptions, '%s' ignored.\n", name);
 		return;
 	}
 
-	ugv = &gd.ugvs[gd.numUGV++];
+	ugv = &ugvs[numUGV++];
 	memset(ugv, 0, sizeof(*ugv));
 	ugv->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 

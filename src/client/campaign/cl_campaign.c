@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
 #include "../cl_game.h"
 #include "../cl_team.h"
 #include "../cl_le.h"	/**< cl_actor.h needs this */
@@ -1914,7 +1913,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 					const chrScoreGlobal_t *score = &chr->score;
 					/* if the soldier was ever on a mission */
 					if (score->assignedMissions) {
-						const rank_t *rank = &gd.ranks[score->rank];
+						const rank_t *rank = &ccs.ranks[score->rank];
 						/* @sa CHRSH_CharGetMaxExperiencePerMission */
 						if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 							increaseWinProbability *= rank->factor;
@@ -1931,7 +1930,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 				if (E_EmployeeIsCurrentlyInBase(employee)) {
 					const character_t *chr = &employee->chr;
 					const chrScoreGlobal_t *score = &chr->score;
-					const rank_t *rank = &gd.ranks[score->rank];
+					const rank_t *rank = &ccs.ranks[score->rank];
 					/* @sa CHRSH_CharGetMaxExperiencePerMission */
 					if (score->experience[SKILL_CLOSE] > 70) { /** @todo fix this value */
 						increaseWinProbability *= rank->factor;
@@ -2118,13 +2117,13 @@ void CL_UpdateCharacterStats (const base_t *base, int won, const aircraft_t *air
 
 			/* Check if the soldier meets the requirements for a higher rank
 			 * and do a promotion. */
-			if (gd.numRanks >= 2) {
-				for (j = gd.numRanks - 1; j > chr->score.rank; j--) {
-					const rank_t *rank = &gd.ranks[j];
+			if (ccs.numRanks >= 2) {
+				for (j = ccs.numRanks - 1; j > chr->score.rank; j--) {
+					const rank_t *rank = &ccs.ranks[j];
 					/** @todo (Zenerka 20080301) extend ranks and change calculations here. */
 					if (rank->type == EMPL_SOLDIER && (chr->score.skills[ABILITY_MIND] >= rank->mind)
-						&& (chr->score.kills[KILLED_ALIENS] >= rank->killed_enemies)
-						&& ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killed_others)) {
+					 && (chr->score.kills[KILLED_ALIENS] >= rank->killed_enemies)
+					 && ((chr->score.kills[KILLED_CIVILIANS] + chr->score.kills[KILLED_TEAM]) <= rank->killed_others)) {
 						chr->score.rank = j;
 						if (chr->HP > 0)
 							Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s has been promoted to %s.\n"), chr->name, _(rank->name));
@@ -2515,7 +2514,6 @@ void CL_ResetSinglePlayerData (void)
 	int i;
 
 	memset(&ccs, 0, sizeof(ccs));
-	memset(&gd, 0, sizeof(gd));
 	memset(&campaignStats, 0, sizeof(campaignStats));
 
 	curCampaign = NULL;

@@ -512,37 +512,6 @@ typedef enum { /** @note Changing order/entries also changes network-transmissio
 
 #define ABILITY_NUM_TYPES SKILL_CLOSE
 
-
-#define MAX_UGV	8
-/** @brief Defines a type of UGV/Robot */
-typedef struct ugv_s {
-	char *id;
-	char weapon[MAX_VAR];
-	char armour[MAX_VAR];
-	int tu;
-	char actors[MAX_VAR];
-	int price;
-} ugv_t;
-
-#define MAX_RANKS	32
-
-/** @brief Describes a rank that a recruit can gain */
-typedef struct rank_s {
-	char *id;		/**< Unique identifier as parsed from the ufo files. */
-	char name[MAX_VAR];	/**< Rank name (Captain, Squad Leader) */
-	char shortname[8];	/**< Rank shortname (Cpt, Sqd Ldr) */
-	char *image;		/**< Image to show in menu */
-	int type;			/**< employeeType_t */
-	int mind;			/**< character mind attribute needed */
-	int killed_enemies;		/**< needed amount of enemies killed */
-	int killed_others;		/**< needed amount of other actors killed */
-	float factor;		/**< a factor that is used to e.g. increase the win
-						 * probability for auto missions */
-} rank_t;
-
-extern rank_t ranks[MAX_RANKS];	/**< Global list of all ranks defined in medals.ufo. */
-extern int numRanks;			/**< The number of entries in the list above. */
-
 /**
  * @brief Structure of all stats collected in a mission.
  * @note More general Info: http://ufoai.ninex.info/wiki/index.php/Proposals/Attribute_Increase

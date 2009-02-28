@@ -26,7 +26,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_UGV_H
 #define CL_UGV_H
 
+#define MAX_UGV	8
+
+/** @brief Defines a type of UGV/Robot */
+typedef struct ugv_s {
+	char *id;
+	char weapon[MAX_VAR];
+	char armour[MAX_VAR];
+	int tu;
+	char actors[MAX_VAR];
+	int price;
+} ugv_t;
+
 void CL_ParseUGVs(const char *name, const char **text);
 void CL_UGVCvars(const character_t *chr);
+ugv_t *CL_GetUGVByID(const char *ugvID);
+
+extern ugv_t ugvs[MAX_UGV];
+extern int numUGV;
 
 #endif

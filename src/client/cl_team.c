@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
-#include "cl_global.h"
 #include "cl_game.h"
 #include "cl_team.h"
 #include "cl_le.h"
@@ -415,26 +414,6 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 	if (m != NONE)
 		item->m = &csi.ods[m];
 }
-
-/**
- * @brief Searches an UGV definition by a given script id and returns the pointer to the global data
- * @param[in] ugvID The script id of the UGV definition you are looking for
- * @return ugv_t pointer or NULL if not found.
- */
-ugv_t *CL_GetUGVByID (const char *ugvID)
-{
-	int i;
-
-	for (i = 0; i < gd.numUGV; i++) {
-		if (!Q_strcmp(gd.ugvs[i].id, ugvID)) {
-			return &gd.ugvs[i];
-		}
-	}
-
-	Com_Printf("CL_GetUGVByID: No ugv_t entry found for id '%s' in %i entries.\n", ugvID, gd.numUGV);
-	return NULL;
-}
-
 
 /**
  * @brief Generates the skills and inventory for a character and for a 2x2 unit

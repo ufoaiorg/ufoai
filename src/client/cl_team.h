@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "mxml/mxml_ufoai.h"
 #include "../common/msg.h"
+#include "cl_ugv.h"
 
 #define MAX_WHOLETEAM	32
 
@@ -36,7 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NUM_TEAMSKINS_SINGLEPLAYER 4
 
 void CL_GenerateCharacter(character_t *chr, int team, employeeType_t employeeType, const ugv_t *ugvType);
-ugv_t *CL_GetUGVByID(const char *ugvID);
 const char* CL_GetTeamSkinName(int id);
 
 qboolean CL_SaveCharacterXML(mxml_node_t *p, character_t chr);

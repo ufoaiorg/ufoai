@@ -23,8 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
 #include "../cl_menu.h"
+#include "../cl_ugv.h"
 #include "../menu/m_nodes.h"
 #include "../menu/m_popup.h"
 #include "cl_campaign.h"
@@ -382,13 +382,14 @@ static void BS_BuyType (const base_t *base)
 		{
 		/* Get item list. */
 		j = 0;
-		for (i = 0; i < gd.numUGV; i++) {
+		for (i = 0; i < numUGV; i++) {
 			/** @todo Add this entry to the list */
-			const technology_t* tech = RS_GetTechByProvided(gd.ugvs[i].id);
+			ugv_t *ugv = &ugvs[i];
+			const technology_t* tech = RS_GetTechByProvided(ugv->id);
 			assert(tech);
 			if (RS_IsResearched_ptr(tech)) {
-				const int hiredRobot = E_CountHiredRobotByType(base, &gd.ugvs[i]);
-				const int unhiredRobot = E_CountUnhiredRobotsByType(&gd.ugvs[i]);
+				const int hiredRobot = E_CountHiredRobotByType(base, ugv);
+				const int unhiredRobot = E_CountUnhiredRobotsByType(ugv);
 
 				if (hiredRobot + unhiredRobot <= 0)
 					continue;
@@ -400,12 +401,12 @@ static void BS_BuyType (const base_t *base)
 				BS_AddToList(tech->name,
 					hiredRobot,			/* numInStorage */
 					unhiredRobot,			/* numOnMarket */
-					gd.ugvs[i].price);
+					ugv->price);
 
 				if (j >= MAX_BUYLIST)
 					Sys_Error("Increase the MAX_BUYLIST value to handle that much entries.\n");
 				buyList.l[j].item = NULL;
-				buyList.l[j].ugv = &gd.ugvs[i];
+				buyList.l[j].ugv = ugv;
 				buyList.l[j].aircraft = NULL;
 				buyList.length = j + 1;
 				BS_UpdateItem(base, j - buyList.scroll);

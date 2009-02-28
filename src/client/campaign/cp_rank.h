@@ -25,6 +25,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_RANK_H
 #define CL_RANK_H
 
+#define MAX_RANKS	32
+
+/** @brief Describes a rank that a recruit can gain */
+typedef struct rank_s {
+	char *id;		/**< Unique identifier as parsed from the ufo files. */
+	char name[MAX_VAR];	/**< Rank name (Captain, Squad Leader) */
+	char shortname[8];	/**< Rank shortname (Cpt, Sqd Ldr) */
+	char *image;		/**< Image to show in menu */
+	int type;			/**< employeeType_t */
+	int mind;			/**< character mind attribute needed */
+	int killed_enemies;		/**< needed amount of enemies killed */
+	int killed_others;		/**< needed amount of other actors killed */
+	float factor;		/**< a factor that is used to e.g. increase the win
+						 * probability for auto missions */
+} rank_t;
+
 void CL_ParseRanks(const char *name, const char **text);
 int CL_GetRankIdx(const char* rankID);
 

@@ -23,7 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
 #include "../cl_le.h"	/**< cl_actor.h needs this */
 #include "../cl_actor.h"	/**< for CL_CharacterCvars() */
 #include "../cl_menu.h"
@@ -79,7 +78,7 @@ static void HOS_UpdateMenu (void)
 				Q_strncpyz(name, employee->chr.name, sizeof(name));
 				/* Print rank for soldiers or type for other personel. */
 				if (type == EMPL_SOLDIER)
-					Q_strncpyz(rank, _(gd.ranks[employee->chr.score.rank].name), sizeof(rank));
+					Q_strncpyz(rank, _(ccs.ranks[employee->chr.score.rank].name), sizeof(rank));
 				else
 					Q_strncpyz(rank, E_GetEmployeeString(employee->type), sizeof(rank));
 				Com_DPrintf(DEBUG_CLIENT, "%s idx: %i entry: %i\n", name, employee->idx, entry);

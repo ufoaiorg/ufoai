@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_global.h"
 #include "../cl_team.h"
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
@@ -188,7 +187,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 		/* Is this a soldier assigned to aircraft? */
 		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
 			Com_sprintf(popupText, sizeof(popupText), _("%s %s is assigned to aircraft and cannot be\ntransfered to another base.\n"),
-				_(gd.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+				_(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
 			MN_Popup(_("Soldier in aircraft"), popupText);
 			return qfalse;
 		}
@@ -322,7 +321,7 @@ static void TR_CargoList (void)
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = trEmployeesTmp[emplType][i];
 					if (emplType == EMPL_SOLDIER)
-						Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(gd.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+						Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
 					else
 						Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 					LIST_AddString(&cargoList, str);
@@ -522,7 +521,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 						continue;
 					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 						if (emplType == EMPL_SOLDIER)
-							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(gd.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+							Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
 						else
 							Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 						LIST_AddString(&transferList, str);
