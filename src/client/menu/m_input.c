@@ -491,11 +491,10 @@ void MN_MouseDown (int x, int y, int button)
 	/* captured or hover node */
 	node = capturedNode ? capturedNode : hoveredNode;
 
-	if (node == NULL)
-		return;
-
-	if (node->behaviour->mouseDown)
-		node->behaviour->mouseDown(node, x, y, button);
+	if (node != NULL) {
+		if (node->behaviour->mouseDown)
+			node->behaviour->mouseDown(node, x, y, button);
+	}
 
 	/* click event */
 	/** @todo should be send this event when the mouse up (after a down on the same node) */
