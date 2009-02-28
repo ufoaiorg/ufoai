@@ -31,9 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <direct.h>
 #include <io.h>
 
-static FARPROC procShell_NotifyIcon = NULL;
-static NOTIFYICONDATA pNdata;
-
 qboolean s_win95, s_win2k, s_winxp, s_vista;
 
 #define MAX_NUM_ARGVS 128

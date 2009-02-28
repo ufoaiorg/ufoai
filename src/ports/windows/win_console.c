@@ -74,8 +74,6 @@ static void Sys_ConsoleLoop (qboolean error)
 
 	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
 		if (!GetMessage(&msg, NULL, 0, 0)) {
-			if (procShell_NotifyIcon)
-				procShell_NotifyIcon(NIM_DELETE, &pNdata);
 			if (error)
 				ExitProcess(1);
 			else
