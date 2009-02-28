@@ -33,14 +33,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_mapfightequip.h"
 #include "cp_time.h"
 
-static cvar_t *mn_uppretext = NULL;
-static cvar_t *mn_uppreavailable = NULL;
+static cvar_t *mn_uppretext;
+static cvar_t *mn_uppreavailable;
 
 static pediaChapter_t *upChapters_displaylist[MAX_PEDIACHAPTERS];
 static int numChapters_displaylist;
 
 static technology_t	*upCurrentTech;
-static pediaChapter_t *currentChapter = NULL;
+static pediaChapter_t *currentChapter;
 
 #define MAX_UPTEXT 4096
 static char upText[MAX_UPTEXT];
@@ -528,6 +528,23 @@ static void UP_BuildingDescription (const technology_t* t)
 }
 
 /**
+ * @brief Reset all sort of info for normal items
+ * @todo Check if this is all needed. Any better way?
+ */
+static void UP_ResetCvarsForNormalItems (void)
+{
+	Cvar_Set("mn_item", "");
+	Cvar_Set("mn_itemname", "");
+	Cvar_Set("mn_upmodel_top", "");
+	Cvar_Set("mn_displayweapon", "0");
+	Cvar_Set("mn_changeweapon", "0");
+	Cvar_Set("mn_displayfiremode", "0");
+	Cvar_Set("mn_changefiremode", "0");
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
+}
+
+/**
  * @brief Prints the (UFOpaedia and other) description for aircraft items
  * @param item The object definition of the item
  * @sa UP_DrawEntry
@@ -542,36 +559,20 @@ void UP_AircraftItemDescription (const objDef_t *item)
 
 	/* Set menu text node content to null. */
 	MN_ResetData(TEXT_STANDARD);
+	UP_ResetCvarsForNormalItems();
 
 	/* no valid item id given */
-	if (!item) {
-		/* Reset all used menu variables/nodes. TEXT_STANDARD is already reset. */
-		Cvar_Set("mn_itemname", "");
-		Cvar_Set("mn_item", "");
-		Cvar_Set("mn_upmodel_top", "");
-		Cvar_Set("mn_displayweapon", "0");
-		Cvar_Set("mn_changeweapon", "0");
-		Cvar_Set("mn_displayfiremode", "0");
-		Cvar_Set("mn_changefiremode", "0");
-		Cvar_Set("mn_researchedlinkname", "");
-		Cvar_Set("mn_upresearchedlinknametooltip", "");
+	if (!item)
 		return;
-	}
 
 	/* select item */
 	assert(item->craftitem.type >= 0);
 	assert(item->tech);
-	Cvar_Set("mn_itemname", _(item->tech->name));
 	/** @todo Is this actually _used_ in the ufopedia?
 	 * No, but in buy and production - and they are using these functions, too, no? (mattn) */
 	Cvar_Set("mn_item", item->id);
+	Cvar_Set("mn_itemname", _(item->tech->name));
 	Cvar_Set("mn_upmodel_top", item->tech->mdl);
-	Cvar_Set("mn_displayweapon", "0");
-	Cvar_Set("mn_changeweapon", "0");
-	Cvar_Set("mn_displayfiremode", "0");
-	Cvar_Set("mn_changefiremode", "0");
-	Cvar_Set("mn_researchedlinkname", "");
-	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 #ifdef DEBUG
 	if (!item->tech) {
@@ -624,15 +625,8 @@ void UP_AircraftItemDescription (const objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* t)
 {
-	/* Reset all sort of info for normal items */
-	/** @todo Check if this is all needed. Any better way? */
-	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_displayfiremode", "0");
-	Cvar_Set("mn_displayweapon", "0");
-	Cvar_Set("mn_changefiremode", "0");
-	Cvar_Set("mn_changeweapon", "0");
-	Cvar_Set("mn_researchedlinkname", "");
-	Cvar_Set("mn_upresearchedlinknametooltip", "");
+	UP_ResetCvarsForNormalItems();
+
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
 
@@ -694,18 +688,10 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	tech = RS_GetTechByProvided(ugvType->id);
 	assert(tech);
 
+	UP_ResetCvarsForNormalItems();
+
 	/* Set name of ugv/robot */
 	Cvar_Set("mn_itemname", _(tech->name));
-
-	/* Reset all sort of info for normal items */
-	/** @todo Check if this is all needed. Any better way? */
-	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_displayfiremode", "0");
-	Cvar_Set("mn_displayweapon", "0");
-	Cvar_Set("mn_changefiremode", "0");
-	Cvar_Set("mn_changeweapon", "0");
-	Cvar_Set("mn_researchedlinkname", "");
-	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 	if (RS_IsResearched_ptr(tech)) {
 		/** @todo make me shiny */
