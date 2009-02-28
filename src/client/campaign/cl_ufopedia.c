@@ -1681,6 +1681,7 @@ static void UP_SetAllMailsRead_f (void)
 /**
  * @brief Increases the number of the weapon to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
  */
 static void UP_IncreaseWeapon_f (void)
 {
@@ -1735,6 +1736,7 @@ static void UP_IncreaseWeapon_f (void)
 /**
  * @brief Decreases the number of the firemode to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
  */
 static void UP_DecreaseWeapon_f (void)
 {
@@ -1789,6 +1791,7 @@ static void UP_DecreaseWeapon_f (void)
 /**
  * @brief Increases the number of the firemode to display
  * @sa UP_ItemDescription
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
  */
 static void UP_IncreaseFiremode_f (void)
 {
@@ -1807,6 +1810,7 @@ static void UP_IncreaseFiremode_f (void)
 /**
  * @brief Decreases the number of the firemode to display
  * @sa UP_ItemDescription
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
  */
 static void UP_DecreaseFiremode_f (void)
 {
