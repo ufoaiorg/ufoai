@@ -40,7 +40,7 @@ int LoadFile(const char *filename, void **bufferptr);
 void CloseFile(qFILE *f);
 void FreeFile(void *buffer);
 int TryLoadFile(const char *filename, void **bufferptr);
-char *FS_EntitiesDefUfoPath(void);
+const char *FS_EntitiesDefinitionPath(void);
 
 qboolean AbortPrint(const verbosityLevel_t importance);
 void Verb_Printf(const verbosityLevel_t importance, const char *format, ...) __attribute__((format(printf, 2, 3)));

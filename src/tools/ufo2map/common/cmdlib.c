@@ -223,7 +223,7 @@ void FS_Init (const char *path)
 }
 
 /** @todo relative path is hardcoded here, is there a better way? */
-char *FS_EntitiesDefUfoPath (void)
+const char *FS_EntitiesDefinitionPath (void)
 {
 	const char *relPath = "ufos/entities.ufo";
 	strncpy(entitiesDefUfoFilename, gamedir, sizeof(gamedir) - 1);

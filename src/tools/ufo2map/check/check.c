@@ -103,7 +103,7 @@ static void Check_InitEntityDefs (void)
 	if (numEntityDefs)
 		return;
 
-	entitiesUfoPath = FS_EntitiesDefUfoPath();
+	entitiesUfoPath = FS_EntitiesDefinitionPath();
 
 	Verb_Printf(VERB_EXTRA , "loading entities.ufo:%s\n", entitiesUfoPath);
 
