@@ -48,6 +48,7 @@ void GAME_HandleResults(struct dbuffer *msg, int winner, int *numSpawned, int *n
 void GAME_SpawnSoldiers(void);
 int GAME_GetCurrentTeam(void);
 equipDef_t *GAME_GetEquipmentDefinition(void);
+void GAME_CharacterCvars(const character_t *chr);
 
 #include "cl_game_campaign.h"
 #include "cl_game_skirmish.h"

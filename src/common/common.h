@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _COMMON_DEFINED
 #define _COMMON_DEFINED
 
-#include <stdarg.h>
-
 #include "../game/q_shared.h"
 #include "../game/inv_shared.h"
 #include "../game/game.h"

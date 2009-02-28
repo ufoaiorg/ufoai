@@ -36,5 +36,6 @@ void GAME_CP_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numA
 qboolean GAME_CP_Spawn(void);
 int GAME_CP_GetTeam(void);
 equipDef_t *GAME_CP_GetEquipmentDefinition(void);
+void GAME_CP_CharacterCvars(const character_t *chr);
 
 #endif

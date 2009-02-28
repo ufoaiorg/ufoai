@@ -433,6 +433,17 @@ equipDef_t *GAME_CP_GetEquipmentDefinition (void)
 	return &ccs.eMission;
 }
 
+void GAME_CP_CharacterCvars (const character_t *chr)
+{
+	/* Display rank if the character has one. */
+	if (chr->score.rank >= 0) {
+		char buf[MAX_VAR];
+		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(ccs.ranks[chr->score.rank].name));
+		Cvar_Set("mn_chrrank", buf);
+		Cvar_Set("mn_chrrank_img", ccs.ranks[chr->score.rank].image);
+	}
+}
+
 void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");

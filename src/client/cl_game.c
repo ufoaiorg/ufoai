@@ -47,12 +47,14 @@ typedef struct gameTypeList_s {
 	qboolean (*itemIsUseable)(const objDef_t *od);
 	/** returns the equipment definition the game mode is using */
 	equipDef_t * (*getequipdef)(void);
+	/** update character display values for game type dependent stuff */
+	void (*charactercvars)(const character_t *chr);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, GAME_MP_CharacterCvars},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, GAME_SK_CharacterCvars},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -332,6 +334,20 @@ equipDef_t *GAME_GetEquipmentDefinition (void)
 		list++;
 	}
 	Sys_Error("GAME_GetEquipmentDefinition: Could not determine gamemode");
+}
+
+void GAME_CharacterCvars (const character_t *chr)
+{
+	const gameTypeList_t *list = gameTypeList;
+
+	while (list->name) {
+		if (list->gametype == cls.gametype) {
+			list->charactercvars(chr);
+			return;
+		}
+		list++;
+	}
+	Sys_Error("GAME_CharacterCvars: Could not determine gamemode");
 }
 
 /**

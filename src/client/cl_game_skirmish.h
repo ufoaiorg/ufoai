@@ -32,5 +32,6 @@ void GAME_SK_Shutdown(void);
 void GAME_SK_Results(struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS]);
 qboolean GAME_SK_Spawn(void);
 int GAME_SK_GetTeam(void);
+void GAME_SK_CharacterCvars(const character_t *chr);
 
 #endif

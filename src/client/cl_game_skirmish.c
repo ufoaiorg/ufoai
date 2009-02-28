@@ -142,6 +142,12 @@ int GAME_SK_GetTeam (void)
 	return cl_team->integer;
 }
 
+void GAME_SK_CharacterCvars (const character_t *chr)
+{
+	Cvar_Set("mn_chrrank", "");
+	Cvar_Set("mn_chrrank_img", "");
+}
+
 void GAME_SK_InitStartup (void)
 {
 	Cvar_ForceSet("sv_maxclients", "1");

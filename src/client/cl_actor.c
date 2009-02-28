@@ -41,9 +41,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/node/m_node_container.h"
 #include "cl_game.h"
 
-/** @todo campaign mode only */
-#include "campaign/cl_campaign.h" /**< ccs */
-
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 static cvar_t *confirm_actions;
 /** @brief Player preference: should the server make guys stand for long walks, to save TU. */
@@ -210,17 +207,7 @@ void CL_CharacterCvars (const character_t * chr)
 	Cvar_Set("mn_chrkillcivilian", va("%i", chr->score.kills[KILLED_CIVILIANS]));
 	Cvar_Set("mn_chrkillteam", va("%i", chr->score.kills[KILLED_TEAM]));
 
-	/* Display rank if the character has one. */
-	/** @todo ranks are campaign mode only */
-	if (chr->score.rank >= 0 && GAME_IsCampaign()) {
-		char buf[MAX_VAR];
-		Com_sprintf(buf, sizeof(buf), _("Rank: %s"), _(ccs.ranks[chr->score.rank].name));
-		Cvar_Set("mn_chrrank", buf);
-		Cvar_Set("mn_chrrank_img", ccs.ranks[chr->score.rank].image);
-	} else {
-		Cvar_Set("mn_chrrank", "");
-		Cvar_Set("mn_chrrank_img", "");
-	}
+	GAME_CharacterCvars(chr);
 
 	Cvar_Set("mn_vpwr", va("%i", chr->score.skills[ABILITY_POWER]));
 	Cvar_Set("mn_vspd", va("%i", chr->score.skills[ABILITY_SPEED]));
@@ -2026,7 +2013,6 @@ void CL_ActorDie (struct dbuffer *msg)
 	le_t *le;
 	int number, state;
 	int i;
-	char tmpbuf[128];
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_DIE], &number, &state);
 
@@ -2073,15 +2059,14 @@ void CL_ActorDie (struct dbuffer *msg)
 
 	/* Print some info about the death or stun. */
 	if (le->team == cls.team) {
-		character_t *chr = CL_GetActorChr(le);
-		/** @todo ranks are campaign mode only */
-		if (chr && LE_IsStunned(le)) {
-			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was stunned\n"),
-				chr->score.rank >= 0 ? _(ccs.ranks[chr->score.rank].shortname) : "", chr->name);
-			HUD_DisplayMessage(tmpbuf);
-		} else if (chr) {
-			Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s %s was killed\n"),
-				chr->score.rank >= 0 ? _(ccs.ranks[chr->score.rank].shortname) : "", chr->name);
+		const character_t *chr = CL_GetActorChr(le);
+		if (chr) {
+			char tmpbuf[128];
+			if (LE_IsStunned(le)) {
+				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was stunned\n"), chr->name);
+			} else {
+				Com_sprintf(tmpbuf, lengthof(tmpbuf), _("%s was killed\n"), chr->name);
+			}
 			HUD_DisplayMessage(tmpbuf);
 		}
 	} else {
@@ -2096,13 +2081,13 @@ void CL_ActorDie (struct dbuffer *msg)
 			if (le->teamDef) {
 				/** @todo campaign mode only - doesn't belong here */
 				if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
+					char tmpbuf[128];
 					if (LE_IsStunned(le)) {
 						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was stunned: %s\n"), _(le->teamDef->name));
-						HUD_DisplayMessage(tmpbuf);
 					} else {
 						Com_sprintf(tmpbuf, lengthof(tmpbuf), _("An alien was killed: %s\n"), _(le->teamDef->name));
-						HUD_DisplayMessage(tmpbuf);
 					}
+					HUD_DisplayMessage(tmpbuf);
 				} else {
 					if (LE_IsStunned(le))
 						HUD_DisplayMessage(_("An alien was stunned.\n"));
