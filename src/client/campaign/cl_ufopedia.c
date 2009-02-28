@@ -1850,12 +1850,8 @@ void UP_InitStartup (void)
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
-	Cvar_Set("mn_displayweapon", "0");
-	Cvar_Set("mn_displayfiremode", "0");
-	Cvar_Set("mn_changeweapon", "0");
-	Cvar_Set("mn_changefiremode", "0");
-	Cvar_Set("mn_researchedlinkname", "");
-	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
+	UP_ResetCvarsForNormalItems();
 }
 
 /**
