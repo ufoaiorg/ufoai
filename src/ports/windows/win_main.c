@@ -154,6 +154,8 @@ char *Sys_GetHomeDirectory (void)
 	return path;
 }
 
+#ifdef COMPILE_UFO
+
 void Sys_Init (void)
 {
 	OSVERSIONINFO vinfo;
@@ -265,49 +267,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	return GetGameAPI(parms);
 }
 
-
-static void ParseCommandLine (LPSTR lpCmdLine)
-{
-	argc = 1;
-	argv[0] = "exe";
-
-	while (*lpCmdLine && (argc < MAX_NUM_ARGVS)) {
-		while (*lpCmdLine && ((*lpCmdLine <= 32) || (*lpCmdLine > 126)))
-			lpCmdLine++;
-
-		if (*lpCmdLine) {
-			argv[argc] = lpCmdLine;
-			argc++;
-
-			while (*lpCmdLine && ((*lpCmdLine > 32) && (*lpCmdLine <= 126)))
-				lpCmdLine++;
-
-			if (*lpCmdLine) {
-				*lpCmdLine = 0;
-				lpCmdLine++;
-			}
-		}
-	}
-}
-
-HINSTANCE global_hInstance;
-
-static void FixWorkingDirectory (void)
-{
-	char *p;
-	char curDir[MAX_PATH];
-
-	GetModuleFileName(NULL, curDir, sizeof(curDir)-1);
-
-	p = strrchr(curDir, '\\');
-	p[0] = 0;
-
-	if (strlen(curDir) > (MAX_OSPATH - MAX_QPATH))
-		Sys_Error("Current path is too long. Please move your installation to a shorter path.");
-
-	SetCurrentDirectory(curDir);
-}
-
 /**
  * @brief Switch to one processor usage for windows system with more than
  * one processor
@@ -389,40 +348,6 @@ void Sys_SetAffinityAndPriority (void)
 	CloseHandle(proc);
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-	/* previous instances do not exist in Win32 */
-	if (hPrevInstance)
-		return 0;
-
-	global_hInstance = hInstance;
-
-	ParseCommandLine(lpCmdLine);
-
-	Sys_ConsoleInit();
-
-	/* always change to the current working dir */
-	FixWorkingDirectory();
-
-	Qcommon_Init(argc, argv);
-
-	/* main window message loop */
-	while (1)
-		Qcommon_Frame();
-
-	/* never gets here */
-	return FALSE;
-}
-
-/**
- * @brief Calls the win32 sleep function
- */
-void Sys_Sleep (int milliseconds)
-{
-	if (milliseconds < 1)
-		milliseconds = 1;
-	Sleep(milliseconds);
-}
 
 const char *Sys_SetLocale (const char *localeID)
 {
@@ -501,4 +426,83 @@ void *Sys_GetProcAddress (void *libHandle, const char *procName)
 	if (!libHandle)
 		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given");
 	return GetProcAddress((HMODULE)libHandle, procName);
+}
+
+#endif
+
+static void ParseCommandLine (LPSTR lpCmdLine)
+{
+	argc = 1;
+	argv[0] = "exe";
+
+	while (*lpCmdLine && (argc < MAX_NUM_ARGVS)) {
+		while (*lpCmdLine && ((*lpCmdLine <= 32) || (*lpCmdLine > 126)))
+			lpCmdLine++;
+
+		if (*lpCmdLine) {
+			argv[argc] = lpCmdLine;
+			argc++;
+
+			while (*lpCmdLine && ((*lpCmdLine > 32) && (*lpCmdLine <= 126)))
+				lpCmdLine++;
+
+			if (*lpCmdLine) {
+				*lpCmdLine = 0;
+				lpCmdLine++;
+			}
+		}
+	}
+}
+
+HINSTANCE global_hInstance;
+
+static void FixWorkingDirectory (void)
+{
+	char *p;
+	char curDir[MAX_PATH];
+
+	GetModuleFileName(NULL, curDir, sizeof(curDir)-1);
+
+	p = strrchr(curDir, '\\');
+	p[0] = 0;
+
+	if (strlen(curDir) > (MAX_OSPATH - MAX_QPATH))
+		Sys_Error("Current path is too long. Please move your installation to a shorter path.");
+
+	SetCurrentDirectory(curDir);
+}
+
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	/* previous instances do not exist in Win32 */
+	if (hPrevInstance)
+		return 0;
+
+	global_hInstance = hInstance;
+
+	ParseCommandLine(lpCmdLine);
+
+	Sys_ConsoleInit();
+
+	/* always change to the current working dir */
+	FixWorkingDirectory();
+
+	Qcommon_Init(argc, argv);
+
+	/* main window message loop */
+	while (1)
+		Qcommon_Frame();
+
+	/* never gets here */
+	return FALSE;
+}
+
+/**
+ * @brief Calls the win32 sleep function
+ */
+void Sys_Sleep (int milliseconds)
+{
+	if (milliseconds < 1)
+		milliseconds = 1;
+	Sleep(milliseconds);
 }
