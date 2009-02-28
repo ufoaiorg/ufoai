@@ -278,9 +278,6 @@ static void UP_DisplayTechTree (const technology_t* t)
  * @sa BS_BuyItem_f
  * @sa BS_SellItem_f
  * @sa MN_Drag
- * Not only called from UFOpaedia but also from other places to display
- * weapon and ammo stats
- * @todo Do we need to add checks for @c od->isDummy here somewhere?
  */
 void UP_ItemDescription (const objDef_t *od)
 {
@@ -290,33 +287,14 @@ void UP_ItemDescription (const objDef_t *od)
 	int up_numresearchedlink = 0;
 	int up_weapon_id = NONE;
 
-	/* reset everything */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_researchedlinkname", "");
-	Cvar_Set("mn_upresearchedlinknametooltip", "");
+	INV_ItemDescription(od);
 
-	if (!od)	/* If nothing selected return */
-		return;
-
-	/* select item */
-	Cvar_Set("mn_itemname", _(od->name));
-	Cvar_Set("mn_item", od->id);
-
-#ifdef DEBUG
 	if (!od->tech) {
 		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		MN_RegisterText(TEXT_STANDARD, itemText);
 		odAmmo = NULL;
-	} else
-#endif
-
 	/* Write attached ammo or weapon even if item is not researched */
-	if (!Q_strcmp(od->type, "ammo")) {
+	} else if (!Q_strcmp(od->type, "ammo")) {
 		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
 		upCurrentTech = od->tech;
 

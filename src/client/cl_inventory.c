@@ -160,6 +160,33 @@ qboolean INV_EquipmentDefSanityCheck (void)
 	return result;
 }
 
+/**
+ * @brief Prints the description for items (weapons, armour, ...)
+ * @param[in] od The object definition of the item
+ * @note Not only called from UFOpaedia but also from other places to display
+ * weapon and ammo stats
+ * @todo Do we need to add checks for @c od->isDummy here somewhere?
+ */
+void INV_ItemDescription (const objDef_t *od)
+{
+	/* reset everything */
+	Cvar_Set("mn_itemname", "");
+	Cvar_Set("mn_item", "");
+	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
+	if (!od)	/* If nothing selected return */
+		return;
+
+	/* select item */
+	Cvar_Set("mn_itemname", _(od->name));
+	Cvar_Set("mn_item", od->id);
+}
+
 void INV_InitStartup (void)
 {
 #ifdef DEBUG

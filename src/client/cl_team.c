@@ -798,9 +798,7 @@ static void CL_UpdateObject_f (void)
 	obj = &csi.ods[num];
 
 	/* update item description */
-	/** @todo current function is campaign mode only - we have to split this function to let this
-	 * also work for none campaign mode games */
-	UP_ItemDescription(obj);
+	INV_ItemDescription(obj);
 
 	/* update tab */
 	if (changeTab) {
