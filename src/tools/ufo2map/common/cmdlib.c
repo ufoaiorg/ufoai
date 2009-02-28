@@ -24,11 +24,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "shared.h"
-#include "cmdlib.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "../../../shared/defines.h"
 #include "../../../shared/typedefs.h"
+#include "cmdlib.h"
 
 static pack_t *pak;
 

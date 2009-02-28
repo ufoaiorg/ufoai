@@ -124,9 +124,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/tools/ufo2map/bsp.h" />
-		<Unit filename="../../src/tools/ufo2map/check.c">
+		<Unit filename="../../src/tools/ufo2map/check/check.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/ufo2map/check/checklib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/tools/ufo2map/check/checklib.h" />
 		<Unit filename="../../src/tools/ufo2map/common/aselib.c">
 			<Option compilerVar="CC" />
 		</Unit>

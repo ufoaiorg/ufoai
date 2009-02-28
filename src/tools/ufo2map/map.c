@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "bsp.h"
-#include "check.h"
+#include "check/check.h"
 #include "common/aselib.h"
 
 mapbrush_t mapbrushes[MAX_MAP_BRUSHES];

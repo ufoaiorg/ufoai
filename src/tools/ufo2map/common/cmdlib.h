@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __CMDLIB__
 
 #include "../../../shared/byte.h"
+#include "shared.h"
 
 void FS_Init(const char *path);
 const char* FS_GameDir(void);

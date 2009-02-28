@@ -1,5 +1,5 @@
 /**
- * @file check.c
+ * @file check.h
  * @brief Performs check on a loaded mapfile, and makes changes
  * that can be saved back to the source map.
  */
