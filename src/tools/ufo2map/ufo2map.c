@@ -752,7 +752,7 @@ int main (int argc, const char **argv)
 	FreeWindings(); /** @todo remove this once the windings are using the memory pool */
 	Verb_Printf(VERB_LESS, "sum: %5.0f seconds elapsed - %.1g MB (%li bytes)\n\n", end - begin, (float)size / (1024.0f * 1024.0f), size);
 
-	Com_Printf("%u bytes of memory freed\n", Mem_Shutdown());
+	Mem_Shutdown();
 
 	return 0;
 }
