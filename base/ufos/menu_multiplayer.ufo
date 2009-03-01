@@ -525,88 +525,74 @@ menu mp_bookmarks extends abstract_multiplayer_join
 menu mp_create_server extends abstract_multiplayer
 {
 
-	panel content {
+	tab create_natigation {
+		pos		"472 200"
+		size	"466 40"
+		cvar	"*cvar mn_server_config_tab"
+		option map {
+			label	"_Map"
+			value	"1"
+			action "mp_update_config_natigation;"
+		}
+		option option {
+			label	"_Options"
+			value	"2"
+			action "mp_update_config_natigation;"
+		}
+		option security {
+			label	"_Security/registration"
+			value	"3"
+			action "mp_update_config_natigation;"
+		}
+	}
+
+	panel panel_main {
 		{
-			pos			"415 0"
-			size		"608 768"
+			pos			"415 80"
+			size		"608 100"
 		}
 
 		// ===================
-		// DAY + NIGHT
+		// HOSTNAME
 		// ===================
-		string daynight_str
+		string current_hostname
 		{
-			string		"_Day version:"
-			pos			"85 100"
-			size		"280 20"
+			string		"_Hostname:"
+			pos			"85 5"
+			size		"256 20"
 		}
-		checkbox daynight_value
+		textentry slot_hostname
 		{
-			current		"*cvar mn_serverday"
-			pos			"410 100"
-			size		"20 18"
-			image		"menu/checkbox_blue"
-		}
-
-		text firewall_str
-		{
-			string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
-			/** @todo check the position */
-			pos			"-480 150"
-			size		"256 40"
-			longlines	wrap
-			textalign	uc
-			font		"f_small"
-			textid		TEXT_STANDARD
-		}
-
-		// =====================
-		// PUBLIC - MASTERSERVER
-		// =====================
-		string public_str
-		{
-			string		"_Make this server public:"
-			pos			"85 120"
-			size		"280 20"
-		}
-		checkbox public_value
-		{
-			current		"*cvar sv_public"
-			pos			"410 120"
-			size		"20 18"
-			image		"menu/checkbox_blue"
-		}
-
-		// ===================
-		// MORALE
-		// ===================
-		string morale_str
-		{
-			string		"_Enable morale states:"
-			pos			"85 140"
-			size		"280 20"
-		}
-		checkbox morale_value
-		{
-			current		"*cvar sv_enablemorale"
-			pos			"410 140"
-			size		"20 18"
-			image		"menu/checkbox_blue"
+			string		"*cvar sv_hostname"
+			image		menu/button_green_verysmall
+			blend		true
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"245 0"
+			size		"256 34"
 		}
 
 		// ===================
 		// GAME TYPE
 		// ===================
+		todo todo1 {
+			string	"use a selectbox for the game type"
+			pos		"500 40"
+		}
+
 		string gametype_str
 		{
 			string		"_Gametype:"
-			pos			"85 160"
+			pos			"85 40"
 			size		"280 20"
 		}
 		string gametype_value
 		{
 			string		"*cvar sv_gametype"
-			pos			"380 160"
+			pos			"380 40"
 			size		"80 20"
 			textalign	uc
 			whup		{ cmd "mp_prevgametype;" }
@@ -614,7 +600,7 @@ menu mp_create_server extends abstract_multiplayer
 		}
 		custombutton gametype_dec
 		{
-			pos			"364 160"
+			pos			"364 40"
 			size		"16 16"
 			icon		prev
 			click		{ cmd "mp_prevgametype;" }
@@ -623,7 +609,7 @@ menu mp_create_server extends abstract_multiplayer
 		}
 		custombutton gametype_inc
 		{
-			pos			"460 160"
+			pos			"460 40"
 			size		"16 16"
 			icon		next
 			click		{ cmd "mp_nextgametype;" }
@@ -637,13 +623,176 @@ menu mp_create_server extends abstract_multiplayer
 		string server_teamplay_str
 		{
 			string		"_Teamplay:"
-			pos			"85 180"
+			pos			"85 70"
 			size		"280 20"
 		}
 		checkbox server_teamplay_value
 		{
 			current		"*cvar sv_teamplay"
-			pos			"410 180"
+			pos			"410 70"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
+
+	}
+
+	panel panel_map {
+		{
+			pos			"415 250"
+			size		"608 768"
+		}
+
+		// ===================
+		// PREVIEW
+		// ===================
+
+		string preview_label
+		{
+			string		"_Preview:"
+			pos			"85 0"
+			size		"256 20"
+		}
+
+		pic mappic
+		{
+			image		"*cvar mn_mappic"
+			pos			"85 30"
+			texl		"0 0"
+			texh		"128 96"
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+			rclick		{ cmd "mn_prevmap;" }
+		}
+		pic mappic2
+		{
+			image		"*cvar mn_mappic2"
+			pos			"225 30"
+			texl		"0 0"
+			texh		"128 96"
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+			rclick		{ cmd "mn_prevmap;" }
+		}
+		pic mappic3
+		{
+			image		"*cvar mn_mappic3"
+			pos			"365 30"
+			texl		"0 0"
+			texh		"128 96"
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+			rclick		{ cmd "mn_prevmap;" }
+		}
+
+		// ===================
+		// MAP
+		// ===================
+		string map_label
+		{
+			string		"_Map name:"
+			pos			"85 155"
+			size		"256 20"
+		}
+		textentry slot_map
+		{
+			string		"*cvar mn_svmapname"
+			image		menu/button_green_verysmall
+			blend		true
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"245 150"
+			size		"256 34"
+			disabled	true
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+		}
+
+		custombutton prev_map
+		{
+			pos			"223 155"
+			size		"16 16"
+			icon		prev
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_prevmap;" }
+		}
+		custombutton next_map
+		{
+			pos			"505 155"
+			size		"16 16"
+			icon		next
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+		}
+
+		// ===================
+		// GAMETYPE
+		// ===================
+
+		string allowedtype_label
+		{
+			string		"_Allowed gametype:"
+			pos			"85 200"
+			size		"256 20"
+		}
+
+		string string_gametypes
+		{
+			string		"*cvar mn_mapgametypes"
+			pos			"245 200"
+			size		"256 32"
+			font		"f_verysmall"
+			longlines	wrap
+		}
+
+		// ===================
+		// DAY + NIGHT
+		// ===================
+		todo todo3 {
+			pos "500 245"
+			string "It should be better to have a selectbox with day/night"
+		}
+		string daynight_str
+		{
+			string		"_Day version:"
+			pos			"85 245"
+			size		"280 20"
+		}
+		checkbox daynight_value
+		{
+			current		"*cvar mn_serverday"
+			pos			"410 245"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
+	}
+
+	panel panel_option {
+		{
+			pos			"415 250"
+			size		"608 768"
+		}
+
+		// ===================
+		// MORALE
+		// ===================
+		string morale_str
+		{
+			string		"_Enable morale states:"
+			pos			"85 0"
+			size		"280 20"
+		}
+		checkbox morale_value
+		{
+			current		"*cvar sv_enablemorale"
+			pos			"410 0"
 			size		"20 18"
 			image		"menu/checkbox_blue"
 		}
@@ -651,17 +800,22 @@ menu mp_create_server extends abstract_multiplayer
 		// ===================
 		// MAXCLIENTS
 		// ===================
+		todo todo5 {
+			string	"We should move number near spinner"
+			pos		"500 50"
+		}
+
 		string maxclients_str
 		{
 			string		"_Max. clients:"
 			tooltip		"_Sets the max allowed clients to connect"
-			pos			"85 200"
+			pos			"85 50"
 			size		"280 20"
 		}
 		string maxclients_value
 		{
 			string		"*cvar sv_maxclients"
-			pos			"395 200"
+			pos			"395 50"
 			size		"50 20"
 			textalign	uc
 		}
@@ -670,7 +824,7 @@ menu mp_create_server extends abstract_multiplayer
 			current		"*cvar sv_maxclients"
 			image		menu/spinner_blue
 			blend		true
-			pos			"475 199"
+			pos			"475 49"
 			mousefx		true
 			min			2
 			max			16
@@ -684,13 +838,13 @@ menu mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per team:"
 			tooltip		"_Sets the max allowed soldiers per team"
-			pos			"85 220"
+			pos			"85 70"
 			size		"280 20"
 		}
 		string maxperplayer_value
 		{
 			string		"*cvar sv_maxsoldiersperteam"
-			pos			"395 220"
+			pos			"395 70"
 			size		"50 20"
 			textalign	uc
 		}
@@ -699,7 +853,7 @@ menu mp_create_server extends abstract_multiplayer
 			current		"*cvar sv_maxsoldiersperteam"
 			image		menu/spinner_blue
 			blend		true
-			pos			"475 219"
+			pos			"475 69"
 			mousefx		true
 			min			1
 			max			8
@@ -713,13 +867,13 @@ menu mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. soldiers per player:"
 			tooltip		"_Sets the max allowed soldiers per player when in teamplay"
-			pos			"85 240"
+			pos			"85 90"
 			size		"280 20"
 		}
 		string maxsoldierperplayer_value
 		{
 			string		"*cvar sv_maxsoldiersperplayer"
-			pos			"395 240"
+			pos			"395 90"
 			size		"50 20"
 			textalign	uc
 		}
@@ -728,7 +882,7 @@ menu mp_create_server extends abstract_multiplayer
 			current		"*cvar sv_maxsoldiersperplayer"
 			image		menu/spinner_blue
 			blend		true
-			pos			"475 239"
+			pos			"475 89"
 			mousefx		true
 			min			1
 			max			8
@@ -742,13 +896,13 @@ menu mp_create_server extends abstract_multiplayer
 		string server_maxplayerperteam_str
 		{
 			string		"_Max. human players per team:"
-			pos			"85 260"
+			pos			"85 110"
 			size		"280 20"
 		}
 		string server_maxplayerperteam_value
 		{
 			string		"*cvar sv_maxplayersperteam"
-			pos			"395 260"
+			pos			"395 110"
 			size		"50 20"
 			textalign	uc
 		}
@@ -757,7 +911,7 @@ menu mp_create_server extends abstract_multiplayer
 			current		"*cvar sv_maxplayersperteam"
 			image		menu/spinner_blue
 			blend		true
-			pos			"475 259"
+			pos			"475 109"
 			mousefx		true
 			min			1
 			max			8
@@ -771,13 +925,13 @@ menu mp_create_server extends abstract_multiplayer
 		{
 			string		"_Max. AI actors:"
 			tooltip		"_Max AI actors for teamplay mode"
-			pos			"85 280"
+			pos			"85 130"
 			size		"280 20"
 		}
 		string ai_numactors_value
 		{
 			string		"*cvar ai_numactors"
-			pos			"395 280"
+			pos			"395 130"
 			size		"50 20"
 			textalign	uc
 		}
@@ -786,7 +940,7 @@ menu mp_create_server extends abstract_multiplayer
 			current		"*cvar ai_numactors"
 			image		menu/spinner_blue
 			blend		true
-			pos			"475 279"
+			pos			"475 129"
 			mousefx		true
 			min			0
 			max			8
@@ -800,13 +954,38 @@ menu mp_create_server extends abstract_multiplayer
 		{
 			string		"_AI autojoin:"
 			tooltip		"_AI autojoin on free teams"
-			pos			"85 300"
+			pos			"85 150"
 			size		"280 20"
 		}
 		checkbox ai_autojoin_value
 		{
 			current		"*cvar ai_autojoin"
-			pos			"410 300"
+			pos			"410 150"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
+
+	}
+
+	panel panel_security {
+		{
+			pos			"415 250"
+			size		"608 768"
+		}
+
+		// =====================
+		// PUBLIC - MASTERSERVER
+		// =====================
+		string public_str
+		{
+			string		"_Make this server public:"
+			pos			"85 20"
+			size		"280 20"
+		}
+		checkbox public_value
+		{
+			current		"*cvar sv_public"
+			pos			"410 20"
 			size		"20 18"
 			image		"menu/checkbox_blue"
 		}
@@ -817,7 +996,7 @@ menu mp_create_server extends abstract_multiplayer
 		string current_server_pwd
 		{
 			string		"_Server-Password:"
-			pos			"85 330"
+			pos			"85 80"
 			size		"256 20"
 		}
 		textentry slot_server_pwd
@@ -830,7 +1009,7 @@ menu mp_create_server extends abstract_multiplayer
 			textalign	cl
 			padding		8
 			font		"f_verysmall"
-			pos			"85 350"
+			pos			"245 75"
 			size		"256 34"
 			ispassword	true
 		}
@@ -841,7 +1020,7 @@ menu mp_create_server extends abstract_multiplayer
 		string current_rcon_pwd
 		{
 			string		"_RCON-Password:"
-			pos			"85 390"
+			pos			"85 140"
 			size		"256 20"
 		}
 		textentry slot_rcon_pwd
@@ -854,145 +1033,71 @@ menu mp_create_server extends abstract_multiplayer
 			textalign	cl
 			padding		8
 			font		"f_verysmall"
-			pos			"85 410"
+			pos			"245 135"
 			size		"256 34"
 			ispassword	true
 		}
 
-		// ===================
-		// HOSTNAME
-		// ===================
-		string current_hostname
-		{
-			string		"_Hostname:"
-			pos			"85 450"
-			size		"256 20"
-		}
-		textentry slot_hostname
-		{
-			string		"*cvar sv_hostname"
-			image		menu/button_green_verysmall
-			blend		true
-			color 		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	cl
-			padding		8
-			font		"f_verysmall"
-			pos			"85 470"
-			size		"256 34"
-		}
-
-		// ===================
-		// MAP
-		// ===================
-		string current_map
-		{
-			string		"_Map"
-			pos			"85 510"
-			size		"256 20"
-		}
-		textentry slot_map
-		{
-			string		"*cvar mn_svmapname"
-			image		menu/button_green_verysmall
-			blend		true
-			color 		"0 .78 0 1"
-			selectcolor	"1 1 1 1"
-			textalign	cl
-			padding		8
-			font		"f_verysmall"
-			pos			"85 530"
-			size		"256 34"
-			disabled	true
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
-		}
-
-		string string_gametypes
-		{
-			string		"*cvar mn_mapgametypes"
-			pos			"85 570"
-			size		"256 32"
-			font		"f_verysmall"
-			longlines	wrap
-		}
-
-		custombutton prev_map
-		{
-			pos			"63 538"
-			size		"16 16"
-			icon		prev
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_prevmap;" }
-		}
-		custombutton next_map
-		{
-			pos			"345 538"
-			size		"16 16"
-			icon		next
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
-		}
-		pic mappic
-		{
-			image		"*cvar mn_mappic"
-			pos			"385 330"
-			texl		"0 0"
-			texh		"128 96"
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
-			rclick		{ cmd "mn_prevmap;" }
-		}
-		pic mappic2
-		{
-			image		"*cvar mn_mappic2"
-			pos			"385 430"
-			texl		"0 0"
-			texh		"128 96"
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
-			rclick		{ cmd "mn_prevmap;" }
-		}
-		pic mappic3
-		{
-			image		"*cvar mn_mappic3"
-			pos			"385 530"
-			texl		"0 0"
-			texh		"128 96"
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
-			rclick		{ cmd "mn_prevmap;" }
-		}
-
-		// ====================
-		// create_server button
-		// ====================
-		button button_server
-		{
-			string		"_Start server"
-			pos			"155 630"
-			size		"256 64"
-			image		menu/button_green_big
-			blend		true
-			font		f_menubig
-			color		"0 0.5 0 1"
-			selectcolor	"1 1 1 1"
-			click		{ cmd "mp_startserver;" }
-		}
 	}
 
 	// ===================
-	// INIT
+	// FIREWALL TEST
 	// ===================
+
+	/** @todo fix it, it can't support string property */
+	text firewall_str_
+	{
+		string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
+		pos			"0 150"
+		size		"256 550"
+		longlines	wrap
+		textalign	uc
+		font		"f_small"
+		textid		TEXT_STANDARD
+	}
+
+	// ====================
+	// create_server button
+	// ====================
+
+	button button_server
+	{
+		string		"_Start server"
+		pos			"570 630"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mp_startserver;" }
+	}
+
+	// ===================
+	// Interaction
+	// ===================
+
+	confunc mp_update_config_natigation {
+		*panel_map invis true
+		*panel_option invis true
+		*panel_security invis true
+		if "mn_server_config_tab == 1" {
+			*panel_map invis false
+		}
+		if "mn_server_config_tab == 2" {
+			*panel_option invis false
+		}
+		if "mn_server_config_tab == 3" {
+			*panel_security invis false
+		}
+	}
+
 	func init
 	{
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_updategametype;mn_getmaps;"
+		*cvar:mn_server_config_tab 1
+		cmd "mp_update_config_natigation"
 	}
 
 }
