@@ -40,8 +40,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 qboolean GAME_CP_IsRunning (void)
 {
-	if (curCampaign && !GAME_IsCampaign())
-		Sys_Error("curCampaign and game mode out of sync");
 	return curCampaign != NULL;
 }
 
