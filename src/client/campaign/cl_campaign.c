@@ -1804,7 +1804,7 @@ void CP_StartSelectedMission (void)
 	aircraft_t *aircraft;
 	base_t *base;
 
-	if (!GAME_CP_IsRunning() || !cls.missionaircraft)
+	if (!cls.missionaircraft)
 		return;
 
 	aircraft = cls.missionaircraft;
@@ -1819,8 +1819,6 @@ void CP_StartSelectedMission (void)
 	}
 
 	mis = ccs.selectedMission;
-	assert(mis);
-	assert(aircraft);
 
 	/* Before we start, we should clear the missionresults array. */
 	memset(&missionresults, 0, sizeof(missionresults));
