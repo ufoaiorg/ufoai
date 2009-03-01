@@ -2785,6 +2785,7 @@ static void CL_Targeting_Radius (vec3_t center)
  * @sa CL_TargetingGrenade
  * @sa CL_AddTargeting
  * @sa CL_Trace
+ * @sa G_ShootSingle
  */
 static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t toPos)
 {

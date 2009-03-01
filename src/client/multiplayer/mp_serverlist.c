@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/parse.h"
 #include "mp_serverlist.h"
 #include "mp_callbacks.h"
+#include <SDL_thread.h>
 
 #define MAX_SERVERLIST 128
 
@@ -356,11 +357,7 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 	NET_StreamFree(s);
 }
 
-/**
- * @sa CL_PingServers_f
- * @todo Not yet thread-safe
- */
-static int CL_QueryMasterServer (void *data)
+static int CL_QueryMasterServerThread (void *data)
 {
 	char *responseBuf;
 	const char *serverList;
@@ -405,6 +402,26 @@ static int CL_QueryMasterServer (void *data)
 	Mem_Free(responseBuf);
 
 	return 0;
+}
+
+/**
+ * @sa CL_PingServers_f
+ */
+static int CL_QueryMasterServer (void *data)
+{
+	static SDL_Thread *thread;
+	int value;
+
+	if (thread != NULL) {
+		Com_Printf("query already in progress\n");
+		return 0;
+	}
+
+	thread = SDL_CreateThread(CL_QueryMasterServerThread, data);
+	SDL_WaitThread(thread, &value);
+	thread = NULL;
+
+	return value;
 }
 
 /**
