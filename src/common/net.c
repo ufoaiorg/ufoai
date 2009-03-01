@@ -371,7 +371,7 @@ static void NET_StreamClose (struct net_stream *s)
 
 static void do_accept (int sock)
 {
-	int index = NET_StreamGetFree();
+	const int index = NET_StreamGetFree();
 	struct net_stream *s;
 	if (index == -1) {
 		Com_Printf("Too many streams open, rejecting inbound connection\n");
@@ -432,7 +432,7 @@ void NET_Wait (int timeout)
 		return;
 
 	if (server_socket != INVALID_SOCKET && FD_ISSET(server_socket, &read_fds_out)) {
-		int client_socket = accept(server_socket, NULL, 0);
+		const int client_socket = accept(server_socket, NULL, 0);
 		if (client_socket == INVALID_SOCKET) {
 			if (errno != EAGAIN)
 				Com_Printf("accept on socket %d failed: %s\n", server_socket, netStringError(netError));
@@ -490,7 +490,7 @@ void NET_Wait (int timeout)
 
 		if (FD_ISSET(s->socket, &read_fds_out)) {
 			char buf[4096];
-			int len = recv(s->socket, buf, sizeof(buf), 0);
+			const int len = recv(s->socket, buf, sizeof(buf), 0);
 			if (len <= 0) {
 				if (len == -1)
 					Com_Printf("read on socket %d failed: %s\n", s->socket, netStringError(netError));
@@ -521,7 +521,7 @@ void NET_Wait (int timeout)
 		if (FD_ISSET(s->socket, &write_fds_out)) {
 			if (s->queue) {
 				struct datagram *dgram = s->queue;
-				int len = sendto(s->socket, dgram->msg, dgram->len, 0, (struct sockaddr *)dgram->addr, s->addrlen);
+				const int len = sendto(s->socket, dgram->msg, dgram->len, 0, (struct sockaddr *)dgram->addr, s->addrlen);
 				if (len == -1)
 					Com_Printf("sendto on socket %d failed: %s\n", s->socket, netStringError(netError));
 				/* Regardless of whether it worked, we don't retry datagrams */
@@ -540,7 +540,7 @@ void NET_Wait (int timeout)
 			char buf[256];
 			char addrbuf[256];
 			socklen_t addrlen = sizeof(addrbuf);
-			int len = recvfrom(s->socket, buf, sizeof(buf), 0, (struct sockaddr *)addrbuf, &addrlen);
+			const int len = recvfrom(s->socket, buf, sizeof(buf), 0, (struct sockaddr *)addrbuf, &addrlen);
 			if (len == -1)
 				Com_Printf("recvfrom on socket %d failed: %s\n", s->socket, netStringError(netError));
 			else
@@ -576,7 +576,7 @@ static struct net_stream *NET_DoConnect (const char *node, const char *service, 
 	}
 
 	if (connect(sock, addr->ai_addr, addr->ai_addrlen) != 0) {
-		int err = netError;
+		const int err = netError;
 #ifdef _WIN32
 		if (err != WSAEWOULDBLOCK) {
 #else
@@ -967,7 +967,7 @@ static struct datagram_socket *NET_DatagramSocketDoNew (const struct addrinfo *a
 	struct datagram_socket *s;
 	SOCKET sock = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	int t = 1;
-	int index = NET_DatagramFindFreeSocket();
+	const int index = NET_DatagramFindFreeSocket();
 
 	if (index == -1) {
 		Com_Printf("Too many datagram sockets open\n");
@@ -1140,7 +1140,7 @@ void NET_DatagramSocketClose (struct datagram_socket *s)
  */
 void NET_SockaddrToStrings (struct datagram_socket *s, struct sockaddr *addr, char *node, size_t nodelen, char *service, size_t servicelen)
 {
-	int rc = getnameinfo(addr, s->addrlen, node, nodelen, service, servicelen,
+	const int rc = getnameinfo(addr, s->addrlen, node, nodelen, service, servicelen,
 			NI_NUMERICHOST | NI_NUMERICSERV | NI_DGRAM);
 	if (rc != 0) {
 		Com_Printf("Failed to convert sockaddr to string: %s\n", gai_strerror(rc));
