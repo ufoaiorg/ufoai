@@ -516,7 +516,7 @@ void CL_ResetBattlescapeEvents (void)
  */
 static void CL_Reset (struct dbuffer *msg)
 {
-	selActor = NULL;
+	CL_ActorSelect(NULL);
 	cl.numTeamList = 0;
 	MN_ExecuteConfunc("numonteam1");
 
@@ -570,7 +570,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	Com_Printf("Starting the game...\n");
 
 	/* make sure selActor is null (after reconnect or server change this is needed) */
-	selActor = NULL;
+	CL_ActorSelect(NULL);
 
 	/* center on first actor */
 	cl_worldlevel->modified = qtrue;

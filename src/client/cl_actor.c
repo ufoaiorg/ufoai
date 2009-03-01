@@ -851,20 +851,20 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 		CL_ConditionalMoveCalcForCurrentSelectedActor();
 
 		for (i = 0; i < cl.numTeamList; i++) {
-			if (CL_ActorSelect(cl.teamList[i]))
+			if (cl.teamList[i] && CL_ActorSelect(cl.teamList[i]))
 				break;
 		}
 
 		if (i == cl.numTeamList) {
 			selActor->selected = qfalse;
-			selActor = NULL;
+			CL_ActorSelect(NULL);
 		}
 	}
 }
 
 /**
  * @brief Selects an actor.
- * @param le Pointer to local entity struct
+ * @param le Pointer to local entity struct. If this is @c NULL the menuInventory that is linked from the actors
  * @sa CL_UGVCvars
  * @sa CL_CharacterCvars
  */
@@ -874,7 +874,13 @@ qboolean CL_ActorSelect (le_t * le)
 	qboolean sameActor = qfalse;
 
 	/* test team */
-	if (!le || le->team != cls.team || LE_IsDead(le) || !le->inuse)
+	if (!le) {
+		selActor = NULL;
+		menuInventory = NULL;
+		return qfalse;
+	}
+
+	if (le->team != cls.team || LE_IsDead(le) || !le->inuse)
 		return qfalse;
 
 	if (blockBattlescapeEvents)
@@ -955,7 +961,7 @@ qboolean CL_ActorSelectList (int num)
 
 	/* select actor */
 	le = cl.teamList[num];
-	if (!CL_ActorSelect(le))
+	if (le && !CL_ActorSelect(le))
 		return qfalse;
 
 	/* center view (if wanted) */
@@ -2151,7 +2157,7 @@ void CL_ActorSelectMouse (void)
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Try and select another team member */
-		if (mouseActor != selActor && CL_ActorSelect(mouseActor)) {
+		if (mouseActor && mouseActor != selActor && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
 			cl.cmode = M_MOVE;
 		} else {
