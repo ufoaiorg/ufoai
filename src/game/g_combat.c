@@ -879,7 +879,14 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 		damage = fd->damage[0] + (fd->damage[1] * crand());
 	else
 		damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
+
+	VectorMA(cur_loc, UNIT_SIZE, dir, impact);
+	tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
+	if (tr.ent && (tr.ent->team == ent->team || tr.ent->team == TEAM_CIVILIAN) && (tr.ent->state & STATE_CROUCHED))
+		VectorMA(cur_loc, UNIT_SIZE * 1.4, dir, cur_loc);
+
 	VectorCopy(cur_loc, tracefrom);
+
 	for (;;) {
 		/* Calc 'impact' vector that is located at the end of the range
 		 * defined by the fireDef_t. This is not really the impact location,
@@ -890,7 +897,6 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
-		/** @todo mins and maxs should be set via localModel_t don't they? */
 		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
 
 		DumpTrace(tracefrom, tr);
