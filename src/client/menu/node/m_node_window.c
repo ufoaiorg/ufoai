@@ -198,8 +198,8 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 
 	/* move fullscreen menu on the center of the screen */
 	if (node->u.window.isFullScreen) {
-		node->pos[0] = (viddef.virtualWidth - node->size[0]) / 2;
-		node->pos[1] = (viddef.virtualHeight - node->size[1]) / 2;
+		node->pos[0] = (int) ((viddef.virtualWidth - node->size[0]) / 2);
+		node->pos[1] = (int) ((viddef.virtualHeight - node->size[1]) / 2);
 	}
 
 	/** @todo check and fix here window outside the screen */
