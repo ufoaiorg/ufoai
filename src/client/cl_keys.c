@@ -885,7 +885,6 @@ void Key_Init (void)
  */
 void Key_SetDest (int key_dest)
 {
-	cls.key_dest_old = cls.key_dest;
 	cls.key_dest = key_dest;
 }
 

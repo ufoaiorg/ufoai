@@ -159,7 +159,6 @@ typedef enum {
 typedef struct client_static_s {
 	connstate_t state;
 	keydest_t key_dest;
-	keydest_t key_dest_old;
 	qboolean deactivateKeyBindings;
 
 	int realtime;				/**< always increasing, no clamping, etc */
