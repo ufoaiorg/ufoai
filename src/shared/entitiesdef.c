@@ -165,6 +165,92 @@ static const char *ED_Constant2Type (int constInt)
 }
 
 /**
+ * @brief parses an int array from a string
+ * @param str the string to parse
+ * @param[out] v the array of int to put the answer in
+ * it must have enough space for n elements.
+ * @param n the number of elements expected in the vector
+ * @return ED_ERROR or ED_OK
+ * @sa ED_GetLastError.
+ */
+static int ED_GetIntVectorFromString (const char *str, int v[], const int n)
+{
+	int i;
+	const char *buf_p = str;
+
+	for (i = 0; buf_p; i++) {
+		const char *tok = COM_Parse (&buf_p);
+		if (tok[0] == '\0')
+			break; /* previous tok was the last real one, don't waste time */
+		ED_TEST_RETURN_ERROR(i >= n, "ED_GetIntVectorFromString: v[%i] too small for ints from string \"%s\"", n, str);
+		v[i] = atoi(tok);
+	}
+	ED_TEST_RETURN_ERROR(i != n, "ED_GetIntVectorFromString: v[%i] wrong size for ints from string \"%s\"", n, str);
+	return ED_OK;
+}
+
+/**
+ * @brief parses an float array from a string
+ * @param str the string to parse
+ * @param[out] v the array of float to put the answer in
+ * it must have enough space for n elements.
+ * @param n the number of elements expected in the vector
+ * @return ED_ERROR or ED_OK
+ * @sa ED_GetLastError.
+ */
+static int ED_GetFloatVectorFromString (const char *str, float v[], const int n)
+{
+	int i;
+	const char *buf_p = str;
+
+	for (i = 0; buf_p; i++) {
+		const char *tok = COM_Parse (&buf_p);
+		if (tok[0] == '\0')
+			break; /* previous tok was the last real one, don't waste time */
+		ED_TEST_RETURN_ERROR(i >= n, "ED_GetFloatVectorFromString: v[%i] too small for floats from string \"%s\"", n, str);
+		v[i] = atof(tok);
+	}
+	ED_TEST_RETURN_ERROR(i != n, "ED_GetFloatVectorFromString: v[%i] wrong size for floats from string \"%s\"", n, str);
+	return ED_OK;
+}
+
+/**
+ * @brief gets the default value for the key
+ * @param[in] defaultBuf the calling function is responsible for ensuring this buffer
+ * has enough space
+ * @param n the number of floats the defaultBuf can hold
+ * @param kd the key definition to get the default for.
+ * @sa ED_GetKeyDef can be used to find kd.
+ * @return ED_OK or ED_ERROR (no default, or n is too small).
+ * @note the defualt int array is tested on parsing
+ */
+int ED_GetDefaultFloat (float *defaultBuf, const int n, const entityKeyDef_t *kd)
+{
+	ED_TEST_RETURN_ERROR(!kd->defaultVal, "ED_GetDefaultFloat: no default available");
+	ED_TEST_RETURN_ERROR(!(kd->flags & ED_TYPE_FLOAT ), "ED_GetDefaultFloat: key does not define V_FLOAT");
+	ED_PASS_ERROR(ED_GetFloatVectorFromString(kd->defaultVal, defaultBuf, n));
+	return ED_OK;
+}
+
+/**
+ * @brief gets the default value for the key
+ * @param[in] defaultBuf the calling function is responsible for ensuring this buffer
+ * has enough space
+ * @param n the number of ints the defaultBuf can hold
+ * @param kd the key definition to get the default for.
+ * @sa ED_GetKeyDef can be used to find kd.
+ * @return ED_OK or ED_ERROR (no default, or n is too small).
+ * @note the defualt int array is tested on parsing
+ */
+int ED_GetDefaultInt (int *defaultBuf, const int n, const entityKeyDef_t *kd)
+{
+	ED_TEST_RETURN_ERROR(!kd->defaultVal, "ED_GetDefaultInt: no default available");
+	ED_TEST_RETURN_ERROR(!(kd->flags & ED_TYPE_INT), "ED_GetDefaultInt: key does not define V_INT");
+	ED_PASS_ERROR(ED_GetIntVectorFromString(kd->defaultVal, defaultBuf, n));
+	return ED_OK;
+}
+
+/**
  * @brief parses a value from the definition
  * @param kd the key definition to parse from
  * @param[out] v the array of int to put the answer in
@@ -175,17 +261,7 @@ static const char *ED_Constant2Type (int constInt)
  */
 int ED_GetIntVector (const entityKeyDef_t *kd, int v[], const int n)
 {
-	int i;
-	const char *buf_p = kd->desc;
-
-	for (i = 0; buf_p; i++) {
-		const char *tok = COM_Parse (&buf_p);
-		if (tok[0] == '\0')
-			break; /* previous tok was the last real one, don't waste time */
-		ED_TEST_RETURN_ERROR(i >= n, "ED_GetIntVector: v[%i] too small for key def \"%s\"", n, kd->name);
-		v[i] = atoi(tok);
-	}
-	ED_TEST_RETURN_ERROR(i != n, "ED_GetIntVector: v[%i] wrong size for key def \"%s\"", n, kd->name);
+	ED_PASS_ERROR(ED_GetIntVectorFromString(kd->desc, v, n));
 	return ED_OK;
 }
 
@@ -349,6 +425,26 @@ int ED_CheckKey (const entityKeyDef_t *kd, const char *value)
 	default:
 		ED_RETURN_ERROR("ED_CheckTypeEntityKey: type not recognised in key def");
 	}
+}
+
+/**
+ * @brief gets the default value for the key
+ * @param[in] defaultBuf the calling function is responsible for ensuring this buffer
+ * has enough space
+ * @param n the number of chars the defualtBuf can hold
+ * @param kd the key definition to get the default for. E
+ * @sa D_GetKeyDef can be used to find kd.
+ * @return ED_OK or ED_ERROR (no default, or n is too small).
+ */
+int ED_GetDefaultString (char *defaultBuf, const size_t n, const entityKeyDef_t *kd)
+{
+	ED_TEST_RETURN_ERROR(n < 1, "ED_GetDefaultString: n is %lu", (unsigned long)n);
+	defaultBuf[0] = '\0'; /* be safe, in case an error is found, and we return early */
+	ED_TEST_RETURN_ERROR(!kd->defaultVal, "ED_GetDefaultString: no default available");
+	strncpy(defaultBuf, kd->defaultVal, n - 1);
+	ED_TEST_RETURN_ERROR(strlen(defaultBuf) < strlen(kd->defaultVal),
+		"ED_GetDefaultString: target buffer supplied is too small");
+	return ED_OK;
 }
 
 /**
@@ -716,6 +812,10 @@ int ED_Parse (const char *data_p)
 
 	done = 1; /* do not do it again */
 
+#ifdef DEBUG_ED
+	ED_Dump();
+#endif
+
 	return ED_OK;
 }
 
@@ -827,6 +927,38 @@ void ED_PrintRange (const entityKeyRange_t *kr)
 	printf("\b<");
 }
 
+void ED_PrintParsedDefault (const entityKeyDef_t *kd)
+{
+	float fa[32];
+	int ia[32];
+	char ca[128];
+	int i;
+
+	if (!kd->defaultVal)
+		return;
+
+	printf(" parsed default>");
+
+	switch (kd->flags & ED_KEY_TYPE) {
+	case ED_TYPE_INT:
+		ED_GetDefaultInt(ia, kd->vLen, kd);
+		for (i = 0; i < kd->vLen; i++)
+			printf("%i ", ia[i]);
+		break;
+	case ED_TYPE_FLOAT:
+		ED_GetDefaultFloat(fa, kd->vLen, kd);
+		for (i = 0; i < kd->vLen; i++)
+			printf("%f ", fa[i]);
+		break;
+	case ED_TYPE_STRING:
+		ED_GetDefaultString(ca, sizeof(ca) - 1, kd);
+		printf("%s", ca);
+		break;
+	}
+
+	printf("<");
+}
+
 void ED_PrintKeyDef (const entityKeyDef_t *kd)
 {
 	printf("  >%s< mandtry:%i opt:%i abst:%i type:%i", kd->name,
@@ -846,6 +978,8 @@ void ED_PrintKeyDef (const entityKeyDef_t *kd)
 			ED_PrintRange(kd->ranges[i]);
 		}
 	}
+
+	ED_PrintParsedDefault(kd);
 
 	printf("\n");
 }

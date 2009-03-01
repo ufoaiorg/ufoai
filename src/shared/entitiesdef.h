@@ -79,6 +79,10 @@ typedef struct entityDef_s {
 	int 			numKeyDefs;
 } entityDef_t;
 
+int ED_GetDefaultFloat (float *defaultBuf, const int n, const entityKeyDef_t *kd);
+int ED_GetDefaultInt (int *defaultBuf, const int n, const entityKeyDef_t *kd);
+int ED_GetDefaultString (char *defaultBuf, const size_t n, const entityKeyDef_t *kd);
+
 int ED_GetIntVector(const entityKeyDef_t *kd, int v[], const int n);
 int ED_Check(const char *classname, const char *key, const char *value);
 int ED_CheckKey(const entityKeyDef_t *kd, const char *value);
