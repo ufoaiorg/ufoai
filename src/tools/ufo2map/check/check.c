@@ -47,8 +47,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** if the sine of an angle is less than this, then the angle is negligibly different from zero */
 #define SIN_EPSILON 0.0001f
 
-static int numToMoveToWorldspawn = 0;
-
 /**
  * @brief wether the surface of a brush is included when testing if a point is in a brush
  * determines how epsilon is applied.
@@ -60,37 +58,6 @@ typedef enum {
 	PIB_INCL_SURF,				/**< surface is included */
 	PIB_ON_SURFACE_ONLY			/**< point on the surface, and the inside of the brush is excluded */
 } pointInBrush_t;
-
-/**
- * @brief single brushes in func_groups are moved to worldspawn. this function allocates space for
- * pointers to those brushes. called when the .map is written back in map.c
- * @return a pointer to the array of pointers to brushes to be included in worldspawn.
- * @param[out] the number of brushes
- */
-mapbrush_t **Check_ExtraBrushesForWorldspawn (int *numBrushes)
-{
-	int i, j;
-	mapbrush_t **brushesToMove = (mapbrush_t **)Mem_Alloc(numToMoveToWorldspawn * sizeof(*brushesToMove));
-
-	if (!brushesToMove)
-		Sys_Error("Check_ExtraBrushesForWorldspawn: out of memory");
-
-	*numBrushes = numToMoveToWorldspawn;
-
-	if (!numToMoveToWorldspawn)
-		return brushesToMove;
-
-	/* 0 is the world - start at 1 */
-	for (i = 1, j = 0; i < num_entities; i++) {
-		const entity_t *e = &entities[i];
-		const char *name = ValueForKey(e, "classname");
-
-		if (e->numbrushes == 1 && !strcmp(name, "func_group"))
-			brushesToMove[j++] = &mapbrushes[e->firstbrush];
-	}
-
-	return brushesToMove;
-}
 
 /** faces close to pointing down may be set to nodraw.
  * this is the cosine of the angle of how close it has to be. around 10 degrees */
@@ -206,144 +173,6 @@ static inline qboolean Check_IsPointInsideBrush (const vec3_t point, const mapbr
 
 	/* inside all planes, therefore inside the brush */
 	return qtrue;
-}
-
-/**
- * @brief see if the entity is am actor start point
- * @note starts with "info_" and contains "_start"
- * @return qtrue if this is a start point
- */
-static qboolean Check_IsInfoStart(const char *classname)
-{
-	return !strncmp(classname, "info_", 5) && strstr(classname, "_start");
-}
-
-/**
- * @brief check alignment using abstract size and mandatory origin
- * @return qtrue if OK
- * @todo check for brush intersection as well as alignment, and move
- * to a good position if bad.
- */
-static qboolean Check_InfoStartAligned (const entityDef_t *ed, const entity_t *e)
-{
-	static int size[6];
-	const entityKeyDef_t *sizeKd = ED_GetKeyDefEntity(ed, "size", 1); /* 1 means find abstract version of key */
-	if (ED_GetIntVector(sizeKd, size, (int)(sizeof(size) / sizeof(int))) == ED_ERROR)
-		Sys_Error("%s", ED_GetLastError());
-
-	return (((int)e->origin[0] - size[0]) % UNIT_SIZE == 0)
-		&& (((int)e->origin[1] - size[1]) % UNIT_SIZE == 0);
-}
-
-/**
- * @brief check targets exist (targetname), and check targetnames are targetted (target)
- * @return qfalse if there is a problem.
- */
-static qboolean Check_TargetExists(const epair_t *kvp)
-{
-	const char *thisKey = kvp->key;
-	const char *value = kvp->value;
-	const char *otherKey = !strcmp("target", thisKey) ? "targetname" : "target";
-	int i;
-
-	for (i = 0; i < num_entities; i++) {
-		const entity_t *e = &entities[i];
-		const char *searchVal = ValueForKey(e, otherKey);
-
-		if (searchVal && !strcmp(searchVal, value))
-			return qtrue;
-	}
-
-	return qfalse;
-}
-
-static void Check_EntityWithBrushes(entity_t *e, const char *classname, int entnum)
-{
-	if (!e->numbrushes) {
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with no brushes given - will be deleted\n", classname);
-		e->skip = qtrue;
-		return;
-	}
-
-	if (e->numbrushes > 1 && !strcmp(classname, "func_breakable")) {
-		Check_Printf(VERB_CHECK, qfalse, entnum, -1, "func_breakable with more than one brush given (might break pathfinding)\n");
-	}
-
-	if (e->numbrushes == 1 && !strcmp(classname, "func_group")) {
-		Check_Printf(VERB_CHECK, qtrue, entnum, -1, "%s with one brush only - will be moved to worldspawn\n", classname);
-		numToMoveToWorldspawn++;
-		e->skip = qtrue;
-	}
-}
-
-/**
- * @brief Perform an entity check
- */
-void CheckEntities (void)
-{
-	int i;
-
-	Check_InitEntityDefs();
-
-	for (i = 0; i < num_entities; i++) {
-		entity_t *e = &entities[i];
-		const char *name = ValueForKey(e, "classname");
-		const entityDef_t *ed = ED_GetEntityDef(name);
-		const epair_t *kvp;
-		const entityKeyDef_t *kd;
-
-		if (!ed) { /* check that a definition exists */
-			Check_Printf(VERB_CHECK, qfalse, i, -1, "Not defined in entities.ufo: %s\n", name);
-			continue;
-		}
-
-		/* check alignment of info_.+_start */
-		if (Check_IsInfoStart(name) && !Check_InfoStartAligned(ed, e))
-			Check_Printf(VERB_CHECK, qfalse, i, -1, "Misaligned %s\n", name);
-
-		if (!strncmp("func_", name, 5)) /* func_* entities should have brushes */
-			Check_EntityWithBrushes(e, name, i);
-
-		/* check all keys in the entity - make sure they are OK */
-		for (kvp = e->epairs; kvp; kvp = kvp->next) {
-			kd = ED_GetKeyDefEntity(ed, kvp->key, 0); /* zero means ignore abstract (radiant only) keys */
-
-			if (!kd) { /* make sure it has a definition */
-				Check_Printf(VERB_CHECK, qfalse, i, -1, "Not defined in entities.ufo: %s in %s\n", kvp->key,name);
-				continue;
-			}
-
-			if (ED_CheckKey(kd, kvp->value) == ED_ERROR) { /* check values against type and range definitions in entities.ufo */
-				Check_Printf(VERB_CHECK, qfalse, i, -1, "%s\n", ED_GetLastError());
-				continue;
-			}
-
-			if (!strcmp("target", kvp->key) || !strcmp("targetname", kvp->key)) {
-				if (!Check_TargetExists(kvp)) {
-					Check_Printf(VERB_CHECK, qfalse, i, -1,
-						"%s with %s of %s: no corresponding entity with %s with matching value\n",
-						ed->classname, kvp->key, kvp->value, !strcmp("target", kvp->key) ? "targetname" : "target");
-				}
-			}
-		}
-
-		/* check keys in the entity definition - make sure mandatory ones are present */
-		for (kd = ed->keyDefs; kd->name; kd++) {
-			if (kd->flags & ED_MANDATORY) {
-				const char *keyNameInEnt = ValueForKey(e, kd->name);
-				if (keyNameInEnt[0] == '\0') {
-					const char *defaultVal = kd->defaultVal;
-					const qboolean hasDefault = defaultVal ? qtrue : qfalse;
-					Check_Printf(VERB_CHECK, hasDefault, i, -1, "Mandatory key missing from entity: %s in %s", kd->name, name);
-					if (defaultVal) {
-						Check_Printf(VERB_CHECK, hasDefault, i, -1, ", supplying default: %s", defaultVal);
-						SetKeyValue(e, kd->name, defaultVal);
-					}
-					Check_Printf(VERB_CHECK, hasDefault, i, -1, "\n");
-				}
-			}
-		}
-	}
 }
 
 /**
