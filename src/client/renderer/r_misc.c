@@ -130,11 +130,15 @@ void R_ScreenShot_f (void)
 
 	/* Find a file name to save it to */
 	for (shotNum = 0; shotNum < 1000; shotNum++) {
-		Com_sprintf(checkName, MAX_OSPATH, "%s/scrnshot/ufo%i%i.%s", FS_Gamedir(), shotNum / 10, shotNum % 10, ext);
-		f.f = fopen(checkName, "rb");
-		if (!f.f)
+		Com_sprintf(checkName, sizeof(checkName), "scrnshot/ufo%i%i.%s", shotNum / 10, shotNum % 10, ext);
+		if (FS_CheckFile(checkName) == -1)
 			break;
-		fclose(f.f);
+	}
+
+	if (shotNum == 1000) {
+		Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
+		FS_CloseFile(&f);
+		return;
 	}
 
 	FS_CreatePath(checkName);
@@ -143,15 +147,8 @@ void R_ScreenShot_f (void)
 
 	/* Open it */
 	FS_OpenFile(checkName, &f, FILE_WRITE);
-
 	if (!f.f) {
 		Com_Printf("R_ScreenShot_f: Couldn't create file: %s\n", checkName);
-		return;
-	}
-
-	if (shotNum == 1000) {
-		Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
-		FS_CloseFile(&f);
 		return;
 	}
 
@@ -190,7 +187,7 @@ void R_ScreenShot_f (void)
 	FS_CloseFile(&f);
 	Mem_Free(buffer);
 
-	Com_Printf("Wrote %s\n", checkName);
+	Com_Printf("Wrote %s to %s\n", checkName, FS_Gamedir());
 }
 
 /**
