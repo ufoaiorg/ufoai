@@ -39,7 +39,7 @@ menu main
 	{
 		pos	"640 240"
 		size "256 64"
-		click	{ cmd "mn_push multiplayer;" }
+		click	{ cmd "mn_push_multiplayer;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"

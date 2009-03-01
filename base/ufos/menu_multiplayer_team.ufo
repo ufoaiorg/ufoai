@@ -741,207 +741,209 @@ menu mp_team_edit
 // MULTIPLAYER TEAM MENU
 // =====================
 
-menu mp_team
+menu mp_team extends abstract_multiplayer
 {
-	{
-		pos	"415 0"
-		size	"608 768"
-	}
-
-	// ==================
-	// slots
-	// ==================
-
-	/**
-	 * @param[in] <1> id of the slot
-	 * @param[in] <2> amount of soldiers in the savegame
-	 * @param[in] <3> name of the savegame
-	 */
-	confunc set_slotname {
-		cmd "set mn_slot<1> \"<3> (<2>)\";"
-		*slot_team<1> disabled false
-	}
-
-	button slot_team0
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 130"
-		size		"256 34"
-		string		"*cvar mn_slot0"
-		click		{ cmd "loadteam 0;mn_push mp_team_edit;" }
-	}
-
-	button slot_team1
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 165"
-		size		"256 34"
-		string		"*cvar mn_slot1"
-		click		{ cmd "loadteam 1;mn_push mp_team_edit;" }
-	}
-
-	button slot_team2
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 200"
-		size		"256 34"
-		string		"*cvar mn_slot2"
-		click		{ cmd "loadteam 2;mn_push mp_team_edit;" }
-	}
-
-	button slot_team3
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 235"
-		size		"256 34"
-		string		"*cvar mn_slot3"
-		click		{ cmd "loadteam 3;mn_push mp_team_edit;" }
-	}
-
-	button slot_team4
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 270"
-		size		"256 34"
-		string		"*cvar mn_slot4"
-		click		{ cmd "loadteam 4;mn_push mp_team_edit;" }
-	}
-
-	button slot_team5
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 305"
-		size		"256 34"
-		string		"*cvar mn_slot5"
-		click		{ cmd "loadteam 5;mn_push mp_team_edit;" }
-	}
-
-	button slot_team6
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 340"
-		size		"256 34"
-		string		"*cvar mn_slot6"
-		click		{ cmd "loadteam 6;mn_push mp_team_edit;" }
-	}
-
-	button slot_team7
-	{
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		disabled	true
-		pos			"85 375"
-		size		"256 34"
-		string		"*cvar mn_slot7"
-		click		{ cmd "loadteam 7;mn_push mp_team_edit;" }
-	}
-
-	// ==================
-	// current team
-	// ==================
-
-	button button_new
-	{
-		pos	"85 430"
-		size "256 40"
-		tooltip	"_Generate a new random team"
-		click	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
-		image	menu/button_green_small	blend	true
-		font	f_menusmall
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_New"
-	}
-
-	button button_save
-	{
-		pos	"85 480"
-		size "256 40"
-		tooltip	"_Save the current team"
-		click	{ cmd "mn_push mp_team_save_popup;" }
-		image	menu/button_green_small	blend	true
-		font	f_menusmall
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Save"
-	}
-
-	string team_str
-	{
-		string	"_Team:"
-		pos	"85 570"
-	}
-
-	selectbox team_box
-	{
-		image	"menu/selectbox_green"
-		pos		"200 570"
-		size	"125 20"
-		color	"0.6 0.6 0.6 0.3"
-		cvar	"*cvar cl_team"
-		option low_value {
-			label	"_Human"
-			value	"1"
-			action	""
+	panel content {
+		{
+			pos	"415 0"
+			size	"608 768"
 		}
-		option medium_value {
-			label	"_Alien"
-			value	"7"
-			action	""
+
+		// ==================
+		// slots
+		// ==================
+
+		/**
+		 * @param[in] <1> id of the slot
+		 * @param[in] <2> amount of soldiers in the savegame
+		 * @param[in] <3> name of the savegame
+		 */
+		confunc set_slotname {
+			cmd "set mn_slot<1> \"<3> (<2>)\";"
+			*content.slot_team<1> disabled false
+		}
+
+		button slot_team0
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 130"
+			size		"256 34"
+			string		"*cvar mn_slot0"
+			click		{ cmd "loadteam 0;mn_push mp_team_edit;" }
+		}
+
+		button slot_team1
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 165"
+			size		"256 34"
+			string		"*cvar mn_slot1"
+			click		{ cmd "loadteam 1;mn_push mp_team_edit;" }
+		}
+
+		button slot_team2
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 200"
+			size		"256 34"
+			string		"*cvar mn_slot2"
+			click		{ cmd "loadteam 2;mn_push mp_team_edit;" }
+		}
+
+		button slot_team3
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 235"
+			size		"256 34"
+			string		"*cvar mn_slot3"
+			click		{ cmd "loadteam 3;mn_push mp_team_edit;" }
+		}
+
+		button slot_team4
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 270"
+			size		"256 34"
+			string		"*cvar mn_slot4"
+			click		{ cmd "loadteam 4;mn_push mp_team_edit;" }
+		}
+
+		button slot_team5
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 305"
+			size		"256 34"
+			string		"*cvar mn_slot5"
+			click		{ cmd "loadteam 5;mn_push mp_team_edit;" }
+		}
+
+		button slot_team6
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 340"
+			size		"256 34"
+			string		"*cvar mn_slot6"
+			click		{ cmd "loadteam 6;mn_push mp_team_edit;" }
+		}
+
+		button slot_team7
+		{
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			disabled	true
+			pos			"85 375"
+			size		"256 34"
+			string		"*cvar mn_slot7"
+			click		{ cmd "loadteam 7;mn_push mp_team_edit;" }
+		}
+
+		// ==================
+		// current team
+		// ==================
+
+		button button_new
+		{
+			pos	"85 430"
+			size "256 40"
+			tooltip	"_Generate a new random team"
+			click	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
+			image	menu/button_green_small	blend	true
+			font	f_menusmall
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_New"
+		}
+
+		button button_save
+		{
+			pos	"85 480"
+			size "256 40"
+			tooltip	"_Save the current team"
+			click	{ cmd "mn_push mp_team_save_popup;" }
+			image	menu/button_green_small	blend	true
+			font	f_menusmall
+			color	"0 0.5 0 1"
+			selectcolor "1 1 1 1"
+			string	"_Save"
+		}
+
+		string team_str
+		{
+			string	"_Team:"
+			pos	"85 570"
+		}
+
+		selectbox team_box
+		{
+			image	"menu/selectbox_green"
+			pos		"200 570"
+			size	"125 20"
+			color	"0.6 0.6 0.6 0.3"
+			cvar	"*cvar cl_team"
+			option low_value {
+				label	"_Human"
+				value	"1"
+				action	""
+			}
+			option medium_value {
+				label	"_Alien"
+				value	"7"
+				action	""
+			}
 		}
 	}
 

@@ -4,6 +4,21 @@
 
 menu multiplayer
 {
+	confunc mn_push_multiplayer
+	{
+		cmd "game_setmode multiplayer; mn_push mp_serverbrowser;"
+		*cvar:mn_multiplayer_tab 1
+	}
+
+	/** @brief prevent pushing this menu */
+	func init
+	{
+		cmd "mn_pop"
+		call mn_push_multiplayer
+	}
+}
+
+menu abstract_multiplayer {
 	// ==================
 	// background
 	// ==================
@@ -14,14 +29,14 @@ menu multiplayer
 	}
 
 	// ==================
-	// buttons
+	// main navigation
 	// ==================
 
 	button button_team
 	{
 		string		"_Team"
-		pos			"80 220"
-		size		"256 64"
+		pos			"80 160"
+		size		"256 60"
 		image		menu/button_green_big
 		blend		true
 		font		f_menubig
@@ -33,8 +48,8 @@ menu multiplayer
 	button button_join
 	{
 		string		"_Join"
-		pos			"80 290"
-		size		"256 64"
+		pos			"80 225"
+		size		"256 60"
 		image		menu/button_green_big
 		blend		true
 		font		f_menubig
@@ -46,8 +61,8 @@ menu multiplayer
 	button button_create
 	{
 		string		"_Create"
-		pos			"80 360"
-		size		"256 64"
+		pos			"80 290"
+		size		"256 60"
 		image		menu/button_green_big
 		blend		true
 		font		f_menubig
@@ -56,27 +71,69 @@ menu multiplayer
 		click		{ cmd "mn_pop; mn_push mp_create_server;" }
 	}
 
-	button button_exit
+	button button_lobby
 	{
-		string		"_Back"
-		pos			"80 450"
-		size		"256 64"
+		string		"_Lobby"
+		pos			"80 385"
+		size		"256 60"
 		image		menu/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_escpop 5; mn_pop esc; mn_pop multiplayer;" }
+		click		{ cmd "irc_connect; mn_push irc;" }
 	}
 
-	func init
+	button button_exit
 	{
-		// first switch to multiplayer - otherwise we will crash
-		cmd "game_setmode; mn_escpop 5; mn_push mp_serverbrowser;"
-		// mn_slot 0; loadteamslot;
+		string		"_Back"
+		pos			"80 480"
+		size		"256 60"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_pop;" }
 	}
+
 }
 
+menu abstract_multiplayer_join extends abstract_multiplayer {
+	// ==================
+	// main navigation
+	// ==================
+
+	tab join_navigation {
+		pos		"462 73"
+		size	"486 40"
+		cvar	"*cvar mn_multiplayer_tab"
+		option internet {
+			label	"_Internet/Lan"
+			value	"1"
+			action "mn_pop;mn_push mp_serverbrowser;"
+		}
+/*		option lan {
+			label	"_Lan"
+			value	"2"
+			action ""
+		}
+*/
+		option bookmark {
+			label	"_Bookmark"
+			value	"3"
+			action "mn_pop;mn_push mp_bookmarks;"
+		}
+/*
+		option bookmark {
+			label	"_Lobby"
+			value	"4"
+			// action "mn_pop;mn_push mp_lobby;"
+			action "irc_connect; mn_push irc;"
+		}
+*/
+	}
+}
 
 // ==================
 // SERVER INFO
@@ -210,192 +267,162 @@ menu serverinfo
 // ==================
 // JOIN LAN MENU
 // ==================
-menu mp_serverbrowser
+menu mp_serverbrowser extends abstract_multiplayer_join
 {
-	{
-		pos			"415 0"
-		size		"608 768"
-	}
-
-	string status_str
-	{
-		string		"_Serverfilter:"
-		pos			"150 107"
-		size		"150 20"
-	}
-	string status_value
-	{
-		string		"*cvar mn_serverliststr"
-		pos			"300 107"
-		size		"150 20"
-		textalign	uc
-	}
-	custombutton status_dec
-	{
-		pos			"455 107"
-		size		"16 16"
-		icon		prev
-		click		{
-			cmd "mn_modifywrap cl_serverlist -1 0 2;"
-			cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
-			cmd "pingservers refresh;"
+	panel content {
+		{
+			pos			"415 120"
+			size		"608 768"
 		}
-	}
-	custombutton status_inc
-	{
-		pos			"470 107"
-		size		"16 16"
-		icon		next
-		click		{
-			cmd "mn_modifywrap cl_serverlist +1 0 2;"
-			cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
-			cmd "pingservers refresh;"
+
+		string status_str
+		{
+			string		"_Serverfilter:"
+			pos			"150 7"
+			size		"150 20"
 		}
-	}
-
-	// ====================
-	// lan / inet buttons
-	// ====================
-	button button_serverbrowser
-	{
-		string		"_Serverbrowser"
-		image		menu/button_green_small
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		pos			"85 70"
-		size		"176 32"
-	}
-
-	button button_bookmarks
-	{
-		string		"_Bookmarks"
-		image		menu/button_green_small
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		pos			"311 70"
-		size		"176 32"
-		click		{
-			cmd "mn_escpop 1;"
-			cmd "mn_pop esc;"
-			cmd "mn_push mp_bookmarks;"
-			cmd "mn_escpop 3;"
+		string status_value
+		{
+			string		"*cvar mn_serverliststr"
+			pos			"300 7"
+			size		"150 20"
+			textalign	uc
 		}
-	}
+		custombutton status_dec
+		{
+			pos			"455 7"
+			size		"16 16"
+			icon		prev
+			click		{
+				cmd "mn_modifywrap cl_serverlist -1 0 2;"
+				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+				cmd "pingservers refresh;"
+			}
+		}
+		custombutton status_inc
+		{
+			pos			"470 7"
+			size		"16 16"
+			icon		next
+			click		{
+				cmd "mn_modifywrap cl_serverlist +1 0 2;"
+				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+				cmd "pingservers refresh;"
+			}
+		}
 
-	// servers_click is CL_ServerListClick_f in cl_main.c
-	text servers
-	{
-		pos			"85 140"
-		size		"420 340"
-		lineheight	20
-		tabwidth	48
-		font		"f_verysmall"
-		mousefx		true
-		border		3
-		bordercolor	"0 0.5 0 1"
-		padding		10
-		bgcolor		"0.3 0.3 0.3 0.4"
-		rows		"17"
-		textid		TEXT_LIST
-		click		{ }
-		rclick		{ cmd "pingservers;" }
-		wheel
-	}
+		// ====================
+		// lan / inet buttons
+		// ====================
 
-	// ==================
-	// nickname
-	// ==================
+		// servers_click is CL_ServerListClick_f in cl_main.c
+		text servers
+		{
+			pos			"65 40"
+			width		"420"
+			lineheight	20
+			tabwidth	48
+			font		"f_verysmall"
+			mousefx		true
+			border		3
+			bordercolor	"0 0.5 0 1"
+			padding		10
+			bgcolor		"0.3 0.3 0.3 0.4"
+			rows		"22"
+			textid		TEXT_LIST
+			click		{ }
+			rclick		{ cmd "pingservers;" }
+			wheel {
+				*(abstractscrollbar)content.servers_scroll current <text_scroll>
+			}
+			lineschange {
+				*(abstractscrollbar)content.servers_scroll fullsize <lines>
+				*(abstractscrollbar)content.servers_scroll current <text_scroll>
+			}
+		}
 
-	string current_name
-	{
-		string		"_Name:"
-		pos			"65 555"
-		size		"256 20"
-	}
+		vscrollbar irc_userlist_scroll {
+			image		menu/scrollbar_v_green
+			blend		true
+			pos			"490 40"
+			height		"440"
+			current		0
+			viewsize	22
+			fullsize	22
+			change		{ cmd "mn_textscroll content.servers <lastdiff>;" }
+		}
 
-	textentry slot_name
-	{
-		string		"*cvar cl_name"
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"65 575"
-		size		"256 34"
-	}
+		button button_serverbrowser_refresh
+		{
+			string		"_Refresh"
+			image		menu/button_green_small
+			blend		true
+			color		"0 0.8 0 1"
+			font		f_small
+			pos			"335 490"
+			size		"176 32"
+			click		{ cmd "pingservers refresh;" }
+		}
 
-	// ==================
-	// preferences
-	// ==================
+		// ==================
+		// nickname
+		// ==================
+/*
+		string current_name
+		{
+			string		"_Name:"
+			pos			"65 455"
+			size		"256 20"
+		}
 
-	button button_serverbrowser_refresh
-	{
-		string		"_Refresh"
-		image		menu/button_green_small
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		pos			"311 650"
-		size		"176 32"
-		click		{ cmd "pingservers refresh;" }
-	}
+		textentry slot_name
+		{
+			string		"*cvar cl_name"
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"65 475"
+			size		"256 34"
+		}
+*/
 
-	// ====================
-	// lobby
-	// ====================
-	button button_inet_lobby
-	{
-		string		"_Lobby"
-		pos			"85 650"
-		size		"176 32"
-		image		menu/button_green_small
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		click		{ cmd "irc_connect; mn_push irc;" }
-	}
-
-	// ===================
-	// connect_to_ip
-	// ===================
-	string current_inet_connect_to_ip
-	{
-		string		"_Connect to IP"
-		pos			"65 500"
-		size		"256 20"
-	}
-	textentry slot_ip
-	{
-		string		"*cvar mn_server_ip"
-		image		menu/button_green_verysmall
-		blend		true
-		color		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"65 520"
-		size		"256 34"
-	}
-
-	// ====================
-	// connect to ip button
-	// ====================
-	button button_inet_connect_to_ip
-	{
-		string		"_Connect"
-		image		menu/button_green_small
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		pos			"335 520"
-		size		"176 32"
-		click		{ cmd "server_info *mn_server_ip;" }
+		// ===================
+		// connect_to_ip
+		// ===================
+		string current_inet_connect_to_ip
+		{
+			string		"_Connect to IP"
+			pos			"65 520"
+			size		"256 20"
+		}
+		textentry slot_ip
+		{
+			string		"*cvar mn_server_ip"
+			image		menu/button_green_verysmall
+			blend		true
+			color		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"65 540"
+			size		"256 34"
+		}
+		button button_inet_connect_to_ip
+		{
+			string		"_Connect"
+			image		menu/button_green_small
+			blend		true
+			color		"0 0.8 0 1"
+			font		f_small
+			pos			"335 540"
+			size		"176 32"
+			click		{ cmd "server_info *mn_server_ip;" }
+		}
 	}
 
 	// ====================
@@ -404,7 +431,6 @@ menu mp_serverbrowser
 	func init
 	{
 		cmd "set cl_serverlist 0;"
-		cmd	"mn_escpop 5;"
 		cmd "pingservers;mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 	}
 
@@ -419,566 +445,544 @@ menu mp_serverbrowser
 // INTERNET MENU
 // ==================
 
-menu mp_bookmarks
+menu mp_bookmarks extends abstract_multiplayer_join
 {
-	{
-		pos			"415 0"
-		size		"608 768"
-	}
+	panel content {
+		{
+			pos			"415 100"
+			size		"608 768"
+		}
 
-	// ====================
-	// lan / inet buttons
-	// ====================
-	button button_serverbrowser
-	{
-		string		"_Serverbrowser"
-		image		menu/button_green_small
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		pos			"85 70"
-		size		"176 32"
-		click		{ cmd "mn_escpop 1;mn_pop esc;mn_push multiplayer;pingservers;mn_escpop 3;" }
-	}
-	button button_bookmarks
-	{
-		string		"_Bookmarks"
-		image		menu/button_green_small
-		blend		true
-		color		"0 0.8 0 1"
-		font		f_small
-		pos			"311 70"
-		size		"176 32"
-	}
+		// ====================
+		// lan / inet buttons
+		// ====================
 
-	string inet_bookmarks
-	{
-		string		"_Bookmarks"
-		font		f_menubig
-		color		"0 0.5 0 1"
-		pos			"85 170"
-		size		"400 35"
-		textalign	uc
-	}
+		string inet_bookmarks
+		{
+			string		"_Bookmarks"
+			font		f_menubig
+			color		"0 0.5 0 1"
+			pos			"85 170"
+			size		"400 35"
+			textalign	uc
+		}
 
-	string adr0 { pos "95 230" string "*cvar adr0" size "300 12" }
-	custombutton resetadr0 { visiblewhen "adr0" pos "65 230" size "22 22" icon garbage	click { cmd "del adr0;" } tooltip "_Delete this bookmark" }
+		string adr0 { pos "95 230" string "*cvar adr0" size "300 12" }
+		custombutton resetadr0 { visiblewhen "adr0" pos "65 230" size "22 22" icon garbage	click { cmd "del adr0;" } tooltip "_Delete this bookmark" }
 
-	string adr1 { pos "95 260" string "*cvar adr1" size "300 12" }
-	custombutton resetadr1 { visiblewhen "adr1" pos "65 230" size "22 22" icon garbage	click { cmd "del adr1;" } tooltip "_Delete this bookmark" }
+		string adr1 { pos "95 260" string "*cvar adr1" size "300 12" }
+		custombutton resetadr1 { visiblewhen "adr1" pos "65 230" size "22 22" icon garbage	click { cmd "del adr1;" } tooltip "_Delete this bookmark" }
 
-	string adr2 { pos "95 290" string "*cvar adr2" size "300 12" }
-	custombutton resetadr2 { visiblewhen "adr2" pos "65 230" size "22 22" icon garbage	click { cmd "del adr2;" } tooltip "_Delete this bookmark" }
+		string adr2 { pos "95 290" string "*cvar adr2" size "300 12" }
+		custombutton resetadr2 { visiblewhen "adr2" pos "65 230" size "22 22" icon garbage	click { cmd "del adr2;" } tooltip "_Delete this bookmark" }
 
-	string adr3 { pos "95 320" string "*cvar adr3" size "300 12" }
-	custombutton resetadr3 { visiblewhen "adr3" pos "65 230" size "22 22" icon garbage	click { cmd "del adr3;" } tooltip "_Delete this bookmark" }
+		string adr3 { pos "95 320" string "*cvar adr3" size "300 12" }
+		custombutton resetadr3 { visiblewhen "adr3" pos "65 230" size "22 22" icon garbage	click { cmd "del adr3;" } tooltip "_Delete this bookmark" }
 
-	string adr4 { pos "95 350" string "*cvar adr4" size "300 12" }
-	custombutton resetadr4 { visiblewhen "adr4" pos "65 230" size "22 22" icon garbage	click { cmd "del adr4;" } tooltip "_Delete this bookmark" }
+		string adr4 { pos "95 350" string "*cvar adr4" size "300 12" }
+		custombutton resetadr4 { visiblewhen "adr4" pos "65 230" size "22 22" icon garbage	click { cmd "del adr4;" } tooltip "_Delete this bookmark" }
 
-	string adr5 { pos "95 380" string "*cvar adr5" size "300 12" }
-	custombutton resetadr5 { visiblewhen "adr5" pos "65 230" size "22 22" icon garbage	click { cmd "del adr5;" } tooltip "_Delete this bookmark" }
+		string adr5 { pos "95 380" string "*cvar adr5" size "300 12" }
+		custombutton resetadr5 { visiblewhen "adr5" pos "65 230" size "22 22" icon garbage	click { cmd "del adr5;" } tooltip "_Delete this bookmark" }
 
-	string adr6 { pos "95 410" string "*cvar adr6" size "300 12" }
-	custombutton resetadr6 { visiblewhen "adr6" pos "65 230" size "22 22" icon garbage	click { cmd "del adr6;" } tooltip "_Delete this bookmark" }
+		string adr6 { pos "95 410" string "*cvar adr6" size "300 12" }
+		custombutton resetadr6 { visiblewhen "adr6" pos "65 230" size "22 22" icon garbage	click { cmd "del adr6;" } tooltip "_Delete this bookmark" }
 
-	string adr7 { pos "95 440" string "*cvar adr7" size "300 12" }
-	custombutton resetadr7 { visiblewhen "adr7" pos "65 230" size "22 22" icon garbage	click { cmd "del adr7;" } tooltip "_Delete this bookmark" }
+		string adr7 { pos "95 440" string "*cvar adr7" size "300 12" }
+		custombutton resetadr7 { visiblewhen "adr7" pos "65 230" size "22 22" icon garbage	click { cmd "del adr7;" } tooltip "_Delete this bookmark" }
 
-	string adr8 { pos "95 470" string "*cvar adr8" size "300 12" }
-	custombutton resetadr8 { visiblewhen "adr8" pos "65 230" size "22 22" icon garbage	click { cmd "del adr8;" } tooltip "_Delete this bookmark" }
+		string adr8 { pos "95 470" string "*cvar adr8" size "300 12" }
+		custombutton resetadr8 { visiblewhen "adr8" pos "65 230" size "22 22" icon garbage	click { cmd "del adr8;" } tooltip "_Delete this bookmark" }
 
-	string adr9 { pos "95 500" string "*cvar adr9" size "300 12" }
-	custombutton resetadr9 { visiblewhen "adr9" pos "65 230" size "22 22" icon garbage	click { cmd "del adr9;" } tooltip "_Delete this bookmark" }
+		string adr9 { pos "95 500" string "*cvar adr9" size "300 12" }
+		custombutton resetadr9 { visiblewhen "adr9" pos "65 230" size "22 22" icon garbage	click { cmd "del adr9;" } tooltip "_Delete this bookmark" }
 
-	string adr10 { pos "95 530" string "*cvar adr10" size "300 12" }
-	custombutton resetadr10 { visiblewhen "adr10" pos "65 230" size "22 22" icon garbage	click { cmd "del adr10;" } tooltip "_Delete this bookmark" }
+		string adr10 { pos "95 530" string "*cvar adr10" size "300 12" }
+		custombutton resetadr10 { visiblewhen "adr10" pos "65 230" size "22 22" icon garbage	click { cmd "del adr10;" } tooltip "_Delete this bookmark" }
 
-	string adr11 { pos "95 560" string "*cvar adr11" size "300 12" }
-	custombutton resetadr11 { visiblewhen "adr11" pos "65 230" size "22 22" icon garbage	click { cmd "del adr11;" } tooltip "_Delete this bookmark" }
+		string adr11 { pos "95 560" string "*cvar adr11" size "300 12" }
+		custombutton resetadr11 { visiblewhen "adr11" pos "65 230" size "22 22" icon garbage	click { cmd "del adr11;" } tooltip "_Delete this bookmark" }
 
-	string adr12 { pos "95 590" string "*cvar adr12" size "300 12" }
-	custombutton resetadr12 { visiblewhen "adr12" pos "65 230" size "22 22" icon garbage	click { cmd "del adr12;" } tooltip "_Delete this bookmark" }
+		string adr12 { pos "95 590" string "*cvar adr12" size "300 12" }
+		custombutton resetadr12 { visiblewhen "adr12" pos "65 230" size "22 22" icon garbage	click { cmd "del adr12;" } tooltip "_Delete this bookmark" }
 
-	string adr13 { pos "95 620" string "*cvar adr13" size "300 12" }
-	custombutton resetadr13 { visiblewhen "adr13" pos "65 230" size "22 22" icon garbage	click { cmd "del adr13;" } tooltip "_Delete this bookmark" }
+		string adr13 { pos "95 620" string "*cvar adr13" size "300 12" }
+		custombutton resetadr13 { visiblewhen "adr13" pos "65 230" size "22 22" icon garbage	click { cmd "del adr13;" } tooltip "_Delete this bookmark" }
 
-	string adr14 { pos "95 650" string "*cvar adr14" size "300 12" }
-	custombutton resetadr14 { visiblewhen "adr14" pos "65 230" size "22 22" icon garbage	click { cmd "del adr14;" } tooltip "_Delete this bookmark" }
+		string adr14 { pos "95 650" string "*cvar adr14" size "300 12" }
+		custombutton resetadr14 { visiblewhen "adr14" pos "65 230" size "22 22" icon garbage	click { cmd "del adr14;" } tooltip "_Delete this bookmark" }
 
-	string adr15 { pos "95 680" string "*cvar adr15" size "300 12" }
-	custombutton resetadr15 { visiblewhen "adr15" pos "65 230" size "22 22" icon garbage	click { cmd "del adr15;" } tooltip "_Delete this bookmark" }
-
-	func init
-	{
-		cmd	"mn_escpop 5;"
+		string adr15 { pos "95 680" string "*cvar adr15" size "300 12" }
+		custombutton resetadr15 { visiblewhen "adr15" pos "65 230" size "22 22" icon garbage	click { cmd "del adr15;" } tooltip "_Delete this bookmark" }
 	}
 }
-
 
 // ==================
 // SERVER MENU
 // ==================
 
-menu mp_create_server
+menu mp_create_server extends abstract_multiplayer
 {
-	{
-		pos			"415 0"
-		size		"608 768"
-	}
 
-	// ===================
-	// DAY + NIGHT
-	// ===================
-	string daynight_str
-	{
-		string		"_Day version:"
-		pos			"85 100"
-		size		"280 20"
-	}
-	checkbox daynight_value
-	{
-		current		"*cvar mn_serverday"
-		pos			"410 100"
-		size		"20 18"
-		image		"menu/checkbox_blue"
-	}
+	panel content {
+		{
+			pos			"415 0"
+			size		"608 768"
+		}
 
-	text firewall_str
-	{
-		string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
-		/** @todo check the position */
-		pos			"-480 150"
-		size		"256 40"
-		longlines	wrap
-		textalign	uc
-		font		"f_small"
-		textid		TEXT_STANDARD
-	}
+		// ===================
+		// DAY + NIGHT
+		// ===================
+		string daynight_str
+		{
+			string		"_Day version:"
+			pos			"85 100"
+			size		"280 20"
+		}
+		checkbox daynight_value
+		{
+			current		"*cvar mn_serverday"
+			pos			"410 100"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
 
-	// =====================
-	// PUBLIC - MASTERSERVER
-	// =====================
-	string public_str
-	{
-		string		"_Make this server public:"
-		pos			"85 120"
-		size		"280 20"
-	}
-	checkbox public_value
-	{
-		current		"*cvar sv_public"
-		pos			"410 120"
-		size		"20 18"
-		image		"menu/checkbox_blue"
-	}
+		text firewall_str
+		{
+			string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
+			/** @todo check the position */
+			pos			"-480 150"
+			size		"256 40"
+			longlines	wrap
+			textalign	uc
+			font		"f_small"
+			textid		TEXT_STANDARD
+		}
 
-	// ===================
-	// MORALE
-	// ===================
-	string morale_str
-	{
-		string		"_Enable morale states:"
-		pos			"85 140"
-		size		"280 20"
-	}
-	checkbox morale_value
-	{
-		current		"*cvar sv_enablemorale"
-		pos			"410 140"
-		size		"20 18"
-		image		"menu/checkbox_blue"
-	}
+		// =====================
+		// PUBLIC - MASTERSERVER
+		// =====================
+		string public_str
+		{
+			string		"_Make this server public:"
+			pos			"85 120"
+			size		"280 20"
+		}
+		checkbox public_value
+		{
+			current		"*cvar sv_public"
+			pos			"410 120"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
 
-	// ===================
-	// GAME TYPE
-	// ===================
-	string gametype_str
-	{
-		string		"_Gametype:"
-		pos			"85 160"
-		size		"280 20"
-	}
-	string gametype_value
-	{
-		string		"*cvar sv_gametype"
-		pos			"380 160"
-		size		"80 20"
-		textalign	uc
-		whup		{ cmd "mp_prevgametype;" }
-		whdown		{ cmd "mp_nextgametype;" }
-	}
-	custombutton gametype_dec
-	{
-		pos			"364 160"
-		size		"16 16"
-		icon		prev
-		click		{ cmd "mp_prevgametype;" }
-		whup		{ cmd "mp_prevgametype;" }
-		whdown		{ cmd "mp_nextgametype;" }
-	}
-	custombutton gametype_inc
-	{
-		pos			"460 160"
-		size		"16 16"
-		icon		next
-		click		{ cmd "mp_nextgametype;" }
-		whup		{ cmd "mp_prevgametype;" }
-		whdown		{ cmd "mp_nextgametype;" }
-	}
+		// ===================
+		// MORALE
+		// ===================
+		string morale_str
+		{
+			string		"_Enable morale states:"
+			pos			"85 140"
+			size		"280 20"
+		}
+		checkbox morale_value
+		{
+			current		"*cvar sv_enablemorale"
+			pos			"410 140"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
 
-	// ===================
-	// TEAMPLAY
-	// ===================
-	string server_teamplay_str
-	{
-		string		"_Teamplay:"
-		pos			"85 180"
-		size		"280 20"
-	}
-	checkbox server_teamplay_value
-	{
-		current		"*cvar sv_teamplay"
-		pos			"410 180"
-		size		"20 18"
-		image		"menu/checkbox_blue"
-	}
+		// ===================
+		// GAME TYPE
+		// ===================
+		string gametype_str
+		{
+			string		"_Gametype:"
+			pos			"85 160"
+			size		"280 20"
+		}
+		string gametype_value
+		{
+			string		"*cvar sv_gametype"
+			pos			"380 160"
+			size		"80 20"
+			textalign	uc
+			whup		{ cmd "mp_prevgametype;" }
+			whdown		{ cmd "mp_nextgametype;" }
+		}
+		custombutton gametype_dec
+		{
+			pos			"364 160"
+			size		"16 16"
+			icon		prev
+			click		{ cmd "mp_prevgametype;" }
+			whup		{ cmd "mp_prevgametype;" }
+			whdown		{ cmd "mp_nextgametype;" }
+		}
+		custombutton gametype_inc
+		{
+			pos			"460 160"
+			size		"16 16"
+			icon		next
+			click		{ cmd "mp_nextgametype;" }
+			whup		{ cmd "mp_prevgametype;" }
+			whdown		{ cmd "mp_nextgametype;" }
+		}
 
-	// ===================
-	// MAXCLIENTS
-	// ===================
-	string maxclients_str
-	{
-		string		"_Max. clients:"
-		tooltip		"_Sets the max allowed clients to connect"
-		pos			"85 200"
-		size		"280 20"
-	}
-	string maxclients_value
-	{
-		string		"*cvar sv_maxclients"
-		pos			"395 200"
-		size		"50 20"
-		textalign	uc
-	}
-	spinner maxclients_change
-	{
-		current		"*cvar sv_maxclients"
-		image		menu/spinner_blue
-		blend		true
-		pos			"475 199"
-		mousefx		true
-		min			2
-		max			16
-		delta		1
-	}
+		// ===================
+		// TEAMPLAY
+		// ===================
+		string server_teamplay_str
+		{
+			string		"_Teamplay:"
+			pos			"85 180"
+			size		"280 20"
+		}
+		checkbox server_teamplay_value
+		{
+			current		"*cvar sv_teamplay"
+			pos			"410 180"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
 
-	// ===================
-	// G_MAXPERPLAYER
-	// ===================
-	string maxperplayer_str
-	{
-		string		"_Max. soldiers per team:"
-		tooltip		"_Sets the max allowed soldiers per team"
-		pos			"85 220"
-		size		"280 20"
-	}
-	string maxperplayer_value
-	{
-		string		"*cvar sv_maxsoldiersperteam"
-		pos			"395 220"
-		size		"50 20"
-		textalign	uc
-	}
-	spinner maxperplayer_change
-	{
-		current		"*cvar sv_maxsoldiersperteam"
-		image		menu/spinner_blue
-		blend		true
-		pos			"475 219"
-		mousefx		true
-		min			1
-		max			8
-		delta		1
-	}
+		// ===================
+		// MAXCLIENTS
+		// ===================
+		string maxclients_str
+		{
+			string		"_Max. clients:"
+			tooltip		"_Sets the max allowed clients to connect"
+			pos			"85 200"
+			size		"280 20"
+		}
+		string maxclients_value
+		{
+			string		"*cvar sv_maxclients"
+			pos			"395 200"
+			size		"50 20"
+			textalign	uc
+		}
+		spinner maxclients_change
+		{
+			current		"*cvar sv_maxclients"
+			image		menu/spinner_blue
+			blend		true
+			pos			"475 199"
+			mousefx		true
+			min			2
+			max			16
+			delta		1
+		}
 
-	// =====================
-	// MAXSOLDIER PER PLAYER
-	// =====================
-	string maxsoldierperplayer_str
-	{
-		string		"_Max. soldiers per player:"
-		tooltip		"_Sets the max allowed soldiers per player when in teamplay"
-		pos			"85 240"
-		size		"280 20"
-	}
-	string maxsoldierperplayer_value
-	{
-		string		"*cvar sv_maxsoldiersperplayer"
-		pos			"395 240"
-		size		"50 20"
-		textalign	uc
-	}
-	spinner maxsoldierperplayer_change
-	{
-		current		"*cvar sv_maxsoldiersperplayer"
-		image		menu/spinner_blue
-		blend		true
-		pos			"475 239"
-		mousefx		true
-		min			1
-		max			8
-		delta		1
-	}
+		// ===================
+		// G_MAXPERPLAYER
+		// ===================
+		string maxperplayer_str
+		{
+			string		"_Max. soldiers per team:"
+			tooltip		"_Sets the max allowed soldiers per team"
+			pos			"85 220"
+			size		"280 20"
+		}
+		string maxperplayer_value
+		{
+			string		"*cvar sv_maxsoldiersperteam"
+			pos			"395 220"
+			size		"50 20"
+			textalign	uc
+		}
+		spinner maxperplayer_change
+		{
+			current		"*cvar sv_maxsoldiersperteam"
+			image		menu/spinner_blue
+			blend		true
+			pos			"475 219"
+			mousefx		true
+			min			1
+			max			8
+			delta		1
+		}
 
-	// ===================
-	// MAX PLAYER PER TEAM
-	// max is half of sv_maxclients
-	// ===================
-	string server_maxplayerperteam_str
-	{
-		string		"_Max. human players per team:"
-		pos			"85 260"
-		size		"280 20"
-	}
-	string server_maxplayerperteam_value
-	{
-		string		"*cvar sv_maxplayersperteam"
-		pos			"395 260"
-		size		"50 20"
-		textalign	uc
-	}
-	spinner maxplayersperteam_change
-	{
-		current		"*cvar sv_maxplayersperteam"
-		image		menu/spinner_blue
-		blend		true
-		pos			"475 259"
-		mousefx		true
-		min			1
-		max			8
-		delta		1
-	}
+		// =====================
+		// MAXSOLDIER PER PLAYER
+		// =====================
+		string maxsoldierperplayer_str
+		{
+			string		"_Max. soldiers per player:"
+			tooltip		"_Sets the max allowed soldiers per player when in teamplay"
+			pos			"85 240"
+			size		"280 20"
+		}
+		string maxsoldierperplayer_value
+		{
+			string		"*cvar sv_maxsoldiersperplayer"
+			pos			"395 240"
+			size		"50 20"
+			textalign	uc
+		}
+		spinner maxsoldierperplayer_change
+		{
+			current		"*cvar sv_maxsoldiersperplayer"
+			image		menu/spinner_blue
+			blend		true
+			pos			"475 239"
+			mousefx		true
+			min			1
+			max			8
+			delta		1
+		}
 
-	// ===================
-	// AI_NUMACTORS
-	// ===================
-	string ai_numactors_str
-	{
-		string		"_Max. AI actors:"
-		tooltip		"_Max AI actors for teamplay mode"
-		pos			"85 280"
-		size		"280 20"
-	}
-	string ai_numactors_value
-	{
-		string		"*cvar ai_numactors"
-		pos			"395 280"
-		size		"50 20"
-		textalign	uc
-	}
-	spinner ai_numactors_change
-	{
-		current		"*cvar ai_numactors"
-		image		menu/spinner_blue
-		blend		true
-		pos			"475 279"
-		mousefx		true
-		min			0
-		max			8
-		delta		1
-	}
+		// ===================
+		// MAX PLAYER PER TEAM
+		// max is half of sv_maxclients
+		// ===================
+		string server_maxplayerperteam_str
+		{
+			string		"_Max. human players per team:"
+			pos			"85 260"
+			size		"280 20"
+		}
+		string server_maxplayerperteam_value
+		{
+			string		"*cvar sv_maxplayersperteam"
+			pos			"395 260"
+			size		"50 20"
+			textalign	uc
+		}
+		spinner maxplayersperteam_change
+		{
+			current		"*cvar sv_maxplayersperteam"
+			image		menu/spinner_blue
+			blend		true
+			pos			"475 259"
+			mousefx		true
+			min			1
+			max			8
+			delta		1
+		}
 
-	// ===================
-	// AI_AUTOJOIN
-	// ===================
-	string ai_autojoin_str
-	{
-		string		"_AI autojoin:"
-		tooltip		"_AI autojoin on free teams"
-		pos			"85 300"
-		size		"280 20"
-	}
-	checkbox ai_autojoin_value
-	{
-		current		"*cvar ai_autojoin"
-		pos			"410 300"
-		size		"20 18"
-		image		"menu/checkbox_blue"
-	}
+		// ===================
+		// AI_NUMACTORS
+		// ===================
+		string ai_numactors_str
+		{
+			string		"_Max. AI actors:"
+			tooltip		"_Max AI actors for teamplay mode"
+			pos			"85 280"
+			size		"280 20"
+		}
+		string ai_numactors_value
+		{
+			string		"*cvar ai_numactors"
+			pos			"395 280"
+			size		"50 20"
+			textalign	uc
+		}
+		spinner ai_numactors_change
+		{
+			current		"*cvar ai_numactors"
+			image		menu/spinner_blue
+			blend		true
+			pos			"475 279"
+			mousefx		true
+			min			0
+			max			8
+			delta		1
+		}
 
-	// ===================
-	// SERVER_PASSWORD
-	// ===================
-	string current_server_pwd
-	{
-		string		"_Server-Password:"
-		pos			"85 330"
-		size		"256 20"
-	}
-	textentry slot_server_pwd
-	{
-		string		"*cvar password"
-		image		menu/button_green_verysmall
-		blend		true
-		color 		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"85 350"
-		size		"256 34"
-		ispassword	true
-	}
+		// ===================
+		// AI_AUTOJOIN
+		// ===================
+		string ai_autojoin_str
+		{
+			string		"_AI autojoin:"
+			tooltip		"_AI autojoin on free teams"
+			pos			"85 300"
+			size		"280 20"
+		}
+		checkbox ai_autojoin_value
+		{
+			current		"*cvar ai_autojoin"
+			pos			"410 300"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
 
-	// ===================
-	// RCON_PASSWORD
-	// ===================
-	string current_rcon_pwd
-	{
-		string		"_RCON-Password:"
-		pos			"85 390"
-		size		"256 20"
-	}
-	textentry slot_rcon_pwd
-	{
-		string		"*cvar rcon_password"
-		image		menu/button_green_verysmall
-		blend		true
-		color 		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"85 410"
-		size		"256 34"
-		ispassword	true
-	}
+		// ===================
+		// SERVER_PASSWORD
+		// ===================
+		string current_server_pwd
+		{
+			string		"_Server-Password:"
+			pos			"85 330"
+			size		"256 20"
+		}
+		textentry slot_server_pwd
+		{
+			string		"*cvar password"
+			image		menu/button_green_verysmall
+			blend		true
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"85 350"
+			size		"256 34"
+			ispassword	true
+		}
 
-	// ===================
-	// HOSTNAME
-	// ===================
-	string current_hostname
-	{
-		string		"_Hostname:"
-		pos			"85 450"
-		size		"256 20"
-	}
-	textentry slot_hostname
-	{
-		string		"*cvar sv_hostname"
-		image		menu/button_green_verysmall
-		blend		true
-		color 		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"85 470"
-		size		"256 34"
-	}
+		// ===================
+		// RCON_PASSWORD
+		// ===================
+		string current_rcon_pwd
+		{
+			string		"_RCON-Password:"
+			pos			"85 390"
+			size		"256 20"
+		}
+		textentry slot_rcon_pwd
+		{
+			string		"*cvar rcon_password"
+			image		menu/button_green_verysmall
+			blend		true
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"85 410"
+			size		"256 34"
+			ispassword	true
+		}
 
-	// ===================
-	// MAP
-	// ===================
-	string current_map
-	{
-		string		"_Map"
-		pos			"85 510"
-		size		"256 20"
-	}
-	textentry slot_map
-	{
-		string		"*cvar mn_svmapname"
-		image		menu/button_green_verysmall
-		blend		true
-		color 		"0 .78 0 1"
-		selectcolor	"1 1 1 1"
-		textalign	cl
-		padding		8
-		font		"f_verysmall"
-		pos			"85 530"
-		size		"256 34"
-		disabled	true
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
-	}
+		// ===================
+		// HOSTNAME
+		// ===================
+		string current_hostname
+		{
+			string		"_Hostname:"
+			pos			"85 450"
+			size		"256 20"
+		}
+		textentry slot_hostname
+		{
+			string		"*cvar sv_hostname"
+			image		menu/button_green_verysmall
+			blend		true
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"85 470"
+			size		"256 34"
+		}
 
-	string string_gametypes
-	{
-		string		"*cvar mn_mapgametypes"
-		pos			"85 570"
-		size		"256 32"
-		font		"f_verysmall"
-		longlines	wrap
-	}
+		// ===================
+		// MAP
+		// ===================
+		string current_map
+		{
+			string		"_Map"
+			pos			"85 510"
+			size		"256 20"
+		}
+		textentry slot_map
+		{
+			string		"*cvar mn_svmapname"
+			image		menu/button_green_verysmall
+			blend		true
+			color 		"0 .78 0 1"
+			selectcolor	"1 1 1 1"
+			textalign	cl
+			padding		8
+			font		"f_verysmall"
+			pos			"85 530"
+			size		"256 34"
+			disabled	true
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+		}
 
-	custombutton prev_map
-	{
-		pos			"63 538"
-		size		"16 16"
-		icon		prev
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_prevmap;" }
-	}
-	custombutton next_map
-	{
-		pos			"345 538"
-		size		"16 16"
-		icon		next
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
-	}
-	pic mappic
-	{
-		image		"*cvar mn_mappic"
-		pos			"385 330"
-		texl		"0 0"
-		texh		"128 96"
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
-		rclick		{ cmd "mn_prevmap;" }
-	}
-	pic mappic2
-	{
-		image		"*cvar mn_mappic2"
-		pos			"385 430"
-		texl		"0 0"
-		texh		"128 96"
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
-		rclick		{ cmd "mn_prevmap;" }
-	}
-	pic mappic3
-	{
-		image		"*cvar mn_mappic3"
-		pos			"385 530"
-		texl		"0 0"
-		texh		"128 96"
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
-		rclick		{ cmd "mn_prevmap;" }
-	}
+		string string_gametypes
+		{
+			string		"*cvar mn_mapgametypes"
+			pos			"85 570"
+			size		"256 32"
+			font		"f_verysmall"
+			longlines	wrap
+		}
 
-	// ====================
-	// create_server button
-	// ====================
-	button button_server
-	{
-		string		"_Start server"
-		pos			"155 630"
-		size		"256 64"
-		image		menu/button_green_big
-		blend		true
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		click		{ cmd "mp_startserver;" }
+		custombutton prev_map
+		{
+			pos			"63 538"
+			size		"16 16"
+			icon		prev
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_prevmap;" }
+		}
+		custombutton next_map
+		{
+			pos			"345 538"
+			size		"16 16"
+			icon		next
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+		}
+		pic mappic
+		{
+			image		"*cvar mn_mappic"
+			pos			"385 330"
+			texl		"0 0"
+			texh		"128 96"
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+			rclick		{ cmd "mn_prevmap;" }
+		}
+		pic mappic2
+		{
+			image		"*cvar mn_mappic2"
+			pos			"385 430"
+			texl		"0 0"
+			texh		"128 96"
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+			rclick		{ cmd "mn_prevmap;" }
+		}
+		pic mappic3
+		{
+			image		"*cvar mn_mappic3"
+			pos			"385 530"
+			texl		"0 0"
+			texh		"128 96"
+			whup		{ cmd "mn_prevmap;" }
+			whdown		{ cmd "mn_nextmap;" }
+			click		{ cmd "mn_nextmap;" }
+			rclick		{ cmd "mn_prevmap;" }
+		}
+
+		// ====================
+		// create_server button
+		// ====================
+		button button_server
+		{
+			string		"_Start server"
+			pos			"155 630"
+			size		"256 64"
+			image		menu/button_green_big
+			blend		true
+			font		f_menubig
+			color		"0 0.5 0 1"
+			selectcolor	"1 1 1 1"
+			click		{ cmd "mp_startserver;" }
+		}
 	}
 
 	// ===================
@@ -986,10 +990,19 @@ menu mp_create_server
 	// ===================
 	func init
 	{
-		cmd	"mn_escpop 5;"
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_updategametype;mn_getmaps;"
 	}
+
+}
+
+// ==================
+// LOBBY
+// ==================
+
+menu mp_lobby extends abstract_multiplayer
+{
+
 }
 
 // ==========================
@@ -1132,7 +1145,7 @@ menu multiplayer_selectteam
 		image		menu/button_background blend true
 		pos			"684 494"
 		size		"64 37"
-		texl		"192 0"	
+		texl		"192 0"
 		icon		return
 		click		{ cmd "spawnsoldiers;" }
 	}
