@@ -840,7 +840,7 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
 			/* disable hud button */
-			MN_ExecuteConfunc("huddisable%i", i);
+			MN_ExecuteConfunc("huddisable %i", i);
 
 			/* remove from list */
 			cl.teamList[i] = NULL;
