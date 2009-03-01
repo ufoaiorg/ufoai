@@ -695,6 +695,10 @@ int main (int argc, const char **argv)
 			WriteMapFile(mapFilename);
 		}
 
+		/* the check stuff includes entitiesdef.h, which does not use mem.h.
+		 * this manual free is required */
+		Check_Free();
+
 		Mem_Shutdown();
 
 		return 0;
