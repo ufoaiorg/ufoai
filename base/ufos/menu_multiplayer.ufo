@@ -1050,11 +1050,11 @@ menu mp_create_server extends abstract_multiplayer
 	// ===================
 
 	/** @todo fix it, it can't support string property */
-	text firewall_str_
+	text firewall_str
 	{
 		string		"_Make sure that you've opened the TCP port 27910 in your firewall settings"
-		pos			"0 150"
-		size		"256 550"
+		pos			"500 530"
+		size		"400 100"
 		longlines	wrap
 		textalign	uc
 		font		"f_small"
