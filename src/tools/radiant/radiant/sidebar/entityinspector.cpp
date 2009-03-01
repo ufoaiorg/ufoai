@@ -1229,22 +1229,6 @@ static void SpawnflagCheck_toggled (GtkWidget *widget, gpointer data)
 	}
 }
 
-/**
- * @brief Get the default value for a given entity parameter
- * @param entity The entity to get the default value for
- * @param key The entity parameter name to get the default value for
- * @return The default value
- */
-static const char *GetDefaultValueForParameter (const EntityClass* entity, const char *key)
-{
-	EntityClassAttribute *attrib = entity->getAttribute(key);
-	//use value if it is set to something
-	if (attrib && strlen(attrib->m_value.c_str()))
-		return attrib->m_value.c_str();
-	// TODO retrieve some default value from entity definition instead of that "value"?
-	return "value";
-}
-
 static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newValue)
 {
 	char *key, *value;
@@ -1285,7 +1269,7 @@ static void entityKeyValueEdited (GtkTreeView *view, int columnIndex, char *newV
 	}
 
 	if (columnIndex == 0 && !keyConverted.empty() && valueConverted.empty())
-		valueConverted << GetDefaultValueForParameter(g_current_attributes, keyConverted.c_str());
+		valueConverted << g_current_attributes->getDefaultForAttribute(keyConverted.c_str());
 
 	g_message("change value for %s to %s\n", keyConverted.c_str(), valueConverted.c_str());
 	if (!strcmp(keyConverted.c_str(), "classname")) {

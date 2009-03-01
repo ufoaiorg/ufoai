@@ -134,13 +134,32 @@ public:
 		return m_skin.c_str();
 	}
 
-	EntityClassAttribute *getAttribute(const char* type) const{
+	/**
+	 * @brief Get the attribute definition for a given attribute name
+	 * @param attributeName the attribute to retrieve
+	 * @return attribute or @c NULL
+	 */
+	EntityClassAttribute *getAttribute(const char* attributeName) const{
 		for (EntityClassAttributes::const_iterator i = m_attributes.begin(); i != m_attributes.end(); ++i) {
-			if (string_equal(type, (*i).first.c_str())) {
+			if (string_equal(attributeName, (*i).first.c_str())) {
 				return const_cast<EntityClassAttribute*>(&(*i).second);
 			}
 		}
 		return NULL;
+	}
+
+	/**
+	 * @brief Get the default value for a given entity parameter
+	 * @param attributeName The attribute name to get the default value for
+	 * @return the default value
+	 */
+	const char* getDefaultForAttribute (const char* attributeName) const {
+		EntityClassAttribute *attrib = getAttribute(attributeName);
+		//use value if it is set to something
+		if (attrib && strlen(attrib->m_value.c_str()))
+			return attrib->m_value.c_str();
+		// TODO retrieve some default value from entity definition instead of that "value"?
+		return "value";
 	}
 };
 

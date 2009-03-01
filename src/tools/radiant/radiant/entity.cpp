@@ -291,6 +291,16 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 	entitypath.push(makeReference(node.get()));
 	scene::Instance& instance = findInstance(entitypath);
 
+	// set all mandatory fields to default values
+	// some will be overwritten later
+	Entity *entity = Node_getEntity(node);
+	for (EntityClassAttributes::const_iterator i = entityClass->m_attributes.begin(); i
+			!= entityClass->m_attributes.end(); ++i) {
+		if ((*i).second.m_mandatory) {
+			entity->setKeyValue((*i).first.c_str(), entityClass->getDefaultForAttribute((*i).first.c_str()));
+		}
+	}
+
 	if (entityClass->fixedsize || (isModel && !brushesSelected)) {
 		Select_Delete();
 
@@ -331,24 +341,24 @@ void Entity_createFromSelection (const char* name, const Vector3& origin)
 			g_iLastLightIntensity = intensity;
 			char buf[10];
 			sprintf(buf, "%d", intensity);
-			Node_getEntity(node)->setKeyValue("light", buf);
+			entity->setKeyValue("light", buf);
 		}
 	}
 
 	if (isModel) {
 		const char* model = misc_model_dialog(GTK_WIDGET(MainFrame_getWindow()));
 		if (model != 0) {
-			Node_getEntity(node)->setKeyValue("model", model);
+			entity->setKeyValue("model", model);
 		}
 	} else if (isSound) {
 		const char* sound = misc_sound_dialog(GTK_WIDGET(MainFrame_getWindow()));
 		if (sound != 0) {
-			Node_getEntity(node)->setKeyValue("noise", sound);
+			entity->setKeyValue("noise", sound);
 		}
 	} else if (isParticle) {
 		char* particle = misc_particle_dialog(GTK_WIDGET(MainFrame_getWindow()));
 		if (particle != 0) {
-			Node_getEntity(node)->setKeyValue("particle", particle);
+			entity->setKeyValue("particle", particle);
 			free(particle);
 		}
 	}
