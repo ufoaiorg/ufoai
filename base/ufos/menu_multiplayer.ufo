@@ -341,7 +341,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			}
 		}
 
-		vscrollbar irc_userlist_scroll {
+		vscrollbar servers_scroll {
 			image		menu/scrollbar_v_green
 			blend		true
 			pos			"500 40"
@@ -431,7 +431,8 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 	func init
 	{
 		cmd "set cl_serverlist 0;"
-		cmd "pingservers;mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
+		cmd "pingservers refresh;"
+		cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 	}
 
 	func event
