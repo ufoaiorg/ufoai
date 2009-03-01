@@ -5,7 +5,8 @@
 menu hud extends ahud
 {
 	{
-		fill	true
+		fill		true
+		starlayout	true
 	}
 
 	// ==================
@@ -15,6 +16,7 @@ menu hud extends ahud
 	{
 		pos			"0 0"
 		size		"1024 768"
+		num			10	/* fill layout */
 	}
 
 	// ==================
@@ -25,6 +27,7 @@ menu hud extends ahud
 		{
 			pos		"0 128"
 			size	"40 369"
+			num		4	/* float middle-left */
 			excluderect	{
 				pos		"33 336"
 				size	"7 34"
@@ -131,6 +134,7 @@ menu hud extends ahud
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"407 39"	size	"97 9" }
 			excluderect { pos	"112 48"	size	"400 56" }
+			num		1	/* float top-left */
 		}
 
 		pic background
@@ -166,6 +170,7 @@ menu hud extends ahud
 		{
 			pos		"415 0"
 			size	"264 56"
+			num		2	/* float top-middle */
 			/** @note excluderect should be for the background, but like that we can move all the panel with the editor */
 			excluderect { pos	"264 17"	size	"44 40" }
 			excluderect { pos	"308 28"	size	"193 28" }
@@ -267,6 +272,7 @@ menu hud extends ahud
 		{
 			pos		"808 0"
 			size	"216 56"
+			num		3	/* float top-right */
 		}
 
 		pic bar_nextround
@@ -331,6 +337,7 @@ menu hud extends ahud
 			pos		"0 616"
 			size	"256 152"
 			excluderect { pos	"176 0"	size	"80 24" }
+			num		7	/* float bottom-left */
 		}
 
 		pic background
@@ -398,6 +405,7 @@ menu hud extends ahud
 		{
 			pos		"768 616"
 			size	"256 152"
+			num		9	/* float bottom-right */
 			excluderect { pos	"0 0"	size	"80 24" }
 		}
 
@@ -498,6 +506,7 @@ menu hud extends ahud
 		{
 			pos		"292 649"
 			size	"457 119"
+			num		8	/* float bottom-middle */
 			excluderect { pos	"0 0"	size	"73 9" }
 		}
 
@@ -715,6 +724,7 @@ menu hud extends ahud
 		{
 			pos		"977 129"
 			size	"47 335"
+			num		6	/* float bottom-right */
 			excluderect { pos	"0 95"	size	"8 33" }
 			excluderect { pos	"0 223"	size	"16 16" }
 		}

@@ -45,6 +45,7 @@ typedef struct {
 	qboolean dropdown;				/**< very special property force the menu to close if we click outside */
 	qboolean isFullScreen;			/**< Internal data to allow fullscreen windows without the same size */
 	qboolean fill;					/**< If true, use all the screen space allowed */
+	qboolean starLayout;			/**< If true, do a star layout (move child into a corner according to his num) */
 
 	struct menuNode_s *parent;	/**< to create child window */
 

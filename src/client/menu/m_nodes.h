@@ -76,6 +76,7 @@ typedef struct menuNode_s {
 
 	/* common attributes */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
+	int num;					/**< used to identify child into a parent; can be used for layout */
 	byte textalign;
 	qboolean invis;				/**< true if the node is invisible */
 	qboolean blend;				/**< use the blending mode while rendering - useful to render e.g. transparent images */

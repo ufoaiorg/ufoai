@@ -66,6 +66,7 @@ static const value_t properties[] = {
 	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
 	{"key", V_CVAR_OR_STRING, offsetof(menuNode_t, key), 0},
+	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
 
 	{"tooltip", V_CVAR_OR_LONGSTRING, offsetof(menuNode_t, tooltip), 0},	/* translated in MN_Tooltip */
 	/** @todo use V_REF_OF_STRING when its possible ('image' is never a cvar) */
@@ -111,25 +112,31 @@ void MN_NodeGetPoint (const menuNode_t* node, vec2_t pos, byte pointDirection)
 {
 	switch (pointDirection % 3) {
 	case 0:	/* left */
+		pos[0] = 0;
 		break;
 	case 1:	/* middle */
-		pos[0] += node->size[0] / 2;
+		pos[0] = node->size[0] / 2;
 		break;
 	case 2:	/* right */
-		pos[0] += node->size[0];
+		pos[0] = node->size[0];
 		break;
+	default:
+		assert(qfalse);
 	}
 
 	/* vertical (0 is upper) */
 	switch ((pointDirection % 9) / 3) {
 	case 0:	/* top */
+		pos[1] = 0;
 		break;
 	case 1: /* middle */
-		pos[1] += node->size[1] / 2;
+		pos[1] = node->size[1] / 2;
 		break;
 	case 2: /* bottom */
-		pos[1] += node->size[1];
+		pos[1] = node->size[1];
 		break;
+	default:
+		assert(qfalse);
 	}
 }
 

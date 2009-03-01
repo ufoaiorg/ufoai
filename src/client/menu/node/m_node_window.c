@@ -124,15 +124,76 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	}
 }
 
+/**
+ * @brief map for star layout from num to align
+ */
+static const align_t starlayoutmap[] = {
+	ALIGN_UL,
+	ALIGN_UC,
+	ALIGN_UR,
+	ALIGN_CL,
+	ALIGN_CC,
+	ALIGN_CR,
+	ALIGN_LL,
+	ALIGN_LC,
+	ALIGN_LR,
+};
+
+/**
+ * @brief Do a star layout with child according to there num
+ * @note 1=top-left 2=top-middle 3=top-right
+ * 4=middle-left 5=middle-middle 6=middle-right
+ * 7=bottom-left 8=bottom-middle 9=bottom-right
+ * 10=fill
+ * @todo Move it into panel node when its possible
+ */
+static void MN_WindowNodeDoStarLayout (menuNode_t *node)
+{
+	menuNode_t *child;
+	for (child = node->firstChild; child; child = child->next) {
+		vec2_t source;
+		vec2_t destination;
+		align_t align;
+
+		if (child->num <= 0 || child->num > 10)
+			continue;
+
+		if (child->num == 10) {
+			child->pos[0] = 0;
+			child->pos[1] = 0;
+			child->size[0] = node->size[0];
+			child->size[1] = node->size[1];
+			MN_Invalidate(child);
+			continue;
+		}
+
+		align = starlayoutmap[child->num - 1];
+		MN_NodeGetPoint(node, destination, align);
+		MN_NodeRelativeToAbsolutePoint(node, destination);
+		MN_NodeGetPoint(child, source, align);
+		MN_NodeRelativeToAbsolutePoint(child, source);
+		child->pos[0] += destination[0] - source[0];
+		child->pos[1] += destination[1] - source[1];
+	}
+}
+
 static void MN_WindowNodeDoLayout (menuNode_t *node)
 {
+	qboolean resized = qfalse;
+
 	if (!node->invalidated)
 		return;
 
 	/* use a the space */
 	if (node->u.window.fill) {
-		node->size[0] = viddef.virtualWidth;
-		node->size[1] = viddef.virtualHeight;
+		if (node->size[0] != viddef.virtualWidth) {
+			node->size[0] = viddef.virtualWidth;
+			resized = qtrue;
+		}
+		if (node->size[1] != viddef.virtualHeight) {
+			node->size[1] = viddef.virtualHeight;
+			resized = qtrue;
+		}
 	}
 
 	/* move fullscreen menu on the center of the screen */
@@ -141,7 +202,13 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 		node->pos[1] = (viddef.virtualHeight - node->size[1]) / 2;
 	}
 
-	/** @todo check and fix here window outside the node */
+	/** @todo check and fix here window outside the screen */
+
+	if (resized) {
+		if (node->u.window.starLayout) {
+			MN_WindowNodeDoStarLayout(node);
+		}
+	}
 
 	/* super */
 	node->behaviour->super->doLayout(node);
@@ -242,6 +309,7 @@ static const value_t windowNodeProperties[] = {
 	{"dropdown", V_BOOL, offsetof(menuNode_t, u.window.dropdown), MEMBER_SIZEOF(menuNode_t, u.window.dropdown)},
 	{"preventtypingescape", V_BOOL, offsetof(menuNode_t, u.window.preventTypingEscape), MEMBER_SIZEOF(menuNode_t, u.window.preventTypingEscape)},
 	{"fill", V_BOOL, offsetof(menuNode_t, u.window.fill), MEMBER_SIZEOF(menuNode_t, u.window.fill)},
+	{"starlayout", V_BOOL, offsetof(menuNode_t, u.window.starLayout), MEMBER_SIZEOF(menuNode_t, u.window.starLayout)},
 
 	{"init", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
 	{"close", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
