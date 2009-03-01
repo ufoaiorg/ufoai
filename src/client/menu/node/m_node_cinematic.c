@@ -33,15 +33,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static void MN_CinematicNodeDraw (menuNode_t *node)
 {
-	vec2_t nodepos;
-	MN_GetNodeAbsPos(node, nodepos);
+	vec2_t pos;
+	MN_GetNodeAbsPos(node, pos);
 	if (node->cvar) {
 		assert(cls.playingCinematic != CIN_STATUS_FULLSCREEN);
 		if (cls.playingCinematic == CIN_STATUS_NONE)
 			CIN_PlayCinematic(node->cvar);
 		if (cls.playingCinematic) {
 			/* only set replay to true if video was found and is running */
-			CIN_SetParameters(nodepos[0], nodepos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
+			CIN_SetParameters(pos[0], pos[1], node->size[0], node->size[1], CIN_STATUS_MENU, qtrue);
 			CIN_RunCinematic();
 		}
 	}
