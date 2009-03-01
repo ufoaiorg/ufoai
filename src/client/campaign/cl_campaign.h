@@ -580,7 +580,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters(vec2_t pos, const linkedList_t 
 
 campaign_t* CL_GetCampaign(const char *name);
 void CL_GameAutoGo(mission_t *mission);
-void CP_CampaignInit(qboolean load);
+void CP_CampaignInit(campaign_t *campaign, qboolean load);
 void CP_CampaignExit(void);
 
 /* Mission related functions */

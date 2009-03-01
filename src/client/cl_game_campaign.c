@@ -51,7 +51,7 @@ qboolean GAME_CP_IsRunning (void)
  */
 static void GAME_CP_MissionAutoGo_f (void)
 {
-	if (!GAME_CP_IsRunning() || !ccs.selectedMission) {
+	if (!ccs.selectedMission) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoGo_f: No update after automission\n");
 		return;
 	}
@@ -74,7 +74,7 @@ static void GAME_CP_MissionAutoGo_f (void)
  */
 static void GAME_CP_MissionAutoCheck_f (void)
 {
-	if (!GAME_CP_IsRunning() || !ccs.selectedMission || !ccs.interceptAircraft) {
+	if (!ccs.selectedMission || !ccs.interceptAircraft) {
 		Com_DPrintf(DEBUG_CLIENT, "GAME_CP_MissionAutoCheck_f: No update after automission\n");
 		return;
 	}
@@ -98,7 +98,7 @@ static void GAME_CP_Results_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "GAME_CP_Results_f\n");
 
 	/* multiplayer? */
-	if (!GAME_CP_IsRunning() || !ccs.selectedMission)
+	if (!ccs.selectedMission)
 		return;
 
 	/* check for replay */
@@ -230,11 +230,11 @@ static void GAME_CP_CampaignListClick_f (void)
 static void GAME_CP_Start_f (void)
 {
 	/* get campaign - they are already parsed here */
-	curCampaign = CL_GetCampaign(cl_campaign->string);
-	if (!curCampaign)
+	campaign_t *campaign = CL_GetCampaign(cl_campaign->string);
+	if (!campaign)
 		return;
 
-	CP_CampaignInit(qfalse);
+	CP_CampaignInit(campaign, qfalse);
 
 	/* Intro sentences */
 	Cbuf_AddText("seq_start intro;\n");

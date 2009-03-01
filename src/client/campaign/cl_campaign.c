@@ -1000,38 +1000,36 @@ static void CL_StatsUpdate_f (void)
 
 qboolean CP_LoadXML (mxml_node_t *parent)
 {
-	mxml_node_t *campaign, *n_ccs, *act_node, *bparam;
+	mxml_node_t *campaignNode, *n_ccs, *act_node, *bparam;
 	int i;
 	const char *name, *missionId;
+	campaign_t *campaign;
 
-	campaign = mxml_GetNode(parent, "campaign");
-	if (!campaign) {
+	campaignNode = mxml_GetNode(parent, "campaign");
+	if (!campaignNode) {
 		Com_Printf("Did not find campaign entry in xml!\n");
 		return qfalse;
 	}
-	if (!(name = mxml_GetString(campaign, "name"))) {
+	if (!(name = mxml_GetString(campaignNode, "name"))) {
 		Com_Printf("couldn't locate campaign name in savegame\n");
 		return qfalse;
 	}
-	for (i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++)
-		if (!Q_strcmp(name, curCampaign->id))
-			break;
 
-	if (i == numCampaigns) {
+	campaign = CL_GetCampaign(name);
+	if (!campaign) {
 		Com_Printf("......campaign \"%s\" doesn't exist.\n", name);
-		curCampaign = NULL;
 		return qfalse;
 	}
 
-	CP_CampaignInit(qtrue);
+	CP_CampaignInit(campaign, qtrue);
 	/* init the map images and reset the map actions */
 	MAP_Init();
 
-	ccs.fund = mxml_GetBool(campaign, "fund", qfalse);
-	cl.nextUniqueCharacterNumber = mxml_GetInt(campaign, "nextuniquecharacternumber", 0);
+	ccs.fund = mxml_GetBool(campaignNode, "fund", qfalse);
+	cl.nextUniqueCharacterNumber = mxml_GetInt(campaignNode, "nextuniquecharacternumber", 0);
 
 	/* read date */
-	n_ccs = mxml_GetNode(campaign, "ccs");
+	n_ccs = mxml_GetNode(campaignNode, "ccs");
 	ccs.date.day = mxml_GetInt(n_ccs, "dateday", 0);
 	ccs.date.sec = mxml_GetInt(n_ccs, "datesec", 0);
 
@@ -1047,9 +1045,9 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	* do not use Cvar_SetValue, because this function check if value->string are equal to skip calculation
 	* and we never set r_geoscape_overlay->string in game: r_geoscape_overlay won't be updated if the loaded
 	* value is 0 (and that's a problem if you're loading a game when r_geoscape_overlay is set to another value */
-	r_geoscape_overlay->integer = mxml_GetInt(campaign, "r_geoscape_overlay", 0);
+	r_geoscape_overlay->integer = mxml_GetInt(campaignNode, "r_geoscape_overlay", 0);
 
-	radarOverlayWasSet = mxml_GetBool(campaign, "radaroverlaywasset", qfalse);
+	radarOverlayWasSet = mxml_GetBool(campaignNode, "radaroverlaywasset", qfalse);
 
 	CL_UpdateCredits(mxml_GetLong(n_ccs, "credits", 0));
 
@@ -1077,8 +1075,8 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	CP_UpdateXVIMapButton();
 
 	/* read missions */
-	for (act_node = mxml_GetNode(campaign, "mission"), i = 0; act_node;
-			act_node = mxml_GetNextNode(act_node, campaign, "mission"), i++) {
+	for (act_node = mxml_GetNode(campaignNode, "mission"), i = 0; act_node;
+			act_node = mxml_GetNextNode(act_node, campaignNode, "mission"), i++) {
 		mission_t mission;
 		int ufoIdx;
 		qboolean defaultAssigned = qfalse;
@@ -1237,7 +1235,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		}
 	}
 
-	mxmlDelete(campaign);
+	mxmlDelete(campaignNode);
 	return qtrue;
 }
 
@@ -1251,21 +1249,18 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 {
 	int i, j, num;
 	const char *name, *missionId;
+	campaign_t *campaign;
 
 	/* read campaign name */
 	name = MSG_ReadString(sb);
 
-	for (i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++)
-		if (!Q_strcmp(name, curCampaign->id))
-			break;
-
-	if (i == numCampaigns) {
+	campaign = CL_GetCampaign(name);
+	if (!campaign) {
 		Com_Printf("......campaign \"%s\" doesn't exist.\n", name);
-		curCampaign = NULL;
 		return qfalse;
 	}
 
-	CP_CampaignInit(qtrue);
+	CP_CampaignInit(campaign, qtrue);
 
 	/* init the map images and reset the map actions */
 	MAP_Init();
@@ -2397,9 +2392,11 @@ static void CP_RemoveCampaignCommands (void)
  * @brief Called at new game and load game
  * @param[in] load qtrue if we are loading game, qfalse otherwise
  */
-void CP_CampaignInit (qboolean load)
+void CP_CampaignInit (campaign_t *campaign, qboolean load)
 {
-	assert(curCampaign);
+	assert(campaign);
+
+	curCampaign = campaign;
 
 	/** @todo are all these needed on every load?
 	 * what about RS_InitTree? how often must this be done? */
@@ -2479,9 +2476,11 @@ void CP_CampaignExit (void)
 	SV_Shutdown("Game exit", qfalse);
 	CL_Disconnect();
 
-	/* singleplayer commands are no longer available */
-	Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
-	CP_RemoveCampaignCommands();
+	if (GAME_CP_IsRunning()) {
+		/* singleplayer commands are no longer available */
+		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
+		CP_RemoveCampaignCommands();
+	}
 }
 
 /**
