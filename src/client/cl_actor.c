@@ -2789,7 +2789,7 @@ static void CL_Targeting_Radius (vec3_t center)
 static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t toPos)
 {
 	vec3_t start, end;
-	vec3_t dir, mid;
+	vec3_t dir, mid, temp;
 	trace_t tr;
 	int oldLevel, i;
 	float d;
@@ -2837,10 +2837,17 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 	oldLevel = cl_worldlevel->integer;
 	cl_worldlevel->integer = cl.map_maxlevel - 1;
 
-	tr = CL_Trace(start, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
+	VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
+	tr = CL_Trace(start, temp, vec3_origin, vec3_origin, selActor, NULL, MASK_SHOT);
+	if (tr.le && (tr.le->team == cls.team || tr.le->team == TEAM_CIVILIAN) && (tr.le->state & STATE_CROUCHED))
+		VectorMA(start, UNIT_SIZE * 1.4, dir, temp);
+	else
+		VectorCopy(start, temp);
+
+	tr = CL_Trace(temp, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
 
 	if (tr.fraction < 1.0) {
-		d = VectorDist(start, mid);
+		d = VectorDist(temp, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
 		crossNo = qtrue;
 	}
