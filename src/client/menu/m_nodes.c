@@ -283,12 +283,15 @@ static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
  */
 menuNode_t *MN_GetNodeAtPosition (int x, int y)
 {
-	int menuId;
+	int pos;
 
 	/* find the first menu under the mouse */
-	for (menuId = mn.menuStackPos - 1; menuId >= 0; menuId--) {
-		menuNode_t *menu = mn.menuStack[menuId];
+	for (pos = mn.menuStackPos - 1; pos >= 0; pos--) {
+		menuNode_t *menu = mn.menuStack[pos];
 		menuNode_t *find;
+
+		/* update the layout */
+		menu->behaviour->doLayout(menu);
 
 		find = MN_GetNodeInTreeAtPosition(menu, x, y);
 		if (find)
