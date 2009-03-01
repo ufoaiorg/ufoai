@@ -82,7 +82,7 @@ pos_t Grid_StepUp(struct routing_s *map, const int actor_size, const pos3_t pos)
 int Grid_TUsUsed(int dir);
 int Grid_Filled(struct routing_s *map, const int actor_size, pos3_t pos);
 pos_t Grid_Fall(struct routing_s *map, const int actor_size, pos3_t pos);
-void Grid_PosToVec(struct routing_s *map, const int actor_size, pos3_t pos, vec3_t vec);
+void Grid_PosToVec(struct routing_s *map, const int actor_size, const pos3_t pos, vec3_t vec);
 
 
 /*==========================================================

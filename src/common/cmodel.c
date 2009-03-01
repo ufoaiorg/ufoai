@@ -2051,14 +2051,14 @@ pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
  * @param[in] pos The grid position
  * @param[out] vec The world vector
  */
-void Grid_PosToVec (struct routing_s *map, const int actor_size, pos3_t pos, vec3_t vec)
+void Grid_PosToVec (struct routing_s *map, const int actor_size, const pos3_t pos, vec3_t vec)
 {
 	SizedPosToVec(pos, actor_size, vec);
 #ifdef PARANOID
 	if (pos[2] >= PATHFINDING_HEIGHT)
 		Com_Printf("Grid_PosToVec: Warning - z level bigger than 7 (%i - source: %.02f)\n", pos[2], vec[2]);
 #endif
-    /* Clamp the floor value between 0 and UNIT_HEIGHT */
+	/* Clamp the floor value between 0 and UNIT_HEIGHT */
 	vec[2] += max(0, min(UNIT_HEIGHT, Grid_Floor(map, actor_size, pos)));
 }
 
