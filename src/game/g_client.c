@@ -864,9 +864,7 @@ edict_t *G_SpawnFloor (pos3_t pos)
 	floor->type = ET_ITEM;
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
-	Com_Printf("floor before: %i\n", floor->pos[2]);
 	floor->pos[2] = gi.GridFall(gi.routingMap, floor->fieldSize, floor->pos);
-	Com_Printf("floor after: %i\n", floor->pos[2]);
 	gi.GridPosToVec(gi.routingMap, floor->fieldSize, floor->pos, floor->origin);
 	return floor;
 }
