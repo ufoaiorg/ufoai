@@ -172,19 +172,25 @@ static void MN_ChangeMap_f (void)
  */
 static void GAME_SetMode_f (void)
 {
-	const char *menuName = MN_GetActiveMenuName();
+	const char *modeName;
 	const gameTypeList_t *list = gameTypeList;
 
-	if (menuName[0] == '\0')
+	if (Cmd_Argc() == 2)
+		modeName = Cmd_Argv(1);
+	else
+		modeName = MN_GetActiveMenuName();
+
+	if (modeName[0] == '\0')
 		return;
 
 	while (list->name) {
-		if (!Q_strcmp(list->menu, menuName)) {
+		if (!Q_strcmp(list->menu, modeName)) {
 			GAME_SetMode(list->gametype);
 			return;
 		}
 		list++;
 	}
+	Com_Printf("GAME_SetMode_f: Mode '%s' not found\n", modeName);
 }
 
 qboolean GAME_ItemIsUseable (const objDef_t *od)
