@@ -61,21 +61,6 @@ menu singleplayer
 		selectcolor	"1 1 1 1"
 		click		{ cmd "mn_pop;" }
 	}
-
-	func init
-	{
-		// quit currently active gametype
-		cmd "game_exit;"
-
-		if "mn_main ne campaign_main" {
-			*button_save tooltip "_No game to save"
-			*button_save disabled true
-		}
-		if "mn_main eq campaign_main" {
-			*button_save tooltip ""
-			*button_save disabled false
-		}
-	}
 }
 
 // ==================
