@@ -1238,14 +1238,13 @@ static void CL_ActorStateChange (struct dbuffer *msg)
  * @return the item index in the csi.ods array
  * @note Only call this for none empty invList_t - see FLOOR, LEFT, RIGHT and so on macros
  */
-static objDef_t *CL_BiggestItem (invList_t *ic)
+static objDef_t *CL_BiggestItem (const invList_t *ic)
 {
-	int size;
 	objDef_t *max;
 	int maxSize = 0;
 
 	for (max = ic->item.t; ic; ic = ic->next) {
-		size = Com_ShapeUsage(ic->item.t->shape);
+		const int size = Com_ShapeUsage(ic->item.t->shape);
 		if (size > maxSize) {
 			max = ic->item.t;
 			maxSize = size;
