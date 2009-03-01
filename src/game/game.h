@@ -171,7 +171,7 @@ typedef struct {
 	int (IMPORT *MoveNext) (struct routing_s * map, int actor_size, struct pathing_s *path, pos3_t from, int crouching_state);
 	int (IMPORT *GridFloor) (struct routing_s * map, int actor_size, const pos3_t pos);
 	int (IMPORT *TUsUsed) (int dir);
-	pos_t (IMPORT *GridFall) (struct routing_s * map, int actor_size, pos3_t pos);
+	pos_t (IMPORT *GridFall) (const struct routing_s * map, int actor_size, const pos3_t pos);
 	void (IMPORT *GridPosToVec) (struct routing_s * map, int actor_size, const pos3_t pos, vec3_t vec);
 	void (IMPORT *GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
 	void (IMPORT *GridDumpDVTable) (struct pathing_s * path);

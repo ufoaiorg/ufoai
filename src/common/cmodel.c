@@ -2014,7 +2014,7 @@ int Grid_Filled (struct routing_s *map, const int actor_size, pos3_t pos)
  * @return New z (height) value.
  * @return 0xFF if an error occured.
  */
-pos_t Grid_Fall (struct routing_s *map, const int actor_size, pos3_t pos)
+pos_t Grid_Fall (const struct routing_s *map, const int actor_size, const pos3_t pos)
 {
 	int z = pos[2], base, diff;
 	qboolean flier = qfalse; /** @todo if an actor can fly, then set this to true. */
