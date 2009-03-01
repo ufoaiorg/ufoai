@@ -1057,6 +1057,7 @@ le_t *LE_Add (int entnum)
 	memset(le, 0, sizeof(*le));
 	le->inuse = qtrue;
 	le->entnum = entnum;
+	le->fieldSize = ACTOR_SIZE_NORMAL;
 	return le;
 }
 

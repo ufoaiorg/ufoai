@@ -420,6 +420,7 @@ static inline void G_InitEdict (edict_t * e)
 	e->inuse = qtrue;
 	e->classname = "noclass";
 	e->number = e - g_edicts;
+	ent->fieldSize = ACTOR_SIZE_NORMAL;
 }
 
 /**

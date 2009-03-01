@@ -862,6 +862,7 @@ edict_t *G_SpawnFloor (pos3_t pos)
 	floor = G_Spawn();
 	floor->classname = "item";
 	floor->type = ET_ITEM;
+	/* make sure that the item is always on a field that even the smallest actor can reach */
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
 	floor->pos[2] = gi.GridFall(gi.routingMap, floor->fieldSize, floor->pos);
