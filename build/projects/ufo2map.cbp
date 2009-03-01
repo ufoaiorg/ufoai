@@ -127,9 +127,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/byte.h" />
+		<Unit filename="../../src/shared/defines.h" />
 		<Unit filename="../../src/shared/entitiesdef.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/shared/entitiesdef.h" />
 		<Unit filename="../../src/shared/mathlib.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -142,6 +144,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/shared/shared.h" />
+		<Unit filename="../../src/shared/typedefs.h" />
 		<Unit filename="../../src/tools/ufo2map/brushbsp.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -152,6 +155,7 @@
 		<Unit filename="../../src/tools/ufo2map/check/check.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/ufo2map/check/check.h" />
 		<Unit filename="../../src/tools/ufo2map/check/checkentities.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -173,6 +177,7 @@
 		<Unit filename="../../src/tools/ufo2map/common/polylib.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/ufo2map/common/polylib.h" />
 		<Unit filename="../../src/tools/ufo2map/common/scriplib.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -199,6 +204,7 @@
 		<Unit filename="../../src/tools/ufo2map/map.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/tools/ufo2map/map.h" />
 		<Unit filename="../../src/tools/ufo2map/patches.c">
 			<Option compilerVar="CC" />
 		</Unit>
