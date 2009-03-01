@@ -70,8 +70,6 @@ int mousePosTargettingAlign = 0;
  */
 int actorMoveLength;
 
-invList_t invList[MAX_INVLIST];
-
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 /** for double-click movement and confirmations ... */

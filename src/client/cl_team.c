@@ -449,26 +449,18 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 	switch (employeeType) {
 	case EMPL_SOLDIER:
 		chr->score.rank = CL_GetRankIdx("rifleman");
-		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
 		Q_strncpyz(teamDefName, teamID, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
 		chr->score.rank = CL_GetRankIdx("scientist");
-		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", teamID);
 		break;
 	case EMPL_PILOT:
 		chr->score.rank = CL_GetRankIdx("pilot");
-		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", teamID);
 		break;
 	case EMPL_WORKER:
 		chr->score.rank = CL_GetRankIdx("worker");
-		/* Create attributes. */
-		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", teamID);
 		break;
 	case EMPL_ROBOT:
@@ -477,16 +469,14 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 
 		chr->score.rank = CL_GetRankIdx("ugv");
 
-		/* Create attributes. */
-		/** @todo get the min/max values from ugv_t def? */
-		CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
-
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");
 	}
 	chr->skin = Com_GetCharacterValues(teamDefName, chr);
+	/* Create attributes. */
+	CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
 }
 
 static menuOption_t skinlist[] = {

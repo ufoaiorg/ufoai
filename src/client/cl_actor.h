@@ -71,7 +71,6 @@ extern pos3_t truePos;
 extern pos3_t mousePos;
 extern int mousePosTargettingAlign;
 extern int actorMoveLength;
-extern invList_t invList[MAX_INVLIST];
 
 extern pos_t *fb_list[MAX_FORBIDDENLIST];
 extern int fb_length;

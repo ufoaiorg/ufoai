@@ -2520,7 +2520,6 @@ void CL_ResetSinglePlayerData (void)
 	baseCurrent = NULL;
 
 	LIST_Delete(&ccs.missions);
-	memset(&invList, 0, sizeof(invList));
 	cp_messageStack = NULL;
 
 	/* cleanup dynamic mails */
@@ -2532,7 +2531,7 @@ void CL_ResetSinglePlayerData (void)
 	 * was maybe already called */
 	RS_ResetTechs();
 	E_ResetEmployees();
-	INVSH_InitInventory(invList);
+
 	/* Count Alien team definitions. */
 	for (i = 0; i < csi.numTeamDefs; i++) {
 		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))

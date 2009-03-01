@@ -74,7 +74,6 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
  * @sa G_Init
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
- * @todo Isn't this something that should be redone on every new game (skirmish, campaign or multiplayer)
  */
 void INVSH_InitInventory (invList_t * invList)
 {

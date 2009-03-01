@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_menu.h"
 #include "menu/m_nodes.h"	/**< menuInventory */
 
+static invList_t invList[MAX_INVLIST];
+
 typedef struct gameTypeList_s {
 	const char *name;
 	const char *menu;
@@ -83,6 +85,8 @@ void GAME_SetMode (int gametype)
 	while (list->name) {
 		if (list->gametype == gametype) {
 			Com_Printf("Change gametype to '%s'\n", list->name);
+			memset(&invList, 0, sizeof(invList));
+			INVSH_InitInventory(invList);
 			list->init();
 		} else if (list->gametype == currentGameType) {
 			Com_Printf("Shutdown gametype '%s'\n", list->name);

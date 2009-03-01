@@ -789,7 +789,6 @@ static void CL_InitLocal (void)
 	CL_SetClientState(ca_disconnected);
 	cls.realtime = Sys_Milliseconds();
 
-	INVSH_InitInventory(invList);
 	IN_Init();
 
 	MN_InitStartup();
