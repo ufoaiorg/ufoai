@@ -58,16 +58,17 @@ typedef enum pf_s {
 } pf_t;
 
 /** @brief valid particle functions - see pf_t and pf_values */
-static const char *pf_strings[PF_NUM_PTLFUNCS] = {
+static const char *pf_strings[] = {
 	"init",
 	"run",
 	"think",
 	"round",
 	"physics"
 };
+CASSERT(lengthof(pf_strings) == PF_NUM_PTLFUNCS);
 
 /** @brief particle functions offsets - see pf_strings and pf_t */
-static const size_t pf_values[PF_NUM_PTLFUNCS] = {
+static const size_t pf_values[] = {
 	offsetof(ptlDef_t, init),
 	offsetof(ptlDef_t, run),
 	offsetof(ptlDef_t, think),

@@ -181,7 +181,7 @@ ELEMENTS COMMUNICATED ACROSS THE NET
  * @sa ev_format
  */
 typedef enum {
-	EV_NULL = 0,
+	EV_NULL,
 	EV_RESET,
 	EV_START,
 	EV_START_DONE,  /**< Signals that all information was sent fromt he server. */
@@ -202,10 +202,12 @@ typedef enum {
 	EV_ACTOR_START_MOVE,
 	EV_ACTOR_TURN,			/**< turn an actor around */
 	EV_ACTOR_MOVE,
+
 	EV_ACTOR_START_SHOOT,
 	EV_ACTOR_SHOOT,
 	EV_ACTOR_SHOOT_HIDDEN,
 	EV_ACTOR_THROW,
+
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
 	EV_ACTOR_STATECHANGE,	/**< set an actor to crounched or reaction fire */

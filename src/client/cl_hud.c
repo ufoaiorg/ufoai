@@ -69,11 +69,12 @@ typedef enum {
 	BT_STAND,
 	BT_CROUCH,
 	BT_HEADGEAR,
+
 	BT_NUM_TYPES
 } button_types_t;
 
 /** @brief a cbuf string for each button_types_t */
-static const char *shoot_type_strings[BT_NUM_TYPES] = {
+static const char *shoot_type_strings[] = {
 	"pr",
 	"reaction",
 	"pl",

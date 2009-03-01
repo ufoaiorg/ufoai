@@ -125,6 +125,7 @@ const char *ev_format[] =
 
 	"s",				/* EV_MODEL_EXPLODE */
 	"s",				/* EV_MODEL_EXPLODE_TRIGGERED */
+
 	"sbp&",				/* EV_SPAWN_PARTICLE */
 
 	"s",				/* EV_DOOR_OPEN */
@@ -132,6 +133,7 @@ const char *ev_format[] =
 	"ss",				/* EV_DOOR_ACTION */
 	"s"					/* EV_RESET_CLIENT_ACTION */
 };
+/*CASSERT(lengthof(ev_format) == EV_NUM_EVENTS);*/
 
 /**
  * @sa ev_format
@@ -184,6 +186,7 @@ static const char *ev_names[] =
 	"EV_DOOR_ACTION",
 	"EV_RESET_CLIENT_ACTION"
 };
+CASSERT(lengthof(ev_names) == EV_NUM_EVENTS);
 
 static void CL_Reset(struct dbuffer *msg);
 static void CL_StartGame(struct dbuffer *msg);
@@ -252,6 +255,7 @@ static void (*ev_func[])(struct dbuffer *msg) =
 	CL_ActorDoorAction,				/* EV_DOOR_ACTION */
 	CL_ActorResetClientAction		/* EV_RESET_CLIENT_ACTION */
 };
+CASSERT(lengthof(ev_func) == EV_NUM_EVENTS);
 
 typedef struct evTimes_s {
 	int when;					/**< timestamp (msec) that is used to determine when the event should be executed */
