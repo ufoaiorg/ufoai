@@ -399,6 +399,11 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			pos			"65 520"
 			size		"256 20"
 		}
+		todo todo6 {
+			string	"This button dont work. We must fix it"
+			pos		"520 540"
+		}
+
 		textentry slot_ip
 		{
 			string		"*cvar mn_server_ip"
