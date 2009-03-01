@@ -751,10 +751,12 @@ static float CL_GetKeyMouseState (int dir)
 
 	switch (dir) {
 	case STATE_FORWARD:
-		value = (in_shiftup.state & 1) + (mousePosY <= SCROLL_BORDER) - (in_shiftdown.state & 1) - (mousePosY >= VID_NORM_HEIGHT - SCROLL_BORDER);
+		/* sum directions, 'true' is use as '1' */
+		value = (in_shiftup.state & 1) + (mousePosY <= (viddef.y / viddef.ry) + SCROLL_BORDER) - (in_shiftdown.state & 1) - (mousePosY >= ((viddef.y + viddef.viewHeight) / viddef.ry) - SCROLL_BORDER);
 		break;
 	case STATE_RIGHT:
-		value = (in_shiftright.state & 1) + (mousePosX >= VID_NORM_WIDTH - SCROLL_BORDER) - (in_shiftleft.state & 1) - (mousePosX <= SCROLL_BORDER);
+		/* sum directions, 'true' is use as '1' */
+		value = (in_shiftright.state & 1) + (mousePosX >= ((viddef.x + viddef.viewWidth) / viddef.rx) - SCROLL_BORDER) - (in_shiftleft.state & 1) - (mousePosX <= (viddef.x / viddef.rx) + SCROLL_BORDER);
 		break;
 	case STATE_ZOOM:
 		value = (in_zoomin.state & 1) - (in_zoomout.state & 1);
