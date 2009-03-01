@@ -115,6 +115,7 @@ menu singleplayermission
 		click		{ cmd "game_abort;" }
 	}
 
+	// @todo only works for campaign mode games - not for skirmish
 	button button_retry
 	{
 		string		"_Retry"

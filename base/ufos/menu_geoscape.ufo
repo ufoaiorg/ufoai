@@ -872,7 +872,7 @@ menu popup_intercept_ready
 		image		menu/button_green_small
 		blend		true
 		pos			"66 102"
-		size		"176 64"
+		size		"176 32"
 		click		{ cmd "game_go;" }
 	}
 
@@ -887,7 +887,7 @@ menu popup_intercept_ready
 		image		menu/button_green_small
 		blend		true
 		pos			"259 102"
-		size		"176 64"
+		size		"176 32"
 		click		{ cmd "cp_mission_autogo;" }
 	}
 
