@@ -1183,9 +1183,9 @@ void CL_CampaignRunAircraft (int dt, qboolean updateRadarOverlay)
 								assert(aircraft->mission);
 								aircraft->mission->active = qtrue;
 								aircraft->status = AIR_DROP;
-								cls.missionaircraft = aircraft;
-								MAP_SelectMission(cls.missionaircraft->mission);
-								ccs.interceptAircraft = cls.missionaircraft;
+								ccs.missionaircraft = aircraft;
+								MAP_SelectMission(ccs.missionaircraft->mission);
+								ccs.interceptAircraft = ccs.missionaircraft;
 								Com_DPrintf(DEBUG_CLIENT, "ccs.interceptAircraft: %i\n", ccs.interceptAircraft->idx);
 								CL_GameTimeStop();
 								MN_PushMenu("popup_intercept_ready", NULL);

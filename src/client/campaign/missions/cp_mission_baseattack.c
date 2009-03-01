@@ -70,7 +70,7 @@ void CP_BaseAttackMissionIsFailure (mission_t *mission)
 	/* we really don't want to use the fake aircraft anywhere */
 	if (base)
 		base->aircraftCurrent = &base->aircraft[0];
-	cls.missionaircraft = NULL;
+	ccs.missionaircraft = NULL;
 
 	CL_ChangeIndividualInterest(0.05f, INTERESTCATEGORY_BUILDING);
 	/* Restore some alien interest for base attacks that has been removed when
@@ -130,7 +130,7 @@ static void CP_BaseAttackMissionDestroyBase (mission_t *mission)
 
 	/* we really don't want to use the fake aircraft anywhere */
 	base->aircraftCurrent = &base->aircraft[0];
-	cls.missionaircraft = NULL;
+	ccs.missionaircraft = NULL;
 
 	/* HACK This hack is only needed until base will be really destroyed
 	 * we must recalculate items in storage because of the items we collected on battlefield */
@@ -206,7 +206,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 
 	LIST_Delete(&hiredSoldiersInBase);
 	base->aircraftCurrent = &baseAttackFakeAircraft;
-	cls.missionaircraft = &baseAttackFakeAircraft;
+	ccs.missionaircraft = &baseAttackFakeAircraft;
 	ccs.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 
 	if (base->capacities[CAP_ALIENS].cur) {

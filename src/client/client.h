@@ -184,7 +184,6 @@ typedef struct client_static_s {
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;			/**< the team you are in @sa TEAM_CIVILIAN, TEAM_ALIEN */
-	struct aircraft_s *missionaircraft;	/**< aircraft pointer for mission handling - holds the teams for skirmish and multiplayer, too */
 
 	float loadingPercent;
 	char loadingMessages[96];

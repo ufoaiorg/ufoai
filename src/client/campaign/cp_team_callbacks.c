@@ -476,7 +476,7 @@ static void CL_TeamListDebug_f (void)
 	aircraft_t *aircraft;
 
 	base = CP_GetMissionBase();
-	aircraft = cls.missionaircraft;
+	aircraft = ccs.missionaircraft;
 
 	if (!base) {
 		Com_Printf("Build and select a base first\n");

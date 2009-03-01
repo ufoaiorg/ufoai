@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CAMPAIGN_H
 #define CLIENT_CL_CAMPAIGN_H
 
+struct aircraft_s;
 struct base_s;
 struct installation_s;
 struct employee_s;
@@ -418,6 +419,8 @@ typedef struct ccs_s {
 
 	/* how fast the game is running */
 	int gameTimeScale;
+
+	aircraft_t *missionaircraft;	/**< aircraft pointer for mission handling */
 
 	/* True if this objDef_t has autosell enabled. */
 	qboolean autosell[MAX_OBJDEFS];
