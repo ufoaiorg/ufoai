@@ -175,6 +175,10 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 	if (!attacker || !fd || !target)
 		return;
 
+	/* only phalanx soldiers have this */
+	if (attacker->chr.scoreMission == NULL)
+		return;
+
 	switch (target->team) {
 	case TEAM_ALIEN:
 		if (target->HP <= 0) {

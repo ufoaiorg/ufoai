@@ -1570,7 +1570,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				tu += div;
 
 				/* move */
-				crouching_state = 0; /**< This is now a flag to indicate a change in crouching */
+				crouching_state = 0; /* This is now a flag to indicate a change in crouching */
 				PosAddDV(ent->pos, crouching_state, dv);
 				if (crouching_state == 0) { /* No change in crouch */
 					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
@@ -1583,14 +1583,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					 * movement - to let the server know about it. */
 					gi.LinkEdict(ent);
 
-					/** Count move for stats
-					 * @todo Add support for armoured walking (movedPowered). */
-					if (ent->chr.scoreMission) { /**< Only the PHALANX team has these stats right now. */
-						if (ent->state & STATE_CROUCHED) {
-							ent->chr.scoreMission->movedCrouched += truediv;	/* Diagonal or straight move. */
-						} else {
-							ent->chr.scoreMission->movedNormal += truediv;	/* Diagonal or straight move. */
-						}
+					/* Only the PHALANX team has these stats right now. */
+					if (ent->chr.scoreMission) {
+						if (ent->state & STATE_CROUCHED)
+							ent->chr.scoreMission->movedCrouched += truediv;
+						else
+							ent->chr.scoreMission->movedNormal += truediv;
 					}
 
 					/* write move header if not yet done */
