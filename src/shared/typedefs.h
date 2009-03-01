@@ -200,19 +200,6 @@ typedef struct pathing_s {
 	int fblength;	/**< length of forbidden list (amount of entries) */
 } pathing_t;
 
-/** @sa mapplanes */
-typedef struct plane_s {
-	vec3_t	normal;			/**< unit (magnitude == 1) normal defining the direction of the plane */
-	vec_t	dist;			/**< distance from the origin to the plane. unit normal and distance
-							 * description is http://mathworld.wolfram.com/HessianNormalForm.html
-							 * though the sign of the distance seems to differ from the standard definition.
-							 * (or the direction of the normal differs, the effect is the same when calculating
-							 * the distance of a point from the plane.)*/
-	int		type;
-	vec3_t	planeVector[3]; /**< 3 points on the plane, from the map file */
-	struct plane_s	*hash_chain;
-} plane_t;
-
 typedef struct {
 	vec2_t	shift;
 	vec_t	rotate;
@@ -222,121 +209,11 @@ typedef struct {
 	int		value;
 } brush_texture_t;
 
-/** @brief for storing the vertices of the side of a brush or other polygon */
-typedef struct {
-	int		numpoints;
-	vec3_t	p[4];		/**< variable sized array of points. minimum numpoints is 3,
-						 * but most brushes have rectangular faces, so default is 4.*/
-} winding_t;
-
-typedef struct side_s {
-	int			planenum;
-	int			texinfo;
-	winding_t	*winding;
-	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
-	int			contentFlags;	/**< from miptex */
-	int			surfaceFlags;	/**< from miptex */
-	qboolean	visible;		/**< choose visible planes first */
-	qboolean	tested;			/**< this plane already checked as a split */
-	qboolean	bevel;			/**< don't ever use for bsp splitting */
-	qboolean	isCompositeMember; /**< forms a side with sides from other brushes @sa Check_FindCompositeSides */
-
-	struct mapbrush_s *brush;		/**< backlink to the brush this side belongs to */
-} side_t;
-
 /** @sa Check_FindCompositeSides */
 typedef struct compositeSide_s {
 	struct side_s **memberSides;
 	int numMembers;
 } compositeSide_t;
-
-typedef struct mapbrush_s {
-	int		entitynum;		/**< the entity number in the map - 0 is the world - everything else is a bmodel */
-	int		brushnum;		/**< the brush number in the map */
-
-	int		contentFlags;
-
-	vec3_t	mins, maxs;
-
-	int		numsides;
-	side_t	*original_sides;
-
-	/**list of brushes that are near to this one.
-	 * not necessarily initialised. call Check_NearList() to make sure it has been initialised
-	 * this will return quickly if it has already been done. */
-	struct	mapbrush_s **nearBrushes;
-	int	numNear;
-
-	qboolean skipWriteBack; /**< in fix mode do not write back to the source .map file */
-
-	qboolean finished;
-	qboolean isTerrain;
-	qboolean isGenSurf;
-} mapbrush_t;
-
-typedef struct face_s {
-	struct face_s	*next;		/**< on node */
-
-	/** the chain of faces off of a node can be merged or split,
-	 * but each face_t along the way will remain in the chain
-	 * until the entire tree is freed */
-	struct face_s	*merged;	/**< if set, this face isn't valid anymore */
-	struct face_s	*split[2];	/**< if set, this face isn't valid anymore */
-
-	struct portal_s	*portal;
-	int				texinfo;
-	int				planenum;
-	int				contentFlags;	/**< faces in different contents can't merge */
-	winding_t		*w;
-	int				numpoints;
-	int				vertexnums[MAXEDGES];
-} face_t;
-
-typedef struct bspbrush_s {
-	struct bspbrush_s	*next;
-	vec3_t	mins, maxs;
-	int		side, testside;		/**< side of node during construction */
-	mapbrush_t	*original;
-	int		numsides;
-	side_t	sides[6];			/**< variably sized */
-} bspbrush_t;
-
-typedef struct node_s {
-	/** both leafs and nodes */
-	int				planenum;	/**< -1 = leaf node */
-	struct node_s	*parent;
-	vec3_t			mins, maxs;	/**< valid after portalization */
-	bspbrush_t		*volume;	/**< one for each leaf/node */
-
-	/** nodes only */
-	side_t			*side;		/**< the side that created the node */
-	struct node_s	*children[2];
-	face_t			*faces;
-
-	/** leafs only */
-	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
-	int				contentFlags;	/**< OR of all brush contents */
-	int				area;		/**< for areaportals */
-	struct portal_s	*portals;	/**< also on nodes during construction */
-} node_t;
-
-typedef struct portal_s {
-	plane_t		plane;
-	node_t		*onnode;		/**< NULL = outside box */
-	node_t		*nodes[2];		/**< [0] = front side of plane */
-	struct portal_s	*next[2];
-	winding_t	*winding;
-
-	qboolean	sidefound;		/**< false if ->side hasn't been checked */
-	side_t		*side;			/**< NULL = non-visible */
-	face_t		*face[2];		/**< output face in bsp file */
-} portal_t;
-
-typedef struct {
-	node_t		*headnode;
-	node_t		outside_node;
-	vec3_t		mins, maxs;
-} tree_t;
 
 typedef struct {
 	vec3_t mins, maxs;

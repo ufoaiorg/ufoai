@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <assert.h>
 
+#include "map.h"
+
 #include "common/shared.h"
 #include "common/scriplib.h"
 #include "common/polylib.h"
@@ -35,6 +37,41 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../common/tracing.h"
 
+
+
+typedef struct bspbrush_s {
+	struct bspbrush_s	*next;
+	vec3_t	mins, maxs;
+	int		side, testside;		/**< side of node during construction */
+	struct mapbrush_s	*original;
+	int		numsides;
+	side_t	sides[6];			/**< variably sized */
+} bspbrush_t;
+
+typedef struct node_s {
+	/** both leafs and nodes */
+	int				planenum;	/**< -1 = leaf node */
+	struct node_s	*parent;
+	vec3_t			mins, maxs;	/**< valid after portalization */
+	bspbrush_t		*volume;	/**< one for each leaf/node */
+
+	/** nodes only */
+	side_t			*side;		/**< the side that created the node */
+	struct node_s	*children[2];
+	face_t			*faces;
+
+	/** leafs only */
+	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
+	int				contentFlags;	/**< OR of all brush contents */
+	int				area;		/**< for areaportals */
+	struct portal_s	*portals;	/**< also on nodes during construction */
+} node_t;
+
+typedef struct {
+	struct node_s		*headnode;
+	struct node_s		outside_node;
+	vec3_t		mins, maxs;
+} tree_t;
 
 extern int entity_num;
 

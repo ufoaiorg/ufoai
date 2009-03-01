@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _POLYLIB
 #define _POLYLIB
 
+#include "../map.h"
+
 #define	MAX_POINTS_ON_WINDING	64
 
 winding_t *AllocWinding(int points);
