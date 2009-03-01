@@ -124,6 +124,25 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 	}
 }
 
+static void MN_WindowNodeDoLayout (menuNode_t *node)
+{
+	if (!node->invalidated)
+		return;
+
+	/* move fullscreen menu on the center of the screen */
+	if (node->u.window.isFullScreen) {
+		/* horisontal */
+		node->pos[0] = (viddef.virtualWidth - node->size[0]) / 2;
+		/* vertical */
+		node->pos[1] = (viddef.virtualHeight - node->size[1]) / 2;
+	}
+
+	/** @todo check and fix here window outside the node */
+
+	/* super */
+	node->behaviour->super->doLayout(node);
+}
+
 /**
  * @brief Called when we init the node on the screen
  * @todo we can move generic code into abstract node
@@ -131,16 +150,6 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 static void MN_WindowNodeInit (menuNode_t *node)
 {
 	menuNode_t *child;
-
-	/* move fullscreen menu on the center of the screen */
-	if (node->u.window.isFullScreen) {
-		/* horisontal */
-		if (node->size[0] != viddef.virtualWidth)
-			node->pos[0] = (viddef.virtualWidth - node->size[0]) / 2;
-		/* vertical */
-		if (node->size[1] != viddef.virtualHeight)
-			node->pos[1] = (viddef.virtualHeight - node->size[1]) / 2;
-	}
 
 	/* init child */
 	for (child = node->firstChild; child; child = child->next) {
@@ -152,6 +161,8 @@ static void MN_WindowNodeInit (menuNode_t *node)
 	/* script callback */
 	if (node->u.window.onInit)
 		MN_ExecuteEventActions(node, node->u.window.onInit);
+
+	MN_Invalidate(node);
 }
 
 /**
@@ -242,5 +253,6 @@ void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 	behaviour->loaded = MN_WindowNodeLoaded;
 	behaviour->init = MN_WindowNodeInit;
 	behaviour->draw = MN_WindowNodeDraw;
+	behaviour->doLayout = MN_WindowNodeDoLayout;
 	behaviour->properties = windowNodeProperties;
 }

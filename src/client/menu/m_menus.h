@@ -40,6 +40,7 @@ struct menuNode_s* MN_GetActiveMenu(void);
 int MN_CompletePushMenu(const char *partial, const char **match);
 qboolean MN_IsMenuOnStack(const char* name);
 qboolean MN_IsPointOnMenu(int x, int y);
+void MN_InvalidateStack(void);
 /* deprecated */
 const char* MN_GetActiveMenuName(void);
 struct menuNode_s* MN_GetNodeFromCurrentMenu(const char *name);

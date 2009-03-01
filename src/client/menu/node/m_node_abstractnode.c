@@ -417,7 +417,7 @@ static void MN_AbstractNodeDoLayout (menuNode_t *node)
 		return;
 
 	for (child = node->firstChild; child; child = child->next) {
-		node->behaviour->doLayout(node);
+		child->behaviour->doLayout(child);
 	}
 
 	node->invalidated = qfalse;

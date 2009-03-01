@@ -39,14 +39,14 @@ static cvar_t *mn_escpop;
 int MN_GetLastFullScreenWindow (void)
 {
 	/* stack pos */
-	int windowId = mn.menuStackPos - 1;
-	while (windowId > 0) {
-		if (MN_WindowIsFullScreen(mn.menuStack[windowId]))
+	int pos = mn.menuStackPos - 1;
+	while (pos > 0) {
+		if (MN_WindowIsFullScreen(mn.menuStack[pos]))
 			break;
-		windowId--;
+		pos--;
 	}
 	/* if we find nothing we return 0 */
-	return windowId;
+	return pos;
 }
 
 /**
@@ -569,6 +569,17 @@ menuNode_t *MN_GetMenu (const char *name)
 			return mn.menus[i];
 
 	return NULL;
+}
+
+/**
+ * @brief Invalidate all menus of the current stack.
+ */
+void MN_InvalidateStack (void)
+{
+	int pos;
+	for (pos = 0; pos < mn.menuStackPos; pos++) {
+		MN_Invalidate(mn.menuStack[pos]);
+	}
 }
 
 /**

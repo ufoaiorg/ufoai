@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_local.h"
 #include "r_main.h"
 #include "r_sdl.h"
+#include "../menu/m_menus.h"
 
 #ifndef _WIN32
 static void R_SetSDLIcon (void)
@@ -170,6 +171,9 @@ qboolean R_InitGraphics (void)
 	}
 
 	SDL_ShowCursor(SDL_DISABLE);
+
+	/* when we change vid_strech we need to check current windows */
+	MN_InvalidateStack();
 
 	return qtrue;
 }
