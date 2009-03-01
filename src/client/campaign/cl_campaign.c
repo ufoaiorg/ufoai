@@ -2708,9 +2708,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 /** @todo remove me and move all the included stuff to proper places */
 void CP_InitStartup (void)
 {
-	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
-	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
-
+	SAV_Init();
 	/* init some production menu nodes */
 	PR_Init();
 
@@ -2741,3 +2739,4 @@ void CP_InitStartup (void)
 	UR_InitStartup();
 	NAT_InitStartup();
 }
+

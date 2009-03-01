@@ -396,6 +396,8 @@ void GAME_CP_InitStartup (void)
 
 	CP_InitStartup();
 
+	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
+	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
 	/* cvars might have been changed by other gametypes */
 	Cvar_ForceSet("sv_maxclients", "1");
 	Cvar_ForceSet("sv_ai", "1");

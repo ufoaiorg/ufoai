@@ -791,7 +791,6 @@ static void CL_InitLocal (void)
 
 	INVSH_InitInventory(invList);
 	IN_Init();
-	SAV_Init();
 
 	MN_InitStartup();
 	TUT_InitStartup();

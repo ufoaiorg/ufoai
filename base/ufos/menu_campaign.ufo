@@ -22,28 +22,16 @@ menu campaigns
 	string c_headline
 	{
 		string	"_Campaigns"
-		pos	"150 170"
+		pos	"640 80"
 		font	f_big
 	}
 
 	// ==================
 	// buttons
 	// ==================
-	button c_button_skirmish
-	{
-		pos	"80 250"
-		size "256 64"
-		click	{ cmd "mn_push skirmish;" }
-		image	menu/button_green_big	blend true
-		font	f_menubig
-		color	"0 0.5 0 1"
-		selectcolor "1 1 1 1"
-		string	"_Skirmish"
-	}
-
 	button c_button_start
 	{
-		pos	"80 320"
+		pos	"80 170"
 		size "256 64"
 		click	{ cmd "cp_start;" }
 		image	menu/button_green_big	blend true
@@ -53,9 +41,51 @@ menu campaigns
 		string	"_Start campaign"
 	}
 
+	button button_load
+	{
+		string		"_Load"
+		pos			"80 240"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push load;" }
+	}
+
+	button button_save
+	{
+		string		"_Save"
+		pos			"80 310"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push save;" }
+	}
+
+	button button_continue
+	{
+		visiblewhen "mn_lastsave"
+
+		string		"_Continue"
+		tooltip		"_Load last saved game or continue playing"
+		pos			"640 380"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_continue;" }
+	}
+
 	button c_button_exit
 	{
-		pos	"80 450"
+		pos	"80 470"
 		size "256 64"
 		click	{ cmd "mn_pop esc;" }
 		image	menu/button_green_big	blend true
@@ -67,26 +97,26 @@ menu campaigns
 
 	text campaignlist
 	{
-		pos		"500 80"
-		size	"420 200"
+		pos		"500 140"
+		size	"420 120"
 		mousefx	true
 		lineheight	"20"
 		textid		TEXT_CAMPAIGN_LIST
 		click	{ }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
-		rows	"10"
+		rows	"6"
 		wheel
 		scrollbar true
 	}
 
 	text campaign_desc
 	{
-		pos	"500 300"
+		pos	"500 320"
 		lineheight	"20"
-		size	"415 380"
+		size	"415 360"
 		textid		TEXT_STANDARD
-		rows	19
+		rows	18
 //		bgcolor "1 1 1 0.4"
 		wheel {
 			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>

@@ -51,6 +51,7 @@ extern cvar_t *cl_lastsave;
 
 qboolean SAV_QuickSave(void);
 void SAV_Init(void);
+
 #define MAX_ARRAYINDEXES	512
 
 /** @brief Indexes of presaveArray. DON'T MESS WITH ORDER. */
