@@ -144,7 +144,7 @@ static void SVC_TeamInfo (struct net_stream *s)
 }
 
 /**
- * @brief Responds with all the info that qplug or qspy can see
+ * @brief Responds with all the info that the server browser can see
  * @sa SV_StatusString
  */
 static void SVC_Status (struct net_stream *s)
@@ -432,9 +432,9 @@ void SV_ReadPacket (struct net_stream *s)
 
 		if (cmd == clc_oob)
 			SV_ConnectionlessPacket(s, msg);
-		else if (cl) {
+		else if (cl)
 			SV_ExecuteClientMessage(cl, cmd, msg);
-		} else
+		else
 			NET_StreamFree(s);
 
 		free_dbuffer(msg);
