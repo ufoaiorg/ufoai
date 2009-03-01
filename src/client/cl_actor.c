@@ -87,7 +87,7 @@ void MSG_Write_PA (player_action_t player_action, int entnum, ...)
 	va_list ap;
 	struct dbuffer *msg = new_dbuffer();
 
-	if (blockEvents)
+	if (blockBattlescapeEvents)
 		Com_Printf("still some pending events but starting %i (%s)\n",
 			player_action, pa_format[player_action]);
 
@@ -879,7 +879,7 @@ qboolean CL_ActorSelect (le_t * le)
 	if (!le || le->team != cls.team || LE_IsDead(le) || !le->inuse)
 		return qfalse;
 
-	if (blockEvents)
+	if (blockBattlescapeEvents)
 		return qfalse;
 
 	/* select him */
@@ -1133,7 +1133,7 @@ int CL_CheckAction (void)
 		return qfalse;
 	}
 
-/*	if (blockEvents) {
+/*	if (blockBattlescapeEvents) {
 		Com_Printf("Can't do that right now.\n");
 		return qfalse;
 	}
@@ -1289,7 +1289,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 		return;
 
 	/* the actor is still moving */
-	if (blockEvents)
+	if (blockBattlescapeEvents)
 		return;
 
 	assert(selActor);
@@ -1621,7 +1621,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->startTime = cl.time;
 	le->endTime = cl.time;
 
-	CL_BlockEvents();
+	CL_BlockBattlescapeEvents();
 }
 
 

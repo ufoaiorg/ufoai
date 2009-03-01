@@ -859,7 +859,7 @@ void CL_CameraMove (void)
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
 			if (DotProduct(delta, routeDelta) < 0.05) {
-				CL_UnblockEvents();
+				CL_UnblockBattlescapeEvents();
 				cameraRoute = qfalse;
 			}
 		} else
@@ -937,7 +937,7 @@ void CL_CameraMove (void)
 }
 
 /**
- * @sa CL_BlockEvents
+ * @sa CL_BlockBattlescapeEvents
  * @sa CL_CameraMove
  */
 void CL_CameraRoute (pos3_t from, pos3_t target)
@@ -960,7 +960,7 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
 	VectorClear(cl.cam.speed);
 	cameraRoute = qtrue;
 	/* no other event should intersect during camera movement */
-	CL_BlockEvents();
+	CL_BlockBattlescapeEvents();
 }
 
 /**

@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_popup.h"
 #include "multiplayer/mp_chatmessages.h"
 
-cvar_t *cl_logevents;
+cvar_t *cl_log_battlescape_events;
 
 /**
  * @brief see also svc_ops_e in common.h
@@ -261,10 +261,10 @@ typedef struct evTimes_s {
 } evTimes_t;
 
 /** @brief linked list of battlescape events */
-static evTimes_t *events = NULL;
+static evTimes_t *battlescapeEvents;
 
-qboolean blockEvents;	/**< block network events - see CL_Events */
-cvar_t *cl_block_events;
+qboolean blockBattlescapeEvents;	/**< block network events - see CL_ExecuteBattlescapeEvent */
+cvar_t *cl_block_battlescape_events;
 
 /** @brief CL_ParseEvent timers and vars */
 static int nextTime;	/**< time when the next event should be executed */
@@ -481,13 +481,14 @@ static void CL_ParseStartSoundPacket (struct dbuffer *msg)
  * @brief Reset the events
  * @note Pending events that are not yet executed - due to the event timer -
  * will just be removed without ever being executed.
+ * @todo Also execute after leaving tactical missions?
  */
-static void CL_EventReset (void)
+void CL_ResetBattlescapeEvents (void)
 {
 	evTimes_t *event, *next;
 	int i = 0;
 
-	for (event = events; event; event = next) {
+	for (event = battlescapeEvents; event; event = next) {
 		next = event->next;
 		Com_DPrintf(DEBUG_EVENTSYS, "event type: %s at %i\n",
 			ev_names[event->eType], event->when);
@@ -496,11 +497,11 @@ static void CL_EventReset (void)
 		i++;
 	}
 
-	events = NULL;
+	battlescapeEvents = NULL;
 
 	if (i)
-		Com_DPrintf(DEBUG_EVENTSYS, "removed %i pending events (cl.eventTime: %i)\n",
-			i, cl.eventTime);
+		Com_DPrintf(DEBUG_EVENTSYS, "removed %i pending events (cl.battlescapeEventTime: %i)\n",
+			i, cl.battlescapeEventTime);
 }
 
 /**
@@ -513,19 +514,19 @@ static void CL_Reset (struct dbuffer *msg)
 	cl.numTeamList = 0;
 	MN_ExecuteConfunc("numonteam1");
 
-	CL_EventReset();
+	CL_ResetBattlescapeEvents();
 	parsedDeath = qfalse;
-	cl.eventTime = 0;
+	cl.battlescapeEventTime = 0;
 	nextTime = 0;
 	shootTime = 0;
 	impactTime = 0;
-	blockEvents = qfalse;
+	blockBattlescapeEvents = qfalse;
 
 	/* set the active player */
 	NET_ReadFormat(msg, ev_format[EV_RESET], &cls.team, &cl.actTeam);
 
 	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
-	/* if in multiplayer spawn the soldiers */
+
 	if (GAME_IsMultiplayer()) {
 		/* pop any waiting menu and activate the HUD */
 		MN_PopMenu(qtrue);
@@ -533,6 +534,7 @@ static void CL_Reset (struct dbuffer *msg)
 		Cvar_Set("mn_active", mn_hud->string);
 		Cvar_Set("mn_main", "multiplayerInGame");
 	}
+
 	if (cls.team == cl.actTeam)
 		MN_ExecuteConfunc("startround");
 	else
@@ -548,7 +550,7 @@ static void CL_Reset (struct dbuffer *msg)
  */
 static void CL_StartGame (struct dbuffer *msg)
 {
-	int team_play = NET_ReadByte(msg);
+	const int team_play = NET_ReadByte(msg);
 
 	/* init camera position and angles */
 	memset(&cl.cam, 0, sizeof(cl.cam));
@@ -574,7 +576,7 @@ static void CL_StartGame (struct dbuffer *msg)
 	/* activate the renderer */
 	CL_SetClientState(ca_active);
 
-	CL_EventReset();
+	CL_ResetBattlescapeEvents();
 
 	/* back to the console */
 	MN_PopMenu(qtrue);
@@ -1499,17 +1501,17 @@ static void CL_InvReload (struct dbuffer *msg)
 }
 
 /**
- * @sa CL_Events
+ * @sa CL_ExecuteBattlescapeEvent
  */
 static inline void CL_LogEvent (const int num)
 {
 	FILE *logfile;
 
-	if (!cl_logevents->integer)
+	if (!cl_log_battlescape_events->integer)
 		return;
 
 	logfile = fopen(va("%s/events.log", FS_Gamedir()), "a");
-	fprintf(logfile, "%10i %s\n", cl.eventTime, ev_names[num]);
+	fprintf(logfile, "%10i %s\n", cl.battlescapeEventTime, ev_names[num]);
 	fclose(logfile);
 }
 
@@ -1517,24 +1519,25 @@ static void CL_ScheduleEvent(evTimes_t *event);
 
 /**
  * @sa CL_ScheduleEvent
- * @sa CL_EventReset
+ * @sa CL_ResetBattlescapeEvents
  */
-static void CL_ExecuteEvent (int now, void *data)
+static void CL_ExecuteBattlescapeEvent (int now, void *data)
 {
-	while (events && !blockEvents) {
-		evTimes_t *event = events;
+	while (battlescapeEvents && !blockBattlescapeEvents) {
+		evTimes_t *event = battlescapeEvents;
 
-		if (event->when > cl.eventTime) {
+		if (event->when > cl.battlescapeEventTime) {
 			CL_ScheduleEvent(event);
 			return;
 		}
 
-		events = event->next;
+		battlescapeEvents = event->next;
 
 		Com_DPrintf(DEBUG_EVENTSYS, "event(dispatching): %s %p\n", ev_names[event->eType], event);
 		CL_LogEvent(event->eType);
 		if (!ev_func[event->eType])
 			Sys_Error("Event %i doesn't have a callback", event->eType);
+
 		ev_func[event->eType](event->msg);
 
 		free_dbuffer(event->msg);
@@ -1545,7 +1548,7 @@ static void CL_ExecuteEvent (int now, void *data)
 /**
  * @brief Schedule the first event in the queue
  * @sa Schedule_Event
- * @sa CL_EventReset
+ * @sa CL_ResetBattlescapeEvents
  * @sa do_event
  * @todo Run the event timer on the master timer
  */
@@ -1556,32 +1559,32 @@ static void CL_ScheduleEvent (evTimes_t *event)
 	 * so we have to convert from one timescale to the other */
 	int timescale_delta;
 
-	if (!events)
+	if (!battlescapeEvents)
 		return;
 
-	timescale_delta = Sys_Milliseconds() - cl.eventTime;
-	Schedule_Event(event->when + timescale_delta, &CL_ExecuteEvent, NULL);
+	timescale_delta = Sys_Milliseconds() - cl.battlescapeEventTime;
+	Schedule_Event(event->when + timescale_delta, &CL_ExecuteBattlescapeEvent, NULL);
 }
 
 /**
- * @sa CL_UnblockEvents
+ * @sa CL_UnblockBattlescapeEvents
  * @todo Get rid of the blocking for actor selection and actor movement - we should
  * really be able to move more than one actor at the same time
  */
-void CL_BlockEvents (void)
+void CL_BlockBattlescapeEvents (void)
 {
-	if (cl_block_events->integer)
-		blockEvents = qtrue;
+	if (cl_block_battlescape_events->integer)
+		blockBattlescapeEvents = qtrue;
 }
 
 /**
- * @sa CL_BlockEvents
+ * @sa CL_BlockBattlescapeEvents
  */
-void CL_UnblockEvents (void)
+void CL_UnblockBattlescapeEvents (void)
 {
-	blockEvents = qfalse;
+	blockBattlescapeEvents = qfalse;
 	/* schedule the event callback again */
-	CL_ScheduleEvent(events);
+	CL_ScheduleEvent(battlescapeEvents);
 }
 
 /**
@@ -1626,11 +1629,11 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		int event_time;
 
 		/* get event time */
-		if (nextTime < cl.eventTime) {
-			nextTime = cl.eventTime;
+		if (nextTime < cl.battlescapeEventTime) {
+			nextTime = cl.battlescapeEventTime;
 		}
-		if (impactTime < cl.eventTime) {
-			impactTime = cl.eventTime;
+		if (impactTime < cl.battlescapeEventTime) {
+			impactTime = cl.battlescapeEventTime;
 		}
 
 		if (eType == EV_ACTOR_DIE)
@@ -1652,7 +1655,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				/* EV_INV_ADD messages are the last events sent after a death */
 				if (eType == EV_INV_ADD)
 					parsedDeath = qfalse;
-			} else if (impactTime > cl.eventTime) { /* item thrown on the ground */
+			} else if (impactTime > cl.battlescapeEventTime) { /* item thrown on the ground */
 				event_time = impactTime + 75;
 			}
 		}
@@ -1750,12 +1753,12 @@ static void CL_ParseEvent (struct dbuffer *msg)
 		cur->eType = eType;
 		cur->msg = event_msg;
 
-		if (!events || (events)->when > event_time) {
-			cur->next = events;
-			events = cur;
+		if (!battlescapeEvents || battlescapeEvents->when > event_time) {
+			cur->next = battlescapeEvents;
+			battlescapeEvents = cur;
 			CL_ScheduleEvent(cur);
 		} else {
-			evTimes_t *e = events;
+			evTimes_t *e = battlescapeEvents;
 			/* sort the new event into the pending scheduled events list */
 			while (e->next && e->next->when <= event_time)
 				e = e->next;
@@ -1859,6 +1862,5 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 
 	default:
 		Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegible server message %d", cmd);
-		break;
 	}
 }

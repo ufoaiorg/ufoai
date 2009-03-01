@@ -710,7 +710,7 @@ static void LET_PathMove (le_t * le)
 			if (floor)
 				FLOOR(le) = FLOOR(floor);
 
-			CL_UnblockEvents();
+			CL_UnblockBattlescapeEvents();
 
 			le->think = LET_StartIdle;
 			le->think(le);
@@ -819,7 +819,7 @@ static void LET_Projectile (le_t * le)
 		/* don't run the think function again */
 		le->inuse = qfalse;
 		/* we have to reset impact time here */
-		CL_UnblockEvents();
+		CL_UnblockBattlescapeEvents();
 	}
 }
 

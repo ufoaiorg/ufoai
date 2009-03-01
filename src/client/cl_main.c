@@ -810,7 +810,7 @@ static void CL_InitLocal (void)
 	cl_leshowinvis = Cvar_Get("cl_leshowinvis", "0", CVAR_ARCHIVE, "Show invisible local entites as null models");
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
-	cl_logevents = Cvar_Get("cl_logevents", "0", 0, "Log all events to events.log");
+	cl_log_battlescape_events = Cvar_Get("cl_log_battlescape_events", "0", 0, "Log all events to events.log");
 	cl_worldlevel = Cvar_Get("cl_worldlevel", "0", 0, "Current worldlevel in tactical mode");
 	cl_worldlevel->modified = qfalse;
 	cl_selected = Cvar_Get("cl_selected", "0", CVAR_NOSET, "Current selected soldier");
@@ -823,7 +823,7 @@ static void CL_InitLocal (void)
 	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	/** @todo remove this once actor selection and actor movement is no longer blocking other events */
-	cl_block_events = Cvar_Get("cl_block_events", "1", 0, "Debug cvar for testing unblocked events");
+	cl_block_battlescape_events = Cvar_Get("cl_block_battlescape_events", "1", 0, "Debug cvar for testing unblocked events");
 
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
@@ -1038,6 +1038,7 @@ void CL_SetClientState (int state)
 		CL_Connect();
 		break;
 	case ca_disconnected:
+		CL_ResetBattlescapeEvents();
 		cls.waitingForStart = 0;
 	case ca_connected:
 		break;
@@ -1066,8 +1067,8 @@ void CL_Frame (int now, void *data)
 	cls.realtime = Sys_Milliseconds();
 	cl.time = now;
 	last_frame = now;
-	if (!blockEvents)
-		cl.eventTime += delta;
+	if (!blockBattlescapeEvents)
+		cl.battlescapeEventTime += delta;
 
 	/* frame rate calculation */
 	if (delta)
