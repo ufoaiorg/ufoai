@@ -37,13 +37,14 @@ struct nodeBehaviour_s;
  */
 typedef struct {
 	int eventTime;
-	vec2_t noticePos; 		/**< the position where the cl.msgText messages are rendered */
-	qboolean dragButton;
-	qboolean closeButton;
-	qboolean preventTypingEscape;
-	qboolean modal;
-	qboolean dropdown;		/**< very special property force the menu to close if we click outside */
-	qboolean isFullScreen;
+	vec2_t noticePos; 				/**< the position where the cl.msgText messages are rendered */
+	qboolean dragButton;			/**< If true, we init the window with a header to move it */
+	qboolean closeButton;			/**< If true, we init the window with a header button to close it */
+	qboolean preventTypingEscape;	/**< If true, we can't use ESC button to close the window */
+	qboolean modal;					/**< If true, we can't click outside the window */
+	qboolean dropdown;				/**< very special property force the menu to close if we click outside */
+	qboolean isFullScreen;			/**< Internal data to allow fullscreen windows without the same size */
+	qboolean fill;					/**< If true, use all the screen space allowed */
 
 	struct menuNode_s *parent;	/**< to create child window */
 

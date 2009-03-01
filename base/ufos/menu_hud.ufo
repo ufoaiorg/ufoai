@@ -4,6 +4,10 @@
 
 menu hud extends ahud
 {
+	{
+		fill	true
+	}
+
 	// ==================
 	// render rectangle
 	// ==================

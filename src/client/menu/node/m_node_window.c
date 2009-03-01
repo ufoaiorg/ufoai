@@ -129,11 +129,15 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 	if (!node->invalidated)
 		return;
 
+	/* use a the space */
+	if (node->u.window.fill) {
+		node->size[0] = viddef.virtualWidth;
+		node->size[1] = viddef.virtualHeight;
+	}
+
 	/* move fullscreen menu on the center of the screen */
 	if (node->u.window.isFullScreen) {
-		/* horisontal */
 		node->pos[0] = (viddef.virtualWidth - node->size[0]) / 2;
-		/* vertical */
 		node->pos[1] = (viddef.virtualHeight - node->size[1]) / 2;
 	}
 
@@ -237,6 +241,7 @@ static const value_t windowNodeProperties[] = {
 	{"modal", V_BOOL, offsetof(menuNode_t, u.window.modal), MEMBER_SIZEOF(menuNode_t, u.window.modal)},
 	{"dropdown", V_BOOL, offsetof(menuNode_t, u.window.dropdown), MEMBER_SIZEOF(menuNode_t, u.window.dropdown)},
 	{"preventtypingescape", V_BOOL, offsetof(menuNode_t, u.window.preventTypingEscape), MEMBER_SIZEOF(menuNode_t, u.window.preventTypingEscape)},
+	{"fill", V_BOOL, offsetof(menuNode_t, u.window.fill), MEMBER_SIZEOF(menuNode_t, u.window.fill)},
 
 	{"init", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
 	{"close", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
