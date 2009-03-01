@@ -2457,7 +2457,7 @@ void CP_CampaignInit (qboolean load)
 	AB_ResetAlienBases();
 
 	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "singleplayerInGame");
+	Cvar_Set("mn_main", "campaign_main");
 	Cvar_Set("mn_active", "map");
 	MN_PushMenu("map", NULL);
 

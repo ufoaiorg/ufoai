@@ -254,9 +254,4 @@ menu skirmish
 		cmd	"game_setmode;set ai_numaliens 8;set difficulty 0;"
 		cmd "set mn_serverday 1;mn_getmaps;"
 	}
-
-	func close
-	{
-		cmd "game_setmode;"
-	}
 }

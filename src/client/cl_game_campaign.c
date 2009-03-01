@@ -330,7 +330,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionresults.itemtypes,  missionresults.itemamount), sizeof(resultText));
 
 	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "singleplayerInGame");
+	Cvar_Set("mn_main", "campaign_main");
 	Cvar_Set("mn_active", "map");
 	MN_PushMenu("map", NULL);
 

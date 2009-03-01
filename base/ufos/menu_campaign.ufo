@@ -54,19 +54,6 @@ menu campaigns
 		click		{ cmd "mn_push load;" }
 	}
 
-	button button_save
-	{
-		string		"_Save"
-		pos			"80 310"
-		size		"256 64"
-		image		menu/button_green_big
-		blend		true
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push save;" }
-	}
-
 	button button_continue
 	{
 		visiblewhen "mn_lastsave"
@@ -143,3 +130,92 @@ menu campaigns
 		cmd "game_setmode;cp_getcampaigns;"
 	}
 }
+
+menu campaign_main
+{
+	// ==================
+	// background
+	// ==================
+
+	pic background
+	{
+		image		menu/main_bg
+	}
+
+	string version
+	{
+		string		"*cvar version"
+		pos			"10 744"
+		size		"550 20"
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	button button_continue
+	{
+		string		"_Continue"
+		pos			"640 170"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_continue;" }
+	}
+
+	button button_load
+	{
+		string		"_Load"
+		pos			"640 240"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push load;" }
+	}
+
+	button button_save
+	{
+		string		"_Save"
+		pos			"640 310"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push save;" }
+	}
+
+	button button_options
+	{
+		string		"_Options"
+		pos			"640 380"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "mn_push options;" }
+	}
+
+	button button_back
+	{
+		string		"_Exit"
+		pos			"640 520"
+		size		"256 64"
+		image		menu/button_green_big
+		blend		true
+		font		f_menubig
+		color		"0 0.5 0 1"
+		selectcolor	"1 1 1 1"
+		click		{ cmd "game_exit;mn_pop;" }
+	}
+}
+

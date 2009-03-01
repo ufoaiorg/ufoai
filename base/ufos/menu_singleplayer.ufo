@@ -24,7 +24,7 @@ menu singleplayer
 	// buttons
 	// ==================
 
-	button button_new
+	button button_campaign
 	{
 		string		"_Campaign"
 		pos			"640 170"
@@ -37,7 +37,7 @@ menu singleplayer
 		click		{ cmd "game_exit; mn_push campaigns;" }
 	}
 
-	button c_button_skirmish
+	button button_skirmish
 	{
 		pos	"640 240"
 		size "256 64"
@@ -59,76 +59,22 @@ menu singleplayer
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_exit;mn_pop;" }
+		click		{ cmd "mn_pop;" }
 	}
 
 	func init
 	{
-		if "mn_main ne singleplayerInGame" {
+		// quit currently active gametype
+		cmd "game_exit;"
+
+		if "mn_main ne campaign_main" {
 			*button_save tooltip "_No game to save"
 			*button_save disabled true
 		}
-		if "mn_main eq singleplayerInGame" {
+		if "mn_main eq campaign_main" {
 			*button_save tooltip ""
 			*button_save disabled false
 		}
-	}
-}
-
-menu singleplayerInGame extends singleplayer
-{
-	// over-ride button_new with a continue button
-	button button_new
-	{
-		string		"_Continue"
-		pos			"640 170"
-		size		"256 64"
-		image		menu/button_green_big
-		blend		true
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		click		{ cmd "game_continue;" }
-	}
-
-	// over-ride button_continue with a continue button
-	button button_continue
-	{
-		string		"_Continue"
-		pos			"640 170"
-		size		"256 64"
-		image		menu/button_green_big
-		blend		true
-		font		f_menubig
-		invis		true
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-	}
-
-	button button_options
-	{
-		string		"_Options"
-		pos			"640 380"
-		size		"256 64"
-		image		menu/button_green_big
-		blend		true
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push options;" }
-	}
-
-	button button_back
-	{
-		string		"_Exit"
-		pos			"640 520"
-		size		"256 64"
-		image		menu/button_green_big
-		blend		true
-		font		f_menubig
-		color		"0 0.5 0 1"
-		selectcolor	"1 1 1 1"
-		click		{ cmd "game_exit;mn_pop;" }
 	}
 }
 
