@@ -87,11 +87,12 @@ MACROS
 /**
  * @brief SizedPosToVect locates the center of an actor based on size and position.
  */
-#define SizedPosToVec(p, actor_size, v) ( \
-	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2, \
-	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2, \
-	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2  \
-)
+#define SizedPosToVec(p, actor_size, v) { \
+	assert(actor_size > 0); \
+	v[0] = ((int)p[0] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2; \
+	v[1] = ((int)p[1] - 128) * UNIT_SIZE   + (UNIT_SIZE * actor_size)  / 2; \
+	v[2] =  (int)p[2]        * UNIT_HEIGHT + UNIT_HEIGHT / 2;  \
+}
 
 
 /*
