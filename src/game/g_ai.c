@@ -1664,7 +1664,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
-	if (ent->chr.weapons && !LEFT(ent) && !RIGHT(ent)) {
+	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent)) {
 		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
 		if (LEFT(ent) || RIGHT(ent))
 			Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Got weapon from inventory\n");
@@ -1854,7 +1854,6 @@ static void AI_SetStats (edict_t * ent, int team)
 		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
 	}
 
-
 	/*
 	 * Set health, morale and stun.
 	 */
@@ -1865,7 +1864,6 @@ static void AI_SetStats (edict_t * ent, int team)
 		ent->chr.morale = MAX_SKILL;
 	ent->morale = ent->chr.morale;
 	ent->STUN = 0;
-
 
 	/*
 	 * Stat post tweaks.
@@ -1887,20 +1885,24 @@ static void AI_SetStats (edict_t * ent, int team)
 static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
 {
 	/* Set model. */
+	const char *teamDefintion;
 	if (team != TEAM_CIVILIAN) {
 		if (gi.csi->numAlienTeams) {
 			const int alienTeam = rand() % gi.csi->numAlienTeams;
 			assert(gi.csi->alienTeams[alienTeam]);
-			ent->chr.skin = gi.GetCharacterValues(gi.csi->alienTeams[alienTeam]->id, &ent->chr);
+			teamDefintion = gi.csi->alienTeams[alienTeam]->id;
 		} else
-			ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_alien"), &ent->chr);
+			teamDefintion = gi.Cvar_String("ai_alien");
 	} else if (team == TEAM_CIVILIAN) {
 		/** @todo Maybe we have civilians with armour, too - police and so on */
-		ent->chr.skin = gi.GetCharacterValues(gi.Cvar_String("ai_civilian"), &ent->chr);
+		teamDefintion = gi.Cvar_String("ai_civilian");
 	}
+	ent->chr.skin = gi.GetCharacterValues(teamDefintion, &ent->chr);
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
 	ent->skin = ent->chr.skin;
+	if (!ent->chr.teamDef)
+		gi.error("Could not set teamDef for character: '%s'", teamDefintion);
 }
 
 
@@ -1914,10 +1916,10 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
 {
 	/* Pack equipment. */
 	if (team != TEAM_CIVILIAN) { /** @todo Give civilians gear. */
-		if (ent->chr.weapons)   /* actor can handle equipment */
+		if (ent->chr.teamDef->weapons)
 			INVSH_EquipActor(&ent->i, ed, &ent->chr);
 		else if (ent->chr.teamDef)
-			/* actor cannot handle equipment */
+			/* actor cannot handle equipment but no weapons */
 			INVSH_EquipActorMelee(&ent->i, &ent->chr);
 		else
 			Com_Printf("AI_InitPlayer: actor with no equipment\n");

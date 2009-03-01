@@ -1255,9 +1255,7 @@ qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteString(sb, e->chr.path);
 			MSG_WriteString(sb, e->chr.head);
 			MSG_WriteByte(sb, e->chr.skin);
-			MSG_WriteByte(sb, e->chr.armour);
-			MSG_WriteByte(sb, e->chr.weapons);
-			MSG_WriteByte(sb, e->chr.teamDef ? e->chr.teamDef->idx : BYTES_NONE);
+			MSG_WriteByte(sb, e->chr.teamDef->idx);
 			MSG_WriteByte(sb, e->chr.gender);
 			MSG_WriteShort(sb, e->chr.ucn);
 			MSG_WriteShort(sb, e->chr.maxHP);
@@ -1407,16 +1405,10 @@ qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.skin = MSG_ReadByte(sb);
 			e->chr.emplIdx = i;
 			e->chr.emplType = j;
-			e->chr.armour = MSG_ReadByte(sb);
-			e->chr.weapons = MSG_ReadByte(sb);
-			e->chr.teamDef = NULL;
 			td = MSG_ReadByte(sb);
-			if (td != BYTES_NONE) {
-				assert(csi.numTeamDefs);
-				if (td >= csi.numTeamDefs)
-					return qfalse;
-				e->chr.teamDef = &csi.teamDef[td];
-			}
+			if (td >= csi.numTeamDefs || td < 0)
+				return qfalse;
+			e->chr.teamDef = &csi.teamDef[td];
 			e->chr.gender = MSG_ReadByte(sb);
 			e->chr.ucn = MSG_ReadShort(sb);
 			e->chr.maxHP = MSG_ReadShort(sb);

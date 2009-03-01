@@ -207,9 +207,9 @@ typedef struct terrainType_s {
 
 const terrainType_t* Com_GetTerrainType(const char *textureName);
 
-const char *Com_GiveName(int gender, const char *category);
-const char *Com_GiveModel(int type, int gender, const char *teamID);
-int Com_GetCharacterValues(const char *team, character_t * chr);
+const char *Com_GiveName(int gender, teamDef_t *td);
+const char *Com_GiveModel(int type, int gender, const teamDef_t *td);
+int Com_GetCharacterValues(const char *teamDefition, character_t * chr);
 const char* Com_GetActorSound(teamDef_t* td, int gender, actorSound_t soundType);
 teamDef_t* Com_GetTeamDefinitionByID(const char *team);
 mapDef_t* Com_GetMapDefinitionByID(const char *mapDefID);

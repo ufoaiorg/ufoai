@@ -176,7 +176,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 		return;
 
 	switch (target->team) {
-	case TEAM_ALIEN:	/**< Aliens. */
+	case TEAM_ALIEN:
 		if (target->HP <= 0) {
 			if (attacker->chr.scoreMission)
 				attacker->chr.scoreMission->kills[KILLED_ALIENS]++;
@@ -187,11 +187,11 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 			attacker->chr.score.stuns[KILLED_ALIENS]++;
 		}
 
-		/**@todo Add check for valid values of fd->weaponSkill */
+		/** @todo Add check for valid values of fd->weaponSkill */
 		if (attacker->chr.scoreMission)
 			attacker->chr.scoreMission->skillKills[fd->weaponSkill]++;
 		break;
-	case TEAM_CIVILIAN:	/**< Civilians. */
+	case TEAM_CIVILIAN:
 		if (target->HP <= 0) {
 			if (attacker->chr.scoreMission)
 				attacker->chr.scoreMission->kills[KILLED_CIVILIANS]++;
@@ -201,7 +201,7 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 			attacker->chr.score.stuns[KILLED_CIVILIANS]++;
 		}
 		break;
-	case TEAM_PHALANX:	/* PHALANX soldiers. */
+	case TEAM_PHALANX:
 		if (target->HP <= 0) {
 			if (attacker->chr.scoreMission)
 				attacker->chr.scoreMission->kills[KILLED_TEAM]++;
@@ -211,8 +211,6 @@ static void G_UpdateCharacterBodycount (edict_t *attacker, const fireDef_t *fd, 
 				attacker->chr.scoreMission->stuns[KILLED_TEAM]++;
 			attacker->chr.score.stuns[KILLED_TEAM]++;
 		}
-		break;
-	default:
 		break;
 	}
 }
@@ -234,8 +232,7 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
 		return;
 
 	if (!splashDamage) {
-		if ((attacker->team == target->team)
-		&& (!attacker->chr.scoreMission->firedHit[KILLED_TEAM])) {
+		if (attacker->team == target->team && !attacker->chr.scoreMission->firedHit[KILLED_TEAM]) {
 			/* Increase friendly fire counter. */
 			attacker->chr.scoreMission->hits[fd->weaponSkill][KILLED_TEAM]++;
 			attacker->chr.scoreMission->firedHit[KILLED_TEAM] = qtrue;
@@ -300,9 +297,9 @@ static void G_UpdateHitScore (edict_t * attacker, const edict_t * target, const 
  */
 static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t *attacker, shot_mock_t *mock)
 {
-	qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
-	qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
-	qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
+	const qboolean stunEl = (fd->obj->dmgtype == gi.csi->damStunElectro);
+	const qboolean stunGas = (fd->obj->dmgtype == gi.csi->damStunGas);
+	const qboolean shock = (fd->obj->dmgtype == gi.csi->damShock);
 	qboolean isRobot;
 
 	assert(target);
@@ -363,8 +360,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 			damage *= pow(1.18, -difficulty->integer);
 	}
 
-	assert((attacker->team >= 0) && (attacker->team < MAX_TEAMS));
-	assert((target->team >= 0) && (target->team < MAX_TEAMS));
+	assert(attacker->team >= 0 && attacker->team < MAX_TEAMS);
+	assert(target->team >= 0 && target->team < MAX_TEAMS);
 
 	if (g_nodamage != NULL && !g_nodamage->integer) {
 		/* hit */
@@ -394,10 +391,10 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 					target->chr.scoreMission->heal += -damage;
 
 				/** @todo Do the same for "attacker" but as "applied" healing
-					e.g. attacker->chr->scoreMission.healOthers += -damage; ? */
+				 * e.g. attacker->chr->scoreMission.healOthers += -damage; ? */
 
 				/** @todo Also increase the morale a little bit when
-					soldier gets healing and morale is lower than max possible? */
+				 * soldier gets healing and morale is lower than max possible? */
 			} else {
 				/* Real damage was dealt. */
 
@@ -420,9 +417,8 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 	if (target->HP == 0 || target->HP <= target->STUN) {
 		G_SendStats(target);
 		/* prints stats for multiplayer to game console */
-		if (sv_maxclients->integer > 1) {
+		if (sv_maxclients->integer > 1)
 			G_PrintActorStats(target, attacker, fd);
-		}
 
 		G_ActorDie(target, target->HP == 0 ? STATE_DEAD : STATE_STUN, attacker);
 
@@ -701,9 +697,8 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 							floor = G_SpawnFloor(drop);
 
 							for (actor = g_edicts; actor < &g_edicts[globals.num_edicts]; actor++)
-								if (actor->inuse
-									 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
-									 && VectorCompare(drop, actor->pos))
+								if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+								 && VectorCompare(drop, actor->pos))
 									FLOOR(actor) = FLOOR(floor);
 						} else {
 							gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
@@ -806,24 +801,24 @@ static void DumpAllEntities (void)
 static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from, pos3_t at,
 	int mask, const item_t *weapon, shot_mock_t *mock, int z_align, int i, int type)
 {
-	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
-	vec3_t angles;	/* ?? @todo The random dir-modifier ?? */
-	vec3_t cur_loc;	/* The current location of the projectile. */
-	vec3_t impact;	/* The location of the target (-center?) */
+	vec3_t dir;			/* Direction from the location of the gun muzzle ("from") to the target ("at") */
+	vec3_t angles;		/** @todo The random dir-modifier? */
+	vec3_t cur_loc;		/* The current location of the projectile. */
+	vec3_t impact;		/* The location of the target (-center?) */
 	vec3_t temp;
 	vec3_t tracefrom;	/* sum */
-	trace_t tr;	/* the traceing */
-	float acc;	/* Accuracy modifier for the angle of the shot. */
-	float range;	/* ?? @todo */
+	trace_t tr;			/* the traceing */
+	float acc;			/* Accuracy modifier for the angle of the shot. */
+	float range;
 	float gauss1;
-	float gauss2;   /* For storing 2 gaussian distributed random values. */
+	float gauss2;		/* For storing 2 gaussian distributed random values. */
 	float commonfactor; /* common to pitch and yaw spread, avoid extra multiplications */
 	float injurymultiplier;
-	int bounce;	/* count the bouncing */
-	int damage;	/* The damage to be dealt to the target. */
-	byte flags;	/* ?? @todo */
-	int throughWall; /* shoot through x walls */
-	int clientType;	/* shoot type for ai controlled actors */
+	int bounce;			/* count the bouncing */
+	int damage;			/* The damage to be dealt to the target. */
+	byte flags;
+	int throughWall;	/* shoot through x walls */
+	int clientType;		/* shoot type for ai controlled actors */
 
 	/* Check if the shooter is still alive (me may fire with area-damage ammo and have just hit the near ground). */
 	if (G_IsDead(ent)) {
@@ -838,7 +833,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/* ?? @todo Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid.
+	/** ?? @todo Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid.
 	 * Might need some change to reflect 2x2 units.
 	 * Also might need a check if the distance is bigger than the one to the impact location. */
 	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
@@ -891,7 +886,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 
 		/* Do the trace from current position of the projectile
 		 * to the end_of_range location.*/
-		/* mins and maxs should be set via localModel_t don't they? */
+		/** @todo mins and maxs should be set via localModel_t don't they? */
 		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
 
 		DumpTrace(tracefrom, tr);

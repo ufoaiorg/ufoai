@@ -681,9 +681,6 @@ typedef struct character_s {
 	int emplIdx;				/**< Backlink to employee-struct - global employee index (gd.employees[][emplIdx]). */
 	employeeType_t emplType;				/**< Employee type.  (gd.employees[emplType][]). */
 
-	qboolean armour;			/**< Able to use armour. */
-	qboolean weapons;			/**< Able to use weapons. */
-
 	teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;				/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */

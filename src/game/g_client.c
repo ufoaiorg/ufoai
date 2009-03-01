@@ -864,7 +864,9 @@ edict_t *G_SpawnFloor (pos3_t pos)
 	floor->type = ET_ITEM;
 	floor->fieldSize = ACTOR_SIZE_NORMAL;
 	VectorCopy(pos, floor->pos);
+	Com_Printf("floor before: %i\n", floor->pos[2]);
 	floor->pos[2] = gi.GridFall(gi.routingMap, floor->fieldSize, floor->pos);
+	Com_Printf("floor after: %i\n", floor->pos[2]);
 	gi.GridPosToVec(gi.routingMap, floor->fieldSize, floor->pos, floor->origin);
 	return floor;
 }
@@ -1188,7 +1190,7 @@ static void G_InventoryToFloor (edict_t * ent)
 
 	/* check for items */
 	for (k = 0; k < gi.csi->numIDs; k++)
-		if (ent->i.c[k])
+		if (k != gi.csi->idArmour && ent->i.c[k])
 			break;
 
 	/* edict is not carrying any items */
@@ -1271,7 +1273,7 @@ static void G_InventoryToFloor (edict_t * ent)
 					continue;
 				}
 #endif
-				if (Q_strncmp(ic->item.t->type, "armour", MAX_VAR))
+				if (Q_strcmp(ic->item.t->type, "armour"))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", ic->item.t->id);
 				if (!Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", ic->item.t->id);
@@ -1879,7 +1881,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	gi.cprintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
 
 	/* drop items in hands */
-	if (!sanity && ent->chr.weapons) {
+	if (!sanity && ent->chr.teamDef->weapons) {
 		if (RIGHT(ent))
 			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
@@ -2148,7 +2150,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 
 	ent = g_edicts + entnum;
 	/* e.g. bloodspiders are not allowed to carry or collect weapons */
-	if (!ent->chr.weapons)
+	if (!ent->chr.teamDef->weapons)
 		return;
 
 	/* search for weapons and select the one that is available easily */
@@ -2213,9 +2215,8 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
 
-	/* handle inventory - drop everything to floor edict (but not the armour) if actor can handle equipment */
-	if (ent->chr.weapons)
-		G_InventoryToFloor(ent);
+	/* handle inventory - drop everything to floor edict (but not the armour) */
+	G_InventoryToFloor(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
 	G_CheckVis(ent, qtrue);
@@ -2671,7 +2672,6 @@ static void G_ClientSkipActorInfo (void)
  * @brief The client lets the server spawn the actors for a given player by sending their information (models, inventory, etc..) over the network.
  * @param[in] player The player to spawn the actors for.
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @sa globals.ClientTeamInfo
  * @sa clc_teaminfo
  * @sa G_EndGame
  */
@@ -2682,7 +2682,6 @@ void G_ClientTeamInfo (player_t * player)
 	int x, y;
 	item_t item;
 	int dummyFieldSize = 0;
-	int td;		/**< teamDef_t index */
 
 	/* find a team */
 	G_GetTeam(player);
@@ -2696,12 +2695,10 @@ void G_ClientTeamInfo (player_t * player)
 		 * +++ Multiplayer
 		 * + the game is already running (activeTeam != -1)
 		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
-		 * + the team already hit the max allowed amount of soldiers
-		 */
-		if (player->pers.team != -1
-		 && (sv_maxclients->integer == 1
-			|| (!G_GameRunning() && i < sv_maxsoldiersperplayer->integer
-			 && level.num_spawned[player->pers.team] < sv_maxsoldiersperteam->integer))) {
+		 * + the team already hit the max allowed amount of soldiers */
+		if (player->pers.team != -1 && (sv_maxclients->integer == 1
+		 || (!G_GameRunning() && i < sv_maxsoldiersperplayer->integer
+		 && level.num_spawned[player->pers.team] < sv_maxsoldiersperteam->integer))) {
 			/* Here the client tells the server the information for the spawned actor(s). */
 
 			/* Receive fieldsize and get matching spawnpoint. */
@@ -2757,10 +2754,7 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.HP = gi.ReadShort();
 			ent->chr.minHP = ent->chr.HP;
 			ent->chr.maxHP = gi.ReadShort();
-			ent->chr.teamDef = NULL;
-			td = gi.ReadByte();
-			if (td != NONE)
-				ent->chr.teamDef = &gi.csi->teamDef[td];
+			ent->chr.teamDef = &gi.csi->teamDef[gi.ReadByte()];
 
 			ent->chr.gender = gi.ReadByte();
 			ent->chr.STUN = gi.ReadByte();

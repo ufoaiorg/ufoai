@@ -2280,7 +2280,6 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 			/* pack equipment */
 			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: Packing initial equipment for %s.\n", chr->name);
 			INVSH_EquipActor(&chr->inv, ed, chr);
-			Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: armour: %i, weapons: %i\n", chr->armour, chr->weapons);
 			chrListTemp.chr[chrListTemp.num] = chr;
 			chrListTemp.num++;
 		}

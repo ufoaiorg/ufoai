@@ -1529,88 +1529,71 @@ NAME AND TEAM DEFINITION INTERPRETER
 
 /**
  * @param[in] gender 1 (female) or 2 (male)
- * @param[in] team Country strings like: spanish_italian, german, russian and so on
+ * @param[in] td The team defintion to get the name from
  * @sa Com_GetCharacterValues
  */
-const char *Com_GiveName (int gender, const char *team)
+const char *Com_GiveName (int gender, teamDef_t *td)
 {
 	static char returnName[MAX_VAR];
-	teamDef_t *td;
-	int i, j, name = 0;
+	int j, name = 0;
 	linkedList_t* list;
 
-	/* search the name */
-	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		if (!Q_strncmp(team, td->id, MAX_VAR)) {
 #ifdef DEBUG
-			for (j = 0; j < NAME_NUM_TYPES; j++)
-				name += td->numNames[j];
-			if (!name)
-				Sys_Error("Could not find any valid name definitions for category '%s'\n", team);
+	for (j = 0; j < NAME_NUM_TYPES; j++)
+		name += td->numNames[j];
+	if (!name)
+		Sys_Error("Could not find any valid name definitions for category '%s'\n", td->id);
 #endif
-			/* found category */
-			if (!td->numNames[gender]) {
+	/* found category */
+	if (!td->numNames[gender]) {
 #ifdef DEBUG
-				Com_DPrintf(DEBUG_ENGINE, "No valid name definitions for gender %i in category '%s'\n", gender, team);
+		Com_DPrintf(DEBUG_ENGINE, "No valid name definitions for gender %i in category '%s'\n", gender, td->id);
 #endif
-				return NULL;
-			}
-			name = rand() % td->numNames[gender];
+		return NULL;
+	}
+	name = rand() % td->numNames[gender];
 
-			/* skip names */
-			list = td->names[gender];
-			for (j = 0; j < name; j++) {
-				assert(list);
-				list = list->next;
-			}
+	/* skip names */
+	list = td->names[gender];
+	for (j = 0; j < name; j++) {
+		assert(list);
+		list = list->next;
+	}
 
-			/* store the name */
-			Q_strncpyz(returnName, (const char*)list->data, sizeof(returnName));
-			return returnName;
-		}
-
-	/* nothing found */
-	return NULL;
+	/* store the name */
+	Q_strncpyz(returnName, (const char*)list->data, sizeof(returnName));
+	return returnName;
 }
 
 /**
  * @param[in] type MODEL_PATH, MODEL_BODY, MODEL_HEAD, MODEL_SKIN (path, body, head, skin - see team_*.ufo)
  * @param[in] gender 1 (female) or 2 (male)
- * @param[in] teamID The team definition id
+ * @param[in] td The team definition
  * @sa Com_GetCharacterValues
  */
-const char *Com_GiveModel (int type, int gender, const char *teamID)
+const char *Com_GiveModel (int type, int gender, const teamDef_t *td)
 {
-	teamDef_t *td;
-	int i, j;
+	int j;
 
-	/* search the name */
-	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		if (!Q_strcmp(teamID, td->id)) {
-			const linkedList_t* list;
-			/* search one of the model definitions and (the +) go to the type entry from team_*.ufo  */
-			const int num = (rand() % td->numModels[gender]) * MODEL_NUM_TYPES + type;
+	const linkedList_t* list;
+	/* search one of the model definitions and (the +) go to the type entry from team_*.ufo  */
+	const int num = (rand() % td->numModels[gender]) * MODEL_NUM_TYPES + type;
 
-			/* found category */
-			if (!td->numModels[gender]) {
-				Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, teamID);
-				return NULL;
-			}
+	/* found category */
+	if (!td->numModels[gender]) {
+		Com_Printf("Com_GiveModel: no models defined for gender %i and category '%s'\n", gender, td->id);
+		return NULL;
+	}
 
-			/* skip models and unwanted info */
-			list = td->models[gender];
-			for (j = 0; j < num; j++) {
-				assert(list);
-				list = list->next;
-			}
+	/* skip models and unwanted info */
+	list = td->models[gender];
+	for (j = 0; j < num; j++) {
+		assert(list);
+		list = list->next;
+	}
 
-			/* return the value */
-			return (const char*)list->data;
-		}
-
-	Com_Printf("Com_GiveModel: no models for gender %i and category '%s'\n", gender, teamID);
-	/* nothing found */
-	return NULL;
+	/* return the value */
+	return (const char*)list->data;
 }
 
 /**
@@ -1668,34 +1651,23 @@ teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 
 /**
  * @brief Assign character values, 3D models and names to a character.
- * @param[in] team What team the character is on.
+ * @param[in] teamDefition The team definition id to use to generate the character values.
  * @param[in,out] chr The character that should get the paths to the different models/skins.
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-int Com_GetCharacterValues (const char *team, character_t * chr)
+int Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 {
-	teamDef_t *td;
-	int i;
 	int retry = 1000;
 
 	assert(chr);
 
-	/* get team definition */
-	for (i = 0; i < csi.numTeamDefs; i++)
-		if (!Q_strncmp(team, csi.teamDef[i].id, MAX_VAR))
-			break;
-
-	/* If no team was found this should be NULL for error checking. */
-	chr->teamDef = NULL;
-
-	if (i >= csi.numTeamDefs)
-		Com_Error(ERR_DROP, "Com_GetCharacterValues: could not find team '%s' in team definitions", team);
-
-	td = &csi.teamDef[i];
+	chr->teamDef = Com_GetTeamDefinitionByID(teamDefition);
+	if (chr->teamDef == NULL)
+		Com_Error(ERR_DROP, "Com_GetCharacterValues: could not find team '%s' in team definitions", teamDefition);
 
 	/* default values for human characters */
-	switch (td->size) {
+	switch (chr->teamDef->size) {
 	case 2:	/* 2x2 unit*/
 		chr->fieldSize = ACTOR_SIZE_2x2;
 		break;
@@ -1704,9 +1676,6 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		break;
 	}
-	chr->weapons = td->weapons;
-	chr->armour = td->armour;
-	chr->teamDef = &csi.teamDef[i];
 
 	/* get the models */
 	while (retry--) {
@@ -1716,38 +1685,38 @@ int Com_GetCharacterValues (const char *team, character_t * chr)
 		chr->gender = gender;
 
 		/* get name */
-		str = Com_GiveName(gender, td->id);
+		str = Com_GiveName(gender, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->name, str, sizeof(chr->name));
 		Q_strcat(chr->name, " ", sizeof(chr->name));
-		str = Com_GiveName(gender + LASTNAME, td->id);
+		str = Com_GiveName(gender + LASTNAME, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strcat(chr->name, str, sizeof(chr->name));
 
 		/* get model */
-		str = Com_GiveModel(MODEL_PATH, gender, td->id);
+		str = Com_GiveModel(MODEL_PATH, gender, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->path, str, sizeof(chr->path));
 
-		str = Com_GiveModel(MODEL_BODY, gender, td->id);
+		str = Com_GiveModel(MODEL_BODY, gender, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->body, str, sizeof(chr->body));
 
-		str = Com_GiveModel(MODEL_HEAD, gender, td->id);
+		str = Com_GiveModel(MODEL_HEAD, gender, chr->teamDef);
 		if (!str)
 			continue;
 		Q_strncpyz(chr->head, str, sizeof(chr->head));
 
-		str = Com_GiveModel(MODEL_SKIN, gender, td->id);
+		str = Com_GiveModel(MODEL_SKIN, gender, chr->teamDef);
 		if (!str)
 			continue;
 		return atoi(str);
 	}
-	Com_Printf("Could not set character values for team '%s' - team '%s'\n", team, td->id);
+	Com_Printf("Could not set character values for team '%s'\n", teamDefition);
 	return 0;
 }
 

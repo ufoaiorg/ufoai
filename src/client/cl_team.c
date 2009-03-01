@@ -79,10 +79,7 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 	mxml_AddString(p, "path", chr.path);
 	mxml_AddString(p, "head", chr.head);
 	mxml_AddInt(p, "skin", chr.skin);
-	mxml_AddBool(p, "armour", chr.armour);
-	mxml_AddBool(p, "weapons", chr.weapons);
-	if (chr.teamDef)
-		mxml_AddInt(p, "teamdefidx", chr.teamDef->idx);
+	mxml_AddInt(p, "teamdefidx", chr.teamDef->idx);
 	mxml_AddInt(p, "gender", chr.gender);
 	mxml_AddInt(p, "ucn", chr.ucn);
 	mxml_AddInt(p, "maxhp", chr.maxHP);
@@ -143,8 +140,6 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	Q_strncpyz(chr->head, mxml_GetString(p, "head"), sizeof(chr->head));
 
 	chr->skin = mxml_GetInt(p, "skin", 0);
-	chr->armour = mxml_GetBool(p, "armour", qfalse);
-	chr->weapons = mxml_GetBool(p, "weapons", qfalse);
 
 	chr->teamDef = NULL;
 	/* Team-definition index */
@@ -490,7 +485,6 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 		break;
 	default:
 		Sys_Error("Unknown employee type\n");
-		break;
 	}
 	chr->skin = Com_GetCharacterValues(teamDefName, chr);
 }

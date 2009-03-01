@@ -251,7 +251,9 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 
 		NET_WriteShort(buf, chr->HP);
 		NET_WriteShort(buf, chr->maxHP);
-		NET_WriteByte(buf, chr->teamDef ? chr->teamDef->idx : NONE);
+		if (chr->teamDef == NULL)
+			Com_Error(ERR_DROP, "Character with no teamdef set");
+		NET_WriteByte(buf, chr->teamDef->idx);
 		NET_WriteByte(buf, chr->gender);
 		NET_WriteByte(buf, chr->STUN);
 		NET_WriteByte(buf, chr->morale);

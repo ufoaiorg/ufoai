@@ -1304,9 +1304,6 @@ void INVSH_EquipActorMelee (inventory_t* const inv, character_t* chr)
 	objDef_t *obj;
 	item_t item;
 
-	assert(chr);
-	assert(!chr->weapons);
-	assert(chr->teamDef);
 	assert(chr->teamDef->onlyWeapon);
 
 	/* Get weapon */
@@ -1335,8 +1332,6 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
 	assert(chr);
 	assert(weapon);
 	assert(chr->emplType == EMPL_ROBOT);
-	/** assert(!chr->weapons); @todo remove/change? */
-	/** assert(chr->teamDef->onlyWeapon); @todo remove/change? */
 
 	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee: team %i: %s, weapon %i: %s\n",
 		chr->teamDef->idx, chr->teamDef->id, weapon->idx, weapon->id);
@@ -1383,7 +1378,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 	const float AKIMBO_CHANCE = 0.3; 	/**< if you got a one-handed secondary weapon (and no primary weapon),
 											 this is the chance to get another one (between 0 and 1) */
 
-	if (chr->weapons) {
+	if (chr->teamDef->weapons) {
 		objDef_t *primaryWeapon = NULL;
 		/* Primary weapons */
 		const int maxWeaponIdx = min(CSI->numODs - 1, numEquip - 1);
@@ -1519,7 +1514,7 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 		Sys_Error("INVSH_EquipActor: character '%s' may not carry weapons\n", chr->name);
 	}
 
-	if (!chr->armour) {
+	if (!chr->teamDef->armour) {
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActor: character '%s' may not carry armour\n", chr->name);
 		return;
 	}
@@ -1806,7 +1801,7 @@ void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t typ
 	assert(chr);
 
 	/* team definition is not defined when new phalanx recruits are added */
-	if (chr->teamDef && chr->teamDef->race != RACE_PHALANX_HUMAN && chr->teamDef->race != RACE_ROBOT) {
+	if (chr->teamDef->race != RACE_PHALANX_HUMAN && chr->teamDef->race != RACE_ROBOT) {
 		/* Add modifiers for difficulty setting here! */
 		switch (chr->teamDef->race) {
 		case RACE_TAMAN:
