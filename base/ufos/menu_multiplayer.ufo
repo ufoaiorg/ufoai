@@ -319,7 +319,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 		text servers
 		{
 			pos			"65 40"
-			width		"420"
+			width		"430"
 			lineheight	20
 			tabwidth	48
 			font		"f_verysmall"
@@ -344,7 +344,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 		vscrollbar irc_userlist_scroll {
 			image		menu/scrollbar_v_green
 			blend		true
-			pos			"490 40"
+			pos			"500 40"
 			height		"440"
 			current		0
 			viewsize	22
