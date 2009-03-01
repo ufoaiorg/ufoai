@@ -133,7 +133,7 @@ const char *ev_format[] =
 	"ss",				/* EV_DOOR_ACTION */
 	"s"					/* EV_RESET_CLIENT_ACTION */
 };
-/*CASSERT(lengthof(ev_format) == EV_NUM_EVENTS);*/
+CASSERT(lengthof(ev_format) == EV_NUM_EVENTS);
 
 /**
  * @sa ev_format
@@ -161,10 +161,12 @@ static const char *ev_names[] =
 	"EV_ACTOR_START_MOVE",
 	"EV_ACTOR_TURN",
 	"EV_ACTOR_MOVE",
+
 	"EV_ACTOR_START_SHOOT",
 	"EV_ACTOR_SHOOT",
 	"EV_ACTOR_SHOOT_HIDDEN",
 	"EV_ACTOR_THROW",
+
 	"EV_ACTOR_DIE",
 	"EV_ACTOR_STATS",
 	"EV_ACTOR_STATECHANGE",

@@ -44,3 +44,4 @@ const char *pa_format[] =
 	"sss",				/**< PA_REACT_SELECT */
 	"sss"				/**< PA_RESERVE_STATE */
 };
+CASSERT(lengthof(pa_format) == PA_NUM_EVENTS);
