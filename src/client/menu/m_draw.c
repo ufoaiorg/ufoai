@@ -134,9 +134,9 @@ static void MN_DrawDebugMenuNodeNames (void)
 	debugTextPositionY = 100;
 
 	/* x panel position with hysteresis */
-	if (mousePosX < VID_NORM_WIDTH / 3)
-		debugPositionX = VID_NORM_WIDTH - DEBUG_PANEL_WIDTH;
-	if (mousePosX > 2 * VID_NORM_WIDTH / 3)
+	if (mousePosX < viddef.virtualWidth / 3)
+		debugPositionX = viddef.virtualWidth - DEBUG_PANEL_WIDTH;
+	if (mousePosX > 2 * viddef.virtualWidth / 3)
 		debugPositionX = 0;
 
 	/* background */
