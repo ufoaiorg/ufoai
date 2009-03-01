@@ -717,18 +717,6 @@ static void Com_DebugHelp_f (void)
 			" * debug_statsupdate\n"
 			"------------------------------\n"
 			"\n");
-	Com_Printf("Network debugging:\n"
-			"------------------------------\n"
-			" * net_showdrop"
-			"   console message if we have to drop a packet\n"
-			" * net_showpackets"
-			"   show packets (reliable and unreliable)\n"
-			" * net_showpacketsreliable"
-			"   only show reliable packets (net_showpackets must be 1, too)\n"
-			" * net_showpacketsdata"
-			"   also print the received and sent data packets to console\n"
-			"------------------------------\n"
-			"\n");
 	Com_Printf("Other useful commands:\n"
 			"------------------------------\n"
 			" * cl_configstrings\n"
