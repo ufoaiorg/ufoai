@@ -96,7 +96,7 @@ static void MN_WindowNodeDraw (menuNode_t *node)
 
 	/* darker background if last window is a modal */
 	if (node->u.window.modal && mn.menuStack[mn.menuStackPos - 1] == node)
-		R_DrawFill(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, ALIGN_UL, modalBackground);
+		R_DrawFill(0, 0, viddef.virtualWidth, viddef.virtualHeight, ALIGN_UL, modalBackground);
 
 	/* draw the background */
 	image = MN_GetReferenceString(node, node->image);
