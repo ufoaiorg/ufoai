@@ -992,7 +992,7 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	const float celestialDist = 1.37f * SKYBOX_HALFSIZE;
 	const float moonSize = 0.025f;
 
-	image_t *starfield, *background, *sun;
+	image_t *starfield, *halo, *sun;
 	/* normalize */
 	const float nx = x * viddef.rx;
 	const float ny = y * viddef.ry;
@@ -1033,12 +1033,11 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	}
 
 	/* Draw atmosphere */
-	background = R_FindImage("pics/geoscape/map_background", it_pic);
-	if (background != r_noTexture) {
-		const float bgZoom = zoom;
-		/* Force height to make sure the image is a circle (and not an ellipse) */
-		const int halfHeight = 768.0f * viddef.ry;
-		R_DrawTexture(background->texnum,  earthPos[0] - nw / 2.0 * bgZoom, earthPos[1] - halfHeight / 2.0 * bgZoom, nw * bgZoom, halfHeight * bgZoom);
+	halo = R_FindImage("pics/geoscape/map_earch_halo", it_pic);
+	if (halo != r_noTexture) {
+		const float earchSizeX = fullscale * 20500.0 * viddef.rx;
+		const float earchSizeY = fullscale * 20500.0 * viddef.ry;
+		R_DrawTexture(halo->texnum,  earthPos[0] - earchSizeX * 0.5, earthPos[1] - earchSizeY * 0.5, earchSizeX, earchSizeY);
 	}
 
 	R_EnableBlend(qfalse);
