@@ -7,6 +7,10 @@ menu map
 	// ==================
 	// background
 	// ==================
+	{
+		fill		true
+		starlayout	true
+	}
 
 	map themap
 	{
@@ -16,6 +20,7 @@ menu map
 		mclick
 		rclick		{ cmd "mn_mapaction_reset;" }
 		wheel
+		num			10
 	}
 
 	text messagesystem
@@ -60,465 +65,477 @@ menu map
 
 	}
 
-	pic back
-	{
-		image		menu/geo_menu
-		pos			"768 0"
-		blend		true
-	}
-
 	// ==================
-	// texts
+	// RIGHT PANEL
 	// ==================
 
-	string daytime
-	{
-		string		"*cvar mn_mapdaytime"
-		pos			"799 304"
-		size		"195 20"
-		textalign	uc
-	}
-
-	text description
-	{
-		pos			"800 154"
-		size		"192 144"
-		lineheight		18
-		tabwidth	100
-		rows		"8"
-		wheel
-//		bgcolor		"1 1 1 0.6"
-		scrollbar	true
-		textid		TEXT_STANDARD
-	}
-
-	// ==================
-	// time
-	// ==================
-
-	string date
-	{
-		string		"*cvar mn_mapdate *cvar mn_maptime"
-		pos			"799 30"
-		size		"195 20"
-		textalign	uc
-		color		"1 1 1 1"
-		font		f_small
-	}
-
-	string txt_credits_caption
-	{
-		string		"_CREDITS"
-		pos			"808 54"
-		size		"75 25"
-		font		f_small
-	}
-
-	string txt_credits
-	{
-		string		"*cvar mn_credits"
-		tooltip		"_Organisation capital"
-		pos			"880 54"
-		size		"100 25"
-		font		f_small
-		textalign	ur
-	}
-
-	radiobutton bt_timestop0
-	{
-		tooltip		"_Pause"
-		cvar		"*cvar mn_timelapse_id"	value "0"
-		icon		speed_stop
-		pos			"816 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-	radiobutton bt_timeplay1
-	{
-		tooltip		"_Time lapse: 5 seconds"
-		cvar		"*cvar mn_timelapse_id"	value "1"
-		icon		speed_dot
-		pos			"836 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-	radiobutton bt_timeplay2
-	{
-		tooltip		"_Time lapse: 5 minutes"
-		cvar		"*cvar mn_timelapse_id"	value "4"
-		icon		speed_play1
-		pos			"856 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-
-	radiobutton bt_timeplay3
-	{
-		tooltip		"_Time lapse: 20 minutes"
-		cvar		"*cvar mn_timelapse_id"	value "6"
-		icon		speed_dot
-		pos			"876 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-	radiobutton bt_timeplay4
-	{
-		tooltip		"_Time lapse: 1 hour"
-		cvar		"*cvar mn_timelapse_id"	value "7"
-		icon		speed_play2
-		pos			"896 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-
-	radiobutton bt_timeplay5
-	{
-		tooltip		"_Time lapse: 12 hours"
-		cvar		"*cvar mn_timelapse_id"	value "8"
-		icon		speed_dot
-		pos			"916 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-
-	radiobutton bt_timeplay6
-	{
-		tooltip		"_Time lapse: 1 day"
-		cvar		"*cvar mn_timelapse_id"	value "9"
-		icon		speed_dot
-		pos			"936 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-	radiobutton bt_timeplay7
-	{
-		tooltip		"_Time lapse: 5 days"
-		cvar		"*cvar mn_timelapse_id"	value "10"
-		icon		speed_play3
-		pos			"956 100"
-		size		"20 20"
-		change		{ cmd "game_settimeid <value>;" }
-		whup		{ cmd "game_timefast;" }
-		whdown		{ cmd "game_timeslow;" }
-	}
-
-
-	string timelapse
-	{
-		string		"*cvar mn_timelapse"
-		pos			"799 122"
-		size		"195 20"
-		textalign	uc
-		color		"0 .78 0 1"
-	}
-
-	// geoscape controll buttons
-
-	zone panel_scroll_up
-	{
-		pos			"868 354"
-		size		"60 30"
-		repeat		true
-		clickdelay	100
-		click		{ cmd "map_scroll down;" }
-	}
-
-	zone panel_scroll_down
-	{
-		pos			"868 484"
-		size		"60 30"
-		repeat		true
-		clickdelay	100
-		click		{ cmd "map_scroll up;" }
-	}
-
-	zone panel_scroll_left
-	{
-		pos			"818 400"
-		size		"30 60"
-		repeat		true
-		clickdelay	100
-		click		{ cmd "map_scroll right;" }
-	}
-
-	zone panel_scroll_right
-	{
-		pos			"950 400"
-		size		"30 60"
-		repeat		true
-		clickdelay		100
-		click		{ cmd "map_scroll left;" }
-	}
-
-	zone panel_zoom_in
-	{
-		pos			"872 400"
-		size		"20 60"
-		repeat		true
-		clickdelay	100
-		click		{ cmd "map_zoom in;" }
-	}
-
-	zone panel_zoom_out
-	{
-		pos			"898 400"
-		size		"20 60"
-		repeat		true
-		clickdelay	100
-		click		{ cmd "map_zoom out;" }
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	button bt_mailclient
-	{
-		visiblewhen "mn_upunreadmail != 0"
-
-		string		"_Mailclient"
-		tooltip		"_INBOX (with unread mails)"
-		color		"0 0.5 0 1"
-		font	 	f_small
-		pos			"809 536"
-		size		"175 34"
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-
-		click		{ cmd "mn_push mailclient;" }
-	}
-
-	button bt_mailclient_nomail
-	{
-		visiblewhen "mn_upunreadmail == 0"
-
-		string		"_Mailclient"
-		tooltip		"_INBOX"
-		color		"0 0.5 0 1"
-		font	 	f_small
-		pos			"809 536"
-		size		"175 34"
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-
-		click		{ cmd "mn_push mailclient;" }
-	}
-
-	button bt_stats
-	{
-		string		"_Statistics"
-		tooltip		"_Organisation statistics"
-		pos			"809 577"
-		size		"175 34"
-		color		"0 0.5 0 1"
-		font	 	f_small
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-
-		click		{ cmd "mn_push stats;" }
-	}
-
-	button bt_ufopedia
-	{
-		string		"_UFOpaedia"
-		tooltip		"_Open UFOpaedia"
-		pos			"809 618"
-		size		"175 34"
-		color		"0 0.5 0 1"
-		font	 	f_small
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-
-		click		{ cmd "mn_push ufopedia;" }
-	}
-
-	button bt_base
-	{
-		visiblewhen "mn_base_count < 8"
-
-		string		"_Create base"
-		tooltip		"_Create base"
-		color		"0 0.5 0 1"
-		size		"175 34"
-		font	 	f_small
-		pos			"809 659"
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-
-		click		{ cmd "mn_select_base -1;" }
-	}
-	button bt_base_nomore
-	{
-		visiblewhen "mn_base_count >= 8"
-
-		string		"_Create base"
-		tooltip		"_Max. bases reached"
-		font	 	f_small
-		pos			"809 659"
-		size		"175 34"
-		color		"0.5 0.5 0.5 1"
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-		disabled	true
-	}
-
-	button bt_installation
-	{
-		// visiblewhen "mn_installation_count < mn_installation_max"
-		visiblewhen "mn_installation_count < 10"
-
-		string		"_Create installation"
-		tooltip		"_Create installation"
-		color		"0 0.5 0 1"
-		pos			"809 700"
-		size		"175 34"
-		font	 	f_small
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-
-		click		{ cmd "mn_push popup_newinstallation_type;" }
-	}
-	button bt_installation_nomore
-	{
-		// visiblewhen "mn_installation_count >= mn_installation_max"
-		visiblewhen "mn_installation_count >= 10"
-
-		tooltip		"_Max. installations reached"
-		string		"_Create installation"
-		font	 	f_small
-		pos			"809 700"
-		size		"175 34"
-		color		"0.5 0.5 0.5 1"
-		selectcolor	"1 1 1 1"
-		image		menu/button_geoscape
-		blend		true
-		disabled	true
-	}
-
-
-	// ==================
-	// small buttons
-	// ==================
-
-	pic bt_show_overlay
-	{
-		tooltip		"_Highlight nation borders"
-		image		menu/geo_nations_highlight
-		pos			"808 320"
-		texl		"0 0"
-		texh		"32 32"
-		mousefx		false
-		click		{ cmd "map_overlay nations;" }
-		out			{ *bt_show_overlay texl "0 0" *bt_show_overlay texh "32 32" }
-		in			{ *bt_show_overlay texl "32 0" *bt_show_overlay texh "64 32" }
-	}
-
-	pic bt_show_radar
-	{
-		tooltip		"_Show radar range"
-		image		menu/geo_radar
-		pos			"808 350"
-		texl		"0 0"
-		texh		"32 32"
-		mousefx		false
-		click		{ cmd "map_overlay radar;" }
-		out			{ *bt_show_radar texl "0 0" *bt_show_radar texh "32 32" }
-		in			{ *bt_show_radar texl "32 0" *bt_show_radar texh "64 32" }
-	}
-
-	pic bt_show_xvi
-	{
-		visiblewhen "mn_xvimap == 1"
-		tooltip		"_Show XVI map"
-		image		menu/geo_nations_highlight
-		pos			"950 350"
-		texl		"0 0"
-		texh		"32 32"
-		mousefx		false
-		click		{ cmd "map_overlay xvi;" }
-		out			{ *bt_show_xvi texl "0 0" *bt_show_xvi texh "32 32" }
-		in			{ *bt_show_xvi texl "32 0" *bt_show_xvi texh "64 32" }
-	}
-
-	custombutton bt_messagesystem
-	{
-		// @todo: better -more verbose- tooltip
-		tooltip		"_Open up messages"
-		image		menu/button_background	blend true
-		icon		geo_messagelog
-		pos			"850 324"
-		size		"28 25"
-		texl		"193 38"
-		click	{
-			cmd "add mn_messagesystem 1;"
-			cmd "mod mn_messagesystem 4;"
-			cmd "messagesystem_changemode"
+	panel control {
+		{
+			pos		"768 0"
+			size	"256 768"
+			num		6	/* float middle-right */
 		}
-		rclick	{
-			cmd "set mn_messagesystem 3;"
-			cmd "messagesystem_changemode"
+
+		pic back
+		{
+			image		menu/geo_menu
+			pos			"0 0"
+			blend		true
 		}
-	}
 
-	custombutton bt_messagesettings
-	{
-		tooltip		"_Change message and pause settings"
-		image		menu/button_background	blend true
-		icon		geo_messageoption
-		pos			"850 354"
-		size		"28 25"
-		texl		"193 38"
-		click		{ cmd "mn_push messageoptions;" }
-	}
+		// ==================
+		// texts
+		// ==================
 
-	custombutton bt_mapcenter
-	{
-		tooltip		"_Center objects on the map"
-		image		menu/button_background	blend true
-		icon		geo_center
-		pos			"892 324"
-		size		"28 25"
-		texl		"193 38"
-		click		{ cmd "map_center;" }
-	}
+		string daytime
+		{
+			string		"*cvar mn_mapdaytime"
+			pos			"31 304"
+			size		"195 20"
+			textalign	uc
+		}
 
-	custombutton bt_menu
-	{
-		tooltip		"_Go to Options"
-		image		menu/button_background	blend true
-		icon		geo_option
-		pos			"950 324"
-		size		"28 25"
-		texl		"193 38"
-		click		{ cmd mn_pop; }
+		text description
+		{
+			pos			"32 154"
+			size		"192 144"
+			lineheight		18
+			tabwidth	100
+			rows		"8"
+			wheel
+//			bgcolor		"1 1 1 0.6"
+			scrollbar	true
+			textid		TEXT_STANDARD
+		}
+
+		// ==================
+		// time
+		// ==================
+
+		string date
+		{
+			string		"*cvar mn_mapdate *cvar mn_maptime"
+			pos			"31 30"
+			size		"195 20"
+			textalign	uc
+			color		"1 1 1 1"
+			font		f_small
+		}
+
+		string txt_credits_caption
+		{
+			string		"_CREDITS"
+			pos			"40 54"
+			size		"75 25"
+			font		f_small
+		}
+
+		string txt_credits
+		{
+			string		"*cvar mn_credits"
+			tooltip		"_Organisation capital"
+			pos			"112 54"
+			size		"100 25"
+			font		f_small
+			textalign	ur
+		}
+
+		radiobutton bt_timestop0
+		{
+			tooltip		"_Pause"
+			cvar		"*cvar mn_timelapse_id"	value "0"
+			icon		speed_stop
+			pos			"48 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+		radiobutton bt_timeplay1
+		{
+			tooltip		"_Time lapse: 5 seconds"
+			cvar		"*cvar mn_timelapse_id"	value "1"
+			icon		speed_dot
+			pos			"68 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+		radiobutton bt_timeplay2
+		{
+			tooltip		"_Time lapse: 5 minutes"
+			cvar		"*cvar mn_timelapse_id"	value "4"
+			icon		speed_play1
+			pos			"88 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+
+		radiobutton bt_timeplay3
+		{
+			tooltip		"_Time lapse: 20 minutes"
+			cvar		"*cvar mn_timelapse_id"	value "6"
+			icon		speed_dot
+			pos			"108 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+		radiobutton bt_timeplay4
+		{
+			tooltip		"_Time lapse: 1 hour"
+			cvar		"*cvar mn_timelapse_id"	value "7"
+			icon		speed_play2
+			pos			"128 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+
+		radiobutton bt_timeplay5
+		{
+			tooltip		"_Time lapse: 12 hours"
+			cvar		"*cvar mn_timelapse_id"	value "8"
+			icon		speed_dot
+			pos			"148 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+
+		radiobutton bt_timeplay6
+		{
+			tooltip		"_Time lapse: 1 day"
+			cvar		"*cvar mn_timelapse_id"	value "9"
+			icon		speed_dot
+			pos			"168 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+		radiobutton bt_timeplay7
+		{
+			tooltip		"_Time lapse: 5 days"
+			cvar		"*cvar mn_timelapse_id"	value "10"
+			icon		speed_play3
+			pos			"188 100"
+			size		"20 20"
+			change		{ cmd "game_settimeid <value>;" }
+			whup		{ cmd "game_timefast;" }
+			whdown		{ cmd "game_timeslow;" }
+		}
+
+
+		string timelapse
+		{
+			string		"*cvar mn_timelapse"
+			pos			"31 122"
+			size		"195 20"
+			textalign	uc
+			color		"0 .78 0 1"
+		}
+
+		// geoscape controll buttons
+
+		zone panel_scroll_up
+		{
+			pos			"100 354"
+			size		"60 30"
+			repeat		true
+			clickdelay	100
+			click		{ cmd "map_scroll down;" }
+		}
+
+		zone panel_scroll_down
+		{
+			pos			"100 484"
+			size		"60 30"
+			repeat		true
+			clickdelay	100
+			click		{ cmd "map_scroll up;" }
+		}
+
+		zone panel_scroll_left
+		{
+			pos			"50 400"
+			size		"30 60"
+			repeat		true
+			clickdelay	100
+			click		{ cmd "map_scroll right;" }
+		}
+
+		zone panel_scroll_right
+		{
+			pos			"182 400"
+			size		"30 60"
+			repeat		true
+			clickdelay		100
+			click		{ cmd "map_scroll left;" }
+		}
+
+		zone panel_zoom_in
+		{
+			pos			"104 400"
+			size		"20 60"
+			repeat		true
+			clickdelay	100
+			click		{ cmd "map_zoom in;" }
+		}
+
+		zone panel_zoom_out
+		{
+			pos			"130 400"
+			size		"20 60"
+			repeat		true
+			clickdelay	100
+			click		{ cmd "map_zoom out;" }
+		}
+
+		// ==================
+		// buttons
+		// ==================
+
+		button bt_mailclient
+		{
+			visiblewhen "mn_upunreadmail != 0"
+
+			string		"_Mailclient"
+			tooltip		"_INBOX (with unread mails)"
+			color		"0 0.5 0 1"
+			font	 	f_small
+			pos			"41 536"
+			size		"175 34"
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+
+			click		{ cmd "mn_push mailclient;" }
+		}
+
+		button bt_mailclient_nomail
+		{
+			visiblewhen "mn_upunreadmail == 0"
+
+			string		"_Mailclient"
+			tooltip		"_INBOX"
+			color		"0 0.5 0 1"
+			font	 	f_small
+			pos			"41 536"
+			size		"175 34"
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+
+			click		{ cmd "mn_push mailclient;" }
+		}
+
+		button bt_stats
+		{
+			string		"_Statistics"
+			tooltip		"_Organisation statistics"
+			pos			"41 577"
+			size		"175 34"
+			color		"0 0.5 0 1"
+			font	 	f_small
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+
+			click		{ cmd "mn_push stats;" }
+		}
+
+		button bt_ufopedia
+		{
+			string		"_UFOpaedia"
+			tooltip		"_Open UFOpaedia"
+			pos			"41 618"
+			size		"175 34"
+			color		"0 0.5 0 1"
+			font	 	f_small
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+
+			click		{ cmd "mn_push ufopedia;" }
+		}
+
+		button bt_base
+		{
+			visiblewhen "mn_base_count < 8"
+
+			string		"_Create base"
+			tooltip		"_Create base"
+			color		"0 0.5 0 1"
+			pos			"41 659"
+			size		"175 34"
+			font	 	f_small
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+
+			click		{ cmd "mn_select_base -1;" }
+		}
+		button bt_base_nomore
+		{
+			visiblewhen "mn_base_count >= 8"
+
+			string		"_Create base"
+			tooltip		"_Max. bases reached"
+			font	 	f_small
+			pos			"41 659"
+			size		"175 34"
+			color		"0.5 0.5 0.5 1"
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+			disabled	true
+		}
+
+		button bt_installation
+		{
+			// visiblewhen "mn_installation_count < mn_installation_max"
+			visiblewhen "mn_installation_count < 10"
+
+			string		"_Create installation"
+			tooltip		"_Create installation"
+			color		"0 0.5 0 1"
+			pos			"41 700"
+			size		"175 34"
+			font	 	f_small
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+
+			click		{ cmd "mn_push popup_newinstallation_type;" }
+		}
+		button bt_installation_nomore
+		{
+			// visiblewhen "mn_installation_count >= mn_installation_max"
+			visiblewhen "mn_installation_count >= 10"
+
+			tooltip		"_Max. installations reached"
+			string		"_Create installation"
+			font	 	f_small
+			pos			"41 700"
+			size		"175 34"
+			color		"0.5 0.5 0.5 1"
+			selectcolor	"1 1 1 1"
+			image		menu/button_geoscape
+			blend		true
+			disabled	true
+		}
+
+		// ==================
+		// small buttons
+		// ==================
+
+		pic bt_show_overlay
+		{
+			tooltip		"_Highlight nation borders"
+			image		menu/geo_nations_highlight
+			pos			"40 320"
+			texl		"0 0"
+			texh		"32 32"
+			mousefx		false
+			click		{ cmd "map_overlay nations;" }
+			out			{ *control.bt_show_overlay texl "0 0" *control.bt_show_overlay texh "32 32" }
+			in			{ *control.bt_show_overlay texl "32 0" *control.bt_show_overlay texh "64 32" }
+		}
+
+		pic bt_show_radar
+		{
+			tooltip		"_Show radar range"
+			image		menu/geo_radar
+			pos			"40 350"
+			texl		"0 0"
+			texh		"32 32"
+			mousefx		false
+			click		{ cmd "map_overlay radar;" }
+			out			{ *control.bt_show_radar texl "0 0" *control.bt_show_radar texh "32 32" }
+			in			{ *control.bt_show_radar texl "32 0" *control.bt_show_radar texh "64 32" }
+		}
+
+		pic bt_show_xvi
+		{
+			visiblewhen "mn_xvimap == 1"
+			tooltip		"_Show XVI map"
+			image		menu/geo_nations_highlight
+			pos			"182 350"
+			texl		"0 0"
+			texh		"32 32"
+			mousefx		false
+			click		{ cmd "map_overlay xvi;" }
+			out			{ *control.bt_show_xvi texl "0 0" *control.bt_show_xvi texh "32 32" }
+			in			{ *control.bt_show_xvi texl "32 0" *control.bt_show_xvi texh "64 32" }
+		}
+
+		custombutton bt_messagesystem
+		{
+			// @todo: better -more verbose- tooltip
+			tooltip		"_Open up messages"
+			image		menu/button_background	blend true
+			icon		geo_messagelog
+			pos			"82 324"
+			size		"28 25"
+			texl		"193 38"
+			click	{
+				cmd "add mn_messagesystem 1;"
+				cmd "mod mn_messagesystem 4;"
+				cmd "messagesystem_changemode"
+			}
+			rclick	{
+				cmd "set mn_messagesystem 3;"
+				cmd "messagesystem_changemode"
+			}
+		}
+
+		custombutton bt_messagesettings
+		{
+			tooltip		"_Change message and pause settings"
+			image		menu/button_background	blend true
+			icon		geo_messageoption
+			pos			"82 354"
+			size		"28 25"
+			texl		"193 38"
+			click		{ cmd "mn_push messageoptions;" }
+		}
+
+		custombutton bt_mapcenter
+		{
+			tooltip		"_Center objects on the map"
+			image		menu/button_background	blend true
+			icon		geo_center
+			pos			"124 324"
+			size		"28 25"
+			texl		"193 38"
+			click		{ cmd "map_center;" }
+		}
+
+		custombutton bt_menu
+		{
+			tooltip		"_Go to Options"
+			image		menu/button_background	blend true
+			icon		geo_option
+			pos			"182 324"
+			size		"28 25"
+			texl		"193 38"
+			click		{ cmd mn_pop; }
+		}
+
 	}
 
 	func init
