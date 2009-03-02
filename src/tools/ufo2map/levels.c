@@ -63,12 +63,10 @@ void PopInfo (void)
 }
 
 /**
- * @param[in] mins
- * @param[in] maxs
  * @param[in] n The node nums
  * @sa R_ModLoadNodes
  */
-static int BuildNodeChildren (vec3_t mins, vec3_t maxs, const int n[3])
+static int BuildNodeChildren (const int n[3])
 {
 	int node = LEAFNODE, i;
 
@@ -190,7 +188,7 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
 	if (!list) {
 		nn[2] = LEAFNODE;
-		return BuildNodeChildren(bmins, bmaxs, nn);
+		return BuildNodeChildren(nn);
 	}
 
 	if (!config.nocsg)
@@ -216,7 +214,7 @@ static int ConstructLevelNodes_r (const int levelnum, const vec3_t cmins, const 
 	FreeTree(tree);
 
 	/* Store created nodes */
-	return BuildNodeChildren(bmins, bmaxs, nn);
+	return BuildNodeChildren(nn);
 }
 
 
