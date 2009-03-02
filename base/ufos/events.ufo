@@ -156,7 +156,7 @@ mail monthly_report
 	// month name
 	subject "_Monthly Report -- %s"
 	body "_mail_monthly_report"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/tech
 }
 
@@ -178,7 +178,7 @@ mail transfer_received
 	// base name
 	subject "_Transfer Received -- %s"
 	body "_mail_transfer_received"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -189,7 +189,7 @@ mail equipment_order_received
 	// base name
 	subject "_Equipment Order Received -- %s"
 	body "_mail_equipment_order_received"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -200,7 +200,7 @@ mail construction_finished
 	// facility name
 	subject "_Construction Finished -- %s"
 	body "_mail_construction_finished"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -211,7 +211,7 @@ mail new_base_ready
 	// base name
 	subject "_New Base Ready -- %s"
 	body "_mail_new_base_ready"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -222,7 +222,7 @@ mail base_attack_report
 	// base name
 	subject "_Base Attack Report -- %s"
 	body "_mail_base_attack_report"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -233,7 +233,7 @@ mail mission_summary
 	// location name
 	subject "_Mission Summary -- %s"
 	body "_mail_mission_summary"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -244,7 +244,7 @@ mail alien_base_discovered
 	// location name
 	subject "_Alien Base Discovered -- %s"
 	body "_mail_alien_base_discovered"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -255,7 +255,7 @@ mail lost_radar_tracking
 	// target name
 	subject "_Lost Radar Tracking -- %s"
 	body "_mail_lost_radar_tracking"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
@@ -266,7 +266,7 @@ mail new_radar_contact
 	// target name
 	subject "_New Radar Contact -- %s"
 	body "_mail_new_radar_contact"
-	model "characters/xo"
+	model "characters/howard"
 	icon icons/world
 }
 
