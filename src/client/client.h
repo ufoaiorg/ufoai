@@ -213,7 +213,6 @@ typedef struct client_static_s {
 
 extern client_static_t cls;
 
-extern struct memPool_s *cl_localPool;
 extern struct memPool_s *cl_genericPool;
 extern struct memPool_s *cl_ircSysPool;
 extern struct memPool_s *cl_menuSysPool;

@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_CAMPAIGN_H
 #define CLIENT_CL_CAMPAIGN_H
 
+extern struct memPool_s *cl_localPool;
+
 struct aircraft_s;
 struct base_s;
 struct installation_s;

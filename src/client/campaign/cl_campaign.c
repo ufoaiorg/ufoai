@@ -63,6 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_market_callbacks.h"
 #include "cp_ufopedia_callbacks.h"
 
+struct memPool_s *cl_localPool;		/**< reset on every game restart */
 /* public vars */
 campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;
@@ -2704,6 +2705,8 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 /** @todo remove me and move all the included stuff to proper places */
 void CP_InitStartup (void)
 {
+	cl_localPool = Mem_CreatePool("Client: Local (per game)");
+
 	SAV_Init();
 	/* init some production menu nodes */
 	PR_Init();

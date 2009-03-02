@@ -85,7 +85,6 @@ static int precache_check;
 
 static void CL_SpawnSoldiers_f(void);
 
-struct memPool_s *cl_localPool;		/**< reset on every game restart */
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
 struct memPool_s *cl_soundSysPool;
@@ -1152,7 +1151,6 @@ void CL_Init (void)
 	/* load language file */
 	textdomain(TEXT_DOMAIN);
 
-	cl_localPool = Mem_CreatePool("Client: Local (per game)");
 	cl_genericPool = Mem_CreatePool("Client: Generic");
 	cl_menuSysPool = Mem_CreatePool("Client: Menu");
 	cl_soundSysPool = Mem_CreatePool("Client: Sound system");

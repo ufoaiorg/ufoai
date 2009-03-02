@@ -33,6 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_le.h"	/**< cl_actor.h needs this */
 #include "../../cl_actor.h"
 #include "../../../shared/parse.h"
+#include "../../campaign/cl_campaign.h"
 
 /** @brief Each maptile must have an entry in the images array */
 typedef struct hudRadarImage_s {
