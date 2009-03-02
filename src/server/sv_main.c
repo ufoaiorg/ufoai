@@ -359,6 +359,10 @@ static inline qboolean Rcon_Validate (const char *password)
 	return qtrue;
 }
 
+#define SV_OUTPUTBUF_LENGTH 1024
+
+static char sv_outputbuf[SV_OUTPUTBUF_LENGTH];
+
 /**
  * @brief A client issued an rcon command. Shift down the remaining args. Redirect all printfs
  */
@@ -372,6 +376,8 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 		Com_Printf("Bad rcon from %s:\n%s\n", peername, Cmd_Argv(1));
 	else
 		Com_Printf("Rcon from %s:\n%s\n", peername, Cmd_Argv(1));
+
+	Com_BeginRedirect(stream, sv_outputbuf, SV_OUTPUTBUF_LENGTH);
 
 	if (!valid)
 		/* inform the client */
@@ -389,6 +395,8 @@ static void SVC_RemoteCommand (struct net_stream *stream)
 		/* execute the string */
 		Cmd_ExecuteString(remaining);
 	}
+
+	Com_EndRedirect();
 }
 
 static void SV_ConnectionlessPacket (struct net_stream *stream, struct dbuffer *msg)

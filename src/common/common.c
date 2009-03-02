@@ -96,10 +96,9 @@ CLIENT / SERVER interactions
 ============================================================================
 */
 
-static int rd_target; /**< redirect the output to e.g. an rcon user */
 static char *rd_buffer;
 static unsigned int rd_buffersize;
-static void (*rd_flush) (int target, char *buffer);
+static struct net_stream *rd_stream;
 
 /**
  * @brief Redirect packets/ouput from server to client
@@ -107,16 +106,15 @@ static void (*rd_flush) (int target, char *buffer);
  *
  * This is used to redirect printf outputs for rcon commands
  */
-void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush) (int, char *))
+void Com_BeginRedirect (struct net_stream *stream, char *buffer, int buffersize)
 {
-	if (!target || !buffer || !buffersize || !flush)
+	if (!buffer || !buffersize)
 		return;
-	rd_target = target;
+
+	rd_stream = stream;
 	rd_buffer = buffer;
 	rd_buffersize = buffersize;
-	rd_flush = flush;
-
-	*rd_buffer = 0;
+	rd_buffer[0] = '\0';
 }
 
 /**
@@ -125,12 +123,11 @@ void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush) 
  */
 void Com_EndRedirect (void)
 {
-	rd_flush(rd_target, rd_buffer);
+	NET_OOB_Printf(rd_stream, "print\n%s", rd_buffer);
 
-	rd_target = 0;
+	rd_stream = NULL;
 	rd_buffer = NULL;
 	rd_buffersize = 0;
-	rd_flush = NULL;
 }
 
 /**
@@ -141,13 +138,13 @@ void Com_vPrintf (const char *fmt, va_list ap)
 {
 	char msg[MAXPRINTMSG];
 
-	Q_vsnprintf(msg, MAXPRINTMSG, fmt, ap);
+	Q_vsnprintf(msg, sizeof(msg), fmt, ap);
 
 	/* redirect the output? */
-	if (rd_target) {
+	if (rd_buffer) {
 		if ((strlen(msg) + strlen(rd_buffer)) > (rd_buffersize - 1)) {
-			rd_flush(rd_target, rd_buffer);
-			*rd_buffer = 0;
+			NET_OOB_Printf(rd_stream, "print\n%s", rd_buffer);
+			rd_buffer[0] = '\0';
 		}
 		Q_strcat(rd_buffer, msg, sizeof(char) * rd_buffersize);
 		return;
@@ -171,8 +168,13 @@ void Com_vPrintf (const char *fmt, va_list ap)
 			else
 				logfile = fopen(name, "w");
 		}
-		if (logfile)
-			fprintf(logfile, "%s", msg);
+		if (logfile) {
+			/* strip color codes */
+			const char *output = msg;
+			if (output[0] < 32)
+				output++;
+			fprintf(logfile, "%s", output);
+		}
 		if (logfile_active->integer > 1)
 			fflush(logfile);	/* force it to save every time */
 	}

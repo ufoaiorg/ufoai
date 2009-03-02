@@ -231,7 +231,7 @@ MISC
 /* text color constant */
 #define	COLORED_GREEN		1
 
-void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *));
+void Com_BeginRedirect(struct net_stream *stream, char *buffer, int buffersize);
 void Com_EndRedirect(void);
 void Com_vPrintf(const char *fmt, va_list);
 void Com_Printf(const char *fmt, ...) __attribute__((format(printf, 1, 2)));

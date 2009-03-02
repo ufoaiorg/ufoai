@@ -266,9 +266,9 @@ static void NET_ShowStreams_f (void)
 
 	for (i = 0; i < MAX_STREAMS; i++) {
 		if (streams[i] != NULL) {
-			Com_Printf("Steam %i is opened: %s (closed: %i, finished: %i, outbound: "UFO_SIZE_T", inbound: "UFO_SIZE_T")\n", i,
+			Com_Printf("Steam %i is opened: %s on socket %i (closed: %i, finished: %i, outbound: "UFO_SIZE_T", inbound: "UFO_SIZE_T")\n", i,
 				NET_StreamPeerToName(streams[i], buf, sizeof(buf), qtrue),
-				streams[i]->closed, streams[i]->finished,
+				streams[i]->socket, streams[i]->closed, streams[i]->finished,
 				dbuffer_len(streams[i]->outbound), dbuffer_len(streams[i]->inbound));
 			cnt++;
 		}
