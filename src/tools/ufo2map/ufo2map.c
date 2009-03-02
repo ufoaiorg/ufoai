@@ -611,7 +611,8 @@ int main (int argc, const char **argv)
 	com_fileSysPool = Mem_CreatePool("ufo2map filesys");
 
 	Verb_Printf(VERB_NORMAL, "path: '%s'\n", argv[argc - 1]);
-	FS_InitFilesystem();
+
+	FS_InitFilesystem(qfalse);
 
 	COM_StripExtension(argv[argc - 1], mapFilename, sizeof(mapFilename));
 	strncpy(baseFilename, mapFilename, sizeof(baseFilename) - 1);

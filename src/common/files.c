@@ -39,7 +39,6 @@ static int fs_openedFiles;
 static filelink_t *fs_links;
 
 static searchpath_t *fs_searchpaths;
-static searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 
 /**
  * @brief Called to find where to write a file (savegames, etc)
@@ -654,7 +653,6 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
 #else
 		Com_sprintf(gdir, sizeof(gdir), "%s/.ufoai/"UFO_VERSION"/%s", homedir, dir);
 #endif
-		Com_Printf("using %s for writing\n", gdir);
 		FS_CreatePath(va("%s/", gdir));
 
 		FS_AddGameDirectory(gdir);
@@ -670,16 +668,10 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
 void FS_ExecAutoexec (void)
 {
 	char name[MAX_QPATH];
-	searchpath_t *s, *end;
-
-	/* don't look in default if gamedir is set */
-	if (fs_searchpaths == fs_base_searchpaths)
-		end = NULL;
-	else
-		end = fs_base_searchpaths;
+	searchpath_t *s;
 
 	/* search through all the paths for an autoexec.cfg file */
-	for (s = fs_searchpaths; s != end; s = s->next) {
+	for (s = fs_searchpaths; s != NULL; s = s->next) {
 		snprintf(name, sizeof(name), "%s/autoexec.cfg", s->filename);
 
 		if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) {
@@ -830,7 +822,7 @@ static void FS_InitCommandsAndCvars (void)
  * @sa FS_Shutdown
  * @sa FS_RestartFilesystem
  */
-void FS_InitFilesystem (void)
+void FS_InitFilesystem (qboolean writeToHomeDir)
 {
 	Com_Printf("\n---- filesystem initialization -----\n");
 
@@ -840,15 +832,19 @@ void FS_InitFilesystem (void)
 	FS_AddGameDirectory(PKGDATADIR"/"BASEDIRNAME);
 #endif
 
-	FS_AddGameDirectory("./" BASEDIRNAME);
-	FS_AddHomeAsGameDirectory(BASEDIRNAME);
+	if (writeToHomeDir) {
+		FS_AddGameDirectory("./" BASEDIRNAME);
+		FS_AddHomeAsGameDirectory(BASEDIRNAME);
+	} else {
+		FS_AddHomeAsGameDirectory(BASEDIRNAME);
+		FS_AddGameDirectory("./" BASEDIRNAME);
+	}
 
 #ifdef COMPILE_UFO
 	FS_InitCommandsAndCvars();
 #endif
 
-	/* any set gamedirs will be freed up to here */
-	fs_base_searchpaths = fs_searchpaths;
+	Com_Printf("using %s for writing\n", FS_Gamedir());
 }
 
 /** @todo This block list code is broken in terms of filename order
@@ -1579,7 +1575,7 @@ void FS_RestartFilesystem (void)
 	FS_Shutdown();
 
 	/* try to start up normally */
-	FS_InitFilesystem();
+	FS_InitFilesystem(qtrue);
 
 	/**
 	 * if we can't find default.cfg, assume that the paths are

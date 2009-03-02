@@ -923,7 +923,7 @@ void Qcommon_Init (int argc, const char **argv)
 	Cbuf_AddEarlyCommands(qfalse);
 	Cbuf_Execute();
 
-	FS_InitFilesystem();
+	FS_InitFilesystem(qtrue);
 
 	Cbuf_AddText("exec default.cfg\n");
 #ifdef DEDICATED_ONLY
