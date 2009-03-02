@@ -446,12 +446,13 @@ void INS_DestroyInstallation (installation_t *installation)
 
 	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
 	CP_MissionNotifyInstallationDestroyed(installation);
-	ccs.numInstallations--;
-	installationCurrent = NULL;
-	installation->founded = qfalse;
 
 	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), _(installation->name));
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+
+	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
+
+	installationCurrent = NULL;
 }
 
 /**
