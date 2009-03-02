@@ -1033,11 +1033,11 @@ void R_Draw3DGlobe (int x, int y, int w, int h, int day, int second, const vec3_
 	}
 
 	/* Draw atmosphere */
-	halo = R_FindImage("pics/geoscape/map_earch_halo", it_pic);
+	halo = R_FindImage("pics/geoscape/map_earth_halo", it_pic);
 	if (halo != r_noTexture) {
-		const float earchSizeX = fullscale * 20500.0 * viddef.rx;
-		const float earchSizeY = fullscale * 20500.0 * viddef.ry;
-		R_DrawTexture(halo->texnum,  earthPos[0] - earchSizeX * 0.5, earthPos[1] - earchSizeY * 0.5, earchSizeX, earchSizeY);
+		const float earthSizeX = fullscale * 20500.0 * viddef.rx;
+		const float earthSizeY = fullscale * 20500.0 * viddef.ry;
+		R_DrawTexture(halo->texnum,  earthPos[0] - earthSizeX * 0.5, earthPos[1] - earthSizeY * 0.5, earthSizeX, earthSizeY);
 	}
 
 	R_EnableBlend(qfalse);
