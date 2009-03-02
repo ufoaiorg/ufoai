@@ -217,7 +217,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 
 	ugv = &ugvs[numUGV++];
 	memset(ugv, 0, sizeof(*ugv));
-	ugv->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_REPARSE_ON_NEW_GAME);
+	ugv->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_PARSE_ONCE);
 
 	do {
 		/* get the name type */
