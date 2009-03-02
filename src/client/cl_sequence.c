@@ -676,7 +676,7 @@ int SEQ_2Dobj (const char *name, char *data)
 				case V_TRANSLATION_STRING:
 					data++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(data, (char**) ((char*)s2d + (int)vp->ofs), cl_localPool, 0);
+					Mem_PoolStrDupTo(data, (char**) ((char*)s2d + (int)vp->ofs), cl_genericPool, 0);
 					break;
 
 				default:

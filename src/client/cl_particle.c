@@ -750,7 +750,7 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 		le->type = ET_PARTICLE;
 		le->invis = !cl_leshowinvis->integer;
 		le->levelflags = levelflags;
-		le->particleID = Mem_PoolStrDup(particle, cl_localPool, 0);
+		le->particleID = Mem_PoolStrDup(particle, cl_genericPool, 0);
 		VectorCopy(origin, le->origin);
 		VecToPos(le->origin, le->pos);
 		le->autohide = autohide;

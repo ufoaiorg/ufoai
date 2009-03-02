@@ -166,8 +166,8 @@ static void CL_AddServerToList (const char *node, const char *service)
 			return;
 
 	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
-	serverList[serverListLength].node = Mem_PoolStrDup(node, cl_localPool, CL_TAG_NONE);
-	serverList[serverListLength].service = Mem_PoolStrDup(service, cl_localPool, CL_TAG_NONE);
+	serverList[serverListLength].node = Mem_PoolStrDup(node, cl_genericPool, CL_TAG_NONE);
+	serverList[serverListLength].service = Mem_PoolStrDup(service, cl_genericPool, CL_TAG_NONE);
 	CL_PingServer(&serverList[serverListLength]);
 	serverListLength++;
 }
