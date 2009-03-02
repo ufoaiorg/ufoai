@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "checklib.h"
 #include "../../../shared/entitiesdef.h"
 #include "../bsp.h"
+#include "check.h"
 
 /**
  * @brief decides wether to proceed with output based on verbosity and ufo2map's mode: check/fix/compile

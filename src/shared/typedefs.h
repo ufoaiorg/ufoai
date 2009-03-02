@@ -201,21 +201,6 @@ typedef struct pathing_s {
 } pathing_t;
 
 typedef struct {
-	vec2_t	shift;
-	vec_t	rotate;
-	vec2_t	scale;
-	char	name[MAX_TEXPATH];	/**< texture name - relative to base/textures */
-	int		surfaceFlags;
-	int		value;
-} brush_texture_t;
-
-/** @sa Check_FindCompositeSides */
-typedef struct compositeSide_s {
-	struct side_s **memberSides;
-	int numMembers;
-} compositeSide_t;
-
-typedef struct {
 	vec3_t mins, maxs;
 	vec3_t origin;			/**< for sounds or lights */
 	int headnode;

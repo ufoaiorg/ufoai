@@ -27,6 +27,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef UFO2MAP_CHECK_CHECK_H
 #define UFO2MAP_CHECK_CHECK_H
 
+/** @sa Check_FindCompositeSides */
+typedef struct compositeSide_s {
+	struct side_s **memberSides;
+	int numMembers;
+} compositeSide_t;
+
+/** an array of composite mapbrush sides.
+ *  @sa Check_FindCompositeSides ensures the array is populated
+ *  @note a composite must have at least 2 members. composites should not be duplicated,
+ *  hence the largest possible number is the number of sides divided by two.
+ */
+compositeSide_t compositeSides[MAX_MAP_SIDES / 2];
+int numCompositeSides;
+
 void CheckTexturesBasedOnFlags(void);
 void CheckFlagsBasedOnTextures(void);
 void CheckLevelFlags(void);

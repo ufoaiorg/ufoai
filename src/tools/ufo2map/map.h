@@ -30,6 +30,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../shared/mathlib.h"
 #include "../../shared/defines.h"
 
+typedef struct brush_texture_s {
+	vec2_t	shift;
+	vec_t	rotate;
+	vec2_t	scale;
+	char	name[MAX_TEXPATH];	/**< texture name - relative to base/textures */
+	int		surfaceFlags;
+	int		value;
+} brush_texture_t;
+
 /** @brief for storing the vertices of the side of a brush or other polygon */
 typedef struct winding_s {
 	int		numpoints;

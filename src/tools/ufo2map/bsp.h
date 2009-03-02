@@ -85,9 +85,6 @@ extern int nummapbrushsides;
 extern side_t brushsides[MAX_MAP_SIDES];
 extern brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
-extern compositeSide_t compositeSides[MAX_MAP_SIDES / 2];
-extern int numCompositeSides;
-
 extern int brush_start, brush_end;
 
 byte GetLevelFlagsFromBrush(const mapbrush_t *brush);

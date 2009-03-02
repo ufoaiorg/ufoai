@@ -35,15 +35,6 @@ int nummapbrushes;
 side_t brushsides[MAX_MAP_SIDES];
 int nummapbrushsides;
 
-/** an array of composite mapbrush sides. call Check_FindCompositeSides to
- *  ensure it is populated.
- *  @sa Check_FindCompositeSides
- *  @note a composite must have at least 2 members. composites should not be duplicated,
- *  hence the largest possible number is the number of sides divided by two.
- */
-compositeSide_t compositeSides[MAX_MAP_SIDES / 2];
-int numCompositeSides = 0;
-
 brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 /** an index of the planes containing the faces of the brushes */
