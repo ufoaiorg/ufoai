@@ -700,6 +700,8 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		CL_ParseTipsOfTheDay(name, text);
 	else if (!Q_strcmp(type, "language"))
 		CL_ParseLanguages(name, text);
+	else if (!Q_strcmp(type, "ugv"))
+		CL_ParseUGVs(name, text);
 }
 
 /** @brief Cvars for initial check (popup at first start) */

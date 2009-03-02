@@ -682,8 +682,6 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		B_ParseBuildings(name, text, qtrue);
 	else if (!Q_strcmp(type, "aircraft"))
 		AIR_ParseAircraft(name, text, qtrue);
-	else if (!Q_strcmp(type, "ugv"))
-		CL_ParseUGVs(name, text);
 }
 
 /**
