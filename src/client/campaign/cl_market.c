@@ -76,37 +76,6 @@ int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean in
 }
 
 /**
- * @brief Function gives the user friendly name of a buyCategory
- */
-const char *BS_BuyTypeName (const int buyCat)
-{
-	switch (buyCat) {
-	case FILTER_S_PRIMARY:
-		return _("Primary weapons");
-	case FILTER_S_SECONDARY:
-		return _("Secondary weapons");
-	case FILTER_S_HEAVY:
-		return _("Heavy weapons");
-	case FILTER_S_MISC:
-		return _("Miscellaneous");
-	case FILTER_S_ARMOUR:
-		return _("Personal Armour");
-	case FILTER_AIRCRAFT:
-		return _("Aircraft");
-	case FILTER_DUMMY:
-		return _("Other");
-	case FILTER_CRAFTITEM:
-		return _("Aircraft equipment");
-	case FILTER_UGVITEM:
-		return _("Tanks");
-	case FILTER_DISASSEMBLY:
-		return _("Disassembling");
-	default:
-		return "Unknown";
-	}
-}
-
-/**
  * @brief Buy items.
  * @param[in] base Pointer to the base where items are bought.
  * @param[in] item Pointer to the item to buy.
