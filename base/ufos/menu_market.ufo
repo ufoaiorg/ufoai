@@ -21,10 +21,10 @@ menu market
 	{
 		textid		TEXT_MARKET_NAMES
 		color		"0 .78 0 1"
-		rows		"28"
+		rows		"22"
 		lineheight	"25"
-		pos			"55 40"
-		size		"265 700"
+		pos			"55 180"
+		size		"265 550"
 		mousefx		true
 		longlines	prettychop
 		click
@@ -36,9 +36,9 @@ menu market
 		textid		TEXT_MARKET_STORAGE
 		color		"0 .78 0 1"
 		textalign	ur
-		pos			"330 40"
-		rows		"28"
-		size		"40 700"
+		pos			"330 180"
+		rows		"25"
+		size		"40 550"
 		lineheight	"25"
 	}
 
@@ -47,9 +47,9 @@ menu market
 		textid		TEXT_MARKET_MARKET
 		color		"0 .78 0 1"
 		textalign	ur
-		pos			"406 40"
-		rows		"28"
-		size		"40 700"
+		pos			"406 180"
+		rows		"25"
+		size		"40 550"
 		lineheight	"25"
 	}
 
@@ -58,11 +58,64 @@ menu market
 		textid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
 		textalign	ur
-		rows		"28"
-		size		"80 700"
+		rows		"25"
+		size		"80 550"
 		lineheight	"25"
-		pos			"462 40"
+		pos			"462 180"
 		wheel		{ cmd "market_scroll;" }
+	}
+
+	tab market_navigation {
+		pos		"37 107"
+		size	"946 39"
+		cvar	"*cvar mn_markettab"
+		option description {
+			label	"_Primary"
+			value	"0"
+			action "buy_type primary;"
+		}
+		option description {
+			label	"_Secondary"
+			value	"0"
+			action "buy_type secondary;"
+		}
+		option description {
+			label	"_Heavy"
+			value	"0"
+			action "buy_type heavy;"
+		}
+		option description {
+			label	"_Misc"
+			value	"0"
+			action "buy_type misc;"
+		}
+		option description {
+			label	"_Armour"
+			value	"0"
+			action "buy_type armour;"
+		}
+		option description {
+			label	"_Craft items"
+			value	"0"
+			action "buy_type craftitem;"
+		}
+		option description {
+			label	"_Aircraft"
+			value	"0"
+			action "buy_type aircraft;"
+		}
+		option description {
+			label	"_UGV items"
+			value	"0"
+			action "buy_type ugvitem;"
+		}
+		option description {
+			label	"_Disassembly"
+			value	"0"
+			action "buy_type disassembly;"
+		}
+		// @todo what about buy_type dummy? needed?
+		// dummy
 	}
 
 	// =========================
@@ -142,7 +195,7 @@ menu market
 	 */
 	zone wz_buysell0
 	{
-		pos			"332 40"
+		pos			"332 180"
 		size		"120 24"
 		whup		{ cmd "mn_buy 0;" }
 		whdown		{ cmd "mn_sell 0;" }
@@ -152,12 +205,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 40"
+		pos			"376 180"
 		change		{ cmd "mn_buysell 0 <lastdiff>; market_click 0;" }
 	}
 	pic bt_autosell0
 	{
-		pos			"30 40"
+		pos			"30 180"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -165,7 +218,7 @@ menu market
 	}
 	zone wz_buysell1
 	{
-		pos			"332 65"
+		pos			"332 205"
 		size		"120 24"
 		whup		{ cmd "mn_buy 1;" }
 		whdown		{ cmd "mn_sell 1;" }
@@ -175,12 +228,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 65"
+		pos			"376 205"
 		change		{ cmd "mn_buysell 1 <lastdiff>; market_click 1" }
 	}
 	pic bt_autosell1
 	{
-		pos			"30 65"
+		pos			"30 205"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -188,7 +241,7 @@ menu market
 	}
 	zone wz_buysell2
 	{
-		pos			"332 90"
+		pos			"332 230"
 		size		"120 24"
 		whup		{ cmd "mn_buy 2;" }
 		whdown		{ cmd "mn_sell 2;" }
@@ -198,12 +251,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 90"
+		pos			"376 230"
 		change		{ cmd "mn_buysell 2 <lastdiff>; market_click 2" }
 	}
 	pic bt_autosell2
 	{
-		pos			"30 90"
+		pos			"30 230"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -211,7 +264,7 @@ menu market
 	}
 	zone wz_buysell3
 	{
-		pos			"332 115"
+		pos			"332 245"
 		size		"120 24"
 		whup		{ cmd "mn_buy 3;" }
 		whdown		{ cmd "mn_sell 3;" }
@@ -221,12 +274,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 115"
+		pos			"376 245"
 		change		{ cmd "mn_buysell 3 <lastdiff>; market_click 3" }
 	}
 	pic bt_autosell3
 	{
-		pos			"30 115"
+		pos			"30 245"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -234,7 +287,7 @@ menu market
 	}
 	zone wz_buysell4
 	{
-		pos			"332 140"
+		pos			"332 270"
 		size		"120 24"
 		whup		{ cmd "mn_buy 4;" }
 		whdown		{ cmd "mn_sell 4;" }
@@ -244,12 +297,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 140"
+		pos			"376 270"
 		change		{ cmd "mn_buysell 4 <lastdiff>; market_click 4" }
 	}
 	pic bt_autosell4
 	{
-		pos			"30 140"
+		pos			"30 270"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -257,7 +310,7 @@ menu market
 	}
 	zone wz_buysell5
 	{
-		pos			"332 165"
+		pos			"332 295"
 		size		"120 24"
 		whup		{ cmd "mn_buy 5;" }
 		whdown		{ cmd "mn_sell 5;" }
@@ -267,12 +320,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 165"
+		pos			"376 295"
 		change		{ cmd "mn_buysell 5 <lastdiff>; market_click 5" }
 	}
 	pic bt_autosell5
 	{
-		pos			"30 165"
+		pos			"30 295"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -646,144 +699,6 @@ menu market
 		mousefx		true
 		click		{ cmd "buy_autosell 21;" }
 	}
-	zone wz_buysell22
-	{
-		pos			"332 590"
-		size		"120 24"
-		whup		{ cmd "mn_buy 22;" }
-		whdown		{ cmd "mn_sell 22;" }
-	}
-	spinner bt_buysell22
-	{
-		tooltip		"_Buy and sell item"
-		image		menu/spinner_blue
-		blend		true
-		pos			"376 590"
-		change		{ cmd "mn_buysell 22 <lastdiff>; market_click 22" }
-	}
-	pic bt_autosell22
-	{
-		pos			"30 590"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "buy_autosell 22;" }
-	}
-	zone wz_buysell23
-	{
-		pos			"332 615"
-		size		"120 24"
-		whup		{ cmd "mn_buy 23;" }
-		whdown		{ cmd "mn_sell 23;" }
-	}
-	spinner bt_buysell23
-	{
-		tooltip		"_Buy and sell item"
-		image		menu/spinner_blue
-		blend		true
-		pos			"376 615"
-		change		{ cmd "mn_buysell 23 <lastdiff>; market_click 23" }
-	}
-	pic bt_autosell23
-	{
-		pos			"30 615"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "buy_autosell 23;" }
-	}
-	zone wz_buysell24
-	{
-		pos			"332 640"
-		size		"120 24"
-		whup		{ cmd "mn_buy 24;" }
-		whdown		{ cmd "mn_sell 24;" }
-	}
-	spinner bt_buysell24
-	{
-		tooltip		"_Buy and sell item"
-		image		menu/spinner_blue
-		blend		true
-		pos			"376 640"
-		change		{ cmd "mn_buysell 24 <lastdiff>; market_click 24" }
-	}
-	pic bt_autosell24
-	{
-		pos			"30 640"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "buy_autosell 24;" }
-	}
-	zone wz_buysell25
-	{
-		pos			"332 665"
-		size		"120 24"
-		whup		{ cmd "mn_buy 25;" }
-		whdown		{ cmd "mn_sell 25;" }
-	}
-	spinner bt_buysell25
-	{
-		tooltip		"_Buy and sell item"
-		image		menu/spinner_blue
-		blend		true
-		pos			"376 665"
-		change		{ cmd "mn_buysell 25 <lastdiff>; market_click 25" }
-	}
-	pic bt_autosell25
-	{
-		pos			"30 665"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "buy_autosell 25;" }
-	}
-	zone wz_buysell26
-	{
-		pos			"332 690"
-		size		"120 24"
-		whup		{ cmd "mn_buy 26;" }
-		whdown		{ cmd "mn_sell 26;" }
-	}
-	spinner bt_buysell26
-	{
-		tooltip		"_Buy and sell item"
-		image		menu/spinner_blue
-		blend		true
-		pos			"376 690"
-		change		{ cmd "mn_buysell 26 <lastdiff>; market_click 26" }
-	}
-	pic bt_autosell26
-	{
-		pos			"30 690"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "buy_autosell 26;" }
-	}
-	zone wz_buysell27
-	{
-		pos			"332 715"
-		size		"120 24"
-		whup		{ cmd "mn_buy 27;" }
-		whdown		{ cmd "mn_sell 27;" }
-	}
-	spinner bt_buysell27
-	{
-		tooltip		"_Buy and sell item"
-		image		menu/spinner_blue
-		blend		true
-		pos			"376 715"
-		change		{ cmd "mn_buysell 27 <lastdiff>; market_click 27" }
-	}
-	pic bt_autosell27
-	{
-		pos			"30 715"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "buy_autosell 27;" }
-	}
 
 	// ==================
 	// credits
@@ -792,18 +707,19 @@ menu market
 	string txt_credits_caption
 	{
 		string		"_CREDITS"
-		pos			"650 50"
-		size		"130 30"
+		pos			"675 30"
+		size		"100 30"
 		font		f_big
 	}
 
 	string txt_credits
 	{
+		tooltip		"_Organisation capital"
 		string		"*cvar mn_credits"
-		pos			"790 50"
-		size		"150 30"
-		font		"f_big"
-		textalign	cr
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
 	}
 
 	// ==================
@@ -839,38 +755,6 @@ menu market
 		pos			"700 647"
 		size		"170 20"
 		textalign	uc
-	}
-	zone zone_category {
-		pos			"650 627"
-		size		"270 59"
-		whup		{ cmd "prev_buy_type;" }
-		whdown		{ cmd "next_buy_type;" }
-	}
-
-	custombutton bt_previtemtype
-	{
-		tooltip		"_Previous category"
-		image		menu/button_pack1
-		texl		"32 0"
-		blend		true
-		pos			"650 630"
-		size		"32 50"
-		click		{ cmd "prev_buy_type;" }
-		whup		{ cmd "prev_buy_type;" }
-		whdown		{ cmd "next_buy_type;" }
-	}
-
-	custombutton bt_nextitemtype
-	{
-		tooltip		"_Next category"
-		image		menu/button_pack1
-		texl		"64 0"
-		blend		true
-		pos			"882 630"
-		size		"32 50"
-		click		{ cmd "next_buy_type;" }
-		whup		{ cmd "prev_buy_type;" }
-		whdown		{ cmd "next_buy_type;" }
 	}
 
 	custombutton bt_continue
@@ -1076,6 +960,11 @@ menu market
 
 	func init
 	{
-		cmd "buy_type *mn_itemtype;"
+		cmd "set mn_markettab 0; buy_type *mn_itemtype;"
+	}
+
+	func close
+	{
+		cmd "del mn_markettab;"
 	}
 }

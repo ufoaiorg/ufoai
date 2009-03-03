@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BUYLIST		64
 
-#define MAX_MARKET_MENU_ENTRIES 28
+#define MAX_MARKET_MENU_ENTRIES 22
 
 /**
  * @brief An entry in the buylist.
@@ -169,7 +169,7 @@ static void BS_MarketScroll_f (void)
 	if (!baseCurrent || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
-	node = MN_GetNodeByPath("buy.market");
+	node = MN_GetNodeByPath("market.market");
 	if (!node)
 		return;
 
@@ -181,13 +181,13 @@ static void BS_MarketScroll_f (void)
 	}
 
 	/* the following nodes must exist */
-	node = MN_GetNodeByPath("buy.market_market");
+	node = MN_GetNodeByPath("market.market_market");
 	assert(node);
 	node->u.text.textScroll = buyList.scroll;
-	node = MN_GetNodeByPath("buy.market_storage");
+	node = MN_GetNodeByPath("market.market_storage");
 	assert(node);
 	node->u.text.textScroll = buyList.scroll;
-	node = MN_GetNodeByPath("buy.market_prices");
+	node = MN_GetNodeByPath("market.market_prices");
 	assert(node);
 	node->u.text.textScroll = buyList.scroll;
 
@@ -532,7 +532,7 @@ static void BS_BuyType (const base_t *base)
 static void BS_BuyType_f (void)
 {
 	if (Cmd_Argc() == 2) {
-		menuNode_t* node = MN_GetNodeByPath("buy.market");
+		menuNode_t* node = MN_GetNodeByPath("market.market");
 
 		buyCat = INV_GetFilterTypeID(Cmd_Argv(1));
 
@@ -559,50 +559,6 @@ static void BS_BuyType_f (void)
 
 	BS_BuyType(baseCurrent);
 	BS_MarketScroll_f();
-}
-
-/**
- * @brief Rolls buyCategory left in Buy/Sell menu.
- */
-static void BS_Prev_BuyType_f (void)
-{
-	buyCat--;
-
-	if (buyCat == MAX_SOLDIER_FILTERTYPES)
-		buyCat--;
-
-	if (buyCat < 0) {
-		buyCat = MAX_FILTERTYPES - 1;
-		if (buyCat == FILTER_DISASSEMBLY)
-			buyCat--;
-	} else if (buyCat >= MAX_FILTERTYPES) {
-		buyCat = 0;
-	}
-	currentSelectedMenuEntry = NULL;
-	Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(buyCat)));
-}
-
-/**
- * @brief Rolls buyCategory right in Buy/Sell menu.
- */
-static void BS_Next_BuyType_f (void)
-{
-	buyCat++;
-
-	if (buyCat == MAX_SOLDIER_FILTERTYPES)
-		buyCat++;
-	if (buyCat == FILTER_DISASSEMBLY)
-		buyCat++;
-
-	if (buyCat < 0) {
-		buyCat = MAX_FILTERTYPES - 1;
-		if (buyCat == FILTER_DISASSEMBLY)
-			buyCat--;
-	} else if (buyCat >= MAX_FILTERTYPES) {
-		buyCat = 0;
-	}
-	currentSelectedMenuEntry = NULL;
-	Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(buyCat)));
 }
 
 /**
@@ -974,8 +930,6 @@ static void BS_Autosell_f (void)
 void BS_InitCallbacks(void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
-	Cmd_AddCommand("prev_buy_type", BS_Prev_BuyType_f, NULL);
-	Cmd_AddCommand("next_buy_type", BS_Next_BuyType_f, NULL);
 	Cmd_AddCommand("market_click", BS_MarketClick_f, "Click function for buy menu text node");
 	Cmd_AddCommand("market_scroll", BS_MarketScroll_f, "Scroll function for buy menu");
 	Cmd_AddCommand("mn_buysell", BS_BuySellItem_f, NULL);
@@ -990,8 +944,6 @@ void BS_InitCallbacks(void)
 void BS_ShutdownCallbacks(void)
 {
 	Cmd_RemoveCommand("buy_type");
-	Cmd_RemoveCommand("prev_buy_type");
-	Cmd_RemoveCommand("next_buy_type");
 	Cmd_RemoveCommand("market_click");
 	Cmd_RemoveCommand("market_scroll");
 	Cmd_RemoveCommand("mn_buysell");
