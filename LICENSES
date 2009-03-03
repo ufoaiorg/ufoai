@@ -3301,7 +3301,6 @@ base/ufos/menu_basedefence.ufo | GNU General Public License 2.0
 base/ufos/menu_bases.ufo | GNU General Public License 2.0
 base/ufos/menu_basesummary.ufo | GNU General Public License 2.0
 base/ufos/menu_buildings.ufo | GNU General Public License 2.0
-base/ufos/menu_buy.ufo | GNU General Public License 2.0
 base/ufos/menu_campaign.ufo | GNU General Public License 2.0
 base/ufos/menu_equipment.ufo | GNU General Public License 2.0
 base/ufos/menu_geoscape.ufo | GNU General Public License 2.0
@@ -3312,6 +3311,7 @@ base/ufos/menu_inventory.ufo | GNU General Public License 2.0
 base/ufos/menu_irc.ufo | GNU General Public License 2.0
 base/ufos/menu_lostwon.ufo | GNU General Public License 2.0
 base/ufos/menu_main.ufo | GNU General Public License 2.0
+base/ufos/menu_market.ufo | GNU General Public License 2.0
 base/ufos/menu_modeltest.ufo | GNU General Public License 2.0
 base/ufos/menu_multiplayer.ufo | GNU General Public License 2.0
 base/ufos/menu_multiplayeringame.ufo | GNU General Public License 2.0
