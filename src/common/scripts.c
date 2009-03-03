@@ -29,6 +29,9 @@
 #include "../client/client.h"
 #endif
 
+/** @todo remove me if PPC users dont have problems */
+#define ALIGN_NOTHING(size)  (size)
+
 /**
  * @brief Parsing function that prints an error message when there is no text in the buffer
  * @sa Com_Parse
@@ -236,7 +239,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		return RESULT_ERROR;
 
 	case V_NULL:
-		*writedByte = ALIGN(0);
+		*writedByte = ALIGN_NOTHING(0);
 		break;
 
 	case V_BOOL:
@@ -244,12 +247,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = qtrue;
 		else
 			*b = qfalse;
-		*writedByte = ALIGN(sizeof(qboolean));
+		*writedByte = ALIGN_NOTHING(sizeof(qboolean));
 		break;
 
 	case V_CHAR:
 		*(char *) b = *token;
-		*writedByte = ALIGN(sizeof(char));
+		*writedByte = ALIGN_NOTHING(sizeof(char));
 		break;
 
 	case V_TEAM:
@@ -261,7 +264,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
-		*writedByte = ALIGN(sizeof(int));
+		*writedByte = ALIGN_NOTHING(sizeof(int));
 		break;
 
 	case V_RACE:
@@ -281,12 +284,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", token);
-		*writedByte = ALIGN(sizeof(int));
+		*writedByte = ALIGN_NOTHING(sizeof(int));
 		break;
 
 	case V_INT:
 		*(int *) b = atoi(token);
-		*writedByte = ALIGN(sizeof(int));
+		*writedByte = ALIGN_NOTHING(sizeof(int));
 		break;
 
 	case V_INT2:
@@ -294,12 +297,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(errorMessage, sizeof(errorMessage), "Illegal int2 statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN(2 * sizeof(int));
+		*writedByte = ALIGN_NOTHING(2 * sizeof(int));
 		break;
 
 	case V_FLOAT:
 		*(float *) b = atof(token);
-		*writedByte = ALIGN(sizeof(float));
+		*writedByte = ALIGN_NOTHING(sizeof(float));
 		break;
 
 	case V_POS:
@@ -307,7 +310,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(errorMessage, sizeof(errorMessage), "Illegal pos statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN(2 * sizeof(float));
+		*writedByte = ALIGN_NOTHING(2 * sizeof(float));
 		break;
 
 	case V_VECTOR:
@@ -315,7 +318,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			snprintf(errorMessage, sizeof(errorMessage), "Illegal vector statement '%s'", token);
 			return RESULT_ERROR;
 		}
-		*writedByte = ALIGN(3 * sizeof(float));
+		*writedByte = ALIGN_NOTHING(3 * sizeof(float));
 		break;
 
 	case V_COLOR:
@@ -325,7 +328,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 				snprintf(errorMessage, sizeof(errorMessage), "Illegal color statement '%s'", token);
 				return RESULT_ERROR;
 			}
-			*writedByte = ALIGN(4 * sizeof(float));
+			*writedByte = ALIGN_NOTHING(4 * sizeof(float));
 		}
 		break;
 
@@ -336,14 +339,14 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 				snprintf(errorMessage, sizeof(errorMessage), "Illegal rgba statement '%s'", token);
 				return RESULT_ERROR;
 			}
-			*writedByte = ALIGN(4 * sizeof(int));
+			*writedByte = ALIGN_NOTHING(4 * sizeof(int));
 		}
 		break;
 
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = (int)strlen(token) + 1;
-		*writedByte = ALIGN(w);
+		*writedByte = ALIGN_NOTHING(w);
 		break;
 
 	/* just remove the _ but don't translate */
@@ -353,13 +356,13 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 		Q_strncpyz((char *) b, token, MAX_VAR);
 		w = (int)strlen((char *) b) + 1;
-		*writedByte = ALIGN(w);
+		*writedByte = ALIGN_NOTHING(w);
 		break;
 
 	case V_LONGSTRING:
 		strcpy((char *) b, token);
 		w = (int)strlen(token) + 1;
-		*writedByte = ALIGN(w);
+		*writedByte = ALIGN_NOTHING(w);
 		break;
 
 	case V_ALIGN:
@@ -370,7 +373,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(sizeof(byte));
+		*writedByte = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_BLEND:
@@ -381,7 +384,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(sizeof(byte));
+		*writedByte = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_STYLE:
@@ -392,7 +395,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(sizeof(byte));
+		*writedByte = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_FADE:
@@ -403,7 +406,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(sizeof(byte));
+		*writedByte = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_SHAPE_SMALL:
@@ -422,7 +425,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		}
 		for (h += y; y < h; y++)
 			*(uint32_t *) b |= ((1 << w) - 1) << x << (y * SHAPE_SMALL_MAX_WIDTH);
-		*writedByte = ALIGN(SHAPE_SMALL_MAX_HEIGHT);
+		*writedByte = ALIGN_NOTHING(SHAPE_SMALL_MAX_HEIGHT);
 		break;
 
 	case V_SHAPE_BIG:
@@ -441,7 +444,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
 			((uint32_t *) b)[y] |= w;
-		*writedByte = ALIGN(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
+		*writedByte = ALIGN_NOTHING(SHAPE_BIG_MAX_HEIGHT * SHAPE_SMALL_MAX_HEIGHT);
 		break;
 
 	case V_DMGWEIGHT:
@@ -453,7 +456,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(sizeof(byte));
+		*writedByte = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	case V_DATE:
@@ -464,7 +467,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 		((date_t *) b)->day = DAYS_PER_YEAR * x + y;
 		((date_t *) b)->sec = SECONDS_PER_HOUR * w;
-		*writedByte = ALIGN(sizeof(date_t));
+		*writedByte = ALIGN_NOTHING(sizeof(date_t));
 		break;
 
 	case V_RELABS:
@@ -484,7 +487,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			}
 			*(float *) b = atof(token);
 		}
-		*writedByte = ALIGN(sizeof(float));
+		*writedByte = ALIGN_NOTHING(sizeof(float));
 		break;
 
 	case V_LONGLINES:
@@ -495,7 +498,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 			*b = 0;
 		else
 			*b = num;
-		*writedByte = ALIGN(sizeof(byte));
+		*writedByte = ALIGN_NOTHING(sizeof(byte));
 		break;
 
 	default:
@@ -576,18 +579,18 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 
 	switch (type) {
 	case V_NULL:
-		return ALIGN(0);
+		return ALIGN_NOTHING(0);
 
 	case V_BOOL:
 		if (*(const qboolean *) set)
 			*(qboolean *)b = qtrue;
 		else
 			*(qboolean *)b = qfalse;
-		return ALIGN(sizeof(qboolean));
+		return ALIGN_NOTHING(sizeof(qboolean));
 
 	case V_CHAR:
 		*(char *) b = *(const char *) set;
-		return ALIGN(sizeof(char));
+		return ALIGN_NOTHING(sizeof(char));
 
 	case V_TEAM:
 		if (!Q_strcmp(set, "civilian"))
@@ -598,7 +601,7 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team given: '%s'", (const char *)set);
-		return ALIGN(sizeof(int));
+		return ALIGN_NOTHING(sizeof(int));
 
 	case V_RACE:
 		if (!Q_strcmp(set, "phalanx"))
@@ -617,45 +620,45 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
-		return ALIGN(sizeof(int));
+		return ALIGN_NOTHING(sizeof(int));
 
 	case V_INT:
 		*(int *) b = *(const int *) set;
-		return ALIGN(sizeof(int));
+		return ALIGN_NOTHING(sizeof(int));
 
 	case V_INT2:
 		((int *) b)[0] = ((const int *) set)[0];
 		((int *) b)[1] = ((const int *) set)[1];
-		return ALIGN(2 * sizeof(int));
+		return ALIGN_NOTHING(2 * sizeof(int));
 
 	case V_FLOAT:
 		*(float *) b = *(const float *) set;
-		return ALIGN(sizeof(float));
+		return ALIGN_NOTHING(sizeof(float));
 
 	case V_POS:
 		((float *) b)[0] = ((const float *) set)[0];
 		((float *) b)[1] = ((const float *) set)[1];
-		return ALIGN(2 * sizeof(float));
+		return ALIGN_NOTHING(2 * sizeof(float));
 
 	case V_VECTOR:
 		((float *) b)[0] = ((const float *) set)[0];
 		((float *) b)[1] = ((const float *) set)[1];
 		((float *) b)[2] = ((const float *) set)[2];
-		return ALIGN(3 * sizeof(float));
+		return ALIGN_NOTHING(3 * sizeof(float));
 
 	case V_COLOR:
 		((float *) b)[0] = ((const float *) set)[0];
 		((float *) b)[1] = ((const float *) set)[1];
 		((float *) b)[2] = ((const float *) set)[2];
 		((float *) b)[3] = ((const float *) set)[3];
-		return ALIGN(4 * sizeof(float));
+		return ALIGN_NOTHING(4 * sizeof(float));
 
 	case V_RGBA:
 		((int *) b)[0] = ((const int *) set)[0];
 		((int *) b)[1] = ((const int *) set)[1];
 		((int *) b)[2] = ((const int *) set)[2];
 		((int *) b)[3] = ((const int *) set)[3];
-		return ALIGN(4 * sizeof(int));
+		return ALIGN_NOTHING(4 * sizeof(int));
 
 	case V_STRING:
 		Q_strncpyz((char *) b, (const char *) set, MAX_VAR);
@@ -674,20 +677,20 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 	case V_STYLE:
 	case V_FADE:
 		*b = *(const byte *) set;
-		return ALIGN(1);
+		return ALIGN_NOTHING(1);
 
 	case V_SHAPE_SMALL:
 		*(int *) b = *(const int *) set;
-		return ALIGN(SHAPE_SMALL_MAX_HEIGHT);
+		return ALIGN_NOTHING(SHAPE_SMALL_MAX_HEIGHT);
 
 	case V_SHAPE_BIG:
 		memcpy(b, set, 64);
-		return ALIGN(SHAPE_BIG_MAX_HEIGHT * 4);
+		return ALIGN_NOTHING(SHAPE_BIG_MAX_HEIGHT * 4);
 
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
 		*b = *(const byte *) set;
-		return ALIGN(1);
+		return ALIGN_NOTHING(1);
 
 	case V_DATE:
 		memcpy(b, set, sizeof(date_t));
