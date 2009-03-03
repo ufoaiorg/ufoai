@@ -748,15 +748,6 @@ menu market
 	// buttons
 	// ==================
 
-	string txt_category
-	{
-		font		"f_small"
-		string		"*cvar mn_itemtypename"
-		pos			"700 647"
-		size		"170 20"
-		textalign	uc
-	}
-
 	custombutton bt_continue
 	{
 		tooltip		"_Back"
@@ -777,7 +768,7 @@ menu market
 	{
 		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
 		string		"*cvar mn_itemname"
-		pos			"610 155"
+		pos			"610 185"
 		size		"365 20"
 		textalign	uc
 	}
@@ -785,7 +776,7 @@ menu market
 	{
 		visiblewhen "mn_itemtype eq aircraft"	// Only for aircraft.
 		string		"*cvar mn_aircraftname"
-		pos			"610 155"
+		pos			"610 185"
 		size		"365 20"
 		textalign	uc
 	}
@@ -793,7 +784,7 @@ menu market
 	item itemmodel
 	{
 		model		"*cvar mn_item"
-		pos			"600 175"
+		pos			"600 205"
 		size		"385 200"
 		angles		"-10 160 70"
 		autoscale	true
@@ -802,7 +793,7 @@ menu market
 	text description
 	{
 		textid		TEXT_STANDARD
-		pos			"620 377"
+		pos			"620 407"
 		size		"336 120"
 		rows		"8"
 		lineheight	15
@@ -960,7 +951,7 @@ menu market
 
 	func init
 	{
-		cmd "set mn_markettab 0; buy_type *mn_itemtype;"
+		cmd "buy_type *mn_itemtype;"
 	}
 
 	func close

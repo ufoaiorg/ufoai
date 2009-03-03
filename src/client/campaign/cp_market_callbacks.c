@@ -547,7 +547,6 @@ static void BS_BuyType_f (void)
 		}
 
 		Cvar_Set("mn_itemtype", INV_GetFilterType(buyCat));
-		Cvar_Set("mn_itemtypename", BS_BuyTypeName(buyCat));
 		buyList.scroll = 0;
 		if (node) {
 			node->u.text.textScroll = 0;

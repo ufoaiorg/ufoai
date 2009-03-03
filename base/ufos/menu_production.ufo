@@ -406,15 +406,6 @@ menu production
 	// buttons
 	// ==================
 
-	string txt_category
-	{
-		string		"*cvar mn_itemtypename"
-		pos			"700 647"
-		size		"170 20"
-		textalign	uc
-		font		f_small
-	}
-
 	zone zone_category {
 		pos			"650 627"
 		size		"270 59"

@@ -639,7 +639,6 @@ static void PR_ProductionSelect_f (void)
 	if (cat < MAX_FILTERTYPES && cat >= FILTER_S_PRIMARY) {	/**< Check for valid bounds */
 		produceCategory = cat;
 		Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
-		Cvar_Set("mn_itemtypename", BS_BuyTypeName(produceCategory));
 	} else {
 		return;
 	}
