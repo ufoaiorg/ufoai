@@ -98,7 +98,7 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
  * @param[out] col Col of the cell at the position (-1 if no cell)
  * @param[out] row Row of the cell at the position (-1 if no cell)
  */
-static void MN_BaseMapGetCellAtPos (menuNode_t *node, int x, int y, int *col, int *row)
+static void MN_BaseMapGetCellAtPos (const menuNode_t *node, int x, int y, int *col, int *row)
 {
 	assert(col);
 	assert(row);
@@ -118,7 +118,7 @@ static void MN_BaseMapGetCellAtPos (menuNode_t *node, int x, int y, int *col, in
  * @brief Check a base cell
  * @return True if the cell is free to build
  */
-inline static qboolean MN_BaseMapIsCellFree (base_t *base, int col, int row)
+inline static qboolean MN_BaseMapIsCellFree (const base_t *base, int col, int row)
 {
 	return col >= 0 && col < BASE_SIZE
 	 && row >= 0 && row < BASE_SIZE
@@ -133,7 +133,8 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 {
 	int width, height, row, col;
 	char image[MAX_QPATH];		/**< this buffer should not be need */
-	building_t *building, *secondBuilding = NULL;
+	building_t *building;
+	const building_t *secondBuilding;
 
 	if (!baseCurrent) {
 		MN_PopMenu(qfalse);
@@ -150,10 +151,6 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 			pos[0] += col * width;
 			pos[1] += row * (height - BASE_IMAGE_OVERLAY);
 
-			/** @todo we should not merge model and view */
-			baseCurrent->map[row][col].posX = pos[0];
-			baseCurrent->map[row][col].posY = pos[1];
-
 			/* base tile */
 			image[0] = '\0';
 			if (baseCurrent->map[row][col].blocked) {
@@ -169,6 +166,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 
 				if (!building->used) {
 					if (building->needs)
+						/** @todo the view should not edit the model */
 						building->used = 1;
 					if (building->image)
 						Q_strncpyz(image, building->image, sizeof(image));
@@ -178,6 +176,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 					if (!secondBuilding)
 						Sys_Error("Error in ufo-scriptfile - could not find the needed building");
 					Q_strncpyz(image, secondBuilding->image, sizeof(image));
+					/** @todo the view should not edit the model */
 					building->used = 0;
 				}
 			}
