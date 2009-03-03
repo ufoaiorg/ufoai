@@ -109,13 +109,6 @@ menu market
 			value	"0"
 			action "buy_type ugvitem;"
 		}
-		option description {
-			label	"_Disassembly"
-			value	"0"
-			action "buy_type disassembly;"
-		}
-		// @todo what about buy_type dummy? needed?
-		// dummy
 	}
 
 	// =========================
