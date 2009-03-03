@@ -346,7 +346,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 			if (mission->mapDef->map[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
 				if (!Q_strcmp(mission->mapDef->id, "ufocrash"))
-					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cl_localPool, 0);
+					ccs.battleParameters.param = Mem_PoolStrDup(shortUFOType, cl_campaignPool, 0);
 			}
 		} else {
 			shortUFOType = UFO_TypeToShortName(ccs.selectedMission->ufo->ufotype);

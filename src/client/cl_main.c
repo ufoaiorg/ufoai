@@ -672,8 +672,7 @@ void CL_InitAfter (void)
  * entities that are parsed in Com_ParseScripts (because maybe items are not parsed
  * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
  * at a later stage)
- * @note This data should not go into cl_localPool memory pool - this data is
- * persistent until you shutdown the game
+ * @note This data is persistent until you shutdown the game
  */
 void CL_ParseClientData (const char *type, const char *name, const char **text)
 {

@@ -69,7 +69,6 @@ static const value_t alien_group_vals[] = {
 
 /**
  * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
  */
 static void CL_ParseAlienTeam (const char *name, const char **text)
 {
@@ -235,7 +234,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 			if (!Q_strcmp(token, tech->id)) {
 				tech->mailSent = MAILSENT_FINISHED;
 				tech->markResearched.markOnly[tech->markResearched.numDefinitions] = qtrue;
-				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+				tech->markResearched.campaign[tech->markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_campaignPool, 0);
 				tech->markResearched.numDefinitions++;
 				Com_DPrintf(DEBUG_CLIENT, "...tech %s\n", tech->id);
 				break;
@@ -616,7 +615,6 @@ components_t *CL_GetComponentsByItem (const objDef_t *item)
  * @sa CL_ReadSinglePlayerData
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
- * @note write into cl_localPool - free on every game restart and reparse
  */
 static void CL_ParseScriptFirst (const char *type, const char *name, const char **text)
 {
@@ -673,7 +671,6 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
  * @sa CL_ReadSinglePlayerData
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
  */
 static void CL_ParseScriptSecond (const char *type, const char *name, const char **text)
 {

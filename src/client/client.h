@@ -222,7 +222,6 @@ extern struct memPool_s *cl_soundSysPool;
 typedef enum {
 	CL_TAG_NONE,				/**< will be wiped on every new game */
 	CL_TAG_PARSE_ONCE,			/**< will not be wiped on a new game (shaders, fonts) */
-	CL_TAG_REPARSE_ON_NEW_GAME,	/**< reparse this stuff on a new game (techs, ...) */
 	CL_TAG_MENU					/**< never delete it */
 } clientMemoryTags_t;
 

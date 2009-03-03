@@ -76,7 +76,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 		if (!eventMail)
 			return NULL;
 
-		newEventMail = Mem_PoolAlloc(sizeof(*newEventMail), cl_localPool, CL_TAG_NONE);
+		newEventMail = Mem_PoolAlloc(sizeof(*newEventMail), cl_campaignPool, 0);
 		if (!newEventMail)
 			return NULL;
 
@@ -122,12 +122,12 @@ eventMail_t* CL_NewEventMail (const char *id, const char *newID, const char *bod
 	if (!mail)
 		return NULL;
 
-	/* cl_localPool is freed with every new game in CL_ResetSinglePlayerData */
-	mail->id = Mem_PoolStrDup(newID, cl_localPool, CL_TAG_NONE);
+	/* cl_campaignPool is freed with every new game in CL_ResetSinglePlayerData */
+	mail->id = Mem_PoolStrDup(newID, cl_campaignPool, 0);
 
 	/* maybe we want to use the old body */
 	if (body)
-		mail->body = Mem_PoolStrDup(body, cl_localPool, CL_TAG_NONE);
+		mail->body = Mem_PoolStrDup(body, cl_campaignPool, 0);
 
 	return mail;
 }
@@ -148,7 +148,7 @@ static const value_t eventMail_vals[] = {
 
 /**
  * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
+ * @note write into cl_campaignPool - free on every game restart and reparse
  */
 void CL_ParseEventMails (const char *name, const char **text)
 {
@@ -167,7 +167,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 	memset(eventMail, 0, sizeof(*eventMail));
 
 	Com_DPrintf(DEBUG_CLIENT, "...found eventMail %s\n", name);
-	eventMail->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+	eventMail->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -197,7 +197,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)eventMail + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					Mem_PoolStrDupTo(token, (char**) ((char*)eventMail + (int)vp->ofs), cl_campaignPool, 0);
 					break;
 				default:
 					Com_EParseValue(eventMail, token, vp->type, vp->ofs, vp->size);
@@ -249,7 +249,7 @@ void CL_EventAddMail_f (void)
 		CL_DateConvertLong(&ccs.date, &date);
 		Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
 			date.year, Date_GetMonthName(date.month - 1), date.day);
-		eventMail->date = Mem_PoolStrDup(dateBuf, cl_localPool, 0);
+		eventMail->date = Mem_PoolStrDup(dateBuf, cl_campaignPool, 0);
 	}
 
 	/* the subject double %s: see UP_SetMailHeader */

@@ -141,7 +141,7 @@ static void S_Music_Start (const char *file)
 			S_Music_Stop();
 		if (music.nextMusicTrack)
 			Mem_Free(music.nextMusicTrack);
-		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_PARSE_ONCE);
+		music.nextMusicTrack = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 		return;
 	}
 
@@ -308,7 +308,7 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 	}
 
 	wavecvt.len = size & ~(samplesize - 1);
-	wavecvt.buf = (byte *)Mem_PoolAlloc(wavecvt.len * wavecvt.len_mult, cl_soundSysPool, CL_TAG_NONE);
+	wavecvt.buf = (byte *)Mem_PoolAlloc(wavecvt.len * wavecvt.len_mult, cl_soundSysPool, 0);
 	if (wavecvt.buf == NULL)
 		return -1;
 	memcpy(wavecvt.buf, mem, size);
@@ -353,8 +353,8 @@ sfx_t *S_RegisterSound (const char *name)
 	if (!mix)
 		return NULL;		/* couldn't load the sound's data */
 
-	sfx = Mem_PoolAlloc(sizeof(*sfx), cl_soundSysPool, CL_TAG_NONE);
-	sfx->name = Mem_PoolStrDup(name, cl_soundSysPool, CL_TAG_NONE);
+	sfx = Mem_PoolAlloc(sizeof(*sfx), cl_soundSysPool, 0);
+	sfx->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sfx->data = mix;
 	sfx->channel = -1; /* just a free channel */
 	sfx->loops = 0; /* play once */
@@ -868,7 +868,7 @@ void S_Shutdown (void)
 	Mix_CloseAudio();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 
-	Mem_FreeTag(cl_soundSysPool, CL_TAG_NONE);
+	Mem_FreeTag(cl_soundSysPool, 0);
 	memset(sfx_hash, 0, sizeof(sfx_hash));
 	sound_started = qfalse;
 }
@@ -916,7 +916,7 @@ void CL_ParseMusic (const char *name, const char **text)
 			FS_SkipBlock(text);
 			break;
 		}
-		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_soundSysPool, CL_TAG_PARSE_ONCE);
+		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_soundSysPool, 0);
 		musicArrayLength[i]++;
 	} while (*text);
 }

@@ -650,7 +650,7 @@ void CIN_PlayCinematic (const char *name)
 		short samples[ROQ_MAX_CHUNK_SIZE];
 		const size_t initialSize = ROQ_MAX_CHUNK_SIZE * 100;
 
-		cin.soundBuffer = (short *)Mem_PoolAlloc(initialSize, cl_soundSysPool, CL_TAG_NONE);
+		cin.soundBuffer = (short *)Mem_PoolAlloc(initialSize, cl_soundSysPool, 0);
 		cin.soundBufferSize = Mem_Size(cin.soundBuffer);
 
 		/* buffer the sound chunks */

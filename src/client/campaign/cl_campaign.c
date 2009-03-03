@@ -63,7 +63,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_market_callbacks.h"
 #include "cp_ufopedia_callbacks.h"
 
-struct memPool_s *cl_localPool;		/**< reset on every game restart */
+struct memPool_s *cl_campaignPool;		/**< reset on every game restart */
 /* public vars */
 campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;
@@ -1189,7 +1189,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		ccs.battleParameters.alienTeamGroup = &ccs.alienCategories[i].alienTeamGroups[j];
 		name = mxml_GetString(bparam, "param");
 		if (name && name[0] != '\0')
-			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
+			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_campaignPool, 0);
 		else
 			ccs.battleParameters.param = NULL;
 
@@ -1403,7 +1403,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		ccs.battleParameters.alienTeamGroup = &ccs.alienCategories[i].alienTeamGroups[j];
 		name = MSG_ReadString(sb);
 		if (name[0] != '\0')
-			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_localPool, 0);
+			ccs.battleParameters.param = Mem_PoolStrDup(name, cl_campaignPool, 0);
 		else
 			ccs.battleParameters.param = NULL;
 		Q_strncpyz(ccs.battleParameters.alienEquipment, MSG_ReadString(sb), sizeof(ccs.battleParameters.alienEquipment));
@@ -2475,6 +2475,8 @@ void CP_CampaignExit (void)
 	SV_Shutdown("Game exit", qfalse);
 	CL_Disconnect();
 
+	Mem_DeletePool(cl_campaignPool);
+
 	if (GAME_CP_IsRunning()) {
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
@@ -2524,7 +2526,7 @@ void CL_ResetSinglePlayerData (void)
 	/* cleanup dynamic mails */
 	CL_FreeDynamicEventMail();
 
-	Mem_FreePool(cl_localPool);
+	Mem_FreePool(cl_campaignPool);
 
 	/* called to flood the hash list - because the parse tech function
 	 * was maybe already called */
@@ -2705,7 +2707,7 @@ qboolean CP_GetRandomPosOnGeoscapeWithParameters (vec2_t pos, const linkedList_t
 /** @todo remove me and move all the included stuff to proper places */
 void CP_InitStartup (void)
 {
-	cl_localPool = Mem_CreatePool("Client: Local (per game)");
+	cl_campaignPool = Mem_CreatePool("Client: Local (per game)");
 
 	SAV_Init();
 	/* init some production menu nodes */

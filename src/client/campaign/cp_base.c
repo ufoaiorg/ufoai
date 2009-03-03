@@ -1699,7 +1699,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		/* new entry */
 		building = &ccs.buildingTemplates[ccs.numBuildingTemplates];
 		memset(building, 0, sizeof(*building));
-		building->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+		building->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 
@@ -1749,7 +1749,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 							case V_TRANSLATION_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
-								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+								Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_campaignPool, 0);
 								break;
 							default:
 								Com_EParseValue(building, token, vp->type, vp->ofs, vp->size);
@@ -1931,7 +1931,6 @@ void B_ClearBase (base_t *const base)
 /**
  * @brief Reads a base layout template
  * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
  */
 void B_ParseBaseTemplate (const char *name, const char **text)
 {
@@ -1961,7 +1960,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	/* create new Template */
 	template = &ccs.baseTemplates[ccs.numBaseTemplates];
-	template->name = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+	template->name = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 	/* clear map for checking duplicate positions and buildingnums for checking moreThanOne constraint */
 	memset(&map, qfalse, sizeof(map));
@@ -3806,7 +3805,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				}
 			}
 			if (aircraft->status == AIR_MISSION)
-				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_localPool, 0);
+				aircraft->missionID = Mem_PoolStrDup(MSG_ReadString(sb), cl_campaignPool, 0);
 			MSG_ReadPos(sb, aircraft->direction);
 			for (l = 0; l < presaveArray[PRE_AIRSTA]; l++)
 				aircraft->stats[l] = MSG_ReadLong(sb);

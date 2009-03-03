@@ -283,7 +283,7 @@ static const value_t nation_vals[] = {
  * @param[in] text The text of the nation node
  * @sa nation_vals
  * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
+ * @note write into cl_campaignPool - free on every game restart and reparse
  */
 void CL_ParseNations (const char *name, const char **text)
 {
@@ -314,7 +314,7 @@ void CL_ParseNations (const char *name, const char **text)
 	ccs.numNations++;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found nation %s\n", name);
-	nation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+	nation->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 	nation->stats[0].inuse = qtrue;
 
@@ -346,7 +346,7 @@ void CL_ParseNations (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cl_campaignPool, 0);
 					break;
 				default:
 					if (Com_EParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
@@ -376,7 +376,7 @@ static const value_t city_vals[] = {
  * @param[in] text The text of the nation node
  * @sa city_vals
  * @sa CL_ParseScriptFirst
- * @note write into cl_localPool - free on every game restart and reparse
+ * @note write into cl_campaignPool - free on every game restart and reparse
  */
 void CL_ParseCities (const char *name, const char **text)
 {
@@ -407,7 +407,7 @@ void CL_ParseCities (const char *name, const char **text)
 	ccs.numCities++;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found city %s\n", name);
-	city->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+	city->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -437,7 +437,7 @@ void CL_ParseCities (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)city + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
+					Mem_PoolStrDupTo(token, (char**) ((char*)city + (int)vp->ofs), cl_campaignPool, 0);
 					break;
 				default:
 					if (Com_EParseValue(city, token, vp->type, vp->ofs, vp->size) == -1)

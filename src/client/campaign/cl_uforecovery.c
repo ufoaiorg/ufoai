@@ -109,11 +109,11 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 	assert(mail);
 
 	/* don't free the old mail body here - it's the string of the source mail */
-	mail->body = Mem_PoolStrDup(va(_(mail->body), UFO_TypeToName(missionresults.ufotype), base->name, body), cl_localPool, CL_TAG_NONE);
+	mail->body = Mem_PoolStrDup(va(_(mail->body), UFO_TypeToName(missionresults.ufotype), base->name, body), cl_campaignPool, 0);
 
 	/* update subject */
 	/* Insert name of the mission in the template */
-	mail->subject = Mem_PoolStrDup(va(_(mail->subject), base->name), cl_localPool, CL_TAG_NONE);
+	mail->subject = Mem_PoolStrDup(va(_(mail->subject), base->name), cl_campaignPool, 0);
 
 	/* Add the mail to unread mail */
 	Cmd_ExecuteString(va("addeventmail %s", mail->id));

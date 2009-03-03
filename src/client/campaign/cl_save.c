@@ -228,7 +228,7 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 	}
 
 	clen = FS_FileLength(&f);
-	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, CL_TAG_NONE);
+	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
 	if (fread(cbuf, 1, clen, f.f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	fclose(f.f);
@@ -252,7 +252,7 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 			"...xml Size: %ld, compressed? %c\n"
 			, header.version, header.gameVersion, header.xml_size, header.compressed?'y':'n');
 	len = header.xml_size+50;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, CL_TAG_NONE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, 0);
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
@@ -355,7 +355,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	/* read compressed data into cbuf buffer */
 	clen = FS_FileLength(&f);
-	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, CL_TAG_NONE);
+	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
 	if (fread(cbuf, 1, clen, f.f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	fclose(f.f);
@@ -369,7 +369,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		"...game version: %s\n"
 		, header.version, header.gameVersion);
 
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, CL_TAG_NONE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, 0);
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
 	if (header.compressed) {
@@ -513,7 +513,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 
 	/** @todo little/big endian */
 	header.xml_size = requiredbuflen;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen+1, cl_genericPool, CL_TAG_NONE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen+1, cl_genericPool, 0);
 	if (!buf) {
 		*error = _("Could not allocate enough memory to save this game");
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
@@ -523,7 +523,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
 	bufLen = (uLongf) (24 + 1.02 * requiredbuflen);
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, CL_TAG_NONE);
+	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
 #ifdef DEBUG
@@ -593,7 +593,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.sav", FS_Gamedir(), filename);
 
 	/* step 2 - allocate the buffers */
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, CL_TAG_NONE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, 0);
 	if (!buf) {
 		*error = _("Could not allocate enough memory to save this game");
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
@@ -615,7 +615,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, CL_TAG_NONE);
+	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
 
 	/* step 4 - write the uncompressed header */
 	memset(&header, 0, sizeof(header));
