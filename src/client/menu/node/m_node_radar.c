@@ -114,7 +114,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 		Com_sprintf(name, sizeof(name), "%s%s", radar.base, token);
 
 		image = &radar.images[radar.numImages++];
-		image->name = Mem_PoolStrDup(name, cl_campaignPool, CL_TAG_NONE);
+		image->name = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 		if (pos && pos[0]) {
 			int i;
@@ -281,7 +281,7 @@ static void MN_InitRadar (const menuNode_t *node)
 			} else {
 				char imagePath[MAX_QPATH];
 				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", image->name, i + 1);
-				image->path[i] = Mem_PoolStrDup(imagePath, cl_campaignPool, CL_TAG_NONE);
+				image->path[i] = Mem_PoolStrDup(imagePath, cl_campaignPool, 0);
 
 				image->maxlevel++;
 

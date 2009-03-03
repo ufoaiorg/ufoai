@@ -332,11 +332,11 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 {
 	if (*action)
 		Sys_Error("There is already an action assigned");
-	*action = (menuAction_t *)Mem_PoolAlloc(sizeof(**action), cl_menuSysPool, CL_TAG_MENU);
+	*action = (menuAction_t *)Mem_PoolAlloc(sizeof(**action), cl_menuSysPool, 0);
 	(*action)->type.op = type;
 	switch (type) {
 	case EA_CMD:
-		(*action)->data = Mem_PoolStrDup((const char *)data, cl_menuSysPool, CL_TAG_MENU);
+		(*action)->data = Mem_PoolStrDup((const char *)data, cl_menuSysPool, 0);
 		break;
 	default:
 		Sys_Error("Action type %i is not yet implemented", type);

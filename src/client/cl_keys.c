@@ -642,7 +642,7 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 	/* allocate memory for new binding, but don't set empty commands*/
 	if (binding)
 	{
-		new = Mem_PoolStrDup(binding, com_genericPool, CL_TAG_NONE);
+		new = Mem_PoolStrDup(binding, com_genericPool, 0);
 		*keySpace = new;
 	}
 }

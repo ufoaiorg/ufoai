@@ -91,7 +91,7 @@ void MN_ParseFont (const char *name, const char **text)
 	font = &fonts[numFonts];
 	memset(font, 0, sizeof(*font));
 
-	font->name = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_MENU);
+	font->name = Mem_PoolStrDup(name, cl_menuSysPool, 0);
 
 	if (!Q_strcmp(font->name, "f_small"))
 		fontSmall = font;
@@ -129,7 +129,7 @@ void MN_ParseFont (const char *name, const char **text)
 				case V_TRANSLATION_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
+					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, 0);
 					break;
 				default:
 					Com_EParseValue(font, token, v->type, v->ofs, v->size);

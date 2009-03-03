@@ -1083,7 +1083,7 @@ static qboolean MN_ParseMenuTransform (menuModel_t *menuModel, const char **text
 			return qfalse;
 		if (*token[0] == '}')
 			break;
-		menuModel->menuTransform[menuModel->menuTransformCnt].menuID = Mem_PoolStrDup(*token, cl_menuSysPool, CL_TAG_MENU);
+		menuModel->menuTransform[menuModel->menuTransformCnt].menuID = Mem_PoolStrDup(*token, cl_menuSysPool, 0);
 
 		*token = COM_EParse(text, errhead, menuModel->id);
 		if (!*text)
@@ -1163,7 +1163,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 
 	Vector4Set(menuModel->color, 1, 1, 1, 1);
 
-	menuModel->id = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_MENU);
+	menuModel->id = Mem_PoolStrDup(name, cl_menuSysPool, 0);
 	Com_DPrintf(DEBUG_CLIENT, "Found menu model %s (%i)\n", menuModel->id, mn.numMenuModels);
 
 	/* get it's body */
@@ -1196,7 +1196,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 				menuModel->next = MN_GetMenuModel(token);
 				if (!menuModel->next)
 					Com_Printf("Could not find menumodel %s", token);
-				menuModel->need = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_MENU);
+				menuModel->need = Mem_PoolStrDup(token, cl_menuSysPool, 0);
 			} else if (!Q_strcmp(v->string, "menutransform")) {
 				qboolean result;
 				result = MN_ParseMenuTransform (menuModel, text, &token, errhead);
@@ -1209,7 +1209,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 				return;
 			switch (v->type) {
 			case V_CLIENT_HUNK_STRING:
-				Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
+				Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), cl_menuSysPool, 0);
 				break;
 			default:
 				Com_EParseValue(menuModel, token, v->type, v->ofs, v->size);

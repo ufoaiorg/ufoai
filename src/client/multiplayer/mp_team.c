@@ -68,7 +68,7 @@ void MP_MultiplayerTeamSlotComments_f (void)
 			error = qtrue;
 		} else {
 			const int clen = sizeof(header);
-			byte *cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, CL_TAG_NONE);
+			byte *cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
 			if (fread(cbuf, 1, clen, qf.f) != clen) {
 				error = qtrue;
 				Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
@@ -245,7 +245,7 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 	/* required for storing compressed */
 	header.xml_size = requiredbuflen;
 
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen + 1, cl_genericPool, CL_TAG_NONE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen + 1, cl_genericPool, 0);
 	if (!buf) {
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
@@ -254,7 +254,7 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 	Com_Printf("XML Written to buffer (%d Bytes)\n", res);
 
 	bufLen = (uLongf) (24 + 1.02 * requiredbuflen);
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, CL_TAG_NONE);
+	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
 	memcpy(fbuf, &header, sizeof(header));
 
 	if (header.compressed) {
@@ -437,7 +437,7 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	}
 
 	clen = FS_FileLength(&f);
-	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, CL_TAG_NONE);
+	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
 	if (fread(cbuf, 1, clen, f.f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	fclose(f.f);
@@ -448,7 +448,7 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
 	len = header.xml_size+50;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, CL_TAG_NONE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, 0);
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */

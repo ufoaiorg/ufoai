@@ -247,7 +247,7 @@ void MN_Init (void)
 
 	/* 256kb */
 	mn.adataize = MENU_HUNK_SIZE;
-	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, cl_menuSysPool, CL_TAG_MENU);
+	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, cl_menuSysPool, 0);
 	mn.curadata = mn.adata;
 
 	MN_InitData();

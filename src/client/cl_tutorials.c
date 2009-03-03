@@ -139,7 +139,7 @@ void TUT_ParseTutorials (const char *name, const char **text)
 
 				switch (v->type) {
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
+					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), cl_menuSysPool, 0);
 					break;
 				default:
 					Com_EParseValue(t, token, v->type, v->ofs, v->size);

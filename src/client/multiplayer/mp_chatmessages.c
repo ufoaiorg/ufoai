@@ -45,15 +45,15 @@ static chatMessage_t *mp_chatMessageStack;
 void MP_AddChatMessage (const char *text)
 {
 	/* allocate memory for new chat message */
-	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(*chat), cl_genericPool, CL_TAG_NONE);
+	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(*chat), cl_genericPool, 0);
 
 	/* push the new chat message at the beginning of the stack */
 	chat->next = mp_chatMessageStack;
 	mp_chatMessageStack = chat;
-	chat->text = Mem_PoolStrDup(text, cl_genericPool, CL_TAG_NONE);
+	chat->text = Mem_PoolStrDup(text, cl_genericPool, 0);
 
 	if (!chatBuffer) {
-		chatBuffer = (char*)Mem_PoolAlloc(sizeof(char) * MAX_MESSAGE_TEXT, cl_genericPool, CL_TAG_NONE);
+		chatBuffer = (char*)Mem_PoolAlloc(sizeof(char) * MAX_MESSAGE_TEXT, cl_genericPool, 0);
 		if (!chatBuffer) {
 			Com_Printf("Could not allocate chat buffer\n");
 			return;

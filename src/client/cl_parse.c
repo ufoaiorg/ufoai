@@ -1753,7 +1753,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			break;
 		}
 
-		cur = Mem_PoolAlloc(sizeof(*cur), cl_genericPool, CL_TAG_NONE);
+		cur = Mem_PoolAlloc(sizeof(*cur), cl_genericPool, 0);
 		cur->when = event_time;
 		cur->eType = eType;
 		cur->msg = event_msg;

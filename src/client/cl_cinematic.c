@@ -253,8 +253,8 @@ static void CIN_DecodeInfo (const byte *data)
 	if (!Q_IsPowerOfTwo(cin.frameWidth) || !Q_IsPowerOfTwo(cin.frameHeight))
 		Com_Error(ERR_DROP, "CIN_DecodeInfo: size is not a power of two (%i x %i)", cin.frameWidth, cin.frameHeight);
 
-	cin.frameBuffer[0] = (byte *)Mem_PoolAlloc(cin.frameWidth * cin.frameHeight * 4, cl_genericPool, CL_TAG_NONE);
-	cin.frameBuffer[1] = (byte *)Mem_PoolAlloc(cin.frameWidth * cin.frameHeight * 4, cl_genericPool, CL_TAG_NONE);
+	cin.frameBuffer[0] = (byte *)Mem_PoolAlloc(cin.frameWidth * cin.frameHeight * 4, cl_genericPool, 0);
+	cin.frameBuffer[1] = (byte *)Mem_PoolAlloc(cin.frameWidth * cin.frameHeight * 4, cl_genericPool, 0);
 }
 
 /**
