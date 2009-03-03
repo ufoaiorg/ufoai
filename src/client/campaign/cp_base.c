@@ -848,7 +848,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 		case B_STORAGE:
 			if (base->capacities[cap].cur + building->capacity > base->capacities[cap].max) {
 				MN_PopupButton(_("Destroy Storage"), _("If you destroy this Storage, every items inside will be destroyed.\nAre you sure you want to destroy this building?"),
-					"mn_pop;mn_push buy;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
+					"mn_pop;mn_push market;buy_type *mn_itemtype", _("Go to storage"), _("Go to buy/sell menu without destroying building"),
 					"building_destroy;mn_pop;", _("Destroy"), _("Destroy the building"),
 					(ccs.numBases > 1) ? "mn_pop;mn_push transfer;" : NULL, (ccs.numBases > 1) ? _("Transfer") : NULL,
 					_("Go to transfer menu without destroying the building"));
@@ -2526,7 +2526,7 @@ void B_BuildingOpenAfterClick (const base_t *base, const building_t *building)
 		case B_STORAGE:
 		case B_ANTIMATTER:
 			if (BS_BuySellAllowed(base))
-				MN_PushMenu("buy", NULL);
+				MN_PushMenu("market", NULL);
 			else
 				UP_OpenWith(building->pedia);
 			break;

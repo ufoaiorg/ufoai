@@ -90,7 +90,7 @@ menu bases
 		selectcolor	"1 1 1 1"
 		color		"0 0.8 0 1"
 		font		f_menu
-		click		{ cmd "mn_push buy;" }
+		click		{ cmd "mn_push market;" }
 	}
 
 	button transfer
