@@ -832,6 +832,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		mxml_node_t *ss;
 		const int idx = mxml_GetInt(s, "idx", 0);
 		installation_t *inst = INS_GetInstallationByIDX(idx);
+		inst->idx = idx;
 		inst->founded = mxml_GetBool(s, "founded", inst->founded);
 		/* should never happen, we only save founded installations */
 		if (!inst->founded)
@@ -891,6 +892,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
 		int j;
 		installation_t *inst = INS_GetInstallationByIDX(i);
+		inst->idx = i;
 		inst->founded = MSG_ReadByte(sb);
 		if (!inst->founded)
 			continue;
