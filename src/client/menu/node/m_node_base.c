@@ -91,15 +91,49 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 #define BASE_IMAGE_OVERLAY 20
 
 /**
+ * @brief Return col and row of a cell, at an absolute position
+ * @param[in] node The menu node definition for the base map
+ * @param[in] x Absolute x-position requested
+ * @param[in] y Absolute y-position requested
+ * @param[out] col Col of the cell at the position (-1 if no cell)
+ * @param[out] row Row of the cell at the position (-1 if no cell)
+ */
+static void MN_BaseMapGetCellAtPos (menuNode_t *node, int x, int y, int *col, int *row)
+{
+	assert(col);
+	assert(row);
+	MN_NodeAbsoluteToRelativePos(node, &x, &y);
+	if (x < 0 || y < 0 || x >= node->size[0] || y >= node->size[1]) {
+		*col = -1;
+		*row = -1;
+		return;
+	}
+	*col = x / (node->size[0] / BASE_SIZE);
+	*row = y / (node->size[0] / BASE_SIZE);
+	assert(*col >= 0 && *col < BASE_SIZE);
+	assert(*row >= 0 && *row < BASE_SIZE);
+}
+
+/**
+ * @brief Check a base cell
+ * @return True if the cell is free to build
+ */
+inline static qboolean MN_BaseMapIsCellFree (base_t *base, int col, int row)
+{
+	return col >= 0 && col < BASE_SIZE
+	 && row >= 0 && row < BASE_SIZE
+	 && base->map[row][col].building == NULL
+	 && !base->map[row][col].blocked;
+}
+
+/**
  * @brief Draws a base.
  */
-static void MN_BaseMapDraw (menuNode_t * node)
+static void MN_BaseMapNodeDraw (menuNode_t * node)
 {
-	int xHover = -1, yHover = -1, widthHover = 1;
-	int width, height, row, col, time, colSecond;
-	const vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
-	char image[MAX_QPATH];
-	building_t *building, *secondBuilding = NULL, *hoverBuilding = NULL;
+	int width, height, row, col;
+	char image[MAX_QPATH];		/**< this buffer should not be need */
+	building_t *building, *secondBuilding = NULL;
 
 	if (!baseCurrent) {
 		MN_PopMenu(qfalse);
@@ -107,14 +141,14 @@ static void MN_BaseMapDraw (menuNode_t * node)
 	}
 
 	width = node->size[0] / BASE_SIZE;
-	height = (node->size[1] + BASE_SIZE * BASE_IMAGE_OVERLAY) / BASE_SIZE;
+	height = node->size[1] / BASE_SIZE + BASE_IMAGE_OVERLAY;
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
 			vec2_t pos;
 			MN_GetNodeAbsPos(node, pos);
 			pos[0] += col * width;
-			pos[1] += row * height - row * BASE_IMAGE_OVERLAY;
+			pos[1] += row * (height - BASE_IMAGE_OVERLAY);
 
 			/** @todo we should not merge model and view */
 			baseCurrent->map[row][col].posX = pos[0];
@@ -152,42 +186,6 @@ static void MN_BaseMapDraw (menuNode_t * node)
 			if (image[0] != '\0')
 				R_DrawNormPic(pos[0], pos[1], width, height, 0, 0, 0, 0, 0, qfalse, image);
 
-			/** @todo We should move it outside the loop */
-			/* check for hovering building name or outline border */
-			if (node->state && mousePosX > pos[0] && mousePosX < pos[0] + width && mousePosY > pos[1] && mousePosY < pos[1] + height - 20) {
-				if (!baseCurrent->map[row][col].building
-				 && !baseCurrent->map[row][col].blocked) {
-					if (ccs.baseAction == BA_NEWBUILDING && xHover == -1) {
-						assert(baseCurrent->buildingCurrent);
-						colSecond = col;
-						if (baseCurrent->buildingCurrent->needs) {
-							if (colSecond + 1 == BASE_SIZE) {
-								if (!baseCurrent->map[row][colSecond - 1].building
-								 && !baseCurrent->map[row][colSecond - 1].blocked)
-									colSecond--;
-							} else if (baseCurrent->map[row][colSecond + 1].building) {
-								if (!baseCurrent->map[row][colSecond - 1].building
-								 && !baseCurrent->map[row][colSecond - 1].blocked)
-									colSecond--;
-							} else {
-								colSecond++;
-							}
-							if (colSecond != col) {
-								if (colSecond < col)
-									xHover = node->pos[0] + colSecond * width;
-								else
-									xHover = pos[0];
-								widthHover = 2;
-							}
-						} else
-							xHover = pos[0];
-						yHover = pos[1];
-					}
-				} else {
-					hoverBuilding = building;
-				}
-			}
-
 			/* only draw for first part of building */
 			if (building && !secondBuilding) {
 				switch (building->buildingStatus) {
@@ -195,29 +193,78 @@ static void MN_BaseMapDraw (menuNode_t * node)
 				case B_STATUS_CONSTRUCTION_FINISHED:
 					break;
 				case B_STATUS_UNDER_CONSTRUCTION:
-					time = building->buildTime - (ccs.date.day - building->timeStart);
+				{
+					const int time = building->buildTime - (ccs.date.day - building->timeStart);
 					R_FontDrawString("f_small", 0, pos[0] + 10, pos[1] + 10, pos[0] + 10, pos[1] + 10, node->size[0], 0, node->texh[0], va(ngettext("%i day left", "%i days left", time), time), 0, 0, NULL, qfalse, 0);
 					break;
+				}
 				default:
 					break;
 				}
 			}
 		}
 	}
-	if (node->state && hoverBuilding) {
-		R_Color(color);
-		R_FontDrawString("f_small", 0, mousePosX + 3, mousePosY, mousePosX + 3, mousePosY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse, 0);
-		R_Color(NULL);
-	}
-	if (xHover != -1) {
-		if (widthHover == 1) {
-			Q_strncpyz(image, "base/hover", sizeof(image));
-			R_DrawNormPic(xHover, yHover, width, height, 0, 0, 0, 0, 0, qfalse, image);
-		} else {
-			Com_sprintf(image, sizeof(image), "base/hover%i", widthHover);
-			R_DrawNormPic(xHover, yHover, width * widthHover, height, 0, 0, 0, 0, 0, qfalse, image);
+
+	if (!node->state)
+		return;
+
+	MN_BaseMapGetCellAtPos(node, mousePosX, mousePosY, &col, &row);
+	if (col == -1)
+		return;
+
+	/* if we are building */
+	if (ccs.baseAction == BA_NEWBUILDING) {
+		qboolean isLarge;
+		assert(baseCurrent->buildingCurrent);
+		/** @todo we should not compute here if we can (or not build something) the map model know it better */
+		if (!MN_BaseMapIsCellFree(baseCurrent, col, row))
+			return;
+
+		isLarge = baseCurrent->buildingCurrent->needs != NULL;
+
+		/* large building */
+		if (isLarge) {
+			if (MN_BaseMapIsCellFree(baseCurrent, col + 1, row)) {
+				/* ok */
+			} else if (MN_BaseMapIsCellFree(baseCurrent, col - 1, row)) {
+				/* fix col at the left cell */
+				col--;
+			} else {
+				col = -1;
+			}
+		}
+		if (col != -1) {
+			vec2_t pos;
+			MN_GetNodeAbsPos(node, pos);
+			if (isLarge) {
+				R_DrawNormPic(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width + width, height, 0, 0, 0, 0, 0, qfalse, "base/hover2");
+			} else
+				R_DrawNormPic(pos[0] + col * width, pos[1] + row * (height - BASE_IMAGE_OVERLAY), width, height, 0, 0, 0, 0, 0, qfalse, "base/hover");
 		}
 	}
+}
+
+/**
+ * @brief Custom tooltip
+ * @param[in] node Node we request to draw tooltip
+ * @param[in] x Position x of the mouse
+ * @param[in] y Position y of the mouse
+ */
+static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
+{
+	int col, row;
+	building_t *building;
+	const int itemToolTipWidth = 250;
+
+	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	if (col == -1)
+		return;
+
+	building = baseCurrent->map[row][col].building;
+	if (!building)
+		return;
+
+	MN_DrawTooltip("f_small", _(building->name), x, y, itemToolTipWidth, 0);
 }
 
 /**
@@ -228,7 +275,7 @@ static void MN_BaseMapDraw (menuNode_t * node)
  * @param[in] x The x screen coordinate
  * @param[in] y The y screen coordinate
  */
-static void MN_BaseMapClick (menuNode_t *node, int x, int y)
+static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = baseCurrent;
@@ -237,42 +284,33 @@ static void MN_BaseMapClick (menuNode_t *node, int x, int y)
 	assert(node);
 	assert(node->menu);
 
+	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	if (col == -1)
+		return;
+
 	if (ccs.baseAction == BA_NEWBUILDING) {
 		assert(base->buildingCurrent);
-		for (row = 0; row < BASE_SIZE; row++)
-			for (col = 0; col < BASE_SIZE; col++) {
-				if (x >= base->map[row][col].posX
-				 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE
-				 && y >= base->map[row][col].posY
-				 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
-					/* we're on the tile the player clicked */
-					if (!base->map[row][col].building && !base->map[row][col].blocked) {
-						if (!base->buildingCurrent->needs
-						 || (col < BASE_SIZE - 1 && !base->map[row][col + 1].building && !base->map[row][col + 1].blocked)
-						 || (col > 0 && !base->map[row][col - 1].building && !base->map[row][col - 1].blocked))
-						/* Set position for a new building */
-						B_SetBuildingByClick(base, base->buildingCurrent, row, col);
-					}
-					return;
-				}
-			}
+		if (!base->map[row][col].building && !base->map[row][col].blocked) {
+			if (!base->buildingCurrent->needs
+			 || (col < BASE_SIZE - 1 && !base->map[row][col + 1].building && !base->map[row][col + 1].blocked)
+			 || (col > 0 && !base->map[row][col - 1].building && !base->map[row][col - 1].blocked))
+			/* Set position for a new building */
+			B_SetBuildingByClick(base, base->buildingCurrent, row, col);
+		}
+		return;
 	}
 
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++)
-			if (base->map[row][col].building && x >= base->map[row][col].posX
-			 && x < base->map[row][col].posX + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY
-			 && y < base->map[row][col].posY + node->size[1] / BASE_SIZE) {
-				const building_t *entry = base->map[row][col].building;
-				if (!entry)
-					Sys_Error("MN_BaseMapClick: no entry at %i:%i", x, y);
+	if (base->map[row][col].building) {
+		const building_t *entry = base->map[row][col].building;
+		if (!entry)
+			Sys_Error("MN_BaseMapClick: no entry at %i:%i", x, y);
 
-				assert(!base->map[row][col].blocked);
+		assert(!base->map[row][col].blocked);
 
-				B_BuildingOpenAfterClick(base, entry);
-				ccs.baseAction = BA_NONE;
-				return;
-			}
+		B_BuildingOpenAfterClick(base, entry);
+		ccs.baseAction = BA_NONE;
+		return;
+	}
 }
 
 /**
@@ -283,7 +321,7 @@ static void MN_BaseMapClick (menuNode_t *node, int x, int y)
  * @param[in] x The x screen coordinate
  * @param[in] y The y screen coordinate
  */
-static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
+static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
 	base_t *base = baseCurrent;
@@ -292,19 +330,19 @@ static void MN_BaseMapRightClick (menuNode_t *node, int x, int y)
 	assert(node);
 	assert(node->menu);
 
-	for (row = 0; row < BASE_SIZE; row++)
-		for (col = 0; col < BASE_SIZE; col++)
-			if (base->map[row][col].building && x >= base->map[row][col].posX + node->menu->pos[0]
-			 && x < base->map[row][col].posX + node->menu->pos[0] + node->size[0] / BASE_SIZE && y >= base->map[row][col].posY + node->menu->pos[1]
-			 && y < base->map[row][col].posY + node->menu->pos[1] + node->size[1] / BASE_SIZE) {
-				building_t *entry = base->map[row][col].building;
-				if (!entry)
-					Sys_Error("MN_BaseMapRightClick: no entry at %i:%i\n", x, y);
+	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	if (col == -1)
+		return;
 
-				assert(!base->map[row][col].blocked);
-				B_MarkBuildingDestroy(base, entry);
-				return;
-			}
+	if (base->map[row][col].building) {
+		building_t *entry = base->map[row][col].building;
+		if (!entry)
+			Sys_Error("MN_BaseMapRightClick: no entry at %i:%i\n", x, y);
+
+		assert(!base->map[row][col].blocked);
+		B_MarkBuildingDestroy(base, entry);
+		return;
+	}
 }
 
 /**
@@ -333,9 +371,10 @@ void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "basemap";
 	behaviour->extends = "abstractbase";
-	behaviour->draw = MN_BaseMapDraw;
-	behaviour->leftClick = MN_BaseMapClick;
-	behaviour->rightClick = MN_BaseMapRightClick;
+	behaviour->draw = MN_BaseMapNodeDraw;
+	behaviour->leftClick = MN_BaseMapNodeClick;
+	behaviour->rightClick = MN_BaseMapNodeRightClick;
+	behaviour->drawTooltip = MN_BaseMapNodeDrawTooltip;
 }
 
 void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)
