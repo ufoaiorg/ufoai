@@ -342,11 +342,11 @@ void MP_SaveTeamMultiplayer_f (void)
 			name = _("NewTeam");
 
 		/* save */
-		Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mpt", FS_Gamedir(), index);
+		Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
 		if (!MP_SaveTeamMultiplayer(filename, name))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 		/*also saving the xml version */
-		Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mptx", FS_Gamedir(), index);
+		Com_sprintf(filename, sizeof(filename), "save/team%i.mptx", index);
 		if (!MP_SaveTeamMultiplayerXML(filename, name))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}

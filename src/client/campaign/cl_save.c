@@ -167,28 +167,28 @@ static qboolean SAV_VerifyXMLHeader (saveFileHeaderXML_t const * const header)
 	int len;
 	/*check the length of the string*/
 	len = strlen(header->name);
-	if (len <0 || len > sizeof(header->name)) {
+	if (len < 0 || len > sizeof(header->name)) {
 		Com_DPrintf(DEBUG_CLIENT, "Name is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->name));
 		return qfalse;
 	}
 	len = strlen(header->gameVersion);
-	if (len <0 || len > sizeof(header->gameVersion)) {
+	if (len < 0 || len > sizeof(header->gameVersion)) {
 		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameVersion));
 		return qfalse;
 	}
 	len = strlen(header->gameDate);
-	if (len <0 || len > sizeof(header->gameDate)) {
+	if (len < 0 || len > sizeof(header->gameDate)) {
 		Com_DPrintf(DEBUG_CLIENT, "gameDate is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->gameDate));
 		return qfalse;
 	}
 	len = strlen(header->realDate);
-	if (len <0 || len > sizeof(header->realDate)) {
+	if (len < 0 || len > sizeof(header->realDate)) {
 		Com_DPrintf(DEBUG_CLIENT, "gameVersion is %d Bytes long, max is "UFO_SIZE_T"\n", len, sizeof(header->realDate));
 		return qfalse;
 	}
 
 	/* saved games should not be bigger than 15MB */
-	if (header->xml_size < 0 || header->xml_size > 15*1024*1024) {
+	if (header->xml_size < 0 || header->xml_size > 15 * 1024 * 1024) {
 		Com_DPrintf(DEBUG_CLIENT, "Save size seems to be to large (over 15 MB) %ld.\n", header->xml_size);
 		return qfalse;
 	}
@@ -214,14 +214,14 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 	char filename[MAX_OSPATH];
 	qFILE f;
 	byte *cbuf, *buf;
-	int res, i, clen;
+	int i, clen;
 	mxml_node_t *top_node, *node;
 	saveFileHeaderXML_t header;
 
 	Q_strncpyz(filename, file, sizeof(filename));
 
 	/* open file */
-	f.f = fopen(va("%s/save/%s.xml", FS_Gamedir(), filename), "rb");
+	FS_OpenFile(va("save/%s.xml", filename), &f, FILE_READ);
 	if (!f.f) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
 		return qfalse;
@@ -229,9 +229,9 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 
 	clen = FS_FileLength(&f);
 	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
-	if (fread(cbuf, 1, clen, f.f) != clen)
+	if (FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	fclose(f.f);
+	FS_CloseFile(&f);
 	Com_Printf("Loading savegame xml (size %d)\n", clen);
 
 	memcpy(&header, cbuf, sizeof(header));
@@ -256,7 +256,7 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
-		res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
+		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
 		Mem_Free(cbuf);
 
 		if (res != Z_OK) {
@@ -266,8 +266,7 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 			return qfalse;
 		}
 		top_node = mxmlLoadString(NULL, (char*)buf , mxml_ufo_type_cb);
-		if (!top_node)
-		{
+		if (!top_node) {
 			Mem_Free(buf);
 			Com_Printf("Error: Failure in Loading the xml Data!");
 			return qfalse;
@@ -276,18 +275,14 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 		/*memcpy(buf, cbuf + sizeof(header), clen - sizeof(header));*/
 		top_node = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
 		Mem_Free(cbuf);
-		if (!top_node)
-		{
+		if (!top_node) {
 			Mem_Free(buf);
 			Com_Printf("Error: Failure in Loading the xml Data!");
 			return qfalse;
 		}
 	}
 
-
 	/* doing a subsystem run ;) */
-
-
 	GAME_RestartMode(GAME_CAMPAIGN);
 	node = mxml_GetNode(top_node, "savegame");
 	if (!node) {
@@ -335,7 +330,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	char filename[MAX_OSPATH];
 	qFILE f;
 	byte *buf, *cbuf;
-	int res, clen, i, diff;
+	int clen, i;
 	sizebuf_t sb;
 	saveFileHeader_t header;
 	int check;
@@ -344,9 +339,8 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	if (SAV_GameLoadXML(file, error))
 		return qtrue;
 
-
 	/* open file */
-	f.f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
+	FS_OpenFile(va("save/%s.sav", filename), &f, FILE_READ);
 	if (!f.f) {
 		*error = _("Couldn't open file");
 		Com_Printf("Couldn't open file '%s'\n", filename);
@@ -356,9 +350,9 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	/* read compressed data into cbuf buffer */
 	clen = FS_FileLength(&f);
 	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
-	if (fread(cbuf, 1, clen, f.f) != clen)
+	if (FS_Read(cbuf, clen, &f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	fclose(f.f);
+	FS_CloseFile(&f);
 
 	memcpy(&header, cbuf, sizeof(header));
 	/* swap all int values if needed */
@@ -374,7 +368,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
-		res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
+		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
 		Mem_Free(cbuf);
 
 		if (res != Z_OK) {
@@ -408,7 +402,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	Com_Printf("Load '%s'\n", filename);
 	for (i = 0; i < saveSubsystemsAmount; i++) {
-		diff = sb.readcount;
+		const int diff = sb.readcount;
 		if (!saveSubsystems[i].load(&sb, &header)) {
 			*error = _("Error in loading a subsystem.\n\nSee game console for more information.");
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
@@ -474,9 +468,9 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 		return qfalse;
 	}
 
-	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.xml", FS_Gamedir(), filename);
+	Com_sprintf(savegame, sizeof(savegame), "save/%s.xml", filename);
 #ifdef DEBUG
-	Com_sprintf(savegame_debug, sizeof(savegame_debug), "%s/save/%s.lint", FS_Gamedir(), filename);
+	Com_sprintf(savegame_debug, sizeof(savegame_debug), "save/%s.lint", filename);
 #endif
 	top_node = mxmlNewXML("1.0");
 	node = mxml_AddNode(top_node, "savegame");
@@ -528,7 +522,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 
 #ifdef DEBUG
 	/* In debugmode we will also write a uncompressed {filename}.lint file without header information */
-	res = FS_WriteFile(buf, requiredbuflen+1, savegame_debug);
+	res = FS_WriteFile(buf, requiredbuflen + 1, savegame_debug);
 #endif
 	if (header.compressed) {
 		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredbuflen+1);
@@ -545,13 +539,11 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 		Mem_Free(buf);
 	}
 
-
 	/* last step - write data */
 	res = FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
 	Mem_Free(fbuf);
 
 	return qtrue;
-
 }
 
 
@@ -590,7 +582,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	}
 
 	/* step 1 - get the filename */
-	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.sav", FS_Gamedir(), filename);
+	Com_sprintf(savegame, sizeof(savegame), "save/%s.sav", filename);
 
 	/* step 2 - allocate the buffers */
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, 0);

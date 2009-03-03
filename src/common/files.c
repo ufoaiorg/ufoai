@@ -1476,23 +1476,19 @@ int FS_WriteFile (const void *buffer, size_t len, const char *filename)
 	qFILE f;
 	int c, lencheck;
 
-	FS_CreatePath(filename);
-
-	f.f = fopen(filename, "wb");
-
+	FS_OpenFile(filename, &f, FILE_WRITE);
 	if (f.f)
-		c = fwrite(buffer, 1, len, f.f);
+		c = FS_Write(buffer, len, &f);
 	else
 		return 0;
 
 	lencheck = FS_FileLength(&f);
-	fclose(f.f);
+	FS_CloseFile(&f);
 
 	/* if file write failed (file is incomplete) then delete it */
 	if (c != len || lencheck != len) {
 		Com_Printf("FS_WriteFile: failed to finish writing '%s'\n", filename);
-		Com_Printf("FS_WriteFile: deleting this incomplete file\n");
-		if (remove(filename))
+		if (remove(va("%s/%s", FS_Gamedir(), filename)))
 			Com_Printf("FS_WriteFile: could not remove file: %s\n", filename);
 		return 0;
 	}

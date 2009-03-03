@@ -190,7 +190,7 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 	for(i = 0, snode = mxml_GetNode(node, "element"); i < MAX_OBJDEFS; i++, snode = mxml_GetNextNode(snode, node, "element")) {
 		if (snode) {
 			const char *s = mxml_GetString(snode, "id");
-			objDef_t *od = INVSH_GetItemByID(s);
+			const objDef_t *od = INVSH_GetItemByID(s);
 			if (!od) {
 				Com_Printf("BS_Load: Could not find item '%s'\n", s);
 			} else {
@@ -217,7 +217,7 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 	/* read market */
 	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
 		const char *s = MSG_ReadString(sb);
-		objDef_t *od = INVSH_GetItemByID(s);
+		const objDef_t *od = INVSH_GetItemByID(s);
 		if (!od) {
 			Com_Printf("BS_Load: Could not find item '%s'\n", s);
 			MSG_ReadLong(sb);
