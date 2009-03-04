@@ -1510,14 +1510,16 @@ static void CL_InvReload (struct dbuffer *msg)
  */
 static inline void CL_LogEvent (const int num)
 {
-	FILE *logfile;
+	qFILE f;
 
 	if (!cl_log_battlescape_events->integer)
 		return;
 
-	logfile = fopen(va("%s/events.log", FS_Gamedir()), "a");
-	fprintf(logfile, "%10i %s\n", cl.battlescapeEventTime, ev_names[num]);
-	fclose(logfile);
+	FS_OpenFile("events.log", &f, FILE_APPEND);
+	if (!f.f)
+		return;
+	FS_Printf(&f, "%10i %s\n", cl.battlescapeEventTime, ev_names[num]);
+	FS_CloseFile(&f);
 }
 
 static void CL_ScheduleEvent(evTimes_t *event);

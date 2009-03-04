@@ -220,7 +220,7 @@ static void MN_EditorNodeExtract_f (void)
 {
 	menuNode_t* menu;
 	menuNode_t* node;
-	FILE* fd;
+	qFILE f;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <menuname>\n", Cmd_Argv(0));
@@ -232,16 +232,16 @@ static void MN_EditorNodeExtract_f (void)
 		return;
 	}
 
-	fd = fopen(va("menu_%s_extracted.ufo", menu->name), "wt");
-	fprintf(fd, "menu %s {\n", menu->name);
+	FS_OpenFile(va("menu_%s_extracted.ufo", menu->name), &f, FILE_WRITE);
+	FS_Printf(&f, "menu %s {\n", menu->name);
 	for (node = menu->firstChild; node; node = node->next) {
-		fprintf(fd, "\t%s %s {\n", node->behaviour->name, node->name);
-		fprintf(fd, "\t\tpos \"%d %d\"\n", (int)node->pos[0], (int)node->pos[1]);
-		fprintf(fd, "\t\tsize \"%d %d\"\n", (int)node->size[0], (int)node->size[1]);
-		fprintf(fd, "\t}\n");
+		FS_Printf(&f, "\t%s %s {\n", node->behaviour->name, node->name);
+		FS_Printf(&f, "\t\tpos \"%d %d\"\n", (int)node->pos[0], (int)node->pos[1]);
+		FS_Printf(&f, "\t\tsize \"%d %d\"\n", (int)node->size[0], (int)node->size[1]);
+		FS_Printf(&f, "\t}\n");
 	}
-	fprintf(fd, "}\n");
-	fclose(fd);
+	FS_Printf(&f, "}\n");
+	FS_CloseFile(&f);
 }
 
 #endif

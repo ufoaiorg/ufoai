@@ -807,7 +807,7 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 void RT_WriteCSVFiles (struct routing_s *map, const char* baseFilename, const ipos3_t mins, const ipos3_t maxs)
 {
 	char filename[MAX_OSPATH], ext[MAX_OSPATH];
-	FILE *handle;
+	qFILE f;
 	int i, x, y, z;
 
 	/* An elevation files- dumps the floor and ceiling levels relative to each cell. */
@@ -815,25 +815,25 @@ void RT_WriteCSVFiles (struct routing_s *map, const char* baseFilename, const ip
 		strncpy(filename, baseFilename, sizeof(filename) - 1);
 		sprintf(ext, ".%i.elevation.csv", i);
 		COM_DefaultExtension(filename, sizeof(filename), ext);
-		handle = fopen(filename, "w");
-		if (!handle)
+		FS_OpenFile(filename, &f, FILE_WRITE);
+		if (!f.f)
 			Sys_Error("Could not open file %s.", filename);
-		fprintf(handle, ",");
+		FS_Printf(&f, ",");
 		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
-			fprintf(handle, "x:%i,", x);
-		fprintf(handle, "\n");
+			FS_Printf(&f, "x:%i,", x);
+		FS_Printf(&f, "\n");
 		for (z = maxs[2]; z >= mins[2]; z--) {
 			for (y = maxs[1]; y >= mins[1] - i + 1; y--) {
-				fprintf(handle, "z:%i  y:%i,", z ,y);
+				FS_Printf(&f, "z:%i  y:%i,", z ,y);
 				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
 					/* compare results */
-					fprintf(handle, "h:%i c:%i,", RT_FLOOR(map, i, x, y, z), RT_CEILING(map, i, x, y, z));
+					FS_Printf(&f, "h:%i c:%i,", RT_FLOOR(map, i, x, y, z), RT_CEILING(map, i, x, y, z));
 				}
-				fprintf(handle, "\n");
+				FS_Printf(&f, "\n");
 			}
-			fprintf(handle, "\n");
+			FS_Printf(&f, "\n");
 		}
-		fclose(handle);
+		FS_CloseFile(&f);
 	}
 
 	/* Output the walls/passage files. */
@@ -841,57 +841,57 @@ void RT_WriteCSVFiles (struct routing_s *map, const char* baseFilename, const ip
 		strncpy(filename, baseFilename, sizeof(filename) - 1);
 		sprintf(ext, ".%i.walls.csv", i);
 		COM_DefaultExtension(filename, sizeof(filename), ext);
-		handle = fopen(filename, "w");
-		if (!handle)
+		FS_OpenFile(filename, &f, FILE_WRITE);
+		if (!f.f)
 			Sys_Error("Could not open file %s.", filename);
-		fprintf(handle, ",");
+		FS_Printf(&f, ",");
 		for (x = mins[0]; x <= maxs[0] - i + 1; x++)
-			fprintf(handle, "x:%i,", x);
-		fprintf(handle, "\n");
+			FS_Printf(&f, "x:%i,", x);
+		FS_Printf(&f, "\n");
 		for (z = maxs[2]; z >= mins[2]; z--) {
 			for (y = maxs[1]; y >= mins[1] - i + 1; y--) {
-				fprintf(handle, "z:%i  y:%i,", z ,y);
+				FS_Printf(&f, "z:%i  y:%i,", z ,y);
 				for (x = mins[0]; x <= maxs[0] - i + 1; x++) {
 					/* compare results */
-					fprintf(handle, "\"");
+					FS_Printf(&f, "\"");
 
 					/* NW corner */
-					fprintf(handle, "%3i ", RT_CONN_NX_PY(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_NX_PY(map, i, x, y, z));
 
 					/* N side */
-					fprintf(handle, "%3i ", RT_CONN_PY(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_PY(map, i, x, y, z));
 
 					/* NE corner */
-					fprintf(handle, "%3i ", RT_CONN_PX_PY(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_PX_PY(map, i, x, y, z));
 
-					fprintf(handle, "\n");
+					FS_Printf(&f, "\n");
 
 					/* W side */
-					fprintf(handle, "%3i ", RT_CONN_NX(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_NX(map, i, x, y, z));
 
 					/* Center - display floor height */
-					fprintf(handle, "_%+2i_ ", RT_FLOOR(map, i, x, y, z));
+					FS_Printf(&f, "_%+2i_ ", RT_FLOOR(map, i, x, y, z));
 
 					/* E side */
-					fprintf(handle, "%3i ", RT_CONN_PX(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_PX(map, i, x, y, z));
 
-					fprintf(handle, "\n");
+					FS_Printf(&f, "\n");
 
 					/* SW corner */
-					fprintf(handle, "%3i ", RT_CONN_NX_NY(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_NX_NY(map, i, x, y, z));
 
 					/* S side */
-					fprintf(handle, "%3i ", RT_CONN_NY(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_NY(map, i, x, y, z));
 
 					/* SE corner */
-					fprintf(handle, "%3i ", RT_CONN_PX_NY(map, i, x, y, z));
+					FS_Printf(&f, "%3i ", RT_CONN_PX_NY(map, i, x, y, z));
 
-					fprintf(handle, "\",");
+					FS_Printf(&f, "\",");
 				}
-				fprintf(handle, "\n");
+				FS_Printf(&f, "\n");
 			}
-			fprintf(handle, "\n");
+			FS_Printf(&f, "\n");
 		}
-		fclose(handle);
+		FS_CloseFile(&f);
 	}
 }

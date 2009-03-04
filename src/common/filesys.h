@@ -114,6 +114,7 @@ int FS_FileLength(qFILE * f);
 int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, size_t len, const char *filename);
 int FS_Write(const void *buffer, int len, qFILE * f);
+int FS_Printf(qFILE *f, const char *msg, ...);
 void FS_InitFilesystem(qboolean writeToHomeDir);
 void FS_RestartFilesystem(void);
 const char *FS_Gamedir(void);

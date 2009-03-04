@@ -702,13 +702,10 @@ static void Cvar_Copy_f (void)
 void Cvar_WriteVariables (qFILE *f)
 {
 	const cvar_t *var;
-	char buffer[256];
 
 	for (var = cvar_vars; var; var = var->next)
-		if (var->flags & CVAR_ARCHIVE) {
-			Com_sprintf(buffer, sizeof(buffer), "set %s \"%s\"\n", var->name, var->string);
-			fprintf(f->f, "%s", buffer);
-		}
+		if (var->flags & CVAR_ARCHIVE)
+			FS_Printf(f, "set %s \"%s\"\n", var->name, var->string);
 }
 
 /**

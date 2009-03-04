@@ -1430,6 +1430,24 @@ void FS_GetMaps (qboolean reset)
 }
 
 /**
+ * @brief Can print chunks for 1024 chars into a file.
+ * @note The file must already be opened and may not be a zip file handle
+ */
+int FS_Printf (qFILE *f, const char *msg, ...)
+{
+	va_list ap;
+	int len;
+	char buf[1024];
+
+	va_start(ap, msg);
+	Q_vsnprintf(buf, sizeof(buf), msg, ap);
+	len = fprintf(f->f, buf);
+	va_end(ap);
+
+	return len;
+}
+
+/**
  * @brief Properly handles partial writes
  */
 int FS_Write (const void *buffer, int len, qFILE * f)

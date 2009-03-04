@@ -134,7 +134,7 @@ static void Con_Dump_f (void)
 {
 	int l, x;
 	char *line;
-	FILE *f;
+	qFILE f;
 	char buffer[MAX_STRING_CHARS];
 	char name[MAX_OSPATH];
 
@@ -147,8 +147,8 @@ static void Con_Dump_f (void)
 
 	Com_Printf("Dumped console text to %s.\n", name);
 	FS_CreatePath(name);
-	f = fopen(name, "w");
-	if (!f) {
+	FS_OpenFile(name, &f, FILE_WRITE);
+	if (!f.f) {
 		Com_Printf("ERROR: couldn't open.\n");
 		return;
 	}
@@ -177,10 +177,10 @@ static void Con_Dump_f (void)
 		for (x = 0; buffer[x]; x++)
 			buffer[x] &= SCHAR_MAX;
 
-		fprintf(f, "%s\n", buffer);
+		FS_Printf(&f, "%s\n", buffer);
 	}
 
-	fclose(f);
+	FS_CloseFile(&f);
 }
 
 
