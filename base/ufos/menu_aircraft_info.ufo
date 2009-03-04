@@ -94,8 +94,7 @@ menu aircraft extends iaircraft
 			*aircraft_return	tooltip		"_Start Aircraft"
 			*aircraft_return	click		{ cmd "aircraft_start;" }
 			*aircraft_return	texl		"0 32"
-		}
-		if "mn_aircraftinbase <= 0" {
+		} else {
 			*aircraft_navigation	disabled	true
 
 			*aircraft_return	tooltip		"_Call back"

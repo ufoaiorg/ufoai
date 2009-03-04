@@ -563,8 +563,7 @@ menu team extends iaircraft
 	{
 		if "mn_hired_count > 0" {
 			*bt_equipsoldiers disabled false
-		}
-		if "mn_hired_count == 0" {
+		} else {
 			*bt_equipsoldiers disabled true
 		}
 	}

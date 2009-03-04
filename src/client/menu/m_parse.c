@@ -72,7 +72,8 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"cmd",
 	"call",
 	"set",
-	"if"
+	"if",
+	"else",
 };
 
 #define EA_SPECIAL_NUM_EVENTACTION 1
@@ -428,6 +429,20 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 			action->data = MN_AllocCondition(*token);
 			if (action->data == NULL)
 				return NULL;
+
+			/* get the action block */
+			*token = COM_EParse(text, errhead, NULL);
+			if (!*text)
+				return NULL;
+			action->scriptValues = (const value_t *) MN_ParseAction (menuNode, text, token);
+			break;
+
+		case EA_ELSE:
+			/* check previous action */
+			if (!lastAction || lastAction->type.op != EA_IF) {
+				Com_Printf("MN_ParseAction: 'else' must be set after an 'if' (node: %s)\n", MN_GetPath(menuNode));
+				return NULL;
+			}
 
 			/* get the action block */
 			*token = COM_EParse(text, errhead, NULL);

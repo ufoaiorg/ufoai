@@ -34,6 +34,7 @@ typedef enum ea_s {
 	EA_CALL,
 	EA_SET,
 	EA_IF,
+	EA_ELSE,
 	EA_NUM_EVENTACTION
 } ea_t;
 

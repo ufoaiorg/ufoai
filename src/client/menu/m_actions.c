@@ -259,7 +259,13 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 	case EA_IF:
 		if (MN_CheckCondition((menuDepends_t *) action->data)) {
 			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
+		} else if (action->next && action->next->type.op == EA_ELSE) {
+			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->next->scriptValues);
 		}
+		break;
+
+	case EA_ELSE:
+		/* previous EA_IF execute this action */
 		break;
 
 	default:
