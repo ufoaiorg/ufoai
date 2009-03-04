@@ -92,47 +92,47 @@ menu market
 	}
 
 	tab market_navigation {
-		pos		"37 107"
+		pos		"35 106"
 		size	"950 39"
-		cvar	"*cvar mn_markettab"
+		cvar	"*cvar mn_itemtype"
 		option description {
 			label	"_Primary"
-			value	"0"
+			value	"primary"
 			action "buy_type primary;"
 		}
 		option description {
 			label	"_Secondary"
-			value	"0"
+			value	"secondary"
 			action "buy_type secondary;"
 		}
 		option description {
 			label	"_Heavy"
-			value	"0"
+			value	"heavy"
 			action "buy_type heavy;"
 		}
 		option description {
 			label	"_Misc"
-			value	"0"
+			value	"misc"
 			action "buy_type misc;"
 		}
 		option description {
 			label	"_Armour"
-			value	"0"
+			value	"armour"
 			action "buy_type armour;"
 		}
 		option description {
 			label	"_Craft items"
-			value	"0"
+			value	"craftitem"
 			action "buy_type craftitem;"
 		}
 		option description {
 			label	"_Aircraft"
-			value	"0"
+			value	"aircraft"
 			action "buy_type aircraft;"
 		}
 		option description {
 			label	"_UGV items"
-			value	"0"
+			value	"ugvitem"
 			action "buy_type ugvitem;"
 		}
 	}
