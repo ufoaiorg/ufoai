@@ -522,10 +522,14 @@ static void U2M_SetDefaultConfigValues (void)
 #ifdef HAVE_SYS_STAT_H
 static int CheckTimeDiff (const char *map, const char *bsp)
 {
+	char buf[MAX_OSPATH];
 	struct stat mapStat, bspStat;
-	if (stat(map, &mapStat) == -1)
+
+	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), map);
+	if (stat(buf, &mapStat) == -1)
 		return 0;
-	if (stat(bsp, &bspStat) == -1)
+	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), bsp);
+	if (stat(buf, &bspStat) == -1)
 		return 0;
 	if (difftime(mapStat.st_mtime, bspStat.st_mtime) < 0)
 		return 1;
@@ -535,22 +539,26 @@ static int CheckTimeDiff (const char *map, const char *bsp)
 #elif defined (_WIN32)
 static int CheckTimeDiff (const char *map, const char *bsp)
 {
+	char buf[MAX_OSPATH];
 	FILETIME ftCreate, ftAccess, ftWriteMap, ftWriteBsp;
 	HANDLE hMapFile, hBspFile;
 	int retval = 0;
+
 	/* open the files */
-	hMapFile = CreateFile(map, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), map);
+	hMapFile = CreateFile(buf, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
 	if (hMapFile == INVALID_HANDLE_VALUE)
 		return 0;
-	hBspFile = CreateFile(bsp, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+	snprintf(buf, sizeof(buf), "%s/%s", FS_Gamedir(), bsp);
+	hBspFile = CreateFile(buf, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
 	if (hBspFile == INVALID_HANDLE_VALUE){
 		CloseHandle(hMapFile);
 		return 0;
 	}
 
-	/** This is done as two if statements to ensure that ftWriteMap and ftWriteBsp are populated first. */
+	/* This is done as two if statements to ensure that ftWriteMap and ftWriteBsp are populated first. */
 	if (GetFileTime(hMapFile, &ftCreate, &ftAccess, &ftWriteMap)
-		&& GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp)) {
+	 && GetFileTime(hBspFile, &ftCreate, &ftAccess, &ftWriteBsp)) {
 		if (CompareFileTime(&ftWriteMap, &ftWriteBsp) == -1) {
 			retval = 1;
 		}
