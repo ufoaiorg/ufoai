@@ -741,14 +741,13 @@ menu market
 	// buttons
 	// ==================
 
-	custombutton bt_continue
+	custombutton back
 	{
-		tooltip		"_Back"
-		image		menu/button_background
-		blend		true
-		texl		"192 0"
-		pos			"920 715"
-		size		"64 37"
+		tooltip		"_Back to baseview"
+		image		menu/button_background	blend	true
+		texl		"1 1"
+		size		"59 55"
+		pos			"950 20"
 		icon		return
 		click		{ cmd "mn_pop;" }
 	}
