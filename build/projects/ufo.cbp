@@ -168,7 +168,6 @@
 		<Unit filename="..\..\base\ufos\menu_bases.ufo" />
 		<Unit filename="..\..\base\ufos\menu_basesummary.ufo" />
 		<Unit filename="..\..\base\ufos\menu_buildings.ufo" />
-		<Unit filename="..\..\base\ufos\menu_buy.ufo" />
 		<Unit filename="..\..\base\ufos\menu_campaign.ufo" />
 		<Unit filename="..\..\base\ufos\menu_debug.ufo" />
 		<Unit filename="..\..\base\ufos\menu_equipment.ufo" />
@@ -181,6 +180,7 @@
 		<Unit filename="..\..\base\ufos\menu_lostwon.ufo" />
 		<Unit filename="..\..\base\ufos\menu_mailclient.ufo" />
 		<Unit filename="..\..\base\ufos\menu_main.ufo" />
+		<Unit filename="..\..\base\ufos\menu_market.ufo" />
 		<Unit filename="..\..\base\ufos\menu_modeltest.ufo" />
 		<Unit filename="..\..\base\ufos\menu_multiplayer.ufo" />
 		<Unit filename="..\..\base\ufos\menu_multiplayer_team.ufo" />
@@ -341,10 +341,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_ufo.h" />
-		<Unit filename="..\..\src\client\campaign\cp_ufopedia_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_ufopedia_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_ufopedia.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -429,6 +425,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_time.h" />
+		<Unit filename="..\..\src\client\campaign\cp_ufopedia_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_ufopedia_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>
