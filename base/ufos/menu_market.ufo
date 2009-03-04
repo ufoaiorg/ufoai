@@ -37,7 +37,7 @@ menu market
 		color		"0 .78 0 1"
 		textalign	ur
 		pos			"330 180"
-		rows		"25"
+		rows		"22"
 		size		"40 550"
 		lineheight	"25"
 	}
@@ -48,7 +48,7 @@ menu market
 		color		"0 .78 0 1"
 		textalign	ur
 		pos			"406 180"
-		rows		"25"
+		rows		"22"
 		size		"40 550"
 		lineheight	"25"
 	}
@@ -58,7 +58,7 @@ menu market
 		textid		TEXT_MARKET_PRICES
 		color		"0 .78 0 1"
 		textalign	ur
-		rows		"25"
+		rows		"22"
 		size		"80 550"
 		lineheight	"25"
 		pos			"462 180"
@@ -257,7 +257,7 @@ menu market
 	}
 	zone wz_buysell3
 	{
-		pos			"332 245"
+		pos			"332 255"
 		size		"120 24"
 		whup		{ cmd "mn_buy 3;" }
 		whdown		{ cmd "mn_sell 3;" }
@@ -267,12 +267,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 245"
+		pos			"376 255"
 		change		{ cmd "mn_buysell 3 <lastdiff>; market_click 3" }
 	}
 	pic bt_autosell3
 	{
-		pos			"30 245"
+		pos			"30 255"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -280,7 +280,7 @@ menu market
 	}
 	zone wz_buysell4
 	{
-		pos			"332 270"
+		pos			"332 280"
 		size		"120 24"
 		whup		{ cmd "mn_buy 4;" }
 		whdown		{ cmd "mn_sell 4;" }
@@ -290,12 +290,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 270"
+		pos			"376 280"
 		change		{ cmd "mn_buysell 4 <lastdiff>; market_click 4" }
 	}
 	pic bt_autosell4
 	{
-		pos			"30 270"
+		pos			"30 280"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -303,7 +303,7 @@ menu market
 	}
 	zone wz_buysell5
 	{
-		pos			"332 295"
+		pos			"332 305"
 		size		"120 24"
 		whup		{ cmd "mn_buy 5;" }
 		whdown		{ cmd "mn_sell 5;" }
@@ -313,12 +313,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 295"
+		pos			"376 305"
 		change		{ cmd "mn_buysell 5 <lastdiff>; market_click 5" }
 	}
 	pic bt_autosell5
 	{
-		pos			"30 295"
+		pos			"30 305"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -326,7 +326,7 @@ menu market
 	}
 	zone wz_buysell6
 	{
-		pos			"332 190"
+		pos			"332 330"
 		size		"120 24"
 		whup		{ cmd "mn_buy 6;" }
 		whdown		{ cmd "mn_sell 6;" }
@@ -336,12 +336,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 190"
+		pos			"376 330"
 		change		{ cmd "mn_buysell 6 <lastdiff>; market_click 6" }
 	}
 	pic bt_autosell6
 	{
-		pos			"30 190"
+		pos			"30 330"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -349,7 +349,7 @@ menu market
 	}
 	zone wz_buysell7
 	{
-		pos			"332 215"
+		pos			"332 355"
 		size		"120 24"
 		whup		{ cmd "mn_buy 7;" }
 		whdown		{ cmd "mn_sell 7;" }
@@ -359,12 +359,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 215"
+		pos			"376 355"
 		change		{ cmd "mn_buysell 7 <lastdiff>; market_click 7" }
 	}
 	pic bt_autosell7
 	{
-		pos			"30 215"
+		pos			"30 355"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -372,7 +372,7 @@ menu market
 	}
 	zone wz_buysell8
 	{
-		pos			"332 240"
+		pos			"332 380"
 		size		"120 24"
 		whup		{ cmd "mn_buy 8;" }
 		whdown		{ cmd "mn_sell 8;" }
@@ -382,12 +382,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 240"
+		pos			"376 380"
 		change		{ cmd "mn_buysell 8 <lastdiff>; market_click 8" }
 	}
 	pic bt_autosell8
 	{
-		pos			"30 240"
+		pos			"30 380"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -395,7 +395,7 @@ menu market
 	}
 	zone wz_buysell9
 	{
-		pos			"332 265"
+		pos			"332 405"
 		size		"120 24"
 		whup		{ cmd "mn_buy 9;" }
 		whdown		{ cmd "mn_sell 9;" }
@@ -405,12 +405,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 265"
+		pos			"376 405"
 		change		{ cmd "mn_buysell 9 <lastdiff>; market_click 9" }
 	}
 	pic bt_autosell9
 	{
-		pos			"30 265"
+		pos			"30 405"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -418,7 +418,7 @@ menu market
 	}
 	zone wz_buysell10
 	{
-		pos			"332 290"
+		pos			"332 430"
 		size		"120 24"
 		whup		{ cmd "mn_buy 10;" }
 		whdown		{ cmd "mn_sell 10;" }
@@ -428,12 +428,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 290"
+		pos			"376 430"
 		change		{ cmd "mn_buysell 10 <lastdiff>; market_click 10" }
 	}
 	pic bt_autosell10
 	{
-		pos			"30 290"
+		pos			"30 430"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -441,7 +441,7 @@ menu market
 	}
 	zone wz_buysell11
 	{
-		pos			"332 315"
+		pos			"332 455"
 		size		"120 24"
 		whup		{ cmd "mn_buy 11;" }
 		whdown		{ cmd "mn_sell 11;" }
@@ -451,12 +451,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 315"
+		pos			"376 455"
 		change		{ cmd "mn_buysell 11 <lastdiff>; market_click 11" }
 	}
 	pic bt_autosell11
 	{
-		pos			"30 315"
+		pos			"30 455"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -464,7 +464,7 @@ menu market
 	}
 	zone wz_buysell12
 	{
-		pos			"332 340"
+		pos			"332 480"
 		size		"120 24"
 		whup		{ cmd "mn_buy 12;" }
 		whdown		{ cmd "mn_sell 12;" }
@@ -474,12 +474,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 340"
+		pos			"376 480"
 		change		{ cmd "mn_buysell 12 <lastdiff>; market_click 12" }
 	}
 	pic bt_autosell12
 	{
-		pos			"30 340"
+		pos			"30 480"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -487,7 +487,7 @@ menu market
 	}
 	zone wz_buysell13
 	{
-		pos			"332 365"
+		pos			"332 505"
 		size		"120 24"
 		whup		{ cmd "mn_buy 13;" }
 		whdown		{ cmd "mn_sell 13;" }
@@ -497,12 +497,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 365"
+		pos			"376 505"
 		change		{ cmd "mn_buysell 13 <lastdiff>; market_click 13" }
 	}
 	pic bt_autosell13
 	{
-		pos			"30 365"
+		pos			"30 505"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -510,7 +510,7 @@ menu market
 	}
 	zone wz_buysell14
 	{
-		pos			"332 390"
+		pos			"332 530"
 		size		"120 24"
 		whup		{ cmd "mn_buy 14;" }
 		whdown		{ cmd "mn_sell 14;" }
@@ -520,12 +520,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 390"
+		pos			"376 530"
 		change		{ cmd "mn_buysell 14 <lastdiff>; market_click 14" }
 	}
 	pic bt_autosell14
 	{
-		pos			"30 390"
+		pos			"30 530"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -533,7 +533,7 @@ menu market
 	}
 	zone wz_buysell15
 	{
-		pos			"332 415"
+		pos			"332 555"
 		size		"120 24"
 		whup		{ cmd "mn_buy 15;" }
 		whdown		{ cmd "mn_sell 15;" }
@@ -543,12 +543,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 415"
+		pos			"376 555"
 		change		{ cmd "mn_buysell 15 <lastdiff>; market_click 15" }
 	}
 	pic bt_autosell15
 	{
-		pos			"30 415"
+		pos			"30 555"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -556,7 +556,7 @@ menu market
 	}
 	zone wz_buysell16
 	{
-		pos			"332 440"
+		pos			"332 580"
 		size		"120 24"
 		whup		{ cmd "mn_buy 16;" }
 		whdown		{ cmd "mn_sell 16;" }
@@ -566,12 +566,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 440"
+		pos			"376 580"
 		change		{ cmd "mn_buysell 16 <lastdiff>; market_click 16" }
 	}
 	pic bt_autosell16
 	{
-		pos			"30 440"
+		pos			"30 580"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -579,7 +579,7 @@ menu market
 	}
 	zone wz_buysell17
 	{
-		pos			"332 465"
+		pos			"332 605"
 		size		"120 24"
 		whup		{ cmd "mn_buy 17;" }
 		whdown		{ cmd "mn_sell 17;" }
@@ -589,12 +589,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 465"
+		pos			"376 605"
 		change		{ cmd "mn_buysell 17 <lastdiff>; market_click 17" }
 	}
 	pic bt_autosell17
 	{
-		pos			"30 465"
+		pos			"30 605"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -602,7 +602,7 @@ menu market
 	}
 	zone wz_buysell18
 	{
-		pos			"332 490"
+		pos			"332 630"
 		size		"120 24"
 		whup		{ cmd "mn_buy 18;" }
 		whdown		{ cmd "mn_sell 18;" }
@@ -612,12 +612,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 490"
+		pos			"376 630"
 		change		{ cmd "mn_buysell 18 <lastdiff>; market_click 18" }
 	}
 	pic bt_autosell18
 	{
-		pos			"30 490"
+		pos			"30 630"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -625,7 +625,7 @@ menu market
 	}
 	zone wz_buysell19
 	{
-		pos			"332 515"
+		pos			"332 655"
 		size		"120 24"
 		whup		{ cmd "mn_buy 19;" }
 		whdown		{ cmd "mn_sell 19;" }
@@ -635,12 +635,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 515"
+		pos			"376 655"
 		change		{ cmd "mn_buysell 19 <lastdiff>; market_click 19" }
 	}
 	pic bt_autosell19
 	{
-		pos			"30 515"
+		pos			"30 655"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -648,7 +648,7 @@ menu market
 	}
 	zone wz_buysell20
 	{
-		pos			"332 540"
+		pos			"332 680"
 		size		"120 24"
 		whup		{ cmd "mn_buy 20;" }
 		whdown		{ cmd "mn_sell 20;" }
@@ -658,12 +658,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 540"
+		pos			"376 680"
 		change		{ cmd "mn_buysell 20 <lastdiff>; market_click 20" }
 	}
 	pic bt_autosell20
 	{
-		pos			"30 540"
+		pos			"30 680"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -671,7 +671,7 @@ menu market
 	}
 	zone wz_buysell21
 	{
-		pos			"332 565"
+		pos			"332 705"
 		size		"120 24"
 		whup		{ cmd "mn_buy 21;" }
 		whdown		{ cmd "mn_sell 21;" }
@@ -681,12 +681,12 @@ menu market
 		tooltip		"_Buy and sell item"
 		image		menu/spinner_blue
 		blend		true
-		pos			"376 565"
+		pos			"376 705"
 		change		{ cmd "mn_buysell 21 <lastdiff>; market_click 21" }
 	}
 	pic bt_autosell21
 	{
-		pos			"30 565"
+		pos			"30 705"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
