@@ -6751,21 +6751,21 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "904 1064 12"
+"origin" "896 1064 12"
 }
 // entity 17
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "1060 966 12"
+"origin" "1044 958 12"
 }
 // entity 18
 {
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "920 1066 12"
+"origin" "920 1050 12"
 }
 // entity 19
 {
@@ -6980,7 +6980,7 @@
 // entity 49
 {
 "classname" "misc_model"
-"origin" "152 924 10"
+"origin" "160 932 10"
 "model" "models/objects/vegi/tropic/tropic03.md2"
 "spawnflags" "255"
 }
@@ -9670,7 +9670,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic01.md2"
-"origin" "1696 928 12"
+"origin" "1696 920 12"
 }
 // entity 169
 {
@@ -9691,7 +9691,7 @@
 "classname" "misc_model"
 "spawnflags" "255"
 "model" "models/objects/vegi/tropic/tropic04.md2"
-"origin" "1396 1200 12"
+"origin" "1380 1232 12"
 }
 // entity 172
 {
