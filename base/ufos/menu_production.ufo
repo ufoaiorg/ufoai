@@ -475,17 +475,6 @@ menu production
 	}
 
 	// ==================
-	// buttons
-	// ==================
-
-	zone zone_category {
-		pos			"650 627"
-		size		"270 59"
-		whup		{ cmd "prev_prod_type;" }
-		whdown		{ cmd "next_prod_type;" }
-	}
-
-	// ==================
 	// init function
 	// ==================
 

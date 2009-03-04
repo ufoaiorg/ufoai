@@ -620,7 +620,7 @@ static void PR_ProductionListClick_f (void)
 /**
  * @brief Will select a new tab on the production list.
  */
-static void PR_ProductionSelect_f (void)
+static void PR_ProductionType_f (void)
 {
 	int cat;
 
@@ -710,49 +710,8 @@ static void PR_ProductionList_f (void)
 
 	produceCategory = atoi(Cmd_Argv(1));
 	PR_ClearSelected();
-	Cmd_ExecuteString(va("prod_select %i", produceCategory));
+	Cmd_ExecuteString(va("prod_type %i", produceCategory));
 }
-
-/**
- * @brief Rolls produceCategory right in Produce menu.
- */
-static void BS_Next_ProduceType_f (void)
-{
-	produceCategory++;
-
-	/* Skip internal filter types */
-	if (produceCategory == MAX_SOLDIER_FILTERTYPES)
-		produceCategory++;
-
-	if (produceCategory < 0) {
-		produceCategory = MAX_FILTERTYPES - 1;
-	} else if (produceCategory >= MAX_FILTERTYPES) {
-		produceCategory = FILTER_S_PRIMARY;	/* First entry of itemFilterTypes_t */
-	}
-
-	Cbuf_AddText(va("prod_select %i\n", produceCategory));
-}
-
-/**
- * @brief Rolls produceCategory left in Produce menu.
- */
-static void BS_Prev_ProduceType_f (void)
-{
-	produceCategory--;
-
-	/* Skip internal filter types */
-	if (produceCategory == MAX_SOLDIER_FILTERTYPES)
-		produceCategory--;
-
-	if (produceCategory < 0) {
-		produceCategory = MAX_FILTERTYPES - 1;
-	} else if (produceCategory >= MAX_FILTERTYPES) {
-		produceCategory = FILTER_S_PRIMARY;	/* First entry of itemFilterTypes_t */
-	}
-
-	Cbuf_AddText(va("prod_select %i\n", produceCategory));
-}
-
 
 /**
  * @brief Function binding for prod_scroll that scrolls other text nodes, too
@@ -1073,7 +1032,7 @@ void PR_Init (void)
 void PR_InitCallbacks (void)
 {
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
-	Cmd_AddCommand("prod_select", PR_ProductionSelect_f, NULL);
+	Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
 	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
@@ -1090,7 +1049,7 @@ void PR_InitCallbacks (void)
 void PR_ShutdownCallbacks (void)
 {
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
-	Cmd_AddCommand("prod_select", PR_ProductionSelect_f, NULL);
+	Cmd_AddCommand("prod_type", PR_ProductionType_f, NULL);
 	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, "Move production item up in the queue");
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, "Move production item down in the queue");
@@ -1098,8 +1057,6 @@ void PR_ShutdownCallbacks (void)
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
 	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
 	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
-	Cmd_AddCommand("prev_prod_type", BS_Prev_ProduceType_f, NULL);
-	Cmd_AddCommand("next_prod_type", BS_Next_ProduceType_f, NULL);
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
 }
