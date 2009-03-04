@@ -12,7 +12,8 @@ if NOT EXIST ufo2map.exe (
 )
 
 rem defaults
-set curpath=base\maps
+set curpath=maps
+set searchpath=base/maps
 set usecores=%NUMBER_OF_PROCESSORS%
 set starttime=%TIME%
 set onlynewer=-onlynewer
@@ -64,10 +65,10 @@ echo compiling maps in %curpath%
 
 set ufo2mapparameters=%extrasamples% %onlynewer% -t %usecores% %quant%
 
-for /D %%i in (%curpath%\*) DO (
-	call :compilemap %%i
+for /D %%i in (%searchpath%\*) DO (
+		call :compilemap %%i
 )
-	call :compilemap %curpath%
+	call :compilemap %searchpath%
 
 echo.
 echo  started at %starttime%
@@ -81,16 +82,27 @@ goto :EOF
 
 :compilemap
 	echo ...found dir "%1"
+
 	if "%~n1" == "prefabs" (
 		echo [skipping prefabs]
 		exit /b
 	)
 	for %%j in (%1\*.map) DO (
-		echo ufo2map.exe -v 2 %ufo2mapparameters% %%j
-		ufo2map.exe -v 2 %ufo2mapparameters% %%j || (
+	if not "%~n1" == "maps" (
+		echo ufo2map.exe -v 2 %ufo2mapparameters% %curpath%\%~n1\%%~nxj
+		ufo2map.exe -v 4 %ufo2mapparameters% %curpath%\%~n1\%%~nxj || (
 			echo.
 			echo interrupt or ufo2map returned nonzero, deleting .bsp
 			Del %%~dpnj.bsp
+			)
+		)
+	if "%~n1" == "maps" (
+		echo ufo2map.exe -v 2 %ufo2mapparameters% %curpath%\%%~nxj
+		ufo2map.exe -v 4 %ufo2mapparameters% %curpath%\%%~nxj || (
+			echo.
+			echo interrupt or ufo2map returned nonzero, deleting .bsp
+			Del %%~dpnj.bsp
+			)
 		)
 	)
 	echo ...dir "%1" finished
