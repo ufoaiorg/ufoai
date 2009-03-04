@@ -194,6 +194,16 @@ language it {
 	}
 }
 
+language ko {
+	"_Korean"
+	{
+		ko.UTF-8
+		ko_KO.UTF-8
+		ko.utf8
+		ko_KO.utf8
+	}
+}
+
 language nl_NL {
 	"_Dutch"
 	{
