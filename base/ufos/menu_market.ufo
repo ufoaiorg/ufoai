@@ -67,7 +67,7 @@ menu market
 
 	tab market_navigation {
 		pos		"37 107"
-		size	"946 39"
+		size	"950 39"
 		cvar	"*cvar mn_markettab"
 		option description {
 			label	"_Primary"
@@ -723,7 +723,7 @@ menu market
 	{
 		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
 		string 		"_Storage (used/all):"
-		pos			"650 80"
+		pos			"650 630"
 		size		"200 20"
 		font		f_small
 	}
@@ -732,7 +732,7 @@ menu market
 	{
 		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
 		string 		"*cvar mn_bs_storage"
-		pos			"855 80"
+		pos			"855 630"
 		size		"100 20"
 		font		f_small
 	}
@@ -803,7 +803,7 @@ menu market
 	{
 		visiblewhen "mn_displayweapon == 1"
 		string		"_With weapon:"
-		pos			"620 506"
+		pos			"620 536"
 		size		"120 20"
 		textalign	cl
 		font		f_verysmall
@@ -812,7 +812,7 @@ menu market
 	{
 		visiblewhen "mn_displayweapon == 2"
 		string		"_With ammo:"
-		pos			"620 506"
+		pos			"620 536"
 		size		"120 20"
 		textalign	cl
 		font		f_verysmall
@@ -823,7 +823,7 @@ menu market
 		visiblewhen "mn_changeweapon == 1"
 		tooltip		"_Previous weapon chambered for this ammunition"
 		image		menu/buttons_small
-		pos			"745 507"
+		pos			"745 537"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -834,7 +834,7 @@ menu market
 		visiblewhen "mn_changeweapon == 2"
 		tooltip		"_Previous ammunition compatible with this weapon"
 		image		menu/buttons_small
-		pos			"745 507"
+		pos			"745 537"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -844,7 +844,7 @@ menu market
 	string weapon_name
 	{
 		string		"*cvar mn_researchedlinkname"
-		pos			"762 506"
+		pos			"762 536"
 		size		"185 20"
 		textalign	cc
 		font		f_verysmall
@@ -855,7 +855,7 @@ menu market
 		visiblewhen "mn_changeweapon == 1"
 		tooltip		"_Next weapon chambered for this ammunition"
 		image		menu/buttons_small
-		pos			"955 507"
+		pos			"955 537"
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
@@ -866,7 +866,7 @@ menu market
 		visiblewhen "mn_changeweapon == 2"
 		tooltip		"_Next ammunition compatible with this weapon"
 		image		menu/buttons_small
-		pos			"955 507"
+		pos			"955 537"
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
@@ -875,7 +875,7 @@ menu market
 
 	zone weapon_wz
 	{
-		pos			"745 507"
+		pos			"745 537"
 		size		"226 16"
 		whup		{ cmd "mn_increaseweapon;" }
 		whdown		{ cmd "mn_decreaseweapon;" }
@@ -889,7 +889,7 @@ menu market
 	{
 		visiblewhen "mn_displayfiremode == 1"
 		string		"_Firemode:"
-		pos			"620 524"
+		pos			"620 554"
 		size		"120 20"
 		textalign	cl
 		font		f_verysmall
@@ -900,7 +900,7 @@ menu market
 		visiblewhen "mn_changefiremode == 1"
 		tooltip		"_Previous firemode"
 		image		menu/buttons_small
-		pos			"745 525"
+		pos			"745 555"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -911,7 +911,7 @@ menu market
 	{
 		visiblewhen "mn_displayfiremode == 1"
 		string		"*cvar mn_firemodename"
-		pos			"762 524"
+		pos			"762 554"
 		size		"185 20"
 		textalign	cc
 		font		f_verysmall
@@ -922,7 +922,7 @@ menu market
 		visiblewhen "mn_changefiremode == 1"
 		tooltip		"_Next firemode"
 		image		menu/buttons_small
-		pos			"955 525"
+		pos			"955 555"
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
@@ -931,7 +931,7 @@ menu market
 
 	zone firemode_wz
 	{
-		pos			"745 525"
+		pos			"745 555"
 		size		"226 16"
 		whup		{ cmd "mn_increasefiremode;" }
 		whdown		{ cmd "mn_decreasefiremode;" }
@@ -945,10 +945,5 @@ menu market
 	func init
 	{
 		cmd "buy_type *mn_itemtype;"
-	}
-
-	func close
-	{
-		cmd "del mn_markettab;"
 	}
 }
