@@ -1232,7 +1232,7 @@ static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned s
 /**
  * @todo rename this function
  */
-inline static void EVENT_ENQUEUE (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
+static inline void EVENT_ENQUEUE (unsigned int keyNum, unsigned short keyUnicode, qboolean keyDown)
 {
 	if (keyNum > 0) {
 		if (in_debug->integer)

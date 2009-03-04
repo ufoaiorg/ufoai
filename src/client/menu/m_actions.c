@@ -51,9 +51,9 @@ void MN_ExecuteConfunc (const char *fmt, ...)
  * @brief read a property name from an input buffer to an output
  * @return last position into the input buffer if we find property, else NULL
  */
-inline static const char* MN_GenCommandReadProperty (const char* input, char* output, int outputSize)
+static inline const char* MN_GenCommandReadProperty (const char* input, char* output, int outputSize)
 {
-	assert(*input == '<');
+	assert(input[0] == '<');
 	outputSize--;
 	input++;
 
@@ -61,10 +61,11 @@ inline static const char* MN_GenCommandReadProperty (const char* input, char* ou
 		*output++ = *input++;
 		outputSize--;
 	}
-	if (*input != '>') {
+
+	if (input[0] != '>')
 		return NULL;
-	}
-	*output = '\0';
+
+	output[0] = '\0';
 	return ++input;
 }
 
@@ -142,7 +143,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 	return cmd;
 }
 
-inline static void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
+static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* action)
 {
 	const char* path;
 	byte *value;
@@ -263,7 +264,6 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 
 	default:
 		Sys_Error("unknown action type");
-		break;
 	}
 }
 

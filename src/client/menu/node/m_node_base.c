@@ -118,7 +118,7 @@ static void MN_BaseMapGetCellAtPos (const menuNode_t *node, int x, int y, int *c
  * @brief Check a base cell
  * @return True if the cell is free to build
  */
-inline static qboolean MN_BaseMapIsCellFree (const base_t *base, int col, int row)
+static inline qboolean MN_BaseMapIsCellFree (const base_t *base, int col, int row)
 {
 	return col >= 0 && col < BASE_SIZE
 	 && row >= 0 && row < BASE_SIZE
