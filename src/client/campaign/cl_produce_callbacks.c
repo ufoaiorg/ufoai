@@ -1040,8 +1040,6 @@ void PR_InitCallbacks (void)
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, "Increase production amount");
 	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, "Decrease production amount");
 	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, "Stop production");
-	Cmd_AddCommand("prev_prod_type", BS_Prev_ProduceType_f, NULL);
-	Cmd_AddCommand("next_prod_type", BS_Next_ProduceType_f, NULL);
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
 }
