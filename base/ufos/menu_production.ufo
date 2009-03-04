@@ -12,6 +12,32 @@ menu production
 		image		menu/production_bg
 	}
 
+	string name
+	{
+		string		"*cvar mn_base_title"
+		tooltip		"_Name of this base"
+		pos			"60 30"
+		size		"240 32"
+		textalign	cl
+		padding		8
+		font		f_big
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	custombutton back
+	{
+		tooltip		"_Back to baseview"
+		image		menu/button_background	blend	true
+		texl		"1 1"
+		size		"59 55"
+		pos			"950 20"
+		icon		return
+		click		{ cmd "mn_pop;" }
+	}
+
 	// ==================
 	// credits
 	// ==================
@@ -32,6 +58,52 @@ menu production
 		size		"150 30"
 		font		f_big
 		textalign	ur
+	}
+
+	tab market_navigation {
+		pos		"37 107"
+		size	"950 39"
+		cvar	"*cvar mn_productiontab"
+		option description {
+			label	"_Primary"
+			value	"0"
+			action "prod_type primary;"
+		}
+		option description {
+			label	"_Secondary"
+			value	"0"
+			action "prod_type secondary;"
+		}
+		option description {
+			label	"_Heavy"
+			value	"0"
+			action "prod_type heavy;"
+		}
+		option description {
+			label	"_Misc"
+			value	"0"
+			action "prod_type misc;"
+		}
+		option description {
+			label	"_Armour"
+			value	"0"
+			action "prod_type armour;"
+		}
+		option description {
+			label	"_Craft items"
+			value	"0"
+			action "prod_type craftitem;"
+		}
+		option description {
+			label	"_Aircraft"
+			value	"0"
+			action "prod_type aircraft;"
+		}
+		option description {
+			label	"_UGV items"
+			value	"0"
+			action "prod_type ugvitem;"
+		}
 	}
 
 	// ==================
@@ -411,39 +483,6 @@ menu production
 		size		"270 59"
 		whup		{ cmd "prev_prod_type;" }
 		whdown		{ cmd "next_prod_type;" }
-	}
-
-	custombutton bt_previtemtype
-	{
-		tooltip		"_Previous category"
-		image		menu/button_pack1
-		blend		true
-		pos			"650 630"
-		size		"32 50"
-		texl		"32 0"
-		click		{ cmd "prev_prod_type;" }
-	}
-
-	custombutton bt_nextitemtype
-	{
-		tooltip		"_Next category"
-		image		menu/button_pack1
-		blend		true
-		pos			"882 630"
-		size		"32 50"
-		texl		"64 0"
-		click		{ cmd "next_prod_type;" }
-	}
-
-	custombutton back
-	{
-		tooltip		"_Back to baseview"
-		image		menu/button_background	blend	true
-		texl		"1 1"
-		size		"59 55"
-		pos			"950 20"
-		icon		return
-		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================
