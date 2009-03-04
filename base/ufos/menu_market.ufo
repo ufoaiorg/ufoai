@@ -741,212 +741,230 @@ menu market
 		textalign	ur
 	}
 
-	// ==================
-	// storage capacity
-	// ==================
+	panel basedescription {
+		{
+			pos		"588 167"
+			size	"410 115"
+			image	"menu/panel_grey_green"
+			blend	true
+		}
 
-	string txt_storage_caption
-	{
-		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
-		string 		"_Storage (used/all):"
-		pos			"650 630"
-		size		"200 20"
-		font		f_small
+		// ==================
+		// storage capacity
+		// ==================
+
+		string txt_storage_caption
+		{
+			visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
+			string 		"_Storage (used/all):"
+			pos			"62 50"
+			size		"200 20"
+			font		f_small
+		}
+
+		string txt_storage_value
+		{
+			visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
+			string 		"*cvar mn_bs_storage"
+			pos			"267 50"
+			size		"100 20"
+			font		f_small
+		}
 	}
 
-	string txt_storage_value
-	{
-		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
-		string 		"*cvar mn_bs_storage"
-		pos			"855 630"
-		size		"100 20"
-		font		f_small
-	}
+	panel itemdescription {
+		{
+			pos		"588 303"
+			size	"410 455"
+			image	"menu/panel_grey_green"
+			blend	true
+		}
 
-	// ==================
-	// item description
-	// ==================
+		// ==================
+		// item description
+		// ==================
 
-	string itemname
-	{
-		visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
-		string		"*cvar mn_itemname"
-		pos			"610 185"
-		size		"365 20"
-		textalign	uc
-	}
-	string aircraftname
-	{
-		visiblewhen "mn_itemtype eq aircraft"	// Only for aircraft.
-		string		"*cvar mn_aircraftname"
-		pos			"610 185"
-		size		"365 20"
-		textalign	uc
-	}
+		string itemname
+		{
+			visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
+			string		"*cvar mn_itemname"
+			pos			"22 35"
+			size		"365 20"
+			textalign	uc
+		}
+		string aircraftname
+		{
+			visiblewhen "mn_itemtype eq aircraft"	// Only for aircraft.
+			string		"*cvar mn_aircraftname"
+			pos			"22 35"
+			size		"365 20"
+			textalign	uc
+		}
 
-	item itemmodel
-	{
-		model		"*cvar mn_item"
-		pos			"600 205"
-		size		"385 200"
-		angles		"-10 160 70"
-		autoscale	true
-	}
+		item itemmodel
+		{
+			model		"*cvar mn_item"
+			pos			"12 55"
+			size		"385 200"
+			angles		"-10 160 70"
+			autoscale	true
+		}
 
-	text description
-	{
-		textid		TEXT_STANDARD
-		pos			"620 407"
-		size		"336 120"
-		rows		"8"
-		lineheight	15
-		tabwidth	168
-		font		"f_verysmall"
-		textid	TEXT_STANDARD
-	}
+		text description
+		{
+			textid		TEXT_STANDARD
+			pos			"32 257"
+			size		"336 120"
+			rows		"8"
+			lineheight	15
+			tabwidth	168
+			font		"f_verysmall"
+			textid	TEXT_STANDARD
+		}
 
-	/**
-	 *	@note: With weapon/ammo
-	 */
+		/**
+		 *	@note: With weapon/ammo
+		 */
 
-	string header_weapon
-	{
-		visiblewhen "mn_displayweapon == 1"
-		string		"_With weapon:"
-		pos			"620 536"
-		size		"120 20"
-		textalign	cl
-		font		f_verysmall
-	}
-	string header_ammo
-	{
-		visiblewhen "mn_displayweapon == 2"
-		string		"_With ammo:"
-		pos			"620 536"
-		size		"120 20"
-		textalign	cl
-		font		f_verysmall
-	}
+		string header_weapon
+		{
+			visiblewhen "mn_displayweapon == 1"
+			string		"_With weapon:"
+			pos			"32 386"
+			size		"120 20"
+			textalign	cl
+			font		f_verysmall
+		}
+		string header_ammo
+		{
+			visiblewhen "mn_displayweapon == 2"
+			string		"_With ammo:"
+			pos			"32 386"
+			size		"120 20"
+			textalign	cl
+			font		f_verysmall
+		}
 
-	pic weapon_dec
-	{
-		visiblewhen "mn_changeweapon == 1"
-		tooltip		"_Previous weapon chambered for this ammunition"
-		image		menu/buttons_small
-		pos			"745 537"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "mn_decreaseweapon;" }
-	}
-	pic ammo_dec
-	{
-		visiblewhen "mn_changeweapon == 2"
-		tooltip		"_Previous ammunition compatible with this weapon"
-		image		menu/buttons_small
-		pos			"745 537"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "mn_decreaseweapon;" }
-	}
+		pic weapon_dec
+		{
+			visiblewhen "mn_changeweapon == 1"
+			tooltip		"_Previous weapon chambered for this ammunition"
+			image		menu/buttons_small
+			pos			"157 387"
+			texl		"0 0"
+			texh		"16 16"
+			mousefx		true
+			click		{ cmd "mn_decreaseweapon;" }
+		}
+		pic ammo_dec
+		{
+			visiblewhen "mn_changeweapon == 2"
+			tooltip		"_Previous ammunition compatible with this weapon"
+			image		menu/buttons_small
+			pos			"157 387"
+			texl		"0 0"
+			texh		"16 16"
+			mousefx		true
+			click		{ cmd "mn_decreaseweapon;" }
+		}
 
-	string weapon_name
-	{
-		string		"*cvar mn_researchedlinkname"
-		pos			"762 536"
-		size		"185 20"
-		textalign	cc
-		font		f_verysmall
-	}
+		string weapon_name
+		{
+			string		"*cvar mn_researchedlinkname"
+			pos			"176 386"
+			size		"185 20"
+			textalign	cc
+			font		f_verysmall
+		}
 
-	pic weapon_inc
-	{
-		visiblewhen "mn_changeweapon == 1"
-		tooltip		"_Next weapon chambered for this ammunition"
-		image		menu/buttons_small
-		pos			"955 537"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		click		{ cmd "mn_increaseweapon;" }
-	}
-	pic ammo_inc
-	{
-		visiblewhen "mn_changeweapon == 2"
-		tooltip		"_Next ammunition compatible with this weapon"
-		image		menu/buttons_small
-		pos			"955 537"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		click		{ cmd "mn_increaseweapon;" }
-	}
+		pic weapon_inc
+		{
+			visiblewhen "mn_changeweapon == 1"
+			tooltip		"_Next weapon chambered for this ammunition"
+			image		menu/buttons_small
+			pos			"377 387"
+			texl		"16 0"
+			texh		"32 16"
+			mousefx		true
+			click		{ cmd "mn_increaseweapon;" }
+		}
+		pic ammo_inc
+		{
+			visiblewhen "mn_changeweapon == 2"
+			tooltip		"_Next ammunition compatible with this weapon"
+			image		menu/buttons_small
+			pos			"367 387"
+			texl		"16 0"
+			texh		"32 16"
+			mousefx		true
+			click		{ cmd "mn_increaseweapon;" }
+		}
 
-	zone weapon_wz
-	{
-		pos			"745 537"
-		size		"226 16"
-		whup		{ cmd "mn_increaseweapon;" }
-		whdown		{ cmd "mn_decreaseweapon;" }
+		zone weapon_wz
+		{
+			pos			"157 387"
+			size		"226 16"
+			whup		{ cmd "mn_increaseweapon;" }
+			whdown		{ cmd "mn_decreaseweapon;" }
+		}
+
+		/**
+		 *	@note: Firemode
+		 */
+
+		string header_firemode
+		{
+			visiblewhen "mn_displayfiremode == 1"
+			string		"_Firemode:"
+			pos			"32 404"
+			size		"120 20"
+			textalign	cl
+			font		f_verysmall
+		}
+
+		pic firemode_dec
+		{
+			visiblewhen "mn_changefiremode == 1"
+			tooltip		"_Previous firemode"
+			image		menu/buttons_small
+			pos			"157 405"
+			texl		"0 0"
+			texh		"16 16"
+			mousefx		true
+			click		{ cmd "mn_decreasefiremode;" }
+		}
+
+		string firemode_name
+		{
+			visiblewhen "mn_displayfiremode == 1"
+			string		"*cvar mn_firemodename"
+			pos			"174 404"
+			size		"185 20"
+			textalign	cc
+			font		f_verysmall
+		}
+
+		pic firemode_inc
+		{
+			visiblewhen "mn_changefiremode == 1"
+			tooltip		"_Next firemode"
+			image		menu/buttons_small
+			pos			"367 405"
+			texl		"16 0"
+			texh		"32 16"
+			mousefx		true
+			click		{ cmd "mn_increasefiremode;" }
+		}
+
+		zone firemode_wz
+		{
+			pos			"157 405"
+			size		"226 16"
+			whup		{ cmd "mn_increasefiremode;" }
+			whdown		{ cmd "mn_decreasefiremode;" }
+		}
+
 	}
-
-	/**
-	 *	@note: Firemode
-	 */
-
-	string header_firemode
-	{
-		visiblewhen "mn_displayfiremode == 1"
-		string		"_Firemode:"
-		pos			"620 554"
-		size		"120 20"
-		textalign	cl
-		font		f_verysmall
-	}
-
-	pic firemode_dec
-	{
-		visiblewhen "mn_changefiremode == 1"
-		tooltip		"_Previous firemode"
-		image		menu/buttons_small
-		pos			"745 555"
-		texl		"0 0"
-		texh		"16 16"
-		mousefx		true
-		click		{ cmd "mn_decreasefiremode;" }
-	}
-
-	string firemode_name
-	{
-		visiblewhen "mn_displayfiremode == 1"
-		string		"*cvar mn_firemodename"
-		pos			"762 554"
-		size		"185 20"
-		textalign	cc
-		font		f_verysmall
-	}
-
-	pic firemode_inc
-	{
-		visiblewhen "mn_changefiremode == 1"
-		tooltip		"_Next firemode"
-		image		menu/buttons_small
-		pos			"955 555"
-		texl		"16 0"
-		texh		"32 16"
-		mousefx		true
-		click		{ cmd "mn_increasefiremode;" }
-	}
-
-	zone firemode_wz
-	{
-		pos			"745 555"
-		size		"226 16"
-		whup		{ cmd "mn_increasefiremode;" }
-		whdown		{ cmd "mn_decreasefiremode;" }
-	}
-
 
 	// ==================
 	// init
