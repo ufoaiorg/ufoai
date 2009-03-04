@@ -73,7 +73,7 @@ static void Irc_Client_Names_f(void);
 static qboolean Irc_Client_Join(const char *channel, const char *password);
 static void Irc_Logic_Disconnect(const char *reason);
 
-static qboolean Irc_AppendToBuffer(const char* const msg, ...) __attribute__((format(printf, 1, 2)));
+static qboolean Irc_AppendToBuffer(const char* const msg, ...) __attribute__((format(__printf__, 1, 2)));
 static qboolean Irc_Proto_ParseServerMsg(const char *txt, size_t txt_len, irc_server_msg_t *msg);
 static qboolean Irc_Proto_Enqueue(const char *msg, size_t msg_len);
 
