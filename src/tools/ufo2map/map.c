@@ -990,7 +990,7 @@ static qboolean ParseMapEntity (const char *filename)
  * @brief Recurse down the epair list
  * @note First writes the last element
  */
-static inline void WriteMapEntities (FILE *f, const epair_t *e)
+static inline void WriteMapEntities (qFILE *f, const epair_t *e)
 {
 	if (!e)
 		return;
@@ -998,7 +998,7 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
 	if (e->next)
 		WriteMapEntities(f, e->next);
 
-	fprintf(f, "\"%s\" \"%s\"\n", e->key, e->value);
+	FS_Printf(f, "\"%s\" \"%s\"\n", e->key, e->value);
 }
 
 
@@ -1007,10 +1007,10 @@ static inline void WriteMapEntities (FILE *f, const epair_t *e)
  * @param j the index of the brush in the entity, to label the brush in the comment in the map file
  * @param f file to write to
  */
-static void WriteMapBrush (const mapbrush_t *brush, const int j, FILE *f)
+static void WriteMapBrush (const mapbrush_t *brush, const int j, qFILE *f)
 {
 	int k = 0;
-	fprintf(f, "// brush %i\n{\n", j);
+	FS_Printf(f, "// brush %i\n{\n", j);
 	for (k = 0; k < brush->numsides; k++) {
 		const side_t *side = &brush->original_sides[k];
 		const ptrdiff_t index = side - brushsides;
@@ -1019,13 +1019,13 @@ static void WriteMapBrush (const mapbrush_t *brush, const int j, FILE *f)
 		int l;
 
 		for (l = 0; l < 3; l++)
-			fprintf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
-		fprintf(f, "%s ", t->name);
-		fprintf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
-		fprintf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
-		fprintf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
+			FS_Printf(f, "( %.7g %.7g %.7g ) ", p->planeVector[l][0], p->planeVector[l][1], p->planeVector[l][2]);
+		FS_Printf(f, "%s ", t->name);
+		FS_Printf(f, "%.7g %.7g %.7g ", t->shift[0], t->shift[1], t->rotate);
+		FS_Printf(f, "%.7g %.7g ", t->scale[0], t->scale[1]);
+		FS_Printf(f, "%i %i %i\n", side->contentFlags, t->surfaceFlags, t->value);
 	}
-	fprintf(f, "}\n");
+	FS_Printf(f, "}\n");
 }
 
 /**
@@ -1034,18 +1034,18 @@ static void WriteMapBrush (const mapbrush_t *brush, const int j, FILE *f)
  */
 void WriteMapFile (const char *filename)
 {
-	FILE *f;
+	qFILE f;
 	int i, j, jc;
 	int removed;
 
 	Verb_Printf(VERB_NORMAL, "writing map: '%s'\n", filename);
 
-	f = fopen(filename, "wb");
-	if (!f)
+	FS_OpenFile(filename, &f, FILE_WRITE);
+	if (!f.f)
 		Sys_Error("Could not open %s for writing", filename);
 
 	removed = 0;
-	fprintf(f, "\n");
+	FS_Printf(&f, "\n");
 	for (i = 0; i < num_entities; i++) {
 		const entity_t *mapent = &entities[i];
 		const epair_t *e = mapent->epairs;
@@ -1055,8 +1055,8 @@ void WriteMapFile (const char *filename)
 			removed++;
 			continue;
 		}
-		fprintf(f, "// entity %i\n{\n", i - removed);
-		WriteMapEntities(f, e);
+		FS_Printf(&f, "// entity %i\n{\n", i - removed);
+		WriteMapEntities(&f, e);
 
 		/* need 2 counters. j counts the brushes in the source entity.
 		 * jc counts the brushes written back. they may differ if some are skipped,
@@ -1065,7 +1065,7 @@ void WriteMapFile (const char *filename)
 			const mapbrush_t *brush = &mapbrushes[mapent->firstbrush + j];
 			if (brush->skipWriteBack)
 				continue;
-			WriteMapBrush(brush, jc++, f);
+			WriteMapBrush(brush, jc++, &f);
 		}
 
 		/* add brushes from func_groups with single members to worldspawn */
@@ -1075,16 +1075,16 @@ void WriteMapFile (const char *filename)
 			for (k = 0; k < numToAdd; k++) {
 				if (brushesToAdd[k]->skipWriteBack)
 					continue;
-				WriteMapBrush(brushesToAdd[k], j++, f);
+				WriteMapBrush(brushesToAdd[k], j++, &f);
 			}
 			Mem_Free(brushesToAdd);
 		}
-		fprintf(f, "}\n");
+		FS_Printf(&f, "}\n");
 	}
 
 	if (removed)
 		Verb_Printf(VERB_NORMAL, "removed %i entities\n", removed);
-	fclose(f);
+	FS_CloseFile(&f);
 }
 
 /**

@@ -1011,37 +1011,37 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
  */
 void WriteBSPBrushMap (const char *name, const bspbrush_t *list)
 {
-	FILE *f;
+	qFILE f;
 
 	/* note it */
 	Verb_Printf(VERB_LESS, "Writing %s\n", name);
 
 	/* open the map file */
-	f = fopen(name, "wb");
-	if (f == NULL)
+	FS_OpenFile(name, &f, FILE_WRITE);
+	if (f.f == NULL)
 		Sys_Error("Can't write %s\b", name);
 
-	fprintf(f, "{\n\"classname\" \"worldspawn\"\n");
+	FS_Printf(&f, "{\n\"classname\" \"worldspawn\"\n");
 
 	for (; list; list = list->next) {
 		const side_t *s;
 		int i;
 
-		fprintf(f, "{\n");
+		FS_Printf(&f, "{\n");
 		for (i = 0, s = list->sides; i < list->numsides; i++, s++) {
 			winding_t *w = BaseWindingForPlane(mapplanes[s->planenum].normal, mapplanes[s->planenum].dist);
 			const dBspTexinfo_t *t = &curTile->texinfo[s->texinfo];
 
-			fprintf(f, "( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
-			fprintf(f, "( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
-			fprintf(f, "( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
+			FS_Printf(&f, "( %i %i %i ) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
+			FS_Printf(&f, "( %i %i %i ) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
+			FS_Printf(&f, "( %i %i %i ) ", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
 
-			fprintf(f, "%s 0 0 0 1 1 0 %i %i\n", t->texture, t->surfaceFlags, t->value);
+			FS_Printf(&f, "%s 0 0 0 1 1 0 %i %i\n", t->texture, t->surfaceFlags, t->value);
 			FreeWinding(w);
 		}
-		fprintf(f, "}\n");
+		FS_Printf(&f, "}\n");
 	}
-	fprintf(f, "}\n");
+	FS_Printf(&f, "}\n");
 
-	fclose (f);
+	FS_CloseFile(&f);
 }
