@@ -119,7 +119,7 @@ const static registerFunction_t registerFunctions[] = {
  */
 static nodeBehaviour_t nodeBehaviourList[NUMBER_OF_BEHAVIOURS];
 
-/*
+/**
  * @brief Get a property from a behaviour or his inheritance
  * @param[in] node Requested node
  * @param[in] name Property name we search
@@ -235,7 +235,7 @@ menuNode_t* MN_AllocNode (const char* type)
  * @param[in] ry Relative y position to the parent of the node
  * @return The first visible node at position, else NULL
  */
-static menuNode_t *MN_GetNodeInTreeAtPosition(menuNode_t *node, int rx, int ry)
+static menuNode_t *MN_GetNodeInTreeAtPosition (menuNode_t *node, int rx, int ry)
 {
 	menuNode_t *find;
 	menuNode_t *child;

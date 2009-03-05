@@ -37,7 +37,7 @@ static void MN_RowsNodeDraw (menuNode_t *node)
 	MN_GetNodeAbsPos(node, pos);
 
 	while (current < node->size[1]) {
-		float *color;
+		const float *color;
 		if (i % 2)
 			color = node->color;
 		else
