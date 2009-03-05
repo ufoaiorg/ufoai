@@ -90,6 +90,11 @@ menu market
 			action "buy_type aircraft;"
 		}
 		option description {
+			label	"_Other"
+			value	"dummy"
+			action "buy_type dummy;"
+		}
+		option description {
 			label	"_UGV items"
 			value	"ugvitem"
 			action "buy_type ugvitem;"
