@@ -368,7 +368,7 @@ static const char *filterTypeNames[MAX_FILTERTYPES] = {
 	"craftitem",	/**< FILTER_CRAFTITEM */
 	"ugvitem",		/**< FILTER_UGVITEM */
 	"aircraft",		/**< FILTER_AIRCRAFT */
-	"dummy"			/**< FILTER_DUMMY */
+	"dummy",		/**< FILTER_DUMMY */
 	"disassembly"	/**< FILTER_DISASSEMBLY */
 };
 CASSERT(lengthof(filterTypeNames) == MAX_FILTERTYPES);
