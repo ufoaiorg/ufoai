@@ -289,8 +289,7 @@ static void PR_UpdateProductionList (const base_t* base)
 				for (j = 0, counter = 0; j < ccs.numAircraft; j++) {
 					const aircraft_t *aircraftBase = AIR_AircraftGetFromIDX(j);
 					assert(aircraftBase);
-					if (aircraftBase->homebase == base
-					 && aircraftBase->tpl == aircraftTemplate)
+					if (aircraftBase->homebase == base && aircraftBase->tpl == aircraftTemplate)
 						counter++;
 				}
 				Q_strcat(productionAmount, va("%i\n", counter), sizeof(productionAmount));
@@ -303,8 +302,7 @@ static void PR_UpdateProductionList (const base_t* base)
 			assert(od->tech);
 			/* We will not show items with producetime = -1 - these are not producible.
 			 * We can produce what was researched before. */
-			if (od->name[0] != '\0' && od->tech->produceTime > 0
-			 && RS_IsResearched_ptr(od->tech)
+			if (od->name[0] != '\0' && od->tech->produceTime > 0 && RS_IsResearched_ptr(od->tech)
 			 && INV_ItemMatchesFilter(od, produceCategory)) {
 				LIST_AddPointer(&productionItemList, od);
 
