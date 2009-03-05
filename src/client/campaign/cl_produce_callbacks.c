@@ -680,11 +680,6 @@ static void PR_ProductionList_f (void)
 	char tmpbuf[MAX_VAR];
 	int numWorkshops = 0;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <type>\n", Cmd_Argv(0));
-		return;
-	}
-
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
@@ -707,9 +702,7 @@ static void PR_ProductionList_f (void)
 		baseCurrent->capacities[CAP_ITEMS].max);
 	Cvar_Set("mn_production_storage", tmpbuf);
 
-	produceCategory = atoi(Cmd_Argv(1));
 	PR_ClearSelected();
-	Cmd_ExecuteString(va("prod_type %i", produceCategory));
 }
 
 /**

@@ -511,6 +511,6 @@ menu production
 
 	func init
 	{
-		cmd "prod_init *mn_itemtype;"
+		cmd "prod_init; prod_type *mn_itemtype;"
 	}
 }
