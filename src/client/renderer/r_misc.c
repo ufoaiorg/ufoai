@@ -137,13 +137,8 @@ void R_ScreenShot_f (void)
 
 	if (shotNum == 1000) {
 		Com_Printf("R_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
-		FS_CloseFile(&f);
 		return;
 	}
-
-	FS_CreatePath(checkName);
-
-	memset(&f, 0, sizeof(f));
 
 	/* Open it */
 	FS_OpenFile(checkName, &f, FILE_WRITE);
