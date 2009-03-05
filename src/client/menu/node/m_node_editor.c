@@ -217,11 +217,45 @@ static void MN_EditorNodeStop_f (void)
 	MN_MouseRelease();
 }
 
+static void MN_EditorNodeExtractNode (qFILE *file, menuNode_t *node, int depth)
+{
+	int i;
+	char tab[16];
+	menuNode_t *child;
+	assert(depth < 16);
+
+	for (i = 0; i < depth; i++) {
+		tab[i] = '\t';
+	}
+	tab[i] = '\0';
+
+	FS_Printf(file, "%s%s %s {\n", tab, node->behaviour->name, node->name);
+	child = node->firstChild;
+
+	/* properties */
+	if (child) {
+		FS_Printf(file, "%s\t{\n", tab);
+		FS_Printf(file, "%s\t\tpos \"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
+		FS_Printf(file, "%s\t\tsize \"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
+		FS_Printf(file, "%s\t}\n", tab);
+	} else {
+		FS_Printf(file, "%s\tpos \"%d %d\"\n", tab, (int)node->pos[0], (int)node->pos[1]);
+		FS_Printf(file, "%s\tsize \"%d %d\"\n", tab, (int)node->size[0], (int)node->size[1]);
+	}
+
+	/* child */
+	while (child) {
+		MN_EditorNodeExtractNode(file, child, depth + 1);
+		child = child->next;
+	}
+
+	FS_Printf(file, "%s}\n", tab);
+}
+
 static void MN_EditorNodeExtract_f (void)
 {
 	menuNode_t* menu;
-	menuNode_t* node;
-	qFILE f;
+	qFILE file;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <menuname>\n", Cmd_Argv(0));
@@ -233,16 +267,9 @@ static void MN_EditorNodeExtract_f (void)
 		return;
 	}
 
-	FS_OpenFile(va("menu_%s_extracted.ufo", menu->name), &f, FILE_WRITE);
-	FS_Printf(&f, "menu %s {\n", menu->name);
-	for (node = menu->firstChild; node; node = node->next) {
-		FS_Printf(&f, "\t%s %s {\n", node->behaviour->name, node->name);
-		FS_Printf(&f, "\t\tpos \"%d %d\"\n", (int)node->pos[0], (int)node->pos[1]);
-		FS_Printf(&f, "\t\tsize \"%d %d\"\n", (int)node->size[0], (int)node->size[1]);
-		FS_Printf(&f, "\t}\n");
-	}
-	FS_Printf(&f, "}\n");
-	FS_CloseFile(&f);
+	FS_OpenFile(va("menu_%s_extracted.ufo", menu->name), &file, FILE_WRITE);
+	MN_EditorNodeExtractNode(&file, menu, 0);
+	FS_CloseFile(&file);
 }
 
 #endif
