@@ -9,7 +9,7 @@ menu production
 
 	pic background
 	{
-		image		menu/production_bg
+		image		menu/base_bg
 	}
 
 	string name
@@ -39,14 +39,76 @@ menu production
 	}
 
 	// ==================
+	// tab
+	// ==================
+
+	panel tab_background {
+		pos		"24 96"
+		size	"986 56"
+		blend	true
+		image	"menu/panel_tab"
+	}
+
+	tab market_navigation {
+		pos		"47 106"
+		size	"938 39"
+		cvar	"*cvar mn_itemtype"
+		option description {
+			label	"_Primary"
+			value	"primary"
+			action "buy_type primary;"
+		}
+		option description {
+			label	"_Secondary"
+			value	"secondary"
+			action "buy_type secondary;"
+		}
+		option description {
+			label	"_Heavy"
+			value	"heavy"
+			action "buy_type heavy;"
+		}
+		option description {
+			label	"_Misc"
+			value	"misc"
+			action "buy_type misc;"
+		}
+		option description {
+			label	"_Armour"
+			value	"armour"
+			action "buy_type armour;"
+		}
+		option description {
+			label	"_Craft items"
+			value	"craftitem"
+			action "buy_type craftitem;"
+		}
+		option description {
+			label	"_Aircraft"
+			value	"aircraft"
+			action "buy_type aircraft;"
+		}
+		option description {
+			label	"_UGV items"
+			value	"ugvitem"
+			action "buy_type ugvitem;"
+		}
+		option description {
+			label	"_Disassembly"
+			value	"disassembly"
+			action "buy_type disassembly;"
+		}
+	}
+
+	// ==================
 	// credits
 	// ==================
 
 	string txt_credits_caption
 	{
 		string		"_CREDITS"
-		pos			"610 30"
-		size		"150 30"
+		pos			"675 30"
+		size		"100 30"
 		font		f_big
 	}
 
@@ -54,56 +116,35 @@ menu production
 	{
 		tooltip		"_Organisation capital"
 		string		"*cvar mn_credits"
-		pos			"825 30"
-		size		"150 30"
+		pos			"780 30"
+		size		"130 30"
 		font		f_big
 		textalign	ur
 	}
 
-	tab market_navigation {
-		pos		"37 107"
-		size	"950 39"
-		cvar	"*cvar mn_productiontab"
-		option description {
-			label	"_Primary"
-			value	"0"
-			action "prod_type primary;"
-		}
-		option description {
-			label	"_Secondary"
-			value	"0"
-			action "prod_type secondary;"
-		}
-		option description {
-			label	"_Heavy"
-			value	"0"
-			action "prod_type heavy;"
-		}
-		option description {
-			label	"_Misc"
-			value	"0"
-			action "prod_type misc;"
-		}
-		option description {
-			label	"_Armour"
-			value	"0"
-			action "prod_type armour;"
-		}
-		option description {
-			label	"_Craft items"
-			value	"0"
-			action "prod_type craftitem;"
-		}
-		option description {
-			label	"_Aircraft"
-			value	"0"
-			action "prod_type aircraft;"
-		}
-		option description {
-			label	"_UGV items"
-			value	"0"
-			action "prod_type ugvitem;"
-		}
+	// ==================
+	// lists
+	// ==================
+
+	rows lines {
+		pos			"28 175"
+		size		"530 568"
+		color1		"0 0.08 0 1"
+		color2		"0 0.16 0 1"
+		lineheight	25
+	}
+
+	panel verticalline {
+		pos		"451 175"
+		size	"4 565"
+		bgcolor	"0.03 0.42 0.03 1"
+	}
+
+	panel itemlist {
+		pos		"12 160"
+		size	"553 597"
+		image	menu/panel_grey_green_large2
+		blend	true
 	}
 
 	// ==================
@@ -128,13 +169,24 @@ menu production
 	}
 
 	// ==================
+	// info panel
+	// ==================
+
+	panel infopanel {
+		pos		"580 160"
+		size	"420 597"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
+
+	// ==================
 	// workers
 	// ==================
 
 	string txt_prod_workers_caption
 	{
 		string		"_Workers (ready/all):"
-		pos			"610 95"
+		pos			"610 195"
 		size		"250 20"
 		font		f_small
 	}
@@ -142,7 +194,7 @@ menu production
 	string txt_prod_workers
 	{
 		string		"*cvar mn_production_workers"
-		pos			"875 95"
+		pos			"875 195"
 		size		"100 20"
 		textalign	ur
 		font		f_small
@@ -155,7 +207,7 @@ menu production
 	string txt_prod_basecap_caption
 	{
 		string		"_Workshop capacity:"
-		pos			"610 120"
+		pos			"610 220"
 		size		"250 20"
 		font		f_small
 	}
@@ -163,7 +215,7 @@ menu production
 	string txt_prod_basecap
 	{
 		string		"*cvar mn_production_basecap"
-		pos			"875 120"
+		pos			"875 220"
 		size		"100 20"
 		textalign	ur
 		font		f_small
@@ -177,7 +229,7 @@ menu production
 	{
 		visiblewhen "mn_itemtype"
 		string		"_Storage capacity:"
-		pos			"610 145"
+		pos			"610 245"
 		size		"250 20"
 		font		f_small
 	}
@@ -186,7 +238,7 @@ menu production
 	{
 		visiblewhen "mn_itemtype"
 		string		"*cvar mn_production_storage"
-		pos			"875 145"
+		pos			"875 245"
 		size		"100 20"
 		textalign	ur
 		font		f_small
@@ -196,36 +248,16 @@ menu production
 	// list
 	// ==================
 
-	string txt_queuetitle
-	{
-		string	 	"_Production queue/producible items"
-		pos 		"35 35"
-		size		"380 20"
-	}
-
-	string txt_queued
-	{
-		string 		"_Q"
-		pos 		"465 35"
-		size		"20 20"
-	}
-
-	string txt_amount
-	{
-		string	 	"_Num"
-		pos			"505 35"
-		size		"40 20"
-	}
-
 	text prodlist
 	{
 		textid		TEXT_PRODUCTION_LIST
-		pos			"40 70"
-		size		"376 670"
 		color		"0 .78 0 1"
-		lineheight	"22"
-		rows		"30"
+		rows		"22"
+		lineheight	"25"
+		pos			"55 180"
+		size		"265 550"
 		mousefx		true
+		longlines	prettychop
 		click
 		rclick
 		wheel		{
@@ -241,19 +273,19 @@ menu production
 	text prodlist_amount
 	{
 		textid		TEXT_PRODUCTION_AMOUNT
-		pos			"505 70"
-		size		"30 670"
 		color		"0 .78 0 1"
-		lineheight	"22"
-		rows		"30"
-		mousefx		true
+		textalign	ur
+		pos			"330 180"
+		rows		"22"
+		size		"40 550"
+		lineheight	"25"
 	}
 
 	vscrollbar prodlist_scroll {
 		image		menu/scrollbar_v_green
 		blend		true
-		pos			"428 70"
-		height		"660"
+		pos			"428 180"
+		height		"550"
 		current		0
 		viewsize	30
 		fullsize	30
@@ -281,7 +313,7 @@ menu production
 	{
 		visiblewhen "mn_itemtype"
 		model		"*cvar mn_item"
-		pos			"608 233"
+		pos			"608 333"
 		size		"370 140"
 		angles		"-10 160 70"
 		autoscale	true
@@ -293,7 +325,7 @@ menu production
 
 	string prod_amount {
 		string		"*cvar mn_production_amount"
-		pos			"730 355"
+		pos			"730 505"
 		size		"40 20"
 		color		"0 .78 0 1"
 		font		f_small
@@ -302,7 +334,7 @@ menu production
 
 	string label_1 {
 		string		"x1"
-		pos			"786 355"
+		pos			"786 505"
 		size		"24 20"
 		color		"0 .78 0 1"
 		font		f_small
@@ -311,7 +343,7 @@ menu production
 
 	string label_10 {
 		string		"x10"
-		pos			"824 355"
+		pos			"824 505"
 		size		"36 20"
 		color		"0 .78 0 1"
 		font		f_small
@@ -322,7 +354,7 @@ menu production
 		tooltip		"_Change the production amount"
 		image		menu/spinner_blue
 		blend		true
-		pos			"810 355"
+		pos			"810 505"
 		min			1
 		current		"*cvar mn_production_amount"
 		max			1000
@@ -330,12 +362,11 @@ menu production
 		change		{ cmd "prod_change <lastdiff>;" }
 	}
 
-
 	spinner prod_change_10 {
 		tooltip		"_Change the production amount"
 		image		menu/spinner_blue
 		blend		true
-		pos			"860 355"
+		pos			"860 505"
 		min			1
 		current		"*cvar mn_production_amount"
 		max			1000
@@ -348,7 +379,7 @@ menu production
 		string		"_Start this production"
 		image		menu/button_green_small
 		blend		true
-		pos			"670 330"
+		pos			"670 480"
 		size		"250 32"
 		font		f_small
 		color		"0 .78 0 1"
@@ -359,7 +390,7 @@ menu production
 	{
 		tooltip		"_Stop production"
 		image		menu/buttons_small
-		pos			"900 355"
+		pos			"900 505"
 		texl		"48 16"
 		texh		"64 32"
 		click		{ cmd "prod_stop;" }
@@ -369,7 +400,7 @@ menu production
 	{
 		tooltip		"_Increase priority"
 		image		menu/button_produce
-		pos			"615 300"
+		pos			"615 400"
 		texl		"0 0"
 		texh		"16 16"
 		click		{ cmd "prod_up;" }
@@ -381,7 +412,7 @@ menu production
 	{
 		tooltip		"_Decrease priority"
 		image		menu/button_produce
-		pos			"615 320"
+		pos			"615 420"
 		texl		"0 16"
 		texh		"16 32"
 		click		{ cmd "prod_down;" }
@@ -465,7 +496,7 @@ menu production
 	text description
 	{
 		textid		TEXT_PRODUCTION_INFO
-		pos			"610 428"
+		pos			"610 528"
 		size		"366 100"
 		lineheight	20
 		tabwidth	260
