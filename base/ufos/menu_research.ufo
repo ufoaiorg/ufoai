@@ -10,7 +10,89 @@ menu research
 
 	pic background
 	{
-		image	menu/research_bg
+		image	menu/base_bg
+	}
+
+	string name
+	{
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	custombutton back
+	{
+		tooltip		"_Back to baseview"
+		image		menu/button_background	blend	true
+		texl		"1 1"
+		size		"59 55"
+		pos			"950 20"
+		icon		return
+		click		{ cmd "mn_pop;" }
+	}
+
+	rows lines {
+		pos			"43 108"
+		size		"530 568"
+		color1		"0 0.08 0 1"
+		color2		"0 0.16 0 1"
+		lineheight	25
+	}
+
+	panel techlist {
+		pos		"29 93"
+		size	"553 597"
+		image	menu/panel_grey_green_large2
+		blend	true
+	}
+
+	panel infopanel {
+		pos		"645 93"
+		size	"353 660"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	custombutton bt_start
+	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		tooltip	"_Start research"
+		icon	research_start
+		pos		"725 674"
+		click	{ cmd "mn_start_research;" }
+	}
+
+	custombutton bt_stop
+	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		tooltip	"_Stop research"
+		icon	research_stop
+		pos		"795 674"
+		click	{ cmd "mn_stop_research;" }
+	}
+
+	custombutton bt_pedia
+	{
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		tooltip	"_Show research proposal"
+		icon	mail
+		pos		"865 674"
+		click	{ cmd "mn_show_ufopedia;" }
 	}
 
 	// ==================
@@ -158,17 +240,6 @@ menu research
 	confunc research_changebase {
 		cmd "mn_pop;mn_pop;mn_select_base <1>;mn_push research;"
 		cmd "research_select <2>;"
-	}
-
-	string name
-	{
-		tooltip	"_Name of this base"
-		string	"*cvar mn_base_title"
-		pos	"60 30"
-		size "240 32"
-		textalign	cl
-		padding	8
-		font	f_big
 	}
 
 	pic img_status0	{ tooltip "*cvar mn_researchstatus0"	pos	"50 113"	image menu/buttons_small	mousefx true	texl	"32 16"	texh	"48 32" }
@@ -683,53 +754,6 @@ menu research
 		size		"130 30"
 		font		f_big
 		textalign	ur
-	}
-
-	// ==================
-	// buttons
-	// ==================
-
-	custombutton bt_stop
-	{
-		image	menu/button_background	blend	true
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Stop research"
-		icon	research_stop
-		pos		"815 680"
-		click	{ cmd "mn_stop_research;" }
-	}
-
-	custombutton bt_start
-	{
-		image	menu/button_background	blend	true
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Start research"
-		icon	research_start
-		pos		"745 680"
-		click	{ cmd "mn_start_research;" }
-	}
-
-	custombutton bt_pedia
-	{
-		image	menu/button_background	blend	true
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Show research proposal"
-		icon	mail
-		pos		"885 680"
-		click	{ cmd "mn_show_ufopedia;" }
-	}
-
-	// ==================
-	// buttons
-	// ==================
-	custombutton bt_continue
-	{
-		image	menu/button_background	blend	true
-		texl	"1 1"	size	"59 55"
-		tooltip	"_Back"
-		pos		"950 20"
-		icon	"return"
-		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
