@@ -728,6 +728,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_radiobutton.h" />
+		<Unit filename="..\..\src\client\menu\node\m_node_rows.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\menu\node\m_node_rows.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_selectbox.c">
 			<Option compilerVar="CC" />
 		</Unit>

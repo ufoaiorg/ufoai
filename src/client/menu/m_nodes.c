@@ -50,6 +50,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_panel.h"
 #include "node/m_node_radar.h"
 #include "node/m_node_radiobutton.h"
+#include "node/m_node_rows.h"
 #include "node/m_node_selectbox.h"
 #include "node/m_node_string.h"
 #include "node/m_node_special.h"
@@ -99,6 +100,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterImageNode,	/* pic */
 	MN_RegisterRadarNode,
 	MN_RegisterRadioButtonNode,
+	MN_RegisterRowsNode,
 	MN_RegisterSelectBoxNode,
 	MN_RegisterSpinnerNode,
 	MN_RegisterStringNode,

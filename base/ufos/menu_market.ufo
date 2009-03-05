@@ -10,7 +10,7 @@ menu market
 
 	pic background
 	{
-		image		menu/market_bg
+		image		menu/base_bg
 	}
 
 	string name
@@ -40,6 +40,87 @@ menu market
 	}
 
 	// ==================
+	// tab
+	// ==================
+
+	panel tab_background {
+		pos		"24 96"
+		size	"986 56"
+		blend	true
+		image	"menu/panel_tab"
+	}
+
+	tab market_navigation {
+		pos		"47 106"
+		size	"938 39"
+		cvar	"*cvar mn_itemtype"
+		option description {
+			label	"_Primary"
+			value	"primary"
+			action "buy_type primary;"
+		}
+		option description {
+			label	"_Secondary"
+			value	"secondary"
+			action "buy_type secondary;"
+		}
+		option description {
+			label	"_Heavy"
+			value	"heavy"
+			action "buy_type heavy;"
+		}
+		option description {
+			label	"_Misc"
+			value	"misc"
+			action "buy_type misc;"
+		}
+		option description {
+			label	"_Armour"
+			value	"armour"
+			action "buy_type armour;"
+		}
+		option description {
+			label	"_Craft items"
+			value	"craftitem"
+			action "buy_type craftitem;"
+		}
+		option description {
+			label	"_Aircraft"
+			value	"aircraft"
+			action "buy_type aircraft;"
+		}
+		option description {
+			label	"_UGV items"
+			value	"ugvitem"
+			action "buy_type ugvitem;"
+		}
+	}
+
+	// ==================
+	// lists
+	// ==================
+
+	rows lines {
+		pos			"28 175"
+		size		"530 568"
+		color1		"0 0.08 0 1"
+		color2		"0 0.16 0 1"
+		lineheight	25
+	}
+
+	panel verticalline {
+		pos		"451 175"
+		size	"4 565"
+		bgcolor	"0.03 0.42 0.03 1"
+	}
+
+	panel itemlist {
+		pos		"12 160"
+		size	"553 597"
+		image	menu/panel_grey_green_large2
+		blend	true
+	}
+
 	// lists
 	// ==================
 
@@ -91,121 +172,8 @@ menu market
 		wheel		{ cmd "market_scroll;" }
 	}
 
-	tab market_navigation {
-		pos		"35 106"
-		size	"950 39"
-		cvar	"*cvar mn_itemtype"
-		option description {
-			label	"_Primary"
-			value	"primary"
-			action "buy_type primary;"
-		}
-		option description {
-			label	"_Secondary"
-			value	"secondary"
-			action "buy_type secondary;"
-		}
-		option description {
-			label	"_Heavy"
-			value	"heavy"
-			action "buy_type heavy;"
-		}
-		option description {
-			label	"_Misc"
-			value	"misc"
-			action "buy_type misc;"
-		}
-		option description {
-			label	"_Armour"
-			value	"armour"
-			action "buy_type armour;"
-		}
-		option description {
-			label	"_Craft items"
-			value	"craftitem"
-			action "buy_type craftitem;"
-		}
-		option description {
-			label	"_Aircraft"
-			value	"aircraft"
-			action "buy_type aircraft;"
-		}
-		option description {
-			label	"_UGV items"
-			value	"ugvitem"
-			action "buy_type ugvitem;"
-		}
-	}
-
-	// =========================
-	// buy/sell/autosell actions
-	// =========================
-
-	/**
-	 * @brief checks an autosell checkbox and makes it visible
-	 * @param[in] <1> row of item
-	 */
-	confunc buy_autoselle {
-		*bt_autosell<1> invis false
-		*bt_autosell<1> image menu/button_autosell1
-		*bt_autosell<1> tooltip "_Item autosell enabled"
-	}
-	/**
-	 * @brief unchecks an autosell checkbox and makes it visible
-	 * @param[in] <1> row of item
-	 */
-	confunc buy_autoselld {
-		*bt_autosell<1> invis false
-		*bt_autosell<1> image menu/button_autosell2
-		*bt_autosell<1> tooltip "_Item autosell disabled"
-	}
-	/**
-	 * @brief makes an autosell checkbox invisible
-	 * @param[in] <1> row of item
-	 */
-	confunc buy_autoselli {
-		*bt_autosell<1> invis true
-	}
-
-	/**
-	 * @brief sets the selected line of the buylist
-	 * @param[in] <1> row of the item
-	 */
-	confunc buy_selectitem {
-		*market lineselected <1>
-	}
-
-	/**
-	 * @brief sets the correct values for spinner controls
-	 * @param[in] <1> row of the item
-	 * @param[in] <2> quantity of the item in the base
-	 * @param[in] <3> min value allowed
-	 * @param[in] <4> max value allowed
-	 */
-	confunc buy_updateitem {
-		*(abstractvalue)bt_buysell<1> current <2>
-		*(abstractvalue)bt_buysell<1> min <3>
-		*(abstractvalue)bt_buysell<1> max <4>
-	}
-
-	/**
-	 * @brief hides the buy/sell spinner control
-	 * @param[in] <1> row of the item
-	 */
-	confunc buy_hide {
-		*bt_buysell<1> invis true
-	}
-	/**
-	 * @brief shows the buy/sell spinner control
-	 * @param[in] <1> row of the item
-	 */
-	confunc buy_show {
-		*bt_buysell<1> invis false
-	}
-
-	// =========================
 	// buy/sell/autosell buttons
-	// =========================
+	// ==================
 
 	/**
 	 * @note correct current and max values of spinners will be set via confunc
@@ -964,6 +932,72 @@ menu market
 			whdown		{ cmd "mn_decreasefiremode;" }
 		}
 
+	}
+
+	// =========================
+	// buy/sell/autosell actions
+	// =========================
+
+	/**
+	 * @brief checks an autosell checkbox and makes it visible
+	 * @param[in] <1> row of item
+	 */
+	confunc buy_autoselle {
+		*bt_autosell<1> invis false
+		*bt_autosell<1> image menu/button_autosell1
+		*bt_autosell<1> tooltip "_Item autosell enabled"
+	}
+	/**
+	 * @brief unchecks an autosell checkbox and makes it visible
+	 * @param[in] <1> row of item
+	 */
+	confunc buy_autoselld {
+		*bt_autosell<1> invis false
+		*bt_autosell<1> image menu/button_autosell2
+		*bt_autosell<1> tooltip "_Item autosell disabled"
+	}
+	/**
+	 * @brief makes an autosell checkbox invisible
+	 * @param[in] <1> row of item
+	 */
+	confunc buy_autoselli {
+		*bt_autosell<1> invis true
+	}
+
+	/**
+	 * @brief sets the selected line of the buylist
+	 * @param[in] <1> row of the item
+	 */
+	confunc buy_selectitem {
+		*market lineselected <1>
+	}
+
+	/**
+	 * @brief sets the correct values for spinner controls
+	 * @param[in] <1> row of the item
+	 * @param[in] <2> quantity of the item in the base
+	 * @param[in] <3> min value allowed
+	 * @param[in] <4> max value allowed
+	 */
+	confunc buy_updateitem {
+		*(abstractvalue)bt_buysell<1> current <2>
+		*(abstractvalue)bt_buysell<1> min <3>
+		*(abstractvalue)bt_buysell<1> max <4>
+	}
+
+	/**
+	 * @brief hides the buy/sell spinner control
+	 * @param[in] <1> row of the item
+	 */
+	confunc buy_hide {
+		*bt_buysell<1> invis true
+	}
+	/**
+	 * @brief shows the buy/sell spinner control
+	 * @param[in] <1> row of the item
+	 */
+	confunc buy_show {
+		*bt_buysell<1> invis false
 	}
 
 	// ==================

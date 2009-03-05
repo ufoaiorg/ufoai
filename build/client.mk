@@ -132,6 +132,7 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_panel.c \
 	client/menu/node/m_node_radar.c \
 	client/menu/node/m_node_radiobutton.c \
+	client/menu/node/m_node_rows.c \
 	client/menu/node/m_node_selectbox.c \
 	client/menu/node/m_node_string.c \
 	client/menu/node/m_node_special.c \
