@@ -582,8 +582,7 @@ static void PR_ProductionListClick_f (void)
 			/* ufo research definition must not have a tech assigned
 			 * only RS_CRAFT types have
 			 * @sa RS_InitTree */
-			if (aircraftTemplate->tech
-			 && aircraftTemplate->tech->produceTime >= 0
+			if (aircraftTemplate->tech && aircraftTemplate->tech->produceTime >= 0
 			 && RS_IsResearched_ptr(aircraftTemplate->tech)) {
 				PR_ClearSelected();
 				selectedAircraft = aircraftTemplate;
@@ -591,7 +590,6 @@ static void PR_ProductionListClick_f (void)
 			}
 		} else {
 			objDef_t *od = (objDef_t*)LIST_GetByIdx(productionItemList, idx);
-
 			if (!od) {
 				Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: No item found at the list-position %i!\n", idx);
 				return;
@@ -600,10 +598,9 @@ static void PR_ProductionListClick_f (void)
 			if (!od->tech)
 				Sys_Error("PR_ProductionListClick_f: No tech pointer for object '%s'\n", od->id);
 			/* We can only produce items that fulfill the following conditions... */
-			if (RS_IsResearched_ptr(od->tech)		/* Tech is researched */
-			 && od->tech->produceTime >= 0			/* Item is producible */
+			if (RS_IsResearched_ptr(od->tech) && od->tech->produceTime >= 0			/* Item is producible */
 			 && INV_ItemMatchesFilter(od, produceCategory)) {	/* Item is in the current inventory-category */
-				assert(*od->name);
+				assert(od->name[0] != '\0');
 
 				PR_ClearSelected();
 				selectedItem = od;
@@ -678,7 +675,7 @@ static void PR_ProductionType_f (void)
 static void PR_ProductionList_f (void)
 {
 	char tmpbuf[MAX_VAR];
-	int numWorkshops = 0;
+	int numWorkshops;
 
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent || !GAME_CP_IsRunning())
