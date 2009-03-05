@@ -121,9 +121,6 @@ menu market
 		blend	true
 	}
 
-	// lists
-	// ==================
-
 	text market
 	{
 		textid		TEXT_MARKET_NAMES
@@ -172,6 +169,7 @@ menu market
 		wheel		{ cmd "market_scroll;" }
 	}
 
+	// ==================
 	// buy/sell/autosell buttons
 	// ==================
 
