@@ -26,14 +26,13 @@ menu iaircraft
 		pos		"19 88"
 		size	"433 298"
 		blend	true
-		image	"menu/panel_grey_black"
+		image	"menu/panel_grey_green"
 	}
 
-	panel aircraftlist_background2 {
-		pos		"33 100"
-		size	"409 232"
-		blend	true
-		image	"menu/panel_green"
+	panel horisontalline {
+		pos		"30 140"
+		size	"409 4"
+		bgcolor	"0.03 0.42 0.03 1"
 	}
 
 	// ==================
