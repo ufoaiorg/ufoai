@@ -148,27 +148,6 @@ menu production
 	}
 
 	// ==================
-	// prod limit
-	// ==================
-
-	string txt_prod_limit_caption
-	{
-		string		"_Production limit:"
-		pos			"610 70"
-		size		"250 20"
-		font		f_small
-	}
-
-	string txt_prod_limit
-	{
-		string		"*cvar mn_production_limit"
-		pos			"875 70"
-		size		"100 20"
-		textalign	ur
-		font		f_small
-	}
-
-	// ==================
 	// info panel
 	// ==================
 
@@ -245,6 +224,27 @@ menu production
 	}
 
 	// ==================
+	// prod limit
+	// ==================
+
+	string txt_prod_limit_caption
+	{
+		string		"_Production limit:"
+		pos			"610 270"
+		size		"250 20"
+		font		f_small
+	}
+
+	string txt_prod_limit
+	{
+		string		"*cvar mn_production_limit"
+		pos			"875 270"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+
+	// ==================
 	// list
 	// ==================
 
@@ -297,11 +297,11 @@ menu production
 	text prodlist_queued
 	{
 		textid		TEXT_PRODUCTION_QUEUED
-		pos			"465 70"
-		size		"30 670"
+		pos			"465 180"
+		size		"30 550"
 		color		"0 .78 0 1"
-		lineheight	"22"
-		rows		"30"
+		lineheight	"25"
+		rows		"22"
 		mousefx		true
 	}
 
@@ -313,8 +313,8 @@ menu production
 	{
 		visiblewhen "mn_itemtype"
 		model		"*cvar mn_item"
-		pos			"608 333"
-		size		"370 140"
+		pos			"636 333"
+		size		"336 140"
 		angles		"-10 160 70"
 		autoscale	true
 	}
