@@ -57,7 +57,7 @@ static void StripHighBits (char *string)
 	char *p = string;
 
 	while (string[0]) {
-		const char c = *(string++);
+		const unsigned char c = *(string++);
 
 		if (c >= 32 && c <= 127)
 			*p++ = c;
