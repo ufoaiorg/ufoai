@@ -624,24 +624,23 @@ static void PR_ProductionType_f (void)
 {
 	int cat;
 
-	/* Can be called from everywhere without a started game. */
-	if (!baseCurrent || !GAME_CP_IsRunning())
-		return;
-
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
 		return;
 	}
 
-	cat = atoi(Cmd_Argv(1));
+	cat = INV_GetFilterTypeID(Cmd_Argv(1));
 
 	/* Check if the given category index is valid. */
-	if (cat < MAX_FILTERTYPES && cat >= FILTER_S_PRIMARY) {	/**< Check for valid bounds */
-		produceCategory = cat;
-		Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
-	} else {
+	if (cat < 0 || cat >= MAX_FILTERTYPES)
+		cat = FILTER_S_PRIMARY;
+
+		/* Can be called from everywhere without a started game. */
+	if (!baseCurrent || !GAME_CP_IsRunning())
 		return;
-	}
+
+	produceCategory = cat;
+	Cvar_Set("mn_itemtype", INV_GetFilterType(produceCategory));
 
 	/* Reset scroll values of the list. */
 	node1->u.text.textScroll = node2->u.text.textScroll = prodlist->u.text.textScroll = 0;

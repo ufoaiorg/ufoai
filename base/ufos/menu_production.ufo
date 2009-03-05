@@ -56,47 +56,47 @@ menu production
 		option description {
 			label	"_Primary"
 			value	"primary"
-			action "buy_type primary;"
+			action "prod_type primary;"
 		}
 		option description {
 			label	"_Secondary"
 			value	"secondary"
-			action "buy_type secondary;"
+			action "prod_type secondary;"
 		}
 		option description {
 			label	"_Heavy"
 			value	"heavy"
-			action "buy_type heavy;"
+			action "prod_type heavy;"
 		}
 		option description {
 			label	"_Misc"
 			value	"misc"
-			action "buy_type misc;"
+			action "prod_type misc;"
 		}
 		option description {
 			label	"_Armour"
 			value	"armour"
-			action "buy_type armour;"
+			action "prod_type armour;"
 		}
 		option description {
 			label	"_Craft items"
 			value	"craftitem"
-			action "buy_type craftitem;"
+			action "prod_type craftitem;"
 		}
 		option description {
 			label	"_Aircraft"
 			value	"aircraft"
-			action "buy_type aircraft;"
+			action "prod_type aircraft;"
 		}
 		option description {
 			label	"_UGV items"
 			value	"ugvitem"
-			action "buy_type ugvitem;"
+			action "prod_type ugvitem;"
 		}
 		option description {
 			label	"_Disassembly"
 			value	"disassembly"
-			action "buy_type disassembly;"
+			action "prod_type disassembly;"
 		}
 	}
 

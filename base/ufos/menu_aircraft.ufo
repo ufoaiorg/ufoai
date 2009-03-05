@@ -29,7 +29,7 @@ menu iaircraft
 		image	"menu/panel_grey_green"
 	}
 
-	panel horisontalline {
+	panel horizontalline {
 		pos		"30 140"
 		size	"409 4"
 		bgcolor	"0.03 0.42 0.03 1"
