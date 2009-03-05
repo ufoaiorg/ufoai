@@ -9,14 +9,182 @@ menu transfer
 
 	pic background
 	{
-		image		menu/transfer_bg
+		image		menu/base_bg
 	}
+
+	string name
+	{
+		string		"*cvar mn_base_title"
+		tooltip		"_Name of this base"
+		pos			"60 30"
+		size		"240 32"
+		textalign	cl
+		padding		8
+		font		f_big
+	}
+
+	// ==================
+	// buttons
+	// ==================
+
+	custombutton back
+	{
+		tooltip		"_Back to baseview"
+		image		menu/button_background	blend	true
+		texl		"1 1"
+		size		"59 55"
+		pos			"950 20"
+		icon		return
+		click		{ cmd "mn_pop;" }
+	}
+
+	// ==================
+	// credits
+	// ==================
+
+	string txt_credits_caption
+	{
+		string		"_CREDITS"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
+	}
+
+	string txt_credits
+	{
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
+	}
+
+	// ==================
+	// tab
+	// ==================
+
+	panel tab_background {
+		pos		"24 96"
+		size	"986 56"
+		blend	true
+		image	"menu/panel_tab"
+	}
+
+	tab market_navigation {
+		pos		"47 106"
+		size	"938 39"
+		cvar	"*cvar mn_itemtype"
+		option description {
+			label	"_Equipment"
+			value	"item"
+			action "trans_type item;"
+		}
+		option description {
+			label	"_Employees"
+			value	"employee"
+			action "trans_type employee;"
+		}
+		option description {
+			label	"_Aliens"
+			value	"alien"
+			action "trans_type alien;"
+		}
+		option description {
+			label	"_Aircraft"
+			value	"aircraft"
+			action "trans_type aircraft;"
+		}
+	}
+
+	// ==================
+	// lists
+	// ==================
+
+	rows lines {
+		pos			"28 175"
+		size		"530 568"
+		color1		"0 0.08 0 1"
+		color2		"0 0.16 0 1"
+		lineheight	25
+	}
+
+	panel itemlist {
+		pos		"12 160"
+		size	"553 597"
+		image	menu/panel_grey_green_large2
+		blend	true
+	}
+
+	// ==================
+	// transfer info panel
+	// ==================
+
+	panel infopanel {
+		pos		"580 160"
+		size	"420 260"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
+
+	// ==================
+	// added to aircraft
+	// ==================
+
+	rows lines_transfer_cargolist {
+		pos			"594 456"
+		size		"388 236"
+		color1		"0 0.08 0 1"
+		color2		"0 0.16 0 1"
+		lineheight	25
+	}
+
+	panel transfer_cargolist {
+		pos		"580 440"
+		size	"420 269"
+		image	menu/panel_grey_green_large2
+		blend	true
+	}
+
+	text trans_cargolist
+	{
+		textid		TEXT_CARGO_LIST
+		pos			"604 463"
+		size		"345 225"
+		mousefx		true
+		lineheight	"25"
+		longlines	prettychop
+		rows		"9"
+		click
+		wheel		{
+			*(abstractscrollbar)trans_cargolist_scroll current <text_scroll>
+		}
+		lineschange	{
+			*(abstractscrollbar)trans_cargolist_scroll fullsize <lines>
+			*(abstractscrollbar)trans_cargolist_scroll current <text_scroll>
+		}
+	}
+
+	vscrollbar trans_cargolist_scroll {
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"960 461"
+		height		"220"
+		current		0
+		viewsize	9
+		fullsize	9
+		change		{ cmd "mn_textscroll trans_cargolist <lastdiff>;" }
+	}
+
+	// ==================
+	// change target base
+	// ==================
 
 	pic prev_base
 	{
 		tooltip		"_Select previous base for transfer"
 		image		menu/buttons_small
-		pos			"710 30"
+		pos			"686 184"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -27,7 +195,7 @@ menu transfer
 	{
 		tooltip		"_Select next base for transfer"
 		image		menu/buttons_small
-		pos			"870 30"
+		pos			"831 184"
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
@@ -37,7 +205,7 @@ menu transfer
 	string s_current_base
 	{
 		string		"_Selected base"
-		pos			"725 30"
+		pos			"698 182"
 		size		"145 20"
 		textalign	uc
 		color		"0.7 0.7 0.7 1"
@@ -47,59 +215,31 @@ menu transfer
 	string s_current_base_var
 	{
 		string		"*cvar mn_trans_base_name"
-		pos			"700 60"
+		pos			"681 200"
 		size		"170 20"
 		textalign	uc
 		color		"1 1 1 1"
 		font		f_small
 	}
 
-	zone wz_base
-	{
-		pos			"576 12"
-		size		"434 81"
-		whup		{ cmd "trans_nextbase;" }
-		whdown		{ cmd "trans_prevbase;" }
-	}
-
-	string s_baseinfo
-	{
-		string		"_Baseinfo"
-		pos			"60 50"
-		size		"460 20"
-		textalign	uc
-		color	 	"1 1 1 1"
-		font		f_normal
-	}
-
 	text t_baseinfo
 	{
 		textid		TEXT_BASE_INFO
-		pos			"60 80"
-		size		"460 240"
+		pos			"598 220"
+		size		"378 177"
 		lineheight	"20"
-		rows		"12"
-	}
-
-	string s_transferlist
-	{
-		string		"_Transfer"
-		pos			"60 340"
-		size		"460 20"
-		textalign	uc
-		color		"1 1 1 1"
-		font		f_normal
+		rows		"9"
 	}
 
 	text trans_list
 	{
 		textid		TEXT_TRANSFER_LIST
-		pos			"60 370"
-		size		"460 360"
+		pos			"37 180"
+		size		"483 550"
 		mousefx		true
 		longlines	prettychop
-		lineheight	"20"
-		rows		"18"
+		lineheight	"25"
+		rows		"22"
 		click
 		wheel		{
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
@@ -113,82 +253,12 @@ menu transfer
 	vscrollbar trans_list_scroll {
 		image		menu/scrollbar_v_green
 		blend		true
-		pos			"522 370"
-		height		"360"
+		pos			"522 180"
+		height		"554"
 		current		0
-		viewsize	18
-		fullsize	18
+		viewsize	22
+		fullsize	22
 		change		{ cmd "mn_textscroll trans_list <lastdiff>;" }
-	}
-
-	string s_trans_cargolist
-	{
-		string		"_Cargo onboard"
-		pos			"595 130"
-		size		"400 25"
-		textalign	uc
-		color		"1 1 1 1"
-		font		f_normal
-	}
-
-	text trans_cargolist
-	{
-		textid		TEXT_CARGO_LIST
-		pos			"595 160"
-		size		"400 400"
-		mousefx		true
-		lineheight	"20"
-		longlines	prettychop
-		rows		"20"
-		click
-		wheel
-	}
-
-	// ==================
-	// category selector
-	// =================
-
-	pic transtypebox
-	{
-		pos			"657 610"
-		image		menu/transtypebox
-		whup		{ cmd "trans_prevcat;" }
-		whdown		{ cmd "trans_nextcat;" }
-	}
-
-	string txt_category
-	{
-		string		"*cvar mn_transcat_name"
-		pos			"660 613"
-		size		"273 26"
-		textalign	cc
-		font		f_small
-	}
-
-	custombutton bt_previtemtype
-	{
-		tooltip		"_Previous category"
-		image		menu/button_pack1
-		blend		true
-		pos			"620 602"
-		size		"32 50"
-		texl		"32 0"
-		click		{ cmd "trans_prevcat;" }
-		whup		{ cmd "trans_prevcat;" }
-		whdown		{ cmd "trans_nextcat;" }
-	}
-
-	custombutton bt_nextitemtype
-	{
-		tooltip		"_Next category"
-		image		menu/button_pack1
-		blend		true
-		pos			"940 602"
-		size		"32 50"
-		texl		"64 0"
-		click		{ cmd "trans_nextcat;" }
-		whup		{ cmd "trans_prevcat;" }
-		whdown		{ cmd "trans_nextcat;" }
 	}
 
 	// ==================
@@ -201,7 +271,7 @@ menu transfer
 		tooltip		"_Empty the aircraft storage"
 		image		menu/button_blue
 		blend		true
-		pos			"605 678"
+		pos			"619 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 1"
@@ -215,24 +285,12 @@ menu transfer
 		tooltip		"_Start the transfer"
 		image		menu/button_blue
 		blend		true
-		pos			"750 678"
+		pos			"830 711"
 		size		"128 52"
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 0.6"
 		font		f_normal
 		click		{ cmd "trans_start;" }
-	}
-
-	custombutton bt_continue
-	{
-		tooltip		"_Back to baseview"
-		image		menu/button_background
-		blend		true
-		pos			"933 710"
-		size		"64 37"
-		texl		"192 0"
-		icon		return
-		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -243,6 +301,7 @@ menu transfer
 	{
 		cmd "trans_init;"
 	}
+
 	func close
 	{
 		cmd "trans_close;"

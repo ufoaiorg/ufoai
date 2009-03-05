@@ -35,6 +35,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_map.h"
 #include "cl_aliencont.h"
 
+typedef enum {
+	TRANS_TYPE_INVALID = -1,
+	TRANS_TYPE_ITEM,
+	TRANS_TYPE_EMPLOYEE,
+	TRANS_TYPE_ALIEN,
+	TRANS_TYPE_AIRCRAFT,
+
+	TRANS_TYPE_MAX
+} transferType_t;
+
+static const char* transferTypeIDs[] = {
+	"item",
+	"employee",
+	"alien",
+	"aircraft"
+};
+CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
+
 /** @brief Current selected aircraft for transfer (if transfer started from mission). */
 static aircraft_t *transferStartAircraft = NULL;
 
@@ -64,6 +82,16 @@ static int trCargoCountTmp = 0;
 
 /** @brief Max values for transfer factors. */
 static const int MAX_TR_FACTORS = 500;
+
+static transferType_t TR_GetTransferType (const char *id)
+{
+	int i;
+	for (i = 0; i < TRANS_TYPE_MAX; i++) {
+		if (!Q_strcmp(transferTypeIDs[i], id))
+			return i;
+	}
+	return TRANS_TYPE_INVALID;
+}
 
 /**
  * @brief Checks condition for item transfer.
@@ -424,28 +452,6 @@ static qboolean TR_AircraftListSelect (int i)
 }
 
 /**
- * @brief Function gives the user friendly name of a transfer category
- */
-static inline const char *TR_CategoryName (const transferType_t cat)
-{
-	switch (cat) {
-	case TRANS_TYPE_ITEM:
-		return _("Equipment");
-	case TRANS_TYPE_EMPLOYEE:
-		return _("Employees");
-	case TRANS_TYPE_ALIEN:
-		return _("Aliens");
-	case TRANS_TYPE_AIRCRAFT:
-		return _("Aircraft");
-	case TRANS_TYPE_MAX:
-	case TRANS_TYPE_INVALID:
-		/* shouldn't happen */
-		break;
-	}
-	Sys_Error("TR_CategoryName: invalid transfer type %i", cat);
-}
-
-/**
  * @brief Reset scrolling of node containing item-in-base list.
  */
 static void TR_ResetScrolling_f (void)
@@ -608,7 +614,6 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	TR_CargoList();
 
 	currentTransferType = transferType;
-	Cvar_Set("mn_transcat_name", TR_CategoryName(currentTransferType));
 	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST, transferList);
 }
 
@@ -628,38 +633,12 @@ static void TR_TransferSelect_f (void)
 	if (Cmd_Argc() < 2)
 		type = currentTransferType;
 	else
-		type = atoi(Cmd_Argv(1));
+		type = TR_GetTransferType(Cmd_Argv(1));
 
 	if (type < TRANS_TYPE_ITEM || type >= TRANS_TYPE_MAX)
 		return;
 
 	TR_TransferSelect(baseCurrent, transferBase, type);
-}
-
-/**
- * @brief Rolls Category left in Transfer menu.
- */
-static void TR_Prev_Category_f (void)
-{
-	currentTransferType--;
-
-	if (currentTransferType < TRANS_TYPE_ITEM)
-		currentTransferType = TRANS_TYPE_MAX - 1;
-
-	Cbuf_AddText(va("trans_resetscroll; trans_select %i;\n", currentTransferType));
-}
-
-/**
- * @brief Rolls Category right in Transfer menu.
- */
-static void TR_Next_Category_f (void)
-{
-	currentTransferType++;
-
-	if (currentTransferType >= TRANS_TYPE_MAX)
-		currentTransferType = TRANS_TYPE_ITEM;
-
-	Cbuf_AddText(va("trans_resetscroll;trans_select %i;\n", currentTransferType));
 }
 
 /**
@@ -1334,8 +1313,6 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	if (!destbase || !srcbase)
 		return;
 
-	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", destbase->name);
-
 	powercomm = B_GetBuildingStatus(destbase, B_POWER);
 
 	/* if there is no power supply facility this check will fail, too */
@@ -1657,7 +1634,7 @@ static void TR_CargoListSelect_f (void)
 		return;
 	}
 
-	Cbuf_AddText(va("trans_select %i\n", currentTransferType));
+	Cbuf_AddText(va("trans_type %i\n", currentTransferType));
 }
 
 /**
@@ -2040,7 +2017,7 @@ void TR_InitStartup (void)
 	/* add commands */
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");
 	Cmd_AddCommand("trans_start", TR_TransferStart_f, "Starts the tranfer");
-	Cmd_AddCommand("trans_select", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
+	Cmd_AddCommand("trans_type", TR_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
 	Cmd_AddCommand("trans_resetscroll", TR_ResetScrolling_f, "Reset scrolling items-in-base list");
 	Cmd_AddCommand("trans_emptyairstorage", TR_TransferListClear_f, "Unload everything from transfer cargo back to base");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
@@ -2049,6 +2026,4 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
-	Cmd_AddCommand("trans_prevcat", TR_Prev_Category_f, "Callback for selecting previous transfer category");
-	Cmd_AddCommand("trans_nextcat", TR_Next_Category_f, "Callback for selecting next transfer category");
 }
