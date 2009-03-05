@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_game.h"
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
 #include "../menu/m_nodes.h"
@@ -107,7 +106,7 @@ static int PR_RequirementsMet (int amount, requirements_t *reqs, base_t *base)
 	for (a = 0; a < amount; a++) {
 		qboolean producible = qtrue;
 		for (i = 0; i < reqs->numLinks; i++) {
-			requirement_t *req = &reqs->links[i];
+			const requirement_t *req = &reqs->links[i];
 			if (req->type == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
 				Com_DPrintf(DEBUG_CLIENT, "PR_RequirementsMet: %s\n", req->id);
@@ -161,7 +160,8 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 	prod = &queue->items[queue->numItems];
 	memset(prod, 0, sizeof(*prod));
 
-	prod->idx = queue->numItems;	/**< Initialize self-reference. */
+	/* self-reference. */
+	prod->idx = queue->numItems;
 
 	if (produceCategory != FILTER_AIRCRAFT)
 		tech = item->tech;
@@ -187,14 +187,16 @@ static production_t *PR_QueueNew (base_t *base, production_queue_t *queue, objDe
 	prod->item = item;
 	prod->aircraft = aircraftTemplate;
 	prod->amount = amount;
-	if (disassembling) {	/* Disassembling. */
+	if (disassembling) {
+		/* Disassembling. */
 		prod->production = qfalse;
 
 		/* We have to remove amount of items being disassembled from base storage. */
 		base->storage.num[item->idx] -= amount;
 		/* Now find related components definition. */
 		prod->percentDone = 0.0f;
-	} else {	/* Production. */
+	} else {
+		/* Production. */
 		prod->production = qtrue;
 
 		/* Don't try to add to queue an item which is not producible. */
@@ -462,7 +464,7 @@ static void PR_ProductionListRightClick_f (void)
 	production_queue_t *queue;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 	queue = &ccs.productions[baseCurrent->idx];
 
@@ -541,7 +543,7 @@ static void PR_ProductionListClick_f (void)
 	base_t* base;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 
 	base = baseCurrent;
@@ -606,10 +608,6 @@ static void PR_ProductionListClick_f (void)
 			}
 		}
 	}
-#ifdef DEBUG
-	else
-		Com_DPrintf(DEBUG_CLIENT, "PR_ProductionListClick_f: Click on spacer %i\n", num);
-#endif
 }
 
 /**
@@ -631,7 +629,7 @@ static void PR_ProductionType_f (void)
 		cat = FILTER_S_PRIMARY;
 
 		/* Can be called from everywhere without a started game. */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 
 	produceCategory = cat;
@@ -676,7 +674,7 @@ static void PR_ProductionList_f (void)
 	int numWorkshops;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!baseCurrent)
 		return;
 
 	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, B_WORKSHOP));
