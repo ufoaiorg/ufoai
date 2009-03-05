@@ -159,7 +159,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
  * @sa MN_PushMenu
  * @note Does not really complete the input - but shows at least all parsed menus
  */
-int MN_CompletePushMenu (const char *partial, const char **match)
+int MN_CompleteWithMenu (const char *partial, const char **match)
 {
 	int i, matches = 0;
 	const char *localMatch[MAX_COMPLETE];
@@ -645,7 +645,7 @@ void MN_InitMenus (void)
 	/* add command */
 	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
-	Cmd_AddParamCompleteFunction("mn_push", MN_CompletePushMenu);
+	Cmd_AddParamCompleteFunction("mn_push", MN_CompleteWithMenu);
 	Cmd_AddCommand("mn_push_dropdown", MN_PushDropDownMenu_f, "Push a dropdown menu at a position");
 	Cmd_AddCommand("mn_push_child", MN_PushChildMenu_f, "Push a menu to the menustack with a big dependancy to a parent menu");
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);

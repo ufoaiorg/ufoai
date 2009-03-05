@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_font.h"
 #include "../m_input.h"
 #include "../m_nodes.h"
+#include "../m_menus.h"
 #include "m_node_editor.h"
 #include "m_node_abstractnode.h"
 
@@ -256,7 +257,8 @@ void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mneditionstart", MN_EditorNodeStart_f, "Start node edition");
 	Cmd_AddCommand("debug_mneditionstop", MN_EditorNodeStop_f, "Stop node edition");
-	Cmd_AddCommand("debug_mneditionextract", MN_EditorNodeExtract_f, "Extract position and size of nodes into a file");
+	Cmd_AddCommand("debug_mnextract", MN_EditorNodeExtract_f, "Extract position and size of nodes into a file");
+	Cmd_AddParamCompleteFunction("debug_mnextract", MN_CompleteWithMenu);
 #endif
 
 }
