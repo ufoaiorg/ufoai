@@ -41,7 +41,7 @@ menu research
 
 	rows lines {
 		pos			"43 108"
-		size		"530 568"
+		size		"564 568"
 		color1		"0 0.08 0 1"
 		color2		"0 0.16 0 1"
 		lineheight	25
@@ -49,7 +49,7 @@ menu research
 
 	panel techlist {
 		pos		"29 93"
-		size	"553 597"
+		size	"587 597"
 		image	menu/panel_grey_green_large2
 		blend	true
 	}
