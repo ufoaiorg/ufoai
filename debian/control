@@ -32,7 +32,7 @@ Package: ufoai-server
 Section: games
 Priority: optional
 Architecture: any
-Depends: ${shlibs:Depends}, ufoai-common (= ${source:Version})
+Depends: ${shlibs:Depends}, ufoai-common (= ${source:Version}), libsdl1.2debian
 Recommends: ufoai-server-data
 Suggests: ufoai
 Description: UFO: Alien Invasion - standalone game server

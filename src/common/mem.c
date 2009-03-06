@@ -27,10 +27,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "common.h"
+#include <SDL/SDL_thread.h>
 
 #define MEM_HEAD_SENTINEL_TOP	0xFEBDFAED
 #define MEM_HEAD_SENTINEL_BOT	0xD0BAF0FF
 #define MEM_FOOT_SENTINEL		0xF00DF00D
+
+static SDL_mutex *z_lock;
 
 typedef struct memBlockFoot_s {
 	uint32_t sentinel;				/**< For memory integrity checking */
@@ -205,6 +208,8 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 	mem->pool->byteCount -= mem->size;
 	size = mem->size;
 
+	SDL_mutexP(z_lock);
+
 	/* De-link it */
 	prev = &mem->pool->blocks;
 	for (;;) {
@@ -218,6 +223,8 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 		}
 		prev = &search->next;
 	}
+
+	SDL_mutexV(z_lock);
 
 	/* Free it */
 	free(mem);
@@ -321,9 +328,13 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	/* Fill in the footer */
 	mem->footer->sentinel = MEM_FOOT_SENTINEL;
 
+	SDL_mutexP(z_lock);
+
 	/* Link it in to the appropriate pool */
 	mem->next = pool->blocks;
 	pool->blocks = mem;
+
+	SDL_mutexV(z_lock);
 
 	return mem->memPointer;
 }
@@ -346,6 +357,8 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 
 	pool = mem->pool;
 
+	SDL_mutexP(z_lock);
+
 	/* De-link it */
 	prev = &pool->blocks;
 	for (;;) {
@@ -363,6 +376,8 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	/* Link it in to the appropriate pool */
 	mem->next = pool->blocks;
 	pool->blocks = mem;
+
+	SDL_mutexV(z_lock);
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
@@ -471,6 +486,7 @@ uint32_t _Mem_ChangeTag (struct memPool_s *pool, const int tagFrom, const int ta
 		return 0;
 
 	numChanged = 0;
+
 	for (mem = pool->blocks; mem; mem = mem->next) {
 		if (mem->tagNum == tagFrom) {
 			mem->tagNum = tagTo;
@@ -653,6 +669,7 @@ static void Mem_Stats_f (void)
 	Com_Printf("----------------------------------------\n");
 	Com_Printf("Total: %i pools, %i blocks, %i bytes (%6.3fMB)\n", i, totalBlocks, totalBytes, totalBytes/1048576.0f);
 }
+#endif
 
 /**
  * @sa Qcommon_Init
@@ -660,10 +677,13 @@ static void Mem_Stats_f (void)
  */
 void Mem_Init (void)
 {
+#ifdef COMPILE_UFO
 	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Prints out current internal memory statistics");
 	Cmd_AddCommand("mem_check", Mem_Check_f, "Checks global memory integrity");
-}
 #endif
+
+	z_lock = SDL_CreateMutex();
+}
 
 /**
  * @sa Mem_Init
@@ -683,6 +703,8 @@ uint32_t Mem_Shutdown (void)
 			continue;
 		size += Mem_DeletePool(pool);
 	}
+
+	SDL_DestroyMutex(z_lock);
 
 	return size;
 }

@@ -612,6 +612,7 @@ int main (int argc, const char **argv)
 	}
 
 	Swap_Init();
+	Mem_Init();
 
 	start = time(NULL);
 
