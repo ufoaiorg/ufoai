@@ -1352,6 +1352,23 @@ menu popup_newinstallation_type
 		font		f_small
 	}
 
+	string base_buildtime
+	{
+		string		"_0 day"
+		pos			"256 138"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+	string base_cost
+	{
+		string		"_Unknown"	// @todo into mn_base_newbasecost
+		pos			"356 138"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+
 	zone click_base
 	{
 		pos			"30 138"
@@ -1361,30 +1378,13 @@ menu popup_newinstallation_type
 		click		{ cmd "mn_pop; mn_select_base -1;" }
 	}
 
-	string base_buildtime
-	{
-		string		"?"			// @todo fix that
-		pos			"256 138"
-		size		"100 20"
-		textalign	ur
-		font		f_small
-	}
-	string base_cost
-	{
-		string		"?"			// @todo fix that
-		pos			"356 138"
-		size		"100 20"
-		textalign	ur
-		font		f_small
-	}
-
 	//
 	// Interaction
 	//
 
 	button bt_close
 	{
-		string		"_Cancel"
+		string		"_Close"
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
