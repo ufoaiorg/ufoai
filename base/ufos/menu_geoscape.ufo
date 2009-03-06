@@ -378,7 +378,7 @@ menu map
 
 			click		{ cmd "mn_push ufopedia;" }
 		}
-
+/*
 		button bt_base
 		{
 			visiblewhen "mn_base_count < 8"
@@ -410,11 +410,11 @@ menu map
 			blend		true
 			disabled	true
 		}
-
+*/
 		button bt_installation
 		{
 			// visiblewhen "mn_installation_count < mn_installation_max"
-			visiblewhen "mn_installation_count < 10"
+//			visiblewhen "mn_installation_count < 10"
 
 			string		"_Create installation"
 			tooltip		"_Create installation"
@@ -428,7 +428,7 @@ menu map
 
 			click		{ cmd "mn_push popup_newinstallation_type;" }
 		}
-		button bt_installation_nomore
+/*		button bt_installation_nomore
 		{
 			// visiblewhen "mn_installation_count >= mn_installation_max"
 			visiblewhen "mn_installation_count >= 10"
@@ -444,7 +444,7 @@ menu map
 			blend		true
 			disabled	true
 		}
-
+*/
 		// ==================
 		// small buttons
 		// ==================
@@ -1165,6 +1165,7 @@ menu popup_newbase
 
 // ==================
 // POPUP NEW INSTALLATION
+// @todo it should explain or display the rules: limitation of 10 installations, 6 bases
 // ==================
 menu popup_newinstallation_type
 {
@@ -1318,8 +1319,55 @@ menu popup_newinstallation_type
 		click		{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
 	}
 
+	//
+	// Create a base
+	//
 
-	button bt_cancel
+	pic base_icon
+	{
+		image		"geoscape/ufoyard"	// @todo update that
+		pos			"46 118"
+	}
+
+	string base_type
+	{
+		string		"_Base"
+		pos			"86 138"
+		size		"170 18"
+		font		f_small
+	}
+
+	zone click_base
+	{
+		pos			"30 138"
+		size		"440 20"
+		in			{ *bt_highlight invis false *bt_highlight pos "26 136" }
+		out			{ *bt_highlight invis true }
+		click		{ cmd "mn_pop; mn_select_base -1;" }
+	}
+
+	string base_buildtime
+	{
+		string		"?"			// @todo fix that
+		pos			"256 138"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+	string base_cost
+	{
+		string		"?"			// @todo fix that
+		pos			"356 138"
+		size		"100 20"
+		textalign	ur
+		font		f_small
+	}
+
+	//
+	// Interaction
+	//
+
+	button bt_close
 	{
 		string		"_Cancel"
 		tooltip		"_Close this dialogue"
@@ -1327,10 +1375,29 @@ menu popup_newinstallation_type
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"176 188"
+		pos			"300 188"
 		size		"176 32"
 		click		{ cmd "mn_pop;" }
 	}
+
+	func init {
+		// @todo change the color of the text too
+		if "mn_base_count >= 8" {
+			*click_base invis true
+		} else {
+			*click_base invis false
+		}
+		if "mn_installation_count >= 10" {
+			*click_ufoyard	invis true
+			*click_sam		invis true
+			*click_radar	invis true
+		} else {
+			*click_ufoyard	invis false
+			*click_sam		invis false
+			*click_radar	invis false
+		}
+	}
+
 }
 
 menu popup_newinstallation
