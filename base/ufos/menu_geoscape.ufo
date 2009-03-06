@@ -255,60 +255,75 @@ menu map
 
 		}
 
-		// geoscape controll buttons
+		// geoscape control buttons
 
-		zone panel_scroll_up
-		{
-			pos			"100 354"
-			size		"60 30"
-			repeat		true
-			clickdelay	100
-			click		{ cmd "map_scroll down;" }
-		}
+		panel geoscape_control {
+			{
+				pos		"48 350"
+				size	"164 164"
+			}
 
-		zone panel_scroll_down
-		{
-			pos			"100 484"
-			size		"60 30"
-			repeat		true
-			clickdelay	100
-			click		{ cmd "map_scroll up;" }
-		}
+			pic background {
+				pos		"0 0"
+				size	"164 164"
+				texh	"164 164"
+				image	menu/geo_miniglobe
+				blend	true
+			}
 
-		zone panel_scroll_left
-		{
-			pos			"50 400"
-			size		"30 60"
-			repeat		true
-			clickdelay	100
-			click		{ cmd "map_scroll right;" }
-		}
+			zone panel_scroll_up
+			{
+				pos			"52 4"
+				size		"60 30"
+				repeat		true
+				clickdelay	100
+				click		{ cmd "map_scroll down;" }
+			}
 
-		zone panel_scroll_right
-		{
-			pos			"182 400"
-			size		"30 60"
-			repeat		true
-			clickdelay		100
-			click		{ cmd "map_scroll left;" }
-		}
+			zone panel_scroll_down
+			{
+				pos			"52 134"
+				size		"60 30"
+				repeat		true
+				clickdelay	100
+				click		{ cmd "map_scroll up;" }
+			}
 
-		zone panel_zoom_in
-		{
-			pos			"104 400"
-			size		"20 60"
-			repeat		true
-			clickdelay	100
-			click		{ cmd "map_zoom in;" }
-		}
+			zone panel_scroll_left
+			{
+				pos			"2 50"
+				size		"30 60"
+				repeat		true
+				clickdelay	100
+				click		{ cmd "map_scroll right;" }
+			}
 
-		zone panel_zoom_out
-		{
-			pos			"130 400"
-			size		"20 60"
-			repeat		true
-			clickdelay	100
-			click		{ cmd "map_zoom out;" }
+			zone panel_scroll_right
+			{
+				pos			"134 50"
+				size		"30 60"
+				repeat		true
+				clickdelay		100
+				click		{ cmd "map_scroll left;" }
+			}
+
+			zone panel_zoom_in
+			{
+				pos			"56 50"
+				size		"20 60"
+				repeat		true
+				clickdelay	100
+				click		{ cmd "map_zoom in;" }
+			}
+
+			zone panel_zoom_out
+			{
+				pos			"82 50"
+				size		"20 60"
+				repeat		true
+				clickdelay	100
+				click		{ cmd "map_zoom out;" }
+			}
 		}
 
 		// ==================
