@@ -40,4 +40,4 @@ clean-maps:
 	@echo "done"
 
 $(BSPS): %.bsp: %.map
-	$(UFO2MAP) $(UFO2MAPFLAGS) $<
+	$(UFO2MAP) $(UFO2MAPFLAGS) $(subst base/,,$<)
