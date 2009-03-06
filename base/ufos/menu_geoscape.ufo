@@ -140,113 +140,119 @@ menu map
 			textalign	ur
 		}
 
-		radiobutton bt_timestop0
-		{
-			tooltip		"_Pause"
-			cvar		"*cvar mn_timelapse_id"	value "0"
-			icon		speed_stop
-			pos			"48 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
+		panel time_panel {
+			{
+				pos "0 90"
+				size	"256 55"
+			}
 
-		radiobutton bt_timeplay1
-		{
-			tooltip		"_Time lapse: 5 seconds"
-			cvar		"*cvar mn_timelapse_id"	value "1"
-			icon		speed_dot
-			pos			"68 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
+			radiobutton bt_timestop0
+			{
+				tooltip		"_Pause"
+				cvar		"*cvar mn_timelapse_id"	value "0"
+				icon		speed_stop
+				pos			"48 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
 
-		radiobutton bt_timeplay2
-		{
-			tooltip		"_Time lapse: 5 minutes"
-			cvar		"*cvar mn_timelapse_id"	value "4"
-			icon		speed_play1
-			pos			"88 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
+			radiobutton bt_timeplay1
+			{
+				tooltip		"_Time lapse: 5 seconds"
+				cvar		"*cvar mn_timelapse_id"	value "1"
+				icon		speed_dot
+				pos			"68 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
 
-
-		radiobutton bt_timeplay3
-		{
-			tooltip		"_Time lapse: 20 minutes"
-			cvar		"*cvar mn_timelapse_id"	value "6"
-			icon		speed_dot
-			pos			"108 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
-
-		radiobutton bt_timeplay4
-		{
-			tooltip		"_Time lapse: 1 hour"
-			cvar		"*cvar mn_timelapse_id"	value "7"
-			icon		speed_play2
-			pos			"128 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
+			radiobutton bt_timeplay2
+			{
+				tooltip		"_Time lapse: 5 minutes"
+				cvar		"*cvar mn_timelapse_id"	value "4"
+				icon		speed_play1
+				pos			"88 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
 
 
-		radiobutton bt_timeplay5
-		{
-			tooltip		"_Time lapse: 12 hours"
-			cvar		"*cvar mn_timelapse_id"	value "8"
-			icon		speed_dot
-			pos			"148 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
+			radiobutton bt_timeplay3
+			{
+				tooltip		"_Time lapse: 20 minutes"
+				cvar		"*cvar mn_timelapse_id"	value "6"
+				icon		speed_dot
+				pos			"108 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay4
+			{
+				tooltip		"_Time lapse: 1 hour"
+				cvar		"*cvar mn_timelapse_id"	value "7"
+				icon		speed_play2
+				pos			"128 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
+
+			radiobutton bt_timeplay5
+			{
+				tooltip		"_Time lapse: 12 hours"
+				cvar		"*cvar mn_timelapse_id"	value "8"
+				icon		speed_dot
+				pos			"148 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
 
 
-		radiobutton bt_timeplay6
-		{
-			tooltip		"_Time lapse: 1 day"
-			cvar		"*cvar mn_timelapse_id"	value "9"
-			icon		speed_dot
-			pos			"168 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
+			radiobutton bt_timeplay6
+			{
+				tooltip		"_Time lapse: 1 day"
+				cvar		"*cvar mn_timelapse_id"	value "9"
+				icon		speed_dot
+				pos			"168 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
 
-		radiobutton bt_timeplay7
-		{
-			tooltip		"_Time lapse: 5 days"
-			cvar		"*cvar mn_timelapse_id"	value "10"
-			icon		speed_play3
-			pos			"188 100"
-			size		"20 20"
-			change		{ cmd "game_settimeid <value>;" }
-			whup		{ cmd "game_timefast;" }
-			whdown		{ cmd "game_timeslow;" }
-		}
+			radiobutton bt_timeplay7
+			{
+				tooltip		"_Time lapse: 5 days"
+				cvar		"*cvar mn_timelapse_id"	value "10"
+				icon		speed_play3
+				pos			"188 10"
+				size		"20 20"
+				change		{ cmd "game_settimeid <value>;" }
+				whup		{ cmd "game_timefast;" }
+				whdown		{ cmd "game_timeslow;" }
+			}
 
+			string timelapse
+			{
+				string		"*cvar mn_timelapse"
+				pos			"31 32"
+				size		"195 20"
+				textalign	uc
+				color		"0 .78 0 1"
+			}
 
-		string timelapse
-		{
-			string		"*cvar mn_timelapse"
-			pos			"31 122"
-			size		"195 20"
-			textalign	uc
-			color		"0 .78 0 1"
 		}
 
 		// geoscape controll buttons
