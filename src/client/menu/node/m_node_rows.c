@@ -1,5 +1,6 @@
 /**
  * @file m_node_panel.c
+ * @todo clean up all properties
  */
 
 /*
@@ -32,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void MN_RowsNodeDraw (menuNode_t *node)
 {
 	int current = 0;
-	int i = 0;
+	int i = node->texh[0];
 	vec2_t pos;
 	MN_GetNodeAbsPos(node, pos);
 
@@ -50,6 +51,7 @@ static void MN_RowsNodeDraw (menuNode_t *node)
 
 static void MN_RowsNodeLoaded (menuNode_t *node)
 {
+	/* prevent infinite loop into the draw */
 	if (node->texh[1] == 0) {
 		node->texh[1] = 10;
 	}
@@ -59,6 +61,7 @@ static const value_t properties[] = {
 	{"color1", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"color2", V_COLOR, offsetof(menuNode_t, selectedColor), MEMBER_SIZEOF(menuNode_t, selectedColor)},
 	{"lineheight", V_FLOAT, offsetof(menuNode_t, texh[1]), MEMBER_SIZEOF(menuNode_t, texh[1])},
+	{"current", V_FLOAT, offsetof(menuNode_t, texh[0]), MEMBER_SIZEOF(menuNode_t, texh[0])},
 	{NULL, V_NULL, 0, 0}
 };
 

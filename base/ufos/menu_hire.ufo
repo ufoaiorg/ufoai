@@ -227,6 +227,7 @@ menu employees
 
 	confunc hire_fix_scroll {
 		*(abstractscrollbar)scroll current <1>
+		*(rows)list_background current <1>
 	}
 
 	vscrollbar scroll
