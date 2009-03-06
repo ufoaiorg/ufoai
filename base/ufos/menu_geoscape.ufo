@@ -1154,7 +1154,7 @@ menu popup_newbase
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"26 188"
+		pos			"298 188"
 		size		"176 32"
 		click	{
 			*name mousefx false
@@ -1169,7 +1169,7 @@ menu popup_newbase
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"296 188"
+		pos			"111 188"
 		size		"176 32"
 		click	{
 			*name mousefx false
@@ -1390,7 +1390,7 @@ menu popup_newinstallation_type
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"300 188"
+		pos			"297 188"
 		size		"176 32"
 		click		{ cmd "mn_pop;" }
 	}
@@ -1515,7 +1515,7 @@ menu popup_newinstallation
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"26 188"
+		pos			"294 188"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
 	}
@@ -1527,7 +1527,7 @@ menu popup_newinstallation
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"296 188"
+		pos			"109 188"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
 	}
@@ -1566,9 +1566,9 @@ menu radartower
 		size		"440 20"
 	}
 
-	button bt_back
+	button bt_close
 	{
-		string		"_Back"
+		string		"_Close"
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
@@ -1622,26 +1622,26 @@ menu popup_installationstatus
 		visiblewhen "mn_installation_timetobuild ne -"
 		string		"_Time to build:"
 		pos			"26 118"
-		size		"100 20"
+		size		"159 20"
 	}
 	string buildtime
 	{
 		visiblewhen "mn_installation_timetobuild ne -"
 		string		"*cvar mn_installation_timetobuild"
-		pos			"126 118"
+		pos			"180 118"
 		size		"100 20"
 		textalign	uc
 	}
 
 	button bt_back
 	{
-		string		"_Back"
+		string		"_Close"
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"26 188"
+		pos			"295 189"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
@@ -1654,7 +1654,7 @@ menu popup_installationstatus
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"296 188"
+		pos			"109 189"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_push *mn_installation_type;" }
 	}
@@ -1666,7 +1666,7 @@ menu popup_installationstatus
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"296 149"
+		pos			"295 78"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_destroyinstallation;" }
 	}
