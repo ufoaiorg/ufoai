@@ -44,6 +44,7 @@ static cvar_t *sv_reconnect_limit;
 
 cvar_t *sv_maxclients = NULL;
 cvar_t *sv_dumpmapassembly;
+cvar_t *sv_threads;
 /** should heartbeats be sent */
 cvar_t *sv_public;
 cvar_t *sv_mapname;
@@ -669,63 +670,13 @@ static void SV_ParseMapcycle (void)
 	FS_FreeFile(buffer);
 }
 
-/**
- * @brief Calls the G_RunFrame function from game api
- * @sa G_RunFrame
- * @sa SV_Frame
- */
-static qboolean SV_RunGameFrame (void)
-{
-	const qboolean gameEnd = ge->RunFrame();
-
-	/* next map in the cycle */
-	if (gameEnd && sv_maxclients->integer > 1)
-		SV_NextMapcycle();
-
-	return gameEnd;
-}
-
-/**
- * @sa Qcommon_Frame
- */
-void SV_Frame (int now, void *data)
-{
-	/* change the gametype even if no server is running (e.g. the first time) */
-	if (sv_dedicated->integer && sv_gametype->modified) {
-		Com_SetGameType();
-		sv_gametype->modified = qfalse;
-	}
-
-	/* if server is not active, do nothing */
-	if (!svs.initialized)
-		return;
-
-	svs.realtime = now;
-
-	/* keep the random time dependent */
-	rand();
-
-	/* let everything in the world think and move */
-	SV_RunGameFrame();
-
-	/* send a heartbeat to the master if needed */
-	Master_Heartbeat();
-
-	/* server is empty - so shutdown */
-	if (abandon && killserver) {
-		abandon = qfalse;
-		killserver = qfalse;
-		SV_Shutdown("Server disconnected.", qfalse);
-	}
-}
-
-/*============================================================================ */
+#define	HEARTBEAT_SECONDS	300
 
 /**
  * @brief Send a message to the master every few minutes to
  * let it know we are alive, and log information
  */
-void Master_Heartbeat (void)
+static void Master_Heartbeat (void)
 {
 	char *responseBuf;
 
@@ -750,6 +701,40 @@ void Master_Heartbeat (void)
 	if (responseBuf) {
 		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
 		Mem_Free(responseBuf);
+	}
+}
+
+/**
+ * @sa Qcommon_Frame
+ */
+void SV_Frame (int now, void *data)
+{
+	/* change the gametype even if no server is running (e.g. the first time) */
+	if (sv_dedicated->integer && sv_gametype->modified) {
+		Com_SetGameType();
+		sv_gametype->modified = qfalse;
+	}
+
+	/* if server is not active, do nothing */
+	if (!svs.initialized)
+		return;
+
+	svs.realtime = now;
+
+	/* keep the random time dependent */
+	rand();
+
+	if (!sv_threads->integer)
+		SV_RunGameFrame(NULL);
+
+	/* send a heartbeat to the master if needed */
+	Master_Heartbeat();
+
+	/* server is empty - so shutdown */
+	if (abandon && killserver) {
+		abandon = qfalse;
+		killserver = qfalse;
+		SV_Shutdown("Server disconnected.", qfalse);
 	}
 }
 
@@ -826,6 +811,7 @@ void SV_Init (void)
 
 	sv_dumpmapassembly = Cvar_Get("sv_dumpmapassembly", "0", CVAR_ARCHIVE, "Dump map assembly information to game console");
 
+	sv_threads = Cvar_Get("sv_threads", "1", 0, "Run the server threaded");
 	sv_public = Cvar_Get("sv_public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 

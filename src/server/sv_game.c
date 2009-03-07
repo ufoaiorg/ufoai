@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "server.h"
+#include <SDL_thread.h>
 
 game_export_t *ge;
 /** this is true when there was an event - and false if the event reached the end */
@@ -350,6 +351,8 @@ static void SV_FreeTags (int tagNum)
 	_Mem_FreeTag(sv_gameSysPool, tagNum, "GAME DLL", 0);
 }
 
+static SDL_Thread *thread;
+
 /**
  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
  * @sa G_Shutdown
@@ -361,12 +364,37 @@ void SV_ShutdownGameProgs (void)
 
 	if (!ge)
 		return;
+
+	if (thread)
+		SDL_KillThread(thread);
+
+	thread = NULL;
+
 	ge->Shutdown();
 	Sys_UnloadGame();
+
 	size = Mem_PoolSize(sv_gameSysPool);
 	if (size > 0)
 		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
+
 	ge = NULL;
+}
+
+/**
+ * @brief Calls the G_RunFrame function from game api
+ * let everything in the world think and move
+ * @sa G_RunFrame
+ * @sa SV_Frame
+ */
+int SV_RunGameFrame (void *data)
+{
+	const int gameEnd = ge->RunFrame();
+
+	/* next map in the cycle */
+	if (gameEnd && sv_maxclients->integer > 1)
+		SV_NextMapcycle();
+
+	return gameEnd;
 }
 
 /**
@@ -483,4 +511,7 @@ void SV_InitGameProgs (void)
 		Com_Error(ERR_DROP, "game is version %i, not %i", ge->apiversion, GAME_API_VERSION);
 
 	ge->Init();
+
+	if (sv_threads->integer)
+		thread = SDL_CreateThread(SV_RunGameFrame, NULL);
 }

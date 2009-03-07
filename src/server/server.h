@@ -121,6 +121,7 @@ extern server_t sv;				/**< local server */
 extern cvar_t *sv_mapname;
 extern cvar_t *sv_public;			/**< should heartbeats be sent? (only for public servers) */
 extern cvar_t *sv_dumpmapassembly;
+extern cvar_t *sv_threads;	/**< run the game lib threaded */
 
 extern client_t *sv_client;
 extern player_t *sv_player;
@@ -136,9 +137,6 @@ int SV_ModelIndex(const char *name);
 void SV_InitOperatorCommands(void);
 
 void SV_UserinfoChanged(client_t *cl);
-
-#define	HEARTBEAT_SECONDS	300
-void Master_Heartbeat(void);
 
 void SV_NextMapcycle(void);
 void SV_MapcycleClear(void);
@@ -167,6 +165,7 @@ void SV_Heartbeat_f(void);
 /* sv_game.c */
 extern game_export_t *ge;
 
+int SV_RunGameFrame(void *data);
 void SV_InitGameProgs(void);
 void SV_ShutdownGameProgs(void);
 
