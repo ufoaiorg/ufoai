@@ -34,16 +34,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "r_model_dpm.h"
 #include "r_model_md2.h"
 #include "r_model_md3.h"
+#include "r_model_obj.h"
 
 /**
  * @brief All supported model formats
  * @sa mod_extensions
  */
-typedef enum {mod_bad, mod_bsp, mod_bsp_submodel, mod_alias_md2, mod_alias_md3, mod_alias_dpm} modtype_t;
+typedef enum {mod_bad, mod_bsp, mod_bsp_submodel, mod_alias_md2, mod_alias_md3, mod_alias_dpm, mod_obj} modtype_t;
 
 typedef struct model_s {
-	/** the name needs to be the first entry in the struct */
-	char name[MAX_QPATH];
+	char name[MAX_QPATH];	/**< path relative to base/ */
 
 	modtype_t type;	/**< model type */
 

@@ -207,6 +207,7 @@ CLIENT_SRCS = \
 	client/renderer/r_model_dpm.c \
 	client/renderer/r_model_md2.c \
 	client/renderer/r_model_md3.c \
+	client/renderer/r_model_obj.c \
 	client/renderer/r_overlay.c \
 	client/renderer/r_particle.c \
 	client/renderer/r_program.c \

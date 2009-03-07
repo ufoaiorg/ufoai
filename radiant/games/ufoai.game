@@ -5,7 +5,7 @@
   basegamename="UFO:Alien Invasion"
   archivetypes="pk3"
   texturetypes="tga jpg png"
-  modeltypes="md2 md3 ase"
+  modeltypes="md2 md3 ase obj"
   mapcompiler_param_compile="-extra"
   mapcompiler_param_fix="-v 1 -fix"
   mapcompiler_param_check="-v 1 -check"

@@ -67,6 +67,9 @@ void R_ModModellist_f (void)
 		case mod_bsp_submodel:
 			Com_Printf("SUB ");
 			break;
+		case mod_obj:
+			Com_Printf("OBJ ");
+			break;
 		default:
 			Com_Printf("%3i ", mod->type);
 			break;
@@ -154,8 +157,11 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		break;
 
 	default:
+		if (strcasestr(mod->name, ".obj")) {
+			R_LoadObjModel(mod, buf, modfilelen);
+			break;
+		}
 		Sys_Error("R_ModForName: unknown fileid for %s", mod->name);
-		break;
 	}
 
 	FS_FreeFile(buf);
@@ -168,7 +174,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
  * @sa modtype_t
  */
 static const char *mod_extensions[] = {
-	"md2", "md3", "dpm", NULL
+	"md2", "md3", "dpm", "obj", NULL
 };
 
 /**

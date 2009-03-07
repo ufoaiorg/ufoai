@@ -416,6 +416,7 @@ static void R_DrawMeshEntities (entity_t *ents)
 			case mod_alias_dpm:
 			case mod_alias_md2:
 			case mod_alias_md3:
+			case mod_obj:
 				R_DrawAliasModel(e);
 				break;
 			default:
@@ -646,6 +647,7 @@ void R_DrawEntities (void)
 			case mod_alias_dpm:
 			case mod_alias_md2:
 			case mod_alias_md3:
+			case mod_obj:
 				skin = R_AliasModelState(e->model, &e->as.mesh, &e->as.frame, &e->as.oldframe, &e->skinnum);
 				if (skin == NULL) {
 					Com_Printf("Model '%s' is broken\n", e->model->name);
