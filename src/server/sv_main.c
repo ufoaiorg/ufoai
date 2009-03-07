@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "server.h"
 #include "../shared/parse.h"
+#include <SDL_thread.h>
 
 /** current client */
 client_t *sv_client;
@@ -672,14 +673,33 @@ static void SV_ParseMapcycle (void)
 
 #define	HEARTBEAT_SECONDS	300
 
+static SDL_Thread *masterServerHeartBeatThread;
+
 /**
  * @brief Send a message to the master every few minutes to
  * let it know we are alive, and log information
  */
-static void Master_Heartbeat (void)
+static int Master_HeartbeatThread (void * data)
 {
 	char *responseBuf;
 
+	/* send to master */
+	Com_Printf("sending heartbeat\n");
+	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string));
+	if (responseBuf) {
+		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
+		Mem_Free(responseBuf);
+	}
+
+	masterServerHeartBeatThread = NULL;
+	return 0;
+}
+
+/**
+ * @sa CL_PingServers_f
+ */
+static void Master_Heartbeat (void)
+{
 	if (!sv_dedicated || !sv_dedicated->integer)
 		return;		/* only dedicated servers send heartbeats */
 
@@ -695,13 +715,12 @@ static void Master_Heartbeat (void)
 
 	svs.last_heartbeat = svs.realtime;
 
-	/* send to master */
-	Com_Printf("sending heartbeat\n");
-	responseBuf = HTTP_GetURL(va("%s/ufo/masterserver.php?heartbeat&port=%s", masterserver_url->string, port->string));
-	if (responseBuf) {
-		Com_DPrintf(DEBUG_SERVER, "response: %s\n", responseBuf);
-		Mem_Free(responseBuf);
+	if (masterServerHeartBeatThread != NULL) {
+		Com_Printf("heartbeat already in progress\n");
+		return;
 	}
+
+	masterServerHeartBeatThread = SDL_CreateThread(Master_HeartbeatThread, NULL);
 }
 
 /**
