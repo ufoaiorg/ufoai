@@ -577,6 +577,6 @@ menu mailclient
 
 	func init
 	{
-		cmd "ufopedia_openmail; mn_escpop 2;"
+		cmd "ufopedia_openmail;"
 	}
 }

@@ -30,8 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_cinematic.h"
 
-static cvar_t *mn_escpop;
-
 /**
  * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
  * @return The last full screen window on the screen, else 0. If the stack is empty, return -1
@@ -311,7 +309,6 @@ static void MN_PushNoHud_f (void)
 static void MN_PushCopyMenu_f (void)
 {
 	if (Cmd_Argc() > 1) {
-		Cvar_SetValue("mn_escpop", mn_escpop->value + 1);
 		MN_PushMenuDelete(Cmd_Argv(1), NULL, qfalse);
 	} else {
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
@@ -465,31 +462,25 @@ static void MN_CloseMenu_f (void)
 /**
  * @brief Console function to pop a menu from the menu stack
  * @sa MN_PopMenu
- * @note The cvar mn_escpop defined how often the MN_PopMenu function is called.
- * This is useful for e.g. nodes that doesn't have a render node (for example: video options)
  */
 static void MN_PopMenu_f (void)
 {
-	if (Cmd_Argc() < 2) {
-		/** @todo we can do the same in a better way: event returning agreement */
+	if (Cmd_Argc() >= 2) {
+		Com_Printf("Usage: %s\n", Cmd_Argv(0));
+		return;
+	}
+
+	/** @todo move it into another function (mn_pop_esc) */
+	if (Cmd_Argc() == 1 && !Q_strcmp(Cmd_Argv(1), "esc")) {
 		const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
 		assert(mn.menuStackPos);
 
 		/* some window can prevent escape */
 		if (menu->u.window.preventTypingEscape)
-			if (Cmd_Argc() >= 1 && !Q_strcmp(Cmd_Argv(1), "esc"))
-				return;
-
-		MN_PopMenu(qfalse);
-	} else {
-		int i;
-
-		for (i = 0; i < mn_escpop->integer; i++)
-			MN_PopMenu(qfalse);
-
-		/** @todo delete it when its possible */
-		Cvar_Set("mn_escpop", "1");
+			return;
 	}
+
+	MN_PopMenu(qfalse);
 }
 
 /**
@@ -644,9 +635,6 @@ static void MN_FireInit_f (void)
 
 void MN_InitMenus (void)
 {
-	/* add cvars */
-	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
-
 	/* add command */
 	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");

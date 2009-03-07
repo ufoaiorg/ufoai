@@ -255,12 +255,11 @@ menu serverinfo
 
 	func init
 	{
-		cmd	"mn_escpop 1;"
 	}
 
 	func close
 	{
-		cmd	"mn_escpop 3; pingservers;"
+		cmd	"pingservers;"
 	}
 }
 

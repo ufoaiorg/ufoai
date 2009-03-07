@@ -168,7 +168,6 @@ menu irc
 	func init
 	{
 		cmd "irc_activate;"
-		cmd "mn_escpop 3;"
 	}
 
 	// ==================
