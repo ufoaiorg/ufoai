@@ -385,13 +385,13 @@ static int SV_HullForEntity (const edict_t *ent, int *tile)
  */
 static void SV_ClipMoveToEntities (moveclip_t *clip)
 {
-	int i, num;
+	int i;
 	edict_t *touchlist[MAX_EDICTS];
 	trace_t trace;
 	const float *angles;
 	int tile = 0, headnode = 0;
 
-	num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS, AREA_SOLID);
+	const int num = SV_AreaEdicts(clip->boxmins, clip->boxmaxs, touchlist, MAX_EDICTS, AREA_SOLID);
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
@@ -459,12 +459,9 @@ static void SV_ClipMoveToEntities (moveclip_t *clip)
  */
 int SV_PointContents (vec3_t p)
 {
-	trace_t trace;
-
-	memset(&trace, 0, sizeof(trace));
-
 	/* clip to world - 0x1FF = all levels */
-	trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL, 0);
+	trace_t trace = TR_CompleteBoxTrace(p, p, vec3_origin, vec3_origin, 0x1FF, MASK_ALL, 0);
+	/** @todo There is more than one world in case of a map assembly */
 	trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (trace.fraction == 0)
 		return trace.contentFlags;		/* blocked by the world */
