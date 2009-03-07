@@ -51,43 +51,54 @@ qboolean MN_CheckCondition (menuDepends_t *condition)
 	if (!condition->var)
 		return qtrue;
 
-#if 0	/**< this code cache the result; it make problem when we delete/create cvar */
-	if (!condition->cvar || Q_strcmp(condition->cvar->name, condition->var))
-#endif
-	cvar = Cvar_Get(condition->var, condition->value ? condition->value : "", 0, "Menu if condition cvar");
+	if (condition->var[0] == '*')
+		cvar = Cvar_Get(condition->var+6, condition->value ? condition->value : "", 0, "Menu if condition cvar");
+	else
+		cvar = Cvar_Get(condition->var, condition->value ? condition->value : "", 0, "Menu if condition cvar");
 	assert(cvar);
 
-	/* menuIfCondition_t */
 	switch (condition->cond) {
 	case IF_EQ:
-		assert(condition->value);
-		if (atof(condition->value) != cvar->value)
-			return qfalse;
-		break;
 	case IF_LE:
-		assert(condition->value);
-		if (cvar->value > atof(condition->value))
-			return qfalse;
-		break;
 	case IF_GE:
-		assert(condition->value);
-		if (cvar->value < atof(condition->value))
-			return qfalse;
-		break;
 	case IF_GT:
-		assert(condition->value);
-		if (cvar->value <= atof(condition->value))
-			return qfalse;
-		break;
 	case IF_LT:
-		assert(condition->value);
-		if (cvar->value >= atof(condition->value))
-			return qfalse;
-		break;
 	case IF_NE:
-		assert(condition->value);
-		if (cvar->value == atof(condition->value))
-			return qfalse;
+		{
+			const float value1 = cvar->value;
+			float value2;
+
+			assert(condition->value);
+			if (condition->value[0] == '*') {
+				if (!Q_strncmp(condition->value+1, "cvar:", 5)) {
+					cvar_t *cvar2 = NULL;
+					cvar2 = Cvar_Get(condition->value + 6, condition->value ? condition->value : "", 0, "Menu if condition cvar");
+					value2 = cvar2->value;
+				} else {
+					Com_Printf("MN_CheckCondition: '%s' is not a cvar\n", condition->value);
+					value2 = 0;
+				}
+			} else {
+				value2 = atof(condition->value);
+			}
+
+			switch (condition->cond) {
+			case IF_EQ:
+				return value1 == value2;
+			case IF_LE:
+				return value1 <= value2;
+			case IF_GE:
+				return value1 >= value2;
+			case IF_GT:
+				return value1 > value2;
+			case IF_LT:
+				return value1 < value2;
+			case IF_NE:
+				return value1 != value2;
+			default:
+				assert(qfalse);
+			}
+		}
 		break;
 	case IF_EXISTS:
 		assert(cvar->string);
