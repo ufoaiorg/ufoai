@@ -38,25 +38,25 @@ menu map
 	confunc messagesystem_changemode
 	{
 		/* one line */
-		if "mn_messagesystem == 0" {
+		if "*cvar:mn_messagesystem == 0" {
 			*messagesystem	rows	1
 			*messagesystem	size	"768 20"
 			*messagesystem	scrollbar false
 		}
 		/* 6 lines */
-		if "mn_messagesystem == 1" {
+		if "*cvar:mn_messagesystem == 1" {
 			*messagesystem	rows	6
 			*messagesystem	size	"768 120"
 			*messagesystem	scrollbar false
 		}
 		/* 12 lines */
-		if "mn_messagesystem == 2" {
+		if "*cvar:mn_messagesystem == 2" {
 			*messagesystem	rows	12
 			*messagesystem	size	"768 240"
 			*messagesystem	scrollbar false
 		}
 		/* full screen */
-		if "mn_messagesystem == 3" {
+		if "*cvar:mn_messagesystem == 3" {
 			*messagesystem	rows	38
 			*messagesystem	size	"768 768"
 			*messagesystem	scrollbar true
@@ -331,7 +331,7 @@ menu map
 
 		button bt_mailclient
 		{
-			visiblewhen "mn_upunreadmail != 0"
+			visiblewhen "*cvar:mn_upunreadmail != 0"
 
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
@@ -348,7 +348,7 @@ menu map
 
 		button bt_mailclient_nomail
 		{
-			visiblewhen "mn_upunreadmail == 0"
+			visiblewhen "*cvar:mn_upunreadmail == 0"
 
 			string		"_Mailclient"
 			tooltip		"_INBOX"
@@ -440,7 +440,7 @@ menu map
 
 		pic bt_show_xvi
 		{
-			visiblewhen "mn_xvimap == 1"
+			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
 			image		menu/geo_nations_highlight
 			pos			"182 350"
@@ -877,7 +877,7 @@ menu popup_intercept_ready
 
 	confunc popup_intercept_ready_update
 	{
-		if "cp_mission_autogo_available == 1" {
+		if "*cvar:cp_mission_autogo_available == 1" {
 			*bt_auto_go disabled false
 		} else {
 			*bt_auto_go disabled true
@@ -1131,7 +1131,7 @@ menu popup_newbase
 
 	func init
 	{
-		if "mn_base_count <= 0" {
+		if "*cvar:mn_base_count <= 0" {
 			*start_employees_str invis false
 			*start_employees invis false
 			*start_buildings_str invis false
@@ -1362,8 +1362,7 @@ menu popup_newinstallation_type
 	}
 
 	func init {
-		// @todo change the color of the text too
-		if "mn_base_count >= 8" {
+		if "*cvar:mn_base_count >= *cvar:mn_base_max" {
 			*click_base invis true
 			*base_type disabled true
 			*base_buildtime disabled true
@@ -1374,7 +1373,7 @@ menu popup_newinstallation_type
 			*base_buildtime disabled false
 			*base_cost disabled false
 		}
-		if "mn_installation_count >= 16" {
+		if "*cvar:mn_installation_count >= *cvar:mn_installation_max" {
 			*click_ufoyard	invis true
 			*ufoyard_type disabled true
 			*ufoyard_buildtime disabled true
@@ -1417,7 +1416,7 @@ menu popup_newinstallation
 
 	string title_radar
 	{
-		visiblewhen "mn_installation_type eq radartower"
+		visiblewhen "*cvar:mn_installation_type eq radartower"
 		string		"_New radar tower"
 		pos			"26 18"
 		size		"420 25"
@@ -1425,7 +1424,7 @@ menu popup_newinstallation
 	}
 	string title_samsite
 	{
-		visiblewhen "mn_installation_type eq samsite"
+		visiblewhen "*cvar:mn_installation_type eq samsite"
 		string		"_New SAM site"
 		pos			"26 18"
 		size		"420 25"
@@ -1433,7 +1432,7 @@ menu popup_newinstallation
 	}
 	string title_ufoyard
 	{
-		visiblewhen "mn_installation_type eq ufoyard"
+		visiblewhen "*cvar:mn_installation_type eq ufoyard"
 		string		"_New UFO yard"
 		pos			"26 18"
 		size		"420 25"
@@ -1474,7 +1473,7 @@ menu popup_newinstallation
 
 	string cost_radartower
 	{
-		visiblewhen "mn_installation_type eq radartower"
+		visiblewhen "*cvar:mn_installation_type eq radartower"
 		string		"*cvar mn_installation_radartower_cost"
 		pos			"26 133"
 		size		"200 25"
@@ -1482,7 +1481,7 @@ menu popup_newinstallation
 	}
 	string cost_samsite
 	{
-		visiblewhen "mn_installation_type eq samsite"
+		visiblewhen "*cvar:mn_installation_type eq samsite"
 		string		"*cvar mn_installation_samsite_cost"
 		pos			"26 133"
 		size		"200 25"
@@ -1490,7 +1489,7 @@ menu popup_newinstallation
 	}
 	string cost_ufoyard
 	{
-		visiblewhen "mn_installation_type eq ufoyard"
+		visiblewhen "*cvar:mn_installation_type eq ufoyard"
 		string		"*cvar mn_installation_ufoyard_cost"
 		pos			"26 133"
 		size		"200 25"
@@ -1609,14 +1608,14 @@ menu popup_installationstatus
 
 	string buildtime_label
 	{
-		visiblewhen "mn_installation_timetobuild ne -"
+		visiblewhen "*cvar:mn_installation_timetobuild ne -"
 		string		"_Time to build:"
 		pos			"26 118"
 		size		"159 20"
 	}
 	string buildtime
 	{
-		visiblewhen "mn_installation_timetobuild ne -"
+		visiblewhen "*cvar:mn_installation_timetobuild ne -"
 		string		"*cvar mn_installation_timetobuild"
 		pos			"180 118"
 		size		"100 20"
@@ -1637,7 +1636,7 @@ menu popup_installationstatus
 	}
 	button bt_enter
 	{
-		visiblewhen "mn_installation_timetobuild eq -"
+		visiblewhen "*cvar:mn_installation_timetobuild eq -"
 		string		"_Manage"
 		tooltip		"_Manage installation"
 		color		"0 0.5 0 1"

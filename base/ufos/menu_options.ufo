@@ -65,7 +65,7 @@ menu options
 
 	button button_sound
 	{
-		visiblewhen "snd_init == 1"
+		visiblewhen "*cvar:snd_init == 1"
 
 		string		"_Sound"
 		pos			"80 310"
@@ -83,7 +83,7 @@ menu options
 
 	button button_sound_na
 	{
-		visiblewhen "snd_init == 0"
+		visiblewhen "*cvar:snd_init == 0"
 
 		string		"_Sound"
 		tooltip		"_Sound is not activated"

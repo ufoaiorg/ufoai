@@ -776,6 +776,7 @@ void B_InitCallbacks (void)
 	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 	Cvar_Set("mn_base_cost", va(_("%i c"), curCampaign->basecost));
+	Cvar_SetValue("mn_base_max", MAX_BASES);
 
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
@@ -818,6 +819,7 @@ void B_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("buildings_click");
 	Cmd_RemoveCommand("reset_building_current");
 	Cmd_RemoveCommand("building_ondestroy");
+	Cvar_Delete("mn_base_max");
 	Cvar_Delete("mn_base_cost");
 	Cvar_Delete("mn_base_title");
 }

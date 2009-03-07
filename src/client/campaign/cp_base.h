@@ -28,6 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_aliencont.h"
 
+#define MAX_BASES 8
+
 #define MAX_BUILDINGS		256
 #define MAX_BASETEMPLATES	5
 

@@ -89,7 +89,6 @@ typedef enum {
 extern const char *const vt_names[];
 
 /** @brief We need this here for checking the boundaries from script values */
-#define MAX_BASES 8
 
 /** possible align values - see also align_names */
 typedef enum {

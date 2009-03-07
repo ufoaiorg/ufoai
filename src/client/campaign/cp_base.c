@@ -761,6 +761,8 @@ void CL_BaseDestroy (base_t *base)
 	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
 		B_BuildingDestroy(base, &ccs.buildings[base->idx][buildingIdx]);
 	}
+	/* set the max installation count */
+	Cvar_SetValue("mn_installation_max", min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE));
 }
 
 #ifdef DEBUG
@@ -980,7 +982,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
 
 	/* now call the onconstruct trigger */
 	if (buildingNew->onConstruct[0] != '\0') {
-		Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", buildingNew->onConstruct, base->idx);
+		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n", buildingNew->onConstruct, base->idx);
 		Cmd_ExecuteString(va("%s %i;", buildingNew->onConstruct, base->idx));
 	}
 }
@@ -1141,7 +1143,9 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 
 	/* this cvar is used for disabling the base build button on geoscape
 	 * if MAX_BASES was reached */
-	Cvar_Set("mn_base_count", va("%i", ccs.numBases));
+	Cvar_SetValue("mn_base_count", ccs.numBases);
+	/* set the max installation count */
+	Cvar_SetValue("mn_installation_max", min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE));
 
 	base->numAircraftInBase = 0;
 
@@ -2360,7 +2364,9 @@ void B_NewBases (void)
 
 	/* base setup */
 	ccs.numBases = 0;
-	Cvar_Set("mn_base_count", "0");
+	Cvar_SetValue("mn_base_count", 0);
+	/* set the max installation count */
+	Cvar_SetValue("mn_installation_max", min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE));
 
 	for (i = 0; i < MAX_BASES; i++) {
 		base_t *base = B_GetBaseByIDX(i);
@@ -3597,7 +3603,9 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 	}
 	ccs.numBases = B_GetFoundedBaseCount();
-	Cvar_Set("mn_base_count", va("%i", ccs.numBases));
+	Cvar_SetValue("mn_base_count", ccs.numBases);
+	/* set the max installation count */
+	Cvar_SetValue("mn_installation_max", min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE));
 	return qtrue;
 }
 
@@ -3851,7 +3859,9 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 	}
 	ccs.numBases = B_GetFoundedBaseCount();
-	Cvar_Set("mn_base_count", va("%i", ccs.numBases));
+	Cvar_SetValue("mn_base_count", ccs.numBases);
+	/* set the max installation count */
+	Cvar_SetValue("mn_installation_max", min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE));
 
 	return qtrue;
 }

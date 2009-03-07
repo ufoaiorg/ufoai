@@ -55,7 +55,7 @@ menu ufopedia
 
 	custombutton button_text_pre
 	{
-		visiblewhen "mn_uppreavailable == 1"
+		visiblewhen "*cvar:mn_uppreavailable == 1"
 		tooltip		"_Pre research text"
 		image		menu/button_background
 		texl		"128 0"
@@ -68,7 +68,7 @@ menu ufopedia
 
 	custombutton button_text_normal
 	{
-		visiblewhen "mn_updisplay == 2"
+		visiblewhen "*cvar:mn_updisplay == 2"
 		tooltip		"_Research results"
 		image		menu/button_background
 		texl		"128 0"
@@ -215,7 +215,7 @@ menu ufopedia
 
 	pic weapon_dec
 	{
-		visiblewhen "mn_changeweapon == 1"
+		visiblewhen "*cvar:mn_changeweapon == 1"
 		tooltip		"_Previous weapon chambered for this ammunition"
 		image		menu/buttons_small
 		pos			"270 704"
@@ -227,7 +227,7 @@ menu ufopedia
 
 	pic ammo_dec
 	{
-		visiblewhen "mn_changeweapon == 2"
+		visiblewhen "*cvar:mn_changeweapon == 2"
 		tooltip		"_Previous ammunition compatible with this weapon"
 		image		menu/buttons_small
 		pos			"270 704"
@@ -239,7 +239,7 @@ menu ufopedia
 
 	pic weapon_inc
 	{
-		visiblewhen "mn_changeweapon == 1"
+		visiblewhen "*cvar:mn_changeweapon == 1"
 		tooltip		"_Next weapon chambered for this ammunition"
 		image		menu/buttons_small
 		pos			"510 704"
@@ -251,7 +251,7 @@ menu ufopedia
 
 	pic ammo_inc
 	{
-		visiblewhen "mn_changeweapon == 2"
+		visiblewhen "*cvar:mn_changeweapon == 2"
 		tooltip		"_Next ammunition compatible with this weapon"
 		image		menu/buttons_small
 		pos			"510 704"
@@ -263,7 +263,7 @@ menu ufopedia
 
 	string header_weapon
 	{
-		visiblewhen "mn_displayweapon == 1"
+		visiblewhen "*cvar:mn_displayweapon == 1"
 		string		"_With weapon:"
 		pos			"115 704"
 		size		"150 20"
@@ -273,7 +273,7 @@ menu ufopedia
 
 	string header_ammo
 	{
-		visiblewhen "mn_displayweapon == 2"
+		visiblewhen "*cvar:mn_displayweapon == 2"
 		string		"_With ammo:"
 		pos			"115 704"
 		size		"150 20"
@@ -284,7 +284,7 @@ menu ufopedia
 
 	string weapon_name
 	{
-		visiblewhen "mn_displayweapon > 0"
+		visiblewhen "*cvar:mn_displayweapon > 0"
 		tooltip		"*cvar mn_upresearchedlinknametooltip"
 		string		"*cvar mn_researchedlinkname"
 		pos			"285 704"
@@ -296,7 +296,7 @@ menu ufopedia
 
 	zone weapon_name_click
 	{
-		visiblewhen "mn_displayweapon > 0"
+		visiblewhen "*cvar:mn_displayweapon > 0"
 		pos			"285 702"
 		size		"230 20"
 		click		{ cmd "mn_upgotoresearchedlink;" }
@@ -305,7 +305,7 @@ menu ufopedia
 	/** Firemodes */
 	string header_firemode
 	{
-		visiblewhen "mn_displayfiremode == 1"
+		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string		"_Firemode:"
 		pos			"115 724"
 		size		"150 20"
@@ -315,7 +315,7 @@ menu ufopedia
 
 	pic firemode_dec
 	{
-		visiblewhen "mn_changefiremode == 1"
+		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip		"_Previous firemode"
 		image		menu/buttons_small
 		pos			"270 724"
@@ -327,7 +327,7 @@ menu ufopedia
 
 	string firemode_name
 	{
-		visiblewhen "mn_displayfiremode == 1"
+		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string		"*cvar mn_firemodename"
 		pos			"285 724"
 		size		"230 20"
@@ -337,7 +337,7 @@ menu ufopedia
 
 	pic firemode_inc
 	{
-		visiblewhen "mn_changefiremode == 1"
+		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip		"_Next firemode"
 		image		menu/buttons_small
 		pos			"510 724"

@@ -249,23 +249,23 @@ menu equipment
 	// ==================
 
 	confunc update_item_list {
-		if "mn_equiptype == 0" {
+		if "*cvar:mn_equiptype == 0" {
 			*(container)equip filter 0
 			*(container)equip_ammo filter 0
 		}
-		if "mn_equiptype == 1" {
+		if "*cvar:mn_equiptype == 1" {
 			*(container)equip filter 1
 			*(container)equip_ammo filter 1
 		}
-		if "mn_equiptype == 2" {
+		if "*cvar:mn_equiptype == 2" {
 			*(container)equip filter 2
 			*(container)equip_ammo filter 2
 		}
-		if "mn_equiptype == 3" {
+		if "*cvar:mn_equiptype == 3" {
 			*(container)equip filter 3
 			*(container)equip_ammo filter 3
 		}
-		if "mn_equiptype == 4" {
+		if "*cvar:mn_equiptype == 4" {
 			*(container)equip filter 4
 			*(container)equip_ammo filter 4
 		}
@@ -339,7 +339,7 @@ menu equipment
 	}
 	pic weapon_dec
 	{
-		visiblewhen "mn_changeweapon == 1"
+		visiblewhen "*cvar:mn_changeweapon == 1"
 		tooltip "_Previous weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos		"160 707"
@@ -354,7 +354,7 @@ menu equipment
 
 	pic ammo_dec
 	{
-		visiblewhen "mn_changeweapon == 2"
+		visiblewhen "*cvar:mn_changeweapon == 2"
 		tooltip "_Previous ammunition compatible with this weapon"
 		image	menu/buttons_small
 		pos		"160 707"
@@ -369,7 +369,7 @@ menu equipment
 
 	pic weapon_inc
 	{
-		visiblewhen "mn_changeweapon == 1"
+		visiblewhen "*cvar:mn_changeweapon == 1"
 		tooltip "_Next weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos		"367 707"
@@ -384,7 +384,7 @@ menu equipment
 
 	pic ammo_inc
 	{
-		visiblewhen "mn_changeweapon == 2"
+		visiblewhen "*cvar:mn_changeweapon == 2"
 		tooltip "_Next ammunition compatible with this weapon"
 		image	menu/buttons_small
 		pos		"367 707"
@@ -400,7 +400,7 @@ menu equipment
 
 	string header_weapon
 	{
-		visiblewhen "mn_displayweapon == 1"
+		visiblewhen "*cvar:mn_displayweapon == 1"
 		string	"_With weapon:"
 		pos		"30 708"
 		size	"130 16"
@@ -409,7 +409,7 @@ menu equipment
 
 	string header_ammo
 	{
-		visiblewhen "mn_displayweapon == 2"
+		visiblewhen "*cvar:mn_displayweapon == 2"
 		string	"_With ammo:"
 		pos		"30 708"
 		size	"130 16"
@@ -427,7 +427,7 @@ menu equipment
 
 	pic firemode_dec
 	{
-		visiblewhen "mn_changefiremode == 1"
+		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
 		pos		"160 725"
@@ -439,7 +439,7 @@ menu equipment
 
 	pic firemode_inc
 	{
-		visiblewhen "mn_changefiremode == 1"
+		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
 		pos		"367 725"
@@ -451,7 +451,7 @@ menu equipment
 
 	string header_firemode
 	{
-		visiblewhen "mn_displayfiremode == 1"
+		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string	"_Firemode:"
 		pos		"30 725"
 		size	"120 16"
@@ -460,7 +460,7 @@ menu equipment
 
 	string firemode_name
 	{
-		visiblewhen "mn_displayfiremode == 1"
+		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string	"*cvar mn_firemodename"
 		pos		"170 725"
 		size	"200 16"

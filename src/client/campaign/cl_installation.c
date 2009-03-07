@@ -495,8 +495,6 @@ void INS_InitStartup (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "Reset installation\n");
 
-	Cvar_SetValue("mn_installation_max", MAX_INSTALLATIONS);
-
 	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
 		ccs.installationTemplates[idx].id = NULL;
 		ccs.installationTemplates[idx].name = NULL;

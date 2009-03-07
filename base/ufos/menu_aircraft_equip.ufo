@@ -448,7 +448,7 @@ menu aircraft_equip extends iaircraft
 		cmd "airequip_updatemenu 2;"
 		call airequip_zone1
 		// absent from base, go back to the main GUI
-		if "mn_equipsoldierstate == 1" {
+		if "*cvar:mn_equipsoldierstate == 1" {
 			cmd "mn_pop;mn_push aircraft;"
 		}
 	}

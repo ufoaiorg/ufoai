@@ -171,27 +171,27 @@ menu hospital
 		pos "665 595"
 	}
 
-	pic hos_icon0	{ visiblewhen "mn_hos_item0"		image icons/health_unused 	pos "272  36" }
-	pic hos_icon1	{ visiblewhen "mn_hos_item1"		image icons/health_unused 	pos "592  36" }
-	pic hos_icon2	{ visiblewhen "mn_hos_item2"		image icons/health_unused 	pos "912  36" }
-	pic hos_icon3	{ visiblewhen "mn_hos_item3"		image icons/health_unused 	pos "272 131" }
-	pic hos_icon4	{ visiblewhen "mn_hos_item4"		image icons/health_unused 	pos "592 131" }
-	pic hos_icon5	{ visiblewhen "mn_hos_item5"		image icons/health_unused 	pos "912 131" }
-	pic hos_icon6	{ visiblewhen "mn_hos_item6"		image icons/health_unused 	pos "272 226" }
-	pic hos_icon7	{ visiblewhen "mn_hos_item7"		image icons/health_unused 	pos "592 226" }
-	pic hos_icon8	{ visiblewhen "mn_hos_item8"		image icons/health_unused 	pos "912 226" }
-	pic hos_icon9	{ visiblewhen "mn_hos_item9"		image icons/health_unused 	pos "272 321" }
-	pic hos_icon10	{ visiblewhen "mn_hos_item10"	image icons/health_unused 	pos "592 321" }
-	pic hos_icon11	{ visiblewhen "mn_hos_item11"	image icons/health_unused 	pos "912 321" }
-	pic hos_icon12	{ visiblewhen "mn_hos_item12"	image icons/health_unused 	pos "272 416" }
-	pic hos_icon13	{ visiblewhen "mn_hos_item13"	image icons/health_unused 	pos "592 416" }
-	pic hos_icon14	{ visiblewhen "mn_hos_item14"	image icons/health_unused 	pos "912 416" }
-	pic hos_icon15	{ visiblewhen "mn_hos_item15"	image icons/health_unused 	pos "272 511" }
-	pic hos_icon16	{ visiblewhen "mn_hos_item16"	image icons/health_unused 	pos "592 511" }
-	pic hos_icon17	{ visiblewhen "mn_hos_item17"	image icons/health_unused 	pos "912 511" }
-	pic hos_icon18	{ visiblewhen "mn_hos_item18"	image icons/health_unused 	pos "272 606" }
-	pic hos_icon19	{ visiblewhen "mn_hos_item19"	image icons/health_unused 	pos "592 606" }
-	pic hos_icon20	{ visiblewhen "mn_hos_item20"	image icons/health_unused 	pos "912 606" }
+	pic hos_icon0	{ visiblewhen "*cvar:mn_hos_item0"		image icons/health_unused 	pos "272  36" }
+	pic hos_icon1	{ visiblewhen "*cvar:mn_hos_item1"		image icons/health_unused 	pos "592  36" }
+	pic hos_icon2	{ visiblewhen "*cvar:mn_hos_item2"		image icons/health_unused 	pos "912  36" }
+	pic hos_icon3	{ visiblewhen "*cvar:mn_hos_item3"		image icons/health_unused 	pos "272 131" }
+	pic hos_icon4	{ visiblewhen "*cvar:mn_hos_item4"		image icons/health_unused 	pos "592 131" }
+	pic hos_icon5	{ visiblewhen "*cvar:mn_hos_item5"		image icons/health_unused 	pos "912 131" }
+	pic hos_icon6	{ visiblewhen "*cvar:mn_hos_item6"		image icons/health_unused 	pos "272 226" }
+	pic hos_icon7	{ visiblewhen "*cvar:mn_hos_item7"		image icons/health_unused 	pos "592 226" }
+	pic hos_icon8	{ visiblewhen "*cvar:mn_hos_item8"		image icons/health_unused 	pos "912 226" }
+	pic hos_icon9	{ visiblewhen "*cvar:mn_hos_item9"		image icons/health_unused 	pos "272 321" }
+	pic hos_icon10	{ visiblewhen "*cvar:mn_hos_item10"	image icons/health_unused 	pos "592 321" }
+	pic hos_icon11	{ visiblewhen "*cvar:mn_hos_item11"	image icons/health_unused 	pos "912 321" }
+	pic hos_icon12	{ visiblewhen "*cvar:mn_hos_item12"	image icons/health_unused 	pos "272 416" }
+	pic hos_icon13	{ visiblewhen "*cvar:mn_hos_item13"	image icons/health_unused 	pos "592 416" }
+	pic hos_icon14	{ visiblewhen "*cvar:mn_hos_item14"	image icons/health_unused 	pos "912 416" }
+	pic hos_icon15	{ visiblewhen "*cvar:mn_hos_item15"	image icons/health_unused 	pos "272 511" }
+	pic hos_icon16	{ visiblewhen "*cvar:mn_hos_item16"	image icons/health_unused 	pos "592 511" }
+	pic hos_icon17	{ visiblewhen "*cvar:mn_hos_item17"	image icons/health_unused 	pos "912 511" }
+	pic hos_icon18	{ visiblewhen "*cvar:mn_hos_item18"	image icons/health_unused 	pos "272 606" }
+	pic hos_icon19	{ visiblewhen "*cvar:mn_hos_item19"	image icons/health_unused 	pos "592 606" }
+	pic hos_icon20	{ visiblewhen "*cvar:mn_hos_item20"	image icons/health_unused 	pos "912 606" }
 
 	string hos_item0	{ string "*cvar mn_hos_item0"		pos "40  35"	color "1 1 1 1"	size "220 16" }
 	string hos_item1	{ string "*cvar mn_hos_item1"		pos "360  35"	color "1 1 1 1"	size "220 16" }

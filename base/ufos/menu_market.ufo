@@ -726,7 +726,7 @@ menu market
 
 		string txt_storage_caption
 		{
-			visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
+			visiblewhen "*cvar:mn_itemtype ne aircraft"	// for everything except aircraft
 			string 		"_Storage (used/all):"
 			pos			"62 50"
 			size		"200 20"
@@ -735,7 +735,7 @@ menu market
 
 		string txt_storage_value
 		{
-			visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
+			visiblewhen "*cvar:mn_itemtype ne aircraft"	// for everything except aircraft
 			string 		"*cvar mn_bs_storage"
 			pos			"267 50"
 			size		"100 20"
@@ -757,7 +757,7 @@ menu market
 
 		string itemname
 		{
-			visiblewhen "mn_itemtype ne aircraft"	// for everything except aircraft
+			visiblewhen "*cvar:mn_itemtype ne aircraft"	// for everything except aircraft
 			string		"*cvar mn_itemname"
 			pos			"22 35"
 			size		"365 20"
@@ -765,7 +765,7 @@ menu market
 		}
 		string aircraftname
 		{
-			visiblewhen "mn_itemtype eq aircraft"	// Only for aircraft.
+			visiblewhen "*cvar:mn_itemtype eq aircraft"	// Only for aircraft.
 			string		"*cvar mn_aircraftname"
 			pos			"22 35"
 			size		"365 20"
@@ -799,7 +799,7 @@ menu market
 
 		string header_weapon
 		{
-			visiblewhen "mn_displayweapon == 1"
+			visiblewhen "*cvar:mn_displayweapon == 1"
 			string		"_With weapon:"
 			pos			"32 386"
 			size		"120 20"
@@ -808,7 +808,7 @@ menu market
 		}
 		string header_ammo
 		{
-			visiblewhen "mn_displayweapon == 2"
+			visiblewhen "*cvar:mn_displayweapon == 2"
 			string		"_With ammo:"
 			pos			"32 386"
 			size		"120 20"
@@ -818,7 +818,7 @@ menu market
 
 		pic weapon_dec
 		{
-			visiblewhen "mn_changeweapon == 1"
+			visiblewhen "*cvar:mn_changeweapon == 1"
 			tooltip		"_Previous weapon chambered for this ammunition"
 			image		menu/buttons_small
 			pos			"157 387"
@@ -829,7 +829,7 @@ menu market
 		}
 		pic ammo_dec
 		{
-			visiblewhen "mn_changeweapon == 2"
+			visiblewhen "*cvar:mn_changeweapon == 2"
 			tooltip		"_Previous ammunition compatible with this weapon"
 			image		menu/buttons_small
 			pos			"157 387"
@@ -850,7 +850,7 @@ menu market
 
 		pic weapon_inc
 		{
-			visiblewhen "mn_changeweapon == 1"
+			visiblewhen "*cvar:mn_changeweapon == 1"
 			tooltip		"_Next weapon chambered for this ammunition"
 			image		menu/buttons_small
 			pos			"377 387"
@@ -861,7 +861,7 @@ menu market
 		}
 		pic ammo_inc
 		{
-			visiblewhen "mn_changeweapon == 2"
+			visiblewhen "*cvar:mn_changeweapon == 2"
 			tooltip		"_Next ammunition compatible with this weapon"
 			image		menu/buttons_small
 			pos			"367 387"
@@ -885,7 +885,7 @@ menu market
 
 		string header_firemode
 		{
-			visiblewhen "mn_displayfiremode == 1"
+			visiblewhen "*cvar:mn_displayfiremode == 1"
 			string		"_Firemode:"
 			pos			"32 404"
 			size		"120 20"
@@ -895,7 +895,7 @@ menu market
 
 		pic firemode_dec
 		{
-			visiblewhen "mn_changefiremode == 1"
+			visiblewhen "*cvar:mn_changefiremode == 1"
 			tooltip		"_Previous firemode"
 			image		menu/buttons_small
 			pos			"157 405"
@@ -907,7 +907,7 @@ menu market
 
 		string firemode_name
 		{
-			visiblewhen "mn_displayfiremode == 1"
+			visiblewhen "*cvar:mn_displayfiremode == 1"
 			string		"*cvar mn_firemodename"
 			pos			"174 404"
 			size		"185 20"
@@ -917,7 +917,7 @@ menu market
 
 		pic firemode_inc
 		{
-			visiblewhen "mn_changefiremode == 1"
+			visiblewhen "*cvar:mn_changefiremode == 1"
 			tooltip		"_Next firemode"
 			image		menu/buttons_small
 			pos			"367 405"

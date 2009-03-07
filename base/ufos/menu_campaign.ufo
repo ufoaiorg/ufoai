@@ -56,7 +56,7 @@ menu campaigns
 
 	button button_continue
 	{
-		visiblewhen "mn_lastsave"
+		visiblewhen "*cvar:mn_lastsave"
 
 		string		"_Continue"
 		tooltip		"_Load last saved game or continue playing"

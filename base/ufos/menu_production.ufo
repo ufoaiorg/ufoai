@@ -206,7 +206,7 @@ menu production
 
 	string txt_prod_storage_caption
 	{
-		visiblewhen "mn_itemtype"
+		visiblewhen "*cvar:mn_itemtype"
 		string		"_Storage capacity:"
 		pos			"610 245"
 		size		"250 20"
@@ -215,7 +215,7 @@ menu production
 
 	string txt_prod_storage
 	{
-		visiblewhen "mn_itemtype"
+		visiblewhen "*cvar:mn_itemtype"
 		string		"*cvar mn_production_storage"
 		pos			"875 245"
 		size		"100 20"
@@ -311,7 +311,7 @@ menu production
 
 	item itemmodel
 	{
-		visiblewhen "mn_itemtype"
+		visiblewhen "*cvar:mn_itemtype"
 		model		"*cvar mn_item"
 		pos			"636 333"
 		size		"336 140"

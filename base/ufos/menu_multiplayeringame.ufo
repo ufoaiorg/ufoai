@@ -49,7 +49,7 @@ menu multiplayerInGame
 
 	button button_irc
 	{
-		visiblewhen "irc_defaultChannel"
+		visiblewhen "*cvar:irc_defaultChannel"
 		pos	"640 310"
 		size "256 64"
 		click	{ cmd "mn_push irc;" }

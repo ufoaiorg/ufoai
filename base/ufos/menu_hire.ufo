@@ -277,7 +277,7 @@ menu employees
 
 	textentry name
 	{
-		visiblewhen "mn_show_employee >= 1"
+		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		"*cvar mn_name"
 		pos			"465 315"
 		size		"400 32"
@@ -286,7 +286,7 @@ menu employees
 
 	pic bt_edit
 	{
-		visiblewhen "mn_employee_hired == 1"
+		visiblewhen "*cvar:mn_employee_hired == 1"
 		tooltip		"_Rename your employee"
 		image		menu/buttons_small
 		pos			"865 322"
@@ -306,7 +306,7 @@ menu employees
 
 	model body
 	{
-		visiblewhen "mn_show_employee >= 1"
+		visiblewhen "*cvar:mn_show_employee >= 1"
 		model		"*cvar mn_body"
 		skin		"*cvar mn_skin"
 		anim		"stand2"
@@ -319,7 +319,7 @@ menu employees
 
 	model head
 	{
-		visiblewhen "mn_show_employee >= 1"
+		visiblewhen "*cvar:mn_show_employee >= 1"
 		model		"*cvar mn_head"
 		skin		"*cvar mn_skin"
 		tag			"body tag_head"
@@ -328,14 +328,14 @@ menu employees
 
 	pic	rank_img
 	{
-		visiblewhen "mn_show_employee >= 1"
+		visiblewhen "*cvar:mn_show_employee >= 1"
 		image		"*cvar mn_chrrank_img"
 		pos			"485 674"
 	}
 
 	string	rank_lbl
 	{
-		visiblewhen "mn_show_employee >= 1"
+		visiblewhen "*cvar:mn_show_employee >= 1"
 		string		"*cvar mn_chrrank"
 		pos			"470 383"
 		size		"200 20"
@@ -344,7 +344,7 @@ menu employees
 
 	panel soldier_info {
 		{
-			visiblewhen "mn_show_employee == 1"
+			visiblewhen "*cvar:mn_show_employee == 1"
 			pos		"670 380"
 			size	"330 360"
 		}
