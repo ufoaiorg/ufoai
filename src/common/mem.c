@@ -203,12 +203,12 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 			mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
 	}
 
+	SDL_mutexP(z_lock);
+
 	/* Decrement counters */
 	mem->pool->blockCount--;
 	mem->pool->byteCount -= mem->size;
 	size = mem->size;
-
-	SDL_mutexP(z_lock);
 
 	/* De-link it */
 	prev = &mem->pool->blocks;
@@ -309,10 +309,6 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	if (zeroFill)
 		memset(mem, 0, size);
 
-	/* For integrity checking and stats */
-	pool->blockCount++;
-	pool->byteCount += size;
-
 	/* Fill in the header */
 	mem->topSentinel = MEM_HEAD_SENTINEL_TOP;
 	mem->tagNum = tagNum;
@@ -329,6 +325,10 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	mem->footer->sentinel = MEM_FOOT_SENTINEL;
 
 	SDL_mutexP(z_lock);
+
+	/* For integrity checking and stats */
+	pool->blockCount++;
+	pool->byteCount += size;
 
 	/* Link it in to the appropriate pool */
 	mem->next = pool->blocks;
