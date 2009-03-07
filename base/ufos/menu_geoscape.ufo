@@ -857,29 +857,36 @@ menu popup_intercept_ready
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"66 102"
-		size		"176 32"
+		pos			"66 125"
+		size		"176 40"
 		click		{ cmd "game_go;" }
 	}
 
 	button bt_auto_go
 	{
-		visiblewhen	"cp_mission_autogo_available == 1"
-
 		string		"_Auto mission"
 		tooltip		"_Automatically finish mission"
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"259 102"
-		size		"176 32"
+		pos			"259 125"
+		size		"176 40"
 		click		{ cmd "cp_mission_autogo;" }
+	}
+
+	confunc popup_intercept_ready_update
+	{
+		if "cp_mission_autogo_available == 1" {
+			*bt_auto_go disabled false
+		} else {
+			*bt_auto_go disabled true
+		}
 	}
 
 	func init
 	{
-		cmd "cp_missionauto_check;"
+		cmd "cp_missionauto_check;popup_intercept_ready_update"
 	}
 }
 
