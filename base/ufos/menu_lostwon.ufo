@@ -41,7 +41,7 @@ menu won
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set cp_mission_tryagain 0;mn_pop;uforecover_check" }
+		click		{ cmd "set cp_mission_tryagain 0;mn_pop;uforecover_check;" }
 	}
 
 	confunc uforecover_check
@@ -168,7 +168,7 @@ menu uforecovery
 
 	string actualufo
 	{
-		string		"_some stats about actual ufo"
+		string		"_Some stats about actual ufo"
 		pos			"26 50"
 		size		"273 23"
 		font		f_small
@@ -182,7 +182,7 @@ menu uforecovery
 			pos		"20 165"
 			size	"731 300"
 		}
-		
+
 		text cp_uforecovery_baselist
 		{
 			textid		TEXT_UFORECOVERY_BASESTORAGE
@@ -292,7 +292,7 @@ menu uforecovery
 			click		{ cmd "cp_ufosellstart;mn_pop;" }
 		}
 	}
-	
+
 	//
 	// function to manage tab
 	//
