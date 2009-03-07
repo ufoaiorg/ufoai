@@ -161,25 +161,26 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
  */
 int MN_CompleteWithMenu (const char *partial, const char **match)
 {
-	int i, matches = 0;
+	int i;
+	int matches = 0;
 	const char *localMatch[MAX_COMPLETE];
 	const size_t len = strlen(partial);
 
-	if (!len) {
+	if (len == 0) {
 		for (i = 0; i < mn.numMenus; i++)
 			Com_Printf("%s\n", mn.menus[i]->name);
 		return 0;
 	}
-
-	localMatch[matches] = NULL;
 
 	/* check for partial matches */
 	for (i = 0; i < mn.numMenus; i++)
 		if (!Q_strncmp(partial, mn.menus[i]->name, len)) {
 			Com_Printf("%s\n", mn.menus[i]->name);
 			localMatch[matches++] = mn.menus[i]->name;
-			if (matches >= MAX_COMPLETE)
+			if (matches >= MAX_COMPLETE) {
+				Com_Printf("MN_CompleteWithMenu: hit MAX_COMPLETE\n");
 				break;
+			}
 		}
 
 	return Cmd_GenericCompleteFunction(len, match, matches, localMatch);
