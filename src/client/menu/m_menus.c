@@ -470,20 +470,24 @@ static void MN_CloseMenu_f (void)
  */
 static void MN_PopMenu_f (void)
 {
-	if (Cmd_Argc() < 2 || !Q_strcmp(Cmd_Argv(1), "esc")) {
+	if (Cmd_Argc() < 2) {
 		/** @todo we can do the same in a better way: event returning agreement */
-		/* some window can prevent escape */
 		const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
 		assert(mn.menuStackPos);
-		if (!menu->u.window.preventTypingEscape) {
-			MN_PopMenu(qfalse);
-		}
+
+		/* some window can prevent escape */
+		if (menu->u.window.preventTypingEscape)
+			if (Cmd_Argc() >= 1 && !Q_strcmp(Cmd_Argv(1), "esc"))
+				return;
+
+		MN_PopMenu(qfalse);
 	} else {
 		int i;
 
 		for (i = 0; i < mn_escpop->integer; i++)
 			MN_PopMenu(qfalse);
 
+		/** @todo delete it when its possible */
 		Cvar_Set("mn_escpop", "1");
 	}
 }
