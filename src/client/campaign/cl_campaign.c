@@ -2480,6 +2480,10 @@ void CP_CampaignExit (void)
 	Mem_DeletePool(cl_campaignPool);
 
 	if (GAME_CP_IsRunning()) {
+		/**@todo perhaps there is a better way to do this, don't call them on their own */
+		MAP_DeactivateOverlay("radar");
+		MAP_DeactivateOverlay("nations");
+		MAP_DeactivateOverlay("xvi");
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();
