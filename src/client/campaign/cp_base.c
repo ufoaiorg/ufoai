@@ -2066,6 +2066,13 @@ void B_SelectBase (base_t *base)
 			installationCurrent = NULL;
 			baseCurrent = B_GetBaseByIDX(baseID);
 			baseCurrent->idx = baseID;
+
+			/* default name */
+			if (baseCurrent->idx == 0)
+				Q_strncpyz(baseCurrent->name, _("Home"), sizeof(baseCurrent->name));
+			else
+				Q_strncpyz(baseCurrent->name, _(va("Base #%d", baseCurrent->idx + 1)) , sizeof(baseCurrent->name));
+
 			Cvar_Set("mn_base_newbasecost", va(_("%i c"), curCampaign->basecost));
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			MN_ExecuteConfunc("set_base_to_normal");
@@ -2095,11 +2102,7 @@ void B_SelectBase (base_t *base)
 		}
 	}
 
-	/**
-	 * this is only needed when we are going to be show up the base
-	 * in our base view port
-	 */
-	if (ccs.mapAction != MA_NEWBASE) {
+	if (baseCurrent) {
 		assert(baseCurrent);
 		Cvar_Set("mn_base_title", baseCurrent->name);
 		Cvar_SetValue("mn_numbases", ccs.numBases);
