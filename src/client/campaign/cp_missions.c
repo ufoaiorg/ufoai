@@ -331,10 +331,8 @@ void CP_CreateBattleParameters (mission_t *mission)
 	/* Is there a UFO to recover ? */
 	if (ccs.selectedMission->ufo) {
 		const char *shortUFOType;
-		const char *missionType;
 		if (mission->crashed) {
 			shortUFOType = UFO_CrashedTypeToShortName(ccs.selectedMission->ufo->ufotype);
-			missionType = "cp_ufocrashed";
 			/* Set random map UFO if this is a random map */
 			if (mission->mapDef->map[0] == '+') {
 				/* set battleParameters.param to the ufo type: used for ufocrash random map */
@@ -343,7 +341,6 @@ void CP_CreateBattleParameters (mission_t *mission)
 			}
 		} else {
 			shortUFOType = UFO_TypeToShortName(ccs.selectedMission->ufo->ufotype);
-			missionType = "cp_uforecovery";
 		}
 
 		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
