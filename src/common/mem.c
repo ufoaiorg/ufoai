@@ -377,14 +377,14 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	mem->next = pool->blocks;
 	pool->blocks = mem;
 
-	SDL_mutexV(z_lock);
-
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
 
 	/* counters */
 	pool->byteCount -= mem->size;
 	pool->byteCount += size;
+
+	SDL_mutexV(z_lock);
 
 	mem->size = size;
 	mem->memPointer = (void *)(mem + 1);
