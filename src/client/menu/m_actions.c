@@ -90,12 +90,35 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 			if (next) {
 				/* cvar injection */
 				if (!Q_strncmp(propertyName, "cvar:", 5)) {
-					cvar_t *cvar = Cvar_Get(propertyName + 5, "", 0, NULL);
-					int l = snprintf(cout, length, "%s", cvar->string);
+					const cvar_t *cvar = Cvar_Get(propertyName + 5, "", 0, NULL);
+					const int l = snprintf(cout, length, "%s", cvar->string);
 					cout += l;
 					cin = next;
 					length -= l;
 					continue;
+
+				/* source path injection */
+				} else if (!Q_strncmp(propertyName, "path:", 5)) {
+					if (source) {
+						const char *command = propertyName + 5;
+						const menuNode_t *node = NULL;
+						if (!Q_strcmp(command, "menu"))
+							node = source->menu;
+						else if (!Q_strcmp(command, "this"))
+							node = source;
+						else if (!Q_strcmp(command, "parent"))
+							node = source->parent;
+						else
+							Com_Printf("MN_GenCommand: Command '%s' for path injection unknown\n", command);
+
+						if (node) {
+							const int l = snprintf(cout, length, "%s", MN_GetPath(node));
+							cout += l;
+							cin = next;
+							length -= l;
+							continue;
+						}
+					}
 
 				/* source property injection */
 				} else if (source) {
@@ -172,7 +195,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	switch (action->type.param1) {
 	case EA_THISMENUNODENAMEPROPERTY:
 		{
-			const menuNode_t *menu = (source->menu)?source->menu:source;
+			const menuNode_t *menu = source->menu;
 			node = MN_GetNodeByPath(va("%s.%s", menu->name, path));
 			if (!node) {
 				Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist (source: %s)\n", menu->name, path, MN_GetPath(source));

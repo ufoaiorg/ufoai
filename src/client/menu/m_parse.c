@@ -1059,7 +1059,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 	} else {
 		node = MN_AllocNode(behaviour->name);
 		node->parent = parent;
-		node->menu = (parent->menu)?parent->menu:parent;
+		node->menu = parent->menu;
 		Q_strncpyz(node->name, *token, sizeof(node->name));
 		MN_AppendNode(parent, node);
 	}
@@ -1304,6 +1304,7 @@ void MN_ParseMenu (const char *name, const char **text)
 	/* initialize the menu */
 	menu = MN_AllocNode("menu");
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
+	menu->menu = menu;
 
 	menu->behaviour->loading(menu);
 
@@ -1325,6 +1326,7 @@ void MN_ParseMenu (const char *name, const char **text)
 			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
 		*menu = *superMenu;
 		menu->super = superMenu;
+		menu->menu = menu;
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 
 		/* start a new list */
