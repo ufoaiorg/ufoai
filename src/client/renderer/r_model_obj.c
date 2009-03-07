@@ -175,8 +175,10 @@ static int R_LoadObjModelFace (model_t *mod, mobj_t *obj, const char *line)
 				else if (!v->normal)
 					v->normal = atoi(tok);
 
-				memset(tok, 0, sizeof(tok));
 				d++;
+
+				memset(tok, 0, sizeof(tok));
+				e = tok;
 
 				continue;
 			}
@@ -214,6 +216,9 @@ static int R_LoadObjModelFace (model_t *mod, mobj_t *obj, const char *line)
  */
 static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char *line)
 {
+	if (!line || line[0] == '\0')  /* don't bother */
+		return;
+
 	if (!strncmp(line, "v ", 2)) {  /* vertex */
 		if (obj->verts) {  /* parse it */
 			float *f = obj->verts + obj->num_verts_parsed * 3;
