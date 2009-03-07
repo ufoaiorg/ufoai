@@ -2073,7 +2073,6 @@ void B_SelectBase (base_t *base)
 			else
 				Q_strncpyz(baseCurrent->name, _(va("Base #%d", baseCurrent->idx + 1)) , sizeof(baseCurrent->name));
 
-			Cvar_Set("mn_base_newbasecost", va(_("%i c"), curCampaign->basecost));
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			MN_ExecuteConfunc("set_base_to_normal");
 			/* show radar overlay (if not already displayed) */

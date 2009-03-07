@@ -68,4 +68,3 @@ qboolean CL_NewInstallation (installation_t* installation, installationTemplate_
 
 	return qtrue;
 }
-
