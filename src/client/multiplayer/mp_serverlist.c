@@ -357,6 +357,8 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 	NET_StreamFree(s);
 }
 
+static SDL_Thread *masterServerQueryThread;
+
 static int CL_QueryMasterServerThread (void *data)
 {
 	char *responseBuf;
@@ -401,27 +403,21 @@ static int CL_QueryMasterServerThread (void *data)
 
 	Mem_Free(responseBuf);
 
+	masterServerQueryThread = NULL;
 	return 0;
 }
 
 /**
  * @sa CL_PingServers_f
  */
-static int CL_QueryMasterServer (void *data)
+static void CL_QueryMasterServer (void)
 {
-	static SDL_Thread *thread;
-	int value;
-
-	if (thread != NULL) {
+	if (masterServerQueryThread != NULL) {
 		Com_Printf("query already in progress\n");
-		return 0;
+		return;
 	}
 
-	thread = SDL_CreateThread(CL_QueryMasterServerThread, data);
-	SDL_WaitThread(thread, &value);
-	thread = NULL;
-
-	return value;
+	masterServerQueryThread = SDL_CreateThread(CL_QueryMasterServerThread, NULL);
 }
 
 /**
@@ -604,8 +600,7 @@ void CL_PingServers_f (void)
 	/* query master server? */
 	if (Cmd_Argc() == 2 && Q_strcmp(Cmd_Argv(1), "local")) {
 		Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
-		/*SDL_CreateThread(CL_QueryMasterServer, NULL);*/
-		CL_QueryMasterServer(NULL);
+		CL_QueryMasterServer();
 	}
 }
 
