@@ -465,13 +465,13 @@ static void MN_CloseMenu_f (void)
  */
 static void MN_PopMenu_f (void)
 {
-	if (Cmd_Argc() >= 2) {
+	if (Cmd_Argc() > 2) {
 		Com_Printf("Usage: %s\n", Cmd_Argv(0));
 		return;
 	}
 
 	/** @todo move it into another function (mn_pop_esc) */
-	if (Cmd_Argc() == 1 && !Q_strcmp(Cmd_Argv(1), "esc")) {
+	if (Cmd_Argc() == 2 && !Q_strcmp(Cmd_Argv(1), "esc")) {
 		const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
 		assert(mn.menuStackPos);
 
