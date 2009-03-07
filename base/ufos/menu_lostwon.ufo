@@ -156,8 +156,8 @@ menu uforecovery
 		pos			"111 142"
 		size		"767 497"
 		dragbutton	true
-		closebutton	true
 		modal		true
+		preventtypingescape true		// we can't use ESC
 		image		menu/popup_alpha_tile
 		blend		true
 		string		"_UFO recovery"
