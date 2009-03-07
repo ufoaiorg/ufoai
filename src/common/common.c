@@ -554,15 +554,14 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			*tmp = '\0';
 
 		cntParams = Cmd_CompleteCommandParameters(cmdBase, s, &cmd);
-		if (cntParams == 1) {
+		if (cntParams > 1)
+			Com_Printf("\n");
+		if (cmd) {
 			/* append the found parameter */
 			Q_strcat(cmdLine, " ", sizeof(cmdLine));
 			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
 			append = qfalse;
 			use = cmdLine;
-		} else if (cntParams > 1) {
-			append = qfalse;
-			Com_Printf("\n");
 		} else
 			return qfalse;
 	} else {
