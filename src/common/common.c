@@ -593,7 +593,7 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 				}
 			}
 			if (idx == maxLength)
-				cmdLine[idx+1] = '\0';
+				cmdLine[idx] = '\0';
 			use = cmdLine;
 			append = qfalse;
 		}
