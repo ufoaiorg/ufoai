@@ -404,8 +404,6 @@ typedef struct ccs_s {
 
 	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
 	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
-	qboolean mission_tryagain;			/**< value to decide whether the try again button is
-										 * available after you played a campaign mission */
 
 	/* UFO to follow while in combat zoom */
 	aircraft_t *combatZoomedUFO;

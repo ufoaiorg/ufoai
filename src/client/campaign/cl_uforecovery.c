@@ -177,8 +177,6 @@ static void CP_UFORecovered_f (void)
  */
 static void CP_UFORecoveryDone (void)
 {
-	/* Disable Try Again a mission. */
-	ccs.mission_tryagain = qfalse;
 	ufoRecovery.recoveryDone = qtrue;
 }
 

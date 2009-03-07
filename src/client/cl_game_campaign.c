@@ -238,19 +238,6 @@ static void GAME_CP_Start_f (void)
 	Cbuf_AddText("seq_start intro;\n");
 }
 
-/**
- * @brief Function to issue Try Again a Mission.
- * @note Command to call this: cp_tryagain.
- */
-static void GAME_CP_TryAgain_f (void)
-{
-	/* Do nothing if user did other stuff. */
-	if (!ccs.mission_tryagain)
-		return;
-	Cvar_Set("cp_mission_tryagain", "1");
-	MN_PopMenu(qfalse);
-}
-
 void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
 	static char resultText[MAX_SMALLMENUTEXTLEN];
@@ -332,8 +319,6 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	Cvar_Set("mn_active", "map");
 	MN_PushMenu("map", NULL);
 
-	/* Make sure that at this point we are able to 'Try Again' a mission. */
-	ccs.mission_tryagain = qtrue;
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
 	if (winner == cls.team) {
@@ -390,7 +375,6 @@ void GAME_CP_InitStartup (void)
 	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
 	Cmd_AddCommand("cp_exit", CP_CampaignExit, "Stop the current running campaign");
-	Cmd_AddCommand("cp_tryagain", GAME_CP_TryAgain_f, "Try again a mission");
 
 	CP_InitStartup();
 
