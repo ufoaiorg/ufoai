@@ -676,15 +676,7 @@ static void SV_ParseMapcycle (void)
  */
 static qboolean SV_RunGameFrame (void)
 {
-	qboolean gameEnd = qfalse;
-
-	/* we always need to bump framenum, even if we
-	 * don't run the world, otherwise the delta
-	 * compression can get confused when a client
-	 * has the "current" frame */
-	sv.framenum++;
-
-	gameEnd = ge->RunFrame();
+	const qboolean gameEnd = ge->RunFrame();
 
 	/* next map in the cycle */
 	if (gameEnd && sv_maxclients->integer > 1)
