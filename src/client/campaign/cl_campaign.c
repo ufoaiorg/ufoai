@@ -619,7 +619,7 @@ int CL_DateCreateSeconds (byte hours, byte minutes, byte seconds)
 void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 {
 	CL_DateConvert(date, &dateLong->day, &dateLong->month, &dateLong->year);
-	/**@todo Make this conversion a function as well (DateConvertSeconds?) See also CL_SecondConvert */
+	/** @todo Make this conversion a function as well (DateConvertSeconds?) See also CL_SecondConvert */
 	dateLong->hour = date->sec / SECONDS_PER_HOUR;
 	dateLong->min = (date->sec - dateLong->hour * SECONDS_PER_HOUR) / 60;
 	dateLong->sec = date->sec - dateLong->hour * SECONDS_PER_HOUR - dateLong->min * 60;
@@ -634,6 +634,8 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 void CP_InitMarket (qboolean load)
 {
 	int i;
+
+	assert(curCampaign);
 
 	/* find the relevant markets */
 	curCampaign->marketDef = INV_GetEquipmentDefinitionByID(curCampaign->market);

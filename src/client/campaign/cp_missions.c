@@ -111,16 +111,10 @@ void CP_StartMissionMap (mission_t* mission)
 	/* base attack maps starts with a dot */
 	case '.':
 		bAttack = (base_t*)mission->data;
-		if (!bAttack) {
+		if (!bAttack)
 			/* assemble a random base and set the base status to BASE_UNDER_ATTACK */
 			Cbuf_AddText("base_assemble_rand 1;");
-			return;
-		} else if (bAttack->baseStatus != BASE_UNDER_ATTACK) {
-			Com_Printf("Base is not under attack\n");
-			return;
-		}
-		/* check whether there are founded bases */
-		if (B_GetFoundedBaseCount() > 0)
+		else if (bAttack->baseStatus == BASE_UNDER_ATTACK && B_GetFoundedBaseCount() > 0)
 			Cbuf_AddText(va("base_assemble %i 1;", bAttack->idx));
 		/* quick save is called when base is really assembled
 		 * @sa B_AssembleMap_f */
@@ -186,7 +180,7 @@ static void CP_SetAlienTeamByInterest (const mission_t *mission)
 		 * the alien team should not change depending on when you encounter it */
 		for (j = 0; j < cat->numAlienTeamGroups; j++) {
 			if (cat->alienTeamGroups[j].minInterest <= mission->initialOverallInterest
-				&& cat->alienTeamGroups[j].maxInterest > mission->initialOverallInterest)
+			 && cat->alienTeamGroups[j].maxInterest > mission->initialOverallInterest)
 				availableGroups[numAvailableGroup++] = &cat->alienTeamGroups[j];
 		}
 	}
@@ -213,12 +207,11 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 	const alienTeamGroup_t const *group = ccs.battleParameters.alienTeamGroup;
 	const linkedList_t const *equipPack = ccs.alienCategories[group->categoryIdx].equipment;
 
-	if (mission->initialOverallInterest > equip->maxInterest ||
-		mission->initialOverallInterest <= equip->minInterest)
+	if (mission->initialOverallInterest > equip->maxInterest || mission->initialOverallInterest <= equip->minInterest)
 		return qfalse;
 
-	while ((equip->name != NULL) && (equipPack != NULL)) {
-		if (!Q_strncmp((const char*)equipPack->data, equip->name, strlen((const char*)equipPack->data)))
+	while (equip->name != NULL && equipPack != NULL) {
+		if (!Q_strcmp((const char*)equipPack->data, equip->name))
 			return qtrue;
 		equipPack = equipPack->next;
 	}
@@ -291,7 +284,7 @@ static void CP_CreateAlienTeam (mission_t *mission)
  * @brief Create civilian team.
  * @param[in] mission Pointer to the mission that generates the battle
  */
-static void CP_CreateCivilianTeam (mission_t *mission)
+static void CP_CreateCivilianTeam (const mission_t *mission)
 {
 	nation_t *nation;
 
