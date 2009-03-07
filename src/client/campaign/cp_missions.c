@@ -211,7 +211,7 @@ static qboolean CP_IsAlienEquipmentSelectable (const mission_t *mission, const e
 		return qfalse;
 
 	while (equip->name != NULL && equipPack != NULL) {
-		if (!Q_strcmp((const char*)equipPack->data, equip->name))
+		if (!Q_strncmp((const char*)equipPack->data, equip->name, strlen((const char*)equipPack->data)))
 			return qtrue;
 		equipPack = equipPack->next;
 	}
