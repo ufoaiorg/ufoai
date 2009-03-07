@@ -34,17 +34,23 @@ static void MN_StringNodeDraw (menuNode_t *node)
 	vec2_t nodepos;
 	const char *font = MN_GetFont(node);
 	const char* ref = MN_GetReferenceString(node, node->text);
+	static vec4_t disabledColor = {0.5, 0.5, 0.5, 1.0};
+	vec_t *color;
+
 	if (!ref)
 		return;
 	MN_GetNodeAbsPos(node, nodepos);
 
-	/* blinking */
-	R_ColorBlend(node->color);
+	if (node->disabled)
+		color = disabledColor;
+	else
+		color = node->color;
+
+	R_ColorBlend(color);
 	if (node->size[0] == 0)
 		R_FontDrawString(font, node->textalign, nodepos[0], nodepos[1], nodepos[0], nodepos[1], node->size[0], 0, 0, ref, 0, 0, NULL, qfalse, 0);
 	else
 		R_FontDrawStringInBox(font, node->textalign, nodepos[0] + node->padding, nodepos[1] + node->padding, node->size[0] - node->padding - node->padding, node->size[1] - node->padding - node->padding, ref, node->longlines);
-
 	R_ColorBlend(NULL);
 }
 
