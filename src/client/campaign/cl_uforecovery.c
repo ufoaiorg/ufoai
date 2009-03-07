@@ -121,7 +121,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 
 /**
  * @brief Function to trigger UFO Recovered event.
- * @note This function prepares related cvars for won menu.
+ * @note This function prepares related cvars for the recovery popup.
  * @note Command to call this: cp_uforecovery.
  */
 static void CP_UFORecovered_f (void)
