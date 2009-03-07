@@ -1790,8 +1790,13 @@ static int AI_InitActor (edict_t * ent, char *type, char *subtype)
 	/* Load the AI */
 	Com_sprintf(path, sizeof(path), "ai/%s.lua", type);
 	size = gi.FS_LoadFile(path, (byte **) &fbuf);
-	if (!luaL_dobuffer(AI->L, fbuf, size, path)) {
+	if (size == 0) {
 		Com_Printf("Unable to load Lua file '%s'.\n", path);
+		return -1;
+	}
+	if (luaL_dobuffer(AI->L, fbuf, size, path)) {
+		Com_Printf("Unable to parse Lua file '%s'\n", path);
+		gi.FS_FreeFile(fbuf);
 		return -1;
 	}
 	gi.FS_FreeFile(fbuf);
