@@ -2042,7 +2042,7 @@ void CL_GameAutoGo (mission_t *mis)
 
 	/* if a UFO has been recovered, send it to a base */
 	if (won && missionresults.recovery)
-		Cmd_ExecuteString("cp_uforecoverystore");
+		Cmd_ExecuteString("mn_push won");
 
 	/* handle base attack mission */
 	if (ccs.selectedMission->stage == STAGE_BASE_ATTACK) {

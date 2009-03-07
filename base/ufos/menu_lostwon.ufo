@@ -28,107 +28,8 @@ menu won
 	}
 
 	// ==================
-	// UFO Recovery
-	// ==================
-
-	confunc menuwon_update_buttons
-	{
-		*bt_storeufo	disabled	false
-		*bt_sellufo		disabled	false
-		*bt_destroyufo	disabled	false
-		*bt_tryagain	disabled	false
-	}
-
-	confunc disufostore
-	{
-		*bt_storeufo	disabled	true
-		*bt_storeufo	tooltip		"_No UFO hangars or no power supply"
-		*bt_continue	disabled	false
-	}
-	confunc disufosell
-	{
-		*bt_sellufo		disabled	true
-		*bt_sellufo		tooltip		"_No nation with accepted level of alien infiltration"
-		*bt_continue	disabled	false
-	}
-	confunc disufodestroy
-	{
-		*bt_destroyufo	disabled	true
-		*bt_destroyufo	tooltip		"_UFO recovery process finished"
-		*bt_continue	disabled	false
-	}
-	confunc disallrecovery	{
-		*bt_storeufo	disabled	true
-		*bt_storeufo	tooltip		"_UFO recovery process finished"
-		*bt_sellufo		disabled	true
-		*bt_sellufo		tooltip		"_UFO recovery process finished"
-		*bt_destroyufo	disabled	true
-		*bt_destroyufo	tooltip		"_UFO recovery process finished"
-		*bt_continue	disabled	false
-	}
-
-	button bt_storeufo
-	{
-		visiblewhen "mission_uforecovered == 1"
-		string		"_Store UFO"
-		tooltip		"_Store the UFO in base"
-		image		"menu/button_blue"
-		pos			"480 630"
-		size		"128 53"
-		color		"1 1 1 0.8"
-		selectcolor	"1 1 1 1"
-		font		"f_small"
-		click		{ cmd "cp_uforecoverystore;" }
-	}
-
-	button bt_sellufo
-	{
-		visiblewhen "mission_uforecovered == 1"
-		string		"_Sell UFO"
-		tooltip		"_Sell the UFO to desired nation"
-		image		"menu/button_blue"
-		pos			"670 630"
-		size		"128 53"
-		click		{ cmd "cp_uforecoverysell;" }
-		color		"1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font		"f_small"
-	}
-
-	button bt_destroyufo
-	{
-		visiblewhen "mission_uforecovered == 1"
-		string		"_Destroy UFO"
-		tooltip		"_Destroy recovered UFO"
-		image		"menu/button_blue"
-		pos			"865 630"
-		size		"128 53"
-		click		{ cmd "cp_uforecoverydestroy;" }
-		color		"1 1 1 0.8"
-		selectcolor "1 1 1 1"
-		font		"f_small"
-	}
-
-	// ==================
 	// buttons
 	// ==================
-
-	confunc distryagain
-	{
-		*bt_tryagain	disabled	true
-	}
-	button bt_tryagain
-	{
-		string		"_Try again"
-		tooltip		"_Retry this mission"
-		image		"menu/button_blue"
-		pos			"480 700"
-		size		"128 53"
-		color		"1 1 1 0.8"
-		selectcolor	"1 1 1 1"
-		font		"f_big"
-		click		{ cmd "cp_tryagain;" }
-	}
 
 	button bt_continue
 	{
@@ -140,20 +41,19 @@ menu won
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set cp_mission_tryagain 0;mn_pop;" }
+		click		{ cmd "set cp_mission_tryagain 0;mn_pop;uforecover_check" }
 	}
 
-	confunc won_check
+	confunc uforecover_check
 	{
 		if "mission_uforecovered == 1" {
-			*bt_continue	disabled	true
+			cmd "mn_push uforecovery;"
 		}
 	}
 
 	func init
 	{
 		cmd "snd_music ufo2;"
-		call won_check
 	}
 
 	func close
@@ -234,178 +134,206 @@ menu lost
 	}
 }
 
-// ===============================
-// POPUP SELECT BASE FOR RECOVERY
-// ===============================
-menu popup_recoverybaselist
+// ==================================
+// POPUP FOR UFO RECOVERY (Base/sell)
+// ==================================
+menu uforecovery
 {
 	{
-		pos			"264 262"
-		size		"496 247"
+		pos			"111 142"
+		size		"767 497"
 		dragbutton	true
-		image		menu/popup_alpha_tile
-		blend		true
-		string		"_Select base for UFO recovery"
-	}
-
-	text cp_uforecovery_baselist
-	{
-		textid		 TEXT_LIST
-		pos			"26 58"
-		size		 "440 96"
-		color		"0.60 0.60 0.60 1"
-		selectcolor	"1 1 1 1"
-		lineheight	16
-		tabwidth	100
-		rows		"6"
-		scrollbar	true
-		mousefx		true
-		wheel
-		click
-		rclick		{ cmd "mn_pop;" }
-	}
-
-	string selected_base_str
-	{
-		string		"Selected base:"
-		pos			"26 158"
-	}
-	string selected_base_val
-	{
-		string		"*cvar mission_recoverybase"
-		pos			"156 158"
-	}
-
-	button bt_cancel
-	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		image		menu/button_green_small
-		blend		true
-		pos			"46 188"
-		size		"176 32"
-		font		f_menu
-		color		"0 0.5 0 1"
-		click		{ cmd "mn_pop;" }
-	}
-
-	confunc baseselect_enable {
-		*bt_basesel	disabled	false
-	}
-	button bt_basesel
-	{
-		string		"_Recover"
-		tooltip		"_Begin UFO recovery process"
-		image		menu/button_green_small
-		blend		true
-		pos			"266 188"
-		size		"176 32"
-		font		f_menu
-		color		"0 0.5 0 1"
-		click		{ cmd "cp_uforecoverystart;mn_pop;" }
-	}
-
-	func init
-	{
-		*cp_uforecovery_baselist	lineselected	-1
-		*bt_basesel					disabled		true
-		cmd "del mission_recoverybase;"
-	}
-}
-
-// ================================
-// POPUP SELECT NATION FOR RECOVERY
-// ================================
-
-menu popup_recoverynationlist
-{
-	{
-		pos			"124 192"
-		size		"777 402"
-		dragbutton	true
+		closebutton	true
 		modal		true
 		image		menu/popup_alpha_tile
 		blend		true
-		string		"_Select nation for UFO recovery"
+		string		"_UFO recovery"
 	}
 
-	string name_label
-	{
-		string		"_Nation:"
-		pos			"26 48"
+	tab uforecovery_navigation {
+		pos		"20 127"
+		size	"731 38"
+		cvar	"*cvar mn_uforecovery_tab"
+		option store {
+			label	"_Store ufo"
+			value	"0"
+			action	"uforecovery_tabchange;"
+		}
+		option sell {
+			label	"_Sell ufo"
+			value	"1"
+			action	"uforecovery_tabchange;"
+		}
 	}
 
-	string price_label
+	string actualufo
 	{
-		string		"_Price:"
-		pos			"326 48"
+		string		"_some stats about actual ufo"
+		pos			"26 50"
+		size		"273 23"
+		font		f_small
 	}
 
-	string relation_label
-	{
-		string		"_Relations:"
-		pos			"526 48"
+	//
+	// store panel
+	//
+	panel store_panel {
+		{
+			pos		"20 165"
+			size	"731 300"
+		}
+		
+		text cp_uforecovery_baselist
+		{
+			textid		TEXT_UFORECOVERY_BASESTORAGE
+			pos			"22 50"
+			size		"440 96"
+			color		"0.60 0.60 0.60 1"
+			selectcolor	"1 1 1 1"
+			lineheight	16
+			tabwidth	100
+			rows		"6"
+			scrollbar	true
+			mousefx		true
+			wheel
+			click
+		}
+
+		string selected_base_str
+		{
+			string		"Selected base:"
+			pos			"26 186"
+		}
+
+		string selected_base_val
+		{
+			string		"*cvar mission_recoverybase"
+			pos			"156 186"
+		}
+
+		button bt_basesel
+		{
+			string		"_Recover"
+			tooltip		"_Begin UFO recovery process"
+			image		menu/button_green_small
+			blend		true
+			pos			"141 280"
+			size		"176 32"
+			font		f_menu
+			color		"0 0.5 0 1"
+			click		{ cmd "cp_uforecoverystart;mn_pop;" }
+		}
 	}
 
-	text cp_uforecovery_nationlist
-	{
-		textid		TEXT_LIST
-		pos			"26 74"
-		size		"726 134"
-		lineheight	16
-		tabwidth	100
-		color		"0.60 0.60 0.60 1"
-		selectcolor	"1 1 1 1"
-		rows		"8"		// max. nations
-		click
-		rclick		{ cmd "mn_pop;" }
-		mousefx true
-		wheel
+	//
+	// sell panel
+	//
+	panel sell_panel {
+		{
+			pos		"20 165"
+			size	"731 300"
+		}
+
+		string name_label
+		{
+			string		"_Nation:"
+			pos			"26 30"
+		}
+
+		string price_label
+		{
+			string		"_Price:"
+			pos			"326 30"
+		}
+
+		string relation_label
+		{
+			string		"_Relations:"
+			pos			"526 30"
+		}
+
+		text cp_uforecovery_nationlist
+		{
+			textid		TEXT_UFORECOVERY_NATIONS
+			pos			"22 50"
+			size		"726 134"
+			lineheight	16
+			tabwidth	100
+			color		"0.60 0.60 0.60 1"
+			selectcolor	"1 1 1 1"
+			rows		"8"		// max. nations
+			click
+			mousefx true
+			wheel
+		}
+
+		string selected_nation_str
+		{
+			string		"Selected nation:"
+			pos			"26 186"
+		}
+
+		string selected_nation_val
+		{
+			string		"*cvar mission_recoverynation"
+			pos			"326 186"
+		}
+
+		button bt_natsel
+		{
+			string		"_Sell"
+			tooltip		"_Begin UFO sell process"
+			image		menu/button_green_small
+			blend		true
+			pos			"141 280"
+			size		"176 32"
+			font		f_menu
+			color		"0 0.5 0 1"
+			click		{ cmd "cp_ufosellstart;mn_pop;" }
+		}
+	}
+	
+	//
+	// function to manage tab
+	//
+	confunc uforecovery_tabchange {
+		*store_panel invis true
+		*sell_panel invis true
+		if "mn_uforecovery_tab == 0" {
+			*store_panel invis false
+		}
+		if "mn_uforecovery_tab == 1" {
+			*sell_panel invis false
+		}
 	}
 
-	string selected_nation_str
-	{
-		string		"Selected nation:"
-		pos			"26 208"
-	}
-	string selected_nation_val
-	{
-		string		"*cvar mission_recoverynation"
-		pos			"326 208"
+	confunc btnatsel_enable {
+		*sell_panel.bt_natsel disabled false
 	}
 
-	button bt_cancel
-	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		image		menu/button_green_small blend true
-		pos			"36 338"
-		size		"176 32"
-		font		f_menu
-		color		"0 0.5 0 1"
-		click		{ cmd "mn_pop;" }
+	confunc btbasesel_enable {
+		*store_panel.bt_basesel disabled false
 	}
 
-	confunc nationselect_enable {
-		*bt_natsel		disabled	false
-	}
-	button bt_natsel
-	{
-		string		"_Sell"
-		tooltip		"_Begin UFO sell process"
-		image		menu/button_green_small
-		blend		true
-		pos			"566 338"
-		size		"176 32"
-		font		f_menu
-		color		"0 0.5 0 1"
-		click		{ cmd "cp_ufosellstart;mn_pop;" }
+	confunc cp_basesel_disable {
+		*store_panel.cp_uforecovery_baselist disabled true
 	}
 
-	func init
-	{
-		*cp_uforecovery_nationlist	lineselected	-1
-		*bt_natsel					disabled		true
+	func init {
+		*store_panel.cp_uforecovery_baselist lineselected	-1
+		*store_panel.cp_uforecovery_baselist disabled false
+		*store_panel.bt_basesel disabled true
+		cmd "del mission_recoverybase;"
+		*sell_panel.cp_uforecovery_nationlist lineselected	-1
+		*sell_panel.bt_natsel disabled true
 		cmd "del mission_recoverynation;"
+		*cvar:mn_uforecovery_tab 0
+		cmd "uforecovery_tabchange"
+		cmd "cp_uforecoverysell"
+		cmd "cp_uforecoverystore"
+	}
+
+	func close {
+		cmd "del mn_uforecovery_tab"
 	}
 }

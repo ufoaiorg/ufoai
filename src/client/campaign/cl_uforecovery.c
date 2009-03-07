@@ -128,9 +128,8 @@ static void CP_UFORecovered_f (void)
 {
 	int i;
 	ufoType_t UFOtype;
-	base_t *base;
 	aircraft_t *ufocraft;
-	qboolean store = qfalse, ufofound = qfalse;
+	qboolean ufofound = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
@@ -143,9 +142,6 @@ static void CP_UFORecovered_f (void)
 		Com_Printf("CP_UFORecovered: UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
 		return;
 	}
-
-	/* At the beginning we enable all UFO recovery options. (confunc) */
-	MN_ExecuteConfunc("menuwon_update_buttons");
 
 	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
@@ -164,18 +160,6 @@ static void CP_UFORecovered_f (void)
 		return;
 	}
 
-	base = NULL;
-	/* Now we have to check whether we can store the UFO in any base. */
-	for (i = 0; i < MAX_BASES; i++) {
-		base = B_GetFoundedBaseByIDX(i);
-		if (!base)
-			continue;
-		if (UR_ConditionsForStoring(base, ufocraft)) {
-			store = qtrue;
-			break;
-		}
-	}
-
 	/* Put relevant info into missionresults array. */
 	missionresults.recovery = qtrue;
 	missionresults.crashsite = qfalse;
@@ -186,11 +170,6 @@ static void CP_UFORecovered_f (void)
 	memset(&ufoRecovery, 0, sizeof(ufoRecovery));
 	ufoRecovery.ufoType = UFOtype;
 
-	/** @todo block Sell button if no nation with requirements */
-	if (!store) {
-		/* Block store option if storing not possible. (confunc) */
-		MN_ExecuteConfunc("disufostore");
-	}
 }
 
 /**
@@ -200,10 +179,6 @@ static void CP_UFORecoveryDone (void)
 {
 	/* Disable Try Again a mission. */
 	ccs.mission_tryagain = qfalse;
-	MN_ExecuteConfunc("distryagain");
-	/* Disable UFORecovery buttons. */
-	MN_ExecuteConfunc("disallrecovery");
-
 	ufoRecovery.recoveryDone = qtrue;
 }
 
@@ -361,22 +336,24 @@ static void CP_UFORecoveredStore_f (void)
 	switch (ufoRecovery.baseHasUFOHangarCount) {
 	case 0:
 		/* No UFO base with proper conditions, do nothing. */
-		return;
+		Q_strcat(recoveryBaseSelectPopup, _("No ufo hangar or ufo yard available."), sizeof(recoveryBaseSelectPopup));
+		MN_ExecuteConfunc("cp_basesel_disable");
+		break;
 	case 1:
 		/* there should only be one entry in UFObases - so use that one. */
 		ufoRecovery.base = ufoRecovery.UFObases[0];
-		CP_UFORecoveredStart_f();
+		/** @todo preselect base */
+		/*CP_UFORecoveredStart_f(); */
+
 		break;
 	default:
 		if (!ufoRecovery.base)
 			ufoRecovery.base = ufoRecovery.UFObases[0];
 		if (ufoRecovery.base)
 			Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
-		/* If more than one - popup with list to select base. */
-		MN_RegisterText(TEXT_LIST, recoveryBaseSelectPopup);
-		MN_PushMenu("popup_recoverybaselist", NULL);
 		break;
 	}
+	MN_RegisterText(TEXT_UFORECOVERY_BASESTORAGE, recoveryBaseSelectPopup);
 }
 
 /**
@@ -401,8 +378,8 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n",
 		ufoRecovery.base->name);
 
-	Cvar_Set("mission_recoverybase", _(ufoRecovery.base->name));
-	MN_ExecuteConfunc("baseselect_enable");
+	Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
+	MN_ExecuteConfunc("btbasesel_enable");
 }
 
 /**
@@ -431,7 +408,7 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryNationSelectPopup_f: picked nation: %s\n", nation->name);
 
 	Cvar_Set("mission_recoverynation", _(nation->name));
-	MN_ExecuteConfunc("nationselect_enable");
+	MN_ExecuteConfunc("btnatsel_enable");
 }
 
 /**
@@ -521,25 +498,8 @@ static void CP_UFORecoveredSell_f (void)
 		return;
 
 	MN_RegisterText(TEXT_LIST, recoveryNationSelectPopup);
-	MN_PushMenu("popup_recoverynationlist", NULL);
-}
-
-/**
- * @brief Function to destroy recovered UFO.
- * @note Command to call this: cp_uforecoverydestroy.
- */
-static void CP_UFORecoveredDestroy_f (void)
-{
-	/* Do nothing if recovery process is finished. */
-	if (ufoRecovery.recoveryDone)
-		return;
-
-	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Secured %s was destroyed."),
-		UFO_TypeToName(ufoRecovery.ufoType));
-	MS_AddNewMessage(_("UFO Recovery"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
-
-	/* UFO recovery process is done, disable buttons. */
-	CP_UFORecoveryDone();
+	/*MN_PushMenu("popup_recoverynationlist", NULL);*/
+	MN_RegisterText(TEXT_UFORECOVERY_NATIONS, recoveryNationSelectPopup);
 }
 
 /**
@@ -750,6 +710,5 @@ void UR_InitStartup (void)
 	Cmd_AddCommand("cp_uforecovery_nationlist_click", CP_UFORecoveryNationSelectPopup_f, "Callback for recovery nation list popup.");
 	Cmd_AddCommand("cp_ufosellstart", CP_UFOSellStart_f, "Function to start UFO selling processing.");
 	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
-	Cmd_AddCommand("cp_uforecoverydestroy", CP_UFORecoveredDestroy_f, "Function to destroy recovered UFO.");
 	Cmd_AddCommand("cp_ufocrashed", CP_UFOCrashed_f, "Function to process crashed UFO after a mission.");
 }
