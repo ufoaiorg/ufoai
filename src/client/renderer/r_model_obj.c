@@ -341,12 +341,14 @@ void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 	/* resolve primitive counts */
 	R_LoadObjModel_(mod, &obj, buffer, bufSize);
 
-	if (!obj.num_verts || !obj.num_texcoords || !obj.num_tris || !obj.num_normals)
-		Com_Error(ERR_DROP, "R_LoadObjModel: Failed to resolve model data: %s\n", mod->name);
+	if (!obj.num_verts || !obj.num_texcoords || !obj.num_tris)
+		Com_Error(ERR_DROP, "R_LoadObjModel: Failed to resolve model data: %s (%i %i %i %i)\n",
+			mod->name, obj.num_verts, obj.num_texcoords, obj.num_tris, obj.num_normals);
 
 	/* allocate the primitives */
 	obj.verts = (float *)Mem_PoolAlloc(obj.num_verts * sizeof(float) * 3, vid_modelPool, 0);
-	obj.normals = (float *)Mem_PoolAlloc(obj.num_normals * sizeof(float) * 3, vid_modelPool, 0);
+	if (obj.num_normals)
+		obj.normals = (float *)Mem_PoolAlloc(obj.num_normals * sizeof(float) * 3, vid_modelPool, 0);
 	obj.texcoords = (float *)Mem_PoolAlloc(obj.num_texcoords * sizeof(float) * 2, vid_modelPool, 0);
 	obj.tris = (mobjtri_t *)Mem_PoolAlloc(obj.num_tris * sizeof(mobjtri_t), vid_modelPool, 0);
 
