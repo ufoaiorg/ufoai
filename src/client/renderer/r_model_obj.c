@@ -78,15 +78,15 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 	for (i = 0; i < obj->num_tris; i++, t++) {
 		const mobjvert_t *v = t->verts;
 
-		/* each face is a tri */
+		/* each vert */
 		for (j = 0; j < 3; j++, v++) {
-			VectorCopy((&obj->verts[v->vert - 1]), (&mesh->verts[vertind + j * 3]));
+			VectorCopy((&obj->verts[(v->vert - 1) * 3]), (&mesh->verts[vertind + j * 3]));
 
 			if (v->normal)
-				VectorCopy((&obj->normals[v->normal - 1]), (&mesh->normals[vertind + j * 3]));
+				VectorCopy((&obj->normals[(v->normal - 1) * 3]), (&mesh->normals[vertind + j * 3]));
 
 			if (v->texcoord)
-				VectorCopy((&obj->texcoords[v->texcoord - 1]), (&mesh->texcoords[coordind + j * 2]));
+				VectorCopy((&obj->texcoords[(v->texcoord - 1) * 2]), (&mesh->texcoords[coordind + j * 2]));
 		}
 
 		coordind += 6;
@@ -97,7 +97,7 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 /**
  * @brief Assembles count tris on the model from the specified array of verts.
  */
-static void R_LoadObjModelTris (mobj_t *obj, mobjvert_t *verts, int count)
+static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
 {
 	int i;
 
@@ -131,7 +131,7 @@ static void R_LoadObjModelTris (mobj_t *obj, mobjvert_t *verts, int count)
  *
  * @return the number of triangles produced for the specified line.
  */
-static int R_LoadObjModelFace (model_t *mod, mobj_t *obj, const char *line)
+static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line)
 {
 	mobjvert_t *v, verts[MAX_OBJ_FACE_VERTS];
 	const char *d;
@@ -139,9 +139,8 @@ static int R_LoadObjModelFace (model_t *mod, mobj_t *obj, const char *line)
 	char tok[32];
 	int i, tris;
 
-	i = 0;
-
 	memset(verts, 0, sizeof(verts));
+	i = 0;
 
 	while (qtrue) {
 		const char *c = COM_Parse(&line);
@@ -175,11 +174,10 @@ static int R_LoadObjModelFace (model_t *mod, mobj_t *obj, const char *line)
 				else if (!v->normal)
 					v->normal = atoi(tok);
 
-				d++;
-
 				memset(tok, 0, sizeof(tok));
 				e = tok;
 
+				d++;
 				continue;
 			}
 
@@ -223,7 +221,7 @@ static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char *line)
 		if (obj->verts) {  /* parse it */
 			float *f = obj->verts + obj->num_verts_parsed * 3;
 
-			if (sscanf(line + 2, "%f %f %f", &f[0], &f[1], &f[2]) != 3)
+			if (sscanf(line + 2, "%f %f %f", &f[0], &f[2], &f[1]) != 3)
 				Com_Error(ERR_DROP, "R_LoadObjModelLine: Malformed vertex for %s: %s.",
 						mod->name, line);
 
@@ -234,7 +232,7 @@ static void R_LoadObjModelLine (model_t *mod, mobj_t *obj, char *line)
 		if (obj->normals) {  /* parse it */
 			float *f = obj->normals + obj->num_normals_parsed * 3;
 
-			if (sscanf(line + 3, "%f %f %f", &f[0], &f[1], &f[2]) != 3)
+			if (sscanf(line + 3, "%f %f %f", &f[0], &f[2], &f[1]) != 3)
 				Com_Error(ERR_DROP, "R_LoadObjModelLine: Malformed normal for %s: %s.",
 						mod->name, line);
 
@@ -280,7 +278,7 @@ static void R_LoadObjSkin (model_t *mod)
  * @brief Drives the actual parsing of the object file.  The file is read twice:
  * once to acquire primitive counts, and a second time to load them.
  */
-static void R_LoadObjModel_(model_t *mod, mobj_t *obj, byte *buffer, int bufSize)
+static void R_LoadObjModel_(model_t *mod, mobj_t *obj, const byte *buffer, int bufSize)
 {
 	char line[MAX_STRING_CHARS];
 	const byte *c;
@@ -322,7 +320,7 @@ static void R_LoadObjModel_(model_t *mod, mobj_t *obj, byte *buffer, int bufSize
 void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 {
 	mobj_t *obj;
-	float *v;
+	const float *v;
 	int i;
 
 	mod->type = mod_obj;
