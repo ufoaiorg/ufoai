@@ -506,7 +506,7 @@ void INS_InitStartup (void)
 	}
 
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, NULL);
+	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
 	Cmd_AddCommand("mn_build_installation", INS_BuildInstallation_f, NULL);
 	Cmd_AddCommand("mn_set_installation_title", INS_SetInstallationTitle_f, NULL);
 	Cmd_AddCommand("mn_check_max_installations", INS_CheckMaxInstallations_f, NULL);

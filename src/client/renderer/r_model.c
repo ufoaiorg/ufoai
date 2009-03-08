@@ -157,7 +157,7 @@ static model_t *R_ModForName (const char *name, qboolean crash)
 		break;
 
 	default:
-		if (strcasestr(mod->name, ".obj")) {
+		if (strcasecmp(mod->name + strlen(mod->name) - 4, ".obj")) {
 			R_LoadObjModel(mod, buf, modfilelen);
 			break;
 		}
