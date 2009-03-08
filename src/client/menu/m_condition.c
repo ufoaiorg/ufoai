@@ -44,20 +44,20 @@ CASSERT(lengthof(if_strings) == IF_SIZE);
  * @brief Check the if conditions for a given node
  * @returns True if the condition is qfalse if the node is not drawn
  */
-qboolean MN_CheckCondition (menuDepends_t *condition)
+qboolean MN_CheckCondition (menuCondition_t *condition)
 {
 	cvar_t *cvar = NULL;
 
-	if (!condition->var)
+	if (!condition->leftValue)
 		return qtrue;
 
-	if (condition->var[0] == '*')
-		cvar = Cvar_Get(condition->var+6, condition->value ? condition->value : "", 0, "Menu if condition cvar");
+	if (condition->leftValue[0] == '*')
+		cvar = Cvar_Get(condition->leftValue+6, "", 0, "Menu if condition cvar");
 	else
-		cvar = Cvar_Get(condition->var, condition->value ? condition->value : "", 0, "Menu if condition cvar");
+		cvar = Cvar_Get(condition->leftValue, "", 0, "Menu if condition cvar");
 	assert(cvar);
 
-	switch (condition->cond) {
+	switch (condition->type.opCode) {
 	case IF_EQ:
 	case IF_LE:
 	case IF_GE:
@@ -68,21 +68,21 @@ qboolean MN_CheckCondition (menuDepends_t *condition)
 			const float value1 = cvar->value;
 			float value2;
 
-			assert(condition->value);
-			if (condition->value[0] == '*') {
-				if (!Q_strncmp(condition->value+1, "cvar:", 5)) {
+			assert(condition->rightValue);
+			if (condition->rightValue[0] == '*') {
+				if (!Q_strncmp(condition->rightValue+1, "cvar:", 5)) {
 					cvar_t *cvar2 = NULL;
-					cvar2 = Cvar_Get(condition->value + 6, condition->value ? condition->value : "", 0, "Menu if condition cvar");
+					cvar2 = Cvar_Get(condition->rightValue + 6, "", 0, "Menu if condition cvar");
 					value2 = cvar2->value;
 				} else {
-					Com_Printf("MN_CheckCondition: '%s' is not a cvar\n", condition->value);
+					Com_Printf("MN_CheckCondition: '%s' is not a cvar\n", condition->rightValue);
 					value2 = 0;
 				}
 			} else {
-				value2 = atof(condition->value);
+				value2 = atof(condition->rightValue);
 			}
 
-			switch (condition->cond) {
+			switch (condition->type.opCode) {
 			case IF_EQ:
 				return value1 == value2;
 			case IF_LE:
@@ -106,19 +106,19 @@ qboolean MN_CheckCondition (menuDepends_t *condition)
 			return qfalse;
 		break;
 	case IF_STR_EQ:
-		assert(condition->value);
+		assert(condition->rightValue);
 		assert(cvar->string);
-		if (Q_strcmp(cvar->string, condition->value))
+		if (Q_strcmp(cvar->string, condition->rightValue))
 			return qfalse;
 		break;
 	case IF_STR_NE:
-		assert(condition->value);
+		assert(condition->rightValue);
 		assert(cvar->string);
-		if (!Q_strcmp(cvar->string, condition->value))
+		if (!Q_strcmp(cvar->string, condition->rightValue))
 			return qfalse;
 		break;
 	default:
-		Sys_Error("Unknown condition for if statement: %i", condition->cond);
+		Sys_Error("Unknown condition for if statement: %i", condition->type.opCode);
 	}
 
 	return qtrue;
@@ -149,13 +149,13 @@ static int MN_GetOperatorByName (const char* operatorName)
  * @param[in] token String describing a condition
  * @return True if the condition is initialized
  */
-qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
+qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
 {
 	memset(condition, 0, sizeof(*condition));
 	if (!strstr(token, " ")) {
 		/* cvar exists? (not null) */
-		condition->var = MN_AllocString(token, 0);
-		condition->cond = IF_EXISTS;
+		condition->leftValue = MN_AllocString(token, 0);
+		condition->type.opCode = IF_EXISTS;
 	} else {
 		char param1[BUF_SIZE + 1];
 		char operator[BUF_SIZE + 1];
@@ -165,11 +165,11 @@ qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
 			return qfalse;
 		}
 
-		condition->var = MN_AllocString(param1, 0);
-		condition->value = MN_AllocString(param2, 0);
+		condition->leftValue = MN_AllocString(param1, 0);
+		condition->rightValue = MN_AllocString(param2, 0);
 
-		condition->cond = MN_GetOperatorByName(operator);
-		if (condition->cond == IF_INVALID) {
+		condition->type.opCode = MN_GetOperatorByName(operator);
+		if (condition->type.opCode == IF_INVALID) {
 			Com_Printf("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator, token);
 			return qfalse;
 		}
@@ -183,9 +183,9 @@ qboolean MN_InitCondition (menuDepends_t *condition, const char *token)
  * @param[out] condition Condition to initialize
  * @return The condition if everything is ok, NULL otherwise
  */
-menuDepends_t *MN_AllocCondition (const char *description)
+menuCondition_t *MN_AllocCondition (const char *description)
 {
-	menuDepends_t condition;
+	menuCondition_t condition;
 	qboolean result;
 
 	if (mn.numConditions >= MAX_MENUCONDITIONS)

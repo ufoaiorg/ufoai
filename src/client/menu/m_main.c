@@ -197,7 +197,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t\t-window: "UFO_SIZE_T" B\n", MEMBER_SIZEOF(menuNode_t, u.window));
 	Com_Printf("\t-Action structure size: "UFO_SIZE_T" B\n", sizeof(menuAction_t));
 	Com_Printf("\t-Model structure size: "UFO_SIZE_T" B\n", sizeof(menuModel_t));
-	Com_Printf("\t-Condition structure size: "UFO_SIZE_T" B\n", sizeof(menuDepends_t));
+	Com_Printf("\t-Condition structure size: "UFO_SIZE_T" B\n", sizeof(menuCondition_t));
 	Com_Printf("\t-AData size: %i B\n", mn.adataize);
 	Com_Printf("\t-Full size: "UFO_SIZE_T" B\n", sizeof(menuGlobal_t) + mn.adataize);
 }

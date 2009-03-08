@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototype */
 struct menuIcon_s;
-struct menuDepends_s;
+struct menuCondition_s;
 struct value_s;
 
 /* extradata struct */
@@ -93,7 +93,7 @@ typedef struct menuNode_s {
 	excludeRect_t *excludeRect;	/**< exclude this for hover or click functions */
 	int excludeRectNum;			/**< how many consecutive exclude rects defined? */
 
-	struct menuDepends_s* visibilityCondition;	/**< cvar condition to display/hide the node */
+	struct menuCondition_s* visibilityCondition;	/**< cvar condition to display/hide the node */
 
 	/** @todo needs cleanup */
 	void* image;

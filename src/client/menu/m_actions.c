@@ -280,7 +280,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 		break;
 
 	case EA_IF:
-		if (MN_CheckCondition((menuDepends_t *) action->data)) {
+		if (MN_CheckCondition((menuCondition_t *) action->data)) {
 			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->scriptValues);
 		} else if (action->next && action->next->type.op == EA_ELSE) {
 			MN_ExecuteInjectedActions(source, useCmdParam, (const menuAction_t* const) action->next->scriptValues);

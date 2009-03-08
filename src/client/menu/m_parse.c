@@ -783,7 +783,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		case V_SPECIAL_IF:
 			{
-				menuDepends_t **condition = (menuDepends_t **) ((byte *) object + property->ofs);
+				menuCondition_t **condition = (menuCondition_t **) ((byte *) object + property->ofs);
 
 				*token = COM_EParse(text, errhead, objectName);
 				if (!*text)

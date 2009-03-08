@@ -35,7 +35,7 @@ struct cvar_s;
 /**
  * @brief conditions for V_SPECIAL_IF
  */
-typedef enum menuIfCondition_s {
+typedef enum menuConditionOpCodeType_s {
 	IF_INVALID = -1,
 	/** float compares */
 	IF_EQ = 0, /**< == */
@@ -51,22 +51,32 @@ typedef enum menuIfCondition_s {
 	IF_STR_NE,	/**< ne */
 
 	IF_SIZE
-} menuIfCondition_t;
+} menuConditionOpCodeType_t;
+
+typedef enum {
+	IF_VALUE_STRING,
+	IF_VALUE_FLOAT,
+	IF_VALUE_CVARNAME,
+	IF_VALUE_NODEPROPERTY,
+} menuConditionValueType_t;
+
+typedef struct {
+	menuConditionOpCodeType_t opCode;
+	menuConditionValueType_t leftType;
+	menuConditionValueType_t rightType;
+} menuConditionType_t;
 
 /**
  * @sa menuIfCondition_t
  */
-typedef struct menuDepends_s {
-	const char *var;
-	const char *value;
-#if 0	/**< cvar cache make problems */
-	struct cvar_s *cvar;
-#endif
-	int cond;
-} menuDepends_t;
+typedef struct menuCondition_s {
+	menuConditionType_t type;
+	const char *leftValue;
+	const char *rightValue;
+} menuCondition_t;
 
-qboolean MN_CheckCondition(menuDepends_t *condition);
-qboolean MN_InitCondition(menuDepends_t *condition, const char *token);
-menuDepends_t *MN_AllocCondition(const char *description) __attribute__ ((warn_unused_result));
+qboolean MN_CheckCondition(menuCondition_t *condition);
+qboolean MN_InitCondition(menuCondition_t *condition, const char *token);
+menuCondition_t *MN_AllocCondition(const char *description) __attribute__ ((warn_unused_result));
 
 #endif
