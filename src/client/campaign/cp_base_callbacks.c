@@ -146,8 +146,6 @@ static qboolean B_NewBase (base_t* base, vec2_t pos)
 	/* build base */
 	Vector2Copy(pos, base->pos);
 
-	ccs.numBases++;
-
 	/* set up the base with buildings that have the autobuild flag set */
 	B_SetUpBase(base, cl_start_employees->integer, cl_start_buildings->integer);
 
