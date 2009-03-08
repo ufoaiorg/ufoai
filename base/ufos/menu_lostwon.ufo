@@ -153,8 +153,8 @@ menu lost
 menu uforecovery
 {
 	{
-		pos			"111 142"
-		size		"767 497"
+		pos			"100 150"
+		size		"700 435"
 		dragbutton	true
 		modal		true
 		preventtypingescape true		// we can't use ESC
@@ -164,8 +164,8 @@ menu uforecovery
 	}
 
 	tab uforecovery_navigation {
-		pos		"20 127"
-		size	"731 38"
+		pos		"17 125"
+		size	"667 38"
 		cvar	"*cvar mn_uforecovery_tab"
 		option store {
 			label	"_Store ufo"
@@ -182,8 +182,8 @@ menu uforecovery
 	string actualufo
 	{
 		string		"*cvar mn_uforecovery_actualufo"
-		pos			"26 50"
-		size		"273 23"
+		pos			"25 50"
+		size		"275 23"
 		font		f_small
 	}
 
@@ -193,11 +193,11 @@ menu uforecovery
 	panel store_panel {
 		{
 			pos		"20 165"
-			size	"731 315"
+			size	"660 255"
 		}
 		rows lines {
-			pos			"22 50"
-			size		"600 128"
+			pos			"25 50"
+			size		"610 128"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
 			lineheight	16
@@ -206,8 +206,8 @@ menu uforecovery
 		text cp_uforecovery_baselist
 		{
 			textid		TEXT_UFORECOVERY_BASESTORAGE
-			pos			"22 50"
-			size		"600 128"
+			pos			"25 50"
+			size		"610 128"
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
 			lineheight	16
@@ -222,13 +222,13 @@ menu uforecovery
 		string selected_base_str
 		{
 			string		"Selected base:"
-			pos			"26 186"
+			pos			"30 186"
 		}
 
 		string selected_base_val
 		{
 			string		"*cvar mission_recoverybase"
-			pos			"156 186"
+			pos			"160 186"
 		}
 
 		button bt_basesel
@@ -237,7 +237,7 @@ menu uforecovery
 			tooltip		"_Begin UFO recovery process"
 			image		menu/button_green_small
 			blend		true
-			pos			"141 280"
+			pos			"140 210"
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
@@ -251,30 +251,30 @@ menu uforecovery
 	panel sell_panel {
 		{
 			pos		"20 165"
-			size	"731 315"
+			size	"660 255"
 		}
 
 		string name_label
 		{
 			string		"_Nation:"
-			pos			"26 30"
+			pos			"25 30"
 		}
 
 		string price_label
 		{
 			string		"_Price:"
-			pos			"326 30"
+			pos			"325 30"
 		}
 
 		string relation_label
 		{
 			string		"_Relations:"
-			pos			"526 30"
+			pos			"525 30"
 		}
 
 		rows lines {
-			pos			"22 50"
-			size		"600 128"
+			pos			"25 50"
+			size		"610 128"
 			color1		"0 0.08 0 1"
 			color2		"0 0.16 0 1"
 			lineheight	16
@@ -283,8 +283,8 @@ menu uforecovery
 		text cp_uforecovery_nationlist
 		{
 			textid		TEXT_UFORECOVERY_NATIONS
-			pos			"22 50"
-			size		"600 128"
+			pos			"25 50"
+			size		"610 128"
 			lineheight	16
 			tabwidth	100
 			color		"0.60 0.60 0.60 1"
@@ -298,13 +298,13 @@ menu uforecovery
 		string selected_nation_str
 		{
 			string		"Selected nation:"
-			pos			"26 186"
+			pos			"30 186"
 		}
 
 		string selected_nation_val
 		{
 			string		"*cvar mission_recoverynation"
-			pos			"326 186"
+			pos			"160 186"
 		}
 
 		button bt_natsel
@@ -313,7 +313,7 @@ menu uforecovery
 			tooltip		"_Begin UFO sell process"
 			image		menu/button_green_small
 			blend		true
-			pos			"141 280"
+			pos			"140 210"
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
