@@ -254,6 +254,10 @@ void R_RenderFrame (void)
 
 	R_SetupGL3D();
 
+	/* activate wire mode */
+	if (r_wire->integer)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL)) {
 		if (r_threads->integer) {
 			while (r_threadstate.state != THREAD_RENDERER)
@@ -266,9 +270,6 @@ void R_RenderFrame (void)
 			/* draw brushes on current worldlevel */
 			R_GetLevelSurfaceLists();
 		}
-		/* activate wire mode */
-		if (r_wire->integer)
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		R_EnableLights();
 
