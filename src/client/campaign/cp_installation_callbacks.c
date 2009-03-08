@@ -60,12 +60,23 @@ void INS_SelectInstallation (installation_t *installation)
 
 		ccs.mapAction = MA_NEWINSTALLATION;
 		installationID = INS_GetFirstUnfoundedInstallation();
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: new installationID is %i\n", installationID);
+		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: new installationID is %i\n", installationID);
 		if (installationID < B_GetInstallationLimit()) {
+			const installationTemplate_t *instmp = INS_GetInstallationTemplateFromInstallationId(Cvar_VariableString("mn_installation_type"));
+			int i = 1;
+			int j;
+
 			installationCurrent = INS_GetInstallationByIDX(installationID);
 			installationCurrent->idx = installationID;
-			Com_sprintf(installationCurrent->name, sizeof(installationCurrent->name), _("Installation #%i"), ccs.numInstallations + 1);
-			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", installationCurrent->name);
+
+			do {
+				j = 0;
+				Com_sprintf(installationCurrent->name, sizeof(installationCurrent->name), "%s #%i", (instmp) ? _(instmp->name) : _("Installation"), i);
+				while (j <= ccs.numInstallations && strcmp(installationCurrent->name, ccs.installations[j++].name));
+			} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
+			
+			
+			Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: baseID is valid for base: %s\n", installationCurrent->name);
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
@@ -78,7 +89,7 @@ void INS_SelectInstallation (installation_t *installation)
 	} else {
 		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: select installation with id %i\n", installation->idx);
+		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
 		installationCurrent = installation;
 		baseCurrent = NULL;
 		ccs.mapAction = MA_NONE;
