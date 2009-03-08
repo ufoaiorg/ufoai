@@ -36,7 +36,6 @@ CLIENT_SRCS = \
 	client/campaign/cp_alien_interest.c \
 	client/campaign/cp_base.c \
 	client/campaign/cp_base_callbacks.c \
-	client/campaign/cp_geoscape_actions.c \
 	client/campaign/cp_hospital.c \
 	client/campaign/cp_hospital_callbacks.c \
 	client/campaign/cp_messages.c \
@@ -59,6 +58,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_employee.c \
 	client/campaign/cp_employee_callbacks.c \
 	client/campaign/cl_installation.c \
+	client/campaign/cp_installation_callbacks.c \
 	client/campaign/cl_market.c \
 	client/campaign/cp_market_callbacks.c \
 	client/campaign/cl_map.c \

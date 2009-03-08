@@ -1,10 +1,10 @@
 /**
- * @file cp_geoscape_actions.c
- * @brief Geoscape actions header
+ * @file cp_installation_callbacks.h
+ * @brief Header file for menu related console command callbacks
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,9 +23,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CP_GEOSCAPE_ACTIONS_H
-#define CP_GEOSCAPE_ACTIONS_H
+#ifndef CP_INSTALLATION_CALLBACKS_H
+#define CP_INSTALLATION_CALLBACKS_H
 
-qboolean CL_NewInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
+cvar_t *mn_installation_title;
+
+void INS_InitCallbacks(void);
+void INS_ShutdownCallbacks(void);
 
 #endif

@@ -122,9 +122,13 @@ extern vec3_t newInstallationPos;
 
 int INS_GetFoundedInstallationCount(void);
 installation_t* INS_GetFoundedInstallationByIDX(int installationIdx);
+int INS_GetFirstUnfoundedInstallation(void);
 
 void INS_NewInstallations(void);
 void INS_SelectInstallation(installation_t *installation);
+
+installationTemplate_t* INS_GetInstallationTemplateFromInstallationId(const char *id);
+qboolean INS_NewInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
 
 aircraft_t *INS_GetAircraftFromInstallationByIndex(installation_t* installation, int index);
 

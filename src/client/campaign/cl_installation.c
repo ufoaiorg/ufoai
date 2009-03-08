@@ -26,11 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_team.h"
-#include "../cl_view.h"
-#include "../renderer/r_draw.h"
-#include "../cl_menu.h"
-#include "../menu/m_popup.h"
 #include "../mxml/mxml_ufoai.h"
 #include "../../shared/parse.h"
 #include "cl_campaign.h"
@@ -39,16 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_missions.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
-#include "cl_popup.h"
 #include "cl_installation.h"
-#include "cp_geoscape_actions.h"
+#include "cp_installation_callbacks.h"
 
 installation_t *installationCurrent;
-
-vec3_t newInstallationPos;
-static cvar_t *mn_installation_title;
-static cvar_t *mn_installation_count;
-static cvar_t *mn_installation_id;
 
 installationType_t INS_GetType (const installation_t *installation)
 {
@@ -93,7 +82,7 @@ installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
  * @param[in] id ID of the installation template to find.
  * @return corresponding installation Template, @c NULL if not found.
  */
-static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (const char *id)
+installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (const char *id)
 {
 	int idx;
 
@@ -108,7 +97,7 @@ static installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (co
 
 /**
  * @brief Setup new installation
- * @sa CL_NewInstallation
+ * @sa INS_NewInstallation
  */
 void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate)
 {
@@ -163,24 +152,10 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 }
 
 /**
- * @brief Renames an installation.
- */
-static void INS_RenameInstallation_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (installationCurrent)
-		Q_strncpyz(installationCurrent->name, Cmd_Argv(1), sizeof(installationCurrent->name));
-}
-
-/**
  * @brief Get the lower IDX of unfounded installation.
  * @return instIdx of first Installation Unfounded, or MAX_INSTALLATIONS is maximum installation number is reached.
  */
-static int INS_GetFirstUnfoundedInstallation (void)
+int INS_GetFirstUnfoundedInstallation (void)
 {
 	int instIdx;
 
@@ -191,152 +166,6 @@ static int INS_GetFirstUnfoundedInstallation (void)
 	}
 
 	return MAX_INSTALLATIONS;
-}
-/**
- * @brief Select an installation when clicking on it on geoscape, or build a new installation.
- * @param[in] installation If this is @c NULL we want to installation a new base
- * @note This is (and should be) the only place where installationCurrent is set
- * to a value that is not @c NULL
- */
-void INS_SelectInstallation (installation_t *installation)
-{
-	/* set up a new installation */
-	if (!installation) {
-		int installationID;
-
-		/* if player hit the "create base" button while creating base mode is enabled
-		 * that means that player wants to quit this mode */
-		if (ccs.mapAction == MA_NEWINSTALLATION) {
-			MAP_ResetAction();
-			if (!radarOverlayWasSet)
-				MAP_DeactivateOverlay("radar");
-			return;
-		}
-
-		ccs.mapAction = MA_NEWINSTALLATION;
-		installationID = INS_GetFirstUnfoundedInstallation();
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: new installationID is %i\n", installationID);
-		if (installationID < B_GetInstallationLimit()) {
-			installationCurrent = INS_GetInstallationByIDX(installationID);
-			installationCurrent->idx = installationID;
-			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", installationCurrent->name);
-			/* show radar overlay (if not already displayed) */
-			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
-				MAP_SetOverlay("radar");
-		} else {
-			Com_Printf("MaxInstallations reached\n");
-			/* select the first installation in list */
-			installationCurrent = INS_GetInstallationByIDX(0);
-			ccs.mapAction = MA_NONE;
-		}
-	} else {
-		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
-
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: select installation with id %i\n", installation->idx);
-		installationCurrent = installation;
-		baseCurrent = NULL;
-		ccs.mapAction = MA_NONE;
-		Cvar_SetValue("mn_installation_id", installation->idx);
-		Cvar_Set("mn_installation_title", installation->name);
-		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
-		if (installation->installationStatus == INSTALLATION_WORKING) {
-			Cvar_Set("mn_installation_timetobuild", "-");
-		} else {
-			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
-		}
-		MN_PushMenu("popup_installationstatus", NULL);
-	}
-}
-
-/**
- * @brief Called when a base is opened or a new base is created on geoscape.
- * For a new base the baseID is -1.
- */
-static void INS_SelectInstallation_f (void)
-{
-	int installationID;
-	installation_t *installation;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <installationID>\n", Cmd_Argv(0));
-		return;
-	}
-	installationID = atoi(Cmd_Argv(1));
-
-	if (installationID >= 0 && installationID < ccs.numInstallations)
-		installation = INS_GetFoundedInstallationByIDX(installationID);
-	else
-		/* create a new base */
-		installation = NULL;
-	INS_SelectInstallation(installation);
-}
-
-
-/**
- * @brief Constructs a new installation.
- * @sa CL_NewInstallation
- */
-static void INS_BuildInstallation_f (void)
-{
-	const nation_t *nation;
-	installationTemplate_t *installationTemplate;
-
-	if (Cmd_Argc() < 1) {
-		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
-		return;
-	}
-
-	/* we should always have at least one base */
-	if (!ccs.numBases)
-		return;
-
-	installationTemplate = INS_GetInstallationTemplateFromInstallationId(Cmd_Argv(1));
-
-	if (!installationTemplate) {
-		Com_Printf("The installation type %s passed for %s is not valid.\n", Cmd_Argv(1), Cmd_Argv(0));
-		return;
-	}
-
-	if (!installationCurrent)
-		return;
-
-	assert(!installationCurrent->founded);
-	assert(installationTemplate->cost >= 0);
-
-	if (ccs.credits - installationTemplate->cost > 0) {
-		/** @todo If there is no nation assigned to the current selected position,
-		 * tell this the gamer and give him an option to rechoose the location.
-		 * If we don't do this, any action that is done for this installation has no
-		 * influence to any nation happiness/funding/supporting */
-		if (CL_NewInstallation(installationCurrent, installationTemplate, newInstallationPos)) {
-			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", ccs.numInstallations);
-
-			/* set up the installation */
-			INS_SetUpInstallation(installationCurrent, installationTemplate);
-
-			campaignStats.installationsBuild++;
-			ccs.mapAction = MA_NONE;
-			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
-			Q_strncpyz(installationCurrent->name, mn_installation_title->string, sizeof(installationCurrent->name));
-			nation = MAP_GetNation(installationCurrent->pos);
-			if (nation)
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), mn_installation_title->string, _(nation->name));
-			else
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), mn_installation_title->string);
-			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-
-			Cbuf_AddText(va("mn_select_installation %i;", installationCurrent->idx));
-			return;
-		}
-	} else {
-		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-			MAP_SetOverlay("radar");
-		if (ccs.mapAction == MA_NEWINSTALLATION)
-			ccs.mapAction = MA_NONE;
-
-		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new installation."));
-		MN_Popup(_("Notice"), popupText);
-	}
 }
 
 /**
@@ -394,34 +223,6 @@ static void INS_InstallationList_f (void)
 #endif
 
 /**
- * @brief Sets the title of the installation.
- */
-static void INS_SetInstallationTitle_f (void)
-{
-	Com_DPrintf(DEBUG_CLIENT, "INS_SetInstallationTitle_f: #installations: %i\n", ccs.numInstallations);
-	if (ccs.numInstallations < B_GetInstallationLimit())
-		Cvar_Set("mn_installation_title", ccs.installations[ccs.numInstallations].name);
-	else {
-		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
-		MN_PopMenu(qfalse);		/* remove the new installation popup */
-	}
-}
-
-/**
- * @brief Creates console command to change the name of a installation.
- * Copies the value of the cvar mn_installation_title over as the name of the
- * current selected installation
- */
-static void INS_ChangeInstallationName_f (void)
-{
-	/* maybe called without installation initialized or active */
-	if (!installationCurrent)
-		return;
-
-	Q_strncpyz(installationCurrent->name, Cvar_VariableString("mn_installation_title"), sizeof(installationCurrent->name));
-}
-
-/**
  * @brief Destroys an installation
  * @param[in] pointer to the installation to be destroyed
  */
@@ -444,41 +245,43 @@ void INS_DestroyInstallation (installation_t *installation)
 }
 
 /**
- * @brief console function for destroying an installation
- * @sa INS_DestroyInstallation
+ * @brief Check conditions for new installation and build it.
+ * @param[in] pos Position on the geoscape.
+ * @return True if the installation has been build.
+ * @sa INS_BuildInstallation
  */
-static void INS_DestroyInstallation_f (void)
+qboolean INS_NewInstallation (installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos)
 {
-	installation_t *installation;
+	byte *colorTerrain;
 
-	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
-		installation = installationCurrent;
+	assert(installation);
+
+	if (installation->founded) {
+		Com_DPrintf(DEBUG_CLIENT, "INS_NewInstallation: installation already founded: %i\n", installation->idx);
+		return qfalse;
+	} else if (ccs.numInstallations >= B_GetInstallationLimit()) {
+		Com_DPrintf(DEBUG_CLIENT, "INS_NewInstallation: max installation limit hit\n");
+		return qfalse;
+	}
+
+	colorTerrain = MAP_GetColor(pos, MAPTYPE_TERRAIN);
+
+	if (MapIsWater(colorTerrain)) {
+		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
+		MS_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
+		return qfalse;
 	} else {
-		installation = INS_GetFoundedInstallationByIDX(atoi(Cmd_Argv(1)));
-		Cvar_SetValue("mn_installation_id", installation->idx);
+		Com_DPrintf(DEBUG_CLIENT, "INS_NewInstallation: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));
 	}
 
-	/* Ask 'Are you sure?' by default */
-	if (Cmd_Argc() < 3) {
-		char command[MAX_VAR];
+	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for installation terrain: R:%i G:%i B:%i\n", colorTerrain[0], colorTerrain[1], colorTerrain[2]);
 
-		Com_sprintf(command, sizeof(command), "mn_destroyinstallation %d 1; mn_pop;", installation->idx);
-		MN_PopupButton(_("Destroy Installation"), _("Do you really want to destroy this installation?"),
-			command, _("Destroy"), _("Destroy installation"),
-			"mn_pop;", _("Cancel"), _("Forget it"),
-			NULL, NULL, NULL);
-		return;
-	}
-	INS_DestroyInstallation(installation);
-	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
-}
+	/* build installation */
+	Vector2Copy(pos, installation->pos);
 
-/**
- * @brief upadtes the installation limit cvar for menus
- */
-static void INS_UpdateInsatallationLimit_f (void)
-{
-	Cvar_SetValue("mn_installation_max", B_GetInstallationLimit());
+	ccs.numInstallations++;
+
+	return qtrue;
 }
 
 /**
@@ -502,20 +305,9 @@ void INS_InitStartup (void)
 	}
 
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
-	Cmd_AddCommand("mn_build_installation", INS_BuildInstallation_f, NULL);
-	Cmd_AddCommand("mn_set_installation_title", INS_SetInstallationTitle_f, NULL);
-	Cmd_AddCommand("mn_rename_installation", INS_RenameInstallation_f, "Rename the current installation");
-	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
-	Cmd_AddCommand("mn_destroyinstallation", INS_DestroyInstallation_f, "Destroys an installation");
-	Cmd_AddCommand("mn_update_max_installations", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
 #endif
-
-	INS_UpdateInsatallationLimit_f();
-	mn_installation_count = Cvar_Get("mn_installation_count", "0", 0, "Current amount of build installations");
-	mn_installation_id = Cvar_Get("mn_installation_id", "-1", 0, "Internal id of the current selected installation");
 }
 
 /**

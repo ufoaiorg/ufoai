@@ -49,6 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_uforecovery.h"
 #include "cl_alienbase.h"
 #include "cl_installation.h"
+#include "cp_installation_callbacks.h"
 #include "cp_alien_interest.h"
 #include "cp_missions.h"
 #include "cp_mission_triggers.h"
@@ -2348,6 +2349,7 @@ static void CP_AddCampaignCallbackCommands (void)
 	UP_InitCallbacks();
 	E_InitCallbacks();
 	HOS_InitCallbacks();
+	INS_InitCallbacks();
 }
 
 static void CP_AddCampaignCommands (void)
@@ -2377,6 +2379,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	UP_ShutdownCallbacks();
 	E_ShutdownCallbacks();
 	HOS_ShutdownCallbacks();
+	INS_ShutdownCallbacks();
 }
 
 static void CP_RemoveCampaignCommands (void)
