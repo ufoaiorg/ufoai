@@ -666,9 +666,9 @@ static void Key_Unbind_f (void)
 		return;
 	}
 
-	if (!Q_strncmp(Cmd_Argv(0), "unbindmenu", MAX_VAR))
+	if (!Q_strcmp(Cmd_Argv(0), "unbindmenu"))
 		Key_SetBinding(b, "", KEYSPACE_MENU);
-	else if (!Q_strncmp(Cmd_Argv(0), "unbindbattle", MAX_VAR))
+	else if (!Q_strcmp(Cmd_Argv(0), "unbindbattle"))
 		Key_SetBinding(b, "", KEYSPACE_BATTLE);
 	else
 		Key_SetBinding(b, "", KEYSPACE_GAME);
@@ -760,7 +760,7 @@ void Key_WriteBindings (const char* filename)
 	FS_Printf(&f, "// If you want to know the keyname of a specific key - set in_debug cvar to 1 and press the key\n");
 	FS_Printf(&f, "unbindallmenu\n");
 	FS_Printf(&f, "unbindall\n");
-	FS_Printf(&f, "unbindbattle\n");
+	FS_Printf(&f, "unbindallbattle\n");
 	/* failfast, stops loop for first occurred error in fprintf */
 	for (i = 0; i < K_LAST_KEY && !delete; i++)
 		if (menukeybindings[i] && menukeybindings[i][0])
