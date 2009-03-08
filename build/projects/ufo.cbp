@@ -353,6 +353,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_uforecovery.h" />
+		<Unit filename="..\..\src\client\campaign\cl_uforecovery_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cl_uforecovery_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_aircraft.c">
 			<Option compilerVar="CC" />
 		</Unit>
