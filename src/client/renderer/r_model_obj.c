@@ -80,19 +80,28 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 
 		/* each vert */
 		for (j = 0; j < 3; j++, v++) {
+			assert(v->vert - 1 >= 0);
 			VectorCopy((&obj->verts[(v->vert - 1) * 3]), (&mesh->verts[vertind + j * 3]));
 
-			if (v->normal)
+			if (v->normal) {
+				assert(v->normal - 1 >= 0);
 				VectorCopy((&obj->normals[(v->normal - 1) * 3]), (&mesh->normals[vertind + j * 3]));
+			}
 
-			if (v->texcoord)
+			if (v->texcoord) {
+				assert(v->texcoord - 1 >= 0);
 				VectorCopy((&obj->texcoords[(v->texcoord - 1) * 2]), (&mesh->texcoords[coordind + j * 2]));
+			}
 		}
+
+/*		Mem_CheckGlobalIntegrity();*/
 
 		coordind += 6;
 		vertind += 9;
 	}
 }
+
+#define MAX_OBJ_FACE_VERTS 128
 
 /**
  * @brief Assembles count tris on the model from the specified array of verts.
@@ -104,6 +113,7 @@ static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
 	if (!obj->tris)
 		return;
 
+	assert(count < MAX_OBJ_FACE_VERTS);
 
 	for (i = 0; i < count; i++) {  /* walk around the polygon */
 		const int v0 = 0;
@@ -111,15 +121,13 @@ static void R_LoadObjModelTris (mobj_t *obj, const mobjvert_t *verts, int count)
 		const int v2 = 2 + i;
 
 		mobjtri_t *t = &obj->tris[obj->num_tris_parsed + i];
+		assert(obj->num_tris_parsed + i < obj->num_tris);
 
 		t->verts[0] = verts[v0];
 		t->verts[1] = verts[v1];
 		t->verts[2] = verts[v2];
 	}
 }
-
-
-#define MAX_OBJ_FACE_VERTS 128
 
 /**
  * @brief Each line consists of 3 or more vertex definitions, e.g.
@@ -187,12 +195,14 @@ static int R_LoadObjModelFace (const model_t *mod, mobj_t *obj, const char *line
 		/* parse whatever is left in the token */
 		if (!v->vert)
 			v->vert = atoi(tok);
-
 		else if (!v->texcoord)
 			v->texcoord = atoi(tok);
-
 		else if (!v->normal)
 			v->normal = atoi(tok);
+
+		if (v->vert < 0 || v->texcoord < 0 || v->normal < 0)
+			Com_Error(ERR_DROP, "R_LoadObjModelFace: bad indices: %s (%i:%i:%i).",
+				mod->name, v->vert, v->texcoord, v->normal);
 	}
 
 	/* number of triangles from parsed verts */
@@ -319,7 +329,7 @@ static void R_LoadObjModel_(model_t *mod, mobj_t *obj, const byte *buffer, int b
 
 void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 {
-	mobj_t *obj;
+	mobj_t obj;
 	const float *v;
 	int i;
 
@@ -328,37 +338,40 @@ void R_LoadObjModel (model_t *mod, byte *buffer, int bufSize)
 	mod->alias.num_frames = 1;
 	mod->alias.num_meshes = 1;
 
-	obj = (mobj_t *)Mem_PoolAlloc(sizeof(*obj), vid_modelPool, 0);
+	memset(&obj, 0, sizeof(obj));
 
 	/* resolve primitive counts */
-	R_LoadObjModel_(mod, obj, buffer, bufSize);
+	R_LoadObjModel_(mod, &obj, buffer, bufSize);
 
-	if (!obj->num_verts || !obj->num_texcoords || !obj->num_tris || !obj->num_normals)
+	if (!obj.num_verts || !obj.num_texcoords || !obj.num_tris || !obj.num_normals)
 		Com_Error(ERR_DROP, "R_LoadObjModel: Failed to resolve model data: %s\n", mod->name);
 
 	/* allocate the primitives */
-	obj->verts = (float *)Mem_PoolAlloc(obj->num_verts * sizeof(float) * 3, vid_modelPool, 0);
-	obj->texcoords = (float *)Mem_PoolAlloc(obj->num_texcoords * sizeof(float) * 2, vid_modelPool, 0);
-	obj->tris = (mobjtri_t *)Mem_PoolAlloc(obj->num_tris * sizeof(mobjtri_t), vid_modelPool, 0);
-	if (obj->num_normals)
-		obj->normals = (float *)Mem_PoolAlloc(obj->num_normals * sizeof(float) * 3, vid_modelPool, 0);
+	obj.verts = (float *)Mem_PoolAlloc(obj.num_verts * sizeof(float) * 3, vid_modelPool, 0);
+	obj.normals = (float *)Mem_PoolAlloc(obj.num_normals * sizeof(float) * 3, vid_modelPool, 0);
+	obj.texcoords = (float *)Mem_PoolAlloc(obj.num_texcoords * sizeof(float) * 2, vid_modelPool, 0);
+	obj.tris = (mobjtri_t *)Mem_PoolAlloc(obj.num_tris * sizeof(mobjtri_t), vid_modelPool, 0);
 
 	/* load the primitives */
-	R_LoadObjModel_(mod, obj, buffer, bufSize);
+	R_LoadObjModel_(mod, &obj, buffer, bufSize);
 
-	v = obj->verts;
+	v = obj.verts;
 	/* resolve mins/maxs */
-	for (i = 0; i < obj->num_verts; i++, v += 3)
+	for (i = 0; i < obj.num_verts; i++, v += 3)
 		AddPointToBounds(v, mod->mins, mod->maxs);
 
+	/* we only have one mesh in obj files */
 	mod->alias.meshes = Mem_PoolAlloc(sizeof(mAliasMesh_t), vid_modelPool, 0);
 
 	/* load the skin */
 	R_LoadObjSkin(mod);
 
 	/* and finally the arrays */
-	R_LoadObjModelVertexArrays(obj, mod);
+	R_LoadObjModelVertexArrays(&obj, mod);
 
 	/* this is no longer needed - we loaded everything into the generic model structs */
-	Mem_Free(obj);
+	Mem_Free(obj.verts);
+	Mem_Free(obj.normals);
+	Mem_Free(obj.texcoords);
+	Mem_Free(obj.tris);
 }
