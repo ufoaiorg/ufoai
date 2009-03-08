@@ -325,6 +325,8 @@ qboolean B_LoadStorageXML(mxml_node_t *parent, equipDef_t *equip);
 
 qboolean B_ScriptSanityCheck(void);
 
+int B_GetInstallationLimit(void);
+
 /* menu functions that checks whether the buttons in the base menu are useable */
 qboolean BS_BuySellAllowed(const base_t* base);
 qboolean AIR_AircraftAllowed(const base_t* base);

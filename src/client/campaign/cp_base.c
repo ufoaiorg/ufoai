@@ -353,6 +353,9 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 	case B_RADAR:
 		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
 		break;
+	case B_COMMAND:
+		Cmd_ExecuteString("mn_update_max_installations");
+		break;
 	default:
 		break;
 	}
@@ -376,6 +379,9 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		break;
 	case B_RADAR:
 		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
+		break;
+	case B_COMMAND:
+		Cmd_ExecuteString("mn_update_max_installations");
 		break;
 	default:
 		break;
@@ -761,8 +767,6 @@ void CL_BaseDestroy (base_t *base)
 	for (buildingIdx = ccs.numBuildings[base->idx] - 1; buildingIdx >= 0; buildingIdx--) {
 		B_BuildingDestroy(base, &ccs.buildings[base->idx][buildingIdx]);
 	}
-	/* set the max installation count */
-	Cvar_SetValue("mn_installation_max", min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE));
 }
 
 #ifdef DEBUG
@@ -1120,17 +1124,32 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 }
 
 /**
+ * @brief Counts the actual installation count limit
+ * @returns int number of installations can be built
+ */
+int B_GetInstallationLimit (void)
+{
+	int i;
+	int limit = 0;
+
+	/* count working Command Centers */
+	for(i = 0; i < ccs.numBases; i++) {
+		const base_t *base = B_GetFoundedBaseByIDX(i);
+
+		limit += (base && B_GetBuildingStatus(base, B_COMMAND)) ? 1 : 0;
+	}
+
+	return min(MAX_INSTALLATIONS, limit * MAX_INSTALLTAIONS_PER_BASE);
+}
+
+/**
  * @brief Update menu script related cvars when the amount of bases changed.
- * @todo We should not only rely on a value of a cvar for the max base and max installation count.
- * This would allow easy cheating
  */
 static void B_UpdateBaseCount (void)
 {
 	/* this cvar is used for disabling the base build button on geoscape
 	 * if MAX_BASES was reached */
 	Cvar_SetValue("mn_base_count", ccs.numBases);
-	/* set the max installation count */
-	Cvar_SetValue("mn_installation_max", min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE));
 }
 
 /**

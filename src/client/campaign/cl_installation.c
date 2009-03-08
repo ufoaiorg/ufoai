@@ -216,7 +216,7 @@ void INS_SelectInstallation (installation_t *installation)
 		ccs.mapAction = MA_NEWINSTALLATION;
 		installationID = INS_GetFirstUnfoundedInstallation();
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: new installationID is %i\n", installationID);
-		if (installationID < min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE)) {
+		if (installationID < B_GetInstallationLimit()) {
 			installationCurrent = INS_GetInstallationByIDX(installationID);
 			installationCurrent->idx = installationID;
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", installationCurrent->name);
@@ -399,7 +399,7 @@ static void INS_InstallationList_f (void)
 static void INS_SetInstallationTitle_f (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "INS_SetInstallationTitle_f: #installations: %i\n", ccs.numInstallations);
-	if (ccs.numInstallations < MAX_INSTALLATIONS)
+	if (ccs.numInstallations < B_GetInstallationLimit())
 		Cvar_Set("mn_installation_title", ccs.installations[ccs.numInstallations].name);
 	else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
@@ -419,18 +419,6 @@ static void INS_ChangeInstallationName_f (void)
 		return;
 
 	Q_strncpyz(installationCurrent->name, Cvar_VariableString("mn_installation_title"), sizeof(installationCurrent->name));
-}
-
-
-/**
- * @brief This function checks whether a user build the max allowed amount of installations
- * if yes, the MN_PopMenu will pop the installation build menu from the stack
- */
-static void INS_CheckMaxInstallations_f (void)
-{
-	if (ccs.numInstallations >= MAX_INSTALLATIONS) {
-		MN_PopMenu(qfalse);
-	}
 }
 
 /**
@@ -486,6 +474,14 @@ static void INS_DestroyInstallation_f (void)
 }
 
 /**
+ * @brief upadtes the installation limit cvar for menus
+ */
+static void INS_UpdateInsatallationLimit_f (void)
+{
+	Cvar_SetValue("mn_installation_max", B_GetInstallationLimit());
+}
+
+/**
  * @brief Resets console commands.
  * @sa MN_ResetMenus
  */
@@ -509,14 +505,15 @@ void INS_InitStartup (void)
 	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
 	Cmd_AddCommand("mn_build_installation", INS_BuildInstallation_f, NULL);
 	Cmd_AddCommand("mn_set_installation_title", INS_SetInstallationTitle_f, NULL);
-	Cmd_AddCommand("mn_check_max_installations", INS_CheckMaxInstallations_f, NULL);
 	Cmd_AddCommand("mn_rename_installation", INS_RenameInstallation_f, "Rename the current installation");
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	Cmd_AddCommand("mn_destroyinstallation", INS_DestroyInstallation_f, "Destroys an installation");
+	Cmd_AddCommand("mn_update_max_installations", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
 #endif
 
+	INS_UpdateInsatallationLimit_f();
 	mn_installation_count = Cvar_Get("mn_installation_count", "0", 0, "Current amount of build installations");
 	mn_installation_id = Cvar_Get("mn_installation_id", "-1", 0, "Internal id of the current selected installation");
 }

@@ -159,6 +159,7 @@ building building_command
 	map_name	"commando"
 	pedia		rs_building_command
 	pos			"4 2"
+	ondestroy	"mn_update_max_installations"
 }
 
 building building_quarters
