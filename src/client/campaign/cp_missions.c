@@ -343,7 +343,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 			shortUFOType = UFO_TypeToShortName(ccs.selectedMission->ufo->ufotype);
 		}
 
-		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery %i;", mission->ufo->ufotype);
+		Com_sprintf(mission->onwin, sizeof(mission->onwin), "cp_uforecovery_init %i;", mission->ufo->ufotype);
 		/* Set random map UFO if this is a random map */
 		if (mission->mapDef->map[0] == '+') {
 			/* set rm_ufo to the ufo type used */

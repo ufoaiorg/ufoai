@@ -181,7 +181,7 @@ menu uforecovery
 
 	string actualufo
 	{
-		string		"_Some stats about actual ufo"
+		string		"*cvar mn_uforecovery_actualufo"
 		pos			"26 50"
 		size		"273 23"
 		font		f_small
@@ -193,7 +193,7 @@ menu uforecovery
 	panel store_panel {
 		{
 			pos		"20 165"
-			size	"731 300"
+			size	"731 315"
 		}
 
 		text cp_uforecovery_baselist
@@ -234,7 +234,7 @@ menu uforecovery
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
-			click		{ cmd "cp_uforecoverystart;mn_pop;" }
+			click		{ cmd "cp_uforecovery_store_start;mn_pop;" }
 		}
 	}
 
@@ -244,7 +244,7 @@ menu uforecovery
 	panel sell_panel {
 		{
 			pos		"20 165"
-			size	"731 300"
+			size	"731 315"
 		}
 
 		string name_label
@@ -302,7 +302,7 @@ menu uforecovery
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
-			click		{ cmd "cp_ufosellstart;mn_pop;" }
+			click		{ cmd "cp_uforecovery_sell_start;mn_pop;" }
 		}
 	}
 
@@ -342,11 +342,11 @@ menu uforecovery
 		cmd "del mission_recoverynation;"
 		*cvar:mn_uforecovery_tab 0
 		cmd "uforecovery_tabchange"
-		cmd "cp_uforecoverysell"
-		cmd "cp_uforecoverystore"
+		cmd "cp_uforecovery_sell_init"
+		cmd "cp_uforecovery_store_init"
 	}
 
 	func close {
-		cmd "del mn_uforecovery_tab"
+		cmd "del mn_uforecovery_tab;del mn_uforecovery_actualufo"
 	}
 }

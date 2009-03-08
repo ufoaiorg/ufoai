@@ -122,7 +122,7 @@ static void UR_SendMail (const aircraft_t *ufocraft, const base_t *base)
 /**
  * @brief Function to trigger UFO Recovered event.
  * @note This function prepares related cvars for the recovery popup.
- * @note Command to call this: cp_uforecovery.
+ * @note Command to call this: cp_uforecovery_init.
  */
 static void CP_UFORecovered_f (void)
 {
@@ -258,10 +258,10 @@ static void UR_Prepare (base_t *base)
 
 /**
  * @brief Function to start UFO recovery process.
- * @note Command to call this: cp_uforecoverystart.
+ * @note Command to call this: cp_uforecovery_store_start.
  * @note This needs the ufoRecovery base value set
  */
-static void CP_UFORecoveredStart_f (void)
+static void CP_UFORecoveryStartStore_f (void)
 {
 	base_t *base = ufoRecovery.base;
 	if (!base)
@@ -278,11 +278,11 @@ static void CP_UFORecoveredStart_f (void)
 }
 
 /**
- * @brief Function to store recovered UFO in desired base.
- * @note Command to call this: cp_uforecoverystore.
+ * @brief Function to initialize list of storage locations for recovered UFO.
+ * @note Command to call this: cp_uforecovery_store_init.
  * @sa UR_ConditionsForStoring
  */
-static void CP_UFORecoveredStore_f (void)
+static void CP_UFORecoveryInitStore_f (void)
 {
 	int i;
 	aircraft_t *ufocraft;
@@ -333,7 +333,7 @@ static void CP_UFORecoveredStore_f (void)
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
 	switch (ufoRecovery.baseHasUFOHangarCount) {
 	case 0:
-		/* No UFO base with proper conditions, do nothing. */
+		/* No UFO base with proper conditions, show a hint and disable list. */
 		Q_strcat(recoveryBaseSelectPopup, _("No ufo hangar or ufo yard available."), sizeof(recoveryBaseSelectPopup));
 		MN_ExecuteConfunc("cp_basesel_disable");
 		break;
@@ -351,6 +351,7 @@ static void CP_UFORecoveredStore_f (void)
 			Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
 		break;
 	}
+	Cvar_Set("mn_uforecovery_actualufo",_("Some stats about actual ufo"));
 	MN_RegisterText(TEXT_UFORECOVERY_BASESTORAGE, recoveryBaseSelectPopup);
 }
 
@@ -359,7 +360,7 @@ static void CP_UFORecoveredStore_f (void)
  * @note The base selection is being done here.
  * @note Callback command: cp_uforecovery_baselist_click.
  */
-static void CP_UFORecoveryBaseSelectPopup_f (void)
+static void CP_UFORecoverySelectStorageBase_f (void)
 {
 	int num;
 
@@ -385,7 +386,7 @@ static void CP_UFORecoveryBaseSelectPopup_f (void)
  * @note The nation selection is being done here.
  * @note Callback command: cp_uforecovery_nationlist_click.
  */
-static void CP_UFORecoveryNationSelectPopup_f (void)
+static void CP_UFORecoverySelectSellNation_f (void)
 {
 	int num;
 	nation_t *nation;
@@ -411,9 +412,9 @@ static void CP_UFORecoveryNationSelectPopup_f (void)
 
 /**
  * @brief Function to start UFO selling process.
- * @note Command to call this: cp_ufosellstart.
+ * @note Command to call this: cp_uforecovery_sell_start.
  */
-static void CP_UFOSellStart_f (void)
+static void CP_UFORecoveryStartSell_f (void)
 {
 	nation_t *nation;
 	int i;
@@ -447,10 +448,10 @@ static void CP_UFOSellStart_f (void)
 }
 
 /**
- * @brief Function to sell recovered UFO to desired nation.
- * @note Command to call this: cp_uforecoverysell.
+ * @brief Function to initialize list to sell recovered UFO to desired nation.
+ * @note Command to call this: cp_uforecovery_sell_init.
  */
-static void CP_UFORecoveredSell_f (void)
+static void CP_UFORecoveryInitSell_f (void)
 {
 	int i, nations = 0;
 	aircraft_t *ufocraft;
@@ -495,8 +496,6 @@ static void CP_UFORecoveredSell_f (void)
 	if (nations == 0)
 		return;
 
-	MN_RegisterText(TEXT_LIST, recoveryNationSelectPopup);
-	/*MN_PushMenu("popup_recoverynationlist", NULL);*/
 	MN_RegisterText(TEXT_UFORECOVERY_NATIONS, recoveryNationSelectPopup);
 }
 
@@ -701,12 +700,12 @@ qboolean UR_ConditionsForStoring (const base_t *base, const aircraft_t *ufocraft
 
 void UR_InitStartup (void)
 {
-	Cmd_AddCommand("cp_uforecovery", CP_UFORecovered_f, "Function to trigger UFO Recovered event");
-	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UFORecoveryBaseSelectPopup_f, "Callback for recovery base list popup.");
-	Cmd_AddCommand("cp_uforecoverystart", CP_UFORecoveredStart_f, "Function to start UFO recovery processing.");
-	Cmd_AddCommand("cp_uforecoverystore", CP_UFORecoveredStore_f, "Function to store recovered UFO in desired base.");
-	Cmd_AddCommand("cp_uforecovery_nationlist_click", CP_UFORecoveryNationSelectPopup_f, "Callback for recovery nation list popup.");
-	Cmd_AddCommand("cp_ufosellstart", CP_UFOSellStart_f, "Function to start UFO selling processing.");
-	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
+	Cmd_AddCommand("cp_uforecovery_init", CP_UFORecovered_f, "Function to trigger UFO Recovered event");
+	Cmd_AddCommand("cp_uforecovery_sell_init", CP_UFORecoveryInitSell_f, "Function to initialize sell recovered UFO to desired nation.");
+	Cmd_AddCommand("cp_uforecovery_store_init", CP_UFORecoveryInitStore_f, "Function to initialize store recovered UFO in desired base.");
+	Cmd_AddCommand("cp_uforecovery_nationlist_click", CP_UFORecoverySelectSellNation_f, "Callback for recovery sell to nation list.");
+	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UFORecoverySelectStorageBase_f, "Callback for recovery store in base list.");
+	Cmd_AddCommand("cp_uforecovery_store_start", CP_UFORecoveryStartStore_f, "Function to start UFO recovery processing.");
+	Cmd_AddCommand("cp_uforecovery_sell_start", CP_UFORecoveryStartSell_f, "Function to start UFO selling processing.");
 	Cmd_AddCommand("cp_ufocrashed", CP_UFOCrashed_f, "Function to process crashed UFO after a mission.");
 }
