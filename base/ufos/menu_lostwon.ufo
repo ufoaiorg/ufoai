@@ -195,17 +195,24 @@ menu uforecovery
 			pos		"20 165"
 			size	"731 315"
 		}
+		rows lines {
+			pos			"22 50"
+			size		"600 128"
+			color1		"0 0.08 0 1"
+			color2		"0 0.16 0 1"
+			lineheight	16
+		}
 
 		text cp_uforecovery_baselist
 		{
 			textid		TEXT_UFORECOVERY_BASESTORAGE
 			pos			"22 50"
-			size		"440 96"
+			size		"600 128"
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
 			lineheight	16
 			tabwidth	100
-			rows		"6"
+			rows		"8"
 			scrollbar	true
 			mousefx		true
 			wheel
@@ -265,11 +272,19 @@ menu uforecovery
 			pos			"526 30"
 		}
 
+		rows lines {
+			pos			"22 50"
+			size		"600 128"
+			color1		"0 0.08 0 1"
+			color2		"0 0.16 0 1"
+			lineheight	16
+		}
+
 		text cp_uforecovery_nationlist
 		{
 			textid		TEXT_UFORECOVERY_NATIONS
 			pos			"22 50"
-			size		"726 134"
+			size		"600 128"
 			lineheight	16
 			tabwidth	100
 			color		"0.60 0.60 0.60 1"
@@ -336,17 +351,13 @@ menu uforecovery
 		*store_panel.cp_uforecovery_baselist lineselected	-1
 		*store_panel.cp_uforecovery_baselist disabled false
 		*store_panel.bt_basesel disabled true
-		cmd "del mission_recoverybase;"
 		*sell_panel.cp_uforecovery_nationlist lineselected	-1
 		*sell_panel.bt_natsel disabled true
-		cmd "del mission_recoverynation;"
 		*cvar:mn_uforecovery_tab 0
-		cmd "uforecovery_tabchange"
-		cmd "cp_uforecovery_sell_init"
-		cmd "cp_uforecovery_store_init"
+		cmd "del mission_recoverybase;del mission_recoverynation;uforecovery_tabchange;cp_uforecovery_sell_init;cp_uforecovery_store_init;"
 	}
 
 	func close {
-		cmd "del mn_uforecovery_tab;del mn_uforecovery_actualufo"
+		cmd "del mn_uforecovery_tab;del mn_uforecovery_actualufo;"
 	}
 }
