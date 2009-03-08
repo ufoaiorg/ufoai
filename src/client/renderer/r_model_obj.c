@@ -94,8 +94,6 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 			}
 		}
 
-/*		Mem_CheckGlobalIntegrity();*/
-
 		coordind += 6;
 		vertind += 9;
 	}
@@ -288,7 +286,7 @@ static void R_LoadObjSkin (model_t *mod)
  * @brief Drives the actual parsing of the object file.  The file is read twice:
  * once to acquire primitive counts, and a second time to load them.
  */
-static void R_LoadObjModel_(model_t *mod, mobj_t *obj, const byte *buffer, int bufSize)
+static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte *buffer, int bufSize)
 {
 	char line[MAX_STRING_CHARS];
 	const byte *c;
