@@ -1147,7 +1147,6 @@ menu popup_newbase
 
 // ==================
 // POPUP NEW INSTALLATION
-// @todo it should explain or display the rules: limitation of 16 installations, 8 bases
 // ==================
 menu popup_newinstallation_type
 {
@@ -1155,6 +1154,7 @@ menu popup_newinstallation_type
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
+		closebutton	true
 		image		menu/popup_alpha_tile
 		blend		true
 		string		"_New installation"
@@ -1344,6 +1344,23 @@ menu popup_newinstallation_type
 		click		{ cmd "mn_pop; mn_select_base -1;" }
 	}
 
+	/* disabled zones - for tooltip */
+	zone disabled_installation
+	{
+		invis		true
+		pos			"30 78"
+		size		"440 60"
+		tooltip		"_Installation limit reached. Build more bases."
+	}
+	zone disabled_base
+	{
+		invis		true
+		pos			"30 138"
+		size		"440 20"
+		tooltip		"_Base limit reached."
+	}
+
+
 	//
 	// Interaction
 	//
@@ -1364,17 +1381,20 @@ menu popup_newinstallation_type
 	func init {
 		if "*cvar:mn_base_count >= *cvar:mn_base_max" {
 			*click_base invis true
+			*disabled_base invis false
 			*base_type disabled true
 			*base_buildtime disabled true
 			*base_cost disabled true
 		} else {
 			*click_base invis false
+			*disabled_base invis true
 			*base_type disabled false
 			*base_buildtime disabled false
 			*base_cost disabled false
 		}
 		if "*cvar:mn_installation_count >= *cvar:mn_installation_max" {
 			*click_ufoyard	invis true
+			*disabled_installation invis false
 			*ufoyard_type disabled true
 			*ufoyard_buildtime disabled true
 			*ufoyard_cost disabled true
@@ -1388,6 +1408,7 @@ menu popup_newinstallation_type
 			*radar_cost disabled true
 		} else {
 			*click_ufoyard	invis false
+			*disabled_installation invis true
 			*ufoyard_type disabled false
 			*ufoyard_buildtime disabled false
 			*ufoyard_cost disabled false
