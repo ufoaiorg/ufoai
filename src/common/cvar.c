@@ -650,25 +650,31 @@ static void Cvar_SetOld_f (void)
  */
 static void Cvar_Set_f (void)
 {
-	int c;
-	int flags;
-	const char *arg;
-
-	c = Cmd_Argc();
+	const int c = Cmd_Argc();
 	if (c != 3 && c != 4) {
 		Com_Printf("Usage: %s <variable> <value> [u / s]\n", Cmd_Argv(0));
 		return;
 	}
 
 	if (c == 4) {
-		arg = Cmd_Argv(3);
-		if (*arg == 'u')
-			flags = CVAR_USERINFO;
-		else if (*arg == 's')
-			flags = CVAR_SERVERINFO;
-		else {
-			Com_Printf("flags can only be 'u' or 's'\n");
-			return;
+		const char *arg = Cmd_Argv(3);
+		int flags;
+
+		while (arg[0] != '\0') {
+			switch (arg[0]) {
+			case 'u':
+				flags |= CVAR_USERINFO;
+				break;
+			case 's':
+				flags |= CVAR_SERVERINFO;
+				break;
+			case 'a':
+				flags |= CVAR_ARCHIVE;
+				break;
+			default:
+				Com_Printf("invalid flags %c given\n", arg[0]);
+			}
+			arg++;
 		}
 		Cvar_FullSet(Cmd_Argv(1), Cmd_Argv(2), flags);
 	} else
@@ -705,7 +711,7 @@ void Cvar_WriteVariables (qFILE *f)
 
 	for (var = cvar_vars; var; var = var->next)
 		if (var->flags & CVAR_ARCHIVE)
-			FS_Printf(f, "set %s \"%s\"\n", var->name, var->string);
+			FS_Printf(f, "set %s \"%s\" a\n", var->name, var->string);
 }
 
 /**
@@ -737,7 +743,7 @@ static void Cvar_List_f (void)
 #endif
 
 		if (var->flags & CVAR_ARCHIVE)
-			Com_Printf("*");
+			Com_Printf("A");
 		else
 			Com_Printf(" ");
 		if (var->flags & CVAR_USERINFO)
