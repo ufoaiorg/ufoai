@@ -57,7 +57,7 @@ typedef struct mobj_s {
 
 static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 {
-	mobjtri_t *t;
+	const mobjtri_t *t;
 	int i, j, vertind, coordind;
 	mAliasMesh_t *mesh = mod->alias.meshes;
 	const int v = obj->num_tris * 3 * 3;
@@ -304,17 +304,12 @@ static void R_LoadObjModel_ (model_t *mod, mobj_t *obj, const byte *buffer, int 
 			continue;
 		}
 
-		if (c[0] == '\r') {
-			c++;
-			continue;
-		}
-
-		if (c[0] == '\n') {
+		if (c[0] == '\r' || c[0] == '\n') {
 			line[i++] = 0;
 			i = 0;
 
 			if (!comment)
-				R_LoadObjModelLine(mod, obj, line);
+				R_LoadObjModelLine(mod, obj, COM_Trim(line));
 
 			comment = qfalse;
 			c++;

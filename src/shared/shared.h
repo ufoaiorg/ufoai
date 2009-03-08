@@ -87,6 +87,8 @@ void COM_StripExtension(const char *in, char *out, size_t size);
 void COM_FilePath(const char *in, char *out);
 void COM_DefaultExtension(char *path, size_t len, const char *extension);
 
+char *COM_Trim(char *s);
+
 /** returns the amount of elements - not the amount of bytes */
 #define lengthof(x) (sizeof(x) / sizeof(*(x)))
 #define CASSERT(x) extern int ASSERT_COMPILE[((x) != 0) * 2 - 1]

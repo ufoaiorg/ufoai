@@ -37,6 +37,23 @@ const char *COM_SkipPath (const char *pathname)
 	return last ? last + 1 : pathname;
 }
 
+char *COM_Trim (char *s)
+{
+	char *left, *right;
+
+	left = s;
+
+	while (isspace(*left))
+		left++;
+
+	right = left + strlen(left) - 1;
+
+	while (isspace(*right))
+		*right-- = 0;
+
+	return left;
+}
+
 /**
  * @brief Removed the file extension from a filename
  * @sa COM_SkipPath
