@@ -522,7 +522,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 
 #ifdef DEBUG
 	/* In debugmode we will also write a uncompressed {filename}.lint file without header information */
-	res = FS_WriteFile(buf, requiredbuflen + 1, savegame_debug);
+	res = FS_WriteFile(buf, requiredbuflen, savegame_debug);
 #endif
 	if (header.compressed) {
 		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredbuflen+1);
