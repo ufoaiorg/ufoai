@@ -748,6 +748,7 @@ void Key_WriteBindings (const char* filename)
 	/* this gets true in case of an error */
 	qboolean delete = qfalse;
 	qFILE f;
+	int cnt = 0;
 
 	memset(&f, 0, sizeof(f));
 	FS_OpenFile(filename, &f, FILE_WRITE);
@@ -763,19 +764,25 @@ void Key_WriteBindings (const char* filename)
 	FS_Printf(&f, "unbindallbattle\n");
 	/* failfast, stops loop for first occurred error in fprintf */
 	for (i = 0; i < K_LAST_KEY && !delete; i++)
-		if (menukeybindings[i] && menukeybindings[i][0])
+		if (menukeybindings[i] && menukeybindings[i][0]) {
 			if (FS_Printf(&f, "bindmenu %s \"%s\"\n", Key_KeynumToString(i), menukeybindings[i]) < 0)
 				delete = qtrue;
+			cnt++;
+		}
 	for (i = 0; i < K_LAST_KEY && !delete; i++)
-		if (keybindings[i] && keybindings[i][0])
+		if (keybindings[i] && keybindings[i][0]) {
 			if (FS_Printf(&f, "bind %s \"%s\"\n", Key_KeynumToString(i), keybindings[i]) < 0)
 				delete = qtrue;
+			cnt++;
+		}
 	for (i = 0; i < K_LAST_KEY && !delete; i++)
-		if (battlekeybindings[i] && battlekeybindings[i][0])
+		if (battlekeybindings[i] && battlekeybindings[i][0]) {
 			if (FS_Printf(&f, "bindbattle %s \"%s\"\n", Key_KeynumToString(i), battlekeybindings[i]) < 0)
 				delete = qtrue;
+			cnt++;
+		}
 	FS_CloseFile(&f);
-	if (!delete)
+	if (!delete && cnt)
 		Com_Printf("Wrote %s\n", filename);
 	else
 		/* error in writing the keys.cfg - remove the file again */
