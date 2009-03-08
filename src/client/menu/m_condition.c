@@ -41,87 +41,107 @@ static const char *const if_strings[] = {
 CASSERT(lengthof(if_strings) == IF_SIZE);
 
 /**
+ * @todo code the FLOAT/STRING type into the opcode; we should not check it like that
+ */
+static inline qboolean MN_IsFloatOperator (menuConditionOpCodeType_t op)
+{
+	return op == IF_EQ
+	 || op == IF_LE
+	 || op == IF_GE
+	 || op == IF_GT
+	 || op == IF_LT
+	 || op == IF_NE;
+}
+
+static float MN_GetFloatFromParam (const char* value, menuConditionValueType_t type)
+{
+	switch (type) {
+	case IF_VALUE_STRING:
+		return atof(value);
+	case IF_VALUE_FLOAT:
+		return *(const float*)value;
+	case IF_VALUE_CVARNAME:
+	{
+		cvar_t *cvar = NULL;
+		cvar = Cvar_Get(value, "", 0, "Menu if condition cvar");
+		return cvar->value;
+	}
+	case IF_VALUE_NODEPROPERTY:
+		assert(qfalse);
+	}
+	return 0;
+}
+
+static const char*MN_GetStringFromParam (const char* value, menuConditionValueType_t type)
+{
+	switch (type) {
+	case IF_VALUE_STRING:
+		return value;
+	case IF_VALUE_FLOAT:
+		assert(qfalse);
+	case IF_VALUE_CVARNAME:
+	{
+		cvar_t *cvar = NULL;
+		cvar = Cvar_Get(value, "", 0, "Menu if condition cvar");
+		return cvar->string;
+	}
+	case IF_VALUE_NODEPROPERTY:
+		assert(qfalse);
+	}
+	return 0;
+}
+
+
+/**
  * @brief Check the if conditions for a given node
  * @returns True if the condition is qfalse if the node is not drawn
  */
 qboolean MN_CheckCondition (menuCondition_t *condition)
 {
-	cvar_t *cvar = NULL;
+	if (MN_IsFloatOperator(condition->type.opCode)) {
+		const float value1 = MN_GetFloatFromParam(condition->leftValue, condition->type.left);
+		const float value2 = MN_GetFloatFromParam(condition->rightValue, condition->type.right);
 
-	if (!condition->leftValue)
-		return qtrue;
-
-	if (condition->leftValue[0] == '*')
-		cvar = Cvar_Get(condition->leftValue+6, "", 0, "Menu if condition cvar");
-	else
-		cvar = Cvar_Get(condition->leftValue, "", 0, "Menu if condition cvar");
-	assert(cvar);
-
-	switch (condition->type.opCode) {
-	case IF_EQ:
-	case IF_LE:
-	case IF_GE:
-	case IF_GT:
-	case IF_LT:
-	case IF_NE:
-		{
-			const float value1 = cvar->value;
-			float value2;
-
-			assert(condition->rightValue);
-			if (condition->rightValue[0] == '*') {
-				if (!Q_strncmp(condition->rightValue+1, "cvar:", 5)) {
-					cvar_t *cvar2 = NULL;
-					cvar2 = Cvar_Get(condition->rightValue + 6, "", 0, "Menu if condition cvar");
-					value2 = cvar2->value;
-				} else {
-					Com_Printf("MN_CheckCondition: '%s' is not a cvar\n", condition->rightValue);
-					value2 = 0;
-				}
-			} else {
-				value2 = atof(condition->rightValue);
-			}
-
-			switch (condition->type.opCode) {
-			case IF_EQ:
-				return value1 == value2;
-			case IF_LE:
-				return value1 <= value2;
-			case IF_GE:
-				return value1 >= value2;
-			case IF_GT:
-				return value1 > value2;
-			case IF_LT:
-				return value1 < value2;
-			case IF_NE:
-				return value1 != value2;
-			default:
-				assert(qfalse);
-			}
+		switch (condition->type.opCode) {
+		case IF_EQ:
+			return value1 == value2;
+		case IF_LE:
+			return value1 <= value2;
+		case IF_GE:
+			return value1 >= value2;
+		case IF_GT:
+			return value1 > value2;
+		case IF_LT:
+			return value1 < value2;
+		case IF_NE:
+			return value1 != value2;
+		default:
+			assert(qfalse);
 		}
-		break;
-	case IF_EXISTS:
-		assert(cvar->string);
-		if (cvar->string[0] == '\0')
-			return qfalse;
-		break;
-	case IF_STR_EQ:
-		assert(condition->rightValue);
-		assert(cvar->string);
-		if (Q_strcmp(cvar->string, condition->rightValue))
-			return qfalse;
-		break;
-	case IF_STR_NE:
-		assert(condition->rightValue);
-		assert(cvar->string);
-		if (!Q_strcmp(cvar->string, condition->rightValue))
-			return qfalse;
-		break;
-	default:
-		Sys_Error("Unknown condition for if statement: %i", condition->type.opCode);
 	}
 
-	return qtrue;
+	if (condition->type.opCode == IF_EXISTS) {
+		if (condition->type.left == IF_VALUE_CVARNAME) {
+			return Cvar_FindVar(condition->leftValue) != NULL;
+		}
+		assert(qfalse);
+	}
+
+	if (condition->type.opCode == IF_STR_EQ || condition->type.opCode == IF_STR_NE) {
+		const char* value1 = MN_GetStringFromParam(condition->leftValue, condition->type.left);
+		const char* value2 = MN_GetStringFromParam(condition->rightValue, condition->type.right);
+
+		switch (condition->type.opCode) {
+		case IF_STR_EQ:
+			return Q_strcmp(value1, value2) == 0;
+		case IF_STR_NE:
+			return Q_strcmp(value1, value2) != 0;
+		default:
+			assert(qfalse);
+		}
+	}
+
+	Sys_Error("Unknown condition for if statement: %i", condition->type.opCode);
 }
 
 /**
@@ -153,8 +173,12 @@ qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
 {
 	memset(condition, 0, sizeof(*condition));
 	if (!strstr(token, " ")) {
-		/* cvar exists? (not null) */
-		condition->leftValue = MN_AllocString(token, 0);
+		if (Q_strncmp(token, "*cvar:", 6) != 0) {
+			Com_Printf("Invalid 'if' statement. '%s' is not a cvar\n", token);
+			return qfalse;
+		}
+		condition->leftValue = MN_AllocString(token + 6, 0);
+		condition->type.left = IF_VALUE_CVARNAME;
 		condition->type.opCode = IF_EXISTS;
 	} else {
 		char param1[BUF_SIZE + 1];
@@ -165,13 +189,29 @@ qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
 			return qfalse;
 		}
 
-		condition->leftValue = MN_AllocString(param1, 0);
-		condition->rightValue = MN_AllocString(param2, 0);
-
+		/* operator code */
 		condition->type.opCode = MN_GetOperatorByName(operator);
 		if (condition->type.opCode == IF_INVALID) {
 			Com_Printf("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator, token);
 			return qfalse;
+		}
+
+		/* left param */
+		if (!Q_strncmp(param1, "*cvar:", 6)) {
+			condition->leftValue = MN_AllocString(param1 + 6, 0);
+			condition->type.left = IF_VALUE_CVARNAME;
+		} else {
+			condition->leftValue = MN_AllocString(param1, 0);
+			condition->type.left = IF_VALUE_STRING;
+		}
+
+		/* right param */
+		if (!Q_strncmp(param2, "*cvar:", 6)) {
+			condition->rightValue = MN_AllocString(param2 + 6, 0);
+			condition->type.right = IF_VALUE_CVARNAME;
+		} else {
+			condition->rightValue = MN_AllocString(param2, 0);
+			condition->type.right = IF_VALUE_STRING;
 		}
 	}
 	return qtrue;

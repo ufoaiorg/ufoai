@@ -62,8 +62,8 @@ typedef enum {
 
 typedef struct {
 	menuConditionOpCodeType_t opCode;
-	menuConditionValueType_t leftType;
-	menuConditionValueType_t rightType;
+	menuConditionValueType_t left;
+	menuConditionValueType_t right;
 } menuConditionType_t;
 
 /**
