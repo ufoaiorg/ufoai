@@ -216,7 +216,7 @@ void INS_SelectInstallation (installation_t *installation)
 		ccs.mapAction = MA_NEWINSTALLATION;
 		installationID = INS_GetFirstUnfoundedInstallation();
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation_f: new installationID is %i\n", installationID);
-		if (installationID < MAX_INSTALLATIONS) {
+		if (installationID < min(MAX_INSTALLATIONS, ccs.numBases * MAX_INSTALLTAIONS_PER_BASE)) {
 			installationCurrent = INS_GetInstallationByIDX(installationID);
 			installationCurrent->idx = installationID;
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", installationCurrent->name);
