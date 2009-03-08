@@ -13,7 +13,7 @@
 	material tex_nature/grass001
 	{
 		texture tex_nature/dirt001
-		dirtmap 1.0
+		blend GL_SRC_ALPHA GL_ONE
 		lightmap
 	}
 }
