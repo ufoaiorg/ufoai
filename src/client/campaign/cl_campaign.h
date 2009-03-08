@@ -507,8 +507,6 @@ typedef struct ccs_s {
 
 	/* A list of _all_ installations ... even unbuilt ones. */
 	installation_t installations[MAX_INSTALLATIONS];
-	/* Total number of parsed installation-names. */
-	int numInstallationNames;
 	/* Total number of built installations (how many are enabled). */
 	int numInstallations;
 

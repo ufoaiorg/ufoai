@@ -633,8 +633,6 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!Q_strcmp(type, "tech"))
 		RS_ParseTechnologies(name, text);
-	else if (!Q_strcmp(type, "installationnames"))
-		INS_ParseInstallationNames(name, text);
 	else if (!Q_strcmp(type, "basetemplate"))
 		B_ParseBaseTemplate(name, text);
 	else if (!Q_strcmp(type, "nation"))

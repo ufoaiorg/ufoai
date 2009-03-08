@@ -38,16 +38,3 @@ installation samsite
 	max_damage		1
 	buildtime	3
 }
-
-
-installationnames main
-{
-	base1		"_Installation #1"
-	base2		"_Installation #2"
-	base3		"_Installation #3"
-	base4		"_Installation #4"
-	base5		"_Installation #5"
-	base6		"_Installation #6"
-	base7		"_Installation #7"
-	base8		"_Installation #8"
-}

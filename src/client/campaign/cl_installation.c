@@ -352,60 +352,6 @@ void INS_UpdateInstallationData (void)
 	}
 }
 
-/**
- * @brief Reads information about installations.
- * @sa CL_ParseScriptFirst
- * @todo Remove this and give an automatically generated name
- */
-void INS_ParseInstallationNames (const char *name, const char **text)
-{
-	const char *errhead = "INS_ParseInstallationNames: unexpected end of file (names ";
-	const char *token;
-	installation_t *installation;
-
-	ccs.numInstallationNames = 0;
-
-	/* get token */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("INS_ParseInstallationNames: installation \"%s\" without body ignored\n", name);
-		return;
-	}
-	do {
-		/* add installation */
-		if (ccs.numInstallationNames > MAX_INSTALLATIONS) {
-			Com_Printf("INS_ParseInstallationNames: too many installations\n");
-			return;
-		}
-
-		/* get the name */
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-
-		installation = INS_GetInstallationByIDX(ccs.numInstallationNames);
-		memset(installation, 0, sizeof(*installation));
-		installation->idx = ccs.numInstallationNames;
-
-		/* get the title */
-		token = COM_EParse(text, errhead, name);
-		if (!*text)
-			break;
-		if (*token == '}')
-			break;
-		if (*token == '_')
-			token++;
-		Q_strncpyz(installation->name, _(token), sizeof(installation->name));
-		Com_DPrintf(DEBUG_CLIENT, "Found installation %s\n", installation->name);
-		ccs.numInstallationNames++; /** @todo Use this value instead of MAX_INSTALLATIONS in the for loops */
-	} while (*text);
-
-	mn_installation_title = Cvar_Get("mn_installation_title", "", 0, NULL);
-}
-
 static const value_t installation_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(installationTemplate_t, name), 0},
 	{"radar_range", V_INT, offsetof(installationTemplate_t, radarRange), MEMBER_SIZEOF(installationTemplate_t, radarRange)},

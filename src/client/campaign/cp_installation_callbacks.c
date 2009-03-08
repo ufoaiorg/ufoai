@@ -64,6 +64,7 @@ void INS_SelectInstallation (installation_t *installation)
 		if (installationID < B_GetInstallationLimit()) {
 			installationCurrent = INS_GetInstallationByIDX(installationID);
 			installationCurrent->idx = installationID;
+			Com_sprintf(installationCurrent->name, sizeof(installationCurrent->name), _("Installation #%i"), ccs.numInstallations + 1);
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", installationCurrent->name);
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
@@ -138,12 +139,12 @@ static void INS_BuildInstallation_f (void)
 			campaignStats.installationsBuild++;
 			ccs.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
-			Q_strncpyz(installationCurrent->name, mn_installation_title->string, sizeof(installationCurrent->name));
+			Q_strncpyz(installationCurrent->name, Cvar_VariableString("mn_installation_title"), sizeof(installationCurrent->name));
 			nation = MAP_GetNation(installationCurrent->pos);
 			if (nation)
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), mn_installation_title->string, _(nation->name));
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installationCurrent->name, _(nation->name));
 			else
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), mn_installation_title->string);
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installationCurrent->name);
 			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
 			Cbuf_AddText(va("mn_select_installation %i;", installationCurrent->idx));
@@ -155,7 +156,7 @@ static void INS_BuildInstallation_f (void)
 		if (ccs.mapAction == MA_NEWINSTALLATION)
 			ccs.mapAction = MA_NONE;
 
-		Com_sprintf(popupText, sizeof(popupText), _("Not enough credits to set up a new installation."));
+		Q_strncpyz(popupText, _("Not enough credits to set up a new installation."), sizeof(popupText));
 		MN_Popup(_("Notice"), popupText);
 	}
 }
@@ -284,6 +285,7 @@ void INS_InitCallbacks (void)
 	INS_UpdateInsatallationLimit_f();
 	mn_installation_count = Cvar_Get("mn_installation_count", "0", 0, "Current amount of build installations");
 	mn_installation_id = Cvar_Get("mn_installation_id", "-1", 0, "Internal id of the current selected installation");
+	Cvar_Set("mn_installation_title", "");
 }
 
 /** @todo unify the names into mn_base_* */
@@ -296,4 +298,5 @@ void INS_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_installation_changename");
 	Cmd_RemoveCommand("mn_destroyinstallation");
 	Cmd_RemoveCommand("mn_update_max_installations");
+	Cvar_Delete("mn_installation_title");
 }

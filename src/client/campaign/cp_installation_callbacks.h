@@ -26,8 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CP_INSTALLATION_CALLBACKS_H
 #define CP_INSTALLATION_CALLBACKS_H
 
-cvar_t *mn_installation_title;
-
 void INS_InitCallbacks(void);
 void INS_ShutdownCallbacks(void);
 
