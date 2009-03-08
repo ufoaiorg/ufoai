@@ -419,8 +419,10 @@ static GLenum R_ConstByName (const char *c)
 		return GL_SRC_COLOR;
 	if (!strcmp(c, "GL_DST_COLOR"))
 		return GL_DST_COLOR;
-	if(!strcmp(c, "GL_ONE_MINUS_SRC_COLOR"))
+	if (!strcmp(c, "GL_ONE_MINUS_SRC_COLOR"))
 		return GL_ONE_MINUS_SRC_COLOR;
+	if (!strcmp(c, "GL_ONE_MINUS_DST_COLOR"))
+		return GL_ONE_MINUS_DST_COLOR;
 
 	Com_Printf("R_ConstByName: Failed to resolve: %s\n", c);
 	return GL_ZERO;
