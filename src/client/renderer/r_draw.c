@@ -386,12 +386,10 @@ const image_t *R_DrawNormPic (float x, float y, float w, float h, float sh, floa
  */
 void R_DrawFill (int x, int y, int w, int h, int align, const vec4_t color)
 {
-	float nx, ny, nw, nh;
-
-	nx = x * viddef.rx;
-	ny = y * viddef.ry;
-	nw = w * viddef.rx;
-	nh = h * viddef.ry;
+	const float nx = x * viddef.rx;
+	const float ny = y * viddef.ry;
+	const float nw = w * viddef.rx;
+	const float nh = h * viddef.ry;
 
 	R_ColorBlend(color);
 
