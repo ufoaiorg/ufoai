@@ -65,7 +65,8 @@ inline int float_to_integer(const Element& f) {
 /// \brief Returns \p f rounded to the nearest multiple of \p snap.
 template<typename Element, typename OtherElement>
 inline Element float_snapped(const Element& f, const OtherElement& snap) {
-	return Element(float_to_integer(f / snap) * snap);
+	// return Element(float_to_integer(f / snap) * snap);
+	return Element(llrint(f / snap) * snap); // llrint has more significant bits
 }
 
 /// \brief Returns true if \p f has no decimal fraction part.

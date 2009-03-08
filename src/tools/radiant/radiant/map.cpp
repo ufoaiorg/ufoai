@@ -786,21 +786,15 @@ void Map_LoadFile (const char *filename)
 		Node_getTraversable(GlobalSceneGraph().root())->traverse(entity_updateworldspawn());
 	}
 
-	globalOutputStream() << "--- LoadMapFile ---\n";
-	globalOutputStream() << g_map.m_name.c_str() << "\n";
+	g_message("LoadMapFile: %s\n", g_map.m_name.c_str());
 
-	globalOutputStream() << makeLeftJustified(Unsigned(g_brushCount.get()), 5) << " primitive\n";
-	globalOutputStream() << makeLeftJustified(Unsigned(g_entityCount.get()), 5) << " entities\n";
+	// move the view to a start position
+	FocusViews(g_vector3_identity, 0);
 
-	//GlobalEntityCreator().printStatistics();
+	g_currentMap = &g_map;
 
-			// move the view to a start position
-			FocusViews(g_vector3_identity, 0);
-
-			g_currentMap = &g_map;
-
-			MapInfo_Update();
-		}
+	MapInfo_Update();
+}
 
 void Map_Reload (void)
 {

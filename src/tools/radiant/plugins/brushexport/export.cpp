@@ -132,10 +132,6 @@ void ExportData::GetShaderNameFromShaderPath(const char* path, std::string& name
 		name = path;
 	else
 		name = tmp.substr(last_slash + 1, tmp.length() - last_slash);
-
-#ifdef DEBUG
-	globalOutputStream() << "Last: " << last_slash << " " << "length: " << (const unsigned int)tmp.length() << "Name: " << name.c_str() << "\n";
-#endif
 }
 
 /*
