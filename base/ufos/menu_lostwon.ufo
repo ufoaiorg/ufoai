@@ -182,9 +182,10 @@ menu uforecovery
 	string actualufo
 	{
 		string		"*cvar mn_uforecovery_actualufo"
-		pos			"25 50"
-		size		"275 23"
+		pos			"30 70"
+		size		"610 40"
 		font		f_small
+		textalign	ul
 	}
 
 	//
