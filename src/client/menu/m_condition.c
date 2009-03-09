@@ -162,6 +162,37 @@ static int MN_GetOperatorByName (const char* operatorName)
 	return IF_INVALID;
 }
 
+/**
+ * @brief Set a condition param from a string and an opcode
+ * @param[in] string Into string
+ * @param[in] opCode Current operator type
+ * @param[out] value Data to identify the value
+ * @param[out] type Type on the value
+ */
+static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t opCode, const char** value, menuConditionValueType_t* type)
+{
+	/* it is a cvarname */
+	if (!Q_strncmp(string, "*cvar:", 6)) {
+		const char* cvarName = string + 6;
+		*value = MN_AllocString(cvarName, 0);
+		*type = IF_VALUE_CVARNAME;
+		return;
+	}
+
+	/* it is a const float */
+	if (MN_IsFloatOperator(opCode)) {
+		float *f = MN_AllocFloat(1);
+		*f = atof(string);
+		*value = (char*) f;
+		*type = IF_VALUE_FLOAT;
+		return;
+	}
+
+	/* it is a const string */
+	*value = MN_AllocString(string, 0);
+	*type = IF_VALUE_STRING;
+}
+
 #define BUF_SIZE MAX_VAR - 1
 /**
  * @brief Initialize a condition according to a string
@@ -195,24 +226,8 @@ qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
 			Com_Printf("Invalid 'if' statement. Unknown '%s' operator from token: '%s'\n", operator, token);
 			return qfalse;
 		}
-
-		/* left param */
-		if (!Q_strncmp(param1, "*cvar:", 6)) {
-			condition->leftValue = MN_AllocString(param1 + 6, 0);
-			condition->type.left = IF_VALUE_CVARNAME;
-		} else {
-			condition->leftValue = MN_AllocString(param1, 0);
-			condition->type.left = IF_VALUE_STRING;
-		}
-
-		/* right param */
-		if (!Q_strncmp(param2, "*cvar:", 6)) {
-			condition->rightValue = MN_AllocString(param2 + 6, 0);
-			condition->type.right = IF_VALUE_CVARNAME;
-		} else {
-			condition->rightValue = MN_AllocString(param2, 0);
-			condition->type.right = IF_VALUE_STRING;
-		}
+		MN_SetParam(param1, condition->type.opCode, &condition->leftValue, &condition->type.left);
+		MN_SetParam(param2, condition->type.opCode, &condition->rightValue, &condition->type.right);
 	}
 	return qtrue;
 }
