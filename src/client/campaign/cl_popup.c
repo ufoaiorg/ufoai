@@ -543,8 +543,8 @@ static void CL_PopupInterceptRClick_f (void)
 static void CL_PopupInterceptBaseClick_f (void)
 {
 	int num, baseIdx, installationIdx, i;
-	base_t* base;
-	installation_t *installation;
+	base_t* base = NULL;
+	installation_t *installation = NULL;
 	qboolean atLeastOneBase = qfalse;
 
 	/* If popup is opened, that means that ufo is selected on geoscape */
@@ -571,17 +571,19 @@ static void CL_PopupInterceptBaseClick_f (void)
 		}
 	}
 
-	for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
-		installation = INS_GetFoundedInstallationByIDX(installationIdx);
-		if (!installation)
-			continue;
+	if (num >= 0) { /*don't try to find an installation if we already found the right base */
+		for (installationIdx = 0; installationIdx < MAX_INSTALLATIONS; installationIdx++) {
+			installation = INS_GetFoundedInstallationByIDX(installationIdx);
+			if (!installation)
+				continue;
 
-		/* Check if the installation should be displayed in base list */
-		if (AII_InstallationCanShoot(installation)) {
-			num--;
-			atLeastOneBase = qtrue;
-			if (num < 0)
-				break;
+			/* Check if the installation should be displayed in base list */
+			if (AII_InstallationCanShoot(installation)) {
+				num--;
+				atLeastOneBase = qtrue;
+				if (num < 0)
+					break;
+			}
 		}
 	}
 
