@@ -1441,7 +1441,7 @@ int FS_Printf (qFILE *f, const char *msg, ...)
 
 	va_start(ap, msg);
 	Q_vsnprintf(buf, sizeof(buf), msg, ap);
-	len = fprintf(f->f, buf);
+	len = fprintf(f->f, "%s", buf);
 	va_end(ap);
 
 	return len;
