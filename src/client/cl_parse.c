@@ -1017,7 +1017,6 @@ static void CL_ActorAppear (struct dbuffer *msg)
 {
 	qboolean newActor;
 	le_t *le;
-	char tmpbuf[128];
 	int entnum, modelnum1, modelnum2;
 	int teamDefID = -1;
 
@@ -1098,16 +1097,10 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 			/* message */
 			if (le->team != TEAM_CIVILIAN) {
-				/** @todo campaign mode only - doesn't belong here */
-				if (GAME_IsCampaign()) {
-					if (le->teamDef) {
-						if (GAME_TeamIsKnown(le->teamDef)) {
-							Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Alien spotted: %s!"), _(le->teamDef->name));
-							HUD_DisplayMessage(tmpbuf);
-						} else
-							HUD_DisplayMessage(_("Alien spotted!\n"));
-					} else
-						HUD_DisplayMessage(_("Alien spotted!\n"));
+				if (GAME_TeamIsKnown(le->teamDef)) {
+					char tmpbuf[128];
+					Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Enemy spotted: %s!"), _(le->teamDef->name));
+					HUD_DisplayMessage(tmpbuf);
 				} else
 					HUD_DisplayMessage(_("Enemy spotted!\n"));
 			} else

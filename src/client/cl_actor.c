@@ -3028,7 +3028,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				break;
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
-					if (mouseActor->teamDef && GAME_TeamIsKnown(mouseActor->teamDef))
+					if (GAME_TeamIsKnown(mouseActor->teamDef))
 						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else
 						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
