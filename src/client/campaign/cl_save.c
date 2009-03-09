@@ -525,7 +525,7 @@ static void SAV_GameSaveNameCleanup_f (void)
 
 	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
 
-	FS_OpenFile(va("save/slot%i.sav", slotID), &f, FILE_READ);
+	FS_OpenFile(va("save/slot%i.xml", slotID), &f, FILE_READ);
 	if (!f.f && !f.z)
 		return;
 
