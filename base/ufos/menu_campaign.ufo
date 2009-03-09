@@ -481,9 +481,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 0;" }
-		change		{ cmd "game_save slot0 *mn_slot0;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 0;" }
+		change		{ cmd "game_save slot0 *mn_slot0;game_comments 0;" }
+		abort		{ cmd "game_comments 0;" }
 		clickoutabort	true
 	}
 	textentry slot1
@@ -498,9 +498,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 1;" }
-		change		{ cmd "game_save slot1 *mn_slot1;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 1;" }
+		change		{ cmd "game_save slot1 *mn_slot1;game_comments 1;" }
+		abort		{ cmd "game_comments 1;" }
 		clickoutabort	true
 	}
 	textentry slot2
@@ -515,9 +515,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 2;" }
-		change		{ cmd "game_save slot2 *mn_slot2;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 2;" }
+		change		{ cmd "game_save slot2 *mn_slot2;game_comments 2;" }
+		abort		{ cmd "game_comments 2;" }
 		clickoutabort	true
 	}
 	textentry slot3
@@ -532,9 +532,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 3;" }
-		change		{ cmd "game_save slot3 *mn_slot3;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 3;" }
+		change		{ cmd "game_save slot3 *mn_slot3;game_comments 3;" }
+		abort		{ cmd "game_comments 3;" }
 		clickoutabort	true
 	}
 	textentry slot4
@@ -549,9 +549,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 4;" }
-		change		{ cmd "game_save slot4 *mn_slot4;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 4;" }
+		change		{ cmd "game_save slot4 *mn_slot4;game_comments 4;" }
+		abort		{ cmd "game_comments 4;" }
 		clickoutabort	true
 	}
 	textentry slot5
@@ -566,9 +566,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 5;" }
-		change		{ cmd "game_save slot5 *mn_slot5;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 5;" }
+		change		{ cmd "game_save slot5 *mn_slot5;game_comments 5;" }
+		abort		{ cmd "game_comments 5;" }
 		clickoutabort	true
 	}
 	textentry slot6
@@ -583,9 +583,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 6;" }
-		change		{ cmd "game_save slot6 *mn_slot6;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 6;" }
+		change		{ cmd "game_save slot6 *mn_slot6;game_comments 6;" }
+		abort		{ cmd "game_comments 6;" }
 		clickoutabort	true
 	}
 	textentry slot7
@@ -600,9 +600,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_comments;game_savenamecleanup 7;" }
-		change		{ cmd "game_save slot7 *mn_slot7;game_comments;" }
-		abort		{ cmd "game_comments;" }
+		click		{ cmd "game_savenamecleanup 7;" }
+		change		{ cmd "game_save slot7 *mn_slot7;game_comments 7;" }
+		abort		{ cmd "game_comments 7;" }
 		clickoutabort	true
 	}
 

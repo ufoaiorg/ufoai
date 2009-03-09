@@ -384,12 +384,38 @@ static void SAV_GameSave_f (void)
 }
 
 /**
+ * @brief Init menu cvar for one savegame slot given by actual index.
+ * @param[in] idx the savegame slot to retrieve gamecomment for
+ * @sa SAV_GameReadGameComments_f
+ */
+static void SAV_GameReadGameComment (const int idx)
+{
+	saveFileHeader_t headerXML;
+	qFILE f;
+
+	FS_OpenFile(va("save/slot%i.xml", idx), &f, FILE_READ);
+	if (f.f || f.z) {
+		if (FS_Read(&headerXML, sizeof(headerXML), &f) != sizeof(headerXML))
+			Com_Printf("Warning: SaveXMLfile header may be corrupted\n");
+		if (!SAV_VerifyXMLHeader(&headerXML)) {
+			Com_Printf("XMLSavegameheader for slot%d is corrupted!\n", idx);
+		} else {
+			char comment[MAX_VAR];
+			Com_sprintf(comment, sizeof(comment), "%s - %s", headerXML.name, headerXML.gameDate);
+			Cvar_Set(va("mn_slot%i", idx), comment);
+			FS_CloseFile(&f);
+		}
+	}
+}
+
+/**
  * @brief Console commands to read the comments from savegames
  * @note The comment is the part of the savegame header that you type in at saving
  * for reidentifying the savegame
  * @sa SAV_GameLoad_f
  * @sa SAV_GameLoad
  * @sa SAV_GameSaveNameCleanup_f
+ * @sa SAV_GameReadGameComment
  */
 static void SAV_GameReadGameComments_f (void)
 {
@@ -403,22 +429,13 @@ static void SAV_GameReadGameComments_f (void)
 		}
 	}
 
-	for (i = 0; i < 8; i++) {
-		saveFileHeader_t headerXML;
-		qFILE f;
-
-		FS_OpenFile(va("save/slot%i.xml", i), &f, FILE_READ);
-		if (f.f || f.z) {
-			if (FS_Read(&headerXML, sizeof(headerXML), &f) != sizeof(headerXML))
-				Com_Printf("Warning: SaveXMLfile header may be corrupted\n");
-			if (!SAV_VerifyXMLHeader(&headerXML)) {
-				Com_Printf("XMLSavegameheader for slot%d is corrupted!\n", i);
-			} else {
-				char comment[MAX_VAR];
-				Com_sprintf(comment, sizeof(comment), "%s - %s", headerXML.name, headerXML.gameDate);
-				Cvar_Set(va("mn_slot%i", i), comment);
-				FS_CloseFile(&f);
-			}
+	if (Cmd_Argc() == 2) {
+		int idx = atoi(Cmd_Argv(2));
+		SAV_GameReadGameComment(idx);
+	} else {
+		/* read all game comments */
+		for (i = 0; i < 8; i++) {
+			SAV_GameReadGameComment(i);
 		}
 	}
 }
