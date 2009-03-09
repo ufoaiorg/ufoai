@@ -1,0 +1,183 @@
+/**
+ * @brief Unittest for conditions
+ * Move it into the ufo script, run the game, and run the command "mn_push unittest_condition"
+ * Every thing must be green and it must not print any text or warning into the console.
+ */
+
+menu unittest_condition
+{
+	{
+		pos "100 100"
+		size "300 300"
+		dragbutton	true
+		closebutton	true
+		string		"_Unittest condition"
+		bgcolor		"0 0 0 1"
+	}
+
+	string floatTitle {
+		pos		"20 40"
+		string	"float"
+	}
+
+	string testFloat1 {
+		pos		"20 60"
+		string	"t1"
+	}
+
+	string testFloat2 {
+		pos		"20 80"
+		string	"t2"
+	}
+
+	string testFloat3 {
+		pos		"20 100"
+		string	"t3"
+	}
+
+	string testFloat4 {
+		pos		"20 120"
+		string	"t4"
+	}
+
+	string testFloat5 {
+		pos		"20 140"
+		string	"t5"
+	}
+
+	string testFloat6 {
+		pos		"60 60"
+		string	"t6"
+	}
+
+	string testFloat7 {
+		pos		"60 80"
+		string	"t7"
+	}
+
+	string testFloat8 {
+		pos		"60 100"
+		string	"t8"
+	}
+
+	string testFloat9 {
+		pos		"60 120"
+		string	"t9"
+	}
+
+	string testFloat10 {
+		pos		"60 140"
+		string	"t10"
+	}
+	
+	string stringTitle {
+		pos		"90 40"
+		string	"string"
+	}
+
+	string testString1 {
+		pos		"100 60"
+		string	"t1"
+	}
+
+	string testString2 {
+		pos		"100 80"
+		string	"t2"
+	}
+
+	string testString3 {
+		pos		"100 100"
+		string	"t3"
+	}
+
+	string testString4 {
+		pos		"100 120"
+		string	"t4"
+	}
+
+	string testString5 {
+		pos		"100 140"
+		string	"t5"
+	}
+
+	string existsTitle {
+		pos		"140 40"
+		string	"exists"
+	}
+
+	string testExists1 {
+		pos		"140 60"
+		string	"t1"
+	}
+
+	string testExists2 {
+		pos		"140 80"
+		string	"t2"
+	}
+
+	func init {
+		*cvar:test_float0 "0"
+		*cvar:test_float1 "1"
+		*cvar:test_float0-2 "0"
+		*cvar:test_float314 "3.14"
+
+		/* const const */
+		if "0 == 0" { *testFloat1 color "0 1 0 1" }
+		else { *testFloat1 color "1 0 0 1" }
+		if "0 == 1" { *testFloat2 color "1 0 0 1" }
+		else { *testFloat2 color "0 1 0 1" }
+		if "0 < 1" { *testFloat3 color "0 1 0 1" }
+		else { *testFloat3 color "1 0 0 1" }
+		if "-1 < 0" { *testFloat4 color "0 1 0 1" }
+		else { *testFloat4 color "1 0 0 1" }
+
+		/* cvar const */
+		if "*cvar:test_float0 == 0" { *testFloat5 color "0 1 0 1" }
+		else { *testFloat5 color "1 0 0 1" }
+		if "*cvar:test_float314 > 0" { *testFloat6 color "0 1 0 1" }
+		else { *testFloat6 color "1 0 0 1" }
+		if "0 <= *cvar:test_float314" { *testFloat7 color "0 1 0 1" }
+		else { *testFloat7 color "1 0 0 1" }
+		if "3.14 == *cvar:test_float314" { *testFloat8 color "0 1 0 1" }
+		else { *testFloat8 color "1 0 0 1" }
+
+		/* cvar cvar */
+		if "*cvar:test_float0 != *cvar:test_float1" { *testFloat9 color "0 1 0 1" }
+		else { *testFloat9 color "1 0 0 1" }
+		if "*cvar:test_float0 == *cvar:test_float0-2" { *testFloat10 color "0 1 0 1" }
+		else { *testFloat10 color "1 0 0 1" }
+
+		*cvar:test_string1 "aaaa"
+		*cvar:test_string2 "aaaa"
+		*cvar:test_string3 "bbbbbbbb"
+		
+		if "0 eq 0" { *testString1 color "0 1 0 1" }
+		else { *testString1 color "1 0 0 1" }
+		if "0 eq 1" { *testString2 color "1 0 0 1" }
+		else { *testString2 color "0 1 0 1" }
+		if "*cvar:test_string1 ne aaa" { *testString3 color "0 1 0 1" }
+		else { *testString3 color "1 0 0 1" }
+		if "*cvar:test_string1 eq *cvar:test_string2" { *testString4 color "0 1 0 1" }
+		else { *testString4 color "1 0 0 1" }
+		if "*cvar:test_string1 ne *cvar:test_string3" { *testString5 color "0 1 0 1" }
+		else { *testString5 color "1 0 0 1" }
+
+		*cvar:test_exists "aaaa"
+
+		if "*cvar:test_exists" { *testExists1 color "0 1 0 1" }
+		else { *testExists1 color "1 0 0 1" }
+		if "*cvar:test_not_exists" { *testExists2 color "1 0 0 1" }
+		else { *testExists2 color "0 1 0 1" }
+	}
+
+	func close {
+		cmd "del test_float0"
+		cmd "del test_float0-2"
+		cmd "del test_float314"
+		cmd "del test_string1"
+		cmd "del test_string2"
+		cmd "del test_string3"
+		cmd "del test_exists"
+	}
+
+}
