@@ -90,7 +90,7 @@ static void R_LoadObjModelVertexArrays (mobj_t *obj, model_t *mod)
 
 			if (v->texcoord) {
 				assert(v->texcoord - 1 >= 0);
-				VectorCopy((&obj->texcoords[(v->texcoord - 1) * 2]), (&mesh->texcoords[coordind + j * 2]));
+				memcpy(&mesh->texcoords[coordind + j * 2], &obj->texcoords[(v->texcoord - 1) * 2], sizeof(vec2_t));
 			}
 		}
 
