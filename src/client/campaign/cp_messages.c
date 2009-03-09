@@ -187,42 +187,6 @@ static void MS_MessageSaveXML (mxml_node_t *p, message_t * message)
 }
 
 /**
- * @brief Saved the complete message stack
- * @sa SAV_GameSave
- * @sa MS_AddNewMessage
- */
-static void MS_MessageSave (sizebuf_t * sb, message_t * message)
-
-{
-	int idx = -1;
-
-	if (!message)
-		return;
-	/* bottom up */
-	MS_MessageSave(sb, message->next);
-
-	/* don't save these message types */
-	if (message->type == MSG_INFO)
-		return;
-
-	if (message->pedia)
-		idx = message->pedia->idx;
-
-	Com_DPrintf(DEBUG_CLIENT, "MS_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
-	MSG_WriteString(sb, message->title);
-	MSG_WriteString(sb, message->text);
-	MSG_WriteByte(sb, message->type);
-	/* store script id of event mail */
-	if (message->type == MSG_EVENT) {
-		MSG_WriteString(sb, message->eventMail->id);
-		MSG_WriteByte(sb, message->eventMail->read);
-	}
-	MSG_WriteLong(sb, idx);
-	MSG_WriteLong(sb, message->date.day);
-	MSG_WriteLong(sb, message->date.sec);
-}
-
-/**
  * @sa MS_LoadXML
  * @sa MN_AddNewMessage
  * @sa MS_MessageSaveXML
@@ -249,7 +213,7 @@ qboolean MS_LoadXML (mxml_node_t *p)
 		return qfalse;
 
 	for (sn = mxml_GetNode(n, "message"), i = 0; sn; sn = mxml_GetNextNode(sn, n, "message"), i++) {
-		eventMail_t *mail = NULL;
+		eventMail_t *mail;
 		int mtype;
 		char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 		/* can contain high bits due to utf8 */
