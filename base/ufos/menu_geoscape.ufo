@@ -2812,3 +2812,120 @@ menu messageoptions
 		cmd "msgoptions_restore;"
 	}
 }
+
+// ==================
+// MENU FOR GEOSCAPE OPTIONS
+// ==================
+
+menu geoscape_options {
+	{
+		pos			"256 256"
+		size		"350 300"
+		dragbutton	true
+		closebutton	true
+		image		menu/popup_alpha_tile
+		blend		true
+		string		"_Geoscape options"
+	}
+
+	panel option1 {
+		{
+			pos			"30 100"
+			size		"320 20"
+		}
+
+		string label {
+			pos			"0 0"
+			size		"250 20"
+			string		"_Geoscape projection mode:"
+		}
+
+		selectbox value {
+			pos			"250 0"
+			size		"55 20"
+			cvar		"*cvar cl_3dmap"
+			image		"menu/selectbox_green"
+			color		"0.6 0.6 0.6 0.3"
+			option 2d {
+				label	"_2D"
+				value	"0"
+				action	""
+			}
+			option 3d {
+				label	"_3D"
+				value	"1"
+				action	""
+			}
+		}
+	}
+
+	panel option2 {
+		{
+			pos			"30 130"
+			size		"320 20"
+		}
+		checkbox value
+		{
+			current		"*cvar r_geoscape_overlay_fooooo"
+			pos			"0 0"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
+		string label {
+			pos			"20 0"
+			size		"200 20"
+			string		"_Highlight nation borders"
+			click		{ cmd "map_overlay nations;" }
+		}
+	}
+
+	todo clickonlabel {
+			pos			"300 130"
+			string		"Checkbox don't work, click on the label"
+	}
+
+	panel option3 {
+		{
+			pos			"30 160"
+			size		"320 20"
+		}
+		checkbox value
+		{
+			current		"*cvar r_geoscape_overlay_fooooo"
+			pos			"0 0"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
+		string label {
+			pos			"20 0"
+			size		"200 20"
+			string		"_Show radar range"
+			click		{ cmd "map_overlay radar;" }
+		}
+	}
+
+	panel option4 {
+		{
+			visiblewhen "*cvar:mn_xvimap == 1"
+			pos			"30 190"
+			size		"320 20"
+		}
+		checkbox value
+		{
+			current		"*cvar r_geoscape_overlay_fooooo"
+			pos			"0 0"
+			size		"20 18"
+			image		"menu/checkbox_blue"
+		}
+		string label {
+			pos			"20 0"
+			size		"200 20"
+			string		"_Show XVI map"
+			click		{ cmd "map_overlay xvi;" }
+		}
+	}
+
+	func init {
+		*cvar:r_geoscape_overlay_fooooo 0
+	}
+}
