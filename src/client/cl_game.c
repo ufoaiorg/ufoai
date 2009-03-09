@@ -350,6 +350,9 @@ qboolean GAME_TeamIsKnown (const teamDef_t *teamDef)
 {
 	const gameTypeList_t *list = gameTypeList;
 
+	if (!teamDef)
+		return qfalse;
+
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
 			if (list->teamisknown)

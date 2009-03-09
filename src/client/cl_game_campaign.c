@@ -414,9 +414,6 @@ int GAME_CP_GetTeam (void)
 
 qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 {
-	if (!teamDef)
-		return qfalse;
-
 	if (!ccs.teamDefTechs[teamDef->idx])
 		ccs.teamDefTechs[teamDef->idx] = RS_GetTechByID(teamDef->tech);
 
