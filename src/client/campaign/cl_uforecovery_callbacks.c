@@ -182,7 +182,8 @@ static void UR_DialogInitStore_f (void)
 			Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
 		break;
 	}
-	Cvar_Set("mn_uforecovery_actualufo",_("Some stats about actual ufo"));
+	/** @todo set this description to new value after replace */
+	Cvar_Set("mn_uforecovery_actualufo",UFO_MissionResultToString());
 	MN_RegisterText(TEXT_UFORECOVERY_BASESTORAGE, recoveryBaseSelectPopup);
 }
 

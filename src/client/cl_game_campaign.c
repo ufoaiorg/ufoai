@@ -324,10 +324,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	if (winner == cls.team) {
 		/* We need to update menu 'won' with UFO recovery stuff. */
 		if (missionresults.recovery) {
-			if (missionresults.crashsite)
-				Q_strcat(resultText, va(_("\nSecured crashed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
-			else
-				Q_strcat(resultText, va(_("\nSecured landed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
+			Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
 		}
 		MN_PushMenu("won", NULL);
 	} else

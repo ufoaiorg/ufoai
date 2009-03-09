@@ -142,6 +142,18 @@ const char* UFO_AircraftToIDOnGeoscape (aircraft_t *ufocraft)
 }
 
 /**
+ * @brief Returns a status string for recovered ufo used to be displayed in uforecovery and mission result overview.
+ * @note this actually relies on valid mission results.
+ */
+const char* UFO_MissionResultToString (void)
+{
+	if (missionresults.crashsite)
+		return va(_("\nSecured crashed %s\n"), UFO_TypeToName(missionresults.ufotype));
+	else
+		return va(_("\nSecured landed %s\n"), UFO_TypeToName(missionresults.ufotype));
+}
+
+/**
  * @brief Give a random destination to the given UFO, and make him to move there.
  * @param[in] ufocraft Pointer to the UFO which destination will be changed.
  * @sa UFO_SetRandomPos

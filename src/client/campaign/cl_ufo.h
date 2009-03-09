@@ -36,6 +36,7 @@ const char* UFO_TypeToShortName(ufoType_t type);
 const char* UFO_CrashedTypeToShortName(ufoType_t type);
 const char* UFO_TypeToName(ufoType_t type);
 const char* UFO_AircraftToIDOnGeoscape(aircraft_t *ufocraft);
+const char* UFO_MissionResultToString(void);
 void UFO_SetRandomDest(aircraft_t* ufo);
 void UFO_SetRandomDestAround(aircraft_t* ufocraft, vec2_t pos);
 void UFO_FleePhalanxAircraft(aircraft_t *ufo, const vec2_t v);
