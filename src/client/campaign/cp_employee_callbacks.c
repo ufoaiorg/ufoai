@@ -4,7 +4,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2009 UFO: Alien Invasion team.
+All original material Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -57,7 +57,10 @@ int employeesInCurrentList;
 static void E_UpdateGUICount_f (void)
 {
 	int max;
-	assert(baseCurrent);
+
+	if (!baseCurrent)
+		return;
+
 	max = baseCurrent->capacities[CAP_EMPLOYEES].max;
 	Cvar_SetValue("mn_hiresoldiers", E_CountHired(baseCurrent, EMPL_SOLDIER));
 	Cvar_SetValue("mn_hireworkers", E_CountHired(baseCurrent, EMPL_WORKER));
@@ -221,13 +224,10 @@ static void E_EmployeeList_f (void)
 	if (employeesInCurrentList == 0) {
 		Cvar_Set("mn_show_employee", "0");
 	} else {
-		if ((employeeCategory == EMPL_PILOT)
-		 || (employeeCategory == EMPL_SCIENTIST)
-		 || (employeeCategory == EMPL_WORKER)) {
+		if (employeeCategory == EMPL_PILOT || employeeCategory == EMPL_SCIENTIST || employeeCategory == EMPL_WORKER)
 			Cvar_Set("mn_show_employee", "2");
-		} else {
+		else
 			Cvar_Set("mn_show_employee", "1");
-		}
 	}
 
 	i = employeesInCurrentList;
@@ -238,10 +238,10 @@ static void E_EmployeeList_f (void)
 
 	/* Select the current employee if name was changed or first one. Use the direct string
 	 * execution here - otherwise the employeeCategory might be out of sync */
-	if (hiredEmployeeIdx < 0)
+	if (hiredEmployeeIdx < 0 || selectedEmployee == NULL)
 		Cmd_ExecuteString("employee_select 0\n");
 	else
-		Cmd_ExecuteString(va("employee_select %i\n", selectedEmployee ? selectedEmployee->idx : 0));
+		Cmd_ExecuteString(va("employee_select %i\n", selectedEmployee->idx));
 
 	/* update scroll */
 	MN_ExecuteConfunc("hire_update_number %i", employeesInCurrentList);
@@ -253,14 +253,12 @@ static void E_EmployeeList_f (void)
  */
 static void E_ChangeName_f (void)
 {
-	employee_t *employee = selectedEmployee;
-
 	/* Maybe called without base initialized or active. */
 	if (!baseCurrent)
 		return;
 
-	if (employee)
-		Q_strncpyz(employee->chr.name, Cvar_VariableString("mn_name"), sizeof(employee->chr.name));
+	if (selectedEmployee)
+		Q_strncpyz(selectedEmployee->chr.name, Cvar_VariableString("mn_name"), sizeof(selectedEmployee->chr.name));
 }
 
 /**
@@ -336,7 +334,7 @@ static void E_EmployeeDelete_f (void)
 
 	if (employee->hired) {
 		if (!E_UnhireEmployee(employee)) {
-			/** @todo message - Couldn't fire employee. */
+			MN_DisplayNotice(_("Could not fire employee"), 2000);
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't fire employee\n");
 			return;
 		}
@@ -453,7 +451,6 @@ void E_InitCallbacks (void)
 	Cmd_AddCommand("employee_select", E_EmployeeSelect_f, NULL);
 	Cmd_AddCommand("employee_changename", E_ChangeName_f, "Change the name of an employee");
 	Cmd_AddCommand("employee_scroll", E_EmployeeListScroll_f, "Scroll callback for employee list");
-
 }
 
 void E_ShutdownCallbacks (void)
@@ -466,5 +463,4 @@ void E_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("employee_select");
 	Cmd_RemoveCommand("employee_changename");
 	Cmd_RemoveCommand("employee_scroll");
-
 }

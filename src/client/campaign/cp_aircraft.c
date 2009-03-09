@@ -2667,7 +2667,7 @@ qboolean AIR_LoadAircraftXML (aircraft_t *craft, qboolean isUfo, mxml_node_t *p)
 			Com_Printf("Error: UFO '%s' is not linked to any mission\n", craft->id);
 	}
 	if (isUfo)
-		craft->mission = CP_GetMissionById(s);
+		craft->mission = CP_GetMissionByID(s);
 	else if (craft->status == AIR_MISSION)
 		craft->missionID = Mem_PoolStrDup(s, cl_campaignPool, 0);
 
@@ -2968,7 +2968,7 @@ qboolean AIR_Load (sizebuf_t* sb, void* data)
 			for (j = 0; j < ufo->route.numPoints; j++)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
 			MSG_ReadPos(sb, ufo->direction);
-			ccs.ufos[i].mission = CP_GetMissionById(MSG_ReadString(sb));
+			ccs.ufos[i].mission = CP_GetMissionByID(MSG_ReadString(sb));
 			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 				ufo->stats[j] = MSG_ReadLong(sb);
 			tmp_int = MSG_ReadShort(sb);

@@ -1171,7 +1171,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 	if ((bparam = mxml_GetNode(n_ccs, "battleparameter"))) {
 		int j;
-		ccs.battleParameters.mission = CP_GetMissionById(mxml_GetString(bparam, "mission.id"));
+		ccs.battleParameters.mission = CP_GetMissionByID(mxml_GetString(bparam, "mission.id"));
 		name = mxml_GetString(bparam, "aliencategories.id");
 
 		/* get corresponding category */
@@ -1207,7 +1207,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 	missionId = mxml_GetString(n_ccs, "selectedmission");
 	if (missionId && missionId[0] != '\0')
-		ccs.selectedMission = CP_GetMissionById(missionId);
+		ccs.selectedMission = CP_GetMissionByID(missionId);
 	else
 		ccs.selectedMission = NULL;
 
@@ -1224,7 +1224,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			if (base->aircraft[j].status == AIR_MISSION) {
 				assert(base->aircraft[j].missionID);
-				base->aircraft[j].mission = CP_GetMissionById(base->aircraft[j].missionID);
+				base->aircraft[j].mission = CP_GetMissionByID(base->aircraft[j].missionID);
 
 				/* not found */
 				if (!base->aircraft[j].mission) {
@@ -1387,7 +1387,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
 	missionId = MSG_ReadString(sb);
 	if (missionId[0] != '\0') {
-		ccs.battleParameters.mission = CP_GetMissionById(missionId);
+		ccs.battleParameters.mission = CP_GetMissionByID(missionId);
 		name = MSG_ReadString(sb);
 		/* get corresponding category */
 		for (i = 0; i < ccs.numAlienCategories; i++)
@@ -1420,7 +1420,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 	/* stores the select mission on geoscape */
 	missionId = MSG_ReadString(sb);
 	if (missionId[0] != '\0')
-		ccs.selectedMission = CP_GetMissionById(missionId);
+		ccs.selectedMission = CP_GetMissionByID(missionId);
 	else
 		ccs.selectedMission = NULL;
 
@@ -1436,7 +1436,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		for (j = 0; j < base->numAircraftInBase; j++) {
 			if (base->aircraft[j].status == AIR_MISSION) {
 				assert(base->aircraft[j].missionID);
-				base->aircraft[j].mission = CP_GetMissionById(base->aircraft[j].missionID);
+				base->aircraft[j].mission = CP_GetMissionByID(base->aircraft[j].missionID);
 
 				/* not found */
 				if (!base->aircraft[j].mission) {

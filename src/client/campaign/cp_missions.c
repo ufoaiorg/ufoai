@@ -365,7 +365,7 @@ void CP_CreateBattleParameters (mission_t *mission)
 /**
  * @brief Get a mission in ccs.missions by Id.
  */
-mission_t* CP_GetMissionById (const char *missionId)
+mission_t* CP_GetMissionByID (const char *missionId)
 {
 	const linkedList_t *list = ccs.missions;
 
@@ -375,7 +375,7 @@ mission_t* CP_GetMissionById (const char *missionId)
 			return mission;
 	}
 
-	Com_Printf("CP_GetMissionById: Could not find mission %s\n", missionId);
+	Com_Printf("CP_GetMissionByID: Could not find mission %s\n", missionId);
 	return NULL;
 }
 
