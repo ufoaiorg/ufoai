@@ -1101,7 +1101,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 				/** @todo campaign mode only - doesn't belong here */
 				if (GAME_IsCampaign()) {
 					if (le->teamDef) {
-						if (RS_IsResearched_ptr(RS_GetTechByID(le->teamDef->tech))) {
+						if (GAME_TeamIsKnown(le->teamDef)) {
 							Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Alien spotted: %s!"), _(le->teamDef->name));
 							HUD_DisplayMessage(tmpbuf);
 						} else
