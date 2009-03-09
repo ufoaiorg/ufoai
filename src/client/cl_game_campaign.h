@@ -37,5 +37,6 @@ qboolean GAME_CP_Spawn(void);
 int GAME_CP_GetTeam(void);
 equipDef_t *GAME_CP_GetEquipmentDefinition(void);
 void GAME_CP_CharacterCvars(const character_t *chr);
+qboolean GAME_CP_TeamIsKnown(const teamDef_t *teamDef);
 
 #endif

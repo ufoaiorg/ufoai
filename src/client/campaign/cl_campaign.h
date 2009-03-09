@@ -534,6 +534,9 @@ typedef struct ccs_s {
 	rank_t ranks[MAX_RANKS];
 	/* The number of entries in the list above. */
 	int numRanks;
+
+	/* cache for techdef technologies */
+	technology_t *teamDefTechs[MAX_TEAMDEFS];
 } ccs_t;
 
 /**

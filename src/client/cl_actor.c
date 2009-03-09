@@ -3028,9 +3028,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				break;
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
-					/** @todo campaign mode only - doesn't belong here */
-					/** @todo cache the technology_t pointer */
-					if (mouseActor->teamDef && (!GAME_IsCampaign() || RS_IsResearched_ptr(RS_GetTechByID(mouseActor->teamDef->tech))))
+					if (mouseActor->teamDef && GAME_TeamIsKnown(mouseActor->teamDef))
 						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _(mouseActor->teamDef->name));
 					else
 						MN_RegisterText(TEXT_MOUSECURSOR_PLAYERNAMES, _("Unknown alien race"));
