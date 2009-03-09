@@ -430,7 +430,7 @@ static void SAV_GameReadGameComments_f (void)
 	}
 
 	if (Cmd_Argc() == 2) {
-		int idx = atoi(Cmd_Argv(2));
+		int idx = atoi(Cmd_Argv(1));
 		SAV_GameReadGameComment(idx);
 	} else {
 		/* read all game comments */
