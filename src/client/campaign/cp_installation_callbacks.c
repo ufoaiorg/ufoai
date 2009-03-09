@@ -62,7 +62,7 @@ void INS_SelectInstallation (installation_t *installation)
 		installationID = INS_GetFirstUnfoundedInstallation();
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: new installationID is %i\n", installationID);
 		if (installationID < B_GetInstallationLimit()) {
-			const installationTemplate_t *instmp = INS_GetInstallationTemplateFromInstallationId(Cvar_VariableString("mn_installation_type"));
+			const installationTemplate_t *instmp = INS_GetInstallationTemplateFromInstallationID(Cvar_VariableString("mn_installation_type"));
 			int i = 1;
 			int j;
 
@@ -71,11 +71,11 @@ void INS_SelectInstallation (installation_t *installation)
 
 			do {
 				j = 0;
-				Com_sprintf(installationCurrent->name, sizeof(installationCurrent->name), "%s #%i", (instmp) ? _(instmp->name) : _("Installation"), i);
+				Com_sprintf(installationCurrent->name, sizeof(installationCurrent->name), "%s #%i", instmp ? _(instmp->name) : _("Installation"), i);
 				while (j <= ccs.numInstallations && strcmp(installationCurrent->name, ccs.installations[j++].name));
 			} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
-			
-			
+
+
 			Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: baseID is valid for base: %s\n", installationCurrent->name);
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
@@ -123,7 +123,7 @@ static void INS_BuildInstallation_f (void)
 	if (!ccs.numBases)
 		return;
 
-	installationTemplate = INS_GetInstallationTemplateFromInstallationId(Cmd_Argv(1));
+	installationTemplate = INS_GetInstallationTemplateFromInstallationID(Cmd_Argv(1));
 
 	if (!installationTemplate) {
 		Com_Printf("The installation type %s passed for %s is not valid.\n", Cmd_Argv(1), Cmd_Argv(0));

@@ -82,7 +82,7 @@ installation_t* INS_GetFoundedInstallationByIDX (int instIdx)
  * @param[in] id ID of the installation template to find.
  * @return corresponding installation Template, @c NULL if not found.
  */
-installationTemplate_t* INS_GetInstallationTemplateFromInstallationId (const char *id)
+installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const char *id)
 {
 	int idx;
 
@@ -571,7 +571,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		/* should never happen, we only save founded installations */
 		if (!inst->founded)
 			continue;
-		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(mxml_GetString(s, "templateid"));
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(mxml_GetString(s, "templateid"));
 		if (!inst->installationTemplate) {
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
@@ -630,7 +630,7 @@ qboolean INS_Load (sizebuf_t* sb, void* data)
 		inst->founded = MSG_ReadByte(sb);
 		if (!inst->founded)
 			continue;
-		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationId(MSG_ReadString(sb));
+		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(MSG_ReadString(sb));
 		if (!inst->installationTemplate) {
 			Com_Printf("Could not find installation template\n");
 			return qfalse;
