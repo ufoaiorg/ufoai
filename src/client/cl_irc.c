@@ -4,7 +4,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Most of this stuff comes from Warsow
 

@@ -4,9 +4,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
-
-Copyright (C) 1997-2001 Id Software, Inc.
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
