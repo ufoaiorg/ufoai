@@ -572,34 +572,6 @@ qboolean PR_SaveXML (mxml_node_t *p)
 }
 
 /**
- * @brief Save callback for savegames
- * @sa PR_Load
- * @sa SAV_GameSave
- */
-qboolean PR_Save (sizebuf_t *sb, void *data)
-{
-	int i, j;
-
-	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
-		const production_queue_t *pq = &ccs.productions[i];
-		MSG_WriteByte(sb, pq->numItems);
-		for (j = 0; j < pq->numItems; j++) {
-			/** @todo This will crash */
-			const objDef_t *item = pq->items[j].item;
-			const aircraft_t *aircraft = pq->items[j].aircraft;
-			assert(item || aircraft);
-			MSG_WriteString(sb, (item ? item->id : ""));
-			MSG_WriteLong(sb, pq->items[j].amount);
-			MSG_WriteFloat(sb, pq->items[j].percentDone);
-			MSG_WriteByte(sb, pq->items[j].production);
-			MSG_WriteString(sb, (aircraft ? aircraft->id : ""));
-			MSG_WriteByte(sb, pq->items[j].items_cached);
-		}
-	}
-	return qtrue;
-}
-
-/**
  * @brief Load callback for xml savegames
  * @sa PR_SaveXML
  * @sa SAV_GameLoadXML
@@ -630,41 +602,6 @@ qboolean PR_LoadXML (mxml_node_t *p)
 			if (s2 && s2[0] != '\0')
 				pq->items[j].aircraft = AIR_GetAircraft(s2);
 			pq->items[j].items_cached = mxml_GetBool(ssnode, "items_cached", qfalse);
-			if (!pq->items[j].item && *s1)
-				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
-			if (!pq->items[j].aircraft && *s2)
-				Com_Printf("PR_Load: Could not find aircraft sample '%s'\n", s2);
-		}
-	}
-	return qtrue;
-}
-
-/**
- * @brief Load callback for savegames
- * @sa PR_Save
- * @sa SAV_GameLoad
- */
-qboolean PR_Load (sizebuf_t *sb, void *data)
-{
-	int i, j;
-
-	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
-		production_queue_t *pq = &ccs.productions[i];
-		pq->numItems = MSG_ReadByte(sb);
-
-		for (j = 0; j < pq->numItems; j++) {
-			const char *s1 = MSG_ReadString(sb);
-			const char *s2;
-			if (s1[0] != '\0')
-				pq->items[j].item = INVSH_GetItemByID(s1);
-			pq->items[j].amount = MSG_ReadLong(sb);
-			pq->items[j].percentDone = MSG_ReadFloat(sb);
-			pq->items[j].production = MSG_ReadByte(sb);
-			s2 = MSG_ReadString(sb);
-			if (s2[0] != '\0')
-				pq->items[j].aircraft = AIR_GetAircraft(s2);
-			pq->items[j].items_cached = MSG_ReadByte(sb);
-
 			if (!pq->items[j].item && *s1)
 				Com_Printf("PR_Load: Could not find item '%s'\n", s1);
 			if (!pq->items[j].aircraft && *s2)

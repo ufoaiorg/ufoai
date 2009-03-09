@@ -618,12 +618,6 @@ int AL_CountAll (void)
 	return amount;
 }
 
-/* AL_CountForMenu */
-/* AC_NextAC_f */
-/* AC_PrevAC_f */
-/* AC_OpenUFOpedia_f */
-
-
 /**
  * @brief Kill all aliens in given base.
  * @param[in] base The base in which you want to kill all aliens
@@ -651,9 +645,6 @@ void AC_KillAll (base_t *base)
 	AL_RemoveAliens(base, NULL, 0, AL_KILL);
 
 }
-
-/* AC_KillAll_f */
-/* AC_KillOne_f */
 
 #ifdef DEBUG
 /**
@@ -722,18 +713,9 @@ static void AC_AddOne_f (void)
 	}
 	/* Reinit menu to display proper values. */
 	/* AC_UpdateMenu(baseCurrent); */
-	/**@todo do we need this update here? is it better to move this debug function to callbacks? */
+	/** @todo do we need this update here? is it better to move this debug function to callbacks? */
 }
 #endif
-
-/* AC_ResearchAlien_f */
-/* AC_AlienClick */
-/* AC_AlienClick_f */
-
-/* AC_UpdateMenu */
-/* AC_Init_f */
-/* AC_List_Up_f */
-/* AC_List_Down_f */
 
 /**
  * @brief Defines commands and cvars for the alien containment menu(s).
@@ -760,17 +742,6 @@ qboolean AC_SaveXML (mxml_node_t * p)
 }
 
 /**
- * @brief Save callback for savegames
- * @sa AC_Load
- * @sa B_Save
- * @sa SAV_GameSave
- */
-qboolean AC_Save (sizebuf_t* sb, void* data)
-{
-	return qtrue;
-}
-
-/**
  * @brief Load callback for savin in XML Format
  * @sa AC_LoadXML
  * @sa B_SaveXML
@@ -779,19 +750,6 @@ qboolean AC_Save (sizebuf_t* sb, void* data)
 qboolean AC_LoadXML (mxml_node_t * p)
 {
 	/** @todo load and save state, perhaps integrate flag into ccs? */
-	breathingMailSent = qfalse;
-	return qtrue;
-}
-
-/**
- * @brief Load callback for savegames
- * @sa AC_Save
- * @sa B_Load
- * @sa SAV_GameLoad
- */
-qboolean AC_Load (sizebuf_t* sb, void* data)
-{
-	/* @todo load and save state, perhaps integrate flag into ccs? */
 	breathingMailSent = qfalse;
 	return qtrue;
 }

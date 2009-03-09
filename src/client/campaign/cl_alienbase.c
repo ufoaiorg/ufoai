@@ -379,25 +379,6 @@ qboolean AB_LoadXML (mxml_node_t *p)
 }
 
 /**
- * @brief Load callback for alien base data
- * @sa AB_Save
- */
-qboolean AB_Load (sizebuf_t *sb, void *data)
-{
-	int i;
-
-	numAlienBases = MSG_ReadShort(sb);
-	for (i = 0; i < presaveArray[PRE_MAXALB]; i++) {
-		alienBase_t *base = &alienBases[i];
-		base->idx = MSG_ReadShort(sb);
-		MSG_Read2Pos(sb, base->pos);
-		base->supply = MSG_ReadShort(sb);
-		base->stealth = MSG_ReadFloat(sb);
-	}
-	return qtrue;
-}
-
-/**
  * @brief Save callback for alien base data
  * @sa AB_LoadXML
  */
@@ -415,25 +396,5 @@ qboolean AB_SaveXML (mxml_node_t *p)
 		mxml_AddInt(s, "supply", base->supply);
 		mxml_AddFloat(s, "stealth", base->stealth);
 	}
-	return qtrue;
-}
-
-/**
- * @brief Save callback for alien base data
- * @sa AB_Load
- */
-qboolean AB_Save (sizebuf_t *sb, void *data)
-{
-	int i;
-
-	MSG_WriteShort(sb, numAlienBases);
-	for (i = 0; i < presaveArray[PRE_MAXALB]; i++) {
-		const alienBase_t *base = &alienBases[i];
-		MSG_WriteShort(sb, base->idx);
-		MSG_Write2Pos(sb, base->pos);
-		MSG_WriteShort(sb, base->supply);
-		MSG_WriteFloat(sb, base->stealth);
-	}
-
 	return qtrue;
 }

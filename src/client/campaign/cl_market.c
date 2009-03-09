@@ -153,27 +153,6 @@ qboolean BS_SaveXML (mxml_node_t *parent)
 
 	return qtrue;
 }
-/**
- * @brief Save callback for savegames
- * @sa BS_Load
- * @sa SAV_GameSave
- */
-qboolean BS_Save (sizebuf_t* sb, void* data)
-{
-	int i;
-
-	/* store market */
-	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
-		MSG_WriteString(sb, csi.ods[i].id);
-		MSG_WriteLong(sb, ccs.eMarket.num[i]);
-		MSG_WriteLong(sb, ccs.eMarket.bid[i]);
-		MSG_WriteLong(sb, ccs.eMarket.ask[i]);
-		MSG_WriteFloat(sb, ccs.eMarket.currentEvolution[i]);
-		MSG_WriteByte(sb, ccs.autosell[i]);
-	}
-
-	return qtrue;
-}
 
 /**
  * @brief Load callback for savegames
@@ -200,37 +179,6 @@ qboolean BS_LoadXML (mxml_node_t *parent)
 				ccs.eMarket.currentEvolution[od->idx] = mxml_GetDouble(snode, "evo", 0.0);
 				ccs.autosell[od->idx] = mxml_GetBool(snode, "autosell", qfalse);
 			}
-		}
-	}
-
-	return qtrue;
-}
-/**
- * @brief Load callback for savegames
- * @sa BS_Save
- * @sa SAV_GameLoad
- */
-qboolean BS_Load (sizebuf_t* sb, void* data)
-{
-	int i;
-
-	/* read market */
-	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
-		const char *s = MSG_ReadString(sb);
-		const objDef_t *od = INVSH_GetItemByID(s);
-		if (!od) {
-			Com_Printf("BS_Load: Could not find item '%s'\n", s);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-			MSG_ReadFloat(sb);
-			MSG_ReadByte(sb);
-		} else {
-			ccs.eMarket.num[od->idx] = MSG_ReadLong(sb);
-			ccs.eMarket.bid[od->idx] = MSG_ReadLong(sb);
-			ccs.eMarket.ask[od->idx] = MSG_ReadLong(sb);
-			ccs.eMarket.currentEvolution[od->idx] = MSG_ReadFloat(sb);
-			ccs.autosell[od->idx] = MSG_ReadByte(sb);
 		}
 	}
 

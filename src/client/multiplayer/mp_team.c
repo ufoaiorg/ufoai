@@ -46,67 +46,41 @@ typedef struct mpSaveFileHeader_s {
 	long xml_size; /** needed, if we store compressed */
 } mpSaveFileHeader_t;
 
-
 /**
  * @brief Reads tha comments from team files
  */
 void MP_MultiplayerTeamSlotComments_f (void)
 {
-	byte buf[MAX_TEAMDATASIZE];
 	int i;
 
 	for (i = 0; i < 8; i++) {
-		int version, soldierCount;
-		const char *comment;
-		mpSaveFileHeader_t header;
 		/* open file */
-		qFILE qf;
-		qboolean error = qfalse;
+		qFILE f;
 
-		qf.f = fopen(va("%s/save/team%i.mptx", FS_Gamedir(), i), "rb");
-		if (!qf.f) {
-			error = qtrue;
-		} else {
+		FS_OpenFile(va("save/team%i.mpt", i), &f, FILE_READ);
+		if (f.f || f.z) {
+			int version, soldierCount;
+			const char *comment;
+			mpSaveFileHeader_t header;
 			const int clen = sizeof(header);
-			byte *cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
-			if (fread(cbuf, 1, clen, qf.f) != clen) {
-				error = qtrue;
+			if (FS_Read(&header, clen, &f) != clen) {
 				Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
+				FS_CloseFile(&f);
+				continue;
 			}
-			fclose(qf.f);
-			memcpy(&header, cbuf, sizeof(header));
+			FS_CloseFile(&f);
 			version = header.version;
 			comment = header.name;
 			soldierCount = header.soldiercount;
+			MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, soldierCount, comment);
 		}
-
-		if (error) {
-			sizebuf_t sb;
-			FILE *f = fopen(va("%s/save/team%i.mpt", FS_Gamedir(), i), "rb");
-			if (!f) {
-				Cvar_Set(va("mn_slot%i", i), "");
-				continue;
-			}
-
-			/* read data */
-			SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
-			sb.cursize = fread(buf, 1, MAX_TEAMDATASIZE, f);
-			fclose(f);
-
-			version = MSG_ReadByte(&sb);
-			comment = MSG_ReadString(&sb);
-			soldierCount = MSG_ReadByte(&sb);
-		}
-
-		MN_ExecuteConfunc("set_slotname %i %i \"%s\"", i, soldierCount, comment);
 	}
 }
 
 /**
  * @brief Stores the wholeTeam into a xml structure
- * @note Called by MP_SaveTeamMultiplayer to store the team info
+ * @note Called by MP_SaveTeamMultiplayerXML to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @sa MP_LoadTeamMultiplayerMember
  */
 static void MP_SaveTeamMultiplayerInfoXML (mxml_node_t *p)
 {
@@ -125,7 +99,6 @@ static void MP_SaveTeamMultiplayerInfoXML (mxml_node_t *p)
  * @brief Loads the wholeTeam from the xml file
  * @note Called by MP_SaveTeamMultiplayer to store the team info
  * @sa GAME_SendCurrentTeamSpawningInfo
- * @sa MP_LoadTeamMultiplayerMember
  */
 static void MP_LoadTeamMultiplayerInfoXML (mxml_node_t *p)
 {
@@ -139,69 +112,6 @@ static void MP_LoadTeamMultiplayerInfoXML (mxml_node_t *p)
 	}
 	chrDisplayList.num = i;
 	Com_DPrintf(DEBUG_CLIENT, "Loaded %i teammembers\n", chrDisplayList.num);
-}
-
-/**
- * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
- * @note Called by MP_SaveTeamMultiplayer to store the team info
- * @sa GAME_SendCurrentTeamSpawningInfo
- * @sa MP_LoadTeamMultiplayerMember
- */
-static void MP_SaveTeamMultiplayerInfo (sizebuf_t *buf)
-{
-	int i, j;
-
-	/* header */
-	Com_DPrintf(DEBUG_CLIENT, "Saving %i teammembers\n", chrDisplayList.num);
-	MSG_WriteByte(buf, chrDisplayList.num);
-	for (i = 0; i < chrDisplayList.num; i++) {
-		const character_t *chr = chrDisplayList.chr[i];
-		/* send the fieldSize ACTOR_SIZE_* */
-		MSG_WriteByte(buf, chr->fieldSize);
-
-		/* unique character number */
-		MSG_WriteShort(buf, chr->ucn);
-
-		/* name */
-		MSG_WriteString(buf, chr->name);
-
-		/* model */
-		MSG_WriteString(buf, chr->path);
-		MSG_WriteString(buf, chr->body);
-		MSG_WriteString(buf, chr->head);
-		MSG_WriteByte(buf, chr->skin);
-
-		MSG_WriteShort(buf, chr->HP);
-		MSG_WriteShort(buf, chr->maxHP);
-		MSG_WriteByte(buf, chr->teamDef ? chr->teamDef->idx : BYTES_NONE);
-		MSG_WriteByte(buf, chr->gender);
-		MSG_WriteByte(buf, chr->STUN);
-		MSG_WriteByte(buf, chr->morale);
-
-		/* Scores */
-		MSG_WriteByte(buf, SKILL_NUM_TYPES + 1);
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			MSG_WriteLong(buf, chr->score.experience[j]);
-		MSG_WriteByte(buf, SKILL_NUM_TYPES);
-		for (j = 0; j < SKILL_NUM_TYPES; j++)	/* even new attributes */
-			MSG_WriteByte(buf, chr->score.skills[j]);
-		MSG_WriteByte(buf, SKILL_NUM_TYPES + 1);
-		for (j = 0; j < SKILL_NUM_TYPES + 1; j++)
-			MSG_WriteByte(buf, chr->score.initialSkills[j]);
-		MSG_WriteByte(buf, KILLED_NUM_TYPES);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			MSG_WriteShort(buf, chr->score.kills[j]);
-		MSG_WriteByte(buf, KILLED_NUM_TYPES);
-		for (j = 0; j < KILLED_NUM_TYPES; j++)
-			MSG_WriteShort(buf, chr->score.stuns[j]);
-		MSG_WriteShort(buf, chr->score.assignedMissions);
-
-		/* Save user-defined (default) reaction-state. */
-		MSG_WriteShort(buf, chr->reservedTus.reserveReaction);
-
-		/* inventory */
-		CL_SaveInventory(buf, &chr->inv);
-	}
 }
 
 /**
@@ -276,48 +186,6 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 }
 
 /**
- * @brief Saves a multiplayer team
- * @sa MP_SaveTeamMultiplayerInfo
- * @sa MP_LoadTeamMultiplayer
- * @todo Implement EMPL_ROBOT
- */
-static qboolean MP_SaveTeamMultiplayer (const char *filename, const char *name)
-{
-	sizebuf_t sb;
-	byte buf[MAX_TEAMDATASIZE];
-	int i, res;
-	equipDef_t *ed = GAME_GetEquipmentDefinition();
-
-	/* create data */
-	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
-	MSG_WriteByte(&sb, MPTEAM_SAVE_FILE_VERSION);
-
-	/* store teamname */
-	MSG_WriteString(&sb, name);
-
-	/* store team */
-	MP_SaveTeamMultiplayerInfo(&sb);
-
-	/* store equipment so soldiers can be properly equipped */
-	MSG_WriteShort(&sb, csi.numODs);
-	for (i = 0; i < csi.numODs; i++) {
-		MSG_WriteString(&sb, csi.ods[i].id);
-		MSG_WriteLong(&sb, ed->num[i]);
-		MSG_WriteByte(&sb, ed->numLoose[i]);
-	}
-
-	/* write data */
-	res = FS_WriteFile(buf, sb.cursize, filename);
-	if (res == sb.cursize && res > 0) {
-		Com_Printf("Team '%s' saved. Size written: %i\n", filename, res);
-		return qtrue;
-	} else {
-		Com_Printf("Team '%s' not saved.\n", filename);
-		return qfalse;
-	}
-}
-
-/**
  * @brief Stores a team in a specified teamslot (multiplayer)
  */
 void MP_SaveTeamMultiplayer_f (void)
@@ -343,74 +211,9 @@ void MP_SaveTeamMultiplayer_f (void)
 
 		/* save */
 		Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
-		if (!MP_SaveTeamMultiplayer(filename, name))
-			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
-		/*also saving the xml version */
-		Com_sprintf(filename, sizeof(filename), "save/team%i.mptx", index);
 		if (!MP_SaveTeamMultiplayerXML(filename, name))
 			MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 	}
-}
-
-/**
- * @brief Load a team member for multiplayer
- * @sa MP_LoadTeamMultiplayer
- * @sa MP_SaveTeamMultiplayerInfo
- */
-static void MP_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int version)
-{
-	int i, num;
-	/* Team-definition index. */
-	int td;
-
-	/* unique character number */
-	chr->fieldSize = MSG_ReadByte(sb);
-	chr->ucn = MSG_ReadShort(sb);
-	if (chr->ucn >= cl.nextUniqueCharacterNumber)
-		cl.nextUniqueCharacterNumber = chr->ucn + 1;
-
-	/* name and model */
-	Q_strncpyz(chr->name, MSG_ReadStringRaw(sb), sizeof(chr->name));
-	Q_strncpyz(chr->path, MSG_ReadString(sb), sizeof(chr->path));
-	Q_strncpyz(chr->body, MSG_ReadString(sb), sizeof(chr->body));
-	Q_strncpyz(chr->head, MSG_ReadString(sb), sizeof(chr->head));
-	chr->skin = MSG_ReadByte(sb);
-
-	chr->HP = MSG_ReadShort(sb);
-	chr->maxHP = MSG_ReadShort(sb);
-	chr->teamDef = NULL;
-	td = MSG_ReadByte(sb);
-	if (td != BYTES_NONE)
-		chr->teamDef = &csi.teamDef[td];
-	chr->gender = MSG_ReadByte(sb);
-	chr->STUN = MSG_ReadByte(sb);
-	chr->morale = MSG_ReadByte(sb);
-
-	/* Load scores @sa inv_shared.h:chrScoreGlobal_t */
-	num = MSG_ReadByte(sb);
-	for (i = 0; i < num; i++)
-		chr->score.experience[i] = MSG_ReadLong(sb);
-	num = MSG_ReadByte(sb);
-	for (i = 0; i < num; i++)
-		chr->score.skills[i] = MSG_ReadByte(sb);
-	num = MSG_ReadByte(sb);
-	for (i = 0; i < num; i++)
-		chr->score.initialSkills[i] = MSG_ReadByte(sb);
-	num = MSG_ReadByte(sb);
-	for (i = 0; i < num; i++)
-		chr->score.kills[i] = MSG_ReadShort(sb);
-	num = MSG_ReadByte(sb);
-	for (i = 0; i < num; i++)
-		chr->score.stuns[i] = MSG_ReadShort(sb);
-	chr->score.assignedMissions = MSG_ReadShort(sb);
-
-	/* Load user-defined (default) reaction-state. */
-	chr->reservedTus.reserveReaction = MSG_ReadShort(sb);
-
-	/* Inventory */
-	/** @todo really needed? */
-	INVSH_DestroyInventory(&chr->inv);
-	CL_LoadInventory(sb, &chr->inv);
 }
 
 /**
@@ -430,30 +233,36 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	equipDef_t *ed;
 
 	/* open file */
-	f.f = fopen(filename, "rb");
-	if (!f.f) {
+	FS_OpenFile(filename, &f, FILE_READ);
+	if (!f.f && !f.z) {
 		Com_Printf("Couldn't open file '%s'\n", filename);
 		return qfalse;
 	}
 
 	clen = FS_FileLength(&f);
 	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
-	if (fread(cbuf, 1, clen, f.f) != clen)
+	if (FS_Read(cbuf, clen, &f) != clen) {
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	fclose(f.f);
-	Com_Printf("Loading multiplayer save from xml (size %d)\n", clen);
+		FS_CloseFile(&f);
+		Mem_Free(cbuf);
+		return qfalse;
+	}
+	FS_CloseFile(&f);
 
 	memcpy(&header, cbuf, sizeof(header));
-		/* swap all int values if needed */
+	/* swap all int values if needed */
 	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
-	len = header.xml_size+50;
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, 0);
+	header.xml_size = LittleLong(header.xml_size);
+	len = header.xml_size + 50;
+
+	Com_Printf("Loading multiplayer team (size %d / %li)\n", clen, header.xml_size);
+
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * len, cl_genericPool, 0);
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
 		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
-		Mem_Free(cbuf);
 
 		if (res != Z_OK) {
 			Mem_Free(buf);
@@ -463,11 +272,10 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 		top_node = mxmlLoadString(NULL, (char*)buf , mxml_ufo_type_cb);
 		if (!top_node) {
 			Mem_Free(buf);
-			Com_Printf("Error: Failure in Loading the xml Data!");
+			Com_Printf("Error: Failure in loading the team data!");
 			return qfalse;
 		}
 	} else {
-		/*memcpy(buf, cbuf + sizeof(header), clen - sizeof(header));*/
 		top_node = mxmlLoadString(NULL, (char*)(cbuf + sizeof(header)) , mxml_ufo_type_cb);
 		Mem_Free(cbuf);
 		if (!top_node) {
@@ -510,67 +318,6 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 }
 
 /**
- * @brief Load a multiplayer team
- * @sa MP_LoadTeamMultiplayer
- * @sa MP_SaveTeamMultiplayer
- * @todo only EMPL_SOLDIERs are saved and loaded
- */
-static void MP_LoadTeamMultiplayer (const char *filename)
-{
-	sizebuf_t sb;
-	byte buf[MAX_TEAMDATASIZE];
-	FILE *f;
-	int version;
-	int i, num;
-	equipDef_t *ed;
-
-	/* open file */
-	f = fopen(filename, "rb");
-	if (!f) {
-		Com_Printf("Couldn't open file '%s'.\n", filename);
-		return;
-	}
-
-	/* read data */
-	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
-	sb.cursize = fread(buf, 1, MAX_TEAMDATASIZE, f);
-	fclose(f);
-
-	version = MSG_ReadByte(&sb);
-	if (version != MPTEAM_SAVE_FILE_VERSION) {
-		Com_Printf("Could not load multiplayer team '%s' - version differs.\n", filename);
-		return;
-	}
-
-	MSG_ReadString(&sb);
-
-	/* read whole team list */
-	num = MSG_ReadByte(&sb);
-	Com_DPrintf(DEBUG_CLIENT, "Loading %i teammembers\n", num);
-	for (i = 0; i < num; i++) {
-		MP_LoadTeamMultiplayerMember(&sb, &multiplayerCharacters[i], version);
-		chrDisplayList.chr[i] = &multiplayerCharacters[i];
-	}
-
-	chrDisplayList.num = i;
-
-	/* read equipment */
-	num = MSG_ReadShort(&sb);
-	ed = GAME_GetEquipmentDefinition();
-	for (i = 0; i < num; i++) {
-		const char *objID = MSG_ReadString(&sb);
-		const objDef_t *od = INVSH_GetItemByID(objID);
-		if (!od) {
-			MSG_ReadLong(&sb);
-			MSG_ReadByte(&sb);
-		} else {
-			ed->num[od->idx] = MSG_ReadLong(&sb);
-			ed->numLoose[od->idx] = MSG_ReadByte(&sb);
-		}
-	}
-}
-
-/**
  * @brief Loads the selected teamslot
  */
 void MP_LoadTeamMultiplayer_f (void)
@@ -586,16 +333,11 @@ void MP_LoadTeamMultiplayer_f (void)
 	index = atoi(Cmd_Argv(1));
 
 	/* first try to load the xml file, if this does not succeed, try the old file */
-	Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mptx", FS_Gamedir(), index);
-	if (MP_LoadTeamMultiplayerXML(filename)) {
-		Com_Printf("Team 'team%i' loaded from xml.\n", index);
-		return;
-	}
-	/* load */
-	Com_sprintf(filename, sizeof(filename), "%s/save/team%i.mpt", FS_Gamedir(), index);
-	MP_LoadTeamMultiplayer(filename);
-
-	Com_Printf("Team 'team%i' loaded.\n", index);
+	Com_sprintf(filename, sizeof(filename), "save/team%i.mpt", index);
+	if (!MP_LoadTeamMultiplayerXML(filename))
+		Com_Printf("Could not load team '%s'.\n", filename);
+	else
+		Com_Printf("Team '%s' loaded.\n", filename);
 }
 
 /**

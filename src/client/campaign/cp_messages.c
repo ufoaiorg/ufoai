@@ -237,27 +237,6 @@ qboolean MS_SaveXML (mxml_node_t *p)
 }
 
 /**
- * @sa MS_Load
- * @sa MS_AddNewMessage
- * @sa MS_MessageSave
- */
-qboolean MS_Save (sizebuf_t* sb, void* data)
-{
-	int i = 0;
-	message_t* message;
-
-	/* store message system items */
-	for (message = cp_messageStack; message; message = message->next) {
-		if (message->type == MSG_INFO)
-			continue;
-		i++;
-	}
-	MSG_WriteLong(sb, i);
-	MS_MessageSave(sb, cp_messageStack);
-	return qtrue;
-}
-
-/**
  * @sa MS_SaveXML
  * @sa MN_AddNewMessageSound
  */
@@ -297,51 +276,6 @@ qboolean MS_LoadXML (mxml_node_t *p)
 	}
 	return qtrue;
 }
-
-/**
- * @sa MS_Save
- * @sa MS_AddNewMessageSound
- */
-qboolean MS_Load (sizebuf_t* sb, void* data)
-{
-	int i, mtype, idx;
-	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
-	message_t *mess;
-	eventMail_t *mail;
-	qboolean read;
-
-	/* how many message items */
-	i = MSG_ReadLong(sb);
-	for (; i--;) {
-		mail = NULL;
-		/* can contain high bits due to utf8 */
-		Q_strncpyz(title, MSG_ReadStringRaw(sb), sizeof(title));
-		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
-		mtype = MSG_ReadByte(sb);
-		if (mtype == MSG_EVENT) {
-			mail = CL_GetEventMail(MSG_ReadString(sb), qfalse);
-			read = MSG_ReadByte(sb);
-			if (mail)
-				mail->read = read;
-		} else
-			mail = NULL;
-		idx = MSG_ReadLong(sb);
-		/* event and not mail means, dynamic mail - we don't save or load them */
-		if ((mtype == MSG_EVENT && !mail) || (mtype == MSG_DEBUG && developer->integer != 1)) {
-			MSG_ReadLong(sb);
-			MSG_ReadLong(sb);
-		} else {
-			mess = MS_AddNewMessageSound(title, text, qfalse, mtype, RS_GetTechByIDX(idx), qfalse);
-			mess->eventMail = mail;
-			mess->date.day = MSG_ReadLong(sb);
-			mess->date.sec = MSG_ReadLong(sb);
-			/* redo timestamp text after setting date */
-			MS_TimestampedText(mess->timestamp, mess, sizeof(mess->timestamp));
-		}
-	}
-	return qtrue;
-}
-
 
 void MS_MessageInit (void)
 {

@@ -35,19 +35,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "cp_time.h"
 
-/**
- * @brief save file header
- */
-typedef struct saveFileHeader_s {
-	int version; /**< which savegame version */
-	int compressed; /**< is this file compressed via zlib */
-	int dummy[14]; /**< maybe we have to extend this later */
-	char gameVersion[16]; /**< game version that was used to save this file */
-	char name[32]; /**< savefile name */
-	char gameDate[32]; /**< internal game date */
-	char realDate[32]; /**< real datestring when the user saved this game */
-} saveFileHeader_t;
-
 typedef struct saveFileHeaderXML_s {
 	int version; /**< which savegame version */
 	int compressed; /**< is this file compressed via zlib */
@@ -57,87 +44,18 @@ typedef struct saveFileHeaderXML_s {
 	char gameDate[32]; /**< internal game date */
 	char realDate[32]; /**< real datestring when the user saved this game */
 	long xml_size;
-} saveFileHeaderXML_t;
+} saveFileHeader_t;
 
 typedef struct saveSubsystems_s {
 	const char *name;
-	qboolean (*save) (sizebuf_t *sb, void *data);	/**< return false if saving failed */
-	qboolean (*load) (sizebuf_t *sb, void *data);	/**< return false if loading failed */
-	int check;
-} saveSubsystems_t;
-
-typedef struct saveSubsystemsXML_s {
-	const char *name;
 	qboolean (*save) (mxml_node_t *parent);	/**< return false if saving failed */
 	qboolean (*load) (mxml_node_t *parent);	/**< return false if loading failed */
-} saveSubsystemsXML_t;
+} saveSubsystems_t;
 
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
-static saveSubsystemsXML_t saveSubsystemsXML[MAX_SAVESUBSYSTEMS];
 static int saveSubsystemsAmount;
-static int saveSubsystemsXMLAmount;
 static cvar_t* save_compressed;
-int presaveArray[MAX_ARRAYINDEXES];
 qboolean loading = qfalse;
-
-/**
- * @brief Fills the presaveArray with needed values and saves it.
- * @sa SAV_PresaveArrayLoad
- */
-static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
-{
-	int i;
-
-	presaveArray[PRE_NUMODS] = csi.numODs;		/* Number of Objects in csi.ods */
-	presaveArray[PRE_NUMIDS] = csi.numIDs;		/* Number of Containers */
-	presaveArray[PRE_BASESI] = BASE_SIZE;		/* #define BASE_SIZE */
-	presaveArray[PRE_MAXBUI] = MAX_BUILDINGS;	/* #define MAX_BUILDINGS */
-	presaveArray[PRE_ACTTEA] = MAX_ACTIVETEAM;	/* #define MAX_ACTIVETEAM */
-	presaveArray[PRE_MAXEMP] = MAX_EMPLOYEES;	/* #define MAX_EMPLOYEES */
-	presaveArray[PRE_MCARGO] = MAX_CARGO;		/* #define MAX_CARGO */
-	presaveArray[PRE_MAXAIR] = MAX_AIRCRAFT;	/* #define MAX_AIRCRAFTS */
-	presaveArray[PRE_AIRSTA] = AIR_STATS_MAX;	/* AIR_STATS_MAX in aircraftParams_t */
-	presaveArray[PRE_MAXCAP] = MAX_CAP;			/* MAX_CAP in baseCapacities_t */
-	presaveArray[PRE_EMPTYP] = MAX_EMPL;		/* MAX_EMPL in employeeType_t */
-	presaveArray[PRE_MAXBAS] = MAX_BASES;		/* #define MAX_BASES */
-	presaveArray[PRE_NATION] = ccs.numNations;	/* ccs.numNations */
-	presaveArray[PRE_KILLTP] = KILLED_NUM_TYPES;	/* KILLED_NUM_TYPES in killtypes_t */
-	presaveArray[PRE_SKILTP] = SKILL_NUM_TYPES;	/* SKILL_NUM_TYPES in abilityskills_t */
-	presaveArray[PRE_NMTECH] = ccs.numTechnologies;	/* ccs.numTechnologies */
-	presaveArray[PRE_TECHMA] = TECHMAIL_MAX;	/* TECHMAIL_MAX in techMailType_t */
-	presaveArray[PRE_NUMTDS] = csi.numTeamDefs;	/* numTeamDefs */
-	presaveArray[PRE_NUMALI] = ccs.numAliensTD;	/* ccs.numAliensTD */
-	presaveArray[PRE_NUMUFO] = ccs.numUFOs;		/* ccs.numUFOs */
-	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */
-	presaveArray[PRE_MAXTRA] = MAX_TRANSFERS;	/* #define MAX_TRANSFERS */
-	presaveArray[PRE_MAXOBJ] = MAX_OBJDEFS;		/* #define MAX_OBJDEFS */
-	presaveArray[PRE_MAXMPR] = MAX_MULTIPLE_PROJECTILES;/* #define MAX_MULTIPLE_PROJECTILES */
-	presaveArray[PRE_MBUITY] = MAX_BUILDING_TYPE;	/* MAX_BUILDING_TYPE in buildingType_t */
-	presaveArray[PRE_MAXALB] = MAX_ALIEN_BASES;		/* #define MAX_ALIEN_BASES */
-	presaveArray[PRE_MAXCAT] = INTERESTCATEGORY_MAX;	/* INTERESTCATEGORY_MAX in interestCategory_t */
-	presaveArray[PRE_MAXINST] = MAX_INSTALLATIONS;
-
-	MSG_WriteByte(sb, PRE_MAX);
-	for (i = 0; i < PRE_MAX; i++) {
-		MSG_WriteLong(sb, presaveArray[i]);
-	}
-	return qtrue;
-}
-
-/**
- * @brief Loads presaveArray.
- * @sa SAV_PresaveArraySave
- */
-static qboolean SAV_PresaveArrayLoad (sizebuf_t* sb, void* data)
-{
-	int i, cnt;
-
-	cnt = MSG_ReadByte(sb);
-	for (i = 0; i < cnt; i++) {
-		presaveArray[i] = MSG_ReadLong(sb);
-	}
-	return qtrue;
-}
 
 /**
  * @brief Perform actions after loading a game for single player campaign
@@ -162,7 +80,7 @@ static qboolean SAV_GameActionsAfterLoad (char **error)
  * @brief Tries to verify the Header of the Xml File
  * @param[in] header a pointer to the header to verify
  */
-static qboolean SAV_VerifyXMLHeader (saveFileHeaderXML_t const * const header)
+static qboolean SAV_VerifyXMLHeader (saveFileHeader_t const * const header)
 {
 	int len;
 	/*check the length of the string*/
@@ -208,7 +126,7 @@ static qboolean SAV_VerifyXMLHeader (saveFileHeaderXML_t const * const header)
  * @param[in] file The Filename to load from (without extension)
  * @param[out] error On failure an errormessage may be set.
  */
-static qboolean SAV_GameLoadXML (const char *file, char **error)
+static qboolean SAV_GameLoad (const char *file, char **error)
 {
 	uLongf len;
 	char filename[MAX_OSPATH];
@@ -216,7 +134,7 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 	byte *cbuf, *buf;
 	int i, clen;
 	mxml_node_t *top_node, *node;
-	saveFileHeaderXML_t header;
+	saveFileHeader_t header;
 
 	Q_strncpyz(filename, file, sizeof(filename));
 
@@ -291,15 +209,15 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 		return qfalse;
 	}
 
-	Com_Printf("Load '%s' %d subsystems\n", filename, saveSubsystemsXMLAmount);
-	for (i = 0; i < saveSubsystemsXMLAmount; i++) {
-		Com_Printf("...Running subsystem '%s'\n", saveSubsystemsXML[i].name);
-		if (!saveSubsystemsXML[i].load(node)) {
-			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystemsXML[i].name);
+	Com_Printf("Load '%s' %d subsystems\n", filename, saveSubsystemsAmount);
+	for (i = 0; i < saveSubsystemsAmount; i++) {
+		Com_Printf("...Running subsystem '%s'\n", saveSubsystems[i].name);
+		if (!saveSubsystems[i].load(node)) {
+			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
 			loading = qfalse;
 			return qfalse;
 		} else
-			Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystemsXML[i].name);
+			Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystems[i].name);
 	}
 	mxmlDelete(node);
 
@@ -317,129 +235,9 @@ static qboolean SAV_GameLoadXML (const char *file, char **error)
 }
 
 /**
- * @brief Loads a savegame from file
- * @param[in] file Savegame to load (relative to writepath/save)
- * @sa SAV_GameLoad_f
- * @sa SAV_GameSave
- * @sa CP_CampaignInit
- * @sa CL_ReadSinglePlayerData
- */
-static qboolean SAV_GameLoad (const char *file, char **error)
-{
-	uLongf len = MAX_GAMESAVESIZE;
-	char filename[MAX_OSPATH];
-	qFILE f;
-	byte *buf, *cbuf;
-	int clen, i;
-	sizebuf_t sb;
-	saveFileHeader_t header;
-	int check;
-
-	Q_strncpyz(filename, file, sizeof(filename));
-	if (SAV_GameLoadXML(file, error))
-		return qtrue;
-
-	/* open file */
-	FS_OpenFile(va("save/%s.sav", filename), &f, FILE_READ);
-	if (!f.f) {
-		*error = _("Couldn't open file");
-		Com_Printf("Couldn't open file '%s'\n", filename);
-		return qfalse;
-	}
-
-	/* read compressed data into cbuf buffer */
-	clen = FS_FileLength(&f);
-	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, 0);
-	if (FS_Read(cbuf, clen, &f) != clen)
-		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	FS_CloseFile(&f);
-
-	memcpy(&header, cbuf, sizeof(header));
-	/* swap all int values if needed */
-	header.compressed = LittleLong(header.compressed);
-	header.version = LittleLong(header.version);
-	Com_Printf("Loading savegame\n"
-		"...version: %i\n"
-		"...game version: %s\n"
-		, header.version, header.gameVersion);
-
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, 0);
-	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
-
-	if (header.compressed) {
-		/* uncompress data, skipping comment header */
-		const int res = uncompress(buf, &len, cbuf + sizeof(header), clen - sizeof(header));
-		Mem_Free(cbuf);
-
-		if (res != Z_OK) {
-			Mem_Free(buf);
-			*error = _("Error decompressing data");
-			Com_Printf("Error decompressing data in '%s'.\n", filename);
-			return qfalse;
-		}
-		sb.cursize = len;
-	} else {
-		memcpy(buf, cbuf + sizeof(header), clen - sizeof(header));
-		sb.cursize = clen - sizeof(header);
-		Mem_Free(cbuf);
-	}
-
-	/* check current version */
-	if (header.version > SAVE_FILE_VERSION) {
-		*error = _("The file is a more recent version than is supported");
-		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n",
-			filename, header.version);
-		Mem_Free(buf);
-		return qfalse;
-	} else if (header.version < SAVE_FILE_VERSION) {
-		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n",
-			filename, header.version);
-	}
-
-	loading = qtrue;
-
-	GAME_RestartMode(GAME_CAMPAIGN);
-
-	Com_Printf("Load '%s'\n", filename);
-	for (i = 0; i < saveSubsystemsAmount; i++) {
-		const int diff = sb.readcount;
-		if (!saveSubsystems[i].load(&sb, &header)) {
-			*error = _("Error in loading a subsystem.\n\nSee game console for more information.");
-			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
-			loading = qfalse;
-			return qfalse;
-		} else
-			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
-		check = MSG_ReadByte(&sb);
-		if (check != saveSubsystems[i].check) {
-			*error = _("Error in loading a subsystem. Sentinel doesn't match.\n\n"
-				"This might be due to an old savegame or a bug in the game.\n\n"
-				"See game console for more information.");
-			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (is %x, should be %x)\n",
-				saveSubsystems[i].name, check, saveSubsystems[i].check);
-			loading = qfalse;
-			return qfalse;
-		}
-	}
-
-	SAV_GameActionsAfterLoad(error);
-
-	loading = qfalse;
-
-	CL_Drop();
-
-	Com_Printf("File '%s' loaded.\n", filename);
-	Mem_Free(buf);
-
-	return qtrue;
-}
-
-/**
  * @brief This is a savegame function which stores the game in xml-Format.
- * @sa SAV_GameSave
- *
  */
-static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char **error)
+static qboolean SAV_GameSave (const char *filename, const char *comment, char **error)
 {
 	mxml_node_t *top_node, *node;
 	char savegame[MAX_OSPATH];
@@ -447,7 +245,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	int requiredbuflen;
 	byte *buf, *fbuf;
 	uLongf bufLen;
-	saveFileHeaderXML_t header;
+	saveFileHeader_t header;
 	char dummy[2];
 	int i;
 	dateLong_t date;
@@ -484,11 +282,11 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	mxml_AddString(node, "gamedate", message);
 	/* working through all subsystems. perhaps we should redesign it, order is not important anymore */
 	Com_Printf("Calling subsystems\n");
-	for (i = 0; i < saveSubsystemsXMLAmount; i++) {
-		if (!saveSubsystemsXML[i].save(node))
-			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystemsXML[i].name);
+	for (i = 0; i < saveSubsystemsAmount; i++) {
+		if (!saveSubsystems[i].save(node))
+			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
 		else
-			Com_Printf("...subsystem '%s' - saved\n", saveSubsystemsXML[i].name);
+			Com_Printf("...subsystem '%s' - saved\n", saveSubsystems[i].name);
 	}
 
 	/* calculate the needed buffer size */
@@ -525,7 +323,7 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	res = FS_WriteFile(buf, requiredbuflen, savegame_debug);
 #endif
 	if (header.compressed) {
-		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredbuflen+1);
+		res = compress(fbuf + sizeof(header), &bufLen, buf, requiredbuflen + 1);
 		Mem_Free(buf);
 
 		if (res != Z_OK) {
@@ -544,115 +342,6 @@ static qboolean SAV_GameSaveXML (const char *filename, const char *comment, char
 	Mem_Free(fbuf);
 
 	return qtrue;
-}
-
-
-/**
- * @brief This is the save function that calls all save-subsystems and stores
- * the data in a portable way
- * @sa SAV_GameLoad
- * @sa SAV_GameSave_f
- * @param[in] filename The filename to save your gamestate into (only the base name)
- * @param[in] comment The comment under which the savegame will be available in the
- * save/load menu
- * @param[out] error Pointer to error string in case of errors
- * @return qfalse on failure, qtrue on success
- */
-static qboolean SAV_GameSave (const char *filename, const char *comment, char **error)
-{
-	sizebuf_t sb;
-	int i, diff;
-	int res;
-	char savegame[MAX_OSPATH];
-	byte *buf, *fbuf;
-	uLongf bufLen;
-	dateLong_t date;
-	saveFileHeader_t header;
-
-	if (!GAME_CP_IsRunning()) {
-		*error = _("No campaign active.");
-		Com_Printf("Error: No campaign active.\n");
-		return qfalse;
-	}
-
-	if (!ccs.numBases) {
-		*error = _("Nothing to save yet.");
-		Com_Printf("Error: Nothing to save yet.\n");
-		return qfalse;
-	}
-
-	/* step 1 - get the filename */
-	Com_sprintf(savegame, sizeof(savegame), "save/%s.sav", filename);
-
-	/* step 2 - allocate the buffers */
-	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, 0);
-	if (!buf) {
-		*error = _("Could not allocate enough memory to save this game");
-		Com_Printf("Error: Could not allocate enough memory to save this game\n");
-		return qfalse;
-	}
-	/* create data */
-	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
-
-	Com_Printf("Save '%s'\n", filename);
-	/* step 3 - serialzer */
-	for (i = 0; i < saveSubsystemsAmount; i++) {
-		diff = sb.cursize;
-		if (!saveSubsystems[i].save(&sb, NULL))
-			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
-		else
-			Com_Printf("...subsystem '%s' - saved %i bytes\n", saveSubsystems[i].name, sb.cursize - diff);
-		MSG_WriteByte(&sb, saveSubsystems[i].check);
-	}
-
-	/* compress data using zlib before writing */
-	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
-	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(header), cl_genericPool, 0);
-
-	/* step 4 - write the uncompressed header */
-	memset(&header, 0, sizeof(header));
-	header.compressed = LittleLong(save_compressed->integer);
-	header.version = LittleLong(SAVE_FILE_VERSION);
-	Q_strncpyz(header.name, comment, sizeof(header.name));
-	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
-	CL_DateConvertLong(&ccs.date, &date);
-	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
-		date.year, Date_GetMonthName(date.month - 1), date.day);
-	/** @todo fill real date string */
-	memcpy(fbuf, &header, sizeof(header));
-
-	/* step 5 - compress */
-	if (header.compressed) {
-		res = compress(fbuf + sizeof(header), &bufLen, buf, sb.cursize);
-		Mem_Free(buf);
-
-		if (res != Z_OK) {
-			Mem_Free(fbuf);
-			*error = _("Memory error compressing save-game data - set save_compressed cvar to 0");
-			Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
-			return qfalse;
-		}
-	} else {
-		memcpy(fbuf + sizeof(header), buf, sb.cursize);
-		Mem_Free(buf);
-	}
-
-	/* last step - write data */
-	res = FS_WriteFile(fbuf, bufLen + sizeof(header), savegame);
-	Mem_Free(fbuf);
-
-	if (res == bufLen + sizeof(header)) {
-		/* set cl_lastsave to let the continue function know which game to
-		 * automatically continue */
-		/** @todo redo this in the menu */
-		Cvar_Set("cl_lastsave", filename);
-		Com_Printf("Campaign '%s' saved.\n", comment);
-		return qtrue;
-	} else {
-		Com_Printf("Failed to save campaign '%s' !!!\n", comment);
-		*error = _("Size mismatch - failed to save the campaign");
-		return qfalse;
-	}
 }
 
 /**
@@ -684,23 +373,12 @@ static void SAV_GameSave_f (void)
 		Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
-	/* save the game */
 	result = SAV_GameSave(Cmd_Argv(1), comment, &error);
-
-	/* if save failed refresh the SaveGame menu and popup error message */
 	if (!result) {
 		if (error)
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving game."), error);
 		else
 			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error saving game."));
-		MN_Popup(_("Note"), popupText);
-	}
-	result = SAV_GameSaveXML(Cmd_Argv(1), comment, &error);
-	if (!result) {
-		if (error)
-			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving xml game."), error);
-		else
-			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error saving xml game."));
 		MN_Popup(_("Note"), popupText);
 	}
 }
@@ -726,42 +404,21 @@ static void SAV_GameReadGameComments_f (void)
 	}
 
 	for (i = 0; i < 8; i++) {
-		char comment[MAX_VAR];
-		saveFileHeader_t header;
-		saveFileHeaderXML_t headerXML;
-		qboolean error=qfalse;
-		/* open file */
-		FILE *f;
-		f = fopen(va("%s/save/slot%i.xml", FS_Gamedir(), i), "rb");
-		if (!f) {
-			error=qtrue;
-		} else {
-			if (fread(&headerXML, 1, sizeof(headerXML), f) != sizeof(headerXML))
+		saveFileHeader_t headerXML;
+		qFILE f;
+
+		FS_OpenFile(va("save/slot%i.xml", i), &f, FILE_READ);
+		if (f.f || f.z) {
+			if (FS_Read(&headerXML, sizeof(headerXML), &f) != sizeof(headerXML))
 				Com_Printf("Warning: SaveXMLfile header may be corrupted\n");
 			if (!SAV_VerifyXMLHeader(&headerXML)) {
-				error=qtrue;
 				Com_Printf("XMLSavegameheader for slot%d is corrupted!\n", i);
 			} else {
+				char comment[MAX_VAR];
 				Com_sprintf(comment, sizeof(comment), "%s - %s", headerXML.name, headerXML.gameDate);
 				Cvar_Set(va("mn_slot%i", i), comment);
-				fclose(f);
+				FS_CloseFile(&f);
 			}
-		}
-
-		/*If we have an error, we try to read the information from the _old_ savegame style */
-		if (error) {
-			f = fopen(va("%s/save/slot%i.sav", FS_Gamedir(), i), "rb");
-			if (!f) {
-				Cvar_Set(va("mn_slot%i", i), "");
-				continue;
-			}
-
-			/* read the comment */
-			if (fread(&header, 1, sizeof(header), f) != sizeof(header))
-				Com_Printf("Warning: Savefile header may be corrupted\n");
-			Com_sprintf(comment, sizeof(comment), "%s - %s", header.name, header.gameDate);
-			Cvar_Set(va("mn_slot%i", i), comment);
-			fclose(f);
 		}
 	}
 }
@@ -827,7 +484,7 @@ static void SAV_GameContinue_f (void)
 
 /**
  * @brief Adds a subsystem to the saveSubsystems array
- * @note The order matters - don't change it or all previous savegames will be broken
+ * @note The order is _not_ important
  * @sa SAV_Init
  */
 static qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
@@ -838,27 +495,7 @@ static qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 	saveSubsystems[saveSubsystemsAmount].name = subsystem->name;
 	saveSubsystems[saveSubsystemsAmount].load = subsystem->load;
 	saveSubsystems[saveSubsystemsAmount].save = subsystem->save;
-	saveSubsystems[saveSubsystemsAmount].check = subsystem->check;
 	saveSubsystemsAmount++;
-
-	Com_Printf("added %s subsystem (check %x)\n", subsystem->name, subsystem->check);
-	return qtrue;
-}
-
-/**
- * @brief Adds a subsystem to the saveSubsystems array
- * @note The order is _not_ important
- * @sa SAV_Init
- */
-static qboolean SAV_AddSubsystemXML (saveSubsystemsXML_t *subsystem)
-{
-	if (saveSubsystemsXMLAmount >= MAX_SAVESUBSYSTEMS)
-		return qfalse;
-
-	saveSubsystemsXML[saveSubsystemsXMLAmount].name = subsystem->name;
-	saveSubsystemsXML[saveSubsystemsXMLAmount].load = subsystem->load;
-	saveSubsystemsXML[saveSubsystemsXMLAmount].save = subsystem->save;
-	saveSubsystemsXMLAmount++;
 
 	Com_Printf("added %s subsystem\n", subsystem->name);
 	return qtrue;
@@ -873,7 +510,7 @@ static void SAV_GameSaveNameCleanup_f (void)
 {
 	int slotID;
 	char cvar[16];
-	FILE *f;
+	qFILE f;
 	saveFileHeader_t header;
 
 	/* get argument */
@@ -888,15 +525,15 @@ static void SAV_GameSaveNameCleanup_f (void)
 
 	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
 
-	f = fopen(va("%s/save/slot%i.sav", FS_Gamedir(), slotID), "rb");
-	if (!f)
+	FS_OpenFile(va("save/slot%i.sav", slotID), &f, FILE_READ);
+	if (!f.f && !f.z)
 		return;
 
 	/* read the comment */
-	if (fread(&header, 1, sizeof(header), f) != sizeof(header))
+	if (FS_Read(&header, sizeof(header), &f) != sizeof(header))
 		Com_Printf("Warning: Savefile header may be corrupted\n");
 	Cvar_Set(cvar, header.name);
-	fclose(f);
+	FS_CloseFile(&f);
 }
 
 /**
@@ -913,10 +550,6 @@ qboolean SAV_QuickSave (void)
 
 	result = SAV_GameSave("slotquick", "QuickSave", &error);
 	if (!result)
-		Com_Printf("Error saving the game: %s\n", error ? error : "");
-
-	result = SAV_GameSaveXML("slotquick", "QuickSave", &error);
-	if (!result)
 		Com_Printf("Error saving the xml game: %s\n", error ? error : "");
 
 	return qtrue;
@@ -928,7 +561,7 @@ qboolean SAV_QuickSave (void)
  */
 static void SAV_GameQuickLoadInit_f (void)
 {
-	FILE *f;
+	qFILE f;
 
 	/* only allow quickload while there is already a running campaign */
 	if (!GAME_CP_IsRunning()) {
@@ -936,11 +569,11 @@ static void SAV_GameQuickLoadInit_f (void)
 		return;
 	}
 
-	f = fopen(va("%s/save/slotquick.sav", FS_Gamedir()), "rb");
-	if (!f)
+	FS_OpenFile("save/slotquick.sav", &f, FILE_READ);
+	if (!f.f && !f.z)
 		MN_PopMenu(qfalse);
 	else
-		fclose(f);
+		FS_CloseFile(&f);
 }
 
 /**
@@ -990,88 +623,47 @@ static void SAV_GameQuickLoad_f (void)
  */
 void SAV_Init (void)
 {
-	static saveSubsystems_t pre_subsystem = {"size", SAV_PresaveArraySave, SAV_PresaveArrayLoad, 0xFF};
-	static saveSubsystems_t b_subsystem = {"base", B_Save, B_Load, 0x0};
-	static saveSubsystems_t cp_subsystem = {"campaign", CP_Save, CP_Load, 0x1};
-	static saveSubsystems_t hos_subsystem = {"hospital", HOS_Save, HOS_Load, 0x2};
-	static saveSubsystems_t bs_subsystem = {"market", BS_Save, BS_Load, 0x3};
-	static saveSubsystems_t rs_subsystem = {"research", RS_Save, RS_Load, 0x4};
-	static saveSubsystems_t e_subsystem = {"employee", E_Save, E_Load, 0x5};
-	static saveSubsystems_t ac_subsystem = {"aliencont", AC_Save, AC_Load, 0x6};
-	static saveSubsystems_t pr_subsystem = {"production", PR_Save, PR_Load, 0x7};
-	static saveSubsystems_t air_subsystem = {"aircraft", AIR_Save, AIR_Load, 0x8};
-	static saveSubsystems_t ms_subsystem = {"messagesystem", MS_Save, MS_Load, 0x9};
-	static saveSubsystems_t stats_subsystem = {"stats", STATS_Save, STATS_Load, 0xA};
-	static saveSubsystems_t na_subsystem = {"nations", NA_Save, NA_Load, 0xB};
-	static saveSubsystems_t trans_subsystem = {"transfer", TR_Save, TR_Load, 0xC};
-	static saveSubsystems_t ab_subsystem = {"alien base", AB_Save, AB_Load, 0xD};
-	static saveSubsystems_t xvi_subsystem = {"xvirate", XVI_Save, XVI_Load, 0xE};
-	static saveSubsystems_t ins_subsystem = {"installation", INS_Save, INS_Load, 0x0};
-	static saveSubsystems_t mso_subsystem = {"messageoptions", MSO_Save, MSO_Load, 0x1};
-
-	/*static saveSubsystemsXML_t pre_subsystemXML = {"size", SAV_PresaveArraySaveXML, SAV_PresaveArrayLoadXML, 0xFF};**/
-	static saveSubsystemsXML_t b_subsystemXML = {"base", B_SaveXML, B_LoadXML};
-	static saveSubsystemsXML_t cp_subsystemXML = {"campaign", CP_SaveXML, CP_LoadXML};
-	static saveSubsystemsXML_t hos_subsystemXML = {"hospital", HOS_SaveXML, HOS_LoadXML};
-	static saveSubsystemsXML_t bs_subsystemXML = {"market", BS_SaveXML, BS_LoadXML};
-	static saveSubsystemsXML_t rs_subsystemXML = {"research", RS_SaveXML, RS_LoadXML};
-	static saveSubsystemsXML_t e_subsystemXML = {"employee", E_SaveXML, E_LoadXML};
-	static saveSubsystemsXML_t ac_subsystemXML = {"aliencont", AC_SaveXML, AC_LoadXML};
-	static saveSubsystemsXML_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
-	static saveSubsystemsXML_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
-	static saveSubsystemsXML_t ms_subsystemXML = {"messagesystem", MS_SaveXML, MS_LoadXML};
-	static saveSubsystemsXML_t stats_subsystemXML = {"stats", STATS_SaveXML, STATS_LoadXML};
-	static saveSubsystemsXML_t na_subsystemXML = {"nations", NAT_SaveXML, NAT_LoadXML};
-	static saveSubsystemsXML_t trans_subsystemXML = {"transfer", TR_SaveXML, TR_LoadXML};
-	static saveSubsystemsXML_t ab_subsystemXML = {"alien base", AB_SaveXML, AB_LoadXML};
-	static saveSubsystemsXML_t xvi_subsystemXML = {"xvirate", XVI_SaveXML, XVI_LoadXML};
-	static saveSubsystemsXML_t ins_subsystemXML = {"installation", INS_SaveXML, INS_LoadXML};
-	static saveSubsystemsXML_t mso_subsystemXML = {"messageoptions", MSO_SaveXML, MSO_LoadXML};
+	static saveSubsystems_t b_subsystemXML = {"base", B_SaveXML, B_LoadXML};
+	static saveSubsystems_t cp_subsystemXML = {"campaign", CP_SaveXML, CP_LoadXML};
+	static saveSubsystems_t hos_subsystemXML = {"hospital", HOS_SaveXML, HOS_LoadXML};
+	static saveSubsystems_t bs_subsystemXML = {"market", BS_SaveXML, BS_LoadXML};
+	static saveSubsystems_t rs_subsystemXML = {"research", RS_SaveXML, RS_LoadXML};
+	static saveSubsystems_t e_subsystemXML = {"employee", E_SaveXML, E_LoadXML};
+	static saveSubsystems_t ac_subsystemXML = {"aliencont", AC_SaveXML, AC_LoadXML};
+	static saveSubsystems_t pr_subsystemXML = {"production", PR_SaveXML, PR_LoadXML};
+	static saveSubsystems_t air_subsystemXML = {"aircraft", AIR_SaveXML, AIR_LoadXML};
+	static saveSubsystems_t ms_subsystemXML = {"messagesystem", MS_SaveXML, MS_LoadXML};
+	static saveSubsystems_t stats_subsystemXML = {"stats", STATS_SaveXML, STATS_LoadXML};
+	static saveSubsystems_t na_subsystemXML = {"nations", NAT_SaveXML, NAT_LoadXML};
+	static saveSubsystems_t trans_subsystemXML = {"transfer", TR_SaveXML, TR_LoadXML};
+	static saveSubsystems_t ab_subsystemXML = {"alien base", AB_SaveXML, AB_LoadXML};
+	static saveSubsystems_t xvi_subsystemXML = {"xvirate", XVI_SaveXML, XVI_LoadXML};
+	static saveSubsystems_t ins_subsystemXML = {"installation", INS_SaveXML, INS_LoadXML};
+	static saveSubsystems_t mso_subsystemXML = {"messageoptions", MSO_SaveXML, MSO_LoadXML};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
-	saveSubsystemsXMLAmount = 0;
-	memset(&saveSubsystemsXML, 0, sizeof(saveSubsystemsXML));
 
 	Com_Printf("\n--- save subsystem initialization --\n");
 
 	/* don't mess with the order */
-	SAV_AddSubsystem(&pre_subsystem);
-	SAV_AddSubsystem(&b_subsystem);
-	SAV_AddSubsystem(&cp_subsystem);
-	SAV_AddSubsystem(&hos_subsystem);
-	SAV_AddSubsystem(&bs_subsystem);
-	SAV_AddSubsystem(&rs_subsystem);
-	SAV_AddSubsystem(&e_subsystem);
-	SAV_AddSubsystem(&ac_subsystem);
-	SAV_AddSubsystem(&pr_subsystem);
-	SAV_AddSubsystem(&air_subsystem);
-	SAV_AddSubsystem(&ms_subsystem);
-	SAV_AddSubsystem(&stats_subsystem);
-	SAV_AddSubsystem(&na_subsystem);
-	SAV_AddSubsystem(&trans_subsystem);
-	SAV_AddSubsystem(&ab_subsystem);
-	SAV_AddSubsystem(&xvi_subsystem);
-	SAV_AddSubsystem(&ins_subsystem);
-	SAV_AddSubsystem(&mso_subsystem);
-
-	SAV_AddSubsystemXML(&b_subsystemXML);
-	SAV_AddSubsystemXML(&cp_subsystemXML);
-	SAV_AddSubsystemXML(&hos_subsystemXML);
-	SAV_AddSubsystemXML(&bs_subsystemXML);
-	SAV_AddSubsystemXML(&rs_subsystemXML);
-	SAV_AddSubsystemXML(&e_subsystemXML);
-	SAV_AddSubsystemXML(&ac_subsystemXML);
-	SAV_AddSubsystemXML(&pr_subsystemXML);
-	SAV_AddSubsystemXML(&air_subsystemXML);
-	SAV_AddSubsystemXML(&ms_subsystemXML);
-	SAV_AddSubsystemXML(&stats_subsystemXML);
-	SAV_AddSubsystemXML(&na_subsystemXML);
-	SAV_AddSubsystemXML(&trans_subsystemXML);
-	SAV_AddSubsystemXML(&ab_subsystemXML);
-	SAV_AddSubsystemXML(&xvi_subsystemXML);
-	SAV_AddSubsystemXML(&ins_subsystemXML);
-	SAV_AddSubsystemXML(&mso_subsystemXML);
+	SAV_AddSubsystem(&b_subsystemXML);
+	SAV_AddSubsystem(&cp_subsystemXML);
+	SAV_AddSubsystem(&hos_subsystemXML);
+	SAV_AddSubsystem(&bs_subsystemXML);
+	SAV_AddSubsystem(&rs_subsystemXML);
+	SAV_AddSubsystem(&e_subsystemXML);
+	SAV_AddSubsystem(&ac_subsystemXML);
+	SAV_AddSubsystem(&pr_subsystemXML);
+	SAV_AddSubsystem(&air_subsystemXML);
+	SAV_AddSubsystem(&ms_subsystemXML);
+	SAV_AddSubsystem(&stats_subsystemXML);
+	SAV_AddSubsystem(&na_subsystemXML);
+	SAV_AddSubsystem(&trans_subsystemXML);
+	SAV_AddSubsystem(&ab_subsystemXML);
+	SAV_AddSubsystem(&xvi_subsystemXML);
+	SAV_AddSubsystem(&ins_subsystemXML);
+	SAV_AddSubsystem(&mso_subsystemXML);
 
 	Cmd_AddCommand("game_quickloadinit", SAV_GameQuickLoadInit_f, "Check whether there is a quicksave at all");
 	Cmd_AddCommand("game_quicksave", SAV_GameQuickSave_f, _("Saves to the quick save slot"));

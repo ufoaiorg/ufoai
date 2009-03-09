@@ -150,38 +150,6 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 }
 
 /**
- * @brief XVI map saving callback
- * @note Only save transparency
- * @sa Savegame callback
- * @sa SAV_Init
- * @sa XVI_Load
- */
-qboolean XVI_Save (sizebuf_t *sb, void *data)
-{
-	byte *out;
-	int x, y;
-	int width;
-	int height;
-
-	out = R_XVIMapCopy(&width, &height);
-	if (!out) {
-		MSG_WriteShort(sb, 0);
-		MSG_WriteShort(sb, 0);
-		return qtrue;
-	}
-
-	MSG_WriteShort(sb, width);
-	MSG_WriteShort(sb, height);
-
-	for (y = 0; y < width; y++) {
-		for (x = 0; x < height; x++)
-			MSG_WriteByte(sb, out[y * width + x]);
-	}
-	Mem_Free(out);
-	return qtrue;
-}
-
-/**
  * @brief Load the XVI map from the savegame.
  * @sa Savegame callback
  * @sa SAV_InitXML
@@ -217,38 +185,6 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 
 	R_InitializeXVIOverlay(curCampaign->map, out, width, height);
 	Mem_Free(out);
-	return qtrue;
-}
-
-/**
- * @brief Load the XVI map from the savegame.
- * @sa Savegame callback
- * @sa SAV_Init
- * @sa XVI_Save
- */
-qboolean XVI_Load (sizebuf_t *sb, void *data)
-{
-	byte *out;
-	int i, j;
-	int width, height;
-
-	width = MSG_ReadShort(sb);
-	height = MSG_ReadShort(sb);
-
-	out = (byte *)Mem_PoolAlloc(width * height, vid_imagePool, 0);
-	if (!out)
-		Sys_Error("TagMalloc: failed on allocation of %i bytes for XVI_Load", width * height);
-
-	for (i = 0; i < width; i++) {
-		for (j = 0; j < height; j++) {
-			out[j * width + i] = MSG_ReadByte(sb);
-		}
-	}
-
-	R_InitializeXVIOverlay(curCampaign->map, out, width, height);
-
-	Mem_Free(out);
-
 	return qtrue;
 }
 

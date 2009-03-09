@@ -1805,46 +1805,6 @@ qboolean TR_SaveXML (mxml_node_t *p)
 	}
 	return qtrue;
 }
-/**
- * @brief Save callback for savegames
- * @sa TR_Load
- * @sa SAV_GameSave
- */
-qboolean TR_Save (sizebuf_t* sb, void* data)
-{
-	int i, j, k;
-
-	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		const transfer_t *transfer = &ccs.alltransfers[i];
-		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
-			MSG_WriteByte(sb, transfer->itemAmount[j]);
-		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
-			MSG_WriteByte(sb, transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
-			MSG_WriteByte(sb, transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
-		}
-		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
-			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++)
-				MSG_WriteShort(sb, (transfer->trEmployees[j][k] ? transfer->trEmployees[j][k]->idx : -1));
-		}
-		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
-			MSG_WriteShort(sb, transfer->aircraftArray[j]);
-
-		MSG_WriteByte(sb, (transfer->destBase ? transfer->destBase->idx : BYTES_NONE));
-		MSG_WriteByte(sb, (transfer->srcBase ? transfer->srcBase->idx : BYTES_NONE));
-		if (transfer->active && !transfer->destBase) {
-			Com_Printf("Could not save transfer, active is true, but no destBase is set\n");
-			return qfalse;
-		}
-		MSG_WriteByte(sb, transfer->active);
-		MSG_WriteByte(sb, transfer->hasItems);
-		MSG_WriteByte(sb, transfer->hasEmployees);
-		MSG_WriteByte(sb, transfer->hasAliens);
-		MSG_WriteByte(sb, transfer->hasAircraft);
-		MSG_WriteLong(sb, transfer->event.day);
-		MSG_WriteLong(sb, transfer->event.sec);
-	}
-	return qtrue;
-}
 
 /**
  * @brief Load callback for xml savegames
@@ -1930,81 +1890,10 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
 		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
 		 * for transfer->destbase and return qfalse here */
-		srcBase =  mxml_GetInt(s, "srcbase", BYTES_NONE);
+		srcBase = mxml_GetInt(s, "srcbase", BYTES_NONE);
 		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
 	}
-		/* not sure, if this is needed anymore... */
-	/* Restore transfer flag if an employee is currently in progress. */
-	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		int j, k;
-		transfer_t *transfer = &ccs.alltransfers[i];
 
-		if (!transfer->active)
-			continue;
-
-		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
-			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-				ccs.employees[j][k].transfer = (transfer->trEmployees[j][k] >= 0) ? qtrue : qfalse;
-			}
-		}
-	}
-	return qtrue;
-}
-
-/**
- * @brief Load callback for savegames
- * @sa TR_Save
- * @sa SAV_GameLoad
- */
-qboolean TR_Load (sizebuf_t* sb, void* data)
-{
-	int i, j, k;
-	byte destBase, srcBase;
-
-	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		transfer_t *transfer = &ccs.alltransfers[i];
-		for (j = 0; j < presaveArray[PRE_MAXOBJ]; j++)
-			transfer->itemAmount[j] = MSG_ReadByte(sb);
-		for (j = 0; j < presaveArray[PRE_NUMALI]; j++) {
-			transfer->alienAmount[j][TRANS_ALIEN_ALIVE] = MSG_ReadByte(sb);
-			transfer->alienAmount[j][TRANS_ALIEN_DEAD] = MSG_ReadByte(sb);
-		}
-		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
-			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-				const int emplIdx = MSG_ReadShort(sb);
-				transfer->trEmployees[j][k] = ((emplIdx >= 0) ? &ccs.employees[j][emplIdx] : NULL);
-			}
-		}
-		for (j = 0; j < presaveArray[PRE_MAXAIR]; j++)
-			transfer->aircraftArray[j] = MSG_ReadShort(sb);
-		assert(ccs.numBases);
-		destBase = MSG_ReadByte(sb);
-		transfer->destBase = ((destBase != BYTES_NONE) ? B_GetBaseByIDX(destBase) : NULL);
-		/** @todo Can (or should) destBase be NULL? If not, check against a null pointer
-		 * for transfer->destbase and return qfalse here */
-		srcBase = MSG_ReadByte(sb);
-		transfer->srcBase = ((srcBase != BYTES_NONE) ? B_GetBaseByIDX(srcBase) : NULL);
-		transfer->active = MSG_ReadByte(sb);
-		transfer->hasItems = MSG_ReadByte(sb);
-		transfer->hasEmployees = MSG_ReadByte(sb);
-		transfer->hasAliens = MSG_ReadByte(sb);
-		transfer->hasAircraft = MSG_ReadByte(sb);
-		transfer->event.day = MSG_ReadLong(sb);
-		transfer->event.sec = MSG_ReadLong(sb);
-	}
-	/* Restore transfer flag if an employee is currently in progress. */
-	for (i = 0; i < presaveArray[PRE_MAXTRA]; i++) {
-		transfer_t *transfer = &ccs.alltransfers[i];
-
-		if (!transfer->active)
-			continue;
-
-		for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
-			for (k = 0; k < presaveArray[PRE_MAXEMP]; k++) {
-				ccs.employees[j][k].transfer = (transfer->trEmployees[j][k] >= 0) ? qtrue : qfalse;
-			}
-		}
-	}
 	return qtrue;
 }
 

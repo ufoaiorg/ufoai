@@ -514,42 +514,6 @@ qboolean INS_SaveXML (mxml_node_t *p)
 }
 
 /**
- * @brief Save callback for savegames
- * @sa INS_Load
- * @sa SAV_GameSave
- */
-qboolean INS_Save (sizebuf_t* sb, void* data)
-{
-	int i;
-	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-		int j;
-		const installation_t *inst = INS_GetInstallationByIDX(i);
-		MSG_WriteByte(sb, inst->founded);
-		if (!inst->founded)
-			continue;
-		MSG_WriteString(sb, inst->installationTemplate->id);
-		MSG_WriteString(sb, inst->name);
-		MSG_WritePos(sb, inst->pos);
-		MSG_WriteByte(sb, inst->installationStatus);
-		MSG_WriteShort(sb, inst->installationDamage);
-		MSG_WriteFloat(sb, inst->alienInterest);
-		MSG_WriteLong(sb, inst->buildStart);
-
-		B_SaveBaseSlots(inst->batteries, inst->numBatteries, sb);
-
-		/* store equipments */
-		for (j = 0; j < presaveArray[PRE_NUMODS]; j++) {
-			MSG_WriteString(sb, csi.ods[j].id);
-			MSG_WriteLong(sb, inst->storage.num[j]);
-		}
-
-		/** @todo aircraft (don't save capacities, they should
-		 * be recalculated after loading) */
-	}
-	return qtrue;
-}
-
-/**
  * @brief Load callback for savegames
  * @sa INS_SaveXML
  * @sa SAV_GameLoadXML
@@ -607,67 +571,6 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		B_LoadBaseSlotsXML(inst->batteries, inst->numBatteries, ss);
 
 		B_LoadStorageXML(s, &inst->storage);
-		/** @todo aircraft */
-		/** @todo don't forget to recalc the capacities like we do for bases */
-	}
-	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
-	return qtrue;
-}
-
-/**
- * @brief Load callback for savegames
- * @sa INS_Save
- * @sa SAV_GameLoad
- * @sa INS_LoadItemSlots
- */
-qboolean INS_Load (sizebuf_t* sb, void* data)
-{
-	int i;
-	for (i = 0; i < presaveArray[PRE_MAXINST]; i++) {
-		int j;
-		installation_t *inst = INS_GetInstallationByIDX(i);
-		inst->idx = i;
-		inst->founded = MSG_ReadByte(sb);
-		if (!inst->founded)
-			continue;
-		inst->installationTemplate = INS_GetInstallationTemplateFromInstallationID(MSG_ReadString(sb));
-		if (!inst->installationTemplate) {
-			Com_Printf("Could not find installation template\n");
-			return qfalse;
-		}
-		ccs.numInstallations++;
-		Q_strncpyz(inst->name, MSG_ReadStringRaw(sb), sizeof(inst->name));
-		MSG_ReadPos(sb, inst->pos);
-		inst->installationStatus = MSG_ReadByte(sb);
-		inst->installationDamage = MSG_ReadShort(sb);
-		inst->alienInterest = MSG_ReadFloat(sb);
-		RADAR_InitialiseUFOs(&inst->radar);
-		RADAR_Initialise(&(inst->radar), 0.0f, 0.0f, 1.0f, qtrue);
-		RADAR_UpdateInstallationRadarCoverage(inst, inst->installationTemplate->radarRange, inst->installationTemplate->trackingRange);
-		inst->buildStart = MSG_ReadLong(sb);
-
-		/* read battery slots */
-		BDEF_InitialiseInstallationSlots(inst);
-
-		inst->numBatteries = MSG_ReadByte(sb);
-		if (inst->numBatteries > inst->installationTemplate->maxBatteries) {
-			Com_Printf("Installation has more batteries than possible\n");
-			return qfalse;
-		}
-		B_LoadBaseSlots(inst->batteries, inst->numBatteries, sb);
-
-		/* load equipments */
-		for (j = 0; j < presaveArray[PRE_NUMODS]; j++) {
-			const char *s = MSG_ReadString(sb);
-			objDef_t *od = INVSH_GetItemByID(s);
-			if (!od) {
-				Com_Printf("INS_Load: Could not find item '%s'\n", s);
-				MSG_ReadLong(sb);
-			} else {
-				inst->storage.num[od->idx] = MSG_ReadLong(sb);
-			}
-		}
-
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 	}

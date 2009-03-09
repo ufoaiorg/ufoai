@@ -1832,37 +1832,6 @@ qboolean RS_SaveXML (mxml_node_t *parent)
 	return qtrue;
 }
 
-qboolean RS_Save (sizebuf_t* sb, void* data)
-{
-	int i, j;
-
-	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
-		const technology_t *t = RS_GetTechByIDX(i);
-		MSG_WriteString(sb, t->id);
-		MSG_WriteByte(sb, t->statusCollected);
-		MSG_WriteFloat(sb, t->time);
-		MSG_WriteByte(sb, t->statusResearch);
-		if (t->base)
-			MSG_WriteShort(sb, t->base->idx);
-		else
-			MSG_WriteShort(sb, -1);
-		MSG_WriteByte(sb, t->scientists);
-		MSG_WriteByte(sb, t->statusResearchable);
-		MSG_WriteLong(sb, t->preResearchedDate.day);
-		MSG_WriteLong(sb, t->preResearchedDate.sec);
-		MSG_WriteLong(sb, t->researchedDate.day);
-		MSG_WriteLong(sb, t->researchedDate.sec);
-		MSG_WriteByte(sb, t->mailSent);
-		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
-			/* only save the already read mails */
-			MSG_WriteByte(sb, j);
-			MSG_WriteByte(sb, t->mail[j].read);
-		}
-	}
-
-	return qtrue;
-}
-
 static linkedList_t *loadTechBases;
 
 qboolean RS_LoadXML (mxml_node_t *parent)
@@ -1911,66 +1880,6 @@ qboolean RS_LoadXML (mxml_node_t *parent)
 
 	return qtrue;
 }
-qboolean RS_Load (sizebuf_t* sb, void* data)
-{
-	int i, j;
-	int tempBaseIdx;
-
-	/* Clear linked list. */
-	LIST_Delete(&loadTechBases);
-
-	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
-		const char *techString = MSG_ReadString(sb);
-		technology_t *t = RS_GetTechByID(techString);
-		if (!t) {
-			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
-			/* We now read dummy data to skip the unknown tech. */
-			MSG_ReadByte(sb);	/* statusCollected */
-			MSG_ReadFloat(sb);	/* time */
-			MSG_ReadByte(sb);	/* statusResearch */
-			MSG_ReadShort(sb);	/* tech->base->idx */
-			MSG_ReadByte(sb);	/* scientists */
-			MSG_ReadByte(sb);	/* statusResearchable */
-			MSG_ReadShort(sb);	/* preResearchedDateDay */
-			MSG_ReadShort(sb);	/* preResearchedDateMonth */
-			MSG_ReadShort(sb);	/* preResearchedDateYear */
-			MSG_ReadShort(sb);	/* researchedDateDay */
-			MSG_ReadShort(sb);	/* researchedDateMonth */
-			MSG_ReadShort(sb);	/* researchedDateYear */
-			MSG_ReadByte(sb);	/* mailSent */
-			for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
-				MSG_ReadByte(sb);	/* mailType */
-				MSG_ReadByte(sb);	/* t->mail[mailType].read */
-			}
-			continue;
-		}
-		t->statusCollected = MSG_ReadByte(sb);
-		t->time = MSG_ReadFloat(sb);
-		t->statusResearch = MSG_ReadByte(sb);
-
-		/* Prepare base-index for later pointer-restoration in RS_PostLoadInit. */
-		tempBaseIdx = MSG_ReadShort(sb);
-		LIST_AddPointer(&loadTechBases, t);
-		LIST_Add(&loadTechBases, (byte *)&tempBaseIdx, sizeof(int));
-
-		t->scientists = MSG_ReadByte(sb);
-		t->statusResearchable = MSG_ReadByte(sb);
-
-		t->preResearchedDate.day = MSG_ReadLong(sb);
-		t->preResearchedDate.sec = MSG_ReadLong(sb);
-		t->researchedDate.day = MSG_ReadLong(sb);
-		t->researchedDate.sec = MSG_ReadLong(sb);
-
-		t->mailSent = MSG_ReadByte(sb);
-		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
-			const techMailType_t mailType = MSG_ReadByte(sb);
-			t->mail[mailType].read = MSG_ReadByte(sb);
-		}
-	}
-
-	return qtrue;
-}
-
 
 /**
  * @brief Called after savegame-load (all subsystems) is complete. Restores the base-pointers for each tech.

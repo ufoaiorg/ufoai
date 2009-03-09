@@ -201,23 +201,6 @@ qboolean NAT_SaveXML (mxml_node_t *p)
 }
 
 /**
- * @brief Nation saving callback
- */
-qboolean NA_Save (sizebuf_t* sb, void* data)
-{
-	int i, j;
-	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
-		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			MSG_WriteByte(sb, ccs.nations[i].stats[j].inuse);
-			MSG_WriteFloat(sb, ccs.nations[i].stats[j].happiness);
-			MSG_WriteLong(sb, ccs.nations[i].stats[j].xviInfection);
-			MSG_WriteFloat(sb, ccs.nations[i].stats[j].alienFriendly);
-		}
-	}
-	return qtrue;
-}
-
-/**
  * @brief Nation loading xml callback
  */
 qboolean NAT_LoadXML (mxml_node_t * p)
@@ -237,24 +220,6 @@ qboolean NAT_LoadXML (mxml_node_t * p)
 			ccs.nations[i].stats[j].happiness = mxml_GetFloat(ss, "happiness", 0.0);
 			ccs.nations[i].stats[j].xviInfection = mxml_GetInt(ss, "xvi", 0);
 			ccs.nations[i].stats[j].alienFriendly = mxml_GetFloat(ss, "alienfriendly", 0.0);
-		}
-	}
-	return qtrue;
-}
-
-/**
- * @brief Nation loading callback
- */
-qboolean NA_Load (sizebuf_t* sb, void* data)
-{
-	int i, j;
-
-	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
-		for (j = 0; j < MONTHS_PER_YEAR; j++) {
-			ccs.nations[i].stats[j].inuse = MSG_ReadByte(sb);
-			ccs.nations[i].stats[j].happiness = MSG_ReadFloat(sb);
-			ccs.nations[i].stats[j].xviInfection = MSG_ReadLong(sb);
-			ccs.nations[i].stats[j].alienFriendly = MSG_ReadFloat(sb);
 		}
 	}
 	return qtrue;

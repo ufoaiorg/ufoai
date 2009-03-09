@@ -290,47 +290,6 @@ qboolean MSO_SaveXML (mxml_node_t *p)
 }
 
 /**
- * @brief saves current notification and pause settings
- * @sa MSO_Load
- */
-qboolean MSO_Save (sizebuf_t* sb, void* data)
-{
-	notify_t type;
-	int idx;
-	const int optionsCount = NT_NUM_NOTIFYTYPE;
-	const int categoryCount = ccs.numMsgCategories;
-
-	/* save amount of available entries (forward compatible for additional types) */
-	MSG_WriteLong(sb, optionsCount);
-
-	/* save positive values */
-	for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-		byte bitmask = 0;
-		messageSettings_t actualSetting = messageSettings[type];
-		if (actualSetting.doNotify)
-			bitmask |= NTMASK_NOTIFY;
-		if (actualSetting.doPause)
-			bitmask |= NTMASK_PAUSE;
-		if (actualSetting.doSound)
-			bitmask |= NTMASK_SOUND;
-		MSG_WriteString(sb, nt_strings[type]);
-		MSG_WriteByte(sb, bitmask);
-	}
-
-	MSG_WriteLong(sb, categoryCount);
-	for (idx = 0; idx < categoryCount; idx++) {
-		byte bitmask = 0;
-		msgCategory_t actualCategory = ccs.messageCategories[idx];
-		if (actualCategory.isFolded)
-			bitmask |= MSGCATMASK_FOLDED;
-		MSG_WriteString(sb, actualCategory.id);
-		MSG_WriteByte(sb, bitmask);
-	}
-
-	return qtrue;
-}
-
-/**
  * @brief Restores the notification and pause settings from savegame
  * @sa MSO_SaveXML
  */
@@ -386,65 +345,6 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 			continue;
 		}
 		MSO_SetCategoryState(category, mxml_GetBool(s, "folded", qfalse)?MSGCATMASK_FOLDED:0, qfalse);
-	}
-
-	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse, qfalse);
-	return qtrue;
-}
-
-/**
- * @brief Restores the notification and pause settings from savegame
- * @sa MSO_Save
- */
-qboolean MSO_Load (sizebuf_t* sb, void* data)
-{
-	int optionsCount;
-	int categoryCount;
-
-	/* reset current message settings (default to set for undefined settings)*/
-	memset(messageSettings, 1, sizeof(messageSettings));
-
-	/* load all msgoptions settings */
-	optionsCount = MSG_ReadLong(sb);
-	if (optionsCount < 0) {
-		Com_Printf("Can't load negative number of message settings, probably old savegame.\n");
-		return qfalse;
-	}
-
-	for (; optionsCount > 0; optionsCount--) {
-		const char *messagetype = MSG_ReadString(sb);
-		const byte pauseOrNotify = MSG_ReadByte(sb);
-		notify_t type;
-
-		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-			if (Q_strcmp(nt_strings[type], messagetype) == 0)
-				break;
-		}
-		/** @todo (menu) check why this message is not shown anywhere in logs*/
-		if (type == NT_NUM_NOTIFYTYPE) {
-			Com_Printf("Unrecognized messagetype '%s' ignored while loading\n", messagetype);
-			continue;
-		}
-		MSO_Set(0, type, MSO_NOTIFY, ((pauseOrNotify & NTMASK_NOTIFY) == NTMASK_NOTIFY), qfalse);
-		MSO_Set(0, type, MSO_PAUSE, ((pauseOrNotify & NTMASK_PAUSE) == NTMASK_PAUSE), qfalse);
-		MSO_Set(0, type, MSO_SOUND, ((pauseOrNotify & NTMASK_SOUND) == NTMASK_SOUND), qfalse);
-	}
-
-	categoryCount = MSG_ReadLong(sb);
-	if (categoryCount < 0) {
-		Com_Printf("Can't load negative number of message category settings, probably old savegame.\n");
-		return qfalse;
-	}
-
-	for (; categoryCount > 0; categoryCount--) {
-		const char *categoryId = MSG_ReadString(sb);
-		const byte categoryState = MSG_ReadByte(sb);
-		msgCategory_t *category = MSO_GetCategoryFromName(categoryId);
-		if (!category) {
-			Com_Printf("Unrecognized messagecategoryid '%s' ignored while loading\n", categoryId);
-			continue;
-		}
-		MSO_SetCategoryState(category, categoryState, qfalse);
 	}
 
 	MSO_SetMenuState(MSO_MSTATE_REINIT,qfalse, qfalse);
