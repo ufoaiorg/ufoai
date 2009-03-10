@@ -44,14 +44,12 @@ start_downloads()
 	download http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
 	download http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
 
-	# changing version of libcurl might also require minor fixes in extract_libcurl
-	download http://curl.de-mirror.de/download/ libcurl-7.16.4-win32-nossl.zip libcurl.zip
+	download http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
-	# changing versions of the sdl libs might also require minor fixes in extract_sdl
-	download http://www.libsdl.org/release/ SDL-devel-1.2.13-mingw32.tar.gz sdl.tar.gz
-	download http://www.libsdl.org/projects/SDL_ttf/release/ SDL_ttf-devel-2.0.9-VC8.zip sdl_ttf.zip
-	download http://www.libsdl.org/projects/SDL_mixer/release/ SDL_mixer-devel-1.2.8-VC8.zip sdl_mixer.zip
-	download http://www.libsdl.org/projects/SDL_image/release/ SDL_image-devel-1.2.6-VC8.zip sdl_image.zip
+	download http://www.libsdl.org/release/ SDL-devel-${SDL_VERSION}-mingw32.tar.gz sdl.tar.gz
+	download http://www.libsdl.org/projects/SDL_ttf/release/ SDL_ttf-devel-${SDL_TTF_VERSION}-VC8.zip sdl_ttf.zip
+	download http://www.libsdl.org/projects/SDL_mixer/release/ SDL_mixer-devel-${SDL_MIXER_VERSION}-VC8.zip sdl_mixer.zip
+	download http://www.libsdl.org/projects/SDL_image/release/ SDL_image-devel-${SDL_IMAGE_VERSION}-VC8.zip sdl_image.zip
 
 #	download http://downloads.xiph.org/releases/ogg/ libogg-1.1.3.tar.gz libogg.tar.gz
 #	download http://downloads.xiph.org/releases/ogg/ libvorbis-1.2.0.tar.gz libvorbis.tar.gz
@@ -106,7 +104,7 @@ extract_libcurl()
 {
 	mkdir ${TEMP_DIR}/tmp
 	${UNZIP} -o ${DOWNLOAD_DIR}/libcurl.zip -d ${TEMP_DIR}/tmp
-	cp ${TEMP_DIR}/tmp/libcurl-7.16.4/* -R ${MINGW_DIR}
+	cp ${TEMP_DIR}/tmp/libcurl-${CURL_VERSION}/* -R ${MINGW_DIR}
 	rm -rf ${TEMP_DIR}/tmp
 }
 
@@ -117,15 +115,15 @@ extract_sdl()
 	${UNZIP} -o ${DOWNLOAD_DIR}/sdl_ttf.zip -d ${TEMP_DIR}/tmp
 	${UNZIP} -o ${DOWNLOAD_DIR}/sdl_image.zip -d ${TEMP_DIR}/tmp
 	${TAR} -xzf ${DOWNLOAD_DIR}/sdl.tar.gz -C ${TEMP_DIR}/tmp
-	pushd ${TEMP_DIR}/tmp/SDL-1.2.13
+	pushd ${TEMP_DIR}/tmp/SDL-${SDL_VERSION}
 	make install-sdl prefix=${MINGW_DIR}
 	popd
-	cp ${TEMP_DIR}/tmp/SDL_mixer-1.2.8/include/* ${MINGW_DIR}/include/SDL
-	cp ${TEMP_DIR}/tmp/SDL_mixer-1.2.8/lib/* ${MINGW_DIR}/lib
-	cp ${TEMP_DIR}/tmp/SDL_ttf-2.0.9/include/* ${MINGW_DIR}/include/SDL
-	cp ${TEMP_DIR}/tmp/SDL_ttf-2.0.9/lib/* ${MINGW_DIR}/lib
-	cp ${TEMP_DIR}/tmp/SDL_image-1.2.6/include/* ${MINGW_DIR}/include/SDL
-	cp ${TEMP_DIR}/tmp/SDL_image-1.2.6/lib/* ${MINGW_DIR}/lib
+	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/include/* ${MINGW_DIR}/include/SDL
+	cp ${TEMP_DIR}/tmp/SDL_mixer-${SDL_MIXER_VERSION}/lib/* ${MINGW_DIR}/lib
+	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/include/* ${MINGW_DIR}/include/SDL
+	cp ${TEMP_DIR}/tmp/SDL_ttf-${SDL_TTF_VERSION}/lib/* ${MINGW_DIR}/lib
+	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/include/* ${MINGW_DIR}/include/SDL
+	cp ${TEMP_DIR}/tmp/SDL_image-${SDL_IMAGE_VERSION}/lib/* ${MINGW_DIR}/lib
 	rm -rf ${TEMP_DIR}/tmp
 }
 
@@ -157,6 +155,14 @@ extract_gtk()
 #######################################################
 # variables
 #######################################################
+
+# Some packages are using the version information at several places
+# because we have to copy some files around
+SDL_VERSION=1.2.13
+SDL_MIXER_VERSION=1.2.8
+SDL_TTF_VERSION=2.0.9
+SDL_IMAGE_VERSION=1.2.6
+CURL_VERSION=7.16.4
 
 TEMP_DIR=$(pwd)/codeblocks_tmp
 TARGET_DIR=${TEMP_DIR}/codeblocks
