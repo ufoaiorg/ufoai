@@ -38,7 +38,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
 
 	# changing version of libcurl might also require minor fixes in extract_libcurl
-	download http://curl.haxx.se/download/ libcurl-7.17.1-win32-nossl.zip libcurl.zip
+	download http://curl.de-mirror.de/download/ libcurl-7.16.4-win32-nossl.zip libcurl.zip
 
 	# changing versions of the sdl libs might also require minor fixes in extract_sdl
 	download http://www.libsdl.org/release/ SDL-devel-1.2.13-mingw32.tar.gz sdl.tar.gz
@@ -86,7 +86,7 @@ extract_libcurl()
 {
 	mkdir ${TEMP_DIR}/tmp
 	${UNZIP} -o ${DOWNLOAD_DIR}/libcurl.zip -d ${TEMP_DIR}/tmp
-	cp ${TEMP_DIR}/tmp/libcurl-7.17.1/* -R ${MINGW_DIR}
+	cp ${TEMP_DIR}/tmp/libcurl-7.16.4/* -R ${MINGW_DIR}
 	rm -rf ${TEMP_DIR}/tmp
 }
 
@@ -211,4 +211,6 @@ elif [ "$ACTION" == "upload" ]; then
 elif [ "$ACTION" == "clean" ]; then
 	rm -rf ${TEMP_DIR}
 	echo -n "clean finished"
+else
+	echo "unknown action given"
 fi
