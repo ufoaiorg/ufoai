@@ -345,7 +345,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		if (!Q_strcmp(value, "true"))
 			v = qtrue;
 		else if (!Q_strcmp(value, "false"))
-			v = qtrue;
+			v = qfalse;
 		else
 			v = atoi(value) != 0;
 		*(qboolean*) b = v;
