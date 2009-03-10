@@ -30,12 +30,12 @@ start_downloads()
 	download http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 bzip2.tar.bz2
 	download http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz tar.tar.gz
 
-	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.2-tdm-1-core.tar.gz gcc.tar.gz
-	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.2-tdm-1-g++.tar.gz g++.tar.gz
+	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-core.tar.gz gcc.tar.gz
+	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.3-tdm-1-g++.tar.gz g++.tar.gz
 
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ zlib-1.2.3-lib.zip zlib.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
-	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ libpng-1.2.33-lib.zip libpng.zip
+	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
