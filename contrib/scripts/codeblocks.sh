@@ -245,7 +245,7 @@ elif [ "$ACTION" == "upload" ]; then
 		read
 		create
 	fi
-	scp ${ARCHIVE_NAME} ufo:~/public_html/downloads
+	scp ${ARCHIVE_NAME} ufo:~/public_html/download
 elif [ "$ACTION" == "clean" ]; then
 	rm -rf ${TEMP_DIR}
 	echo "clean finished"
