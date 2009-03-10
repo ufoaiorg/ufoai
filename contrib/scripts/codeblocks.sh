@@ -95,6 +95,7 @@ extract_sdl()
 	mkdir ${TEMP_DIR}/tmp
 	${UNZIP} -o ${DOWNLOAD_DIR}/sdl_mixer.zip -d ${TEMP_DIR}/tmp
 	${UNZIP} -o ${DOWNLOAD_DIR}/sdl_ttf.zip -d ${TEMP_DIR}/tmp
+	${UNZIP} -o ${DOWNLOAD_DIR}/sdl_image.zip -d ${TEMP_DIR}/tmp
 	${TAR} -xzf ${DOWNLOAD_DIR}/sdl.tar.gz -C ${TEMP_DIR}/tmp
 	pushd ${TEMP_DIR}/tmp/SDL-1.2.13
 	make install-sdl prefix=${MINGW_DIR}
@@ -103,6 +104,8 @@ extract_sdl()
 	cp ${TEMP_DIR}/tmp/SDL_mixer-1.2.8/lib/* ${MINGW_DIR}/lib
 	cp ${TEMP_DIR}/tmp/SDL_ttf-2.0.9/include/* ${MINGW_DIR}/include/SDL
 	cp ${TEMP_DIR}/tmp/SDL_ttf-2.0.9/lib/* ${MINGW_DIR}/lib
+	cp ${TEMP_DIR}/tmp/SDL_image-1.2.6/include/* ${MINGW_DIR}/include/SDL
+	cp ${TEMP_DIR}/tmp/SDL_image-1.2.6/lib/* ${MINGW_DIR}/lib
 	rm -rf ${TEMP_DIR}/tmp
 }
 
