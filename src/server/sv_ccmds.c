@@ -73,7 +73,6 @@ static qboolean SV_SetPlayer (void)
 {
 	client_t *cl;
 	int i;
-	int idnum;
 	const char *s;
 
 	if (Cmd_Argc() < 2)
@@ -83,7 +82,7 @@ static qboolean SV_SetPlayer (void)
 
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
-		idnum = atoi(Cmd_Argv(1));
+		const int idnum = atoi(Cmd_Argv(1));
 		if (idnum < 0 || idnum >= sv_maxclients->integer) {
 			Com_Printf("Bad client slot: %i\n", idnum);
 			return qfalse;
@@ -159,7 +158,7 @@ static void SV_Map_f (void)
 		return;
 	}
 
-	if (!Q_strncmp(Cmd_Argv(0), "devmap", 6)) {
+	if (!Q_strcmp(Cmd_Argv(0), "devmap")) {
 		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting\n");
 		Cvar_SetValue("sv_ai", 0);
 	}
@@ -201,7 +200,7 @@ static void SV_Kick_f (void)
 	}
 
 	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: kick <userid>\n");
+		Com_Printf("Usage: %s <userid>\n", Cmd_Argv(0));
 		return;
 	}
 
