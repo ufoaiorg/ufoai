@@ -34,8 +34,10 @@ start_downloads()
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ libpng-1.2.33-lib.zip libpng.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
-	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ freetype-2.3.5-lib.zip freetype.zip
+	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
+	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
+	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ gettext-0.14.4-lib.zip gettext.zip
 
 	# changing version of libcurl might also require minor fixes in extract_libcurl
 	download http://curl.de-mirror.de/download/ libcurl-7.16.4-win32-nossl.zip libcurl.zip
@@ -52,6 +54,12 @@ start_downloads()
 	download http://download.berlios.de/codeblocks/ wxmsw28u_gcc_cb_wx289.7z codeblocks_gcc.7z
 	download http://download.berlios.de/codeblocks/ mingwm10_gcc421.7z codeblocks_mingw.7z
 	download http://download.berlios.de/codeblocks/ CB_20090214_rev5456_win32.7z codeblocks.7z
+
+	download http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.18/ glib-dev_2.18.4-1_win32.zip glib-dev.zip
+	download http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/2.14/ gtk+-dev_2.14.7-1_win32.zip gtk+-dev.zip
+	download http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.22/ pango-dev_1.22.4-1_win32.zip pango-dev.zip
+	download http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.24/ atk-dev_1.24.0-1_win32.zip atk-dev.zip
+	download http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
 }
 
 extract_codeblocks()
@@ -80,6 +88,8 @@ extract_libs()
 	${UNZIP} -o ${DOWNLOAD_DIR}/libiconv.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libintl.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/freetype.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/libtiff.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/gettext.zip -d ${MINGW_DIR}
 }
 
 extract_libcurl()
@@ -116,6 +126,15 @@ extract_tools()
 	${UNZIP} -o ${DOWNLOAD_DIR}/wget.zip -d ${TEMP_DIR}/tmp
 	cp ${TEMP_DIR}/tmp/bin/wget.exe ${MINGW_DIR}/bin
 	rm -rf ${TEMP_DIR}/tmp
+}
+
+extract_gtk()
+{
+	${UNZIP} -o ${DOWNLOAD_DIR}/glib-dev.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/gtk+-dev.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/pango-dev.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/atk-dev.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/cairo-dev.zip -d ${MINGW_DIR}
 }
 
 #######################################################
@@ -178,6 +197,8 @@ create()
 	extract_libcurl
 
 	extract_tools
+
+	extract_gtk
 
 	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR}
 
