@@ -21,10 +21,14 @@ download()
 start_downloads()
 {
 	download http://downloads.sourceforge.net/mingw/ binutils-2.18.50-20080109-2.tar.gz binutils.tar.gz
-	download http://downloads.sourceforge.net/mingw/ mingwrt-3.15.1-mingw32-dev.tar.gz mingwrt.tar.gz
-	download http://downloads.sourceforge.net/mingw/ w32api-3.12-mingw32-dev.tar.gz w32api.tar.gz
+	download http://downloads.sourceforge.net/mingw/ mingwrt-3.15.2-mingw32-dev.tar.gz mingwrt.tar.gz
+	download http://downloads.sourceforge.net/mingw/ w32api-3.13-mingw32-dev.tar.gz w32api.tar.gz
 	download http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz mingw32.tar.gz
 	download http://downloads.sourceforge.net/mingw/ gdb-6.8-mingw-3.tar.bz2 gdb.tar.bz2
+	download http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz make.tar.gz
+	download http://downloads.sourceforge.net/mingw/ bash-3.1-MSYS-1.0.11-1.tar.bz2 bash.tar.bz2
+	download http://downloads.sourceforge.net/mingw/ bzip2-1.0.3-MSYS-1.0.11-1.tar.bz2 bzip2.tar.bz2
+	download http://downloads.sourceforge.net/mingw/ tar-1.19.90-MSYS-1.0.11-2-bin.tar.gz tar.tar.gz
 
 	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.2-tdm-1-core.tar.gz gcc.tar.gz
 	download http://downloads.sourceforge.net/tdm-gcc/ gcc-4.3.2-tdm-1-g++.tar.gz g++.tar.gz
@@ -78,6 +82,10 @@ extract_mingw()
 	${TAR} -xjf ${DOWNLOAD_DIR}/gdb.tar.bz2 -C ${MINGW_DIR}
 	${TAR} -xzf ${DOWNLOAD_DIR}/gcc.tar.gz -C ${MINGW_DIR}
 	${TAR} -xzf ${DOWNLOAD_DIR}/g++.tar.gz -C ${MINGW_DIR}
+	${TAR} -xzf ${DOWNLOAD_DIR}/make.tar.gz -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/bash.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xjf ${DOWNLOAD_DIR}/bzip2.tar.bz2 -C ${MINGW_DIR}
+	${TAR} -xzf ${DOWNLOAD_DIR}/tar.tar.gz -C ${MINGW_DIR}
 }
 
 extract_libs()
