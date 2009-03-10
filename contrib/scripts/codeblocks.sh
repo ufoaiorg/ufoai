@@ -149,7 +149,7 @@ extract_gtk()
 	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0"); do
 		mv ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include
 		rm -r ${MINGW_DIR}/include/${i}
-		mv ${MINGW_DIR}/lib/${i}/lib/* ${MINGW_DIR}/include
+		mv ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include
 		rm -r ${MINGW_DIR}/lib/${i}
 	done
 }
