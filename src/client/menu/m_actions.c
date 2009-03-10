@@ -251,7 +251,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	}
 }
 
-static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
+static void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
 
 /**
  * @brief Execute an action from a source
@@ -296,7 +296,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 	}
 }
 
-static inline void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
+static void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction)
 {
 	static int callnumber = 0;
 	const menuAction_t *action;

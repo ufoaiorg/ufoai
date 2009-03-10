@@ -1498,7 +1498,7 @@ static void CL_InvReload (struct dbuffer *msg)
 /**
  * @sa CL_ExecuteBattlescapeEvent
  */
-static inline void CL_LogEvent (const int num)
+static void CL_LogEvent (const int num)
 {
 	qFILE f;
 
