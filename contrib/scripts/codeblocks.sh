@@ -124,6 +124,7 @@ TARGET_DIR=${TEMP_DIR}/codeblocks
 DOWNLOAD_DIR=${TEMP_DIR}/downloads
 MINGW_DIR=${TARGET_DIR}/MinGW
 CODEBLOCKS_DIR=${TARGET_DIR}
+ARCHIVE_NAME=codeblocks.zip
 UN7ZIP=$(which 7z)
 WGET=$(which wget)
 UNZIP=$(which unzip)
@@ -153,9 +154,8 @@ fi
 # don't change anything below here
 #######################################################
 
-ACTION=${1:-help}
-
-if [ "$ACTION" == "create" ]; then
+create()
+{
 	mkdir -p ${TEMP_DIR}
 	rm -rf ${TARGET_DIR}
 	mkdir -p ${TARGET_DIR}
@@ -176,16 +176,35 @@ if [ "$ACTION" == "create" ]; then
 
 	extract_tools
 
-	${UN7ZIP} a -tzip -mx=9 codeblocks.zip ${CODEBLOCKS_DIR}
+	${UN7ZIP} a -tzip -mx=9 ${ARCHIVE_NAME} ${CODEBLOCKS_DIR}
 
-	echo "finished creating codeblocks.zip in $(pwd)"
+	if [ ! -e "${ARCHIVE_NAME}" ]; then
+		echo "Failed to create ${ARCHIVE_NAME}"
+		exit 1;
+	fi
+	echo "finished creating ${ARCHIVE_NAME} in $(pwd)"
+}
+
+ACTION=${1:-help}
+
+if [ "$ACTION" == "create" ]; then
+	create
 elif [ "$ACTION" == "help" ]; then
 	echo "Valid parameters are: help, create and clean"
-	echo " - create  : creates the codeblocks.zip with the latest versions"
+	echo " - create  : creates the ${ARCHIVE_NAME} with the latest versions"
 	echo "             of the needed programs and libs"
 	echo " - clean   : removes the downloads and the temp dirs - but not"
 	echo "             the created archive file"
 	echo " - help    : prints this help message"
+	echo " - upload  : uploads the creates archive - ./ssh/config must be"
+	echo "             set up for this to work"
+elif [ "$ACTION" == "upload" ]; then
+	if [ ! -e "${ARCHIVE_NAME}" ]; then
+		echo "${ARCHIVE_NAME} doesn't exist. Hit any key to create it."
+		read
+		create
+	fi
+	scp ${ARCHIVE_NAME} ufo:~/public_html/downloads
 elif [ "$ACTION" == "clean" ]; then
 	rm -rf ${TEMP_DIR}
 	echo -n "clean finished"
