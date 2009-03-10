@@ -2507,6 +2507,14 @@ public:
 			Winding_Draw(m_winding, m_plane.normal(), state);
 		} else {
 			Winding_DrawWireframe(m_winding);
+
+			// also draw a line indicating the direction of the cut
+			Vector3 lineverts[2];
+			Winding_Centroid(m_winding, m_plane, lineverts[0]);
+			lineverts[1] = vector3_added(lineverts[0], vector3_scaled(m_plane.normal(), Brush::m_maxWorldCoord * 4));
+
+			glVertexPointer(3, GL_FLOAT, sizeof(Vector3), &lineverts[0]);
+			glDrawArrays(GL_LINES, 0, GLsizei(2));
 		}
 	}
 
