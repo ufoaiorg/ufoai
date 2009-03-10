@@ -34,6 +34,7 @@ struct value_s;
 
 qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
 qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
+float MN_GetFloatFromNodeProperty(const struct menuNode_s* node, const struct value_s* property);
 
 /* visibility */
 void MN_UnHideNode(struct menuNode_s* node);

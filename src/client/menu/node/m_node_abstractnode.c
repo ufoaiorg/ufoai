@@ -347,6 +347,43 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 	return qtrue;
 }
 
+/**
+ * @brief Return a float from a node property
+ * @param[in] node Requested node
+ * @param[in] property Requested property
+ */
+float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* property)
+{
+	const byte* b = (const byte*)node + property->ofs;
+
+	if (property->type == V_FLOAT) {
+		return *(const float*) b;
+	} else if (property->type == V_CVAR_OR_FLOAT) {
+		b = *(const byte* const*) b;
+		if (!Q_strncmp((const char*)b, "*cvar", 5)) {
+			const char* cvarName = b + 6;
+			cvar_t *cvar = NULL;
+			cvar = Cvar_Get(cvarName, "", 0, "Menu cvar");
+			return cvar->value;
+		} else {
+			return *(const float*) b;
+		}
+	} else if (property->type == V_INT) {
+		return *(const int*) b;
+	} else if (property->type == V_BOOL) {
+		return *(const qboolean *) b;
+	} else {
+#if debug
+		Com_Printf("MN_GetFloatFromNodeProperty: Unimplemented float getter for property '%s@%s'. If it should return a float, request it.\n", MN_GetPath(node), property->string);
+#else
+		Com_Printf("MN_GetFloatFromNodeProperty: Property '%s@%s' can't return a float\n", MN_GetPath(node), property->string);
+#endif
+		return 0;
+	}
+
+	return 0;
+}
+
 #ifdef DEBUG
 /**
  * @brief set a node property from the command line

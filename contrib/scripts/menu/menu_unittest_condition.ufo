@@ -115,6 +115,44 @@ menu unittest_condition
 		string	"t2"
 	}
 
+	string nodeTitle {
+		pos		"180 40"
+		string	"node"
+	}
+
+	string testNode1 {
+		pos		"180 60"
+		string	"t1"
+	}
+
+	string testNode2 {
+		pos		"180 80"
+		string	"t2"
+	}
+
+	string testNode3 {
+		pos		"180 100"
+		string	"t3"
+	}
+
+	string testNode4 {
+		pos		"180 120"
+		string	"t4"
+	}
+
+	string testNode5 {
+		pos		"180 140"
+		string	"t5"
+	}
+
+	spinner testNodeFoo {
+		current		"*cvar test_nodefoo"
+		min			0
+		max			16
+		invis		true
+		disabled	false
+	}
+	
 	func init {
 		*cvar:test_float0 "0"
 		*cvar:test_float1 "1"
@@ -168,6 +206,19 @@ menu unittest_condition
 		else { *testExists1 color "1 0 0 1" }
 		if "*cvar:test_not_exists" { *testExists2 color "1 0 0 1" }
 		else { *testExists2 color "0 1 0 1" }
+		
+		*cvar:test_nodefoo 1
+		
+		if "*node:unittest_condition.testNodeFoo@current == 1" { *testNode1 color "0 1 0 1" }
+		else { *testNode1 color "1 0 0 1" }
+		if "*1 == node:unittest_condition.testNodeFoo@current" { *testNode2 color "0 1 0 1" }
+		else { *testNode2 color "1 0 0 1" }
+		if "*node:unittest_condition.testNodeFoo@max == 16" { *testNode3 color "0 1 0 1" }
+		else { *testNode3 color "1 0 0 1" }
+		if "*node:unittest_condition.testNodeFoo@invis == 1" { *testNode4 color "0 1 0 1" }
+		else { *testNode4 color "1 0 0 1" }
+		if "*node:unittest_condition.testNodeFoo@disabled == 0" { *testNode5 color "0 1 0 1" }
+		else { *testNode5 color "1 0 0 1" }
 	}
 
 	func close {
@@ -178,6 +229,7 @@ menu unittest_condition
 		cmd "del test_string2"
 		cmd "del test_string3"
 		cmd "del test_exists"
+		cmd "del test_nodefoo"
 	}
 
 }

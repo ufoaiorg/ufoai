@@ -181,6 +181,79 @@ const char* MN_GetPath (const menuNode_t* node)
 }
 
 /**
+ * @brief Read a path and return every we can use (node and property)
+ * @details The path token must be a menu name, and then node child.
+ * Reserved token 'menu' and 'parent' can be used to navigate.
+ * If relativeNode is set, the path can start with reserved token
+ * 'this', 'menu' and 'parent' (relative to this node).
+ * The function can return a node property by using a '@',
+ * the path 'foo@pos' will return the menu foo and the property 'pos'
+ * from the 'window' behaviour.
+ * @param[in] path Path to read. Contain a node location with dot seprator and a facultative property
+ * @param[in] relativeNode relative node where the path start. It allow to use facultative command to start the path (this, parent, menu).
+ * @param[out] resultNode Node found. Else NULL.
+ * @param[out] resultProperty Property found. Else NULL.
+ */
+void MN_ReadNodePath (const char* path, menuNode_t *relativeNode, const menuNode_t **resultNode, const value_t **resultProperty)
+{
+	char name[MAX_VAR];
+	menuNode_t* node = NULL;
+	const char* nextName;
+	char nextCommand = '^';
+
+	*resultNode = NULL;
+	*resultProperty = NULL;
+
+	nextName = path;
+	while (nextName && nextName[0] != '\0') {
+		const char* begin = nextName;
+		char command = nextCommand;
+		nextName = strpbrk(begin, ".@");
+		if (!nextName) {
+			Q_strncpyz(name, begin, sizeof(name));
+			nextCommand = '\0';
+		} else {
+			assert(nextName - begin + 1 <= sizeof(name));
+			Q_strncpyz(name, begin, nextName - begin + 1);
+			nextCommand = *nextName;
+			nextName++;
+		}
+
+		switch (command) {
+		case '^':	/* first string */
+			if (!Q_strcmp(name, "this"))
+				node = relativeNode;
+			else if (!Q_strcmp(name, "parent"))
+				node = relativeNode->parent;
+			else if (!Q_strcmp(name, "menu"))
+				node = relativeNode->menu;
+			else
+				node = MN_GetMenu(name);
+			break;
+		case '.':	/* child node */
+			if (!Q_strcmp(name, "parent"))
+				node = node->parent;
+			else if (!Q_strcmp(name, "menu"))
+				node = node->menu;
+			else
+				node = MN_GetNode(node, name);
+			break;
+		case '@':	/* property */
+			assert(nextCommand == '\0');
+			*resultProperty = MN_GetPropertyFromBehaviour(node->behaviour, name);
+			*resultNode = node;
+			return;
+		}
+
+		if (!node)
+			return;
+	}
+
+	*resultNode = node;
+	return;
+}
+
+/**
  * @brief Return a node by a path name (names with dot separation)
  */
 menuNode_t* MN_GetNodeByPath (const char* path)

@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_main.h"
 #include "m_internal.h"
 #include "m_parse.h"
+#include "node/m_node_abstractnode.h"
 
 static const char *const if_strings[] = {
 	"==",
@@ -61,13 +62,22 @@ static float MN_GetFloatFromParam (const char* value, menuConditionValueType_t t
 	case IF_VALUE_FLOAT:
 		return *(const float*)value;
 	case IF_VALUE_CVARNAME:
-	{
-		cvar_t *cvar = NULL;
-		cvar = Cvar_Get(value, "", 0, "Menu if condition cvar");
-		return cvar->value;
-	}
+		{
+			cvar_t *cvar = NULL;
+			cvar = Cvar_Get(value, "", 0, "Menu if condition cvar");
+			return cvar->value;
+		}
 	case IF_VALUE_NODEPROPERTY:
-		assert(qfalse);
+		{
+			const menuNode_t *node;
+			const value_t *property;
+			/** @todo very important to find a way to use the relative node */
+			MN_ReadNodePath(value, NULL, &node, &property);
+			/** @todo need to make a better check */
+			assert(node);
+			assert(property);
+			return MN_GetFloatFromNodeProperty (node, property);
+		}
 	}
 	return 0;
 }
@@ -176,6 +186,14 @@ static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t op
 		const char* cvarName = string + 6;
 		*value = MN_AllocString(cvarName, 0);
 		*type = IF_VALUE_CVARNAME;
+		return;
+	}
+
+	/* it is a node property */
+	if (!Q_strncmp(string, "*node:", 6)) {
+		const char* path = string + 6;
+		*value = MN_AllocString(path, 0);
+		*type = IF_VALUE_NODEPROPERTY;
 		return;
 	}
 
