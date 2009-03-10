@@ -37,7 +37,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ freetype-2.3.5-lib.zip freetype.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
 
-	# changing version of libcurl might alsi require minor fixes in extract_libcurl
+	# changing version of libcurl might also require minor fixes in extract_libcurl
 	download http://curl.haxx.se/download/ libcurl-7.17.1-win32-nossl.zip libcurl.zip
 
 	# changing versions of the sdl libs might also require minor fixes in extract_sdl
@@ -196,7 +196,7 @@ elif [ "$ACTION" == "help" ]; then
 	echo " - clean   : removes the downloads and the temp dirs - but not"
 	echo "             the created archive file"
 	echo " - help    : prints this help message"
-	echo " - upload  : uploads the creates archive - ./ssh/config must be"
+	echo " - upload  : uploads the created archive - ./ssh/config must be"
 	echo "             set up for this to work"
 elif [ "$ACTION" == "upload" ]; then
 	if [ ! -e "${ARCHIVE_NAME}" ]; then
@@ -209,4 +209,3 @@ elif [ "$ACTION" == "clean" ]; then
 	rm -rf ${TEMP_DIR}
 	echo -n "clean finished"
 fi
-
