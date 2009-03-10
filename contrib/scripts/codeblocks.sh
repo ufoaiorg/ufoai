@@ -37,6 +37,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/gnuwin32/ jpeg-6b-4-lib.zip libjpeg.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libpng-1.2.35-lib.zip libpng.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-lib.zip libiconv.zip
+	download http://downloads.sourceforge.net/gnuwin32/ libiconv-1.9.2-1-bin.zip libiconv-bin.zip
 	download http://downloads.sourceforge.net/gnuwin32/ libintl-0.14.4-lib.zip libintl.zip
 	download http://downloads.sourceforge.net/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
 	download http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
@@ -93,6 +94,7 @@ extract_libs()
 	${UNZIP} -o ${DOWNLOAD_DIR}/zlib.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libjpeg.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libpng.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/libiconv-bin.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libiconv.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libintl.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/freetype.zip -d ${MINGW_DIR}
@@ -143,6 +145,13 @@ extract_gtk()
 	${UNZIP} -o ${DOWNLOAD_DIR}/pango-dev.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/atk-dev.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/cairo-dev.zip -d ${MINGW_DIR}
+
+	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0"); do
+		mv ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include
+		rm -r ${MINGW_DIR}/include/${i}
+		mv ${MINGW_DIR}/lib/${i}/lib/* ${MINGW_DIR}/include
+		rm -r ${MINGW_DIR}/lib/${i}
+	done
 }
 
 #######################################################
