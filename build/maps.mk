@@ -1,7 +1,6 @@
 MAPSDIR ?= base/maps
 
 UFO2MAP = ./ufo2map
-UFO2MAPFLAGS = -extra -t 
 
 # Excludes "*tutorial*", "*prefab*" and "*autosave*" maps
 ifeq ($(TARGET_OS),mingw32)
