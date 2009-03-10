@@ -323,6 +323,7 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
  * @note More hard to set string like that at the run time
  * @todo remove atof
  * @todo add support of more fixed size value (everything else string)
+ * @todo use function from script.c for common type
  */
 qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const char* value)
 {
@@ -339,6 +340,15 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		}
 	} else if (property->type == V_INT) {
 		*(int*) b = atoi(value);
+	} else if (property->type == V_BOOL) {
+		qboolean v;
+		if (!Q_strcmp(value, "true"))
+			v = qtrue;
+		else if (!Q_strcmp(value, "false"))
+			v = qtrue;
+		else
+			v = atoi(value) != 0;
+		*(qboolean*) b = v;
 	} else {
 		Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s.%s@%s'\n", node->menu->name, node->name, property->string);
 		return qfalse;
