@@ -138,7 +138,7 @@ menu iaircraft
 	text aircraft_list
 	{
 		pos			"51 153"
-		size		"235 167"
+		size		"350 167"
 		rows		8
 		lineheight	20
 		textid		TEXT_AIRCRAFT_LIST
@@ -146,6 +146,7 @@ menu iaircraft
 		selectcolor	"1 1 1 1"
 		wheel
 		mousefx		true
+		longlines	prettychop
 		lineschange {
 			*(abstractscrollbar)aircraft_list_scroll fullsize <lines>
 			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>

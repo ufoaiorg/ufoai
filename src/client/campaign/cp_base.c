@@ -354,7 +354,7 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
 		break;
 	case B_COMMAND:
-		Cmd_ExecuteString("mn_update_max_installations");
+		Cmd_ExecuteString("mn_update_max_installations;");
 		break;
 	default:
 		break;
@@ -381,7 +381,7 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
 		break;
 	case B_COMMAND:
-		Cmd_ExecuteString("mn_update_max_installations");
+		Cmd_ExecuteString("mn_update_max_installations;");
 		break;
 	default:
 		break;
@@ -2128,10 +2128,10 @@ void B_SelectBase (base_t *base)
 		MN_PushMenu("bases", NULL);
 		switch (base->baseStatus) {
 		case BASE_UNDER_ATTACK:
-			Cmd_ExecuteString("set_base_under_attack");
+			Cmd_ExecuteString("set_base_under_attack;");
 			break;
 		default:
-			Cmd_ExecuteString("set_base_to_normal");
+			Cmd_ExecuteString("set_base_to_normal;");
 			break;
 		}
 	}
