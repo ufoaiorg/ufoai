@@ -134,7 +134,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 	int width, height, row, col;
 	char image[MAX_QPATH];		/**< this buffer should not be need */
 	building_t *building;
-	const building_t *secondBuilding;
+	const building_t *secondBuilding = NULL;
 
 	if (!baseCurrent) {
 		MN_PopMenu(qfalse);
@@ -172,6 +172,9 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 						Q_strncpyz(image, building->image, sizeof(image));
 				} else if (building->needs) {
 					/** @todo Understand this code */
+					/* some buildings are drawn with two tiles - e.g. the hangar is no square map tile.
+					 * These buildings have the needs parameter set to the second building part which has
+					 * its own image set, too. We are searching for this second building part here. */
 					secondBuilding = B_GetBuildingTemplate(building->needs);
 					if (!secondBuilding)
 						Sys_Error("Error in ufo-scriptfile - could not find the needed building");

@@ -658,7 +658,7 @@ static void Cvar_Set_f (void)
 
 	if (c == 4) {
 		const char *arg = Cmd_Argv(3);
-		int flags;
+		int flags = 0;
 
 		while (arg[0] != '\0') {
 			switch (arg[0]) {
