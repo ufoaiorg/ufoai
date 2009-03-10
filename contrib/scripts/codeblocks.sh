@@ -37,7 +37,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ freetype-2.3.6-lib.zip freetype.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
 	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
-	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ gettext-0.14.4-lib.zip gettext.zip
+	download http://downloads.sourceforge.net/sourceforge/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
 
 	# changing version of libcurl might also require minor fixes in extract_libcurl
 	download http://curl.de-mirror.de/download/ libcurl-7.16.4-win32-nossl.zip libcurl.zip
