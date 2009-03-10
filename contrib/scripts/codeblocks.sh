@@ -210,7 +210,7 @@ elif [ "$ACTION" == "upload" ]; then
 	scp ${ARCHIVE_NAME} ufo:~/public_html/downloads
 elif [ "$ACTION" == "clean" ]; then
 	rm -rf ${TEMP_DIR}
-	echo -n "clean finished"
+	echo "clean finished"
 else
 	echo "unknown action given"
 fi
