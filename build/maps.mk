@@ -1,8 +1,15 @@
 MAPSDIR ?= base/maps
 
 UFO2MAP = ./ufo2map
+UFO2MAPFLAGS = -extra -t 
 
-MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'prefab*' \! -name 'test*' )
+# Excludes "*tutorial*", "*prefab*" and "*autosave*" maps
+ifeq ($(TARGET_OS),mingw32)
+    MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map | findstr /V "prefab" | findstr /V "tutorial" | findstr /V "autosave") 
+else
+    MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'prefab*' \! -name 'test*' )
+endif
+
 BSPS = $(MAPSRCS:.map=.bsp)
 
 # Set NUMTHREADS to enable multi-threading in ufo2map. This
@@ -17,7 +24,11 @@ else
 	ifeq ($(TARGET_OS),linux-gnu)
 		NUMTHREADS ?= $(shell grep -c ^processor /proc/cpuinfo)
 	else
-		NUMTHREADS ?= 1
+		ifeq ($(TARGET_OS),mingw32)
+			NUMTHREADS = $(shell echo %NUMBER_OF_PROCESSORS%)
+		else
+			NUMTHREADS ?= 1
+		endif
 	endif
 endif
 
@@ -36,7 +47,11 @@ maps-ents:
 
 clean-maps:
 	@echo "Deleting maps..."
-	@find $(MAPSDIR) -name '*.bsp' -delete
+	ifeq ($(TARGET_OS),mingw32)
+		@del /S $(MAPSDIR)\*.bsp
+	else
+		@find $(MAPSDIR) -name '*.bsp' -delete
+	endif
 	@echo "done"
 
 $(BSPS): %.bsp: %.map
