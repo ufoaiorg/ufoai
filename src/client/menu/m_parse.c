@@ -670,7 +670,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		} else {
 			result = Com_ParseValue(object, *token, property->type, property->ofs, property->size, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
 				return qfalse;
 			}
 		}
@@ -716,13 +716,13 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 			/* sanity check */
 			if (strlen(*token) > MAX_VAR - 1) {
-				Com_Printf(": Value '%s' is too long (key %s)\n", *token, property->string);
+				Com_Printf("MN_ParseProperty: Value '%s' is too long (key %s)\n", *token, property->string);
 				return qfalse;
 			}
 
 			result = Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
 				return qfalse;
 			}
 			mn.curadata += bytes;

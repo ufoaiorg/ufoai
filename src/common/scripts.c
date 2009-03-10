@@ -186,7 +186,7 @@ static char errorMessage[256];
  * Return the last error message
  * @return adresse containe the last message
  */
-const char* Com_GetError ()
+const char* Com_GetError (void)
 {
 	return errorMessage;
 }
