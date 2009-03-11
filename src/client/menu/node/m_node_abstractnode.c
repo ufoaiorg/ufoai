@@ -371,9 +371,8 @@ float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* proper
 	} else if (property->type == V_CVAR_OR_FLOAT) {
 		b = *(const byte* const*) b;
 		if (!Q_strncmp((const char*)b, "*cvar", 5)) {
-			const char* cvarName = b + 6;
-			cvar_t *cvar = NULL;
-			cvar = Cvar_Get(cvarName, "", 0, "Menu cvar");
+			const char* cvarName = (const char*)b + 6;
+			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "Menu cvar");
 			return cvar->value;
 		} else {
 			return *(const float*) b;
