@@ -12,25 +12,6 @@ menu basesummary
 		image	menu/basesummary_bg
 	}
 
-	// ==================
-	// main window
-	// ==================
-
-	string txt_basesummary_currentbase
-	{
-		string		"_Name:"
-		pos			"40 137"
-		size		"85 22"
-		font		f_small_bold
-	}
-
-	string txt_basesummary_currentbase_v
-	{
-		string		"*cvar mn_base_title"
-		pos			"105 137"
-		size		"266 22"
-	}
-
 	// ===================
 	// left side text node
 	// ===================
