@@ -382,7 +382,8 @@ float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* proper
 	} else if (property->type == V_BOOL) {
 		return *(const qboolean *) b;
 	} else {
-#if debug
+		/** @todo Return type and doxygen doesn't match the returned values and comments here */
+#ifdef DEBUG
 		Com_Printf("MN_GetFloatFromNodeProperty: Unimplemented float getter for property '%s@%s'. If it should return a float, request it.\n", MN_GetPath(node), property->string);
 #else
 		Com_Printf("MN_GetFloatFromNodeProperty: Property '%s@%s' can't return a float\n", MN_GetPath(node), property->string);
