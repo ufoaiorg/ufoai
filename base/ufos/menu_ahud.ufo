@@ -59,314 +59,306 @@ menu firemode_left {
 		size	"192 0"
 	}
 
-	/* images */
-	/*
-		Some helpful info:
-		hud/firemode (active)	->	texl "0 0"	texh "255 63"
-		hud/firemode (inactive)	->	texl "0 64"	texh "255 128"
-	*/
 	pic bt_left_fm0
 	{
-		image	hud/firemode
-		pos		"0 576"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 0;mn_pop;" }
-		in { *bt_left_fm0 image "hud/firemode_hover" }
-		out { *bt_left_fm0 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 576"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 0;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name0" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 0;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name0"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu0"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot0"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_left_fm1
 	{
-		image	hud/firemode
-		pos		"0 512"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 1;mn_pop;" }
-		in { *bt_left_fm1 image "hud/firemode_hover" }
-		out { *bt_left_fm1 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 512"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 1;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name1" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 1;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name1"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu1"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot1"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_left_fm2
 	{
-		image	hud/firemode
-		pos		"0 448"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 2;mn_pop;" }
-		in { *bt_left_fm2 image "hud/firemode_hover" }
-		out { *bt_left_fm2 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 448"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 2;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name2" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 2;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name2"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu2"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot2"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_left_fm3
 	{
-		image	hud/firemode
-		pos		"0 384"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 3;mn_pop;" }
-		in { *bt_left_fm3 image "hud/firemode_hover" }
-		out { *bt_left_fm3 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 384"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 3;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name3" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 3;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name3"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu3"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot3"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_left_fm4
 	{
-		image	hud/firemode
-		pos		"0 320"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 4;mn_pop;" }
-		in { *bt_left_fm4 image "hud/firemode_hover" }
-		out { *bt_left_fm4 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 320"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 4;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name4" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 4;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name4"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu4"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot4"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_left_fm5
 	{
-		image	hud/firemode
-		pos		"0 256"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 5;mn_pop;" }
-		in { *bt_left_fm5 image "hud/firemode_hover" }
-		out { *bt_left_fm5 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 256"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 5;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name5" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 5;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name5"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu5"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot5"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_left_fm6
 	{
-		image	hud/firemode
-		pos		"0 192"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 6;mn_pop;" }
-		in { *bt_left_fm6 image "hud/firemode_hover" }
-		out { *bt_left_fm6 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 192"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 6;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name6" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 6;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name6"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu6"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot6"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_left_fm7
 	{
-		image	hud/firemode
-		pos		"0 128"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap l 7;mn_pop;" }
-		in { *bt_left_fm7 image "hud/firemode_hover" }
-		out { *bt_left_fm7 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 128"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap l 7;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_l_fm_name7" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode l 7;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_l_fm_name7"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_l_fm_tu7"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_l_fm_shot7"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
-
-	/* checkbox */
-	/*
-		Some helpful info:
-		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31"
-		hud/checkbox (active)	->	texl "0 32"	texh "31 63"
-	*/
-
-	pic bt_left_cb0
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 608"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 0;" }
-		blend 1
-	}
-
-	pic bt_left_cb1
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 544"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 1;" }
-		blend 1
-	}
-
-	pic bt_left_cb2
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 480"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 2;" }
-		blend 1
-	}
-
-	pic bt_left_cb3
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 416"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 3;" }
-		blend 1
-	}
-
-	pic bt_left_cb4
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 352"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 4;" }
-		blend 1
-	}
-
-	pic bt_left_cb5
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 288"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 5;" }
-		blend 1
-	}
-
-	pic bt_left_cb6
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 224"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 6;" }
-		blend 1
-	}
-
-	pic bt_left_cb7
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 160"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode l 7;" }
-		blend 1
-	}
-
-	/* text */
-	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "32 582"	invis true ghost true }
-	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "32 518"	invis true ghost true }
-	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "32 454"	invis true ghost true }
-	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "32 390"	invis true ghost true }
-	string left_fm_name4 { string "*cvar mn_l_fm_name4"	pos "32 326"	invis true ghost true }
-	string left_fm_name5 { string "*cvar mn_l_fm_name5"	pos "32 262"	invis true ghost true }
-	string left_fm_name6 { string "*cvar mn_l_fm_name6"	pos "32 198"	invis true ghost true }
-	string left_fm_name7 { string "*cvar mn_l_fm_name7"	pos "32 134"	invis true ghost true }
-
-	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "32 614"	invis true	tooltip "*cvar mn_l_fm_tt_tu0" size "80 16" ghost true }
-	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "32 550"	invis true	tooltip "*cvar mn_l_fm_tt_tu1" size "80 16" ghost true }
-	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "32 486"	invis true	tooltip "*cvar mn_l_fm_tt_tu2" size "80 16" ghost true }
-	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "32 422"	invis true	tooltip "*cvar mn_l_fm_tt_tu3" size "80 16" ghost true }
-	string left_fm_tu4 { string "*cvar mn_l_fm_tu4"	pos "32 358"	invis true	tooltip "*cvar mn_l_fm_tt_tu4" size "80 16" ghost true }
-	string left_fm_tu5 { string "*cvar mn_l_fm_tu5"	pos "32 294"	invis true	tooltip "*cvar mn_l_fm_tt_tu5" size "80 16" ghost true }
-	string left_fm_tu6 { string "*cvar mn_l_fm_tu6"	pos "32 230"	invis true	tooltip "*cvar mn_l_fm_tt_tu6" size "80 16" ghost true }
-	string left_fm_tu7 { string "*cvar mn_l_fm_tu7"	pos "32 166"	invis true	tooltip "*cvar mn_l_fm_tt_tu7" size "80 16" ghost true }
-
-	string left_fm_shot0 { string "*cvar mn_l_fm_shot0"	pos "106 614"	invis true ghost true }
-	string left_fm_shot1 { string "*cvar mn_l_fm_shot1"	pos "106 550"	invis true ghost true }
-	string left_fm_shot2 { string "*cvar mn_l_fm_shot2"	pos "106 486"	invis true ghost true }
-	string left_fm_shot3 { string "*cvar mn_l_fm_shot3"	pos "106 422"	invis true ghost true }
-	string left_fm_shot4 { string "*cvar mn_l_fm_shot4"	pos "106 358"	invis true ghost true }
-	string left_fm_shot5 { string "*cvar mn_l_fm_shot5"	pos "106 294"	invis true ghost true }
-	string left_fm_shot6 { string "*cvar mn_l_fm_shot6"	pos "106 230"	invis true ghost true }
-	string left_fm_shot7 { string "*cvar mn_l_fm_shot7"	pos "106 166"	invis true ghost true }
 
 	/* Firemode console functions ===================================*/
 
 	confunc set_left_ina {
 		*bt_left_fm<1>	texl "0 64"
-		*bt_left_fm<1>	texh "255 128"
+		*bt_left_fm<1>	texh "214 128"
 	}
 
 	confunc set_left_a {
 		*bt_left_fm<1>	texl "0 0"
-		*bt_left_fm<1> texh "255 63"
+		*bt_left_fm<1> texh "214 63"
 	}
 
 	confunc set_left_inv {
 		*bt_left_fm<1> invis true
-		*left_fm_name<1> invis true
-		*left_fm_tu<1> invis true
-		*left_fm_shot<1> invis true
-		*bt_left_cb<1> invis true
 	}
 
 	confunc set_left_vis {
 		*bt_left_fm<1> invis false
-		*left_fm_name<1> invis false
-		*left_fm_tu<1> invis false
-		*left_fm_shot<1> invis false
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_left_cb_ina {
-		*bt_left_cb<1> texl "0 0"
-		*bt_left_cb<1> texh "31 31"
-		*bt_left_cb<1> invis false
+		*bt_left_fm<1>.cb texl "0 0"
+		*bt_left_fm<1>.cb texh "31 31"
+		*bt_left_fm<1>.cb invis false
 	}
 
 	confunc set_left_cb_a {
-		*bt_left_cb<1> texl "0 32"
-		*bt_left_cb<1> texh "31 63"
-		*bt_left_cb<1> invis false
+		*bt_left_fm<1>.cb texl "0 32"
+		*bt_left_fm<1>.cb texh "31 63"
+		*bt_left_fm<1>.cb invis false
 	}
 
 	confunc set_left_cb_invis {
-		*bt_left_cb<1> invis true
+		*bt_left_fm<1>.cb invis true
 	}
 }
 
@@ -384,313 +376,314 @@ menu firemode_right {
 		size	"192 0"
 	}
 
-	/* images */
-	/*
-		Some helpful info:
-		hud/firemode (active)	->	texl "0 0"	texh "255 63"
-		hud/firemode (inactive)	->	texl "0 64"	texh "255 128"
-	*/
-
 	pic bt_right_fm0
 	{
-		image	hud/firemode
-		pos		"0 576"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 0;mn_pop;" }
-		in { *bt_right_fm0 image "hud/firemode_hover" }
-		out { *bt_right_fm0 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 576"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 0;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name0" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 0;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name0"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu0"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot0"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_right_fm1
 	{
-		image	hud/firemode
-		pos		"0 512"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 1;mn_pop;" }
-		in { *bt_right_fm1 image "hud/firemode_hover" }
-		out { *bt_right_fm1 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 512"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 1;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name1" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 1;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name1"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu1"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot1"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_right_fm2
 	{
-		image	hud/firemode
-		pos		"0 448"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 2;mn_pop;" }
-		in { *bt_right_fm2 image "hud/firemode_hover" }
-		out { *bt_right_fm2 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 448"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 2;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name2" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 2;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name2"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu2"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot2"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_right_fm3
 	{
-		image	hud/firemode
-		pos		"0 384"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 3;mn_pop;" }
-		in { *bt_right_fm3 image "hud/firemode_hover" }
-		out { *bt_right_fm3 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 384"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 3;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name3" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 3;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name3"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu3"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot3"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_right_fm4
 	{
-		image	hud/firemode
-		pos		"0 320"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 4;mn_pop;" }
-		in { *bt_right_fm4 image "hud/firemode_hover" }
-		out { *bt_right_fm4 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 320"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 4;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name4" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 4;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name4"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu4"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot4"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_right_fm5
 	{
-		image	hud/firemode
-		pos		"0 256"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 5;mn_pop;" }
-		in { *bt_right_fm5 image "hud/firemode_hover" }
-		out { *bt_right_fm5 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 256"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 5;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name5" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 5;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name5"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu5"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot5"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_right_fm6
 	{
-		image	hud/firemode
-		pos		"0 192"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 6;mn_pop;" }
-		in { *bt_right_fm6 image "hud/firemode_hover" }
-		out { *bt_right_fm6 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 192"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 6;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name6" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 6;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name6"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu6"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot6"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
 
 	pic bt_right_fm7
 	{
-		image	hud/firemode
-		pos		"0 128"
-		texl	"0 0"
-		texh	"214  63"
-		size	"214  63"
-		mousefx	false
-		invis true
-		click	{ cmd "fireweap r 7;mn_pop;" }
-		in { *bt_right_fm7 image "hud/firemode_hover" }
-		out { *bt_right_fm7 image "hud/firemode" }
-		blend 1
+		{
+			image	hud/firemode
+			pos		"0 128"
+			texl	"0 0"
+			texh	"214  63"
+			size	"214  63"
+			mousefx	false
+			invis true
+			click	{ cmd "fireweap r 7;mn_pop;" }
+			in { *path:this image "hud/firemode_hover" }
+			out { *path:this image "hud/firemode" }
+			blend 1
+			tooltip "*cvar mn_r_fm_name7" // @todo create a better tooltip with name, tu, shots...
+		}
+
+		pic cb
+		{
+			image	hud/checkbox
+			tooltip	"_Check to use this firemode for reaction fire"
+			pos		"0 32"
+			texl	"0 0"
+			texh	"31 31"
+			mousefx	false
+			click	{ cmd "sel_reactmode r 7;" }
+			blend 1
+		}
+		string name	{ string "*cvar mn_r_fm_name7"	pos "27 4"	size "183 25"	textalign cl	ghost true }
+		string tu	{ string "*cvar mn_r_fm_tu7"	pos "27 32"	size "69 28"	textalign cc	ghost true }
+		string shot	{ string "*cvar mn_r_fm_shot7"	pos "99 32"	size "111 28"	textalign cc	ghost true }
 	}
-
-	/* checkbox */
-	/*
-		Some helpful info:
-		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31"
-		hud/checkbox (active)	->	texl "0 32"	texh "31 63"
-	*/
-	pic bt_right_cb0
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 608"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 0;" }
-		blend 1
-	}
-
-	pic bt_right_cb1
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 544"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 1;" }
-		blend 1
-	}
-
-	pic bt_right_cb2
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 480"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 2;" }
-		blend 1
-	}
-
-	pic bt_right_cb3
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 416"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 3;" }
-		blend 1
-	}
-
-	pic bt_right_cb4
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 352"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 4;" }
-		blend 1
-	}
-
-	pic bt_right_cb5
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 288"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 5;" }
-		blend 1
-	}
-
-	pic bt_right_cb6
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 224"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 6;" }
-		blend 1
-	}
-
-	pic bt_right_cb7
-	{
-		image	hud/checkbox
-		tooltip	"_Check to use this firemode for reaction fire"
-		pos		"0 160"
-		texl	"0 0"
-		texh	"31 31"
-		mousefx	false
-		invis true
-		click	{ cmd "sel_reactmode r 7;" }
-		blend 1
-	}
-
-	/* text */
-	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "32 582"	invis true ghost true }
-	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "32 518"	invis true ghost true }
-	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "32 454"	invis true ghost true }
-	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "32 390"	invis true ghost true }
-	string right_fm_name4 { string "*cvar mn_r_fm_name4"	pos "32 326"	invis true ghost true }
-	string right_fm_name5 { string "*cvar mn_r_fm_name5"	pos "32 262"	invis true ghost true }
-	string right_fm_name6 { string "*cvar mn_r_fm_name6"	pos "32 198"	invis true ghost true }
-	string right_fm_name7 { string "*cvar mn_r_fm_name7"	pos "32 134"	invis true ghost true }
-
-	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "32 614"	invis true	tooltip "*cvar mn_r_fm_tt_tu0" size "80 16" ghost true  }
-	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "32 550"	invis true	tooltip "*cvar mn_r_fm_tt_tu1" size "80 16" ghost true  }
-	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "32 486"	invis true	tooltip "*cvar mn_r_fm_tt_tu2" size "80 16" ghost true  }
-	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "32 422"	invis true	tooltip "*cvar mn_r_fm_tt_tu3" size "80 16" ghost true  }
-	string right_fm_tu4 { string "*cvar mn_r_fm_tu4"	pos "32 358"	invis true	tooltip "*cvar mn_r_fm_tt_tu4" size "80 16" ghost true  }
-	string right_fm_tu5 { string "*cvar mn_r_fm_tu5"	pos "32 294"	invis true	tooltip "*cvar mn_r_fm_tt_tu5" size "80 16" ghost true  }
-	string right_fm_tu6 { string "*cvar mn_r_fm_tu6"	pos "32 230"	invis true	tooltip "*cvar mn_r_fm_tt_tu6" size "80 16" ghost true  }
-	string right_fm_tu7 { string "*cvar mn_r_fm_tu7"	pos "32 166"	invis true	tooltip "*cvar mn_r_fm_tt_tu7" size "80 16" click }
-
-	string right_fm_shot0 { string "*cvar mn_r_fm_shot0"	pos "106 614"	invis true ghost true }
-	string right_fm_shot1 { string "*cvar mn_r_fm_shot1"	pos "106 550"	invis true ghost true }
-	string right_fm_shot2 { string "*cvar mn_r_fm_shot2"	pos "106 486"	invis true ghost true }
-	string right_fm_shot3 { string "*cvar mn_r_fm_shot3"	pos "106 422"	invis true ghost true }
-	string right_fm_shot4 { string "*cvar mn_r_fm_shot4"	pos "106 358"	invis true ghost true }
-	string right_fm_shot5 { string "*cvar mn_r_fm_shot5"	pos "106 294"	invis true ghost true }
-	string right_fm_shot6 { string "*cvar mn_r_fm_shot6"	pos "106 230"	invis true ghost true }
-	string right_fm_shot7 { string "*cvar mn_r_fm_shot7"	pos "106 166"	invis true ghost true }
 
 	/* Firemode console functions ===================================*/
 
+	/* texture map
+		checkbox:
+		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31"
+		hud/checkbox (active)	->	texl "0 32"	texh "31 63"
+		firemode:
+		hud/firemode (active)	->	texl "0 0"	texh "214 63"
+		hud/firemode (inactive)	->	texl "0 64"	texh "214 128"
+	*/
+
 	confunc set_right_ina {
 		*bt_right_fm<1>	texl "0 64"
-		*bt_right_fm<1> texh "255 128"
+		*bt_right_fm<1> texh "214 128"
 	}
 
 	confunc set_right_a {
 		*bt_right_fm<1>	texl "0 0"
-		*bt_right_fm<1> texh "255 63"
+		*bt_right_fm<1> texh "214 63"
 	}
 
 	confunc set_right_inv {
 		*bt_right_fm<1> invis true
-		*right_fm_name<1> invis true
-		*right_fm_tu<1> invis true
-		*right_fm_shot<1> invis true
-		*bt_right_cb<1> invis true
 	}
 
 	confunc set_right_vis {
 		*bt_right_fm<1> invis false
-		*right_fm_name<1> invis false
-		*right_fm_tu<1> invis false
-		*right_fm_shot<1> invis false
 	}
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
 
 	confunc set_right_cb_ina {
-		*bt_right_cb<1> texl "0 0"
-		*bt_right_cb<1> texh "31 31"
-		*bt_right_cb<1> invis false
+		*bt_right_fm<1>.cb texl "0 0"
+		*bt_right_fm<1>.cb texh "31 31"
+		*bt_right_fm<1>.cb invis false
 	}
 
 	confunc set_right_cb_a {
-		*bt_right_cb<1>	texl "0 32"
-		*bt_right_cb<1> texh "31 63"
-		*bt_right_cb<1> invis false
+		*bt_right_fm<1>.cb	texl "0 32"
+		*bt_right_fm<1>.cb texh "31 63"
+		*bt_right_fm<1>.cb invis false
 	}
 
 	confunc set_right_cb_invis {
-		*bt_right_cb<1> invis true
+		*bt_right_fm<1>.cb invis true
 	}
 }
