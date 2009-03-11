@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef SCRIPTS_H
 #define SCRIPTS_H
 
+#if 0	/**< @todo should no more need. @sa ALIGN_NOTHING */
+
 #ifndef ALIGNBYTES
 #define ALIGNBYTES 1
 #endif
@@ -34,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ALIGN(size)  (size)
 /*((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))*/
 #endif
+
+#endif	/*#if 0*/
 
 #ifndef ALIGN_PTR
 #define ALIGN_PTR(value,size) (void*)(((uintptr_t)value + (size - 1)) & (~(size - 1)))
