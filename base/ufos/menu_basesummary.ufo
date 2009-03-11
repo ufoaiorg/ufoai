@@ -18,8 +18,8 @@ menu basesummary
 	text txt_base_summary
 	{
 		textid		TEXT_STATS_BASESUMMARY
-		pos			"39 189"
-		size		"510 537"
+		pos			"34 124"
+		size		"507 612"
 		lineheight	16
 		tabwidth	42
 		font		f_small
