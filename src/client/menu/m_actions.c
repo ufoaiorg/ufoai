@@ -204,7 +204,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		}
 		break;
 	case EA_PATHPROPERTY:
-		node = MN_GetNodeByPath(path);
+		MN_ReadNodePath(path, source, (const menuNode_t**) &node, NULL);
 		if (!node) {
 			Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
 			return;

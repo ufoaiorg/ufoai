@@ -194,15 +194,16 @@ const char* MN_GetPath (const menuNode_t* node)
  * @param[out] resultNode Node found. Else NULL.
  * @param[out] resultProperty Property found. Else NULL.
  */
-void MN_ReadNodePath (const char* path, menuNode_t *relativeNode, const menuNode_t **resultNode, const value_t **resultProperty)
+void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, const menuNode_t **resultNode, const value_t **resultProperty)
 {
 	char name[MAX_VAR];
-	menuNode_t* node = NULL;
+	const menuNode_t* node = NULL;
 	const char* nextName;
 	char nextCommand = '^';
 
 	*resultNode = NULL;
-	*resultProperty = NULL;
+	if (resultProperty)
+		*resultProperty = NULL;
 
 	nextName = path;
 	while (nextName && nextName[0] != '\0') {
