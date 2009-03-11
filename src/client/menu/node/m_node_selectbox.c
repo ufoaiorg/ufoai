@@ -1,6 +1,5 @@
 /**
  * @file m_node_selectbox.c
- * @todo change to mouse behaviour. It better to click to dropdown the list
  * @todo manage disabled option
  */
 
@@ -70,14 +69,6 @@ static menuOption_t*  MN_SelectBoxNodeGetFirstOption (menuNode_t * node)
 }
 
 /**
- * @brief call when the mouse move over the node
- */
-static void MN_SelectBoxNodeMouseMove (menuNode_t *node, int x, int y)
-{
-	MN_SetMouseCapture(node);
-}
-
-/**
  * @brief call when the mouse move is the node is captured
  * @todo we can remove the loop if we save the current element in the node
  */
@@ -90,7 +81,6 @@ static void MN_SelectBoxNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 
 	/* test bounded box */
 	if (x < 0 || y < 0 || x > node->size[0] || y > node->size[1] * (node->u.option.count + 1)) {
-		MN_MouseRelease();
 		return;
 	}
 
@@ -219,16 +209,26 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	int clickedAtOption;
 	vec2_t pos;
 
-	/* only execute the click stuff if the selectbox is active */
-	if (MN_GetMouseCapture() != node)
+	/* dropdown the node */
+	if (MN_GetMouseCapture() == NULL) {
+		MN_SetMouseCapture(node);
 		return;
+	}
 
 	MN_GetNodeAbsPos(node, pos);
 	clickedAtOption = (y - pos[1]);
 
-	/* we click on the head */
-	if (clickedAtOption < node->size[1])
+	/* we click outside */
+	if (x < pos[0] || y < pos[1] || x >= pos[0] + node->size[0] || y >= pos[1] + node->size[1] * (node->u.option.count + 1)) {
+		MN_MouseRelease();
 		return;
+	}
+
+	/* we click on the head */
+	if (clickedAtOption < node->size[1]) {
+		MN_MouseRelease();
+		return;
+	}
 
 	clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
 	if (clickedAtOption < 0 || clickedAtOption >= node->u.option.count)
@@ -263,6 +263,9 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 			Cbuf_AddText(option->action);
 		}
 	}
+
+	/* close the dropdown */
+	MN_MouseRelease();
 }
 
 /**
@@ -286,7 +289,6 @@ void MN_RegisterSelectBoxNode (nodeBehaviour_t *behaviour)
 	behaviour->draw = MN_SelectBoxNodeDraw;
 	behaviour->drawOverMenu = MN_SelectBoxNodeDrawOverMenu;
 	behaviour->leftClick = MN_SelectBoxNodeClick;
-	behaviour->mouseMove = MN_SelectBoxNodeMouseMove;
 	behaviour->loading = MN_SelectBoxNodeLoading;
 	behaviour->loaded = MN_SelectBoxNodeLoaded;
 	behaviour->capturedMouseMove = MN_SelectBoxNodeCapturedMouseMove;
