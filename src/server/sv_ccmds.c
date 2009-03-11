@@ -361,13 +361,21 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 
 	dayNightStr = strstr(partial, " ");
 	if (!dayNightStr) {
-		if (partial[0] == 'd')
-			Com_Printf("day\n");
-		else if (partial[0] == 'n')
-			Com_Printf("night\n");
-		else
-			Com_Printf("day\nnight\n");
-		return 0;
+		static char dayNightMatch[7];
+		if (partial[0] == 'd') {
+			Q_strncpyz(dayNightMatch,"day ",sizeof(dayNightMatch));
+			*match = dayNightMatch;
+			return 1;
+		} else if (partial[0] == 'n') {
+			Q_strncpyz(dayNightMatch,"night ",sizeof(dayNightMatch));
+			*match = dayNightMatch;
+			return 1;
+		}
+		/* neither day or night, delete previous content and display options */
+		Com_Printf("day\nnight\n");
+		dayNightMatch[0] = '\0';
+		*match = dayNightMatch;
+		return 2;
 	} else
 		partial = dayNightStr + 1;
 
