@@ -9,7 +9,50 @@ menu hospital
 
 	pic background
 	{
-		image	menu/hospital_bg
+		image	menu/base_bg
+	}
+
+	// ==================
+	// Base header
+	// ==================
+
+	string base_name
+	{
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
+	}
+
+	string txt_credits_caption
+	{
+		string		"_CREDITS"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
+	}
+
+	string txt_credits
+	{
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
+	}
+
+	custombutton bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		pos		"950 20"
+		icon	"return"
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -80,319 +123,318 @@ menu hospital
 
 	zone hos_scroll_zone
 	{
-		pos "0 0"
-		size "1024 700"
+		pos "0 75"
+		size "1024 690"
 		whup { cmd "hosp_list_up;" }
 		whdown { cmd "hosp_list_down;" }
 	}
 
 	pic hos_button0 {
 		image menu/hosp_button_green
-		pos "25  25"
+		pos "25 95"
 	}
 	pic hos_button1 {
 		image menu/hosp_button_green
-		pos "345  25"
+		pos "345 95"
 	}
 	pic hos_button2 {
 		image menu/hosp_button_green
-		pos "665  25"
+		pos "665 95"
 	}
 	pic hos_button3 {
 		image menu/hosp_button_green
-		pos "25 120"
+		pos "25 190"
 	}
 	pic hos_button4 {
 		image menu/hosp_button_green
-		pos "345 120"
+		pos "345 190"
 	}
 	pic hos_button5 {
 		image menu/hosp_button_green
-		pos "665 120"
+		pos "665 190"
 	}
 	pic hos_button6 {
 		image menu/hosp_button_green
-		pos "25 215"
+		pos "25 285"
 	}
 	pic hos_button7 {
 		image menu/hosp_button_green
-		pos "345 215"
+		pos "345 285"
 	}
 	pic hos_button8 {
 		image menu/hosp_button_green
-		pos "665 215"
+		pos "665 285"
 	}
 	pic hos_button9 {
 		image menu/hosp_button_green
-		pos "25 310"
+		pos "25 380"
 	}
 	pic hos_button10 {
 		image menu/hosp_button_green
-		pos "345 310"
+		pos "345 380"
 	}
 	pic hos_button11 {
 		image menu/hosp_button_green
-		pos "665 310"
+		pos "665 380"
 	}
 	pic hos_button12 {
 		image menu/hosp_button_green
-		pos "25 405"
+		pos "25 475"
 	}
 	pic hos_button13 {
 		image menu/hosp_button_green
-		pos "345 405"
+		pos "345 475"
 	}
 	pic hos_button14 {
 		image menu/hosp_button_green
-		pos "665 405"
+		pos "665 475"
 	}
 	pic hos_button15 {
 		image menu/hosp_button_green
-		pos "25 500"
+		pos "25 570"
 	}
 	pic hos_button16 {
 		image menu/hosp_button_green
-		pos "345 500"
+		pos "345 570"
 	}
 	pic hos_button17 {
 		image menu/hosp_button_green
-		pos "665 500"
+		pos "665 570"
 	}
 	pic hos_button18 {
 		image menu/hosp_button_green
-		pos "25 595"
+		pos "25 665"
 	}
 	pic hos_button19 {
 		image menu/hosp_button_green
-		pos "345 595"
+		pos "345 665"
 	}
 	pic hos_button20 {
 		image menu/hosp_button_green
-		pos "665 595"
+		pos "665 665"
 	}
 
-	pic hos_icon0	{ visiblewhen "*cvar:mn_hos_item0"		image icons/health_unused 	pos "272  36" }
-	pic hos_icon1	{ visiblewhen "*cvar:mn_hos_item1"		image icons/health_unused 	pos "592  36" }
-	pic hos_icon2	{ visiblewhen "*cvar:mn_hos_item2"		image icons/health_unused 	pos "912  36" }
-	pic hos_icon3	{ visiblewhen "*cvar:mn_hos_item3"		image icons/health_unused 	pos "272 131" }
-	pic hos_icon4	{ visiblewhen "*cvar:mn_hos_item4"		image icons/health_unused 	pos "592 131" }
-	pic hos_icon5	{ visiblewhen "*cvar:mn_hos_item5"		image icons/health_unused 	pos "912 131" }
-	pic hos_icon6	{ visiblewhen "*cvar:mn_hos_item6"		image icons/health_unused 	pos "272 226" }
-	pic hos_icon7	{ visiblewhen "*cvar:mn_hos_item7"		image icons/health_unused 	pos "592 226" }
-	pic hos_icon8	{ visiblewhen "*cvar:mn_hos_item8"		image icons/health_unused 	pos "912 226" }
-	pic hos_icon9	{ visiblewhen "*cvar:mn_hos_item9"		image icons/health_unused 	pos "272 321" }
-	pic hos_icon10	{ visiblewhen "*cvar:mn_hos_item10"	image icons/health_unused 	pos "592 321" }
-	pic hos_icon11	{ visiblewhen "*cvar:mn_hos_item11"	image icons/health_unused 	pos "912 321" }
-	pic hos_icon12	{ visiblewhen "*cvar:mn_hos_item12"	image icons/health_unused 	pos "272 416" }
-	pic hos_icon13	{ visiblewhen "*cvar:mn_hos_item13"	image icons/health_unused 	pos "592 416" }
-	pic hos_icon14	{ visiblewhen "*cvar:mn_hos_item14"	image icons/health_unused 	pos "912 416" }
-	pic hos_icon15	{ visiblewhen "*cvar:mn_hos_item15"	image icons/health_unused 	pos "272 511" }
-	pic hos_icon16	{ visiblewhen "*cvar:mn_hos_item16"	image icons/health_unused 	pos "592 511" }
-	pic hos_icon17	{ visiblewhen "*cvar:mn_hos_item17"	image icons/health_unused 	pos "912 511" }
-	pic hos_icon18	{ visiblewhen "*cvar:mn_hos_item18"	image icons/health_unused 	pos "272 606" }
-	pic hos_icon19	{ visiblewhen "*cvar:mn_hos_item19"	image icons/health_unused 	pos "592 606" }
-	pic hos_icon20	{ visiblewhen "*cvar:mn_hos_item20"	image icons/health_unused 	pos "912 606" }
+	pic hos_icon0	{ visiblewhen "*cvar:mn_hos_item0"		image icons/health_unused 	pos "272  106" }
+	pic hos_icon1	{ visiblewhen "*cvar:mn_hos_item1"		image icons/health_unused 	pos "592  106" }
+	pic hos_icon2	{ visiblewhen "*cvar:mn_hos_item2"		image icons/health_unused 	pos "912  106" }
+	pic hos_icon3	{ visiblewhen "*cvar:mn_hos_item3"		image icons/health_unused 	pos "272 201" }
+	pic hos_icon4	{ visiblewhen "*cvar:mn_hos_item4"		image icons/health_unused 	pos "592 201" }
+	pic hos_icon5	{ visiblewhen "*cvar:mn_hos_item5"		image icons/health_unused 	pos "912 201" }
+	pic hos_icon6	{ visiblewhen "*cvar:mn_hos_item6"		image icons/health_unused 	pos "272 296" }
+	pic hos_icon7	{ visiblewhen "*cvar:mn_hos_item7"		image icons/health_unused 	pos "592 296" }
+	pic hos_icon8	{ visiblewhen "*cvar:mn_hos_item8"		image icons/health_unused 	pos "912 296" }
+	pic hos_icon9	{ visiblewhen "*cvar:mn_hos_item9"		image icons/health_unused 	pos "272 391" }
+	pic hos_icon10	{ visiblewhen "*cvar:mn_hos_item10"	image icons/health_unused 	pos "592 391" }
+	pic hos_icon11	{ visiblewhen "*cvar:mn_hos_item11"	image icons/health_unused 	pos "912 391" }
+	pic hos_icon12	{ visiblewhen "*cvar:mn_hos_item12"	image icons/health_unused 	pos "272 486" }
+	pic hos_icon13	{ visiblewhen "*cvar:mn_hos_item13"	image icons/health_unused 	pos "592 486" }
+	pic hos_icon14	{ visiblewhen "*cvar:mn_hos_item14"	image icons/health_unused 	pos "912 486" }
+	pic hos_icon15	{ visiblewhen "*cvar:mn_hos_item15"	image icons/health_unused 	pos "272 581" }
+	pic hos_icon16	{ visiblewhen "*cvar:mn_hos_item16"	image icons/health_unused 	pos "592 581" }
+	pic hos_icon17	{ visiblewhen "*cvar:mn_hos_item17"	image icons/health_unused 	pos "912 581" }
+	pic hos_icon18	{ visiblewhen "*cvar:mn_hos_item18"	image icons/health_unused 	pos "272 676" }
+	pic hos_icon19	{ visiblewhen "*cvar:mn_hos_item19"	image icons/health_unused 	pos "592 676" }
+	pic hos_icon20	{ visiblewhen "*cvar:mn_hos_item20"	image icons/health_unused 	pos "912 676" }
 
-	string hos_item0	{ string "*cvar mn_hos_item0"		pos "40  35"	color "1 1 1 1"	size "220 16" }
-	string hos_item1	{ string "*cvar mn_hos_item1"		pos "360  35"	color "1 1 1 1"	size "220 16" }
-	string hos_item2	{ string "*cvar mn_hos_item2"		pos "680  35"	color "1 1 1 1"	size "220 16" }
-	string hos_item3	{ string "*cvar mn_hos_item3"		pos "40 130"	color "1 1 1 1"	size "220 16" }
-	string hos_item4	{ string "*cvar mn_hos_item4"		pos "360 130"	color "1 1 1 1"	size "220 16" }
-	string hos_item5	{ string "*cvar mn_hos_item5"		pos "680 130"	color "1 1 1 1"	size "220 16" }
-	string hos_item6	{ string "*cvar mn_hos_item6"		pos "40 225"	color "1 1 1 1"	size "220 16" }
-	string hos_item7 	{ string "*cvar mn_hos_item7"   	pos "360 225"	color "1 1 1 1"	size "220 16" }
-	string hos_item8	{ string "*cvar mn_hos_item8"		pos "680 225"	color "1 1 1 1"	size "220 16" }
-	string hos_item9 	{ string "*cvar mn_hos_item9"		pos "40 320"	color "1 1 1 1"	size "220 16" }
-	string hos_item10 	{ string "*cvar mn_hos_item10"		pos "360 320"	color "1 1 1 1"	size "220 16" }
-	string hos_item11	{ string "*cvar mn_hos_item11"		pos "680 320"	color "1 1 1 1"	size "220 16" }
-	string hos_item12 	{ string "*cvar mn_hos_item12"		pos "40 415"	color "1 1 1 1"	size "220 16" }
-	string hos_item13 	{ string "*cvar mn_hos_item13"		pos "360 415"	color "1 1 1 1"	size "220 16" }
-	string hos_item14	{ string "*cvar mn_hos_item14"		pos "680 415"	color "1 1 1 1"	size "220 16" }
-	string hos_item15	{ string "*cvar mn_hos_item15"		pos "40 510"	color "1 1 1 1"	size "220 16" }
-	string hos_item16	{ string "*cvar mn_hos_item16"		pos "360 510"	color "1 1 1 1"	size "220 16" }
-	string hos_item17	{ string "*cvar mn_hos_item17"		pos "680 510"	color "1 1 1 1"	size "220 16" }
-	string hos_item18	{ string "*cvar mn_hos_item18"		pos "40 605"	color "1 1 1 1"	size "220 16" }
-	string hos_item19	{ string "*cvar mn_hos_item19"		pos "360 605"	color "1 1 1 1"	size "220 16" }
-	string hos_item20	{ string "*cvar mn_hos_item20"		pos "680 605"	color "1 1 1 1"	size "220 16" }
+	string hos_item0	{ string "*cvar mn_hos_item0"		pos "40 105"	color "1 1 1 1"	size "220 16" }
+	string hos_item1	{ string "*cvar mn_hos_item1"		pos "360 105"	color "1 1 1 1"	size "220 16" }
+	string hos_item2	{ string "*cvar mn_hos_item2"		pos "680 105"	color "1 1 1 1"	size "220 16" }
+	string hos_item3	{ string "*cvar mn_hos_item3"		pos "40 200"	color "1 1 1 1"	size "220 16" }
+	string hos_item4	{ string "*cvar mn_hos_item4"		pos "360 200"	color "1 1 1 1"	size "220 16" }
+	string hos_item5	{ string "*cvar mn_hos_item5"		pos "680 200"	color "1 1 1 1"	size "220 16" }
+	string hos_item6	{ string "*cvar mn_hos_item6"		pos "40 295"	color "1 1 1 1"	size "220 16" }
+	string hos_item7 	{ string "*cvar mn_hos_item7"   	pos "360 295"	color "1 1 1 1"	size "220 16" }
+	string hos_item8	{ string "*cvar mn_hos_item8"		pos "680 295"	color "1 1 1 1"	size "220 16" }
+	string hos_item9 	{ string "*cvar mn_hos_item9"		pos "40 390"	color "1 1 1 1"	size "220 16" }
+	string hos_item10 	{ string "*cvar mn_hos_item10"		pos "360 390"	color "1 1 1 1"	size "220 16" }
+	string hos_item11	{ string "*cvar mn_hos_item11"		pos "680 390"	color "1 1 1 1"	size "220 16" }
+	string hos_item12 	{ string "*cvar mn_hos_item12"		pos "40 485"	color "1 1 1 1"	size "220 16" }
+	string hos_item13 	{ string "*cvar mn_hos_item13"		pos "360 485"	color "1 1 1 1"	size "220 16" }
+	string hos_item14	{ string "*cvar mn_hos_item14"		pos "680 485"	color "1 1 1 1"	size "220 16" }
+	string hos_item15	{ string "*cvar mn_hos_item15"		pos "40 580"	color "1 1 1 1"	size "220 16" }
+	string hos_item16	{ string "*cvar mn_hos_item16"		pos "360 580"	color "1 1 1 1"	size "220 16" }
+	string hos_item17	{ string "*cvar mn_hos_item17"		pos "680 580"	color "1 1 1 1"	size "220 16" }
+	string hos_item18	{ string "*cvar mn_hos_item18"		pos "40 675"	color "1 1 1 1"	size "220 16" }
+	string hos_item19	{ string "*cvar mn_hos_item19"		pos "360 675"	color "1 1 1 1"	size "220 16" }
+	string hos_item20	{ string "*cvar mn_hos_item20"		pos "680 675"	color "1 1 1 1"	size "220 16" }
 
-	string hos_rank0	{ string "*cvar mn_hos_rank0"		pos "40  60"	color "1 1 1 1"	size "220 16" }
-	string hos_rank1	{ string "*cvar mn_hos_rank1"		pos "360  60"	color "1 1 1 1"	size "220 16" }
-	string hos_rank2	{ string "*cvar mn_hos_rank2"		pos "680  60"	color "1 1 1 1"	size "220 16" }
-	string hos_rank3	{ string "*cvar mn_hos_rank3"		pos "40 155"	color "1 1 1 1"	size "220 16" }
-	string hos_rank4	{ string "*cvar mn_hos_rank4"		pos "360 155"	color "1 1 1 1"	size "220 16" }
-	string hos_rank5	{ string "*cvar mn_hos_rank5"		pos "680 155"	color "1 1 1 1"	size "220 16" }
-	string hos_rank6	{ string "*cvar mn_hos_rank6"		pos "40 250"	color "1 1 1 1"	size "220 16" }
-	string hos_rank7 	{ string "*cvar mn_hos_rank7"   	pos "360 250"	color "1 1 1 1"	size "220 16" }
-	string hos_rank8	{ string "*cvar mn_hos_rank8"		pos "680 250"	color "1 1 1 1"	size "220 16" }
-	string hos_rank9 	{ string "*cvar mn_hos_rank9"		pos "40 345"	color "1 1 1 1"	size "220 16" }
-	string hos_rank10 	{ string "*cvar mn_hos_rank10"		pos "360 345"	color "1 1 1 1"	size "220 16" }
-	string hos_rank11	{ string "*cvar mn_hos_rank11"		pos "680 345"	color "1 1 1 1"	size "220 16" }
-	string hos_rank12 	{ string "*cvar mn_hos_rank12"		pos "40 440"	color "1 1 1 1"	size "220 16" }
-	string hos_rank13 	{ string "*cvar mn_hos_rank13"		pos "360 440"	color "1 1 1 1"	size "220 16" }
-	string hos_rank14	{ string "*cvar mn_hos_rank14"		pos "680 440"	color "1 1 1 1"	size "220 16" }
-	string hos_rank15	{ string "*cvar mn_hos_rank15"		pos "40 535"	color "1 1 1 1"	size "220 16" }
-	string hos_rank16	{ string "*cvar mn_hos_rank16"		pos "360 535"	color "1 1 1 1"	size "220 16" }
-	string hos_rank17	{ string "*cvar mn_hos_rank17"		pos "680 535"	color "1 1 1 1"	size "220 16" }
-	string hos_rank18	{ string "*cvar mn_hos_rank18"		pos "40 630"	color "1 1 1 1"	size "220 16" }
-	string hos_rank19	{ string "*cvar mn_hos_rank19"		pos "360 630"	color "1 1 1 1"	size "220 16" }
-	string hos_rank20	{ string "*cvar mn_hos_rank20"		pos "680 630"	color "1 1 1 1"	size "220 16" }
+	string hos_rank0	{ string "*cvar mn_hos_rank0"		pos "40 130"	color "1 1 1 1"	size "220 16" }
+	string hos_rank1	{ string "*cvar mn_hos_rank1"		pos "360 130"	color "1 1 1 1"	size "220 16" }
+	string hos_rank2	{ string "*cvar mn_hos_rank2"		pos "680 130"	color "1 1 1 1"	size "220 16" }
+	string hos_rank3	{ string "*cvar mn_hos_rank3"		pos "40 225"	color "1 1 1 1"	size "220 16" }
+	string hos_rank4	{ string "*cvar mn_hos_rank4"		pos "360 225"	color "1 1 1 1"	size "220 16" }
+	string hos_rank5	{ string "*cvar mn_hos_rank5"		pos "680 225"	color "1 1 1 1"	size "220 16" }
+	string hos_rank6	{ string "*cvar mn_hos_rank6"		pos "40 320"	color "1 1 1 1"	size "220 16" }
+	string hos_rank7 	{ string "*cvar mn_hos_rank7"   	pos "360 320"	color "1 1 1 1"	size "220 16" }
+	string hos_rank8	{ string "*cvar mn_hos_rank8"		pos "680 320"	color "1 1 1 1"	size "220 16" }
+	string hos_rank9 	{ string "*cvar mn_hos_rank9"		pos "40 415"	color "1 1 1 1"	size "220 16" }
+	string hos_rank10 	{ string "*cvar mn_hos_rank10"		pos "360 415"	color "1 1 1 1"	size "220 16" }
+	string hos_rank11	{ string "*cvar mn_hos_rank11"		pos "680 415"	color "1 1 1 1"	size "220 16" }
+	string hos_rank12 	{ string "*cvar mn_hos_rank12"		pos "40 510"	color "1 1 1 1"	size "220 16" }
+	string hos_rank13 	{ string "*cvar mn_hos_rank13"		pos "360 510"	color "1 1 1 1"	size "220 16" }
+	string hos_rank14	{ string "*cvar mn_hos_rank14"		pos "680 510"	color "1 1 1 1"	size "220 16" }
+	string hos_rank15	{ string "*cvar mn_hos_rank15"		pos "40 605"	color "1 1 1 1"	size "220 16" }
+	string hos_rank16	{ string "*cvar mn_hos_rank16"		pos "360 605"	color "1 1 1 1"	size "220 16" }
+	string hos_rank17	{ string "*cvar mn_hos_rank17"		pos "680 605"	color "1 1 1 1"	size "220 16" }
+	string hos_rank18	{ string "*cvar mn_hos_rank18"		pos "40 700"	color "1 1 1 1"	size "220 16" }
+	string hos_rank19	{ string "*cvar mn_hos_rank19"		pos "360 700"	color "1 1 1 1"	size "220 16" }
+	string hos_rank20	{ string "*cvar mn_hos_rank20"		pos "680 700"	color "1 1 1 1"	size "220 16" }
 
-	bar hos_health0     { pos "47  90" 	current "*cvar mn_hos_hp0" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax0" }
-	bar hos_health1     { pos "367  90" current "*cvar mn_hos_hp1" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax1" }
-	bar hos_health2     { pos "687  90" current "*cvar mn_hos_hp2" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax2" }
-	bar hos_health3     { pos "47 185" 	current "*cvar mn_hos_hp3" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax3" }
-	bar hos_health4     { pos "367 185" current "*cvar mn_hos_hp4" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax4" }
-	bar hos_health5     { pos "687 185" current "*cvar mn_hos_hp5" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax5" }
-	bar hos_health6     { pos "47 280" 	current "*cvar mn_hos_hp6" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax6" }
-	bar hos_health7     { pos "367 280" current "*cvar mn_hos_hp7" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax7" }
-	bar hos_health8     { pos "687 280" current "*cvar mn_hos_hp8" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax8" }
-	bar hos_health9     { pos "47 375" 	current "*cvar mn_hos_hp9" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax9" }
-	bar hos_health10    { pos "367 375" current "*cvar mn_hos_hp10" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax10" }
-	bar hos_health11    { pos "687 375" current "*cvar mn_hos_hp11" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax11" }
-	bar hos_health12    { pos "47 470" 	current "*cvar mn_hos_hp12" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax12" }
-	bar hos_health13    { pos "367 470" current "*cvar mn_hos_hp13" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax13" }
-	bar hos_health14    { pos "687 470" current "*cvar mn_hos_hp14" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax14" }
-	bar hos_health15    { pos "47 565" 	current "*cvar mn_hos_hp15" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax15" }
-	bar hos_health16    { pos "367 565" current "*cvar mn_hos_hp16" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax16" }
-	bar hos_health17	{ pos "687 565" current "*cvar mn_hos_hp17" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax17" }
-	bar hos_health18    { pos "47 660" 	current "*cvar mn_hos_hp18" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax18" }
-	bar hos_health19    { pos "367 660" current "*cvar mn_hos_hp19" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax19" }
-	bar hos_health20	{ pos "687 660" current "*cvar mn_hos_hp20" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax20" }
+	bar hos_health0     { pos "47 160" 	current "*cvar mn_hos_hp0" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax0" }
+	bar hos_health1     { pos "367 160" current "*cvar mn_hos_hp1" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax1" }
+	bar hos_health2     { pos "687 160" current "*cvar mn_hos_hp2" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax2" }
+	bar hos_health3     { pos "47 255" 	current "*cvar mn_hos_hp3" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax3" }
+	bar hos_health4     { pos "367 255" current "*cvar mn_hos_hp4" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax4" }
+	bar hos_health5     { pos "687 255" current "*cvar mn_hos_hp5" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax5" }
+	bar hos_health6     { pos "47 350" 	current "*cvar mn_hos_hp6" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax6" }
+	bar hos_health7     { pos "367 350" current "*cvar mn_hos_hp7" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax7" }
+	bar hos_health8     { pos "687 350" current "*cvar mn_hos_hp8" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax8" }
+	bar hos_health9     { pos "47 445" 	current "*cvar mn_hos_hp9" 	size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax9" }
+	bar hos_health10    { pos "367 445" current "*cvar mn_hos_hp10" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax10" }
+	bar hos_health11    { pos "687 445" current "*cvar mn_hos_hp11" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax11" }
+	bar hos_health12    { pos "47 540" 	current "*cvar mn_hos_hp12" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax12" }
+	bar hos_health13    { pos "367 540" current "*cvar mn_hos_hp13" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax13" }
+	bar hos_health14    { pos "687 540" current "*cvar mn_hos_hp14" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax14" }
+	bar hos_health15    { pos "47 635" 	current "*cvar mn_hos_hp15" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax15" }
+	bar hos_health16    { pos "367 635" current "*cvar mn_hos_hp16" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax16" }
+	bar hos_health17	{ pos "687 635" current "*cvar mn_hos_hp17" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax17" }
+	bar hos_health18    { pos "47 730" 	current "*cvar mn_hos_hp18" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax18" }
+	bar hos_health19    { pos "367 730" current "*cvar mn_hos_hp19" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax19" }
+	bar hos_health20	{ pos "687 730" current "*cvar mn_hos_hp20" size "263 6" color "0 .8 0 1" max "*cvar mn_hos_hpmax20" }
 
 	zone click_hos_button0 {
-		pos "25  25"
+		pos "25 95"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 0;" }
 	}
 	zone click_hos_button1 {
-		pos "345  25"
+		pos "345 95"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 1;" }
 	}
 	zone click_hos_button2 {
-		pos "665  25"
+		pos "665 95"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 2;" }
 	}
 	zone click_hos_button3 {
-		pos "25 120"
+		pos "25 190"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 3;" }
 	}
 	zone click_hos_button4 {
-		pos "345 120"
+		pos "345 190"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 4;" }
 	}
 	zone click_hos_button5 {
-		pos "665 120"
+		pos "665 190"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 5;" }
 	}
 	zone click_hos_button6 {
-		pos "25 215"
+		pos "25 285"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 6;" }
 	}
 	zone click_hos_button7 {
-		pos "345 215"
+		pos "345 285"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 7;" }
 	}
 	zone click_hos_button8 {
-		pos "665 215"
+		pos "665 285"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 8;" }
 	}
 	zone click_hos_button9 {
-		pos "25 310"
+		pos "25 380"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 9;" }
 	}
 	zone click_hos_button10 {
-		pos "345 310"
+		pos "345 380"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 10;" }
 	}
 	zone click_hos_button11 {
-		pos "665 310"
+		pos "665 380"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 11;" }
 	}
 	zone click_hos_button12 {
-		pos "25 405"
+		pos "25 475"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 12;" }
 	}
 	zone click_hos_button13 {
-		pos "345 405"
+		pos "345 475"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 13;" }
 	}
 	zone click_hos_button14 {
-		pos "665 405"
+		pos "665 475"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 14;" }
 	}
 	zone click_hos_button15 {
-		pos "25 500"
+		pos "25 570"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 15;" }
 	}
 	zone click_hos_button16 {
-		pos "345 500"
+		pos "345 570"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 16;" }
 	}
 	zone click_hos_button17 {
-		pos "665 500"
+		pos "665 570"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 17;" }
 	}
 	zone click_hos_button18 {
-		pos "25 595"
+		pos "25 665"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 18;" }
 	}
 	zone click_hos_button19 {
-		pos "345 595"
+		pos "345 665"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 19;" }
 	}
 	zone click_hos_button20 {
-		pos "665 595"
+		pos "665 665"
 		size "300 85"
 		tooltip "_Unused"
 		click { cmd "hosp_list_click 20;" }
 	}
-
 
 	pic hos_button_scrollup
 	{
 		tooltip "_Scroll up"
 		image	menu/buttons_small
 		mousefx true
-		pos		"980 25"
+		pos		"980 95"
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "hosp_list_up;" }
@@ -405,29 +447,12 @@ menu hospital
 		tooltip "_Scroll down"
 		image	menu/buttons_small
 		mousefx true
-		pos		"980 663"
+		pos		"980 733"
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "hosp_list_down;" }
 		out		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
 		in		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
-	}
-
-
-	// ==================
-	// additional stuff
-	// ==================
-
-	custombutton hospital_leave
-	{
-		tooltip		"_Back"
-		image		menu/button_background
-		blend		true
-		texl		"192 0"
-		size		"64 37"
-		pos			"940 720"
-		icon		return
-		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -451,7 +476,50 @@ menu hospital_employee
 
 	pic background
 	{
-		image	menu/hosp_empl_bg
+		image	menu/base_bg
+	}
+
+	// ==================
+	// Base header
+	// ==================
+
+	string base_name
+	{
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
+	}
+
+	string txt_credits_caption
+	{
+		string		"_CREDITS"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
+	}
+
+	string txt_credits
+	{
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
+	}
+
+	custombutton bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		pos		"950 20"
+		icon	"return"
+		click	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -556,22 +624,6 @@ menu hospital_employee
 		tooltip		"_not implemented"
 		disabled	true
 		click
-	}
-
-	// ==================
-	// additional stuff
-	// ==================
-
-	custombutton hospitalemployee_leave
-	{
-		tooltip		"_Back"
-		image		menu/button_background
-		blend		true
-		texl		"192 0"
-		size		"64 37"
-		pos			"940 720"
-		icon		return
-		click		{ cmd "mn_pop;" }
 	}
 
 	// ==================
