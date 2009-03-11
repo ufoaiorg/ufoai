@@ -152,96 +152,98 @@ menu production
 	// ==================
 
 	panel infopanel {
-		pos		"580 160"
-		size	"420 597"
-		image	menu/panel_grey_green_large
-		blend	true
-	}
+		{
+			pos		"580 160"
+			size	"420 145"
+			image	menu/panel_grey_green_large
+			blend	true
+		}
 
-	// ==================
-	// workers
-	// ==================
+		// ==================
+		// workers
+		// ==================
 
-	string txt_prod_workers_caption
-	{
-		string		"_Workers (ready/all):"
-		pos			"610 195"
-		size		"250 20"
-		font		f_small
-	}
+		string txt_prod_workers_caption
+		{
+			string		"_Workers (ready/all):"
+			pos			"30 25"
+			size		"250 20"
+			font		f_small
+		}
 
-	string txt_prod_workers
-	{
-		string		"*cvar mn_production_workers"
-		pos			"875 195"
-		size		"100 20"
-		textalign	ur
-		font		f_small
-	}
+		string txt_prod_workers
+		{
+			string		"*cvar mn_production_workers"
+			pos			"295 25"
+			size		"100 20"
+			textalign	ur
+			font		f_small
+		}
 
-	// ==================
-	// workshop capacity
-	// ==================
+		// ==================
+		// workshop capacity
+		// ==================
 
-	string txt_prod_basecap_caption
-	{
-		string		"_Workshop capacity:"
-		pos			"610 220"
-		size		"250 20"
-		font		f_small
-	}
+		string txt_prod_basecap_caption
+		{
+			string		"_Workshop capacity:"
+			pos			"30 50"
+			size		"250 20"
+			font		f_small
+		}
 
-	string txt_prod_basecap
-	{
-		string		"*cvar mn_production_basecap"
-		pos			"875 220"
-		size		"100 20"
-		textalign	ur
-		font		f_small
-	}
+		string txt_prod_basecap
+		{
+			string		"*cvar mn_production_basecap"
+			pos			"295 50"
+			size		"100 20"
+			textalign	ur
+			font		f_small
+		}
 
-	// ==================
-	// storage capacity
-	// ==================
+		// ==================
+		// storage capacity
+		// ==================
 
-	string txt_prod_storage_caption
-	{
-		visiblewhen "*cvar:mn_itemtype"
-		string		"_Storage capacity:"
-		pos			"610 245"
-		size		"250 20"
-		font		f_small
-	}
+		string txt_prod_storage_caption
+		{
+			visiblewhen "*cvar:mn_itemtype"
+			string		"_Storage capacity:"
+			pos			"30 75"
+			size		"250 20"
+			font		f_small
+		}
 
-	string txt_prod_storage
-	{
-		visiblewhen "*cvar:mn_itemtype"
-		string		"*cvar mn_production_storage"
-		pos			"875 245"
-		size		"100 20"
-		textalign	ur
-		font		f_small
-	}
+		string txt_prod_storage
+		{
+			visiblewhen "*cvar:mn_itemtype"
+			string		"*cvar mn_production_storage"
+			pos			"295 75"
+			size		"100 20"
+			textalign	ur
+			font		f_small
+		}
 
-	// ==================
-	// prod limit
-	// ==================
+		// ==================
+		// prod limit
+		// ==================
 
-	string txt_prod_limit_caption
-	{
-		string		"_Production limit:"
-		pos			"610 270"
-		size		"250 20"
-		font		f_small
-	}
+		string txt_prod_limit_caption
+		{
+			string		"_Production limit:"
+			pos			"30 100"
+			size		"250 20"
+			font		f_small
+		}
 
-	string txt_prod_limit
-	{
-		string		"*cvar mn_production_limit"
-		pos			"875 270"
-		size		"100 20"
-		textalign	ur
-		font		f_small
+		string txt_prod_limit
+		{
+			string		"*cvar mn_production_limit"
+			pos			"295 100"
+			size		"100 20"
+			textalign	ur
+			font		f_small
+		}
 	}
 
 	// ==================
@@ -309,18 +311,29 @@ menu production
 	// item
 	// ==================
 
-	item itemmodel
-	{
-		visiblewhen "*cvar:mn_itemtype"
-		model		"*cvar mn_item"
-		pos			"636 333"
-		size		"336 140"
-		angles		"-10 160 70"
-		autoscale	true
+	panel itempanel {
+		{
+			pos		"580 310"
+			size	"420 447"
+			image	menu/panel_grey_green_large
+			blend	true
+		}
+
+		item itemmodel
+		{
+			visiblewhen "*cvar:mn_itemtype"
+			model		"*cvar mn_item"
+			pos			"56 23"
+			size		"336 140"
+			angles		"-10 160 70"
+			autoscale	true
+		}
+
 	}
 
 	// ==================
-	// panel
+	// info
+	// @todo move it into the item panel
 	// ==================
 
 	string prod_amount {
