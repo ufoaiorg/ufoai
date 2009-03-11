@@ -336,7 +336,7 @@ static void MN_VScrollbarNodeDraw (menuNode_t *node)
 		int description[5];
 		MN_VScrollbarNodeGetElementSize(node, description);
 		if (MN_GetMouseCapture() == node)
-			houveredElement = 2;
+			houveredElement = capturedElement;
 		else if (node->state)
 			houveredElement = MN_VScrollbarNodeGetElement(node, description, mousePosX, mousePosY);
 
