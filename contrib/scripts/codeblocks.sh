@@ -144,7 +144,7 @@ extract_gtk()
 	${UNZIP} -o ${DOWNLOAD_DIR}/atk-dev.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/cairo-dev.zip -d ${MINGW_DIR}
 
-	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0"); do
+	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo"); do
 		mv ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include
 		rm -r ${MINGW_DIR}/include/${i}
 		mv ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include
