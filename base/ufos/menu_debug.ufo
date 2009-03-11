@@ -15,11 +15,11 @@ menu editor {
 	}
 
 	func init {
-		cmd "debug_mneditionstart editor.editor"
+		cmd "mn_editornode_start <path:menu>.editor"
 	}
 
 	func close {
-		cmd "debug_mneditionstop editor.editor"
+		cmd "mn_editornode_stop <path:menu>.editor"
 	}
 
 }

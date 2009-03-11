@@ -1,6 +1,6 @@
 /**
  * @file m_node_editor.c
- * @note type "mn_push editor" to use it, Escape button to close it, and "debug_mneditionextract" to extract a menu
+ * @note type "mn_push editor" to use it, Escape button to close it, and "mn_extract" to extract a menu
  */
 
 /*
@@ -191,8 +191,6 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 		anchoredNode = hovered;
 }
 
-#ifdef DEBUG
-
 static void MN_EditorNodeStart_f (void)
 {
 	menuNode_t* node;
@@ -272,8 +270,6 @@ static void MN_EditorNodeExtract_f (void)
 	FS_CloseFile(&file);
 }
 
-#endif
-
 void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "editor";
@@ -281,11 +277,9 @@ void MN_RegisterEditorNode (nodeBehaviour_t *behaviour)
 	behaviour->mouseDown = MN_EditorNodeMouseDown;
 	behaviour->mouseUp = MN_EditorNodeMouseUp;
 	behaviour->capturedMouseMove = MN_EditorNodeCapturedMouseMove;
-#ifdef DEBUG
-	Cmd_AddCommand("debug_mneditionstart", MN_EditorNodeStart_f, "Start node edition");
-	Cmd_AddCommand("debug_mneditionstop", MN_EditorNodeStop_f, "Stop node edition");
-	Cmd_AddCommand("debug_mnextract", MN_EditorNodeExtract_f, "Extract position and size of nodes into a file");
-	Cmd_AddParamCompleteFunction("debug_mnextract", MN_CompleteWithMenu);
-#endif
 
+	Cmd_AddCommand("mn_editornode_start", MN_EditorNodeStart_f, "Start node edition");
+	Cmd_AddCommand("mn_editornode_stop", MN_EditorNodeStop_f, "Stop node edition");
+	Cmd_AddCommand("mn_extract", MN_EditorNodeExtract_f, "Extract position and size of nodes into a file");
+	Cmd_AddParamCompleteFunction("mn_extract", MN_CompleteWithMenu);
 }
