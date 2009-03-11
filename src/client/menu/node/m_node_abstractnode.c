@@ -358,6 +358,26 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 }
 
 /**
+ * @brief Return a string from a node property
+ * @param[in] node Requested node
+ * @param[in] property Requested property
+ * @return Return a string value of a property, else NULL, if the type is not supported
+ */
+const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t* property)
+{
+	const int baseType = property->type & V_SPECIAL_TYPE;
+	assert(node);
+	assert(property);
+
+	switch (baseType) {
+	case 0: /* common type */
+		return Com_ValueToStr (node, property->type, property->ofs);
+	default:
+		return NULL;
+	}
+}
+
+/**
  * @brief Return a float from a node property
  * @param[in] node Requested node
  * @param[in] property Requested property
@@ -398,6 +418,46 @@ float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* proper
 #ifdef DEBUG
 /**
  * @brief set a node property from the command line
+ */
+static void MN_NodeGetProperty_f (void)
+{
+	const menuNode_t *node;
+	const value_t *property;
+	const char *sValue;
+	float fValue;
+
+	if (Cmd_Argc() != 2) {
+		Com_Printf("Usage: %s <nodepath@prop>\n", Cmd_Argv(0));
+		return;
+	}
+
+	MN_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
+
+	if (node == NULL) {
+		Com_Printf("MN_NodeGetProperty_f: Node from path '%s' doesn't exist\n", Cmd_Argv(1));
+		return;
+	}
+
+	if (property == NULL) {
+		Com_Printf("MN_NodeGetProperty_f: Property from path '%s' doesn't exist\n", Cmd_Argv(1));
+		return;
+	}
+
+	/* check string value */
+	sValue = MN_GetStringFromNodeProperty(node, property);
+	if (sValue) {
+		Com_Printf("\"%s\" is \"%s\"\n", Cmd_Argv(1), sValue);
+		return;
+	}
+
+	/* check float value */
+	fValue = MN_GetFloatFromNodeProperty(node, property);
+	Com_Printf("\"%s\" is \"%f\"\n", Cmd_Argv(1), fValue);
+}
+
+/**
+ * @brief set a node property from the command line
+ * @todo Unify path syntaxe to allow to create a common autocompletion
  */
 static void MN_NodeSetProperty_f (void)
 {
@@ -497,5 +557,6 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_mnsetnodeproperty", MN_NodeSetProperty_f, "Set a node property");
+	Cmd_AddCommand("debug_mngetnodeproperty", MN_NodeGetProperty_f, "Get a node property");
 #endif
 }
