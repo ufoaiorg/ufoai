@@ -358,10 +358,10 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 	const char *localMatch[MAX_COMPLETE];
 	size_t len;
 	const char *dayNightStr;
+	static char dayNightMatch[7];
 
 	dayNightStr = strstr(partial, " ");
 	if (!dayNightStr) {
-		static char dayNightMatch[7];
 		if (partial[0] == 'd') {
 			Q_strncpyz(dayNightMatch,"day ",sizeof(dayNightMatch));
 			*match = dayNightMatch;
@@ -376,8 +376,20 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 		dayNightMatch[0] = '\0';
 		*match = dayNightMatch;
 		return 2;
-	} else
-		partial = dayNightStr + 1;
+	} else {
+		if (!Q_strcmp(partial,"day ") || !Q_strcmp(partial,"night ")) {
+			/* dayNightStr is correct, use it */
+			partial = dayNightStr + 1;
+		} else {
+			/** @todo can we somehow delete previous parameters? */
+			/* neither day or night, delete previous content and display options */
+			Com_Printf("day\nnight\n");
+			dayNightMatch[0] = '\0';
+			*match = dayNightMatch;
+			return 2;
+		}
+	}
+
 
 	FS_GetMaps(qfalse);
 
