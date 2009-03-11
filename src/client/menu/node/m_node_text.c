@@ -462,7 +462,12 @@ static void MN_TextNodeDraw (menuNode_t *node)
 
 	switch (mn.sharedData[EXTRADATA(node).num].type) {
 	case MN_SHARED_TEXT:
-		MN_TextNodeDrawText(node, mn.sharedData[EXTRADATA(node).num].data.text, NULL);
+		{
+			const char* t = mn.sharedData[EXTRADATA(node).num].data.text;
+			if (t[0] == '_')
+				t = _(++t);
+			MN_TextNodeDrawText(node, t, NULL);
+		}
 		break;
 	case MN_SHARED_LINKEDLISTTEXT:
 		MN_TextNodeDrawText(node, NULL, mn.sharedData[EXTRADATA(node).num].data.linkedListText);

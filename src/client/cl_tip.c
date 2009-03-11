@@ -78,7 +78,7 @@ static void CL_GetTipOfTheDay_f (void)
 		rnd--;
 	}
 
-	MN_RegisterText(TEXT_TIPOFTHEDAY, _(tip->tipString));
+	MN_RegisterText(TEXT_TIPOFTHEDAY, tip->tipString);
 }
 
 /**
@@ -110,7 +110,7 @@ void CL_ParseTipsOfTheDay (const char *name, const char **text)
 			continue;
 		}
 		tip = Mem_PoolAlloc(sizeof(*tip), cl_genericPool, 0);
-		tip->tipString = Mem_PoolStrDup(token + 1, cl_genericPool, 0);
+		tip->tipString = Mem_PoolStrDup(token, cl_genericPool, 0);
 		tip->next = tipList;
 		tipList = tip;
 		tipCount++;
