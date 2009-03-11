@@ -351,10 +351,10 @@ static void B_UpdateOneBaseBuildingStatusOnEnable (buildingType_t type, base_t* 
 {
 	switch (type) {
 	case B_RADAR:
-		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
+		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
 		break;
 	case B_COMMAND:
-		Cmd_ExecuteString("mn_update_max_installations;");
+		Cmd_ExecuteString("mn_update_max_installations");
 		break;
 	default:
 		break;
@@ -378,10 +378,10 @@ static void B_UpdateOneBaseBuildingStatusOnDisable (buildingType_t type, base_t*
 		AC_KillAll(base);
 		break;
 	case B_RADAR:
-		Cmd_ExecuteString(va("update_base_radar_coverage %i;", base->idx));
+		Cmd_ExecuteString(va("update_base_radar_coverage %i", base->idx));
 		break;
 	case B_COMMAND:
-		Cmd_ExecuteString("mn_update_max_installations;");
+		Cmd_ExecuteString("mn_update_max_installations");
 		break;
 	default:
 		break;
@@ -743,7 +743,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 	if (onDestroyCommand) {
 		Com_DPrintf(DEBUG_CLIENT, "B_BuildingDestroy: %s %i %i;\n",
 			template->onDestroy, base->idx, buildingType);
-		Cmd_ExecuteString(va("%s %i %i;", template->onDestroy, base->idx, buildingType));
+		Cmd_ExecuteString(va("%s %i %i", template->onDestroy, base->idx, buildingType));
 	}
 
 	return qtrue;
@@ -987,7 +987,7 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
 	/* now call the onconstruct trigger */
 	if (buildingNew->onConstruct[0] != '\0') {
 		Com_DPrintf(DEBUG_CLIENT, "B_AddBuildingToBasePos: %s %i;\n", buildingNew->onConstruct, base->idx);
-		Cmd_ExecuteString(va("%s %i;", buildingNew->onConstruct, base->idx));
+		Cmd_ExecuteString(va("%s %i", buildingNew->onConstruct, base->idx));
 	}
 }
 
@@ -2128,10 +2128,10 @@ void B_SelectBase (base_t *base)
 		MN_PushMenu("bases", NULL);
 		switch (base->baseStatus) {
 		case BASE_UNDER_ATTACK:
-			Cmd_ExecuteString("set_base_under_attack;");
+			Cmd_ExecuteString("set_base_under_attack");
 			break;
 		default:
-			Cmd_ExecuteString("set_base_to_normal;");
+			Cmd_ExecuteString("set_base_to_normal");
 			break;
 		}
 	}
