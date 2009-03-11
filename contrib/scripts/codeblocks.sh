@@ -20,7 +20,7 @@ download()
 
 start_downloads()
 {
-	download http://downloads.sourceforge.net/mingw/ binutils-2.18.50-20080109-2.tar.gz binutils.tar.gz
+	download http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
 	download http://downloads.sourceforge.net/mingw/ mingwrt-3.15.2-mingw32-dev.tar.gz mingwrt.tar.gz
 	download http://downloads.sourceforge.net/mingw/ w32api-3.13-mingw32-dev.tar.gz w32api.tar.gz
 	download http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz mingw32.tar.gz
