@@ -275,10 +275,42 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 }
 
 /**
+ * @brief Compute scape and center for a node and a modelInfo
+ * @todo Code and interface need improvment for composite models
+ */
+static void MN_AutoScale(menuNode_t *node, modelInfo_t *mi, vec3_t pScale, vec3_t center)
+{
+	/* autoscale */
+	float max, size;
+	vec3_t mins, maxs;
+	int i;
+	mAliasFrame_t *frame = mi->model->alias.frames;
+
+	/* get center and scale */
+	for (max = 1.0, i = 0; i < 3; i++) {
+		mins[i] = frame->translate[i];
+		maxs[i] = mins[i] + frame->scale[i] * 255;
+		center[i] = (mins[i] + maxs[i]) / 2;
+		size = maxs[i] - mins[i];
+		if (size > max)
+			max = size;
+	}
+	size = (node->size[0] < node->size[1] ? node->size[0] : node->size[1]) / max;
+
+	pScale[0] = size;
+	pScale[1] = size;
+	pScale[2] = size;
+}
+
+/**
  * @brief Draw a model using "menu model" definition
  */
 static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source, modelInfo_t *mi, menuModel_t *menuModel)
 {
+	qboolean autoScaleComputed = qfalse;
+	vec3_t autoScale;
+	vec3_t autoCenter;
+
 	while (menuModel) {
 		/* no animation */
 		mi->frame = 0;
@@ -307,6 +339,19 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			const char *ref;
 			MN_InitModelInfoView(node, mi, menuModel);
 			Vector4Copy(node->color, mi->color);
+
+			/* compute the scale and center for the first model.
+			 * it think its the bigger of composite models.
+			 * All next elements use the same result
+			 */
+			if (node->u.model.autoscale) {
+				if (!autoScaleComputed) {
+					MN_AutoScale(node, mi, autoScale, autoCenter);
+					autoScaleComputed = qtrue;
+				}
+				mi->center = autoCenter;
+				mi->scale = autoScale;
+			}
 
 			/* get the animation given by menu node properties */
 			if (node->u.model.animation && *(char *) node->u.model.animation) {
@@ -367,8 +412,8 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 
 			/* autoscale? */
 			if (node->u.model.autoscale) {
-				mi->scale = NULL;
-				mi->center = node->size;
+				pmi.scale = NULL;
+				pmi.center = node->size;
 			}
 
 			as = &menuModelParent->animState;
