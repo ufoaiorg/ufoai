@@ -247,6 +247,13 @@ qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
 		MN_SetParam(param1, condition->type.opCode, &condition->leftValue, &condition->type.left);
 		MN_SetParam(param2, condition->type.opCode, &condition->rightValue, &condition->type.right);
 	}
+
+	/* prevent wrong code */
+	if (condition->type.left == condition->type.right
+		 && (condition->type.left == IF_VALUE_STRING || condition->type.left == IF_VALUE_FLOAT)) {
+		Com_Printf("MN_InitCondition: '%s' dont use any var operand.\n", token);
+	}
+
 	return qtrue;
 }
 
