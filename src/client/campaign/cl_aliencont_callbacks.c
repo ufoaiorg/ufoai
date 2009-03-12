@@ -75,92 +75,6 @@ static int AL_CountForMenu (int alienidx, qboolean alive)
 }
 
 /**
- * @brief Open menu for next Alien Containment.
- * @sa AC_PrevAC_f
- */
-static void AC_NextAC_f (void)
-{
-	base_t *base;
-	qboolean found = qfalse;
-
-	/* Can be called from everywhere. */
-	if (!baseCurrent || !aliencontCurrent)
-		return;
-
-	/* Get next base */
-	if (baseCurrent >= ccs.bases + MAX_BASES - 1)
-		base = &ccs.bases[0];
-	else
-		base = baseCurrent + 1;
-
-	/* Loop until we hit the original base. */
-	while (base != baseCurrent) {
-		if (base->founded && base->hasBuilding[B_ALIEN_CONTAINMENT] &&
-			B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
-			found = qtrue;
-			break;
-		}
-
-		/* Get next base */
-		if (base >= ccs.bases + MAX_BASES - 1)
-			base = &ccs.bases[0];	/* Wrap around from last to first base. */
-		else
-			base++;
-	}
-
-	if (!found)
-		return;
-
-	if (!base->founded)
-		return;
-	else
-		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", base->idx));
-}
-
-/**
- * @brief Open menu for previous Alien Containment.
- * @sa AC_NextAC_f
- */
-static void AC_PrevAC_f (void)
-{
-	qboolean found = qfalse;
-	const base_t *base;
-
-	/* Can be called from everywhere. */
-	if (!baseCurrent || !aliencontCurrent)
-		return;
-
-	/* Get previous base */
-	if (baseCurrent <= ccs.bases)
-		base = &ccs.bases[MAX_BASES - 1];
-	else
-		base = baseCurrent - 1;
-
-	/* Loop until we hit the original base. */
-	while (base != baseCurrent) {
-		if (base->founded && base->hasBuilding[B_ALIEN_CONTAINMENT] &&
-			B_CheckBuildingTypeStatus(base, B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
-			found = qtrue;
-			break;
-		}
-
-		/* Get next base */
-		if (base <= ccs.bases)
-			base = &ccs.bases[MAX_BASES - 1];	/* Wrap around from first to last base. */
-		else
-			base--;
-	}
-
-	if (!found)
-		return;
-
-	if (!base->founded)
-		return;
-	else
-		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", base->idx));
-}
-
-/**
  * @brief Call UFOpedia for selected alien.
  */
 static void AC_OpenUFOpedia_f (void)
@@ -278,7 +192,7 @@ static void AC_UpdateMenu (const base_t *base)
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
 		for (i = 0, j = 0; i < ccs.numAliensTD; i++) {
-			if ((j >= alienContFirstEntry) && (j < AC_MENU_MAX_ENTRIES)) {
+			if (j >= alienContFirstEntry && j < AC_MENU_MAX_ENTRIES) {
 				if (containment[i].teamDef) {
 					const technology_t *tech = containment[i].tech;
 					if (!tech) {
@@ -437,8 +351,6 @@ void AC_InitCallbacks (void)
 	Cmd_AddCommand("aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
 	Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
 	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
-	Cmd_AddCommand("aliencont_nextbase", AC_NextAC_f, "Opens Alien Containment menu in next base");
-	Cmd_AddCommand("aliencont_prevbase", AC_PrevAC_f, "Opens Alien Containment menu in previous base");
 	Cmd_AddCommand("aliencont_list_up", AC_ListUp_f, "Scroll up function for aliencont list");
 	Cmd_AddCommand("aliencont_list_down", AC_ListDown_f, "Scroll down function for aliencont list");
 	Cmd_AddCommand("aliencont_click", AC_AlienClick_f, "Click function for aliencont list");
@@ -452,8 +364,6 @@ void AC_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("aliencont_killone");
 	Cmd_RemoveCommand("aliencont_research");
 	Cmd_RemoveCommand("aliencont_pedia");
-	Cmd_RemoveCommand("aliencont_nextbase");
-	Cmd_RemoveCommand("aliencont_prevbase");
 	Cmd_RemoveCommand("aliencont_list_up");
 	Cmd_RemoveCommand("aliencont_list_down");
 	Cmd_RemoveCommand("aliencont_click");

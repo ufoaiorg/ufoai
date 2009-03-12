@@ -638,10 +638,6 @@ static void BaseSummary_SelectBase_f (void)
 {
 	int i;
 
-	/* Can be called from everywhere. */
-	if (!baseCurrent || !GAME_CP_IsRunning())
-		return;
-
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
 		return;
