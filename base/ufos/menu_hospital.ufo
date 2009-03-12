@@ -526,10 +526,17 @@ menu hospital_employee
 	// actor info
 	// ==================
 
+	panel actorinfo {
+		pos		"457 101"
+		size	"555 471"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
+
 	string txt_name
 	{
 		string	"*cvar mn_name"
-		pos		"475 18"
+		pos		"475 118"
 		size	"415 20"
 	}
 
@@ -540,7 +547,7 @@ menu hospital_employee
 		anim	"stand2"
 		angles	"0 70 90"
 		scale	"6.7 6.7 6.7"
-		pos		"480 80"
+		pos		"480 180"
 		size	"200 350"
 		origin	"0 -35 0"
 	}
@@ -553,74 +560,79 @@ menu hospital_employee
 		scale	"1.0 1.0 1.0"
 	}
 
-	pic	rank_img { pos "475 370" image "*cvar mn_chrrank_img" }
-	string	rank_lbl { pos "475 75" size "200 20" string "*cvar mn_chrrank" longlines prettychop }
+	pic	rank_img { pos "475 470" image "*cvar mn_chrrank_img" }
+	string	rank_lbl { pos "475 175" size "200 20" string "*cvar mn_chrrank" longlines prettychop }
 
-	string pwr_lbl { pos "690 82" size "180 20" string "_Strength:" longlines prettychop }
-	string pwr_val { pos "860 82" size "130 20" string "*cvar mn_tpwr" textalign ur longlines prettychop }
-	pic pwr_bdr    { pos "707 98"  image menu/bar_border }
-	tbar pwr_bar   { pos "710 98"  max 100 current "*cvar mn_vpwr" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	string pwr_lbl { pos "690 182" size "180 20" string "_Strength:" longlines prettychop }
+	string pwr_val { pos "860 182" size "130 20" string "*cvar mn_tpwr" textalign ur longlines prettychop }
+	pic pwr_bdr    { pos "707 198"  image menu/bar_border }
+	tbar pwr_bar   { pos "710 198"  max 100 current "*cvar mn_vpwr" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string spd_lbl { pos "690 112" size "180 20" string "_Speed:" longlines prettychop }
-	string spd_val { pos "860 112" size "130 20" string "*cvar mn_tspd" textalign ur longlines prettychop }
-	pic spd_bdr    { pos "707 128" image menu/bar_border }
-	tbar spd_bar   { pos "710 128" current "*cvar mn_vspd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	string spd_lbl { pos "690 212" size "180 20" string "_Speed:" longlines prettychop }
+	string spd_val { pos "860 212" size "130 20" string "*cvar mn_tspd" textalign ur longlines prettychop }
+	pic spd_bdr    { pos "707 228" image menu/bar_border }
+	tbar spd_bar   { pos "710 228" current "*cvar mn_vspd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string acc_lbl { pos "690 142" size "180 20" string "_Accuracy:" longlines prettychop }
-	string acc_val { pos "860 142" size "130 20" string "*cvar mn_tacc" textalign ur longlines prettychop }
-	pic acc_brd    { pos "707 158" image menu/bar_border }
-	tbar acc_bar   { pos "710 158" current "*cvar mn_vacc" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	string acc_lbl { pos "690 242" size "180 20" string "_Accuracy:" longlines prettychop }
+	string acc_val { pos "860 242" size "130 20" string "*cvar mn_tacc" textalign ur longlines prettychop }
+	pic acc_brd    { pos "707 258" image menu/bar_border }
+	tbar acc_bar   { pos "710 258" current "*cvar mn_vacc" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string mnd_lbl { pos "690 172" size "180 20" string "_Mind:" longlines prettychop }
-	string mnd_val { pos "860 172" size "130 20" string "*cvar mn_tmnd" textalign ur longlines prettychop }
-	pic mnd_brd    { pos "707 188" image menu/bar_border }
-	tbar mnd_bar   { pos "710 188" current "*cvar mn_vmnd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	string mnd_lbl { pos "690 272" size "180 20" string "_Mind:" longlines prettychop }
+	string mnd_val { pos "860 272" size "130 20" string "*cvar mn_tmnd" textalign ur longlines prettychop }
+	pic mnd_brd    { pos "707 288" image menu/bar_border }
+	tbar mnd_bar   { pos "710 288" current "*cvar mn_vmnd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
 
-	string cls_lbl { pos "690 212" size "180 20" string "_Close Combat:" longlines prettychop }
-	string cls_val { pos "860 212" size "130 20" string "*cvar mn_tcls" textalign ur longlines prettychop }
-	pic cls_brd    { pos "707 228" image menu/bar_border }
-	tbar cls_bar   { pos "710 228" current "*cvar mn_vcls" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	string cls_lbl { pos "690 312" size "180 20" string "_Close Combat:" longlines prettychop }
+	string cls_val { pos "860 312" size "130 20" string "*cvar mn_tcls" textalign ur longlines prettychop }
+	pic cls_brd    { pos "707 328" image menu/bar_border }
+	tbar cls_bar   { pos "710 328" current "*cvar mn_vcls" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string hvy_lbl { pos "690 242" size "180 20" string "_Heavy Weapons:" longlines prettychop }
-	string hvy_val { pos "860 242" size "130 20" string "*cvar mn_thvy" textalign ur longlines prettychop }
-	pic hvy_brd    { pos "707 258" image menu/bar_border }
-	tbar hvy_bar   { pos "710 258" current "*cvar mn_vhvy" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	string hvy_lbl { pos "690 342" size "180 20" string "_Heavy Weapons:" longlines prettychop }
+	string hvy_val { pos "860 342" size "130 20" string "*cvar mn_thvy" textalign ur longlines prettychop }
+	pic hvy_brd    { pos "707 358" image menu/bar_border }
+	tbar hvy_bar   { pos "710 358" current "*cvar mn_vhvy" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string ass_lbl { pos "690 272" size "180 20" string "_Assault Weapons:" longlines prettychop }
-	string ass_val { pos "860 272" size "130 20" string "*cvar mn_tass" textalign ur longlines prettychop }
-	pic ass_brd    { pos "707 288" image menu/bar_border }
-	tbar ass_bar   { pos "710 288" current "*cvar mn_vass" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	string ass_lbl { pos "690 372" size "180 20" string "_Assault Weapons:" longlines prettychop }
+	string ass_val { pos "860 372" size "130 20" string "*cvar mn_tass" textalign ur longlines prettychop }
+	pic ass_brd    { pos "707 388" image menu/bar_border }
+	tbar ass_bar   { pos "710 388" current "*cvar mn_vass" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string snp_lbl { pos "690 302" size "180 20" string "_Sniper Rifles:" longlines prettychop }
-	string snp_val { pos "860 302" size "130 20" string "*cvar mn_tsnp" textalign ur longlines prettychop }
-	pic snp_brd    { pos "707 318" image menu/bar_border }
-	tbar snp_bar   { pos "710 318" current "*cvar mn_vsnp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	string snp_lbl { pos "690 402" size "180 20" string "_Sniper Rifles:" longlines prettychop }
+	string snp_val { pos "860 402" size "130 20" string "*cvar mn_tsnp" textalign ur longlines prettychop }
+	pic snp_brd    { pos "707 418" image menu/bar_border }
+	tbar snp_bar   { pos "710 418" current "*cvar mn_vsnp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string exp_lbl { pos "690 332" size "180 20" string "_High-Explosives:" longlines prettychop }
-	string exp_val { pos "860 332" size "130 20" string "*cvar mn_texp" textalign ur longlines prettychop }
-	pic exp_brd    { pos "707 348" image menu/bar_border }
-	tbar exp_bar   { pos "710 348" current "*cvar mn_vexp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	string exp_lbl { pos "690 432" size "180 20" string "_High-Explosives:" longlines prettychop }
+	string exp_val { pos "860 432" size "130 20" string "*cvar mn_texp" textalign ur longlines prettychop }
+	pic exp_brd    { pos "707 448" image menu/bar_border }
+	tbar exp_bar   { pos "710 448" current "*cvar mn_vexp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
 
-	string health     { pos "690 376" size "180 30" string "_Health:" font f_normal longlines prettychop }
-	string health_val { pos "860 376" size "130 30" string "*cvar mn_hp" textalign ur font f_normal longlines prettychop }
-	pic health_brd    { pos "707 398" image menu/bar_border }
-	tbar health_bar   { pos "710 398" current "*cvar mn_hp" max "*cvar mn_hpmax" texl "3 0" image menu/bar_health size "250 16" }
-
+	string health     { pos "690 476" size "180 30" string "_Health:" font f_normal longlines prettychop }
+	string health_val { pos "860 476" size "130 30" string "*cvar mn_hp" textalign ur font f_normal longlines prettychop }
+	pic health_brd    { pos "707 498" image menu/bar_border }
+	tbar health_bar   { pos "710 498" current "*cvar mn_hp" max "*cvar mn_hpmax" texl "3 0" image menu/bar_health size "250 16" }
 
 	// ==================
 	// action buttons
 	// ==================
+
+	panel buttonpanel {
+		pos		"26 101"
+		size	"276 471"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
 
 	button button_hosp_bionic_start
 	{
 		string		"_Implants"
 		color		"0 0.8 0 1"
 		image		menu/button_green_small
-		pos			"60 170"
+		pos			"60 270"
 		size		"207 48"
 		font		f_menu
 		blend		true
-		// disable till not function
 		tooltip		"_not implemented"
 		disabled	true
 		click
