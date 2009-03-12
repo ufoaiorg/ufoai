@@ -20,7 +20,9 @@ download()
 
 start_downloads()
 {
-	download http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
+	# using an older version here - as windres is buggy in higher versions. Latest tested version is 2.19.1
+	download http://downloads.sourceforge.net/mingw/ binutils-2.16.91-20060119-1.tar.gz binutils.tar.gz
+	#download http://downloads.sourceforge.net/mingw/ binutils-2.19.1-mingw32-bin.tar.gz binutils.tar.gz
 	download http://downloads.sourceforge.net/mingw/ mingwrt-3.15.2-mingw32-dev.tar.gz mingwrt.tar.gz
 	download http://downloads.sourceforge.net/mingw/ w32api-3.13-mingw32-dev.tar.gz w32api.tar.gz
 	download http://downloads.sourceforge.net/mingw/ mingw32-make-3.81-20080326-3.tar.gz mingw32.tar.gz
@@ -63,6 +65,8 @@ start_downloads()
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/pango/1.22/ pango-dev_1.22.4-1_win32.zip pango-dev.zip
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/atk/1.24/ atk-dev_1.24.0-1_win32.zip atk-dev.zip
 	download http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/ cairo-dev_1.8.6-1_win32.zip cairo-dev.zip
+
+	download http://downloads.sourceforge.net/gtkglext/ gtkglext-1.2.0.zip gtkglext-dev.zip
 }
 
 extract_codeblocks()
@@ -143,8 +147,9 @@ extract_gtk()
 	${UNZIP} -o ${DOWNLOAD_DIR}/pango-dev.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/atk-dev.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/cairo-dev.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/gtkglext-dev.zip -d ${MINGW_DIR}
 
-	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo"); do
+	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo gtkglext-1.2.0"); do
 		mv ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include
 		rm -r ${MINGW_DIR}/include/${i}
 		mv ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include
