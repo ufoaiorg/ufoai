@@ -1102,6 +1102,7 @@ menu mp_create_server extends abstract_multiplayer
 		cmd "mp_updategametype;mn_getmaps;"
 		*cvar:mn_server_config_tab 1
 		cmd "mp_update_config_natigation"
+		cmd "mn_datareset TEXT_STANDARD"
 	}
 
 }
