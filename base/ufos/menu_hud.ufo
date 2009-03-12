@@ -732,6 +732,7 @@ menu hud extends ahud
 		pic background
 		{
 			image	hud/bar_popup
+			blend	true
 			pos		"0 0"
 			size	"47 335"
 			texh	"47 335"
@@ -792,83 +793,101 @@ menu hud extends ahud
 		wheel
 		in			{ cmd "unhide_chatscreen;" }
 	}
-	pic bar_chat
-	{
-		visiblewhen	"sv_maxclients >= 2"
 
-		image		hud/bar_chat
-		pos			"960 64"
-		size		"64 64"
-		out			{
-			*bar_chat image hud/bar_chat
-			*bar_chat size "64 64"
-			cmd "mn_showchatbuttons 0;"
+	panel chat {
+		{
+			visiblewhen	"*cvar:sv_maxclients >= 2"
+			pos		"768 64"
+			size	"256 463"	/* popup height 335+64*2*/
+			ghost	true
+			num		6	/* middle-right float */
 		}
-		in			{
-			*bar_chat image hud/bar_chat_choice
-			*bar_chat size "256 64"
-			cmd "mn_showchatbuttons 1;"
-		}
-	}
-	pic bar_chat_all
-	{
-		visiblewhen	"mn_showchatbuttons == 1"
 
-		tooltip		"_Chat"
-		key			"*binding messagesay"
-		image		hud/button_chat
-		pos			"944 76"
-		size		"32 32"
-		texl		"0 0"
-		texh		"32 32"
-		click		{ cmd "messagesay;" }
-	}
-	pic bar_chat_team
-	{
-		visiblewhen	"mn_showchatbuttons == 1"
-		tooltip		"_Teamchat"
-		key			"*binding messagesayteam"
-		image		hud/button_chat
-		pos			"906 76"
-		size		"32 32"
-		texl		"32 0"
-		texh		"64 32"
-		click		{ cmd "messagesayteam;" }
-	}
-	pic bar_chat_show
-	{
-		visiblewhen	"mn_showchatbuttons == 1"
-		tooltip		"_Show chat history"
-		key			"*binding showchat"
-		image		hud/button_chat
-		pos			"868 76"
-		size		"32 32"
-		texl		"64 0"
-		texh		"96 32"
-		mousefx		false
-		out			{
-			*chatscreen size "690 48"
-			*chatscreen rows "3"
-			*(func)event timeout 10000
+		pic bar_chat_bg
+		{
+			image		hud/bar_chat
+			pos			"192 0"
+			size		"64 64"
 		}
-		in			{
-			*chatscreen size "690 400"
-			*chatscreen rows "25"
-			*(func)event timeout 0
-			cmd "mn_unhidenode chatscreen;"
-		}
-	}
+		pic bar_chat_all
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
 
-	pic button_chat
-	{
-		visiblewhen	"sv_maxclients >= 2"
-		tooltip		"_Chat messages"
-		image		hud/event_log
-		texl		"0 0"
-		texh		"32 36"
-		pos			"985 70"
-		mousefx		false
-		in
+			tooltip		"_Chat"
+			key			"*binding messagesay"
+			image		hud/button_chat
+			pos			"176 12"
+			size		"32 32"
+			texl		"0 0"
+			texh		"32 32"
+			click		{ cmd "messagesay;" }
+		}
+		pic bar_chat_team
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+			tooltip		"_Teamchat"
+			key			"*binding messagesayteam"
+			image		hud/button_chat
+			pos			"138 12"
+			size		"32 32"
+			texl		"32 0"
+			texh		"64 32"
+			click		{ cmd "messagesayteam;" }
+		}
+		pic bar_chat_show
+		{
+			visiblewhen	"*cvar:mn_showchatbuttons == 1"
+			tooltip		"_Show chat history"
+			key			"*binding showchat"
+			image		hud/button_chat
+			pos			"100 12"
+			size		"32 32"
+			texl		"64 0"
+			texh		"96 32"
+			mousefx		false
+			out			{
+				*chatscreen size "690 48"
+				*chatscreen rows "3"
+				*(func)event timeout 10000
+			}
+			in			{
+				*chatscreen size "690 400"
+				*chatscreen rows "25"
+				*(func)event timeout 0
+				cmd "mn_unhidenode chatscreen;"
+			}
+		}
+
+		pic button_chat
+		{
+			tooltip		"_Chat messages"
+			image		hud/event_log
+			pos			"217 6"
+			texl		"0 0"
+			texh		"32 36"
+			mousefx		false
+			in {
+				*path:this	texl	"0 36"
+				*path:this	texh	"32 72"
+			}
+			out {
+				*path:this	texl	"0 0"
+				*path:this	texh	"32 36"
+			}
+			click		{
+				if "*cvar:mn_showchatbuttons != 0" {
+					*path:parent.bar_chat_bg image hud/bar_chat
+					*path:parent.bar_chat_bg pos "192 0"
+					*path:parent.bar_chat_bg size "64 64"
+					*cvar:mn_showchatbuttons 0
+				} else {
+					*path:parent.bar_chat_bg image hud/bar_chat_choice
+					*path:parent.bar_chat_bg pos "0 0"
+					*path:parent.bar_chat_bg size "256 64"
+					*cvar:mn_showchatbuttons 1
+				}
+			}
+		}
 	}
 
 	confunc unhide_chatscreen
