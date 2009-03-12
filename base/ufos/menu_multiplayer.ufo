@@ -536,17 +536,17 @@ menu mp_create_server extends abstract_multiplayer
 		option map {
 			label	"_Map"
 			value	"1"
-			action "mp_update_config_natigation;"
+			action "mp_update_config_navigation;"
 		}
 		option option {
 			label	"_Options"
 			value	"2"
-			action "mp_update_config_natigation;"
+			action "mp_update_config_navigation;"
 		}
 		option security {
 			label	"_Security/registration"
 			value	"3"
-			action "mp_update_config_natigation;"
+			action "mp_update_config_navigation;"
 		}
 	}
 
@@ -1081,7 +1081,7 @@ menu mp_create_server extends abstract_multiplayer
 	// Interaction
 	// ===================
 
-	confunc mp_update_config_natigation {
+	confunc mp_update_config_navigation {
 		*panel_map invis true
 		*panel_option invis true
 		*panel_security invis true
@@ -1101,8 +1101,8 @@ menu mp_create_server extends abstract_multiplayer
 		cmd "killserver;set sv_maxplayersperteam 8;set sv_roundtimelimit 0;set mn_serverday 1;"
 		cmd "mp_updategametype;mn_getmaps;"
 		*cvar:mn_server_config_tab 1
-		cmd "mp_update_config_natigation"
-		cmd "mn_datareset TEXT_STANDARD"
+		cmd "mp_update_config_navigation;"
+		cmd "mn_datareset TEXT_STANDARD;"
 	}
 
 }
