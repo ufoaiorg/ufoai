@@ -3739,7 +3739,8 @@ tech rs_alien_bloodspider_autopsy
 
 	mdl	"aliens/bloodspider/bloodspider"
 
-	//TODO: autopsy image
+	//TODO: autopsy image - empty for now to just show nothing
+	image ""
 }
 
 tech rs_weapon_bloodspider
