@@ -1107,15 +1107,6 @@ menu mp_create_server extends abstract_multiplayer
 
 }
 
-// ==================
-// LOBBY
-// ==================
-
-menu mp_lobby extends abstract_multiplayer
-{
-
-}
-
 // ==========================
 // MULTIPLAYER TEAM SELECTION
 // ==========================
