@@ -31,9 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_campaign.h"
 #include "cl_aliencont_callbacks.h"
 
-static aliensTmp_t aliencargo[MAX_AIRCRAFT][MAX_CARGO];	/**< Cargo of aliens. */
-static int alientypes[MAX_AIRCRAFT];						/**< How many types of aliens we collected. */
-
 /**
  * Collecting aliens functions for aircraft
  */
@@ -47,7 +44,7 @@ static int alientypes[MAX_AIRCRAFT];						/**< How many types of aliens we colle
 aliensTmp_t *AL_GetAircraftAlienCargo (const aircraft_t *aircraft)
 {
 	assert(aircraft);
-	return aliencargo[aircraft->idx];
+	return ccs.aliencargo[aircraft->idx];
 }
 
 /**
@@ -60,7 +57,7 @@ aliensTmp_t *AL_GetAircraftAlienCargo (const aircraft_t *aircraft)
 int AL_GetAircraftAlienCargoTypes (const aircraft_t *aircraft)
 {
 	assert(aircraft);
-	return alientypes[aircraft->idx];
+	return ccs.alientypes[aircraft->idx];
 }
 
 /**
@@ -75,8 +72,8 @@ int AL_GetAircraftAlienCargoTypes (const aircraft_t *aircraft)
 int AL_SetAircraftAlienCargoTypes (const aircraft_t *aircraft, int alienCargoTypes)
 {
 	assert(aircraft);
-	alientypes[aircraft->idx] = alienCargoTypes;
-	return alientypes[aircraft->idx];
+	ccs.alientypes[aircraft->idx] = alienCargoTypes;
+	return ccs.alientypes[aircraft->idx];
 }
 
 /**
