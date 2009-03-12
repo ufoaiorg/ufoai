@@ -393,6 +393,7 @@ typedef struct ccs_s {
 	qboolean XVISpreadActivated;	/**< should the XVI spread over the globe already */
 	qboolean XVIShowMap;			/**< spread was activated and the map is activated now */
 	qboolean humansAttackActivated;	/**< humans start to attack player */
+	qboolean breathingMailSent;		/**< status flag indicating that mail about died aliens due to missing breathing tech was sent */
 	float timer;
 
 	vec3_t angles;			/**< 3d geoscape rotation */

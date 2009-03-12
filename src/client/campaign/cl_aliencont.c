@@ -31,9 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_campaign.h"
 #include "cl_aliencont_callbacks.h"
 
-/** status flag indicating that mail about died aliens due to missing breathing tech was sent */
-static qboolean breathingMailSent = qfalse;
-
 static aliensTmp_t aliencargo[MAX_AIRCRAFT][MAX_CARGO];	/**< Cargo of aliens. */
 static int alientypes[MAX_AIRCRAFT];						/**< How many types of aliens we collected. */
 
@@ -264,9 +261,9 @@ void AL_AddAliens (aircraft_t *aircraft)
 						MS_AddNewMessage(_("Notice"), _("You can't hold live aliens yet. Aliens died."), qfalse, MSG_DEATH, NULL);
 						messageAlreadySet = qtrue;
 					}
-					if (!breathingMailSent) {
+					if (!ccs.breathingMailSent) {
 						Cmd_ExecuteString("addeventmail alienbreathing");
-						breathingMailSent = qtrue;
+						ccs.breathingMailSent = qtrue;
 					}
 				} else {
 					for (k = 0; k < cargo[i].amount_alive; k++) {
@@ -541,13 +538,11 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 	assert(base);
 	assert(containment);
 
-	/* Just a check -- should never be reached */
-	if (!AL_CheckAliveFreeSpace(base, containment, num)) {
-		Com_Printf("AL_ChangeAliveAlienNumber: Can't add/remove %i live aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
+	/* Just a sanity check -- should never be reached */
+	if (!AL_CheckAliveFreeSpace(base, containment, num))
+		Com_Error(ERR_DROP, "AL_ChangeAliveAlienNumber: Can't add/remove %i live aliens, (capacity: %i/%i, Alien Containment Status: %i)\n",
 			num, base->capacities[CAP_ALIENS].cur, base->capacities[CAP_ALIENS].max,
 			B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT));
-		return;
-	}
 
 	containment->amount_alive += num;
 	base->capacities[CAP_ALIENS].cur += num;
@@ -555,7 +550,7 @@ void AL_ChangeAliveAlienNumber (base_t *base, aliensCont_t *containment, int num
 #ifdef DEBUG
 	if (base->capacities[CAP_ALIENS].cur != AL_CountInBase(base))
 		Com_Printf("AL_ChangeAliveAlienNumber: Wrong capacity in Alien containment: %i instead of %i\n",
-		base->capacities[CAP_ALIENS].cur, AL_CountInBase(base));
+			base->capacities[CAP_ALIENS].cur, AL_CountInBase(base));
 #endif
 }
 
@@ -643,7 +638,6 @@ void AC_KillAll (base_t *base)
 		return;
 
 	AL_RemoveAliens(base, NULL, 0, AL_KILL);
-
 }
 
 #ifdef DEBUG
@@ -736,8 +730,13 @@ void AC_InitStartup (void)
  * @sa B_SaveXML
  * @sa SAV_GameSaveXML
  */
-qboolean AC_SaveXML (mxml_node_t * p)
+qboolean AC_SaveXML (mxml_node_t * parent)
 {
+	mxml_node_t *aliencont;
+
+	aliencont = mxml_AddNode(parent, "aliencont");
+	mxml_AddInt(aliencont, "ccs.breathingMailSent", ccs.breathingMailSent);
+
 	return qtrue;
 }
 
@@ -747,10 +746,17 @@ qboolean AC_SaveXML (mxml_node_t * p)
  * @sa B_SaveXML
  * @sa SAV_GameLoadXML
  */
-qboolean AC_LoadXML (mxml_node_t * p)
+qboolean AC_LoadXML (mxml_node_t * parent)
 {
-	/** @todo load and save state, perhaps integrate flag into ccs? */
-	breathingMailSent = qfalse;
+	mxml_node_t *aliencont;
+
+	aliencont = mxml_GetNode(parent, "aliencont");
+	if (!aliencont) {
+		Com_Printf("Error: AlienCont Node wasn't found in savegame\n");
+		return qfalse;
+	}
+	ccs.breathingMailSent = mxml_GetInt(aliencont, "ccs.breathingMailSent", 0);
+
 	return qtrue;
 }
 
