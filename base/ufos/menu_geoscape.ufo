@@ -934,8 +934,6 @@ menu popup_baseattack
 	checkbox killaliens
 	{
 		current		0
-		disabled	true
-		tooltip		"_Not implemented"
 		pos			"26 165"
 		size		"20 18"
 		image		"menu/checkbox_blue"
@@ -943,9 +941,6 @@ menu popup_baseattack
 	string killaliens_str
 	{
 		string		"_Kill aliens in container"
-		disabled	true
-		tooltip		"_Not implemented"
-//		tooltip		"_Kill aliens in alien container"
 		pos			"55 165"
 		size		"220 20"
 	}
@@ -1002,7 +997,7 @@ menu popup_baseattack
 				cmd "air_liftall;"
 			}
 			if "*node:popup_baseattack.killaliens@current > 0" {
-				cmd "alc_killall;"
+				cmd "aliencont_killall;"
 			}
 			if "*node:popup_baseattack.powerdown@current > 0" {
 				cmd "pwr_down;"
@@ -1031,7 +1026,7 @@ menu popup_baseattack
 				cmd "air_liftall;"
 			}
 			if "*node:popup_baseattack.killaliens@current > 0" {
-				cmd "alc_killall;"
+				cmd "aliencont_killall;"
 			}
 			if "*node:popup_baseattack.powerdown@current > 0" {
 				cmd "pwr_down;"
