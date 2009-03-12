@@ -716,6 +716,12 @@ menu equipment
 		click	{ cmd "mn_pop;" }
 	}
 
+	func close
+	{
+		cmd "<cvar:mn_postaction>;"
+		cmd "del mn_postaction;"
+	}
+
 	func init
 	{
 		call names_clear

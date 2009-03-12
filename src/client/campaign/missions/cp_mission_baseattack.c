@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -209,11 +209,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	ccs.missionaircraft = &baseAttackFakeAircraft;
 	ccs.interceptAircraft = &baseAttackFakeAircraft; /* needed for updating soldier stats sa CL_UpdateCharacterStats*/
 
-	if (base->capacities[CAP_ALIENS].cur) {
-		Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack - you can enter this base to change soldiers equipment. What to do ?"), base->name);
-	} else {
-		Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack - you can enter this base to change soldiers equipment or to kill aliens in Alien Containment Facility. What to do ?"), base->name);
-	}
+	Com_sprintf(popupText, sizeof(popupText), _("Base '%s' is under attack! What to do ?"), base->name);
 	MN_RegisterText(TEXT_POPUP, popupText);
 
 	CL_GameTimeStop();

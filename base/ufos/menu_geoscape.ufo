@@ -898,7 +898,7 @@ menu popup_baseattack
 {
 	{
 		pos			"264 262"
-		size		"496 247"
+		size		"496 250"
 		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
@@ -916,18 +916,76 @@ menu popup_baseattack
 		rows		5
 	}
 
-	button bt_go
+	checkbox equip
 	{
-		string		"_Enter"
-		tooltip		"_Enter the battlefield"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		menu/button_green_small
-		blend		true
-		pos			"266 188"
-		size		"176 32"
-		click		{ cmd "game_go;" }
+		current		1
+		pos			"26 145"
+		size		"20 18"
+		image		"menu/checkbox_blue"
 	}
+	string equip_str
+	{
+		string		"_Equip soldiers"
+		tooltip		"_Go to soldier equipment screen before the battle"
+		pos			"55 145"
+		size		"220 20"
+	}
+
+	checkbox killaliens
+	{
+		current		0
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"26 165"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+	}
+	string killaliens_str
+	{
+		string		"_Kill aliens in container"
+		disabled	true
+		tooltip		"_Not implemented"
+//		tooltip		"_Kill aliens in alien container"
+		pos			"55 165"
+		size		"220 20"
+	}
+
+	checkbox liftcrafts
+	{
+		current		0
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"26 185"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+	}
+	string liftcrafts_str
+	{
+		string		"_Lift aircraft"
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"55 185"
+		size		"220 20"
+	}
+
+	checkbox powerdown
+	{
+		current		0
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"26 205"
+		size		"20 18"
+		image		"menu/checkbox_blue"
+	}
+	string powerdown_str
+	{
+		string		"_Disable Power Plant"
+		disabled	true
+		tooltip		"_Not implemented"
+		pos			"55 205"
+		size		"220 20"
+	}
+
 
 	button bt_auto_go
 	{
@@ -937,22 +995,54 @@ menu popup_baseattack
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"266 148"
+		pos			"290 150"
 		size		"176 32"
-		click		{ cmd "cp_mission_autogo;" }
+		click		{
+			if "*node:popup_baseattack.liftcrafts@current > 0" {
+				cmd "air_liftall;"
+			}
+			if "*node:popup_baseattack.killaliens@current > 0" {
+				cmd "alc_killall;"
+			}
+			if "*node:popup_baseattack.powerdown@current > 0" {
+				cmd "pwr_down;"
+			}
+			if "*node:popup_baseattack.equip@current > 0" {
+				*cvar:mn_postaction	"cp_mission_autogo"
+				cmd "mn_push equipment;"
+			} else {
+				cmd "cp_mission_autogo;"
+			}			
+		}
 	}
 
-	button bt_enter_base
+	button bt_go
 	{
-		string		"_Equip"
-		tooltip		"_Equip soldiers before the battle"
+		string		"_Enter"
+		tooltip		"_Enter the battlefield"
 		color		"0 0.5 0 1"
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"36 188"
+		pos			"290 195"
 		size		"176 32"
-		click		{ cmd "mn_push equipment;" }
+		click		{
+			if "*node:popup_baseattack.liftcrafts@current > 0" {
+				cmd "air_liftall;"
+			}
+			if "*node:popup_baseattack.killaliens@current > 0" {
+				cmd "alc_killall;"
+			}
+			if "*node:popup_baseattack.powerdown@current > 0" {
+				cmd "pwr_down;"
+			}
+			if "*node:popup_baseattack.equip@current > 0" {
+				*cvar:mn_postaction	"game_go"
+				cmd "mn_push equipment;"
+			} else {
+				cmd "game_go;"
+			}			
+		}
 	}
 
 	func init
