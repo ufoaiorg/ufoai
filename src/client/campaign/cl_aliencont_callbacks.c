@@ -29,8 +29,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_aliencont.h"
 #include "cl_aliencont_callbacks.h"
 
-/** @brief Number of entries in a line of the aliencont menu. */
-#define AC_MENU_LINE_ENTRIES 2
+/**
+ * @brief Maximal entries in aliencont menu.
+ * @sa MAX_TEAMDEFS
+ */
+#define MAX_AC_MENU_ENTRIES 12
 
 /** Statics for menu. */
 static const aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment. */
@@ -317,6 +320,11 @@ void AC_InitCallbacks (void)
 	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
 	Cmd_AddCommand("aliencont_click", AC_AlienClick_f, "Click function for aliencont list");
 	aliencontCurrent = NULL;
+
+	if (ccs.numAliensTD > MAX_AC_MENU_ENTRIES) {
+		Com_Printf("Warning: More alien team definitions than we are able to display in the menus\n");
+		ccs.numAliensTD = MAX_AC_MENU_ENTRIES;
+	}
 }
 
 void AC_ShutdownCallbacks (void)
@@ -327,5 +335,4 @@ void AC_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("aliencont_research");
 	Cmd_RemoveCommand("aliencont_pedia");
 	Cmd_RemoveCommand("aliencont_click");
-
 }
