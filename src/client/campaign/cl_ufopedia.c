@@ -268,6 +268,8 @@ static void UP_DisplayTechTree (const technology_t* t)
  * @sa BS_BuyItem_f
  * @sa BS_SellItem_f
  * @sa MN_Drag
+ * @todo the none campaign mode only code from this function must be cleaned up and
+ * moved into @c INV_ItemDescription
  */
 void UP_ItemDescription (const objDef_t *od)
 {
