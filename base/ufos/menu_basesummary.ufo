@@ -19,12 +19,12 @@ menu basesummary
 	{
 		textid		TEXT_STATS_BASESUMMARY
 		pos			"34 124"
-		size		"507 612"
+		size		"507 608"
 		lineheight	16
 		tabwidth	42
 		font		f_small
 		scrollbar	true
-		rows		"33"
+		rows		"38"
 		longlines	prettychop
 		wheel
 	}

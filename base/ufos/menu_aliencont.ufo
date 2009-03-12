@@ -9,46 +9,66 @@ menu aliencont
 
 	pic background
 	{
-		image		menu/aliencont_bg
+		image		menu/base_bg
 	}
 
-	// ================================================================================
-	// buttons
-	// ================================================================================
+	// ==================
+	// Base header
+	// ==================
+
+	string base_name
+	{
+		tooltip	"_Name of this base"
+		string	"*cvar mn_base_title"
+		pos	"60 30"
+		size "240 32"
+		textalign	cl
+		padding	8
+		font	f_big
+	}
+
+	string txt_credits_caption
+	{
+		string		"_CREDITS"
+		pos			"675 30"
+		size		"100 30"
+		font		f_big
+	}
+
+	string txt_credits
+	{
+		tooltip		"_Organisation capital"
+		string		"*cvar mn_credits"
+		pos			"780 30"
+		size		"130 30"
+		font		f_big
+		textalign	ur
+	}
+
 	custombutton bt_continue
 	{
-		tooltip		"_Back to baseview"
-		image		menu/button_background
-		blend		true
-		pos			"940 720"
-		size		"64 37"
-		texl		"192 0"
-		icon		return
-		click		{ cmd mn_pop }
+		tooltip	"_Back to baseview"
+		image	menu/button_background	blend	true
+		texl	"1 1"	size	"59 55"
+		pos		"950 20"
+		icon	"return"
+		click	{ cmd "mn_pop;" }
+	}
+
+	// ==================
+	// background panels
+	// ==================
+
+	panel infopanel {
+		pos		"685 560"
+		size	"280 200"
+		image	menu/panel_grey_green_large
+		blend	true
 	}
 
 	// ==================
 	// aliencont actions
 	// ==================
-
-	zone wz_alc_base
-	{
-		pos			"10 669"
-		size		"915 88"
-		whup		{ cmd "aliencont_nextbase;" }
-		whdown		{ cmd "aliencont_prevbase;" }
-	}
-
-	custombutton bt_alc_prevbase
-	{
-		tooltip		"_Previous alien containment"
-		image		menu/button_pack1
-		texl		"32 0"
-		blend		true
-		pos			"620 689"
-		size		"32 50"
-		click		{ cmd "aliencont_prevbase;" }
-	}
 
 	confunc aliencont_killb { *bt_alc_killaliens disabled false }
 	confunc aliencont_killg { *bt_alc_killaliens disabled true }
@@ -56,21 +76,10 @@ menu aliencont
 	custombutton bt_alc_killaliens
 	{
 		tooltip		"_Kill all aliens in this base"
-		pos			"800 680"
+		pos			"600 675"
 		size		"64 64"
 		icon		killalien
 		click		{ cmd "aliencont_killall;" }
-	}
-
-	custombutton bt_alc_nextbase
-	{
-		tooltip		"_Next alien containment"
-		image		menu/button_pack1
-		texl		"64 0"
-		blend		true
-		pos			"870 689"
-		size		"32 50"
-		click		{ cmd "aliencont_nextbase;" }
 	}
 
 	// ==================
@@ -132,223 +141,200 @@ menu aliencont
 		*ac_autopsy_zone11 invis true
 	}
 
-	confunc ac_hide_kill0 { *ac_kill_zone0 invis true *ac_autopsy_zone0 invis false }
-	confunc ac_hide_kill1 { *ac_kill_zone1 invis true *ac_autopsy_zone1 invis false }
-	confunc ac_hide_kill2 { *ac_kill_zone2 invis true *ac_autopsy_zone2 invis false }
-	confunc ac_hide_kill3 { *ac_kill_zone3 invis true *ac_autopsy_zone3 invis false }
-	confunc ac_hide_kill4 { *ac_kill_zone4 invis true *ac_autopsy_zone4 invis false }
-	confunc ac_hide_kill5 { *ac_kill_zone5 invis true *ac_autopsy_zone5 invis false }
-	confunc ac_hide_kill6 { *ac_kill_zone6 invis true *ac_autopsy_zone6 invis false }
-	confunc ac_hide_kill7 { *ac_kill_zone7 invis true *ac_autopsy_zone7 invis false }
-	confunc ac_hide_kill8 { *ac_kill_zone8 invis true *ac_autopsy_zone8 invis false }
-	confunc ac_hide_kill9 { *ac_kill_zone9 invis true *ac_autopsy_zone9 invis false }
-	confunc ac_hide_kill10 { *ac_kill_zone10 invis true *ac_autopsy_zone10 invis false }
-	confunc ac_hide_kill11 { *ac_kill_zone11 invis true *ac_autopsy_zone11 invis false }
+	/**
+	 * @param[in] <1> index of the field
+	 */
+	confunc ac_hide_kill {
+		*ac_kill_zone<1> invis true
+		*ac_autopsy_zone<1> invis false
+	}
 
-	confunc ac_hide_autopsy0 { *ac_kill_zone0 invis false *ac_autopsy_zone0 invis true }
-	confunc ac_hide_autopsy1 { *ac_kill_zone1 invis false *ac_autopsy_zone1 invis true }
-	confunc ac_hide_autopsy2 { *ac_kill_zone2 invis false *ac_autopsy_zone2 invis true }
-	confunc ac_hide_autopsy3 { *ac_kill_zone3 invis false *ac_autopsy_zone3 invis true }
-	confunc ac_hide_autopsy4 { *ac_kill_zone4 invis false *ac_autopsy_zone4 invis true }
-	confunc ac_hide_autopsy5 { *ac_kill_zone5 invis false *ac_autopsy_zone5 invis true }
-	confunc ac_hide_autopsy6 { *ac_kill_zone6 invis false *ac_autopsy_zone6 invis true }
-	confunc ac_hide_autopsy7 { *ac_kill_zone7 invis false *ac_autopsy_zone7 invis true }
-	confunc ac_hide_autopsy8 { *ac_kill_zone8 invis false *ac_autopsy_zone8 invis true }
-	confunc ac_hide_autopsy9 { *ac_kill_zone9 invis false *ac_autopsy_zone9 invis true }
-	confunc ac_hide_autopsy10 { *ac_kill_zone10 invis false *ac_autopsy_zone10 invis true }
-	confunc ac_hide_autopsy11 { *ac_kill_zone11 invis false *ac_autopsy_zone11 invis true }
+	/**
+	 * @param[in] <1> index of the field
+	 */
+	confunc ac_hide_autopsy {
+		*ac_kill_zone<1> invis false
+		*ac_autopsy_zone<1> invis true
+	}
 
-	confunc aliencontneedautopsy0  { *ac_icon0  image icons/surgery *ac_button0 image menu/hosp_button_light *ac_icon0 tooltip "_Start autopsy" call ac_hide_kill0 }
-	confunc aliencontneedautopsy1  { *ac_icon1  image icons/surgery *ac_button1 image menu/hosp_button_light *ac_icon1 tooltip "_Start autopsy" call ac_hide_kill1 }
-	confunc aliencontneedautopsy2  { *ac_icon2  image icons/surgery *ac_button2 image menu/hosp_button_light *ac_icon2 tooltip "_Start autopsy" call ac_hide_kill2 }
-	confunc aliencontneedautopsy3  { *ac_icon3  image icons/surgery *ac_button3 image menu/hosp_button_light *ac_icon3 tooltip "_Start autopsy" call ac_hide_kill3 }
-	confunc aliencontneedautopsy4  { *ac_icon4  image icons/surgery *ac_button4 image menu/hosp_button_light *ac_icon4 tooltip "_Start autopsy" call ac_hide_kill4 }
-	confunc aliencontneedautopsy5  { *ac_icon5  image icons/surgery *ac_button5 image menu/hosp_button_light *ac_icon5 tooltip "_Start autopsy" call ac_hide_kill5 }
-	confunc aliencontneedautopsy6  { *ac_icon6  image icons/surgery *ac_button6 image menu/hosp_button_light *ac_icon6 tooltip "_Start autopsy" call ac_hide_kill6 }
-	confunc aliencontneedautopsy7  { *ac_icon7  image icons/surgery *ac_button7 image menu/hosp_button_light *ac_icon7 tooltip "_Start autopsy" call ac_hide_kill7 }
-	confunc aliencontneedautopsy8  { *ac_icon8  image icons/surgery *ac_button8 image menu/hosp_button_light *ac_icon8 tooltip "_Start autopsy" call ac_hide_kill8 }
-	confunc aliencontneedautopsy9  { *ac_icon9  image icons/surgery *ac_button9 image menu/hosp_button_light *ac_icon9 tooltip "_Start autopsy" call ac_hide_kill9 }
-	confunc aliencontneedautopsy10 { *ac_icon10 image icons/surgery *ac_button10 image menu/hosp_button_light *ac_icon10 tooltip "_Start autopsy" call ac_hide_kill10 }
-	confunc aliencontneedautopsy11 { *ac_icon11 image icons/surgery *ac_button11 image menu/hosp_button_light *ac_icon11 tooltip "_Start autopsy" call ac_hide_kill11 }
+	/**
+	 * @param[in] <1> index of the field
+	 */
+	confunc aliencontneedautopsy {
+		*ac_icon<1> image icons/surgery
+		*ac_button<1> image menu/hosp_button_light
+		*ac_icon<1> tooltip "_Start autopsy"
+		cmd "ac_hide_kill <1>;"
+	}
 
-	confunc aliencontkill0  { *ac_icon0  image icons/kill *ac_button0 image menu/hosp_button_light *ac_icon0 tooltip "_Kill this alien" call ac_hide_autopsy0 }
-	confunc aliencontkill1  { *ac_icon1  image icons/kill *ac_button1 image menu/hosp_button_light *ac_icon1 tooltip "_Kill this alien" call ac_hide_autopsy1 }
-	confunc aliencontkill2  { *ac_icon2  image icons/kill *ac_button2 image menu/hosp_button_light *ac_icon2 tooltip "_Kill this alien" call ac_hide_autopsy2 }
-	confunc aliencontkill3  { *ac_icon3  image icons/kill *ac_button3 image menu/hosp_button_light *ac_icon3 tooltip "_Kill this alien" call ac_hide_autopsy3 }
-	confunc aliencontkill4  { *ac_icon4  image icons/kill *ac_button4 image menu/hosp_button_light *ac_icon4 tooltip "_Kill this alien" call ac_hide_autopsy4 }
-	confunc aliencontkill5  { *ac_icon5  image icons/kill *ac_button5 image menu/hosp_button_light *ac_icon5 tooltip "_Kill this alien" call ac_hide_autopsy5 }
-	confunc aliencontkill6  { *ac_icon6  image icons/kill *ac_button6 image menu/hosp_button_light *ac_icon6 tooltip "_Kill this alien" call ac_hide_autopsy6 }
-	confunc aliencontkill7  { *ac_icon7  image icons/kill *ac_button7 image menu/hosp_button_light *ac_icon7 tooltip "_Kill this alien" call ac_hide_autopsy7 }
-	confunc aliencontkill8  { *ac_icon8  image icons/kill *ac_button8 image menu/hosp_button_light *ac_icon8 tooltip "_Kill this alien" call ac_hide_autopsy8 }
-	confunc aliencontkill9  { *ac_icon9  image icons/kill *ac_button9 image menu/hosp_button_light *ac_icon9 tooltip "_Kill this alien" call ac_hide_autopsy9 }
-	confunc aliencontkill10 { *ac_icon10 image icons/kill *ac_button10 image menu/hosp_button_light *ac_icon10 tooltip "_Kill this alien" call ac_hide_autopsy10 }
-	confunc aliencontkill11 { *ac_icon11 image icons/kill *ac_button11 image menu/hosp_button_light *ac_icon11 tooltip "_Kill this alien" call ac_hide_autopsy11 }
-
-	zone ac_scroll_zone
-	{
-		pos			"0 0"
-		size		"1024 700"
-		whup		{ cmd "aliencont_list_up;" }
-		whdown		{ cmd "aliencont_list_down;" }
+	/**
+	 * @param[in] <1> index of the field
+	 */
+	confunc aliencontkill {
+		*ac_icon<1> image icons/kill
+		*ac_button<1> image menu/hosp_button_light
+		*ac_icon<1> tooltip "_Kill this alien"
+		cmd "ac_hide_autopsy <1>;"
 	}
 
 	pic ac_button0 {
 		image		menu/hosp_button_green
-		pos			"25  25"
+		pos			"25 95"
 		click		{ cmd "aliencont_click 0;" }
 		rclick		{ cmd "aliencont_pedia 0;" }
 	}
 	pic ac_button1 {
 		image		menu/hosp_button_green
-		pos			"345  25"
+		pos			"345 95"
 		click		{ cmd "aliencont_click 1;" }
 		rclick		{ cmd "aliencont_pedia 1;" }
 	}
 	pic ac_button2 {
 		image		menu/hosp_button_green
-		pos			"25 120"
+		pos			"25 190"
 		click		{ cmd "aliencont_click 2;" }
 		rclick		{ cmd "aliencont_pedia 2;" }
 	}
 	pic ac_button3 {
 		image		menu/hosp_button_green
-		pos			"345 120"
+		pos			"345 190"
 		click		{ cmd "aliencont_click 3;" }
 		rclick		{ cmd "aliencont_pedia 3;" }
 	}
 	pic ac_button4 {
 		image		menu/hosp_button_green
-		pos			"25 215"
+		pos			"25 285"
 		click		{ cmd "aliencont_click 4;" }
 		rclick		{ cmd "aliencont_pedia 4;" }
 	}
 	pic ac_button5 {
 		image		menu/hosp_button_green
-		pos			"345 215"
+		pos			"345 285"
 		click		{ cmd "aliencont_click 5;" }
 		rclick		{ cmd "aliencont_pedia 5;" }
 	}
 	pic ac_button6 {
 		image		menu/hosp_button_green
-		pos			"25 310"
+		pos			"25 380"
 		click		{ cmd "aliencont_click 6;" }
 		rclick		{ cmd "aliencont_pedia 6;" }
 	}
 	pic ac_button7 {
 		image		menu/hosp_button_green
-		pos			"345 310"
+		pos			"345 380"
 		click		{ cmd "aliencont_click 7;" }
 		rclick		{ cmd "aliencont_pedia 7;" }
 	}
 	pic ac_button8 {
 		image		menu/hosp_button_green
-		pos			"25 405"
+		pos			"25 475"
 		click		{ cmd "aliencont_click 8;" }
 		rclick		{ cmd "aliencont_pedia 8;" }
 	}
 	pic ac_button9 {
 		image		menu/hosp_button_green
-		pos			"345 405"
+		pos			"345 475"
 		click		{ cmd "aliencont_click 9;" }
 		rclick		{ cmd "aliencont_pedia 9;" }
 	}
 	pic ac_button10 {
 		image		menu/hosp_button_green
-		pos			"25 500"
+		pos			"25 570"
 		click		{ cmd "aliencont_click 10;" }
 		rclick		{ cmd "aliencont_pedia 10;" }
 	}
 	pic ac_button11 {
 		image		menu/hosp_button_green
-		pos			"345 500"
+		pos			"345 570"
 		click		{ cmd "aliencont_click 11;" }
 		rclick		{ cmd "aliencont_pedia 11;" }
 	}
 
-	pic ac_icon0	{ image icons/health_unused 	pos "272  36" }
-	pic ac_icon1	{ image icons/health_unused 	pos "592  36" }
-	pic ac_icon2	{ image icons/health_unused 	pos "272 131" }
-	pic ac_icon3	{ image icons/health_unused 	pos "592 131" }
-	pic ac_icon4	{ image icons/health_unused 	pos "272 226" }
-	pic ac_icon5	{ image icons/health_unused 	pos "592 226" }
-	pic ac_icon6	{ image icons/health_unused 	pos "272 321" }
-	pic ac_icon7	{ image icons/health_unused 	pos "592 321" }
-	pic ac_icon8	{ image icons/health_unused 	pos "272 416" }
-	pic ac_icon9	{ image icons/health_unused 	pos "592 416" }
-	pic ac_icon10	{ image icons/health_unused 	pos "272 511" }
-	pic ac_icon11	{ image icons/health_unused 	pos "592 511" }
+	pic ac_icon0	{ image icons/health_unused 	pos "272 106" }
+	pic ac_icon1	{ image icons/health_unused 	pos "592 106" }
+	pic ac_icon2	{ image icons/health_unused 	pos "272 201" }
+	pic ac_icon3	{ image icons/health_unused 	pos "592 201" }
+	pic ac_icon4	{ image icons/health_unused 	pos "272 296" }
+	pic ac_icon5	{ image icons/health_unused 	pos "592 296" }
+	pic ac_icon6	{ image icons/health_unused 	pos "272 391" }
+	pic ac_icon7	{ image icons/health_unused 	pos "592 391" }
+	pic ac_icon8	{ image icons/health_unused 	pos "272 486" }
+	pic ac_icon9	{ image icons/health_unused 	pos "592 486" }
+	pic ac_icon10	{ image icons/health_unused 	pos "272 581" }
+	pic ac_icon11	{ image icons/health_unused 	pos "592 581" }
 
-	zone ac_kill_zone0	{ pos "272  36" size "40 40" click { cmd "aliencont_killone 0;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone1	{ pos "592  36" size "40 40" click { cmd "aliencont_killone 1;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone2	{ pos "272 131" size "40 40" click { cmd "aliencont_killone 2;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone3	{ pos "592 131" size "40 40" click { cmd "aliencont_killone 3;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone4	{ pos "272 226" size "40 40" click { cmd "aliencont_killone 4;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone5	{ pos "592 226" size "40 40" click { cmd "aliencont_killone 5;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone6	{ pos "272 321" size "40 40" click { cmd "aliencont_killone 6;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone7	{ pos "592 321" size "40 40" click { cmd "aliencont_killone 7;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone8	{ pos "272 416" size "40 40" click { cmd "aliencont_killone 8;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone9	{ pos "592 416" size "40 40" click { cmd "aliencont_killone 9;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone10	{ pos "272 511" size "40 40" click { cmd "aliencont_killone 10;" } tooltip "_Kill this alien" }
-	zone ac_kill_zone11	{ pos "592 511" size "40 40" click { cmd "aliencont_killone 11;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone0	{ pos "272 106" size "40 40" click { cmd "aliencont_killone 0;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone1	{ pos "592 106" size "40 40" click { cmd "aliencont_killone 1;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone2	{ pos "272 201" size "40 40" click { cmd "aliencont_killone 2;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone3	{ pos "592 291" size "40 40" click { cmd "aliencont_killone 3;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone4	{ pos "272 296" size "40 40" click { cmd "aliencont_killone 4;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone5	{ pos "592 296" size "40 40" click { cmd "aliencont_killone 5;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone6	{ pos "272 391" size "40 40" click { cmd "aliencont_killone 6;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone7	{ pos "592 391" size "40 40" click { cmd "aliencont_killone 7;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone8	{ pos "272 486" size "40 40" click { cmd "aliencont_killone 8;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone9	{ pos "592 486" size "40 40" click { cmd "aliencont_killone 9;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone10	{ pos "272 581" size "40 40" click { cmd "aliencont_killone 10;" } tooltip "_Kill this alien" }
+	zone ac_kill_zone11	{ pos "592 581" size "40 40" click { cmd "aliencont_killone 11;" } tooltip "_Kill this alien" }
 
-	zone ac_autopsy_zone0	{ pos "272  36" size "40 40" click { cmd "aliencont_research 0;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone1	{ pos "592  36" size "40 40" click { cmd "aliencont_research 1;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone2	{ pos "272 131" size "40 40" click { cmd "aliencont_research 2;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone3	{ pos "592 131" size "40 40" click { cmd "aliencont_research 3;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone4	{ pos "272 226" size "40 40" click { cmd "aliencont_research 4;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone5	{ pos "592 226" size "40 40" click { cmd "aliencont_research 5;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone6	{ pos "272 321" size "40 40" click { cmd "aliencont_research 6;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone7	{ pos "592 321" size "40 40" click { cmd "aliencont_research 7;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone8	{ pos "272 416" size "40 40" click { cmd "aliencont_research 8;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone9	{ pos "592 416" size "40 40" click { cmd "aliencont_research 9;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone10	{ pos "272 511" size "40 40" click { cmd "aliencont_research 10;" } tooltip "_Start autopsy" }
-	zone ac_autopsy_zone11	{ pos "592 511" size "40 40" click { cmd "aliencont_research 11;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone0	{ pos "272 106" size "40 40" click { cmd "aliencont_research 0;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone1	{ pos "592 106" size "40 40" click { cmd "aliencont_research 1;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone2	{ pos "272 201" size "40 40" click { cmd "aliencont_research 2;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone3	{ pos "592 201" size "40 40" click { cmd "aliencont_research 3;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone4	{ pos "272 296" size "40 40" click { cmd "aliencont_research 4;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone5	{ pos "592 296" size "40 40" click { cmd "aliencont_research 5;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone6	{ pos "272 391" size "40 40" click { cmd "aliencont_research 6;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone7	{ pos "592 391" size "40 40" click { cmd "aliencont_research 7;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone8	{ pos "272 486" size "40 40" click { cmd "aliencont_research 8;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone9	{ pos "592 486" size "40 40" click { cmd "aliencont_research 9;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone10	{ pos "272 581" size "40 40" click { cmd "aliencont_research 10;" } tooltip "_Start autopsy" }
+	zone ac_autopsy_zone11	{ pos "592 581" size "40 40" click { cmd "aliencont_research 11;" } tooltip "_Start autopsy" }
 
-	string ac_name0		{ string "*cvar mn_ac_name0"		pos "40  35"	color "1 1 1 1"	size "220 16" }
-	string ac_name1		{ string "*cvar mn_ac_name1"		pos "360  35"	color "1 1 1 1"	size "220 16" }
-	string ac_name2		{ string "*cvar mn_ac_name2"		pos "40 130"	color "1 1 1 1"	size "220 16" }
-	string ac_name3		{ string "*cvar mn_ac_name3"		pos "360 130"	color "1 1 1 1"	size "220 16" }
-	string ac_name4		{ string "*cvar mn_ac_name4"		pos "40 225"	color "1 1 1 1"	size "220 16" }
-	string ac_name5 	{ string "*cvar mn_ac_name5"  	 	pos "360 225"	color "1 1 1 1"	size "220 16" }
-	string ac_name6 	{ string "*cvar mn_ac_name6"		pos "40 320"	color "1 1 1 1"	size "220 16" }
-	string ac_name7 	{ string "*cvar mn_ac_name7"		pos "360 320"	color "1 1 1 1"	size "220 16" }
-	string ac_name8 	{ string "*cvar mn_ac_name8"		pos "40 415"	color "1 1 1 1"	size "220 16" }
-	string ac_name9 	{ string "*cvar mn_ac_name9"		pos "360 415"	color "1 1 1 1"	size "220 16" }
-	string ac_name10 	{ string "*cvar mn_ac_name10"		pos "40 510"	color "1 1 1 1"	size "220 16" }
-	string ac_name11 	{ string "*cvar mn_ac_name11"		pos "360 510"	color "1 1 1 1"	size "220 16" }
+	string ac_name0		{ string "*cvar mn_ac_name0"		pos "40 105"	color "1 1 1 1"	size "220 16" }
+	string ac_name1		{ string "*cvar mn_ac_name1"		pos "360 105"	color "1 1 1 1"	size "220 16" }
+	string ac_name2		{ string "*cvar mn_ac_name2"		pos "40 200"	color "1 1 1 1"	size "220 16" }
+	string ac_name3		{ string "*cvar mn_ac_name3"		pos "360 200"	color "1 1 1 1"	size "220 16" }
+	string ac_name4		{ string "*cvar mn_ac_name4"		pos "40 295"	color "1 1 1 1"	size "220 16" }
+	string ac_name5 	{ string "*cvar mn_ac_name5"  	 	pos "360 295"	color "1 1 1 1"	size "220 16" }
+	string ac_name6 	{ string "*cvar mn_ac_name6"		pos "40 390"	color "1 1 1 1"	size "220 16" }
+	string ac_name7 	{ string "*cvar mn_ac_name7"		pos "360 390"	color "1 1 1 1"	size "220 16" }
+	string ac_name8 	{ string "*cvar mn_ac_name8"		pos "40 485"	color "1 1 1 1"	size "220 16" }
+	string ac_name9 	{ string "*cvar mn_ac_name9"		pos "360 485"	color "1 1 1 1"	size "220 16" }
+	string ac_name10 	{ string "*cvar mn_ac_name10"		pos "40 580"	color "1 1 1 1"	size "220 16" }
+	string ac_name11 	{ string "*cvar mn_ac_name11"		pos "360 580"	color "1 1 1 1"	size "220 16" }
 
-	string ac_status0	{ string "*cvar mn_ac_statusstr0"		pos "40  60"	color "1 1 1 1"	size "220 16" }
-	string ac_status1	{ string "*cvar mn_ac_statusstr1"		pos "360  60"	color "1 1 1 1"	size "220 16" }
-	string ac_status2	{ string "*cvar mn_ac_statusstr2"		pos "40 155"	color "1 1 1 1"	size "220 16" }
-	string ac_status3	{ string "*cvar mn_ac_statusstr3"		pos "360 155"	color "1 1 1 1"	size "220 16" }
-	string ac_status4	{ string "*cvar mn_ac_statusstr4"		pos "40 250"	color "1 1 1 1"	size "220 16" }
-	string ac_status5 	{ string "*cvar mn_ac_statusstr5"   	pos "360 250"	color "1 1 1 1"	size "220 16" }
-	string ac_status6 	{ string "*cvar mn_ac_statusstr6"		pos "40 345"	color "1 1 1 1"	size "220 16" }
-	string ac_status7	{ string "*cvar mn_ac_statusstr7"		pos "360 345"	color "1 1 1 1"	size "220 16" }
-	string ac_status8	{ string "*cvar mn_ac_statusstr8"		pos "40 440"	color "1 1 1 1"	size "220 16" }
-	string ac_status9	{ string "*cvar mn_ac_statusstr9"		pos "360 440"	color "1 1 1 1"	size "220 16" }
-	string ac_status10	{ string "*cvar mn_ac_statusstr10"		pos "40 535"	color "1 1 1 1"	size "220 16" }
-	string ac_status11	{ string "*cvar mn_ac_statusstr11"		pos "360 535"	color "1 1 1 1"	size "220 16" }
+	string ac_status0	{ string "*cvar mn_ac_statusstr0"		pos "40 130"	color "1 1 1 1"	size "220 16" }
+	string ac_status1	{ string "*cvar mn_ac_statusstr1"		pos "360 130"	color "1 1 1 1"	size "220 16" }
+	string ac_status2	{ string "*cvar mn_ac_statusstr2"		pos "40 225"	color "1 1 1 1"	size "220 16" }
+	string ac_status3	{ string "*cvar mn_ac_statusstr3"		pos "360 225"	color "1 1 1 1"	size "220 16" }
+	string ac_status4	{ string "*cvar mn_ac_statusstr4"		pos "40 320"	color "1 1 1 1"	size "220 16" }
+	string ac_status5 	{ string "*cvar mn_ac_statusstr5"   	pos "360 320"	color "1 1 1 1"	size "220 16" }
+	string ac_status6 	{ string "*cvar mn_ac_statusstr6"		pos "40 415"	color "1 1 1 1"	size "220 16" }
+	string ac_status7	{ string "*cvar mn_ac_statusstr7"		pos "360 415"	color "1 1 1 1"	size "220 16" }
+	string ac_status8	{ string "*cvar mn_ac_statusstr8"		pos "40 510"	color "1 1 1 1"	size "220 16" }
+	string ac_status9	{ string "*cvar mn_ac_statusstr9"		pos "360 510"	color "1 1 1 1"	size "220 16" }
+	string ac_status10	{ string "*cvar mn_ac_statusstr10"		pos "40 605"	color "1 1 1 1"	size "220 16" }
+	string ac_status11	{ string "*cvar mn_ac_statusstr11"		pos "360 605"	color "1 1 1 1"	size "220 16" }
 
-	bar ac_tech_progress0		{ pos "47  90" 	current "*cvar mn_ac_progress0"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress1		{ pos "367  90" current "*cvar mn_ac_progress1"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress2		{ pos "47 185" 	current "*cvar mn_ac_progress2"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress3		{ pos "367 185" current "*cvar mn_ac_progress3"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress4		{ pos "47 280" 	current "*cvar mn_ac_progress4"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress5		{ pos "367 280" current "*cvar mn_ac_progress5"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress6		{ pos "47 375" 	current "*cvar mn_ac_progress6"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress7		{ pos "367 375" current "*cvar mn_ac_progress7"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress8		{ pos "367 375" current "*cvar mn_ac_progress8"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress9		{ pos "367 375" current "*cvar mn_ac_progress9"		size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress10		{ pos "367 375" current "*cvar mn_ac_progress10"	size "263 6" color "0 .8 0 1" max "100" }
-	bar ac_tech_progress11		{ pos "367 375" current "*cvar mn_ac_progress11"	size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress0		{ pos "47 160" 	current "*cvar mn_ac_progress0"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress1		{ pos "367 160" current "*cvar mn_ac_progress1"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress2		{ pos "47 255" 	current "*cvar mn_ac_progress2"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress3		{ pos "367 255" current "*cvar mn_ac_progress3"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress4		{ pos "47 350" 	current "*cvar mn_ac_progress4"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress5		{ pos "367 350" current "*cvar mn_ac_progress5"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress6		{ pos "47 445" 	current "*cvar mn_ac_progress6"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress7		{ pos "367 445" current "*cvar mn_ac_progress7"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress8		{ pos "47 560" current "*cvar mn_ac_progress8"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress9		{ pos "367 560" current "*cvar mn_ac_progress9"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress10		{ pos "47 675" current "*cvar mn_ac_progress10"		size "263 6" color "0 .8 0 1" max "100" }
+	bar ac_tech_progress11		{ pos "367 675" current "*cvar mn_ac_progress11"	size "263 6" color "0 .8 0 1" max "100" }
 
+	// @todo convert into abstract scrollbar
 	pic ac_button_scrollup
 	{
 		tooltip		"_Scroll up"
 		image		menu/buttons_small
 		mousefx		true
-		pos			"980 25"
+		pos			"660 95"
 		texh		"48 48"
 		texl		"32 32"
 		click		{ cmd "aliencont_list_up;" }
@@ -361,7 +347,7 @@ menu aliencont
 		tooltip		"_Scroll down"
 		image		menu/buttons_small
 		mousefx		true
-		pos			"980 623"
+		pos			"660 623"
 		texl		"32 48"
 		texh		"48 64"
 		click		{ cmd "aliencont_list_down;" }
@@ -372,6 +358,14 @@ menu aliencont
 	// ================================================================================
 	// alien info
 	// ================================================================================
+
+	panel alc_alien_panel
+	{
+		pos		"685 90"
+		size	"280 466"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
 
 	string txt_alc_race
 	{
@@ -385,13 +379,45 @@ menu aliencont
 	pic alc_alien_image
 	{
 		image	"*cvar mn_al_alienimage"
-		pos		"685 90"
-		size	"240 440"
+		pos		"702 107"
+		size	"245 431"
 	}
 
 	// ================================================================================
-	// info window (bottom)
+	// info window
 	// ================================================================================
+
+	// ==================
+	// base info
+	// ==================
+
+	string txt_base_info
+	{
+		string		"_Base info"
+		pos			"708 585"
+		size		"200 20"
+		font		f_small_bold
+	}
+
+	// ==================
+	// aliencont capacity
+	// ==================
+
+	string txt_alc_limit
+	{
+		string		"_Base capacity:"
+		pos			"730 609"
+		size		"150 20"
+		font		f_small
+	}
+
+	string txt_alc_limit_v
+	{
+		string		"*cvar mn_al_capacity / *cvar mn_al_capacity_max"
+		pos			"730 629"
+		size		"150 20"
+		font		f_small
+	}
 
 	// ==================
 	// alien info
@@ -400,7 +426,7 @@ menu aliencont
 	string txt_alien_amount
 	{
 		string		"_Amounts"
-		pos			"430 680"
+		pos			"708 652"
 		size		"150 20"
 		font		f_small_bold
 	}
@@ -409,18 +435,18 @@ menu aliencont
 	// alive alien amount
 	// ==================
 
-	string txt_alc_alice
+	string txt_alc_alive
 	{
 		string		"_Alive:"
-		pos			"440 705"
+		pos			"730 676"
 		size		"100 20"
 		font		f_small
 	}
 
-	string txt_alc_alice_v
+	string txt_alc_alive_v
 	{
 		string		"*cvar mn_al_alive"
-		pos			"540 705"
+		pos			"850 676"
 		size		"50 20"
 		font		f_small
 		textalign	ur
@@ -433,70 +459,18 @@ menu aliencont
 	string txt_alc_dead
 	{
 		string		"_Dead:"
-		pos			"440 730"
+		pos			"730 700"
 		size		"100 20"
-		font	f_small
+		font		f_small
 	}
 
 	string txt_alc_dead_v
 	{
 		string		"*cvar mn_al_dead"
-		pos			"540 730"
+		pos			"850 700"
 		size		"50 20"
 		font		f_small
 		textalign	ur
-	}
-
-	// ==================
-	// base info
-	// ==================
-
-	string txt_base_name
-	{
-		string		"_Base info"
-		pos			"30 680"
-		size		"200 20"
-		font		f_small_bold
-	}
-
-	// ==================
-	// base name
-	// ==================
-
-	string txt_alc_currentbase
-	{
-		string		"_Current base:"
-		pos			"40 705"
-		size		"150 20"
-		font		f_small
-	}
-
-	string txt_alc_currentbase_v
-	{
-		string		"*cvar mn_base_title"
-		pos			"200 705"
-		size		"150 20"
-		font		f_small
-	}
-
-	// ==================
-	// aliencont capacity
-	// ==================
-
-	string txt_alc_limit
-	{
-		string		"_Base capacity:"
-		pos			"40 730"
-		size		"150 20"
-		font		f_small
-	}
-
-	string txt_alc_limit_v
-	{
-		string		"*cvar mn_al_capacity / *cvar mn_al_capacity_max"
-		pos			"200 730"
-		size		"150 20"
-		font		f_small
 	}
 
 	// ================================================================================
