@@ -150,9 +150,9 @@ extract_gtk()
 	${TAR} -xzf ${DOWNLOAD_DIR}/gtkglext-dev.tar.gz -C ${MINGW_DIR}
 
 	for i in $(echo "glib-2.0 gail-1.0 gtk-2.0 pango-1.0 atk-1.0 cairo gtkglext-1.0 gtkglextmm-1.2"); do
-		mv ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include
+		cp -R ${MINGW_DIR}/include/${i}/* ${MINGW_DIR}/include
 		rm -r ${MINGW_DIR}/include/${i}
-		mv ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include
+		cp -R ${MINGW_DIR}/lib/${i}/include/* ${MINGW_DIR}/include
 		rm -r ${MINGW_DIR}/lib/${i}
 	done
 }
