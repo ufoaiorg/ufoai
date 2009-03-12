@@ -2169,6 +2169,10 @@ void CL_ResetSinglePlayerData (void)
 		if (CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			ccs.numAliensTD++;
 	}
+	if (ccs.numAliensTD > MAX_AC_MENU_ENTRIES) {
+		Com_Printf("Warning: More alien team definitions than we are able to display in the menus\n");
+		ccs.numAliensTD = MAX_AC_MENU_ENTRIES;
+	}
 }
 
 #ifdef DEBUG

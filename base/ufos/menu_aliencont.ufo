@@ -67,15 +67,6 @@ menu aliencont
 		*bt_alc_killaliens disabled true
 	}
 
-	custombutton bt_alc_killaliens
-	{
-		tooltip		"_Kill all aliens in this base"
-		pos			"661 698"
-		size		"64 64"
-		icon		killalien
-		click		{ cmd "aliencont_killall;" }
-	}
-
 	// ==================
 	// main window
 	// ==================
@@ -165,7 +156,7 @@ menu aliencont
 	panel ac {
 		{
 			pos "11 92"
-			size "707 607"
+			size "670 606"
 			image	menu/panel_grey_green_large
 			blend	true
 		}
@@ -320,41 +311,6 @@ menu aliencont
 		bar tech_progress9	{ pos "367 375" current "*cvar mn_ac_progress9"		size "263 6" color "0 .8 0 1" max "100" }
 		bar tech_progress10	{ pos "367 375" current "*cvar mn_ac_progress10"	size "263 6" color "0 .8 0 1" max "100" }
 		bar tech_progress11	{ pos "367 375" current "*cvar mn_ac_progress11"	size "263 6" color "0 .8 0 1" max "100" }
-
-		zone scroll_zone
-		{
-			pos			"657 0"
-			size		"50 607"
-			whup		{ cmd "aliencont_list_up;" }
-			whdown		{ cmd "aliencont_list_down;" }
-		}
-
-		pic button_scrollup
-		{
-			tooltip		"_Scroll up"
-			image		menu/buttons_small
-			mousefx		true
-			pos			"667 25"
-			texh		"48 48"
-			texl		"32 32"
-			click		{ cmd "aliencont_list_up;" }
-			out			{ *path:this texl "32 32" *path:this texh "48 48" }
-			in			{ *path:this texl "48 32" *path:this texh "64 48" }
-		}
-
-		pic button_scrolldown
-		{
-			tooltip		"_Scroll down"
-			image		menu/buttons_small
-			mousefx		true
-			pos			"667 567"
-			texl		"32 48"
-			texh		"48 64"
-			click		{ cmd "aliencont_list_down;" }
-			out			{ *path:this texl "32 48" *path:this texh "48 64" }
-			in			{ *path:this texl "48 48" *path:this texh "64 64" }
-		}
-
 	}
 
 	// ================================================================================
@@ -365,7 +321,7 @@ menu aliencont
 	{
 		{
 			pos		"730 90"
-			size	"280 466"
+			size	"280 520"
 			image	menu/panel_grey_green_large
 			blend	true
 		}
@@ -386,6 +342,52 @@ menu aliencont
 			size			"239 397"
 			preventratio	true
 		}
+
+		// ==================
+		// alien info
+		// ==================
+
+		// ==================
+		// alive alien amount
+		// ==================
+
+		string txt_alc_alive
+		{
+			string		"_Alive:"
+			pos			"45 445"
+			size		"100 20"
+			font		f_small
+		}
+
+		string txt_alc_alive_v
+		{
+			string		"*cvar mn_al_alive"
+			pos			"165 445"
+			size		"50 20"
+			font		f_small
+			textalign	ur
+		}
+
+		// ==================
+		// dead alien amount
+		// ==================
+
+		string txt_alc_dead
+		{
+			string		"_Dead:"
+			pos			"45 470"
+			size		"100 20"
+			font		f_small
+		}
+
+		string txt_alc_dead_v
+		{
+			string		"*cvar mn_al_dead"
+			pos			"165 470"
+			size		"50 20"
+			font		f_small
+			textalign	ur
+		}
 	}
 
 	// ================================================================================
@@ -394,8 +396,8 @@ menu aliencont
 
 	panel baseinfo {
 		{
-			pos		"728 560"
-			size	"280 200"
+			pos		"728 626"
+			size	"280 134"
 			image	menu/panel_grey_green_large
 			blend	true
 		}
@@ -431,60 +433,19 @@ menu aliencont
 			size		"150 20"
 			font		f_small
 		}
+	}
 
-		// ==================
-		// alien info
-		// ==================
+	// ================================================================================
+	// buttons
+	// ================================================================================
 
-		string txt_alien_amount
-		{
-			string		"_Amounts"
-			pos			"23 92"
-			size		"150 20"
-			font		f_small_bold
-		}
-
-		// ==================
-		// alive alien amount
-		// ==================
-
-		string txt_alc_alive
-		{
-			string		"_Alive:"
-			pos			"45 116"
-			size		"100 20"
-			font		f_small
-		}
-
-		string txt_alc_alive_v
-		{
-			string		"*cvar mn_al_alive"
-			pos			"165 116"
-			size		"50 20"
-			font		f_small
-			textalign	ur
-		}
-
-		// ==================
-		// dead alien amount
-		// ==================
-
-		string txt_alc_dead
-		{
-			string		"_Dead:"
-			pos			"45 140"
-			size		"100 20"
-			font		f_small
-		}
-
-		string txt_alc_dead_v
-		{
-			string		"*cvar mn_al_dead"
-			pos			"165 140"
-			size		"50 20"
-			font		f_small
-			textalign	ur
-		}
+	custombutton bt_alc_killaliens
+	{
+		tooltip		"_Kill all aliens in this base"
+		pos			"915 674"
+		size		"64 64"
+		icon		killalien
+		click		{ cmd "aliencont_killall;" }
 	}
 
 	// ================================================================================

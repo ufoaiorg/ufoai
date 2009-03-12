@@ -29,20 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_aliencont.h"
 #include "cl_aliencont_callbacks.h"
 
-/**
- * @brief Maximal entries in aliencont menu.
- * @sa MAX_TEAMDEFS
- */
-#define AC_MENU_MAX_ENTRIES 12
-
 /** @brief Number of entries in a line of the aliencont menu. */
 #define AC_MENU_LINE_ENTRIES 2
 
 /** Statics for menu. */
 static const aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment. */
 static int numAliensOnList = 0;			/**< Number of aliens on AC menu list. */
-/** @brief First line in aliencont menu. */
-static int alienContFirstEntry;
 
 /**
  * @brief Counts killed or captured aliens of given type in all bases.
@@ -192,7 +184,7 @@ static void AC_UpdateMenu (const base_t *base)
 	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
 		const aliensCont_t *containment = base->alienscont;
 		for (i = 0, j = 0; i < ccs.numAliensTD; i++) {
-			if (j >= alienContFirstEntry && j < AC_MENU_MAX_ENTRIES) {
+			if (j < MAX_AC_MENU_ENTRIES) {
 				if (containment[i].teamDef) {
 					const technology_t *tech = containment[i].tech;
 					if (!tech) {
@@ -230,7 +222,7 @@ static void AC_UpdateMenu (const base_t *base)
 
 		numAliensOnList = j;
 
-		for (; j < AC_MENU_MAX_ENTRIES; j++) {
+		for (; j < MAX_AC_MENU_ENTRIES; j++) {
 			Cvar_Set(va("mn_ac_statusstr%i", j), _("Free slot"));
 			Cvar_Set(va("mn_ac_name%i", j), _("None"));
 			Cvar_Set(va("mn_ac_dead%i", j), "");
@@ -316,34 +308,6 @@ static void AC_KillOne_f (void)
 	}
 }
 
-/**
- * @brief Click function for scrolling up the aliencont list.
- */
-static void AC_ListUp_f (void)
-{
-	if (!baseCurrent)
-		return;
-
-	if (alienContFirstEntry >= AC_MENU_LINE_ENTRIES)
-		alienContFirstEntry -= AC_MENU_LINE_ENTRIES;
-
-	AC_UpdateMenu(baseCurrent);
-}
-
-/**
- * @brief Click function for scrolling down the aliencont list.
- */
-static void AC_ListDown_f (void)
-{
-	if (!baseCurrent)
-		return;
-
-	if (alienContFirstEntry + AC_MENU_MAX_ENTRIES < numAliensOnList)
-		alienContFirstEntry += AC_MENU_LINE_ENTRIES;
-
-	AC_UpdateMenu(baseCurrent);
-}
-
 void AC_InitCallbacks (void)
 {
 	Cmd_AddCommand("aliencont_init", AC_Init_f, "Init function for alien containment menu");
@@ -351,8 +315,6 @@ void AC_InitCallbacks (void)
 	Cmd_AddCommand("aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
 	Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
 	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
-	Cmd_AddCommand("aliencont_list_up", AC_ListUp_f, "Scroll up function for aliencont list");
-	Cmd_AddCommand("aliencont_list_down", AC_ListDown_f, "Scroll down function for aliencont list");
 	Cmd_AddCommand("aliencont_click", AC_AlienClick_f, "Click function for aliencont list");
 	aliencontCurrent = NULL;
 }
@@ -364,8 +326,6 @@ void AC_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("aliencont_killone");
 	Cmd_RemoveCommand("aliencont_research");
 	Cmd_RemoveCommand("aliencont_pedia");
-	Cmd_RemoveCommand("aliencont_list_up");
-	Cmd_RemoveCommand("aliencont_list_down");
 	Cmd_RemoveCommand("aliencont_click");
 
 }
