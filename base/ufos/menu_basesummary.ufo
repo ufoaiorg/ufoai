@@ -9,12 +9,165 @@ menu basesummary
 
 	pic background
 	{
-		image	menu/basesummary_bg
+		image	menu/base_bg
+	}
+
+	func resetbaselayout
+	{
+		*basenavigation.base0 bgcolor "1 1 1 0.4"
+		*basenavigation.base1 bgcolor "1 1 1 0.4"
+		*basenavigation.base2 bgcolor "1 1 1 0.4"
+		*basenavigation.base3 bgcolor "1 1 1 0.4"
+		*basenavigation.base4 bgcolor "1 1 1 0.4"
+		*basenavigation.base5 bgcolor "1 1 1 0.4"
+		*basenavigation.base6 bgcolor "1 1 1 0.4"
+		*basenavigation.base7 bgcolor "1 1 1 0.4"
+	}
+
+	panel basenavigation {
+		{
+			pos		"621 115"
+			size	"338 211"
+			image	"menu/panel_grey"
+			blend	true
+		}
+
+		panel inner_border {
+			{
+				pos		"19 20"
+				size	"298 170"
+				image	"menu/panel_grey_black"
+				blend	true
+			}
+		}
+
+		// ==================
+		// base layouts
+		// ==================
+		baselayout base0
+		{
+			pos			"29 30"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		0
+			click 		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
+
+		baselayout base1
+		{
+			pos			"99 30"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		1
+			click		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
+
+		baselayout base2
+		{
+			pos			"169 30"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		2
+			click		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
+
+		baselayout base3
+		{
+			pos			"239 30"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		3
+			click		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
+
+		baselayout base4
+		{
+			pos			"29 105"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		4
+			click		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
+
+		baselayout base5
+		{
+			pos			"99 105"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		5
+			click		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
+
+		baselayout base6
+		{
+			pos			"169 105"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		6
+			click		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
+
+		baselayout base7
+		{
+			pos			"239 105"
+			size		"67 72"
+			color		"1 0 0 0.4"
+			padding		2
+			baseid		7
+			click		{
+				call resetbaselayout
+				*path:this bgcolor "1 1 1 1"
+				cmd "basesummary_selectbase <baseid>;"
+			}
+		}
 	}
 
 	// ===================
 	// left side text node
 	// ===================
+
+	panel base_summary_bg {
+		pos	"12 103"
+		size	"551 655"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
+
 	text txt_base_summary
 	{
 		textid		TEXT_STATS_BASESUMMARY
@@ -32,6 +185,14 @@ menu basesummary
 	// ==================
 	// info window
 	// ==================
+
+	panel info_bg {
+		pos	"588 337"
+		size	"408 423"
+		image	menu/panel_grey_green_large
+		blend	true
+	}
+
 	text txt_info
 	{
 		pos			"615 362"
@@ -43,133 +204,6 @@ menu basesummary
 		scrollbar	yes
 		rows		"23"
 		textid			TEXT_STANDARD
-	}
-
-	func resetbaselayout
-	{
-		*base0 bgcolor "1 1 1 0.4"
-		*base1 bgcolor "1 1 1 0.4"
-		*base2 bgcolor "1 1 1 0.4"
-		*base3 bgcolor "1 1 1 0.4"
-		*base4 bgcolor "1 1 1 0.4"
-		*base5 bgcolor "1 1 1 0.4"
-		*base6 bgcolor "1 1 1 0.4"
-		*base7 bgcolor "1 1 1 0.4"
-	}
-
-	// ==================
-	// base layouts
-	// ==================
-	baselayout base0
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"650 145"
-		baseid		0
-		click 		{
-			call resetbaselayout
-			*base0 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 0;"
-		}
-	}
-
-	baselayout base1
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"720 145"
-		baseid		1
-		click		{
-			call resetbaselayout
-			*base1 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 1;"
-		}
-	}
-
-	baselayout base2
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"790 145"
-		baseid		2
-		click		{
-			call resetbaselayout
-			*base2 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 2;"
-		}
-	}
-
-	baselayout base3
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"860 145"
-		baseid		3
-		click		{
-			call resetbaselayout
-			*base3 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 3;"
-		}
-	}
-
-	baselayout base4
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"650 220"
-		baseid		4
-		click		{
-			call resetbaselayout
-			*base4 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 4;"
-		}
-	}
-
-	baselayout base5
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"720 220"
-		baseid		5
-		click		{
-			call resetbaselayout
-			*base5 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 5;"
-		}
-	}
-
-	baselayout base6
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"790 220"
-		baseid		6
-		click		{
-			call resetbaselayout
-			*base6 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 6;"
-		}
-	}
-
-	baselayout base7
-	{
-		size		"67 72"
-		color		"1 0 0 0.4"
-		padding		2
-		pos			"860 220"
-		baseid		7
-		click		{
-			call resetbaselayout
-			*base7 bgcolor "1 1 1 1"
-			cmd "basesummary_selectbase 7;"
-		}
 	}
 
 	// ==================
