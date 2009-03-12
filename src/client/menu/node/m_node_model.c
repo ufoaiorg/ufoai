@@ -278,7 +278,7 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
  * @brief Compute scape and center for a node and a modelInfo
  * @todo Code and interface need improvment for composite models
  */
-static void MN_AutoScale(menuNode_t *node, modelInfo_t *mi, vec3_t pScale, vec3_t center)
+static void MN_AutoScale(menuNode_t *node, modelInfo_t *mi, vec3_t scale, vec3_t center)
 {
 	/* autoscale */
 	float max, size;
@@ -297,9 +297,9 @@ static void MN_AutoScale(menuNode_t *node, modelInfo_t *mi, vec3_t pScale, vec3_
 	}
 	size = (node->size[0] < node->size[1] ? node->size[0] : node->size[1]) / max;
 
-	pScale[0] = size;
-	pScale[1] = size;
-	pScale[2] = size;
+	scale[0] = size;
+	scale[1] = size;
+	scale[2] = size;
 }
 
 /**
