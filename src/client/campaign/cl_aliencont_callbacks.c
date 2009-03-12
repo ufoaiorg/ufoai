@@ -210,9 +210,9 @@ static void AC_UpdateMenu (const base_t *base)
 						} else {
 							Cvar_Set(va("mn_ac_statusstr%i", j), _("Needs autopsy!"));
 							if (!containment[i].amount_dead) {
-								MN_ExecuteConfunc("aliencontkill%i", j);
+								MN_ExecuteConfunc("aliencontkill %i", j);
 							} else {
-								MN_ExecuteConfunc("aliencontneedautopsy%i", j);
+								MN_ExecuteConfunc("aliencontneedautopsy %i", j);
 							}
 						}
 						Cvar_SetValue(va("mn_ac_progress%i", j), (1 - tech->time / tech->overalltime) * 100);
