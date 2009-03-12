@@ -748,11 +748,12 @@ qboolean AC_LoadXML (mxml_node_t * parent)
 	mxml_node_t *aliencont;
 
 	aliencont = mxml_GetNode(parent, "aliencont");
-	if (!aliencont) {
-		Com_Printf("Error: AlienCont Node wasn't found in savegame\n");
-		return qfalse;
+	if (aliencont) {
+		ccs.breathingMailSent = mxml_GetInt(aliencont, "ccs.breathingMailSent", 0);
+	} else {
+		/* set defaults, old savegame without aliencont node*/
+		ccs.breathingMailSent = qfalse;
 	}
-	ccs.breathingMailSent = mxml_GetInt(aliencont, "ccs.breathingMailSent", 0);
 
 	return qtrue;
 }
