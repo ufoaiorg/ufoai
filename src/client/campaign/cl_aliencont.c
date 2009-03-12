@@ -751,6 +751,7 @@ qboolean AC_LoadXML (mxml_node_t * parent)
 	if (aliencont) {
 		ccs.breathingMailSent = mxml_GetInt(aliencont, "ccs.breathingMailSent", 0);
 	} else {
+		/** @todo Remove this once we release 2.3 */
 		/* set defaults, old savegame without aliencont node*/
 		ccs.breathingMailSent = qfalse;
 	}
