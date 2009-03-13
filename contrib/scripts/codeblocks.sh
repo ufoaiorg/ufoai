@@ -45,6 +45,7 @@ start_downloads()
 	download http://downloads.sourceforge.net/gnuwin32/ wget-1.11.4-1-bin.zip wget.zip
 	download http://downloads.sourceforge.net/gnuwin32/ tiff-3.8.2-1-lib.zip libtiff.zip
 	download http://downloads.sourceforge.net/gnuwin32/ gettext-0.14.4-bin.zip gettext.zip
+	download http://downloads.sourceforge.net/gnuwin32/ libxml2-2.4.12-1-lib.zip libxml2.zip
 
 	download http://curl.de-mirror.de/download/ libcurl-${CURL_VERSION}-win32-nossl.zip libcurl.zip
 
@@ -102,6 +103,9 @@ extract_libs()
 	${UNZIP} -o ${DOWNLOAD_DIR}/freetype.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/libtiff.zip -d ${MINGW_DIR}
 	${UNZIP} -o ${DOWNLOAD_DIR}/gettext.zip -d ${MINGW_DIR}
+	${UNZIP} -o ${DOWNLOAD_DIR}/libxml2.zip -d ${MINGW_DIR}
+	cp -R ${MINGW_DIR}/include/libxml2/* ${MINGW_DIR}/include
+	rm -r ${MINGW_DIR}/include/libxml2
 }
 
 extract_libcurl()
