@@ -1177,7 +1177,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 				const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
 
 				/* Only try left hand if right hand is empty or no twohanded weapon/item is in it. */
-				if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
+				if (!rightHand || !rightHand->item.t->fireTwoHanded) {
 					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
 					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
 				}
@@ -1345,7 +1345,6 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	qboolean exists;
 	int itemX = 0;
 	int itemY = 0;
-	int checkedTo = INV_DOES_NOT_FIT;
 	item_t *dragItem = MN_DNDGetItem();
 
 	/* we already check it when the node accept the DND */
@@ -1394,7 +1393,7 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 	}
 
 	if (!MN_IsScrollContainerNode(target)) {
-		checkedTo = Com_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+		const int checkedTo = Com_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
 		return checkedTo != 0;
 	}
 
@@ -1432,26 +1431,11 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 			EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
 			EXTRADATA(target).container->id, dragInfoToX, dragInfoToY);
 	} else {
-		menuNode_t *target;
-
-#if 0 /* is it really needed? */
-		if (EXTRADATA(source).container->id == csi.idArmour) {
-			/** HACK @todo This is only because armour containers (and their nodes) are
-			 * handled differently than normal containers somehow.
-			 * dragInfo is not updated in MN_DrawMenus for them, this needs to be fixed.
-			 * In a perfect world EXTRADATA(node).container would always be the same as dragInfo.to here. */
-			if (MN_DNDGetTargetNode() == source) {
-				/* dragInfo.to = EXTRADATA(source).container; */
-				dragInfoToX = 0;
-				dragInfoToY = 0;
-			}
-		}
-#endif
-		target = MN_DNDGetTargetNode();
+		menuNode_t *target = MN_DNDGetTargetNode();
 		if (target) {
 			invList_t *fItem;
 			/* menu */
-			/** @todo Is filterEquipType here is need?, we can use anyway Com_SearchInInventory if we disable dragInfoFromX/Y when we start DND */
+			/** @todo Is filterEquipType needed here?, we can use anyway Com_SearchInInventory if we disable dragInfoFromX/Y when we start DND */
 			if (MN_IsScrollContainerNode(source)) {
 				const int equipType = EXTRADATA(source).filterEquipType;
 				fItem = MN_ContainerNodeGetExistingItem(source, dragItem->t, equipType);
