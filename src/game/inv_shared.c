@@ -666,7 +666,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	/* Get empty container */
 	ic = invUnused;
 
-	/* Ensure, that for later usage in other (or this) function(s) invUnused will be the next empty/free slot.
+	/* Ensure, that for later usage invUnused will be the next empty/free slot.
 	 * It is not used _here_ anymore. */
 	invUnused = ic->next;
 
@@ -699,7 +699,7 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
  */
 qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * container, invList_t *fItem)
 {
-	invList_t *ic, *oldUnused, *previous;
+	invList_t *ic, *previous;
 
 	assert(i);
 	assert(container);
@@ -737,8 +737,11 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 		assert(ic->item.amount == 1);
 
 		i->c[container->id] = ic->next;
+
+		/* updated invUnused to be able to reuse this space later again */
 		ic->next = invUnused;
 		invUnused = ic;
+
 		return qtrue;
 	}
 
@@ -752,14 +755,15 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, const invDef_t * contain
 					ic->item.t->name, ic->item.amount);
 				return qtrue;
 			}
-			oldUnused = invUnused;
-			invUnused = ic;
-			if (ic == i->c[container->id]) {
+
+			if (ic == i->c[container->id])
 				i->c[container->id] = i->c[container->id]->next;
-			} else {
+			else
 				previous->next = ic->next;
-			}
-			invUnused->next = oldUnused;
+
+			ic->next = invUnused;
+			invUnused = ic;
+
 			return qtrue;
 		}
 		previous = ic;
@@ -1021,7 +1025,7 @@ qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
  */
 void INVSH_EmptyContainer (inventory_t* const i, const invDef_t * container)
 {
-	invList_t *ic, *old;
+	invList_t *ic;
 #ifdef DEBUG
 	int cnt = 0;
 
@@ -1029,14 +1033,14 @@ void INVSH_EmptyContainer (inventory_t* const i, const invDef_t * container)
 
 	if (container->temp)
 		Com_DPrintf(DEBUG_SHARED, "INVSH_EmptyContainer: Emptying temp container %s.\n", container->name);
-#endif
 
 	assert(i);
+#endif
 
 	ic = i->c[container->id];
 
 	while (ic) {
-		old = ic;
+		invList_t *old = ic;
 		ic = ic->next;
 		old->next = invUnused;
 		invUnused = old;
