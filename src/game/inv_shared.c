@@ -2070,8 +2070,7 @@ FIREMODE MANAGEMENT FUNCTIONS
  * @brief Returns the index of the array that has the firedefinitions for a given weapon/ammo (-index)
  * @param[in] od The object definition of the ammo item.
  * @param[in] weapon The weapon (in the inventory) to check the ammo item with.
- * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
- * @note the return value of -1 is in most cases a fatal error (except the scripts are not parsed while e.g. maptesting)
+ * @return int Returns the index in the fd array.
  */
 int FIRESH_FiredefsIDXForWeapon (const objDef_t *od, const objDef_t *weapon)
 {
@@ -2091,8 +2090,15 @@ int FIRESH_FiredefsIDXForWeapon (const objDef_t *od, const objDef_t *weapon)
 			return i;
 	}
 
+#ifdef DEBUG
+	/* print the ids in case of an error */
+	for (i = 0; i < od->numWeapons; i++)
+		Com_Printf("%s\n", od->weapons[i]->id);
+#endif
+
 	/* No firedef index found for this weapon/ammo. */
-	Sys_Error("FIRESH_FiredefsIDXForWeapon: No firedef index found for weapon: '%s' with weapIdx: %i.", od->id, weapon->idx);
+	Sys_Error("FIRESH_FiredefsIDXForWeapon: No firedef index found for ammo: '%s' with weapon: %s.",
+		od->id, weapon->id);
 }
 
 /**

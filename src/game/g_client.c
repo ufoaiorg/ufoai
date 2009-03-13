@@ -2268,9 +2268,6 @@ int G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
-	invDef_t *fromPtr;
-	invDef_t *toPtr;
-	invList_t *fromItem;
 	int hand, fdIdx, objIdx;
 	int resType, resState, resValue;
 	edict_t *ent;
@@ -2278,6 +2275,12 @@ int G_ClientAction (player_t * player)
 	/* read the header */
 	action = gi.ReadByte();
 	num = gi.ReadShort();
+
+	if (num < 0 || num >= MAX_EDICTS) {
+		Com_Printf("Invalid edict num %i\n", num);
+		return action;
+	}
+
 	switch (action) {
 	case PA_NULL:
 		/* do nothing on a null action */
@@ -2307,22 +2310,16 @@ int G_ClientAction (player_t * player)
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 
-		if (from >= 0 && from < gi.csi->numIDs)
-			fromPtr = &gi.csi->ids[from];
-		else
-			fromPtr = NULL;
-		if (to >= 0 && to < gi.csi->numIDs)
-			toPtr = &gi.csi->ids[to];
-		else
-			toPtr = NULL;
-		if (!fromPtr || !toPtr)
+		ent = g_edicts + num;
+
+		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
 			Com_Printf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
-		else {
-			ent = g_edicts + num;
-			if (ent) {
-				fromItem = Com_SearchInInventory(&ent->i, fromPtr, fx, fy);
-				G_ClientInvMove(player, num, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
-			}
+		} else {
+			invDef_t *fromPtr = &gi.csi->ids[from];
+			invDef_t *toPtr = &gi.csi->ids[to];
+			invList_t *fromItem = Com_SearchInInventory(&ent->i, fromPtr, fx, fy);
+			assert(fromItem);
+			G_ClientInvMove(player, num, fromPtr, fromItem, toPtr, tx, ty, qtrue, NOISY);
 		}
 		break;
 
@@ -2350,18 +2347,13 @@ int G_ClientAction (player_t * player)
 		break;
 
 	case PA_REACT_SELECT:
-		hand = -1;
-		fdIdx = -1;
-		objIdx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
 		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
 		/** @todo Add check for correct player here (player==g_edicts[num]->team ???) */
 		ent = g_edicts + num;
-		if (ent) {
-			ent->chr.RFmode.hand = hand;
-			ent->chr.RFmode.fmIdx = fdIdx;
-			ent->chr.RFmode.wpIdx = objIdx;
-		}
+		ent->chr.RFmode.hand = hand;
+		ent->chr.RFmode.fmIdx = fdIdx;
+		ent->chr.RFmode.wpIdx = objIdx;
 		break;
 
 	case PA_RESERVE_STATE:
@@ -2371,44 +2363,25 @@ int G_ClientAction (player_t * player)
 
 		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resType, &resState, &resValue);
 
-		if (resState == RES_TYPES) {
+		if (resState == RES_TYPES)
 			gi.error("G_ClientAction: No sane value received for resState! (resType=%i resState=%i resValue=%i)\n", resType, resState, resValue);
-			break;
-		}
 
-		if (resValue < 0) {
+		if (resValue < 0)
 			gi.error("G_ClientAction: No sane value received for resValue!  (resType=%i resState=%i resValue=%i)\n", resType, resState, resValue);
-			break;
-		}
 
 		ent = g_edicts + num;
-		if (ent) {
-			switch (resType) {
-			case RES_REACTION:
-				ent->chr.reservedTus.reserveReaction = resState;
-				ent->chr.reservedTus.reaction = resValue;
-				break;
-#if 0
-/* These are actually not needed on the server-side */
-			case RES_CROUCH:
-				ent->chr.reservedTus.reserveCrouch = resState;
-				ent->chr.reservedTus.crouch = resValue;
-				break;
-			case RES_SHOT:
-				/* resState is ignored here right now */
-				ent->chr.reservedTus.shot = resValue;
-				break;
-#endif
-			default:
-				gi.error("G_ClientAction: Unknown reservation type (on the server-side)!\n");
-				break;
-			}
+		switch (resType) {
+		case RES_REACTION:
+			ent->chr.reservedTus.reserveReaction = resState;
+			ent->chr.reservedTus.reaction = resValue;
+			break;
+		default:
+			gi.error("G_ClientAction: Unknown reservation type (on the server-side)!\n");
 		}
 		break;
 
 	default:
 		gi.error("G_ClientAction: Unknown action!\n");
-		break;
 	}
 	return action;
 }
