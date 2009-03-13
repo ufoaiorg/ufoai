@@ -46,7 +46,7 @@ vec3_t newBasePos;
 building_t *buildingConstructionList[MAX_BUILDINGS];
 static cvar_t *cl_initial_equipment;
 
-static void B_AssignInitial(aircraft_t *aircraft, const equipDef_t *ed);
+static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
 
 /**
  * @brief Array bound check for the base index.
@@ -1028,7 +1028,8 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 		Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
 	} else {
 		if (assignInitialAircraft) {
-			B_AssignInitial(assignInitialAircraft, ed);
+			AIR_AssignInitial(assignInitialAircraft);
+			B_PackInitialEquipment(assignInitialAircraft, ed);
 		} else {
 			for (i = 0; i < csi.numODs; i++)
 				edTarget->num[i] += ed->num[i] / 5;
@@ -2289,7 +2290,6 @@ static void CL_SwapSkills (chrList_t *team)
 
 /**
  * @brief Assigns initial soldier equipment for the first base
- * @sa B_AssignInitial
  * @todo Move this function to a better place - has nothing to do with bases anymore
  */
 static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
@@ -2336,31 +2336,6 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 		}
 	}
 	CL_UpdateCredits(ccs.credits - price);
-}
-
-/**
- * @brief Assigns initial team of soldiers with equipment to aircraft
- * @sa B_PackInitialEquipment
- */
-static void B_AssignInitial (aircraft_t *aircraft, const equipDef_t *ed)
-{
-	int i, num;
-	base_t *base;
-
-	if (!aircraft) {
-		Com_Printf("B_AssignInitial: No aircraft given\n");
-		return;
-	}
-
-	base = aircraft->homebase;
-	assert(base);
-
-	num = E_GenerateHiredEmployeesList(base);
-	num = min(num, MAX_TEAMLIST);
-	for (i = 0; i < num; i++)
-		AIM_AddEmployeeFromMenu(aircraft, i);
-
-	B_PackInitialEquipment(aircraft, ed);
 }
 
 /**

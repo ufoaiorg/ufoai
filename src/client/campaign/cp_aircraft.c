@@ -3081,3 +3081,26 @@ void AIM_AddEmployeeFromMenu (aircraft_t *aircraft, const int num)
 		}
 	}
 }
+
+/**
+ * @brief Assigns initial team of soldiers to aircraft
+ * @param[in] aircraft soldiers to add to
+ */
+void AIR_AssignInitial (aircraft_t *aircraft)
+{
+	int i, num;
+	base_t *base;
+
+	if (!aircraft) {
+		Com_Printf("AIR_AssignInitial: No aircraft given\n");
+		return;
+	}
+
+	base = aircraft->homebase;
+	assert(base);
+
+	num = E_GenerateHiredEmployeesList(base);
+	num = min(num, MAX_TEAMLIST);
+	for (i = 0; i < num; i++)
+		AIM_AddEmployeeFromMenu(aircraft, i);
+}
