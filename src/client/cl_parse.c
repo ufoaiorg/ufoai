@@ -618,7 +618,7 @@ static void CL_StartingGameDone (struct dbuffer *msg)
 			const character_t *chr = CL_GetActorChr(le);
 			if (!chr)
 				Com_Error(ERR_DROP, "No character struct assigned to actor");
-			CL_SetReactionFiremode(le, chr->RFmode.hand, chr->RFmode.wpIdx, chr->RFmode.fmIdx);
+			CL_SetReactionFiremode(le, chr->RFmode.hand, chr->RFmode.weapon, chr->RFmode.fmIdx);
 
 			/* Reserve Tus for crouching/standing up if player selected this previously. */
 			if (chr->reservedTus.reserveCrouch) {

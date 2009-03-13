@@ -589,7 +589,7 @@ typedef struct chrScoreGlobal_s {
 typedef struct chrFiremodeSettings_s {
 	int hand;	/**< Stores the used hand (0=right, 1=left, -1=undef) */
 	int fmIdx;	/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
-	int wpIdx;	/**< Stores the weapon idx in ods. (for faster access and checks) -1=undef */
+	const objDef_t *weapon;
 } chrFiremodeSettings_t;
 
 /**
@@ -746,7 +746,7 @@ qboolean INVSH_UseableForTeam(const objDef_t *od, const int team);
 /* =============================== */
 
 const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
-int FIRESH_FiredefsIDXForWeapon(const item_t *item);
+const fireDef_t *FIRESH_FiredefsIDXForWeapon(const item_t *item);
 int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapFdsIdx);
 
 void Com_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);

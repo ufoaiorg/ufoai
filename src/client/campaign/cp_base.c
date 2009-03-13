@@ -2190,45 +2190,38 @@ static void CL_SwapSkills (chrList_t *team)
 		for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
 			for (i1 = 0; i1 < team->num - 1; i1++) {
 				character_t *cp1 = team->chr[i1];
-				int weaponr_fd_idx = -1;
-				int weaponh_fd_idx = -1;
+				const fireDef_t *fdRightArray, *fdHolsterArray;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m && RIGHT(cp1)->item.t)
-					weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp1)->item);
+					fdRightArray = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp1)->item);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m && HOLSTER(cp1)->item.t)
-					weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp1)->item);
+					fdHolsterArray = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp1)->item);
 				/* disregard left hand, or dual-wielding guys are too good */
 
-				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-					/** @todo Is there a better way to check for this case? */
-					Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
-				} else {
-					const int no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
-						+ 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[weaponr_fd_idx][fmode2].weaponSkill)
+				if (fdHolsterArray != NULL && fdRightArray != NULL) {
+					const int no1 = 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
+						+ 2 * (RIGHT(cp1) && skill == RIGHT(cp1)->item.m->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
 						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.t->reload
-						   && skill == HOLSTER(cp1)->item.m->fd[weaponh_fd_idx][fmode1].weaponSkill)
+						   && skill == HOLSTER(cp1)->item.m->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
 						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.t->reload
-						   && skill == HOLSTER(cp1)->item.m->fd[weaponh_fd_idx][fmode2].weaponSkill);
+						   && skill == HOLSTER(cp1)->item.m->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
 					for (i2 = i1 + 1; i2 < team->num; i2++) {
 						character_t *cp2 = team->chr[i2];
-						weaponr_fd_idx = -1;
-						weaponh_fd_idx = -1;
+						fdRightArray = NULL;
+						fdHolsterArray = NULL;
 
 						if (RIGHT(cp2) && RIGHT(cp2)->item.m && RIGHT(cp2)->item.t)
-							weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp2)->item);
+							fdRightArray = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp2)->item);
 						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m && HOLSTER(cp2)->item.t)
-							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp2)->item);
+							fdHolsterArray = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp2)->item);
 
-						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-							/** @todo Is there a better way to check for this case? */
-							Com_DPrintf(DEBUG_CLIENT, "CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
-						} else {
-							const int no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode1].weaponSkill)
-								+ 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[weaponr_fd_idx][fmode2].weaponSkill)
+						if (fdHolsterArray != NULL && fdRightArray != NULL) {
+							const int no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
+								+ 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[fdRightArray->weapFdsIdx][fmode2].weaponSkill)
 								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.t->reload
-								   && skill == HOLSTER(cp2)->item.m->fd[weaponh_fd_idx][fmode1].weaponSkill)
+								   && skill == HOLSTER(cp2)->item.m->fd[fdHolsterArray->weapFdsIdx][fmode1].weaponSkill)
 								+ (HOLSTER(cp2) && HOLSTER(cp2)->item.t->reload
-								   && skill == HOLSTER(cp2)->item.m->fd[weaponh_fd_idx][fmode2].weaponSkill);
+								   && skill == HOLSTER(cp2)->item.m->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
 							if (no1 > no2 /* more use of this skill */
 								 || (no1 && no1 == no2)) { /* or earlier on list */

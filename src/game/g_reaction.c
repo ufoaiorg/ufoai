@@ -30,22 +30,22 @@ static int G_GetFiringTUsForItem (edict_t *ent, edict_t *target, int *fire_hand_
 	/* Fire the weapon in the right hand if everything is ok. */
 	if (invList && invList->item.m && invList->item.t->weapon
 	 && (!invList->item.t->reload || invList->item.a > 0)) {
-		const int weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&invList->item);
-		if (weaponFdIdx == -1)
+		const fireDef_t *fdArray = FIRESH_FiredefsIDXForWeapon(&invList->item);
+		if (fdArray == NULL)
 			return -1;
 
 		if (ent->chr.RFmode.hand == 0 && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
 			*firemode = ent->chr.RFmode.fmIdx; /* Get selected (if any) firemode for the weapon in the right hand. */
 
-			if (invList->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-			 && invList->item.m->fd[weaponFdIdx][*firemode].range > VectorDist(ent->origin, target->origin)) {
+			if (fdArray[*firemode].time + sv_reaction_leftover->integer <= ent->TU
+			 && fdArray[*firemode].range > VectorDist(ent->origin, target->origin)) {
 				if (fire_hand_type)
 					*fire_hand_type = ST_RIGHT_REACTION;
 
 				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: entnumber:%i firemode:%i entteam:%i\n",
 					ent->number, *firemode, ent->team);
-				return invList->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer;
+				return fdArray[*firemode].time + sv_reaction_leftover->integer;
 			}
 		}
 	}

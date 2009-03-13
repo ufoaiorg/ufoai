@@ -49,11 +49,12 @@ void INVSH_InitCSI (csi_t * import)
 }
 
 /**
- * @brief Get the fire definition for a given object
+ * @brief Get the fire definitions for a given object
  * @param[in] obj The object to get the firedef for
  * @param[in] weapFdsIdx
  * @param[in] fdIdx
  * @return Will never return NULL
+ * @sa FIRESH_FiredefsIDXForWeapon
  */
 const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
 {
@@ -2068,20 +2069,27 @@ FIREMODE MANAGEMENT FUNCTIONS
 
 /**
  * @brief Returns the index of the array that has the firedefinitions for a given weapon/ammo (-index)
- * @return int Returns the index in the fd array.
+ * @return The array (one-dimensional) of the firedefs of the ammo for a given weapon, or @c NULL if the ammo
+ * doesn't support the given weapon
+ * @sa FIRESH_GetFiredef
  */
-int FIRESH_FiredefsIDXForWeapon (const item_t *item)
+const fireDef_t *FIRESH_FiredefsIDXForWeapon (const item_t *item)
 {
 	int i;
 	const objDef_t *ammo = item->m;
 	const objDef_t *weapon = item->t;
 
+	/* this weapon does not use ammo, check for
+	 * existing firedefs in the weapon. */
+	if (weapon->numWeapons > 0)
+		ammo = item->t;
+
 	for (i = 0; i < ammo->numWeapons; i++) {
 		if (weapon == ammo->weapons[i])
-			return i;
+			return &ammo->fd[i][0];
 	}
 
-	return -1;
+	return NULL;
 }
 
 /**

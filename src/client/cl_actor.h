@@ -82,13 +82,13 @@ void ACTOR_InitStartup(void);
 void CL_CharacterCvars(const character_t *chr);
 const char *CL_GetSkillString(const int skill);
 
-void CL_GetWeaponAndAmmo(const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weapFdsIdx);
+const fireDef_t *CL_GetWeaponAndAmmo(const le_t * actor, const char hand);
 int CL_GetActorNumber(const le_t * le);
 int CL_CheckAction(void);
 qboolean CL_WeaponWithReaction(const le_t * actor, const char hand);
 
 int CL_UsableReactionTUs(const le_t * le);
-void CL_SetReactionFiremode(le_t *actor, const int handidx, const int obj_idx, const int fd_idx);
+void CL_SetReactionFiremode(le_t *actor, const int handidx, const objDef_t *od, const int fd_idx);
 void CL_SetDefaultReactionFiremode(le_t *actor, const char hand);
 void CL_UpdateReactionFiremodes(le_t * actor, const char hand, int firemodeActive);
 
@@ -154,8 +154,8 @@ void CL_AddPathing(void);
 void CL_ActorTargetAlign_f(void);
 void CL_ActorInventoryOpen_f(void);
 
-void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
-void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeIndex, int weaponIndex);
+void CL_CharacterSetShotSettings(character_t *chr, int hand, int fireModeIndex, const objDef_t *weapon);
+void CL_CharacterSetRFMode(character_t *chr, int hand, int fireModeInde, const objDef_t *weapon);
 
 void CL_DisplayFloorArrows(void);
 void CL_DisplayObstructionArrows(void);

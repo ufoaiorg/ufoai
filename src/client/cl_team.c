@@ -88,21 +88,6 @@ qboolean CL_SaveCharacterXML (mxml_node_t *p, const character_t chr)
 	mxml_AddInt(p, "morale", chr.morale);
 	mxml_AddInt(p, "fieldsize", chr.fieldSize);
 
-	/* Store reaction-firemode */
-	mxml_AddInt(p, "rfmode.hand", chr.RFmode.hand);
-	mxml_AddInt(p, "rfmode.fmidx", chr.RFmode.fmIdx);
-	mxml_AddInt(p, "rfmode.wpidx", chr.RFmode.wpIdx);
-
-	/* Store reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
-	mxml_AddInt(p, "reservedtus.reservereaction", chr.reservedTus.reserveReaction);
-	mxml_AddInt(p, "reservedtus.reaction", chr.reservedTus.reaction);
-	mxml_AddInt(p, "reservedtus.reservecrouch", chr.reservedTus.reserveCrouch);
-	mxml_AddInt(p, "reservedtus.crouch", chr.reservedTus.crouch);
-	mxml_AddInt(p, "reservedtus.shot", chr.reservedTus.shot);
-	mxml_AddInt(p, "reservedtus.shotsettings.hand", chr.reservedTus.shotSettings.hand);
-	mxml_AddInt(p, "reservedtus.shotsettings.fmidx", chr.reservedTus.shotSettings.fmIdx);
-	mxml_AddInt(p, "reservedtus.shotsettings.wpidx", chr.reservedTus.shotSettings.wpIdx);
-
 	/* Store character stats/score */
 	for (k = 0; k < count; k++) {
 		s = mxml_AddNode(p, "score");
@@ -160,22 +145,6 @@ qboolean CL_LoadCharacterXML (mxml_node_t *p, character_t *chr)
 	chr->STUN = mxml_GetInt(p, "stun", 0);
 	chr->morale = mxml_GetInt(p, "morale", 0);
 	chr->fieldSize = mxml_GetInt(p, "fieldsize", 1);
-
-	/* Load reaction-firemode */
-	CL_CharacterSetRFMode(chr, mxml_GetInt(p, "rfmode.hand", 0),
-		mxml_GetInt(p, "rfmode.fmidx", 0), mxml_GetInt(p, "rfmode.wpidx", 0));
-
-	/* Read reserved Tus and additional info (i.e. the cl_reserved_tus_t struct */
-	chr->reservedTus.reserveReaction = mxml_GetInt(p, "reservedtus.reservereaction", 0);
-	chr->reservedTus.reaction = mxml_GetInt(p, "reservedtus.reaction", 0);
-	chr->reservedTus.reserveCrouch = mxml_GetInt(p, "reservedtus.reservecrouch", 0);
-	chr->reservedTus.crouch = mxml_GetInt(p, "reservedtus.crouch", 0);
-	chr->reservedTus.shot = mxml_GetInt(p, "reservedtus.shot", 0);
-	/** @todo Check for dummy value. I think it's save to remove this later on (e.g. before 2.3 release). */
-	if (chr->reservedTus.shot == -1)
-		chr->reservedTus.shot = 0;
-	CL_CharacterSetShotSettings(chr, mxml_GetInt(p, "reservedtus.shotsettings.hand", 0), mxml_GetInt(p, "reservedtus.shotsettings.fmidx", 0),
-		mxml_GetInt(p, "reservedtus.shotsettings.wpidx", 0));
 
 	/** Load character stats/score
 	 * @sa chrScoreGlobal_t */
@@ -443,7 +412,7 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 	 * AI actor (includes aliens if one doesn't play AS them) are set in @sa G_SpawnAIPlayer */
 	chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
-	CL_CharacterSetShotSettings(chr, -1, -1, -1);
+	CL_CharacterSetShotSettings(chr, -1, -1, NULL);
 
 	/* Generate character stats, models & names. */
 	switch (employeeType) {

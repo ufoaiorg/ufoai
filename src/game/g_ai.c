@@ -260,9 +260,8 @@ static int actorL_shoot (lua_State *L)
 {
 	int fm, tu, shots;
 	aiActor_t *target;
-	int weapFdsIdx;
 	const item_t *item;
-	const fireDef_t *fd;
+	const fireDef_t *fdArray;
 	objDef_t *od;
 
 	assert(lua_isactor(L, 1));
@@ -301,9 +300,9 @@ static int actorL_shoot (lua_State *L)
 		return 1;
 	}
 
-	/** @todo Choose fire mode based on TU available. */
-	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(item);
-	if (weapFdsIdx == -1) {
+	/** @todo Choose fire mode based on TU available - currently the first one is used. */
+	fdArray = FIRESH_FiredefsIDXForWeapon(item);
+	if (fdArray == NULL) {
 		/* Failure - no weapon. */
 		lua_pushboolean(L, 0);
 		return 1;
@@ -314,8 +313,7 @@ static int actorL_shoot (lua_State *L)
 	else
 		od = item->m;
 
-	fd = &od->fd[weapFdsIdx][0];
-	shots = tu / fd->time;
+	shots = tu / fdArray->time;
 
 	while (shots > 0) {
 		shots--;
@@ -1040,9 +1038,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	const objDef_t *ad;
 	int still_searching = 1;
 
-	int weapFdsIdx; /* Weapon-Firedefs index in fd[x] */
-	int fdIdx;	/* firedef index fd[][x]*/
-
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
 	move = gi.MoveLength(gi.pathingMap, to,
@@ -1082,6 +1077,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
 		const item_t *item;
+		int fdIdx;
+		const fireDef_t *fdArray;
 
 		/* optimization: reaction fire is automatic */
 		if (IS_SHOT_REACTION(fm))
@@ -1109,14 +1106,13 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		if (!item)
 			continue;
 
-		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(item);
-		/* if od was not null and weapon not null - then we have a problem here
-		 * maybe this is only a maptest and thus no scripts parsed */
-		if (weapFdsIdx == -1)
+		fdArray = FIRESH_FiredefsIDXForWeapon(item);
+		if (fdArray == NULL)
 			continue;
+
 		/** @todo timed firedefs that bounce around should not be thrown/shooten about the hole distance */
-		for (fdIdx = 0; fdIdx < item->t->numFiredefs[weapFdsIdx]; fdIdx++) {
-			const fireDef_t *fd = &item->t->fd[weapFdsIdx][fdIdx];
+		for (fdIdx = 0; fdIdx < item->t->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
+			const fireDef_t *fd = &fdArray[fdIdx];
 
 			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));

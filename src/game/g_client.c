@@ -2353,7 +2353,7 @@ int G_ClientAction (player_t * player)
 		ent = g_edicts + num;
 		ent->chr.RFmode.hand = hand;
 		ent->chr.RFmode.fmIdx = fdIdx;
-		ent->chr.RFmode.wpIdx = objIdx;
+		ent->chr.RFmode.weapon = &gi.csi->ods[objIdx];
 		break;
 
 	case PA_RESERVE_STATE:

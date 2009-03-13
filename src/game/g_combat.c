@@ -1064,7 +1064,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	}
 }
 
-static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
+static void G_GetShotOrigin (const edict_t *shooter, const fireDef_t *fd, const vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
 	gi.GridPosToVec(gi.routingMap, shooter->fieldSize, shooter->pos, shotOrigin);
@@ -1087,9 +1087,9 @@ static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t
 /**
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, fireDef_t **fd)
+static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, const fireDef_t **fd)
 {
-	int weaponFdIdx;
+	const fireDef_t *fdArray;
 	objDef_t *od;
 	item_t *item;
 
@@ -1119,14 +1119,14 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 		od = item->m;
 
 	/* Get firedef from the weapon entry instead */
-	weaponFdIdx = FIRESH_FiredefsIDXForWeapon(item);
-	if (weaponFdIdx == -1)
+	fdArray = FIRESH_FiredefsIDXForWeapon(item);
+	if (fdArray == NULL)
 		return qfalse;
 
 	*weapon = item;
 
 	assert(firemode >= 0);
-	*fd = &od->fd[weaponFdIdx][firemode];
+	*fd = &fdArray[firemode];
 
 	return qtrue;
 }
@@ -1146,7 +1146,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
-	fireDef_t *fd;
+	const fireDef_t *fd;
 	edict_t *ent;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
