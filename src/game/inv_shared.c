@@ -613,11 +613,11 @@ invList_t *Com_AddToInventory (inventory_t * const i, item_t item, const invDef_
 	if (!item.t)
 		return NULL;
 
-	if (!invUnused)
-		Sys_Error("Com_AddToInventory: No free inventory space!");
-
 	if (amount <= 0)
 		return NULL;
+
+	if (!invUnused)
+		Sys_Error("Com_AddToInventory: No free inventory space!");
 
 	assert(i);
 	assert(container);
@@ -1070,10 +1070,10 @@ void INVSH_DestroyInventory (inventory_t* const i)
 		return;
 
 	for (k = 0; k < CSI->numIDs; k++)
-		if (CSI->ids[k].temp)
-			i->c[k] = NULL;
-		else
+		if (!CSI->ids[k].temp)
 			INVSH_EmptyContainer(i, &CSI->ids[k]);
+
+	memset(i, 0, sizeof(*i));
 }
 
 /**
@@ -1116,7 +1116,8 @@ void Com_FindSpace (const inventory_t* const inv, const item_t *item, const invD
 	cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
 
 #ifdef PARANOID
-	Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: no space for %s: %s in %s\n", item->t->type, item->t->id, container->name);
+	Com_DPrintf(DEBUG_SHARED, "Com_FindSpace: no space for %s: %s in %s\n",
+		item->t->type, item->t->id, container->name);
 #endif
 	*px = *py = NONE;
 }
