@@ -125,8 +125,8 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 		if (!INVSH_UseableForTeam(&csi.ods[i], GAME_GetCurrentTeam()))
 			continue;
 
-		/* Don't allow to show unresearched items. */
-		if (!RS_IsResearched_ptr(csi.ods[i].tech))
+		/* Don't allow to show unuseable items. */
+		if (!GAME_ItemIsUseable(&csi.ods[i]))
 			continue;
 
 		while (ed->num[i]) {
