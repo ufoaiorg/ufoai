@@ -151,9 +151,8 @@ static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *nam
 		mxml_AddInt(ssnode, "numloose", ed->numLoose[i]);
 	}
 	requiredbuflen = mxmlSaveString(top_node, dummy, 2, MXML_NO_CALLBACK);
-	/** @todo little/big endian */
 	/* required for storing compressed */
-	header.xml_size = requiredbuflen;
+	header.xml_size = LittleLong(requiredbuflen);
 
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * requiredbuflen + 1, cl_genericPool, 0);
 	if (!buf) {
@@ -254,7 +253,7 @@ static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 	header.compressed = LittleLong(header.compressed);
 	header.version = LittleLong(header.version);
 	header.xml_size = LittleLong(header.xml_size);
-	len = header.xml_size + 50;
+	len = header.xml_size + 1 + sizeof(header);
 
 	Com_Printf("Loading multiplayer team (size %d / %li)\n", clen, header.xml_size);
 
