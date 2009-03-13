@@ -314,7 +314,6 @@ character_t *CL_GetActorChr (const le_t * le)
 void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weapFdsIdx)
 {
 	const invList_t *invlistWeapon;
-	objDef_t *item, *itemAmmo;
 
 	assert(weapFdsIdx);
 
@@ -329,18 +328,15 @@ void CL_GetWeaponAndAmmo (const le_t * actor, char hand, objDef_t **weapon, objD
 	if (!invlistWeapon || !invlistWeapon->item.t)
 		return;
 
-	item = invlistWeapon->item.t;
-
-	if (item->numWeapons) /** @todo "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
-		itemAmmo = item; /* This weapon doesn't need ammo it already has firedefs */
+	if (invlistWeapon->item.t->numWeapons)
+		/* This weapon doesn't need ammo it already has firedefs */
+		*ammo = invlistWeapon->item.t;
 	else
-		itemAmmo = invlistWeapon->item.m;
+		*ammo = invlistWeapon->item.m;
 
-	*weapFdsIdx = FIRESH_FiredefsIDXForWeapon(itemAmmo, invlistWeapon->item.t);
-	if (ammo)
-		*ammo = itemAmmo;
+	*weapFdsIdx = FIRESH_FiredefsIDXForWeapon(&invlistWeapon->item);
 	if (weapon)
-		*weapon = item;
+		*weapon = invlistWeapon->item.t;
 }
 
 #ifdef DEBUG

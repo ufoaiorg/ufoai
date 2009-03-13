@@ -1090,6 +1090,8 @@ static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t
 static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, fireDef_t **fd)
 {
 	int weaponFdIdx;
+	objDef_t *od;
+	item_t *item;
 
 	if (type >= ST_NUM_SHOOT_TYPES)
 		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
@@ -1097,43 +1099,34 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 	if (IS_SHOT_HEADGEAR(type)) {
 		if (!HEADGEAR(ent))
 			return qfalse;
-		*weapon = &HEADGEAR(ent)->item;
+		item = &HEADGEAR(ent)->item;
 		*container = gi.csi->idHeadgear;
 	} else if (IS_SHOT_RIGHT(type)) {
 		if (!RIGHT(ent))
 			return qfalse;
-		*weapon = &RIGHT(ent)->item;
+		item = &RIGHT(ent)->item;
 		*container = gi.csi->idRight;
 	} else {
 		if (!LEFT(ent))
 			return qfalse;
-		*weapon = &LEFT(ent)->item;
+		item = &LEFT(ent)->item;
 		*container = gi.csi->idLeft;
 	}
 
-	if (!(*weapon)->m) {
-		/* This weapon does not use ammo, check for existing firedefs in the weapon. */
-		if ((*weapon)->t->numWeapons > 0) {
-			/* Get firedef from the weapon entry instead */
-			Com_DPrintf(DEBUG_GAME, "od->numWeapons: %i\n", (*weapon)->t->numWeapons);
-			weaponFdIdx = FIRESH_FiredefsIDXForWeapon((*weapon)->t, (*weapon)->t);
-			Com_DPrintf(DEBUG_GAME, "weaponFdIdx: %i (%s), firemode: %i\n", weaponFdIdx, (*weapon)->t->name, firemode);
-			assert(weaponFdIdx >= 0);
-			assert(firemode >= 0);
-			/* fd = od[weaponFdIdx][firemodeidx] */
-			*fd = &(*weapon)->t->fd[weaponFdIdx][firemode];
-		} else {
-			*weapon = NULL;
-			return qfalse;
-		}
-	} else {
-		/* Get firedef from the ammo entry. */
-		weaponFdIdx = FIRESH_FiredefsIDXForWeapon((*weapon)->m, (*weapon)->t);
-		assert(weaponFdIdx >= 0);
-		assert(firemode >= 0);
-		/* fd = od[weaponFdIdx][firemodeidx] */
-		*fd = &(*weapon)->m->fd[weaponFdIdx][firemode];
-	}
+	if (!item->m)
+		od = item->t;
+	else
+		od = item->m;
+
+	/* Get firedef from the weapon entry instead */
+	weaponFdIdx = FIRESH_FiredefsIDXForWeapon(item);
+	if (weaponFdIdx == -1)
+		return qfalse;
+
+	*weapon = item;
+
+	assert(firemode >= 0);
+	*fd = &od->fd[weaponFdIdx][firemode];
 
 	return qtrue;
 }

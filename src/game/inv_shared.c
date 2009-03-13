@@ -2068,37 +2068,20 @@ FIREMODE MANAGEMENT FUNCTIONS
 
 /**
  * @brief Returns the index of the array that has the firedefinitions for a given weapon/ammo (-index)
- * @param[in] od The object definition of the ammo item.
- * @param[in] weapon The weapon (in the inventory) to check the ammo item with.
  * @return int Returns the index in the fd array.
  */
-int FIRESH_FiredefsIDXForWeapon (const objDef_t *od, const objDef_t *weapon)
+int FIRESH_FiredefsIDXForWeapon (const item_t *item)
 {
 	int i;
+	const objDef_t *ammo = item->m;
+	const objDef_t *weapon = item->t;
 
-	if (!od)
-		Sys_Error("FIRESH_FiredefsIDXForWeapon: Ammo definition is NULL.");
-
-	if (!od->numWeapons)
-		Sys_Error("FIRESH_FiredefsIDXForWeapon: Ammo object has no weapons assigned.");
-
-	if (!weapon)
-		Sys_Error("FIRESH_FiredefsIDXForWeapon: No weapon given (item '%s').", od->id);
-
-	for (i = 0; i < od->numWeapons; i++) {
-		if (weapon == od->weapons[i])
+	for (i = 0; i < ammo->numWeapons; i++) {
+		if (weapon == ammo->weapons[i])
 			return i;
 	}
 
-#ifdef DEBUG
-	/* print the ids in case of an error */
-	for (i = 0; i < od->numWeapons; i++)
-		Com_Printf("%s\n", od->weapons[i]->id);
-#endif
-
-	/* No firedef index found for this weapon/ammo. */
-	Sys_Error("FIRESH_FiredefsIDXForWeapon: No firedef index found for ammo: '%s' with weapon: %s.",
-		od->id, weapon->id);
+	return -1;
 }
 
 /**

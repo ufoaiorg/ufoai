@@ -943,6 +943,38 @@ static void HUD_RemainingTus_f (void)
 }
 
 /**
+ * @return The minimum time needed to fire the weapons in the given @c invList
+ */
+static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
+{
+	int fds_idx = -1;
+	int time = 100;
+	const objDef_t *od;
+	int i;
+
+	assert(invList->item.t);
+
+	fds_idx = FIRESH_FiredefsIDXForWeapon(&invList->item);
+	if (fds_idx == -1)
+		return time;
+
+	if (invList->item.m)
+		od = invList->item.m;
+	else
+		od = invList->item.t;
+
+	/* Search for the smallest TU needed to shoot. */
+	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+		if (!od->fd[fds_idx][i].time)
+			continue;
+		if (od->fd[fds_idx][i].time < time)
+			time = od->fd[fds_idx][i].time;
+	}
+
+	return time;
+}
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa HUD_ActorUpdateCvars
@@ -952,12 +984,7 @@ static void HUD_RefreshWeaponButtons (int time)
 	invList_t *weaponr;
 	invList_t *weaponl;
 	invList_t *headgear;
-	int minweaponrtime = 100, minweaponltime = 100;
-	int minheadgeartime = 100;
-	int weaponr_fds_idx = -1, weaponl_fds_idx = -1;
-	int headgear_fds_idx = -1;
-	qboolean isammo = qfalse;
-	int i, reloadtime;
+	int reloadtime;
 
 	if (!selActor)
 		return;
@@ -1016,60 +1043,13 @@ static void HUD_RefreshWeaponButtons (int time)
 		Cvar_Set("mn_shot_reservation_tt", _("Reserving TUs for shooting not possible."));
 	}
 
-	/* Headgear button (nearly the same code as for weapon firing buttons below). */
-	/** @todo Make a generic function out of this? */
-	if (headgear) {
-		assert(headgear->item.t);
-		/* Check whether this item use ammo. */
-		if (!headgear->item.m) {
-			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (headgear->item.t->numWeapons > 0) {
-				/* Get firedef from the weapon entry instead. */
-				headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(headgear->item.t, headgear->item.t);
-			} else {
-				headgear_fds_idx = -1;
-			}
-			isammo = qfalse;
-		} else {
-			/* This item uses ammo, get the firedefs from ammo. */
-			headgear_fds_idx = FIRESH_FiredefsIDXForWeapon(headgear->item.m, headgear->item.t);
-			isammo = qtrue;
-		}
-		if (isammo) {
-			/* Search for the smallest TU needed to shoot. */
-			if (headgear_fds_idx != -1)
-				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!headgear->item.m->fd[headgear_fds_idx][i].time)
-						continue;
-					if (headgear->item.m->fd[headgear_fds_idx][i].time < minheadgeartime)
-						minheadgeartime = headgear->item.m->fd[headgear_fds_idx][i].time;
-				}
-		} else {
-			if (headgear_fds_idx != -1)
-				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!headgear->item.t->fd[headgear_fds_idx][i].time)
-						continue;
-					if (headgear->item.t->fd[headgear_fds_idx][i].time < minheadgeartime)
-						minheadgeartime = headgear->item.t->fd[headgear_fds_idx][i].time;
-				}
-		}
-		if (time < minheadgeartime) {
-			HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
-		} else {
-			HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DESELECT);
-		}
-	} else {
-		HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
-	}
-
 	/* reaction-fire button */
 	if (HUD_GetReactionState(selActor) == R_FIRE_OFF) {
-		if ((time >= CL_ReservedTUs(selActor, RES_REACTION))
+		if (time >= CL_ReservedTUs(selActor, RES_REACTION)
 		 && (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)))
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
-
 	} else {
 		if ((CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT))) {
 			HUD_DisplayPossibleReaction(selActor);
@@ -1111,43 +1091,20 @@ static void HUD_RefreshWeaponButtons (int time)
 		}
 	}
 
-	/* Weapon firing buttons. (nearly the same code as for headgear buttons above).*/
-	/** @todo Make a generic function out of this? */
+	/* Headgear button */
+	if (headgear) {
+		const int minheadgeartime = HUD_GetMinimumTUsForUsage(headgear);
+		if (time < minheadgeartime)
+			HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
+		else
+			HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DESELECT);
+	} else {
+		HUD_SetWeaponButton(BT_HEADGEAR, BT_STATE_DISABLE);
+	}
+
+	/* Weapon firing buttons. */
 	if (weaponr) {
-		assert(weaponr->item.t);
-		/* Check whether this item use ammo. */
-		if (!weaponr->item.m) {
-			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (weaponr->item.t->numWeapons > 0) {
-				/* Get firedef from the weapon entry instead. */
-				weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponr->item.t, weaponr->item.t);
-			} else {
-				weaponr_fds_idx = -1;
-			}
-			isammo = qfalse;
-		} else {
-			/* This item uses ammo, get the firedefs from ammo. */
-			weaponr_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponr->item.m, weaponr->item.t);
-			isammo = qtrue;
-		}
-		if (isammo) {
-			/* Search for the smallest TU needed to shoot. */
-			if (weaponr_fds_idx != -1)
-				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!weaponr->item.m->fd[weaponr_fds_idx][i].time)
-						continue;
-					if (weaponr->item.m->fd[weaponr_fds_idx][i].time < minweaponrtime)
-						minweaponrtime = weaponr->item.m->fd[weaponr_fds_idx][i].time;
-				}
-		} else {
-			if (weaponr_fds_idx != -1)
-				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!weaponr->item.t->fd[weaponr_fds_idx][i].time)
-						continue;
-					if (weaponr->item.t->fd[weaponr_fds_idx][i].time < minweaponrtime)
-						minweaponrtime = weaponr->item.t->fd[weaponr_fds_idx][i].time;
-				}
-		}
+		const int minweaponrtime = HUD_GetMinimumTUsForUsage(weaponr);
 		if (time < minweaponrtime)
 			HUD_SetWeaponButton(BT_RIGHT_FIRE, BT_STATE_DISABLE);
 		else
@@ -1157,40 +1114,7 @@ static void HUD_RefreshWeaponButtons (int time)
 	}
 
 	if (weaponl) {
-		assert(weaponl->item.t);
-		/* Check whether this item uses ammo. */
-		if (!weaponl->item.m) {
-			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (weaponl->item.t->numWeapons > 0) {
-				/* Get firedef from the weapon entry instead. */
-				weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponl->item.t, weaponl->item.t);
-			} else {
-				weaponl_fds_idx = -1;
-			}
-			isammo = qfalse;
-		} else {
-			/* This item uses ammo, get the firedefs from ammo. */
-			weaponl_fds_idx = FIRESH_FiredefsIDXForWeapon(weaponl->item.m, weaponl->item.t);
-			isammo = qtrue;
-		}
-		if (isammo) {
-			/* Search for the smallest TU needed to shoot. */
-			if (weaponl_fds_idx != -1)
-				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!weaponl->item.m->fd[weaponl_fds_idx][i].time)
-						continue;
-					if (weaponl->item.m->fd[weaponl_fds_idx][i].time < minweaponltime)
-						minweaponltime = weaponl->item.m->fd[weaponl_fds_idx][i].time;
-				}
-		} else {
-			if (weaponl_fds_idx != -1)
-				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-					if (!weaponl->item.t->fd[weaponl_fds_idx][i].time)
-						continue;
-					if (weaponl->item.t->fd[weaponl_fds_idx][i].time < minweaponltime)
-						minweaponltime = weaponl->item.t->fd[weaponl_fds_idx][i].time;
-				}
-		}
+		const int minweaponltime = HUD_GetMinimumTUsForUsage(weaponl);
 		if (time < minweaponltime)
 			HUD_SetWeaponButton(BT_LEFT_FIRE, BT_STATE_DISABLE);
 		else
@@ -1322,33 +1246,26 @@ void HUD_ActorUpdateCvars (void)
 			} else {
 				/* Check whether this item uses/has ammo. */
 				if (!selWeapon->item.m) {
+					selFD = NULL;
 					/* This item does not use ammo, check for existing firedefs in this item. */
 					/* This is supposed to be a weapon or other usable item. */
 					if (selWeapon->item.t->numWeapons > 0) {
 						if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
+							const int fireDefIndex = FIRESH_FiredefsIDXForWeapon(&selWeapon->item);
 							/* Get firedef from the weapon (or other usable item) entry instead. */
-							selFD = FIRESH_GetFiredef(
-								selWeapon->item.t,
-								FIRESH_FiredefsIDXForWeapon(selWeapon->item.t, selWeapon->item.t),
-								cl.cfiremode);
-						} else {
-							/* This is ammo */
-							selFD = NULL;
+							if (fireDefIndex != -1)
+								selFD = FIRESH_GetFiredef(selWeapon->item.t, fireDefIndex, cl.cfiremode);
 						}
-					} else {
-						/* No firedefinitions found in this presumed 'weapon with no ammo'. */
-						selFD = NULL;
 					}
 				} else {
-					/* This item uses ammo, get the firedefs from ammo. */
-					const fireDef_t *old = FIRESH_GetFiredef(
-						selWeapon->item.m,
-						FIRESH_FiredefsIDXForWeapon(selWeapon->item.m, selWeapon->item.t),
-						cl.cfiremode);
-					/* reset the align if we switched the firemode */
-					if (old != selFD)
-						mousePosTargettingAlign = 0;
-					selFD = old;
+					const int fireDefIndex = FIRESH_FiredefsIDXForWeapon(&selWeapon->item);
+					if (fireDefIndex != -1) {
+						const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fireDefIndex, cl.cfiremode);
+						/* reset the align if we switched the firemode */
+						if (old != selFD)
+							mousePosTargettingAlign = 0;
+						selFD = old;
+					}
 				}
 			}
 		}

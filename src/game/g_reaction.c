@@ -43,15 +43,14 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	if (!firemode)
 		firemode = &tmp;
 
+	/** @todo merge code */
 	/* Fire the weapon in the right hand if everything is ok. */
-	if (RIGHT(ent) && RIGHT(ent)->item.m
-	 && RIGHT(ent)->item.t->weapon
+	if (RIGHT(ent) && RIGHT(ent)->item.m && RIGHT(ent)->item.t->weapon
 	 && (!RIGHT(ent)->item.t->reload || RIGHT(ent)->item.a > 0)) {
-		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(RIGHT(ent)->item.m, RIGHT(ent)->item.t);
+		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&RIGHT(ent)->item);
 		assert(weaponFdIdx >= 0);
 
-		if (ent->chr.RFmode.hand == 0
-		 && ent->chr.RFmode.fmIdx >= 0
+		if (ent->chr.RFmode.hand == 0 && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
 			*firemode = ent->chr.RFmode.fmIdx; /* Get selected (if any) firemode for the weapon in the right hand. */
 
@@ -68,22 +67,19 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 	}
 
 	/* Fire the weapon in the left hand if everything is ok. */
-	if (LEFT(ent) && LEFT(ent)->item.m
-	 && LEFT(ent)->item.t->weapon
+	if (LEFT(ent) && LEFT(ent)->item.m && LEFT(ent)->item.t->weapon
 	 && (!LEFT(ent)->item.t->reload || LEFT(ent)->item.a > 0)) {
-		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(LEFT(ent)->item.m, LEFT(ent)->item.t);
+		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&LEFT(ent)->item);
 		assert(weaponFdIdx >= 0);
 
-		if (ent->chr.RFmode.hand == 1
-		 && ent->chr.RFmode.fmIdx >= 0
+		if (ent->chr.RFmode.hand == 1 && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a LEFT-hand firemode is selected and sane. */
 			*firemode = ent->chr.RFmode.fmIdx; /* Get selected firemode for the weapon in the left hand. */
 
 			if (LEFT(ent)->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 			 && LEFT(ent)->item.m->fd[weaponFdIdx][*firemode].range > VectorDist(ent->origin, target->origin)) {
-				if (fire_hand_type) {
+				if (fire_hand_type)
 					*fire_hand_type = ST_LEFT_REACTION;
-				}
 
 				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: left entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
 				return LEFT(ent)->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer;
@@ -124,27 +120,13 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char **reason)
 	}
 
 	/* check ent has reaction fire enabled */
-	if (!(ent->state & STATE_SHAKEN)
-	 && !(ent->state & STATE_REACTION)) {
+	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION)) {
 #ifdef DEBUG_REACTION
 		if (reason)
 			*reason = "Shooter does not have reaction fire enabled";
 #endif
 		return qfalse;
 	}
-
-#if 0
-/** This code will prevent multiple shots (no matter the available TUs) if STATE_REACTION_ONCE is set.
- * @todo Remove this if we don't happen to re-introduce it. */
-	if ((ent->state & STATE_REACTION_ONCE)
-	 && (ent->reactionFired > 0)) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			*reason = "Shooter is not supposed to react again (i.e. has shot too often).";
-#endif
-		return qfalse;
-	}
-#endif
 
 	/* check in range and visible */
 	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST) {

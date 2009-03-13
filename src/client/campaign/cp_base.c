@@ -2193,9 +2193,9 @@ static void CL_SwapSkills (chrList_t *team)
 				int weaponr_fd_idx = -1;
 				int weaponh_fd_idx = -1;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m && RIGHT(cp1)->item.t)
-					weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(RIGHT(cp1)->item.m, RIGHT(cp1)->item.t);
+					weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp1)->item);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m && HOLSTER(cp1)->item.t)
-					weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(HOLSTER(cp1)->item.m, HOLSTER(cp1)->item.t);
+					weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp1)->item);
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
@@ -2215,9 +2215,9 @@ static void CL_SwapSkills (chrList_t *team)
 						weaponh_fd_idx = -1;
 
 						if (RIGHT(cp2) && RIGHT(cp2)->item.m && RIGHT(cp2)->item.t)
-							weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(RIGHT(cp2)->item.m, RIGHT(cp2)->item.t);
+							weaponr_fd_idx = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp2)->item);
 						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m && HOLSTER(cp2)->item.t)
-							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(HOLSTER(cp2)->item.m, HOLSTER(cp2)->item.t);
+							weaponh_fd_idx = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp2)->item);
 
 						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
 							/** @todo Is there a better way to check for this case? */

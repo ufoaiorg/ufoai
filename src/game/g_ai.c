@@ -261,9 +261,9 @@ static int actorL_shoot (lua_State *L)
 	int fm, tu, shots;
 	aiActor_t *target;
 	int weapFdsIdx;
-	const objDef_t *od;     /* Ammo pointer. */
-	const objDef_t *weapon; /* Weapon pointer. */
-	const fireDef_t *fd;    /* Fire-definition pointer. */
+	const item_t *item;
+	const fireDef_t *fd;
+	objDef_t *od;
 
 	assert(lua_isactor(L, 1));
 
@@ -288,15 +288,13 @@ static int actorL_shoot (lua_State *L)
 			&& RIGHT(AIL_ent)->item.t->weapon
 			&& (!RIGHT(AIL_ent)->item.t->reload
 				|| RIGHT(AIL_ent)->item.a > 0)) {
-		od = RIGHT(AIL_ent)->item.m;
-		weapon = RIGHT(AIL_ent)->item.t;
+		item = &RIGHT(AIL_ent)->item;
 	} else if (IS_SHOT_LEFT(fm) && LEFT(AIL_ent)
 			&& LEFT(AIL_ent)->item.m
 			&& LEFT(AIL_ent)->item.t->weapon
 			&& (!LEFT(AIL_ent)->item.t->reload
 				|| LEFT(AIL_ent)->item.a > 0)) {
-		od = LEFT(AIL_ent)->item.m;
-		weapon = LEFT(AIL_ent)->item.t;
+		item = &LEFT(AIL_ent)->item;
 	} else {
 		/* Failure - no weapon. */
 		lua_pushboolean(L, 0);
@@ -304,7 +302,18 @@ static int actorL_shoot (lua_State *L)
 	}
 
 	/** @todo Choose fire mode based on TU available. */
-	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
+	weapFdsIdx = FIRESH_FiredefsIDXForWeapon(item);
+	if (weapFdsIdx == -1) {
+		/* Failure - no weapon. */
+		lua_pushboolean(L, 0);
+		return 1;
+	}
+
+	if (!item->m)
+		od = item->t;
+	else
+		od = item->m;
+
 	fd = &od->fd[weapFdsIdx][0];
 	shots = tu / fd->time;
 
@@ -1072,8 +1081,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* shooting */
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
-		const objDef_t *od;		/* Ammo pointer. */
-		const objDef_t *weapon;	/* Weapon pointer. */
+		const item_t *item;
 
 		/* optimization: reaction fire is automatic */
 		if (IS_SHOT_REACTION(fm))
@@ -1084,34 +1092,31 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			&& RIGHT(ent)->item.t->weapon
 			&& (!RIGHT(ent)->item.t->reload
 				|| RIGHT(ent)->item.a > 0)) {
-			od = RIGHT(ent)->item.m;
-			weapon = RIGHT(ent)->item.t;
+			item = &RIGHT(ent)->item;
 		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
 			&& LEFT(ent)->item.m
 			&& LEFT(ent)->item.t->weapon
 			&& (!LEFT(ent)->item.t->reload
 				|| LEFT(ent)->item.a > 0)) {
-			od = LEFT(ent)->item.m;
-			weapon = LEFT(ent)->item.t;
+			item = &LEFT(ent)->item;
 		} else {
-			weapon = NULL;
-			od = NULL;
+			item = NULL;
 			Com_DPrintf(DEBUG_GAME, "AI_FighterCalcBestAction: todo - grenade/knife toss from inventory using empty hand\n");
 			/** @todo grenade/knife toss from inventory using empty hand */
 			/** @todo evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
 
-		if (!od || !weapon)
+		if (!item)
 			continue;
 
-		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(od, weapon);
+		weapFdsIdx = FIRESH_FiredefsIDXForWeapon(item);
 		/* if od was not null and weapon not null - then we have a problem here
 		 * maybe this is only a maptest and thus no scripts parsed */
 		if (weapFdsIdx == -1)
 			continue;
 		/** @todo timed firedefs that bounce around should not be thrown/shooten about the hole distance */
-		for (fdIdx = 0; fdIdx < od->numFiredefs[weapFdsIdx]; fdIdx++) {
-			const fireDef_t *fd = &od->fd[weapFdsIdx][fdIdx];
+		for (fdIdx = 0; fdIdx < item->t->numFiredefs[weapFdsIdx]; fdIdx++) {
+			const fireDef_t *fd = &item->t->fd[weapFdsIdx][fdIdx];
 
 			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
