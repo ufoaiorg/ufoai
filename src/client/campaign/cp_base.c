@@ -3175,8 +3175,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 {
 	int i;
 	int buildingIdx;
-
-	mxml_node_t * bases, * base;
+	mxml_node_t *bases, *base;
 
 	bases = mxml_GetNode(parent, "bases");
 	if (!bases) {
@@ -3289,6 +3288,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				}
 			}
 		}
+		/** @todo can't we use something like INVSH_DestroyInventory here? */
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 	}
