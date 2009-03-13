@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototype */
 struct cvar_s;
+struct menuNode_s;
 
 #define MAX_MENUCONDITIONS 512
 
@@ -75,7 +76,7 @@ typedef struct menuCondition_s {
 	const char *rightValue;
 } menuCondition_t;
 
-qboolean MN_CheckCondition(menuCondition_t *condition);
+qboolean MN_CheckCondition(const struct menuNode_s *source, menuCondition_t *condition);
 qboolean MN_InitCondition(menuCondition_t *condition, const char *token);
 menuCondition_t *MN_AllocCondition(const char *description) __attribute__ ((warn_unused_result));
 

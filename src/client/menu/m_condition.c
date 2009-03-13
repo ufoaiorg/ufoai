@@ -54,7 +54,7 @@ static inline qboolean MN_IsFloatOperator (menuConditionOpCodeType_t op)
 	 || op == IF_NE;
 }
 
-static float MN_GetFloatFromParam (const char* value, menuConditionValueType_t type)
+static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
 {
 	switch (type) {
 	case IF_VALUE_STRING:
@@ -71,8 +71,7 @@ static float MN_GetFloatFromParam (const char* value, menuConditionValueType_t t
 		{
 			const menuNode_t *node;
 			const value_t *property;
-			/** @todo very important to find a way to use the relative node */
-			MN_ReadNodePath(value, NULL, &node, &property);
+			MN_ReadNodePath(value, source, &node, &property);
 			/** @todo need to make a better check */
 			assert(node);
 			assert(property);
@@ -82,7 +81,7 @@ static float MN_GetFloatFromParam (const char* value, menuConditionValueType_t t
 	return 0;
 }
 
-static const char*MN_GetStringFromParam (const char* value, menuConditionValueType_t type)
+static const char*MN_GetStringFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
 {
 	switch (type) {
 	case IF_VALUE_STRING:
@@ -104,13 +103,13 @@ static const char*MN_GetStringFromParam (const char* value, menuConditionValueTy
 
 /**
  * @brief Check the if conditions for a given node
- * @returns True if the condition is qfalse if the node is not drawn
+ * @return True if the condition is qfalse if the node is not drawn
  */
-qboolean MN_CheckCondition (menuCondition_t *condition)
+qboolean MN_CheckCondition (const menuNode_t *source, menuCondition_t *condition)
 {
 	if (MN_IsFloatOperator(condition->type.opCode)) {
-		const float value1 = MN_GetFloatFromParam(condition->leftValue, condition->type.left);
-		const float value2 = MN_GetFloatFromParam(condition->rightValue, condition->type.right);
+		const float value1 = MN_GetFloatFromParam(source, condition->leftValue, condition->type.left);
+		const float value2 = MN_GetFloatFromParam(source, condition->rightValue, condition->type.right);
 
 		switch (condition->type.opCode) {
 		case IF_EQ:
@@ -138,8 +137,8 @@ qboolean MN_CheckCondition (menuCondition_t *condition)
 	}
 
 	if (condition->type.opCode == IF_STR_EQ || condition->type.opCode == IF_STR_NE) {
-		const char* value1 = MN_GetStringFromParam(condition->leftValue, condition->type.left);
-		const char* value2 = MN_GetStringFromParam(condition->rightValue, condition->type.right);
+		const char* value1 = MN_GetStringFromParam(source, condition->leftValue, condition->type.left);
+		const char* value2 = MN_GetStringFromParam(source, condition->rightValue, condition->type.right);
 
 		switch (condition->type.opCode) {
 		case IF_STR_EQ:
