@@ -2500,6 +2500,11 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no map\n", name);
 		csi.numMDs--;
 	}
+
+	if (!md->description) {
+		Com_Printf("Com_ParseMapDefinition: mapdef \"%s\" with no description\n", name);
+		csi.numMDs--;
+	}
 }
 
 /**
