@@ -604,7 +604,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, fd->rolled, startV);
 	if (!dt) {
 		if (!mock)
-			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - impossible throw!\n"));
+			gi.cprintf(player, PRINT_HUD, _("Can't perform action - impossible throw!\n"));
 		return;
 	}
 
@@ -1170,7 +1170,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	container = 0;
 	if (!G_GetShotFromType(ent, type, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
-			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - object not activateable!\n"));
+			gi.cprintf(player, PRINT_HUD, _("Can't perform action - object not activateable!\n"));
 		return qfalse;
 	}
 
@@ -1188,14 +1188,14 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	/* check that we're not firing a twohanded weapon with one hand! */
 	if (weapon->t->fireTwoHanded &&	LEFT(ent)) {
 		if (!quiet)
-			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - weapon cannot be fired one handed!\n"));
+			gi.cprintf(player, PRINT_HUD, _("Can't perform action - weapon cannot be fired one handed!\n"));
 		return qfalse;
 	}
 
 	/* check we're not out of ammo */
 	if (!ammo && fd->ammo && !weapon->t->thrown) {
 		if (!quiet)
-			gi.cprintf(player, PRINT_CONSOLE, _("Can't perform action - no ammo!\n"));
+			gi.cprintf(player, PRINT_HUD, _("Can't perform action - no ammo!\n"));
 		return qfalse;
 	}
 
