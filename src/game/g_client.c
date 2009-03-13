@@ -954,7 +954,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	int fx, fy;
 
 	ent = g_edicts + num;
-	msglevel = quiet ? PRINT_NONE : PRINT_CONSOLE;
+	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	assert(fItem);
 	assert(fItem->item.t);
