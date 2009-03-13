@@ -26,6 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "node/m_node_container.h"
 #include "node/m_node_abstractnode.h"
+#ifdef PARANOID
+#include "../cl_video.h"
+#include "../renderer/r_draw.h"
+#endif
 
 #include "../cl_input.h"
 
