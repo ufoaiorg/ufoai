@@ -134,6 +134,12 @@ menu production
 		lineheight	25
 	}
 
+	panel scroll_bg {
+		pos			"421 175"
+		size		"31 568"
+		bgcolor		"0 0 0 0.5"
+	}
+
 	panel verticalline {
 		pos		"451 175"
 		size	"4 565"
