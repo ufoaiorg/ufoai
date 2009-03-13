@@ -609,6 +609,12 @@ void TextureDirectory_loadTexture (const char* directory, const char* texture)
 		return;
 	}
 
+	/* don't load textures with '_nm' = normalmaps in its name */
+	if (strstr(texture,"_nm")!= 0) {
+		g_warning("Skipping normalmap texture: [%s]\n", name.c_str());
+		return;
+	}
+
 	// if a texture is already in use to represent a shader, ignore it
 	IShader* shader = QERApp_Shader_ForName(name.c_str());
 	shader->DecRef();
