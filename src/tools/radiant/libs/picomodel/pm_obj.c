@@ -263,7 +263,9 @@ static picoModel_t *_obj_load (PM_PARAMS_LOAD)
 			if (!_pico_parse_vec(p,v))
 				_obj_error_return("Vertex parse error");
 
-			_pico_copy_vec(v,data->v);
+			data->v[0] = v[0];
+			data->v[2] = v[1];
+			data->v[1] = v[2];
 
 #ifdef DEBUG_PM_OBJ_EX
 			printf("Vertex: x: %f y: %f z: %f\n",v[0],v[1],v[2]);
