@@ -25,6 +25,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+static int G_GetFiringTUsForItem (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode, invList_t *invList)
+{
+	/* Fire the weapon in the right hand if everything is ok. */
+	if (invList && invList->item.m && invList->item.t->weapon
+	 && (!invList->item.t->reload || invList->item.a > 0)) {
+		const int weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&invList->item);
+		if (weaponFdIdx == -1)
+			return -1;
+
+		if (ent->chr.RFmode.hand == 0 && ent->chr.RFmode.fmIdx >= 0
+		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
+			*firemode = ent->chr.RFmode.fmIdx; /* Get selected (if any) firemode for the weapon in the right hand. */
+
+			if (invList->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+			 && invList->item.m->fd[weaponFdIdx][*firemode].range > VectorDist(ent->origin, target->origin)) {
+				if (fire_hand_type)
+					*fire_hand_type = ST_RIGHT_REACTION;
+
+				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: entnumber:%i firemode:%i entteam:%i\n",
+					ent->number, *firemode, ent->team);
+				return invList->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer;
+			}
+		}
+	}
+
+	return -1;
+}
+
 /**
  * @brief Get the number of TUs that ent needs to fire at target, also optionally return the firing hand. Used for reaction fire.
  * @param[in] ent The shooter entity.
@@ -36,56 +64,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode)
 {
-	int weaponFdIdx;
+	int TUs;
 	int tmp = -2;
 
 	/* The caller doesn't use this parameter, use a temporary one instead. */
 	if (!firemode)
 		firemode = &tmp;
 
-	/** @todo merge code */
-	/* Fire the weapon in the right hand if everything is ok. */
-	if (RIGHT(ent) && RIGHT(ent)->item.m && RIGHT(ent)->item.t->weapon
-	 && (!RIGHT(ent)->item.t->reload || RIGHT(ent)->item.a > 0)) {
-		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&RIGHT(ent)->item);
-		assert(weaponFdIdx >= 0);
+	TUs = G_GetFiringTUsForItem(ent, target, fire_hand_type, firemode, RIGHT(ent));
+	if (TUs != -1)
+		return TUs;
+	TUs = G_GetFiringTUsForItem(ent, target, fire_hand_type, firemode, LEFT(ent));
+	if (TUs != -1)
+		return TUs;
 
-		if (ent->chr.RFmode.hand == 0 && ent->chr.RFmode.fmIdx >= 0
-		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
-			*firemode = ent->chr.RFmode.fmIdx; /* Get selected (if any) firemode for the weapon in the right hand. */
-
-			if (RIGHT(ent)->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-			 && RIGHT(ent)->item.m->fd[weaponFdIdx][*firemode].range > VectorDist(ent->origin, target->origin)) {
-				if (fire_hand_type) {
-					*fire_hand_type = ST_RIGHT_REACTION;
-				}
-
-				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: right entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
-				return RIGHT(ent)->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer;
-			}
-		}
-	}
-
-	/* Fire the weapon in the left hand if everything is ok. */
-	if (LEFT(ent) && LEFT(ent)->item.m && LEFT(ent)->item.t->weapon
-	 && (!LEFT(ent)->item.t->reload || LEFT(ent)->item.a > 0)) {
-		weaponFdIdx = FIRESH_FiredefsIDXForWeapon(&LEFT(ent)->item);
-		assert(weaponFdIdx >= 0);
-
-		if (ent->chr.RFmode.hand == 1 && ent->chr.RFmode.fmIdx >= 0
-		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a LEFT-hand firemode is selected and sane. */
-			*firemode = ent->chr.RFmode.fmIdx; /* Get selected firemode for the weapon in the left hand. */
-
-			if (LEFT(ent)->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-			 && LEFT(ent)->item.m->fd[weaponFdIdx][*firemode].range > VectorDist(ent->origin, target->origin)) {
-				if (fire_hand_type)
-					*fire_hand_type = ST_LEFT_REACTION;
-
-				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: left entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team);
-				return LEFT(ent)->item.m->fd[weaponFdIdx][*firemode].time + sv_reaction_leftover->integer;
-			}
-		}
-	}
 	return -1;
 }
 
