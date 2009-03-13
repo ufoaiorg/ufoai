@@ -1553,15 +1553,15 @@ static void CL_ActorToggleReaction_f (void)
 			return;
 		}
 
-		/* Update RF list if it is visible. */
-		if (visible_firemode_list_left || visible_firemode_list_right)
-			HUD_DisplayFiremodes_f();
-
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 		selChr->reservedTus.reserveReaction = state;
 		/* Re-calc reserved values with already selected FM. Includes PA_RESERVE_STATE (Update server-side settings)*/
 		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.weapon, selChr->RFmode.fmIdx);
+
+		/* Update RF list if it is visible. */
+		if (visible_firemode_list_left || visible_firemode_list_right)
+			HUD_DisplayFiremodes_f();
 	} else {
 		/* No usable RF weapon. */
 		switch (selActorReactionState) {
