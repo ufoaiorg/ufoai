@@ -3251,7 +3251,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 				snode = mxml_GetNextNode(snode, node, "aircraft"), k++) {
 			const aircraft_t *const model = AIR_GetAircraft(mxml_GetString(snode, "id"));
 			aircraft_t *aircraft = &b->aircraft[k];
-			Com_Printf("Adding Aircraft %d to base %d\n", k, i);
+			Com_DPrintf(DEBUG_CLIENT, "Adding Aircraft %d to base %d\n", k, i);
 			*aircraft = *model;
 			aircraft->homebase = b;
 			AIR_LoadAircraftXML(aircraft, qfalse, snode);

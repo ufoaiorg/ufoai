@@ -1037,7 +1037,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	ccs.date.day = mxml_GetInt(n_ccs, "dateday", 0);
 	ccs.date.sec = mxml_GetInt(n_ccs, "datesec", 0);
 
-	Com_Printf("CP_LoadXML: Getting position\n");
+	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Getting position\n");
 	/* read map view */
 	ccs.center[0] = mxml_GetFloat(n_ccs, "center0", 0.0);
 	ccs.center[1] = mxml_GetFloat(n_ccs, "center1", 0.0);
@@ -1165,7 +1165,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 		LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
 	}
 
-	Com_Printf("CP_LoadXML: Reading Battle Parameters\n");
+	Com_DPrintf(DEBUG_CLIENT, "CP_LoadXML: Reading Battle Parameters\n");
 	/* read ccs.battleParameters */
 	memset(&ccs.battleParameters, 0, sizeof(ccs.battleParameters));
 
