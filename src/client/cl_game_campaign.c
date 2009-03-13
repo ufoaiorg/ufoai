@@ -240,16 +240,14 @@ static void GAME_CP_Start_f (void)
 
 void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *numAlive, int numKilled[][MAX_TEAMS], int numStunned[][MAX_TEAMS])
 {
-	static char resultText[MAX_SMALLMENUTEXTLEN];
 	int i, j;
+	/** @todo remove standalone ints if possible */
 	int our_survivors, our_killed, our_stunned;
 	int their_survivors, their_killed, their_stunned;
 	int civilian_survivors, civilian_killed, civilian_stunned;
+	int counts[MAX_MISSIONRESULTCOUNT];
 
 	CP_ParseCharacterData(msg);
-
-	/* init result text */
-	MN_RegisterText(TEXT_STANDARD, resultText);
 
 	our_survivors = our_killed = our_stunned = 0;
 	their_survivors = their_killed = their_stunned = 0;
@@ -296,23 +294,21 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	/* clear unused LE inventories */
 	LE_Cleanup();
 
-	/* needs to be cleared and then append to it */
-	Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), their_killed);
 	ccs.aliensKilled += their_killed;
 
-	Q_strcat(resultText, va(_("Aliens captured\t%i\n"), their_stunned), sizeof(resultText));
-	Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), their_survivors), sizeof(resultText));
-
-	/* team stats */
-	Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), our_killed - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team]), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), our_stunned), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team]), sizeof(resultText));
-	Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), our_survivors), sizeof(resultText));
-
-	Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), civilian_killed), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN]), sizeof(resultText));
-	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), civilian_survivors), sizeof(resultText));
-	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionresults.itemtypes,  missionresults.itemamount), sizeof(resultText));
+	counts[MRC_ALIENS_KILLED] = their_killed;
+	counts[MRC_ALIENS_STUNNED] = their_stunned;
+	counts[MRC_ALIENS_SURVIVOR] = their_survivors;
+	counts[MRC_PHALANX_KILLED] = our_killed - numKilled[cls.team][cls.team] - numKilled[TEAM_CIVILIAN][cls.team];
+	counts[MRC_PHALANX_MIA] = our_stunned;
+	counts[MRC_PHALANX_FF_KILLED] = numKilled[cls.team][cls.team] + numKilled[TEAM_CIVILIAN][cls.team];
+	counts[MRC_PHALANX_SURVIVOR] = our_survivors;
+	counts[MRC_CIVILIAN_KILLED] = civilian_killed;
+	counts[MRC_CIVILIAN_FF_KILLED] = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
+	counts[MRC_CIVILIAN_SURVIVOR] = civilian_survivors;
+	counts[MRC_ITEM_GATHEREDTYPES] = missionresults.itemtypes;
+	counts[MRC_ITEM_GATHEREDTYPES] = missionresults.itemamount;
+	CP_InitMissionResults(counts,winner == cls.team);
 
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "campaign_main");
@@ -322,10 +318,6 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
 	if (winner == cls.team) {
-		/* We need to update menu 'won' with UFO recovery stuff. */
-		if (missionresults.recovery) {
-			Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
-		}
 		MN_PushMenu("won", NULL);
 	} else
 		MN_PushMenu("lost", NULL);
