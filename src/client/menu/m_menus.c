@@ -588,6 +588,34 @@ void MN_SetNewMenuPos (menuNode_t* menu, int x, int y)
 }
 
 /**
+ * @brief Add a new menu to the list of all menus
+ * @note Sort menus by alphabet
+ */
+void MN_InsertMenu(menuNode_t* menu)
+{
+	int pos = 0;
+	int i;
+
+	if (mn.numMenus + 1 > MAX_MENUS)
+		Sys_Error("MN_InsertMenu: hit MAX_MENUS\n");
+
+	/* search the insertion position */
+	for (pos = 0; pos < mn.numMenus; pos++) {
+		const menuNode_t* node = mn.menus[pos];
+		if (Q_strcmp(menu->name, node->name) < 0)
+			break;
+	}
+
+	/* create the space */
+	for (i = mn.numMenus - 1; i >= pos; i--)
+		mn.menus[i + 1] = mn.menus[i];
+
+	/* insert */
+	mn.menus[pos] = menu;
+	mn.numMenus++;
+}
+
+/**
  * @brief Console command for moving a menu
  */
 void MN_SetNewMenuPos_f (void)

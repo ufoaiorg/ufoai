@@ -1297,8 +1297,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	menu->behaviour->loading(menu);
 
-	/* add the menu to the list */
-	mn.menus[mn.numMenus++] = menu;
+	MN_InsertMenu(menu);
 
 	/* get it's body */
 	token = COM_Parse(text);

@@ -41,6 +41,8 @@ int MN_CompleteWithMenu(const char *partial, const char **match);
 qboolean MN_IsMenuOnStack(const char* name);
 qboolean MN_IsPointOnMenu(int x, int y);
 void MN_InvalidateStack(void);
+void MN_InsertMenu(struct menuNode_s* menu);
+
 /* deprecated */
 const char* MN_GetActiveMenuName(void);
 struct menuNode_s* MN_GetNodeFromCurrentMenu(const char *name);
@@ -49,6 +51,5 @@ struct menuNode_s* MN_GetNodeFromCurrentMenu(const char *name);
 void MN_SetNewMenuPos(struct menuNode_s* menu, int x, int y);
 void MN_SetNewMenuPos_f (void);
 struct menuNode_s *MN_GetMenu(const char *name);
-
 
 #endif
