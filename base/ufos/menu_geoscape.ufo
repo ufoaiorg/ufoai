@@ -335,9 +335,9 @@ menu map
 
 			string		"_Mailclient"
 			tooltip		"_INBOX (with unread mails)"
-			color		"0 0.5 0 1"
+			color		"1 1 1 1"
 			font	 	f_small
-			pos			"41 536"
+			pos			"41 556"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			image		menu/button_geoscape
@@ -354,7 +354,7 @@ menu map
 			tooltip		"_INBOX"
 			color		"0 0.5 0 1"
 			font	 	f_small
-			pos			"41 536"
+			pos			"41 556"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
 			image		menu/button_geoscape
@@ -367,7 +367,7 @@ menu map
 		{
 			string		"_Statistics"
 			tooltip		"_Organisation statistics"
-			pos			"41 577"
+			pos			"41 597"
 			size		"175 34"
 			color		"0 0.5 0 1"
 			font	 	f_small
@@ -382,7 +382,7 @@ menu map
 		{
 			string		"_UFOpaedia"
 			tooltip		"_Open UFOpaedia"
-			pos			"41 618"
+			pos			"41 638"
 			size		"175 34"
 			color		"0 0.5 0 1"
 			font	 	f_small
@@ -398,7 +398,7 @@ menu map
 			string		"_Create installation"
 			tooltip		"_Create installation"
 			color		"0 0.5 0 1"
-			pos			"41 659"
+			pos			"41 679"
 			size		"175 34"
 			font	 	f_small
 			selectcolor	"1 1 1 1"
