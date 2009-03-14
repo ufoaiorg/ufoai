@@ -1003,11 +1003,14 @@ menu popup_baseattack
 				cmd "pwr_down;"
 			}
 			if "*node:popup_baseattack.equip@current > 0" {
-				*cvar:mn_postaction	"cp_mission_autogo"
+				*path:equipment close {
+					cmd "cp_mission_autogo"
+					*path:this close { }
+				}
 				cmd "mn_push equipment;"
 			} else {
 				cmd "cp_mission_autogo;"
-			}			
+			}
 		}
 	}
 
@@ -1036,7 +1039,7 @@ menu popup_baseattack
 				cmd "mn_push equipment;"
 			} else {
 				cmd "game_go;"
-			}			
+			}
 		}
 	}
 

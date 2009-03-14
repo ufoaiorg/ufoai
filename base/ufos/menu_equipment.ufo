@@ -718,8 +718,10 @@ menu equipment
 
 	func close
 	{
-		cmd "<cvar:mn_postaction>;"
-		cmd "del mn_postaction;"
+		/** @note Do not define action here
+		 * this close is edited by the code
+		 * pushing this menu
+		 */
 	}
 
 	func init

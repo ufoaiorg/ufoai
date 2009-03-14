@@ -67,7 +67,15 @@ menu team extends iaircraft
 		pos		"483 129"
 		size	"198 43"
 		image	menu/button_blue	blend true
-		click	{ cmd "mn_push equipment" }
+		click	{
+			*cvar:cl_selected2 <cvar:cl_selected>
+			*path:(menu)equipment close {
+				cmd "team_select <cvar:cl_selected2>"
+				*path:(menu)this close { }
+				cmd "del cl_selected2"
+			}
+			cmd "mn_push equipment"
+		}
 		color	"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 	}
