@@ -548,21 +548,30 @@ qboolean MN_IsPointOnMenu (int x, int y)
 
 /**
  * @brief Searches all menus for the specified one
- * @param[in] name If name is NULL this function will return the current menu
- * on the stack - otherwise it will search the hole stack for a menu with the
- * id name
- * @return NULL if not found or no menu on the stack
+ * @param[in] name Name of the menu we search
+ * @return The menu found, else NULL
+ * @note Use dichotomic search
  * @sa MN_GetActiveMenu
  */
 menuNode_t *MN_GetMenu (const char *name)
 {
-	int i;
+	unsigned char min = 0;
+	unsigned char max = mn.numMenus;
 
-	assert(name);
+	while (min != max) {
+		const int mid = (min + max) >> 1;
+		const char diff = Q_strcmp(mn.menus[mid]->name, name);
+		assert(mid < max);
+		assert(mid >= min);
 
-	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strcmp(mn.menus[i]->name, name))
-			return mn.menus[i];
+		if (diff == 0)
+			return mn.menus[mid];
+
+		if (diff > 0)
+			max = mid;
+		else
+			min = mid + 1;
+	}
 
 	return NULL;
 }
