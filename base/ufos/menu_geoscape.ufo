@@ -1155,16 +1155,16 @@ menu popup_newbase
 	// START WITH EMPLOYEES
 	string start_employees_str
 	{
-		string		"_Start with employees:"
-		pos			"251 98"
-		size		"200 20"
-		textalign	ur
+		string		"_Start with employees"
+		pos			"270 98"
+		size		"180 20"
+		textalign	ul
 	}
 	checkbox start_employees
 	{
 		tooltip		"_Employees already hired at campaign start"
 		current		"*cvar cl_start_employees"
-		pos			"456 98"
+		pos			"246 98"
 		size		"20 18"
 		image		"menu/checkbox_blue"
 	}
@@ -1172,16 +1172,16 @@ menu popup_newbase
 	// START WITH BUILDINGS
 	string start_buildings_str
 	{
-		string		"_Start with buildings:"
-		pos			"251 123"
-		size		"200 20"
-		textalign	ur
+		string		"_Start with buildings"
+		pos			"270 123"
+		size		"180 20"
+		textalign	ul
 	}
 	checkbox start_building
 	{
 		tooltip		"_Buildings already built in the initial base"
 		current		"*cvar cl_start_buildings"
-		pos			"456 123"
+		pos			"246 123"
 		image		"menu/checkbox_blue"
 		size		"20 18"
 	}
