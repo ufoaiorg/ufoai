@@ -898,7 +898,7 @@ menu popup_baseattack
 {
 	{
 		pos			"264 262"
-		size		"496 250"
+		size		"496 304"
 		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
@@ -990,19 +990,19 @@ menu popup_baseattack
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"290 150"
+		pos			"259 241"
 		size		"176 32"
 		click		{
-			if "*node:popup_baseattack.liftcrafts@current > 0" {
+			if "*node:menu.liftcrafts@current > 0" {
 				cmd "air_liftall;"
 			}
-			if "*node:popup_baseattack.killaliens@current > 0" {
+			if "*node:menu.killaliens@current > 0" {
 				cmd "aliencont_killall;"
 			}
-			if "*node:popup_baseattack.powerdown@current > 0" {
+			if "*node:menu.powerdown@current > 0" {
 				cmd "pwr_down;"
 			}
-			if "*node:popup_baseattack.equip@current > 0" {
+			if "*node:menu.equip@current > 0" {
 				*path:(menu)equipment close {
 					cmd "cp_mission_autogo"
 					*path:(menu)this close { }
@@ -1022,19 +1022,19 @@ menu popup_baseattack
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"290 195"
+		pos			"74 241"
 		size		"176 32"
 		click		{
-			if "*node:popup_baseattack.liftcrafts@current > 0" {
+			if "*node:menu.liftcrafts@current > 0" {
 				cmd "air_liftall;"
 			}
-			if "*node:popup_baseattack.killaliens@current > 0" {
+			if "*node:menu.killaliens@current > 0" {
 				cmd "aliencont_killall;"
 			}
-			if "*node:popup_baseattack.powerdown@current > 0" {
+			if "*node:menu.powerdown@current > 0" {
 				cmd "pwr_down;"
 			}
-			if "*node:popup_baseattack.equip@current > 0" {
+			if "*node:menu.equip@current > 0" {
 				*cvar:mn_postaction	"game_go"
 				cmd "mn_push equipment;"
 			} else {
