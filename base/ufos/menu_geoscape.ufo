@@ -1784,71 +1784,70 @@ menu popup_intercept
 
 	{
 		pos			"124 192"
-		size		"777 402"
+		size		"777 447"
 		dragbutton	true
 		image		menu/popup_alpha_tile
 		blend		true
+		string		"_Interception"
 	}
 
-	pic vertical_bar
+	panel vertical_bar
 	{
-		mousefx		true
-		pos			"486 0"
-		image		menu/vertical_bar
-		texl		"0 6"
-		texh		"2 512"
+		pos			"486 93"
+		size		"2 280"
+		bgcolor		"0 0.5 0 1"
 	}
 
 	string title
 	{
-		string		"_Select aircraft"
-		pos			"27 17"
+		string		"_Select an aircraft"
+		pos			"27 62"
 		size		"449 28"
 		font		f_big
-		textalign	uc
+		textalign	ul
 	}
 
 	string title2
 	{
-		string		"_Select base"
-		pos			"500 17"
+		string		"_Select a base"
+		pos			"500 62"
 		size		"250 28"
 		font		f_big
-		textalign	uc
+		textalign	ul
 	}
 
 	string name_label
 	{
 		string		"_Name:"
-		pos			"26 48"
+		pos			"26 93"
 		size		"140 20"
 	}
 
 	string status_label
 	{
 		string		"_Status:"
-		pos			"176 48"
+		pos			"176 93"
 		size		"140 20"
 	}
 
 	string craft_base_label
 	{
 		string		"_Base:"
-		pos			"326 48"
+		pos			"326 93"
 		size		"150 20"
 	}
 
 	string base_label
 	{
 		string		"_Base:"
-		pos			"501 48"
+		pos			"501 93"
 		size		"250 20"
 	}
 
 	text ships
 	{
 		textid		TEXT_AIRCRAFT_LIST
-		pos			"26 74"
+		pos			"26 119"
 		size		"460 260"
 		lineheight	20
 		tabwidth	150
@@ -1863,7 +1862,7 @@ menu popup_intercept
 	text bases
 	{
 		textid		TEXT_BASE_LIST
-		pos			"501 74"
+		pos			"501 119"
 		size		"250 260"
 		lineheight	20
 		tabwidth	175
@@ -1882,7 +1881,7 @@ menu popup_intercept
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"566 338"
+		pos			"566 383"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
