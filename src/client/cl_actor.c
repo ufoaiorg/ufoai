@@ -932,7 +932,7 @@ qboolean CL_ActorSelectList (int num)
 
 	/* select actor */
 	le = cl.teamList[num];
-	if (le && !CL_ActorSelect(le))
+	if (!le || !CL_ActorSelect(le))
 		return qfalse;
 
 	/* center view (if wanted) */
