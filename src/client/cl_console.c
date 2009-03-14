@@ -127,63 +127,6 @@ void Con_Scroll (int scroll)
 		con.displayLine = 0;
 }
 
-/**
- * @brief Save the console contents out to a file
- */
-static void Con_Dump_f (void)
-{
-	int l, x;
-	char *line;
-	qFILE f;
-	char buffer[MAX_STRING_CHARS];
-	char name[MAX_OSPATH];
-
-	if (Cmd_Argc() != 2) {
-		Com_Printf("Usage: %s <filename>\n", Cmd_Argv(0));
-		return;
-	}
-
-	Com_sprintf(name, sizeof(name), "%s/%s.txt", FS_Gamedir(), Cmd_Argv(1));
-
-	Com_Printf("Dumped console text to %s.\n", name);
-	FS_CreatePath(name);
-	FS_OpenFile(name, &f, FILE_WRITE);
-	if (!f.f) {
-		Com_Printf("ERROR: couldn't open.\n");
-		return;
-	}
-
-	/* skip empty lines */
-	for (l = con.currentLine - con.totalLines + 1; l <= con.currentLine; l++) {
-		line = con.text + (l % con.totalLines) * con.lineWidth;
-		for (x = 0; x < con.lineWidth; x++)
-			if (line[x] != ' ')
-				break;
-		if (x != con.lineWidth)
-			break;
-	}
-
-	/* write the remaining lines */
-	buffer[con.lineWidth] = 0;
-	for (; l <= con.currentLine; l++) {
-		line = con.text + (l % con.totalLines) * con.lineWidth;
-		strncpy(buffer, line, con.lineWidth);
-		for (x = con.lineWidth - 1; x >= 0; x--) {
-			if (buffer[x] == ' ')
-				buffer[x] = 0;
-			else
-				break;
-		}
-		for (x = 0; buffer[x]; x++)
-			buffer[x] &= SCHAR_MAX;
-
-		FS_Printf(&f, "%s\n", buffer);
-	}
-
-	FS_CloseFile(&f);
-}
-
-
 void Con_ClearNotify (void)
 {
 	int i;
@@ -296,21 +239,15 @@ void Con_SaveConsoleHistory (void)
 {
 	int i;
 	qFILE f;
-	char filename[MAX_OSPATH];
 	const char *lastLine = NULL;
-	const char *path = FS_Gamedir();
 
 	/* maybe con_history is not initialized here (early Sys_Error) */
 	if (!con_history || !con_history->integer)
 		return;
 
-	Com_sprintf(filename, sizeof(filename), "%s/%s", path, CONSOLE_HISTORY_FILENAME);
-
-	memset(&f, 0, sizeof(f));
-
-	FS_OpenFile(filename, &f, FILE_WRITE);
+	FS_OpenFile(CONSOLE_HISTORY_FILENAME, &f, FILE_WRITE);
 	if (!f.f) {
-		Com_Printf("Can not open %s/%s for writing\n", path, CONSOLE_HISTORY_FILENAME);
+		Com_Printf("Can not open "CONSOLE_HISTORY_FILENAME" for writing\n");
 		return;
 	}
 
@@ -341,7 +278,6 @@ void Con_Init (void)
 	Cmd_AddCommand("messagesay", Con_MessageModeSay_f, _("Send a message to all players"));
 	Cmd_AddCommand("messagesayteam", Con_MessageModeSayTeam_f, _("Send a message to allied team members"));
 	Cmd_AddCommand("clear", Con_Clear_f, "Clear console text");
-	Cmd_AddCommand("condump", Con_Dump_f, "Dump console text to textfile");
 
 	/* load console history if con_history is true */
 	Con_LoadConsoleHistory();

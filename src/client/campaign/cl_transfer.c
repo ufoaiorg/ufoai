@@ -1745,9 +1745,8 @@ qboolean TR_SaveXML (mxml_node_t *p)
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		int j;
 		const transfer_t *transfer = &ccs.alltransfers[i];
-		mxml_node_t * s;
-		/*if (!transfer->active)
-			continue;*/
+		mxml_node_t *s;
+
 		s = mxml_AddNode(n, "transfer");
 		if (transfer->hasItems) {
 			for (j = 0; j < MAX_OBJDEFS; j++) {
@@ -1764,9 +1763,9 @@ qboolean TR_SaveXML (mxml_node_t *p)
 				{
 					mxml_node_t *ss = mxml_AddNode(s, "alien");
 					mxml_AddInt(ss, "alienid", j);
-					if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] >0)
+					if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] > 0)
 						mxml_AddInt(ss, "aliveamount", transfer->alienAmount[j][TRANS_ALIEN_ALIVE]);
-					if (transfer->alienAmount[j][TRANS_ALIEN_DEAD] >0)
+					if (transfer->alienAmount[j][TRANS_ALIEN_DEAD] > 0)
 						mxml_AddInt(ss, "deadamount", transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
 				}
 			}
@@ -1827,7 +1826,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		transfer->event.day = mxml_GetInt(s, "day", 0);
 		transfer->event.sec = mxml_GetInt(s, "sec", 0);
 		transfer->active = mxml_GetBool(s, "active", qfalse);
-		/*initialising some variables */
+		/* initialising some variables */
 		transfer->hasItems = qfalse;
 		transfer->hasEmployees = qfalse;
 		transfer->hasAliens = qfalse;
@@ -1866,7 +1865,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 		ss = mxml_GetNode(s, "employee");
 		if (ss) {
 			transfer->hasEmployees = qtrue;
-			for (;ss; ss= mxml_GetNextNode(ss, s, "employee")) {
+			for (; ss; ss = mxml_GetNextNode(ss, s, "employee")) {
 				const int emplIdx = mxml_GetInt(ss, "idx", 0);
 				const int group = mxml_GetInt(ss, "group", 0);
 				const int empl = mxml_GetInt(ss, "empl", 0);
@@ -1880,7 +1879,7 @@ qboolean TR_LoadXML (mxml_node_t *p)
 			transfer->hasAircraft = qtrue;
 			for (; ss; ss = mxml_GetNextNode(ss, s, "aircraft")) {
 				const int j = mxml_GetInt(ss, "id", 0);
-				const int airc = mxml_GetInt(ss, "air",  0);
+				const int airc = mxml_GetInt(ss, "air", TRANS_LIST_EMPTY_SLOT);
 				if (j >= 0 && j < MAX_AIRCRAFT)
 					transfer->aircraftArray[j] = airc;
 			}
