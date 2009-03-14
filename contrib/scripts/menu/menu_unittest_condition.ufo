@@ -116,7 +116,7 @@ menu unittest_condition
 	}
 
 	string nodeTitle {
-		pos		"180 40"
+		pos		"190 40"
 		string	"node"
 	}
 
@@ -145,12 +145,60 @@ menu unittest_condition
 		string	"t5"
 	}
 
+	string testNode6 {
+		pos		"220 60"
+		string	"t6"
+	}
+
+	string testNode7 {
+		pos		"220 80"
+		string	"t7"
+	}
+
+	string testNode8 {
+		pos		"220 100"
+		string	"t8"
+	}
+
+	string testNode9 {
+		pos		"220 120"
+		string	"t9"
+	}
+
+	string testNode10 {
+		pos		"220 140"
+		string	"t10"
+	}
+
 	spinner testNodeFoo {
 		current		"*cvar test_nodefoo"
 		min			0
 		max			16
 		invis		true
 		disabled	false
+	}
+
+	spinner testNodeFoo2 {
+		{
+			current		"*cvar test_nodefoo"
+			min			0
+			max			16
+			invis		true
+			disabled	false
+		}
+		
+		confunc unittest_condition_relative {
+			if "*node:this.parent@current == 1" { *testNode6 color "0 1 0 1" }
+			else { *testNode6 color "1 0 0 1" }
+			if "1 == *node:parent@current" { *testNode7 color "0 1 0 1" }
+			else { *testNode7 color "1 0 0 1" }
+			if "*node:this.menu.testNodeFoo2@max == 16" { *testNode8 color "0 1 0 1" }
+			else { *testNode8 color "1 0 0 1" }
+			if "*node:menu.testNodeFoo2@invis == 1" { *testNode9 color "0 1 0 1" }
+			else { *testNode9 color "1 0 0 1" }
+			if "*node:this.parent.parent.testNodeFoo2.menu.testNodeFoo2@disabled == 0" { *testNode10 color "0 1 0 1" }
+			else { *testNode10 color "1 0 0 1" }
+		}
 	}
 	
 	func init {
@@ -219,6 +267,8 @@ menu unittest_condition
 		else { *testNode4 color "1 0 0 1" }
 		if "*node:unittest_condition.testNodeFoo@disabled == 0" { *testNode5 color "0 1 0 1" }
 		else { *testNode5 color "1 0 0 1" }
+		
+		cmd "unittest_condition_relative"
 	}
 
 	func close {
