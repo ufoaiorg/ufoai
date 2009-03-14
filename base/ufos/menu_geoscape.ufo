@@ -1003,9 +1003,9 @@ menu popup_baseattack
 				cmd "pwr_down;"
 			}
 			if "*node:popup_baseattack.equip@current > 0" {
-				*path:equipment close {
+				*path:(menu)equipment close {
 					cmd "cp_mission_autogo"
-					*path:this close { }
+					*path:(menu)this close { }
 				}
 				cmd "mn_push equipment;"
 			} else {
