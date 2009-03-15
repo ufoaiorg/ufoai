@@ -748,6 +748,8 @@ void CL_CampaignRun (void)
 	checks = (int)(checks / DETECTION_INTERVAL);
 	dt = DETECTION_INTERVAL - currentinterval;
 
+	UP_GetUnreadMails();
+
 	/* Execute every actions that needs to be independant of time speed : every DETECTION_INTERVAL
 	 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
 	 *	- Check if any new mission is detected
@@ -837,7 +839,6 @@ void CL_CampaignRun (void)
 			ccs.fund = qtrue;
 
 		CP_UpdateXVIMapButton();
-		UP_GetUnreadMails();
 		CL_UpdateTime();
 	}
 }
