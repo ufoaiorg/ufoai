@@ -427,15 +427,13 @@ static void Con_DrawInput (void)
  */
 void Con_DrawNotify (void)
 {
-	int x, l, v;
-	char *text, *s;
-	int i, time, skip;
-	qboolean draw;
+	const char *text;
+	int i, time, skip, x;
+	int v = 60 * viddef.rx;
+	const int l = 120 * viddef.ry;
 
-	v = 60 * viddef.rx;
-	l = 120 * viddef.ry;
 	for (i = con.currentLine - NUM_CON_TIMES + 1; i <= con.currentLine; i++) {
-		draw = qfalse;
+		qboolean draw = qfalse;
 		if (i < 0)
 			continue;
 		time = con.times[i % NUM_CON_TIMES];
@@ -458,6 +456,9 @@ void Con_DrawNotify (void)
 	}
 
 	if (cls.key_dest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
+		const char *s = msg_buffer;
+		int x;
+
 		if (msg_mode == MSG_SAY) {
 			Con_DisplayString(l, v, "say:");
 			skip = 4;
@@ -466,9 +467,9 @@ void Con_DrawNotify (void)
 			skip = 10;
 		}
 
-		s = msg_buffer;
 		if (msg_bufferlen > (viddef.width >> con_fontShift) - (skip + 1))
 			s += msg_bufferlen - ((viddef.width >> con_fontShift) - (skip + 1));
+
 		x = 0;
 		while (s[x]) {
 			R_DrawChar(l + ((x + skip) << con_fontShift), v, s[x]);
