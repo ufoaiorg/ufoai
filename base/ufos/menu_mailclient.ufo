@@ -334,7 +334,7 @@ menu mailclient
 	pic mail_button_6
 	{
 		visiblewhen "*cvar:mn_mail_read6 == 1"
-		image	 	menumail_button
+		image	 	menu/mail_button
 		pos			"90 352"
 		texl		"0 0"
 		texh		"852 28"
