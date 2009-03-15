@@ -71,6 +71,12 @@ static void GAME_SK_Start_f (void)
 	Cbuf_AddText(map);
 }
 
+static void GAME_SK_Restart_f (void)
+{
+	GAME_RestartMode(GAME_SKIRMISH);
+	GAME_SK_Start_f();
+}
+
 /**
  * @brief Changed the cl_equip cvar to the next/prev equipment definition
  */
@@ -156,6 +162,7 @@ void GAME_SK_InitStartup (void)
 	Cmd_AddCommand("sk_start", GAME_SK_Start_f, "Start the new skirmish game");
 	Cmd_AddCommand("sk_prevequip", GAME_SK_ChangeEquip_f, "Previous equipment definition");
 	Cmd_AddCommand("sk_nextequip", GAME_SK_ChangeEquip_f, "Next equipment definition");
+	Cmd_AddCommand("game_go", GAME_SK_Restart_f, "Restart the skirmish mission");
 }
 
 void GAME_SK_Shutdown (void)
@@ -169,4 +176,5 @@ void GAME_SK_Shutdown (void)
 	Cmd_RemoveCommand("sk_start");
 	Cmd_RemoveCommand("sk_nextequip");
 	Cmd_RemoveCommand("sk_prevequip");
+	Cmd_RemoveCommand("game_go");
 }
