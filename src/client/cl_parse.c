@@ -1282,7 +1282,9 @@ static void CL_PlaceItem (le_t *le)
 	if (FLOOR(le)) {
 		const objDef_t *biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cls.model_weapons[biggest->idx];
-		assert(le->model1);
+		if (!le->model1)
+			Com_Error(ERR_DROP, "Model for item %s is not precached in the cls.model_weapons array",
+				biggest->id);
 		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 		VectorSubtract(le->origin, biggest->center, le->origin);
 		le->angles[ROLL] = 90;
@@ -1304,6 +1306,7 @@ static void CL_PlaceItem (le_t *le)
 		 * https://sourceforge.net/tracker/index.php?func=detail&aid=2071463&group_id=157793&atid=805242
 		le->inuse = qfalse;
 		*/
+		Com_Error(ERR_DROP, "Empty container as floor le with number: %i", le->entnum);
 	}
 }
 
@@ -1311,31 +1314,29 @@ static void CL_PlaceItem (le_t *le)
 /**
  * @sa CL_InvDel
  * @sa G_SendInventory
+ * @sa EV_INV_ADD
  */
 static void CL_InvAdd (struct dbuffer *msg)
 {
-	int		number, nr;
-	int		container, x, y;
-	le_t	*le;
-	item_t	item;
+	int container, x, y;
+	item_t item;
+	const int number = NET_ReadShort(msg);
+	le_t *le = LE_Get(number);
+	int nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
 
-	number = NET_ReadShort(msg);
-
-	le = LE_Get(number);
 	if (!le) {
-		nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
-		Com_Printf("InvAdd: message ignored... LE %i not found\n", number);
+#ifdef DEBUG
 		for (; nr-- > 0;) {
 			CL_NetReceiveItem(msg, &item, &container, &x, &y);
 			Com_Printf("InvAdd: ignoring:\n");
 			INVSH_PrintItemDescription(item.t);
 		}
-		return;
+#endif
+		Com_Error(ERR_DROP, "InvAdd: message ignored... LE %i not found\n", number);
 	}
-	if (!le->inuse)
-		Com_DPrintf(DEBUG_CLIENT, "InvAdd: warning... LE found but not in-use\n");
 
-	nr = NET_ReadShort(msg) / INV_INVENTORY_BYTES;
+	if (!le->inuse)
+		Com_Error(ERR_DROP, "InvAdd: warning... LE found but not in-use\n");
 
 	for (; nr-- > 0;) {
 		CL_NetReceiveItem(msg, &item, &container, &x, &y);
@@ -1406,6 +1407,7 @@ static void CL_InvDel (struct dbuffer *msg)
 		le->think = LET_StartIdle;
 		break;
 	case ET_ITEM:
+		/* update the rendered item */
 		CL_PlaceItem(le);
 		break;
 	}

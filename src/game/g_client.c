@@ -442,10 +442,13 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 
 /**
  * @brief test if check is visible by from
- * from is from team team
- * @param[in] team @todo document why this can be negative
+ * @param[in] team Living team members are always visible. If this is a negative
+ * number we inverse the team rules (see comments included).
+ * @param[in] from is from team @c team and must be a living actor
+ * @param[in] check The edict we want to get the visibility for
+ * @param[in] flags VT_NOFRUSTUM, ...
  */
-static float G_Vis (int team, edict_t * from, edict_t * check, int flags)
+static float G_Vis (int team, const edict_t * from, const edict_t * check, int flags)
 {
 	vec3_t eye;
 
@@ -794,7 +797,6 @@ int G_GetActiveTeam (void)
  * @param[in] TU The time units to check against the ones ent has.
  * @param[in] quiet Don't print the console message if quiet is true.
  * the action with
- * @todo Integrate into hud - don't use cprintf
  */
 qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 {
@@ -1000,9 +1002,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 			Com_FindSpace(&ent->i, &ic->item, to, &tx, &ty, fItem);
 	}
 	if (tx == NONE) {
-/*		assert(ty == NONE); */
 		if (ty != NONE)
-			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
+			gi.error("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
 		return;
 	}
 
@@ -1016,7 +1017,6 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		/** @todo "or not researched" */
 		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
@@ -1025,8 +1025,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		break;
 	}
 
-	/** @todo This is impossible - if not we should check MAX_INVDEFS */
-	assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
+	assert(gi.csi->idFloor >= 0 && gi.csi->idFloor < MAX_CONTAINERS);
 
 	/* successful inventory change; remove the item in clients */
 	if (from->id == gi.csi->idFloor) {
@@ -1111,15 +1110,13 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		if (newFloor) {
 			/* A new container was created for the floor. */
 			assert(FLOOR(ent));
-			/** @todo @b why do we do this here exactly? Shouldn't they be the
-			 * same already at this point? */
+			/* we have to link the temp floor container to the new floor edict */
 			FLOOR(floor) = FLOOR(ent);
 			/* Send item info to the clients */
 			G_CheckVis(floor, qtrue);
 		} else {
-			/* Add the item; update floor, because we add at beginning */
-			/** @todo @b why do we do this here exactly? Shouldn't they be the
-			 * same already at this point? */
+			/* Add the item to an already existing floor edict - the floor container that
+			 * is already linked might be from a differnet entity */
 			FLOOR(floor) = FLOOR(ent);
 			/* Tell the client to add the item to the container. */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
@@ -1136,12 +1133,12 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	}
 
 	/* Update reaction firemode when something is moved from/to a hand. */
-	if ((from->id == gi.csi->idRight) || (to->id == gi.csi->idRight)) {
+	if (from->id == gi.csi->idRight || to->id == gi.csi->idRight) {
 		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove: Something moved in/out of right hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
 		gi.WriteShort(0);	/**< hand = right */
-	} else if ((from->id == gi.csi->idLeft) || (to->id == gi.csi->idLeft)) {
+	} else if (from->id == gi.csi->idLeft || to->id == gi.csi->idLeft) {
 		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove:  Something moved in/out of left hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
@@ -1214,7 +1211,7 @@ static void G_InventoryToFloor (edict_t * ent)
 		if (k == gi.csi->idFloor)
 			continue;
 		/* skip csi->idArmour, we will collect armours using idArmour container,
-		   not idFloor */
+		 * not idFloor */
 		if (k == gi.csi->idArmour) {
 			if (ent->i.c[gi.csi->idArmour])
 				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: this actor has armour: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
