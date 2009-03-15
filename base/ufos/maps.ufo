@@ -1334,6 +1334,7 @@ mapdef eaglenest
 		coop4
 	}
 	maxaliens		9
+	description		"_A small estate in the mountains"
 
 //	ufos
 //	{
@@ -1375,6 +1376,7 @@ mapdef scout_crash
 		coop4
 	}
 	maxaliens		4
+	description		"_A crashed Scout UFO"
 
 	ufos
 	{
@@ -2217,6 +2219,7 @@ mapdef lake_ice_big
 	map				lake_ice_big
 	multiplayer		true
 	teams			3
+	description		"_A small settlement in winter."
 	gametypes {
 		1on1
 		1on1on1
