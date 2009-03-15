@@ -88,7 +88,7 @@ void GAME_SetMode (int gametype)
 		if (list->gametype == gametype) {
 			Com_Printf("Change gametype to '%s'\n", list->name);
 			memset(&invList, 0, sizeof(invList));
-			INVSH_InitInventory(invList);
+			INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initiallized */
 			list->init();
 		} else if (list->gametype == currentGameType) {
 			Com_Printf("Shutdown gametype '%s'\n", list->name);
@@ -218,6 +218,7 @@ void GAME_HandleResults (struct dbuffer *msg, int winner, int *numSpawned, int *
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
 			list->results(msg, winner, numSpawned, numAlive, numKilled, numStunned);
+			INVSH_InvUnusedRevert(); /* inventory buffer switched back */
 			break;
 		}
 		list++;

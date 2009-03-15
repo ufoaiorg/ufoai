@@ -1210,6 +1210,7 @@ static void G_InventoryToFloor (edict_t * ent)
 		/* skip floor - we want to drop to floor */
 		if (k == gi.csi->idFloor)
 			continue;
+
 		/* skip csi->idArmour, we will collect armours using idArmour container,
 		 * not idFloor */
 		if (k == gi.csi->idArmour) {
@@ -1250,7 +1251,8 @@ static void G_InventoryToFloor (edict_t * ent)
 						gi.WriteShort(floorAdjacent->number);
 						floorAdjacent->visflags = 0;
 					}
-					Com_FindSpace(&floorAdjacent->i, &ic->item, gi.csi->idFloor, &x, &y);
+					/* Com_FindSpace missing argument */
+					Com_FindSpace(&floorAdjacent->i, &ic->item, gi.csi->idFloor, &x, &y, ic);
 					if (x != NONE) {
 						ic->x = x;
 						ic->y = y;

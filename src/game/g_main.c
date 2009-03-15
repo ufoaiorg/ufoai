@@ -238,7 +238,7 @@ static void G_Init (void)
 
 	/* init csi and inventory */
 	INVSH_InitCSI(gi.csi);
-	INVSH_InitInventory(invChain);
+	INVSH_InitInventory(invChain, qtrue);
 
 	logstatsfile = NULL;
 	if (logstats->integer)

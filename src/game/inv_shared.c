@@ -35,6 +35,7 @@ INVENTORY MANAGEMENT FUNCTIONS
 
 static csi_t *CSI;
 static invList_t *invUnused;
+static invList_t *invUnusedRevert = NULL;
 static item_t cacheItem = {NONE_AMMO, NULL, NULL, 0, 0}; /* to crash as soon as possible */
 
 /**
@@ -76,11 +77,15 @@ const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, c
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
  */
-void INVSH_InitInventory (invList_t * invList)
+void INVSH_InitInventory (invList_t * invList, int store)
 {
 	int i;
 
 	assert(invList);
+
+	/* store last Unused stack? */
+	if (store)
+		invUnusedRevert = invUnused;
 
 	invUnused = invList;
 	/* first entry doesn't have an ancestor: invList[0]->next = NULL */
@@ -96,6 +101,18 @@ void INVSH_InitInventory (invList_t * invList)
 		invList_t *last = invUnused++;
 		invUnused->next = last;
 	}
+}
+
+/**
+ * @brief reverts invUnused back to previous structure list
+ */
+void INVSH_InvUnusedRevert (void)
+{
+	if (!invUnusedRevert)
+		return;
+
+	invUnused = invUnusedRevert;
+	invUnusedRevert = NULL;
 }
 
 static int cache_Com_CheckToInventory = INV_DOES_NOT_FIT;
