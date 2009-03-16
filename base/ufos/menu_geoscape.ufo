@@ -2144,8 +2144,8 @@ menu messageoptions
 	{
 		string		"_Apply"
 		tooltip		"_Apply changes"
-		pos			"30 400"
-		size		"208 48"
+		pos			"109 436"
+		size		"176 32"
 		image		menu/button_green_small
 		blend		true
 		font		f_menu
@@ -2158,8 +2158,8 @@ menu messageoptions
 	{
 		string		"_Cancel"
 		tooltip		"_Revert changes"
-		pos			"256 400"
-		size		"208 48"
+		pos			"296 437"
+		size		"176 32"
 		image		menu/button_green_small
 		blend		true
 		font		f_menu
@@ -2170,10 +2170,10 @@ menu messageoptions
 
 	string header_messagetype
 	{
-		string		"_Notify type"
+		string		"_Notify types:"
 		pos			"30 60"
 		size		"300 25"
-		font		f_big
+		font		f_small
 	}
 
 	pic header_pause
@@ -2213,9 +2213,28 @@ menu messageoptions
 		size		"440 300"
 		mousefx		true
 		longlines	prettychop
-		scrollbar	true
-		click
-		wheel		{ cmd "msgoptions_scroll;" }
+		wheel		{
+			*(abstractscrollbar)messagetypes_scroll current <text_scroll>
+			cmd "msgoptions_scroll;"
+		}
+		lineschange	{
+			*(abstractscrollbar)messagetypes_scroll fullsize <lines>
+			*(abstractscrollbar)messagetypes_scroll current <text_scroll>
+		}
+	}
+
+	vscrollbar messagetypes_scroll {
+		image		menu/scrollbar_v_green
+		blend		true
+		pos			"455 90"
+		height		"300"
+		current		0
+		viewsize	12
+		fullsize	12
+		change		{
+			cmd "mn_textscroll messagetypes <lastdiff>;"
+			cmd "msgoptions_scroll;"
+		}
 	}
 
 	// ===================
