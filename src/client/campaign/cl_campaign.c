@@ -1730,7 +1730,7 @@ void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean w
 	Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), resultCounts[MRC_CIVILIAN_FF_KILLED]), sizeof(resultText));
 	Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), resultCounts[MRC_CIVILIAN_SURVIVOR]), sizeof(resultText));
 	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), resultCounts[MRC_ITEM_GATHEREDTYPES],
-			resultCounts[MRC_ITEM_GATHEREDTYPES]), sizeof(resultText));
+			resultCounts[MRC_ITEM_GATHEREDAMOUNT]), sizeof(resultText));
 
 	if (won && missionresults.recovery)
 		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
