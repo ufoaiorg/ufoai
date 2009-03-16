@@ -37,9 +37,9 @@ typedef enum {
  * @param[in] team
  * @param[in] point
  */
-static qboolean G_TeamPointVis (int team, vec3_t point)
+static qboolean G_TeamPointVis (int team, const vec3_t point)
 {
-	edict_t *from;
+	const edict_t *from;
 	vec3_t eye;
 	int i;
 

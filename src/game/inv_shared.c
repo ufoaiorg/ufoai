@@ -35,7 +35,7 @@ INVENTORY MANAGEMENT FUNCTIONS
 
 static csi_t *CSI;
 static invList_t *invUnused;
-static invList_t *invUnusedRevert = NULL;
+static invList_t *invUnusedRevert;
 static item_t cacheItem = {NONE_AMMO, NULL, NULL, 0, 0}; /* to crash as soon as possible */
 
 /**

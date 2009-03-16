@@ -417,13 +417,12 @@ static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
  */
 qboolean G_ReactToMove (edict_t *target, qboolean mock)
 {
-	qboolean fired;
-
 	/* Check to see whether this resolves any reaction fire */
-	fired = G_CheckRFResolution(target, mock);
+	const qboolean fired = G_CheckRFResolution(target, mock);
 
 	/* Check to see whether this triggers any reaction fire */
 	G_CheckRFTrigger(target);
+
 	return fired;
 }
 

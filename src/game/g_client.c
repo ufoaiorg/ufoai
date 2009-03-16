@@ -1251,7 +1251,7 @@ static void G_InventoryToFloor (edict_t * ent)
 						gi.WriteShort(floorAdjacent->number);
 						floorAdjacent->visflags = 0;
 					}
-					/* Com_FindSpace missing argument */
+
 					Com_FindSpace(&floorAdjacent->i, &ic->item, gi.csi->idFloor, &x, &y, ic);
 					if (x != NONE) {
 						ic->x = x;
@@ -1680,15 +1680,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* check for reaction fire */
 				if (G_ReactToMove(ent, qtrue)) {
-					if (G_ReactToMove(ent, qfalse))
+					if (G_ReactToMove(ent, qfalse)) {
 						status |= VIS_STOP;
+					}
 					autoCrouchRequired = qfalse;
-					/** @todo Let the camera center on the attacker if he's visible
-					 * if he's invisible let the target turn in the shooting direction
-					 * of the attacker (@see G_Turn) - also let all team members now
-					 * about the situation. Otherwise they may move (e.g. in a
-					 * coop game) and trigger the reaction fire which may kill
-					 * the targetted actor */
+					/** @todo if the attacker is invisible let the target turn in the shooting direction
+					 * of the attacker (@see G_Turn) */
 					steps = 0;
 					sentAppearPerishEvent = qfalse;
 				}
