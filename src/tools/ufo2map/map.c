@@ -486,7 +486,7 @@ static inline void GenerateMaterialFile (const char *filename, int mipTexIndex, 
 	assert(filename);
 
 	COM_StripExtension(filename, fileBase, sizeof(fileBase));
-	Com_sprintf(materialPath, sizeof(materialPath), "%smaterials/%s.mat", FS_Gamedir(), COM_SkipPath(fileBase));
+	Com_sprintf(materialPath, sizeof(materialPath), "materials/%s.mat", COM_SkipPath(fileBase));
 
 	FS_OpenFile(materialPath, &f, FILE_APPEND);
 	if (!f.f) {
