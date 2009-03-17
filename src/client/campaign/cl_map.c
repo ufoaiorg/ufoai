@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_game.h"
 #include "../cl_screen.h"
 #include "../renderer/r_draw.h"
 #include "../cl_menu.h"
@@ -2005,10 +2004,6 @@ void MAP_DrawMap (const menuNode_t* node)
  */
 void MAP_ResetAction (void)
 {
-	/* only if there is a running single player campaign */
-	if (!GAME_CP_IsRunning())
-		return;
-
 	/* don't allow a reset when no base is set up */
 	if (ccs.numBases)
 		ccs.mapAction = MA_NONE;
