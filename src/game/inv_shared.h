@@ -160,7 +160,7 @@ typedef enum {
  * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)
  */
 typedef enum {
-	AIR_STATS_SPEED,	/**< Aircraft crusing speed. */
+	AIR_STATS_SPEED,	/**< Aircraft cruising speed. */
 	AIR_STATS_MAXSPEED,	/**< Aircraft max speed. */
 	AIR_STATS_SHIELD,	/**< Aircraft shield. */
 	AIR_STATS_ECM,		/**< Aircraft electronic warfare level. */
@@ -171,7 +171,7 @@ typedef enum {
 						 * for aircraft, the value is in millidegree (because this is an int) */
 
 	AIR_STATS_MAX,
-	AIR_STATS_OP_RANGE	/**< Operationnal range of the aircraft (after AIR_STATS_MAX because not needed in stats[AIR_STATS_MAX], only in CL_AircraftMenuStatsValues */
+	AIR_STATS_OP_RANGE	/**< Operational range of the aircraft (after AIR_STATS_MAX because not needed in stats[AIR_STATS_MAX], only in CL_AircraftMenuStatsValues */
 } aircraftParams_t;
 
 /**
@@ -214,7 +214,7 @@ typedef enum {
 					 * The UGVs themself are specially handled.*/
 	FILTER_AIRCRAFT,	/**< Aircrafts. */
 	FILTER_DUMMY,		/**< Everything that is not in _any_ of the other filter types.
-					 * Mostly plot-relevant stuff, unproducable stuff and stuff. */
+					 * Mostly plot-relevant stuff, unproducible stuff and stuff. */
 	FILTER_DISASSEMBLY,
 
 	MAX_FILTERTYPES,
@@ -223,8 +223,8 @@ typedef enum {
 } itemFilterTypes_t;
 
 /**
- * @brief Defines all attributes of obejcts used in the inventory.
- * @todo Document the various (and mostly not obvious) varables here. The documentation in the .ufo file(s) might be a good starting point.
+ * @brief Defines all attributes of objects used in the inventory.
+ * @todo Document the various (and mostly not obvious) variables here. The documentation in the .ufo file(s) might be a good starting point.
  * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
  */
 typedef struct objDef_s {
@@ -253,7 +253,7 @@ typedef struct objDef_s {
 	int price;			/**< Price for this item. */
 	int size;			/**< Size of an item, used in storage capacities. */
 
-	/** Item type used to check agains buyypes.
+	/** Item type used to check against buyypes.
 	 * @sa type=="armour", type=="ammo"			equals "isAmmo"
 	 * @sa obj.craftitem.type == MAX_ACITEMS	equals "isCraftitem" */
 	qboolean isPrimary;
@@ -280,7 +280,7 @@ typedef struct objDef_s {
 	int numAmmos;			/**< Number of ammos this weapon can be used with, which is <= MAX_AMMOS_PER_OBJDEF. */
 
 	/* Firemodes (per weapon). */
-	struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where thsi item can be used in.
+	struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
 															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
 															 * FIRESH_FiredefsIDXForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
@@ -309,7 +309,7 @@ typedef struct objDef_s {
 enum {
 	INV_DOES_NOT_FIT		= 0,	/**< Item does not fit. */
 	INV_FITS 				= 1,	/**< The item fits without rotation (only) */
-	INV_FITS_ONLY_ROTATED	= 2,	/**< The item fits only when rotated (90! to theleft) */
+	INV_FITS_ONLY_ROTATED	= 2,	/**< The item fits only when rotated (90! to the left) */
 	INV_FITS_BOTH			= 3		/**< The item fits either rotated or not. */
 };
 
@@ -332,7 +332,7 @@ typedef struct invDef_s {
 	/** Scroll information. @sa inventory_t */
 	int scroll;			/**< If set this container is scrollable (i.e. no grid and no single container)
 						 * The number tells us how many pixels (width) the container can display at one time. */
-	int scrollHeight;	/**< Tells us how many pixels (height) the conatiner can display. */
+	int scrollHeight;	/**< Tells us how many pixels (height) the container can display. */
 	int scrollVertical;	/**< 0/false=horizontal 1/true=vertical */
 } invDef_t;
 
@@ -520,7 +520,7 @@ typedef enum { /** @note Changing order/entries also changes network-transmissio
  * The result is parsed into chrScoreGlobal_t which is stored in savegames.
  * @note BTAxis about "hit" count:
  * "But yeah, what we want is a counter per skill. This counter should start at 0
- * every battle, and then be intreased by 1 everytime:
+ * every battle, and then be increased by 1 everytime:
  * - a direct fire weapon hits (or deals damage, same thing) the actor the weapon
  *   was fired at. If it wasn't fired at an actor, nothing should happen.
  * - a splash weapon deals damage to any enemy actor. If multiple actors are hit,
@@ -542,12 +542,12 @@ typedef struct chrScoreMission_s {
 
 	/**
 	 * Hits/Misses @sa g_combat.c:G_UpdateHitScore. */
-	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldeir started shooting) */
+	int fired[SKILL_NUM_TYPES];				/**< Count of fired "firemodes" (i.e. the count of how many times the soldier started shooting) */
 	int firedTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes". (direct hits only)*/
 	qboolean firedHit[KILLED_NUM_TYPES];	/** Temporarily used for shot-stats calculations and status-tracking. Not used in stats.*/
 	int hits[SKILL_NUM_TYPES][KILLED_NUM_TYPES];	/**< Count of hits (aliens, civilians or, teammates) per skill.
 													 * It is a sub-count of "fired".
-													 * It's planned to be increased by 1 for each series fo shots that dealt _some_ damage. */
+													 * It's planned to be increased by 1 for each series of shots that dealt _some_ damage. */
 	int firedSplash[SKILL_NUM_TYPES];	/**< Count of fired splash "firemodes". */
 	int firedSplashTUs[SKILL_NUM_TYPES];				/**< Count of TUs used for the fired "firemodes" (splash damage only). */
 	qboolean firedSplashHit[KILLED_NUM_TYPES];	/** Same as firedHit but for Splash damage. */
@@ -581,7 +581,7 @@ typedef struct chrScoreGlobal_s {
 	int kills[KILLED_NUM_TYPES];	/**< Count of kills (aliens, civilians, teammates) */
 	int stuns[KILLED_NUM_TYPES];	/**< Count of stuns(aliens, civilians, teammates) */
 
-	int assignedMissions;		/**< Number of missions this soldeir was assigned to. */
+	int assignedMissions;		/**< Number of missions this soldier was assigned to. */
 
 	int rank;					/**< Index of rank (in gd.ranks). */
 } chrScoreGlobal_t;
