@@ -62,7 +62,6 @@ static int researchListPos;
 
 /**
  * @brief Displays the informations of the current selected technology in the description-area.
- * See menu_research.ufo for the layout/called functions.
  */
 static void RS_UpdateInfo (const base_t* base)
 {
@@ -154,18 +153,6 @@ static void RS_UpdateInfo (const base_t* base)
 	/* Set image cvar. */
 	if (tech->image)
 		Cvar_Set("mn_research_imagetop", tech->image);
-
-	/** @todo Should we really show the model before it is researched? If not we'd need a pic/model to show a research proposal image.
-	else if (tech->provides)
-		switch (tech->type) {
-			case RS_WEAPON:
-			case RS_ARMOUR:
-				Cvar_Set("mn_researchitem", tech->provides);
-				break;
-			default:
-				break;
-		} * switch *
-	*/
 }
 
 /**
@@ -802,7 +789,6 @@ static void RS_InitGUIData (base_t* base)
  * @note if there is a base but no lab a popup appears
  * @sa RS_UpdateData
  * @sa MN_ResearchInit_f
- * @todo wrong computation: researchListLength doesn't say if there are research on this base
  */
 static void CL_ResearchType_f (void)
 {
@@ -813,10 +799,10 @@ static void CL_ResearchType_f (void)
 	RS_InitGUIData(baseCurrent);
 
 	/* Nothing to research here. */
+	/** @todo wrong computation: researchListLength doesn't say if there are research on this base */
 	if (!researchListLength) {
 		MN_PopMenu(qfalse);
-		if (!researchListLength)
-			MN_Popup(_("Notice"), _("Nothing to research"));
+		MN_Popup(_("Notice"), _("Nothing to research"));
 	} else if (!B_GetBuildingStatus(baseCurrent, B_LAB)) {
 		MN_PopMenu(qfalse);
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
