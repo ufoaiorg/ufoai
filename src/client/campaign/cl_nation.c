@@ -25,7 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_game.h"
 #include "../cl_screen.h"
 #include "../cl_menu.h"
 #include "../menu/m_nodes.h"
@@ -499,9 +498,6 @@ Menu functions
 static void CP_NationStatsClick_f (void)
 {
 	int num;
-
-	if (!GAME_CP_IsRunning())
-		return;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
