@@ -40,6 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ROTATE_SPEED	0.5
 #define MAX_OLDREFVALUE MAX_VAR
 
+static const nodeBehaviour_t const *localBehaviour;
+
 /**
  * @brief Add a menu link to menumodel definition for faster access
  * @note Called after all menus are parsed - only once
@@ -680,6 +682,15 @@ static void MN_ModelNodeLoading (menuNode_t *node)
 	node->u.model.clipOverflow = qtrue;
 }
 
+/**
+ * @brief Call to update a cloned node
+ */
+static void MN_ModelNodeClone (const menuNode_t *source, menuNode_t *clone)
+{
+	localBehaviour->super->clone(source, clone);
+	clone->u.model.oldRefValue = MN_AllocString("", MAX_OLDREFVALUE);
+}
+
 static void MN_ModelNodeLoaded (menuNode_t *node)
 {
 	/* link node with the parent */
@@ -728,12 +739,14 @@ static const value_t properties[] = {
 
 void MN_RegisterModelNode (nodeBehaviour_t *behaviour)
 {
+	localBehaviour = behaviour;
 	behaviour->name = "model";
 	behaviour->draw = MN_ModelNodeDraw;
 	behaviour->mouseDown = MN_ModelNodeMouseDown;
 	behaviour->mouseUp = MN_ModelNodeMouseUp;
 	behaviour->loading = MN_ModelNodeLoading;
 	behaviour->loaded = MN_ModelNodeLoaded;
+	behaviour->clone = MN_ModelNodeClone;
 	behaviour->capturedMouseMove = MN_ModelNodeCapturedMouseMove;
 	behaviour->properties = properties;
 
