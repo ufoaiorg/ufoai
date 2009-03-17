@@ -191,6 +191,16 @@ menu transfer
 		click		{ cmd "trans_prevbase;" }
 	}
 
+	string s_current_base
+	{
+		string		"_Selected base"
+		pos			"698 182"
+		size		"135 20"
+		textalign	uc
+		color		"0.7 0.7 0.7 1"
+		font		f_small
+	}
+
 	pic next_base
 	{
 		tooltip		"_Select next base for transfer"
@@ -200,16 +210,6 @@ menu transfer
 		texh		"32 16"
 		mousefx		true
 		click		{ cmd "trans_nextbase;" }
-	}
-
-	string s_current_base
-	{
-		string		"_Selected base"
-		pos			"698 182"
-		size		"145 20"
-		textalign	uc
-		color		"0.7 0.7 0.7 1"
-		font		f_small
 	}
 
 	string s_current_base_var
