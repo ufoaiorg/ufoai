@@ -45,10 +45,10 @@ static void MN_AbstractValueLoaded (menuNode_t * node)
 	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.min, 0);
 }
 
-static void MN_CloneCvarOrFloat (float** source, float** clone)
+static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
 {
 	/* dont update cvar */
-	if (Q_strncmp(*(char**)source, "*cvar", 5) != 0)
+	if (Q_strncmp(*(const char*const*)source, "*cvar", 5) != 0)
 		return;
 
 	/* clone float */
@@ -59,13 +59,13 @@ static void MN_CloneCvarOrFloat (float** source, float** clone)
 /**
  * @brief Call to update a cloned node
  */
-static void MN_AbstractValueClone (menuNode_t *source, menuNode_t *clone)
+static void MN_AbstractValueClone (const menuNode_t *source, menuNode_t *clone)
 {
 	localBehaviour->super->clone(source, clone);
-	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.value, (float**)&clone->u.abstractvalue.value);
-	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.delta, (float**)&clone->u.abstractvalue.delta);
-	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.max, (float**)&clone->u.abstractvalue.max);
-	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.min, (float**)&clone->u.abstractvalue.min);
+	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.value, (float**)&clone->u.abstractvalue.value);
+	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.delta, (float**)&clone->u.abstractvalue.delta);
+	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.max, (float**)&clone->u.abstractvalue.max);
+	MN_CloneCvarOrFloat((const float*const*)&source->u.abstractvalue.min, (float**)&clone->u.abstractvalue.min);
 }
 
 static const value_t properties[] = {

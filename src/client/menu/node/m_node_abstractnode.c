@@ -525,7 +525,7 @@ static qboolean MN_AbstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
 /**
  * @brief Call to update a cloned node
  */
-static void MN_AbstractNodeClone (menuNode_t *source, menuNode_t *clone)
+static void MN_AbstractNodeClone (const menuNode_t *source, menuNode_t *clone)
 {
 }
 
