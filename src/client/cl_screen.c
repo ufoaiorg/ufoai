@@ -406,9 +406,6 @@ static void SCR_DrawConsole (void)
  */
 void SCR_BeginLoadingPlaque (void)
 {
-	if (developer->integer)
-		return;
-
 	scr_draw_loading = 1;
 
 	SCR_UpdateScreen();
