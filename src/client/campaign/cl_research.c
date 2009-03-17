@@ -522,7 +522,7 @@ void RS_InitTree (qboolean load)
 				objDef_t *item = &csi.ods[j];
 
 				/* This item has been 'provided' -> get the correct data. */
-				if (!Q_strncmp(tech->provides, item->id, MAX_VAR)) {
+				if (!Q_strcmp(tech->provides, item->id)) {
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(item->name, cl_campaignPool, 0);
@@ -546,7 +546,7 @@ void RS_InitTree (qboolean load)
 			for (j = 0; j < ccs.numBuildingTemplates; j++) {
 				building_t *building = &ccs.buildingTemplates[j];
 				/* This building has been 'provided'  -> get the correct data. */
-				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
+				if (!Q_strcmp(tech->provides, building->id)) {
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(building->name, cl_campaignPool, 0);
@@ -1313,7 +1313,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 					if (!Q_strcmp(token, "tech") || !Q_strcmp(token, "tech_not")) {
 						if (requiredTemp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							if (!Q_strncmp(token, "tech_not", MAX_VAR))
+							if (!Q_strcmp(token, "tech_not"))
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH_NOT;
 							else
 								requiredTemp->links[requiredTemp->numLinks].type = RS_LINK_TECH;
@@ -1397,7 +1397,7 @@ void RS_ParseTechnologies (const char *name, const char **text)
 				if (*token) {
 					/* find chapter */
 					for (i = 0; i < ccs.numChapters; i++) {
-						if (!Q_strncmp(token, ccs.upChapters[i].id, MAX_VAR)) {
+						if (!Q_strcmp(token, ccs.upChapters[i].id)) {
 							/* add entry to chapter */
 							tech->upChapter = &ccs.upChapters[i];
 							if (!ccs.upChapters[i].first) {
