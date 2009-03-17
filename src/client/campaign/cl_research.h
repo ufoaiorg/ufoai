@@ -92,12 +92,6 @@ typedef struct requirements_s {
 	requirement_t links[MAX_TECHLINKS];
 } requirements_t;
 
-typedef struct stringlist_s {
-	int numEntries;				/**< The number of used strings/techs. */
-	char string[MAX_TECHLINKS][MAX_VAR];	/**< A list of strings. */
-	int idx[MAX_TECHLINKS];		/**< holds the indices of the tech for faster operation after finding it once */
-} stringlist_t;
-
 typedef struct markResearched_s {
 	qboolean markOnly[MAX_CAMPAIGNS];
 	char *campaign[MAX_CAMPAIGNS];

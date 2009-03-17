@@ -43,8 +43,6 @@ typedef enum {
 	RSGUI_UNRESEARCHABLEITEMTITLE
 } guiResearchElementType_t;
 
-/**
- */
 typedef struct {
 	base_t *base;
 	technology_t *tech;
@@ -61,9 +59,6 @@ static int researchListLength;
 
 /* The currently selected entry in the above list. */
 static int researchListPos;
-
-/** todo what is this good for? */
-static stringlist_t curRequiredList;
 
 /**
  * @brief Displays the informations of the current selected technology in the description-area.
@@ -337,7 +332,7 @@ static void RS_InitGUI (base_t* base, qboolean update)
 	if (researchListLength) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength);
 		if (researchListPos >= 0 && researchListPos < researchListLength && researchListLength < MAX_RESEARCHDISPLAY) {
-			int t = researchList2[researchListPos].type;
+			const int t = researchList2[researchListPos].type;
 			/* is it a tech row */
 			if (t == RSGUI_RESEARCH || t == RSGUI_RESEARCHOUT || t == RSGUI_UNRESEARCHABLEITEM) {
 				MN_ExecuteConfunc("research_selected %i", researchListPos);
@@ -390,7 +385,7 @@ static void CL_ResearchSelect_f (void)
 		return;
 	}
 
-	/** @todo improve that, dont need to update every thing */
+	/** @todo improve that, don't need to update everything */
 	/* need to set previous selected tech to proper color */
 	RS_InitGUI(baseCurrent, qtrue);
 }
@@ -401,7 +396,7 @@ static void CL_ResearchSelect_f (void)
  * @sa RS_RemoveScientist_f
  * @todo use the diff as a value, not only as a +1 or -1
  */
-static void RS_ChangeScientist_f ()
+static void RS_ChangeScientist_f (void)
 {
 	int num;
 	float diff;
@@ -461,7 +456,7 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 }
 
 /**
- * @brief Script function to add a scientist to  the technology entry in the research-list.
+ * @brief Script function to add a scientist to the technology entry in the research-list.
  * @sa RS_AssignScientist
  * @sa RS_RemoveScientist_f
  */
@@ -511,8 +506,6 @@ static void RS_RemoveScientist_f (void)
 	/* Update display-list and display-info. */
 	RS_InitGUI(baseCurrent, qtrue);
 }
-
-
 
 /**
  * @brief Script binding for RS_UpdateData
@@ -681,7 +674,7 @@ static void RS_InitGUIData (base_t* base)
 		available[i] = E_CountUnassigned(b, EMPL_SCIENTIST);
 	}
 
-	/** TODO verify: do we need to mark research for gui again here? */
+	/** @todo verify: do we need to mark research for gui again here? */
 	RS_MarkResearchable(qfalse, base);
 
 	/* update tech of the base */
@@ -797,7 +790,7 @@ static void RS_InitGUIData (base_t* base)
 		row++;
 	}
 
-	/** @todo add missingitem, unsearchableitem  */
+	/** @todo add missing items, unresearchable items */
 
 	researchListLength = row;
 }
@@ -809,7 +802,7 @@ static void RS_InitGUIData (base_t* base)
  * @note if there is a base but no lab a popup appears
  * @sa RS_UpdateData
  * @sa MN_ResearchInit_f
- * @todo wrong computation: researchListLength dont say if there are research on this base
+ * @todo wrong computation: researchListLength doesn't say if there are research on this base
  */
 static void CL_ResearchType_f (void)
 {
@@ -820,7 +813,7 @@ static void CL_ResearchType_f (void)
 	RS_InitGUIData(baseCurrent);
 
 	/* Nothing to research here. */
-	if (!researchListLength || !ccs.numBases) {
+	if (!researchListLength) {
 		MN_PopMenu(qfalse);
 		if (!researchListLength)
 			MN_Popup(_("Notice"), _("Nothing to research"));
@@ -831,35 +824,15 @@ static void CL_ResearchType_f (void)
 }
 /**
  * @brief Research menu init function binding
- * @note Command to call this: research_init
- *
  * @note Should be called whenever the research menu gets active
  * @sa CL_ResearchType_f
  */
 static void MN_ResearchInit_f (void)
 {
-	assert(baseCurrent);
+	if (!baseCurrent)
+		return;
 	CL_ResearchType_f();
 	RS_InitGUI(baseCurrent, qfalse);
-}
-
-/**
- * @brief Opens UFOpedia by clicking dependency list
- */
-static void RS_DependenciesClick_f (void)
-{
-	int num;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-	if (num >= curRequiredList.numEntries)
-		return;
-
-	UP_OpenWith(curRequiredList.string[num]);
 }
 
 void RS_InitCallbacks (void)
@@ -868,15 +841,18 @@ void RS_InitCallbacks (void)
 	Cmd_AddCommand("research_select", CL_ResearchSelect_f, "Update current selection with the one that has been clicked");
 	Cmd_AddCommand("research_update", RS_UpdateData_f, NULL);
 	Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between different research types");
-	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
 	Cmd_AddCommand("mn_rs_change", RS_ChangeScientist_f, "Assign or remove scientist from this entry");
 	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
 	Cmd_AddCommand("mn_start_research", RS_ResearchStart_f, "Start the research of the selected entry");
 	Cmd_AddCommand("mn_stop_research", RS_ResearchStop_f, "Pause the research of the selected entry");
 	Cmd_AddCommand("mn_show_ufopedia", RS_ShowPedia_f, "Show the entry in the UFOpaedia for the selected research topic");
-	memset(&curRequiredList, 0, sizeof(curRequiredList));
 
+	/* reset some static data - this is needed because we can start several
+	 * campaign games without restarting ufo. */
+	memset(&researchList2, 0, sizeof(researchList2));
+	researchListLength = 0;
+	researchListPos = 0;
 }
 
 void RS_ShutdownCallbacks (void)
@@ -885,12 +861,10 @@ void RS_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("research_select");
 	Cmd_RemoveCommand("research_update");
 	Cmd_RemoveCommand("research_type");
-	Cmd_RemoveCommand("research_dependencies_click");
 	Cmd_RemoveCommand("mn_rs_add");
 	Cmd_RemoveCommand("mn_rs_change");
 	Cmd_RemoveCommand("mn_rs_remove");
 	Cmd_RemoveCommand("mn_start_research");
 	Cmd_RemoveCommand("mn_stop_research");
 	Cmd_RemoveCommand("mn_show_ufopedia");
-
 }
