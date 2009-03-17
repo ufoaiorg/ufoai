@@ -6,7 +6,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Original file from Quake 2 v3.21: quake2-2.31/server/sv_ccmds.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -64,8 +64,6 @@ void SV_SetMaster_f (void)
 	SV_Heartbeat_f();
 }
 
-
-
 /**
  * @brief Sets sv_client and sv_player to the player with idnum Cmd_Argv(1)
  */
@@ -113,7 +111,7 @@ static qboolean SV_SetPlayer (void)
 }
 
 /**
- * @brief Checks wether a map exists
+ * @brief Checks whether a map exists
  */
 static qboolean SV_CheckMap (const char *map, const char *assembly)
 {
@@ -491,7 +489,6 @@ static const char *serverCommandList[] = {
 #endif
 	NULL
 };
-
 
 /**
  * @brief Autocomplete function for server commands

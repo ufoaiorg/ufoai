@@ -50,8 +50,8 @@ cvar_t *sv_threads;
 cvar_t *sv_public;
 cvar_t *sv_mapname;
 
-static qboolean abandon = qfalse;		/**< shutdown server when all clients disconnect and don't accept new connections */
-static qboolean killserver = qfalse;	/**< will initiate shutdown once abandon is set */
+static qboolean abandon;		/**< shutdown server when all clients disconnect and don't accept new connections */
+static qboolean killserver;		/**< will initiate shutdown once abandon is set */
 
 mapcycle_t *mapcycleList;
 int mapcycleCount;

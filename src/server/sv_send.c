@@ -94,15 +94,16 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	/* echo to console */
 	if (sv_dedicated->integer) {
 		char copy[1024];
+		const int length = sizeof(copy) - 1;
 
 		va_start(argptr, fmt);
 		Q_vsnprintf(copy, sizeof(copy), fmt, argptr);
 		va_end(argptr);
 
 		/* mask off high bits */
-		for (i = 0; i < 1023 && copy[i]; i++)
+		for (i = 0; i < length && copy[i]; i++)
 			copy[i] = copy[i] & 127;
-		copy[i] = 0;
+		copy[i] = '\0';
 		Com_Printf("%s", copy);
 	}
 

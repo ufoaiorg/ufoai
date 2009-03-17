@@ -4,7 +4,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Original file from Quake 2 v3.21: quake2-2.31/server/sv_users.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -288,7 +288,7 @@ static void SV_ExecuteUserCommand (const char *s)
 	sv_player = sv_client->player;
 
 	for (u = ucmds; u->name; u++)
-		if (!Q_strncmp(Cmd_Argv(0), u->name, MAX_VAR)) {
+		if (!Q_strcmp(Cmd_Argv(0), u->name)) {
 			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
 			u->func();
 			return;
@@ -305,7 +305,7 @@ static void SV_ExecuteUserCommand (const char *s)
  */
 void SV_ExecuteClientMessage (client_t * cl, int cmd, struct dbuffer *msg)
 {
-	char *s;
+	const char *s;
 
 	sv_client = cl;
 	sv_player = sv_client->player;
