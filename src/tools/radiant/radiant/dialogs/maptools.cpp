@@ -84,11 +84,11 @@ static gint fixCallback (GtkWidget *widget, gpointer data)
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_fix");
 
 		// attach parameter and map name
-		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, fullname);
+		snprintf(bufCmd, sizeof(bufCmd) - 1, "%s %s %s", compilerBinaryWithPath, compiler_parameter, strstr(fullname, "maps"));
 		bufCmd[sizeof(bufCmd) - 1] = '\0';
 
 		char* output = NULL;
-		exec_run_cmd(bufCmd, &output);
+		exec_run_cmd(bufCmd, &output, GlobalRadiant().getEnginePath());
 		if (output) {
 			// reload after fix
 			Map_Reload();
@@ -246,11 +246,11 @@ void ToolsCheckErrors (void)
 		const char* compiler_parameter = g_pGameDescription->getRequiredKeyValue("mapcompiler_param_check");
 
 		// attach parameter and map name
-		snprintf(bufCmd, sizeof(bufCmd) - 1, "\"%s\" %s \"%s\"", compilerBinaryWithPath, compiler_parameter, fullname);
+		snprintf(bufCmd, sizeof(bufCmd) - 1, "\"%s\" %s \"%s\"", compilerBinaryWithPath, compiler_parameter, strstr(fullname, "maps"));
 		bufCmd[sizeof(bufCmd) - 1] = '\0';
 
 		char* output = NULL;
-		exec_run_cmd(bufCmd, &output);
+		exec_run_cmd(bufCmd, &output, GlobalRadiant().getEnginePath());
 		if (output) {
 			if (!checkDialog)
 				CreateCheckDialog();
@@ -422,7 +422,7 @@ void ToolsGenerateMaterials (void)
 		ExecCmd *cmd = exec_cmd_new(&compilerRun);
 		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
 		exec_cmd_add_arg(cmd, compiler_parameter);
-		exec_cmd_add_arg(cmd, fullname);
+		exec_cmd_add_arg(cmd, strstr(fullname, "maps"));
 		cmd->read_proc = compileReadProgress;
 		cmd->working_dir = g_strdup(enginePath);
 		exec_run(compilerRun);
@@ -465,7 +465,7 @@ void ToolsCompile (void)
 		ExecCmd *cmd = exec_cmd_new(&compilerRun);
 		exec_cmd_add_arg(cmd, compilerBinaryWithPath);
 		exec_cmd_add_arg(cmd, compiler_parameter);
-		exec_cmd_add_arg(cmd, fullname);
+		exec_cmd_add_arg(cmd, strstr(fullname, "maps"));
 		cmd->read_proc = compileReadProgress;
 		cmd->working_dir = g_strdup(enginePath);
 		exec_run(compilerRun);

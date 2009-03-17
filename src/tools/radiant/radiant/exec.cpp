@@ -440,12 +440,16 @@ void exec_stop (Exec *e)
  * @brief Runs the given command and blocks the GUI until command is finished
  * @sa exec_run for async processes
  */
-gint exec_run_cmd (const gchar *cmd, gchar **output)
+gint exec_run_cmd (const gchar *cmd, gchar **output, const gchar *working_dir)
 {
 	gchar *std_out = NULL;
 	gchar *std_err = NULL;
 	gint exit_code = -1;
 	GError *error = NULL;
+
+	if (working_dir != NULL && chdir(working_dir) < 0)
+		return -1;
+
 	if (g_spawn_command_line_sync(cmd, &std_out, &std_err, &exit_code, &error)) {
 		*output = g_strconcat(std_out, std_err, NULL);
 		g_free(std_out);
