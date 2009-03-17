@@ -1392,12 +1392,25 @@ static qboolean MN_ContainerNodeDNDMove (menuNode_t *target, int x, int y)
 		Com_FindSpace(menuInventory, dragItem, EXTRADATA(target).container, &dragInfoToX, &dragInfoToY, dragInfoIC);
 	}
 
-	if (!MN_IsScrollContainerNode(target)) {
-		const int checkedTo = Com_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
-		return checkedTo != 0;
+	/* we can drag every thing */
+	if (MN_IsScrollContainerNode(target)) {
+		return qtrue;
 	}
 
-	return qtrue;
+	{
+		invList_t *fItem;
+
+		/* is there empty slot? */
+		const int checkedTo = Com_CheckToInventory(menuInventory, dragItem->t, EXTRADATA(target).container, dragInfoToX, dragInfoToY, dragInfoIC);
+		if (checkedTo != INV_DOES_NOT_FIT)
+			return qtrue;
+
+		/* can we equip dragging item into the target item? */
+		fItem = Com_SearchInInventory(menuInventory, EXTRADATA(target).container, dragInfoToX, dragInfoToY);
+		if (!fItem)
+			return qfalse;
+		return INVSH_LoadableInWeapon(dragItem->t, fItem->item.t);
+	}
 }
 
 /**
