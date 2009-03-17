@@ -2185,6 +2185,11 @@ menu messageoptions
 		rclick		{ cmd "msgoptions_setall pause 0;" }
 	}
 
+	todo position {
+		pos		"386 45"
+		string	"'Notify' should be the first check"
+	}
+
 	pic header_notify
 	{
 		tooltip		"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
@@ -2881,6 +2886,14 @@ menu messageoptions
 	 * @param[in] <4> state for sound notification button
 	 */
 	confunc ms_btnstate {
+		*cvar:tmp <3>
+		if "*cvar:tmp == 0" {
+			*bt_pause<1> disabled true
+			*bt_sound<1> disabled true
+		} else {
+			*bt_pause<1> disabled false
+			*bt_sound<1> disabled false
+		}
 		*(abstractvalue)bt_pause<1> current <2>
 		*(abstractvalue)bt_notify<1> current <3>
 		*(abstractvalue)bt_sound<1> current <4>
@@ -2915,6 +2928,7 @@ menu messageoptions
 
 	func close
 	{
+		cmd "del tmp;"
 		cmd "msgoptions_restore;"
 	}
 }
