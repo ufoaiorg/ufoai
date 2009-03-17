@@ -523,6 +523,13 @@ static qboolean MN_AbstractNodeDNDFinished (menuNode_t *node, qboolean isDroped)
 }
 
 /**
+ * @brief Call to update a cloned node
+ */
+static void MN_AbstractNodeClone (menuNode_t *source, menuNode_t *clone)
+{
+}
+
+/**
  * @brief Call to update the node layout. This common code revalidates the node tree.
  */
 static void MN_AbstractNodeDoLayout (menuNode_t *node)
@@ -551,6 +558,7 @@ void MN_RegisterAbstractNode (nodeBehaviour_t *behaviour)
 	behaviour->dndDrop = MN_AbstractNodeDNDDrop;
 	behaviour->dndFinished = MN_AbstractNodeDNDFinished;
 	behaviour->doLayout = MN_AbstractNodeDoLayout;
+	behaviour->clone = MN_AbstractNodeClone;
 
 	/* some commands */
 	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");

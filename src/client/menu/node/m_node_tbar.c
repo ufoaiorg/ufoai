@@ -68,26 +68,9 @@ static void MN_TBarNodeDraw (menuNode_t *node)
 		shx, node->texh[1], node->texl[0], node->texl[1], ALIGN_UL, node->blend, ref);
 }
 
-static void MN_TBarNodeLoaded (menuNode_t *node)
-{
-	if (node->size[0] == 0 && node->size[1] == 0) {
-		Com_Printf("MN_TBarNodeLoaded: Please fix the size of the node %s.%s (it should be '250 16')", node->menu->name, node->name);
-		node->size[0] = 250;
-		node->size[1] = 16;
-	}
-	if (node->u.abstractvalue.max == NULL) {
-		float *f;
-		Com_Printf("MN_TBarNodeLoaded: Please fix a max value to the node %s.%s (it should be '100')", node->menu->name, node->name);
-		f = MN_AllocFloat(1);
-		*f = 100;
-		node->u.abstractvalue.max = (void*)f;
-	}
-}
-
 void MN_RegisterTBarNode (nodeBehaviour_t *behaviour)
 {
 	behaviour->name = "tbar";
 	behaviour->extends = "abstractvalue";
 	behaviour->draw = MN_TBarNodeDraw;
-	behaviour->loaded = MN_TBarNodeLoaded;
 }

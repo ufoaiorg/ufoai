@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../m_input.h"
 #include "m_node_abstractvalue.h"
 
+static const nodeBehaviour_t const *localBehaviour;
+
 static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
 {
 	if (*adress == NULL) {
@@ -35,12 +37,35 @@ static inline void MN_InitCvarOrFloat (float** adress, float defaultValue)
 	}
 }
 
-static void MN_RegisterAbstractValueLoaded (menuNode_t * node)
+static void MN_AbstractValueLoaded (menuNode_t * node)
 {
 	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.value, 0);
 	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.delta, 1);
 	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.max, 0);
 	MN_InitCvarOrFloat((float**)&node->u.abstractvalue.min, 0);
+}
+
+static void MN_CloneCvarOrFloat (float** source, float** clone)
+{
+	/* dont update cvar */
+	if (Q_strncmp(*(char**)source, "*cvar", 5) != 0)
+		return;
+
+	/* clone float */
+	*clone = MN_AllocFloat(1);
+	**clone = **source;
+}
+
+/**
+ * @brief Call to update a cloned node
+ */
+static void MN_AbstractValueClone (menuNode_t *source, menuNode_t *clone)
+{
+	localBehaviour->super->clone(source, clone);
+	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.value, (float**)&clone->u.abstractvalue.value);
+	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.delta, (float**)&clone->u.abstractvalue.delta);
+	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.max, (float**)&clone->u.abstractvalue.max);
+	MN_CloneCvarOrFloat((float**)&source->u.abstractvalue.min, (float**)&clone->u.abstractvalue.min);
 }
 
 static const value_t properties[] = {
@@ -54,8 +79,10 @@ static const value_t properties[] = {
 
 void MN_RegisterAbstractValueNode (nodeBehaviour_t *behaviour)
 {
+	localBehaviour = behaviour;
 	behaviour->name = "abstractvalue";
-	behaviour->loaded = MN_RegisterAbstractValueLoaded;
+	behaviour->loaded = MN_AbstractValueLoaded;
+	behaviour->clone = MN_AbstractValueClone;
 	behaviour->isAbstract = qtrue;
 	behaviour->properties = properties;
 }

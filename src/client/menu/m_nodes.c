@@ -414,12 +414,9 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 
 /**
  * @brief Clone a node
- * @param[in] node to clone
+ * @param[in] node Node to clone
  * @param[in] recursive True if we also must clone subnodes
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
- * @todo Properties like CVAR_OR_FLOAT that are using a value don't embed the value, but point to a value.
- * As a result, the new node will share the value with the "base" node.
- * We can embed this values into node.
  * @todo exclude rect is not safe cloned.
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive)
@@ -435,6 +432,8 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	newNode->firstChild = NULL;
 	newNode->lastChild = NULL;
 	newNode->next = NULL;
+
+	newNode->behaviour->clone(node, newNode);
 
 	/* clone child */
 	if (recursive) {
@@ -461,6 +460,7 @@ static const size_t virtualFunctions[] = {
 	offsetof(nodeBehaviour_t, capturedMouseMove),
 	offsetof(nodeBehaviour_t, loading),
 	offsetof(nodeBehaviour_t, loaded),
+	offsetof(nodeBehaviour_t, clone),
 	offsetof(nodeBehaviour_t, doLayout),
 	offsetof(nodeBehaviour_t, dndEnter),
 	offsetof(nodeBehaviour_t, dndMove),

@@ -190,6 +190,7 @@ typedef struct nodeBehaviour_s {
 	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 	void (*init)(menuNode_t *node);			/**< call every time we push the parent menu */
+	void (*clone)(menuNode_t *source, menuNode_t *clone);			/**< call to init a cloned node */
 	void (*doLayout)(menuNode_t *node);		/**< call to update node layout */
 
 	/* drag and drop callback */
