@@ -30,7 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "../client.h"
-#include "../cl_game.h"
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
 #include "../mxml/mxml_ufoai.h"
@@ -489,17 +488,12 @@ void RS_InitTree (qboolean load)
 	}
 
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
-		if (GAME_IsCampaign()) {
-			for (j = 0; j < tech->markResearched.numDefinitions; j++) {
-				if (tech->markResearched.markOnly[j] && !Q_strcmp(tech->markResearched.campaign[j], curCampaign->researched)) {
-					Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
-					RS_ResearchFinish(tech);
-					break;
-				}
+		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
+			if (tech->markResearched.markOnly[j] && !Q_strcmp(tech->markResearched.campaign[j], curCampaign->researched)) {
+				Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
+				RS_ResearchFinish(tech);
+				break;
 			}
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
-			RS_ResearchFinish(tech);
 		}
 
 		/* Save the idx to the id-names of the different requirement-types for quicker access.
@@ -1536,15 +1530,10 @@ void RS_ParseTechnologies (const char *name, const char **text)
  */
 qboolean RS_IsResearched_idx (int techIdx)
 {
-	if (!GAME_IsCampaign())
-		return qtrue;
-
 	if (techIdx == TECH_INVALID)
 		return qfalse;
 
-	if ((ccs.technologies[techIdx].statusResearch == RS_FINISH)
-	&& (techIdx != TECH_INVALID)
-	&& (techIdx >= 0))
+	if (ccs.technologies[techIdx].statusResearch == RS_FINISH && techIdx >= 0)
 		return qtrue;
 
 	return qfalse;
@@ -1557,8 +1546,6 @@ qboolean RS_IsResearched_idx (int techIdx)
  */
 qboolean RS_IsResearched_ptr (const technology_t * tech)
 {
-	if (!GAME_IsCampaign())
-		return qtrue;
 	if (tech && tech->statusResearch == RS_FINISH)
 		return qtrue;
 	return qfalse;
