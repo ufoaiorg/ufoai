@@ -1,6 +1,6 @@
 /**
  * @file cl_le.c
- * @brief Local entity managament.
+ * @brief Local entity management.
  */
 
 /*
