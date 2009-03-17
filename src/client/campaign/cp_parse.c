@@ -202,8 +202,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	const char *token;
 	int i;
-	campaign_t* campaign;
-	technology_t *tech;
+	const campaign_t* campaign;
 
 	campaign = CL_GetCampaign(cl_campaign->string);
 	if (!campaign) {
@@ -211,14 +210,15 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 		return;
 	}
 	/* Don't parse if it is not definition for current type of campaign. */
-	if ((Q_strcmp(campaign->researched, name)) != 0)
+	if (Q_strcmp(campaign->researched, name))
 		return;
 
 	/* get it's body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n", name, token);
+		Com_Printf("CL_ParseResearchedCampaignItems: equipment def \"%s\" without body ignored (%s)\n",
+				name, token);
 		return;
 	}
 
@@ -229,7 +229,7 @@ static void CL_ParseResearchedCampaignItems (const char *name, const char **text
 			return;
 
 		for (i = 0; i < ccs.numTechnologies; i++) {
-			tech = RS_GetTechByIDX(i);
+			technology_t *tech = RS_GetTechByIDX(i);
 			assert(tech);
 			if (!Q_strcmp(token, tech->id)) {
 				tech->mailSent = MAILSENT_FINISHED;
@@ -257,8 +257,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	const char *token;
 	int i;
-	campaign_t* campaign;
-	technology_t *tech;
+	const campaign_t* campaign;
 
 	campaign = CL_GetCampaign(cl_campaign->string);
 	if (!campaign) {
@@ -286,7 +285,7 @@ static void CL_ParseResearchableCampaignStates (const char *name, const char **t
 			return;
 
 		for (i = 0; i < ccs.numTechnologies; i++) {
-			tech = RS_GetTechByIDX(i);
+			technology_t *tech = RS_GetTechByIDX(i);
 			if (!Q_strcmp(token, tech->id)) {
 				if (researchable) {
 					tech->mailSent = MAILSENT_PROPOSAL;
@@ -653,10 +652,6 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		MSO_ParseSettings(name, text);
 	else if (!Q_strcmp(type, "msgcategory"))
 		MSO_ParseCategories(name, text);
-#if 0
-	else if (!Q_strcmp(type, "medal"))
-		Com_ParseMedalsAndRanks(name, &text, qfalse);
-#endif
 }
 
 /**

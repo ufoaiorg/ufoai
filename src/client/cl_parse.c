@@ -360,8 +360,6 @@ static void CL_ParseServerData (struct dbuffer *msg)
 	Com_DPrintf(DEBUG_CLIENT, "serverdata: count %d, pnum %d, level %s\n", cl.servercount, cl.pnum, str);
 
 	if (cl.pnum >= 0) {
-		/* seperate the printfs so the server message can have a color */
-		/*Com_Printf("%c%s\n", COLORED_GREEN, str);*/
 		/* need to prep refresh at next oportunity */
 		refdef.ready = qfalse;
 	}
@@ -398,7 +396,7 @@ static void CL_ParseClientinfo (int player)
 static void CL_ParseConfigString (struct dbuffer *msg)
 {
 	int i;
-	char *s;
+	const char *s;
 
 	/* which configstring? */
 	i = NET_ReadShort(msg);
@@ -451,7 +449,7 @@ ACTION MESSAGES
 static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
 	vec3_t pos_v;
-	float *pos;
+	const float *pos;
 	int flags;
 	float volume;
 	const char *sound;
@@ -1266,8 +1264,7 @@ static void CL_PlaceItem (le_t *le)
 
 	/* search owners (there can be many, some of them dead) */
 	for (i = 0, actor = LEs; i < numLEs; i++, actor++)
-		if (actor->inuse
-		 && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
+		if (actor->inuse && (actor->type == ET_ACTOR || actor->type == ET_ACTOR2x2)
 		 && VectorCompare(actor->pos, le->pos)) {
 #if PARANOID
 			Com_DPrintf(DEBUG_CLIENT, "CL_PlaceItem: shared container: '%p'\n", FLOOR(le));
