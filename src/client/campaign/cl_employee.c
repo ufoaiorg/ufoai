@@ -501,7 +501,7 @@ qboolean E_HireEmployeeByType (base_t* base, employeeType_t type)
 /**
  * @brief Hires the first free employee of that type.
  * @param[in] base  Which base the ugv/robot should be hired in.
- * @param[in] ugvType What type of ugv/robot whoudl be hired.
+ * @param[in] ugvType What type of ugv/robot should be hired.
  * @return qtrue if everything went ok (the ugv was added), otherwise qfalse.
  */
 qboolean E_HireRobot (base_t* base, const ugv_t *ugvType)
@@ -514,7 +514,7 @@ qboolean E_HireRobot (base_t* base, const ugv_t *ugvType)
  * @brief Removes the inventory of the employee and also removes him from buildings
  * @note This is used in the transfer start function (when you transfer an employee
  * this must be called for him to make him no longer useable in the current base)
- * and is also used when you completly unhire an employee.
+ * and is also used when you completely unhire an employee.
  * @sa E_UnhireEmployee
  */
 void E_ResetEmployee (employee_t *employee)
