@@ -404,19 +404,17 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 			/* Update stats values */
 			if (aircraft) {
 				AII_UpdateAircraftStats(aircraft);
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
+				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 						_("%s was successfully installed into aircraft %s at base %s."),
 						_(slot->item->name), _(aircraft->name), aircraft->homebase->name);
-				MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			} else if (installation) {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was successfully installed at installation %s."),
+				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully installed at installation %s."),
 						_(slot->item->name), installation->name);
-				MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			} else {
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was successfully installed at base %s."),
+				Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully installed at base %s."),
 						_(slot->item->name), base->name);
-				MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			}
+			MSO_CheckAddNewMessage(NT_INSTALLATION_INSTALLED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 		}
 	} else if (slot->installationTime < 0) {
 		const objDef_t *olditem;
@@ -434,13 +432,13 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				AII_UpdateAircraftStats(aircraft);
 				/* Only stop time and post a notice, if no new item to install is assigned */
 				if (!slot->item) {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
+					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 							_("%s was successfully removed from aircraft %s at base %s."),
 							_(olditem->name), _(aircraft->name), base->name);
 					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse,
 							MSG_STANDARD, NULL);
 				} else {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
+					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 							_ ("%s was successfully removed, starting installation of %s into aircraft %s at base %s"),
 							_(olditem->name), _(slot->item->name), _(aircraft->name), base->name);
 					MSO_CheckAddNewMessage(NT_INSTALLATION_REPLACE, _("Notice"), cp_messageBuffer, qfalse,
@@ -448,17 +446,14 @@ static void AII_UpdateOneInstallationDelay (base_t* base, installation_t* instal
 				}
 			} else if (!slot->item) {
 				if (installation) {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
+					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 							_("%s was successfully removed from installation %s."),
 							_(olditem->name), installation->name);
-					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD,
-							NULL);
 				} else {
-					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("%s was successfully removed from base %s."),
+					Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer), _("%s was successfully removed from base %s."),
 							_(olditem->name), base->name);
-					MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD,
-							NULL);
 				}
+				MSO_CheckAddNewMessage(NT_INSTALLATION_REMOVED, _("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 			}
 		}
 	}
@@ -530,8 +525,6 @@ void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *ai
 {
 	int k;
 	const qboolean nextAmmo = (qboolean) slot->nextItem;	/**< do we search an ammo for next item? */
-	const technology_t *ammo_tech;
-	const objDef_t *ammo;
 	const objDef_t *item;
 
 	assert(slot);
@@ -551,9 +544,9 @@ void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *ai
 
 	/* Try every ammo usable with this weapon until we find one we have in storage */
 	for (k = 0; k < item->numAmmos; k++) {
-		ammo = item->ammos[k];
+		const objDef_t *ammo = item->ammos[k];
 		if (ammo) {
-			ammo_tech = ammo->tech;
+			const technology_t *ammo_tech = ammo->tech;
 			if (ammo_tech && AIM_SelectableAircraftItem(base, installation, aircraft, ammo_tech, airequipID)) {
 				AII_AddAmmoToSlot((ammo->notOnMarket || ammo->craftitem.unlimitedAmmo) ? NULL : base, ammo_tech, slot);
 				break;
@@ -586,7 +579,6 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
 				B_UpdateStorageAndCapacity(base, slot->ammo, 1, qfalse, qfalse);
 			slot->ammo = NULL;
 		}
-		return;
 	} else if (slot->nextItem) {
 		/* Remove nextItem */
 		if (base)
@@ -625,7 +617,7 @@ void AII_RemoveItemFromSlot (base_t* base, aircraftSlot_t *slot, qboolean ammo)
  */
 qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot)
 {
-	objDef_t *ammo;
+	const objDef_t *ammo;
 
 	assert(slot);
 	assert(tech);
@@ -686,7 +678,7 @@ qboolean AII_AddAmmoToSlot (base_t* base, const technology_t *tech, aircraftSlot
  */
 qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot_t *slot, qboolean nextItem)
 {
-	objDef_t *item;
+	const objDef_t *item;
 
 	assert(slot);
 	assert(tech);
@@ -751,7 +743,6 @@ qboolean AII_AddItemToSlot (base_t* base, const technology_t *tech, aircraftSlot
 void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 {
 	int i;
-	aircraftSlot_t *slot;
 	objDef_t *item;
 	const technology_t *tech = RS_GetTechByID("rs_craft_weapon_sparrowhawk");
 
@@ -766,7 +757,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		return;
 
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		slot = &aircraft->weapons[i];
+		aircraftSlot_t *slot = &aircraft->weapons[i];
 		if (slot->size < AII_GetItemWeightBySize(item))
 			continue;
 		if (aircraft->homebase->storage.num[item->idx] <= 0)
@@ -788,7 +779,7 @@ void AIM_AutoEquipAircraft (aircraft_t *aircraft)
 		return;
 
 	for (i = 0; i < aircraft->maxWeapons; i++) {
-		slot = &aircraft->weapons[i];
+		aircraftSlot_t *slot = &aircraft->weapons[i];
 		if (slot->size < AII_GetItemWeightBySize(item))
 			continue;
 		if (aircraft->homebase->storage.num[item->idx] <= 0)
@@ -837,8 +828,6 @@ void AII_InitialiseSlot (aircraftSlot_t *slot, aircraft_t *aircraft, base_t *bas
  */
 static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int stat)
 {
-	const objDef_t *item;
-
 	assert(slot);
 
 	/* there's no item */
@@ -847,7 +836,7 @@ static qboolean AII_CheckUpdateAircraftStats (const aircraftSlot_t *slot, int st
 
 	/* you can not have advantages from items if it is being installed or removed, but only disavantages */
 	if (slot->installationTime != 0) {
-		item = slot->item;
+		const objDef_t *item = slot->item;
 		if (item->craftitem.stats[stat] > 1.0f) /* advantages for relative and absolute values */
 			return qfalse;
 	}
@@ -937,7 +926,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
-			if (!AII_CheckUpdateAircraftStats (&aircraft->electronics[i], currentStat))
+			if (!AII_CheckUpdateAircraftStats(&aircraft->electronics[i], currentStat))
 				continue;
 			item = aircraft->electronics[i].item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
@@ -949,7 +938,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by weapons (do nothing if the value of stat is 0)
 		 * note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
-			if (!AII_CheckUpdateAircraftStats (&aircraft->weapons[i], currentStat))
+			if (!AII_CheckUpdateAircraftStats(&aircraft->weapons[i], currentStat))
 				continue;
 			item = aircraft->weapons[i].item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
@@ -959,7 +948,7 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		}
 
 		/* modify by shield (do nothing if the value of stat is 0) */
-		if (AII_CheckUpdateAircraftStats (&aircraft->shield, currentStat)) {
+		if (AII_CheckUpdateAircraftStats(&aircraft->shield, currentStat)) {
 			item = aircraft->shield.item;
 			if (fabs(item->craftitem.stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->craftitem.stats[currentStat];
