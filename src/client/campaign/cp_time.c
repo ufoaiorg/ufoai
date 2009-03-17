@@ -174,6 +174,14 @@ void CL_GameTimeStop (void)
 	CL_UpdateTime();
 }
 
+/**
+ * Time scaling is only allowed when you are on the geoscape
+ */
+static qboolean CL_AllowTimeScale (void)
+{
+	const char *menuName = MN_GetActiveMenuName();
+	return !Q_strncmp(menuName, "map", 3) || !Q_strncmp(menuName, "airfight", 8);
+}
 
 /**
  * @brief Decrease game time speed
@@ -196,7 +204,7 @@ void CL_GameTimeSlow (void)
 	assert(gameLapse >= minGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if ((!Q_strncmp(MN_GetActiveMenuName(), "map", 3) || !Q_strncmp(MN_GetActiveMenuName(), "airfight", 8))) {
+	if (CL_AllowTimeScale()) {
 		gameLapse--;
 		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse <= minGameLapse) {
@@ -233,7 +241,7 @@ void CL_GameTimeFast (void)
 	assert(gameLapse <= maxGameLapse);
 
 	/* don't allow time scale in tactical mode - only on the geoscape */
-	if ((!Q_strncmp(MN_GetActiveMenuName(), "map", 3) || !Q_strncmp(MN_GetActiveMenuName(), "airfight", 8))) {
+	if (CL_AllowTimeScale()) {
 		gameLapse++;
 		while ((lapse[gameLapse].type & lapseType) != lapseType) {
 			if (gameLapse >= maxGameLapse) {
