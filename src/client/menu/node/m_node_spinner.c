@@ -36,6 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_input.h"
 #include "../../cl_keys.h"
 
+static const nodeBehaviour_t const *localBehaviour;
+
 static const int TILE_SIZE = 32;
 static const int SPINNER_WIDTH = 15;
 static const int SPINNER_HEIGHT = 19;
@@ -193,7 +195,7 @@ static void MN_SpinnerNodeDraw (menuNode_t *node)
 
 static void MN_SpinnerNodeLoaded (menuNode_t *node)
 {
-	node->behaviour->super->loaded(node);
+	localBehaviour->super->loaded(node);
 	/* we can't choose a size */
 	node->size[0] = SPINNER_WIDTH;
 	node->size[1] = SPINNER_HEIGHT;
@@ -201,6 +203,7 @@ static void MN_SpinnerNodeLoaded (menuNode_t *node)
 
 void MN_RegisterSpinnerNode (nodeBehaviour_t *behaviour)
 {
+	localBehaviour = behaviour;
 	behaviour->name = "spinner";
 	behaviour->extends = "abstractvalue";
 	behaviour->mouseWheel = MN_SpinnerNodeWheel;

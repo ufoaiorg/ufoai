@@ -48,6 +48,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MARGE 3
 
+static const nodeBehaviour_t const *localBehaviour;
+
 static const int CONTROLS_IMAGE_DIMENSIONS = 17;
 static const int CONTROLS_PADDING = 22;
 static const int CONTROLS_SPACING = 5;
@@ -211,7 +213,7 @@ static void MN_WindowNodeDoLayout (menuNode_t *node)
 	}
 
 	/* super */
-	node->behaviour->super->doLayout(node);
+	localBehaviour->super->doLayout(node);
 }
 
 /**
@@ -320,6 +322,7 @@ static const value_t windowNodeProperties[] = {
 
 void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
+	localBehaviour = behaviour;
 	/** @todo rename it according to the function name when its possible */
 	behaviour->name = "menu";
 	behaviour->loading = MN_WindowNodeLoading;
