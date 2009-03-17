@@ -202,7 +202,7 @@ typedef struct technology_s {
 	struct technology_s *upNext;	/**< Next tech in pedia. */
 
 	techMail_t mail[TECHMAIL_MAX];	/**< UFOpaedia mails. See techMailType_t for the different array-entries. */
-	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equalt to TECHMAIL_MAX both mailtypes are available. */
+	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equal to TECHMAIL_MAX both mailtypes are available. */
 
 	struct technology_s *hashNext;
 	struct technology_s *hashProvidedNext;
@@ -224,7 +224,6 @@ void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
 void RS_MarkResearchable(qboolean init, const struct base_s *base);
 void RS_ResearchFinish(technology_t* tech);
 void RS_MarkOneResearchable(technology_t *tech);
-void RS_MarkResearchedAll(void);
 
 void RS_AssignScientist(technology_t* tech, struct base_s *base);
 void RS_RemoveScientist(technology_t* tech, struct employee_s *employee);

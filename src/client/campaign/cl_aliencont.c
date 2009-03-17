@@ -78,7 +78,7 @@ int AL_SetAircraftAlienCargoTypes (const aircraft_t *aircraft, int alienCargoTyp
 
 /**
  * @brief Searches an existing index in the alien cargo of an aircraft, or returns the next free index of
- * the alien cargo if the team defintion wasn't found in the current alien cargo.
+ * the alien cargo if the team definition wasn't found in the current alien cargo.
  * @param[in] aircraft The aircraft that should have the given team definition in its alien cargo
  * @param[in] teamDef The team definition that should be searched for
  * @return The index of the team definition in the alien cargo of the given aircraft

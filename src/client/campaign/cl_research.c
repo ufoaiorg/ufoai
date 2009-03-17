@@ -490,9 +490,8 @@ void RS_InitTree (qboolean load)
 
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
 		if (GAME_IsCampaign()) {
-			assert(GAME_CP_IsRunning());
 			for (j = 0; j < tech->markResearched.numDefinitions; j++) {
-				if (tech->markResearched.markOnly[j] && !Q_strncmp(tech->markResearched.campaign[j], curCampaign->researched, MAX_VAR)) {
+				if (tech->markResearched.markOnly[j] && !Q_strcmp(tech->markResearched.campaign[j], curCampaign->researched)) {
 					Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 					RS_ResearchFinish(tech);
 					break;
@@ -503,7 +502,8 @@ void RS_InitTree (qboolean load)
 			RS_ResearchFinish(tech);
 		}
 
-		/* Save the idx to the id-names of the different requirement-types for quicker access. The id-strings themself are not really needed afterwards :-/ */
+		/* Save the idx to the id-names of the different requirement-types for quicker access.
+		 * The id-strings themself are not really needed afterwards :-/ */
 		RS_AssignTechLinks(&tech->require_AND);
 		RS_AssignTechLinks(&tech->require_OR);
 
@@ -543,7 +543,8 @@ void RS_InitTree (qboolean load)
 			/* No id found in csi.ods */
 			if (!found) {
 				tech->name = Mem_PoolStrDup(tech->id, cl_campaignPool, 0);
-				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armour (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
+				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armour (provided=\"%s\") not found. Tech-id used as name.\n",
+						tech->id, tech->provides);
 			}
 			break;
 		case RS_BUILDING:
@@ -564,7 +565,8 @@ void RS_InitTree (qboolean load)
 			}
 			if (!found) {
 				tech->name = Mem_PoolStrDup(tech->id, cl_campaignPool, 0);
-				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
+				Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n",
+						tech->id, tech->provides);
 			}
 			break;
 		case RS_CRAFT:
@@ -572,7 +574,7 @@ void RS_InitTree (qboolean load)
 			for (j = 0; j < numAircraftTemplates; j++) {
 				aircraft_t *air_samp = &aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
-				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
+				if (!Q_strcmp(tech->provides, air_samp->id)) {
 					found = qtrue;
 					if (!tech->name)
 						tech->name = Mem_PoolStrDup(air_samp->name, cl_campaignPool, 0);
@@ -691,9 +693,6 @@ void RS_AssignScientist (technology_t* tech, base_t *base)
 	}
 }
 
-/* RS_ChangeScientist */
-/* RS_AssignScientist */
-
 /**
  * @brief Remove a scientist from a technology.
  * @param[in] tech The technology you want to remove the scientist from.
@@ -740,9 +739,6 @@ void RS_RemoveScientist (technology_t* tech, employee_t *employee)
 	}
 }
 
-/* RS_MaxOutResearch */
-/* Rs_RemoveScientist_f */
-
 /**
  * @brief Remove one scientist from research project if needed.
  * @param[in] base Pointer to base where a scientist should be removed.
@@ -775,46 +771,6 @@ void RS_RemoveFiredScientist (base_t *base, employee_t *employee)
 	RS_RemoveScientist(tech, employee);
 }
 
-/* RS_Research_Start */
-/* RS_Reserach_Stop */
-/* RS_ShowPedia */
-/* RS_InitGUIData */
-/* RS_UpdateResearchStatus */
-
-
-/* RS_InitGui */
-/* RS_UpdateData */
-
-/* CL_Research_Type */
-
-#if 0
-/**
- * @brief Checks if the research item id1 depends on (requires) id2
- * @param[in] id1 Unique id of a technology_t that may or may not depend on id2.
- * @param[in] id2 Unique id of a technology_t
- * @return qboolean
- */
-static qboolean RS_DependsOn (char *id1, char *id2)
-{
-	int i;
-	technology_t *tech;
-	stringlist_t required;
-
-	tech = RS_GetTechByID(id1);
-	if (!tech)
-		return qfalse;
-
-	/* research item found */
-	required = tech->requires;
-	for (i = 0; i < required.numEntries; i++) {
-		/* Current item (=id1) depends on id2. */
-		if (!Q_strncmp(required.string[i], id2, MAX_VAR))
-			return qtrue;
-	}
-	return qfalse;
-}
-#endif
-
 /**
  * @brief Enable autosell option.
  * @param[in] tech Pointer to newly researched technology.
@@ -825,11 +781,11 @@ static void RS_EnableAutosell (const technology_t *tech)
 	int i;
 
 	/* If the tech leads to weapon or armour, find related item and enable autosell. */
-	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOUR)) {
+	if (tech->type == RS_WEAPON || tech->type == RS_ARMOUR) {
 		const objDef_t *obj = NULL;
 		for (i = 0; i < csi.numODs; i++) {
 			obj = &csi.ods[i];
-			if (!Q_strncmp(tech->provides, obj->id, MAX_VAR)) {
+			if (!Q_strcmp(tech->provides, obj->id)) {
 				ccs.autosell[i] = qtrue;
 				break;
 			}
@@ -838,11 +794,11 @@ static void RS_EnableAutosell (const technology_t *tech)
 			return;
 
 		/* If the weapon has ammo, enable autosell for proper ammo as well. */
-		if ((tech->type == RS_WEAPON) && (obj->reload)) {
+		if (tech->type == RS_WEAPON && obj->reload) {
 			for (i = 0; i < obj->numAmmos; i++) {
 				const objDef_t *ammo = obj->ammos[i];
 				const technology_t *ammotech = ammo->tech;
-				if (ammotech && (ammotech->produceTime < 0))
+				if (ammotech && ammotech->produceTime < 0)
 					continue;
 				ccs.autosell[ammo->idx] = qtrue;
 			}
@@ -873,12 +829,6 @@ void RS_ResearchRun (void)
 	int i, newResearch = 0;
 	base_t* checkBases[MAX_BASES];
 
-#if 0
-	/** what is this good for? researchListLength is counter for gui stating how many entries are displayed actually */
-	if (!researchListLength)
-		return;
-#endif
-
 	memset(checkBases, 0, sizeof(checkBases));
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
@@ -902,11 +852,7 @@ void RS_ResearchRun (void)
 							RS_RemoveScientist(tech, NULL);
 
 						RS_MarkResearched(tech, base);
-#if 0
-/* these two are only for gui, why shall we update them here? */
-						researchListLength = 0;
-						researchListPos = 0;
-#endif
+
 						newResearch++;
 						/* Add this base to the list that needs an update call.
 						 * tech->base was set to NULL with the last call of RS_RemoveScientist. */
@@ -925,10 +871,6 @@ void RS_ResearchRun (void)
 		if (checkBases[i])
 			RS_MarkResearchable(qfalse, checkBases[i]);
 	}
-
-/*	if (newResearch)
-		CL_GameTimeStop();
-		*/
 }
 
 #ifdef DEBUG
@@ -1067,16 +1009,13 @@ static void RS_TechnologyList_f (void)
 		}
 	}
 }
-#endif /* DEBUG */
-
-/* MN_ResearchInit */
 
 /**
  * @brief Mark everything as researched
  * @sa CL_Connect_f
  * @sa MN_StartServer
  */
-void RS_MarkResearchedAll (void)
+static void RS_MarkResearchedAll (void)
 {
 	int i;
 	technology_t *tech;
@@ -1090,19 +1029,16 @@ void RS_MarkResearchedAll (void)
 	}
 }
 
-#ifdef DEBUG
 /**
  * @brief Set all items to researched
  * @note Just for debugging purposes
  */
 static void RS_DebugResearchAll (void)
 {
-	technology_t *tech;
-
 	if (Cmd_Argc() != 2) {
 		RS_MarkResearchedAll();
 	} else {
-		tech= RS_GetTechByID(Cmd_Argv(1));
+		technology_t *tech = RS_GetTechByID(Cmd_Argv(1));
 		if (!tech)
 			return;
 		Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
@@ -1118,17 +1054,16 @@ static void RS_DebugResearchAll (void)
 static void RS_DebugResearchableAll (void)
 {
 	int i;
-	technology_t *tech;
 
 	if (Cmd_Argc() != 2) {
 		for (i = 0; i < ccs.numTechnologies; i++) {
-			tech = RS_GetTechByIDX(i);
+			technology_t *tech = RS_GetTechByIDX(i);
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
 			RS_MarkCollected(tech);
 		}
 	} else {
-		tech = RS_GetTechByID(Cmd_Argv(1));
+		technology_t *tech = RS_GetTechByID(Cmd_Argv(1));
 		if (tech) {
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech);
