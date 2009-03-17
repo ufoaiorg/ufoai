@@ -53,32 +53,38 @@ static const char* transferTypeIDs[] = {
 };
 CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
 
-/** @brief Current selected aircraft for transfer (if transfer started from mission). */
-static aircraft_t *transferStartAircraft = NULL;
+#define ANTIMATTER_TECH_ID "antimatter"
 
-/** @brief Current selected base for transfer. */
-static base_t *transferBase = NULL;
+typedef struct transferData_s {
+	/** @brief Current selected aircraft for transfer (if transfer started from mission). */
+	aircraft_t *transferStartAircraft;
 
-/** @brief Current transfer type (item, employee, alien, aircraft). */
-static transferType_t currentTransferType = TRANS_TYPE_ITEM;
+	/** @brief Current selected base for transfer. */
+	base_t *transferBase;
 
-/** @brief Current cargo onboard. */
-static transferCargo_t cargo[MAX_CARGO];
+	/** @brief Current transfer type (item, employee, alien, aircraft). */
+	transferType_t currentTransferType;
 
-/** @brief Current item cargo. */
-static int trItemsTmp[MAX_OBJDEFS];
+	/** @brief Current cargo onboard. */
+	transferCargo_t cargo[MAX_CARGO];
 
-/** @brief Current alien cargo. [0] alive [1] dead */
-static int trAliensTmp[MAX_TEAMDEFS][TRANS_ALIEN_MAX];
+	/** @brief Current item cargo. */
+	int trItemsTmp[MAX_OBJDEFS];
 
-/** @brief Current personnel cargo. */
-static employee_t *trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
+	/** @brief Current alien cargo. [0] alive [1] dead */
+	int trAliensTmp[MAX_TEAMDEFS][TRANS_ALIEN_MAX];
 
-/** @brief Current aircraft for transfer. */
-static int trAircraftsTmp[MAX_AIRCRAFT];
+	/** @brief Current personnel cargo. */
+	employee_t *trEmployeesTmp[MAX_EMPL][MAX_EMPLOYEES];
 
-/** @brief Current cargo type count (updated in TR_CargoList) */
-static int trCargoCountTmp = 0;
+	/** @brief Current aircraft for transfer. */
+	int trAircraftsTmp[MAX_AIRCRAFT];
+
+	/** @brief Current cargo type count (updated in TR_CargoList) */
+	int trCargoCountTmp;
+} transferData_t;
+
+static transferData_t td;
 
 /** @brief Max values for transfer factors. */
 static const int MAX_TR_FACTORS = 500;
@@ -110,9 +116,9 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 
 	/* Count size of all items already on the transfer list. */
 	for (i = 0; i < csi.numODs; i++) {
-		if (trItemsTmp[i] > 0) {
-			if (!Q_strcmp(csi.ods[i].id, "antimatter"))
-				amtransfer = ANTIMATTER_SIZE * trItemsTmp[i];
+		if (td.trItemsTmp[i] > 0) {
+			if (!Q_strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
+				amtransfer = ANTIMATTER_SIZE * td.trItemsTmp[i];
 			if (od->tech->type == RS_CRAFT) {
 				aircraft_t *ufocraft = AIR_GetAircraft(od->tech->provides);
 				assert(ufocraft);
@@ -121,12 +127,12 @@ static int TR_CheckItem (const objDef_t *od, const base_t *destbase, int amount)
 				else
 					smallufotransfer++;
 			} else
-				intransfer += csi.ods[i].size * trItemsTmp[i];
+				intransfer += csi.ods[i].size * td.trItemsTmp[i];
 		}
 	}
 
 	/* Is this antimatter and destination base has enough space in Antimatter Storage? */
-	if (!Q_strcmp(od->id, "antimatter")) {
+	if (!Q_strcmp(od->id, ANTIMATTER_TECH_ID)) {
 		/* Give some meaningful feedback to the player if the player clicks on an a.m. item but base doesn't have am storage. */
 		if (!B_GetBuildingStatus(destbase, B_ANTIMATTER) && B_GetBuildingStatus(destbase, B_STORAGE)) {
 			MN_Popup(_("Missing storage"), _("Destination base does not have an Antimatter Storage.\n"));
@@ -199,7 +205,7 @@ static qboolean TR_CheckEmployee (const employee_t *employee, const base_t *dest
 	/* Count amount of all employees already on the transfer list. */
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		for (i = 0; i < ccs.numEmployees[emplType]; i++) {
-			if (trEmployeesTmp[emplType][i])
+			if (td.trEmployeesTmp[emplType][i])
 				intransfer++;
 		}
 	}
@@ -250,8 +256,8 @@ static qboolean TR_CheckAlien (int alienidx, base_t *destbase)
 
 	/* Count amount of live aliens already on the transfer list. */
 	for (i = 0; i < ccs.numAliensTD; i++) {
-		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
-			intransfer += trAliensTmp[i][TRANS_ALIEN_ALIVE];
+		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
+			intransfer += td.trAliensTmp[i][TRANS_ALIEN_ALIVE];
 	}
 
 	/* add the alien we are trying to transfer */
@@ -281,7 +287,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 	/* Count weight and number of all aircraft already on the transfer list that goes
 	 * into the same hangar type than aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++)
-		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
+		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIDX(i);
 			assert(aircraftTemp);
 			if (aircraftTemp->size == aircraft->size)
@@ -322,20 +328,20 @@ static void TR_CargoList (void)
 	linkedList_t *cargoList = NULL;
 	char str[128];
 
-	trCargoCountTmp = 0;
-	memset(cargo, 0, sizeof(cargo));
+	td.trCargoCountTmp = 0;
+	memset(td.cargo, 0, sizeof(td.cargo));
 	memset(trempl, 0, sizeof(trempl));
 
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
-		if (trItemsTmp[i] > 0) {
+		if (td.trItemsTmp[i] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
-				_(csi.ods[i].name), trItemsTmp[i]);
+				_(csi.ods[i].name), td.trItemsTmp[i]);
 			LIST_AddString(&cargoList, str);
-			cargo[trCargoCountTmp].type = CARGO_TYPE_ITEM;
-			cargo[trCargoCountTmp].itemidx = i;
-			trCargoCountTmp++;
-			if (trCargoCountTmp >= MAX_CARGO) {
+			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ITEM;
+			td.cargo[td.trCargoCountTmp].itemidx = i;
+			td.trCargoCountTmp++;
+			if (td.trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -345,18 +351,18 @@ static void TR_CargoList (void)
 	/* Show employees. */
 	for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 		for (i = 0; i < ccs.numEmployees[emplType]; i++) {
-			if (trEmployeesTmp[emplType][i]) {
+			if (td.trEmployeesTmp[emplType][i]) {
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
-					employee_t *employee = trEmployeesTmp[emplType][i];
+					employee_t *employee = td.trEmployeesTmp[emplType][i];
 					if (emplType == EMPL_SOLDIER)
 						Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
 					else
 						Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
 					LIST_AddString(&cargoList, str);
-					cargo[trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
-					cargo[trCargoCountTmp].itemidx = employee->idx;
-					trCargoCountTmp++;
-					if (trCargoCountTmp >= MAX_CARGO) {
+					td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
+					td.cargo[td.trCargoCountTmp].itemidx = employee->idx;
+					td.trCargoCountTmp++;
+					if (td.trCargoCountTmp >= MAX_CARGO) {
 						Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 						break;
 					}
@@ -372,9 +378,9 @@ static void TR_CargoList (void)
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
 				E_GetEmployeeString(emplType), trempl[emplType]);
 			LIST_AddString(&cargoList, str);
-			cargo[trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
-			trCargoCountTmp++;
-			if (trCargoCountTmp >= MAX_CARGO) {
+			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
+			td.trCargoCountTmp++;
+			if (td.trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -383,28 +389,28 @@ static void TR_CargoList (void)
 
 	/* Show aliens. */
 	for (i = 0; i < ccs.numAliensTD; i++) {
-		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
+		if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer)"),
-				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_DEAD]);
+				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_DEAD]);
 			LIST_AddString(&cargoList, str);
-			cargo[trCargoCountTmp].type = CARGO_TYPE_ALIEN_DEAD;
-			cargo[trCargoCountTmp].itemidx = i;
-			trCargoCountTmp++;
-			if (trCargoCountTmp >= MAX_CARGO) {
+			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ALIEN_DEAD;
+			td.cargo[td.trCargoCountTmp].itemidx = i;
+			td.trCargoCountTmp++;
+			if (td.trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {
-		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
+		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
-				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
+				_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 			LIST_AddString(&cargoList, str);
-			cargo[trCargoCountTmp].type = CARGO_TYPE_ALIEN_ALIVE;
-			cargo[trCargoCountTmp].itemidx = i;
-			trCargoCountTmp++;
-			if (trCargoCountTmp >= MAX_CARGO) {
+			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ALIEN_ALIVE;
+			td.cargo[td.trCargoCountTmp].itemidx = i;
+			td.trCargoCountTmp++;
+			if (td.trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -413,15 +419,15 @@ static void TR_CargoList (void)
 
 	/* Show all aircraft. */
 	for (i = 0; i < MAX_AIRCRAFT; i++) {
-		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
-			aircraft_t *aircraft = AIR_AircraftGetFromIDX(trAircraftsTmp[i]);
+		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
+			aircraft_t *aircraft = AIR_AircraftGetFromIDX(td.trAircraftsTmp[i]);
 			assert(aircraft);
 			Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
 			LIST_AddString(&cargoList, str);
-			cargo[trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
-			cargo[trCargoCountTmp].itemidx = i;
-			trCargoCountTmp++;
-			if (trCargoCountTmp >= MAX_CARGO) {
+			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
+			td.cargo[td.trCargoCountTmp].itemidx = i;
+			td.trCargoCountTmp++;
+			if (td.trCargoCountTmp >= MAX_CARGO) {
 				Com_DPrintf(DEBUG_CLIENT, "TR_CargoList: Cargo is full\n");
 				break;
 			}
@@ -441,7 +447,7 @@ static qboolean TR_AircraftListSelect (int i)
 {
 	aircraft_t *aircraft;
 
-	if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
+	if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT)	/* Already on transfer list. */
 		return qfalse;
 
 	aircraft = AIR_AircraftGetFromIDX(i);
@@ -490,7 +496,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	for (i = 0; i < MAX_EMPL; i++) {
 		trempl[i] = numempl[i] = 0;
 		for (j = 0; j < MAX_EMPLOYEES; j++) {
-			if (trEmployeesTmp[i][j])
+			if (td.trEmployeesTmp[i][j])
 				trempl[i]++;
 		}
 	}
@@ -500,8 +506,8 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		if (B_GetBuildingStatus(destbase, B_STORAGE)) {
 			for (i = 0; i < csi.numODs; i++)
 				if (srcbase->storage.num[i]) {
-					if (trItemsTmp[i] > 0)
-						Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)"), _(csi.ods[i].name), trItemsTmp[i], srcbase->storage.num[i]);
+					if (td.trItemsTmp[i] > 0)
+						Com_sprintf(str, sizeof(str), _("%s (%i for transfer, %i left)"), _(csi.ods[i].name), td.trItemsTmp[i], srcbase->storage.num[i]);
 					else
 						Com_sprintf(str, sizeof(str), _("%s (%i available)"), _(csi.ods[i].name), srcbase->storage.num[i]);
 					LIST_AddString(&transferList, str);
@@ -523,7 +529,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 					const employee_t *employee = &ccs.employees[emplType][i];
 					if (!E_IsInBase(employee, srcbase))
 						continue;
-					if (trEmployeesTmp[emplType][i])	/* Already on transfer list. */
+					if (td.trEmployeesTmp[emplType][i])	/* Already on transfer list. */
 						continue;
 					if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 						if (emplType == EMPL_SOLDIER)
@@ -557,9 +563,9 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 		if (B_GetBuildingStatus(destbase, B_ALIEN_CONTAINMENT)) {
 			for (i = 0; i < ccs.numAliensTD; i++) {
 				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_dead > 0) {
-					if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
+					if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i for transfer, %i left)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_DEAD],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_DEAD],
 						srcbase->alienscont[i].amount_dead);
 					else
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)"),
@@ -568,9 +574,9 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 					cnt++;
 				}
 				if (srcbase->alienscont[i].teamDef && srcbase->alienscont[i].amount_alive > 0) {
-					if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
+					if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i for transfer, %i left)"),
-						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), trAliensTmp[i][TRANS_ALIEN_ALIVE],
+						_(AL_AlienTypeToName(AL_GetAlienGlobalIDX(i))), td.trAliensTmp[i][TRANS_ALIEN_ALIVE],
 						srcbase->alienscont[i].amount_alive);
 					else
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)"),
@@ -592,7 +598,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 			for (i = 0; i < MAX_AIRCRAFT; i++) {
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 				if (aircraft) {
-					if ((aircraft->homebase == srcbase) && TR_AircraftListSelect(i)) {
+					if (aircraft->homebase == srcbase && TR_AircraftListSelect(i)) {
 						Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
 						LIST_AddString(&transferList, str);
 						cnt++;
@@ -613,7 +619,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 	/* Update cargo list. */
 	TR_CargoList();
 
-	currentTransferType = transferType;
+	td.currentTransferType = transferType;
 	MN_RegisterLinkedListText(TEXT_TRANSFER_LIST, transferList);
 }
 
@@ -627,18 +633,18 @@ static void TR_TransferSelect_f (void)
 {
 	int type;
 
-	if (!transferBase || !baseCurrent)
+	if (!td.transferBase || !baseCurrent)
 		return;
 
 	if (Cmd_Argc() < 2)
-		type = currentTransferType;
+		type = td.currentTransferType;
 	else
 		type = TR_GetTransferType(Cmd_Argv(1));
 
 	if (type < TRANS_TYPE_ITEM || type >= TRANS_TYPE_MAX)
 		return;
 
-	TR_TransferSelect(baseCurrent, transferBase, type);
+	TR_TransferSelect(baseCurrent, td.transferBase, type);
 }
 
 /**
@@ -653,37 +659,37 @@ static void TR_TransferListClear_f (void)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
-		if (trItemsTmp[i] > 0) {
-			if (!Q_strcmp(csi.ods[i].id, "antimatter"))
-				B_ManageAntimatter(baseCurrent, trItemsTmp[i], qtrue);
+		if (td.trItemsTmp[i] > 0) {
+			if (!Q_strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
+				B_ManageAntimatter(baseCurrent, td.trItemsTmp[i], qtrue);
 			else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 				const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 				assert(ufocraft);
 				/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-				baseCurrent->storage.num[i] += trItemsTmp[i];
+				baseCurrent->storage.num[i] += td.trItemsTmp[i];
 				if (ufocraft->size == AIRCRAFT_LARGE)
 					baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
 				else
 					baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
 			} else
-				B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], trItemsTmp[i], qfalse, qfalse);
+				B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], td.trItemsTmp[i], qfalse, qfalse);
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
-		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
-			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), trAliensTmp[i][TRANS_ALIEN_ALIVE]);
-		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
-			baseCurrent->alienscont[i].amount_dead += trAliensTmp[i][TRANS_ALIEN_DEAD];
+		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
+			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), td.trAliensTmp[i][TRANS_ALIEN_ALIVE]);
+		if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
+			baseCurrent->alienscont[i].amount_dead += td.trAliensTmp[i][TRANS_ALIEN_DEAD];
 	}
 
 	/* Clear temporary cargo arrays. */
-	memset(trItemsTmp, 0, sizeof(trItemsTmp));
-	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
-	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
+	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
+	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
+	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
+	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
-	TR_TransferSelect(baseCurrent, transferBase, currentTransferType);
+	TR_TransferSelect(baseCurrent, td.transferBase, td.currentTransferType);
 	TR_ResetScrolling_f();
 }
 
@@ -709,7 +715,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 		} else {
 			for (i = 0; i < csi.numODs; i++) {
 				if (transfer->itemAmount[i] > 0) {
-					if (!Q_strcmp(csi.ods[i].id, "antimatter"))
+					if (!Q_strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
 						B_ManageAntimatter(destination, transfer->itemAmount[i], qtrue);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
@@ -846,7 +852,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 
 	/* Initialize transfer.
 	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = MAP_GetDistance(base->pos, transferStartAircraft->pos) / 90.0f;
+	time = MAP_GetDistance(base->pos, td.transferStartAircraft->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);
@@ -859,8 +865,8 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transfer->srcBase = NULL;	/* Source base. */
 	transfer->active = qtrue;
 
-	alienCargoTypes = AL_GetAircraftAlienCargoTypes(transferStartAircraft);
-	cargo = AL_GetAircraftAlienCargo(transferStartAircraft);
+	alienCargoTypes = AL_GetAircraftAlienCargoTypes(td.transferStartAircraft);
+	cargo = AL_GetAircraftAlienCargo(td.transferStartAircraft);
 	for (i = 0; i < alienCargoTypes; i++, cargo++) {		/* Aliens. */
 		if (cargo->amount_alive > 0) {
 			for (j = 0; j < ccs.numAliensTD; j++) {
@@ -890,7 +896,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 
 	/* Make sure that we don't use transferStartAircraft after this point
 	 * (Could be a fake aircraft in case of base attack) */
-	transferStartAircraft = NULL;
+	td.transferStartAircraft = NULL;
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transfer->destBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_ALIENBODIES_DEFERED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -948,7 +954,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 	transferBaseSelectPopup[0] = '\0';
 
 	/* store the aircraft to be able to remove alien bodies */
-	transferStartAircraft = aircraft;
+	td.transferStartAircraft = aircraft;
 
 	/* make sure that all tests here are the same than in TR_TransferBaseListClick_f */
 	for (i = 0; i < MAX_BASES; i++) {
@@ -1001,18 +1007,18 @@ static void TR_TransferStart_f (void)
 	float time;
 	char message[256];
 
-	if (currentTransferType == TRANS_TYPE_INVALID) {
+	if (td.currentTransferType == TRANS_TYPE_INVALID) {
 		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
 		return;
 	}
 
-	if (!transferBase || !baseCurrent) {
+	if (!td.transferBase || !baseCurrent) {
 		Com_Printf("TR_TransferStart_f: No base selected!\n");
 		return;
 	}
 
 	/* don't start any empty transport */
-	if (!trCargoCountTmp) {
+	if (!td.trCargoCountTmp) {
 		return;
 	}
 
@@ -1030,7 +1036,7 @@ static void TR_TransferStart_f (void)
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = MAP_GetDistance(transferBase->pos, baseCurrent->pos) / 90.0f;
+	time = MAP_GetDistance(td.transferBase->pos, baseCurrent->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);
@@ -1039,22 +1045,22 @@ static void TR_TransferStart_f (void)
 		transfer->event.sec -= SECONDS_PER_DAY;
 		transfer->event.day++;
 	}
-	transfer->destBase = transferBase;	/* Destination base. */
+	transfer->destBase = td.transferBase;	/* Destination base. */
 	assert(transfer->destBase);
 	transfer->srcBase = baseCurrent;	/* Source base. */
 	transfer->active = qtrue;
 	for (i = 0; i < csi.numODs; i++) {	/* Items. */
-		if (trItemsTmp[i] > 0) {
+		if (td.trItemsTmp[i] > 0) {
 			transfer->hasItems = qtrue;
-			transfer->itemAmount[i] = trItemsTmp[i];
+			transfer->itemAmount[i] = td.trItemsTmp[i];
 		}
 	}
 	/* Note that personel remains hired in source base during the transfer, that is
 	 * it takes Living Quarters capacity, etc, but it cannot be used anywhere. */
 	for (i = 0; i < MAX_EMPL; i++) {		/* Employees. */
 		for (j = 0; j < ccs.numEmployees[i]; j++) {
-			if (trEmployeesTmp[i][j]) {
-				employee_t *employee = trEmployeesTmp[i][j];
+			if (td.trEmployeesTmp[i][j]) {
+				employee_t *employee = td.trEmployeesTmp[i][j];
 				transfer->hasEmployees = qtrue;
 
 				assert(employee->baseHired == baseCurrent);
@@ -1069,17 +1075,17 @@ static void TR_TransferStart_f (void)
 	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
 		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
-		if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
+		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 			transfer->hasAliens = qtrue;
-			transfer->alienAmount[i][TRANS_ALIEN_ALIVE] = trAliensTmp[i][TRANS_ALIEN_ALIVE];
+			transfer->alienAmount[i][TRANS_ALIEN_ALIVE] = td.trAliensTmp[i][TRANS_ALIEN_ALIVE];
 		}
-		if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
+		if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 			transfer->hasAliens = qtrue;
-			transfer->alienAmount[i][TRANS_ALIEN_DEAD] = trAliensTmp[i][TRANS_ALIEN_DEAD];
+			transfer->alienAmount[i][TRANS_ALIEN_DEAD] = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
 		}
 	}
 	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
-		if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
+		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 			aircraft->status = AIR_TRANSFER;
 			AIR_RemoveEmployees(aircraft);
@@ -1089,16 +1095,16 @@ static void TR_TransferStart_f (void)
 	}
 
 	/* Clear temporary cargo arrays. */
-	memset(trItemsTmp, 0, sizeof(trItemsTmp));
-	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
-	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
+	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
+	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
+	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
+	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 
 	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
 	PR_ProductionAllowed(baseCurrent);
 	RS_ResearchAllowed(baseCurrent);
 
-	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), transferBase->name);
+	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), td.transferBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
 	MN_PopMenu(qfalse);
 }
@@ -1129,7 +1135,7 @@ static void TR_TransferListSelect_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!transferBase) {
+	if (!td.transferBase) {
 		MN_Popup(_("No target base selected"), _("Please select the target base from the list"));
 		return;
 	}
@@ -1138,7 +1144,7 @@ static void TR_TransferListSelect_f (void)
 	if (num < 0 || num >= csi.numODs)
 		return;
 
-	switch (currentTransferType) {
+	switch (td.currentTransferType) {
 	case TRANS_TYPE_INVALID:	/**< No list was inited before you call this. */
 		return;
 	case TRANS_TYPE_ITEM:
@@ -1150,10 +1156,10 @@ static void TR_TransferListSelect_f (void)
 					/* you can't transfer more item than you have */
 					amount = min(amount, baseCurrent->storage.num[i]);
 					/* you can only transfer items that destination base can accept */
-					amount = TR_CheckItem(od, transferBase, amount);
+					amount = TR_CheckItem(od, td.transferBase, amount);
 					if (amount) {
-						trItemsTmp[i] += amount;
-						if (!Q_strncmp(od->id, "antimatter", 10))
+						td.trItemsTmp[i] += amount;
+						if (!Q_strcmp(od->id, ANTIMATTER_TECH_ID))
 							B_ManageAntimatter(baseCurrent, amount, qfalse);
 						else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
@@ -1179,11 +1185,11 @@ static void TR_TransferListSelect_f (void)
 			employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			if (trEmployeesTmp[EMPL_SOLDIER][i])
+			if (td.trEmployeesTmp[EMPL_SOLDIER][i])
 				continue;
 			if (cnt == num) {
-				if (TR_CheckEmployee(employee, transferBase)) {
-					trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee;
+				if (TR_CheckEmployee(employee, td.transferBase)) {
+					td.trEmployeesTmp[EMPL_SOLDIER][employee->idx] = employee;
 					added = qtrue;
 					break;
 				} else
@@ -1195,11 +1201,11 @@ static void TR_TransferListSelect_f (void)
 			employee_t *employee = &ccs.employees[EMPL_PILOT][i];
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			if (trEmployeesTmp[EMPL_PILOT][i])
+			if (td.trEmployeesTmp[EMPL_PILOT][i])
 				continue;
 			if (cnt == num) {
-				if (TR_CheckEmployee(employee, transferBase)) {
-					trEmployeesTmp[EMPL_PILOT][employee->idx] = employee;
+				if (TR_CheckEmployee(employee, td.transferBase)) {
+					td.trEmployeesTmp[EMPL_PILOT][employee->idx] = employee;
 					added = qtrue;
 					break;
 				} else
@@ -1215,7 +1221,7 @@ static void TR_TransferListSelect_f (void)
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 			numempl[emplType] = E_CountHired(baseCurrent, emplType);
 			for (i = 0; i < MAX_EMPLOYEES; i++) {
-				if (trEmployeesTmp[emplType][i])
+				if (td.trEmployeesTmp[emplType][i])
 					numempl[emplType]--;
 			}
 		}
@@ -1232,10 +1238,10 @@ static void TR_TransferListSelect_f (void)
 					employee_t *employee = &ccs.employees[emplType][i];
 					if (!E_IsInBase(employee, baseCurrent))
 						continue;
-					if (trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
+					if (td.trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
-					if (TR_CheckEmployee(employee, transferBase)) {
-						trEmployeesTmp[emplType][employee->idx] = employee;
+					if (TR_CheckEmployee(employee, td.transferBase)) {
+						td.trEmployeesTmp[emplType][employee->idx] = employee;
 						amount--;
 						if (amount == 0)
 							break;
@@ -1247,12 +1253,12 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_ALIEN:
-		if (!B_GetBuildingStatus(transferBase, B_ALIEN_CONTAINMENT))
+		if (!B_GetBuildingStatus(td.transferBase, B_ALIEN_CONTAINMENT))
 			return;
 		for (i = 0; i < ccs.numAliensTD; i++) {
 			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
-					trAliensTmp[i][TRANS_ALIEN_DEAD]++;
+					td.trAliensTmp[i][TRANS_ALIEN_DEAD]++;
 					/* Remove the corpse from Alien Containment. */
 					baseCurrent->alienscont[i].amount_dead--;
 					break;
@@ -1261,8 +1267,8 @@ static void TR_TransferListSelect_f (void)
 			}
 			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
-					if (TR_CheckAlien(i, transferBase)) {
-						trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
+					if (TR_CheckAlien(i, td.transferBase)) {
+						td.trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
 						AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), -1);
 						break;
@@ -1274,7 +1280,7 @@ static void TR_TransferListSelect_f (void)
 		}
 		break;
 	case TRANS_TYPE_AIRCRAFT:
-		if (!B_GetBuildingStatus(transferBase, B_HANGAR) && !B_GetBuildingStatus(transferBase, B_SMALL_HANGAR))
+		if (!B_GetBuildingStatus(td.transferBase, B_HANGAR) && !B_GetBuildingStatus(td.transferBase, B_SMALL_HANGAR))
 			return;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
 			const aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
@@ -1282,8 +1288,8 @@ static void TR_TransferListSelect_f (void)
 				return;
 			if (aircraft->homebase == baseCurrent && TR_AircraftListSelect(i)) {
 				if (cnt == num) {
-					if (TR_CheckAircraft(aircraft, transferBase)) {
-						trAircraftsTmp[i] = i;
+					if (TR_CheckAircraft(aircraft, td.transferBase)) {
+						td.trAircraftsTmp[i] = i;
 						break;
 					} else
 						return;
@@ -1296,7 +1302,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	}
 
-	TR_TransferSelect(baseCurrent, transferBase, currentTransferType);
+	TR_TransferSelect(baseCurrent, td.transferBase, td.currentTransferType);
 }
 
 /**
@@ -1355,11 +1361,11 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	MN_RegisterText(TEXT_BASE_INFO, baseInfo);
 
 	/* Set global pointer to current selected base. */
-	transferBase = destbase;
+	td.transferBase = destbase;
 	Cvar_Set("mn_trans_base_name", destbase->name);
 
 	/* Update stuff-in-base list. */
-	TR_TransferSelect(srcbase, destbase, currentTransferType);
+	TR_TransferSelect(srcbase, destbase, td.currentTransferType);
 }
 
 /**
@@ -1374,10 +1380,10 @@ static void TR_NextBase_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!transferBase)
+	if (!td.transferBase)
 		counter = baseCurrent->idx;
 	else
-		counter = transferBase->idx;
+		counter = td.transferBase->idx;
 
 	for (baseIdx = counter + 1; baseIdx < MAX_BASES; baseIdx++) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -1412,10 +1418,10 @@ static void TR_PrevBase_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (!transferBase)
+	if (!td.transferBase)
 		counter = baseCurrent->idx;
 	else
-		counter = transferBase->idx;
+		counter = td.transferBase->idx;
 
 	for (baseIdx = counter - 1; baseIdx >= 0; baseIdx--) {
 		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
@@ -1458,17 +1464,15 @@ static void TR_CargoListSelect_f (void)
 	if (num < 0 || num >= MAX_CARGO)
 		return;
 
-	switch (cargo[num].type) {
+	switch (td.cargo[num].type) {
 	case CARGO_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if (trItemsTmp[i] > 0) {
+			if (td.trItemsTmp[i] > 0) {
 				if (cnt == num) {
-					int amount;
-					amount = TR_GetTransferFactor();
+					const int amount = min(TR_GetTransferFactor(), td.trItemsTmp[i]);
 					/* you can't transfer more item than there are in current tranfer */
-					amount = min(amount, trItemsTmp[i]);
-					trItemsTmp[i] -= amount;
-					if (!Q_strcmp(csi.ods[i].id, "antimatter"))
+					td.trItemsTmp[i] -= amount;
+					if (!Q_strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
 						B_ManageAntimatter(baseCurrent, amount, qfalse);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
@@ -1490,7 +1494,7 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_EMPLOYEE:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			switch (cargo[i].type) {
+			switch (td.cargo[i].type) {
 			case CARGO_TYPE_ITEM:
 				entries++;
 			default:
@@ -1500,9 +1504,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
-			if (trEmployeesTmp[EMPL_SOLDIER][i]) {
+			if (td.trEmployeesTmp[EMPL_SOLDIER][i]) {
 				if (cnt == num) {
-					trEmployeesTmp[EMPL_SOLDIER][i] = NULL;
+					td.trEmployeesTmp[EMPL_SOLDIER][i] = NULL;
 					removed = qtrue;
 					break;
 				}
@@ -1510,9 +1514,9 @@ static void TR_CargoListSelect_f (void)
 			}
 		}
 		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
-			if (trEmployeesTmp[EMPL_PILOT][i]) {
+			if (td.trEmployeesTmp[EMPL_PILOT][i]) {
 				if (cnt == num) {
-					trEmployeesTmp[EMPL_PILOT][i] = NULL;
+					td.trEmployeesTmp[EMPL_PILOT][i] = NULL;
 					removed = qtrue;
 					break;
 				}
@@ -1528,21 +1532,19 @@ static void TR_CargoListSelect_f (void)
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 			numempl[emplType] = 0;
 			for (i = 0; i < MAX_EMPLOYEES; i++) {
-				if (trEmployeesTmp[emplType][i])
+				if (td.trEmployeesTmp[emplType][i])
 					numempl[emplType]++;
 			}
 		}
 
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			if ((numempl[emplType] < 1) || (emplType == EMPL_SOLDIER) || (emplType == EMPL_PILOT))
+			if (numempl[emplType] < 1 || emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 				continue;
 			if (cnt == num) {
-				int amount;
-				amount = TR_GetTransferFactor();
-				amount = min(amount, E_CountHired(baseCurrent, emplType));
+				int amount = min(TR_GetTransferFactor(), E_CountHired(baseCurrent, emplType));
 				for (j = 0; j < ccs.numEmployees[emplType]; j++) {
-					if (trEmployeesTmp[emplType][j]) {
-						trEmployeesTmp[emplType][j] = NULL;
+					if (td.trEmployeesTmp[emplType][j]) {
+						td.trEmployeesTmp[emplType][j] = NULL;
 						amount--;
 						removed = qtrue;
 						if (amount == 0)
@@ -1559,7 +1561,7 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_ALIEN_DEAD:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			switch (cargo[i].type) {
+			switch (td.cargo[i].type) {
 			case CARGO_TYPE_ITEM:
 			case CARGO_TYPE_EMPLOYEE:
 				entries++;
@@ -1570,9 +1572,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < ccs.numAliensTD; i++) {
-			if (trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
+			if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 				if (cnt == num) {
-					trAliensTmp[i][TRANS_ALIEN_DEAD]--;
+					td.trAliensTmp[i][TRANS_ALIEN_DEAD]--;
 					baseCurrent->alienscont[i].amount_dead++;
 					break;
 				}
@@ -1583,7 +1585,7 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_ALIEN_ALIVE:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			switch (cargo[i].type) {
+			switch (td.cargo[i].type) {
 			case CARGO_TYPE_ITEM:
 			case CARGO_TYPE_EMPLOYEE:
 			case CARGO_TYPE_ALIEN_DEAD:
@@ -1595,9 +1597,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < ccs.numAliensTD; i++) {
-			if (trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
+			if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 				if (cnt == num) {
-					trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
+					td.trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
 					AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), 1);
 					break;
 				}
@@ -1608,7 +1610,7 @@ static void TR_CargoListSelect_f (void)
 	case CARGO_TYPE_AIRCRAFT:
 		for (i = 0; i < MAX_CARGO; i++) {
 			/* Count previous types on the list. */
-			switch (cargo[i].type) {
+			switch (td.cargo[i].type) {
 			case CARGO_TYPE_ITEM:
 			case CARGO_TYPE_EMPLOYEE:
 			case CARGO_TYPE_ALIEN_DEAD:
@@ -1621,9 +1623,9 @@ static void TR_CargoListSelect_f (void)
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
 		for (i = 0; i < MAX_AIRCRAFT; i++) {
-			if (trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
+			if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 				if (cnt == num) {
-					trAircraftsTmp[i] = TRANS_LIST_EMPTY_SLOT;
+					td.trAircraftsTmp[i] = TRANS_LIST_EMPTY_SLOT;
 					break;
 				}
 				cnt++;
@@ -1634,7 +1636,7 @@ static void TR_CargoListSelect_f (void)
 		return;
 	}
 
-	Cbuf_AddText(va("trans_type %i\n", currentTransferType));
+	Cbuf_AddText(va("trans_type %i\n", td.currentTransferType));
 }
 
 /**
@@ -1693,13 +1695,13 @@ static void TR_Init_f (void)
 	if (!baseCurrent)
 		return;
 
-	transferBase = NULL;
+	td.transferBase = NULL;
 
 	/* Clear employees temp array. */
-	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
+	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
 
 	/* Clear aircraft temp array. */
-	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
+	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 
 	/* Select first available item */
 	TR_TransferSelect_f();
@@ -1708,8 +1710,8 @@ static void TR_Init_f (void)
 	TR_NextBase_f();
 
 	/* Set up cvar used to display transferBase. */
-	if (transferBase)
-		Cvar_Set("mn_trans_base_name", transferBase->name);
+	if (td.transferBase)
+		Cvar_Set("mn_trans_base_name", td.transferBase->name);
 	/* Reset scrolling for item-in-base list */
 	TR_ResetScrolling_f();
 }
@@ -1726,10 +1728,10 @@ static void TR_TransferClose_f (void)
 	TR_TransferListClear_f();
 
 	/* Clear temporary cargo arrays. */
-	memset(trItemsTmp, 0, sizeof(trItemsTmp));
-	memset(trAliensTmp, 0, sizeof(trAliensTmp));
-	memset(trEmployeesTmp, 0, sizeof(trEmployeesTmp));
-	memset(trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(trAircraftsTmp));
+	memset(td.trItemsTmp, 0, sizeof(td.trItemsTmp));
+	memset(td.trAliensTmp, 0, sizeof(td.trAliensTmp));
+	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
+	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 }
 /**
  * @brief Save callback for xml savegames
@@ -1914,4 +1916,6 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
+
+	memset(&td, 0, sizeof(td));
 }
