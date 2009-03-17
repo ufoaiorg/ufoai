@@ -1801,7 +1801,7 @@ menu popup_intercept
 			action "popup_intercept_update;"
 		}
 		option sam {
-			label	"_Surface-to-air missile defence"
+			label	"_SAM defence"
 			value	"1"
 			action "popup_intercept_update;"
 		}
@@ -1816,7 +1816,7 @@ menu popup_intercept
 
 		string name_label
 		{
-			string		"_Name:"
+			string		"_Aircraft:"
 			pos			"26 3"
 			size		"140 20"
 		}
@@ -1861,7 +1861,7 @@ menu popup_intercept
 
 		string base_label
 		{
-			string		"_Base:"
+			string		"_Surface-to-air missile site:"
 			pos			"26 3"
 			size		"250 20"
 		}
