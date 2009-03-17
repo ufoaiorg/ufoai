@@ -2071,7 +2071,7 @@ menu popup_aircraft
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"26 188"
+		pos			"297 191"
 		size		"176 32"
 		click		{ cmd "mn_pop;" }
 	}
