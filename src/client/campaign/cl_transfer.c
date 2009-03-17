@@ -1636,7 +1636,7 @@ static void TR_CargoListSelect_f (void)
 		return;
 	}
 
-	Cbuf_AddText(va("trans_type %i\n", td.currentTransferType));
+	TR_TransferSelect(baseCurrent, td.transferBase, td.currentTransferType);
 }
 
 /**
