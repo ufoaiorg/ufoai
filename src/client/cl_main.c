@@ -1,6 +1,6 @@
 /**
  * @file cl_main.c
- * @brief Primary functions for the client. NB: The main() is system-secific and can currently be found in ports/.
+ * @brief Primary functions for the client. NB: The main() is system-specific and can currently be found in ports/.
  */
 
 /*
@@ -165,7 +165,7 @@ static void CL_Quit_f (void)
 }
 
 /**
- * @brief Ensures the right menu cvars are set after error drop or mapchange
+ * @brief Ensures the right menu cvars are set after error drop or map change
  * @note E.g. called after an ERR_DROP was thrown
  * @sa CL_Disconnect
  * @sa SV_Map
@@ -207,7 +207,7 @@ void CL_Drop (void)
 }
 
 /**
- * @note Only call CL_Connect if there is no connection yet (cls.netStream is NULL)
+ * @note Only call @c CL_Connect if there is no connection yet (@c cls.netStream is @c NULL)
  * @sa CL_Disconnect
  * @sa CL_SendChangedUserinfos
  */
@@ -239,7 +239,7 @@ static void CL_Connect (void)
 }
 
 /**
- * @brief Called after tatical missions to wipe away the tactical-mission-only data.
+ * @brief Called after tactical missions to wipe away the tactical-mission-only data.
  * @sa CL_ParseServerData
  * @sa CL_Disconnect
  * @sa R_ClearScene
@@ -259,12 +259,12 @@ void CL_ClearState (void)
 }
 
 /**
- * @brief Sets the cls.state to ca_disconnected and informs the server
+ * @brief Sets the @c cls.state to @c ca_disconnected and informs the server
  * @sa CL_Disconnect_f
  * @sa CL_Drop
  * @note Goes from a connected state to disconnected state
  * Sends a disconnect message to the server
- * This is also called on Com_Error, so it shouldn't cause any errors
+ * This is also called on @c Com_Error, so it shouldn't cause any errors
  */
 void CL_Disconnect (void)
 {
@@ -575,7 +575,7 @@ static void CL_Precache_f (void)
 
 /**
  * @brief Precaches all models at game startup - for faster access
- * @todo In case of vid restart due to changed settings the vid_genericPool is
+ * @todo In case of vid restart due to changed settings the @c vid_genericPool is
  * wiped away, too. So the models has to be reloaded with every map change
  */
 static void CL_PrecacheModels (void)
@@ -603,7 +603,7 @@ static void CL_PrecacheModels (void)
 }
 
 /**
- * @brief Init function for clients - called after menu was inited and ufo-scripts were parsed
+ * @brief Init function for clients - called after menu was initialized and ufo-scripts were parsed
  * @sa Qcommon_Init
  */
 void CL_InitAfter (void)
@@ -781,7 +781,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 
 /**
  * @brief Calls all reset functions for all subsystems like production and research
- * also inits the cvars and commands
+ * also initializes the cvars and commands
  * @sa CL_Init
  */
 static void CL_InitLocal (void)

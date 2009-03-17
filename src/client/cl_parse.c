@@ -70,7 +70,7 @@ static const char *svc_strings[UCHAR_MAX + 1] =
  * b	| byte		| 1
  * s	| short		| 2
  * l	| long		| 4
- * p	| pos		| 6 (map boudaries - (-MAX_WORLD_WIDTH) - (MAX_WORLD_WIDTH))
+ * p	| pos		| 6 (map boundaries - (-MAX_WORLD_WIDTH) - (MAX_WORLD_WIDTH))
  * g	| gpos		| 3
  * d	| dir		| 1
  * a	| angle		| 1
@@ -360,7 +360,7 @@ static void CL_ParseServerData (struct dbuffer *msg)
 	Com_DPrintf(DEBUG_CLIENT, "serverdata: count %d, pnum %d, level %s\n", cl.servercount, cl.pnum, str);
 
 	if (cl.pnum >= 0) {
-		/* need to prep refresh at next oportunity */
+		/* need to prep refresh at next opportunity */
 		refdef.ready = qfalse;
 	}
 }
@@ -1229,7 +1229,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
  * @brief Returns the index of the biggest item in the inventory list
  * @note This item is the only one that will be drawn when lying at the floor
  * @sa CL_PlaceItem
- * @return the item index in the csi.ods array
+ * @return the item index in the @c csi.ods array
  * @note Only call this for none empty invList_t - see FLOOR, LEFT, RIGHT and so on macros
  */
 static objDef_t *CL_BiggestItem (const invList_t *ic)
@@ -1363,7 +1363,6 @@ static void CL_InvAdd (struct dbuffer *msg)
 
 /**
  * @sa CL_InvAdd
- * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
  */
 static void CL_InvDel (struct dbuffer *msg)
 {
@@ -1410,9 +1409,6 @@ static void CL_InvDel (struct dbuffer *msg)
 	}
 }
 
-/**
- * @todo This can never work with scroll container (we don't know a filter type here). It this ever used in the base screen?
- */
 static void CL_InvAmmo (struct dbuffer *msg)
 {
 	invList_t	*ic;
@@ -1445,8 +1441,6 @@ static void CL_InvAmmo (struct dbuffer *msg)
 
 /**
  * @sa CL_InvReload
- * @todo This can never work with scroll container (we don't know a filter type here).
- * @todo It this ever used in the base screen? No, it is not - this is for reloading a weapon from hud (battlescape/network event)
  */
 static void CL_InvReload (struct dbuffer *msg)
 {

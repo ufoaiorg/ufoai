@@ -60,7 +60,7 @@ void MN_SetViewRect (void)
 }
 
 /**
- * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
+ * @brief Prints a list of tab and newline separated string to keylist char array that hold the key and the command desc
  * @todo Use a linked list here, no static buffer
  */
 static void MN_InitKeyList_f (void)
