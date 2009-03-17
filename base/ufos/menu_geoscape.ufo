@@ -1784,93 +1784,101 @@ menu popup_intercept
 
 	{
 		pos			"124 192"
-		size		"777 447"
+		size		"548 459"
 		dragbutton	true
 		image		menu/popup_alpha_tile
 		blend		true
-		string		"_Interception"
+		string		"_Anti-UFO defence"
 	}
 
-	panel vertical_bar
-	{
-		pos			"486 93"
-		size		"2 280"
-		bgcolor		"0 0.5 0 1"
+	tab defence_navigation {
+		pos		"18 55"
+		size	"515 40"
+		cvar	"*cvar mn_defencetab"
+		option aircraft {
+			label	"_Aircraft interception"
+			value	"0"
+			action "popup_intercept_update;"
+		}
+		option sam {
+			label	"_Surface-to-air missile defence"
+			value	"1"
+			action "popup_intercept_update;"
+		}
 	}
 
-	string title
+	panel aircraft
 	{
-		string		"_Select an aircraft"
-		pos			"27 62"
-		size		"449 28"
-		font		f_big
-		textalign	ul
+		{
+			pos			"30 100"
+			size		"460 300"
+		}
+
+		string name_label
+		{
+			string		"_Name:"
+			pos			"26 3"
+			size		"140 20"
+		}
+
+		string status_label
+		{
+			string		"_Status:"
+			pos			"176 3"
+			size		"140 20"
+		}
+
+		string craft_base_label
+		{
+			string		"_Base:"
+			pos			"326 3"
+			size		"150 20"
+		}
+
+		text ships
+		{
+			textid		TEXT_AIRCRAFT_LIST
+			pos			"26 29"
+			size		"460 260"
+			lineheight	20
+			tabwidth	150
+			mousefx		true
+			rows		"13"
+			longlines	prettychop
+			click
+			rclick
+			wheel
+		}
+
 	}
 
-	string title2
+	panel sam
 	{
-		string		"_Select a base"
-		pos			"500 62"
-		size		"250 28"
-		font		f_big
-		textalign	ul
-	}
+		{
+			pos			"30 100"
+			size		"460 300"
+		}
 
-	string name_label
-	{
-		string		"_Name:"
-		pos			"26 93"
-		size		"140 20"
-	}
+		string base_label
+		{
+			string		"_Base:"
+			pos			"26 3"
+			size		"250 20"
+		}
 
-	string status_label
-	{
-		string		"_Status:"
-		pos			"176 93"
-		size		"140 20"
-	}
-
-	string craft_base_label
-	{
-		string		"_Base:"
-		pos			"326 93"
-		size		"150 20"
-	}
-
-	string base_label
-	{
-		string		"_Base:"
-		pos			"501 93"
-		size		"250 20"
-	}
-
-	text ships
-	{
-		textid		TEXT_AIRCRAFT_LIST
-		pos			"26 119"
-		size		"460 260"
-		lineheight	20
-		tabwidth	150
-		mousefx		true
-		rows		"13"
-		longlines	prettychop
-		click
-		rclick
-		wheel
-	}
-
-	text bases
-	{
-		textid		TEXT_BASE_LIST
-		pos			"501 119"
-		size		"250 260"
-		lineheight	20
-		tabwidth	175
-		mousefx		true
-		rows		"13"
-		wheel
-		click
-		rclick
+		text bases
+		{
+			textid		TEXT_BASE_LIST
+			pos			"26 29"
+			size		"460 260"
+			lineheight	20
+			tabwidth	175
+			mousefx		true
+			rows		"13"
+			wheel
+			click
+			rclick
+		}
 	}
 
 	button bt_cancel
@@ -1881,9 +1889,29 @@ menu popup_intercept
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"566 383"
+		pos			"346 402"
 		size		"176 32"
 		click		{ cmd "mn_pop;mn_mapaction_reset;" }
+	}
+
+	confunc popup_intercept_update {
+		if "*cvar:mn_defencetab == 0" {
+			*path:menu.aircraft invis false
+			*path:menu.sam invis true
+		}
+		if "*cvar:mn_defencetab == 1" {
+			*path:menu.aircraft invis true
+			*path:menu.sam invis false
+		}
+	}
+
+	func init {
+		*cvar:mn_defencetab 0
+		cmd "popup_intercept_update"
+	}
+
+	func close {
+		cmd "del mn_defencetab"
 	}
 }
 
