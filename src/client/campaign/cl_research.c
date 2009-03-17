@@ -436,11 +436,11 @@ void RS_RequiredLinksAssign (void)
 
 	for (i = 0; i < ccs.numTechnologies; i++) {
 		technology_t *tech = RS_GetTechByIDX(i);
-		if (&tech->require_AND.numLinks)
+		if (tech->require_AND.numLinks)
 			RS_AssignTechLinks(&tech->require_AND);
-		if (&tech->require_OR.numLinks)
+		if (tech->require_OR.numLinks)
 			RS_AssignTechLinks(&tech->require_OR);
-		if (&tech->require_for_production.numLinks)
+		if (tech->require_for_production.numLinks)
 			RS_AssignTechLinks(&tech->require_for_production);
 	}
 
