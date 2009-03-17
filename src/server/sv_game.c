@@ -54,7 +54,7 @@ static void SV_dprintf (const char *fmt, ...)
  * @brief Print to a single client
  * @sa SV_BroadcastPrintf
  */
-static void SV_cprintf (const player_t * player, int level, const char *fmt, ...)
+static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -64,11 +64,8 @@ static void SV_cprintf (const player_t * player, int level, const char *fmt, ...
 		return;
 
 	n = 0;
-	if (player) {
+	if (player)
 		n = player->num;
-		if (n < 0 || n >= ge->maxplayersperteam)
-			return;
-	}
 
 	va_start(argptr, fmt);
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
@@ -104,10 +101,6 @@ static void SV_error (const char *fmt, ...)
  */
 static void SV_SetModel (edict_t * ent, const char *name)
 {
-	cBspModel_t *mod;
-
-	assert(ent);
-
 	if (!name)
 		Com_Error(ERR_DROP, "SV_SetModel: NULL");
 
@@ -115,7 +108,7 @@ static void SV_SetModel (edict_t * ent, const char *name)
 
 	/* if it is an inline model, get the size information for it */
 	if (name[0] == '*') {
-		mod = CM_InlineModel(name);
+		cBspModel_t *mod = CM_InlineModel(name);
 		assert(mod);
 		/* Copy model mins and maxs to entity */
 		VectorCopy(mod->mins, ent->mins);
@@ -143,7 +136,7 @@ static void SV_Configstring (int index, const char *val)
 	switch (index) {
 	case CS_TILES:
 	case CS_POSITIONS:
-		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS*MAX_TILESTRINGS);
+		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		break;
 	default:
 		Q_strncpyz(sv.configstrings[index], val, MAX_TOKEN_CHARS);
@@ -410,9 +403,9 @@ void SV_InitGameProgs (void)
 		SV_ShutdownGameProgs();
 
 	/* load a new game dll */
-	import.bprintf = SV_BroadcastPrintf;
+	import.BroadcastPrintf = SV_BroadcastPrintf;
 	import.dprintf = SV_dprintf;
-	import.cprintf = SV_cprintf;
+	import.PlayerPrintf = SV_PlayerPrintf;
 	import.error = SV_error;
 
 	import.trace = SV_Trace;

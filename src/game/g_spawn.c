@@ -685,7 +685,7 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 		if (activator->team == TEAM_ALIEN) {
 			if (!self->count) {
 				self->count = level.actualRound;
-				gi.bprintf(PRINT_HUD, _("Aliens entered target zone\n"));
+				gi.BroadcastPrintf(PRINT_HUD, _("Aliens entered target zone\n"));
 			}
 			return qtrue;
 		} else {
@@ -712,13 +712,13 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 								G_ClientInvMove(game.players + activator->pnum, activator->number,
 									&gi.csi->ids[j], ic, &gi.csi->ids[gi.csi->idFloor],
 									NONE, NONE, qfalse, QUIET);
-								gi.bprintf(PRINT_HUD, _("Item was placed\n"));
+								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));
 								self->owner->count = level.actualRound;
 								return qtrue;
 							}
 						}
 				} else {
-					gi.bprintf(PRINT_HUD, _("Target zone is occupied\n"));
+					gi.BroadcastPrintf(PRINT_HUD, _("Target zone is occupied\n"));
 				}
 			}
 			return qtrue;
@@ -850,7 +850,7 @@ static void Think_Mission (edict_t *self)
 		}
 
 	/* mission succeeds */
-	gi.bprintf(PRINT_HUD, _("Mission won for team %i\n"), team);
+	gi.BroadcastPrintf(PRINT_HUD, _("Mission won for team %i\n"), team);
 
 	level.winningTeam = self->team;
 	level.intermissionTime = level.time + 10;

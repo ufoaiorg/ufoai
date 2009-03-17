@@ -808,39 +808,39 @@ qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		gi.cprintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
+		gi.PlayerPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
 		return qfalse;
 	}
 
 	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	if (!ent || !ent->inuse) {
-		gi.cprintf(player, msglevel, _("Can't perform action - object not present!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - object not present!\n"));
 		return qfalse;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
-		gi.cprintf(player, msglevel, _("Can't perform action - not an actor!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - not an actor!\n"));
 		return qfalse;
 	}
 
 	if (G_IsStunned(ent)) {
-		gi.cprintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
 		return qfalse;
 	}
 
 	if (G_IsDead(ent)) {
-		gi.cprintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
 		return qfalse;
 	}
 
 	if (ent->team != player->pers.team) {
-		gi.cprintf(player, msglevel, _("Can't perform action - not on same team!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - not on same team!\n"));
 		return qfalse;
 	}
 
 	if (ent->pnum != player->num) {
-		gi.cprintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
 		return qfalse;
 	}
 
@@ -1014,10 +1014,10 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		/* No action possible - abort */
 		return;
 	case IA_NOTIME:
-		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
+		gi.PlayerPrintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
 		/* Continue below. */
@@ -1817,7 +1817,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
 			if (ent->state & STATE_SHAKEN) {
-				gi.cprintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
+				gi.PlayerPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
@@ -1871,7 +1871,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
  */
 static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 {
-	gi.cprintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
+	gi.PlayerPrintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
 
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
@@ -1931,9 +1931,9 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 	G_SendState(G_VisToPM(ent->visflags), ent);
 
 	if (sanity)
-		gi.bprintf(PRINT_CONSOLE, _("%s is on a rampage.\n"), ent->chr.name);
+		gi.BroadcastPrintf(PRINT_CONSOLE, _("%s is on a rampage.\n"), ent->chr.name);
 	else
-		gi.bprintf(PRINT_CONSOLE, _("%s is consumed by mad rage!\n"), ent->chr.name);
+		gi.BroadcastPrintf(PRINT_CONSOLE, _("%s is consumed by mad rage!\n"), ent->chr.name);
 	AI_ActorThink(game.players + ent->pnum, ent);
 }
 
@@ -1947,7 +1947,7 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
  */
 static void G_MoraleStopRage (edict_t * ent, qboolean quiet)
 {
-	if (((ent->morale) / mor_panic->value) > (m_rage_stop->value * frand())) {
+	if (ent->morale / mor_panic->value > m_rage_stop->value * frand()) {
 		ent->state &= ~STATE_INSANE;
 		G_SendState(G_VisToPM(ent->visflags), ent);
 	} else
@@ -1990,13 +1990,10 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					/** @todo Comment-me: Why do we modify reaction stuff (especially TUs) here?
-					 * I've commented this out for now, we could remove it completely or add a special "shaken" TU penalty. */
-					/* ent->TU -= TU_REACTION_SINGLE; */
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
-					gi.cprintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s is currently shaken.\n"), ent->chr.name);
+					gi.PlayerPrintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s is currently shaken.\n"), ent->chr.name);
 				} else {
 					if (ent->state & STATE_PANIC)
 						G_MoraleStopPanic(ent, quiet);
@@ -2035,15 +2032,13 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	invList_t *icFinal;
 	invDef_t * hand;
 	objDef_t *weapon;
-	int x, y, tu;
+	int tu;
 	int containerID;
 	invDef_t *bestContainer;
 
 	ent = g_edicts + entnum;
 
 	/* search for clips and select the one that is available easily */
-	x = 0;
-	y = 0;
 	icFinal = NULL;
 	tu = 100;
 	hand = st == ST_RIGHT_RELOAD ? &gi.csi->ids[gi.csi->idRight] : &gi.csi->ids[gi.csi->idLeft];
@@ -2074,8 +2069,6 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 			 * we've already found. */
 			for (ic = ent->i.c[containerID]; ic; ic = ic->next)
 				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
-					x = ic->x;
-					y = ic->y;
 					icFinal = ic;
 					tu = gi.csi->ids[containerID].out;
 					bestContainer = &gi.csi->ids[containerID];
@@ -2137,7 +2130,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 	invList_t *ic;
 	invList_t *icFinal;
 	invDef_t *hand;
-	int x, y, tu;
+	int tu;
 	int container;
 	invDef_t *bestContainer;
 
@@ -2147,8 +2140,6 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 		return;
 
 	/* search for weapons and select the one that is available easily */
-	x = 0;
-	y = 0;
 	tu = 100;
 	hand = &gi.csi->ids[gi.csi->idRight];
 	bestContainer = NULL;
@@ -2163,8 +2154,6 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 			for (ic = ent->i.c[container]; ic; ic = ic->next) {
 				assert(ic->item.t);
 				if (ic->item.t->weapon && (ic->item.a > 0 || !ic->item.t->reload)) {
-					x = ic->x;
-					y = ic->y;
 					icFinal = ic;
 					tu = gi.csi->ids[container].out;
 					bestContainer = &gi.csi->ids[container];
@@ -2345,7 +2334,6 @@ int G_ClientAction (player_t * player)
 	case PA_REACT_SELECT:
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fdIdx, &objIdx);
 		Com_DPrintf(DEBUG_GAME, "G_ClientAction: entnum:%i hand:%i fd:%i obj:%i\n", num, hand, fdIdx, objIdx);
-		/** @todo Add check for correct player here (player==g_edicts[num]->team ???) */
 		ent = g_edicts + num;
 		ent->chr.RFmode.hand = hand;
 		ent->chr.RFmode.fmIdx = fdIdx;
@@ -2433,7 +2421,7 @@ static void G_GetTeam (player_t * player)
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			player->pers.team = i;
-			gi.bprintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
+			gi.BroadcastPrintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
 			Com_Printf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			player->pers.team = DEFAULT_TEAMNUM;
@@ -2465,7 +2453,7 @@ static void G_GetTeam (player_t * player)
 			/* remove ai player */
 			for (j = 0, p = game.players + game.sv_maxplayersperteam; j < game.sv_maxplayersperteam; j++, p++)
 				if (p->inuse && p->pers.team == i) {
-					gi.bprintf(PRINT_CONSOLE, "Removing ai player...");
+					gi.BroadcastPrintf(PRINT_CONSOLE, "Removing ai player...");
 					p->inuse = qfalse;
 					break;
 				}
@@ -2546,8 +2534,8 @@ static void G_ClientTeamAssign (const player_t * player)
 					G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 			}
 		}
-		G_PrintStats(va("Team %i got the first round", turnTeam));
-		gi.bprintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
+		G_PrintStats(va("Team %i got the first round", level.activeTeam));
+		gi.BroadcastPrintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), level.activeTeam, buffer);
 	}
 }
 
@@ -2783,7 +2771,7 @@ void G_ClientTeamInfo (player_t * player)
 /**
  * @brief Counts the still living actors for a player
  */
-static int G_PlayerSoldiersCount (player_t* player)
+static int G_PlayerSoldiersCount (const player_t* player)
 {
 	int i, cnt = 0;
 	edict_t *ent;
@@ -2813,22 +2801,22 @@ void G_ForceEndRound (void)
 	diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
 	switch (diff) {
 	case 240:
-		gi.bprintf(PRINT_HUD, _("4 minutes left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("4 minutes left until forced round end\n"));
 		return;
 	case 180:
-		gi.bprintf(PRINT_HUD, _("3 minutes left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("3 minutes left until forced round end\n"));
 		return;
 	case 120:
-		gi.bprintf(PRINT_HUD, _("2 minutes left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("2 minutes left until forced round end\n"));
 		return;
 	case 60:
-		gi.bprintf(PRINT_HUD, _("1 minute left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("1 minute left until forced round end\n"));
 		return;
 	case 30:
-		gi.bprintf(PRINT_HUD, _("30 seconds left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("30 seconds left until forced round end\n"));
 		return;
 	case 15:
-		gi.bprintf(PRINT_HUD, _("15 seconds left until forced round end\n"));
+		gi.BroadcastPrintf(PRINT_HUD, _("15 seconds left until forced round end\n"));
 		return;
 	}
 
@@ -2836,7 +2824,7 @@ void G_ForceEndRound (void)
 	if (level.time < level.roundstartTime + sv_roundtimelimit->integer)
 		return;
 
-	gi.bprintf(PRINT_HUD, _("Current active team hit the max round time\n"));
+	gi.BroadcastPrintf(PRINT_HUD, _("Current active team hit the max round time\n"));
 
 	/* set all team members to ready (only human players) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++)
@@ -2874,8 +2862,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		if (!player->ready) {
 			player->ready = qtrue;
 			/* don't send this for alien and civilian teams */
-			if (player->pers.team != TEAM_CIVILIAN
-			 && player->pers.team != TEAM_ALIEN) {
+			if (player->pers.team != TEAM_CIVILIAN && player->pers.team != TEAM_ALIEN) {
 				gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
 				gi.WriteByte(player->num);
 				gi.WriteByte(player->pers.team);
@@ -2916,15 +2903,14 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 				i = 0;
 			}
 
-			if (((level.num_alive[i] || (level.num_spawnpoints[i] && !level.num_spawned[i]))
-				 && i != lastTeam)) {
+			if ((level.num_alive[i] || (level.num_spawnpoints[i] && !level.num_spawned[i])) && i != lastTeam) {
 				nextTeam = i;
 				break;
 			}
 		}
 
-		if (nextTeam == -1) {
-/*			gi.bprintf(PRINT_CONSOLE, "Can't change round - no living actors left.\n"); */
+		if (nextTeam == NO_ACTIVE_TEAM) {
+/*			gi.BroadcastPrintf(PRINT_CONSOLE, "Can't change round - no living actors left.\n"); */
 			level.activeTeam = lastTeam;
 			gi.EndEvents();
 			return;
@@ -3068,7 +3054,7 @@ void G_ClientBegin (player_t* player)
 
 	/** @todo This should be a client side error */
 	if (!P_MASK(player)) {
-		gi.bprintf(PRINT_CONSOLE, "%s tried to join - but server is full\n", player->pers.netname);
+		gi.BroadcastPrintf(PRINT_CONSOLE, "%s tried to join - but server is full\n", player->pers.netname);
 		return;
 	}
 
@@ -3089,7 +3075,7 @@ void G_ClientBegin (player_t* player)
 	gi.ConfigString(CS_PLAYERNAMES + player->num, player->pers.netname);
 
 	/* inform all clients */
-	gi.bprintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has joined team %i\n", player->pers.netname, player->pers.team);
 }
 
 /**
@@ -3107,7 +3093,7 @@ qboolean G_ClientSpawn (player_t * player)
 	int i;
 
 	if (player->spawned) {
-		gi.bprintf(PRINT_CONSOLE, "%s already spawned.\n", player->pers.netname);
+		gi.BroadcastPrintf(PRINT_CONSOLE, "%s already spawned.\n", player->pers.netname);
 		G_ClientDisconnect(player);
 		return qfalse;
 	}
@@ -3171,7 +3157,7 @@ qboolean G_ClientSpawn (player_t * player)
 	gi.EndEvents();
 
 	/* inform all clients */
-	gi.bprintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
+	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
 	return qtrue;
 }
 
@@ -3227,7 +3213,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 
 	/* fix for fast reconnects after a disconnect */
 	if (player->inuse) {
-		gi.bprintf(PRINT_CONSOLE, "%s already in use.\n", player->pers.netname);
+		gi.BroadcastPrintf(PRINT_CONSOLE, "%s already in use.\n", player->pers.netname);
 		G_ClientDisconnect(player);
 	}
 
@@ -3235,7 +3221,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	memset(&player->pers, 0, sizeof(player->pers));
 	G_ClientUserinfoChanged(player, userinfo);
 
-	gi.bprintf(PRINT_CHAT, "%s is connecting...\n", player->pers.netname);
+	gi.BroadcastPrintf(PRINT_CHAT, "%s is connecting...\n", player->pers.netname);
 	return qtrue;
 }
 
@@ -3261,7 +3247,7 @@ void G_ClientDisconnect (player_t * player)
 	player->spawned = qfalse;
 	player->ready = qfalse;
 
-	gi.bprintf(PRINT_CONSOLE, "%s disconnected.\n", player->pers.netname);
+	gi.BroadcastPrintf(PRINT_CHAT, "%s disconnected.\n", player->pers.netname);
 }
 
 /**

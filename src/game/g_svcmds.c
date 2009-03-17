@@ -73,7 +73,7 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 
 	for (i = 0; i < 4; i++) {
 		if (*s < '0' || *s > '9') {
-			gi.cprintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
+			gi.PlayerPrintf(NULL, PRINT_CONSOLE, "Bad filter address: %s\n", s);
 			return qfalse;
 		}
 
@@ -135,7 +135,7 @@ static void SVCmd_AddIP_f (void)
 	int i;
 
 	if (gi.Cmd_Argc() < 3) {
-		gi.cprintf(NULL, PRINT_CONSOLE, "Usage: addip <ip-mask>\n");
+		gi.dprintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
 		return;
 	}
 
@@ -144,7 +144,7 @@ static void SVCmd_AddIP_f (void)
 			break;				/* free spot */
 	if (i == numipfilters) {
 		if (numipfilters == MAX_IPFILTERS) {
-			gi.cprintf(NULL, PRINT_CONSOLE, "IP filter list is full\n");
+			gi.dprintf("IP filter list is full\n");
 			return;
 		}
 		numipfilters++;
@@ -163,7 +163,7 @@ static void SVCmd_RemoveIP_f (void)
 	int i, j;
 
 	if (gi.Cmd_Argc() < 3) {
-		gi.cprintf(NULL, PRINT_CONSOLE, "Usage:  sv removeip <ip-mask>\n");
+		gi.dprintf("Usage: %s <ip-mask>\n", gi.Cmd_Argv(1));
 		return;
 	}
 
@@ -175,10 +175,10 @@ static void SVCmd_RemoveIP_f (void)
 			for (j = i + 1; j < numipfilters; j++)
 				ipfilters[j - 1] = ipfilters[j];
 			numipfilters--;
-			gi.cprintf(NULL, PRINT_CONSOLE, "Removed.\n");
+			gi.dprintf("Removed.\n");
 			return;
 		}
-	gi.cprintf(NULL, PRINT_CONSOLE, "Didn't find %s.\n", gi.Cmd_Argv(2));
+	gi.dprintf("Didn't find %s.\n", gi.Cmd_Argv(2));
 }
 
 /**
@@ -189,10 +189,10 @@ static void SVCmd_ListIP_f (void)
 	int i;
 	byte b[4];
 
-	gi.cprintf(NULL, PRINT_CONSOLE, "Filter list:\n");
+	gi.dprintf("Filter list:\n");
 	for (i = 0; i < numipfilters; i++) {
 		*(unsigned *) b = ipfilters[i].compare;
-		gi.cprintf(NULL, PRINT_CONSOLE, "%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
+		gi.dprintf("%3i.%3i.%3i.%3i\n", b[0], b[1], b[2], b[3]);
 	}
 }
 
@@ -208,11 +208,11 @@ static void SVCmd_WriteIP_f (void)
 
 	Com_sprintf(name, sizeof(name), "%s/listip.cfg", gi.FS_Gamedir());
 
-	gi.cprintf(NULL, PRINT_CONSOLE, "Writing %s.\n", name);
+	gi.dprintf("Writing %s.\n", name);
 
 	f = fopen(name, "wb");
 	if (!f) {
-		gi.cprintf(NULL, PRINT_CONSOLE, "Couldn't open %s\n", name);
+		gi.dprintf("Couldn't open %s\n", name);
 		return;
 	}
 
@@ -236,15 +236,15 @@ static void SVCmd_AI_Add_f (void)
 	int team;
 
 	if (gi.Cmd_Argc() < 3) {
-		Com_Printf("Usage: ai_add <teamnum>\n");
+		gi.dprintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
 		return;
 	}
 	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS) {
 		if (!AI_CreatePlayer(team))
-			Com_Printf("Couldn't create AI player.\n");
+			gi.dprintf("Couldn't create AI player.\n");
 	} else
-		Com_Printf("Bad team number.\n");
+		gi.dprintf("Bad team number.\n");
 }
 
 
@@ -258,14 +258,14 @@ static void SVCmd_Win_f (void)
 	int team;
 
 	if (gi.Cmd_Argc() < 3) {
-		Com_Printf("Usage: win <teamnum>\n");
+		gi.dprintf("Usage: %s <teamnum>\n", gi.Cmd_Argv(1));
 		return;
 	}
 	team = atoi(gi.Cmd_Argv(2));
 	if (team > TEAM_CIVILIAN && team < MAX_TEAMS)
 		G_EndGame(team);
 	else
-		Com_Printf("Bad team number.\n");
+		gi.dprintf("Bad team number.\n");
 }
 
 #ifdef DEBUG
@@ -280,7 +280,7 @@ static void SVCmd_ShowAll_f (void)
 			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent);
 			ent->visflags |= ~ent->visflags;
 		}
-	Com_Printf("All items and creatures revealed to all sides\n");
+	gi.dprintf("All items and creatures revealed to all sides\n");
 }
 
 /**
@@ -328,7 +328,7 @@ static void SVCmd_StartGame_f (void)
 				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
-	Com_DPrintf(DEBUG_GAME, "SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
+	gi.dprintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
 	G_PrintStats(va("Starting new game: %s", level.mapname));
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
@@ -345,7 +345,7 @@ static void SVCmd_StartGame_f (void)
 		G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 	}
 	G_PrintStats(va("Team %i got the first round", turnTeam));
-	gi.bprintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
+	gi.BroadcastPrintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
 }
 
 /**
@@ -380,5 +380,5 @@ void ServerCommand (void)
 		SVCmd_ActorInvList_f();
 #endif
 	else
-		gi.cprintf(NULL, PRINT_CONSOLE, "Unknown server command \"%s\"\n", cmd);
+		gi.dprintf("Unknown server command \"%s\"\n", cmd);
 }

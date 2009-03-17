@@ -2072,9 +2072,7 @@ qboolean INVSH_LoadableInWeapon (const objDef_t *od, const objDef_t *weapon)
 			break;
 		}
 	}
-#if 0
-	Com_DPrintf(DEBUG_SHARED, "INVSH_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, weapon->id);
-#endif
+
 	return usable;
 }
 

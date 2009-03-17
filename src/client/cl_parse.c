@@ -1822,7 +1822,7 @@ void CL_ParseServerMessage (int cmd, struct dbuffer *msg)
 			break;
 		case PRINT_HUD:
 			/* all game lib messages or server messages should be printed
-			 * untranslated with bprintf or cprintf */
+			 * untranslated with BroadcastPrintf or PlayerPrintf */
 			/* see src/po/OTHER_STRINGS */
 			HUD_DisplayMessage(_(s));
 		default:

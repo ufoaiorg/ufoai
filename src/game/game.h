@@ -106,18 +106,19 @@ struct edict_s {
 /** @brief functions provided by the main engine */
 typedef struct {
 	/* client/server information */
-	int seed;
+	int seed; /**< random seed */
 	csi_t *csi;
 	struct routing_s *routingMap;	/**< server side routing table */
 	struct pathing_s *pathingMap;
 
 	/* special messages */
 
-	/* sends message to all entities */
-	void (IMPORT *bprintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	/** sends message to all players */
+	void (IMPORT *BroadcastPrintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	/** print output to server console */
 	void (IMPORT *dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-	/** sends message to only one entity */
-	void (IMPORT *cprintf) (const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+	/** sends message to only one player */
+	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
 	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, float volume);
 
@@ -126,7 +127,7 @@ typedef struct {
 	 * they connect, and changes are sent to all connected clients. */
 	void (IMPORT *ConfigString) (int num, const char *string);
 
-	/* @note The error message should not have a newline - it's added inside of this function */
+	/** @note The error message should not have a newline - it's added inside of this function */
 	void (IMPORT *error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/** the *index functions create configstrings and some internal server state */
@@ -232,10 +233,10 @@ typedef struct {
 	/* ClientCommand and ServerCommand parameter access */
 	int (IMPORT *Cmd_Argc) (void);
 	const char *(IMPORT *Cmd_Argv) (int n);
-	const char *(IMPORT *Cmd_Args) (void);		/* concatenation of all argv >= 1 */
+	const char *(IMPORT *Cmd_Args) (void);		/**< concatenation of all argv >= 1 */
 
-	/* add commands to the server console as if they were typed in */
-	/* for map changing, etc */
+	/** add commands to the server console as if they were typed in
+	 * for map changing, etc */
 	void (IMPORT *AddCommandString) (const char *text);
 } game_import_t;
 
