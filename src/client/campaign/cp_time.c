@@ -175,28 +175,27 @@ void CL_GameTimeStop (void)
 }
 
 /**
- * Time scaling is only allowed when you are on the geoscape
+ * Time scaling is only allowed when you are on the geoscape and when you had at least one base built.
  */
 static qboolean CL_AllowTimeScale (void)
 {
 	const char *menuName = MN_GetActiveMenuName();
+
+	/* check the stats value - already build bases might have been destroyed
+	 * so the ccs.numBases values is pointless here */
+	if (!campaignStats.basesBuild)
+		return qfalse;
+
 	return !Q_strncmp(menuName, "map", 3) || !Q_strncmp(menuName, "airfight", 8);
 }
 
 /**
  * @brief Decrease game time speed
- *
- * Decrease game time speed - only works when there is already a base available
  */
 void CL_GameTimeSlow (void)
 {
 	const int lapseType = ccs.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int minGameLapse = CP_MinGameLapseForType(lapseType);
-
-	/* check the stats value - already build bases might have been destroyed
-	 * so the ccs.numBases values is pointless here */
-	if (!campaignStats.basesBuild)
-		return;
 
 	if (gameLapse == minGameLapse)
 		return;
@@ -214,26 +213,18 @@ void CL_GameTimeSlow (void)
 				gameLapse--;
 			}
 		}
+		/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
+		CL_UpdateTime();
 	}
-
-	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
-	CL_UpdateTime();
 }
 
 /**
  * @brief Increase game time speed
- *
- * Increase game time speed - only works when there is already a base available
  */
 void CL_GameTimeFast (void)
 {
 	const int lapseType = ccs.combatZoomedUFO ? LAPSETYPE_COMBATZOOM : LAPSETYPE_GEOSCAPE;
 	const int maxGameLapse = CP_MaxGameLapseForType(lapseType);
-
-	/* check the stats value - already build bases might have been destroyed
-	 * so the ccs.numBases values is pointless here */
-	if (!campaignStats.basesBuild)
-		return;
 
 	if (gameLapse == maxGameLapse)
 		return;
@@ -251,16 +242,14 @@ void CL_GameTimeFast (void)
 				gameLapse++;
 			}
 		}
+		/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
+		CL_UpdateTime();
 	}
-
-	/* Make sure the new lapse state is updated and it (and the time) is show in the menu. */
-	CL_UpdateTime();
 }
 
 /**
  * @brief Set game time speed
  * @param[in] gameLapseValue The value to set the game time to.
- * @note
  */
 void CL_SetGameTime (int gameLapseValue)
 {
