@@ -795,7 +795,7 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	 * source base as soon as transfer starts */
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
 		/* reverse loop: aircraft are deleted in the loop: idx change */
-		for (i = MAX_AIRCRAFT - 1; i >= 0; i--) {
+		for (i = min(MAX_AIRCRAFT, ccs.numAircraft) - 1; i >= 0; i--) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 				assert(aircraft);
