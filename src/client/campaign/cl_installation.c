@@ -86,11 +86,9 @@ installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const cha
 {
 	int idx;
 
-	for (idx = 0; idx < ccs.numInstallationTemplates; idx++) {
-		if (Q_strncmp(ccs.installationTemplates[idx].id, id, MAX_VAR) == 0) {
+	for (idx = 0; idx < ccs.numInstallationTemplates; idx++)
+		if (!Q_strcmp(ccs.installationTemplates[idx].id, id))
 			return &ccs.installationTemplates[idx];
-		}
-	}
 
 	return NULL;
 }
@@ -136,9 +134,8 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	for (i = 0; i < csi.numODs; i++) {
 		const objDef_t *item = &csi.ods[i];
 		/* this is a craftitem but also dummy */
-		if (INV_IsBaseDefenceItem(item)) {
+		if (INV_IsBaseDefenceItem(item))
 			installation->storage.num[item->idx] = installation->installationTemplate->maxBatteries;
-		}
 	}
 	BDEF_InitialiseInstallationSlots(installation);
 
@@ -444,7 +441,7 @@ void INS_ParseInstallations (const char *name, const char **text)
 
 		/* other values */
 		if (!vp->string) {
-			if (!Q_strncmp(token, "cost", MAX_VAR)) {
+			if (!Q_strcmp(token, "cost")) {
 				char cvarname[MAX_VAR] = "mn_installation_";
 
 				Q_strcat(cvarname, installation->id, MAX_VAR);
@@ -456,17 +453,16 @@ void INS_ParseInstallations (const char *name, const char **text)
 				installation->cost = atoi(token);
 
 				Cvar_Set(cvarname, va(_("%d c"), atoi(token)));
-			} else if (!Q_strncmp(token, "buildtime", MAX_VAR)) {
-				char cvarname[MAX_VAR] = "mn_installation_";
+			} else if (!Q_strcmp(token, "buildtime")) {
+				char cvarname[MAX_VAR];
 
-				Q_strcat(cvarname, installation->id, MAX_VAR);
-				Q_strcat(cvarname, "_buildtime", MAX_VAR);
 
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				installation->buildTime = atoi(token);
 
+				Com_sprintf(cvarname, sizeof(cvarname), "mn_installation_%s_buildtime", installation->id);
 				Cvar_Set(cvarname, va(ngettext("%d day\n", "%d days\n", atoi(token)), atoi(token)));
 			}
 		}
