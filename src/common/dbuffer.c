@@ -140,6 +140,7 @@ void free_dbuffer (struct dbuffer *buf)
 	free_dbuffer_list = buf;
 	free_dbuffers++;
 
+	/* now we should free them, as we are still having a lot of them allocated */
 	while (free_dbuffers > DBUFFER_FREE_THRESHOLD) {
 		buf = free_dbuffer_list;
 		free_dbuffer_list = buf->next_free;
@@ -156,7 +157,7 @@ void free_dbuffer (struct dbuffer *buf)
  * given length, plus one character (see the comments in dbuffer_add()
  * for the explanation of that extra character).
  */
-static void dbuffer_grow (struct dbuffer *buf, size_t len)
+static inline void dbuffer_grow (struct dbuffer *buf, size_t len)
 {
 	struct dbuffer_element *e;
 	while (buf->space <= len) {
@@ -189,6 +190,8 @@ void dbuffer_add (struct dbuffer *buf, const char *data, size_t len)
 	*/
 	if (len >= buf->space)
 		dbuffer_grow(buf, len);
+
+	assert(len < buf->space);
 	while (len > 0) {
 		size_t l = (len < e->space) ? len : e->space;
 		memcpy(buf->end, data, l);
@@ -201,6 +204,7 @@ void dbuffer_add (struct dbuffer *buf, const char *data, size_t len)
 		buf->space -=l;
 		if (e->space == 0) {
 			e = e->next;
+			assert(e != NULL);
 			buf->end = &e->data[0];
 		}
 	}
@@ -233,8 +237,8 @@ size_t dbuffer_get (const struct dbuffer *buf, char *data, size_t len)
 
 	e = buf->head;
 	p = buf->start;
-	while ((len > 0) && e && (e->len > 0)) {
-		size_t l = (len < e->len) ? len : e->len;
+	while (len > 0 && e && e->len > 0) {
+		const size_t l = (len < e->len) ? len : e->len;
 		memcpy(data, p, l);
 		data += l;
 		len -= l;
@@ -274,13 +278,13 @@ size_t dbuffer_get_at (const struct dbuffer *buf, size_t offset, char *data, siz
 	e = buf->head;
 	p = buf->start;
 
-	while ((offset > 0) && e && (offset >= e->len)) {
+	while (offset > 0 && e && offset >= e->len) {
 		offset -= e->len;
 		e = e->next;
 		p = &e->data[0];
 	}
 
-	while ((len > 0) && e && (e->len > 0)) {
+	while (len > 0 && e && e->len > 0) {
 		size_t l = e->len - offset;
 		if (len < l)
 			l = len;
@@ -335,8 +339,8 @@ size_t dbuffer_remove (struct dbuffer *buf, size_t len)
 	if (!buf  || !len)
 		return 0;
 
-	while ((len > 0) && (buf->len > 0)) {
-		size_t l = (len < buf->head->len) ? len : buf->head->len;
+	while (len > 0 && buf->len > 0) {
+		const size_t l = (len < buf->head->len) ? len : buf->head->len;
 		struct dbuffer_element *e = buf->head;
 		buf->len -= l;
 		buf->space += l;
@@ -383,8 +387,8 @@ size_t dbuffer_extract (struct dbuffer *buf, char *data, size_t len)
 	size_t extracted = 0;
 	if (!buf || !data || !len)
 		return 0;
-	while ((len > 0) && (buf->len > 0)) {
-		size_t l = (len < buf->head->len) ? len : buf->head->len;
+	while (len > 0 && buf->len > 0) {
+		const size_t l = (len < buf->head->len) ? len : buf->head->len;
 		struct dbuffer_element *e = buf->head;
 		memcpy(data, buf->start, l);
 		data += l;
