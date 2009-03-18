@@ -232,43 +232,6 @@ void CL_CharacterCvars (const character_t * chr)
 }
 
 /**
- * @brief Calculate total reload time for selected actor.
- * @param[in] weapon Item in (currently only right) hand.
- * @return Time needed to reload or >= 999 if no suitable ammo found.
- * @note This routine assumes the time to reload a weapon
- * @note in the right hand is the same as the left hand.
- * @sa HUD_RefreshWeaponButtons
- * @sa CL_CheckMenuAction
- */
-int CL_CalcReloadTime (const objDef_t *weapon)
-{
-	int container;
-	int tu = 999;
-
-	if (!selActor)
-		return tu;
-
-	if (!weapon)
-		return tu;
-
-	for (container = 0; container < csi.numIDs; container++) {
-		if (csi.ids[container].out < tu) {
-			const invList_t *ic;
-			for (ic = selActor->i.c[container]; ic; ic = ic->next)
-				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
-					tu = csi.ids[container].out;
-					break;
-				}
-		}
-	}
-
-	/* total TU cost is the sum of 3 numbers:
-	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
-	tu += weapon->reload + csi.ids[csi.idRight].in;
-	return tu;
-}
-
-/**
  * @brief Returns the number of the actor in the teamlist.
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist.

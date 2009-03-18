@@ -761,6 +761,43 @@ static void HUD_SelectReactionFiremode_f (void)
 }
 
 /**
+ * @brief Calculate total reload time for selected actor.
+ * @param[in] weapon Item in (currently only right) hand.
+ * @return Time needed to reload or >= 999 if no suitable ammo found.
+ * @note This routine assumes the time to reload a weapon
+ * @note in the right hand is the same as the left hand.
+ * @sa HUD_RefreshWeaponButtons
+ * @sa CL_CheckMenuAction
+ */
+static int CL_CalcReloadTime (const le_t *le, const objDef_t *weapon)
+{
+	int container;
+	int tu = 999;
+
+	if (!le)
+		return tu;
+
+	if (!weapon)
+		return tu;
+
+	for (container = 0; container < csi.numIDs; container++) {
+		if (csi.ids[container].out < tu) {
+			const invList_t *ic;
+			for (ic = le->i.c[container]; ic; ic = ic->next)
+				if (INVSH_LoadableInWeapon(ic->item.t, weapon)) {
+					tu = csi.ids[container].out;
+					break;
+				}
+		}
+	}
+
+	/* total TU cost is the sum of 3 numbers:
+	 * TU for weapon reload + TU to get ammo out + TU to put ammo in hands */
+	tu += weapon->reload + csi.ids[csi.idRight].in;
+	return tu;
+}
+
+/**
  * @brief Checks whether an action on hud menu is valid and displays proper message.
  * @param[in] time The amount of TU (of an actor) left.
  * @param[in] weapon An item in hands.
@@ -771,7 +808,7 @@ static void HUD_SelectReactionFiremode_f (void)
  * @sa CL_ReloadRight_f
  * @todo Check for ammo in hand and give correct feedback in all cases.
  */
-static qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
+static qboolean CL_CheckMenuAction (const le_t* le, invList_t *weapon, int mode)
 {
 	/* No item in hand. */
 	/** @todo Ignore this condition when ammo in hand. */
@@ -793,7 +830,7 @@ static qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 			return qfalse;
 		}
 		/* Cannot shoot because weapon is fireTwoHanded, yet both hands handle items. */
-		if (weapon->item.t->fireTwoHanded && LEFT(selActor)) {
+		if (weapon->item.t->fireTwoHanded && LEFT(le)) {
 			HUD_DisplayMessage(_("This weapon cannot be fired\none handed.\n"));
 			return qfalse;
 		}
@@ -807,17 +844,15 @@ static qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 			return qfalse;
 		}
 		/* Cannot reload because of no ammo in inventory. */
-		if (CL_CalcReloadTime(weapon->item.t) >= 999) {
+		if (CL_CalcReloadTime(le, weapon->item.t) >= 999) {
 			HUD_DisplayMessage(_("Can't perform action:\nammo not available.\n"));
 			return qfalse;
 		}
 		/* Cannot reload because of not enough TUs. */
-		if (time < CL_CalcReloadTime(weapon->item.t)) {
+		if (le->TU < CL_CalcReloadTime(le, weapon->item.t)) {
 			HUD_DisplayMessage(_("Can't perform action:\nnot enough TUs.\n"));
 			return qfalse;
 		}
-		break;
-	default:
 		break;
 	}
 
@@ -868,10 +903,10 @@ static void HUD_FireWeapon_f (void)
 	/* Let's check if shooting is possible.
 	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
 	if (hand == ACTOR_HAND_CHAR_RIGHT) {
-		if (!CL_CheckMenuAction(CL_UsableTUs(selActor), RIGHT(selActor), EV_INV_AMMO))
+		if (!CL_CheckMenuAction(selActor, RIGHT(selActor), EV_INV_AMMO))
 			return;
 	} else {
-		if (!CL_CheckMenuAction(CL_UsableTUs(selActor), LEFT(selActor), EV_INV_AMMO))
+		if (!CL_CheckMenuAction(selActor, LEFT(selActor), EV_INV_AMMO))
 			return;
 	}
 
@@ -1030,7 +1065,7 @@ static void HUD_RefreshWeaponButtons (int time)
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 	} else {
-		if ((CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT))) {
+		if (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)) {
 			HUD_DisplayPossibleReaction(selActor);
 		} else {
 			CL_DisplayImpossibleReaction(selActor);
@@ -1041,7 +1076,7 @@ static void HUD_RefreshWeaponButtons (int time)
 	{
 		const qboolean fullyLoadedR = (weaponr && weaponr->item.t && (weaponr->item.t->ammo == weaponr->item.a));
 		if (weaponr)
-			reloadtime = CL_CalcReloadTime(weaponr->item.t);
+			reloadtime = CL_CalcReloadTime(selActor, weaponr->item.t);
 		if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime || fullyLoadedR) {
 			HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 			if (fullyLoadedR)
@@ -1057,7 +1092,7 @@ static void HUD_RefreshWeaponButtons (int time)
 	{
 		const qboolean fullyLoadedL = (weaponl && weaponl->item.t && (weaponl->item.t->ammo == weaponl->item.a));
 		if (weaponl)
-			reloadtime = CL_CalcReloadTime(weaponl->item.t);
+			reloadtime = CL_CalcReloadTime(selActor, weaponl->item.t);
 		if (!weaponl || !weaponl->item.m || !weaponl->item.t->reload || time < reloadtime || fullyLoadedL) {
 			HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 			if (fullyLoadedL)
@@ -1264,7 +1299,7 @@ void HUD_ActorUpdateCvars (void)
 			/** @sa HUD_RefreshWeaponButtons */
 			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
 				const invList_t *weapon = RIGHT(selActor);
-				const int reloadtime = CL_CalcReloadTime(weapon->item.t);
+				const int reloadtime = CL_CalcReloadTime(selActor, weapon->item.t);
 				if (weapon->item.m
 					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
@@ -1272,7 +1307,7 @@ void HUD_ActorUpdateCvars (void)
 				}
 			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
 				const invList_t *weapon = LEFT(selActor);
-				const int reloadtime = CL_CalcReloadTime(weapon->item.t);
+				const int reloadtime = CL_CalcReloadTime(selActor, weapon->item.t);
 				if (weapon && weapon->item.m
 					 && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
@@ -1614,7 +1649,7 @@ static invList_t* CL_GetLeftHandWeapon (le_t *actor)
  */
 static void CL_ReloadLeft_f (void)
 {
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
+	if (!selActor || !CL_CheckMenuAction(selActor, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
 		return;
 	CL_ActorReload(csi.idLeft);
 }
@@ -1624,7 +1659,7 @@ static void CL_ReloadLeft_f (void)
  */
 static void CL_ReloadRight_f (void)
 {
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_RELOAD))
+	if (!selActor || !CL_CheckMenuAction(selActor, RIGHT(selActor), EV_INV_RELOAD))
 		return;
 	CL_ActorReload(csi.idRight);
 }
