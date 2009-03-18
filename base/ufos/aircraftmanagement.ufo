@@ -474,7 +474,7 @@ aircraft craft_ufo_corrupter
 	shortname	"_Corrupter U"
 	type		ufo
 	model		"geoscape/ufo_corrupter"
-	size		1
+	size		2
 	building	building_big_ufo_hangar
 	price		230000
 	image		"geoscape/air_ufo"
@@ -501,7 +501,7 @@ aircraft craft_ufo_supply
 	shortname	"_Supply U"
 	type		ufo
 	model		"geoscape/ufo_supply"
-	size		1
+	size		2
 	building	building_big_ufo_hangar
 	price		250000
 	image		"geoscape/air_ufo"
@@ -524,7 +524,7 @@ aircraft craft_ufo_bomber
 	shortname	"_Bomber U"
 	type		ufo
 	model		"geoscape/ufo_bomber"
-	size		1
+	size		2
 	building	building_big_ufo_hangar
 	price		250000
 	image		"geoscape/air_ufo"
