@@ -354,15 +354,34 @@ COLLISION DETECTION
 /* Maximum falling distance in step units (model units / QUANT) */
 /* common/routing.c */
 #define	PATHFINDING_MAX_FALL	16
-/* Maximum step-up height in step units (model units/QUANT)
+/* Minimum step-up height in step units (model units/QUANT)
  * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
 /* common/routing.c */
-#define	PATHFINDING_MIN_STEPUP		5
+#define	PATHFINDING_MIN_STEPUP		2
+/* Minimum step-up height in step units (model units/QUANT)
+ * Note that 4 is the minimum to rise one cell every 4 moved horizontally. */
+/* common/routing.c */
+#define	PATHFINDING_MAX_STEPUP		4
+/* A stepup value indicating that there is no way to enter the cell. */
+/* common/routing.c */
+#define	PATHFINDING_NO_STEPUP		(2 * CELL_HEIGHT)
+/* A special bit mask indicating that the stepup causes the actor to rise a cell. */
+/* common/routing.c */
+#define	PATHFINDING_BIG_STEPUP		0x80
+/* A special bit mask indicating that the stepup causes the actor to walk down a cell. */
+/* common/routing.c */
+#define	PATHFINDING_BIG_STEPDOWN		0x40
 /* Minimum height for an opening to be an opening in step units (model units/QUANT)
- * Must be larger than PATHFINDING_MIN_STEPUP!!
+ * Must be larger than PATHFINDING_MAX_STEPUP!!
  */
 /* common/routing.c */
 #define	PATHFINDING_MIN_OPENING	6
+/* common/routing.c */
+/** @brief The size (in model units) of a microstep.  Must be a power of 2 and less than UNIT_SIZE. */
+#define PATHFINDING_MICROSTEP_SIZE	4
+/** @brief The number of microsteps that can be stepped over by an actor.
+ *  Used to allow an actor to stepup when the floor is not level or consitent. */
+#define PATHFINDING_MICROSTEP_SKIP	2
 
 /* DIRECTION constants- define "odd" directions */
 #define DIRECTION_FALL			13
@@ -381,9 +400,9 @@ COLLISION DETECTION
  * common/cmodel.c, renderer/r_bsp.c, shared/typedefs.h */
 /**
  * @note The bsp trees are generated based on the levels that a given brush is supposed to be in.
- * So a bursh that is tagged for viewing in levels 1, 2, and 3 will be in bsp tree 7 (1 + 2 + 4)
+ * So a brush that is tagged for viewing in levels 1, 2, and 3 will be in bsp tree 7 (1 + 2 + 4)
  * a brush that is viewable in all levels will be in bsp tree level 255, and a bush that is not
- * tagged for viewing will be in tree 0.
+ * tagged for viewing by level will be in tree 0.
  * Also, a brush will only be in one bsp tree - the brush tagged for levels 1, 2, and 3 will only
  * be in tree 7, saving memory
  */

@@ -70,6 +70,14 @@ const vec4_t dvecs[PATHFINDING_DIRECTIONS] = {
 	{-1, -1,  1,  0},	/* UP SW (Fliers only) */
 	{-1,  1,  1,  0},	/* UP NW (Fliers only) */
 	{ 1, -1,  1,  0},	/* UP SE (Fliers only) */
+	{ 1,  0,  0,  0},	/* E (Fliers only)*/
+	{-1,  0,  0,  0},	/* W (Fliers only) */
+	{ 0,  1,  0,  0},	/* N (Fliers only) */
+	{ 0, -1,  0,  0},	/* S (Fliers only) */
+	{ 1,  1,  0,  0},	/* NE (Fliers only) */
+	{-1, -1,  0,  0},	/* SW (Fliers only) */
+	{-1,  1,  0,  0},	/* NW (Fliers only) */
+	{ 1, -1,  0,  0},	/* SE (Fliers only) */
 	{ 1,  0, -1,  0},	/* DOWN E (Fliers only) */
 	{-1,  0, -1,  0},	/* DOWN W (Fliers only) */
 	{ 0,  1, -1,  0},	/* DOWN N (Fliers only) */

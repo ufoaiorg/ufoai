@@ -620,6 +620,8 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 	cBspModel_t *model;
 	const char **name;
 	int blocked;
+	vec3_t amins, amaxs, acenter, aoffset;
+	float offset, fraction = 2.0f;
 
 	/* trace against world first */
 	blocked = TR_TestLineDM(start, stop, end, levelmask);
@@ -633,15 +635,36 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
-		trace = CM_TransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles);
+
+		/* Quickly calculate the bounds of this model to see if they can overlap. */
+		VectorAdd(model->origin, model->mins, amins);
+		VectorAdd(model->origin, model->maxs, amaxs);
+		if (VectorNotEmpty(model->angles)) {
+			offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
+			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
+			VectorSet(aoffset, offset, offset, offset);
+			VectorAdd(acenter, aoffset, amaxs);
+			VectorSubtract(acenter, aoffset, amins);
+		}
+		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
+		if ((start[0] > amaxs[0] && end[0] > amaxs[0])
+			|| (start[1] > amaxs[1] && end[1] > amaxs[1])
+			|| (start[2] > amaxs[2] && end[2] > amaxs[2])
+			|| (start[0] < amins[0] && end[0] < amins[0])
+			|| (start[1] < amins[1] && end[1] < amins[1])
+			|| (start[2] < amins[2] && end[2] < amins[2]))
+			continue;
+
+		trace = CM_HintedTransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles, fraction);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
 			VectorCopy(start, end);
 			return qtrue;
 		}
 		/* trace not finishd */
-		if (trace.fraction < 1.0) {
+		if (trace.fraction < fraction) {
 			blocked = qtrue;
+			fraction = trace.fraction;
 			VectorCopy(trace.endpos, end);
 		}
 	}
@@ -679,11 +702,25 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 	trace_t trace, newtr;
 	cBspModel_t *model;
 	const char **name;
+	vec3_t amins, amaxs, acenter, aoffset;
+	vec3_t bmins, bmaxs, boffset;
+	float offset;
 
 	/* trace against world first */
 	trace = TR_CompleteBoxTrace(start, end, mins, maxs, levelmask, brushmask, brushreject);
 	if (!inlineList || trace.fraction == 0.0)
 		return trace;
+
+	/* Find the size of the extents box from its center. */
+	VectorAdd(mins, maxs, boffset);
+	VectorDiv(boffset, 2.0, boffset);
+	/* Now find the original bounding box for the tracing line. */
+	VectorSet(bmins, min(start[0], end[0]), min(start[1], end[1]), min(start[2], end[2]));
+	VectorSet(bmaxs, max(start[0], end[0]), max(start[1], end[1]), max(start[2], end[2]));
+	/* Now increase the bounding box by boffset in both directions. */
+	VectorSubtract(bmins, boffset, bmins);
+	VectorAdd(bmaxs, boffset, bmaxs);
+	/* Now bmins and bmaxs specify the whole volume to be traced through. */
 
 	for (name = inlineList; *name; name++) {
 		/* check whether this is really an inline model */
@@ -691,6 +728,26 @@ trace_t CM_EntCompleteBoxTrace(const vec3_t start, const vec3_t end, const vec3_
 		model = CM_InlineModel(*name);
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
+			continue;
+
+		/* Quickly calculate the bounds of this model to see if they can overlap. */
+		VectorAdd(model->origin, model->mins, amins);
+		VectorAdd(model->origin, model->maxs, amaxs);
+		if (VectorNotEmpty(model->angles)) {
+			offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
+			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
+			VectorSet(aoffset, offset, offset, offset);
+			VectorAdd(acenter, aoffset, amaxs);
+			VectorSubtract(acenter, aoffset, amins);
+		}
+
+		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
+		if (bmins[0] > amaxs[0]
+			|| bmins[1] > amaxs[1]
+			|| bmins[2] > amaxs[2]
+			|| bmaxs[0] < amins[0]
+			|| bmaxs[1] < amins[1]
+			|| bmaxs[2] < amins[2])
 			continue;
 
 		newtr = CM_HintedTransformedBoxTrace(model->tile, start, end, mins, maxs, model->headnode, brushmask, brushreject, model->origin, model->angles, trace.fraction);
@@ -808,8 +865,10 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 				for (z = minZ; z <= maxZ; z++) {
 					clMap[size].floor[z][y][x] = temp_map[size].floor[z - sZ][y - sY][x - sX];
 					clMap[size].ceil[z][y][x] = temp_map[size].ceil[z - sZ][y - sY][x - sX];
-					for (dir = 0; dir < CORE_DIRECTIONS; dir++)
+					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 						clMap[size].route[z][y][x][dir] = temp_map[size].route[z - sZ][y - sY][x - sX][dir];
+						clMap[size].stepup[z][y][x][dir] = temp_map[size].stepup[z - sZ][y - sY][x - sX][dir];
+					}
 				}
 				/* Update the reroute table */
 				if (!reroute[size][y][x]) {
@@ -1061,6 +1120,10 @@ static void CMod_RerouteMap (void)
 	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
+				/** @note The new R_UpdateConnection updates both directions at the same time,
+				 * so we only need to check every other direction. */
+				/* Not needed until inverse tracing works again.
+				 * for (dir = 0; dir < CORE_DIRECTIONS; dir += 2) { */
 				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 					const int dx = x + dvecs[dir][0];
 					const int dy = y + dvecs[dir][1];
@@ -1461,11 +1524,11 @@ static void Grid_SetMoveData (struct pathing_s *path, const int x, const int y, 
 		VectorSet(test, x, y, z);
 		PosSubDV(test, crouch, RT_AREA_FROM(path, x, y, z, c));
 		if (!VectorCompare(test, pos) || crouch != oc) {
-			Com_Printf("Grid_MoveMark: Created faulty DV table.\nx:%i y:%i z:%i c:%i\ndir:%i\nnx:%i ny:%i nz:%i nc:%i\ntx:%i ty:%i tz:%i tc:%i\n",
+			Com_Printf("Grid_SetMoveData: Created faulty DV table.\nx:%i y:%i z:%i c:%i\ndir:%i\nnx:%i ny:%i nz:%i nc:%i\ntx:%i ty:%i tz:%i tc:%i\n",
 				ox, oy, oz, oc, dir, x, y, z, c, test[0], test[1], test[2], crouch);
 
 			Grid_DumpDVTable(path);
-			Com_Error(ERR_DROP, "Grid_MoveMark: Created faulty DV table.");
+			Com_Error(ERR_DROP, "Grid_SetMoveData: Created faulty DV table.");
 		}
 	}
 	Vector4Set(dummy, x, y, z, c);
@@ -1489,12 +1552,31 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	int nx, ny, nz;
 	int dx, dy, dz;
 	byte l, ol;
-	qboolean flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
-	qboolean has_ladder_support = qfalse; /**< Indicates if there is a ladder present providing support. */
-	qboolean has_ladder_climb = qfalse; /**< Indicates if there is a ladder present providing ability to climb. */
-	int actor_height, passage_height, stepup_height, falling_height;
-	int height_change = 0;
-	int core_dir;
+	int passage_height, actor_stepup_height;
+
+	/** @todo flier should return true if the actor can fly. */
+	const qboolean flier = qfalse; /**< This can be keyed into whether an actor can fly or not to allow flying */
+
+	/** @todo has_ladder_support should return true if
+	 *  1) There is a ladder in the new cell in the specified direction or
+	 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
+	const qboolean has_ladder_support = qfalse; /**< Indicates if there is a ladder present providing support. */
+
+	/** @todo has_ladder_climb should return true if
+	 *  1) There is a ladder in the new cell in the specified direction. */
+	const qboolean has_ladder_climb = qfalse; /**< Indicates if there is a ladder present providing ability to climb. */
+
+	/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
+	const int falling_height = PATHFINDING_MAX_FALL;/**<This is the maximum height that an actor can fall. */
+
+	/**
+	 * @note This value is worthless if it is between CORE_DIRECTIONS and FLYING_DIRECTIONS:
+	 * These are defined actions or climbing.
+	 */
+	const int core_dir = dir % CORE_DIRECTIONS;/**< The compass direction of this move if less than CORE_DIRECTIONS or at least FLYING_DIRECTIONS */
+
+	/** @note This is the actor's height. */
+	const int actor_height = ceil(((float)(crouching_state ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)) / QUANT); /**< The actor's height */
 
 	/* Ensure that dir is in bounds. */
 	if (dir < 0 || dir >= PATHFINDING_DIRECTIONS)
@@ -1550,12 +1632,17 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	/* If this is a crouching or crouching move, then process that motion. */
 	if (dir == DIRECTION_STAND_UP || dir == DIRECTION_CROUCH) {
 		/* Can't stand up if standing. */
-		if (dvecs[dir][3] < 0 && crouching_state == 0) {
+		if (dir == DIRECTION_STAND_UP && crouching_state == 0) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't stand while standing.\n");
 			return;
 		}
+		/* Can't stand up if there's not enough head room. */
+		if (dir == DIRECTION_STAND_UP && Grid_Height(map, actor_size, pos) * QUANT >= PLAYER_STANDING_HEIGHT) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't stand under a short ceiling.\n");
+			return;
+		}
 		/* Can't get down if crouching. */
-		if (dvecs[dir][3] > 0 && crouching_state == 1) {
+		if (dir == DIRECTION_CROUCH && crouching_state == 1) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't crouch while crouching.\n");
 			return;
 		}
@@ -1596,162 +1683,178 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 
 	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: (%i %i %i) s:%i to (%i %i %i)\n", x, y, z, actor_size, nx, ny, nz);
 
-	/* This value is worthless if it is CORE_DIRECTIONS through FLYING_DIRECTIONS:
-	 * these are actions or climbing. */
-	core_dir = dir % CORE_DIRECTIONS;
-
 	/* If there is no passageway (or rather lack of a wall) to the desired cell, then return. */
 	/** @todo actor_height is currently the fixed height of a 1x1 actor.  This needs to be adjusted
 	 *  to the actor's actual height, including crouching. */
 	/* If the flier is moving up or down diagonally, then passage height will also adjust */
 	if (dir >= FLYING_DIRECTIONS) {
+		int needed_height;
 		if (dz > 0) {
 			/* If the actor is moving up, check the passage at the current cell.
 			 * The minimum height is the actor's height plus the distance from the current floor to the top of the cell. */
-			actor_height = (UNIT_HEIGHT + PLAYER_STANDING_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, x, y, z));
+			needed_height = actor_height + CELL_HEIGHT - max(0, RT_FLOOR(map, actor_size, x, y, z));
 			RT_CONN_TEST(map, actor_size, x, y, z, core_dir);
 			passage_height = RT_CONN(map, actor_size, x, y, z, core_dir);
-		} else {
+		} else if (dz < 0) {
 			/* If the actor is moving down, check from the destination cell back. *
 			 * The minimum height is the actor's height plus the distance from the destination floor to the top of the cell. */
-			actor_height = (UNIT_HEIGHT + PLAYER_STANDING_HEIGHT) / QUANT - max(0, RT_FLOOR(map, actor_size, nx, ny, nz));
+			needed_height = actor_height + CELL_HEIGHT - max(0, RT_FLOOR(map, actor_size, nx, ny, nz));
 			RT_CONN_TEST(map, actor_size, nx, ny, nz, core_dir ^ 1);
 			passage_height = RT_CONN(map, actor_size, nx, ny, nz, core_dir ^ 1);
+		} else {
+			needed_height = actor_height;
+			RT_CONN_TEST(map, actor_size, x, y, z, core_dir);
+			passage_height = RT_CONN(map, actor_size, x, y, z, core_dir);
 		}
-		if (passage_height < actor_height) {
+		if (passage_height < needed_height) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passage_height, actor_height);
 			return;
 		}
 	} else if (dir < CORE_DIRECTIONS) {
+		/**
+		 * @note Fliers use this code only when they are walking.
+		 * @brief First test for opening height availablilty.  Then test for stepup compatability.
+		 * Last test for fall.
+		 */
+
+		const int stepup = RT_STEPUP(map, actor_size, x, y, z, dir); /**< The stepup needed to get to/through the passage */
+		const int stepup_height = stepup & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP); /**< The actual stepup height without the level flags */
+		int height_change;
+
+		/** @todo actor_stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
+		actor_stepup_height = PATHFINDING_MAX_STEPUP;
+
 		/* This is the standard passage height for all units trying to move horizontally. */
-		actor_height = ceil(((float)(crouching_state ? PLAYER_CROUCHING_HEIGHT : PLAYER_STANDING_HEIGHT)) / QUANT);
 		RT_CONN_TEST(map, actor_size, x, y, z, core_dir);
 		passage_height = RT_CONN(map, actor_size, x, y, z, core_dir);
 		if (passage_height < actor_height) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Passage is not tall enough. passage:%i actor:%i\n", passage_height, actor_height);
 			return;
 		}
-	}
-	/* else there is no movement that uses passages. */
 
-	/** @todo stepup_height should be replaced with an arbitrary max stepup height based on the actor. */
-	stepup_height = PATHFINDING_MIN_STEPUP;
-	/* If we are moving horizontally, get the height difference of the floors. */
-	if (dir < CORE_DIRECTIONS) {
-		/* Here's the catch: if we can possibly move up, then do so. */
-		if (z < PATHFINDING_HEIGHT - 1 /* Not at the top */
-		 /* The floor is in the target cell */
-		 && RT_FLOOR(map, actor_size, nx, ny, nz + 1) >= 0
-		 /* We can make the step into the cell */
-		 && stepup_height + RT_FLOOR(map, actor_size, x, y, z) >= CELL_HEIGHT + RT_FLOOR(map, actor_size, nx, ny, nz + 1)) {
-			/* Use the adjusted calculation. */
-			height_change = CELL_HEIGHT + RT_FLOOR(map, actor_size, nx, ny, nz + 1) - RT_FLOOR(map, actor_size, x, y, z);
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
-		} else {
-			/* Use the default calculation. */
-			height_change = RT_FLOOR(map, actor_size, nx, ny, nz) - RT_FLOOR(map, actor_size, x, y, z);
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up into higher cell.\n");
-		}
-	}
-	/* If we are falling, the height difference is the floor value. */
-	if (dir == DIRECTION_FALL)
-		height_change = RT_FLOOR(map, actor_size, x, y, z);
-
-	if (!flier) {
-		/* If the destination cell is higher than this actor can walk, then return.
-		 * Fliers will ignore this rule.  They only need the passage to exist. */
-		if (height_change > stepup_height) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't step up high enough. change:%i stepup:%i\n", height_change, stepup_height);
+		/* If we are moving horizontally, use the stepup requirement of the floors.
+		 * The new z coordinate may need to be adjusted from stepup.
+		 * Also, actor_stepup_height must be at least the cell's positive stepup value to move that direction. */
+		/* If the actor cannot reach stepup, then we can't go this way. */
+		if (actor_stepup_height < stepup_height) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Actor cannot stepup high enough. passage:%i actor:%i\n", stepup_height, actor_stepup_height);
 			return;
 		}
+		if ((stepup & PATHFINDING_BIG_STEPUP) && nz < PATHFINDING_HEIGHT - 1) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Stepping up into higher cell.\n");
+			nz++;
+			/**
+			 * @note If you need to know about how pathfinding works,  you need to understand the
+			 * following brief.  It may cause nausea, but is an important concept.
+			 *
+			 * @brief OK, now some crazy tests:
+			 * Because of the grid based nature of this game, each cell can have at most only ONE
+			 * floor that can be stood upon.  If an actor can walk down a slope that is in the
+			 * same level, and actor should be able to walk on (and not fall into) the slope that
+			 * decends a game level.  BUT it is possible for an actor to be able to crawl under a
+			 * floor that can be stood on, with this opening being in the same cell as the floor.
+			 * SO to prevent any conflicts, we will move down a floor under the following conditions:
+			 * - The STEPDOWN flag is set
+			 * - The floor in the immediately adjacent cell is lower than the current floor, but not
+			 *   more than CELL_HEIGHT units (in QUANT units) below the current floor.
+			 * - The actor's stepup value is at least the inverse stepup value.  This is the stepup
+			 *   FROM the cell we are moving towards back into the cell we are starting in.  This
+			 *    ensures that the actor can actually WALK BACK.
+			 * If the actor does not have a high enough stepup but meets all the other requirements to
+			 * descend the level, the actor will move into a fall state, provided that there is no
+			 * floor in the adjacent cell.
+			 *
+			 * This will prevent actors from walking under a floor in the same cell in order to fall
+			 * to the floor beneath.  They will need to be able to step down into the cell or will
+			 * not be able to use the opening.
+			 */
+		} else if ((stepup & PATHFINDING_BIG_STEPDOWN) && nz > 0
+			&& actor_stepup_height >= (RT_STEPUP(map, actor_size, nx, ny, nz - 1, dir ^ 1) & ~(PATHFINDING_BIG_STEPDOWN | PATHFINDING_BIG_STEPUP))) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping down into lower cell.\n");
+			nz--;
+		} else {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not stepping up into higher cell.\n");
+		}
+		height_change = RT_FLOOR(map, actor_size, nx, ny, nz) - RT_FLOOR(map, actor_size, x, y, z) + (nz - z) * CELL_HEIGHT;
 
-		/* If the actor cannot fly and tries to fall more than falling_height, then prohibit the move. */
-		/** @todo falling_height should be replaced with an arbitrary max falling height based on the actor. */
-		falling_height = PATHFINDING_MAX_FALL;
-		/** @todo has_ladder_support should return true if
-		 *  1) There is a ladder in the new cell in the specified direction or
-		 *  2) There is a ladder in any direction in the cell below the new cell and no ladder in the new cell itself. */
-		has_ladder_support = qfalse;
+		/* If the actor tries to fall more than falling_height, then prohibit the move. */
 		if (height_change < -falling_height && !has_ladder_support) {
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Too far a drop without a ladder. change:%i maxfall:%i\n", height_change, -falling_height);
 			return;
 		}
 
-		/* The actor can't fall it there is ladder support. */
-		if (dir == DIRECTION_FALL && has_ladder_support) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall because of ladder.\n");
-			return;
-		}
-
-		/** @todo has_ladder_climb should return true if
-		 *  1) There is a ladder in the new cell in the specified direction. */
-		has_ladder_climb = qfalse;
-		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
-		if (dir == DIRECTION_CLIMB_UP && !has_ladder_climb) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't climb up without a ladder.\n");
-			return;
-		}
-
-		/* If the actor is not a flyer and tries to move down, there must be a ladder. */
-		if (dir == DIRECTION_CLIMB_DOWN && !has_ladder_climb) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't climb down without a ladder.\n");
-			return;
-		}
-
-		/* If we are walking normally, we cannot fall a distance further than stepup_height, so we initiate a fall:
+		/* If we are walking normally, we can fall if we move into a cell that does not
+		 * have its STEPDOWN flag set and has a negative floor:
 		 * Set height_change to 0.
 		 * The actor enters the cell.
 		 * The actor will be forced to fall (dir 13) from the destination cell to the cell below. */
-		if (dir < CORE_DIRECTIONS && height_change < -stepup_height) {
+		if (RT_FLOOR(map, actor_size, nx, ny, nz) < 0) {
+			/* We cannot fall if STEPDOWN is not defined. */
+			if (!(stepup & PATHFINDING_BIG_STEPDOWN)) {
+				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: There is no stepdown from here.\n");
+				return;
+			}
 			/* We cannot fall if there is an entity below the cell we want to move to. */
 			if (Grid_CheckForbidden(map, actor_size, path, nx, ny, nz - 1)) {
 				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: The fall destination is occupied.\n");
 				return;
 			}
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", height_change, -stepup_height);
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Preparing for a fall. change:%i fall:%i\n", height_change, -actor_stepup_height);
 			height_change = 0;
 		}
 
-		/* We cannot fall if there is a floor in this cell. */
-		if (dir == DIRECTION_FALL && RT_FLOOR(map, actor_size, x, y, z) >= 0) {
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall while supported. floor:%i\n", RT_FLOOR(map, actor_size, x, y, z));
-			return;
-		}
-	} else {
-		/* Fliers cannot fall intentionally. */
-		if (dir == DIRECTION_FALL) {
+	}
+	/* else there is no movement that uses passages. */
+	/* If we are falling, the height difference is the floor value. */
+	else if (dir == DIRECTION_FALL) {
+		if (flier) {
+			/* Fliers cannot fall intentionally. */
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Fliers can't fall.\n");
 			return;
+		} else if (RT_FLOOR(map, actor_size, x, y, z) >= 0) {
+			/* We cannot fall if there is a floor in this cell. */
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall while supported. floor:%i\n", RT_FLOOR(map, actor_size, x, y, z));
+			return;
+		} else if (has_ladder_support) {
+			/* The actor can't fall if there is ladder support. */
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fall because of ladder.\n");
+			return;
 		}
-		/* This is the last check for fliers. All passages are OK if we are here, but the actor
-		 * might be moving straight up or down.  Ensure there is an opening for this actor to
-		 * move in the desired direction. */
-		if (dir == DIRECTION_CLIMB_UP && RT_CEILING(map, actor_size, x, y, z) * QUANT < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* up */
+	}
+	else if (dir == DIRECTION_CLIMB_UP) {
+		if (flier && RT_CEILING(map, actor_size, x, y, z) * QUANT < UNIT_HEIGHT * 2 - PLAYER_HEIGHT) { /* up */
 			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Not enough headroom to fly up. passage:%i actor:%i\n", RT_CEILING(map, actor_size, x, y, z) * QUANT, UNIT_HEIGHT * 2 - PLAYER_HEIGHT);
 			return;
 		}
-		if (dir == DIRECTION_CLIMB_DOWN && RT_FLOOR(map, actor_size, x, y, z) >= 0 ) { /* down */
-			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly down through a floor. floor:%i\n", RT_FLOOR(map, actor_size, x, y, z));
+		/* If the actor is not a flyer and tries to move up, there must be a ladder. */
+		if (dir == DIRECTION_CLIMB_UP && !has_ladder_climb) {
+			Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't climb up without a ladder.\n");
 			return;
+		}
+	}
+	else if (dir == DIRECTION_CLIMB_DOWN) {
+		if (flier) {
+			if (RT_FLOOR(map, actor_size, x, y, z) >= 0 ) { /* down */
+				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't fly down through a floor. floor:%i\n", RT_FLOOR(map, actor_size, x, y, z));
+				return;
+			}
+		} else {
+			/* If the actor is not a flyer and tries to move down, there must be a ladder. */
+			if (!has_ladder_climb) {
+				Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Can't climb down without a ladder.\n");
+				return;
+			}
 		}
 	}
 
 	/* OK, at this point we are certain of a few things:
 	 * There is not a wall obstructing access to the destination cell.
-	 * If the actor is not a flier, the actor will not rise more than stepup_height or fall more than
+	 * If the actor is not a flier, the actor will not rise more than actor_stepup_height or fall more than
 	 *    falling_height, unless climbing.
 	 *
 	 * If the actor is a flier, as long as there is a passage, it can be moved through.
 	 * There are no floor difference restrictions for fliers, only obstructions. */
 
-	/* If we are moving horizontally, the new z coordinate may need to be adjusted from stepup. */
-	if (dir < CORE_DIRECTIONS && abs(height_change) <= stepup_height) {
-		const int new_floor = RT_FLOOR(map, actor_size, x, y, z) + height_change;
-		/** @note offset by 15 if negative to force nz down */
-		const int delta = new_floor < 0 ? (new_floor - (CELL_HEIGHT - 1)) / CELL_HEIGHT : new_floor / CELL_HEIGHT;
-		/* Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Adjusting hight. floor:%i new_floor:%i delta:%i\n", RT_FLOOR(map, actor_size, x, y, z), new_floor, delta); */
-		nz += delta;
-	}
 	/* nz can't move out of bounds */
 	if (nz < 0)
 		nz = 0;
@@ -1775,7 +1878,7 @@ void Grid_MoveMark (struct routing_s *map, const int actor_size, struct pathing_
 	if (pqueue) {
 		Grid_SetMoveData(path, nx, ny, nz, crouching_state, l, dir, x, y, z, crouching_state, pqueue);
 	}
-	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i change:%i\n", nx, ny, nz, crouching_state, l, RT_FLOOR(map, actor_size, x, y, z), height_change);
+	Com_DPrintf(DEBUG_PATHING, "Grid_MoveMark: Set move to (%i %i %i) c:%i to %i. srcfloor:%i\n", nx, ny, nz, crouching_state, l, RT_FLOOR(map, actor_size, x, y, z));
 }
 
 
@@ -1963,15 +2066,15 @@ int Grid_Floor (struct routing_s *map, const int actor_size, const pos3_t pos)
  * @brief Returns the maximum height of an obstruction that an actor can travel over.
  * @param[in] map Pointer to client or server side routing table (clMap, svMap)
  * @param[in] pos Position in the map to check the height
- * @return The actual model height increse allowed to move into an adjacent cell.
+ * @return The actual model height increase needed to move into an adjacent cell.
  */
-pos_t Grid_StepUp (struct routing_s *map, const int actor_size, const pos3_t pos)
+pos_t Grid_StepUp (struct routing_s *map, const int actor_size, const pos3_t pos, const int dir)
 {
 	/* max 8 levels */
 	if (pos[2] >= PATHFINDING_HEIGHT) {
 		Com_Printf("Grid_StepUp: Warning: z level is bigger than 7: %i\n", pos[2]);
 	}
-	return PATHFINDING_MIN_STEPUP;
+	return RT_STEPUP(map, actor_size, pos[0], pos[1], pos[2] & (PATHFINDING_HEIGHT - 1), dir) * QUANT;
 }
 
 
@@ -2104,16 +2207,25 @@ void Grid_RecalcBoxRouting (struct routing_s *map, pos3_t min, pos3_t max)
 #endif
 
 	/* check connections */
-	for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) {
-		const int maxY = min(max[1] - actor_size + 1, PATHFINDING_WIDTH - 1);
+	/*for (actor_size = 1; actor_size <= ACTOR_MAX_SIZE; actor_size++) { */
+	for (actor_size = 1; actor_size <= 1; actor_size++) {
+		const int minX = max(min[0] - actor_size, 0);
+		const int minY = max(min[1] - actor_size, 0);
 		const int maxX = min(max[0] - actor_size + 1, PATHFINDING_WIDTH - 1);
+		const int maxY = min(max[1] - actor_size + 1, PATHFINDING_WIDTH - 1);
 		/* Offset the initial X and Y to compensate for larger actors when needed.
 		 * Also sweep further out to catch the walls back into our box. */
-		for (y = max(min[1] - actor_size, 0); y < maxY; y++) {
-			for (x = max(min[0] - actor_size, 0); x < maxX; x++) {
-				for (dir = 0; dir < CORE_DIRECTIONS; dir ++) {
+		for (y = minY; y < maxY; y++) {
+			for (x = minX; x < maxX; x++) {
+				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
 					/** @note This update MUST go from the bottom (0) to the top (7) of the model.
-					 * RT_UpdateConnection expects it and breaks otherwise. */
+					 * RT_UpdateConnection expects it and breaks otherwise.
+					 * @note The new version of RT_UpdateConnection is bidirectional, so we can
+					 * trace every other dir, unless we are on the edge. */
+					/*
+					if ((dir & 1) && x != minX && x != maxX && y != minY && y != maxY)
+						continue;
+					*/
 					for (z = 0; z <= max[2]; z++) {
 						const int new_z = RT_UpdateConnection(map, actor_size, x, y, z, dir);
 						assert(new_z >= z);

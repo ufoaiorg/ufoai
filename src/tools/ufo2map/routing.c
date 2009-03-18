@@ -98,10 +98,10 @@ static int CheckConnections (unsigned int unitnum)
 
 	/* get coordinates of that unit */
 	const int z = unitnum % PATHFINDING_HEIGHT;
-	const int dir = (unitnum / PATHFINDING_HEIGHT) % CORE_DIRECTIONS;
-	const int y = (unitnum / PATHFINDING_HEIGHT / CORE_DIRECTIONS) % PATHFINDING_WIDTH;
-	const int x = (unitnum / PATHFINDING_HEIGHT / CORE_DIRECTIONS / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
-	const int actor_size = unitnum / PATHFINDING_HEIGHT / PATHFINDING_WIDTH / PATHFINDING_WIDTH / CORE_DIRECTIONS;
+	const int dir = ((unitnum / PATHFINDING_HEIGHT) % (CORE_DIRECTIONS / 1));
+	const int y = (unitnum / PATHFINDING_HEIGHT / (CORE_DIRECTIONS / 1)) % PATHFINDING_WIDTH;
+	const int x = (unitnum / PATHFINDING_HEIGHT / (CORE_DIRECTIONS / 1) / PATHFINDING_WIDTH) % PATHFINDING_WIDTH;
+	const int actor_size = unitnum / PATHFINDING_HEIGHT / PATHFINDING_WIDTH / PATHFINDING_WIDTH / (CORE_DIRECTIONS / 1);
 
 
 	/* test bounds - the size adjustment is needed because large actor cells occupy multiple cell units. */
@@ -179,10 +179,10 @@ void DoRouting (void)
 	assert(wpMins[2] <= wpMaxs[2]);
 
 	/* scan area heights */
-	RunThreadsOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
+	RunSingleThreadOn(CheckUnitThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "UNITCHECK");
 
 	/* scan connections */
-	RunThreadsOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * CORE_DIRECTIONS * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "CONNCHECK");
+	RunSingleThreadOn(CheckConnectionsThread, PATHFINDING_WIDTH * PATHFINDING_WIDTH * (CORE_DIRECTIONS / 2) * ACTOR_MAX_SIZE, config.verbosity >= VERB_NORMAL, "CONNCHECK");
 
 	/* Try to shrink the world bounds along the x and y coordinates */
 	for (i = 0; i < 2; i++) {
@@ -226,6 +226,9 @@ void DoRouting (void)
 	data = CompressRouting((byte*)Nmap, data, sizeof(Nmap));
 
 	curTile->routedatasize = data - curTile->routedata;
+
+	/* Ensure that we did not exceed our allotment of memory for this data. */
+	assert(curTile->routedatasize <= MAX_MAP_ROUTING);
 
 	/* Remove the CLIPS fom the tracing structure by resetting it. */
 	PopInfo();

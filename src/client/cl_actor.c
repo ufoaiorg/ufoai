@@ -3306,16 +3306,6 @@ void CL_DisplayFloorArrows (void)
 	VectorCopy(base, start);
 	base[2] -= QUANT;
 	start[2] += QUANT;
-
-	RT_CheckCell(clMap, fieldSize, truePos[0], truePos[1], truePos[2]);
-
-	/* Display floor arrow */
-	if (VectorNotEmpty(brushesHit.floor))
-		CL_AddArrow(base, brushesHit.floor, 0.0, 0.5, 1.0);
-
-	/* Display ceiling arrow */
-	if (VectorNotEmpty(brushesHit.ceiling))
-		CL_AddArrow(start, brushesHit.ceiling, 1.0, 1.0, 0.0);
 }
 
 /**
@@ -3327,32 +3317,12 @@ void CL_DisplayObstructionArrows (void)
 	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
-	int dir;
 	vec3_t base, start;
 
 	Grid_PosToVec(clMap, fieldSize, truePos, base);
+	VectorCopy(base, start);
+	CL_AddArrow(base, start, 0.0, 0.0, 0.0);
 
-	for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-		RT_UpdateConnection(clMap, fieldSize, truePos[0], truePos[1], truePos[2], dir);
-
-		VectorCopy(base, start);
-		start[0] += dvecs[dir][0] * QUANT;
-		start[1] += dvecs[dir][1] * QUANT;
-
-		/* Display floor arrow */
-		if (VectorNotEmpty(brushesHit.floor)) {
-			if (brushesHit.obstructed) {
-				CL_AddArrow(start, brushesHit.floor, 1.0, 1.0, 1.0);
-			} else {
-				CL_AddArrow(start, brushesHit.floor, 1.0, 0.5, 0.0);
-			}
-		}
-
-		/* Display ceiling arrow */
-		if (VectorNotEmpty(brushesHit.ceiling)) {
-			CL_AddArrow(start, brushesHit.ceiling, 0.0, 1.0, 1.0);
-		}
-	}
 }
 
 #ifdef DEBUG

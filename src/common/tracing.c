@@ -1260,8 +1260,11 @@ static trace_t TR_TileBoxTrace (TR_TILE_TYPE *myTile, const vec3_t start, const 
  */
 trace_t TR_SingleTileBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject)
 {
+	trace_t tr;
 	/* Trace the whole line against the first tile. */
-	return TR_TileBoxTrace(&mapTiles[0], start, end, mins, maxs, levelmask, brushmask, brushreject, 2.0f);
+	tr = TR_TileBoxTrace(&mapTiles[0], start, end, mins, maxs, levelmask, brushmask, brushreject, 2.0f);
+	tr.mapTile = 0;
+	return tr;
 }
 
 #else

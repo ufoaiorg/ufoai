@@ -78,7 +78,7 @@ int Grid_MoveNext(struct routing_s *map, const int actor_size, struct pathing_s 
 int Grid_Height(struct routing_s *map, const int actor_size, const pos3_t pos);
 unsigned int Grid_Ceiling (struct routing_s *map, const int actor_size, const pos3_t pos);
 int Grid_Floor(struct routing_s *map, const int actor_size, const pos3_t pos);
-pos_t Grid_StepUp(struct routing_s *map, const int actor_size, const pos3_t pos);
+pos_t Grid_StepUp(struct routing_s *map, const int actor_size, const pos3_t pos, const int dir);
 int Grid_TUsUsed(int dir);
 int Grid_Filled(struct routing_s *map, const int actor_size, pos3_t pos);
 pos_t Grid_Fall(const struct routing_s *map, const int actor_size, const pos3_t pos);

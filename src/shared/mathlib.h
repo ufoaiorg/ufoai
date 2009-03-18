@@ -97,7 +97,7 @@ qboolean Q_IsPowerOfTwo(int i);
 #define BASE_DIRECTIONS			4			/* Only the standard N,S,E,W directions */
 
 /* game/g_ai.c, game/g_spawn.c, common/routing.c, ufo2map/routing.c, client/cl_actor.c, common/cmodel.c, shared/typedefs.h */
-#define PATHFINDING_DIRECTIONS	32			/* total number of directions */
+#define PATHFINDING_DIRECTIONS	40			/* total number of directions */
 #define CORE_DIRECTIONS			8			/* The standard N,S,E,W directions plus diagonals. */
 #define FLYING_DIRECTIONS		16			/* starting number of directions available only to fliers */
 

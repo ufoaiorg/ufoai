@@ -70,6 +70,18 @@ MACROS
 #define RT_CONN_NX_PY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 6))
 #define RT_CONN_NX_NY(map, actor_size, x, y, z)	    (RT_CONN(map, actor_size, x, y, z, 5))
 
+#define RT_STEPUP(map, actor_size, x, y, z, dir)	map[(actor_size) - 1].stepup[(z)][(y)][(x)][(dir)]
+
+#define RT_STEPUP_PX(map, actor_size, x, y, z)		(RT_STEPUP(map, actor_size, x, y, z, 0))
+#define RT_STEPUP_NX(map, actor_size, x, y, z)		(RT_STEPUP(map, actor_size, x, y, z, 1))
+#define RT_STEPUP_PY(map, actor_size, x, y, z)		(RT_STEPUP(map, actor_size, x, y, z, 2))
+#define RT_STEPUP_NY(map, actor_size, x, y, z)		(RT_STEPUP(map, actor_size, x, y, z, 3))
+
+#define RT_STEPUP_PX_PY(map, actor_size, x, y, z)	    (RT_STEPUP(map, actor_size, x, y, z, 4))
+#define RT_STEPUP_PX_NY(map, actor_size, x, y, z)	    (RT_STEPUP(map, actor_size, x, y, z, 7))
+#define RT_STEPUP_NX_PY(map, actor_size, x, y, z)	    (RT_STEPUP(map, actor_size, x, y, z, 6))
+#define RT_STEPUP_NX_NY(map, actor_size, x, y, z)	    (RT_STEPUP(map, actor_size, x, y, z, 5))
+
 #define RT_FLOOR(map, actor_size, x, y, z)			map[(actor_size) - 1].floor[(z)][(y)][(x)]
 #define RT_CEILING(map, actor_size, x, y, z)		map[(actor_size) - 1].ceil[(z)][(y)][(x)]
 #define RT_FILLED(map, actor_size, x, y, z)			(RT_CEILING(map, actor_size, x, y, z) - RT_FLOOR(map, actor_size, x, y, z) < PATHFINDING_MIN_OPENING)
@@ -101,7 +113,6 @@ SHARED EXTERNS (cmodel.c and ufo2map/routing.c)
 ===============================================================================
 */
 
-extern crossPoints_t brushesHit;
 extern qboolean debugTrace;
 
 /*
