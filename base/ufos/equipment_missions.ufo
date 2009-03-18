@@ -104,7 +104,7 @@ equipment alien_workers1
 	// Primary
 
 	// Secondary
-	plaspistol			50
+	plaspistol			100
 		plaspistol_ammo		1
 
 	// Misc
@@ -122,7 +122,7 @@ equipment alien_workers1_explosive
 	// Primary
 
 	// Secondary
-	plaspistol			50
+	plaspistol			100
 		plaspistol_ammo		0
 
 	// Misc
@@ -139,11 +139,11 @@ equipment alien_workers2
 	maxinterest			500
 
 	// Primary
-	plasrifle			5
+	plasrifle			50
 		plasrifle_ammo		0
 
 	// Secondary
-	plaspistol			75
+	plaspistol			100
 		plaspistol_ammo		1
 
 	// Misc
@@ -161,7 +161,7 @@ equipment alien_workers3
 	maxinterest			750
 
 	// Primary
-	plasrifle			5
+	plasrifle			100
 		plasrifle_ammo		0
 
 	// Secondary
@@ -185,13 +185,17 @@ equipment alien_workers_explosive3
 
 	// Primary
 	plasblaster			8
-		plasblaster_ammo	0
+		plasblaster_ammo	1
 	pbeamcannon			8
 		pbeamcannon_ammo	0
+	plasrifle			84
+		plasrifle_ammo		1
 
 	// Secondary
-	plaspistol			2
-		plaspistol_ammo		0
+	pbeampistol			50
+		pbeampistol_ammo	1
+	plaspistol			50
+		plaspistol_ammo		1
 
 	// Misc
 	kerrblade			25
@@ -209,10 +213,10 @@ equipment alien_workers4
 	maxinterest			10000
 
 	// Primary
-	plasrifle			3
-		plasrifle_ammo		0
-	plasblaster			6
-		plasblaster_ammo	0
+	plasrifle			55
+		plasrifle_ammo		1
+	plasblaster			10
+		plasblaster_ammo	1
 	pbeamcannon			25
 		pbeamcannon_ammo	0
 	needlergun          20
@@ -220,9 +224,9 @@ equipment alien_workers4
 
 	// Secondary
 	pbeampistol			70
-		pbeampistol_ammo	2
-	plaspistol			20
-		plaspistol_ammo		0
+		pbeampistol_ammo	1
+	plaspistol			30
+		plaspistol_ammo		1
 
 	// Misc
 	kerrblade			5
@@ -241,11 +245,11 @@ equipment alien_soldiers0
 	maxinterest			100
 
 	// Secondary
-	plaspistol			5
-		plaspistol_ammo		0
+	plaspistol			100
+		plaspistol_ammo		2
 
 	// Misc
-	kerrblade			100
+	kerrblade			50
 }
 
 equipment alien_soldiers1
@@ -254,11 +258,11 @@ equipment alien_soldiers1
 	maxinterest			150
 
 	// Primary
-	plasrifle			40
+	plasrifle			60
 		plasrifle_ammo		1
 
 	// Secondary
-	plaspistol			38
+	plaspistol			100
 		plaspistol_ammo		1
 
 	// Misc
@@ -275,14 +279,16 @@ equipment alien_soldiers2
 	maxinterest			300
 
 	// Primary
-	plasrifle			60
-		plasrifle_ammo		0
-	plasblaster			30
+	plasrifle			65
+		plasrifle_ammo		1
+	plasblaster			35
 		plasblaster_ammo	1
 
 	// Secondary
-	plaspistol			90
-		plaspistol_ammo		0
+	plaspistol			50
+		plaspistol_ammo		1
+	pbeampistol			50
+		pbeampistol_ammo	1
 
 	// Misc
 	kerrblade			80
@@ -304,8 +310,10 @@ equipment alien_soldiers2_melee
 		plasrifle_ammo		0
 
 	// Secondary
-	plaspistol			3
-		plaspistol_ammo		0
+	plaspistol			70
+		plaspistol_ammo		1
+	pbeampistol			30
+		pbeampistol_ammo	0
 
 	// Misc
 	kerrblade			10
@@ -326,9 +334,9 @@ equipment alien_soldiers3
 	// Primary
 	plasblaster			30
 		plasblaster_ammo	1
-	plasrifle			30
+	plasrifle			40
 		plasrifle_ammo		1
-	needlergun          20
+	needlergun          30
 		needlergun_ammo     1
 
 	// Secondary
@@ -354,11 +362,11 @@ equipment alien_soldiers4
 	maxinterest			750
 
 	// Primary
-	plasblaster			20
+	plasblaster			25
 		plasblaster_ammo	1
-	needlergun          20
+	needlergun          30
 		needlergun_ammo     1
-	pbeamrifle			25
+	pbeamrifle			35
 		pbeamrifle_ammo		1
 	needlerheavy        10
 //		needlergun_ammo		(use same ammo as for needlergun)
@@ -388,11 +396,11 @@ equipment alien_soldiers99
 	// Primary
 	plasrifle			3
 		plasrifle_ammo		1
-	plasblaster			5
+	plasblaster			8
 		plasblaster_ammo	1
-	pbeamcannon			30
+	pbeamcannon			25
 		pbeamcannon_ammo	1
-	pbeamrifle			25
+	pbeamrifle			30
 		pbeamrifle_ammo		1
 	needlergun          20
 		needlergun_ammo		1
@@ -400,7 +408,7 @@ equipment alien_soldiers99
 //		needlergun_ammo		(use same ammo as for needlergun)
 
 	// Secondary
-	plaspistol			38
+	plaspistol			20
 		plaspistol_ammo		1
 	pbeampistol			50
 		pbeampistol_ammo	2
@@ -422,7 +430,7 @@ equipment alien_soldiers99_plasma
 	maxinterest			10000
 
 	// Primary
-	plasrifle			22
+	plasrifle			30
 		plasrifle_ammo		1
 	plasblaster			70
 		plasblaster_ammo	1
@@ -430,6 +438,8 @@ equipment alien_soldiers99_plasma
 	// Secondary
 	plaspistol			80
 		plaspistol_ammo		3
+	pbeampistol			10
+		pbeampistol_ammo	1
 
 	// Misc
 	kerrblade			2
@@ -450,7 +460,7 @@ equipment alien_base1
 	// Primary
 	plasrifle			3
 		plasrifle_ammo		1
-	plasblaster			5
+	plasblaster			8
 		plasblaster_ammo	1
 	pbeamcannon			30
 		pbeamcannon_ammo	1
