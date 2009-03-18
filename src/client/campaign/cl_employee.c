@@ -636,11 +636,6 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	employee->baseHired = NULL;
 	employee->building = NULL;
 	employee->type = type;
-	/* multiplayer doesn't have a nation ppinter */
-	if (nation) {
-		assert(nation >= ccs.nations);
-		assert(nation <= &ccs.nations[MAX_NATIONS]);
-	}
 	employee->nation = nation;
 
 	switch (type) {
@@ -860,38 +855,6 @@ void E_DeleteEmployeesExceedingCapacity (base_t *base)
 	Com_Printf("E_DeleteEmployeesExceedingCapacity: Warning, removed all employees from base '%s', but capacity is still > 0\n", base->name);
 }
 
-#if 0
-/**
- * @brief Assigns an employee to a building.
- * @todo Will later on be used in e.g RS_AssignScientist_f
- * @param[in] building The building the employee is assigned to.
- * @param[in] employee_type	What type of employee to assign to the building.
- * @sa E_RemoveEmployeeFromBuildingOrAircraft
- * @return Returns true if adding was possible/sane otherwise false. In the later case nothing will be changed.
- */
-qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t type)
-{
-	employee_t * employee;
-
-	switch (type) {
-	case EMPL_SOLDIER:
-		break;
-	case EMPL_SCIENTIST:
-		employee = E_GetUnassignedEmployee(building->base, type);
-		if (employee) {
-			employee->building = building;
-		} else {
-			/** @todo message -> no employee available */
-		}
-		break;
-	default:
-		Com_DPrintf(DEBUG_CLIENT, "E_AssignEmployee: Unhandled employee type: %i\n", type);
-		break;
-	}
-	return qfalse;
-}
-#endif
-
 /**
  * @brief Recreates all the employees for a particular employee type in the global list.  But it does not overwrite any employees already hired.
  * @param[in] type The type of the employee list to process.
@@ -955,7 +918,7 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 	/* get the base where the employee is hired in */
 	base = employee->baseHired;
 	if (!base)
-		Sys_Error("Employee (type: %i) is not hired", employee->type);
+		Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->type);
 
 	assert(employee->type == employee->chr.emplType);
 
@@ -1190,16 +1153,13 @@ qboolean E_SaveXML (mxml_node_t *p)
 			mxml_AddBool(ssnode, "hired", e->hired);
 			/** @note e->transfer is not saved here because it'll be restored via TR_Load. */
 			mxml_AddInt(ssnode, "idx", e->idx);
-			/** @todo Use BYTES_NONE here and use MSG_WriteByte */
 			if (e->baseHired)
 				mxml_AddInt(ssnode, "basehired", e->baseHired->idx);
 			if (e->building)
 				mxml_AddInt(ssnode, "building", e->building->idx);
 			/* Store the nations identifier string. */
-			if (e->nation) {
-				assert(e->nation->id);
-				mxml_AddString(ssnode, "nation", e->nation->id);
-			}
+			assert(e->nation);
+			mxml_AddString(ssnode, "nation", e->nation->id);
 
 			/* Store the ugv-type identifier string. (Only exists for EMPL_ROBOT). */
 			if (e->ugv)
@@ -1248,12 +1208,15 @@ qboolean E_LoadXML (mxml_node_t *p)
 			 * Same for the ugv string below.
 			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
 			string = mxml_GetString(ssnode, "nation");
-			if (string && Q_strcmp(string, "NULL"))
-				e->nation = NAT_GetNationByID(string);
+			if (string[0] == '\0' && Q_strcmp(string, "NULL"))
+				return qfalse;
+			e->nation = NAT_GetNationByID(string);
+			if (!e->nation)
+				return qfalse;
 
 			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
 			string = mxml_GetString(ssnode, "ugv");
-			if (string[0]!='\0' && Q_strcmp(string, "NULL"))
+			if (string[0] != '\0' && Q_strcmp(string, "NULL"))
 				e->ugv = CL_GetUGVByID(string);
 			e->chr.emplIdx = i;
 			e->chr.emplType = j;
