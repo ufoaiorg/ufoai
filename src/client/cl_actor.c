@@ -147,10 +147,10 @@ const char *CL_GetSkillString (const int skill)
  * @brief Decide how the actor will walk, taking into account autostanding.
  * @param[in] length The distance to move: units are TU required assuming actor is standing.
  */
-int CL_MoveMode (int length)
+int CL_MoveMode (const le_t *le, int length)
 {
-	assert(selActor);
-	if (selActor->state & STATE_CROUCHED) {
+	assert(le);
+	if (le->state & STATE_CROUCHED) {
 		if (cl_autostand->integer) { /* Is the player using autostand? */
 			if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
 				return WALKTYPE_AUTOSTAND_BEING_USED;
@@ -1128,12 +1128,12 @@ int CL_CheckAction (void)
  * @param[in] to The position in the map to calculate the move-length for.
  * @return The amount of TUs that are needed to walk to the given grid position
  */
-static int CL_MoveLength (pos3_t to)
+static int CL_MoveLength (const le_t *le, pos3_t to)
 {
-	const int crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+	const int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
 	const float length = Grid_MoveLength(&clPathMap, to, crouching_state, qfalse);
 
-	switch (CL_MoveMode(length)) {
+	switch (CL_MoveMode(le, length)) {
 	case WALKTYPE_AUTOSTAND_BEING_USED:
 		return length /* + 2 * TU_CROUCH */;
 	case WALKTYPE_AUTOSTAND_BUT_NOT_FAR_ENOUGH:
@@ -1152,7 +1152,7 @@ static int CL_MoveLength (pos3_t to)
 void CL_ResetActorMoveLength (void)
 {
 	assert(selActor);
-	actorMoveLength = CL_MoveLength(mousePos);
+	actorMoveLength = CL_MoveLength(selActor, mousePos);
 }
 
 /**
@@ -1175,7 +1175,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	if (!selActor)
 		return qfalse;
 
-	length = CL_MoveLength(to);
+	length = CL_MoveLength(selActor, to);
 	if (!length || length >= 0x3F)
 		return qfalse;
 
@@ -1195,7 +1195,7 @@ static qboolean CL_TraceMove (pos3_t to)
 			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
 		}
 #endif
-		length = CL_MoveLength(pos);
+		length = CL_MoveLength(selActor, pos);
 		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
 		Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i].\n", pos[0], pos[1], pos[2], crouching_state, dv);
 		Grid_PosToVec(clMap, selActor->fieldSize, pos, vec);
@@ -1229,14 +1229,14 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
 
 	crouching_state = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
 
-	length = CL_MoveLength(to);
+	length = CL_MoveLength(selActor, to);
 	if (!length || length >= 0x3F)
 		return;
 
 	VectorCopy(to, pos);
 
 	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
-		length = CL_MoveLength(pos);
+		length = CL_MoveLength(selActor, pos);
 		if (length <= tus)
 			return;
 		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
@@ -1267,8 +1267,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	if (blockBattlescapeEvents)
 		return;
 
-	assert(selActor);
-	length = CL_MoveLength(to);
+	length = CL_MoveLength(le, to);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {
 		/* move not valid, don't even care to send */
@@ -1276,12 +1275,12 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	}
 
 	/* Get the last position we can walk to with the usable TUs. */
-	CL_MaximumMove(to, CL_UsableTUs(selActor), toReal);
+	CL_MaximumMove(to, CL_UsableTUs(le), toReal);
 
 	/* Get the cost of the new position just in case. */
-	length = CL_MoveLength(toReal);
+	length = CL_MoveLength(le, toReal);
 
-	if (CL_UsableTUs(selActor) < length) {
+	if (CL_UsableTUs(le) < length) {
 		/* We do not have enough _usable_ TUs to move so don't even try to send. */
 		/* This includes a check for reserved TUs (which isn't done on the server!) */
 		return;

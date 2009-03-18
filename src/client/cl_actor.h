@@ -98,8 +98,8 @@ int CL_UsableTUs(const le_t *le);
 int CL_ReservedTUs(const le_t *le, reservation_types_t type);
 void CL_ReserveTUs(const le_t *le, reservation_types_t type, int tus);
 
-int CL_MoveMode (int length);
-int CL_CalcReloadTime (const objDef_t *weapon);
+int CL_MoveMode(const le_t *le, int length);
+int CL_CalcReloadTime(const objDef_t *weapon);
 
 #ifdef DEBUG
 void CL_ListReactionAndReservations_f (void);

@@ -1300,11 +1300,11 @@ void HUD_ActorUpdateCvars (void)
 					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 					if (reserved_tus > 0)
 						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-							selActor->morale, reserved_tus, moveModeDescriptions[CL_MoveMode(actorMoveLength)], actorMoveLength,
+							selActor->morale, reserved_tus, moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)], actorMoveLength,
 							selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
 					else
 						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
-							moveModeDescriptions[CL_MoveMode(actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
+							moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
 
 					if (actorMoveLength <= CL_UsableTUs(selActor))
 						Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
