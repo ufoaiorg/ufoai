@@ -286,7 +286,7 @@ static qboolean TR_CheckAircraft (const aircraft_t *aircraft, const base_t *dest
 
 	/* Count weight and number of all aircraft already on the transfer list that goes
 	 * into the same hangar type than aircraft. */
-	for (i = 0; i < MAX_AIRCRAFT; i++)
+	for (i = 0; i < ccs.numAircraft; i++)
 		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			const aircraft_t *aircraftTemp = AIR_AircraftGetFromIDX(i);
 			assert(aircraftTemp);
@@ -335,7 +335,7 @@ static void TR_CargoList (void)
 	/* Show items. */
 	for (i = 0; i < csi.numODs; i++) {
 		if (td.trItemsTmp[i] > 0) {
-			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
+			Com_sprintf(str, lengthof(str), _("%s (%i for transfer)"),
 				_(csi.ods[i].name), td.trItemsTmp[i]);
 			LIST_AddString(&cargoList, str);
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_ITEM;
@@ -355,9 +355,9 @@ static void TR_CargoList (void)
 				if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT) {
 					employee_t *employee = td.trEmployeesTmp[emplType][i];
 					if (emplType == EMPL_SOLDIER)
-						Com_sprintf(str, sizeof(str), _("Soldier %s %s"), _(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
+						Com_sprintf(str, lengthof(str), _("Soldier %s %s"), _(ccs.ranks[employee->chr.score.rank].shortname), employee->chr.name);
 					else
-						Com_sprintf(str, sizeof(str), _("Pilot %s"), employee->chr.name);
+						Com_sprintf(str, lengthof(str), _("Pilot %s"), employee->chr.name);
 					LIST_AddString(&cargoList, str);
 					td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
 					td.cargo[td.trCargoCountTmp].itemidx = employee->idx;
@@ -375,7 +375,7 @@ static void TR_CargoList (void)
 		if (emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 			continue;
 		if (trempl[emplType] > 0) {
-			Com_sprintf(str, sizeof(str), _("%s (%i for transfer)"),
+			Com_sprintf(str, lengthof(str), _("%s (%i for transfer)"),
 				E_GetEmployeeString(emplType), trempl[emplType]);
 			LIST_AddString(&cargoList, str);
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_EMPLOYEE;
@@ -418,11 +418,11 @@ static void TR_CargoList (void)
 	}
 
 	/* Show all aircraft. */
-	for (i = 0; i < MAX_AIRCRAFT; i++) {
+	for (i = 0; i < ccs.numAircraft; i++) {
 		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft_t *aircraft = AIR_AircraftGetFromIDX(td.trAircraftsTmp[i]);
 			assert(aircraft);
-			Com_sprintf(str, sizeof(str), _("Aircraft %s"), _(aircraft->name));
+			Com_sprintf(str, lengthof(str), _("Aircraft %s"), _(aircraft->name));
 			LIST_AddString(&cargoList, str);
 			td.cargo[td.trCargoCountTmp].type = CARGO_TYPE_AIRCRAFT;
 			td.cargo[td.trCargoCountTmp].itemidx = i;
@@ -1084,7 +1084,7 @@ static void TR_TransferStart_f (void)
 			transfer->alienAmount[i][TRANS_ALIEN_DEAD] = td.trAliensTmp[i][TRANS_ALIEN_DEAD];
 		}
 	}
-	for (i = 0; i < MAX_AIRCRAFT; i++) {	/* Aircrafts. */
+	for (i = 0; i < ccs.numAircraft; i++) {	/* Aircraft. */
 		if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 			aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 			aircraft->status = AIR_TRANSFER;

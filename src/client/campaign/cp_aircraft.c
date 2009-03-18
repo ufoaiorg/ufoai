@@ -945,8 +945,7 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
  */
 void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 {
-	int i, j;
-	transfer_t *transfer;
+	int i;
 	/* Check if aircraft is on geoscape while it's not destroyed yet */
 	const qboolean aircraftIsOnGeoscape = AIR_IsAircraftOnGeoscape(aircraft);
 
@@ -969,23 +968,6 @@ void AIR_DeleteAircraft (base_t *base, aircraft_t *aircraft)
 		AII_RemoveItemFromSlot(NULL, aircraft->electronics, qfalse);
 	}
 	AII_RemoveItemFromSlot(NULL, &aircraft->shield, qfalse);
-
-	/** @todo This might be duplicate, see TR_NotifyAircraftRemoved() call
-	 * on the top of this function */
-	for (i = 0, transfer = ccs.alltransfers; i < MAX_TRANSFERS; i++, transfer++) {
-		if (!transfer->active)
-			continue;
-		if (!transfer->hasAircraft)
-			continue;
-		for (j = 0; j < MAX_AIRCRAFT; j++) {
-			if (transfer->aircraftArray[j] > aircraft->idx)
-				transfer->aircraftArray[j]--;
-			else if (transfer->aircraftArray[j] == aircraft->idx)
-				/** @todo This might not work as expected - maybe we
-				 * have to memmove the array @sa E_DeleteEmployee */
-				transfer->aircraftArray[j] = TRANS_LIST_EMPTY_SLOT;
-		}
-	}
 
 	for (i = aircraft->idx + 1; i < ccs.numAircraft; i++) {
 		/* Decrease the global index of aircraft that have a higher index than the deleted one. */
