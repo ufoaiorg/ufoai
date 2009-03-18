@@ -213,7 +213,7 @@ equipment alien_workers4
 	maxinterest			10000
 
 	// Primary
-	plasrifle			55
+	plasrifle			45
 		plasrifle_ammo		1
 	plasblaster			10
 		plasblaster_ammo	1
@@ -396,7 +396,7 @@ equipment alien_soldiers99
 	// Primary
 	plasrifle			3
 		plasrifle_ammo		1
-	plasblaster			8
+	plasblaster			7
 		plasblaster_ammo	1
 	pbeamcannon			25
 		pbeamcannon_ammo	1
@@ -460,7 +460,7 @@ equipment alien_base1
 	// Primary
 	plasrifle			3
 		plasrifle_ammo		1
-	plasblaster			8
+	plasblaster			7
 		plasblaster_ammo	1
 	pbeamcannon			30
 		pbeamcannon_ammo	1
