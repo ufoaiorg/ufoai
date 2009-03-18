@@ -1531,6 +1531,8 @@ static void TR_CargoListSelect_f (void)
 		/* Reset and fill temp employees arrays. */
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
 			numempl[emplType] = 0;
+			/** @todo not ccs.numEmployees? isn't this (the td.trEmployeesTmp array)
+			 * updated when an employee gets deleted? */
 			for (i = 0; i < MAX_EMPLOYEES; i++) {
 				if (td.trEmployeesTmp[emplType][i])
 					numempl[emplType]++;
@@ -1622,7 +1624,7 @@ static void TR_CargoListSelect_f (void)
 		}
 		/* Start increasing cnt from the amount of previous entries. */
 		cnt = entries;
-		for (i = 0; i < MAX_AIRCRAFT; i++) {
+		for (i = 0; i < ccs.numAircraft; i++) {
 			if (td.trAircraftsTmp[i] > TRANS_LIST_EMPTY_SLOT) {
 				if (cnt == num) {
 					td.trAircraftsTmp[i] = TRANS_LIST_EMPTY_SLOT;
@@ -1651,14 +1653,13 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 
 	for (i = 0; i < MAX_TRANSFERS; i++) {
 		transfer_t *transfer = &ccs.alltransfers[i];
-		size_t n = MAX_AIRCRAFT;
 
 		/* skip non active transfer */
 		if (!transfer->active)
 			continue;
 		if (!transfer->hasAircraft)
 			continue;
-		REMOVE_ELEM(transfer->aircraftArray, aircraft->idx, n);
+		REMOVE_ELEM_MEMSET(transfer->aircraftArray, aircraft->idx, ccs.numAircraft, TRANS_LIST_EMPTY_SLOT);
 	}
 }
 

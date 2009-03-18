@@ -151,6 +151,7 @@ qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
  * @brief Adds a defence system to base.
  * @param[in] basedefType Base defence type (see basedefenceType_t)
  * @param[in] base Pointer to the base in which the battery will be added
+ * @sa BDEF_RemoveBattery
  */
 static void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 {
@@ -233,6 +234,7 @@ void BDEF_AddBattery_f (void)
  * @brief Remove a base defence sytem from base.
  * @param[in] basedefType (see basedefenceType_t)
  * @param[in] idx idx of the battery to destroy (-1 if this is random)
+ * @sa BDEF_AddBattery
  */
 void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 {
@@ -248,6 +250,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		REMOVE_ELEM(base->batteries, idx, base->numBatteries);
 		/* just for security */
 		AII_InitialiseSlot(&base->batteries[base->numBatteries].slot, NULL, base, NULL, AC_ITEM_BASE_MISSILE);
+		base->numBatteries--;
 		break;
 	case BASEDEF_LASER: /* this is a laser battery */
 		/* we must have at least one laser battery to remove it */
@@ -257,6 +260,7 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 		REMOVE_ELEM(base->lasers, idx, base->numLasers);
 		/* just for security */
 		AII_InitialiseSlot(&base->lasers[base->numLasers].slot, NULL, base, NULL, AC_ITEM_BASE_LASER);
+		base->numLasers--;
 		break;
 	default:
 		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defence system.\n");
@@ -1043,11 +1047,11 @@ int AII_AircraftCanShoot (const aircraft_t *aircraft)
  * @return qtrue if the base can fight, qfalse else
  * @sa AII_BaseCanShoot
  */
-static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, const int *numWeapons)
+static qboolean AII_WeaponsCanShoot (const baseWeapon_t *weapons, int numWeapons)
 {
 	int i;
 
-	for (i = 0; i < *numWeapons; i++) {
+	for (i = 0; i < numWeapons; i++) {
 		if (AIRFIGHT_CheckWeapon(&weapons[i].slot, 0) != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
 			return qtrue;
 	}
@@ -1067,12 +1071,12 @@ int AII_BaseCanShoot (const base_t *base)
 
 	if (B_GetBuildingStatus(base, B_DEFENCE_MISSILE)) {
 		/* base has missile battery and any needed building */
-		return AII_WeaponsCanShoot(base->batteries, &base->numBatteries);
+		return AII_WeaponsCanShoot(base->batteries, base->numBatteries);
 	}
 
 	if (B_GetBuildingStatus(base, B_DEFENCE_LASER)) {
 		/* base has laser battery and any needed building */
-		return AII_WeaponsCanShoot(base->lasers, &base->numLasers);
+		return AII_WeaponsCanShoot(base->lasers, base->numLasers);
 	}
 
 	return qfalse;
@@ -1091,7 +1095,7 @@ qboolean AII_InstallationCanShoot (const installation_t *installation)
 	if (installation->founded && installation->installationStatus == INSTALLATION_WORKING
 	 && installation->installationTemplate->maxBatteries > 0) {
 		/* installation is working and has battery */
-		return AII_WeaponsCanShoot(installation->batteries, &installation->installationTemplate->maxBatteries);
+		return AII_WeaponsCanShoot(installation->batteries, installation->installationTemplate->maxBatteries);
 	}
 
 	return qfalse;
