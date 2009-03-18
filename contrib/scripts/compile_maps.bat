@@ -27,7 +27,8 @@ REM loop through args. SHIFT turns %2 into %1 etc
 
 IF "%1"=="" ( GOTO Continue)
 if EXIST base\maps\%1 (
-	set curpath=base\maps\%1
+	set    curpath=maps
+	set searchpath=base/maps/%1
 ) else if "%1"=="/-t" (
 	set usecores=1
 ) else if "%1"=="/help" (

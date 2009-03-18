@@ -168,12 +168,12 @@ menu uforecovery
 		size	"667 38"
 		cvar	"*cvar mn_uforecovery_tab"
 		option store {
-			label	"_Store ufo"
+			label	"_Store UFO"
 			value	"0"
 			action	"uforecovery_tabchange;"
 		}
 		option sell {
-			label	"_Sell ufo"
+			label	"_Sell UFO"
 			value	"1"
 			action	"uforecovery_tabchange;"
 		}
