@@ -46,11 +46,11 @@ maps-ents:
 
 clean-maps:
 	@echo "Deleting maps..."
-	ifeq ($(TARGET_OS),mingw32)
-		@del /S $(MAPSDIR)\*.bsp
-	else
-		@find $(MAPSDIR) -name '*.bsp' -delete
-	endif
+ifeq ($(TARGET_OS),mingw32)
+	@del /S $(MAPSDIR)\*.bsp
+else
+	@find $(MAPSDIR) -name '*.bsp' -delete
+endif
 	@echo "done"
 
 $(BSPS): %.bsp: %.map
