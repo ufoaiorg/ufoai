@@ -182,6 +182,7 @@ void CL_Drop (void)
 	/* make sure that we are in the correct menus in singleplayer after
 	 * dropping the game due to a failure */
 	if (GAME_IsCampaign()) {
+		/** @todo maybe create a savegame? */
 		Cvar_Set("mn_main", "campaign_main");
 		Cvar_Set("mn_active", "map");
 		MN_PushMenu("map", NULL);
