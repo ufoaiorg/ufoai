@@ -1863,29 +1863,109 @@ void AIR_AircraftsUFODisappear (const aircraft_t *const ufo)
 }
 
 /**
+ * @brief funtion we need to find roots.
+ * @param[in] c angle SOT
+ * @param[in] B angle STI
+ * @param[in] speedRatio ratio of speed of shooter divided by speed of target.
+ * @param[in] a angle TOI
+ * @note S is the position of the shooter, T the position of the target,
+ * D the destination of the target and I the interception point where shooter should reach target.
+ * @return value of the function.
+ */
+static inline float AIR_GetDestinationFunction (const float c, const float B, const float speedRatio, float a)
+{
+	return pow(cos(a) - cos(speedRatio * a) * cos(c), 2.)
+		- sin(c) * sin(c) * (sin(speedRatio * a) * sin(speedRatio * a) - sin(a) * sin(a) * sin(B) * sin(B));
+}
+/**
+ * @brief Find the roots of a function.
+ * @param[in] c angle SOT
+ * @param[in] B angle STI
+ * @param[in] speedRatio ratio of speed of shooter divided by speed of target.
+ * @param[in] start minimum value of the root to find
+ * @note S is the position of the shooter, T the position of the target,
+ * D the destination of the target and I the interception point where shooter should reach target.
+ * @return root of the function.
+ */
+static float AIR_GetDestinationFindRoot (const float c, const float B, const float speedRatio, float start)
+{
+	const float PRECISION = 0.000001;		/**< precision of the calculation */
+	const float BIG_STEP = .01;				/**< step for rough calculation */
+	const float MAXIMUM_VALUE = 2. * M_PI;	/**< maximum value of the root to search */
+	float epsilon;
+	float begin, end, middle;
+	float fBegin, fEnd, fMiddle;
+
+
+	/* there may be several solution, first try to find roughly the smallest one */
+	end = start + PRECISION;		/* don't start at begin = 0, because the function returns nan */
+	fEnd = AIR_GetDestinationFunction(c, B, speedRatio, end);
+
+	do {
+		begin = end;
+		fBegin = fEnd;
+		end = begin + BIG_STEP;
+		if (end > MAXIMUM_VALUE) {
+			end = MAXIMUM_VALUE - PRECISION;
+			fEnd = AIR_GetDestinationFunction(c, B, speedRatio, end);
+			break;
+		}
+		fEnd = AIR_GetDestinationFunction(c, B, speedRatio, end);
+	} while  (fBegin * fEnd > 0);
+
+	if (fBegin * fEnd > 0) {
+		Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Did not find solution is range %.2f, %.2f\n", start, MAXIMUM_VALUE);
+		/* there's no solution, return default value */
+		return -10.;
+	}
+
+	/* now use dichotomy to get more precision on the solution */
+
+	middle = (begin + end) / 2.;
+	fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
+
+	epsilon = 1000.;
+	while (epsilon > PRECISION) {
+		if (fEnd * fMiddle < 0) {
+			/* root is bigger than middle */
+			begin = middle;
+			fBegin = fMiddle;
+		} else if (fBegin * fMiddle < 0) {
+			/* root is smaller than middle */
+			end = middle;
+			fEnd = fMiddle;
+		} else {
+			Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Error in calculation, one of the value is nan\n");
+			return -10.;
+		}
+		middle = (begin + end) / 2.;
+		fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
+
+		epsilon = end - middle ;
+	}
+	return middle;
+}
+
+/**
  * @brief Calculates the point where aircraft should go to intecept a moving target.
  * @param[in] shooter Pointer to shooting aircraft.
  * @param[in] target Pointer to target aircraft.
  * @param[out] dest Destination that shooting aircraft should aim to intercept target aircraft.
- * @todo This function is not perfect, because I (Kracken) made the calculations in a plane.
- * We should use here geometry on a sphere, and only compute this calculation every time target
- * change destination, or one of the aircraft speed changes. The calculation here gives good results
- * when both aircraft are quite close (most of the time, it's true).
+ * @todo only compute this calculation every time target changes destination, or one of the aircraft speed changes.
  * @sa AIR_SendAircraftPursuingUFO
  * @sa UFO_SendPursuingAircraft
  */
 void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const aircraft_t const *target, vec2_t *dest)
 {
 	vec3_t shooterPos, targetPos, targetDestPos, shooterDestPos, rotationAxis;
-	float dist;
-	float angle;
+	vec3_t tangentVectTS, tangentVectTD;
+	float a, b, c, B;
 
-	dist = MAP_GetDistance(shooter->pos, target->pos);
-	/* below calculation gives bad results when aircraft are far away: just go to target location at first
-	 * (this is a hack that should be removed when sphere calculation is made)
-	 * we also skip the calculation if aircraft are really close one from each other (eg. in airfight map)
-	 * otherwise the dotproduct may be greater than 1 due to rounding errors */
-	if (dist > 50.0f || dist < .02f) {
+	const float speedRatio = (float)(shooter->stats[AIR_STATS_SPEED]) / target->stats[AIR_STATS_SPEED];
+
+	c = MAP_GetDistance(shooter->pos, target->pos) * torad;
+	/* if aircraft are really close one from each other, just go directly to the target */
+	if (c < .02f) {
 		Vector2Copy(target->pos, (*dest));
 		return;
 	}
@@ -1896,21 +1976,44 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 	PolarToVec(target->route.point[target->route.numPoints - 1], targetDestPos);
 
 	/* In the following, we note S the position of the shooter, T the position of the target,
-	 * D the destination of the target and I the interception point where shooter should reach target */
+	 * D the destination of the target and I the interception point where shooter should reach target
+	 * O is the center of earth.
+	 * A, B and C are the angles TSI, STI and SIT
+	 * a, b, and c are the angles TOI, SOI and SOT */
 
-	/* Calculate angle between ST and TD (in radian) */
-	angle = acos(DotProduct(shooterPos, targetPos));
-
-	/* Calculate the distance target will be able to fly before shooter reaches it */
-	dist /= cos(angle) + sqrt(pow(shooter->stats[AIR_STATS_SPEED], 2) / pow(target->stats[AIR_STATS_SPEED], 2) - pow(sin(angle), 2));
-
-	/* Get rotation vector */
+	/* Get first vector (tangent to triangle in T, in the direction of D) */
+	CrossProduct(targetPos, shooterPos, rotationAxis);
+	VectorNormalize(rotationAxis);
+	RotatePointAroundVector(tangentVectTS, rotationAxis, targetPos, 90.0f);
+	/* Get second vector (tangent to triangle in T, in the direction of S) */
 	CrossProduct(targetPos, targetDestPos, rotationAxis);
 	VectorNormalize(rotationAxis);
+	RotatePointAroundVector(tangentVectTD, rotationAxis, targetPos, 90.0f);
 
-	/* Rotate target position of dist to find destination point */
-	RotatePointAroundVector(shooterDestPos, rotationAxis, targetPos, dist);
-	VecToPolar(shooterDestPos, *dest);
+	/* Get angle B of the triangle (in radian) */
+	B = acos(DotProduct(tangentVectTS, tangentVectTD));
+
+	/* Look for a value, as long as we don't have a proper value */
+	a = 0;
+	do {
+		a = AIR_GetDestinationFindRoot(c, B, speedRatio, a);
+
+		/* Get rotation vector */
+		CrossProduct(targetPos, targetDestPos, rotationAxis);
+		VectorNormalize(rotationAxis);
+
+		/* Rotate target position of dist to find destination point */
+		RotatePointAroundVector(shooterDestPos, rotationAxis, targetPos, a * todeg);
+		VecToPolar(shooterDestPos, *dest);
+
+		b = MAP_GetDistance(shooter->pos, *dest) * torad;
+	} while (fabs(b - speedRatio * a) > .1 && a > 0.);	/* check that value is proper */
+
+	if (a < 0.) {
+		/* did not find solution, go directly to target direction */
+		Vector2Copy(target->pos, (*dest));
+		return;
+	}
 
 	/* make sure we don't get a NAN value */
 	assert((*dest)[0] <= 180.0f && (*dest)[0] >= -180.0f && (*dest)[1] <= 90.0f && (*dest)[1] >= -90.0f);
