@@ -33,12 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 void G_PhysicsStep (edict_t *ent)
 {
-	int contentFlags;
-	int visflags;
-
 	if (ent->moveinfo.currentStep < ent->moveinfo.steps) {
-		contentFlags = ent->contentFlags;
-		visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
+		const int contentFlags = ent->contentFlags;
+		const int visflags = ent->moveinfo.visflags[ent->moveinfo.currentStep];
 		/* Send the sound effect to everyone how's not seeing the actor */
 		if (ent->state & ~STATE_CROUCHED) {
 			if (contentFlags & CONTENTS_WATER) {
@@ -75,9 +72,8 @@ void G_PhysicsStep (edict_t *ent)
 		ent->contentFlags = ent->moveinfo.contentFlags[ent->moveinfo.currentStep];
 		ent->moveinfo.currentStep++;
 
-		/* immediatly rethink */
+		/* Immediately re-think */
 		ent->nextthink = (level.framenum + 3) * SERVER_FRAME_SECONDS;
-/*		Com_Printf("step: %i/%i\n", ent->moveinfo.currentStep, ent->moveinfo.steps);*/
 	} else {
 		ent->moveinfo.currentStep = 0;
 		ent->moveinfo.steps = 0;

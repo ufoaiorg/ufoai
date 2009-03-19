@@ -80,24 +80,22 @@ qboolean G_UseEdict (edict_t *ent)
 static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
 {
 	int i, j, k;
-	const fireDef_t *csiFD;
-	const objDef_t *od;
 
 	/* For each object ... */
 	for (i = 0; i < gi.csi->numODs; i++) {
-		od = &gi.csi->ods[i];
+		const objDef_t *od = &gi.csi->ods[i];
 		/* For each weapon-entry in the object ... */
 		for (j = 0; j < od->numWeapons; j++) {
 			/* For each fire-definition in the weapon entry  ... */
 			for (k = 0; k < od->numFiredefs[j]; k++) {
-				csiFD = &od->fd[j][k];
+				const fireDef_t *csiFD = &od->fd[j][k];
 				if (csiFD == fd)
 					return od;
 			}
 		}
 	}
 
-	Com_DPrintf(DEBUG_GAME, "Could nor find a objDef_t for fireDef_t '%s'\n", fd->name);
+	Com_DPrintf(DEBUG_GAME, "Could not find an objDef_t for fireDef_t '%s'\n", fd->name);
 
 	return NULL;
 }
@@ -152,12 +150,12 @@ void G_PrintStats (const char *buffer)
  */
 void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fireDef_t *fd)
 {
-	const char *victimName, *attackerName;
 	char buffer[512];
 
 	if (victim->pnum != attacker->pnum) {
-		victimName = G_GetPlayerName(victim->pnum);
-		if (!*victimName) { /* empty string */
+		const char *victimName = G_GetPlayerName(victim->pnum);
+		const char *attackerName = G_GetPlayerName(attacker->pnum);
+		if (victimName[0] == '\0') { /* empty string */
 			switch (victim->team) {
 			case TEAM_CIVILIAN:
 				victimName = "civilian";
@@ -170,8 +168,7 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 				break;
 			}
 		}
-		attackerName = G_GetPlayerName(attacker->pnum);
-		if (!*attackerName) { /* empty string */
+		if (attackerName[0] == '\0') { /* empty string */
 			switch (attacker->team) {
 			case TEAM_CIVILIAN:
 				attackerName = "civilian";
@@ -196,7 +193,7 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
 				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 		}
 	} else {
-		attackerName = G_GetPlayerName(attacker->pnum);
+		const char *attackerName = G_GetPlayerName(attacker->pnum);
 		Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s",
 			attackerName, (victim->HP == 0 ? "kills" : "stuns"),
 			victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
@@ -213,7 +210,7 @@ void G_PrintActorStats (const edict_t *victim, const edict_t *attacker, const fi
  */
 edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 {
-	char *s;
+	const char *s;
 
 	if (!from)
 		from = g_edicts;
@@ -223,7 +220,7 @@ edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 	for (; from < &g_edicts[globals.num_edicts]; from++) {
 		if (!from->inuse)
 			continue;
-		s = *(char **) ((byte *) from + fieldofs);
+		s = *(const char **) ((byte *) from + fieldofs);
 		if (!s)
 			continue;
 		if (!Q_strcasecmp(s, match))
