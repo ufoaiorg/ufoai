@@ -1468,7 +1468,7 @@ void CP_StartSelectedMission (void)
 	/* manage inventory */
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(base);
-	CL_ReloadAndRemoveCarried(aircraft, &ccs.eMission);
+	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
 	/* remove inventory of any old temporary LEs */
 	LE_Cleanup();
 

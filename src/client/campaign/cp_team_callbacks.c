@@ -233,8 +233,9 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	/* manage inventory */
 	unused = aircraft->homebase->storage; /* copied, including arrays inside! */
 
+	/* clean up aircraft crew for upcoming mission */
 	CL_CleanTempInventory(aircraft->homebase);
-	CL_ReloadAndRemoveCarried(aircraft, &unused);
+	CL_CleanupAircraftCrew(aircraft, &unused);
 
 	MN_ContainerNodeUpdateEquipment(&aircraft->homebase->bEquipment, &unused);
 }

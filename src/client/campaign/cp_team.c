@@ -30,12 +30,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_team.h"
 
 /**
- * @brief Reloads weapons and removes "not assigned" ones from containers.
+ * @brief Reloads weapons, removes not assigned and resets defaults
  * @param[in] aircraft Pointer to an aircraft for given team.
  * @param[in] ed equipDef_t pointer to equipment
  * @sa CL_AddWeaponAmmo
  */
-void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
+void CL_CleanupAircraftCrew (aircraft_t *aircraft, equipDef_t * ed)
 {
 	invList_t *ic, *next;
 	int p, container;
@@ -51,19 +51,25 @@ void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 
 	assert(aircraft);
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ReloadAndRemoveCarried:aircraft idx: %i, team size: %i\n",
+	Com_DPrintf(DEBUG_CLIENT, "CL_CleanupAircraftCrew:aircraft idx: %i, team size: %i\n",
 		aircraft->idx, aircraft->teamSize);
 
 	/* Auto-assign weapons to UGVs/Robots if they have no weapon yet. */
 	for (p = 0; p < aircraft->maxTeamSize; p++) {
-		if (aircraft->acTeam[p] && aircraft->acTeam[p]->ugv) {
-			/* This is an UGV */
+		if (aircraft->acTeam[p]) {
 			character_t *chr = &aircraft->acTeam[p]->chr;
 			assert(chr);
 
-			/* Check if there is a weapon and add it if there isn't. */
-			if (!chr->inv.c[csi.idRight] || !chr->inv.c[csi.idRight]->item.t)
-				INVSH_EquipActorRobot(&chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
+			if (aircraft->acTeam[p]->ugv) {
+				/* This is an UGV */
+
+				/* Check if there is a weapon and add it if there isn't. */
+				if (!chr->inv.c[csi.idRight] || !chr->inv.c[csi.idRight]->item.t)
+					INVSH_EquipActorRobot(&chr->inv, chr, INVSH_GetItemByID(aircraft->acTeam[p]->ugv->weapon));
+			}
+
+			/* reset reserveReaction state to default */
+			chr->reservedTus.reserveReaction = STATE_REACTION_ONCE;
 		}
 	}
 
