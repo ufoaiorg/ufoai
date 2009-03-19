@@ -371,20 +371,25 @@ void SV_ShutdownGameProgs (void)
 }
 
 /**
- * @brief Calls the G_RunFrame function from game api
- * let everything in the world think and move
- * @sa G_RunFrame
+ * @brief Thread for the game frame function
+ * @sa SV_RunGameFrame
  * @sa SV_Frame
  */
 int SV_RunGameFrameThread (void *data)
 {
 	do {
-		sv.endgame = ge->RunFrame();
+		SV_RunGameFrame();
 	} while (!sv.endgame);
 
 	return 0;
 }
 
+/**
+ * @brief Calls the G_RunFrame function from game api
+ * let everything in the world think and move
+ * @sa G_RunFrame
+ * @sa SV_Frame
+ */
 void SV_RunGameFrame (void)
 {
 	sv.endgame = ge->RunFrame();
