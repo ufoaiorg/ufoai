@@ -2273,7 +2273,6 @@ int G_ClientAction (player_t * player)
 
 	case PA_TURN:
 		gi.ReadFormat(pa_format[PA_TURN], &i);
-		/** @todo endian safe? */
 		G_ClientTurn(player, num, (byte) i);
 		break;
 
@@ -2390,7 +2389,7 @@ static void G_GetTeam (player_t * player)
 	if (playersInGame <= 1 && sv_maxclients->integer > 1 && !sv_teamplay->integer) {
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
-		int randomSpot = -1;
+		int randomSpot;
 		/* skip civilian teams */
 		for (i = TEAM_PHALANX; i < MAX_TEAMS; i++) {
 			spawnCheck[i] = 0;
@@ -2434,8 +2433,8 @@ static void G_GetTeam (player_t * player)
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
 				/* check if team is in use (only human controlled players) */
-				/** @todo If someone left the game and rejoins he should get his "old" team back */
-				/*        maybe we could identify such a situation */
+				/** @todo If someone left the game and rejoins he should get his "old" team back
+				 * maybe we could identify such a situation */
 				for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
 					if (p->inuse && p->pers.team == i) {
 						Com_DPrintf(DEBUG_GAME, "Team %i is already in use\n", i);
@@ -2560,10 +2559,9 @@ static edict_t *G_ClientGetFreeSpawnPoint (const player_t * player, int spawnTyp
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 			if (ent->type == spawnType && player->pers.team == ent->team)
 				list[count++] = ent;
+
 		if (count)
 			return list[rand() % count];
-		else
-			return NULL;
 	} else {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 			if (ent->type == spawnType && player->pers.team == ent->team)
@@ -2910,7 +2908,6 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		}
 
 		if (nextTeam == NO_ACTIVE_TEAM) {
-/*			gi.BroadcastPrintf(PRINT_CONSOLE, "Can't change round - no living actors left.\n"); */
 			level.activeTeam = lastTeam;
 			gi.EndEvents();
 			return;
@@ -3016,10 +3013,6 @@ static void G_SendEdictsAndBrushModels (int team)
 			break;
 
 		case SOLID_BBOX:
-			if (sv_send_edicts->integer) {
-				/** @todo Send actorspawn boxes to show the bboxes client side, too
-				 * @note Only needed for displaying them */
-			}
 			break;
 
 		/* send trigger entities to the client to display them (needs mins, maxs set) */

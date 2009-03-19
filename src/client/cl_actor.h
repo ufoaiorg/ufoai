@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define ACTOR_HAND_CHAR_RIGHT 'r'
 #define ACTOR_HAND_CHAR_LEFT 'l'
-#define ACTOR_HAND_RIGHT 0
-#define ACTOR_HAND_LEFT 1
 
 /** @param[in] hand Hand index (ACTOR_HAND_RIGHT, ACTOR_HAND_LEFT) */
 #define ACTOR_GET_HAND_CHAR(hand) ((hand) == ACTOR_HAND_LEFT ? ACTOR_HAND_CHAR_LEFT : ACTOR_HAND_CHAR_RIGHT)

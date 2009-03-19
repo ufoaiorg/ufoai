@@ -25,27 +25,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-static int G_GetFiringTUsForItem (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode, invList_t *invList)
+/**
+ * @brief Get the weapon firing TUs of the item in the right hand of the edict.
+ * @return -1 if no firedef was found for the item or the reaction fire mode is not activated for the right hand.
+ * @todo why only right hand?
+ */
+static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, invList_t *invList)
 {
-	/* Fire the weapon in the right hand if everything is ok. */
 	if (invList && invList->item.m && invList->item.t->weapon
 	 && (!invList->item.t->reload || invList->item.a > 0)) {
 		const fireDef_t *fdArray = FIRESH_FiredefsIDXForWeapon(&invList->item);
 		if (fdArray == NULL)
 			return -1;
 
-		if (ent->chr.RFmode.hand == 0 && ent->chr.RFmode.fmIdx >= 0
+		if (ent->chr.RFmode.hand == ACTOR_HAND_RIGHT && ent->chr.RFmode.fmIdx >= 0
 		 && ent->chr.RFmode.fmIdx < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
-			*firemode = ent->chr.RFmode.fmIdx; /* Get selected (if any) firemode for the weapon in the right hand. */
+			const int fmIdx = ent->chr.RFmode.fmIdx;
 
-			if (fdArray[*firemode].time + sv_reaction_leftover->integer <= ent->TU
-			 && fdArray[*firemode].range > VectorDist(ent->origin, target->origin)) {
-				if (fire_hand_type)
-					*fire_hand_type = ST_RIGHT_REACTION;
-
+			if (fdArray[fmIdx].time + sv_reaction_leftover->integer <= ent->TU
+			 && fdArray[fmIdx].range > VectorDist(ent->origin, target->origin)) {
 				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: entnumber:%i firemode:%i entteam:%i\n",
-					ent->number, *firemode, ent->team);
-				return fdArray[*firemode].time + sv_reaction_leftover->integer;
+					ent->number, fmIdx, ent->team);
+				return fdArray[fmIdx].time + sv_reaction_leftover->integer;
 			}
 		}
 	}
@@ -64,21 +65,17 @@ static int G_GetFiringTUsForItem (edict_t *ent, edict_t *target, int *fire_hand_
  */
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode)
 {
-	int TUs;
-	int tmp = -2;
+	const int TUs = G_GetFiringTUsForItem(ent, target, RIGHT(ent));
+	if (TUs >= 0) {
+		/* Get selected (if any) firemode for the weapon */
+		if (firemode)
+			*firemode = ent->chr.RFmode.fmIdx;
 
-	/* The caller doesn't use this parameter, use a temporary one instead. */
-	if (!firemode)
-		firemode = &tmp;
+		if (fire_hand_type)
+			*fire_hand_type = ST_RIGHT_REACTION;
+	}
 
-	TUs = G_GetFiringTUsForItem(ent, target, fire_hand_type, firemode, RIGHT(ent));
-	if (TUs != -1)
-		return TUs;
-	TUs = G_GetFiringTUsForItem(ent, target, fire_hand_type, firemode, LEFT(ent));
-	if (TUs != -1)
-		return TUs;
-
-	return -1;
+	return TUs;
 }
 
 /**
@@ -88,78 +85,43 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
  * @param[out] reason If not null then it prints the reason that reaction fire wasn't possible
  * @returns Whether 'ent' can actually fire at 'target'
  */
-static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char **reason)
+static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 {
 	float actorVis;
 	qboolean frustum;
 
 	/* an entity can't reaction fire at itself */
-	if (ent == target) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			*reason = "Cannot fire on self";
+	if (ent == target)
 		return qfalse;
-#endif
-	}
 
 	/* check ent is a suitable shooter */
-	if (!ent->inuse || !G_IsLivingActor(ent)) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			*reason = "Shooter is not ent, is non-actor or is dead";
-#endif
+	if (!ent->inuse || !G_IsLivingActor(ent))
 		return qfalse;
-	}
 
 	/* check ent has reaction fire enabled */
-	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION)) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			*reason = "Shooter does not have reaction fire enabled";
-#endif
+	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION))
 		return qfalse;
-	}
 
 	/* check in range and visible */
-	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			*reason = "Target is out of range";
-#endif
+	if (VectorDistSqr(ent->origin, target->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
 		return qfalse;
-	}
 
 	actorVis = G_ActorVis(ent->origin, target, qtrue);
 	frustum = G_FrustumVis(ent, target->origin);
-	if (actorVis <= 0.2 || !frustum) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			*reason = "Target is not visible";
-#endif
+	if (actorVis <= 0.2 || !frustum)
 		return qfalse;
-	}
 
 	/* If reaction fire is triggered by a friendly unit
 	 * and the shooter is still sane, don't shoot;
 	 * well, if the shooter isn't sane anymore... */
 	if (target->team == TEAM_CIVILIAN || target->team == ent->team)
-		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand()) {
-#ifdef DEBUG_REACTION
-			if (reason)
-				*reason = "Shooter will not fire on friendly";
-#endif
+		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
 			return qfalse;
-		}
 
 	/* Don't react in your own turn, trust your commander. Can't use
 	 * level.activeTeam, because this function touches it recursively. */
-	if (ent->team == turnTeam) {
-#ifdef DEBUG_REACTION
-		if (reason)
-			*reason = "It's the shooter's turn";
-#endif
+	if (ent->team == turnTeam)
 		return qfalse;
-	}
 
 	/* okay do it then */
 	return qtrue;
@@ -177,7 +139,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 	edict_t *ent;
 	int i, tus;
 	qboolean queued = qfalse;
-	int firemode = -3;
+	int firemode = -1;
 
 	/* check all possible shooters */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
@@ -186,7 +148,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 			continue;
 
 		/* check whether reaction fire is possible */
-		if (!G_CanReactionFire(ent, target, NULL))
+		if (!G_CanReactionFire(ent, target))
 			continue;
 
 		/* see how quickly ent can fire (if it can fire at all) */
@@ -206,9 +168,6 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 		queued = qtrue;
 
 		/** @todo generate an 'interrupt'? */
-#ifdef DEBUG_REACTION
-		Com_Printf("Entity %s begins reaction fire on %s\n", ent->chr.name, target->chr.name);
-#endif
 	}
 	return queued;
 }
@@ -251,8 +210,8 @@ static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos
 	ff = mock.friend + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemy >= minhit)
 		return G_ClientShoot(player, shooter->number, at, type, firemode, NULL, qfalse, 0);
-	else
-		return qfalse;
+
+	return qfalse;
 }
 
 /**
@@ -267,71 +226,36 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	int tus, fire_hand_type, team;
 	int firemode = -1;
 	qboolean tookShot;
-	char *reason = NULL;
 
 	/* check whether this ent has a reaction fire queued */
-	if (!ent->reactionTarget) {
-#ifdef DEBUG_REACTION
-		if (!mock)
-			Com_Printf("Not resolving reaction fire for %s because ent has no target (which shouldn't happen)\n", ent->chr.name);
-#endif
+	if (!ent->reactionTarget)
 		return qfalse;
-	}
 
 	/* ent can't use RF if is in STATE_DAZED (flashbang impact) */
-	if (ent->state & STATE_DAZED) {
-#ifdef DEBUG
-		Com_Printf("This entity is in STATE_DAZED, will not use reaction fire.\n");
-#endif
+	if (ent->state & STATE_DAZED)
 		return qfalse;
-	}
 
-	/* ent can't take a reaction shot if it's not possible */
-	if (!G_CanReactionFire(ent, ent->reactionTarget, &reason)) {
+	/* ent can't take a reaction shot if it's not possible - and check that
+	 * the target is still alive*/
+	if (!G_CanReactionFire(ent, ent->reactionTarget)
+	 || G_IsDead(ent->reactionTarget)) {
 		ent->reactionTarget = NULL;
-#ifdef DEBUG_REACTION
-		if (!mock)
-			Com_Printf("Not resolving reaction fire for %s because '%s'\n", ent->chr.name, reason);
-#endif
-		return qfalse;
-	}
-
-	/* check the target is still alive */
-	if (G_IsDead(ent->reactionTarget)) {
-		ent->reactionTarget = NULL;
-#ifdef DEBUG_REACTION
-		if (!mock)
-			Com_Printf("Not resolving reaction fire for %s because target is dead\n", ent->chr.name);
-#endif
 		return qfalse;
 	}
 
 	/* check ent can fire (necessary? covered by G_CanReactionFire?) */
 	tus = G_GetFiringTUs(ent, ent->reactionTarget, &fire_hand_type, &firemode);
-	if (tus < 0) {
-#ifdef DEBUG_REACTION
-		if (!mock)
-			Com_Printf("Cancelling resolution because %s cannot fire\n", ent->chr.name);
-#endif
+	if (tus < 0)
 		return qfalse;
-	}
 
 	/* Check if a firemode has been set by the client. */
-	if (firemode < 0) {
-		if (!mock)
-			Com_DPrintf(DEBUG_GAME, "G_ResolveRF: Cancelling resolution because %s has not set a reaction-firemode (%i).\n", ent->chr.name, firemode);
+	if (firemode < 0)
 		return qfalse;
-	}
 
 	/* Get player. */
 	player = game.players + ent->pnum;
-	if (!player) {
-#ifdef DEBUG_REACTION
-		if (!mock)
-			Com_Printf("Cancelling resolution because %s has no player\n", ent->chr.name);
-#endif
+	if (!player)
 		return qfalse;
-	}
 
 	/* take the shot */
 	if (mock)
@@ -354,10 +278,6 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		ent->state &= ~STATE_SHAKEN;
 		/* Save the fact that the ent has fired. */
 		ent->reactionFired += 1;
-	} else {
-#ifdef DEBUG_REACTION
-		Com_Printf("Cancelling resolution because %s judged it unwise to fire\n", ent->chr.name);
-#endif
 	}
 	return tookShot;
 }
@@ -384,22 +304,12 @@ static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
 		shoot = qfalse;
 
 		/* check whether target has changed (i.e. the player is making a move with a different entity) */
-		if (ent->reactionTarget != target) {
-#ifdef DEBUG_REACTION
-			if (!mock)
-				Com_Printf("Resolving reaction fire for %s because target has changed\n", ent->chr.name);
-#endif
+		if (ent->reactionTarget != target)
 			shoot = qtrue;
-		}
 
 		/* check whether target is out of time */
-		if (!shoot  && ent->reactionTarget->TU < ent->reactionTUs) {
-#ifdef DEBUG_REACTION
-			if (!mock)
-				Com_Printf("Resolving reaction fire for %s because target is out of time\n", ent->chr.name);
-#endif
+		if (!shoot && ent->reactionTarget->TU < ent->reactionTUs)
 			shoot = qtrue;
-		}
 
 		/* okay do it */
 		if (shoot)
@@ -453,7 +363,7 @@ void G_ReactToPreFire (edict_t *target)
 		/* draw!! */
 		entTUs = G_GetFiringTUs(ent, target, NULL, &firemode);
 		targTUs = G_GetFiringTUs(target, ent, NULL, NULL);
-		if ((entTUs < 0) || (firemode < 0)) {
+		if (entTUs < 0 || firemode < 0) {
 			/* can't reaction fire if no TUs to fire */
 			ent->reactionTarget = NULL;
 			continue;
@@ -464,14 +374,8 @@ void G_ReactToPreFire (edict_t *target)
 			/* target wins, so delay ent */
 			ent->reactionTUs = max(0, target->TU - (entTUs - targTUs)); /* target gets the difference in TUs */
 			ent->reactionNoDraw = qtrue; 								/* so ent can't lose the TU battle again */
-#ifdef DEBUG_REACTION
-			Com_Printf("Entity %s was out-drawn\n", ent->chr.name);
-#endif
 		} else {
 			/* ent wins so take the shot */
-#ifdef DEBUG_REACTION
-			Com_Printf("Entity %s won the draw\n", ent->chr.name);
-#endif
 			G_ResolveRF(ent, qfalse);
 		}
 	}
@@ -501,9 +405,7 @@ void G_ReactToEndTurn (void)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (!ent->reactionTarget)
 			continue;
-#ifdef DEBUG_REACTION
-		Com_Printf("Resolving reaction fire for %s because the other player ended their turn\n", ent->chr.name);
-#endif
+
 		G_ResolveRF(ent, qfalse);
 		ent->reactionTarget = NULL;
 		ent->reactionFired = 0;
@@ -513,7 +415,6 @@ void G_ReactToEndTurn (void)
 /**
  * @brief Guess! Reset all "shaken" states on end of turn?
  * @note Normally called on end of turn.
- * @todo Comment on the AddEvent code.
  * @sa G_ClientStateChange
  * @param[in] team Index of team to loop through.
  */
