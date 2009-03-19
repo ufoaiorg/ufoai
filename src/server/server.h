@@ -43,6 +43,9 @@ typedef enum {
 	ss_game						/**< actively running */
 } server_state_t;
 
+/**
+ * @brief Struct that is only valid for one map. It's deleted on every map load.
+ */
 typedef struct {
 	server_state_t state;		/**< precache commands are only valid during load */
 
@@ -50,6 +53,8 @@ typedef struct {
 	qboolean day;				/**< day version loaded */
 	char assembly[MAX_QPATH];		/**< random map assembly name */
 	struct cBspModel_s *models[MAX_MODELS];
+
+	qboolean endgame;
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 } server_t;
@@ -165,7 +170,8 @@ void SV_Heartbeat_f(void);
 /* sv_game.c */
 extern game_export_t *ge;
 
-int SV_RunGameFrame(void *data);
+int SV_RunGameFrameThread(void *data);
+void SV_RunGameFrame(void);
 void SV_InitGameProgs(void);
 void SV_ShutdownGameProgs(void);
 

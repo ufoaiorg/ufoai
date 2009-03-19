@@ -4,27 +4,27 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+ All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-Original file from Quake 2 v3.21: quake2-2.31/server/sv_game.c
-Copyright (C) 1997-2001 Id Software, Inc.
+ Original file from Quake 2 v3.21: quake2-2.31/server/sv_game.c
+ Copyright (C) 1997-2001 Id Software, Inc.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-See the GNU General Public License for more details.
+ See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
+ */
 
 #include "server.h"
 #include <SDL_thread.h>
@@ -48,7 +48,6 @@ static void SV_dprintf (const char *fmt, ...)
 	Com_vPrintf(fmt, ap);
 	va_end(ap);
 }
-
 
 /**
  * @brief Print to a single client
@@ -93,7 +92,6 @@ static void SV_error (const char *fmt, ...)
 
 	Com_Error(ERR_DROP, "Game Error: %s", msg);
 }
-
 
 /**
  * @note Also sets mins and maxs for inline bmodels
@@ -143,7 +141,7 @@ static void SV_Configstring (int index, const char *val)
 		break;
 	}
 
-	if (Com_ServerState() != ss_loading) {	/* send the update to everyone */
+	if (Com_ServerState() != ss_loading) { /* send the update to everyone */
 		struct dbuffer *msg = new_dbuffer();
 		NET_WriteByte(msg, svc_configstring);
 		NET_WriteShort(msg, index);
@@ -168,7 +166,7 @@ static void SV_WriteByte (byte c)
  */
 static byte* SV_WriteDummyByte (byte c)
 {
-	byte *pos = (byte*)pfe_msg->end;
+	byte *pos = (byte*) pfe_msg->end;
 	NET_WriteByte(pfe_msg, c);
 	return pos;
 }
@@ -274,7 +272,7 @@ static void SV_ReadFormat (const char *format, ...)
 	va_list ap;
 
 	assert(format);
-	if (!*format)	/* PA_NULL */
+	if (!*format) /* PA_NULL */
 		return;
 	va_start(ap, format);
 	NET_vReadFormat(sv_msg, format, ap);
@@ -332,7 +330,6 @@ static void SV_MemFree (void *ptr)
 	_Mem_Free(ptr, "GAME DLL", -1);
 }
 
-
 /**
  * @brief Makes sure the game DLL does not use client, or signed tags
  */
@@ -379,15 +376,18 @@ void SV_ShutdownGameProgs (void)
  * @sa G_RunFrame
  * @sa SV_Frame
  */
-int SV_RunGameFrame (void *data)
+int SV_RunGameFrameThread (void *data)
 {
-	const int gameEnd = ge->RunFrame();
+	do {
+		sv.endgame = ge->RunFrame();
+	} while (!sv.endgame);
 
-	/* next map in the cycle */
-	if (gameEnd && sv_maxclients->integer > 1)
-		SV_NextMapcycle();
+	return 0;
+}
 
-	return gameEnd;
+void SV_RunGameFrame (void)
+{
+	sv.endgame = ge->RunFrame();
 }
 
 /**
@@ -506,5 +506,5 @@ void SV_InitGameProgs (void)
 	ge->Init();
 
 	if (sv_threads->integer)
-		thread = SDL_CreateThread(SV_RunGameFrame, NULL);
+		thread = SDL_CreateThread(SV_RunGameFrameThread, NULL);
 }

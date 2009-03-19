@@ -744,7 +744,11 @@ void SV_Frame (int now, void *data)
 	rand();
 
 	if (!sv_threads->integer)
-		SV_RunGameFrame(NULL);
+		SV_RunGameFrame();
+
+	/* next map in the cycle */
+	if (sv.endgame && sv_maxclients->integer > 1)
+		SV_NextMapcycle();
 
 	/* send a heartbeat to the master if needed */
 	Master_Heartbeat();
