@@ -3126,8 +3126,8 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/** Set initial state of reaction fire to previously stored state for all team-members.
 	 * This (and the second loop below) defines the default reaction-mode.
-	 * @sa cl_team:CL_GenerateCharacter for the initial default value.
-	 * @sa g_ai.c:G_SpawnAIPlayer */
+	 * @sa CL_GenerateCharacter for the initial default value.
+	 * @sa G_SpawnAIPlayer */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
 			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);

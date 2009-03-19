@@ -1575,6 +1575,10 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	 * I think this has something to do with the vis check in G_BuildForbiddenList */
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
+	/* test for possible death during move. reset bestAia due to dead status */
+	if (G_IsDead(ent))
+		memset(&bestAia, 0, sizeof(bestAia));
+
 	if (g_aidebug->integer)
 		Com_DPrintf(DEBUG_GAME, "bestAIAction.to (%i %i %i) stop (%i %i %i)\n",
 			(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
@@ -1582,7 +1586,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	return bestAia;
 }
-#endif /* LUA_AI */
+#endif /* !LUA_AI */
 
 /**
  * @brief This function will turn the AI actor into the direction that is needed to walk
