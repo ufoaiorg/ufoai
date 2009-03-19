@@ -708,7 +708,7 @@ static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, c
 	vec3_t start, end;
 	pos3_t pos;
 	trace_t tr;
-	int lo, hi, temp_z;
+	int lo, hi, temp_z, adj_lo;
 
 	const int endfloor = RT_FLOOR(map, actor_size, ax, ay, z) + z * CELL_HEIGHT;
 
@@ -760,7 +760,13 @@ static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, c
 				*hi_val = hi;
 				/* Find the floor for the highest adjacent cell in this passage. */
 				temp_z = min(floor((hi - 1) / CELL_HEIGHT), PATHFINDING_HEIGHT - 1);
-				temp_z = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+				adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+				if (adj_lo > hi) {
+					temp_z--;
+					adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+				}
+				if (debugTrace)
+					Com_Printf("Found floor in destination cell: %i (%i).\n", adj_lo, temp_z);
 				/* Here's the code that makes an actor fall and not step down: */
 				/** @note Don't do this here!  Let Grid_MoveMark make this decision. */
 				/*
@@ -770,7 +776,7 @@ static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, c
 					return z;
 				}
 				*/
-				return floor(temp_z / CELL_HEIGHT);
+				return floor(adj_lo / CELL_HEIGHT);
 			}
 		}
 	} else {
@@ -805,7 +811,13 @@ static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, c
 					*hi_val = hi;
 					/* Find the floor for the highest adjacent cell in this passage. */
 					temp_z = min(floor((hi - 1) / CELL_HEIGHT), PATHFINDING_HEIGHT - 1);
-					temp_z = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+					adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+					if (adj_lo > hi) {
+						temp_z--;
+						adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+					}
+					if (debugTrace)
+						Com_Printf("Found floor in destination cell: %i (%i).\n", adj_lo, temp_z);
 					/* Here's the code that makes an actor fall vs step down: */
 					/** @note Don't do this here!  Let Grid_MoveMark make this decision. */
 					/*
@@ -815,7 +827,7 @@ static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, c
 						return z;
 					}
 					*/
-					return floor(temp_z / CELL_HEIGHT);
+					return floor(adj_lo / CELL_HEIGHT);
 				} else {
 				/* Credit to Duke: We skip the minimum opening, as if there is a
 				 * viable opening, even one slice above, that opening would be open. */
