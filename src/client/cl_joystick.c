@@ -323,10 +323,8 @@ void IN_StartupJoystick (void)
 	stick = NULL;
 	memset(&stick_state, '\0', sizeof(stick_state));
 
-	if (!in_joystick->integer) {
-		Com_Printf("joystick is not active.\n");
+	if (!in_joystick->integer)
 		return;
-	}
 
 	if (!SDL_WasInit(SDL_INIT_JOYSTICK)) {
 		Com_DPrintf(DEBUG_CLIENT, "Calling SDL_Init(SDL_INIT_JOYSTICK)...\n");

@@ -43,8 +43,7 @@ void MN_SetViewRect (void)
 		if (MN_IsMenuOnStack(mn_hud->string))
 			menu = MN_GetMenu(mn_hud->string);
 
-	if (menu && menu->u.window.renderNode)
-	{
+	if (menu && menu->u.window.renderNode) {
 		menuNode_t* node = menu->u.window.renderNode;
 		vec2_t pos;
 		MN_GetNodeAbsPos(node, pos);
