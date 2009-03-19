@@ -290,7 +290,7 @@ static void GAME_SendCurrentTeamSpawningInfo (struct dbuffer * buf, chrList_t *t
 }
 
 /**
- * @brief After a mission was finished this function is called
+ * @brief Called during startup of mission to send team info
  */
 void GAME_SpawnSoldiers (void)
 {
