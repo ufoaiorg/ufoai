@@ -333,6 +333,7 @@ void R_EndFrame (void)
 	if (vid_gamma->modified) {
 		const float g = vid_gamma->value;
 		SDL_SetGamma(g, g, g);
+		vid_gamma->modified = qfalse;
 	}
 
 	R_ClearScene();
