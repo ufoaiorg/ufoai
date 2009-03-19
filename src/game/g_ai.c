@@ -1110,7 +1110,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		if (fdArray == NULL)
 			continue;
 
-		/** @todo timed firedefs that bounce around should not be thrown/shooten about the hole distance */
+		/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
 		for (fdIdx = 0; fdIdx < item->t->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 			const fireDef_t *fd = &fdArray[fdIdx];
 
@@ -1399,30 +1399,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 
 	return bestActionPoints;
 }
-#endif /* LUA_AI */
 
-edict_t *ai_waypointList;
-
-void G_AddToWayPointList (edict_t *ent)
-{
-	int i = 1;
-
-	if (!ai_waypointList)
-		ai_waypointList = ent;
-	else {
-		edict_t *e = ai_waypointList;
-		while (e->groupChain) {
-			e = e->groupChain;
-			i++;
-		}
-		i++;
-		e->groupChain = ent;
-	}
-
-	Com_DPrintf(DEBUG_GAME, "%i waypoints in this map\n", i);
-}
-
-#ifndef LUA_AI
 /**
  * @brief Searches the map for mission edicts and try to get there
  * @sa AI_PrepBestAction
@@ -1587,6 +1564,27 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	return bestAia;
 }
 #endif /* !LUA_AI */
+
+edict_t *ai_waypointList;
+
+void G_AddToWayPointList (edict_t *ent)
+{
+	int i = 1;
+
+	if (!ai_waypointList)
+		ai_waypointList = ent;
+	else {
+		edict_t *e = ai_waypointList;
+		while (e->groupChain) {
+			e = e->groupChain;
+			i++;
+		}
+		i++;
+		e->groupChain = ent;
+	}
+
+	Com_DPrintf(DEBUG_GAME, "%i waypoints in this map\n", i);
+}
 
 /**
  * @brief This function will turn the AI actor into the direction that is needed to walk

@@ -121,8 +121,8 @@ static invList_t invChain[MAX_INVLIST];
 
 
 /**
- * @brief This will be called when the dll is first loaded
- * @note only happens when a new game is started or a save game is loaded.
+ * @brief This will be called when the game library is first loaded
+ * @note only happens when a new game/map is started
  */
 static void G_Init (void)
 {
@@ -157,7 +157,7 @@ static void G_Init (void)
 	password = gi.Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	sv_needpass = gi.Cvar_Get("sv_needpass", "0", CVAR_SERVERINFO, NULL);
 	sv_filterban = gi.Cvar_Get("sv_filterban", "1", 0, NULL);
-	sv_ai = gi.Cvar_Get("sv_ai", "1", 0, NULL);
+	sv_ai = gi.Cvar_Get("sv_ai", "1", 0, "Activate or deativate the ai");
 	sv_teamplay = gi.Cvar_Get("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see sv_maxclients, sv_maxplayersperteam, sv_maxsoldiersperteam and sv_maxsoldiersperplayer");
 	/* how many connected clients */
 	sv_maxclients = gi.Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
@@ -187,14 +187,14 @@ static void G_Init (void)
 	mof_civilian = gi.Cvar_Get("mof_civilian", "0.3", CVAR_LATCH|CVAR_NOSET, NULL);
 	mof_enemy = gi.Cvar_Get("mof_ememy", "0.5", CVAR_LATCH|CVAR_NOSET, NULL);
 	mor_pain = gi.Cvar_Get("mof_pain", "3.6", CVAR_LATCH|CVAR_NOSET, NULL);
-	/*everyone gets this times morale damage */
+	/* everyone gets this times morale damage */
 	mor_default = gi.Cvar_Get("mor_default", "0.3", CVAR_LATCH|CVAR_NOSET, "Everyone gets this times morale damage");
-	/*at this distance the following two get halfed (exponential scale) */
-	mor_distance = gi.Cvar_Get("mor_distance", "120", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halfed (exponential scale)");
-	/*at this distance the following two get halfed (exponential scale) */
-	mor_victim = gi.Cvar_Get("mor_victim", "0.7", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halfed (exponential scale)");
-	/*at this distance the following two get halfed (exponential scale) */
-	mor_attacker = gi.Cvar_Get("mor_attacker", "0.3", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halfed (exponential scale)");
+	/* at this distance the following two get halved (exponential scale) */
+	mor_distance = gi.Cvar_Get("mor_distance", "120", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halved (exponential scale)");
+	/* at this distance the following two get halved (exponential scale) */
+	mor_victim = gi.Cvar_Get("mor_victim", "0.7", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halved (exponential scale)");
+	/* at this distance the following two get halved (exponential scale) */
+	mor_attacker = gi.Cvar_Get("mor_attacker", "0.3", CVAR_LATCH|CVAR_NOSET, "At this distance the following two get halved (exponential scale)");
 	/* how much the morale depends on the size of the damaged team */
 	mon_teamfactor = gi.Cvar_Get("mon_teamfactor", "0.6", CVAR_LATCH|CVAR_NOSET, "How much the morale depends on the size of the damaged team");
 
@@ -220,7 +220,6 @@ static void G_Init (void)
 	difficulty = gi.Cvar_Get("difficulty", "0", CVAR_NOSET, "Difficulty level");
 
 	game.sv_maxentities = sv_maxentities->integer;
-	/** @todo */
 	game.sv_maxplayersperteam = sv_maxplayersperteam->integer;
 
 	/* initialize all entities for this game */
@@ -244,10 +243,6 @@ static void G_Init (void)
 	if (logstats->integer)
 		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
 }
-
-
-/*=================================================================== */
-
 
 /**
  * @brief Free the tags TAG_LEVEL and TAG_GAME
@@ -303,7 +298,7 @@ game_export_t *GetGameAPI (game_import_t * import)
 	return &globals;
 }
 
-/* this is only here so the functions in q_shared.c and q_shwin.c can link */
+/* this is only here so the functions in the shared code can link */
 void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
@@ -366,7 +361,6 @@ static void CheckNeedPass (void)
 
 /**
  * @brief Sends character stats like assigned missions and kills back to client
- *
  * @note first short is the ucn to allow the client to identify the character
  * @note parsed in GAME_CP_Results
  * @sa G_EndGame
@@ -469,10 +463,6 @@ static void G_UpdateCharacterSkills (character_t *chr)
 		return;
 	}
 
-	/* Mostly for debugging */
-	if (chr->emplType >= MAX_EMPL)
-		Com_DPrintf(DEBUG_GAME, "G_UpdateCharacterSkills Soldier %s has employee-type of %i - please check if this is ok.\n", chr->name, chr->emplType);
-
 	/* Robots/UGVs do not get skill-upgrades. */
 	if (chr->emplType == EMPL_ROBOT)
 		return;
@@ -514,10 +504,7 @@ void G_EndGame (int team)
 
 	G_PrintStats(va("End of game - Team %i is the winner", team));
 
-	/** Calculate new scores/skills for the soldiers.
-	 * @note In theory we do not have to check for ET_ACTOR2x2 actors
-	 * (since phalanx has only robots that are 2x2),
-	 * but we never know, maybe we have Hulk in the future ;). */
+	/* Calculate new scores/skills for the soldiers. */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX) {
 			G_UpdateCharacterSkills(&ent->chr);
@@ -533,7 +520,7 @@ void G_EndGame (int team)
 				ent->HP = 0;
 				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
 				gi.WriteShort(ent->number);
-				gi.WriteShort(STATE_DEAD);
+				gi.WriteShort(ent->state);
 				level.num_kills[team][ent->team]++;
 			}
 		/* also kill all civilians */
@@ -656,7 +643,6 @@ qboolean G_RunFrame (void)
 	level.framenum++;
 	/* server is running at 10 fps */
 	level.time = level.framenum * SERVER_FRAME_SECONDS;
-/*	Com_Printf("frame: %i   time: %f\n", level.framenum, level.time); */
 
 	/* still waiting for other players */
 	if (!G_GameRunning()) {
