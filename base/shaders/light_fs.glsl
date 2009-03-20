@@ -70,6 +70,9 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 		}
 	}
 #endif
+
+	light = clamp(light, 0.0, 1.8);
+
 	// now modulate the diffuse sample with the modified lightmap
 	gl_FragColor.rgb = diffuse.rgb * (lightmap + light);
 
