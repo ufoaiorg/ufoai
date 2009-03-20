@@ -244,6 +244,19 @@ menu uforecovery
 			color		"0 0.5 0 1"
 			click		{ cmd "cp_uforecovery_store_start;mn_pop;" }
 		}
+
+		button bt_basereplace
+		{
+			string		"_Replace UFO"
+			tooltip		"_Replace stored UFO with actual recovered one"
+			image		menu/button_green_small
+			blend		true
+			pos			"375 210"
+			size		"176 32"
+			font		f_menu
+			color		"0 0.5 0 1"
+			click		{ cmd "start_replace;" }
+		}
 	}
 
 	//
@@ -344,13 +357,31 @@ menu uforecovery
 		*store_panel.bt_basesel disabled false
 	}
 
+	confunc btbaserepl_enable {
+		*store_panel.bt_basereplace disabled false
+	}
+
 	confunc cp_basesel_disable {
 		*store_panel.cp_uforecovery_baselist disabled true
+	}
+
+	confunc start_replace {
+		*cvar:mn_uforecovery_tab 1
+		call uforecovery_tabchange
+		cmd "cp_uforecovery_replace;"
+		*store_panel.cp_uforecovery_baselist disabled true
+		*store_panel.cp_uforecovery_baselist lineselected -1
+		*store_panel.bt_basesel disabled true
+		*store_panel.bt_basereplace disabled true
+		*sell_panel.cp_uforecovery_nationlist lineselected	-1
+		*sell_panel.bt_natsel disabled true
+		*cvar:mission_recoverynation ""
 	}
 
 	func init {
 		*store_panel.cp_uforecovery_baselist lineselected	-1
 		*store_panel.cp_uforecovery_baselist disabled false
+		*store_panel.bt_basereplace disabled true
 		*store_panel.bt_basesel disabled true
 		*sell_panel.cp_uforecovery_nationlist lineselected	-1
 		*sell_panel.bt_natsel disabled true
