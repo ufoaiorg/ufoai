@@ -34,7 +34,7 @@ static technology_t *rsAlienXVI;
 
 
 /**
- * @brief Sread XVI at a given position.
+ * @brief Spread XVI at a given position.
  * @param[in] pos Position where XVI should be spread.
  */
 void CP_SpreadXVIAtPos (const vec2_t pos)
@@ -136,7 +136,7 @@ qboolean XVI_SaveXML (mxml_node_t *p)
 	for (y = 0; y < height; y++) {
 		int x;
 		for (x = 0; x < width; x++) {
-			/* That saves many Bytes in the savegame */
+			/* That saves many bytes in the savegame */
 			if (out[y * width + x] != defaultval) {
 				mxml_node_t *s = mxml_AddNode(n, "entry");
 				mxml_AddInt(s, "x", x);

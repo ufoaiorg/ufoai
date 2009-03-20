@@ -370,7 +370,7 @@ void UP_ItemDescription (const objDef_t *od)
 					up_weapon_id = i;
 			}
 
-			Cvar_Set("mn_displayweapon", "2");
+			Cvar_Set("mn_displayweapon", "2"); /**< @todo remove magic number */
 			Cvar_Set("mn_researchedlinkname", _(odAmmo->name));
 			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), _(odAmmo->name)));
 		} else {
@@ -1258,7 +1258,8 @@ static void UP_RightClick_f (void)
 	switch (upDisplay) {
 	case UFOPEDIA_INDEX:
 	case UFOPEDIA_ARTICLE:
-		Cbuf_AddText("mn_upback;");
+		UP_Back_f();
+		break;
 	default:
 		break;
 	}

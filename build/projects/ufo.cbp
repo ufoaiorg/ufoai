@@ -429,10 +429,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cp_time.h" />
-		<Unit filename="..\..\src\client\campaign\cp_ufopedia_callbacks.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cp_ufopedia_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cp_xvi.c">
 			<Option compilerVar="CC" />
 		</Unit>

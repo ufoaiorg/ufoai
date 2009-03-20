@@ -62,7 +62,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_market.h"
 #include "cp_employee_callbacks.h"
 #include "cp_market_callbacks.h"
-#include "cp_ufopedia_callbacks.h"
 
 struct memPool_s *cl_campaignPool;		/**< reset on every game restart */
 /* public vars */
@@ -2007,7 +2006,6 @@ static void CP_AddCampaignCallbackCommands (void)
 	B_InitCallbacks();
 	BS_InitCallbacks();
 	CP_TEAM_InitCallbacks();
-	UP_InitCallbacks();
 	E_InitCallbacks();
 	HOS_InitCallbacks();
 	INS_InitCallbacks();
@@ -2037,7 +2035,6 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	B_ShutdownCallbacks();
 	BS_ShutdownCallbacks();
 	CP_TEAM_ShutdownCallbacks();
-	UP_ShutdownCallbacks();
 	E_ShutdownCallbacks();
 	HOS_ShutdownCallbacks();
 	INS_ShutdownCallbacks();
