@@ -39,7 +39,7 @@ static mAliasAnim_t *R_AnimGet (model_t * mod, const char *name)
 	mAliasAnim_t *anim;
 	int i;
 
-	if (!mod || mod->type != mod_alias_md2)
+	if (!mod || !mod->alias.num_anims)
 		return NULL;
 
 	for (i = 0, anim = mod->alias.animdata; i < mod->alias.num_anims; i++, anim++)
@@ -63,7 +63,7 @@ void R_AnimAppend (animState_t * as, model_t * mod, const char *name)
 
 	assert(as->ladd < MAX_ANIMLIST);
 
-	if (!mod || mod->type != mod_alias_md2)
+	if (!mod || !mod->alias.num_anims)
 		return;
 
 	/* get animation */
@@ -110,10 +110,8 @@ void R_AnimChange (animState_t * as, model_t * mod, const char *name)
 
 	assert(as->ladd < MAX_ANIMLIST);
 
-	if (!mod || mod->type != mod_alias_md2) {
-		Com_Printf("R_AnimChange: No md2 model - can't set animation (%s) (model: %s)\n", name, mod ? mod->name : "(null)");
+	if (!mod || !mod->alias.num_anims)
 		return;
-	}
 
 	/* get animation */
 	anim = R_AnimGet(mod, name);
@@ -165,7 +163,7 @@ void R_AnimRun (animState_t * as, const model_t * mod, int msec)
 {
 	assert(as->lcur < MAX_ANIMLIST);
 
-	if (!mod || mod->type != mod_alias_md2)
+	if (!mod || !mod->alias.num_anims)
 		return;
 
 	if (as->lcur == as->ladd)
@@ -214,7 +212,7 @@ const char *R_AnimGetName (animState_t * as, const model_t * mod)
 
 	assert(as->lcur < MAX_ANIMLIST);
 
-	if (!mod || mod->type != mod_alias_md2)
+	if (!mod || !mod->alias.num_anims)
 		return NULL;
 
 	if (as->lcur == as->ladd)
