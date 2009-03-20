@@ -1975,11 +1975,22 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 	PolarToVec(target->pos, targetPos);
 	PolarToVec(target->route.point[target->route.numPoints - 1], targetDestPos);
 
-	/* In the following, we note S the position of the shooter, T the position of the target,
+	/** In the following, we note S the position of the shooter, T the position of the target,
 	 * D the destination of the target and I the interception point where shooter should reach target
 	 * O is the center of earth.
 	 * A, B and C are the angles TSI, STI and SIT
-	 * a, b, and c are the angles TOI, SOI and SOT */
+	 * a, b, and c are the angles TOI, SOI and SOT
+	 *
+	 * According to geometry on a sphere, the values defined above must be solutions of both equations:
+	 *		sin(A) / sin(a) = sin(B) / sin(b)
+	 *		cos(a) = cos(b) * cos(c) + sin(b) * sin(c) * cos(A)
+	 * And we have another equation, given by the fact that shooter and target must reach I at the same time:
+	 *		shooterSpeed * a = targetSpeed * b
+	 * We the want to find and equation linking a, c and B (we know the last 2 values). We therefore
+	 * eliminate b, then A, to get the equation we need to solve:
+	 *		pow(cos(a) - cos(speedRatio * a) * cos(c), 2.)
+	 *		- sin(c) * sin(c) * (sin(speedRatio * a) * sin(speedRatio * a) - sin(a) * sin(a) * sin(B) * sin(B)) = 0
+	 */
 
 	/* Get first vector (tangent to triangle in T, in the direction of D) */
 	CrossProduct(targetPos, shooterPos, rotationAxis);
