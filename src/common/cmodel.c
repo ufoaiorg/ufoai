@@ -88,6 +88,14 @@ static const int TUs_used[PATHFINDING_DIRECTIONS] = {
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & SW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & NW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY UP & SE */
+	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & E  */
+	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & W  */
+	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & N  */
+	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & S  */
+	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & NE */
+	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & SW */
+	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & NW */
+	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY LEVEL & SE */
 	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & E  */
 	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & W  */
 	TU_MOVE_STRAIGHT * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & N  */
@@ -551,6 +559,8 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 	trace_t trace;
 	cBspModel_t *model;
 	const char **name;
+	vec3_t amins, amaxs, acenter, aoffset;
+	float offset;
 
 	/* trace against world first */
 	if (TR_TestLine(start, stop, levelmask))
@@ -568,6 +578,26 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		assert(model);
 		if (model->headnode >= mapTiles[model->tile].numnodes + 6)
 			continue;
+
+		/* Quickly calculate the bounds of this model to see if they can overlap. */
+		VectorAdd(model->origin, model->mins, amins);
+		VectorAdd(model->origin, model->maxs, amaxs);
+		if (VectorNotEmpty(model->angles)) {
+			offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
+			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
+			VectorSet(aoffset, offset, offset, offset);
+			VectorAdd(acenter, aoffset, amaxs);
+			VectorSubtract(acenter, aoffset, amins);
+		}
+		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
+		if ((start[0] > amaxs[0] && stop[0] > amaxs[0])
+			|| (start[1] > amaxs[1] && stop[1] > amaxs[1])
+			|| (start[2] > amaxs[2] && stop[2] > amaxs[2])
+			|| (start[0] < amins[0] && stop[0] < amins[0])
+			|| (start[1] < amins[1] && stop[1] < amins[1])
+			|| (start[2] < amins[2] && stop[2] < amins[2]))
+			continue;
+
 		trace = CM_TransformedBoxTrace(model->tile, start, stop, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -647,12 +677,12 @@ qboolean CM_EntTestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, co
 			VectorSubtract(acenter, aoffset, amins);
 		}
 		/* If the bounds of the extents box and the line do not overlap, then skip tracing this model. */
-		if ((start[0] > amaxs[0] && end[0] > amaxs[0])
-			|| (start[1] > amaxs[1] && end[1] > amaxs[1])
-			|| (start[2] > amaxs[2] && end[2] > amaxs[2])
-			|| (start[0] < amins[0] && end[0] < amins[0])
-			|| (start[1] < amins[1] && end[1] < amins[1])
-			|| (start[2] < amins[2] && end[2] < amins[2]))
+		if ((start[0] > amaxs[0] && stop[0] > amaxs[0])
+			|| (start[1] > amaxs[1] && stop[1] > amaxs[1])
+			|| (start[2] > amaxs[2] && stop[2] > amaxs[2])
+			|| (start[0] < amins[0] && stop[0] < amins[0])
+			|| (start[1] < amins[1] && stop[1] < amins[1])
+			|| (start[2] < amins[2] && stop[2] < amins[2]))
 			continue;
 
 		trace = CM_HintedTransformedBoxTrace(model->tile, start, end, vec3_origin, vec3_origin, model->headnode, MASK_ALL, 0, model->origin, model->angles, fraction);
