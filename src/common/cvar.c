@@ -310,7 +310,7 @@ qboolean Cvar_Delete (const char *var_name)
 				Mem_Free(var->old_string);
 			if (var->default_string)
 				Mem_Free(var->default_string);
-			/* lateched cvars should not be deleteable */
+			/* latched cvars should not be removable */
 			assert(var->latched_string == NULL);
 			Mem_Free(var);
 			return qtrue;
@@ -333,7 +333,7 @@ qboolean Cvar_Delete (const char *var_name)
  * @note CVAR_SERVERINFO: This cvar will be send in the server info response strings (server browser)
  * @note CVAR_NOSET: This cvar can not be set from the commandline
  * @note CVAR_USERINFO: This cvar will be added to the userinfo string when changed (network synced)
- * @note CVAR_DEVELOPER: Only changeable if we are in developement mode
+ * @note CVAR_DEVELOPER: Only changeable if we are in development mode
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
@@ -381,7 +381,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	var->hash_next = cvar_vars_hash[hash];
 	/* set the cvar_vars_hash pointer to the current cvar */
 	/* if there were already others in cvar_vars_hash at position hash, they are
-	 * now accessable via var->hash_next - loop until var->hash_next is null (the first
+	 * now accessible via var->hash_next - loop until var->hash_next is null (the first
 	 * cvar at that position)
 	 */
 	cvar_vars_hash[hash] = var;
@@ -399,7 +399,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 
 /**
  * @brief Sets a cvar values
- * Handles writeprotection and latched cvars as expected
+ * Handles write protection and latched cvars as expected
  * @param[in] var_name Which cvar
  * @param[in] value Set the cvar to the value specified by 'value'
  * @param[in] force Force the update of the cvar
@@ -480,7 +480,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
-		userinfo_modified = qtrue;	/* transmit at next oportunity */
+		userinfo_modified = qtrue;	/* transmit at next opportunity */
 
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
@@ -542,7 +542,7 @@ cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 
 	var->modified = qtrue;
 
-	/* transmit at next oportunity */
+	/* transmit at next opportunity */
 	if (var->flags & CVAR_USERINFO)
 		userinfo_modified = qtrue;
 

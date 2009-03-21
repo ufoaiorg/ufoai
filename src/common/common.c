@@ -101,7 +101,7 @@ static unsigned int rd_buffersize;
 static struct net_stream *rd_stream;
 
 /**
- * @brief Redirect packets/ouput from server to client
+ * @brief Redirect packets/output from server to client
  * @sa Com_EndRedirect
  *
  * This is used to redirect printf outputs for rcon commands
@@ -132,7 +132,7 @@ void Com_EndRedirect (void)
 
 /**
  * @note Both client and server can use this, and it will output
- * to the apropriate place.
+ * to the appropriate place.
  */
 void Com_vPrintf (const char *fmt, va_list ap)
 {
@@ -210,7 +210,7 @@ void Com_DPrintf (int level, const char *fmt, ...)
 
 /**
  * @note Both client and server can use this, and it will
- * do the apropriate things.
+ * do the appropriate things.
  */
 void Com_Error (int code, const char *fmt, ...)
 {
@@ -267,7 +267,7 @@ void Com_Drop (void)
 
 /**
  * Both client and server can use this, and it will
- * do the apropriate things.
+ * do the appropriate things.
  */
 void Com_Quit (void)
 {
@@ -311,8 +311,6 @@ void Com_SetServerState (int state)
 	server_state = state;
 }
 
-/*=========================================================================== */
-
 /**
  * @brief returns hash key for a string
  */
@@ -331,10 +329,10 @@ unsigned int Com_HashKey (const char *name, int hashsize)
 }
 
 /**
- * @brief Checks whether a given commandline paramter was set
+ * @brief Checks whether a given commandline parameter was set
  * @param[in] parm Check for this commandline parameter
  * @return the position (1 to argc-1) in the program's argument list
- * where the given parameter apears, or 0 if not present
+ * where the given parameter appears, or 0 if not present
  * @sa COM_InitArgv
  */
 int COM_CheckParm (const char *parm)
@@ -545,7 +543,7 @@ qboolean Com_ConsoleCompleteCommand (const char *s, char *target, size_t bufSize
 			*tmp++ = *s++;
 		/* get rid of the whitespace */
 		s++;
-		/* terminate the string at whitespace position to seperate the cmd */
+		/* terminate the string at whitespace position to separate the cmd */
 		*tmp = '\0';
 
 		/* now strip away that part that is not yet completed */
@@ -873,8 +871,6 @@ static void Cbuf_Execute_timer (int now, void *data)
 
 /**
  * @brief Init function
- * @param[in] argc int
- * @param[in] argv char**
  * @sa Com_ParseScripts
  * @sa Qcommon_Shutdown
  * @sa Sys_Init
@@ -1251,7 +1247,7 @@ linkedList_t* LIST_Add (linkedList_t** listDest, const byte* data, size_t length
 /**
  * @brief Searches for the first occurrence of a given string
  * @return true if the string is found, otherwise false
- * @note if string is NULL, the function returns false
+ * @note if string is @c NULL, the function returns false
  * @sa LIST_AddString
  */
 const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* string)
@@ -1283,7 +1279,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 
 	/* create the list */
 	if (!*listDest) {
-		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(**listDest), com_genericPool, 0);
 		(*listDest)->data = (byte*)Mem_PoolStrDup(data, com_genericPool, 0);
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
 		return;
@@ -1293,7 +1289,7 @@ void LIST_AddString (linkedList_t** listDest, const char* data)
 	while (list->next)
 		list = list->next;
 
-	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(*newEntry), com_genericPool, 0);
 	list->next = newEntry;
 	newEntry->data = (byte*)Mem_StrDup(data);
 	newEntry->next = NULL; /* not really needed - but for better readability */
@@ -1315,7 +1311,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 
 	/* create the list */
 	if (!*listDest) {
-		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+		*listDest = (linkedList_t*)Mem_PoolAlloc(sizeof(**listDest), com_genericPool, 0);
 		(*listDest)->data = data;
 		(*listDest)->ptr = qtrue;
 		(*listDest)->next = NULL; /* not really needed - but for better readability */
@@ -1326,7 +1322,7 @@ void LIST_AddPointer (linkedList_t** listDest, void* data)
 	while (list->next)
 		list = list->next;
 
-	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(linkedList_t), com_genericPool, 0);
+	newEntry = (linkedList_t*)Mem_PoolAlloc(sizeof(*newEntry), com_genericPool, 0);
 	list->next = newEntry;
 	newEntry->data = data;
 	newEntry->ptr = qtrue;

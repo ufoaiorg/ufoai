@@ -98,7 +98,7 @@ void Cbuf_Init (void)
 
 /**
  * @brief Adds command text at the end of the buffer
- * @note Normally when a command is generate from the console or keybinings, it will be added to the end of the command buffer.
+ * @note Normally when a command is generate from the console or keybindings, it will be added to the end of the command buffer.
  */
 void Cbuf_AddText (const char *text)
 {
@@ -207,7 +207,6 @@ void Cbuf_Execute (void)
 				break;
 		}
 
-		/* sku - removed potentional buffer overflow vulnerability */
 		if (i > sizeof(line) - 1)
 			i = sizeof(line) - 1;
 
@@ -260,7 +259,7 @@ void Cbuf_AddEarlyCommands (qboolean clear)
 /**
  * @brief Adds command line parameters as script statements
  * @note Commands lead with a + and continue until another + or -
- * @return true if any late commands were added, which will keep the demoloop from immediately starting
+ * @return true if any late commands were added
  * @sa Cbuf_AddEarlyCommands
  */
 qboolean Cbuf_AddLateCommands (void)
@@ -370,7 +369,7 @@ static void Cmd_Echo_f (void)
 }
 
 /**
- * @brief Creates a new command that executes a command string (possibly ; seperated)
+ * @brief Creates a new command that executes a command string (possibly ; separated)
  */
 static void Cmd_Alias_f (void)
 {
@@ -593,7 +592,7 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 	unsigned int hash;
 	char searchName[MAX_VAR];
 
-	/* remove paramters */
+	/* remove parameters */
 	Q_strncpyz(searchName, cmd_name, sizeof(searchName));
 	sep = strstr(searchName, " ");
 	if (sep)

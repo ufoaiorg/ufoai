@@ -2,7 +2,7 @@
  * @file files.c
  * @brief All of UFO's data access is through a hierarchical file system, but the
  * contents of the file system can be transparently merged from several sources.
- * The "base directory" is the path to the directory holding the ufo.exe and the game directory (base).
+ * The "base directory" is the path to the directory holding the ufo binary and the game directory (base).
  * The base directory is only used during filesystem initialization.
  * The "game directory" is the first tree on the search path and directory that all generated
  * files (savegames, screenshots, config files) will be saved to.
@@ -110,8 +110,7 @@ void FS_CreatePath (const char *path)
 }
 
 /**
- * @brief For some reason, other dll's can't just call fclose()
- * on files returned by FS_OpenFile...
+ * @brief Closes a file handle
  * @sa FS_OpenFile
  */
 void FS_CloseFile (qFILE * f)
@@ -195,7 +194,6 @@ static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mod
 							return info.uncompressed_size;
 						}
 					}
-					/*fseek(*file, pak->files[i].filepos->pos_in_zip_directory, SEEK_SET);*/
 					return pak->files[i].filelen;
 				}
 		} else {
@@ -207,7 +205,6 @@ static int FS_OpenFileSingle (const char *filename, qFILE * file, filemode_t mod
 				continue;
 
 			fs_openedFiles++;
-			/*Com_DPrintf(DEBUG_ENGINE, "FindFile: %s\n", netpath);*/
 			return FS_FileLength(file);
 		}
 	}
@@ -488,7 +485,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 #define MAX_PACKFILES 1024
 
 static const char *pakFileExt[] = {
-	"zip", "pk3", NULL
+	"pk3", "zip", NULL
 };
 
 /**
@@ -879,7 +876,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 		f++;
 /*	Com_Printf("_AddToListBlock: %s\n", name);*/
 
-	/* check for double occurences */
+	/* check for double occurrences */
 	for (tblock = block; tblock; tblock = tblock->next) {
 		tl = tblock->files;
 		while (*tl) {
@@ -894,7 +891,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 	if (tl && !*tl) {
 		const size_t len = strlen(f);
 		if (*fl - block->files + len >= FL_BLOCKSIZE) {
-			/* terminalize the last block */
+			/* terminate the last block */
 			**fl = 0;
 
 			/* allocate a new block */
@@ -1006,7 +1003,7 @@ int FS_BuildFileList (const char *fileList)
 		}
 	}
 
-	/* terminalize the list */
+	/* terminate the list */
 	*fl = 0;
 	return numfiles;
 }
@@ -1303,7 +1300,7 @@ static int CheckBSPFile (const char *filename)
 
 /**
  * @brief File the fs_maps array with valid maps
- * @param[in] reset If true the directory is scanned everytime for new maps (useful for dedicated servers).
+ * @param[in] reset If true the directory is scanned every time for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
  * @todo Add ump file support
  */
@@ -1484,7 +1481,6 @@ int FS_Write (const void *buffer, int len, qFILE * f)
 		remaining -= written;
 		buf += written;
 	}
-/* 	fflush(f->f); */
 	return len;
 }
 
