@@ -69,7 +69,11 @@
 		</Compiler>
 		<Unit filename="../../base/ai/alien.lua" />
 		<Unit filename="../../base/ai/civilian.lua" />
+		<Unit filename="../../src/game/g_ai.h" />
 		<Unit filename="../../src/game/g_ai.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/game/g_ai_lua.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/game/g_client.c">

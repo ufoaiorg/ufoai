@@ -219,6 +219,7 @@ extern cvar_t *m_rage;
 extern cvar_t *m_rage_stop;
 extern cvar_t *m_panic_stop;
 
+extern cvar_t *g_ailua;
 extern cvar_t *g_aidebug;
 extern cvar_t *g_nodamage;
 extern cvar_t *g_notu;
