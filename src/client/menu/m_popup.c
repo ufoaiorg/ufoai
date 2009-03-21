@@ -33,9 +33,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief strings to be used for popup when text is not static */
 char popupText[MAX_SMALLMENUTEXTLEN];
-char popupAction1[MAX_SMALLMENUTEXTLEN];
-char popupAction2[MAX_SMALLMENUTEXTLEN];
-char popupAction3[MAX_SMALLMENUTEXTLEN];
+static char popupAction1[MAX_SMALLMENUTEXTLEN];
+static char popupAction2[MAX_SMALLMENUTEXTLEN];
+static char popupAction3[MAX_SMALLMENUTEXTLEN];
 
 /**
  * @brief Popup on geoscape

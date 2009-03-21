@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_MENU_M_NODE_ABSTRACTSCROLLBAR_H
 
 /**
- * @brief extradata for scroolbar widget
+ * @brief extradata for scrollbar widget
  * @todo think about switching to percent when its possible (lowPosition, hightPosition)
  * @todo think about adding a "direction" property and merging v and h scrollbar
  */

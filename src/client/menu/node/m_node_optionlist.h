@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_OPTIONLIST_H
 #define CLIENT_MENU_M_NODE_OPTIONLIST_H
 
-struct nodeBehaviour_s;
+#include "../m_nodes.h"
 
-void MN_RegisterOptionListNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterOptionListNode(nodeBehaviour_t *behaviour);
 
 #endif

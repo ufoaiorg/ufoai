@@ -25,6 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_LINECHART_H
 #define CLIENT_MENU_M_NODE_LINECHART_H
 
+#include "../m_nodes.h"
+
 #define MAX_LINESTRIPS 16
 
 /**
@@ -47,7 +49,6 @@ typedef struct lineChartExtraData_s {
 	vec4_t axesColor;			/**< color of the axes */
 } lineChartExtraData_t;
 
-struct nodeBehaviour_s; /* prototype */
 void MN_RegisterLineChartNode(struct nodeBehaviour_s *behaviour);
 
 #endif

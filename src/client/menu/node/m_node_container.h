@@ -39,17 +39,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* prototypes */
 struct base_s;
-struct inventory_s;
 struct nodeBehaviour_s;
 struct menuNode_s;
-struct invList_s;
-struct item_s;
-struct invDef_s;
 
 extern struct inventory_s *menuInventory;
 
 void MN_RegisterContainerNode(struct nodeBehaviour_s *behaviour);
-struct invList_s *MN_GetItemFromScrollableContainer (const struct menuNode_s* const node, int mouseX, int mouseY, int* contX, int* contY);
+invList_t *MN_GetItemFromScrollableContainer (const struct menuNode_s* const node, int mouseX, int mouseY, int* contX, int* contY);
 void MN_DrawItem(struct menuNode_s *node, const vec3_t org, const struct item_s *item, int x, int y, const vec3_t scale, const vec4_t color);
 void MN_ContainerNodeSetFilter(struct menuNode_s* node, int num);
 void MN_ContainerNodeUpdateEquipment(inventory_t *inv, equipDef_t *ed);
@@ -60,7 +56,7 @@ void MN_ContainerNodeUpdateEquipment(inventory_t *inv, equipDef_t *ed);
  */
 typedef struct containerExtraData_s {
 	/* for all containers */
-	struct invDef_s *container;	/**< The container linked to this node. */
+	invDef_t *container;	/**< The container linked to this node. */
 
 	int lastSelectedId;		/**< id oject the object type selected */
 	struct menuAction_s *onSelect;	/**< call when we select an item */

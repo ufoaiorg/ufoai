@@ -25,8 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_RADAR_H
 #define CLIENT_MENU_M_NODE_RADAR_H
 
-struct nodeBehaviour_s;
+#include "../m_nodes.h"
 
-void MN_RegisterRadarNode(struct nodeBehaviour_s *behaviour);
+void MN_RegisterRadarNode(nodeBehaviour_t *behaviour);
 
 #endif

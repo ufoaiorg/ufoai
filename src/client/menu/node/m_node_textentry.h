@@ -26,9 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_TEXT_ENTRY_H
 #define CLIENT_MENU_M_NODE_TEXT_ENTRY_H
 
-/* prototype */
-struct nodeBehaviour_s;
-struct menuAction_s;
+#include "../m_nodes.h"
 
 /**
  * @brief extradata for the textentry, to custom draw and behaviour

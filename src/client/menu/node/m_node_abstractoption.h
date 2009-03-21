@@ -43,7 +43,7 @@ typedef struct menuOption_s {
 	qboolean disabled;		/**< If true, the option is not selectable */
 
 	/**
-	 * @frief True if the element is hovered
+	 * @brief True if the element is hovered
 	 * @todo remove it, deprecated, we should use optionExtraData_t->hovered
 	 */
 	qboolean hovered;

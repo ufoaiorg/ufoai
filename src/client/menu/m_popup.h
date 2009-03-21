@@ -33,9 +33,6 @@ struct menuNode_s;	/* prototype */
 #define POPUPLIST_NODE_NAME "popup_list"
 
 extern char popupText[MAX_SMALLMENUTEXTLEN];
-extern char popupAction1[MAX_SMALLMENUTEXTLEN];
-extern char popupAction2[MAX_SMALLMENUTEXTLEN];
-extern char popupAction3[MAX_SMALLMENUTEXTLEN];
 
 void MN_Popup(const char *title, const char *text);
 struct menuNode_s *MN_PopupList(const char *title, const char *headline, linkedList_t* entries, const char *clickAction);

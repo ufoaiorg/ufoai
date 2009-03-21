@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MENU_M_NODE_MODEL_H
 #define CLIENT_MENU_M_NODE_MODEL_H
 
+#include "../m_nodes.h"
 #include "../../cl_renderer.h"	/**< include animState_t */
 
 #define MAX_MENUMODELS		128
@@ -84,11 +85,7 @@ typedef struct modelExtraData_s {
 void MN_LinkMenuModels(void);
 menuModel_t *MN_GetMenuModel(const char *menuModel);
 void MN_ListMenuModels_f(void);
-
-struct menuNode_s; /* prototype */
 void MN_DrawModelNode(struct menuNode_s *node, const char *source);
-
-struct nodeBehaviour_s; /* prototype */
 void MN_RegisterModelNode(struct nodeBehaviour_s *behaviour);
 
 #endif
