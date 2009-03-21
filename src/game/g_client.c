@@ -2891,7 +2891,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	p = NULL;
 	while (level.activeTeam == NO_ACTIVE_TEAM) {
 		/* search next team */
-		nextTeam = -1;
+		nextTeam = NO_ACTIVE_TEAM;
 
 		for (i = lastTeam + 1; i != lastTeam; i++) {
 			if (i >= MAX_TEAMS) {
@@ -2992,9 +2992,6 @@ static void G_SendEdictsAndBrushModels (int team)
 		 * a map assembly */
 		switch (ent->solid) {
 		case SOLID_BSP:
-			if (ent->type == ET_DOOR)
-				Com_DPrintf(DEBUG_GAME, "Sending door origin (%i, %i, %i)\n",
-					(int) ent->origin[0], (int) ent->origin[1], (int) ent->origin[2]);
 			/* skip the world(s) in case of map assembly */
 			if (ent->type) {
 				gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
@@ -3012,12 +3009,6 @@ static void G_SendEdictsAndBrushModels (int team)
 			}
 			break;
 
-		case SOLID_NOT:
-			break;
-
-		case SOLID_BBOX:
-			break;
-
 		/* send trigger entities to the client to display them (needs mins, maxs set) */
 		case SOLID_TRIGGER:
 			if (sv_send_edicts->integer) {
@@ -3027,6 +3018,10 @@ static void G_SendEdictsAndBrushModels (int team)
 				gi.WritePos(ent->mins);
 				gi.WritePos(ent->maxs);
 			}
+			break;
+
+		case SOLID_NOT:
+		case SOLID_BBOX:
 			break;
 		}
 	}
