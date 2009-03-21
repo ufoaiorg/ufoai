@@ -65,8 +65,8 @@ static void GAME_MP_StartServer_f (void)
 	if (!sv_dedicated->integer && !chrDisplayList.num)
 		GAME_MP_AutoTeam();
 
-	if (Cvar_VariableInteger("sv_teamplay")
-	 && Cvar_VariableValue("sv_maxsoldiersperplayer") > Cvar_VariableValue("sv_maxsoldiersperteam")) {
+	if (Cvar_GetInteger("sv_teamplay")
+	 && Cvar_GetValue("sv_maxsoldiersperplayer") > Cvar_GetValue("sv_maxsoldiersperteam")) {
 		MN_Popup(_("Settings doesn't make sense"), _("Set soldiers per player lower than soldiers per team"));
 		return;
 	}
@@ -76,7 +76,7 @@ static void GAME_MP_StartServer_f (void)
 		return;
 	assert(md->map);
 
-	Com_sprintf(map, sizeof(map), "map %s %s %s", Cvar_VariableInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
+	Com_sprintf(map, sizeof(map), "map %s %s %s", Cvar_GetInteger("mn_serverday") ? "day" : "night", md->map, md->param ? md->param : "");
 
 	/* let the (local) server know which map we are running right now */
 	csi.currentMD = md;

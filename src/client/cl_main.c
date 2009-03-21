@@ -757,7 +757,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 	if (!len) {
 		/* list them all if there was no parameter given */
 		for (i = 0; i < MAX_BOOKMARKS; i++) {
-			const char *adrStr = Cvar_VariableString(va("adr%i", i));
+			const char *adrStr = Cvar_GetString(va("adr%i", i));
 			if (adrStr[0] != '\0')
 				Com_Printf("%s\n", adrStr);
 		}
@@ -768,7 +768,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 
 	/* search all matches and fill the localMatch array */
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *adrStr = Cvar_VariableString(va("adr%i", i));
+		const char *adrStr = Cvar_GetString(va("adr%i", i));
 		if (adrStr[0] != '\0' && !Q_strncmp(partial, adrStr, len)) {
 			Com_Printf("%s\n", adrStr);
 			localMatch[matches++] = adrStr;
@@ -998,10 +998,10 @@ static void CL_CvarCheck (void)
 		CL_LanguageTryToSet(s_language->string);
 
 	/* r_mode and fullscreen */
-	v = Cvar_VariableInteger("mn_vidmode");
+	v = Cvar_GetInteger("mn_vidmode");
 	if (v < -1 || v >= VID_GetModeNums()) {
 		Com_Printf("Max vid_mode value is %i (%i)\n", VID_GetModeNums(), v);
-		v = Cvar_VariableInteger("vid_mode");
+		v = Cvar_GetInteger("vid_mode");
 		Cvar_SetValue("mn_vidmode", v);
 	}
 	if (v >= 0)

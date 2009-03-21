@@ -49,7 +49,6 @@ typedef struct menuOption_s {
 	qboolean hovered;
 
 	struct menuOption_s *next;	/**< Next element into a linked list of option */
-
 } menuOption_t;
 
 typedef struct {

@@ -258,7 +258,7 @@ static void E_ChangeName_f (void)
 		return;
 
 	if (selectedEmployee)
-		Q_strncpyz(selectedEmployee->chr.name, Cvar_VariableString("mn_name"), sizeof(selectedEmployee->chr.name));
+		Q_strncpyz(selectedEmployee->chr.name, Cvar_GetString("mn_name"), sizeof(selectedEmployee->chr.name));
 }
 
 /**

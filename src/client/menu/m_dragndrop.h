@@ -40,7 +40,7 @@ typedef enum {
 void MN_DrawDragAndDrop(int mousePosX, int mousePosY);
 
 /* command */
-void MN_DNDDragItem (struct menuNode_s *node, const struct item_s *item);
+void MN_DNDDragItem(struct menuNode_s *node, const struct item_s *item);
 void MN_DNDDrop(void);
 void MN_DNDAbort(void);
 

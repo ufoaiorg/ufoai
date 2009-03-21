@@ -100,7 +100,7 @@ static void S_Music_Start(const char *file);
 static void S_MusicHookFinished (void)
 {
 	S_Music_Stop();
-	S_Music_Start(Cvar_VariableString("snd_music"));
+	S_Music_Start(Cvar_GetString("snd_music"));
 }
 
 /**
@@ -185,7 +185,7 @@ static void S_Music_Play_f (void)
 	if (Cmd_Argc() == 2)
 		Cvar_Set("snd_music", Cmd_Argv(1));
 
-	S_Music_Start(Cvar_VariableString("snd_music"));
+	S_Music_Start(Cvar_GetString("snd_music"));
 #endif
 
 	if (!sound_started) {

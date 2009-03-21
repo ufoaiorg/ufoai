@@ -30,11 +30,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void MN_RegisterAbstractNode(nodeBehaviour_t *);
 
 struct menuNode_s;
-struct value_s;
 
 qboolean MN_NodeInstanceOf(const menuNode_t *node, const char* behaviourName);
-qboolean MN_NodeSetProperty(menuNode_t* node, const struct value_s *property, const char* value);
-float MN_GetFloatFromNodeProperty(const struct menuNode_s* node, const struct value_s* property);
+qboolean MN_NodeSetProperty(menuNode_t* node, const value_t *property, const char* value);
+float MN_GetFloatFromNodeProperty(const struct menuNode_s* node, const value_t* property);
 const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t* property);
 
 /* visibility */

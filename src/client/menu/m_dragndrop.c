@@ -26,10 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_input.h"
 #include "node/m_node_container.h"
 #include "node/m_node_abstractnode.h"
-#ifdef PARANOID
-#include "../cl_video.h"
-#include "../renderer/r_draw.h"
-#endif
 
 #include "../cl_input.h"
 
@@ -236,20 +232,6 @@ void MN_DrawDragAndDrop (int mousePosX, int mousePosY)
 	switch (objectType) {
 	case DND_ITEM:
 		MN_DrawItem(NULL, orgine, &draggingItem, -1, -1, scale, color);
-#ifdef PARANOID
-		/** Debugging only - Will draw a marker in the upper left corner of the
-		 * dragged item (which is the one used for calculating the resulting grid-coordinates).
-		 * @todo Maybe we could make this a feature in some way. i.e. we could draw
-		 * a special cursor at this place when dragging as a hint*/
-
-		Vector4Set(color, 1, 0, 0, 1);
-		if (draggingItem.t)
-			VectorSet(orgine,
-				mousePosX - (C_UNIT * draggingItem.t->sx - C_UNIT) / 2,
-				mousePosY - (C_UNIT * draggingItem.t->sy - C_UNIT) / 2,
-				-50);
-		R_DrawCircle2D(orgine[0] * viddef.rx, orgine[1] * viddef.ry, 2.0, qtrue, color, 1.0);
-#endif
 		break;
 
 	default:

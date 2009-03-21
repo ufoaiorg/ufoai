@@ -445,7 +445,7 @@ static void CL_BookmarkAdd_f (void)
 	const char *newBookmark;
 
 	if (Cmd_Argc() < 2) {
-		newBookmark = Cvar_VariableString("mn_server_ip");
+		newBookmark = Cvar_GetString("mn_server_ip");
 		if (!newBookmark) {
 			Com_Printf("Usage: %s <ip>\n", Cmd_Argv(0));
 			return;
@@ -454,7 +454,7 @@ static void CL_BookmarkAdd_f (void)
 		newBookmark = Cmd_Argv(1);
 
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
-		const char *bookmark = Cvar_VariableString(va("adr%i", i));
+		const char *bookmark = Cvar_GetString(va("adr%i", i));
 		if (bookmark[0] == '\0') {
 			Cvar_Set(va("adr%i", i), newBookmark);
 			return;
@@ -487,7 +487,7 @@ static void CL_ServerInfo_f (void)
 			host = selectedServer->node;
 			port = selectedServer->service;
 		} else {
-			host = Cvar_VariableString("mn_server_ip");
+			host = Cvar_GetString("mn_server_ip");
 			port = DOUBLEQUOTE(PORT_SERVER);
 		}
 		break;
@@ -574,7 +574,7 @@ void CL_PingServers_f (void)
 		const char *service;
 		const char *p;
 		Com_sprintf(name, sizeof(name), "adr%i", i);
-		adrstring = Cvar_VariableString(name);
+		adrstring = Cvar_GetString(name);
 		if (!adrstring || !adrstring[0])
 			continue;
 

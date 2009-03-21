@@ -1190,7 +1190,7 @@ void HUD_ActorUpdateCvars (void)
 	if (cls.state != ca_active)
 		return;
 
-	refresh = Cvar_VariableInteger("hud_refresh");
+	refresh = Cvar_GetInteger("hud_refresh");
 	if (refresh) {
 		Cvar_Set("hud_refresh", "0");
 		Cvar_Set("cl_worldlevel", cl_worldlevel->string);
@@ -1426,7 +1426,7 @@ void HUD_ActorUpdateCvars (void)
 		}
 
 		if (!LEFT(selActor) && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
-			Cvar_Set("mn_ammoleft", Cvar_VariableString("mn_ammoright"));
+			Cvar_Set("mn_ammoleft", Cvar_GetString("mn_ammoright"));
 
 		/* change stand-crouch & reaction button state */
 		if (cl.oldstate != selActor->state || refresh) {

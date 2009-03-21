@@ -35,7 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../shared/parse.h"
 
-static qboolean MN_ParseProperty (void* object, const value_t *property, const char* objectName, const char **text, const char **token);
+/** prototypes */
+static qboolean MN_ParseProperty(void* object, const value_t *property, const char* objectName, const char **text, const char **token);
+static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
+static qboolean MN_ParseNode(menuNode_t * parent, const char **text, const char **token, const char *errhead);
 
 /** @brief valid properties for options (selectbox, tab...) */
 static const value_t optionProperties[] = {
@@ -75,6 +78,7 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"if",
 	"else",
 };
+CASSERT(lengthof(ea_strings) == EA_NUM_EVENTACTION);
 
 #define EA_SPECIAL_NUM_EVENTACTION 1
 #define EA_SPECIAL_TIMEOUT (EA_NUM_EVENTACTION + 1)
@@ -82,8 +86,7 @@ static const char *ea_strings[EA_NUM_EVENTACTION] = {
 static const char *ea_special_strings[EA_SPECIAL_NUM_EVENTACTION] = {
 	"timeout",
 };
-
-/* =========================================================== */
+CASSERT(lengthof(ea_special_strings) == EA_SPECIAL_NUM_EVENTACTION);
 
 /**
  * @brief Find a value_t by name into a array of value_t
@@ -180,11 +183,6 @@ char* MN_AllocString (const char* string, int size)
 	return result;
 }
 
-/* prototype */
-static menuAction_t *MN_ParseAction(menuNode_t *menuNode, const char **text, const const char **token);
-
-/**
- */
 static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *action, const char **text, const char **token, const char *errhead)
 {
 	char cast[32] = "abstractnode";
@@ -402,7 +400,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 					Com_Printf("MN_ParseAction: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
 				}
-				/** @todo we dont need to alloc a pointer */
+				/** @todo we don't have to allocate a pointer */
 				action->data = MN_AllocPointer(1);
 				*(menuAction_t ***) action->data = &callNode->onClick;
 				lastAction = action;
@@ -443,7 +441,6 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 		case EA_SPECIAL_TIMEOUT:
 			/* get new token */
 			*token = COM_EParse(text, errhead, NULL);
-			/** @todo use scanf instead of atoi, no need to check '}' */
 			if (!*token || **token == '}') {
 				Com_Printf("MN_ParseAction: timeout with no value (in event) (node: %s)\n", MN_GetPath(menuNode));
 				return NULL;
@@ -659,7 +656,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 		} else {
 			result = Com_ParseValue(object, *token, property->type, property->ofs, property->size, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
 		}
@@ -685,7 +682,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 		result = Com_ParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
 		if (result != RESULT_OK) {
-			Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
+			Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 			return qfalse;
 		}
 		mn.curadata += bytes;
@@ -711,7 +708,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 			result = Com_ParseValue(mn.curadata, *token, V_STRING, 0, 0, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
 			mn.curadata += bytes;
@@ -728,7 +725,7 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 			result = Com_ParseValue(mn.curadata, *token, property->type & V_BASETYPEMASK, 0, property->size, &bytes);
 			if (result != RESULT_OK) {
-				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetError());
+				Com_Printf("MN_ParseProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
 				return qfalse;
 			}
 			mn.curadata += bytes;
@@ -793,20 +790,23 @@ static qboolean MN_ParseProperty (void* object, const value_t *property, const c
 
 				*dataId = MN_GetDataIDByName(*token);
 				if (*dataId < 0) {
-					Com_Printf("MN_ParseProperty: Could not find menu dataId '%s' (%s@%s)", *token, objectName, property->string);
+					Com_Printf("MN_ParseProperty: Could not find menu dataId '%s' (%s@%s)",
+							*token, objectName, property->string);
 					return qfalse;
 				}
 			}
 			break;
 
 		default:
-			Com_Printf("MN_ParseProperty: unknown property type '%d' (0x%X) (%s@%s)\n", property->type, property->type, objectName, property->string);
+			Com_Printf("MN_ParseProperty: unknown property type '%d' (0x%X) (%s@%s)\n",
+					property->type, property->type, objectName, property->string);
 			return qfalse;
 		}
 		break;
 
 	default:
-		Com_Printf("MN_ParseNodeProperties: unknown property type '%d' (0x%X) (%s@%s)\n", property->type, property->type, objectName, property->string);
+		Com_Printf("MN_ParseNodeProperties: unknown property type '%d' (0x%X) (%s@%s)\n",
+				property->type, property->type, objectName, property->string);
 		return qfalse;
 	}
 
@@ -835,7 +835,7 @@ static qboolean MN_ParseFunction (menuNode_t * node, const char **text, const ch
 
 	*action = MN_ParseAction(node, text, token);
 
-#if 0 /* emplty function also return NULL */
+#if 0 /* empty function also return NULL */
 	if (*action == NULL)
 		return qfalse;
 #endif
@@ -892,14 +892,16 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 		val = MN_GetPropertyFromBehaviour(node->behaviour, *token);
 		if (!val) {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseNodeProperties: unknown property \"%s\", node ignored (node %s)\n", *token, MN_GetPath(node));
+			Com_Printf("MN_ParseNodeProperties: unknown property \"%s\", node ignored (node %s)\n",
+					*token, MN_GetPath(node));
 			return qfalse;
 		}
 
 		/* get parameter values */
 		result = MN_ParseProperty(node, val, node->name, text, token);
 		if (!result) {
-			Com_Printf("MN_ParseNodeProperties: Problem with parsing of node property '%s@%s'. See upper\n", MN_GetPath(node), val->string);
+			Com_Printf("MN_ParseNodeProperties: Problem with parsing of node property '%s@%s'. See upper\n",
+					MN_GetPath(node), val->string);
 			return qfalse;
 		}
 
@@ -910,8 +912,6 @@ static qboolean MN_ParseNodeProperties (menuNode_t * node, const char **text, co
 
 	return qtrue;
 }
-
-static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char **token, const char *errhead);
 
 /**
  * @brief Read a node body
@@ -972,7 +972,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const ch
 				if (*text == NULL)
 					return qfalse;
 			}
-
 		} else if (MN_GetPropertyFromBehaviour(node->behaviour, *token)) {
 			/* we should have a block with properties only */
 			result = MN_ParseNodeProperties(node, text, token);
@@ -1278,7 +1277,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	/* search for menus with same name */
 	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strncmp(name, mn.menus[i]->name, MAX_VAR))
+		if (!Q_strncmp(name, mn.menus[i]->name, sizeof(mn.menus[i]->name)))
 			break;
 
 	if (i < mn.numMenus) {
@@ -1365,7 +1364,6 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 	if (*ref == '*') {
 		char ident[MAX_VAR];
 		const char *text, *token;
-		char command[MAX_VAR] = "\0";
 
 		/* get the reference and the name */
 		text = COM_MacroExpandString(ref);
@@ -1379,6 +1377,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 		Q_strncpyz(ident, token, sizeof(ident));
 
 		if (!Q_strncmp(ident, "binding", 7)) {
+			char command[MAX_VAR] = "";
 			/* get the cvar value */
 			if (*text) {
 				if (*text == ' ')
@@ -1440,7 +1439,7 @@ float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
 
 		if (!Q_strncmp(ident, "cvar", 4)) {
 			/* get the cvar value */
-			return Cvar_VariableValue(token);
+			return Cvar_GetValue(token);
 		} else {
 			menuNode_t *refNode;
 			const value_t *val;

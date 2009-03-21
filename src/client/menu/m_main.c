@@ -82,7 +82,7 @@ static void MN_Modify_f (void)
 	if (Cmd_Argc() < 5)
 		Com_Printf("Usage: %s <name> <amount> <min> <max>\n", Cmd_Argv(0));
 
-	value = Cvar_VariableValue(Cmd_Argv(1));
+	value = Cvar_GetValue(Cmd_Argv(1));
 	value += atof(Cmd_Argv(2));
 	if (value < atof(Cmd_Argv(3)))
 		value = atof(Cmd_Argv(3));
@@ -104,7 +104,7 @@ static void MN_ModifyWrap_f (void)
 		return;
 	}
 
-	value = Cvar_VariableValue(Cmd_Argv(1));
+	value = Cvar_GetValue(Cmd_Argv(1));
 	value += atof(Cmd_Argv(2));
 	if (value < atof(Cmd_Argv(3)))
 		value = atof(Cmd_Argv(4));
@@ -130,7 +130,7 @@ static void MN_Translate_f (void)
 		return;
 	}
 
-	current = Cvar_VariableString(Cmd_Argv(1));
+	current = Cvar_GetString(Cmd_Argv(1));
 	list = Cmd_Argv(3);
 	next = qfalse;
 

@@ -372,7 +372,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft--)
 		if (UFO_IsUFOSeenOnGeoscape(aircraft)
 #ifdef DEBUG
-		|| Cvar_VariableInteger("debug_showufos")
+		|| Cvar_GetInteger("debug_showufos")
 #endif
 		)
 			if (AIR_IsAircraftOnGeoscape(aircraft) && MAP_IsMapPositionSelected(node, aircraft->pos, x, y))
@@ -1735,7 +1735,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		aircraft_t *aircraft = &ccs.ufos[aircraftIdx];
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
-		if (Cvar_VariableInteger("debug_showufos")) {
+		if (Cvar_GetInteger("debug_showufos")) {
 			/* Draw ufo route */
 			if (cl_3dmap->integer)
 				MAP_3DMapDrawLine(node, &aircraft->route);

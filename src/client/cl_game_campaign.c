@@ -100,7 +100,7 @@ static void GAME_CP_Results_f (void)
 		return;
 
 	/* check for replay */
-	if (Cvar_VariableInteger("cp_mission_tryagain")) {
+	if (Cvar_GetInteger("cp_mission_tryagain")) {
 		/* don't collect things and update stats --- we retry the mission */
 		CP_StartSelectedMission();
 		return;
@@ -375,9 +375,9 @@ void GAME_CP_InitStartup (void)
 
 	/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
 	/** @todo do we have to set sv_maxsoldiersperteam for campaign mode? */
-	if (Cvar_VariableInteger("sv_maxsoldiersperteam") != MAX_ACTIVETEAM / 2)
+	if (Cvar_GetInteger("sv_maxsoldiersperteam") != MAX_ACTIVETEAM / 2)
 		Cvar_SetValue("sv_maxsoldiersperteam", MAX_ACTIVETEAM / 2);
-	if (Cvar_VariableInteger("sv_maxsoldiersperplayer") != MAX_ACTIVETEAM)
+	if (Cvar_GetInteger("sv_maxsoldiersperplayer") != MAX_ACTIVETEAM)
 		Cvar_SetValue("sv_maxsoldiersperplayer", MAX_ACTIVETEAM);
 
 	/* reset campaign data */

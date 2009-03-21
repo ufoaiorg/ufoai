@@ -134,7 +134,7 @@ typedef struct menuNode_s {
 	byte longlines;				/**< what to do with long lines */
 
 	/* zone */
-	qboolean repeat;			/**< repeat action when "click" is holded */
+	qboolean repeat;			/**< repeat action when "click" is held */
 	int clickDelay;				/**< for nodes that have repeat set, this is the delay for the next click */
 
 	/** union will contain all extradata for a node */
@@ -161,9 +161,9 @@ typedef struct nodeBehaviour_s {
 	/* behaviour attributes */
 	const char* name;				/**< name of the behaviour: string type of a node */
 	const char* extends;			/**< name of the extends behaviour */
-	qboolean isVirtual;				/**< true, if the node dont have any position on the screen */
+	qboolean isVirtual;				/**< true, if the node doesn't have any position on the screen */
 	qboolean isFunction;			/**< true, if the node is a function */
-	qboolean isAbstract;			/**< true, if we can't instanciate the behaviour */
+	qboolean isAbstract;			/**< true, if we can't instantiate the behaviour */
 	qboolean isInitialized;			/**< cache if we already have initialized the node behaviour */
 	qboolean focusEnabled;			/**< true if the node can win the focus (should be use when type TAB) */
 	const value_t* properties;		/**< list of properties of the node */
@@ -187,16 +187,16 @@ typedef struct nodeBehaviour_s {
 	void (*capturedMouseLost)(menuNode_t *node);
 
 	/* system callback */
-	void (*loading)(menuNode_t *node);		/**< called before script initialization, inits default values */
+	void (*loading)(menuNode_t *node);		/**< called before script initialization, initialized default values */
 	void (*loaded)(menuNode_t *node);		/**< only called one time, when node parsing was finished */
 	void (*init)(menuNode_t *node);			/**< call every time we push the parent menu */
-	void (*clone)(const menuNode_t *source, menuNode_t *clone);			/**< call to init a cloned node */
+	void (*clone)(const menuNode_t *source, menuNode_t *clone);			/**< call to initialize a cloned node */
 	void (*doLayout)(menuNode_t *node);		/**< call to update node layout */
 
 	/* drag and drop callback */
 	qboolean (*dndEnter)(menuNode_t *node);							/**< Send to the target when we enter first, return true if we can drop the DND somewhere on the node */
 	qboolean (*dndMove)(menuNode_t *node, int x, int y);			/**< Send to the target when we enter first, return true if we can drop the DND here */
-	void (*dndLeave)(menuNode_t *node);								/**< Send to the target when the DND is cancelled */
+	void (*dndLeave)(menuNode_t *node);								/**< Send to the target when the DND is canceled */
 	qboolean (*dndDrop)(menuNode_t *node, int x, int y);			/**< Send to the target to finalize the drop */
 	qboolean (*dndFinished)(menuNode_t *node, qboolean isDroped);	/**< Sent to the source to finalize the drop */
 
@@ -218,7 +218,7 @@ void MN_InitNodes(void);
 
 /* nodes */
 menuNode_t* MN_AllocNode(const char* type) __attribute__ ((warn_unused_result));
-menuNode_t* MN_GetNodeByPath (const char* path);
+menuNode_t* MN_GetNodeByPath(const char* path);
 void MN_ReadNodePath(const char* path, const menuNode_t *relativeNode, const menuNode_t** resultNode, const value_t **resultProperty);
 struct menuNode_s *MN_GetNodeAtPosition(int x, int y);
 const char* MN_GetPath(const menuNode_t* node);

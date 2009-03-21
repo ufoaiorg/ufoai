@@ -53,7 +53,7 @@ static void MN_AbstractBaseNodeLoaded (menuNode_t * node)
 static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 {
 	base_t *base;
-	int height, width, x, y;
+	int height, width, y;
 	int row, col;
 	const vec4_t c_gray = {0.5, 0.5, 0.5, 1.0};
 	vec2_t nodepos;
@@ -72,7 +72,7 @@ static void MN_BaseLayoutNodeDraw (menuNode_t * node)
 
 	y = nodepos[1] + node->padding;
 	for (row = 0; row < BASE_SIZE; row++) {
-		x = nodepos[0] + node->padding;
+		int x = nodepos[0] + node->padding;
 		for (col = 0; col < BASE_SIZE; col++) {
 			if (base->map[row][col].blocked) {
 				R_DrawFill(x, y, width, height, ALIGN_UL, c_gray);

@@ -50,7 +50,6 @@ static void MN_AirfightmapNodeDraw (menuNode_t *node)
 
 static void MN_AirfightmapNodeRightClick (menuNode_t *node, int x, int y)
 {
-
 }
 
 static void MN_AirfightmapNodeMouseWheel (menuNode_t *node, qboolean down, int x, int y)

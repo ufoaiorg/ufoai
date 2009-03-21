@@ -79,7 +79,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 {
 	static char cmd[256];
 	int length = sizeof(cmd) - ((addNewLine)?2:1);
-	static char propertyName[64];
+	static char propertyName[MAX_VAR];
 	const char *cin = input;
 	char *cout = cmd;
 
@@ -128,9 +128,9 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 						const char* value;
 						int l;
 						/* only allow common type or cvar */
-						if ((property->type & V_SPECIAL_TYPE) != 0 && (property->type & V_SPECIAL_TYPE) != V_SPECIAL_CVAR) {
+						if ((property->type & V_SPECIAL_TYPE) != 0 && (property->type & V_SPECIAL_TYPE) != V_SPECIAL_CVAR)
 							Sys_Error("MN_GenCommand: Unsupported type injection for property '%s', node '%s'", property->string, MN_GetPath(source));
-						}
+
 						/* inject the property value */
 						value = Com_ValueToStr((const void*)source, property->type, property->ofs);
 						l = snprintf(cout, length, "%s", value);
@@ -184,7 +184,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		textValue = action->data2;
 		textValue = MN_GenInjectedString(source, useCmdParam, textValue, qfalse);
 		if (textValue[0] == '_') {
-			textValue = gettext(textValue + 1);
+			textValue = _(textValue + 1);
 		}
 		Cvar_ForceSet(cvarName, textValue);
 		return;
@@ -251,7 +251,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	}
 }
 
-static void MN_ExecuteInjectedActions (const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
+static void MN_ExecuteInjectedActions(const menuNode_t* source, qboolean useCmdParam, const menuAction_t* firstAction);
 
 /**
  * @brief Execute an action from a source

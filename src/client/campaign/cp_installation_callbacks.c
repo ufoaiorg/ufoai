@@ -62,7 +62,7 @@ void INS_SelectInstallation (installation_t *installation)
 		installationID = INS_GetFirstUnfoundedInstallation();
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: new installationID is %i\n", installationID);
 		if (installationID < B_GetInstallationLimit()) {
-			const installationTemplate_t *instmp = INS_GetInstallationTemplateFromInstallationID(Cvar_VariableString("mn_installation_type"));
+			const installationTemplate_t *instmp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
 			int i = 1;
 			int j;
 
@@ -150,7 +150,7 @@ static void INS_BuildInstallation_f (void)
 			campaignStats.installationsBuild++;
 			ccs.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
-			Q_strncpyz(installationCurrent->name, Cvar_VariableString("mn_installation_title"), sizeof(installationCurrent->name));
+			Q_strncpyz(installationCurrent->name, Cvar_GetString("mn_installation_title"), sizeof(installationCurrent->name));
 			nation = MAP_GetNation(installationCurrent->pos);
 			if (nation)
 				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installationCurrent->name, _(nation->name));
@@ -236,7 +236,7 @@ static void INS_ChangeInstallationName_f (void)
 	if (!installationCurrent)
 		return;
 
-	Q_strncpyz(installationCurrent->name, Cvar_VariableString("mn_installation_title"), sizeof(installationCurrent->name));
+	Q_strncpyz(installationCurrent->name, Cvar_GetString("mn_installation_title"), sizeof(installationCurrent->name));
 }
 
 

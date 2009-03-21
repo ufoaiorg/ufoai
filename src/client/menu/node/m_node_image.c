@@ -87,9 +87,9 @@ void MN_ImageNodeDraw(menuNode_t *node)
 		int pt;
 
 		if (node->name[4] == 'm')
-			pt = Cvar_VariableInteger("mn_morale") / 2;
+			pt = Cvar_GetInteger("mn_morale") / 2;
 		else
-			pt = Cvar_VariableInteger("mn_hp");
+			pt = Cvar_GetInteger("mn_hp");
 		node->texl[1] = (3 - (int) (pt < 60 ? pt : 60) / 20) * 32;
 		node->texh[1] = node->texl[1] + 32;
 		node->texl[0] = -(int) (0.01 * (node->name[4] - 'a') * time) % 64;

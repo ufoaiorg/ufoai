@@ -722,7 +722,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 	if (ctcp) {
 		if (!Q_strcmp(trailing + 1, "VERSION" IRC_CTCP_MARKER_STR)) {
 			/* response with the game version */
-			Irc_Proto_Msg(irc_defaultChannel->string, Cvar_VariableString("version"));
+			Irc_Proto_Msg(irc_defaultChannel->string, Cvar_GetString("version"));
 			/*Irc_Proto_Notice(nick, IRC_CTCP_MARKER_STR "VERSION " UFO_VERSION " " CPUSTRING " " __DATE__ " " BUILDSTRING);*/
 			Com_DPrintf(DEBUG_CLIENT, "Irc_Client_CmdPrivmsg: Response to version query\n");
 		} else if (!Q_strncmp(trailing + 1, "PING", 4)) {

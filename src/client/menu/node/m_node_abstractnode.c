@@ -371,7 +371,7 @@ const char* MN_GetStringFromNodeProperty (const menuNode_t* node, const value_t*
 
 	switch (baseType) {
 	case 0: /* common type */
-		return Com_ValueToStr (node, property->type, property->ofs);
+		return Com_ValueToStr(node, property->type, property->ofs);
 	default:
 		return NULL;
 	}

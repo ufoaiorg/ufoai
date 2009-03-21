@@ -50,7 +50,7 @@ void CL_Connect_f (void)
 		return;
 	}
 
-	if (Cvar_VariableInteger("mn_server_need_password")) {
+	if (Cvar_GetInteger("mn_server_need_password")) {
 		MN_PushMenu("serverpassword", NULL);
 		return;
 	}
@@ -194,7 +194,7 @@ static void CL_TeamNum_f (void)
 	int max = 4;
 	int i = cl_teamnum->integer;
 	static char buf[MAX_STRING_CHARS];
-	const int maxteamnum = Cvar_VariableInteger("mn_maxteams");
+	const int maxteamnum = Cvar_GetInteger("mn_maxteams");
 
 	if (maxteamnum > 0)
 		max = maxteamnum;

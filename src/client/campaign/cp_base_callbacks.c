@@ -220,7 +220,7 @@ static void B_ChangeBaseName_f (void)
 	if (!baseCurrent)
 		return;
 
-	Q_strncpyz(baseCurrent->name, Cvar_VariableString("mn_base_title"), sizeof(baseCurrent->name));
+	Q_strncpyz(baseCurrent->name, Cvar_GetString("mn_base_title"), sizeof(baseCurrent->name));
 }
 
 /**

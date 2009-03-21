@@ -141,7 +141,7 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 	const char *mapname;
 
 	if (!mapString || Com_ServerState())
-		mapname = Cvar_VariableString("sv_mapname");
+		mapname = Cvar_GetString("sv_mapname");
 	else {
 		mapname = mapString;
 		Cvar_Set("sv_mapname", mapString);
@@ -163,7 +163,7 @@ const char* SCR_SetLoadingBackground (const char *mapString)
 
 	Cvar_Set("mn_mappicbig", loadingPic);
 
-	return Cvar_VariableString("mn_mappicbig");
+	return Cvar_GetString("mn_mappicbig");
 }
 
 /**

@@ -30,12 +30,41 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_draw.h"
 #include "m_dragndrop.h"
 
-#include "../client.h"
+#include "../cl_keys.h"
+#include "../cl_input.h"
 
 /**
  * @brief save the node with the focus
  */
-static menuNode_t* focusNode = NULL;
+static menuNode_t* focusNode;
+
+/**
+ * @brief save the current hovered node (first node under the mouse)
+ * @sa MN_GetHoveredNode
+ * @sa MN_MouseMove
+ * @sa MN_CheckMouseMove
+ */
+static menuNode_t* hoveredNode;
+
+/**
+ * @brief save the previous hovered node
+ */
+static menuNode_t *oldHoveredNode;
+
+/**
+ * @brief save old position of the mouse
+ */
+static int oldMousePosX, oldMousePosY;
+
+/**
+ * @brief save the captured node
+ * @sa MN_SetMouseCapture
+ * @sa MN_GetMouseCapture
+ * @sa MN_MouseRelease
+ * @todo think about replacing it by a boolean. When capturedNode != NULL => hoveredNode == capturedNode
+ * it create unneed case
+ */
+static menuNode_t* capturedNode;
 
 /**
  * @brief Execute the current focused action node
@@ -227,16 +256,6 @@ void MN_ReleaseInput (void)
 }
 
 /**
- * @brief save the captured node
- * @sa MN_SetMouseCapture
- * @sa MN_GetMouseCapture
- * @sa MN_MouseRelease
- * @todo think about replacing it by a boolean. When capturedNode != NULL => hoveredNode == capturedNode
- * it create unneed case
- */
-static menuNode_t* capturedNode = NULL;
-
-/**
  * @brief Return the captured node
  * @return Return a node, else NULL
  */
@@ -271,24 +290,6 @@ void MN_MouseRelease (void)
 
 	MN_InvalidateMouse();
 }
-
-/**
- * @brief save the current hovered node (first node under the mouse)
- * @sa MN_GetHoveredNode
- * @sa MN_MouseMove
- * @sa MN_CheckMouseMove
- */
-static menuNode_t* hoveredNode = NULL;
-
-/**
- * @brief save the previous hovered node
- */
-static menuNode_t *oldHoveredNode;
-
-/**
- * @brief save old position of the mouse
- */
-static int oldMousePosX = 0, oldMousePosY = 0;
 
 /**
  * @brief Get the current hovered node

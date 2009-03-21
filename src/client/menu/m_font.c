@@ -34,9 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int numFonts = 0;
 static font_t fonts[MAX_FONTS];
 
-font_t *fontBig;
-font_t *fontSmall;
-
 static const value_t fontValues[] = {
 	{"font", V_TRANSLATION_STRING, offsetof(font_t, path), 0},
 	{"size", V_INT, offsetof(font_t, size), MEMBER_SIZEOF(font_t, size)},
@@ -92,11 +89,6 @@ void MN_ParseFont (const char *name, const char **text)
 	memset(font, 0, sizeof(*font));
 
 	font->name = Mem_PoolStrDup(name, cl_menuSysPool, 0);
-
-	if (!Q_strcmp(font->name, "f_small"))
-		fontSmall = font;
-	else if (!Q_strcmp(font->name, "f_big"))
-		fontBig = font;
 
 	Com_DPrintf(DEBUG_CLIENT, "...found font %s (%i)\n", font->name, numFonts);
 
