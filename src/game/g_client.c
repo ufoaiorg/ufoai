@@ -2630,7 +2630,6 @@ void G_ClientTeamInfo (player_t * player)
 	int i, k, length;
 	int x, y;
 	item_t item;
-	int dummyFieldSize = 0;
 
 	/* find a team */
 	G_GetTeam(player);
@@ -2651,7 +2650,7 @@ void G_ClientTeamInfo (player_t * player)
 			/* Here the client tells the server the information for the spawned actor(s). */
 
 			/* Receive fieldsize and get matching spawnpoint. */
-			dummyFieldSize = gi.ReadByte();
+			const int dummyFieldSize = gi.ReadByte();
 			switch (dummyFieldSize) {
 			case ACTOR_SIZE_NORMAL:
 				/* Find valid actor spawn fields for this player. */
