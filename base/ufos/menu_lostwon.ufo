@@ -365,6 +365,11 @@ menu uforecovery
 		*store_panel.cp_uforecovery_baselist disabled true
 	}
 
+	// @todo perhaps a shorter way to do so?
+	confunc cp_basesel_select {
+		*store_panel.cp_uforecovery_baselist lineselected 0
+	}
+
 	confunc start_replace {
 		*cvar:mn_uforecovery_tab 1
 		call uforecovery_tabchange

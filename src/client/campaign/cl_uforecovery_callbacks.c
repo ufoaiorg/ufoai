@@ -92,36 +92,35 @@ static int UR_GetBaseCapacityForUfotype (const base_t *base, const aircraft_t *u
 	}
 }
 
+
 /**
- * @brief Function calculates prices for actual ufo to sell and initializes menu text.
- * @param ufocraft the ufo type to sell
- * @note called by UR_DialogInitSell_f and UR_DialogStartReplace
+ * @brief Select appropriate the base or replace option from list
+ * @param num selected index must be within valid range
  */
-static void UR_DialogInitSell (aircraft_t *ufocraft)
+static void UR_DialogSelectStorageBase (const int num)
 {
-	int i, nations = 0;
-	static char recoveryNationSelectPopup[MAX_SMALLMENUTEXTLEN];
-
-	recoveryNationSelectPopup[0] = '\0';
-
-	for (i = 0; i < ccs.numNations; i++) {
-		const nation_t *nation = &ccs.nations[i];
-		nations++;
-		/* Calculate price offered by nation only if this is first popup opening. */
-		if (!ufoRecovery.nation) {
-			ufoRecovery.UFOprices[i] = (int) (ufocraft->price * (.85f + frand() * .3f));
-			/* Nation will pay less if corrupted */
-			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
-		}
-		Com_sprintf(recoveryNationSelectPopup + strlen(recoveryNationSelectPopup), sizeof(recoveryNationSelectPopup),
-				"%s\t\t\t%i\t\t%s\n", _(nation->name), ufoRecovery.UFOprices[i], NAT_GetHappinessString(nation));
+	qboolean useBase = qtrue;
+	if (num < ufoRecovery.baseHasUFOHangarCount) {
+		if (!ufoRecovery.UFObases[num])
+			return;
+	} else {
+		useBase = qfalse;
+		if (!ufoRecovery.replaceUFOs[num - ufoRecovery.baseHasUFOHangarCount].base)
+			return;
 	}
 
-	/* Do nothing without at least one nation. */
-	if (nations == 0)
-		return;
-
-	MN_RegisterText(TEXT_UFORECOVERY_NATIONS, recoveryNationSelectPopup);
+	if (useBase) {
+		ufoRecovery.base = ufoRecovery.UFObases[num];
+		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n", ufoRecovery.base->name);
+		MN_ExecuteConfunc("btbasesel_enable");
+	} else {
+		ufoRecovery.selectedStorage = &ufoRecovery.replaceUFOs[num - ufoRecovery.baseHasUFOHangarCount];
+		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked replace ufo %s from base %s\n",
+				ufoRecovery.selectedStorage->ufoTemplate->name, ufoRecovery.selectedStorage->base->name);
+		ufoRecovery.base = ufoRecovery.selectedStorage->base;
+		MN_ExecuteConfunc("btbaserepl_enable");
+	}
+	Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
 }
 
 /**
@@ -175,6 +174,38 @@ static void UR_DialogInit_f (void)
 	memset(&ufoRecovery, 0, sizeof(ufoRecovery));
 	ufoRecovery.ufoType = UFOtype;
 
+}
+
+/**
+ * @brief Function calculates prices for actual ufo to sell and initializes menu text.
+ * @param ufocraft the ufo type to sell
+ * @note called by UR_DialogInitSell_f and UR_DialogStartReplace
+ */
+static void UR_DialogInitSell (aircraft_t *ufocraft)
+{
+	int i, nations = 0;
+	static char recoveryNationSelectPopup[MAX_SMALLMENUTEXTLEN];
+
+	recoveryNationSelectPopup[0] = '\0';
+
+	for (i = 0; i < ccs.numNations; i++) {
+		const nation_t *nation = &ccs.nations[i];
+		nations++;
+		/* Calculate price offered by nation only if this is first popup opening. */
+		if (!ufoRecovery.nation) {
+			ufoRecovery.UFOprices[i] = (int) (ufocraft->price * (.85f + frand() * .3f));
+			/* Nation will pay less if corrupted */
+			ufoRecovery.UFOprices[i] = (int) (ufoRecovery.UFOprices[i] * exp(-nation->stats[0].xviInfection / 20.0f));
+		}
+		Com_sprintf(recoveryNationSelectPopup + strlen(recoveryNationSelectPopup), sizeof(recoveryNationSelectPopup),
+				"%s\t\t\t%i\t\t%s\n", _(nation->name), ufoRecovery.UFOprices[i], NAT_GetHappinessString(nation));
+	}
+
+	/* Do nothing without at least one nation. */
+	if (nations == 0)
+		return;
+
+	MN_RegisterText(TEXT_UFORECOVERY_NATIONS, recoveryNationSelectPopup);
 }
 
 /**
@@ -282,13 +313,13 @@ static void UR_DialogInitStore_f (void)
 		break;
 	case 1:
 		/* there should only be one entry in UFObases - so use that one. */
-		/** @todo preselect base / storage */
 		if (ufoRecovery.baseHasUFOHangarCount)
 			ufoRecovery.base = ufoRecovery.UFObases[0];
 		else
 			ufoRecovery.selectedStorage = &ufoRecovery.replaceUFOs[0];
-		/*CP_UFORecoveredStart_f(); */
-
+		UR_DialogSelectStorageBase(0);
+		/** @todo some better way to do so without the need of a confunc? */
+		MN_ExecuteConfunc("cp_basesel_select");
 		break;
 	default:
 		/** @todo check whether this is needed */
@@ -310,7 +341,6 @@ static void UR_DialogInitStore_f (void)
 static void UR_DialogSelectStorageBase_f (void)
 {
 	int num;
-	qboolean useBase = qtrue;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseid>\n", Cmd_Argv(0));
@@ -320,27 +350,8 @@ static void UR_DialogSelectStorageBase_f (void)
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= ufoRecovery.replaceCount + ufoRecovery.baseHasUFOHangarCount)
 		return;
-	if (num < ufoRecovery.baseHasUFOHangarCount) {
-		if (!ufoRecovery.UFObases[num])
-			return;
-	} else {
-		useBase = qfalse;
-		if (!ufoRecovery.replaceUFOs[num - ufoRecovery.baseHasUFOHangarCount].base)
-			return;
-	}
 
-	if (useBase) {
-		ufoRecovery.base = ufoRecovery.UFObases[num];
-		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked base: %s\n", ufoRecovery.base->name);
-		MN_ExecuteConfunc("btbasesel_enable");
-	} else {
-		ufoRecovery.selectedStorage = &ufoRecovery.replaceUFOs[num - ufoRecovery.baseHasUFOHangarCount];
-		Com_DPrintf(DEBUG_CLIENT, "CP_UFORecoveryBaseSelectPopup_f: picked replace ufo %s from base %s\n",
-				ufoRecovery.selectedStorage->ufoTemplate->name, ufoRecovery.selectedStorage->base->name);
-		ufoRecovery.base = ufoRecovery.selectedStorage->base;
-		MN_ExecuteConfunc("btbaserepl_enable");
-	}
-	Cvar_Set("mission_recoverybase", ufoRecovery.base->name);
+	UR_DialogSelectStorageBase(num);
 }
 
 /**
