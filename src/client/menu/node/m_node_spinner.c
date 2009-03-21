@@ -77,7 +77,7 @@ static void MN_SpinnerNodeStep (menuNode_t *node, qboolean down)
 
 	/* save result */
 	node->u.abstractvalue.lastdiff = value - last;
-	if (!Q_strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
+	if (!strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
 		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
 	} else {
 		*(float*) node->u.abstractvalue.value = value;

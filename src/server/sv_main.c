@@ -118,11 +118,11 @@ static void SVC_TeamInfo (struct net_stream *s)
 	NET_WriteByte(msg, clc_oob);
 	NET_WriteRawString(msg, "teaminfo\n");
 
-	NET_WriteRawString(msg, Cvar_VariableString("sv_teamplay"));
+	NET_WriteRawString(msg, Cvar_GetString("sv_teamplay"));
 	NET_WriteRawString(msg, "\n");
-	NET_WriteRawString(msg, Cvar_VariableString("sv_maxteams"));
+	NET_WriteRawString(msg, Cvar_GetString("sv_maxteams"));
 	NET_WriteRawString(msg, "\n");
-	NET_WriteRawString(msg, Cvar_VariableString("sv_maxplayersperteam"));
+	NET_WriteRawString(msg, Cvar_GetString("sv_maxplayersperteam"));
 	NET_WriteRawString(msg, "\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state >= cs_connected) {
@@ -478,7 +478,7 @@ void SV_NextMapcycle (void)
 					base[0] = '\0'; /* split the strings */
 					Q_strncpyz(assembly, base + 1, sizeof(assembly));
 					/* get current position */
-					if (!Q_strcmp(sv.name, expanded) && !Q_strcmp(sv.assembly, assembly)) {
+					if (!strcmp(sv.name, expanded) && !strcmp(sv.assembly, assembly)) {
 						/* next map in cycle */
 						if (mapcycle->next) {
 							map = mapcycle->next->map;
@@ -500,7 +500,7 @@ void SV_NextMapcycle (void)
 				}
 			} else {
 				/* get current position */
-				if (!Q_strcmp(sv.name, mapcycle->map)) {
+				if (!strcmp(sv.name, mapcycle->map)) {
 					/* next map in cycle */
 					if (mapcycle->next) {
 						map = mapcycle->next->map;

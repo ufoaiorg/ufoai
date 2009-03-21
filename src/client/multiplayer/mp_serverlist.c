@@ -52,7 +52,7 @@ static qboolean CL_ProcessPingReply (serverList_t *server, const char *msg)
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Protocol mismatch\n");
 		return qfalse;
 	}
-	if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "sv_version"))) {
+	if (strcmp(UFO_VERSION, Info_ValueForKey(msg, "sv_version"))) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ProcessPingReply: Version mismatch\n");
 	}
 
@@ -90,7 +90,7 @@ static void CL_PingServerCallback (struct net_stream *s)
 	const int cmd = NET_ReadByte(buf);
 	const char *str = NET_ReadStringLine(buf);
 
-	if (cmd == clc_oob && Q_strncmp(str, "info", 4) == 0) {
+	if (cmd == clc_oob && strncmp(str, "info", 4) == 0) {
 		str = NET_ReadString(buf);
 		if (!str)
 			return;
@@ -348,7 +348,7 @@ static void CL_ServerInfoCallback (struct net_stream *s)
 		const int cmd = NET_ReadByte(buf);
 		const char *str = NET_ReadStringLine(buf);
 
-		if (cmd == clc_oob && !Q_strcmp(str, "print")) {
+		if (cmd == clc_oob && !strcmp(str, "print")) {
 			char hostname[256];
 			NET_StreamPeerToName(s, hostname, sizeof(hostname), qtrue);
 			CL_ParseServerInfoMessage(buf, hostname);
@@ -598,7 +598,7 @@ void CL_PingServers_f (void)
 	lastServerQuery = cls.realtime;
 
 	/* query master server? */
-	if (Cmd_Argc() == 2 && Q_strcmp(Cmd_Argv(1), "local")) {
+	if (Cmd_Argc() == 2 && strcmp(Cmd_Argv(1), "local")) {
 		Com_DPrintf(DEBUG_CLIENT, "Query masterserver\n");
 		CL_QueryMasterServer();
 	}

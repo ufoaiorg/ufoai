@@ -180,15 +180,15 @@ static const size_t vt_aligns[] = {
 };
 CASSERT(lengthof(vt_aligns) == V_NUM_TYPES);
 
-static char errorMessage[256];
+static char parseErrorMessage[256];
 
 /**
  * Return the last error message
  * @return adresse containe the last message
  */
-const char* Com_GetError (void)
+const char* Com_GetLastParseError (void)
 {
-	return errorMessage;
+	return parseErrorMessage;
 }
 
 /**
@@ -222,12 +222,12 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	if (size) {
 #ifdef DEBUG
 		if (size > vt_sizes[type]) {
-			snprintf(errorMessage, sizeof(errorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T" (type: %i). ", size, vt_sizes[type], type);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T" (type: %i). ", size, vt_sizes[type], type);
 			status = RESULT_WARNING;
 		}
 #endif
 		if (size < vt_sizes[type]) {
-			snprintf(errorMessage, sizeof(errorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)", size, vt_sizes[type], type);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)", size, vt_sizes[type], type);
 			return RESULT_ERROR;
 		}
 	}
@@ -235,7 +235,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	switch (type) {
 	case V_CLIENT_HUNK_STRING:
 	case V_CLIENT_HUNK:
-		snprintf(errorMessage, sizeof(errorMessage), "V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here");
+		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here");
 		return RESULT_ERROR;
 
 	case V_NULL:
@@ -243,7 +243,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_BOOL:
-		if (!Q_strncmp(token, "true", 4) || *token == '1')
+		if (!strncmp(token, "true", 4) || *token == '1')
 			*b = qtrue;
 		else
 			*b = qfalse;
@@ -256,11 +256,11 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_TEAM:
-		if (!Q_strcmp(token, "civilian"))
+		if (!strcmp(token, "civilian"))
 			*(int *) b = TEAM_CIVILIAN;
-		else if (!Q_strcmp(token, "phalanx"))
+		else if (!strcmp(token, "phalanx"))
 			*(int *) b = TEAM_PHALANX;
-		else if (!Q_strcmp(token, "alien"))
+		else if (!strcmp(token, "alien"))
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team string: '%s' found in script files", token);
@@ -268,19 +268,19 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_RACE:
-		if (!Q_strcmp(token, "phalanx"))
+		if (!strcmp(token, "phalanx"))
 			*(int *) b = RACE_PHALANX_HUMAN;
-		else if (!Q_strcmp(token, "civilian"))
+		else if (!strcmp(token, "civilian"))
 			*(int *) b = RACE_CIVILIAN;
-		else if (!Q_strcmp(token, "robot"))
+		else if (!strcmp(token, "robot"))
 			*(int *) b = RACE_ROBOT;
-		else if (!Q_strcmp(token, "taman"))
+		else if (!strcmp(token, "taman"))
 			*(int *) b = RACE_TAMAN;
-		else if (!Q_strcmp(token, "ortnok"))
+		else if (!strcmp(token, "ortnok"))
 			*(int *) b = RACE_ORTNOK;
-		else if (!Q_strcmp(token, "bloodspider"))
+		else if (!strcmp(token, "bloodspider"))
 			*(int *) b = RACE_BLOODSPIDER;
-		else if (!Q_strcmp(token, "shevaar"))
+		else if (!strcmp(token, "shevaar"))
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", token);
@@ -294,7 +294,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_INT2:
 		if (sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]) != 2) {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal int2 statement '%s'", token);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int2 statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN_NOTHING(2 * sizeof(int));
@@ -307,7 +307,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_POS:
 		if (sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]) != 2) {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal pos statement '%s'", token);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal pos statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN_NOTHING(2 * sizeof(float));
@@ -315,7 +315,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_VECTOR:
 		if (sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]) != 3) {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal vector statement '%s'", token);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal vector statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		*writedByte = ALIGN_NOTHING(3 * sizeof(float));
@@ -325,7 +325,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		{
 			float* f = (float *) b;
 			if (sscanf(token, "%f %f %f %f", &f[0], &f[1], &f[2], &f[3]) != 4) {
-				snprintf(errorMessage, sizeof(errorMessage), "Illegal color statement '%s'", token);
+				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal color statement '%s'", token);
 				return RESULT_ERROR;
 			}
 			*writedByte = ALIGN_NOTHING(4 * sizeof(float));
@@ -336,7 +336,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		{
 			int* i = (int *) b;
 			if (sscanf(token, "%i %i %i %i", &i[0], &i[1], &i[2], &i[3]) != 4) {
-				snprintf(errorMessage, sizeof(errorMessage), "Illegal rgba statement '%s'", token);
+				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal rgba statement '%s'", token);
 				return RESULT_ERROR;
 			}
 			*writedByte = ALIGN_NOTHING(4 * sizeof(int));
@@ -367,7 +367,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_ALIGN:
 		for (num = 0; num < ALIGN_LAST; num++)
-			if (!Q_strcmp(token, align_names[num]))
+			if (!strcmp(token, align_names[num]))
 				break;
 		if (num == ALIGN_LAST)
 			*b = 0;
@@ -378,7 +378,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_BLEND:
 		for (num = 0; num < BLEND_LAST; num++)
-			if (!Q_strcmp(token, blend_names[num]))
+			if (!strcmp(token, blend_names[num]))
 				break;
 		if (num == BLEND_LAST)
 			*b = 0;
@@ -389,7 +389,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_STYLE:
 		for (num = 0; num < STYLE_LAST; num++)
-			if (!Q_strcmp(token, style_names[num]))
+			if (!strcmp(token, style_names[num]))
 				break;
 		if (num == STYLE_LAST)
 			*b = 0;
@@ -400,7 +400,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_FADE:
 		for (num = 0; num < FADE_LAST; num++)
-			if (!Q_strcmp(token, fade_names[num]))
+			if (!strcmp(token, fade_names[num]))
 				break;
 		if (num == FADE_LAST)
 			*b = 0;
@@ -411,16 +411,16 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_SHAPE_SMALL:
 		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4) {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal shape small statement '%s'", token);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal shape small statement '%s'", token);
 			return RESULT_ERROR;
 		}
 
 		if (y + h > SHAPE_SMALL_MAX_HEIGHT || y >= SHAPE_SMALL_MAX_HEIGHT || h > SHAPE_SMALL_MAX_HEIGHT) {
-			snprintf(errorMessage, sizeof(errorMessage), "illegal shape small statement - max h value is %i (y: %i, h: %i)", SHAPE_SMALL_MAX_HEIGHT, y, h);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "illegal shape small statement - max h value is %i (y: %i, h: %i)", SHAPE_SMALL_MAX_HEIGHT, y, h);
 			return RESULT_ERROR;
 		}
 		if (x + w > SHAPE_SMALL_MAX_WIDTH || x >= SHAPE_SMALL_MAX_WIDTH || w > SHAPE_SMALL_MAX_WIDTH) {
-			snprintf(errorMessage, sizeof(errorMessage), "illegal shape small statement - max x and w values are %i", SHAPE_SMALL_MAX_WIDTH);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "illegal shape small statement - max x and w values are %i", SHAPE_SMALL_MAX_WIDTH);
 			return RESULT_ERROR;
 		}
 		for (h += y; y < h; y++)
@@ -430,15 +430,15 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_SHAPE_BIG:
 		if (sscanf(token, "%i %i %i %i", &x, &y, &w, &h) != 4) {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal shape big statement '%s'", token);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal shape big statement '%s'", token);
 			return RESULT_ERROR;
 		}
 		if (y + h > SHAPE_BIG_MAX_HEIGHT || y >= SHAPE_BIG_MAX_HEIGHT || h > SHAPE_BIG_MAX_HEIGHT) {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal shape big statement, max height is %i", SHAPE_BIG_MAX_HEIGHT);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal shape big statement, max height is %i", SHAPE_BIG_MAX_HEIGHT);
 			return RESULT_ERROR;
 		}
 		if (x + w > SHAPE_BIG_MAX_WIDTH || x >= SHAPE_BIG_MAX_WIDTH || w > SHAPE_BIG_MAX_WIDTH) {
-			snprintf(errorMessage, sizeof(errorMessage), "illegal shape big statement - max x and w values are %i ('%s')", SHAPE_BIG_MAX_WIDTH, token);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "illegal shape big statement - max x and w values are %i ('%s')", SHAPE_BIG_MAX_WIDTH, token);
 			return RESULT_ERROR;
 		}
 		w = ((1 << w) - 1) << x;
@@ -450,7 +450,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_DMGWEIGHT:
 	case V_DMGTYPE:
 		for (num = 0; num < csi.numDTs; num++)
-			if (!Q_strcmp(token, csi.dts[num].id))
+			if (!strcmp(token, csi.dts[num].id))
 				break;
 		if (num == csi.numDTs)
 			*b = 0;
@@ -461,7 +461,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_DATE:
 		if (sscanf(token, "%i %i %i", &x, &y, &w) != 3) {
-			snprintf(errorMessage, sizeof(errorMessage), "Illegal if statement '%s'", token);
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal if statement '%s'", token);
 			return RESULT_ERROR;
 		}
 
@@ -473,7 +473,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 	case V_RELABS:
 		if (token[0] == '-' || token[0] == '+') {
 			if (fabs(atof(token + 1)) <= 2.0f) {
-				snprintf(errorMessage, sizeof(errorMessage), "a V_RELABS (absolute) value should always be bigger than +/-2.0");
+				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "a V_RELABS (absolute) value should always be bigger than +/-2.0");
 				status = RESULT_WARNING;
 			}
 			if (token[0] == '-')
@@ -482,7 +482,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 				*(float *) b = atof(token + 1);
 		} else {
 			if (fabs(atof(token)) > 2.0f) {
-				snprintf(errorMessage, sizeof(errorMessage), "a V_RELABS (relative) value should only be between 0.00..1 and 2.0");
+				snprintf(parseErrorMessage, sizeof(parseErrorMessage), "a V_RELABS (relative) value should only be between 0.00..1 and 2.0");
 				status = RESULT_WARNING;
 			}
 			*(float *) b = atof(token);
@@ -492,7 +492,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 
 	case V_LONGLINES:
 		for (num = 0; num < LONGLINES_LAST; num++)
-			if (!Q_strcmp(token, longlines_names[num]))
+			if (!strcmp(token, longlines_names[num]))
 				break;
 		if (num == LONGLINES_LAST)
 			*b = 0;
@@ -502,7 +502,7 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	default:
-		snprintf(errorMessage, sizeof(errorMessage), "unknown value type '%s'", token);
+		snprintf(parseErrorMessage, sizeof(parseErrorMessage), "unknown value type '%s'", token);
 		return RESULT_ERROR;
 	}
 	return status;
@@ -527,16 +527,16 @@ int Com_EParseValue (void *base, const char *token, valueTypes_t type, int ofs, 
 	switch (result) {
 	case RESULT_ERROR:
 #ifdef DEBUG
-		Sys_Error("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
+		Sys_Error("Com_EParseValue: %s (file: '%s', line: %i)\n", parseErrorMessage, file, line);
 #else
-		Sys_Error("Com_EParseValue: %s\n", errorMessage);
+		Sys_Error("Com_EParseValue: %s\n", parseErrorMessage);
 #endif
 		break;
 	case RESULT_WARNING:
 #ifdef DEBUG
-		Com_Printf("Com_EParseValue: %s (file: '%s', line: %i)\n", errorMessage, file, line);
+		Com_Printf("Com_EParseValue: %s (file: '%s', line: %i)\n", parseErrorMessage, file, line);
 #else
-		Com_Printf("Com_EParseValue: %s\n", errorMessage);
+		Com_Printf("Com_EParseValue: %s\n", parseErrorMessage);
 #endif
 		break;
 	case RESULT_OK:
@@ -593,30 +593,30 @@ int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_
 		return ALIGN_NOTHING(sizeof(char));
 
 	case V_TEAM:
-		if (!Q_strcmp(set, "civilian"))
+		if (!strcmp(set, "civilian"))
 			*(int *) b = TEAM_CIVILIAN;
-		else if (!Q_strcmp(set, "phalanx"))
+		else if (!strcmp(set, "phalanx"))
 			*(int *) b = TEAM_PHALANX;
-		else if (!Q_strcmp(set, "alien"))
+		else if (!strcmp(set, "alien"))
 			*(int *) b = TEAM_ALIEN;
 		else
 			Sys_Error("Unknown team given: '%s'", (const char *)set);
 		return ALIGN_NOTHING(sizeof(int));
 
 	case V_RACE:
-		if (!Q_strcmp(set, "phalanx"))
+		if (!strcmp(set, "phalanx"))
 			*(int *) b = RACE_PHALANX_HUMAN;
-		else if (!Q_strcmp(set, "civilian"))
+		else if (!strcmp(set, "civilian"))
 			*(int *) b = RACE_CIVILIAN;
-		else if (!Q_strcmp(set, "robot"))
+		else if (!strcmp(set, "robot"))
 			*(int *) b = RACE_ROBOT;
-		else if (!Q_strcmp(set, "taman"))
+		else if (!strcmp(set, "taman"))
 			*(int *) b = RACE_TAMAN;
-		else if (!Q_strcmp(set, "ortnok"))
+		else if (!strcmp(set, "ortnok"))
 			*(int *) b = RACE_ORTNOK;
-		else if (!Q_strcmp(set, "bloodspider"))
+		else if (!strcmp(set, "bloodspider"))
 			*(int *) b = RACE_BLOODSPIDER;
-		else if (!Q_strcmp(set, "shevaar"))
+		else if (!strcmp(set, "shevaar"))
 			*(int *) b = RACE_SHEVAAR;
 		else
 			Sys_Error("Unknown race type: '%s'", (const char *)set);
@@ -1008,7 +1008,7 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 			}
 
 		if (!fdp->string) {
-			if (!Q_strncmp(token, "skill", 5)) {
+			if (!strncmp(token, "skill", 5)) {
 				int skill;
 
 				token = COM_EParse(text, errhead, name);
@@ -1022,12 +1022,12 @@ static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 					}
 				if (skill >= SKILL_NUM_TYPES)
 					Com_Printf("Com_ParseFire: unknown weapon skill \"%s\" ignored (weapon %s)\n", token, name);
-			} else if (!Q_strncmp(token, "range", 5)) {
+			} else if (!strncmp(token, "range", 5)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				fd->range = atof(token) * UNIT_SIZE;
-			} else if (!Q_strncmp(token, "splrad", 6)) {
+			} else if (!strncmp(token, "splrad", 6)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1068,7 +1068,7 @@ static void Com_ParseArmour (const char *name, const char **text, short *ad, qbo
 			return;
 
 		for (i = 0; i < csi.numDTs; i++)
-			if (!Q_strncmp(token, csi.dts[i].id, MAX_VAR)) {
+			if (!strncmp(token, csi.dts[i].id, MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1124,7 +1124,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 
 	/* search for items with same name */
 	for (i = 0; i < csi.numODs; i++)
-		if (!Q_strncmp(name, csi.ods[i].name, sizeof(csi.ods[i].name)))
+		if (!strncmp(name, csi.ods[i].name, sizeof(csi.ods[i].name)))
 			break;
 
 	if (i < csi.numODs) {
@@ -1203,7 +1203,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 								if (*token == '}')
 									break;
 
-								if (!Q_strcmp(token, "firedef")) {
+								if (!strcmp(token, "firedef")) {
 									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
 										const int fdIdx = od->numFiredefs[weapFdsIdx];
 										od->fd[weapFdsIdx][fdIdx].relFireVolume = DEFAULT_SOUND_PACKET_VOLUME;
@@ -1241,7 +1241,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 			}
 		}
 		if (!val->string) {
-			if (!Q_strcmp(token, "craftweapon")) {
+			if (!strcmp(token, "craftweapon")) {
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
 				if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
@@ -1253,7 +1253,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 				} else {
 					Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
 				}
-			} else if (!Q_strcmp(token, "crafttype")) {
+			} else if (!strcmp(token, "crafttype")) {
 				/* Craftitem type definition. */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -1261,7 +1261,7 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 
 				/* Check which type it is and store the correct one.*/
 				for (i = 0; i < MAX_ACITEMS; i++) {
-					if (!Q_strcmp(token, air_slot_type_strings[i])) {
+					if (!strcmp(token, air_slot_type_strings[i])) {
 						od->craftitem.type = i;
 						break;
 					}
@@ -1328,7 +1328,7 @@ static void Com_ParseInventory (const char *name, const char **text)
 
 	/* search for containers with same name */
 	for (i = 0; i < csi.numIDs; i++)
-		if (!Q_strncmp(name, csi.ids[i].name, sizeof(csi.ids[i].name)))
+		if (!strncmp(name, csi.ids[i].name, sizeof(csi.ids[i].name)))
 			break;
 
 	if (i < csi.numIDs) {
@@ -1357,34 +1357,34 @@ static void Com_ParseInventory (const char *name, const char **text)
 	}
 
 	/* Special IDs for container. These are also used elsewhere, so be careful. */
-	if (!Q_strncmp(name, "right", 5)) {
+	if (!strncmp(name, "right", 5)) {
 		csi.idRight = id - csi.ids;
 		id->id = csi.idRight;
-	} else if (!Q_strncmp(name, "left", 4)) {
+	} else if (!strncmp(name, "left", 4)) {
 		csi.idLeft = id - csi.ids;
 		id->id = csi.idLeft;
-	} else if (!Q_strncmp(name, "extension", 4)) {
+	} else if (!strncmp(name, "extension", 4)) {
 		csi.idExtension = id - csi.ids;
 		id->id = csi.idExtension;
-	} else if (!Q_strncmp(name, "belt", 4)) {
+	} else if (!strncmp(name, "belt", 4)) {
 		csi.idBelt = id - csi.ids;
 		id->id = csi.idBelt;
-	} else if (!Q_strncmp(name, "holster", 7)) {
+	} else if (!strncmp(name, "holster", 7)) {
 		csi.idHolster = id - csi.ids;
 		id->id = csi.idHolster;
-	} else if (!Q_strncmp(name, "backpack", 8)) {
+	} else if (!strncmp(name, "backpack", 8)) {
 		csi.idBackpack = id - csi.ids;
 		id->id = csi.idBackpack;
-	} else if (!Q_strncmp(name, "armour", 5)) {
+	} else if (!strncmp(name, "armour", 5)) {
 		csi.idArmour = id - csi.ids;
 		id->id = csi.idArmour;
-	} else if (!Q_strncmp(name, "floor", 5)) {
+	} else if (!strncmp(name, "floor", 5)) {
 		csi.idFloor = id - csi.ids;
 		id->id = csi.idFloor;
-	} else if (!Q_strncmp(name, "equip", 5)) {
+	} else if (!strncmp(name, "equip", 5)) {
 		csi.idEquip = id - csi.ids;
 		id->id = csi.idEquip;
-	} else if (!Q_strncmp(name, "headgear", 8)) {
+	} else if (!strncmp(name, "headgear", 8)) {
 		csi.idHeadgear = id - csi.ids;
 		id->id = csi.idHeadgear;
 	}
@@ -1456,7 +1456,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 	/* search for equipments with same name */
 	for (i = 0; i < csi.numEDs; i++)
-		if (!Q_strncmp(name, csi.eds[i].name, MAX_VAR))
+		if (!strncmp(name, csi.eds[i].name, MAX_VAR))
 			break;
 
 	if (i < csi.numEDs) {
@@ -1490,7 +1490,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 			return;
 
 		for (vp = equipment_definition_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
+			if (!strcmp(token, vp->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -1502,7 +1502,7 @@ static void Com_ParseEquipment (const char *name, const char **text)
 
 		if (!foundDefinition) {
 			for (i = 0; i < csi.numODs; i++)
-				if (!Q_strncmp(token, csi.ods[i].id, MAX_VAR)) {
+				if (!strncmp(token, csi.ods[i].id, MAX_VAR)) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text || *token == '}') {
 						Com_Printf("Com_ParseEquipment: unexpected end of equipment def \"%s\"\n", name);
@@ -1645,7 +1645,7 @@ teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 
 	/* get team definition */
 	for (i = 0; i < csi.numTeamDefs; i++)
-		if (!Q_strncmp(team, csi.teamDef[i].id, MAX_VAR))
+		if (!strncmp(team, csi.teamDef[i].id, MAX_VAR))
 			return &csi.teamDef[i];
 
 	Com_Printf("Com_GetTeamDefinitionByID: could not find team definition for '%s' in team definitions\n", team);
@@ -1751,7 +1751,7 @@ static void Com_ParseActorNames (const char *name, const char **text, teamDef_t*
 			break;
 
 		for (i = 0; i < NAME_NUM_TYPES; i++)
-			if (!Q_strcmp(token, name_strings[i])) {
+			if (!strcmp(token, name_strings[i])) {
 				td->numNames[i] = 0;
 
 				token = COM_EParse(text, errhead, name);
@@ -1826,7 +1826,7 @@ static void Com_ParseActorModels (const char *name, const char **text, teamDef_t
 			break;
 
 		for (i = 0; i < NAME_NUM_TYPES; i++)
-			if (!Q_strcmp(token, name_strings[i])) {
+			if (!strcmp(token, name_strings[i])) {
 				if (td->numModels[i])
 					Sys_Error("Com_ParseActorModels: Already parsed models for actor definition '%s'\n", name);
 				td->numModels[i] = 0;
@@ -1905,7 +1905,7 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 			break;
 
 		for (i = 0; i < NAME_LAST; i++)
-			if (!Q_strcmp(token, name_strings[i])) {
+			if (!strcmp(token, name_strings[i])) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					break;
@@ -1919,13 +1919,13 @@ static void Com_ParseActorSounds (const char *name, const char **text, teamDef_t
 						break;
 					if (*token == '}')
 						break;
-					if (!Q_strcmp(token, "hurtsound")) {
+					if (!strcmp(token, "hurtsound")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
 						LIST_AddString(&td->sounds[SND_HURT][i], token);
 						td->numSounds[SND_HURT][i]++;
-					} else if (!Q_strcmp(token, "deathsound")) {
+					} else if (!strcmp(token, "deathsound")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
@@ -1968,7 +1968,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		if (!Q_strncmp(td->id, name, sizeof(td->id)))
+		if (!strncmp(td->id, name, sizeof(td->id)))
 			break;
 
 	/* reset new category */
@@ -2011,7 +2011,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 			break;
 
 		for (v = teamDefValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, strlen(token))) {
+			if (!strncmp(token, v->string, strlen(token))) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -2022,7 +2022,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 			}
 
 		if (!v->string) {
-			if (!Q_strcmp(token, "onlyWeapon")) {
+			if (!strcmp(token, "onlyWeapon")) {
 				objDef_t *od;
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -2033,11 +2033,11 @@ static void Com_ParseTeam (const char *name, const char **text)
 					td->onlyWeapon = od;
 				else
 					Sys_Error("Com_ParseTeam: Could not get item definition for '%s'", token);
-			} else if (!Q_strcmp(token, "models"))
+			} else if (!strcmp(token, "models"))
 				Com_ParseActorModels(name, text, td);
-			else if (!Q_strcmp(token, "names"))
+			else if (!strcmp(token, "names"))
 				Com_ParseActorNames(name, text, td);
-			else if (!Q_strcmp(token, "actorsounds"))
+			else if (!strcmp(token, "actorsounds"))
 				Com_ParseActorSounds(name, text, td);
 			else
 				Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
@@ -2076,7 +2076,7 @@ const terrainType_t* Com_GetTerrainType (const char *textureName)
 	assert(textureName);
 	hash = Com_HashKey(textureName, TERRAIN_HASH_SIZE);
 	for (t = terrainTypesHash[hash]; t; t = t->hash_next) {
-		if (!Q_strcmp(textureName, t->texture))
+		if (!strcmp(textureName, t->texture))
 			return t;
 	}
 
@@ -2126,7 +2126,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 			break;
 
 		for (v = terrainTypeValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -2179,7 +2179,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 
 	/* search for game types with same name */
 	for (i = 0; i < numGTs; i++)
-		if (!Q_strncmp(token, gts[i].id, MAX_VAR))
+		if (!strncmp(token, gts[i].id, MAX_VAR))
 			break;
 
 	if (i == numGTs) {
@@ -2199,7 +2199,7 @@ static void Com_ParseGameTypes (const char *name, const char **text)
 				break;
 
 			for (v = gameTypeValues; v->string; v++)
-				if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+				if (!strncmp(token, v->string, sizeof(v->string))) {
 					/* found a definition */
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
@@ -2274,7 +2274,7 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 
 		/* search for damage types with same name */
 		for (i = 0; i < csi.numDTs; i++)
-			if (!Q_strncmp(token, csi.dts[i].id, MAX_VAR))
+			if (!strncmp(token, csi.dts[i].id, MAX_VAR))
 				break;
 
 		/* Not found in the for loop. */
@@ -2285,23 +2285,23 @@ static void Com_ParseDamageTypes (const char *name, const char **text)
 			if (csi.dts[csi.numDTs].showInMenu) {
 				Com_DPrintf(DEBUG_CLIENT, "Com_ParseDamageTypes: dmgtype/dmgweight %s\n", token);
 				/* Special IDs */
-				if (!Q_strncmp(token, "normal", 6))
+				if (!strncmp(token, "normal", 6))
 					csi.damNormal = csi.numDTs;
-				else if (!Q_strncmp(token, "blast", 5))
+				else if (!strncmp(token, "blast", 5))
 					csi.damBlast = csi.numDTs;
-				else if (!Q_strncmp(token, "fire", 4))
+				else if (!strncmp(token, "fire", 4))
 					csi.damFire = csi.numDTs;
-				else if (!Q_strncmp(token, "shock", 5))
+				else if (!strncmp(token, "shock", 5))
 					csi.damShock = csi.numDTs;
-				else if (!Q_strncmp(token, "laser", 5))
+				else if (!strncmp(token, "laser", 5))
 					csi.damLaser = csi.numDTs;
-				else if (!Q_strncmp(token, "plasma", 6))
+				else if (!strncmp(token, "plasma", 6))
 					csi.damPlasma = csi.numDTs;
-				else if (!Q_strncmp(token, "particle", 7))
+				else if (!strncmp(token, "particle", 7))
 					csi.damParticle = csi.numDTs;
-				else if (!Q_strncmp(token, "stun_electro", 12))
+				else if (!strncmp(token, "stun_electro", 12))
 					csi.damStunElectro = csi.numDTs;
-				else if (!Q_strncmp(token, "stun_gas", 8))
+				else if (!strncmp(token, "stun_gas", 8))
 					csi.damStunGas = csi.numDTs;
 				else
 					Com_Printf("Unknown dmgtype: '%s'\n", token);
@@ -2391,7 +2391,7 @@ mapDef_t* Com_GetMapDefinitionByID (const char *mapDefID)
 	assert(mapDefID);
 
 	for (i = 0; i < csi.numMDs; i++) {
-		if (!Q_strcmp(csi.mds[i].id, mapDefID))
+		if (!strcmp(csi.mds[i].id, mapDefID))
 			return &csi.mds[i];
 	}
 
@@ -2445,7 +2445,7 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 			break;
 
 		for (vp = mapdef_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
+			if (!strcmp(token, vp->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -2468,15 +2468,15 @@ static void Com_ParseMapDefinition (const char *name, const char **text)
 
 		if (!vp->string) {
 			linkedList_t **list;
-			if (!Q_strcmp(token, "ufos")) {
+			if (!strcmp(token, "ufos")) {
 				list = &md->ufos;
-			} else if (!Q_strcmp(token, "terrains")) {
+			} else if (!strcmp(token, "terrains")) {
 				list = &md->terrains;
-			} else if (!Q_strcmp(token, "populations")) {
+			} else if (!strcmp(token, "populations")) {
 				list = &md->populations;
-			} else if (!Q_strcmp(token, "cultures")) {
+			} else if (!strcmp(token, "cultures")) {
 				list = &md->cultures;
-			} else if (!Q_strcmp(token, "gametypes")) {
+			} else if (!strcmp(token, "gametypes")) {
 				list = &md->gameTypes;
 			} else {
 				Com_Printf("Com_ParseMapDefinition: unknown token \"%s\" ignored (mapdef %s)\n", token, name);
@@ -2546,9 +2546,9 @@ void Com_ParseScripts (void)
 	text = NULL;
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-		if (!Q_strncmp(type, "damagetypes", 11))
+		if (!strncmp(type, "damagetypes", 11))
 			Com_ParseDamageTypes(name, &text);
-		else if (!Q_strncmp(type, "gametype", 8))
+		else if (!strncmp(type, "gametype", 8))
 			Com_ParseGameTypes(name, &text);
 
 	/* stage one parsing */
@@ -2557,15 +2557,15 @@ void Com_ParseScripts (void)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!Q_strncmp(type, "item", 4))
+		if (!strncmp(type, "item", 4))
 			Com_ParseItem(name, &text, qfalse);
-		else if (!Q_strncmp(type, "mapdef", 6))
+		else if (!strncmp(type, "mapdef", 6))
 			Com_ParseMapDefinition(name, &text);
-		else if (!Q_strncmp(type, "craftitem", 8))
+		else if (!strncmp(type, "craftitem", 8))
 			Com_ParseItem(name, &text, qtrue);
-		else if (!Q_strncmp(type, "inventory", 9))
+		else if (!strncmp(type, "inventory", 9))
 			Com_ParseInventory(name, &text);
-		else if (!Q_strncmp(type, "terrain", 7))
+		else if (!strncmp(type, "terrain", 7))
 			Com_ParseTerrain(name, &text);
 		else if (!sv_dedicated->integer)
 			CL_ParseClientData(type, name, &text);
@@ -2577,9 +2577,9 @@ void Com_ParseScripts (void)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!Q_strncmp(type, "equipment", 9))
+		if (!strncmp(type, "equipment", 9))
 			Com_ParseEquipment(name, &text);
-		else if (!Q_strncmp(type, "team", 4))
+		else if (!strncmp(type, "team", 4))
 			Com_ParseTeam(name, &text);
 	}
 

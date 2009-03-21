@@ -151,7 +151,7 @@ static void MN_Translate_f (void)
 		*trans = '\0';
 		list++;
 
-		if (!Q_strcmp(current, original)) {
+		if (!strcmp(current, original)) {
 			Cvar_Set(Cmd_Argv(2), _(translation));
 			return;
 		}

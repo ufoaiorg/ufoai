@@ -120,7 +120,7 @@ void Info_RemoveKey (char *s, const char *key)
 		}
 		*o = 0;
 
-		if (!Q_strncmp(key, pkey, sizeof(pkey))) {
+		if (!strncmp(key, pkey, sizeof(pkey))) {
 			strcpy(start, s);	/* remove this part */
 			return;
 		}

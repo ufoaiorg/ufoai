@@ -50,13 +50,13 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 
 	if (!createCopy) {
 		for (i = 0; i < ccs.numEventMails; i++)
-			if (!Q_strcmp(ccs.eventMails[i].id, id))
+			if (!strcmp(ccs.eventMails[i].id, id))
 				return &ccs.eventMails[i];
 
 		list = eventMails;
 		while (list) {
 			listMail = (eventMail_t *)list->data;
-			if (!Q_strcmp(listMail->id, id))
+			if (!strcmp(listMail->id, id))
 				return listMail;
 			list = list->next;
 		}
@@ -68,7 +68,7 @@ eventMail_t* CL_GetEventMail (const char *id, qboolean createCopy)
 
 		/* search the static mails - and only the static ones! */
 		for (i = 0; i < ccs.numEventMails; i++)
-			if (!Q_strcmp(ccs.eventMails[i].id, id)) {
+			if (!strcmp(ccs.eventMails[i].id, id)) {
 				eventMail = &ccs.eventMails[i];
 				break;
 			}
@@ -187,7 +187,7 @@ void CL_ParseEventMails (const char *name, const char **text)
 
 		/* check for some standard values */
 		for (vp = eventMail_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
+			if (!strcmp(token, vp->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)

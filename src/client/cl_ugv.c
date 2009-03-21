@@ -43,7 +43,7 @@ ugv_t *CL_GetUGVByID (const char *ugvID)
 	int i;
 
 	for (i = 0; i < numUGV; i++) {
-		if (!Q_strcmp(ugvs[i].id, ugvID)) {
+		if (!strcmp(ugvs[i].id, ugvID)) {
 			return &ugvs[i];
 		}
 	}
@@ -203,7 +203,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 	}
 
 	for (i = 0; i < numUGV; i++) {
-		if (!Q_strcmp(name, ugvs[i].id)) {
+		if (!strcmp(name, ugvs[i].id)) {
 			Com_Printf("CL_ParseUGVs: ugv \"%s\" with same name already loaded\n", name);
 			return;
 		}
@@ -227,7 +227,7 @@ void CL_ParseUGVs (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		for (v = ugvValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)

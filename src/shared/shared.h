@@ -113,9 +113,6 @@ int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnul
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
 /* portable case sensitive compare */
-#define Q_strcmp(a, b)     strcmp((a), (b))
-#define Q_strncmp(a, b, n) strncmp((a), (b), (n))
-
 #if defined _WIN32
 #	define Q_strcasecmp(a, b) _stricmp((a), (b))
 #else

@@ -944,11 +944,11 @@ static void HUD_RemainingTus_f (void)
 	type = Cmd_Argv(1);
 	state = atoi(Cmd_Argv(2));
 
-	if (!Q_strcmp(type, "reload_r")) {
+	if (!strcmp(type, "reload_r")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] = state;
-	} else if (!Q_strcmp(type, "reload_l")) {
+	} else if (!strcmp(type, "reload_l")) {
 		displayRemainingTus[REMAINING_TU_RELOAD_LEFT] = state;
-	} else if (!Q_strcmp(type, "crouch")) {
+	} else if (!strcmp(type, "crouch")) {
 		displayRemainingTus[REMAINING_TU_CROUCH] = state;
 	}
 

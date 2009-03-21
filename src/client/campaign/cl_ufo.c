@@ -69,7 +69,7 @@ ufoType_t UFO_ShortNameToID (const char *token)
 	const ufoTypeList_t *list = ufoTypeList;
 
 	while (list->id) {
-		if (!Q_strcmp(list->id, token))
+		if (!strcmp(list->id, token))
 			return list->ufoType;
 		list++;
 	}

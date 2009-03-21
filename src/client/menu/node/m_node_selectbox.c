@@ -124,7 +124,7 @@ static void MN_SelectBoxNodeDraw (menuNode_t *node)
 		12.0f + SELECTBOX_RIGHT_WIDTH, SELECTBOX_DEFAULT_HEIGHT, 12.0f, 0.0f, ALIGN_UL, node->blend, image);
 	/* draw the label for the current selected option */
 	for (option = MN_SelectBoxNodeGetFirstOption(node); option; option = option->next) {
-		if (!Q_strcmp(option->value, ref)) {
+		if (!strcmp(option->value, ref)) {
 			R_FontDrawString(font, ALIGN_UL, selBoxX, selBoxY,
 				selBoxX, selBoxY, node->size[0] - 4, 0,
 				0, _(option->label), 0, 0, NULL, qfalse, LONGLINES_PRETTYCHOP);
@@ -242,7 +242,7 @@ static void MN_SelectBoxNodeClick (menuNode_t *node, int x, int y)
 	}
 
 	/* no cvar? */
-	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
+	if (strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
 	/* select the right option */

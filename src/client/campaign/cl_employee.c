@@ -160,15 +160,15 @@ const char* E_GetEmployeeString (employeeType_t type)
 employeeType_t E_GetEmployeeType (const char* type)
 {
 	assert(type);
-	if (!Q_strcmp(type, "EMPL_SCIENTIST"))
+	if (!strcmp(type, "EMPL_SCIENTIST"))
 		return EMPL_SCIENTIST;
-	else if (!Q_strcmp(type, "EMPL_SOLDIER"))
+	else if (!strcmp(type, "EMPL_SOLDIER"))
 		return EMPL_SOLDIER;
-	else if (!Q_strcmp(type, "EMPL_WORKER"))
+	else if (!strcmp(type, "EMPL_WORKER"))
 		return EMPL_WORKER;
-	else if (!Q_strcmp(type, "EMPL_PILOT"))
+	else if (!strcmp(type, "EMPL_PILOT"))
 		return EMPL_PILOT;
-	else if (!Q_strcmp(type, "EMPL_ROBOT"))
+	else if (!strcmp(type, "EMPL_ROBOT"))
 		return EMPL_ROBOT;
 
 	Sys_Error("Unknown employee type '%s'\n", type);
@@ -1208,7 +1208,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 			 * Same for the ugv string below.
 			 * We would need a Post-Load init funtion in that case. @sa SAV_GameActionsAfterLoad */
 			string = mxml_GetString(ssnode, "nation");
-			if (string[0] == '\0' && Q_strcmp(string, "NULL"))
+			if (string[0] == '\0' && strcmp(string, "NULL"))
 				return qfalse;
 			e->nation = NAT_GetNationByID(string);
 			if (!e->nation)
@@ -1216,7 +1216,7 @@ qboolean E_LoadXML (mxml_node_t *p)
 
 			/* Read the UGV-Type identifier and get the matching ugv_t pointer. */
 			string = mxml_GetString(ssnode, "ugv");
-			if (string[0] != '\0' && Q_strcmp(string, "NULL"))
+			if (string[0] != '\0' && strcmp(string, "NULL"))
 				e->ugv = CL_GetUGVByID(string);
 			e->chr.emplIdx = i;
 			e->chr.emplType = j;

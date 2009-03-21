@@ -42,7 +42,7 @@ static qboolean Destroy_Breakable (edict_t *self)
 	else
 		gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 	gi.WriteShort(self->number);
-	if (self->particle && Q_strcmp(self->particle, "null")) {
+	if (self->particle && strcmp(self->particle, "null")) {
 		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 		gi.WriteShort(self->spawnflags);
 		gi.WriteByte(1);

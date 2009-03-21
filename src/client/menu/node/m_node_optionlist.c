@@ -111,7 +111,7 @@ static void MN_OptionListNodeDraw (menuNode_t *node)
 			R_DrawFill(pos[0] + node->padding, currentY, node->size[0] - node->padding - node->padding, elementHeight, ALIGN_UL, node->color);
 
 		/* text color */
-		if (!Q_strcmp(option->value, ref)) {
+		if (!strcmp(option->value, ref)) {
 			textColor = node->selectedColor;
 		} else if (node->disabled) {
 			textColor = disabledColor;
@@ -187,7 +187,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 	}
 
 	/* no cvar? */
-	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
+	if (strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
 	/* select the right option */

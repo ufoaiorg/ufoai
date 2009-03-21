@@ -3026,7 +3026,7 @@ void CL_ActorInventoryOpen_f (void)
 {
 	if (CL_OnBattlescape()) {
 		if (!strstr(MN_GetActiveMenuName(), "hudinv")) {
-			if (!Q_strcmp(mn_hud->string, "althud"))
+			if (!strcmp(mn_hud->string, "althud"))
 				MN_PushMenu("ahudinv", NULL);
 			else
 				MN_PushMenu("hudinv", NULL);

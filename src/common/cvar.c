@@ -61,7 +61,7 @@ static qboolean Cvar_InfoValidate (const char *s)
  * @brief Searches for a cvar given by parameter
  * @param var_name The cvar name as string
  * @return Pointer to cvar_t struct
- * @sa Cvar_VariableString
+ * @sa Cvar_GetString
  * @sa Cvar_SetValue
  */
 cvar_t *Cvar_FindVar (const char *var_name)
@@ -70,7 +70,7 @@ cvar_t *Cvar_FindVar (const char *var_name)
 	const unsigned hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 
 	for (var = cvar_vars_hash[hash]; var; var = var->hash_next)
-		if (!Q_strcmp(var_name, var->name))
+		if (!strcmp(var_name, var->name))
 			return var;
 
 	return NULL;
@@ -78,12 +78,12 @@ cvar_t *Cvar_FindVar (const char *var_name)
 
 /**
  * @brief Returns the float value of a cvar
- * @sa Cvar_VariableString
+ * @sa Cvar_GetString
  * @sa Cvar_FindVar
- * @sa Cvar_VariableInteger
+ * @sa Cvar_GetInteger
  * @return 0 if not defined
  */
-float Cvar_VariableValue (const char *var_name)
+float Cvar_GetValue (const char *var_name)
 {
 	cvar_t *var;
 
@@ -166,7 +166,7 @@ qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
 
 	for (i = 0; i < arraySize; i++) {
 		string = array[i];
-		if (Q_strncmp(cvar->string, string, sizeof(cvar->string))) {
+		if (strncmp(cvar->string, string, sizeof(cvar->string))) {
 			/* valid value */
 			return qfalse;
 		}
@@ -183,12 +183,12 @@ qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
 
 /**
  * @brief Returns the int value of a cvar
- * @sa Cvar_VariableValue
- * @sa Cvar_VariableString
+ * @sa Cvar_GetValue
+ * @sa Cvar_GetString
  * @sa Cvar_FindVar
  * @return 0 if not defined
  */
-int Cvar_VariableInteger (const char *var_name)
+int Cvar_GetInteger (const char *var_name)
 {
 	cvar_t *var;
 
@@ -200,13 +200,13 @@ int Cvar_VariableInteger (const char *var_name)
 
 /**
  * @brief Returns the value of cvar as string
- * @sa Cvar_VariableValue
+ * @sa Cvar_GetValue
  * @sa Cvar_FindVar
  *
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-const char *Cvar_VariableString (const char *var_name)
+const char *Cvar_GetString (const char *var_name)
 {
 	cvar_t *var;
 
@@ -218,7 +218,7 @@ const char *Cvar_VariableString (const char *var_name)
 
 /**
  * @brief Returns the old value of cvar as string before we changed it
- * @sa Cvar_VariableValue
+ * @sa Cvar_GetValue
  * @sa Cvar_FindVar
  *
  * Even if the cvar does not exist this function will not return a null pointer
@@ -258,7 +258,7 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 
 	/* check for partial matches */
 	for (cvar = cvar_vars; cvar; cvar = cvar->next)
-		if (!Q_strncmp(partial, cvar->name, len)) {
+		if (!strncmp(partial, cvar->name, len)) {
 #ifndef DEBUG
 			if (cvar->flags & CVAR_DEVELOPER)
 				continue;
@@ -436,12 +436,12 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 
 		if (var->flags & CVAR_LATCH) {
 			if (var->latched_string) {
-				if (!Q_strcmp(value, var->latched_string))
+				if (!strcmp(value, var->latched_string))
 					return var;
 				Mem_Free(var->latched_string);
 				var->latched_string = NULL;
 			} else {
-				if (!Q_strcmp(value, var->string))
+				if (!strcmp(value, var->string))
 					return var;
 			}
 
@@ -471,7 +471,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 		}
 	}
 
-	if (!Q_strcmp(value, var->string))
+	if (!strcmp(value, var->string))
 		return var;				/* not changed */
 
 	if (var->old_string)
@@ -696,7 +696,7 @@ static void Cvar_Copy_f (void)
 		return;
 	}
 
-	Cvar_Set(Cmd_Argv(1), Cvar_VariableString(Cmd_Argv(2)));
+	Cvar_Set(Cmd_Argv(1), Cvar_GetString(Cmd_Argv(2)));
 }
 
 
@@ -732,7 +732,7 @@ static void Cvar_List_f (void)
 
 	i = 0;
 	for (var = cvar_vars; var; var = var->next, i++) {
-		if (c == 2 && Q_strncmp(var->name, token, l)) {
+		if (c == 2 && strncmp(var->name, token, l)) {
 			i--;
 			continue;
 		}
@@ -891,7 +891,7 @@ void Cvar_FixCheatVars (void)
 {
 	cvar_t *var;
 
-	if (!(Com_ServerState() && !Cvar_VariableInteger("sv_cheats")))
+	if (!(Com_ServerState() && !Cvar_GetInteger("sv_cheats")))
 		return;
 
 	for (var = cvar_vars; var; var = var->next) {

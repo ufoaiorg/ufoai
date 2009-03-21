@@ -118,7 +118,7 @@ static void GAME_MP_ChangeGametype_f (void)
 	}
 
 	/* previous? */
-	if (!Q_strcmp(Cmd_Argv(0), "mn_prevgametype")) {
+	if (!strcmp(Cmd_Argv(0), "mn_prevgametype")) {
 		next = qfalse;
 	}
 
@@ -126,7 +126,7 @@ static void GAME_MP_ChangeGametype_f (void)
 		linkedList_t *list = md->gameTypes;
 		linkedList_t *old = NULL;
 		while (list) {
-			if (!Q_strcmp((const char*)list->data, sv_gametype->string)) {
+			if (!strcmp((const char*)list->data, sv_gametype->string)) {
 				if (next) {
 					if (list->next)
 						newGameTypeID = (const char *)list->next->data;
@@ -153,7 +153,7 @@ static void GAME_MP_ChangeGametype_f (void)
 	} else {
 		for (i = 0; i < numGTs; i++) {
 			const gametype_t *gt = &gts[i];
-			if (!Q_strcmp(gt->id, sv_gametype->string)) {
+			if (!strcmp(gt->id, sv_gametype->string)) {
 				if (next) {
 					newType = (i + 1);
 					if (newType >= numGTs)

@@ -69,7 +69,7 @@ static void MN_BarNodeCapturedMouseMove (menuNode_t *node, int x, int y)
 	MN_GetNodeAbsPos(node, pos);
 	Q_strncpyz(var, node->u.abstractvalue.value, sizeof(var));
 	/* no cvar? */
-	if (!Q_strncmp(var, "*cvar", 5)) {
+	if (!strncmp(var, "*cvar", 5)) {
 		/* normalize it */
 		const float frac = (float) x / node->size[0];
 		const float min = MN_GetReferenceFloat(node, node->u.abstractvalue.min);

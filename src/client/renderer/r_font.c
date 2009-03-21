@@ -209,7 +209,7 @@ static font_t *R_FontGetFont (const char *name)
 	int i;
 
 	for (i = 0; i < numFonts; i++)
-		if (!Q_strcmp(name, fonts[i].name))
+		if (!strcmp(name, fonts[i].name))
 			return &fonts[i];
 
 	Com_Error(ERR_FATAL, "Could not find font: %s", name);
@@ -476,7 +476,7 @@ static wrapCache_t *R_FontWrapText (const font_t *f, const char *text, int maxWi
 	 * over the whole string, this is good enough. */
 	for (wrap = hash[hashValue]; wrap; wrap = wrap->next)
 		/* big string are cut, we must not test the 256e character ('\0') */
-		if (!Q_strncmp(text, wrap->text, sizeof(wrap->text) - 1)
+		if (!strncmp(text, wrap->text, sizeof(wrap->text) - 1)
 		 && wrap->font == f
 		 && wrap->method == method
 		 && (wrap->maxWidth == maxWidth

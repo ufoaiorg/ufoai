@@ -74,7 +74,7 @@ void MN_ParseFont (const char *name, const char **text)
 
 	/* search for font with same name */
 	for (i = 0; i < numFonts; i++)
-		if (!Q_strncmp(fonts[i].name, name, MAX_VAR)) {
+		if (!strncmp(fonts[i].name, name, MAX_VAR)) {
 			Com_Printf("MN_ParseFont: font \"%s\" with same name found, second ignored\n", name);
 			return;
 		}
@@ -111,7 +111,7 @@ void MN_ParseFont (const char *name, const char **text)
 			break;
 
 		for (v = fontValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)

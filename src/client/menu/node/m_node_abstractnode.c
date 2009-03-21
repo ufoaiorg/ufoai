@@ -38,7 +38,7 @@ qboolean MN_NodeInstanceOf (const menuNode_t *node, const char* behaviourName)
 {
 	const nodeBehaviour_t *behaviour;
 	for (behaviour = node->behaviour; behaviour; behaviour = behaviour->super) {
-		if (Q_strcmp(behaviour->name, behaviourName) == 0)
+		if (strcmp(behaviour->name, behaviourName) == 0)
 			return qtrue;
 	}
 	return qfalse;
@@ -262,7 +262,7 @@ menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
 		return NULL;
 
 	for (current = node->firstChild; current; current = current->next)
-		if (!Q_strncmp(name, current->name, sizeof(current->name)))
+		if (!strncmp(name, current->name, sizeof(current->name)))
 			break;
 
 	return current;
@@ -333,7 +333,7 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		*(float*) b = atof(value);
 	} else if (property->type == V_CVAR_OR_FLOAT) {
 		b = (byte*) (*(void**)b);
-		if (!Q_strncmp((const char*)b, "*cvar", 5)) {
+		if (!strncmp((const char*)b, "*cvar", 5)) {
 			MN_SetCvar(&((char*)b)[6], NULL, atof(value));
 		} else {
 			*(float*) b = atof(value);
@@ -342,9 +342,9 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		*(int*) b = atoi(value);
 	} else if (property->type == V_BOOL) {
 		qboolean v;
-		if (!Q_strcmp(value, "true"))
+		if (!strcmp(value, "true"))
 			v = qtrue;
-		else if (!Q_strcmp(value, "false"))
+		else if (!strcmp(value, "false"))
 			v = qfalse;
 		else
 			v = atoi(value) != 0;
@@ -393,7 +393,7 @@ float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* proper
 		return *(const float*) b;
 	} else if (property->type == V_CVAR_OR_FLOAT) {
 		b = *(const byte* const*) b;
-		if (!Q_strncmp((const char*)b, "*cvar", 5)) {
+		if (!strncmp((const char*)b, "*cvar", 5)) {
 			const char* cvarName = (const char*)b + 6;
 			const cvar_t *cvar = Cvar_Get(cvarName, "", 0, "Menu cvar");
 			return cvar->value;

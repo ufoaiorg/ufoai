@@ -285,7 +285,7 @@ static ptlArt_t *CL_ParticleGetArt (const char *name, int frame, byte type)
 
 	/* search for the pic in the list */
 	for (i = 0, a = r_particlesArt; i < r_numParticlesArt; i++, a++)
-		if (a->type == type && a->frame == frame && !Q_strcmp(name, a->name))
+		if (a->type == type && a->frame == frame && !strcmp(name, a->name))
 			break;
 
 	if (i < r_numParticlesArt)
@@ -634,7 +634,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 
 	/* find the particle definition */
 	for (i = 0; i < numPtlDefs; i++)
-		if (!Q_strcmp(name, ptlDef[i].name))
+		if (!strcmp(name, ptlDef[i].name))
 			break;
 
 	if (i == numPtlDefs) {
@@ -741,7 +741,7 @@ void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &levelflags, &autohide, &origin, &particle);
 	Com_DPrintf(DEBUG_CLIENT, "Spawn particle '%s'\n", particle);
 
-	if (Q_strcmp(particle, "null")) {
+	if (strcmp(particle, "null")) {
 		le = LE_Add(0);
 		if (!le) {
 			Com_DPrintf(DEBUG_CLIENT, "CL_ParticleSpawnFromSizeBuf: Could not add le\n");
@@ -997,13 +997,13 @@ static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterward
 			continue;
 
 		for (pp = pps; pp->string; pp++)
-			if (!Q_strcmp(key, pp->string)) {
+			if (!strcmp(key, pp->string)) {
 				/* register art */
-				if (!Q_strcmp(pp->string, "image")) {
+				if (!strcmp(pp->string, "image")) {
 					ptl->pic = CL_ParticleGetArt(token, ptl->frame, ART_PIC);
 					break;
 				}
-				if (!Q_strcmp(pp->string, "model")) {
+				if (!strcmp(pp->string, "model")) {
 					ptl->model = CL_ParticleGetArt(token, ptl->frame, ART_MODEL);
 					break;
 				}
@@ -1076,7 +1076,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 			break;
 
 		for (i = 0; i < PC_NUM_PTLCMDS; i++)
-			if (!Q_strcmp(token, pc_strings[i])) {
+			if (!strcmp(token, pc_strings[i])) {
 				/* allocate an new cmd */
 				if (numPtlCmds >= MAX_PTLCMDS)
 					Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
@@ -1121,7 +1121,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 						len = 0;
 
 					for (pp = pps; pp->string; pp++)
-						if (!Q_strcmp(baseComponentToken, pp->string))
+						if (!strcmp(baseComponentToken, pp->string))
 							break;
 
 					if (!pp->string) {
@@ -1175,7 +1175,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					j = pc_types[i] & ~PTL_ONLY_ONE_TYPE;
 				else {
 					for (j = 0; j < V_NUM_TYPES; j++)
-						if (!Q_strcmp(token, vt_names[j]))
+						if (!strcmp(token, vt_names[j]))
 							break;
 
 					if (j >= V_NUM_TYPES || !((1 << j) & pc_types[i])) {
@@ -1205,7 +1205,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 			continue;
 
 		for (pp = pps; pp->string; pp++)
-			if (!Q_strcmp(token, pp->string)) {
+			if (!strcmp(token, pp->string)) {
 				/* get parameter */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -1257,7 +1257,7 @@ int CL_ParseParticle (const char *name, const char **text)
 
 	/* search for particles with same name */
 	for (i = 0; i < numPtlDefs; i++)
-		if (!Q_strcmp(name, ptlDef[i].name))
+		if (!strcmp(name, ptlDef[i].name))
 			break;
 
 	if (i < numPtlDefs) {
@@ -1296,7 +1296,7 @@ int CL_ParseParticle (const char *name, const char **text)
 			break;
 
 		for (i = 0; i < PF_NUM_PTLFUNCS; i++)
-			if (!Q_strcmp(token, pf_strings[i])) {
+			if (!strcmp(token, pf_strings[i])) {
 				/* allocate the first particle command */
 				ptlCmd_t **pc;
 

@@ -245,7 +245,7 @@ void Cbuf_AddEarlyCommands (qboolean clear)
 
 	for (i = 0; i < COM_Argc(); i++) {
 		const char *s = COM_Argv(i);
-		if (Q_strncmp(s, "+set", 4))
+		if (strncmp(s, "+set", 4))
 			continue;
 		Cbuf_AddText(va("set %s %s\n", COM_Argv(i + 1), COM_Argv(i + 2)));
 		if (clear) {
@@ -401,7 +401,7 @@ static void Cmd_Alias_f (void)
 	/* if the alias already exists, reuse it */
 	hash = Com_HashKey(s, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
-		if (!Q_strncmp(s, a->name, MAX_ALIAS_NAME)) {
+		if (!strncmp(s, a->name, MAX_ALIAS_NAME)) {
 			Mem_Free(a->value);
 			break;
 		}
@@ -571,7 +571,7 @@ void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 			/* check first char of string if it is a variable */
 			if (com_token[0] == '*') {
 				com_token++;
-				com_token = Cvar_VariableString(com_token);
+				com_token = Cvar_GetString(com_token);
 			}
 			assert(!cmd_argv[cmd_argc]);
 			cmd_argv[cmd_argc] = Mem_PoolStrDup(com_token, com_cmdSysPool, 0);
@@ -602,7 +602,7 @@ const char* Cmd_GetCommandDesc (const char* cmd_name)
 	/* fail if the command already exists */
 	hash = Com_HashKey(searchName, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_strcmp(searchName, cmd->name)) {
+		if (!strcmp(searchName, cmd->name)) {
 			if (cmd->description)
 				return cmd->description;
 			else
@@ -678,7 +678,7 @@ void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const c
 
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_strcmp(cmd_name, cmd->name)) {
+		if (!strcmp(cmd_name, cmd->name)) {
 			cmd->completeParam = function;
 			return;
 		}
@@ -701,7 +701,7 @@ void Cmd_AddUserdata (const char *cmd_name, void* userdata)
 
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_strcmp(cmd_name, cmd->name)) {
+		if (!strcmp(cmd_name, cmd->name)) {
 			cmd->userdata = userdata;
 			return;
 		}
@@ -723,7 +723,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 		return;
 
 	/* fail if the command is a variable name */
-	if (Cvar_VariableString(cmd_name)[0]) {
+	if (Cvar_GetString(cmd_name)[0]) {
 		Com_Printf("Cmd_AddCommand: %s already defined as a var\n", cmd_name);
 		return;
 	}
@@ -731,7 +731,7 @@ void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc
 	/* fail if the command already exists */
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_strcmp(cmd_name, cmd->name)) {
+		if (!strcmp(cmd_name, cmd->name)) {
 			Com_DPrintf(DEBUG_COMMANDS, "Cmd_AddCommand: %s already defined\n", cmd_name);
 			return;
 		}
@@ -781,7 +781,7 @@ void Cmd_RemoveCommand (const char *cmd_name)
 			Com_Printf("Cmd_RemoveCommand: %s not added\n", cmd_name);
 			return;
 		}
-		if (!Q_strcmp(cmd_name, cmd->name)) {
+		if (!strcmp(cmd_name, cmd->name)) {
 			*back = cmd->next;
 			Mem_Free(cmd);
 			return;
@@ -801,7 +801,7 @@ qboolean Cmd_Exists (const char *cmd_name)
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
-		if (!Q_strcmp(cmd_name, cmd->name))
+		if (!strcmp(cmd_name, cmd->name))
 			return qtrue;
 	}
 
@@ -853,7 +853,7 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 
 	/* check for partial matches in commands */
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (!Q_strncmp(partial, cmd->name, len)) {
+		if (!strncmp(partial, cmd->name, len)) {
 			Com_Printf("[cmd] %s\n", cmd->name);
 			if (cmd->description)
 				Com_Printf("%c      %s\n", COLORED_GREEN, cmd->description);
@@ -866,7 +866,7 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
 	/* and then aliases */
 	if (matches < MAX_COMPLETE) {
 		for (a = cmd_alias; a; a = a->next) {
-			if (!Q_strncmp(partial, a->name, len)) {
+			if (!strncmp(partial, a->name, len)) {
 				Com_Printf("[ali] %s\n", a->name);
 				localMatch[matches++] = a->name;
 				if (matches >= MAX_COMPLETE)
@@ -954,7 +954,7 @@ static void Cmd_List_f (void)
 	}
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next, i++) {
-		if (c == 2 && Q_strncmp(cmd->name, token, l)) {
+		if (c == 2 && strncmp(cmd->name, token, l)) {
 			i--;
 			continue;
 		}
@@ -964,7 +964,7 @@ static void Cmd_List_f (void)
 	}
 	/* check alias */
 	for (alias = cmd_alias; alias; alias = alias->next, j++) {
-		if (c == 2 && Q_strncmp(alias->name, token, l)) {
+		if (c == 2 && strncmp(alias->name, token, l)) {
 			j--;
 			continue;
 		}
@@ -1010,7 +1010,7 @@ static void Cmd_Test_f (void)
 	cmd_function_t *cmd;
 
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
-		if (Q_strcmp(cmd->name, "quit"))
+		if (strcmp(cmd->name, "quit"))
 			Cmd_ExecuteString(cmd->name);
 	}
 }

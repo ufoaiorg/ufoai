@@ -76,7 +76,7 @@ static inline int MN_GetMenuPositionFromStackByName (const char *name)
 {
 	int i;
 	for (i = 0; i < mn.menuStackPos; i++)
-		if (!Q_strcmp(mn.menuStack[i]->name, name))
+		if (!strcmp(mn.menuStack[i]->name, name))
 			return i;
 
 	return -1;
@@ -172,7 +172,7 @@ int MN_CompleteWithMenu (const char *partial, const char **match)
 
 	/* check for partial matches */
 	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strncmp(partial, mn.menus[i]->name, len)) {
+		if (!strncmp(partial, mn.menus[i]->name, len)) {
 			Com_Printf("%s\n", mn.menus[i]->name);
 			localMatch[matches++] = mn.menus[i]->name;
 			if (matches >= MAX_COMPLETE) {
@@ -425,7 +425,7 @@ void MN_PopMenu (qboolean all)
 		/* mn_main contains the menu that is the very first menu and should be
 		 * pushed back onto the stack (otherwise there would be no menu at all
 		 * right now) */
-		if (!Q_strcmp(oldfirst->name, mn_main->string)) {
+		if (!strcmp(oldfirst->name, mn_main->string)) {
 			if (mn_active->string[0] != '\0')
 				MN_PushMenu(mn_active->string, NULL);
 			if (!mn.menuStackPos)
@@ -471,7 +471,7 @@ static void MN_PopMenu_f (void)
 	}
 
 	/** @todo move it into another function (mn_pop_esc) */
-	if (Cmd_Argc() == 2 && !Q_strcmp(Cmd_Argv(1), "esc")) {
+	if (Cmd_Argc() == 2 && !strcmp(Cmd_Argv(1), "esc")) {
 		const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
 		assert(mn.menuStackPos);
 
@@ -560,7 +560,7 @@ menuNode_t *MN_GetMenu (const char *name)
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
-		const char diff = Q_strcmp(mn.menus[mid]->name, name);
+		const char diff = strcmp(mn.menus[mid]->name, name);
 		assert(mid < max);
 		assert(mid >= min);
 
@@ -611,7 +611,7 @@ void MN_InsertMenu(menuNode_t* menu)
 	/* search the insertion position */
 	for (pos = 0; pos < mn.numMenus; pos++) {
 		const menuNode_t* node = mn.menus[pos];
-		if (Q_strcmp(menu->name, node->name) < 0)
+		if (strcmp(menu->name, node->name) < 0)
 			break;
 	}
 

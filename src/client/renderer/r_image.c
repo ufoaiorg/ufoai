@@ -1318,7 +1318,7 @@ static inline image_t *R_GetImage (const char *name)
 
 	/* look for it */
 	for (i = 0, image = r_images; i < r_numImages; i++, image++)
-		if (!Q_strcmp(name, image->name))
+		if (!strcmp(name, image->name))
 			return image;
 
 	return NULL;

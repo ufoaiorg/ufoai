@@ -87,7 +87,7 @@ static void MN_ZoneNodeLoading (menuNode_t *node)
 static void MN_ZoneNodeLoaded (menuNode_t *node)
 {
 	menuNode_t * menu = node->menu;
-	if (!Q_strncmp(node->name, "render", 6)) {
+	if (!strncmp(node->name, "render", 6)) {
 		if (!menu->u.window.renderNode)
 			menu->u.window.renderNode = node;
 		else

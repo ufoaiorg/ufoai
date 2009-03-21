@@ -975,7 +975,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 				Com_Error(ERR_DROP, "CMod_LoadEntityString: closing brace without data");
 
 			/* alter value, if needed */
-			if (!Q_strncmp(keyname, "origin", sizeof(keyname))) {
+			if (!strncmp(keyname, "origin", sizeof(keyname))) {
 				/* origins are shifted */
 				sscanf(com_token, "%f %f %f", &(v[0]), &(v[1]), &(v[2]));
 				VectorAdd(v, shift, v);
@@ -985,7 +985,7 @@ static void CMod_LoadEntityString (lump_t * l, vec3_t shift)
 					VectorSubtract(model->mins, shift, model->mins);
 					VectorSubtract(model->maxs, shift, model->maxs);
 				}
-			} else if (!Q_strncmp(keyname, "model", sizeof(keyname)) && com_token[0] == '*') {
+			} else if (!strncmp(keyname, "model", sizeof(keyname)) && com_token[0] == '*') {
 				/* adapt inline model number */
 				num = atoi(com_token + 1);
 				/* Get the model */

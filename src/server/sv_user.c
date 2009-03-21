@@ -288,7 +288,7 @@ static void SV_ExecuteUserCommand (const char *s)
 	sv_player = sv_client->player;
 
 	for (u = ucmds; u->name; u++)
-		if (!Q_strcmp(Cmd_Argv(0), u->name)) {
+		if (!strcmp(Cmd_Argv(0), u->name)) {
 			Com_DPrintf(DEBUG_SERVER, "SV_ExecuteUserCommand: %s\n", s);
 			u->func();
 			return;

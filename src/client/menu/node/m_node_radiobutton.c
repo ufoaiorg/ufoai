@@ -82,7 +82,7 @@ static void MN_RadioButtonNodeClick (menuNode_t * node, int x, int y)
 
 	/* its not a cvar! */
 	/** @todo the parser should already check that the property value is a right cvar */
-	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
+	if (strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
 	current = MN_GetReferenceFloat(node, node->cvar);

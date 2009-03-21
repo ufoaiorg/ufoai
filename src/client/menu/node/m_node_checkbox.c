@@ -86,7 +86,7 @@ static void MN_CheckBoxNodeClick (menuNode_t * node, int x, int y)
 
 	/* save result */
 	node->u.abstractvalue.lastdiff = value - last;
-	if (!Q_strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
+	if (!strncmp(node->u.abstractvalue.value, "*cvar", 5)) {
 		MN_SetCvar(&((char*)node->u.abstractvalue.value)[6], NULL, value);
 	} else {
 		*(float*) node->u.abstractvalue.value = value;

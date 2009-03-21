@@ -131,7 +131,7 @@ void TUT_ParseTutorials (const char *name, const char **text)
 		if (*token == '}')
 			break;
 		for (v = tutValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+			if (!strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)

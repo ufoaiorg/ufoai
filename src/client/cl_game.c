@@ -163,7 +163,7 @@ static void MN_GetMaps_f (void)
 
 static void MN_ChangeMap_f (void)
 {
-	if (!Q_strcmp(Cmd_Argv(0), "mn_nextmap"))
+	if (!strcmp(Cmd_Argv(0), "mn_nextmap"))
 		MN_MapInfo(1);
 	else
 		MN_MapInfo(-1);
@@ -186,7 +186,7 @@ static void GAME_SetMode_f (void)
 		return;
 
 	while (list->name) {
-		if (!Q_strcmp(list->menu, modeName)) {
+		if (!strcmp(list->menu, modeName)) {
 			GAME_SetMode(list->gametype);
 			return;
 		}

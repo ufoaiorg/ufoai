@@ -112,7 +112,7 @@ static void MN_TextScroll_f (void)
 		return;
 	}
 
-	if (!Q_strncmp(Cmd_Argv(2), "reset", 5)) {
+	if (!strncmp(Cmd_Argv(2), "reset", 5)) {
 		EXTRADATA(node).textScroll = 0;
 		return;
 	}
@@ -281,7 +281,7 @@ static void MN_TextNodeDrawText (menuNode_t* node, const char *text, const linke
 				cur += 2; /* don't print the format string */
 				break;
 			}
-		} else if (!Q_strncmp(cur, TEXT_IMAGETAG, strlen(TEXT_IMAGETAG))) {
+		} else if (!strncmp(cur, TEXT_IMAGETAG, strlen(TEXT_IMAGETAG))) {
 			const char *token;
 			const image_t *image;
 			int y1 = y;

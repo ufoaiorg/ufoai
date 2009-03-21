@@ -363,10 +363,10 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	Com_DPrintf(DEBUG_CLIENT, "server OOB: %s\n", Cmd_Args());
 
 	/* server connection */
-	if (!Q_strncmp(c, "client_connect", 13)) {
+	if (!strncmp(c, "client_connect", 13)) {
 		for (i = 1; i < Cmd_Argc(); i++) {
 			const char *p = Cmd_Argv(i);
-			if (!Q_strncmp(p, "dlserver=", 9)) {
+			if (!strncmp(p, "dlserver=", 9)) {
 				p += 9;
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", cls.servername);
 				CL_SetHTTPServer(p);
@@ -387,7 +387,7 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* remote command from gui front end */
-	if (!Q_strncmp(c, "cmd", 3)) {
+	if (!strncmp(c, "cmd", 3)) {
 		if (!NET_StreamIsLoopback(cls.netStream)) {
 			Com_Printf("Command packet from remote host. Ignored.\n");
 			return;
@@ -399,25 +399,25 @@ static void CL_ConnectionlessPacket (struct dbuffer *msg)
 	}
 
 	/* teaminfo command */
-	if (!Q_strncmp(c, "teaminfo", 8)) {
+	if (!strncmp(c, "teaminfo", 8)) {
 		CL_ParseTeamInfoMessage(msg);
 		return;
 	}
 
 	/* ping from server */
-	if (!Q_strncmp(c, "ping", 4)) {
+	if (!strncmp(c, "ping", 4)) {
 		NET_OOB_Printf(cls.netStream, "ack");
 		return;
 	}
 
 	/* echo request from server */
-	if (!Q_strncmp(c, "echo", 4)) {
+	if (!strncmp(c, "echo", 4)) {
 		NET_OOB_Printf(cls.netStream, "%s", Cmd_Argv(1));
 		return;
 	}
 
 	/* print */
-	if (!Q_strncmp(c, "print", 5)) {
+	if (!strncmp(c, "print", 5)) {
 		s = NET_ReadString(msg);
 		/* special reject messages needs proper handling */
 		if (strstr(s, REJ_PASSWORD_REQUIRED_OR_INCORRECT))
@@ -531,7 +531,7 @@ void CL_RequestNextDownload (void)
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && ufoScript_checksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
 			Com_Printf("You are using modified ufo script files - might produce problems\n");
-		} else if (Q_strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
+		} else if (strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
 			MN_Popup(_("Error"), popupText);
 			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
@@ -677,29 +677,29 @@ void CL_InitAfter (void)
  */
 void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
-	if (!Q_strcmp(type, "font"))
+	if (!strcmp(type, "font"))
 		MN_ParseFont(name, text);
-	else if (!Q_strcmp(type, "tutorial"))
+	else if (!strcmp(type, "tutorial"))
 		TUT_ParseTutorials(name, text);
-	else if (!Q_strcmp(type, "menu_model"))
+	else if (!strcmp(type, "menu_model"))
 		MN_ParseMenuModel(name, text);
-	else if (!Q_strcmp(type, "menu"))
+	else if (!strcmp(type, "menu"))
 		MN_ParseMenu(name, text);
-	else if (!Q_strcmp(type, "icon"))
+	else if (!strcmp(type, "icon"))
 		MN_ParseIcon(name, text);
-	else if (!Q_strcmp(type, "particle"))
+	else if (!strcmp(type, "particle"))
 		CL_ParseParticle(name, text);
-	else if (!Q_strcmp(type, "sequence"))
+	else if (!strcmp(type, "sequence"))
 		CL_ParseSequence(name, text);
-	else if (!Q_strcmp(type, "campaign"))
+	else if (!strcmp(type, "campaign"))
 		CL_ParseCampaign(name, text);
-	else if (!Q_strcmp(type, "music"))
+	else if (!strcmp(type, "music"))
 		CL_ParseMusic(name, text);
-	else if (!Q_strcmp(type, "tips"))
+	else if (!strcmp(type, "tips"))
 		CL_ParseTipsOfTheDay(name, text);
-	else if (!Q_strcmp(type, "language"))
+	else if (!strcmp(type, "language"))
 		CL_ParseLanguages(name, text);
-	else if (!Q_strcmp(type, "ugv"))
+	else if (!strcmp(type, "ugv"))
 		CL_ParseUGVs(name, text);
 }
 
@@ -769,7 +769,7 @@ static int CL_CompleteNetworkAddress (const char *partial, const char **match)
 	/* search all matches and fill the localMatch array */
 	for (i = 0; i < MAX_BOOKMARKS; i++) {
 		const char *adrStr = Cvar_GetString(va("adr%i", i));
-		if (adrStr[0] != '\0' && !Q_strncmp(partial, adrStr, len)) {
+		if (adrStr[0] != '\0' && !strncmp(partial, adrStr, len)) {
 			Com_Printf("%s\n", adrStr);
 			localMatch[matches++] = adrStr;
 			if (matches >= MAX_COMPLETE)

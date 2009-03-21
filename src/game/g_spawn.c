@@ -142,7 +142,7 @@ static void ED_CallSpawn (edict_t * ent)
 	/* check normal spawn functions */
 	for (s = spawns; s->name; s++) {
 		/* found it */
-		if (!Q_strcmp(s->name, ent->classname)) {
+		if (!strcmp(s->name, ent->classname)) {
 			s->spawn(ent);
 			return;
 		}
@@ -607,7 +607,7 @@ static void SP_alien_start (edict_t *ent)
 	ent->STUN = 0;
 	ent->HP = MAX_HP;
 	/* hurt aliens in ufo crash missions (5%: almost dead, 15%: wounded, 30%: stunned)  */
-	if (gi.csi->currentMD && Q_strcmp(gi.csi->currentMD->id, "ufocrash") == 0) {
+	if (gi.csi->currentMD && strcmp(gi.csi->currentMD->id, "ufocrash") == 0) {
 		const float random = frand();
 		if (random <= .05f) {
 			ent->STUN = 50;

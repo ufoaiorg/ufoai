@@ -114,43 +114,43 @@ static void CL_ParseEntitystring (const char *es)
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: closing brace without data");
 
 			/* filter interesting keys */
-			if (!Q_strcmp(keyname, "classname"))
+			if (!strcmp(keyname, "classname"))
 				Q_strncpyz(classname, entity_token, sizeof(classname));
-			else if (!Q_strcmp(keyname, "model"))
+			else if (!strcmp(keyname, "model"))
 				Q_strncpyz(model, entity_token, sizeof(model));
-			else if (!Q_strcmp(keyname, "frame"))
+			else if (!strcmp(keyname, "frame"))
 				frame = atoi(entity_token);
-			else if (!Q_strcmp(keyname, "anim"))
+			else if (!strcmp(keyname, "anim"))
 				Q_strncpyz(animname, entity_token, sizeof(animname));
-			else if (!Q_strcmp(keyname, "particle"))
+			else if (!strcmp(keyname, "particle"))
 				Q_strncpyz(particle, entity_token, sizeof(particle));
-			else if (!Q_strcmp(keyname, "noise"))
+			else if (!strcmp(keyname, "noise"))
 				Q_strncpyz(sound, entity_token, sizeof(sound));
-			else if (!Q_strcmp(keyname, "volume"))
+			else if (!strcmp(keyname, "volume"))
 				volume = atof(entity_token);
-			else if (!Q_strcmp(keyname, "modelscale_vec"))
+			else if (!strcmp(keyname, "modelscale_vec"))
 				Com_EParseValue(scale, entity_token, V_VECTOR, 0, sizeof(scale));
-			else if (!Q_strcmp(keyname, "origin"))
+			else if (!strcmp(keyname, "origin"))
 				Com_EParseValue(origin, entity_token, V_VECTOR, 0, sizeof(origin));
-			else if (!Q_strcmp(keyname, "angles") && !angles[YAW])
+			else if (!strcmp(keyname, "angles") && !angles[YAW])
 				/* pitch, yaw, roll */
 				Com_EParseValue(angles, entity_token, V_VECTOR, 0, sizeof(angles));
-			else if (!Q_strcmp(keyname, "angle") && !angles[YAW])
+			else if (!strcmp(keyname, "angle") && !angles[YAW])
 				angles[YAW] = atof(entity_token);
-			else if (!Q_strcmp(keyname, "wait"))
+			else if (!strcmp(keyname, "wait"))
 				Com_EParseValue(wait, entity_token, V_POS, 0, sizeof(wait));
-			else if (!Q_strcmp(keyname, "spawnflags"))
+			else if (!strcmp(keyname, "spawnflags"))
 				spawnflags = atoi(entity_token);
-			else if (!Q_strcmp(keyname, "maxlevel"))
+			else if (!strcmp(keyname, "maxlevel"))
 				maxlevel = atoi(entity_token);
-			else if (!Q_strcmp(keyname, "maxteams"))
+			else if (!strcmp(keyname, "maxteams"))
 				maxmultiplayerteams = atoi(entity_token);
-			else if (!Q_strcmp(keyname, "skin"))
+			else if (!strcmp(keyname, "skin"))
 				skin = atoi(entity_token);
 		}
 
 		/* analyze values - there is one worlspawn per maptile */
-		if (!Q_strcmp(classname, "worldspawn")) {
+		if (!strcmp(classname, "worldspawn")) {
 			/* maximum level */
 			cl.map_maxlevel = maxlevel;
 
@@ -162,7 +162,7 @@ static void CL_ParseEntitystring (const char *es)
 				Cvar_SetValue("cl_teamnum", DEFAULT_TEAMNUM);
 				Com_Printf("Set teamnum to %i\n", cl_teamnum->integer);
 			}
-		} else if (!Q_strcmp(classname, "misc_model")) {
+		} else if (!strcmp(classname, "misc_model")) {
 			localModel_t *lm;
 			int renderFlags = 0;
 
@@ -184,10 +184,10 @@ static void CL_ParseEntitystring (const char *es)
 				else
 					Com_Printf("Warning: Model has frame and anim parameters - using frame (no animation)\n");
 			}
-		} else if (!Q_strcmp(classname, "misc_particle")) {
+		} else if (!strcmp(classname, "misc_particle")) {
 			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
-		} else if (!Q_strcmp(classname, "misc_sound")) {
+		} else if (!strcmp(classname, "misc_sound")) {
 			LE_AddAmbientSound(sound, origin, volume, (spawnflags & 0xFF));
 		}
 

@@ -557,13 +557,13 @@ static int AIL_see (lua_State *L)
 			s = lua_tostring(L, 1);
 			/** @todo Properly implement at edict level, get rid of magic numbers.
 			 * These are only "placeholders". */
-			if (Q_strcmp(s, "all") == 0)
+			if (strcmp(s, "all") == 0)
 				vision = 0;
-			else if (Q_strcmp(s, "sight") == 0)
+			else if (strcmp(s, "sight") == 0)
 				vision = 1;
-			else if (Q_strcmp(s, "psionic") == 0)
+			else if (strcmp(s, "psionic") == 0)
 				vision = 2;
-			else if (Q_strcmp(s, "infrared") == 0)
+			else if (strcmp(s, "infrared") == 0)
 				vision = 3;
 			else
 				AIL_invalidparameter(1);
@@ -574,13 +574,13 @@ static int AIL_see (lua_State *L)
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
 				s = lua_tostring(L, 2);
-				if (Q_strcmp(s, "all") == 0)
+				if (strcmp(s, "all") == 0)
 					team = TEAM_NONE;
-				else if (Q_strcmp(s, "alien") == 0)
+				else if (strcmp(s, "alien") == 0)
 					team = TEAM_ALIEN;
-				else if (Q_strcmp(s, "civilian") == 0)
+				else if (strcmp(s, "civilian") == 0)
 					team = TEAM_CIVILIAN;
-				else if (Q_strcmp(s, "phalanx") == 0)
+				else if (strcmp(s, "phalanx") == 0)
 					team = TEAM_PHALANX;
 				else
 					AIL_invalidparameter(2);
@@ -716,9 +716,9 @@ static int AIL_reload (lua_State *L)
 		if (lua_isstring(L, 1)) {
 			const char *s = lua_tostring(L, 1);
 
-			if (!Q_strcmp(s, "right"))
+			if (!strcmp(s, "right"))
 				weap = gi.csi->idRight;
-			else if (!Q_strcmp(s, "left"))
+			else if (!strcmp(s, "left"))
 				weap = gi.csi->idLeft;
 			else
 				return 0;

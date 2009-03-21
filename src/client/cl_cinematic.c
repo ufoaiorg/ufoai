@@ -807,7 +807,7 @@ static int CIN_CompleteCommand (const char *partial, const char **match)
 
 	/* check for partial matches */
 	while ((filename = FS_NextFileFromFileList("videos/*.roq")) != NULL) {
-		if (!Q_strncmp(partial, filename, len)) {
+		if (!strncmp(partial, filename, len)) {
 			Com_Printf("%s\n", filename);
 			localMatch[matches++] = filename;
 			if (matches >= MAX_COMPLETE)

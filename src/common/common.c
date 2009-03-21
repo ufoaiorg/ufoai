@@ -344,7 +344,7 @@ int COM_CheckParm (const char *parm)
 	for (i = 1; i < com_argc; i++) {
 		if (!com_argv[i])
 			continue;               /* NEXTSTEP sometimes clears appkit vars. */
-		if (!Q_strcmp(parm, com_argv[i]))
+		if (!strcmp(parm, com_argv[i]))
 			return i;
 	}
 
@@ -450,7 +450,7 @@ const char *COM_MacroExpandString (const char *text)
 		if (scan[i] == '"')
 			inquote ^= 1;
 		/* don't expand inside quotes */
-		if (inquote || Q_strncmp(&scan[i], "*cvar ", MACRO_CVAR_ID_LENGTH)) {
+		if (inquote || strncmp(&scan[i], "*cvar ", MACRO_CVAR_ID_LENGTH)) {
 			*pos++ = scan[i];
 			continue;
 		}
@@ -467,7 +467,7 @@ const char *COM_MacroExpandString (const char *text)
 		i--;
 
 		/* get the cvar value */
-		cvarvalue = Cvar_VariableString(token);
+		cvarvalue = Cvar_GetString(token);
 		if (!cvarvalue) {
 			Com_Printf("Could not get cvar value for cvar: %s\n", token);
 			return NULL;
@@ -618,7 +618,7 @@ void Com_SetGameType (void)
 
 	for (i = 0; i < numGTs; i++) {
 		const gametype_t *gt = &gts[i];
-		if (!Q_strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
+		if (!strncmp(gt->id, sv_gametype->string, MAX_VAR)) {
 			int j;
 			const cvarlist_t *list;
 			if (sv_dedicated->integer)
@@ -744,11 +744,11 @@ static void Com_DebugError_f (void)
 {
 	if (Cmd_Argc() == 3) {
 		const char *errorType = Cmd_Argv(1);
-		if (!Q_strcmp(errorType, "ERR_DROP"))
+		if (!strcmp(errorType, "ERR_DROP"))
 			Com_Error(ERR_DROP, "%s", Cmd_Argv(2));
-		else if (!Q_strcmp(errorType, "ERR_FATAL"))
+		else if (!strcmp(errorType, "ERR_FATAL"))
 			Com_Error(ERR_FATAL, "%s", Cmd_Argv(2));
-		else if (!Q_strcmp(errorType, "ERR_DISCONNECT"))
+		else if (!strcmp(errorType, "ERR_DISCONNECT"))
 			Com_Error(ERR_DISCONNECT, "%s", Cmd_Argv(2));
 	}
 	Com_Printf("Usage: %s <ERR_FATAL|ERR_DROP|ERR_DISCONNECT> <msg>\n", Cmd_Argv(0));
@@ -780,14 +780,14 @@ static const debugLevel_t debugLevels[] = {
 
 static void Com_DeveloperSet_f (void)
 {
-	int oldValue = Cvar_VariableInteger("developer");
+	int oldValue = Cvar_GetInteger("developer");
 	int newValue = oldValue;
 	int i = 0;
 
 	if (Cmd_Argc() == 2) {
 		const char *debugLevel = Cmd_Argv(1);
 		while (debugLevels[i].str) {
-			if (!Q_strcmp(debugLevel, debugLevels[i].str)) {
+			if (!strcmp(debugLevel, debugLevels[i].str)) {
 				if (oldValue & debugLevels[i].debugLevel)
 					newValue &= ~debugLevels[i].debugLevel;
 				else
@@ -1259,7 +1259,7 @@ const linkedList_t* LIST_ContainsString (const linkedList_t* list, const char* s
 	assert(list);
 
 	while ((string != NULL) && (list != NULL)) {
-		if (!Q_strcmp((const char*)list->data, string))
+		if (!strcmp((const char*)list->data, string))
 			return list;
 		list = list->next;
 	}

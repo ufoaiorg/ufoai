@@ -51,7 +51,7 @@ int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean in
 
 	/* Get storage amount in baseCurrent. */
 	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-		if (!Q_strcmp(aircraft->id, airCharId))
+		if (!strcmp(aircraft->id, airCharId))
 			storage++;
 	}
 	/* Get supply amount (global). */
@@ -60,7 +60,7 @@ int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean in
 		if (!base)
 			continue;
 		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			if (!Q_strcmp(aircraft->id, airCharId))
+			if (!strcmp(aircraft->id, airCharId))
 				amount++;
 		}
 	}

@@ -252,7 +252,7 @@ void Con_SaveConsoleHistory (void)
 	}
 
 	for (i = 0; i < history_line; i++) {
-		if (lastLine && !Q_strncmp(lastLine, &(key_lines[i][1]), MAXCMDLINE - 1))
+		if (lastLine && !strncmp(lastLine, &(key_lines[i][1]), MAXCMDLINE - 1))
 			continue;
 
 		lastLine = &(key_lines[i][1]);

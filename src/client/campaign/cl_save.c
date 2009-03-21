@@ -423,7 +423,7 @@ static void SAV_GameReadGameComments_f (void)
 
 	if (Cmd_Argc() == 2) {
 		/* checks whether we plan to save without a running game */
-		if (!GAME_CP_IsRunning() && !Q_strncmp(Cmd_Argv(1), "save", 4)) {
+		if (!GAME_CP_IsRunning() && !strncmp(Cmd_Argv(1), "save", 4)) {
 			MN_PopMenu(qfalse);
 			return;
 		}

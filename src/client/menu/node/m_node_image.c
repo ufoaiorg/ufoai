@@ -83,7 +83,7 @@ void MN_ImageNodeDraw(menuNode_t *node)
 
 	MN_GetNodeAbsPos(node, nodepos);
 	/* HACK for ekg pics */
-	if (!Q_strncmp(node->name, "ekg_", 4)) {
+	if (!strncmp(node->name, "ekg_", 4)) {
 		int pt;
 
 		if (node->name[4] == 'm')

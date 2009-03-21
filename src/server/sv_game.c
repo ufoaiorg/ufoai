@@ -486,7 +486,7 @@ void SV_InitGameProgs (void)
 
 	import.Cvar_Get = Cvar_Get;
 	import.Cvar_Set = Cvar_Set;
-	import.Cvar_String = Cvar_VariableString;
+	import.Cvar_String = Cvar_GetString;
 
 	import.Cmd_Argc = Cmd_Argc;
 	import.Cmd_Argv = Cmd_Argv;

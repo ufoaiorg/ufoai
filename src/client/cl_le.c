@@ -401,18 +401,18 @@ const char *LE_GetAnim (const char *anim, int right, int left, int state)
 			type = "item";
 		else {
 			/* left hand grenades look OK with default anim; others don't */
-			if (Q_strcmp(csi.ods[left].type, "grenade"))
+			if (strcmp(csi.ods[left].type, "grenade"))
 				akimbo = qtrue;
 			type = csi.ods[left].type;
 		}
 	} else {
 		animationIndex = csi.ods[right].animationIndex;
 		type = csi.ods[right].type;
-		if (left != NONE && !Q_strcmp(csi.ods[right].type, "pistol") && !Q_strcmp(csi.ods[left].type, "pistol"))
+		if (left != NONE && !strcmp(csi.ods[right].type, "pistol") && !strcmp(csi.ods[left].type, "pistol"))
 			akimbo = qtrue;
 	}
 
-	if (!Q_strncmp(anim, "stand", 5) || !Q_strncmp(anim, "walk", 4)) {
+	if (!strncmp(anim, "stand", 5) || !strncmp(anim, "walk", 4)) {
 		Q_strncpyz(mod, anim, length);
 		mod += strlen(anim);
 		*mod++ = animationIndex;

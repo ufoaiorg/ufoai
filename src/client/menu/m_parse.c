@@ -191,7 +191,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	const value_t *property;
 
 	/* cvar setter */
-	if (Q_strncmp(nodeName, "cvar:", 5) == 0) {
+	if (strncmp(nodeName, "cvar:", 5) == 0) {
 		action->data = MN_AllocString(nodeName + 5, 0);
 		action->type.param1 = EA_CVARNAME;
 		action->type.param2 = EA_VALUE;
@@ -205,7 +205,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	}
 
 	/* copy the menu name, and move to the node name */
-	if (Q_strncmp(nodeName, "path:", 5) == 0) {
+	if (strncmp(nodeName, "path:", 5) == 0) {
 		nodeName = nodeName + 5;
 		action->type.param1 = EA_PATHPROPERTY;
 	} else {
@@ -560,12 +560,12 @@ static qboolean MN_ParseExcludeRect (menuNode_t * node, const char **text, const
 		*token = COM_EParse(text, errhead, node->name);
 		if (!*text)
 			return qfalse;
-		if (!Q_strcmp(*token, "pos")) {
+		if (!strcmp(*token, "pos")) {
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
 			Com_EParseValue(&rect, *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
-		} else if (!Q_strcmp(*token, "size")) {
+		} else if (!strcmp(*token, "size")) {
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
 				return qfalse;
@@ -1150,7 +1150,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 
 	/* search for menumodels with same name */
 	for (i = 0; i < mn.numMenuModels; i++)
-		if (!Q_strcmp(mn.menuModels[i].id, name)) {
+		if (!strcmp(mn.menuModels[i].id, name)) {
 			Com_Printf("MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return;
 		}
@@ -1192,7 +1192,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 			Com_Printf("MN_ParseMenuModel: unknown token \"%s\" ignored (menu_model %s)\n", token, name);
 
 		if (v->type == V_NULL) {
-			if (!Q_strcmp(v->string, "need")) {
+			if (!strcmp(v->string, "need")) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1200,7 +1200,7 @@ void MN_ParseMenuModel (const char *name, const char **text)
 				if (!menuModel->next)
 					Com_Printf("Could not find menumodel %s", token);
 				menuModel->need = Mem_PoolStrDup(token, cl_menuSysPool, 0);
-			} else if (!Q_strcmp(v->string, "menutransform")) {
+			} else if (!strcmp(v->string, "menutransform")) {
 				qboolean result;
 				result = MN_ParseMenuTransform (menuModel, text, &token, errhead);
 				if (!result)
@@ -1231,7 +1231,7 @@ void MN_ParseIcon (const char *name, const char **text)
 
 	/* get it's body */
 	token = COM_Parse(text);
-	assert(Q_strcmp(token, "{") == 0);
+	assert(strcmp(token, "{") == 0);
 
 	/** @todo While MN_ParseProperty read the next token */
 	token = COM_Parse(text);
@@ -1277,7 +1277,7 @@ void MN_ParseMenu (const char *name, const char **text)
 
 	/* search for menus with same name */
 	for (i = 0; i < mn.numMenus; i++)
-		if (!Q_strncmp(name, mn.menus[i]->name, sizeof(mn.menus[i]->name)))
+		if (!strncmp(name, mn.menus[i]->name, sizeof(mn.menus[i]->name)))
 			break;
 
 	if (i < mn.numMenus) {
@@ -1302,7 +1302,7 @@ void MN_ParseMenu (const char *name, const char **text)
 	token = COM_Parse(text);
 
 	/* does this menu inherit data from another menu? */
-	if (!Q_strncmp(token, "extends", 7)) {
+	if (!strncmp(token, "extends", 7)) {
 		menuNode_t *superMenu;
 		menuNode_t *newNode;
 
@@ -1376,7 +1376,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 			return NULL;
 		Q_strncpyz(ident, token, sizeof(ident));
 
-		if (!Q_strncmp(ident, "binding", 7)) {
+		if (!strncmp(ident, "binding", 7)) {
 			char command[MAX_VAR] = "";
 			/* get the cvar value */
 			if (*text) {
@@ -1437,7 +1437,7 @@ float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
 		if (!text)
 			return 0.0;
 
-		if (!Q_strncmp(ident, "cvar", 4)) {
+		if (!strncmp(ident, "cvar", 4)) {
 			/* get the cvar value */
 			return Cvar_GetValue(token);
 		} else {

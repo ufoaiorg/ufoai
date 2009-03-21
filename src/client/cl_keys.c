@@ -589,7 +589,7 @@ const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 	}
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
-		if (keySpace[i] && *keySpace[i] && !Q_strncmp(keySpace[i], binding, strlen(binding))) {
+		if (keySpace[i] && *keySpace[i] && !strncmp(keySpace[i], binding, strlen(binding))) {
 			return Key_KeynumToString(i);
 		}
 
@@ -666,9 +666,9 @@ static void Key_Unbind_f (void)
 		return;
 	}
 
-	if (!Q_strcmp(Cmd_Argv(0), "unbindmenu"))
+	if (!strcmp(Cmd_Argv(0), "unbindmenu"))
 		Key_SetBinding(b, "", KEYSPACE_MENU);
-	else if (!Q_strcmp(Cmd_Argv(0), "unbindbattle"))
+	else if (!strcmp(Cmd_Argv(0), "unbindbattle"))
 		Key_SetBinding(b, "", KEYSPACE_BATTLE);
 	else
 		Key_SetBinding(b, "", KEYSPACE_GAME);
@@ -684,7 +684,7 @@ static void Key_Unbindall_f (void)
 
 	for (i = K_FIRST_KEY; i < K_LAST_KEY; i++)
 		if (keybindings[i]) {
-			if (!Q_strcmp(Cmd_Argv(0), "unbindallmenu"))
+			if (!strcmp(Cmd_Argv(0), "unbindallmenu"))
 				Key_SetBinding(i, "", KEYSPACE_MENU);
 			else
 				Key_SetBinding(i, "", KEYSPACE_GAME);
@@ -729,9 +729,9 @@ static void Key_Bind_f (void)
 			Q_strcat(cmd, " ", sizeof(cmd));
 	}
 
-	if (!Q_strncmp(Cmd_Argv(0), "bindmenu", MAX_VAR))
+	if (!strncmp(Cmd_Argv(0), "bindmenu", MAX_VAR))
 		Key_SetBinding(b, cmd, KEYSPACE_MENU);
-	else if (!Q_strncmp(Cmd_Argv(0), "bindbattle", MAX_VAR))
+	else if (!strncmp(Cmd_Argv(0), "bindbattle", MAX_VAR))
 		Key_SetBinding(b, cmd, KEYSPACE_BATTLE);
 	else
 		Key_SetBinding(b, cmd, KEYSPACE_GAME);
@@ -845,7 +845,7 @@ static int Key_CompleteKeyName (const char *partial, const char **match)
 
 	/* check for partial matches */
 	for (kn = keynames; kn->name; kn++) {
-		if (!Q_strncmp(partial, kn->name, len)) {
+		if (!strncmp(partial, kn->name, len)) {
 			Com_Printf("%s\n", kn->name);
 			localMatch[matches++] = kn->name;
 			if (matches >= MAX_COMPLETE)

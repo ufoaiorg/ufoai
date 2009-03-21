@@ -78,7 +78,7 @@ menuModel_t *MN_GetMenuModel (const char *menuModel)
 
 	for (i = 0; i < mn.numMenuModels; i++) {
 		m = &mn.menuModels[i];
-		if (!Q_strncmp(m->id, menuModel, MAX_VAR))
+		if (!strncmp(m->id, menuModel, MAX_VAR))
 			return m;
 	}
 	return NULL;
@@ -152,11 +152,11 @@ static void MN_SetModelTransform_f (void)
 
 			for (i = 0; i < model->menuTransformCnt; i++) {
 				if (menu == model->menuTransform[i].menuPtr) {
-					if (!Q_strcmp(command, "debug_mnscale")) {
+					if (!strcmp(command, "debug_mnscale")) {
 						VectorCopy(value, model->menuTransform[i].scale);
-					} else if (!Q_strcmp(command, "debug_mnangles")) {
+					} else if (!strcmp(command, "debug_mnangles")) {
 						VectorCopy(value, model->menuTransform[i].angles);
-					} else if (!Q_strcmp(command, "debug_mnorigin")) {
+					} else if (!strcmp(command, "debug_mnorigin")) {
 						VectorCopy(value, model->menuTransform[i].origin);
 					}
 					break;
@@ -179,11 +179,11 @@ static void MN_SetModelTransform_f (void)
 			return;
 		}
 
-		if (!Q_strcmp(command, "debug_mnscale")) {
+		if (!strcmp(command, "debug_mnscale")) {
 			VectorCopy(value, node->u.model.scale);
-		} else if (!Q_strcmp(command, "debug_mnangles")) {
+		} else if (!strcmp(command, "debug_mnangles")) {
 			VectorCopy(value, node->u.model.angles);
-		} else if (!Q_strcmp(command, "debug_mnorigin")) {
+		} else if (!strcmp(command, "debug_mnorigin")) {
 			VectorCopy(value, node->u.model.origin);
 		}
 	}
@@ -221,7 +221,7 @@ static inline void MN_InitModelInfoView (menuNode_t *node, modelInfo_t *mi, menu
 		for (i = 0; i < menuModel->menuTransformCnt; i++) {
 			if (node->u.model.viewName != NULL) {
 				/** @todo improve the test when its possible */
-				if (!Q_strcmp(node->u.model.viewName, menuModel->menuTransform[i].menuID))
+				if (!strcmp(node->u.model.viewName, menuModel->menuTransform[i].menuID))
 					break;
 			}
 #if 0
@@ -367,7 +367,7 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 				animState_t *as = &menuModel->animState;
 				const char *anim = R_AnimGetName(as, mi->model);
 				/* initial animation or animation change */
-				if (!anim || (anim && Q_strncmp(anim, ref, MAX_VAR)))
+				if (!anim || (anim && strncmp(anim, ref, MAX_VAR)))
 					R_AnimChange(as, mi->model, ref);
 				else
 					R_AnimRun(as, mi->model, cls.frametime * 1000);
@@ -543,7 +543,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 		ref = MN_GetReferenceString(node, node->u.model.animation);
 
 		/* check whether the cvar value changed */
-		if (Q_strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
+		if (strncmp(node->u.model.oldRefValue, source, MAX_OLDREFVALUE)) {
 			Q_strncpyz(node->u.model.oldRefValue, source, MAX_OLDREFVALUE);
 			/* model has changed but mem is already reserved in pool */
 			if (node->u.model.animationState) {
@@ -564,7 +564,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			if (!as)
 				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 			anim = R_AnimGetName(as, mi.model);
-			if (anim && Q_strncmp(anim, ref, MAX_VAR))
+			if (anim && strncmp(anim, ref, MAX_VAR))
 				R_AnimChange(as, mi.model, ref);
 			R_AnimRun(as, mi.model, cls.frametime * 1000);
 		}

@@ -186,7 +186,7 @@ static qboolean CL_AllowTimeScale (void)
 	if (!campaignStats.basesBuild)
 		return qfalse;
 
-	return !Q_strncmp(menuName, "map", 3) || !Q_strncmp(menuName, "airfight", 8);
+	return !strncmp(menuName, "map", 3) || !strncmp(menuName, "airfight", 8);
 }
 
 /**

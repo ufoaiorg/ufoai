@@ -125,7 +125,7 @@ static void MN_TextEntryNodeClick (menuNode_t *node, int x, int y)
 	/* no cvar */
 	if (!node->text)
 		return;
-	if (Q_strncmp(node->text, "*cvar", 5))
+	if (strncmp(node->text, "*cvar", 5))
 		return;
 
 	if (!MN_HasFocus(node)) {

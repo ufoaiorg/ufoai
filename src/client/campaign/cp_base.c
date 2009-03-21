@@ -460,7 +460,7 @@ static void B_UpdateAntimatterCap (base_t *base)
 	int i;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (!Q_strncmp(csi.ods[i].id, "antimatter", 10)) {
+		if (!strncmp(csi.ods[i].id, "antimatter", 10)) {
 			base->capacities[CAP_ANTIMATTER].cur = (base->storage.num[i] * ANTIMATTER_SIZE);
 			return;
 		}
@@ -1651,41 +1651,41 @@ void B_BuildingInit (base_t* base)
  */
 buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 {
-	if (!Q_strncmp(buildingID, "lab", MAX_VAR)) {
+	if (!strncmp(buildingID, "lab", MAX_VAR)) {
 		return B_LAB;
-	} else if (!Q_strncmp(buildingID, "hospital", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "hospital", MAX_VAR)) {
 		return B_HOSPITAL;
-	} else if (!Q_strncmp(buildingID, "aliencont", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "aliencont", MAX_VAR)) {
 		return B_ALIEN_CONTAINMENT;
-	} else if (!Q_strncmp(buildingID, "workshop", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "workshop", MAX_VAR)) {
 		return B_WORKSHOP;
-	} else if (!Q_strncmp(buildingID, "storage", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "storage", MAX_VAR)) {
 		return B_STORAGE;
-	} else if (!Q_strncmp(buildingID, "hangar", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "hangar", MAX_VAR)) {
 		return B_HANGAR;
-	} else if (!Q_strncmp(buildingID, "smallhangar", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "smallhangar", MAX_VAR)) {
 		return B_SMALL_HANGAR;
-	} else if (!Q_strncmp(buildingID, "ufohangar", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "ufohangar", MAX_VAR)) {
 		return B_UFO_HANGAR;
-	} else if (!Q_strncmp(buildingID, "smallufohangar", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "smallufohangar", MAX_VAR)) {
 		return B_UFO_SMALL_HANGAR;
-	} else if (!Q_strncmp(buildingID, "quarters", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "quarters", MAX_VAR)) {
 		return B_QUARTERS;
-	} else if (!Q_strncmp(buildingID, "workshop", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "workshop", MAX_VAR)) {
 		return B_WORKSHOP;
-	} else if (!Q_strncmp(buildingID, "power", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "power", MAX_VAR)) {
 		return B_POWER;
-	} else if (!Q_strncmp(buildingID, "command", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "command", MAX_VAR)) {
 		return B_COMMAND;
-	} else if (!Q_strncmp(buildingID, "amstorage", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "amstorage", MAX_VAR)) {
 		return B_ANTIMATTER;
-	} else if (!Q_strncmp(buildingID, "entrance", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "entrance", MAX_VAR)) {
 		return B_ENTRANCE;
-	} else if (!Q_strncmp(buildingID, "missile", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "missile", MAX_VAR)) {
 		return B_DEFENCE_MISSILE;
-	} else if (!Q_strncmp(buildingID, "radar", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "radar", MAX_VAR)) {
 		return B_RADAR;
-	} else if (!Q_strncmp(buildingID, "teamroom", MAX_VAR)) {
+	} else if (!strncmp(buildingID, "teamroom", MAX_VAR)) {
 		return B_TEAMROOM;
 	}
 	return MAX_BUILDING_TYPE;
@@ -1726,7 +1726,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 
 	if (!link) {
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
-			if (!Q_strcmp(ccs.buildingTemplates[i].id, name)) {
+			if (!strcmp(ccs.buildingTemplates[i].id, name)) {
 				Com_Printf("B_ParseBuildings: Second building with same name found (%s) - second ignored\n", name);
 				return;
 			}
@@ -1757,7 +1757,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				break;
 
 			/* get values */
-			if (!Q_strncmp(token, "type", MAX_VAR)) {
+			if (!strncmp(token, "type", MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1767,13 +1767,13 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					Com_Printf("didn't find buildingType '%s'\n", token);
 			} else {
 				/* no linking yet */
-				if (!Q_strncmp(token, "depends", MAX_VAR)) {
+				if (!strncmp(token, "depends", MAX_VAR)) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
 					for (vp = valid_building_vars; vp->string; vp++)
-						if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
+						if (!strncmp(token, vp->string, sizeof(vp->string))) {
 							/* found a definition */
 							token = COM_EParse(text, errhead, name);
 							if (!*text)
@@ -1820,7 +1820,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			if (*token == '}')
 				break;
 			/* get values */
-			if (!Q_strncmp(token, "depends", MAX_VAR)) {
+			if (!strncmp(token, "depends", MAX_VAR)) {
 				dependsBuilding = B_GetBuildingTemplate(COM_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Sys_Error("Could not find building depend of %s\n", building->id);
@@ -3275,7 +3275,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 static qboolean B_ItemsIsStoredInBaseStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
-	if (!Q_strcmp(obj->id, "antimatter"))
+	if (!strcmp(obj->id, "antimatter"))
 		return qfalse;
 
 	/* aircraft are stored in hangars */
@@ -3548,7 +3548,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	}
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		if (!Q_strncmp(od->id, "antimatter", 10))
+		if (!strncmp(od->id, "antimatter", 10))
 			break;
 	}
 

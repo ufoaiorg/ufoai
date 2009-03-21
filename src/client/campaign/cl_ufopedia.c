@@ -283,7 +283,7 @@ void UP_ItemDescription (const objDef_t *od)
 		MN_RegisterText(TEXT_STANDARD, itemText);
 		odAmmo = NULL;
 	/* Write attached ammo or weapon even if item is not researched */
-	} else if (!Q_strcmp(od->type, "ammo")) {
+	} else if (!strcmp(od->type, "ammo")) {
 		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
 		upCurrentTech = od->tech;
 
@@ -378,8 +378,8 @@ void UP_ItemDescription (const objDef_t *od)
 	/* set description text if item as been researched or one of its ammo/weapon has been researched */
 	if (RS_IsResearched_ptr(od->tech) || up_numresearchedlink > 0) {
 		*itemText = '\0';
-		if (!Q_strcmp(od->type, "armour")) {
-			if (Q_strcmp(MN_GetActiveMenuName(), "equipment")) {
+		if (!strcmp(od->type, "armour")) {
+			if (strcmp(MN_GetActiveMenuName(), "equipment")) {
 				/* next two lines are not merge in one to avoid to have several entries in .po files (first line will be used again) */
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 				Q_strcat(itemText, "\n", sizeof(itemText));
@@ -390,19 +390,19 @@ void UP_ItemDescription (const objDef_t *od)
 					continue;
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
-		} else if (!Q_strcmp(od->type, "ammo")) {
-			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
+		} else if (!strcmp(od->type, "ammo")) {
+			if (strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
+			if (strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
+			if (strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			/* more will be written below */
 		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
@@ -415,7 +415,7 @@ void UP_ItemDescription (const objDef_t *od)
 			/* only primary definition */
 			/** @todo We use the default firemodes here. We might need some change the "fd[0]" below to FIRESH_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			if (Q_strcmp(MN_GetActiveMenuName(), "equipment"))
+			if (strcmp(MN_GetActiveMenuName(), "equipment"))
 				Q_strcat(itemText, va(_("Size:\t%i\n"), od->size), sizeof(itemText));
 			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
@@ -871,7 +871,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 					break;
 				case RS_WEAPON:
 					for (i = 0; i < csi.numODs; i++) {
-						if (!Q_strcmp(tech->provides, csi.ods[i].id)) {
+						if (!strcmp(tech->provides, csi.ods[i].id)) {
 							UP_ItemDescription(&csi.ods[i]);
 							UP_DisplayTechTree(tech);
 							break;
@@ -1435,7 +1435,7 @@ static void UP_ResearchedLinkClick_f (void)
 	od = INVSH_GetItemByID(upCurrentTech->provides);
 	assert(od);
 
-	if (!Q_strcmp(od->type, "ammo")) {
+	if (!strcmp(od->type, "ammo")) {
 		const technology_t *t = od->weapons[upResearchedLink]->tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);

@@ -1148,7 +1148,7 @@ static void MAP_GetGeoscapeAngle (float *vector)
  */
 void MAP_CenterOnPoint_f (void)
 {
-	if (Q_strncmp(MN_GetActiveMenuName(), "map", 3))
+	if (strncmp(MN_GetActiveMenuName(), "map", 3))
 		return;
 
 	centerOnEventIdx++;
@@ -1192,7 +1192,7 @@ void MAP_CenterOnPoint_f (void)
 static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration)
 {
 	/* this function only concerns maps */
-	if (Q_strncmp(MN_GetActiveMenuName(), "map", 3))
+	if (strncmp(MN_GetActiveMenuName(), "map", 3))
 		return;
 
 	if (cl_3dmap->integer) {
@@ -1215,7 +1215,7 @@ static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const
 		/** @todo check why disabling combatzoom moves the viewpoint to the southpole
 		 *	  then this can be re-enabled maybe for map menu too
 		 */
-		if (Q_strncmp(MN_GetActiveMenuName(), "map_combatzoom", 13))
+		if (strncmp(MN_GetActiveMenuName(), "map_combatzoom", 13))
 			return;
 
 		Vector2Set(smoothFinal2DGeoscapeCenter, pointOnGeoscape[0], pointOnGeoscape[1]);
@@ -2689,7 +2689,7 @@ void MAP_Scroll_f (void)
  */
 void MAP_SetOverlay (const char *overlayID)
 {
-	if (!Q_strcmp(overlayID, "nations")) {
+	if (!strcmp(overlayID, "nations")) {
 		if (r_geoscape_overlay->integer & OVERLAY_NATION)
 			r_geoscape_overlay->integer ^= OVERLAY_NATION;
 		else
@@ -2700,12 +2700,12 @@ void MAP_SetOverlay (const char *overlayID)
 	if (ccs.numBases + ccs.numInstallations == 0)
 		return;
 
-	if (!Q_strcmp(overlayID, "xvi")) {
+	if (!strcmp(overlayID, "xvi")) {
 		if (r_geoscape_overlay->integer & OVERLAY_XVI)
 			r_geoscape_overlay->integer ^= OVERLAY_XVI;
 		else
 			r_geoscape_overlay->integer |= OVERLAY_XVI;
-	} else if (!Q_strcmp(overlayID, "radar")) {
+	} else if (!strcmp(overlayID, "radar")) {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			r_geoscape_overlay->integer ^= OVERLAY_RADAR;
 		else {
@@ -2731,7 +2731,7 @@ static void MAP_SetOverlay_f (void)
 	MAP_SetOverlay(arg);
 
 	/* save last decision player took on radar display, in order to be able to restore it later */
-	if (!Q_strcmp(arg, "radar"))
+	if (!strcmp(arg, "radar"))
 		radarOverlayWasSet = (r_geoscape_overlay->integer & OVERLAY_RADAR);
 }
 
@@ -2741,19 +2741,19 @@ static void MAP_SetOverlay_f (void)
  */
 void MAP_DeactivateOverlay (const char *overlayID)
 {
-	if (!Q_strcmp(overlayID, "nations")) {
+	if (!strcmp(overlayID, "nations")) {
 		if (r_geoscape_overlay->integer & OVERLAY_NATION)
 			MAP_SetOverlay("nations");
 		else
 			return;
 	}
 
-	if (!Q_strcmp(overlayID, "xvi")) {
+	if (!strcmp(overlayID, "xvi")) {
 		if (r_geoscape_overlay->integer & OVERLAY_XVI)
 			MAP_SetOverlay("xvi");
 		else
 			return;
-	} else if (!Q_strcmp(overlayID, "radar")) {
+	} else if (!strcmp(overlayID, "radar")) {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");
 		else

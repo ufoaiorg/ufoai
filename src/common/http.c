@@ -116,7 +116,7 @@ char* HTTP_GetURL (const char *url)
 	curl_easy_setopt(dl.curl, CURLOPT_MAXREDIRS, 5);
 	curl_easy_setopt(dl.curl, CURLOPT_WRITEHEADER, &dl);
 	curl_easy_setopt(dl.curl, CURLOPT_HEADERFUNCTION, HTTP_Header);
-	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, Cvar_VariableString("version"));
+	curl_easy_setopt(dl.curl, CURLOPT_USERAGENT, Cvar_GetString("version"));
 	curl_easy_setopt(dl.curl, CURLOPT_URL, dl.URL);
 
 	/* get it */

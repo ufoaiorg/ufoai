@@ -1074,7 +1074,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 	if (team != TEAM_CIVILIAN) {
 		Q_strncpyz(name, gi.Cvar_String("ai_equipment"), sizeof(name));
 		for (i = 0, ed = gi.csi->eds; i < gi.csi->numEDs; i++, ed++)
-			if (!Q_strncmp(name, ed->name, MAX_VAR))
+			if (!strncmp(name, ed->name, MAX_VAR))
 				break;
 		if (i == gi.csi->numEDs)
 			ed = &gi.csi->eds[0];

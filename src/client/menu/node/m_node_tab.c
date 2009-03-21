@@ -107,7 +107,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 
 	ref = MN_GetReferenceString(node, node->cvar);
 	/* Is we click on the already active tab? */
-	if (!Q_strcmp(option->value, ref))
+	if (!strcmp(option->value, ref))
 		return;
 
 	/* the cvar string is stored in dataModelSkinOrCVar
@@ -118,7 +118,7 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 	}
 
 	/* no cvar? */
-	if (Q_strncmp((const char *)node->cvar, "*cvar", 5))
+	if (strncmp((const char *)node->cvar, "*cvar", 5))
 		return;
 
 	/* only execute the click stuff if the selectbox is active */
@@ -199,7 +199,7 @@ static void MN_TabNodeDraw (menuNode_t *node)
 
 		/* Check the status of the current tab */
 		mn_tab_type_t status = MN_TAB_NORMAL;
-		if (!Q_strcmp(option->value, ref)) {
+		if (!strcmp(option->value, ref)) {
 			status = MN_TAB_SELECTED;
 		} else if (option->disabled || node->disabled) {
 			status = MN_TAB_DISABLED;

@@ -48,7 +48,7 @@ static void MN_AbstractValueLoaded (menuNode_t * node)
 static void MN_CloneCvarOrFloat (const float*const* source, float** clone)
 {
 	/* dont update cvar */
-	if (Q_strncmp(*(const char*const*)source, "*cvar", 5) != 0)
+	if (strncmp(*(const char*const*)source, "*cvar", 5) != 0)
 		return;
 
 	/* clone float */

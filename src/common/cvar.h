@@ -59,17 +59,17 @@ void Cvar_SetValue(const char *var_name, float value);
 /**
  * @brief returns 0 if not defined or non numeric
  */
-int Cvar_VariableInteger(const char *var_name);
+int Cvar_GetInteger(const char *var_name);
 
 /**
  * @brief returns 0.0 if not defined or non numeric
  */
-float Cvar_VariableValue(const char *var_name);
+float Cvar_GetValue(const char *var_name);
 
 /**
  * @brief returns an empty string if not defined
  */
-const char *Cvar_VariableString(const char *var_name);
+const char *Cvar_GetString(const char *var_name);
 
 /**
  * @brief returns an empty string if not defined

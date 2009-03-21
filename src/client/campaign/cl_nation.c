@@ -45,7 +45,7 @@ nation_t *NAT_GetNationByID (const char *nationID)
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = &ccs.nations[i];
-		if (!Q_strcmp(nation->id, nationID))
+		if (!strcmp(nation->id, nationID))
 			return nation;
 	}
 
@@ -264,7 +264,7 @@ void CL_ParseNations (const char *name, const char **text)
 
 	/* search for nations with same name */
 	for (i = 0; i < ccs.numNations; i++)
-		if (!Q_strncmp(name, ccs.nations[i].id, sizeof(ccs.nations[i].id)))
+		if (!strncmp(name, ccs.nations[i].id, sizeof(ccs.nations[i].id)))
 			break;
 	if (i < ccs.numNations) {
 		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);
@@ -300,7 +300,7 @@ void CL_ParseNations (const char *name, const char **text)
 
 		/* check for some standard values */
 		for (vp = nation_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
+			if (!strcmp(token, vp->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -357,7 +357,7 @@ void CL_ParseCities (const char *name, const char **text)
 
 	/* search for cities with same name */
 	for (i = 0; i < ccs.numCities; i++)
-		if (!Q_strncmp(name, ccs.cities[i].id, sizeof(ccs.cities[i].id)))
+		if (!strncmp(name, ccs.cities[i].id, sizeof(ccs.cities[i].id)))
 			break;
 	if (i < ccs.numCities) {
 		Com_Printf("CL_ParseCities: city def \"%s\" with same name found, second ignored\n", name);
@@ -391,7 +391,7 @@ void CL_ParseCities (const char *name, const char **text)
 
 		/* check for some standard values */
 		for (vp = city_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
+			if (!strcmp(token, vp->string)) {
 				/* found a definition */
 				token = COM_EParse(text, errhead, name);
 				if (!*text)

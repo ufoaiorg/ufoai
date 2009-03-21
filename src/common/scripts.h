@@ -189,7 +189,7 @@ int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t
 #endif
 void* Com_AlignPtr(void *memory, valueTypes_t type);
 const char *Com_ValueToStr(const void *base, const valueTypes_t type, const int ofs);
-const char *Com_GetError(void);
+const char *Com_GetLastParseError(void);
 int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte);
 
 /*==============================================================

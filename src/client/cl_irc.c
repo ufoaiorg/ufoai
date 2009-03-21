@@ -449,7 +449,7 @@ static qboolean Irc_AppendToBuffer (const char* const msg, ...)
 		Com_Printf("IRC: %s\n", appendString);
 
 	MN_TextScrollBottom("irc_data");
-	if (irc_showIfNotInMenu->integer && Q_strcmp(MN_GetActiveMenuName(), "irc")) {
+	if (irc_showIfNotInMenu->integer && strcmp(MN_GetActiveMenuName(), "irc")) {
 		S_StartLocalSound("misc/talk");
 		MP_AddChatMessage(appendString);
 		return qtrue;
@@ -720,17 +720,17 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 		strcpy(nick, prefix);
 
 	if (ctcp) {
-		if (!Q_strcmp(trailing + 1, "VERSION" IRC_CTCP_MARKER_STR)) {
+		if (!strcmp(trailing + 1, "VERSION" IRC_CTCP_MARKER_STR)) {
 			/* response with the game version */
 			Irc_Proto_Msg(irc_defaultChannel->string, Cvar_GetString("version"));
 			/*Irc_Proto_Notice(nick, IRC_CTCP_MARKER_STR "VERSION " UFO_VERSION " " CPUSTRING " " __DATE__ " " BUILDSTRING);*/
 			Com_DPrintf(DEBUG_CLIENT, "Irc_Client_CmdPrivmsg: Response to version query\n");
-		} else if (!Q_strncmp(trailing + 1, "PING", 4)) {
+		} else if (!strncmp(trailing + 1, "PING", 4)) {
 			char response[IRC_SEND_BUF_SIZE];
 			strcpy(response, trailing);
 			response[2] = 'O'; /* PING => PONG */
 			Irc_Proto_Notice(nick, response);
-		} else if (!Q_strcmp(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
+		} else if (!strcmp(trailing + 1, "TIME" IRC_CTCP_MARKER_STR)) {
 			const time_t t = time(NULL);
 			char response[IRC_SEND_BUF_SIZE];
 			const size_t response_len = sprintf(response, IRC_CTCP_MARKER_STR "TIME :%s" IRC_CTCP_MARKER_STR, ctime(&t));
@@ -743,20 +743,20 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 
 		if (!Irc_AppendToBuffer("<%s> %s", nick, trailing)) {
 			/* check whether this is no message to the channel - but to the user */
-			if (params && Q_strcmp(params, irc_defaultChannel->string)) {
+			if (params && strcmp(params, irc_defaultChannel->string)) {
 				S_StartLocalSound("misc/lobbyprivmsg");
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
 			} else if (strstr(trailing, irc_nick->string)) {
 				S_StartLocalSound("misc/lobbyprivmsg");
 				MP_AddChatMessage(va("<%s> %s\n", nick, trailing));
-				if (Q_strcmp(MN_GetActiveMenuName(), "irc") && Q_strcmp(MN_GetActiveMenuName(), mn_hud->string)) {
+				if (strcmp(MN_GetActiveMenuName(), "irc") && strcmp(MN_GetActiveMenuName(), mn_hud->string)) {
 					/* we are not in hud mode, nor in the lobby menu, use a popup */
 					MN_PushMenu("chat_popup", NULL);
 				}
 			}
 		}
 
-		if (MN_GetActiveMenu() && Q_strcmp(MN_GetActiveMenuName(), "irc")) {
+		if (MN_GetActiveMenu() && strcmp(MN_GetActiveMenuName(), "irc")) {
 			Com_Printf("%c<%s@lobby> %s\n", COLORED_GREEN, nick, trailing);
 		}
 	}
@@ -964,30 +964,30 @@ static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 #ifdef DEBUG
 		Com_DPrintf(DEBUG_CLIENT, "<%s> [%s] %s : %s\n", msg->prefix, cmd.id.string, msg->params, msg->trailing);
 #endif
-		if (!Q_strncmp(cmd.id.string, "NICK", 4))
+		if (!strncmp(cmd.id.string, "NICK", 4))
 			Irc_Client_CmdNick(msg->prefix, msg->params, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "QUIT", 4))
+		else if (!strncmp(cmd.id.string, "QUIT", 4))
 			Irc_Client_CmdQuit(msg->prefix, msg->params, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "NOTICE", 6)) {
+		else if (!strncmp(cmd.id.string, "NOTICE", 6)) {
 			if (irc_logConsole->integer)
 				Com_Printf("%s\n", msg->trailing);
-		} else if (!Q_strncmp(cmd.id.string, "PRIVMSG", 7))
+		} else if (!strncmp(cmd.id.string, "PRIVMSG", 7))
 			Irc_Client_CmdPrivmsg(msg->prefix, msg->params, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "MODE", 4))
+		else if (!strncmp(cmd.id.string, "MODE", 4))
 			Irc_Client_CmdMode(msg->prefix, msg->params, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "JOIN", 4))
+		else if (!strncmp(cmd.id.string, "JOIN", 4))
 			Irc_Client_CmdJoin(msg->prefix, msg->params, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "PART", 4))
+		else if (!strncmp(cmd.id.string, "PART", 4))
 			Irc_Client_CmdPart(msg->prefix, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "TOPIC", 5))
+		else if (!strncmp(cmd.id.string, "TOPIC", 5))
 			Irc_Client_CmdTopic(msg->prefix, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "KILL", 4))
+		else if (!strncmp(cmd.id.string, "KILL", 4))
 			Irc_Client_CmdKill(msg->prefix, msg->params, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "KICK", 4))
+		else if (!strncmp(cmd.id.string, "KICK", 4))
 			Irc_Client_CmdKick(msg->prefix, msg->params, msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "PING", 4))
+		else if (!strncmp(cmd.id.string, "PING", 4))
 			Com_DPrintf(DEBUG_CLIENT, "IRC: <PING> %s\n", msg->trailing);
-		else if (!Q_strncmp(cmd.id.string, "ERROR", 5)) {
+		else if (!strncmp(cmd.id.string, "ERROR", 5)) {
 			Irc_Logic_Disconnect(msg->trailing);
 			Q_strncpyz(popupText, msg->trailing, sizeof(popupText));
 			MN_Popup(_("Error"), popupText);
@@ -1294,7 +1294,7 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
 	/* first one */
 	irc_user_t* user = channel->user;
 	for (i = 0; user && i < channel->users; i++, user = user->next) {
-		if (!Q_strncmp(&(user->key[1]), nick, MAX_VAR - 1))
+		if (!strncmp(&(user->key[1]), nick, MAX_VAR - 1))
 			return;
 	}
 	user = Mem_PoolAlloc(sizeof(*user), cl_ircSysPool, 0);
@@ -1318,7 +1318,7 @@ static void Irc_Logic_RemoveChannelName (irc_channel_t *channel, const char *nic
 	irc_user_t* user = channel->user;
 	irc_user_t* predecessor = NULL;
 	for (i = 0; user && i < channel->users; i++, user = user->next) {
-		if (!Q_strncmp(&(user->key[1]), nick, sizeof(user->key))) {
+		if (!strncmp(&(user->key[1]), nick, sizeof(user->key))) {
 			/* delete the first user from the list */
 			if (!predecessor)
 				channel->user = user->next;

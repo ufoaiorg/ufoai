@@ -229,7 +229,7 @@ int Com_CheckToInventory (const inventory_t * const i, const objDef_t *od, const
 	assert(od);
 
 	/* armour vs item */
-	if (!Q_strcmp(od->type, "armour")) {
+	if (!strcmp(od->type, "armour")) {
 		if (!container->armour && !container->all) {
 			return INV_DOES_NOT_FIT;
 		}
@@ -407,7 +407,7 @@ itemFilterTypes_t INV_GetFilterTypeID (const char * filterTypeID)
 		return FILTER_S_PRIMARY;
 
 	for (i = 0; i < MAX_FILTERTYPES; i++) {
-		if (filterTypeNames[i] && !Q_strcmp(filterTypeNames[i], filterTypeID))
+		if (filterTypeNames[i] && !strcmp(filterTypeNames[i], filterTypeID))
 			return i;
 	}
 
@@ -466,7 +466,7 @@ itemFilterTypes_t INV_GetFilterFromItem (const objDef_t *obj)
 		return FILTER_S_HEAVY;
 	if (obj->isMisc)
 		return FILTER_S_MISC;
-	if (!Q_strcmp(obj->type, "armour"))
+	if (!strcmp(obj->type, "armour"))
 		return FILTER_S_ARMOUR;
 
 	/** @todo need to implement everything */
@@ -521,7 +521,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		break;
 
 	case FILTER_S_ARMOUR:
-		return !Q_strcmp(obj->type, "armour");
+		return !strcmp(obj->type, "armour");
 
 	case FILTER_S_MISC:
 		return obj->isMisc;
@@ -537,7 +537,7 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 		return obj->isDummy;
 
 	case FILTER_AIRCRAFT:
-		return !Q_strcmp(obj->type, "aircraft");
+		return !strcmp(obj->type, "aircraft");
 
 	case FILTER_DISASSEMBLY:
 		/** @todo I guess we should search for components matching this item here. */
@@ -869,7 +869,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 	/* If non-armour moved to an armour slot then abort.
 	 * Same for non extension items when moved to an extension slot. */
-	if ((to->armour && Q_strcmp(fItem->item.t->type, "armour"))
+	if ((to->armour && strcmp(fItem->item.t->type, "armour"))
 	 || (to->extension && !fItem->item.t->extension)
 	 || (to->headgear && !fItem->item.t->headgear)) {
 		return IA_NONE;
@@ -1017,7 +1017,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 	}
 
 	if (to->id == CSI->idArmour) {
-		assert(!Q_strcmp(cacheItem.t->type, "armour"));
+		assert(!strcmp(cacheItem.t->type, "armour"));
 		return IA_ARMOUR;
 	} else
 		return IA_MOVE;
@@ -1025,7 +1025,7 @@ int Com_MoveInInventory (inventory_t* const i, const invDef_t * from, invList_t 
 
 qboolean INVSH_UseableForTeam (const objDef_t *od, const int team)
 {
-	const qboolean isArmour = !Q_strcmp(od->type, "armour");
+	const qboolean isArmour = !strcmp(od->type, "armour");
 	if (isArmour && od->useable != team)
 		return qfalse;
 
@@ -1222,7 +1222,7 @@ static int INVSH_PackAmmoAndWeapon (inventory_t* const inv, objDef_t* weapon, in
 	}
 #endif
 
-	assert(Q_strcmp(weapon->type, "armour"));
+	assert(strcmp(weapon->type, "armour"));
 	item.t = weapon;
 
 	/* are we going to allow trying the left hand */
@@ -1570,11 +1570,11 @@ CHARACTER GENERATING FUNCTIONS
  */
 int Com_StringToTeamNum (const char* teamString)
 {
-	if (!Q_strncmp(teamString, "TEAM_PHALANX", MAX_VAR))
+	if (!strncmp(teamString, "TEAM_PHALANX", MAX_VAR))
 		return TEAM_PHALANX;
-	if (!Q_strncmp(teamString, "TEAM_CIVILIAN", MAX_VAR))
+	if (!strncmp(teamString, "TEAM_CIVILIAN", MAX_VAR))
 		return TEAM_CIVILIAN;
-	if (!Q_strncmp(teamString, "TEAM_ALIEN", MAX_VAR))
+	if (!strncmp(teamString, "TEAM_ALIEN", MAX_VAR))
 		return TEAM_ALIEN;
 	Com_Printf("Com_StringToTeamNum: Unknown teamString: '%s'\n", teamString);
 	return -1;
@@ -1928,7 +1928,7 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
-		if (Q_strcmp(od->type, "armour"))
+		if (strcmp(od->type, "armour"))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->body);
@@ -1949,7 +1949,7 @@ const char *CHRSH_CharGetHead (const character_t * const chr)
 	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
 		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
-		if (Q_strcmp(od->type, "armour"))
+		if (strcmp(od->type, "armour"))
 			Sys_Error("CHRSH_CharGetBody: Item is no armour");
 
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->head);
@@ -1999,7 +1999,7 @@ objDef_t *INVSH_GetItemByIDSilent (const char *id)
 
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
 		objDef_t *item = &CSI->ods[i];
-		if (!Q_strncmp(id, item->id, MAX_VAR)) {
+		if (!strncmp(id, item->id, MAX_VAR)) {
 			return item;
 		}
 	}

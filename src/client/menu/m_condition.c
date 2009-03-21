@@ -142,9 +142,9 @@ qboolean MN_CheckCondition (const menuNode_t *source, menuCondition_t *condition
 
 		switch (condition->type.opCode) {
 		case IF_STR_EQ:
-			return Q_strcmp(value1, value2) == 0;
+			return strcmp(value1, value2) == 0;
 		case IF_STR_NE:
-			return Q_strcmp(value1, value2) != 0;
+			return strcmp(value1, value2) != 0;
 		default:
 			assert(qfalse);
 		}
@@ -164,7 +164,7 @@ static int MN_GetOperatorByName (const char* operatorName)
 {
 	int i;
 	for (i = 0; i < IF_SIZE; i++) {
-		if (!Q_strcmp(if_strings[i], operatorName)) {
+		if (!strcmp(if_strings[i], operatorName)) {
 			return i;
 		}
 	}
@@ -181,7 +181,7 @@ static int MN_GetOperatorByName (const char* operatorName)
 static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t opCode, const char** value, menuConditionValueType_t* type)
 {
 	/* it is a cvarname */
-	if (!Q_strncmp(string, "*cvar:", 6)) {
+	if (!strncmp(string, "*cvar:", 6)) {
 		const char* cvarName = string + 6;
 		*value = MN_AllocString(cvarName, 0);
 		*type = IF_VALUE_CVARNAME;
@@ -189,7 +189,7 @@ static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t op
 	}
 
 	/* it is a node property */
-	if (!Q_strncmp(string, "*node:", 6)) {
+	if (!strncmp(string, "*node:", 6)) {
 		const char* path = string + 6;
 		*value = MN_AllocString(path, 0);
 		*type = IF_VALUE_NODEPROPERTY;
@@ -221,7 +221,7 @@ qboolean MN_InitCondition (menuCondition_t *condition, const char *token)
 {
 	memset(condition, 0, sizeof(*condition));
 	if (!strstr(token, " ")) {
-		if (Q_strncmp(token, "*cvar:", 6) != 0) {
+		if (strncmp(token, "*cvar:", 6) != 0) {
 			Com_Printf("Invalid 'if' statement. '%s' is not a cvar\n", token);
 			return qfalse;
 		}

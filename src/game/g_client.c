@@ -1269,7 +1269,7 @@ static void G_InventoryToFloor (edict_t * ent)
 					continue;
 				}
 #endif
-				if (Q_strcmp(ic->item.t->type, "armour"))
+				if (strcmp(ic->item.t->type, "armour"))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", ic->item.t->id);
 				if (!Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", ic->item.t->id);
@@ -3196,8 +3196,8 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
-	if (*password->string && Q_strcmp(password->string, "none")
-	 && Q_strcmp(password->string, value)) {
+	if (*password->string && strcmp(password->string, "none")
+	 && strcmp(password->string, value)) {
 		Info_SetValueForKey(userinfo, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}

@@ -206,7 +206,7 @@ static void CL_TeamNum_f (void)
 		i = DEFAULT_TEAMNUM;
 	}
 
-	if (Q_strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {
+	if (strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {
 		for (i--; i > TEAM_CIVILIAN; i--) {
 			if (teamData.maxplayersperteam > teamData.teamCount[i]) {
 				Cvar_SetValue("cl_teamnum", i);

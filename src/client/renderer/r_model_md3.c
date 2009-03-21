@@ -131,7 +131,7 @@ void R_ModLoadAliasMD3Model (model_t *mod, byte *buffer, int bufSize)
 	for (i = 0; i < mod->alias.num_meshes; i++, poutmesh++) {
 		memcpy(poutmesh->name, pinmesh->name, MD3_MAX_PATH);
 
-		if (Q_strncmp(pinmesh->id, "IDP3", 4)) {
+		if (strncmp(pinmesh->id, "IDP3", 4)) {
 			Com_Error(ERR_DROP, "mesh %s in model %s has wrong id (%s should be %i)",
 					poutmesh->name, mod->name, pinmesh->id, IDMD3HEADER);
 		}

@@ -228,7 +228,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 			const char *name = (const char *) taghdr + taghdr->ofs_names;
 
 			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME) {
-				if (!Q_strcmp(name, tagname)) {
+				if (!strcmp(name, tagname)) {
 					float interpolated[16];
 					animState_t as;
 					/* found the tag (matrix) */

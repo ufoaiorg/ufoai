@@ -48,7 +48,7 @@ menuIcon_t* MN_GetIconByName (const char* name)
 	int i;
 
 	for (i = 0; i < mn.numIcons; i++) {
-		if (Q_strncmp(name, mn.menuIcons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
+		if (strncmp(name, mn.menuIcons[i].name, MEMBER_SIZEOF(menuIcon_t, name)) != 0)
 			continue;
 		return &mn.menuIcons[i];
 	}

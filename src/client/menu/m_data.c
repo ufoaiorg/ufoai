@@ -99,7 +99,7 @@ int MN_GetDataIDByName (const char* name)
 {
 	int num;
 	for (num = 0; num < MAX_MENUTEXTS; num++)
-		if (!Q_strcmp(name, menutextid_names[num]))
+		if (!strcmp(name, menutextid_names[num]))
 			return num;
 
 	return -1;
@@ -167,7 +167,7 @@ static menuOption_t *MN_OptionNodeRemoveHigherOption (menuOption_t **option)
 
 	/* search the smaller element */
 	while (search) {
-		if (Q_strcmp(label, search->label) < 0) {
+		if (strcmp(label, search->label) < 0) {
 			prevfind = prev;
 			label = search->label;
 		}

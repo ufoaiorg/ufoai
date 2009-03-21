@@ -39,7 +39,7 @@ equipDef_t *INV_GetEquipmentDefinitionByID (const char *name)
 	int i;
 
 	for (i = 0, csi.eds; i < csi.numEDs; i++)
-		if (!Q_strcmp(name, csi.eds[i].name))
+		if (!strcmp(name, csi.eds[i].name))
 			return &csi.eds[i];
 
 	Com_DPrintf(DEBUG_CLIENT, "INV_GetEquipmentDefinitionByID: equipment %s not found.\n", name);
@@ -114,7 +114,7 @@ qboolean INV_EquipmentDefSanityCheck (void)
 	for (i = 0; i < csi.numEDs; i++) {
 		const equipDef_t const *ed = &csi.eds[i];
 		/* only check definitions used for generating teams */
-		if (Q_strncmp(ed->name, "alien", 5) && Q_strncmp(ed->name, "phalanx", 7))
+		if (strncmp(ed->name, "alien", 5) && strncmp(ed->name, "phalanx", 7))
 			continue;
 
 		/* Check primary */
@@ -186,7 +186,7 @@ void INV_ItemDescription (const objDef_t *od)
 
 	/** @todo see UP_ItemDescription */
 #if 0
-	if (!Q_strcmp(od->type, "ammo")) {
+	if (!strcmp(od->type, "ammo")) {
 		/* We display the pre/next buttons for changing weapon only if there are at least 2 weapons for this ammo */
 		if (od->numWeapons > 1)
 			Cvar_Set("mn_changeweapon", "1");

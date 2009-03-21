@@ -72,7 +72,7 @@ static msgCategory_t *MSO_GetCategoryFromName(const char* categoryid)
 	int idx;
 
 	for (idx = 0; idx < ccs.numMsgCategories; idx++) {
-		if (!Q_strcmp(ccs.messageCategories[idx].id, categoryid)) {
+		if (!strcmp(ccs.messageCategories[idx].id, categoryid)) {
 			categoryEntry = &ccs.messageCategories[idx];
 			break;
 		}
@@ -155,7 +155,7 @@ static void MSO_Set_f (void)
 		const char *messagetype = Cmd_Argv(1);
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-			if (!Q_strcmp(nt_strings[type], messagetype))
+			if (!strcmp(nt_strings[type], messagetype))
 				break;
 		}
 		if (type == NT_NUM_NOTIFYTYPE) {
@@ -163,11 +163,11 @@ static void MSO_Set_f (void)
 			return;
 		}
 
-		if (!Q_strcmp(Cmd_Argv(2), "pause"))
+		if (!strcmp(Cmd_Argv(2), "pause"))
 			optionsType = MSO_PAUSE;
-		else if (!Q_strcmp(Cmd_Argv(2), "notify"))
+		else if (!strcmp(Cmd_Argv(2), "notify"))
 			optionsType = MSO_NOTIFY;
-		else if (!Q_strcmp(Cmd_Argv(2), "sound"))
+		else if (!strcmp(Cmd_Argv(2), "sound"))
 			optionsType = MSO_SOUND;
 		else {
 			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
@@ -190,11 +190,11 @@ static void MSO_SetAll_f(void)
 		int optionsType;
 		notify_t type;
 		qboolean activate = atoi(Cmd_Argv(2));
-		if (!Q_strcmp(Cmd_Argv(1), "pause"))
+		if (!strcmp(Cmd_Argv(1), "pause"))
 			optionsType = MSO_PAUSE;
-		else if (!Q_strcmp(Cmd_Argv(1), "notify"))
+		else if (!strcmp(Cmd_Argv(1), "notify"))
 			optionsType = MSO_NOTIFY;
-		else if (!Q_strcmp(Cmd_Argv(1), "sound"))
+		else if (!strcmp(Cmd_Argv(1), "sound"))
 			optionsType = MSO_SOUND;
 		else {
 			Com_Printf("Unrecognized optionstype during set '%s' ignored\n", Cmd_Argv(2));
@@ -317,7 +317,7 @@ qboolean MSO_LoadXML (mxml_node_t *p)
 		notify_t type;
 
 		for (type = 0; type < NT_NUM_NOTIFYTYPE; type++) {
-			if (Q_strcmp(nt_strings[type], messagetype) == 0)
+			if (strcmp(nt_strings[type], messagetype) == 0)
 				break;
 		}
 
@@ -448,7 +448,7 @@ void MSO_ParseCategories (const char *name, const char **text)
 
 		if (token[0] != '\0') {
 			for (idx = 0; idx < NT_NUM_NOTIFYTYPE; idx ++) {
-				if (!Q_strncmp(token, nt_strings[idx],MAX_VAR)) {
+				if (!strncmp(token, nt_strings[idx],MAX_VAR)) {
 					/* prepare a new msgcategory entry */
 					msgCategoryEntry_t *old = ccs.messageCategories[ccs.numMsgCategories].last;
 

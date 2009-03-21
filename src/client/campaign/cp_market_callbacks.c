@@ -652,7 +652,7 @@ static void BS_SellAircraft_f (void)
 			return;
 
 		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-			if (!Q_strncmp(aircraft->id, aircraftTemplate->id, MAX_VAR)) {
+			if (!strncmp(aircraft->id, aircraftTemplate->id, MAX_VAR)) {
 				if (aircraft->teamSize) {
 					teamNote = qtrue;
 					continue;

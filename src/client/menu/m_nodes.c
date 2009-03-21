@@ -222,19 +222,19 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, const me
 
 		switch (command) {
 		case '^':	/* first string */
-			if (!Q_strcmp(name, "this"))
+			if (!strcmp(name, "this"))
 				node = relativeNode;
-			else if (!Q_strcmp(name, "parent"))
+			else if (!strcmp(name, "parent"))
 				node = relativeNode->parent;
-			else if (!Q_strcmp(name, "menu"))
+			else if (!strcmp(name, "menu"))
 				node = relativeNode->menu;
 			else
 				node = MN_GetMenu(name);
 			break;
 		case '.':	/* child node */
-			if (!Q_strcmp(name, "parent"))
+			if (!strcmp(name, "parent"))
 				node = node->parent;
-			else if (!Q_strcmp(name, "menu"))
+			else if (!strcmp(name, "menu"))
 				node = node->menu;
 			else
 				node = MN_GetNode(node, name);
@@ -396,7 +396,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 
 	while (min != max) {
 		const int mid = (min + max) >> 1;
-		const char diff = Q_strcmp(nodeBehaviourList[mid].name, name);
+		const char diff = strcmp(nodeBehaviourList[mid].name, name);
 		assert(mid < max);
 		assert(mid >= min);
 
@@ -490,7 +490,7 @@ static void MN_InitializeNodeBehaviour (nodeBehaviour_t* behaviour)
 	}
 
 	/* everything inherits 'abstractnode' */
-	if (behaviour->extends == NULL && Q_strcmp(behaviour->name, "abstractnode") != 0) {
+	if (behaviour->extends == NULL && strcmp(behaviour->name, "abstractnode") != 0) {
 		behaviour->extends = "abstractnode";
 	}
 
@@ -537,7 +537,7 @@ void MN_InitNodes (void)
 		const nodeBehaviour_t *a = current;
 		const nodeBehaviour_t *b = current + 1;
 		assert(b);
-		if (Q_strcmp(a->name, b->name) >= 0) {
+		if (strcmp(a->name, b->name) >= 0) {
 #ifdef DEBUG
 			Sys_Error("MN_InitNodes: '%s' is before '%s'. Please order node behaviour registrations by name\n", a->name, b->name);
 #else

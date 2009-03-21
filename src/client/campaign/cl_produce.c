@@ -293,7 +293,7 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calcul
 		size += compOd->size * comp->item_amount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
-			if (!Q_strncmp(compOd->id, "antimatter", 10))
+			if (!strncmp(compOd->id, "antimatter", 10))
 				B_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
 				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);

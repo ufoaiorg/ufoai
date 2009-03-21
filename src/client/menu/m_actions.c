@@ -89,7 +89,7 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 			const char *next = MN_GenCommandReadProperty(cin, propertyName, sizeof(propertyName));
 			if (next) {
 				/* cvar injection */
-				if (!Q_strncmp(propertyName, "cvar:", 5)) {
+				if (!strncmp(propertyName, "cvar:", 5)) {
 					const cvar_t *cvar = Cvar_Get(propertyName + 5, "", 0, NULL);
 					const int l = snprintf(cout, length, "%s", cvar->string);
 					cout += l;
@@ -98,15 +98,15 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 					continue;
 
 				/* source path injection */
-				} else if (!Q_strncmp(propertyName, "path:", 5)) {
+				} else if (!strncmp(propertyName, "path:", 5)) {
 					if (source) {
 						const char *command = propertyName + 5;
 						const menuNode_t *node = NULL;
-						if (!Q_strcmp(command, "menu"))
+						if (!strcmp(command, "menu"))
 							node = source->menu;
-						else if (!Q_strcmp(command, "this"))
+						else if (!strcmp(command, "this"))
 							node = source;
-						else if (!Q_strcmp(command, "parent"))
+						else if (!strcmp(command, "parent"))
 							node = source->parent;
 						else
 							Com_Printf("MN_GenCommand: Command '%s' for path injection unknown\n", command);

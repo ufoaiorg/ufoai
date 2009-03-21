@@ -156,14 +156,14 @@ static void SV_Map_f (void)
 		return;
 	}
 
-	if (!Q_strcmp(Cmd_Argv(0), "devmap")) {
+	if (!strcmp(Cmd_Argv(0), "devmap")) {
 		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting\n");
 		Cvar_SetValue("sv_ai", 0);
 	}
 
-	if (!Q_strcmp(Cmd_Argv(1), "day")) {
+	if (!strcmp(Cmd_Argv(1), "day")) {
 		day = qtrue;
-	} else if (!Q_strcmp(Cmd_Argv(1), "night")) {
+	} else if (!strcmp(Cmd_Argv(1), "night")) {
 		day = qfalse;
 	} else {
 		Com_Printf("Invalid lightmap parameter - use day or night\n");
@@ -376,7 +376,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 		*match = dayNightMatch;
 		return 2;
 	} else {
-		if (!Q_strcmp(partial,"day ") || !Q_strcmp(partial,"night ")) {
+		if (!strcmp(partial,"day ") || !strcmp(partial,"night ")) {
 			/* dayNightStr is correct, use it */
 			partial = dayNightStr + 1;
 		} else {
@@ -403,7 +403,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 
 	/* search all matches and fill the localMatch array */
 	for (i = 0; i <= fs_numInstalledMaps; i++)
-		if (!Q_strncmp(partial, fs_maps[i], len)) {
+		if (!strncmp(partial, fs_maps[i], len)) {
 			Com_Printf("%s\n", fs_maps[i]);
 			localMatch[matches++] = fs_maps[i];
 			if (matches >= MAX_COMPLETE)
@@ -522,7 +522,7 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 
 	/* search all matches and fill the localMatch array */
 	for (i = 0; i < numServerCommands; i++)
-		if (!Q_strncmp(partial, serverCommandList[i * 2], len)) {
+		if (!strncmp(partial, serverCommandList[i * 2], len)) {
 			Com_Printf("[cmd] %s\n", serverCommandList[i * 2]);
 			if (*serverCommandList[i * 2 + 1])
 				Com_Printf("%c      %s\n", COLORED_GREEN, serverCommandList[i * 2 + 1]);

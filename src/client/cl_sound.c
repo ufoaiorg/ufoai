@@ -130,7 +130,7 @@ static void S_Music_Start (const char *file)
 	}
 
 	/* we are already playing that track */
-	if (!Q_strcmp(name, music.currentlyPlaying))
+	if (!strcmp(name, music.currentlyPlaying))
 		return;
 
 	/* we are still playing some background track - fade it out @sa S_Frame */
@@ -663,13 +663,13 @@ static void S_Music_Change_f (void)
 		return;
 	}
 	type = Cmd_Argv(1);
-	if (!Q_strcmp(type, "geoscape")) {
+	if (!strcmp(type, "geoscape")) {
 		category = MUSIC_GEOSCAPE;
-	} else if (!Q_strcmp(type, "battlescape")) {
+	} else if (!strcmp(type, "battlescape")) {
 		category = MUSIC_BATTLESCAPE;
-	} else if (!Q_strcmp(type, "main")) {
+	} else if (!strcmp(type, "main")) {
 		category = MUSIC_MAIN;
-	} else if (!Q_strcmp(type, "aircombat")) {
+	} else if (!strcmp(type, "aircombat")) {
 		category = MUSIC_AIRCOMBAT;
 	} else {
 		Com_Printf("Invalid parameter given\n");
@@ -713,7 +713,7 @@ static int S_CompleteMusic (const char *partial, const char **match)
 
 	/* check for partial matches */
 	while ((filename = FS_NextFileFromFileList("music/*.ogg")) != NULL) {
-		if (!Q_strncmp(partial, filename, len)) {
+		if (!strncmp(partial, filename, len)) {
 			Com_Printf("%s\n", filename);
 			localMatch[matches++] = filename;
 			if (matches >= MAX_COMPLETE)
@@ -751,7 +751,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
 				Com_sprintf(fileWithPath, sizeof(fileWithPath), "%s/%s", *dirList, filename);
 				if (!len) {
 					Com_Printf("%s\n", fileWithPath);
-				} else if (!Q_strncmp(partial, fileWithPath, len)) {
+				} else if (!strncmp(partial, fileWithPath, len)) {
 					Com_Printf("%s\n", fileWithPath);
 					localMatch[matches++] = strdup(fileWithPath);
 					if (matches >= MAX_COMPLETE)
@@ -881,13 +881,13 @@ void CL_ParseMusic (const char *name, const char **text)
 	const char *token;
 	int i;
 
-	if (!Q_strcmp(name, "geoscape"))
+	if (!strcmp(name, "geoscape"))
 		i = MUSIC_GEOSCAPE;
-	else if (!Q_strcmp(name, "battlescape"))
+	else if (!strcmp(name, "battlescape"))
 		i = MUSIC_BATTLESCAPE;
-	else if (!Q_strcmp(name, "aircombat"))
+	else if (!strcmp(name, "aircombat"))
 		i = MUSIC_AIRCOMBAT;
-	else if (!Q_strcmp(name, "main"))
+	else if (!strcmp(name, "main"))
 		i = MUSIC_MAIN;
 	else {
 		Com_Printf("CL_ParseMusic: Invalid music id '%s'\n", name);

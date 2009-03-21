@@ -50,7 +50,7 @@ static void MN_ItemNodeDraw (menuNode_t *node)
 		vec3_t pos;
 		item.t = &csi.ods[od->idx];
 
-		if (!Q_strcmp(item.t->type, "armour")) {
+		if (!strcmp(item.t->type, "armour")) {
 			/* We position the model of the item ourself (in the middle of the item
 			 * node). See the "-1, -1" parameter of MN_DrawItem. */
 			MN_GetNodeAbsPos(node, pos);

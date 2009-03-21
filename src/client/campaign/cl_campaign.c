@@ -1176,7 +1176,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 
 		/* get corresponding category */
 		for (i = 0; i < ccs.numAlienCategories; i++)
-			if (!Q_strncmp(name, ccs.alienCategories[i].id, sizeof(ccs.alienCategories[i].id)))
+			if (!strncmp(name, ccs.alienCategories[i].id, sizeof(ccs.alienCategories[i].id)))
 				break;
 
 		if (i >= ccs.numAlienCategories) {
@@ -2162,7 +2162,7 @@ campaign_t* CL_GetCampaign (const char* name)
 	int i;
 
 	for (i = 0, campaign = campaigns; i < numCampaigns; i++, campaign++)
-		if (!Q_strcmp(name, campaign->id))
+		if (!strcmp(name, campaign->id))
 			break;
 
 	if (i == numCampaigns) {

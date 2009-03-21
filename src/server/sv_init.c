@@ -340,7 +340,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 		if (!text || *token == '}')
 			break;
 
-		if (!Q_strncmp(token, "title", 5)) {
+		if (!strncmp(token, "title", 5)) {
 			/* get map title */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
@@ -349,7 +349,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			Q_strncpyz(a->title, token, sizeof(a->title));
 			continue;
 			/* fix tilename x y */
-		} else if (!Q_strncmp(token, "size", 4)) {
+		} else if (!strncmp(token, "size", 4)) {
 			/* get map size */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
@@ -357,7 +357,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 
 			sscanf(token, "%i %i", &a->w, &a->h);
 			continue;
-		} else if (!Q_strncmp(token, "grid", 4)) {
+		} else if (!strncmp(token, "grid", 4)) {
 			/* get map size */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
@@ -366,14 +366,14 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			sscanf(token, "%i %i", &a->dx, &a->dy);
 			continue;
 		/* fix tilename x y */
-		} else if (!Q_strncmp(token, "fix", 3)) {
+		} else if (!strncmp(token, "fix", 3)) {
 			/* get tile */
 			token = COM_EParse(text, errhead, filename);
 			if (!text)
 				break;
 
 			for (i = 0; i < numTiles; i++)
-				if (!Q_strncmp(token, mTile[i].id, MAX_VAR)) {
+				if (!strncmp(token, mTile[i].id, MAX_VAR)) {
 					if (a->numFixed >= MAX_FIXEDTILES) {
 						Com_Printf("SV_ParseAssembly: Too many fixed tiles in assembly '%s'\n", a->id);
 						break;
@@ -399,7 +399,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 			token = COM_EParse(text, errhead, filename);
 			if (!text || *token == '}')
 				break;
-			cvarValue = Cvar_VariableString(cvarName);
+			cvarValue = Cvar_GetString(cvarName);
 			Com_DPrintf(DEBUG_SERVER, "SV_ParseAssembly: cvar replacement value: %s\n", cvarValue);
 			if (*cvarValue != '+') {
 				Com_Printf("SV_ParseAssembly: warning - cvar '%s' value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarName, cvarValue, token);
@@ -411,7 +411,7 @@ static void SV_ParseAssembly (const char *filename, const char **text)
 		}
 
 		for (i = 0; i < numTiles; i++)
-			if (!Q_strncmp(token, mTile[i].id, MAX_VAR)) {
+			if (!strncmp(token, mTile[i].id, MAX_VAR)) {
 				/* get min and max tile number */
 				token = COM_EParse(text, errhead, filename);
 				if (!text || *token == '}')
@@ -924,14 +924,14 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 		if (!text)
 			break;
 
-		if (!Q_strcmp(token, "base")) {
+		if (!strcmp(token, "base")) {
 			token = COM_Parse(&text);
 			Q_strncpyz(basePath, token, sizeof(basePath));
-		} else if (!Q_strcmp(token, "tile"))
+		} else if (!strcmp(token, "tile"))
 			SV_ParseMapTile(filename, &text);
-		else if (!Q_strcmp(token, "assembly"))
+		else if (!strcmp(token, "assembly"))
 			SV_ParseAssembly(filename, &text);
-		else if (!Q_strcmp(token, "{")) {
+		else if (!strcmp(token, "{")) {
 			Com_Printf("SV_AssembleMap: Skipping unknown block\n");
 			/* ignore unknown block */
 			text = strchr(text, '}') + 1;
@@ -962,7 +962,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, const char *
 	/* get assembly */
 	if (assembly && assembly[0]) {
 		for (i = 0, mAsm = mAssembly; i < numAssemblies; i++, mAsm++)
-			if (!Q_strcmp(assembly, mAsm->id))
+			if (!strcmp(assembly, mAsm->id))
 				break;
 		if (i >= numAssemblies) {
 			Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assembly);
@@ -1124,7 +1124,7 @@ static void SV_SpawnServer (qboolean day, const char *server, const char *param)
 	Com_sprintf(sv.configstrings[CS_VERSION], sizeof(sv.configstrings[CS_VERSION]), "%s", UFO_VERSION);
 
 	Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "%s", SV_GetMapTitle(server));
-	if (!Q_strncmp(sv.configstrings[CS_MAPTITLE], "b/", 2)) {
+	if (!strncmp(sv.configstrings[CS_MAPTITLE], "b/", 2)) {
 		/* For base attack, cl.configstrings[CS_MAPTITLE] contains too many chars */
 		Com_sprintf(sv.configstrings[CS_MAPTITLE], sizeof(sv.configstrings[CS_MAPTITLE]), "Base attack");
 	}
