@@ -560,8 +560,7 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 	trace_t trace;
 	cBspModel_t *model;
 	const char **name;
-	vec3_t amins, amaxs, acenter, aoffset;
-	float offset;
+	vec3_t amins, amaxs;
 
 	/* trace against world first */
 	if (TR_TestLine(start, stop, levelmask))
@@ -584,7 +583,8 @@ qboolean CM_EntTestLine (const vec3_t start, const vec3_t stop, const int levelm
 		VectorAdd(model->origin, model->mins, amins);
 		VectorAdd(model->origin, model->maxs, amaxs);
 		if (VectorNotEmpty(model->angles)) {
-			offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
+			vec3_t acenter, aoffset;
+			const float offset = max(max(fabs(amins[0] - amaxs[0]), fabs(amins[1] - amaxs[1])), fabs(amins[2] - amaxs[2])) / 2.0;
 			VectorCenterFromMinsMaxs(amins, amaxs, acenter);
 			VectorSet(aoffset, offset, offset, offset);
 			VectorAdd(acenter, aoffset, amaxs);
