@@ -794,6 +794,18 @@ void R_LoadMaterials (const char *map)
 			continue;
 
 		m = &image->material;
+
+		if (!strcmp(c, "normalmap")){
+			c = COM_Parse(&buffer);
+			image->normalmap = R_FindImage(va("textures/%s", c), it_normalmap);
+
+			if (image->normalmap == r_noTexture){
+				Com_Printf("R_LoadMaterials: Failed to resolve normalmap: %s\n", c);
+				image->normalmap = NULL;
+			}
+		}
+
+
 		if (!strcmp(c, "bump")) {
 			m->bump = atof(COM_Parse(&buffer));
 			if (m->bump < 0.0) {
