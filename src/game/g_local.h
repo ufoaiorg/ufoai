@@ -354,7 +354,6 @@ extern edict_t *ai_waypointList;
 void G_AddToWayPointList(edict_t *ent);
 void AI_Run(void);
 void AI_ActorThink(player_t *player, edict_t *ent);
-void AI_Cleanup(void);
 player_t *AI_CreatePlayer(int team);
 qboolean AI_CheckUsingDoor(const edict_t *ent, const edict_t *door);
 
