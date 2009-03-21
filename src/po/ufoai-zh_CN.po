@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-18 20:51+0600\n"
+"POT-Creation-Date: 2009-03-21 19:43+0100\n"
 "PO-Revision-Date: 2009-01-04 18:20+0800\n"
 "Last-Translator: sunsolzn\n"
 "Language-Team: \n"
@@ -2319,7 +2319,7 @@ msgstr "副武器"
 
 #: ../base/ufos/menu_equipment.ufo:292 ../base/ufos/menu_market.ufo:68
 #: ../base/ufos/menu_multiplayer_team.ufo:301
-#: ../base/ufos/menu_production.ufo:67 client/campaign/cl_ufopedia.c:162
+#: ../base/ufos/menu_production.ufo:67
 msgid "Heavy"
 msgstr "大型"
 
@@ -2658,7 +2658,6 @@ msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:1458 ../base/ufos/menu_geoscape.ufo:1669
 #: ../base/ufos/menu_geoscape.ufo:1736 ../base/ufos/menu_main.ufo:368
-#: client/campaign/cl_ufopedia.c:159
 msgid "Close"
 msgstr "近距离"
 
@@ -3061,13 +3060,12 @@ msgstr "接收UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:171
 #, fuzzy
-msgid "Store ufo"
-msgstr "接收UFO"
+msgid "Store UFO"
+msgstr "卖UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:176
-#, fuzzy
-msgid "Sell ufo"
-msgstr "贩卖量单位："
+msgid "Sell UFO"
+msgstr "卖UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:237
 msgid "Recover"
@@ -3077,23 +3075,32 @@ msgstr "接收"
 msgid "Begin UFO recovery process"
 msgstr "开始接收UFO"
 
-#: ../base/ufos/menu_lostwon.ufo:260
+#: ../base/ufos/menu_lostwon.ufo:250
+#, fuzzy
+msgid "Replace UFO"
+msgstr "卖UFO"
+
+#: ../base/ufos/menu_lostwon.ufo:251
+msgid "Replace stored UFO with actual recovered one"
+msgstr ""
+
+#: ../base/ufos/menu_lostwon.ufo:273
 msgid "Nation:"
 msgstr "国际组织："
 
-#: ../base/ufos/menu_lostwon.ufo:266
+#: ../base/ufos/menu_lostwon.ufo:279
 msgid "Price:"
 msgstr "价格："
 
-#: ../base/ufos/menu_lostwon.ufo:272
+#: ../base/ufos/menu_lostwon.ufo:285
 msgid "Relations:"
 msgstr "关系："
 
-#: ../base/ufos/menu_lostwon.ufo:313
+#: ../base/ufos/menu_lostwon.ufo:326
 msgid "Sell"
 msgstr "出售"
 
-#: ../base/ufos/menu_lostwon.ufo:314
+#: ../base/ufos/menu_lostwon.ufo:327
 msgid "Begin UFO sell process"
 msgstr "开始出售UFO"
 
@@ -4472,7 +4479,7 @@ msgstr ""
 "\n"
 "博士康纳"
 
-#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:332
+#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:331
 #: client/campaign/cp_missions.c:447
 msgid "Alien base"
 msgstr "异形基地"
@@ -10990,9 +10997,9 @@ msgstr "一架UFO正在攻击%s"
 #: client/campaign/cl_airfight.c:376 client/campaign/cl_airfight.c:400
 #: client/campaign/cl_aliencont.c:229 client/campaign/cl_aliencont.c:258
 #: client/campaign/cl_aliencont.c:275 client/campaign/cl_aliencont.c:285
-#: client/campaign/cl_campaign.c:1591 client/campaign/cl_campaign.c:1636
-#: client/campaign/cl_campaign.c:1690 client/campaign/cl_campaign.c:1702
-#: client/campaign/cl_campaign.c:1704 client/campaign/cl_installation.c:268
+#: client/campaign/cl_campaign.c:1590 client/campaign/cl_campaign.c:1635
+#: client/campaign/cl_campaign.c:1689 client/campaign/cl_campaign.c:1701
+#: client/campaign/cl_campaign.c:1703 client/campaign/cl_installation.c:268
 #: client/campaign/cl_map.c:290 client/campaign/cl_map.c:294
 #: client/campaign/cl_map.c:314 client/campaign/cl_map.c:318
 #: client/campaign/cl_mapfightequip.c:421
@@ -11039,7 +11046,7 @@ msgstr "一架UFO正在攻击%s"
 #: client/campaign/cp_nations.c:138 client/campaign/cp_nations.c:154
 #: client/campaign/cp_nations.c:167 client/campaign/cp_nations.c:174
 #: client/campaign/cp_nations.c:182
-#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:424
+#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:425
 #: client/cl_parse.c:1790 client/multiplayer/mp_serverlist.c:464
 msgid "Notice"
 msgstr "注    释"
@@ -11056,7 +11063,7 @@ msgstr "拦截"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFO拦截成功l -- UFO坠落海中。"
 
-#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1704
+#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1703
 msgid "You've lost the battle"
 msgstr "战斗失败"
 
@@ -11112,28 +11119,28 @@ msgstr "空位"
 msgid "None"
 msgstr "无"
 
-#: client/campaign/cl_campaign.c:366
+#: client/campaign/cl_campaign.c:365
 msgid "You've gone too far into debt."
 msgstr "你有太多债务了。"
 
-#: client/campaign/cl_campaign.c:374
+#: client/campaign/cl_campaign.c:373
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "你的基地被毁坏了，没有资金可以再建造一个新的了。"
 
-#: client/campaign/cl_campaign.c:380
+#: client/campaign/cl_campaign.c:379
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr ""
 
-#: client/campaign/cl_campaign.c:398
+#: client/campaign/cl_campaign.c:397
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "在你的指挥下，PHALANX没有很好的保护各个国家。联合国对你相当不满意，你被开除了。解散后的PHALANX分散到各地继续战斗。但是没有了全球联合行动，各个国家各自在为自己奋战，被强大的外星力量一一打败。"
 
-#: client/campaign/cl_campaign.c:862 client/campaign/cp_base_callbacks.c:772
+#: client/campaign/cl_campaign.c:861 client/campaign/cp_base_callbacks.c:772
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cl_campaign.c:884
+#: client/campaign/cl_campaign.c:883
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -11144,7 +11151,7 @@ msgstr ""
 "失败：\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:889
+#: client/campaign/cl_campaign.c:888
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -11155,47 +11162,47 @@ msgstr ""
 "健在：\t%i\n"
 "攻击：\t%i\n"
 
-#: client/campaign/cl_campaign.c:897
+#: client/campaign/cl_campaign.c:896
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: client/campaign/cl_campaign.c:904 client/campaign/cl_ufopedia.c:1627
+#: client/campaign/cl_campaign.c:903 client/campaign/cl_ufopedia.c:1628
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cl_campaign.c:943 client/campaign/cl_ufopedia.c:397
+#: client/campaign/cl_campaign.c:942 client/campaign/cl_ufopedia.c:397
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cl_campaign.c:949
+#: client/campaign/cl_campaign.c:948
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "薪资：\t%i c\n"
 
-#: client/campaign/cl_campaign.c:962
+#: client/campaign/cl_campaign.c:961
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "航空机维护费：\t%i c\n"
 
-#: client/campaign/cl_campaign.c:973
+#: client/campaign/cl_campaign.c:972
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "基地维护 （%s）费：\t%i c\n"
 
-#: client/campaign/cl_campaign.c:978
+#: client/campaign/cl_campaign.c:977
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "管理费：\t%i c\n"
 
-#: client/campaign/cl_campaign.c:985
+#: client/campaign/cl_campaign.c:984
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "债务：\t%i c\n"
 
-#: client/campaign/cl_campaign.c:988
+#: client/campaign/cl_campaign.c:987
 #, c-format
 msgid ""
 "\n"
@@ -11206,47 +11213,47 @@ msgstr ""
 "\t-------\n"
 "合计：\t%i c\n"
 
-#: client/campaign/cl_campaign.c:993
+#: client/campaign/cl_campaign.c:992
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "最大借款额： %ic\n"
 
-#: client/campaign/cl_campaign.c:998
+#: client/campaign/cl_campaign.c:997
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 msgstr ""
 
-#: client/campaign/cl_campaign.c:1591
+#: client/campaign/cl_campaign.c:1590
 #, fuzzy
 msgid "Collected dead alien bodies"
 msgstr "收集了 %i 具异形尸体"
 
-#: client/campaign/cl_campaign.c:1636
+#: client/campaign/cl_campaign.c:1635
 msgid "Your dropship is not near the landing zone"
 msgstr "你的登陆机没有靠近登陆点"
 
-#: client/campaign/cl_campaign.c:1689 client/campaign/cp_missions.c:1167
+#: client/campaign/cl_campaign.c:1688 client/campaign/cp_missions.c:1167
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "基地防御： %s 成功！"
 
-#: client/campaign/cl_campaign.c:1702
+#: client/campaign/cl_campaign.c:1701
 msgid "You've won the battle"
 msgstr "战斗胜利"
 
-#: client/campaign/cl_campaign.c:1720
+#: client/campaign/cl_campaign.c:1719
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "杀死异形\t%i\n"
 
-#: client/campaign/cl_campaign.c:1721
+#: client/campaign/cl_campaign.c:1720
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "俘虏异形\t%i\n"
 
-#: client/campaign/cl_campaign.c:1722
+#: client/campaign/cl_campaign.c:1721
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -11255,22 +11262,22 @@ msgstr ""
 "幸存异形\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1724
+#: client/campaign/cl_campaign.c:1723
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "被异形杀死的士兵\t%i\n"
 
-#: client/campaign/cl_campaign.c:1725
+#: client/campaign/cl_campaign.c:1724
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "丢失的士兵\t%i\n"
 
-#: client/campaign/cl_campaign.c:1726
+#: client/campaign/cl_campaign.c:1725
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "误伤死亡的士兵\t%i\n"
 
-#: client/campaign/cl_campaign.c:1727
+#: client/campaign/cl_campaign.c:1726
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -11279,17 +11286,17 @@ msgstr ""
 "幸存的士兵\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1729
+#: client/campaign/cl_campaign.c:1728
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "被异形杀死的平民\t%i\n"
 
-#: client/campaign/cl_campaign.c:1730
+#: client/campaign/cl_campaign.c:1729
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "误伤死亡的平民\t%i\n"
 
-#: client/campaign/cl_campaign.c:1731
+#: client/campaign/cl_campaign.c:1730
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11298,24 +11305,24 @@ msgstr ""
 "获救平民\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1732
+#: client/campaign/cl_campaign.c:1731
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "收集的物资 （种类/数量）\t%i/%i\n"
 
-#: client/campaign/cl_campaign.c:1786
+#: client/campaign/cl_campaign.c:1785
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s 已经升级到 %s。\n"
 
-#: client/campaign/cl_campaign.c:1788
+#: client/campaign/cl_campaign.c:1787
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s在战斗中光荣牺牲，被追封%s。\n"
 
-#: client/campaign/cl_campaign.c:1789
+#: client/campaign/cl_campaign.c:1788
 msgid "Soldier promoted"
 msgstr "士兵晋升"
 
@@ -12235,8 +12242,8 @@ msgstr "载入游戏错误。"
 
 #: client/campaign/cl_save.c:471 client/campaign/cl_save.c:494
 #: client/campaign/cl_save.c:630 client/cl_irc.c:993 client/cl_irc.c:1221
-#: client/cl_main.c:516 client/cl_main.c:521 client/cl_main.c:527
-#: client/cl_main.c:535 client/multiplayer/mp_callbacks.c:49
+#: client/cl_main.c:517 client/cl_main.c:522 client/cl_main.c:528
+#: client/cl_main.c:536 client/multiplayer/mp_callbacks.c:49
 #: client/multiplayer/mp_callbacks.c:169
 msgid "Error"
 msgstr "错误"
@@ -12614,16 +12621,65 @@ msgstr "我们的雷达侦测到一个新的UFO"
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "我们的雷达已经失去了追踪的UFO"
 
+#: client/campaign/cl_ufopedia.c:159
+msgid "skill_close"
+msgstr ""
+
+#: client/campaign/cl_ufopedia.c:162
+msgid "skill_heavy"
+msgstr ""
+
 #: client/campaign/cl_ufopedia.c:165
-msgid "Assault"
-msgstr "射击"
+#, fuzzy
+msgid "skill_assault"
+msgstr ""
+"突击步枪\n"
+"\n"
+"黄皮书\n"
+"\n"
+"PHALANX计划\n"
+"\n"
+"技术文档\n"
+"\n"
+"时间: 20 三月 2084\n"
+"\n"
+"编著: 司令官保罗纳瓦拉，研究开发工程部，PHALANX，大西洋作战司令部\n"
+"\n"
+"\n"
+"\n"
+"概况\n"
+"\n"
+"孟买事件让我们清楚的认识到他们的技术是如此的先进。英联邦军队根本对它们构成不了威胁，他们损失了三个营才只是让异形停止了脚步。PHALANX要获得胜利必须使用人类技术最高的产品。\n"
+"\n"
+"神剑计划的设立不仅是为了找到合适的武器来攻打外星力量，同时也为了寻找一些其他对战斗有利的工具来帮助我们的士兵完成他们的任务。这些都是为了提高士兵的作战能力和生存能力。\n"
+"\n"
+"法国的勒布朗FAA-191自动突击步枪是突击步枪里最好的。枪托采用无托结构（将弹匣和机匣的位置改为扳机后方的枪托内）从而使得枪体的长度和重量都有所减少。该枪使用4.7毫米30发无壳弹夹，钨芯穿甲弹令人印象深刻的穿甲能力对中短距离都很有效。虽然长距离表现不佳，但这并不意味着不能攻击远距离目标。\n"
+"\n"
+"虽然这款的设计有一定年份了（2057年设计的），但没有任何其他的突击步枪可以超过FAA-191。它的特点是装弹迅速，结构坚固，性能可靠，同时还耐热抗寒防尘防水。部件更换也非常容易。这是一款完全值得信赖的突击步枪。\n"
+"\n"
+"PHALANX采用的是这款步枪的AR-80型。\n"
+"\n"
+"\n"
+"建议\n"
+"\n"
+"这款武器主要用于中等距离攻击。它的射程比任何手枪和冲锋枪都远。\n"
+"\n"
+"但突击步枪不是全能的。处理不同的情况需要不同的武器。而突击步枪除了用于中程距离，在近距离的表现也很不错，在狭小空间也不会妨碍士兵使用，相比冲锋枪和霰弹枪在这方面突击步枪有很大的优势。一般城市作战的战术是用近距离武器进行扫射突破，同时持步枪装备的士兵在周围作掩护提供第二波的攻击。\n"
+"\n"
+"如果条件不适合使用步枪，那士兵应该使用事先准备好的其他武器来应付不同情况。狙击手应该提供火力掩护以及攻击远处的敌人。\n"
+"\n"
+"\n"
+"注解\n"
+"\n"
+"虽然AR-80步枪是最好的，但它毕竟不是设计用来打异形的。我们应该尽快研发合适有效的武器。"
 
 #: client/campaign/cl_ufopedia.c:168
-msgid "Sniper"
-msgstr "阻击"
+msgid "skill_sniper"
+msgstr ""
 
 #: client/campaign/cl_ufopedia.c:171
-msgid "Explosive"
+#, fuzzy
+msgid "skill_explosive"
 msgstr "爆破"
 
 #: client/campaign/cl_ufopedia.c:174 client/campaign/cl_ufopedia.c:204
@@ -12889,37 +12945,37 @@ msgstr "资料目录"
 msgid "UFOpaedia Index: %s"
 msgstr "资料库索引： %s"
 
-#: client/campaign/cl_ufopedia.c:1567
+#: client/campaign/cl_ufopedia.c:1568
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^B草案： %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1571
+#: client/campaign/cl_ufopedia.c:1572
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "草案： %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1582
+#: client/campaign/cl_ufopedia.c:1583
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^B回复： %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1586
+#: client/campaign/cl_ufopedia.c:1587
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "回复： %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1596 client/campaign/cl_ufopedia.c:1608
+#: client/campaign/cl_ufopedia.c:1597 client/campaign/cl_ufopedia.c:1609
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1600 client/campaign/cl_ufopedia.c:1612
+#: client/campaign/cl_ufopedia.c:1601 client/campaign/cl_ufopedia.c:1613
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1624
+#: client/campaign/cl_ufopedia.c:1625
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
@@ -12934,21 +12990,41 @@ msgstr "  * %i x\t%s\n"
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/campaign/cl_uforecovery_callbacks.c:168
+#: client/campaign/cl_uforecovery_callbacks.c:304
+#, fuzzy, c-format
+msgid "Replace %s at %s (%i stored available)\n"
+msgstr "活的 %s （%i 可用）"
+
+#: client/campaign/cl_uforecovery_callbacks.c:311
 msgid "No ufo hangar or ufo yard available."
 msgstr ""
 
-#: client/campaign/cl_uforecovery_callbacks.c:228
+#: client/campaign/cl_uforecovery_callbacks.c:366
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "从战场收缴 %s 。UFO运送到基地（%s）。"
 
-#: client/campaign/cl_uforecovery_callbacks.c:230
-#: client/campaign/cl_uforecovery_callbacks.c:338
+#: client/campaign/cl_uforecovery_callbacks.c:368
+#: client/campaign/cl_uforecovery_callbacks.c:515
 msgid "UFO Recovery"
 msgstr "接收UFO"
 
-#: client/campaign/cl_uforecovery_callbacks.c:336
+#: client/campaign/cl_uforecovery_callbacks.c:424
+#, fuzzy, c-format
+msgid "previously recovered %s from base %s"
+msgstr "%s已经从%s移除。"
+
+#: client/campaign/cl_uforecovery_callbacks.c:425
+#, c-format
+msgid "Storage process for captured %s ongoing."
+msgstr ""
+
+#: client/campaign/cl_uforecovery_callbacks.c:509
+#, fuzzy, c-format
+msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
+msgstr "从战场收缴 %s 。UFO将被卖给 %s ，获取 %ic 资金。"
+
+#: client/campaign/cl_uforecovery_callbacks.c:512
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "从战场收缴 %s 。UFO将被卖给 %s ，获取 %ic 资金。"
@@ -13603,7 +13679,7 @@ msgstr "支付 %i 管理费。"
 msgid "Paid %i credits in interest on your debt."
 msgstr "偿还 %i 欠债。"
 
-#: client/campaign/cp_team.c:125
+#: client/campaign/cp_team.c:131
 #, c-format
 msgid "%i of %i"
 msgstr ""
@@ -13751,70 +13827,70 @@ msgstr "杰出"
 msgid "Superhuman"
 msgstr "超人"
 
-#: client/cl_actor.c:1107
+#: client/cl_actor.c:1070
 msgid "Nobody selected\n"
 msgstr "没有选择人物\n"
 
-#: client/cl_actor.c:1117
+#: client/cl_actor.c:1080
 msgid "This isn't your round\n"
 msgstr "这不是你的回合\n"
 
-#: client/cl_actor.c:1374
+#: client/cl_actor.c:1336
 #, fuzzy
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 "不能使用未知物品。\n"
 "你需要先研究它。\n"
 
-#: client/cl_actor.c:2041
+#: client/cl_actor.c:2003
 #, fuzzy, c-format
 msgid "%s was stunned\n"
 msgstr "%s %s 昏倒了\n"
 
-#: client/cl_actor.c:2043
+#: client/cl_actor.c:2005
 #, fuzzy, c-format
 msgid "%s was killed\n"
 msgstr "%s %s 被杀了\n"
 
-#: client/cl_actor.c:2051
+#: client/cl_actor.c:2013
 msgid "A civilian was stunned.\n"
 msgstr "一个平民晕倒在地。\n"
 
-#: client/cl_actor.c:2053
+#: client/cl_actor.c:2015
 msgid "A civilian was killed.\n"
 msgstr "有个平民被杀了。\n"
 
-#: client/cl_actor.c:2057
+#: client/cl_actor.c:2019
 msgid "An alien was stunned.\n"
 msgstr "打倒一个异形。\n"
 
-#: client/cl_actor.c:2059
+#: client/cl_actor.c:2021
 msgid "An alien was killed.\n"
 msgstr "打死一个异形。\n"
 
-#: client/cl_actor.c:2063
+#: client/cl_actor.c:2025
 msgid "A soldier was stunned.\n"
 msgstr "有个士兵受伤倒地。\n"
 
-#: client/cl_actor.c:2065
+#: client/cl_actor.c:2027
 msgid "A soldier was killed.\n"
 msgstr "有个士兵牺牲了。\n"
 
-#: client/cl_actor.c:2069
+#: client/cl_actor.c:2031
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "队伍%i的一个成员昏迷了。\n"
 
-#: client/cl_actor.c:2071
+#: client/cl_actor.c:2033
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "队伍%i的一个成员阵亡了。\n"
 
-#: client/cl_actor.c:2251
+#: client/cl_actor.c:2213
 msgid "Your round started!\n"
 msgstr "你的回合开始！\n"
 
-#: client/cl_actor.c:3005
+#: client/cl_actor.c:2967
 msgid "Unknown alien race"
 msgstr "未知异形种类"
 
@@ -13983,11 +14059,11 @@ msgstr "为射击保留时间"
 msgid "Shot Reservation"
 msgstr "保留射击时间"
 
-#: client/cl_hud.c:779
+#: client/cl_hud.c:816
 msgid "No item in hand.\n"
 msgstr "手里没有东西。\n"
 
-#: client/cl_hud.c:792
+#: client/cl_hud.c:829
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -13995,13 +14071,13 @@ msgstr ""
 "无法攻击：\n"
 "弹药不足。\n"
 
-#: client/cl_hud.c:797
+#: client/cl_hud.c:834
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr "武器不能单手使用\n"
 
-#: client/cl_hud.c:806
+#: client/cl_hud.c:843
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -14009,7 +14085,7 @@ msgstr ""
 "无法执行命令：\n"
 "这个装备不能重装弹药。\n"
 
-#: client/cl_hud.c:811
+#: client/cl_hud.c:848
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -14017,7 +14093,7 @@ msgstr ""
 "无法攻击：\n"
 "弹药不能用。\n"
 
-#: client/cl_hud.c:816 client/cl_hud.c:889
+#: client/cl_hud.c:853 client/cl_hud.c:924
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -14025,25 +14101,25 @@ msgstr ""
 "无法执行命令：\n"
 "活动时间不足。\n"
 
-#: client/cl_hud.c:984
+#: client/cl_hud.c:1019
 msgid "Not enough TUs for standing up."
 msgstr "没有足够时间站立。"
 
-#: client/cl_hud.c:987
+#: client/cl_hud.c:1022
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "站立（%i耗时）"
 
-#: client/cl_hud.c:993
+#: client/cl_hud.c:1028
 msgid "Not enough TUs for crouching."
 msgstr "没有足够时间下蹲。"
 
-#: client/cl_hud.c:996
+#: client/cl_hud.c:1031
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "下蹲（%i耗时）"
 
-#: client/cl_hud.c:1004
+#: client/cl_hud.c:1039
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -14052,16 +14128,16 @@ msgstr ""
 "为站蹲保留%i活动时间。\n"
 "点击取消。"
 
-#: client/cl_hud.c:1007
+#: client/cl_hud.c:1042
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "为站蹲保留%i活动时间。"
 
-#: client/cl_hud.c:1010
+#: client/cl_hud.c:1045
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "无法为站蹲保留%i活动时间。"
 
-#: client/cl_hud.c:1016
+#: client/cl_hud.c:1051
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -14072,38 +14148,38 @@ msgstr ""
 "点击切换保留时间的长短。\n"
 "右击取消。"
 
-#: client/cl_hud.c:1019
+#: client/cl_hud.c:1054
 msgid "Reserve TUs for shooting."
 msgstr "为射击保留活动时间。"
 
-#: client/cl_hud.c:1022
+#: client/cl_hud.c:1057
 msgid "Reserving TUs for shooting not possible."
 msgstr "不能为射击保留活动时间。"
 
-#: client/cl_hud.c:1048
+#: client/cl_hud.c:1083
 #, fuzzy
 msgid "No reload possible for right hand, already fully loaded."
 msgstr "右手武器无法装弹。"
 
-#: client/cl_hud.c:1050
+#: client/cl_hud.c:1085
 msgid "No reload possible for right hand."
 msgstr "右手武器无法装弹。"
 
-#: client/cl_hud.c:1053 client/cl_hud.c:1069
+#: client/cl_hud.c:1088 client/cl_hud.c:1104
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "装弹（%i耗时）"
 
-#: client/cl_hud.c:1064
+#: client/cl_hud.c:1099
 #, fuzzy
 msgid "No reload possible for left hand, already fully loaded."
 msgstr "左手武器无法装弹。"
 
-#: client/cl_hud.c:1066
+#: client/cl_hud.c:1101
 msgid "No reload possible for left hand."
 msgstr "左手武器无法装弹。"
 
-#: client/cl_hud.c:1182
+#: client/cl_hud.c:1217
 #, c-format
 msgid ""
 "Time Units\n"
@@ -14116,17 +14192,17 @@ msgstr ""
 "-预留：%i\n"
 "-剩余：%i\n"
 
-#: client/cl_hud.c:1292
+#: client/cl_hud.c:1327
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "士气 %i | 预留活动时间 %i\n"
 
-#: client/cl_hud.c:1294
+#: client/cl_hud.c:1329
 #, c-format
 msgid "Morale  %i"
 msgstr "士气  %i"
 
-#: client/cl_hud.c:1302
+#: client/cl_hud.c:1337
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -14135,7 +14211,7 @@ msgstr ""
 "士气  %i |预留活动时间：%i\n"
 "%s %i (%i|%i 剩余活动时间)\n"
 
-#: client/cl_hud.c:1306
+#: client/cl_hud.c:1341
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -14144,7 +14220,7 @@ msgstr ""
 "士气  %i\n"
 "%s %i (%i 剩余活动时间)\n"
 
-#: client/cl_hud.c:1325
+#: client/cl_hud.c:1360
 #, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
@@ -14153,7 +14229,7 @@ msgstr ""
 "你不能给此物上弹药。\n"
 "你需要先研究。\n"
 
-#: client/cl_hud.c:1342
+#: client/cl_hud.c:1377
 #, c-format
 msgid ""
 "%s\n"
@@ -14162,23 +14238,23 @@ msgstr ""
 "%s\n"
 "（空）\n"
 
-#: client/cl_hud.c:1351
+#: client/cl_hud.c:1386
 msgid "Currently panics!\n"
 msgstr "Currently panics!恐慌\n"
 
-#: client/cl_hud.c:1635
+#: client/cl_hud.c:1670
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "左手武器装弹"
 
-#: client/cl_hud.c:1636
+#: client/cl_hud.c:1671
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "右手武器装弹"
 
-#: client/cl_hud.c:1638
+#: client/cl_hud.c:1673
 msgid "Toggle reservation for crouching."
 msgstr "切换预留下蹲时间"
 
-#: client/cl_hud.c:1644
+#: client/cl_hud.c:1679
 msgid "Toggle reaction fire"
 msgstr "切换自动反应攻击模式"
 
@@ -14298,37 +14374,37 @@ msgstr "服务器关闭"
 msgid "..."
 msgstr ""
 
-#: client/cl_main.c:515
+#: client/cl_main.c:516
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "本地游戏版本（%s）不同于服务器"
 
-#: client/cl_main.c:521
+#: client/cl_main.c:522
 msgid "Local map version differs from server"
 msgstr "本地地图版本不同于服务器"
 
-#: client/cl_main.c:527
+#: client/cl_main.c:528
 msgid "Script files are not the same"
 msgstr "脚本文件不相同"
 
-#: client/cl_main.c:534
+#: client/cl_main.c:535
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "本地游戏版本（%s）不同于服务器（%s）"
 
-#: client/cl_main.c:833
+#: client/cl_main.c:834
 msgid "Target your shot to the ground"
 msgstr "细微调整你射击的高度"
 
-#: client/cl_main.c:834
+#: client/cl_main.c:835
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "显示选定的士兵的详细装备资料"
 
-#: client/cl_main.c:960 client/cl_view.c:278
+#: client/cl_main.c:961 client/cl_view.c:278
 msgid "Awaiting game start"
 msgstr "等待游戏开始"
 
-#: client/cl_main.c:1009
+#: client/cl_main.c:1010
 msgid "Custom"
 msgstr "手动"
 
@@ -14368,48 +14444,48 @@ msgstr "下载 [%s]"
 msgid "Loading Map [%s]"
 msgstr "读取地图 [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:452
+#: client/cl_team.c:50 client/cl_team.c:453
 msgid "Urban"
 msgstr "都市"
 
-#: client/cl_team.c:52 client/cl_team.c:453
+#: client/cl_team.c:52 client/cl_team.c:454
 msgid "Jungle"
 msgstr "丛林"
 
-#: client/cl_team.c:54 client/cl_team.c:454
+#: client/cl_team.c:54 client/cl_team.c:455
 msgid "Desert"
 msgstr "沙漠"
 
-#: client/cl_team.c:56 client/cl_team.c:455
+#: client/cl_team.c:56 client/cl_team.c:456
 msgid "Arctic"
 msgstr "极地"
 
-#: client/cl_team.c:58 client/cl_team.c:456
+#: client/cl_team.c:58 client/cl_team.c:457
 msgid "Yellow"
 msgstr ""
 
-#: client/cl_team.c:60 client/cl_team.c:457
+#: client/cl_team.c:60 client/cl_team.c:458
 msgid "CCCP"
 msgstr ""
 
-#: client/cl_team.c:791
+#: client/cl_team.c:792
 msgid "Select a soldier from list"
 msgstr "从列表里选择一个士兵"
 
-#: client/cl_team.c:792
+#: client/cl_team.c:793
 msgid "Reselect the current soldier"
 msgstr "重新选择士兵"
 
-#: client/cl_team.c:793
+#: client/cl_team.c:794
 #, fuzzy
 msgid "Update a soldier"
 msgstr "改名换姓"
 
-#: client/cl_team.c:794
+#: client/cl_team.c:795
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/cl_team.c:795
+#: client/cl_team.c:796
 msgid "Toggle to next soldier"
 msgstr "切换下一个士兵"
 
@@ -14604,100 +14680,100 @@ msgstr "新的队伍"
 msgid "Error saving team. Check free disk space!"
 msgstr "保存发生错误，请检查磁盘空间。"
 
-#: game/g_client.c:811
+#: game/g_client.c:809
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "无法行动：这不是你的回合！\n"
 
-#: game/g_client.c:818
+#: game/g_client.c:816
 msgid "Can't perform action - object not present!\n"
 msgstr ""
 
-#: game/g_client.c:823
+#: game/g_client.c:821
 msgid "Can't perform action - not an actor!\n"
 msgstr "无法行动：不可以指挥！\n"
 
-#: game/g_client.c:828
+#: game/g_client.c:826
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "无法行动：人物昏迷！\n"
 
-#: game/g_client.c:833
+#: game/g_client.c:831
 msgid "Can't perform action - actor is dead!\n"
 msgstr "无法行动：人物死了！\n"
 
-#: game/g_client.c:838
+#: game/g_client.c:836
 msgid "Can't perform action - not on same team!\n"
 msgstr "无法行动：不是同一队伍！\n"
 
-#: game/g_client.c:843
+#: game/g_client.c:841
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "无法行动：不能控制异形！\n"
 
-#: game/g_client.c:1017
+#: game/g_client.c:1015
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "无法行动：活动时间不足！\n"
 
-#: game/g_client.c:1020
+#: game/g_client.c:1018
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "无法行动：武器已装同类型弹药！\n"
 
-#: game/g_client.c:1820
+#: game/g_client.c:1815
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr ""
 
-#: game/g_client.c:1874
+#: game/g_client.c:1878
 #, c-format
 msgid "%s panics!\n"
 msgstr ""
 
-#: game/g_client.c:1934
+#: game/g_client.c:1938
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr ""
 
-#: game/g_client.c:1936
+#: game/g_client.c:1940
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr ""
 
-#: game/g_client.c:1996
+#: game/g_client.c:2000
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr ""
 
-#: game/g_client.c:2538 game/g_svcmds.c:348
+#: game/g_client.c:2541 game/g_svcmds.c:348
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr ""
 
-#: game/g_client.c:2804
+#: game/g_client.c:2805
 msgid "4 minutes left until forced round end\n"
 msgstr "离回合结束还有4分钟\n"
 
-#: game/g_client.c:2807
+#: game/g_client.c:2808
 msgid "3 minutes left until forced round end\n"
 msgstr "离回合结束还有3分钟\n"
 
-#: game/g_client.c:2810
+#: game/g_client.c:2811
 msgid "2 minutes left until forced round end\n"
 msgstr "离回合结束还有2分钟\n"
 
-#: game/g_client.c:2813
+#: game/g_client.c:2814
 msgid "1 minute left until forced round end\n"
 msgstr "离回合结束还有1分钟\n"
 
-#: game/g_client.c:2816
+#: game/g_client.c:2817
 msgid "30 seconds left until forced round end\n"
 msgstr "离回合结束还有半分钟\n"
 
-#: game/g_client.c:2819
+#: game/g_client.c:2820
 msgid "15 seconds left until forced round end\n"
 msgstr "离回合结束还有15秒\n"
 
-#: game/g_client.c:2827
+#: game/g_client.c:2828
 msgid "Current active team hit the max round time\n"
 msgstr "回合时间用完\n"
 
-#: game/g_combat.c:386
+#: game/g_combat.c:385
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -14705,27 +14781,27 @@ msgstr ""
 "士兵昏迷了！\n"
 "敌人使用了闪光雷！\n"
 
-#: game/g_combat.c:607
+#: game/g_combat.c:606
 msgid "Can't perform action - impossible throw!\n"
 msgstr "无法行动：不能扔出！\n"
 
-#: game/g_combat.c:1166
+#: game/g_combat.c:1165
 msgid "Can't perform action - object not activateable!\n"
 msgstr "无法行动：不能使用！\n"
 
-#: game/g_combat.c:1184
+#: game/g_combat.c:1183
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "无法行动：武器不能单手使用！\n"
 
-#: game/g_combat.c:1191
+#: game/g_combat.c:1190
 msgid "Can't perform action - no ammo!\n"
 msgstr "无法行动：没有弹药！\n"
 
-#: game/g_combat.c:1199
+#: game/g_combat.c:1198
 msgid "Can't perform action - target out of range!\n"
 msgstr "无法行动：目标太远！\n"
 
-#: game/g_combat.c:1245
+#: game/g_combat.c:1244
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "无法行动：弹药不足！\n"
 
@@ -14770,6 +14846,20 @@ msgstr "希腊语"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr ""
+
+#~ msgid "Assault"
+#~ msgstr "射击"
+
+#~ msgid "Sniper"
+#~ msgstr "阻击"
+
+#, fuzzy
+#~ msgid "Store ufo"
+#~ msgstr "接收UFO"
+
+#, fuzzy
+#~ msgid "Sell ufo"
+#~ msgstr "贩卖量单位："
 
 #~ msgid "Installation #1"
 #~ msgstr "#1站"
@@ -14833,9 +14923,6 @@ msgstr ""
 
 #~ msgid "Store the UFO in base"
 #~ msgstr "由基地接收UFO"
-
-#~ msgid "Sell UFO"
-#~ msgstr "卖UFO"
 
 #~ msgid "Sell the UFO to desired nation"
 #~ msgstr "出售UFO给国际组织"

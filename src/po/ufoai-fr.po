@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-18 20:51+0600\n"
+"POT-Creation-Date: 2009-03-21 19:43+0100\n"
 "PO-Revision-Date: 2009-01-06 22:29+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -2156,7 +2156,7 @@ msgstr "Secondaire"
 
 #: ../base/ufos/menu_equipment.ufo:292 ../base/ufos/menu_market.ufo:68
 #: ../base/ufos/menu_multiplayer_team.ufo:301
-#: ../base/ufos/menu_production.ufo:67 client/campaign/cl_ufopedia.c:162
+#: ../base/ufos/menu_production.ufo:67
 msgid "Heavy"
 msgstr "Lourd"
 
@@ -2495,7 +2495,6 @@ msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:1458 ../base/ufos/menu_geoscape.ufo:1669
 #: ../base/ufos/menu_geoscape.ufo:1736 ../base/ufos/menu_main.ufo:368
-#: client/campaign/cl_ufopedia.c:159
 msgid "Close"
 msgstr "Rapproché"
 
@@ -2889,13 +2888,12 @@ msgstr "Rapatriement des OVNI"
 
 #: ../base/ufos/menu_lostwon.ufo:171
 #, fuzzy
-msgid "Store ufo"
-msgstr "Entreposer l'OVNI"
+msgid "Store UFO"
+msgstr "Vendre l'OVNI"
 
 #: ../base/ufos/menu_lostwon.ufo:176
-#, fuzzy
-msgid "Sell ufo"
-msgstr "Vente par :"
+msgid "Sell UFO"
+msgstr "Vendre l'OVNI"
 
 #: ../base/ufos/menu_lostwon.ufo:237
 msgid "Recover"
@@ -2905,23 +2903,32 @@ msgstr "Rapatriement"
 msgid "Begin UFO recovery process"
 msgstr "Commencer le rapatriement de l'OVNI"
 
-#: ../base/ufos/menu_lostwon.ufo:260
+#: ../base/ufos/menu_lostwon.ufo:250
+#, fuzzy
+msgid "Replace UFO"
+msgstr "Vendre l'OVNI"
+
+#: ../base/ufos/menu_lostwon.ufo:251
+msgid "Replace stored UFO with actual recovered one"
+msgstr ""
+
+#: ../base/ufos/menu_lostwon.ufo:273
 msgid "Nation:"
 msgstr "Nation :"
 
-#: ../base/ufos/menu_lostwon.ufo:266
+#: ../base/ufos/menu_lostwon.ufo:279
 msgid "Price:"
 msgstr "Prix :"
 
-#: ../base/ufos/menu_lostwon.ufo:272
+#: ../base/ufos/menu_lostwon.ufo:285
 msgid "Relations:"
 msgstr "Relation :"
 
-#: ../base/ufos/menu_lostwon.ufo:313
+#: ../base/ufos/menu_lostwon.ufo:326
 msgid "Sell"
 msgstr "Vendre"
 
-#: ../base/ufos/menu_lostwon.ufo:314
+#: ../base/ufos/menu_lostwon.ufo:327
 msgid "Begin UFO sell process"
 msgstr "Commencer la vente de l'OVNI"
 
@@ -4296,7 +4303,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:332
+#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:331
 #: client/campaign/cp_missions.c:447
 msgid "Alien base"
 msgstr "Base alienne"
@@ -10483,9 +10490,9 @@ msgstr "Un OVNI tire sur %s"
 #: client/campaign/cl_airfight.c:376 client/campaign/cl_airfight.c:400
 #: client/campaign/cl_aliencont.c:229 client/campaign/cl_aliencont.c:258
 #: client/campaign/cl_aliencont.c:275 client/campaign/cl_aliencont.c:285
-#: client/campaign/cl_campaign.c:1591 client/campaign/cl_campaign.c:1636
-#: client/campaign/cl_campaign.c:1690 client/campaign/cl_campaign.c:1702
-#: client/campaign/cl_campaign.c:1704 client/campaign/cl_installation.c:268
+#: client/campaign/cl_campaign.c:1590 client/campaign/cl_campaign.c:1635
+#: client/campaign/cl_campaign.c:1689 client/campaign/cl_campaign.c:1701
+#: client/campaign/cl_campaign.c:1703 client/campaign/cl_installation.c:268
 #: client/campaign/cl_map.c:290 client/campaign/cl_map.c:294
 #: client/campaign/cl_map.c:314 client/campaign/cl_map.c:318
 #: client/campaign/cl_mapfightequip.c:421
@@ -10532,7 +10539,7 @@ msgstr "Un OVNI tire sur %s"
 #: client/campaign/cp_nations.c:138 client/campaign/cp_nations.c:154
 #: client/campaign/cp_nations.c:167 client/campaign/cp_nations.c:174
 #: client/campaign/cp_nations.c:182
-#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:424
+#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:425
 #: client/cl_parse.c:1790 client/multiplayer/mp_serverlist.c:464
 msgid "Notice"
 msgstr "Note"
@@ -10549,7 +10556,7 @@ msgstr "Interception"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Interception OVNI réussie -- l'OVNI s'est écrasé en mer"
 
-#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1704
+#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1703
 msgid "You've lost the battle"
 msgstr "Vous avez perdu la bataille"
 
@@ -10605,28 +10612,28 @@ msgstr "Emplacement libre"
 msgid "None"
 msgstr "Aucun(e)"
 
-#: client/campaign/cl_campaign.c:366
+#: client/campaign/cl_campaign.c:365
 msgid "You've gone too far into debt."
 msgstr "Vous être trop endetté."
 
-#: client/campaign/cl_campaign.c:374
+#: client/campaign/cl_campaign.c:373
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr "Vous avez perdu toutes vos bases et n'avez plus assez d'argent pour en construire de nouvelles. "
 
-#: client/campaign/cl_campaign.c:380
+#: client/campaign/cl_campaign.c:379
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Vous avez failli dans votre mission de protection de la terre. Nos maisons et nos gens sont tombés sous l'infection alienne. Seule une poignée de personnes sur Terre reste humaine, mais n'ont plus aucun chance de repousser l'assaut. Vous perdez votre commandement, PHALANX n'est plus capable d'opérer en tant qu'unité fonctionnelle. Plus personne ne s'interpose entre les aliens et leur victoire totale."
 
-#: client/campaign/cl_campaign.c:398
+#: client/campaign/cl_campaign.c:397
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Sous votre commandement, les opérations PHALANX ne sont à maintes reprises pas parvenues à protéger les différentes nations. Les nations unies, très mécontentes de vos performances, ont décidé de vous relever de votre poste de commandement, et de dissoudre le projet PHALANX. Plus aucun effort de coopération internationale n'est fait. Chaque nation terrestre tente de se défendre seule contre les aliens, pour tomber l'une après l'autre."
 
-#: client/campaign/cl_campaign.c:862 client/campaign/cp_base_callbacks.c:772
+#: client/campaign/cl_campaign.c:861 client/campaign/cp_base_callbacks.c:772
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cl_campaign.c:884
+#: client/campaign/cl_campaign.c:883
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -10637,7 +10644,7 @@ msgstr ""
 "Perdues :\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:889
+#: client/campaign/cl_campaign.c:888
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -10648,47 +10655,47 @@ msgstr ""
 "Actives :\t%i\n"
 "Attaquées :\t%i\n"
 
-#: client/campaign/cl_campaign.c:897
+#: client/campaign/cl_campaign.c:896
 #, c-format
 msgid "%s\n"
 msgstr "%s\n"
 
-#: client/campaign/cl_campaign.c:904 client/campaign/cl_ufopedia.c:1627
+#: client/campaign/cl_campaign.c:903 client/campaign/cl_ufopedia.c:1628
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cl_campaign.c:943 client/campaign/cl_ufopedia.c:397
+#: client/campaign/cl_campaign.c:942 client/campaign/cl_ufopedia.c:397
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cl_campaign.c:949
+#: client/campaign/cl_campaign.c:948
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Employés :\t%i c\n"
 
-#: client/campaign/cl_campaign.c:962
+#: client/campaign/cl_campaign.c:961
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Appareil :\t%i c\n"
 
-#: client/campaign/cl_campaign.c:973
+#: client/campaign/cl_campaign.c:972
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Base (%s) :\t%i c\n"
 
-#: client/campaign/cl_campaign.c:978
+#: client/campaign/cl_campaign.c:977
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Coûts administratifs :\t%i c\n"
 
-#: client/campaign/cl_campaign.c:985
+#: client/campaign/cl_campaign.c:984
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Emprunt :\t%i c\n"
 
-#: client/campaign/cl_campaign.c:988
+#: client/campaign/cl_campaign.c:987
 #, c-format
 msgid ""
 "\n"
@@ -10699,12 +10706,12 @@ msgstr ""
 "\t-------\n"
 "Somme :\t%i c\n"
 
-#: client/campaign/cl_campaign.c:993
+#: client/campaign/cl_campaign.c:992
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Dette max. autorisée : %ic\n"
 
-#: client/campaign/cl_campaign.c:998
+#: client/campaign/cl_campaign.c:997
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -10713,35 +10720,35 @@ msgstr ""
 "Infection Virale eXtraterrestre max. : %i%%\n"
 "Infection Virale eXtraterrestre actuelle : %i%%"
 
-#: client/campaign/cl_campaign.c:1591
+#: client/campaign/cl_campaign.c:1590
 #, fuzzy
 msgid "Collected dead alien bodies"
 msgstr "%i corps aliens ont été récoltés"
 
-#: client/campaign/cl_campaign.c:1636
+#: client/campaign/cl_campaign.c:1635
 msgid "Your dropship is not near the landing zone"
 msgstr "Votre transport n'est pas près de la zone d'atterrissage"
 
-#: client/campaign/cl_campaign.c:1689 client/campaign/cp_missions.c:1167
+#: client/campaign/cl_campaign.c:1688 client/campaign/cp_missions.c:1167
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr "La défense de la base %s a été une victoire !"
 
-#: client/campaign/cl_campaign.c:1702
+#: client/campaign/cl_campaign.c:1701
 msgid "You've won the battle"
 msgstr "Vous avez gagné la bataille"
 
-#: client/campaign/cl_campaign.c:1720
+#: client/campaign/cl_campaign.c:1719
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens tués\t%i\n"
 
-#: client/campaign/cl_campaign.c:1721
+#: client/campaign/cl_campaign.c:1720
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens capturés\t%i\n"
 
-#: client/campaign/cl_campaign.c:1722
+#: client/campaign/cl_campaign.c:1721
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -10750,22 +10757,22 @@ msgstr ""
 "Aliens survivants\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1724
+#: client/campaign/cl_campaign.c:1723
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Soldats PHALANX tués par les aliens\t%i\n"
 
-#: client/campaign/cl_campaign.c:1725
+#: client/campaign/cl_campaign.c:1724
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Soldats PHALANX disparus en mission\t%i\n"
 
-#: client/campaign/cl_campaign.c:1726
+#: client/campaign/cl_campaign.c:1725
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Pertes des tirs amis PHALANAX\t%i\n"
 
-#: client/campaign/cl_campaign.c:1727
+#: client/campaign/cl_campaign.c:1726
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -10774,17 +10781,17 @@ msgstr ""
 "Survivants PHALANX\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1729
+#: client/campaign/cl_campaign.c:1728
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civils tués par les aliens\t%i\n"
 
-#: client/campaign/cl_campaign.c:1730
+#: client/campaign/cl_campaign.c:1729
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civils tués par des tirs amis\t%i\n"
 
-#: client/campaign/cl_campaign.c:1731
+#: client/campaign/cl_campaign.c:1730
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -10793,24 +10800,24 @@ msgstr ""
 "Civils sauvés\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1732
+#: client/campaign/cl_campaign.c:1731
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Eléments récupérés (types/tous)\t%i/%i\n"
 
-#: client/campaign/cl_campaign.c:1786
+#: client/campaign/cl_campaign.c:1785
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s a été promu(e) au grade de %s.\n"
 
-#: client/campaign/cl_campaign.c:1788
+#: client/campaign/cl_campaign.c:1787
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s a été promu(e) au grade de %s\\à titre posthume pour son courage exemplaire\\ dans les situations les plus dangereuses.\n"
 
-#: client/campaign/cl_campaign.c:1789
+#: client/campaign/cl_campaign.c:1788
 msgid "Soldier promoted"
 msgstr "Soldat promu"
 
@@ -11731,8 +11738,8 @@ msgstr "Erreur lors du chargement."
 
 #: client/campaign/cl_save.c:471 client/campaign/cl_save.c:494
 #: client/campaign/cl_save.c:630 client/cl_irc.c:993 client/cl_irc.c:1221
-#: client/cl_main.c:516 client/cl_main.c:521 client/cl_main.c:527
-#: client/cl_main.c:535 client/multiplayer/mp_callbacks.c:49
+#: client/cl_main.c:517 client/cl_main.c:522 client/cl_main.c:528
+#: client/cl_main.c:536 client/multiplayer/mp_callbacks.c:49
 #: client/multiplayer/mp_callbacks.c:169
 msgid "Error"
 msgstr "Erreur"
@@ -12112,16 +12119,65 @@ msgstr "Nos radars ont détecté un nouvel OVNI"
 msgid "Our radar has lost the tracking on a UFO"
 msgstr "Nos radars ont perdu la trace d'un OVNI"
 
+#: client/campaign/cl_ufopedia.c:159
+msgid "skill_close"
+msgstr ""
+
+#: client/campaign/cl_ufopedia.c:162
+msgid "skill_heavy"
+msgstr ""
+
 #: client/campaign/cl_ufopedia.c:165
-msgid "Assault"
-msgstr "Assaut"
+#, fuzzy
+msgid "skill_assault"
+msgstr ""
+"Spécifications techniques : Fusil d'Assaut FA-80\n"
+"\n"
+"NIVEAU DE CONFIDENTIALITE JAUNE\n"
+"\n"
+"Unité de réaction extraterrestre PHALANX\n"
+"\n"
+"Document Technique, Autorisation Delta\n"
+"\n"
+"Classé le : 20 Mars 2084\n"
+"\n"
+"Auteur : Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique\n"
+"\n"
+"\n"
+"\n"
+"Considérations générales\n"
+"\n"
+"L'attaque alienne sur Mumbai a rendu notre situation douloureusement claire. Leur technologie est beaucoup plus avancée que la nôtre. L'incapacité complète des troupes du Commonwealth à repousser l'offensive de Mumbai a révélé les failles de l'entraînement militaire actuel et des équipements utilisés. Elles perdirent trois bataillons, uniquement pour parvenir à stopper l'avancée alienne ; et sans pour autant leur infliger de pertes significatives. PHALANX doit parvenir à renverser le rapport de force, et pour cela nous avons besoin de ce que la technologie humaine propose de meilleur.\n"
+"\n"
+"Le Programme Excalibur fut créé pour développer les armes les plus performantes sur Terre en réévaluant les qualités de fabrication, les résistances, et en réexaminant les performances en action de nos armes dans les situations où nous sommes parvenus à engager le combat avec les aliens.\n"
+"\n"
+"Le Fusil d'Assaut Automatique français LeBlanc FAA-191 présente le meilleur équilibre entre portée, pénétration des armures aliennes, et capacité des chargeurs dans la catégorie des fusils d'assaut. Il est de conception Bullpup : le mécanisme et le chargeur se trouvent derrière la poignée de tir pour réduire la longueur totale du fusil. Le 191 utilise un chargeur de 30 balles de 4,7 mm sans étui, avec ogive en acier et noyau en tungstène, ce qui lui confère une impressionnante capacité à percer les armures à courte et moyenne portée. Les balles ne sont pas performantes à longue distance, mais les fusils d'assaut ne sont pas faits pour cette portée.\n"
+"\n"
+"Bien que sa conception soit loin d'être récente (le premier prototype date de 2057), aucun autre fusil n'a réellement surpassé le 191. Il est précis et rapide à recharger. Sa construction solide le rend fiable en combat et peu sujet à s'enrayer. Il résiste à la chaleur, au froid, à la poussière et à l'humidité. Les munitions et pièces de rechange sont facilement disponibles grâce à la maturité de sa conception et sa popularité dans les forces armées terriennes. C'est un fusil auquel vous pouvez confier votre vie.\n"
+"\n"
+"Pour l'utilisation PHALANX, nous avons donné à ce fusil la classification FA-80.\n"
+"\n"
+"\n"
+"Doctrine recommandée\n"
+"\n"
+"Le FA-80 devrait être notre arme de prédilection pour les combats à moyenne portée. Il dispose d'une impressionnante puissance de feu et est mortel sur des distances beaucoup plus importantes que n'importe quel pistolet ou pistolet mitrailleur.\n"
+"\n"
+"Cependant, il ne faut pas imaginer que le fusil d'assaut est l'arme absolue de notre arsenal. Un panel d'armes diversifié est nécessaire pour faire face à différentes situations. Même si le fusil d'assaut est une bonne arme à courte portée, sa manipulation est lente dans des espaces restreints, et il ne vaut pas les pistolets mitrailleur ou les fusils à pompe à ces distances. Ces armes sont bien plus performantes à bout portant. Une exploration d'immeuble en milieu urbain sera menée avec des armes à courte portée, tandis que des soldats équipés de fusils assureront la sécurité du périmètre ou participeront à une seconde vague d'assaut pour soutenir le premier groupe.\n"
+"\n"
+"Si nos troupes équipées de fusils sont attaquées au delà de la portée d'efficacité, elles devraient avancer à couvert afin d'être à distance de tir. Des tireurs embusqués pourront alors les couvrir où tenter de forcer les ennemis à se rapprocher.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"Même si le FA-80 est un bon fusil, il n'a pas été conçu pour combattre une force d'invasion alienne. Nous devrions développer nos propres armes dans ce but dès que possible."
 
 #: client/campaign/cl_ufopedia.c:168
-msgid "Sniper"
-msgstr "Fusil de précision"
+msgid "skill_sniper"
+msgstr ""
 
 #: client/campaign/cl_ufopedia.c:171
-msgid "Explosive"
+#, fuzzy
+msgid "skill_explosive"
 msgstr "Explosif"
 
 #: client/campaign/cl_ufopedia.c:174 client/campaign/cl_ufopedia.c:204
@@ -12389,37 +12445,37 @@ msgstr "Contenu OVNIpédia"
 msgid "UFOpaedia Index: %s"
 msgstr "Index OVNIpédia : %s"
 
-#: client/campaign/cl_ufopedia.c:1567
+#: client/campaign/cl_ufopedia.c:1568
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BProposition : %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1571
+#: client/campaign/cl_ufopedia.c:1572
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Proposition : %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1582
+#: client/campaign/cl_ufopedia.c:1583
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe : %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1586
+#: client/campaign/cl_ufopedia.c:1587
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Re: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1596 client/campaign/cl_ufopedia.c:1608
+#: client/campaign/cl_ufopedia.c:1597 client/campaign/cl_ufopedia.c:1609
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1600 client/campaign/cl_ufopedia.c:1612
+#: client/campaign/cl_ufopedia.c:1601 client/campaign/cl_ufopedia.c:1613
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1624
+#: client/campaign/cl_ufopedia.c:1625
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
@@ -12434,21 +12490,41 @@ msgstr "  * %i x\t%s\n"
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/campaign/cl_uforecovery_callbacks.c:168
+#: client/campaign/cl_uforecovery_callbacks.c:304
+#, fuzzy, c-format
+msgid "Replace %s at %s (%i stored available)\n"
+msgstr "%s vivant (%i disponible)"
+
+#: client/campaign/cl_uforecovery_callbacks.c:311
 msgid "No ufo hangar or ufo yard available."
 msgstr ""
 
-#: client/campaign/cl_uforecovery_callbacks.c:228
+#: client/campaign/cl_uforecovery_callbacks.c:366
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "%s a été rapatrié du champ de bataille. L'OVNI est transporté à la base %s."
 
-#: client/campaign/cl_uforecovery_callbacks.c:230
-#: client/campaign/cl_uforecovery_callbacks.c:338
+#: client/campaign/cl_uforecovery_callbacks.c:368
+#: client/campaign/cl_uforecovery_callbacks.c:515
 msgid "UFO Recovery"
 msgstr "Rapatriement des OVNI"
 
-#: client/campaign/cl_uforecovery_callbacks.c:336
+#: client/campaign/cl_uforecovery_callbacks.c:424
+#, fuzzy, c-format
+msgid "previously recovered %s from base %s"
+msgstr "%s a été supprimé avec succès de la base %s."
+
+#: client/campaign/cl_uforecovery_callbacks.c:425
+#, c-format
+msgid "Storage process for captured %s ongoing."
+msgstr ""
+
+#: client/campaign/cl_uforecovery_callbacks.c:509
+#, fuzzy, c-format
+msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
+msgstr "%s a été rapatrié du champ de bataille. L'OVNI a été vendu à la nation %s pour %i crédits."
+
+#: client/campaign/cl_uforecovery_callbacks.c:512
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "%s a été rapatrié du champ de bataille. L'OVNI a été vendu à la nation %s pour %i crédits."
@@ -13100,7 +13176,7 @@ msgstr "Vous avez dépensé %i crédits en frais administratifs."
 msgid "Paid %i credits in interest on your debt."
 msgstr "Vous avez dépensé %i crédits en intérêts de vos emprunts."
 
-#: client/campaign/cp_team.c:125
+#: client/campaign/cp_team.c:131
 #, c-format
 msgid "%i of %i"
 msgstr "%i sur %i"
@@ -13248,70 +13324,70 @@ msgstr "Incroyable"
 msgid "Superhuman"
 msgstr "Surhumain"
 
-#: client/cl_actor.c:1107
+#: client/cl_actor.c:1070
 msgid "Nobody selected\n"
 msgstr "Personne de sélectionné\n"
 
-#: client/cl_actor.c:1117
+#: client/cl_actor.c:1080
 msgid "This isn't your round\n"
 msgstr "Ce n'est pas votre tour\n"
 
-#: client/cl_actor.c:1374
+#: client/cl_actor.c:1336
 #, fuzzy
 msgid "You cannot reload this unknown item.\n"
 msgstr ""
 "Vous ne pouvez pas utiliser cet objet.\n"
 "Vous devez l'étudier d'abord.\n"
 
-#: client/cl_actor.c:2041
+#: client/cl_actor.c:2003
 #, fuzzy, c-format
 msgid "%s was stunned\n"
 msgstr "%s %s a été assommé\n"
 
-#: client/cl_actor.c:2043
+#: client/cl_actor.c:2005
 #, fuzzy, c-format
 msgid "%s was killed\n"
 msgstr "%s %s a été tué\n"
 
-#: client/cl_actor.c:2051
+#: client/cl_actor.c:2013
 msgid "A civilian was stunned.\n"
 msgstr "Un civil a été assommé.\n"
 
-#: client/cl_actor.c:2053
+#: client/cl_actor.c:2015
 msgid "A civilian was killed.\n"
 msgstr "Un civil a été tué.\n"
 
-#: client/cl_actor.c:2057
+#: client/cl_actor.c:2019
 msgid "An alien was stunned.\n"
 msgstr "Un alien a été assommé.\n"
 
-#: client/cl_actor.c:2059
+#: client/cl_actor.c:2021
 msgid "An alien was killed.\n"
 msgstr "Un alien a été tué.\n"
 
-#: client/cl_actor.c:2063
+#: client/cl_actor.c:2025
 msgid "A soldier was stunned.\n"
 msgstr "Un soldat a été assommé.\n"
 
-#: client/cl_actor.c:2065
+#: client/cl_actor.c:2027
 msgid "A soldier was killed.\n"
 msgstr "Un soldat a été tué.\n"
 
-#: client/cl_actor.c:2069
+#: client/cl_actor.c:2031
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Un membre de l'équipe %i a été assommé.\n"
 
-#: client/cl_actor.c:2071
+#: client/cl_actor.c:2033
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Un membre de l'équipe %i a été tué.\n"
 
-#: client/cl_actor.c:2251
+#: client/cl_actor.c:2213
 msgid "Your round started!\n"
 msgstr "Votre tour a commencé !\n"
 
-#: client/cl_actor.c:3005
+#: client/cl_actor.c:2967
 msgid "Unknown alien race"
 msgstr "Race alienne inconnue"
 
@@ -13483,11 +13559,11 @@ msgstr "Conserver des UT pour tirer/utiliser"
 msgid "Shot Reservation"
 msgstr "Réserve de tir"
 
-#: client/cl_hud.c:779
+#: client/cl_hud.c:816
 msgid "No item in hand.\n"
 msgstr "Aucun objet en main.\n"
 
-#: client/cl_hud.c:792
+#: client/cl_hud.c:829
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -13495,7 +13571,7 @@ msgstr ""
 "Ne peut faire l'action :\n"
 "plus de munitions.\n"
 
-#: client/cl_hud.c:797
+#: client/cl_hud.c:834
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -13503,7 +13579,7 @@ msgstr ""
 "Cette arme ne peut être utilisée\n"
 "à une main.\n"
 
-#: client/cl_hud.c:806
+#: client/cl_hud.c:843
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -13511,7 +13587,7 @@ msgstr ""
 "Ne peut faire l'action :\n"
 "cet objet n'est pas rechargeable.\n"
 
-#: client/cl_hud.c:811
+#: client/cl_hud.c:848
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -13519,7 +13595,7 @@ msgstr ""
 "Ne peut faire l'action :\n"
 "plus de munitions disponibles.\n"
 
-#: client/cl_hud.c:816 client/cl_hud.c:889
+#: client/cl_hud.c:853 client/cl_hud.c:924
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -13527,25 +13603,25 @@ msgstr ""
 "Ne peut faire l'action :\n"
 "pas assez d'UT.\n"
 
-#: client/cl_hud.c:984
+#: client/cl_hud.c:1019
 msgid "Not enough TUs for standing up."
 msgstr "Plus assez de UT pour se lever."
 
-#: client/cl_hud.c:987
+#: client/cl_hud.c:1022
 #, c-format
 msgid "Stand up (%i TU)"
 msgstr "Se lever (%i UT)"
 
-#: client/cl_hud.c:993
+#: client/cl_hud.c:1028
 msgid "Not enough TUs for crouching."
 msgstr "Plus assez de UT pour s'accroupir."
 
-#: client/cl_hud.c:996
+#: client/cl_hud.c:1031
 #, c-format
 msgid "Crouch (%i TU)"
 msgstr "S'accroupir (%i UT)"
 
-#: client/cl_hud.c:1004
+#: client/cl_hud.c:1039
 #, c-format
 msgid ""
 "%i TUs reserved for crouching/standing up.\n"
@@ -13554,16 +13630,16 @@ msgstr ""
 "%i UT réservées pour s'accroupir / se lever.\n"
 "Cliquez pour effacer."
 
-#: client/cl_hud.c:1007
+#: client/cl_hud.c:1042
 #, c-format
 msgid "Reserve %i TUs for crouching/standing up."
 msgstr "Réserver %i UT pour s'accroupir / se lever"
 
-#: client/cl_hud.c:1010
+#: client/cl_hud.c:1045
 msgid "Not enough TUs left to reserve for crouching/standing up."
 msgstr "Plus assez de UT en réserve pour s'accroupir / se lever."
 
-#: client/cl_hud.c:1016
+#: client/cl_hud.c:1051
 #, c-format
 msgid ""
 "%i TUs reserved for shooting.\n"
@@ -13574,38 +13650,38 @@ msgstr ""
 "Cliquez pour changer.\n"
 "Clic droit pour effacer."
 
-#: client/cl_hud.c:1019
+#: client/cl_hud.c:1054
 msgid "Reserve TUs for shooting."
 msgstr "Conserver des UT pour tirer."
 
-#: client/cl_hud.c:1022
+#: client/cl_hud.c:1057
 msgid "Reserving TUs for shooting not possible."
 msgstr "Impossible de conserver des UT pour tirer."
 
-#: client/cl_hud.c:1048
+#: client/cl_hud.c:1083
 #, fuzzy
 msgid "No reload possible for right hand, already fully loaded."
 msgstr "Pas de rechargement possible à la main droite."
 
-#: client/cl_hud.c:1050
+#: client/cl_hud.c:1085
 msgid "No reload possible for right hand."
 msgstr "Pas de rechargement possible à la main droite."
 
-#: client/cl_hud.c:1053 client/cl_hud.c:1069
+#: client/cl_hud.c:1088 client/cl_hud.c:1104
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Recharger l'arme (%i UT)."
 
-#: client/cl_hud.c:1064
+#: client/cl_hud.c:1099
 #, fuzzy
 msgid "No reload possible for left hand, already fully loaded."
 msgstr "Pas de rechargement possible à la main gauche."
 
-#: client/cl_hud.c:1066
+#: client/cl_hud.c:1101
 msgid "No reload possible for left hand."
 msgstr "Pas de rechargement possible à la main gauche."
 
-#: client/cl_hud.c:1182
+#: client/cl_hud.c:1217
 #, c-format
 msgid ""
 "Time Units\n"
@@ -13618,17 +13694,17 @@ msgstr ""
 "- Réservé:  %i\n"
 "- Restante: %i\n"
 
-#: client/cl_hud.c:1292
+#: client/cl_hud.c:1327
 #, c-format
 msgid "Morale  %i | Reserved TUs: %i\n"
 msgstr "Moral %i | UT réservées: %i\n"
 
-#: client/cl_hud.c:1294
+#: client/cl_hud.c:1329
 #, c-format
 msgid "Morale  %i"
 msgstr "Morale  %i"
 
-#: client/cl_hud.c:1302
+#: client/cl_hud.c:1337
 #, c-format
 msgid ""
 "Morale  %i | Reserved TUs: %i\n"
@@ -13637,7 +13713,7 @@ msgstr ""
 "Moral  %i | UT réservées: %i\n"
 "%s %i (%i|%i UT restantes)\n"
 
-#: client/cl_hud.c:1306
+#: client/cl_hud.c:1341
 #, c-format
 msgid ""
 "Morale  %i\n"
@@ -13646,7 +13722,7 @@ msgstr ""
 "Moral  %i\n"
 "%s %i (%i UT restantes)\n"
 
-#: client/cl_hud.c:1325
+#: client/cl_hud.c:1360
 #, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
@@ -13655,7 +13731,7 @@ msgstr ""
 "Vous ne pouvez pas charger cet objet inconnu.\n"
 "Vous devez l'étudier d'abord.\n"
 
-#: client/cl_hud.c:1342
+#: client/cl_hud.c:1377
 #, c-format
 msgid ""
 "%s\n"
@@ -13664,23 +13740,23 @@ msgstr ""
 "%s\n"
 "(empty)\n"
 
-#: client/cl_hud.c:1351
+#: client/cl_hud.c:1386
 msgid "Currently panics!\n"
 msgstr "Paniqué !\n"
 
-#: client/cl_hud.c:1635
+#: client/cl_hud.c:1670
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Recharger l'arme de la main gauche du soldat"
 
-#: client/cl_hud.c:1636
+#: client/cl_hud.c:1671
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Recharger l'arme de la main droite du soldat"
 
-#: client/cl_hud.c:1638
+#: client/cl_hud.c:1673
 msgid "Toggle reservation for crouching."
 msgstr "Changer la réservation pour s'accroupir"
 
-#: client/cl_hud.c:1644
+#: client/cl_hud.c:1679
 msgid "Toggle reaction fire"
 msgstr "Activer/désactiver le tir de réaction"
 
@@ -13800,37 +13876,37 @@ msgstr "Le serveur a fermé la connection"
 msgid "..."
 msgstr "..."
 
-#: client/cl_main.c:515
+#: client/cl_main.c:516
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "La version du jeu local (%s) diffère de celle des serveurs"
 
-#: client/cl_main.c:521
+#: client/cl_main.c:522
 msgid "Local map version differs from server"
 msgstr "Les cartes en local diffèrent de celles du serveur"
 
-#: client/cl_main.c:527
+#: client/cl_main.c:528
 msgid "Script files are not the same"
 msgstr "Les fichiers scripts ne sont pas les mêmes"
 
-#: client/cl_main.c:534
+#: client/cl_main.c:535
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "La version du jeu local (%s) diffère de celle des serveurs (%s)"
 
-#: client/cl_main.c:833
+#: client/cl_main.c:834
 msgid "Target your shot to the ground"
 msgstr "Visez votre cible au sol"
 
-#: client/cl_main.c:834
+#: client/cl_main.c:835
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Ouvrir l'inventaire pendant une mission tactique"
 
-#: client/cl_main.c:960 client/cl_view.c:278
+#: client/cl_main.c:961 client/cl_view.c:278
 msgid "Awaiting game start"
 msgstr "Attente du début de la partie"
 
-#: client/cl_main.c:1009
+#: client/cl_main.c:1010
 msgid "Custom"
 msgstr "Personnalisé"
 
@@ -13870,48 +13946,48 @@ msgstr "Téléchargement [%s]"
 msgid "Loading Map [%s]"
 msgstr "Chargement de la carte [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:452
+#: client/cl_team.c:50 client/cl_team.c:453
 msgid "Urban"
 msgstr "Urbain"
 
-#: client/cl_team.c:52 client/cl_team.c:453
+#: client/cl_team.c:52 client/cl_team.c:454
 msgid "Jungle"
 msgstr "Jungle"
 
-#: client/cl_team.c:54 client/cl_team.c:454
+#: client/cl_team.c:54 client/cl_team.c:455
 msgid "Desert"
 msgstr "Désertique"
 
-#: client/cl_team.c:56 client/cl_team.c:455
+#: client/cl_team.c:56 client/cl_team.c:456
 msgid "Arctic"
 msgstr "Arctique"
 
-#: client/cl_team.c:58 client/cl_team.c:456
+#: client/cl_team.c:58 client/cl_team.c:457
 msgid "Yellow"
 msgstr "Jaune"
 
-#: client/cl_team.c:60 client/cl_team.c:457
+#: client/cl_team.c:60 client/cl_team.c:458
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/cl_team.c:791
+#: client/cl_team.c:792
 msgid "Select a soldier from list"
 msgstr "Sélectionner un soldat de la liste"
 
-#: client/cl_team.c:792
+#: client/cl_team.c:793
 msgid "Reselect the current soldier"
 msgstr "Sélectionner le soldat à nouveau"
 
-#: client/cl_team.c:793
+#: client/cl_team.c:794
 #, fuzzy
 msgid "Update a soldier"
 msgstr "Renommer votre soldat"
 
-#: client/cl_team.c:794
+#: client/cl_team.c:795
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/cl_team.c:795
+#: client/cl_team.c:796
 msgid "Toggle to next soldier"
 msgstr "Passer au soldat suivant"
 
@@ -14106,100 +14182,100 @@ msgstr "Nouvelle équipe"
 msgid "Error saving team. Check free disk space!"
 msgstr "Erreur lors de la sauvegarde de l'équipe. Vérifiez l'espace disque disponible !"
 
-#: game/g_client.c:811
+#: game/g_client.c:809
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Ne peut faire l'action - ce n'est pas votre tour !\n"
 
-#: game/g_client.c:818
+#: game/g_client.c:816
 msgid "Can't perform action - object not present!\n"
 msgstr "Ne peut faire l'action - objet non présent !\n"
 
-#: game/g_client.c:823
+#: game/g_client.c:821
 msgid "Can't perform action - not an actor!\n"
 msgstr "Ne peut faire l'action - n'est pas une unité !\n"
 
-#: game/g_client.c:828
+#: game/g_client.c:826
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Ne peut faire l'action - unité assommée !\n"
 
-#: game/g_client.c:833
+#: game/g_client.c:831
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Ne peut faire l'action - unité morte !\n"
 
-#: game/g_client.c:838
+#: game/g_client.c:836
 msgid "Can't perform action - not on same team!\n"
 msgstr "Ne peut faire l'action - pas dans la même équipe !\n"
 
-#: game/g_client.c:843
+#: game/g_client.c:841
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Ne peut faire l'action - pas de contrôle sur les unités alliées !\n"
 
-#: game/g_client.c:1017
+#: game/g_client.c:1015
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Ne peut faire l'action - pas assez d'UT !\n"
 
-#: game/g_client.c:1020
+#: game/g_client.c:1018
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Ne peut faire l'action - arme déjà chargée avec les mêmes munitions !\n"
 
-#: game/g_client.c:1820
+#: game/g_client.c:1815
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Secoués, mais ne baisseront pas leur garde.\n"
 
-#: game/g_client.c:1874
+#: game/g_client.c:1878
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s panique !\n"
 
-#: game/g_client.c:1934
+#: game/g_client.c:1938
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s fait un massacre.\n"
 
-#: game/g_client.c:1936
+#: game/g_client.c:1940
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s est fou de rage !\n"
 
-#: game/g_client.c:1996
+#: game/g_client.c:2000
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s est secoué.\n"
 
-#: game/g_client.c:2538 game/g_svcmds.c:348
+#: game/g_client.c:2541 game/g_svcmds.c:348
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "L'équipe %i (%s) jouera le premier tour.\n"
 
-#: game/g_client.c:2804
+#: game/g_client.c:2805
 msgid "4 minutes left until forced round end\n"
 msgstr "Plus que 4 minutes avant la fin du tour\n"
 
-#: game/g_client.c:2807
+#: game/g_client.c:2808
 msgid "3 minutes left until forced round end\n"
 msgstr "Plus que 3 minutes avant la fin du tour\n"
 
-#: game/g_client.c:2810
+#: game/g_client.c:2811
 msgid "2 minutes left until forced round end\n"
 msgstr "Plus que 2 minutes avant la fin du tour\n"
 
-#: game/g_client.c:2813
+#: game/g_client.c:2814
 msgid "1 minute left until forced round end\n"
 msgstr "Plus que 1 minute avant la fin du tour\n"
 
-#: game/g_client.c:2816
+#: game/g_client.c:2817
 msgid "30 seconds left until forced round end\n"
 msgstr "Plus que 30 secondes avant la fin du tour\n"
 
-#: game/g_client.c:2819
+#: game/g_client.c:2820
 msgid "15 seconds left until forced round end\n"
 msgstr "Plus que 15 secondes avant la fin du tour\n"
 
-#: game/g_client.c:2827
+#: game/g_client.c:2828
 msgid "Current active team hit the max round time\n"
 msgstr "L'équipe active est arrivée au bout du temps limite pour le tour\n"
 
-#: game/g_combat.c:386
+#: game/g_combat.c:385
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
@@ -14207,27 +14283,27 @@ msgstr ""
 "Le soldat est étourdi!\n"
 "L'ennemi a utilisé une grenade étourdissante!\n"
 
-#: game/g_combat.c:607
+#: game/g_combat.c:606
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Ne peut faire l'action - lancé impossible!\n"
 
-#: game/g_combat.c:1166
+#: game/g_combat.c:1165
 msgid "Can't perform action - object not activateable!\n"
 msgstr "Ne peut faire l'action - l'objet ne peut être actionné !\n"
 
-#: game/g_combat.c:1184
+#: game/g_combat.c:1183
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr "Ne peut faire l'action - Cette arme ne peut être utilisée à une main !\n"
 
-#: game/g_combat.c:1191
+#: game/g_combat.c:1190
 msgid "Can't perform action - no ammo!\n"
 msgstr "Ne peut faire l'action - plus de munitions!\n"
 
-#: game/g_combat.c:1199
+#: game/g_combat.c:1198
 msgid "Can't perform action - target out of range!\n"
 msgstr "Ne peut faire l'action - la cible est hors de portée !\n"
 
-#: game/g_combat.c:1245
+#: game/g_combat.c:1244
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Ne peut faire l'action - pas assez de munitions!\n"
 
@@ -14271,6 +14347,20 @@ msgstr "Libre"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr "En jeu"
+
+#~ msgid "Assault"
+#~ msgstr "Assaut"
+
+#~ msgid "Sniper"
+#~ msgstr "Fusil de précision"
+
+#, fuzzy
+#~ msgid "Store ufo"
+#~ msgstr "Entreposer l'OVNI"
+
+#, fuzzy
+#~ msgid "Sell ufo"
+#~ msgstr "Vente par :"
 
 #~ msgid "Installation #1"
 #~ msgstr "Installation #1"
@@ -14334,9 +14424,6 @@ msgstr "En jeu"
 
 #~ msgid "Store the UFO in base"
 #~ msgstr "Entreposer l'OVNI dans la base"
-
-#~ msgid "Sell UFO"
-#~ msgstr "Vendre l'OVNI"
 
 #~ msgid "Sell the UFO to desired nation"
 #~ msgstr "Vendre l'OVNI à la nation désirée"
