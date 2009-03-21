@@ -788,14 +788,13 @@ static void TR_TestBoxInBrush (boxtrace_t *trace_data, cBspBrush_t * brush)
 	float dist;
 	vec3_t ofs;
 	float d1;
-	TR_BRUSHSIDE_TYPE *side;
 	TR_TILE_TYPE *myTile = trace_data->tile;
 
 	if (!brush || !brush->numsides)
 		return;
 
 	for (i = 0; i < brush->numsides; i++) {
-		side = &myTile->brushsides[brush->firstbrushside + i];
+		TR_BRUSHSIDE_TYPE *side = &myTile->brushsides[brush->firstbrushside + i];
 #ifdef COMPILE_UFO
 		plane = side->plane;
 #else
@@ -849,7 +848,7 @@ static void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 
 	leaf = &myTile->leafs[leafnum];
 
-	if ((trace_data->contents != MASK_ALL) && (!(leaf->contentFlags & trace_data->contents) || (leaf->contentFlags & trace_data->rejects)))
+	if (trace_data->contents != MASK_ALL && (!(leaf->contentFlags & trace_data->contents) || (leaf->contentFlags & trace_data->rejects)))
 		return;
 
 	/* trace line against all brushes in the leaf */
@@ -861,7 +860,7 @@ static void TR_TraceToLeaf (boxtrace_t *trace_data, int leafnum)
 			continue;			/* already checked this brush in another leaf */
 		b->checkcount = checkcount;
 
-		if ((trace_data->contents != MASK_ALL) && (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects)))
+		if (trace_data->contents != MASK_ALL && (!(b->contentFlags & trace_data->contents) || (b->contentFlags & trace_data->rejects)))
 			continue;
 
 		TR_ClipBoxToBrush(trace_data, b, leaf);
@@ -1283,7 +1282,6 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 {
 	trace_t newtr, tr;
 	int tile, i;
-	TR_TILE_TYPE *myTile;
 	vec3_t smin, smax, emin, emax, wpmins, wpmaxs;
 	const vec3_t offset = {UNIT_SIZE / 2, UNIT_SIZE / 2, UNIT_HEIGHT / 2};
 
@@ -1291,7 +1289,7 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 	tr.fraction = 2.0f;
 
 	/* Prep the mins and maxs */
-	for (i = 0; i < 3 ; i++) {
+	for (i = 0; i < 3; i++) {
 		smin[i] = start[i] + min(mins[i], maxs[i]);
 		smax[i] = start[i] + max(mins[i], maxs[i]);
 		emin[i] = end[i] + min(mins[i], maxs[i]);
@@ -1300,7 +1298,7 @@ trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t 
 
 	/* trace against all loaded map tiles */
 	for (tile = 0; tile < numTiles; tile++) {
-		myTile = &mapTiles[tile];
+		TR_TILE_TYPE *myTile = &mapTiles[tile];
 		PosToVec(myTile->wpMins, wpmins);
 		VectorSubtract(wpmins, offset, wpmins);
 		PosToVec(myTile->wpMaxs, wpmaxs);

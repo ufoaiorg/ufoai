@@ -63,7 +63,7 @@ static pos3_t exclude_from_forbiddenlist;
 static cBspSurface_t nullsurface;
 
 /** @note these are the TUs used to intentionally move in a given direction.  Falling not included. */
-static const int TUs_used[PATHFINDING_DIRECTIONS] = {
+static const int TUs_used[] = {
 	TU_MOVE_STRAIGHT, /* E  */
 	TU_MOVE_STRAIGHT, /* W  */
 	TU_MOVE_STRAIGHT, /* N  */
@@ -105,6 +105,7 @@ static const int TUs_used[PATHFINDING_DIRECTIONS] = {
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR, /* FLY DOWN & NW */
 	TU_MOVE_DIAGONAL * TU_FLYING_MOVING_FACTOR  /* FLY DOWN & SE */
 	};
+CASSERT(lengthof(TUs_used) == PATHFINDING_DIRECTIONS);
 
 /** @brief Used to track where rerouting needs to occur. */
 static byte reroute[ACTOR_MAX_SIZE][PATHFINDING_WIDTH][PATHFINDING_WIDTH];
