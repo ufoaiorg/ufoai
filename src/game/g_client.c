@@ -172,14 +172,12 @@ static void G_SendPlayerStats (player_t * player)
  * fully stunned (i.e. on the floor).
  * @param[in] team The index of the team to update the values for.
  * @sa G_GiveTimeUnits
- * @todo Use dynamic value for regeneration. See comment below.
+ * @todo Make this depend on the character-attributes. http://lists.cifrid.net/pipermail/ufoai/2008-February/000346.html
  */
 static void G_UpdateStunState (int team)
 {
 	edict_t *ent;
 	int i;
-	/** @todo Make this depend on the character-attributes.
-	 * @see http://lists.cifrid.net/pipermail/ufoai/2008-February/000346.html */
 	const int regen = 1;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
@@ -1398,7 +1396,6 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 	PosAddDV(pos, i, dv);
 
 	/* Search for blocker. */
-	/** @todo 2x2 support needed? */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && G_IsLivingActor(ent) && VectorCompare(pos, ent->pos))
 			return qtrue;
@@ -1430,8 +1427,7 @@ static inline void G_ClientStartMove (edict_t *ent, int player_mask)
 }
 
 /**
- * @brief Generates the client events that are send over the netchannel to move
- * an actor
+ * @brief Generates the client events that are send over the netchannel to move an actor
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam
  * @param[in] num Edict index to move
@@ -1439,7 +1435,6 @@ static inline void G_ClientStartMove (edict_t *ent, int player_mask)
  * @param[in] stop qfalse means that VIS_STOP is ignored
  * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
- * @todo 2x2 units?
  * @sa PA_MOVE
  */
 void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
@@ -1821,6 +1816,9 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
+
+				if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
+		 			gi.error("AI reaction fire is server side only");
 			}
 		}
 		break;
@@ -1828,12 +1826,18 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
 
+		if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
+ 			gi.error("AI reaction fire is server side only");
+
 		/* Enable multi reaction fire. */
  		ent->state |= STATE_REACTION_MANY;
 		break;
 	case STATE_REACTION_ONCE: /* Request to turn on single-reaction fire mode. */
 		/* Disable reaction fire. */
  		ent->state &= ~STATE_REACTION;
+
+		if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
+ 			gi.error("AI reaction fire is server side only");
 
 		/* Turn on single reaction fire. */
 		ent->state |= STATE_REACTION_ONCE;

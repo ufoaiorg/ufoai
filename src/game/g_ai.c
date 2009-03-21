@@ -852,7 +852,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/* decide whether the actor maybe wants to go crouched */
 		if (AI_CheckCrouch(ent))
-			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qtrue);
+			G_ClientStateChange(player, ent->number, STATE_CROUCHED, qfalse);
 
 		/* actor is still alive - try to turn into the appropriate direction to see the target
 		 * actor once he sees the ai, too */
@@ -860,6 +860,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 		/** @todo If possible targets that can shoot back (check their inventory for weapons, not for ammo)
 		 * are close, go into reaction fire mode, too */
+		/* G_ClientStateChange(player, ent->number, STATE_REACTION_ONCE, qtrue); */
 
 		ent->hiding = qfalse;
 	}
@@ -918,15 +919,13 @@ static void AI_SetStats (edict_t * ent, int team)
 {
 	/* Set base stats. */
 	if (team != TEAM_CIVILIAN) {
-		/** skills; @todo more power to Ortnoks, more mind to Tamans
-		 * For aliens we give "MAX_EMPL" as a type, since the employee-type is not used at all for them. */
-		CHRSH_CharGenAbilitySkills(&ent->chr, team, MAX_EMPL, sv_maxclients->integer >= 2);
+		CHRSH_CharGenAbilitySkills(&ent->chr, team, 0, sv_maxclients->integer >= 2);
 		/* Aliens get much more mind */
 		ent->chr.score.skills[ABILITY_MIND] += 100;
 		if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
 			ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
 	} else if (team == TEAM_CIVILIAN) {
-		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_SOLDIER, sv_maxclients->integer >= 2);
+		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_WORKER, sv_maxclients->integer >= 2);
 	}
 
 	/* Set health, morale and stun. */
@@ -965,7 +964,6 @@ static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
 		} else
 			teamDefintion = gi.Cvar_String("ai_alien");
 	} else if (team == TEAM_CIVILIAN) {
-		/** @todo Maybe we have civilians with armour, too - police and so on */
 		teamDefintion = gi.Cvar_String("ai_civilian");
 	}
 	ent->chr.skin = gi.GetCharacterValues(teamDefintion, &ent->chr);
@@ -1023,19 +1021,14 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 
 	/* More tweaks */
 	if (team != TEAM_CIVILIAN) {
-		/** Set default reaction mode.
-		 * @sa cl_team:CL_GenerateCharacter This function sets the initial default value for (newly created) non-AI actors.
-		 * @todo Make the AI change the value (and its state) if needed while playing! */
+		/* Set default reaction mode. */
 		ent->chr.reservedTus.reserveReaction = STATE_REACTION_ONCE;
 
-		/** Set initial state of reaction fire to previously stored state for this actor.
-		 * @sa g_client.c:G_ClientSpawn */
-		Com_DPrintf(DEBUG_GAME, "AI_InitPlayer: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
 		/* no need to call G_SendStats for the AI - reaction fire is serverside only for the AI */
 		G_ClientStateChange(player, ent->number, ent->chr.reservedTus.reserveReaction, qfalse);
 	}
 
-	/* initialize the AI now */
+	/* initialize the LUA AI now */
 	if (team == TEAM_CIVILIAN)
 		AIL_InitActor(ent, "civilian", "default");
 	else if (team == TEAM_ALIEN)

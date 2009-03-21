@@ -350,7 +350,6 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 		}
 	} else if (damage < 0) {
 		/* Robots can't be healed. */
-		/** @todo We can't 'repair' robots yet :) The least we need for this would be a seperation of medikit vs. a repair-kit. */
 		if (isRobot)
 			return;
 	}
@@ -838,8 +837,8 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/** ?? @todo Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid.
-	 * Might need some change to reflect 2x2 units.
+	/* places the starting-location a bit away from the attacker-model/grid. */
+	/** @todo need some change to reflect 2x2 units.
 	 * Also might need a check if the distance is bigger than the one to the impact location. */
 	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
 	VecToAngles(dir, angles);		/* Get the angles of the direction vector. */
@@ -985,7 +984,7 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 				throughWall--;
 				Com_DPrintf(DEBUG_GAME, "Shot through wall, %i walls left.\n", throughWall);
 				/* reduce damage */
-				/* TODO: reduce even more if the wall was hit far away and
+				/** @todo reduce even more if the wall was hit far away and
 				 * not close by the shooting actor */
 				damage /= sqrt(fd->throughWall - throughWall + 1);
 				VectorMA(tr.endpos, MAX_WALL_THICKNESS_FOR_SHOOTING_THROUGH, dir, tracefrom);
@@ -1133,17 +1132,17 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 
 /**
  * @brief Setup for shooting, either real or mock
- * @param[in] player @todo The player this action belongs to (i.e. either the ai or the player)
- * @param[in] num @todo The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
+ * @param[in] player The player this action belongs to (i.e. either the ai or the player)
+ * @param[in] entnum The index number of the edict that is doing the shot
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
- * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
+ * @param[in] firemode The firemode index of the ammo for the used weapon.
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @param[in] z_align This value may change the target z height
  */
-qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
+qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int type,
 	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	const fireDef_t *fd;
@@ -1155,7 +1154,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	qboolean quiet;
 	int clientType;
 
-	ent = g_edicts + num;
+	ent = g_edicts + entnum;
 	quiet = (mock != NULL);
 
 	weapon = NULL;
@@ -1261,7 +1260,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		G_CheckVisTeam(ent->team, NULL, qfalse);
 
 		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
-		gi.WriteShort(num);
+		gi.WriteShort(entnum);
 		gi.WriteByte(ent->dir);
 	}
 
@@ -1315,7 +1314,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		if (fd->ammo) {
 			if (ammo > 0 || !weapon->t->thrown) {
 				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
-				gi.WriteShort(num);
+				gi.WriteShort(entnum);
 				gi.WriteByte(ammo);
 				gi.WriteByte(weapon->m->idx);
 				weapon->a = ammo;
@@ -1325,7 +1324,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 					gi.WriteByte(gi.csi->idLeft);
 			} else { /* delete the knife or the rifle without ammo */
 				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
-				gi.WriteShort(num);
+				gi.WriteShort(entnum);
 				gi.WriteByte(container);
 				assert(gi.csi->ids[container].single);
 				INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
@@ -1341,7 +1340,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 		if (weapon->t->thrown && weapon->t->oneshot && weapon->t->deplete) {
 			assert(!itemAlreadyRemoved);
 			gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
-			gi.WriteShort(num);
+			gi.WriteShort(entnum);
 			gi.WriteByte(container);
 			assert(gi.csi->ids[container].single);
 			INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
