@@ -2107,9 +2107,20 @@ qboolean AIR_SendAircraftPursuingUFO (aircraft_t* aircraft, aircraft_t* ufo)
 		AII_ReloadWeapon(aircraft);
 	}
 
-	/* don't check if the aircraft has enough fuel: maybe UFO will come closer */
-
 	AIR_GetDestinationWhilePursuing(aircraft, ufo, &dest);
+	/* check if aircraft has enough fuel */
+	if (!AIR_AircraftHasEnoughFuel(aircraft, dest)) {
+		/* did not find solution, go directly to target direction if enough fuel */
+		if (AIR_AircraftHasEnoughFuel(aircraft, ufo->pos)) {
+			Com_DPrintf(DEBUG_CLIENT, "AIR_SendAircraftPursuingUFO: not enough fuel to anticipate target movement: go directly to target position\n");
+			Vector2Copy(ufo->pos, dest);
+		} else {
+			MS_AddNewMessage(_("Notice"), va(_("Craft %s has not enough fuel to intercept UFO: fly back to base %s."), _(aircraft->name), aircraft->homebase->name), qfalse, MSG_STANDARD, NULL);
+			AIR_AircraftReturnToBase(aircraft);
+			return qfalse;
+		}
+	}
+
 	MAP_MapCalcLine(aircraft->pos, dest, &aircraft->route);
 	aircraft->status = AIR_UFO;
 	aircraft->time = 0;
