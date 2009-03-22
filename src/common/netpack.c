@@ -275,11 +275,10 @@ char *NET_ReadStringRaw (struct dbuffer *buf)
 {
 	static char string[2048];
 	unsigned int l;
-	int c;
 
 	l = 0;
 	do {
-		c = NET_ReadByte(buf);
+		const int c = NET_ReadByte(buf);
 		if (c == -1 || c == 0)
 			break;
 		string[l] = c;
@@ -305,11 +304,10 @@ char *NET_ReadString (struct dbuffer *buf)
 {
 	static char string[2048];
 	unsigned int l;
-	int c;
 
 	l = 0;
 	do {
-		c = NET_ReadByte(buf);
+		int c = NET_ReadByte(buf);
 		if (c == -1 || c == 0)
 			break;
 		/* translate all format specs to avoid crash bugs */
@@ -333,11 +331,10 @@ char *NET_ReadStringLine (struct dbuffer *buf)
 {
 	static char string[2048];
 	unsigned int l;
-	int c;
 
 	l = 0;
 	do {
-		c = NET_ReadByte(buf);
+		int c = NET_ReadByte(buf);
 		if (c == -1 || c == 0 || c == '\n')
 			break;
 		/* translate all format specs to avoid crash bugs */
@@ -412,9 +409,7 @@ void NET_ReadData (struct dbuffer *buf, void *data, int len)
 
 void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
 {
-	int b;
-
-	b = NET_ReadByte(buf);
+	const int b = NET_ReadByte(buf);
 	if (b >= NUMVERTEXNORMALS)
 		Com_Error(ERR_DROP, "NET_ReadDir: out of range");
 	VectorCopy(bytedirs[b], dir);
@@ -428,11 +423,8 @@ void NET_ReadDir (struct dbuffer *buf, vec3_t dir)
  */
 void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 {
-	char typeID;
-
-	assert(format); /* may not be null */
 	while (*format) {
-		typeID = *format++;
+		const char typeID = *format++;
 
 		switch (typeID) {
 		case 'c':
@@ -467,10 +459,10 @@ void NET_vReadFormat (struct dbuffer *buf, const char *format, va_list ap)
 			break;
 		case '*':
 			{
-				int i, n;
+				int i;
 				byte *p;
+				const int n = NET_ReadShort(buf);
 
-				n = NET_ReadShort(buf);
 				*va_arg(ap, int *) = n;
 				p = va_arg(ap, void *);
 
@@ -555,7 +547,7 @@ void NET_WriteConstMsg (struct net_stream *s, const struct dbuffer *buf)
 	NET_StreamEnqueue(s, (char *)&len, 4);
 
 	while (pos < dbuffer_len(buf)) {
-		int x = dbuffer_get_at(buf, pos, tmp, sizeof(tmp));
+		const int x = dbuffer_get_at(buf, pos, tmp, sizeof(tmp));
 		NET_StreamEnqueue(s, tmp, x);
 		pos += x;
 	}
@@ -585,7 +577,7 @@ struct dbuffer *NET_ReadMsg (struct net_stream *s)
 
 	buf = new_dbuffer();
 	while (len > 0) {
-		int x = NET_StreamDequeue(s, tmp, min(len, 4096));
+		const int x = NET_StreamDequeue(s, tmp, min(len, 4096));
 		dbuffer_add(buf, tmp, x);
 		len -= x;
 	}
@@ -596,7 +588,7 @@ struct dbuffer *NET_ReadMsg (struct net_stream *s)
 void NET_VPrintf (struct dbuffer *buf, const char *format, va_list ap)
 {
 	static char str[32768];
-	int len = Q_vsnprintf(str, sizeof(str), format, ap);
+	const int len = Q_vsnprintf(str, sizeof(str), format, ap);
 	dbuffer_add(buf, str, len);
 }
 
