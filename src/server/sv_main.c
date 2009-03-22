@@ -64,7 +64,7 @@ struct memPool_s *sv_genericPool;
 
 /**
  * @brief Called when the player is totally leaving the server, either willingly
- * or unwillingly. This is NOT called if the entire server is quiting
+ * or unwillingly. This is NOT called if the entire server is quitting
  * or crashing.
  */
 void SV_DropClient (client_t * drop, const char *message)
