@@ -245,7 +245,54 @@ static void B_BaseInit_f (void)
 {
 	if (!baseCurrent)
 		return;
-	B_BaseMenuInit(baseCurrent);
+
+	/* make sure the credits cvar is up-to-date */
+	CL_UpdateCredits(ccs.credits);
+
+	Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
+
+	MN_ExecuteConfunc("mn_buildings_reset");
+	/* activate or deactivate the aircraft button */
+	if (AIR_AircraftAllowed(baseCurrent) && baseCurrent->numAircraftInBase)
+		MN_ExecuteConfunc("set_aircraft_enabled");
+	else
+		MN_ExecuteConfunc("set_aircraft_disabled");
+
+	if (BS_BuySellAllowed(baseCurrent))
+		MN_ExecuteConfunc("set_buysell_enabled");
+	else
+		MN_ExecuteConfunc("set_buysell_disabled");
+
+	if (ccs.numBases > 1 && baseCurrent->baseStatus != BASE_UNDER_ATTACK)
+		MN_ExecuteConfunc("set_transfer_enabled");
+	else
+		MN_ExecuteConfunc("set_transfer_disabled");
+
+	if (RS_ResearchAllowed(baseCurrent))
+		MN_ExecuteConfunc("set_research_enabled");
+	else
+		MN_ExecuteConfunc("set_research_disabled");
+
+	if (PR_ProductionAllowed(baseCurrent)) {
+		MN_ExecuteConfunc("set_prod_enabled");
+	} else {
+		MN_ExecuteConfunc("set_prod_disabled");
+	}
+
+	if (E_HireAllowed(baseCurrent))
+		MN_ExecuteConfunc("set_hire_enabled");
+	else
+		MN_ExecuteConfunc("set_hire_disabled");
+
+	if (AC_ContainmentAllowed(baseCurrent))
+		MN_ExecuteConfunc("set_containment_enabled");
+	else
+		MN_ExecuteConfunc("set_containment_disabled");
+
+	if (HOS_HospitalAllowed(baseCurrent))
+		MN_ExecuteConfunc("set_hospital_enabled");
+	else
+		MN_ExecuteConfunc("set_hospital_disabled");
 }
 
 /**

@@ -604,58 +604,6 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	}
 }
 
-/** @todo should go into cp_base_callbacks.c */
-void B_BaseMenuInit (const base_t *base)
-{
-	/* make sure the credits cvar is up-to-date */
-	CL_UpdateCredits(ccs.credits);
-
-	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
-
-	MN_ExecuteConfunc("mn_buildings_reset");
-	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed(base) && base->numAircraftInBase)
-		MN_ExecuteConfunc("set_aircraft_enabled");
-	else
-		MN_ExecuteConfunc("set_aircraft_disabled");
-
-	if (BS_BuySellAllowed(base))
-		MN_ExecuteConfunc("set_buysell_enabled");
-	else
-		MN_ExecuteConfunc("set_buysell_disabled");
-
-	if (ccs.numBases > 1 && base->baseStatus != BASE_UNDER_ATTACK)
-		MN_ExecuteConfunc("set_transfer_enabled");
-	else
-		MN_ExecuteConfunc("set_transfer_disabled");
-
-	if (RS_ResearchAllowed(base))
-		MN_ExecuteConfunc("set_research_enabled");
-	else
-		MN_ExecuteConfunc("set_research_disabled");
-
-	if (PR_ProductionAllowed(base)) {
-		MN_ExecuteConfunc("set_prod_enabled");
-	} else {
-		MN_ExecuteConfunc("set_prod_disabled");
-	}
-
-	if (E_HireAllowed(base))
-		MN_ExecuteConfunc("set_hire_enabled");
-	else
-		MN_ExecuteConfunc("set_hire_disabled");
-
-	if (AC_ContainmentAllowed(base))
-		MN_ExecuteConfunc("set_containment_enabled");
-	else
-		MN_ExecuteConfunc("set_containment_disabled");
-
-	if (HOS_HospitalAllowed(base))
-		MN_ExecuteConfunc("set_hospital_enabled");
-	else
-		MN_ExecuteConfunc("set_hospital_disabled");
-}
-
 /**
  * @brief Removes a building from the given base
  * @param[in] base Base to remove the building in
@@ -736,7 +684,7 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		}
 	}
 
-	B_BaseMenuInit(base);
+	Cmd_ExecuteString("base_init");
 
 	/* call ondestroy trigger only if building is not under construction
 	 * (we do that after base capacity has been updated) */
@@ -1345,7 +1293,7 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building, buildin
 	}
 
 	CL_UpdateCredits(ccs.credits - building->fixCosts);
-	B_BaseMenuInit(base);
+	Cmd_ExecuteString("base_init");
 	return qtrue;
 }
 
