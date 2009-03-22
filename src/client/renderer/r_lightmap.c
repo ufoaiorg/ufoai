@@ -43,8 +43,8 @@ static void R_UploadLightmapBlock (void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_lightmaps.size, r_lightmaps.size,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.sample_buffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, r_lightmaps.size, r_lightmaps.size,
+		0, GL_RGB, GL_UNSIGNED_BYTE, r_lightmaps.sample_buffer);
 
 	R_CheckError();
 
@@ -60,8 +60,8 @@ static void R_UploadLightmapBlock (void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, r_lightmaps.size, r_lightmaps.size,
-		0, GL_RGBA, GL_UNSIGNED_BYTE, r_lightmaps.direction_buffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, r_lightmaps.size, r_lightmaps.size,
+		0, GL_RGB, GL_UNSIGNED_BYTE, r_lightmaps.direction_buffer);
 
 	r_lightmaps.deluxemap_texnum++;
 
@@ -166,18 +166,15 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 		lm[0] = surf->samples[j++];
 		lm[1] = surf->samples[j++];
 		lm[2] = surf->samples[j++];
-		lm[3] = 255;  /* pad alpha */
 
 		/* read in directional samples for deluxe mapping as well */
 		dm[0] = surf->samples[j++];
 		dm[1] = surf->samples[j++];
 		dm[2] = surf->samples[j++];
-		dm[3] = 255;  /* pad alpha */
 	}
 
 	/* apply modulate, contrast, resolve average surface color, etc.. */
-	R_FilterTexture((unsigned *)lightmap, smax, tmax, it_lightmap);
-
+	R_FilterTexture(lightmap, smax, tmax, it_lightmap, LIGHTMAP_BLOCK_BYTES);
 
 	if (surf->texinfo->flags & (SURF_BLEND33 | SURF_ALPHATEST))
 		surf->color[3] = 0.25;
@@ -207,7 +204,6 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 			sout[0] = lm[0];
 			sout[1] = lm[1];
 			sout[2] = lm[2];
-			sout[3] = lm[3];
 			sout += LIGHTMAP_BLOCK_BYTES;
 
 			/* and to the surface, discarding alpha */
@@ -222,7 +218,6 @@ static void R_BuildLightmap (mBspSurface_t *surf, byte *sout, byte *dout, int st
 			dout[0] = dm[0];
 			dout[1] = dm[1];
 			dout[2] = dm[2];
-			dout[3] = dm[3];
 			dout += DELUXEMAP_BLOCK_BYTES;
 
 			dm += DELUXEMAP_BLOCK_BYTES;

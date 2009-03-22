@@ -1008,12 +1008,12 @@ static void R_ScaleTexture (unsigned *in, int inwidth, int inheight, unsigned *o
  * the image's average color. Also handles image inversion and monochrome. This is
  * all munged into one function to reduce loops on level load.
  */
-void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
+void R_FilterTexture (byte *in, int width, int height, imagetype_t type, int bpp)
 {
 	const float scale = 1.0 / 255.0;
 
-	byte *p = (byte*)in;
-	const byte *end = p + width * height * 4;
+	byte *p = in;
+	const byte *end = p + width * height * bpp;
 	const float brightness = type == it_lightmap ? r_modulate->value : r_brightness->value;
 	const float contrast = r_contrast->value;
 	const float saturation = r_saturation->value;
@@ -1050,7 +1050,7 @@ void R_FilterTexture (unsigned *in, int width, int height, imagetype_t type)
 
 	VectorSet(luminosity, 0.2125, 0.7154, 0.0721);
 
-	for (; p != end; p += 4) {
+	for (; p != end; p += bpp) {
 		VectorCopy(p, temp);
 		VectorScale(temp, scale, temp);  /* convert to float */
 
@@ -1153,7 +1153,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
-		R_FilterTexture(scaled, scaled_width, scaled_height, image->type);
+		R_FilterTexture((byte*)scaled, scaled_width, scaled_height, image->type, 4);
 
 	/* scan the texture for any non-255 alpha */
 	c = scaled_width * scaled_height;
