@@ -1877,6 +1877,23 @@ static inline float AIR_GetDestinationFunction (const float c, const float B, co
 	return pow(cos(a) - cos(speedRatio * a) * cos(c), 2.)
 		- sin(c) * sin(c) * (sin(speedRatio * a) * sin(speedRatio * a) - sin(a) * sin(a) * sin(B) * sin(B));
 }
+
+/**
+ * @brief derivative of the funtion we need to find roots.
+ * @param[in] c angle SOT
+ * @param[in] B angle STI
+ * @param[in] speedRatio ratio of speed of shooter divided by speed of target.
+ * @param[in] a angle TOI
+ * @note S is the position of the shooter, T the position of the target,
+ * D the destination of the target and I the interception point where shooter should reach target.
+ * @return value of the derivative function.
+ */
+static inline float AIR_GetDestinationDerivativeFunction (const float c, const float B, const float speedRatio, float a)
+{
+	return 2. * (cos(a) - cos(speedRatio * a) * cos(c)) * (- sin(a) + speedRatio * sin(speedRatio * a) * cos(c))
+		- sin(c) * sin(c) * (speedRatio * sin(2. * speedRatio * a) - sin(2. * a) * sin(B) * sin(B));
+}
+
 /**
  * @brief Find the roots of a function.
  * @param[in] c angle SOT
@@ -1889,34 +1906,72 @@ static inline float AIR_GetDestinationFunction (const float c, const float B, co
  */
 static float AIR_GetDestinationFindRoot (const float c, const float B, const float speedRatio, float start)
 {
-	const float PRECISION = 0.000001;		/**< precision of the calculation */
-	const float BIG_STEP = .01;				/**< step for rough calculation */
-	const float MAXIMUM_VALUE = 2. * M_PI;	/**< maximum value of the root to search */
-	float epsilon;
-	float begin, end, middle;
-	float fBegin, fEnd, fMiddle;
-
+	const float BIG_STEP = .05;				/**< step for rough calculation. this value must be short enough so
+											 * that we're sure there's only 1 root in this range. */
+	const float PRECISION_ROOT = 0.000001;		/**< precision of the calculation */
+	const float MAXIMUM_VALUE_ROOT = 2. * M_PI;	/**< maximum value of the root to search */
+	float epsilon;							/**< precision of current point */
+	float begin, end, middle;				/**< abscissa of the point */
+	float fBegin, fEnd, fMiddle;			/**< ordinate of the point */
+	float fdBegin, fdEnd, fdMiddle;			/**< derivative of the point */
 
 	/* there may be several solution, first try to find roughly the smallest one */
-	end = start + PRECISION;		/* don't start at begin = 0, because the function returns nan */
+	end = start + PRECISION_ROOT / 10.;		/* don't start at 0: derivative is 0 */
 	fEnd = AIR_GetDestinationFunction(c, B, speedRatio, end);
+	fdEnd = AIR_GetDestinationDerivativeFunction(c, B, speedRatio, end);
 
 	do {
 		begin = end;
 		fBegin = fEnd;
+		fdBegin = fdEnd;
 		end = begin + BIG_STEP;
-		if (end > MAXIMUM_VALUE) {
-			end = MAXIMUM_VALUE - PRECISION;
+		if (end > MAXIMUM_VALUE_ROOT) {
+			end = MAXIMUM_VALUE_ROOT;
 			fEnd = AIR_GetDestinationFunction(c, B, speedRatio, end);
 			break;
 		}
 		fEnd = AIR_GetDestinationFunction(c, B, speedRatio, end);
-	} while  (fBegin * fEnd > 0);
+		fdEnd = AIR_GetDestinationDerivativeFunction(c, B, speedRatio, end);
+	} while  (fBegin * fEnd > 0 && fdBegin * fdEnd > 0);
 
 	if (fBegin * fEnd > 0) {
-		Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Did not find solution is range %.2f, %.2f\n", start, MAXIMUM_VALUE);
-		/* there's no solution, return default value */
-		return -10.;
+		if (fdBegin * fdEnd < 0) {
+			/* the sign of derivative changed: we could have a root somewhere 
+			 * between begin and end: try to narrow down the root until fBegin * fEnd < 0 */
+			middle = (begin + end) / 2.;
+			fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
+			fdMiddle = AIR_GetDestinationDerivativeFunction(c, B, speedRatio, middle);
+			do {
+				if (fdEnd * fdMiddle < 0) {
+					/* root is bigger than middle */
+					begin = middle;
+					fBegin = fMiddle;
+					fdBegin = fdMiddle;
+				} else if (fdBegin * fdMiddle < 0) {
+					/* root is smaller than middle */
+					end = middle;
+					fEnd = fMiddle;
+					fdEnd = fdMiddle;
+				} else {
+					Sys_Error("AIR_GetDestinationFindRoot: Error in calculation, can't find root");
+				}
+				middle = (begin + end) / 2.;
+				fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
+				fdMiddle = AIR_GetDestinationDerivativeFunction(c, B, speedRatio, middle);
+
+				epsilon = end - middle ;
+
+				if (epsilon < PRECISION_ROOT) {
+					/* this is only a root of the derivative: no root of the function itself
+					 * proceed with next value */
+					return AIR_GetDestinationFindRoot(c, B, speedRatio, end);
+				}
+			} while  (fBegin * fEnd > 0);
+		} else {
+			/* there's no solution, return default value */
+			Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationFindRoot: Did not find solution is range %.2f, %.2f\n", start, MAXIMUM_VALUE_ROOT);
+			return -10.;
+		}
 	}
 
 	/* now use dichotomy to get more precision on the solution */
@@ -1924,8 +1979,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
 	middle = (begin + end) / 2.;
 	fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
 
-	epsilon = 1000.;
-	while (epsilon > PRECISION) {
+	do {
 		if (fEnd * fMiddle < 0) {
 			/* root is bigger than middle */
 			begin = middle;
@@ -1942,7 +1996,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
 		fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
 
 		epsilon = end - middle ;
-	}
+	} while (epsilon > PRECISION_ROOT);
 	return middle;
 }
 
@@ -1964,11 +2018,6 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 	const float speedRatio = (float)(shooter->stats[AIR_STATS_SPEED]) / target->stats[AIR_STATS_SPEED];
 
 	c = MAP_GetDistance(shooter->pos, target->pos) * torad;
-	/* if aircraft are really close one from each other, just go directly to the target */
-	if (c < .02f) {
-		Vector2Copy(target->pos, (*dest));
-		return;
-	}
 
 	/* Convert aircraft position into cartesian frame */
 	PolarToVec(shooter->pos, shooterPos);
@@ -2005,9 +2054,13 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 	B = acos(DotProduct(tangentVectTS, tangentVectTD));
 
 	/* Look for a value, as long as we don't have a proper value */
-	a = 0;
-	do {
+	for (a = 0;;) {
 		a = AIR_GetDestinationFindRoot(c, B, speedRatio, a);
+
+		if (a < 0.) {
+			/* we couldn't find a root on the whole range */
+			break;
+		}
 
 		/* Get rotation vector */
 		CrossProduct(targetPos, targetDestPos, rotationAxis);
@@ -2018,7 +2071,12 @@ void AIR_GetDestinationWhilePursuing (const aircraft_t const *shooter, const air
 		VecToPolar(shooterDestPos, *dest);
 
 		b = MAP_GetDistance(shooter->pos, *dest) * torad;
-	} while (fabs(b - speedRatio * a) > .1 && a > 0.);	/* check that value is proper */
+
+		if (fabs(b - speedRatio * a) < .1)
+			break;
+
+		Com_DPrintf(DEBUG_CLIENT, "AIR_GetDestinationWhilePursuing: reject solution: doesn't fit %.2f == %.2f\n", b, speedRatio * a);
+	}
 
 	if (a < 0.) {
 		/* did not find solution, go directly to target direction */
