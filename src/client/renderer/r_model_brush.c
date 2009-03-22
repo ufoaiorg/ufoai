@@ -57,13 +57,11 @@ static model_t *r_worldmodel;
 static void R_LoadBspLights (model_t *mod)
 {
 	const char *ents;
-	char class[128];
 	vec3_t org;
 	qboolean entity, light;
 
 	ents = CM_EntityString();
 
-	memset(class, 0, sizeof(class));
 	entity = light = qfalse;
 
 	while (qtrue) {
@@ -95,7 +93,6 @@ static void R_LoadBspLights (model_t *mod)
 
 		if (!strcmp(c, "classname")) {
 			c = COM_Parse(&ents);
-			Q_strncpyz(class, c, sizeof(class));
 			if (!strcmp(c, "light"))
 				light = qtrue;
 		}
