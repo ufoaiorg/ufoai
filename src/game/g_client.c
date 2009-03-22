@@ -547,7 +547,7 @@ int G_TestVis (int team, edict_t * check, int flags)
 			/* visible */
 			return VIS_YES | !old;
 
-	/* jusr return the old state */
+	/* just return the old state */
 	return old;
 }
 
@@ -2633,7 +2633,6 @@ static void G_ClientSkipActorInfo (void)
  */
 void G_ClientTeamInfo (player_t * player)
 {
-	edict_t *ent;
 	int i, k, length;
 	int x, y;
 	item_t item;
@@ -2655,6 +2654,7 @@ void G_ClientTeamInfo (player_t * player)
 				< sv_maxsoldiersperplayer->integer && level.num_spawned[player->pers.team]
 				< sv_maxsoldiersperteam->integer))) {
 			/* Here the client tells the server the information for the spawned actor(s). */
+			edict_t *ent;
 
 			/* Receive fieldsize and get matching spawnpoint. */
 			const int dummyFieldSize = gi.ReadByte();
@@ -2662,33 +2662,24 @@ void G_ClientTeamInfo (player_t * player)
 			case ACTOR_SIZE_NORMAL:
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
-				if (!ent) {
-					Com_DPrintf(
-							DEBUG_GAME,
-							"G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
-							dummyFieldSize);
-					G_ClientSkipActorInfo();
-					continue;
-				}
 				ent->type = ET_ACTOR;
 				break;
 			case ACTOR_SIZE_2x2:
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
-				if (!ent) {
-					Com_DPrintf(
-							DEBUG_GAME,
-							"G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
-							dummyFieldSize);
-					G_ClientSkipActorInfo();
-					continue;
-				}
 				ent->type = ET_ACTOR2x2;
 				ent->morale = 100;
 				break;
 			default:
 				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actor_size: %i, actor num: %i)\n",
 						dummyFieldSize, i);
+			}
+
+			if (!ent) {
+				Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
+						dummyFieldSize);
+				G_ClientSkipActorInfo();
+				continue;
 			}
 
 			level.num_alive[ent->team]++;
