@@ -959,16 +959,13 @@ static inline void B_AddBuildingToBase (base_t *base, const building_t const *te
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  */
-static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const campaign_t* campaign, const char *eqname, equipDef_t *edTarget, const equipDef_t *ed)
+static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft, const char *eqname, equipDef_t *edTarget)
 {
 	int i, price = 0;
+	equipDef_t *ed;
 
 	assert(base);
 	assert(edTarget);
-
-	/* Copy it to base storage. */
-	if (ed)
-		*edTarget = *ed;
 
 	/* Initial soldiers and their equipment. */
 	ed = INV_GetEquipmentDefinitionByID(eqname);
@@ -976,7 +973,6 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 		Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
 	} else {
 		if (assignInitialAircraft) {
-			AIR_AssignInitial(assignInitialAircraft);
 			B_PackInitialEquipment(assignInitialAircraft, ed);
 		} else {
 			for (i = 0; i < csi.numODs; i++)
@@ -1051,21 +1047,31 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 
 		/* Find the initial equipment definition for current campaign. */
 		ed = INV_GetEquipmentDefinitionByID(curCampaign->equipment);
-
-		/* initial base equipment */
-		B_InitialEquipment(base, hire ? base->aircraftCurrent : NULL, curCampaign, cl_initial_equipment->string, &base->storage, ed);
+		/* Copy it to base storage. */
+		base->storage = *ed;
 
 		/* Auto equip interceptors with weapons and ammos */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
 			assert(aircraft);
-			if (aircraft->type == AIRCRAFT_INTERCEPTOR)
-				AIM_AutoEquipAircraft(aircraft);
-		}
 
-		/** @todo remove this - has nothing to do with base setup */
-		CL_GameTimeFast();
-		CL_GameTimeFast();
+			switch (aircraft->type) {
+			case AIRCRAFT_INTERCEPTOR:
+				AIM_AutoEquipAircraft(aircraft);
+				break;
+			case AIRCRAFT_TRANSPORTER:
+				if (hire) {
+					AIR_AssignInitial(aircraft);
+					/** @todo cleanup this mess: */
+					B_InitialEquipment(base, aircraft, cl_initial_equipment->string, &base->storage);
+				} else {
+					B_InitialEquipment(base, NULL, cl_initial_equipment->string, &base->storage);
+				}
+				break;
+			default:
+				Sys_Error("B_SetUpFirstBase: Invalid aircraft type.");	
+			}
+		}
 	} else {
 		/* if no autobuild, set up zero build time for the first base */
 		ccs.instant_build = 1;
