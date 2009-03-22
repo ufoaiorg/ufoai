@@ -1026,11 +1026,6 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				Sys_Error("Could not find craft_drop_firebird definition");
 			AIR_NewAircraft(base, "craft_drop_firebird");
 			CL_UpdateCredits(ccs.credits - aircraft->price);
-			if (hire) {
-				if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
-					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
-				}
-			}
 		}
 		if (B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			aircraft_t *aircraft = AIR_GetAircraft("craft_inter_stiletto");
@@ -1038,11 +1033,6 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				Sys_Error("Could not find craft_inter_stiletto definition");
 			AIR_NewAircraft(base, "craft_inter_stiletto");
 			CL_UpdateCredits(ccs.credits - aircraft->price);
-			if (hire) {
-				if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
-					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
-				}
-			}
 		}
 
 		/* Find the initial equipment definition for current campaign. */
@@ -1050,16 +1040,24 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		/* Copy it to base storage. */
 		base->storage = *ed;
 
-		/* Auto equip interceptors with weapons and ammos */
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft_t *aircraft = &base->aircraft[i];
 			assert(aircraft);
 
+			/* Hire and assign a pilot for each */
+			if (hire) {
+				if (!E_HireEmployeeByType(base, EMPL_PILOT)) {
+					Com_DPrintf(DEBUG_CLIENT, "B_SetUpFirstBase: Hiring pilot failed.\n");
+				}
+			}
+
 			switch (aircraft->type) {
 			case AIRCRAFT_INTERCEPTOR:
+				/* Auto equip interceptors with weapons and ammos */
 				AIM_AutoEquipAircraft(aircraft);
 				break;
 			case AIRCRAFT_TRANSPORTER:
+				/* Assign and equip soldiers on Dropships */
 				if (hire) {
 					AIR_AssignInitial(aircraft);
 					/** @todo cleanup this mess: */
@@ -2250,7 +2248,6 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 {
 	int i;
 	base_t *base = aircraft->homebase;
-	int container, price = 0;
 	chrList_t chrListTemp;
 
 	if (!aircraft)
@@ -2273,23 +2270,6 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 		B_UpdateStorageCap(base);
 	}
 	CL_SwapSkills(&chrListTemp);
-
-	/* pay for the initial equipment */
-	for (container = 0; container < csi.numIDs; container++) {
-		int p;
-		for (p = 0; p < aircraft->maxTeamSize; p++) {
-			if (aircraft->acTeam[p]) {
-				const invList_t *ic;
-				const character_t *chr = &aircraft->acTeam[p]->chr;
-				for (ic = chr->inv.c[container]; ic; ic = ic->next) {
-					const item_t item = ic->item;
-					price += item.t->price;
-					Com_DPrintf(DEBUG_CLIENT, "B_PackInitialEquipment: adding price for %s, price: %i\n", item.t->id, price);
-				}
-			}
-		}
-	}
-	CL_UpdateCredits(ccs.credits - price);
 }
 
 /**
