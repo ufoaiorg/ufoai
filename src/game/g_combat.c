@@ -631,7 +631,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 		/* trace */
 		tr = gi.trace(oldPos, NULL, NULL, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
-			float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
+			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
 			/* advance time */
 			dt += tr.fraction * GRENADE_DT;
 			time += dt;
@@ -671,7 +671,7 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 
 				tr.endpos[2] += 10;
 
-				/* check if this is a stone, ammor clip or grenade */
+				/* check if this is a stone, ammo clip or grenade */
 				if (fd->splrad) {
 					G_SplashDamage(ent, fd, tr.endpos, mock, &tr);
 				} else if (!mock) {

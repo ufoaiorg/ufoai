@@ -278,8 +278,6 @@ extern int time_after_ref;
 
 extern csi_t csi;
 
-extern char map_entitystring[MAX_MAP_ENTSTRING];
-
 /* Time information. */
 /**
  * @brief Engine-side time information in the game.

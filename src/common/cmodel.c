@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../shared/parse.h"
 
 /** @note holds all entity data as a single parsable string */
-char map_entitystring[MAX_MAP_ENTSTRING];
+static char map_entitystring[MAX_MAP_ENTSTRING];
 
 /**
  * @note The vectors are from 0 up to 2*MAX_WORLD_WIDTH - but not negative
