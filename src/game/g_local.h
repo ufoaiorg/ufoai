@@ -57,7 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	SERVER_FRAME_SECONDS		0.1
 
 /** memory tags to allow dynamic memory to be cleaned up */
-#define	TAG_GAME	765			/* clear when unloading the dll */
+#define	TAG_GAME	765			/* clear when unloading the game library */
 #define	TAG_LEVEL	766			/* clear when loading a new level */
 
 /** Macros for faster access to the inventory-container. */
@@ -67,7 +67,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HEADGEAR(e)  (e->i.c[gi.csi->idHeadgear])
 #define FLOOR(e) (e->i.c[gi.csi->idFloor])
 
-/** Actor visiblitly constants */
+/** Actor visibility constants */
 #define ACTOR_VIS_100	1.0
 #define ACTOR_VIS_50	0.5
 #define ACTOR_VIS_10	0.1
@@ -76,8 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define G_PLAYER_FROM_ENT(ent) (game.players + (ent)->pnum)
 
 /** @brief this structure is left intact through an entire game
- * it should be initialized at dll load time, and read/written to
- * the server.ssv file for savegames */
+ * it should be initialized at game library load time */
 typedef struct {
 	player_t *players;			/* [maxplayers] */
 
@@ -86,8 +85,7 @@ typedef struct {
 	int sv_maxentities;
 } game_locals_t;
 
-/** @brief this structure is cleared as each map is entered
- * it is read/written to the level.sav file for savegames */
+/** @brief this structure is cleared as each map is entered */
 typedef struct {
 	int framenum;		/**< the current frame (10fps) */
 	float time;			/**< seconds the game is running already
@@ -123,7 +121,7 @@ typedef struct {
 
 /**
  * @brief this is only used to hold entity field values that can be set from
- * the editor, but aren't actualy present in edict_t during gameplay
+ * the editor, but aren't actually present in edict_t during gameplay
  */
 typedef struct {
 	/* world vars */

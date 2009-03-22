@@ -506,7 +506,6 @@ static float G_Vis (int team, const edict_t * from, const edict_t * check, int f
 	case ET_ACTOR2x2:
 		return G_ActorVis(eye, check, qfalse);
 	case ET_ITEM:
-		return !G_LineVis(eye, check->origin);
 	case ET_PARTICLE:
 		return !G_LineVis(eye, check->origin);
 	default:

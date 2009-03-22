@@ -231,7 +231,6 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 {
 	qboolean init;
 	char keyname[256];
-	const char *com_token;
 
 	init = qfalse;
 	memset(&st, 0, sizeof(st));
@@ -239,20 +238,20 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 	/* go through all the dictionary pairs */
 	while (1) {
 		/* parse key */
-		com_token = COM_Parse(&data);
-		if (com_token[0] == '}')
+		const char *c = COM_Parse(&data);
+		if (c[0] == '}')
 			break;
 		if (!data)
 			gi.error("ED_ParseEntity: EOF without closing brace");
 
-		Q_strncpyz(keyname, com_token, sizeof(keyname));
+		Q_strncpyz(keyname, c, sizeof(keyname));
 
 		/* parse value */
-		com_token = COM_Parse(&data);
+		c = COM_Parse(&data);
 		if (!data)
 			gi.error("ED_ParseEntity: EOF without closing brace");
 
-		if (com_token[0] == '}')
+		if (c[0] == '}')
 			gi.error("ED_ParseEntity: closing brace without data");
 
 		init = qtrue;
@@ -265,14 +264,7 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		Com_DPrintf(DEBUG_GAME, "Entity:%i class:%s key:%s\n",
 			ent->number, ent->classname, keyname);
 
-		ED_ParseField(keyname, com_token, ent);
-
-#if 0
-		if (!Q_strcasecmp(keyname, "origin")) {
-				Com_Printf("Origin issued: (%i, %i, %i)\n",
-					(int) ent->origin[0], (int) ent->origin[1], (int) ent->origin[2]);
-		}
-#endif
+		ED_ParseField(keyname, c, ent);
 	}
 
 	if (!init)
