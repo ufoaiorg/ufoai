@@ -2948,7 +2948,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* store the round start time to be able to abort the round after a give time */
 	level.roundstartTime = level.time;
 
-	/** Update the state of stuned team-members. @note The actul stats are sent in G_GiveTimeUnits below! */
+	/** Update the state of stuned team-members. @note The actual statistics are sent in G_GiveTimeUnits below! */
 	G_UpdateStunState(level.activeTeam);
 
 	/* Give the actors of the now active team their TUs. */
@@ -3013,7 +3013,7 @@ static void G_SendEdictsAndBrushModels (int team)
 			}
 			break;
 
-			/* send trigger entities to the client to display them (needs mins, maxs set) */
+		/* send trigger entities to the client to display them (needs mins, maxs set) */
 		case SOLID_TRIGGER:
 			if (sv_send_edicts->integer) {
 				gi.AddEvent(G_TeamToPM(team), EV_ADD_EDICT);
@@ -3058,7 +3058,6 @@ void G_ClientBegin (player_t* player)
 	level.numplayers++;
 	gi.ConfigString(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
-	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.sv_maxplayersperteam: %i	\n", P_MASK(player), player->num, game.sv_maxplayersperteam);*/
 	/* spawn camera (starts client rendering) */
 	gi.AddEvent(P_MASK(player), EV_START | EVENT_INSTANTLY);
 	gi.WriteByte(sv_teamplay->integer);
@@ -3211,7 +3210,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 		G_ClientDisconnect(player);
 	}
 
-	/* reset persistant data */
+	/* reset persistent data */
 	memset(&player->pers, 0, sizeof(player->pers));
 	G_ClientUserinfoChanged(player, userinfo);
 
