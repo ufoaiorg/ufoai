@@ -202,8 +202,8 @@ static void CL_TeamNum_f (void)
 	cl_teamnum->modified = qfalse;
 
 	if (i <= TEAM_CIVILIAN || i > teamData.maxteams) {
-		Cvar_SetValue("cl_teamnum", DEFAULT_TEAMNUM);
-		i = DEFAULT_TEAMNUM;
+		Cvar_SetValue("cl_teamnum", TEAM_DEFAULT);
+		i = TEAM_DEFAULT;
 	}
 
 	if (strncmp(Cmd_Argv(0), "teamnum_dec", 11)) {

@@ -347,7 +347,7 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 	G_ResetClientData();
 
 	ent = NULL;
-	level.activeTeam = NO_ACTIVE_TEAM;
+	level.activeTeam = TEAM_NO_ACTIVE;
 	level.actualRound = 1;
 	ai_waypointList = NULL;
 
@@ -731,7 +731,7 @@ static qboolean Touch_Mission (edict_t *self, edict_t *activator)
 							 * actor's inventory */
 							if (!strcmp(od->id, self->owner->item)) {
 								/* drop the weapon - even if out of TUs */
-								G_ClientInvMove(game.players + activator->pnum, activator->number,
+								G_ClientInvMove(G_PLAYER_FROM_ENT(activator), activator->number,
 									&gi.csi->ids[j], ic, &gi.csi->ids[gi.csi->idFloor],
 									NONE, NONE, qfalse, QUIET);
 								gi.BroadcastPrintf(PRINT_HUD, _("Item was placed\n"));

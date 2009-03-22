@@ -253,7 +253,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		return qfalse;
 
 	/* Get player. */
-	player = game.players + ent->pnum;
+	player = G_PLAYER_FROM_ENT(ent);
 	if (!player)
 		return qfalse;
 

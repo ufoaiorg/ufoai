@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	UFO_EPSILON 0.00001f
 
 /* game/g_client.c, client/cl_main.c, client/cl_view.c */
-#define	DEFAULT_TEAMNUM 1
+#define	TEAM_DEFAULT 1
 
 /** @sa Com_DeveloperSet_f */
 /* {game}, {ufo}, {ufo_ded} */

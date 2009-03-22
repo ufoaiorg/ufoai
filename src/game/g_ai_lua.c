@@ -544,17 +544,16 @@ static int AIL_see (lua_State *L)
 	aiActor_t target;
 	edict_t *sorted[MAX_EDICTS], *unsorted[MAX_EDICTS];
 	float dist_lookup[MAX_EDICTS];
-	const char *s;
 
 	/* Defaults. */
-	team = TEAM_NONE;
+	team = TEAM_NO_ACTIVE;
 	vision = 0;
 
 	/* Handle parameters. */
 	if ((lua_gettop(L) > 0)) {
 		/* Get what to "see" with. */
 		if (lua_isstring(L, 1)) {
-			s = lua_tostring(L, 1);
+			const char *s = lua_tostring(L, 1);
 			/** @todo Properly implement at edict level, get rid of magic numbers.
 			 * These are only "placeholders". */
 			if (strcmp(s, "all") == 0)
@@ -573,9 +572,9 @@ static int AIL_see (lua_State *L)
 		/* We now check for different teams. */
 		if ((lua_gettop(L) > 1)) {
 			if (lua_isstring(L, 2)) {
-				s = lua_tostring(L, 2);
+				const char *s = lua_tostring(L, 2);
 				if (strcmp(s, "all") == 0)
-					team = TEAM_NONE;
+					team = TEAM_NO_ACTIVE;
 				else if (strcmp(s, "alien") == 0)
 					team = TEAM_ALIEN;
 				else if (strcmp(s, "civilian") == 0)
@@ -595,7 +594,7 @@ static int AIL_see (lua_State *L)
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if (check->inuse && G_IsLivingActor(check) && AIL_ent != check
 		 && vision == 0 /* Vision checks. */
-		 && (team == TEAM_NONE || check->team == team)) {/* Check for team match if needed. */
+		 && (team == TEAM_NO_ACTIVE || check->team == team)) {/* Check for team match if needed. */
 			dist_lookup[n] = VectorDistSqr(AIL_ent->pos, check->pos);
 			unsorted[n++] = check;
 		}

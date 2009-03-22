@@ -159,7 +159,7 @@ void Com_DPrintf(int level, const char *msg, ...) __attribute__((format(printf, 
 #define AREA_SOLID			1
 #define AREA_TRIGGERS		2
 
-#define TEAM_NONE      -1
+#define TEAM_NO_ACTIVE -1
 #define TEAM_CIVILIAN   0
 #define TEAM_PHALANX    1
 #define TEAM_ALIEN      7

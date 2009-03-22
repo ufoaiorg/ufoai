@@ -800,17 +800,17 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!(ent->state & STATE_PANIC)) {
 		if (RIGHT(ent) && RIGHT(ent)->item.t->reload && RIGHT(ent)->item.a == 0) {
-			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
+			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idRight)) {
 				G_ClientReload(player, ent->number, ST_RIGHT_RELOAD, QUIET);
 			} else {
-				G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
+				G_ClientInvMove(G_PLAYER_FROM_ENT(ent), ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
 			}
 		}
 		if (LEFT(ent) && LEFT(ent)->item.t->reload && LEFT(ent)->item.a == 0) {
-			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
+			if (G_ClientCanReload(G_PLAYER_FROM_ENT(ent), ent->number, gi.csi->idLeft)) {
 				G_ClientReload(player, ent->number, ST_LEFT_RELOAD, QUIET);
 			} else {
-				G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
+				G_ClientInvMove(G_PLAYER_FROM_ENT(ent), ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, QUIET);
 			}
 		}
 	}

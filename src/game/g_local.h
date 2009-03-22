@@ -53,8 +53,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define P_MASK(p)		((p)->num < game.sv_maxplayersperteam ? 1<<((p)->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
-#define NO_ACTIVE_TEAM -1
-
 /** server is running at 10 fps */
 #define	SERVER_FRAME_SECONDS		0.1
 
@@ -74,6 +72,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define ACTOR_VIS_50	0.5
 #define ACTOR_VIS_10	0.1
 #define ACTOR_VIS_0		0.0
+
+#define G_PLAYER_FROM_ENT(ent) (game.players + (ent)->pnum)
 
 /** @brief this structure is left intact through an entire game
  * it should be initialized at dll load time, and read/written to

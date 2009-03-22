@@ -357,9 +357,9 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 
 	/* Apply difficulty settings. */
 	if (sv_maxclients->integer == 1) {
-		if (attacker->team == TEAM_ALIEN && target->team < TEAM_ALIEN)
+		if (attacker->team == TEAM_ALIEN && target->team != TEAM_ALIEN)
 			damage *= pow(1.18, difficulty->integer);
-		else if (attacker->team < TEAM_ALIEN && target->team == TEAM_ALIEN)
+		else if (attacker->team != TEAM_ALIEN && target->team == TEAM_ALIEN)
 			damage *= pow(1.18, -difficulty->integer);
 	}
 
@@ -378,11 +378,10 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (!isRobot && target->team != attacker->team) {
-				const player_t *player = game.players + target->pnum;
 				/** @todo there should be a possible protection, too */
 				target->TU = 0; /* flashbangs kill TUs */
 				target->state |= STATE_DAZED; /* entity is dazed */
-				gi.PlayerPrintf(player, PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
+				gi.PlayerPrintf(G_PLAYER_FROM_ENT(target), PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
 				return;
 			}
 		} else {

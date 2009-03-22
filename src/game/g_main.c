@@ -575,7 +575,7 @@ void G_EndGame (int team)
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-				 && ent->team == TEAM_PHALANX) {
+			 && ent->team == TEAM_PHALANX) {
 				Com_DPrintf(DEBUG_GAME, "Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);
 			}
@@ -632,7 +632,7 @@ void G_CheckEndGame (void)
  */
 qboolean G_GameRunning (void)
 {
-	return (level.activeTeam != NO_ACTIVE_TEAM);
+	return (level.activeTeam != TEAM_NO_ACTIVE);
 }
 
 /**

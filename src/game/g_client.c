@@ -563,11 +563,12 @@ int G_TestVis (int team, edict_t * check, int flags)
  */
 void G_SendInvisible (player_t* player)
 {
-	int i;
-	edict_t* ent;
-	int team = player->pers.team;
+	const int team = player->pers.team;
 
+	assert(team != TEAM_NO_ACTIVE);
 	if (level.num_alive[team]) {
+		int i;
+		edict_t* ent;
 		/* check visibility */
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 			if (ent->inuse && ent->team != team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
@@ -780,7 +781,7 @@ int G_DoTurn (edict_t * ent, byte dir)
 #if 0
 		/* stop turning if a new living player (which is not in our team) appears */
 		if (stop && (status & VIS_STOP))
-		break;
+			break;
 #endif
 	}
 
@@ -1883,15 +1884,15 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
  */
 static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 {
-	gi.PlayerPrintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
+	gi.PlayerPrintf(G_PLAYER_FROM_ENT(ent), PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
 
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
 		if (RIGHT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent),
+			G_ClientInvMove(G_PLAYER_FROM_ENT(ent), ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent),
 					&gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent),
+			G_ClientInvMove(G_PLAYER_FROM_ENT(ent), ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent),
 					&gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 	}
 
@@ -1908,7 +1909,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	gi.WriteGPos(ent->pos);
 
 	/* move around a bit, try to avoid opponents */
-	AI_ActorThink(game.players + ent->pnum, ent);
+	AI_ActorThink(G_PLAYER_FROM_ENT(ent), ent);
 
 	/* kill TUs */
 	ent->TU = 0;
@@ -1948,7 +1949,7 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 		gi.BroadcastPrintf(PRINT_CONSOLE, _("%s is on a rampage.\n"), ent->chr.name);
 	else
 		gi.BroadcastPrintf(PRINT_CONSOLE, _("%s is consumed by mad rage!\n"), ent->chr.name);
-	AI_ActorThink(game.players + ent->pnum, ent);
+	AI_ActorThink(G_PLAYER_FROM_ENT(ent), ent);
 }
 
 /**
@@ -2007,7 +2008,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
-					gi.PlayerPrintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s is currently shaken.\n"),
+					gi.PlayerPrintf(G_PLAYER_FROM_ENT(ent), PRINT_CONSOLE, _("%s is currently shaken.\n"),
 							ent->chr.name);
 				} else {
 					if (ent->state & STATE_PANIC)
@@ -2192,8 +2193,9 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		ent->state |= (1 + rand() % MAX_DEATH);
 		break;
 	case STATE_STUN:
-		ent->STUN = 0; /**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
-		 * @sa g_client.c:CL_ActorDie */
+		/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
+		 * @sa CL_ActorDie */
+		ent->STUN = 0;
 		ent->state = state;
 		break;
 	default:
@@ -2390,7 +2392,7 @@ static void G_GetTeam (player_t * player)
 			playersInGame++;
 
 	/* player has already a team */
-	if (player->pers.team) {
+	if (player->pers.team > 0) {
 		Com_DPrintf(DEBUG_GAME, "You are already on team %i\n", player->pers.team);
 		return;
 	}
@@ -2410,7 +2412,7 @@ static void G_GetTeam (player_t * player)
 		/* we need at least 2 different team spawnpoints for multiplayer */
 		if (spawnSpots <= 1) {
 			Com_DPrintf(DEBUG_GAME, "G_GetTeam: Not enough spawn spots in map!\n");
-			player->pers.team = -1;
+			player->pers.team = TEAM_NO_ACTIVE;
 			return;
 		}
 		/* assign random valid team number */
@@ -2433,7 +2435,7 @@ static void G_GetTeam (player_t * player)
 			gi.BroadcastPrintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
 			Com_Printf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
-			player->pers.team = DEFAULT_TEAMNUM;
+			player->pers.team = TEAM_DEFAULT;
 		}
 	} else {
 		qboolean teamAvailable;
@@ -2443,8 +2445,6 @@ static void G_GetTeam (player_t * player)
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
 				/* check if team is in use (only human controlled players) */
-				/** @todo If someone left the game and rejoins he should get his "old" team back
-				 * maybe we could identify such a situation */
 				for (j = 0, p = game.players; j < game.sv_maxplayersperteam; j++, p++)
 					if (p->inuse && p->pers.team == i) {
 						Com_DPrintf(DEBUG_GAME, "Team %i is already in use\n", i);
@@ -2633,14 +2633,13 @@ static void G_ClientSkipActorInfo (void)
  */
 void G_ClientTeamInfo (player_t * player)
 {
-	int i, k, length;
+	int i, k;
 	int x, y;
 	item_t item;
+	const int length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 
 	/* find a team */
 	G_GetTeam(player);
-
-	length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 
 	for (i = 0; i < length; i++) {
 		/* Search for a spawn point for each entry the client sent
@@ -2650,7 +2649,7 @@ void G_ClientTeamInfo (player_t * player)
 		 * + the game is already running (activeTeam != -1)
 		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
 		 * + the team already hit the max allowed amount of soldiers */
-		if (player->pers.team != -1 && (sv_maxclients->integer == 1 || (!G_GameRunning() && i
+		if (player->pers.team != TEAM_NO_ACTIVE && (sv_maxclients->integer == 1 || (!G_GameRunning() && i
 				< sv_maxsoldiersperplayer->integer && level.num_spawned[player->pers.team]
 				< sv_maxsoldiersperteam->integer))) {
 			/* Here the client tells the server the information for the spawned actor(s). */
@@ -2869,8 +2868,8 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		/* check if all team members are ready */
 		if (!player->ready) {
 			player->ready = qtrue;
-			/* don't send this for alien and civilian teams */
-			if (player->pers.team != TEAM_CIVILIAN && player->pers.team != TEAM_ALIEN) {
+			/* don't send this for ai controlled teams */
+			if (!player->pers.ai) {
 				gi.AddEvent(PM_ALL, EV_ENDROUNDANNOUNCE | EVENT_INSTANTLY);
 				gi.WriteByte(player->num);
 				gi.WriteByte(player->pers.team);
@@ -2891,13 +2890,13 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	G_CheckVisTeam(level.activeTeam, NULL, qtrue);
 
 	lastTeam = player->pers.team;
-	level.activeTeam = NO_ACTIVE_TEAM;
+	level.activeTeam = TEAM_NO_ACTIVE;
 
 	/* Get the next active team. */
 	p = NULL;
-	while (level.activeTeam == NO_ACTIVE_TEAM) {
+	while (level.activeTeam == TEAM_NO_ACTIVE) {
 		/* search next team */
-		nextTeam = NO_ACTIVE_TEAM;
+		nextTeam = TEAM_NO_ACTIVE;
 
 		for (i = lastTeam + 1; i != lastTeam; i++) {
 			if (i >= MAX_TEAMS) {
@@ -2916,7 +2915,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 			}
 		}
 
-		if (nextTeam == NO_ACTIVE_TEAM) {
+		if (nextTeam == TEAM_NO_ACTIVE) {
 			level.activeTeam = lastTeam;
 			gi.EndEvents();
 			return;
@@ -2930,7 +2929,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 				break;
 			}
 
-		if (level.activeTeam == NO_ACTIVE_TEAM && sv_ai->integer && ai_autojoin->integer) {
+		if (level.activeTeam == TEAM_NO_ACTIVE && sv_ai->integer && ai_autojoin->integer) {
 			/* no corresponding player found - create ai player */
 			p = AI_CreatePlayer(nextTeam);
 			if (p)
@@ -2940,7 +2939,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		lastTeam = nextTeam;
 	}
 	turnTeam = level.activeTeam;
-	assert(level.activeTeam != NO_ACTIVE_TEAM);
+	assert(level.activeTeam != TEAM_NO_ACTIVE);
 	level.actualRound++;
 
 	/* communicate next player in row to clients */
