@@ -52,6 +52,63 @@ static model_t *r_worldmodel;
 #define MIN_AMBIENT_SUM 1.25
 
 /**
+ * @brief Parse the entity string and resolve all static light sources.
+ */
+static void R_LoadBspLights (model_t *mod)
+{
+	const char *ents;
+	char class[128];
+	vec3_t org;
+	qboolean entity, light;
+
+	ents = CM_EntityString();
+
+	memset(class, 0, sizeof(class));
+	entity = light = qfalse;
+
+	while (qtrue) {
+		const char *c = COM_Parse(&ents);
+		if (!strlen(c))
+			break;
+
+		if (c[0] == '{')
+			entity = qtrue;
+
+		if (!entity)  /* skip any whitespace between ents */
+			continue;
+
+		if (c[0] == '}') {
+			entity = qfalse;
+
+			if (light) {
+				mBspLight_t *l = (mBspLight_t *)Mem_PoolAlloc(sizeof(*l), vid_modelPool, 0);
+
+				if (!mod->bsp.bsplights)  /* first one */
+					mod->bsp.bsplights = l;
+
+				VectorCopy(org, l->org);
+
+				mod->bsp.numbsplights++;
+				light = qfalse;
+			}
+		}
+
+		if (!strcmp(c, "classname")) {
+			c = COM_Parse(&ents);
+			Q_strncpyz(class, c, sizeof(class));
+			if (!strcmp(c, "light"))
+				light = qtrue;
+		}
+
+		if (!strcmp(c, "origin")) {
+			sscanf(COM_Parse(&ents), "%f %f %f", &org[0], &org[1], &org[2]);
+			continue;
+		}
+	}
+}
+
+
+/**
  * @brief Load the lightmap data
  */
 static void R_ModLoadLighting (const lump_t *l, qboolean day)
@@ -66,7 +123,7 @@ static void R_ModLoadLighting (const lump_t *l, qboolean day)
 	}
 
 	/* resolve ambient light */
-	if ((s = strstr(map_entitystring, ambientLightString))) {
+	if ((s = strstr(CM_EntityString(), ambientLightString))) {
 		int i;
 		const char *c;
 
@@ -980,6 +1037,8 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
 	R_ModLoadSubmodels(&header->lumps[LUMP_MODELS]);
 
 	R_SetupSubmodels();
+
+	R_LoadBspLights(r_worldmodel);
 
 	R_LoadBspVertexArrays(r_worldmodel);
 

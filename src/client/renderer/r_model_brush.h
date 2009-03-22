@@ -122,7 +122,6 @@ typedef struct msurfaces_s {
 #define CONTENTS_NODE -1
 #define CONTENTS_PATHFINDING_NODE -2
 
-
 /**
  * @note The mBspLeaf_t type shares the same first variables - don't change the order */
 typedef struct mBspNode_s {
@@ -151,6 +150,11 @@ typedef struct mBspLeaf_s {
 
 	struct model_s *model;
 } mBspLeaf_t;
+
+/** @brief static light sources from the entities string */
+typedef struct mbsplight_s {
+	vec3_t org;
+} mBspLight_t;
 
 /** @brief brush model */
 typedef struct mBspModel_s {
@@ -202,6 +206,9 @@ typedef struct mBspModel_s {
 
 	byte lightquant;
 	byte *lightdata;
+
+	int numbsplights;
+	mBspLight_t *bsplights;
 
 	/* sorted surfaces arrays */
 	mBspSurfaces_t *sorted_surfaces[NUM_SURFACES_ARRAYS];
