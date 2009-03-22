@@ -793,9 +793,7 @@ static void Think_Mission (edict_t *self)
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
 	if (self->particle) {
-		/** @todo this should be visible for everyone */
-		edict_t *ent = G_ParticleSpawn(self->origin, self->spawnflags, self->particle);
-		ent->visflags = VIS_YES;
+		G_ParticleSpawn(self->origin, self->spawnflags, self->particle);
 
 		/* This is automatically freed on map shutdown */
 		self->particle = NULL;
