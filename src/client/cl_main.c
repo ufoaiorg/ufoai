@@ -1196,6 +1196,7 @@ void CL_Shutdown (void)
 	}
 	isdown = qtrue;
 
+	GAME_SetMode(GAME_NONE);
 	CL_HTTP_Cleanup();
 	Irc_Shutdown();
 	Con_SaveConsoleHistory();

@@ -403,7 +403,6 @@ static int CL_QueryMasterServerThread (void *data)
 
 	Mem_Free(responseBuf);
 
-	masterServerQueryThread = NULL;
 	return 0;
 }
 
@@ -412,10 +411,8 @@ static int CL_QueryMasterServerThread (void *data)
  */
 static void CL_QueryMasterServer (void)
 {
-	if (masterServerQueryThread != NULL) {
-		Com_Printf("query already in progress\n");
-		return;
-	}
+	if (masterServerQueryThread != NULL)
+		SDL_WaitThread(masterServerQueryThread, NULL);
 
 	masterServerQueryThread = SDL_CreateThread(CL_QueryMasterServerThread, NULL);
 }
@@ -626,4 +623,7 @@ void MP_ServerListShutdown (void)
 	Cmd_RemoveCommand("server_info");
 	Cmd_RemoveCommand("serverlist");
 	Cmd_RemoveCommand("servers_click");
+
+	if (masterServerQueryThread)
+		SDL_KillThread(masterServerQueryThread);
 }
