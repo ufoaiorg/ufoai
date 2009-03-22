@@ -3798,8 +3798,6 @@ tech rs_alien_ortnok_autopsy
 	time	1500
 
 	image	techs/ortnok_autopsy
-	// menuModel - see models.ufo
-	//mdl	alien_ortnok
 }
 
 // TAMAN
@@ -3842,8 +3840,6 @@ tech rs_alien_taman_autopsy
 	time	1500
 
 	image	techs/taman_autopsy
-	// menuModel - see models.ufo
-	//mdl		alien_taman
 }
 
 // SHEVAAR
@@ -3886,8 +3882,6 @@ tech rs_alien_shevaar_autopsy
 	time	1500
 
 	image	techs/shevaar_autopsy
-	// menuModel - see models.ufo
-	//mdl	alien_shevaar
 }
 
 // HOVERNET
@@ -4058,7 +4052,8 @@ tech rs_base_AA51_launcher
 	time		0
 	producetime	200
 
-	image	"techs/base_AA51_launcher"
+	// TODO: Add a model for this
+	// image	"techs/base_AA51_launcher"
 }
 
 tech rs_base_ammo_AA51
@@ -4075,7 +4070,8 @@ tech rs_base_ammo_AA51
 	time		0
 	producetime	-1
 
-	image	"techs/base_ammo_AA51"
+	// TODO: Add a model for this
+	// image	"techs/base_ammo_AA51"
 }
 
 //========================
@@ -4334,7 +4330,7 @@ tech rs_craft_ammo_shiva_1
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	image	"techs/craft_ammo_shiva_1"
+	// image	"techs/craft_ammo_shiva_1"
 }
 
 tech rs_craft_ammo_shiva_2
@@ -4355,7 +4351,7 @@ tech rs_craft_ammo_shiva_2
 	time		0
 	producetime	10 //Assuming a full magazine.
 
-	image	"techs/craft_ammo_shiva_2"
+	// image	"techs/craft_ammo_shiva_2"
 }
 
 tech rs_craft_weapon_sparrowhawk
@@ -4477,7 +4473,7 @@ tech rs_craft_weapon_particle
 	producetime	150
 
 	mdl		"aircraft/craft_weapon_particle/pbw"
-	image	"techs/craft_weapon_particle"
+	//image	"techs/craft_weapon_particle"
 }
 
 tech rs_craft_el_targeting
