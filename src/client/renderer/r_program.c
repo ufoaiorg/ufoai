@@ -398,6 +398,8 @@ static void R_InitDefaultProgram (void)
 	R_ProgramParameter1i("BUMPMAP", 0);
 	R_ProgramParameter1i("FOG", 0);
 
+	R_ProgramParameter1f("OFFSET", 0.0);
+
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
 	R_ProgramParameter1f("HARDNESS", 1.0);
