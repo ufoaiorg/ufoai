@@ -8,6 +8,7 @@ uniform int LIGHTMAP;
 uniform int BUMPMAP;
 uniform int FOG;
 
+uniform int OFFSET;
 
 /*
 main
@@ -18,7 +19,7 @@ void main(void){
 	gl_Position = ftransform();
 
 	// pass any active texunits through
-	gl_TexCoord[0] = gl_MultiTexCoord0;
+	gl_TexCoord[0] = gl_MultiTexCoord0 + OFFSET;
 
 	if(LIGHTMAP > 0)
 		gl_TexCoord[1] = gl_MultiTexCoord1;
