@@ -50,7 +50,7 @@ cvar_t* cl_map_debug;
  * @sa G_SendEdictsAndBrushModels
  * @sa CL_AddBrushModel
  */
-static void CL_ParseEntitystring (const char *es)
+static void CL_ParseEntitystring (void)
 {
 	char keyname[256];
 	char classname[MAX_VAR];
@@ -61,6 +61,7 @@ static void CL_ParseEntitystring (const char *es)
 	int skin, frame, spawnflags;
 	float volume;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
+	const char *es = CM_EntityString();
 
 	cl.map_maxlevel = 8;
 	if (cl.map_maxlevel_base >= 1)
@@ -221,7 +222,7 @@ void V_LoadMedia (void)
 		SCR_SetLoadingBackground(cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
 	R_ModBeginLoading(cl.configstrings[CS_TILES], atoi(cl.configstrings[CS_LIGHTMAP]), cl.configstrings[CS_POSITIONS], cl.configstrings[CS_NAME]);
-	CL_ParseEntitystring(map_entitystring);
+	CL_ParseEntitystring();
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("loading models..."));
 	cls.loadingPercent += 10.0f;
