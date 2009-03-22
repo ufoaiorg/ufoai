@@ -421,7 +421,7 @@ tech rs_alien_oddbehaviour
 		alienglobal 10
 	}
 	time		1500
-//	image		"techs/alien_oddbehaviour"
+	image		"techs/alien_oddbehaviour"
 }
 
 tech rs_alien_communication
