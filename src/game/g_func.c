@@ -42,14 +42,9 @@ static qboolean Destroy_Breakable (edict_t *self)
 	else
 		gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 	gi.WriteShort(self->number);
-	if (self->particle && strcmp(self->particle, "null")) {
-		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-		gi.WriteShort(self->spawnflags);
-		gi.WriteByte(1);
-		gi.WritePos(origin);
-		gi.WriteString(self->particle);
-		gi.EndEvents();
-	}
+	if (self->particle)
+		G_ParticleSpawn(origin, self->spawnflags, self->particle);
+
 	switch (self->material) {
 	case MAT_GLASS:
 		gi.PositionedSound(PM_ALL, origin, self, "misc/breakglass", 1);

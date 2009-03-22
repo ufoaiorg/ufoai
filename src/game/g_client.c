@@ -4,24 +4,24 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+ Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-See the GNU General Public License for more details.
+ See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-*/
+ */
 
 #include "g_local.h"
 
@@ -70,7 +70,6 @@ int G_TeamToPM (int team)
 	return player_mask;
 }
 
-
 /**
  * @brief Converts vis mask to player mask
  */
@@ -88,7 +87,6 @@ int G_VisToPM (int vis_mask)
 
 	return player_mask;
 }
-
 
 /**
  * @brief Send stats to network buffer
@@ -110,7 +108,6 @@ void G_SendStats (edict_t * ent)
 	gi.WriteByte(ent->morale);
 }
 
-
 /**
  * @brief Write an item to the network buffer
  * @sa CL_NetReceiveItem
@@ -119,8 +116,7 @@ void G_SendStats (edict_t * ent)
 static void G_WriteItem (item_t item, const invDef_t *container, int x, int y)
 {
 	assert(item.t);
-	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m ? item.m->idx : NONE,
-		container->id, x, y, item.rotated);
+	gi.WriteFormat("sbsbbbb", item.t->idx, item.a, item.m ? item.m->idx : NONE, container->id, x, y, item.rotated);
 }
 
 /**
@@ -148,7 +144,6 @@ static void G_ReadItem (item_t *item, invDef_t **container, int *x, int *y)
 		*container = NULL;
 }
 
-
 /**
  * @brief Write player stats to network buffer
  * @sa G_SendStats
@@ -159,8 +154,7 @@ static void G_SendPlayerStats (player_t * player)
 	int i;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-		 && ent->team == player->pers.team)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2) && ent->team == player->pers.team)
 			G_SendStats(ent);
 }
 
@@ -209,7 +203,6 @@ void G_GiveTimeUnits (int team)
 		}
 }
 
-
 static void G_SendState (int player_mask, edict_t * ent)
 {
 	gi.AddEvent(player_mask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
@@ -221,6 +214,18 @@ static void G_SendState (int player_mask, edict_t * ent)
 	gi.WriteShort(ent->state & STATE_PUBLIC);
 }
 
+/**
+ * Send a particle spawn event to the client
+ * @param player_mask The clients that should see the particle
+ * @param ent The particle to spawn
+ */
+static void G_SendParticle (int player_mask, edict_t *ent)
+{
+	gi.AddEvent(player_mask, EV_SPAWN_PARTICLE);
+	gi.WriteShort(ent->number);
+	gi.WriteShort(ent->spawnflags);
+	gi.WriteString(ent->particle);
+}
 
 /**
  * @sa G_EndGame
@@ -259,22 +264,28 @@ void G_SendInventory (int player_mask, edict_t * ent)
 		}
 }
 
+static void G_EdictAppear (int player_mask, edict_t *ent)
+{
+	gi.AddEvent(player_mask, EV_ENT_APPEAR);
+	gi.WriteShort(ent->number);
+	gi.WriteByte(ent->type);
+	gi.WriteGPos(ent->pos);
+}
 
 /**
  * @brief Send the appear or perish event the the affected clients
  * @param[in] player_mask These are the affected players or clients
  * In case of e.g. teamplay there can be more than one client affected - thus
  * this is a player mask
- * @param[in] appear Is this event about an appearing actor (or
- * a perishing one)?
+ * @param[in] appear Is this event about an appearing actor (or a perishing one)
  * @param[in] check The edict we are talking about
  * @sa CL_ActorAppear
  */
 void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 {
-	int maxMorale;
-
-	sentAppearPerishEvent = qtrue;
+	/* test for pointless player mask */
+	if (!player_mask)
+		return;
 
 	if (appear) {
 		/* appear */
@@ -309,10 +320,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 			gi.WriteShort(check->state & STATE_PUBLIC);
 			gi.WriteByte(check->fieldSize);
 			gi.WriteByte(GET_TU(check->chr.score.skills[ABILITY_SPEED]));
-			maxMorale = GET_MORALE(check->chr.score.skills[ABILITY_MIND]);
-			if (maxMorale >= MAX_SKILL)
-				maxMorale = MAX_SKILL;
-			gi.WriteByte(maxMorale);
+			gi.WriteByte(min(MAX_SKILL, GET_MORALE(check->chr.score.skills[ABILITY_MIND])));
 			gi.WriteShort(check->chr.maxHP);
 
 			if (player_mask & G_TeamToPM(check->team)) {
@@ -324,20 +332,25 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 			break;
 
 		case ET_ITEM:
-			gi.AddEvent(player_mask, EV_ENT_APPEAR);
-			gi.WriteShort(check->number);
-			gi.WriteByte(ET_ITEM);
-			gi.WriteGPos(check->pos);
+			G_EdictAppear(player_mask, check);
 			G_SendInventory(player_mask, check);
 			break;
+
+		case ET_PARTICLE:
+			G_EdictAppear(player_mask, check);
+			G_SendParticle(player_mask, check);
+			break;
 		}
-	} else if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2 || check->type == ET_ITEM) {
+	} else if (check->type == ET_ACTOR || check->type == ET_ACTOR2x2 || check->type == ET_ITEM || check->type
+			== ET_PARTICLE) {
 		/* disappear */
 		gi.AddEvent(player_mask, EV_ENT_PERISH);
 		gi.WriteShort(check->number);
-	}
-}
+	} else
+		return;
 
+	sentAppearPerishEvent = qtrue;
+}
 
 /**
  * @brief Checks whether a point is "visible" from the edicts position
@@ -347,7 +360,6 @@ qboolean G_FrustumVis (const edict_t *from, const vec3_t point)
 {
 	return FrustumVis(from->origin, from->dir, point);
 }
-
 
 /**
  * @brief tests the visibility between two points
@@ -437,7 +449,6 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 	}
 }
 
-
 /**
  * @brief test if check is visible by from
  * @param[in] team Living team members are always visible. If this is a negative
@@ -496,11 +507,12 @@ static float G_Vis (int team, const edict_t * from, const edict_t * check, int f
 		return G_ActorVis(eye, check, qfalse);
 	case ET_ITEM:
 		return !G_LineVis(eye, check->origin);
+	case ET_PARTICLE:
+		return !G_LineVis(eye, check->origin);
 	default:
 		return ACTOR_VIS_0;
 	}
 }
-
 
 /**
  * @brief test if check is visible by team (or if visibility changed?)
@@ -510,7 +522,7 @@ static float G_Vis (int team, const edict_t * from, const edict_t * check, int f
  * their view
  * @param[in] check the edict we are talking about - which may become visible
  * or perish
- * @param[in] flags if you wanna check whether the edict may also perish from
+ * @param[in] flags if you want to check whether the edict may also perish from
  * other players view, you should use the @c VT_PERISH bits
  * @note If the edict is already visible and flags doesn't contain the
  * bits of @c VT_PERISH, no further checks are performed - only the
@@ -518,11 +530,10 @@ static float G_Vis (int team, const edict_t * from, const edict_t * check, int f
  */
 int G_TestVis (int team, edict_t * check, int flags)
 {
-	int i, old;
+	int i;
 	edict_t *from;
-
 	/* store old flag */
-	old = (check->visflags & (1 << team)) ? 1 : 0;
+	const int old = (check->visflags & (1 << team)) ? 1 : 0;
 
 	if (g_aidebug->integer)
 		return VIS_YES | !old;
@@ -536,7 +547,7 @@ int G_TestVis (int team, edict_t * check, int flags)
 			/* visible */
 			return VIS_YES | !old;
 
-	/* not visible */
+	/* jusr return the old state */
 	return old;
 }
 
@@ -559,13 +570,12 @@ void G_SendInvisible (player_t* player)
 	if (level.num_alive[team]) {
 		/* check visibility */
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-			if (ent->inuse && ent->team != team
-			&& (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
+			if (ent->inuse && ent->team != team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
 				/* not visible for this team - so add the le only */
 				if (!(ent->visflags & (1 << team))) {
 					/* parsed in CL_ActorAdd */
-					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: ent->player: %i - ent->team: %i (%s)\n",
-						ent->pnum, ent->team, ent->chr.name);
+					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: ent->player: %i - ent->team: %i (%s)\n", ent->pnum,
+							ent->team, ent->chr.name);
 					gi.AddEvent(P_MASK(player), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
@@ -582,14 +592,14 @@ void G_SendInvisible (player_t* player)
 }
 
 /**
- * @brief
+ * @brief Sets visible edict on player spawn
  * @sa G_ClientSpawn
  * @sa G_CheckVisTeam
  * @sa G_AppearPerishEvent
  */
 static int G_CheckVisPlayer (player_t* player, qboolean perish)
 {
-	int vis, i;
+	int i;
 	int status = 0;
 	edict_t* ent;
 
@@ -597,7 +607,7 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse) {
 			/* check if he's visible */
-			vis = G_TestVis(player->pers.team, ent, perish);
+			const int vis = G_TestVis(player->pers.team, ent, perish);
 
 			if (vis & VIS_CHANGE) {
 				ent->visflags ^= (1 << player->pers.team);
@@ -637,7 +647,7 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
  */
 int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 {
-	int vis, i, end;
+	int i, end;
 	int status = 0;
 
 	/* decide whether to check all entities or a specific one */
@@ -651,7 +661,7 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 	for (i = 0; i < end; i++, check++)
 		if (check->inuse) {
 			/* check if he's visible */
-			vis = G_TestVis(team, check, perish);
+			const int vis = G_TestVis(team, check, perish);
 
 			/* visiblity has changed ... */
 			if (vis & VIS_CHANGE) {
@@ -671,7 +681,6 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 
 	return status;
 }
-
 
 /**
  * @brief Check if the edict appears/perishes for the other teams
@@ -694,7 +703,6 @@ int G_CheckVis (edict_t * check, qboolean perish)
 	return status;
 }
 
-
 /**
  * @brief Reset the visflags for all edict in the global list (g_edicts) for the
  * given team - and only for the given team
@@ -709,7 +717,6 @@ void G_ClearVisFlags (int team)
 		if (ent->inuse)
 			ent->visflags &= mask;
 }
-
 
 /**
  * @brief Turns an actor around
@@ -773,7 +780,7 @@ int G_DoTurn (edict_t * ent, byte dir)
 #if 0
 		/* stop turning if a new living player (which is not in our team) appears */
 		if (stop && (status & VIS_STOP))
-			break;
+		break;
 #endif
 	}
 
@@ -849,7 +856,6 @@ qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 	/* could be possible */
 	return qtrue;
 }
-
 
 /**
  * @brief Spawns a new entity at the floor
@@ -940,7 +946,8 @@ static void G_PrintFloorToConsole (pos3_t pos)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx, int ty, qboolean checkaction, qboolean quiet)
+void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList_t *fItem, const invDef_t * to, int tx,
+		int ty, qboolean checkaction, qboolean quiet)
 {
 	edict_t *ent, *floor;
 	invList_t *ic;
@@ -968,7 +975,6 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 	fx += fItem->x;
 	fy += fItem->y;
 
-
 	/* Check if action is possible */
 	/* TUs are 1 here - but this is only a dummy - the real TU check is done in the inventory functions below */
 	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
@@ -991,7 +997,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 
 	/* search for space */
 	if (tx == NONE) {
-/*		assert(ty == NONE); */
+		/*		assert(ty == NONE); */
 		if (ty != NONE)
 			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
 
@@ -1015,7 +1021,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		gi.PlayerPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
+		gi.PlayerPrintf(player, msglevel,
+				_("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
 		/* Continue below. */
@@ -1135,12 +1142,12 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove: Something moved in/out of right hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
-		gi.WriteShort(0);	/**< hand = right */
+		gi.WriteShort(0); /**< hand = right */
 	} else if (from->id == gi.csi->idLeft || to->id == gi.csi->idLeft) {
 		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove:  Something moved in/out of left hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
-		gi.WriteShort(1);	/**< hand = left */
+		gi.WriteShort(1); /**< hand = left */
 	}
 
 	/* Other players receive weapon info only. */
@@ -1213,7 +1220,8 @@ static void G_InventoryToFloor (edict_t * ent)
 		 * not idFloor */
 		if (k == gi.csi->idArmour) {
 			if (ent->i.c[gi.csi->idArmour])
-				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: this actor has armour: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
+				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: this actor has armour: %s\n",
+						ent->i.c[gi.csi->idArmour]->item.t->name);
 			continue;
 		}
 		/* now cycle through all items for the container of the character (or the entity) */
@@ -1270,7 +1278,8 @@ static void G_InventoryToFloor (edict_t * ent)
 				}
 #endif
 				if (strcmp(ic->item.t->type, "armour"))
-					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n", ic->item.t->id);
+					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n",
+							ic->item.t->id);
 				if (!Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic))
 					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", ic->item.t->id);
 			} else {
@@ -1291,7 +1300,8 @@ static void G_InventoryToFloor (edict_t * ent)
 	FLOOR(ent) = FLOOR(floor);
 
 	if (ent->i.c[gi.csi->idArmour])
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor: this actor has armour in idArmour container: %s\n", ent->i.c[gi.csi->idArmour]->item.t->name);
+		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor: this actor has armour in idArmour container: %s\n",
+				ent->i.c[gi.csi->idArmour]->item.t->name);
 	else
 		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor: this actor has NOT armour in idArmour container\n");
 
@@ -1299,10 +1309,9 @@ static void G_InventoryToFloor (edict_t * ent)
 	G_CheckVis(floor, qtrue);
 #ifdef ADJACENT
 	if (floorAdjacent)
-		G_CheckVis(floorAdjacent, qtrue);
+	G_CheckVis(floorAdjacent, qtrue);
 #endif
 }
-
 
 pos_t *fb_list[MAX_FORBIDDENLIST];
 int fb_length;
@@ -1343,11 +1352,11 @@ static void G_BuildForbiddenList (int team)
 		 */
 		if (((ent->type == ET_ACTOR && !G_IsDead(ent)) || ent->type == ET_ACTOR2x2) && (ent->visflags & vis_mask)) {
 			fb_list[fb_length++] = ent->pos;
-			fb_list[fb_length++] = (byte*)&ent->fieldSize;
+			fb_list[fb_length++] = (byte*) &ent->fieldSize;
 		} else if (ent->type == ET_SOLID) {
 			fb_list[fb_length++] = ent->pos;
 			/** @todo get fieldsize from bounding box (ent->mins, ent->maxs) */
-			fb_list[fb_length++] = (byte*)&ent->fieldSize;
+			fb_list[fb_length++] = (byte*) &ent->fieldSize;
 		}
 	}
 
@@ -1371,7 +1380,6 @@ void G_MoveCalc (int team, pos3_t from, int actor_size, int crouching_state, int
 	G_BuildForbiddenList(team);
 	gi.MoveCalc(gi.routingMap, actor_size, gi.pathingMap, from, crouching_state, distance, fb_list, fb_length);
 }
-
 
 /**
  * @brief Check whether there is already an edict on the field where the actor
@@ -1472,7 +1480,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if ((ent->state & STATE_CROUCHED) && player->autostand) {
 		/* ...and if this is a long walk... */
-		if ((float)(2 * TU_CROUCH) < (float)length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
+		if ((float) (2 * TU_CROUCH) < (float) length * (TU_CROUCH_MOVING_FACTOR - 1.0f)) {
 			/* ...make them stand first. If the player really wants them to walk a long
 			 * way crouched, he can move the actor in several stages.
 			 * Uses the threshold at which standing, moving and crouching again takes
@@ -1498,7 +1506,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 		Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
+		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouching_state))
+				!= ROUTING_UNREACHABLE) {
 			/* dv indicates the direction traveled to get to the new cell and the original cell height.
 			 * dv = (dir << 3) | z
 			 */
@@ -1512,7 +1521,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			olddvtab[numdv] = dv;
 			PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
 			dvtab[numdv++] = NewDVZ(dv, old_z); /* Replace the z portion of the DV value so we can get back to where we were. */
-			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i->%i].\n", pos[0], pos[1], pos[2], crouching_state, dv, dvtab[numdv - 1]);
+			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i->%i].\n", pos[0], pos[1], pos[2],
+					crouching_state, dv, dvtab[numdv - 1]);
 		}
 
 		if (VectorCompare(pos, ent->pos)) {
@@ -1737,7 +1747,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
 }
 
-
 /**
  * @brief Sends the actual actor turn event over the netchannel
  */
@@ -1771,7 +1780,6 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	/* end the event */
 	gi.EndEvents();
 }
-
 
 /**
  * @brief Changes the state of a player/soldier.
@@ -1818,7 +1826,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 				ent->state &= ~STATE_REACTION;
 
 				if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
-		 			gi.error("AI reaction fire is server side only");
+					gi.error("AI reaction fire is server side only");
 			}
 		}
 		break;
@@ -1827,17 +1835,17 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		ent->state &= ~STATE_REACTION;
 
 		if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
- 			gi.error("AI reaction fire is server side only");
+			gi.error("AI reaction fire is server side only");
 
 		/* Enable multi reaction fire. */
- 		ent->state |= STATE_REACTION_MANY;
+		ent->state |= STATE_REACTION_MANY;
 		break;
 	case STATE_REACTION_ONCE: /* Request to turn on single-reaction fire mode. */
 		/* Disable reaction fire. */
- 		ent->state &= ~STATE_REACTION;
+		ent->state &= ~STATE_REACTION;
 
 		if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
- 			gi.error("AI reaction fire is server side only");
+			gi.error("AI reaction fire is server side only");
 
 		/* Turn on single reaction fire. */
 		ent->state |= STATE_REACTION_ONCE;
@@ -1880,9 +1888,11 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
 		if (RIGHT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idRight], RIGHT(ent),
+					&gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 		if (LEFT(ent))
-			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent), &gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
+			G_ClientInvMove(game.players + ent->pnum, ent->number, &gi.csi->ids[gi.csi->idLeft], LEFT(ent),
+					&gi.csi->ids[gi.csi->idFloor], NONE, NONE, qtrue, quiet);
 	}
 
 	/* get up */
@@ -1914,7 +1924,7 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
  */
 static void G_MoraleStopPanic (edict_t * ent, qboolean quiet)
 {
-	if (((ent->morale) / mor_panic->value) > (m_panic_stop->value * frand()))
+	if (ent->morale / mor_panic->value > m_panic_stop->value * frand())
 		ent->state &= ~STATE_PANIC;
 	else
 		G_MoralePanic(ent, qtrue, quiet);
@@ -1955,7 +1965,7 @@ static void G_MoraleStopRage (edict_t * ent, qboolean quiet)
 		ent->state &= ~STATE_INSANE;
 		G_SendState(G_VisToPM(ent->visflags), ent);
 	} else
-		G_MoralePanic(ent, qtrue, quiet);	/*regains sanity */
+		G_MoralePanic(ent, qtrue, quiet); /*regains sanity */
 }
 
 /**
@@ -1980,8 +1990,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 				G_MoralePanic(ent, qfalse, quiet);
 			/* multiplayer needs enabled sv_enablemorale */
 			/* singleplayer has this in every case */
-			if ((sv_maxclients->integer >= 2 && sv_enablemorale->integer == 1)
-				|| sv_maxclients->integer == 1) {
+			if ((sv_maxclients->integer >= 2 && sv_enablemorale->integer == 1) || sv_maxclients->integer == 1) {
 				/* if panic, determine what kind of panic happens: */
 				if (ent->morale <= mor_panic->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
 					if ((float) ent->morale / mor_panic->value > (m_sanity->value * frand()))
@@ -1993,11 +2002,13 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 					else
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
-				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
+				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC)
+						&& !(ent->state & STATE_RAGE)) {
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
-					gi.PlayerPrintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s is currently shaken.\n"), ent->chr.name);
+					gi.PlayerPrintf(game.players + ent->pnum, PRINT_CONSOLE, _("%s is currently shaken.\n"),
+							ent->chr.name);
 				} else {
 					if (ent->state & STATE_PANIC)
 						G_MoraleStopPanic(ent, quiet);
@@ -2024,7 +2035,6 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 		}
 }
 
-
 /**
  * @brief Reload weapon with actor.
  * @sa AI_ActorThink
@@ -2050,13 +2060,11 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 
 	if (ent->i.c[hand->id]) {
 		weapon = ent->i.c[hand->id]->item.t;
-	} else if (hand->id == gi.csi->idLeft
-			&& ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
+	} else if (hand->id == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = &gi.csi->ids[gi.csi->idRight];
 		weapon = ent->i.c[hand->id]->item.t;
-	}
-	else
+	} else
 		return;
 
 	assert(weapon);
@@ -2105,8 +2113,7 @@ qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 
 	if (ent->i.c[hand]) {
 		weapon = ent->i.c[hand]->item.t;
-	} else if (hand == gi.csi->idLeft
-	 && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
+	} else if (hand == gi.csi->idLeft && ent->i.c[gi.csi->idRight]->item.t->holdTwoHanded) {
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
@@ -2185,8 +2192,8 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		ent->state |= (1 + rand() % MAX_DEATH);
 		break;
 	case STATE_STUN:
-		ent->STUN = 0;	/**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
-						 * @sa g_client.c:CL_ActorDie */
+		ent->STUN = 0; /**< @todo Is there a reason this is reset? We _may_ need that in the future somehow.
+		 * @sa g_client.c:CL_ActorDie */
 		ent->state = state;
 		break;
 	default:
@@ -2292,7 +2299,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode, &from);
-		(void)G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue, from);
+		(void) G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue, from);
 		break;
 
 	case PA_INVMOVE:
@@ -2311,27 +2318,26 @@ int G_ClientAction (player_t * player)
 		}
 		break;
 
-	case PA_USE_DOOR:
-		{
-			edict_t *door;
-			edict_t *actor = (g_edicts + num);
+	case PA_USE_DOOR: {
+		edict_t *door;
+		edict_t *actor = (g_edicts + num);
 
-			/* read the door the client wants to open */
-			gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
+		/* read the door the client wants to open */
+		gi.ReadFormat(pa_format[PA_USE_DOOR], &i);
 
-			/* get the door edict */
-			door = g_edicts + i;
+		/* get the door edict */
+		door = g_edicts + i;
 
-			if (actor->client_action == door) {
-				/* check whether it's part of an edict group but not the master */
-				if (door->flags & FL_GROUPSLAVE)
-					door = door->groupMaster;
+		if (actor->client_action == door) {
+			/* check whether it's part of an edict group but not the master */
+			if (door->flags & FL_GROUPSLAVE)
+				door = door->groupMaster;
 
-				G_ClientUseEdict(player, actor, door);
-			} else
-				Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n",
-					actor->client_action->number, door->number);
-		}
+			G_ClientUseEdict(player, actor, door);
+		} else
+			Com_DPrintf(DEBUG_GAME, "client_action and ent differ: %i - %i\n", actor->client_action->number,
+					door->number);
+	}
 		break;
 
 	case PA_REACT_SELECT:
@@ -2347,7 +2353,8 @@ int G_ClientAction (player_t * player)
 		gi.ReadFormat(pa_format[PA_RESERVE_STATE], &resType, &resState, &resValue);
 
 		if (resValue < 0)
-			gi.error("G_ClientAction: No sane value received for resValue!  (resType=%i resState=%i resValue=%i)\n", resType, resState, resValue);
+			gi.error("G_ClientAction: No sane value received for resValue!  (resType=%i resState=%i resValue=%i)\n",
+					resType, resState, resValue);
 
 		ent = g_edicts + num;
 		switch (resType) {
@@ -2365,7 +2372,6 @@ int G_ClientAction (player_t * player)
 	}
 	return action;
 }
-
 
 /**
  * @brief Sets the teamnum var for this match
@@ -2408,7 +2414,7 @@ static void G_GetTeam (player_t * player)
 			return;
 		}
 		/* assign random valid team number */
-		randomSpot = (int)(frand() * (spawnSpots - 1) + 0.5);
+		randomSpot = (int) (frand() * (spawnSpots - 1) + 0.5);
 		player->pers.team = spawnCheck[randomSpot];
 		Com_Printf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
@@ -2517,13 +2523,14 @@ static void G_ClientTeamAssign (const player_t * player)
 		}
 	}
 
-	Com_DPrintf(DEBUG_GAME, "G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
+	Com_DPrintf(DEBUG_GAME, "G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount,
+			teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
 	if ((sv_teamplay->integer && teamCount >= sv_maxteams->integer) || playerCount >= sv_maxclients->integer) {
 		char buffer[MAX_VAR] = "";
 		G_PrintStats(va("Starting new game: %s with %i teams", level.mapname, teamCount));
-		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
+		level.activeTeam = knownTeams[(int) (frand() * (teamCount - 1) + 0.5)];
 		turnTeam = level.activeTeam;
 		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
 			if (p->inuse) {
@@ -2634,7 +2641,7 @@ void G_ClientTeamInfo (player_t * player)
 	/* find a team */
 	G_GetTeam(player);
 
-	length = gi.ReadByte();	/* Get the actor amount that the client sent. */
+	length = gi.ReadByte(); /* Get the actor amount that the client sent. */
 
 	for (i = 0; i < length; i++) {
 		/* Search for a spawn point for each entry the client sent
@@ -2644,9 +2651,9 @@ void G_ClientTeamInfo (player_t * player)
 		 * + the game is already running (activeTeam != -1)
 		 * + the sv_maxsoldiersperplayer limit is hit (e.g. the assembled team is bigger than the allowed number of soldiers)
 		 * + the team already hit the max allowed amount of soldiers */
-		if (player->pers.team != -1 && (sv_maxclients->integer == 1
-		 || (!G_GameRunning() && i < sv_maxsoldiersperplayer->integer
-		 && level.num_spawned[player->pers.team] < sv_maxsoldiersperteam->integer))) {
+		if (player->pers.team != -1 && (sv_maxclients->integer == 1 || (!G_GameRunning() && i
+				< sv_maxsoldiersperplayer->integer && level.num_spawned[player->pers.team]
+				< sv_maxsoldiersperteam->integer))) {
 			/* Here the client tells the server the information for the spawned actor(s). */
 
 			/* Receive fieldsize and get matching spawnpoint. */
@@ -2656,7 +2663,10 @@ void G_ClientTeamInfo (player_t * player)
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTORSPAWN);
 				if (!ent) {
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
+					Com_DPrintf(
+							DEBUG_GAME,
+							"G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
+							dummyFieldSize);
 					G_ClientSkipActorInfo();
 					continue;
 				}
@@ -2666,7 +2676,10 @@ void G_ClientTeamInfo (player_t * player)
 				/* Find valid actor spawn fields for this player. */
 				ent = G_ClientGetFreeSpawnPoint(player, ET_ACTOR2x2SPAWN);
 				if (!ent) {
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n", dummyFieldSize);
+					Com_DPrintf(
+							DEBUG_GAME,
+							"G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
+							dummyFieldSize);
 					G_ClientSkipActorInfo();
 					continue;
 				}
@@ -2674,7 +2687,8 @@ void G_ClientTeamInfo (player_t * player)
 				ent->morale = 100;
 				break;
 			default:
-				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actor_size: %i, actor num: %i)\n", dummyFieldSize, i);
+				gi.error("G_ClientTeamInfo: unknown fieldSize for actor edict (actor_size: %i, actor num: %i)\n",
+						dummyFieldSize, i);
 			}
 
 			level.num_alive[ent->team]++;
@@ -2697,7 +2711,7 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.skin = gi.ReadByte();
 
 			Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: name: %s, path: %s, body: %s, head: %s, skin: %i\n",
-				ent->chr.name, ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.skin);
+					ent->chr.name, ent->chr.path, ent->chr.body, ent->chr.head, ent->chr.skin);
 
 			ent->chr.HP = gi.ReadShort();
 			ent->chr.minHP = ent->chr.HP;
@@ -2709,9 +2723,9 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.morale = gi.ReadByte();
 
 			/** Scores @sa G_ClientSkipActorInfo */
-			for (k = 0; k < SKILL_NUM_TYPES + 1; k++)	/* new attributes */
+			for (k = 0; k < SKILL_NUM_TYPES + 1; k++) /* new attributes */
 				ent->chr.score.experience[k] = gi.ReadLong();
-			for (k = 0; k < SKILL_NUM_TYPES; k++)	/* new attributes */
+			for (k = 0; k < SKILL_NUM_TYPES; k++) /* new attributes */
 				ent->chr.score.skills[k] = gi.ReadByte();
 			for (k = 0; k < SKILL_NUM_TYPES + 1; k++)
 				ent->chr.score.initialSkills[k] = gi.ReadByte();
@@ -2736,11 +2750,13 @@ void G_ClientTeamInfo (player_t * player)
 				for (; nr-- > 0;) {
 					invDef_t *container;
 					G_ReadItem(&item, &container, &x, &y);
-					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx : NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
+					Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", (item.t ? item.t->idx
+							: NONE), item.a, (item.m ? item.m->idx : NONE), x, y);
 
 					if (container) {
 						Com_AddToInventory(&ent->i, item, container, x, y, 1);
-						Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n", container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
+						Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: (container: %i - idArmour: %i) <- Added %s.\n",
+								container->id, gi.csi->idArmour, ent->i.c[container->id]->item.t->id);
 					}
 				}
 			}
@@ -2871,8 +2887,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 			}
 		}
 		for (i = 0, p = game.players; i < game.sv_maxplayersperteam * 2; i++, p++)
-			if (p->inuse && p->pers.team == level.activeTeam
-				&& !p->ready && G_PlayerSoldiersCount(p) > 0)
+			if (p->inuse && p->pers.team == level.activeTeam && !p->ready && G_PlayerSoldiersCount(p) > 0)
 				return;
 	} else {
 		player->ready = qtrue;
@@ -3009,7 +3024,7 @@ static void G_SendEdictsAndBrushModels (int team)
 			}
 			break;
 
-		/* send trigger entities to the client to display them (needs mins, maxs set) */
+			/* send trigger entities to the client to display them (needs mins, maxs set) */
 		case SOLID_TRIGGER:
 			if (sv_send_edicts->integer) {
 				gi.AddEvent(G_TeamToPM(team), EV_ADD_EDICT);
@@ -3121,7 +3136,8 @@ qboolean G_ClientSpawn (player_t * player)
 	 * @sa G_SpawnAIPlayer */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
-			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
+			Com_DPrintf(DEBUG_GAME, "G_ClientSpawn: Setting default reaction-mode to %i (%s - %s).\n",
+					ent->chr.reservedTus.reserveReaction, player->pers.netname, ent->chr.name);
 			G_ClientStateChange(player, i, ent->chr.reservedTus.reserveReaction, qfalse);
 		}
 
@@ -3151,7 +3167,6 @@ qboolean G_ClientSpawn (player_t * player)
 	gi.BroadcastPrintf(PRINT_CONSOLE, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
 	return qtrue;
 }
-
 
 /**
  * @brief called whenever the player updates a userinfo variable.
@@ -3196,8 +3211,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 	}
 
 	value = Info_ValueForKey(userinfo, "password");
-	if (*password->string && strcmp(password->string, "none")
-	 && strcmp(password->string, value)) {
+	if (*password->string && strcmp(password->string, "none") && strcmp(password->string, value)) {
 		Info_SetValueForKey(userinfo, "rejmsg", REJ_PASSWORD_REQUIRED_OR_INCORRECT);
 		return qfalse;
 	}

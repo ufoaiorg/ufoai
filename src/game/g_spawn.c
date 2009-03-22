@@ -453,6 +453,28 @@ edict_t *G_Spawn (void)
 }
 
 /**
+ * This is only for particles that are spawned during a match - not for map particles.
+ * @return A particle edict
+ */
+edict_t *G_ParticleSpawn (vec3_t origin, int spawnflags, const char *particle)
+{
+	edict_t *ent = G_Spawn();
+	ent->classname = "particle";
+	ent->type = ET_PARTICLE;
+	VectorCopy(origin, ent->origin);
+
+	/* Set the position of the entity */
+	VecToPos(ent->origin, ent->pos);
+
+	ent->particle = particle;
+	ent->spawnflags = spawnflags;
+
+	G_CheckVis(ent, qtrue);
+
+	return ent;
+}
+
+/**
  * @brief Spawn a 1x1 unit.
  */
 static void G_ActorSpawn (edict_t *ent)
@@ -771,12 +793,9 @@ static void Think_Mission (edict_t *self)
 	/* when every player has joined the match - spawn the mission target
 	 * particle (if given) to mark the trigger */
 	if (self->particle) {
-		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-		gi.WriteShort(self->spawnflags);
-		gi.WriteByte(0);
-		gi.WritePos(self->origin);
-		gi.WriteString(self->particle);
-		gi.EndEvents();
+		/** @todo this should be visible for everyone */
+		edict_t *ent = G_ParticleSpawn(self->origin, self->spawnflags, self->particle);
+		ent->visflags = VIS_YES;
 
 		/* This is automatically freed on map shutdown */
 		self->particle = NULL;

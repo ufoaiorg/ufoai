@@ -250,6 +250,7 @@ void G_PrintActorStats(const edict_t *victim, const edict_t *attacker, const fir
 void G_PrintStats(const char *buffer);
 int G_TouchTriggers(edict_t *ent);
 edict_t *G_Spawn(void);
+edict_t *G_ParticleSpawn(vec3_t origin, int spawnflags, const char *particle);
 void G_FreeEdict(edict_t *e);
 qboolean G_UseEdict(edict_t *ent);
 

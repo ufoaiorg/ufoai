@@ -1743,7 +1743,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* add effect le */
-	LE_AddProjectile(fd, flags, muzzle, impact, normal, qtrue);
+	LE_AddProjectile(fd, flags, muzzle, impact, normal);
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {

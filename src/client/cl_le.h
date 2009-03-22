@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct le_s {
 	qboolean inuse;
 	qboolean invis;
-	qboolean autohide;
 	qboolean selected;
 	int hearTime;		/**< draw a marker over the entity if its an actor and he heard something */
 	int type;				/**< the local entity type */
@@ -143,7 +142,7 @@ static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD
 
 qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
-void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, qboolean autohide);
+void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt);
 void LE_AddAmbientSound(const char *sound, const vec3_t origin, float volume, int levelflags);
 le_t *LE_GetClosestActor(const vec3_t origin);
@@ -160,7 +159,6 @@ void LE_Think(void);
 void LET_StartIdle(le_t *le);
 void LET_Appear(le_t *le);
 void LET_StartPathMove(le_t *le);
-void LET_ProjectileAutoHide(le_t *le);
 void LET_PlayAmbientSound(le_t *le);
 void LET_BrushModel(le_t *le);
 
@@ -179,6 +177,7 @@ qboolean LE_IsActor(const le_t *le);
 void LE_Explode(struct dbuffer *msg);
 void LE_DoorOpen(struct dbuffer *msg);
 void LE_DoorClose(struct dbuffer *msg);
+void LE_ParticleAppear(struct dbuffer *msg);
 le_t *LE_Add(int entnum);
 le_t *LE_Get(int entnum);
 le_t *LE_Find(int type, pos3_t pos);

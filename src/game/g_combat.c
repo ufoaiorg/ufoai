@@ -545,15 +545,9 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 
 	/** @todo splash might also hit other surfaces and the trace doesn't handle that */
 	if (tr && G_FireAffectedSurface(tr->surface, fd)) {
-		/* sent particle to all players */
-		gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-		gi.WriteShort(tr->contentFlags >> 8);
-		gi.WriteByte(0);
 		/* move a little away from the impact vector */
 		VectorMA(impact, 1, tr->plane.normal, impact);
-		gi.WritePos(impact);
-		gi.WriteString("burning");
-		gi.EndEvents();
+		G_ParticleSpawn(impact, tr->contentFlags >> 8, "burning");
 	}
 }
 
@@ -962,19 +956,11 @@ static void G_ShootSingle (edict_t *ent, const fireDef_t *fd, const vec3_t from,
 			gi.WriteByte(fd->weapFdsIdx);
 			gi.WriteByte(fd->fdIdx);
 
-			if (i == 0 && (fd->obj->dmgtype == gi.csi->damFire
-			 || fd->obj->dmgtype == gi.csi->damBlast)
-			 && tr.surface && tr.surface->surfaceFlags & SURF_BURN) {
+			if (i == 0 && G_FireAffectedSurface(tr.surface, fd)) {
 				vec3_t origin;
-
 				/* sent particle to all players */
-				gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
-				gi.WriteShort(tr.contentFlags >> 8);
-				gi.WriteByte(1);
 				VectorMA(impact, 1, tr.plane.normal, origin);
-				gi.WritePos(origin);
-				gi.WriteString("fire");
-				gi.EndEvents();
+				G_ParticleSpawn(origin, tr.contentFlags >> 8, "fire");
 			}
 		}
 
@@ -1155,7 +1141,9 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int type
 	int clientType;
 
 	ent = g_edicts + entnum;
-	quiet = (mock != NULL);
+	/* just in 'test-whether-it's-possible'-mode or the player is an
+	 * ai - no readable feedback needed */
+	quiet = (mock != NULL) || player->pers.ai;
 
 	weapon = NULL;
 	fd = NULL;

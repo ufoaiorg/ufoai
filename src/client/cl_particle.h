@@ -39,7 +39,6 @@ extern int numMPs;
 
 void CL_AddMapParticle(const char *particle, vec3_t origin, vec2_t wait, const char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
-void CL_ParticleSpawnFromSizeBuf (struct dbuffer *msg);
 void CL_ParticleFree(ptl_t *p);
 
 void CL_ParticleRegisterArt(void);

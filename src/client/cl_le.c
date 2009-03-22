@@ -190,6 +190,37 @@ qboolean LE_IsLivingAndVisibleActor (const le_t *le)
 }
 
 /**
+ * @brief Let a particle appear for the client
+ * @param[in] msg holds the network data
+ * @sa CL_ParticleSpawn
+ * @sa EV_SPAWN_PARTICLE
+ */
+void LE_ParticleAppear (struct dbuffer *msg)
+{
+	char *particle;
+	int entnum, levelflags;
+	le_t* le;
+
+	/* read data */
+	NET_ReadFormat(msg, ev_format[EV_SPAWN_PARTICLE], &entnum, &levelflags, &particle);
+
+	le = LE_Get(entnum);
+	if (!le) {
+		Com_DPrintf(DEBUG_CLIENT, "LE_ParticleAppear: Could not get particle le with id %i\n", entnum);
+		return;
+	}
+
+	/* particles don't have a model to add to the scene - we mark them as invisible and
+	 * only render the particle */
+	le->invis = !cl_leshowinvis->integer;
+	le->levelflags = levelflags;
+	le->particleID = Mem_PoolStrDup(particle, cl_genericPool, 0);
+	le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
+	if (!le->ptl)
+		Com_Printf("Could not spawn particle: '%s'\n", le->particleID);
+}
+
+/**
  * @sa EV_DOOR_CLOSE
  * @sa EV_DOOR_OPEN
  * @sa G_ClientUseEdict
@@ -748,51 +779,6 @@ void LET_StartPathMove (le_t *le)
 }
 
 /**
- * @brief Autohides a projectile particle if no actor of your team can see it
- * @note Think function
- * @sa LET_Projectile
- * @sa CM_TestLine
- * @sa FrustumVis
- */
-void LET_ProjectileAutoHide (le_t *le)
-{
-	int i;
-	le_t *actors;
-
-	/* only compute this every 20 frames */
-	if (le->thinkDelay <= 0) {
-		le->thinkDelay = 20;
-		return;
-	} else {
-		le->thinkDelay--;
-	}
-
-	/* check whether any of our actors can see this le */
-	for (i = 0, actors = LEs; i < numLEs; i++, actors++) {
-		if (actors->team != cls.team)
-			continue;
-		/* visible because it's our team - so we just check for living actor here */
-		if (LE_IsLivingActor(actors)) {
-			/* at least one of our actors can see this */
-			if (FrustumVis(actors->origin, actors->dir, le->origin)) {
-				if (TR_TestLine(actors->origin, le->origin, TL_FLAG_NONE)) {
-					if (!le->ptl) {
-						le->ptl = CL_ParticleSpawn(le->particleID, le->levelflags, le->origin, NULL, NULL);
-					}
-					return;
-				}
-			}
-		}
-	}
-
-	/* hide the particle */
-	if (le->ptl) {
-		CL_ParticleFree(le->ptl);
-		le->ptl = NULL;
-	}
-}
-
-/**
  * @note Think function
  */
 static void LET_Projectile (le_t * le)
@@ -827,7 +813,7 @@ static void LET_Projectile (le_t * le)
  LE Special Effects
 =========================================================================== */
 
-void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal, qboolean autohide)
+void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal)
 {
 	le_t *le;
 	vec3_t delta;
@@ -838,7 +824,6 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 	if (!le)
 		return;
 	le->invis = !cl_leshowinvis->integer;
-	le->autohide = autohide;
 	/* bind particle */
 	le->ptl = CL_ParticleSpawn(fd->projectile, 0, muzzle, NULL, NULL);
 	if (!le->ptl) {

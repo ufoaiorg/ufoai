@@ -123,7 +123,7 @@ const char *ev_format[] =
 	"s",				/* EV_MODEL_EXPLODE */
 	"s",				/* EV_MODEL_EXPLODE_TRIGGERED */
 
-	"sbp&",				/* EV_SPAWN_PARTICLE */
+	"ss&",				/* EV_SPAWN_PARTICLE */
 
 	"s",				/* EV_DOOR_OPEN */
 	"s",				/* EV_DOOR_CLOSE */
@@ -247,7 +247,7 @@ static void (*ev_func[])(struct dbuffer *msg) =
 	LE_Explode,						/* EV_MODEL_EXPLODE */
 	LE_Explode,						/* EV_MODEL_EXPLODE_TRIGGERED */
 
-	CL_ParticleSpawnFromSizeBuf,	/* EV_SPAWN_PARTICLE */
+	LE_ParticleAppear,				/* EV_SPAWN_PARTICLE */
 
 	LE_DoorOpen,					/* EV_DOOR_OPEN */
 	LE_DoorClose,					/* EV_DOOR_CLOSE */
@@ -274,8 +274,6 @@ static int nextTime;	/**< time when the next event should be executed */
 static int shootTime;	/**< time when the shoot was fired */
 static int impactTime;	/**< time when the shoot hits the target */
 static qboolean parsedDeath = qfalse;	/**< extra delay caused by death - @sa @c impactTime */
-
-/*============================================================================= */
 
 /**
  * @return true if the file exists, otherwise it attempts to start a download via curl
@@ -668,6 +666,11 @@ static void CL_EntAppear (struct dbuffer *msg)
 
 	le->type = type;
 
+	/* the default is invisible - another event will follow which spawns not
+	 * only the le, but also the particle. The visibility is set there, too */
+	if (le->type == ET_PARTICLE)
+		le->invis = !cl_leshowinvis->integer;
+
 	VectorCopy(pos, le->pos);
 	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 }
@@ -716,6 +719,10 @@ static void CL_EntPerish (struct dbuffer *msg)
 		Com_DPrintf(DEBUG_CLIENT, "CL_EntPerish: It should not happen that we perish an hidden actor\n");
 		return;
 #endif
+	case ET_PARTICLE:
+		CL_ParticleFree(le->ptl);
+		le->ptl = NULL;
+		break;
 	case ET_BREAKABLE:
 	case ET_DOOR:
 		break;
