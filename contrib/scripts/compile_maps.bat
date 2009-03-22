@@ -4,6 +4,11 @@ rem setlocal ensures implicit endlocal call howevert batch exits.
 rem so we can goto :EOF  or ctrl-c an at point and env variables
 rem and directory will be reset
 
+if EXIST ufo2map.exe (
+	goto :Run
+)
+
+
 pushd ..\..
 
 if NOT EXIST ufo2map.exe (
@@ -11,6 +16,7 @@ if NOT EXIST ufo2map.exe (
 	goto :EOF
 )
 
+:Run
 rem defaults
 set curpath=maps
 set searchpath=base/maps
