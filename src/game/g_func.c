@@ -180,10 +180,8 @@ static qboolean Door_Use (edict_t *door)
  */
 static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 {
-	if (!self->owner) {
-		Com_DPrintf(DEBUG_GAME, "Touch_DoorTrigger: No owner for door trigger\n");
+	if (!self->owner)
 		return qfalse;
-	}
 
 	if (activator->team == TEAM_CIVILIAN || activator->team == TEAM_ALIEN) {
 		/* let the ai interact with the door */
@@ -202,9 +200,6 @@ static qboolean Touch_DoorTrigger (edict_t *self, edict_t *activator)
 			gi.WriteShort(activator->number);
 			gi.WriteShort(activator->client_action->number);
 			gi.EndEvents();
-			Com_DPrintf(DEBUG_GAME, "Touch_DoorTrigger: Assigned door as the current client action\n");
-		} else {
-			Com_DPrintf(DEBUG_GAME, "Touch_DoorTrigger: Door is already the current client action\n");
 		}
 		return qtrue;
 	}

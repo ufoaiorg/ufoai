@@ -338,7 +338,6 @@ int G_TouchTriggers (edict_t *ent)
 
 	/* be careful, it is possible to have an entity in this
 	 * list removed before we get to it (killtriggered) */
-	Com_DPrintf(DEBUG_GAME, "G_TouchTriggers: Found %i possible triggers.\n", num);
 	for (i = 0; i < num; i++) {
 		edict_t *hit = touch[i];
 		if (!hit->inuse)

@@ -1381,37 +1381,6 @@ void G_MoveCalc (int team, pos3_t from, int actor_size, int crouching_state, int
 	gi.MoveCalc(gi.routingMap, actor_size, gi.pathingMap, from, crouching_state, distance, fb_list, fb_length);
 }
 
-/**
- * @brief Check whether there is already an edict on the field where the actor
- * is trying to get with the next move
- * @param[in] dv Direction to walk to. See the "dvecs" array and DIRECTIONS for more info.
- * @param[in] from starting point to walk from
- * @return qtrue if there is something blocking this direction.
- * @return qfalse if moving into this direction is ok.
- * @todo Add support for 2x2 units. See Grid_CheckForbidden for an example on how to do that.
- * @todo But maybe this check isn't even needed anymore? Shouldn't Grid_CheckForbidden have prevented this?
- */
-static qboolean G_CheckMoveBlock (pos3_t from, int dv)
-{
-	edict_t *ent;
-	pos3_t pos;
-	int i = 0;
-
-	/* Get target position. */
-	VectorCopy(from, pos);
-
-	/* Calculate the field in the given direction. */
-	PosAddDV(pos, i, dv);
-
-	/* Search for blocker. */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && VectorCompare(pos, ent->pos))
-			return qtrue;
-
-	/* Nothing blocked - moving to this direction should be ok. */
-	return qfalse;
-}
-
 #define ACTOR_SPEED_NORMAL 100
 #define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
 
@@ -1421,6 +1390,9 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
  */
 static inline void G_ClientStartMove (edict_t *ent, int player_mask)
 {
+	if (!player_mask)
+		return;
+
 	/* start move */
 	gi.AddEvent(player_mask, EV_ACTOR_START_MOVE);
 	gi.WriteShort(ent->number);
@@ -1560,10 +1532,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					sentAppearPerishEvent = qfalse;
 				}
 
-				/* check for "blockers" */
-				if (G_CheckMoveBlock(ent->pos, dv))
-					break;
-
 				/* decrease TUs */
 				/* moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4); */
 				div = gi.TUsUsed(dir);
@@ -1664,7 +1632,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					/* check triggers at new position but only if no actor appeared */
 					if (G_TouchTriggers(ent)) {
 						triggers = qtrue;
-						Com_DPrintf(DEBUG_GAME, "G_ClientMove: Touching trigger\n");
 						if (!client_action) {
 							status |= VIS_STOP;
 							steps = 0;
@@ -1719,11 +1686,9 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
 
 			/* submit the TUs / round down */
-			if (g_notu != NULL && !g_notu->integer) {
+			if (g_notu != NULL && !g_notu->integer)
 				ent->TU = max(0, initTU - (int) tu);
-			} else {
-				Com_Printf("TUs reset because of developer flag.\n");
-			}
+
 			G_SendStats(ent);
 
 			/* only if triggers are touched - there was a client
@@ -1733,7 +1698,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				ent->client_action = NULL;
 				gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);
 				gi.WriteShort(ent->number);
-				Com_DPrintf(DEBUG_GAME, "G_ClientMove: Reseting current client action\n");
 			}
 
 			/* end the move */
