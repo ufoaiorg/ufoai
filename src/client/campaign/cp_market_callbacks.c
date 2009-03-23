@@ -507,6 +507,8 @@ static void BS_BuyType (const base_t *base)
 				UP_ItemDescription(currentSelectedMenuEntry);
 			} else if (buyList.l[0].ugv) {
 				UP_UGVDescription(buyList.l[0].ugv);
+			} else if (buyList.l[0].item) {
+				UP_ItemDescription(buyList.l[0].item);
 			}
 			break;
 		default:
