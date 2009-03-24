@@ -38,7 +38,7 @@
 #include "../../../shared/parse.h"
 #include "../../../shared/entitiesdef.h"
 
-#define OLDPARSING 1
+#define OLDPARSING 0
 
 static const char* EClass_GetFilename (void)
 {
@@ -355,8 +355,9 @@ static void Eclass_ScanFile (EntityClassCollector& collector, const char *filena
 	g_message("ScanFile: '%s'\n", filename);
 
 	const std::size_t size = file_size(filename);
-	char *entities = (char *)malloc(size);
+	char *entities = (char *)malloc(size + 1);
 	file.read(entities, size);
+	entities[size] = '\0';
 #if OLDPARSING
 	const char **text = (const char **)&entities;
 
