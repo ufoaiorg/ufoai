@@ -2987,7 +2987,7 @@ void G_ClientBegin (player_t* player)
 	gi.AddEvent(P_MASK(player), EV_START | EVENT_INSTANTLY);
 	gi.WriteByte(sv_teamplay->integer);
 
-	/* send events */
+	/* ensure that the start event is send */
 	gi.EndEvents();
 
 	/* set the net name */
@@ -3063,9 +3063,6 @@ qboolean G_ClientSpawn (player_t * player)
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
 
-	/* send events */
-	gi.EndEvents();
-
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)) {
 			gi.AddEvent(player->pers.team, EV_ACTOR_STATECHANGE);
@@ -3074,6 +3071,7 @@ qboolean G_ClientSpawn (player_t * player)
 		}
 
 	gi.AddEvent(P_MASK(player), EV_START_DONE);
+	/* ensure that the last event is send, too */
 	gi.EndEvents();
 
 	/* inform all clients */

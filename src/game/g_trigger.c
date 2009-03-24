@@ -63,7 +63,6 @@ edict_t* G_TriggerSpawn (edict_t *owner)
 /**
  * @brief Hurt trigger
  * @sa SP_trigger_hurt
- * @note No new event in the trigger functions!!!! They are called while moving
  */
 static qboolean Touch_HurtTrigger (edict_t *self, edict_t *activator)
 {
@@ -111,7 +110,6 @@ void SP_trigger_hurt (edict_t *ent)
 /**
  * @brief Touch trigger
  * @sa SP_trigger_touch
- * @note No new event in the trigger functions!!!! They are called while moving
  */
 static qboolean Touch_TouchTrigger (edict_t *self, edict_t *activator)
 {
