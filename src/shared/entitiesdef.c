@@ -182,7 +182,7 @@ static int ED_GetIntVectorFromString (const char *str, int v[], const int n)
 	const char *buf_p = str;
 
 	for (i = 0; buf_p; i++) {
-		const char *tok = COM_Parse (&buf_p);
+		const char *tok = COM_Parse(&buf_p);
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		ED_TEST_RETURN_ERROR(i >= n, "ED_GetIntVectorFromString: v[%i] too small for ints from string \"%s\"", n, str);
@@ -207,7 +207,7 @@ static int ED_GetFloatVectorFromString (const char *str, float v[], const int n)
 	const char *buf_p = str;
 
 	for (i = 0; buf_p; i++) {
-		const char *tok = COM_Parse (&buf_p);
+		const char *tok = COM_Parse(&buf_p);
 		if (tok[0] == '\0')
 			break; /* previous tok was the last real one, don't waste time */
 		ED_TEST_RETURN_ERROR(i >= n, "ED_GetFloatVectorFromString: v[%i] too small for floats from string \"%s\"", n, str);
@@ -230,7 +230,7 @@ static int ED_GetFloatVectorFromString (const char *str, float v[], const int n)
 int ED_GetDefaultFloat (float *defaultBuf, const int n, const entityKeyDef_t *kd)
 {
 	ED_TEST_RETURN_ERROR(!kd->defaultVal, "ED_GetDefaultFloat: no default available");
-	ED_TEST_RETURN_ERROR(!(kd->flags & ED_TYPE_FLOAT ), "ED_GetDefaultFloat: key does not define V_FLOAT");
+	ED_TEST_RETURN_ERROR(!(kd->flags & ED_TYPE_FLOAT), "ED_GetDefaultFloat: key does not define V_FLOAT");
 	ED_PASS_ERROR(ED_GetFloatVectorFromString(kd->defaultVal, defaultBuf, n));
 	return ED_OK;
 }
@@ -316,7 +316,7 @@ static int ED_CheckNumber (const char *value, const int floatOrInt, const int in
 static int ED_CheckRange (const entityKeyDef_t *keyDef, const int floatOrInt, const int index, int_float_tu parsedNumber)
 {
 	/* there may be a range for each element of the value, or there may only be one */
-	int useRangeIndex = (keyDef->numRanges == 1) ? 0 : index;
+	const int useRangeIndex = (keyDef->numRanges == 1) ? 0 : index;
 	entityKeyRange_t *kr;
 	const float discreteFloatEpsilon = 0.0001f;
 	if (0 == keyDef->numRanges)
@@ -545,7 +545,7 @@ static const char *ED_Constant2Block (int constInt)
 	}
 }
 
-static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
+static int ED_AllocRange (entityKeyDef_t *kd, const char *rangeStr)
 {
 	entityKeyRange_t **newRanges;
 	/* start a new range */
@@ -561,7 +561,7 @@ static int ED_AllocRange(entityKeyDef_t *kd, const char *rangeStr)
 		memcpy(newRanges, kd->ranges, kd->numRanges * sizeof(entityKeyRange_t *));
 		free(kd->ranges);
 	}
-	(kd->numRanges)++;
+	kd->numRanges++;
 	kd->ranges = newRanges;
 	return ED_OK;
 }
@@ -678,8 +678,8 @@ static int ED_ParseEntities (const char **data_p)
 
 			tokensOnLevel0++;
 		} else { /* braceLevel > 0 */
-			int newMode = ED_Block2Constant(parsedToken);
-			if (ED_ERROR == newMode ) { /* must be a key name or value */
+			const int newMode = ED_Block2Constant(parsedToken);
+			if (ED_ERROR == newMode) { /* must be a key name or value */
 				if (toggle) { /* store key name til after next token is parsed */
 					if('\0' == parsedToken[0])
 						ED_RETURN_ERROR("key name null string, \"\", or missing closing brace");
@@ -872,7 +872,7 @@ const entityKeyDef_t *ED_GetKeyDefEntity (const entityDef_t *ed, const char *key
  */
 const entityDef_t *ED_GetEntityDef (const char *classname)
 {
-	entityDef_t *ed;
+	const entityDef_t *ed;
 
 	for (ed = entityDefs; ed->numKeyDefs; ed++)
 		if (!strcmp(classname, ed->classname))
