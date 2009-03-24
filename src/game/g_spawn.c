@@ -367,12 +367,12 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 	/* spawn ai players, if needed */
 	if (level.num_spawnpoints[TEAM_CIVILIAN]) {
 		if (AI_CreatePlayer(TEAM_CIVILIAN) == NULL)
-			Com_Printf("Could not create civilian\n");
+			gi.dprintf("Could not create civilian\n");
 	}
 
 	if ((sv_maxclients->integer == 1 || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
-			Com_Printf("Could not create alien\n");
+			gi.dprintf("Could not create alien\n");
 	}
 
 	G_FindEdictGroups();
@@ -457,7 +457,7 @@ static void G_ActorSpawn (edict_t *ent)
 
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
-		Com_Printf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
+		gi.dprintf("G_ActorSpawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 

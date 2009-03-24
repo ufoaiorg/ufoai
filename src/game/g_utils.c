@@ -134,7 +134,7 @@ void G_PrintStats (const char *buffer)
 	t = localtime(&aclock);
 
 	Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
-	Com_Printf("[STATS] %s - %s\n", tbuf, buffer);
+	gi.dprintf("[STATS] %s - %s\n", tbuf, buffer);
 	if (logstatsfile)
 		fprintf(logstatsfile, "[STATS] %s - %s\n", tbuf, buffer);
 }

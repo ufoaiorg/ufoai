@@ -117,7 +117,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 					mod *= mor_pain->value;
 				break;
 			default:
-				Com_Printf("Undefined morale modifier type %i\n", type);
+				gi.dprintf("Undefined morale modifier type %i\n", type);
 				mod = 0;
 			}
 			/* clamp new morale */

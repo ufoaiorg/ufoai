@@ -908,23 +908,6 @@ edict_t *G_GetFloorItems (edict_t * ent)
 	return NULL;
 }
 
-#if 0
-/**
- * @brief Debug functions that prints the content of a floor (container) at a given position in the map.
- * @param[in] Position of the floor in the map.
- */
-static void G_PrintFloorToConsole (pos3_t pos)
-{
-	edict_t *floor = G_GetFloorItemsFromPos(pos);
-	Com_DPrintf(DEBUG_GAME, "G_PrintFloorToConsole: Printing containers from floor at %i,%i,%i.\n", pos[0], pos[1], pos[2]);
-	if (floor) {
-		INVSH_PrintContainerToConsole(&floor->i);
-	} else {
-		Com_DPrintf(DEBUG_GAME, "G_PrintFloorToConsole: No Floor items found.\n");
-	}
-}
-#endif
-
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
  * @param[in] player The player the edict/soldier belongs to.
@@ -981,7 +964,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		newFloor = qtrue;
 	} else if (from->id == gi.csi->idFloor && !floor) {
 		/* We are moving from the floor, but no existing edict for this floor-tile found -> thi should never be the case. */
-		Com_Printf("G_ClientInvMove: No source-floor found.\n");
+		gi.dprintf("G_ClientInvMove: No source-floor found.\n");
 		return;
 	} else {
 		/* There already exists an edict for this floor-tile. */
@@ -990,9 +973,8 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 
 	/* search for space */
 	if (tx == NONE) {
-		/*		assert(ty == NONE); */
 		if (ty != NONE)
-			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
+			gi.dprintf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
 
 		ic = Com_SearchInInventory(&ent->i, from, fItem->x, fItem->y);
 		if (ic)
@@ -1076,9 +1058,6 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 
 		/* send ammo message to all --- it's fun to hear that sound */
 		gi.AddEvent(PM_ALL, EV_INV_RELOAD);
-		/** @todo is this condition below needed? or is 'num' enough?
-		 * probably needed so that red rifle on the floor changes color,
-		 * but this needs testing. */
 		gi.WriteShort(to->id == gi.csi->idFloor ? floor->number : num);
 		gi.WriteByte(item.t->ammo);
 		gi.WriteByte(item.m->idx);
@@ -1091,7 +1070,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 			return;
 		} else { /* ia == IA_RELOAD_SWAP */
 			if (!fItemBackupPtr) {
-				Com_Printf("G_ClientInvMove: Didn't find invList of the item you're moving\n");
+				gi.dprintf("G_ClientInvMove: Didn't find invList of the item you're moving\n");
 				gi.EndEvents();
 				return;
 			}
@@ -1163,7 +1142,7 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 
 /** @brief Move items to adjacent locations if the containers on the current
  * floor edict are full */
-/*#define ADJACENT*/
+/* #define ADJACENT */
 
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
@@ -1216,7 +1195,7 @@ static void G_InventoryToFloor (edict_t * ent)
 		for (ic = ent->i.c[k]; ic; ic = next) {
 			int x, y;
 #ifdef ADJACENT
-			vec2_t oldPos; /**< if we have to place it to adjacent  */
+			vec2_t oldPos; /* if we have to place it to adjacent  */
 #endif
 			/* Save the next inv-list before it gets overwritten below.
 			 * Do not put this in the "for" statement,
@@ -1246,7 +1225,7 @@ static void G_InventoryToFloor (edict_t * ent)
 						floorAdjacent->visflags = 0;
 					}
 
-					Com_FindSpace(&floorAdjacent->i, &ic->item, gi.csi->idFloor, &x, &y, ic);
+					Com_FindSpace(&floorAdjacent->i, &ic->item, &gi.csi->ids[gi.csi->idFloor], &x, &y, ic);
 					if (x != NONE) {
 						ic->x = x;
 						ic->y = y;
@@ -1315,7 +1294,7 @@ static void G_BuildForbiddenList (int team)
 	if (team)
 		vis_mask = 1 << team;
 	else
-		vis_mask = 0xFFFFFFFF;
+		vis_mask = PM_ALL;
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (!ent->inuse)
@@ -1475,11 +1454,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* no floor inventory at this point */
 			FLOOR(ent) = NULL;
 
-			/* BEWARE: do not print anything (even with DPrintf)
-			 * in functions called in this loop
-			 * without setting 'steps = 0' afterwards;
-			 * also do not send events except G_AppearPerishEvent
-			 * without manually setting 'steps = 0' */
 			while (numdv > 0) {
 				/* get next dv */
 				numdv--;
@@ -1757,7 +1731,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		ent->state |= STATE_REACTION_ONCE;
 		break;
 	default:
-		Com_Printf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
+		gi.dprintf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
 		return;
 	}
 
@@ -2180,7 +2154,7 @@ int G_ClientAction (player_t * player)
 	num = gi.ReadShort();
 
 	if (num < 0 || num >= MAX_EDICTS) {
-		Com_Printf("Invalid edict num %i\n", num);
+		gi.dprintf("Invalid edict num %i\n", num);
 		return action;
 	}
 
@@ -2215,7 +2189,7 @@ int G_ClientAction (player_t * player)
 		ent = g_edicts + num;
 
 		if (from < 0 || from >= gi.csi->numIDs || to < 0 || to >= gi.csi->numIDs) {
-			Com_Printf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
+			gi.dprintf("G_ClientAction: PA_INVMOVE Container index out of range. (from: %i, to: %i)\n", from, to);
 		} else {
 			invDef_t *fromPtr = &gi.csi->ids[from];
 			invDef_t *toPtr = &gi.csi->ids[to];
@@ -2323,7 +2297,7 @@ static void G_GetTeam (player_t * player)
 		/* assign random valid team number */
 		randomSpot = (int) (frand() * (spawnSpots - 1) + 0.5);
 		player->pers.team = spawnCheck[randomSpot];
-		Com_Printf("You have been randomly assigned to team %i\n", player->pers.team);
+		gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
 	}
 
@@ -2332,20 +2306,20 @@ static void G_GetTeam (player_t * player)
 		player->pers.team = TEAM_PHALANX;
 	else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
-		Com_Printf("Get a team for teamplay for %s\n", player->pers.netname);
+		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "cl_teamnum"));
 		/* civilians are at team zero */
 		if (i > TEAM_CIVILIAN && sv_maxteams->integer >= i) {
 			player->pers.team = i;
 			gi.BroadcastPrintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
 		} else {
-			Com_Printf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
+			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			player->pers.team = TEAM_DEFAULT;
 		}
 	} else {
 		qboolean teamAvailable;
 		/* search team */
-		Com_Printf("Getting a multiplayer team for %s\n", player->pers.netname);
+		gi.dprintf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = TEAM_CIVILIAN + 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
@@ -2374,7 +2348,7 @@ static void G_GetTeam (player_t * player)
 			Com_DPrintf(DEBUG_GAME, "Assigning %s to Team %i\n", player->pers.netname, i);
 			player->pers.team = i;
 		} else {
-			Com_Printf("No free team - disconnecting '%s'\n", player->pers.netname);
+			gi.dprintf("No free team - disconnecting '%s'\n", player->pers.netname);
 			G_ClientDisconnect(player);
 		}
 	}

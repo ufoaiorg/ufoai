@@ -149,7 +149,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 		 * try to hide behind the door when there is an alien */
 		break;
 	default:
-		Com_Printf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
+		gi.dprintf("Invalid team in AI_CheckUsingDoor: %i for ent type: %i\n",
 			ent->team, ent->type);
 		break;
 	}
@@ -494,7 +494,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 		if (ent->state & ~STATE_PANIC && teamDef->weapons)
 			return AI_FighterCalcBestAction(ent, to, aia);
 	} else
-		Com_Printf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
+		gi.dprintf("AI_CivilianCalcBestAction: Error - civilian team with no teamdef\n");
 
 	/* run away */
 	minDist = minDistCivilian = minDistFighter = RUN_AWAY_DIST * UNIT_SIZE;
@@ -973,7 +973,7 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
 			/* actor cannot handle equipment but no weapons */
 			INVSH_EquipActorMelee(&ent->i, &ent->chr);
 		else
-			Com_Printf("AI_InitPlayer: actor with no equipment\n");
+			gi.dprintf("AI_InitPlayer: actor with no equipment\n");
 	}
 }
 
@@ -1016,7 +1016,7 @@ static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 	else if (team == TEAM_ALIEN)
 		AIL_InitActor(ent, "alien", "default");
 	else
-		Com_Printf("AI_InitPlayer: unknown team AI\n");
+		gi.dprintf("AI_InitPlayer: unknown team AI\n");
 
 	/* link the new actor entity */
 	gi.LinkEdict(ent);
@@ -1048,7 +1048,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 	/* check spawn point number */
 	if (numPoints < numSpawn) {
-		Com_Printf("Not enough spawn points for team %i\n", team);
+		gi.dprintf("Not enough spawn points for team %i\n", team);
 		numSpawn = numPoints;
 	}
 
@@ -1097,7 +1097,7 @@ player_t *AI_CreatePlayer (int team)
 	int i;
 
 	if (!sv_ai->integer) {
-		Com_Printf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
+		gi.dprintf("AI deactivated - set sv_ai cvar to 1 to activate it\n");
 		return NULL;
 	}
 
@@ -1115,7 +1115,7 @@ player_t *AI_CreatePlayer (int team)
 				G_SpawnAIPlayer(p, ai_numaliens->integer);
 			else
 				G_SpawnAIPlayer(p, ai_numactors->integer);
-			Com_Printf("Created AI player (team %i)\n", team);
+			gi.dprintf("Created AI player (team %i)\n", team);
 			return p;
 		}
 

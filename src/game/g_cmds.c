@@ -205,7 +205,7 @@ static void G_ListMissionScore_f (void)
 	if (gi.Cmd_Argc() == 2) {
 		team = atoi(gi.Cmd_Argv(1));
 	} else {
-		Com_Printf("Usage: %s <teamnumber>\n", gi.Cmd_Argv(0));
+		gi.dprintf("Usage: %s <teamnumber>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
@@ -216,73 +216,73 @@ static void G_ListMissionScore_f (void)
 
 			assert(ent->chr.scoreMission);
 
-			Com_Printf("Soldier: %s\n", ent->chr.name);
+			gi.dprintf("Soldier: %s\n", ent->chr.name);
 
 			/* ===================== */
-			Com_Printf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
+			gi.dprintf("  Move: Normal=%i Crouched=%i\n", ent->chr.scoreMission->movedNormal, ent->chr.scoreMission->movedCrouched);
 
-			Com_Printf("  Kills:");
+			gi.dprintf("  Kills:");
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {
-				Com_Printf(" %i", ent->chr.scoreMission->kills[i]);
+				gi.dprintf(" %i", ent->chr.scoreMission->kills[i]);
 			}
-			Com_Printf("\n");
+			gi.dprintf("\n");
 
-			Com_Printf("  Stuns:");
+			gi.dprintf("  Stuns:");
 			for (i = 0; i < KILLED_NUM_TYPES; i++) {
-				Com_Printf(" %i", ent->chr.scoreMission->stuns[i]);
+				gi.dprintf(" %i", ent->chr.scoreMission->stuns[i]);
 			}
-			Com_Printf("\n");
+			gi.dprintf("\n");
 
 			/* ===================== */
-			Com_Printf("  Fired:");
+			gi.dprintf("  Fired:");
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				Com_Printf(" %i", ent->chr.scoreMission->fired[i]);
+				gi.dprintf(" %i", ent->chr.scoreMission->fired[i]);
 			}
-			Com_Printf("\n");
+			gi.dprintf("\n");
 
-			Com_Printf("  Hits:\n");
+			gi.dprintf("  Hits:\n");
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				Com_Printf("    Skill%i: ",i);
+				gi.dprintf("    Skill%i: ",i);
 				for (j = 0; j < KILLED_NUM_TYPES; j++) {
-					Com_Printf(" %i", ent->chr.scoreMission->hits[i][j]);
+					gi.dprintf(" %i", ent->chr.scoreMission->hits[i][j]);
 				}
-				Com_Printf("\n");
+				gi.dprintf("\n");
 			}
 
 			/* ===================== */
-			Com_Printf("  Fired Splash:");
+			gi.dprintf("  Fired Splash:");
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				Com_Printf(" %i", ent->chr.scoreMission->firedSplash[i]);
+				gi.dprintf(" %i", ent->chr.scoreMission->firedSplash[i]);
 			}
-			Com_Printf("\n");
+			gi.dprintf("\n");
 
-			Com_Printf("  Hits Splash:\n");
+			gi.dprintf("  Hits Splash:\n");
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				Com_Printf("    Skill%i: ",i);
+				gi.dprintf("    Skill%i: ",i);
 				for (j = 0; j < KILLED_NUM_TYPES; j++) {
-					Com_Printf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
+					gi.dprintf(" %i", ent->chr.scoreMission->hitsSplash[i][j]);
 				}
-				Com_Printf("\n");
+				gi.dprintf("\n");
 			}
 
-			Com_Printf("  Splash Damage:\n");
+			gi.dprintf("  Splash Damage:\n");
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				Com_Printf("    Skill%i: ",i);
+				gi.dprintf("    Skill%i: ",i);
 				for (j = 0; j < KILLED_NUM_TYPES; j++) {
-					Com_Printf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
+					gi.dprintf(" %i", ent->chr.scoreMission->hitsSplashDamage[i][j]);
 				}
-				Com_Printf("\n");
+				gi.dprintf("\n");
 			}
 
 			/* ===================== */
-			Com_Printf("  Kills per skill:");
+			gi.dprintf("  Kills per skill:");
 			for (i = 0; i < SKILL_NUM_TYPES; i++) {
-				Com_Printf(" %i", ent->chr.scoreMission->skillKills[i]);
+				gi.dprintf(" %i", ent->chr.scoreMission->skillKills[i]);
 			}
-			Com_Printf("\n");
+			gi.dprintf("\n");
 
 			/* ===================== */
-			Com_Printf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
+			gi.dprintf("  Heal (received): %i\n", ent->chr.scoreMission->heal);
 		}
 	}
 }
@@ -295,10 +295,10 @@ void G_InvList_f (const player_t *player)
 	edict_t *ent;
 	int i;
 
-	Com_Printf("Print inventory for '%s'\n", player->pers.netname);
+	gi.dprintf("Print inventory for '%s'\n", player->pers.netname);
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && G_IsLivingActor(ent) && ent->team == player->pers.team) {
-			Com_Printf("actor: '%s'\n", ent->chr.name);
+			gi.dprintf("actor: '%s'\n", ent->chr.name);
 			INVSH_PrintContainerToConsole(&ent->i);
 		}
 }
@@ -309,7 +309,7 @@ static void G_TouchEdict_f (void)
 	int i, j;
 
 	if (gi.Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		gi.dprintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
@@ -319,7 +319,7 @@ static void G_TouchEdict_f (void)
 
 	e = &g_edicts[i];
 	if (!e->touch) {
-		Com_Printf("No touch function for entity %s\n", e->classname);
+		gi.dprintf("No touch function for entity %s\n", e->classname);
 		return;
 	}
 
@@ -329,7 +329,7 @@ static void G_TouchEdict_f (void)
 	if (j == globals.num_edicts)
 		return;
 
-	Com_Printf("Call touch function for %s\n", e->classname);
+	gi.dprintf("Call touch function for %s\n", e->classname);
 	e->touch(e, &g_edicts[j]);
 }
 
@@ -339,7 +339,7 @@ static void G_UseEdict_f (void)
 	int i;
 
 	if (gi.Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
+		gi.dprintf("Usage: %s <entnum>\n", gi.Cmd_Argv(0));
 		return;
 	}
 
@@ -349,11 +349,11 @@ static void G_UseEdict_f (void)
 
 	e = &g_edicts[i];
 	if (!e->use) {
-		Com_Printf("No use function for entity %s\n", e->classname);
+		gi.dprintf("No use function for entity %s\n", e->classname);
 		return;
 	}
 
-	Com_Printf("Call use function for %s\n", e->classname);
+	gi.dprintf("Call use function for %s\n", e->classname);
 	e->use(e);
 }
 
