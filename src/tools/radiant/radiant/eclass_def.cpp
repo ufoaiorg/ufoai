@@ -40,7 +40,7 @@
 
 #define OLDPARSING 1
 
-static const char* EClass_GetFilename ()
+static const char* EClass_GetFilename (void)
 {
 	return "ufos/entities.ufo";
 }
@@ -244,17 +244,17 @@ static EntityClass *Eclass_InitFromText (const char **text)
  * @note opposed to old parsing code this adds attributes for all definitions,
  * not only for the ones that get special treatment in gui.
  */
-static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t keydef)
+static void Eclass_ParseAttribute (EntityClass *e, entityKeyDef_t *keydef)
 {
-	bool mandatory = (keydef.flags & ED_MANDATORY);
+	const bool mandatory = (keydef->flags & ED_MANDATORY);
 	/* we use attribute key as its type, only for some types this is really used */
-	const char *attributeName = keydef.name;
-	char* value = "";
-	char* desc = "";
-	if (keydef.defaultVal)
-		value = keydef.defaultVal;
-	if (keydef.desc)
-		desc = keydef.desc;
+	const char *attributeName = keydef->name;
+	const char* value = "";
+	const char* desc = "";
+	if (keydef->defaultVal)
+		value = keydef->defaultVal;
+	if (keydef->desc)
+		desc = keydef->desc;
 	EntityClassAttribute attribute =  EntityClassAttribute(attributeName, _(attributeName), mandatory, value, desc);
 	EntityClass_insertAttribute(*e, attributeName, attribute);
 }
@@ -301,7 +301,7 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 				Eclass_ParseFlags(e, (const char **) &flags);
 				g_free(flags);
 			} else {
-				Eclass_ParseAttribute(e, keydef);
+				Eclass_ParseAttribute(e, &keydef);
 			}
 		} else if (!strcmp(keyName, "classname")) {
 			/* ignore, read from head */
@@ -311,19 +311,19 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 			StringOutputStream buffer(string_length(keydef.desc));
 			buffer << PathCleaned(e->m_modelpath.c_str());
 			e->m_modelpath = buffer.c_str();
-			bool mandatory = (keydef.flags & ED_MANDATORY);
+			const bool mandatory = (keydef.flags & ED_MANDATORY);
 			EntityClass_insertAttribute(*e, "model", EntityClassAttribute("model", "Model", mandatory));
 		} else {
 			/* all other keys are valid attribute keys */
-			Eclass_ParseAttribute(e, keydef);
+			Eclass_ParseAttribute(e, &keydef);
 		}
 	}
 
 	/**
-	 *  @todo direction and angle are 2 types used for different display
-	 *  (see entityinspector DirectionAttribute and AngleAttribute)
-	 *  the problem is that different entities have "angle" property, but different defines what values are valid
-	 *  which is actually not reflected by this code. Perhaps we should introduce different types for these representations.
+	 * @todo direction and angle are 2 types used for different display
+	 * (see entityinspector DirectionAttribute and AngleAttribute)
+	 * the problem is that different entities have "angle" property, but different defines what values are valid
+	 * which is actually not reflected by this code. Perhaps we should introduce different types for these representations.
 	 */
 	EntityClassAttribute *angle = e->getAttribute("angle");
 	if (angle) {
