@@ -101,7 +101,8 @@ RADIANT_SRCS_CPP = \
 	$(RADIANT_BASE)/libs/profile/file.cpp \
 
 RADIANT_SRCS_C = \
-	shared/parse.c
+	shared/parse.c \
+	shared/entitiesdef.c
 
 RADIANT_CPP_OBJS=$(RADIANT_SRCS_CPP:%.cpp=$(BUILDDIR)/tools/radiant/%.o)
 RADIANT_C_OBJS=$(RADIANT_SRCS_C:%.c=$(BUILDDIR)/tools/radiant_c/%.o)
