@@ -31,10 +31,6 @@
 /** Stores level.activeTeam while G_CanReactionFire() is abusing it. */
 int turnTeam;
 
-/** if actors appear or perish we have to handle the movement of the current
- * actor a little bit different */
-static qboolean sentAppearPerishEvent;
-
 static chrScoreMission_t scoreMission[MAX_EDICTS];
 static int scoreMissionNum = 0;
 
@@ -3184,5 +3180,4 @@ void G_ResetClientData (void)
 {
 	scoreMissionNum = 0;
 	memset(scoreMission, 0, sizeof(scoreMission));
-	sentAppearPerishEvent = qfalse;
 }
