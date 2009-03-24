@@ -4,7 +4,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 Original file from Quake 2 v3.21: quake2-2.31/server/sv_send.c
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -119,7 +119,9 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 }
 
 /**
- * @brief Sends the contents of msg to a subset of the clients,then frees msg
+ * @brief Sends the contents of msg to a subset of the clients, then frees msg
+ * @param[in] mask Bitmask of the players to send the multicast to
+ * @param[in,out] msg The message to send to the clients
  */
 void SV_Multicast (int mask, struct dbuffer *msg)
 {
@@ -128,7 +130,7 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 
 	/* send the data to all relevant clients */
 	for (j = 0, c = svs.clients; j < sv_maxclients->integer; j++, c++) {
-		if (c->state == cs_free)
+		if (c->state < cs_connected)
 			continue;
 		if (!(mask & (1 << j)))
 			continue;
@@ -139,13 +141,6 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 
 	free_dbuffer(msg);
 }
-
-
-/*
-===============================================================================
-FRAME UPDATES
-===============================================================================
-*/
 
 /**
  * @brief Each entity can have eight independant sound sources, like voice, weapon, feet, etc.

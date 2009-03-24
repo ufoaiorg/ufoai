@@ -328,10 +328,10 @@ int G_CheckVis(edict_t *check, qboolean perish);
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
 
-void G_AppearPerishEvent(int player_mask, int appear, edict_t * check);
-int G_VisToPM(int vis_mask);
-void G_SendInventory(int player_mask, edict_t * ent);
-int G_TeamToPM(int team);
+void G_AppearPerishEvent(unsigned int player_mask, int appear, edict_t * check);
+unsigned int G_VisToPM(unsigned int vis_mask);
+void G_SendInventory(unsigned int player_mask, edict_t * ent);
+unsigned int G_TeamToPM(int team);
 
 void G_SpawnEntities(const char *mapname, const char *entities);
 qboolean G_RunFrame(void);

@@ -772,15 +772,8 @@ void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 	if (dv != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */
-		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS) {
-			const int status = G_DoTurn(aiActor, dir & (CORE_DIRECTIONS - 1));
-			if (status) {
-				/* send the turn */
-				gi.AddEvent(G_VisToPM(aiActor->visflags), EV_ACTOR_TURN);
-				gi.WriteShort(aiActor->number);
-				gi.WriteByte(aiActor->dir);
-			}
-		}
+		if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
+			G_DoTurn(aiActor, dir & (CORE_DIRECTIONS - 1));
 	}
 }
 

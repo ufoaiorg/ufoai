@@ -55,10 +55,10 @@ qboolean G_IsLivingActor (const edict_t *ent)
  * @note E.g. multiplayer team play can have more than one human player on the
  * same team.
  */
-int G_TeamToPM (int team)
+unsigned int G_TeamToPM (int team)
 {
 	const player_t *p;
-	int player_mask, i;
+	unsigned int player_mask, i;
 
 	player_mask = 0;
 
@@ -77,10 +77,10 @@ int G_TeamToPM (int team)
  * @return Returns a playermask for all the teams of the connected players that
  * are marked in the given @c vis_mask.
  */
-int G_VisToPM (int vis_mask)
+unsigned int G_VisToPM (unsigned int vis_mask)
 {
 	const player_t *p;
-	int player_mask, i;
+	unsigned int player_mask, i;
 
 	player_mask = 0;
 
@@ -236,7 +236,7 @@ static void G_SendParticle (int player_mask, edict_t *ent)
  * @sa G_AppearPerishEvent
  * @sa CL_InvAdd
  */
-void G_SendInventory (int player_mask, edict_t * ent)
+void G_SendInventory (unsigned int player_mask, edict_t * ent)
 {
 	invList_t *ic;
 	unsigned short nr = 0;
@@ -251,9 +251,8 @@ void G_SendInventory (int player_mask, edict_t * ent)
 			nr++;
 
 	/* return if no inventory items to send */
-	if (nr == 0 && ent->type != ET_ITEM) {
+	if (nr == 0 && ent->type != ET_ITEM)
 		return;
-	}
 
 	gi.AddEvent(player_mask, EV_INV_ADD);
 
@@ -285,7 +284,7 @@ static void G_EdictAppear (int player_mask, edict_t *ent)
  * @param[in] check The edict we are talking about
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
+void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check)
 {
 	/* test for pointless player mask */
 	if (!player_mask)
@@ -350,10 +349,7 @@ void G_AppearPerishEvent (int player_mask, int appear, edict_t *check)
 		/* disappear */
 		gi.AddEvent(player_mask, EV_ENT_PERISH);
 		gi.WriteShort(check->number);
-	} else
-		return;
-
-	sentAppearPerishEvent = qtrue;
+	}
 }
 
 /**
@@ -781,11 +777,13 @@ int G_DoTurn (edict_t * ent, byte dir)
 		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
 		status |= G_CheckVisTeam(ent->team, NULL, qfalse);
-#if 0
-		/* stop turning if a new living player (which is not in our team) appears */
-		if (stop && (status & VIS_STOP))
-			break;
-#endif
+	}
+
+	if (status) {
+		/* send the turn */
+		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
+		gi.WriteShort(ent->number);
+		gi.WriteByte(ent->dir);
 	}
 
 	return status;
@@ -1416,12 +1414,12 @@ static inline void G_ClientStartMove (edict_t *ent, int player_mask)
  * @param[in] visTeam
  * @param[in] num Edict index to move
  * @param[in] to The grid position to walk to
- * @param[in] stop qfalse means that VIS_STOP is ignored
+ * @param[in] stopOnVisStop qfalse means that VIS_STOP is ignored
  * @param[in] quiet Don't print the console message (G_ActionCheck) if quiet is true.
  * @sa CL_ActorStartMove
  * @sa PA_MOVE
  */
-void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stop, qboolean quiet)
+void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean stopOnVisStop, qboolean quiet)
 {
 	edict_t *ent;
 	int status, initTU;
@@ -1480,32 +1478,26 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		tu = 0;
 		initTU = ent->TU;
 
-		Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
-
 		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouching_state))
 				!= ROUTING_UNREACHABLE) {
 			/* dv indicates the direction traveled to get to the new cell and the original cell height.
-			 * dv = (dir << 3) | z
-			 */
-			if (!(numdv < MAX_DVTAB)) {
+			 * dv = (dir << 3) | z */
+			if (numdv >= MAX_DVTAB) {
 				gi.GridDumpDVTable(gi.pathingMap);
 				for (numdv = 0; numdv < MAX_DVTAB; numdv++)
 					Com_Printf(" %i", olddvtab[numdv]);
-				Sys_Error("G_ClientMove: numdv == %i (%i %i %i) ", numdv, to[0], to[1], to[2]);
+				gi.error("G_ClientMove: numdv == %i (%i %i %i) ", numdv, to[0], to[1], to[2]);
 			}
 			old_z = pos[2];
 			olddvtab[numdv] = dv;
 			PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
 			dvtab[numdv++] = NewDVZ(dv, old_z); /* Replace the z portion of the DV value so we can get back to where we were. */
-			Com_DPrintf(DEBUG_PATHING, "Next pos: (%i, %i, %i, %i) [%i->%i].\n", pos[0], pos[1], pos[2],
-					crouching_state, dv, dvtab[numdv - 1]);
 		}
 
 		if (VectorCompare(pos, ent->pos)) {
 			/* everything ok, found valid route */
 			/* create movement related events */
 			steps = 0;
-			sentAppearPerishEvent = qfalse;
 
 			/* no floor inventory at this point */
 			FLOOR(ent) = NULL;
@@ -1523,18 +1515,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* turn around first */
 				status = G_DoTurn(ent, dir);
-				if (status) {
-					/* send the turn */
-					gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
-					gi.WriteShort(ent->number);
-					gi.WriteByte(ent->dir);
-				}
-				if (stop && (status & VIS_STOP))
+				if (stopOnVisStop && (status & VIS_STOP))
 					break;
-				if (status || sentAppearPerishEvent) {
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
-				}
 
 				/* decrease TUs */
 				/* moveDiagonal = !((dvtab[numdv] & (DIRECTIONS - 1)) < 4); */
@@ -1569,7 +1551,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					}
 
 					/* write move header if not yet done */
-					if (!steps) {
+					if (!gi.GetEvent() != EV_ACTOR_MOVE) {
 						gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 						gi.WriteShort(num);
 						/* stepAmount is a pointer to a location in the netchannel
@@ -1588,8 +1570,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 						gi.WriteDummyByte(0); /* z */
 					}
 
-					assert(stepAmount);
-
 					/* the moveinfo stuff is used inside the G_PhysicsStep think function */
 					if (ent->moveinfo.steps >= MAX_DVTAB) {
 						ent->moveinfo.steps = 0;
@@ -1599,11 +1579,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					ent->moveinfo.visflags[ent->moveinfo.steps] = ent->visflags;
 					ent->moveinfo.steps++;
 
-					/* we are using another steps here, because the steps
-					 * in the moveinfo maybe are not 0 again */
-					steps++;
 					/* store steps in netchannel */
-					*stepAmount = steps;
+					(*stepAmount)++;
 					/* store the position too */
 					*(stepAmount + 1) = ent->pos[0];
 					*(stepAmount + 2) = ent->pos[1];
@@ -1620,7 +1597,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					if (status & VIS_APPEAR) {
 						const int deltaVisMask = (oldState ^ ent->visflags) & ent->visflags;
 						const int playerMask = G_VisToPM(deltaVisMask);
-						/* the player appear in mid move, so we have to inform the players
+						/* the actor appears in mid move, so we have to inform the players
 						 * that are now able to see the actor */
 						G_ClientStartMove(ent, playerMask);
 					}
@@ -1636,18 +1613,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					/* check triggers at new position but only if no actor appeared */
 					if (G_TouchTriggers(ent)) {
 						triggers = qtrue;
-						if (!client_action) {
+						if (!client_action)
 							status |= VIS_STOP;
-							steps = 0;
-							sentAppearPerishEvent = qfalse;
-						}
 					}
 					/* state has changed - maybe we walked on a trigger_hurt */
-					if (oldState != ent->state) {
+					if (oldState != ent->state)
 						status |= VIS_STOP;
-						steps = 0;
-						sentAppearPerishEvent = qfalse;
-					}
 				} else if (crouching_state == 1) { /* Actor is standing */
 					G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
 				} else { /* Actor is crouching */
@@ -1656,14 +1627,13 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 				/* check for reaction fire */
 				if (G_ReactToMove(ent, qtrue)) {
-					if (G_ReactToMove(ent, qfalse)) {
+					if (G_ReactToMove(ent, qfalse))
 						status |= VIS_STOP;
-					}
+
 					autoCrouchRequired = qfalse;
 					/** @todo if the attacker is invisible let the target turn in the shooting direction
 					 * of the attacker (@see G_Turn) */
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
+					/*G_DoTurn(ent->reactionTarget, dir);*/
 				}
 
 				/* Restore ent->TU because the movement code relies on it not being modified! */
@@ -1678,13 +1648,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					return;
 				}
 
-				if (stop && (status & VIS_STOP))
+				if (stopOnVisStop && (status & VIS_STOP))
 					break;
-
-				if (sentAppearPerishEvent) {
-					steps = 0;
-					sentAppearPerishEvent = qfalse;
-				}
 			}
 
 			/* now we can send other events again - the EV_ACTOR_MOVE event has ended */
@@ -1793,7 +1758,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
 
-				if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
+				if (player->pers.ai && checkaction)
 					gi.error("AI reaction fire is server side only");
 			}
 		}
@@ -1802,7 +1767,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
 
-		if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
+		if (player->pers.ai && checkaction)
 			gi.error("AI reaction fire is server side only");
 
 		/* Enable multi reaction fire. */
@@ -1812,7 +1777,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 		/* Disable reaction fire. */
 		ent->state &= ~STATE_REACTION;
 
-		if ((ent->team == TEAM_ALIEN || ent->team == TEAM_CIVILIAN) && checkaction)
+		if (player->pers.ai && checkaction)
 			gi.error("AI reaction fire is server side only");
 
 		/* Turn on single reaction fire. */
@@ -2642,7 +2607,8 @@ void G_ClientTeamInfo (player_t * player)
 			}
 
 			if (!ent) {
-				Com_DPrintf(DEBUG_GAME, "G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
+				Com_DPrintf(DEBUG_GAME,
+						"G_ClientTeamInfo: Could not spawn actor because no useable spawn-point is available (%i)\n",
 						dummyFieldSize);
 				G_ClientSkipActorInfo();
 				continue;
@@ -2981,7 +2947,7 @@ static void G_SendEdictsAndBrushModels (int team)
 			}
 			break;
 
-		/* send trigger entities to the client to display them (needs mins, maxs set) */
+			/* send trigger entities to the client to display them (needs mins, maxs set) */
 		case SOLID_TRIGGER:
 			if (sv_send_edicts->integer) {
 				gi.AddEvent(G_TeamToPM(team), EV_ADD_EDICT);

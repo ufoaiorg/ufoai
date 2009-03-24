@@ -33,8 +33,8 @@ game_export_t *ge;
 /** this is true when there was an event - and false if the event reached the end */
 static qboolean pfe_pending = qfalse;
 /** player mask of the current event */
-static int pfe_mask = 0;
-static struct dbuffer *pfe_msg = NULL;
+static int pfe_mask;
+static struct dbuffer *pfe_msg;
 struct dbuffer *sv_msg = NULL;
 
 /**
@@ -147,6 +147,7 @@ static void SV_Configstring (int index, const char *val)
 		NET_WriteShort(msg, index);
 		NET_WriteString(msg, val);
 
+		/* send to all clients */
 		SV_Multicast(~0, msg);
 	}
 }
@@ -280,6 +281,19 @@ static void SV_ReadFormat (const char *format, ...)
 }
 
 /**
+ * @sa gi.AbortEvents
+ */
+static void SV_AbortEvents (void)
+{
+	if (!pfe_pending)
+		return;
+
+	pfe_pending = qfalse;
+	free_dbuffer(pfe_msg);
+	pfe_msg = NULL;
+}
+
+/**
  * @sa gi.EndEvents
  */
 static void SV_EndEvents (void)
@@ -297,21 +311,31 @@ static void SV_EndEvents (void)
 /**
  * @sa gi.AddEvent
  */
-static void SV_AddEvent (int mask, int eType)
+static void SV_AddEvent (unsigned int mask, int eType)
 {
 	/* finish the last event */
 	if (pfe_pending)
 		SV_EndEvents();
 
-	Com_DPrintf(DEBUG_EVENTSYS, "new event '%i' for mask %i\n", eType, mask);
 	/* start the new event */
 	pfe_pending = qtrue;
 	pfe_mask = mask;
 	pfe_msg = new_dbuffer();
-	NET_WriteByte(pfe_msg, svc_event);
 
 	/* write header */
+	NET_WriteByte(pfe_msg, svc_event);
 	NET_WriteByte(pfe_msg, eType);
+}
+
+/**
+ * @return The current active event or -1 if no event is active at the moment
+ */
+static int SV_GetEvent (void)
+{
+	if (!pfe_pending)
+		return -1;
+
+	return pfe_mask;
 }
 
 /**
@@ -463,8 +487,10 @@ void SV_InitGameProgs (void)
 	import.WriteAngle = SV_WriteAngle;
 	import.WriteFormat = SV_WriteFormat;
 
+	import.AbortEvents = SV_AbortEvents;
 	import.EndEvents = SV_EndEvents;
 	import.AddEvent = SV_AddEvent;
+	import.GetEvent = SV_GetEvent;
 
 	import.ReadChar = SV_ReadChar;
 	import.ReadByte = SV_ReadByte;

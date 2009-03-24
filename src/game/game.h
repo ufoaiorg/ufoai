@@ -197,8 +197,10 @@ typedef struct {
 	void (IMPORT *WriteAngle) (float f);
 	void (IMPORT *WriteFormat) (const char *format, ...);
 
+	void (IMPORT *AbortEvents) (void);
 	void (IMPORT *EndEvents) (void);
-	void (IMPORT *AddEvent) (int mask, int eType);
+	void (IMPORT *AddEvent) (unsigned int mask, int eType);
+	int (IMPORT *GetEvent) (void);
 
 	/* network messaging (reading) */
 	/* only use after a call from one of these functions: */
