@@ -950,25 +950,6 @@ menu mp_create_server extends abstract_multiplayer
 			max			8
 			delta		1
 		}
-
-		// ===================
-		// AI_AUTOJOIN
-		// ===================
-		string ai_autojoin_str
-		{
-			string		"_AI autojoin:"
-			tooltip		"_AI autojoin on free teams"
-			pos			"85 150"
-			size		"280 20"
-		}
-		checkbox ai_autojoin_value
-		{
-			current		"*cvar ai_autojoin"
-			pos			"410 150"
-			size		"20 18"
-			image		"menu/checkbox_blue"
-		}
-
 	}
 
 	panel panel_security {

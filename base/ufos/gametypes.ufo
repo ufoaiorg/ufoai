@@ -9,7 +9,6 @@ gametype 1on1
 		sv_maxsoldiersperteam 4
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 1
 	}
 }
@@ -23,7 +22,6 @@ gametype 1on1on1
 		sv_maxsoldiersperteam 4
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 1
 	}
 }
@@ -37,7 +35,6 @@ gametype 2on2
 		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 2
 	}
 }
@@ -51,7 +48,6 @@ gametype 2on2on2
 		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 2
 	}
 }
@@ -65,7 +61,6 @@ gametype 3on3
 		sv_maxsoldiersperteam 6
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 3
 	}
 }
@@ -79,7 +74,6 @@ gametype 3on3on3
 		sv_maxsoldiersperteam 6
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 3
 	}
 }
@@ -93,7 +87,6 @@ gametype 4on4
 		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 4
 	}
 }
@@ -107,7 +100,6 @@ gametype 4on4on4
 		sv_maxsoldiersperteam 8
 		ai_numactors 0
 		sv_ai 0
-		ai_autojoin 0
 //		sv_maxplayersperteam 4
 	}
 }
@@ -121,7 +113,6 @@ gametype coop2
 		sv_maxsoldiersperteam 8
 		ai_numactors 8
 		sv_ai 1
-		ai_autojoin 0
 //		sv_maxplayersperteam 2
 	}
 }
@@ -135,7 +126,6 @@ gametype coop3
 		sv_maxsoldiersperteam 6
 		ai_numactors 6
 		sv_ai 1
-		ai_autojoin 0
 //		sv_maxplayersperteam 3
 	}
 }
@@ -149,7 +139,6 @@ gametype coop4
 		sv_maxsoldiersperteam 8
 		ai_numactors 8
 		sv_ai 1
-		ai_autojoin 0
 //		sv_maxplayersperteam 4
 	}
 }
