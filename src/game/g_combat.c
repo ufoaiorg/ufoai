@@ -390,7 +390,7 @@ static void G_Damage (edict_t *target, const fireDef_t *fd, int damage, edict_t 
 				/* The 'attacker' is healing the target. */
 				/* Update stats here to get info on how many TUs the target received. */
 				if (target->chr.scoreMission)
-					target->chr.scoreMission->heal += -damage;
+					target->chr.scoreMission->heal += abs(damage);
 
 				/** @todo Do the same for "attacker" but as "applied" healing
 				 * e.g. attacker->chr->scoreMission.healOthers += -damage; ? */
@@ -632,6 +632,8 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 		tr = gi.trace(oldPos, NULL, NULL, newPos, ent, MASK_SHOT);
 		if (tr.fraction < 1.0 || time + dt > 4.0) {
 			const float bounceFraction = tr.surface ? gi.GetBounceFraction(tr.surface->name) : 1.0f;
+			int i;
+
 			/* advance time */
 			dt += tr.fraction * GRENADE_DT;
 			time += dt;
@@ -640,13 +642,10 @@ static void G_ShootGrenade (player_t *player, edict_t *ent, const fireDef_t *fd,
 			if (tr.fraction < 1.0)
 				VectorCopy(tr.endpos, newPos);
 
-#if 0
-			/* please debug, currently it causes double sounds */
 			/* calculate additional visibility */
 			for (i = 0; i < MAX_TEAMS; i++)
-				if (G_TeamPointVis(i, newPos))
+				if (player->pers.team != level.activeTeam && G_TeamPointVis(i, newPos))
 					mask |= 1 << i;
-#endif
 
 			if
 				/* enough bouncing around */
