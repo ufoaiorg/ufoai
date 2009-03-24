@@ -601,7 +601,6 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 			if (checkPoint->count < ent->count) {
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
 					i++;
-					Com_DPrintf(DEBUG_GAME, "civ found civtarget with %i\n", checkPoint->count);
 					/* test for time and distance */
 					length = ent->TU - gi.MoveLength(gi.pathingMap, checkPoint->pos, crouching_state, qtrue);
 					bestActionPoints = GUETE_MISSION_TARGET + length;
@@ -726,11 +725,6 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	if (G_IsDead(ent))
 		memset(&bestAia, 0, sizeof(bestAia));
 
-	if (g_aidebug->integer)
-		Com_DPrintf(DEBUG_GAME, "bestAIAction.to (%i %i %i) stop (%i %i %i)\n",
-			(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
-			(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2]);
-
 	return bestAia;
 }
 #endif /* !LUA_AI */
@@ -752,8 +746,6 @@ void G_AddToWayPointList (edict_t *ent)
 		i++;
 		e->groupChain = ent;
 	}
-
-	Com_DPrintf(DEBUG_GAME, "%i waypoints in this map\n", i);
 }
 
 /**
@@ -809,11 +801,8 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	}
 
 	/* if both hands are empty, attempt to get a weapon out of backpack if TUs permit */
-	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent)) {
+	if (ent->chr.teamDef->weapons && !LEFT(ent) && !RIGHT(ent))
 		G_ClientGetWeaponFromInventory(player, ent->number, QUIET);
-		if (LEFT(ent) || RIGHT(ent))
-			Com_DPrintf(DEBUG_GAME, "AI_ActorThink: Got weapon from inventory\n");
-	}
 
 	bestAia = AI_PrepBestAction(player, ent);
 

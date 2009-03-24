@@ -50,10 +50,8 @@ void G_FreeEdict (edict_t *ent)
  */
 qboolean G_UseEdict (edict_t *ent)
 {
-	if (!ent) {
-		Com_DPrintf(DEBUG_GAME, "G_UseEdict: No edict given\n");
+	if (!ent)
 		return qfalse;
-	}
 
 	/* no use function assigned */
 	if (!ent->use)
@@ -94,8 +92,6 @@ static const objDef_t* G_GetObjectForFiredef (const fireDef_t* fd)
 			}
 		}
 	}
-
-	Com_DPrintf(DEBUG_GAME, "Could not find an objDef_t for fireDef_t '%s'\n", fd->name);
 
 	return NULL;
 }

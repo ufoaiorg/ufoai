@@ -117,17 +117,13 @@ cvar_t *difficulty;
 
 static invList_t invChain[MAX_INVLIST];
 
-
-/*=================================================================== */
-
-
 /**
  * @brief This will be called when the game library is first loaded
  * @note only happens when a new game/map is started
  */
 static void G_Init (void)
 {
-	Com_Printf("==== InitGame ====\n");
+	gi.dprintf("==== InitGame ====\n");
 
 	/* noset vars */
 	sv_dedicated = gi.Cvar_Get("sv_dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
@@ -250,7 +246,7 @@ static void G_Init (void)
  */
 static void G_Shutdown (void)
 {
-	Com_Printf("==== ShutdownGame ====\n");
+	gi.dprintf("==== ShutdownGame ====\n");
 
 	if (logstatsfile)
 		fclose(logstatsfile);
@@ -349,10 +345,10 @@ void Com_DPrintf (int level, const char *msg, ...)
 static void CheckNeedPass (void)
 {
 	if (password->modified) {
-		char *need = "0";
+		const char *need = "0";
 		password->modified = qfalse;
 
-		if (*password->string && Q_strcasecmp(password->string, "none"))
+		if (password->string[0] != '\0' && Q_strcasecmp(password->string, "none"))
 			need = "1";
 
 		gi.Cvar_Set("sv_needpass", need);
@@ -438,7 +434,6 @@ static int G_GetEarnedExperience (abilityskills_t skill, character_t *chr)
 		exp = 200 * (chr->scoreMission->hits[skill][KILLED_ALIENS] + chr->scoreMission->hitsSplash[skill][KILLED_ALIENS]);
 		break;
 	default:
-		Com_DPrintf(DEBUG_GAME, "G_GetEarnedExperience: invalid skill type\n");
 		break;
 	}
 
@@ -458,11 +453,6 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	abilityskills_t i = 0;
 	unsigned int maxXP, gainedXP, totalGainedXP;
 
-	if (!chr) {
-		Com_DPrintf(DEBUG_GAME, "G_UpdateCharacterSkills: Bad character_t pointer given.");
-		return;
-	}
-
 	/* Robots/UGVs do not get skill-upgrades. */
 	if (chr->emplType == EMPL_ROBOT)
 		return;
@@ -476,7 +466,8 @@ static void G_UpdateCharacterSkills (character_t *chr)
 		chr->score.experience[i] += gainedXP;
 		totalGainedXP += gainedXP;
 		chr->score.skills[i] = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i])/100, 0.6f));
-		Com_DPrintf(DEBUG_GAME, "Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.\n", chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]);
+		G_PrintStats(va("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.\n",
+				chr->name, gainedXP, i, chr->score.experience[i], chr->score.skills[i] - chr->score.initialSkills[i]));
 	}
 
 	/* Health isn't part of abilityskills_t, so it needs to be handled separately. */
@@ -486,7 +477,8 @@ static void G_UpdateCharacterSkills (character_t *chr)
 
 	chr->score.experience[i] += gainedXP;
 	chr->maxHP = chr->score.initialSkills[i] + (int) (pow((float) (chr->score.experience[i]) / 100, 0.6f));
-	Com_DPrintf(DEBUG_GAME, "Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.\n", chr->name, gainedXP, i, chr->score.experience[i], chr->maxHP - chr->score.initialSkills[i]);
+	G_PrintStats(va("Soldier %s earned %d experience points in skill #%d (total experience: %d). It is now %d higher.\n",
+			chr->name, gainedXP, i, chr->score.experience[i], chr->maxHP - chr->score.initialSkills[i]));
 }
 
 /**
@@ -500,16 +492,13 @@ void G_EndGame (int team)
 {
 	edict_t *ent;
 	int i, j = 0;
-	int	number_of_teams;
 
 	G_PrintStats(va("End of game - Team %i is the winner", team));
 
 	/* Calculate new scores/skills for the soldiers. */
-	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
-		if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX) {
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX)
 			G_UpdateCharacterSkills(&ent->chr);
-		}
-	}
 
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
@@ -537,24 +526,22 @@ void G_EndGame (int team)
 		}
 
 	/* send results */
-	Com_DPrintf(DEBUG_GAME, "Sending results for game won by team %i.\n", team);
 	gi.AddEvent(PM_ALL, EV_RESULTS);
-	number_of_teams = MAX_TEAMS;
-	gi.WriteByte(number_of_teams);
+	gi.WriteByte(MAX_TEAMS);
 	gi.WriteByte(team);
 
-	for (i = 0; i < number_of_teams; i++) {
+	for (i = 0; i < MAX_TEAMS; i++) {
 		gi.WriteByte(level.num_spawned[i]);
 		gi.WriteByte(level.num_alive[i]);
 	}
 
-	for (i = 0; i < number_of_teams; i++)
-		for (j = 0; j < number_of_teams; j++) {
+	for (i = 0; i < MAX_TEAMS; i++)
+		for (j = 0; j < MAX_TEAMS; j++) {
 			gi.WriteByte(level.num_kills[i][j]);
 		}
 
-	for (i = 0; i < number_of_teams; i++)
-		for (j = 0; j < number_of_teams; j++) {
+	for (i = 0; i < MAX_TEAMS; i++)
+		for (j = 0; j < MAX_TEAMS; j++) {
 			gi.WriteByte(level.num_stuns[i][j]);
 		}
 
@@ -564,8 +551,6 @@ void G_EndGame (int team)
 			 && ent->team == TEAM_PHALANX)
 			j++;
 
-	Com_DPrintf(DEBUG_GAME, "Sending results with %i actors.\n", j);
-
 	/* number of soldiers */
 	gi.WriteByte(j);
 
@@ -573,7 +558,6 @@ void G_EndGame (int team)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
 			 && ent->team == TEAM_PHALANX) {
-				Com_DPrintf(DEBUG_GAME, "Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);
 			}
 	}
@@ -585,7 +569,7 @@ void G_EndGame (int team)
 
 	if (level.nextmap[0] != '\0') {
 		char command[MAX_VAR];
-		/** @todo We have to make sure, that the teaminfo is not completly resent
+		/** @todo We have to make sure, that the teaminfo is not completely resent
 		 * otherwise we would have the same team again and died actors are not taken
 		 * into account */
 		Com_sprintf(command, sizeof(command), "map %s\n", level.nextmap);
@@ -659,7 +643,7 @@ qboolean G_RunFrame (void)
 			level.roundstartTime = level.time;
 			/* don't allow smaller values here */
 			if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
-				Com_Printf("The minimum value for sv_roundtimelimit is 30\n");
+				gi.dprintf("The minimum value for sv_roundtimelimit is 30\n");
 				gi.Cvar_Set("sv_roundtimelimit", "30");
 			}
 			sv_roundtimelimit->modified = qfalse;

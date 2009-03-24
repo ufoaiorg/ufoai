@@ -134,10 +134,8 @@ static void ED_CallSpawn (edict_t * ent)
 {
 	const spawn_t *s;
 
-	if (!ent->classname) {
-		Com_DPrintf(DEBUG_GAME, "ED_CallSpawn: NULL classname\n");
+	if (!ent->classname)
 		return;
-	}
 
 	/* check normal spawn functions */
 	for (s = spawns; s->name; s++) {
@@ -148,7 +146,6 @@ static void ED_CallSpawn (edict_t * ent)
 		}
 	}
 
-	Com_DPrintf(DEBUG_GAME, "%s doesn't have a spawn function\n", ent->classname);
 	ent->inuse = qfalse;
 }
 
@@ -220,7 +217,6 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 			return;
 		}
 	}
-	Com_DPrintf(DEBUG_GAME, "ED_ParseField: %s is not a valid field\n", key);
 }
 
 /**
@@ -260,9 +256,6 @@ static const char *ED_ParseEdict (const char *data, edict_t * ent)
 		 * and are immediately discarded by ufo */
 		if (keyname[0] == '_')
 			continue;
-
-		Com_DPrintf(DEBUG_GAME, "Entity:%i class:%s key:%s\n",
-			ent->number, ent->classname, keyname);
 
 		ED_ParseField(keyname, c, ent);
 	}
@@ -313,8 +306,6 @@ static void G_FindEdictGroups (void)
 			}
 		}
 	}
-
-	Com_DPrintf(DEBUG_GAME, "%i groups with %i entities\n", c, c2);
 }
 
 /**
@@ -360,14 +351,6 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 
 		entities = ED_ParseEdict(entities, ent);
 
-		Com_DPrintf(DEBUG_GAME, "entity: model (%s) num: %i solid:%i mins: %i %i %i maxs: %i %i %i absmins: %i %i %i absmaxs: %i %i %i origin: %i %i %i\n",
-			ent->model ? ent->model : "", ent->mapNum, ent->solid,
-			(int)ent->mins[0], (int)ent->mins[1], (int)ent->mins[2],
-			(int)ent->maxs[0], (int)ent->maxs[1], (int)ent->maxs[2],
-			(int)ent->absmin[0], (int)ent->absmin[1], (int)ent->absmin[2],
-			(int)ent->absmax[0], (int)ent->absmax[1], (int)ent->absmax[2],
-			(int)ent->origin[0], (int)ent->origin[1], (int)ent->origin[2]);
-
 		ent->mapNum = entnum++;
 
 		/* Set the position of the entity */
@@ -386,19 +369,10 @@ void G_SpawnEntities (const char *mapname, const char *entities)
 		if (AI_CreatePlayer(TEAM_CIVILIAN) == NULL)
 			Com_Printf("Could not create civilian\n");
 	}
-#ifdef DEBUG
-	else
-		Com_Printf("No civilian spawn points in this map or civilians deactivated\n");
-#endif
 
 	if ((sv_maxclients->integer == 1 || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
 			Com_Printf("Could not create alien\n");
-#ifdef DEBUG
-	} else {
-		Com_Printf("No alien spawn points in this map or aliens are deactivated for multiplayer\n");
-		Com_Printf("(sv_maxclients %i, ai_numactors: %i, alien spawnpoints: %i)\n", sv_maxclients->integer, ai_numactors->integer, level.num_spawnpoints[TEAM_ALIEN]);
-#endif
 	}
 
 	G_FindEdictGroups();
@@ -515,7 +489,7 @@ static void G_Actor2x2Spawn (edict_t *ent)
 		ent->pos[2] = PATHFINDING_HEIGHT - 1;
 	ent->pos[2] = gi.GridFall(gi.routingMap, ent->fieldSize, ent->pos);
 	if (ent->pos[2] >= PATHFINDING_HEIGHT)
-		Com_Printf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
+		gi.dprintf("G_Actor2x2Spawn: Warning: z level is out of bounds: %i\n", ent->pos[2]);
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 
 	/* link it for collision detection */
@@ -751,7 +725,7 @@ static qboolean Use_Mission (edict_t *self)
 {
 	edict_t *target = G_FindTargetEntity(self->target);
 	if (!target) {
-		Com_Printf("Target '%s' wasn't found for misc_mission\n", self->target);
+		gi.dprintf("Target '%s' wasn't found for misc_mission\n", self->target);
 		G_FreeEdict(self);
 		return qfalse;
 	}
@@ -820,11 +794,8 @@ static void Think_Mission (edict_t *self)
 			if (chain->time) {
 				/* not every edict in the group chain has
 				 * been occupied long enough */
-				if (!chain->count || level.actualRound - chain->count < chain->time) {
-					Com_DPrintf(DEBUG_GAME, "time: %i, %i, %i\n", chain->count,
-						level.actualRound, chain->time);
+				if (!chain->count || level.actualRound - chain->count < chain->time)
 					return;
-				}
 			}
 			/* not destroyed yet */
 			if ((chain->flags & FL_DESTROYABLE) && chain->HP)
@@ -886,7 +857,7 @@ static void SP_misc_mission (edict_t *ent)
 
 	if (!ent->HP && !ent->time && !ent->target) {
 		G_FreeEdict(ent);
-		Com_Printf("misc_mission given with no objective\n");
+		gi.dprintf("misc_mission given with no objective\n");
 		return;
 	}
 
@@ -951,11 +922,11 @@ static void SP_misc_model (edict_t *ent)
 				ent->solid = SOLID_BBOX;
 				gi.LinkEdict(ent);
 			} else {
-				Com_Printf("Could not get mins/maxs for model '%s'\n", ent->model);
+				gi.dprintf("Could not get mins/maxs for model '%s'\n", ent->model);
 				G_FreeEdict(ent);
 			}
 		} else {
-			Com_Printf("server_solid misc_model with no model given\n");
+			gi.dprintf("server_solid misc_model with no model given\n");
 			G_FreeEdict(ent);
 		}
 	} else {
@@ -974,14 +945,14 @@ static void SP_misc_item (edict_t *ent)
 	objDef_t *od;
 
 	if (!ent->item) {
-		Com_Printf("No item defined in misc_item\n");
+		gi.dprintf("No item defined in misc_item\n");
 		G_FreeEdict(ent);
 		return;
 	}
 
 	od = INVSH_GetItemByID(ent->item);
 	if (!od) {
-		Com_Printf("Could not find item '%s' for misc_item\n", ent->item);
+		gi.dprintf("Could not find item '%s' for misc_item\n", ent->item);
 		G_FreeEdict(ent);
 		return;
 	}

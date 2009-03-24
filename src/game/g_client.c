@@ -200,7 +200,7 @@ void G_GiveTimeUnits (int team)
 		}
 }
 
-static void G_SendState (int player_mask, edict_t * ent)
+static void G_SendState (unsigned int player_mask, edict_t * ent)
 {
 	gi.AddEvent(player_mask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
@@ -216,7 +216,7 @@ static void G_SendState (int player_mask, edict_t * ent)
  * @param player_mask The clients that should see the particle
  * @param ent The particle to spawn
  */
-static void G_SendParticle (int player_mask, edict_t *ent)
+static void G_SendParticle (unsigned int player_mask, edict_t *ent)
 {
 	gi.AddEvent(player_mask, EV_SPAWN_PARTICLE);
 	gi.WriteShort(ent->number);
@@ -260,7 +260,7 @@ void G_SendInventory (unsigned int player_mask, edict_t * ent)
 		}
 }
 
-static void G_EdictAppear (int player_mask, edict_t *ent)
+static void G_EdictAppear (unsigned int player_mask, edict_t *ent)
 {
 	gi.AddEvent(player_mask, EV_ENT_APPEAR);
 	gi.WriteShort(ent->number);
@@ -567,9 +567,7 @@ void G_SendInvisible (player_t* player)
 				/* not visible for this team - so add the le only */
 				if (!(ent->visflags & (1 << team))) {
 					/* parsed in CL_ActorAdd */
-					Com_DPrintf(DEBUG_GAME, "G_SendInvisible: ent->player: %i - ent->team: %i (%s)\n", ent->pnum,
-							ent->team, ent->chr.name);
-					gi.AddEvent(P_MASK(player), EV_ACTOR_ADD);
+					gi.AddEvent(G_PlayerToPM(player), EV_ACTOR_ADD);
 					gi.WriteShort(ent->number);
 					gi.WriteByte(ent->team);
 					gi.WriteByte(ent->chr.teamDef ? ent->chr.teamDef->idx : NONE);
@@ -604,7 +602,7 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
 
 			if (vis & VIS_CHANGE) {
 				ent->visflags ^= (1 << player->pers.team);
-				G_AppearPerishEvent(P_MASK(player), vis & VIS_YES, ent);
+				G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent);
 
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
@@ -1134,12 +1132,10 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 
 	/* Update reaction firemode when something is moved from/to a hand. */
 	if (from->id == gi.csi->idRight || to->id == gi.csi->idRight) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove: Something moved in/out of right hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
 		gi.WriteShort(0); /**< hand = right */
 	} else if (from->id == gi.csi->idLeft || to->id == gi.csi->idLeft) {
-		Com_DPrintf(DEBUG_GAME, "G_ClientInvMove:  Something moved in/out of left hand.\n");
 		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 		gi.WriteShort(num);
 		gi.WriteShort(1); /**< hand = left */
@@ -1213,12 +1209,9 @@ static void G_InventoryToFloor (edict_t * ent)
 
 		/* skip csi->idArmour, we will collect armours using idArmour container,
 		 * not idFloor */
-		if (k == gi.csi->idArmour) {
-			if (ent->i.c[gi.csi->idArmour])
-				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: this actor has armour: %s\n",
-						ent->i.c[gi.csi->idArmour]->item.t->name);
+		if (k == gi.csi->idArmour)
 			continue;
-		}
+
 		/* now cycle through all items for the container of the character (or the entity) */
 		for (ic = ent->i.c[k]; ic; ic = next) {
 			int x, y;
@@ -1272,19 +1265,12 @@ static void G_InventoryToFloor (edict_t * ent)
 					continue;
 				}
 #endif
-				if (strcmp(ic->item.t->type, "armour"))
-					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Warning: could not drop item to floor: %s\n",
-							ic->item.t->id);
-				if (!Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic))
-					Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: Error: could not remove item: %s\n", ic->item.t->id);
+				Com_RemoveFromInventory(&ent->i, &gi.csi->ids[k], ic);
 			} else {
 				ic->x = x;
 				ic->y = y;
 				ic->next = FLOOR(floor);
 				FLOOR(floor) = ic;
-#ifdef PARANOID
-				Com_DPrintf(DEBUG_GAME, "G_InventoryToFloor: item to floor: %s\n", ic->item.t->id);
-#endif
 			}
 		}
 
@@ -1294,17 +1280,11 @@ static void G_InventoryToFloor (edict_t * ent)
 
 	FLOOR(ent) = FLOOR(floor);
 
-	if (ent->i.c[gi.csi->idArmour])
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor: this actor has armour in idArmour container: %s\n",
-				ent->i.c[gi.csi->idArmour]->item.t->name);
-	else
-		Com_DPrintf(DEBUG_GAME, "At the end of G_InventoryToFloor: this actor has NOT armour in idArmour container\n");
-
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
 #ifdef ADJACENT
 	if (floorAdjacent)
-	G_CheckVis(floorAdjacent, qtrue);
+		G_CheckVis(floorAdjacent, qtrue);
 #endif
 }
 
@@ -1478,7 +1458,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			if (numdv >= MAX_DVTAB) {
 				gi.GridDumpDVTable(gi.pathingMap);
 				for (numdv = 0; numdv < MAX_DVTAB; numdv++)
-					Com_Printf(" %i", olddvtab[numdv]);
+					gi.dprintf(" %i", olddvtab[numdv]);
 				gi.error("G_ClientMove: numdv == %i (%i %i %i) ", numdv, to[0], to[1], to[2]);
 			}
 			old_z = pos[2];
@@ -2956,7 +2936,7 @@ void G_ClientBegin (player_t* player)
 	}
 
 	/** @todo This should be a client side error */
-	if (!P_MASK(player)) {
+	if (!G_PlayerToPM(player)) {
 		gi.BroadcastPrintf(PRINT_CONSOLE, "%s tried to join - but server is full\n", player->pers.netname);
 		return;
 	}
@@ -2967,7 +2947,7 @@ void G_ClientBegin (player_t* player)
 	gi.ConfigString(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
 	/* spawn camera (starts client rendering) */
-	gi.AddEvent(P_MASK(player), EV_START | EVENT_INSTANTLY);
+	gi.AddEvent(G_PlayerToPM(player), EV_START | EVENT_INSTANTLY);
 	gi.WriteByte(sv_teamplay->integer);
 
 	/* ensure that the start event is send */
@@ -3016,7 +2996,7 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* do all the init events here... */
 	/* reset the data */
-	gi.AddEvent(P_MASK(player), EV_RESET | EVENT_INSTANTLY);
+	gi.AddEvent(G_PlayerToPM(player), EV_RESET | EVENT_INSTANTLY);
 	gi.WriteByte(player->pers.team);
 	gi.WriteByte(level.activeTeam);
 
@@ -3052,7 +3032,7 @@ qboolean G_ClientSpawn (player_t * player)
 			gi.WriteShort(ent->state);
 		}
 
-	gi.AddEvent(P_MASK(player), EV_START_DONE);
+	gi.AddEvent(G_PlayerToPM(player), EV_START_DONE);
 	/* ensure that the last event is send, too */
 	gi.EndEvents();
 

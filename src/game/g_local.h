@@ -46,14 +46,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** the "gameversion" client command will print this plus compile date */
 #define	GAMEVERSION	"baseufo"
 
-/*================================================================== */
-
 #define MAX_SPOT_DIST	4096 /* 768 */
 
-#define P_MASK(p)		((p)->num < game.sv_maxplayersperteam ? 1<<((p)->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
-#define G_PlayerToPM(player) (1 << (player)->num)
+#define G_PlayerToPM(player) ((player)->num < game.sv_maxplayersperteam ? 1 << ((player)->num) : 0)
 
 /** server is running at 10 fps */
 #define	SERVER_FRAME_SECONDS		0.1

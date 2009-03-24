@@ -44,8 +44,6 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, inv
 
 			if (fdArray[fmIdx].time + sv_reaction_leftover->integer <= ent->TU
 			 && fdArray[fmIdx].range > VectorDist(ent->origin, target->origin)) {
-				Com_DPrintf(DEBUG_GAME, "G_GetFiringTUs: entnumber:%i firemode:%i entteam:%i\n",
-					ent->number, fmIdx, ent->team);
 				return fdArray[fmIdx].time + sv_reaction_leftover->integer;
 			}
 		}
@@ -203,9 +201,6 @@ static qboolean G_FireWithJudgementCall (player_t *player, edict_t *shooter, pos
 	for (i = 0; i < 100; i++)
 		G_ClientShoot(player, shooter->number, at, type, firemode, &mock, qfalse, 0);
 
-	Com_DPrintf(DEBUG_GAME, "G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
-		mock.enemy, minhit, mock.friend, mock.civilian, mock.friend + mock.civilian, maxff, mock.self);
-
 	ff = mock.friend + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemy >= minhit)
 		return G_ClientShoot(player, shooter->number, at, type, firemode, NULL, qfalse, 0);
@@ -265,7 +260,6 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	Com_DPrintf(DEBUG_GAME, "G_ResolveRF: reaction shot: fd:%i\n", firemode);
 	tookShot = G_FireWithJudgementCall(player, ent, ent->reactionTarget->pos, fire_hand_type, firemode);
 
 	/* Revert active team. */

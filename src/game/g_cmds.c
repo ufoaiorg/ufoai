@@ -91,8 +91,7 @@ static qboolean G_CheckFlood (player_t *player)
 static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 {
 	int j;
-	const char *p, *token;
-	char text[2048];
+	char text[256];
 
 	if (gi.Cmd_Argc() < 2 && !arg0)
 		return;
@@ -110,16 +109,11 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 		Q_strcat(text, " ", sizeof(text));
 		Q_strcat(text, gi.Cmd_Args(), sizeof(text));
 	} else {
-		p = gi.Cmd_Args();
-
-		token = COM_Parse(&p);
+		const char *p = gi.Cmd_Args();
+		const char *token = COM_Parse(&p);
 
 		Q_strcat(text, token, sizeof(text));
 	}
-
-	/* don't let text be too long for malicious reasons */
-	if (strlen(text) > 150)
-		text[150] = 0;
 
 	Q_strcat(text, "\n", sizeof(text));
 
@@ -178,8 +172,6 @@ static void G_StunTeam_f (void)
 	/* with a parameter we will be able to kill a specific team */
 	if (gi.Cmd_Argc() == 2)
 		teamToKill = atoi(gi.Cmd_Argv(1));
-
-	Com_DPrintf(DEBUG_GAME, "G_StunTeam: stun team %i\n", teamToKill);
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && G_IsLivingActor(ent)) {
