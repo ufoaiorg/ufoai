@@ -72,6 +72,10 @@ int G_TeamToPM (int team)
 
 /**
  * @brief Converts vis mask to player mask
+ * @param[in] vis_mask The visibility bit mask (contains the team numbers) that
+ * is converted to a player mask
+ * @return Returns a playermask for all the teams of the connected players that
+ * are marked in the given @c vis_mask.
  */
 int G_VisToPM (int vis_mask)
 {
