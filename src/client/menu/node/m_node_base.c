@@ -257,6 +257,7 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
 	int col, row;
 	building_t *building;
 	const int itemToolTipWidth = 250;
+	char *tooltipText;
 
 	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
@@ -266,7 +267,10 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
 	if (!building)
 		return;
 
-	MN_DrawTooltip("f_small", _(building->name), x, y, itemToolTipWidth, 0);
+	tooltipText = _(building->name);
+	if (!B_CheckBuildingDependencesStatus(baseCurrent, building))
+		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
+	MN_DrawTooltip("f_small", tooltipText, x, y, itemToolTipWidth, 0);
 }
 
 /**
