@@ -185,7 +185,6 @@ extern cvar_t *ai_equipment;
 extern cvar_t *ai_numaliens;
 extern cvar_t *ai_numcivilians;
 extern cvar_t *ai_numactors;
-extern cvar_t *ai_autojoin;
 
 extern cvar_t *mob_death;
 extern cvar_t *mob_wound;

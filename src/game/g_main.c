@@ -70,7 +70,6 @@ cvar_t *ai_equipment;
 cvar_t *ai_numaliens;
 cvar_t *ai_numcivilians;
 cvar_t *ai_numactors;
-cvar_t *ai_autojoin;
 
 /* morale cvars */
 cvar_t *mob_death;
@@ -179,8 +178,6 @@ static void G_Init (void)
 	ai_numcivilians = gi.Cvar_Get("ai_numcivilians", "10", 0, "How many civilians in this battle");
 	/* aliens in multiplayer */
 	ai_numactors = gi.Cvar_Get("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
-	/* autojoin aliens */
-	ai_autojoin = gi.Cvar_Get("ai_autojoin", "0", 0, "Auto join ai players if no human player was found for a team");
 
 	mob_death = gi.Cvar_Get("mob_death", "10", CVAR_LATCH|CVAR_NOSET, NULL);
 	mob_wound = gi.Cvar_Get("mob_wound", "0.1", CVAR_LATCH|CVAR_NOSET, NULL);

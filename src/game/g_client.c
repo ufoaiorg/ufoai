@@ -2775,7 +2775,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 {
 	player_t *p;
 	qboolean sanity = qfalse;
-	int i, lastTeam, nextTeam;
+	int i, lastTeam;
 
 	/* inactive players can't end their inactive round :) */
 	if (level.activeTeam != player->pers.team)
@@ -2821,16 +2821,14 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	p = NULL;
 	while (level.activeTeam == TEAM_NO_ACTIVE) {
 		/* search next team */
-		nextTeam = TEAM_NO_ACTIVE;
+		int nextTeam = TEAM_NO_ACTIVE;
 
 		for (i = lastTeam + 1; i != lastTeam; i++) {
 			if (i >= MAX_TEAMS) {
 				if (!sanity)
 					sanity = qtrue;
-				else {
-					Com_Printf("Not enough spawn positions in this map\n");
-					break;
-				}
+				else
+					gi.error("Could not find the next team for the round.");
 				i = 0;
 			}
 
@@ -2838,12 +2836,6 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 				nextTeam = i;
 				break;
 			}
-		}
-
-		if (nextTeam == TEAM_NO_ACTIVE) {
-			level.activeTeam = lastTeam;
-			gi.EndEvents();
-			return;
 		}
 
 		/* search corresponding player (even ai players) */
@@ -2854,12 +2846,8 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 				break;
 			}
 
-		if (level.activeTeam == TEAM_NO_ACTIVE && sv_ai->integer && ai_autojoin->integer) {
-			/* no corresponding player found - create ai player */
-			p = AI_CreatePlayer(nextTeam);
-			if (p)
-				level.activeTeam = nextTeam;
-		}
+		if (level.activeTeam == TEAM_NO_ACTIVE)
+			gi.error("Could not find any living player on team %i", nextTeam);
 
 		lastTeam = nextTeam;
 	}
@@ -2873,7 +2861,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* store the round start time to be able to abort the round after a give time */
 	level.roundstartTime = level.time;
 
-	/** Update the state of stuned team-members. @note The actual statistics are sent in G_GiveTimeUnits below! */
+	/* Update the state of stuned team-members. The actual statistics are sent below! */
 	G_UpdateStunState(level.activeTeam);
 
 	/* Give the actors of the now active team their TUs. */
