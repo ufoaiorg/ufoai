@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 # define	ED_MAX_DEFS		64
 
 # define	ED_ERROR		-1
@@ -79,9 +80,9 @@ typedef struct entityDef_s {
 	int 			numKeyDefs;
 } entityDef_t;
 
-int ED_GetDefaultFloat (float *defaultBuf, const int n, const entityKeyDef_t *kd);
-int ED_GetDefaultInt (int *defaultBuf, const int n, const entityKeyDef_t *kd);
-int ED_GetDefaultString (char *defaultBuf, const size_t n, const entityKeyDef_t *kd);
+int ED_GetDefaultFloat(float *defaultBuf, const int n, const entityKeyDef_t *kd);
+int ED_GetDefaultInt(int *defaultBuf, const int n, const entityKeyDef_t *kd);
+int ED_GetDefaultString(char *defaultBuf, const size_t n, const entityKeyDef_t *kd);
 
 int ED_GetIntVector(const entityKeyDef_t *kd, int v[], const int n);
 int ED_Check(const char *classname, const char *key, const char *value);
@@ -93,8 +94,9 @@ int ED_Parse(const char *data_p);
 const char *ED_GetLastError(void);
 void ED_Free(void);
 
-int numEntityDefs;
-entityDef_t entityDefs[ED_MAX_DEFS + 1];
+extern int numEntityDefs;
+extern entityDef_t entityDefs[ED_MAX_DEFS + 1];
+
 #ifdef __cplusplus
 }
 #endif

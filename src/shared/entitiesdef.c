@@ -41,6 +41,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static char lastErr[ED_MAX_ERR_LEN]; /**< for storing last error message */
 static char lastErrExtra[ED_MAX_ERR_LEN]; /**< temporary storage for extra information to be added to lastErr */
 
+int numEntityDefs;
+entityDef_t entityDefs[ED_MAX_DEFS + 1];
+
 /**
  * @brief write an error message and exit the current function returning ED_ERROR
  * @sa ED_TEST_RETURN_ERROR
