@@ -53,6 +53,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define P_MASK(p)		((p)->num < game.sv_maxplayersperteam ? 1<<((p)->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
+#define G_PlayerToPM(player) (1 << (player)->num)
+
 /** server is running at 10 fps */
 #define	SERVER_FRAME_SECONDS		0.1
 
@@ -256,9 +258,6 @@ qboolean G_UseEdict(edict_t *ent);
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
 void G_ReactToPreFire(edict_t *target);
 void G_ReactToPostFire(edict_t *target);
-/* uncomment this to enable debugging the reaction fire */
-/*#define DEBUG_REACTION*/
-
 
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(const edict_t * ent);

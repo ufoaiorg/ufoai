@@ -2910,11 +2910,10 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
  * @sa EV_ADD_BRUSH_MODEL
  * @param[in] team The team the edicts are send to
  */
-static void G_SendEdictsAndBrushModels (int team)
+static void G_ClientSendEdictsAndBrushModels (const player_t *player)
 {
 	int i;
 	edict_t *ent;
-	qboolean end = qfalse;
 
 	/* make SOLID_BSP edicts visible to the client */
 	for (i = 1, ent = g_edicts + 1; i < globals.num_edicts; ent++, i++) {
@@ -2928,7 +2927,7 @@ static void G_SendEdictsAndBrushModels (int team)
 		case SOLID_BSP:
 			/* skip the world(s) in case of map assembly */
 			if (ent->type) {
-				gi.AddEvent(G_TeamToPM(team), EV_ADD_BRUSH_MODEL);
+				gi.AddEvent(G_PlayerToPM(player), EV_ADD_BRUSH_MODEL);
 				gi.WriteShort(ent->type);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(ent->modelindex);
@@ -2939,14 +2938,13 @@ static void G_SendEdictsAndBrushModels (int team)
 				gi.WriteShort(ent->speed);
 				gi.WriteByte(ent->angle);
 				ent->visflags |= ~ent->visflags;
-				end = qtrue;
 			}
 			break;
 
 			/* send trigger entities to the client to display them (needs mins, maxs set) */
 		case SOLID_TRIGGER:
 			if (sv_send_edicts->integer) {
-				gi.AddEvent(G_TeamToPM(team), EV_ADD_EDICT);
+				gi.AddEvent(G_PlayerToPM(player), EV_ADD_EDICT);
 				gi.WriteShort(ent->type);
 				gi.WriteShort(ent->number);
 				gi.WritePos(ent->mins);
@@ -2959,9 +2957,6 @@ static void G_SendEdictsAndBrushModels (int team)
 			break;
 		}
 	}
-
-	if (end)
-		gi.EndEvents();
 }
 
 /**
@@ -3063,7 +3058,7 @@ qboolean G_ClientSpawn (player_t * player)
 	G_SendPlayerStats(player);
 
 	/* send things like doors and breakables */
-	G_SendEdictsAndBrushModels(player->pers.team);
+	G_ClientSendEdictsAndBrushModels(player);
 
 	/* give time units */
 	G_GiveTimeUnits(player->pers.team);
