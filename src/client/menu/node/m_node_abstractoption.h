@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../../shared/shared.h"
 
-#define MAX_MENUOPTIONS 128
+#define MAX_MENUOPTIONS 256
 #define OPTION_MAX_VALUE_LENGTH 32
 
 struct menuIcon_s;
