@@ -98,6 +98,10 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 	if (!ent->inuse || !G_IsLivingActor(ent))
 		return qfalse;
 
+	/* Don't react in your own turn */
+	if (ent->team == level.activeTeam)
+		return qfalse;
+
 	/* check ent has reaction fire enabled */
 	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION))
 		return qfalse;
@@ -117,11 +121,6 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 	if (target->team == TEAM_CIVILIAN || target->team == ent->team)
 		if (!(ent->state & STATE_SHAKEN) || (float) ent->morale / mor_shaken->value > frand())
 			return qfalse;
-
-	/* Don't react in your own turn, trust your commander. Can't use
-	 * level.activeTeam, because this function touches it recursively. */
-	if (ent->team == turnTeam)
-		return qfalse;
 
 	/* okay do it then */
 	return qtrue;
@@ -237,8 +236,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 
 	/* ent can't take a reaction shot if it's not possible - and check that
 	 * the target is still alive*/
-	if (!G_CanReactionFire(ent, ent->reactionTarget)
-	 || G_IsDead(ent->reactionTarget)) {
+	if (!G_CanReactionFire(ent, ent->reactionTarget) || G_IsDead(ent->reactionTarget)) {
 		ent->reactionTarget = NULL;
 		return qfalse;
 	}

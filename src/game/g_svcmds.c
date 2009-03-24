@@ -328,11 +328,11 @@ static void SVCmd_StartGame_f (void)
 				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
-	gi.dprintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
+	gi.dprintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n",
+			playerCount, teamCount);
 
 	G_PrintStats(va("Starting new game: %s", level.mapname));
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
-	turnTeam = level.activeTeam;
 	/* spawn the player (only human controlled players) */
 	for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
 		if (!p->inuse)
@@ -344,8 +344,9 @@ static void SVCmd_StartGame_f (void)
 		}
 		G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 	}
-	G_PrintStats(va("Team %i got the first round", turnTeam));
-	gi.BroadcastPrintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
+	G_PrintStats(va("Team %i got the first round", level.activeTeam));
+	gi.BroadcastPrintf(PRINT_CONSOLE, _("Team %i (%s) will get the first turn.\n"),
+			level.activeTeam, buffer);
 }
 
 /**

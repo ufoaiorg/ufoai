@@ -28,9 +28,6 @@
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
-/** Stores level.activeTeam while G_CanReactionFire() is abusing it. */
-int turnTeam;
-
 static chrScoreMission_t scoreMission[MAX_EDICTS];
 static int scoreMissionNum = 0;
 
@@ -2459,7 +2456,6 @@ static void G_ClientTeamAssign (const player_t * player)
 		char buffer[MAX_VAR] = "";
 		G_PrintStats(va("Starting new game: %s with %i teams", level.mapname, teamCount));
 		level.activeTeam = knownTeams[(int) (frand() * (teamCount - 1) + 0.5)];
-		turnTeam = level.activeTeam;
 		for (i = 0, p = game.players; i < game.sv_maxplayersperteam; i++, p++) {
 			if (p->inuse) {
 				if (p->pers.team == level.activeTeam) {
@@ -2867,7 +2863,6 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 
 		lastTeam = nextTeam;
 	}
-	turnTeam = level.activeTeam;
 	assert(level.activeTeam != TEAM_NO_ACTIVE);
 	level.actualRound++;
 
@@ -3022,7 +3017,6 @@ qboolean G_ClientSpawn (player_t * player)
 		/* activate round if in single-player */
 		if (sv_maxclients->integer == 1) {
 			level.activeTeam = player->pers.team;
-			turnTeam = level.activeTeam;
 		} else {
 			/* return since not all multiplayer teams have joined */
 			/* (G_ClientTeamAssign sets level.activeTeam once all teams have joined) */
