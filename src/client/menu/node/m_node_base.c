@@ -305,7 +305,7 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 	if (base->map[row][col].building) {
 		const building_t *entry = base->map[row][col].building;
 		if (!entry)
-			Sys_Error("MN_BaseMapClick: no entry at %i:%i", x, y);
+			Sys_Error("MN_BaseMapNodeClick: no entry at %i:%i", x, y);
 
 		assert(!base->map[row][col].blocked);
 
@@ -317,7 +317,7 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 
 /**
  * @brief Right click on the basemap
- * @sa MN_BaseMapClick
+ * @sa MN_BaseMapNodeClick
  * @param[in] node The menu node definition for the base map
  * @param[in,out] base The base we are just viewing (and clicking)
  * @param[in] x The x screen coordinate
@@ -339,10 +339,42 @@ static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 	if (base->map[row][col].building) {
 		building_t *entry = base->map[row][col].building;
 		if (!entry)
-			Sys_Error("MN_BaseMapRightClick: no entry at %i:%i\n", x, y);
+			Sys_Error("MN_BaseMapNodeRightClick: no entry at %i:%i\n", x, y);
 
 		assert(!base->map[row][col].blocked);
 		B_MarkBuildingDestroy(base, entry);
+		return;
+	}
+}
+
+/**
+ * @brief Middle click on the basemap
+ * @sa MN_BaseMapNodeClick
+ * @param[in] node The menu node definition for the base map
+ * @param[in] x The x screen coordinate
+ * @param[in] y The y screen coordinate
+ * @note relies on @c baseCurrent
+ */
+static void MN_BaseMapNodeMiddleClick (menuNode_t *node, int x, int y)
+{
+	int row, col;
+	base_t *base = baseCurrent;
+
+	assert(base);
+	assert(node);
+	assert(node->menu);
+
+	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
+	if (col == -1)
+		return;
+
+	if (base->map[row][col].building) {
+		building_t *entry = base->map[row][col].building;
+		if (!entry)
+			Sys_Error("MN_BaseMapNodeMiddleClick: no entry at %i:%i\n", x, y);
+
+		assert(!base->map[row][col].blocked);
+		B_DrawBuilding(base, entry);
 		return;
 	}
 }
@@ -377,6 +409,7 @@ void MN_RegisterBaseMapNode (nodeBehaviour_t *behaviour)
 	behaviour->leftClick = MN_BaseMapNodeClick;
 	behaviour->rightClick = MN_BaseMapNodeRightClick;
 	behaviour->drawTooltip = MN_BaseMapNodeDrawTooltip;
+	behaviour->middleClick = MN_BaseMapNodeMiddleClick;
 }
 
 void MN_RegisterBaseLayoutNode (nodeBehaviour_t *behaviour)

@@ -177,8 +177,8 @@ typedef struct nodeBehaviour_s {
 
 	/* mouse events */
 	void (*leftClick)(menuNode_t *node, int x, int y);		/**< left mouse click event in the node */
-	void (*rightClick)(menuNode_t *node, int x, int y);		/**< left mouse button click event in the node */
-	void (*middleClick)(menuNode_t *node, int x, int y);	/**< right mouse button click event in the node */
+	void (*rightClick)(menuNode_t *node, int x, int y);		/**< right mouse button click event in the node */
+	void (*middleClick)(menuNode_t *node, int x, int y);	/**< middle mouse button click event in the node */
 	void (*mouseWheel)(menuNode_t *node, qboolean down, int x, int y);	/**< mouse wheel event in the node */
 	void (*mouseMove)(menuNode_t *node, int x, int y);
 	void (*mouseDown)(menuNode_t *node, int x, int y, int button);	/**< mouse button down event in the node */
