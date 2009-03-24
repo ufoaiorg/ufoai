@@ -853,7 +853,13 @@ void B_BuildingStatus (const base_t* base, const building_t* building)
 		Cvar_Set("mn_building_status", _("Construction finished"));
 		break;
 	case B_STATUS_WORKING:
-		Cvar_Set("mn_building_status", _("Working 100%"));
+		if (B_CheckBuildingDependencesStatus(base, building)) {
+			Cvar_Set("mn_building_status", _("Working 100%"));
+		} else {
+			assert (building->dependsBuilding);
+			/** @todo shorten text or provide more space in overview popup */
+			Cvar_Set("mn_building_status", va("%s %s", _("Not operational, depends on"), _(building->dependsBuilding->name)));
+		}
 		break;
 	case B_STATUS_DOWN:
 		Cvar_Set("mn_building_status", _("Down"));
@@ -1067,7 +1073,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				}
 				break;
 			default:
-				Sys_Error("B_SetUpFirstBase: Invalid aircraft type.");	
+				Sys_Error("B_SetUpFirstBase: Invalid aircraft type.");
 			}
 		}
 	} else {
