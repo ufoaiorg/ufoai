@@ -1315,6 +1315,57 @@ static void entityKeyEditCanceled(GtkCellRendererText *renderer, GtkTreeView *vi
 	}
 }
 
+/**
+ * @brief Callback used to determine combobox content for key column.
+ * @note if any value is set, renderer will not be editable
+ * @param column the column the renderer is associated with
+ * @param renderer the renderer that shows content
+ * @param model underlying model
+ * @param iter pointer to actual line
+ * @param user_data unused
+ */
+static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCellRenderer *renderer,
+		GtkTreeModel *model, GtkTreeIter *iter, gpointer user_data)
+{
+	/* prevent update if already displaying anything */
+	{
+		bool editing;
+		g_object_get(G_OBJECT(renderer), "editing", &editing, NULL);
+		if (editing)
+			return;
+	}
+	char *value, *key;
+	gtk_tree_model_get(model, iter, 0, &key, 1, &value, -1);
+	/* don't allow to edit keys if value is already set to anything (only remove possible) */
+	if (strlen(value) > 0) {
+		g_object_set(renderer, "editable", FALSE, (const char*)0);
+	} else {
+		/** @todo don't calculate anything if nothing is selected or no valid entries are left - new button should be disabled in that case */
+		if (!g_current_attributes)
+			return;
+		/* determine available key values and set them to combo box */
+		g_object_set(renderer, "editable", TRUE, (const char*)0);
+		GtkListStore* store = gtk_list_store_new(1, G_TYPE_STRING);
+		GtkTreeIter iter;
+		/** @todo fix this for multi-selections, actually it only gets the first selected */
+		/** @todo fix problem for yaw angle property */
+		const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
+		for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
+			EntityClassAttribute *attrib = const_cast<EntityClassAttribute*>(&(*i).second);
+			KeyValues::const_iterator keyIter = g_selectedKeyValues.find(attrib->m_name.c_str());
+			/* end means we don't have it actually in this map, so this is a valid new key*/
+			if (keyIter == g_selectedKeyValues.end()) {
+				gtk_list_store_append(store, &iter);
+				gtk_list_store_set(store, &iter, 0, attrib->m_name.c_str(), -1);
+			}
+		}
+		g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
+		/* @todo disable edit of combo iff we got parse problems solved */
+//		g_object_set(renderer, "has-entry", FALSE, (const char*)0);
+		g_object_unref(store);
+	}
+}
+
 GtkWidget* EntityInspector_constructNotebookTab (void)
 {
 	GtkWidget* pageframe = gtk_frame_new(_("Entity Inspector"));
@@ -1408,9 +1459,10 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 			gtk_tree_view_set_enable_search(GTK_TREE_VIEW(view), FALSE);
 
 			{
-				GtkCellRenderer* renderer = gtk_cell_renderer_text_new();
+				GtkCellRenderer* renderer = gtk_cell_renderer_combo_new();
 				GtkTreeViewColumn* column = gtk_tree_view_column_new_with_attributes(_("Key"), renderer, "text",
 						0, (char const*) 0);
+				gtk_tree_view_column_set_cell_data_func(column, renderer, EntityKeyValueList_updateKeyCombo, NULL, NULL);
 				gtk_tree_view_append_column(GTK_TREE_VIEW(view), column);
 				g_object_set(renderer, "editable", TRUE, "editable-set", TRUE, (char const*) 0);
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityKeyEdited), (gpointer) view);
