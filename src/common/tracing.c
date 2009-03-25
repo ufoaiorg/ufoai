@@ -1046,7 +1046,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
  *  the bounding box is returned.
  *  There is another special case when mins and maxs are both origin vectors (0, 0, 0).  In this case, the
  */
-trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction)
+static trace_t TR_BoxTrace (TR_TILE_TYPE *tile, const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int headnode, const int brushmask, const int brushreject, const float fraction)
 {
 	int i;
 	vec3_t offset, amins, amaxs, astart, aend;

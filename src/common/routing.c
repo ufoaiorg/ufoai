@@ -36,6 +36,13 @@ MAP TRACING DEBUGGING TABLES
 
 qboolean debugTrace = qfalse;
 
+/*
+==========================================================
+  LOCAL CONSTANTS
+==========================================================
+*/
+
+#define RT_NO_OPENING -1
 
 /*
 ==========================================================
@@ -541,7 +548,7 @@ static trace_t RT_ObstructedTrace (const vec3_t start, const vec3_t end, int act
  * @param[in] starting_height The starting height for this upward trace.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloorFrac(vec3_t start, vec3_t end, const int actor_size, const float frac, const int starting_height){
+static int RT_FindOpeningFloorFrac(const vec3_t start, const vec3_t end, const int actor_size, const float frac, const int starting_height){
 	vec3_t bmin, bmax; /**< Tracing box extents */
 	vec3_t mstart, mend; /**< Midpoint line to trace across */
 	trace_t tr;
@@ -577,7 +584,7 @@ static int RT_FindOpeningFloorFrac(vec3_t start, vec3_t end, const int actor_siz
  * @param[in] starting_height The starting height for this upward trace.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeilingFrac(vec3_t start, vec3_t end, const int actor_size, const float frac, const int starting_height){
+static int RT_FindOpeningCeilingFrac(const vec3_t start, const vec3_t end, const int actor_size, const float frac, const int starting_height){
 	vec3_t bmin, bmax; /**< Tracing box extents */
 	vec3_t mstart, mend; /**< Midpoint line to trace across */
 	trace_t tr;
@@ -610,11 +617,10 @@ static int RT_FindOpeningCeilingFrac(vec3_t start, vec3_t end, const int actor_s
  * @param[in] end The starting coordinate to search for a floor from.
  * @param[in] actor_size The actor's size.
  * @param[in] starting_height The starting height for this downward trace.
- * @param[in] starting_floor Starting coordinate's floor.
- * @param[in] ending_floor Ending coordinate's floor.
+ * @param[in] floor_limit The lowest limit of the found floor.
  * @return The absolute height of the found floor in QUANT units.
  */
-static int RT_FindOpeningFloor(vec3_t start, vec3_t end, const int actor_size, const int starting_height, const int starting_floor, const int ending_floor){
+static int RT_FindOpeningFloor(const vec3_t start, const vec3_t end, const int actor_size, const int starting_height, const int floor_limit){
 	/*
 	 * Look for additional space below init_bottom, down to lowest_bottom.
 	 */
@@ -627,7 +633,7 @@ static int RT_FindOpeningFloor(vec3_t start, vec3_t end, const int actor_size, c
 		Com_Printf("midfloor:%i.\n", midfloor);
 
 	/* Now make find the highest floor. */
-	highest_floor = max(starting_floor, max(ending_floor, midfloor));
+	highest_floor = max(floor_limit, midfloor);
 
 	/* If this is diagonal, trace the 1/4 and 3/4 points as well. */
 	if (start[0] != end[0] && start[1] != end[1]) {
@@ -654,11 +660,10 @@ static int RT_FindOpeningFloor(vec3_t start, vec3_t end, const int actor_size, c
  * @param[in] end The starting coordinate to search for a ceiling from.
  * @param[in] actor_size The actor's size.
  * @param[in] starting_height The starting height for this upward trace.
- * @param[in] starting_ceil Starting coordinate's ceiling.
- * @param[in] ending_ceil Ending coordinate's ceiling.
+ * @param[in] ceil_limit The highest the ceiling may be.
  * @return The absolute height of the found ceiling in QUANT units.
  */
-static int RT_FindOpeningCeiling(vec3_t start, vec3_t end, const int actor_size, const int starting_height, const int starting_ceil, const int ending_ceil){
+static int RT_FindOpeningCeiling(const vec3_t start, const vec3_t end, const int actor_size, const int starting_height, const int ceil_limit){
 	int midceil;
 	int lowest_ceil;
 
@@ -668,7 +673,7 @@ static int RT_FindOpeningCeiling(vec3_t start, vec3_t end, const int actor_size,
 		Com_Printf("midceil:%i.\n", midceil);
 
 	/* Now make midfloor the lowest ceiling. */
-	lowest_ceil = min(starting_ceil, min(ending_ceil, midceil));
+	lowest_ceil = min(ceil_limit, midceil);
 
 	/* If this is diagonal, trace the 1/4 and 3/4 points as well. */
 	if (start[0] != end[0] && start[1] != end[1]) {
@@ -690,6 +695,66 @@ static int RT_FindOpeningCeiling(vec3_t start, vec3_t end, const int actor_size,
 
 
 /**
+ * @brief Performs actual trace to find a passage between two points given an upper and lower bound.
+ * @param[in] map The map's routing data
+ * @param[in] actor_size The actor's size
+ * @param[in] start Starting trace coordinate
+ * @param[in] end Ending trace coordinate
+ * @param[in] ax Ending x coordinate
+ * @param[in] ay Ending y coordinate
+ * @param[in] bottom Actual height of the starting floor.
+ * @param[in] top Actual height of the starting ceiling.
+ * @param[in] lo Actual height of the bottom of the slice trace.
+ * @param[in] hi Actual height of the top of the slice trace.
+ * @param[out] lo_val Actual height of the bottom of the found passage.
+ * @param[out] hi_val Actual height of the top of the found passage.
+ * @return The new z value of the actor after traveling in this direction from the starting location.
+ */
+static int RT_TraceOpening(routing_t * map, const int actor_size, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val) {
+	trace_t tr;
+	int temp_z, adj_lo;
+
+	tr = RT_ObstructedTrace(start, end, actor_size, hi, lo);
+	if (tr.fraction >= 1.0) {
+		lo = RT_FindOpeningFloor(start, end, actor_size, lo, bottom);
+		hi = RT_FindOpeningCeiling(start, end, actor_size, hi, top);
+		if (hi - lo >= PATHFINDING_MIN_OPENING) {
+			if (lo == -1) {
+				if (debugTrace)
+					Com_Printf("Bailing- no floor in destination cell.\n");
+				*lo_val = *hi_val = 0;
+				return RT_NO_OPENING;
+			}
+			/* This opening works, use it! */
+			*lo_val = lo;
+			*hi_val = hi;
+			/* Find the floor for the highest adjacent cell in this passage. */
+			temp_z = min(floor((hi - 1) / CELL_HEIGHT), PATHFINDING_HEIGHT - 1);
+			adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+			if (adj_lo > hi) {
+				temp_z--;
+				adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
+			}
+			/**
+			 * @note Return a value only if there is a floor for the adjacent cell.
+			 * Also the found adjacent lo must be at lease MIN_OPENING-MIN_STEPUP below
+			 * the top.
+			 */
+			if (adj_lo >= 0 && top - adj_lo >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
+				if (debugTrace)
+					Com_Printf("Found floor in destination cell: %i (%i).\n", adj_lo, temp_z);
+				return floor(adj_lo / CELL_HEIGHT);
+			}
+			if (debugTrace)
+				Com_Printf("Skipping found floor in destination cell- not enough opening: %i (%i).\n", adj_lo, temp_z);
+		}
+	}
+	*lo_val = *hi_val = hi;
+	return RT_NO_OPENING;
+}
+
+
+/**
  * @brief Performs traces to find a passage between two points given an upper and lower bound.
  * @param[in] map The map's routing data
  * @param[in] actor_size The actor's size
@@ -707,10 +772,10 @@ static int RT_FindOpeningCeiling(vec3_t start, vec3_t end, const int actor_size,
 static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val) {
 	vec3_t start, end;
 	pos3_t pos;
-	trace_t tr;
-	int lo, hi, temp_z, adj_lo;
+	int lo, hi, temp_z;
 
 	const int endfloor = RT_FLOOR(map, actor_size, ax, ay, z) + z * CELL_HEIGHT;
+	const int hifloor = max (endfloor, bottom);
 
 	if (debugTrace)
 		Com_Printf("ef:%i t:%i b:%i\n", endfloor, top, bottom);
@@ -719,7 +784,7 @@ static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, c
 		if (debugTrace)
 			Com_Printf("Bailing- no floor in current cell.\n");
 		*lo_val = *hi_val = 0;
-		return -1;
+		return RT_NO_OPENING;
 	}
 
 	/* Initialize the starting vector */
@@ -744,103 +809,23 @@ static int RT_FindOpening(routing_t * map, const int actor_size, const int  x, c
 		hi = bottom + PATHFINDING_MIN_OPENING;
 		if (debugTrace)
 			Com_Printf("Tracing closed space from %i to %i.\n", bottom, top);
-		tr = RT_ObstructedTrace(start, end, actor_size, hi, lo);
-		if (tr.fraction >= 1.0) {
-			lo = RT_FindOpeningFloor(start, end, actor_size, lo, bottom, endfloor);
-			hi = RT_FindOpeningCeiling(start, end, actor_size, hi, top, top);
-			if (hi - lo >= PATHFINDING_MIN_OPENING) {
-				if (lo == -1) {
-					if (debugTrace)
-						Com_Printf("Bailing- no floor in destination cell.\n");
-					*lo_val = *hi_val = 0;
-					return -1;
-				}
-				/* This opening works, use it! */
-				*lo_val = lo;
-				*hi_val = hi;
-				/* Find the floor for the highest adjacent cell in this passage. */
-				temp_z = min(floor((hi - 1) / CELL_HEIGHT), PATHFINDING_HEIGHT - 1);
-				adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
-				if (adj_lo > hi) {
-					temp_z--;
-					adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
-				}
-				if (debugTrace)
-					Com_Printf("Found floor in destination cell: %i (%i).\n", adj_lo, temp_z);
-				/* Here's the code that makes an actor fall and not step down: */
-				/** @note Don't do this here!  Let Grid_MoveMark make this decision. */
-				/*
-				if (bottom - temp_z > PATHFINDING_MAX_STEPUP){
-					if (debugTrace)
-						Com_Printf("Not stepping down so we fall bottom:%i temp_z:%i.\n", bottom, temp_z);
-					return z;
-				}
-				*/
-				return floor(adj_lo / CELL_HEIGHT);
-			}
-		}
+		temp_z = RT_TraceOpening(map, actor_size, start, end, ax, ay, hifloor, top, lo, hi, lo_val, hi_val);
 	} else {
 		/* There is no "guaranteed" opening, brute force search. */
 		lo = bottom;
 		while (lo <= top - PATHFINDING_MIN_OPENING) {
-			int old_lo = lo;
 			/* Check for a 1 QUANT opening. */
 			if (debugTrace)
 				Com_Printf("Tracing open space from %i.\n", lo);
-			tr = RT_ObstructedTrace(start, end, actor_size, lo + 1 , lo);
-			if (tr.fraction < 1.0) {
-				/* Credit to Duke: We skip the minimum opening, as if there is a
-				 * viable opening, even one slice above, that opening would be open. */
-				lo += PATHFINDING_MIN_OPENING;
-			} else {
-				/* Check for the full opening. Check the high first so we don't
-				 * recheck the slice we just found. */
-				hi = RT_FindOpeningCeiling(start, end, actor_size, lo + 1, top, top);
-				lo = RT_FindOpeningFloor(start, end, actor_size, lo, bottom, endfloor);
-				if (debugTrace)
-					Com_Printf("Found ceiling at %i.\n", hi);
-				if (hi - lo >= PATHFINDING_MIN_OPENING) {
-					if (lo == -1) {
-						if (debugTrace)
-							Com_Printf("Bailing- no floor in destination cell.\n");
-						*lo_val = *hi_val = 0;
-						return -1;
-					}
-					/* This opening works, use it! */
-					*lo_val = lo;
-					*hi_val = hi;
-					/* Find the floor for the highest adjacent cell in this passage. */
-					temp_z = min(floor((hi - 1) / CELL_HEIGHT), PATHFINDING_HEIGHT - 1);
-					adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
-					if (adj_lo > hi) {
-						temp_z--;
-						adj_lo = RT_FLOOR(map, actor_size, ax, ay, temp_z) + temp_z * CELL_HEIGHT;
-					}
-					if (debugTrace)
-						Com_Printf("Found floor in destination cell: %i (%i).\n", adj_lo, temp_z);
-					/* Here's the code that makes an actor fall vs step down: */
-					/** @note Don't do this here!  Let Grid_MoveMark make this decision. */
-					/*
-					if (bottom - temp_z > PATHFINDING_MAX_STEPUP){
-						if (debugTrace)
-							Com_Printf("Not stepping down so we fall bottom:%i temp_z:%i.\n", bottom, temp_z);
-						return z;
-					}
-					*/
-					return floor(adj_lo / CELL_HEIGHT);
-				} else {
-				/* Credit to Duke: We skip the minimum opening, as if there is a
-				 * viable opening, even one slice above, that opening would be open. */
-				lo = max(hi, old_lo) + PATHFINDING_MIN_OPENING;
-				if (debugTrace)
-					Com_Printf("Opening not large enough; setting lo to %i.\n", lo);
-				}
-			}
+			temp_z = RT_TraceOpening(map, actor_size, start, end, ax, ay, bottom, top, lo, lo + 1, lo_val, hi_val);
+			if (temp_z != RT_NO_OPENING)
+				break;
+			/* Credit to Duke: We skip the minimum opening, as if there is a
+			 * viable opening, even one slice above, that opening would be open. */
+			lo = *hi_val + PATHFINDING_MIN_OPENING;
 		}
 	}
-
-	*lo_val = *hi_val = top;
-	return -1;
+	return temp_z;
 }
 
 
@@ -871,10 +856,11 @@ static int RT_MicroTrace(routing_t * map, const int actor_size, const int x, con
 	int i, current_h, highest_h, highest_i = 0, skipped, new_bottom;
 	vec3_t start, end;
 	pos3_t pos;
+	int last_step;
 
 	/* First prepare the two known end values. */
 	bases[0] = max(0, RT_FLOOR(map, actor_size, x, y, z)) + z * CELL_HEIGHT;
-	bases[steps] = max(0, RT_FLOOR(map, actor_size, ax, ay, az)) + az * CELL_HEIGHT;
+	bases[steps] = last_step = max(0, RT_FLOOR(map, actor_size, ax, ay, az)) + az * CELL_HEIGHT;
 
 	/* Initialize the starting vector */
 	VectorSet(pos, x, y, z);
@@ -918,6 +904,9 @@ static int RT_MicroTrace(routing_t * map, const int actor_size, const int x, con
 
 		new_bottom = max(new_bottom, bases[i]);
 	}
+
+	if (debugTrace && last_step != bases[steps])
+		Com_Printf("The last found step does not match the destination floor! ls:%i f:%i\n", bases[steps], last_step);
 
 	if (debugTrace)
 		Com_Printf("z:%i az:%i bottom:%i new_bottom:%i top:%i bases[0]:%i bases[%i]:%i\n", z, az, bottom, new_bottom, top, bases[0], steps, bases[steps]);
@@ -996,15 +985,71 @@ static int RT_MicroTrace(routing_t * map, const int actor_size, const int x, con
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The size in QUANT units of the detected opening.
  */
+static int RT_TraceOnePassage(routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, const int lower, const int upper, int *opening_base, int *stepup)
+{
+	int hi; /**< absolute ceiling of the passage found. */
+	int az; /**< z height of the actor after moving in this direction. */
+	int opening_size, bonus_size;
+
+	az = RT_FindOpening(map, actor_size, x, y, z, ax, ay, lower, upper, opening_base, &hi);
+	/* calc opening found so far and set stepup */
+	opening_size = hi - *opening_base;
+	*stepup = *opening_base - lower;
+	if (az < z)
+		*stepup |= PATHFINDING_BIG_STEPDOWN;
+	else if (az > z)
+		*stepup |= PATHFINDING_BIG_STEPUP;
+
+	/* We subtract MIN_STEPUP because that is foot space-
+	 * the opening there only needs to be the microtrace
+	 * wide and not the usual dimensions.
+	 */
+	if (opening_size >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
+		const int src_floor = RT_FLOOR(map, actor_size, x, y, z);
+		const int dst_floor = RT_FLOOR(map, actor_size, ax, ay, az);
+		/* if we already have enough headroom, try to skip microtracing */
+		if (opening_size < CELL_HEIGHT
+			|| abs(src_floor - *opening_base) > PATHFINDING_MIN_STEPUP
+			|| abs(dst_floor - *opening_base) > PATHFINDING_MIN_STEPUP) {
+			/* This returns the total opening height, as the
+			 * microtrace may reveal more passage height from the foot space. */
+			bonus_size = RT_MicroTrace(map, actor_size, x, y, z, ax, ay, az, *opening_base, hi, stepup);
+			*opening_base += bonus_size;
+			opening_size = hi - *opening_base;	/* re-calculate */
+		}
+		if (opening_size >= PATHFINDING_MIN_OPENING) {
+			return opening_size;
+		}
+	}
+
+	if (debugTrace)
+		Com_Printf(" No opening found.\n");
+	*stepup = PATHFINDING_NO_STEPUP;
+	return 0;
+}
+
+/**
+ * @brief Performs traces to find a passage between two points given an upper and lower bound.
+ * @param[in] map The map's routing data
+ * @param[in] actor_size The actor's size
+ * @param[in] x Starting x coordinate
+ * @param[in] y Starting y coordinate
+ * @param[in] z Starting z coordinate
+ * @param[in] ax Ending x coordinate
+ * @param[in] ay Ending y coordinate
+ * @param[in] az Ending z coordinate
+ * @param[out] opening_base Actual height in QUANT units of the detected opening.
+ * @param[out] stepup Required stepup to travel in this direction.
+ * @return The size in QUANT units of the detected opening.
+ */
 static int RT_TracePassage(routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, int *opening_base, int *stepup)
 {
 	/* See if there is a passage TO the adjacent cell. */
 	const int bottom = max(0, RT_FLOOR(map, actor_size, x, y, z)) + z * CELL_HEIGHT;
 	const int top = RT_CEILING(map, actor_size, x, y, z) + z * CELL_HEIGHT;
 	const int belowceil = z > 0 ? RT_CEILING(map, actor_size, ax, ay, z) + z * CELL_HEIGHT: 0;
-	int hi; /**< absolute ceiling of the passage found. */
-	int az; /**< z height of the actor after moving in this direction. */
-	int opening_size, bonus_size;
+	const int lowceil = min(top, belowceil);
+	int opening_size;
 
 	/*
 	 * First check the ceiling fo the cell beneath the adjacent floor to see
@@ -1024,23 +1069,12 @@ static int RT_TracePassage(routing_t * map, const int actor_size, const int  x, 
 	 * If there is no passage, then the obstruction may be used as steps to
 	 * climb up to the adjacent floor.
 	 */
-	if (belowceil - bottom >= PATHFINDING_MIN_OPENING) {
+	if (lowceil - bottom >= PATHFINDING_MIN_OPENING && lowceil < top) {
 		if (debugTrace)
 			Com_Printf(" Testing down.\n");
-		az = RT_FindOpening(map, actor_size, x, y, z, ax, ay, bottom, belowceil, opening_base, &hi);
-		/* We subtract MIN_STEPUP because that is foot space-
-		 * the opening there only needs to be the microtrace
-		 * wide and not the usual dimensions.
-		 */
-		if (hi - *opening_base >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
-			/* This returns the total opening height, as the
-			 * microtrace may reveal more passage height from the foot space. */
-			bonus_size = RT_MicroTrace(map, actor_size, x, y, z, ax, ay, az, *opening_base, hi, stepup);
-			*opening_base += bonus_size;
-			opening_size = hi - *opening_base;
-			if (opening_size >= PATHFINDING_MIN_OPENING) {
-				return opening_size;
-			}
+		opening_size = RT_TraceOnePassage(map, actor_size, x, y, z, ax, ay, bottom, lowceil, opening_base, stepup);
+		if (opening_size >= PATHFINDING_MIN_OPENING) {
+			return opening_size;
 		}
 	}
 
@@ -1053,20 +1087,9 @@ static int RT_TracePassage(routing_t * map, const int actor_size, const int  x, 
 	if (debugTrace)
 		Com_Printf(" Testing up.\n");
 
-	az = RT_FindOpening(map, actor_size, x, y, z, ax, ay, bottom, top, opening_base, &hi);
-	/* We subtract MIN_STEPUP because that is foot space-
-	 * the opening there only needs to be the microtrace
-	 * wide and not the usual dimensions.
-	 */
-	if (hi - *opening_base >= PATHFINDING_MIN_OPENING - PATHFINDING_MIN_STEPUP) {
-		/* This returns the total opening height, as the
-		 * microtrace may reveal more passage height from the foot space. */
-		bonus_size = RT_MicroTrace(map, actor_size, x, y, z, ax, ay, az, *opening_base, hi, stepup);
-		*opening_base += bonus_size;
-		opening_size = hi - *opening_base;
-		if (opening_size >= PATHFINDING_MIN_OPENING) {
-			return opening_size;
-		}
+	opening_size = RT_TraceOnePassage(map, actor_size, x, y, z, ax, ay, bottom, top, opening_base, stepup);
+	if (opening_size >= PATHFINDING_MIN_OPENING) {
+		return opening_size;
 	}
 
 	if (debugTrace)
@@ -1136,20 +1159,6 @@ int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, con
 			Com_Printf("Current cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_CEILING(map, actor_size, x, y, z));
 		return z;
 	}
-
-	/* test if the destination unit is blocked by a loaded model */
-	/** @note We don't need this test.  Even though the cell immediately in front is filled, we
-	 * may still be able to stepup into the next level.  Scan just in case. */
-	/*
-	if (RT_CEILING(map, actor_size, ax, ay, z) == 0){
-		/ * We can't go this way. * /
-		RT_CONN(map, actor_size, x, y, z, dir) = 0;
-		RT_STEPUP(map, actor_size, x, y, z, dir) = PATHFINDING_NO_STEPUP;
-		if (debugTrace)
-			Com_Printf("Destination cell filled. f:%i c:%i\n", RT_FLOOR(map, actor_size, x, y, z), RT_CEILING(map, actor_size, x, y, z));
-		return z;
-	}
-	*/
 
 	/* Find an opening. */
 	opening_size = RT_TracePassage(map, actor_size, x, y, z, ax, ay, &opening_base, &stepup);
