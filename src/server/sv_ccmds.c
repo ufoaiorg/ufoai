@@ -355,7 +355,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 	int i, matches = 0;
 	const char *localMatch[MAX_COMPLETE];
 	size_t len;
-	const char *dayNightStr;
+	const char *dayNightStr = NULL;
 	static char dayNightMatch[7];
 
 	if (partial[0])
