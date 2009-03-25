@@ -409,6 +409,9 @@
 		<Unit filename="../../src/shared/parse.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../../src/shared/entitiesdef.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
