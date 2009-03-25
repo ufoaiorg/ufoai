@@ -903,16 +903,13 @@ static void CMod_LoadRouting (const char *name, const lump_t * l, int sX, int sY
 				}
 				/* Update the reroute table */
 				if (!reroute[size][y][x]) {
-					reroute[size][y][x] = numTiles;
+					reroute[size][y][x] = numTiles + 1;
 				} else {
 					reroute[size][y][x] = ROUTING_NOT_REACHABLE;
 				}
 			}
 
 	Com_Printf("Done copying data.\n");
-
-	/* calculate new border after merge */
-	RT_GetMapSize(map_min, map_max);
 
 	end = time(NULL);
 	Com_Printf("Loaded routing for tile %s in %5.1fs\n", name, end - start);
@@ -1101,10 +1098,15 @@ static unsigned CM_AddMapTile (const char *name, qboolean day, int sX, int sY, b
 	 * these to the right values now */
 	numInline += curTile->nummodels - NUM_REGULAR_MODELS;
 
+	CMod_LoadRouting(name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
+
 	/* now increase the amount of loaded tiles */
 	numTiles++;
 
-	CMod_LoadRouting(name, &header.lumps[LUMP_ROUTING], sX, sY, sZ);
+	/* Now find the map bounds with the updated numTiles. */
+	/* calculate new border after merge */
+	RT_GetMapSize(map_min, map_max);
+
 
 	FS_FreeFile(buf);
 
