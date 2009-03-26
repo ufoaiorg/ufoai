@@ -12,9 +12,7 @@
 <builder enableAutoBuild="true" errorParsers="org.eclipse.cdt.core.MakeErrorParser" id="org.eclipse.cdt.build.core.settings.default.builder.1740510450" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="4" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.libs.202962542" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.16358229" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
-<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.177059442" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-<listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
-</option>
+<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.177059442" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath"/>
 <inputType id="org.eclipse.cdt.build.core.settings.holder.inType.2033761625" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 </tool>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.308147572" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
@@ -22,12 +20,17 @@
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufo/src/tools/radiant/include}&quot;"/>
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/ufo/src/tools/radiant/libs}&quot;"/>
 <listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
+<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
+<listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
 </option>
 <inputType id="org.eclipse.cdt.build.core.settings.holder.inType.728735646" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 </tool>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.1327607573" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
 <option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1920891541" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+<listOptionValue builtIn="false" value="/usr/include/SDL"/>
 <listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
+<listOptionValue builtIn="false" value="/usr/include/glib-2.0"/>
+<listOptionValue builtIn="false" value="/usr/include/gtkglext-1.0"/>
 </option>
 <inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1984391641" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 </tool>
