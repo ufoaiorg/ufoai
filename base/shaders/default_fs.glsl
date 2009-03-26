@@ -43,10 +43,12 @@ void main(void){
 
 	vec3 lightmap;
 
-	if(LIGHTMAP > 0)  // sample the lightmap
+	if(LIGHTMAP > 0){  // sample the lightmap
 		lightmap = texture2D(SAMPLER1, gl_TexCoord[1].st).rgb;
-	else  // or use primary color
+	}
+	else {  // or use the primary color
 		lightmap = gl_Color.rgb;
+	}
 
 	// add any dynamic lighting and yield a base fragment color
 	LightFragment(diffuse, lightmap);
@@ -57,4 +59,14 @@ void main(void){
 
 	if(FOG > 0)
 		FogFragment();
+
+	// developer tools
+	//if(LIGHTMAP > 0){
+	//	gl_FragColor.rgb = lightmap;
+	//	gl_FragColor.a = 1.0;
+	//}
+	//if(BUMPMAP > 0){
+	//	gl_FragColor.rgb = deluxemap;
+	//	gl_FragColor.a = 1.0;
+	//}
 }

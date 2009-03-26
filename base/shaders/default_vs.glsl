@@ -8,7 +8,8 @@ uniform int LIGHTMAP;
 uniform int BUMPMAP;
 uniform int FOG;
 
-uniform int OFFSET;
+uniform float OFFSET;
+
 
 /*
 main
@@ -23,8 +24,6 @@ void main(void){
 
 	if(LIGHTMAP > 0)
 		gl_TexCoord[1] = gl_MultiTexCoord1;
-	else
-		gl_FrontColor = gl_Color;
 
 	LightVertex();
 

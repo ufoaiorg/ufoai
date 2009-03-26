@@ -3,10 +3,10 @@
 #include "fog_fs.glsl"
 
 uniform vec4 OFFSET;
+uniform int FOG;
 
 uniform sampler2D SAMPLER0;
 uniform sampler2D SAMPLER1;
-uniform int FOG;
 
 
 /*

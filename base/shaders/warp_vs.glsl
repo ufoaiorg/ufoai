@@ -4,6 +4,7 @@
 
 uniform int FOG;
 
+
 /*
 main
 */

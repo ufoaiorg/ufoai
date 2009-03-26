@@ -3,79 +3,163 @@
 varying vec3 point;
 varying vec3 normal;
 
-// NOTE about OpenGL3:
-// gl_FragColor is now out_Color
-// gl_LightSource doesn't exist anymore
 
 /*
 LightFragment
 */
 void LightFragment(in vec4 diffuse, in vec3 lightmap){
 
-	vec3 light = vec3(0.0);
-#if defined(ATI)
-	// ATI can't handle for loops and array access in fragment shaders - use at least two lights
-	if(gl_LightSource[0].constantAttenuation > 0.0){
-		vec3 delta = gl_LightSource[0].position.xyz - point;
-		float dist = length(delta);
+	vec3 delta, dir, light = vec3(0.0);
+	float dist, d, atten;
 
-		// if the light is too far away, skip it
-		if(dist <= gl_LightSource[0].constantAttenuation){
-			vec3 dir = normalize(delta);
-			float d = dot(normal, dir);
+	/*
+	 * Any reasonable GLSL compiler could handle this as a for-loop
+	 * and unroll it nicely.  But apparently some vendors are mental
+	 * midgets.  So we do their job for them.
+	 */
+
+	if(gl_LightSource[0].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[0].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[0].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
 
 			if(d > 0.0){
-				float atten = gl_LightSource[0].constantAttenuation / dist - 1.0;
+				atten = gl_LightSource[0].constantAttenuation / dist - 1.0;
 				light += gl_LightSource[0].diffuse.rgb * d * atten * atten;
 			}
 		}
-	}
-	if(gl_LightSource[1].constantAttenuation > 0.0){
-		vec3 delta = gl_LightSource[1].position.xyz - point;
-		float dist = length(delta);
 
-		// if the light is too far away, skip it
-		if(dist <= gl_LightSource[1].constantAttenuation){
-			vec3 dir = normalize(delta);
-			float d = dot(normal, dir);
+	if(gl_LightSource[1].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[1].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[1].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
 
 			if(d > 0.0){
-				float atten = gl_LightSource[1].constantAttenuation / dist - 1.0;
+				atten = gl_LightSource[1].constantAttenuation / dist - 1.0;
 				light += gl_LightSource[1].diffuse.rgb * d * atten * atten;
 			}
 		}
-	}
-#else
-	// accumulate diffuse lighting for this fragment
-	for(int i = 0; i < 8; i++){
 
-		// if the light is off, we're done
-		if(gl_LightSource[i].constantAttenuation == 0.0)
-			break;
+	if(gl_LightSource[2].constantAttenuation > 0.0){
 
-		vec3 delta = gl_LightSource[i].position.xyz - point;
-		float dist = length(delta);
+		delta = gl_LightSource[2].position.xyz - point;
+		dist = length(delta);
 
-		// if the light is too far away, skip it
-		if(dist <= gl_LightSource[i].constantAttenuation){
+		if(dist < gl_LightSource[2].constantAttenuation){
 
-			vec3 dir = normalize(delta);
-			float d = dot(normal, dir);
+			dir = normalize(delta);
+			d = dot(normal, dir);
 
-			// if the light is not facing us, skip it
 			if(d > 0.0){
-				float atten = gl_LightSource[i].constantAttenuation / dist - 1.0;
-				light += gl_LightSource[i].diffuse.rgb * d * atten * atten;
+				atten = gl_LightSource[2].constantAttenuation / dist - 1.0;
+				light += gl_LightSource[2].diffuse.rgb * d * atten * atten;
+			}
+		}
+
+	if(gl_LightSource[3].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[3].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[3].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				atten = gl_LightSource[3].constantAttenuation / dist - 1.0;
+				light += gl_LightSource[3].diffuse.rgb * d * atten * atten;
+			}
+		}
+
+	if(gl_LightSource[4].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[4].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[4].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				atten = gl_LightSource[4].constantAttenuation / dist - 1.0;
+				light += gl_LightSource[4].diffuse.rgb * d * atten * atten;
+			}
+		}
+
+	if(gl_LightSource[5].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[5].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[5].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				atten = gl_LightSource[5].constantAttenuation / dist - 1.0;
+				light += gl_LightSource[5].diffuse.rgb * d * atten * atten;
+			}
+		}
+
+	if(gl_LightSource[6].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[6].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[6].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				atten = gl_LightSource[6].constantAttenuation / dist - 1.0;
+				light += gl_LightSource[6].diffuse.rgb * d * atten * atten;
+			}
+		}
+
+	if(gl_LightSource[7].constantAttenuation > 0.0){
+
+		delta = gl_LightSource[7].position.xyz - point;
+		dist = length(delta);
+
+		if(dist < gl_LightSource[7].constantAttenuation){
+
+			dir = normalize(delta);
+			d = dot(normal, dir);
+
+			if(d > 0.0){
+				atten = gl_LightSource[7].constantAttenuation / dist - 1.0;
+				light += gl_LightSource[7].diffuse.rgb * d * atten * atten;
 			}
 		}
 	}
-#endif
+	}
+	}
+	}
+	}
+	}
+	}
+	}
 
 	light = clamp(light, 0.0, 1.8);
+
 
 	// now modulate the diffuse sample with the modified lightmap
 	gl_FragColor.rgb = diffuse.rgb * (lightmap + light);
 
-	// lastly pass the alpha value through, unaffected
-	gl_FragColor.a = diffuse.a;
+	// lastly modulate the alpha channel by the color
+	gl_FragColor.a = diffuse.a * gl_Color.a;
 }
