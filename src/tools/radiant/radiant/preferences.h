@@ -29,7 +29,7 @@ please contact Id Software immediately at info@idsoftware.com.
 #if !defined(INCLUDED_PREFERENCES_H)
 #define INCLUDED_PREFERENCES_H
 
-#include "libxml/parser.h"
+#include <libxml/parser.h>
 #include "dialog.h"
 #include <list>
 #include <map>
