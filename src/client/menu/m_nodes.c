@@ -256,6 +256,11 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, const me
 
 /**
  * @brief Return a node by a path name (names with dot separation)
+ * @return The requested node, else NULL if not found
+ * @code
+ * // get keylist node from options_keys node from options menu
+ * node = MN_GetNodeByPath("options.options_keys.keylist");
+ * @endcode
  */
 menuNode_t* MN_GetNodeByPath (const char* path)
 {
