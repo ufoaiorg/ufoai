@@ -1398,11 +1398,11 @@ static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCel
 		const EntityClassAttributes validAttrib = g_current_attributes->m_attributes;
 		for (EntityClassAttributes::const_iterator i = validAttrib.begin(); i != validAttrib.end(); ++i) {
 			EntityClassAttribute *attrib = const_cast<EntityClassAttribute*>(&(*i).second);
-			KeyValues::const_iterator keyIter = g_selectedKeyValues.find(attrib->m_name.c_str());
+			KeyValues::const_iterator keyIter = g_selectedKeyValues.find(attrib->m_type.c_str());
 			/* end means we don't have it actually in this map, so this is a valid new key*/
 			if (keyIter == g_selectedKeyValues.end()) {
 				gtk_list_store_append(store, &iter);
-				gtk_list_store_set(store, &iter, 0, attrib->m_name.c_str(), -1);
+				gtk_list_store_set(store, &iter, 0, attrib->m_type.c_str(), -1);
 			}
 		}
 		g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
