@@ -125,9 +125,11 @@ static void R_ModLoadLighting (const lump_t *l, qboolean day)
 		const char *c;
 
 		c = COM_Parse(&s);  /* parse the string itself */
+		c = COM_Parse(&s);  /* and then the value */
 
-		sscanf(c, "%f %f %f", &refdef.ambient_light[0],
-			&refdef.ambient_light[1], &refdef.ambient_light[2]);
+		if (sscanf(c, "%f %f %f", &refdef.ambient_light[0],
+			&refdef.ambient_light[1], &refdef.ambient_light[2]) != 3)
+			Com_Printf("Invalid light vector given: '%s'\n", c);
 
 		for (i = 0; i < 3; i++) {  /* clamp it */
 			if (refdef.ambient_light[i] < MIN_AMBIENT_COMPONENT)

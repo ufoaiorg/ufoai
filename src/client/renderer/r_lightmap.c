@@ -117,21 +117,20 @@ static void R_BuildDefaultLightmap (mBspSurface_t *surf, byte *sout, byte *dout,
 	const int smax = (surf->stextents[0] / surf->lightmap_scale) + 1;
 	const int tmax = (surf->stextents[1] / surf->lightmap_scale) + 1;
 
-	stride -= (smax * 4);
+	/* this works because the block bytes for the deluxemap are the same as for the lightmap */
+	stride -= (smax * LIGHTMAP_BLOCK_BYTES);
 
 	for (i = 0; i < tmax; i++, sout += stride, dout += stride) {
 		for (j = 0; j < smax; j++) {
 			sout[0] = 255;
 			sout[1] = 255;
 			sout[2] = 255;
-			sout[3] = 255;
 
 			sout += LIGHTMAP_BLOCK_BYTES;
 
 			dout[0] = 127;
 			dout[1] = 127;
 			dout[2] = 255;
-			dout[3] = 255;
 
 			dout += DELUXEMAP_BLOCK_BYTES;
 		}
