@@ -69,7 +69,7 @@ public:
 
 class EntityClassAttribute {
 public:
-	CopiedString m_type; /**< type used to decide how gui representation will look like @sa EntityAttributeFactory */
+	CopiedString m_type; /**< type used as entity key and to decide how gui representation will look like @sa EntityAttributeFactory */
 	CopiedString m_name; /**< name used for display in entityinspector */
 	CopiedString m_value; /**< current attribute value */
 	CopiedString m_description; /**< actually not used, could be used as a tooltip @todo use this as tooltip in entityinspector?*/
