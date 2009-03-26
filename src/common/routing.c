@@ -711,7 +711,7 @@ static int RT_FindOpeningCeiling (const vec3_t start, const vec3_t end, const in
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_TraceOpening (routing_t * map, const int actor_size, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val) 
+static int RT_TraceOpening (routing_t * map, const int actor_size, const vec3_t start, const vec3_t end, const int ax, const int ay, const int bottom, const int top, int lo, int hi, int *lo_val, int *hi_val)
 {
 	trace_t tr;
 	int temp_z, adj_lo;
@@ -771,7 +771,7 @@ static int RT_TraceOpening (routing_t * map, const int actor_size, const vec3_t 
  * @param[out] hi_val Actual height of the top of the found passage.
  * @return The new z value of the actor after traveling in this direction from the starting location.
  */
-static int RT_FindOpening (routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val) 
+static int RT_FindOpening (routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, const int bottom, const int top, int *lo_val, int *hi_val)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -846,7 +846,7 @@ static int RT_FindOpening (routing_t * map, const int actor_size, const int  x, 
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The change in floor height in QUANT units because of the additional trace.
 */
-static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, const int y, const int z, const int ax, const int ay, const int az, const int bottom, const int top, int *stepup) 
+static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, const int y, const int z, const int ax, const int ay, const int az, const int bottom, const int top, int *stepup)
 {
 	/* OK, now we have a viable shot across.  Run microstep tests now. */
 	/* Now calculate the stepup at the floor using microsteps. */
@@ -874,7 +874,7 @@ static int RT_MicroTrace (routing_t * map, const int actor_size, const int x, co
 	SizedPosToVec(pos, actor_size, end);
 
 	/* Now prep the z values for start and end. */
-	start[2] = min (top * QUANT - 1, (max(z, az) + 1) * UNIT_HEIGHT); /**< Just below the passage ceiling */
+	start[2] = bottom * QUANT + 1; /**< Just above the bottom of the found passage */
 	end[2] = -QUANT;
 
 	/* Memorize the start and end x,y points */
