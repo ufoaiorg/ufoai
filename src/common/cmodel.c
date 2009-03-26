@@ -1118,6 +1118,9 @@ static void CMod_RerouteMap (void)
 	int size, x, y, z, dir;
 	int i;
 	pos3_t mins, maxs;
+	double start, end;
+
+	start = time(NULL);
 
 	VecToPos(map_min, mins);
 	VecToPos(map_max, maxs);
@@ -1150,37 +1153,47 @@ static void CMod_RerouteMap (void)
 	}
 
 	/* Wall pass */
-	for (size = 0; size < ACTOR_MAX_SIZE; size++) {
+	/** @note A temporary hack- if we decrease ACTOR_MAX_SIZE we need to bump the BSPVERSION again.
+	 * I'm just commenting out the CORRECT code for now.
+	 */
+	/* for (size = 0; size < ACTOR_MAX_SIZE; size++) { */
+	for (size = 0; size < 1; size++) {
 		for (y = mins[1]; y <= maxs[1]; y++) {
 			for (x = mins[0]; x <= maxs[0]; x++) {
-				/** @note The new R_UpdateConnection updates both directions at the same time,
-				 * so we only need to check every other direction. */
-				/* Not needed until inverse tracing works again.
-				 * for (dir = 0; dir < CORE_DIRECTIONS; dir += 2) { */
-				for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
-					const int dx = x + dvecs[dir][0];
-					const int dy = y + dvecs[dir][1];
-					/* Skip if the destination is out of bounds. */
-					if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
-						continue;
-					/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
-					if (reroute[size][y][x] && reroute[size][dy][dx]
-					 && (reroute[size][y][x] == ROUTING_NOT_REACHABLE
-					 || reroute[size][dy][dx] == ROUTING_NOT_REACHABLE
-					 || reroute[size][dy][dx] != reroute[size][y][x])) {
-						/** @note This update MUST go from the bottom (0) to the top (7) of the model.
-						 * RT_UpdateConnection expects it and breaks otherwise. */
-						/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
-						for (z = 0; z <= maxs[2]; z++) {
-							const int new_z = RT_UpdateConnection(clMap, size + 1, x, y, z, dir);
-							assert(new_z >= z);
-							z = new_z;
+				const byte tile = reroute[size][y][x];
+				if (tile) {
+					/** @note The new R_UpdateConnection updates both directions at the same time,
+					 * so we only need to check every other direction. */
+					/* Not needed until inverse tracing works again.
+					 * for (dir = 0; dir < CORE_DIRECTIONS; dir += 2) { */
+					for (dir = 0; dir < CORE_DIRECTIONS; dir++) {
+						const int dx = x + dvecs[dir][0];
+						const int dy = y + dvecs[dir][1];
+						int tile2; /**< Can't const: need to check bounds first. */
+						/* Skip if the destination is out of bounds. */
+						if (dx < 0 || dx >= PATHFINDING_WIDTH || dy < 0 || dy >= PATHFINDING_WIDTH)
+							continue;
+						tile2 = reroute[size][dy][dx];
+						/* Both cells are present and if either cell is ROUTING_NOT_REACHABLE or if the cells are different. */
+						if (tile2
+						 && (tile2 == ROUTING_NOT_REACHABLE
+						 || tile2 != tile)) {
+							/** @note This update MUST go from the bottom (0) to the top (7) of the model.
+							 * RT_UpdateConnection expects it and breaks otherwise. */
+							/* Com_Printf("Tracing passage (%i %i s:%i d:%i)\n", x, y, size, dir); */
+							for (z = 0; z <= maxs[2]; z++) {
+								const int new_z = RT_UpdateConnection(clMap, size + 1, x, y, z, dir);
+								assert(new_z >= z);
+								z = new_z;
+							}
 						}
 					}
 				}
 			}
 		}
 	}
+	end = time(NULL);
+	Com_Printf("Rerouted for RMA in %5.1fs\n", end - start);
 }
 
 /**
@@ -2292,6 +2305,9 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	cBspModel_t *model;
 	pos3_t min, max;
 	unsigned int i;
+	double start, end;
+
+	start = time(NULL);
 
 	assert(list);
 
@@ -2352,17 +2368,20 @@ void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **l
 	}
 
 	/* fit min/max into the world size */
-	max[0] = min(max[0] + 2, PATHFINDING_WIDTH - 1);
-	max[1] = min(max[1] + 2, PATHFINDING_WIDTH - 1);
-	max[2] = min(max[2] + 2, PATHFINDING_HEIGHT - 1);
+	max[0] = min(max[0] + 1, PATHFINDING_WIDTH - 1);
+	max[1] = min(max[1] + 1, PATHFINDING_WIDTH - 1);
+	max[2] = min(max[2] + 1, PATHFINDING_HEIGHT - 1);
 	for (i = 0; i < 3; i++)
-		min[i] = max(min[i] - 2, 0);
+		min[i] = max(min[i] - 1, 0);
 
 	/* We now have the dimensions, call the generic rerouting function. */
 	Grid_RecalcBoxRouting(map, min, max);
 
 	/* Reset the inlineList variable */
 	inlineList = NULL;
+
+	end = time(NULL);
+	Com_Printf("Retracing for model %s in %5.1fs\n", name, end - start);
 }
 
 
