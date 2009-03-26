@@ -1316,6 +1316,52 @@ static void entityKeyEditCanceled(GtkCellRendererText *renderer, GtkTreeView *vi
 }
 
 /**
+ * @brief Container class holds references to different gui elements in Entity Inspector
+ * @todo perhaps rename and move current selection elements also into this one?
+ */
+class EntityInspectorGuiElements
+{
+	public:
+		GtkButton *m_btnRemoveKey;
+		GtkButton *m_btnAddKey;
+};
+
+static EntityInspectorGuiElements g_entityInspectorGui;
+
+/**
+ * @brief Callback for selection changed in entity key value list used to enable/disable buttons
+ * @param selection current selection
+ */
+static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
+{
+	assert(g_entityInspectorGui.m_btnRemoveKey);
+	if (gtk_tree_selection_count_selected_rows(selection) == 0) {
+		g_object_set(g_entityInspectorGui.m_btnRemoveKey, "sensitive", FALSE, (const char*) 0);
+		return;
+	}
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	gtk_tree_selection_get_selected(selection, &model, &iter);
+	char* attribKey;
+	bool removeAllowed = true;
+	gtk_tree_model_get(model, &iter, 0, &attribKey, -1);
+	assert(attribKey);
+	if (strlen(attribKey) == 0) {
+		/* new attribute, don't check for remove yet */
+		removeAllowed = false;
+	} else if (!strcmp(attribKey, "classname")) {
+		/* classname is mandatory but has no attribute */
+		removeAllowed = false;
+	} else {
+		EntityClassAttribute *attribute = g_current_attributes->getAttribute(attribKey);
+		assert(attribute);
+		if (attribute->m_mandatory)
+			removeAllowed = false;
+	}
+	g_object_set(g_entityInspectorGui.m_btnRemoveKey, "sensitive", removeAllowed, (const char*) 0);
+}
+
+/**
  * @brief Callback used to determine combobox content for key column.
  * @note if any value is set, renderer will not be editable
  * @param column the column the renderer is associated with
@@ -1478,6 +1524,11 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				g_signal_connect(G_OBJECT(renderer), "edited", G_CALLBACK(entityValueEdited), (gpointer) view);
 			}
 
+			{
+				GtkTreeSelection* selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+				g_signal_connect(G_OBJECT(selection), "changed", G_CALLBACK(EntityKeyValueList_selection_changed), NULL);
+			}
+
 			gtk_container_add(GTK_CONTAINER(scr), view);
 
 			g_object_unref(G_OBJECT(store));
@@ -1493,12 +1544,15 @@ GtkWidget* EntityInspector_constructNotebookTab (void)
 				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_clearKeyValue),
 						gpointer(view));
 				gtk_box_pack_start(hbox, GTK_WIDGET(button), TRUE, TRUE, 0);
+				g_entityInspectorGui.m_btnRemoveKey = button;
+				g_object_set(button, "sensitive", FALSE, (const char*) 0);
 			}
 			{
 				GtkButton* button = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_NEW));
 				g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(EntityInspector_addKeyValue),
 						gpointer(view));
 				gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(button), TRUE, TRUE, 0);
+				g_entityInspectorGui.m_btnAddKey = button;
 			}
 		}
 		{
