@@ -331,7 +331,6 @@ static EntityClass *Eclass_InitFromDefinition (entityDef_t *definition)
 			angle->m_name = _("Yaw Angle");
 		} else {
 			angle->m_name = _("Direction");
-			angle->m_type = "direction";
 		}
 	}
 	eclass_capture_state(e);
