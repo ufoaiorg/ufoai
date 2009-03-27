@@ -51,7 +51,7 @@ static menuTimer_t *tooltipTimer;
  * @sa MN_CaptureDrawOver
  * @sa nodeBehaviour_t.drawOverMenu
  */
-static menuNode_t *drawOverNode = NULL;
+static menuNode_t *drawOverNode;
 
 /**
  * @brief Capture a node we will draw over all nodes per menu
@@ -204,7 +204,7 @@ static void MN_DrawNode (menuNode_t *node)
 
 	/** @todo remove it when its possible:
 	 * we can create a 'box' node with this properties,
-	 * but we often dont need it */
+	 * but we often don't need it */
 	/* check node size x and y value to check whether they are zero */
 	if (node->size[0] && node->size[1]) {
 		vec2_t pos;
@@ -261,7 +261,7 @@ void MN_Draw (void)
 		return;
 
 	/* draw all visible menus */
-	for (;pos < mn.menuStackPos; pos++) {
+	for (; pos < mn.menuStackPos; pos++) {
 		menu = mn.menuStack[pos];
 
 		/* update the layout */

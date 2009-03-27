@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "m_dragndrop.h"
 #include "m_input.h"
-#include "node/m_node_container.h"
 #include "node/m_node_abstractnode.h"
 
 #include "../cl_input.h"
