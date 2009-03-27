@@ -1334,7 +1334,7 @@ static EntityInspectorGuiElements g_entityInspectorGui;
  */
 static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 {
-	assert(g_entityInspectorGui.m_btnRemoveKey);
+	ASSERT_NOTNULL(g_entityInspectorGui.m_btnRemoveKey);
 	if (gtk_tree_selection_count_selected_rows(selection) == 0) {
 		g_object_set(g_entityInspectorGui.m_btnRemoveKey, "sensitive", FALSE, (const char*) 0);
 		return;
@@ -1345,7 +1345,7 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 	char* attribKey;
 	bool removeAllowed = true;
 	gtk_tree_model_get(model, &iter, 0, &attribKey, -1);
-	assert(attribKey);
+	ASSERT_NOTNULL(attribKey);
 	if (strlen(attribKey) == 0) {
 		/* new attribute, don't check for remove yet */
 		removeAllowed = false;
@@ -1354,7 +1354,7 @@ static void EntityKeyValueList_selection_changed (GtkTreeSelection* selection)
 		removeAllowed = false;
 	} else {
 		EntityClassAttribute *attribute = g_current_attributes->getAttribute(attribKey);
-		assert(attribute);
+		ASSERT_NOTNULL(attribute);
 		if (attribute->m_mandatory)
 			removeAllowed = false;
 	}
@@ -1406,8 +1406,8 @@ static void EntityKeyValueList_updateKeyCombo (GtkTreeViewColumn *column, GtkCel
 			}
 		}
 		g_object_set(renderer, "model", GTK_TREE_MODEL(store), "text-column", 0, (const char*)0);
-		/* @todo disable edit of combo iff we got parse problems solved */
-//		g_object_set(renderer, "has-entry", FALSE, (const char*)0);
+		/** @todo disable edit of combo iff we got parse problems solved */
+/*		g_object_set(renderer, "has-entry", FALSE, (const char*)0); */
 		g_object_unref(store);
 	}
 }
