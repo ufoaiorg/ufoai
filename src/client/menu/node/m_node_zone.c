@@ -48,7 +48,7 @@ static void MN_ZoneNodeDown (menuNode_t *node, int x, int y, int button)
 	if (button == K_MOUSE1) {
 		MN_SetMouseCapture(node);
 		capturedTimer = MN_AllocTimer(node, node->clickDelay, MN_ZoneNodeRepeat);
-		MN_TimerStart (capturedTimer);
+		MN_TimerStart(capturedTimer);
 	}
 }
 
@@ -103,7 +103,6 @@ static const value_t properties[] = {
 
 void MN_RegisterZoneNode (nodeBehaviour_t *behaviour)
 {
-	memset(behaviour, 0, sizeof(behaviour));
 	behaviour->name = "zone";
 	behaviour->loading = MN_ZoneNodeLoading;
 	behaviour->loaded = MN_ZoneNodeLoaded;

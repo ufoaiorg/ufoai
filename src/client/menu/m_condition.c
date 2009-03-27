@@ -210,7 +210,7 @@ static inline void MN_SetParam (const char *string, menuConditionOpCodeType_t op
 	*type = IF_VALUE_STRING;
 }
 
-#define BUF_SIZE MAX_VAR - 1
+#define BUF_SIZE (MAX_VAR - 1)
 /**
  * @brief Initialize a condition according to a string
  * @param[out] condition Condition to initialize
