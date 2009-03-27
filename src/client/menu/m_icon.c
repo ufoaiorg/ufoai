@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 
 /**
- * @brief normal, hovered, disabled, hilighted status are store in the same texture 256x256.
+ * @brief normal, hovered, disabled, highlighted status are store in the same texture 256x256.
  * Each use a row of 64 pixels
  */
 #define TILE_HEIGHT 64
@@ -83,7 +83,6 @@ menuIcon_t* MN_AllocIcon (const char* name)
 }
 
 /**
- *
  * @param[in] status 0:normal, 1:hover, 2:disabled, 3:clicked
  * @todo use named const for status
  */

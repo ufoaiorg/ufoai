@@ -75,6 +75,8 @@ void _Mem_CheckGlobalIntegrity(const char *fileName, const int fileLine);
 void _Mem_TouchPool(struct memPool_s *pool, const char *fileName, const int fileLine);
 void _Mem_TouchGlobal(const char *fileName, const int fileLine);
 
+void* _Mem_AllocatedInPool(struct memPool_s *pool, const void *pointer);
+
 void Mem_Init(void);
 uint32_t Mem_Shutdown(void);
 

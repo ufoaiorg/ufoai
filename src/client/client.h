@@ -171,7 +171,7 @@ typedef struct client_static_s {
 	int gametype;		/**< singleplayer or multiplayer */
 
 	/* connection information */
-	char servername[MAX_OSPATH];	/**< name of server from original connect */
+	char servername[MAX_VAR];		/**< name of server from original connect */
 	char serverport[16];			/**< port the server is running at */
 	int connectTime;				/**< for connection retransmits */
 	int waitingForStart;			/**< waiting for EV_START or timeout */
