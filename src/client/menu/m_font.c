@@ -74,7 +74,7 @@ void MN_ParseFont (const char *name, const char **text)
 
 	/* search for font with same name */
 	for (i = 0; i < numFonts; i++)
-		if (!strncmp(fonts[i].name, name, MAX_VAR)) {
+		if (!strcmp(fonts[i].name, name)) {
 			Com_Printf("MN_ParseFont: font \"%s\" with same name found, second ignored\n", name);
 			return;
 		}

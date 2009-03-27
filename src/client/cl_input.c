@@ -940,7 +940,7 @@ void CL_CameraMove (void)
  * @sa CL_BlockBattlescapeEvents
  * @sa CL_CameraMove
  */
-void CL_CameraRoute (pos3_t from, pos3_t target)
+void CL_CameraRoute (const pos3_t from, const pos3_t target)
 {
 	/* initialize the camera route variables */
 	PosToVec(from, routeFrom);

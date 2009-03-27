@@ -36,9 +36,9 @@ typedef enum {
 } mouseSpace_t;
 
 typedef enum {
-	key_game,
-	key_console,
-	key_message
+	key_game,		/**< input focus is on the menu (or the keybindings) */
+	key_console,	/**< console is opened */
+	key_message		/**< chatting */
 } keydest_t;
 
 #define FOV				75.0
@@ -73,6 +73,6 @@ void IN_SendKeyEvents(void);
 void IN_EventEnqueue(unsigned int key, unsigned short, qboolean down);
 
 void CL_CameraMove(void);
-void CL_CameraRoute(pos3_t from, pos3_t target);
+void CL_CameraRoute(const pos3_t from, const pos3_t target);
 
 #endif /* CLIENT_INPUT_H */
