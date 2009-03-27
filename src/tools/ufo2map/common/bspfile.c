@@ -177,6 +177,13 @@ static void SwapBSPFile (void)
 		curTile->edges[i].v[1] = LittleShort(curTile->edges[i].v[1]);
 	}
 
+	/* dbrushes */
+	for (i = 0; i < curTile->numbrushes; i++) {
+		curTile->dbrushes[i].firstbrushside = LittleLong(curTile->dbrushes[i].firstbrushside);
+		curTile->dbrushes[i].numsides = LittleLong(curTile->dbrushes[i].numsides);
+		curTile->dbrushes[i].contentFlags = LittleLong(curTile->dbrushes[i].contentFlags);
+	}
+
 	/* brushes */
 	for (i = 0; i < curTile->numbrushes; i++) {
 		curTile->brushes[i].firstbrushside = LittleLong(curTile->brushes[i].firstbrushside);
@@ -330,7 +337,6 @@ long WriteBSPFile (const char *filename)
 	fseek(bspfile.f, 0L, SEEK_SET);
 	FS_Write(&outheader, sizeof(outheader), &bspfile);
 	FS_CloseFile(&bspfile);
-	SwapBSPFile();
 	return size;
 }
 
