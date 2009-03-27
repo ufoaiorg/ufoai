@@ -29,7 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_le.h"
 #include "cl_actor.h"
 #include "cl_inventory.h"
-#include "campaign/cp_rank.h"
 #include "cl_ugv.h"
 #include "cl_parse.h"
 #include "cl_menu.h"
@@ -389,18 +388,8 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeType, const ugv_t *ugvType)
+void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_t *ugvType)
 {
-	char teamDefName[MAX_VAR];
-	const char *teamID;
-
-	if (team != TEAM_ALIEN)
-		teamID = Com_ValueToStr(&team, V_TEAM, 0);
-	else {
-		/** @todo should not be hardcoded */
-		teamID = "taman";
-	}
-
 	memset(chr, 0, sizeof(*chr));
 
 	/* link inventory */
@@ -415,38 +404,9 @@ void CL_GenerateCharacter (character_t *chr, int team, employeeType_t employeeTy
 
 	CL_CharacterSetShotSettings(chr, -1, -1, NULL);
 
-	/* Generate character stats, models & names. */
-	switch (employeeType) {
-	case EMPL_SOLDIER:
-		chr->score.rank = CL_GetRankIdx("rifleman");
-		Q_strncpyz(teamDefName, teamID, sizeof(teamDefName));
-		break;
-	case EMPL_SCIENTIST:
-		chr->score.rank = CL_GetRankIdx("scientist");
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", teamID);
-		break;
-	case EMPL_PILOT:
-		chr->score.rank = CL_GetRankIdx("pilot");
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", teamID);
-		break;
-	case EMPL_WORKER:
-		chr->score.rank = CL_GetRankIdx("worker");
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", teamID);
-		break;
-	case EMPL_ROBOT:
-		if (!ugvType)
-			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.");
-
-		chr->score.rank = CL_GetRankIdx("ugv");
-
-		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
-		break;
-	default:
-		Sys_Error("Unknown employee type\n");
-	}
 	chr->skin = Com_GetCharacterValues(teamDefName, chr);
 	/* Create attributes. */
-	CHRSH_CharGenAbilitySkills(chr, team, employeeType, GAME_IsMultiplayer());
+	CHRSH_CharGenAbilitySkills(chr, GAME_IsMultiplayer());
 }
 
 static menuOption_t skinlist[] = {
@@ -678,7 +638,7 @@ static void CL_ActorEquipmentSelect_f (void)
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	if (chr->emplType == EMPL_ROBOT)
+	if (chr->teamDef->race == RACE_ROBOT)
 		CL_UGVCvars(chr);
 	else
 		CL_CharacterCvars(chr);
@@ -777,7 +737,7 @@ static void CL_UpdateSoldier_f (void)
 	/* We are in the base or multiplayer inventory */
 	if (num < chrDisplayList.num) {
 		assert(chrDisplayList.chr[num]);
-		if (chrDisplayList.chr[num]->emplType == EMPL_ROBOT)
+		if (chrDisplayList.chr[num]->teamDef->race == RACE_ROBOT)
 			CL_UGVCvars(chrDisplayList.chr[num]);
 		else
 			CL_CharacterCvars(chrDisplayList.chr[num]);

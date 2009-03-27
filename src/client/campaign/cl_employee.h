@@ -45,6 +45,18 @@ void E_InitStartup(void);
  * @endcode
  */
 
+/**
+ * @brief The types of employees.
+ */
+typedef enum {
+	EMPL_SOLDIER,
+	EMPL_SCIENTIST,
+	EMPL_WORKER,
+	EMPL_PILOT,
+	EMPL_ROBOT,
+	MAX_EMPL		/**< For counting over all available enums. */
+} employeeType_t;
+
 /** The definition of an employee */
 typedef struct employee_s {
 	int idx;					/**< self link in global employee-list - this should be references only with the variable name emplIdx

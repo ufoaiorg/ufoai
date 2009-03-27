@@ -634,20 +634,6 @@ typedef enum {
 	RES_TYPES /**< Max. */
 } reservation_types_t;
 
-/**
- * @brief The types of employees.
- * @note If you will change order, make sure personel transfering still works.
- * @todo doesn't belong here
- */
-typedef enum {
-	EMPL_SOLDIER,
-	EMPL_SCIENTIST,
-	EMPL_WORKER,
-	EMPL_PILOT,
-	EMPL_ROBOT,
-	MAX_EMPL		/**< For counting over all available enums. */
-} employeeType_t;
-
 /** @brief Artificial intelligence of a character
  * @todo doesn't belong here  */
 typedef struct AI_s {
@@ -680,10 +666,6 @@ typedef struct character_s {
 
 	inventory_t inv;			/**< Inventory definition. */
 
-	/** @note These unfortunately need to be indices 'cause in the battlescape there is no employee-info anywhere (AFAIK). */
-	int emplIdx;				/**< Backlink to employee-struct - global employee index (gd.employees[][emplIdx]). */
-	employeeType_t emplType;				/**< Employee type.  (gd.employees[emplType][]). */
-
 	teamDef_t *teamDef;			/**< Pointer to team definition. */
 	int gender;				/**< Gender index. */
 	chrReservations_t reservedTus;	/** < Stores the reserved TUs for actions. @sa See chrReserveSettings_t for more. */
@@ -701,9 +683,8 @@ typedef struct character_s {
 /*  CHARACTER GENERATING FUNCTIONS  */
 /* ================================ */
 
-int Com_StringToTeamNum(const char* teamString) __attribute__((nonnull));
 int CHRSH_CharGetMaxExperiencePerMission(abilityskills_t skill);
-void CHRSH_CharGenAbilitySkills(character_t * chr, int team, employeeType_t type, qboolean multiplayer) __attribute__((nonnull));
+void CHRSH_CharGenAbilitySkills(character_t * chr, qboolean multiplayer) __attribute__((nonnull));
 const char *CHRSH_CharGetBody(const character_t* const chr) __attribute__((nonnull));
 const char *CHRSH_CharGetHead(const character_t* const chr) __attribute__((nonnull));
 qboolean CHRSH_IsTeamDefAlien(const teamDef_t* const td) __attribute__((nonnull));

@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../mxml/mxml_ufoai.h"
 #include "cl_campaign.h"
 #include "cp_employee_callbacks.h"
-
+#include "cp_rank.h"
 
 /**
  * @brief Tells you if a employee is away from his home base (gone in mission).
@@ -609,10 +609,12 @@ void E_UnhireAllEmployees (base_t* base, employeeType_t type)
  * @return Pointer to the newly created employee in the global list. NULL if something goes wrong.
  * @sa E_DeleteEmployee
  */
-static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int emplIdx, int team)
+static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *nation, ugv_t *ugvType, const int emplIdx)
 {
 	employee_t* employee;
 	int curEmployeeIdx;
+	const char *teamID;
+	char teamDefName[MAX_VAR];
 
 	if (type >= MAX_EMPL)
 		return NULL;
@@ -638,14 +640,51 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	employee->type = type;
 	employee->nation = nation;
 
+	if (curCampaign->team != TEAM_ALIEN)
+		teamID = Com_ValueToStr(&curCampaign->team, V_TEAM, 0);
+	else {
+		/** @todo should not be hardcoded */
+		teamID = "taman";
+	}
+
+	/* Generate character stats, models & names. */
 	switch (type) {
 	case EMPL_SOLDIER:
-		CL_GenerateCharacter(&employee->chr, team, type, NULL);
+		employee->chr.score.rank = CL_GetRankIdx("rifleman");
+		Q_strncpyz(teamDefName, teamID, sizeof(teamDefName));
+		break;
+	case EMPL_SCIENTIST:
+		employee->chr.score.rank = CL_GetRankIdx("scientist");
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", teamID);
+		break;
+	case EMPL_PILOT:
+		employee->chr.score.rank = CL_GetRankIdx("pilot");
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", teamID);
+		break;
+	case EMPL_WORKER:
+		employee->chr.score.rank = CL_GetRankIdx("worker");
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", teamID);
+		break;
+	case EMPL_ROBOT:
+		if (!ugvType)
+			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.");
+
+		employee->chr.score.rank = CL_GetRankIdx("ugv");
+
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
+		break;
+	default:
+		Sys_Error("Unknown employee type\n");
+	}
+
+	switch (type) {
+	case EMPL_SOLDIER:
+		CL_GenerateCharacter(&employee->chr, teamDefName, NULL);
 		break;
 	case EMPL_SCIENTIST:
 	case EMPL_PILOT:
 	case EMPL_WORKER:
-		CL_GenerateCharacter(&employee->chr, team, type, NULL);
+		CL_GenerateCharacter(&employee->chr, teamDefName, NULL);
 		employee->speed = 100;
 		break;
 	case EMPL_ROBOT:
@@ -653,18 +692,14 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 			Com_DPrintf(DEBUG_CLIENT, "E_CreateEmployee: No ugvType given!\n");
 			return NULL;
 		}
-		CL_GenerateCharacter(&employee->chr, team, type, ugvType);
+		CL_GenerateCharacter(&employee->chr, teamDefName, ugvType);
 		employee->ugv = ugvType;
 		break;
 	default:
 		break;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "Generate character for team: '%i' (type: %i)\n", team, type);
-
-	/* Backlink from chr to employee struct. */
-	employee->chr.emplIdx = employee->idx;
-	employee->chr.emplType = type;
+	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
 
 	if (emplIdx < 0)
 		ccs.numEmployees[type]++;
@@ -683,7 +718,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 employee_t* E_CreateEmployee (employeeType_t type, nation_t *nation, ugv_t *ugvType)
 {
 	/* Runs the create employee function with a -1 index parameter, which means at to end of list. */
-	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1, curCampaign->team);
+	return E_CreateEmployeeAtIndex(type, nation, ugvType, -1);
 }
 
 /**
@@ -727,7 +762,6 @@ qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 				/* Move all the following employees in the list one place forward and correct its index. */
 				ccs.employees[type][i] = ccs.employees[type][i + 1];
 				ccs.employees[type][i].idx = i;
-				ccs.employees[type][i].chr.emplIdx = i;
 			}
 		}
 	}
@@ -886,7 +920,7 @@ void E_RefreshUnhiredEmployeeGlobalList (const employeeType_t type, const qboole
 
 		/* we dont want to overwrite employees that have already been hired */
 		if (!employee->hired) {
-			E_CreateEmployeeAtIndex(type, happyNations[nationIdx], NULL, idx, curCampaign->team);
+			E_CreateEmployeeAtIndex(type, happyNations[nationIdx], NULL, idx);
 			nationIdx = (nationIdx + 1) % numHappyNations;
 		}
 	}
@@ -919,8 +953,6 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 	base = employee->baseHired;
 	if (!base)
 		Com_Error(ERR_DROP, "Employee (type: %i) is not hired", employee->type);
-
-	assert(employee->type == employee->chr.emplType);
 
 	switch (employee->type) {
 	case EMPL_SCIENTIST:
@@ -1218,8 +1250,6 @@ qboolean E_LoadXML (mxml_node_t *p)
 			string = mxml_GetString(ssnode, "ugv");
 			if (string[0] != '\0' && strcmp(string, "NULL"))
 				e->ugv = CL_GetUGVByID(string);
-			e->chr.emplIdx = i;
-			e->chr.emplType = j;
 			CL_LoadCharacterXML(ssnode, &e->chr);
 		}
 	}

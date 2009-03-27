@@ -37,9 +37,11 @@ static void GAME_MP_AutoTeam (void)
 {
 	int i;
 	const equipDef_t *ed = INV_GetEquipmentDefinitionByID("multiplayer_initial");
+	/** @todo support more teamdefs */
+	const char *teamDefID = cl_team->integer == TEAM_PHALANX ? "phalanx" : "taman";
 
 	for (i = 0; i < MAX_ACTIVETEAM; i++) {
-		CL_GenerateCharacter(&multiplayerCharacters[i], cl_team->integer, EMPL_SOLDIER, NULL);
+		CL_GenerateCharacter(&multiplayerCharacters[i], teamDefID, NULL);
 		/* pack equipment */
 		INVSH_EquipActor(&multiplayerCharacters[i].inv, ed, &multiplayerCharacters[i]);
 

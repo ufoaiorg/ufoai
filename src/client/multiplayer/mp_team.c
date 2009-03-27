@@ -118,7 +118,6 @@ static void MP_LoadTeamMultiplayerInfoXML (mxml_node_t *p)
  * @brief Saves a multiplayer team in xml format
  * @sa MP_SaveTeamMultiplayerInfoXML
  * @sa MP_LoadTeamMultiplayerXML
- * @todo Implement EMPL_ROBOT
  */
 static qboolean MP_SaveTeamMultiplayerXML (const char *filename, const char *name)
 {

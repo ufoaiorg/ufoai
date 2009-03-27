@@ -901,13 +901,13 @@ static void AI_SetStats (edict_t * ent, int team)
 {
 	/* Set base stats. */
 	if (team != TEAM_CIVILIAN) {
-		CHRSH_CharGenAbilitySkills(&ent->chr, team, 0, sv_maxclients->integer >= 2);
+		CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
 		/* Aliens get much more mind */
 		ent->chr.score.skills[ABILITY_MIND] += 100;
 		if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
 			ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
 	} else if (team == TEAM_CIVILIAN) {
-		CHRSH_CharGenAbilitySkills(&ent->chr, team, EMPL_WORKER, sv_maxclients->integer >= 2);
+		CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
 	}
 
 	/* Set health, morale and stun. */

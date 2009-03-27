@@ -1353,7 +1353,7 @@ void INVSH_EquipActorRobot (inventory_t* const inv, character_t* chr, objDef_t* 
 
 	assert(chr);
 	assert(weapon);
-	assert(chr->emplType == EMPL_ROBOT);
+	assert(chr->teamDef->race == RACE_ROBOT);
 
 	Com_DPrintf(DEBUG_SHARED, "INVSH_EquipActorMelee: team %i: %s, weapon %i: %s\n",
 		chr->teamDef->idx, chr->teamDef->id, weapon->idx, weapon->id);
@@ -1562,23 +1562,6 @@ void INVSH_EquipActor (inventory_t* const inv, const equipDef_t *ed, character_t
 CHARACTER GENERATING FUNCTIONS
 ================================
 */
-
-/**
- * @brief Translate the team string to the team int value
- * @sa TEAM_ALIEN, TEAM_CIVILIAN, TEAM_PHALANX
- * @param[in] teamString
- */
-int Com_StringToTeamNum (const char* teamString)
-{
-	if (!strncmp(teamString, "TEAM_PHALANX", MAX_VAR))
-		return TEAM_PHALANX;
-	if (!strncmp(teamString, "TEAM_CIVILIAN", MAX_VAR))
-		return TEAM_CIVILIAN;
-	if (!strncmp(teamString, "TEAM_ALIEN", MAX_VAR))
-		return TEAM_ALIEN;
-	Com_Printf("Com_StringToTeamNum: Unknown teamString: '%s'\n", teamString);
-	return -1;
-}
 
 /**
  * @brief Determines the maximum amount of XP per skill that can be gained from any one mission.
@@ -1810,93 +1793,79 @@ static const int MPSoldier[][2] =
 /**
  * @brief Generates a skill and ability set for any character.
  * @param[in] chr Pointer to the character, for which we generate stats.
- * @param[in] team Index of team (TEAM_ALIEN, TEAM_CIVILIAN, ...).
- * @param[in] type This is the employee type you want to generate the skills for. This is MAX_EMPL for aliens.
- * @param[in] multiplayer If this is true we use the skill values from MPSoldier
+ * @param[in] multiplayer If this is true we use the skill values from @c MPSoldier
  * mulitplayer is a special case here
  */
-void CHRSH_CharGenAbilitySkills (character_t * chr, int team, employeeType_t type, qboolean multiplayer)
+void CHRSH_CharGenAbilitySkills (character_t * chr, qboolean multiplayer)
 {
 	int i;
-	const int (*soldierTemplate)[2] = MPSoldier;
+	const int (*chrTemplate)[2];
 
-	assert(chr);
-
-	/* team definition is not defined when new phalanx recruits are added */
-	if (chr->teamDef->race != RACE_PHALANX_HUMAN && chr->teamDef->race != RACE_ROBOT) {
-		/* Add modifiers for difficulty setting here! */
-		switch (chr->teamDef->race) {
-		case RACE_TAMAN:
-			soldierTemplate = tamanSoldier;
-			break;
-		case RACE_ORTNOK:
-			soldierTemplate = ortnokSoldier;
-			break;
-		case RACE_BLOODSPIDER:
-			soldierTemplate = bloodSoldier;
-			break;
-		case RACE_SHEVAAR:
-			soldierTemplate = shevaarSoldier;
-			break;
-		case RACE_CIVILIAN:
-			soldierTemplate = civilSoldier;
-			break;
-		default:
-			Sys_Error("CHRSH_CharGenAbilitySkills: unexpected race '%i'", chr->teamDef->race);
-		}
-	} else if (!multiplayer) {
-		/* Determine which soldier template to use.
-		 * 25% of the soldiers will be specialists (5% chance each).
-		 * 1% of the soldiers will be elite.
-		 * 74% of the soldiers will be common. */
-		switch (type) {
-		case EMPL_SOLDIER: {
+	/* Add modifiers for difficulty setting here! */
+	switch (chr->teamDef->race) {
+	case RACE_TAMAN:
+		chrTemplate = tamanSoldier;
+		break;
+	case RACE_ORTNOK:
+		chrTemplate = ortnokSoldier;
+		break;
+	case RACE_BLOODSPIDER:
+		chrTemplate = bloodSoldier;
+		break;
+	case RACE_SHEVAAR:
+		chrTemplate = shevaarSoldier;
+		break;
+	case RACE_CIVILIAN:
+		chrTemplate = civilSoldier;
+		break;
+	case RACE_PHALANX_HUMAN: {
+		if (multiplayer) {
+			chrTemplate = MPSoldier;
+		} else {
+			/* Determine which soldier template to use.
+			 * 25% of the soldiers will be specialists (5% chance each).
+			 * 1% of the soldiers will be elite.
+			 * 74% of the soldiers will be common. */
 			const float soldierRoll = frand();
 			if (soldierRoll <= 0.01f)
-				soldierTemplate = eliteSoldier;
+				chrTemplate = eliteSoldier;
 			else if (soldierRoll <= 0.06)
-				soldierTemplate = closeSoldier;
+				chrTemplate = closeSoldier;
 			else if (soldierRoll <= 0.11)
-				soldierTemplate = heavySoldier;
+				chrTemplate = heavySoldier;
 			else if (soldierRoll <= 0.16)
-				soldierTemplate = assaultSoldier;
+				chrTemplate = assaultSoldier;
 			else if (soldierRoll <= 0.22)
-				soldierTemplate = sniperSoldier;
+				chrTemplate = sniperSoldier;
 			else if (soldierRoll <= 0.26)
-				soldierTemplate = blastSoldier;
+				chrTemplate = blastSoldier;
 			else
-				soldierTemplate = commonSoldier;
-			break;
+				chrTemplate = commonSoldier;
 		}
-		case EMPL_PILOT:
-		case EMPL_SCIENTIST:
-		case EMPL_WORKER:
-			soldierTemplate = civilSoldier;
-			break;
-		case EMPL_ROBOT:
-			soldierTemplate = robotSoldier;
-			break;
-		default:
-			soldierTemplate = commonSoldier;
-			break;
-		}
+		break;
+	}
+	case RACE_ROBOT:
+		chrTemplate = robotSoldier;
+		break;
+	default:
+		Sys_Error("CHRSH_CharGenAbilitySkills: unexpected race '%i'", chr->teamDef->race);
 	}
 
-	assert(soldierTemplate);
+	assert(chrTemplate);
 
 	/* Abilities and skills -- random within the range */
 	for (i = 0; i < SKILL_NUM_TYPES; i++) {
-		const int abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
+		const int abilityWindow = chrTemplate[i][1] - chrTemplate[i][0];
 		/* Reminder: In case if abilityWindow==0 the ability will get set to the lower limit. */
-		const int temp = (frand() * abilityWindow) + soldierTemplate[i][0];
+		const int temp = (frand() * abilityWindow) + chrTemplate[i][0];
 		chr->score.skills[i] = temp;
 		chr->score.initialSkills[i] = temp;
 	}
 
 	{
 		/* Health. */
-		const int abilityWindow = soldierTemplate[i][1] - soldierTemplate[i][0];
-		const int temp = (frand() * abilityWindow) + soldierTemplate[i][0];
+		const int abilityWindow = chrTemplate[i][1] - chrTemplate[i][0];
+		const int temp = (frand() * abilityWindow) + chrTemplate[i][0];
 		chr->score.initialSkills[SKILL_NUM_TYPES] = temp;
 		chr->maxHP = temp;
 		chr->HP = temp;
