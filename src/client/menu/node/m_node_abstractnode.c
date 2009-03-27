@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 #include "../m_parse.h"
 #include "../m_main.h"
+#include "../m_internal.h"
 
 /*
  * @brief Check the node inheritance
@@ -347,8 +348,11 @@ qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const ch
 		else
 			v = atoi(value) != 0;
 		*(qboolean*) b = v;
+	} else if (property->type == V_CVAR_OR_LONGSTRING || property->type == V_CVAR_OR_STRING) {
+		MN_FreeStringProperty(*(void**)b);
+		*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
 	} else {
-		Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s.%s@%s'\n", node->menu->name, node->name, property->string);
+		Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s@%s'\n", MN_GetPath(node), property->string);
 		return qfalse;
 	}
 

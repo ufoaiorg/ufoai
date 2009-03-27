@@ -36,6 +36,7 @@ cvar_t *mn_active;
 cvar_t *mn_afterdrop;
 cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
+struct memPool_s *mn_dynStringPool;
 
 /**
  * @sa MN_DisplayNotice
@@ -255,6 +256,8 @@ void MN_Init (void)
 	mn.adataize = MENU_HUNK_SIZE;
 	mn.adata = (byte*)Mem_PoolAlloc(mn.adataize, cl_menuSysPool, 0);
 	mn.curadata = mn.adata;
+
+	mn_dynStringPool = Mem_CreatePool("Menu: Dynamic string");
 
 	MN_InitData();
 	MN_InitNodes();

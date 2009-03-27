@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_internal.h"
 #include "m_parse.h"
 #include "m_input.h"
+#include "m_actions.h"
 #include "node/m_node_abstractnode.h"
 
 #include "../client.h"
@@ -230,6 +231,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		Com_SetValue(node, (char *) value, action->scriptValues->type, action->scriptValues->ofs, action->scriptValues->size);
 	else if ((action->scriptValues->type & V_SPECIAL_TYPE) == V_SPECIAL_CVAR) {
 		void *mem = ((byte *) node + action->scriptValues->ofs);
+		MN_FreeStringProperty(*(void**)mem);
 		switch (action->scriptValues->type & V_BASETYPEMASK) {
 		case V_FLOAT:
 			**(float **) mem = *(float*) value;
@@ -347,6 +349,23 @@ qboolean MN_IsInjectedString (const char *string)
 		c++;
 	}
 	return qfalse;
+}
+
+/**
+ * @brief Free a string property if it is allocated into mn_dynStringPool
+ * @sa mn_dynStringPool
+ */
+void MN_FreeStringProperty (void* pointer)
+{
+	/* skip const string */
+	if ((uintptr_t)mn.adata <= (uintptr_t)pointer && (uintptr_t)pointer < (uintptr_t)mn.adata + (uintptr_t)mn.adataize)
+		return;
+
+	/* skip pointer out of mn_dynStringPool */
+	if (!_Mem_AllocatedInPool(mn_dynStringPool, pointer))
+		return;
+
+	Mem_Free(pointer);
 }
 
 /**
