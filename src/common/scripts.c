@@ -1645,7 +1645,7 @@ teamDef_t* Com_GetTeamDefinitionByID (const char *team)
 
 	/* get team definition */
 	for (i = 0; i < csi.numTeamDefs; i++)
-		if (!strncmp(team, csi.teamDef[i].id, MAX_VAR))
+		if (!strcmp(team, csi.teamDef[i].id))
 			return &csi.teamDef[i];
 
 	Com_Printf("Com_GetTeamDefinitionByID: could not find team definition for '%s' in team definitions\n", team);
@@ -1968,7 +1968,7 @@ static void Com_ParseTeam (const char *name, const char **text)
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = csi.teamDef; i < csi.numTeamDefs; i++, td++)
-		if (!strncmp(td->id, name, sizeof(td->id)))
+		if (!strcmp(td->id, name))
 			break;
 
 	/* reset new category */
