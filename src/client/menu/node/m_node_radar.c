@@ -22,16 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../m_main.h"
-#include "../m_font.h"
 #include "m_node_radar.h"
 #include "m_node_abstractnode.h"
 
-#include "../../client.h"
 #include "../../renderer/r_draw.h"
-#include "../../cl_view.h"
+#include "../../client.h"
 #include "../../cl_le.h"	/**< cl_actor.h needs this */
-#include "../../cl_actor.h"
 #include "../../../shared/parse.h"
 
 /** @brief Each maptile must have an entry in the images array */
@@ -385,7 +381,7 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 
 	/* draw player circles */
 	R_DrawCircle2D(x, y, radar.gridWidth / 2, qtrue, color, 1);
-	if (le == selActor)
+	if (le->selected)
 		Vector4Set(color, 1.0, 1.0, 1.0, 1.0);
 	else
 		Vector4Set(color, 0.8, 0.8, 0.8, 1.0);
