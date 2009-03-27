@@ -454,7 +454,7 @@ static void G_UpdateCharacterSkills (character_t *chr)
 	unsigned int maxXP, gainedXP, totalGainedXP;
 
 	/* Robots/UGVs do not get skill-upgrades. */
-	if (chr->emplType == EMPL_ROBOT)
+	if (chr->teamDef->race == RACE_ROBOT)
 		return;
 
 	totalGainedXP = 0;
@@ -497,7 +497,7 @@ void G_EndGame (int team)
 
 	/* Calculate new scores/skills for the soldiers. */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-		if (ent->inuse && G_IsLivingActor(ent) && ent->team == TEAM_PHALANX)
+		if (ent->inuse && G_IsLivingActor(ent) && !G_PLAYER_FROM_ENT(ent)->pers.ai)
 			G_UpdateCharacterSkills(&ent->chr);
 
 	/* if aliens won, make sure every soldier dies */
@@ -548,7 +548,7 @@ void G_EndGame (int team)
 	/* how many actors */
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-			 && ent->team == TEAM_PHALANX)
+		 && !G_PLAYER_FROM_ENT(ent)->pers.ai)
 			j++;
 
 	/* number of soldiers */
@@ -557,7 +557,7 @@ void G_EndGame (int team)
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_ACTOR2x2)
-			 && ent->team == TEAM_PHALANX) {
+			 && !G_PLAYER_FROM_ENT(ent)->pers.ai) {
 				G_SendCharacterData(ent);
 			}
 	}
