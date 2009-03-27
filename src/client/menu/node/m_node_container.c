@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../m_main.h"
 #include "../m_parse.h"
-#include "../m_font.h"
 #include "../m_dragndrop.h"
 #include "../m_tooltip.h"
 #include "../m_nodes.h"
@@ -37,13 +36,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_abstractnode.h"
 
 #include "../../client.h"
-#include "../../campaign/cl_campaign.h"
+#include "../../campaign/cl_campaign.h" /**< @todo campaign mode only */
 #include "../../renderer/r_draw.h"
 #include "../../renderer/r_mesh.h"
 #include "../../cl_game.h"
+#include "../../cl_team.h"
 #include "../../cl_le.h"	/**< cl_actor.h needs this */
 #include "../../cl_actor.h"
-#include "../../cl_team.h"
+#include "../../cl_inventory.h"
 
 inventory_t *menuInventory = NULL;
 
@@ -206,6 +206,7 @@ void MN_DrawItem (menuNode_t *node, const vec3_t org, const item_t *item, int x,
 	} else {
 		menuModel_t *menuModel = NULL;
 		const char *modelName = od->model;
+		/** @todo campaign mode only (techs) */
 		if (od->tech && od->tech->mdl) {
 			menuModel = MN_GetMenuModel(od->tech->mdl);
 			/* the model from the tech structure has higher priority, because the item model itself
@@ -265,7 +266,7 @@ static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 		Com_sprintf(tooltiptext, string_maxlength, "%s\n", _(item.t->name));
 
 	/* Only display further info if item.t is researched */
-	if (RS_IsResearched_ptr(item.t->tech)) {
+	if (GAME_ItemIsUseable(item.t)) {
 		if (item.t->weapon) {
 			/* Get info about used ammo (if there is any) */
 			if (item.t == item.m) {
@@ -285,7 +286,7 @@ static void MN_GetItemTooltip (item_t item, char *tooltiptext, size_t string_max
 				Q_strcat(tooltiptext, _("Usable in:\n"), string_maxlength);
 				for (i = 0; i < item.t->numWeapons; i++) {
 					weapon = item.t->weapons[i];
-					if (RS_IsResearched_ptr(weapon->tech)) {
+					if (GAME_ItemIsUseable(weapon)) {
 						Q_strcat(tooltiptext, va("* %s\n", _(weapon->name)), string_maxlength);
 					}
 				}
@@ -529,7 +530,7 @@ static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int di
 	qboolean isArmour;
 
 	/* skip none researched objects */
-	if (!RS_IsResearched_ptr(obj->tech))
+	if (!GAME_ItemIsUseable(obj))
 		return qfalse;
 
 	if (!INVSH_UseableForTeam(obj, GAME_GetCurrentTeam()))
@@ -666,7 +667,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 				tempItem.t = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
-				if (!tempItem.t->tech || !RS_IsResearched_ptr(tempItem.t->tech))
+				if (!GAME_ItemIsUseable(tempItem.t))
 					continue;
 
 				/* find and skip none existing ammo */
@@ -979,7 +980,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 				objDef_t *objammo = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
-				if (!objammo->tech || !RS_IsResearched_ptr(objammo->tech))
+				if (GAME_ItemIsUseable(objammo))
 					continue;
 
 				/* find and skip none existing ammo */
@@ -1425,12 +1426,12 @@ static void MN_ContainerNodeDNDLeave (menuNode_t *node)
 /**
  * @brief Call into the source when the DND end
  */
-static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDroped)
+static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDropped)
 {
 	item_t *dragItem = MN_DNDGetItem();
 
 	/* if the target can't finalize the DND we stop */
-	if (!isDroped) {
+	if (!isDropped) {
 		return qfalse;
 	}
 
@@ -1440,6 +1441,7 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 		assert(EXTRADATA(source).container);
 		assert(target);
 		assert(EXTRADATA(target).container);
+		/** @todo not sure whether a network event belongs into the menu code... */
 		MSG_Write_PA(PA_INVMOVE, selActor->entnum,
 			EXTRADATA(source).container->id, dragInfoFromX, dragInfoFromY,
 			EXTRADATA(target).container->id, dragInfoToX, dragInfoToY);

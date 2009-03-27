@@ -30,7 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_controls.h"
 #include "m_node_abstractnode.h"
 
-#include "../../client.h"
+#include "../../cl_keys.h"
+#include "../../cl_video.h"
 
 static int deltaMouseX;
 static int deltaMouseY;

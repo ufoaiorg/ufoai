@@ -545,6 +545,7 @@ static void CL_ChangeSkinForWholeTeam_f (void)
 
 /**
  * @sa CL_CleanupAircraftCrew
+ * @todo Move it to a better place - has nothing to do with team code imo
  */
 item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
