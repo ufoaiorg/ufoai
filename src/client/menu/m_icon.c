@@ -29,6 +29,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../renderer/r_draw.h"
 
+/**
+ * @brief normal, hovered, disabled, hilighted status are store in the same texture 256x256.
+ * Each use a row of 64 pixels
+ */
+#define TILE_HEIGHT 64
+
 const value_t mn_iconProperties[] = {
 	{"texl", V_POS, offsetof(menuIcon_t, pos), MEMBER_SIZEOF(menuIcon_t, pos)},
 	{"size", V_POS, offsetof(menuIcon_t, size), MEMBER_SIZEOF(menuIcon_t, size)},
@@ -90,7 +96,7 @@ void MN_DrawIconInBox (menuIcon_t* icon, int status, int posX, int posY, int siz
 	if (icon->single)
 		texY = icon->pos[1];
 	else
-		texY = icon->pos[1] + (64 * status);
+		texY = icon->pos[1] + (TILE_HEIGHT * status);
 
 	posX += (sizeX - icon->size[0]) / 2;
 	posY += (sizeY - icon->size[1]) / 2;
