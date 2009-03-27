@@ -218,7 +218,6 @@ void MP_SaveTeamMultiplayer_f (void)
  * @brief Load a multiplayer team from an xml file
  * @sa MP_LoadTeamMultiplayer
  * @sa MP_SaveTeamMultiplayer
- * @todo only EMPL_SOLDIERs are saved and loaded
  */
 static qboolean MP_LoadTeamMultiplayerXML (const char *filename)
 {
