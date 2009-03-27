@@ -87,10 +87,8 @@ void S_Music_Stop (void)
 	if (music.data != NULL) {
 		Mix_HaltMusic();
 		Mix_FreeMusic(music.data);
-		music.data = NULL;
-		/* this is freed in the SDL_mixer callback functions */
-		music.musicSrc = NULL;
-		Q_strncpyz(music.currentlyPlaying, "", sizeof(music.currentlyPlaying));
+		/* rwops is freed in the SDL_mixer callback functions */
+		memset(&music, 0, sizeof(music));
 	}
 }
 
