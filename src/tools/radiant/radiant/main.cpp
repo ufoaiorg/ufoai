@@ -398,6 +398,13 @@ static void user_shortcuts_init(void) {
 	SaveCommandMap(SettingsPath_get());
 }
 
+void user_shortcuts_save()
+{
+	StringOutputStream path(256);
+	path << SettingsPath_get() << g_pGameDescription->mGameFile.c_str() << '/';
+	SaveCommandMap(path.c_str());
+}
+
 int main (int argc, char* argv[])
 {
 	streams_init();
@@ -490,6 +497,8 @@ int main (int argc, char* argv[])
 	}
 
 	delete g_pParentWnd;
+
+	user_shortcuts_save();
 
 	global_accel_destroy();
 
