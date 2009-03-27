@@ -459,7 +459,7 @@ static void CL_ActorTeamSelect_f (void)
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
 	/* set info cvars */
-	if (chr->emplType == EMPL_ROBOT)
+	if (chr->teamDef->race == RACE_ROBOT)
 		CL_UGVCvars(chr);
 	else
 		CL_CharacterCvars(chr);
