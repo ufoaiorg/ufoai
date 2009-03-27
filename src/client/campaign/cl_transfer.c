@@ -1072,6 +1072,9 @@ static void TR_TransferStart_f (void)
 			}
 		}
 	}
+	/** @todo This doesn't work - it would require to store the aliens as the
+	 * first entries in the teamDef array - and this is not guaranteed. The
+	 * alienAmount array may not contain more than numAliensTD entries though */
 	for (i = 0; i < ccs.numAliensTD; i++) {		/* Aliens. */
 		if (!CHRSH_IsTeamDefAlien(&csi.teamDef[i]))
 			continue;
