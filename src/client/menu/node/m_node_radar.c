@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../cl_le.h"	/**< cl_actor.h needs this */
 #include "../../cl_actor.h"
 #include "../../../shared/parse.h"
-#include "../../campaign/cl_campaign.h"
 
 /** @brief Each maptile must have an entry in the images array */
 typedef struct hudRadarImage_s {
@@ -114,7 +113,7 @@ static void MN_BuildRadarImageList (const char *tiles, const char *pos)
 		Com_sprintf(name, sizeof(name), "%s%s", radar.base, token);
 
 		image = &radar.images[radar.numImages++];
-		image->name = Mem_PoolStrDup(name, cl_campaignPool, 0);
+		image->name = Mem_StrDup(name);
 
 		if (pos && pos[0]) {
 			int i;
@@ -281,7 +280,7 @@ static void MN_InitRadar (const menuNode_t *node)
 			} else {
 				char imagePath[MAX_QPATH];
 				Com_sprintf(imagePath, sizeof(imagePath), "radars/%s_%i", image->name, i + 1);
-				image->path[i] = Mem_PoolStrDup(imagePath, cl_campaignPool, 0);
+				image->path[i] = Mem_StrDup(imagePath);
 
 				image->maxlevel++;
 
@@ -415,7 +414,7 @@ static void MN_RadarNodeDraw (menuNode_t *node)
 	int i;
 	vec3_t pos;
 
-	if (!(cls.state == ca_active && !cl.skipRadarNodes))
+	if (cls.state != ca_active || cl.skipRadarNodes)
 		return;
 
 	/* the cl struct is wiped with every new map */
