@@ -108,7 +108,6 @@ static inline void MN_InsertMenuIntoStack (menuNode_t *menu, int position)
  * @param[in] name Name of the menu to push onto menu stack
  * @param[in] delete Delete the menu from the menu stack before adding it again
  * @return pointer to menuNode_t
- * @todo Replace "i" by a menuNode_t, more easy to read
  */
 static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboolean delete)
 {
@@ -144,7 +143,7 @@ static menuNode_t* MN_PushMenuDelete (const char *name, const char *parent, qboo
 		menu->behaviour->init(menu);
 	}
 
-	/** @todo what does it mean? why here? */
+	/* change from e.g. console mode to game input mode (fetch input) */
 	Key_SetDest(key_game);
 
 	MN_InvalidateMouse();
@@ -353,7 +352,7 @@ qboolean MN_IsMenuOnStack(const char* name)
 }
 
 /**
- * @todo FInd  better name
+ * @todo Find  better name
  */
 static void MN_CloseMenuByRef (menuNode_t *menu)
 {
@@ -508,7 +507,7 @@ const char* MN_GetActiveMenuName (void)
 
 /**
  * @brief Searches a given node in the current menu
- * @todo deprecated, we should not use it because its hard to predict result of "current" (we use popups...)
+ * @todo @deprecated we should not use it because its hard to predict result of "current" (we use popups...)
  * plus, if we need, we can use MN_GetActiveMenu and MN_GetNode
  * @sa MN_GetNode
  * @sa MN_GetActiveMenu

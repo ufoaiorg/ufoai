@@ -73,7 +73,9 @@ void MN_SetCvar (const char *name, const char *str, float value)
 }
 
 /**
- * @todo add a brief
+ * @brief Adds a given value to the numeric representation of a cvar. Also
+ * performs min and max check for that value.
+ * @sa MN_ModifyWrap_f
  */
 static void MN_Modify_f (void)
 {
@@ -93,7 +95,11 @@ static void MN_Modify_f (void)
 }
 
 /**
- * @todo add a brief
+ * @brief Adds a given value to the numeric representation of a cvar. Also
+ * performs min and max check for that value. If there would be an overflow
+ * we use the min value - and if there would be an underrun, we use the max
+ * value.
+ * @sa MN_Modify_f
  */
 static void MN_ModifyWrap_f (void)
 {
