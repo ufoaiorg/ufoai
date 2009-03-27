@@ -350,12 +350,13 @@ qboolean MN_IsInjectedString (const char *string)
 }
 
 /**
- * @brief Set a new action to a nodeAction_t pointer
- * @param[in] type EA_CMD
- * @param[in] data The data for this action - in case of EA_CMD this is the commandline
+ * @brief Set a new action to a @c menuAction_t pointer
+ * @param[in] type Only @c EA_CMD is supported
+ * @param[in] data The data for this action - in case of @c EA_CMD this is the commandline
  * @note You first have to free existing node actions - only free those that are
- * not static in mn.menuActions array
- * @todo we should create a function to free the memory
+ * not static in @c mn.menuActions array
+ * @todo we should create a function to free the memory. We can use a tag in the Mem_PoolAlloc
+ * calls and use use Mem_FreeTag.
  */
 void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 {
