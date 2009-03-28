@@ -60,6 +60,13 @@ menu team extends iaircraft
 		textalign	ur
 	}
 
+	func listen_close_equipment
+	{
+		cmd "team_select <cvar:cl_selected2>"
+		cmd "del cl_selected2"
+		cmd "mn_removelistener equipment@close <path:this>"
+	}
+
 	button bt_equipsoldiers
 	{
 		tooltip	"_Equip soldiers"
@@ -69,11 +76,7 @@ menu team extends iaircraft
 		image	menu/button_blue	blend true
 		click	{
 			*cvar:cl_selected2 <cvar:cl_selected>
-			*path:(menu)equipment close {
-				cmd "team_select <cvar:cl_selected2>"
-				*path:(menu)this close { }
-				cmd "del cl_selected2"
-			}
+			cmd "mn_addlistener equipment@close <path:menu>.listen_close_equipment"
 			cmd "mn_push equipment"
 		}
 		color	"1 1 1 0.8"

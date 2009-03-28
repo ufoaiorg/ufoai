@@ -981,6 +981,11 @@ menu popup_baseattack
 		size		"220 20"
 	}
 
+	func listen_close_equipment
+	{
+		cmd "cp_mission_autogo"
+		cmd "mn_removelistener equipment@close <path:this>"
+	}
 
 	button bt_auto_go
 	{
@@ -1003,10 +1008,7 @@ menu popup_baseattack
 				cmd "pwr_down;"
 			}
 			if "*node:menu.equip@current > 0" {
-				*path:(menu)equipment close {
-					cmd "cp_mission_autogo"
-					*path:(menu)this close { }
-				}
+				cmd "mn_addlistener equipment@close <path:menu>.listen_close_equipment"
 				cmd "mn_push equipment;"
 			} else {
 				cmd "cp_mission_autogo;"
