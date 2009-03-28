@@ -701,10 +701,6 @@ static void AC_AddOne_f (void)
 		AL_RemoveAliens(base, alienType, 1, AL_ADDALIVE);
 	else
 		AL_RemoveAliens(base, alienType, 1, AL_ADDDEAD);
-
-	/* Reinit menu to display proper values. */
-	/* AC_UpdateMenu(baseCurrent); */
-	/** @todo do we need this update here? is it better to move this debug function to callbacks? */
 }
 #endif
 

@@ -247,12 +247,6 @@ typedef struct baseTemplate_s {
 	int numBuildings;		/**< Number of buildings in this template. */
 } baseTemplate_t;
 
-/** Currently displayed/accessed base.
- * @todo this should not be extern but only available in cp_base_callbacks,c */
-extern base_t *baseCurrent;
-/** @todo this should not be extern but only available in cp_base_callbacks,c */
-extern building_t *buildingConstructionList[MAX_BUILDINGS];
-
 void B_UpdateBaseData(void);
 int B_CheckBuildingConstruction(building_t *b, base_t* base);
 float B_GetMaxBuildingLevel(const base_t* base, const buildingType_t type);
@@ -306,7 +300,6 @@ baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
 
 void B_ResetBuildingCurrent(base_t* base);
-void B_BuildingInit(base_t* base);
 void B_BaseMenuInit(const base_t *base);
 void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);
 void B_DrawBuilding(base_t* base, building_t* building);

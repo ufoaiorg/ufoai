@@ -49,7 +49,7 @@ int AIR_GetStorageSupply (const base_t *base, const char *airCharId, qboolean in
 	int i, j;
 	int amount = 0, storage = 0, supply;
 
-	/* Get storage amount in baseCurrent. */
+	/* Get storage amount in the base. */
 	for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
 		if (!strcmp(aircraft->id, airCharId))
 			storage++;

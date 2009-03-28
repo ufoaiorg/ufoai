@@ -43,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 
 vec3_t newBasePos;
-building_t *buildingConstructionList[MAX_BUILDINGS];
 static cvar_t *cl_initial_equipment;
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
@@ -932,9 +931,6 @@ static void B_AddBuildingToBasePos (base_t *base, const building_t const *templa
 	B_UpdateAllBaseBuildingStatus(buildingNew, base, B_STATUS_WORKING);
 	Com_DPrintf(DEBUG_CLIENT, "Base %i new building:%s at (%.0f:%.0f)\n", base->idx, buildingNew->id, buildingNew->pos[0], buildingNew->pos[1]);
 
-	/* update the building-list */
-	B_BuildingInit(base);
-
 	if (hire)
 		E_HireForBuilding(base, buildingNew, -1);
 
@@ -1130,8 +1126,6 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 	for (i = 0; i < MAX_CAP; i++)
 		base->capacities[i].cur = 0;
 
-	/* update the building-list */
-	B_BuildingInit(base);
 	Com_DPrintf(DEBUG_CLIENT, "Set up for %i\n", base->idx);
 
 	ccs.numBases++;
@@ -1408,7 +1402,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 			buildingNew->pos[1] = col;
 
 			B_ResetBuildingCurrent(base);
-			B_BuildingInit(base);	/* update the building-list */
+			Cmd_ExecuteString("building_init");
 
 			return buildingNew;
 		} else {
@@ -1463,27 +1457,6 @@ void B_DrawBuilding (base_t* base, building_t* building)
 	/* link into menu text array */
 	MN_RegisterText(TEXT_BUILDING_INFO, buildingText);
 }
-
-/**
- * @brief Handles the list of constructable buildings.
- * @param[in] base The base to update the building list for
- * @param[in] building Add this building to the construction list
- * @note Called everytime a building was constructed and thus maybe other buildings
- * get available. The content is updated everytime B_BuildingInit is called
- * (i.e everytime the buildings-list is displayed/updated)
- */
-static void B_BuildingAddToList (base_t *base, building_t *building)
-{
-	int count;
-	assert(base);
-	assert(building);
-	assert(building->name);
-
-	count = LIST_Count(base->buildingList);
-	LIST_AddPointer(&base->buildingList, _(building->name));
-	buildingConstructionList[count] = building->tpl;
-}
-
 
 /**
  * @brief Counts the number of buildings of a particular type in a base.
@@ -1551,54 +1524,6 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 			NumberOfBuildings++;
 	}
 	return NumberOfBuildings;
-}
-
-/**
- * @brief Update the building-list.
- * @sa B_BuildingInit_f
- */
-void B_BuildingInit (base_t* base)
-{
-	int i;
-
-	/* maybe someone call this command before the bases are parsed?? */
-	if (!base)
-		return;
-
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", base->name, base->idx);
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", ccs.numBuildings[base->idx]);
-
-	/* delete the whole linked list - it's rebuild in the loop below */
-	LIST_Delete(&base->buildingList);
-
-	for (i = 0; i < ccs.numBuildingTemplates; i++) {
-		building_t *tpl = &ccs.buildingTemplates[i];
-		/* make an entry in list for this building */
-
-		if (tpl->visible) {
-			const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
-
-			if (tpl->moreThanOne) {
-				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
-				if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
-					continue;
-			} else if (numSameBuildings > 0) {
-				continue;
-			}
-
-			/* if the building is researched add it to the list */
-			if (RS_IsResearched_ptr(tpl->tech)) {
-				B_BuildingAddToList(base, tpl);
-			} else {
-				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
-					tpl->id, tpl->tech ? tpl->tech->idx : 0);
-			}
-		}
-	}
-	if (base->buildingCurrent)
-		B_DrawBuilding(base, base->buildingCurrent);
-
-	MN_RegisterLinkedListText(TEXT_BUILDINGS, base->buildingList);
 }
 
 /**
@@ -2645,7 +2570,7 @@ int B_CheckBuildingConstruction (building_t *building, base_t *base)
 		if (building->timeStart && building->timeStart + building->buildTime <= ccs.date.day) {
 			B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 
-			if (*building->onConstruct) {
+			if (building->onConstruct[0] != '\0') {
 				base->buildingCurrent = building;
 				Com_DPrintf(DEBUG_CLIENT, "B_CheckBuildingConstruction: %s %i;\n", building->onConstruct, base->idx);
 				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
@@ -2654,9 +2579,9 @@ int B_CheckBuildingConstruction (building_t *building, base_t *base)
 			newBuilding++;
 		}
 	}
+
 	if (newBuilding)
-		/* update the building-list */
-		B_BuildingInit(base);
+		Cmd_ExecuteString("building_init");
 
 	return newBuilding;
 }

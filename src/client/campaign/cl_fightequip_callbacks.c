@@ -550,13 +550,13 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	MN_ResetData(TEXT_AIREQUIP_2);
 	MN_ResetData(TEXT_STANDARD);
 
-	/* baseCurrent or installationCurrent should be non NULL because we are in the menu of this base or installation */
+	/* base or installation should not be NULL because we are in the menu of this base or installation */
 	if (!base && !installation)
 		return;
 
-	/* baseCurrent and installationCurrent should not be both be set.  This function requires one or the other set. */
+	/* base and installation should not both be set. This function requires one or the other set. */
 	if (base && installation) {
-		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: both the basecurrent and installationcurrent are set.  This shouldn't happen: you shouldn't be in this function.\n");
+		Com_Printf("BDEF_BaseDefenseMenuUpdate_f: both the base and installation are set.  This shouldn't happen: you shouldn't be in this function.\n");
 		return;
 	}
 

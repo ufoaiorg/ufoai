@@ -39,6 +39,27 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t *mn_base_title;
 static cvar_t *cl_start_buildings;
+static building_t *buildingConstructionList[MAX_BUILDINGS];
+
+/**
+ * @brief Handles the list of constructable buildings.
+ * @param[in] base The base to update the building list for
+ * @param[in] building Add this building to the construction list
+ * @note Called everytime a building was constructed and thus maybe other buildings
+ * get available. The content is updated everytime B_BuildingInit is called
+ * (i.e everytime the buildings-list is displayed/updated)
+ */
+static void B_BuildingAddToList (base_t *base, building_t *building)
+{
+	int count;
+	assert(base);
+	assert(building);
+	assert(building->name);
+
+	count = LIST_Count(base->buildingList);
+	LIST_AddPointer(&base->buildingList, _(building->name));
+	buildingConstructionList[count] = building->tpl;
+}
 
 /**
  * @brief Called when a base is opened or a new base is created on geoscape.
@@ -400,6 +421,53 @@ static void B_BuildingOnDestroy_f (void)
 		Com_Printf("B_BuildingOnDestroy_f: base %i is not founded\n", baseIdx);
 }
 
+/**
+ * @brief Update the building-list.
+ * @sa B_BuildingInit_f
+ */
+static void B_BuildingInit (base_t* base)
+{
+	int i;
+
+	/* maybe someone call this command before the bases are parsed?? */
+	if (!base)
+		return;
+
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Updating b-list for '%s' (%i)\n", base->name, base->idx);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingInit: Buildings in base: %i\n", ccs.numBuildings[base->idx]);
+
+	/* delete the whole linked list - it's rebuild in the loop below */
+	LIST_Delete(&base->buildingList);
+
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		building_t *tpl = &ccs.buildingTemplates[i];
+		/* make an entry in list for this building */
+
+		if (tpl->visible) {
+			const int numSameBuildings = B_GetNumberOfBuildingsInBaseByTemplate(base, tpl);
+
+			if (tpl->moreThanOne) {
+				/* skip if limit of BASE_SIZE*BASE_SIZE exceeded */
+				if (numSameBuildings >= BASE_SIZE * BASE_SIZE)
+					continue;
+			} else if (numSameBuildings > 0) {
+				continue;
+			}
+
+			/* if the building is researched add it to the list */
+			if (RS_IsResearched_ptr(tpl->tech)) {
+				B_BuildingAddToList(base, tpl);
+			} else {
+				Com_DPrintf(DEBUG_CLIENT, "Building not researched yet %s (tech idx: %i)\n",
+					tpl->id, tpl->tech ? tpl->tech->idx : 0);
+			}
+		}
+	}
+	if (base->buildingCurrent)
+		B_DrawBuilding(base, base->buildingCurrent);
+
+	MN_RegisterLinkedListText(TEXT_BUILDINGS, base->buildingList);
+}
 
 /**
  * @brief Script command binding for B_BuildingInit
@@ -634,15 +702,8 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	buildingID = Cmd_Argv(1);
 	building = B_GetBuildingTemplate(buildingID);
 
-	if (!building) {
-		Com_Printf("B_CheckBuildingStatusForMenu_f: building pointer is NULL\n");
+	if (!building || !base)
 		return;
-	}
-
-	if (!base) {
-		Com_Printf("B_CheckBuildingStatusForMenu_f: baseCurrent pointer is NULL\n");
-		return;
-	}
 
 	/* Maybe base is under attack ? */
 	if (base->baseStatus == BASE_UNDER_ATTACK) {
