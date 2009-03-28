@@ -133,7 +133,7 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 	char image[MAX_QPATH];		/**< this buffer should not be need */
 	building_t *building;
 	const building_t *secondBuilding = NULL;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base) {
 		MN_PopMenu(qfalse);
@@ -257,7 +257,7 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
 	building_t *building;
 	const int itemToolTipWidth = 250;
 	char *tooltipText;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
@@ -284,7 +284,7 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
 static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	assert(base);
 	assert(node);
@@ -330,7 +330,7 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	assert(base);
 	assert(node);
@@ -362,7 +362,7 @@ static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 static void MN_BaseMapNodeMiddleClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	assert(base);
 	assert(node);

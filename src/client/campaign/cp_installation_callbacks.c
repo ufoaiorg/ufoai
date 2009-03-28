@@ -43,7 +43,7 @@ static void INS_SetCurrentSelectedInstallation (installation_t *installation)
 {
 	ccs.installationCurrent = installation;
 	if (installation) {
-		ccs.baseCurrent = NULL;
+		B_SetCurrentSelectedBase(NULL);
 		Cvar_Set("mn_installation_title", installation->name);
 		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
 	}

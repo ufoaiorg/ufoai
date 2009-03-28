@@ -237,6 +237,7 @@ typedef struct base_s {
 	int batteryDamage;			/**< Hit points of defence system */
 	int baseDamage;			/**< Hit points of base */
 
+	qboolean selected;		/**< the current selected base */
 	building_t *buildingCurrent; /**< needn't be saved */
 } base_t;
 
@@ -300,6 +301,7 @@ baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
 
 base_t *B_GetCurrentSelectedBase(void);
+void B_SetCurrentSelectedBase(const base_t *base);
 
 void B_ResetBuildingCurrent(base_t* base);
 void B_BaseMenuInit(const base_t *base);

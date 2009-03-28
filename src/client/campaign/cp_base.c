@@ -1966,20 +1966,41 @@ static int B_GetFirstUnfoundedBase (void)
  * @sa B_SelectBase
  * @param base
  */
-static void B_SetCurrentSelectedBase (base_t *base)
+void B_SetCurrentSelectedBase (const base_t *base)
 {
-	/* e.g. on geoscape we don't have any base selected */
-	ccs.baseCurrent = base;
+	int i;
+
+	for (i = 0; i < MAX_BASES; i++) {
+		base_t *b = B_GetBaseByIDX(i);
+		if (b == base) {
+			b->selected = qtrue;
+			if (!b->founded)
+				Com_Error(ERR_DROP, "The base you are trying to select is not founded yet");
+		} else
+			b->selected = qfalse;
+	}
+
 	if (base) {
 		ccs.installationCurrent = NULL;
 		Cvar_Set("mn_base_title", base->name);
 		Cvar_SetValue("mn_base_status_id", base->baseStatus);
+	} else {
+		Cvar_Set("mn_base_title", "");
+		Cvar_Set("mn_base_status_id", "");
 	}
 }
 
 base_t *B_GetCurrentSelectedBase (void)
 {
-	return ccs.baseCurrent;
+	int i;
+
+	for (i = 0; i < MAX_BASES; i++) {
+		base_t *base = B_GetBaseByIDX(i);
+		if (base->selected)
+			return base;
+	}
+
+	return NULL;
 }
 
 /**
