@@ -240,11 +240,14 @@ static void B_ResetBuildingCurrent_f (void)
  * @brief Initialises base.
  * @note This command is executed in the init node of the base menu.
  * It is called everytime the base menu pops up and sets the cvars.
+ * @todo integrate building status tooltips from B_CheckBuildingStatusForMenu_f into this one
  */
 static void B_BaseInit_f (void)
 {
+	qboolean baseUnderAttack;
 	if (!baseCurrent)
 		return;
+	baseUnderAttack = (baseCurrent->baseStatus == BASE_UNDER_ATTACK);
 
 	/* make sure the credits cvar is up-to-date */
 	CL_UpdateCredits(ccs.credits);
@@ -254,45 +257,72 @@ static void B_BaseInit_f (void)
 	MN_ExecuteConfunc("mn_buildings_reset");
 	/* activate or deactivate the aircraft button */
 	if (AIR_AircraftAllowed(baseCurrent) && baseCurrent->numAircraftInBase)
-		MN_ExecuteConfunc("set_aircraft_enabled");
-	else
-		MN_ExecuteConfunc("set_aircraft_disabled");
+		MN_ExecuteConfunc("update_aircraft false \"%s\"", _("Manage your aircraft"));
+	else {
+		if (baseCurrent->numAircraftInBase == 0)
+			MN_ExecuteConfunc("update_aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
+		else
+			MN_ExecuteConfunc("update_aircraft true \"%s\"", va(_("Build a %s or %s first."), _("Small Hangar"), _("Large Hangar")));
+	}
 
 	if (BS_BuySellAllowed(baseCurrent))
-		MN_ExecuteConfunc("set_buysell_enabled");
-	else
-		MN_ExecuteConfunc("set_buysell_disabled");
+		MN_ExecuteConfunc("update_buysell false \"%s\"", _("Buy/Sell equipment"));
+	else {
+		if (baseUnderAttack)
+			MN_ExecuteConfunc("update_buysell true \"%s\"", _("Base is under attack, you can't access this building !"));
+		else
+			MN_ExecuteConfunc("update_buysell true \"%s\"", va(_("Build a %s first."), _("Storage")));
+	}
 
-	if (ccs.numBases > 1 && baseCurrent->baseStatus != BASE_UNDER_ATTACK)
-		MN_ExecuteConfunc("set_transfer_enabled");
-	else
-		MN_ExecuteConfunc("set_transfer_disabled");
+	if (ccs.numBases > 1 && !baseUnderAttack)
+		MN_ExecuteConfunc("update_transfer false \"%s\"", _("Transfer equipment or personnel"));
+	else {
+		if (baseUnderAttack)
+			MN_ExecuteConfunc("update_transfer true \"%s\"", _("Base is under attack, you can't access this building !"));
+		else
+			MN_ExecuteConfunc("update_transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
+	}
 
 	if (RS_ResearchAllowed(baseCurrent))
-		MN_ExecuteConfunc("set_research_enabled");
-	else
-		MN_ExecuteConfunc("set_research_disabled");
+		MN_ExecuteConfunc("update_research false \"%s\"", _("Research new technology"));
+	else {
+		if (baseUnderAttack)
+			MN_ExecuteConfunc("update_research true \"%s\"", _("Base is under attack, you can't access this building !"));
+		else
+			MN_ExecuteConfunc("update_research true \"%s\"", va(_("Build a %s first."), _("Laboratory")));
+	}
 
 	if (PR_ProductionAllowed(baseCurrent)) {
-		MN_ExecuteConfunc("set_prod_enabled");
+		MN_ExecuteConfunc("update_prod false \"%s\"", _("Produce new equipment"));
 	} else {
-		MN_ExecuteConfunc("set_prod_disabled");
+		if (baseUnderAttack)
+			MN_ExecuteConfunc("update_prod true \"%s\"", _("Base is under attack, you can't access this building !"));
+		else
+			MN_ExecuteConfunc("update_prod true \"%s\"", va(_("Build a %s first."), _("Workshop")));
 	}
 
 	if (E_HireAllowed(baseCurrent))
-		MN_ExecuteConfunc("set_hire_enabled");
-	else
-		MN_ExecuteConfunc("set_hire_disabled");
+		MN_ExecuteConfunc("update_hire false \"%s\"", _("Hire employees"));
+	else {
+		if (baseUnderAttack)
+			MN_ExecuteConfunc("update_hire true \"%s\"", _("Base is under attack, you can't access this building !"));
+		else
+			MN_ExecuteConfunc("update_hire true \"%s\"", va(_("Build %s first."), _("Living Quarters")));
+	}
 
 	if (AC_ContainmentAllowed(baseCurrent))
-		MN_ExecuteConfunc("set_containment_enabled");
+		MN_ExecuteConfunc("update_containment false \"%s\"", _("Deal with Aliens in Alien Containment"));
 	else
-		MN_ExecuteConfunc("set_containment_disabled");
+		MN_ExecuteConfunc("update_containment true \"%s\"", va(_("Build a %s first."), _("Containment")));
 
 	if (HOS_HospitalAllowed(baseCurrent))
-		MN_ExecuteConfunc("set_hospital_enabled");
-	else
-		MN_ExecuteConfunc("set_hospital_disabled");
+		MN_ExecuteConfunc("update_hospital false \"%s\"", _("Medical and Surgery operations"));
+	else {
+		if (baseUnderAttack)
+			MN_ExecuteConfunc("update_hospital true \"%s\"", _("Base is under attack, you can't access this building !"));
+		else
+			MN_ExecuteConfunc("update_hospital true \"%s\"", va(_("Build a %s first."), _("Hospital")));
+	}
 }
 
 /**
