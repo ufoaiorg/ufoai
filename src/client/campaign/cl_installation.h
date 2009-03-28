@@ -123,7 +123,7 @@ extern vec3_t newInstallationPos;
 
 int INS_GetFoundedInstallationCount(void);
 installation_t* INS_GetFoundedInstallationByIDX(int installationIdx);
-int INS_GetFirstUnfoundedInstallation(void);
+installation_t *INS_GetFirstUnfoundedInstallation(void);
 
 void INS_NewInstallations(void);
 void INS_SelectInstallation(installation_t *installation);

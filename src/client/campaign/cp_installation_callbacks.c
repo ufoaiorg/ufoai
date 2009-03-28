@@ -37,7 +37,7 @@ vec3_t newInstallationPos;
 
 /**
  * @brief Select an installation when clicking on it on geoscape, or build a new installation.
- * @param[in] installation If this is @c NULL we want to installation a new base
+ * @param[in] installation If this is @c NULL we want to build a new installation
  * @note This is (and should be) the only place where installationCurrent is set
  * to a value that is not @c NULL
  */
@@ -45,44 +45,19 @@ void INS_SelectInstallation (installation_t *installation)
 {
 	/* set up a new installation */
 	if (!installation) {
-		int installationID;
-
 		/* if player hit the "create base" button while creating base mode is enabled
 		 * that means that player wants to quit this mode */
-		if (ccs.mapAction == MA_NEWINSTALLATION) {
+		if (ccs.mapAction == MA_NEWINSTALLATION || ccs.numInstallations >= B_GetInstallationLimit()) {
 			MAP_ResetAction();
 			if (!radarOverlayWasSet)
 				MAP_DeactivateOverlay("radar");
 			return;
-		}
+		} else {
+			ccs.mapAction = MA_NEWINSTALLATION;
 
-		ccs.mapAction = MA_NEWINSTALLATION;
-		installationID = INS_GetFirstUnfoundedInstallation();
-		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: new installationID is %i\n", installationID);
-		if (installationID < B_GetInstallationLimit()) {
-			const installationTemplate_t *instmp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
-			int i = 1;
-			int j;
-
-			installation = INS_GetInstallationByIDX(installationID);
-			installation->idx = installationID;
-
-			do {
-				j = 0;
-				Com_sprintf(installation->name, sizeof(installation->name), "%s #%i", instmp ? _(instmp->name) : _("Installation"), i);
-				while (j <= ccs.numInstallations && strcmp(installation->name, ccs.installations[j++].name));
-			} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
-
-
-			Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: baseID is valid for base: %s\n", installation->name);
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
-		} else {
-			Com_Printf("MaxInstallations reached\n");
-			/* select the first installation in list */
-			installation = INS_GetInstallationByIDX(0);
-			ccs.mapAction = MA_NONE;
 		}
 	} else {
 		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
@@ -95,9 +70,9 @@ void INS_SelectInstallation (installation_t *installation)
 			Cvar_Set("mn_installation_timetobuild", va(ngettext("%d day", "%d days", timetobuild), timetobuild));
 		}
 		MN_PushMenu("popup_installationstatus", NULL);
-	}
 
-	INS_SetCurrentSelectedInstallation(installation);
+		INS_SetCurrentSelectedInstallation(installation);
+	}
 }
 
 /**
@@ -107,8 +82,10 @@ void INS_SelectInstallation (installation_t *installation)
 static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
+	int i = 1;
+	int j;
 	installationTemplate_t *installationTemplate;
-	installation_t *installation = INS_GetCurrentSelectedInstallation();
+	installation_t *installation;
 
 	if (Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
@@ -126,8 +103,15 @@ static void INS_BuildInstallation_f (void)
 		return;
 	}
 
+	installation = INS_GetFirstUnfoundedInstallation();
 	if (!installation)
 		return;
+
+	do {
+		j = 0;
+		Com_sprintf(installation->name, sizeof(installation->name), "%s #%i", installationTemplate ? _(installationTemplate->name) : _("Installation"), i);
+		while (j <= ccs.numInstallations && strcmp(installation->name, ccs.installations[j++].name));
+	} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
 
 	assert(!installation->founded);
 	assert(installationTemplate->cost >= 0);

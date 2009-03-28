@@ -147,17 +147,17 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
  * @brief Get the lower IDX of unfounded installation.
  * @return instIdx of first Installation Unfounded, or MAX_INSTALLATIONS is maximum installation number is reached.
  */
-int INS_GetFirstUnfoundedInstallation (void)
+installation_t *INS_GetFirstUnfoundedInstallation (void)
 {
 	int instIdx;
 
 	for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
-		const installation_t const *installation = INS_GetFoundedInstallationByIDX(instIdx);
-		if (!installation)
-			return instIdx;
+		installation_t *installation = INS_GetInstallationByIDX(instIdx);
+		if (!installation->founded)
+			return installation;
 	}
 
-	return MAX_INSTALLATIONS;
+	return NULL;
 }
 
 /**
@@ -170,10 +170,9 @@ void INS_NewInstallations (void)
 	/* reset installations */
 	int i;
 	char title[MAX_VAR];
-	installation_t *installation;
 
 	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		installation = INS_GetInstallationByIDX(i);
+		installation_t *installation = INS_GetInstallationByIDX(i);
 		Q_strncpyz(title, installation->name, sizeof(title));
 /*		INS_ClearInstallation(installation); */
 		Q_strncpyz(installation->name, title, sizeof(title));
