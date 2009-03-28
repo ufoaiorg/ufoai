@@ -191,6 +191,9 @@ void R_ShutdownPrograms (void)
 	if (!qglDeleteProgram)
 		return;
 
+	if (!r_programs->integer)
+		return;
+
 	for (i = 0; i < MAX_PROGRAMS; i++) {
 		if (!r_state.programs[i].id)
 			continue;

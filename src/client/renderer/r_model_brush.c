@@ -1087,7 +1087,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 		R_LoadMaterials(mapName);
 
 	/* fix this, currently needed, slows down loading times */
-	R_ShutdownModels();
+	R_ShutdownModels(qfalse);
 
 	/* init */
 	R_BeginBuildingLightmaps();

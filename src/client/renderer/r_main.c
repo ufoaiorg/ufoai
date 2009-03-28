@@ -794,7 +794,7 @@ void R_Shutdown (void)
 	for (commands = r_commands; commands->name; commands++)
 		Cmd_RemoveCommand(commands->name);
 
-	R_ShutdownModels();
+	R_ShutdownModels(qtrue);
 	R_ShutdownImages();
 
 	R_ShutdownPrograms();

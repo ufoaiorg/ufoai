@@ -246,17 +246,19 @@ void R_SwitchModelMemPoolTag (void)
 }
 
 /**
- * @brief Frees the model pool (but only tag 0)
+ * @brief Frees the model pool
+ * @param complete If this is true the static mesh models are freed, too
  * @sa R_SwitchModelMemPoolTag
  */
-void R_ShutdownModels (void)
+void R_ShutdownModels (qboolean complete)
 {
 	int i;
+	const int start = complete ? 0 : r_numModelsStatic;
 
 	/* free the vertex buffer - but not for the static models
 	 * the world, the submodels and all the misc_models are located in the
 	 * r_models array */
-	for (i = r_numModelsStatic; i < r_numModels; i++) {
+	for (i = start; i < r_numModels; i++) {
 		model_t *mod = &r_models[i];
 
 		if (mod->bsp.vertex_buffer)
