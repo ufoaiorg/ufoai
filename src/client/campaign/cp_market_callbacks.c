@@ -165,7 +165,7 @@ static void BS_MarketScroll_f (void)
 {
 	menuNode_t* node;
 	int i;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
@@ -534,7 +534,7 @@ static void BS_BuyType (const base_t *base)
  */
 static void BS_BuyType_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() == 2) {
 		menuNode_t* node = MN_GetNodeByPath("market.market");
@@ -573,7 +573,7 @@ static void BS_BuyAircraft_f (void)
 {
 	int num, freeSpace;
 	const aircraft_t *aircraftTemplate;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -635,7 +635,7 @@ static void BS_SellAircraft_f (void)
 	qboolean found = qfalse;
 	qboolean teamNote = qfalse;
 	qboolean aircraftOutNote = qfalse;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -716,7 +716,7 @@ static void BS_SellAircraft_f (void)
 static void BS_BuyItem_f (void)
 {
 	int num;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -796,7 +796,7 @@ static void BS_BuyItem_f (void)
 static void BS_SellItem_f (void)
 {
 	int num;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -894,7 +894,7 @@ static void BS_Autosell_f (void)
 {
 	int num;
 	const objDef_t *item;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* Can be called from everywhere. */
 	if (!base)

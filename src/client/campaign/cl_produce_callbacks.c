@@ -462,7 +462,7 @@ static void PR_ProductionListRightClick_f (void)
 {
 	int num;
 	production_queue_t *queue;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* can be called from everywhere without a base set */
 	if (!base)
@@ -542,7 +542,7 @@ static void PR_ProductionListClick_f (void)
 {
 	int num;
 	production_queue_t *queue;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* can be called from everywhere without a base set */
 	if (!base)
@@ -617,7 +617,7 @@ static void PR_ProductionListClick_f (void)
 static void PR_ProductionType_f (void)
 {
 	int cat;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
@@ -674,7 +674,7 @@ static void PR_ProductionList_f (void)
 {
 	char tmpbuf[MAX_VAR];
 	int numWorkshops;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* can be called from everywhere without a started game */
 	if (!base)
@@ -721,7 +721,7 @@ static void PR_ProductionIncrease_f (void)
 	int amount = 1, amountTemp = 0;
 	production_queue_t *queue;
 	production_t *prod;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -874,7 +874,7 @@ static void PR_ProductionIncrease_f (void)
 static void PR_ProductionStop_f (void)
 {
 	production_queue_t *queue;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || !selectedProduction)
 		return;
@@ -901,7 +901,7 @@ static void PR_ProductionDecrease_f (void)
 	int amount = 1, amountTemp = 0;
 	production_queue_t *queue;
 	production_t *prod;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
@@ -958,7 +958,7 @@ static void PR_ProductionChange_f (void)
 static void PR_ProductionUp_f (void)
 {
 	production_queue_t *queue;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || !selectedProduction)
 		return;
@@ -980,7 +980,7 @@ static void PR_ProductionUp_f (void)
 static void PR_ProductionDown_f (void)
 {
 	production_queue_t *queue;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || !selectedProduction)
 		return;

@@ -97,7 +97,7 @@ static void B_SelectBase_f (void)
 static void B_NextBase_f (void)
 {
 	int baseID;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -116,7 +116,7 @@ static void B_NextBase_f (void)
 static void B_PrevBase_f (void)
 {
 	int baseID;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -180,7 +180,7 @@ static qboolean B_NewBase (base_t* base, vec2_t pos)
 static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -236,7 +236,7 @@ static void B_BuildBase_f (void)
  */
 static void B_ChangeBaseName_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* maybe called without base initialized or active */
 	if (!base)
@@ -252,7 +252,7 @@ static void B_ChangeBaseName_f (void)
  */
 static void B_ResetBuildingCurrent_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() == 2)
 		ccs.instant_build = atoi(Cmd_Argv(1));
@@ -268,7 +268,7 @@ static void B_ResetBuildingCurrent_f (void)
  */
 static void B_BaseInit_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 	qboolean baseUnderAttack;
 
 	if (!base)
@@ -474,7 +474,7 @@ static void B_BuildingInit (base_t* base)
  */
 static void B_BuildingInit_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -487,7 +487,7 @@ static void B_BuildingInit_f (void)
  */
 static void B_BuildingInfoClick_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -503,7 +503,7 @@ static void B_BuildingClick_f (void)
 {
 	int num, count;
 	building_t *building;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -539,7 +539,7 @@ static void B_BuildingClick_f (void)
  */
 static void B_BuildingDestroy_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || !base->buildingCurrent)
 		return;
@@ -555,7 +555,7 @@ static void B_BuildingDestroy_f (void)
  */
 static void B_BuildingStatus_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* maybe someone called this command before the buildings are parsed?? */
 	if (!base || !base->buildingCurrent)
@@ -582,7 +582,7 @@ static void B_AssembleMap_f (void)
 	char maps[2024];
 	char coords[2048];
 	int setUnderAttack = 0, baseID = 0;
-	base_t* base = ccs.baseCurrent;
+	base_t* base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2)
 		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
@@ -692,7 +692,7 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	int baseIdx;
 	const char *buildingID;
 	building_t *building;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s buildingID\n", Cmd_Argv(0));
@@ -816,7 +816,7 @@ static void BaseSummary_Init_f (void)
 	static char textStatsBuffer[1024];
 	static char textInfoBuffer[256];
 	int i;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base) {
 		Com_Printf("No base selected\n");

@@ -339,7 +339,7 @@ static void CL_ResearchSelect_f (void)
 {
 	int num;
 	int type;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -388,7 +388,7 @@ static void RS_ChangeScientist_f (void)
 {
 	int num;
 	float diff;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -452,7 +452,7 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 static void RS_AssignScientist_f (void)
 {
 	int num;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -481,7 +481,7 @@ static void RS_AssignScientist_f (void)
 static void RS_RemoveScientist_f (void)
 {
 	int num;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -506,7 +506,7 @@ static void RS_RemoveScientist_f (void)
  */
 static void RS_UpdateData_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -520,7 +520,7 @@ static void RS_UpdateData_f (void)
 static void RS_ResearchStart_f (void)
 {
 	technology_t *tech;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* We are not in base view. */
 	if (!base)
@@ -590,7 +590,7 @@ static void RS_ResearchStart_f (void)
 static void RS_ResearchStop_f (void)
 {
 	technology_t *tech;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* we are not in base view */
 	if (!base)
@@ -800,7 +800,7 @@ static void RS_InitGUIData (base_t* base)
  */
 static void CL_ResearchType_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -825,7 +825,7 @@ static void CL_ResearchType_f (void)
  */
 static void MN_ResearchInit_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

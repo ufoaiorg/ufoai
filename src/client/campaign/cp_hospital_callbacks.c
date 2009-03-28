@@ -56,7 +56,7 @@ static void HOS_UpdateMenu (void)
 	char rank[128];
 	int i, j, type;
 	int entry;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -125,7 +125,7 @@ static void HOS_UpdateMenu (void)
  */
 static void HOS_Init_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -169,7 +169,7 @@ static void HOS_ListDown_f (void)
 static void HOS_ListClick_f (void)
 {
 	int num, type, i;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base) {
 		currentEmployeeInHospital = NULL;

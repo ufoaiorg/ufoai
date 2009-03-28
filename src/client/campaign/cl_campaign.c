@@ -1899,7 +1899,7 @@ static void CL_DebugChangeCharacterStats_f (void)
 {
 	int i, j;
 	character_t *chr;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

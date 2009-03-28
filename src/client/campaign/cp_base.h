@@ -299,6 +299,8 @@ qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amoun
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
 
+base_t *B_GetCurrentSelectedBase(void);
+
 void B_ResetBuildingCurrent(base_t* base);
 void B_BaseMenuInit(const base_t *base);
 void B_RemoveAircraftExceedingCapacity(base_t* base, buildingType_t buildingType);

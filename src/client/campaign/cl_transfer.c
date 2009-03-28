@@ -632,7 +632,7 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 static void TR_TransferSelect_f (void)
 {
 	int type;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!td.transferBase || !base)
 		return;
@@ -655,7 +655,7 @@ static void TR_TransferSelect_f (void)
 static void TR_TransferListClear_f (void)
 {
 	int i;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -1008,7 +1008,7 @@ static void TR_TransferStart_f (void)
 	transfer_t *transfer;
 	float time;
 	char message[256];
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (td.currentTransferType == TRANS_TYPE_INVALID) {
 		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
@@ -1134,7 +1134,7 @@ static void TR_TransferListSelect_f (void)
 	employeeType_t emplType;
 	qboolean added = qfalse;
 	int numempl[MAX_EMPL];
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1383,7 +1383,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 static void TR_NextBase_f (void)
 {
 	int baseIdx, counter;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -1422,7 +1422,7 @@ static void TR_NextBase_f (void)
 static void TR_PrevBase_f (void)
 {
 	int baseIdx, counter;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -1462,7 +1462,7 @@ static void TR_CargoListSelect_f (void)
 	qboolean removed = qfalse;
 	int numempl[MAX_EMPL];
 	employeeType_t emplType;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -1703,11 +1703,6 @@ void TR_TransferCheck (void)
  */
 static void TR_Init_f (void)
 {
-	base_t *base = ccs.baseCurrent;
-
-	if (!base)
-		return;
-
 	td.transferBase = NULL;
 
 	/* Clear employees temp array. */
@@ -1734,7 +1729,7 @@ static void TR_Init_f (void)
  */
 static void TR_TransferClose_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

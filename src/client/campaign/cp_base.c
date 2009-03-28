@@ -1977,6 +1977,11 @@ static void B_SetCurrentSelectedBase (base_t *base)
 	}
 }
 
+base_t *B_GetCurrentSelectedBase (void)
+{
+	return ccs.baseCurrent;
+}
+
 /**
  * @param[in] base If this is @c NULL we want to build a new base
  */
@@ -2452,7 +2457,7 @@ static void B_PrintCapacities_f (void)
 static void B_BuildingConstructionFinished_f (void)
 {
 	int i;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

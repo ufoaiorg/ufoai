@@ -50,7 +50,7 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 	aircraft_t *aircraft;
 	linkedList_t *emplList;
 	int id;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* Check if we are allowed to be here.
 	 * We are only allowed to be here if we already set up a base. */
@@ -198,7 +198,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	equipDef_t unused;
 	int p;
 	aircraft_t *aircraft;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -249,7 +249,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 static void CL_AssignPilot_f (void)
 {
 	employee_t *employee;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 	aircraft_t *aircraft;
 	int relativeId = 0;
 	int num;
@@ -299,7 +299,7 @@ static void CL_AssignPilot_f (void)
  */
 static void CL_AssignSoldier_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 	aircraft_t *aircraft;
 	int relativeId = 0;
 	int num;
@@ -387,7 +387,7 @@ static void CL_ActorPilotSelect_f (void)
 	int num;
 	int relativeId = 0;
 	const employeeType_t employeeType = EMPL_PILOT;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -431,7 +431,7 @@ static void CL_ActorTeamSelect_f (void)
 	int relativeId = 0;
 	const employeeType_t employeeType = cls.displayHeavyEquipmentList
 			? EMPL_ROBOT : EMPL_SOLDIER;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

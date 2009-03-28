@@ -124,7 +124,7 @@ static void HOS_HealAll_f (void)
 {
 	int i, type;
 	employee_t* employee;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -146,7 +146,7 @@ static void HOS_HurtAll_f (void)
 {
 	int i, type, amount;
 	employee_t* employee;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

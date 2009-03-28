@@ -44,7 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void AIM_AircraftReturnToBase_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (base && base->aircraftCurrent) {
 		AIR_AircraftReturnToBase(base->aircraftCurrent);
@@ -60,7 +60,7 @@ static void AIM_AircraftReturnToBase_f (void)
  */
 static void AIM_ResetAircraftCvars_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || base->numAircraftInBase < 0)
 		return;
@@ -84,7 +84,7 @@ static void AIM_ResetAircraftCvars_f (void)
  */
 static void AIM_SelectAircraft_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 	int i;
 
 	if (!base || base->numAircraftInBase <= 0)
@@ -111,7 +111,7 @@ static void AIM_SelectAircraft_f (void)
  */
 static void AIM_NextAircraft_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || base->numAircraftInBase <= 0)
 		return;
@@ -131,7 +131,7 @@ static void AIM_NextAircraft_f (void)
  */
 static void AIM_PrevAircraft_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base || base->numAircraftInBase <= 0)
 		return;
@@ -150,7 +150,7 @@ static void AIM_PrevAircraft_f (void)
 static void AIM_AircraftStart_f (void)
 {
 	aircraft_t *aircraft;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -276,7 +276,7 @@ static void AIR_AircraftUpdateList_f (void)
 {
 	static char buffer[1024];
 	int i;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

@@ -71,7 +71,7 @@ void BDEF_ListClick_f (void)
 {
 	int num, height;
 	menuNode_t *node;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 	installation_t* installation = ccs.installationCurrent;
 
 	if ((!base && !installation) || (base && installation))
@@ -541,7 +541,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	int i;
 	int type;
 	menuNode_t *node;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = ccs.installationCurrent;
 
 	/* don't let old links appear on this menu */
@@ -738,7 +738,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	menuNode_t *node;
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -873,7 +873,7 @@ void AIM_AircraftEquipSlotSelect_f (void)
 {
 	int i, pos;
 	aircraft_t *aircraft;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -933,7 +933,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	aircraft_t *aircraft;
 	aircraftSlot_t *slot;
 	qboolean aircraftMenu;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = ccs.installationCurrent;
 
 	if ((!base && !installation) || (base && installation))
@@ -1027,7 +1027,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	aircraft_t *aircraft = NULL;
 	qboolean aircraftMenu;
 	installation_t* installation = ccs.installationCurrent;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if ((!base && !installation) || (base && installation)) {
 		Com_Printf("Exiting early base and install both true or both false\n");
@@ -1144,7 +1144,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	aircraft_t *aircraft = NULL;
 	qboolean aircraftMenu;
 	installation_t* installation = ccs.installationCurrent;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if ((!base && !installation) || (base && installation)) {
 		Com_Printf("Exiting early base and install both true or both false\n");
@@ -1237,7 +1237,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	int num;
 	technology_t **list;
 	installation_t* installation = ccs.installationCurrent;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if ((!base && !installation) || (base && installation) || airequipID == -1)
 		return;

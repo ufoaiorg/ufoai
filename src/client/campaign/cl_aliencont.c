@@ -648,7 +648,7 @@ static void AC_AddOne_f (void)
 	aliensCont_t *containment;
 	qboolean updateAlive;
 	int j;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* Can be called from everywhere. */
 	if (!base)

@@ -1,6 +1,5 @@
 /**
  * @file m_node_base.c
- * @todo We can remove baseCurrent if we use and update baseid
  */
 
 /*

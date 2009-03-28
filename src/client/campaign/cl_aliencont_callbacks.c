@@ -155,7 +155,7 @@ static void AC_AlienClick (const base_t *base, int num)
 static void AC_AlienClick_f (void)
 {
 	int num;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (Cmd_Argc() < 2 || !base) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -246,7 +246,7 @@ static void AC_UpdateMenu (const base_t *base)
  */
 static void AC_Init_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* Reset the aliencont list. */
 	numAliensOnList = 0;
@@ -265,7 +265,7 @@ static void AC_Init_f (void)
  */
 static void AC_KillAll_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* Can be called from everywhere. */
 	if (!base)
@@ -282,7 +282,7 @@ static void AC_KillAll_f (void)
 static void AC_KillOne_f (void)
 {
 	int num, i, step;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	/* Can be called from everywhere. */
 	if (!base)

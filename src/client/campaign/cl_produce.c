@@ -260,7 +260,7 @@ static void PR_EmptyQueue (base_t *base)
 static void PR_ProductionRollBottom_f (void)
 {
 	production_queue_t *queue;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;

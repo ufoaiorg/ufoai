@@ -57,7 +57,7 @@ int employeesInCurrentList;
 static void E_UpdateGUICount_f (void)
 {
 	int max;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -98,7 +98,7 @@ static void E_EmployeeListScroll_f (void)
 {
 	int i, j, cnt = 0;
 	employee_t* employee;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -149,7 +149,7 @@ static void E_EmployeeList_f (void)
 	employee_t* employee;
 	int hiredEmployeeIdx;
 	linkedList_t *employeeListName;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -255,7 +255,7 @@ static void E_EmployeeList_f (void)
  */
 static void E_ChangeName_f (void)
 {
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -355,7 +355,7 @@ static void E_EmployeeHire_f (void)
 	int num, button;
 	const char *arg;
 	employee_t* employee;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
@@ -409,7 +409,7 @@ static void E_EmployeeHire_f (void)
 static void E_EmployeeSelect_f (void)
 {
 	int num;
-	base_t *base = ccs.baseCurrent;
+	base_t *base = B_GetCurrentSelectedBase();
 
 	if (!base)
 		return;
