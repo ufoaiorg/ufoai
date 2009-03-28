@@ -1,6 +1,8 @@
 
+--[[
+	AI Entry point.
+--]]
 function think()
-	seen = ai.see("all","alien")
 	phalanx = ai.see("all","phalanx")
 
 	-- Prepare action
