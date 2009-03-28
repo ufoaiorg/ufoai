@@ -2031,7 +2031,7 @@ void B_SelectBase (base_t *base)
 			if (base->idx == 0)
 				Q_strncpyz(base->name, _("Home"), sizeof(base->name));
 			else
-				Q_strncpyz(base->name, _(va("Base #%d", base->idx + 1)) , sizeof(base->name));
+				Com_sprintf(base->name, lengthof(base->name), _("Base #%d"), base->idx + 1);
 
 			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", base->name);
 			MN_ExecuteConfunc("set_base_to_normal");
