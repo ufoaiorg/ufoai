@@ -337,6 +337,9 @@ long WriteBSPFile (const char *filename)
 	fseek(bspfile.f, 0L, SEEK_SET);
 	FS_Write(&outheader, sizeof(outheader), &bspfile);
 	FS_CloseFile(&bspfile);
+
+	SwapBSPFile();
+
 	return size;
 }
 
