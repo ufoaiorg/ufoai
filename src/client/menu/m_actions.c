@@ -121,27 +121,34 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 						}
 					}
 
-				/* source property injection */
-				} else if (source) {
-					/* find property definition */
-					const value_t *property = MN_GetPropertyFromBehaviour(source->behaviour, propertyName);
-					if (property) {
-						const char* value;
-						int l;
-						/* only allow common type or cvar */
-						if ((property->type & V_SPECIAL_TYPE) != 0 && (property->type & V_SPECIAL_TYPE) != V_SPECIAL_CVAR)
-							Sys_Error("MN_GenCommand: Unsupported type injection for property '%s', node '%s'", property->string, MN_GetPath(source));
+				/* no prefix */
+				} else {
+					/* source property injection */
+					if (source) {
+						/* find property definition */
+						const value_t *property = MN_GetPropertyFromBehaviour(source->behaviour, propertyName);
+						if (property) {
+							const char* value;
+							int l;
+							/* only allow common type or cvar */
+							if ((property->type & V_SPECIAL_TYPE) != 0 && (property->type & V_SPECIAL_TYPE) != V_SPECIAL_CVAR)
+								Sys_Error("MN_GenCommand: Unsupported type injection for property '%s', node '%s'", property->string, MN_GetPath(source));
 
-						/* inject the property value */
-						value = Com_ValueToStr((const void*)source, property->type, property->ofs);
-						l = snprintf(cout, length, "%s", value);
-						cout += l;
-						cin = next;
-						length -= l;
-						continue;
-					} else if (useCmdParam) {
-						const int arg = atoi(propertyName);
-						if (Cmd_Argc() >= arg) {
+							/* inject the property value */
+							value = Com_ValueToStr((const void*)source, property->type, property->ofs);
+							l = snprintf(cout, length, "%s", value);
+							cout += l;
+							cin = next;
+							length -= l;
+							continue;
+						}
+					}
+
+					/* param injection */
+					if (useCmdParam) {
+						int arg;
+						const int checked = sscanf(propertyName, "%d", &arg);
+						if (checked == 1 && Cmd_Argc() >= arg) {
 							const int l = snprintf(cout, length, "%s", Cmd_Argv(arg));
 							cout += l;
 							cin = next;
