@@ -124,15 +124,16 @@ static void HOS_HealAll_f (void)
 {
 	int i, type;
 	employee_t* employee;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < ccs.numEmployees[type]; i++) {
 			employee = &ccs.employees[type][i];
 			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, baseCurrent))
+			if (!E_IsInBase(employee, base))
 				continue;
 			employee->chr.HP = employee->chr.maxHP;
 		}
@@ -145,8 +146,9 @@ static void HOS_HurtAll_f (void)
 {
 	int i, type, amount;
 	employee_t* employee;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (Cmd_Argc() == 2)
@@ -158,7 +160,7 @@ static void HOS_HurtAll_f (void)
 		for (i = 0; i < ccs.numEmployees[type]; i++) {
 			employee = &ccs.employees[type][i];
 			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, baseCurrent))
+			if (!E_IsInBase(employee, base))
 				continue;
 			employee->chr.HP = max(0, employee->chr.HP - amount);
 		}

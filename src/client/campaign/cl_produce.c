@@ -260,11 +260,12 @@ static void PR_EmptyQueue (base_t *base)
 static void PR_ProductionRollBottom_f (void)
 {
 	production_queue_t *queue;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	queue = &ccs.productions[baseCurrent->idx];
+	queue = &ccs.productions[base->idx];
 
 	if (queue->numItems < 2)
 		return;

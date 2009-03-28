@@ -50,15 +50,16 @@ static qboolean CL_UpdateEmployeeList (employeeType_t employeeType, char *nodeTa
 	aircraft_t *aircraft;
 	linkedList_t *emplList;
 	int id;
+	base_t *base = ccs.baseCurrent;
 
 	/* Check if we are allowed to be here.
 	 * We are only allowed to be here if we already set up a base. */
-	if (!baseCurrent) {
+	if (!base) {
 		Com_Printf("No base set up\n");
 		return qfalse;
 	}
 
-	aircraft = baseCurrent->aircraftCurrent;
+	aircraft = base->aircraftCurrent;
 	if (!aircraft) {
 		return qfalse;
 	}
@@ -197,11 +198,12 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 	equipDef_t unused;
 	int p;
 	aircraft_t *aircraft;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	aircraft = baseCurrent->aircraftCurrent;
+	aircraft = base->aircraftCurrent;
 	if (!aircraft)
 		return;
 
@@ -247,7 +249,7 @@ static void CL_UpdateEquipmentMenuParameters_f (void)
 static void CL_AssignPilot_f (void)
 {
 	employee_t *employee;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 	aircraft_t *aircraft;
 	int relativeId = 0;
 	int num;
@@ -263,7 +265,7 @@ static void CL_AssignPilot_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(baseCurrent, employeeType))
+	if (num >= E_CountHired(base, employeeType))
 		return;
 
 	/* In case we didn't populate the list with E_GenerateHiredEmployeesList before. */
@@ -272,7 +274,7 @@ static void CL_AssignPilot_f (void)
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_AssignPilot_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_AssignPilot_f: No employee at list-pos %i (base: %i)\n", num, base->idx);
 
 	aircraft = base->aircraftCurrent;
 	if (!aircraft)
@@ -297,7 +299,7 @@ static void CL_AssignPilot_f (void)
  */
 static void CL_AssignSoldier_f (void)
 {
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 	aircraft_t *aircraft;
 	int relativeId = 0;
 	int num;
@@ -385,8 +387,9 @@ static void CL_ActorPilotSelect_f (void)
 	int num;
 	int relativeId = 0;
 	const employeeType_t employeeType = EMPL_PILOT;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	/* check syntax */
@@ -399,18 +402,18 @@ static void CL_ActorPilotSelect_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(baseCurrent, employeeType)) {
+	if (num >= E_CountHired(base, employeeType)) {
 		CL_ResertCharacterCvars();
 		return;
 	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_ActorPilotSelect_f: No employee at list-pos %i (base: %i)\n", num, base->idx);
 
 	chr = &employee->chr;
 	if (!chr)
-		Sys_Error("CL_ActorPilotSelect_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_ActorPilotSelect_f: No hired character at list-pos %i (base: %i)\n", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
@@ -428,8 +431,9 @@ static void CL_ActorTeamSelect_f (void)
 	int relativeId = 0;
 	const employeeType_t employeeType = cls.displayHeavyEquipmentList
 			? EMPL_ROBOT : EMPL_SOLDIER;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	/* check syntax */
@@ -442,18 +446,18 @@ static void CL_ActorTeamSelect_f (void)
 		relativeId = atoi(Cmd_Argv(2));
 
 	num = atoi(Cmd_Argv(1)) + relativeId;
-	if (num >= E_CountHired(baseCurrent, employeeType)) {
+	if (num >= E_CountHired(base, employeeType)) {
 		CL_ResertCharacterCvars();
 		return;
 	}
 
 	employee = E_GetEmployeeByMenuIndex(num);
 	if (!employee)
-		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_ActorTeamSelect_f: No employee at list-pos %i (base: %i)\n", num, base->idx);
 
 	chr = &employee->chr;
 	if (!chr)
-		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, baseCurrent->idx);
+		Sys_Error("CL_ActorTeamSelect_f: No hired character at list-pos %i (base: %i)\n", num, base->idx);
 
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));

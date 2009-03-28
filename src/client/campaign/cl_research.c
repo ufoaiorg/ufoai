@@ -277,13 +277,8 @@ const char *RS_GetDescription (descriptions_t *desc)
 	 * The default (0) entry is skipped here. */
 	for (i = 1; i < desc->numDescriptions; i++) {
 		const technology_t *tech = RS_GetTechByID(desc->tech[i]);
-		const base_t* base;
 		if (!tech)
 			continue;
-		if (tech->base)
-			base = tech->base;
-		else
-			base = baseCurrent;
 
 		if (RS_IsResearched_ptr(tech)) {
 			desc->usedDescription = i;	/**< Stored used description */
@@ -482,14 +477,13 @@ void RS_InitTree (qboolean load)
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		tech = RS_GetTechByProvided(od->id);
 		od->tech = tech;
-		if (!od->tech) {
-			Com_Printf("RS_InitTree: Could not find a valid tech for item %s\n", od->id);
-		}
+		if (!od->tech)
+			Sys_Error("RS_InitTree: Could not find a valid tech for item %s", od->id);
 	}
 
 	for (i = 0, tech = ccs.technologies; i < ccs.numTechnologies; i++, tech++) {
 		for (j = 0; j < tech->markResearched.numDefinitions; j++) {
-			if (tech->markResearched.markOnly[j] && !strcmp(tech->markResearched.campaign[j], curCampaign->researched)) {
+			if (tech->markResearched.markOnly[j] && !strcmp(tech->markResearched.campaign[j], ccs.curCampaign->researched)) {
 				Com_DPrintf(DEBUG_CLIENT, "...mark %s as researched\n", tech->id);
 				RS_ResearchFinish(tech);
 				break;
@@ -530,7 +524,6 @@ void RS_InitTree (qboolean load)
 						tech->mdl = Mem_PoolStrDup(item->model, cl_campaignPool, 0);
 					if (!tech->image)
 						tech->image = Mem_PoolStrDup(item->image, cl_campaignPool, 0);
-					/* Should return to CASE RS_xxx. */
 					break;
 				}
 			}
@@ -552,8 +545,6 @@ void RS_InitTree (qboolean load)
 						tech->name = Mem_PoolStrDup(building->name, cl_campaignPool, 0);
 					if (!tech->image)
 						tech->image = Mem_PoolStrDup(building->image, cl_campaignPool, 0);
-
-					/* Should return to CASE RS_xxx. */
 					break;
 				}
 			}
@@ -565,8 +556,8 @@ void RS_InitTree (qboolean load)
 			break;
 		case RS_CRAFT:
 			found = qfalse;
-			for (j = 0; j < numAircraftTemplates; j++) {
-				aircraft_t *air_samp = &aircraftTemplates[j];
+			for (j = 0; j < ccs.numAircraftTemplates; j++) {
+				aircraft_t *air_samp = &ccs.aircraftTemplates[j];
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!strcmp(tech->provides, air_samp->id)) {
 					found = qtrue;
@@ -577,7 +568,6 @@ void RS_InitTree (qboolean load)
 						Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
 					air_samp->tech = tech;
-					/* Should return to CASE RS_xxx. */
 					break;
 				}
 			}
@@ -593,12 +583,12 @@ void RS_InitTree (qboolean load)
 		case RS_LOGIC:
 			/* Does not need any additional data. */
 			break;
-		} /* switch */
+		}
 
 		/* Check if we finally have a name for the tech. */
 		if (!tech->name) {
 			if (tech->type != RS_LOGIC)
-				Com_Printf("RS_InitTree: \"%s\" - no name found!\n", tech->id);
+				Sys_Error("RS_InitTree: \"%s\" - no name found!", tech->id);
 		} else {
 			/* Fill in subject lines of tech-mails.
 			 * The tech-name is copied if nothing is defined. */
@@ -631,9 +621,6 @@ void RS_InitTree (qboolean load)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
-
-/* RS_UpdateInfo */
-/* RS_Resaerch_Select */
 
 /**
  * @brief Assigns scientist to the selected research-project.
@@ -833,12 +820,8 @@ void RS_ResearchRun (void)
 				base_t *base = tech->base;
 				assert(tech->base);	/**< If there are scientitsts there _has_ to be a base. */
 				if (RS_ResearchAllowed(base)) {
-					Com_DPrintf(DEBUG_CLIENT, "timebefore %.2f\n", tech->time);
-					Com_DPrintf(DEBUG_CLIENT, "timedelta %.2f\n", tech->scientists * 0.8);
-					/** @todo Just for testing, better formular may be needed. */
+					/** @todo Just for testing, better formular may be needed. Include employee-skill in calculation. */
 					tech->time -= tech->scientists * 0.8;
-					Com_DPrintf(DEBUG_CLIENT, "timeafter %.2f\n", tech->time);
-					/** @todo include employee-skill in calculation. */
 					/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 					if (tech->time <= 0) {
 						/* Remove all scientists from the technology. */

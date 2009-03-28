@@ -77,7 +77,7 @@ static void AC_OpenUFOpedia_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !aliencontCurrent)
+	if (!aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;
@@ -101,7 +101,7 @@ static void AC_ResearchAlien_f (void)
 	const technology_t *tech;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent || !aliencontCurrent)
+	if (!aliencontCurrent)
 		return;
 
 	tech = aliencontCurrent->tech;
@@ -155,8 +155,9 @@ static void AC_AlienClick (const base_t *base, int num)
 static void AC_AlienClick_f (void)
 {
 	int num;
+	base_t *base = ccs.baseCurrent;
 
-	if (Cmd_Argc() < 2 || !baseCurrent) {
+	if (Cmd_Argc() < 2 || !base) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
@@ -165,7 +166,7 @@ static void AC_AlienClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	Com_DPrintf(DEBUG_CLIENT, "AC_AlienClick_f: listnumber %i\n", num);
-	AC_AlienClick(baseCurrent, num);
+	AC_AlienClick(base, num);
 }
 
 /**
@@ -245,15 +246,17 @@ static void AC_UpdateMenu (const base_t *base)
  */
 static void AC_Init_f (void)
 {
+	base_t *base = ccs.baseCurrent;
+
 	/* Reset the aliencont list. */
 	numAliensOnList = 0;
 
-	if (!baseCurrent) {
+	if (!base) {
 		Com_Printf("No base selected\n");
 		return;
 	}
 
-	AC_UpdateMenu(baseCurrent);
+	AC_UpdateMenu(base);
 }
 
 /**
@@ -262,13 +265,15 @@ static void AC_Init_f (void)
  */
 static void AC_KillAll_f (void)
 {
+	base_t *base = ccs.baseCurrent;
+
 	/* Can be called from everywhere. */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	AC_KillAll(baseCurrent);
+	AC_KillAll(base);
 	/* Reinit menu to display proper values. */
-	AC_UpdateMenu(baseCurrent);
+	AC_UpdateMenu(base);
 }
 
 /**
@@ -277,9 +282,10 @@ static void AC_KillAll_f (void)
 static void AC_KillOne_f (void)
 {
 	int num, i, step;
+	base_t *base = ccs.baseCurrent;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -294,8 +300,8 @@ static void AC_KillOne_f (void)
 		return;
 	}
 
-	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
-		aliensCont_t *containment = baseCurrent->alienscont;
+	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+		aliensCont_t *containment = base->alienscont;
 		for (i = 0, step = 0; i < ccs.numAliensTD; i++) {
 			if (!containment[i].amount_alive && !containment[i].amount_dead)
 				continue;
@@ -305,9 +311,9 @@ static void AC_KillOne_f (void)
 			}
 			step++;
 		}
-		AL_RemoveAliens(baseCurrent, containment[num].teamDef, 1, AL_KILLONE);
+		AL_RemoveAliens(base, containment[num].teamDef, 1, AL_KILLONE);
 		/* Reinit menu to display proper values. */
-		AC_UpdateMenu(baseCurrent);
+		AC_UpdateMenu(base);
 	}
 }
 

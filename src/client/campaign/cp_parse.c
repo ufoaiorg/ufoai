@@ -347,7 +347,7 @@ static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 	const char *token;
 
 	/* initialize the campaign */
-	s = &salaries[campaignID];
+	s = &ccs.salaries[campaignID];
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -422,25 +422,25 @@ void CL_ParseCampaign (const char *name, const char **text)
 	salary_t *s;
 
 	/* search for campaigns with same name */
-	for (i = 0; i < numCampaigns; i++)
-		if (!strcmp(name, campaigns[i].id))
+	for (i = 0; i < ccs.numCampaigns; i++)
+		if (!strcmp(name, ccs.campaigns[i].id))
 			break;
 
-	if (i < numCampaigns) {
+	if (i < ccs.numCampaigns) {
 		Com_Printf("CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
-	if (numCampaigns >= MAX_CAMPAIGNS) {
+	if (ccs.numCampaigns >= MAX_CAMPAIGNS) {
 		Com_Printf("CL_ParseCampaign: Max campaigns reached (%i)\n", MAX_CAMPAIGNS);
 		return;
 	}
 
 	/* initialize the campaign */
-	cp = &campaigns[numCampaigns++];
+	cp = &ccs.campaigns[ccs.numCampaigns++];
 	memset(cp, 0, sizeof(*cp));
 
-	cp->idx = numCampaigns - 1;
+	cp->idx = ccs.numCampaigns - 1;
 	Q_strncpyz(cp->id, name, sizeof(cp->id));
 
 	/* some default values */
@@ -452,13 +452,12 @@ void CL_ParseCampaign (const char *name, const char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseCampaign: campaign def \"%s\" without body ignored\n", name);
-		numCampaigns--;
+		ccs.numCampaigns--;
 		return;
 	}
 
 	/* some default values */
-	s = &salaries[cp->idx];
-	memset(s, 0, sizeof(*s));
+	s = &ccs.salaries[cp->idx];
 	s->soldier_base = 3000;
 	s->soldier_rankbonus = 500;
 	s->worker_base = 3000;
@@ -620,6 +619,8 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 	/* check for client interpretable scripts */
 	if (!strcmp(type, "up_chapters"))
 		UP_ParseChapters(name, text);
+	else if (!strcmp(type, "campaign"))
+		CL_ParseCampaign(name, text);
 	else if (!strcmp(type, "building"))
 		B_ParseBuildings(name, text, qfalse);
 	else if (!strcmp(type, "installation"))

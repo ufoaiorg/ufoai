@@ -38,6 +38,22 @@ static cvar_t *mn_installation_count;
 static cvar_t *mn_installation_id;
 
 /**
+ * @sa INS_SelectInstallation
+ * @param installation
+ */
+static void INS_SetCurrentSelectedInstallation (installation_t *installation)
+{
+	ccs.installationCurrent = installation;
+	if (installation) {
+		ccs.installationCurrent = installation;
+		ccs.baseCurrent = NULL;
+		Cvar_SetValue("mn_installation_id", installation->idx);
+		Cvar_Set("mn_installation_title", installation->name);
+		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
+	}
+}
+
+/**
  * @brief Select an installation when clicking on it on geoscape, or build a new installation.
  * @param[in] installation If this is @c NULL we want to installation a new base
  * @note This is (and should be) the only place where installationCurrent is set
@@ -66,36 +82,32 @@ void INS_SelectInstallation (installation_t *installation)
 			int i = 1;
 			int j;
 
-			installationCurrent = INS_GetInstallationByIDX(installationID);
-			installationCurrent->idx = installationID;
+			installation = INS_GetInstallationByIDX(installationID);
+			installation->idx = installationID;
 
 			do {
 				j = 0;
-				Com_sprintf(installationCurrent->name, sizeof(installationCurrent->name), "%s #%i", instmp ? _(instmp->name) : _("Installation"), i);
-				while (j <= ccs.numInstallations && strcmp(installationCurrent->name, ccs.installations[j++].name));
+				Com_sprintf(installation->name, sizeof(installation->name), "%s #%i", instmp ? _(instmp->name) : _("Installation"), i);
+				while (j <= ccs.numInstallations && strcmp(installation->name, ccs.installations[j++].name));
 			} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
 
 
-			Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: baseID is valid for base: %s\n", installationCurrent->name);
+			Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: baseID is valid for base: %s\n", installation->name);
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
 		} else {
 			Com_Printf("MaxInstallations reached\n");
 			/* select the first installation in list */
-			installationCurrent = INS_GetInstallationByIDX(0);
+			installation = INS_GetInstallationByIDX(0);
 			ccs.mapAction = MA_NONE;
 		}
 	} else {
 		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
-		installationCurrent = installation;
-		baseCurrent = NULL;
+		INS_SetCurrentSelectedInstallation(installation);
 		ccs.mapAction = MA_NONE;
-		Cvar_SetValue("mn_installation_id", installation->idx);
-		Cvar_Set("mn_installation_title", installation->name);
-		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
 		if (installation->installationStatus == INSTALLATION_WORKING) {
 			Cvar_Set("mn_installation_timetobuild", "-");
 		} else {
@@ -113,6 +125,7 @@ static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
 	installationTemplate_t *installationTemplate;
+	installation_t *installation = ccs.installationCurrent;
 
 	if (Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
@@ -130,10 +143,10 @@ static void INS_BuildInstallation_f (void)
 		return;
 	}
 
-	if (!installationCurrent)
+	if (!installation)
 		return;
 
-	assert(!installationCurrent->founded);
+	assert(!installation->founded);
 	assert(installationTemplate->cost >= 0);
 
 	if (ccs.credits - installationTemplate->cost > 0) {
@@ -141,25 +154,24 @@ static void INS_BuildInstallation_f (void)
 		 * tell this the gamer and give him an option to rechoose the location.
 		 * If we don't do this, any action that is done for this installation has no
 		 * influence to any nation happiness/funding/supporting */
-		if (INS_NewInstallation(installationCurrent, installationTemplate, newInstallationPos)) {
+		if (INS_NewInstallation(installation, installationTemplate, newInstallationPos)) {
 			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", ccs.numInstallations);
 
 			/* set up the installation */
-			INS_SetUpInstallation(installationCurrent, installationTemplate);
+			INS_SetUpInstallation(installation, installationTemplate);
 
-			campaignStats.installationsBuild++;
+			ccs.campaignStats.installationsBuild++;
 			ccs.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
-			Q_strncpyz(installationCurrent->name, Cvar_GetString("mn_installation_title"), sizeof(installationCurrent->name));
-			nation = MAP_GetNation(installationCurrent->pos);
+			Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
+			nation = MAP_GetNation(installation->pos);
 			if (nation)
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installationCurrent->name, _(nation->name));
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installation->name, _(nation->name));
 			else
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installationCurrent->name);
+				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installation->name);
 			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
-			Cbuf_AddText(va("mn_select_installation %i;", installationCurrent->idx));
-			return;
+			Cbuf_AddText(va("mn_select_installation %i;", installation->idx));
 		}
 	} else {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
@@ -196,22 +208,7 @@ static void INS_SelectInstallation_f (void)
 }
 
 /**
- * @brief Renames an installation.
- */
-static void INS_RenameInstallation_f (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
-		return;
-	}
-
-	if (installationCurrent)
-		Q_strncpyz(installationCurrent->name, Cmd_Argv(1), sizeof(installationCurrent->name));
-}
-
-
-/**
- * @brief Sets the title of the installation.
+ * @brief Sets the title of the installation to a cvar to prepare the rename menu.
  */
 static void INS_SetInstallationTitle_f (void)
 {
@@ -232,11 +229,13 @@ static void INS_SetInstallationTitle_f (void)
  */
 static void INS_ChangeInstallationName_f (void)
 {
+	installation_t *installation = ccs.installationCurrent;
+
 	/* maybe called without installation initialized or active */
-	if (!installationCurrent)
+	if (!installation)
 		return;
 
-	Q_strncpyz(installationCurrent->name, Cvar_GetString("mn_installation_title"), sizeof(installationCurrent->name));
+	Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
 }
 
 
@@ -249,7 +248,7 @@ static void INS_DestroyInstallation_f (void)
 	installation_t *installation;
 
 	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
-		installation = installationCurrent;
+		installation = ccs.installationCurrent;
 	} else {
 		installation = INS_GetFoundedInstallationByIDX(atoi(Cmd_Argv(1)));
 		if (!installation) {
@@ -288,7 +287,6 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_select_installation", INS_SelectInstallation_f, "Parameter is the installation index. -1 will build a new one.");
 	Cmd_AddCommand("mn_build_installation", INS_BuildInstallation_f, NULL);
 	Cmd_AddCommand("mn_set_installation_title", INS_SetInstallationTitle_f, NULL);
-	Cmd_AddCommand("mn_rename_installation", INS_RenameInstallation_f, "Rename the current installation");
 	Cmd_AddCommand("mn_installation_changename", INS_ChangeInstallationName_f, "Called after editing the cvar installation name");
 	Cmd_AddCommand("mn_destroyinstallation", INS_DestroyInstallation_f, "Destroys an installation");
 	Cmd_AddCommand("mn_update_max_installations", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
@@ -305,7 +303,6 @@ void INS_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_select_installation");
 	Cmd_RemoveCommand("mn_build_installation");
 	Cmd_RemoveCommand("mn_set_installation_title");
-	Cmd_RemoveCommand("mn_rename_installation");
 	Cmd_RemoveCommand("mn_installation_changename");
 	Cmd_RemoveCommand("mn_destroyinstallation");
 	Cmd_RemoveCommand("mn_update_max_installations");

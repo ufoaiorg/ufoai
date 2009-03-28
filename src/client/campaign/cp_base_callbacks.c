@@ -76,7 +76,7 @@ static void B_SelectBase_f (void)
 static void B_NextBase_f (void)
 {
 	int baseID;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	if (!base)
 		return;
@@ -95,7 +95,7 @@ static void B_NextBase_f (void)
 static void B_PrevBase_f (void)
 {
 	int baseID;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	if (!base)
 		return;
@@ -159,15 +159,14 @@ static qboolean B_NewBase (base_t* base, vec2_t pos)
 static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	if (!base)
 		return;
 
 	assert(!base->founded);
-	assert(curCampaign);
 
-	if (ccs.credits - curCampaign->basecost > 0) {
+	if (ccs.credits - ccs.curCampaign->basecost > 0) {
 		/** @todo If there is no nation assigned to the current selected position,
 		 * tell this the gamer and give him an option to rechoose the location.
 		 * If we don't do this, any action that is done for this base has no
@@ -181,9 +180,9 @@ static void B_BuildBase_f (void)
 			base->idx = ccs.numBases - 1;
 			base->founded = qtrue;
 			base->baseStatus = BASE_WORKING;
-			campaignStats.basesBuild++;
+			ccs.campaignStats.basesBuild++;
 			ccs.mapAction = MA_NONE;
-			CL_UpdateCredits(ccs.credits - curCampaign->basecost);
+			CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);
 			Q_strncpyz(base->name, baseName, sizeof(base->name));
 			nation = MAP_GetNation(base->pos);
 			if (nation)
@@ -216,11 +215,13 @@ static void B_BuildBase_f (void)
  */
 static void B_ChangeBaseName_f (void)
 {
+	base_t *base = ccs.baseCurrent;
+
 	/* maybe called without base initialized or active */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	Q_strncpyz(baseCurrent->name, Cvar_GetString("mn_base_title"), sizeof(baseCurrent->name));
+	Q_strncpyz(base->name, Cvar_GetString("mn_base_title"), sizeof(base->name));
 }
 
 /**
@@ -230,10 +231,12 @@ static void B_ChangeBaseName_f (void)
  */
 static void B_ResetBuildingCurrent_f (void)
 {
+	base_t *base = ccs.baseCurrent;
+
 	if (Cmd_Argc() == 2)
 		ccs.instant_build = atoi(Cmd_Argv(1));
 
-	B_ResetBuildingCurrent(baseCurrent);
+	B_ResetBuildingCurrent(base);
 }
 
 /**
@@ -244,28 +247,31 @@ static void B_ResetBuildingCurrent_f (void)
  */
 static void B_BaseInit_f (void)
 {
+	base_t *base = ccs.baseCurrent;
 	qboolean baseUnderAttack;
-	if (!baseCurrent)
+
+	if (!base)
 		return;
-	baseUnderAttack = (baseCurrent->baseStatus == BASE_UNDER_ATTACK);
+
+	baseUnderAttack = (base->baseStatus == BASE_UNDER_ATTACK);
 
 	/* make sure the credits cvar is up-to-date */
 	CL_UpdateCredits(ccs.credits);
 
-	Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
+	Cvar_SetValue("mn_base_num_aircraft", base->numAircraftInBase);
 
 	MN_ExecuteConfunc("mn_buildings_reset");
 	/* activate or deactivate the aircraft button */
-	if (AIR_AircraftAllowed(baseCurrent) && baseCurrent->numAircraftInBase)
+	if (AIR_AircraftAllowed(base) && base->numAircraftInBase)
 		MN_ExecuteConfunc("update_aircraft false \"%s\"", _("Manage your aircraft"));
 	else {
-		if (baseCurrent->numAircraftInBase == 0)
+		if (base->numAircraftInBase == 0)
 			MN_ExecuteConfunc("update_aircraft true \"%s\"", _("Buy or produce at least one aircraft first."));
 		else
 			MN_ExecuteConfunc("update_aircraft true \"%s\"", va(_("Build a %s or %s first."), _("Small Hangar"), _("Large Hangar")));
 	}
 
-	if (BS_BuySellAllowed(baseCurrent))
+	if (BS_BuySellAllowed(base))
 		MN_ExecuteConfunc("update_buysell false \"%s\"", _("Buy/Sell equipment"));
 	else {
 		if (baseUnderAttack)
@@ -283,7 +289,7 @@ static void B_BaseInit_f (void)
 			MN_ExecuteConfunc("update_transfer true \"%s\"", _("Build at least a second base to transfer equipment or personnel"));
 	}
 
-	if (RS_ResearchAllowed(baseCurrent))
+	if (RS_ResearchAllowed(base))
 		MN_ExecuteConfunc("update_research false \"%s\"", _("Research new technology"));
 	else {
 		if (baseUnderAttack)
@@ -292,7 +298,7 @@ static void B_BaseInit_f (void)
 			MN_ExecuteConfunc("update_research true \"%s\"", va(_("Build a %s first."), _("Laboratory")));
 	}
 
-	if (PR_ProductionAllowed(baseCurrent)) {
+	if (PR_ProductionAllowed(base)) {
 		MN_ExecuteConfunc("update_prod false \"%s\"", _("Produce new equipment"));
 	} else {
 		if (baseUnderAttack)
@@ -301,7 +307,7 @@ static void B_BaseInit_f (void)
 			MN_ExecuteConfunc("update_prod true \"%s\"", va(_("Build a %s first."), _("Workshop")));
 	}
 
-	if (E_HireAllowed(baseCurrent))
+	if (E_HireAllowed(base))
 		MN_ExecuteConfunc("update_hire false \"%s\"", _("Hire employees"));
 	else {
 		if (baseUnderAttack)
@@ -310,12 +316,12 @@ static void B_BaseInit_f (void)
 			MN_ExecuteConfunc("update_hire true \"%s\"", va(_("Build %s first."), _("Living Quarters")));
 	}
 
-	if (AC_ContainmentAllowed(baseCurrent))
+	if (AC_ContainmentAllowed(base))
 		MN_ExecuteConfunc("update_containment false \"%s\"", _("Deal with Aliens in Alien Containment"));
 	else
 		MN_ExecuteConfunc("update_containment true \"%s\"", va(_("Build a %s first."), _("Containment")));
 
-	if (HOS_HospitalAllowed(baseCurrent))
+	if (HOS_HospitalAllowed(base))
 		MN_ExecuteConfunc("update_hospital false \"%s\"", _("Medical and Surgery operations"));
 	else {
 		if (baseUnderAttack)
@@ -400,9 +406,12 @@ static void B_BuildingOnDestroy_f (void)
  */
 static void B_BuildingInit_f (void)
 {
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
-	B_BuildingInit(baseCurrent);
+
+	B_BuildingInit(base);
 }
 
 /**
@@ -410,11 +419,13 @@ static void B_BuildingInit_f (void)
  */
 static void B_BuildingInfoClick_f (void)
 {
-	if (baseCurrent && baseCurrent->buildingCurrent) {
-		Com_DPrintf(DEBUG_CLIENT, "B_BuildingInfoClick_f: %s - %i\n",
-			baseCurrent->buildingCurrent->id, baseCurrent->buildingCurrent->buildingStatus);
-		UP_OpenWith(baseCurrent->buildingCurrent->pedia);
-	}
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
+		return;
+
+	if (base->buildingCurrent)
+		UP_OpenWith(base->buildingCurrent->pedia);
 }
 
 /**
@@ -424,8 +435,12 @@ static void B_BuildingClick_f (void)
 {
 	int num, count;
 	building_t *building;
+	base_t *base = ccs.baseCurrent;
 
-	if (Cmd_Argc() < 2 || !baseCurrent) {
+	if (!base)
+		return;
+
+	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
@@ -433,9 +448,9 @@ static void B_BuildingClick_f (void)
 	/* which building? */
 	num = atoi(Cmd_Argv(1));
 
-	Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: listnumber %i base %i\n", num, baseCurrent->idx);
+	Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: listnumber %i base %i\n", num, base->idx);
 
-	count = LIST_Count(baseCurrent->buildingList);
+	count = LIST_Count(base->buildingList);
 	if (num > count || num < 0) {
 		Com_DPrintf(DEBUG_CLIENT, "B_BuildingClick_f: max exceeded %i/%i\n", num, count);
 		return;
@@ -443,8 +458,8 @@ static void B_BuildingClick_f (void)
 
 	building = buildingConstructionList[num];
 
-	baseCurrent->buildingCurrent = building;
-	B_DrawBuilding(baseCurrent, building);
+	base->buildingCurrent = building;
+	B_DrawBuilding(base, building);
 
 	ccs.baseAction = BA_NEWBUILDING;
 }
@@ -456,12 +471,14 @@ static void B_BuildingClick_f (void)
  */
 static void B_BuildingDestroy_f (void)
 {
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base || !base->buildingCurrent)
 		return;
 
-	B_BuildingDestroy(baseCurrent, baseCurrent->buildingCurrent);
+	B_BuildingDestroy(base, base->buildingCurrent);
 
-	B_ResetBuildingCurrent(baseCurrent);
+	B_ResetBuildingCurrent(base);
 }
 
 /**
@@ -470,11 +487,13 @@ static void B_BuildingDestroy_f (void)
  */
 static void B_BuildingStatus_f (void)
 {
+	base_t *base = ccs.baseCurrent;
+
 	/* maybe someone called this command before the buildings are parsed?? */
-	if (!baseCurrent || !baseCurrent->buildingCurrent)
+	if (!base || !base->buildingCurrent)
 		return;
 
-	B_BuildingStatus(baseCurrent, baseCurrent->buildingCurrent);
+	B_BuildingStatus(base, base->buildingCurrent);
 }
 
 /**
@@ -495,7 +514,7 @@ static void B_AssembleMap_f (void)
 	char maps[2024];
 	char coords[2048];
 	int setUnderAttack = 0, baseID = 0;
-	base_t* base = baseCurrent;
+	base_t* base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2)
 		Com_DPrintf(DEBUG_CLIENT, "Usage: %s <baseID> <setUnderAttack>\n", Cmd_Argv(0));
@@ -605,11 +624,13 @@ static void B_CheckBuildingStatusForMenu_f (void)
 	int baseIdx;
 	const char *buildingID;
 	building_t *building;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s buildingID\n", Cmd_Argv(0));
 		return;
 	}
+
 	buildingID = Cmd_Argv(1);
 	building = B_GetBuildingTemplate(buildingID);
 
@@ -618,19 +639,19 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		return;
 	}
 
-	if (!baseCurrent) {
+	if (!base) {
 		Com_Printf("B_CheckBuildingStatusForMenu_f: baseCurrent pointer is NULL\n");
 		return;
 	}
 
 	/* Maybe base is under attack ? */
-	if (baseCurrent->baseStatus == BASE_UNDER_ATTACK) {
+	if (base->baseStatus == BASE_UNDER_ATTACK) {
 		Com_sprintf(popupText, sizeof(popupText), _("Base is under attack, you can't access this building !"));
 		MN_Popup(_("Notice"), popupText);
 		return;
 	}
 
-	baseIdx = baseCurrent->idx;
+	baseIdx = base->idx;
 
 	if (building->buildingType == B_HANGAR) {
 		/* this is an exception because you must have a small or large hangar to enter aircraft menu */
@@ -639,11 +660,11 @@ static void B_CheckBuildingStatusForMenu_f (void)
 		return;
 	}
 
-	num = B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, building->buildingType);
+	num = B_GetNumberOfBuildingsInBaseByBuildingType(base, building->buildingType);
 	if (num > 0) {
 		int numUnderConstruction;
 		/* maybe all buildings of this type are under construction ? */
-		B_CheckBuildingTypeStatus(baseCurrent, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
+		B_CheckBuildingTypeStatus(base, building->buildingType, B_STATUS_UNDER_CONSTRUCTION, &numUnderConstruction);
 		if (numUnderConstruction == num) {
 			int minDay = 99999;
 			/* Find the building whose construction will finish first */
@@ -659,10 +680,10 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			return;
 		}
 
-		if (!B_CheckBuildingDependencesStatus(baseCurrent, building)) {
+		if (!B_CheckBuildingDependencesStatus(base, building)) {
 			building_t *dependenceBuilding = building->dependsBuilding;
 			assert(building->dependsBuilding);
-			if (B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, dependenceBuilding->buildingType) <= 0) {
+			if (B_GetNumberOfBuildingsInBaseByBuildingType(base, dependenceBuilding->buildingType) <= 0) {
 				/* the dependence of the building is not built */
 				Com_sprintf(popupText, sizeof(popupText), _("You need a building %s to make building %s functional."), _(dependenceBuilding->name), _(building->name));
 				MN_Popup(_("Notice"), popupText);
@@ -688,12 +709,12 @@ static void B_CheckBuildingStatusForMenu_f (void)
 			}
 		}
 		/* all buildings are OK: employees must be missing */
-		if ((building->buildingType == B_WORKSHOP) && (E_CountHired(baseCurrent, EMPL_WORKER) <= 0)) {
+		if (building->buildingType == B_WORKSHOP && E_CountHired(base, EMPL_WORKER) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_WORKER), _(building->name));
 			MN_Popup(_("Notice"), popupText);
 			return;
-		} else if ((building->buildingType == B_LAB) && (E_CountHired(baseCurrent, EMPL_SCIENTIST) <= 0)) {
+		} else if (building->buildingType == B_LAB && E_CountHired(base, EMPL_SCIENTIST) <= 0) {
 			Com_sprintf(popupText, sizeof(popupText), _("You need to recruit %s to use building %s."),
 				E_GetEmployeeString(EMPL_SCIENTIST), _(building->name));
 			MN_Popup(_("Notice"), popupText);
@@ -734,14 +755,13 @@ static void BaseSummary_Init_f (void)
 	static char textStatsBuffer[1024];
 	static char textInfoBuffer[256];
 	int i;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	if (!base) {
 		Com_Printf("No base selected\n");
 		return;
 	} else {
 		baseCapacities_t cap;
-		building_t* b;
 		production_queue_t *queue;
 		technology_t *tech;
 		int totalEmployees = 0;
@@ -769,7 +789,7 @@ static void BaseSummary_Init_f (void)
 
 		Q_strcat(textStatsBuffer, _("^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"), sizeof(textStatsBuffer));
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
-			b = &ccs.buildingTemplates[i];
+			const building_t* b = &ccs.buildingTemplates[i];
 
 			/* only show already researched buildings */
 			if (!RS_IsResearched_ptr(b->tech))
@@ -846,7 +866,7 @@ void B_InitCallbacks (void)
 {
 	mn_base_title = Cvar_Get("mn_base_title", "", 0, NULL);
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
-	Cvar_Set("mn_base_cost", va(_("%i c"), curCampaign->basecost));
+	Cvar_Set("mn_base_cost", va(_("%i c"), ccs.curCampaign->basecost));
 	Cvar_SetValue("mn_base_max", MAX_BASES);
 
 	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");

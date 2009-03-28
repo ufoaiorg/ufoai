@@ -648,11 +648,11 @@ static void AC_AddOne_f (void)
 	aliensCont_t *containment;
 	qboolean updateAlive;
 	int j;
+	base_t *base = ccs.baseCurrent;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent) {
+	if (!base)
 		return;
-	}
 
 	/* arg parsing */
 	if (Cmd_Argc() < 2) {
@@ -669,7 +669,7 @@ static void AC_AddOne_f (void)
 	}
 
 	/* Check that alientType exists */
-	containment = baseCurrent->alienscont;
+	containment = base->alienscont;
 	for (j = 0; j < ccs.numAliensTD; j++) {
 		assert(containment[j].teamDef);
 		if (containment[j].teamDef == alienType)
@@ -689,19 +689,19 @@ static void AC_AddOne_f (void)
 	}
 
 	/* update alien counter*/
-	if (B_GetBuildingStatus(baseCurrent, B_ALIEN_CONTAINMENT)) {
-		containment = baseCurrent->alienscont;
+	if (B_GetBuildingStatus(base, B_ALIEN_CONTAINMENT)) {
+		containment = base->alienscont;
 	} else {
 		return;
 	}
 
 	/**@todo is AL_RemoveAliens a wrong name for this or why do we remove them on AC_AddOne? */
 	/* call the function that actually changes the persistent datastructure */
-	if (updateAlive) {
-		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDALIVE);
-	} else {
-		AL_RemoveAliens(baseCurrent, alienType, 1, AL_ADDDEAD);
-	}
+	if (updateAlive)
+		AL_RemoveAliens(base, alienType, 1, AL_ADDALIVE);
+	else
+		AL_RemoveAliens(base, alienType, 1, AL_ADDDEAD);
+
 	/* Reinit menu to display proper values. */
 	/* AC_UpdateMenu(baseCurrent); */
 	/** @todo do we need this update here? is it better to move this debug function to callbacks? */

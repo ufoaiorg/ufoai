@@ -236,9 +236,6 @@ typedef struct aircraft_s {
 	qboolean notOnGeoscape;	/**< don't let this aircraft appear ever on geoscape (e.g. ufo_carrier) */
 } aircraft_t;
 
-extern aircraft_t aircraftTemplates[MAX_AIRCRAFT]; /**< available aircraft types */
-extern int numAircraftTemplates;
-
 /* script functions */
 
 #ifdef DEBUG

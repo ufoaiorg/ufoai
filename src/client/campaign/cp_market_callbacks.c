@@ -165,8 +165,9 @@ static void BS_MarketScroll_f (void)
 {
 	menuNode_t* node;
 	int i;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent || buyCat >= MAX_FILTERTYPES || buyCat < 0)
+	if (!base || buyCat >= MAX_FILTERTYPES || buyCat < 0)
 		return;
 
 	node = MN_GetNodeByPath("market.market");
@@ -205,9 +206,9 @@ static void BS_MarketScroll_f (void)
 		else {
 			const objDef_t *od = BS_GetObjectDefition(&buyList.l[i]);
 			/* Check whether the item matches the proper filter, storage in current base and market. */
-			if (od && (baseCurrent->storage.num[od->idx] || ccs.eMarket.num[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
+			if (od && (base->storage.num[od->idx] || ccs.eMarket.num[od->idx]) && INV_ItemMatchesFilter(od, buyCat)) {
 				MN_ExecuteConfunc("buy_show %i", i - buyList.scroll);
-				BS_UpdateItem(baseCurrent, i - buyList.scroll);
+				BS_UpdateItem(base, i - buyList.scroll);
 				if (ccs.autosell[od->idx])
 					MN_ExecuteConfunc("buy_autoselle %i", i - buyList.scroll);
 				else
@@ -305,7 +306,6 @@ static void BS_AddToList (const char *name, int storage, int market, int price)
 static void BS_BuyType (const base_t *base)
 {
 	const objDef_t *od;
-	const aircraft_t *air_samp;
 	int i, j = 0;
 	char tmpbuf[MAX_VAR];
 
@@ -326,7 +326,8 @@ static void BS_BuyType (const base_t *base)
 	case FILTER_AIRCRAFT:	/* Aircraft */
 		{
 		const technology_t* tech;
-		for (i = 0, j = 0, air_samp = aircraftTemplates; i < numAircraftTemplates; i++, air_samp++) {
+		const aircraft_t *air_samp;
+		for (i = 0, j = 0, air_samp = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, air_samp++) {
 			if (air_samp->type == AIRCRAFT_UFO || air_samp->price == -1)
 				continue;
 			tech = air_samp->tech;
@@ -533,6 +534,8 @@ static void BS_BuyType (const base_t *base)
  */
 static void BS_BuyType_f (void)
 {
+	base_t *base = ccs.baseCurrent;
+
 	if (Cmd_Argc() == 2) {
 		menuNode_t* node = MN_GetNodeByPath("market.market");
 
@@ -558,7 +561,7 @@ static void BS_BuyType_f (void)
 		currentSelectedMenuEntry = NULL;
 	}
 
-	BS_BuyType(baseCurrent);
+	BS_BuyType(base);
 	BS_MarketScroll_f();
 }
 
@@ -570,13 +573,14 @@ static void BS_BuyAircraft_f (void)
 {
 	int num, freeSpace;
 	const aircraft_t *aircraftTemplate;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	num = atoi(Cmd_Argv(1));
@@ -585,17 +589,17 @@ static void BS_BuyAircraft_f (void)
 
 	if (buyCat == FILTER_AIRCRAFT) {
 		/* We cannot buy aircraft if there is no power in our base. */
-		if (!B_GetBuildingStatus(baseCurrent, B_POWER)) {
+		if (!B_GetBuildingStatus(base, B_POWER)) {
 			MN_Popup(_("Note"), _("No power supplies in this base.\nHangars are not functional."));
 			return;
 		}
 		/* We cannot buy aircraft without any hangar. */
-		if (!B_GetBuildingStatus(baseCurrent, B_HANGAR) && !B_GetBuildingStatus(baseCurrent, B_SMALL_HANGAR)) {
+		if (!B_GetBuildingStatus(base, B_HANGAR) && !B_GetBuildingStatus(base, B_SMALL_HANGAR)) {
 			MN_Popup(_("Note"), _("Build a hangar first."));
 			return;
 		}
 		aircraftTemplate = buyList.l[num].aircraft;
-		freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, baseCurrent, 0);
+		freeSpace = AIR_CalculateHangarStorage(aircraftTemplate, base, 0);
 
 		/* Check free space in hangars. */
 		if (freeSpace < 0) {
@@ -614,7 +618,7 @@ static void BS_BuyAircraft_f (void)
 			} else {
 				/* Hangar capacities are being updated in AIR_NewAircraft().*/
 				CL_UpdateCredits(ccs.credits - aircraftTemplate->price);
-				AIR_NewAircraft(baseCurrent, aircraftTemplate->id);
+				AIR_NewAircraft(base, aircraftTemplate->id);
 				Cmd_ExecuteString(va("buy_type %s", INV_GetFilterType(FILTER_AIRCRAFT)));
 			}
 		}
@@ -631,21 +635,19 @@ static void BS_SellAircraft_f (void)
 	qboolean found = qfalse;
 	qboolean teamNote = qfalse;
 	qboolean aircraftOutNote = qfalse;
-	base_t *base;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyList.length)
 		return;
-
-	base = baseCurrent;
 
 	if (buyCat == FILTER_AIRCRAFT) {
 		aircraft_t *aircraft;
@@ -714,13 +716,14 @@ static void BS_SellAircraft_f (void)
 static void BS_BuyItem_f (void)
 {
 	int num;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (buyCat == FILTER_AIRCRAFT) {
@@ -752,19 +755,19 @@ static void BS_BuyItem_f (void)
 			if (!ccs.eMarket.num[ugvWeapon->idx])
 				ugvWeaponBuyable = qfalse;
 
-			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur <
+			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur <
 				UGV_SIZE + ugvWeapon->size) {
 				MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
 				ugvWeaponBuyable = qfalse;
 			}
 
-			if (ugvWeaponBuyable && E_HireRobot(baseCurrent, ugv)) {
+			if (ugvWeaponBuyable && E_HireRobot(base, ugv)) {
 				/* Move the item into the storage. */
-				B_UpdateStorageAndCapacity(baseCurrent, ugvWeapon, 1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, ugvWeapon, 1, qfalse, qfalse);
 				ccs.eMarket.num[ugvWeapon->idx]--;
 
 				/* Update Display/List and credits. */
-				BS_BuyType(baseCurrent);
+				BS_BuyType(base);
 				CL_UpdateCredits(ccs.credits - ugv->price);	/** @todo make this depend on market as well? */
 			} else {
 				Com_Printf("Could not buy this item.\n");
@@ -777,10 +780,10 @@ static void BS_BuyItem_f (void)
 		currentSelectedMenuEntry = item;
 		UP_ItemDescription(item);
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %s\n", item->id);
-		BS_CheckAndDoBuyItem(baseCurrent, item, BS_GetBuySellFactor());
+		BS_CheckAndDoBuyItem(base, item, BS_GetBuySellFactor());
 		/* reinit the menu */
-		BS_BuyType(baseCurrent);
-		BS_UpdateItem(baseCurrent, num);
+		BS_BuyType(base);
+		BS_UpdateItem(base, num);
 	}
 }
 
@@ -793,13 +796,14 @@ static void BS_BuyItem_f (void)
 static void BS_SellItem_f (void)
 {
 	int num;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (buyCat == FILTER_AIRCRAFT) {
@@ -826,23 +830,23 @@ static void BS_SellItem_f (void)
 		if (!ugvWeapon)
 			Sys_Error("BS_BuyItem_f: Could not get wepaon '%s' for ugv/tank '%s'.", ugv->weapon, ugv->id);
 
-		employee = E_GetHiredRobot(baseCurrent, ugv);
+		employee = E_GetHiredRobot(base, ugv);
 		if (!E_UnhireEmployee(employee)) {
 			/** @todo message - Couldn't fire employee. */
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't sell/fire robot/ugv.\n");
 		} else {
-			if (baseCurrent->storage.num[ugvWeapon->idx]) {
+			if (base->storage.num[ugvWeapon->idx]) {
 				/* If we have a weapon we sell it as well. */
-				B_UpdateStorageAndCapacity(baseCurrent, ugvWeapon, -1, qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, ugvWeapon, -1, qfalse, qfalse);
 				ccs.eMarket.num[ugvWeapon->idx]++;
 			}
-			BS_BuyType(baseCurrent);
+			BS_BuyType(base);
 			CL_UpdateCredits(ccs.credits + ugv->price);	/** @todo make this depend on market as well? */
 		}
 	} else {
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 		/* don't sell more items than we have */
-		const int numItems = min(baseCurrent->storage.num[item->idx], BS_GetBuySellFactor());
+		const int numItems = min(base->storage.num[item->idx], BS_GetBuySellFactor());
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
 		assert(item);
 		currentSelectedMenuEntry = item;
@@ -851,12 +855,12 @@ static void BS_SellItem_f (void)
 		/* don't sell more items than we have */
 		if (numItems) {
 			/* reinit the menu */
-			B_UpdateStorageAndCapacity(baseCurrent, item, -numItems, qfalse, qfalse);
+			B_UpdateStorageAndCapacity(base, item, -numItems, qfalse, qfalse);
 			ccs.eMarket.num[item->idx] += numItems;
 
-			BS_BuyType(baseCurrent);
+			BS_BuyType(base);
 			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item->idx] * numItems);
-			BS_UpdateItem(baseCurrent, num);
+			BS_UpdateItem(base, num);
 		}
 	}
 }
@@ -870,9 +874,6 @@ static void BS_BuySellItem_f (void)
 		Com_Printf("Usage: %s <num> <value>\n", Cmd_Argv(0));
 		return;
 	}
-
-	if (!baseCurrent)
-		return;
 
 	num = atoi(Cmd_Argv(1));
 	value = atof(Cmd_Argv(2));
@@ -893,9 +894,10 @@ static void BS_Autosell_f (void)
 {
 	int num;
 	const objDef_t *item;
+	base_t *base = ccs.baseCurrent;
 
 	/* Can be called from everywhere. */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -923,7 +925,7 @@ static void BS_Autosell_f (void)
 	}
 
 	/* Reinit the menu. */
-	BS_BuyType(baseCurrent);
+	BS_BuyType(base);
 }
 
 

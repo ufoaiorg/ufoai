@@ -34,9 +34,9 @@ void CL_BlockBattlescapeEvents(void);
 void CL_UnblockBattlescapeEvents(void);
 void CL_ResetBattlescapeEvents(void);
 
-void CL_SetLastMoving(le_t *le);
+void CL_SetLastMoving(struct le_s *le);
 void CL_ParseServerMessage(int cmd, struct dbuffer *msg);
 qboolean CL_CheckOrDownloadFile(const char *filename);
-void CL_DrawLineOfSight(const le_t *watcher, const le_t *target);
+void CL_DrawLineOfSight(const struct le_s *watcher, const struct le_s *target);
 
 #endif

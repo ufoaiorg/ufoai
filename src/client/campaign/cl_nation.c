@@ -69,7 +69,7 @@ void NAT_UpdateHappinessForAllNations (void)
 		const mission_t *mission = (mission_t *)list->data;
 		nation_t *nation = MAP_GetNation(mission->pos);
 		/* Difficulty modifier range is [0, 0.02f] */
-		const float difficultyModifier = (4.0f + curCampaign->difficulty) / 400;
+		const float difficultyModifier = (4.0f + ccs.curCampaign->difficulty) / 400;
 
 		/* Some non-water location have no nation */
 		if (nation) {
@@ -147,7 +147,7 @@ void NAT_SetHappiness (nation_t *nation, const float happiness)
 	const char *oldString = NAT_GetHappinessString(nation);
 	const char *newString;
 	const float oldHappiness = nation->stats[0].happiness;
-	const float middleHappiness = (curCampaign->minhappiness + 1.0) / 2;
+	const float middleHappiness = (ccs.curCampaign->minhappiness + 1.0) / 2;
 	notify_t notifyType = NT_NUM_NOTIFYTYPE;
 
 	nation->stats[0].happiness = happiness;
@@ -166,7 +166,7 @@ void NAT_SetHappiness (nation_t *nation, const float happiness)
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
 			_("Nation %s changed happiness to %s"), _(nation->name), newString);
 		notifyType = NT_HAPPINESS_PLEASED;
-	} else if (happiness < curCampaign->minhappiness && oldHappiness > curCampaign->minhappiness) {
+	} else if (happiness < ccs.curCampaign->minhappiness && oldHappiness > ccs.curCampaign->minhappiness) {
 		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), /** @todo need to more specific message */
 			_("Happiness of nation %s is %s and less than minimal happiness allowed to the campaign"), _(nation->name), newString);
 		notifyType = NT_HAPPINESS_MIN;

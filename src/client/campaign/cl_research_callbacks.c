@@ -339,8 +339,9 @@ static void CL_ResearchSelect_f (void)
 {
 	int num;
 	int type;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -359,7 +360,7 @@ static void CL_ResearchSelect_f (void)
 	/* switch to another team */
 	if (type == RSGUI_BASETITLE) {
 		base_t *b = researchList2[num].base;
-		if (b != NULL && b != baseCurrent) {
+		if (b != NULL && b != base) {
 			MN_ExecuteConfunc("research_changebase %i %i", b->idx, researchListPos);
 			return;
 		}
@@ -374,7 +375,7 @@ static void CL_ResearchSelect_f (void)
 
 	/** @todo improve that, don't need to update everything */
 	/* need to set previous selected tech to proper color */
-	RS_InitGUI(baseCurrent, qtrue);
+	RS_InitGUI(base, qtrue);
 }
 
 /**
@@ -387,8 +388,9 @@ static void RS_ChangeScientist_f (void)
 {
 	int num;
 	float diff;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (Cmd_Argc() < 3) {
@@ -406,13 +408,13 @@ static void RS_ChangeScientist_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_ChangeScientist_f: num %i, diff %i\n", num, (int) diff);
 	if (diff > 0) {
-		RS_AssignScientist(researchList2[num].tech, baseCurrent);
+		RS_AssignScientist(researchList2[num].tech, base);
 	} else {
 		RS_RemoveScientist(researchList2[num].tech, NULL);
 	}
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(baseCurrent, qtrue);
+	RS_InitGUI(base, qtrue);
 }
 
 /**
@@ -450,8 +452,9 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 static void RS_AssignScientist_f (void)
 {
 	int num;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -464,10 +467,10 @@ static void RS_AssignScientist_f (void)
 		return;
 
 	Com_DPrintf(DEBUG_CLIENT, "RS_AssignScientist_f: num %i\n", num);
-	RS_AssignScientist(researchList2[num].tech, baseCurrent);
+	RS_AssignScientist(researchList2[num].tech, base);
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(baseCurrent, qtrue);
+	RS_InitGUI(base, qtrue);
 }
 
 /**
@@ -478,6 +481,10 @@ static void RS_AssignScientist_f (void)
 static void RS_RemoveScientist_f (void)
 {
 	int num;
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
+		return;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num_in_list>\n", Cmd_Argv(0));
@@ -491,7 +498,7 @@ static void RS_RemoveScientist_f (void)
 	RS_RemoveScientist(researchList2[num].tech, NULL);
 
 	/* Update display-list and display-info. */
-	RS_InitGUI(baseCurrent, qtrue);
+	RS_InitGUI(base, qtrue);
 }
 
 /**
@@ -499,9 +506,12 @@ static void RS_RemoveScientist_f (void)
  */
 static void RS_UpdateData_f (void)
 {
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
-	RS_InitGUI(baseCurrent, qtrue);
+
+	RS_InitGUI(base, qtrue);
 }
 
 /**
@@ -510,16 +520,17 @@ static void RS_UpdateData_f (void)
 static void RS_ResearchStart_f (void)
 {
 	technology_t *tech;
+	base_t *base = ccs.baseCurrent;
 
 	/* We are not in base view. */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (researchListPos < 0 || researchListPos >= researchListLength)
 		return;
 
 	/* Check if laboratory is available. */
-	if (!B_GetBuildingStatus(baseCurrent, B_LAB))
+	if (!B_GetBuildingStatus(base, B_LAB))
 		return;
 
 	/* get the currently selected research-item */
@@ -530,18 +541,18 @@ static void RS_ResearchStart_f (void)
 	if (!tech->statusResearchable) {
 		Com_DPrintf(DEBUG_CLIENT, "RS_ResearchStart_f: %s was not researchable yet. re-checking\n", tech->id);
 		/* If all requirements are met (includes a check for "enough-collected") mark this tech as researchable.*/
-		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, baseCurrent))
+		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR, base))
 			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable(qfalse, baseCurrent);	/* Re-check all other techs in case they depend on the marked one. */
+		RS_MarkResearchable(qfalse, base);	/* Re-check all other techs in case they depend on the marked one. */
 	}
 
 	/* statusResearchable might have changed - check it again */
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
 		case RS_RUNNING:
-			if (tech->base == baseCurrent) {
+			if (tech->base == base) {
 				/* Research already running in current base ... try to add max amount of scis. */
-				RS_MaxOutResearch(baseCurrent, tech);
+				RS_MaxOutResearch(base, tech);
 			}else {
 				/* Research already running in another base. */
 				MN_Popup(_("Notice"), _("This item is currently under research in another base."));
@@ -554,7 +565,7 @@ static void RS_ResearchStart_f (void)
 				Com_Printf("RS_ResearchStart_f: The research on this item continues.\n");
 			}
 			/* Add as many scientists as possible to this tech. */
-			RS_MaxOutResearch(baseCurrent, tech);
+			RS_MaxOutResearch(base, tech);
 
 			if (tech->scientists > 0) {
 				tech->statusResearch = RS_RUNNING;
@@ -570,7 +581,7 @@ static void RS_ResearchStart_f (void)
 	} else
 		MN_Popup(_("Notice"), _("The research on this item is not yet possible.\nYou need to research the technologies it's based on first."));
 
-	RS_InitGUI(baseCurrent, qtrue);
+	RS_InitGUI(base, qtrue);
 }
 
 /**
@@ -579,16 +590,17 @@ static void RS_ResearchStart_f (void)
 static void RS_ResearchStop_f (void)
 {
 	technology_t *tech;
+	base_t *base = ccs.baseCurrent;
 
 	/* we are not in base view */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (researchListPos < 0 || researchListPos >= researchListLength)
 		return;
 
 	/* Check if laboratory is available. */
-	if (!B_GetBuildingStatus(baseCurrent, B_LAB))
+	if (!B_GetBuildingStatus(base, B_LAB))
 		return;
 
 	/* get the currently selected research-item */
@@ -614,7 +626,7 @@ static void RS_ResearchStop_f (void)
 	default:
 		break;
 	}
-	RS_InitGUI(baseCurrent, qtrue);
+	RS_InitGUI(base, qtrue);
 }
 
 /**
@@ -623,10 +635,6 @@ static void RS_ResearchStop_f (void)
 static void RS_ShowPedia_f (void)
 {
 	const technology_t *tech;
-
-	/* We are not in base view. */
-	if (!baseCurrent)
-		return;
 
 	if (researchListPos < 0 || researchListPos >= researchListLength)
 		return;
@@ -792,18 +800,20 @@ static void RS_InitGUIData (base_t* base)
  */
 static void CL_ResearchType_f (void)
 {
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
 
 	/* Update and display the list. */
-	RS_InitGUIData(baseCurrent);
+	RS_InitGUIData(base);
 
 	/* Nothing to research here. */
 	/** @todo wrong computation: researchListLength doesn't say if there are research on this base */
 	if (!researchListLength) {
 		MN_PopMenu(qfalse);
 		MN_Popup(_("Notice"), _("Nothing to research"));
-	} else if (!B_GetBuildingStatus(baseCurrent, B_LAB)) {
+	} else if (!B_GetBuildingStatus(base, B_LAB)) {
 		MN_PopMenu(qfalse);
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
 	}
@@ -815,10 +825,13 @@ static void CL_ResearchType_f (void)
  */
 static void MN_ResearchInit_f (void)
 {
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
+
 	CL_ResearchType_f();
-	RS_InitGUI(baseCurrent, qfalse);
+	RS_InitGUI(base, qfalse);
 }
 
 void RS_InitCallbacks (void)

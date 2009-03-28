@@ -183,7 +183,7 @@ qboolean XVI_LoadXML (mxml_node_t *p)
 			out[y * width + x] = mxml_GetInt(s, "xv", 0);
 	}
 
-	R_InitializeXVIOverlay(curCampaign->map, out, width, height);
+	R_InitializeXVIOverlay(ccs.curCampaign->map, out, width, height);
 	Mem_Free(out);
 	return qtrue;
 }
@@ -204,9 +204,9 @@ void CP_StartXVISpreading_f (void)
 	ccs.XVIShowMap = qtrue;
 
 	/* Spawn a few alien bases depending on difficulty level */
-	if (curCampaign->difficulty > 0)
+	if (ccs.curCampaign->difficulty > 0)
 		numAlienBases = 3;
-	else if (curCampaign->difficulty < 0)
+	else if (ccs.curCampaign->difficulty < 0)
 		numAlienBases = 1;
 	else
 		numAlienBases = 2;

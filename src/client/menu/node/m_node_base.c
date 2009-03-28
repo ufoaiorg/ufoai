@@ -134,8 +134,9 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 	char image[MAX_QPATH];		/**< this buffer should not be need */
 	building_t *building;
 	const building_t *secondBuilding = NULL;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent) {
+	if (!base) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -152,14 +153,14 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 
 			/* base tile */
 			image[0] = '\0';
-			if (baseCurrent->map[row][col].blocked) {
+			if (base->map[row][col].blocked) {
 				building = NULL;
 				Q_strncpyz(image, "base/invalid", sizeof(image));
-			} else if (!baseCurrent->map[row][col].building) {
+			} else if (!base->map[row][col].building) {
 				building = NULL;
 				Q_strncpyz(image, "base/grid", sizeof(image));
 			} else {
-				building = baseCurrent->map[row][col].building;
+				building = base->map[row][col].building;
 				secondBuilding = NULL;
 				assert(building);
 
@@ -216,18 +217,18 @@ static void MN_BaseMapNodeDraw (menuNode_t * node)
 	/* if we are building */
 	if (ccs.baseAction == BA_NEWBUILDING) {
 		qboolean isLarge;
-		assert(baseCurrent->buildingCurrent);
+		assert(base->buildingCurrent);
 		/** @todo we should not compute here if we can (or not build something) the map model know it better */
-		if (!MN_BaseMapIsCellFree(baseCurrent, col, row))
+		if (!MN_BaseMapIsCellFree(base, col, row))
 			return;
 
-		isLarge = baseCurrent->buildingCurrent->needs != NULL;
+		isLarge = base->buildingCurrent->needs != NULL;
 
 		/* large building */
 		if (isLarge) {
-			if (MN_BaseMapIsCellFree(baseCurrent, col + 1, row)) {
+			if (MN_BaseMapIsCellFree(base, col + 1, row)) {
 				/* ok */
-			} else if (MN_BaseMapIsCellFree(baseCurrent, col - 1, row)) {
+			} else if (MN_BaseMapIsCellFree(base, col - 1, row)) {
 				/* fix col at the left cell */
 				col--;
 			} else {
@@ -257,17 +258,18 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
 	building_t *building;
 	const int itemToolTipWidth = 250;
 	char *tooltipText;
+	base_t *base = ccs.baseCurrent;
 
 	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
 		return;
 
-	building = baseCurrent->map[row][col].building;
+	building = base->map[row][col].building;
 	if (!building)
 		return;
 
 	tooltipText = _(building->name);
-	if (!B_CheckBuildingDependencesStatus(baseCurrent, building))
+	if (!B_CheckBuildingDependencesStatus(base, building))
 		tooltipText = va("%s\n%s %s", tooltipText, _("not operational, depends on"), _(building->dependsBuilding->name));
 	MN_DrawTooltip("f_small", tooltipText, x, y, itemToolTipWidth, 0);
 }
@@ -283,7 +285,7 @@ static void MN_BaseMapNodeDrawTooltip (menuNode_t *node, int x, int y)
 static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	assert(base);
 	assert(node);
@@ -329,7 +331,7 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	assert(base);
 	assert(node);
@@ -361,7 +363,7 @@ static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 static void MN_BaseMapNodeMiddleClick (menuNode_t *node, int x, int y)
 {
 	int row, col;
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	assert(base);
 	assert(node);

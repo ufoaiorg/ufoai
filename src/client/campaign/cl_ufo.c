@@ -147,10 +147,10 @@ const char* UFO_AircraftToIDOnGeoscape (aircraft_t *ufocraft)
  */
 const char* UFO_MissionResultToString (void)
 {
-	if (missionresults.crashsite)
-		return va(_("\nSecured crashed %s\n"), UFO_TypeToName(missionresults.ufotype));
+	if (ccs.missionresults.crashsite)
+		return va(_("\nSecured crashed %s\n"), UFO_TypeToName(ccs.missionresults.ufotype));
 	else
-		return va(_("\nSecured landed %s\n"), UFO_TypeToName(missionresults.ufotype));
+		return va(_("\nSecured landed %s\n"), UFO_TypeToName(ccs.missionresults.ufotype));
 }
 
 /**
@@ -698,20 +698,20 @@ aircraft_t *UFO_AddToGeoscape (ufoType_t ufoType, vec2_t destination, mission_t 
 		return NULL;
 	}
 
-	for (newUFONum = 0; newUFONum < numAircraftTemplates; newUFONum++)
-		if (aircraftTemplates[newUFONum].type == AIRCRAFT_UFO
-		 && ufoType == aircraftTemplates[newUFONum].ufotype
-		 && !aircraftTemplates[newUFONum].notOnGeoscape)
+	for (newUFONum = 0; newUFONum < ccs.numAircraftTemplates; newUFONum++)
+		if (ccs.aircraftTemplates[newUFONum].type == AIRCRAFT_UFO
+		 && ufoType == ccs.aircraftTemplates[newUFONum].ufotype
+		 && !ccs.aircraftTemplates[newUFONum].notOnGeoscape)
 			break;
 
-	if (newUFONum == numAircraftTemplates) {
+	if (newUFONum == ccs.numAircraftTemplates) {
 		Com_DPrintf(DEBUG_CLIENT, "Could not add ufo type %i to geoscape\n", ufoType);
 		return NULL;
 	}
 
 	/* Create ufo */
 	ufo = &ccs.ufos[ccs.numUFOs];
-	*ufo = aircraftTemplates[newUFONum];
+	*ufo = ccs.aircraftTemplates[newUFONum];
 	Com_DPrintf(DEBUG_CLIENT, "New UFO on geoscape: '%s' (ccs.numUFOs: %i, newUFONum: %i)\n", ufo->id, ccs.numUFOs, newUFONum);
 	ccs.numUFOs++;
 

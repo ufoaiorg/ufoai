@@ -1005,7 +1005,8 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
  */
 static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 {
-	assert(curCampaign->firstBaseTemplate[0]);
+	if (ccs.curCampaign->firstBaseTemplate[0] == '\0')
+		Sys_Error("No base template for setting up the first base given");
 
 	RS_MarkResearchable(qtrue, base);
 	CP_InitMarket(qfalse);
@@ -1013,7 +1014,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 	if (buildings) {
 		int i;
 		/* get template for base */
-		const baseTemplate_t *template = B_GetBaseTemplate(curCampaign->firstBaseTemplate);
+		const baseTemplate_t *template = B_GetBaseTemplate(ccs.curCampaign->firstBaseTemplate);
 		const equipDef_t *ed = NULL;
 
 		/* find each building in the template */
@@ -1042,7 +1043,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		}
 
 		/* Find the initial equipment definition for current campaign. */
-		ed = INV_GetEquipmentDefinitionByID(curCampaign->equipment);
+		ed = INV_GetEquipmentDefinitionByID(ccs.curCampaign->equipment);
 		/* Copy it to base storage. */
 		base->storage = *ed;
 
@@ -1882,6 +1883,7 @@ void B_ClearBase (base_t *const base)
 {
 	int i;
 	int j = 0;
+	campaign_t *campaign = ccs.curCampaign;
 
 	B_ResetHiredEmployeesInBase(base);
 
@@ -1894,21 +1896,21 @@ void B_ClearBase (base_t *const base)
 	/* setup team */
 	/** @todo I think this should be made only once per game, not once per base, no ? -- Kracken 19/12/07 */
 	if (!E_CountUnhired(EMPL_SOLDIER)) {
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
-		for (i = 0; i < curCampaign->soldiers; i++)
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", campaign->soldiers);
+		for (i = 0; i < campaign->soldiers; i++)
 			E_CreateEmployee(EMPL_SOLDIER, B_RandomNation(), NULL);
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i scientists\n", curCampaign->scientists);
-		for (i = 0; i < curCampaign->scientists; i++)
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i scientists\n", campaign->scientists);
+		for (i = 0; i < campaign->scientists; i++)
 			E_CreateEmployee(EMPL_SCIENTIST, B_RandomNation(), NULL);
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i robots\n", curCampaign->ugvs);
-		for (i = 0; i < curCampaign->ugvs; i++) {
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i robots\n", campaign->ugvs);
+		for (i = 0; i < campaign->ugvs; i++) {
 			if (frand() > 0.5)
 				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUGVByID("ugv_ares_w"));
 			else
 				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUGVByID("ugv_phoenix"));
 		}
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", curCampaign->workers);
-		for (i = 0; i < curCampaign->workers; i++)
+		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", campaign->workers);
+		for (i = 0; i < campaign->workers; i++)
 			E_CreateEmployee(EMPL_WORKER, B_RandomNation(), NULL);
 
 		/* Fill the global data employee list with pilots, evenly distributed between nations */
@@ -2036,6 +2038,21 @@ static int B_GetFirstUnfoundedBase (void)
 }
 
 /**
+ * @sa B_SelectBase
+ * @param base
+ */
+static void B_SetCurrentSelectedBase (base_t *base)
+{
+	/* e.g. on geoscape we don't have any base selected */
+	ccs.baseCurrent = base;
+	if (base) {
+		ccs.installationCurrent = NULL;
+		Cvar_Set("mn_base_title", base->name);
+		Cvar_SetValue("mn_base_status_id", base->baseStatus);
+	}
+}
+
+/**
  * @param[in] base If this is @c NULL we want to build a new base
  */
 void B_SelectBase (base_t *base)
@@ -2053,36 +2070,32 @@ void B_SelectBase (base_t *base)
 			return;
 		}
 
-		ccs.mapAction = MA_NEWBASE;
 		baseID = B_GetFirstUnfoundedBase();
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
-			installationCurrent = NULL;
-			baseCurrent = B_GetBaseByIDX(baseID);
-			baseCurrent->idx = baseID;
+			base = B_GetBaseByIDX(baseID);
+			base->idx = baseID;
 
 			/* default name */
-			if (baseCurrent->idx == 0)
-				Q_strncpyz(baseCurrent->name, _("Home"), sizeof(baseCurrent->name));
+			if (base->idx == 0)
+				Q_strncpyz(base->name, _("Home"), sizeof(base->name));
 			else
-				Q_strncpyz(baseCurrent->name, _(va("Base #%d", baseCurrent->idx + 1)) , sizeof(baseCurrent->name));
+				Q_strncpyz(base->name, _(va("Base #%d", base->idx + 1)) , sizeof(base->name));
 
-			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
+			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", base->name);
 			MN_ExecuteConfunc("set_base_to_normal");
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
+			ccs.mapAction = MA_NEWBASE;
 		} else {
 			Com_Printf("MaxBases reached\n");
 			/* select the first base in list */
-			installationCurrent = NULL;
-			baseCurrent = B_GetBaseByIDX(0);
+			base = B_GetBaseByIDX(0);
 			ccs.mapAction = MA_NONE;
 		}
 	} else {
 		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: select base with id %i\n", base->idx);
-		installationCurrent = NULL;
-		baseCurrent = base;
 		ccs.mapAction = MA_NONE;
 		MN_PushMenu("bases", NULL);
 		switch (base->baseStatus) {
@@ -2095,12 +2108,7 @@ void B_SelectBase (base_t *base)
 		}
 	}
 
-	if (baseCurrent) {
-		assert(baseCurrent);
-		Cvar_Set("mn_base_title", baseCurrent->name);
-		Cvar_SetValue("mn_numbases", ccs.numBases);
-		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
-	}
+	B_SetCurrentSelectedBase(base);
 }
 
 #undef RIGHT
@@ -2326,12 +2334,6 @@ static void B_BuildingList_f (void)
 	int baseIdx, j, k;
 	building_t *building;
 
-	/*maybe someone call this command before the buildings are parsed?? */
-	if (!baseCurrent) {
-		Com_Printf("No base selected\n");
-		return;
-	}
-
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
 		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
 		if (!base)
@@ -2341,7 +2343,7 @@ static void B_BuildingList_f (void)
 		Com_Printf("\nBase id %i: %s\n", baseIdx, base->name);
 		for (j = 0; j < ccs.numBuildings[baseIdx]; j++) {
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id,
-				B_GetNumberOfBuildingsInBaseByTemplate(baseCurrent, building->tpl), baseIdx);
+				B_GetNumberOfBuildingsInBaseByTemplate(base, building->tpl), baseIdx);
 			Com_Printf("...image: %s\n", building->image);
 			Com_Printf(".....Status:\n");
 			for (k = 0; k < BASE_SIZE * BASE_SIZE; k++) {
@@ -2525,12 +2527,11 @@ static void B_PrintCapacities_f (void)
 static void B_BuildingConstructionFinished_f (void)
 {
 	int i;
-	base_t *base;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	base = baseCurrent;
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		building_t *building = &ccs.buildings[base->idx][i];
 		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);

@@ -320,28 +320,26 @@ typedef struct salary_s {
 	float debt_interest;
 } salary_t;
 
-extern salary_t salaries[MAX_CAMPAIGNS];
-
-#define SALARY_SOLDIER_BASE salaries[curCampaign->idx].soldier_base
-#define SALARY_SOLDIER_RANKBONUS salaries[curCampaign->idx].soldier_rankbonus
-#define SALARY_WORKER_BASE salaries[curCampaign->idx].worker_base
-#define SALARY_WORKER_RANKBONUS salaries[curCampaign->idx].worker_rankbonus
-#define SALARY_SCIENTIST_BASE salaries[curCampaign->idx].scientist_base
-#define SALARY_SCIENTIST_RANKBONUS salaries[curCampaign->idx].scientist_rankbonus
-#define SALARY_PILOT_BASE salaries[curCampaign->idx].pilot_base
-#define SALARY_PILOT_RANKBONUS salaries[curCampaign->idx].pilot_rankbonus
-#define SALARY_ROBOT_BASE salaries[curCampaign->idx].robot_base
-#define SALARY_ROBOT_RANKBONUS salaries[curCampaign->idx].robot_rankbonus
-#define SALARY_AIRCRAFT_FACTOR salaries[curCampaign->idx].aircraft_factor
-#define SALARY_AIRCRAFT_DIVISOR salaries[curCampaign->idx].aircraft_divisor
-#define SALARY_BASE_UPKEEP salaries[curCampaign->idx].base_upkeep
-#define SALARY_ADMIN_INITIAL salaries[curCampaign->idx].admin_initial
-#define SALARY_ADMIN_SOLDIER salaries[curCampaign->idx].admin_soldier
-#define SALARY_ADMIN_WORKER salaries[curCampaign->idx].admin_worker
-#define SALARY_ADMIN_SCIENTIST salaries[curCampaign->idx].admin_scientist
-#define SALARY_ADMIN_PILOT salaries[curCampaign->idx].admin_pilot
-#define SALARY_ADMIN_ROBOT salaries[curCampaign->idx].admin_robot
-#define SALARY_DEBT_INTEREST salaries[curCampaign->idx].debt_interest
+#define SALARY_SOLDIER_BASE ccs.salaries[ccs.curCampaign->idx].soldier_base
+#define SALARY_SOLDIER_RANKBONUS ccs.salaries[ccs.curCampaign->idx].soldier_rankbonus
+#define SALARY_WORKER_BASE ccs.salaries[ccs.curCampaign->idx].worker_base
+#define SALARY_WORKER_RANKBONUS ccs.salaries[ccs.curCampaign->idx].worker_rankbonus
+#define SALARY_SCIENTIST_BASE ccs.salaries[ccs.curCampaign->idx].scientist_base
+#define SALARY_SCIENTIST_RANKBONUS ccs.salaries[ccs.curCampaign->idx].scientist_rankbonus
+#define SALARY_PILOT_BASE ccs.salaries[ccs.curCampaign->idx].pilot_base
+#define SALARY_PILOT_RANKBONUS ccs.salaries[ccs.curCampaign->idx].pilot_rankbonus
+#define SALARY_ROBOT_BASE ccs.salaries[ccs.curCampaign->idx].robot_base
+#define SALARY_ROBOT_RANKBONUS ccs.salaries[ccs.curCampaign->idx].robot_rankbonus
+#define SALARY_AIRCRAFT_FACTOR ccs.salaries[ccs.curCampaign->idx].aircraft_factor
+#define SALARY_AIRCRAFT_DIVISOR ccs.salaries[ccs.curCampaign->idx].aircraft_divisor
+#define SALARY_BASE_UPKEEP ccs.salaries[ccs.curCampaign->idx].base_upkeep
+#define SALARY_ADMIN_INITIAL ccs.salaries[ccs.curCampaign->idx].admin_initial
+#define SALARY_ADMIN_SOLDIER ccs.salaries[ccs.curCampaign->idx].admin_soldier
+#define SALARY_ADMIN_WORKER ccs.salaries[ccs.curCampaign->idx].admin_worker
+#define SALARY_ADMIN_SCIENTIST ccs.salaries[ccs.curCampaign->idx].admin_scientist
+#define SALARY_ADMIN_PILOT ccs.salaries[ccs.curCampaign->idx].admin_pilot
+#define SALARY_ADMIN_ROBOT ccs.salaries[ccs.curCampaign->idx].admin_robot
+#define SALARY_DEBT_INTEREST ccs.salaries[ccs.curCampaign->idx].debt_interest
 
 /** market structure */
 typedef struct market_s {
@@ -541,6 +539,19 @@ typedef struct ccs_s {
 
 	/* cache for techdef technologies */
 	technology_t *teamDefTechs[MAX_TEAMDEFS];
+
+	campaign_t *curCampaign;			/**< Current running campaign */
+	base_t *baseCurrent;				/**< Pointer to current base. */
+	installation_t *installationCurrent;
+	stats_t campaignStats;
+	missionResults_t missionresults;
+
+	campaign_t campaigns[MAX_CAMPAIGNS];
+	int numCampaigns;
+	salary_t salaries[MAX_CAMPAIGNS];
+
+	aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
+	int numAircraftTemplates;		/**< Number of aircraft templates. */
 } ccs_t;
 
 /**

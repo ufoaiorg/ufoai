@@ -44,9 +44,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 static void AIM_AircraftReturnToBase_f (void)
 {
-	if (baseCurrent && baseCurrent->aircraftCurrent) {
-		AIR_AircraftReturnToBase(baseCurrent->aircraftCurrent);
-		AIR_AircraftSelect(baseCurrent->aircraftCurrent);
+	base_t *base = ccs.baseCurrent;
+
+	if (base && base->aircraftCurrent) {
+		AIR_AircraftReturnToBase(base->aircraftCurrent);
+		AIR_AircraftSelect(base->aircraftCurrent);
 	}
 }
 
@@ -58,18 +60,20 @@ static void AIM_AircraftReturnToBase_f (void)
  */
 static void AIM_ResetAircraftCvars_f (void)
 {
-	if (!baseCurrent || baseCurrent->numAircraftInBase < 0)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base || base->numAircraftInBase < 0)
 		return;
 
 	/* Maybe we sold displayed aircraft ? */
-	if (baseCurrent->numAircraftInBase == 0) {
+	if (base->numAircraftInBase == 0) {
 		/* no more aircraft in base */
 		/** @todo Why don't we use MN_PopMenu(qfalse) here directly? */
 		Cbuf_AddText("mn_pop\n");
 		return;
 	}
 
-	AIR_AircraftSelect(baseCurrent->aircraftCurrent);
+	AIR_AircraftSelect(base->aircraftCurrent);
 }
 
 /**
@@ -80,7 +84,7 @@ static void AIM_ResetAircraftCvars_f (void)
  */
 static void AIM_SelectAircraft_f (void)
 {
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 	int i;
 
 	if (!base || base->numAircraftInBase <= 0)
@@ -107,7 +111,7 @@ static void AIM_SelectAircraft_f (void)
  */
 static void AIM_NextAircraft_f (void)
 {
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	if (!base || base->numAircraftInBase <= 0)
 		return;
@@ -127,7 +131,7 @@ static void AIM_NextAircraft_f (void)
  */
 static void AIM_PrevAircraft_f (void)
 {
-	base_t *base = baseCurrent;
+	base_t *base = ccs.baseCurrent;
 
 	if (!base || base->numAircraftInBase <= 0)
 		return;
@@ -146,22 +150,23 @@ static void AIM_PrevAircraft_f (void)
 static void AIM_AircraftStart_f (void)
 {
 	aircraft_t *aircraft;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	if (!baseCurrent->aircraftCurrent) {
+	if (!base->aircraftCurrent) {
 		Com_DPrintf(DEBUG_CLIENT, "Error - there is no current aircraft in this base\n");
 		return;
 	}
 
 	/* Aircraft cannot start without Command Centre operational. */
-	if (!B_GetBuildingStatus(baseCurrent, B_COMMAND)) {
+	if (!B_GetBuildingStatus(base, B_COMMAND)) {
 		MN_Popup(_("Notice"), _("No operational Command Centre in this base.\n\nAircraft can not start.\n"));
 		return;
 	}
 
-	aircraft = baseCurrent->aircraftCurrent;
+	aircraft = base->aircraftCurrent;
 
 	/* Aircraft cannot start without a pilot. */
 	if (!aircraft->pilot) {
@@ -271,14 +276,15 @@ static void AIR_AircraftUpdateList_f (void)
 {
 	static char buffer[1024];
 	int i;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	buffer[0] = '\0';
 
-	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
-		const aircraft_t * aircraft = &baseCurrent->aircraft[i];
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		const aircraft_t * aircraft = &base->aircraft[i];
 		Q_strcat(buffer, _(aircraft->name), sizeof(buffer));
 		Q_strcat(buffer, "\n", sizeof(buffer));
 	}

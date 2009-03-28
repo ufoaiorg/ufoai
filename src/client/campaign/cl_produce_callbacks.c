@@ -274,8 +274,8 @@ static void PR_UpdateProductionList (const base_t* base)
 			}
 		}
 	} else if (produceCategory == FILTER_AIRCRAFT) {
-		for (i = 0; i < numAircraftTemplates; i++) {
-			aircraft_t *aircraftTemplate = &aircraftTemplates[i];
+		for (i = 0; i < ccs.numAircraftTemplates; i++) {
+			aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
 			/* don't allow producing ufos */
 			if (aircraftTemplate->ufotype != UFO_MAX)
 				continue;
@@ -462,11 +462,13 @@ static void PR_ProductionListRightClick_f (void)
 {
 	int num;
 	production_queue_t *queue;
+	base_t *base = ccs.baseCurrent;
 
-	/* can be called from everywhere without a started game */
-	if (!baseCurrent)
+	/* can be called from everywhere without a base set */
+	if (!base)
 		return;
-	queue = &ccs.productions[baseCurrent->idx];
+
+	queue = &ccs.productions[base->idx];
 
 	/* not enough parameters */
 	if (Cmd_Argc() < 2) {
@@ -540,13 +542,12 @@ static void PR_ProductionListClick_f (void)
 {
 	int num;
 	production_queue_t *queue;
-	base_t* base;
+	base_t *base = ccs.baseCurrent;
 
-	/* can be called from everywhere without a started game */
-	if (!baseCurrent)
+	/* can be called from everywhere without a base set */
+	if (!base)
 		return;
 
-	base = baseCurrent;
 	queue = &ccs.productions[base->idx];
 
 	/* Break if there are not enough parameters. */
@@ -616,6 +617,7 @@ static void PR_ProductionListClick_f (void)
 static void PR_ProductionType_f (void)
 {
 	int cat;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
@@ -628,8 +630,8 @@ static void PR_ProductionType_f (void)
 	if (cat < 0 || cat >= MAX_FILTERTYPES)
 		cat = FILTER_S_PRIMARY;
 
-		/* Can be called from everywhere without a started game. */
-	if (!baseCurrent)
+	/* Can be called from everywhere without a base set */
+	if (!base)
 		return;
 
 	produceCategory = cat;
@@ -639,7 +641,7 @@ static void PR_ProductionType_f (void)
 	node1->u.text.textScroll = node2->u.text.textScroll = prodlist->u.text.textScroll = 0;
 
 	/* Update list of entries for current production tab. */
-	PR_UpdateProductionList(baseCurrent);
+	PR_UpdateProductionList(base);
 
 	/* Reset selected entry, if it was not from the queue */
 	selectedItem = NULL;
@@ -657,11 +659,11 @@ static void PR_ProductionType_f (void)
 	}
 	/* update selection index if first entry of actual list was chosen */
 	if (!selectedProduction) {
-		MN_TextNodeSelectLine(prodlist, ccs.productions[baseCurrent->idx].numItems + QUEUE_SPACERS);
+		MN_TextNodeSelectLine(prodlist, ccs.productions[base->idx].numItems + QUEUE_SPACERS);
 	}
 
 	/* Update displayed info about selected entry (if any). */
-	PR_ProductionInfo(baseCurrent);
+	PR_ProductionInfo(base);
 }
 
 /**
@@ -672,27 +674,28 @@ static void PR_ProductionList_f (void)
 {
 	char tmpbuf[MAX_VAR];
 	int numWorkshops;
+	base_t *base = ccs.baseCurrent;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(baseCurrent, B_WORKSHOP));
+	numWorkshops = max(0, B_GetNumberOfBuildingsInBaseByBuildingType(base, B_WORKSHOP));
 
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * numWorkshops);
-	Cvar_SetValue("mn_production_basecap", baseCurrent->capacities[CAP_WORKSPACE].max);
+	Cvar_SetValue("mn_production_basecap", base->capacities[CAP_WORKSPACE].max);
 
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
-	PR_UpdateProductionCap(baseCurrent);
+	PR_UpdateProductionCap(base);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		baseCurrent->capacities[CAP_WORKSPACE].cur,
-		E_CountHired(baseCurrent, EMPL_WORKER));
+		base->capacities[CAP_WORKSPACE].cur,
+		E_CountHired(base, EMPL_WORKER));
 	Cvar_Set("mn_production_workers", tmpbuf);
 
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i",
-		baseCurrent->capacities[CAP_ITEMS].cur,
-		baseCurrent->capacities[CAP_ITEMS].max);
+		base->capacities[CAP_ITEMS].cur,
+		base->capacities[CAP_ITEMS].max);
 	Cvar_Set("mn_production_storage", tmpbuf);
 
 	PR_ClearSelected();
@@ -718,15 +721,13 @@ static void PR_ProductionIncrease_f (void)
 	int amount = 1, amountTemp = 0;
 	production_queue_t *queue;
 	production_t *prod;
-	base_t* base;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (!(selectedProduction || selectedAircraft || selectedItem || selectedDisassembly))
 		return;
-
-	base = baseCurrent;
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
@@ -873,12 +874,10 @@ static void PR_ProductionIncrease_f (void)
 static void PR_ProductionStop_f (void)
 {
 	production_queue_t *queue;
-	base_t* base;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent || !selectedProduction)
+	if (!base || !selectedProduction)
 		return;
-
-	base = baseCurrent;
 
 	queue = &ccs.productions[base->idx];
 
@@ -902,15 +901,13 @@ static void PR_ProductionDecrease_f (void)
 	int amount = 1, amountTemp = 0;
 	production_queue_t *queue;
 	production_t *prod;
-	base_t* base;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() == 2)
 		amount = atoi(Cmd_Argv(1));
 
-	if (!baseCurrent || !selectedProduction)
+	if (!base || !selectedProduction)
 		return;
-
-	base = baseCurrent;
 
 	queue = &ccs.productions[base->idx];
 	prod = selectedProduction;
@@ -939,9 +936,6 @@ static void PR_ProductionChange_f (void)
 {
 	int amount;
 
-	if (!baseCurrent)
-		return;
-
 	if (!(selectedProduction || selectedAircraft || selectedItem || selectedDisassembly))
 		return;
 
@@ -964,19 +958,20 @@ static void PR_ProductionChange_f (void)
 static void PR_ProductionUp_f (void)
 {
 	production_queue_t *queue;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent || !selectedProduction)
+	if (!base || !selectedProduction)
 		return;
 
 	/* first position already */
 	if (selectedProduction->idx == 0)
 		return;
 
-	queue = &ccs.productions[baseCurrent->idx];
+	queue = &ccs.productions[base->idx];
 	PR_QueueMove(queue, selectedProduction->idx, -1);
 
 	selectedProduction = &queue->items[selectedProduction->idx - 1];
-	PR_UpdateProductionList(baseCurrent);
+	PR_UpdateProductionList(base);
 }
 
 /**
@@ -985,11 +980,12 @@ static void PR_ProductionUp_f (void)
 static void PR_ProductionDown_f (void)
 {
 	production_queue_t *queue;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent || !selectedProduction)
+	if (!base || !selectedProduction)
 		return;
 
-	queue = &ccs.productions[baseCurrent->idx];
+	queue = &ccs.productions[base->idx];
 
 	if (selectedProduction->idx >= queue->numItems - 1)
 		return;
@@ -997,7 +993,7 @@ static void PR_ProductionDown_f (void)
 	PR_QueueMove(queue, selectedProduction->idx, 1);
 
 	selectedProduction = &queue->items[selectedProduction->idx + 1];
-	PR_UpdateProductionList(baseCurrent);
+	PR_UpdateProductionList(base);
 }
 
 /**

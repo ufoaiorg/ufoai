@@ -37,8 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_installation.h"
 #include "cp_installation_callbacks.h"
 
-installation_t *installationCurrent;
-
 installationType_t INS_GetType (const installation_t *installation)
 {
 	if (installation->installationTemplate->maxBatteries > 0)
@@ -238,7 +236,7 @@ void INS_DestroyInstallation (installation_t *installation)
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
 
-	installationCurrent = NULL;
+	ccs.installationCurrent = NULL;
 }
 
 /**

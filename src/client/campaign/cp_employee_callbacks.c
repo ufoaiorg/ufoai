@@ -57,16 +57,17 @@ int employeesInCurrentList;
 static void E_UpdateGUICount_f (void)
 {
 	int max;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	max = baseCurrent->capacities[CAP_EMPLOYEES].max;
-	Cvar_SetValue("mn_hiresoldiers", E_CountHired(baseCurrent, EMPL_SOLDIER));
-	Cvar_SetValue("mn_hireworkers", E_CountHired(baseCurrent, EMPL_WORKER));
-	Cvar_SetValue("mn_hirescientists", E_CountHired(baseCurrent, EMPL_SCIENTIST));
-	Cvar_SetValue("mn_hirepilots", E_CountHired(baseCurrent, EMPL_PILOT));
-	Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(baseCurrent), max));
+	max = base->capacities[CAP_EMPLOYEES].max;
+	Cvar_SetValue("mn_hiresoldiers", E_CountHired(base, EMPL_SOLDIER));
+	Cvar_SetValue("mn_hireworkers", E_CountHired(base, EMPL_WORKER));
+	Cvar_SetValue("mn_hirescientists", E_CountHired(base, EMPL_SCIENTIST));
+	Cvar_SetValue("mn_hirepilots", E_CountHired(base, EMPL_PILOT));
+	Cvar_Set("mn_hirepeople", va("%d/%d", E_CountAllHired(base), max));
 }
 
 /**
@@ -97,15 +98,16 @@ static void E_EmployeeListScroll_f (void)
 {
 	int i, j, cnt = 0;
 	employee_t* employee;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	j = employeeListNode->u.text.textScroll;
 
 	for (i = 0, employee = &(ccs.employees[employeeCategory][0]); i < ccs.numEmployees[employeeCategory]; i++, employee++) {
 		/* don't show employees of other bases */
-		if (employee->baseHired != baseCurrent && employee->hired)
+		if (employee->baseHired != base && employee->hired)
 			continue;
 
 		/* drop the first j entries */
@@ -115,7 +117,7 @@ static void E_EmployeeListScroll_f (void)
 		}
 		/* change the buttons */
 		if (employee->hired) {
-			if (employee->baseHired == baseCurrent)
+			if (employee->baseHired == base)
 				MN_ExecuteConfunc("employeeadd %i", cnt);
 			else
 				MN_ExecuteConfunc("employeedisable %i", cnt);
@@ -147,9 +149,9 @@ static void E_EmployeeList_f (void)
 	employee_t* employee;
 	int hiredEmployeeIdx;
 	linkedList_t *employeeListName;
+	base_t *base = ccs.baseCurrent;
 
-	/* can be called from everywhere without a started game */
-	if (!baseCurrent || !GAME_CP_IsRunning())
+	if (!base)
 		return;
 
 	if (Cmd_Argc() < 2) {
@@ -189,7 +191,7 @@ static void E_EmployeeList_f (void)
 	/** @todo Use CL_GetTeamList and reduce code duplication */
 	for (j = 0, employee = ccs.employees[employeeCategory]; j < ccs.numEmployees[employeeCategory]; j++, employee++) {
 		/* don't show employees of other bases */
-		if (employee->baseHired != baseCurrent && employee->hired)
+		if (employee->baseHired != base && employee->hired)
 			continue;
 
 		LIST_AddPointer(&employeeListName, employee->chr.name);
@@ -200,7 +202,7 @@ static void E_EmployeeList_f (void)
 		if (employeesInCurrentList >= employeeListNode->u.text.textScroll
 		 && employeesInCurrentList < employeeListNode->u.text.textScroll + maxEmployeesPerPage) {
 			if (employee->hired) {
-				if (employee->baseHired == baseCurrent) {
+				if (employee->baseHired == base) {
 					if (employee->transfer)
 						Cvar_ForceSet(va("mn_name%i", employeesInCurrentList), va(_("%s [Transferred]"), employee->chr.name));
 					else
@@ -253,8 +255,9 @@ static void E_EmployeeList_f (void)
  */
 static void E_ChangeName_f (void)
 {
-	/* Maybe called without base initialized or active. */
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
 
 	if (selectedEmployee)
@@ -315,9 +318,6 @@ static void E_EmployeeDelete_f (void)
 	const int scroll = employeeListNode->u.text.textScroll;
 	employee_t* employee;
 
-	if (!baseCurrent)
-		return;
-
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
@@ -355,8 +355,9 @@ static void E_EmployeeHire_f (void)
 	int num, button;
 	const char *arg;
 	employee_t* employee;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	/* Check syntax. */
@@ -392,7 +393,7 @@ static void E_EmployeeHire_f (void)
 		} else
 			Cbuf_AddText(va("employeedel %i\n", button));
 	} else {
-		if (!E_HireEmployee(baseCurrent, employee)) {
+		if (!E_HireEmployee(base, employee)) {
 			Com_DPrintf(DEBUG_CLIENT, "Couldn't hire employee\n");
 			MN_DisplayNotice(_("Could not hire employee"), 2000);
 		} else
@@ -408,15 +409,16 @@ static void E_EmployeeHire_f (void)
 static void E_EmployeeSelect_f (void)
 {
 	int num;
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
+		return;
 
 	/* Check syntax. */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
-
-	if (!baseCurrent)
-		return;
 
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= employeesInCurrentList)

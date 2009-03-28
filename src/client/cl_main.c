@@ -54,7 +54,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "menu/m_font.h"
 #include "menu/m_nodes.h"
 #include "menu/m_parse.h"
-#include "campaign/cp_parse.h"
 #include "multiplayer/mp_callbacks.h"
 #include "multiplayer/mp_serverlist.h"
 #include "multiplayer/mp_team.h"
@@ -691,8 +690,6 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		CL_ParseParticle(name, text);
 	else if (!strcmp(type, "sequence"))
 		CL_ParseSequence(name, text);
-	else if (!strcmp(type, "campaign"))
-		CL_ParseCampaign(name, text);
 	else if (!strcmp(type, "music"))
 		CL_ParseMusic(name, text);
 	else if (!strcmp(type, "tips"))

@@ -149,8 +149,8 @@ static void UR_DialogInit_f (void)
 
 	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraftTemplates; i++) {
-		ufocraft = &aircraftTemplates[i];
+	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+		ufocraft = &ccs.aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == UFOtype) {
@@ -165,9 +165,9 @@ static void UR_DialogInit_f (void)
 	}
 
 	/* Put relevant info into missionresults array. */
-	missionresults.recovery = qtrue;
-	missionresults.crashsite = qfalse;
-	missionresults.ufotype = ufocraft->ufotype;
+	ccs.missionresults.recovery = qtrue;
+	ccs.missionresults.crashsite = qfalse;
+	ccs.missionresults.ufotype = ufocraft->ufotype;
 
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
@@ -216,7 +216,7 @@ static void UR_DialogInitSell (aircraft_t *ufocraft)
 static void UR_DialogInitStore_f (void)
 {
 	int i,j, replaceTemplates = 0;
-	aircraft_t *ufocraft, *tempcraft;
+	aircraft_t *ufocraft;
 	static char recoveryBaseSelectPopup[MAX_SMALLMENUTEXTLEN];
 	qboolean ufofound = qfalse;
 	linkedList_t *validReplaceTemplateList = NULL, *replaceObjDefList = NULL;
@@ -230,8 +230,8 @@ static void UR_DialogInitStore_f (void)
 		return;
 
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraftTemplates; i++) {
-		ufocraft = &aircraftTemplates[i];
+	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+		ufocraft = &ccs.aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == ufoRecovery.ufoType) {
@@ -247,9 +247,8 @@ static void UR_DialogInitStore_f (void)
 	}
 
 	/* find valid replace templates */
-	for (i = 0; i < numAircraftTemplates; i++)
-	{
-		tempcraft = &aircraftTemplates[i];
+	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+		aircraft_t *tempcraft = &ccs.aircraftTemplates[i];
 		if (tempcraft == ufocraft)
 			continue;
 		if (tempcraft->type != AIRCRAFT_UFO)
@@ -443,8 +442,8 @@ static void UR_DialogInitSell_f (void)
 
 	ufocraft = NULL;
 	/* Find ufo sample of given ufotype. */
-	for (i = 0; i < numAircraftTemplates; i++) {
-		ufocraft = &aircraftTemplates[i];
+	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+		ufocraft = &ccs.aircraftTemplates[i];
 		if (ufocraft->type != AIRCRAFT_UFO)
 			continue;
 		if (ufocraft->ufotype == ufoRecovery.ufoType)

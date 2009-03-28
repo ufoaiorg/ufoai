@@ -64,16 +64,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_market_callbacks.h"
 
 struct memPool_s *cl_campaignPool;		/**< reset on every game restart */
-/* public vars */
-campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;
-base_t *baseCurrent;				/**< Pointer to current base. */
-stats_t campaignStats;
-missionResults_t missionresults;
-
-campaign_t campaigns[MAX_CAMPAIGNS];
-int numCampaigns;
-salary_t salaries[MAX_CAMPAIGNS];
 cvar_t *cl_campaign;
 cvar_t *cl_start_employees;
 
@@ -361,7 +352,7 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 	/* fraction of nation that can be below min happiness before the game is lost */
 	const float nationBelowLimitPercentage = 0.5f;
 
-	if (!endCampaign && ccs.credits < -curCampaign->negativeCreditsUntilLost) {
+	if (!endCampaign && ccs.credits < -ccs.curCampaign->negativeCreditsUntilLost) {
 		MN_RegisterText(TEXT_STANDARD, _("You've gone too far into debt."));
 		endCampaign = qtrue;
 	}
@@ -369,13 +360,13 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 	/** @todo Should we make the campaign lost when a player loses all his bases?
 	 * until he has set up a base again, the aliens might have invaded the whole
 	 * world ;) - i mean, removing the credits check here. */
-	if (!ccs.numBases && ccs.credits < curCampaign->basecost - curCampaign->negativeCreditsUntilLost) {
+	if (!ccs.numBases && ccs.credits < ccs.curCampaign->basecost - ccs.curCampaign->negativeCreditsUntilLost) {
 		MN_RegisterText(TEXT_STANDARD, _("You've lost your bases and don't have enough money to build new ones."));
 		endCampaign = qtrue;
 	}
 
 	if (!endCampaign) {
-		if (CP_GetAverageXVIRate() > curCampaign->maxAllowedXVIRateUntilLost) {
+		if (CP_GetAverageXVIRate() > ccs.curCampaign->maxAllowedXVIRateUntilLost) {
 			MN_RegisterText(TEXT_STANDARD, _("You have failed in your charter to protect Earth."
 				" Our home and our people have fallen to the alien infection. Only a handful"
 				" of people on Earth remain human, and the remaining few no longer have a"
@@ -388,7 +379,7 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 			int j, nationBelowLimit = 0;
 			for (j = 0; j < ccs.numNations; j++) {
 				const nation_t *nation = &ccs.nations[j];
-				if (nation->stats[0].happiness < curCampaign->minhappiness) {
+				if (nation->stats[0].happiness < ccs.curCampaign->minhappiness) {
 					nationBelowLimit++;
 				}
 			}
@@ -436,14 +427,14 @@ void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKil
 	const float performance = civilianRatio * 0.5 + alienRatio * 0.5;
 
 	if (lost) {
-		campaignStats.missionsLost++;
+		ccs.campaignStats.missionsLost++;
 		ccs.civiliansKilled += civiliansKilled;
 	} else
-		campaignStats.missionsWon++;
+		ccs.campaignStats.missionsWon++;
 
 	for (i = 0; i < ccs.numNations; i++) {
 		nation_t *nation = &ccs.nations[i];
-		const float difficultyModifier = (float)curCampaign->difficulty * 0.01f;
+		const float difficultyModifier = (float)ccs.curCampaign->difficulty * 0.01f;
 		float delta_happiness = 0.0f;
 
 		if (lost) {
@@ -634,18 +625,17 @@ void CL_DateConvertLong (const date_t * date, dateLong_t * dateLong)
 void CP_InitMarket (qboolean load)
 {
 	int i;
-
-	assert(curCampaign);
+	campaign_t *campaign = ccs.curCampaign;
 
 	/* find the relevant markets */
-	curCampaign->marketDef = INV_GetEquipmentDefinitionByID(curCampaign->market);
-	if (!curCampaign->marketDef)
+	campaign->marketDef = INV_GetEquipmentDefinitionByID(campaign->market);
+	if (!campaign->marketDef)
 		Sys_Error("CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
-			curCampaign->id, curCampaign->market);
-	curCampaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(curCampaign->asymptoticMarket);
-	if (!curCampaign->asymptoticMarketDef)
+				campaign->id, campaign->market);
+	campaign->asymptoticMarketDef = INV_GetEquipmentDefinitionByID(campaign->asymptoticMarket);
+	if (!ccs.curCampaign->asymptoticMarketDef)
 		Sys_Error("CP_InitMarket: Could not find market equipment '%s' as given in the campaign definition of '%s'\n",
-			curCampaign->id, curCampaign->asymptoticMarket);
+				campaign->id, campaign->asymptoticMarket);
 
 	/* the savegame loading process will get the following values from savefile */
 	if (load)
@@ -657,14 +647,14 @@ void CP_InitMarket (qboolean load)
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
 		}
 
-		if (!curCampaign->marketDef->num[i])
+		if (!ccs.curCampaign->marketDef->num[i])
 			continue;
 
-		if (!RS_IsResearched_ptr(csi.ods[i].tech) && curCampaign->marketDef->num[i] > 0)
-			Com_Printf("CP_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, curCampaign->id);
+		if (!RS_IsResearched_ptr(csi.ods[i].tech) && campaign->marketDef->num[i] > 0)
+			Sys_Error("CP_InitMarket: Could not add item %s to the market - not marked as researched in campaign %s\n", csi.ods[i].id, campaign->id);
 		else
 			/* the other relevant values were already set above */
-			ccs.eMarket.num[i] = curCampaign->marketDef->num[i];
+			ccs.eMarket.num[i] = campaign->marketDef->num[i];
 	}
 }
 
@@ -678,9 +668,10 @@ void CP_InitMarket (qboolean load)
 static void CL_CampaignRunMarket (void)
 {
 	int i;
+	campaign_t *campaign = ccs.curCampaign;
 
-	assert(curCampaign->marketDef);
-	assert(curCampaign->asymptoticMarketDef);
+	assert(campaign->marketDef);
+	assert(campaign->asymptoticMarketDef);
 
 	for (i = 0; i < csi.numODs; i++) {
 		const technology_t *tech = csi.ods[i].tech;
@@ -692,11 +683,11 @@ static void CL_CampaignRunMarket (void)
 		if (!tech)
 			Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
 
-		if (RS_IsResearched_ptr(tech) && (curCampaign->marketDef->num[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
+		if (RS_IsResearched_ptr(tech) && (campaign->marketDef->num[i] != 0 || ccs.date.day > tech->researchedDate.day + RESEARCH_LIMIT_DELAY)) {
 			/* if items are researched for more than RESEARCH_LIMIT_DELAY or was on the initial market,
 			 * there number tend to the value defined in equipment.ufo.
 			 * This value is the asymptotic value if it is not 0, or initial value else */
-			asymptoticNumber = curCampaign->asymptoticMarketDef->num[i] ? curCampaign->asymptoticMarketDef->num[i] : curCampaign->marketDef->num[i];
+			asymptoticNumber = campaign->asymptoticMarketDef->num[i] ? campaign->asymptoticMarketDef->num[i] : campaign->marketDef->num[i];
 		} else {
 			/* items that have just been researched don't appear on market, but they can disappear */
 			asymptoticNumber = 0;
@@ -880,13 +871,13 @@ static void CL_StatsUpdate_f (void)
 
 	/* missions */
 	MN_RegisterText(TEXT_STATS_MISSION, pos);
-	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), campaignStats.missionsWon, campaignStats.missionsLost);
+	Com_sprintf(pos, MAX_STATS_BUFFER, _("Won:\t%i\nLost:\t%i\n\n"), ccs.campaignStats.missionsWon, ccs.campaignStats.missionsLost);
 
 	/* bases */
 	pos += (strlen(pos) + 1);
 	MN_RegisterText(TEXT_STATS_BASES, pos);
 	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
-		campaignStats.basesBuild, ccs.numBases, campaignStats.basesAttacked),
+			ccs.campaignStats.basesBuild, ccs.numBases, ccs.campaignStats.basesAttacked),
 
 	/* installations */
 	pos += (strlen(pos) + 1);
@@ -989,14 +980,14 @@ static void CL_StatsUpdate_f (void)
 	/* campaign */
 	pos += (strlen(pos) + 1);
 	MN_RegisterText(TEXT_GENERIC, pos);
-	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), curCampaign->negativeCreditsUntilLost),
+	Q_strcat(pos, va(_("Max. allowed debts: %ic\n"), ccs.curCampaign->negativeCreditsUntilLost),
 		(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 
 	/* only show the xvi spread data when it's available */
 	if (ccs.XVISpreadActivated) {
 		Q_strcat(pos, va(_("Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 			"Current eXtraterrestial Viral Infection: %i%%"),
-			curCampaign->maxAllowedXVIRateUntilLost,
+			ccs.curCampaign->maxAllowedXVIRateUntilLost,
 			CP_GetAverageXVIRate()),
 			(ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
@@ -1252,7 +1243,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 	campaign = mxml_AddNode(parent, "campaign");
 
-	mxml_AddString(campaign, "name", curCampaign->id);
+	mxml_AddString(campaign, "name", ccs.curCampaign->id);
 	mxml_AddShort(campaign, "fund", ccs.fund);
 	mxml_AddShort(campaign, "nextuniquecharacternumber", cl.nextUniqueCharacterNumber);
 
@@ -1373,20 +1364,20 @@ qboolean STATS_SaveXML (mxml_node_t *parent)
 
 	stats = mxml_AddNode(parent, "stats");
 
-	mxml_AddInt(stats, "missionswon", campaignStats.missionsWon);
-	mxml_AddInt(stats, "missionslost", campaignStats.missionsLost);
-	mxml_AddInt(stats, "basesbuild", campaignStats.basesBuild);
-	mxml_AddInt(stats, "basesattacked", campaignStats.basesAttacked);
-	mxml_AddInt(stats, "interceptions", campaignStats.interceptions);
-	mxml_AddInt(stats, "soldierslost", campaignStats.soldiersLost);
-	mxml_AddInt(stats, "soldiersnew", campaignStats.soldiersNew);
-	mxml_AddInt(stats, "killedaliens", campaignStats.killedAliens);
-	mxml_AddInt(stats, "rescuedcivilians", campaignStats.rescuedCivilians);
-	mxml_AddInt(stats, "researchedtechnologies", campaignStats.researchedTechnologies);
-	mxml_AddInt(stats, "moneyinterceptions", campaignStats.moneyInterceptions);
-	mxml_AddInt(stats, "moneybases", campaignStats.moneyBases);
-	mxml_AddInt(stats, "moneyresearch", campaignStats.moneyResearch);
-	mxml_AddInt(stats, "moneyweapons", campaignStats.moneyWeapons);
+	mxml_AddInt(stats, "missionswon", ccs.campaignStats.missionsWon);
+	mxml_AddInt(stats, "missionslost", ccs.campaignStats.missionsLost);
+	mxml_AddInt(stats, "basesbuild", ccs.campaignStats.basesBuild);
+	mxml_AddInt(stats, "basesattacked", ccs.campaignStats.basesAttacked);
+	mxml_AddInt(stats, "interceptions", ccs.campaignStats.interceptions);
+	mxml_AddInt(stats, "soldierslost", ccs.campaignStats.soldiersLost);
+	mxml_AddInt(stats, "soldiersnew", ccs.campaignStats.soldiersNew);
+	mxml_AddInt(stats, "killedaliens", ccs.campaignStats.killedAliens);
+	mxml_AddInt(stats, "rescuedcivilians", ccs.campaignStats.rescuedCivilians);
+	mxml_AddInt(stats, "researchedtechnologies", ccs.campaignStats.researchedTechnologies);
+	mxml_AddInt(stats, "moneyinterceptions", ccs.campaignStats.moneyInterceptions);
+	mxml_AddInt(stats, "moneybases", ccs.campaignStats.moneyBases);
+	mxml_AddInt(stats, "moneyresearch", ccs.campaignStats.moneyResearch);
+	mxml_AddInt(stats, "moneyweapons", ccs.campaignStats.moneyWeapons);
 	return qtrue;
 }
 
@@ -1399,20 +1390,20 @@ qboolean STATS_LoadXML (mxml_node_t *tree)
 		Com_Printf("Did not find stats entry in xml!\n");
 		return qfalse;
 	}
-	campaignStats.missionsWon = mxml_GetInt(stats, "missionswon", 0);
-	campaignStats.missionsLost = mxml_GetInt(stats, "missionslost", 0);
-	campaignStats.basesBuild = mxml_GetInt(stats, "basesbuild", 0);
-	campaignStats.basesAttacked = mxml_GetInt(stats, "basesattacked", 0);
-	campaignStats.interceptions = mxml_GetInt(stats, "interceptions", 0);
-	campaignStats.soldiersLost = mxml_GetInt(stats, "soldierslost", 0);
-	campaignStats.soldiersNew = mxml_GetInt(stats, "soldiersnew", 0);
-	campaignStats.killedAliens = mxml_GetInt(stats, "killedaliens", 0);
-	campaignStats.rescuedCivilians = mxml_GetInt(stats, "rescuedcivilians", 0);
-	campaignStats.researchedTechnologies = mxml_GetInt(stats, "researchedtechnologies", 0);
-	campaignStats.moneyInterceptions = mxml_GetInt(stats, "moneyinterceptions", 0);
-	campaignStats.moneyBases = mxml_GetInt(stats, "moneybases", 0);
-	campaignStats.moneyResearch = mxml_GetInt(stats, "moneyresearch", 0);
-	campaignStats.moneyWeapons = mxml_GetInt(stats, "moneyweapons", 0);
+	ccs.campaignStats.missionsWon = mxml_GetInt(stats, "missionswon", 0);
+	ccs.campaignStats.missionsLost = mxml_GetInt(stats, "missionslost", 0);
+	ccs.campaignStats.basesBuild = mxml_GetInt(stats, "basesbuild", 0);
+	ccs.campaignStats.basesAttacked = mxml_GetInt(stats, "basesattacked", 0);
+	ccs.campaignStats.interceptions = mxml_GetInt(stats, "interceptions", 0);
+	ccs.campaignStats.soldiersLost = mxml_GetInt(stats, "soldierslost", 0);
+	ccs.campaignStats.soldiersNew = mxml_GetInt(stats, "soldiersnew", 0);
+	ccs.campaignStats.killedAliens = mxml_GetInt(stats, "killedaliens", 0);
+	ccs.campaignStats.rescuedCivilians = mxml_GetInt(stats, "rescuedcivilians", 0);
+	ccs.campaignStats.researchedTechnologies = mxml_GetInt(stats, "researchedtechnologies", 0);
+	ccs.campaignStats.moneyInterceptions = mxml_GetInt(stats, "moneyinterceptions", 0);
+	ccs.campaignStats.moneyBases = mxml_GetInt(stats, "moneybases", 0);
+	ccs.campaignStats.moneyResearch = mxml_GetInt(stats, "moneyresearch", 0);
+	ccs.campaignStats.moneyWeapons = mxml_GetInt(stats, "moneyweapons", 0);
 	/* freeing the memory below this node */
 	mxmlDelete(stats);
 	return qtrue;
@@ -1447,7 +1438,7 @@ void CP_StartSelectedMission (void)
 	mis = ccs.selectedMission;
 
 	/* Before we start, we should clear the missionresults array. */
-	memset(&missionresults, 0, sizeof(missionresults));
+	memset(&ccs.missionresults, 0, sizeof(ccs.missionresults));
 
 	/* Various sanity checks. */
 	if (!mis->active) {
@@ -1494,16 +1485,16 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 		case INTERESTCATEGORY_TERROR_ATTACK:
 			/* very hard to win this */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		case INTERESTCATEGORY_XVI:
 			/* not that hard to win this, they want to spread xvi - no real terror mission */
 			/** @todo change the formular here to reflect the above comment */
-			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		default:
 			/** @todo change the formular here to reflect the above comments */
-			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * aircraft->teamSize - ccs.battleParameters.aliens);
 			break;
 		}
 		Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i -- probability to win: %.02f\n", ccs.battleParameters.aliens, aircraft->teamSize, winProbability);
@@ -1557,7 +1548,7 @@ static float CP_GetWinProbabilty (const mission_t *mis, const base_t *base, cons
 				listPos = listPos->next;
 			}
 
-			winProbability = exp((0.5 - .15 * curCampaign->difficulty) * numSoldiers - ccs.battleParameters.aliens);
+			winProbability = exp((0.5 - .15 * ccs.curCampaign->difficulty) * numSoldiers - ccs.battleParameters.aliens);
 			winProbability += increaseWinProbability;
 
 			Com_DPrintf(DEBUG_CLIENT, "Aliens: %i - Soldiers: %i - UGVs: %i -- probability to win: %.02f\n",
@@ -1666,7 +1657,7 @@ void CL_GameAutoGo (mission_t *mis)
 	CP_ExecuteMissionTrigger(ccs.selectedMission, won);
 
 	/* if a UFO has been recovered, send it to a base */
-	if (won && missionresults.recovery) {
+	if (won && ccs.missionresults.recovery) {
 		int counts[MAX_MISSIONRESULTCOUNT];
 		memset(counts,0,sizeof(counts));
 		/** @todo set other counts, use the counts above */
@@ -1731,7 +1722,7 @@ void CP_InitMissionResults (int resultCounts[MAX_MISSIONRESULTCOUNT], qboolean w
 	Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), resultCounts[MRC_ITEM_GATHEREDTYPES],
 			resultCounts[MRC_ITEM_GATHEREDAMOUNT]), sizeof(resultText));
 
-	if (won && missionresults.recovery)
+	if (won && ccs.missionresults.recovery)
 		Q_strcat(resultText, UFO_MissionResultToString(), sizeof(resultText));
 
 }
@@ -1908,14 +1899,15 @@ static void CL_DebugChangeCharacterStats_f (void)
 {
 	int i, j;
 	character_t *chr;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
 		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
 
-		if (!employee->hired && employee->baseHired != baseCurrent)
+		if (!employee->hired && employee->baseHired != base)
 			continue;
 
 		chr = &(employee->chr);
@@ -1924,8 +1916,8 @@ static void CL_DebugChangeCharacterStats_f (void)
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			chr->score.kills[j]++;
 	}
-	if (baseCurrent->aircraftCurrent)
-		CL_UpdateCharacterStats(baseCurrent, 1, baseCurrent->aircraftCurrent);
+	if (base->aircraftCurrent)
+		CL_UpdateCharacterStats(base, 1, base->aircraftCurrent);
 }
 
 /**
@@ -2058,7 +2050,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 {
 	assert(campaign);
 
-	curCampaign = campaign;
+	ccs.curCampaign = campaign;
 
 	/** @todo are all these needed on every load?
 	 * what about RS_InitTree? how often must this be done? */
@@ -2082,7 +2074,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
 	/* initialise date */
-	ccs.date = curCampaign->date;
+	ccs.date = campaign->date;
 
 	MAP_Init();
 
@@ -2103,14 +2095,14 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	ccs.center[0] = ccs.center[1] = 0.5;
 	ccs.zoom = 1.0;
 
-	CL_UpdateCredits(curCampaign->credits);
+	CL_UpdateCredits(campaign->credits);
 
 	/* Initialize alien interest */
 	CL_ResetAlienInterest();
 
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
-	R_InitializeXVIOverlay(curCampaign->map, NULL, 0, 0);
+	R_InitializeXVIOverlay(campaign->map, NULL, 0, 0);
 
 	/* Reset alien bases */
 	AB_ResetAlienBases();
@@ -2161,11 +2153,11 @@ campaign_t* CL_GetCampaign (const char* name)
 	campaign_t* campaign;
 	int i;
 
-	for (i = 0, campaign = campaigns; i < numCampaigns; i++, campaign++)
+	for (i = 0, campaign = ccs.campaigns; i < ccs.numCampaigns; i++, campaign++)
 		if (!strcmp(name, campaign->id))
 			break;
 
-	if (i == numCampaigns) {
+	if (i == ccs.numCampaigns) {
 		Com_Printf("CL_GetCampaign: Campaign \"%s\" doesn't exist.\n", name);
 		return NULL;
 	}
@@ -2182,10 +2174,6 @@ void CL_ResetSinglePlayerData (void)
 	int i;
 
 	memset(&ccs, 0, sizeof(ccs));
-	memset(&campaignStats, 0, sizeof(campaignStats));
-
-	curCampaign = NULL;
-	baseCurrent = NULL;
 
 	LIST_Delete(&ccs.missions);
 	cp_messageStack = NULL;
@@ -2214,15 +2202,17 @@ void CL_ResetSinglePlayerData (void)
  */
 static void CP_CampaignStats_f (void)
 {
+	campaign_t *campaign = ccs.curCampaign;
+
 	if (!GAME_CP_IsRunning()) {
 		Com_Printf("No campaign active\n");
 		return;
 	}
 
-	Com_Printf("Campaign id: %s\n", curCampaign->id);
-	Com_Printf("..research list: %s\n", curCampaign->researched);
-	Com_Printf("..equipment: %s\n", curCampaign->equipment);
-	Com_Printf("..team: %i\n", curCampaign->team);
+	Com_Printf("Campaign id: %s\n", campaign->id);
+	Com_Printf("..research list: %s\n", campaign->researched);
+	Com_Printf("..equipment: %s\n", campaign->equipment);
+	Com_Printf("..team: %i\n", campaign->team);
 
 	Com_Printf("..salaries:\n");
 	Com_Printf("...soldier_base: %i\n", SALARY_SOLDIER_BASE);

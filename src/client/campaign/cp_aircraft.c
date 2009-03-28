@@ -44,16 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_missions.h"
 
-
-aircraft_t aircraftTemplates[MAX_AIRCRAFT];		/**< Available aircraft types/templates/samples. */
-/**
- * Number of aircraft templates.
- * @todo Should be reset to 0 each time scripts are read anew; also
- * aircraftTemplates memory should be freed at that time,
- * or old memory used for new records
- */
-int numAircraftTemplates = 0;
-
 /**
  * @brief Updates hangar capacities for one aircraft in given base.
  * @param[in] aircraftTemplate Aircraft template.
@@ -411,9 +401,9 @@ void AII_CollectingItems (aircraft_t *aircraft, int won)
 		}
 	}
 	/* Fill the missionresults array. */
-	missionresults.itemtypes = aircraft->itemtypes;
+	ccs.missionresults.itemtypes = aircraft->itemtypes;
 	for (i = 0; i < aircraft->itemtypes; i++)
-		missionresults.itemamount += cargo[i].amount;
+		ccs.missionresults.itemamount += cargo[i].amount;
 
 #ifdef DEBUG
 	/* Print all of collected items. */
@@ -688,12 +678,12 @@ aircraft_t *AIR_GetAircraft (const char *name)
 	int i;
 
 	assert(name);
-	for (i = 0; i < numAircraftTemplates; i++) {
-		if (!strncmp(aircraftTemplates[i].id, name, MAX_VAR))
-			return &aircraftTemplates[i];
+	for (i = 0; i < ccs.numAircraftTemplates; i++) {
+		if (!strcmp(ccs.aircraftTemplates[i].id, name))
+			return &ccs.aircraftTemplates[i];
 	}
 
-	Com_Printf("Aircraft '%s' not found (%i).\n", name, numAircraftTemplates);
+	Com_Printf("Aircraft '%s' not found (%i).\n", name, ccs.numAircraftTemplates);
 	return NULL;
 }
 
@@ -1425,29 +1415,29 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 	technology_t *tech;
 	aircraftItemType_t itemType = MAX_ACITEMS;
 
-	if (numAircraftTemplates >= MAX_AIRCRAFT) {
+	if (ccs.numAircraftTemplates >= MAX_AIRCRAFT) {
 		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
 	aircraftTemplate = NULL;
 	if (!assignAircraftItems) {
-		for (i = 0; i < numAircraftTemplates; i++) {
-			if (!strcmp(aircraftTemplates[i].id, name)) {
+		for (i = 0; i < ccs.numAircraftTemplates; i++) {
+			if (!strcmp(ccs.aircraftTemplates[i].id, name)) {
 				Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
 				return;
 			}
 		}
 
 		/* initialize the menu */
-		aircraftTemplate = &aircraftTemplates[numAircraftTemplates];
+		aircraftTemplate = &ccs.aircraftTemplates[ccs.numAircraftTemplates];
 		memset(aircraftTemplate, 0, sizeof(*aircraftTemplate));
 
 		Com_DPrintf(DEBUG_CLIENT, "...found aircraft %s\n", name);
 		/** @todo is this needed here? I think not, because the index of available aircraft
 		 * are set when we create these aircraft from the samples - but i might be wrong here
 		 * if i'm not wrong, the ccs.numAircraft++ from a few lines below can go into trashbin, too */
-		aircraftTemplate->idx = numAircraftTemplates;
+		aircraftTemplate->idx = ccs.numAircraftTemplates;
 		aircraftTemplate->tpl = aircraftTemplate;
 		aircraftTemplate->id = Mem_PoolStrDup(name, cl_genericPool, 0);
 		aircraftTemplate->status = AIR_HOME;
@@ -1457,26 +1447,19 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 		/* Initialise UFO sensored */
 		RADAR_InitialiseUFOs(&aircraftTemplate->radar);
 
-		numAircraftTemplates++;
+		ccs.numAircraftTemplates++;
 	} else {
-		for (i = 0; i < numAircraftTemplates; i++) {
-			if (!strcmp(aircraftTemplates[i].id, name)) {
-				aircraftTemplate = &aircraftTemplates[i];
-				/* initialize slot numbers (useful when restarting a single campaign) */
-				aircraftTemplate->maxWeapons = 0;
-				aircraftTemplate->maxElectronics = 0;
+		aircraftTemplate = AIR_GetAircraft(name);
+		if (aircraftTemplate) {
+			/* initialize slot numbers (useful when restarting a single campaign) */
+			aircraftTemplate->maxWeapons = 0;
+			aircraftTemplate->maxElectronics = 0;
 
-				if (aircraftTemplate->type == AIRCRAFT_UFO)
-					aircraftTemplate->ufotype = UFO_ShortNameToID(aircraftTemplate->id);
-
-				break;
-			}
-		}
-		if (i == numAircraftTemplates) {
-			for (i = 0; i < numAircraftTemplates; i++) {
-				Com_Printf("aircraft id: %s\n", aircraftTemplates[i].id);
-			}
-			Sys_Error("AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n", name, numAircraftTemplates);
+			if (aircraftTemplate->type == AIRCRAFT_UFO)
+				aircraftTemplate->ufotype = UFO_ShortNameToID(aircraftTemplate->id);
+		} else {
+			Sys_Error("AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n",
+					name, ccs.numAircraftTemplates);
 		}
 	}
 
@@ -1723,18 +1706,18 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
  */
 void AIR_ListAircraftSamples_f (void)
 {
-	int i = 0, max = numAircraftTemplates;
+	int i = 0, max = ccs.numAircraftTemplates;
 	const value_t *vp;
 
 	Com_Printf("%i aircraft\n", max);
 	if (Cmd_Argc() == 2) {
 		max = atoi(Cmd_Argv(1));
-		if (max >= numAircraftTemplates || max < 0)
+		if (max >= ccs.numAircraftTemplates || max < 0)
 			return;
 		i = max - 1;
 	}
 	for (; i < max; i++) {
-		aircraft_t *aircraftTemplate = &aircraftTemplates[i];
+		aircraft_t *aircraftTemplate = &ccs.aircraftTemplates[i];
 		Com_Printf("aircraft: '%s'\n", aircraftTemplate->id);
 		for (vp = aircraft_vals; vp->string; vp++) {
 			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(aircraftTemplate, vp->type, vp->ofs));
@@ -1936,7 +1919,7 @@ static float AIR_GetDestinationFindRoot (const float c, const float B, const flo
 
 	if (fBegin * fEnd > 0) {
 		if (fdBegin * fdEnd < 0) {
-			/* the sign of derivative changed: we could have a root somewhere 
+			/* the sign of derivative changed: we could have a root somewhere
 			 * between begin and end: try to narrow down the root until fBegin * fEnd < 0 */
 			middle = (begin + end) / 2.;
 			fMiddle = AIR_GetDestinationFunction(c, B, speedRatio, middle);
@@ -2881,15 +2864,15 @@ qboolean AIR_LoadXML (mxml_node_t *parent)
 
 	ccs.numProjectiles = i;
 
-	for (i = 0, snode = mxml_GetNode(node, "recoverie"); snode && i < MAX_RECOVERIES;
-			snode = mxml_GetNextNode(snode, node, "recoverie"), i++) {
+	for (i = 0, snode = mxml_GetNode(node, "recovery"); snode && i < MAX_RECOVERIES;
+			snode = mxml_GetNextNode(snode, node, "recovery"), i++) {
 		byte base, ufotype;
 		ccs.recoveries[i].active = qtrue;
 		base = mxml_GetInt(snode, "targetbase", BYTES_NONE);
 		ccs.recoveries[i].base = (base != BYTES_NONE) ? B_GetBaseByIDX((byte)base) : NULL;
-		assert(numAircraftTemplates);
+		assert(ccs.numAircraftTemplates);
 		ufotype = mxml_GetInt(snode, "ufotemplateidx", BYTES_NONE);
-		ccs.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &aircraftTemplates[ufotype] : NULL;
+		ccs.recoveries[i].ufoTemplate = (ufotype != BYTES_NONE) ? &ccs.aircraftTemplates[ufotype] : NULL;
 		ccs.recoveries[i].event.day = mxml_GetInt(snode, "day", 0);
 		ccs.recoveries[i].event.sec = mxml_GetInt(snode, "sec", 0);
 	}
@@ -2928,7 +2911,7 @@ qboolean AIR_ScriptSanityCheck (void)
 	int var;
 	aircraft_t* a;
 
-	for (i = 0, a = aircraftTemplates; i < numAircraftTemplates; i++, a++) {
+	for (i = 0, a = ccs.aircraftTemplates; i < ccs.numAircraftTemplates; i++, a++) {
 		if (!a->name) {
 			error++;
 			Com_Printf("...... aircraft '%s' has no name\n", a->id);

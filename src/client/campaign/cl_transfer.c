@@ -632,8 +632,9 @@ static void TR_TransferSelect (base_t *srcbase, base_t *destbase, transferType_t
 static void TR_TransferSelect_f (void)
 {
 	int type;
+	base_t *base = ccs.baseCurrent;
 
-	if (!td.transferBase || !baseCurrent)
+	if (!td.transferBase || !base)
 		return;
 
 	if (Cmd_Argc() < 2)
@@ -644,7 +645,7 @@ static void TR_TransferSelect_f (void)
 	if (type < TRANS_TYPE_ITEM || type >= TRANS_TYPE_MAX)
 		return;
 
-	TR_TransferSelect(baseCurrent, td.transferBase, type);
+	TR_TransferSelect(base, td.transferBase, type);
 }
 
 /**
@@ -654,32 +655,33 @@ static void TR_TransferSelect_f (void)
 static void TR_TransferListClear_f (void)
 {
 	int i;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	for (i = 0; i < csi.numODs; i++) {	/* Return items. */
 		if (td.trItemsTmp[i] > 0) {
 			if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
-				B_ManageAntimatter(baseCurrent, td.trItemsTmp[i], qtrue);
+				B_ManageAntimatter(base, td.trItemsTmp[i], qtrue);
 			else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 				const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 				assert(ufocraft);
 				/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-				baseCurrent->storage.num[i] += td.trItemsTmp[i];
+				base->storage.num[i] += td.trItemsTmp[i];
 				if (ufocraft->size == AIRCRAFT_LARGE)
-					baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur++;
+					base->capacities[CAP_UFOHANGARS_LARGE].cur++;
 				else
-					baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur++;
+					base->capacities[CAP_UFOHANGARS_SMALL].cur++;
 			} else
-				B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], td.trItemsTmp[i], qfalse, qfalse);
+				B_UpdateStorageAndCapacity(base, &csi.ods[i], td.trItemsTmp[i], qfalse, qfalse);
 		}
 	}
 	for (i = 0; i < ccs.numAliensTD; i++) {	/* Return aliens. */
 		if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0)
-			AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), td.trAliensTmp[i][TRANS_ALIEN_ALIVE]);
+			AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), td.trAliensTmp[i][TRANS_ALIEN_ALIVE]);
 		if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0)
-			baseCurrent->alienscont[i].amount_dead += td.trAliensTmp[i][TRANS_ALIEN_DEAD];
+			base->alienscont[i].amount_dead += td.trAliensTmp[i][TRANS_ALIEN_DEAD];
 	}
 
 	/* Clear temporary cargo arrays. */
@@ -689,7 +691,7 @@ static void TR_TransferListClear_f (void)
 	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 	/* Update cargo list and items list. */
 	TR_CargoList();
-	TR_TransferSelect(baseCurrent, td.transferBase, td.currentTransferType);
+	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
 	TR_ResetScrolling_f();
 }
 
@@ -1006,13 +1008,14 @@ static void TR_TransferStart_f (void)
 	transfer_t *transfer;
 	float time;
 	char message[256];
+	base_t *base = ccs.baseCurrent;
 
 	if (td.currentTransferType == TRANS_TYPE_INVALID) {
 		Com_Printf("TR_TransferStart_f: currentTransferType is wrong!\n");
 		return;
 	}
 
-	if (!td.transferBase || !baseCurrent) {
+	if (!td.transferBase || !base) {
 		Com_Printf("TR_TransferStart_f: No base selected!\n");
 		return;
 	}
@@ -1036,7 +1039,7 @@ static void TR_TransferStart_f (void)
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
-	time = MAP_GetDistance(td.transferBase->pos, baseCurrent->pos) / 90.0f;
+	time = MAP_GetDistance(td.transferBase->pos, base->pos) / 90.0f;
 	transfer->event.day = ccs.date.day + floor(time);	/* add day */
 	time = (time - floor(time)) * SECONDS_PER_DAY;	/* convert remaining time in second */
 	transfer->event.sec = ccs.date.sec + round(time);
@@ -1047,7 +1050,7 @@ static void TR_TransferStart_f (void)
 	}
 	transfer->destBase = td.transferBase;	/* Destination base. */
 	assert(transfer->destBase);
-	transfer->srcBase = baseCurrent;	/* Source base. */
+	transfer->srcBase = base;	/* Source base. */
 	transfer->active = qtrue;
 	for (i = 0; i < csi.numODs; i++) {	/* Items. */
 		if (td.trItemsTmp[i] > 0) {
@@ -1063,7 +1066,7 @@ static void TR_TransferStart_f (void)
 				employee_t *employee = td.trEmployeesTmp[i][j];
 				transfer->hasEmployees = qtrue;
 
-				assert(employee->baseHired == baseCurrent);
+				assert(employee->baseHired == base);
 
 				E_ResetEmployee(employee);
 				transfer->trEmployees[i][j] = employee;
@@ -1104,8 +1107,8 @@ static void TR_TransferStart_f (void)
 	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 
 	/* Recheck if production/research can be done on srcbase (if there are workers/scientists) */
-	PR_ProductionAllowed(baseCurrent);
-	RS_ResearchAllowed(baseCurrent);
+	PR_ProductionAllowed(base);
+	RS_ResearchAllowed(base);
 
 	Com_sprintf(message, sizeof(message), _("Transport mission started, cargo is being transported to base %s"), td.transferBase->name);
 	MSO_CheckAddNewMessage(NT_TRANSFER_STARTED, _("Transport mission"), message, qfalse, MSG_TRANSFERFINISHED, NULL);
@@ -1131,11 +1134,12 @@ static void TR_TransferListSelect_f (void)
 	employeeType_t emplType;
 	qboolean added = qfalse;
 	int numempl[MAX_EMPL];
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2)
 		return;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (!td.transferBase) {
@@ -1152,29 +1156,29 @@ static void TR_TransferListSelect_f (void)
 		return;
 	case TRANS_TYPE_ITEM:
 		for (i = 0; i < csi.numODs; i++) {
-			if (baseCurrent->storage.num[i]) {
+			if (base->storage.num[i]) {
 				if (cnt == num) {
 					int amount = TR_GetTransferFactor();
 					const objDef_t *od = &csi.ods[i];
 					/* you can't transfer more item than you have */
-					amount = min(amount, baseCurrent->storage.num[i]);
+					amount = min(amount, base->storage.num[i]);
 					/* you can only transfer items that destination base can accept */
 					amount = TR_CheckItem(od, td.transferBase, amount);
 					if (amount) {
 						td.trItemsTmp[i] += amount;
 						if (!strcmp(od->id, ANTIMATTER_TECH_ID))
-							B_ManageAntimatter(baseCurrent, amount, qfalse);
+							B_ManageAntimatter(base, amount, qfalse);
 						else if (od->tech->type == RS_CRAFT) { /* This is UFO craft */
 							const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 							assert(ufocraft);
 							/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-							baseCurrent->storage.num[i] -= amount;
+							base->storage.num[i] -= amount;
 							if (ufocraft->size == AIRCRAFT_LARGE)
-								baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur -= amount;
+								base->capacities[CAP_UFOHANGARS_LARGE].cur -= amount;
 							else
-								baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur -= amount;
+								base->capacities[CAP_UFOHANGARS_SMALL].cur -= amount;
 						} else
-							B_UpdateStorageAndCapacity(baseCurrent, od, -amount, qfalse, qfalse);
+							B_UpdateStorageAndCapacity(base, od, -amount, qfalse, qfalse);
 						break;
 					} else
 						return;
@@ -1186,7 +1190,7 @@ static void TR_TransferListSelect_f (void)
 	case TRANS_TYPE_EMPLOYEE:
 		for (i = 0; i < ccs.numEmployees[EMPL_SOLDIER]; i++) {
 			employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
-			if (!E_IsInBase(employee, baseCurrent))
+			if (!E_IsInBase(employee, base))
 				continue;
 			if (td.trEmployeesTmp[EMPL_SOLDIER][i])
 				continue;
@@ -1202,7 +1206,7 @@ static void TR_TransferListSelect_f (void)
 		}
 		for (i = 0; i < ccs.numEmployees[EMPL_PILOT]; i++) {
 			employee_t *employee = &ccs.employees[EMPL_PILOT][i];
-			if (!E_IsInBase(employee, baseCurrent))
+			if (!E_IsInBase(employee, base))
 				continue;
 			if (td.trEmployeesTmp[EMPL_PILOT][i])
 				continue;
@@ -1222,7 +1226,7 @@ static void TR_TransferListSelect_f (void)
 
 		/* Reset and fill temp employees arrays. */
 		for (emplType = 0; emplType < MAX_EMPL; emplType++) {
-			numempl[emplType] = E_CountHired(baseCurrent, emplType);
+			numempl[emplType] = E_CountHired(base, emplType);
 			for (i = 0; i < MAX_EMPLOYEES; i++) {
 				if (td.trEmployeesTmp[emplType][i])
 					numempl[emplType]--;
@@ -1236,10 +1240,10 @@ static void TR_TransferListSelect_f (void)
 			if (numempl[emplType] < 1)
 				continue;
 			if (cnt == num) {
-				int amount = min(E_CountHired(baseCurrent, emplType), TR_GetTransferFactor());
+				int amount = min(E_CountHired(base, emplType), TR_GetTransferFactor());
 				for (i = 0; i < ccs.numEmployees[emplType]; i++) {
 					employee_t *employee = &ccs.employees[emplType][i];
-					if (!E_IsInBase(employee, baseCurrent))
+					if (!E_IsInBase(employee, base))
 						continue;
 					if (td.trEmployeesTmp[emplType][employee->idx])	/* Already on transfer list. */
 						continue;
@@ -1259,21 +1263,21 @@ static void TR_TransferListSelect_f (void)
 		if (!B_GetBuildingStatus(td.transferBase, B_ALIEN_CONTAINMENT))
 			return;
 		for (i = 0; i < ccs.numAliensTD; i++) {
-			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_dead > 0) {
+			if (base->alienscont[i].teamDef && base->alienscont[i].amount_dead > 0) {
 				if (cnt == num) {
 					td.trAliensTmp[i][TRANS_ALIEN_DEAD]++;
 					/* Remove the corpse from Alien Containment. */
-					baseCurrent->alienscont[i].amount_dead--;
+					base->alienscont[i].amount_dead--;
 					break;
 				}
 				cnt++;
 			}
-			if (baseCurrent->alienscont[i].teamDef && baseCurrent->alienscont[i].amount_alive > 0) {
+			if (base->alienscont[i].teamDef && base->alienscont[i].amount_alive > 0) {
 				if (cnt == num) {
 					if (TR_CheckAlien(i, td.transferBase)) {
 						td.trAliensTmp[i][TRANS_ALIEN_ALIVE]++;
 						/* Remove an alien from Alien Containment. */
-						AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), -1);
+						AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), -1);
 						break;
 					} else
 						return;
@@ -1289,7 +1293,7 @@ static void TR_TransferListSelect_f (void)
 			const aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 			if (!aircraft)
 				return;
-			if (aircraft->homebase == baseCurrent && TR_AircraftListSelect(i)) {
+			if (aircraft->homebase == base && TR_AircraftListSelect(i)) {
 				if (cnt == num) {
 					if (TR_CheckAircraft(aircraft, td.transferBase)) {
 						td.trAircraftsTmp[i] = i;
@@ -1305,7 +1309,7 @@ static void TR_TransferListSelect_f (void)
 		return;
 	}
 
-	TR_TransferSelect(baseCurrent, td.transferBase, td.currentTransferType);
+	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
 }
 
 /**
@@ -1379,32 +1383,33 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 static void TR_NextBase_f (void)
 {
 	int baseIdx, counter;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (!td.transferBase)
-		counter = baseCurrent->idx;
+		counter = base->idx;
 	else
 		counter = td.transferBase->idx;
 
 	for (baseIdx = counter + 1; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
+		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
+		if (!destbase)
 			continue;
-		if (base == baseCurrent)
+		if (destbase == base)
 			continue;
-		TR_TransferBaseSelect(baseCurrent, base);
+		TR_TransferBaseSelect(base, destbase);
 		return;
 	}
 	/* At this point we are at "last" base, so we will select first. */
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
+		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
+		if (!destbase)
 			continue;
-		if (base == baseCurrent)
+		if (destbase == base)
 			continue;
-		TR_TransferBaseSelect(baseCurrent, base);
+		TR_TransferBaseSelect(base, destbase);
 		return;
 	}
 }
@@ -1417,32 +1422,33 @@ static void TR_NextBase_f (void)
 static void TR_PrevBase_f (void)
 {
 	int baseIdx, counter;
+	base_t *base = ccs.baseCurrent;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	if (!td.transferBase)
-		counter = baseCurrent->idx;
+		counter = base->idx;
 	else
 		counter = td.transferBase->idx;
 
 	for (baseIdx = counter - 1; baseIdx >= 0; baseIdx--) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
+		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
+		if (!destbase)
 			continue;
-		if (base == baseCurrent)
+		if (base == destbase)
 			continue;
-		TR_TransferBaseSelect(baseCurrent, base);
+		TR_TransferBaseSelect(base, destbase);
 		return;
 	}
 	/* At this point we are at "first" base, so we will select last. */
 	for (baseIdx = MAX_BASES - 1; baseIdx >= 0; baseIdx--) {
-		base_t *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
+		base_t *destbase = B_GetFoundedBaseByIDX(baseIdx);
+		if (!destbase)
 			continue;
-		if (base == baseCurrent)
+		if (base == destbase)
 			continue;
-		TR_TransferBaseSelect(baseCurrent, base);
+		TR_TransferBaseSelect(base, destbase);
 		return;
 	}
 }
@@ -1456,11 +1462,12 @@ static void TR_CargoListSelect_f (void)
 	qboolean removed = qfalse;
 	int numempl[MAX_EMPL];
 	employeeType_t emplType;
+	base_t *base = ccs.baseCurrent;
 
 	if (Cmd_Argc() < 2)
 		return;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
 	num = atoi(Cmd_Argv(1));
@@ -1476,18 +1483,18 @@ static void TR_CargoListSelect_f (void)
 					/* you can't transfer more item than there are in current tranfer */
 					td.trItemsTmp[i] -= amount;
 					if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID))
-						B_ManageAntimatter(baseCurrent, amount, qfalse);
+						B_ManageAntimatter(base, amount, qfalse);
 					else if (csi.ods[i].tech->type == RS_CRAFT) { /* This is UFO craft */
 						const aircraft_t *ufocraft = AIR_GetAircraft(csi.ods[i].tech->provides);
 						assert(ufocraft);
 						/* don't use B_UpdateStorageAndCapacity: UFO are not stored in storage */
-						baseCurrent->storage.num[i] += amount;
+						base->storage.num[i] += amount;
 						if (ufocraft->size == AIRCRAFT_LARGE)
-							baseCurrent->capacities[CAP_UFOHANGARS_LARGE].cur += amount;
+							base->capacities[CAP_UFOHANGARS_LARGE].cur += amount;
 						else
-							baseCurrent->capacities[CAP_UFOHANGARS_SMALL].cur += amount;
+							base->capacities[CAP_UFOHANGARS_SMALL].cur += amount;
 					} else
-						B_UpdateStorageAndCapacity(baseCurrent, &csi.ods[i], amount, qfalse, qfalse);
+						B_UpdateStorageAndCapacity(base, &csi.ods[i], amount, qfalse, qfalse);
 					break;
 				}
 				cnt++;
@@ -1546,7 +1553,7 @@ static void TR_CargoListSelect_f (void)
 			if (numempl[emplType] < 1 || emplType == EMPL_SOLDIER || emplType == EMPL_PILOT)
 				continue;
 			if (cnt == num) {
-				int amount = min(TR_GetTransferFactor(), E_CountHired(baseCurrent, emplType));
+				int amount = min(TR_GetTransferFactor(), E_CountHired(base, emplType));
 				for (j = 0; j < ccs.numEmployees[emplType]; j++) {
 					if (td.trEmployeesTmp[emplType][j]) {
 						td.trEmployeesTmp[emplType][j] = NULL;
@@ -1580,7 +1587,7 @@ static void TR_CargoListSelect_f (void)
 			if (td.trAliensTmp[i][TRANS_ALIEN_DEAD] > 0) {
 				if (cnt == num) {
 					td.trAliensTmp[i][TRANS_ALIEN_DEAD]--;
-					baseCurrent->alienscont[i].amount_dead++;
+					base->alienscont[i].amount_dead++;
 					break;
 				}
 				cnt++;
@@ -1605,7 +1612,7 @@ static void TR_CargoListSelect_f (void)
 			if (td.trAliensTmp[i][TRANS_ALIEN_ALIVE] > 0) {
 				if (cnt == num) {
 					td.trAliensTmp[i][TRANS_ALIEN_ALIVE]--;
-					AL_ChangeAliveAlienNumber(baseCurrent, &(baseCurrent->alienscont[i]), 1);
+					AL_ChangeAliveAlienNumber(base, &(base->alienscont[i]), 1);
 					break;
 				}
 				cnt++;
@@ -1641,7 +1648,7 @@ static void TR_CargoListSelect_f (void)
 		return;
 	}
 
-	TR_TransferSelect(baseCurrent, td.transferBase, td.currentTransferType);
+	TR_TransferSelect(base, td.transferBase, td.currentTransferType);
 }
 
 /**
@@ -1696,7 +1703,9 @@ void TR_TransferCheck (void)
  */
 static void TR_Init_f (void)
 {
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
 
 	td.transferBase = NULL;
@@ -1725,7 +1734,9 @@ static void TR_Init_f (void)
  */
 static void TR_TransferClose_f (void)
 {
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
 
 	/* Unload what was loaded. */

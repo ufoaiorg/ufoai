@@ -28,13 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "m_node_map.h"
 
 #include "../../client.h"
+#include "../../cl_game.h"
 #include "../../campaign/cl_campaign.h"
 #include "../../campaign/cl_map.h"
 #include "../../renderer/r_draw.h"
 
 static void MN_MapNodeDraw (menuNode_t *node)
 {
-	if (curCampaign) {
+	if (GAME_CP_IsRunning()) {
 		vec2_t pos;
 		/* don't run the campaign in console mode */
 		if (cls.key_dest != key_console)

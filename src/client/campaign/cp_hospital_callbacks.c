@@ -56,6 +56,10 @@ static void HOS_UpdateMenu (void)
 	char rank[128];
 	int i, j, type;
 	int entry;
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
+		return;
 
 	/* Reset list. */
 	MN_ExecuteConfunc("hospital_clear");
@@ -64,7 +68,7 @@ static void HOS_UpdateMenu (void)
 		for (i = 0; i < ccs.numEmployees[type]; i++) {
 			employee_t *employee = &ccs.employees[type][i];
 			/* Only show those employees, that are in the current base. */
-			if (!E_IsInBase(employee, baseCurrent))
+			if (!E_IsInBase(employee, base))
 				continue;
 			/* Don't show soldiers who are gone in mission */
 			if (E_IsAwayFromBase(employee))
@@ -121,10 +125,12 @@ static void HOS_UpdateMenu (void)
  */
 static void HOS_Init_f (void)
 {
-	if (!baseCurrent)
+	base_t *base = ccs.baseCurrent;
+
+	if (!base)
 		return;
 
-	if (!B_GetBuildingStatus(baseCurrent, B_HOSPITAL)) {
+	if (!B_GetBuildingStatus(base, B_HOSPITAL)) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -163,14 +169,15 @@ static void HOS_ListDown_f (void)
 static void HOS_ListClick_f (void)
 {
 	int num, type, i;
+	base_t *base = ccs.baseCurrent;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+	if (!base) {
+		currentEmployeeInHospital = NULL;
 		return;
 	}
 
-	if (!baseCurrent) {
-		currentEmployeeInHospital = NULL;
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
 		return;
 	}
 
@@ -181,7 +188,7 @@ static void HOS_ListClick_f (void)
 		for (i = 0; i < ccs.numEmployees[type]; i++) {
 			employee_t *employee = &ccs.employees[type][i];
 			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= employee->chr.maxHP)
+			if (!E_IsInBase(employee, base) || employee->chr.HP >= employee->chr.maxHP)
 				continue;
 			/* Don't select soldiers who are gone in mission */
 			if (E_IsAwayFromBase(employee))

@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "campaign/cp_missions.h"
 #include "campaign/cp_mission_triggers.h"
 #include "campaign/cp_team.h"
-#include "campaign/cl_ufo.h"
 #include "menu/m_nodes.h"
 
 /**
@@ -40,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 qboolean GAME_CP_IsRunning (void)
 {
-	return curCampaign != NULL;
+	return ccs.curCampaign != NULL;
 }
 
 /**
@@ -153,17 +152,17 @@ static void GAME_CP_GetCampaigns_f (void)
 	int i;
 
 	*campaignText = *campaignDesc = '\0';
-	for (i = 0; i < numCampaigns; i++) {
-		if (campaigns[i].visible)
-			Q_strcat(campaignText, va("%s\n", _(campaigns[i].name)), MAXCAMPAIGNTEXT);
+	for (i = 0; i < ccs.numCampaigns; i++) {
+		if (ccs.campaigns[i].visible)
+			Q_strcat(campaignText, va("%s\n", _(ccs.campaigns[i].name)), MAXCAMPAIGNTEXT);
 	}
 	/* default campaign */
 	MN_RegisterText(TEXT_STANDARD, campaignDesc);
 	MN_RegisterText(TEXT_CAMPAIGN_LIST, campaignText);
 
 	/* select main as default */
-	for (i = 0; i < numCampaigns; i++)
-		if (!strcmp(campaigns[i].id, "main")) {
+	for (i = 0; i < ccs.numCampaigns; i++)
+		if (!strcmp(ccs.campaigns[i].id, "main")) {
 			Cmd_ExecuteString(va("campaignlist_click %i", i));
 			return;
 		}
@@ -186,18 +185,18 @@ static void GAME_CP_CampaignListClick_f (void)
 
 	/* Which campaign in the list? */
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= numCampaigns)
+	if (num < 0 || num >= ccs.numCampaigns)
 		return;
 
 	/* jump over all invisible campaigns */
-	while (!campaigns[num].visible) {
+	while (!ccs.campaigns[num].visible) {
 		num++;
-		if (num >= numCampaigns)
+		if (num >= ccs.numCampaigns)
 			return;
 	}
 
-	Cvar_Set("cl_campaign", campaigns[num].id);
-	if (campaigns[num].team == TEAM_PHALANX)
+	Cvar_Set("cl_campaign", ccs.campaigns[num].id);
+	if (ccs.campaigns[num].team == TEAM_PHALANX)
 		racetype = _("Human");
 	else
 		racetype = _("Aliens");
@@ -206,13 +205,13 @@ static void GAME_CP_CampaignListClick_f (void)
 		"Credits: %ic\nDifficulty: %s\n"
 		"Min. happiness of nations: %i %%\n"
 		"Max. allowed debts: %ic\n"
-		"%s\n"), _(campaigns[num].name), racetype,
-			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
-			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
-			campaigns[num].workers, ngettext("worker", "workers", campaigns[num].workers),
-			campaigns[num].credits, CP_ToDifficultyName(campaigns[num].difficulty),
-			(int)(round(campaigns[num].minhappiness * 100.0f)), campaigns[num].negativeCreditsUntilLost,
-			_(campaigns[num].text));
+		"%s\n"), _(ccs.campaigns[num].name), racetype,
+			ccs.campaigns[num].soldiers, ngettext("soldier", "soldiers", ccs.campaigns[num].soldiers),
+			ccs.campaigns[num].scientists, ngettext("scientist", "scientists", ccs.campaigns[num].scientists),
+			ccs.campaigns[num].workers, ngettext("worker", "workers", ccs.campaigns[num].workers),
+			ccs.campaigns[num].credits, CP_ToDifficultyName(ccs.campaigns[num].difficulty),
+			(int)(round(ccs.campaigns[num].minhappiness * 100.0f)), ccs.campaigns[num].negativeCreditsUntilLost,
+			_(ccs.campaigns[num].text));
 	MN_RegisterText(TEXT_STANDARD, campaignDesc);
 
 	/* Highlight currently selected entry */
@@ -306,8 +305,8 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	counts[MRC_CIVILIAN_KILLED] = civilian_killed;
 	counts[MRC_CIVILIAN_FF_KILLED] = numKilled[cls.team][TEAM_CIVILIAN] + numKilled[TEAM_CIVILIAN][TEAM_CIVILIAN];
 	counts[MRC_CIVILIAN_SURVIVOR] = civilian_survivors;
-	counts[MRC_ITEM_GATHEREDTYPES] = missionresults.itemtypes;
-	counts[MRC_ITEM_GATHEREDAMOUNT] = missionresults.itemamount;
+	counts[MRC_ITEM_GATHEREDTYPES] = ccs.missionresults.itemtypes;
+	counts[MRC_ITEM_GATHEREDAMOUNT] = ccs.missionresults.itemamount;
 	CP_InitMissionResults(counts,winner == cls.team);
 
 	MN_PopMenu(qtrue);
@@ -397,8 +396,8 @@ qboolean GAME_CP_ItemIsUseable (const objDef_t *od)
 
 int GAME_CP_GetTeam (void)
 {
-	assert(curCampaign);
-	return curCampaign->team;
+	assert(ccs.curCampaign);
+	return ccs.curCampaign->team;
 }
 
 qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)

@@ -640,8 +640,8 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	employee->type = type;
 	employee->nation = nation;
 
-	if (curCampaign->team != TEAM_ALIEN)
-		teamID = Com_ValueToStr(&curCampaign->team, V_TEAM, 0);
+	if (ccs.curCampaign->team != TEAM_ALIEN)
+		teamID = Com_ValueToStr(&ccs.curCampaign->team, V_TEAM, 0);
 	else {
 		/** @todo should not be hardcoded */
 		teamID = "taman";

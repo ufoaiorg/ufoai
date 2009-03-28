@@ -173,7 +173,7 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	}
 
 	base->baseStatus = BASE_UNDER_ATTACK;
-	campaignStats.basesAttacked++;
+	ccs.campaignStats.basesAttacked++;
 
 #if 0
 	/** @todo implement onattack: add it to basemanagement.ufo and implement functions */
@@ -213,7 +213,6 @@ void CP_BaseAttackStartMission (mission_t *mission)
 	MN_RegisterText(TEXT_POPUP, popupText);
 
 	CL_GameTimeStop();
-	baseCurrent = base;
 	MN_PushMenu("popup_baseattack", NULL);
 }
 
