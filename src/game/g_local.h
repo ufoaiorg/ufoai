@@ -297,6 +297,7 @@ void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(player_t * player);
 int G_ClientGetTeamNum(const player_t * player);
 int G_ClientGetTeamNumPref(const player_t * player);
+void G_PlayerPrintf(const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 void G_ResetClientData(void);
 
 void G_ClientCommand(player_t * player);

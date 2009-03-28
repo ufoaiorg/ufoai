@@ -117,8 +117,8 @@ typedef struct {
 	void (IMPORT *BroadcastPrintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 	/** print output to server console */
 	void (IMPORT *dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-	/** sends message to only one player */
-	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+	/** sends message to only one player (don't use this to send messages to an AI player struct) */
+	void (IMPORT *PlayerPrintf) (const player_t * player, int printlevel, const char *fmt, va_list ap);
 
 	void (IMPORT *PositionedSound) (int mask, vec3_t origin, edict_t *ent, const char *sound, float volume);
 

@@ -88,7 +88,7 @@ static qboolean SV_SetPlayer (void)
 
 		sv_client = &svs.clients[idnum];
 		sv_player = sv_client->player;
-		if (!sv_client->state) {
+		if (sv_client->state == cs_free) {
 			Com_Printf("Client %i is not active\n", idnum);
 			return qfalse;
 		}

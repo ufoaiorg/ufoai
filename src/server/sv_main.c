@@ -785,7 +785,7 @@ static void Master_Shutdown (void)
 /*============================================================================ */
 
 /**
- * @brief Pull specific info from a newly changed userinfo string into a more C freindly form.
+ * @brief Pull specific info from a newly changed userinfo string into a more C friendly form.
  */
 void SV_UserinfoChanged (client_t * cl)
 {

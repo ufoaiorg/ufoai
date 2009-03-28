@@ -56,7 +56,7 @@ static void G_Players_f (const player_t *player)
 		count++;
 	}
 
-	gi.PlayerPrintf(player, PRINT_CONSOLE, "%s\n%i players\n", largeBuf, count);
+	G_PlayerPrintf(player, PRINT_CONSOLE, "%s\n%i players\n", largeBuf, count);
 }
 
 /**
@@ -68,7 +68,7 @@ static qboolean G_CheckFlood (player_t *player)
 
 	if (flood_msgs->integer) {
 		if (level.time < player->pers.flood_locktill) {
-			gi.PlayerPrintf(player, PRINT_CONSOLE, "You can't talk for %d more seconds\n",
+			G_PlayerPrintf(player, PRINT_CONSOLE, "You can't talk for %d more seconds\n",
 					   (int)(player->pers.flood_locktill - level.time));
 			return qtrue;
 		}
@@ -77,7 +77,7 @@ static qboolean G_CheckFlood (player_t *player)
 			i = (sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0])) + i;
 		if (player->pers.flood_when[i] && level.time - player->pers.flood_when[i] < flood_persecond->value) {
 			player->pers.flood_locktill = level.time + flood_waitdelay->value;
-			gi.PlayerPrintf(player, PRINT_CHAT, "Flood protection: You can't talk for %d seconds.\n",
+			G_PlayerPrintf(player, PRINT_CHAT, "Flood protection: You can't talk for %d seconds.\n",
 					   flood_waitdelay->integer);
 			return qtrue;
 		}
@@ -125,7 +125,7 @@ static void G_Say_f (player_t *player, qboolean arg0, qboolean team)
 			continue;
 		if (team && game.players[j].pers.team != player->pers.team)
 			continue;
-		gi.PlayerPrintf(&game.players[j], PRINT_CHAT, "%s", text);
+		G_PlayerPrintf(&game.players[j], PRINT_CHAT, "%s", text);
 	}
 }
 

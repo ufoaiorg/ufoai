@@ -156,6 +156,24 @@ static void G_SendPlayerStats (player_t * player)
 }
 
 /**
+ * Send messages to human players
+ * @param player A player (AI players are ignored here)
+ */
+void G_PlayerPrintf (const player_t * player, int printlevel, const char *fmt, ...)
+{
+	va_list ap;
+
+	/* there is no client for an AI controlled player on the server where we
+	 * could send the message to */
+	if (player->pers.ai)
+		return;
+
+	va_start(ap, fmt);
+	gi.PlayerPrintf(player, printlevel, fmt, ap);
+	va_end(ap);
+}
+
+/**
  * @brief Regenerate the "STUN" value of each (partly) stunned team member.
  * @note The values are @b not sent via network. This is done in
  * @c G_GiveTimeUnits. It @b has to be called afterwards.
@@ -806,39 +824,39 @@ qboolean G_ActionCheck (player_t *player, edict_t *ent, int TU, qboolean quiet)
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		gi.PlayerPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
+		G_PlayerPrintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
 		return qfalse;
 	}
 
 	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	if (!ent || !ent->inuse) {
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - object not present!\n"));
+		G_PlayerPrintf(player, msglevel, _("Can't perform action - object not present!\n"));
 		return qfalse;
 	}
 
 	if (ent->type != ET_ACTOR && ent->type != ET_ACTOR2x2) {
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - not an actor!\n"));
+		G_PlayerPrintf(player, msglevel, _("Can't perform action - not an actor!\n"));
 		return qfalse;
 	}
 
 	if (G_IsStunned(ent)) {
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
+		G_PlayerPrintf(player, msglevel, _("Can't perform action - actor is stunned!\n"));
 		return qfalse;
 	}
 
 	if (G_IsDead(ent)) {
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
+		G_PlayerPrintf(player, msglevel, _("Can't perform action - actor is dead!\n"));
 		return qfalse;
 	}
 
 	if (ent->team != player->pers.team) {
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - not on same team!\n"));
+		G_PlayerPrintf(player, msglevel, _("Can't perform action - not on same team!\n"));
 		return qfalse;
 	}
 
 	if (ent->pnum != player->num) {
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
+		G_PlayerPrintf(player, msglevel, _("Can't perform action - no control over allied actors!\n"));
 		return qfalse;
 	}
 
@@ -993,10 +1011,10 @@ void G_ClientInvMove (player_t * player, int num, const invDef_t * from, invList
 		/* No action possible - abort */
 		return;
 	case IA_NOTIME:
-		gi.PlayerPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
+		G_PlayerPrintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		gi.PlayerPrintf(player, msglevel,
+		G_PlayerPrintf(player, msglevel,
 				_("Can't perform action - weapon already fully loaded with the same ammunition!\n"));
 		return;
 	default:
@@ -1700,7 +1718,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 	case ~STATE_REACTION: /* Request to turn off reaction fire. */
 		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)) {
 			if (ent->state & STATE_SHAKEN) {
-				gi.PlayerPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
+				G_PlayerPrintf(player, PRINT_CONSOLE, _("Currently shaken, won't let their guard down.\n"));
 			} else {
 				/* Turn off reaction fire. */
 				ent->state &= ~STATE_REACTION;
@@ -1763,7 +1781,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
  */
 static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 {
-	gi.PlayerPrintf(G_PLAYER_FROM_ENT(ent), PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
+	G_PlayerPrintf(G_PLAYER_FROM_ENT(ent), PRINT_CONSOLE, _("%s panics!\n"), ent->chr.name);
 
 	/* drop items in hands */
 	if (!sanity && ent->chr.teamDef->weapons) {
@@ -1887,7 +1905,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
-					gi.PlayerPrintf(G_PLAYER_FROM_ENT(ent), PRINT_CONSOLE, _("%s is currently shaken.\n"),
+					G_PlayerPrintf(G_PLAYER_FROM_ENT(ent), PRINT_CONSOLE, _("%s is currently shaken.\n"),
 							ent->chr.name);
 				} else {
 					if (ent->state & STATE_PANIC)

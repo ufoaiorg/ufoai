@@ -53,17 +53,14 @@ static void SV_dprintf (const char *fmt, ...)
  * @brief Print to a single client
  * @sa SV_BroadcastPrintf
  */
-static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt, ...)
+static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt, va_list ap)
 {
 	char msg[1024];
-	va_list argptr;
 
 	if (level == PRINT_NONE)
 		return;
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
+	Q_vsnprintf(msg, sizeof(msg), fmt, ap);
 
 	if (player)
 		SV_ClientPrintf(svs.clients + player->num, level, "%s", msg);
