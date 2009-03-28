@@ -72,7 +72,7 @@ void BDEF_ListClick_f (void)
 	int num, height;
 	menuNode_t *node;
 	base_t *base = B_GetCurrentSelectedBase();
-	installation_t* installation = ccs.installationCurrent;
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
 
 	if ((!base && !installation) || (base && installation))
 		return;
@@ -542,7 +542,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	int type;
 	menuNode_t *node;
 	base_t *base = B_GetCurrentSelectedBase();
-	installation_t *installation = ccs.installationCurrent;
+	installation_t *installation = INS_GetCurrentSelectedInstallation();
 
 	/* don't let old links appear on this menu */
 	MN_ResetData(TEXT_BASEDEFENCE_LIST);
@@ -934,7 +934,7 @@ void AIM_AircraftEquipZoneSelect_f (void)
 	aircraftSlot_t *slot;
 	qboolean aircraftMenu;
 	base_t *base = B_GetCurrentSelectedBase();
-	installation_t *installation = ccs.installationCurrent;
+	installation_t *installation = INS_GetCurrentSelectedInstallation();
 
 	if ((!base && !installation) || (base && installation))
 		return;
@@ -1026,7 +1026,7 @@ void AIM_AircraftEquipAddItem_f (void)
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft = NULL;
 	qboolean aircraftMenu;
-	installation_t* installation = ccs.installationCurrent;
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if ((!base && !installation) || (base && installation)) {
@@ -1143,7 +1143,7 @@ void AIM_AircraftEquipDeleteItem_f (void)
 	aircraftSlot_t *slot;
 	aircraft_t *aircraft = NULL;
 	qboolean aircraftMenu;
-	installation_t* installation = ccs.installationCurrent;
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if ((!base && !installation) || (base && installation)) {
@@ -1236,7 +1236,7 @@ void AIM_AircraftEquipMenuClick_f (void)
 	aircraft_t *aircraft;
 	int num;
 	technology_t **list;
-	installation_t* installation = ccs.installationCurrent;
+	installation_t* installation = INS_GetCurrentSelectedInstallation();
 	base_t *base = B_GetCurrentSelectedBase();
 
 	if ((!base && !installation) || (base && installation) || airequipID == -1)

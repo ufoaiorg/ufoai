@@ -45,7 +45,6 @@ static void INS_SetCurrentSelectedInstallation (installation_t *installation)
 {
 	ccs.installationCurrent = installation;
 	if (installation) {
-		ccs.installationCurrent = installation;
 		ccs.baseCurrent = NULL;
 		Cvar_SetValue("mn_installation_id", installation->idx);
 		Cvar_Set("mn_installation_title", installation->name);
@@ -125,7 +124,7 @@ static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
 	installationTemplate_t *installationTemplate;
-	installation_t *installation = ccs.installationCurrent;
+	installation_t *installation = INS_GetCurrentSelectedInstallation();
 
 	if (Cmd_Argc() < 1) {
 		Com_Printf("Usage: %s <installationType>\n", Cmd_Argv(0));
@@ -221,7 +220,6 @@ static void INS_SetInstallationTitle_f (void)
 	}
 }
 
-
 /**
  * @brief Creates console command to change the name of a installation.
  * Copies the value of the cvar mn_installation_title over as the name of the
@@ -229,7 +227,7 @@ static void INS_SetInstallationTitle_f (void)
  */
 static void INS_ChangeInstallationName_f (void)
 {
-	installation_t *installation = ccs.installationCurrent;
+	installation_t *installation = INS_GetCurrentSelectedInstallation();
 
 	/* maybe called without installation initialized or active */
 	if (!installation)
@@ -237,7 +235,6 @@ static void INS_ChangeInstallationName_f (void)
 
 	Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
 }
-
 
 /**
  * @brief console function for destroying an installation
@@ -248,7 +245,7 @@ static void INS_DestroyInstallation_f (void)
 	installation_t *installation;
 
 	if (Cmd_Argc() < 2 || atoi(Cmd_Argv(1)) < 0) {
-		installation = ccs.installationCurrent;
+		installation = INS_GetCurrentSelectedInstallation();
 	} else {
 		installation = INS_GetFoundedInstallationByIDX(atoi(Cmd_Argv(1)));
 		if (!installation) {
@@ -272,7 +269,6 @@ static void INS_DestroyInstallation_f (void)
 	INS_DestroyInstallation(installation);
 	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 }
-
 
 /**
  * @brief upadtes the installation limit cvar for menus

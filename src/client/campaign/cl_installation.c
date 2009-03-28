@@ -239,6 +239,11 @@ void INS_DestroyInstallation (installation_t *installation)
 	ccs.installationCurrent = NULL;
 }
 
+installation_t *INS_GetCurrentSelectedInstallation (void)
+{
+	return ccs.installationCurrent;
+}
+
 /**
  * @brief Check conditions for new installation and build it.
  * @param[in] pos Position on the geoscape.
