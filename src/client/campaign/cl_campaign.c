@@ -333,8 +333,7 @@ void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
  */
 void CP_EndCampaign (qboolean won)
 {
-	CP_CampaignExit();
-	assert(!GAME_CP_IsRunning());
+	GAME_SetMode(GAME_NONE);
 
 	if (won)
 		Cvar_Set("mn_afterdrop", "endgame");

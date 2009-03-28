@@ -1070,7 +1070,6 @@ static void R_ModAddMapTile (const char *name, qboolean day, int sX, int sY, int
  */
 void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const char *mapName)
 {
-	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
 	ipos3_t sh;
@@ -1097,7 +1096,7 @@ void R_ModBeginLoading (const char *tiles, qboolean day, const char *pos, const 
 	/* load tiles */
 	while (tiles) {
 		/* get tile name */
-		token = COM_Parse(&tiles);
+		const char *token = COM_Parse(&tiles);
 		if (!tiles) {
 			/* finish */
 			R_EndBuildingLightmaps();

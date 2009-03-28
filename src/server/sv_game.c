@@ -57,21 +57,16 @@ static void SV_PlayerPrintf (const player_t * player, int level, const char *fmt
 {
 	char msg[1024];
 	va_list argptr;
-	int n;
 
 	if (level == PRINT_NONE)
 		return;
-
-	n = 0;
-	if (player)
-		n = player->num;
 
 	va_start(argptr, fmt);
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
 	if (player)
-		SV_ClientPrintf(svs.clients + n, level, "%s", msg);
+		SV_ClientPrintf(svs.clients + player->num, level, "%s", msg);
 	else
 		Com_Printf("%s", msg);
 }
