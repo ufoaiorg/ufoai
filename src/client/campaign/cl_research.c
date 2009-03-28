@@ -1841,10 +1841,8 @@ qboolean RS_ResearchAllowed (const base_t* base)
 	assert(base);
 	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_LAB)
 	 && E_CountHired(base, EMPL_SCIENTIST) > 0) {
-		MN_ExecuteConfunc("set_research_enabled");
 		return qtrue;
 	} else {
-		MN_ExecuteConfunc("set_research_disabled");
 		return qfalse;
 	}
 }
