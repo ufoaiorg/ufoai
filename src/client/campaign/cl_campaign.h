@@ -541,7 +541,6 @@ typedef struct ccs_s {
 	technology_t *teamDefTechs[MAX_TEAMDEFS];
 
 	campaign_t *curCampaign;			/**< Current running campaign */
-	installation_t *installationCurrent;
 	stats_t campaignStats;
 	missionResults_t missionresults;
 

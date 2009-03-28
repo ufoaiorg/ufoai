@@ -232,13 +232,47 @@ void INS_DestroyInstallation (installation_t *installation)
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
-
-	ccs.installationCurrent = NULL;
 }
 
 installation_t *INS_GetCurrentSelectedInstallation (void)
 {
-	return ccs.installationCurrent;
+	int i;
+
+	for (i = 0; i < MAX_INSTALLATIONS; i++) {
+		installation_t *ins = INS_GetInstallationByIDX(i);
+		if (ins->selected)
+			return ins;
+	}
+
+	return NULL;
+}
+
+/**
+ * @sa INS_SelectInstallation
+ * @param installation
+ */
+void INS_SetCurrentSelectedInstallation (const installation_t *installation)
+{
+	int i;
+
+	for (i = 0; i < MAX_INSTALLATIONS; i++) {
+		installation_t *ins = INS_GetInstallationByIDX(i);
+		if (ins == installation) {
+			ins->selected = qtrue;
+			if (!ins->founded)
+				Com_Error(ERR_DROP, "The installation you are trying to select is not founded yet");
+		} else
+			ins->selected = qfalse;
+	}
+
+	if (installation) {
+		B_SetCurrentSelectedBase(NULL);
+		Cvar_Set("mn_installation_title", installation->name);
+		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
+	} else {
+		Cvar_Set("mn_installation_title", "");
+		Cvar_Set("mn_installation_type", "");
+	}
 }
 
 /**

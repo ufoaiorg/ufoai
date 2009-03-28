@@ -36,20 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 vec3_t newInstallationPos;
 
 /**
- * @sa INS_SelectInstallation
- * @param installation
- */
-static void INS_SetCurrentSelectedInstallation (installation_t *installation)
-{
-	ccs.installationCurrent = installation;
-	if (installation) {
-		B_SetCurrentSelectedBase(NULL);
-		Cvar_Set("mn_installation_title", installation->name);
-		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
-	}
-}
-
-/**
  * @brief Select an installation when clicking on it on geoscape, or build a new installation.
  * @param[in] installation If this is @c NULL we want to installation a new base
  * @note This is (and should be) the only place where installationCurrent is set

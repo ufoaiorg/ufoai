@@ -106,6 +106,7 @@ typedef struct installation_s {
 
 	int installationDamage;			/**< Hit points of installation */
 	int buildStart;					/**< Date when the installation building started */
+	qboolean selected;				/**< current selected installation? */
 } installation_t;
 
 /** Currently displayed/accessed base. */
@@ -128,6 +129,7 @@ void INS_NewInstallations(void);
 void INS_SelectInstallation(installation_t *installation);
 
 installation_t *INS_GetCurrentSelectedInstallation(void);
+void INS_SetCurrentSelectedInstallation(const installation_t *installation);
 
 installationTemplate_t* INS_GetInstallationTemplateFromInstallationID(const char *id);
 qboolean INS_NewInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);

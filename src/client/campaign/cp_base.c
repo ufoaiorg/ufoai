@@ -1981,7 +1981,7 @@ void B_SetCurrentSelectedBase (const base_t *base)
 	}
 
 	if (base) {
-		ccs.installationCurrent = NULL;
+		INS_SetCurrentSelectedInstallation(NULL);
 		Cvar_Set("mn_base_title", base->name);
 		Cvar_SetValue("mn_base_status_id", base->baseStatus);
 	} else {
