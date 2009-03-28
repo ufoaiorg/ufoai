@@ -34,8 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_draw.h"
 
 vec3_t newInstallationPos;
-static cvar_t *mn_installation_count;
-static cvar_t *mn_installation_id;
 
 /**
  * @sa INS_SelectInstallation
@@ -46,7 +44,6 @@ static void INS_SetCurrentSelectedInstallation (installation_t *installation)
 	ccs.installationCurrent = installation;
 	if (installation) {
 		ccs.baseCurrent = NULL;
-		Cvar_SetValue("mn_installation_id", installation->idx);
 		Cvar_Set("mn_installation_title", installation->name);
 		Cvar_Set("mn_installation_type", installation->installationTemplate->id);
 	}
@@ -105,7 +102,6 @@ void INS_SelectInstallation (installation_t *installation)
 		const int timetobuild = max(0, installation->installationTemplate->buildTime - (ccs.date.day - installation->buildStart));
 
 		Com_DPrintf(DEBUG_CLIENT, "INS_SelectInstallation: select installation with id %i\n", installation->idx);
-		INS_SetCurrentSelectedInstallation(installation);
 		ccs.mapAction = MA_NONE;
 		if (installation->installationStatus == INSTALLATION_WORKING) {
 			Cvar_Set("mn_installation_timetobuild", "-");
@@ -114,6 +110,8 @@ void INS_SelectInstallation (installation_t *installation)
 		}
 		MN_PushMenu("popup_installationstatus", NULL);
 	}
+
+	INS_SetCurrentSelectedInstallation(installation);
 }
 
 /**
@@ -252,7 +250,6 @@ static void INS_DestroyInstallation_f (void)
 			Com_DPrintf(DEBUG_CLIENT, "Installation not founded (idx %i)\n", atoi(Cmd_Argv(1)));
 			return;
 		}
-		Cvar_SetValue("mn_installation_id", installation->idx);
 	}
 
 	/* Ask 'Are you sure?' by default */
@@ -288,8 +285,7 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_update_max_installations", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
 
 	INS_UpdateInsatallationLimit_f();
-	mn_installation_count = Cvar_Get("mn_installation_count", "0", 0, "Current amount of build installations");
-	mn_installation_id = Cvar_Get("mn_installation_id", "-1", 0, "Internal id of the current selected installation");
+	Cvar_Set("mn_installation_count", "0");
 	Cvar_Set("mn_installation_title", "");
 }
 
@@ -302,5 +298,6 @@ void INS_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_installation_changename");
 	Cmd_RemoveCommand("mn_destroyinstallation");
 	Cmd_RemoveCommand("mn_update_max_installations");
+	Cvar_Delete("mn_installation_count");
 	Cvar_Delete("mn_installation_title");
 }

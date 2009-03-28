@@ -114,9 +114,6 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
 	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
 
-	/* this cvar is needed by INS_SetBuildingByClick below*/
-	Cvar_SetValue("mn_installation_id", installation->idx);
-
 	installation->numUFOsInInstallation = 0;
 
 	/* a new installation is not discovered (yet) */
@@ -573,6 +570,8 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		/** @todo aircraft */
 		/** @todo don't forget to recalc the capacities like we do for bases */
 	}
-	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
+
+	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
+
 	return qtrue;
 }
