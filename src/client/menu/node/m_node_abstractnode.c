@@ -423,7 +423,7 @@ float MN_GetFloatFromNodeProperty (const menuNode_t* node, const value_t* proper
  */
 static void MN_NodeGetProperty_f (void)
 {
-	const menuNode_t *node;
+	menuNode_t *node;
 	const value_t *property;
 	const char *sValue;
 	float fValue;

@@ -400,9 +400,8 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 					Com_Printf("MN_ParseAction: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
 				}
-				/** @todo we don't have to allocate a pointer */
-				action->data = MN_AllocPointer(1);
-				*(menuAction_t ***) action->data = &callNode->onClick;
+				action->data = (void*) callNode;
+				action->data2 = (void*) &callNode->onClick;
 				lastAction = action;
 			}
 			break;

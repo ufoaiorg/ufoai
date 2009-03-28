@@ -263,4 +263,5 @@ void MN_Init (void)
 	MN_InitNodes();
 	MN_InitMenus();
 	MN_InitDraw();
+	MN_InitActions();
 }

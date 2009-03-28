@@ -73,5 +73,6 @@ qboolean MN_IsInjectedString(const char *string);
 void MN_FreeStringProperty(void* pointer);
 
 void MN_PoolAllocAction(menuAction_t** action, int type, const void *data);
+void MN_InitActions(void);
 
 #endif

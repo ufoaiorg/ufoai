@@ -212,7 +212,7 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 		}
 		break;
 	case EA_PATHPROPERTY:
-		MN_ReadNodePath(path, source, (const menuNode_t**) &node, NULL);
+		MN_ReadNodePath(path, source, &node, NULL);
 		if (!node) {
 			Com_Printf("MN_ExecuteSetAction: node \"%s\" doesn't exist (source: %s)\n", path, MN_GetPath(source));
 			return;
@@ -281,7 +281,7 @@ static void MN_ExecuteInjectedAction (const menuNode_t* source, qboolean useCmdP
 
 	case EA_CALL:
 		/* call another function */
-		MN_ExecuteInjectedActions(source, qfalse, **(menuAction_t ***) action->data);
+		MN_ExecuteInjectedActions((const menuNode_t *) action->data, qfalse, *(menuAction_t **) action->data2);
 		break;
 
 	case EA_SET:
@@ -397,4 +397,119 @@ void MN_PoolAllocAction (menuAction_t** action, int type, const void *data)
 	default:
 		Sys_Error("Action type %i is not yet implemented", type);
 	}
+}
+
+/**
+ * @brief add a call of a function into a nodfe event
+ */
+static void MN_AddListener_f (void)
+{
+	menuNode_t *node;
+	menuNode_t *function;
+	const value_t *property;
+	menuAction_t *action;
+	menuAction_t *lastAction;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <pathnode@event> <pathnode>\n", Cmd_Argv(0));
+		return;
+	}
+
+	MN_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
+	if (node == NULL) {
+		Com_Printf("MN_AddListener_f: '%s' node not found.\n", Cmd_Argv(1));
+		return;
+	}
+	if (property == NULL || property->type != V_SPECIAL_ACTION) {
+		Com_Printf("MN_AddListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
+		return;
+	}
+
+	function = MN_GetNodeByPath(Cmd_Argv(2));
+	if (function == NULL) {
+		Com_Printf("MN_AddListener_f: '%s' node not found.\n", Cmd_Argv(2));
+		return;
+	}
+
+	/* create the action */
+	action = (menuAction_t*) Mem_PoolAlloc(sizeof(*action), cl_menuSysPool, 0);
+	action->type.op = EA_CALL;
+	action->data = (void*) function;
+	action->data2 = (void*) &function->onClick;
+	action->next = NULL;
+
+	/* insert the action */
+	lastAction = *(menuAction_t**)((char*)node + property->ofs);
+	while (lastAction)
+		lastAction = lastAction->next;
+	if (lastAction)
+		lastAction->next = action;
+	else
+		*(menuAction_t**)((char*)node + property->ofs) = action;
+}
+
+/**
+ * @brief add a call of a function from a nodfe event
+ */
+static void MN_RemoveListener_f (void)
+{
+	menuNode_t *node;
+	menuNode_t *function;
+	const value_t *property;
+	void *data;
+	menuAction_t *lastAction;
+
+	if (Cmd_Argc() != 3) {
+		Com_Printf("Usage: %s <pathnode@event> <pathnode>\n", Cmd_Argv(0));
+		return;
+	}
+
+	MN_ReadNodePath(Cmd_Argv(1), NULL, &node, &property);
+	if (node == NULL) {
+		Com_Printf("MN_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(1));
+		return;
+	}
+	if (property == NULL || property->type != V_SPECIAL_ACTION) {
+		Com_Printf("MN_RemoveListener_f: '%s' property not found, or is not an event.\n", Cmd_Argv(1));
+		return;
+	}
+
+	function = MN_GetNodeByPath(Cmd_Argv(2));
+	if (function == NULL) {
+		Com_Printf("MN_RemoveListener_f: '%s' node not found.\n", Cmd_Argv(2));
+		return;
+	}
+
+	/* data we must remove */
+	data = (void*) &function->onClick;
+
+	/* remove the action */
+	lastAction = *(menuAction_t**)((char*)node + property->ofs);
+	if (lastAction) {
+		menuAction_t *tmp = NULL;
+		if (lastAction->data2 == data) {
+			tmp = lastAction;
+			*(menuAction_t**)((char*)node + property->ofs) = lastAction->next;
+		} else {
+			while (lastAction->next) {
+				if (lastAction->next->data2 == data)
+					break;
+				lastAction = lastAction->next;
+			}
+			if (lastAction->next) {
+				tmp = lastAction->next;
+				lastAction->next = lastAction->next->next;
+			}
+		}
+		if (tmp)
+			Mem_Free(tmp);
+		else
+			Com_Printf("MN_RemoveListener_f: '%s' into '%s' not found.\n", Cmd_Argv(2), Cmd_Argv(1));
+	}
+}
+
+void MN_InitActions (void)
+{
+	Cmd_AddCommand("mn_addlistener", MN_AddListener_f, NULL);
+	Cmd_AddCommand("mn_removelistener", MN_RemoveListener_f, NULL);
 }

@@ -69,7 +69,7 @@ static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, 
 		}
 	case IF_VALUE_NODEPROPERTY:
 		{
-			const menuNode_t *node;
+			menuNode_t *node;
 			const value_t *property;
 			MN_ReadNodePath(value, source, &node, &property);
 			/** @todo need to make a better check */
