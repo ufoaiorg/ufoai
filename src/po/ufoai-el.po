@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-03-21 19:43+0100\n"
+"POT-Creation-Date: 2009-03-28 22:18+0100\n"
 "PO-Revision-Date: 2008-07-21 11:28+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -110,6 +110,7 @@ msgid "Japan"
 msgstr "Ιαπωνικά"
 
 #: ../base/maps/laboratory.ump:43 ../base/ufos/basemanagement.ufo:341
+#: client/campaign/cp_base_callbacks.c:319
 msgid "Laboratory"
 msgstr "Εργαστήριο"
 
@@ -307,12 +308,12 @@ msgstr "UFO - Carrier"
 msgid "Carrier U"
 msgstr "UFO - Carrier"
 
-#: ../base/ufos/aircraftmanagement.ufo:574 ../base/ufos/research.ufo:4257
+#: ../base/ufos/aircraftmanagement.ufo:574 ../base/ufos/research.ufo:4253
 #, fuzzy
 msgid "Aerial Laser Cannon"
 msgstr "Shiva Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:584 ../base/ufos/research.ufo:4296
+#: ../base/ufos/aircraftmanagement.ufo:584 ../base/ufos/research.ufo:4292
 #, fuzzy
 msgid "DF-Tank"
 msgstr "Μεταφορά"
@@ -321,11 +322,11 @@ msgstr "Μεταφορά"
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva Rotary Cannon"
 
-#: ../base/ufos/aircraftmanagement.ufo:610 ../base/ufos/research.ufo:4323
+#: ../base/ufos/aircraftmanagement.ufo:610 ../base/ufos/research.ufo:4319
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Rounds"
 
-#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/research.ufo:4344
+#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/research.ufo:4340
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI Rounds"
 
@@ -341,51 +342,51 @@ msgstr "Sparrowhawk AA Missile Rack"
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk Missile"
 
-#: ../base/ufos/aircraftmanagement.ufo:679 ../base/ufos/research.ufo:4403
+#: ../base/ufos/aircraftmanagement.ufo:679 ../base/ufos/research.ufo:4399
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:691 ../base/ufos/research.ufo:4420
+#: ../base/ufos/aircraftmanagement.ufo:691 ../base/ufos/research.ufo:4416
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rocket"
 
-#: ../base/ufos/aircraftmanagement.ufo:710 ../base/ufos/research.ufo:4439
+#: ../base/ufos/aircraftmanagement.ufo:710 ../base/ufos/research.ufo:4435
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/aircraftmanagement.ufo:724 ../base/ufos/research.ufo:4487
+#: ../base/ufos/aircraftmanagement.ufo:724 ../base/ufos/research.ufo:4483
 msgid "Targeting Computer"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/aircraftmanagement.ufo:735 ../base/ufos/research.ufo:4504
+#: ../base/ufos/aircraftmanagement.ufo:735 ../base/ufos/research.ufo:4500
 msgid "Fuel Pod"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/aircraftmanagement.ufo:748 ../base/ufos/research.ufo:4106
+#: ../base/ufos/aircraftmanagement.ufo:748 ../base/ufos/research.ufo:4102
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/aircraftmanagement.ufo:761 ../base/ufos/research.ufo:4123
+#: ../base/ufos/aircraftmanagement.ufo:761 ../base/ufos/research.ufo:4119
 msgid "Alien Aircraft Plating"
 msgstr "Alien Aircraft Plating"
 
-#: ../base/ufos/aircraftmanagement.ufo:774 ../base/ufos/research.ufo:4143
+#: ../base/ufos/aircraftmanagement.ufo:774 ../base/ufos/research.ufo:4139
 msgid "Alien Astrogation"
 msgstr "Εξωγήινος Αστρολάβος"
 
-#: ../base/ufos/aircraftmanagement.ufo:783 ../base/ufos/research.ufo:4181
+#: ../base/ufos/aircraftmanagement.ufo:783 ../base/ufos/research.ufo:4177
 msgid "Alien Propulsion"
 msgstr "Εξωγήινη ώθηση"
 
-#: ../base/ufos/aircraftmanagement.ufo:792 ../base/ufos/research.ufo:4218
+#: ../base/ufos/aircraftmanagement.ufo:792 ../base/ufos/research.ufo:4214
 msgid "Alien Detection"
 msgstr "Εξωγήινη ανίχνευση"
 
-#: ../base/ufos/aircraftmanagement.ufo:805 ../base/ufos/research.ufo:4051
+#: ../base/ufos/aircraftmanagement.ufo:805 ../base/ufos/research.ufo:4045
 msgid "AA51 missile launcher"
 msgstr "AA51 εκτοξευτής πυραύλων"
 
-#: ../base/ufos/aircraftmanagement.ufo:815 ../base/ufos/research.ufo:4068
+#: ../base/ufos/aircraftmanagement.ufo:815 ../base/ufos/research.ufo:4063
 msgid "AA51 Cicada SAM"
 msgstr "AA51 Cicada SAM"
 
@@ -463,7 +464,7 @@ msgstr "Είσοδος"
 msgid "Missile Battery"
 msgstr "Συστοιχία πυραύλων"
 
-#: ../base/ufos/basemanagement.ufo:119
+#: ../base/ufos/basemanagement.ufo:119 client/campaign/cp_base_callbacks.c:301
 msgid "Storage"
 msgstr "Αποθήκη"
 
@@ -475,15 +476,16 @@ msgstr "Γεννήτριες Ρεύματος"
 msgid "Command Centre"
 msgstr "Κέντρο Επιχειρήσεων"
 
-#: ../base/ufos/basemanagement.ufo:167
+#: ../base/ufos/basemanagement.ufo:167 client/campaign/cp_base_callbacks.c:337
 msgid "Living Quarters"
 msgstr "Διαμερίσματα"
 
 #: ../base/ufos/basemanagement.ufo:183 ../base/ufos/basemanagement.ufo:202
+#: client/campaign/cp_base_callbacks.c:292
 msgid "Large Hangar"
 msgstr "Μεγάλο Υπόστεγο"
 
-#: ../base/ufos/basemanagement.ufo:210
+#: ../base/ufos/basemanagement.ufo:210 client/campaign/cp_base_callbacks.c:292
 msgid "Small Hangar"
 msgstr "Μικρό Υπόστεγο"
 
@@ -500,6 +502,7 @@ msgid "Team Room"
 msgstr "Δωμάτιο Ομάδας"
 
 #: ../base/ufos/basemanagement.ufo:281 ../base/ufos/basemanagement.ufo:300
+#: client/campaign/cp_base_callbacks.c:328
 msgid "Workshop"
 msgstr "Μηχανουργείο"
 
@@ -511,7 +514,8 @@ msgstr "Ραντάρ"
 msgid "Advanced Radar"
 msgstr ""
 
-#: ../base/ufos/basemanagement.ufo:359 ../base/ufos/menu_bases.ufo:168
+#: ../base/ufos/basemanagement.ufo:359 ../base/ufos/menu_bases.ufo:167
+#: client/campaign/cp_base_callbacks.c:351
 msgid "Hospital"
 msgstr "Νοσοκομείο"
 
@@ -700,18 +704,18 @@ msgstr "SecGen. Mahouf Serra, Ηνωμένα Έθνη, Πόλη Νέας Υόρ�
 #: ../base/ufos/research.ufo:3650 ../base/ufos/research.ufo:3658
 #: ../base/ufos/research.ufo:3721 ../base/ufos/research.ufo:3729
 #: ../base/ufos/research.ufo:3781 ../base/ufos/research.ufo:3789
-#: ../base/ufos/research.ufo:3825 ../base/ufos/research.ufo:3833
-#: ../base/ufos/research.ufo:3869 ../base/ufos/research.ufo:3877
-#: ../base/ufos/research.ufo:4156 ../base/ufos/research.ufo:4163
-#: ../base/ufos/research.ufo:4194 ../base/ufos/research.ufo:4201
-#: ../base/ufos/research.ufo:4231 ../base/ufos/research.ufo:4238
-#: ../base/ufos/research.ufo:4273 ../base/ufos/research.ufo:4281
-#: ../base/ufos/research.ufo:4455 ../base/ufos/research.ufo:4463
-#: ../base/ufos/research.ufo:4538 ../base/ufos/research.ufo:4546
-#: ../base/ufos/research.ufo:4632 ../base/ufos/research.ufo:4666
-#: ../base/ufos/research.ufo:4673 ../base/ufos/research.ufo:4704
-#: ../base/ufos/research.ufo:4713 ../base/ufos/research.ufo:4746
-#: ../base/ufos/research.ufo:4753
+#: ../base/ufos/research.ufo:3823 ../base/ufos/research.ufo:3831
+#: ../base/ufos/research.ufo:3865 ../base/ufos/research.ufo:3873
+#: ../base/ufos/research.ufo:4152 ../base/ufos/research.ufo:4159
+#: ../base/ufos/research.ufo:4190 ../base/ufos/research.ufo:4197
+#: ../base/ufos/research.ufo:4227 ../base/ufos/research.ufo:4234
+#: ../base/ufos/research.ufo:4269 ../base/ufos/research.ufo:4277
+#: ../base/ufos/research.ufo:4451 ../base/ufos/research.ufo:4459
+#: ../base/ufos/research.ufo:4534 ../base/ufos/research.ufo:4542
+#: ../base/ufos/research.ufo:4628 ../base/ufos/research.ufo:4662
+#: ../base/ufos/research.ufo:4669 ../base/ufos/research.ufo:4700
+#: ../base/ufos/research.ufo:4709 ../base/ufos/research.ufo:4742
+#: ../base/ufos/research.ufo:4749
 msgid "mail_to_base_commander"
 msgstr "Διοικητής Βάσεως,Φάλαγγα, Atlantic Operations Command"
 
@@ -779,13 +783,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:3528 ../base/ufos/research.ufo:3563
 #: ../base/ufos/research.ufo:3571 ../base/ufos/research.ufo:3606
 #: ../base/ufos/research.ufo:3614 ../base/ufos/research.ufo:3649
-#: ../base/ufos/research.ufo:3657 ../base/ufos/research.ufo:4155
-#: ../base/ufos/research.ufo:4162 ../base/ufos/research.ufo:4193
-#: ../base/ufos/research.ufo:4200 ../base/ufos/research.ufo:4230
-#: ../base/ufos/research.ufo:4237 ../base/ufos/research.ufo:4272
-#: ../base/ufos/research.ufo:4280 ../base/ufos/research.ufo:4454
-#: ../base/ufos/research.ufo:4462 ../base/ufos/research.ufo:4537
-#: ../base/ufos/research.ufo:4545
+#: ../base/ufos/research.ufo:3657 ../base/ufos/research.ufo:4151
+#: ../base/ufos/research.ufo:4158 ../base/ufos/research.ufo:4189
+#: ../base/ufos/research.ufo:4196 ../base/ufos/research.ufo:4226
+#: ../base/ufos/research.ufo:4233 ../base/ufos/research.ufo:4268
+#: ../base/ufos/research.ufo:4276 ../base/ufos/research.ufo:4450
+#: ../base/ufos/research.ufo:4458 ../base/ufos/research.ufo:4533
+#: ../base/ufos/research.ufo:4541
 msgid "mail_from_paul_navarre"
 msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
 
@@ -965,8 +969,8 @@ msgstr "<TODO>"
 
 #: ../base/ufos/events.ufo:276 ../base/ufos/events.ufo:287
 #: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:542
-#: ../base/ufos/research.ufo:551 ../base/ufos/research.ufo:4703
-#: ../base/ufos/research.ufo:4712
+#: ../base/ufos/research.ufo:551 ../base/ufos/research.ufo:4699
+#: ../base/ufos/research.ufo:4708
 msgid "mail_from_col_falkland"
 msgstr "Col. Ingrid Falkland, Intelligence Division, PHALANX, Atlantic Operations Command"
 
@@ -1075,43 +1079,43 @@ msgstr "media/FreeSans.ttf"
 msgid "1on1"
 msgstr "1με1"
 
-#: ../base/ufos/gametypes.ufo:18
+#: ../base/ufos/gametypes.ufo:17
 msgid "1on1on1"
 msgstr "1με1με1"
 
-#: ../base/ufos/gametypes.ufo:32
+#: ../base/ufos/gametypes.ufo:30
 msgid "2on2"
 msgstr "2με2"
 
-#: ../base/ufos/gametypes.ufo:46
+#: ../base/ufos/gametypes.ufo:43
 msgid "2on2on2"
 msgstr "2με2με2"
 
-#: ../base/ufos/gametypes.ufo:60
+#: ../base/ufos/gametypes.ufo:56
 msgid "3on3"
 msgstr "3με3"
 
-#: ../base/ufos/gametypes.ufo:74
+#: ../base/ufos/gametypes.ufo:69
 msgid "3on3on3"
 msgstr "3με3με3"
 
-#: ../base/ufos/gametypes.ufo:88
+#: ../base/ufos/gametypes.ufo:82
 msgid "4on4"
 msgstr "4με4"
 
-#: ../base/ufos/gametypes.ufo:102
+#: ../base/ufos/gametypes.ufo:95
 msgid "4on4on4"
 msgstr "4με4με4"
 
-#: ../base/ufos/gametypes.ufo:116
+#: ../base/ufos/gametypes.ufo:108
 msgid "Coop 2 players"
 msgstr "Συνεργασία 2 παιχτών"
 
-#: ../base/ufos/gametypes.ufo:130
+#: ../base/ufos/gametypes.ufo:121
 msgid "Coop 3 players"
 msgstr "Συνεργασία 3 παιχτών"
 
-#: ../base/ufos/gametypes.ufo:144
+#: ../base/ufos/gametypes.ufo:134
 msgid "Coop 4 players"
 msgstr "Συνεργασία 4 παιχτών"
 
@@ -1570,7 +1574,7 @@ msgid "Check to use this firemode for reaction fire"
 msgstr "Επιλέξτε για να χρησιμοποιήσετε αυτήν την απάντηση πυρών."
 
 #: ../base/ufos/menu_aircraft.ufo:44 ../base/ufos/menu_aliencont.ufo:21
-#: ../base/ufos/menu_bases.ufo:219 ../base/ufos/menu_basesummary.ufo:215
+#: ../base/ufos/menu_bases.ufo:218 ../base/ufos/menu_basesummary.ufo:215
 #: ../base/ufos/menu_buildings.ufo:41 ../base/ufos/menu_hire.ufo:586
 #: ../base/ufos/menu_hospital.ufo:21 ../base/ufos/menu_hospital.ufo:488
 #: ../base/ufos/menu_market.ufo:19 ../base/ufos/menu_production.ufo:18
@@ -1579,7 +1583,7 @@ msgid "Name of this base"
 msgstr "Όνομα αυτής της βάσης"
 
 #: ../base/ufos/menu_aircraft.ufo:55 ../base/ufos/menu_airfight.ufo:45
-#: ../base/ufos/menu_aliencont.ufo:32 ../base/ufos/menu_bases.ufo:200
+#: ../base/ufos/menu_aliencont.ufo:32 ../base/ufos/menu_bases.ufo:199
 #: ../base/ufos/menu_basesummary.ufo:226 ../base/ufos/menu_buildings.ufo:70
 #: ../base/ufos/menu_geoscape.ufo:126 ../base/ufos/menu_geoscape.ufo:572
 #: ../base/ufos/menu_hire.ufo:596 ../base/ufos/menu_hospital.ufo:32
@@ -1591,7 +1595,7 @@ msgid "CREDITS"
 msgstr "ΧΡΗΜΑΤΑ"
 
 #: ../base/ufos/menu_aircraft.ufo:63 ../base/ufos/menu_airfight.ufo:53
-#: ../base/ufos/menu_aliencont.ufo:40 ../base/ufos/menu_bases.ufo:208
+#: ../base/ufos/menu_aliencont.ufo:40 ../base/ufos/menu_bases.ufo:207
 #: ../base/ufos/menu_basesummary.ufo:234 ../base/ufos/menu_buildings.ufo:78
 #: ../base/ufos/menu_geoscape.ufo:135 ../base/ufos/menu_geoscape.ufo:581
 #: ../base/ufos/menu_hire.ufo:604 ../base/ufos/menu_hospital.ufo:40
@@ -2034,96 +2038,97 @@ msgstr "Έγινε"
 msgid "Back to geoscape"
 msgstr "Επιστροφή στο geoscape"
 
-#: ../base/ufos/menu_bases.ufo:56
+#: ../base/ufos/menu_bases.ufo:55
 msgid "Buildings"
 msgstr "Κτήρια"
 
-#: ../base/ufos/menu_bases.ufo:57
+#: ../base/ufos/menu_bases.ufo:56
 msgid "Build base facilities"
 msgstr "Χτίσιμο δραστηριοτήτων βάσης"
 
-#: ../base/ufos/menu_bases.ufo:70 ../base/ufos/menu_geoscape.ufo:2062
+#: ../base/ufos/menu_bases.ufo:69 ../base/ufos/menu_geoscape.ufo:2062
 #: ../base/ufos/menu_market.ufo:88 ../base/ufos/menu_production.ufo:87
 #: ../base/ufos/menu_transfer.ufo:94 ../base/ufos/research.ufo:108
 #: client/campaign/cl_map.c:359
 msgid "Aircraft"
 msgstr "Σκάφος"
 
-#: ../base/ufos/menu_bases.ufo:71
+#: ../base/ufos/menu_bases.ufo:70 client/campaign/cp_base_callbacks.c:287
 msgid "Manage your aircraft"
 msgstr "Διευθύνεται το σκάφος σας"
 
-#: ../base/ufos/menu_bases.ufo:84
+#: ../base/ufos/menu_bases.ufo:83
 msgid "Buy/Sell Equipment"
 msgstr "Αγορά/Πώληση"
 
-#: ../base/ufos/menu_bases.ufo:85
+#: ../base/ufos/menu_bases.ufo:84 client/campaign/cp_base_callbacks.c:296
 msgid "Buy/Sell equipment"
 msgstr "Αγορά/Πώληση"
 
-#: ../base/ufos/menu_bases.ufo:98 ../base/ufos/menu_transfer.ufo:284
-#: client/campaign/cp_base.c:839 client/campaign/cp_base.c:849
-#: client/campaign/cp_base.c:859
+#: ../base/ufos/menu_bases.ufo:97 ../base/ufos/menu_transfer.ufo:284
+#: client/campaign/cp_base.c:786 client/campaign/cp_base.c:796
+#: client/campaign/cp_base.c:806
 msgid "Transfer"
 msgstr "Μεταφορά"
 
-#: ../base/ufos/menu_bases.ufo:99
+#: ../base/ufos/menu_bases.ufo:98 client/campaign/cp_base_callbacks.c:305
 msgid "Transfer equipment or personnel"
 msgstr "Μεταφορά εξοπλισμού ή προσωπικού"
 
-#: ../base/ufos/menu_bases.ufo:112
+#: ../base/ufos/menu_bases.ufo:111
 msgid "Research"
 msgstr "Έρευνα"
 
-#: ../base/ufos/menu_bases.ufo:113
+#: ../base/ufos/menu_bases.ufo:112 client/campaign/cp_base_callbacks.c:314
 msgid "Research new technology"
 msgstr "Έρευνα νέας τεχνολογίας"
 
-#: ../base/ufos/menu_bases.ufo:126
+#: ../base/ufos/menu_bases.ufo:125
 msgid "Production"
 msgstr "Παραγωγή"
 
-#: ../base/ufos/menu_bases.ufo:127
+#: ../base/ufos/menu_bases.ufo:126 client/campaign/cp_base_callbacks.c:323
 msgid "Produce new equipment"
 msgstr "Παραγωγή νέου εξοπλισμού"
 
-#: ../base/ufos/menu_bases.ufo:140 ../base/ufos/menu_bases.ufo:141
+#: ../base/ufos/menu_bases.ufo:139 ../base/ufos/menu_bases.ufo:140
+#: client/campaign/cp_base_callbacks.c:332
 msgid "Hire employees"
 msgstr "Μίσθωση Ατόμων"
 
-#: ../base/ufos/menu_bases.ufo:154
+#: ../base/ufos/menu_bases.ufo:153 client/campaign/cp_base_callbacks.c:343
 msgid "Containment"
 msgstr "Θόλος Εξωγήινων"
 
-#: ../base/ufos/menu_bases.ufo:155
+#: ../base/ufos/menu_bases.ufo:154 client/campaign/cp_base_callbacks.c:341
 msgid "Deal with Aliens in Alien Containment"
 msgstr "Εξετάστε τους αλλοδαπούς στόν Θόλο εξωγήινων"
 
-#: ../base/ufos/menu_bases.ufo:169
+#: ../base/ufos/menu_bases.ufo:168 client/campaign/cp_base_callbacks.c:346
 msgid "Medical and Surgery operations"
 msgstr "Νοσοκομειακή και χειρουργική επιχείρηση"
 
-#: ../base/ufos/menu_bases.ufo:182
+#: ../base/ufos/menu_bases.ufo:181
 msgid "Base Summary"
 msgstr "Περίληψη Βάσης"
 
-#: ../base/ufos/menu_bases.ufo:183
+#: ../base/ufos/menu_bases.ufo:182
 msgid "Base Information"
 msgstr "Πληροφορίες Βάσης"
 
-#: ../base/ufos/menu_bases.ufo:239 ../base/ufos/menu_geoscape.ufo:1132
+#: ../base/ufos/menu_bases.ufo:238 ../base/ufos/menu_geoscape.ufo:1132
 msgid "Rename your base"
 msgstr "Μεταονομασία της βάσης σας"
 
-#: ../base/ufos/menu_bases.ufo:252
+#: ../base/ufos/menu_bases.ufo:251
 msgid "Switch to the previous base"
 msgstr "Αλλαγή στην προηγούμενη βάση"
 
-#: ../base/ufos/menu_bases.ufo:263
+#: ../base/ufos/menu_bases.ufo:262
 msgid "Switch to the next base"
 msgstr "Αλλαγή στην επόμενη βάση"
 
-#: ../base/ufos/menu_bases.ufo:285 ../base/ufos/menu_geoscape.ufo:907
+#: ../base/ufos/menu_bases.ufo:284 ../base/ufos/menu_geoscape.ufo:907
 msgid "Base is under attack"
 msgstr "Η βάση βρίσκεται σε επίθεση"
 
@@ -2265,8 +2270,8 @@ msgstr "Διάφορα"
 #: ../base/ufos/menu_equipment.ufo:302 ../base/ufos/menu_market.ufo:78
 #: ../base/ufos/menu_multiplayer_team.ufo:311
 #: ../base/ufos/menu_production.ufo:77
-#: client/campaign/cl_fightequip_callbacks.c:360
-#: client/campaign/cl_ufopedia.c:192
+#: client/campaign/cl_fightequip_callbacks.c:362
+#: client/campaign/cl_ufopedia.c:186
 msgid "Armour"
 msgstr "Θωράκιση"
 
@@ -2433,7 +2438,7 @@ msgid "Toggle between full zoom and half zoom"
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:717 ../base/ufos/menu_geoscape.ufo:2142
-#: ../base/ufos/menu_main.ufo:267 ../base/ufos/menu_multiplayer.ufo:1401
+#: ../base/ufos/menu_main.ufo:267 ../base/ufos/menu_multiplayer.ufo:1382
 msgid "OK"
 msgstr "OK"
 
@@ -2462,7 +2467,7 @@ msgstr "Το σκάφος έφτασε στην επιθυμητή περιοχ�
 #: ../base/ufos/menu_geoscape.ufo:2037 ../base/ufos/menu_geoscape.ufo:2096
 #: ../base/ufos/menu_geoscape.ufo:2187 ../base/ufos/menu_irc.ufo:218
 #: ../base/ufos/menu_options.ufo:1284
-#: client/campaign/cp_installation_callbacks.c:269
+#: client/campaign/cp_installation_callbacks.c:232
 msgid "Cancel"
 msgstr "Ακύρωση"
 
@@ -2652,15 +2657,15 @@ msgstr "Range"
 msgid "Manage installation"
 msgstr "Έθνος"
 
-#: ../base/ufos/menu_geoscape.ufo:1761 client/campaign/cp_base.c:838
-#: client/campaign/cp_base.c:848 client/campaign/cp_base.c:858
-#: client/campaign/cp_base.c:871
-#: client/campaign/cp_installation_callbacks.c:268
+#: ../base/ufos/menu_geoscape.ufo:1761 client/campaign/cp_base.c:785
+#: client/campaign/cp_base.c:795 client/campaign/cp_base.c:805
+#: client/campaign/cp_base.c:818
+#: client/campaign/cp_installation_callbacks.c:231
 msgid "Destroy"
 msgstr "Καταστρέψτε"
 
 #: ../base/ufos/menu_geoscape.ufo:1762
-#: client/campaign/cp_installation_callbacks.c:268
+#: client/campaign/cp_installation_callbacks.c:231
 #, fuzzy
 msgid "Destroy installation"
 msgstr "Έθνος"
@@ -2951,7 +2956,7 @@ msgstr "Πάτωμα"
 
 #: ../base/ufos/menu_irc.ufo:19 ../base/ufos/menu_multiplayer.ufo:76
 #: ../base/ufos/menu_multiplayer.ufo:129
-#: ../base/ufos/menu_multiplayer.ufo:1443
+#: ../base/ufos/menu_multiplayer.ufo:1424
 #: ../base/ufos/menu_multiplayeringame.ufo:60
 msgid "Lobby"
 msgstr "Προθάλαμος"
@@ -2983,7 +2988,7 @@ msgstr ""
 
 #: ../base/ufos/menu_irc.ufo:206 ../base/ufos/menu_multiplayer.ufo:221
 #: ../base/ufos/menu_multiplayer.ufo:421
-#: ../base/ufos/menu_multiplayer.ufo:1402
+#: ../base/ufos/menu_multiplayer.ufo:1383
 msgid "Connect"
 msgstr "Σύνδεση"
 
@@ -3334,100 +3339,92 @@ msgstr "Max. AI actors:"
 msgid "Max AI actors for teamplay mode"
 msgstr "Max AI actors for teamplay mode"
 
-#: ../base/ufos/menu_multiplayer.ufo:959
-msgid "AI autojoin:"
-msgstr "AI autojoin:"
-
-#: ../base/ufos/menu_multiplayer.ufo:960
-msgid "AI autojoin on free teams"
-msgstr "AI autojoin on free teams"
-
-#: ../base/ufos/menu_multiplayer.ufo:985
+#: ../base/ufos/menu_multiplayer.ufo:966
 msgid "Make this server public:"
 msgstr "Κάντε αυτόν τον server κοινό:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1002
+#: ../base/ufos/menu_multiplayer.ufo:983
 msgid "Server-Password:"
 msgstr "Server-Password:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1026
+#: ../base/ufos/menu_multiplayer.ufo:1007
 msgid "RCON-Password:"
 msgstr "RCON-Password:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1054 ../base/ufos/seq_tutorials.ufo:785
+#: ../base/ufos/menu_multiplayer.ufo:1035 ../base/ufos/seq_tutorials.ufo:785
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1069
+#: ../base/ufos/menu_multiplayer.ufo:1050
 msgid "Start server"
 msgstr "Έναρξη server"
 
-#: ../base/ufos/menu_multiplayer.ufo:1134
+#: ../base/ufos/menu_multiplayer.ufo:1115
 msgid "Team selection"
 msgstr "Επιλογή Ομάδας"
 
-#: ../base/ufos/menu_multiplayer.ufo:1144
+#: ../base/ufos/menu_multiplayer.ufo:1125
 msgid "Click the big button in the lower right corner when ready"
 msgstr "Πιέστε το μεγάλο πλήκτρο στη κάτω δεξιά γωνία όταν είστε έτοιμος"
 
-#: ../base/ufos/menu_multiplayer.ufo:1184
+#: ../base/ufos/menu_multiplayer.ufo:1165
 msgid "Max. players per team"
 msgstr "Μεγ.αριθμός παιχτών ανά ομάδα"
 
-#: ../base/ufos/menu_multiplayer.ufo:1198
+#: ../base/ufos/menu_multiplayer.ufo:1179
 msgid "Max. teams for this map"
 msgstr "Μεγ. αριθμός ομάδων για αυτόν τον χάρτη"
 
-#: ../base/ufos/menu_multiplayer.ufo:1212
+#: ../base/ufos/menu_multiplayer.ufo:1193
 msgid "Team preference:"
 msgstr "Προτιμήσεις ομάδας:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1225
+#: ../base/ufos/menu_multiplayer.ufo:1206
 msgid "Next free team"
 msgstr "Επόμενη ελεύθερη ομάδα"
 
-#: ../base/ufos/menu_multiplayer.ufo:1235
+#: ../base/ufos/menu_multiplayer.ufo:1216
 msgid "Previous free team"
 msgstr "Προηγούμενη ελεύθερη ομάδα"
 
-#: ../base/ufos/menu_multiplayer.ufo:1246
+#: ../base/ufos/menu_multiplayer.ufo:1227
 msgid "Finish the teamselection and start the game"
 msgstr "Ολοκληρώστε την επιλογή της ομάδας και ξεκινήστε τοπαιχνίδι"
 
-#: ../base/ufos/menu_multiplayer.ufo:1264
+#: ../base/ufos/menu_multiplayer.ufo:1245
 msgid "Activate chat"
 msgstr "Ενεργοποιήστε το  chat"
 
-#: ../base/ufos/menu_multiplayer.ufo:1302
+#: ../base/ufos/menu_multiplayer.ufo:1283
 msgid "Please wait"
 msgstr "Παρακαλώ περιμένετε"
 
-#: ../base/ufos/menu_multiplayer.ufo:1326
+#: ../base/ufos/menu_multiplayer.ufo:1307
 msgid "Players connected, waiting for others"
 msgstr "Παίχτες συνδέονται, περιμένετε για τουσς υπολοίπους"
 
-#: ../base/ufos/menu_multiplayer.ufo:1341
+#: ../base/ufos/menu_multiplayer.ufo:1322
 msgid "Force start"
 msgstr "Force start"
 
-#: ../base/ufos/menu_multiplayer.ufo:1342
+#: ../base/ufos/menu_multiplayer.ufo:1323
 msgid "Start the game even if not all teams have joined"
 msgstr "Start the game even if not all teams have joined"
 
-#: ../base/ufos/menu_multiplayer.ufo:1366
+#: ../base/ufos/menu_multiplayer.ufo:1347
 msgid "Enter server password"
 msgstr "Εισάγετε κωδικό πρόσβασης του server"
 
-#: ../base/ufos/menu_multiplayer.ufo:1380
+#: ../base/ufos/menu_multiplayer.ufo:1361
 msgid "Password:"
 msgstr "Κωδικός Πρόσβασης:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1420
+#: ../base/ufos/menu_multiplayer.ufo:1401
 #, fuzzy
 msgid "Personal message"
 msgstr "Άνοιγμα μηνυμάτων"
 
-#: ../base/ufos/menu_multiplayer.ufo:1444
+#: ../base/ufos/menu_multiplayer.ufo:1425
 #, fuzzy
 msgid "Go into the lobby"
 msgstr "Σύνδεση στην IP"
@@ -3453,7 +3450,7 @@ msgid "Team:"
 msgstr "Ομάδα"
 
 #: ../base/ufos/menu_multiplayer_team.ufo:938
-#: ../base/ufos/menu_skirmish.ufo:237 client/cl_game_campaign.c:201
+#: ../base/ufos/menu_skirmish.ufo:237 client/cl_game_campaign.c:200
 msgid "Human"
 msgstr "Άνθρωπος"
 
@@ -3586,7 +3583,7 @@ msgid "Medium"
 msgstr "Μέση"
 
 #: ../base/ufos/menu_options.ufo:509 ../base/ufos/menu_options.ufo:538
-#: client/cl_game_campaign.c:132
+#: client/cl_game_campaign.c:131
 msgid "Normal"
 msgstr "Κανονική"
 
@@ -3949,7 +3946,7 @@ msgstr "Χρηματοδότηση"
 msgid "max"
 msgstr "μέγιστο"
 
-#: ../base/ufos/menu_transfer.ufo:89 client/cl_game_campaign.c:203
+#: ../base/ufos/menu_transfer.ufo:89 client/cl_game_campaign.c:202
 msgid "Aliens"
 msgstr "Εξωγήινοι"
 
@@ -4079,8 +4076,8 @@ msgstr "Antimatter"
 msgid "Alien Breathing Apparatus"
 msgstr "Συσκευή Αναπνοής Εξωγήινων"
 
-#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4524
-#: ../base/ufos/research.ufo:4563
+#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4520
+#: ../base/ufos/research.ufo:4559
 msgid "Alien Materials"
 msgstr "Εξωγήινα υλικά"
 
@@ -4290,11 +4287,11 @@ msgstr ""
 #: ../base/ufos/research.ufo:505 ../base/ufos/research.ufo:513
 #: ../base/ufos/research.ufo:3720 ../base/ufos/research.ufo:3728
 #: ../base/ufos/research.ufo:3780 ../base/ufos/research.ufo:3788
-#: ../base/ufos/research.ufo:3824 ../base/ufos/research.ufo:3832
-#: ../base/ufos/research.ufo:3868 ../base/ufos/research.ufo:3876
-#: ../base/ufos/research.ufo:4631 ../base/ufos/research.ufo:4665
-#: ../base/ufos/research.ufo:4672 ../base/ufos/research.ufo:4745
-#: ../base/ufos/research.ufo:4752
+#: ../base/ufos/research.ufo:3822 ../base/ufos/research.ufo:3830
+#: ../base/ufos/research.ufo:3864 ../base/ufos/research.ufo:3872
+#: ../base/ufos/research.ufo:4627 ../base/ufos/research.ufo:4661
+#: ../base/ufos/research.ufo:4668 ../base/ufos/research.ufo:4741
+#: ../base/ufos/research.ufo:4748
 msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
 
@@ -4470,7 +4467,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:331
+#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:322
 #: client/campaign/cp_missions.c:447
 #, fuzzy
 msgid "Alien base"
@@ -7168,8 +7165,8 @@ msgstr ""
 "\n"
 "Ουδέν."
 
-#: ../base/ufos/research.ufo:2967 ../base/ufos/research.ufo:4054
-#: ../base/ufos/research.ufo:4071
+#: ../base/ufos/research.ufo:2967 ../base/ufos/research.ufo:4048
+#: ../base/ufos/research.ufo:4066
 msgid "b_missile_txt"
 msgstr ""
 "Σχεδιάγραμμα -- Συστοιχία Πυραύλων\n"
@@ -8550,11 +8547,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3809
+#: ../base/ufos/research.ufo:3807
 msgid "Alien Autopsy - Taman"
 msgstr "Αυτοψία Εξωγήινου - Taman"
 
-#: ../base/ufos/research.ufo:3814
+#: ../base/ufos/research.ufo:3812
 msgid "taman_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8593,7 +8590,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3815
+#: ../base/ufos/research.ufo:3813
 msgid "taman_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8630,7 +8627,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3818
+#: ../base/ufos/research.ufo:3816
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8641,7 +8638,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3819
+#: ../base/ufos/research.ufo:3817
 msgid "taman_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8652,11 +8649,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3853
+#: ../base/ufos/research.ufo:3849
 msgid "Alien Autopsy - Shevaar"
 msgstr "Αυτοψία Εξωγήινου - Shevaar"
 
-#: ../base/ufos/research.ufo:3858
+#: ../base/ufos/research.ufo:3854
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8693,7 +8690,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3859
+#: ../base/ufos/research.ufo:3855
 msgid "shevaar_autopsy_extra_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8728,7 +8725,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3862
+#: ../base/ufos/research.ufo:3858
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8739,7 +8736,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3863
+#: ../base/ufos/research.ufo:3859
 msgid "shevaar_autopsy_extra_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -8750,49 +8747,49 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:3954
+#: ../base/ufos/research.ufo:3948
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:3956
+#: ../base/ufos/research.ufo:3950
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3959
+#: ../base/ufos/research.ufo:3953
 msgid "ugv_phoenix_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3974
+#: ../base/ufos/research.ufo:3968
 msgid "Ares W (UGV)"
 msgstr "Ares W (UGV)"
 
-#: ../base/ufos/research.ufo:3976
+#: ../base/ufos/research.ufo:3970
 msgid "ugv_ares_w_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3979
+#: ../base/ufos/research.ufo:3973
 msgid "ugv_ares_w_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:3995
+#: ../base/ufos/research.ufo:3989
 #, fuzzy
 msgid "ugv_chaingun_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3998
+#: ../base/ufos/research.ufo:3992
 msgid "ugv_chaingun_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4014
+#: ../base/ufos/research.ufo:4008
 #, fuzzy
 msgid "ugv_chaingun_belt_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4017
+#: ../base/ufos/research.ufo:4011
 msgid "ugv_chaingun_belt_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4032
+#: ../base/ufos/research.ufo:4026
 #, fuzzy
 msgid "ugv_weapon_autocannon_txt"
 msgstr ""
@@ -8812,15 +8809,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4035
+#: ../base/ufos/research.ufo:4029
 msgid "ugv_weapon_autocannon_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4089
+#: ../base/ufos/research.ufo:4085
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
-#: ../base/ufos/research.ufo:4092
+#: ../base/ufos/research.ufo:4088
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -8859,7 +8856,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4109
+#: ../base/ufos/research.ufo:4105
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -8902,11 +8899,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4125
+#: ../base/ufos/research.ufo:4121
 msgid "craft_shield_plating_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4128
+#: ../base/ufos/research.ufo:4124
 msgid "craft_shield_plating_txt"
 msgstr ""
 "Commander, I've got some good news. My team and I have finished prototyping the alien aircraft plating project. Our new armour is now ready for full PHALANX production.\n"
@@ -8923,7 +8920,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4148
+#: ../base/ufos/research.ufo:4144
 msgid "craft_alien_astrogation_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, η περισυλλογή μιας άθικτης μονάδας αστροπλοήγησης των εξωγήινων αποτελεί σταθμό στις προσπάθειές μας. Παρόλο που η μονάδα δεν φαίνεται να περιέχει κάποιον αστρικό χάρτη, θα μας επιτρέψει να μεταφράσουμε τις εξωγήινες αστρονομικές παρατηρήσεις και να αναβαθμίσουμε τα δικά μας αστρονομικά συστήματα κατά αρκετές τάξεις μεγέθους. Τελικά, η προσπάθεια που θα καταβάλλουμε εδώ μπορεί να μας βοηθήσει να ακολουθήσουμε τους εξωγήινους πίσω στον μητρικό τους πλανήτη.\n"
@@ -8932,7 +8929,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4151
+#: ../base/ufos/research.ufo:4147
 msgid "craft_alien_astrogation_txt"
 msgstr ""
 "Κύριε Διοικητά, ολοκληρώσαμε τις εργασίες μας πάνω στην εξωγήινη μονάδα αστροπλοήγησης. Ακολουθεί μια περίληψη της αναφοράς που προέκυψε.\n"
@@ -8951,7 +8948,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4186
+#: ../base/ufos/research.ufo:4182
 msgid "craft_alien_propulsion_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, οι εξηγήινοι κινητήρες αντιύλης που περισυλλέξαμε προκαλέσαν το ενδαφέρον της ομάδας μου από τη στιγμή που βρέθηκαν στα χέρια μας. Τώρα πια που έχουμε κατανοήσει τις ιδιότητες των εξωγήινων υλικών, πιστεύω ότι μπορούμε να αποκαλύψουμε τις λεπτομέρειες της συγκεκριμένης τεχνολογίας καθώς και να την αντιγράψουμε. Μόλις κατανοήσουμε τη λειτουργία και τον τρόπο κατασκευής των διαφορετικών εξαρτηματων θα είμαστε σε θέση να αντιγράψουμε τους συγκεκριμένους κινητήρες.\n"
@@ -8960,7 +8957,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4189
+#: ../base/ufos/research.ufo:4185
 msgid "craft_alien_propulsion_txt"
 msgstr ""
 "Κύριε Διοικητά, βρίσκομαι στην ευχάριστη θέση να σας αναφέρω την επιτυχία του προγράμματος ανάλυσης της εξωγήινης προώθησης. Αποκαλύψαμε τα μυστικά της κατασκευής του εξωγήινου κινητήρα και κατανοήσαμε επιτέλους τη διαδρομή που διανύει η αντιύλη από τη δεξαμενή καυσίμων μέχρι τον θάλαμο αντίδρασης.\n"
@@ -8983,7 +8980,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4223
+#: ../base/ufos/research.ufo:4219
 msgid "craft_alien_detection_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, ο εξωγήινος εξοπλισμός ανίχνευσης φαίνεται να αποτελείται από ένα σύνολο ισχυρών ενεργητικών και παθητικών ανιχνευτικών συστημάτων, στα οποία συμπεριλαμβάνεται ρανταρ, εικόνα, δέκτες μαγνητισμού και υπεριωδών/υπέρυθρων. Το πιο ενδιαφέρον, όμως, εξάρτημα εκτελεί κάποιο είδος ανίχνευσης άγνωστο σε εμάς και το οποίο δείχνει να είναι πολύ πιο αποτελεσματικό στον εντοπισμό UFO από οτιδήποτε άλλο διαθέτουμε.\n"
@@ -8994,7 +8991,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4226
+#: ../base/ufos/research.ufo:4222
 msgid "craft_alien_detection_txt"
 msgstr ""
 "Η έρευνα του εξωγήινου εξοπλισμού ανίχνευσης ολοκληρώθηκε, κύριε Διοικητά. Τώρα πια έχουμε πλήρη κατανόηση της λειτουργίας και του ελέγχου των μηχανημάτων, καθώς και των τροποποιήσεων που απαιτούνται για ανθρώπινη χρήση.\n"
@@ -9017,7 +9014,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διεύθυντής"
 
-#: ../base/ufos/research.ufo:4259
+#: ../base/ufos/research.ufo:4255
 #, fuzzy
 msgid "craft_weapon_alc_pre_txt"
 msgstr ""
@@ -9061,7 +9058,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4262
+#: ../base/ufos/research.ufo:4258
 #, fuzzy
 msgid "craft_weapon_alc_txt"
 msgstr ""
@@ -9105,11 +9102,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4306
+#: ../base/ufos/research.ufo:4302
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:4309
+#: ../base/ufos/research.ufo:4305
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -9152,7 +9149,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4326
+#: ../base/ufos/research.ufo:4322
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -9191,7 +9188,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4347
+#: ../base/ufos/research.ufo:4343
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -9230,11 +9227,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4365
+#: ../base/ufos/research.ufo:4361
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missile Rack"
 
-#: ../base/ufos/research.ufo:4368
+#: ../base/ufos/research.ufo:4364
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -9283,11 +9280,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4382
+#: ../base/ufos/research.ufo:4378
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/research.ufo:4385
+#: ../base/ufos/research.ufo:4381
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -9330,7 +9327,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4406
+#: ../base/ufos/research.ufo:4402
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -9373,7 +9370,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4423
+#: ../base/ufos/research.ufo:4419
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -9416,11 +9413,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:4444
+#: ../base/ufos/research.ufo:4440
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
-#: ../base/ufos/research.ufo:4447
+#: ../base/ufos/research.ufo:4443
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
@@ -9439,7 +9436,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:4490
+#: ../base/ufos/research.ufo:4486
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technical Specifications: Targeting Computer\n"
@@ -9478,7 +9475,7 @@ msgstr ""
 "\n"
 "With all the possibilities and different scenarios waiting in our future, there is no golden rule that will help decide when to deploy the Targeting Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:4507
+#: ../base/ufos/research.ufo:4503
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technical Specifications: Fuel Pod\n"
@@ -9515,7 +9512,7 @@ msgstr ""
 "\n"
 "Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
-#: ../base/ufos/research.ufo:4529 ../base/ufos/research.ufo:4565
+#: ../base/ufos/research.ufo:4525 ../base/ufos/research.ufo:4561
 msgid "alien_materials_txt"
 msgstr ""
 "Κύριε Διοικητά, πιστεύω ότι ανακαλύψαμε το μυστικό των εξωγήινων υλικών. Ύστερα από ορισμένες τροποποιήσεις του εξοπλισμού των Μηχανουργείων μας, είμαστε πλέον έτοιμοι να χρησιμοποιήσουμε τα υλικά αυτά και να τα \"προγραματίσουμε\" σε νέες και περίπλοκες μορφές.\n"
@@ -9532,7 +9529,7 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4532
+#: ../base/ufos/research.ufo:4528
 msgid "alien_materials_pre_txt"
 msgstr ""
 "Κύριε Διοικητά, όπως ανέφερα στην προηγούμενή μου αναφορά, το UFO που περισυλλέξαμε είναι εξωτερικά καλυμμένο με ένα άκρως ενδιαφέρον κράμα το οποίο συνδυάζει πλαστικό και μέταλλο σε ένα υλικό. Το υλικό αυτό φαίνεται να χρησιμοποιείται σχεδόν σε κάθε εκφρασή της εξηγήινης τεχνολογίας. Πρόκεται για άκρως εξελιγμένο υλικό που προσφέρει μεγάλη ευελιξία και θα μπορούσε να βρει χιλιάδες πιθανές εφαρμογές.\n"
@@ -9541,11 +9538,11 @@ msgstr ""
 "\n"
 "--Paul Navarre, Διευθυντής"
 
-#: ../base/ufos/research.ufo:4584
+#: ../base/ufos/research.ufo:4580
 msgid "Political Situation Before The Invasion"
 msgstr "Πολιτική κατάσταση πρίν την εισβολή"
 
-#: ../base/ufos/research.ufo:4586
+#: ../base/ufos/research.ufo:4582
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "In the year 2084, Earth is in better shape than it has been for more than a century. Perhaps for the first time, peace and cooperation are the norm rather than the exception. The current state of affairs, however, can only be explained through the brutal history of the 21st century.\n"
@@ -9564,11 +9561,11 @@ msgstr ""
 "\n"
 "The loyalist army suffered massive desertions in the days that followed; it was the single event that eventually spelled doom for the government. More than six million lives were lost before the surrender of loyalist forces on 15 August 2036, having fought tooth and nail and employed large-scale scorched earth tactics as the rebels slowly drove them into the Indian Ocean. This is the official ending of the Second Cold War."
 
-#: ../base/ufos/research.ufo:4596
+#: ../base/ufos/research.ufo:4592
 msgid "After The War"
 msgstr "Μετά τον πόλεμο"
 
-#: ../base/ufos/research.ufo:4598
+#: ../base/ufos/research.ufo:4594
 msgid "news_after_the_war_txt"
 msgstr ""
 "Η ασιατική Δημοκρατίαc:\n"
@@ -9681,11 +9678,11 @@ msgstr ""
 "\n"
 "Ο στρατός της Ωκεανίας αποτελείται κυρίως από ένα ισχυρό ναυτικό. Ο στρατός εδάφους είναι μικροσκοπικός έναντι σε αυτόν οποιουδήποτε έθνους εκτός από την ηνωμένη Αμερική, και εξυπηρετεί μόνο σε μια αμυντική ικανότητα, με τη μέση κατάρτιση και τον εξοπλισμό. Εντούτοις, μπορεί να αποκριθεί αρκετά γρήγορα στις καταστάσεις έκτακτης ανάγκης."
 
-#: ../base/ufos/research.ufo:4608
+#: ../base/ufos/research.ufo:4604
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:4610
+#: ../base/ufos/research.ufo:4606
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Project PHALANX\" was first conceived by the United States Department of Defense in 1955, after years of growing concern over increased numbers of UFO sightings all across the world. The possibility of an alien invasion plagued badly on the minds of politicians already unnerved by the nuclear power of the Soviet Union. The existence of hostile extraterrestrial life in the universe seemed a very remote possibility, even moreso that these hostiles might find Earth among all the vastness of space -- but could America afford to take that chance?\n"
@@ -9716,11 +9713,11 @@ msgstr ""
 "\n"
 "All it lacked was a leader."
 
-#: ../base/ufos/research.ufo:4620
+#: ../base/ufos/research.ufo:4616
 msgid "A New Twist"
 msgstr "Μια νέα καμπή"
 
-#: ../base/ufos/research.ufo:4625
+#: ../base/ufos/research.ufo:4621
 #, fuzzy
 msgid "news_new_twist_txt"
 msgstr ""
@@ -9746,7 +9743,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4626
+#: ../base/ufos/research.ufo:4622
 #, fuzzy
 msgid "news_new_twist_alt_txt"
 msgstr ""
@@ -9772,11 +9769,11 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:4651
+#: ../base/ufos/research.ufo:4647
 msgid "The Enemy On Earth"
 msgstr "Ο εχθρός στη Γή"
 
-#: ../base/ufos/research.ufo:4656
+#: ../base/ufos/research.ufo:4652
 msgid "enemy_on_earth_alt_txt"
 msgstr ""
 "Πρόταση\n"
@@ -9809,7 +9806,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4657
+#: ../base/ufos/research.ufo:4653
 msgid "enemy_on_earth_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -9830,7 +9827,7 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4660
+#: ../base/ufos/research.ufo:4656
 msgid "enemy_on_earth_pre_txt"
 msgstr ""
 "Κύριε Διοικητά,\n"
@@ -9853,11 +9850,11 @@ msgstr ""
 "\n"
 "Δρ. Connor"
 
-#: ../base/ufos/research.ufo:4690
+#: ../base/ufos/research.ufo:4686
 msgid "XVI Census"
 msgstr ""
 
-#: ../base/ufos/research.ufo:4695
+#: ../base/ufos/research.ufo:4691
 msgid "xvi_census_txt"
 msgstr ""
 "Καλημέρα σας, Κύριε.\n"
@@ -9880,7 +9877,7 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:4698
+#: ../base/ufos/research.ufo:4694
 msgid "xvi_census_pre_txt"
 msgstr ""
 "Καλημέρα σας, Κύριε.\n"
@@ -9897,12 +9894,12 @@ msgstr ""
 "\n"
 "Συνταγματάρχης Falkland"
 
-#: ../base/ufos/research.ufo:4732
+#: ../base/ufos/research.ufo:4728
 #, fuzzy
 msgid "The Enemy On Earth - Revisited"
 msgstr "Ο εχθρός στη Γή"
 
-#: ../base/ufos/research.ufo:4737
+#: ../base/ufos/research.ufo:4733
 #, fuzzy
 msgid "enemy_on_earth_rev_txt"
 msgstr ""
@@ -9924,7 +9921,7 @@ msgstr ""
 "\n"
 "Sincerely,Dr. Connor"
 
-#: ../base/ufos/research.ufo:4740
+#: ../base/ufos/research.ufo:4736
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "Δεν υπάρχουν προκαταρκτικές πληροφορίες"
 
@@ -10992,57 +10989,58 @@ msgstr "το ΟΥΦΟ πυροβολει στο %s"
 #: client/campaign/cl_airfight.c:376 client/campaign/cl_airfight.c:400
 #: client/campaign/cl_aliencont.c:229 client/campaign/cl_aliencont.c:258
 #: client/campaign/cl_aliencont.c:275 client/campaign/cl_aliencont.c:285
-#: client/campaign/cl_campaign.c:1590 client/campaign/cl_campaign.c:1635
-#: client/campaign/cl_campaign.c:1689 client/campaign/cl_campaign.c:1701
-#: client/campaign/cl_campaign.c:1703 client/campaign/cl_installation.c:268
+#: client/campaign/cl_campaign.c:1580 client/campaign/cl_campaign.c:1625
+#: client/campaign/cl_campaign.c:1679 client/campaign/cl_campaign.c:1691
+#: client/campaign/cl_campaign.c:1693 client/campaign/cl_installation.c:301
 #: client/campaign/cl_map.c:290 client/campaign/cl_map.c:294
 #: client/campaign/cl_map.c:314 client/campaign/cl_map.c:318
 #: client/campaign/cl_mapfightequip.c:421
 #: client/campaign/cl_mapfightequip.c:442
 #: client/campaign/cl_mapfightequip.c:448
 #: client/campaign/cl_mapfightequip.c:460 client/campaign/cl_popup.c:507
-#: client/campaign/cl_produce.c:350 client/campaign/cl_produce.c:360
-#: client/campaign/cl_produce.c:371 client/campaign/cl_produce.c:381
-#: client/campaign/cl_produce.c:392
-#: client/campaign/cl_research_callbacks.c:547
-#: client/campaign/cl_research_callbacks.c:565
-#: client/campaign/cl_research_callbacks.c:571
-#: client/campaign/cl_research_callbacks.c:609
-#: client/campaign/cl_research_callbacks.c:639
-#: client/campaign/cl_research_callbacks.c:805
-#: client/campaign/cl_research_callbacks.c:808 client/campaign/cl_ufo.c:484
+#: client/campaign/cl_produce.c:351 client/campaign/cl_produce.c:361
+#: client/campaign/cl_produce.c:372 client/campaign/cl_produce.c:382
+#: client/campaign/cl_produce.c:393
+#: client/campaign/cl_research_callbacks.c:558
+#: client/campaign/cl_research_callbacks.c:576
+#: client/campaign/cl_research_callbacks.c:582
+#: client/campaign/cl_research_callbacks.c:621
+#: client/campaign/cl_research_callbacks.c:647
+#: client/campaign/cl_research_callbacks.c:815
+#: client/campaign/cl_research_callbacks.c:818 client/campaign/cl_ufo.c:484
 #: client/campaign/cl_ufo.c:838 client/campaign/cl_ufo.c:842
-#: client/campaign/cl_ufo.c:846 client/campaign/cp_aircraft.c:757
-#: client/campaign/cp_aircraft.c:1197 client/campaign/cp_aircraft.c:1205
-#: client/campaign/cp_aircraft.c:1308 client/campaign/cp_aircraft.c:1332
-#: client/campaign/cp_aircraft_callbacks.c:160
-#: client/campaign/cp_aircraft_callbacks.c:168
-#: client/campaign/cp_aircraft_callbacks.c:176 client/campaign/cp_base.c:816
-#: client/campaign/cp_base.c:1391 client/campaign/cp_base.c:2809
-#: client/campaign/cp_base.c:2814 client/campaign/cp_base.c:3546
-#: client/campaign/cp_base_callbacks.c:138
-#: client/campaign/cp_base_callbacks.c:208
-#: client/campaign/cp_base_callbacks.c:552
-#: client/campaign/cp_base_callbacks.c:561
-#: client/campaign/cp_base_callbacks.c:581
-#: client/campaign/cp_base_callbacks.c:591
-#: client/campaign/cp_base_callbacks.c:602
-#: client/campaign/cp_base_callbacks.c:609
-#: client/campaign/cp_base_callbacks.c:617
-#: client/campaign/cp_base_callbacks.c:622
-#: client/campaign/cp_base_callbacks.c:627
-#: client/campaign/cp_installation_callbacks.c:171
-#: client/campaign/cp_installation_callbacks.c:222
-#: client/campaign/cp_market_callbacks.c:605
-#: client/campaign/cp_market_callbacks.c:610 client/campaign/cp_missions.c:739
+#: client/campaign/cl_ufo.c:846 client/campaign/cp_aircraft.c:747
+#: client/campaign/cp_aircraft.c:1187 client/campaign/cp_aircraft.c:1195
+#: client/campaign/cp_aircraft.c:1298 client/campaign/cp_aircraft.c:1322
+#: client/campaign/cp_aircraft.c:2101
+#: client/campaign/cp_aircraft_callbacks.c:165
+#: client/campaign/cp_aircraft_callbacks.c:173
+#: client/campaign/cp_aircraft_callbacks.c:181 client/campaign/cp_base.c:763
+#: client/campaign/cp_base.c:1344 client/campaign/cp_base.c:2701
+#: client/campaign/cp_base.c:2706 client/campaign/cp_base.c:3438
+#: client/campaign/cp_base_callbacks.c:159
+#: client/campaign/cp_base_callbacks.c:228
+#: client/campaign/cp_base_callbacks.c:711
+#: client/campaign/cp_base_callbacks.c:720
+#: client/campaign/cp_base_callbacks.c:740
+#: client/campaign/cp_base_callbacks.c:750
+#: client/campaign/cp_base_callbacks.c:761
+#: client/campaign/cp_base_callbacks.c:768
+#: client/campaign/cp_base_callbacks.c:776
+#: client/campaign/cp_base_callbacks.c:781
+#: client/campaign/cp_base_callbacks.c:786
+#: client/campaign/cp_installation_callbacks.c:150
+#: client/campaign/cp_installation_callbacks.c:186
+#: client/campaign/cp_market_callbacks.c:611
+#: client/campaign/cp_market_callbacks.c:616 client/campaign/cp_missions.c:739
 #: client/campaign/cp_missions.c:1168 client/campaign/cp_nations.c:85
 #: client/campaign/cp_nations.c:97 client/campaign/cp_nations.c:107
 #: client/campaign/cp_nations.c:117 client/campaign/cp_nations.c:127
 #: client/campaign/cp_nations.c:138 client/campaign/cp_nations.c:154
 #: client/campaign/cp_nations.c:167 client/campaign/cp_nations.c:174
 #: client/campaign/cp_nations.c:182
-#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:425
-#: client/cl_parse.c:1790 client/multiplayer/mp_serverlist.c:464
+#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:424
+#: client/cl_parse.c:1797 client/multiplayer/mp_serverlist.c:461
 msgid "Notice"
 msgstr "Παρατήρηση"
 
@@ -11058,7 +11056,7 @@ msgstr "Αναχαίτιση"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "Αναχαίτιση ΟΥΦΟ επιτυχήςl -- το ΟΥΦΟ χάθηκε στη θάλασσα."
 
-#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1703
+#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1693
 msgid "You've lost the battle"
 msgstr "Έχασες την μάχη"
 
@@ -11097,48 +11095,48 @@ msgstr "Δεν έχετε αρκετό χώρο στο Θόλο εξωγήινω
 msgid "You've captured new aliens."
 msgstr "Αιχμαλωτίσατε νέους εξωγήινους."
 
-#: client/campaign/cl_aliencont_callbacks.c:204
+#: client/campaign/cl_aliencont_callbacks.c:205
 #, fuzzy
 msgid "Already researched"
 msgstr "Pre research text"
 
-#: client/campaign/cl_aliencont_callbacks.c:206
+#: client/campaign/cl_aliencont_callbacks.c:207
 msgid "Needs autopsy!"
 msgstr "Χρειάζεται αυτοψία!"
 
-#: client/campaign/cl_aliencont_callbacks.c:229
+#: client/campaign/cl_aliencont_callbacks.c:230
 #, fuzzy
 msgid "Free slot"
 msgstr "Force start"
 
-#: client/campaign/cl_aliencont_callbacks.c:230
-#: client/campaign/cl_ufopedia.c:507
+#: client/campaign/cl_aliencont_callbacks.c:231
+#: client/campaign/cl_ufopedia.c:501
 msgid "None"
 msgstr "Κανένα"
 
-#: client/campaign/cl_campaign.c:365
+#: client/campaign/cl_campaign.c:355
 msgid "You've gone too far into debt."
 msgstr "Πέσατε πολύ μέσα στο χρέος."
 
-#: client/campaign/cl_campaign.c:373
+#: client/campaign/cl_campaign.c:363
 msgid "You've lost your bases and don't have enough money to build new ones."
 msgstr ""
 
-#: client/campaign/cl_campaign.c:379
+#: client/campaign/cl_campaign.c:369
 msgid "You have failed in your charter to protect Earth. Our home and our people have fallen to the alien infection. Only a handful of people on Earth remain human, and the remaining few no longer have a chance to stem the tide. Your command is no more; PHALANX is no longer able to operate as a functioning unit. Nothing stands between the aliens and total victory."
 msgstr "Αποτύχατε να προστατέψετε την Γή. Τα σπίτια μας και οι άνθρωποί μας μολύνθηκαν απο τους εξωγήινους. Μόνο μία χούφτα ανθρώπων παρέμειναν αμόλυντοι, και δεν είναι ικανοί να το σταματήσουν. Η ΦΑΛΑΓΓΑ δεν είναι πλεόν ικανή να λειτουργήσει σαν μία αξιόπιστη  μονάδα.Τίποτα δε στέκεται μεταξύ των εξωγήινων και την απόλυτη νίκη."
 
-#: client/campaign/cl_campaign.c:397
+#: client/campaign/cl_campaign.c:387
 #, fuzzy
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr "Υπό τις διαταγές σου, η ΦΑΛΑΓΓΑ απέτυχε παταγωδώς να υπερασπίσει τους αθώους πολίτες. Δεκάδες έχασαν την ζωή τους στην ανικανότητά σου να χειριστείς με επιτυχία την εξωγήινοι απειλή. Τα Ηνωμένα Έθνη, είναι δυσαρεστημένα με την απόδοσή σου, και γι αυτό αποφάσισαν να σου αφαιρέσουν την διοίκηση και να διαλύσουν την ΦΑΛΑΓΓΑ. Καμία άλλη προσπάθεια σε παγκόσμιο επίπεδο δεν έγινε ποτέ ξανά. Τα έθνη της Γής προσπαθούν μόνα τους να σταθούν απέναντι στους εξωγήινους, και τελικά πέφτουν το ένα πίσω απο το άλλο."
 
-#: client/campaign/cl_campaign.c:861 client/campaign/cp_base_callbacks.c:772
+#: client/campaign/cl_campaign.c:851 client/campaign/cp_base_callbacks.c:930
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/campaign/cl_campaign.c:883
+#: client/campaign/cl_campaign.c:873
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -11149,7 +11147,7 @@ msgstr ""
 "Ήτες:\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:888
+#: client/campaign/cl_campaign.c:878
 #, c-format
 msgid ""
 "Built:\t%i\n"
@@ -11160,49 +11158,49 @@ msgstr ""
 "Ενεργά:\t%i\n"
 "Επιτιθέμενα:\t%i\n"
 
-#: client/campaign/cl_campaign.c:896
+#: client/campaign/cl_campaign.c:886
 #, fuzzy, c-format
 msgid "%s\n"
 msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cl_campaign.c:903 client/campaign/cl_ufopedia.c:1628
+#: client/campaign/cl_campaign.c:893 client/campaign/cl_ufopedia.c:1622
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cl_campaign.c:942 client/campaign/cl_ufopedia.c:397
+#: client/campaign/cl_campaign.c:932 client/campaign/cl_ufopedia.c:391
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/campaign/cl_campaign.c:948
+#: client/campaign/cl_campaign.c:938
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Υπάληλοι:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:961
+#: client/campaign/cl_campaign.c:951
 #, c-format
 msgid "Aircraft:\t%i c\n"
 msgstr "Σκάφος:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:972
+#: client/campaign/cl_campaign.c:962
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Βάση (%s):\t%i c\n"
 
-#: client/campaign/cl_campaign.c:977
+#: client/campaign/cl_campaign.c:967
 #, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Διαχειριστικά έξοδα:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:984
+#: client/campaign/cl_campaign.c:974
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Χρέος:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:987
+#: client/campaign/cl_campaign.c:977
 #, c-format
 msgid ""
 "\n"
@@ -11213,12 +11211,12 @@ msgstr ""
 "\t-------\n"
 "Σύνολα:\t%i c\n"
 
-#: client/campaign/cl_campaign.c:992
+#: client/campaign/cl_campaign.c:982
 #, c-format
 msgid "Max. allowed debts: %ic\n"
 msgstr "Μεγ. επιτρπόμενα χρέη: %ic\n"
 
-#: client/campaign/cl_campaign.c:997
+#: client/campaign/cl_campaign.c:987
 #, c-format
 msgid ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
@@ -11227,35 +11225,35 @@ msgstr ""
 "Max. allowed eXtraterrestial Viral Infection: %i%%\n"
 "Current eXtraterrestial Viral Infection: %i%%"
 
-#: client/campaign/cl_campaign.c:1590
+#: client/campaign/cl_campaign.c:1580
 #, fuzzy
 msgid "Collected dead alien bodies"
 msgstr "Μαζέυτηκαν %i πτώματα εξωγήινων"
 
-#: client/campaign/cl_campaign.c:1635
+#: client/campaign/cl_campaign.c:1625
 msgid "Your dropship is not near the landing zone"
 msgstr "Το μεταγωγικό σας σκάφος δεν έιναι κοντά στη ζώνη ρίψης"
 
-#: client/campaign/cl_campaign.c:1688 client/campaign/cp_missions.c:1167
+#: client/campaign/cl_campaign.c:1678 client/campaign/cp_missions.c:1167
 #, fuzzy, c-format
 msgid "Defence of base: %s successful!"
 msgstr "Άμυνα της βάσης: %s επιτυχής!"
 
-#: client/campaign/cl_campaign.c:1701
+#: client/campaign/cl_campaign.c:1691
 msgid "You've won the battle"
 msgstr "Νίκησες την μάχη"
 
-#: client/campaign/cl_campaign.c:1719
+#: client/campaign/cl_campaign.c:1709
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Νεκροί εξωγήινοι\t%i\n"
 
-#: client/campaign/cl_campaign.c:1720
+#: client/campaign/cl_campaign.c:1710
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Εξωγήινοι που αιχμαλωτίστηκαν\t%i\n"
 
-#: client/campaign/cl_campaign.c:1721
+#: client/campaign/cl_campaign.c:1711
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -11264,22 +11262,22 @@ msgstr ""
 "Επιζώντες εξωγήινοι\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1723
+#: client/campaign/cl_campaign.c:1713
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Στρατιώτες που σκοτώθηκαν απο εξωγήινους\t%i\n"
 
-#: client/campaign/cl_campaign.c:1724
+#: client/campaign/cl_campaign.c:1714
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Στρατιώτες που χάθηκαν εν δράση\t%i\n"
 
-#: client/campaign/cl_campaign.c:1725
+#: client/campaign/cl_campaign.c:1715
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Απώλειες απο φίλια πυρά της ΦΑΛΑΓΓΑΣ\t%i\n"
 
-#: client/campaign/cl_campaign.c:1726
+#: client/campaign/cl_campaign.c:1716
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -11288,17 +11286,17 @@ msgstr ""
 "Επιζώντες ΦΑΛΑΓΓΑΣ\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1728
+#: client/campaign/cl_campaign.c:1718
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Πολίτες που σκοτώθηκαν απο εξωγήινους\t%i\n"
 
-#: client/campaign/cl_campaign.c:1729
+#: client/campaign/cl_campaign.c:1719
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Πολίτες που σκοτώθηκαν απο φίλια πυρά\t%i\n"
 
-#: client/campaign/cl_campaign.c:1730
+#: client/campaign/cl_campaign.c:1720
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -11307,24 +11305,24 @@ msgstr ""
 "Πολίτες που σώθηκαν\t%i\n"
 "\n"
 
-#: client/campaign/cl_campaign.c:1731
+#: client/campaign/cl_campaign.c:1721
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
 msgstr "Συγκεντρωμένα αντικέιμενα (τύπος/όλα)\t%i/%i\n"
 
-#: client/campaign/cl_campaign.c:1785
+#: client/campaign/cl_campaign.c:1775
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s προάχθηκε σε %s.\n"
 
-#: client/campaign/cl_campaign.c:1787
+#: client/campaign/cl_campaign.c:1777
 #, fuzzy, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\n"
 "for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s παρασημοφορήθηκε και προτάθηκε για το βαθμό του %s\\για γενναίες πράξεις πέραν του καθήκοντος.\n"
 
-#: client/campaign/cl_campaign.c:1788
+#: client/campaign/cl_campaign.c:1778
 msgid "Soldier promoted"
 msgstr "Προαγωγή στρατιώτη"
 
@@ -11345,8 +11343,8 @@ msgstr ""
 "Χτίστε περισσότερα διαμερίσματα."
 
 #: client/campaign/cl_event.c:250 client/campaign/cl_save.c:280
-#: client/campaign/cl_save.c:300 client/campaign/cl_ufopedia.c:787
-#: client/campaign/cl_ufopedia.c:792 client/campaign/cp_time.c:147
+#: client/campaign/cl_save.c:300 client/campaign/cl_ufopedia.c:781
+#: client/campaign/cl_ufopedia.c:786 client/campaign/cp_time.c:147
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -11356,155 +11354,155 @@ msgstr "%i %s %02i"
 msgid "You've got a new mail: %s"
 msgstr "Έχετε νέο email: %s"
 
-#: client/campaign/cl_fightequip_callbacks.c:358
+#: client/campaign/cl_fightequip_callbacks.c:360
 msgid "Weapons"
 msgstr "Όπλα"
 
-#: client/campaign/cl_fightequip_callbacks.c:362
+#: client/campaign/cl_fightequip_callbacks.c:364
 msgid "Items"
 msgstr "Αντικέιμενα"
 
-#: client/campaign/cl_fightequip_callbacks.c:365
+#: client/campaign/cl_fightequip_callbacks.c:367
 #, fuzzy
 msgid "Ammo"
 msgstr "Πυρομαχικά:\t%i\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:367 client/campaign/cl_map.c:379
+#: client/campaign/cl_fightequip_callbacks.c:369 client/campaign/cl_map.c:379
 #, fuzzy
 msgid "Unknown"
 msgstr "Άγνωστο βάρος"
 
-#: client/campaign/cl_fightequip_callbacks.c:631
+#: client/campaign/cl_fightequip_callbacks.c:635
 #, fuzzy
 msgid "No defence of this type in this installation\n"
 msgstr "Όχι τέτοιο είδους άμυνα στη βάση\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:635
-#: client/campaign/cl_fightequip_callbacks.c:649
-#: client/campaign/cl_fightequip_callbacks.c:663
+#: client/campaign/cl_fightequip_callbacks.c:639
+#: client/campaign/cl_fightequip_callbacks.c:653
+#: client/campaign/cl_fightequip_callbacks.c:667
 #, c-format
 msgid "Slot %i:\tempty\n"
 msgstr "Θέση %i:\tκενή\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:638
-#: client/campaign/cl_fightequip_callbacks.c:652
-#: client/campaign/cl_fightequip_callbacks.c:666
+#: client/campaign/cl_fightequip_callbacks.c:642
+#: client/campaign/cl_fightequip_callbacks.c:656
+#: client/campaign/cl_fightequip_callbacks.c:670
 #, c-format
 msgid "Slot %i:\t%s\n"
 msgstr "Θέση %i:\t%s\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:645
-#: client/campaign/cl_fightequip_callbacks.c:659
+#: client/campaign/cl_fightequip_callbacks.c:649
+#: client/campaign/cl_fightequip_callbacks.c:663
 #, fuzzy
 msgid "No defence of this type in this base\n"
 msgstr "Όχι τέτοιο είδους άμυνα στη βάση\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:679
+#: client/campaign/cl_fightequip_callbacks.c:683
 #, fuzzy
 msgid "No defence system assigned.\n"
 msgstr "No defense system assigned.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:688
+#: client/campaign/cl_fightequip_callbacks.c:692
 #, fuzzy
 msgid "This defence system is functional.\n"
 msgstr "This defense system is functional.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:690
+#: client/campaign/cl_fightequip_callbacks.c:694
 #, fuzzy, c-format
 msgid "This defence system will be installed in %i hours.\n"
 msgstr "This defense system will be installed in %i hours.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:693
-#: client/campaign/cl_fightequip_callbacks.c:821
+#: client/campaign/cl_fightequip_callbacks.c:697
+#: client/campaign/cl_fightequip_callbacks.c:826
 #, fuzzy, c-format
 msgid "%s will be removed in %i hours.\n"
 msgstr "Το αντικέιμενο θα αφαιρεθεί %i ώρες.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:695
-#: client/campaign/cl_fightequip_callbacks.c:823
+#: client/campaign/cl_fightequip_callbacks.c:699
+#: client/campaign/cl_fightequip_callbacks.c:828
 #, fuzzy, c-format
 msgid "%s will be installed in %i hours.\n"
 msgstr "Το αντικείμενο θα εγκατασταθεί σε %i ώρες.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:698
+#: client/campaign/cl_fightequip_callbacks.c:702
 #, fuzzy, c-format
 msgid "This defence system will be removed in %i hours.\n"
 msgstr "This defense system will be removed in %i hours.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:709
+#: client/campaign/cl_fightequip_callbacks.c:713
 #, fuzzy
 msgid "No ammo assigned to this defence system."
 msgstr "No ammo assigned to this defense system."
 
-#: client/campaign/cl_fightequip_callbacks.c:713
+#: client/campaign/cl_fightequip_callbacks.c:717
 #, fuzzy
 msgid " (unlimited missiles)"
 msgstr " (%i πύραυλος απέμεινε)"
 
-#: client/campaign/cl_fightequip_callbacks.c:807
+#: client/campaign/cl_fightequip_callbacks.c:812
 msgid "No item assigned.\n"
 msgstr "Δεν ανατέθηκε αντικείμενο.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:808
+#: client/campaign/cl_fightequip_callbacks.c:813
 #, c-format
 msgid "This slot is for %s or smaller items."
 msgstr "Αυτή η θέση είναι για %s 'η για μικρότερα αντικείμενα."
 
-#: client/campaign/cl_fightequip_callbacks.c:816
+#: client/campaign/cl_fightequip_callbacks.c:821
 msgid "This item is functional.\n"
 msgstr "Αυτό το αντικέιμενο είναι λειτουργικό.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:818
+#: client/campaign/cl_fightequip_callbacks.c:823
 #, c-format
 msgid "This item will be installed in %i hours.\n"
 msgstr "Το αντικείμενο θα εγκατασταθεί σε %i ώρες.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:826
+#: client/campaign/cl_fightequip_callbacks.c:831
 #, c-format
 msgid "This item will be removed in %i hours.\n"
 msgstr "Το αντικέιμενο θα αφαιρεθεί %i ώρες.\n"
 
-#: client/campaign/cl_fightequip_callbacks.c:835
+#: client/campaign/cl_fightequip_callbacks.c:840
 msgid "No ammo assigned to this weapon."
 msgstr "Δεν ανατέθηκαν πυρομαχικά στο όπλο."
 
-#: client/campaign/cl_fightequip_callbacks.c:843
 #: client/campaign/cl_fightequip_callbacks.c:848
+#: client/campaign/cl_fightequip_callbacks.c:853
 #, fuzzy
 msgid " (unlimited ammos)"
 msgstr " (%i πύραυλος απέμεινε)"
 
-#: client/campaign/cl_installation.c:236
+#: client/campaign/cl_installation.c:230
 #, fuzzy, c-format
 msgid "Installation %s was destroyed."
 msgstr "Ασφαλές %s καταστράθηκε."
 
-#: client/campaign/cl_installation.c:237
+#: client/campaign/cl_installation.c:231
 #, fuzzy
 msgid "Installation destroyed"
 msgstr "Έθνος"
 
-#: client/campaign/cl_installation.c:268 client/campaign/cl_map.c:318
+#: client/campaign/cl_installation.c:301 client/campaign/cl_map.c:318
 #, fuzzy
 msgid "Could not set up your installation at this location"
 msgstr "Δε μπορείτε να χτίσετε την βάση σας σε αυτήν την περιοχή"
 
-#: client/campaign/cl_installation.c:346
+#: client/campaign/cl_installation.c:379
 #, fuzzy, c-format
 msgid "Construction of installation %s finished."
 msgstr "Κατασκευή ολοκληρώθηκε"
 
-#: client/campaign/cl_installation.c:347
+#: client/campaign/cl_installation.c:380
 #, fuzzy
 msgid "Installation finished"
 msgstr "Έθνος"
 
-#: client/campaign/cl_installation.c:455
+#: client/campaign/cl_installation.c:488
 #, fuzzy, c-format
 msgid "%d c"
 msgstr "%i c"
 
-#: client/campaign/cl_installation.c:466
+#: client/campaign/cl_installation.c:499
 #, fuzzy, c-format
 msgid "%d day\n"
 msgid_plural "%d days\n"
@@ -11515,17 +11513,18 @@ msgstr[1] "1 μέρα"
 msgid "You've reached the base limit."
 msgstr "Φτάσατε το όριο βάσεων."
 
-#: client/campaign/cl_map.c:294 client/campaign/cp_base_callbacks.c:138
+#: client/campaign/cl_map.c:294 client/campaign/cp_base_callbacks.c:159
 msgid "Could not set up your base at this location"
 msgstr "Δε μπορείτε να χτίσετε την βάση σας σε αυτήν την περιοχή"
 
 #: client/campaign/cl_map.c:314
-#: client/campaign/cp_installation_callbacks.c:222
+#: client/campaign/cp_installation_callbacks.c:186
 #, fuzzy
 msgid "You've reached the installation limit."
 msgstr "Φτάσατε το όριο βάσεων."
 
-#: client/campaign/cl_map.c:368 client/campaign/cp_installation_callbacks.c:74
+#: client/campaign/cl_map.c:368
+#: client/campaign/cp_installation_callbacks.c:112
 #, fuzzy
 msgid "Installation"
 msgstr "Έθνος"
@@ -11596,13 +11595,13 @@ msgid "Distance to target:\t\t%.0f\n"
 msgstr "Απόσταση από το στόχο:\t\t%.0f\n"
 
 #: client/campaign/cl_map.c:1972 client/campaign/cl_map.c:1981
-#: client/campaign/cl_map.c:1994 client/campaign/cp_aircraft_callbacks.c:239
+#: client/campaign/cl_map.c:1994 client/campaign/cp_aircraft_callbacks.c:244
 #, fuzzy, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Ταχύτητα:\t%i\n"
 
 #: client/campaign/cl_map.c:1973 client/campaign/cl_map.c:1982
-#: client/campaign/cp_aircraft_callbacks.c:241
+#: client/campaign/cp_aircraft_callbacks.c:246
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Καύσιμα:\t%i/%i\n"
@@ -11667,11 +11666,11 @@ msgstr "Βαρύ"
 msgid "Unknown weight"
 msgstr "Άγνωστο βάρος"
 
-#: client/campaign/cl_market.c:108 client/campaign/cp_market_callbacks.c:755
+#: client/campaign/cl_market.c:108 client/campaign/cp_market_callbacks.c:760
 msgid "Not enough storage space"
 msgstr "Όχι αρκετός αποθηκευτικός χώρος"
 
-#: client/campaign/cl_market.c:108 client/campaign/cp_market_callbacks.c:755
+#: client/campaign/cl_market.c:108 client/campaign/cp_market_callbacks.c:760
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -11953,37 +11952,37 @@ msgstr "Σειρά αναμονής παραγωγής για την βάση %s
 msgid "Production queue empty"
 msgstr "Σειρά αναμονής παραγωγής κενή"
 
-#: client/campaign/cl_produce.c:349 client/campaign/cl_produce.c:370
+#: client/campaign/cl_produce.c:350 client/campaign/cl_produce.c:371
 #, c-format
 msgid "Not enough credits to finish production in base %s.\n"
 msgstr "Όχι αρκετά χρήματα για να τελειώσει την παραγωγή στη βάση %s.\n"
 
-#: client/campaign/cl_produce.c:359
+#: client/campaign/cl_produce.c:360
 #, fuzzy, c-format
 msgid "Not enough free storage space in base %s. Production postponed.\n"
 msgstr "Όχι αρκετό ελεύθερο χώρο αποθήκευσης στη βάση %s. Η παραγωγή σταμάτησε.\n"
 
-#: client/campaign/cl_produce.c:380
+#: client/campaign/cl_produce.c:381
 #, fuzzy, c-format
 msgid "Not enough free hangar space in base %s. Production postponed.\n"
 msgstr "Όχι αρκετό ελεύθερο χώρο στο υπόστεγο στη βάση %s. Η παραγωγή σταμάτησε.\n"
 
-#: client/campaign/cl_produce.c:391
+#: client/campaign/cl_produce.c:392
 #, fuzzy, c-format
 msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
 msgstr "Όχι αρκετό ελεύθερο χώρο αποθήκευσης στη βάση %s.Η αποσύνθεση σταμάτησε.\n"
 
-#: client/campaign/cl_produce.c:423 client/campaign/cl_produce.c:435
+#: client/campaign/cl_produce.c:424 client/campaign/cl_produce.c:436
 #, c-format
 msgid "The production of %s has finished."
 msgstr "Η παραγωγή του %s τελείωσε."
 
-#: client/campaign/cl_produce.c:424 client/campaign/cl_produce.c:436
-#: client/campaign/cl_produce.c:466
+#: client/campaign/cl_produce.c:425 client/campaign/cl_produce.c:437
+#: client/campaign/cl_produce.c:467
 msgid "Production finished"
 msgstr "Παραγωγή τελείωσε"
 
-#: client/campaign/cl_produce.c:465
+#: client/campaign/cl_produce.c:466
 #, c-format
 msgid "The disassembling of %s has finished."
 msgstr "Η διάλυση του %s ολοκληρώθηκε."
@@ -12017,8 +12016,8 @@ msgstr ""
 #: client/campaign/cl_produce_callbacks.c:174
 #: client/campaign/cl_produce_callbacks.c:177
 #: client/campaign/cl_produce_callbacks.c:182
-#: client/campaign/cl_produce_callbacks.c:742
-#: client/campaign/cl_produce_callbacks.c:783
+#: client/campaign/cl_produce_callbacks.c:743
+#: client/campaign/cl_produce_callbacks.c:784
 #: client/campaign/cl_transfer.c:299 client/campaign/cl_transfer.c:302
 #: client/campaign/cl_transfer.c:305
 msgid "Hangars not ready"
@@ -12041,8 +12040,8 @@ msgstr ""
 "Όχι υπόστεγα στη βάση.\n"
 
 #: client/campaign/cl_produce_callbacks.c:182
-#: client/campaign/cl_produce_callbacks.c:742
-#: client/campaign/cl_produce_callbacks.c:783
+#: client/campaign/cl_produce_callbacks.c:743
+#: client/campaign/cl_produce_callbacks.c:784
 msgid ""
 "You cannot queue aircraft.\n"
 "No free space in hangars.\n"
@@ -12099,42 +12098,42 @@ msgstr "Κόστη Παραγωγής\t%i c\n"
 msgid "No aircraft selected."
 msgstr "Δεν έχει επιλεχτεί σκάφος."
 
-#: client/campaign/cl_produce_callbacks.c:809
+#: client/campaign/cl_produce_callbacks.c:810
 msgid "Queue full!"
 msgstr "λίστα γεμάτη!"
 
-#: client/campaign/cl_produce_callbacks.c:809
+#: client/campaign/cl_produce_callbacks.c:810
 msgid "You cannot queue any more items!"
 msgstr "Δε μπορείτε να βάλετε σε λίστα άλλα αντικείμενα!"
 
-#: client/campaign/cl_produce_callbacks.c:829
-#: client/campaign/cl_produce_callbacks.c:846
+#: client/campaign/cl_produce_callbacks.c:830
+#: client/campaign/cl_produce_callbacks.c:847
 msgid "Not enough material!"
 msgstr "Όχι αρκετά υλικά!"
 
-#: client/campaign/cl_produce_callbacks.c:829
+#: client/campaign/cl_produce_callbacks.c:830
 #, c-format
 msgid "You don't have enough material to produce all (%i) items. Production will continue with a reduced (%i) number."
 msgstr "Δεν έχετε αρκετά υλικά να παράγετε όλα τα (%i) αντικέιμενα. Η παραγωγή θα συνεχιστεί με μείωση (%i) αριθμών."
 
-#: client/campaign/cl_produce_callbacks.c:834
-#: client/campaign/cl_produce_callbacks.c:858
+#: client/campaign/cl_produce_callbacks.c:835
+#: client/campaign/cl_produce_callbacks.c:859
 #, c-format
 msgid "Production of %s started"
 msgstr "Παραγωγή του/της %s ξεκίνησε"
 
-#: client/campaign/cl_produce_callbacks.c:835
-#: client/campaign/cl_produce_callbacks.c:838
-#: client/campaign/cl_produce_callbacks.c:859
+#: client/campaign/cl_produce_callbacks.c:836
+#: client/campaign/cl_produce_callbacks.c:839
+#: client/campaign/cl_produce_callbacks.c:860
 msgid "Production started"
 msgstr "Παραγωγή ξεκίνησε"
 
-#: client/campaign/cl_produce_callbacks.c:837
+#: client/campaign/cl_produce_callbacks.c:838
 #, c-format
 msgid "Disassembling of %s started"
 msgstr "Διάλυση του %s ξεκίνησε"
 
-#: client/campaign/cl_produce_callbacks.c:846
+#: client/campaign/cl_produce_callbacks.c:847
 msgid "You don't have enough of the needed material to produce this item."
 msgstr "Δέν έχετε αρκετά απο τα υλικά που χρειάζονται για την παραγωγή του."
 
@@ -12147,7 +12146,7 @@ msgstr "Ένα ερευνητικό πρόγραμα ολοκληρώθηκε: %
 msgid "Research finished"
 msgstr "Έρευνα τελείωσε"
 
-#: client/campaign/cl_research.c:120 client/campaign/cl_research.c:313
+#: client/campaign/cl_research.c:120 client/campaign/cl_research.c:308
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "Πρόταση νέας τεχνολογίας: %s\n"
@@ -12156,11 +12155,11 @@ msgstr "Πρόταση νέας τεχνολογίας: %s\n"
 msgid "Unknown Technology researchable"
 msgstr "Έρευνα άγνωστης τεχνολογίας"
 
-#: client/campaign/cl_research.c:314
+#: client/campaign/cl_research.c:309
 msgid "Unknown Technology found"
 msgstr "Άγνωστη τεχνολογία βρέθηκε"
 
-#: client/campaign/cl_research.c:678 client/campaign/cl_research.c:682
+#: client/campaign/cl_research.c:665 client/campaign/cl_research.c:669
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -12168,15 +12167,15 @@ msgstr ""
 "Όχι ελεύθερος χώρος στα εργαστήρια.\n"
 "Χτίστε περισοτερα εργαστήρια.\n"
 
-#: client/campaign/cl_research.c:678 client/campaign/cl_research.c:682
+#: client/campaign/cl_research.c:665 client/campaign/cl_research.c:669
 msgid "Not enough laboratories"
 msgstr "Όχι αρκετά εργαστήρια"
 
-#: client/campaign/cl_research.c:1184
+#: client/campaign/cl_research.c:1167
 msgid "No description available."
 msgstr "Περιγραφή μη διαθέσιμη."
 
-#: client/campaign/cl_research.c:1185
+#: client/campaign/cl_research.c:1168
 msgid "No research proposal available."
 msgstr "Πρόταση έρευνας μη διαθέσιμη."
 
@@ -12246,16 +12245,16 @@ msgstr ""
 msgid "Unresearchable collected items"
 msgstr "%i collected item"
 
-#: client/campaign/cl_research_callbacks.c:547
+#: client/campaign/cl_research_callbacks.c:558
 msgid "This item is currently under research in another base."
 msgstr "Αυτό το αντικέιμενο βρισκεται υπό έρευνα σε άλλη βάση."
 
-#: client/campaign/cl_research_callbacks.c:565
-#: client/campaign/cl_research_callbacks.c:609
+#: client/campaign/cl_research_callbacks.c:576
+#: client/campaign/cl_research_callbacks.c:621
 msgid "The research on this item is complete."
 msgstr "Η έρευνα σε αυτό το αντικέιμενο ολοκληρώθηκε."
 
-#: client/campaign/cl_research_callbacks.c:571
+#: client/campaign/cl_research_callbacks.c:582
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -12263,15 +12262,15 @@ msgstr ""
 "Η έρευνα σε αυτό το αντικέιμενο δεν είανια κομά δυνατή.\n"
 "Πρέπει να ερευνήσετε τις τεχνολογίες που βασίζεται πρώτα."
 
-#: client/campaign/cl_research_callbacks.c:639
+#: client/campaign/cl_research_callbacks.c:647
 msgid "No research proposal available for this project."
 msgstr "Δεν υπάρχει πρόταση έρευνας για αυτό το έργο."
 
-#: client/campaign/cl_research_callbacks.c:805
+#: client/campaign/cl_research_callbacks.c:815
 msgid "Nothing to research"
 msgstr "Τίποτα για έρευνα"
 
-#: client/campaign/cl_research_callbacks.c:808
+#: client/campaign/cl_research_callbacks.c:818
 msgid "Build a laboratory first"
 msgstr "Χτίστε ένα εργαστήριο πρώτα"
 
@@ -12299,12 +12298,12 @@ msgstr "Λάθος Μνήμης - ορίστε save_compressed cvar σε 0"
 msgid "Error saving game."
 msgstr "Λάθος στην αποθήκευση του παιχνιδιού."
 
-#: client/campaign/cl_save.c:382 client/campaign/cp_base.c:2527
-#: client/campaign/cp_base.c:2529 client/campaign/cp_market_callbacks.c:587
-#: client/campaign/cp_market_callbacks.c:592
-#: client/campaign/cp_market_callbacks.c:697
-#: client/campaign/cp_market_callbacks.c:699 client/multiplayer/mp_team.c:193
-#: client/multiplayer/mp_team.c:214
+#: client/campaign/cl_save.c:382 client/campaign/cp_base.c:2420
+#: client/campaign/cp_base.c:2422 client/campaign/cp_market_callbacks.c:593
+#: client/campaign/cp_market_callbacks.c:598
+#: client/campaign/cp_market_callbacks.c:701
+#: client/campaign/cp_market_callbacks.c:703 client/multiplayer/mp_team.c:192
+#: client/multiplayer/mp_team.c:213
 msgid "Note"
 msgstr "Σημείωση"
 
@@ -12315,8 +12314,8 @@ msgstr "Λάθος στη φόρτωση του παιχνιδιού."
 
 #: client/campaign/cl_save.c:471 client/campaign/cl_save.c:494
 #: client/campaign/cl_save.c:630 client/cl_irc.c:993 client/cl_irc.c:1221
-#: client/cl_main.c:517 client/cl_main.c:522 client/cl_main.c:528
-#: client/cl_main.c:536 client/multiplayer/mp_callbacks.c:49
+#: client/cl_main.c:516 client/cl_main.c:521 client/cl_main.c:527
+#: client/cl_main.c:535 client/multiplayer/mp_callbacks.c:49
 #: client/multiplayer/mp_callbacks.c:169
 msgid "Error"
 msgstr "Λάθος"
@@ -12573,111 +12572,111 @@ msgstr "Δεν υπάρχει διαθέσιμο σκάφος για μεταφ�
 msgid "Transfer is not possible - the base doesn't have a functional hangar."
 msgstr "Transfer is not possible - the base doesn't have any hangar."
 
-#: client/campaign/cl_transfer.c:712
+#: client/campaign/cl_transfer.c:714
 #, c-format
 msgid "Base %s does not have Storage, items are removed!"
 msgstr "Η βάση %s δεν έχει αποθήκη, τα αντικέιμενα απομακρύνθηκαν!"
 
-#: client/campaign/cl_transfer.c:713 client/campaign/cl_transfer.c:744
-#: client/campaign/cl_transfer.c:780 client/campaign/cl_transfer.c:813
-#: client/campaign/cl_transfer.c:902 client/campaign/cl_transfer.c:987
-#: client/campaign/cl_transfer.c:993 client/campaign/cl_transfer.c:1108
+#: client/campaign/cl_transfer.c:715 client/campaign/cl_transfer.c:746
+#: client/campaign/cl_transfer.c:782 client/campaign/cl_transfer.c:815
+#: client/campaign/cl_transfer.c:904 client/campaign/cl_transfer.c:989
+#: client/campaign/cl_transfer.c:995 client/campaign/cl_transfer.c:1114
 msgid "Transport mission"
 msgstr "Αποστολή μεταφοράς"
 
-#: client/campaign/cl_transfer.c:743
+#: client/campaign/cl_transfer.c:745
 #, c-format
 msgid "Base %s does not have Living Quarters, employees got unhired!"
 msgstr "Η βάση %s δεν έχει διαμερίσματα, οι υπάληλοι απολύθηκαν!"
 
-#: client/campaign/cl_transfer.c:779
+#: client/campaign/cl_transfer.c:781
 #, c-format
 msgid "Base %s does not have Alien Containment, Aliens are removed!"
 msgstr "Η βάση %s δεν έχει Θόλο εξωγήινων, οι εξωγήινοι απομακρύνθηκαν!"
 
-#: client/campaign/cl_transfer.c:812
+#: client/campaign/cl_transfer.c:814
 #, c-format
 msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
 msgstr "Η βάση %s Δέν έχει αρκετό χώρο στα υπόστεγα. Το σκάφος χάθηκε!"
 
-#: client/campaign/cl_transfer.c:901 client/campaign/cl_transfer.c:1107
+#: client/campaign/cl_transfer.c:903 client/campaign/cl_transfer.c:1113
 #, c-format
 msgid "Transport mission started, cargo is being transported to base %s"
 msgstr "Αποστολή μεταφοράς ξεκίνησε, το φορτίο μεταφέρετε στη βάση %s"
 
-#: client/campaign/cl_transfer.c:970
+#: client/campaign/cl_transfer.c:972
 #, fuzzy, c-format
 msgid "(can host %i live alien)\n"
 msgid_plural "(can host %i live aliens)\n"
 msgstr[0] "(can host %i alive alien)\n"
 msgstr[1] "(can host %i alive aliens)\n"
 
-#: client/campaign/cl_transfer.c:987
+#: client/campaign/cl_transfer.c:989
 msgid "The destination base no longer exists! Transfer cargo are lost, personel got unhired."
 msgstr "Η απομακρυσμένη βάση πλέον δεν υπάρχει! Τα μεταφερόμενα φορτία χάθηκαν, το πρωσοπικό απολύθει."
 
-#: client/campaign/cl_transfer.c:992
+#: client/campaign/cl_transfer.c:994
 #, c-format
 msgid "Transport mission ended, unloading cargo in base %s"
 msgstr "Αποστολή μεταφοράς τελείωσε, ξεφόρτωμα φορτίου στη βάση %s"
 
-#: client/campaign/cl_transfer.c:1139
+#: client/campaign/cl_transfer.c:1146
 msgid "No target base selected"
 msgstr "Δεν έχει επιλεγεί βάση στόχος"
 
-#: client/campaign/cl_transfer.c:1139
+#: client/campaign/cl_transfer.c:1146
 msgid "Please select the target base from the list"
 msgstr "Παρακαλώ επιλέξτε την βάση στόχο απο την λίστα"
 
-#: client/campaign/cl_transfer.c:1326
+#: client/campaign/cl_transfer.c:1333
 msgid "You can transfer equipment - this base has a Storage.\n"
 msgstr "Μπορείτε να μεταφέρετε εξοπλισμό - αυτλη η βάση έχει αποθήκη.\n"
 
-#: client/campaign/cl_transfer.c:1329
+#: client/campaign/cl_transfer.c:1336
 msgid "No Storage in this base.\n"
 msgstr "Όχι αποθήκη στη βάση.\n"
 
-#: client/campaign/cl_transfer.c:1333
+#: client/campaign/cl_transfer.c:1340
 msgid "You can transfer employees - this base has Living Quarters.\n"
 msgstr "Μπορείτε να μεταφέρετε υπαλλήλους - αυτή η βάση έχει διαμερίσματα.\n"
 
-#: client/campaign/cl_transfer.c:1335
+#: client/campaign/cl_transfer.c:1342
 msgid "No Living Quarters in this base.\n"
 msgstr "Όχι διαμερίσματα στη βάση.\n"
 
-#: client/campaign/cl_transfer.c:1339
+#: client/campaign/cl_transfer.c:1346
 msgid "You can transfer Aliens - this base has an Alien Containment.\n"
 msgstr "Μπορείτε να μεταφέρε εξωγήινους -αυτή η βάση έχει θόλο εξωγήινων.\n"
 
-#: client/campaign/cl_transfer.c:1341
+#: client/campaign/cl_transfer.c:1348
 msgid "No Alien Containment in this base.\n"
 msgstr "Όχι εξωγήινος θόλος στην βάση.\n"
 
-#: client/campaign/cl_transfer.c:1345
+#: client/campaign/cl_transfer.c:1352
 msgid "You can transfer antimatter - this base has an Antimatter Storage.\n"
 msgstr "Μπορείτε να μεταφέρε αντιύλη - αυτή η βάση έχει αποθήκη αντιύλης.\n"
 
-#: client/campaign/cl_transfer.c:1347
+#: client/campaign/cl_transfer.c:1354
 msgid "No Antimatter Storage in this base.\n"
 msgstr "Όχι αποθήκευση αντιύλης στη βάση.\n"
 
-#: client/campaign/cl_transfer.c:1351
+#: client/campaign/cl_transfer.c:1358
 msgid "You can transfer aircraft - this base has a Hangar.\n"
 msgstr "Μπορείται να μεταφέρετε σκάφος - αυτή η βάση έχει υπόστεγο.\n"
 
-#: client/campaign/cl_transfer.c:1353
+#: client/campaign/cl_transfer.c:1360
 msgid "Aircraft transfer not possible - this base does not have a Command Centre.\n"
 msgstr "Μεταφορά σκάφους αδύνατη - αυτή η βάση δεν έχει κέντρο επιχειρήσεων.\n"
 
-#: client/campaign/cl_transfer.c:1355
+#: client/campaign/cl_transfer.c:1362
 msgid "No Hangar in this base.\n"
 msgstr "Όχι υπόστεγο σε αυτή την Βάση.\n"
 
-#: client/campaign/cl_transfer.c:1359
+#: client/campaign/cl_transfer.c:1366
 msgid "No power supplies in this base.\n"
 msgstr "Όχι ηλεκτρικές γεννήτριες στη βάση.\n"
 
-#: client/campaign/cl_ufo.c:141 client/campaign/cp_aircraft.c:559
+#: client/campaign/cl_ufo.c:141 client/campaign/cp_aircraft.c:549
 msgid "UFO"
 msgstr "ΟΥΦΟ"
 
@@ -12716,11 +12715,11 @@ msgstr "Το ραντάρ μας έχασε την ανίχνευση του Ο�
 msgid "skill_close"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:162
+#: client/campaign/cl_ufopedia.c:161
 msgid "skill_heavy"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:165
+#: client/campaign/cl_ufopedia.c:163
 #, fuzzy
 msgid "skill_assault"
 msgstr ""
@@ -12764,240 +12763,240 @@ msgstr ""
 "\n"
 "Παρόλο που το AR-80 είναι από όλες τις απόψεις ένα πολύ καλό τουφέκι, δεν σχεδιάστηκε για την αντιμετώπιση εξωγήινης εισβολής. Θα χρειαστεί να αναπτύξουμε δικά μας όπλα ειδικά για το συγκεκριμένο σκοπό μόλις αποκτήσουμε την απαραίτητη τεχνογνωσία."
 
-#: client/campaign/cl_ufopedia.c:168
+#: client/campaign/cl_ufopedia.c:165
 msgid "skill_sniper"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:171
+#: client/campaign/cl_ufopedia.c:167
 #, fuzzy
 msgid "skill_explosive"
 msgstr "Εκρηκτικά"
 
-#: client/campaign/cl_ufopedia.c:174 client/campaign/cl_ufopedia.c:204
+#: client/campaign/cl_ufopedia.c:169 client/campaign/cl_ufopedia.c:198
 msgid "Unknown weapon skill"
 msgstr "Άγνωστη ικανότητα όπλου"
 
-#: client/campaign/cl_ufopedia.c:188
+#: client/campaign/cl_ufopedia.c:182
 msgid "Cruising speed"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:190
+#: client/campaign/cl_ufopedia.c:184
 msgid "Maximum speed"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:194
+#: client/campaign/cl_ufopedia.c:188
 msgid "ECM"
 msgstr "ECM"
 
-#: client/campaign/cl_ufopedia.c:196
+#: client/campaign/cl_ufopedia.c:190
 msgid "Aircraft damage"
 msgstr "Ζημιά σκάφους"
 
-#: client/campaign/cl_ufopedia.c:198
+#: client/campaign/cl_ufopedia.c:192
 msgid "Accuracy"
 msgstr "Ακρίβεια"
 
-#: client/campaign/cl_ufopedia.c:200
+#: client/campaign/cl_ufopedia.c:194
 msgid "Fuel size"
 msgstr "Μέγεθος Καυσίμου"
 
-#: client/campaign/cl_ufopedia.c:202
+#: client/campaign/cl_ufopedia.c:196
 msgid "Weapon range"
 msgstr "Εμβέλεια Όπλου"
 
-#: client/campaign/cl_ufopedia.c:216
+#: client/campaign/cl_ufopedia.c:210
 #, fuzzy
 msgid "Small"
 msgstr "all"
 
-#: client/campaign/cl_ufopedia.c:218
+#: client/campaign/cl_ufopedia.c:212
 #, fuzzy
 msgid "Large"
 msgstr "Γλώσσα"
 
-#: client/campaign/cl_ufopedia.c:220
+#: client/campaign/cl_ufopedia.c:214
 #, fuzzy
 msgid "Unknown aircraft size"
 msgstr "Εμφάνιση αντικειμένων σκάφους"
 
-#: client/campaign/cl_ufopedia.c:240
+#: client/campaign/cl_ufopedia.c:234
 msgid "No requirements"
 msgstr "Όχι αιτήματα"
 
-#: client/campaign/cl_ufopedia.c:321 client/campaign/cl_ufopedia.c:375
+#: client/campaign/cl_ufopedia.c:315 client/campaign/cl_ufopedia.c:369
 #, c-format
 msgid "Go to '%s' UFOpaedia entry"
 msgstr "Go to '%s' UFOpaedia entry"
 
-#: client/campaign/cl_ufopedia.c:390 client/campaign/cl_ufopedia.c:401
-#: client/campaign/cl_ufopedia.c:406 client/campaign/cl_ufopedia.c:412
-#: client/campaign/cl_ufopedia.c:425 client/campaign/cl_ufopedia.c:483
+#: client/campaign/cl_ufopedia.c:384 client/campaign/cl_ufopedia.c:395
+#: client/campaign/cl_ufopedia.c:400 client/campaign/cl_ufopedia.c:406
+#: client/campaign/cl_ufopedia.c:419 client/campaign/cl_ufopedia.c:477
 #, c-format
 msgid "Size:\t%i\n"
 msgstr "Μέγεθος:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:393
+#: client/campaign/cl_ufopedia.c:387
 msgid "Type:\tProtection:\n"
 msgstr "Τύπος:\tΠροστασία:\n"
 
-#: client/campaign/cl_ufopedia.c:404
+#: client/campaign/cl_ufopedia.c:398
 #, c-format
 msgid "%s weapon with\n"
 msgstr "%s όπλο με\n"
 
-#: client/campaign/cl_ufopedia.c:404 client/campaign/cl_ufopedia.c:410
-#: client/campaign/cl_ufopedia.c:423
+#: client/campaign/cl_ufopedia.c:398 client/campaign/cl_ufopedia.c:404
+#: client/campaign/cl_ufopedia.c:417
 msgid "One-handed"
 msgstr "Με ένα χέρι"
 
-#: client/campaign/cl_ufopedia.c:404 client/campaign/cl_ufopedia.c:410
-#: client/campaign/cl_ufopedia.c:423
+#: client/campaign/cl_ufopedia.c:398 client/campaign/cl_ufopedia.c:404
+#: client/campaign/cl_ufopedia.c:417
 msgid "Two-handed"
 msgstr "Με δύο χέρια"
 
-#: client/campaign/cl_ufopedia.c:407
+#: client/campaign/cl_ufopedia.c:401
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Μεγ. πυρομαχικά:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:410
+#: client/campaign/cl_ufopedia.c:404
 #, c-format
 msgid "%s ammo-less weapon with\n"
 msgstr "%s ammo-less weapon with\n"
 
-#: client/campaign/cl_ufopedia.c:416
+#: client/campaign/cl_ufopedia.c:410
 #, fuzzy
 msgid "Weapon for base defence system\n"
 msgstr "Αφαίρεση πυρομαχικών απο το παρών αμυντικό σύστημα"
 
-#: client/campaign/cl_ufopedia.c:423
+#: client/campaign/cl_ufopedia.c:417
 #, c-format
 msgid "%s auxiliary equipment with\n"
 msgstr "%s auxiliary equipment with\n"
 
-#: client/campaign/cl_ufopedia.c:426
+#: client/campaign/cl_ufopedia.c:420
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Ενέργεια:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:427 client/campaign/cl_ufopedia.c:452
+#: client/campaign/cl_ufopedia.c:421 client/campaign/cl_ufopedia.c:446
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Χρονικές Μονάδες:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:428 client/campaign/cl_ufopedia.c:453
+#: client/campaign/cl_ufopedia.c:422 client/campaign/cl_ufopedia.c:447
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Εμβέλεια:\t%g\n"
 
-#: client/campaign/cl_ufopedia.c:448
+#: client/campaign/cl_ufopedia.c:442
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "Δεξιότητα:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:449 client/campaign/cl_ufopedia.c:580
+#: client/campaign/cl_ufopedia.c:443 client/campaign/cl_ufopedia.c:574
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Ζημιά:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:454
+#: client/campaign/cl_ufopedia.c:448
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "Επεκτάσεις:\t%g\n"
 
-#: client/campaign/cl_ufopedia.c:460 client/campaign/cl_ufopedia.c:653
-#: client/campaign/cl_ufopedia.c:655 client/campaign/cl_ufopedia.c:688
-#: client/campaign/cl_ufopedia.c:691
+#: client/campaign/cl_ufopedia.c:454 client/campaign/cl_ufopedia.c:647
+#: client/campaign/cl_ufopedia.c:649 client/campaign/cl_ufopedia.c:682
+#: client/campaign/cl_ufopedia.c:685
 msgid "Unknown - need to research this"
 msgstr "Άγνωστο - πρέπει να ερευνηθεί αυτό"
 
-#: client/campaign/cl_ufopedia.c:489
+#: client/campaign/cl_ufopedia.c:483
 #, c-format
 msgid "%s:\tProtection: %i\n"
 msgstr "%s:\tΠροστασία: %i\n"
 
-#: client/campaign/cl_ufopedia.c:505
+#: client/campaign/cl_ufopedia.c:499
 msgid "Error - could not find building"
 msgstr "Σφάλμα - δε βρίσκω κτήριο"
 
-#: client/campaign/cl_ufopedia.c:507 client/campaign/cp_base.c:1494
+#: client/campaign/cl_ufopedia.c:501 client/campaign/cp_base.c:1447
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr "Ανάγκες:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:508
+#: client/campaign/cl_ufopedia.c:502
 #, fuzzy, c-format
 msgid "Construction time:\t%i day\n"
 msgid_plural "Construction time:\t%i days\n"
 msgstr[0] "Χρόνος Χτισήματος:\t%i ημέρα\n"
 msgstr[1] "Χρόνος Χτισήματος:\t%i ημέρες\n"
 
-#: client/campaign/cl_ufopedia.c:509
+#: client/campaign/cl_ufopedia.c:503
 #, fuzzy, c-format
 msgid "Cost:\t%i c\n"
 msgstr "Κόστη:\t%i c\n"
 
-#: client/campaign/cl_ufopedia.c:510 client/campaign/cp_base.c:1491
+#: client/campaign/cl_ufopedia.c:504 client/campaign/cp_base.c:1444
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Τρέχοντα έξοδα:\t%i c\n"
 
-#: client/campaign/cl_ufopedia.c:574
+#: client/campaign/cl_ufopedia.c:568
 #, c-format
 msgid "Weight:\t%s\n"
 msgstr "Βάρος:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:578
+#: client/campaign/cl_ufopedia.c:572
 #, c-format
 msgid "Ammo:\t%i\n"
 msgstr "Πυρομαχικά:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:581
+#: client/campaign/cl_ufopedia.c:575
 #, c-format
 msgid "Reloading time:\t%i\n"
 msgstr "Χρόνος Επαναφόρτωσης:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:597
+#: client/campaign/cl_ufopedia.c:591
 #, c-format
 msgid "%s:\t+%i %%\n"
 msgstr "%s:\t+%i %%\n"
 
-#: client/campaign/cl_ufopedia.c:599
+#: client/campaign/cl_ufopedia.c:593
 #, c-format
 msgid "%s:\t%i %%\n"
 msgstr "%s:\t%i %%\n"
 
-#: client/campaign/cl_ufopedia.c:622
+#: client/campaign/cl_ufopedia.c:616
 msgid "Error - could not find aircraft"
 msgstr "Σφάλμα - δε μπορεί να βρεθεί σκάφος"
 
-#: client/campaign/cl_ufopedia.c:629 client/campaign/cl_ufopedia.c:634
+#: client/campaign/cl_ufopedia.c:623 client/campaign/cl_ufopedia.c:628
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/h\n"
 
-#: client/campaign/cl_ufopedia.c:638
-#: client/campaign/cp_aircraft_callbacks.c:243
+#: client/campaign/cl_ufopedia.c:632
+#: client/campaign/cp_aircraft_callbacks.c:248
 #, fuzzy, c-format
 msgid "Operational range:\t%i km\n"
 msgstr "Λειτουργικό σύστημα:\t%s\n"
 
-#: client/campaign/cl_ufopedia.c:641
+#: client/campaign/cl_ufopedia.c:635
 #, c-format
 msgid "%s:\t%i\n"
 msgstr "%s:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:648
+#: client/campaign/cl_ufopedia.c:642
 #, fuzzy, c-format
 msgid "Aircraft size:\t%s\n"
 msgstr "Σκάφος %s\n"
 
-#: client/campaign/cl_ufopedia.c:649
+#: client/campaign/cl_ufopedia.c:643
 #, c-format
 msgid "Max. soldiers:\t%i\n"
 msgstr "Μεγ. Στρατιώτες:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:684
+#: client/campaign/cl_ufopedia.c:678
 #, c-format
 msgid ""
 "%s\n"
@@ -13006,15 +13005,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: client/campaign/cl_ufopedia.c:809
+#: client/campaign/cl_ufopedia.c:803
 msgid "Proposal: "
 msgstr "Πρόταση: "
 
-#: client/campaign/cl_ufopedia.c:812
+#: client/campaign/cl_ufopedia.c:806
 msgid "Re: "
 msgstr "Re: "
 
-#: client/campaign/cl_ufopedia.c:823
+#: client/campaign/cl_ufopedia.c:817
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -13027,50 +13026,50 @@ msgstr ""
 "ΗΜ/ΝΙΑ: %s\n"
 "ΘΕΜΑ: %s%s\n"
 
-#: client/campaign/cl_ufopedia.c:915
+#: client/campaign/cl_ufopedia.c:909
 msgid "No pre-research description available."
 msgstr "Δεν υπάρχει περιγραφή πρίν την κυρίως έρευνα."
 
-#: client/campaign/cl_ufopedia.c:1119
+#: client/campaign/cl_ufopedia.c:1113
 msgid "UFOpaedia Content"
 msgstr "UFOpaedia Content"
 
-#: client/campaign/cl_ufopedia.c:1150
+#: client/campaign/cl_ufopedia.c:1144
 #, c-format
 msgid "UFOpaedia Index: %s"
 msgstr "UFOpaedia Index: %s"
 
-#: client/campaign/cl_ufopedia.c:1568
+#: client/campaign/cl_ufopedia.c:1562
 #, c-format
 msgid "^BProposal: %s\t%i %s %02i\n"
 msgstr "^BΠρότασηl: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1572
+#: client/campaign/cl_ufopedia.c:1566
 #, c-format
 msgid "Proposal: %s\t%i %s %02i\n"
 msgstr "Πρόταση: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1583
+#: client/campaign/cl_ufopedia.c:1577
 #, c-format
 msgid "^BRe: %s\t%i %s %02i\n"
 msgstr "^BRe: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1587
+#: client/campaign/cl_ufopedia.c:1581
 #, c-format
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Re: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1597 client/campaign/cl_ufopedia.c:1609
+#: client/campaign/cl_ufopedia.c:1591 client/campaign/cl_ufopedia.c:1603
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1601 client/campaign/cl_ufopedia.c:1613
+#: client/campaign/cl_ufopedia.c:1595 client/campaign/cl_ufopedia.c:1607
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1625
+#: client/campaign/cl_ufopedia.c:1619
 #, c-format
 msgid "^B%s\t%s\n"
 msgstr "^B%s\t%s\n"
@@ -13085,159 +13084,164 @@ msgstr "  * %i x\t%s\n"
 msgid "  * %s\n"
 msgstr "  * %s\n"
 
-#: client/campaign/cl_uforecovery_callbacks.c:304
+#: client/campaign/cl_uforecovery_callbacks.c:303
 #, fuzzy, c-format
 msgid "Replace %s at %s (%i stored available)\n"
 msgstr "Ζώντες %s (%i διαθέσιμοι)\n"
 
-#: client/campaign/cl_uforecovery_callbacks.c:311
+#: client/campaign/cl_uforecovery_callbacks.c:310
 msgid "No ufo hangar or ufo yard available."
 msgstr ""
 
-#: client/campaign/cl_uforecovery_callbacks.c:366
+#: client/campaign/cl_uforecovery_callbacks.c:365
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr "Recovered %s from the battlefield. UFO is being transported to base %s."
 
-#: client/campaign/cl_uforecovery_callbacks.c:368
-#: client/campaign/cl_uforecovery_callbacks.c:515
+#: client/campaign/cl_uforecovery_callbacks.c:367
+#: client/campaign/cl_uforecovery_callbacks.c:514
 msgid "UFO Recovery"
 msgstr "Ανάκτηση ΟΥΦΟ"
 
-#: client/campaign/cl_uforecovery_callbacks.c:424
+#: client/campaign/cl_uforecovery_callbacks.c:423
 #, fuzzy, c-format
 msgid "previously recovered %s from base %s"
 msgstr "Αντικείμενο σκάφους εγκαταστάθηκε με επιτυχία."
 
-#: client/campaign/cl_uforecovery_callbacks.c:425
+#: client/campaign/cl_uforecovery_callbacks.c:424
 #, c-format
 msgid "Storage process for captured %s ongoing."
 msgstr ""
 
-#: client/campaign/cl_uforecovery_callbacks.c:509
+#: client/campaign/cl_uforecovery_callbacks.c:508
 #, fuzzy, c-format
 msgid "Sold previously recovered %s from %s to nation %s, gained %i credits."
 msgstr "Ανακτήθηκε %s απο το πεδίο της μάχης. Το ΟΥΦΟ πουλήθηκε στο έθνος %s, κερδίσατε %i."
 
-#: client/campaign/cl_uforecovery_callbacks.c:512
+#: client/campaign/cl_uforecovery_callbacks.c:511
 #, c-format
 msgid "Recovered %s from the battlefield. UFO sold to nation %s, gained %i credits."
 msgstr "Ανακτήθηκε %s απο το πεδίο της μάχης. Το ΟΥΦΟ πουλήθηκε στο έθνος %s, κερδίσατε %i."
 
-#: client/campaign/cp_aircraft.c:456
+#: client/campaign/cp_aircraft.c:446
 msgid "ON RED ALERT"
 msgstr "ΣΕ ΣΥΝΑΓΕΡΜΟ"
 
-#: client/campaign/cp_aircraft.c:460
+#: client/campaign/cp_aircraft.c:450
 msgid "Nothing - should not be displayed"
 msgstr "Τίποτα - δε μπορεί να προβληθεί"
 
-#: client/campaign/cp_aircraft.c:462
+#: client/campaign/cp_aircraft.c:452
 #, fuzzy
 msgid "at home base"
 msgstr "Στη βάση"
 
-#: client/campaign/cp_aircraft.c:464
+#: client/campaign/cp_aircraft.c:454
 #, fuzzy
 msgid "refuelling"
 msgstr "Ανεφοδιασμός"
 
-#: client/campaign/cp_aircraft.c:466
+#: client/campaign/cp_aircraft.c:456
 #, fuzzy
 msgid "idle"
 msgstr "Αδρανές"
 
-#: client/campaign/cp_aircraft.c:468
+#: client/campaign/cp_aircraft.c:458
 #, fuzzy
 msgid "in transit"
 msgstr "Σε μεταφορά"
 
-#: client/campaign/cp_aircraft.c:470
+#: client/campaign/cp_aircraft.c:460
 #, fuzzy
 msgid "enroute to mission"
 msgstr "Αυτόματη αποστολή"
 
-#: client/campaign/cp_aircraft.c:472
+#: client/campaign/cp_aircraft.c:462
 #, fuzzy
 msgid "pursuing a UFO"
 msgstr "Καταδιώκει ένα ΟΥΦΟ"
 
-#: client/campaign/cp_aircraft.c:474
+#: client/campaign/cp_aircraft.c:464
 #, fuzzy
 msgid "ready to drop soldiers"
 msgstr "Μεταονομάστε τον στρατιώτη"
 
-#: client/campaign/cp_aircraft.c:476
+#: client/campaign/cp_aircraft.c:466
 #, fuzzy
 msgid "intercepting a UFO"
 msgstr "Σε αναχαίτιση"
 
-#: client/campaign/cp_aircraft.c:478
+#: client/campaign/cp_aircraft.c:468
 #, fuzzy
 msgid "enroute to new home base"
 msgstr "Δημιουργεία νέας ομάδας"
 
-#: client/campaign/cp_aircraft.c:480
+#: client/campaign/cp_aircraft.c:470
 #, fuzzy
 msgid "returning to base"
 msgstr "Ιδία Βάση:"
 
-#: client/campaign/cp_aircraft.c:555
+#: client/campaign/cp_aircraft.c:545
 #, fuzzy
 msgid "Interceptor"
 msgstr "Αναχαιτιστικά:"
 
-#: client/campaign/cp_aircraft.c:557
+#: client/campaign/cp_aircraft.c:547
 #, fuzzy
 msgid "Transporter"
 msgstr "Μεταγωγικά:"
 
-#: client/campaign/cp_aircraft.c:756
+#: client/campaign/cp_aircraft.c:746
 #, c-format
 msgid "A new (a %s) class craft is ready in base %s"
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:822
+#: client/campaign/cp_aircraft.c:812
 #, fuzzy
 msgid "No operational hangars at that base."
 msgstr "Όχι υπόστεγα σε αυτή την βάση."
 
-#: client/campaign/cp_aircraft.c:826
+#: client/campaign/cp_aircraft.c:816
 #, fuzzy
 msgid "No free hangars at that base."
 msgstr "Όχι υπόστεγα σε αυτή την βάση."
 
-#: client/campaign/cp_aircraft.c:829
+#: client/campaign/cp_aircraft.c:819
 msgid "Insufficient free crew quarter space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:832
+#: client/campaign/cp_aircraft.c:822
 msgid "Insufficient storage space at that base."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:836
+#: client/campaign/cp_aircraft.c:826
 msgid "That base is beyond this aircraft's range."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1197
+#: client/campaign/cp_aircraft.c:1187
 #, fuzzy, c-format
 msgid "Craft %s has refuelled at base %s."
 msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
 
-#: client/campaign/cp_aircraft.c:1205
+#: client/campaign/cp_aircraft.c:1195
 #, fuzzy, c-format
 msgid "Craft %s is low on fuel and must return to base."
 msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
 
-#: client/campaign/cp_aircraft.c:1308
+#: client/campaign/cp_aircraft.c:1298
 msgid "Assign one or more soldiers to this aircraft first."
 msgstr ""
 
-#: client/campaign/cp_aircraft.c:1332
+#: client/campaign/cp_aircraft.c:1322
 msgid "Insufficient fuel."
 msgstr ""
 
-#: client/campaign/cp_aircraft_callbacks.c:160
+#: client/campaign/cp_aircraft.c:2101
+#, fuzzy, c-format
+msgid "Craft %s has not enough fuel to intercept UFO: fly back to base %s."
+msgstr "Το μεταγωγικό σας έχει λίγα καύσιμα και επιστρέφει στην βάση"
+
+#: client/campaign/cp_aircraft_callbacks.c:165
 #, fuzzy
 msgid ""
 "No operational Command Centre in this base.\n"
@@ -13248,7 +13252,7 @@ msgstr ""
 "\n"
 "το σκάφος δε μπορεί να ξεκινήσει.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:168
+#: client/campaign/cp_aircraft_callbacks.c:173
 #, fuzzy
 msgid ""
 "There is no pilot assigned to this aircraft.\n"
@@ -13260,235 +13264,280 @@ msgstr ""
 "\n"
 "Το σκάφος δε μπορεί να ξεκινήσει.\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:176
+#: client/campaign/cp_aircraft_callbacks.c:181
 msgid "Aircraft started"
 msgstr "Σκάφος ξεκίνησε"
 
-#: client/campaign/cp_aircraft_callbacks.c:245
+#: client/campaign/cp_aircraft_callbacks.c:250
 #, c-format
 msgid "Weapons:\t%i on %i\n"
 msgstr "Όπλα:\t%i on %i\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:246
+#: client/campaign/cp_aircraft_callbacks.c:251
 #, fuzzy, c-format
 msgid "Armour:\t%i on 1\n"
 msgstr "Θωράκιση:\t%i on 1\n"
 
-#: client/campaign/cp_aircraft_callbacks.c:247
+#: client/campaign/cp_aircraft_callbacks.c:252
 #, c-format
 msgid "Electronics:\t%i on %i"
 msgstr "Ηλεκτρονικά:\t%i on %i"
 
-#: client/campaign/cp_base.c:815
+#: client/campaign/cp_base.c:762
 #, fuzzy
 msgid "Base is under attack, you can't destroy buildings !"
 msgstr "Η βάση δέχετε επίθεση, δε μπορείτε να προσπαλάσετε αυτό το κτήριο !"
 
-#: client/campaign/cp_base.c:827
+#: client/campaign/cp_base.c:774
 #, fuzzy
 msgid "Destroy Entrance"
 msgstr "Αποθήκη"
 
-#: client/campaign/cp_base.c:827
+#: client/campaign/cp_base.c:774
 #, fuzzy
 msgid "You cannot destroy the entrance of the base!"
 msgstr "Δε μπορείτε να βάλετε σε λίστα άλλα αντικείμενα!"
 
-#: client/campaign/cp_base.c:836
+#: client/campaign/cp_base.c:783
 #, fuzzy
 msgid "Destroy Hangar"
 msgstr "Καταστροφή κτηρίου"
 
-#: client/campaign/cp_base.c:836
+#: client/campaign/cp_base.c:783
 msgid ""
 "If you destroy this hangar, you will also destroy the aircraft inside.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:837
+#: client/campaign/cp_base.c:784
 #, fuzzy
 msgid "Go to hangar"
 msgstr "Επιστροφή στο υπόστεγο"
 
-#: client/campaign/cp_base.c:837
+#: client/campaign/cp_base.c:784
 #, fuzzy
 msgid "Go to hangar without destroying building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:838 client/campaign/cp_base.c:848
-#: client/campaign/cp_base.c:858 client/campaign/cp_base.c:871
+#: client/campaign/cp_base.c:785 client/campaign/cp_base.c:795
+#: client/campaign/cp_base.c:805 client/campaign/cp_base.c:818
 msgid "Destroy the building"
 msgstr "Καταστρέψτε το κτήρο"
 
-#: client/campaign/cp_base.c:840 client/campaign/cp_base.c:850
-#: client/campaign/cp_base.c:860
+#: client/campaign/cp_base.c:787 client/campaign/cp_base.c:797
+#: client/campaign/cp_base.c:807
 #, fuzzy
 msgid "Go to transfer menu without destroying the building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:846
+#: client/campaign/cp_base.c:793
 #, fuzzy
 msgid "Destroy Quarter"
 msgstr "Καταστρέψτε"
 
-#: client/campaign/cp_base.c:846
+#: client/campaign/cp_base.c:793
 msgid ""
 "If you destroy this Quarters, every employee inside will be killed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:847
+#: client/campaign/cp_base.c:794
 msgid "Dismiss"
 msgstr ""
 
-#: client/campaign/cp_base.c:847
+#: client/campaign/cp_base.c:794
 #, fuzzy
 msgid "Go to hiring menu without destroying building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:856
+#: client/campaign/cp_base.c:803
 #, fuzzy
 msgid "Destroy Storage"
 msgstr "Αποθήκη"
 
-#: client/campaign/cp_base.c:856
+#: client/campaign/cp_base.c:803
 msgid ""
 "If you destroy this Storage, every items inside will be destroyed.\n"
 "Are you sure you want to destroy this building?"
 msgstr ""
 
-#: client/campaign/cp_base.c:857
+#: client/campaign/cp_base.c:804
 #, fuzzy
 msgid "Go to buy/sell menu without destroying building"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:857
+#: client/campaign/cp_base.c:804
 #, fuzzy
 msgid "Go to storage"
 msgstr "Πήγαινε στις επιλογές"
 
-#: client/campaign/cp_base.c:869
+#: client/campaign/cp_base.c:816
 msgid "Are you sure you want to destroy this building?"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_base.c:869
+#: client/campaign/cp_base.c:816
 msgid "Destroy building"
 msgstr "Καταστροφή κτηρίου"
 
-#: client/campaign/cp_base.c:888
+#: client/campaign/cp_base.c:835
 msgid "Not set"
 msgstr "Όχι ρυθμισμένο"
 
-#: client/campaign/cp_base.c:894
+#: client/campaign/cp_base.c:841
 #, c-format
 msgid "Already %i in base"
 msgstr "Ήδη  %i στη βάση"
 
-#: client/campaign/cp_base.c:905
+#: client/campaign/cp_base.c:852
 msgid "Construction finished"
 msgstr "Κατασκευή ολοκληρώθηκε"
 
-#: client/campaign/cp_base.c:908
+#: client/campaign/cp_base.c:856
 msgid "Working 100%"
 msgstr "Εργασία 100%"
 
-#: client/campaign/cp_base.c:911
+#: client/campaign/cp_base.c:860
+msgid "Not operational, depends on"
+msgstr ""
+
+#: client/campaign/cp_base.c:864
 msgid "Down"
 msgstr "Κάτω"
 
-#: client/campaign/cp_base.c:1391
+#: client/campaign/cp_base.c:1344
 msgid "Not enough credits to build this\n"
 msgstr "Όχι αρκετά χρήματα για να χτίσετε αυτό\n"
 
-#: client/campaign/cp_base.c:1485
+#: client/campaign/cp_base.c:1438
 #, c-format
 msgid "Costs:\t%i c\n"
 msgstr "Κόστη:\t%i c\n"
 
-#: client/campaign/cp_base.c:1488
+#: client/campaign/cp_base.c:1441
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i ημέρα για χτίσιμο\n"
 msgstr[1] "%i ημέρες για χτίσιμο\n"
 
-#: client/campaign/cp_base.c:2108
+#: client/campaign/cp_base.c:2032
 msgid "Home"
 msgstr "Αρχηγείο Φάλαγγας"
 
-#: client/campaign/cp_base.c:2527
+#: client/campaign/cp_base.c:2034
+#, fuzzy, c-format
+msgid "Base #%d"
+msgstr "Βάση #2"
+
+#: client/campaign/cp_base.c:2420
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
 msgstr "Όχι σκάφος σε αυτήν την βάση - Πρέπει πρώτα να αγοράσεις ή να μεταφέρεις ενα σκάφος\n"
 
-#: client/campaign/cp_base.c:2529
+#: client/campaign/cp_base.c:2422
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "Όχι σκάφος στη βάση - Πρέπει πρώτα να αγοράσετε ένα σκάφος\n"
 
-#: client/campaign/cp_base.c:2676
+#: client/campaign/cp_base.c:2568
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Η κατασκευή του %s ολοκληρώθηκε στη βάση %s."
 
-#: client/campaign/cp_base.c:2677
+#: client/campaign/cp_base.c:2569
 msgid "Building finished"
 msgstr "Κτήριο ολοκληρώθηκε"
 
-#: client/campaign/cp_base.c:2807
+#: client/campaign/cp_base.c:2699
 #, c-format
 msgid "By selling %s you gathered %i credits."
 msgstr "By selling %s you gathered %i credits."
 
-#: client/campaign/cp_base.c:2808
+#: client/campaign/cp_base.c:2700
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i collected item"
 msgstr[1] "%i collected items"
 
-#: client/campaign/cp_base.c:2812
+#: client/campaign/cp_base.c:2704
 #, c-format
 msgid "Not enough storage space in base %s. %s"
 msgstr "Not enough storage space in base %s. %s"
 
-#: client/campaign/cp_base.c:2813
+#: client/campaign/cp_base.c:2705
 #, fuzzy, c-format
 msgid "%i item was sold for %i credits."
 msgid_plural "%i items were sold for %i credits."
 msgstr[0] "%i item was sold."
 msgstr[1] "%i items were sold."
 
-#: client/campaign/cp_base.c:3544
+#: client/campaign/cp_base.c:3436
 #, c-format
 msgid "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 msgstr "Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."
 
-#: client/campaign/cp_base_callbacks.c:190
+#: client/campaign/cp_base_callbacks.c:210
 #, c-format
 msgid "A new base has been built: %s (nation: %s)"
 msgstr "Μία νέα βάση χτίστηκε: %s (έθνος: %s)"
 
-#: client/campaign/cp_base_callbacks.c:192
+#: client/campaign/cp_base_callbacks.c:212
 #, c-format
 msgid "A new base has been built: %s"
 msgstr "Μία νέα βάση χτίστηκε: %s"
 
-#: client/campaign/cp_base_callbacks.c:193
+#: client/campaign/cp_base_callbacks.c:213
 msgid "Base built"
 msgstr "Βάση χτίστηκε"
 
-#: client/campaign/cp_base_callbacks.c:207
+#: client/campaign/cp_base_callbacks.c:227
 msgid "Not enough credits to set up a new base."
 msgstr "Όχι αρκετά χρήματα για χτίσημο νέας βάσης."
 
-#: client/campaign/cp_base_callbacks.c:551
+#: client/campaign/cp_base_callbacks.c:290
+#, fuzzy
+msgid "Buy or produce at least one aircraft first."
+msgstr "Αγορά ή παραγωγή νέου σκάφους"
+
+#: client/campaign/cp_base_callbacks.c:292
+#, fuzzy, c-format
+msgid "Build a %s or %s first."
+msgstr "Χτίστε ένα  %s πρώτα."
+
+#: client/campaign/cp_base_callbacks.c:299
+#: client/campaign/cp_base_callbacks.c:308
+#: client/campaign/cp_base_callbacks.c:317
+#: client/campaign/cp_base_callbacks.c:326
+#: client/campaign/cp_base_callbacks.c:335
+#: client/campaign/cp_base_callbacks.c:349
+#: client/campaign/cp_base_callbacks.c:710
 msgid "Base is under attack, you can't access this building !"
 msgstr "Η βάση δέχετε επίθεση, δε μπορείτε να προσπαλάσετε αυτό το κτήριο !"
 
-#: client/campaign/cp_base_callbacks.c:560
+#: client/campaign/cp_base_callbacks.c:301
+#: client/campaign/cp_base_callbacks.c:319
+#: client/campaign/cp_base_callbacks.c:328
+#: client/campaign/cp_base_callbacks.c:343
+#: client/campaign/cp_base_callbacks.c:351
+#: client/campaign/cp_base_callbacks.c:785
+#, c-format
+msgid "Build a %s first."
+msgstr "Χτίστε ένα  %s πρώτα."
+
+#: client/campaign/cp_base_callbacks.c:310
+#, fuzzy
+msgid "Build at least a second base to transfer equipment or personnel"
+msgstr "Μεταφορά εξοπλισμού ή προσωπικού"
+
+#: client/campaign/cp_base_callbacks.c:337
+#, fuzzy, c-format
+msgid "Build %s first."
+msgstr "Χτίστε ένα  %s πρώτα."
+
+#: client/campaign/cp_base_callbacks.c:719
 msgid "You need at least one Hangar (and its dependencies) to use aircraft."
 msgstr "Χρειάζεστε τουλάχιστον ένα υπόστεγο (και τα παρελκόμενά) για να χρησιμοποιήσετε ένα σκάφος."
 
-#: client/campaign/cp_base_callbacks.c:579
+#: client/campaign/cp_base_callbacks.c:738
 #, c-format
 msgid ""
 "Construction of building will be over in %i day.\n"
@@ -13503,140 +13552,135 @@ msgstr[1] ""
 "Η κατασκευή θα ολοκληρωθεί σε %i ημέρες.\n"
 "Παρακαλώ περιμένετε να εισέλθετε."
 
-#: client/campaign/cp_base_callbacks.c:590
+#: client/campaign/cp_base_callbacks.c:749
 #, c-format
 msgid "You need a building %s to make building %s functional."
 msgstr "Χρειάζεστε ένα %s για να κάνετε λειτουργικό το %s."
 
-#: client/campaign/cp_base_callbacks.c:600
+#: client/campaign/cp_base_callbacks.c:759
 #, c-format
 msgid "Building %s is not finished yet, and is needed to use building %s."
 msgstr "Το %s δεν ολοκληρώθηκε ακόμα, και χρειάζεται να χρησιμοποιήσει το %s."
 
-#: client/campaign/cp_base_callbacks.c:607
+#: client/campaign/cp_base_callbacks.c:766
 #, c-format
 msgid "Make sure that the dependencies of building %s (%s) are operational, so that building %s may be used."
 msgstr "Σιγουρευτήτε ότι τα παρελκόμενα του κτηρίου %s (%s) είναι λειτουργικά, έτσι ώστε το κτήριο %s να μπορεί να χρησιμοποιηθεί."
 
-#: client/campaign/cp_base_callbacks.c:615
-#: client/campaign/cp_base_callbacks.c:620
+#: client/campaign/cp_base_callbacks.c:774
+#: client/campaign/cp_base_callbacks.c:779
 #, c-format
 msgid "You need to recruit %s to use building %s."
 msgstr "You need to recruit %s to use building %s."
 
-#: client/campaign/cp_base_callbacks.c:626
-#, c-format
-msgid "Build a %s first."
-msgstr "Χτίστε ένα  %s πρώτα."
-
-#: client/campaign/cp_base_callbacks.c:676
+#: client/campaign/cp_base_callbacks.c:834
 #, fuzzy
 msgid "^BAircraft\n"
 msgstr "Σκάφος"
 
-#: client/campaign/cp_base_callbacks.c:683
+#: client/campaign/cp_base_callbacks.c:841
 #, fuzzy
 msgid "^BEmployees\n"
 msgstr "Υπάλληλοι"
 
-#: client/campaign/cp_base_callbacks.c:693
+#: client/campaign/cp_base_callbacks.c:851
 msgid "^BBuildings\t\t\t\t\t\tCapacity\t\t\t\tAmount\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:717
+#: client/campaign/cp_base_callbacks.c:875
 msgid "day"
 msgid_plural "days"
 msgstr[0] "μέρα"
 msgstr[1] "μέρες"
 
-#: client/campaign/cp_base_callbacks.c:727
+#: client/campaign/cp_base_callbacks.c:885
 msgid "^BProduction\t\t\t\t\t\tQuantity\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:738
+#: client/campaign/cp_base_callbacks.c:896
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%.2f%%\n"
 
-#: client/campaign/cp_base_callbacks.c:742
-#: client/campaign/cp_base_callbacks.c:758
+#: client/campaign/cp_base_callbacks.c:900
+#: client/campaign/cp_base_callbacks.c:916
 #, fuzzy
 msgid "Nothing\n"
 msgstr "None\n"
 
-#: client/campaign/cp_base_callbacks.c:747
+#: client/campaign/cp_base_callbacks.c:905
 msgid "^BResearch\t\t\t\t\t\tScientists\t\t\t\tPercent\n"
 msgstr ""
 
-#: client/campaign/cp_base_callbacks.c:752
+#: client/campaign/cp_base_callbacks.c:910
 #, c-format
 msgid "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 msgstr "%s\t\t\t\t\t\t%d\t\t\t\t%1.2f%%\n"
 
-#: client/campaign/cp_employee_callbacks.c:205
+#: client/campaign/cp_employee_callbacks.c:207
 #, fuzzy, c-format
 msgid "%s [Transferred]"
 msgstr "Μεταφορά"
 
 #: client/campaign/cp_employee_callbacks.c:337
-#: client/campaign/cp_employee_callbacks.c:391
+#: client/campaign/cp_employee_callbacks.c:392
 #, fuzzy
 msgid "Could not fire employee"
 msgstr "Μίσθωση Ατόμων"
 
-#: client/campaign/cp_employee_callbacks.c:397
+#: client/campaign/cp_employee_callbacks.c:398
 #, fuzzy
 msgid "Could not hire employee"
 msgstr "Μίσθωση Ατόμων"
 
-#: client/campaign/cp_installation_callbacks.c:102
+#: client/campaign/cp_installation_callbacks.c:70
 #, fuzzy, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "1 μέρα"
 msgstr[1] "1 μέρα"
 
-#: client/campaign/cp_installation_callbacks.c:156
+#: client/campaign/cp_installation_callbacks.c:136
 #, fuzzy, c-format
 msgid "A new installation has been built: %s (nation: %s)"
 msgstr "Μία νέα βάση χτίστηκε: %s (έθνος: %s)"
 
-#: client/campaign/cp_installation_callbacks.c:158
+#: client/campaign/cp_installation_callbacks.c:138
 #, fuzzy, c-format
 msgid "A new installation has been built: %s"
 msgstr "Μία νέα βάση χτίστηκε: %s"
 
-#: client/campaign/cp_installation_callbacks.c:159
+#: client/campaign/cp_installation_callbacks.c:139
 #, fuzzy
 msgid "Installation building"
 msgstr "Έθνος"
 
-#: client/campaign/cp_installation_callbacks.c:170
+#: client/campaign/cp_installation_callbacks.c:149
 #, fuzzy
 msgid "Not enough credits to set up a new installation."
 msgstr "Όχι αρκετά χρήματα για χτίσημο νέας βάσης."
 
-#: client/campaign/cp_installation_callbacks.c:267
+#: client/campaign/cp_installation_callbacks.c:230
 #, fuzzy
 msgid "Destroy Installation"
 msgstr "Έθνος"
 
-#: client/campaign/cp_installation_callbacks.c:267
+#: client/campaign/cp_installation_callbacks.c:230
 #, fuzzy
 msgid "Do you really want to destroy this installation?"
 msgstr "Είστε σίγουρος ότι θέλετε να καταστρέψετε αυτό το κτήριο;"
 
-#: client/campaign/cp_installation_callbacks.c:269
+#: client/campaign/cp_installation_callbacks.c:232
 #, fuzzy
 msgid "Forget it"
 msgstr "Force start"
 
-#: client/campaign/cp_market_callbacks.c:295
+#: client/campaign/cp_market_callbacks.c:296
 #, c-format
 msgid "%i c\n"
 msgstr "%i c\n"
 
-#: client/campaign/cp_market_callbacks.c:587
+#: client/campaign/cp_market_callbacks.c:593
 msgid ""
 "No power supplies in this base.\n"
 "Hangars are not functional."
@@ -13644,11 +13688,11 @@ msgstr ""
 "Όχι παροχή ρεύματος στην βάση.\n"
 "Τα υπόστεγα δεν έιναι λειτουργικά."
 
-#: client/campaign/cp_market_callbacks.c:592
+#: client/campaign/cp_market_callbacks.c:598
 msgid "Build a hangar first."
 msgstr "Χτίστε ένα υπόστεγο πρώτα."
 
-#: client/campaign/cp_market_callbacks.c:605
+#: client/campaign/cp_market_callbacks.c:611
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -13656,7 +13700,7 @@ msgstr ""
 "Δε μπορείται να αγοράσατε αυτό το σκάφος.\n"
 "Όχι αρκετός χώρος στα υπόστεγα.\n"
 
-#: client/campaign/cp_market_callbacks.c:610
+#: client/campaign/cp_market_callbacks.c:616
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -13664,11 +13708,11 @@ msgstr ""
 "Δε μπορείται να αγοράσατε αυτό το σκάφος.\n"
 "Όχι αρκετά χρήματα.\n"
 
-#: client/campaign/cp_market_callbacks.c:697
+#: client/campaign/cp_market_callbacks.c:701
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Δε μπορείται να πουλήσετε ένα σκάφος όσο έχει αναθετήμενη μια ομάδα"
 
-#: client/campaign/cp_market_callbacks.c:699
+#: client/campaign/cp_market_callbacks.c:703
 #, fuzzy
 msgid "You can't sell an aircraft that is not in base"
 msgstr "Δε μπορείται να πουλήσετε ένα σκάφος όσο έχει αναθετήμενη μια ομάδα"
@@ -13733,19 +13777,19 @@ msgid_plural "credits"
 msgstr[0] "credit"
 msgstr[1] "credits"
 
-#: client/campaign/cp_nations.c:81 client/cl_game_campaign.c:211
+#: client/campaign/cp_nations.c:81 client/cl_game_campaign.c:210
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "επιστήμονας"
 msgstr[1] "επιστήμονες"
 
-#: client/campaign/cp_nations.c:82 client/cl_game_campaign.c:210
+#: client/campaign/cp_nations.c:82 client/cl_game_campaign.c:209
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "στρατιώτης"
 msgstr[1] "στρατιώτες"
 
-#: client/campaign/cp_nations.c:83 client/cl_game_campaign.c:212
+#: client/campaign/cp_nations.c:83 client/cl_game_campaign.c:211
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "εργάτης"
@@ -14028,31 +14072,31 @@ msgstr "Αποστολή μηνύματος σε όλους του παίχτε�
 msgid "Send a message to allied team members"
 msgstr "Αποστολή μηνύματος σε όλους του σύμμαχους παίχτες"
 
-#: client/cl_game_campaign.c:125
+#: client/cl_game_campaign.c:124
 msgid "Chicken-hearted"
 msgstr "Δειλό"
 
-#: client/cl_game_campaign.c:127
+#: client/cl_game_campaign.c:126
 msgid "Very Easy"
 msgstr "Πολύ εύκολο"
 
-#: client/cl_game_campaign.c:130
+#: client/cl_game_campaign.c:129
 msgid "Easy"
 msgstr "Έυκολο"
 
-#: client/cl_game_campaign.c:135
+#: client/cl_game_campaign.c:134
 msgid "Hard"
 msgstr "Δύσκολο"
 
-#: client/cl_game_campaign.c:137
+#: client/cl_game_campaign.c:136
 msgid "Very Hard"
 msgstr "Πολύ δύσκολο"
 
-#: client/cl_game_campaign.c:139
+#: client/cl_game_campaign.c:138
 msgid "Insane"
 msgstr "Τρελό"
 
-#: client/cl_game_campaign.c:205
+#: client/cl_game_campaign.c:204
 #, c-format
 msgid ""
 "%s\n"
@@ -14075,20 +14119,20 @@ msgstr ""
 "Μεγ. επιτρεπόμενο χρέος: %ic\n"
 "%s\n"
 
-#: client/cl_game_campaign.c:425
+#: client/cl_game_campaign.c:424
 #, c-format
 msgid "Rank: %s"
 msgstr "Βαθμός: %s"
 
-#: client/cl_game_multiplayer.c:70
+#: client/cl_game_multiplayer.c:72
 msgid "Set soldiers per player lower than soldiers per team"
 msgstr "Set soldiers per player lower than soldiers per team"
 
-#: client/cl_game_multiplayer.c:70
+#: client/cl_game_multiplayer.c:72
 msgid "Settings doesn't make sense"
 msgstr "Οι ρυθμίσεις δε βγάζουν νόημα"
 
-#: client/cl_game_multiplayer.c:185 client/cl_game_skirmish.c:107
+#: client/cl_game_multiplayer.c:187 client/cl_game_skirmish.c:109
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -14098,11 +14142,11 @@ msgstr ""
 "\n"
 "Κανείς επιζών και για τις δύο πλευρές."
 
-#: client/cl_game_multiplayer.c:186 client/cl_game_skirmish.c:108
+#: client/cl_game_multiplayer.c:188 client/cl_game_skirmish.c:110
 msgid "Game Drawn!"
 msgstr "Παιχνίδι Ισόπαλο!"
 
-#: client/cl_game_multiplayer.c:198 client/cl_game_skirmish.c:120
+#: client/cl_game_multiplayer.c:200 client/cl_game_skirmish.c:122
 #, c-format
 msgid ""
 "\n"
@@ -14115,28 +14159,28 @@ msgstr ""
 "Εχθροί που σκοτώθηκαν:  %i\n"
 "Επιζώντες ομάδας:  %i"
 
-#: client/cl_game_multiplayer.c:200 client/cl_game_skirmish.c:122
+#: client/cl_game_multiplayer.c:202 client/cl_game_skirmish.c:124
 msgid "You won the game!"
 msgstr "Νίκησες το παιχνίδι!"
 
-#: client/cl_game_multiplayer.c:201 client/cl_game_skirmish.c:123
+#: client/cl_game_multiplayer.c:203 client/cl_game_skirmish.c:125
 msgid "Congratulations"
 msgstr "Συγχαρητήρια"
 
-#: client/cl_game_multiplayer.c:203 client/cl_game_skirmish.c:125
+#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:127
 #, fuzzy
 msgid "You've lost the game!"
 msgstr "Χάσατε το παιχνίδι"
 
-#: client/cl_game_multiplayer.c:204 client/cl_game_skirmish.c:126
+#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:128
 msgid "Better luck next time"
 msgstr "Καλύτερη τύχη την επόμενη φορά"
 
-#: client/cl_game_multiplayer.c:220 client/multiplayer/mp_callbacks.c:239
+#: client/cl_game_multiplayer.c:222 client/multiplayer/mp_callbacks.c:239
 msgid "Invalid or full team"
 msgstr "Invalid or full team"
 
-#: client/cl_game_multiplayer.c:268
+#: client/cl_game_multiplayer.c:270
 msgid "all"
 msgstr "all"
 
@@ -14384,114 +14428,114 @@ msgstr "Διακόπτης απάντησης πυρών"
 msgid "Toggle reaction fire"
 msgstr "Διακόπτης απάντησης πυρών"
 
-#: client/cl_input.c:1415
+#: client/cl_input.c:1414
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Περιστρέψτε την κάμερα μάχης αντίθετα απο τους δείκτες του ρολογιού"
 
-#: client/cl_input.c:1417
+#: client/cl_input.c:1416
 msgid "Rotate battlescape camera clockwise"
 msgstr "Περιστρέψτε την κάμερα μάχης με την φορά του ρολογιού"
 
-#: client/cl_input.c:1419
+#: client/cl_input.c:1418
 msgid "Tilt battlescape camera up"
 msgstr "Γύρετε την κάμερα μάχης πάνω"
 
-#: client/cl_input.c:1421
+#: client/cl_input.c:1420
 msgid "Tilt battlescape camera down"
 msgstr "Γύρετε την κάμερα μάχης κάτω"
 
-#: client/cl_input.c:1423
+#: client/cl_input.c:1422
 msgid "Move battlescape camera left"
 msgstr "Γύρετε την κάμερα μάχης αριστερά"
 
-#: client/cl_input.c:1425
+#: client/cl_input.c:1424
 msgid "Move battlescape camera right"
 msgstr "Γύρετε την κάμερα μάχης δεξία"
 
-#: client/cl_input.c:1427
+#: client/cl_input.c:1426
 msgid "Move battlescape camera forward"
 msgstr "Μετακινήστε την κάμερα μάχης εμπρός"
 
-#: client/cl_input.c:1429
+#: client/cl_input.c:1428
 msgid "Move battlescape camera backward"
 msgstr "Μετακινήστε την κάμερα μάχης πίσω"
 
-#: client/cl_input.c:1431 client/cl_input.c:1461
+#: client/cl_input.c:1430 client/cl_input.c:1460
 msgid "Zoom in"
 msgstr "Εστίαση μέσα"
 
-#: client/cl_input.c:1433 client/cl_input.c:1462
+#: client/cl_input.c:1432 client/cl_input.c:1461
 msgid "Zoom out"
 msgstr "Εστίαση έξω"
 
-#: client/cl_input.c:1436
+#: client/cl_input.c:1435
 msgid "Left mouse button click (menu)"
 msgstr "Αριστερό πλήκτρο (μενού)"
 
-#: client/cl_input.c:1438
+#: client/cl_input.c:1437
 msgid "Middle mouse button click (menu)"
 msgstr "Μεσαίο πλήκτρο (μενού)"
 
-#: client/cl_input.c:1440
+#: client/cl_input.c:1439
 msgid "Right mouse button click (menu)"
 msgstr "Δεξί πλήκτρο (μενού)"
 
-#: client/cl_input.c:1442
+#: client/cl_input.c:1441
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Επιλέξτε αντικέιμενα/Περπατήστε στο τετράγωνο κτλ"
 
-#: client/cl_input.c:1444
+#: client/cl_input.c:1443
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Περπατήστε σε τετράγωνο/Σε κατάσταση πύρ, ακύρωση ενέργειας"
 
-#: client/cl_input.c:1446
+#: client/cl_input.c:1445
 msgid "Turn soldier toward mouse pointer"
 msgstr "Turn soldier toward mouse pointer"
 
-#: client/cl_input.c:1448
+#: client/cl_input.c:1447
 #, fuzzy
 msgid "Toggles the hud radar mode"
 msgstr "Διακόπτης the headgear"
 
-#: client/cl_input.c:1451
+#: client/cl_input.c:1450
 msgid "Toggle stand/crounch"
 msgstr "Διακόπτης όρθιος/οκλαδόν"
 
-#: client/cl_input.c:1452
+#: client/cl_input.c:1451
 msgid "Toggle the headgear"
 msgstr "Διακόπτης the headgear"
 
-#: client/cl_input.c:1453
+#: client/cl_input.c:1452
 #, fuzzy
 msgid "Toggle to next alien"
 msgstr "Διακόπτης στον επόμενο εξωγήινο"
 
-#: client/cl_input.c:1454
+#: client/cl_input.c:1453
 msgid "Draw a line to each alien visible to the current actor."
 msgstr "Draw a line to each alien visible to the current actor."
 
-#: client/cl_input.c:1455
+#: client/cl_input.c:1454
 #, fuzzy
 msgid "Toggle to next alien visible from selected actor."
 msgstr "Toogle to next alien visible from selected actor."
 
-#: client/cl_input.c:1457
+#: client/cl_input.c:1456
 msgid "Ends current round"
 msgstr "Τερματισμός γύρου"
 
-#: client/cl_input.c:1458
+#: client/cl_input.c:1457
 msgid "Opens or closes a door"
 msgstr ""
 
-#: client/cl_input.c:1459
+#: client/cl_input.c:1458
 msgid "Slice through terrain at a higher level"
 msgstr "Slice through terrain at a higher level"
 
-#: client/cl_input.c:1460
+#: client/cl_input.c:1459
 msgid "Slice through terrain at a lower level"
 msgstr "Slice through terrain at a lower level"
 
-#: client/cl_input.c:1463
+#: client/cl_input.c:1462
 msgid "Confirm the current action"
 msgstr "Επιβαιβεώστε την ενέργεια σας"
 
@@ -14503,63 +14547,63 @@ msgstr ""
 msgid "..."
 msgstr ""
 
-#: client/cl_main.c:516
+#: client/cl_main.c:515
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Local game version (%s) differs from the servers"
 
-#: client/cl_main.c:522
+#: client/cl_main.c:521
 msgid "Local map version differs from server"
 msgstr "Local map version differs from server"
 
-#: client/cl_main.c:528
+#: client/cl_main.c:527
 msgid "Script files are not the same"
 msgstr "Script files are not the same"
 
-#: client/cl_main.c:535
+#: client/cl_main.c:534
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Local game version (%s) differs from the servers (%s)"
 
-#: client/cl_main.c:834
+#: client/cl_main.c:831
 msgid "Target your shot to the ground"
 msgstr "Πυροβολήστε στο έδαφος"
 
-#: client/cl_main.c:835
+#: client/cl_main.c:832
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr "Open the actors inventory while we are in tactical mission"
 
-#: client/cl_main.c:961 client/cl_view.c:278
+#: client/cl_main.c:958 client/cl_view.c:279
 msgid "Awaiting game start"
 msgstr "Αναμονή για την έναρξη του παιχνιδιού"
 
-#: client/cl_main.c:1010
+#: client/cl_main.c:1007
 msgid "Custom"
 msgstr "Παραμετροποιημένο"
 
-#: client/cl_parse.c:858
+#: client/cl_parse.c:865
 msgid "You've ended your round\n"
 msgstr "Τερματίσατε τον γύρο σας\n"
 
-#: client/cl_parse.c:861
+#: client/cl_parse.c:868
 #, c-format
 msgid "%s ended his round (team %i)\n"
 msgstr "%s τερματίστε τον γύρο του (ομάδα %i)\n"
 
-#: client/cl_parse.c:1100
+#: client/cl_parse.c:1107
 #, fuzzy, c-format
 msgid "Enemy spotted: %s!"
 msgstr "Εντοπίστηκε εχθρός!\n"
 
-#: client/cl_parse.c:1103
+#: client/cl_parse.c:1110
 msgid "Enemy spotted!\n"
 msgstr "Εντοπίστηκε εχθρός!\n"
 
-#: client/cl_parse.c:1105
+#: client/cl_parse.c:1112
 msgid "Civilian spotted!\n"
 msgstr "Εντοπίστηκε πολίτης!\n"
 
-#: client/cl_parse.c:1790
+#: client/cl_parse.c:1797
 msgid "The server has disconnected.\n"
 msgstr "Ο server αποσυνδέθηκε.\n"
 
@@ -14573,70 +14617,70 @@ msgstr "Κατέβασμα [%s]"
 msgid "Loading Map [%s]"
 msgstr "Φόρτωση Χάρτη [%s]"
 
-#: client/cl_team.c:50 client/cl_team.c:453
+#: client/cl_team.c:49 client/cl_team.c:413
 msgid "Urban"
 msgstr "Πόλης"
 
-#: client/cl_team.c:52 client/cl_team.c:454
+#: client/cl_team.c:51 client/cl_team.c:414
 msgid "Jungle"
 msgstr "Ζούγκλας"
 
-#: client/cl_team.c:54 client/cl_team.c:455
+#: client/cl_team.c:53 client/cl_team.c:415
 msgid "Desert"
 msgstr "Ερήμου"
 
-#: client/cl_team.c:56 client/cl_team.c:456
+#: client/cl_team.c:55 client/cl_team.c:416
 msgid "Arctic"
 msgstr "Αρκτικής"
 
-#: client/cl_team.c:58 client/cl_team.c:457
+#: client/cl_team.c:57 client/cl_team.c:417
 msgid "Yellow"
 msgstr "Κίτρινη"
 
-#: client/cl_team.c:60 client/cl_team.c:458
+#: client/cl_team.c:59 client/cl_team.c:418
 msgid "CCCP"
 msgstr "CCCP"
 
-#: client/cl_team.c:792
+#: client/cl_team.c:753
 msgid "Select a soldier from list"
 msgstr "Επιλέξτε στρατιώτη απο την λίστα"
 
-#: client/cl_team.c:793
+#: client/cl_team.c:754
 #, fuzzy
 msgid "Reselect the current soldier"
 msgstr "Ο επιλεγμένος στρατιώτης"
 
-#: client/cl_team.c:794
+#: client/cl_team.c:755
 #, fuzzy
 msgid "Update a soldier"
 msgstr "Μεταονομάστε τον στρατιώτη"
 
-#: client/cl_team.c:795
+#: client/cl_team.c:756
 msgid "Update the GUI with the selected item"
 msgstr ""
 
-#: client/cl_team.c:796
+#: client/cl_team.c:757
 msgid "Toggle to next soldier"
 msgstr "Toggle to next soldier"
 
-#: client/cl_view.c:213 client/cl_view.c:243
+#: client/cl_view.c:214 client/cl_view.c:244
 #, c-format
 msgid "loading %s"
 msgstr "φόρτωση %s"
 
-#: client/cl_view.c:226
+#: client/cl_view.c:227
 msgid "loading models..."
 msgstr "φόρτωση μοντέλων..."
 
-#: client/menu/m_main.c:48
+#: client/menu/m_main.c:49
 msgid "This change requires a restart"
 msgstr ""
 
-#: client/menu/m_main.c:50
+#: client/menu/m_main.c:51
 msgid "This change might require a restart"
 msgstr ""
 
-#: client/menu/m_menus.c:684
+#: client/menu/m_menus.c:683
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Hide the HUD (press ESC to reactivate HUD)"
 
@@ -14645,29 +14689,33 @@ msgstr "Hide the HUD (press ESC to reactivate HUD)"
 msgid "Key: %s"
 msgstr "Πλήκτρο: %s"
 
-#: client/menu/node/m_node_base.c:200
+#: client/menu/node/m_node_base.c:199
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i μέρα που μένει"
 msgstr[1] "%i μέρες που μένουν"
 
-#: client/menu/node/m_node_container.c:274
-#: client/menu/node/m_node_container.c:279
+#: client/menu/node/m_node_base.c:272
+msgid "not operational, depends on"
+msgstr ""
+
+#: client/menu/node/m_node_container.c:275
+#: client/menu/node/m_node_container.c:280
 #, c-format
 msgid "Ammo: %i\n"
 msgstr "Πυρομαχικά: %i\n"
 
-#: client/menu/node/m_node_container.c:278
+#: client/menu/node/m_node_container.c:279
 #, c-format
 msgid "%s loaded\n"
 msgstr "%s φόρτωση\n"
 
-#: client/menu/node/m_node_container.c:285
+#: client/menu/node/m_node_container.c:286
 msgid "Usable in:\n"
 msgstr "Usable in:\n"
 
-#: client/menu/node/m_node_container.c:326
+#: client/menu/node/m_node_container.c:327
 #, c-format
 msgid "In: %i Out: %i"
 msgstr "Μέσα: %i Έξω: %i"
@@ -14795,52 +14843,52 @@ msgstr "Max. soldiers per team:\t%s\n"
 msgid "Password protected:\t%s\n"
 msgstr "Προστασία με κωδικό:\t%s\n"
 
-#: client/multiplayer/mp_serverlist.c:464
+#: client/multiplayer/mp_serverlist.c:461
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
 msgstr "All bookmark slots are used - please removed unused entries and repeat this step"
 
-#: client/multiplayer/mp_team.c:193
+#: client/multiplayer/mp_team.c:192
 #, fuzzy
 msgid "Error saving team. Nothing to save yet."
 msgstr "Τίποτα για σώσιμο ακόμα."
 
-#: client/multiplayer/mp_team.c:209
+#: client/multiplayer/mp_team.c:208
 msgid "NewTeam"
 msgstr "Νέα ομάδα"
 
-#: client/multiplayer/mp_team.c:214
+#: client/multiplayer/mp_team.c:213
 msgid "Error saving team. Check free disk space!"
 msgstr "Λάθος στο σώσιμο της ομάδας. Ελέξτε ελεύθερο χώρο στο δίσκο!"
 
-#: game/g_client.c:809
+#: game/g_client.c:827
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Αδυναμία εκτέλεσης - δεν είναι ο γύρος σας!\n"
 
-#: game/g_client.c:816
+#: game/g_client.c:834
 msgid "Can't perform action - object not present!\n"
 msgstr "Αδυναμία εκτέλεσης - αντικέιμενο όχι παρών!\n"
 
-#: game/g_client.c:821
+#: game/g_client.c:839
 msgid "Can't perform action - not an actor!\n"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: game/g_client.c:826
+#: game/g_client.c:844
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Αδυναμία εκτέλεσης - στρατιώτης σαστισμένος!\n"
 
-#: game/g_client.c:831
+#: game/g_client.c:849
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Αδυναμία εκτέλεσης - στρατιώτης νεκρός!\n"
 
-#: game/g_client.c:836
+#: game/g_client.c:854
 msgid "Can't perform action - not on same team!\n"
 msgstr "Αδυναμία εκτέλεσης - όχι στην ίδια ομάδαm!\n"
 
-#: game/g_client.c:841
+#: game/g_client.c:859
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Αδυναμία εκτέλεσης - όχι έλεγχος σε συμμαχικούς στρατιώτες!\n"
 
-#: game/g_client.c:1015
+#: game/g_client.c:1014
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Αδυναμία εκτέλεσης - όχι αρκετοί TUs!\n"
 
@@ -14848,115 +14896,115 @@ msgstr "Αδυναμία εκτέλεσης - όχι αρκετοί TUs!\n"
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Αδυναμία εκτέλεσης - το όπλο ήδη γεμισμένο με τα ίδια πυρομαχικά!\n"
 
-#: game/g_client.c:1815
+#: game/g_client.c:1721
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Currently shaken, won't let their guard down.\n"
 
-#: game/g_client.c:1878
+#: game/g_client.c:1784
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s πανικοβλημένος!\n"
 
-#: game/g_client.c:1938
+#: game/g_client.c:1846
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s is on a rampage.\n"
 
-#: game/g_client.c:1940
+#: game/g_client.c:1848
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s is consumed by mad rage!\n"
 
-#: game/g_client.c:2000
+#: game/g_client.c:1908
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s is currently shaken.\n"
 
-#: game/g_client.c:2541 game/g_svcmds.c:348
+#: game/g_client.c:2444 game/g_svcmds.c:348
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Η ομάδα %i (%s) θα πάρει τον πρώτο γύρο.\n"
 
-#: game/g_client.c:2805
+#: game/g_client.c:2708
 msgid "4 minutes left until forced round end\n"
 msgstr "4 λεπτά απέμειναν μέχρι να ολοκληρωθεί ο γύρος\n"
 
-#: game/g_client.c:2808
+#: game/g_client.c:2711
 msgid "3 minutes left until forced round end\n"
 msgstr "3 λεπτά απέμειναν μέχρι να ολοκληρωθεί ο γύρος\n"
 
-#: game/g_client.c:2811
+#: game/g_client.c:2714
 msgid "2 minutes left until forced round end\n"
 msgstr "2 λεπτά απέμειναν μέχρι να ολοκληρωθεί ο γύρος\n"
 
-#: game/g_client.c:2814
+#: game/g_client.c:2717
 msgid "1 minute left until forced round end\n"
 msgstr "1 λεπτό απέμεινε μέχρι να ολοκληρωθεί ο γύρος\n"
 
-#: game/g_client.c:2817
+#: game/g_client.c:2720
 msgid "30 seconds left until forced round end\n"
 msgstr "30 δευτερόλεπτα απέμειναν μέχρι να ολοκληρωθεί ο γύρος\n"
 
-#: game/g_client.c:2820
+#: game/g_client.c:2723
 msgid "15 seconds left until forced round end\n"
 msgstr "15 δευτερόλεπτα απέμειναν μέχρι να ολοκληρωθεί ο γύρος\n"
 
-#: game/g_client.c:2828
+#: game/g_client.c:2731
 msgid "Current active team hit the max round time\n"
 msgstr "Η παρούσα ομάδα έφθασε το μέγιστο των πειτρπτών γύρων\n"
 
-#: game/g_combat.c:385
+#: game/g_combat.c:384
 msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
 msgstr ""
 
-#: game/g_combat.c:606
+#: game/g_combat.c:599
 #, fuzzy
 msgid "Can't perform action - impossible throw!\n"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: game/g_combat.c:1165
+#: game/g_combat.c:1151
 #, fuzzy
 msgid "Can't perform action - object not activateable!\n"
 msgstr "Αδυναμία εκτέλεσης - αντικέιμενο όχι παρών!\n"
 
-#: game/g_combat.c:1183
+#: game/g_combat.c:1169
 #, fuzzy
 msgid "Can't perform action - weapon cannot be fired one handed!\n"
 msgstr ""
 "Δε μπορεί να κάνει πύρ\n"
 "ενός χεριού.\n"
 
-#: game/g_combat.c:1190
+#: game/g_combat.c:1176
 #, fuzzy
 msgid "Can't perform action - no ammo!\n"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: game/g_combat.c:1198
+#: game/g_combat.c:1184
 #, fuzzy
 msgid "Can't perform action - target out of range!\n"
 msgstr "Αδυναμία εκτέλεσης - δεν υπάρχει στρατιώτης!\n"
 
-#: game/g_combat.c:1244
+#: game/g_combat.c:1230
 #, fuzzy
 msgid "Can't perform action - not enough ammo!\n"
 msgstr "Αδυναμία εκτέλεσης - όχι αρκετοί TUs!\n"
 
-#: game/g_spawn.c:688
+#: game/g_spawn.c:676
 msgid "Aliens entered target zone\n"
 msgstr ""
 
-#: game/g_spawn.c:715
+#: game/g_spawn.c:703
 #, fuzzy
 msgid "Item was placed\n"
 msgstr "%i item was sold."
 
-#: game/g_spawn.c:721
+#: game/g_spawn.c:709
 msgid "Target zone is occupied\n"
 msgstr ""
 
-#: game/g_spawn.c:853
+#: game/g_spawn.c:833
 #, c-format
 msgid "Mission won for team %i\n"
 msgstr ""
@@ -14986,6 +15034,12 @@ msgstr "Grenchen"
 #: po/OTHER_STRINGS:9
 msgid "Playing"
 msgstr ""
+
+#~ msgid "AI autojoin:"
+#~ msgstr "AI autojoin:"
+
+#~ msgid "AI autojoin on free teams"
+#~ msgstr "AI autojoin on free teams"
 
 #~ msgid "Assault"
 #~ msgstr "Επίθεση"
@@ -15176,9 +15230,6 @@ msgstr ""
 #~ msgid "Toggle first-person/third-person camera mode"
 #~ msgstr "Toggle first-person/third-person camera mode"
 
-#~ msgid "Base #2"
-#~ msgstr "Βάση #2"
-
 #~ msgid "Base #3"
 #~ msgstr "Βάση #3"
 
@@ -15312,9 +15363,6 @@ msgstr ""
 
 #~ msgid "Produce aircraft"
 #~ msgstr "Παράγετε αεροσκάφος"
-
-#~ msgid "Buy or produce a new aircraft"
-#~ msgstr "Αγορά ή παραγωγή νέου σκάφους"
 
 #~ msgid "Assemble or load a team"
 #~ msgstr "Συναθροίστε ή φορτώστε μια ομάδα"
