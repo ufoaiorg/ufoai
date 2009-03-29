@@ -66,14 +66,14 @@ tile +hangar
 {
 8 8
 
-0   av   av   av   av   av   av   av   av  0
-ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
-ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
-0   av   av   av   av   av   av   av   av  0
+0   av   av   av   av   av   av  0
+ah  +a   +a   +a   +a  +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a  ah
+0   av   av   av   av   av   av  0
 }
 
 // ########################################
