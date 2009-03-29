@@ -771,7 +771,7 @@ void B_MarkBuildingDestroy (base_t* base, building_t* building)
 
 	/** @todo: make base destroyable by destroying entrance */
 	if (building->buildingType == B_ENTRANCE) {
-		MN_Popup(_("Destroy Entrance"), _("You cannot destroy the entrance of the base!"));
+		MN_Popup(_("Destroy Entrance"), _("You can't destroy the entrance of the base!"));
 		return;
 	}
 
