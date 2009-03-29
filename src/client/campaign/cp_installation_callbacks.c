@@ -82,8 +82,6 @@ void INS_SelectInstallation (installation_t *installation)
 static void INS_BuildInstallation_f (void)
 {
 	const nation_t *nation;
-	int i = 1;
-	int j;
 	installationTemplate_t *installationTemplate;
 	installation_t *installation;
 
@@ -97,7 +95,6 @@ static void INS_BuildInstallation_f (void)
 		return;
 
 	installationTemplate = INS_GetInstallationTemplateFromInstallationID(Cmd_Argv(1));
-
 	if (!installationTemplate) {
 		Com_Printf("The installation type %s passed for %s is not valid.\n", Cmd_Argv(1), Cmd_Argv(0));
 		return;
@@ -106,12 +103,6 @@ static void INS_BuildInstallation_f (void)
 	installation = INS_GetFirstUnfoundedInstallation();
 	if (!installation)
 		return;
-
-	do {
-		j = 0;
-		Com_sprintf(installation->name, sizeof(installation->name), "%s #%i", installationTemplate ? _(installationTemplate->name) : _("Installation"), i);
-		while (j <= ccs.numInstallations && strcmp(installation->name, ccs.installations[j++].name));
-	} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
 
 	assert(!installation->founded);
 	assert(installationTemplate->cost >= 0);

@@ -161,21 +161,17 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
 }
 
 /**
- * @brief Cleans all installations but restore the installation names
+ * @brief Set default installation names
  * @sa CL_GameNew
  */
 
 void INS_NewInstallations (void)
 {
-	/* reset installations */
 	int i;
-	char title[MAX_VAR];
 
 	for (i = 0; i < MAX_INSTALLATIONS; i++) {
 		installation_t *installation = INS_GetInstallationByIDX(i);
-		Q_strncpyz(title, installation->name, sizeof(title));
-/*		INS_ClearInstallation(installation); */
-		Q_strncpyz(installation->name, title, sizeof(title));
+		Com_sprintf(installation->name, lengthof(installation->name), _("Installation #%i"), i);
 	}
 }
 
@@ -227,7 +223,7 @@ void INS_DestroyInstallation (installation_t *installation)
 	RADAR_UpdateInstallationRadarCoverage(installation, 0, 0);
 	CP_MissionNotifyInstallationDestroyed(installation);
 
-	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), _(installation->name));
+	Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Installation %s was destroyed."), installation->name);
 	MSO_CheckAddNewMessage(NT_INSTALLATION_DESTROY, _("Installation destroyed"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
 	REMOVE_ELEM_ADJUST_IDX(ccs.installations, installation->idx, ccs.numInstallations);
@@ -376,7 +372,7 @@ void INS_UpdateInstallationData (void)
 			installation->installationStatus = INSTALLATION_WORKING;
 			RADAR_UpdateInstallationRadarCoverage(installation, installation->installationTemplate->radarRange, installation->installationTemplate->trackingRange);
 
-			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of installation %s finished."), _(installation->name));
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Construction of installation %s finished."), installation->name);
 				MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDFINISH, _("Installation finished"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 		}
 	}

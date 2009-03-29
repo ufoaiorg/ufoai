@@ -139,7 +139,6 @@ aircraft_t *INS_GetAircraftFromInstallationByIndex(installation_t* installation,
 void INS_DestroyInstallation(installation_t *installation);
 
 void INS_InitStartup(void);
-void INS_ParseInstallationNames(const char *name, const char **text);
 void INS_ParseInstallations(const char *name, const char **text);
 void INS_UpdateInstallationData(void);
 

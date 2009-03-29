@@ -68,7 +68,6 @@ static void B_BuildingAddToList (base_t *base, building_t *building)
 static void B_SelectBase_f (void)
 {
 	int baseID;
-	base_t *base;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
@@ -79,7 +78,7 @@ static void B_SelectBase_f (void)
 	 * if we would check against ccs.numBases here, a click on the base summary
 	 * base nodes would try to select unfounded bases */
 	if (baseID >= 0 && baseID < MAX_BASES) {
-		base = B_GetFoundedBaseByIDX(baseID);
+		base_t *base = B_GetFoundedBaseByIDX(baseID);
 		/* don't create a new base if the index was valid */
 		if (base)
 			B_SelectBase(base);
@@ -180,8 +179,7 @@ static qboolean B_NewBase (base_t* base, vec2_t pos)
 static void B_BuildBase_f (void)
 {
 	const nation_t *nation;
-	base_t *base = B_GetCurrentSelectedBase();
-
+	base_t *base = B_GetFirstUnfoundedBase();
 	if (!base)
 		return;
 
@@ -194,9 +192,9 @@ static void B_BuildBase_f (void)
 		 * influence to any nation happiness/funding/supporting */
 		if (B_NewBase(base, newBasePos)) {
 			const char *baseName = mn_base_title->string;
-			if (baseName[0] == '\0') {
+			if (baseName[0] == '\0')
 				baseName = "Base";
-			}
+
 			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", ccs.numBases);
 			base->idx = ccs.numBases - 1;
 			base->founded = qtrue;

@@ -94,7 +94,7 @@ static void MSO_InitTextList (void)
 		visibleMSOEntries++;
 	}
 	MN_RegisterLinkedListText(TEXT_MESSAGEOPTIONS, messageSettingsList);
-	MSO_SetMenuState(MSO_MSTATE_PREPARED,qfalse,qtrue);
+	MSO_SetMenuState(MSO_MSTATE_PREPARED, qfalse, qtrue);
 	if (oldVisibleEntries > visibleMSOEntries && messageList_scroll > visibleMSOEntries - msoTextNode->u.text.rows) {
 		messageList_scroll = visibleMSOEntries - msoTextNode->u.text.rows;
 		if (messageList_scroll < 0)

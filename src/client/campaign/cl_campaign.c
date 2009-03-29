@@ -883,7 +883,7 @@ static void CL_StatsUpdate_f (void)
 	MN_RegisterText(TEXT_STATS_INSTALLATIONS, pos);
 	for (i = 0; i < ccs.numInstallations; i++) {
 		const installation_t *inst = &ccs.installations[i];
-		Q_strcat(pos, va(_("%s\n"), inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		Q_strcat(pos, va("%s\n", inst->name), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
 	/* nations */

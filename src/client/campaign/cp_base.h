@@ -243,7 +243,7 @@ typedef struct base_s {
 
 /** @brief template for creating a base */
 typedef struct baseTemplate_s {
-	char* name;			/**< Name of the Base template */
+	char* id;			/**< ID of the base template */
 	baseBuildingTile_t buildings[MAX_BASEBUILDINGS]; /**< the buildings to be built for this template. */
 	int numBuildings;		/**< Number of buildings in this template. */
 } baseTemplate_t;
@@ -300,6 +300,7 @@ qboolean B_UpdateStorageAndCapacity(base_t* base, const objDef_t *obj, int amoun
 baseCapacities_t B_GetCapacityFromBuildingType(buildingType_t type);
 void B_ResetAllStatusAndCapacities(base_t *base, qboolean firstEnable);
 
+base_t *B_GetFirstUnfoundedBase(void);
 base_t *B_GetCurrentSelectedBase(void);
 void B_SetCurrentSelectedBase(const base_t *base);
 

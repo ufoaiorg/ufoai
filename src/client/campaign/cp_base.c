@@ -1216,19 +1216,18 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 
 /**
  * @brief Returns the baseTemplate in the global baseTemplate list that has the unique name baseTemplateID.
- * @param[in] baseTemplateName The unique id of the building (baseTemplate_t->name).
+ * @param[in] baseTemplateID The unique id of the building (baseTemplate_t->name).
  * @return baseTemplate_t If a Template was found it is returned, otherwise->NULL.
  */
-const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateName)
+const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 {
 	int i = 0;
 
-	assert(baseTemplateName);
 	for (i = 0; i < ccs.numBaseTemplates; i++)
-		if (!Q_strcasecmp(ccs.baseTemplates[i].name, baseTemplateName))
+		if (!Q_strcasecmp(ccs.baseTemplates[i].id, baseTemplateID))
 			return &ccs.baseTemplates[i];
 
-	Com_Printf("Base Template %s not found\n", baseTemplateName);
+	Com_Printf("Base Template %s not found\n", baseTemplateID);
 	return NULL;
 }
 
@@ -1872,7 +1871,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	/* create new Template */
 	template = &ccs.baseTemplates[ccs.numBaseTemplates];
-	template->name = Mem_PoolStrDup(name, cl_campaignPool, 0);
+	template->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 	/* clear map for checking duplicate positions and buildingnums for checking moreThanOne constraint */
 	memset(&map, qfalse, sizeof(map));
@@ -1933,24 +1932,24 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 
 	/* templates without Entrance can't be used */
 	if (!hasEntrance)
-		Sys_Error("Every base template needs one entrace! '%s' has none.", template->name);
+		Sys_Error("Every base template needs one entrace! '%s' has none.", template->id);
 }
 
 /**
  * @brief Get the lower IDX of unfounded base.
  * @return baseIdx of first Base Unfounded, or MAX_BASES is maximum base number is reached.
  */
-static int B_GetFirstUnfoundedBase (void)
+base_t *B_GetFirstUnfoundedBase (void)
 {
 	int baseIdx;
 
 	for (baseIdx = 0; baseIdx < MAX_BASES; baseIdx++) {
-		const base_t const *base = B_GetFoundedBaseByIDX(baseIdx);
-		if (!base)
-			return baseIdx;
+		base_t *base = B_GetBaseByIDX(baseIdx);
+		if (!base->founded)
+			return base;
 	}
 
-	return MAX_BASES;
+	return NULL;
 }
 
 /**
@@ -2001,8 +2000,6 @@ void B_SelectBase (base_t *base)
 {
 	/* set up a new base */
 	if (!base) {
-		int baseID;
-
 		/* if player hit the "create base" button while creating base mode is enabled
 		 * that means that player wants to quit this mode */
 		if (ccs.mapAction == MA_NEWBASE) {
@@ -2012,28 +2009,12 @@ void B_SelectBase (base_t *base)
 			return;
 		}
 
-		baseID = B_GetFirstUnfoundedBase();
-		Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: new baseID is %i\n", baseID);
-		if (baseID < MAX_BASES) {
-			base = B_GetBaseByIDX(baseID);
-			base->idx = baseID;
-
-			/* default name */
-			if (base->idx == 0)
-				Q_strncpyz(base->name, _("Home"), sizeof(base->name));
-			else
-				Com_sprintf(base->name, lengthof(base->name), _("Base #%d"), base->idx + 1);
-
-			Com_DPrintf(DEBUG_CLIENT, "B_SelectBase_f: baseID is valid for base: %s\n", base->name);
-			MN_ExecuteConfunc("set_base_to_normal");
+		if (ccs.numBases < MAX_BASES) {
 			/* show radar overlay (if not already displayed) */
 			if (!(r_geoscape_overlay->integer & OVERLAY_RADAR))
 				MAP_SetOverlay("radar");
 			ccs.mapAction = MA_NEWBASE;
 		} else {
-			Com_Printf("MaxBases reached\n");
-			/* select the first base in list */
-			base = B_GetBaseByIDX(0);
 			ccs.mapAction = MA_NONE;
 		}
 	} else {
@@ -2048,9 +2029,9 @@ void B_SelectBase (base_t *base)
 			Cmd_ExecuteString("set_base_to_normal");
 			break;
 		}
+		B_SetCurrentSelectedBase(base);
 	}
 
-	B_SetCurrentSelectedBase(base);
 }
 
 #undef RIGHT
@@ -2249,7 +2230,6 @@ void B_BaseResetStatus (base_t* const base)
 void B_NewBases (void)
 {
 	int i;
-	char title[MAX_VAR];
 
 	/* base setup */
 	ccs.numBases = 0;
@@ -2258,9 +2238,11 @@ void B_NewBases (void)
 
 	for (i = 0; i < MAX_BASES; i++) {
 		base_t *base = B_GetBaseByIDX(i);
-		Q_strncpyz(title, base->name, sizeof(title));
 		B_ClearBase(base);
-		Q_strncpyz(base->name, title, sizeof(title));
+		if (i == 0)
+			Q_strncpyz(base->name, _("Home"), lengthof(base->name));
+		else
+			Com_sprintf(base->name, lengthof(base->name), _("Base #%i"), i);
 	}
 }
 
