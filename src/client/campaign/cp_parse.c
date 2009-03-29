@@ -633,8 +633,6 @@ static void CL_ParseScriptFirst (const char *type, const char *name, const char 
 		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!strcmp(type, "tech"))
 		RS_ParseTechnologies(name, text);
-	else if (!strcmp(type, "basetemplate"))
-		B_ParseBaseTemplate(name, text);
 	else if (!strcmp(type, "nation"))
 		CL_ParseNations(name, text);
 	else if (!strcmp(type, "city"))
@@ -673,6 +671,8 @@ static void CL_ParseScriptSecond (const char *type, const char *name, const char
 		B_ParseBuildings(name, text, qtrue);
 	else if (!strcmp(type, "aircraft"))
 		AIR_ParseAircraft(name, text, qtrue);
+	else if (!strcmp(type, "basetemplate"))
+		B_ParseBaseTemplate(name, text);
 }
 
 /**

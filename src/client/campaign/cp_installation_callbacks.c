@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "../renderer/r_draw.h"
 
-vec3_t newInstallationPos;
+vec2_t newInstallationPos;
 
 /**
  * @brief Select an installation when clicking on it on geoscape, or build a new installation.
@@ -108,29 +108,22 @@ static void INS_BuildInstallation_f (void)
 	assert(installationTemplate->cost >= 0);
 
 	if (ccs.credits - installationTemplate->cost > 0) {
-		/** @todo If there is no nation assigned to the current selected position,
-		 * tell this the gamer and give him an option to rechoose the location.
-		 * If we don't do this, any action that is done for this installation has no
-		 * influence to any nation happiness/funding/supporting */
-		if (INS_NewInstallation(installation, installationTemplate, newInstallationPos)) {
-			Com_DPrintf(DEBUG_CLIENT, "INS_BuildInstallation_f: numInstallations: %i\n", ccs.numInstallations);
+		/* set up the installation */
+		INS_SetUpInstallation(installation, installationTemplate, newInstallationPos);
 
-			/* set up the installation */
-			INS_SetUpInstallation(installation, installationTemplate);
+		ccs.numInstallations++;
+		ccs.campaignStats.installationsBuild++;
+		ccs.mapAction = MA_NONE;
+		CL_UpdateCredits(ccs.credits - installationTemplate->cost);
+		Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
+		nation = MAP_GetNation(installation->pos);
+		if (nation)
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installation->name, _(nation->name));
+		else
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installation->name);
+		MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 
-			ccs.campaignStats.installationsBuild++;
-			ccs.mapAction = MA_NONE;
-			CL_UpdateCredits(ccs.credits - installationTemplate->cost);
-			Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
-			nation = MAP_GetNation(installation->pos);
-			if (nation)
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s (nation: %s)"), installation->name, _(nation->name));
-			else
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new installation has been built: %s"), installation->name);
-			MSO_CheckAddNewMessage(NT_INSTALLATION_BUILDSTART, _("Installation building"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-
-			Cbuf_AddText(va("mn_select_installation %i;", installation->idx));
-		}
+		Cbuf_AddText(va("mn_select_installation %i;", installation->idx));
 	} else {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");

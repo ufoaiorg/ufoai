@@ -113,13 +113,12 @@ typedef struct installation_s {
 extern installation_t *installationCurrent;
 
 installation_t* INS_GetInstallationByIDX(int instIdx);
-void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate);
-void INS_ResetInstallation(void);
+void INS_SetUpInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
 
 installationType_t INS_GetType(const installation_t *installation);
 
 /** Coordinates to place the new installation at (long, lat) */
-extern vec3_t newInstallationPos;
+extern vec2_t newInstallationPos;
 
 int INS_GetFoundedInstallationCount(void);
 installation_t* INS_GetFoundedInstallationByIDX(int installationIdx);
@@ -132,7 +131,6 @@ installation_t *INS_GetCurrentSelectedInstallation(void);
 void INS_SetCurrentSelectedInstallation(const installation_t *installation);
 
 installationTemplate_t* INS_GetInstallationTemplateFromInstallationID(const char *id);
-qboolean INS_NewInstallation(installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos);
 
 aircraft_t *INS_GetAircraftFromInstallationByIndex(installation_t* installation, int index);
 

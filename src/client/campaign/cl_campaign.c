@@ -726,10 +726,7 @@ void CL_CampaignRun (void)
 {
 	const int currentinterval = (int)floor(ccs.date.sec) % DETECTION_INTERVAL;
 	int checks, dt, i;
-	int timeAlreadyFlied = 0;	/**< Time already flied by UFO or aircraft due to detection each detectioninterval */
-
-	/* temporary check to find out bug: [1999099] no pilots available */
-	assert(ccs.numEmployees[EMPL_PILOT]);
+	int timeAlreadyFlied = 0;	/**< Time already flied by UFO or aircraft due to detection each detection interval */
 
 	/* advance time */
 	ccs.timer += cls.frametime * ccs.gameTimeScale;
@@ -739,7 +736,7 @@ void CL_CampaignRun (void)
 
 	UP_GetUnreadMails();
 
-	/* Execute every actions that needs to be independant of time speed : every DETECTION_INTERVAL
+	/* Execute every actions that needs to be independent of time speed : every DETECTION_INTERVAL
 	 *	- Run UFOs and craft at least every DETECTION_INTERVAL. If detection occurred, break.
 	 *	- Check if any new mission is detected
 	 *	- Update stealth value of phalanx bases and installations ; alien bases */
@@ -831,10 +828,6 @@ void CL_CampaignRun (void)
 		CL_UpdateTime();
 	}
 }
-
-
-/* =========================================================== */
-
 
 #define MAX_CREDITS 10000000
 /**

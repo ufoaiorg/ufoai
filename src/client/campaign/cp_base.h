@@ -261,20 +261,20 @@ const baseTemplate_t *B_GetBaseTemplate(const char *baseTemplateName);
 buildingType_t B_GetBuildingTypeByBuildingID(const char *buildingID);
 
 /** Coordinates to place the new base at (long, lat) */
-extern vec3_t newBasePos;
+extern vec2_t newBasePos;
 
 int B_GetFoundedBaseCount(void);
-void B_SetUpBase(base_t* base, qboolean hire, qboolean buildings);
+void B_SetUpBase(base_t* base, qboolean hire, qboolean buildings, vec2_t pos);
 base_t* B_GetBaseByIDX(int baseIdx);
 base_t* B_GetFoundedBaseByIDX(int baseIdx);
 buildingType_t B_GetBuildingTypeByCapacity(baseCapacities_t cap);
 
 building_t* B_SetBuildingByClick(base_t *base, const building_t const *template, int row, int col);
 void B_InitStartup(void);
-void B_ClearBase(base_t *const base);
 void B_NewBases(void);
 void B_BuildingStatus(const base_t* base, const building_t* building);
 void B_SelectBase(base_t *base);
+void B_UpdateBaseCount(void);
 
 building_t *B_GetFreeBuildingType(buildingType_t type);
 int B_GetNumberOfBuildingsInBaseByTemplate(const base_t *base, const building_t *type);

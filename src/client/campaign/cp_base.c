@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_time.h"
 #include "cp_base_callbacks.h"
 
-vec3_t newBasePos;
+vec2_t newBasePos;
 static cvar_t *cl_initial_equipment;
 
 static void B_PackInitialEquipment(aircraft_t *aircraft, const equipDef_t *ed);
@@ -643,11 +643,11 @@ qboolean B_BuildingDestroy (base_t* base, building_t* building)
 		base->buildingCurrent = NULL;
 
 	{
-		int         const base_idx  = base->idx;
+		int const base_idx = base->idx;
 		building_t* const buildings = ccs.buildings[base_idx];
-		int         const idx       = building->idx;
-		int               cntBldgs;
-		int               i;
+		int const idx = building->idx;
+		int cntBldgs;
+		int i;
 
 		REMOVE_ELEM(buildings, idx, ccs.numBuildings[base_idx]);
 
@@ -996,17 +996,20 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
  */
 static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 {
-	if (ccs.curCampaign->firstBaseTemplate[0] == '\0')
+	campaign_t *campaign = ccs.curCampaign;
+
+	if (campaign->firstBaseTemplate[0] == '\0')
 		Sys_Error("No base template for setting up the first base given");
 
 	RS_MarkResearchable(qtrue, base);
 	CP_InitMarket(qfalse);
+	E_InitialEmployees();
 
 	if (buildings) {
 		int i;
 		/* get template for base */
 		const baseTemplate_t *template = B_GetBaseTemplate(ccs.curCampaign->firstBaseTemplate);
-		const equipDef_t *ed = NULL;
+		const equipDef_t *ed;
 
 		/* find each building in the template */
 		for (i = 0; i < template->numBuildings; ++i) {
@@ -1096,7 +1099,7 @@ int B_GetInstallationLimit (void)
 /**
  * @brief Update menu script related cvars when the amount of bases changed.
  */
-static void B_UpdateBaseCount (void)
+void B_UpdateBaseCount (void)
 {
 	/* this cvar is used for disabling the base build button on geoscape
 	 * if MAX_BASES was reached */
@@ -1111,42 +1114,34 @@ static void B_UpdateBaseCount (void)
  * @sa B_NewBase
  * @sa B_SetUpFirstBase
  */
-void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
+void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 {
 	int i;
 	const int newBaseAlienInterest = 1.0f;
 
-	assert(base);
 	/* Reset current capacities. */
 	for (i = 0; i < MAX_CAP; i++)
 		base->capacities[i].cur = 0;
 
-	Com_DPrintf(DEBUG_CLIENT, "Set up for %i\n", base->idx);
+	Vector2Copy(pos, base->pos);
 
-	ccs.numBases++;
-
-	B_UpdateBaseCount();
-
+	base->idx = ccs.numBases - 1;
+	base->founded = qtrue;
+	base->baseStatus = BASE_WORKING;
 	base->numAircraftInBase = 0;
 
 	/* setup for first base */
-	/** @todo this will propably also be called if all player bases are
-	 * destroyed (mimics old behaviour), do we want this? */
-	if (ccs.numBases == 1) {
+	if (ccs.campaignStats.basesBuild == 0)
 		B_SetUpFirstBase(base, hire, buildings);
-	}
-
-	/* add auto build buildings if it's not the first base */
-	if (ccs.numBases > 1 && buildings) {
+	else if (buildings) {
+		/* add auto build buildings if it's not the first base */
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
 			if (ccs.buildingTemplates[i].autobuild) {
 				B_AddBuildingToBase(base, &ccs.buildingTemplates[i], hire);
 			}
 		}
-	}
-
-	if (!buildings) {
-		/* we need to set up the entrance in case autobuild is off */
+	} else {
+		/* we need to set up the entrance in case autobuild is off and this is not the first base */
 		for (i = 0; i < ccs.numBuildingTemplates; ++i) {
 			building_t* entrance = &ccs.buildingTemplates[i];
 			if (entrance->buildingType == B_ENTRANCE) {
@@ -1156,7 +1151,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings)
 				B_AddBuildingToBasePos(base, entrance, hire, pos);
 
 				/* we are done here */
-				i = ccs.numBuildingTemplates;
+				break;
 			}
 		}
 	}
@@ -1258,9 +1253,8 @@ static inline qboolean B_CheckCredits (int costs)
  * @sa B_NewBuilding
  * @param[in,out] base The base to construct the building in
  * @param[in,out] building The building to construct
- * @param[in,out] secondBuildingPart The second building part in case of e.g. big hangars
  */
-static qboolean B_ConstructBuilding (base_t* base, building_t *building, building_t *secondBuildingPart)
+static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 {
 	/* maybe someone call this command before the buildings are parsed?? */
 	if (!base || !building)
@@ -1274,10 +1268,6 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building, buildin
 	}
 
 	Com_DPrintf(DEBUG_CLIENT, "Construction of %s is starting\n", building->id);
-
-	/* second building part */
-	if (secondBuildingPart)
-		secondBuildingPart->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
 
 	if (!ccs.instant_build) {
 		building->buildingStatus = B_STATUS_UNDER_CONSTRUCTION;
@@ -1300,11 +1290,10 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building, buildin
  * @brief Build new building.
  * @param[in,out] base The base to construct the building in
  * @param[in,out] building The building to construct
- * @param[in,out] secondBuildingPart The second building part in case of e.g. big hangars
  * @sa B_MarkBuildingDestroy
  * @sa B_ConstructBuilding
  */
-static void B_NewBuilding (base_t* base, building_t *building, building_t *secondBuildingPart)
+static void B_NewBuilding (base_t* base, building_t *building)
 {
 	/* maybe someone call this command before the buildings are parsed?? */
 	if (!base || !building)
@@ -1312,7 +1301,7 @@ static void B_NewBuilding (base_t* base, building_t *building, building_t *secon
 
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION)
 		/* credits are updated in the construct function */
-		if (B_ConstructBuilding(base, building, secondBuildingPart)) {
+		if (B_ConstructBuilding(base, building)) {
 			B_BuildingStatus(base, building);
 			Com_DPrintf(DEBUG_CLIENT, "B_NewBuilding: building->buildingStatus = %i\n", building->buildingStatus);
 		}
@@ -1340,7 +1329,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 	}
 
 	/* template should really be a template */
-	assert(template == template->tpl);
+	/*assert(template == template->tpl);*/
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		/* new building in base (not a template) */
@@ -1351,19 +1340,13 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 
 		/* self-link to building-list in base */
 		buildingNew->idx = ccs.numBuildings[base->idx];
-		ccs.numBuildings[base->idx]++;
 
 		/* Link to the base. */
 		buildingNew->base = base;
 
-		if (base->map[row][col].blocked) {
-			Com_DPrintf(DEBUG_CLIENT, "This base field is marked as invalid - you can't build here\n");
-		} else if (!base->map[row][col].building) {
-			building_t *secondBuildingPart = NULL;
+		if (!base->map[row][col].blocked && !base->map[row][col].building) {
 			/* No building in this place */
-			if (template->needs) {
-				secondBuildingPart = B_GetBuildingTemplate(template->needs);	/* template link */
-
+			if (buildingNew->needs) {
 				if (col + 1 == BASE_SIZE) {
 					if (base->map[row][col - 1].building
 					 || base->map[row][col - 1].blocked) {
@@ -1382,12 +1365,9 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 				}
 
 				base->map[row][col + 1].building = buildingNew;
-				/* where is this building located in our base? */
-				secondBuildingPart->pos[1] = col + 1;
-				secondBuildingPart->pos[0] = row;
 			}
 			/* Credits are updated here, too */
-			B_NewBuilding(base, buildingNew, secondBuildingPart);
+			B_NewBuilding(base, buildingNew);
 
 			base->map[row][col].building = buildingNew;
 
@@ -1395,17 +1375,14 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 			buildingNew->pos[0] = row;
 			buildingNew->pos[1] = col;
 
+			ccs.numBuildings[base->idx]++;
+
 			B_ResetBuildingCurrent(base);
 			Cmd_ExecuteString("building_init");
 
 			return buildingNew;
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "There is already a building\n");
-			Com_DPrintf(DEBUG_CLIENT, "Building: %s at (row:%i, col:%i)\n", base->map[row][col].building->id, row, col);
 		}
-	} else
-		Com_DPrintf(DEBUG_CLIENT, "Invalid coordinates\n");
-
+	}
 	return NULL;
 }
 
@@ -1477,7 +1454,7 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 
 	/* Check if the template really is one. */
 	if (tpl != tpl->tpl) {
-		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No building-type given as paramter. It's probably a normal building!\n");
+		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No building-type given as parameter. It's probably a normal building!\n");
 		return -1;
 	}
 
@@ -1596,11 +1573,9 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
 		return;
 	}
-	if (ccs.numBuildingTemplates >= MAX_BUILDINGS) {
-		Com_Printf("B_ParseBuildings: too many buildings\n");
-		ccs.numBuildingTemplates = MAX_BUILDINGS;	/* just in case it's bigger. */
-		return;
-	}
+
+	if (ccs.numBuildingTemplates >= MAX_BUILDINGS)
+		Sys_Error("B_ParseBuildings: too many buildings");
 
 	if (!link) {
 		for (i = 0; i < ccs.numBuildingTemplates; i++) {
@@ -1617,7 +1592,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 
 		Com_DPrintf(DEBUG_CLIENT, "...found building %s\n", building->id);
 
-		/*set standard values */
+		/* set standard values */
 		building->tpl = building;	/* Self-link just in case ... this way we can check if it is a template or not. */
 		building->idx = -1;			/* No entry in buildings list (yet). */
 		building->base = NULL;
@@ -1635,7 +1610,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 				break;
 
 			/* get values */
-			if (!strncmp(token, "type", MAX_VAR)) {
+			if (!strcmp(token, "type")) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
@@ -1645,7 +1620,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 					Com_Printf("didn't find buildingType '%s'\n", token);
 			} else {
 				/* no linking yet */
-				if (!strncmp(token, "depends", MAX_VAR)) {
+				if (!strcmp(token, "depends")) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
@@ -1731,114 +1706,6 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildi
 	return NULL;
 }
 
-
-/**
- * @brief Hack to get a random nation for the initial
- */
-static inline nation_t *B_RandomNation (void)
-{
-	const int nationIndex = rand() % ccs.numNations;
-	return &ccs.nations[nationIndex];
-}
-
-/**
- * @brief Remove all character_t information (and linked to that employees & team info) from the game.
- * @param[in] base The base to remove all this stuff from.
- * @sa CL_GenerateCharacter
- * @sa AIR_ResetAircraftTeam
- */
-static void B_ResetHiredEmployeesInBase (base_t* const base)
-{
-	int i;
-	linkedList_t *hiredEmployees = NULL;
-	linkedList_t *hiredEmployeesTemp;
-
-	/* Reset inventory data of all hired employees that can be sent into combat (i.e. characters with inventories).
-	 * i.e. these are soldiers and robots right now. */
-	E_GetHiredEmployees(base, EMPL_SOLDIER, &hiredEmployees);
-	hiredEmployeesTemp = hiredEmployees;
-	while (hiredEmployeesTemp) {
-		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
-		if (employee)
-			INVSH_DestroyInventory(&employee->chr.inv);
-		hiredEmployeesTemp = hiredEmployeesTemp->next;
-	}
-
-	E_GetHiredEmployees(base, EMPL_ROBOT, &hiredEmployees);
-	hiredEmployeesTemp = hiredEmployees;
-	while (hiredEmployeesTemp) {
-		employee_t *employee = (employee_t*)hiredEmployeesTemp->data;
-		if (employee)
-			INVSH_DestroyInventory(&employee->chr.inv);
-		hiredEmployeesTemp = hiredEmployeesTemp->next;
-	}
-
-	LIST_Delete(&hiredEmployees);
-
-	/* Reset hire info. */
-	Cvar_ForceSet("cl_selected", "0");
-
-	/* Fire 'em all (in multiplayer they are not hired) */
-	for (i = 0; i < MAX_EMPL; i++) {
-		E_UnhireAllEmployees(base, i);
-	}
-
-	/* Purge all team-info from the aircraft */
-	for (i = 0; i < base->numAircraftInBase; i++) {
-		AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
-	}
-}
-
-/**
- * @brief Clears a base with all its characters
- * @sa B_ResetHiredEmployeesInBase
- * @sa CL_GenerateCharacter
- */
-void B_ClearBase (base_t *const base)
-{
-	int i;
-	int j = 0;
-	campaign_t *campaign = ccs.curCampaign;
-
-	B_ResetHiredEmployeesInBase(base);
-
-	memset(base, 0, sizeof(*base));
-
-	/* only go further if we have a active campaign */
-	if (!GAME_CP_IsRunning())
-		return;
-
-	/* setup team */
-	/** @todo I think this should be made only once per game, not once per base, no ? -- Kracken 19/12/07 */
-	if (!E_CountUnhired(EMPL_SOLDIER)) {
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i soldiers\n", campaign->soldiers);
-		for (i = 0; i < campaign->soldiers; i++)
-			E_CreateEmployee(EMPL_SOLDIER, B_RandomNation(), NULL);
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i scientists\n", campaign->scientists);
-		for (i = 0; i < campaign->scientists; i++)
-			E_CreateEmployee(EMPL_SCIENTIST, B_RandomNation(), NULL);
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i robots\n", campaign->ugvs);
-		for (i = 0; i < campaign->ugvs; i++) {
-			if (frand() > 0.5)
-				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUGVByID("ugv_ares_w"));
-			else
-				E_CreateEmployee(EMPL_ROBOT, B_RandomNation(), CL_GetUGVByID("ugv_phoenix"));
-		}
-		Com_DPrintf(DEBUG_CLIENT, "B_ClearBase: create %i workers\n", campaign->workers);
-		for (i = 0; i < campaign->workers; i++)
-			E_CreateEmployee(EMPL_WORKER, B_RandomNation(), NULL);
-
-		/* Fill the global data employee list with pilots, evenly distributed between nations */
-		for (i = 0; i < MAX_EMPLOYEES; i++) {
-			nation_t *nation = &ccs.nations[++j % ccs.numNations];
-			if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
-				break;
-		}
-	}
-
-	memset(base->map, 0, sizeof(base->map));
-}
-
 /**
  * @brief Reads a base layout template
  * @sa CL_ParseScriptFirst
@@ -1863,70 +1730,65 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		return;
 	}
 
-	if (ccs.numBaseTemplates >= MAX_BASETEMPLATES) {
-		Com_Printf("B_ParseBaseTemplate: too many base templates\n");
-		ccs.numBuildingTemplates = MAX_BASETEMPLATES;	/* just in case it's bigger. */
-		return;
-	}
+	if (ccs.numBaseTemplates >= MAX_BASETEMPLATES)
+		Sys_Error("B_ParseBaseTemplate: too many base templates");
 
 	/* create new Template */
 	template = &ccs.baseTemplates[ccs.numBaseTemplates];
 	template->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
 	/* clear map for checking duplicate positions and buildingnums for checking moreThanOne constraint */
-	memset(&map, qfalse, sizeof(map));
+	memset(&map, 0, sizeof(map));
 	memset(&buildingnums, 0, sizeof(buildingnums));
 
 	ccs.numBaseTemplates++;
 
-	Com_DPrintf(DEBUG_CLIENT, "Found Base Template %s\n", name);
 	do {
 		/* get the building */
-		token = COM_EParse(text, errhead, name);
+		token = COM_EParse(text, errhead, template->id);
 		if (!*text)
 			break;
 		if (*token == '}')
 			break;
 
-		if (template->numBuildings >= MAX_BASEBUILDINGS) {
-			Com_Printf("B_ParseBaseTemplate: too many buildings\n");
-			ccs.numBuildingTemplates = MAX_BASEBUILDINGS;	/* just in case it's bigger. */
-			return;
-		}
+		if (template->numBuildings >= MAX_BASEBUILDINGS)
+			Sys_Error("B_ParseBaseTemplate: too many buildings");
 
 		/* check if building type is known */
 		tile = &template->buildings[template->numBuildings];
 		template->numBuildings++;
 
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
-			if (!Q_strcasecmp(ccs.buildingTemplates[i].id, token)) {
+			if (!strcmp(ccs.buildingTemplates[i].id, token)) {
 				tile->building = &ccs.buildingTemplates[i];
 				if (!tile->building->moreThanOne && buildingnums[i]++ > 0)
-					Sys_Error("B_ParseBaseTemplate: Found more %s than allowed in template %s\n", token, name);
+					Sys_Error("B_ParseBaseTemplate: Found more %s than allowed in template %s", token, template->id);
+				break;
 			}
 
 		if (!tile->building)
-			Sys_Error("B_ParseBaseTemplate: Could not find building with id %s\n", name);
+			Sys_Error("B_ParseBaseTemplate: Could not find building with id %s\n", template->id);
 
 		if (tile->building->buildingType == B_ENTRANCE)
 			hasEntrance = qtrue;
 
-		Com_DPrintf(DEBUG_CLIENT, "...found Building %s ", token);
-
 		/* get the position */
-		token = COM_EParse(text, errhead, name);
+		token = COM_EParse(text, errhead, template->id);
 		if (!*text)
 			break;
 		if (*token == '}')
 			break;
-		Com_DPrintf(DEBUG_CLIENT, "on position %s\n", token);
 
 		Com_EParseValue(pos, token, V_POS, 0, sizeof(vec2_t));
 		tile->posX = pos[0];
 		tile->posY = pos[1];
+		if (tile->posX < 0 || tile->posX >= BASE_SIZE || tile->posY < 0 || tile->posY >= BASE_SIZE)
+			Sys_Error("Invalid template coordinates for building %s in template %s given",
+					tile->building->id, template->id);
 
 		/* check for buildings on same position */
-		assert(!map[tile->posX][tile->posY]);
+		if (map[tile->posX][tile->posY])
+			Sys_Error("Base template '%s' has ambiguous positions for buildings set.", template->id);
 		map[tile->posX][tile->posY] = qtrue;
 	} while (*text);
 
@@ -2225,7 +2087,6 @@ void B_BaseResetStatus (base_t* const base)
 
 /**
  * @brief Cleans all bases and related structures to prepare a new campaign mode game
- * @note restores the original base names
  * @sa CL_GameNew
  */
 void B_NewBases (void)
@@ -2233,17 +2094,13 @@ void B_NewBases (void)
 	int i;
 
 	/* base setup */
-	ccs.numBases = 0;
-
-	B_UpdateBaseCount();
-
 	for (i = 0; i < MAX_BASES; i++) {
+		/*
 		base_t *base = B_GetBaseByIDX(i);
-		B_ClearBase(base);
 		if (i == 0)
-			Q_strncpyz(base->name, _("Home"), lengthof(base->name));
+			Q_strncpyz(base->name, _("Home"), sizeof(base->name));
 		else
-			Com_sprintf(base->name, lengthof(base->name), _("Base #%i"), i);
+			Com_sprintf(base->name, sizeof(base->name), _("Base #%i"), i);*/
 	}
 }
 
@@ -3124,7 +2981,6 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 	}
 	ccs.numBases = B_GetFoundedBaseCount();
-
 	B_UpdateBaseCount();
 
 	return qtrue;

@@ -132,47 +132,6 @@ static void B_PrevBase_f (void)
 }
 
 /**
- * @brief Check conditions for new base and build it.
- * @param[in] pos Position on the geoscape.
- * @return True if the base has been build.
- * @sa B_BuildBase
- */
-static qboolean B_NewBase (base_t* base, vec2_t pos)
-{
-	byte *colorTerrain;
-
-	assert(base);
-
-	if (base->founded) {
-		Com_DPrintf(DEBUG_CLIENT, "B_NewBase: base already founded: %i\n", base->idx);
-		return qfalse;
-	} else if (ccs.numBases == MAX_BASES) {
-		Com_DPrintf(DEBUG_CLIENT, "B_NewBase: max base limit hit\n");
-		return qfalse;
-	}
-
-	colorTerrain = MAP_GetColor(pos, MAPTYPE_TERRAIN);
-
-	if (MapIsWater(colorTerrain)) {
-		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
-		MS_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
-		return qfalse;
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "B_NewBase: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for base terrain: R:%i G:%i B:%i\n", colorTerrain[0], colorTerrain[1], colorTerrain[2]);
-
-	/* build base */
-	Vector2Copy(pos, base->pos);
-
-	/* set up the base with buildings that have the autobuild flag set */
-	B_SetUpBase(base, cl_start_employees->integer, cl_start_buildings->integer);
-
-	return qtrue;
-}
-
-/**
  * @brief Constructs a new base.
  * @sa B_NewBase
  */
@@ -186,36 +145,30 @@ static void B_BuildBase_f (void)
 	assert(!base->founded);
 
 	if (ccs.credits - ccs.curCampaign->basecost > 0) {
-		/** @todo If there is no nation assigned to the current selected position,
-		 * tell this the gamer and give him an option to rechoose the location.
-		 * If we don't do this, any action that is done for this base has no
-		 * influence to any nation happiness/funding/supporting */
-		if (B_NewBase(base, newBasePos)) {
-			const char *baseName = mn_base_title->string;
-			if (baseName[0] == '\0')
-				baseName = "Base";
+		const char *baseName = mn_base_title->string;
+		if (baseName[0] == '\0')
+			baseName = "Base";
 
-			Com_DPrintf(DEBUG_CLIENT, "B_BuildBase_f: numBases: %i\n", ccs.numBases);
-			base->idx = ccs.numBases - 1;
-			base->founded = qtrue;
-			base->baseStatus = BASE_WORKING;
-			ccs.campaignStats.basesBuild++;
-			ccs.mapAction = MA_NONE;
-			CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);
-			Q_strncpyz(base->name, baseName, sizeof(base->name));
-			nation = MAP_GetNation(base->pos);
-			if (nation)
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
-			else
-				Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
-			MS_AddNewMessage(_("Base built"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
-			B_ResetAllStatusAndCapacities(base, qtrue);
-			AL_FillInContainment(base);
-			PR_UpdateProductionCap(base);
+		ccs.numBases++;
+		/* set up the base with buildings that have the autobuild flag set */
+		B_SetUpBase(base, cl_start_employees->integer, cl_start_buildings->integer, newBasePos);
 
-			B_SelectBase(base);
-			return;
-		}
+		ccs.campaignStats.basesBuild++;
+		ccs.mapAction = MA_NONE;
+		CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);
+		Q_strncpyz(base->name, baseName, sizeof(base->name));
+		nation = MAP_GetNation(base->pos);
+		if (nation)
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
+		else
+			Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
+		MS_AddNewMessage(_("Base built"), cp_messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
+		B_ResetAllStatusAndCapacities(base, qtrue);
+		AL_FillInContainment(base);
+		PR_UpdateProductionCap(base);
+
+		B_UpdateBaseCount();
+		B_SelectBase(base);
 	} else {
 		if (r_geoscape_overlay->integer & OVERLAY_RADAR)
 			MAP_SetOverlay("radar");

@@ -95,12 +95,12 @@ installationTemplate_t* INS_GetInstallationTemplateFromInstallationID (const cha
  * @brief Setup new installation
  * @sa INS_NewInstallation
  */
-void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate)
+void INS_SetUpInstallation (installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos)
 {
 	const int newInstallationAlienInterest = 1.0f;
 	int i;
 
-	assert(installation);
+	Vector2Copy(pos, installation->pos);
 
 	installation->idx = ccs.numInstallations - 1;
 	installation->founded = qtrue;
@@ -144,14 +144,14 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 }
 
 /**
- * @brief Get the lower IDX of unfounded installation.
- * @return instIdx of first Installation Unfounded, or MAX_INSTALLATIONS is maximum installation number is reached.
+ * @brief Get and not yet founded installation.
  */
 installation_t *INS_GetFirstUnfoundedInstallation (void)
 {
 	int instIdx;
+	const int maxInstallations = B_GetInstallationLimit();
 
-	for (instIdx = 0; instIdx < MAX_INSTALLATIONS; instIdx++) {
+	for (instIdx = 0; instIdx < maxInstallations; instIdx++) {
 		installation_t *installation = INS_GetInstallationByIDX(instIdx);
 		if (!installation->founded)
 			return installation;
@@ -268,46 +268,6 @@ void INS_SetCurrentSelectedInstallation (const installation_t *installation)
 		Cvar_Set("mn_installation_title", "");
 		Cvar_Set("mn_installation_type", "");
 	}
-}
-
-/**
- * @brief Check conditions for new installation and build it.
- * @param[in] pos Position on the geoscape.
- * @return True if the installation has been build.
- * @sa INS_BuildInstallation
- */
-qboolean INS_NewInstallation (installation_t* installation, installationTemplate_t *installationTemplate, vec2_t pos)
-{
-	byte *colorTerrain;
-
-	assert(installation);
-
-	if (installation->founded) {
-		Com_DPrintf(DEBUG_CLIENT, "INS_NewInstallation: installation already founded: %i\n", installation->idx);
-		return qfalse;
-	} else if (ccs.numInstallations >= B_GetInstallationLimit()) {
-		Com_DPrintf(DEBUG_CLIENT, "INS_NewInstallation: max installation limit hit\n");
-		return qfalse;
-	}
-
-	colorTerrain = MAP_GetColor(pos, MAPTYPE_TERRAIN);
-
-	if (MapIsWater(colorTerrain)) {
-		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
-		MS_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
-		return qfalse;
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "INS_NewInstallation: zoneType: '%s'\n", MAP_GetTerrainType(colorTerrain));
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "Colorvalues for installation terrain: R:%i G:%i B:%i\n", colorTerrain[0], colorTerrain[1], colorTerrain[2]);
-
-	/* build installation */
-	Vector2Copy(pos, installation->pos);
-
-	ccs.numInstallations++;
-
-	return qtrue;
 }
 
 /**

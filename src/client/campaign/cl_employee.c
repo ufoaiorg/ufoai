@@ -1106,6 +1106,43 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 	return count;
 }
 
+/**
+ * @brief Hack to get a random nation for the initial
+ */
+static inline nation_t *E_RandomNation (void)
+{
+	const int nationIndex = rand() % ccs.numNations;
+	return &ccs.nations[nationIndex];
+}
+
+void E_InitialEmployees (void)
+{
+	campaign_t *campaign = ccs.curCampaign;
+	int i;
+	int j = 0;
+
+	/* setup initial employee count */
+	for (i = 0; i < campaign->soldiers; i++)
+		E_CreateEmployee(EMPL_SOLDIER, E_RandomNation(), NULL);
+	for (i = 0; i < campaign->scientists; i++)
+		E_CreateEmployee(EMPL_SCIENTIST, E_RandomNation(), NULL);
+	for (i = 0; i < campaign->ugvs; i++) {
+		if (frand() > 0.5)
+			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), CL_GetUGVByID("ugv_ares_w"));
+		else
+			E_CreateEmployee(EMPL_ROBOT, E_RandomNation(), CL_GetUGVByID("ugv_phoenix"));
+	}
+	for (i = 0; i < campaign->workers; i++)
+		E_CreateEmployee(EMPL_WORKER, E_RandomNation(), NULL);
+
+	/* Fill the global data employee list with pilots, evenly distributed between nations */
+	for (i = 0; i < MAX_EMPLOYEES; i++) {
+		nation_t *nation = &ccs.nations[++j % ccs.numNations];
+		if (!E_CreateEmployee(EMPL_PILOT, nation, NULL))
+			break;
+	}
+}
+
 #ifdef DEBUG
 /**
  * @brief Debug command to list all hired employee
