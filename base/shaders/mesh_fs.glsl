@@ -16,8 +16,12 @@ void main(void){
 	// sample the diffuse texture, honoring the parallax offset
 	vec4 diffuse = texture2D(SAMPLER0, gl_TexCoord[0].st);
 
+	// use the primary color and static light direction to resolve shade
+	vec3 lightdir = normalize(LIGHTPOS - point);
+	float shade = max(0.5, pow(2.0 * dot(normal, lightdir), 2.0));
+
 	// add any dynamic lighting and yield a base fragment color
-	LightFragment(diffuse, gl_Color.rgb);
+	LightFragment(diffuse, gl_Color.rgb * shade);
 
 #if r_fog
 	FogFragment();  // add fog

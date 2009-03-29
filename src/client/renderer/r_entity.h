@@ -39,11 +39,14 @@ typedef struct animState_s {
 } animState_t;
 
 typedef struct static_lighting_s {
+	vec3_t origin;		/**< starting point, entity origin */
 	vec3_t point;		/**< impact point, shadow origin */
 	vec3_t normal;		/**< shadow direction */
 	vec3_t color;		/**< light color */
+	vec3_t position;	/**< and position */
 	float time;			/**< lerping interval */
 	vec3_t colors[2];	/**< lerping color */
+	vec3_t positions[2];/**< and positions */
 	qboolean dirty;		/**< cache invalidation */
 } static_lighting_t;
 

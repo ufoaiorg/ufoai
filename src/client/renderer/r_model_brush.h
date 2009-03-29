@@ -77,6 +77,9 @@ typedef struct mBspSurface_s {
 	vec2_t stcenter;
 	vec2_t stextents;
 
+	vec3_t mins;
+	vec3_t maxs;
+
 	vec3_t center;
 	vec4_t color;
 	vec3_t normal;
@@ -154,6 +157,7 @@ typedef struct mBspLeaf_s {
 /** @brief static light sources from the entities string */
 typedef struct mbsplight_s {
 	vec3_t org;
+	float radius;
 } mBspLight_t;
 
 /** @brief brush model */
