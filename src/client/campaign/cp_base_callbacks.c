@@ -972,4 +972,5 @@ void B_ShutdownCallbacks (void)
 	Cvar_Delete("mn_base_max");
 	Cvar_Delete("mn_base_cost");
 	Cvar_Delete("mn_base_title");
+	Cvar_Delete("mn_base_id");
 }

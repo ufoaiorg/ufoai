@@ -12,18 +12,6 @@ menu basesummary
 		image	menu/base_bg
 	}
 
-	func resetbaselayout
-	{
-		*basenavigation.base0 bgcolor "1 1 1 0.4"
-		*basenavigation.base1 bgcolor "1 1 1 0.4"
-		*basenavigation.base2 bgcolor "1 1 1 0.4"
-		*basenavigation.base3 bgcolor "1 1 1 0.4"
-		*basenavigation.base4 bgcolor "1 1 1 0.4"
-		*basenavigation.base5 bgcolor "1 1 1 0.4"
-		*basenavigation.base6 bgcolor "1 1 1 0.4"
-		*basenavigation.base7 bgcolor "1 1 1 0.4"
-	}
-
 	panel basenavigation {
 		{
 			pos		"621 115"
@@ -52,8 +40,6 @@ menu basesummary
 			padding		2
 			baseid		0
 			click 		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -66,8 +52,6 @@ menu basesummary
 			padding		2
 			baseid		1
 			click		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -80,8 +64,6 @@ menu basesummary
 			padding		2
 			baseid		2
 			click		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -94,8 +76,6 @@ menu basesummary
 			padding		2
 			baseid		3
 			click		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -108,8 +88,6 @@ menu basesummary
 			padding		2
 			baseid		4
 			click		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -122,8 +100,6 @@ menu basesummary
 			padding		2
 			baseid		5
 			click		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -136,8 +112,6 @@ menu basesummary
 			padding		2
 			baseid		6
 			click		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -150,8 +124,6 @@ menu basesummary
 			padding		2
 			baseid		7
 			click		{
-				call resetbaselayout
-				*path:this bgcolor "1 1 1 1"
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -254,7 +226,15 @@ menu basesummary
 	// ==================
 	func init
 	{
-		call resetbaselayout
+		*basenavigation.base0 bgcolor "1 1 1 0.4"
+		*basenavigation.base1 bgcolor "1 1 1 0.4"
+		*basenavigation.base2 bgcolor "1 1 1 0.4"
+		*basenavigation.base3 bgcolor "1 1 1 0.4"
+		*basenavigation.base4 bgcolor "1 1 1 0.4"
+		*basenavigation.base5 bgcolor "1 1 1 0.4"
+		*basenavigation.base6 bgcolor "1 1 1 0.4"
+		*basenavigation.base7 bgcolor "1 1 1 0.4"
+		*basenavigation.base<cvar:mn_base_id> bgcolor "1 1 1 0.7"
 		cmd "basesummary_init;"
 	}
 }
