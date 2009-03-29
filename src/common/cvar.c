@@ -594,7 +594,7 @@ void Cvar_UpdateLatchedVars (void)
 
 /**
  * @brief Handles variable inspection and changing from the console
- * @return qboolean True if cvar exists - false otherwise
+ * @return True if cvar exists - false otherwise
  *
  * You can print the current value or set a new value with this function
  * To set a new value for a cvar from within the console just type the cvar name
@@ -715,6 +715,31 @@ void Cvar_WriteVariables (qFILE *f)
 }
 
 /**
+ * @brief Checks whether there are pending cvars for the given flags
+ * @param flags The CVAR_* flags
+ * @return true if there are pending cvars, false otherwise
+ */
+qboolean Cvar_PendingCvars (int flags)
+{
+	const cvar_t *var;
+
+	for (var = cvar_vars; var; var = var->next)
+		if ((var->flags & flags) && var->modified)
+			return qtrue;
+
+	return qfalse;
+}
+
+void Cvar_ClearVars (int flags)
+{
+	cvar_t *var;
+
+	for (var = cvar_vars; var; var = var->next)
+		if ((var->flags & flags) && var->modified)
+			var->modified = qfalse;
+}
+
+/**
  * @brief List all cvars via console command 'cvarlist'
  */
 static void Cvar_List_f (void)
@@ -762,7 +787,7 @@ static void Cvar_List_f (void)
 			Com_Printf("D");
 		else
 			Com_Printf(" ");
-		if (var->flags & CVAR_IMAGES)
+		if (var->flags & CVAR_R_IMAGES)
 			Com_Printf("I");
 		else
 			Com_Printf(" ");

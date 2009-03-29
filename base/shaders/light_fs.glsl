@@ -1,4 +1,4 @@
-// lighting fragment shader
+// dynamic lighting fragment shader
 
 varying vec3 point;
 varying vec3 normal;
@@ -12,6 +12,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 	vec3 delta, dir, light = vec3(0.0);
 	float dist, d, atten;
 
+#if r_lights
 	/*
 	 * Any reasonable GLSL compiler could handle this as a for-loop
 	 * and unroll it nicely.  But apparently some vendors are mental
@@ -156,6 +157,7 @@ void LightFragment(in vec4 diffuse, in vec3 lightmap){
 
 	light = clamp(light, 0.0, 1.8);
 
+#endif
 
 	// now modulate the diffuse sample with the modified lightmap
 	gl_FragColor.rgb = diffuse.rgb * (lightmap + light);

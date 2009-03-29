@@ -141,3 +141,12 @@ qboolean Cvar_Delete(const char *var_name);
  * @brief Searches for a cvar given by parameter
  */
 cvar_t *Cvar_FindVar(const char *var_name);
+
+/**
+ * @brief Checks whether there are pending cvars for the given flags
+ * @param flags The CVAR_* flags
+ * @return true if there are pending cvars, false otherwise
+ */
+qboolean Cvar_PendingCvars(int flags);
+
+void Cvar_ClearVars(int flags);

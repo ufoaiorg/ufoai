@@ -93,7 +93,7 @@ extern cvar_t *r_wire;
 extern cvar_t *r_vertexbuffers;
 extern cvar_t *r_maxlightmap;
 extern cvar_t *r_warp;
-extern cvar_t *r_lighting;
+extern cvar_t *r_lights;
 extern cvar_t *r_programs;
 extern cvar_t *r_shownormals;
 extern cvar_t *r_bumpmap;

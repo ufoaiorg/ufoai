@@ -84,7 +84,7 @@ static void R_StageLighting (const mBspSurface_t *surf, const materialStage_t *s
 
 		/* hardware lighting */
 		if (stage->flags & STAGE_LIGHTING) {
-			R_EnableLighting(r_state.default_program, qtrue);
+			R_EnableLighting(r_state.world_program, qtrue);
 
 			if (r_state.lighting_enabled) {
 				if (r_bumpmap->value && stage->image->normalmap) {
@@ -340,7 +340,7 @@ void R_DrawMaterialSurfaces (mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qtrue);
 
-	R_EnableLighting(r_state.default_program, qtrue);
+	R_EnableLighting(r_state.world_program, qtrue);
 
 	R_EnableColorArray(qtrue);
 

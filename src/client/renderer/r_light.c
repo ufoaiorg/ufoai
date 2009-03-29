@@ -36,7 +36,7 @@ void R_AddLight (const vec3_t origin, float radius, const vec3_t color)
 {
 	int i;
 
-	if (!r_lighting->integer)
+	if (!r_lights->integer)
 		return;
 
 	if (r_numLights == MAX_GL_LIGHTS)
@@ -57,7 +57,7 @@ void R_AddSustainedLight (const vec3_t org, float radius, const vec3_t color, fl
 	sustain_t *s;
 	int i;
 
-	if (!r_lighting->integer)
+	if (!r_lights->integer)
 		return;
 
 	s = r_sustainArray;

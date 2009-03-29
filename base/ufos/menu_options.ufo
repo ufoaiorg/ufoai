@@ -303,7 +303,7 @@ menu options
 		}
 		checkbox light
 		{
-			current		"*cvar r_lighting"
+			current		"*cvar r_lights"
 			pos			"463 390"
 			size		"20 18"
 			image		"menu/checkbox_blue"

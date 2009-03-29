@@ -83,22 +83,15 @@ static inline void R_SetVertexArrayState (const model_t* mod, int mask)
 	if (mask & R_ARRAY_VERTEX)
 		R_BindArray(GL_VERTEX_ARRAY, GL_FLOAT, mod->bsp.verts);
 
-#if 0
-	/* color array */
-	if (r_state.color_array_enabled) {
-		if (mask & R_ARRAY_COLOR)
-			R_BindArray(GL_COLOR_ARRAY, GL_FLOAT, mod->bsp.colors);
-	}
-#endif
-
 	/* normals and tangents for lighting */
 	if (r_state.lighting_enabled) {
 		if (mask & R_ARRAY_NORMAL)
 			R_BindArray(GL_NORMAL_ARRAY, GL_FLOAT, mod->bsp.normals);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value && (mask & R_ARRAY_TANGENT))
-			R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
+		if (r_bumpmap->value && r_state.active_program == r_state.world_program)
+			if (mask & R_ARRAY_TANGENT)
+				R_BindArray(GL_TANGENT_ARRAY, GL_FLOAT, mod->bsp.tangents);
 	}
 
 	/* diffuse texcoords */
@@ -204,7 +197,7 @@ void R_ResetArrayState (void)
 		R_BindDefaultArray(GL_NORMAL_ARRAY);
 
 		/* tangent vectors for bump mapping */
-		if (r_bumpmap->value)
+		if (r_bumpmap->value && r_state.active_program == r_state.world_program)
 			R_BindDefaultArray(GL_TANGENT_ARRAY);
 	}
 

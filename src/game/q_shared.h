@@ -95,8 +95,11 @@ CVARS (console variables)
 #define CVAR_LATCH      16      /**< save changes until server restart */
 #define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
 #define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
-#define CVAR_IMAGES     128     /**< effects image filtering */
-#define CVAR_CONTEXT    256     /**< vid shutdown if such a cvar was modified */
+#define CVAR_R_IMAGES   128     /**< effects image filtering */
+#define CVAR_R_CONTEXT    256     /**< vid shutdown if such a cvar was modified */
+#define CVAR_R_PROGRAMS 512		/**< if changed, shaders are restarted */
+
+#define CVAR_R_MASK (CVAR_R_IMAGES | CVAR_R_CONTEXT | CVAR_R_PROGRAMS)
 
 /**
  * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.

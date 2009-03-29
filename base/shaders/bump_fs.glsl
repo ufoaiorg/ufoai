@@ -24,7 +24,7 @@ vec2 BumpTexcoord(in float height){
 /*
 BumpFragment
 */
-void BumpFragment(in vec3 deluxemap, in vec3 normalmap){
+vec3 BumpFragment(in vec3 deluxemap, in vec3 normalmap){
 
 	float diffuse = dot(deluxemap,
 			vec3(normalmap.x * BUMP, normalmap.y * BUMP, normalmap.z));
@@ -32,5 +32,5 @@ void BumpFragment(in vec3 deluxemap, in vec3 normalmap){
 	float specular = HARDNESS * pow(max(-dot(eye,
 			reflect(deluxemap, normalmap)), 0.0), 8.0 * SPECULAR);
 
-	gl_FragColor.rgb *= vec3(diffuse + specular);
+	return vec3(diffuse + specular);
 }

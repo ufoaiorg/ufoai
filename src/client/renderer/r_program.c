@@ -202,7 +202,7 @@ void R_ShutdownPrograms (void)
 	}
 }
 
-static size_t R_ShaderIncludes (const char *name, const char *in, char *out, int len)
+static size_t R_PreprocessShader (const char *name, const char *in, char *out, size_t len)
 {
 	char path[MAX_QPATH];
 	byte *buf;
@@ -223,7 +223,7 @@ static size_t R_ShaderIncludes (const char *name, const char *in, char *out, int
 		hwHack = NULL;
 		break;
 	default:
-		Sys_Error("R_ShaderIncludes: Unknown hardwaretype");
+		Sys_Error("R_PreprocessShader: Unknown hardwaretype");
 	}
 
 	i = 0;
@@ -249,14 +249,49 @@ static size_t R_ShaderIncludes (const char *name, const char *in, char *out, int
 				continue;
 			}
 
-			inc_len = R_ShaderIncludes(name,  (const char *)buf, out, len);
+			inc_len = R_PreprocessShader(name,  (const char *)buf, out, len);
 			len -= inc_len;
 			out += inc_len;
 			FS_FreeFile(buf);
 		}
+
+		if (!strncmp(in, "#if", 3)) {  /* conditionals */
+			float f;
+
+			in += 3;
+
+			f = Cvar_GetValue(COM_Parse(&in));
+
+			while (*in) {
+				if (!strncmp(in, "#endif", 6)) {
+					in += 6;
+					break;
+				}
+
+				len--;
+				if (len < 0) {
+					Com_Error(ERR_DROP, "R_PreprocessShader: "
+							"Overflow: %s", name);
+				}
+
+				if (f) {
+					*out++ = *in++;
+					i++;
+				} else
+					in++;
+			}
+
+			if (!*in) {
+				Com_Error(ERR_DROP, "R_PreprocessShader: "
+						"Unterminated conditional: %s", name);
+			}
+		}
+
+		/* general case is to copy so long as the buffer has room */
+
 		len--;
 		if (len < 0)
-			Sys_Error("overflow in shader loading '%s'", name);
+			Sys_Error("R_PreprocessShader: Overflow in shader loading '%s'", name);
 		*out++ = *in++;
 		i++;
 	}
@@ -283,7 +318,7 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 
 	source = Mem_PoolAlloc(SHADER_BUF_SIZE, vid_imagePool, 0);
 
-	R_ShaderIncludes(name, (const char *)buf, source, SHADER_BUF_SIZE);
+	R_PreprocessShader(name, (const char *)buf, source, SHADER_BUF_SIZE);
 	FS_FreeFile(buf);
 
 	src[0] = source;
@@ -309,6 +344,8 @@ static r_shader_t *R_LoadShader (GLenum type, const char *name)
 	sh->id = qglCreateShader(sh->type);
 	if(!sh->id)
 		return NULL;
+
+	/* upload the shader source */
 	qglShaderSource(sh->id, 1, src, length);
 
 	/* compile it and check for errors */
@@ -390,18 +427,14 @@ static r_program_t *R_LoadProgram (const char *name, void *init, void *use)
 	return prog;
 }
 
-static void R_InitDefaultProgram (void)
+static void R_InitWorldProgram (void)
 {
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
 	R_ProgramParameter1i("SAMPLER2", 2);
 	R_ProgramParameter1i("SAMPLER3", 3);
 
-	R_ProgramParameter1i("LIGHTMAP", 0);
 	R_ProgramParameter1i("BUMPMAP", 0);
-	R_ProgramParameter1i("FOG", 0);
-
-	R_ProgramParameter1f("OFFSET", 0.0);
 
 	R_ProgramParameter1f("BUMP", 1.0);
 	R_ProgramParameter1f("PARALLAX", 1.0);
@@ -409,25 +442,25 @@ static void R_InitDefaultProgram (void)
 	R_ProgramParameter1f("SPECULAR", 1.0);
 }
 
-static void R_UseDefaultProgram (void)
+static void R_InitMeshProgram (void)
 {
-	if (texunit_lightmap.enabled)
-		R_ProgramParameter1i("LIGHTMAP", 1);
-	else
-		R_ProgramParameter1i("LIGHTMAP", 0);
+	static vec3_t lightPos;
 
-	if (r_state.fog_enabled)
-		R_ProgramParameter1i("FOG", 1);
-	else
-		R_ProgramParameter1i("FOG", 0);
+	R_ProgramParameter1i("SAMPLER0", 0);
+
+	R_ProgramParameter3fv("LIGHTPOS", lightPos);
+
+	R_ProgramParameter1f("OFFSET", 0.0);
 }
 
 static void R_InitWarpProgram (void)
 {
+	static vec4_t offset;
+
 	R_ProgramParameter1i("SAMPLER0", 0);
 	R_ProgramParameter1i("SAMPLER1", 1);
 
-	R_ProgramParameter1i("FOG", 0);
+	R_ProgramParameter4fv("OFFSET", offset);
 }
 
 static void R_UseWarpProgram (void)
@@ -436,11 +469,6 @@ static void R_UseWarpProgram (void)
 
 	offset[0] = offset[1] = refdef.time / 8.0;
 	R_ProgramParameter4fv("OFFSET", offset);
-
-	if (r_state.fog_enabled)
-		R_ProgramParameter1i("FOG", 1);
-	else
-		R_ProgramParameter1i("FOG", 0);
 }
 
 void R_InitPrograms (void)
@@ -456,7 +484,8 @@ void R_InitPrograms (void)
 	if (!r_programs->integer)
 		return;
 
-	r_state.default_program = R_LoadProgram("default", R_InitDefaultProgram, R_UseDefaultProgram);
+	r_state.world_program = R_LoadProgram("world", R_InitWorldProgram, NULL);
+	r_state.mesh_program = R_LoadProgram("mesh", R_InitMeshProgram, NULL);
 	r_state.warp_program = R_LoadProgram("warp", R_InitWarpProgram, R_UseWarpProgram);
 }
 

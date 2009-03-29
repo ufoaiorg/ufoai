@@ -124,7 +124,7 @@ void R_DrawOpaqueSurfaces (const mBspSurfaces_t *surfs)
 
 	R_EnableTexture(&texunit_lightmap, qtrue);
 
-	R_EnableLighting(r_state.default_program, qtrue);
+	R_EnableLighting(r_state.world_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(NULL, qfalse);
 
@@ -151,7 +151,7 @@ void R_DrawAlphaTestSurfaces (mBspSurfaces_t *surfs)
 		return;
 
 	R_EnableAlphaTest(qtrue);
-	R_EnableLighting(r_state.default_program, qtrue);
+	R_EnableLighting(r_state.world_program, qtrue);
 	R_DrawSurfaces(surfs);
 	R_EnableLighting(NULL, qfalse);
 	R_EnableAlphaTest(qfalse);

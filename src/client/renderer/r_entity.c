@@ -436,7 +436,7 @@ static void R_DrawOpaqueMeshEntities (entity_t *ents)
 		return;
 
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
-		R_EnableLighting(r_state.default_program, qtrue);
+		R_EnableLighting(r_state.mesh_program, qtrue);
 	R_DrawMeshEntities(ents);
 	if (!(refdef.rdflags & RDF_NOWORLDMODEL))
 		R_EnableLighting(NULL, qfalse);

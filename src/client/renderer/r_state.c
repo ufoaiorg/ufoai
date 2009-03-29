@@ -255,7 +255,7 @@ void R_EnableLighting (r_program_t *program, qboolean enable)
 	if (enable && (!program || !program->id))
 		return;
 
-	if (!r_lighting->integer || r_state.lighting_enabled == enable)
+	if (!r_lights->integer || r_state.lighting_enabled == enable)
 		return;
 
 	r_state.lighting_enabled = enable;
@@ -375,9 +375,11 @@ void R_EnableFog (qboolean enable)
 			r_state.fog_enabled = qtrue;
 
 			glFogfv(GL_FOG_COLOR, refdef.fog_color);
+			glFogf(GL_FOG_DENSITY, 1.0);
 			glEnable(GL_FOG);
 		}
 	} else {
+		glFogf(GL_FOG_DENSITY, 0.0);
 		glDisable(GL_FOG);
 	}
 }

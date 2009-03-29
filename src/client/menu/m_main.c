@@ -45,9 +45,9 @@ struct memPool_s *mn_dynStringPool;
 static void MN_CheckCvar (const cvar_t *cvar)
 {
 	if (cvar->modified) {
-		if (cvar->flags & CVAR_CONTEXT) {
+		if (cvar->flags & CVAR_R_CONTEXT) {
 			MN_DisplayNotice(_("This change requires a restart"), 2000);
-		} else if (cvar->flags & CVAR_IMAGES) {
+		} else if (cvar->flags & CVAR_R_IMAGES) {
 			MN_DisplayNotice(_("This change might require a restart"), 2000);
 		}
 	}
