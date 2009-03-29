@@ -510,6 +510,6 @@ static void MN_RemoveListener_f (void)
 
 void MN_InitActions (void)
 {
-	Cmd_AddCommand("mn_addlistener", MN_AddListener_f, NULL);
-	Cmd_AddCommand("mn_removelistener", MN_RemoveListener_f, NULL);
+	Cmd_AddCommand("mn_addlistener", MN_AddListener_f, "Add a function into a node event");
+	Cmd_AddCommand("mn_removelistener", MN_RemoveListener_f, "Remove a function from a node event");
 }
