@@ -2528,9 +2528,13 @@ base/textures/tex_buildings/metceil1d.jpg | GNU General Public License 2.0 | Ope
 base/textures/tex_buildings/mtl_fnce.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_fnce2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_fnce4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/mtl_fnce_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_gray.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_gray4.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/mtl_gray4_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/mtl_gray_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/mtl_midwrn.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/mtl_midwrn_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/pent_metalbridge6.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/pewter.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/q1metal7_99.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2540,6 +2544,7 @@ base/textures/tex_buildings/roof006.jpg | GNU General Public License 2.0 | Werne
 base/textures/tex_buildings/roof007.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer
 base/textures/tex_buildings/roof10.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/roof11.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
+base/textures/tex_buildings/roof12.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/rustpipes.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/sfloor1_2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/sp_stairs.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
@@ -2549,7 +2554,10 @@ base/textures/tex_buildings/stripes.jpg | GNU General Public License 2.0 | OpenA
 base/textures/tex_buildings/surface2.jpg | GNU General Public License 2.0 | OpenArena GPLed Content
 base/textures/tex_buildings/t_wll_fnctrm.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/t_wll_fnctrm2_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/t_wll_fnctrm_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm_ow.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
+base/textures/tex_buildings/t_wll_fnctrm_ow_nm.tga | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm_sgn.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/t_wll_fnctrm_sgn2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_buildings/tile_teracotablue.tga | GNU General Public License 2.0 | OpenArena GPLed Content
