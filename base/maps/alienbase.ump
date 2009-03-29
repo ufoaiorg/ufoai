@@ -52,17 +52,6 @@ ah   +a   +a   ah
 0    av   av   0
 }
 
-tile +tunnel_x2
-{
-6 4
-
-0   av   av   av   av  0
-ah  +a   +a   +a   +a  ah
-ah  +a   +a   +a   +a  ah
-0   av   av   av   av  0
-}
-
-
 tile +lab
 {
 6 4
@@ -73,18 +62,32 @@ ah  +a   +a   +a   +a  ah
 0   av   av   av   av  0
 }
 
+tile +hangar
+{
+8 8
+
+0   av   av   av   av   av   av   av   av  0
+ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
+ah  +a   +a   +a   +a  +a   +a   +a   +a  ah
+0   av   av   av   av   av   av   av   av  0
+}
+
 // ########################################
 // ########### Maps for the game ###########
 
 assembly alienbase1
 {
-size "8 8"
+size "10 10"
 title "_Alienbase"
 grid "2 2"
 +empty "1 8"
++hangar "1 1"
 +tunnel_h "0 4"
 +tunnel_v "0 4"
 +tunnel_x "1 12"
-+tunnel_x2 "0 2"
 +lab "1 2"
 }
