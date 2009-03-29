@@ -194,7 +194,7 @@ const char* MN_GetPath (const menuNode_t* node)
  * @param[out] resultNode Node found. Else NULL.
  * @param[out] resultProperty Property found. Else NULL.
  */
-void MN_ReadNodePath (const char* path, menuNode_t *relativeNode, menuNode_t **resultNode, const value_t **resultProperty)
+void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode_t **resultNode, const value_t **resultProperty)
 {
 	char name[MAX_VAR];
 	menuNode_t* node = NULL;
@@ -223,7 +223,8 @@ void MN_ReadNodePath (const char* path, menuNode_t *relativeNode, menuNode_t **r
 		switch (command) {
 		case '^':	/* first string */
 			if (!strcmp(name, "this"))
-				node = relativeNode;
+				/** @todo fix a way to fix the bad cast. only here to remove "discards qualifiers" warning */
+				node = *(menuNode_t**) ((void*)&relativeNode);
 			else if (!strcmp(name, "parent"))
 				node = relativeNode->parent;
 			else if (!strcmp(name, "menu"))
