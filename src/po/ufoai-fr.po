@@ -1058,93 +1058,93 @@ msgstr "Site anti-aérien"
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
-msgstr "anglais"
+msgstr "Anglais"
 
 #: ../base/ufos/language.ufo:36
 msgid "German"
-msgstr "allemand"
+msgstr "Allemand"
 
 #: ../base/ufos/language.ufo:54
 msgid "Polish"
-msgstr "polonais"
+msgstr "Polonais"
 
 #: ../base/ufos/language.ufo:64
 msgid "Spanish"
-msgstr "espagnol"
+msgstr "Espagnol"
 
 #: ../base/ufos/language.ufo:108
 msgid "Czech"
-msgstr "tchèque"
+msgstr "Tchèque"
 
 #: ../base/ufos/language.ufo:118
 msgid "Danish"
-msgstr "danois"
+msgstr "Danois"
 
 #: ../base/ufos/language.ufo:128
 msgid "Estonian"
-msgstr "estonien"
+msgstr "Estonien"
 
 #: ../base/ufos/language.ufo:138
 msgid "Finnish"
-msgstr "finlandais"
+msgstr "Finlandais"
 
 #: ../base/ufos/language.ufo:148
 msgid "French"
-msgstr "français"
+msgstr "Français"
 
 #: ../base/ufos/language.ufo:166
 msgid "Greek"
-msgstr "grec"
+msgstr "Grec"
 
 #: ../base/ufos/language.ufo:176
 msgid "Hungarian"
-msgstr "hongrois"
+msgstr "Hongrois"
 
 #: ../base/ufos/language.ufo:186
 msgid "Italien"
-msgstr "italien"
+msgstr "Italien"
 
 #: ../base/ufos/language.ufo:198
 #, fuzzy
 msgid "Korean"
-msgstr "Kracken"
+msgstr "Coréen"
 
 #: ../base/ufos/language.ufo:208
 msgid "Dutch"
-msgstr ""
+msgstr "Néerlandais"
 
 #: ../base/ufos/language.ufo:218
 msgid "Portuguese"
-msgstr "portuguais"
+msgstr "Portuguais"
 
 #: ../base/ufos/language.ufo:230
 msgid "Russian"
-msgstr "russe"
+msgstr "Russe"
 
 #: ../base/ufos/language.ufo:242
 msgid "Slovenian"
-msgstr "slovène"
+msgstr "Slovène"
 
 #: ../base/ufos/language.ufo:252
 msgid "Swedish"
-msgstr "suédois"
+msgstr "Suédois"
 
 #: ../base/ufos/language.ufo:264
 msgid "Thai"
-msgstr "thaï"
+msgstr "Thaï"
 
 #: ../base/ufos/language.ufo:274
 msgid "Japanese"
-msgstr "japonais"
+msgstr "Japonais"
 
 #: ../base/ufos/language.ufo:282
 msgid "Chinese"
-msgstr "chinois"
+msgstr "Chinois"
 
 #: ../base/ufos/language.ufo:290
 #, fuzzy
 msgid "Bulgarian"
-msgstr "hongrois"
+msgstr "Hongrois"
 
 #: ../base/ufos/language.ufo:298
 msgid "No language"

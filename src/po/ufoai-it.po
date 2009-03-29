@@ -1146,105 +1146,105 @@ msgstr ""
 
 #: ../base/ufos/language.ufo:2
 msgid "English"
-msgstr ""
+msgstr "Inglese"
 
 #: ../base/ufos/language.ufo:36
 #, fuzzy
 msgid "German"
-msgstr "Sovrumano"
+msgstr "Tedesco"
 
 #: ../base/ufos/language.ufo:54
 msgid "Polish"
-msgstr ""
+msgstr "Polacco"
 
 #: ../base/ufos/language.ufo:64
 #, fuzzy
 msgid "Spanish"
-msgstr "Colpisci"
+msgstr "Spagnolo"
 
 #: ../base/ufos/language.ufo:108
 msgid "Czech"
-msgstr ""
+msgstr "Turco"
 
 #: ../base/ufos/language.ufo:118
 msgid "Danish"
-msgstr ""
+msgstr "Danese"
 
 #: ../base/ufos/language.ufo:128
 msgid "Estonian"
-msgstr ""
+msgstr "Estone"
 
 #: ../base/ufos/language.ufo:138
 #, fuzzy
 msgid "Finnish"
-msgstr "Fine turno"
+msgstr "Finlandese"
 
 #: ../base/ufos/language.ufo:148
 #, fuzzy
 msgid "French"
-msgstr "Grenchen"
+msgstr "Francese"
 
 #: ../base/ufos/language.ufo:166
 #, fuzzy
 msgid "Greek"
-msgstr "Grenchen"
+msgstr "Greco"
 
 #: ../base/ufos/language.ufo:176
 msgid "Hungarian"
-msgstr ""
+msgstr "Ungherese"
 
 #: ../base/ufos/language.ufo:186
 #, fuzzy
 msgid "Italien"
-msgstr "Alieni"
+msgstr "Italiano"
 
 #: ../base/ufos/language.ufo:198
 #, fuzzy
 msgid "Korean"
-msgstr "Saracen I"
+msgstr "Coreano"
 
 #: ../base/ufos/language.ufo:208
 msgid "Dutch"
-msgstr ""
+msgstr "Neerlandese"
 
 #: ../base/ufos/language.ufo:218
 msgid "Portuguese"
-msgstr ""
+msgstr "Portoghese"
 
 #: ../base/ufos/language.ufo:230
 #, fuzzy
 msgid "Russian"
-msgstr "Russia"
+msgstr "Russo"
 
 #: ../base/ufos/language.ufo:242
 msgid "Slovenian"
-msgstr ""
+msgstr "Sloveno"
 
 #: ../base/ufos/language.ufo:252
 #, fuzzy
 msgid "Swedish"
-msgstr "Medici"
+msgstr "Svedese"
 
 #: ../base/ufos/language.ufo:264
 msgid "Thai"
-msgstr ""
+msgstr "Thai"
 
 #: ../base/ufos/language.ufo:274
 msgid "Japanese"
-msgstr ""
+msgstr "Giapponese"
 
 #: ../base/ufos/language.ufo:282
 msgid "Chinese"
-msgstr ""
+msgstr "Cinese"
 
 #: ../base/ufos/language.ufo:290
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgaro"
 
 #: ../base/ufos/language.ufo:298
 #, fuzzy
 msgid "No language"
-msgstr "caricamento modelli..."
+msgstr "No lingua"
 
 #: ../base/ufos/maps.ufo:27
 #, fuzzy
