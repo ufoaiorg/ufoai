@@ -203,12 +203,17 @@ public:
 				NodeSmartReference child(path.top().get());
 				NodeSmartReference parent(path.parent().get());
 
-				Node_getTraversable(parent)->erase(child);
-				Node_getTraversable(group)->insert(child);
-
-				if (Node_getTraversable(parent)->empty() && path.size() >= 3 && parent != Map_FindOrInsertWorldspawn(g_map)) {
+				if (path.size() >= 3 && parent != Map_FindOrInsertWorldspawn(g_map)) {
 					NodeSmartReference parentparent(path[path.size() - 3].get());
-					Node_getTraversable(parentparent)->erase(parent);
+					Node_getTraversable(parent)->erase(child);
+					Node_getTraversable(group)->insert(child);
+
+					if (Node_getTraversable(parent)->empty()) {
+						Node_getTraversable(parentparent)->erase(parent);
+					}
+				} else {
+					Node_getTraversable(parent)->erase(child);
+					Node_getTraversable(group)->insert(child);
 				}
 			}
 		}
