@@ -1646,7 +1646,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 			event_time = nextTime;
 		}
 
-		if ((eType == EV_ENT_APPEAR || eType == EV_INV_ADD)) {
+		if (eType == EV_ENT_APPEAR || eType == EV_INV_ADD) {
 			if (parsedDeath) { /* drop items after death (caused by impact) */
 				event_time = impactTime + 400;
 				/* EV_INV_ADD messages are the last events sent after a death */
