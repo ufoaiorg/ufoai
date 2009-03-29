@@ -574,7 +574,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 				continue;
 			break;
 		default:
-			Sys_Error("B_RemoveAircraftExceedingCapacity: Unkown type of aircraft '%i'\n", aircraftSize);
+			Sys_Error("B_RemoveAircraftExceedingCapacity: Unknown type of aircraft '%i'\n", aircraftSize);
 		}
 
 		/** @todo move aircraft being transfered to the destBase */
@@ -841,12 +841,7 @@ void B_BuildingStatus (const base_t* base, const building_t* building)
 			Cvar_Set("mn_building_status", va(_("Already %i in base"), numberOfBuildings));
 		break;
 	case B_STATUS_UNDER_CONSTRUCTION:
-		{
-			/** @todo Was this planned to be used anywhere (e.g. for B_STATUS_UNDER_CONSTRUCTION text)
-			 * or was it removed intentionally?
-			 * const int daysLeft = building->timeStart + building->buildTime - ccs.date.day; */
-			Cvar_Set("mn_building_status", "");
-		}
+		Cvar_Set("mn_building_status", "");
 		break;
 	case B_STATUS_CONSTRUCTION_FINISHED:
 		Cvar_Set("mn_building_status", _("Construction finished"));
@@ -1581,7 +1576,7 @@ buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
  * it into the next free entry in bmBuildings[0], which is the list of buildings
  * in the first base (building_t).
  * @param[in] name Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
- * @param[in] text @todo document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ * @param[in] text the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  * @sa CL_ParseScriptFirst (link is false here)
  * @sa CL_ParseScriptSecond (link it true here)
@@ -1688,13 +1683,10 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", name);
 
 		tech_link = RS_GetTechByProvided(name);
-		if (tech_link) {
+		if (tech_link)
 			building->tech = tech_link;
-		} else {
-			if (building->visible)
-				/** @todo are the techs already parsed? */
-				Com_DPrintf(DEBUG_CLIENT, "B_ParseBuildings: Could not find tech that provides %s\n", name);
-		}
+		else if (building->visible)
+			Sys_Error("B_ParseBuildings: Could not find tech that provides %s\n", name);
 
 		do {
 			/* get the name type */
@@ -1704,7 +1696,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 			if (*token == '}')
 				break;
 			/* get values */
-			if (!strncmp(token, "depends", MAX_VAR)) {
+			if (!strcmp(token, "depends")) {
 				dependsBuilding = B_GetBuildingTemplate(COM_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Sys_Error("Could not find building depend of %s\n", building->id);
@@ -1725,7 +1717,6 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildingType, qboolean onlyWorking)
 {
 	int i;
-	building_t *building;
 
 	/* we maybe only want to get the working building (e.g. it might the
 	 * case that we don't have a powerplant and thus the searched building
@@ -1734,7 +1725,7 @@ building_t *B_GetBuildingInBaseByType (const base_t* base, buildingType_t buildi
 		return NULL;
 
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
-		building = &ccs.buildings[base->idx][i];
+		building_t *building = &ccs.buildings[base->idx][i];
 		if (building->buildingType == buildingType)
 			return building;
 	}
@@ -2278,7 +2269,6 @@ void B_NewBases (void)
  * @brief Just lists all buildings with their data
  * @note called with debug_listbuilding
  * @note Just for debugging purposes - not needed in game
- * @todo To be extended for load/save purposes
  */
 static void B_BuildingList_f (void)
 {
@@ -2314,7 +2304,6 @@ static void B_BuildingList_f (void)
  * @brief Just lists all bases with their data
  * @note called with debug_listbase
  * @note Just for debugging purposes - not needed in game
- * @todo To be extended for load/save purposes
  */
 static void B_BaseList_f (void)
 {
@@ -2732,8 +2721,7 @@ void CL_AircraftReturnedToHomeBase (aircraft_t* aircraft)
 	RS_MarkResearchable(qfalse, aircraft->homebase);		/**< Mark new technologies researchable. */
 	RADAR_InitialiseUFOs(&aircraft->radar);		/**< Reset UFO sensored on radar */
 
-	/** @note Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground
-	 * @todo this should be removed when new inventory code will be over */
+	/* Recalculate storage capacity, to fix wrong capacity if a soldier drops something on the ground */
 	assert(aircraft->homebase);
 	B_UpdateStorageCap(aircraft->homebase);
 
