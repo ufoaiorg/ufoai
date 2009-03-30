@@ -1011,9 +1011,6 @@ static inline void IN_PrintKey (const SDL_Event* event, int down)
  */
 static void IN_TranslateKey (SDL_keysym *keysym, unsigned int *ascii, unsigned short *unicode)
 {
-	if (cls.deactivateKeyBindings)
-		return;
-
 	switch (keysym->sym) {
 	case SDLK_KP9:
 		*ascii = K_KP_PGUP;
@@ -1383,14 +1380,6 @@ void IN_Frame (void)
 }
 
 /**
- * @brief De-/Activates the executing of key bindings
- */
-static void CL_InputBindingsToggle_f (void)
-{
-	cls.deactivateKeyBindings ^= 1;
-}
-
-/**
  * @sa CL_InitLocal
  */
 void IN_Init (void)
@@ -1469,8 +1458,6 @@ void IN_Init (void)
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
 	Cmd_AddCommand("camsetzoom", CL_CamSetZoom_f, "Set camera zoom level");
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, "Command to make a screenshot for the baseview with the correct angles");
-
-	Cmd_AddCommand("bindingstoggle", CL_InputBindingsToggle_f, "Toggle the use of bind keys - useful for some popup menus");
 
 	mousePosX = mousePosY = 0.0;
 

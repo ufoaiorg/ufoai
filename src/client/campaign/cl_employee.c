@@ -615,6 +615,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	int curEmployeeIdx;
 	const char *teamID;
 	char teamDefName[MAX_VAR];
+	const char* rank;
 
 	if (type >= MAX_EMPL)
 		return NULL;
@@ -650,26 +651,26 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	/* Generate character stats, models & names. */
 	switch (type) {
 	case EMPL_SOLDIER:
-		employee->chr.score.rank = CL_GetRankIdx("rifleman");
+		rank = "rifleman";
 		Q_strncpyz(teamDefName, teamID, sizeof(teamDefName));
 		break;
 	case EMPL_SCIENTIST:
-		employee->chr.score.rank = CL_GetRankIdx("scientist");
+		rank = "scientist";
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", teamID);
 		break;
 	case EMPL_PILOT:
-		employee->chr.score.rank = CL_GetRankIdx("pilot");
+		rank = "pilot";
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_pilot", teamID);
 		break;
 	case EMPL_WORKER:
-		employee->chr.score.rank = CL_GetRankIdx("worker");
+		rank = "worker";
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", teamID);
 		break;
 	case EMPL_ROBOT:
 		if (!ugvType)
 			Sys_Error("CL_GenerateCharacter: no type given for generation of EMPL_ROBOT employee.");
 
-		employee->chr.score.rank = CL_GetRankIdx("ugv");
+		rank = "ugv";
 
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
 		break;
@@ -698,6 +699,8 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 	default:
 		break;
 	}
+
+	employee->chr.score.rank = CL_GetRankIdx("rifleman");
 
 	Com_DPrintf(DEBUG_CLIENT, "Generate character for type: %i\n", type);
 

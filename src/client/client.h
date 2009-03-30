@@ -133,9 +133,6 @@ typedef struct client_state_s {
 	int map_maxlevel_base;
 
 	chrList_t chrList;	/**< the list of characters that are used as team in the currently running tactical mission */
-
-	/* unique character id */
-	int nextUniqueCharacterNumber;
 } client_state_t;
 
 extern client_state_t cl;
@@ -159,7 +156,6 @@ typedef enum {
 typedef struct client_static_s {
 	connstate_t state;
 	keydest_t key_dest;
-	qboolean deactivateKeyBindings;
 
 	int realtime;				/**< always increasing, no clamping, etc */
 	float frametime;			/**< seconds since last frame */
@@ -209,6 +205,9 @@ typedef struct client_static_s {
 
 	/** Used in team assignment screen to tell if we are assigning soldiers or heavy equipment (ugvs/tanks) */
 	qboolean displayHeavyEquipmentList;
+
+	/* unique character id */
+	int nextUniqueCharacterNumber;
 } client_static_t;
 
 extern client_static_t cls;

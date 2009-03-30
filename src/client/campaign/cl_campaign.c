@@ -1007,7 +1007,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 	MAP_Init();
 
 	ccs.fund = mxml_GetBool(campaignNode, "fund", qfalse);
-	cl.nextUniqueCharacterNumber = mxml_GetInt(campaignNode, "nextuniquecharacternumber", 0);
+	cls.nextUniqueCharacterNumber = mxml_GetInt(campaignNode, "nextuniquecharacternumber", 0);
 
 	/* read date */
 	n_ccs = mxml_GetNode(campaignNode, "ccs");
@@ -1231,8 +1231,7 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 	mxml_AddString(campaign, "name", ccs.curCampaign->id);
 	mxml_AddShort(campaign, "fund", ccs.fund);
-	mxml_AddShort(campaign, "nextuniquecharacternumber", cl.nextUniqueCharacterNumber);
-
+	mxml_AddShort(campaign, "nextuniquecharacternumber", cls.nextUniqueCharacterNumber);
 
 	structure_ccs = mxml_AddNode(campaign, "ccs");
 	mxml_AddInt(structure_ccs, "dateday", ccs.date.day);
@@ -1244,7 +1243,6 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 	mxml_AddFloat(structure_ccs, "angles1", ccs.angles[1]);
 	mxml_AddFloat(structure_ccs, "zoom", ccs.zoom);
 
-
 	mxml_AddShort(campaign, "r_geoscape_overlay", r_geoscape_overlay->integer);
 	mxml_AddBool(campaign, "radaroverlaywasset", radarOverlayWasSet);
 
@@ -1252,7 +1250,6 @@ qboolean CP_SaveXML (mxml_node_t *parent)
 
 	mxml_AddShort(structure_ccs, "lastinterestincreasedelay", ccs.lastInterestIncreaseDelay);
 	mxml_AddShort(structure_ccs, "lastmissionspawneddelay", ccs.lastMissionSpawnedDelay);
-
 
 	mxml_AddShort(structure_ccs, "overall", ccs.overallInterest);
 	/*mxml_AddInt(substructure, "count", INTERESTCATEGORY_MAX);*/
