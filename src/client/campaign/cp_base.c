@@ -2902,14 +2902,18 @@ qboolean B_LoadXML (mxml_node_t *parent)
 			byte buildingTpl;
 			if (buildId >= MAX_BUILDINGS) {
 				Com_Printf("building ID is greater than MAX buildings\n");
-				continue;
+				return qfalse;
 			}
 			building = &ccs.buildings[i][buildId];
 			buildingTpl = mxml_GetInt(snode, "building_tpl", BYTES_NONE);
 			if (buildingTpl != BYTES_NONE)
 				*building = ccs.buildingTemplates[buildingTpl];
 
-			building->idx = buildId;
+			building->idx = B_GetBuildingIDX(b, building);
+			if (building->idx != buildId) {
+				Com_Printf("building ID doesn't match\n");
+				return qfalse;
+			}
 			building->base = b;
 			building->buildingStatus = mxml_GetInt(snode, "buildingstatus", 0);
 			building->timeStart = mxml_GetInt(snode, "buildingtimestart", 0);
@@ -2976,6 +2980,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		/* clear the mess of stray loaded pointers */
 		memset(&b->bEquipment, 0, sizeof(b->bEquipment));
 	}
+
 	ccs.numBases = B_GetFoundedBaseCount();
 	B_UpdateBaseCount();
 
