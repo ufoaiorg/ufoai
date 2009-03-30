@@ -354,7 +354,7 @@ qboolean AB_LoadXML (mxml_node_t *p)
 	ccs.numAlienBases = mxml_GetInt(n, "num", 0);
 	for (i = 0, s = mxml_GetNode(n, "base"); i < MAX_ALIEN_BASES && s; i++, s = mxml_GetNextNode(s, n, "base")) {
 		alienBase_t *base = &ccs.alienBases[i];
-		base->idx = mxml_GetInt(s, "idx", 0);
+		base->idx = (ptrdiff_t)(base - ccs.alienBases);
 		if (!mxml_GetPos2(s, "pos", base->pos)) {
 			Com_Printf("Position is invalid for Alienbase %d (idx %d)\n", i, base->idx);
 			return qfalse;
@@ -378,7 +378,6 @@ qboolean AB_SaveXML (mxml_node_t *p)
 	for (i = 0; i < MAX_ALIEN_BASES; i++) {
 		const alienBase_t *base = &ccs.alienBases[i];
 		mxml_node_t *s = mxml_AddNode(n, "base");
-		mxml_AddInt(s, "idx", base->idx);
 		mxml_AddPos2(s, "pos", base->pos);
 		mxml_AddInt(s, "supply", base->supply);
 		mxml_AddFloat(s, "stealth", base->stealth);
