@@ -34,6 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_INSTALLATION_BATTERIES	5
 #define MAX_INSTALLATION_SLOT	4
 
+#define INS_GetInstallationIDX(installation) ((ptrdiff_t)((installation) - ccs.installations))
+
 /**
  * @brief Possible installation states
  * @note: Don't change the order or you have to change the installationmenu scriptfiles, too

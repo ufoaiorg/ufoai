@@ -102,7 +102,7 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 
 	Vector2Copy(pos, installation->pos);
 
-	installation->idx = ccs.numInstallations - 1;
+	installation->idx = INS_GetInstallationIDX(installation);
 	installation->founded = qtrue;
 	installation->installationStatus = INSTALLATION_UNDER_CONSTRUCTION;
 	installation->installationTemplate = installationTemplate;
@@ -515,7 +515,7 @@ qboolean INS_LoadXML (mxml_node_t *p)
 		mxml_node_t *ss;
 		const int idx = mxml_GetInt(s, "idx", 0);
 		installation_t *inst = INS_GetInstallationByIDX(idx);
-		inst->idx = idx;
+		inst->idx = INS_GetInstallationIDX(inst);
 		inst->founded = mxml_GetBool(s, "founded", inst->founded);
 		/* should never happen, we only save founded installations */
 		if (!inst->founded)

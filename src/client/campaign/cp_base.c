@@ -2873,7 +2873,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 		int k;
 		int aircraftIdxInBase;
 		base_t *const b = B_GetBaseByIDX(i);
-		b->idx = i;
+		b->idx = B_GetBaseIDX(b);
 		b->founded = mxml_GetBool(base, "founded", qfalse);
 		if (!b->founded)
 			continue;
