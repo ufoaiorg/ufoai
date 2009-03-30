@@ -3030,7 +3030,7 @@ qboolean B_UpdateStorageAndCapacity (base_t* base, const objDef_t *obj, int amou
 			return qfalse;
 		}
 
-		if (!ignorecap && (amount > 0)) {
+		if (!ignorecap && amount > 0) {
 			/* Only add items if there is enough room in storage */
 			if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur < (obj->size * amount)) {
 				Com_DPrintf(DEBUG_CLIENT, "B_UpdateStorageAndCapacity: Not enough storage space (item: %s, amount: %i)\n", obj->id, amount);
@@ -3101,12 +3101,12 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 {
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
-	int numObj;
+	int num, cnt;
 
 	if (base->capacities[CAP_ITEMS].cur <= base->capacities[CAP_ITEMS].max)
 		return;
 
-	for (i = 0, numObj = 0; i < csi.numODs; i++) {
+	for (i = 0, num = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
 
 		if (!B_ItemsIsStoredInBaseStorage(obj))
@@ -3116,17 +3116,18 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 		if (!base->storage.num[i])
 			continue;
 
-		objIdx[numObj++] = i;
+		objIdx[num++] = i;
 	}
 
+	cnt = E_CountHired(base, EMPL_ROBOT);
 	/* UGV takes room in storage capacity: we store them with a value MAX_OBJDEFS that can't be used by objIdx */
-	for (i = 0; i < E_CountHired(base, EMPL_ROBOT); i++) {
-		objIdx[numObj++] = MAX_OBJDEFS;
+	for (i = 0; i < cnt; i++) {
+		objIdx[num++] = MAX_OBJDEFS;
 	}
 
-	while (numObj && base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
+	while (num && base->capacities[CAP_ITEMS].cur > base->capacities[CAP_ITEMS].max) {
 		/* Select the item to remove */
-		const int randNumber = rand() % numObj;
+		const int randNumber = rand() % num;
 		if (objIdx[randNumber] >= MAX_OBJDEFS) {
 			/* A UGV is destroyed: get first one */
 			employee_t* employee = E_GetHiredRobot(base, 0);
@@ -3141,10 +3142,10 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 			assert(idx < MAX_OBJDEFS);
 			B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
 		}
-		REMOVE_ELEM(objIdx, randNumber, numObj);
+		REMOVE_ELEM(objIdx, randNumber, num);
 
 		/* Make sure that we don't have an infinite loop */
-		if (numObj <= 0)
+		if (num <= 0)
 			break;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "B_RemoveItemsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
@@ -3158,10 +3159,10 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
  */
 void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingType)
 {
-	const baseCapacities_t capacity_type = B_GetCapacityFromBuildingType (buildingType);
+	const baseCapacities_t capacity_type = B_GetCapacityFromBuildingType(buildingType);
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
-	int numObj;
+	int num;
 
 	if (capacity_type != CAP_UFOHANGARS_SMALL && capacity_type != CAP_UFOHANGARS_LARGE)
 		return;
@@ -3169,15 +3170,14 @@ void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingT
 	if (base->capacities[capacity_type].cur <= base->capacities[capacity_type].max)
 		return;
 
-	for (i = 0, numObj = 0; i < csi.numODs; i++) {
+	for (i = 0, num = 0; i < csi.numODs; i++) {
 		const objDef_t *obj = &csi.ods[i];
 		aircraft_t *ufocraft;
 
 		/* Don't count what isn't an aircraft */
 		assert(obj->tech);
-		if (obj->tech->type != RS_CRAFT) {
+		if (obj->tech->type != RS_CRAFT)
 			continue;
-		}
 
 		/* look for corresponding aircraft in global array */
 		ufocraft = AIR_GetAircraft (obj->id);
@@ -3195,12 +3195,12 @@ void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingT
 		if (!base->storage.num[i])
 			continue;
 
-		objIdx[numObj++] = i;
+		objIdx[num++] = i;
 	}
 
-	while (numObj && base->capacities[capacity_type].cur > base->capacities[capacity_type].max) {
+	while (num && base->capacities[capacity_type].cur > base->capacities[capacity_type].max) {
 		/* Select the item to remove */
-		const int randNumber = rand() % numObj;
+		const int randNumber = rand() % num;
 		/* items are destroyed. We guess that all items of a given type are stored in the same location
 		 *	=> destroy all items of this type */
 		const int idx = objIdx[randNumber];
@@ -3209,11 +3209,11 @@ void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingT
 		assert(idx < MAX_OBJDEFS);
 		B_UpdateStorageAndCapacity(base, &csi.ods[idx], -base->storage.num[idx], qfalse, qfalse);
 
-		REMOVE_ELEM(objIdx, randNumber, numObj);
+		REMOVE_ELEM(objIdx, randNumber, num);
 		UR_UpdateUFOHangarCapForAll(base);
 
 		/* Make sure that we don't have an infinite loop */
-		if (numObj <= 0)
+		if (num <= 0)
 			break;
 	}
 	Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Remains %i in storage for a maxium of %i\n",
@@ -3259,8 +3259,8 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 
 	assert(base);
 
-	if (!B_GetBuildingStatus(base, B_ANTIMATTER) && add) {
-		Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer),
+	if (add && !B_GetBuildingStatus(base, B_ANTIMATTER)) {
+		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
 			_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
 			base->name, amount);
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -3268,7 +3268,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	}
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		if (!strncmp(od->id, "antimatter", 10))
+		if (!strcmp(od->id, "antimatter"))
 			break;
 	}
 
