@@ -149,10 +149,10 @@ static void B_BuildBase_f (void)
 		if (baseName[0] == '\0')
 			baseName = "Base";
 
-		ccs.numBases++;
 		/* set up the base with buildings that have the autobuild flag set */
 		B_SetUpBase(base, cl_start_employees->integer, cl_start_buildings->integer, newBasePos);
 
+		ccs.numBases++;
 		ccs.campaignStats.basesBuild++;
 		ccs.mapAction = MA_NONE;
 		CL_UpdateCredits(ccs.credits - ccs.curCampaign->basecost);

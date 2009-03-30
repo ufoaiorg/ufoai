@@ -1125,7 +1125,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 
 	Vector2Copy(pos, base->pos);
 
-	base->idx = ccs.numBases - 1;
+	base->idx = (ptrdiff_t)(base - ccs.bases);
 	base->founded = qtrue;
 	base->baseStatus = BASE_WORKING;
 	base->numAircraftInBase = 0;
@@ -1135,11 +1135,9 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 		B_SetUpFirstBase(base, hire, buildings);
 	else if (buildings) {
 		/* add auto build buildings if it's not the first base */
-		for (i = 0; i < ccs.numBuildingTemplates; i++) {
-			if (ccs.buildingTemplates[i].autobuild) {
+		for (i = 0; i < ccs.numBuildingTemplates; i++)
+			if (ccs.buildingTemplates[i].autobuild)
 				B_AddBuildingToBase(base, &ccs.buildingTemplates[i], hire);
-			}
-		}
 	} else {
 		/* we need to set up the entrance in case autobuild is off and this is not the first base */
 		for (i = 0; i < ccs.numBuildingTemplates; ++i) {
@@ -1202,7 +1200,7 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 
 	assert(buildingName);
 	for (i = 0; i < ccs.numBuildingTemplates; i++)
-		if (!Q_strcasecmp(ccs.buildingTemplates[i].id, buildingName))
+		if (!strcmp(ccs.buildingTemplates[i].id, buildingName))
 			return &ccs.buildingTemplates[i];
 
 	Com_Printf("Building %s not found\n", buildingName);
@@ -1219,7 +1217,7 @@ const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 	int i = 0;
 
 	for (i = 0; i < ccs.numBaseTemplates; i++)
-		if (!Q_strcasecmp(ccs.baseTemplates[i].id, baseTemplateID))
+		if (!strcmp(ccs.baseTemplates[i].id, baseTemplateID))
 			return &ccs.baseTemplates[i];
 
 	Com_Printf("Base Template %s not found\n", baseTemplateID);
@@ -1274,10 +1272,8 @@ static qboolean B_ConstructBuilding (base_t* base, building_t *building)
 		building->timeStart = ccs.date.day;
 	} else {
 		/* call the onconstruct trigger */
-		if (building->onConstruct[0] != '\0') {
-			Com_DPrintf(DEBUG_CLIENT, "B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
+		if (building->onConstruct[0] != '\0')
 			Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
-		}
 		B_UpdateAllBaseBuildingStatus(building, base, B_STATUS_WORKING);
 	}
 
