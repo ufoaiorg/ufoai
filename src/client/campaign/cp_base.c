@@ -214,7 +214,7 @@ void B_SetBuildingStatus (base_t* const base, const buildingType_t buildingType,
 		base->hasBuilding[buildingType] = newStatus;
 		Com_DPrintf(DEBUG_CLIENT, "B_SetBuildingStatus: set status for %i to %i\n", buildingType, newStatus);
 	} else
-		Com_Printf("B_SetBuildingStatus: Type of building %i does not exists\n", buildingType);
+		Com_Printf("B_SetBuildingStatus: Type of building %i does not exist\n", buildingType);
 }
 
 /**
@@ -459,7 +459,7 @@ static void B_UpdateAntimatterCap (base_t *base)
 	int i;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (!strncmp(csi.ods[i].id, "antimatter", 10)) {
+		if (!strcmp(csi.ods[i].id, "antimatter")) {
 			base->capacities[CAP_ANTIMATTER].cur = (base->storage.num[i] * ANTIMATTER_SIZE);
 			return;
 		}
