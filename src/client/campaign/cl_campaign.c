@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 #include "../cl_game.h"
 #include "../cl_team.h"
-#include "../cl_le.h"	/**< cl_actor.h needs this */
-#include "../cl_actor.h"
-#include "../cl_view.h"
 #include "../cl_menu.h"
 #include "../menu/m_popup.h"
 #include "../menu/node/m_node_container.h"
@@ -42,12 +39,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_base_callbacks.h"
 #include "cp_team.h"
 #include "cp_team_callbacks.h"
-#include "cp_parse.h"
 #include "cl_popup.h"
 #include "cl_map.h"
 #include "cl_ufo.h"
-#include "cl_uforecovery.h"
-#include "cl_alienbase.h"
 #include "cl_installation.h"
 #include "cp_installation_callbacks.h"
 #include "cp_alien_interest.h"
@@ -1108,7 +1102,7 @@ qboolean CP_LoadXML (mxml_node_t *parent)
 				int baseidx = mxml_GetInt(act_node, "baseindex", BYTES_NONE);
 				if (baseidx != BYTES_NONE) {
 					/* don't check baseidx value here: alien bases are not loaded yet */
-					alienBase_t *alienBase = AB_GetBase(baseidx, 0);
+					alienBase_t *alienBase = AB_GetBase(baseidx, qfalse);
 					if (alienBase)
 						mission.data = (void *) alienBase;
 					else
@@ -1451,8 +1445,6 @@ void CP_StartSelectedMission (void)
 	ccs.eMission = base->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(base);
 	CL_CleanupAircraftCrew(aircraft, &ccs.eMission);
-	/* remove inventory of any old temporary LEs */
-	LE_Cleanup();
 
 	CP_StartMissionMap(mis);
 }
@@ -2095,9 +2087,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 	R_InitializeXVIOverlay(campaign->map, NULL, 0, 0);
-
-	/* Reset alien bases */
-	AB_ResetAlienBases();
 
 	MN_PopMenu(qtrue);
 	Cvar_Set("mn_main", "campaign_main");

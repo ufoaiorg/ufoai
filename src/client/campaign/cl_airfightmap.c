@@ -336,9 +336,9 @@ static void AFM_DrawMapMarkers (const menuNode_t* node)
 
 	/* finds the centroid of all aircraft in combat range who are targeting the zoomed ufo
 	 * and uses this as the point on which to center. */
-	for (combatAirIdx = 0; combatAirIdx < combatZoomNumCombatAircraft; combatAirIdx++) {
+	for (combatAirIdx = 0; combatAirIdx < combatZoomNumCombatAircraft; combatAirIdx++)
 		VectorAdd(combatZoomAircraftInCombatPos[combatAirIdx], centroid, centroid);
-	}
+
 	if (combatAirIdx > 1) {
 		VectorScale(centroid, 1.0 / (float)combatAirIdx, centroid);
 		AFM_CenterMapPosition(centroid);

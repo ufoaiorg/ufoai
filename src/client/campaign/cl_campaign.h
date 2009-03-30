@@ -52,6 +52,7 @@ struct menuNode_s; /**< @todo remove this once the menuNode_t usage is cleaned u
 #include "cl_airfight.h"
 #include "cl_installation.h"
 #include "cl_messageoptions.h"
+#include "cl_alienbase.h"
 
 /* check for water */
 /* blue value is 64 */
@@ -449,6 +450,9 @@ typedef struct ccs_s {
 	/* a list of all templates for building bases */
 	baseTemplate_t baseTemplates[MAX_BASETEMPLATES];
 	int numBaseTemplates;
+
+	alienBase_t alienBases[MAX_ALIEN_BASES];		/**< Alien bases spawned in game */
+	int numAlienBases;							/**< Number of alien bases in game */
 
 	/* == Nations == */
 	nation_t nations[MAX_NATIONS];

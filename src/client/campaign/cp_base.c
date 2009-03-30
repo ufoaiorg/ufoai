@@ -1125,7 +1125,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 
 	Vector2Copy(pos, base->pos);
 
-	base->idx = (ptrdiff_t)(base - ccs.bases);
+	base->idx = B_GetBaseIDX(base);
 	base->founded = qtrue;
 	base->baseStatus = BASE_WORKING;
 	base->numAircraftInBase = 0;
@@ -1335,7 +1335,7 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 		*buildingNew = *template;
 
 		/* self-link to building-list in base */
-		buildingNew->idx = ccs.numBuildings[base->idx];
+		buildingNew->idx = B_GetBuildingIDX(base, buildingNew);
 
 		/* Link to the base. */
 		buildingNew->base = base;

@@ -36,7 +36,6 @@ typedef struct alienBase_s {
 						 * and base is known if stealth < 0 */
 } alienBase_t;
 
-void AB_ResetAlienBases(void);
 void AB_SetAlienBasePosition(vec2_t position);
 alienBase_t* AB_BuildBase(vec2_t pos);
 void AB_DestroyBase(alienBase_t *base);

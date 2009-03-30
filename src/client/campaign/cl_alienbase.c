@@ -29,19 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_alienbase.h"
 #include "cl_map.h"
 
-static alienBase_t alienBases[MAX_ALIEN_BASES];		/**< Alien bases spawned in game */
-static int numAlienBases;							/**< Number of alien bases in game */
-
-/**
- * @brief Reset global array and number of base
- * @note Use me when stating a new game
- */
-void AB_ResetAlienBases (void)
-{
-	memset(alienBases, 0, sizeof(alienBases));
-	numAlienBases = 0;
-}
-
 /**
  * @brief Set new base position
  * @param[out] position Position of the new base.
@@ -69,13 +56,13 @@ void AB_SetAlienBasePosition (vec2_t position)
 			continue;
 
 		/* If this is the first alien base, there's no further condition: select this pos and quit */
-		if (!numAlienBases) {
+		if (!ccs.numAlienBases) {
 			Vector2Copy(pos, position);
 			return;
 		}
 
 		/* Calculate minimim distance between THIS position (pos) and all alien bases */
-		for (base = alienBases; base < alienBases + numAlienBases; base++) {
+		for (base = ccs.alienBases; base < ccs.alienBases + ccs.numAlienBases; base++) {
 			const float currentDistance = MAP_GetDistance(base->pos, pos);
 			if (distance < currentDistance) {
 				distance = currentDistance;
@@ -102,17 +89,18 @@ alienBase_t* AB_BuildBase (vec2_t pos)
 	alienBase_t *base;
 	const float initialStealthValue = 50.0f;				/**< How hard PHALANX will find the base */
 
-	if (numAlienBases >= MAX_ALIEN_BASES) {
+	if (ccs.numAlienBases >= MAX_ALIEN_BASES) {
 		Com_Printf("AB_BuildBase: Too many alien bases build\n");
 		return NULL;
 	}
 
-	base = &alienBases[numAlienBases];
+	base = &ccs.alienBases[ccs.numAlienBases];
 	memset(base, 0, sizeof(*base));
 
 	Vector2Copy(pos, base->pos);
 	base->stealth = initialStealthValue;
-	base->idx = numAlienBases++;
+	base->idx = (ptrdiff_t)(base - ccs.alienBases);
+	ccs.numAlienBases++;
 
 	return base;
 }
@@ -125,10 +113,10 @@ void AB_DestroyBase (alienBase_t *base)
 {
 	assert(base);
 
-	REMOVE_ELEM_ADJUST_IDX(alienBases, base->idx, numAlienBases);
+	REMOVE_ELEM_ADJUST_IDX(ccs.alienBases, base->idx, ccs.numAlienBases);
 
 	/* Alien loose all their interest in supply if there's no base to send the supply */
-	if (numAlienBases == 0)
+	if (ccs.numAlienBases == 0)
 		ccs.interest[INTERESTCATEGORY_SUPPLY] = 0;
 }
 
@@ -143,10 +131,10 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 	if (baseIDX < 0 || baseIDX >= MAX_ALIEN_BASES)
 		return NULL;
 
-	if (checkIdx && baseIDX >= numAlienBases)
+	if (checkIdx && baseIDX >= ccs.numAlienBases)
 		return NULL;
 
-	return &alienBases[baseIDX];
+	return &ccs.alienBases[baseIDX];
 }
 
 /**
@@ -216,9 +204,8 @@ void AB_UpdateStealthForAllBase (void)
 			if (!AIR_IsAircraftOnGeoscape(aircraft))
 				continue;
 
-			for (alienBase = alienBases; alienBase < alienBases + numAlienBases; alienBase++) {
+			for (alienBase = ccs.alienBases; alienBase < ccs.alienBases + ccs.numAlienBases; alienBase++)
 				AB_UpdateStealthForOneBase(aircraft, alienBase);
-			}
 		}
 	}
 }
@@ -240,7 +227,7 @@ void AB_BaseSearchedByNations (void)
 	if (ccs.date.day % daysPerWeek)
 		return;
 
-	for (base = alienBases; base < alienBases + numAlienBases; base++) {
+	for (base = ccs.alienBases; base < ccs.alienBases + ccs.numAlienBases; base++) {
 		const nation_t *nation = MAP_GetNation(base->pos);
 
 		/* If nation is a lot infected, it won't help in finding base (government infected) */
@@ -260,7 +247,7 @@ void AB_BaseSearchedByNations (void)
  */
 qboolean AB_CheckSupplyMissionPossible (void)
 {
-	return numAlienBases;
+	return ccs.numAlienBases;
 }
 
 /**
@@ -270,11 +257,11 @@ qboolean AB_CheckSupplyMissionPossible (void)
  */
 alienBase_t* AB_ChooseBaseToSupply (vec2_t pos)
 {
-	const int baseIDX = rand() % numAlienBases;
+	const int baseIDX = rand() % ccs.numAlienBases;
 
-	Vector2Copy(alienBases[baseIDX].pos, pos);
+	Vector2Copy(ccs.alienBases[baseIDX].pos, pos);
 
-	return &alienBases[baseIDX];
+	return &ccs.alienBases[baseIDX];
 }
 
 /**
@@ -298,7 +285,7 @@ void AB_SupplyBase (alienBase_t *base, qboolean decreaseStealth)
  */
 int AB_GetAlienBaseNumber (void)
 {
-	return numAlienBases;
+	return ccs.numAlienBases;
 }
 
 #ifdef DEBUG
@@ -309,9 +296,9 @@ static void AB_AlienBaseDiscovered_f (void)
 {
 	int i;
 
-	for (i = 0; i < numAlienBases; i++) {
-		alienBases[i].stealth = -10.0f;
-		CP_SpawnAlienBaseMission(&alienBases[i]);
+	for (i = 0; i < ccs.numAlienBases; i++) {
+		ccs.alienBases[i].stealth = -10.0f;
+		CP_SpawnAlienBaseMission(&ccs.alienBases[i]);
 	}
 }
 
@@ -323,21 +310,21 @@ static void AB_AlienBaseList_f (void)
 {
 	int i;
 
-	if (numAlienBases == 0) {
+	if (ccs.numAlienBases == 0) {
 		Com_Printf("No alien base founded\n");
 		return;
 	}
 
-	for (i = 0; i < numAlienBases; i++) {
+	for (i = 0; i < ccs.numAlienBases; i++) {
 		Com_Printf("Alien Base: %i\n", i);
-		if (i != alienBases[i].idx)
-			Com_Printf("Warning: bad idx (%i instead of %i)\n", alienBases[i].idx, i);
-		Com_Printf("...pos: (%f, %f)\n", alienBases[i].pos[0], alienBases[i].pos[1]);
-		Com_Printf("...supply: %i\n", alienBases[i].supply);
-		if (alienBases[i].stealth < 0)
+		if (i != ccs.alienBases[i].idx)
+			Com_Printf("Warning: bad idx (%i instead of %i)\n", ccs.alienBases[i].idx, i);
+		Com_Printf("...pos: (%f, %f)\n", ccs.alienBases[i].pos[0], ccs.alienBases[i].pos[1]);
+		Com_Printf("...supply: %i\n", ccs.alienBases[i].supply);
+		if (ccs.alienBases[i].stealth < 0)
 			Com_Printf("...base discovered\n");
 		else
-			Com_Printf("...stealth: %f\n", alienBases[i].stealth);
+			Com_Printf("...stealth: %f\n", ccs.alienBases[i].stealth);
 	}
 }
 #endif
@@ -364,9 +351,9 @@ qboolean AB_LoadXML (mxml_node_t *p)
 	n = mxml_GetNode(p, "alienbases");
 	if (!n)
 		return qfalse;
-	numAlienBases = mxml_GetInt(n, "num", 0);
+	ccs.numAlienBases = mxml_GetInt(n, "num", 0);
 	for (i = 0, s = mxml_GetNode(n, "base"); i < MAX_ALIEN_BASES && s; i++, s = mxml_GetNextNode(s, n, "base")) {
-		alienBase_t *base = &alienBases[i];
+		alienBase_t *base = &ccs.alienBases[i];
 		base->idx = mxml_GetInt(s, "idx", 0);
 		if (!mxml_GetPos2(s, "pos", base->pos)) {
 			Com_Printf("Position is invalid for Alienbase %d (idx %d)\n", i, base->idx);
@@ -387,9 +374,9 @@ qboolean AB_SaveXML (mxml_node_t *p)
 	int i;
 	mxml_node_t *n = mxml_AddNode(p, "alienbases");
 
-	mxml_AddInt(n, "num", numAlienBases);
+	mxml_AddInt(n, "num", ccs.numAlienBases);
 	for (i = 0; i < MAX_ALIEN_BASES; i++) {
-		const alienBase_t *base = &alienBases[i];
+		const alienBase_t *base = &ccs.alienBases[i];
 		mxml_node_t *s = mxml_AddNode(n, "base");
 		mxml_AddInt(s, "idx", base->idx);
 		mxml_AddPos2(s, "pos", base->pos);

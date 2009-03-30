@@ -94,7 +94,7 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 
 	assert(weaponSlot->item);
 
-	projectile->idx = ccs.numProjectiles;
+	projectile->idx = (ptrdiff_t)(projectile - ccs.projectiles);
 	projectile->aircraftItem = weaponSlot->ammo;
 	if (attackingBase) {
 		projectile->attackingAircraft = NULL;
@@ -108,7 +108,7 @@ static qboolean AIRFIGHT_AddProjectile (const base_t* attackingBase, const insta
 		VectorSet(projectile->pos[0], attacker->pos[0], attacker->pos[1], 0);
 	}
 
-	projectile->numProjectiles = 1;
+	projectile->numProjectiles++;
 
 	/* if we are not aiming to a base - we are aiming towards an aircraft */
 	if (aimedBase) {

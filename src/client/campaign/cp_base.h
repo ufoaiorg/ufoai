@@ -50,6 +50,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_BLOCKEDFIELDS	4
 #define MIN_BLOCKEDFIELDS	1
 
+#define B_GetBaseIDX(base) ((ptrdiff_t)((base) - ccs.bases))
+#define B_GetBuildingIDX(base, building) ((ptrdiff_t)((building) - ccs.buildings[base->idx]))
+
 /**
  * @brief Possible base states
  * @note: Don't change the order or you have to change the basemenu scriptfiles, too
