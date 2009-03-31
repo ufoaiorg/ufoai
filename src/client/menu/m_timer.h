@@ -32,7 +32,6 @@ typedef void (*timerCallback_t)(struct menuNode_s *node, struct menuTimer_s *tim
 
 /**
  * @todo We can use void* for the owner type, and allow to use it outside nodes
- * @todo Add a "isWorking" property to know if a timer is start/stop
  */
 typedef struct menuTimer_s {
 	struct menuTimer_s *next;	/**< next timer in the ordered list of active timers */
