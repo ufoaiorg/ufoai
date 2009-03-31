@@ -645,7 +645,7 @@ typedef struct AI_s {
 /** @brief Describes a character with all its attributes
  * @todo doesn't belong here */
 typedef struct character_s {
-	int ucn;
+	int ucn;					/**< unique character number */
 	char name[MAX_VAR];			/**< Character name (as in: soldier name). */
 	char path[MAX_VAR];
 	char body[MAX_VAR];
