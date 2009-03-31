@@ -202,6 +202,8 @@ void CL_Drop (void)
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;
 
+	if (!GAME_IsCampaign())
+		GAME_SetMode(GAME_NONE);
 	CL_Disconnect();
 }
 
