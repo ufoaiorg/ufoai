@@ -319,44 +319,57 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 
 /**
  * @brief Set node property
- * @note More hard to set string like that at the run time
- * @todo remove atof
- * @todo add support of more fixed size value (everything else string)
- * @todo use function from script.c for common type
  */
 qboolean MN_NodeSetProperty (menuNode_t* node, const value_t *property, const char* value)
 {
 	byte* b = (byte*)node + property->ofs;
+	const int specialType = property->type & V_SPECIAL_TYPE;
+	int result;
+	size_t bytes;
 
-	if (property->type == V_FLOAT) {
-		*(float*) b = atof(value);
-	} else if (property->type == V_CVAR_OR_FLOAT) {
-		b = (byte*) (*(void**)b);
-		if (!strncmp((const char*)b, "*cvar", 5)) {
-			MN_SetCvar(&((char*)b)[6], NULL, atof(value));
-		} else {
-			*(float*) b = atof(value);
+	switch (specialType) {
+	case 0:	/* common type */
+		/* not possible to set a string */
+		if (property->type == V_STRING || property->type == V_LONGSTRING)
+			break;
+		result = Com_ParseValue(node, value, property->type, property->ofs, property->size, &bytes);
+		if (result != RESULT_OK) {
+			Com_Printf("MN_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+			return qfalse;
 		}
-	} else if (property->type == V_INT) {
-		*(int*) b = atoi(value);
-	} else if (property->type == V_BOOL) {
-		qboolean v;
-		if (!strcmp(value, "true"))
-			v = qtrue;
-		else if (!strcmp(value, "false"))
-			v = qfalse;
-		else
-			v = atoi(value) != 0;
-		*(qboolean*) b = v;
-	} else if (property->type == V_CVAR_OR_LONGSTRING || property->type == V_CVAR_OR_STRING) {
-		MN_FreeStringProperty(*(void**)b);
-		*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
-	} else {
-		Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s@%s'\n", MN_GetPath(node), property->string);
-		return qfalse;
+		return qtrue;
+
+	case V_SPECIAL_CVAR:	/* cvar */
+		switch (property->type) {
+		case V_CVAR_OR_FLOAT:
+			{
+				float f;
+
+				result = Com_ParseValue(&f, value, V_FLOAT, 0, sizeof(f), &bytes);
+				if (result != RESULT_OK) {
+					Com_Printf("MN_NodeSetProperty: Invalid value for property '%s': %s\n", property->string, Com_GetLastParseError());
+					return qfalse;
+				}
+
+				b = (byte*) (*(void**)b);
+				if (!strncmp((const char*)b, "*cvar", 5))
+					MN_SetCvar(&((char*)b)[6], NULL, f);
+				else
+					*(float*) b = f;
+				return qtrue;
+			}
+		case V_CVAR_OR_LONGSTRING:
+		case V_CVAR_OR_STRING:
+			{
+				MN_FreeStringProperty(*(void**)b);
+				*(char**) b = Mem_PoolStrDup(value, mn_dynStringPool, 0);
+				return qtrue;
+			}
+		}
 	}
 
-	return qtrue;
+	Com_Printf("MN_NodeSetProperty: Unimplemented type for property '%s@%s'\n", MN_GetPath(node), property->string);
+	return qfalse;
 }
 
 /**
