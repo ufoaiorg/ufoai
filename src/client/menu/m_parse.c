@@ -501,7 +501,6 @@ static qboolean MN_ParseOption (menuNode_t * node, const char **text, const char
 		return qfalse;
 	}
 
-	/** @todo mem corruption in case of too many select box options */
 	Q_strncpyz(option->id, *token, sizeof(option->id));
 	Com_DPrintf(DEBUG_CLIENT, "...found selectbox: '%s'\n", *token);
 
@@ -1232,7 +1231,6 @@ void MN_ParseIcon (const char *name, const char **text)
 	token = COM_Parse(text);
 	assert(strcmp(token, "{") == 0);
 
-	/** @todo While MN_ParseProperty read the next token */
 	token = COM_Parse(text);
 	if (*text == NULL)
 		return;
