@@ -396,6 +396,7 @@ void GAME_Drop (void)
 
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
+			MN_PopMenu(qtrue);
 			if (!list->drop) {
 				GAME_SetMode(GAME_NONE);
 				Cvar_Set("mn_main", "main");

@@ -177,7 +177,6 @@ void CL_Drop (void)
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;
 
-	MN_PopMenu(qtrue);
 	GAME_Drop();
 
 	CL_Disconnect();
