@@ -174,9 +174,8 @@ void CL_Drop (void)
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
 
-	if (MN_GetActiveMenu() != NULL) {
+	if (MN_GetActiveMenu() != NULL)
 		MN_PopMenu(qtrue);
-	}
 
 	/* make sure that we are in the correct menus in singleplayer after
 	 * dropping the game due to a failure */
@@ -972,11 +971,8 @@ static void CL_CvarCheck (void)
 	/* worldlevel */
 	if (cl_worldlevel->modified) {
 		int i;
-		if (cl_worldlevel->integer < 0) {
-			CL_Drop();
-			Com_DPrintf(DEBUG_CLIENT, "CL_CvarCheck: Called drop - something went wrong\n");
-			return;
-		}
+		if (cl_worldlevel->integer < 0)
+			Com_Error(ERR_DROP, "CL_CvarCheck: cl_worldlevel is negative\n");
 
 		if (cl_worldlevel->integer >= cl.map_maxlevel - 1)
 			Cvar_SetValue("cl_worldlevel", cl.map_maxlevel - 1);

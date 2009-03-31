@@ -52,12 +52,6 @@ extern cvar_t *cl_lastsave;
 qboolean SAV_QuickSave(void);
 void SAV_Init(void);
 
-/**
- * @brief True if a game is currently loading.
- * @note Used to execute some actions only while loading in function used ingame and while loading.
- */
-extern qboolean loading;
-
 /* and now the save and load prototypes for every subsystem */
 qboolean B_SaveXML(mxml_node_t *parent);
 qboolean B_LoadXML(mxml_node_t *parent);

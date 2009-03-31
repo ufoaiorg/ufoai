@@ -404,8 +404,7 @@ void RADAR_UpdateBaseRadarCoverage_f (void)
 
 	level = B_GetMaxBuildingLevel(base, B_RADAR);
 	RADAR_Initialise(&base->radar, RADAR_BASERANGE, RADAR_BASETRACKINGRANGE, level, qtrue);
-	if (!loading)
-		CP_UpdateMissionVisibleOnGeoscape();
+	CP_UpdateMissionVisibleOnGeoscape();
 }
 
 /**
@@ -415,8 +414,7 @@ void RADAR_UpdateInstallationRadarCoverage (installation_t *installation, const 
 {
 	if (installation && installation->founded && (installation->installationStatus == INSTALLATION_WORKING)) {
 		RADAR_Initialise(&installation->radar, radarRange, trackingRadarRange, RADAR_INSTALLATIONLEVEL, qtrue);
-		if (!loading)
-			CP_UpdateMissionVisibleOnGeoscape();
+		CP_UpdateMissionVisibleOnGeoscape();
 	}
 }
 

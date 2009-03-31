@@ -55,7 +55,6 @@ typedef struct saveSubsystems_s {
 static saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 static int saveSubsystemsAmount;
 static cvar_t* save_compressed;
-qboolean loading = qfalse;
 
 /**
  * @brief Perform actions after loading a game for single player campaign
@@ -215,7 +214,6 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		if (!saveSubsystems[i].load(node)) {
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n",
 					saveSubsystems[i].name);
-			loading = qfalse;
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded.\n", saveSubsystems[i].name);
@@ -223,12 +221,6 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	mxmlDelete(node);
 
 	SAV_GameActionsAfterLoad(error);
-
-	loading = qfalse;
-
-	assert(GAME_IsCampaign());
-
-	CL_Drop();
 
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
