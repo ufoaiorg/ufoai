@@ -3341,6 +3341,66 @@ void CL_DumpTUs_f (void)
 }
 #endif
 
+/**
+ * @brief display pathfinding info to the console. Also useful to
+ * directly use the debugger on some vital pathfinding functions.
+ * Will probably be removed for the release.
+ */
+void CL_DebugPath_f (void)
+{
+	const int actor_size = 1;
+	const pos_t x = mousePos[0];
+	const pos_t y = mousePos[1];
+	const pos_t z = mousePos[2];
+	int dir = 1;
+	int new_z;
+	if (mouseSpace != MS_WORLD)
+		return;
+	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
+		RT_FLOOR(clMap, actor_size, x, y, z),
+		RT_CEILING(clMap, actor_size, x, y, z) );
+	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
+		RT_CONN_PX(clMap, actor_size, x, y, z),		// dir = 0
+		RT_CONN_NX(clMap, actor_size, x, y, z),		// 1
+		RT_CONN_PY(clMap, actor_size, x, y, z),		// 2
+		RT_CONN_NY(clMap, actor_size, x, y, z) );	// 3
+	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
+		RT_CONN_PX_PY(clMap, actor_size, x, y, z),	// dir = 4
+		RT_CONN_NX_NY(clMap, actor_size, x, y, z),	// 5
+		RT_CONN_NX_PY(clMap, actor_size, x, y, z),	// 6
+		RT_CONN_PX_NY(clMap, actor_size, x, y, z) );// 7
+	Com_Printf("stepup ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
+		RT_STEPUP_PX(clMap, actor_size, x, y, z),		// dir = 0
+		RT_STEPUP_NX(clMap, actor_size, x, y, z),		// 1
+		RT_STEPUP_PY(clMap, actor_size, x, y, z),		// 2
+		RT_STEPUP_NY(clMap, actor_size, x, y, z) );	// 3
+
+#if 1
+	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
+	new_z = RT_UpdateConnection(clMap, actor_size, x, y, z, dir);
+	Com_Printf("connections ortho: (PX=%i, NX=%i, PY=%i, NY=%i))\n",
+		RT_CONN_PX(clMap, actor_size, x, y, z),
+		RT_CONN_NX(clMap, actor_size, x, y, z),
+		RT_CONN_PY(clMap, actor_size, x, y, z),
+		RT_CONN_NY(clMap, actor_size, x, y, z) );
+	Com_Printf("connections diago: (PX_PY=%i, NX_NY=%i, NX_PY=%i, PX_NY=%i))\n",
+		RT_CONN_PX_PY(clMap, actor_size, x, y, z),	// dir = 4
+		RT_CONN_NX_NY(clMap, actor_size, x, y, z),	// 5
+		RT_CONN_NX_PY(clMap, actor_size, x, y, z),	// 6
+		RT_CONN_PX_NY(clMap, actor_size, x, y, z) );// 7
+#endif
+#if 0
+	const int new_z = RT_CheckCell(clMap, actor_size, x, y, z);
+	Com_Printf("check returns: Z=%i\n", new_z);
+#endif
+#if 0
+	priorityQueue_t pqueue;
+	PQueueInitialise(&pqueue, 1024);
+	Grid_MoveMark(clMap, actor_size, &clPathMap, mousePos, 0, 1,&pqueue);
+	PQueueFree(&pqueue);
+#endif
+}
+
 void ACTOR_InitStartup (void)
 {
 	cl_autostand = Cvar_Get("cl_autostand","1", CVAR_USERINFO | CVAR_ARCHIVE, "Save accidental TU waste by allowing server to autostand before long walks");

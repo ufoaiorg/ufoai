@@ -105,6 +105,7 @@ void LE_List_f(void);
 void LM_List_f(void);
 void CL_DumpTUs_f(void);
 void CL_DumpMoveMark_f(void);
+void CL_DebugPath_f(void);
 #endif
 void CL_ConditionalMoveCalcForCurrentSelectedActor(void);
 qboolean CL_ActorSelect(le_t *le);
