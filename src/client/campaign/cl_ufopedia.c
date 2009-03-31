@@ -278,19 +278,14 @@ void UP_ItemDescription (const objDef_t *od)
 
 	INV_ItemDescription(od);
 
-	if (!od->tech) {
-		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
-		MN_RegisterText(TEXT_STANDARD, itemText);
-		odAmmo = NULL;
-	/* Write attached ammo or weapon even if item is not researched */
-	} else if (!strcmp(od->type, "ammo")) {
+	if (!strcmp(od->type, "ammo")) {
 		/* We store the current technology in upCurrentTech (needed for changing firemodes while in equip menu) */
 		upCurrentTech = od->tech;
 
 		/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
 		/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
 		for (i = 0; i < od->numWeapons; i++) {
-			if (RS_IsResearched_ptr(od->weapons[i]->tech))
+			if (GAME_ItemIsUseable(od->weapons[i]))
 				up_numresearchedlink++;
 		}
 		if (up_numresearchedlink > 1)
@@ -301,7 +296,7 @@ void UP_ItemDescription (const objDef_t *od)
 			/* We check that upResearchedLink exists for this ammo (in case we switched from an ammo or a weapon with higher value)*/
 			if (upResearchedLink >= od->numWeapons) {
 				for (upResearchedLink = 0; upResearchedLink < od->numWeapons; upResearchedLink++) {
-					if (RS_IsResearched_ptr(od->weapons[upResearchedLink]->tech))
+					if (GAME_ItemIsUseable(od->weapons[upResearchedLink]))
 						break;
 					upResearchedLink++;
 				}
@@ -340,7 +335,7 @@ void UP_ItemDescription (const objDef_t *od)
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo */
 		/* up_numresearchedlink contains the number of researched ammos useable with this weapon */
 		for (i = 0; i < od->numAmmos; i++) {
-			if (RS_IsResearched_ptr(od->ammos[i]->tech))
+			if (GAME_ItemIsUseable(od->ammos[i]))
 				up_numresearchedlink++;
 		}
 		if (up_numresearchedlink > 1)
@@ -351,7 +346,7 @@ void UP_ItemDescription (const objDef_t *od)
 			/* We check that upResearchedLink exists for this weapon (in case we switched from an ammo or a weapon with higher value)*/
 			if (upResearchedLink >= od->numAmmos) {
 				for (upResearchedLink = 0; upResearchedLink < od->numAmmos; upResearchedLink++) {
-					if (RS_IsResearched_ptr(od->ammos[upResearchedLink]->tech))
+					if (GAME_ItemIsUseable(od->ammos[upResearchedLink]))
 						break;
 					upResearchedLink++;
 				}
@@ -376,7 +371,7 @@ void UP_ItemDescription (const objDef_t *od)
 		odAmmo = NULL;
 
 	/* set description text if item as been researched or one of its ammo/weapon has been researched */
-	if (RS_IsResearched_ptr(od->tech) || up_numresearchedlink > 0) {
+	if (GAME_ItemIsUseable(od) || up_numresearchedlink > 0) {
 		*itemText = '\0';
 		if (!strcmp(od->type, "armour")) {
 			if (strcmp(MN_GetActiveMenuName(), "equipment")) {
