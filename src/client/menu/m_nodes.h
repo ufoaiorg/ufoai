@@ -54,7 +54,6 @@ typedef struct excludeRect_s {
 
 /**
  * @brief menu node
- * @todo delete data* when it's possible
  */
 typedef struct menuNode_s {
 	/* common identification */
