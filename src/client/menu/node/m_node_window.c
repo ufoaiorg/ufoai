@@ -254,6 +254,8 @@ static void MN_WindowNodeLoading (menuNode_t *node)
  */
 static void MN_WindowNodeLoaded (menuNode_t *node)
 {
+	static const char* closeCommand = "mn_close <path:menu>;";
+
 	/* if it need, construct the drag button */
 	if (node->u.window.dragButton) {
 		menuNode_t *control = MN_AllocNode("controls");
@@ -273,7 +275,6 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 	if (node->u.window.closeButton) {
 		menuNode_t *button = MN_AllocNode("pic");
 		const int positionFromRight = CONTROLS_PADDING;
-		const char* command = MN_AllocString(va("mn_close %s;", node->name), 0);
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->menu = node;
 		button->image = "menu/close";
@@ -283,7 +284,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		button->pos[0] = node->size[0] - positionFromRight - button->size[0];
 		button->pos[1] = CONTROLS_PADDING;
 		button->tooltip = _("Close the window");
-		MN_PoolAllocAction(&button->onClick, EA_CMD, command);
+		button->onClick = MN_AllocCommandAction(closeCommand);
 		MN_AppendNode(node, button);
 	}
 

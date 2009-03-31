@@ -376,6 +376,20 @@ void MN_FreeStringProperty (void* pointer)
 }
 
 /**
+ * @brief Allocate and initialize a command action
+ * @param[in] command A command for the action
+ * @return An initialised action
+ */
+menuAction_t* MN_AllocCommandAction (char *command)
+{
+	menuAction_t* action = &mn.menuActions[mn.numActions++];
+	memset(action, 0, sizeof(*action));
+	action->type.op = EA_CMD;
+	action->data = command;
+	return action;
+}
+
+/**
  * @brief Set a new action to a @c menuAction_t pointer
  * @param[in] type Only @c EA_CMD is supported
  * @param[in] data The data for this action - in case of @c EA_CMD this is the commandline
