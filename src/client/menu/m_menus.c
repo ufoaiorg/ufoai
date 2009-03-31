@@ -304,6 +304,7 @@ static void MN_PushNoHud_f (void)
 /**
  * @brief Console function to push a menu, without deleting its copies
  * @sa MN_PushMenu
+ * @todo It's technically not possible to use multi instance menu. Is this fuction is realy need? Ufopedia dont need more than one instance?
  */
 static void MN_PushCopyMenu_f (void)
 {
