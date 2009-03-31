@@ -167,9 +167,9 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	Com_Printf("Loading savegame\n"
 			"...version: %i\n"
 			"...game version: %s\n"
-			"...xml Size: %ld, compressed? %c\n"
-			, header.version, header.gameVersion, header.xml_size, header.compressed?'y':'n');
-	len = header.xml_size+50;
+			"...xml Size: %ld, compressed? %c\n",
+			header.version, header.gameVersion, header.xml_size, header.compressed ? 'y' : 'n');
+	len = header.xml_size + 50;
 	buf = (byte *) Mem_PoolAlloc(sizeof(byte)*len, cl_genericPool, 0);
 
 	if (header.compressed) {
@@ -186,7 +186,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		top_node = mxmlLoadString(NULL, (char*)buf , mxml_ufo_type_cb);
 		if (!top_node) {
 			Mem_Free(buf);
-			Com_Printf("Error: Failure in Loading the xml Data!");
+			Com_Printf("Error: Failure in loading the xml data!\n");
 			return qfalse;
 		}
 	} else {
@@ -195,7 +195,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 		Mem_Free(cbuf);
 		if (!top_node) {
 			Mem_Free(buf);
-			Com_Printf("Error: Failure in Loading the xml Data!");
+			Com_Printf("Error: Failure in loading the xml data!\n");
 			return qfalse;
 		}
 	}
@@ -204,7 +204,7 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	GAME_RestartMode(GAME_CAMPAIGN);
 	node = mxml_GetNode(top_node, "savegame");
 	if (!node) {
-		Com_Printf("Error: Failure in Loading the xml Data! (savegame node not found)");
+		Com_Printf("Error: Failure in loading the xml data! (savegame node not found)\n");
 		Mem_Free(buf);
 		return qfalse;
 	}
@@ -213,7 +213,8 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	for (i = 0; i < saveSubsystemsAmount; i++) {
 		Com_Printf("...Running subsystem '%s'\n", saveSubsystems[i].name);
 		if (!saveSubsystems[i].load(node)) {
-			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
+			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n",
+					saveSubsystems[i].name);
 			loading = qfalse;
 			return qfalse;
 		} else
@@ -229,7 +230,8 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 
 	CL_Drop();
 
-	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n", filename, header.compressed?"compressed":"");
+	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
+			filename, header.compressed ? "compressed" : "");
 	Mem_Free(buf);
 	return qtrue;
 }
