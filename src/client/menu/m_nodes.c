@@ -44,7 +44,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "node/m_node_item.h"
 #include "node/m_node_linechart.h"
 #include "node/m_node_map.h"
-#include "node/m_node_airfightmap.h"
 #include "node/m_node_model.h"
 #include "node/m_node_optionlist.h"
 #include "node/m_node_panel.h"
@@ -76,7 +75,6 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterAbstractOptionNode,
 	MN_RegisterAbstractScrollbarNode,
 	MN_RegisterAbstractValueNode,
-	MN_RegisterAirfightMapNode,
 	MN_RegisterBarNode,
 	MN_RegisterBaseLayoutNode,
 	MN_RegisterBaseMapNode,

@@ -1171,64 +1171,6 @@ static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const
 	smoothRotation = qtrue;
 }
 
-
-/**
- * @brief Activates the "combat zoom" interception framework.
- */
-void MAP_TurnCombatZoomOn (void)
-{
-	ccs.combatZoomOn = qtrue;
-}
-
-/**
- * @brief Sets the UFO that "combat zoom" should focus on.
- * @param[in] combatZoomedUFO  A pointer to the ufo for "combat zoom" should focus on.
- */
-void MAP_SetCombatZoomedUFO (aircraft_t *combatZoomedUFO)
-{
-	ccs.combatZoomedUFO = combatZoomedUFO;
-	ccs.combatZoomLevel = COMBAT_ZOOM_FULL;
-	CL_EnsureValidGameLapseForCombatZoom();
-	MAP_SmoothlyMoveToGeoscapePoint(combatZoomedUFO->pos, 40.0f, 0.06f);
-}
-
-/**
- * @brief Deactivates the "combat zoom" interception framework.
- * @sa MAP_ResetAction
- */
-void MAP_TurnCombatZoomOff (void)
-{
-	if (ccs.combatZoomedUFO)
-		MN_PopMenu(qfalse);
-}
-
-/**
- * @brief Performs the steps necessary to exit the "combat zoom" interception
- * framework once it has been deactivated.
- */
-void MAP_CombatZoomExit_f (void)
-{
-	if (ccs.combatZoomedUFO) {
-		MAP_SetSmoothZoom(cl_mapzoommax->value - 0.5f, qtrue);
-		ccs.combatZoomOn = qfalse;
-		ccs.combatZoomedUFO = NULL;
-		CL_EnsureValidGameLapseForGeoscape();
-	}
-}
-
-/**
- * @brief Toggles the level of "combat zoom" in the interception framework.  This will cause the zoom to
- * move between close up combat (if in combat range) and a half zoom.
- */
-static void MAP_ToggleCombatZoomLevel_f (void)
-{
-	if (ccs.combatZoomLevel == COMBAT_ZOOM_FULL)
-		ccs.combatZoomLevel = COMBAT_ZOOM_HALF;
-	else
-		ccs.combatZoomLevel = COMBAT_ZOOM_FULL;
-}
-
-
 /**
  * @brief smooth rotation of the 3D geoscape
  * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to smoothFinalGlobeAngle
@@ -1242,7 +1184,6 @@ static void MAP3D_SmoothRotate (void)
 	const float epsilon = 0.1f;
 	const float epsilonZoom = 0.01f;
 
-	static float speedOffset = 0.0f;
 	static float rotationSpeed = 0.0f;
 
 	diff_zoom = smoothFinalZoom - ccs.zoom;
@@ -1250,17 +1191,12 @@ static void MAP3D_SmoothRotate (void)
 	VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
 	diff_angle = VectorLength(diff);
 
-	if (smoothNewClick) {
-		if (ccs.combatZoomOn)
-			speedOffset = 0.0f;
-		else
-			speedOffset = rotationSpeed;
+	if (smoothNewClick)
 		smoothNewClick = qfalse;
-	}
 
 	if (smoothDeltaLength > smoothDeltaZoom) {
 		if (diff_angle > epsilon) {
-			rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) + speedOffset * diff_angle / smoothDeltaLength;
+			rotationSpeed = smoothDeltaLength * sin(3.05f * diff_angle / smoothDeltaLength) * diff_angle / smoothDeltaLength;
 			VectorScale(diff, smoothAcceleration / diff_angle * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
 			ccs.zoom = ccs.zoom + smoothAcceleration * diff_zoom / diff_angle * rotationSpeed;
@@ -1268,7 +1204,7 @@ static void MAP3D_SmoothRotate (void)
 		}
 	} else {
 		if (fabs(diff_zoom) > epsilonZoom) {
-			rotationSpeed = smoothDeltaZoom * sin(3.05f * (diff_zoom / smoothDeltaZoom)) + fabs(speedOffset) * diff_zoom / smoothDeltaZoom;
+			rotationSpeed = smoothDeltaZoom * sin(3.05f * (diff_zoom / smoothDeltaZoom)) * diff_zoom / smoothDeltaZoom;
 			VectorScale(diff, smoothAcceleration * diff_angle / fabs(diff_zoom) * rotationSpeed, diff);
 			VectorAdd(ccs.angles, diff, ccs.angles);
 			ccs.zoom = ccs.zoom + smoothAcceleration * rotationSpeed;
@@ -1279,7 +1215,6 @@ static void MAP3D_SmoothRotate (void)
 	/* if we reach this point, that means that movement is over */
 	VectorCopy(smoothFinalGlobeAngle, ccs.angles);
 	smoothRotation = qfalse;
-	speedOffset = 0.0f;
 	ccs.zoom = smoothFinalZoom;
 }
 
@@ -1571,23 +1506,10 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	qboolean showXVI = qfalse;
 	qboolean oneUFOVisible = qfalse;
 	static char buffer[512] = "";
-	float closestUFODistance = -1.0f;
-	vec3_t *closestInterceptorPos = NULL;
-	int closestInterceptorStatus = -1;
 	float closestInterceptorDistance = -1.0f;
-	float weaponZoomRange = 0;
-	static qboolean aircraftInWeaponsRange = qfalse;
-	aircraft_t *closestUFO = NULL;
 	int maxInterpolationPoints;
-	vec3_t combatZoomAttackingAircraftPos[MAX_AIRCRAFT];
-	int combatZoomNumAttackingAircraft = 0;
-	vec3_t combatZoomAircraftInCombatPos[MAX_AIRCRAFT];
-	int combatZoomNumCombatAircraft = 0;
 
 	assert(node);
-
-	if (ccs.zoom < 35.0f && ccs.combatZoomedUFO)
-		MN_PushMenu("airfight", NULL);
 
 	/* font color on geoscape */
 	R_Color(node->color);
@@ -1633,25 +1555,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		/* draw all aircraft of base */
 		for (aircraftIdx = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
 			aircraft_t *aircraft = &base->aircraft[aircraftIdx];
-			if (AIR_IsAircraftOnGeoscape(aircraft)) {
-				float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
-
+			if (AIR_IsAircraftOnGeoscape(aircraft))
 				MAP_DrawMapOnePhalanxAircraft(node, aircraft, oneUFOVisible);
-
-				/** @todo Remove me: this shouldn't be in this function */
-				if (ccs.combatZoomedUFO && aircraft->aircraftTarget == ccs.combatZoomedUFO) {
-					float distance = MAP_GetDistance(aircraft->pos, ccs.combatZoomedUFO->pos);
-					VectorCopy(aircraft->pos, combatZoomAttackingAircraftPos[combatZoomNumAttackingAircraft]);
-					combatZoomNumAttackingAircraft++;
-					if (distance < maxRange && weaponZoomRange < maxRange)
-						weaponZoomRange = maxRange;
-					if ((distance < closestInterceptorDistance || !closestInterceptorPos) && distance > maxRange) {
-						closestInterceptorPos = &aircraft->pos;
-						closestInterceptorDistance = distance;
-						closestInterceptorStatus = aircraft->status;
-					}
-				}
-			}
 		}
 	}
 
@@ -1674,74 +1579,9 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		{
 			const float angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 
-			if (ccs.combatZoomOn && !ccs.combatZoomedUFO) {
-				if (closestUFODistance > MAP_GetDistance(ccs.mapPos, aircraft->pos) || closestUFODistance == -1.0f) {
-					closestUFODistance = MAP_GetDistance(ccs.mapPos, aircraft->pos);
-					closestUFO = aircraft;
-				}
-			}
-
-			if (ccs.combatZoomedUFO && ccs.combatZoomOn) {
-				if (ccs.combatZoomedUFO == aircraft) {
-					float maxRange = AIR_GetMaxAircraftWeaponRange(aircraft->weapons, aircraft->maxWeapons);
-					if (weaponZoomRange != 0) {
-						int attAirIdx;
-
-						if (!aircraftInWeaponsRange) {
-							CL_SetGameTime(1);
-							aircraftInWeaponsRange = qtrue;
-						}
-
-						if (weaponZoomRange < maxRange)
-							weaponZoomRange = maxRange;
-
-						for (attAirIdx = 0; attAirIdx < combatZoomNumAttackingAircraft; attAirIdx++) {
-							float distance = MAP_GetDistance(combatZoomAttackingAircraftPos[attAirIdx], ccs.combatZoomedUFO->pos);
-							if (distance <= weaponZoomRange) {
-								VectorCopy(combatZoomAttackingAircraftPos[attAirIdx], combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
-								combatZoomNumCombatAircraft++;
-							}
-						}
-
-					} else {
-						aircraftInWeaponsRange = qfalse;
-					}
-#if 0
-					if (aircraftInWeaponsRange && ccs.combatZoomLevel == COMBAT_ZOOM_FULL) {
-						vec3_t centroid = {0,0,0};
-						int combatAirIdx;
-
-						VectorCopy(ccs.combatZoomedUFO->pos, combatZoomAircraftInCombatPos[combatZoomNumCombatAircraft]);
-						combatZoomNumCombatAircraft++;
-
-						/* finds the centroid of all aircraft in combat range who are targeting the zoomed ufo
-						 * and uses this as the point on which to center. */
-						for (combatAirIdx = 0; combatAirIdx < combatZoomNumCombatAircraft; combatAirIdx++) {
-							VectorAdd(combatZoomAircraftInCombatPos[combatAirIdx], centroid, centroid);
-						}
-						if (combatAirIdx > 1) {
-							VectorScale(centroid, 1.0/(float)combatAirIdx, centroid);
-							MAP_SmoothlyMoveToGeoscapePoint(centroid, MAP_GetZoomFromDistance(node, weaponZoomRange * 0.75), 0.15);
-						} else {
-							MAP_SmoothlyMoveToGeoscapePoint(ccs.combatZoomedUFO->pos, MAP_GetZoomFromDistance(node, weaponZoomRange * 0.75), 0.15);
-						}
-					}
-					else {
-						if (closestInterceptorStatus != AIR_RETURNING && closestInterceptorPos && (ccs.combatZoomLevel == COMBAT_ZOOM_FULL || (ccs.combatZoomLevel == COMBAT_ZOOM_HALF && closestInterceptorDistance >= weaponZoomRange + 2))) {
-							vec3_t midpoint = {0,0,0};
-							VectorMidpoint(ccs.combatZoomedUFO->pos, *closestInterceptorPos, midpoint);
-							MAP_SmoothlyMoveToGeoscapePoint(midpoint, MAP_GetZoomFromDistance(node, closestInterceptorDistance), 0.4);
-						} else {
-							MAP_SmoothlyMoveToGeoscapePoint(ccs.combatZoomedUFO->pos, cl_mapzoommax->value + 1, 0.15);
-						}
-					}
-#endif
-				}
-			}
-
-			if (cl_3dmap->integer && !ccs.combatZoomedUFO)
+			if (cl_3dmap->integer)
 				MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, white);
-			if (aircraft == selectedUFO && !ccs.combatZoomedUFO) {
+			if (aircraft == selectedUFO) {
 				if (cl_3dmap->integer)
 					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow);
 				else
@@ -1758,13 +1598,13 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		maxInterpolationPoints = 0;
 
 	/** draws projectiles
-	 * @todo you should only draw projectile comming from base here: projectiles fired by missiles
+	 * @todo you should only draw projectile coming from base here: projectiles fired by missiles
 	 * are drawn only in airfight menu */
 	for (idx = 0; idx < ccs.numProjectiles; idx++) {
 		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		vec3_t drawPos = {0, 0, 0};
 
-		if (projectile->attackingAircraft && !ccs.combatZoomedUFO)
+		if (projectile->attackingAircraft)
 			continue;
 
 		if (projectile->hasMoved) {
@@ -1792,12 +1632,6 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 			MAP_DrawLaser(node, vec3_origin, vec3_origin);
 		else
 			MAP_Draw3DMarkerIfVisible(node, drawPos, projectile->angle, projectile->aircraftItem->model, 0);
-	}
-
-	if (ccs.combatZoomOn && !ccs.combatZoomedUFO && closestUFO) {
-		MAP_SetCombatZoomedUFO(closestUFO);
-	} else if (ccs.combatZoomOn && !ccs.combatZoomedUFO && !closestUFO) {
-		ccs.combatZoomOn = qfalse;
 	}
 
 	showXVI = CP_IsXVIResearched() ? qtrue : qfalse;
@@ -1978,9 +1812,6 @@ void MAP_NotifyUFORemoved (const aircraft_t* ufo, qboolean destroyed)
 {
 	if (!selectedUFO)
 		return;
-
-	if (ccs.combatZoomedUFO == ufo)
-		MAP_TurnCombatZoomOff();
 
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUFO == ufo)
@@ -2460,9 +2291,6 @@ void MAP_NotifyUFODisappear (const aircraft_t* ufo)
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUFO == ufo)
 		MAP_ResetAction();
-
-	if (ccs.combatZoomedUFO == ufo)
-		MAP_TurnCombatZoomOff();
 }
 
 /**
@@ -2477,9 +2305,6 @@ void MAP_Zoom_f (void)
 		Com_Printf("Usage: %s <in|out>\n", Cmd_Argv(0));
 		return;
 	}
-
-	if (ccs.combatZoomOn && ccs.combatZoomedUFO)
-		return;
 
 	cmd = Cmd_Argv(1);
 	switch (cmd[0]) {
@@ -2710,7 +2535,6 @@ void MAP_InitStartup (void)
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);
 	Cmd_AddCommand("map_overlay", MAP_SetOverlay_f, "Set the geoscape overlay");
 	Cmd_AddCommand("map_deactivateoverlay", MAP_DeactivateOverlay_f, "Deactivate overlay");
-	Cmd_AddCommand("togglecombatzoomlevel", MAP_ToggleCombatZoomLevel_f, _("Toggle the combat zoom level (full zoom or half zoom)."));
 
 	cl_3dmap = Cvar_Get("cl_3dmap", "1", CVAR_ARCHIVE, "3D geoscape or flat geoscape");
 	cl_mapzoommax = Cvar_Get("cl_mapzoommax", "6.0", CVAR_ARCHIVE, "Maximum geoscape zooming value");

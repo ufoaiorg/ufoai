@@ -350,11 +350,6 @@ typedef struct market_s {
 	double currentEvolution[MAX_OBJDEFS];	/**< evolution of the market */
 } market_t;
 
-typedef enum {
-	COMBAT_ZOOM_FULL,	/**< Zoomed in at max weapons range */
-	COMBAT_ZOOM_HALF	/**< Zoomed out, but still tracking the combat zoomed ufo */
-} combatZoomLevel_t;
-
 /** possible geoscape actions */
 typedef enum mapAction_s {
 	MA_NONE,
@@ -404,11 +399,6 @@ typedef struct ccs_s {
 
 	mission_t *selectedMission;			/**< Currently selected mission on geoscape */
 	aircraft_t *interceptAircraft;		/**< selected aircraft for interceptions */
-
-	/* UFO to follow while in combat zoom */
-	aircraft_t *combatZoomedUFO;
-	qboolean combatZoomOn;
-	combatZoomLevel_t combatZoomLevel;
 
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */

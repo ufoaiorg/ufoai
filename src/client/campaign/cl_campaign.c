@@ -33,7 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../renderer/r_overlay.h"
 #include "cl_campaign.h"
 #include "cl_mapfightequip.h"
-#include "cl_airfightmap.h"
 #include "cp_hospital.h"
 #include "cp_hospital_callbacks.h"
 #include "cp_base_callbacks.h"
@@ -1941,9 +1940,6 @@ static const cmdList_t game_commands[] = {
 	{"update_base_radar_coverage", RADAR_UpdateBaseRadarCoverage_f, "Update base radar coverage"},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 	{"stats_update", CL_StatsUpdate_f, NULL},
-	{"combatzoom_exit", MAP_CombatZoomExit_f, "Exit combat zoom mode."},
-	{"airfightmap_init", AFM_Init_f, "Exit air fight map mode."},
-	{"airfightmap_exit", AFM_Exit_f, "Exit air fight map mode."},
 	{"game_go", CP_StartSelectedMission, NULL},
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},

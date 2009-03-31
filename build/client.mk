@@ -52,7 +52,6 @@ CLIENT_SRCS = \
 	client/campaign/cl_aliencont.c \
 	client/campaign/cl_aliencont_callbacks.c \
 	client/campaign/cl_airfight.c \
-	client/campaign/cl_airfightmap.c \
 	client/campaign/cl_campaign.c \
 	client/campaign/cl_event.c \
 	client/campaign/cl_employee.c \
@@ -113,7 +112,6 @@ CLIENT_SRCS = \
 	client/menu/node/m_node_abstractvalue.c \
 	client/menu/node/m_node_abstractoption.c \
 	client/menu/node/m_node_abstractscrollbar.c \
-	client/menu/node/m_node_airfightmap.c \
 	client/menu/node/m_node_bar.c \
 	client/menu/node/m_node_base.c \
 	client/menu/node/m_node_button.c \

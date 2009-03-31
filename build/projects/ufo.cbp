@@ -161,7 +161,6 @@
 		<Unit filename="..\..\base\ufos\menu_aircraft_info.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft_pilots.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aircraft_soldiers.ufo" />
-		<Unit filename="..\..\base\ufos\menu_airfight.ufo" />
 		<Unit filename="..\..\base\ufos\menu_aliencont.ufo" />
 		<Unit filename="..\..\base\ufos\menu_althud.ufo" />
 		<Unit filename="..\..\base\ufos\menu_basedefence.ufo" />
@@ -245,10 +244,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_airfight.h" />
-		<Unit filename="..\..\src\client\campaign\cl_airfightmap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\campaign\cl_airfightmap.h" />
 		<Unit filename="..\..\src\client\campaign\cl_alienbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -652,10 +647,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\menu\node\m_node_abstractvalue.h" />
-		<Unit filename="..\..\src\client\menu\node\m_node_airfightmap.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\menu\node\m_node_airfightmap.h" />
 		<Unit filename="..\..\src\client\menu\node\m_node_bar.c">
 			<Option compilerVar="CC" />
 		</Unit>
