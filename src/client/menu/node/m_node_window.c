@@ -254,7 +254,7 @@ static void MN_WindowNodeLoading (menuNode_t *node)
  */
 static void MN_WindowNodeLoaded (menuNode_t *node)
 {
-	static const char* closeCommand = "mn_close <path:menu>;";
+	static char* closeCommand = "mn_close <path:menu>;";
 
 	/* if it need, construct the drag button */
 	if (node->u.window.dragButton) {
