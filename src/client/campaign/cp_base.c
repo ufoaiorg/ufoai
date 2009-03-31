@@ -2091,12 +2091,11 @@ void B_NewBases (void)
 
 	/* base setup */
 	for (i = 0; i < MAX_BASES; i++) {
-		/*
 		base_t *base = B_GetBaseByIDX(i);
 		if (i == 0)
 			Q_strncpyz(base->name, _("Home"), sizeof(base->name));
 		else
-			Com_sprintf(base->name, sizeof(base->name), _("Base #%i"), i);*/
+			Com_sprintf(base->name, sizeof(base->name), _("Base #%i"), i);
 	}
 }
 
