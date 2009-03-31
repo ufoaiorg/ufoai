@@ -409,31 +409,31 @@ void MN_CloseMenu (const char* name)
 void MN_PopMenu (qboolean all)
 {
 	menuNode_t *oldfirst = mn.menuStack[0];
-	assert(mn.menuStackPos);
 
 	if (all) {
 		MN_CloseAllMenu();
 	} else {
 		menuNode_t *mainMenu = mn.menuStack[mn.menuStackPos - 1];
+		assert(mn.menuStackPos);
 		if (mainMenu->u.window.parent)
 			mainMenu = mainMenu->u.window.parent;
 		MN_CloseMenuByRef(mainMenu);
-	}
 
-	if (!all && mn.menuStackPos == 0) {
-		/* mn_main contains the menu that is the very first menu and should be
-		 * pushed back onto the stack (otherwise there would be no menu at all
-		 * right now) */
-		if (!strcmp(oldfirst->name, mn_main->string)) {
-			if (mn_active->string[0] != '\0')
-				MN_PushMenu(mn_active->string, NULL);
-			if (!mn.menuStackPos)
-				MN_PushMenu(mn_main->string, NULL);
-		} else {
-			if (mn_main->string[0] != '\0')
-				MN_PushMenu(mn_main->string, NULL);
-			if (!mn.menuStackPos)
-				MN_PushMenu(mn_active->string, NULL);
+		if (mn.menuStackPos == 0) {
+			/* mn_main contains the menu that is the very first menu and should be
+			 * pushed back onto the stack (otherwise there would be no menu at all
+			 * right now) */
+			if (!strcmp(oldfirst->name, mn_main->string)) {
+				if (mn_active->string[0] != '\0')
+					MN_PushMenu(mn_active->string, NULL);
+				if (!mn.menuStackPos)
+					MN_PushMenu(mn_main->string, NULL);
+			} else {
+				if (mn_main->string[0] != '\0')
+					MN_PushMenu(mn_main->string, NULL);
+				if (!mn.menuStackPos)
+					MN_PushMenu(mn_active->string, NULL);
+			}
 		}
 	}
 
