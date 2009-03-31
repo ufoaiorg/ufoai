@@ -173,7 +173,7 @@ menu basesummary
 		lineheight		16
 		tabwidth	50
 		wheel
-		scrollbar	yes
+		scrollbar	true
 		rows		"23"
 		textid			TEXT_STANDARD
 	}

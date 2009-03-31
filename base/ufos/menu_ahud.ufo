@@ -24,7 +24,7 @@ menu radarmenu {
 	{
 		pos	"0 0"
 		size "1024 768"
-		blend	yes
+		blend	true
 	}
 }
 

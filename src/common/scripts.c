@@ -208,7 +208,6 @@ void* Com_AlignPtr (void *memory, valueTypes_t type)
  * @return A resultStatus_t value
  * @note instead of , this function separate error message and write byte result
  * @todo better doxygen documentation
- * @todo improve check (remove atoi and atof, check 'true' value, but 'false' too)
  */
 int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size, size_t *writedByte)
 {
@@ -243,10 +242,14 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_BOOL:
-		if (!strncmp(token, "true", 4) || *token == '1')
+		if (!strcmp(token, "true") || *token == '1')
 			*b = qtrue;
-		else
+		else if (!strcmp(token, "false") || *token == '0')
 			*b = qfalse;
+		else {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal bool statement '%s'", token);
+			return RESULT_ERROR;
+		}
 		*writedByte = ALIGN_NOTHING(sizeof(qboolean));
 		break;
 
@@ -288,7 +291,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_INT:
-		*(int *) b = atoi(token);
+		if (sscanf(token, "%i", &((int *) b)[0]) != 1) {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal int statement '%s'", token);
+			return RESULT_ERROR;
+		}
 		*writedByte = ALIGN_NOTHING(sizeof(int));
 		break;
 
@@ -301,7 +307,10 @@ int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, s
 		break;
 
 	case V_FLOAT:
-		*(float *) b = atof(token);
+		if (sscanf(token, "%f", &((float *) b)[0]) != 1) {
+			snprintf(parseErrorMessage, sizeof(parseErrorMessage), "Illegal float statement '%s'", token);
+			return RESULT_ERROR;
+		}
 		*writedByte = ALIGN_NOTHING(sizeof(float));
 		break;
 
