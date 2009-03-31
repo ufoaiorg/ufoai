@@ -422,6 +422,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
  * @param[in] recursive True if we also must clone subnodes
  * @param[in] newMenu Menu where the nodes must be add (this function only link node into menu, note menu into the new node)
  * @todo exclude rect is not safe cloned.
+ * @todo actions are not cloned. It is be a problem if we use add/remove listener into a cloned node.
  */
 menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean recursive)
 {
