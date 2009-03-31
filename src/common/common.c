@@ -232,15 +232,13 @@ void Com_Error (int code, const char *fmt, ...)
 		Cvar_Set("mn_afterdrop", "popup");
 		CL_Drop();
 		recursive = qfalse;
-		longjmp(abortframe, -1);
-		break;
+		Com_Drop();
 	case ERR_DROP:
 		Com_Printf("********************\nERROR: %s\n********************\n", msg);
 		SV_Shutdown("Server crashed.", qfalse);
 		CL_Drop();
 		recursive = qfalse;
-		longjmp(abortframe, -1);
-		break;
+		Com_Drop();
 	default:
 		Com_Printf("%s\n", msg);
 		SV_Shutdown("Server fatal crashed: %s", qfalse);
@@ -260,8 +258,6 @@ void Com_Error (int code, const char *fmt, ...)
 
 void Com_Drop (void)
 {
-	SV_Shutdown("Server disconnected.", qfalse);
-	CL_Drop();
 	longjmp(abortframe, -1);
 }
 

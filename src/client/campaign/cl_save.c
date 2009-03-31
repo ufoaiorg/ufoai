@@ -225,6 +225,8 @@ static qboolean SAV_GameLoad (const char *file, char **error)
 	Com_Printf("File '%s' successfully loaded from %s xml savegame.\n",
 			filename, header.compressed ? "compressed" : "");
 	Mem_Free(buf);
+
+	MN_PushMenu("map", NULL);
 	return qtrue;
 }
 

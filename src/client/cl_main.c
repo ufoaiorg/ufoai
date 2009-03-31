@@ -174,36 +174,12 @@ void CL_Drop (void)
 	/* drop loading plaque */
 	SCR_EndLoadingPlaque();
 
-	if (MN_GetActiveMenu() != NULL)
-		MN_PopMenu(qtrue);
-
-	/* make sure that we are in the correct menus in singleplayer after
-	 * dropping the game due to a failure */
-	if (GAME_IsCampaign()) {
-		/** @todo maybe create a savegame? */
-		Cvar_Set("mn_main", "campaign_main");
-		Cvar_Set("mn_active", "map");
-		MN_PushMenu("map", NULL);
-	} else {
-		Cvar_Set("mn_main", "main");
-		Cvar_Set("mn_active", "");
-		MN_PushMenu("main", NULL);
-	}
-
-	if (mn_afterdrop->string[0] != '\0') {
-		MN_PushMenu(mn_afterdrop->string, NULL);
-		Cvar_Set("mn_afterdrop", "");
-	}
-	if (mn_main_afterdrop->string[0] != '\0') {
-		Cvar_Set("mn_main", mn_main_afterdrop->string);
-		Cvar_Set("mn_main_afterdrop", "");
-	}
-
 	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;
 
-	if (!GAME_IsCampaign())
-		GAME_SetMode(GAME_NONE);
+	MN_PopMenu(qtrue);
+	GAME_Drop();
+
 	CL_Disconnect();
 }
 

@@ -329,10 +329,12 @@ void CP_EndCampaign (qboolean won)
 {
 	GAME_SetMode(GAME_NONE);
 
+	MN_PopMenu(qtrue);
 	if (won)
-		Cvar_Set("mn_afterdrop", "endgame");
+		MN_PushMenu("endgame", NULL);
 	else
-		Cvar_Set("mn_afterdrop", "lostgame");
+		MN_PushMenu("lostgame", NULL);
+
 	Com_Drop();
 }
 
@@ -390,9 +392,8 @@ void CP_CheckLostCondition (qboolean lost, const mission_t* mission, int civilia
 		}
 	}
 
-	if (endCampaign) {
+	if (endCampaign)
 		CP_EndCampaign(qfalse);
-	}
 }
 
 /* Initial fraction of the population in the country where a mission has been lost / won */
@@ -2111,10 +2112,7 @@ void CP_CampaignExit (void)
 	Mem_DeletePool(cl_campaignPool);
 
 	if (GAME_CP_IsRunning()) {
-		/**@todo perhaps there is a better way to do this, don't call them on their own */
-		MAP_DeactivateOverlay("radar");
-		MAP_DeactivateOverlay("nations");
-		MAP_DeactivateOverlay("xvi");
+		r_geoscape_overlay->integer = 0;
 		/* singleplayer commands are no longer available */
 		Com_DPrintf(DEBUG_CLIENT, "Remove game commands\n");
 		CP_RemoveCampaignCommands();

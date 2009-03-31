@@ -33,8 +33,6 @@ menuGlobal_t mn;
 cvar_t *mn_main;
 cvar_t *mn_sequence;
 cvar_t *mn_active;
-cvar_t *mn_afterdrop;
-cvar_t *mn_main_afterdrop;
 cvar_t *mn_hud;
 struct memPool_s *mn_dynStringPool;
 
@@ -240,8 +238,6 @@ void MN_Init (void)
 	mn_main = Cvar_Get("mn_main", "main", 0, "This is the main menu id that is at the very first menu stack - also see mn_active");
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
 	mn_active = Cvar_Get("mn_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_main");
-	mn_afterdrop = Cvar_Get("mn_afterdrop", "", 0, "The menu that should be pushed after the drop function was called");
-	mn_main_afterdrop = Cvar_Get("mn_main_afterdrop", "", 0, "The main menu that should be returned to after the drop function was called - will be the new mn_main value then");
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "This is the current selected hud");
 
 	/* add menu commands */

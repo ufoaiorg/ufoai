@@ -50,6 +50,7 @@ int GAME_GetCurrentTeam(void);
 equipDef_t *GAME_GetEquipmentDefinition(void);
 void GAME_CharacterCvars(const character_t *chr);
 qboolean GAME_TeamIsKnown(const teamDef_t *teamDef);
+void GAME_Drop(void);
 
 #include "cl_game_campaign.h"
 #include "cl_game_skirmish.h"

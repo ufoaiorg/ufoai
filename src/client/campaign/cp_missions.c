@@ -94,7 +94,7 @@ void CP_StartMissionMap (mission_t* mission)
 
 	/* prepare */
 	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main_afterdrop", "singleplayermission");
+	Cvar_Set("mn_main", "singleplayermission");
 
 	assert(mission->mapDef->map);
 

@@ -53,12 +53,14 @@ typedef struct gameTypeList_s {
 	void (*charactercvars)(const character_t *chr);
 	/** checks whether the given team is known in the particular gamemode */
 	qboolean (*teamisknown)(const teamDef_t *teamDef);
+	/** called on errors */
+	void (*drop)(void);
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, GAME_MP_CharacterCvars, NULL},
-	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, GAME_SK_CharacterCvars, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, GAME_MP_CharacterCvars, NULL, NULL},
+	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, GAME_SK_CharacterCvars, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -386,6 +388,27 @@ static void GAME_Abort_f (void)
 {
 	/* aborting means letting the aliens win */
 	Cbuf_AddText(va("sv win %i\n", TEAM_ALIEN));
+}
+
+void GAME_Drop (void)
+{
+	const gameTypeList_t *list = gameTypeList;
+
+	while (list->name) {
+		if (list->gametype == cls.gametype) {
+			if (!list->drop) {
+				GAME_SetMode(GAME_NONE);
+				Cvar_Set("mn_main", "main");
+				Cvar_Set("mn_active", "");
+				MN_PushMenu("main", NULL);
+			} else {
+				list->drop();
+			}
+			return;
+		}
+		list++;
+	}
+	Sys_Error("GAME_Drop: Could not determine gamemode");
 }
 
 /**

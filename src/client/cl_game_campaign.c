@@ -409,6 +409,15 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 	return RS_IsResearched_ptr(ccs.teamDefTechs[teamDef->idx]);
 }
 
+void GAME_CP_Drop (void)
+{
+	/** @todo maybe create a savegame? */
+	Cvar_Set("mn_main", "campaign_main");
+	Cvar_Set("mn_active", "map");
+
+	MN_PushMenu("map", NULL);
+}
+
 equipDef_t *GAME_CP_GetEquipmentDefinition (void)
 {
 	return &ccs.eMission;
