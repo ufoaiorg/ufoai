@@ -148,7 +148,7 @@ const char* E_GetEmployeeString (employeeType_t type)
 	case EMPL_ROBOT:
 		return _("UGV");
 	default:
-		Sys_Error("Unknown employee type '%i'\n", type);
+		Com_Error(ERR_DROP, "Unknown employee type '%i'\n", type);
 	}
 }
 
@@ -171,7 +171,7 @@ employeeType_t E_GetEmployeeType (const char* type)
 	else if (!strcmp(type, "EMPL_ROBOT"))
 		return EMPL_ROBOT;
 
-	Sys_Error("Unknown employee type '%s'\n", type);
+	Com_Error(ERR_DROP, "Unknown employee type '%s'\n", type);
 }
 
 /**
@@ -190,22 +190,6 @@ void E_ResetEmployees (void)
 			ccs.numEmployees[i] = 0;
 		}
 }
-
-#if 0
-/**
- * @brief Returns true if the employee is only assigned to quarters but not to labs and workshops.
- * @param[in] employee The employee_t pointer to check
- * @return qboolean
- * @sa E_EmployeeIsUnassigned
- */
-static qboolean E_EmployeeIsFree (employee_t * employee)
-{
-	if (!employee)
-		Sys_Error("E_EmployeeIsFree: Employee is NULL.\n");
-
-	return (employee->buildingID < 0 && employee->hired);
-}
-#endif
 
 /**
  * @brief Return a given employee pointer in the given base of a given type.
@@ -371,7 +355,7 @@ employee_t* E_GetHiredRobot (const base_t* const base, const ugv_t *ugvType)
 static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 {
 	if (!employee)
-		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
+		Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
 
 	return (!employee->building);
 }
@@ -386,7 +370,7 @@ static inline qboolean E_EmployeeIsUnassigned (const employee_t * employee)
 qboolean E_EmployeeIsCurrentlyInBase (const employee_t * employee)
 {
 	if (!employee)
-		Sys_Error("E_EmployeeIsUnassigned: Employee is NULL.\n");
+		Com_Error(ERR_DROP, "E_EmployeeIsUnassigned: Employee is NULL.\n");
 
 	assert(employee->hired);
 
@@ -412,12 +396,10 @@ qboolean E_EmployeeIsCurrentlyInBase (const employee_t * employee)
 employee_t* E_GetAssignedEmployee (const base_t* const base, employeeType_t type)
 {
 	int i;
-	employee_t *employee;
 
 	for (i = 0; i < ccs.numEmployees[type]; i++) {
-		employee = &ccs.employees[type][i];
-		if (employee->baseHired == base
-			&& !E_EmployeeIsUnassigned(employee))
+		employee_t *employee = &ccs.employees[type][i];
+		if (employee->baseHired == base && !E_EmployeeIsUnassigned(employee))
 			return employee;
 	}
 	return NULL;
@@ -476,7 +458,6 @@ qboolean E_HireEmployee (base_t* base, employee_t* employee)
 		case EMPL_ROBOT:
 			base->capacities[CAP_ITEMS].cur += UGV_SIZE;
 			break;
-		/* shut up compiler */
 		case MAX_EMPL:
 			break;
 		}
@@ -519,13 +500,8 @@ qboolean E_HireRobot (base_t* base, const ugv_t *ugvType)
  */
 void E_ResetEmployee (employee_t *employee)
 {
-	base_t* base;
-
 	assert(employee);
 	assert(employee->hired);
-	assert(employee->baseHired);
-
-	base = employee->baseHired;
 
 	/* Remove employee from building (and tech/production). */
 	E_RemoveEmployeeFromBuildingOrAircraft(employee);
@@ -567,7 +543,6 @@ qboolean E_UnhireEmployee (employee_t* employee)
 		case EMPL_ROBOT:
 			base->capacities[CAP_ITEMS].cur -= UGV_SIZE;
 			break;
-		/* shut up compiler */
 		case MAX_EMPL:
 			break;
 		}
@@ -675,7 +650,7 @@ static employee_t* E_CreateEmployeeAtIndex (employeeType_t type, nation_t *natio
 		Com_sprintf(teamDefName, sizeof(teamDefName), "%s%s", teamID, ugvType->actors);
 		break;
 	default:
-		Sys_Error("Unknown employee type\n");
+		Com_Error(ERR_DROP, "Unknown employee type\n");
 	}
 
 	switch (type) {
@@ -962,11 +937,11 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 		RS_RemoveFiredScientist(base, employee);
 		break;
 
+	case EMPL_ROBOT:
 	case EMPL_SOLDIER:
 		/* Remove soldier from aircraft/team if he was assigned to one. */
-		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
+		if (AIR_IsEmployeeInAircraft(employee, NULL))
 			AIR_RemoveEmployee(employee, NULL);
-		}
 		break;
 
 	case EMPL_PILOT:
@@ -976,16 +951,6 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 	case EMPL_WORKER:
 		/* Update current capacity and production times if worker is being counted there. */
 		PR_UpdateProductionCap(base);
-		break;
-
-	case EMPL_ROBOT:
-		/** @todo Check if they are linked to anywhere and remove them there. */
-#if 0
-		/* Remove ugv from aircraft/team if it was assigned to one. */
-		if (AIR_IsEmployeeInAircraft(employee, NULL)) {
-			AIR_RemoveEmployee(employee, NULL);
-		}
-#endif
 		break;
 
 	/* otherwise the compiler would print a warning */
@@ -998,7 +963,7 @@ qboolean E_RemoveEmployeeFromBuildingOrAircraft (employee_t *employee)
 
 /**
  * @brief Counts hired employees of a given type in a given base
- * @param[in] base The base where we count.
+ * @param[in] base The base where we count (@c NULL to count all).
  * @param[in] type The type of employee to search.
  * @return count of hired employees of a given type in a given base
  */
@@ -1015,7 +980,7 @@ int E_CountHired (const base_t* const base, employeeType_t type)
 }
 
 /**
- * @brief Counts 'hired' (i.e. bought or produced UGVs and other robots of a giben ugv-type in a given base.
+ * @brief Counts 'hired' (i.e. bought or produced UGVs and other robots of a given ugv-type in a given base.
  * @param[in] base The base where we count.
  * @param[in] ugvType What type of robot/ugv we are looking for.
  * @return Count of Robots/UGVs.
@@ -1160,16 +1125,14 @@ static void E_ListHired_f (void)
 			const employee_t employee = ccs.employees[emplType][emplIdx];
 
 			if (!employee.hired) {
-				if (employee.baseHired) {
+				if (employee.baseHired)
 					Com_Printf("Warning: empolyee: %s (idx: %i) %s not hired but has baseHired: %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, employee.baseHired->name);
-				}
 				continue;
 			}
 
 			Com_Printf("Empolyee: %s (idx: %i) %s at base %s\n", E_GetEmployeeString(employee.type), employee.idx, employee.chr.name, ((employee.baseHired) ? employee.baseHired->name : "NULL"));
-			if (employee.type != emplType) {
+			if (employee.type != emplType)
 				Com_Printf("Warning: EmployeeType mismatch: %i != %i\n", emplType, employee.type);
-			}
 		}
 	}
 }
@@ -1190,13 +1153,13 @@ void E_InitStartup (void)
 /**
  * @brief Searches all soldiers employees for the ucn (character id)
  */
-employee_t* E_GetEmployeeFromChrUCN (int ucn)
+employee_t* E_GetEmployeeFromChrUCN (int uniqueCharacterNumber)
 {
 	int i;
 
 	/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
 	for (i = 0; i < MAX_EMPLOYEES; i++)
-		if (ccs.employees[EMPL_SOLDIER][i].chr.ucn == ucn)
+		if (ccs.employees[EMPL_SOLDIER][i].chr.ucn == uniqueCharacterNumber)
 			return &(ccs.employees[EMPL_SOLDIER][i]);
 
 	return NULL;
@@ -1302,9 +1265,8 @@ qboolean E_LoadXML (mxml_node_t *p)
  */
 qboolean E_HireAllowed (const base_t* base)
 {
-	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_QUARTERS)) {
+	if (base->baseStatus != BASE_UNDER_ATTACK && B_GetBuildingStatus(base, B_QUARTERS))
 		return qtrue;
-	} else {
+	else
 		return qfalse;
-	}
 }

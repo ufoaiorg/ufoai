@@ -1088,12 +1088,12 @@ void CP_MissionIsOverByUFO (aircraft_t *ufocraft)
 
 void CP_MissionEnd (mission_t* mission, qboolean won)
 {
-	int civilians_killed;
-	int aliens_killed;
+	int civiliansKilled;
+	int aliensKilled;
 	int i;
 	base_t *base;
 	aircraft_t *aircraft;
-	int numberofsoldiers = 0; /* DEBUG */
+	int numberOfSoldiers = 0; /* DEBUG */
 
 	if (mission->stage == STAGE_BASE_ATTACK) {
 		base = (base_t *)mission->data;
@@ -1109,13 +1109,13 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 	/* add the looted goods to base storage and market */
 	base->storage = ccs.eMission; /* copied, including the arrays! */
 
-	civilians_killed = ccs.civiliansKilled;
-	aliens_killed = ccs.aliensKilled;
+	civiliansKilled = ccs.civiliansKilled;
+	aliensKilled = ccs.aliensKilled;
 	Com_DPrintf(DEBUG_CLIENT, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n",
-		won, ccs.battleParameters.civilians - civilians_killed, civilians_killed,
-		ccs.battleParameters.aliens - aliens_killed, aliens_killed);
-	CL_HandleNationData(!won, ccs.battleParameters.civilians - civilians_killed, civilians_killed, ccs.battleParameters.aliens - aliens_killed, aliens_killed, mission);
-	CP_CheckLostCondition(!won, mission, civilians_killed);
+		won, ccs.battleParameters.civilians - civiliansKilled, civiliansKilled,
+		ccs.battleParameters.aliens - aliensKilled, aliensKilled);
+	CL_HandleNationData(!won, ccs.battleParameters.civilians - civiliansKilled, civiliansKilled, ccs.battleParameters.aliens - aliensKilled, aliensKilled, mission);
+	CP_CheckLostCondition(!won, mission, civiliansKilled);
 
 	/* update the character stats */
 	CP_ParseCharacterData(NULL);
@@ -1128,14 +1128,13 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 		employee_t *employee = &ccs.employees[EMPL_SOLDIER][i];
 
 		if (AIR_IsEmployeeInAircraft(employee, aircraft))
-			numberofsoldiers++;
+			numberOfSoldiers++;
 
 		Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - try to get player %i \n", i);
 
 		if (employee->hired && employee->baseHired == base) {
 			const character_t *chr = &(employee->chr);
-			assert(chr);
-			Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - idx %d hp %d\n", chr->ucn, chr->HP);
+			Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - ucn %d hp %d\n", chr->ucn, chr->HP);
 			/* if employee is marked as dead */
 			if (chr->HP <= 0) { /** @todo <= -50, etc. (implants) */
 				/* Delete the employee. */
@@ -1145,7 +1144,7 @@ void CP_MissionEnd (mission_t* mission, qboolean won)
 			} /* if dead */
 		}
 	}
-	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberofsoldiers); /* DEBUG */
+	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - num %i\n", numberOfSoldiers); /* DEBUG */
 
 	Com_DPrintf(DEBUG_CLIENT, "CP_MissionEnd - done removing dead players\n");
 
@@ -1208,25 +1207,25 @@ qboolean CP_CheckNextStageDestination (aircraft_t *ufocraft)
  * @brief Make UFO proceed with its mission when the fight with another aircraft is over (and UFO survived).
  * @param[in] ufocraft Pointer to the ufo that should proceed a mission.
  */
-void CP_UFOProceedMission (aircraft_t *ufocraft)
+void CP_UFOProceedMission (aircraft_t *ufo)
 {
 	/* Every UFO on geoscape should have a mission assigned */
-	assert(ufocraft->mission);
+	assert(ufo->mission);
 
-	if (ufocraft->mission->category == INTERESTCATEGORY_INTERCEPT && !ufocraft->mission->data) {
+	if (ufo->mission->category == INTERESTCATEGORY_INTERCEPT && !ufo->mission->data) {
 		/* This is an Intercept mission where UFO attacks aircraft (not installations) */
 		/* Keep on looking targets until mission is over, unless no more ammo */
-		ufocraft->status = AIR_TRANSIT;
-		if (AIRFIGHT_ChooseWeapon(ufocraft->weapons, ufocraft->maxWeapons, ufocraft->pos, ufocraft->pos) !=
+		ufo->status = AIR_TRANSIT;
+		if (AIRFIGHT_ChooseWeapon(ufo->weapons, ufo->maxWeapons, ufo->pos, ufo->pos) !=
 			AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
-			UFO_SetRandomDest(ufocraft);
+			UFO_SetRandomDest(ufo);
 		else
-			CP_MissionStageEnd(ufocraft->mission);
-	} else if (ufocraft->mission->stage < STAGE_MISSION_GOTO ||
-		ufocraft->mission->stage >= STAGE_RETURN_TO_ORBIT) {
-		UFO_SetRandomDest(ufocraft);
+			CP_MissionStageEnd(ufo->mission);
+	} else if (ufo->mission->stage < STAGE_MISSION_GOTO ||
+		ufo->mission->stage >= STAGE_RETURN_TO_ORBIT) {
+		UFO_SetRandomDest(ufo);
 	} else {
-		UFO_SendToDestination(ufocraft, ufocraft->mission->pos);
+		UFO_SendToDestination(ufo, ufo->mission->pos);
 	}
 }
 
@@ -1474,9 +1473,8 @@ static int CP_SelectNewMissionType (void)
 
 	randomNumber = (int) (frand() * (float) sum);
 
-	for (i = 0; randomNumber >= 0; i++) {
+	for (i = 0; randomNumber >= 0; i++)
 		randomNumber -= ccs.interest[i];
-	}
 
 	return i - 1;
 }

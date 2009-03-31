@@ -92,8 +92,6 @@ static void GAME_CP_MissionAutoCheck_f (void)
  */
 static void GAME_CP_Results_f (void)
 {
-	Com_DPrintf(DEBUG_CLIENT, "GAME_CP_Results_f\n");
-
 	/* multiplayer? */
 	if (!ccs.selectedMission)
 		return;
