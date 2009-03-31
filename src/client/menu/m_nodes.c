@@ -221,7 +221,7 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 		switch (command) {
 		case '^':	/* first string */
 			if (!strcmp(name, "this"))
-				/** @todo fix a way to fix the bad cast. only here to remove "discards qualifiers" warning */
+				/** @todo find a way to fix the bad cast. only here to remove "discards qualifiers" warning */
 				node = *(menuNode_t**) ((void*)&relativeNode);
 			else if (!strcmp(name, "parent"))
 				node = relativeNode->parent;
