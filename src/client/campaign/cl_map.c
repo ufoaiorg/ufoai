@@ -263,61 +263,38 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 	const linkedList_t *list = ccs.missions;
 
 	/* get map position */
-	if (cl_3dmap->integer) {
+	if (cl_3dmap->integer)
 		MAP3D_ScreenToMap(node, x, y, pos);
-	} else {
+	else
 		MAP_ScreenToMap(node, x, y, pos);
-	}
 
 	/* new base construction */
 	switch (ccs.mapAction) {
 	case MA_NEWBASE:
 		/** @todo make this a function in cp_base.c - B_BuildBaseAtPos and make newBasePos static */
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			const nation_t* nation = MAP_GetNation(pos);
-			if (nation)
-				Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base in nation '%s'\n", nation->id);
-
 			Vector2Copy(pos, newBasePos);
-			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build base at: %.0f:%.0f\n", pos[0], pos[1]);
 
 			CL_GameTimeStop();
 
 			if (ccs.numBases < MAX_BASES) {
 				Cvar_Set("mn_base_title", ccs.bases[ccs.numBases].name);
 				MN_PushMenu("popup_newbase", NULL);
-			} else {
-				MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
 			}
 			return;
-		} else {
-			MS_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
-			if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-				MAP_SetOverlay("radar");
 		}
 		break;
 	case MA_NEWINSTALLATION:
 		if (!MapIsWater(MAP_GetColor(pos, MAPTYPE_TERRAIN))) {
-			const nation_t* nation = MAP_GetNation(pos);
-			if (nation)
-				Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build installation in nation '%s'\n", nation->id);
-
-			Vector2Copy(pos, newInstallationPos);
-			Com_DPrintf(DEBUG_CLIENT, "MAP_MapClick: Build installation at: %.0f:%.0f\n", pos[0], pos[1]);
+			Vector2Copy(pos, newBasePos);
 
 			CL_GameTimeStop();
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
 				Cvar_Set("mn_installation_title", ccs.installations[ccs.numInstallations].name);
 				MN_PushMenu("popup_newinstallation", NULL);
-			} else {
-				MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
 			}
 			return;
-		} else {
-			MS_AddNewMessage(_("Notice"), _("Could not set up your installation at this location"), qfalse, MSG_INFO, NULL);
-			if (r_geoscape_overlay->integer & OVERLAY_RADAR)
-				MAP_SetOverlay("radar");
 		}
 		break;
 	case MA_UFORADAR:
@@ -328,7 +305,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		break;
 	}
 
-	/* Init datas for multi selection */
+	/* Init data for multi selection */
 	multiSelect.nbSelect = 0;
 	memset(multiSelect.popupText, 0, sizeof(multiSelect.popupText));
 
@@ -337,7 +314,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 		const mission_t *tempMission = (mission_t *)list->data;
 		if (multiSelect.nbSelect >= MULTISELECT_MAXSELECT)
 			break;
-		if ((tempMission->stage == STAGE_NOT_ACTIVE) || !tempMission->onGeoscape)
+		if (tempMission->stage == STAGE_NOT_ACTIVE || !tempMission->onGeoscape)
 			continue;
 		if (tempMission->pos && MAP_IsMapPositionSelected(node, tempMission->pos, x, y))
 			MAP_MultiSelectListAddItem(MULTISELECT_TYPE_MISSION, MAP_GetIdxByMission(tempMission),
@@ -434,39 +411,6 @@ const float STANDARD_3D_ZOOM = 40.0f;
 /** @brief radius of the globe in screen coordinates */
 #define GLOBE_RADIUS EARTH_RADIUS * (ccs.zoom / STANDARD_3D_ZOOM)
 
-#if 0
-/**
- * @brief Return needed zoom to show a given distance on screen, for 3D geoscape.
- * @param[in] node Pointer to the node where 3D geoscape is displayed.
- * @param[in] distance Half distance that we want to display on the full height of the screen.
- * @return zoom that should be applied to see given distance, if within boundaries.
- */
-static float MAP_GetZoomFromDistance (const menuNode_t* node, float distance)
-{
-	float zoom;
-	/* maximum zoom reachable with automatic zoom
-	 * we can zoom closer than manually, so don't use cl_mapzoomax */
-	const float MAX_AUTO_ZOOM = 40.0f;
-
-	if (distance >= 90.0f) {
-		/* We want to see the whole world */
-		distance = EARTH_RADIUS;
-	} else {
-		distance = sin(torad * distance) * EARTH_RADIUS;
-	}
-
-	/* smaller size is height of the screen */
-	zoom = (ccs.mapSize[1] / 2.0f) * STANDARD_3D_ZOOM / distance;
-
-	if (zoom > MAX_AUTO_ZOOM)
-		zoom = MAX_AUTO_ZOOM;
-	else if (zoom < cl_mapzoommin->value)
-		zoom = cl_mapzoommin->value;
-
-	return zoom;
-}
-#endif
-
 /**
  * @brief Transform a 2D position on the map to screen coordinates.
  * @param[in] pos vector that holds longitude and latitude
@@ -502,9 +446,8 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	*x = (int) (mid[0] - radius * v[1]);
 	*y = (int) (mid[1] - radius * v[0]);
 
-	if (z) {
+	if (z)
 		*z = (int) (radius * v[2]);
-	}
 
 	/* if the point is on the wrong side of earth, the player cannot see it */
 	if (v[2] > 0)
@@ -527,8 +470,7 @@ static qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
-		int *x, int *y)
+qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
 {
 	float sx;
 
@@ -675,21 +617,21 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 	v[2] = - sqrt(radius * radius - (x - mid[0]) * (x - mid[0]) - (y - mid[1]) * (y - mid[1]));
 	VectorNormalize(v);
 
-	/* rotate the vector to switch of reference frame */
-	/* note the ccs.angles[ROLL] is always 0, so there is only 2 rotations and not 3 */
-	/*	and that GLOBE_ROTATE is already included in ccs.angles[YAW] */
-	/* first rotation is along the horizontal axis of the screen, to put north-south axis of the earth
-	 *	perpendicular to the screen */
+	/* rotate the vector to switch of reference frame
+	 * note the ccs.angles[ROLL] is always 0, so there is only 2 rotations and not 3
+	 * and that GLOBE_ROTATE is already included in ccs.angles[YAW]
+	 * first rotation is along the horizontal axis of the screen, to put north-south axis of the earth
+	 * perpendicular to the screen */
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v1, rotationAxis, v, ccs.angles[YAW]);
 
 	/* second rotation is to rotate the earth around its north-south axis
-	 *	so that Greenwich meridian is along the vertical axis of the screen */
+	 * so that Greenwich meridian is along the vertical axis of the screen */
 	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v, rotationAxis, v1, ccs.angles[PITCH]);
 
 	/* we therefore got in v the coordinates of the point in the static frame of the earth
-	 *	that we can convert in polar coordinates to get its latitude and longitude */
+	 * that we can convert in polar coordinates to get its latitude and longitude */
 	VecToPolar(v, pos);
 }
 
@@ -713,7 +655,7 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 	/* get plane normal */
 	PolarToVec(start, s);
 	PolarToVec(end, e);
-	/* Procedur below won't work if start is the same than end */
+	/* Procedure below won't work if start is the same than end */
 	if (VectorCompareEps(s, e, UFO_EPSILON)) {
 		line->distance = 0;
 		line->numPoints = 2;
@@ -751,10 +693,6 @@ void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 		n = n + 1;
 	else
 		n = -n + 1;
-
-#if 0
-	Com_DPrintf(DEBUG_CLIENT, "MAP_MapCalcLine: #(%3.1f %3.1f) -> (%3.1f %3.1f)\n", start[0], start[1], end[0], end[1]);
-#endif
 
 	line->distance = fabs(phiEnd - phiStart) / n * todeg;
 	line->numPoints = n + 1;
@@ -850,10 +788,10 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 	/* draw only when the point of the path is visible */
 	R_Color(color);
 	for (i = 0, numPoints = 0; i < line->numPoints; i++) {
-		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL)) {
+		if (MAP_3DMapToScreen(node, line->point[i], &pts[i].x, &pts[i].y, NULL))
 			numPoints++;
-		} else if (!numPoints)
-			/* the point which is not drawn is at the begining of the path */
+		else if (!numPoints)
+			/* the point which is not drawn is at the beginning of the path */
 			start++;
 	}
 
@@ -959,11 +897,10 @@ float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, v
 			RotatePointAroundVector(v, rotationAxis, direction, 5.0);
 			VectorCopy(v, direction);
 			VectorSubtract(tangentVector, direction, v);
-			if (VectorLength(v) < dist) {
+			if (VectorLength(v) < dist)
 				VectorCopy(direction, tangentVector);
-			} else {
+			else
 				VectorCopy(tangentVector, direction);
-			}
 		}
 	}
 
@@ -1015,9 +952,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		}
 	}
 	for (aircraft = ccs.ufos + ccs.numUFOs - 1; aircraft >= ccs.ufos; aircraft --) {
-		if (UFO_IsUFOSeenOnGeoscape(aircraft)) {
+		if (UFO_IsUFOSeenOnGeoscape(aircraft))
 			maxEventIdx++;
-		}
 	}
 
 	/* if there's nothing to center the view on, just go to 0,0 pos */
@@ -1041,9 +977,8 @@ static void MAP_GetGeoscapeAngle (float *vector)
 		mission_t *mission = NULL;
 		for (;list && (centerOnEventIdx != counter - 1); list = list->next) {
 			mission = (mission_t *)list->data;
-			if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape) {
+			if (mission->stage != STAGE_NOT_ACTIVE && mission->stage != STAGE_OVER && mission->onGeoscape)
 				counter++;
-			}
 		}
 		assert(mission);
 
@@ -1184,7 +1119,7 @@ void MAP_CenterOnPoint_f (void)
 }
 
 /**
- * @brief Smoothly moves the map center position to the secified location on the geoscape.
+ * @brief Smoothly moves the map center position to the specified location on the geoscape.
  * @param[in] pointOnGeoscape  The position to center on.
  * @param[in] zoom  The level at which to zoom.
  * @param[in] acceleration  How fast the smooth movement should go.
@@ -1401,14 +1336,6 @@ void MAP_SmoothTranslate (void)
 	}
 }
 
-qboolean checkSmoothRotation(void)
-{
-	if (smoothRotation)
-		return qtrue;
-	else
-		return qfalse;
-}
-
 #define BULLET_SIZE	1
 /**
  * @brief Draws on bunch of bullets on the geoscape map
@@ -1490,9 +1417,8 @@ static void MAP_DrawMapOneInstallation (const menuNode_t* node, const installati
 		/** @todo When there will be different possible installation weapon, range should change */
 		for (i = 0; i < tpl->maxBatteries; i++) {
 			const aircraftSlot_t const *slot = &installation->batteries[i].slot;
-			if (slot->item
-				&& (slot->ammoLeft > 0 || slot->ammoLeft)
-				&& slot->installationTime == 0) {
+			if (slot->item && (slot->ammoLeft > 0 || slot->ammoLeft)
+			 && slot->installationTime == 0) {
 				MAP_MapDrawEquidistantPoints(node, installation->pos,
 					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
 			}
@@ -1533,9 +1459,8 @@ static void MAP_DrawMapOneBase (const menuNode_t* node, const base_t *base,
 		/** @todo When there will be different possible base weapon, range should change */
 		for (i = 0; i < base->numBatteries; i++) {
 			const aircraftSlot_t const *slot = &base->batteries[i].slot;
-			if (slot->item
-				&& (slot->ammoLeft > 0 || slot->ammoLeft)
-				&& slot->installationTime == 0) {
+			if (slot->item && (slot->ammoLeft > 0 || slot->ammoLeft)
+			 && slot->installationTime == 0) {
 				MAP_MapDrawEquidistantPoints(node, base->pos,
 					slot->ammo->craftitem.stats[AIR_STATS_WRANGE], red);
 			}

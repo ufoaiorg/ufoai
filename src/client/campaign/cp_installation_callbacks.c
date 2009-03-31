@@ -33,8 +33,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../menu/m_popup.h"
 #include "../renderer/r_draw.h"
 
-vec2_t newInstallationPos;
-
 /**
  * @brief Select an installation when clicking on it on geoscape, or build a new installation.
  * @param[in] installation If this is @c NULL we want to build a new installation
@@ -109,7 +107,7 @@ static void INS_BuildInstallation_f (void)
 
 	if (ccs.credits - installationTemplate->cost > 0) {
 		/* set up the installation */
-		INS_SetUpInstallation(installation, installationTemplate, newInstallationPos);
+		INS_SetUpInstallation(installation, installationTemplate, newBasePos);
 
 		ccs.numInstallations++;
 		ccs.campaignStats.installationsBuild++;
