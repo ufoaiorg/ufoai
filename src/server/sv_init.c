@@ -1219,7 +1219,7 @@ void SV_Map (qboolean day, const char *levelstring, const char *assembly)
 		return;
 	}
 
-	CL_Drop();
+	CL_Drop(); /* make sure local clients drop */
 	SCR_BeginLoadingPlaque();
 	SV_SpawnServer(day, levelstring, assembly);
 	Cbuf_CopyToDefer();
