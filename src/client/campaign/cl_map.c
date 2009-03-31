@@ -1147,12 +1147,6 @@ static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const
 		/* case 2D geoscape */
 		vec2_t diff;
 
-		/** @todo check why disabling combatzoom moves the viewpoint to the southpole
-		 *	  then this can be re-enabled maybe for map menu too
-		 */
-		if (strncmp(MN_GetActiveMenuName(), "map_combatzoom", 13))
-			return;
-
 		Vector2Set(smoothFinal2DGeoscapeCenter, pointOnGeoscape[0], pointOnGeoscape[1]);
 		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
 /*		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
@@ -1759,7 +1753,6 @@ void MAP_DrawMap (const menuNode_t* node)
 
 /**
  * @brief No more special action in geoscape
- * @sa MAP_TurnCombatZoomOff
  */
 void MAP_ResetAction (void)
 {
@@ -2323,11 +2316,8 @@ void MAP_Zoom_f (void)
 
 	if (smoothFinalZoom < cl_mapzoommin->value)
 		smoothFinalZoom = cl_mapzoommin->value;
-	else if (smoothFinalZoom > cl_mapzoommax->value) {
+	else if (smoothFinalZoom > cl_mapzoommax->value)
 		smoothFinalZoom = cl_mapzoommax->value;
-		if (cmd[0] == 'i')
-			MAP_TurnCombatZoomOn();
-	}
 
 	if (!cl_3dmap->integer) {
 		ccs.zoom = smoothFinalZoom;

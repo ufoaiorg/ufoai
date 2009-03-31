@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CP_TIME_H
 
 void CL_UpdateTime(void);
-void CL_EnsureValidGameLapseForCombatZoom(void);
-void CL_EnsureValidGameLapseForGeoscape(void);
 void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
