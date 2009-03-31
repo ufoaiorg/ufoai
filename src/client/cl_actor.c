@@ -3354,8 +3354,10 @@ void CL_DebugPath_f (void)
 	const pos_t z = mousePos[2];
 	int dir = 1;
 	int new_z;
+
 	if (mouseSpace != MS_WORLD)
 		return;
+
 	Com_Printf("data at cursor XYZ(%i, %i, %i) Floor(%i) Ceiling(%i)\n", x, y, z,
 		RT_FLOOR(clMap, actor_size, x, y, z),
 		RT_CEILING(clMap, actor_size, x, y, z) );
@@ -3373,7 +3375,7 @@ void CL_DebugPath_f (void)
 		RT_STEPUP_PX(clMap, actor_size, x, y, z),		// dir = 0
 		RT_STEPUP_NX(clMap, actor_size, x, y, z),		// 1
 		RT_STEPUP_PY(clMap, actor_size, x, y, z),		// 2
-		RT_STEPUP_NY(clMap, actor_size, x, y, z) );	// 3
+		RT_STEPUP_NY(clMap, actor_size, x, y, z) );		// 3
 
 #if 1
 	Com_Printf("performing RT_UpdateConnection() in dir: %i\n", dir);
@@ -3390,7 +3392,7 @@ void CL_DebugPath_f (void)
 		RT_CONN_PX_NY(clMap, actor_size, x, y, z) );// 7
 #endif
 #if 0
-	const int new_z = RT_CheckCell(clMap, actor_size, x, y, z);
+	new_z = RT_CheckCell(clMap, actor_size, x, y, z);
 	Com_Printf("check returns: Z=%i\n", new_z);
 #endif
 #if 0
