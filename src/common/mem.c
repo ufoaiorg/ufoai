@@ -61,12 +61,13 @@ typedef struct memBlock_s {
 
 #define MEM_MAX_POOLCOUNT	32
 #define MEM_MAX_POOLNAME	64
+#define MEM_HASH			11
 
 typedef struct memPool_s {
 	char name[MEM_MAX_POOLNAME];	/**< Name of pool */
 	qboolean inUse;					/**< Slot in use? */
 
-	memBlock_t *blocks;				/**< Allocated blocks */
+	memBlock_t *blocks[MEM_HASH];	/**< Allocated blocks */
 
 	uint32_t blockCount;			/**< Total allocated blocks */
 	uint32_t byteCount;				/**< Total allocated bytes */
@@ -130,7 +131,8 @@ memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fi
 	}
 
 	/* Store values */
-	pool->blocks = NULL;
+	for (i = 0; i < MEM_HASH; i++)
+		pool->blocks[i] = NULL;
 	pool->blockCount = 0;
 	pool->byteCount = 0;
 	pool->createFile = fileName;
@@ -211,7 +213,7 @@ uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
 	size = mem->size;
 
 	/* De-link it */
-	prev = &mem->pool->blocks;
+	prev = &mem->pool->blocks[(uintptr_t)mem % MEM_HASH];
 	for (;;) {
 		search = *prev;
 		if (!search)
@@ -238,15 +240,18 @@ uint32_t _Mem_FreeTag (struct memPool_s *pool, const int tagNum, const char *fil
 {
 	memBlock_t *mem, *next;
 	uint32_t size;
+	int j = 0;
 
 	if (!pool)
 		return 0;
 
 	size = 0;
-	for (mem = pool->blocks; mem; mem = next) {
-		next = mem->next;
-		if (mem->tagNum == tagNum)
-			size += _Mem_Free(mem->memPointer, fileName, fileLine);
+	for (j = 0; j < MEM_HASH; j++) {
+		for (mem = pool->blocks[j]; mem; mem = next) {
+			next = mem->next;
+			if (mem->tagNum == tagNum)
+				size += _Mem_Free(mem->memPointer, fileName, fileLine);
+		}
 	}
 
 	return size;
@@ -262,14 +267,17 @@ uint32_t _Mem_FreePool (struct memPool_s *pool, const char *fileName, const int 
 {
 	memBlock_t *mem, *next;
 	uint32_t size;
+	int j = 0;
 
 	if (!pool)
 		return 0;
 
 	size = 0;
-	for (mem = pool->blocks; mem; mem = next) {
-		next = mem->next;
-		size += _Mem_Free(mem->memPointer, fileName, fileLine);
+	for (j = 0; j < MEM_HASH; j++) {
+		for (mem = pool->blocks[j]; mem; mem = next) {
+			next = mem->next;
+			size += _Mem_Free(mem->memPointer, fileName, fileLine);
+		}
 	}
 
 	assert(pool->blockCount == 0);
@@ -331,8 +339,8 @@ void *_Mem_Alloc (size_t size, qboolean zeroFill, memPool_t *pool, const int tag
 	pool->byteCount += size;
 
 	/* Link it in to the appropriate pool */
-	mem->next = pool->blocks;
-	pool->blocks = mem;
+	mem->next = pool->blocks[(uintptr_t)mem % MEM_HASH];
+	pool->blocks[(uintptr_t)mem % MEM_HASH] = mem;
 
 	SDL_mutexV(z_lock);
 
@@ -360,7 +368,7 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	SDL_mutexP(z_lock);
 
 	/* De-link it */
-	prev = &pool->blocks;
+	prev = &pool->blocks[(uintptr_t)mem % MEM_HASH];
 	for (;;) {
 		search = *prev;
 		if (!search)
@@ -374,8 +382,8 @@ void* _Mem_ReAlloc (void *ptr, size_t size, const char *fileName, const int file
 	}
 
 	/* Link it in to the appropriate pool */
-	mem->next = pool->blocks;
-	pool->blocks = mem;
+	mem->next = pool->blocks[(uintptr_t)mem % MEM_HASH];
+	pool->blocks[(uintptr_t)mem % MEM_HASH] = mem;
 
 	/* Add header and round to cacheline */
 	size = (size + sizeof(memBlock_t) + sizeof(memBlockFoot_t) + 31) & ~31;
@@ -463,14 +471,17 @@ uint32_t _Mem_TagSize (struct memPool_s *pool, const int tagNum)
 {
 	memBlock_t *mem;
 	uint32_t size;
+	int j = 0;
 
 	if (!pool)
 		return 0;
 
 	size = 0;
-	for (mem = pool->blocks; mem; mem = mem->next) {
-		if (mem->tagNum == tagNum)
-			size += mem->size;
+	for (j = 0; j < MEM_HASH; j++) {
+		for (mem = pool->blocks[j]; mem; mem = mem->next) {
+			if (mem->tagNum == tagNum)
+				size += mem->size;
+		}
 	}
 
 	return size;
@@ -481,16 +492,19 @@ uint32_t _Mem_ChangeTag (struct memPool_s *pool, const int tagFrom, const int ta
 {
 	memBlock_t *mem;
 	uint32_t numChanged;
+	int j = 0;
 
 	if (!pool)
 		return 0;
 
 	numChanged = 0;
 
-	for (mem = pool->blocks; mem; mem = mem->next) {
-		if (mem->tagNum == tagFrom) {
-			mem->tagNum = tagTo;
-			numChanged++;
+	for (j = 0; j < MEM_HASH; j++) {
+		for (mem = pool->blocks[j]; mem; mem = mem->next) {
+			if (mem->tagNum == tagFrom) {
+				mem->tagNum = tagTo;
+				numChanged++;
+			}
 		}
 	}
 
@@ -503,32 +517,35 @@ void _Mem_CheckPoolIntegrity (struct memPool_s *pool, const char *fileName, cons
 	memBlock_t *mem;
 	uint32_t blocks;
 	uint32_t size;
+	int j = 0;
 
 	assert(pool);
 	if (!pool)
 		return;
 
 	/* Check sentinels */
-	for (mem = pool->blocks, blocks = 0, size = 0; mem; blocks++, mem = mem->next) {
-		size += mem->size;
-		if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
-			Sys_Error("Mem_CheckPoolIntegrity: bad memory head top sentinel [buffer underflow]\n"
-				"check: %s:#%i", fileName, fileLine);
-		} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
-			Sys_Error("Mem_CheckPoolIntegrity: bad memory head bottom sentinel [buffer underflow]\n"
-				"check: %s:#%i", fileName, fileLine);
-		} else if (!mem->footer) {
-			Sys_Error("Mem_CheckPoolIntegrity: bad memory footer [buffer overflow]\n"
-				"pool: %s\n"
-				"alloc: %s:#%i\n"
-				"check: %s:#%i",
-				mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
-		} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
-			Sys_Error("Mem_CheckPoolIntegrity: bad memory foot sentinel [buffer overflow]\n"
-				"pool: %s\n"
-				"alloc: %s:#%i\n"
-				"check: %s:#%i",
-				mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
+	for (j = 0, blocks = 0, size = 0; j < MEM_HASH; j++) {
+		for (mem = pool->blocks[j]; mem; blocks++, mem = mem->next) {
+			size += mem->size;
+			if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
+				Sys_Error("Mem_CheckPoolIntegrity: bad memory head top sentinel [buffer underflow]\n"
+					"check: %s:#%i", fileName, fileLine);
+			} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
+				Sys_Error("Mem_CheckPoolIntegrity: bad memory head bottom sentinel [buffer underflow]\n"
+					"check: %s:#%i", fileName, fileLine);
+			} else if (!mem->footer) {
+				Sys_Error("Mem_CheckPoolIntegrity: bad memory footer [buffer overflow]\n"
+					"pool: %s\n"
+					"alloc: %s:#%i\n"
+					"check: %s:#%i",
+					mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
+			} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
+				Sys_Error("Mem_CheckPoolIntegrity: bad memory foot sentinel [buffer overflow]\n"
+					"pool: %s\n"
+					"alloc: %s:#%i\n"
+					"check: %s:#%i",
+					mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
+			}
 		}
 	}
 
@@ -557,6 +574,7 @@ void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fil
 	memBlock_t *mem;
 	uint32_t i;
 	int sum;
+	int j = 0;
 
 	if (!pool)
 		return;
@@ -564,10 +582,12 @@ void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fil
 	sum = 0;
 
 	/* Cycle through the blocks */
-	for (mem = pool->blocks; mem; mem = mem->next) {
-		/* Touch each page */
-		for (i = 0; i < mem->memSize; i += 128) {
-			sum += ((byte *)mem->memPointer)[i];
+	for (j = 0; j < MEM_HASH; j++) {
+		for (mem = pool->blocks[j]; mem; mem = mem->next) {
+			/* Touch each page */
+			for (i = 0; i < mem->memSize; i += 128) {
+				sum += ((byte *)mem->memPointer)[i];
+			}
 		}
 	}
 }
@@ -584,8 +604,12 @@ void* _Mem_AllocatedInPool (struct memPool_s *pool, const void *pointer)
 	if (!pool)
 		return NULL;
 
+	/* if it's in the pool, it must be in THIS block */
+	mem = pool->blocks[(uintptr_t)pointer % MEM_HASH];
+	if (!mem)		/* the block might be in initialized state */
+		return NULL;
 	/* Cycle through the blocks */
-	for (mem = pool->blocks; mem; mem = mem->next) {
+	for ( ; mem; mem = mem->next) {
 		if (mem->memPointer == pointer)
 			return mem->memPointer;
 	}
@@ -623,6 +647,7 @@ static void Mem_Stats_f (void)
 	uint32_t totalBlocks, totalBytes;
 	memPool_t *pool;
 	uint32_t poolNum, i;
+	int j = 0;
 
 	if (Cmd_Argc() > 1) {
 		memPool_t *best;
@@ -650,13 +675,15 @@ static void Mem_Stats_f (void)
 		Com_Printf("----- ----- -------------------- ---------- \n");
 
 		totalBytes = 0;
-		for (i = 0, mem = best->blocks; mem; mem = mem->next, i++) {
-			if (i & 1)
-				Com_Printf("%c", COLORED_GREEN);
+		for (j = 0; j < MEM_HASH; j++) {
+			for (i = 0, mem = best->blocks[j]; mem; mem = mem->next, i++) {
+				if (i & 1)
+					Com_Printf("%c", COLORED_GREEN);
 
-			Com_Printf("%5i %5i %20s "UFO_SIZE_T"B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
+				Com_Printf("%5i %5i %20s "UFO_SIZE_T"B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
 
-			totalBytes += mem->size;
+				totalBytes += mem->size;
+			}
 		}
 
 		Com_Printf("----------------------------------------\n");
