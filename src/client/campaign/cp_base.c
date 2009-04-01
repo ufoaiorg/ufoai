@@ -1072,6 +1072,20 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 			}
 		}
 	} else {
+		const baseTemplate_t *template = B_GetBaseTemplate(ccs.curCampaign->firstBaseTemplate);
+		int i;
+
+		/* build must-have (autobuild) buildings in template */
+		for (i = 0; i < template->numBuildings; i++) {
+			if (template->buildings[i].building
+			 && template->buildings[i].building->autobuild) {
+				vec2_t pos;
+
+				Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
+				B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
+			}
+		}
+		/* @todo: build "autobuild" buildings not in the template? */
 		/* if no autobuild, set up zero build time for the first base */
 		ccs.instant_build = 1;
 	}
