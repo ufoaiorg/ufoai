@@ -12,7 +12,7 @@
 <builder enableAutoBuild="true" errorParsers="org.eclipse.cdt.core.MakeErrorParser" id="org.eclipse.cdt.build.core.settings.default.builder.1740510450" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="4" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.libs.202962542" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.16358229" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
-<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.177059442" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath"/>
+<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.177059442" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths"/>
 <inputType id="org.eclipse.cdt.build.core.settings.holder.inType.2033761625" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 </tool>
 <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.308147572" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
@@ -38,7 +38,7 @@
 </toolChain>
 </folderInfo>
 <sourceEntries>
-<entry excluding="release-linux-gnu-x86_64|debian|contrib|autom4te.cache|base/videos|base/sound|base/shaders|base/i18n|base/ai|base/textures|base/maps|base/mapcycle.txt|base/keys.cfg|base/irc_motd.txt|base/default.cfg|base/dedicated.cfg|base/autoexec.cfg|base/materials|base/media|base/models|base/music|base/pics|base/ufos|debug-linux-gnu-x86_64" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 </sourceEntries>
 </configuration>
 </storageModule>
