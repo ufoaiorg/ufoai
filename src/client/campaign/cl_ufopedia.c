@@ -69,7 +69,8 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
 
 /**
  * @brief Checks If a technology/UFOpaedia-entry will be displayed in the UFOpaedia (-list).
- * @note This does not check for different display modes (only pre-research text, what stats, etc...). The content is mostly checked in UP_Article
+ * @note This does not check for different display modes (only pre-research text, what statistics, etc...). The
+ * content is mostly checked in @c UP_Article
  * @return qtrue if the tech gets displayed at all, otherwise qfalse.
  * @sa UP_Article
  */
@@ -147,7 +148,7 @@ static void UP_ChangeDisplay (int newDisplay)
 }
 
 /**
- * @brief Translate a weaponSkill int to a translated string
+ * @brief Translate a weaponSkill integer to a translated string
  *
  * The weaponSkills were defined in q_shared.h at abilityskills_t
  * @sa abilityskills_t
@@ -171,7 +172,7 @@ static const char* CL_WeaponSkillToName (int weaponSkill)
 }
 
 /**
- * @brief Translate a aircraft stat int to a translated string
+ * @brief Translate a aircraft stat integer to a translated string
  * @sa aircraftParams_t
  * @sa CL_AircraftMenuStatsValues
  */
@@ -200,7 +201,7 @@ static const char* CL_AircraftStatToName (int stat)
 }
 
 /**
- * @brief Translate a aircraft size int to a translated string
+ * @brief Translate a aircraft size integer to a translated string
  * @sa aircraftSize_t
  */
 static const char* CL_AircraftSizeToName (int aircraftSize)
@@ -216,7 +217,7 @@ static const char* CL_AircraftSizeToName (int aircraftSize)
 }
 
 /**
- * @brief Diplays the tech tree dependencies in the UFOpaedia
+ * @brief Displays the tech tree dependencies in the UFOpaedia
  * @sa UP_DrawEntry
  * @todo Add support for "require_AND"
  * @todo re-iterate trough logic blocks (i.e. append the tech-names it references recursively)
@@ -249,7 +250,8 @@ static void UP_DisplayTechTree (const technology_t* t)
 				Q_strcat(up_techtree, "\n", sizeof(up_techtree));
 			}
 		}
-	/* and now set the buffer to the right mn.menuText */
+
+	/* and now register the buffer */
 	MN_RegisterText(TEXT_LIST, up_techtree);
 }
 
@@ -283,7 +285,7 @@ void UP_ItemDescription (const objDef_t *od)
 		upCurrentTech = od->tech;
 
 		/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
-		/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
+		/* up_numresearchedlink contains the number of researched weapons usable with this ammo */
 		for (i = 0; i < od->numWeapons; i++) {
 			if (GAME_ItemIsUseable(od->weapons[i]))
 				up_numresearchedlink++;
@@ -309,7 +311,7 @@ void UP_ItemDescription (const objDef_t *od)
 			Cvar_Set("mn_researchedlinkname", _(od->weapons[upResearchedLink]->name));
 			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpaedia entry"), _(od->weapons[upResearchedLink]->name)));
 
-			/* Needed for writing stats below */
+			/* Needed for writing statistics below */
 			odAmmo = od;
 		} else {
 			upResearchedLink = 0;
@@ -325,7 +327,7 @@ void UP_ItemDescription (const objDef_t *od)
 		/* ammo and weapon are the same item: must use up_weapon_id 0 */
 		up_weapon_id = 0;
 
-		/* Needed for writing stats below */
+		/* Needed for writing statistics below */
 		odAmmo = od;
 	} else if (od->weapon) {
 		/* We have a weapon that uses ammos */
@@ -333,7 +335,7 @@ void UP_ItemDescription (const objDef_t *od)
 		upCurrentTech = od->tech;
 
 		/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo */
-		/* up_numresearchedlink contains the number of researched ammos useable with this weapon */
+		/* up_numresearchedlink contains the number of researched ammos usable with this weapon */
 		for (i = 0; i < od->numAmmos; i++) {
 			if (GAME_ItemIsUseable(od->ammos[i]))
 				up_numresearchedlink++;
@@ -816,7 +818,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 }
 
 /**
- * @brief Display only the TEXT_UFOPEDIA part - don't reset any other mn.menuText pointers here
+ * @brief Display only the TEXT_UFOPEDIA part for a given technology
  * @param[in] tech The technology_t pointer to print the UFOpaedia article for
  * @sa UP_DrawEntry
  */
@@ -952,7 +954,7 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 
 	if (tech) {
 		upFireMode = 0;
-		upResearchedLink = 0;	/** @todo if the first weapon of the firemode of an ammo is unresearched, its dammages,... will still be displayed */
+		upResearchedLink = 0;	/** @todo if the first weapon of the firemode of an ammo is unresearched, its damages,... will still be displayed */
 
 		if (tech->mdl)
 			Cvar_Set("mn_upmodel_top", tech->mdl);
@@ -971,7 +973,6 @@ static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
 }
 
 /**
- * @brief
  * @sa CL_EventAddMail_f
  */
 void UP_OpenEventMail (const char *eventMailID)
@@ -1191,7 +1192,7 @@ static void UP_Prev_f (void)
 			t = t->upPrev;
 			assert(t);
 			if (t == t->upPrev)
-				Sys_Error("UP_Prev_f: The 'prev':%s entry is equal to '%s'.", t->upPrev->id, t->id);
+				Sys_Error("UP_Prev_f: The 'prev': %s entry is equal to '%s'.", t->upPrev->id, t->id);
 		} while (t->upPrev && !UP_TechGetsDisplayed(t));
 
 		if (UP_TechGetsDisplayed(t)) {
@@ -1224,7 +1225,7 @@ static void UP_Next_f (void)
 		do {
 			t = t->upNext;
 			if (t == t->upNext)
-				Sys_Error("UP_Next_f: The 'next':%s entry is equal to '%s'.", t->upNext->id, t->id);
+				Sys_Error("UP_Next_f: The 'next': %s entry is equal to '%s'.", t->upNext->id, t->id);
 		} while (t->upNext && !UP_TechGetsDisplayed(t));
 
 		if (UP_TechGetsDisplayed(t)) {
@@ -1530,7 +1531,6 @@ static void UP_SetMailButtons_f (void)
 /**
  * @brief Start the mailclient
  * @sa UP_MailClientClick_f
- * @note use TEXT_UFOPEDIA_MAIL in mn.menuText array (33)
  * @sa CP_GetUnreadMails
  * @sa CL_EventAddMail_f
  * @sa MS_AddNewMessage
@@ -1673,7 +1673,7 @@ static void UP_SetAllMailsRead_f (void)
 /**
  * @brief Increases the number of the weapon to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
- * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's usable and needed in the equipment code, too
  */
 static void UP_IncreaseWeapon_f (void)
 {
@@ -1728,7 +1728,7 @@ static void UP_IncreaseWeapon_f (void)
 /**
  * @brief Decreases the number of the firemode to display (for ammo) or the ammo to display (for weapon)
  * @sa UP_ItemDescription
- * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's usable and needed in the equipment code, too
  */
 static void UP_DecreaseWeapon_f (void)
 {
@@ -1783,7 +1783,7 @@ static void UP_DecreaseWeapon_f (void)
 /**
  * @brief Increases the number of the firemode to display
  * @sa UP_ItemDescription
- * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's usable and needed in the equipment code, too
  */
 static void UP_IncreaseFiremode_f (void)
 {
@@ -1802,7 +1802,7 @@ static void UP_IncreaseFiremode_f (void)
 /**
  * @brief Decreases the number of the firemode to display
  * @sa UP_ItemDescription
- * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's useable and needed in the equipment code, too
+ * @todo use the current select objDef_t directly and move this out of the ufopedia code - it's usable and needed in the equipment code, too
  */
 static void UP_DecreaseFiremode_f (void)
 {
@@ -1851,7 +1851,7 @@ void UP_InitStartup (void)
 }
 
 /**
- * @brief Parse the UFOpaedia chapters from UFO-scriptfiles
+ * @brief Parse the UFOpaedia chapters from scripts
  * @param[in] name Chapter ID
  * @param[in] text Text for chapter ID
  * @sa CL_ParseFirstScript
