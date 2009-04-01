@@ -589,7 +589,7 @@ craftitem craft_ammo_alc
 	unlimitedAmmo	true
 	wdamage		10
 	accuracy	0.7
-	wrange		0.4
+	wrange		1.8
 	wspeed		900
 	delay		30
 	size	10	// light
@@ -615,7 +615,7 @@ craftitem craft_ammo_shiva_API
 	ammo		20
 	wdamage		8
 	accuracy	0.3
-	wrange		0.28
+	wrange		1.07
 	wspeed		62
 	delay		3
 	size	10	// light
@@ -631,7 +631,7 @@ craftitem craft_ammo_shiva_HEI
 	ammo		20
 	wdamage		10
 	accuracy	0.2
-	wrange		0.28
+	wrange		1.07
 	wspeed		62
 	delay		3
 	size	10	// light
@@ -669,7 +669,7 @@ craftitem craft_ammo_sparrowhawk
 	ammo		7
 	wdamage		15
 	accuracy	0.4
-	wrange		0.62
+	wrange		2.5
 	wspeed		25
 	delay		45
 }
@@ -700,7 +700,7 @@ craftitem craft_ammo_tr20
 	ammo		12
 	wdamage		13
 	accuracy	0.4
-	wrange		0.28
+	wrange		1.07
 	wspeed		19
 	delay		10
 }
@@ -716,7 +716,7 @@ craftitem craft_weapon_particle_beam
 	wdamage		21
 	speed		0.8
 	maxspeed	0.8
-	wrange		0.45
+	wrange		1.79
 }
 
 craftitem craft_el_targeting
