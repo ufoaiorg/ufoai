@@ -190,7 +190,7 @@ void RADAR_DeactivateRadarOverlay (void)
 {
 	int idx, aircraftIdx;
 
-	/* never deactivate radar if player wants it to be alwayse turned on */
+	/* never deactivate radar if player wants it to be always turned on */
 	if (radarOverlayWasSet)
 		return;
 

@@ -43,7 +43,7 @@ static const int PRODUCE_WORKERS = 10;
 
 static cvar_t* mn_production_limit;		/**< Maximum items in queue. */
 static cvar_t* mn_production_workers;		/**< Amount of hired workers in base. */
-static cvar_t* mn_production_amount;	/**< Amount of the current production; if no production, an invalide value */
+static cvar_t* mn_production_amount;	/**< Amount of the current production; if no production, an invalid value */
 
 /**
  * @brief Calculates the fraction (percentage) of production of an item in 1 hour.
@@ -88,7 +88,7 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
 		return fraction;
 	} else {
 		/* Calculate the fraction of item produced for our amount of workers. */
-		/* NOTE: I changed algorithm for a more realistic one, variing like maxworkers^2 -- Kracken 2007/11/18
+		/* NOTE: I changed algorithm for a more realistic one, varying like maxworkers^2 -- Kracken 2007/11/18
 		 * now, production time is divided by 4 each time you double the number of worker */
 		const float fraction = ((float)maxworkers / (PRODUCE_WORKERS * timeDefault))
 			* ((float)maxworkers / PRODUCE_WORKERS);
@@ -106,8 +106,8 @@ float PR_CalculateProductionPercentDone (const base_t *base, const technology_t 
  * @brief Remove or add the required items from/to the a base.
  * @param[in] base Pointer to base.
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
- * @param[in] reqs The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
- * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
+ * @param[in] reqs The production requirements of the item that is to be produced. These included numbers are multiplied with 'amount')
+ * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-function with checks, otherwise we can make it a 'condition' in order to run this function.
  */
 void PR_UpdateRequiredItemsInBasestorage (base_t *base, int amount, requirements_t *reqs)
 {
@@ -244,11 +244,8 @@ static void PR_EmptyQueue (base_t *base)
 		return;
 
 	queue = &ccs.productions[base->idx];
-
-	/* #ifdef PARANOID ? */
 	if (!queue)
 		return;
-	/* #endif */
 
 	while (queue->numItems)
 		PR_QueueDelete(base, queue, 0);
@@ -294,7 +291,7 @@ static int PR_DisassembleItem (base_t *base, components_t *comp, qboolean calcul
 		size += compOd->size * comp->item_amount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
-			if (!strncmp(compOd->id, "antimatter", 10))
+			if (!strcmp(compOd->id, "antimatter"))
 				B_ManageAntimatter(base, comp->item_amount[i], qtrue);
 			else
 				B_UpdateStorageAndCapacity(base, compOd, comp->item_amount[i], qfalse, qfalse);
@@ -491,7 +488,6 @@ qboolean PR_ProductionAllowed (const base_t* base)
 
 void PR_ProductionInit (void)
 {
-	Com_DPrintf(DEBUG_CLIENT, "Reset all productions\n");
 	mn_production_limit = Cvar_Get("mn_production_limit", "0", 0, NULL);
 	mn_production_workers = Cvar_Get("mn_production_workers", "0", 0, NULL);
 	mn_production_amount = Cvar_Get("mn_production_amount", "0", 0, NULL);
