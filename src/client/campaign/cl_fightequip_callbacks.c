@@ -1,6 +1,7 @@
 /**
  * @file cl_fightequip_callbacks.c
  * @brief Header file for menu callback functions used for base and aircraft equip menu
+ * @todo we should split basedefence and aircraftequipment in 2 files
  */
 
 /*
@@ -58,7 +59,7 @@ void BDEF_MenuInit_f (void)
 	/* initialize selected slot */
 	airequipSelectedSlot = 0;
 	/* update position of the arrow in front of the selected base defence */
-	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+	node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 	if (node)
 		Vector2Set(node->pos, 25, 30);
 }
@@ -86,11 +87,11 @@ void BDEF_ListClick_f (void)
 		airequipSelectedSlot = num;
 
 	/* draw an arrow in front of the selected base defence */
-	node = MN_GetNodeFromCurrentMenu("basedef_slot_list");
+	node = MN_GetNodeByPath("basedefence.basedef_slot_list");
 	if (!node)
 		return;
 	height = node->texh[0];
-	node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+	node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 	if (!node)
 		return;
 	Vector2Set(node->pos, 25, 30 + height * airequipSelectedSlot);
@@ -171,7 +172,7 @@ aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base, const int airequipID)
 		assert(base->numBatteries > 0);
 		if (airequipSelectedSlot >= base->numBatteries) {
 			/* update position of the arrow in front of the selected base defence */
-			menuNode_t *node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 			if (!node)
 				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
@@ -184,7 +185,7 @@ aircraftSlot_t *BDEF_SelectBaseSlot (base_t *base, const int airequipID)
 		assert(base->numLasers > 0);
 		if (airequipSelectedSlot >= base->numLasers) {
 			/* update position of the arrow in front of the selected base defence */
-			menuNode_t *node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 			if (!node)
 				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
@@ -218,7 +219,7 @@ aircraftSlot_t *BDEF_SelectInstallationSlot (installation_t *installation, const
 		assert(installation->installationTemplate->maxBatteries > 0);
 		if (airequipSelectedSlot >= installation->installationTemplate->maxBatteries) {
 			/* update position of the arrow in front of the selected base defence */
-			menuNode_t *node = MN_GetNodeFromCurrentMenu("basedef_selected_slot");
+			menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_selected_slot");
 			if (!node)
 				Sys_Error("BDEF_SelectBaseSlot: Could not find node basedef_selected_slot");
 			Vector2Set(node->pos, 25, 30);
@@ -425,17 +426,37 @@ static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installati
 /**
  * @brief Highlight selected zone
  */
-static void AIM_DrawSelectedZone (void)
+static void BDEF_DrawSelectedZone (void)
 {
 	menuNode_t *node;
 
-	node = MN_GetNodeFromCurrentMenu("airequip_zone_select1");
+	node = MN_GetNodeByPath("basedefence.airequip_zone_select1");
 	if (airequipSelectedZone == ZONE_MAIN)
 		MN_HideNode(node);
 	else
 		MN_UnHideNode(node);
 
-	node = MN_GetNodeFromCurrentMenu("airequip_zone_select2");
+	node = MN_GetNodeByPath("basedefence.airequip_zone_select2");
+	if (airequipSelectedZone == ZONE_AMMO)
+		MN_HideNode(node);
+	else
+		MN_UnHideNode(node);
+}
+
+/**
+ * @brief Highlight selected zone
+ */
+static void AIM_DrawSelectedZone (void)
+{
+	menuNode_t *node;
+
+	node = MN_GetNodeByPath("aircraft_equip.airequip_zone_select1");
+	if (airequipSelectedZone == ZONE_MAIN)
+		MN_HideNode(node);
+	else
+		MN_UnHideNode(node);
+
+	node = MN_GetNodeByPath("aircraft_equip.airequip_zone_select2");
 	if (airequipSelectedZone == ZONE_AMMO)
 		MN_HideNode(node);
 	else
@@ -456,7 +477,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
 	for (i = 0; i < 8; i++)
 		Cvar_Set(va("mn_aircraft_item_model_slot%i", i), "");
 
-	node = MN_GetNodeFromCurrentMenu("airequip_slot0");
+	node = MN_GetNodeByPath("aircraft_equip.airequip_slot0");
 	for (i = 0; node && i < AIR_POSITIONS_MAX; node = node->next) {
 		if (strncmp(node->name, "airequip_slot", 13) != 0)
 			continue;
@@ -508,7 +529,7 @@ static void AIM_DrawAircraftSlots (const aircraft_t *aircraft)
  */
 static inline void AIM_EmphazeAmmoSlotText (void)
 {
-	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone2");
+	menuNode_t *node = MN_GetNodeByPath("aircraft_equip.airequip_text_zone2");
 	if (!node)
 		return;
 	VectorSet(node->color, 1.0f, .0f, .0f);
@@ -521,7 +542,7 @@ static inline void AIM_EmphazeAmmoSlotText (void)
  */
 static inline void AIM_NoEmphazeAmmoSlotText (void)
 {
-	menuNode_t *node = MN_GetNodeFromCurrentMenu("airequip_text_zone2");
+	menuNode_t *node = MN_GetNodeByPath("aircraft_equip.airequip_text_zone2");
 	if (!node)
 		return;
 	VectorSet(node->color, 1.0f, 1.0f, 1.0f);
@@ -608,9 +629,9 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	/* Check if we can change to laser or missile */
 	if (base && base->numBatteries > 0 && base->numLasers > 0) {
-		node = MN_GetNodeFromCurrentMenu("basedef_button_missile");
+		node = MN_GetNodeByPath("basedefence.basedef_button_missile");
 		MN_UnHideNode(node);
-		node = MN_GetNodeFromCurrentMenu("basedef_button_laser");
+		node = MN_GetNodeByPath("basedefence.basedef_button_laser");
 		MN_UnHideNode(node);
 	}
 
@@ -721,7 +742,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	MN_RegisterText(TEXT_AIREQUIP_2, smallbuffer2);
 
 	/* Draw selected zone */
-	AIM_DrawSelectedZone();
+	BDEF_DrawSelectedZone();
 
 	noparams = qfalse;
 }
@@ -780,7 +801,7 @@ void AIM_AircraftEquipMenuUpdate_f (void)
 	/* Reset value of noparams */
 	noparams = qfalse;
 
-	node = MN_GetNodeFromCurrentMenu("aircraftequip");
+	node = MN_GetNodeByPath("aircraft_equip.aircraftequip");
 
 	/* we are not in the aircraft menu */
 	if (!node) {
