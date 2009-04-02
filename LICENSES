@@ -2342,12 +2342,6 @@ base/sound/weapons/smg2.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/smokeexplosion.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/sniperrifle.wav | GNU General Public License 2.0 | Alex Parker
 base/sound/weapons/stun_grenade.wav | GNU General Public License 2.0 | Karen Rei Pease
-base/textures/tex_alienbase/floor01.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
-base/textures/tex_alienbase/floor02.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar) | GPL2 photo by Martin Gerhardy
-base/textures/tex_alienbase/wall01.jpg | GNU General Public License 2.0 | Werner "hoehrer" Höhrer | GPL2 photo by Martin Gerhardy
-base/textures/tex_alienbase/wall01_a.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_alienbase/wall01_b.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
-base/textures/tex_alienbase/wall01_c.jpg | GNU General Public License 2.0 | John W. Bjerk (eleazar)
 base/textures/tex_base/barrel_rst_top.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/barrel_rst_top2.jpg | GNU General Public License 2.0 | Nexuiz GPLed Data
 base/textures/tex_base/bollard.jpg | GNU General Public License 2.0 | XaverXN
