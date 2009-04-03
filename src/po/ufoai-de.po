@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-03-28 22:18+0100\n"
-"PO-Revision-Date: 2009-03-29 21:31+0100\n"
+"PO-Revision-Date: 2009-04-02 23:08+0100\n"
 "Last-Translator: Borsti67 <i-c-q@hiereinwerfen.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgstr "Kleiner Wald"
 
 #: ../base/maps/forest.ump:400
 msgid "Little bungalo in forest"
-msgstr "Ein kleines Bungalo im Wald"
+msgstr "Ein kleiner Bungalow im Wald"
 
 #: ../base/maps/frozen.ump:251
 msgid "Snow"
@@ -134,7 +134,7 @@ msgstr "Spedition"
 
 #: ../base/maps/stadium.ump:43
 msgid "Stadium"
-msgstr "Stadium"
+msgstr "Stadion"
 
 #: ../base/maps/transport.ump:42
 msgid "Transport"
@@ -146,11 +146,11 @@ msgstr "Tropisch, Fluss"
 
 #: ../base/maps/tropic.ump:373
 msgid "Tropical drug"
-msgstr "Tropisch Drogen"
+msgstr "Tropisch, Drogen"
 
 #: ../base/maps/tropic.ump:398
 msgid "Tropical UFO"
-msgstr "Tropisches Ufo"
+msgstr "Tropisch, UFO"
 
 #: ../base/maps/ufocrash.ump:320
 #: client/campaign/cp_missions.c:451
@@ -183,7 +183,7 @@ msgstr "Firebird D"
 
 #: ../base/ufos/aircraftmanagement.ufo:127
 msgid "Herakles-class Heavy Lifter"
-msgstr "Herakles-class Schwerer Transporter"
+msgstr "Herakles-Klasse Schwerer Transporter"
 
 #: ../base/ufos/aircraftmanagement.ufo:128
 msgid "Herakles D"
@@ -1142,7 +1142,7 @@ msgstr "Alienaktivitäten gemeldet -- %s"
 #: ../base/ufos/events.ufo:301
 msgid "mail_alien_activity_reported"
 msgstr ""
-"Herr Kommandant,Wir haben die Bestätigung von Aktivitäten Außerirdischer in %s. Zivilisten sind in Gefahr; Ich schlage vor, dass wir sofort Truppen dorthin entsenden. Weidmanns Heil.\n"
+"Herr Kommandant,Wir haben die Bestätigung von Aktivitäten Außerirdischer in %s. Zivilisten sind in Gefahr; Ich schlage vor, dass wir sofort Truppen dorthin entsenden. Waidmanns Heil.\n"
 "\n"
 "Mit freundlichen Grüßen,\n"
 "\n"
@@ -1267,9 +1267,8 @@ msgstr "Radarturm"
 
 #: ../base/ufos/installation.ufo:20
 #: ../base/ufos/menu_geoscape.ufo:1362
-#, fuzzy
 msgid "UFO Yard"
-msgstr "UFO Hof"
+msgstr "UFO Lagerhalle"
 
 #: ../base/ufos/installation.ufo:32
 #: ../base/ufos/menu_geoscape.ufo:1325
@@ -1326,7 +1325,7 @@ msgstr "Italienisch"
 
 #: ../base/ufos/language.ufo:198
 msgid "Korean"
-msgstr "koreanisch"
+msgstr "Koreanisch"
 
 #: ../base/ufos/language.ufo:208
 msgid "Dutch"
@@ -1400,12 +1399,12 @@ msgstr "Ein Industriekomplex."
 
 #: ../base/ufos/maps.ufo:459
 msgid "A river runs through this piece of jungle."
-msgstr "Ein Fluss der durch diesen Teil des Jungels fliesst."
+msgstr "Ein Stück Dschungel, duch den ein Fluss fliesst."
 
 #: ../base/ufos/maps.ufo:494
 #: ../base/ufos/maps.ufo:530
 msgid "A cleared stretch of land in the middle of the jungle."
-msgstr "Eine Lichtung in mittem vom Jungel."
+msgstr "Eine Lichtung inmitten des Dschungels."
 
 #: ../base/ufos/maps.ufo:568
 #: ../base/ufos/maps.ufo:599
@@ -1417,7 +1416,7 @@ msgstr "Eine friedliche Wohngegend in der Vorstadt."
 #: ../base/ufos/maps.ufo:693
 #: ../base/ufos/maps.ufo:729
 msgid "Aliens are up to no good in this sparsely populated forest region."
-msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Gegend vor."
+msgstr "Aliens haben nichts gutes mit dieser spärlich besiedelten Waldgegend vor."
 
 #: ../base/ufos/maps.ufo:765
 #: ../base/ufos/maps.ufo:801
@@ -1430,11 +1429,11 @@ msgstr "Eine Ausgrabungsstätte die unter einem Alienangriff leidet."
 
 #: ../base/ufos/maps.ufo:880
 msgid "An estate owned by rich and influential people."
-msgstr "Ein Anwesen von Reichen und Einflusshabenden Leuten"
+msgstr "Ein Anwesen von reichen und einflussreichen Leuten"
 
 #: ../base/ufos/maps.ufo:919
 msgid "A small office in a mountainous region."
-msgstr "Ein kleines Büro in einer Bergreichen Gegend"
+msgstr "Ein kleines Büro in einer bergigen Gegend"
 
 #: ../base/ufos/maps.ufo:960
 msgid "A kind of communal gathering centre annex foraging facility, known as a supermarket."
@@ -1454,11 +1453,11 @@ msgstr "Bunker aus einem vorherigem Konflikt."
 
 #: ../base/ufos/maps.ufo:1127
 msgid "A hydroelectricity dam that is threatened by the alien invaders."
-msgstr "Ein Wasserkraftwerk, dass durch außerirdische Eindringlinge bedroht ist."
+msgstr "Ein Wasserkraftwerk, das durch außerirdische Eindringlinge bedroht ist."
 
 #: ../base/ufos/maps.ufo:1166
 msgid "A classic eastern suburban area."
-msgstr "Eine klassiche Vorortliche Gegend"
+msgstr "Eine klassische östlich-vorortliche Gegend"
 
 #: ../base/ufos/maps.ufo:1205
 msgid "A small industrial area."
@@ -1466,19 +1465,19 @@ msgstr "Ein kleines Industriegebiet."
 
 #: ../base/ufos/maps.ufo:1244
 msgid "A stadium used for various recreational events."
-msgstr "Ein Stadium welches für verschiedene Veranstaltungsmöglichkeiten verwendet wird."
+msgstr "Ein Stadion, welches für verschiedene Veranstaltungsmöglichkeiten verwendet wird."
 
 #: ../base/ufos/maps.ufo:1286
 msgid "A tropical area where several suspected criminals have made their homes."
-msgstr "Ein tropisches Gebiet, wo mehrere, möglicherweise kriminelle, Einwohner leben."
+msgstr "Ein tropisches Gebiet, mit möglicherweise kriminellen Einwohnern."
 
 #: ../base/ufos/maps.ufo:1337
 msgid "A small estate in the mountains"
-msgstr "Ein kleines Anwesen in einer Bergreichen Gegend"
+msgstr "Ein kleines Anwesen in den Bergen"
 
 #: ../base/ufos/maps.ufo:1379
 msgid "A crashed Scout UFO"
-msgstr "Abgestürztes UFO"
+msgstr "Abgestürztes Kundschafter-UFO"
 
 #: ../base/ufos/maps.ufo:1409
 msgid "A farmhouse surrounded by fields and sheds. A UFO has landed in one of the fields."
@@ -1491,16 +1490,16 @@ msgstr "Ein eher altmodischer Vorortsbezirk."
 #: ../base/ufos/maps.ufo:1495
 #: ../base/ufos/maps.ufo:1535
 msgid "A small neighbourhood in a warm urban region."
-msgstr "Eine kleine Wohngegend in deiner warmen Städtischen Region"
+msgstr "Eine kleine Wohngegend in einer warmen städtischen Region."
 
 #: ../base/ufos/maps.ufo:1575
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
-msgstr "Tankstelle"
+msgstr "Ein Ort, zu dem die Bürger kommen, um die Tanks ihrer Fahrzeuge zu befüllen."
 
 #: ../base/ufos/maps.ufo:1617
 #: ../base/ufos/maps.ufo:1656
 msgid "An urban district in an oriental region."
-msgstr "Ein Stadtbezirk einer orientalischen Region"
+msgstr "Ein Stadtbezirk einer orientalischen Region."
 
 #: ../base/ufos/maps.ufo:1695
 msgid "A subway station in a suburban part of town."
@@ -1562,19 +1561,19 @@ msgstr "Ein Bomber ist mitten in einer Stadt gelandet."
 
 #: ../base/ufos/maps.ufo:2328
 msgid "A place where people come to relax and mingle."
-msgstr "Ein Ort and den sich Leute treffen und entspannen."
+msgstr "Ein Ort an dem sich Leute treffen und entspannen."
 
 #: ../base/ufos/maps.ufo:2369
 msgid "A laboratory where they examined found UFO wreck tiles."
-msgstr "Ein Labor in dem Ufowrackteile untersucht werden."
+msgstr "Ein Labor in dem UFO-Wrackteile untersucht werden."
 
 #: ../base/ufos/maps.ufo:2410
 msgid "A fuel depot the aliens try to destroy."
-msgstr "Ein Treibstoffdepot welches Aliens vernichten wollen"
+msgstr "Ein Treibstoffdepot welches Aliens vernichten wollen."
 
 #: ../base/ufos/maps.ufo:2444
 msgid "Wilderness terror mission."
-msgstr "Terrormission in der Wildniss."
+msgstr "Terrormission in der Wildnis."
 
 #: ../base/ufos/maps.ufo:2485
 msgid "UFO Crashsite."
@@ -1798,7 +1797,7 @@ msgstr "Zurück"
 
 #: ../base/ufos/menu_aircraft.ufo:97
 msgid "Description"
-msgstr "Beschreibung:"
+msgstr "Beschreibung"
 
 #: ../base/ufos/menu_aircraft.ufo:102
 #: ../base/ufos/menu_hire.ufo:560
@@ -1827,7 +1826,7 @@ msgstr "Soldaten Ausrüstung"
 
 #: ../base/ufos/menu_aircraft_equip.ufo:69
 msgid "Available equipment:"
-msgstr "Verfügbare Ausrüstung"
+msgstr "Verfügbare Ausrüstung:"
 
 #: ../base/ufos/menu_aircraft_equip.ufo:108
 msgid "Selected item:"
@@ -1913,7 +1912,7 @@ msgstr "Soldat hinzufügen/entfernen"
 #: ../base/ufos/menu_aircraft_soldiers.ufo:66
 #: ../base/ufos/menu_geoscape.ufo:928
 msgid "Equip soldiers"
-msgstr "Soldat ausrüsten"
+msgstr "Soldaten ausrüsten"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:135
 msgid "Soldier carries equipment"
@@ -1967,7 +1966,7 @@ msgstr "Verstand:"
 #: ../base/ufos/menu_multiplayer_team.ufo:503
 #: ../base/ufos/menu_physdat.ufo:76
 msgid "Close Combat:"
-msgstr "Nahkampf"
+msgstr "Nahkampf:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:515
 #: ../base/ufos/menu_equipment.ufo:500
@@ -2122,7 +2121,7 @@ msgstr "Teamchat"
 #: ../base/ufos/menu_althud.ufo:112
 #: ../base/ufos/menu_hud.ufo:840
 msgid "Show chat history"
-msgstr "Zeige Chatlog an."
+msgstr "Zeige Chatlog"
 
 #: ../base/ufos/menu_althud.ufo:136
 #: ../base/ufos/menu_hud.ufo:863
@@ -2443,7 +2442,7 @@ msgstr "Lade die Kampagne neu"
 
 #: ../base/ufos/menu_campaign.ufo:240
 msgid "Are you sure that you really want to reload the last automatically saved campaign state?"
-msgstr "Sind Sie sich sicher, das letzte Kampagnen-Autosave laden zu wollen?"
+msgstr "Wollen Sie wirklich das letzte Kampagnen-Autosave laden?"
 
 #: ../base/ufos/menu_campaign.ufo:249
 msgid "Reload the last automatically saved campaign state"
@@ -2477,7 +2476,7 @@ msgstr "Erweiterung"
 #: ../base/ufos/menu_inventory.ufo:62
 #: ../base/ufos/menu_multiplayer_team.ufo:56
 msgid "Headgear"
-msgstr "Kopfausrüstung"
+msgstr "Kopf"
 
 #: ../base/ufos/menu_equipment.ufo:65
 #: ../base/ufos/menu_inventory.ufo:71
@@ -2618,15 +2617,15 @@ msgstr " [angehalten]"
 
 #: ../base/ufos/menu_geoscape.ufo:162
 msgid "Time lapse: 5 seconds"
-msgstr "Zeitraffer: 5 sekunden"
+msgstr "Zeitraffer: 5 Sekunden"
 
 #: ../base/ufos/menu_geoscape.ufo:174
 msgid "Time lapse: 5 minutes"
-msgstr "Zeitraffer: 5 minutes"
+msgstr "Zeitraffer: 5 Minuten"
 
 #: ../base/ufos/menu_geoscape.ufo:187
 msgid "Time lapse: 20 minutes"
-msgstr "Zeitraffer: 20 minutes"
+msgstr "Zeitraffer: 20 Minuten"
 
 #: ../base/ufos/menu_geoscape.ufo:199
 msgid "Time lapse: 1 hour"
@@ -2689,7 +2688,7 @@ msgstr "Zeige Radar Reichweite"
 #: ../base/ufos/menu_geoscape.ufo:444
 #: ../base/ufos/menu_geoscape.ufo:3071
 msgid "Show XVI map"
-msgstr "Zeige XVI Map"
+msgstr "Zeige XVI Karte"
 
 #: ../base/ufos/menu_geoscape.ufo:458
 msgid "Open up messages"
@@ -2697,7 +2696,7 @@ msgstr "Weitere Nachrichten anzeigen"
 
 #: ../base/ufos/menu_geoscape.ufo:477
 msgid "Change message and pause settings"
-msgstr "Änderung der Nachrichten und Pauseneinstellungen"
+msgstr "Änderung der Nachrichten- und Pauseneinstellungen"
 
 #: ../base/ufos/menu_geoscape.ufo:488
 msgid "Center objects on the map"
@@ -2798,7 +2797,7 @@ msgstr "nicht implementiert"
 
 #: ../base/ufos/menu_geoscape.ufo:959
 msgid "Lift aircraft"
-msgstr "Flugzeugliste"
+msgstr "Flugzeug starten"
 
 #: ../base/ufos/menu_geoscape.ufo:977
 msgid "Disable Power Plant"
@@ -2838,7 +2837,7 @@ msgstr "Starte mit Angestellten:"
 
 #: ../base/ufos/menu_geoscape.ufo:1165
 msgid "Employees already hired at campaign start"
-msgstr "Angestelle werden schon zu Beginn der Kampagne angestellt"
+msgstr "Angestelle sind schon zu Beginn der Kampagne vorhanden"
 
 #: ../base/ufos/menu_geoscape.ufo:1175
 msgid "Start with buildings"
@@ -2846,7 +2845,7 @@ msgstr "Starte mit Gebäuden:"
 
 #: ../base/ufos/menu_geoscape.ufo:1182
 msgid "Buildings already built in the initial base"
-msgstr "Gebäude wurden schon in der Startbasis gebaut"
+msgstr "Die Starbasis enthält bereits Gebäude"
 
 #: ../base/ufos/menu_geoscape.ufo:1206
 #: ../base/ufos/menu_geoscape.ufo:1622
@@ -2863,7 +2862,7 @@ msgstr "Neue externe Einrichtung"
 
 #: ../base/ufos/menu_geoscape.ufo:1253
 msgid "Type"
-msgstr "Art:"
+msgstr "Art"
 
 #: ../base/ufos/menu_geoscape.ufo:1260
 msgid "Build Time"
@@ -2871,7 +2870,7 @@ msgstr "Bauzeit"
 
 #: ../base/ufos/menu_geoscape.ufo:1268
 msgid "Cost"
-msgstr "Kosten:"
+msgstr "Kosten"
 
 #: ../base/ufos/menu_geoscape.ufo:1288
 msgid "Radar tower"
@@ -2888,11 +2887,11 @@ msgstr "0 Tage"
 
 #: ../base/ufos/menu_geoscape.ufo:1441
 msgid "Installation limit reached. Build more bases."
-msgstr ""
+msgstr "Es können keine weiteren externen Einrichtungen erstellt werden. Erst weitere Basen bauen!"
 
 #: ../base/ufos/menu_geoscape.ufo:1448
 msgid "Base limit reached."
-msgstr "Base Limit erreicht"
+msgstr "Basis-Limit erreicht."
 
 #: ../base/ufos/menu_geoscape.ufo:1458
 #: ../base/ufos/menu_geoscape.ufo:1669
@@ -2907,12 +2906,11 @@ msgstr "Neuer Radarturm"
 
 #: ../base/ufos/menu_geoscape.ufo:1537
 msgid "New SAM site"
-msgstr "Neue Luftabwehr Stellung"
+msgstr "Neue Luftabwehr-Stellung"
 
 #: ../base/ufos/menu_geoscape.ufo:1545
-#, fuzzy
 msgid "New UFO yard"
-msgstr "New UFO yard"
+msgstr "Neue UFO Lagerhalle"
 
 #: ../base/ufos/menu_geoscape.ufo:1567
 #: ../base/ufos/menu_geoscape.ufo:1709
@@ -2925,7 +2923,7 @@ msgstr "Baue einen Radarturm"
 
 #: ../base/ufos/menu_geoscape.ufo:1662
 msgid "No manangeable options for a radartower"
-msgstr "Keine Manage-optionen für Radarturm"
+msgstr "Keine Optionen für Radarturm einstellbar"
 
 #: ../base/ufos/menu_geoscape.ufo:1689
 msgid "Installation Status"
@@ -2937,7 +2935,7 @@ msgstr "Bauzeit:"
 
 #: ../base/ufos/menu_geoscape.ufo:1749
 msgid "Manage"
-msgstr "Manage"
+msgstr "Verwalten"
 
 #: ../base/ufos/menu_geoscape.ufo:1750
 msgid "Manage installation"
@@ -2987,7 +2985,7 @@ msgstr "Basis:"
 
 #: ../base/ufos/menu_geoscape.ufo:1864
 msgid "Surface-to-air missile site:"
-msgstr ""
+msgstr "Boden-Luft-Raketenabwehr:"
 
 #: ../base/ufos/menu_geoscape.ufo:1931
 msgid "Select aircraft"
@@ -3031,7 +3029,7 @@ msgstr "Änderungen zurücksetzen"
 
 #: ../base/ufos/menu_geoscape.ufo:2201
 msgid "Notify types:"
-msgstr "Benachrichtigungstyp"
+msgstr "Benachrichtigungstyp:"
 
 #: ../base/ufos/menu_geoscape.ufo:2209
 msgid ""
@@ -3171,7 +3169,7 @@ msgstr "Angestellten umbenennen"
 
 #: ../base/ufos/menu_hire.ufo:476
 msgid "Occupation"
-msgstr "Besatzung"
+msgstr "Tätigkeit"
 
 #: ../base/ufos/menu_hire.ufo:566
 msgid "Workers"
@@ -3341,7 +3339,7 @@ msgstr "Nicht verbunden"
 
 #: ../base/ufos/menu_irc.ufo:199
 msgid "You are not connected to the lobby. Do you want to connect?"
-msgstr "Sie sind nicht mit dem Lobby Server verbunden. Möchten Sie das tun?"
+msgstr "Sie sind nicht mit der Lobby verbunden. Möchten Sie die Verbindung herstellen?"
 
 #: ../base/ufos/menu_irc.ufo:206
 #: ../base/ufos/menu_multiplayer.ufo:221
@@ -3390,7 +3388,7 @@ msgstr "UFO ersetzen"
 
 #: ../base/ufos/menu_lostwon.ufo:251
 msgid "Replace stored UFO with actual recovered one"
-msgstr "Ersetze aktuel gelagertes Ufo mit dem neuen Ufo"
+msgstr "Ersetze derzeit gelagertes UFO mit dem neuen"
 
 #: ../base/ufos/menu_lostwon.ufo:273
 msgid "Nation:"
@@ -5612,9 +5610,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1022
-#, fuzzy
 msgid "Electromagnetic Rifle Magazine"
-msgstr "Elektromagentisches Gewehr"
+msgstr "Magazin für Elektromagnetisches Gewehr"
 
 #: ../base/ufos/research.ufo:1043
 msgid "combatknife_txt"
@@ -13348,9 +13345,8 @@ msgid "Replace %s at %s (%i stored available)\n"
 msgstr "Lebendige %s (%i verfügbar)"
 
 #: client/campaign/cl_uforecovery_callbacks.c:310
-#, fuzzy
 msgid "No ufo hangar or ufo yard available."
-msgstr "Kein Ufo hangar oder Ufo-Lagermöglchkeit verfügbar"
+msgstr "Kein UFO Hangar/keine UFO-Lagerhalle verfügbar."
 
 #: client/campaign/cl_uforecovery_callbacks.c:365
 #, c-format
@@ -13482,9 +13478,9 @@ msgid "Insufficient fuel."
 msgstr "Nicht genug Treibstoff."
 
 #: client/campaign/cp_aircraft.c:2101
-#, fuzzy, c-format
+#, c-format
 msgid "Craft %s has not enough fuel to intercept UFO: fly back to base %s."
-msgstr "%s wurde in Basis %s aufgetankt."
+msgstr "Flugzeug % hat nicht genug Treibstoff, um das UFO abzufangen. Rückflug zu Basis %s."
 
 #: client/campaign/cp_aircraft_callbacks.c:165
 msgid ""
@@ -13762,9 +13758,8 @@ msgid "Build a %s first."
 msgstr "Zuerst muss ein %s gebaut werden."
 
 #: client/campaign/cp_base_callbacks.c:310
-#, fuzzy
 msgid "Build at least a second base to transfer equipment or personnel"
-msgstr "Ausrüstung oder Personal transferieren"
+msgstr "Es ist mindestens eine weitere Basis nötig, um Ausrüstung oder Personal zu transferieren"
 
 #: client/campaign/cp_base_callbacks.c:337
 #, c-format
@@ -14233,11 +14228,8 @@ msgid "This isn't your round\n"
 msgstr "Du bist nicht dran\n"
 
 #: client/cl_actor.c:1336
-#, fuzzy
 msgid "You cannot reload this unknown item.\n"
-msgstr ""
-"Dieser unbekannte Gegenstand kann nicht verwendet werden.\n"
-"Er muss erst erforscht werden.\n"
+msgstr "Dieser Gegenstand kann nicht nachgeladen werden, er muss erst erforscht werden.\n"
 
 #: client/cl_actor.c:2003
 #, c-format
@@ -14629,13 +14621,10 @@ msgstr ""
 "%s %i (%i übrige ZE)\n"
 
 #: client/cl_hud.c:1360
-#, fuzzy
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
-msgstr ""
-"Dieser unbekannte Gegenstand kann nicht geladen werden.\n"
-"Er muss erst erforscht werden.\n"
+msgstr "Dieser Gegenstand kann nicht benutzt werden, er muss erst erforscht werden.\n"
 
 #: client/cl_hud.c:1377
 #, c-format
