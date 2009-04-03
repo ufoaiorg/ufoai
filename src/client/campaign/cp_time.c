@@ -139,7 +139,7 @@ void CL_GameTimeFast (void)
  * @brief Set game time speed
  * @param[in] gameLapseValue The value to set the game time to.
  */
-void CL_SetGameTime (int gameLapseValue)
+static void CL_SetGameTime (int gameLapseValue)
 {
 	if (gameLapseValue == gameLapse)
 		return;
@@ -149,10 +149,8 @@ void CL_SetGameTime (int gameLapseValue)
 	if (!ccs.campaignStats.basesBuild)
 		return;
 
-	if (gameLapse == NUM_TIMELAPSE - 1)
+	if (gameLapseValue < 0 || gameLapseValue >= NUM_TIMELAPSE)
 		return;
-
-	assert(gameLapse < NUM_TIMELAPSE);
 
 	gameLapse = gameLapseValue;
 

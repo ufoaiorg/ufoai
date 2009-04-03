@@ -30,7 +30,6 @@ void CL_UpdateTime(void);
 void CL_GameTimeStop(void);
 void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
-void CL_SetGameTime(int gameLapseValue);
 void CL_SetGameTime_f(void);
 
 qboolean Date_LaterThan(date_t now, date_t compare);
