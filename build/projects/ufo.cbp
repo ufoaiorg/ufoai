@@ -497,6 +497,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_inventory.h" />
+		<Unit filename="..\..\src\client\cl_inventory_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_inventory_callbacks.h" />
 		<Unit filename="..\..\src\client\cl_irc.c">
 			<Option compilerVar="CC" />
 		</Unit>

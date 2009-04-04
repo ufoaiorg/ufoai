@@ -418,7 +418,7 @@ menu equipment
 
 	string weapon_name
 	{
-		string	"*cvar mn_researchedlinkname"
+		string	"*cvar mn_linkname"
 		pos		"170 707"
 		size	"200 16"
 		textalign	cc
@@ -427,7 +427,6 @@ menu equipment
 
 	pic firemode_dec
 	{
-		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
 		pos		"160 725"
@@ -439,7 +438,6 @@ menu equipment
 
 	pic firemode_inc
 	{
-		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
 		pos		"367 725"
@@ -451,7 +449,6 @@ menu equipment
 
 	string header_firemode
 	{
-		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string	"_Firemode:"
 		pos		"30 725"
 		size	"120 16"
@@ -460,7 +457,6 @@ menu equipment
 
 	string firemode_name
 	{
-		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string	"*cvar mn_firemodename"
 		pos		"170 725"
 		size	"200 16"

@@ -1310,10 +1310,9 @@ void AIM_ResetEquipAircraftMenu (void)
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
 	Cvar_Set("mn_upmodel_top", "");
-	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_researchedlinkname", "");
-	Cvar_Set("mn_upresearchedlinknametooltip", "");
+	Cvar_Set("mn_displayitem", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changeitem", "0"); /* use strings here - no int */
+	Cvar_Set("mn_linkname", "");
 
 	MN_RegisterText(TEXT_STANDARD, "");
 }

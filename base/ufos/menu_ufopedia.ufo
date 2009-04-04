@@ -285,8 +285,7 @@ menu ufopedia
 	string weapon_name
 	{
 		visiblewhen "*cvar:mn_displayweapon > 0"
-		tooltip		"*cvar mn_upresearchedlinknametooltip"
-		string		"*cvar mn_researchedlinkname"
+		string		"*cvar mn_linkname"
 		pos			"285 704"
 		size		"230 20"
 		textalign	uc

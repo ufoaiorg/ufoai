@@ -11,6 +11,7 @@ CLIENT_SRCS = \
 	client/cl_http.c \
 	client/cl_hud.c \
 	client/cl_inventory.c \
+	client/cl_inventory_callbacks.c \
 	client/cl_input.c \
 	client/cl_irc.c \
 	client/cl_joystick.c \

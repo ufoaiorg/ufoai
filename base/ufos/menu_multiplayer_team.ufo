@@ -346,96 +346,84 @@ menu mp_team_edit
 		wheel
 		textid		TEXT_STANDARD
 	}
-	pic weapon_dec
+	
+	/**
+	 * @param[in] <1> 1 or 2 for ammo or weapon. 0 for deactivate them
+	 */
+	confunc change_action {
+		cmd "set mn_changeitem <1>;"
+		if "*cvar:mn_changeitem != 0" {
+			// only show them when the object info window is active  
+			if "*node:menu.item_name@invis == 0" {
+				*action_dec invis false 
+				*action_inc invis false 
+				*header_item invis false
+				if "*cvar:mn_changeitem == 2" {
+					cmd "hide_firemode true;"
+				} else {
+					cmd "hide_firemode false;"
+				}				
+			}
+		} else {
+			*action_dec invis true 
+			*action_inc invis true 
+			*header_item invis true
+			cmd "hide_firemode true;" 
+		}
+	}
+
+	pic action_dec
 	{
-		visiblewhen "*cvar:mn_changeweapon == 1"
-		tooltip "_Previous weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos		"160 707"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		click
-		{
-			cmd "mn_decreaseweapon;"
-		}
+		click	{ cmd "mn_decreaseitem;" }
 	}
 
-	pic ammo_dec
+	pic action_inc
 	{
-		visiblewhen "*cvar:mn_changeweapon == 2"
-		tooltip "_Previous ammunition compatible with this weapon"
-		image	menu/buttons_small
-		pos		"160 707"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_decreaseweapon;"
-		}
-	}
-
-	pic weapon_inc
-	{
-		visiblewhen "*cvar:mn_changeweapon == 1"
-		tooltip "_Next weapon chambered for this ammunition"
 		image	menu/buttons_small
 		pos		"367 707"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		click
-		{
-			cmd "mn_increaseweapon;"
-		}
+		click	{ cmd "mn_increaseitem;" }
 	}
-
-	pic ammo_inc
+	
+	string header_item
 	{
-		visiblewhen "*cvar:mn_changeweapon == 2"
-		tooltip "_Next ammunition compatible with this weapon"
-		image	menu/buttons_small
-		pos		"367 707"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_increaseweapon;"
-		}
-	}
-
-	string header_weapon
-	{
-		visiblewhen "*cvar:mn_displayweapon == 1"
-		string	"_With weapon:"
+		string	"_With:"
 		pos		"30 708"
 		size	"130 16"
 		font	f_small
 	}
 
-	string header_ammo
+	string item_name
 	{
-		visiblewhen "*cvar:mn_displayweapon == 2"
-		string	"_With ammo:"
-		pos		"30 708"
-		size	"130 16"
-		font	f_small
-	}
-
-	string weapon_name
-	{
-		string	"*cvar mn_researchedlinkname"
+		string	"*cvar mn_linkname"
 		pos		"170 707"
 		size	"200 16"
 		textalign	cc
 		font	f_small
 	}
 
+	/**
+	 * @param[in] <1> true or false to hide or show the firemode nodes
+	 */
+	confunc hide_firemode {
+		// only show them when the object info window is active  
+		if "*node:menu.item_name@invis == 0" {
+			*firemode_dec invis <1>
+			*firemode_inc invis <1>
+			*header_firemode invis <1>
+			*firemode_name invis <1>
+		}
+	}
+
 	pic firemode_dec
 	{
-		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
 		pos		"160 725"
@@ -447,7 +435,6 @@ menu mp_team_edit
 
 	pic firemode_inc
 	{
-		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
 		pos		"367 725"
@@ -459,7 +446,6 @@ menu mp_team_edit
 
 	string header_firemode
 	{
-		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string	"_Firemode:"
 		pos		"30 725"
 		size	"120 16"
@@ -468,7 +454,6 @@ menu mp_team_edit
 
 	string firemode_name
 	{
-		visiblewhen "*cvar:mn_displayfiremode == 1"
 		string	"*cvar mn_firemodename"
 		pos		"170 725"
 		size	"200 16"
@@ -535,18 +520,16 @@ menu mp_team_edit
 		*itemname invis false
 		*itemmodel invis false
 		*description invis false
-		*weapon_dec invis false
-		*ammo_dec invis false
-		*weapon_inc invis false
-		*ammo_inc invis false
-		*header_weapon invis false
-		*header_ammo invis false
-		*weapon_name invis false
-		*firemode_dec invis false
-		*firemode_inc invis false
-		*header_firemode invis false
-		*firemode_name invis false
-
+		*item_name invis false
+		// they are hidden
+		*action_dec invis true
+		*action_inc invis true
+		*header_item invis true
+		*firemode_dec invis true
+		*firemode_inc invis true
+		*header_firemode invis true
+		*firemode_name invis true
+		
 		*pwr_lbl invis true *pwr_val invis true *pwr_bdr invis true *pwr_bar invis true
 		*spd_lbl invis true *spd_val invis true *spd_bdr invis true *spd_bar invis true
 		*acc_lbl invis true *acc_val invis true *acc_bdr invis true *acc_bar invis true
@@ -564,13 +547,10 @@ menu mp_team_edit
 		*itemname invis true
 		*itemmodel invis true
 		*description invis true
-		*weapon_dec invis true
-		*ammo_dec invis true
-		*weapon_inc invis true
-		*ammo_inc invis true
-		*header_weapon invis true
-		*header_ammo invis true
-		*weapon_name invis true
+		*action_dec invis true
+		*action_inc invis true
+		*header_item invis true
+		*item_name invis true
 		*firemode_dec invis true
 		*firemode_inc invis true
 		*header_firemode invis true

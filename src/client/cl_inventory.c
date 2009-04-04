@@ -2,7 +2,6 @@
  * @file cl_inventory.c
  * @brief General actor related inventory function for are used in every game mode
  * @note Inventory functions prefix: INV_
- * @todo Remove those functions that doesn't really belong here
  */
 
 /*
@@ -27,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_inventory.h"
-#include "cl_game.h"
+#include "cl_inventory_callbacks.h"
 #include "../shared/parse.h"
 
 /**
@@ -160,51 +159,11 @@ qboolean INV_EquipmentDefSanityCheck (void)
 	return result;
 }
 
-/**
- * @brief Prints the description for items (weapons, armour, ...)
- * @param[in] od The object definition of the item
- * @note Not only called from UFOpaedia but also from other places to display
- * weapon and ammo stats
- * @todo Do we need to add checks for @c od->isDummy here somewhere?
- */
-void INV_ItemDescription (const objDef_t *od)
-{
-	/* reset everything */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_displayfiremode", "0");
-	Cvar_Set("mn_displayweapon", "0");
-	Cvar_Set("mn_changefiremode", "0");
-	Cvar_Set("mn_changeweapon", "0");
-
-	if (!od)	/* If nothing selected return */
-		return;
-
-	/* select item */
-	Cvar_Set("mn_itemname", _(od->name));
-	Cvar_Set("mn_item", od->id);
-
-	/** @todo see UP_ItemDescription */
-#if 0
-	if (!strcmp(od->type, "ammo")) {
-		/* We display the pre/next buttons for changing weapon only if there are at least 2 weapons for this ammo */
-		if (od->numWeapons > 1)
-			Cvar_Set("mn_changeweapon", "1");
-	} else if (od->weapon && od->reload) {
-		/* We have a weapon that uses ammos */
-
-		/* We display the pre/next buttons for changing ammo only if there are at least 2 ammo types for this weapon */
-		if (od->numAmmos > 1)
-			Cvar_Set("mn_changeweapon", "2");
-
-		Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
-	}
-#endif
-}
-
 void INV_InitStartup (void)
 {
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listinventory", INV_InventoryList_f, "Print the current inventory to the game console");
 #endif
+	INV_InitCallbacks();
 }
+

@@ -829,8 +829,8 @@ menu market
 		{
 			pos			"157 387"
 			size		"226 16"
-			whup		{ cmd "mn_increaseweapon;" }
-			whdown		{ cmd "mn_decreaseweapon;" }
+			whup		{ cmd "mn_increaseitem;" }
+			whdown		{ cmd "mn_decreaseitem;" }
 		}
 
 		pic weapon_dec
@@ -842,7 +842,7 @@ menu market
 			texl		"0 0"
 			texh		"16 16"
 			mousefx		true
-			click		{ cmd "mn_decreaseweapon;" }
+			click		{ cmd "mn_decreaseitem;" }
 		}
 		pic ammo_dec
 		{
@@ -853,7 +853,7 @@ menu market
 			texl		"0 0"
 			texh		"16 16"
 			mousefx		true
-			click		{ cmd "mn_decreaseweapon;" }
+			click		{ cmd "mn_decreaseitem;" }
 		}
 
 		pic weapon_inc
@@ -865,7 +865,7 @@ menu market
 			texl		"16 0"
 			texh		"32 16"
 			mousefx		true
-			click		{ cmd "mn_increaseweapon;" }
+			click		{ cmd "mn_increaseitem;" }
 		}
 		pic ammo_inc
 		{
@@ -876,7 +876,7 @@ menu market
 			texl		"16 0"
 			texh		"32 16"
 			mousefx		true
-			click		{ cmd "mn_increaseweapon;" }
+			click		{ cmd "mn_increaseitem;" }
 		}
 
 		/**
