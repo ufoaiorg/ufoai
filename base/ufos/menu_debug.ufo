@@ -1,9 +1,8 @@
 // ==================
-// DEBUG MENU
+// EDITOR MENU
 // ==================
 
 menu editor {
-
 	{
 		pos "0 0"
 		size "1 1"
@@ -15,11 +14,11 @@ menu editor {
 	}
 
 	func init {
+		cmd "echo \"Use mn_extract to write your changes to a file\";"
 		cmd "mn_editornode_start <path:menu>.editor"
 	}
 
 	func close {
 		cmd "mn_editornode_stop <path:menu>.editor"
 	}
-
 }

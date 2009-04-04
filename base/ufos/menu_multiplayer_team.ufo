@@ -318,147 +318,162 @@ menu mp_team_edit
 	// item description
 	// ==================
 
-	string itemname
-	{
-		string	"*cvar mn_itemname"
-		pos		"40 426"
-		size	"326 20"
-		textalign	uc
-	}
+	panel itemdescription {
+		{
+			pos		"30 405"
+			size	"350 336"
+		}
 
-	item itemmodel
-	{
-		pos 		"28 450"
-		size 		"346 91"
-		model		"*cvar mn_item"
-		angles		"-10 160 70"
-		autoscale	true
-	}
-
-	text description
-	{
-		pos			"40 566"
-		size		"326 140"
-		lineheight	20
-		tabwidth	190
-		rows		"7"
-		scrollbar	true
-		wheel
-		textid		TEXT_STANDARD
-	}
-	
-	/**
-	 * @param[in] <1> 1 or 2 for ammo or weapon. 0 for deactivate them
-	 */
-	confunc change_action {
-		cmd "set mn_changeitem <1>;"
-		if "*cvar:mn_changeitem != 0" {
+		/**
+		 * @param[in] <1> true or false to hide or show the firemode nodes
+		 */
+		confunc hide_firemode {
 			// only show them when the object info window is active  
-			if "*node:menu.item_name@invis == 0" {
-				*action_dec invis false 
-				*action_inc invis false 
-				*header_item invis false
-				if "*cvar:mn_changeitem == 2" {
-					cmd "hide_firemode true;"
-				} else {
-					cmd "hide_firemode false;"
-				}				
+			if "*node:this.parent.item_name@invis == 0" {
+				*path:this.parent.firemode_dec invis <1>
+				*path:this.parent.firemode_inc invis <1>
+				*path:this.parent.header_firemode invis <1>
+				*path:this.parent.firemode_name invis <1>
 			}
-		} else {
-			*action_dec invis true 
-			*action_inc invis true 
-			*header_item invis true
-			cmd "hide_firemode true;" 
 		}
-	}
+		
+		/**
+		 * @param[in] <1> 1 or 2 for ammo or weapon. 0 for deactivate them
+		 */
+		confunc change_action {
+			cmd "set mn_changeitem <1>;"
+			if "*cvar:mn_changeitem != 0" {
+				// only show them when the object info window is active  
+				if "*node:this.parent.item_name@invis == 0" {
+					*path:this.parent.action_dec invis false 
+					*path:this.parent.action_inc invis false 
+					*path:this.parent.header_item invis false
+					if "*cvar:mn_changeitem == 2" {
+						cmd "hide_firemode true;"
+					} else {
+						cmd "hide_firemode false;"
+					}				
+				}
+			} else {
+				*path:this.parent.action_dec invis true 
+				*path:this.parent.action_inc invis true 
+				*path:this.parent.header_item invis true
+				cmd "hide_firemode true;" 
+			}
+		}
 
-	pic action_dec
-	{
-		image	menu/buttons_small
-		pos		"160 707"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_decreaseitem;" }
-	}
-
-	pic action_inc
-	{
-		image	menu/buttons_small
-		pos		"367 707"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_increaseitem;" }
-	}
+		string itemname
+		{
+			string	"*cvar mn_itemname"
+			pos		"10 6"
+			size	"330 20"
+			textalign	uc
+		}
 	
-	string header_item
-	{
-		string	"_With:"
-		pos		"30 708"
-		size	"130 16"
-		font	f_small
-	}
-
-	string item_name
-	{
-		string	"*cvar mn_linkname"
-		pos		"170 707"
-		size	"200 16"
-		textalign	cc
-		font	f_small
-	}
-
-	/**
-	 * @param[in] <1> true or false to hide or show the firemode nodes
-	 */
-	confunc hide_firemode {
-		// only show them when the object info window is active  
-		if "*node:menu.item_name@invis == 0" {
-			*firemode_dec invis <1>
-			*firemode_inc invis <1>
-			*header_firemode invis <1>
-			*firemode_name invis <1>
+		item itemmodel
+		{
+			pos 		"0 30"
+			size 		"350 100"
+			model		"*cvar mn_item"
+			angles		"-10 160 70"
+			autoscale	true
 		}
-	}
+	
+		text description
+		{
+			pos			"10 140"
+			size		"330 150"
+			lineheight	20
+			tabwidth	190
+			rows		"7"
+			scrollbar	true
+			wheel
+			textid		TEXT_STANDARD
+		}
+	
+		// ======================
+		// useable weapon or ammo
+		// ======================
 
-	pic firemode_dec
-	{
-		tooltip "_Previous firemode"
-		image	menu/buttons_small
-		pos		"160 725"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_decreasefiremode;" }
-	}
+		string header_item
+		{
+			string	"_With:"
+			pos		"10 290"
+			size	"100 16"
+			font	f_small
+		}
+	
+		pic action_dec
+		{
+			image	menu/buttons_small
+			pos		"120 290"
+			texl	"0 0"
+			texh	"16 16"
+			mousefx	true
+			click	{ cmd "mn_decreaseitem;" }
+		}
+	
+		string item_name
+		{
+			string	"*cvar mn_linkname"
+			pos		"140 290"
+			size	"190 16"
+			textalign	cc
+			font	f_small
+		}
 
-	pic firemode_inc
-	{
-		tooltip "_Next firemode"
-		image	menu/buttons_small
-		pos		"367 725"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_increasefiremode;" }
-	}
+		pic action_inc
+		{
+			image	menu/buttons_small
+			pos		"334 290"
+			texl	"16 0"
+			texh	"32 16"
+			mousefx	true
+			click	{ cmd "mn_increaseitem;" }
+		}
 
-	string header_firemode
-	{
-		string	"_Firemode:"
-		pos		"30 725"
-		size	"120 16"
-		font	f_small
-	}
-
-	string firemode_name
-	{
-		string	"*cvar mn_firemodename"
-		pos		"170 725"
-		size	"200 16"
-		textalign	cc
-		font	f_small
+		// ==================
+		// firemode
+		// ==================
+	
+		string header_firemode
+		{
+			string	"_Firemode:"
+			pos		"10 314"
+			size	"100 16"
+			font	f_small
+		}
+		
+		pic firemode_dec
+		{
+			tooltip "_Previous firemode"
+			image	menu/buttons_small
+			pos		"120 314"
+			texl	"0 0"
+			texh	"16 16"
+			mousefx	true
+			click	{ cmd "mn_decreasefiremode;" }
+		}
+		
+		string firemode_name
+		{
+			string	"*cvar mn_firemodename"
+			pos		"140 314"
+			size	"190 16"
+			textalign	cc
+			font	f_small
+		}
+			
+		pic firemode_inc
+		{
+			tooltip "_Next firemode"
+			image	menu/buttons_small
+			pos		"334 314"
+			texl	"16 0"
+			texh	"32 16"
+			mousefx	true
+			click	{ cmd "mn_increasefiremode;" }
+		}
 	}
 
 	// ==================
@@ -517,18 +532,18 @@ menu mp_team_edit
 	// @todo merge with confunc weapon_stats?
 	confunc mp_weapon_stats
 	{
-		*itemname invis false
-		*itemmodel invis false
-		*description invis false
-		*item_name invis false
+		*itemdescription.itemname invis false
+		*itemdescription.itemmodel invis false
+		*itemdescription.description invis false
+		*itemdescription.item_name invis false
 		// they are hidden
-		*action_dec invis true
-		*action_inc invis true
-		*header_item invis true
-		*firemode_dec invis true
-		*firemode_inc invis true
-		*header_firemode invis true
-		*firemode_name invis true
+		*itemdescription.action_dec invis true
+		*itemdescription.action_inc invis true
+		*itemdescription.header_item invis true
+		*itemdescription.firemode_dec invis true
+		*itemdescription.firemode_inc invis true
+		*itemdescription.header_firemode invis true
+		*itemdescription.firemode_name invis true
 		
 		*pwr_lbl invis true *pwr_val invis true *pwr_bdr invis true *pwr_bar invis true
 		*spd_lbl invis true *spd_val invis true *spd_bdr invis true *spd_bar invis true
@@ -544,17 +559,17 @@ menu mp_team_edit
 	// @todo merge with confunc actor_stats?
 	confunc mp_actor_stats
 	{
-		*itemname invis true
-		*itemmodel invis true
-		*description invis true
-		*action_dec invis true
-		*action_inc invis true
-		*header_item invis true
-		*item_name invis true
-		*firemode_dec invis true
-		*firemode_inc invis true
-		*header_firemode invis true
-		*firemode_name invis true
+		*itemdescription.itemname invis true
+		*itemdescription.itemmodel invis true
+		*itemdescription.description invis true
+		*itemdescription.action_dec invis true
+		*itemdescription.action_inc invis true
+		*itemdescription.header_item invis true
+		*itemdescription.item_name invis true
+		*itemdescription.firemode_dec invis true
+		*itemdescription.firemode_inc invis true
+		*itemdescription.header_firemode invis true
+		*itemdescription.firemode_name invis true
 
 		*pwr_lbl invis false *pwr_val invis false *pwr_bdr invis false *pwr_bar invis false
 		*spd_lbl invis false *spd_val invis false *spd_bdr invis false *spd_bar invis false
