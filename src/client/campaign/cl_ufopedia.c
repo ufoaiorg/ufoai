@@ -45,6 +45,15 @@ static pediaChapter_t *currentChapter;
 #define MAX_UPTEXT 4096
 static char upBuffer[MAX_UPTEXT];
 
+#define MAIL_LENGTH 256
+#define MAIL_BUFFER_SIZE 0x4000
+static char mailBuffer[MAIL_BUFFER_SIZE];
+#define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
+#define MAIL_CLIENT_LINES 15
+
+/* the menu node of the mail client list */
+static menuNode_t *mailClientListNode;
+
 /**
  * @note don't change the order or you have to change the if statements about mn_updisplay cvar
  * in menu_ufopedia.ufo, too
@@ -340,15 +349,15 @@ void UP_AircraftItemDescription (const objDef_t *item)
  * @sa BS_MarketAircraftDescription
  * @sa UP_Article
  */
-void UP_AircraftDescription (const technology_t* t)
+void UP_AircraftDescription (const technology_t* tech)
 {
 	INV_ItemDescription(NULL);
 
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
 
-	if (RS_IsResearched_ptr(t)) {
-		const aircraft_t* aircraft = AIR_GetAircraft(t->provides);
+	if (RS_IsResearched_ptr(tech)) {
+		const aircraft_t* aircraft = AIR_GetAircraft(tech->provides);
 		if (!aircraft) {
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft"));
 		} else {
@@ -379,14 +388,14 @@ void UP_AircraftDescription (const technology_t* t)
 			Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
 			Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 		}
-	} else if (RS_Collected_(t)) {
+	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	} else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
 	MN_RegisterText(TEXT_STANDARD, upBuffer);
-	UP_DisplayTechTree(t);
+	UP_DisplayTechTree(tech);
 }
 
 /**
@@ -651,11 +660,8 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 				UP_AircraftDescription(tech);
 				break;
 			case RS_CRAFTITEM:
-			{
-				const objDef_t *item = AII_GetAircraftItemByID(tech->provides);
-				UP_AircraftItemDescription(item);
+				UP_AircraftItemDescription(AII_GetAircraftItemByID(tech->provides));
 				break;
-			}
 			case RS_BUILDING:
 				UP_BuildingDescription(tech);
 				break;
@@ -1137,15 +1143,6 @@ static void UP_ResearchedLinkClick_f (void)
 			UP_OpenWith(t->id);
 	}
 }
-
-#define MAIL_LENGTH 256
-#define MAIL_BUFFER_SIZE 0x4000
-static char mailBuffer[MAIL_BUFFER_SIZE];
-#define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
-#define MAIL_CLIENT_LINES 15
-
-/* the menu node of the mail client list */
-static menuNode_t *mailClientListNode;
 
 /**
  * @brief Set up mail icons

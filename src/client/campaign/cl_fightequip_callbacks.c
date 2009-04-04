@@ -419,7 +419,7 @@ static void AIM_UpdateAircraftItemList (base_t* base, installation_t* installati
 	else {
 		/* no element in list, no tech selected */
 		airequipSelectedTechnology = NULL;
-		UP_AircraftItemDescription(NULL);
+		INV_ItemDescription(NULL);
 	}
 }
 

@@ -94,7 +94,7 @@ static void BS_MarketAircraftDescription (const aircraft_t *aircraftTemplate)
 {
 	const technology_t *tech;
 
-	/* Break if no airaft was given or if  it's no sample-aircraft (i.e. template). */
+	/* Break if no aicraft was given or if  it's no sample-aircraft (i.e. template). */
 	if (!aircraftTemplate || aircraftTemplate != aircraftTemplate->tpl)
 		return;
 
