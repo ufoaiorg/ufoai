@@ -1409,7 +1409,7 @@ void B_DrawBuilding (base_t* base, building_t* building)
 	if (!base || !building)
 		return;
 
-	*buildingText = '\0';
+	buildingText[0] = '\0';
 
 	B_BuildingStatus(base, building);
 
@@ -1450,7 +1450,7 @@ void B_DrawBuilding (base_t* base, building_t* building)
 int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t *tpl)
 {
 	int i;
-	int NumberOfBuildings = 0;
+	int numberOfBuildings = 0;
 
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByTemplate: No base given!\n");
@@ -1471,9 +1471,9 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		if (ccs.buildings[base->idx][i].tpl == tpl
 		 && ccs.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
-			NumberOfBuildings++;
+			numberOfBuildings++;
 	}
-	return NumberOfBuildings;
+	return numberOfBuildings;
 }
 
 /**
@@ -1487,7 +1487,7 @@ int B_GetNumberOfBuildingsInBaseByTemplate (const base_t *base, const building_t
 int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildingType_t buildingType)
 {
 	int i;
-	int NumberOfBuildings = 0;
+	int numberOfBuildings = 0;
 
 	if (!base) {
 		Com_Printf("B_GetNumberOfBuildingsInBaseByBuildingType: No base given!\n");
@@ -1502,9 +1502,9 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
 	for (i = 0; i < ccs.numBuildings[base->idx]; i++) {
 		if (ccs.buildings[base->idx][i].buildingType == buildingType
 		 && ccs.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
-			NumberOfBuildings++;
+			numberOfBuildings++;
 	}
-	return NumberOfBuildings;
+	return numberOfBuildings;
 }
 
 /**
@@ -1516,41 +1516,41 @@ int B_GetNumberOfBuildingsInBaseByBuildingType (const base_t *base, const buildi
  */
 buildingType_t B_GetBuildingTypeByBuildingID (const char *buildingID)
 {
-	if (!strncmp(buildingID, "lab", MAX_VAR)) {
+	if (!strcmp(buildingID, "lab")) {
 		return B_LAB;
-	} else if (!strncmp(buildingID, "hospital", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "hospital")) {
 		return B_HOSPITAL;
-	} else if (!strncmp(buildingID, "aliencont", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "aliencont")) {
 		return B_ALIEN_CONTAINMENT;
-	} else if (!strncmp(buildingID, "workshop", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "workshop")) {
 		return B_WORKSHOP;
-	} else if (!strncmp(buildingID, "storage", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "storage")) {
 		return B_STORAGE;
-	} else if (!strncmp(buildingID, "hangar", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "hangar")) {
 		return B_HANGAR;
-	} else if (!strncmp(buildingID, "smallhangar", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "smallhangar")) {
 		return B_SMALL_HANGAR;
-	} else if (!strncmp(buildingID, "ufohangar", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "ufohangar")) {
 		return B_UFO_HANGAR;
-	} else if (!strncmp(buildingID, "smallufohangar", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "smallufohangar")) {
 		return B_UFO_SMALL_HANGAR;
-	} else if (!strncmp(buildingID, "quarters", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "quarters")) {
 		return B_QUARTERS;
-	} else if (!strncmp(buildingID, "workshop", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "workshop")) {
 		return B_WORKSHOP;
-	} else if (!strncmp(buildingID, "power", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "power")) {
 		return B_POWER;
-	} else if (!strncmp(buildingID, "command", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "command")) {
 		return B_COMMAND;
-	} else if (!strncmp(buildingID, "amstorage", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "amstorage")) {
 		return B_ANTIMATTER;
-	} else if (!strncmp(buildingID, "entrance", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "entrance")) {
 		return B_ENTRANCE;
-	} else if (!strncmp(buildingID, "missile", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "missile")) {
 		return B_DEFENCE_MISSILE;
-	} else if (!strncmp(buildingID, "radar", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "radar")) {
 		return B_RADAR;
-	} else if (!strncmp(buildingID, "teamroom", MAX_VAR)) {
+	} else if (!strcmp(buildingID, "teamroom")) {
 		return B_TEAMROOM;
 	}
 	return MAX_BUILDING_TYPE;
@@ -1663,7 +1663,7 @@ void B_ParseBuildings (const char *name, const char **text, qboolean link)
 		} while (*text);
 	} else {
 		building = B_GetBuildingTemplate(name);
-		if (!building)			/* i'm paranoid */
+		if (!building)
 			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", name);
 
 		tech_link = RS_GetTechByProvided(name);
@@ -1941,18 +1941,18 @@ static void CL_SwapSkill (character_t *cp1, character_t *cp2, abilityskills_t sk
  */
 static void CL_SwapSkills (chrList_t *team)
 {
-	int j, i1, i2, skill;
+	int i, j, k, skill;
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 
-	j = team->num;
-	while (j--) {
+	i = team->num;
+	while (i--) {
 		/* running the loops below is not enough, we need transitive closure */
 		/* I guess num times is enough --- could anybody prove this? */
 		/* or perhaps 2 times is enough as long as weapons have 1 skill? */
 		for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
-			for (i1 = 0; i1 < team->num - 1; i1++) {
-				character_t *cp1 = team->chr[i1];
+			for (j = 0; j < team->num - 1; j++) {
+				character_t *cp1 = team->chr[j];
 				const fireDef_t *fdRightArray, *fdHolsterArray;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m && RIGHT(cp1)->item.t)
 					fdRightArray = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp1)->item);
@@ -1968,8 +1968,8 @@ static void CL_SwapSkills (chrList_t *team)
 						+ (HOLSTER(cp1) && HOLSTER(cp1)->item.t->reload
 						   && skill == HOLSTER(cp1)->item.m->fd[fdHolsterArray->weapFdsIdx][fmode2].weaponSkill);
 
-					for (i2 = i1 + 1; i2 < team->num; i2++) {
-						character_t *cp2 = team->chr[i2];
+					for (k = j + 1; k < team->num; k++) {
+						character_t *cp2 = team->chr[k];
 						fdRightArray = NULL;
 						fdHolsterArray = NULL;
 
@@ -2042,9 +2042,9 @@ static void CL_SwapSkills (chrList_t *team)
 									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
 								}
 							}
-						} /* if xx_fd_xx < 0 */
-					} /* for */
-				} /* if xx_fd_xx < 0 */
+						}
+					}
+				}
 			}
 		}
 	}
@@ -2084,7 +2084,7 @@ static void B_PackInitialEquipment (aircraft_t *aircraft, const equipDef_t *ed)
 
 /**
  * @brief Sets the baseStatus to BASE_NOT_USED
- * @param[in] base Which base should be resetted?
+ * @param[in] base Which base should be reseted?
  * @sa CL_CampaignRemoveMission
  */
 void B_BaseResetStatus (base_t* const base)
@@ -3168,19 +3168,19 @@ void B_RemoveItemsExceedingCapacity (base_t *base)
 /**
  * @brief Remove ufos until everything fits in ufo hangars.
  * @param[in] base Pointer to the base
- * @param[in] ufohangar type
+ * @param[in] buildingType type
  */
 void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingType)
 {
-	const baseCapacities_t capacity_type = B_GetCapacityFromBuildingType(buildingType);
+	const baseCapacities_t capacityType = B_GetCapacityFromBuildingType(buildingType);
 	int i;
 	int objIdx[MAX_OBJDEFS];	/**< Will contain idx of items that can be removed */
 	int num;
 
-	if (capacity_type != CAP_UFOHANGARS_SMALL && capacity_type != CAP_UFOHANGARS_LARGE)
+	if (capacityType != CAP_UFOHANGARS_SMALL && capacityType != CAP_UFOHANGARS_LARGE)
 		return;
 
-	if (base->capacities[capacity_type].cur <= base->capacities[capacity_type].max)
+	if (base->capacities[capacityType].cur <= base->capacities[capacityType].max)
 		return;
 
 	for (i = 0, num = 0; i < csi.numODs; i++) {
@@ -3193,15 +3193,15 @@ void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingT
 			continue;
 
 		/* look for corresponding aircraft in global array */
-		ufocraft = AIR_GetAircraft (obj->id);
+		ufocraft = AIR_GetAircraft(obj->id);
 		if (!ufocraft) {
 			Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Did not find UFO %s\n", obj->id);
 			continue;
 		}
 
-		if (ufocraft->size == AIRCRAFT_LARGE && capacity_type != CAP_UFOHANGARS_LARGE)
+		if (ufocraft->size == AIRCRAFT_LARGE && capacityType != CAP_UFOHANGARS_LARGE)
 			continue;
-		if (ufocraft->size == AIRCRAFT_SMALL && capacity_type != CAP_UFOHANGARS_SMALL)
+		if (ufocraft->size == AIRCRAFT_SMALL && capacityType != CAP_UFOHANGARS_SMALL)
 			continue;
 
 		/* Don't count item that we don't have in base */
@@ -3211,7 +3211,7 @@ void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingT
 		objIdx[num++] = i;
 	}
 
-	while (num && base->capacities[capacity_type].cur > base->capacities[capacity_type].max) {
+	while (num && base->capacities[capacityType].cur > base->capacities[capacityType].max) {
 		/* Select the item to remove */
 		const int randNumber = rand() % num;
 		/* items are destroyed. We guess that all items of a given type are stored in the same location
@@ -3229,8 +3229,8 @@ void B_RemoveUFOsExceedingCapacity (base_t *base, const buildingType_t buildingT
 		if (num <= 0)
 			break;
 	}
-	Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Remains %i in storage for a maxium of %i\n",
-		base->capacities[capacity_type].cur, base->capacities[capacity_type].max);
+	Com_DPrintf(DEBUG_CLIENT, "B_RemoveUFOsExceedingCapacity: Remains %i in storage for a maximum of %i\n",
+		base->capacities[capacityType].cur, base->capacities[capacityType].max);
 }
 
 /**
@@ -3258,7 +3258,7 @@ void B_UpdateStorageCap (base_t *base)
 }
 
 /**
- * @brief Manages Antimatter (adding, removing) through Antimatter Storage Facility.
+ * @brief Manages antimatter (adding, removing) through Antimatter Storage Facility.
  * @param[in] base Pointer to the base.
  * @param[in] amount quantity of antimatter to add/remove (> 0 even if antimatter is removed)
  * @param[in] add True if we are adding antimatter, false when removing.
@@ -3274,7 +3274,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 
 	if (add && !B_GetBuildingStatus(base, B_ANTIMATTER)) {
 		Com_sprintf(cp_messageBuffer, lengthof(cp_messageBuffer),
-			_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
+			_("Base %s does not have Antimatter Storage Facility. %i units of antimatter got removed."),
 			base->name, amount);
 		MS_AddNewMessage(_("Notice"), cp_messageBuffer, qfalse, MSG_STANDARD, NULL);
 		return;
