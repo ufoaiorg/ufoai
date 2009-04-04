@@ -587,9 +587,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		/* This allows us to use the index button in the UFOpaedia,
 		 * eventMails don't have any chapter to go back to. */
 		upDisplay = UFOPEDIA_INDEX;
-	} else {
-		assert(tech);
-
+	} else if (tech) {
 		if (RS_IsResearched_ptr(tech)) {
 			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 			/* If researched -> display research text */
@@ -610,41 +608,39 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED, NULL);
 			}
 
-			if (upCurrentTech) { /** @todo ? upCurrentTech? not tech? why is that if statement here anyway? */
-				switch (tech->type) {
-				case RS_ARMOUR:
-					UP_ArmourDescription(tech);
-					break;
-				case RS_WEAPON:
-					for (i = 0; i < csi.numODs; i++) {
-						if (!strcmp(tech->provides, csi.ods[i].id)) {
-							INV_ItemDescription(&csi.ods[i]);
-							UP_DisplayTechTree(tech);
-							break;
-						}
+			switch (tech->type) {
+			case RS_ARMOUR:
+				UP_ArmourDescription(tech);
+				break;
+			case RS_WEAPON:
+				for (i = 0; i < csi.numODs; i++) {
+					if (!strcmp(tech->provides, csi.ods[i].id)) {
+						INV_ItemDescription(&csi.ods[i]);
+						UP_DisplayTechTree(tech);
+						break;
 					}
-					break;
-				case RS_TECH:
-					UP_DisplayTechTree(tech);
-					break;
-				case RS_CRAFT:
-					UP_AircraftDescription(tech);
-					break;
-				case RS_CRAFTITEM:
-				{
-					const objDef_t *item = AII_GetAircraftItemByID(tech->provides);
-					UP_AircraftItemDescription(item);
-					break;
 				}
-				case RS_BUILDING:
-					UP_BuildingDescription(tech);
-					break;
-				default:
-					break;
-				}
+				break;
+			case RS_TECH:
+				UP_DisplayTechTree(tech);
+				break;
+			case RS_CRAFT:
+				UP_AircraftDescription(tech);
+				break;
+			case RS_CRAFTITEM:
+			{
+				const objDef_t *item = AII_GetAircraftItemByID(tech->provides);
+				UP_AircraftItemDescription(item);
+				break;
+			}
+			case RS_BUILDING:
+				UP_BuildingDescription(tech);
+				break;
+			default:
+				break;
 			}
 		/* see also UP_TechGetsDisplayed */
-		} else if (RS_Collected_(tech) || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0))) {
+		} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->pre_description.numDescriptions > 0)) {
 			/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
 			Cvar_Set("mn_uptitle", _(tech->name));
 			/* Not researched but some items collected -> display pre-research text if available. */
@@ -658,6 +654,8 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 			Cvar_Set("mn_uptitle", _(tech->name));
 			MN_ResetData(TEXT_UFOPEDIA);
 		}
+	} else {
+		Sys_Error("UP_Article: No mail or tech given");
 	}
 }
 
