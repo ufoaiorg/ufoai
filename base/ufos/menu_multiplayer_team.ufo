@@ -341,7 +341,7 @@ menu mp_team_edit
 		 * @param[in] <1> 1 or 2 for ammo or weapon. 0 to deactivate them
 		 */
 		confunc change_action {
-			*cvar:mn_changeitem <1>;"
+			*cvar:mn_changeitem <1>
 			if "*cvar:mn_changeitem != 0" {
 				// only show them when the object info window is active  
 				if "*node:this.parent.item_name@invis == 0" {
