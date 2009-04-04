@@ -807,7 +807,8 @@ static void UP_Content_f (void)
 
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researched_entries) {
-			assert(numChapters_displaylist<MAX_PEDIACHAPTERS);
+			if (numChapters_displaylist >= MAX_PEDIACHAPTERS)
+				Sys_Error("MAX_PEDIACHAPTERS hit");
 			upChapters_displaylist[numChapters_displaylist++] = &ccs.upChapters[i];
 			/** @todo integrate images into text better */
 			Q_strcat(upText, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", ccs.upChapters[i].id, _(ccs.upChapters[i].name)), sizeof(upText));

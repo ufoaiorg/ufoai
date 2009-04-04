@@ -1085,7 +1085,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
 			}
 		}
-		/* @todo: build "autobuild" buildings not in the template? */
+		/** @todo: build "autobuild" buildings not in the template? */
 		/* if no autobuild, set up zero build time for the first base */
 		ccs.instant_build = 1;
 	}
