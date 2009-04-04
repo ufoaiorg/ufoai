@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TECH_INVALID -1	/**< The value for an "undef" tech-index. */
 
+#define ANTIMATTER_TECH_ID "antimatter"
+
 /** @brief The status of a research (per tech) */
 typedef enum researchStatus_s {
 	RS_NONE,

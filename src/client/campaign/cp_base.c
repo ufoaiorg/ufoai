@@ -459,7 +459,7 @@ static void B_UpdateAntimatterCap (base_t *base)
 	int i;
 
 	for (i = 0; i < csi.numODs; i++) {
-		if (!strcmp(csi.ods[i].id, "antimatter")) {
+		if (!strcmp(csi.ods[i].id, ANTIMATTER_TECH_ID)) {
 			base->capacities[CAP_ANTIMATTER].cur = (base->storage.num[i] * ANTIMATTER_SIZE);
 			return;
 		}
@@ -552,7 +552,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 	baseCapacities_t capacity;
 	int aircraftIdx;
 	aircraft_t *awayAircraft[MAX_AIRCRAFT];
-	int numawayAircraft, randomNum;
+	int numAwayAircraft, randomNum;
 
 	memset(awayAircraft, 0, sizeof(awayAircraft));
 
@@ -562,7 +562,7 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 		return;
 
 	/* destroy one aircraft (must not be sold: may be destroyed by aliens) */
-	for (aircraftIdx = 0, numawayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
+	for (aircraftIdx = 0, numAwayAircraft = 0; aircraftIdx < base->numAircraftInBase; aircraftIdx++) {
 		const int aircraftSize = base->aircraft[aircraftIdx].size;
 		switch (aircraftSize) {
 		case AIRCRAFT_SMALL:
@@ -582,23 +582,23 @@ void B_RemoveAircraftExceedingCapacity (base_t* base, buildingType_t buildingTyp
 		/* Only aircraft in hangar will be destroyed by hangar destruction */
 		if (!AIR_IsAircraftInBase(&base->aircraft[aircraftIdx])) {
 			if (AIR_IsAircraftOnGeoscape(&base->aircraft[aircraftIdx]))
-				awayAircraft[numawayAircraft++] = &base->aircraft[aircraftIdx];
+				awayAircraft[numAwayAircraft++] = &base->aircraft[aircraftIdx];
 			continue;
 		}
 
 		/* Remove aircraft and aircraft items, but do not fire employees */
 		AIR_DeleteAircraft(base, &base->aircraft[aircraftIdx]);
-		awayAircraft[numawayAircraft++] = NULL;
+		awayAircraft[numAwayAircraft++] = NULL;
 		return;
 	}
 
-	if (!numawayAircraft)
+	if (!numAwayAircraft)
 		return;
 	/* All aircraft are away from base, pick up one and change it's homebase */
-	randomNum = rand() % numawayAircraft;
+	randomNum = rand() % numAwayAircraft;
 	if (!CL_DisplayHomebasePopup(awayAircraft[randomNum], qfalse)) {
-		/* No base can hold this aircraft
-		 @todo fixme Better solution ? */
+		/* No base can hold this aircraft */
+		/** @todo Better solution? */
 		AIR_DeleteAircraft(awayAircraft[randomNum]->homebase, awayAircraft[randomNum]);
 	}
 }
@@ -874,12 +874,12 @@ void B_BuildingStatus (const base_t* base, const building_t* building)
 static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	qboolean test;
-	buildingStatus_t oldstatus;
+	buildingStatus_t oldStatus;
 
 	assert(base);
 	assert(building);
 
-	oldstatus = building->buildingStatus;
+	oldStatus = building->buildingStatus;
 	building->buildingStatus = status;
 
 	/* we update the status of the building (we'll call this building building 1) */
@@ -902,7 +902,7 @@ static void B_UpdateAllBaseBuildingStatus (building_t* building, base_t* base, b
 	}
 
 	/** @todo this should be an user option defined in Game Options. */
-	if (oldstatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
+	if (oldStatus == B_STATUS_UNDER_CONSTRUCTION && (status == B_STATUS_CONSTRUCTION_FINISHED || status == B_STATUS_WORKING)) {
 		if (B_CheckBuildingDependencesStatus(base, building))
 			CL_GameTimeStop();
 	} else {
@@ -3008,7 +3008,7 @@ qboolean B_LoadXML (mxml_node_t *parent)
 static qboolean B_ItemsIsStoredInBaseStorage (const objDef_t *obj)
 {
 	/* antimatter is stored in antimatter storage */
-	if (!strcmp(obj->id, "antimatter"))
+	if (!strcmp(obj->id, ANTIMATTER_TECH_ID))
 		return qfalse;
 
 	/* aircraft are stored in hangars */
@@ -3281,7 +3281,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	}
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		if (!strcmp(od->id, "antimatter"))
+		if (!strcmp(od->id, ANTIMATTER_TECH_ID))
 			break;
 	}
 
