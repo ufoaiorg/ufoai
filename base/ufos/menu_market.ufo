@@ -816,6 +816,23 @@ menu market
 			font		f_verysmall
 		}
 
+		string weapon_name
+		{
+			string		"*cvar mn_researchedlinkname"
+			pos			"176 386"
+			size		"185 20"
+			textalign	cc
+			font		f_verysmall
+		}
+
+		zone weapon_wz
+		{
+			pos			"157 387"
+			size		"226 16"
+			whup		{ cmd "mn_increaseweapon;" }
+			whdown		{ cmd "mn_decreaseweapon;" }
+		}
+
 		pic weapon_dec
 		{
 			visiblewhen "*cvar:mn_changeweapon == 1"
@@ -839,21 +856,12 @@ menu market
 			click		{ cmd "mn_decreaseweapon;" }
 		}
 
-		string weapon_name
-		{
-			string		"*cvar mn_researchedlinkname"
-			pos			"176 386"
-			size		"185 20"
-			textalign	cc
-			font		f_verysmall
-		}
-
 		pic weapon_inc
 		{
 			visiblewhen "*cvar:mn_changeweapon == 1"
 			tooltip		"_Next weapon chambered for this ammunition"
 			image		menu/buttons_small
-			pos			"377 387"
+			pos			"367 387"
 			texl		"16 0"
 			texh		"32 16"
 			mousefx		true
@@ -871,14 +879,6 @@ menu market
 			click		{ cmd "mn_increaseweapon;" }
 		}
 
-		zone weapon_wz
-		{
-			pos			"157 387"
-			size		"226 16"
-			whup		{ cmd "mn_increaseweapon;" }
-			whdown		{ cmd "mn_decreaseweapon;" }
-		}
-
 		/**
 		 *	@note: Firemode
 		 */
@@ -893,6 +893,24 @@ menu market
 			font		f_verysmall
 		}
 
+		string firemode_name
+		{
+			visiblewhen "*cvar:mn_displayfiremode == 1"
+			string		"*cvar mn_firemodename"
+			pos			"174 404"
+			size		"185 20"
+			textalign	cc
+			font		f_verysmall
+		}
+
+		zone firemode_wz
+		{
+			pos			"157 405"
+			size		"226 16"
+			whup		{ cmd "mn_increasefiremode;" }
+			whdown		{ cmd "mn_decreasefiremode;" }
+		}
+
 		pic firemode_dec
 		{
 			visiblewhen "*cvar:mn_changefiremode == 1"
@@ -905,16 +923,6 @@ menu market
 			click		{ cmd "mn_decreasefiremode;" }
 		}
 
-		string firemode_name
-		{
-			visiblewhen "*cvar:mn_displayfiremode == 1"
-			string		"*cvar mn_firemodename"
-			pos			"174 404"
-			size		"185 20"
-			textalign	cc
-			font		f_verysmall
-		}
-
 		pic firemode_inc
 		{
 			visiblewhen "*cvar:mn_changefiremode == 1"
@@ -925,14 +933,6 @@ menu market
 			texh		"32 16"
 			mousefx		true
 			click		{ cmd "mn_increasefiremode;" }
-		}
-
-		zone firemode_wz
-		{
-			pos			"157 405"
-			size		"226 16"
-			whup		{ cmd "mn_increasefiremode;" }
-			whdown		{ cmd "mn_decreasefiremode;" }
 		}
 
 	}
