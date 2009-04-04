@@ -54,6 +54,9 @@ static inline qboolean MN_IsFloatOperator (menuConditionOpCodeType_t op)
 	 || op == IF_NE;
 }
 
+/**
+ * @return A float value, else 0
+ */
 static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
 {
 	switch (type) {
@@ -72,9 +75,14 @@ static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, 
 			menuNode_t *node;
 			const value_t *property;
 			MN_ReadNodePath(value, source, &node, &property);
-			if (!node)
-				Sys_Error("Node %s wasn't found", value);
-			assert(property);
+			if (!node) {
+				Com_Printf("MN_GetFloatFromParam: Node '%s' wasn't found; '0' returned", value);
+				return 0;
+			}
+			if (!property) {
+				Com_Printf("MN_GetFloatFromParam: Property '%s' wasn't found; '0' returned", value);
+				return 0;
+			}
 			return MN_GetFloatFromNodeProperty (node, property);
 		}
 	}
