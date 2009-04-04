@@ -89,6 +89,9 @@ static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, 
 	return 0;
 }
 
+/**
+ * @return A string, else an empty string
+ */
 static const char*MN_GetStringFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
 {
 	switch (type) {
@@ -103,9 +106,10 @@ static const char*MN_GetStringFromParam (const menuNode_t *source, const char* v
 		return cvar->string;
 	}
 	case IF_VALUE_NODEPROPERTY:
-		assert(qfalse);
+		Com_Printf("MN_GetStringFromParam: Node property '%s' to string unsupported", value);
+		break;
 	}
-	return 0;
+	return "";
 }
 
 
