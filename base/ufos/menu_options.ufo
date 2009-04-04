@@ -30,9 +30,9 @@ menu options
 	// buttons
 	// ==================
 
-	button button_input
+	button button_game
 	{
-		string		"_Input"
+		string		"_Game"
 		pos			"80 170"
 		size		"256 64"
 		image		menu/button_green_big
@@ -42,7 +42,7 @@ menu options
 		selectcolor	"1 1 1 1"
 		click		{
 			call hidepanels
-			*(panel)options_input invis false
+			*(panel)options_game invis false
 		}
 	}
 
@@ -96,9 +96,9 @@ menu options
 		selectcolor	"1 1 1 1"
 	}
 
-	button button_game
+	button button_input
 	{
-		string		"_Game"
+		string		"_Input"
 		pos			"80 380"
 		size		"256 64"
 		image		menu/button_green_big
@@ -108,7 +108,7 @@ menu options
 		selectcolor	"1 1 1 1"
 		click		{
 			call hidepanels
-			*(panel)options_game invis false
+			*(panel)options_input invis false
 		}
 	}
 
