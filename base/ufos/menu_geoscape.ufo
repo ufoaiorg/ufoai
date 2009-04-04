@@ -172,7 +172,7 @@ menu map
 			radiobutton bt_timeplay2
 			{
 				tooltip		"_Time lapse: 5 minutes"
-				cvar		"*cvar mn_timelapse_id"	value "4"
+				cvar		"*cvar mn_timelapse_id"	value "2"
 				icon		speed_play1
 				pos			"88 10"
 				size		"20 20"
@@ -185,7 +185,7 @@ menu map
 			radiobutton bt_timeplay3
 			{
 				tooltip		"_Time lapse: 20 minutes"
-				cvar		"*cvar mn_timelapse_id"	value "6"
+				cvar		"*cvar mn_timelapse_id"	value "3"
 				icon		speed_dot
 				pos			"108 10"
 				size		"20 20"
@@ -197,7 +197,7 @@ menu map
 			radiobutton bt_timeplay4
 			{
 				tooltip		"_Time lapse: 1 hour"
-				cvar		"*cvar mn_timelapse_id"	value "7"
+				cvar		"*cvar mn_timelapse_id"	value "4"
 				icon		speed_play2
 				pos			"128 10"
 				size		"20 20"
@@ -209,7 +209,7 @@ menu map
 			radiobutton bt_timeplay5
 			{
 				tooltip		"_Time lapse: 12 hours"
-				cvar		"*cvar mn_timelapse_id"	value "8"
+				cvar		"*cvar mn_timelapse_id"	value "5"
 				icon		speed_dot
 				pos			"148 10"
 				size		"20 20"
@@ -222,7 +222,7 @@ menu map
 			radiobutton bt_timeplay6
 			{
 				tooltip		"_Time lapse: 1 day"
-				cvar		"*cvar mn_timelapse_id"	value "9"
+				cvar		"*cvar mn_timelapse_id"	value "6"
 				icon		speed_dot
 				pos			"168 10"
 				size		"20 20"
@@ -234,7 +234,7 @@ menu map
 			radiobutton bt_timeplay7
 			{
 				tooltip		"_Time lapse: 5 days"
-				cvar		"*cvar mn_timelapse_id"	value "10"
+				cvar		"*cvar mn_timelapse_id"	value "7"
 				icon		speed_play3
 				pos			"188 10"
 				size		"20 20"
