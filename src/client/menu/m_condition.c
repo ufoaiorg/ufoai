@@ -92,7 +92,7 @@ static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, 
 /**
  * @return A string, else an empty string
  */
-static const char*MN_GetStringFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
+static const char* MN_GetStringFromParam (const menuNode_t *source, const char* value, menuConditionValueType_t type)
 {
 	switch (type) {
 	case IF_VALUE_STRING:
