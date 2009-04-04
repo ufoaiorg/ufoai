@@ -53,8 +53,6 @@ static const char* transferTypeIDs[] = {
 };
 CASSERT(lengthof(transferTypeIDs) == TRANS_TYPE_MAX);
 
-#define ANTIMATTER_TECH_ID "antimatter"
-
 typedef struct transferData_s {
 	/** @brief Current selected aircraft for transfer (if transfer started from mission). */
 	aircraft_t *transferStartAircraft;
