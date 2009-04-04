@@ -252,14 +252,14 @@ static void BS_MarketClick_f (void)
 			UP_UGVDescription(buyList.l[num].ugv);
 			currentSelectedMenuEntry = NULL;
 		} else {
-			UP_ItemDescription(buyList.l[num].item);
+			INV_ItemDescription(buyList.l[num].item);
 			currentSelectedMenuEntry = buyList.l[num].item;
 		}
 		break;
 	case MAX_FILTERTYPES:
 		break;
 	default:
-		UP_ItemDescription(buyList.l[num].item);
+		INV_ItemDescription(buyList.l[num].item);
 		currentSelectedMenuEntry = buyList.l[num].item;
 		break;
 	}
@@ -496,36 +496,32 @@ static void BS_BuyType (const base_t *base)
 		case FILTER_CRAFTITEM:
 			Cvar_Set("mn_aircraftname", "");	/** @todo Use craftitem name here? See also BS_MarketClick_f */
 			/* Select current item or first one. */
-			if (currentSelectedMenuEntry) {
+			if (currentSelectedMenuEntry)
 				UP_AircraftItemDescription(currentSelectedMenuEntry);
-			} else {
+			else
 				UP_AircraftItemDescription(buyList.l[0].item);
-			}
 			break;
 		case FILTER_UGVITEM:
 			/** @todo select first heavy item */
-			if (currentSelectedMenuEntry) {
-				UP_ItemDescription(currentSelectedMenuEntry);
-			} else if (buyList.l[0].ugv) {
+			if (currentSelectedMenuEntry)
+				INV_ItemDescription(currentSelectedMenuEntry);
+			else if (buyList.l[0].ugv)
 				UP_UGVDescription(buyList.l[0].ugv);
-			} else if (buyList.l[0].item) {
-				UP_ItemDescription(buyList.l[0].item);
-			}
+			else if (buyList.l[0].item)
+				INV_ItemDescription(buyList.l[0].item);
 			break;
 		default:
 			assert(buyCat != MAX_FILTERTYPES);
 			/* Select current item or first one. */
 			if (currentSelectedMenuEntry)
-				UP_ItemDescription(currentSelectedMenuEntry);
+				INV_ItemDescription(currentSelectedMenuEntry);
 			else
-				UP_ItemDescription(buyList.l[0].item);
+				INV_ItemDescription(buyList.l[0].item);
 			break;
 		}
 	} else {
 		/* reset description */
-		Cvar_Set("mn_itemname", "");
-		Cvar_Set("mn_item", "");
-		MN_ResetData(TEXT_STANDARD);
+		INV_ItemDescription(NULL);
 	}
 }
 
@@ -778,7 +774,7 @@ static void BS_BuyItem_f (void)
 		const objDef_t *item = BS_GetObjectDefition(&buyList.l[num + buyList.scroll]);
 		assert(item);
 		currentSelectedMenuEntry = item;
-		UP_ItemDescription(item);
+		INV_ItemDescription(item);
 		Com_DPrintf(DEBUG_CLIENT, "BS_BuyItem_f: item %s\n", item->id);
 		BS_CheckAndDoBuyItem(base, item, BS_GetBuySellFactor());
 		/* reinit the menu */
@@ -850,7 +846,7 @@ static void BS_SellItem_f (void)
 		/* Normal item (or equipment for UGVs/Robots if buyCategory==BUY_HEAVY) */
 		assert(item);
 		currentSelectedMenuEntry = item;
-		UP_ItemDescription(item);
+		INV_ItemDescription(item);
 
 		/* don't sell more items than we have */
 		if (numItems) {

@@ -98,11 +98,6 @@ static void UP_ChangeDisplay (int newDisplay)
 		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
 
 	Cvar_SetValue("mn_uppreavailable", 0);
-	Cvar_Set("mn_displayitem", "0");
-	Cvar_Set("mn_displayfiremode", "0");
-	Cvar_Set("mn_changeitem", "0");
-	Cvar_Set("mn_changefiremode", "0");
-	Cvar_Set("mn_linkname", "");
 
 	/**
 	 * only fetch this once after UFOpaedia menu was on the stack (was the
@@ -231,28 +226,6 @@ static void UP_DisplayTechTree (const technology_t* t)
 }
 
 /**
- * @brief Prints the (UFOpaedia and other) description for items (weapons, armour, ...)
- * @param[in] od The object definition of the item
- * @sa UP_DrawEntry
- * @sa BS_BuySelect_f
- * @sa BS_BuyType_f
- * @sa BS_BuyItem_f
- * @sa BS_SellItem_f
- * @sa MN_Drag
- * @todo the none campaign mode only code from this function must be cleaned up and
- * moved into @c INV_ItemDescription
- */
-void UP_ItemDescription (const objDef_t *od)
-{
-	Cvar_Set("mn_linkname", "");
-
-	INV_ItemDescription(od);
-
-	if (od->weapon || !strcmp(od->type, "ammo"))
-		upCurrentTech = od->tech;
-}
-
-/**
  * @brief Prints the UFOpaedia description for armour
  * @sa UP_DrawEntry
  * @todo This is not ufopedia only - no? We could use it in the equip menu, too (object info tab)
@@ -304,22 +277,6 @@ static void UP_BuildingDescription (const technology_t* t)
 }
 
 /**
- * @brief Reset all sort of info for normal items
- * @todo Check if this is all needed. Any better way?
- */
-static void UP_ResetCvarsForNormalItems (void)
-{
-	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_upmodel_top", "");
-	Cvar_Set("mn_displayitem", "0");
-	Cvar_Set("mn_changeitem", "0");
-	Cvar_Set("mn_displayfiremode", "0");
-	Cvar_Set("mn_changefiremode", "0");
-	Cvar_Set("mn_linkname", "");
-}
-
-/**
  * @brief Prints the (UFOpaedia and other) description for aircraft items
  * @param item The object definition of the item
  * @sa UP_DrawEntry
@@ -333,8 +290,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
 	int i;
 
 	/* Set menu text node content to null. */
-	MN_ResetData(TEXT_STANDARD);
-	UP_ResetCvarsForNormalItems();
+	INV_ItemDescription(NULL);
 
 	/* no valid item id given */
 	if (!item)
@@ -395,7 +351,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
  */
 void UP_AircraftDescription (const technology_t* t)
 {
-	UP_ResetCvarsForNormalItems();
+	INV_ItemDescription(NULL);
 
 	/* ensure that the buffer is emptied in every case */
 	upBuffer[0] = '\0';
@@ -458,7 +414,7 @@ void UP_UGVDescription (const ugv_t *ugvType)
 	tech = RS_GetTechByProvided(ugvType->id);
 	assert(tech);
 
-	UP_ResetCvarsForNormalItems();
+	INV_ItemDescription(NULL);
 
 	/* Set name of ugv/robot */
 	Cvar_Set("mn_itemname", _(tech->name));
@@ -662,7 +618,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 				case RS_WEAPON:
 					for (i = 0; i < csi.numODs; i++) {
 						if (!strcmp(tech->provides, csi.ods[i].id)) {
-							UP_ItemDescription(&csi.ods[i]);
+							INV_ItemDescription(&csi.ods[i]);
 							UP_DisplayTechTree(tech);
 							break;
 						}
@@ -1487,8 +1443,6 @@ void UP_InitStartup (void)
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, "Show the pre-research text in the UFOpaedia");
 	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, "True if there is a pre-research text available");
-
-	UP_ResetCvarsForNormalItems();
 }
 
 /**

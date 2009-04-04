@@ -71,14 +71,16 @@ void INV_ItemDescription (const objDef_t *od)
 	int i, count;
 
 	/* reset everything */
-	Cvar_Set("mn_itemname", "");
-	Cvar_Set("mn_item", "");
 	MN_ExecuteConfunc("change_action 0");
 
 	currentDisplayedObject = od;
 
-	if (!od)	/* If nothing selected return */
+	if (!od) {	/* If nothing selected return */
+		Cvar_Set("mn_itemname", "");
+		Cvar_Set("mn_item", "");
+		MN_ResetData(TEXT_STANDARD);
 		return;
+	}
 
 	/* select item */
 	Cvar_Set("mn_itemname", _(od->name));
