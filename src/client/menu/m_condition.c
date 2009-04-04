@@ -72,8 +72,8 @@ static float MN_GetFloatFromParam (const menuNode_t *source, const char* value, 
 			menuNode_t *node;
 			const value_t *property;
 			MN_ReadNodePath(value, source, &node, &property);
-			/** @todo need to make a better check */
-			assert(node);
+			if (!node)
+				Sys_Error("Node %s wasn't found", value);
 			assert(property);
 			return MN_GetFloatFromNodeProperty (node, property);
 		}
