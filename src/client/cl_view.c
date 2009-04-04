@@ -68,7 +68,7 @@ static void CL_ParseEntitystring (void)
 		cl.map_maxlevel = maxlevel = cl.map_maxlevel_base;
 
 	/* vid restart? */
-	if (numMPs || numLMs)
+	if (numMapParticles || numLMs)
 		return;
 
 	/* clear local entities */

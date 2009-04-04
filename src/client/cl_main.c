@@ -229,7 +229,7 @@ void CL_ClearState (void)
 
 	numLEs = 0;
 	numLMs = 0;
-	numMPs = 0;
+	numMapParticles = 0;
 	/* wipe the particles with every new map */
 	r_numParticles = 0;
 }

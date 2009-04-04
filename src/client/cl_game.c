@@ -45,7 +45,7 @@ typedef struct gameTypeList_s {
 	const mapDef_t* (*mapinfo)(int step);
 	/** some gametypes require extra data in the results parsing (like e.g. campaign mode) */
 	void (*results)(struct dbuffer *msg, int, int*, int*, int[][MAX_TEAMS], int[][MAX_TEAMS]);
-	/** check whether the given item is useable in the current game mode */
+	/** check whether the given item is usable in the current game mode */
 	qboolean (*itemIsUseable)(const objDef_t *od);
 	/** returns the equipment definition the game mode is using */
 	equipDef_t * (*getequipdef)(void);
@@ -90,7 +90,7 @@ void GAME_SetMode (int gametype)
 		if (list->gametype == gametype) {
 			Com_Printf("Change gametype to '%s'\n", list->name);
 			memset(&invList, 0, sizeof(invList));
-			INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initiallized */
+			INVSH_InitInventory(invList, qfalse); /* inventory structure switched/initialized */
 			list->init();
 		} else if (list->gametype == currentGameType) {
 			Com_Printf("Shutdown gametype '%s'\n", list->name);

@@ -36,8 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t *cl_particleweather;
 
-static mapParticle_t MPs[MAX_MAPPARTICLES];
-int numMPs;
+static mapParticle_t mapParticles[MAX_MAPPARTICLES];
+int numMapParticles;
 
 #define RADR(x)		((x < 0) ? (byte*)p - x : (byte*) pcmdData + x)
 #define RSTACK		-0xFFF0
@@ -214,13 +214,13 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 {
 	mapParticle_t *mp;
 
-	mp = &MPs[numMPs];
+	mp = &mapParticles[numMapParticles];
 
-	if (numMPs >= MAX_MAPPARTICLES) {
+	if (numMapParticles >= MAX_MAPPARTICLES) {
 		Com_Printf("Too many map particles (don't add %s) - exceeded %i\n", ptl, MAX_MAPPARTICLES);
 		return;
 	}
-	numMPs++;
+	numMapParticles++;
 
 	Q_strncpyz(mp->ptl, ptl, sizeof(mp->ptl));
 	VectorCopy(origin, mp->origin);
@@ -230,7 +230,7 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 	mp->wait[1] = wait[1] * 1000;
 	mp->nextTime = cl.time + wait[0] + wait[1] * frand() + 1;
 
-	Com_DPrintf(DEBUG_CLIENT, "Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
+	Com_DPrintf(DEBUG_CLIENT, "Adding map particle %s (%i) with levelflags %i\n", ptl, numMapParticles, levelflags);
 }
 
 /**
@@ -542,22 +542,8 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 		case PC_SPAWN:
 			pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
-			if (pnew) {
-#if 0
-				/** @todo
-				 * Also hand down "size" if children is a "beam"-style particle.
-				 * It can only be copied down if the parent is also a "beam"-style particle because
-				 * the value is only set for "infinite speed" particles (such as "beam"-style particles) in LE_AddProjectile. */
-				if (pnew->style == STYLE_BEAM && p->style == STYLE_BEAM) {
-					Vector2Copy(p->size, pnew->size);
-				}
-
-				/** @todo Also hand down the "angles" values. (if it is needed?) */
-				VectorCopy(p->angles, pnew->angles);
-#endif
-			} else {
+			if (!pnew)
 				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
-			}
 			break;
 
 		case PC_NSPAWN:
@@ -574,22 +560,8 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			for (i = 0; i < n; i++) {
 				pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
-				if (pnew) {
-#if 0
-					/** @todo
-					 * Also hand down "size" if children is a "beam"-style particle.
-					 * It can only be copied down if the parent is also a "beam"-style particle because
-					 * the value is only set for "infinite speed" particles (such as "beam"-style particles) in LE_AddProjectile. */
-					if (pnew->style == STYLE_BEAM && p->style == STYLE_BEAM) {
-						Vector2Copy(p->size, pnew->size);
-					}
-
-					/** @todo Also hand down the "angles" values (if it is needed?) */
-					VectorCopy(p->angles, pnew->angles);
-#endif
-				} else {
+				if (!pnew)
 					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
-				}
 			}
 			break;
 
@@ -638,7 +610,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 			break;
 
 	if (i == numPtlDefs) {
-		Com_Printf("Particle definiton \"%s\" not found\n", name);
+		Com_Printf("Particle definition \"%s\" not found\n", name);
 		return NULL;
 	}
 
@@ -693,7 +665,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 }
 
 /**
- * @brief Mark a particle an all its children as invisible or visibile
+ * @brief Mark a particle an all its children as invisible or visible
  * @param[in] p Particle to set the invis flags for
  * @param[in] hide Boolean value for hiding the particle
  */
@@ -986,7 +958,7 @@ void CL_RunMapParticles (void)
 	if (cls.state != ca_active)
 		return;
 
-	for (i = 0, mp = MPs; i < numMPs; i++, mp++)
+	for (i = 0, mp = mapParticles; i < numMapParticles; i++, mp++)
 		if (mp->nextTime && cl.time >= mp->nextTime) {
 			/* spawn a new particle */
 			ptl = CL_ParticleSpawn(mp->ptl, mp->levelflags, mp->origin, NULL, NULL);
