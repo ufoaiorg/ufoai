@@ -48,12 +48,6 @@ static char upText[MAX_UPTEXT];
 /* this buffer is for stuff like aircraft or building info */
 static char upBuffer[MAX_UPTEXT];
 
-/* this variable contains the current firemode number for ammos and weapons */
-static int upFireMode;
-
-/* this variable contains the current weapon to display (for an ammo) */
-static int upResearchedLink;
-
 /**
  * @note don't change the order or you have to change the if statements about mn_updisplay cvar
  * in menu_ufopedia.ufo, too
@@ -188,7 +182,7 @@ static const char* CL_AircraftSizeToName (int aircraftSize)
 
 /**
  * @brief Displays the tech tree dependencies in the UFOpaedia
- * @sa UP_DrawEntry
+ * @sa UP_Article
  * @todo Add support for "require_AND"
  * @todo re-iterate trough logic blocks (i.e. append the tech-names it references recursively)
  */
@@ -227,7 +221,7 @@ static void UP_DisplayTechTree (const technology_t* t)
 
 /**
  * @brief Prints the UFOpaedia description for armour
- * @sa UP_DrawEntry
+ * @sa UP_Article
  * @todo This is not ufopedia only - no? We could use it in the equip menu, too (object info tab)
  */
 static void UP_ArmourDescription (const technology_t* t)
@@ -258,7 +252,7 @@ static void UP_ArmourDescription (const technology_t* t)
 
 /**
  * @brief Prints the UFOpaedia description for buildings
- * @sa UP_DrawEntry
+ * @sa UP_Article
  */
 static void UP_BuildingDescription (const technology_t* t)
 {
@@ -279,7 +273,7 @@ static void UP_BuildingDescription (const technology_t* t)
 /**
  * @brief Prints the (UFOpaedia and other) description for aircraft items
  * @param item The object definition of the item
- * @sa UP_DrawEntry
+ * @sa UP_Article
  * Not only called from UFOpaedia but also from other places to display
  * @todo Don't display things like speed for base defence items - a missile
  * facility isn't getting slower or faster due a special weapon or ammunition
@@ -347,7 +341,7 @@ void UP_AircraftItemDescription (const objDef_t *item)
  * @brief Prints the UFOpaedia description for aircraft
  * @note Also checks whether the aircraft tech is already researched or collected
  * @sa BS_MarketAircraftDescription
- * @sa UP_DrawEntry
+ * @sa UP_Article
  */
 void UP_AircraftDescription (const technology_t* t)
 {
@@ -402,7 +396,7 @@ void UP_AircraftDescription (const technology_t* t)
  * @brief Prints the description for robots/ugvs.
  * @param[in] ugvType What type of robot/ugv to print the description for.
  * @sa BS_MarketClick_f
- * @sa UP_DrawEntry
+ * @sa UP_Article
  */
 void UP_UGVDescription (const ugv_t *ugvType)
 {
@@ -567,13 +561,42 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type, eventMail
 }
 
 /**
+ * @brief Set the ammo model to display to selected ammo (only for a reloadable weapon)
+ * @param tech technology_t pointer for the weapon's tech
+ * @sa UP_Article
+ */
+static void UP_DrawAssociatedAmmo (const technology_t* tech)
+{
+	const objDef_t *od = INVSH_GetItemByID(tech->provides);
+	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
+	if (od->numAmmos > 0) {
+		const technology_t *associated = od->ammos[0]->tech;
+		Cvar_Set("mn_upmodel_bottom", associated->mdl);
+	}
+}
+
+/**
  * @brief Display only the TEXT_UFOPEDIA part for a given technology
  * @param[in] tech The technology_t pointer to print the UFOpaedia article for
- * @sa UP_DrawEntry
+ * @sa UP_Article
  */
-void UP_Article (technology_t* tech, eventMail_t *mail)
+static void UP_Article (technology_t* tech, eventMail_t *mail)
 {
 	int i;
+
+	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
+
+	if (tech->mdl) {
+		Cvar_Set("mn_upmodel_top", tech->mdl);
+		Cvar_Set("mn_upimage_top", "");
+	} else if (tech->image) {
+		Cvar_Set("mn_upmodel_top", "");
+		Cvar_Set("mn_upimage_top", tech->image);
+	}
+	Cvar_Set("mn_upmodel_bottom", "");
+
+	if (tech->type == RS_WEAPON)
+		UP_DrawAssociatedAmmo(tech);
 
 	MN_ResetData(TEXT_UFOPEDIA);
 	MN_ResetData(TEXT_LIST);
@@ -588,6 +611,7 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 		 * eventMails don't have any chapter to go back to. */
 		upDisplay = UFOPEDIA_INDEX;
 	} else if (tech) {
+		currentChapter = tech->upChapter;
 		if (RS_IsResearched_ptr(tech)) {
 			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 			/* If researched -> display research text */
@@ -660,66 +684,6 @@ void UP_Article (technology_t* tech, eventMail_t *mail)
 }
 
 /**
- * @brief Set the ammo model to display to selected ammo (only for a reloadable weapon)
- * @param tech technology_t pointer for the weapon's tech
- * @sa UP_DrawEntry
- * @sa UP_DecreaseWeapon_f
- * @sa UP_IncreaseWeapon_f
- */
-static void UP_DrawAssociatedAmmo (const technology_t* tech)
-{
-	const objDef_t *od;
-
-	if (!tech)
-		return;
-
-	/* select item */
-	od = INVSH_GetItemByID(tech->provides);
-	assert(od);
-	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
-	if (od->numAmmos > 0) {
-		/* We set t_associated to ammo to display */
-		const technology_t *t_associated = od->ammos[upResearchedLink]->tech;
-		assert(t_associated);
-		Cvar_Set("mn_upmodel_bottom", t_associated->mdl);
-	}
-}
-
-/**
- * @brief Displays the UFOpaedia information about a technology
- * @param tech technology_t pointer for the tech to display the information about
- * @sa UP_AircraftDescription
- * @sa UP_BuildingDescription
- * @sa UP_ArmourDescription
- * @sa UP_ItemDescription
- */
-static void UP_DrawEntry (technology_t* tech, eventMail_t* mail)
-{
-	Cvar_Set("mn_upmodel_top", "");
-	Cvar_Set("mn_upmodel_bottom", "");
-	Cvar_Set("mn_upimage_top", "base/empty");
-
-	if (tech) {
-		upFireMode = 0;
-		upResearchedLink = 0;	/** @todo if the first weapon of the firemode of an ammo is unresearched, its damages,... will still be displayed */
-
-		if (tech->mdl)
-			Cvar_Set("mn_upmodel_top", tech->mdl);
-		if (tech->type == RS_WEAPON)
-			UP_DrawAssociatedAmmo(tech);
-		if (!tech->mdl && tech->image)
-			Cvar_Set("mn_upimage_top", tech->image);
-
-		currentChapter = tech->upChapter;
-	} else if (!mail)
-		return;
-
-	UP_ChangeDisplay(UFOPEDIA_ARTICLE);
-
-	UP_Article(tech, mail);
-}
-
-/**
  * @sa CL_EventAddMail_f
  */
 void UP_OpenEventMail (const char *eventMailID)
@@ -730,7 +694,7 @@ void UP_OpenEventMail (const char *eventMailID)
 		return;
 
 	MN_PushMenu("mail", NULL);
-	UP_DrawEntry(NULL, mail);
+	UP_Article(NULL, mail);
 }
 
 /**
@@ -805,7 +769,7 @@ static void UP_FindEntry_f (void)
 		}
 
 		upCurrentTech = tech;
-		UP_DrawEntry(upCurrentTech, NULL);
+		UP_Article(upCurrentTech, NULL);
 		return;
 	}
 
@@ -903,7 +867,7 @@ static void UP_Index_f (void)
  * @sa UP_Content_f
  * @sa UP_ChangeDisplay
  * @sa UP_Index_f
- * @sa UP_DrawEntry
+ * @sa UP_Article
  */
 static void UP_Back_f (void)
 {
@@ -944,7 +908,7 @@ static void UP_Prev_f (void)
 
 		if (UP_TechGetsDisplayed(t)) {
 			upCurrentTech = t;
-			UP_DrawEntry(t, NULL);
+			UP_Article(t, NULL);
 			return;
 		}
 	}
@@ -977,7 +941,7 @@ static void UP_Next_f (void)
 
 		if (UP_TechGetsDisplayed(t)) {
 			upCurrentTech = t;
-			UP_DrawEntry(t, NULL);
+			UP_Article(t, NULL);
 			return;
 		}
 	}
@@ -1044,7 +1008,7 @@ static void UP_Click_f (void)
 		}
 		upCurrentTech = t;
 		if (upCurrentTech)
-			UP_DrawEntry(upCurrentTech, NULL);
+			UP_Article(upCurrentTech, NULL);
 		break;
 	case UFOPEDIA_ARTICLE:
 		/* we don't want the click function parameter in our index function */
@@ -1102,7 +1066,7 @@ static void UP_TechTreeClick_f (void)
 static void UP_Update_f (void)
 {
 	if (upCurrentTech)
-		UP_DrawEntry(upCurrentTech, NULL);
+		UP_Article(upCurrentTech, NULL);
 }
 
 /**
@@ -1179,11 +1143,11 @@ static void UP_ResearchedLinkClick_f (void)
 	assert(od);
 
 	if (!strcmp(od->type, "ammo")) {
-		const technology_t *t = od->weapons[upResearchedLink]->tech;
+		const technology_t *t = od->weapons[0]->tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	} else if (od->weapon && od->reload) {
-		const technology_t *t = od->ammos[upResearchedLink]->tech;
+		const technology_t *t = od->ammos[0]->tech;
 		if (UP_TechGetsDisplayed(t))
 			UP_OpenWith(t->id);
 	}

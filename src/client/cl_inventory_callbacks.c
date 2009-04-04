@@ -79,6 +79,7 @@ void INV_ItemDescription (const objDef_t *od)
 		Cvar_Set("mn_itemname", "");
 		Cvar_Set("mn_item", "");
 		MN_ResetData(TEXT_STANDARD);
+		itemIndex = fireModeIndex = 0;
 		return;
 	}
 

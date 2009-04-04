@@ -233,7 +233,6 @@ int RS_CountInBase(const struct base_s *base);
 qboolean RS_ScriptSanityCheck(void);
 
 /* UFOpaedia function - but needs technology_t */
-void UP_Article(technology_t* tech, eventMail_t *mail);
 void UP_AircraftDescription(const technology_t* t);
 void UP_UGVDescription(const ugv_t *ugvType);
 
