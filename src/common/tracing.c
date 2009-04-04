@@ -980,7 +980,7 @@ static void TR_RecursiveHullCheck (boxtrace_t *trace_data, int num, float p1f, f
 	/* put the crosspoint DIST_EPSILON pixels on the near side */
 	/** @note t1 and t2 refer to the distance the endpoints of the line are from the bsp dividing plane for this node.
 	 * Additionally, frac and frac2 are the fractions of the CURRENT PIECE of the line that was being tested, and will
-	 * add to (aproximately) 1.  When midf is calculated, frac and frac2 are converted to reflect the fraction of the
+	 * add to (approximately) 1.  When midf is calculated, frac and frac2 are converted to reflect the fraction of the
 	 * WHOLE line being traced.  However, the interpolated vector is based on the CURRENT endpoints so uses frac and
 	 * frac2 to find the actual splitting point.
 	 */
@@ -1272,7 +1272,7 @@ trace_t TR_SingleTileBoxTrace (const vec3_t start, const vec3_t end, const vec3_
  * @param[in] levelmask Selects which submodels get scanned.
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @param[in] brushreject brushes the trace should ignore (see MASK_*)
- * @brief Traces all submodels in all tiles.  Used by ufo adn ufo_ded.
+ * @brief Traces all submodels in all tiles.  Used by ufo and ufo_ded.
  */
 trace_t TR_CompleteBoxTrace (const vec3_t start, const vec3_t end, const vec3_t mins, const vec3_t maxs, const int levelmask, const int brushmask, const int brushreject)
 {

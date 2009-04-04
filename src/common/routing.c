@@ -252,7 +252,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 	float bottom, top; /* Floor and ceiling model distances from the cell base. */
 	float initial; /* Cell floor and ceiling z coordinate. */
 	int i;
-	int fz, cz; /* Floor and celing Z cell coordinates */
+	int fz, cz; /* Floor and ceiling Z cell coordinates */
 	trace_t tr;
 
 	assert(map);
@@ -280,7 +280,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 
 	/*
 	 * Trace for a floor.  Steps:
-	 * 1. Start at the top of the designated cell and scan twoard the model's base.
+	 * 1. Start at the top of the designated cell and scan toward the model's base.
 	 * 2. If we do not find a brush, then this cell is bottomless and not enterable.
 	 * 3. We have found an upward facing brush.  Scan up PATHFINDING_MIN_STEPUP height.
 	 * 4. If we find anything, then this space is too small of an opening.  Restart just below our current floor.
@@ -333,7 +333,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 			/*
 			 * There is a premature obstruction.  We can't use this as a floor.
 			 * Check under start.  We need to have at least the minimum amount of clearance from our ceiling,
-			 * So shart at that point.
+			 * So start at that point.
 			 */
 			start[2] = tr.endpos[2] - PATHFINDING_MIN_OPENING * QUANT;
 			/* Check in case we are trying to scan too close to the bottom of the model. */
@@ -457,7 +457,7 @@ int RT_CheckCell (routing_t * map, const int actor_size, const int x, const int 
 static int RT_FillPassageData (routing_t * map, const int actor_size, const int dir, const int  x, const int y, const int z, const int opening_size, const int opening_base, const int stepup)
 {
 	const int opening_top = opening_base + opening_size;
-	int fz, cz; /**< Floor and celing Z cell coordinates */
+	int fz, cz; /**< Floor and ceiling Z cell coordinates */
 	int i;
 
 	/* Final interpretation:
@@ -798,7 +798,7 @@ static int RT_FindOpening (routing_t * map, const int actor_size, const int  x, 
 	VectorSet(pos, ax, ay, z);
 	SizedPosToVec(pos, actor_size, end);
 
-	/* Initialize the z component of both vetors */
+	/* Initialize the z component of both vectors */
 	start[2] = end[2] = 0;
 
 	/* First calculate the "guaranteed" opening, if any. If the opening from
@@ -1045,7 +1045,7 @@ static int RT_TraceOnePassage (routing_t * map, const int actor_size, const int 
  * @param[out] stepup Required stepup to travel in this direction.
  * @return The size in QUANT units of the detected opening.
  */
-static int RT_TracePassage (routing_t * map, const int actor_size, const int  x, const int y, const int z, const int ax, const int ay, int *opening_base, int *stepup)
+static int RT_TracePassage (routing_t * map, const int actor_size, const int x, const int y, const int z, const int ax, const int ay, int *opening_base, int *stepup)
 {
 	/* See if there is a passage TO the adjacent cell. */
 	const int bottom = max(0, RT_FLOOR(map, actor_size, x, y, z)) + z * CELL_HEIGHT;
@@ -1055,7 +1055,7 @@ static int RT_TracePassage (routing_t * map, const int actor_size, const int  x,
 	int opening_size;
 
 	/*
-	 * First check the ceiling fo the cell beneath the adjacent floor to see
+	 * First check the ceiling for the cell beneath the adjacent floor to see
 	 * if there is a potential opening.  The the difference between the
 	 * ceiling and the floor is at least PATHFINDING_MIN_OPENING tall, then
 	 * scan it to see if we can use it.  If we can, then one of two things
@@ -1114,8 +1114,7 @@ static int RT_TracePassage (routing_t * map, const int actor_size, const int  x,
  */
 int RT_UpdateConnection (routing_t * map, const int actor_size, const int x, const int y, const int z, const int dir)
 {
-
-	int opening_size; /**< The opening size (max actor hight) that can travel this passage. */
+	int opening_size; /**< The opening size (max actor height) that can travel this passage. */
 	int opening_base; /**< The base height of the opening. */
 	int stepup; /**< The stepup needed to travel through this passage in this direction. */
 

@@ -98,7 +98,7 @@ void INV_ItemDescription (const objDef_t *od)
 		if (itemIndex >= od->numWeapons || itemIndex < 0)
 			itemIndex = count - 1;
 
-		/* Only display weapons if at least one is useable */
+		/* Only display weapons if at least one is usable */
 		if (count > 0) {
 			MN_ExecuteConfunc("change_action "ITEM_DESCRIPTION_AMMO);
 			/* Display the name of the associated weapon */
