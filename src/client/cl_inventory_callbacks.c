@@ -140,18 +140,42 @@ void INV_ItemDescription (const objDef_t *od)
 				Q_strcat(itemText, va(_("%s\t%i\n"), _(csi.dts[i].id), od->ratings[i]), sizeof(itemText));
 			}
 		} else if (!strcmp(od->type, "ammo")) {
-			/* more will be written below */
+			/** @todo is there ammo with no firedefs? */
+			if (od->numFiredefs[itemIndex] > 0) {
+				const fireDef_t *fd;
+				const int numFiredefs = od->numFiredefs[itemIndex];
+
+				/* This contains everything common for weapons and ammos */
+
+				/* We check if the wanted firemode to display exists. */
+				if (fireModeIndex > numFiredefs - 1)
+					fireModeIndex = 0;
+				if (fireModeIndex < 0)
+					fireModeIndex = numFiredefs - 1;
+
+				fd = &od->fd[itemIndex][fireModeIndex];
+
+				/* We always display the name of the firemode for an ammo */
+				Cvar_Set("mn_firemodename", _(fd->name));
+
+				/* We display the characteristics of this firemode */
+				Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(fd->weaponSkill)), sizeof(itemText));
+				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) (fd->damage[0] + fd->spldmg[0]) * fd->shots), sizeof(itemText));
+				Q_strcat(itemText, va(_("Time units:\t%i\n"), fd->time), sizeof(itemText));
+				Q_strcat(itemText, va(_("Range:\t%g\n"), fd->range / UNIT_SIZE), sizeof(itemText));
+				Q_strcat(itemText, va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2), sizeof(itemText));
+			}
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
 			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
-			/* more will be written below */
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->fireTwoHanded ? _("Two-handed") : _("One-handed")));
-			/* more will be written below */
 		} else if (od->craftitem.type <= AC_ITEM_BASE_LASER) {
+			/** @todo move this into the campaign mode only code */
 			/* This is a weapon for base, can be displayed in equip menu */
 			Com_sprintf(itemText, sizeof(itemText), _("Weapon for base defence system\n"));
 		} else if (od->craftitem.type != AIR_STATS_MAX) {
+			/** @todo move this into the campaign mode only code */
 			/* This is an item for aircraft or ammos for bases -- do nothing */
 		} else {
 			/* just an item - only primary definition */
@@ -159,32 +183,6 @@ void INV_ItemDescription (const objDef_t *od)
 			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
-		}
-
-		/** @todo is there ammo with no firedef? */
-		if (!strcmp(od->type, "ammo") && od->numFiredefs[itemIndex] > 0) {
-			const fireDef_t *fd;
-			const int numFiredefs = od->numFiredefs[itemIndex];
-
-			/* This contains everything common for weapons and ammos */
-
-			/* We check if the wanted firemode to display exists. */
-			if (fireModeIndex > numFiredefs - 1)
-				fireModeIndex = 0;
-			if (fireModeIndex < 0)
-				fireModeIndex = numFiredefs - 1;
-
-			fd = &od->fd[itemIndex][fireModeIndex];
-
-			/* We always display the name of the firemode for an ammo */
-			Cvar_Set("mn_firemodename", _(fd->name));
-
-			/* We display the characteristics of this firemode */
-			Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(fd->weaponSkill)), sizeof(itemText));
-			Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) (fd->damage[0] + fd->spldmg[0]) * fd->shots), sizeof(itemText));
-			Q_strcat(itemText, va(_("Time units:\t%i\n"), fd->time), sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g\n"), fd->range / UNIT_SIZE), sizeof(itemText));
-			Q_strcat(itemText, va(_("Spreads:\t%g\n"), (fd->spread[0] + fd->spread[1]) / 2), sizeof(itemText));
 		}
 
 		MN_RegisterText(TEXT_STANDARD, itemText);
