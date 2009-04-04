@@ -360,7 +360,6 @@ menu mp_team_edit
 				*path:this.parent.header_item invis true
 				cmd "hide_firemode true;" 
 			}
-			cmd "del mn_changeitem;"
 		}
 
 		string itemname
