@@ -36,16 +36,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static cvar_t *mn_uppretext;
 static cvar_t *mn_uppreavailable;
 
-static pediaChapter_t *upChapters_displaylist[MAX_PEDIACHAPTERS];
-static int numChapters_displaylist;
+static pediaChapter_t *upChaptersDisplayList[MAX_PEDIACHAPTERS];
+static int numChaptersDisplayList;
 
 static technology_t	*upCurrentTech;
 static pediaChapter_t *currentChapter;
 
 #define MAX_UPTEXT 4096
-static char upText[MAX_UPTEXT];
-
-/* this buffer is for stuff like aircraft or building info */
 static char upBuffer[MAX_UPTEXT];
 
 /**
@@ -612,6 +609,8 @@ static void UP_Article (technology_t* tech, eventMail_t *mail)
 		upDisplay = UFOPEDIA_INDEX;
 	} else if (tech) {
 		currentChapter = tech->upChapter;
+		upCurrentTech = tech;
+
 		if (RS_IsResearched_ptr(tech)) {
 			Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 			/* If researched -> display research text */
@@ -754,27 +753,21 @@ static void UP_FindEntry_f (void)
 	id = Cmd_Argv(1);
 
 	/* maybe we get a call like 'ufopedia ""' */
-	if (!*id) {
+	if (id[0] == '\0') {
 		Com_Printf("UP_FindEntry_f: No UFOpaedia entry given as parameter\n");
 		return;
 	}
 
-	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: id=\"%s\"\n", id);
-
 	tech = RS_GetTechByID(id);
-	if (tech) {
-		if (tech->redirect) {
-			Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: Tech %s redirected to %s\n", tech->id, tech->redirect->id);
-			tech = tech->redirect;
-		}
-
-		upCurrentTech = tech;
-		UP_Article(upCurrentTech, NULL);
+	if (!tech) {
+		Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No UFOpaedia entry found for %s\n", id);
 		return;
 	}
 
-	/* if we can not find it */
-	Com_DPrintf(DEBUG_CLIENT, "UP_FindEntry_f: No UFOpaedia entry found for %s\n", id);
+	if (tech->redirect)
+		tech = tech->redirect;
+
+	UP_Article(tech, NULL);
 }
 
 /**
@@ -786,16 +779,16 @@ static void UP_Content_f (void)
 {
 	int i;
 
-	numChapters_displaylist = 0;
-	upText[0] = 0;
+	numChaptersDisplayList = 0;
+	upBuffer[0] = 0;
 
 	for (i = 0; i < ccs.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
-		qboolean researched_entries = qfalse;
+		qboolean researchedEntries = qfalse;
 		upCurrentTech = ccs.upChapters[i].first;
 		do {
 			if (UP_TechGetsDisplayed(upCurrentTech)) {
-				researched_entries = qtrue;
+				researchedEntries = qtrue;
 				break;
 			}
 			if (upCurrentTech != upCurrentTech->upNext && upCurrentTech->upNext)
@@ -806,18 +799,18 @@ static void UP_Content_f (void)
 		} while (upCurrentTech);
 
 		/* .. and if so add them to the displaylist of chapters. */
-		if (researched_entries) {
-			if (numChapters_displaylist >= MAX_PEDIACHAPTERS)
+		if (researchedEntries) {
+			if (numChaptersDisplayList >= MAX_PEDIACHAPTERS)
 				Sys_Error("MAX_PEDIACHAPTERS hit");
-			upChapters_displaylist[numChapters_displaylist++] = &ccs.upChapters[i];
+			upChaptersDisplayList[numChaptersDisplayList++] = &ccs.upChapters[i];
 			/** @todo integrate images into text better */
-			Q_strcat(upText, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", ccs.upChapters[i].id, _(ccs.upChapters[i].name)), sizeof(upText));
+			Q_strcat(upBuffer, va(TEXT_IMAGETAG"icons/ufopedia_%s %s\n", ccs.upChapters[i].id, _(ccs.upChapters[i].name)), sizeof(upBuffer));
 		}
 	}
 
 	UP_ChangeDisplay(UFOPEDIA_CHAPTERS);
 
-	MN_RegisterText(TEXT_UFOPEDIA, upText);
+	MN_RegisterText(TEXT_UFOPEDIA, upBuffer);
 	Cvar_Set("mn_uptitle", _("UFOpaedia Content"));
 }
 
@@ -828,7 +821,6 @@ static void UP_Content_f (void)
 static void UP_Index_f (void)
 {
 	technology_t* t;
-	char *upIndex;
 
 	if (Cmd_Argc() < 2 && !currentChapter) {
 		Com_Printf("Usage: %s <chapter-id>\n", Cmd_Argv(0));
@@ -845,9 +837,8 @@ static void UP_Index_f (void)
 
 	UP_ChangeDisplay(UFOPEDIA_INDEX);
 
-	upIndex = upText;
-	*upIndex = '\0';
-	MN_RegisterText(TEXT_UFOPEDIA, upIndex);
+	upBuffer[0] = '\0';
+	MN_RegisterText(TEXT_UFOPEDIA, upBuffer);
 
 	Cvar_Set("mn_uptitle", va(_("UFOpaedia Index: %s"), _(currentChapter->name)));
 
@@ -856,8 +847,8 @@ static void UP_Index_f (void)
 	/* get next entry */
 	while (t) {
 		if (UP_TechGetsDisplayed(t)) {
-			/* Add this tech to the index - it gets dsiplayed. */
-			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
+			/* Add this tech to the index - it gets displayed. */
+			Q_strcat(upBuffer, va("%s\n", _(t->name)), sizeof(upBuffer));
 		}
 		t = t->upNext;
 	}
@@ -890,26 +881,23 @@ static void UP_Back_f (void)
  */
 static void UP_Prev_f (void)
 {
-	technology_t *t;
+	technology_t *tech = upCurrentTech;
 
-	if (!upCurrentTech) /* if called from console */
+	if (!tech) /* if called from console */
 		return;
 
-	t = upCurrentTech;
-
 	/* get previous entry */
-	if (t->upPrev) {
+	if (tech->upPrev) {
 		/* Check if the previous entry is researched already otherwise go to the next entry. */
 		do {
-			t = t->upPrev;
-			assert(t);
-			if (t == t->upPrev)
-				Sys_Error("UP_Prev_f: The 'prev': %s entry is equal to '%s'.", t->upPrev->id, t->id);
-		} while (t->upPrev && !UP_TechGetsDisplayed(t));
+			tech = tech->upPrev;
+			assert(tech);
+			if (tech == tech->upPrev)
+				Sys_Error("UP_Prev_f: The 'prev': %s entry is equal to '%s'.", tech->upPrev->id, tech->id);
+		} while (tech->upPrev && !UP_TechGetsDisplayed(tech));
 
-		if (UP_TechGetsDisplayed(t)) {
-			upCurrentTech = t;
-			UP_Article(t, NULL);
+		if (UP_TechGetsDisplayed(tech)) {
+			UP_Article(tech, NULL);
 			return;
 		}
 	}
@@ -924,25 +912,22 @@ static void UP_Prev_f (void)
  */
 static void UP_Next_f (void)
 {
-	technology_t *t;
+	technology_t *tech = upCurrentTech;
 
-	if (!upCurrentTech) /* if called from console */
+	if (!tech) /* if called from console */
 		return;
 
-	t = upCurrentTech;
-
 	/* get next entry */
-	if (t && t->upNext) {
+	if (tech && tech->upNext) {
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
-			t = t->upNext;
-			if (t == t->upNext)
-				Sys_Error("UP_Next_f: The 'next': %s entry is equal to '%s'.", t->upNext->id, t->id);
-		} while (t->upNext && !UP_TechGetsDisplayed(t));
+			tech = tech->upNext;
+			if (tech == tech->upNext)
+				Sys_Error("UP_Next_f: The 'next': %s entry is equal to '%s'.", tech->upNext->id, tech->id);
+		} while (tech->upNext && !UP_TechGetsDisplayed(tech));
 
-		if (UP_TechGetsDisplayed(t)) {
-			upCurrentTech = t;
-			UP_Article(t, NULL);
+		if (UP_TechGetsDisplayed(tech)) {
+			UP_Article(tech, NULL);
 			return;
 		}
 	}
@@ -973,7 +958,7 @@ static void UP_RightClick_f (void)
 static void UP_Click_f (void)
 {
 	int num;
-	technology_t *t;
+	technology_t *tech;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -981,8 +966,8 @@ static void UP_Click_f (void)
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
-		if (num < numChapters_displaylist && upChapters_displaylist[num]->first) {
-			upCurrentTech = upChapters_displaylist[num]->first;
+		if (num < numChaptersDisplayList && upChaptersDisplayList[num]->first) {
+			upCurrentTech = upChaptersDisplayList[num]->first;
 			do {
 				if (UP_TechGetsDisplayed(upCurrentTech)) {
 					Cbuf_AddText(va("mn_upindex %i;", upCurrentTech->upChapter->idx));
@@ -994,22 +979,21 @@ static void UP_Click_f (void)
 		break;
 	case UFOPEDIA_INDEX:
 		assert(currentChapter);
-		t = currentChapter->first;
+		tech = currentChapter->first;
 
 		/* get next entry */
-		while (t) {
-			if (UP_TechGetsDisplayed(t)) {
+		while (tech) {
+			if (UP_TechGetsDisplayed(tech)) {
 				/* Add this tech to the index - it gets displayed. */
 				if (num > 0)
 					num--;
 				else
 					break;
 			}
-			t = t->upNext;
+			tech = tech->upNext;
 		}
-		upCurrentTech = t;
-		if (upCurrentTech)
-			UP_Article(upCurrentTech, NULL);
+		if (tech)
+			UP_Article(tech, NULL);
 		break;
 	case UFOPEDIA_ARTICLE:
 		/* we don't want the click function parameter in our index function */
