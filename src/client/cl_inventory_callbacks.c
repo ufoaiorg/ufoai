@@ -121,10 +121,19 @@ void INV_ItemDescription (const objDef_t *od)
 		if (count > 0) {
 			MN_ExecuteConfunc("change_action "ITEM_DESCRIPTION_WEAPON);
 			odAmmo = od->ammos[itemIndex];
-			for (i = 0; i < od->numWeapons; i++) {
-
+			if (!GAME_ItemIsUseable(odAmmo)) {
+				Cvar_Set("mn_linkname", _("None"));
+				for (i = 0; i < od->numWeapons; i++) {
+					itemIndex++;
+					odAmmo = od->ammos[itemIndex];
+					if (GAME_ItemIsUseable(odAmmo)) {
+						Cvar_Set("mn_linkname", _(odAmmo->name));
+						break;
+					}
+				}
+			} else {
+				Cvar_Set("mn_linkname", _(odAmmo->name));
 			}
-			Cvar_Set("mn_linkname", _(odAmmo->name));
 		}
 	}
 
