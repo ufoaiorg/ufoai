@@ -120,7 +120,7 @@ void CL_ActorDoTurn(struct dbuffer *msg);
 void CL_ActorStandCrouch_f(void);
 void CL_ActorToggleCrouchReservation_f(void);
 void CL_ActorUseHeadgear_f(void);
-void CL_ActorStartMove(const le_t *le, pos3_t to);
+void CL_ActorStartMove(le_t *le, pos3_t to);
 void CL_ActorShoot(const le_t *le, pos3_t at);
 void CL_InvCheckHands(struct dbuffer *msg);
 void CL_ActorDoMove(struct dbuffer *msg);

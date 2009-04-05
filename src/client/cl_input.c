@@ -375,7 +375,7 @@ static void CL_ConfirmAction_f (void)
 	if (!selActor)
 		return;
 
-	switch (cl.actorMode) {
+	switch (selActor->actorMode) {
 	case M_PEND_MOVE:
 		CL_ActorStartMove(selActor, mousePendPos);
 		break;
@@ -383,7 +383,7 @@ static void CL_ConfirmAction_f (void)
 	case M_PEND_FIRE_L:
 		CL_ActorShoot(selActor, mousePendPos);
 		/** @todo this might've broken animation choosing in cl_actor:CL_ActorDoShoot and CL_ActorStartShoot. */
-		/* cl.actorMode = M_MOVE; */
+		/* selActor->actorMode = M_MOVE; */
 		break;
 	default:
 		break;
@@ -448,7 +448,8 @@ static void CL_TurnUp_f (void)
 		return;
 	mouseSpace = MS_NULL;
 	/* leave the fire mode when turning around - not everybody has a mmb mouse */
-	cl.actorMode = M_MOVE;
+	assert(selActor);
+	selActor->actorMode = M_MOVE;
 }
 
 /**
@@ -984,10 +985,6 @@ static void IN_Parse (void)
 		return;
 
 	CL_ActorMouseTrace();
-	/* set the mousespace to MS_WORLD because we are not in a menu
-	 * (MN_CursorOnMenu failed) and we have the cursor in the world */
-	if (cl.actorMode > M_PEND_MOVE)
-		mouseSpace = MS_WORLD;
 }
 
 /**

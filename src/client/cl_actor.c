@@ -868,7 +868,7 @@ qboolean CL_ActorSelect (le_t * le)
 	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
 	if (!sameActor) {
 		HUD_HideFiremodes(); /**< @todo remove this here */
-		cl.actorMode = M_MOVE;
+		le->actorMode = M_MOVE;
 	}
 
 	return qtrue;
@@ -1051,9 +1051,9 @@ void CL_DisplayBlockedPaths_f (void)
 void CL_ConditionalMoveCalcForCurrentSelectedActor (void)
 {
 	if (selActor) {
-		const int crouching_state = (selActor->state & STATE_CROUCHED) ? 1 : 0;
+		const int crouchingState = (selActor->state & STATE_CROUCHED) ? 1 : 0;
 		CL_BuildForbiddenList();
-		Grid_MoveCalc(clMap, selActor->fieldSize, &clPathMap, selActor->pos, crouching_state, MAX_ROUTE, fb_list, fb_length);
+		Grid_MoveCalc(clMap, selActor->fieldSize, &clPathMap, selActor->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 		CL_ResetActorMoveLength();
 	}
 }
@@ -1093,8 +1093,8 @@ int CL_CheckAction (void)
  */
 static int CL_MoveLength (const le_t *le, pos3_t to)
 {
-	const int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
-	const float length = Grid_MoveLength(&clPathMap, to, crouching_state, qfalse);
+	const int crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
+	const float length = Grid_MoveLength(&clPathMap, to, crouchingState, qfalse);
 
 	switch (CL_MoveMode(le, length)) {
 	case WALKTYPE_AUTOSTAND_BEING_USED:
@@ -1180,30 +1180,26 @@ static qboolean CL_TraceMove (pos3_t to)
  * @param[out] pos The location we can reach with the given amount of TUs.
  * @sa CL_TraceMove (similar algo.)
  */
-static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
+static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
 {
 	int length;
-	/* vec3_t vec; */
 	int dv;
-	int crouching_state;
+	int crouchingState = le && (le->state & STATE_CROUCHED) ? 1 : 0;
+	const int tus = CL_UsableTUs(le);
+	/* vec3_t vec; */
 
-	if (!selActor)
-		return;
-
-	crouching_state = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
-
-	length = CL_MoveLength(selActor, to);
+	length = CL_MoveLength(le, to);
 	if (!length || length >= 0x3F)
 		return;
 
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
-		length = CL_MoveLength(selActor, pos);
+	while ((dv = Grid_MoveNext(clMap, le->fieldSize, &clPathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+		length = CL_MoveLength(le, pos);
 		if (length <= tus)
 			return;
-		PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
-		/* Grid_PosToVec(clMap, selActor->fieldSize, pos, vec); */
+		PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
+		/* Grid_PosToVec(clMap, le->fieldSize, pos, vec); */
 	}
 }
 
@@ -1215,7 +1211,7 @@ static void CL_MaximumMove (pos3_t to, int tus, pos3_t pos)
  * @sa CL_ActorActionMouse
  * @sa CL_ActorSelectMouse
  */
-void CL_ActorStartMove (const le_t * le, pos3_t to)
+void CL_ActorStartMove (le_t * le, pos3_t to)
 {
 	int length;
 	pos3_t toReal;
@@ -1238,7 +1234,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	}
 
 	/* Get the last position we can walk to with the usable TUs. */
-	CL_MaximumMove(to, CL_UsableTUs(le), toReal);
+	CL_MaximumMove(to, le, toReal);
 
 	/* Get the cost of the new position just in case. */
 	length = CL_MoveLength(le, toReal);
@@ -1250,7 +1246,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	}
 
 	/* change mode to move now */
-	cl.actorMode = M_MOVE;
+	le->actorMode = M_MOVE;
 
 	/* move seems to be possible; send request to server */
 	MSG_Write_PA(PA_MOVE, le->entnum, toReal);
@@ -1277,11 +1273,11 @@ void CL_ActorShoot (const le_t * le, pos3_t at)
 	/** @todo Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
 	 */
-	if (IS_MODE_FIRE_RIGHT(cl.actorMode)) {
+	if (IS_MODE_FIRE_RIGHT(le->actorMode)) {
 		type = ST_RIGHT;
-	} else if (IS_MODE_FIRE_LEFT(cl.actorMode)) {
+	} else if (IS_MODE_FIRE_LEFT(le->actorMode)) {
 		type = ST_LEFT;
-	} else if (IS_MODE_FIRE_HEADGEAR(cl.actorMode)) {
+	} else if (IS_MODE_FIRE_HEADGEAR(le->actorMode)) {
 		type = ST_HEADGEAR;
 	} else
 		return;
@@ -1582,12 +1578,12 @@ void CL_ActorTurnMouse (void)
 	}
 
 	/* check for fire-modes, and cancel them */
-	switch (cl.actorMode) {
+	switch (selActor->actorMode) {
 	case M_FIRE_R:
 	case M_FIRE_L:
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		cl.actorMode = M_MOVE;
+		selActor->actorMode = M_MOVE;
 		return; /* and return without turning */
 	default:
 		break;
@@ -1675,10 +1671,10 @@ void CL_ActorUseHeadgear_f (void)
 	if (!headgear)
 		return;
 
-	cl.actorMode = M_FIRE_HEADGEAR;
+	selActor->actorMode = M_FIRE_HEADGEAR;
 	selActor->currentSelectedFiremode = 0; /** @todo make this a variable somewhere? */
 	CL_ActorShoot(selActor, selActor->pos);
-	cl.actorMode = M_MOVE;
+	selActor->actorMode = M_MOVE;
 
 	/* restore old mouse space */
 	mouseSpace = tmp_mouseSpace;
@@ -1780,11 +1776,9 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		return;
 	}
 
-	if (le->team == cls.team) {
-		/* if actor on our team, set this le as the last moving */
+	/* if actor on our team, set this le as the last moving */
+	if (le->team == cls.team)
 		CL_SetLastMoving(le);
-		shootType = cl.actorMode;
-	}
 
 	/* Animate - we have to check if it is right or left weapon usage. */
 	if (HEADGEAR(le) && IS_SHOT_HEADGEAR(shootType)) {
@@ -1795,12 +1789,8 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	} else if (LEFT(le) && IS_SHOT_LEFT(shootType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
-	} else {
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow (entnum: %i).\n", number);
-		/* We use the default (right) animation now. */
-		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
-		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-	}
+	} else
+		Com_Error(ERR_DROP, "CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow (entnum: %i).\n", number);
 }
 
 
@@ -1919,9 +1909,6 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	/* ET_ACTORHIDDEN actors don't have a model yet */
 	if (le->type == ET_ACTORHIDDEN)
 		return;
-
-	if (le->team == cls.team)
-		shootType = cl.actorMode;
 
 	/* Animate - we have to check if it is right or left weapon usage. */
 	if (RIGHT(le) && IS_SHOT_RIGHT(shootType)) {
@@ -2049,7 +2036,7 @@ MOUSE INPUT
  */
 static void CL_ActorMoveMouse (void)
 {
-	if (cl.actorMode == M_PEND_MOVE) {
+	if (selActor->actorMode == M_PEND_MOVE) {
 		if (VectorCompare(mousePos, mousePendPos)) {
 			/* Pending move and clicked the same spot (i.e. 2 clicks on the same place) */
 			CL_ActorStartMove(selActor, mousePos);
@@ -2062,7 +2049,7 @@ static void CL_ActorMoveMouse (void)
 			/* Set our mode to pending move. */
 			VectorCopy(mousePos, mousePendPos);
 
-			cl.actorMode = M_PEND_MOVE;
+			selActor->actorMode = M_PEND_MOVE;
 		} else {
 			/* Just move there */
 			CL_ActorStartMove(selActor, mousePos);
@@ -2080,13 +2067,13 @@ void CL_ActorSelectMouse (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	switch (cl.actorMode) {
+	switch (selActor->actorMode) {
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Try and select another team member */
 		if (mouseActor && mouseActor != selActor && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
-			cl.actorMode = M_MOVE;
+			selActor->actorMode = M_MOVE;
 		} else {
 			CL_ActorMoveMouse();
 		}
@@ -2098,10 +2085,10 @@ void CL_ActorSelectMouse (void)
 			CL_ActorShoot(selActor, mousePos);
 
 			/* We switch back to aiming mode. */
-			if (cl.actorMode == M_PEND_FIRE_R)
-				cl.actorMode = M_FIRE_R;
+			if (selActor->actorMode == M_PEND_FIRE_R)
+				selActor->actorMode = M_FIRE_R;
 			else
-				cl.actorMode = M_FIRE_L;
+				selActor->actorMode = M_FIRE_L;
 		} else {
 			/* Clicked different spot. */
 			VectorCopy(mousePos, mousePendPos);
@@ -2113,7 +2100,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			cl.actorMode = M_PEND_FIRE_R;
+			selActor->actorMode = M_PEND_FIRE_R;
 			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -2125,7 +2112,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			cl.actorMode = M_PEND_FIRE_L;
+			selActor->actorMode = M_PEND_FIRE_L;
 			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -2147,10 +2134,10 @@ void CL_ActorActionMouse (void)
 	if (!selActor || mouseSpace != MS_WORLD)
 		return;
 
-	if (cl.actorMode == M_MOVE || cl.actorMode == M_PEND_MOVE) {
+	if (selActor->actorMode == M_MOVE || selActor->actorMode == M_PEND_MOVE) {
 		CL_ActorMoveMouse();
 	} else {
-		cl.actorMode = M_MOVE;
+		selActor->actorMode = M_MOVE;
 	}
 }
 
@@ -3040,8 +3027,8 @@ void CL_ActorTargetAlign_f (void)
 	/* no firedef selected */
 	if (!selFD || !selActor)
 		return;
-	if (cl.actorMode != M_FIRE_R && cl.actorMode != M_FIRE_L
-	 && cl.actorMode != M_PEND_FIRE_R && cl.actorMode != M_PEND_FIRE_L)
+	if (selActor->actorMode != M_FIRE_R && selActor->actorMode != M_FIRE_L
+	 && selActor->actorMode != M_PEND_FIRE_R && selActor->actorMode != M_PEND_FIRE_L)
 		return;
 
 	/* user defined height align */
@@ -3093,25 +3080,25 @@ void CL_ActorTargetAlign_f (void)
  */
 void CL_AddTargeting (void)
 {
-	if (mouseSpace != MS_WORLD)
+	if (mouseSpace != MS_WORLD || !selActor)
 		return;
 
-	switch (cl.actorMode) {
+	switch (selActor->actorMode) {
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Display Move-cursor. */
 		CL_AddTargetingBox(mousePos, qfalse);
 
-		if (cl.actorMode == M_PEND_MOVE) {
+		if (selActor->actorMode == M_PEND_MOVE) {
 			/* Also display a box for the pending move if we have one. */
 			CL_AddTargetingBox(mousePendPos, qtrue);
 			if (!CL_TraceMove(mousePendPos))
-				cl.actorMode = M_MOVE;
+				selActor->actorMode = M_MOVE;
 		}
 		break;
 	case M_FIRE_R:
 	case M_FIRE_L:
-		if (!selActor || !selFD)
+		if (!selFD)
 			return;
 
 		if (!selFD->gravity)
@@ -3121,7 +3108,7 @@ void CL_AddTargeting (void)
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		if (!selActor || !selFD)
+		if (!selFD)
 			return;
 
 		/* Draw cursor at mousepointer */
