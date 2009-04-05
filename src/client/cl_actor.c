@@ -1484,8 +1484,7 @@ void CL_InvCheckHands (struct dbuffer *msg)
 void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
-	int number, i;
-	pos3_t pos;
+	int number, i, pathLength;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -1506,11 +1505,9 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		return;
 	}
 
-	/* speed is set in the EV_ACTOR_START_MOVE event */
-	assert(le->speed);
 
-	le->pathLength = NET_ReadByte(msg);
-	if (le->pathLength >= MAX_LE_PATHLENGTH)
+	pathLength = NET_ReadByte(msg);
+	if (le->pathLength + pathLength >= MAX_LE_PATHLENGTH)
 		Com_Error(ERR_DROP, "Overflow in pathLength");
 
 	/* Also get the final position */
@@ -1518,10 +1515,16 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->newPos[1] = NET_ReadByte(msg);
 	le->newPos[2] = NET_ReadByte(msg);
 
-	for (i = 0; i < le->pathLength; i++) {
+	for (i = le->pathLength; i < le->pathLength + pathLength; i++) {
 		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
+		le->speed = NET_ReadShort(msg);
 		le->pathContents[i] = NET_ReadShort(msg);
 	}
+
+	/* we are adding to already existing pathLength because a move event can be interrupted by
+	 * an perish or appear event (or any other event) on the server side. This results in two events
+	 * where the player would just like to walk on path */
+	le->pathLength += pathLength;
 
 	/* activate PathMove function */
 	FLOOR(le) = NULL;

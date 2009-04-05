@@ -202,7 +202,6 @@ typedef enum {
 
 	EV_ACTOR_APPEAR,
 	EV_ACTOR_ADD,
-	EV_ACTOR_START_MOVE,
 	EV_ACTOR_TURN,			/**< turn an actor around */
 	EV_ACTOR_MOVE,
 

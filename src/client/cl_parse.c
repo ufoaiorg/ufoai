@@ -100,7 +100,6 @@ const char *ev_format[] =
 
 	"!s!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
-	"ss",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!sbbs",			/* EV_ACTOR_MOVE: Don't use this format string - see CL_ActorDoMove for more info */
 
@@ -155,7 +154,6 @@ static const char *ev_names[] =
 
 	"EV_ACTOR_APPEAR",
 	"EV_ACTOR_ADD",
-	"EV_ACTOR_START_MOVE",
 	"EV_ACTOR_TURN",
 	"EV_ACTOR_MOVE",
 
@@ -195,7 +193,6 @@ static void CL_EntAppear(struct dbuffer *msg);
 static void CL_EntPerish(struct dbuffer *msg);
 static void CL_AddBrushModel(struct dbuffer *msg);
 static void CL_AddEdict(struct dbuffer * msg);
-static void CL_ActorDoStartMove(struct dbuffer *msg);
 static void CL_ActorAppear(struct dbuffer *msg);
 static void CL_ActorAdd(struct dbuffer *msg);
 static void CL_ActorStats(struct dbuffer *msg);
@@ -226,7 +223,6 @@ static void (*ev_func[])(struct dbuffer *msg) =
 
 	CL_ActorAppear,					/* EV_ACTOR_APPEAR */
 	CL_ActorAdd,					/* EV_ACTOR_ADD */
-	CL_ActorDoStartMove,			/* EV_ACTOR_START_MOVE */
 	CL_ActorDoTurn,					/* EV_ACTOR_TURN */
 	CL_ActorDoMove,					/* EV_ACTOR_MOVE */
 	CL_ActorStartShoot,				/* EV_ACTOR_START_SHOOT */
@@ -916,22 +912,6 @@ static void CL_ParseResults (struct dbuffer *msg)
 			num_stuns[i][j] = NET_ReadByte(msg);
 
 	GAME_HandleResults(msg, winner, num_spawned, num_alive, num_kills, num_stuns);
-}
-
-/**
- * @sa EV_ACTOR_START_MOVE
- * @note Only send to all the players that see the actual actor behind the entnum
- */
-static void CL_ActorDoStartMove (struct dbuffer *msg)
-{
-	int entnum, speed;
-	le_t *le;
-
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_MOVE], &entnum, &speed);
-	le = LE_Get(entnum);
-	if (!le)
-		Com_Error(ERR_DROP, "Could not find le with id %i", entnum);
-	le->speed = speed;
 }
 
 /**

@@ -1366,28 +1366,6 @@ void G_MoveCalc (int team, pos3_t from, int actor_size, int crouching_state, int
 #define ACTOR_SPEED_CROUCHED (ACTOR_SPEED_NORMAL / 2)
 
 /**
- * @brief Sends the EV_ACTOR_START_MOVE event to the client
- * the ent belongs, too
- */
-static inline void G_ClientStartMove (edict_t *ent, int player_mask)
-{
-	if (!player_mask)
-		return;
-
-	/* start move */
-	gi.AddEvent(player_mask, EV_ACTOR_START_MOVE);
-	gi.WriteShort(ent->number);
-	/* slower if crouched */
-	if (ent->state & STATE_CROUCHED)
-		ent->speed = ACTOR_SPEED_CROUCHED;
-	else
-		ent->speed = ACTOR_SPEED_NORMAL;
-	ent->speed *= g_actorspeed->value;
-	/* client and server are using the same speed value */
-	gi.WriteShort(ent->speed);
-}
-
-/**
  * @brief Generates the client events that are send over the netchannel to move an actor
  * @param[in] player Player who is moving an actor
  * @param[in] visTeam
@@ -1412,7 +1390,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	vec3_t pointTrace;
 	byte* stepAmount = NULL;
 	qboolean triggers = qfalse;
-	edict_t* client_action;
+	edict_t* clientAction;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
 	int crouchingState;
@@ -1442,10 +1420,15 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		}
 	}
 
+	/* slower if crouched */
+	if (ent->state & STATE_CROUCHED)
+		ent->speed = ACTOR_SPEED_CROUCHED;
+	else
+		ent->speed = ACTOR_SPEED_NORMAL;
+	ent->speed *= g_actorspeed->value;
+
 	/* length of ROUTING_NOT_REACHABLE means not reachable */
 	if (length && length < ROUTING_NOT_REACHABLE) {
-		G_ClientStartMove(ent, G_VisToPM(ent->visflags));
-
 		/* this let the footstep sounds play even over network */
 		ent->think = G_PhysicsStep;
 		ent->nextthink = level.time;
@@ -1529,7 +1512,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 						 * the value of this pointer depends on how far the actor walks
 						 * and this might be influenced at a later stage inside this
 						 * loop. That's why we can modify the value of this byte
-						 * if e.g. a VIS_STOP occured and no more steps should be made.
+						 * if e.g. a VIS_STOP occurred and no more steps should be made.
 						 * But keep in mind, that no other events might be between
 						 * this event and its successful end - otherwise the
 						 * stepAmount pointer would no longer be valid and you would
@@ -1560,18 +1543,11 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					/* write move header and always one step after another - because the next step
 					 * might already be the last one due to some stop event */
 					gi.WriteByte(dv);
+					gi.WriteShort(ent->speed);
 					gi.WriteShort(contentFlags);
 
-					oldState = ent->visflags;
 					/* check if player appears/perishes, seen from other teams */
-					status = G_CheckVis(ent, qtrue);
-					if (status & VIS_APPEAR) {
-						const int deltaVisMask = (oldState ^ ent->visflags) & ent->visflags;
-						const int playerMask = G_VisToPM(deltaVisMask);
-						/* the actor appears in mid move, so we have to inform the players
-						 * that are now able to see the actor */
-						G_ClientStartMove(ent, playerMask);
-					}
+					G_CheckVis(ent, qtrue);
 
 					/* check for anything appearing, seen by "the moving one" */
 					status = G_CheckVisTeam(ent->team, NULL, qfalse, ent);
@@ -1579,12 +1555,12 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 					ent->TU = max(0, initTU - (int) tu);
 
-					client_action = ent->client_action;
+					clientAction = ent->client_action;
 					oldState = ent->state;
 					/* check triggers at new position but only if no actor appeared */
 					if (G_TouchTriggers(ent)) {
 						triggers = qtrue;
-						if (!client_action)
+						if (!clientAction)
 							status |= VIS_STOP;
 					}
 					/* state has changed - maybe we walked on a trigger_hurt */
@@ -1666,8 +1642,6 @@ static void G_ClientTurn (player_t * player, int num, byte dv)
 	/* check if we're already facing that direction */
 	if (ent->dir == dir)
 		return;
-
-	G_ClientStartMove(ent, G_VisToPM(ent->visflags));
 
 	/* do the turn */
 	G_DoTurn(ent, dir);
