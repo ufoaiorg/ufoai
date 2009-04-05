@@ -288,7 +288,7 @@ const fireDef_t *CL_GetWeaponAndAmmo (const le_t * actor, const char hand)
 	if (!invlistWeapon || !invlistWeapon->item.t)
 		return NULL;
 
-	return FIRESH_FiredefsIDXForWeapon(&invlistWeapon->item);
+	return FIRESH_FiredefForWeapon(&invlistWeapon->item);
 }
 
 #ifdef DEBUG

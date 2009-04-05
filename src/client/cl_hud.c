@@ -968,7 +968,7 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
 
 	assert(invList->item.t);
 
-	fdArray = FIRESH_FiredefsIDXForWeapon(&invList->item);
+	fdArray = FIRESH_FiredefForWeapon(&invList->item);
 	if (fdArray == NULL)
 		return time;
 
@@ -1265,14 +1265,14 @@ void HUD_ActorUpdateCvars (void)
 					/* This is supposed to be a weapon or other usable item. */
 					if (selWeapon->item.t->numWeapons > 0) {
 						if (selWeapon->item.t->weapon || selWeapon->item.t->weapons[0] == selWeapon->item.t) {
-							const fireDef_t *fdArray = FIRESH_FiredefsIDXForWeapon(&selWeapon->item);
+							const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 							/* Get firedef from the weapon (or other usable item) entry instead. */
 							if (fdArray != NULL)
 								selFD = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, cl.cfiremode);
 						}
 					}
 				} else {
-					const fireDef_t *fdArray = FIRESH_FiredefsIDXForWeapon(&selWeapon->item);
+					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 					if (fdArray != NULL) {
 						const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, cl.cfiremode);
 						/* reset the align if we switched the firemode */

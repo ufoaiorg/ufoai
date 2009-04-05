@@ -209,6 +209,7 @@ extern cvar_t *mon_teamfactor;
 extern cvar_t *mor_regeneration;
 extern cvar_t *mor_shaken;
 extern cvar_t *mor_panic;
+extern cvar_t *mor_brave;
 
 extern cvar_t *m_sanity;
 extern cvar_t *m_rage;
@@ -308,6 +309,7 @@ qboolean G_ClientConnect(player_t * player, char *userinfo);
 void G_ClientDisconnect(player_t * player);
 
 int G_TestVis(int team, edict_t * check, int flags);
+float G_Vis(int team, const edict_t * from, const edict_t * check, int flags);
 void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean quiet);
 qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st);
 void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet);

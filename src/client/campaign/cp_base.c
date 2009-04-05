@@ -1955,9 +1955,9 @@ static void CL_SwapSkills (chrList_t *team)
 				character_t *cp1 = team->chr[j];
 				const fireDef_t *fdRightArray, *fdHolsterArray;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m && RIGHT(cp1)->item.t)
-					fdRightArray = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp1)->item);
+					fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp1)->item);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m && HOLSTER(cp1)->item.t)
-					fdHolsterArray = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp1)->item);
+					fdHolsterArray = FIRESH_FiredefForWeapon(&HOLSTER(cp1)->item);
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (fdHolsterArray != NULL && fdRightArray != NULL) {
@@ -1974,9 +1974,9 @@ static void CL_SwapSkills (chrList_t *team)
 						fdHolsterArray = NULL;
 
 						if (RIGHT(cp2) && RIGHT(cp2)->item.m && RIGHT(cp2)->item.t)
-							fdRightArray = FIRESH_FiredefsIDXForWeapon(&RIGHT(cp2)->item);
+							fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp2)->item);
 						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m && HOLSTER(cp2)->item.t)
-							fdHolsterArray = FIRESH_FiredefsIDXForWeapon(&HOLSTER(cp2)->item);
+							fdHolsterArray = FIRESH_FiredefForWeapon(&HOLSTER(cp2)->item);
 
 						if (fdHolsterArray != NULL && fdRightArray != NULL) {
 							const int no2 = 2 * (RIGHT(cp2) && skill == RIGHT(cp2)->item.m->fd[fdRightArray->weapFdsIdx][fmode1].weaponSkill)
@@ -3286,7 +3286,7 @@ void B_ManageAntimatter (base_t *base, int amount, qboolean add)
 	}
 
 	if (i == csi.numODs)
-		Sys_Error("Could not find antimatter object definition");
+		Sys_Error("Could not find "ANTIMATTER_TECH_ID" object definition");
 
 	if (add) {	/* Adding. */
 		if (base->capacities[CAP_ANTIMATTER].cur + (amount * ANTIMATTER_SIZE) <= base->capacities[CAP_ANTIMATTER].max) {

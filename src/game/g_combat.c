@@ -1102,7 +1102,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 		od = item->m;
 
 	/* Get firedef from the weapon entry instead */
-	fdArray = FIRESH_FiredefsIDXForWeapon(item);
+	fdArray = FIRESH_FiredefForWeapon(item);
 	if (fdArray == NULL)
 		return qfalse;
 

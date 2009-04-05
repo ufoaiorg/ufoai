@@ -282,7 +282,7 @@ typedef struct objDef_s {
 	/* Firemodes (per weapon). */
 	struct objDef_s *weapons[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon-object pointers where this item can be used in.
 															 * Correct index for this array can be get from fireDef_t.weapFdsIdx. or
-															 * FIRESH_FiredefsIDXForWeapon. */
+															 * FIRESH_FiredefForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
 	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon.
 												 * Maximum value for fireDef_t.fdIdx <= MAX_FIREDEFS_PER_WEAPON. */
@@ -731,16 +731,13 @@ qboolean INVSH_UseableForTeam(const objDef_t *od, const int team);
 /* =============================== */
 
 const fireDef_t* FIRESH_GetFiredef(const objDef_t *obj, const int weapFdsIdx, const int fdIdx);
-const fireDef_t *FIRESH_FiredefsIDXForWeapon(const item_t *item);
+const fireDef_t *FIRESH_FiredefForWeapon(const item_t *item);
 int FIRESH_GetDefaultReactionFire(const objDef_t *ammo, int weapFdsIdx);
 
 void Com_MergeShapes(uint32_t *shape, const uint32_t itemShape, const int x, const int y);
 qboolean Com_CheckShape(const uint32_t *shape, const int x, const int y);
 int Com_ShapeUsage(const uint32_t shape);
 uint32_t Com_ShapeRotate(const uint32_t shape);
-#ifdef DEBUG
-void Com_ShapePrint(const uint32_t shape);
-#endif
 
 /** @brief Number of bytes that is read and written via inventory transfer functions */
 #define INV_INVENTORY_BYTES 9

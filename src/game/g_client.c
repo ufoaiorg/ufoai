@@ -396,8 +396,8 @@ static qboolean G_LineVis (const vec3_t from, const vec3_t to)
 }
 
 /**
- * @brief calculate how much check is "visible" from from
- * @returns a value between 0 and 1 which reflects the visibility from 0
+ * @brief calculate how much check is "visible" from @c from
+ * @return a value between 0.0 and 1.0 which reflects the visibility from 0
  * to 100 percent
  */
 float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
@@ -463,12 +463,13 @@ float G_ActorVis (const vec3_t from, const edict_t *check, qboolean full)
 /**
  * @brief test if check is visible by from
  * @param[in] team Living team members are always visible. If this is a negative
- * number we inverse the team rules (see comments included).
+ * number we inverse the team rules (see comments included). In combination with VT_NOFRUSTUM
+ * we can check whether there is any edict (that is no in our team) that can see @c check
  * @param[in] from is from team @c team and must be a living actor
  * @param[in] check The edict we want to get the visibility for
  * @param[in] flags VT_NOFRUSTUM, ...
  */
-static float G_Vis (int team, const edict_t * from, const edict_t * check, int flags)
+float G_Vis (int team, const edict_t * from, const edict_t * check, int flags)
 {
 	vec3_t eye;
 
@@ -502,6 +503,9 @@ static float G_Vis (int team, const edict_t * from, const edict_t * check, int f
 
 	/* view frustum check */
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
+		return ACTOR_VIS_0;
+
+	if (!(check->type == ET_ACTOR || check->type ==  ET_ACTOR2x2 || check->type == ET_ITEM || check->type == ET_PARTICLE))
 		return ACTOR_VIS_0;
 
 	/* get viewers eye height */
@@ -1396,7 +1400,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	byte dvtab[MAX_DVTAB];
 	byte olddvtab[MAX_DVTAB];
 	int dv, dir;
-	int old_z;
 	byte numdv, length, steps;
 	pos3_t pos;
 	float div, truediv, tu;
@@ -1407,10 +1410,10 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	edict_t* client_action;
 	int oldState;
 	qboolean autoCrouchRequired = qfalse;
-	int crouching_state;
+	int crouchingState;
 
 	ent = g_edicts + num;
-	crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
+	crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 	oldState = 0;
 
 	/* check if action is possible */
@@ -1418,8 +1421,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		return;
 
 	/* calculate move table */
-	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouching_state, MAX_ROUTE);
-	length = gi.MoveLength(gi.pathingMap, to, crouching_state, qfalse);
+	G_MoveCalc(visTeam, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
+	length = gi.MoveLength(gi.pathingMap, to, crouchingState, qfalse);
 
 	/* Autostand: check if the actor is crouched and player wants autostanding...*/
 	if ((ent->state & STATE_CROUCHED) && player->autostand) {
@@ -1448,20 +1451,20 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		tu = 0;
 		initTU = ent->TU;
 
-		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouching_state))
+		while ((dv = gi.MoveNext(gi.routingMap, ent->fieldSize, gi.pathingMap, pos, crouchingState))
 				!= ROUTING_UNREACHABLE) {
-			/* dv indicates the direction traveled to get to the new cell and the original cell height.
-			 * dv = (dir << 3) | z */
+			const int oldZ = pos[2];
+			/* dv indicates the direction traveled to get to the new cell and the original cell height. */
+			/* dv = (dir << 3) | z */
 			if (numdv >= MAX_DVTAB) {
 				gi.GridDumpDVTable(gi.pathingMap);
 				for (numdv = 0; numdv < MAX_DVTAB; numdv++)
 					gi.dprintf(" %i", olddvtab[numdv]);
 				gi.error("G_ClientMove: numdv == %i (%i %i %i) ", numdv, to[0], to[1], to[2]);
 			}
-			old_z = pos[2];
 			olddvtab[numdv] = dv;
-			PosSubDV(pos, crouching_state, dv); /* We are going backwards to the origin. */
-			dvtab[numdv++] = NewDVZ(dv, old_z); /* Replace the z portion of the DV value so we can get back to where we were. */
+			PosSubDV(pos, crouchingState, dv); /* We are going backwards to the origin. */
+			dvtab[numdv++] = NewDVZ(dv, oldZ); /* Replace the z portion of the DV value so we can get back to where we were. */
 		}
 
 		if (VectorCompare(pos, ent->pos)) {
@@ -1494,9 +1497,9 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				tu += div;
 
 				/* move */
-				crouching_state = 0; /* This is now a flag to indicate a change in crouching */
-				PosAddDV(ent->pos, crouching_state, dv);
-				if (crouching_state == 0) { /* No change in crouch */
+				crouchingState = 0; /* This is now a flag to indicate a change in crouching */
+				PosAddDV(ent->pos, crouchingState, dv);
+				if (crouchingState == 0) { /* No change in crouch */
 					gi.GridPosToVec(gi.routingMap, ent->fieldSize, ent->pos, ent->origin);
 					VectorCopy(ent->origin, pointTrace);
 					pointTrace[2] += PLAYER_MIN;
@@ -1584,7 +1587,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					/* state has changed - maybe we walked on a trigger_hurt */
 					if (oldState != ent->state)
 						status |= VIS_STOP;
-				} else if (crouching_state == 1) { /* Actor is standing */
+				} else if (crouchingState == 1) { /* Actor is standing */
 					G_ClientStateChange(player, num, STATE_CROUCHED, qtrue);
 				} else { /* Actor is crouching */
 					G_ClientStateChange(player, num, STATE_CROUCHED, qfalse);

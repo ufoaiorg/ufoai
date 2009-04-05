@@ -186,9 +186,42 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 			if (VectorDist(check->origin, ent->origin) > MAX_SPOT_DIST)
 				continue;
 			actorVis = G_ActorVis(check->origin, ent, qtrue);
-			if (actorVis >= 0.6)
+			if (actorVis >= ACTOR_VIS_50)
 				return qtrue;
 		}
+	}
+	return qfalse;
+}
+
+/**
+ * @param ent The alien edict that checks whether it should hide
+ * @return true if hide is needed or false if the alien thinks that it is not needed
+ */
+static qboolean AI_NoHideNeeded (edict_t *ent)
+{
+	/* only brave aliens are trying to stay on the field if no dangerous actor is visible */
+	if (ent->morale > mor_brave->integer) {
+		edict_t *from;
+		int i;
+		/* test if check is visible */
+		for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
+			if (G_Vis(-ent->team, ent, from, VT_PERISH | VT_NOFRUSTUM)) {
+				const invList_t *invlist = LEFT(from);
+				const fireDef_t *fd = NULL;
+				if (invlist && invlist->item.t) {
+					fd = FIRESH_FiredefForWeapon(&invlist->item);
+				} else {
+					invlist = LEFT(from);
+					if (invlist && invlist->item.t)
+						fd = FIRESH_FiredefForWeapon(&invlist->item);
+				}
+				/* search the (visible) inventory (by just checking the weapon in the hands of the enemy */
+				if (fd != NULL && fd->range * fd->range >= VectorDistSqr(ent->origin, from->origin)) {
+					const int damage = max(0, fd->damage[0] + (fd->damage[1] * crand()));
+					if (damage >= ent->HP / 3)
+						return qtrue;
+				}
+			}
 	}
 	return qfalse;
 }
@@ -201,12 +234,12 @@ static qboolean AI_CheckCrouch (const edict_t *ent)
 static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * aia)
 {
 	edict_t *check;
-	int move, delta = 0, tu;
-	int i, fm, shots, reaction_trap = 0;
+	int move, tu;
+	int i, fm, shots;
 	float dist, minDist;
-	float bestActionPoints, dmg, maxDmg, best_time = -1, vis;
+	float bestActionPoints, dmg, maxDmg, bestTime = -1, vis;
 	const objDef_t *ad;
-	int still_searching = 1;
+	int stillSearching = 1;
 
 	bestActionPoints = 0.0;
 	memset(aia, 0, sizeof(*aia));
@@ -217,25 +250,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* test for time */
 	if (tu < 0)
 		return AI_ACTION_NOTHING_FOUND;
-
-	/* see if we are very well visible by a reacting enemy */
-	/** @todo this is worthless now; need to check all squares along our way! */
-	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if (check->inuse && G_IsLivingActor(check) && ent != check
-			 && (check->team != ent->team || ent->state & STATE_INSANE)
-			 /* also check if we are in range of the weapon's primary mode */
-			 && check->state & STATE_REACTION) {
-			qboolean frustum = G_FrustumVis(check, ent->origin);
-			const float actorVis = G_ActorVis(check->origin, ent, qtrue);
-			if (actorVis > 0.6 && frustum
-				&& (VectorDistSqr(check->origin, ent->origin)
-					> MAX_SPOT_DIST * MAX_SPOT_DIST))
-				reaction_trap++;
-		}
-
-	/** Don't waste TU's when in reaction fire trap
-	 * @todo Learn to escape such traps if move == 2 || move == 3 */
-	bestActionPoints -= move * reaction_trap * GUETE_REACTION_FEAR_FACTOR;
 
 	/* set basic parameters */
 	VectorCopy(to, ent->pos);
@@ -276,14 +290,13 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		if (!item)
 			continue;
 
-		fdArray = FIRESH_FiredefsIDXForWeapon(item);
+		fdArray = FIRESH_FiredefForWeapon(item);
 		if (fdArray == NULL)
 			continue;
 
 		/** @todo timed firedefs that bounce around should not be thrown/shoot about the whole distance */
 		for (fdIdx = 0; fdIdx < item->t->numFiredefs[fdArray->weapFdsIdx]; fdIdx++) {
 			const fireDef_t *fd = &fdArray[fdIdx];
-
 			const float nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
 				GET_ACC(ent->chr.score.skills[ABILITY_ACCURACY], fd->weaponSkill));
 			/* how many shoots can this actor do */
@@ -317,11 +330,9 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							dmg *= 1.0 - ad->protection[ad->dmgtype] * 0.01;
 						}
 
-						if (dmg > check->HP
-							&& check->state & STATE_REACTION)
+						if (dmg > check->HP && (check->state & STATE_REACTION))
 							/* reaction shooters eradication bonus */
-							dmg = check->HP + GUETE_KILL
-								+ GUETE_REACTION_ERADICATION;
+							dmg = check->HP + GUETE_KILL + GUETE_REACTION_ERADICATION;
 						else if (dmg > check->HP)
 							/* standard kill bonus */
 							dmg = check->HP + GUETE_KILL;
@@ -342,7 +353,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 						/* check if most damage can be done here */
 						if (dmg > maxDmg) {
 							maxDmg = dmg;
-							best_time = fd->time * shots;
+							bestTime = fd->time * shots;
 							aia->mode = fm;
 							aia->shots = shots;
 							aia->target = check;
@@ -354,7 +365,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 					/* search best none human target */
 					for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 						if (check->inuse && (check->flags & FL_DESTROYABLE)) {
-
 							if (!AI_FighterCheckShoot(ent, check, fd, &dist))
 								continue;
 
@@ -366,7 +376,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 							aia->shots = shots;
 							aia->target = check;
 							aia->fd = fd;
-							best_time = fd->time * shots;
+							bestTime = fd->time * shots;
 							/* take the first best breakable or door and try to shoot it */
 							break;
 						}
@@ -377,8 +387,8 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 	/* add damage to bestActionPoints */
 	if (aia->target) {
 		bestActionPoints += maxDmg;
-		assert(best_time > 0);
-		tu -= best_time;
+		assert(bestTime > 0);
+		tu -= bestTime;
 	}
 
 	if (!(ent->state & STATE_RAGE)) {
@@ -386,14 +396,14 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 		/** @todo Only hide if the visible actors have long range weapons in their hands
 		 * otherwise make it depended on the mood (or some skill) of the alien whether
 		 * it tries to attack by trying to get as close as possible or to try to hide */
-		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
+		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES) || AI_NoHideNeeded(ent)) {
 			/* is a hiding spot */
 			bestActionPoints += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
-		/** @todo What is this 2? */
-		} else if (aia->target && tu >= 2) {
+		} else if (aia->target && tu >= TU_MOVE_STRAIGHT) {
 			byte minX, maxX, minY, maxY;
-			/* reward short walking to shooting spot, when seen by enemies;
-			 * @todo do this decently, only penalizing the visible part of walk
+			const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
+			/* reward short walking to shooting spot, when seen by enemies; */
+			/** @todo do this decently, only penalizing the visible part of walk
 			 * and penalizing much more for reaction shooters around;
 			 * now it may remove some tactical options from aliens,
 			 * e.g. they may now choose only the closer doors;
@@ -402,8 +412,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			bestActionPoints += GUETE_CLOSE_IN - move < 0 ? 0 : GUETE_CLOSE_IN - move;
 
 			/* search hiding spot */
-			G_MoveCalc(0, to, ent->fieldSize,
-					(ent->state & STATE_CROUCHED) ? 1 : 0, HIDE_DIST);
+			G_MoveCalc(0, to, ent->fieldSize, crouchingState, HIDE_DIST);
 			ent->pos[2] = to[2];
 			minX = to[0] - HIDE_DIST > 0 ? to[0] - HIDE_DIST : 0;
 			minY = to[1] - HIDE_DIST > 0 ? to[1] - HIDE_DIST : 0;
@@ -413,8 +422,7 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			for (ent->pos[1] = minY; ent->pos[1] <= maxY; ent->pos[1]++) {
 				for (ent->pos[0] = minX; ent->pos[0] <= maxX; ent->pos[0]++) {
 					/* time */
-					delta = gi.MoveLength(gi.pathingMap, ent->pos,
-							(ent->state & STATE_CROUCHED) ? 1 : 0, qfalse);
+					const int delta = gi.MoveLength(gi.pathingMap, ent->pos, crouchingState, qfalse);
 					if (delta > tu)
 						continue;
 
@@ -423,15 +431,16 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 
-					still_searching = 0;
+					stillSearching = 0;
+					tu -= delta;
 					break;
 				}
-				if (!still_searching)
+				if (!stillSearching)
 					break;
 			}
 		}
 
-		if (still_searching) {
+		if (stillSearching) {
 			/* nothing found */
 			VectorCopy(to, ent->pos);
 			gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
@@ -440,7 +449,6 @@ static float AI_FighterCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * ai
 			/* found a hiding spot */
 			VectorCopy(ent->pos, aia->stop);
 			bestActionPoints += GUETE_HIDE;
-			tu -= delta;
 			/** @todo also add bonus for fleeing from reaction fire
 			 * and a huge malus if more than 1 move under reaction */
 		}
@@ -471,7 +479,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	float bestActionPoints;
 	float reaction_trap = 0.0;
 	float delta = 0.0;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
+	const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* set basic parameters */
 	bestActionPoints = 0.0;
@@ -481,7 +489,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 	VectorCopy(to, aia->stop);
 	gi.GridPosToVec(gi.routingMap, ent->fieldSize, to, ent->origin);
 
-	move = gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue);
+	move = gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue);
 	tu = ent->TU - move;
 
 	/* test for time */
@@ -579,7 +587,7 @@ static float AI_CivilianCalcBestAction (edict_t * ent, pos3_t to, aiAction_t * a
 static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t *aia)
 {
 	int bestActionPoints = AI_ACTION_NOTHING_FOUND;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
+	const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* reset any previous given action set */
 	memset(aia, 0, sizeof(*aia));
@@ -602,7 +610,7 @@ static int AI_CheckForMissionTargets (player_t* player, edict_t *ent, aiAction_t
 				if (VectorDist(ent->origin, checkPoint->origin) <= WAYPOINT_CIV_DIST) {
 					i++;
 					/* test for time and distance */
-					length = ent->TU - gi.MoveLength(gi.pathingMap, checkPoint->pos, crouching_state, qtrue);
+					length = ent->TU - gi.MoveLength(gi.pathingMap, checkPoint->pos, crouchingState, qtrue);
 					bestActionPoints = GUETE_MISSION_TARGET + length;
 
 					ent->count = checkPoint->count;
@@ -654,10 +662,10 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	vec3_t oldOrigin;
 	int xl, yl, xh, yh;
 	float bestActionPoints, best;
-	const int crouching_state = ent->state & STATE_CROUCHED ? 1 : 0;
+	const int crouchingState = ent->state & STATE_CROUCHED ? 1 : 0;
 
 	/* calculate move table */
-	G_MoveCalc(0, ent->pos, ent->fieldSize, crouching_state, MAX_ROUTE);
+	G_MoveCalc(0, ent->pos, ent->fieldSize, crouchingState, MAX_ROUTE);
 	Com_DPrintf(DEBUG_ENGINE, "AI_PrepBestAction: Called MoveMark.\n");
 	gi.MoveStore(gi.pathingMap);
 
@@ -685,7 +693,7 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 	for (to[2] = 0; to[2] < PATHFINDING_HEIGHT; to[2]++)
 		for (to[1] = yl; to[1] < yh; to[1]++)
 			for (to[0] = xl; to[0] < xh; to[0]++)
-				if (gi.MoveLength(gi.pathingMap, to, crouching_state, qtrue) <= ent->TU) {
+				if (gi.MoveLength(gi.pathingMap, to, crouchingState, qtrue) <= ent->TU) {
 					if (ent->team == TEAM_CIVILIAN || ent->state & STATE_PANIC)
 						bestActionPoints = AI_CivilianCalcBestAction(ent, to, &aia);
 					else
@@ -756,11 +764,11 @@ void G_AddToWayPointList (edict_t *ent)
 void AI_TurnIntoDirection (edict_t *aiActor, pos3_t pos)
 {
 	int dv;
-	const int crouching_state = aiActor->state & STATE_CROUCHED ? 1 : 0;
+	const int crouchingState = aiActor->state & STATE_CROUCHED ? 1 : 0;
 
-	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouching_state, MAX_ROUTE);
+	G_MoveCalc(aiActor->team, pos, aiActor->fieldSize, crouchingState, MAX_ROUTE);
 
-	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouching_state);
+	dv = gi.MoveNext(gi.routingMap, aiActor->fieldSize, gi.pathingMap, pos, crouchingState);
 	if (dv != ROUTING_UNREACHABLE) {
 		const byte dir = getDVdir(dv);
 		/* Only attempt to turn if the direction is not a vertical only action */

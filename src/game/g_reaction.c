@@ -34,7 +34,7 @@ static int G_GetFiringTUsForItem (const edict_t *ent, const edict_t *target, inv
 {
 	if (invList && invList->item.m && invList->item.t->weapon
 	 && (!invList->item.t->reload || invList->item.a > 0)) {
-		const fireDef_t *fdArray = FIRESH_FiredefsIDXForWeapon(&invList->item);
+		const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&invList->item);
 		if (fdArray == NULL)
 			return -1;
 

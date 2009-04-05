@@ -55,7 +55,7 @@ void INVSH_InitCSI (csi_t * import)
  * @param[in] weapFdsIdx
  * @param[in] fdIdx
  * @return Will never return NULL
- * @sa FIRESH_FiredefsIDXForWeapon
+ * @sa FIRESH_FiredefForWeapon
  */
 const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
 {
@@ -2057,7 +2057,7 @@ FIREMODE MANAGEMENT FUNCTIONS
  * doesn't support the given weapon
  * @sa FIRESH_GetFiredef
  */
-const fireDef_t *FIRESH_FiredefsIDXForWeapon (const item_t *item)
+const fireDef_t *FIRESH_FiredefForWeapon (const item_t *item)
 {
 	int i;
 	const objDef_t *ammo = item->m;
@@ -2228,38 +2228,5 @@ uint32_t Com_ShapeRotate (const uint32_t shape)
 		}
 	}
 
-#if 0
-	Com_Printf("\n");
-	Com_Printf("<normal>\n");
-	Com_ShapePrint(shape);
-	Com_Printf("<rotated>\n");
-	Com_ShapePrint(shapeNew);
-#endif
 	return shapeNew;
 }
-
-#ifdef DEBUG
-/**
- * @brief Prints the shape. (mainly debug)
- * @note Only works for V_SHAPE_SMALL!
- */
-void Com_ShapePrint (const uint32_t shape)
-{
-	int h, w;
-
-	for (h = 0; h < SHAPE_SMALL_MAX_HEIGHT; h++) {
-		/* Shift the mask to the right to remove leading rows and
-		 * mask out trailing rows */
-		const int row = (shape >> (h * SHAPE_SMALL_MAX_WIDTH)) & 0xFF;
-		Com_Printf("<");
-		for (w = 0; w < SHAPE_SMALL_MAX_WIDTH; w++) {
-			if (row & (0x01 << w)) { /* Bit number 'w' in this row set? */
-				Com_Printf("#");
-			} else {
-				Com_Printf(".");
-			}
-		}
-		Com_Printf(">\n");
-	}
-}
-#endif
