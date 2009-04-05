@@ -363,6 +363,7 @@ static void MN_CloseAllMenu (void)
  * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-menu / geoscape-and-base / battlescape
  * @todo Update the code: popAll should be every time true
  * @todo Update the code: pushActive should be every time true
+ * @todo Illustration about when/how we should use MN_InitStack http://ufoai.ninex.info/wiki/index.php/Image:MN_InitStack.jpg
  */
 void MN_InitStack (char* activeMenu, char* mainMenu, qboolean popAll, qboolean pushActive)
 {
