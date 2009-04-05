@@ -58,7 +58,6 @@ menu althud extends ahud
 		border		2
 		bgcolor		"0 0.1 0 0.8"
 		wheel
-		in			{ cmd "unhide_chatscreen;" }
 	}
 
 	pic bar_chat
@@ -126,7 +125,7 @@ menu althud extends ahud
 			*chatscreen size "690 400"
 			*chatscreen rows "25"
 			*(func)event timeout 0
-			cmd "mn_unhidenode chatscreen;"
+			*chatscreen invis false
 		}
 	}
 
@@ -145,7 +144,7 @@ menu althud extends ahud
 	func event
 	{
 		timeout	10000
-		cmd "hide_chatscreen;"
+		*chatscreen invis true
 	}
 
 	pic bar_floor
@@ -1150,8 +1149,13 @@ menu althud extends ahud
 	// init function
 	// ==================
 
+	confunc unhide_chatscreen {
+		*chatscreen invis false
+	}
+
 	func init
 	{
+		*chatscreen invis true
 		cmd "music_change battlescape;"
 		cmd "set hud_refresh 1;"
 		call show_rightweapon

@@ -13,6 +13,7 @@ menu ahud {
 	confunc crouch_checkbox_clear_s	{ }
 	confunc crouch_checkbox_check_s	{ }
 
+	confunc unhide_chatscreen { }
 }
 
 menu radarmenu {

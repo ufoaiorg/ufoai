@@ -791,7 +791,6 @@ menu hud extends ahud
 		border		2
 		bgcolor		"0 0.1 0 0.8"
 		wheel
-		in			{ cmd "unhide_chatscreen;" }
 	}
 
 	panel chat {
@@ -854,7 +853,7 @@ menu hud extends ahud
 				*chatscreen size "690 400"
 				*chatscreen rows "25"
 				*(func)event timeout 0
-				cmd "mn_unhidenode chatscreen;"
+				*chatscreen invis false
 			}
 		}
 
@@ -890,27 +889,23 @@ menu hud extends ahud
 		}
 	}
 
-	confunc unhide_chatscreen
-	{
-		*chatscreen invis false
-	}
-	confunc hide_chatscreen
-	{
-		*chatscreen invis true
-	}
-
 	func event
 	{
 		timeout	10000
-		cmd "hide_chatscreen;"
+		*chatscreen invis true
 	}
 
 	// ==================
 	// init function
 	// ==================
 
+	confunc unhide_chatscreen {
+		*chatscreen invis false
+	}
+
 	func init
 	{
+		*chatscreen invis true
 		cmd "music_change battlescape;"
 		cmd "set hud_refresh 1;"
 		cmd "set mn_showchatbuttons 0;"
