@@ -133,22 +133,21 @@ void R_AnimChange (animState_t * as, model_t * mod, const char *name)
 		as->dt = 0;
 
 		as->list[as->ladd] = anim - mod->alias.animdata;
+		as->change = qtrue;
 	} else {
-		/* don't change to same animation */
-/*		if (anim == mod->animdata + as->list[as->lcur])
-			return; */
-
 		/* next animation */
 		as->ladd = LNEXT(as->lcur);
 		as->list[as->ladd] = anim - mod->alias.animdata;
 
 		if (anim->time < as->time)
 			as->time = anim->time;
+		/* don't change to the same animation */
+		if (anim != mod->alias.animdata + as->list[as->lcur])
+			as->change = qtrue;
 	}
 
 	/* advance in list (no overflow protection!) */
 	as->ladd = LNEXT(as->ladd);
-	as->change = qtrue;
 }
 
 

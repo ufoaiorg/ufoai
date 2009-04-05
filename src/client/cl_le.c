@@ -718,7 +718,6 @@ static void LET_PathMove (le_t * le)
 			CL_UnblockBattlescapeEvents();
 
 			le->think = LET_StartIdle;
-			/* maybe there are some other EV_ACTOR_MOVE events following */
 			return;
 		}
 	}

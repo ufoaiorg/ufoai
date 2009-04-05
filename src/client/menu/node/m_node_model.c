@@ -564,7 +564,7 @@ void MN_DrawModelNode (menuNode_t *node, const char *source)
 			if (!as)
 				Com_Error(ERR_DROP, "Model %s should have animState_t for animation %s - but doesn't\n", mi.name, ref);
 			anim = R_AnimGetName(as, mi.model);
-			if (anim && strncmp(anim, ref, MAX_VAR))
+			if (anim && strcmp(anim, ref))
 				R_AnimChange(as, mi.model, ref);
 			R_AnimRun(as, mi.model, cls.frametime * 1000);
 		}
