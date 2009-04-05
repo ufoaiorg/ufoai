@@ -519,9 +519,6 @@ void LET_StartIdle (le_t * le)
 			R_AnimChange(&le->as, le->model1, "panic0");
 		else
 			R_AnimChange(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-		if (!le->as.change)
-			Com_Printf("LET_StartIdle: Could not change anim of le: %i, team: %i, pnum: %i\n",
-				le->entnum, le->team, le->pnum);
 	}
 
 	le->pathPos = le->pathLength = 0;
