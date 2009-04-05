@@ -1085,7 +1085,6 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 				B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
 			}
 		}
-		/** @todo: build "autobuild" buildings not in the template? */
 		/* if no autobuild, set up zero build time for the first base */
 		ccs.instant_build = 1;
 	}
@@ -1724,12 +1723,11 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 {
 	const char *errhead = "B_ParseBaseTemplate: unexpected end of file (names ";
 	const char *token;
-	qboolean hasEntrance = qfalse;
 	baseTemplate_t* template;
 	baseBuildingTile_t* tile;
 	vec2_t pos;
 	qboolean map[BASE_SIZE][BASE_SIZE];
-	byte buildingnums[MAX_BUILDINGS];
+	byte buildingNums[MAX_BUILDINGS];
 	int i;
 
 	/* get token */
@@ -1747,9 +1745,9 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	template = &ccs.baseTemplates[ccs.numBaseTemplates];
 	template->id = Mem_PoolStrDup(name, cl_campaignPool, 0);
 
-	/* clear map for checking duplicate positions and buildingnums for checking moreThanOne constraint */
+	/* clear map for checking duplicate positions and buildingNums for checking moreThanOne constraint */
 	memset(&map, 0, sizeof(map));
-	memset(&buildingnums, 0, sizeof(buildingnums));
+	memset(&buildingNums, 0, sizeof(buildingNums));
 
 	ccs.numBaseTemplates++;
 
@@ -1771,16 +1769,14 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
 			if (!strcmp(ccs.buildingTemplates[i].id, token)) {
 				tile->building = &ccs.buildingTemplates[i];
-				if (!tile->building->moreThanOne && buildingnums[i]++ > 0)
+				if (!tile->building->moreThanOne && buildingNums[i] > 0)
 					Sys_Error("B_ParseBaseTemplate: Found more %s than allowed in template %s", token, template->id);
+				buildingNums[i]++;
 				break;
 			}
 
 		if (!tile->building)
 			Sys_Error("B_ParseBaseTemplate: Could not find building with id %s\n", template->id);
-
-		if (tile->building->buildingType == B_ENTRANCE)
-			hasEntrance = qtrue;
 
 		/* get the position */
 		token = COM_EParse(text, errhead, template->id);
@@ -1802,9 +1798,13 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 		map[tile->posX][tile->posY] = qtrue;
 	} while (*text);
 
-	/* templates without Entrance can't be used */
-	if (!hasEntrance)
-		Sys_Error("Every base template needs one entrace! '%s' has none.", template->id);
+	/* templates without the must-have buildings can't be used */
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		const building_t *building = &ccs.buildingTemplates[i];
+		if (building && building->autobuild && !buildingNums[i]) {
+			Sys_Error("Every base template needs one '%s'! '%s' has none.", building->id, template->id);
+		}
+        }
 }
 
 /**
