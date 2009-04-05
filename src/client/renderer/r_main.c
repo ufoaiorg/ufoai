@@ -469,6 +469,8 @@ static void R_UpdateVidDef (void)
 
 qboolean R_SetMode (void)
 {
+	qboolean result;
+
 	Com_Printf("I: setting mode %d:", vid_mode->integer);
 
 	/* store old values if new ones will fail */
@@ -486,10 +488,11 @@ qboolean R_SetMode (void)
 		Com_Printf(" invalid mode\n");
 		return qfalse;
 	}
+
+	result = R_InitGraphics();
 	R_UpdateVidDef();
 	Com_Printf(" %dx%d (fullscreen: %s)\n", viddef.width, viddef.height, viddef.fullscreen ? "yes" : "no");
-
-	if (R_InitGraphics())
+	if (result)
 		return qtrue;
 
 	Com_Printf("Failed to set video mode %dx%d %s.\n",
@@ -507,8 +510,9 @@ qboolean R_SetMode (void)
 	if (!VID_GetModeInfo())
 		return qfalse;
 
+	result = R_InitGraphics();
 	R_UpdateVidDef();
-	return R_InitGraphics();
+	return result;
 }
 
 /**

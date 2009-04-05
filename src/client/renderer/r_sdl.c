@@ -138,6 +138,7 @@ qboolean R_InitGraphics (void)
 {
 	uint32_t flags;
 	int i;
+	SDL_Surface* screen = NULL;
 
 	vid_strech->modified = qfalse;
 	vid_fullscreen->modified = qfalse;
@@ -164,10 +165,16 @@ qboolean R_InitGraphics (void)
 	if (viddef.fullscreen)
 		flags |= SDL_FULLSCREEN;
 
-	if (!SDL_SetVideoMode(viddef.width, viddef.height, 0, flags)) {
+	screen = SDL_SetVideoMode(viddef.width, viddef.height, 0, flags);
+	if (!screen) {
 		const char *error = SDL_GetError();
 		Com_Printf("SDL SetVideoMode failed: %s\n", error);
 		return qfalse;
+	}
+	if (viddef.width != screen->w || viddef.height != screen->h) {
+		Com_Printf("I: video mode requested: %dx%d\nI: video mode used: %dx%d\n", viddef.width, viddef.height, screen->w, screen->h);
+		viddef.width = screen->w;
+		viddef.height = screen->h;
 	}
 
 	SDL_ShowCursor(SDL_DISABLE);
