@@ -1710,16 +1710,16 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	const fireDef_t *fd;
 	le_t *le;
 	vec3_t muzzle, impact;
-	int flags, normal, number;
+	int flags, normal, entnum;
 	int objIdx;
 	const objDef_t *obj;
 	int weapFdsIdx, fdIdx, surfaceFlags, shootType;
 
 	/* read data */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &entnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
 	/* get le */
-	le = LE_Get(number);
+	le = LE_Get(entnum);
 
 	/* get the fire def */
 	obj = &csi.ods[objIdx];
@@ -1764,16 +1764,20 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	}
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	if (HEADGEAR(le) && IS_SHOT_HEADGEAR(shootType)) {
-		/* No animation for this */
-	} else if (RIGHT(le) && IS_SHOT_RIGHT(shootType)) {
+	if (IS_SHOT_RIGHT(shootType)) {
+		if (!RIGHT(le))
+			Com_Error(ERR_DROP, "CL_ActorDoShoot: %i shootType send but no weapon in the right hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-	} else if (LEFT(le) && IS_SHOT_LEFT(shootType)) {
+	} else if (IS_SHOT_LEFT(shootType)) {
+		if (!LEFT(le))
+			Com_Error(ERR_DROP, "CL_ActorDoShoot: %i shootType send but no weapon in the left hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
-	} else
-		Com_Error(ERR_DROP, "CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow (entnum: %i).\n", number);
+	} else if (!IS_SHOT_HEADGEAR(shootType)) {
+		/* no animation for headgear (yet) */
+		Com_Error(ERR_DROP, "CL_ActorDoShoot: Invalid shootType given (entnum: %i, shootType: %i).\n", shootType, entnum);
+	}
 }
 
 
