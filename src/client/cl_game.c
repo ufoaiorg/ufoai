@@ -96,9 +96,8 @@ void GAME_SetMode (int gametype)
 			Com_Printf("Shutdown gametype '%s'\n", list->name);
 			list->shutdown();
 
-			/* menu cvars are the same everywhere when shutting down a game type */
-			Cvar_Set("mn_main", "main");
-			Cvar_Set("mn_active", "");
+			/* option menu are the same everywhere when shutting down a game type */
+			MN_InitStack(NULL, "main", qfalse, qfalse);
 		}
 		list++;
 	}
@@ -399,9 +398,7 @@ void GAME_Drop (void)
 			MN_PopMenu(qtrue);
 			if (!list->drop) {
 				GAME_SetMode(GAME_NONE);
-				Cvar_Set("mn_main", "main");
-				Cvar_Set("mn_active", "");
-				MN_PushMenu("main", NULL);
+				MN_InitStack("main", NULL, qfalse, qtrue);
 			} else {
 				list->drop();
 			}

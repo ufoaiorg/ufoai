@@ -72,7 +72,7 @@ void CL_Connect_f (void)
 
 	CL_SetClientState(ca_connecting);
 
-	Cvar_Set("mn_main", "multiplayerInGame");
+	MN_InitStack(NULL, "multiplayerInGame", qfalse, qfalse);
 }
 
 /**

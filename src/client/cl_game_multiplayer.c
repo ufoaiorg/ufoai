@@ -85,9 +85,7 @@ static void GAME_MP_StartServer_f (void)
 
 	Cmd_ExecuteString(map);
 
-	Cvar_Set("mn_main", "multiplayerInGame");
-	MN_PushMenu("multiplayer_wait", NULL);
-	Cvar_Set("mn_active", "multiplayer_wait");
+	MN_InitStack("multiplayer_wait", "multiplayerInGame", qfalse, qtrue);
 }
 
 /**

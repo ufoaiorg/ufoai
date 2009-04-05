@@ -31,6 +31,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../cl_cinematic.h"
 
 /**
+ * @brief Menu name use as alternative for option
+ */
+cvar_t *mn_main;
+
+/**
+ * @brief Main menu of a stack
+ */
+cvar_t *mn_active;
+
+/**
  * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
  * @return The last full screen window on the screen, else 0. If the stack is empty, return -1
  */
@@ -345,6 +355,30 @@ static void MN_CloseAllMenu (void)
 }
 
 /**
+ * @brief Init the stack to start with a menu, and have an alternative menu with ESC
+ * @param[in] activeMenu The first active menu of the stack, else NULL
+ * @param[in] mainMenu The alternative menu, else NULL if nothing
+ * @todo remove Cvar_Set we have direct access to the cvar
+ * @todo check why activeMenu can be NULL. It should never be NULL: a stack must not be empty
+ * @todo We should only call it a very few time. When we switch from/to this different par of the game: main-option-menu / geoscape-and-base / battlescape
+ * @todo Update the code: popAll should be every time true
+ * @todo Update the code: pushActive should be every time true
+ */
+void MN_InitStack (char* activeMenu, char* mainMenu, qboolean popAll, qboolean pushActive)
+{
+	if (popAll)
+		MN_PopMenu(qtrue);
+	if (activeMenu) {
+		Cvar_Set("mn_active", activeMenu);
+		if (pushActive)
+			MN_PushMenu(activeMenu, NULL);
+	}
+
+	if (mainMenu)
+		Cvar_Set("mn_main", mainMenu);
+}
+
+/**
  * @brief Check if a named menu is on the stack if active menus
  */
 qboolean MN_IsMenuOnStack(const char* name)
@@ -415,7 +449,8 @@ void MN_PopMenu (qboolean all)
 		MN_CloseAllMenu();
 	} else {
 		menuNode_t *mainMenu = mn.menuStack[mn.menuStackPos - 1];
-		assert(mn.menuStackPos);
+		if (!mn.menuStackPos)
+			return;
 		if (mainMenu->u.window.parent)
 			mainMenu = mainMenu->u.window.parent;
 		MN_CloseMenuByRef(mainMenu);
@@ -438,6 +473,7 @@ void MN_PopMenu (qboolean all)
 		}
 	}
 
+	/* change from e.g. console mode to game input mode (fetch input) */
 	Key_SetDest(key_game);
 
 	/* when we leave a menu and a menu cinematic is running... we should stop it */
@@ -672,6 +708,9 @@ static void MN_FireInit_f (void)
 
 void MN_InitMenus (void)
 {
+	mn_main = Cvar_Get("mn_main", "main", 0, "This is the main menu id that is at the very first menu stack - also see mn_active");
+	mn_active = Cvar_Get("mn_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_main");
+
 	/* add command */
 	Cmd_AddCommand("mn_fireinit", MN_FireInit_f, "Call the init function of a menu");
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");

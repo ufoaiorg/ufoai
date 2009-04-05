@@ -93,8 +93,7 @@ void CP_StartMissionMap (mission_t* mission)
 	const char *param = NULL;
 
 	/* prepare */
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "singleplayermission");
+	MN_InitStack(NULL, "singleplayermission", qtrue, qfalse);
 
 	assert(mission->mapDef->map);
 

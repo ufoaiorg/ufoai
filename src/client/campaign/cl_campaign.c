@@ -328,11 +328,10 @@ void CP_EndCampaign (qboolean won)
 {
 	GAME_SetMode(GAME_NONE);
 
-	MN_PopMenu(qtrue);
 	if (won)
-		MN_PushMenu("endgame", NULL);
+		MN_InitStack("endgame", NULL, qtrue, qtrue);
 	else
-		MN_PushMenu("lostgame", NULL);
+		MN_InitStack("lostgame", NULL, qtrue, qtrue);
 
 	Com_Drop();
 }
@@ -2086,7 +2085,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 	R_InitializeXVIOverlay(campaign->map, NULL, 0, 0);
 
-	MN_PushMenu("map", NULL);
+	MN_InitStack("map", "campaign_main", qtrue, qtrue);
 
 	/* create a base as first step */
 	B_SelectBase(NULL);

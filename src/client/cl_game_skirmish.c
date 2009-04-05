@@ -67,8 +67,7 @@ static void GAME_SK_Start_f (void)
 	}
 
 	/* prepare */
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "singleplayermission");
+	MN_InitStack(NULL, "singleplayermission", qtrue, qfalse);
 
 	Cbuf_AddText(map);
 }

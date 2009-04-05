@@ -307,10 +307,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	counts[MRC_ITEM_GATHEREDAMOUNT] = ccs.missionresults.itemamount;
 	CP_InitMissionResults(counts,winner == cls.team);
 
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "campaign_main");
-	Cvar_Set("mn_active", "map");
-	MN_PushMenu("map", NULL);
+	MN_InitStack("map", "campaign_main", qtrue, qtrue);
 
 	CP_ExecuteMissionTrigger(ccs.selectedMission, winner == cls.team);
 
@@ -346,8 +343,7 @@ qboolean GAME_CP_Spawn (void)
 	CL_CleanTempInventory(base);
 
 	/* activate hud */
-	MN_PushMenu(mn_hud->string, NULL);
-	Cvar_Set("mn_active", mn_hud->string);
+	MN_InitStack(mn_hud->string, NULL, qfalse, qtrue);
 
 	return qtrue;
 }
@@ -412,10 +408,7 @@ qboolean GAME_CP_TeamIsKnown (const teamDef_t *teamDef)
 void GAME_CP_Drop (void)
 {
 	/** @todo maybe create a savegame? */
-	Cvar_Set("mn_main", "campaign_main");
-	Cvar_Set("mn_active", "map");
-
-	MN_PushMenu("map", NULL);
+	MN_InitStack("map", "campaign_main", qfalse, qtrue);
 }
 
 equipDef_t *GAME_CP_GetEquipmentDefinition (void)

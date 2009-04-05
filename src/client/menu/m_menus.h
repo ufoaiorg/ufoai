@@ -34,6 +34,7 @@ void MN_InitMenus(void);
 /* menu stack */
 int MN_GetLastFullScreenWindow(void);
 struct menuNode_s* MN_PushMenu(const char *name, const char *parentName);
+void MN_InitStack(char* activeMenu, char* mainMenu, qboolean popAll, qboolean pushActive);
 void MN_PopMenu(qboolean all);
 void MN_CloseMenu(const char* name);
 struct menuNode_s* MN_GetActiveMenu(void);

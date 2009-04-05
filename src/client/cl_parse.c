@@ -519,11 +519,7 @@ static void CL_Reset (struct dbuffer *msg)
 	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
 
 	if (GAME_IsMultiplayer()) {
-		/* pop any waiting menu and activate the HUD */
-		MN_PopMenu(qtrue);
-		MN_PushMenu(mn_hud->string, NULL);
-		Cvar_Set("mn_active", mn_hud->string);
-		Cvar_Set("mn_main", "multiplayerInGame");
+		MN_InitStack(mn_hud->string, "multiplayerInGame", qtrue, qtrue);
 	}
 
 	if (cls.team == cl.actTeam)
@@ -570,18 +566,15 @@ static void CL_StartGame (struct dbuffer *msg)
 	CL_ResetBattlescapeEvents();
 
 	/* back to the console */
-	MN_PopMenu(qtrue);
-
 	if (GAME_IsMultiplayer()) {
 		if (team_play) {
-			MN_PushMenu("multiplayer_selectteam", NULL);
-			Cvar_Set("mn_active", "multiplayer_selectteam");
+			MN_InitStack("multiplayer_selectteam", NULL, qtrue, qtrue);
 		} else {
+			MN_PopMenu(qtrue);
 			Cbuf_AddText("mp_selectteam_init\n");
 		}
 	} else {
-		MN_PushMenu(mn_hud->string, NULL);
-		Cvar_Set("mn_active", mn_hud->string);
+		MN_InitStack(mn_hud->string, NULL, qtrue, qtrue);
 	}
 
 	/* get rid of loading plaque */

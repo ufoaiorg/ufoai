@@ -30,9 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../client.h"
 
 menuGlobal_t mn;
-cvar_t *mn_main;
 cvar_t *mn_sequence;
-cvar_t *mn_active;
 cvar_t *mn_hud;
 struct memPool_s *mn_dynStringPool;
 
@@ -235,9 +233,8 @@ void MN_Init (void)
 	memset(&mn, 0, sizeof(mn));
 
 	/* add cvars */
-	mn_main = Cvar_Get("mn_main", "main", 0, "This is the main menu id that is at the very first menu stack - also see mn_active");
 	mn_sequence = Cvar_Get("mn_sequence", "sequence", 0, "This is the sequence menu to render the sequence in");
-	mn_active = Cvar_Get("mn_active", "", 0, "The active menu we will return to when hitting esc once - also see mn_main");
+	/** @todo should be a client Cvar, not a menu */
 	mn_hud = Cvar_Get("mn_hud", "hud", CVAR_ARCHIVE, "This is the current selected hud");
 
 	/* add menu commands */
