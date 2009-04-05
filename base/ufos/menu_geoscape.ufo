@@ -1752,12 +1752,12 @@ menu popup_intercept
 
 	confunc popup_intercept_update {
 		if "*cvar:mn_defencetab == 0" {
-			*path:menu.aircraft invis false
-			*path:menu.sam invis true
+			*node:menu.aircraft invis false
+			*node:menu.sam invis true
 		}
 		if "*cvar:mn_defencetab == 1" {
-			*path:menu.aircraft invis true
-			*path:menu.sam invis false
+			*node:menu.aircraft invis true
+			*node:menu.sam invis false
 		}
 	}
 

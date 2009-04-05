@@ -205,7 +205,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	}
 
 	/* copy the menu name, and move to the node name */
-	if (strncmp(nodeName, "path:", 5) == 0) {
+	if (strncmp(nodeName, "node:", 5) == 0) {
 		nodeName = nodeName + 5;
 		action->type.param1 = EA_PATHPROPERTY;
 	} else {

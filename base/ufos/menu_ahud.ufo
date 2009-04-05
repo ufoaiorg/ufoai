@@ -70,8 +70,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 0;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name0" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -103,8 +103,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 1;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name1" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -136,8 +136,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 2;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name2" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -169,8 +169,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 3;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name3" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -202,8 +202,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 4;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name4" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -235,8 +235,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 5;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name5" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -268,8 +268,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 6;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name6" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -301,8 +301,8 @@ menu firemode_left {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap l 7;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name7" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -387,8 +387,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 0;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name0" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -420,8 +420,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 1;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name1" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -453,8 +453,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 2;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name2" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -486,8 +486,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 3;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name3" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -519,8 +519,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 4;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name4" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -552,8 +552,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 5;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name5" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -585,8 +585,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 6;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name6" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -618,8 +618,8 @@ menu firemode_right {
 			mousefx	false
 			invis true
 			click	{ cmd "fireweap r 7;mn_pop;" }
-			in { *path:this image "hud/firemode_hover" }
-			out { *path:this image "hud/firemode" }
+			in { *node:this image "hud/firemode_hover" }
+			out { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name7" // @todo create a better tooltip with name, tu, shots...
 		}

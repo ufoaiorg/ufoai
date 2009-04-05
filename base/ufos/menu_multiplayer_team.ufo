@@ -330,10 +330,10 @@ menu mp_team_edit
 		confunc hide_firemode {
 			// only show them when the object info window is active  
 			if "*node:this.parent.item_name@invis == 0" {
-				*path:this.parent.firemode_dec invis <1>
-				*path:this.parent.firemode_inc invis <1>
-				*path:this.parent.header_firemode invis <1>
-				*path:this.parent.firemode_name invis <1>
+				*node:this.parent.firemode_dec invis <1>
+				*node:this.parent.firemode_inc invis <1>
+				*node:this.parent.header_firemode invis <1>
+				*node:this.parent.firemode_name invis <1>
 			}
 		}
 		
@@ -345,9 +345,9 @@ menu mp_team_edit
 			if "*cvar:mn_changeitem != 0" {
 				// only show them when the object info window is active  
 				if "*node:this.parent.item_name@invis == 0" {
-					*path:this.parent.action_dec invis false 
-					*path:this.parent.action_inc invis false 
-					*path:this.parent.header_item invis false
+					*node:this.parent.action_dec invis false 
+					*node:this.parent.action_inc invis false 
+					*node:this.parent.header_item invis false
 					if "*cvar:mn_changeitem == 2" {
 						cmd "hide_firemode true;"
 					} else {
@@ -355,9 +355,9 @@ menu mp_team_edit
 					}				
 				}
 			} else {
-				*path:this.parent.action_dec invis true 
-				*path:this.parent.action_inc invis true 
-				*path:this.parent.header_item invis true
+				*node:this.parent.action_dec invis true 
+				*node:this.parent.action_inc invis true 
+				*node:this.parent.header_item invis true
 				cmd "hide_firemode true;" 
 			}
 		}

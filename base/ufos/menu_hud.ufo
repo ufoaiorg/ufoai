@@ -867,23 +867,23 @@ menu hud extends ahud
 			texh		"32 36"
 			mousefx		false
 			in {
-				*path:this	texl	"0 36"
-				*path:this	texh	"32 72"
+				*node:this	texl	"0 36"
+				*node:this	texh	"32 72"
 			}
 			out {
-				*path:this	texl	"0 0"
-				*path:this	texh	"32 36"
+				*node:this	texl	"0 0"
+				*node:this	texh	"32 36"
 			}
 			click		{
 				if "*cvar:mn_showchatbuttons != 0" {
-					*path:parent.bar_chat_bg image hud/bar_chat
-					*path:parent.bar_chat_bg pos "192 0"
-					*path:parent.bar_chat_bg size "64 64"
+					*node:parent.bar_chat_bg image hud/bar_chat
+					*node:parent.bar_chat_bg pos "192 0"
+					*node:parent.bar_chat_bg size "64 64"
 					*cvar:mn_showchatbuttons 0
 				} else {
-					*path:parent.bar_chat_bg image hud/bar_chat_choice
-					*path:parent.bar_chat_bg pos "0 0"
-					*path:parent.bar_chat_bg size "256 64"
+					*node:parent.bar_chat_bg image hud/bar_chat_choice
+					*node:parent.bar_chat_bg pos "0 0"
+					*node:parent.bar_chat_bg size "256 64"
 					*cvar:mn_showchatbuttons 1
 				}
 			}
