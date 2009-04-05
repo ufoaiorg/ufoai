@@ -362,7 +362,7 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 	} else {
 		/* draw direction line only for living actors */
 		int verts[4];
-		const float actorDirection = dangle[le->dir] * torad;
+		const float actorDirection = directionAngles[le->dir] * torad;
 		verts[0] = x;
 		verts[1] = y;
 		verts[2] = x + (radar.gridWidth * cos(actorDirection));
@@ -370,12 +370,12 @@ static void MN_DrawActor (const le_t *le, const vec3_t pos)
 		R_DrawLine(verts, 3);
 
 		/* 120 degree frustum view - see FrustumVis */
-		verts[2] = x + (radar.gridWidth * cos((dangle[le->dir] + 60) * torad)) * 5;
-		verts[3] = y - (radar.gridWidth * sin((dangle[le->dir] + 60) * torad)) * 5;
+		verts[2] = x + (radar.gridWidth * cos((directionAngles[le->dir] + 60) * torad)) * 5;
+		verts[3] = y - (radar.gridWidth * sin((directionAngles[le->dir] + 60) * torad)) * 5;
 		R_DrawLine(verts, 0.1);
 
-		verts[2] = x + (radar.gridWidth * cos((dangle[le->dir] - 60) * torad)) * 5;
-		verts[3] = y - (radar.gridWidth * sin((dangle[le->dir] - 60) * torad)) * 5;
+		verts[2] = x + (radar.gridWidth * cos((directionAngles[le->dir] - 60) * torad)) * 5;
+		verts[3] = y - (radar.gridWidth * sin((directionAngles[le->dir] - 60) * torad)) * 5;
 		R_DrawLine(verts, 0.1);
 	}
 

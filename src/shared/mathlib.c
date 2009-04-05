@@ -90,19 +90,19 @@ const vec4_t dvecs[PATHFINDING_DIRECTIONS] = {
 
 /*                                           0:E     1:W      2:N     3:S      4:NE        5:SW          6:NW         7:SE  */
 const float dvecsn[CORE_DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
-/** @note if you change dangle[PATHFINDING_DIRECTIONS], you must also change function AngleToDV */
+/** @note if you change directionAngles[PATHFINDING_DIRECTIONS], you must also change function AngleToDV */
 /*                                     0:E 1: W    2:N    3:S     4:NE   5:SW    6:NW    7:SE  */
-const float dangle[CORE_DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
+const float directionAngles[CORE_DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
 
 const byte dvright[CORE_DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
 const byte dvleft[CORE_DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
 
 /**
- * @brief Returns the indice of array dangle[DIRECTIONS] whose value is the closest to angle
+ * @brief Returns the indice of array directionAngles[DIRECTIONS] whose value is the closest to angle
  * @note This function allows to know the closest multiple of 45 degree of angle.
  * @param[in] angle The angle (in degrees) which is tested.
- * @return Corresponding indice of array dangle[DIRECTIONS].
+ * @return Corresponding indice of array directionAngles[DIRECTIONS].
  */
 int AngleToDir (int angle)
 {

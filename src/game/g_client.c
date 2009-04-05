@@ -772,7 +772,7 @@ int G_DoTurn (edict_t * ent, byte dir)
 		return 0;
 
 	/* calculate angle difference */
-	angleDiv = dangle[dir] - dangle[ent->dir];
+	angleDiv = directionAngles[dir] - directionAngles[ent->dir];
 	if (angleDiv > 180.0)
 		angleDiv -= 360.0;
 	if (angleDiv < -180.0)

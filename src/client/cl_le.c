@@ -646,14 +646,11 @@ static void LET_PathMove (le_t * le)
 			const byte fulldv = le->path[le->pathPos];
 			const byte dir = getDVdir(fulldv);
 			const int crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
-			/** @note new_crouching_state needs to be set to the current crouching state and is possibly updated by PosAddDV. */
+			/** @note newCrouchingState needs to be set to the current crouching state and is possibly updated by PosAddDV. */
 			int newCrouchingState = crouchingState;
 			PosAddDV(le->pos, newCrouchingState, fulldv);
-			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dir, le->pos[0], le->pos[1], le->pos[2]);
-			/** @note we no longer need to adjust the value from Grid_MoveLength for crouching:
-			 *  the function now accounts for crouching. */
-			tuCost = Grid_MoveLength(&clPathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouchingState, qfalse);
 
+			tuCost = Grid_MoveLength(&clPathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouchingState, qfalse);
 			le->TU -= tuCost;
 			if (le == selActor)
 				actorMoveLength -= tuCost;
@@ -678,7 +675,7 @@ static void LET_PathMove (le_t * le)
 			/* only change the direction if the actor moves horizontally. */
 			if (dir < CORE_DIRECTIONS || dir >= FLYING_DIRECTIONS)
 				le->dir = dir & (CORE_DIRECTIONS - 1);
-			le->angles[YAW] = dangle[le->dir];
+			le->angles[YAW] = directionAngles[le->dir];
 			le->startTime = le->endTime;
 			/* check for straight movement or diagonal movement */
 			assert(le->speed);
@@ -693,10 +690,6 @@ static void LET_PathMove (le_t * le)
 				le->endTime += (start[2] - dest[2]);
 			}
 
-			Com_DPrintf(DEBUG_CLIENT, "LET_PathMove: moving from (%i %i %i) to (%i %i %i).\n"
-				, le->oldPos[0], le->oldPos[1], le->oldPos[2]
-				, le->pos[0], le->pos[1], le->pos[2]);
-
 			le->positionContents = le->pathContents[le->pathPos];
 			le->pathPos++;
 		} else {
@@ -705,7 +698,8 @@ static void LET_PathMove (le_t * le)
 
 			/* Verify the current position */
 			if (!VectorCompare(le->pos, le->newPos))
-				Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync");
+				Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync: %i:%i:%i should be %i:%i:%i (step %i of %i)",
+						le->pos[0], le->pos[1], le->pos[2], le->newPos[0], le->newPos[1], le->newPos[2], le->pathPos, le->pathLength);
 
 			if (le == selActor)
 				CL_ConditionalMoveCalcForCurrentSelectedActor();

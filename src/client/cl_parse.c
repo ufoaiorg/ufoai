@@ -1065,7 +1065,7 @@ static void CL_ActorAppear (struct dbuffer *msg)
 	le->model1 = cl.model_draw[modelnum1];
 	le->model2 = cl.model_draw[modelnum2];
 	Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
-	le->angles[YAW] = dangle[le->dir];
+	le->angles[YAW] = directionAngles[le->dir];
 
 	le->contents = CONTENTS_ACTOR;
 	VectorCopy(player_mins, le->mins);

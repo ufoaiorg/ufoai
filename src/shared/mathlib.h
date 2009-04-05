@@ -103,7 +103,7 @@ qboolean Q_IsPowerOfTwo(int i);
 
 extern const vec4_t dvecs[PATHFINDING_DIRECTIONS];
 extern const float dvecsn[CORE_DIRECTIONS][2];
-extern const float dangle[CORE_DIRECTIONS];
+extern const float directionAngles[CORE_DIRECTIONS];
 
 extern const byte dvright[CORE_DIRECTIONS];
 extern const byte dvleft[CORE_DIRECTIONS];

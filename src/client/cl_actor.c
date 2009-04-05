@@ -1056,19 +1056,13 @@ void CL_ConditionalMoveCalcForCurrentSelectedActor (void)
  */
 int CL_CheckAction (void)
 {
-	static char infoText[MAX_SMALLMENUTEXTLEN];
-
-	if (!selActor) {
-		Com_Printf("Nobody selected.\n");
-		Com_sprintf(infoText, lengthof(infoText), _("Nobody selected\n"));
+	if (!selActor)
 		return qfalse;
-	}
 
-/*	if (blockBattlescapeEvents) {
-		Com_Printf("Can't do that right now.\n");
+	/* already moving */
+	if (selActor->pathLength)
 		return qfalse;
-	}
-*/
+
 	if (cls.team != cl.actTeam) {
 		HUD_DisplayMessage(_("This isn't your round\n"));
 		return qfalse;
@@ -1491,6 +1485,7 @@ void CL_ActorDoMove (struct dbuffer *msg)
 {
 	le_t *le;
 	int number, i;
+	pos3_t pos;
 
 	number = NET_ReadShort(msg);
 	/* get le */
@@ -1514,22 +1509,14 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	/* speed is set in the EV_ACTOR_START_MOVE event */
 	assert(le->speed);
 
-#ifdef DEBUG
-	/* get length/steps */
-	if (le->pathLength || le->pathPos)
-		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoMove: Looks like the previous movement wasn't finished but a new one was received already\n");
-#endif
-
 	le->pathLength = NET_ReadByte(msg);
-	assert(le->pathLength <= MAX_LE_PATHLENGTH);
+	if (le->pathLength >= MAX_LE_PATHLENGTH)
+		Com_Error(ERR_DROP, "Overflow in pathLength");
 
 	/* Also get the final position */
 	le->newPos[0] = NET_ReadByte(msg);
 	le->newPos[1] = NET_ReadByte(msg);
 	le->newPos[2] = NET_ReadByte(msg);
-	Com_DPrintf(DEBUG_CLIENT, "EV_ACTOR_MOVE: %i steps, s:(%i %i %i) d:(%i %i %i)\n", le->pathLength,
-		le->pos[0], le->pos[1], le->pos[2],
-		le->newPos[0], le->newPos[1], le->newPos[2]);
 
 	for (i = 0; i < le->pathLength; i++) {
 		le->path[i] = NET_ReadByte(msg); /** Don't adjust dv values here- the whole thing is needed to move the actor! */
@@ -1614,7 +1601,7 @@ void CL_ActorDoTurn (struct dbuffer *msg)
 	}
 
 	le->dir = dir;
-	le->angles[YAW] = dangle[le->dir];
+	le->angles[YAW] = directionAngles[le->dir];
 }
 
 
@@ -1858,18 +1845,18 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	const fireDef_t *fd;
 	le_t *le;
 	pos3_t from, target;
-	int number;
+	int entnum;
 	int objIdx;
 	objDef_t *obj;
 	int weapFdsIdx, fdIdx, shootType;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &from, &target);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &entnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &from, &target);
 
 	obj = &csi.ods[objIdx];
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* shooting actor */
-	le = LE_Get(number);
+	le = LE_Get(entnum);
 
 	/* center view (if wanted) */
 	if (cl_centerview->integer && cl.actTeam != cls.team)
@@ -1884,12 +1871,12 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		return;
 
 	if (!LE_IsActor(le)) {
-		Com_Printf("CL_ActorStartShoot: LE (%i) not an actor (type: %i)\n", number, le->type);
+		Com_Printf("CL_ActorStartShoot: LE (%i) not an actor (type: %i)\n", entnum, le->type);
 		return;
 	}
 
 	if (LE_IsDead(le)) {
-		Com_Printf("CL_ActorStartShoot: Can't start shoot, actor (%i) dead or stunned.\n", number);
+		Com_Printf("CL_ActorStartShoot: Can't start shoot, actor (%i) dead or stunned.\n", entnum);
 		return;
 	}
 
@@ -1898,14 +1885,17 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		return;
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	if (RIGHT(le) && IS_SHOT_RIGHT(shootType)) {
+	if (IS_SHOT_RIGHT(shootType)) {
+		if (!RIGHT(le))
+			Com_Error(ERR_DROP, "CL_ActorStartShoot: %i shootType send but no weapon in the right hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
-	} else if (LEFT(le) && IS_SHOT_LEFT(shootType)) {
+	} else if (IS_SHOT_LEFT(shootType)) {
+		if (!LEFT(le))
+			Com_Error(ERR_DROP, "CL_ActorStartShoot: %i shootType send but no weapon in the left hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
-	/* no animation change for headgear - @see CL_ActorDoShoot */
-	} else if (!(HEADGEAR(le) && IS_SHOT_HEADGEAR(shootType))) {
-		/* We use the default (right) animation now. */
-		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+	} else if (!IS_SHOT_HEADGEAR(shootType)) {
+		/* no animation for headgear (yet) */
+		Com_Error(ERR_DROP, "CL_ActorStartShoot: Invalid shootType given (entnum: %i, shootType: %i).\n", shootType, entnum);
 	}
 }
 
