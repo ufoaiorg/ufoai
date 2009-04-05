@@ -868,7 +868,7 @@ qboolean CL_ActorSelect (le_t * le)
 	 * Only if it's a different actor - if it's the same we keep the current mode etc... */
 	if (!sameActor) {
 		HUD_HideFiremodes(); /**< @todo remove this here */
-		cl.cmode = M_MOVE;
+		cl.actorMode = M_MOVE;
 	}
 
 	return qtrue;
@@ -1250,7 +1250,7 @@ void CL_ActorStartMove (const le_t * le, pos3_t to)
 	}
 
 	/* change mode to move now */
-	cl.cmode = M_MOVE;
+	cl.actorMode = M_MOVE;
 
 	/* move seems to be possible; send request to server */
 	MSG_Write_PA(PA_MOVE, le->entnum, toReal);
@@ -1272,21 +1272,21 @@ void CL_ActorShoot (const le_t * le, pos3_t at)
 	if (!CL_CheckAction())
 		return;
 
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorShoot: cl.firemode %i.\n", cl.cfiremode);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorShoot: cl.firemode %i.\n", le->currentSelectedFiremode);
 
 	/** @todo Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
 	 */
-	if (IS_MODE_FIRE_RIGHT(cl.cmode)) {
+	if (IS_MODE_FIRE_RIGHT(cl.actorMode)) {
 		type = ST_RIGHT;
-	} else if (IS_MODE_FIRE_LEFT(cl.cmode)) {
+	} else if (IS_MODE_FIRE_LEFT(cl.actorMode)) {
 		type = ST_LEFT;
-	} else if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
+	} else if (IS_MODE_FIRE_HEADGEAR(cl.actorMode)) {
 		type = ST_HEADGEAR;
 	} else
 		return;
 
-	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, cl.cfiremode, mousePosTargettingAlign);
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, le->currentSelectedFiremode, mousePosTargettingAlign);
 }
 
 
@@ -1373,10 +1373,10 @@ void CL_ActorUseDoor (void)
 	if (!CL_CheckAction())
 		return;
 
-	assert(selActor->client_action);
+	assert(selActor->clientAction);
 
-	MSG_Write_PA(PA_USE_DOOR, selActor->entnum, selActor->client_action);
-	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", selActor->client_action, selActor->entnum);
+	MSG_Write_PA(PA_USE_DOOR, selActor->entnum, selActor->clientAction);
+	Com_DPrintf(DEBUG_CLIENT, "CL_ActorUseDoor: Use door number: %i (actor %i)\n", selActor->clientAction, selActor->entnum);
 }
 
 /**
@@ -1400,7 +1400,7 @@ void CL_ActorDoorAction (struct dbuffer *msg)
 		return;
 	}
 	/* set door number */
-	le->client_action = doornumber;
+	le->clientAction = doornumber;
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction: Set door number: %i (for actor with entnum %i)\n", doornumber, number);
 }
 
@@ -1413,7 +1413,7 @@ void CL_ActorDoorAction_f (void)
 		return;
 
 	/* no client action */
-	if (selActor->client_action == 0) {
+	if (selActor->clientAction == 0) {
 		Com_DPrintf(DEBUG_CLIENT, "CL_ActorDoorAction_f: No client_action set for actor with entnum %i\n", selActor->entnum);
 		return;
 	}
@@ -1443,7 +1443,7 @@ void CL_ActorResetClientAction (struct dbuffer *msg)
 		return;
 	}
 	/* set door number */
-	le->client_action = 0;
+	le->clientAction = 0;
 	Com_DPrintf(DEBUG_CLIENT, "CL_ActorResetClientAction: Reset client action for actor with entnum %i\n", number);
 }
 
@@ -1582,12 +1582,12 @@ void CL_ActorTurnMouse (void)
 	}
 
 	/* check for fire-modes, and cancel them */
-	switch (cl.cmode) {
+	switch (cl.actorMode) {
 	case M_FIRE_R:
 	case M_FIRE_L:
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		cl.cmode = M_MOVE;
+		cl.actorMode = M_MOVE;
 		return; /* and return without turning */
 	default:
 		break;
@@ -1675,10 +1675,10 @@ void CL_ActorUseHeadgear_f (void)
 	if (!headgear)
 		return;
 
-	cl.cmode = M_FIRE_HEADGEAR;
-	cl.cfiremode = 0; /** @todo make this a variable somewhere? */
+	cl.actorMode = M_FIRE_HEADGEAR;
+	selActor->currentSelectedFiremode = 0; /** @todo make this a variable somewhere? */
 	CL_ActorShoot(selActor, selActor->pos);
-	cl.cmode = M_MOVE;
+	cl.actorMode = M_MOVE;
 
 	/* restore old mouse space */
 	mouseSpace = tmp_mouseSpace;
@@ -1730,10 +1730,10 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	int flags, normal, number;
 	int objIdx;
 	const objDef_t *obj;
-	int weapFdsIdx, fdIdx, surfaceFlags, clientType;
+	int weapFdsIdx, fdIdx, surfaceFlags, shootType;
 
 	/* read data */
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &clientType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &normal);
 
 	/* get le */
 	le = LE_Get(number);
@@ -1783,19 +1783,16 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	if (le->team == cls.team) {
 		/* if actor on our team, set this le as the last moving */
 		CL_SetLastMoving(le);
-
-		if (clientType != 0xFF)
-			Com_Printf("CL_ActorDoShoot: left/right info out of sync somehow (le: %i, server: %i, client: %i).\n", number, clientType, cl.cmode);
-		clientType = cl.cmode;
+		shootType = cl.actorMode;
 	}
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	if (HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(clientType)) {
+	if (HEADGEAR(le) && IS_SHOT_HEADGEAR(shootType)) {
 		/* No animation for this */
-	} else if (RIGHT(le) && IS_MODE_FIRE_RIGHT(clientType)) {
+	} else if (RIGHT(le) && IS_SHOT_RIGHT(shootType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(clientType)) {
+	} else if (LEFT(le) && IS_SHOT_LEFT(shootType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
@@ -1925,8 +1922,8 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 
 	if (le->team == cls.team) {
 		if (clientType != 0xFF)
-			Com_Printf("CL_ActorStartShoot: left/right info out of sync somehow (le: %i, server: %i, client: %i).\n", number, clientType, cl.cmode);
-		clientType = cl.cmode;
+			Com_Printf("CL_ActorStartShoot: left/right info out of sync somehow (le: %i, server: %i, client: %i).\n", number, clientType, cl.actorMode);
+		clientType = cl.actorMode;
 	}
 
 	/* Animate - we have to check if it is right or left weapon usage. */
@@ -2055,7 +2052,7 @@ MOUSE INPUT
  */
 static void CL_ActorMoveMouse (void)
 {
-	if (cl.cmode == M_PEND_MOVE) {
+	if (cl.actorMode == M_PEND_MOVE) {
 		if (VectorCompare(mousePos, mousePendPos)) {
 			/* Pending move and clicked the same spot (i.e. 2 clicks on the same place) */
 			CL_ActorStartMove(selActor, mousePos);
@@ -2068,7 +2065,7 @@ static void CL_ActorMoveMouse (void)
 			/* Set our mode to pending move. */
 			VectorCopy(mousePos, mousePendPos);
 
-			cl.cmode = M_PEND_MOVE;
+			cl.actorMode = M_PEND_MOVE;
 		} else {
 			/* Just move there */
 			CL_ActorStartMove(selActor, mousePos);
@@ -2078,7 +2075,7 @@ static void CL_ActorMoveMouse (void)
 
 /**
  * @brief Selects an actor using the mouse.
- * @todo Comment on the cl.cmode stuff.
+ * @todo Comment on the cl.actorMode stuff.
  * @sa CL_ActorStartMove
  */
 void CL_ActorSelectMouse (void)
@@ -2086,13 +2083,13 @@ void CL_ActorSelectMouse (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	switch (cl.cmode) {
+	switch (cl.actorMode) {
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Try and select another team member */
 		if (mouseActor && mouseActor != selActor && CL_ActorSelect(mouseActor)) {
 			/* Succeeded so go back into move mode. */
-			cl.cmode = M_MOVE;
+			cl.actorMode = M_MOVE;
 		} else {
 			CL_ActorMoveMouse();
 		}
@@ -2104,10 +2101,10 @@ void CL_ActorSelectMouse (void)
 			CL_ActorShoot(selActor, mousePos);
 
 			/* We switch back to aiming mode. */
-			if (cl.cmode == M_PEND_FIRE_R)
-				cl.cmode = M_FIRE_R;
+			if (cl.actorMode == M_PEND_FIRE_R)
+				cl.actorMode = M_FIRE_R;
 			else
-				cl.cmode = M_FIRE_L;
+				cl.actorMode = M_FIRE_L;
 		} else {
 			/* Clicked different spot. */
 			VectorCopy(mousePos, mousePendPos);
@@ -2119,7 +2116,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			cl.cmode = M_PEND_FIRE_R;
+			cl.actorMode = M_PEND_FIRE_R;
 			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -2131,7 +2128,7 @@ void CL_ActorSelectMouse (void)
 
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			cl.cmode = M_PEND_FIRE_L;
+			cl.actorMode = M_PEND_FIRE_L;
 			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
@@ -2153,10 +2150,10 @@ void CL_ActorActionMouse (void)
 	if (!selActor || mouseSpace != MS_WORLD)
 		return;
 
-	if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+	if (cl.actorMode == M_MOVE || cl.actorMode == M_PEND_MOVE) {
 		CL_ActorMoveMouse();
 	} else {
-		cl.cmode = M_MOVE;
+		cl.actorMode = M_MOVE;
 	}
 }
 
@@ -2192,8 +2189,6 @@ void CL_NextRound_f (void)
  */
 void CL_DoEndRound (struct dbuffer *msg)
 {
-	int actorIdx;
-
 	/* hud changes */
 	if (cls.team == cl.actTeam)
 		MN_ExecuteConfunc("endround");
@@ -2207,6 +2202,7 @@ void CL_DoEndRound (struct dbuffer *msg)
 
 	/* hud changes */
 	if (cls.team == cl.actTeam) {
+		int actorIdx;
 		/* check whether a particle has to go */
 		CL_ParticleCheckRounds();
 		MN_ExecuteConfunc("startround");
@@ -2246,7 +2242,7 @@ MOUSE SCANNING
 void CL_ActorMouseTrace (void)
 {
 	int i, restingLevel;
-	float cur[2], frustumslope[2], projectiondistance = 2048;
+	float cur[2], frustumSlope[2], projectionDistance = 2048.0f;
 	float nDotP2minusP1;
 	vec3_t forward, right, up, stop;
 	vec3_t from, end, dir;
@@ -2273,19 +2269,19 @@ void CL_ActorMouseTrace (void)
 	VectorCopy(cl.cam.axis[2], up);
 
 	if (cl_isometric->integer)
-		frustumslope[0] = 10.0 * refdef.fov_x;
+		frustumSlope[0] = 10.0 * refdef.fov_x;
 	else
-		frustumslope[0] = tan(refdef.fov_x * M_PI / 360.0) * projectiondistance;
-	frustumslope[1] = frustumslope[0] * ((float)viddef.viewHeight / (float)viddef.viewWidth);
+		frustumSlope[0] = tan(refdef.fov_x * M_PI / 360.0) * projectionDistance;
+	frustumSlope[1] = frustumSlope[0] * ((float)viddef.viewHeight / (float)viddef.viewWidth);
 
 	/* transform cursor position into perspective space */
-	VectorMA(from, projectiondistance, forward, stop);
-	VectorMA(stop, cur[0] * frustumslope[0], right, stop);
-	VectorMA(stop, cur[1] * -frustumslope[1], up, stop);
+	VectorMA(from, projectionDistance, forward, stop);
+	VectorMA(stop, cur[0] * frustumSlope[0], right, stop);
+	VectorMA(stop, cur[1] * -frustumSlope[1], up, stop);
 
 	/* in isometric mode the camera position has to be calculated from the cursor position so that the trace goes in the right direction */
 	if (cl_isometric->integer)
-		VectorMA(stop, -projectiondistance * 2, forward, from);
+		VectorMA(stop, -projectionDistance * 2, forward, from);
 
 	/* set stop point to the intersection of the trace line with the desired plane */
 	/* description of maths used:
@@ -2730,7 +2726,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 	qboolean crossNo;
 	le_t *le;
 	le_t *target = NULL;
-	int to_actor_size;
+	int toActorSize;
 
 	if (!selActor || !selFD)
 		return;
@@ -2743,14 +2739,14 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 		}
 
 	/* Determine the target's size. */
-	to_actor_size = target
+	toActorSize = target
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
 	/** @todo Adjust the toPos to the actor in case the actor is 2x2 */
 
 	Grid_PosToVec(clMap, from_actor_size, fromPos, start);
-	Grid_PosToVec(clMap, to_actor_size, toPos, end);
+	Grid_PosToVec(clMap, toActorSize, toPos, end);
 	if (mousePosTargettingAlign)
 		end[2] -= mousePosTargettingAlign;
 
@@ -2821,7 +2817,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 	int i;
 	le_t *le;
 	le_t *target = NULL;
-	int to_actor_size;
+	int toActorSize;
 
 	if (!selActor || Vector2Compare(fromPos, toPos))
 		return;
@@ -2834,7 +2830,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 		}
 
 	/* Determine the target's size. */
-	to_actor_size = target
+	toActorSize = target
 		? target->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
@@ -2842,7 +2838,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 
 	/* get vectors, paint cross */
 	Grid_PosToVec(clMap, from_actor_size, fromPos, from);
-	Grid_PosToVec(clMap, to_actor_size, toPos, at);
+	Grid_PosToVec(clMap, toActorSize, toPos, at);
 	from[2] += selFD->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
@@ -2900,7 +2896,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
 	if (selFD->splrad) {
-		Grid_PosToVec(clMap, to_actor_size, toPos, at);
+		Grid_PosToVec(clMap, toActorSize, toPos, at);
 		CL_Targeting_Radius(at);
 	}
 
@@ -3047,8 +3043,8 @@ void CL_ActorTargetAlign_f (void)
 	/* no firedef selected */
 	if (!selFD || !selActor)
 		return;
-	if (cl.cmode != M_FIRE_R && cl.cmode != M_FIRE_L
-	 && cl.cmode != M_PEND_FIRE_R && cl.cmode != M_PEND_FIRE_L)
+	if (cl.actorMode != M_FIRE_R && cl.actorMode != M_FIRE_L
+	 && cl.actorMode != M_PEND_FIRE_R && cl.actorMode != M_PEND_FIRE_L)
 		return;
 
 	/* user defined height align */
@@ -3103,17 +3099,17 @@ void CL_AddTargeting (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	switch (cl.cmode) {
+	switch (cl.actorMode) {
 	case M_MOVE:
 	case M_PEND_MOVE:
 		/* Display Move-cursor. */
 		CL_AddTargetingBox(mousePos, qfalse);
 
-		if (cl.cmode == M_PEND_MOVE) {
+		if (cl.actorMode == M_PEND_MOVE) {
 			/* Also display a box for the pending move if we have one. */
 			CL_AddTargetingBox(mousePendPos, qtrue);
 			if (!CL_TraceMove(mousePendPos))
-				cl.cmode = M_MOVE;
+				cl.actorMode = M_MOVE;
 		}
 		break;
 	case M_FIRE_R:
@@ -3164,8 +3160,8 @@ static void CL_AddPathingBox (pos3_t pos)
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
 
-	const int crouching_state = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
-	const int TUneed = Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse);
+	const int crouchingState = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
+	const int TUneed = Grid_MoveLength(&clPathMap, pos, crouchingState, qfalse);
 	const int TUhave = CL_UsableTUs(selActor);
 
 	memset(&ent, 0, sizeof(ent));
@@ -3297,7 +3293,7 @@ void CL_DumpMoveMark_f (void)
 	const int fieldSize = selActor
 		? selActor->fieldSize
 		: ACTOR_SIZE_NORMAL;
-	const int crouching_state = selActor
+	const int crouchingState = selActor
 		? (selActor->state & STATE_CROUCHED ? 1 : 0)
 		: 0;
 	const int temp = developer->integer;
@@ -3305,7 +3301,7 @@ void CL_DumpMoveMark_f (void)
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(clMap, fieldSize, &clPathMap, truePos, crouching_state, MAX_ROUTE, fb_list, fb_length);
+	Grid_MoveCalc(clMap, fieldSize, &clPathMap, truePos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 
 	developer->integer ^= DEBUG_PATHING;
 
@@ -3319,13 +3315,13 @@ void CL_DumpMoveMark_f (void)
  */
 void CL_DumpTUs_f (void)
 {
-	int x, y, crouching_state;
+	int x, y, crouchingState;
 	pos3_t pos, loc;
 
 	if (!selActor)
 		return;
 
-	crouching_state = selActor->state & STATE_CROUCHED ? 1 : 0;
+	crouchingState = selActor->state & STATE_CROUCHED ? 1 : 0;
 	VectorCopy(selActor->pos, pos);
 
 	Com_Printf("TUs around (%i, %i, %i)\n", pos[0], pos[1], pos[2]);
@@ -3333,11 +3329,11 @@ void CL_DumpTUs_f (void)
 	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
 		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
 			VectorSet(loc, x, y, pos[2]);
-			Com_Printf("%3i ", Grid_MoveLength(&clPathMap, loc, crouching_state, qfalse));
+			Com_Printf("%3i ", Grid_MoveLength(&clPathMap, loc, crouchingState, qfalse));
 		}
 		Com_Printf("\n");
 	}
-	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse));
+	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouchingState, qfalse));
 }
 
 /**

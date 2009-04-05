@@ -66,6 +66,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAPDEBUG_CELLS		(1<<2) /* Creates arrows pointing at floors and ceilings at mouse cursor */
 #define MAPDEBUG_WALLS		(1<<3) /* Creates arrows pointing at obstructions in the 8 primary directions */
 
+/** @brief Actor actions */
+typedef enum {
+	M_MOVE,		/**< We are currently in move-mode (destination selection). */
+	M_FIRE_R,	/**< We are currently in fire-mode for the right weapon (target selection). */
+	M_FIRE_L,	/**< We are currently in fire-mode for the left weapon (target selection). */
+	M_FIRE_HEADGEAR, /**< We'll fire headgear item shortly. */
+	M_PEND_MOVE,	/**< A move target has been selected, we are waiting for player-confirmation. */
+	M_PEND_FIRE_R,	/**< A fire target (right weapon) has been selected, we are waiting for player-confirmation. */
+	M_PEND_FIRE_L	/**< A fire target (left weapon) has been selected, we are waiting for player-confirmation. */
+} actorModes_t;
+
+#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
+#define IS_MODE_FIRE_LEFT(x)		((x) == M_FIRE_L || (x) == M_PEND_FIRE_L)
+#define IS_MODE_FIRE_HEADGEAR(x)		((x) == M_FIRE_HEADGEAR)
+
 /* Macros for faster access to the inventory-container. */
 #define RIGHT(e) ((e)->i.c[csi.idRight])
 #define LEFT(e)  ((e)->i.c[csi.idLeft])
@@ -100,9 +115,8 @@ typedef struct client_state_s {
 
 	camera_t cam;
 
-	cmodes_t cmode;		/**< current selected action for the selected actor */
-	int cfiremode;
-	cmodes_t oldcmode;
+	actorModes_t actorMode;		/**< current selected action for the selected actor */
+	actorModes_t oldActorMode;
 	int oldstate;
 
 	/** @todo MN_DisplayNotice should use a different timer and buffer - this place is for tactical stuff only */

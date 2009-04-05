@@ -47,7 +47,7 @@ typedef struct le_s {
 	int HP, maxHP;				/**< health points */
 	int STUN;					/**< if stunned - state STATE_STUN */
 	int state;					/**< rf states, dead, crouched and so on */
-	int reaction_minhit;
+	int reactionFireMinHit;
 
 	float angles[3];
 	float alpha;
@@ -55,7 +55,9 @@ typedef struct le_s {
 	int team;		/**< the team number this local entity belongs to */
 	int pnum;		/**< the player number this local entity belongs to */
 
-	int client_action;		/**< entnum from server that is currently triggered */
+	int currentSelectedFiremode;
+
+	int clientAction;		/**< entnum from server that is currently triggered */
 
 	int contents;			/**< content flags for this LE - used for tracing */
 	vec3_t mins, maxs;

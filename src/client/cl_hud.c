@@ -888,7 +888,7 @@ static void HUD_FireWeapon_f (void)
 
 	firemode = atoi(Cmd_Argv(2));
 
-	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
+	if (firemode >= MAX_FIREDEFS_PER_WEAPON || firemode < 0) {
 		Com_Printf("HUD_FireWeapon_f: Firemode index to big (%i). Highest possible number is %i.\n",
 			firemode, MAX_FIREDEFS_PER_WEAPON - 1);
 		return;
@@ -913,10 +913,10 @@ static void HUD_FireWeapon_f (void)
 	if (ammo->fd[fd->weapFdsIdx][firemode].time <= CL_UsableTUs(selActor)) {
 		/* Actually start aiming. This is done by changing the current mode of display. */
 		if (hand == ACTOR_HAND_CHAR_RIGHT)
-			cl.cmode = M_FIRE_R;
+			cl.actorMode = M_FIRE_R;
 		else
-			cl.cmode = M_FIRE_L;
-		cl.cfiremode = firemode;	/* Store firemode. */
+			cl.actorMode = M_FIRE_L;
+		selActor->currentSelectedFiremode = firemode;	/* Store firemode. */
 		HUD_HideFiremodes();
 	} else {
 		/* Cannot shoot because of not enough TUs - every other
@@ -1242,9 +1242,9 @@ void HUD_ActorUpdateCvars (void)
 		}
 
 		/* get weapon */
-		if (IS_MODE_FIRE_HEADGEAR(cl.cmode)) {
+		if (IS_MODE_FIRE_HEADGEAR(cl.actorMode)) {
 			selWeapon = HEADGEAR(selActor);
-		} else if (IS_MODE_FIRE_LEFT(cl.cmode)) {
+		} else if (IS_MODE_FIRE_LEFT(cl.actorMode)) {
 			selWeapon = LEFT(selActor);
 		} else {
 			selWeapon = RIGHT(selActor);
@@ -1268,13 +1268,13 @@ void HUD_ActorUpdateCvars (void)
 							const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 							/* Get firedef from the weapon (or other usable item) entry instead. */
 							if (fdArray != NULL)
-								selFD = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, cl.cfiremode);
+								selFD = FIRESH_GetFiredef(selWeapon->item.t, fdArray->fdIdx, selActor->currentSelectedFiremode);
 						}
 					}
 				} else {
 					const fireDef_t *fdArray = FIRESH_FiredefForWeapon(&selWeapon->item);
 					if (fdArray != NULL) {
-						const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, cl.cfiremode);
+						const fireDef_t *old = FIRESH_GetFiredef(selWeapon->item.m, fdArray->fdIdx, selActor->currentSelectedFiremode);
 						/* reset the align if we switched the firemode */
 						if (old != selFD)
 							mousePosTargettingAlign = 0;
@@ -1317,11 +1317,11 @@ void HUD_ActorUpdateCvars (void)
 				if (CL_UsableTUs(selActor) >= TU_CROUCH)
 					time = TU_CROUCH;
 			}
-		} else if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+		} else if (cl.actorMode == M_MOVE || cl.actorMode == M_PEND_MOVE) {
 			const int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, and we haven't placed the cursor in pend
 			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
-			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
+			if ((mouseSpace != MS_WORLD && cl.actorMode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
 				actorMoveLength = ROUTING_NOT_REACHABLE;
 				if (reserved_tus > 0)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
@@ -1329,7 +1329,7 @@ void HUD_ActorUpdateCvars (void)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
 				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
-			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
+			if (cl.actorMode != cl.oldActorMode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
 					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
@@ -1358,7 +1358,7 @@ void HUD_ActorUpdateCvars (void)
 			MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			if (selWeapon && !GAME_ItemIsUseable(selWeapon->item.t)) {
 				HUD_DisplayMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"));
-				cl.cmode = M_MOVE;
+				cl.actorMode = M_MOVE;
 			} else if (selWeapon && selFD) {
 				Com_sprintf(infoText, lengthof(infoText),
 							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, selToHit, selFD->time);
@@ -1370,13 +1370,13 @@ void HUD_ActorUpdateCvars (void)
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
 				if (CL_UsableTUs(selActor) < time || (selWeapon->item.t->reload && selWeapon->item.a <= 0)) {
-					cl.cmode = M_MOVE;
+					cl.actorMode = M_MOVE;
 					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				}
 			} else if (selWeapon) {
 				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
 			} else {
-				cl.cmode = M_MOVE;
+				cl.actorMode = M_MOVE;
 				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 			}
 		}
@@ -1448,7 +1448,7 @@ void HUD_ActorUpdateCvars (void)
 
 			cl.oldstate = selActor->state;
 			/** @todo Check if the use of "time" is correct here (e.g. are the reserved TUs ignored here etc...?) */
-			if (actorMoveLength >= ROUTING_NOT_REACHABLE || (cl.cmode != M_MOVE && cl.cmode != M_PEND_MOVE))
+			if (actorMoveLength >= ROUTING_NOT_REACHABLE || (cl.actorMode != M_MOVE && cl.actorMode != M_PEND_MOVE))
 				time = CL_UsableTUs(selActor);
 
 			HUD_RefreshWeaponButtons(time);
@@ -1475,8 +1475,8 @@ void HUD_ActorUpdateCvars (void)
 	}
 
 	/* mode */
-	if (cl.oldcmode != cl.cmode || refresh) {
-		cl.oldcmode = cl.cmode;
+	if (cl.oldActorMode != cl.actorMode || refresh) {
+		cl.oldActorMode = cl.actorMode;
 		if (selActor)
 			HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 	}

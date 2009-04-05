@@ -1703,11 +1703,11 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				int flags, dummy;
 				int objIdx, surfaceFlags;
 				objDef_t *obj;
-				int weap_fds_idx, fd_idx, clientType;
+				int weap_fds_idx, fd_idx, shootType;
 				vec3_t muzzle, impact;
 
 				/* read data */
-				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &objIdx, &weap_fds_idx, &fd_idx, &clientType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
+				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
 				obj = &csi.ods[objIdx];
 				fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
