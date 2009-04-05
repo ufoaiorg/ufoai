@@ -1400,7 +1400,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	byte dvtab[MAX_DVTAB];
 	byte olddvtab[MAX_DVTAB];
 	int dv, dir;
-	byte numdv, length, steps;
+	byte numdv, length;
 	pos3_t pos;
 	float div, truediv, tu;
 	int contentFlags;
@@ -1469,8 +1469,6 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 		if (VectorCompare(pos, ent->pos)) {
 			/* everything ok, found valid route */
-			/* create movement related events */
-			steps = 0;
 
 			/* no floor inventory at this point */
 			FLOOR(ent) = NULL;
@@ -1519,7 +1517,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					}
 
 					/* write move header if not yet done */
-					if (!gi.GetEvent() != EV_ACTOR_MOVE) {
+					if (gi.GetEvent() != EV_ACTOR_MOVE) {
 						gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_MOVE);
 						gi.WriteShort(num);
 						/* stepAmount is a pointer to a location in the netchannel
@@ -1630,7 +1628,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 			/* only if triggers are touched - there was a client
 			 * action set and there were steps made */
-			if (!triggers && ent->client_action && steps) {
+			if (!triggers && ent->client_action) {
 				/* no triggers, no client action */
 				ent->client_action = NULL;
 				gi.AddEvent(G_TeamToPM(ent->team), EV_RESET_CLIENT_ACTION);

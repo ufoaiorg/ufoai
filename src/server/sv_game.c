@@ -33,7 +33,7 @@ game_export_t *ge;
 /** this is true when there was an event - and false if the event reached the end */
 static qboolean pfe_pending = qfalse;
 /** player mask of the current event */
-static int pfe_mask;
+static int pfe_mask, pfe_type;
 static struct dbuffer *pfe_msg;
 struct dbuffer *sv_msg = NULL;
 
@@ -312,6 +312,7 @@ static void SV_AddEvent (unsigned int mask, int eType)
 	/* start the new event */
 	pfe_pending = qtrue;
 	pfe_mask = mask;
+	pfe_type = eType;
 	pfe_msg = new_dbuffer();
 
 	/* write header */
@@ -327,7 +328,7 @@ static int SV_GetEvent (void)
 	if (!pfe_pending)
 		return -1;
 
-	return pfe_mask;
+	return pfe_type;
 }
 
 /**
