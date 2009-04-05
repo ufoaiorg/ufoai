@@ -85,10 +85,6 @@ void MSG_Write_PA (player_action_t player_action, int entnum, ...)
 	va_list ap;
 	struct dbuffer *msg = new_dbuffer();
 
-	if (blockBattlescapeEvents)
-		Com_Printf("still some pending events but starting %i (%s)\n",
-			player_action, pa_format[player_action]);
-
 	va_start(ap, entnum);
 	NET_WriteFormat(msg, "bbs", clc_action, player_action, entnum);
 	NET_vWriteFormat(msg, pa_format[player_action], ap);
@@ -817,9 +813,6 @@ qboolean CL_ActorSelect (le_t * le)
 	if (le->team != cls.team || LE_IsDead(le) || !le->inuse)
 		return qfalse;
 
-	if (blockBattlescapeEvents)
-		return qfalse;
-
 	/* select him */
 	if (selActor)
 		selActor->selected = qfalse;
@@ -1222,10 +1215,6 @@ void CL_ActorStartMove (le_t * le, pos3_t to)
 	if (!CL_CheckAction())
 		return;
 
-	/* the actor is still moving */
-	if (blockBattlescapeEvents)
-		return;
-
 	length = CL_MoveLength(le, to);
 
 	if (!length || length >= ROUTING_NOT_REACHABLE) {
@@ -1553,8 +1542,6 @@ void CL_ActorDoMove (struct dbuffer *msg)
 	le->pathPos = 0;
 	le->startTime = cl.time;
 	le->endTime = cl.time;
-
-	CL_BlockBattlescapeEvents();
 }
 
 

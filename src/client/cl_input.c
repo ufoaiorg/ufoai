@@ -858,10 +858,8 @@ void CL_CameraMove (void)
 		if (VectorDist(cl.cam.origin, routeFrom) > routeDist - 200) {
 			VectorMA(cl.cam.speed, -frac, routeDelta, cl.cam.speed);
 			VectorNormalize2(cl.cam.speed, delta);
-			if (DotProduct(delta, routeDelta) < 0.05) {
-				CL_UnblockBattlescapeEvents();
+			if (DotProduct(delta, routeDelta) < 0.05)
 				cameraRoute = qfalse;
-			}
 		} else
 			VectorMA(cl.cam.speed, frac, routeDelta, cl.cam.speed);
 	} else {
@@ -937,7 +935,6 @@ void CL_CameraMove (void)
 }
 
 /**
- * @sa CL_BlockBattlescapeEvents
  * @sa CL_CameraMove
  */
 void CL_CameraRoute (const pos3_t from, const pos3_t target)
@@ -959,8 +956,6 @@ void CL_CameraRoute (const pos3_t from, const pos3_t target)
 
 	VectorClear(cl.cam.speed);
 	cameraRoute = qtrue;
-	/* no other event should intersect during camera movement */
-	CL_BlockBattlescapeEvents();
 }
 
 /**

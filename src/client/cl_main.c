@@ -795,8 +795,6 @@ static void CL_InitLocal (void)
 	cl_teamnum = Cvar_Get("cl_teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
 	cl_msg = Cvar_Get("cl_msg", "2", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("sv_maxclients", "1", CVAR_SERVERINFO, "If sv_maxclients is 1 we are in singleplayer - otherwise we are multiplayer mode (see sv_teamplay)");
-	/** @todo remove this once actor selection and actor movement is no longer blocking other events */
-	cl_block_battlescape_events = Cvar_Get("cl_block_battlescape_events", "1", 0, "Debug cvar for testing unblocked events");
 
 	masterserver_url = Cvar_Get("masterserver_url", MASTER_SERVER, CVAR_ARCHIVE, "URL of UFO:AI masterserver");
 
@@ -1037,8 +1035,7 @@ void CL_Frame (int now, void *data)
 	cls.realtime = Sys_Milliseconds();
 	cl.time = now;
 	last_frame = now;
-	if (!blockBattlescapeEvents)
-		cl.battlescapeEventTime += delta;
+	cl.battlescapeEventTime += delta;
 
 	/* frame rate calculation */
 	if (delta)

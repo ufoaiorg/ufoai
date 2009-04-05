@@ -266,9 +266,6 @@ typedef struct evTimes_s {
 /** @brief linked list of battlescape events */
 static evTimes_t *battlescapeEvents;
 
-qboolean blockBattlescapeEvents;	/**< block network events - see CL_ExecuteBattlescapeEvent */
-cvar_t *cl_block_battlescape_events;
-
 /** @brief CL_ParseEvent timers and vars */
 static int nextTime;	/**< time when the next event should be executed */
 static int shootTime;	/**< time when the shoot was fired */
@@ -519,7 +516,6 @@ static void CL_Reset (struct dbuffer *msg)
 	nextTime = 0;
 	shootTime = 0;
 	impactTime = 0;
-	blockBattlescapeEvents = qfalse;
 
 	/* set the active player */
 	NET_ReadFormat(msg, ev_format[EV_RESET], &cls.team, &cl.actTeam);
@@ -1520,7 +1516,7 @@ static void CL_ScheduleEvent(evTimes_t *event);
  */
 static void CL_ExecuteBattlescapeEvent (int now, void *data)
 {
-	while (battlescapeEvents && !blockBattlescapeEvents) {
+	while (battlescapeEvents) {
 		evTimes_t *event = battlescapeEvents;
 
 		if (event->when > cl.battlescapeEventTime) {
@@ -1561,27 +1557,6 @@ static void CL_ScheduleEvent (evTimes_t *event)
 
 	timescale_delta = Sys_Milliseconds() - cl.battlescapeEventTime;
 	Schedule_Event(event->when + timescale_delta, &CL_ExecuteBattlescapeEvent, NULL);
-}
-
-/**
- * @sa CL_UnblockBattlescapeEvents
- * @todo Get rid of the blocking for actor selection and actor movement - we should
- * really be able to move more than one actor at the same time
- */
-void CL_BlockBattlescapeEvents (void)
-{
-	if (cl_block_battlescape_events->integer)
-		blockBattlescapeEvents = qtrue;
-}
-
-/**
- * @sa CL_BlockBattlescapeEvents
- */
-void CL_UnblockBattlescapeEvents (void)
-{
-	blockBattlescapeEvents = qfalse;
-	/* schedule the event callback again */
-	CL_ScheduleEvent(battlescapeEvents);
 }
 
 /**

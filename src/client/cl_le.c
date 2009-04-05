@@ -715,8 +715,6 @@ static void LET_PathMove (le_t * le)
 			if (floor)
 				FLOOR(le) = FLOOR(floor);
 
-			CL_UnblockBattlescapeEvents();
-
 			le->think = LET_StartIdle;
 			return;
 		}
@@ -776,8 +774,6 @@ static void LET_Projectile (le_t * le)
 		CL_ParticleFree(le->ptl);
 		/* don't run the think function again */
 		le->inuse = qfalse;
-		/* we have to reset impact time here */
-		CL_UnblockBattlescapeEvents();
 	}
 }
 
