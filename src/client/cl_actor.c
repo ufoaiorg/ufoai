@@ -3339,7 +3339,6 @@ void CL_DumpTUs_f (void)
 	}
 	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouching_state, qfalse));
 }
-#endif
 
 /**
  * @brief display pathfinding info to the console. Also useful to
@@ -3402,6 +3401,7 @@ void CL_DebugPath_f (void)
 	PQueueFree(&pqueue);
 #endif
 }
+#endif
 
 void ACTOR_InitStartup (void)
 {
