@@ -518,7 +518,7 @@ static void G_SplashDamage (edict_t *ent, const fireDef_t *fd, vec3_t impact, sh
 			/* check whether this actor (check) is in the field of view of the 'shooter' (ent) */
 			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
-					G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);
+					G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check, ent);
 					check->visflags |= ~check->visflags;
 				}
 				continue;
@@ -1224,7 +1224,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 	assert(ent->dir < CORE_DIRECTIONS);
 
 	if (!mock) {
-		G_CheckVisTeam(ent->team, NULL, qfalse);
+		G_CheckVisTeam(ent->team, NULL, qfalse, ent);
 
 		gi.AddEvent(G_VisToPM(ent->visflags), EV_ACTOR_TURN);
 		gi.WriteShort(entnum);

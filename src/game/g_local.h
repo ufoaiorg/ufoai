@@ -283,7 +283,7 @@ qboolean G_ClientUseEdict(player_t *player, edict_t *actor, edict_t *door);
 qboolean G_ActionCheck(player_t *player, edict_t *ent, int TU, qboolean quiet);
 void G_SendStats(edict_t *ent);
 edict_t *G_SpawnFloor(pos3_t pos);
-int G_CheckVisTeam(int team, edict_t *check, qboolean perish);
+int G_CheckVisTeam(int team, edict_t *check, qboolean perish, edict_t *ent);
 edict_t *G_GetFloorItems(edict_t *ent);
 
 #define G_IsStunned(ent)	(((ent)->state & STATE_STUN) & ~STATE_DEAD)
@@ -326,7 +326,7 @@ int G_CheckVis(edict_t *check, qboolean perish);
 void G_SendInvisible(player_t *player);
 void G_GiveTimeUnits(int team);
 
-void G_AppearPerishEvent(unsigned int player_mask, int appear, edict_t * check);
+void G_AppearPerishEvent(unsigned int player_mask, int appear, edict_t * check, edict_t *ent);
 unsigned int G_VisToPM(unsigned int vis_mask);
 void G_SendInventory(unsigned int player_mask, edict_t * ent);
 unsigned int G_TeamToPM(int team);

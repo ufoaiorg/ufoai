@@ -277,7 +277,7 @@ static void SVCmd_ShowAll_f (void)
 	/* Make everything visible to anyone who can't already see it */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse) {
-			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent);
+			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent, NULL);
 			ent->visflags |= ~ent->visflags;
 		}
 	gi.dprintf("All items and creatures revealed to all sides\n");

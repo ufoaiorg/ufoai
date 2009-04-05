@@ -293,9 +293,10 @@ static void G_EdictAppear (unsigned int player_mask, edict_t *ent)
  * this is a player mask
  * @param[in] appear Is this event about an appearing actor (or a perishing one)
  * @param[in] check The edict we are talking about
+ * @param[in] ent The edict that was responsible for letting the check edict appear or perish
  * @sa CL_ActorAppear
  */
-void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check)
+void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, edict_t *ent)
 {
 	/* test for pointless player mask */
 	if (!player_mask)
@@ -309,6 +310,10 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check)
 			/* parsed in CL_ActorAppear */
 			gi.AddEvent(player_mask, EV_ACTOR_APPEAR);
 			gi.WriteShort(check->number);
+			if (ent != NULL)
+				gi.WriteShort(ent->number);
+			else
+				gi.WriteShort(-1);
 
 			gi.WriteByte(check->team);
 			gi.WriteByte(check->chr.teamDef ? check->chr.teamDef->idx : NONE);
@@ -624,7 +629,7 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
 
 			if (vis & VIS_CHANGE) {
 				ent->visflags ^= (1 << player->pers.team);
-				G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent);
+				G_AppearPerishEvent(G_PlayerToPM(player), vis & VIS_YES, ent, NULL);
 
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
@@ -644,7 +649,7 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @sa G_TestVis
  * @param[in] team Team to check the vis for
  * @param[in] check The edict that you wanna check (and which maybe will appear
- * or perish for the given team).
+ * or perish for the given team). If this is NULL every edict will be checked.
  * If check is a NULL pointer - all edicts in g_edicts are checked
  * @param[in] perish Also check whether the edict (the actor) is going to become
  * invisible for the given team
@@ -658,7 +663,7 @@ static int G_CheckVisPlayer (player_t* player, qboolean perish)
  * @sa G_AppearPerishEvent
  * @sa G_CheckVisPlayer
  */
-int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
+int G_CheckVisTeam (int team, edict_t * check, qboolean perish, edict_t *ent)
 {
 	int i, end;
 	int status = 0;
@@ -680,7 +685,7 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 			if (vis & VIS_CHANGE) {
 				/* swap the vis mask for the given team */
 				check->visflags ^= (1 << team);
-				G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check);
+				G_AppearPerishEvent(G_TeamToPM(team), vis & VIS_YES, check, ent);
 
 				/* ... to visible - if this is no civilian, stop the movement */
 				if (vis & VIS_YES) {
@@ -711,7 +716,7 @@ int G_CheckVis (edict_t * check, qboolean perish)
 	status = 0;
 	for (team = 0; team < MAX_TEAMS; team++)
 		if (level.num_alive[team])
-			status |= G_CheckVisTeam(team, check, perish);
+			status |= G_CheckVisTeam(team, check, perish, NULL);
 
 	return status;
 }
@@ -789,7 +794,7 @@ int G_DoTurn (edict_t * ent, byte dir)
 	for (i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
 		assert(ent->dir < CORE_DIRECTIONS);
-		status |= G_CheckVisTeam(ent->team, NULL, qfalse);
+		status |= G_CheckVisTeam(ent->team, NULL, qfalse, ent);
 	}
 
 	if (status) {
@@ -1569,7 +1574,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					}
 
 					/* check for anything appearing, seen by "the moving one" */
-					status = G_CheckVisTeam(ent->team, NULL, qfalse);
+					status = G_CheckVisTeam(ent->team, NULL, qfalse, ent);
 
 					/* Set ent->TU because the reaction code relies on ent->TU being accurate. */
 					ent->TU = max(0, initTU - (int) tu);
@@ -1765,7 +1770,7 @@ void G_ClientStateChange (player_t * player, int num, int reqState, qboolean che
 	G_CheckVis(ent, qtrue);
 
 	/* Calc new vis for this player. */
-	G_CheckVisTeam(ent->team, NULL, qfalse);
+	G_CheckVisTeam(ent->team, NULL, qfalse, ent);
 
 	/* Send the new TUs. */
 	G_SendStats(ent);
@@ -2119,7 +2124,7 @@ void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 		G_CheckVis(attacker, qtrue);
 
 	/* calc new vis for this player */
-	G_CheckVisTeam(ent->team, NULL, qfalse);
+	G_CheckVisTeam(ent->team, NULL, qfalse, attacker);
 }
 
 /**
@@ -2785,7 +2790,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	G_ReactToEndTurn();
 
 	/* let all the invisible players perish now */
-	G_CheckVisTeam(level.activeTeam, NULL, qtrue);
+	G_CheckVisTeam(level.activeTeam, NULL, qtrue, NULL);
 
 	lastTeam = player->pers.team;
 	level.activeTeam = TEAM_NO_ACTIVE;

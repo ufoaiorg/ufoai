@@ -1763,10 +1763,6 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 		return;
 	}
 
-	/* if actor on our team, set this le as the last moving */
-	if (le->team == cls.team)
-		CL_SetLastMoving(le);
-
 	/* Animate - we have to check if it is right or left weapon usage. */
 	if (HEADGEAR(le) && IS_SHOT_HEADGEAR(shootType)) {
 		/* No animation for this */

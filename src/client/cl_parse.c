@@ -98,7 +98,7 @@ const char *ev_format[] =
 	"sssbppsb",			/* EV_ADD_BRUSH_MODEL */
 	"sspp",				/* EV_ADD_EDICT */
 
-	"!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!s!sbbbbgbssssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"!sbbbbgsb",		/* EV_ACTOR_ADD; beware of the '!' */
 	"ss",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
@@ -918,17 +918,6 @@ static void CL_ParseResults (struct dbuffer *msg)
 	GAME_HandleResults(msg, winner, num_spawned, num_alive, num_kills, num_stuns);
 }
 
-static le_t	*lastMoving;
-
-/**
- * @brief Set the lastMoving entity (set to the actor who last
- * walked, turned, crouched or stood up).
- */
-void CL_SetLastMoving (le_t *le)
-{
-	lastMoving = le;
-}
-
 /**
  * @sa EV_ACTOR_START_MOVE
  * @note Only send to all the players that see the actual actor behind the entnum
@@ -936,11 +925,13 @@ void CL_SetLastMoving (le_t *le)
 static void CL_ActorDoStartMove (struct dbuffer *msg)
 {
 	int entnum, speed;
+	le_t *le;
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_MOVE], &entnum, &speed);
-	CL_SetLastMoving(LE_Get(entnum));
-	assert(lastMoving);
-	lastMoving->speed = speed;
+	le = LE_Get(entnum);
+	if (!le)
+		Com_Error(ERR_DROP, "Could not find le with id %i", entnum);
+	le->speed = speed;
 }
 
 /**
@@ -1017,7 +1008,7 @@ static void CL_ActorAdd (struct dbuffer *msg)
 static void CL_ActorAppear (struct dbuffer *msg)
 {
 	qboolean newActor;
-	le_t *le;
+	le_t *le, *leResponsible;
 	int entnum, modelnum1, modelnum2;
 	int teamDefID = -1;
 
@@ -1034,16 +1025,23 @@ static void CL_ActorAppear (struct dbuffer *msg)
 		else
 			newActor = qfalse;
 	}
+
 	/* maybe added via CL_ActorAdd before */
 	le->invis = qfalse;
 
+	entnum = NET_ReadShort(msg);
+	if (entnum >= 0)
+		leResponsible = LE_Get(entnum);
+	else
+		leResponsible = NULL;
+
 	/* get the info */
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_APPEAR],
-				&le->team, &teamDefID, &le->gender, &le->pnum, &le->pos,
-				&le->dir, &le->right, &le->left,
-				&modelnum1, &modelnum2, &le->skinnum,
-				&le->state, &le->fieldSize,
-				&le->maxTU, &le->maxMorale, &le->maxHP);
+			&le->team, &teamDefID, &le->gender, &le->pnum, &le->pos,
+			&le->dir, &le->right, &le->left,
+			&modelnum1, &modelnum2, &le->skinnum,
+			&le->state, &le->fieldSize,
+			&le->maxTU, &le->maxMorale, &le->maxHP);
 
 	if (teamDefID < 0 || teamDefID > csi.numTeamDefs)
 		Com_Printf("CL_ActorAppear: Invalid teamDef index\n");
@@ -1092,9 +1090,8 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 		/* draw line of sight */
 		if (le->team != cls.team) {
-			if (cl.actTeam == cls.team && lastMoving) {
-				CL_DrawLineOfSight(lastMoving, le);
-			}
+			if (leResponsible)
+				CL_DrawLineOfSight(leResponsible, le);
 
 			/* message */
 			if (le->team != TEAM_CIVILIAN) {
@@ -1171,14 +1168,14 @@ static void CL_ActorStats (struct dbuffer *msg)
 
 static void CL_ActorStateChange (struct dbuffer *msg)
 {
-	le_t	*le;
-	int		number, state;
+	le_t *le;
+	int entnum, state;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATECHANGE], &number, &state);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_STATECHANGE], &entnum, &state);
 
-	le = LE_Get(number);
+	le = LE_Get(entnum);
 	if (!le) {
-		Com_Printf("Could not get le with id %i\n", number);
+		Com_Printf("Could not get le with id %i\n", entnum);
 		return;
 	}
 
@@ -1189,7 +1186,7 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 		break;
 	default:
 		Com_Printf("StateChange message ignored... LE not found or not an actor (number: %i, state: %i, type: %i)\n",
-			number, state, le->type);
+			entnum, state, le->type);
 		return;
 	}
 
@@ -1199,7 +1196,6 @@ static void CL_ActorStateChange (struct dbuffer *msg)
 	 */
 	if ((state & STATE_CROUCHED && !(le->state & STATE_CROUCHED)) ||
 		 (!(state & STATE_CROUCHED) && le->state & STATE_CROUCHED)) {
-		CL_SetLastMoving(le);
 		if ((CL_UsableTUs(selActor) < TU_CROUCH)
 		&&  (CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH)) {
 			/* We have not enough non-reserved TUs,
