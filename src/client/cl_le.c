@@ -524,12 +524,6 @@ void LET_StartIdle (le_t * le)
 				le->entnum, le->team, le->pnum);
 	}
 
-#ifdef DEBUG
-	/* idle actors don't move */
-	if (le->pathPos != le->pathLength)
-		Com_Printf("LET_StartIdle: Looks like the actor has some steps to do. length: %i, pos: %i\n",
-			le->pathLength, le->pathPos);
-#endif
 	le->pathPos = le->pathLength = 0;
 
 	/* keep this animation until something happens */
@@ -644,21 +638,21 @@ static void LET_PathMove (le_t * le)
 		/* Ensure that we are displayed where we are supposed to be, in case the last frame came too quickly. */
 		Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
 
-		/* Record the last postition of movement calculations. */
+		/* Record the last position of movement calculations. */
 		VectorCopy(le->pos, le->oldPos);
 
 		if (le->pathPos < le->pathLength) {
 			/* next part */
 			const byte fulldv = le->path[le->pathPos];
 			const byte dir = getDVdir(fulldv);
-			const int crouching_state = le->state & STATE_CROUCHED ? 1 : 0;
+			const int crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
 			/** @note new_crouching_state needs to be set to the current crouching state and is possibly updated by PosAddDV. */
-			int new_crouching_state = crouching_state;
-			PosAddDV(le->pos, new_crouching_state, fulldv);
+			int newCrouchingState = crouchingState;
+			PosAddDV(le->pos, newCrouchingState, fulldv);
 			Com_DPrintf(DEBUG_PATHING, "Moved in dir %i to (%i, %i, %i)\n", dir, le->pos[0], le->pos[1], le->pos[2]);
 			/** @note we no longer need to adjust the value from Grid_MoveLength for crouching:
 			 *  the function now accounts for crouching. */
-			tuCost = Grid_MoveLength(&clPathMap, le->pos, new_crouching_state, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouching_state, qfalse);
+			tuCost = Grid_MoveLength(&clPathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouchingState, qfalse);
 
 			le->TU -= tuCost;
 			if (le == selActor)
@@ -708,30 +702,10 @@ static void LET_PathMove (le_t * le)
 		} else {
 			/* end of move */
 			le_t *floor;
-#ifdef DEBUG
-			{
-				pos3_t gridPos;
 
-				/* HACK: Attempt to correct actor positions */
-				VecToPos(le->origin, gridPos);
-				if (!Vector2Compare(gridPos, le->pos)) {
-					Com_DPrintf(DEBUG_CLIENT, "LET_PathMove: Warning: Actor positions doesn't match "
-						"(origin grid: %i:%i:%i, le->pos: %i:%i:%i)\n",
-						gridPos[0], gridPos[1], gridPos[2], le->pos[0], le->pos[1], le->pos[2]);
-					VectorCopy(gridPos, le->pos);
-				}
-			}
-#endif
 			/* Verify the current position */
-			if (!VectorCompare(le->pos, le->newPos)) {
-				/* Output an error message */
-				Com_DPrintf(DEBUG_CLIENT, "The actor's end position is not what the server has. o(%i %i %i) n(%i %i %i)\n"
-					, le->pos[0], le->pos[1], le->pos[2]
-					, le->newPos[0], le->newPos[1], le->newPos[2]);
-				/* Fix the location */
-				VectorCopy(le->newPos, le->pos);
-				Grid_PosToVec(clMap, le->fieldSize, le->pos, le->origin);
-			}
+			if (!VectorCompare(le->pos, le->newPos))
+				Com_Error(ERR_DROP, "LET_PathMove: Actor movement is out of sync");
 
 			if (le == selActor)
 				CL_ConditionalMoveCalcForCurrentSelectedActor();
@@ -744,7 +718,6 @@ static void LET_PathMove (le_t * le)
 			CL_UnblockBattlescapeEvents();
 
 			le->think = LET_StartIdle;
-			le->think(le);
 			/* maybe there are some other EV_ACTOR_MOVE events following */
 			return;
 		}
