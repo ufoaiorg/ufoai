@@ -1884,9 +1884,9 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	int number;
 	int objIdx;
 	objDef_t *obj;
-	int weapFdsIdx, fdIdx, clientType;
+	int weapFdsIdx, fdIdx, shootType;
 
-	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &clientType, &from, &target);
+	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &number, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &from, &target);
 
 	obj = &csi.ods[objIdx];
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
@@ -1920,19 +1920,16 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 	if (le->type == ET_ACTORHIDDEN)
 		return;
 
-	if (le->team == cls.team) {
-		if (clientType != 0xFF)
-			Com_Printf("CL_ActorStartShoot: left/right info out of sync somehow (le: %i, server: %i, client: %i).\n", number, clientType, cl.actorMode);
-		clientType = cl.actorMode;
-	}
+	if (le->team == cls.team)
+		shootType = cl.actorMode;
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(clientType)) {
+	if (RIGHT(le) && IS_SHOT_RIGHT(shootType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
-	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(clientType)) {
+	} else if (LEFT(le) && IS_SHOT_LEFT(shootType)) {
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	/* no animation change for headgear - @see CL_ActorDoShoot */
-	} else if (!(HEADGEAR(le) && IS_MODE_FIRE_HEADGEAR(clientType))) {
+	} else if (!(HEADGEAR(le) && IS_SHOT_HEADGEAR(shootType))) {
 		/* We use the default (right) animation now. */
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	}
