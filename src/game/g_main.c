@@ -98,6 +98,7 @@ cvar_t *mon_teamfactor;
 cvar_t *mor_regeneration;
 cvar_t *mor_shaken;
 cvar_t *mor_panic;
+cvar_t *mor_brave;
 
 cvar_t *m_sanity;
 cvar_t *m_rage;
@@ -196,6 +197,7 @@ static void G_Init (void)
 	mor_regeneration = gi.Cvar_Get("mor_regeneration", "15", CVAR_LATCH|CVAR_NOSET, NULL);
 	mor_shaken = gi.Cvar_Get("mor_shaken", "50", CVAR_LATCH|CVAR_NOSET, NULL);
 	mor_panic = gi.Cvar_Get("mor_panic", "30", CVAR_LATCH|CVAR_NOSET, NULL);
+	mor_brave = gi.Cvar_Get("mor_panic", "85", CVAR_LATCH|CVAR_NOSET, NULL);
 
 	m_sanity = gi.Cvar_Get("m_sanity", "1.0", CVAR_LATCH|CVAR_NOSET, NULL);
 	m_rage = gi.Cvar_Get("m_rage", "0.6", CVAR_LATCH|CVAR_NOSET, NULL);
