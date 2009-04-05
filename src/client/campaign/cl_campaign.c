@@ -2043,6 +2043,10 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	CP_XVIInit();
 
+	MN_PopMenu(qtrue);
+	Cvar_Set("mn_main", "campaign_main");
+	Cvar_Set("mn_active", "map");
+
 	if (load) {
 		/** @todo move into CP_Load? */
 		CP_InitMarket(load);
@@ -2082,9 +2086,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 	R_InitializeXVIOverlay(campaign->map, NULL, 0, 0);
 
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "campaign_main");
-	Cvar_Set("mn_active", "map");
 	MN_PushMenu("map", NULL);
 
 	/* create a base as first step */
