@@ -908,14 +908,14 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 	if (key >= K_KEY_SIZE)
 		return;
 
+	/* any key (except F1-F12) during the sequence mode will bring up the menu */
+	if (cls.state == ca_sequence && !(key >= K_F1 && key <= K_F12))
+		key = K_ESCAPE;
+
 	if (cls.key_dest != key_console && down) {
 		if (MN_KeyPressed(key, unicode))
 			return;
 	}
-
-	/* any key (except F1-F12) during the sequence mode will bring up the menu */
-	if (cls.state == ca_sequence && !(key >= K_F1 && key <= K_F12))
-		key = K_ESCAPE;
 
 	/* menu key is hardcoded, so the user can never unbind it */
 	if (key == K_ESCAPE) {
@@ -928,9 +928,6 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		switch (cls.key_dest) {
 		case key_message:
 			Key_Message(unicode);
-			break;
-		case key_game:
-			Cbuf_AddText("mn_pop esc;");
 			break;
 		case key_console:
 			Con_ToggleConsole_f();

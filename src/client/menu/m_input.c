@@ -239,6 +239,9 @@ qboolean MN_KeyPressed (unsigned int key, unsigned short unicode)
 		if (MN_FocusExecuteActionNode())
 			return qtrue;
 		break;
+	case K_ESCAPE:
+		MN_PopMenuWithEscKey();
+		return qtrue;
 	}
 
 	return qfalse;
