@@ -499,7 +499,10 @@ static void MN_CloseMenu_f (void)
 void MN_PopMenuWithEscKey (void)
 {
 	const menuNode_t *menu = mn.menuStack[mn.menuStackPos - 1];
-	assert(mn.menuStackPos);
+
+	/* nothing if stack is empty */
+	if (mn.menuStackPos == 0)
+		return;
 
 	/* some window can prevent escape */
 	if (menu->u.window.preventTypingEscape)
