@@ -33,12 +33,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief Menu name use as alternative for option
  */
-cvar_t *mn_main;
+static cvar_t *mn_main;
 
 /**
  * @brief Main menu of a stack
  */
-cvar_t *mn_active;
+static cvar_t *mn_active;
 
 /**
  * @brief Returns the ID of the last fullscreen ID. Before this, window should be hidden.
