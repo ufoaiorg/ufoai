@@ -216,11 +216,12 @@ void MN_HideNode (menuNode_t* node)
 
 /**
  * @brief Script command to hide a given menu node
+ * @todo fix param to use absolute path
  */
 static void MN_HideNode_f (void)
 {
 	if (Cmd_Argc() == 2)
-		MN_HideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
+		MN_HideNode(MN_GetNode(MN_GetActiveMenu(), Cmd_Argv(1)));
 	else
 		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
@@ -239,11 +240,12 @@ void MN_UnHideNode (menuNode_t* node)
 
 /**
  * @brief Script command to unhide a given menu node
+ * @todo fix param to use absolute path
  */
 static void MN_UnHideNode_f (void)
 {
 	if (Cmd_Argc() == 2)
-		MN_UnHideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
+		MN_UnHideNode(MN_GetNode(MN_GetActiveMenu(), Cmd_Argv(1)));
 	else
 		Com_Printf("Usage: %s <node>\n", Cmd_Argv(0));
 }
@@ -251,7 +253,6 @@ static void MN_UnHideNode_f (void)
 /**
  * @brief Search a child node by given name
  * @node Only search with one depth
- * @sa MN_GetNodeFromCurrentMenu
  */
 menuNode_t *MN_GetNode (const menuNode_t* const node, const char *name)
 {

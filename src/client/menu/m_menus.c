@@ -66,16 +66,19 @@ static void MN_DeleteMenuFromStack (menuNode_t * menu)
 {
 	int i;
 
-	for (i = 0; i < mn.menuStackPos; i++)
-		if (mn.menuStack[i] == menu) {
-			/** @todo (menu) don't leave the loop even if we found it - there still
-			 * may be other copies around in the stack of the same menu
-			 * @sa MN_PushCopyMenu_f */
-			for (mn.menuStackPos--; i < mn.menuStackPos; i++)
-				mn.menuStack[i] = mn.menuStack[i + 1];
-			MN_InvalidateMouse();
-			return;
-		}
+	for (i = 0; i < mn.menuStackPos; i++) {
+		if (mn.menuStack[i] != menu)
+			continue;
+
+		/** @todo (menu) don't leave the loop even if we found it - there still
+		 * may be other copies around in the stack of the same menu
+		 * @sa MN_PushCopyMenu_f */
+		for (mn.menuStackPos--; i < mn.menuStackPos; i++)
+			mn.menuStack[i] = mn.menuStack[i + 1];
+
+		MN_InvalidateMouse();
+		return;
+	}
 }
 
 /**
@@ -318,11 +321,11 @@ static void MN_PushNoHud_f (void)
  */
 static void MN_PushCopyMenu_f (void)
 {
-	if (Cmd_Argc() > 1) {
-		MN_PushMenuDelete(Cmd_Argv(1), NULL, qfalse);
-	} else {
+	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: %s <name>\n", Cmd_Argv(0));
+		return;
 	}
+	MN_PushMenuDelete(Cmd_Argv(1), NULL, qfalse);
 }
 
 static void MN_RemoveMenuAtPositionFromStack (int position)
@@ -546,18 +549,6 @@ const char* MN_GetActiveMenuName (void)
 	if (menu == NULL)
 		return "";
 	return menu->name;
-}
-
-/**
- * @brief Searches a given node in the current menu
- * @todo @deprecated we should not use it because its hard to predict result of "current" (we use popups...)
- * plus, if we need, we can use MN_GetActiveMenu and MN_GetNode
- * @sa MN_GetNode
- * @sa MN_GetActiveMenu
- */
-menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
-{
-	return MN_GetNode(MN_GetActiveMenu(), name);
 }
 
 /**

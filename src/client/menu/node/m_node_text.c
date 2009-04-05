@@ -127,10 +127,11 @@ static void MN_TextScroll_f (void)
 
 /**
  * @brief Scroll to the bottom
+ * @todo fix param to use absolute path
  */
 void MN_TextScrollBottom (const char* nodeName)
 {
-	menuNode_t *node = MN_GetNodeFromCurrentMenu(nodeName);
+	menuNode_t *node = MN_GetNode(MN_GetActiveMenu(), nodeName);
 	if (!node) {
 		Com_DPrintf(DEBUG_CLIENT, "Node '%s' could not be found\n", nodeName);
 		return;
