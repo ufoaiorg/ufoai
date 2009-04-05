@@ -114,9 +114,6 @@ endif
 	@echo "Built for $(BUILDDIR)"
 	@echo
 
-#
-# TODO why are they included here (again?) shouldn't the -include above be enough
-#
 include build/lang.mk
 include build/install.mk
 include build/various.mk
