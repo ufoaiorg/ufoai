@@ -1,9 +1,11 @@
 #include <winresrc.h>
 
 #ifndef CROSSBUILD
+1 RT_MANIFEST DISCARDABLE "ufo.exe.manifest"
 101 ICON DISCARDABLE "ufo.ico"
 112 ICON DISCARDABLE "ufo_ded.ico"
 #else
+1 RT_MANIFEST DISCARDABLE "build/projects/ufo.exe.manifest"
 101 ICON DISCARDABLE "build/projects/ufo.ico"
 112 ICON DISCARDABLE "build/projects/ufo_ded.ico"
 #endif
@@ -27,7 +29,7 @@ BEGIN
 			VALUE "CompanyName", "UFO:Alien Invasion Team"
 			VALUE "FileDescription", "UFO:Alien Invasion"
 			VALUE "InternalName", "ufoai"
-			VALUE "LegalCopyright", "Copyright (C) 2002-2007"
+			VALUE "LegalCopyright", "Copyright (C) 2002-2009"
 			VALUE "OriginalFilename", "ufo.exe"
 			VALUE "ProductName", "UFO:AI"
 			VALUE "ProductVersion", "Release"
