@@ -100,6 +100,10 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 	if (ent->team == level.activeTeam)
 		return qfalse;
 
+	/* actor may not carry weapons at all - so no further checking is needed */
+	if (!ent->chr.teamDef->weapons)
+		return qfalse;
+
 	/* check ent has reaction fire enabled */
 	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION))
 		return qfalse;
