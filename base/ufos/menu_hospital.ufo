@@ -514,7 +514,7 @@ menu hospital_employee
 
 	custombutton bt_continue
 	{
-		tooltip	"_Back to baseview"
+		tooltip	"_Back"
 		image	menu/button_background	blend	true
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
@@ -633,7 +633,7 @@ menu hospital_employee
 		size		"207 48"
 		font		f_menu
 		blend		true
-		tooltip		"_not implemented"
+		tooltip		"_Not implemented"
 		disabled	true
 		onClick
 	}

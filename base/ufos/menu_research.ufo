@@ -30,11 +30,12 @@ menu research
 
 	custombutton back
 	{
-		tooltip		"_Back to baseview"
-		image		menu/button_background	blend	true
-		texl		"1 1"
-		size		"59 55"
+		tooltip		"_Back"
+		image		menu/button_background
+		blend		true
 		pos			"950 20"
+		size		"59 55"
+		texl		"1 1"
 		icon		return
 		onClick		{ cmd "mn_pop;" }
 	}
