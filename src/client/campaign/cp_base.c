@@ -988,6 +988,73 @@ static void B_InitialEquipment (base_t *base, aircraft_t *assignInitialAircraft,
 }
 
 /**
+ * @brief builds a base from template
+ * @param[out] base The base to build
+ * @param[in] templateName Templated used for building
+ * @param[in] hire If hiring employee needed
+ * @note It builds an empty base on NULL (or empty) templatename
+ */
+static void B_BuildFromTemplate (base_t *base, const char *templateName, qboolean hire)
+{
+	const baseTemplate_t *template = B_GetBaseTemplate(templateName);
+	int freeSpace = BASE_SIZE * BASE_SIZE;
+	int i;
+
+	assert(base);
+
+	for (i = 0; i < MAX_CAP; i++)
+		base->capacities[i].cur = 0;
+
+	/* Create random blocked fields in the base.
+	 * The first base never has blocked fields so we skip it. */
+	if (ccs.campaignStats.basesBuild) {
+		const int j = round((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
+		for (i = 0; i < j; i++) {
+			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE)];
+
+			if (!mapPtr->blocked)
+				freeSpace--;
+			mapPtr->blocked = qtrue;
+		}
+	}
+
+	if (template) {
+		/* find each building in the template */
+		for (i = 0; i < template->numBuildings; i++) {
+			vec2_t pos;
+
+			Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
+
+			if (!(base->map[(int)pos[0]][(int)pos[1]].blocked || base->map[(int)pos[0]][(int)pos[1]].building)) {
+				B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
+				freeSpace--;
+			}
+		}
+	}
+
+	/* we need to set up the mandatory buildings */
+	for (i = 0; i < ccs.numBuildingTemplates; i++) {
+		building_t* building = &ccs.buildingTemplates[i];
+		vec2_t pos;
+
+		if ((!building->mandatory) || B_GetBuildingStatus(base, building->buildingType))
+			continue;
+
+		while ((freeSpace > 0) && !B_GetBuildingStatus(base, building->buildingType)) {
+			Vector2Set(pos, rand() % BASE_SIZE, rand() % BASE_SIZE);
+			if (!(base->map[(int)pos[0]][(int)pos[1]].blocked || base->map[(int)pos[0]][(int)pos[1]].building)) {
+				B_AddBuildingToBasePos(base, building, hire, pos);
+				freeSpace--;
+			}
+		}
+		/* @todo if there is no more space for mandatory building, remove a non mandatory one
+		 * or build mandatory ones first */
+		if (!B_GetBuildingStatus(base, building->buildingType))
+			Sys_Error("B_BuildFromTemplate: Cannot build base. No space for it's buildings!.");
+	}
+}
+
+/**
  * @brief Setup buildings and equipment for first base
  * @param[in,out] base The base to set up
  * @param[in] hire Hire employees for the building we create from the template
@@ -1007,17 +1074,9 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 
 	if (buildings) {
 		int i;
-		/* get template for base */
-		const baseTemplate_t *template = B_GetBaseTemplate(ccs.curCampaign->firstBaseTemplate);
 		const equipDef_t *ed;
 
-		/* find each building in the template */
-		for (i = 0; i < template->numBuildings; ++i) {
-			vec2_t pos;
-			Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
-			B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
-		}
-
+		B_BuildFromTemplate(base, ccs.curCampaign->firstBaseTemplate, hire);
 		/* Add aircraft to the first base */
 		/** @todo move aircraft to .ufo */
 		/* buy two first aircraft and hire pilots for them. */
@@ -1072,19 +1131,7 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 			}
 		}
 	} else {
-		const baseTemplate_t *template = B_GetBaseTemplate(ccs.curCampaign->firstBaseTemplate);
-		int i;
-
-		/* build mandatory buildings in template */
-		for (i = 0; i < template->numBuildings; i++) {
-			if (template->buildings[i].building
-			 && template->buildings[i].building->mandatory) {
-				vec2_t pos;
-
-				Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
-				B_AddBuildingToBasePos(base, template->buildings[i].building, hire, pos);
-			}
-		}
+		B_BuildFromTemplate(base, NULL, hire);
 		/* if no autobuild, set up zero build time for the first base */
 		ccs.instant_build = 1;
 	}
@@ -1129,12 +1176,7 @@ void B_UpdateBaseCount (void)
  */
 void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 {
-	int i;
 	const int newBaseAlienInterest = 1.0f;
-
-	/* Reset current capacities. */
-	for (i = 0; i < MAX_CAP; i++)
-		base->capacities[i].cur = 0;
 
 	Vector2Copy(pos, base->pos);
 
@@ -1146,48 +1188,8 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuild == 0)
 		B_SetUpFirstBase(base, hire, buildings);
-	else if (buildings) {
-		/* add auto build buildings if it's not the first base */
-		for (i = 0; i < ccs.numBuildingTemplates; i++)
-			if (ccs.buildingTemplates[i].mandatory)
-				B_AddBuildingToBase(base, &ccs.buildingTemplates[i], hire);
-	} else {
-		/* we need to set up the entrance in case autobuild is off and this is not the first base */
-		for (i = 0; i < ccs.numBuildingTemplates; ++i) {
-			building_t* entrance = &ccs.buildingTemplates[i];
-			if (entrance->buildingType == B_ENTRANCE) {
-				/* set up entrance to base */
-				vec2_t pos;
-				Vector2Set(pos, rand() % BASE_SIZE, rand() % BASE_SIZE);
-				B_AddBuildingToBasePos(base, entrance, hire, pos);
-
-				/* we are done here */
-				break;
-			}
-		}
-	}
-
-	/* Create random blocked fields in the base.
-	 * The first base never has blocked fields so we skip it. */
-	if (base->idx > 0) {
-		const int j = round ((frand() * (MAX_BLOCKEDFIELDS - MIN_BLOCKEDFIELDS)) + MIN_BLOCKEDFIELDS);
-		for (i = 0; i < j; i++) {
-			/* Note that the rightmost column (containing the entrance) should never contain any blocked tiles, lest the entrance be boxed in. */
-			baseBuildingTile_t *mapPtr = &base->map[rand() % BASE_SIZE][rand() % (BASE_SIZE - 1)];
-			/* set this field to invalid if there is no building yet */
-			if (!mapPtr->building)
-				mapPtr->blocked = qtrue;
-		}
-	}
-
-	if (B_GetNumberOfBuildingsInBaseByBuildingType(base, B_ENTRANCE)) {
-		/* Set hasBuilding[B_ENTRANCE] to correct value, because it can't be updated afterwards.*/
-		B_SetBuildingStatus(base, B_ENTRANCE, qtrue);
-	} else {
-		/* base can't start without an entrance, because this is where the aliens will arrive during base attack */
-		/* autobuild and base templates should contain a base entrance */
-		Sys_Error("B_SetUpBase: A new base should have an entrance.");
-	}
+	else
+		B_BuildFromTemplate(base, NULL, hire);
 
 	/* a new base is not discovered (yet) */
 	base->alienInterest = newBaseAlienInterest;
@@ -1228,6 +1230,9 @@ building_t *B_GetBuildingTemplate (const char *buildingName)
 const baseTemplate_t *B_GetBaseTemplate (const char *baseTemplateID)
 {
 	int i = 0;
+
+	if (!baseTemplateID)
+		return NULL;
 
 	for (i = 0; i < ccs.numBaseTemplates; i++)
 		if (!strcmp(ccs.baseTemplates[i].id, baseTemplateID))
