@@ -190,7 +190,7 @@ menu ahudinv extends inventory
 		pos     "878 84"
 		size    "130 265"
 		click   { cmd "mn_pop;" }
-		rclick  { cmd "mn_pop;" }
+		onRClick  { cmd "mn_pop;" }
 	}
 	func leave
 	{

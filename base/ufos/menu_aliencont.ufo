@@ -165,73 +165,73 @@ menu aliencont
 			image		menu/hosp_button_green
 			pos			"25  25"
 			click		{ cmd "aliencont_click 0;" }
-			rclick		{ cmd "aliencont_pedia 0;" }
+			onRClick		{ cmd "aliencont_pedia 0;" }
 		}
 		pic button1 {
 			image		menu/hosp_button_green
 			pos			"345  25"
 			click		{ cmd "aliencont_click 1;" }
-			rclick		{ cmd "aliencont_pedia 1;" }
+			onRClick		{ cmd "aliencont_pedia 1;" }
 		}
 		pic button2 {
 			image		menu/hosp_button_green
 			pos			"25 120"
 			click		{ cmd "aliencont_click 2;" }
-			rclick		{ cmd "aliencont_pedia 2;" }
+			onRClick		{ cmd "aliencont_pedia 2;" }
 		}
 		pic button3 {
 			image		menu/hosp_button_green
 			pos			"345 120"
 			click		{ cmd "aliencont_click 3;" }
-			rclick		{ cmd "aliencont_pedia 3;" }
+			onRClick		{ cmd "aliencont_pedia 3;" }
 		}
 		pic button4 {
 			image		menu/hosp_button_green
 			pos			"25 215"
 			click		{ cmd "aliencont_click 4;" }
-			rclick		{ cmd "aliencont_pedia 4;" }
+			onRClick		{ cmd "aliencont_pedia 4;" }
 		}
 		pic button5 {
 			image		menu/hosp_button_green
 			pos			"345 215"
 			click		{ cmd "aliencont_click 5;" }
-			rclick		{ cmd "aliencont_pedia 5;" }
+			onRClick		{ cmd "aliencont_pedia 5;" }
 		}
 		pic button6 {
 			image		menu/hosp_button_green
 			pos			"25 310"
 			click		{ cmd "aliencont_click 6;" }
-			rclick		{ cmd "aliencont_pedia 6;" }
+			onRClick		{ cmd "aliencont_pedia 6;" }
 		}
 		pic button7 {
 			image		menu/hosp_button_green
 			pos			"345 310"
 			click		{ cmd "aliencont_click 7;" }
-			rclick		{ cmd "aliencont_pedia 7;" }
+			onRClick		{ cmd "aliencont_pedia 7;" }
 		}
 		pic button8 {
 			image		menu/hosp_button_green
 			pos			"25 405"
 			click		{ cmd "aliencont_click 8;" }
-			rclick		{ cmd "aliencont_pedia 8;" }
+			onRClick		{ cmd "aliencont_pedia 8;" }
 		}
 		pic button9 {
 			image		menu/hosp_button_green
 			pos			"345 405"
 			click		{ cmd "aliencont_click 9;" }
-			rclick		{ cmd "aliencont_pedia 9;" }
+			onRClick		{ cmd "aliencont_pedia 9;" }
 		}
 		pic button10 {
 			image		menu/hosp_button_green
 			pos			"25 500"
 			click		{ cmd "aliencont_click 10;" }
-			rclick		{ cmd "aliencont_pedia 10;" }
+			onRClick		{ cmd "aliencont_pedia 10;" }
 		}
 		pic button11 {
 			image		menu/hosp_button_green
 			pos			"345 500"
 			click		{ cmd "aliencont_click 11;" }
-			rclick		{ cmd "aliencont_pedia 11;" }
+			onRClick		{ cmd "aliencont_pedia 11;" }
 		}
 
 		pic icon0	{ image icons/health_unused 	pos "272  36" }

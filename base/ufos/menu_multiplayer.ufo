@@ -329,7 +329,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			rows		"22"
 			textid		TEXT_LIST
 			onClick		{ }
-			onRclick		{ cmd "pingservers;" }
+			onRClick	{ cmd "pingservers;" }
 			onWheel {
 				*(abstractscrollbar)content.servers_scroll current <text_scroll>
 			}
@@ -665,7 +665,7 @@ menu mp_create_server extends abstract_multiplayer
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_nextmap;" }
-			rclick		{ cmd "mn_prevmap;" }
+			onRClick		{ cmd "mn_prevmap;" }
 		}
 		pic mappic2
 		{
@@ -676,7 +676,7 @@ menu mp_create_server extends abstract_multiplayer
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_nextmap;" }
-			rclick		{ cmd "mn_prevmap;" }
+			onRClick		{ cmd "mn_prevmap;" }
 		}
 		pic mappic3
 		{
@@ -687,7 +687,7 @@ menu mp_create_server extends abstract_multiplayer
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_nextmap;" }
-			rclick		{ cmd "mn_prevmap;" }
+			onRClick		{ cmd "mn_prevmap;" }
 		}
 
 		// ===================

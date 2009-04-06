@@ -65,7 +65,7 @@ menu irc
 		rows		"27"
 		mousefx		true
 		onClick
-		onRclick
+		onRClick
 		onWheel {
 			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
 		}

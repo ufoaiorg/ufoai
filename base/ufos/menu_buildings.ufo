@@ -30,9 +30,6 @@ menu buildings
 	{
 		pos			"0 96"
 		size		"725 672"
-		click
-		rclick
-		mclick
 	}
 
 	string name

@@ -407,7 +407,7 @@ menu althud extends ahud
 		scale		"4 4 4"
 
 		click		{ cmd "mn_push ahudinv;" }
-		rclick		{ cmd "mn_push ahudphysdat;" }
+		onRClick		{ cmd "mn_push ahudphysdat;" }
 	}
 
 	model right_head
@@ -729,7 +729,7 @@ menu althud extends ahud
 		texh		"127 64"
 		mousefx		true
 		click		{ cmd "sel_shotreservation;" }
-		rclick		{ cmd "sel_shotreservation 0;" }
+		onRClick		{ cmd "sel_shotreservation 0;" }
 	}
 
 	pic bt_floorup

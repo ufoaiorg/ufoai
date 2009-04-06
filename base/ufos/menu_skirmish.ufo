@@ -193,7 +193,7 @@ menu skirmish
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
-		rclick		{ cmd "mn_prevmap;" }
+		onRClick		{ cmd "mn_prevmap;" }
 	}
 	pic mappic2
 	{
@@ -204,7 +204,7 @@ menu skirmish
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
-		rclick		{ cmd "mn_prevmap;" }
+		onRClick		{ cmd "mn_prevmap;" }
 	}
 	pic mappic3
 	{
@@ -215,7 +215,7 @@ menu skirmish
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
-		rclick		{ cmd "mn_prevmap;" }
+		onRClick		{ cmd "mn_prevmap;" }
 	}
 
 	string team_str

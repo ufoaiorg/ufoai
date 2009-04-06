@@ -267,7 +267,7 @@ menu production
 		mousefx		true
 		longlines	prettychop
 		onClick
-		onRclick
+		onRClick
 		onWheel		{
 			*(abstractscrollbar)prodlist_scroll current <text_scroll>
 			cmd "prod_scroll;"

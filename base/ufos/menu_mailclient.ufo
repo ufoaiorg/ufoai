@@ -42,7 +42,7 @@ menu mail
 		tabwidth	100
 		rows		"20"
 		onClick
-		onRclick
+		onRClick
 		onWheel		{
 			*(abstractscrollbar)mail_scroll current <text_scroll>
 		}
@@ -537,7 +537,7 @@ menu mailclient
 		tabwidth	700
 		mousefx		true
 		onClick
-		onRclick
+		onRClick
 		onWheel		{
 			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 			cmd "ufopedia_scrollmail;"

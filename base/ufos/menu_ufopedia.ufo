@@ -104,7 +104,7 @@ menu ufopedia
 		tabwidth	100
 		rows		16
 		onClick
-		onRclick
+		onRClick
 		onWheel		{
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}

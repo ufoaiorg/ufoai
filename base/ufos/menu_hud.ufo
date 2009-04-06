@@ -531,7 +531,7 @@ menu hud extends ahud
 			texh	"115 64"
 			mousefx	true
 			click	{ cmd "sel_shotreservation;" }
-			rclick	{ cmd "sel_shotreservation 0;" }
+			onRClick	{ cmd "sel_shotreservation 0;" }
 		}
 
 		pic bt_reaction_s
