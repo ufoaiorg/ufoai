@@ -48,7 +48,7 @@ item assault_ammo
 			speed	0
 			spread	"1.8 1.8"
 			crouch	0.7
-			range	250
+			range	70
 			shots	1
 			ammo	1
 			time	8
@@ -252,7 +252,7 @@ item machinegun_ammo
 			speed	0
 			spread	"2 2"
 			crouch	0.75
-			range	250
+			range	70
 			shots	5
 			ammo	5
 			delaybetweenshots		5
@@ -272,7 +272,7 @@ item machinegun_ammo
 			speed	0
 			spread	"3 3"
 			crouch	0.5
-			range	250
+			range	70
 			shots	20
 			ammo	20
 			delaybetweenshots		10
@@ -292,7 +292,7 @@ item machinegun_ammo
 			speed	0
 			spread	"3 20"
 			crouch	0.5
-			range	250
+			range	70
 			shots	20
 			ammo	20
 			delaybetweenshots		10
@@ -354,7 +354,7 @@ item sniper_ammo
 			speed	0
 			spread	"1.5 1.5"
 			crouch	0.5
-			range	250
+			range	90
 			shots	1
 			ammo	1
 			time	12
@@ -373,7 +373,7 @@ item sniper_ammo
 			speed	0
 			spread	"0.9 0.9"
 			crouch	0.5
-			range	250
+			range	90
 			shots	1
 			ammo	1
 			time	18
@@ -433,8 +433,8 @@ item coilgun_ammo
 			firesnd weapons/bolter2
 			speed	0
 			spread	"1.5 1.5"
-			crouch	0.3
-			range	250
+			crouch	0.5
+			range	100
 			shots	1
 			ammo	1
 			time	12
@@ -452,8 +452,8 @@ item coilgun_ammo
 			firesnd weapons/bolter2
 			speed	0
 			spread	"0.9 0.9"
-			crouch	0.3
-			range	250
+			crouch	0.5
+			range	100
 			shots	1
 			ammo	1
 			time	18
@@ -714,7 +714,7 @@ item smg_ammo
 			speed	0
 			spread	"1.7 1.7"
 			crouch	0.8
-			range	250
+			range	50
 			shots	1
 			ammo	1
 			time	5
@@ -733,7 +733,7 @@ item smg_ammo
 			speed	0
 			spread	"2.0 2.0"
 			crouch	0.7
-			range	250
+			range	50
 			shots	5
 			ammo	5
 			delaybetweenshots		10
@@ -753,7 +753,7 @@ item smg_ammo
 			speed	0
 			spread	"3.0 3.0"
 			crouch	0.6
-			range	250
+			range	50
 			shots	15
 			ammo	15
 			delaybetweenshots		10
@@ -773,7 +773,7 @@ item smg_ammo
 			speed	0
 			spread	"1.25 1.25"
 			crouch	0.8
-			range	250
+			range	50
 			shots	1
 			ammo	1
 			time	10
@@ -920,7 +920,7 @@ item shotgun_micro_ammo
 			speed	0
 			spread	"1.3 1.3"
 			crouch	0.9
-			range	10
+			range	20
 			shots	7
 			ammo	1
 			delaybetweenshots		0
@@ -942,7 +942,7 @@ item shotgun_micro_ammo
 			speed	0
 			spread	"2.8 2.8"
 			crouch	0.9
-			range	10
+			range	20
 			shots	21
 			ammo	3
 			delaybetweenshots		15
@@ -1934,7 +1934,7 @@ item bolterrifle_ammo
 			speed   0
 			spread  "1.7 1.7"
 			crouch  0.8
-			range	250
+			range	80
 			shots   1
 			ammo    1
 			time    8
@@ -1954,7 +1954,7 @@ item bolterrifle_ammo
 			speed   0
 			spread  "2.1 2.1"
 			crouch  0.8
-			range	250
+			range	80
 			shots   3
 			ammo    3
 			time    13
@@ -1974,7 +1974,7 @@ item bolterrifle_ammo
 			speed   0
 			spread  "1.1 1.1"
 			crouch  0.5
-			range	250
+			range	80
 			shots   1
 			ammo    1
 			delaybetweenshots     2

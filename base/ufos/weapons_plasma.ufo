@@ -47,7 +47,7 @@ item plaspistol_ammo
 			speed	1800
 			spread	"1.5 1.5"
 			crouch	0.8
-			range	15
+			range	40
 			shots	1
 			ammo	1
 			delaybetweenshots		5
@@ -67,7 +67,7 @@ item plaspistol_ammo
 			speed	1800
 			spread	"1.2 1.2"
 			crouch	0.8
-			range	15
+			range	40
 			shots	1
 			ammo	1
 			delaybetweenshots		5
@@ -85,9 +85,9 @@ item plaspistol_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1800
-			spread	"2 2"
+			spread	"1.9 1.9"
 			crouch	0.8
-			range	15
+			range	40
 			shots	3
 			ammo	3
 			delaybetweenshots		5
@@ -149,7 +149,7 @@ item plasrifle_ammo
 			speed	1700
 			spread	"1.7 1.7"
 			crouch	0.8
-			range	22
+			range	70
 			shots	1
 			ammo	1
 			delaybetweenshots		5
@@ -169,7 +169,7 @@ item plasrifle_ammo
 			speed	1700
 			spread	"1 1"
 			crouch	0.8
-			range	22
+			range	70
 			shots	1
 			ammo	1
 			delaybetweenshots		5
@@ -187,9 +187,9 @@ item plasrifle_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1700
-			spread	"2 2"
+			spread	"1.8 1.8"
 			crouch	0.7
-			range	22
+			range	70
 			shots	3
 			ammo	3
 			delaybetweenshots		5
@@ -207,9 +207,9 @@ item plasrifle_ammo
 			hitbody	plasmaImpactCharged
 			firesnd	weapons/plasma_s
 			speed	1700
-			spread	"3 3"
+			spread	"2.7 2.7"
 			crouch	0.6
-			range	22
+			range	70
 			shots	6
 			ammo	6
 			delaybetweenshots		10
@@ -275,7 +275,7 @@ item plasblaster_ammo
 			speed	0
 			spread	"2.2 2.2"
 			crouch	0.6
-			range	40
+			range	60
 			shots	1
 			ammo	1
 			delaybetweenshots		38
@@ -295,7 +295,7 @@ item plasblaster_ammo
 			speed	2000
 			spread	"2 2"
 			crouch 	0.6
-			range	250
+			range	70
 			shots	1
 			ammo	10
 			delaybetweenshots		10
@@ -316,9 +316,9 @@ item plasblaster_ammo
 			firesnd	weapons/plasma_big
 			sndonce true
 			speed	0
-			spread	"3 3"
+			spread	"2.7 2.7"
 			crouch	0.6
-			range	40
+			range	60
 			shots	5
 			ammo	5
 			delaybetweenshots		38
