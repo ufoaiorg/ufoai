@@ -104,6 +104,10 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target)
 	if (!ent->chr.teamDef->weapons)
 		return qfalse;
 
+	/* no weapon that can be used for reaction fire */
+	if (!LEFT(ent) && !RIGHT(ent) && !HEADGEAR(ent))
+		return qfalse;
+
 	/* check ent has reaction fire enabled */
 	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION))
 		return qfalse;
