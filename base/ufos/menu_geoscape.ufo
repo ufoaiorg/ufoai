@@ -2102,11 +2102,11 @@ menu messageoptions
 		size		"440 300"
 		mousefx		true
 		longlines	prettychop
-		wheel		{
+		onWheel		{
 			*(abstractscrollbar)messagetypes_scroll current <text_scroll>
 			cmd "msgoptions_scroll;"
 		}
-		lineschange	{
+		onLinesChange	{
 			*(abstractscrollbar)messagetypes_scroll fullsize <lines>
 			*(abstractscrollbar)messagetypes_scroll current <text_scroll>
 		}
@@ -2120,7 +2120,7 @@ menu messageoptions
 		current		0
 		viewsize	12
 		fullsize	12
-		change		{
+		onChange	{
 			cmd "mn_textscroll messagetypes <lastdiff>;"
 			cmd "msgoptions_scroll;"
 		}
@@ -2137,7 +2137,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 0 pause;" }
+		onChange	{ cmd "msgoptions_toggle 0 pause;" }
 	}
 
 	checkbox bt_notify0 {
@@ -2147,7 +2147,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 0 notify;" }
+		onChange	{ cmd "msgoptions_toggle 0 notify;" }
 	}
 
 	checkbox bt_sound0 {
@@ -2156,7 +2156,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"	size	"20 18"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 0 sound;" }
+		onChange	{ cmd "msgoptions_toggle 0 sound;" }
 	}
 
 	checkbox bt_pause1 {
@@ -2166,7 +2166,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 1 pause;" }
+		onChange	{ cmd "msgoptions_toggle 1 pause;" }
 	}
 
 	checkbox bt_notify1 {
@@ -2176,7 +2176,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 1 notify;" }
+		onChange	{ cmd "msgoptions_toggle 1 notify;" }
 	}
 
 	checkbox bt_sound1 {
@@ -2186,7 +2186,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 1 sound;" }
+		onChange	{ cmd "msgoptions_toggle 1 sound;" }
 	}
 
 	checkbox bt_pause2 {
@@ -2196,7 +2196,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 2 pause;" }
+		onChange	{ cmd "msgoptions_toggle 2 pause;" }
 	}
 
 	checkbox bt_notify2 {
@@ -2206,7 +2206,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 2 notify;" }
+		onChange	{ cmd "msgoptions_toggle 2 notify;" }
 	}
 
 	checkbox bt_sound2 {
@@ -2216,7 +2216,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 2 sound;" }
+		onChange	{ cmd "msgoptions_toggle 2 sound;" }
 	}
 
 	checkbox bt_pause3 {
@@ -2226,7 +2226,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 3 pause;" }
+		onChange	{ cmd "msgoptions_toggle 3 pause;" }
 	}
 
 	checkbox bt_notify3 {
@@ -2236,7 +2236,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 3 notify;" }
+		onChange	{ cmd "msgoptions_toggle 3 notify;" }
 	}
 
 	checkbox bt_sound3 {
@@ -2246,7 +2246,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 3 sound;" }
+		onChange	{ cmd "msgoptions_toggle 3 sound;" }
 	}
 
 	checkbox bt_pause4 {
@@ -2256,7 +2256,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 4 pause;" }
+		onChange	{ cmd "msgoptions_toggle 4 pause;" }
 	}
 
 	checkbox bt_notify4 {
@@ -2266,7 +2266,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 4 notify;" }
+		onChange	{ cmd "msgoptions_toggle 4 notify;" }
 	}
 
 	checkbox bt_sound4 {
@@ -2276,7 +2276,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 4 sound;" }
+		onChange	{ cmd "msgoptions_toggle 4 sound;" }
 	}
 
 	checkbox bt_pause5 {
@@ -2286,7 +2286,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 5 pause;" }
+		onChange	{ cmd "msgoptions_toggle 5 pause;" }
 	}
 
 	checkbox bt_notify5 {
@@ -2296,7 +2296,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 5 notify;" }
+		onChange	{ cmd "msgoptions_toggle 5 notify;" }
 	}
 
 	checkbox bt_sound5 {
@@ -2306,7 +2306,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 5 sound;" }
+		onChange	{ cmd "msgoptions_toggle 5 sound;" }
 	}
 
 	checkbox bt_pause6 {
@@ -2316,7 +2316,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 6 pause;" }
+		onChange	{ cmd "msgoptions_toggle 6 pause;" }
 	}
 
 	checkbox bt_notify6 {
@@ -2326,7 +2326,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 6 notify;" }
+		onChange	{ cmd "msgoptions_toggle 6 notify;" }
 	}
 
 	checkbox bt_sound6 {
@@ -2336,7 +2336,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 6 sound;" }
+		onChange	{ cmd "msgoptions_toggle 6 sound;" }
 	}
 
 	checkbox bt_pause7 {
@@ -2346,7 +2346,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 7 pause;" }
+		onChange	{ cmd "msgoptions_toggle 7 pause;" }
 	}
 
 	checkbox bt_notify7 {
@@ -2356,7 +2356,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 7 notify;" }
+		onChange	{ cmd "msgoptions_toggle 7 notify;" }
 	}
 
 	checkbox bt_sound7 {
@@ -2366,7 +2366,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 7 sound;" }
+		onChange	{ cmd "msgoptions_toggle 7 sound;" }
 	}
 
 	checkbox bt_pause8 {
@@ -2376,7 +2376,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 8 pause;" }
+		onChange	{ cmd "msgoptions_toggle 8 pause;" }
 	}
 
 	checkbox bt_notify8 {
@@ -2386,7 +2386,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 8 notify;" }
+		onChange	{ cmd "msgoptions_toggle 8 notify;" }
 	}
 
 	checkbox bt_sound8 {
@@ -2396,7 +2396,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 8 sound;" }
+		onChange	{ cmd "msgoptions_toggle 8 sound;" }
 	}
 
 	checkbox bt_pause9 {
@@ -2406,7 +2406,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 9 pause;" }
+		onChange	{ cmd "msgoptions_toggle 9 pause;" }
 	}
 
 	checkbox bt_notify9 {
@@ -2416,7 +2416,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 9 notify;" }
+		onChange	{ cmd "msgoptions_toggle 9 notify;" }
 	}
 
 	checkbox bt_sound9 {
@@ -2426,7 +2426,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 9 sound;" }
+		onChange	{ cmd "msgoptions_toggle 9 sound;" }
 	}
 
 	checkbox bt_pause10 {
@@ -2436,7 +2436,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 10 pause;" }
+		onChange	{ cmd "msgoptions_toggle 10 pause;" }
 	}
 
 	checkbox bt_notify10 {
@@ -2446,7 +2446,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		 true
-		change		{ cmd "msgoptions_toggle 10 notify;" }
+		onChange	{ cmd "msgoptions_toggle 10 notify;" }
 	}
 
 	checkbox bt_sound10 {
@@ -2456,7 +2456,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 10 sound;" }
+		onChange	{ cmd "msgoptions_toggle 10 sound;" }
 	}
 
 	checkbox bt_pause11 {
@@ -2466,7 +2466,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 11 pause;" }
+		onChange	{ cmd "msgoptions_toggle 11 pause;" }
 	}
 
 	checkbox bt_notify11 {
@@ -2476,7 +2476,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 11 notify;" }
+		onChange	{ cmd "msgoptions_toggle 11 notify;" }
 	}
 
 	checkbox bt_sound11 {
@@ -2486,7 +2486,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 11 sound;" }
+		onChange	{ cmd "msgoptions_toggle 11 sound;" }
 	}
 
 	checkbox bt_pause12 {
@@ -2496,7 +2496,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 12 pause;" }
+		onChange	{ cmd "msgoptions_toggle 12 pause;" }
 	}
 
 	checkbox bt_notify12 {
@@ -2506,7 +2506,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 12 notify;" }
+		onChange	{ cmd "msgoptions_toggle 12 notify;" }
 	}
 
 	checkbox bt_sound12 {
@@ -2516,7 +2516,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 12 sound;" }
+		onChange	{ cmd "msgoptions_toggle 12 sound;" }
 	}
 
 	checkbox bt_pause13 {
@@ -2526,7 +2526,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 13 pause;" }
+		onChange	{ cmd "msgoptions_toggle 13 pause;" }
 	}
 
 	checkbox bt_notify13 {
@@ -2536,7 +2536,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 13 notify;" }
+		onChange	{ cmd "msgoptions_toggle 13 notify;" }
 	}
 
 	checkbox bt_sound13 {
@@ -2546,7 +2546,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 13 sound;" }
+		onChange	{ cmd "msgoptions_toggle 13 sound;" }
 	}
 
 	checkbox bt_pause14 {
@@ -2556,7 +2556,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 14 pause;" }
+		onChange	{ cmd "msgoptions_toggle 14 pause;" }
 	}
 
 	checkbox bt_notify14 {
@@ -2566,7 +2566,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 14 notify;" }
+		onChange	{ cmd "msgoptions_toggle 14 notify;" }
 	}
 
 	checkbox bt_sound14 {
@@ -2576,7 +2576,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 14 sound;" }
+		onChange	{ cmd "msgoptions_toggle 14 sound;" }
 	}
 
 	checkbox bt_pause15 {
@@ -2586,7 +2586,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 15 pause;" }
+		onChange	{ cmd "msgoptions_toggle 15 pause;" }
 	}
 
 	checkbox bt_notify15 {
@@ -2596,7 +2596,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 15 notify;" }
+		onChange	{ cmd "msgoptions_toggle 15 notify;" }
 	}
 
 	checkbox bt_sound15 {
@@ -2606,7 +2606,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 15 sound;" }
+		onChange	{ cmd "msgoptions_toggle 15 sound;" }
 	}
 
 	checkbox bt_pause16 {
@@ -2616,7 +2616,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 16 pause;" }
+		onChange	{ cmd "msgoptions_toggle 16 pause;" }
 	}
 
 	checkbox bt_notify16 {
@@ -2626,7 +2626,7 @@ menu messageoptions
 		size		"20 18"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 16 notify;" }
+		onChange	{ cmd "msgoptions_toggle 16 notify;" }
 	}
 
 	checkbox bt_sound16 {
@@ -2636,7 +2636,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 16 sound;" }
+		onChange	{ cmd "msgoptions_toggle 16 sound;" }
 	}
 
 	checkbox bt_pause17 {
@@ -2646,7 +2646,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 17 pause;" }
+		onChange	{ cmd "msgoptions_toggle 17 pause;" }
 	}
 
 	checkbox bt_notify17 {
@@ -2656,7 +2656,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 17 notify;" }
+		onChange	{ cmd "msgoptions_toggle 17 notify;" }
 	}
 
 	checkbox bt_sound17 {
@@ -2666,7 +2666,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 17 sound;" }
+		onChange	{ cmd "msgoptions_toggle 17 sound;" }
 	}
 
 	checkbox bt_pause18 {
@@ -2676,7 +2676,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 18 pause;" }
+		onChange	{ cmd "msgoptions_toggle 18 pause;" }
 	}
 
 	checkbox bt_notify18 {
@@ -2686,7 +2686,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 18 notify;" }
+		onChange	{ cmd "msgoptions_toggle 18 notify;" }
 	}
 
 	checkbox bt_sound18 {
@@ -2696,7 +2696,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 18 sound;" }
+		onChange	{ cmd "msgoptions_toggle 18 sound;" }
 	}
 
 	checkbox bt_pause19 {
@@ -2706,7 +2706,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 19 pause;" }
+		onChange	{ cmd "msgoptions_toggle 19 pause;" }
 	}
 
 	checkbox bt_notify19 {
@@ -2716,7 +2716,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 19 notify;" }
+		onChange	{ cmd "msgoptions_toggle 19 notify;" }
 	}
 
 	checkbox bt_sound19 {
@@ -2726,7 +2726,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 19 sound;" }
+		onChange	{ cmd "msgoptions_toggle 19 sound;" }
 	}
 
 	checkbox bt_pause20 {
@@ -2736,7 +2736,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 20 pause;" }
+		onChange	{ cmd "msgoptions_toggle 20 pause;" }
 	}
 
 	checkbox bt_notify20 {
@@ -2746,7 +2746,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 20 notify;" }
+		onChange	{ cmd "msgoptions_toggle 20 notify;" }
 	}
 
 	checkbox bt_sound20 {
@@ -2756,7 +2756,7 @@ menu messageoptions
 		image		"menu/checkbox_blue"
 		current		0
 		invis		true
-		change		{ cmd "msgoptions_toggle 20 sound;" }
+		onChange	{ cmd "msgoptions_toggle 20 sound;" }
 	}
 
 	// ===================
@@ -2879,7 +2879,7 @@ menu geoscape_options {
 			pos			"20 0"
 			size		"200 20"
 			string		"_Highlight nation borders"
-			click		{ cmd "map_overlay nations;" }
+			onClick		{ cmd "map_overlay nations;" }
 		}
 	}
 
@@ -2925,7 +2925,7 @@ menu geoscape_options {
 			pos			"20 0"
 			size		"200 20"
 			string		"_Show XVI map"
-			click		{ cmd "map_overlay xvi;" }
+			onClick		{ cmd "map_overlay xvi;" }
 		}
 	}
 

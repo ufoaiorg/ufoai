@@ -618,8 +618,6 @@ static const value_t properties[] = {
 	{"tabwidth", V_INT, offsetof(menuNode_t, u.text.tabWidth), MEMBER_SIZEOF(menuNode_t, u.text.tabWidth)},
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
 
-	/** @deprecated */
-	{"lineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
 	{NULL, V_NULL, 0, 0}
 };
 

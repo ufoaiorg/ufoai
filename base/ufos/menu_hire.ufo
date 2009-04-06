@@ -253,10 +253,10 @@ menu employees
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		mousefx		true
-		click
-		whup		{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
-		whdown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
-		lineschange	{
+		onClick
+		onWhup			{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
+		onWhdown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
+		onLinesChange	{
 			*(abstractscrollbar)scroll fullsize <lines>
 			*(abstractscrollbar)scroll current <text_scroll>
 		}
@@ -281,7 +281,7 @@ menu employees
 		string		"*cvar mn_name"
 		pos			"465 315"
 		size		"400 32"
-		change		{ cmd "employee_changename;" }
+		onChange	{ cmd "employee_changename;" }
 	}
 
 	pic bt_edit
@@ -292,7 +292,7 @@ menu employees
 		pos			"865 322"
 		texl		"0 48"
 		texh		"16 64"
-		click		{ cmd "mn_edittextentry name" }
+		onClick		{ cmd "mn_edittextentry name" }
 	}
 
 	panel actor_info {
@@ -618,7 +618,7 @@ menu employees
 		size		"59 55"
 		texl		"1 1"
 		icon		"return"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ==================

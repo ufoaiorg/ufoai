@@ -103,12 +103,12 @@ menu ufopedia
 		lineheight	23
 		tabwidth	100
 		rows		16
-		click
-		rclick
-		wheel		{
+		onClick
+		onRclick
+		onWheel		{
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
-		lineschange	{
+		onLinesChange	{
 			*(abstractscrollbar)ufopedia_scroll fullsize <lines>
 			*(abstractscrollbar)ufopedia_scroll current <text_scroll>
 		}
@@ -122,7 +122,7 @@ menu ufopedia
 		current		0
 		viewsize	16
 		fullsize	50
-		change		{ cmd "mn_textscroll ufopedia <lastdiff>;" }
+		onChange	{ cmd "mn_textscroll ufopedia <lastdiff>;" }
 	}
 
 	confunc mn_upfbig
@@ -234,7 +234,7 @@ menu ufopedia
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_decreaseweapon;" }
+		onClick		{ cmd "mn_decreaseweapon;" }
 	}
 
 	pic weapon_inc
@@ -246,7 +246,7 @@ menu ufopedia
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
-		click		{ cmd "mn_increaseweapon;" }
+		onClick		{ cmd "mn_increaseweapon;" }
 	}
 
 	pic ammo_inc
@@ -258,7 +258,7 @@ menu ufopedia
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
-		click		{ cmd "mn_increaseweapon;" }
+		onClick		{ cmd "mn_increaseweapon;" }
 	}
 
 	string header_weapon
@@ -298,7 +298,7 @@ menu ufopedia
 		visiblewhen "*cvar:mn_displayweapon > 0"
 		pos			"285 702"
 		size		"230 20"
-		click		{ cmd "mn_upgotoresearchedlink;" }
+		onClick		{ cmd "mn_upgotoresearchedlink;" }
 	}
 
 	/** Firemodes */
@@ -321,7 +321,7 @@ menu ufopedia
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_decreasefiremode;" }
+		onClick		{ cmd "mn_decreasefiremode;" }
 	}
 
 	string firemode_name
@@ -343,7 +343,7 @@ menu ufopedia
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
-		click		{ cmd "mn_increasefiremode;" }
+		onClick		{ cmd "mn_increasefiremode;" }
 	}
 
 	func init

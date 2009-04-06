@@ -79,7 +79,7 @@ menu iaircraft
 		tooltip	"_Back"
 		pos		"950 20"
 		icon	"return"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 	}
 
 	panel tab_background {
@@ -147,11 +147,11 @@ menu iaircraft
 		wheel
 		mousefx		true
 		longlines	prettychop
-		lineschange {
+		onLinesChange {
 			*(abstractscrollbar)aircraft_list_scroll fullsize <lines>
 			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>
 		}
-		click {
+		onClick {
 			cmd "mn_select_aircraft"	// @note the node autocomplet the command with the selected line
 		}
 	}
@@ -165,7 +165,7 @@ menu iaircraft
 		viewsize		8
 		fullsize		19
 		hidewhenunused	true
-		change {
+		onChange {
 			cmd "mn_textscroll aircraft_list <lastdiff>;"
 		}
 	}

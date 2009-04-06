@@ -1492,9 +1492,6 @@ static const value_t properties[] = {
 	{"fullsize", V_INT, offsetof(menuNode_t, u.container.scrollTotalNum),  MEMBER_SIZEOF(menuNode_t, u.container.scrollTotalNum)},
 	{"onviewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.container.onViewChange), MEMBER_SIZEOF(menuNode_t, u.container.onViewChange)},
 
-	/** @deprecated */
-	{"viewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.container.onViewChange), MEMBER_SIZEOF(menuNode_t, u.container.onViewChange)},
-	{"select", V_SPECIAL_ACTION, offsetof(menuNode_t, u.container.onSelect),  MEMBER_SIZEOF(menuNode_t, u.container.onSelect)},
 	{NULL, V_NULL, 0, 0}
 };
 

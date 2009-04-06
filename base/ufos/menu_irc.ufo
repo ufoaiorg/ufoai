@@ -64,12 +64,12 @@ menu irc
 		textid		TEXT_LIST
 		rows		"27"
 		mousefx		true
-		click
-		rclick
-		wheel {
+		onClick
+		onRclick
+		onWheel {
 			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
 		}
-		lineschange {
+		onLinesChange {
 			*(abstractscrollbar)irc_userlist_scroll fullsize <lines>
 			*(abstractscrollbar)irc_userlist_scroll current <text_scroll>
 		}
@@ -84,7 +84,7 @@ menu irc
 		viewsize	27
 		fullsize	27
 		hidewhenunused	true
-		change		{ cmd "mn_textscroll irc_userlist <lastdiff>;" }
+		onChange		{ cmd "mn_textscroll irc_userlist <lastdiff>;" }
 	}
 
 	text irc_data
@@ -94,10 +94,10 @@ menu irc
 		rows		"24"
 		lineheight  "22"
 		textid		TEXT_STANDARD
-		wheel {
+		onWheel {
 			*(abstractscrollbar)irc_data_scroll current <text_scroll>
 		}
-		lineschange {
+		onLinesChange {
 			*(abstractscrollbar)irc_data_scroll fullsize <lines>
 			*(abstractscrollbar)irc_data_scroll current <text_scroll>
 		}
@@ -111,7 +111,7 @@ menu irc
 		current		0
 		viewsize	24
 		fullsize	24
-		change		{ cmd "mn_textscroll irc_data <lastdiff>;" }
+		onChange	{ cmd "mn_textscroll irc_data <lastdiff>;" }
 	}
 
 	string irc_server_string
@@ -155,7 +155,7 @@ menu irc
 		size		"690 34"
 		bgcolor		"0.5 0.5 0.5 0.2"
 		clickoutabort	true
-		change	{
+		onChange	{
 			cmd "irc_chanmsg"
 			//cmd "set irc_send_buffer \"\""
 			cmd "mn_edittextentry slot_irc_send_buffer"
@@ -210,7 +210,7 @@ menu irc_popup
 		image		menu/button_green_small
 		pos			"296 192"
 		size		"176 32"
-		click		{ cmd "irc_connect; mn_pop; mn_push irc;" }
+		onClick		{ cmd "irc_connect; mn_pop; mn_push irc;" }
 	}
 
 	button bt_cancel
@@ -222,7 +222,7 @@ menu irc_popup
 		image		menu/button_green_small
 		pos			"36 192"
 		size		"176 32"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	func leave

@@ -27,7 +27,7 @@ menu main
 	{
 		pos	"640 170"
 		size "256 64"
-		click	{ cmd "mn_push singleplayer;" }
+		onClick	{ cmd "mn_push singleplayer;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -39,7 +39,7 @@ menu main
 	{
 		pos	"640 240"
 		size "256 64"
-		click	{ cmd "mn_push_multiplayer;" }
+		onClick	{ cmd "mn_push_multiplayer;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -51,7 +51,7 @@ menu main
 	{
 		pos	"640 310"
 		size "256 64"
-		click	{ cmd "mn_push options;" }
+		onClick	{ cmd "mn_push options;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -63,7 +63,7 @@ menu main
 	{
 		pos	"640 380"
 		size "256 64"
-		click	{ cmd "mn_push tutorials;" }
+		onClick	{ cmd "mn_push tutorials;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -75,7 +75,7 @@ menu main
 	{
 		pos	"640 450"
 		size "256 64"
-		click	{ cmd "seq_start credits;" }
+		onClick	{ cmd "seq_start credits;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -87,7 +87,7 @@ menu main
 	{
 		pos	"640 520"
 		size "256 64"
-		click	{ cmd "quit;" }
+		onClick	{ cmd "quit;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -179,7 +179,7 @@ menu checkcvars
 		color		"0 .8 0 1"
 		max			128
 		mousefx		true
-		click
+		onClick
 	}
 	string music_str
 	{
@@ -200,7 +200,7 @@ menu checkcvars
 		color		"0 .8 0 1"
 		max			128
 		mousefx		true
-		click
+		onClick
 	}
 
 	// ===================
@@ -228,13 +228,13 @@ menu checkcvars
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 		dataid		OPTION_LANGUAGES
-		viewchange {
+		onViewChange {
 			*(vscrollbar)select_language_scroll current <viewpos>
 			*(vscrollbar)select_language_scroll fullsize <count>
 			*(vscrollbar)select_language_scroll viewsize 19
 		}
-		whup	{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
-		whdown	{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
+		onWhup		{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
+		onWhdown	{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
 	}
 
 	vscrollbar select_language_scroll {
@@ -245,7 +245,7 @@ menu checkcvars
 		current			0
 		viewsize		8
 		fullsize		21
-		change {
+		onChange {
 			*select_language viewpos <current>
 		}
 	}
@@ -271,7 +271,7 @@ menu checkcvars
 		image		menu/button_green_small
 		font		f_menu
 		color		"0 0.5 0 1"
-		click		{ cmd "mn_pop; saveconfig config.cfg;" }
+		onClick		{ cmd "mn_pop; saveconfig config.cfg;" }
 	}
 
 	// check again - maybe the user has forgotton something
@@ -295,7 +295,7 @@ menu sequence
 	zone click
 	{
 		size		"1024 768"
-		click		{ cmd "seq_click;" }
+		onClick		{ cmd "seq_click;" }
 	}
 
 	func close
@@ -324,7 +324,7 @@ menu popup_tipoftheday
 		pos			"36 194"
 		image		"menu/checkbox_blue"
 		size		"20 18"
-		change		{ cmd "check_nexttip;" }
+		onChange		{ cmd "check_nexttip;" }
 	}
 	string activate_string
 	{
@@ -342,8 +342,8 @@ menu popup_tipoftheday
 		tabwidth	150
 		textid		TEXT_TIPOFTHEDAY
 		rows		6
-		click
-		wheel
+		onClick
+		onWheel
 	}
 
 	button bt_next
@@ -356,7 +356,7 @@ menu popup_tipoftheday
 		pos			"266 188"
 		font		f_menu
 		color		"0 0.5 0 1"
-		click		{ cmd "tipoftheday;" }
+		onClick		{ cmd "tipoftheday;" }
 	}
 
 	confunc check_nexttip

@@ -155,11 +155,11 @@ menu transfer
 		lineheight	"25"
 		longlines	prettychop
 		rows		"9"
-		click
-		wheel		{
+		onClick
+		onWheel		{
 			*(abstractscrollbar)trans_cargolist_scroll current <text_scroll>
 		}
-		lineschange	{
+		onLinesChange	{
 			*(abstractscrollbar)trans_cargolist_scroll fullsize <lines>
 			*(abstractscrollbar)trans_cargolist_scroll current <text_scroll>
 		}
@@ -173,7 +173,7 @@ menu transfer
 		current		0
 		viewsize	9
 		fullsize	9
-		change		{ cmd "mn_textscroll trans_cargolist <lastdiff>;" }
+		onChange	{ cmd "mn_textscroll trans_cargolist <lastdiff>;" }
 	}
 
 	// ==================
@@ -188,7 +188,7 @@ menu transfer
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "trans_prevbase;" }
+		onClick		{ cmd "trans_prevbase;" }
 	}
 
 	string s_current_base
@@ -209,7 +209,7 @@ menu transfer
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
-		click		{ cmd "trans_nextbase;" }
+		onClick		{ cmd "trans_nextbase;" }
 	}
 
 	string s_current_base_var
@@ -240,11 +240,11 @@ menu transfer
 		longlines	prettychop
 		lineheight	"25"
 		rows		"22"
-		click
-		wheel		{
+		onClick
+		onWheel		{
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
-		lineschange	{
+		onLinesChange	{
 			*(abstractscrollbar)trans_list_scroll fullsize <lines>
 			*(abstractscrollbar)trans_list_scroll current <text_scroll>
 		}
@@ -258,7 +258,7 @@ menu transfer
 		current		0
 		viewsize	22
 		fullsize	22
-		change		{ cmd "mn_textscroll trans_list <lastdiff>;" }
+		onChange	{ cmd "mn_textscroll trans_list <lastdiff>;" }
 	}
 
 	// ==================
@@ -276,7 +276,7 @@ menu transfer
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 1"
 		font		f_normal
-		click		{ cmd "trans_emptyairstorage;" }
+		onClick		{ cmd "trans_emptyairstorage;" }
 	}
 
 	button bt_starttrans
@@ -290,7 +290,7 @@ menu transfer
 		color		"1 1 1 0.6"
 		selectcolor	"1 1 1 0.6"
 		font		f_normal
-		click		{ cmd "trans_start;" }
+		onClick		{ cmd "trans_start;" }
 	}
 
 	// ==================

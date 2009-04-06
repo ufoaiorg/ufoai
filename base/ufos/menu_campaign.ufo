@@ -33,7 +33,7 @@ menu campaigns
 	{
 		pos	"80 170"
 		size "256 64"
-		click	{ cmd "cp_start;" }
+		onClick	{ cmd "cp_start;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -51,7 +51,7 @@ menu campaigns
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push load;" }
+		onClick		{ cmd "mn_push load;" }
 	}
 
 	button button_continue
@@ -67,14 +67,14 @@ menu campaigns
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_continue;" }
+		onClick		{ cmd "game_continue;" }
 	}
 
 	button c_button_exit
 	{
 		pos	"80 470"
 		size "256 64"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -89,7 +89,7 @@ menu campaigns
 		mousefx	true
 		lineheight	"20"
 		textid		TEXT_CAMPAIGN_LIST
-		click	{ }
+		onClick	{ }
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		rows	"6"
@@ -105,10 +105,10 @@ menu campaigns
 		textid		TEXT_STANDARD
 		rows	18
 //		bgcolor "1 1 1 0.4"
-		wheel {
+		onWheel {
 			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
 		}
-		lineschange {
+		onLinesChange {
 			*(abstractscrollbar)campaign_desc_scroll fullsize <lines>
 			*(abstractscrollbar)campaign_desc_scroll current <text_scroll>
 		}
@@ -120,7 +120,7 @@ menu campaigns
 		current 0
 		viewsize 19
 		fullsize 19
-		change {
+		onChange {
 			cmd "mn_textscroll campaign_desc <lastdiff>;"
 		}
 	}
@@ -163,7 +163,7 @@ menu campaign_main
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_continue;" }
+		onClick		{ cmd "game_continue;" }
 	}
 
 	button button_load
@@ -176,7 +176,7 @@ menu campaign_main
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push load;" }
+		onClick		{ cmd "mn_push load;" }
 	}
 
 	button button_save
@@ -189,7 +189,7 @@ menu campaign_main
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push save;" }
+		onClick		{ cmd "mn_push save;" }
 	}
 
 	button button_options
@@ -202,7 +202,7 @@ menu campaign_main
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push options;" }
+		onClick		{ cmd "mn_push options;" }
 	}
 
 	button button_back
@@ -215,7 +215,7 @@ menu campaign_main
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_exit;mn_pop;" }
+		onClick		{ cmd "game_exit;mn_pop;" }
 	}
 }
 
@@ -253,7 +253,7 @@ menu quickload
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_quickload;" }
+		onClick		{ cmd "game_quickload;" }
 	}
 
 	func init
@@ -309,7 +309,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot0; game_timestop;" }
+		onClick		{ cmd "game_load slot0; game_timestop;" }
 	}
 	button slot1
 	{
@@ -323,7 +323,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot1; game_timestop;" }
+		onClick		{ cmd "game_load slot1; game_timestop;" }
 	}
 	button slot2
 	{
@@ -337,7 +337,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot2; game_timestop;" }
+		onClick		{ cmd "game_load slot2; game_timestop;" }
 	}
 	button slot3
 	{
@@ -351,7 +351,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot3; game_timestop;" }
+		onClick		{ cmd "game_load slot3; game_timestop;" }
 	}
 	button slot4
 	{
@@ -365,7 +365,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot4; game_timestop;" }
+		onClick		{ cmd "game_load slot4; game_timestop;" }
 	}
 	button slot5
 	{
@@ -379,7 +379,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot5; game_timestop;" }
+		onClick		{ cmd "game_load slot5; game_timestop;" }
 	}
 	button slot6
 	{
@@ -393,7 +393,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot6; game_timestop;" }
+		onClick		{ cmd "game_load slot6; game_timestop;" }
 	}
 	button slot7
 	{
@@ -407,7 +407,7 @@ menu load
 		selectcolor	"1 1 1 1"
 		textalign	cl
 		padding		8
-		click		{ cmd "game_load slot7; game_timestop;" }
+		onClick		{ cmd "game_load slot7; game_timestop;" }
 	}
 
 	// ==================
@@ -424,7 +424,7 @@ menu load
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	func init
@@ -481,9 +481,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 0;" }
-		change		{ cmd "game_save slot0 *mn_slot0;game_comments 0;" }
-		abort		{ cmd "game_comments 0;" }
+		onClick		{ cmd "game_savenamecleanup 0;" }
+		onChange		{ cmd "game_save slot0 *mn_slot0;game_comments 0;" }
+		onAbort		{ cmd "game_comments 0;" }
 		clickoutabort	true
 	}
 	textentry slot1
@@ -498,9 +498,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 1;" }
-		change		{ cmd "game_save slot1 *mn_slot1;game_comments 1;" }
-		abort		{ cmd "game_comments 1;" }
+		onClick		{ cmd "game_savenamecleanup 1;" }
+		onChange	{ cmd "game_save slot1 *mn_slot1;game_comments 1;" }
+		onAbort		{ cmd "game_comments 1;" }
 		clickoutabort	true
 	}
 	textentry slot2
@@ -515,9 +515,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 2;" }
-		change		{ cmd "game_save slot2 *mn_slot2;game_comments 2;" }
-		abort		{ cmd "game_comments 2;" }
+		onClick		{ cmd "game_savenamecleanup 2;" }
+		onChange	{ cmd "game_save slot2 *mn_slot2;game_comments 2;" }
+		onAbort		{ cmd "game_comments 2;" }
 		clickoutabort	true
 	}
 	textentry slot3
@@ -532,9 +532,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 3;" }
-		change		{ cmd "game_save slot3 *mn_slot3;game_comments 3;" }
-		abort		{ cmd "game_comments 3;" }
+		onClick		{ cmd "game_savenamecleanup 3;" }
+		onChange	{ cmd "game_save slot3 *mn_slot3;game_comments 3;" }
+		onAbort		{ cmd "game_comments 3;" }
 		clickoutabort	true
 	}
 	textentry slot4
@@ -549,9 +549,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 4;" }
-		change		{ cmd "game_save slot4 *mn_slot4;game_comments 4;" }
-		abort		{ cmd "game_comments 4;" }
+		onClick		{ cmd "game_savenamecleanup 4;" }
+		onChange	{ cmd "game_save slot4 *mn_slot4;game_comments 4;" }
+		onAbort		{ cmd "game_comments 4;" }
 		clickoutabort	true
 	}
 	textentry slot5
@@ -566,9 +566,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 5;" }
-		change		{ cmd "game_save slot5 *mn_slot5;game_comments 5;" }
-		abort		{ cmd "game_comments 5;" }
+		onClick		{ cmd "game_savenamecleanup 5;" }
+		onChange	{ cmd "game_save slot5 *mn_slot5;game_comments 5;" }
+		onAbort		{ cmd "game_comments 5;" }
 		clickoutabort	true
 	}
 	textentry slot6
@@ -583,9 +583,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 6;" }
-		change		{ cmd "game_save slot6 *mn_slot6;game_comments 6;" }
-		abort		{ cmd "game_comments 6;" }
+		onClick		{ cmd "game_savenamecleanup 6;" }
+		onChange	{ cmd "game_save slot6 *mn_slot6;game_comments 6;" }
+		onAbort		{ cmd "game_comments 6;" }
 		clickoutabort	true
 	}
 	textentry slot7
@@ -600,9 +600,9 @@ menu save
 		textalign	cl
 		padding		8
 		font		"f_verysmall"
-		click		{ cmd "game_savenamecleanup 7;" }
-		change		{ cmd "game_save slot7 *mn_slot7;game_comments 7;" }
-		abort		{ cmd "game_comments 7;" }
+		onClick		{ cmd "game_savenamecleanup 7;" }
+		onChange	{ cmd "game_save slot7 *mn_slot7;game_comments 7;" }
+		onAbort		{ cmd "game_comments 7;" }
 		clickoutabort	true
 	}
 
@@ -620,7 +620,7 @@ menu save
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	func init

@@ -41,12 +41,12 @@ menu mail
 		lineheight	24
 		tabwidth	100
 		rows		"20"
-		click
-		rclick
-		wheel		{
+		onClick
+		onRclick
+		onWheel		{
 			*(abstractscrollbar)mail_scroll current <text_scroll>
 		}
-		lineschange	{
+		onLinesChange	{
 			*(abstractscrollbar)mail_scroll fullsize <lines>
 			*(abstractscrollbar)mail_scroll current <text_scroll>
 		}
@@ -60,7 +60,7 @@ menu mail
 		current		0
 		viewsize	20
 		fullsize	50
-		change		{ cmd "mn_textscroll mail <lastdiff>;" }
+		onChange	{ cmd "mn_textscroll mail <lastdiff>;" }
 	}
 
 	model sender_body
@@ -174,7 +174,7 @@ menu mailclient
 		pos			"50 50"
 		texl		"0 32"
 		texh		"32 64"
-		click		{ cmd "mn_mail_readall;" }
+		onClick		{ cmd "mn_mail_readall;" }
 	}
 
 	pic mail_icon_0
@@ -536,13 +536,13 @@ menu mailclient
 		lineheight	38
 		tabwidth	700
 		mousefx		true
-		click
-		rclick
-		wheel		{
+		onClick
+		onRclick
+		onWheel		{
 			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 			cmd "ufopedia_scrollmail;"
 		}
-		lineschange	{
+		onLinesChange	{
 			*(abstractscrollbar)mailclient_scroll fullsize <lines>
 			*(abstractscrollbar)mailclient_scroll current <text_scroll>
 		}
@@ -557,7 +557,7 @@ menu mailclient
 		viewsize	15
 		fullsize	50
 		hidewhenunused true
-		change		{
+		onChange		{
 			cmd "mn_textscroll mailclient <lastdiff>;"
 			cmd "ufopedia_scrollmail;"
 		}
@@ -572,7 +572,7 @@ menu mailclient
 		pos			"920 720"
 		size		"64 37"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	func init

@@ -42,7 +42,7 @@ menu abstract_multiplayer {
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop; mn_push mp_team;" }
+		onClick		{ cmd "mn_pop; mn_push mp_team;" }
 	}
 
 	button button_join
@@ -55,7 +55,7 @@ menu abstract_multiplayer {
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop; mn_push mp_serverbrowser;" }
+		onClick		{ cmd "mn_pop; mn_push mp_serverbrowser;" }
 	}
 
 	button button_create
@@ -68,7 +68,7 @@ menu abstract_multiplayer {
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		click		{ cmd "mn_pop; mn_push mp_create_server;" }
+		onClick		{ cmd "mn_pop; mn_push mp_create_server;" }
 	}
 
 	button button_lobby
@@ -81,7 +81,7 @@ menu abstract_multiplayer {
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "irc_connect; mn_push irc;" }
+		onClick		{ cmd "irc_connect; mn_push irc;" }
 	}
 
 	button button_exit
@@ -94,7 +94,7 @@ menu abstract_multiplayer {
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 }
@@ -196,7 +196,7 @@ menu serverinfo
 		padding		10
 		bgcolor		"0.3 0.3 0.3 0.4"
 		rows		"19"
-		wheel
+		onWheel
 	}
 
 	string mapstring
@@ -226,7 +226,7 @@ menu serverinfo
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "connect *mn_server_ip;" }
+		onClick		{ cmd "connect *mn_server_ip;" }
 	}
 
 	custombutton button_exit
@@ -238,7 +238,7 @@ menu serverinfo
 		pos			"26 720"
 		size		"64 37"
 		icon		return
-		click		{ cmd "mn_pop; pingservers;" }
+		onClick		{ cmd "mn_pop; pingservers;" }
 	}
 
 	button button_favorite
@@ -250,7 +250,7 @@ menu serverinfo
 		font		f_menu
 		color		"1 1 1 0.8"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "bookmark_add;" }
+		onClick		{ cmd "bookmark_add;" }
 	}
 
 	func init
@@ -292,7 +292,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			pos			"455 7"
 			size		"16 16"
 			icon		prev
-			click		{
+			onClick		{
 				cmd "mn_modifywrap cl_serverlist -1 0 2;"
 				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 				cmd "pingservers refresh;"
@@ -303,7 +303,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			pos			"470 7"
 			size		"16 16"
 			icon		next
-			click		{
+			onClick		{
 				cmd "mn_modifywrap cl_serverlist +1 0 2;"
 				cmd "mn_translate cl_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 				cmd "pingservers refresh;"
@@ -329,12 +329,12 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			bgcolor		"0.3 0.3 0.3 0.4"
 			rows		"22"
 			textid		TEXT_LIST
-			click		{ }
-			rclick		{ cmd "pingservers;" }
-			wheel {
+			onClick		{ }
+			onRclick		{ cmd "pingservers;" }
+			onWheel {
 				*(abstractscrollbar)content.servers_scroll current <text_scroll>
 			}
-			lineschange {
+			onLinesChange {
 				*(abstractscrollbar)content.servers_scroll fullsize <lines>
 				*(abstractscrollbar)content.servers_scroll current <text_scroll>
 			}
@@ -348,7 +348,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			current		0
 			viewsize	22
 			fullsize	22
-			change		{ cmd "mn_textscroll content.servers <lastdiff>;" }
+			onChange		{ cmd "mn_textscroll content.servers <lastdiff>;" }
 		}
 
 		button button_serverbrowser_refresh
@@ -360,7 +360,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			font		f_small
 			pos			"335 490"
 			size		"176 32"
-			click		{ cmd "pingservers refresh;" }
+			onClick		{ cmd "pingservers refresh;" }
 		}
 
 		// ==================
@@ -425,7 +425,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 			font		f_small
 			pos			"335 540"
 			size		"176 32"
-			click		{ cmd "server_info *mn_server_ip;" }
+			onClick		{ cmd "server_info *mn_server_ip;" }
 		}
 	}
 
