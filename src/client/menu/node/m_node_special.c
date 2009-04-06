@@ -52,6 +52,7 @@ static void MN_FuncNodeLoading (menuNode_t *node)
 
 /**
  * @brief Call after the script initialized the node
+ * @todo special cases should be managed as a common property event of the parent node
  */
 static void MN_FuncNodeLoaded (menuNode_t *node)
 {

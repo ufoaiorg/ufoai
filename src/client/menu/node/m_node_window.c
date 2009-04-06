@@ -314,10 +314,14 @@ static const value_t windowNodeProperties[] = {
 	{"fill", V_BOOL, offsetof(menuNode_t, u.window.fill), MEMBER_SIZEOF(menuNode_t, u.window.fill)},
 	{"starlayout", V_BOOL, offsetof(menuNode_t, u.window.starLayout), MEMBER_SIZEOF(menuNode_t, u.window.starLayout)},
 
+	{"oninit", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
+	{"onclose", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
+	{"onleave", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onLeave), MEMBER_SIZEOF(menuNode_t, u.window.onLeave)},
+
+	/** @deprecated */
 	{"init", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onInit), MEMBER_SIZEOF(menuNode_t, u.window.onInit)},
 	{"close", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onClose), MEMBER_SIZEOF(menuNode_t, u.window.onClose)},
 	{"leave", V_SPECIAL_ACTION, offsetof(menuNode_t, u.window.onLeave), MEMBER_SIZEOF(menuNode_t, u.window.onLeave)},
-
 	{NULL, V_NULL, 0, 0}
 };
 

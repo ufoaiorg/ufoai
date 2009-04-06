@@ -77,6 +77,9 @@ static const value_t properties[] = {
 	{"option", V_SPECIAL_OPTIONNODE, offsetof(menuNode_t, u.option.first), 0},
 	{"viewpos", V_INT, offsetof(menuNode_t, u.option.pos),  MEMBER_SIZEOF(menuNode_t, u.option.pos)},
 	{"count", V_INT, offsetof(menuNode_t, u.option.count),  MEMBER_SIZEOF(menuNode_t, u.option.count)},
+	{"onviewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.option.onViewChange), MEMBER_SIZEOF(menuNode_t, u.option.onViewChange)},
+
+	/** @deprecated */
 	{"viewchange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.option.onViewChange), MEMBER_SIZEOF(menuNode_t, u.option.onViewChange)},
 	{NULL, V_NULL, 0, 0}
 };

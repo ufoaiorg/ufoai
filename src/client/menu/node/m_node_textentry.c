@@ -322,6 +322,9 @@ static void MN_TextEntryNodeLoading (menuNode_t *node)
 static const value_t properties[] = {
 	{"ispassword", V_BOOL, offsetof(menuNode_t, u.textentry.isPassword), MEMBER_SIZEOF(menuNode_t, u.textentry.isPassword) },
 	{"clickoutabort", V_BOOL, offsetof(menuNode_t, u.textentry.clickOutAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.clickOutAbort)},
+	{"onabort", V_SPECIAL_ACTION, offsetof(menuNode_t, u.textentry.onAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.onAbort)},
+
+	/** @deprecated */
 	{"abort", V_SPECIAL_ACTION, offsetof(menuNode_t, u.textentry.onAbort), MEMBER_SIZEOF(menuNode_t, u.textentry.onAbort)},
 	{NULL, V_NULL, 0, 0}
 };

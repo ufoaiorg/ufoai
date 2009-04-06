@@ -612,11 +612,14 @@ static const value_t properties[] = {
 	{"textid", V_SPECIAL_DATAID, offsetof(menuNode_t, u.text.num), MEMBER_SIZEOF(menuNode_t, u.text.num)},
 	{"rows", V_INT, offsetof(menuNode_t, u.text.rows), MEMBER_SIZEOF(menuNode_t, u.text.rows)},
 	{"text_scroll", V_INT, offsetof(menuNode_t, u.text.textScroll), MEMBER_SIZEOF(menuNode_t, u.text.textScroll)},
-	{"lineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
+	{"onlineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
 	{"lines", V_INT, offsetof(menuNode_t, u.text.textLines), MEMBER_SIZEOF(menuNode_t, u.text.textLines)},
 	{"lineheight", V_INT, offsetof(menuNode_t, u.text.lineHeight), MEMBER_SIZEOF(menuNode_t, u.text.lineHeight)},
 	{"tabwidth", V_INT, offsetof(menuNode_t, u.text.tabWidth), MEMBER_SIZEOF(menuNode_t, u.text.tabWidth)},
 	{"longlines", V_LONGLINES, offsetof(menuNode_t, longlines), MEMBER_SIZEOF(menuNode_t, longlines)},
+
+	/** @deprecated */
+	{"lineschange", V_SPECIAL_ACTION, offsetof(menuNode_t, u.text.onLinesChange), MEMBER_SIZEOF(menuNode_t, u.text.onLinesChange)},
 	{NULL, V_NULL, 0, 0}
 };
 
