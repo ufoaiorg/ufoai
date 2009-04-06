@@ -275,7 +275,7 @@ static const value_t valid_building_vars[] = {
 	{"onattack", V_STRING, offsetof(building_t, onAttack), 0}, /**< Event handler. */
 	{"ondestroy", V_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
 	{"pos", V_POS, offsetof(building_t, pos), MEMBER_SIZEOF(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
-	{"autobuild", V_BOOL, offsetof(building_t, autobuild), MEMBER_SIZEOF(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
+	{"mandatory", V_BOOL, offsetof(building_t, mandatory), MEMBER_SIZEOF(building_t, mandatory)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
 	{NULL, 0, 0, 0}
 };
 
@@ -1075,10 +1075,10 @@ static void B_SetUpFirstBase (base_t* base, qboolean hire, qboolean buildings)
 		const baseTemplate_t *template = B_GetBaseTemplate(ccs.curCampaign->firstBaseTemplate);
 		int i;
 
-		/* build must-have (autobuild) buildings in template */
+		/* build mandatory buildings in template */
 		for (i = 0; i < template->numBuildings; i++) {
 			if (template->buildings[i].building
-			 && template->buildings[i].building->autobuild) {
+			 && template->buildings[i].building->mandatory) {
 				vec2_t pos;
 
 				Vector2Set(pos, template->buildings[i].posX, template->buildings[i].posY);
@@ -1149,7 +1149,7 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 	else if (buildings) {
 		/* add auto build buildings if it's not the first base */
 		for (i = 0; i < ccs.numBuildingTemplates; i++)
-			if (ccs.buildingTemplates[i].autobuild)
+			if (ccs.buildingTemplates[i].mandatory)
 				B_AddBuildingToBase(base, &ccs.buildingTemplates[i], hire);
 	} else {
 		/* we need to set up the entrance in case autobuild is off and this is not the first base */
@@ -1801,7 +1801,7 @@ void B_ParseBaseTemplate (const char *name, const char **text)
 	/* templates without the must-have buildings can't be used */
 	for (i = 0; i < ccs.numBuildingTemplates; i++) {
 		const building_t *building = &ccs.buildingTemplates[i];
-		if (building && building->autobuild && !buildingNums[i]) {
+		if (building && building->mandatory && !buildingNums[i]) {
 			Sys_Error("Every base template needs one '%s'! '%s' has none.", building->id, template->id);
 		}
         }

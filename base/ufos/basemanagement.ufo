@@ -93,7 +93,7 @@ building building_entrance
 	map_name	"entrance"
 	pedia		rs_building_entrance
 	pos			"2 4"
-	autobuild	true
+	mandatory	true
 	type		entrance
 	visible		false
 }

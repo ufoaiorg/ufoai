@@ -166,7 +166,7 @@ typedef struct building_s {
 	int moreThanOne;	/**< More than one building of the same type allowed? */
 
 	vec2_t pos;			/**< Position of autobuild. */
-	qboolean autobuild;	/**< Autobuild when base is set up. */
+	qboolean mandatory;
 
 	/** How many employees to hire on construction in the first base */
 	int maxEmployees;
