@@ -40,7 +40,7 @@ menu options
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{
+		onClick		{
 			call hidepanels
 			*(panel)options_game invis false
 		}
@@ -56,7 +56,7 @@ menu options
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{
+		onClick		{
 			call hidepanels
 			*(panel)options_video invis false
 			cmd "copy mn_vidmode vid_mode;"
@@ -75,7 +75,7 @@ menu options
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		click		{
+		onClick		{
 			call hidepanels
 			*(panel)options_sound invis false
 		}
@@ -106,7 +106,7 @@ menu options
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{
+		onClick		{
 			call hidepanels
 			*(panel)options_input invis false
 		}
@@ -122,7 +122,7 @@ menu options
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	func init
@@ -166,7 +166,7 @@ menu options
 			texl		"32 0"
 			texh		"47 16"
 			mousefx		true
-			click		{ cmd "mn_push popup_maintain_resolution;" }
+			onClick		{ cmd "mn_push popup_maintain_resolution;" }
 		}
 
 		string texres_str
@@ -405,7 +405,7 @@ menu options
 			color		"0 .8 0 1"
 			max			3.0
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		string contrast_str
@@ -427,7 +427,7 @@ menu options
 			color		"0 .8 0 1"
 			max			2.0
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		string brightness_str
@@ -449,7 +449,7 @@ menu options
 			color		"0 .8 0 1"
 			max			2.0
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		string lightmap_str
@@ -471,7 +471,7 @@ menu options
 			color		"0 .8 0 1"
 			max			4.0
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		string strech_str
@@ -612,7 +612,7 @@ menu options
 			color		"0 .8 0 1"
 			max			128
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		string music_str
@@ -634,7 +634,7 @@ menu options
 			color		"0 .8 0 1"
 			max			128
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		string rate_str
@@ -651,7 +651,7 @@ menu options
 			texl		"32 0"
 			texh		"47 16"
 			mousefx		true
-			click		{ cmd "snd_restart;" }
+			onClick		{ cmd "snd_restart;" }
 		}
 
 		selectbox rate_box
@@ -712,7 +712,7 @@ menu options
 			size		"430 560"
 			rows		"28"
 			lineheight	"20"
-			wheel		{
+			onWheel		{
 				*(abstractscrollbar)options_keys.keyscroll current <text_scroll>
 			}
 		}
@@ -725,7 +725,7 @@ menu options
 			current		0
 			viewsize	28
 			fullsize	50
-			change		{ cmd "mn_textscroll options_keys.keylist <lastdiff>;" }
+			onChange		{ cmd "mn_textscroll options_keys.keylist <lastdiff>;" }
 		}
 
 		confunc optionkey_count
@@ -825,13 +825,13 @@ menu options
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
 			padding		6
-			viewchange	{
+			onViewchange	{
 				*(vscrollbar)options_game.select_language_scroll current <viewpos>
 				*(vscrollbar)options_game.select_language_scroll fullsize <count>
 				*(vscrollbar)options_game.select_language_scroll viewsize 10
 			}
-			whup { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
-			whdown { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
+			onWhup { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
+			onWhdown { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
 		}
 
 		vscrollbar select_language_scroll {
@@ -842,7 +842,7 @@ menu options
 			current		0
 			viewsize	8
 			fullsize	22
-			change		{
+			onChange		{
 				*options_game.select_language viewpos <current>
 			}
 		}
@@ -977,7 +977,7 @@ menu options
 			color		"0 .8 0 1"
 			max			9
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 	}
 
@@ -1031,7 +1031,7 @@ menu options
 			min			150
 			max			3000
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		// ===================
@@ -1057,7 +1057,7 @@ menu options
 			min			50
 			max			1000
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		// ===================
@@ -1083,7 +1083,7 @@ menu options
 			min			150
 			max			3000
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		// ===================
@@ -1119,7 +1119,7 @@ menu options
 			min			0.0
 			max			1.0
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		// ===================
@@ -1161,7 +1161,7 @@ menu options
 			font		f_menubig
 			color		"0 0.5 0 1"
 			selectcolor	"1 1 1 1"
-			click		{
+			onClick		{
 				*(panel)options_input invis true
 				*(panel)options_keys invis false
 			}
@@ -1289,7 +1289,7 @@ menu popup_maintain_resolution
 		blend		true
 		pos			"26 188"
 		size		"176 32"
-		click		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
+		onClick		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
 	}
 	button bt_change
 	{
@@ -1301,7 +1301,7 @@ menu popup_maintain_resolution
 		blend		true
 		pos			"296 188"
 		size		"176 32"
-		click		{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
+		onClick		{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
 	}
 
 	func init
