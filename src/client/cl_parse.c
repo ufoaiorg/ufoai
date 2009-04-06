@@ -1408,7 +1408,7 @@ static void CL_InvAmmo (struct dbuffer *msg)
 
 	/* set new ammo */
 	ic->item.a = ammo;
-	ic->item.m = &csi.ods[type];
+	ic->item.m = INVSH_GetItemByIDX(type);
 }
 
 /**
@@ -1457,7 +1457,7 @@ static void CL_InvReload (struct dbuffer *msg)
 
 	/* set new ammo */
 	ic->item.a = ammo;
-	ic->item.m = &csi.ods[type];
+	ic->item.m = INVSH_GetItemByIDX(type);
 }
 
 /**
@@ -1625,7 +1625,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 
 				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &objIdx, &weap_fds_idx, &fd_idx);
 
-				obj = &csi.ods[objIdx];
+				obj = INVSH_GetItemByIDX(objIdx);
 				if (first) {
 					nextTime += 500;
 					impactTime = shootTime = nextTime;
@@ -1653,7 +1653,7 @@ static void CL_ParseEvent (struct dbuffer *msg)
 				/* read data */
 				NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT], &dummy, &objIdx, &weap_fds_idx, &fd_idx, &shootType, &flags, &surfaceFlags, &muzzle, &impact, &dummy);
 
-				obj = &csi.ods[objIdx];
+				obj = INVSH_GetItemByIDX(objIdx);
 				fd = FIRESH_GetFiredef(obj, weap_fds_idx, fd_idx);
 
 				if (!(flags & SF_BOUNCED)) {

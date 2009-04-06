@@ -1469,10 +1469,6 @@ void CL_InvCheckHands (struct dbuffer *msg)
 		}
 		HUD_HideFiremodes();
 	}
-
-	if (CL_WorkingFiremode(le, qfalse)) {
-		/* Reserved firemode for current turn not sane and/or not usable. */
-	}
 }
 
 /**
@@ -1504,7 +1500,6 @@ void CL_ActorDoMove (struct dbuffer *msg)
 		Com_Printf("Can't move, actor dead\n");
 		return;
 	}
-
 
 	pathLength = NET_ReadByte(msg);
 	if (le->pathLength + pathLength >= MAX_LE_PATHLENGTH)
@@ -1712,16 +1707,15 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 	le = LE_Get(entnum);
 
 	/* get the fire def */
-	obj = &csi.ods[objIdx];
+	obj = INVSH_GetItemByIDX(objIdx);
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
 
 	/* start the sound */
-	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
+	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED))
 		S_StartLocalSound(fd->fireSound);
-	}
 
 	firstShot = qfalse;
 
@@ -1755,13 +1749,9 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 
 	/* Animate - we have to check if it is right or left weapon usage. */
 	if (IS_SHOT_RIGHT(shootType)) {
-		if (!RIGHT(le))
-			Com_Error(ERR_DROP, "CL_ActorDoShoot: %i shootType send but no weapon in the right hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	} else if (IS_SHOT_LEFT(shootType)) {
-		if (!LEFT(le))
-			Com_Error(ERR_DROP, "CL_ActorDoShoot: %i shootType send but no weapon in the left hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		R_AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else if (!IS_SHOT_HEADGEAR(shootType)) {
@@ -1786,14 +1776,12 @@ void CL_ActorShootHidden (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &objIdx, &weapFdsIdx, &fdIdx);
 
 	/* get the fire def */
-	obj = &csi.ods[objIdx];
+	obj = INVSH_GetItemByIDX(objIdx);
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* start the sound */
-	/** @todo is check for SF_BOUNCED needed? */
-	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0]) {
+	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
 		S_StartLocalSound(fd->fireSound);
-	}
 
 	/* if the shooting becomes visible, don't repeat sounds! */
 	firstShot = qfalse;
@@ -1818,7 +1806,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_THROW], &dtime, &objIdx, &weapFdsIdx, &fdIdx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
-	obj = &csi.ods[objIdx];
+	obj = INVSH_GetItemByIDX(objIdx);
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* add effect le (local entity) */
@@ -1855,7 +1843,7 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 
 	NET_ReadFormat(msg, ev_format[EV_ACTOR_START_SHOOT], &entnum, &objIdx, &weapFdsIdx, &fdIdx, &shootType, &from, &target);
 
-	obj = &csi.ods[objIdx];
+	obj = INVSH_GetItemByIDX(objIdx);
 	fd = FIRESH_GetFiredef(obj, weapFdsIdx, fdIdx);
 
 	/* shooting actor */
@@ -1873,13 +1861,8 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 		/* it's OK, the actor not visible */
 		return;
 
-	if (!LE_IsActor(le)) {
-		Com_Printf("CL_ActorStartShoot: LE (%i) not an actor (type: %i)\n", entnum, le->type);
-		return;
-	}
-
-	if (LE_IsDead(le)) {
-		Com_Printf("CL_ActorStartShoot: Can't start shoot, actor (%i) dead or stunned.\n", entnum);
+	if (!LE_IsLivingActor(le)) {
+		Com_Printf("CL_ActorStartShoot: LE (%i) not a living actor (type: %i)\n", entnum, le->type);
 		return;
 	}
 
@@ -1889,12 +1872,8 @@ void CL_ActorStartShoot (struct dbuffer *msg)
 
 	/* Animate - we have to check if it is right or left weapon usage. */
 	if (IS_SHOT_RIGHT(shootType)) {
-		if (!RIGHT(le))
-			Com_Error(ERR_DROP, "CL_ActorStartShoot: %i shootType send but no weapon in the right hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	} else if (IS_SHOT_LEFT(shootType)) {
-		if (!LEFT(le))
-			Com_Error(ERR_DROP, "CL_ActorStartShoot: %i shootType send but no weapon in the left hand (entnum: %i).\n", shootType, entnum);
 		R_AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else if (!IS_SHOT_HEADGEAR(shootType)) {
 		/* no animation for headgear (yet) */
@@ -2376,7 +2355,7 @@ ACTOR GRAPHICS
 static inline qboolean CL_AddActorWeapon (int objID)
 {
 	if (objID != NONE) {
-		const objDef_t *od = &csi.ods[objID];
+		const objDef_t *od = INVSH_GetItemByIDX(objID);
 		if (od->isDummy)
 			return qfalse;
 		return qtrue;

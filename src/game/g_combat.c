@@ -1287,7 +1287,7 @@ qboolean G_ClientShoot (player_t * player, const int entnum, pos3_t at, int shoo
 				assert(gi.csi->ids[container].single);
 				INVSH_EmptyContainer(&ent->i, &gi.csi->ids[container]);
 
-				itemAlreadyRemoved = qtrue;	/**<for assert only */
+				itemAlreadyRemoved = qtrue;	/**< for assert only */
 			}
 			/* x and y value */
 			gi.WriteByte(0);

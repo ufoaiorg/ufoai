@@ -519,7 +519,7 @@ static void HUD_ReserveShot_f (void)
 	Com_DPrintf(DEBUG_CLIENT, "HUD_ReserveShot_f: hand %i, fmIdx %i, weapIdx %i\n", hand, fmIdx, wpIdx);
 	if (CL_UsableTUs(selActor) + CL_ReservedTUs(selActor, RES_SHOT) >= TUs) {
 		CL_ReserveTUs(selActor, RES_SHOT, TUs);
-		CL_CharacterSetShotSettings(selChr, hand, fmIdx, &csi.ods[wpIdx]);
+		CL_CharacterSetShotSettings(selChr, hand, fmIdx, INVSH_GetItemByIDX(wpIdx));
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
 		if (popupListNode)
 			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);

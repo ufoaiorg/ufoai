@@ -373,11 +373,8 @@ void CL_NetReceiveItem (struct dbuffer *buf, item_t *item, int *container, int *
 	item->a = NONE_AMMO;
 	NET_ReadFormat(buf, ev_format[EV_INV_TRANSFER], &t, &item->a, &m, container, x, y, &item->rotated);
 
-	if (t != NONE)
-		item->t = &csi.ods[t];
-
-	if (m != NONE)
-		item->m = &csi.ods[m];
+	item->t = INVSH_GetItemByIDX(t);
+	item->m = INVSH_GetItemByIDX(m);
 }
 
 /**
