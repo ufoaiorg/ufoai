@@ -59,14 +59,10 @@ void INVSH_InitCSI (csi_t * import)
  */
 const fireDef_t* FIRESH_GetFiredef (const objDef_t *obj, const int weapFdsIdx, const int fdIdx)
 {
-#ifdef DEBUG
-	if (!obj)
-		Sys_Error("FIRESH_GetFiredef: no obj given.");
 	if (weapFdsIdx < 0 || weapFdsIdx >= MAX_WEAPONS_PER_OBJDEF)
 		Sys_Error("FIRESH_GetFiredef: weapFdsIdx out of bounds [%i] for item '%s'", weapFdsIdx, obj->id);
 	if (fdIdx < 0 || fdIdx >= MAX_FIREDEFS_PER_WEAPON)
 		Sys_Error("FIRESH_GetFiredef: fdIdx out of bounds [%i] for item '%s'", fdIdx, obj->id);
-#endif
 	return &obj->fd[weapFdsIdx & (MAX_WEAPONS_PER_OBJDEF - 1)][fdIdx & (MAX_FIREDEFS_PER_WEAPON - 1)];
 }
 
@@ -1968,7 +1964,7 @@ objDef_t *INVSH_GetItemByIDSilent (const char *id)
 
 	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
 		objDef_t *item = &CSI->ods[i];
-		if (!strncmp(id, item->id, MAX_VAR)) {
+		if (!strcmp(id, item->id)) {
 			return item;
 		}
 	}
@@ -1977,28 +1973,30 @@ objDef_t *INVSH_GetItemByIDSilent (const char *id)
 
 /**
  * @brief Returns the index of this item in the inventory.
- * @note id may not be null or empty
- * @note previously known as RS_GetItem
+ */
+objDef_t *INVSH_GetItemByIDX (int index)
+{
+	if (index == NONE)
+		return NULL;
+
+	if (index < 0 || index >= CSI->numODs)
+		Sys_Error("Invalid object index given: %i", index);
+
+	return &CSI->ods[index];
+}
+
+/**
+ * @brief Returns the item that belongs to the given id or @c NULL if it wasn't found.
  * @param[in] id the item id in our object definition array (csi.ods)
  * @sa INVSH_GetItemByIDSilent
  */
 objDef_t *INVSH_GetItemByID (const char *id)
 {
-	objDef_t *od;
+	objDef_t *od = INVSH_GetItemByIDSilent(id);
+	if (!od)
+		Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 
-#ifdef DEBUG
-	if (!id || !*id) {
-		Com_Printf("INVSH_GetItemByID: Called with empty id\n");
-		return NULL;
-	}
-#endif
-
-	od = INVSH_GetItemByIDSilent(id);
-	if (od)
-		return od;
-
-	Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
-	return NULL;
+	return od;
 }
 
 /**
