@@ -41,7 +41,7 @@ menu won
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
+		onClick		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
 	}
 
 	button bt_continue
@@ -54,7 +54,7 @@ menu won
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set cp_mission_tryagain 0;mn_pop;uforecover_check;" }
+		onClick		{ cmd "set cp_mission_tryagain 0;mn_pop;uforecover_check;" }
 	}
 
 	confunc uforecover_check
@@ -118,7 +118,7 @@ menu lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
+		onClick		{ cmd "set cp_mission_tryagain 1;mn_pop;" }
 	}
 
 	button bt_continue
@@ -133,7 +133,7 @@ menu lost
 		color		"1 1 1 0.8"
 		selectcolor "1 1 1 1"
 		font		"f_big"
-		click		{ cmd "set cp_mission_tryagain 0;mn_pop;" }
+		onClick		{ cmd "set cp_mission_tryagain 0;mn_pop;" }
 	}
 
 	func init
@@ -216,7 +216,7 @@ menu uforecovery
 			rows		"8"
 			scrollbar	true
 			mousefx		true
-			click
+			onClick
 		}
 
 		string selected_base_str
@@ -241,7 +241,7 @@ menu uforecovery
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
-			click		{ cmd "cp_uforecovery_store_start;mn_pop;" }
+			onClick		{ cmd "cp_uforecovery_store_start;mn_pop;" }
 		}
 
 		button bt_basereplace
@@ -254,7 +254,7 @@ menu uforecovery
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
-			click		{ cmd "start_replace;" }
+			onClick		{ cmd "start_replace;" }
 		}
 	}
 
@@ -303,7 +303,7 @@ menu uforecovery
 			color		"0.60 0.60 0.60 1"
 			selectcolor	"1 1 1 1"
 			rows		"8"		// max. nations
-			click
+			onClick
 			mousefx true
 		}
 
@@ -329,7 +329,7 @@ menu uforecovery
 			size		"176 32"
 			font		f_menu
 			color		"0 0.5 0 1"
-			click		{ cmd "cp_uforecovery_sell_start;mn_pop;" }
+			onClick		{ cmd "cp_uforecovery_sell_start;mn_pop;" }
 		}
 	}
 

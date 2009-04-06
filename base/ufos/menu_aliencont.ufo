@@ -52,7 +52,7 @@ menu aliencont
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -164,73 +164,73 @@ menu aliencont
 		pic button0 {
 			image		menu/hosp_button_green
 			pos			"25  25"
-			click		{ cmd "aliencont_click 0;" }
+			onClick		{ cmd "aliencont_click 0;" }
 			onRClick		{ cmd "aliencont_pedia 0;" }
 		}
 		pic button1 {
 			image		menu/hosp_button_green
 			pos			"345  25"
-			click		{ cmd "aliencont_click 1;" }
+			onClick		{ cmd "aliencont_click 1;" }
 			onRClick		{ cmd "aliencont_pedia 1;" }
 		}
 		pic button2 {
 			image		menu/hosp_button_green
 			pos			"25 120"
-			click		{ cmd "aliencont_click 2;" }
+			onClick		{ cmd "aliencont_click 2;" }
 			onRClick		{ cmd "aliencont_pedia 2;" }
 		}
 		pic button3 {
 			image		menu/hosp_button_green
 			pos			"345 120"
-			click		{ cmd "aliencont_click 3;" }
+			onClick		{ cmd "aliencont_click 3;" }
 			onRClick		{ cmd "aliencont_pedia 3;" }
 		}
 		pic button4 {
 			image		menu/hosp_button_green
 			pos			"25 215"
-			click		{ cmd "aliencont_click 4;" }
+			onClick		{ cmd "aliencont_click 4;" }
 			onRClick		{ cmd "aliencont_pedia 4;" }
 		}
 		pic button5 {
 			image		menu/hosp_button_green
 			pos			"345 215"
-			click		{ cmd "aliencont_click 5;" }
+			onClick		{ cmd "aliencont_click 5;" }
 			onRClick		{ cmd "aliencont_pedia 5;" }
 		}
 		pic button6 {
 			image		menu/hosp_button_green
 			pos			"25 310"
-			click		{ cmd "aliencont_click 6;" }
+			onClick		{ cmd "aliencont_click 6;" }
 			onRClick		{ cmd "aliencont_pedia 6;" }
 		}
 		pic button7 {
 			image		menu/hosp_button_green
 			pos			"345 310"
-			click		{ cmd "aliencont_click 7;" }
+			onClick		{ cmd "aliencont_click 7;" }
 			onRClick		{ cmd "aliencont_pedia 7;" }
 		}
 		pic button8 {
 			image		menu/hosp_button_green
 			pos			"25 405"
-			click		{ cmd "aliencont_click 8;" }
+			onClick		{ cmd "aliencont_click 8;" }
 			onRClick		{ cmd "aliencont_pedia 8;" }
 		}
 		pic button9 {
 			image		menu/hosp_button_green
 			pos			"345 405"
-			click		{ cmd "aliencont_click 9;" }
+			onClick		{ cmd "aliencont_click 9;" }
 			onRClick		{ cmd "aliencont_pedia 9;" }
 		}
 		pic button10 {
 			image		menu/hosp_button_green
 			pos			"25 500"
-			click		{ cmd "aliencont_click 10;" }
+			onClick		{ cmd "aliencont_click 10;" }
 			onRClick		{ cmd "aliencont_pedia 10;" }
 		}
 		pic button11 {
 			image		menu/hosp_button_green
 			pos			"345 500"
-			click		{ cmd "aliencont_click 11;" }
+			onClick		{ cmd "aliencont_click 11;" }
 			onRClick		{ cmd "aliencont_pedia 11;" }
 		}
 
@@ -247,31 +247,31 @@ menu aliencont
 		pic icon10	{ image icons/health_unused 	pos "272 511" }
 		pic icon11	{ image icons/health_unused 	pos "592 511" }
 
-		zone kill_zone0	{ pos "272  36" size "40 40" click { cmd "aliencont_killone 0;" } tooltip "_Kill this alien" }
-		zone kill_zone1	{ pos "592  36" size "40 40" click { cmd "aliencont_killone 1;" } tooltip "_Kill this alien" }
-		zone kill_zone2	{ pos "272 131" size "40 40" click { cmd "aliencont_killone 2;" } tooltip "_Kill this alien" }
-		zone kill_zone3	{ pos "592 131" size "40 40" click { cmd "aliencont_killone 3;" } tooltip "_Kill this alien" }
-		zone kill_zone4	{ pos "272 226" size "40 40" click { cmd "aliencont_killone 4;" } tooltip "_Kill this alien" }
-		zone kill_zone5	{ pos "592 226" size "40 40" click { cmd "aliencont_killone 5;" } tooltip "_Kill this alien" }
-		zone kill_zone6	{ pos "272 321" size "40 40" click { cmd "aliencont_killone 6;" } tooltip "_Kill this alien" }
-		zone kill_zone7	{ pos "592 321" size "40 40" click { cmd "aliencont_killone 7;" } tooltip "_Kill this alien" }
-		zone kill_zone8	{ pos "272 416" size "40 40" click { cmd "aliencont_killone 8;" } tooltip "_Kill this alien" }
-		zone kill_zone9	{ pos "592 416" size "40 40" click { cmd "aliencont_killone 9;" } tooltip "_Kill this alien" }
-		zone kill_zone10	{ pos "272 511" size "40 40" click { cmd "aliencont_killone 10;" } tooltip "_Kill this alien" }
-		zone kill_zone11	{ pos "592 511" size "40 40" click { cmd "aliencont_killone 11;" } tooltip "_Kill this alien" }
+		zone kill_zone0	{ pos "272  36" size "40 40" onClick { cmd "aliencont_killone 0;" } tooltip "_Kill this alien" }
+		zone kill_zone1	{ pos "592  36" size "40 40" onClick { cmd "aliencont_killone 1;" } tooltip "_Kill this alien" }
+		zone kill_zone2	{ pos "272 131" size "40 40" onClick { cmd "aliencont_killone 2;" } tooltip "_Kill this alien" }
+		zone kill_zone3	{ pos "592 131" size "40 40" onClick { cmd "aliencont_killone 3;" } tooltip "_Kill this alien" }
+		zone kill_zone4	{ pos "272 226" size "40 40" onClick { cmd "aliencont_killone 4;" } tooltip "_Kill this alien" }
+		zone kill_zone5	{ pos "592 226" size "40 40" onClick { cmd "aliencont_killone 5;" } tooltip "_Kill this alien" }
+		zone kill_zone6	{ pos "272 321" size "40 40" onClick { cmd "aliencont_killone 6;" } tooltip "_Kill this alien" }
+		zone kill_zone7	{ pos "592 321" size "40 40" onClick { cmd "aliencont_killone 7;" } tooltip "_Kill this alien" }
+		zone kill_zone8	{ pos "272 416" size "40 40" onClick { cmd "aliencont_killone 8;" } tooltip "_Kill this alien" }
+		zone kill_zone9	{ pos "592 416" size "40 40" onClick { cmd "aliencont_killone 9;" } tooltip "_Kill this alien" }
+		zone kill_zone10	{ pos "272 511" size "40 40" onClick { cmd "aliencont_killone 10;" } tooltip "_Kill this alien" }
+		zone kill_zone11	{ pos "592 511" size "40 40" onClick { cmd "aliencont_killone 11;" } tooltip "_Kill this alien" }
 
-		zone autopsy_zone0	{ pos "272  36" size "40 40" click { cmd "aliencont_research 0;" } tooltip "_Start autopsy" }
-		zone autopsy_zone1	{ pos "592  36" size "40 40" click { cmd "aliencont_research 1;" } tooltip "_Start autopsy" }
-		zone autopsy_zone2	{ pos "272 131" size "40 40" click { cmd "aliencont_research 2;" } tooltip "_Start autopsy" }
-		zone autopsy_zone3	{ pos "592 131" size "40 40" click { cmd "aliencont_research 3;" } tooltip "_Start autopsy" }
-		zone autopsy_zone4	{ pos "272 226" size "40 40" click { cmd "aliencont_research 4;" } tooltip "_Start autopsy" }
-		zone autopsy_zone5	{ pos "592 226" size "40 40" click { cmd "aliencont_research 5;" } tooltip "_Start autopsy" }
-		zone autopsy_zone6	{ pos "272 321" size "40 40" click { cmd "aliencont_research 6;" } tooltip "_Start autopsy" }
-		zone autopsy_zone7	{ pos "592 321" size "40 40" click { cmd "aliencont_research 7;" } tooltip "_Start autopsy" }
-		zone autopsy_zone8	{ pos "272 416" size "40 40" click { cmd "aliencont_research 8;" } tooltip "_Start autopsy" }
-		zone autopsy_zone9	{ pos "592 416" size "40 40" click { cmd "aliencont_research 9;" } tooltip "_Start autopsy" }
-		zone autopsy_zone10	{ pos "272 511" size "40 40" click { cmd "aliencont_research 10;" } tooltip "_Start autopsy" }
-		zone autopsy_zone11	{ pos "592 511" size "40 40" click { cmd "aliencont_research 11;" } tooltip "_Start autopsy" }
+		zone autopsy_zone0	{ pos "272  36" size "40 40" onClick { cmd "aliencont_research 0;" } tooltip "_Start autopsy" }
+		zone autopsy_zone1	{ pos "592  36" size "40 40" onClick { cmd "aliencont_research 1;" } tooltip "_Start autopsy" }
+		zone autopsy_zone2	{ pos "272 131" size "40 40" onClick { cmd "aliencont_research 2;" } tooltip "_Start autopsy" }
+		zone autopsy_zone3	{ pos "592 131" size "40 40" onClick { cmd "aliencont_research 3;" } tooltip "_Start autopsy" }
+		zone autopsy_zone4	{ pos "272 226" size "40 40" onClick { cmd "aliencont_research 4;" } tooltip "_Start autopsy" }
+		zone autopsy_zone5	{ pos "592 226" size "40 40" onClick { cmd "aliencont_research 5;" } tooltip "_Start autopsy" }
+		zone autopsy_zone6	{ pos "272 321" size "40 40" onClick { cmd "aliencont_research 6;" } tooltip "_Start autopsy" }
+		zone autopsy_zone7	{ pos "592 321" size "40 40" onClick { cmd "aliencont_research 7;" } tooltip "_Start autopsy" }
+		zone autopsy_zone8	{ pos "272 416" size "40 40" onClick { cmd "aliencont_research 8;" } tooltip "_Start autopsy" }
+		zone autopsy_zone9	{ pos "592 416" size "40 40" onClick { cmd "aliencont_research 9;" } tooltip "_Start autopsy" }
+		zone autopsy_zone10	{ pos "272 511" size "40 40" onClick { cmd "aliencont_research 10;" } tooltip "_Start autopsy" }
+		zone autopsy_zone11	{ pos "592 511" size "40 40" onClick { cmd "aliencont_research 11;" } tooltip "_Start autopsy" }
 
 		string name0	{ string "*cvar mn_ac_name0"		pos "40  35"	color "1 1 1 1"	size "220 16"	ghost true }
 		string name1	{ string "*cvar mn_ac_name1"		pos "360  35"	color "1 1 1 1"	size "220 16"	ghost true }
@@ -445,7 +445,7 @@ menu aliencont
 		pos			"915 674"
 		size		"64 64"
 		icon		killalien
-		click		{ cmd "aliencont_killall;" }
+		onClick		{ cmd "aliencont_killall;" }
 	}
 
 	// ================================================================================

@@ -32,7 +32,7 @@ menu irc
 		size		"160 37"
 		selectcolor "1 1 1 1"
 		font		f_normal
-		click		{ cmd "irc_disconnect; mn_pop;" }
+		onClick		{ cmd "irc_disconnect; mn_pop;" }
 	}
 
 	custombutton button_exit
@@ -44,7 +44,7 @@ menu irc
 		pos			"950 720"
 		size		"64 37"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	string users_string

@@ -36,7 +36,7 @@ menu market
 		size		"59 55"
 		pos			"950 20"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -136,7 +136,7 @@ menu market
 		size		"265 550"
 		mousefx		true
 		longlines	prettychop
-		click
+		onClick
 		onWheel		{ cmd "market_scroll;" }
 	}
 
@@ -204,7 +204,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 0;" }
+		onClick		{ cmd "buy_autosell 0;" }
 	}
 	zone wz_buysell1
 	{
@@ -227,7 +227,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 1;" }
+		onClick		{ cmd "buy_autosell 1;" }
 	}
 	zone wz_buysell2
 	{
@@ -250,7 +250,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 2;" }
+		onClick		{ cmd "buy_autosell 2;" }
 	}
 	zone wz_buysell3
 	{
@@ -273,7 +273,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 3;" }
+		onClick		{ cmd "buy_autosell 3;" }
 	}
 	zone wz_buysell4
 	{
@@ -296,7 +296,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 4;" }
+		onClick		{ cmd "buy_autosell 4;" }
 	}
 	zone wz_buysell5
 	{
@@ -319,7 +319,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 5;" }
+		onClick		{ cmd "buy_autosell 5;" }
 	}
 	zone wz_buysell6
 	{
@@ -342,7 +342,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 6;" }
+		onClick		{ cmd "buy_autosell 6;" }
 	}
 	zone wz_buysell7
 	{
@@ -365,7 +365,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 7;" }
+		onClick		{ cmd "buy_autosell 7;" }
 	}
 	zone wz_buysell8
 	{
@@ -388,7 +388,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 8;" }
+		onClick		{ cmd "buy_autosell 8;" }
 	}
 	zone wz_buysell9
 	{
@@ -411,7 +411,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 9;" }
+		onClick		{ cmd "buy_autosell 9;" }
 	}
 	zone wz_buysell10
 	{
@@ -434,7 +434,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 10;" }
+		onClick		{ cmd "buy_autosell 10;" }
 	}
 	zone wz_buysell11
 	{
@@ -457,7 +457,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 11;" }
+		onClick		{ cmd "buy_autosell 11;" }
 	}
 	zone wz_buysell12
 	{
@@ -480,7 +480,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 12;" }
+		onClick		{ cmd "buy_autosell 12;" }
 	}
 	zone wz_buysell13
 	{
@@ -503,7 +503,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 13;" }
+		onClick		{ cmd "buy_autosell 13;" }
 	}
 	zone wz_buysell14
 	{
@@ -526,7 +526,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 14;" }
+		onClick		{ cmd "buy_autosell 14;" }
 	}
 	zone wz_buysell15
 	{
@@ -549,7 +549,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 15;" }
+		onClick		{ cmd "buy_autosell 15;" }
 	}
 	zone wz_buysell16
 	{
@@ -572,7 +572,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 16;" }
+		onClick		{ cmd "buy_autosell 16;" }
 	}
 	zone wz_buysell17
 	{
@@ -595,7 +595,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 17;" }
+		onClick		{ cmd "buy_autosell 17;" }
 	}
 	zone wz_buysell18
 	{
@@ -618,7 +618,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 18;" }
+		onClick		{ cmd "buy_autosell 18;" }
 	}
 	zone wz_buysell19
 	{
@@ -641,7 +641,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 19;" }
+		onClick		{ cmd "buy_autosell 19;" }
 	}
 	zone wz_buysell20
 	{
@@ -664,7 +664,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 20;" }
+		onClick		{ cmd "buy_autosell 20;" }
 	}
 	zone wz_buysell21
 	{
@@ -687,7 +687,7 @@ menu market
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "buy_autosell 21;" }
+		onClick		{ cmd "buy_autosell 21;" }
 	}
 
 	// ==================

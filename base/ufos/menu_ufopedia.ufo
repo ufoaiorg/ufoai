@@ -26,7 +26,7 @@ menu ufopedia
 		pos			"10 10"
 		size		"64 37"
 		icon		prev
-		click		{ cmd mn_upprev; }
+		onClick		{ cmd mn_upprev; }
 	}
 
 	custombutton bt_next
@@ -38,7 +38,7 @@ menu ufopedia
 		pos			"950 10"
 		size		"64 37"
 		icon		next
-		click		{ cmd mn_upnext; }
+		onClick		{ cmd mn_upnext; }
 	}
 
 	custombutton button_content
@@ -50,7 +50,7 @@ menu ufopedia
 		pos			"10 720"
 		size		"64 37"
 		icon		list
-		click		{ cmd "mn_upback;" }
+		onClick		{ cmd "mn_upback;" }
 	}
 
 	custombutton button_text_pre
@@ -63,7 +63,7 @@ menu ufopedia
 		pos			"90 14"
 		size		"37 32"
 		icon		prev
-		click		{ cmd "set mn_uppretext 1; mn_upupdate;" }
+		onClick		{ cmd "set mn_uppretext 1; mn_upupdate;" }
 	}
 
 	custombutton button_text_normal
@@ -76,7 +76,7 @@ menu ufopedia
 		pos			"140 14"
 		size		"37 32"
 		icon		next
-		click		{ cmd "set mn_uppretext 0; mn_upupdate;" }
+		onClick		{ cmd "set mn_uppretext 0; mn_upupdate;" }
 	}
 
 	custombutton button_exit
@@ -88,7 +88,7 @@ menu ufopedia
 		pos			"950 720"
 		size		"64 37"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -171,7 +171,7 @@ menu ufopedia
 		rows		"12"
 		mousefx		true
 		scrollbar	true
-		click
+		onClick
 	}
 
 	string title
@@ -220,7 +220,7 @@ menu ufopedia
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_decreaseweapon;" }
+		onClick		{ cmd "mn_decreaseweapon;" }
 	}
 
 	pic ammo_dec
@@ -288,7 +288,6 @@ menu ufopedia
 		size		"230 20"
 		textalign	uc
 		font		f_small
-		in
 	}
 
 	zone weapon_name_click

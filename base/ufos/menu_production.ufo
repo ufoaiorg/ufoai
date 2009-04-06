@@ -35,7 +35,7 @@ menu production
 		size		"59 55"
 		pos			"950 20"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ==================

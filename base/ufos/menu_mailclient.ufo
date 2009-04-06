@@ -26,7 +26,7 @@ menu mail
 		pos			"950 720"
 		size		"64 37"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ==================

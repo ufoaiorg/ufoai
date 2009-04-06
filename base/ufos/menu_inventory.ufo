@@ -17,7 +17,7 @@ menu inventory
 	{
 		image	hud/bar_inventory
 		pos		"0 0"
-		click
+		onClick
 	}
 	string s_backpack
 	{
@@ -145,7 +145,7 @@ menu inventory
 		texl	"192 0"	size "64 37"
 		pos		"428 458"
 		icon return
-		click	{ cmd mn_pop }
+		onClick	{ cmd mn_pop }
 	}
 }
 
@@ -161,7 +161,7 @@ menu hudinv extends inventory
 		mousefx true
 		pos		"983 266"
 		size	"36 75"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 	}
 
 	zone bt_inventory
@@ -170,7 +170,7 @@ menu hudinv extends inventory
 		mousefx true
 		pos		"983 376"
 		size	"36 75"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 	}
 	func leave
 	{
@@ -189,7 +189,7 @@ menu ahudinv extends inventory
 		tooltip "_Inventory and physical stats"
 		pos     "878 84"
 		size    "130 265"
-		click   { cmd "mn_pop;" }
+		onClick   { cmd "mn_pop;" }
 		onRClick  { cmd "mn_pop;" }
 	}
 	func leave

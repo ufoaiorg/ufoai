@@ -70,9 +70,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 0;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 0;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name0" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -85,7 +85,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 0;" }
+			onClick	{ cmd "sel_reactmode l 0;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name0"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -103,9 +103,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 1;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 1;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name1" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -118,7 +118,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 1;" }
+			onClick	{ cmd "sel_reactmode l 1;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name1"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -136,9 +136,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 2;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 2;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name2" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -151,7 +151,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 2;" }
+			onClick	{ cmd "sel_reactmode l 2;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name2"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -169,9 +169,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 3;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 3;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name3" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -184,7 +184,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 3;" }
+			onClick	{ cmd "sel_reactmode l 3;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name3"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -202,9 +202,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 4;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 4;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name4" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -217,7 +217,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 4;" }
+			onClick	{ cmd "sel_reactmode l 4;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name4"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -235,9 +235,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 5;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 5;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name5" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -250,7 +250,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 5;" }
+			onClick	{ cmd "sel_reactmode l 5;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name5"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -268,9 +268,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 6;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 6;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name6" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -283,7 +283,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 6;" }
+			onClick	{ cmd "sel_reactmode l 6;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name6"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -301,9 +301,9 @@ menu firemode_left {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap l 7;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap l 7;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_l_fm_name7" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -316,7 +316,7 @@ menu firemode_left {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode l 7;" }
+			onClick	{ cmd "sel_reactmode l 7;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_l_fm_name7"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -387,9 +387,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 0;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 0;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name0" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -402,7 +402,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 0;" }
+			onClick	{ cmd "sel_reactmode r 0;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name0"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -420,9 +420,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 1;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 1;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name1" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -435,7 +435,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 1;" }
+			onClick	{ cmd "sel_reactmode r 1;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name1"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -453,9 +453,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 2;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 2;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name2" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -468,7 +468,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 2;" }
+			onClick	{ cmd "sel_reactmode r 2;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name2"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -486,9 +486,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 3;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 3;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name3" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -501,7 +501,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 3;" }
+			onClick	{ cmd "sel_reactmode r 3;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name3"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -519,9 +519,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 4;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 4;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name4" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -534,7 +534,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 4;" }
+			onClick	{ cmd "sel_reactmode r 4;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name4"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -552,9 +552,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 5;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 5;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name5" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -567,7 +567,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 5;" }
+			onClick	{ cmd "sel_reactmode r 5;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name5"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -585,9 +585,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 6;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 6;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name6" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -600,7 +600,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 6;" }
+			onClick	{ cmd "sel_reactmode r 6;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name6"	pos "27 4"	size "183 25"	textalign cl	ghost true }
@@ -618,9 +618,9 @@ menu firemode_right {
 			size	"214  63"
 			mousefx	false
 			invis true
-			click	{ cmd "fireweap r 7;mn_pop;" }
-			in { *node:this image "hud/firemode_hover" }
-			out { *node:this image "hud/firemode" }
+			onClick	{ cmd "fireweap r 7;mn_pop;" }
+			onMouseIn { *node:this image "hud/firemode_hover" }
+			onMouseOut { *node:this image "hud/firemode" }
 			blend 1
 			tooltip "*cvar mn_r_fm_name7" // @todo create a better tooltip with name, tu, shots...
 		}
@@ -633,7 +633,7 @@ menu firemode_right {
 			texl	"0 0"
 			texh	"31 31"
 			mousefx	false
-			click	{ cmd "sel_reactmode r 7;" }
+			onClick	{ cmd "sel_reactmode r 7;" }
 			blend 1
 		}
 		string name	{ string "*cvar mn_r_fm_name7"	pos "27 4"	size "183 25"	textalign cl	ghost true }

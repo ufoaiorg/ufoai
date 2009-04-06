@@ -194,7 +194,7 @@ menu mp_team_edit
 		pos		"90 13"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 0;" }
+		onClick { cmd "mp_team_select 0;" }
 	}
 	string txt_actor1
 	{
@@ -202,7 +202,7 @@ menu mp_team_edit
 		pos		"90 54"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 1;" }
+		onClick { cmd "mp_team_select 1;" }
 	}
 	string txt_actor2
 	{
@@ -210,7 +210,7 @@ menu mp_team_edit
 		pos		"90 95"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 2;" }
+		onClick { cmd "mp_team_select 2;" }
 	}
 	string txt_actor3
 	{
@@ -218,7 +218,7 @@ menu mp_team_edit
 		pos		"90 136"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 3;" }
+		onClick { cmd "mp_team_select 3;" }
 	}
 	string txt_actor4
 	{
@@ -226,7 +226,7 @@ menu mp_team_edit
 		pos		"90 177"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 4;" }
+		onClick { cmd "mp_team_select 4;" }
 	}
 	string txt_actor5
 	{
@@ -234,7 +234,7 @@ menu mp_team_edit
 		pos		"90 218"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 5;" }
+		onClick { cmd "mp_team_select 5;" }
 	}
 	string txt_actor6
 	{
@@ -242,7 +242,7 @@ menu mp_team_edit
 		pos		"90 259"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 6;" }
+		onClick { cmd "mp_team_select 6;" }
 	}
 	string txt_actor7
 	{
@@ -250,7 +250,7 @@ menu mp_team_edit
 		pos		"90 300"
 		size	"270 40"
 		textalign cl
-		click { cmd "mp_team_select 7;" }
+		onClick { cmd "mp_team_select 7;" }
 	}
 
 	// ==================
@@ -409,7 +409,7 @@ menu mp_team_edit
 			texl	"0 0"
 			texh	"16 16"
 			mousefx	true
-			click	{ cmd "mn_decreaseitem;" }
+			onClick	{ cmd "mn_decreaseitem;" }
 		}
 	
 		string item_name
@@ -428,7 +428,7 @@ menu mp_team_edit
 			texl	"16 0"
 			texh	"32 16"
 			mousefx	true
-			click	{ cmd "mn_increaseitem;" }
+			onClick	{ cmd "mn_increaseitem;" }
 		}
 
 		// ==================
@@ -451,7 +451,7 @@ menu mp_team_edit
 			texl	"0 0"
 			texh	"16 16"
 			mousefx	true
-			click	{ cmd "mn_decreasefiremode;" }
+			onClick	{ cmd "mn_decreasefiremode;" }
 		}
 		
 		string firemode_name
@@ -471,7 +471,7 @@ menu mp_team_edit
 			texl	"16 0"
 			texh	"32 16"
 			mousefx	true
-			click	{ cmd "mn_increasefiremode;" }
+			onClick	{ cmd "mn_increasefiremode;" }
 		}
 	}
 

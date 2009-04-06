@@ -272,7 +272,7 @@ menu map
 				size		"60 30"
 				repeat		true
 				clickdelay	100
-				click		{ cmd "map_scroll down;" }
+				onClick		{ cmd "map_scroll down;" }
 			}
 
 			zone panel_scroll_down
@@ -281,7 +281,7 @@ menu map
 				size		"60 30"
 				repeat		true
 				clickdelay	100
-				click		{ cmd "map_scroll up;" }
+				onClick		{ cmd "map_scroll up;" }
 			}
 
 			zone panel_scroll_left
@@ -290,7 +290,7 @@ menu map
 				size		"30 60"
 				repeat		true
 				clickdelay	100
-				click		{ cmd "map_scroll right;" }
+				onClick		{ cmd "map_scroll right;" }
 			}
 
 			zone panel_scroll_right
@@ -299,7 +299,7 @@ menu map
 				size		"30 60"
 				repeat		true
 				clickdelay		100
-				click		{ cmd "map_scroll left;" }
+				onClick		{ cmd "map_scroll left;" }
 			}
 
 			zone panel_zoom_in
@@ -308,7 +308,7 @@ menu map
 				size		"20 60"
 				repeat		true
 				clickdelay	100
-				click		{ cmd "map_zoom in;" }
+				onClick		{ cmd "map_zoom in;" }
 			}
 
 			zone panel_zoom_out
@@ -317,7 +317,7 @@ menu map
 				size		"20 60"
 				repeat		true
 				clickdelay	100
-				click		{ cmd "map_zoom out;" }
+				onClick		{ cmd "map_zoom out;" }
 			}
 		}
 
@@ -339,7 +339,7 @@ menu map
 			image		menu/button_geoscape
 			blend		true
 
-			click		{ cmd "mn_push mailclient;" }
+			onClick		{ cmd "mn_push mailclient;" }
 		}
 
 		button bt_mailclient_nomail
@@ -356,7 +356,7 @@ menu map
 			image		menu/button_geoscape
 			blend		true
 
-			click		{ cmd "mn_push mailclient;" }
+			onClick		{ cmd "mn_push mailclient;" }
 		}
 
 		button bt_stats
@@ -371,7 +371,7 @@ menu map
 			image		menu/button_geoscape
 			blend		true
 
-			click		{ cmd "mn_push stats;" }
+			onClick		{ cmd "mn_push stats;" }
 		}
 
 		button bt_ufopedia
@@ -386,7 +386,7 @@ menu map
 			image		menu/button_geoscape
 			blend		true
 
-			click		{ cmd "mn_push ufopedia;" }
+			onClick		{ cmd "mn_push ufopedia;" }
 		}
 
 		button bt_installation
@@ -401,7 +401,7 @@ menu map
 			image		menu/button_geoscape
 			blend		true
 
-			click		{ cmd "mn_push popup_newinstallation_type;" }
+			onClick		{ cmd "mn_push popup_newinstallation_type;" }
 		}
 
 		// ==================
@@ -416,9 +416,9 @@ menu map
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
-			click		{ cmd "map_overlay nations;" }
-			out			{ *control.bt_show_overlay texl "0 0" *control.bt_show_overlay texh "32 32" }
-			in			{ *control.bt_show_overlay texl "32 0" *control.bt_show_overlay texh "64 32" }
+			onClick		{ cmd "map_overlay nations;" }
+			onMouseOut			{ *control.bt_show_overlay texl "0 0" *control.bt_show_overlay texh "32 32" }
+			onMouseIn			{ *control.bt_show_overlay texl "32 0" *control.bt_show_overlay texh "64 32" }
 		}
 
 		pic bt_show_radar
@@ -429,9 +429,9 @@ menu map
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
-			click		{ cmd "map_overlay radar;" }
-			out			{ *control.bt_show_radar texl "0 0" *control.bt_show_radar texh "32 32" }
-			in			{ *control.bt_show_radar texl "32 0" *control.bt_show_radar texh "64 32" }
+			onClick		{ cmd "map_overlay radar;" }
+			onMouseOut			{ *control.bt_show_radar texl "0 0" *control.bt_show_radar texh "32 32" }
+			onMouseIn			{ *control.bt_show_radar texl "32 0" *control.bt_show_radar texh "64 32" }
 		}
 
 		pic bt_show_xvi
@@ -443,9 +443,9 @@ menu map
 			texl		"0 0"
 			texh		"32 32"
 			mousefx		false
-			click		{ cmd "map_overlay xvi;" }
-			out			{ *control.bt_show_xvi texl "0 0" *control.bt_show_xvi texh "32 32" }
-			in			{ *control.bt_show_xvi texl "32 0" *control.bt_show_xvi texh "64 32" }
+			onClick		{ cmd "map_overlay xvi;" }
+			onMouseOut			{ *control.bt_show_xvi texl "0 0" *control.bt_show_xvi texh "32 32" }
+			onMouseIn			{ *control.bt_show_xvi texl "32 0" *control.bt_show_xvi texh "64 32" }
 		}
 
 		custombutton bt_messagesystem
@@ -457,7 +457,7 @@ menu map
 			pos			"82 324"
 			size		"28 25"
 			texl		"193 38"
-			click	{
+			onClick	{
 				cmd "add mn_messagesystem 1;"
 				cmd "mod mn_messagesystem 4;"
 				cmd "messagesystem_changemode"
@@ -476,7 +476,7 @@ menu map
 			pos			"82 354"
 			size		"28 25"
 			texl		"193 38"
-			click		{ cmd "mn_push messageoptions;" }
+			onClick		{ cmd "mn_push messageoptions;" }
 		}
 
 		custombutton bt_mapcenter
@@ -487,7 +487,7 @@ menu map
 			pos			"124 324"
 			size		"28 25"
 			texl		"193 38"
-			click		{ cmd "map_center;" }
+			onClick		{ cmd "map_center;" }
 		}
 
 		custombutton bt_menu
@@ -498,7 +498,7 @@ menu map
 			pos			"182 324"
 			size		"28 25"
 			texl		"193 38"
-			click		{ cmd mn_pop; }
+			onClick		{ cmd mn_pop; }
 		}
 
 	}
@@ -572,7 +572,7 @@ menu popup_list
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 }
 
@@ -691,7 +691,7 @@ menu popup_intercept_ready
 		blend		true
 		pos			"266 188"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 
 	/**
@@ -707,7 +707,7 @@ menu popup_intercept_ready
 		blend		true
 		pos			"66 125"
 		size		"176 40"
-		click		{ cmd "game_go;" }
+		onClick		{ cmd "game_go;" }
 	}
 
 	button bt_auto_go
@@ -720,7 +720,7 @@ menu popup_intercept_ready
 		blend		true
 		pos			"259 125"
 		size		"176 40"
-		click		{ cmd "cp_mission_autogo;" }
+		onClick		{ cmd "cp_mission_autogo;" }
 	}
 
 	confunc popup_intercept_ready_update
@@ -845,7 +845,7 @@ menu popup_baseattack
 		blend		true
 		pos			"259 241"
 		size		"176 32"
-		click		{
+		onClick		{
 			if "*node:menu.liftcrafts@current > 0" {
 				cmd "air_liftall;"
 			}
@@ -874,7 +874,7 @@ menu popup_baseattack
 		blend		true
 		pos			"74 241"
 		size		"176 32"
-		click		{
+		onClick		{
 			if "*node:menu.liftcrafts@current > 0" {
 				cmd "air_liftall;"
 			}
@@ -929,7 +929,7 @@ menu popup_transferbaselist
 		tabwidth	100
 		rows		7
 		mousefx		true
-		click
+		onClick
 		onRClick		{ cmd "mn_pop; aircraft_return;" }
 	}
 
@@ -943,7 +943,7 @@ menu popup_transferbaselist
 		blend		true
 		pos			"266 188"
 		size		"176 32"
-		click		{ cmd "mn_pop;aircraft_return;" }
+		onClick		{ cmd "mn_pop;aircraft_return;" }
 	}
 }
 
@@ -984,7 +984,7 @@ menu popup_newbase
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		click		{ cmd "mn_edittextentry name;" }
+		onClick		{ cmd "mn_edittextentry name;" }
 	}
 
 	string cost_label
@@ -1045,7 +1045,7 @@ menu popup_newbase
 		blend		true
 		pos			"298 188"
 		size		"176 32"
-		click	{
+		onClick	{
 			*name mousefx false
 			cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;"
 		}
@@ -1060,7 +1060,7 @@ menu popup_newbase
 		blend		true
 		pos			"111 188"
 		size		"176 32"
-		click	{
+		onClick	{
 			*name mousefx false
 			cmd "mn_pop;mn_build_base;"
 		}
@@ -1159,9 +1159,9 @@ menu popup_newinstallation_type
 	{
 		pos			"30 78"
 		size		"440 20"
-		in			{ *bt_highlight invis false *bt_highlight pos "26 76" }
-		out			{ *bt_highlight invis true }
-		click		{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
+		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 76" }
+		onMouseOut			{ *bt_highlight invis true }
+		onClick		{ cmd "set mn_installation_type radartower; mn_pop; mn_select_installation -1;" }
 	}
 
 	pic sam_icon
@@ -1196,9 +1196,9 @@ menu popup_newinstallation_type
 	{
 		pos			"30 98"
 		size		"440 20"
-		in			{ *bt_highlight invis false *bt_highlight pos "26 96" }
-		out			{ *bt_highlight invis true }
-		click		{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
+		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 96" }
+		onMouseOut			{ *bt_highlight invis true }
+		onClick		{ cmd "set mn_installation_type samsite; mn_pop; mn_select_installation -1;" }
 	}
 
 	pic ufoyard_icon
@@ -1233,9 +1233,9 @@ menu popup_newinstallation_type
 	{
 		pos			"30 118"
 		size		"440 20"
-		in			{ *bt_highlight invis false *bt_highlight pos "26 116" }
-		out			{ *bt_highlight invis true }
-		click		{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
+		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 116" }
+		onMouseOut			{ *bt_highlight invis true }
+		onClick		{ cmd "set mn_installation_type ufoyard; mn_pop; mn_select_installation -1;" }
 	}
 
 	//
@@ -1276,9 +1276,9 @@ menu popup_newinstallation_type
 	{
 		pos			"30 138"
 		size		"440 20"
-		in			{ *bt_highlight invis false *bt_highlight pos "26 136" }
-		out			{ *bt_highlight invis true }
-		click		{ cmd "mn_pop; mn_select_base -1;" }
+		onMouseIn			{ *bt_highlight invis false *bt_highlight pos "26 136" }
+		onMouseOut			{ *bt_highlight invis true }
+		onClick		{ cmd "mn_pop; mn_select_base -1;" }
 	}
 
 	/* disabled zones - for tooltip */
@@ -1312,7 +1312,7 @@ menu popup_newinstallation_type
 		blend		true
 		pos			"297 188"
 		size		"176 32"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	func init {
@@ -1419,7 +1419,7 @@ menu popup_newinstallation
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		click		{ cmd "mn_edittextentry name;" }
+		onClick		{ cmd "mn_edittextentry name;" }
 	}
 
 	string cost_label
@@ -1464,7 +1464,7 @@ menu popup_newinstallation
 		blend		true
 		pos			"294 188"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
+		onClick		{ cmd "mn_pop;mn_mapaction_reset;map_deactivateoverlay radar;" }
 	}
 	button bt_build
 	{
@@ -1476,7 +1476,7 @@ menu popup_newinstallation
 		blend		true
 		pos			"109 188"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
+		onClick		{ cmd "mn_pop;mn_build_installation *mn_installation_type;" }
 	}
 }
 
@@ -1523,7 +1523,7 @@ menu radartower
 		blend		true
 		pos			"296 188"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -1561,7 +1561,7 @@ menu popup_installationstatus
 		texl		"0 48"
 		texh		"16 64"
 		mousefx		false
-		click		{ cmd "mn_edittextentry name;" }
+		onClick		{ cmd "mn_edittextentry name;" }
 	}
 
 	string buildtime_label
@@ -1590,7 +1590,7 @@ menu popup_installationstatus
 		blend		true
 		pos			"295 189"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 	button bt_enter
 	{
@@ -1603,7 +1603,7 @@ menu popup_installationstatus
 		blend		true
 		pos			"109 189"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_push *mn_installation_type;" }
+		onClick		{ cmd "mn_pop;mn_push *mn_installation_type;" }
 	}
 	button bt_destroy
 	{
@@ -1615,7 +1615,7 @@ menu popup_installationstatus
 		blend		true
 		pos			"295 78"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_destroyinstallation;" }
+		onClick		{ cmd "mn_pop;mn_destroyinstallation;" }
 	}
 
 	func init
@@ -1723,7 +1723,7 @@ menu popup_intercept
 			tabwidth	175
 			mousefx		true
 			rows		"13"
-			click
+			onClick
 			onRClick
 		}
 	}
@@ -1738,7 +1738,7 @@ menu popup_intercept
 		blend		true
 		pos			"346 402"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 
 	confunc popup_intercept_update {
@@ -1815,7 +1815,7 @@ menu popup_mission
 		tabwidth	190
 		mousefx		true
 		rows	"13"
-		click
+		onClick
 		onRClick
 	}
 
@@ -1829,7 +1829,7 @@ menu popup_mission
 		blend		true
 		pos			"566 338"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -1874,7 +1874,7 @@ menu popup_multi_selection
 		tabwidth	150
 		rows		5
 		mousefx		true
-		click		{ cmd "multi_select;" }
+		onClick		{ cmd "multi_select;" }
 	}
 
 	button bt_cancel
@@ -1887,7 +1887,7 @@ menu popup_multi_selection
 		blend		true
 		pos			"266 188"
 		size		"176 32"
-		click		{ cmd "mn_pop;mn_mapaction_reset;" }
+		onClick		{ cmd "mn_pop;mn_mapaction_reset;" }
 	}
 }
 
@@ -1932,7 +1932,7 @@ menu popup_aircraft
 		tabwidth	150
 		rows		5
 		mousefx		true
-		click
+		onClick
 	}
 
 	button bt_cancel
@@ -1945,7 +1945,7 @@ menu popup_aircraft
 		blend		true
 		pos			"297 191"
 		size		"176 32"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 }
 
@@ -1990,7 +1990,7 @@ menu popup
 		width		"200"
 		font		f_menu
 		color		"0 0.5 0 1"
-		click		{ cmd "mn_close popup;" }
+		onClick		{ cmd "mn_close popup;" }
 	}
 }
 
@@ -2022,7 +2022,7 @@ menu messageoptions
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;msgoptions_backup;" }
+		onClick		{ cmd "mn_pop;msgoptions_backup;" }
 	}
 
 	button button_revert
@@ -2036,7 +2036,7 @@ menu messageoptions
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor "1 1 1 1"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	string header_messagetype
@@ -2052,7 +2052,7 @@ menu messageoptions
 		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
 		pos			"356 60"
 		image		menu/notify_pause
-		click		{ cmd "msgoptions_setall pause 1;" }
+		onClick		{ cmd "msgoptions_setall pause 1;" }
 		onRClick		{ cmd "msgoptions_setall pause 0;" }
 	}
 
@@ -2066,7 +2066,7 @@ menu messageoptions
 		tooltip		"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
 		pos			"386 60"
 		image		menu/notify_notice
-		click		{ cmd "msgoptions_setall notify 1;" }
+		onClick		{ cmd "msgoptions_setall notify 1;" }
 		onRClick		{ cmd "msgoptions_setall notify 0;" }
 	}
 
@@ -2075,7 +2075,7 @@ menu messageoptions
 		tooltip		"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
 		pos			"416 60"
 		image		menu/notify_sound
-		click		{ cmd "msgoptions_setall sound 1;" }
+		onClick		{ cmd "msgoptions_setall sound 1;" }
 		onRClick		{ cmd "msgoptions_setall sound 0;" }
 	}
 
@@ -2891,7 +2891,7 @@ menu geoscape_options {
 			pos			"20 0"
 			size		"200 20"
 			string		"_Show radar range"
-			click		{ cmd "map_overlay radar;" }
+			onClick		{ cmd "map_overlay radar;" }
 		}
 	}
 

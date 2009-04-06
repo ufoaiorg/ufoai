@@ -1145,7 +1145,7 @@ menu options
 			min			5
 			max			30
 			mousefx		true
-			click		{ }
+			onClick		{ }
 		}
 
 		// ===================

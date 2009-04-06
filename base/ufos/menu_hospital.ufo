@@ -52,7 +52,7 @@ menu hospital
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -306,127 +306,127 @@ menu hospital
 		pos "25 95"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 0;" }
+		onClick { cmd "hosp_list_click 0;" }
 	}
 	zone click_hos_button1 {
 		pos "345 95"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 1;" }
+		onClick { cmd "hosp_list_click 1;" }
 	}
 	zone click_hos_button2 {
 		pos "665 95"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 2;" }
+		onClick { cmd "hosp_list_click 2;" }
 	}
 	zone click_hos_button3 {
 		pos "25 190"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 3;" }
+		onClick { cmd "hosp_list_click 3;" }
 	}
 	zone click_hos_button4 {
 		pos "345 190"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 4;" }
+		onClick { cmd "hosp_list_click 4;" }
 	}
 	zone click_hos_button5 {
 		pos "665 190"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 5;" }
+		onClick { cmd "hosp_list_click 5;" }
 	}
 	zone click_hos_button6 {
 		pos "25 285"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 6;" }
+		onClick { cmd "hosp_list_click 6;" }
 	}
 	zone click_hos_button7 {
 		pos "345 285"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 7;" }
+		onClick { cmd "hosp_list_click 7;" }
 	}
 	zone click_hos_button8 {
 		pos "665 285"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 8;" }
+		onClick { cmd "hosp_list_click 8;" }
 	}
 	zone click_hos_button9 {
 		pos "25 380"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 9;" }
+		onClick { cmd "hosp_list_click 9;" }
 	}
 	zone click_hos_button10 {
 		pos "345 380"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 10;" }
+		onClick { cmd "hosp_list_click 10;" }
 	}
 	zone click_hos_button11 {
 		pos "665 380"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 11;" }
+		onClick { cmd "hosp_list_click 11;" }
 	}
 	zone click_hos_button12 {
 		pos "25 475"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 12;" }
+		onClick { cmd "hosp_list_click 12;" }
 	}
 	zone click_hos_button13 {
 		pos "345 475"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 13;" }
+		onClick { cmd "hosp_list_click 13;" }
 	}
 	zone click_hos_button14 {
 		pos "665 475"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 14;" }
+		onClick { cmd "hosp_list_click 14;" }
 	}
 	zone click_hos_button15 {
 		pos "25 570"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 15;" }
+		onClick { cmd "hosp_list_click 15;" }
 	}
 	zone click_hos_button16 {
 		pos "345 570"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 16;" }
+		onClick { cmd "hosp_list_click 16;" }
 	}
 	zone click_hos_button17 {
 		pos "665 570"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 17;" }
+		onClick { cmd "hosp_list_click 17;" }
 	}
 	zone click_hos_button18 {
 		pos "25 665"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 18;" }
+		onClick { cmd "hosp_list_click 18;" }
 	}
 	zone click_hos_button19 {
 		pos "345 665"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 19;" }
+		onClick { cmd "hosp_list_click 19;" }
 	}
 	zone click_hos_button20 {
 		pos "665 665"
 		size "300 85"
 		tooltip "_Unused"
-		click { cmd "hosp_list_click 20;" }
+		onClick { cmd "hosp_list_click 20;" }
 	}
 
 	pic hos_button_scrollup
@@ -437,9 +437,9 @@ menu hospital
 		pos		"980 95"
 		texh	"48 48"
 		texl	"32 32"
-		click	{ cmd "hosp_list_up;" }
-		out		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
-		in		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
+		onClick	{ cmd "hosp_list_up;" }
+		onMouseOut		{ *hos_button_scrollup texl "32 32" *hos_button_scrollup texh "48 48" }
+		onMouseIn		{ *hos_button_scrollup texl "48 32" *hos_button_scrollup texh "64 48" }
 	}
 
 	pic hos_button_scrolldown
@@ -450,9 +450,9 @@ menu hospital
 		pos		"980 733"
 		texl	"32 48"
 		texh	"48 64"
-		click	{ cmd "hosp_list_down;" }
-		out		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
-		in		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
+		onClick	{ cmd "hosp_list_down;" }
+		onMouseOut		{ *hos_button_scrolldown texl "32 48" *hos_button_scrolldown texh "48 64" }
+		onMouseIn		{ *hos_button_scrolldown texl "48 48" *hos_button_scrolldown texh "64 64" }
 	}
 
 	// ==================
@@ -519,7 +519,7 @@ menu hospital_employee
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -635,7 +635,7 @@ menu hospital_employee
 		blend		true
 		tooltip		"_not implemented"
 		disabled	true
-		click
+		onClick
 	}
 
 	// ==================

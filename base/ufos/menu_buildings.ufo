@@ -55,7 +55,7 @@ menu buildings
 		size		"59 55"
 		pos			"950 20"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ==================
@@ -91,7 +91,7 @@ menu buildings
 		mousefx		true
 		textid		TEXT_BUILDINGS
 		rows		"20"
-		click
+		onClick
 	}
 
 	confunc mn_buildings_reset
@@ -173,6 +173,6 @@ menu popup_buildingpreview
 		tooltip		"_UFOpaedia"
 		pos			"320 190"
 		size		"16 16"
-		click		{ cmd "building_ufopedia;" }
+		onClick		{ cmd "building_ufopedia;" }
 	}
 }

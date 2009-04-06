@@ -272,7 +272,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 460"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 0 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 0 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
@@ -283,7 +283,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 495"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 1 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 1 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
@@ -294,7 +294,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 530"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 2 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 2 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
@@ -305,7 +305,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 565"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 3 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 3 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
@@ -316,7 +316,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 600"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 4 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 4 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
@@ -327,7 +327,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 635"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 5 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 5 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
@@ -338,7 +338,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 670"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 6 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 6 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
@@ -349,7 +349,7 @@ menu aircraft_pilots extends iaircraft
 		pos		"60 705"
 		size	"190 35"
 		textalign cl
-		click { cmd "pilot_select 7 <cvar:mn_relative_id>;" }
+		onClick { cmd "pilot_select 7 <cvar:mn_relative_id>;" }
 		invis	true
 		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
 		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom

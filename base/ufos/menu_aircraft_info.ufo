@@ -92,13 +92,13 @@ menu aircraft extends iaircraft
 			*aircraft_navigation	disabled	false
 
 			*aircraft_return	tooltip		"_Start Aircraft"
-			*aircraft_return	click		{ cmd "aircraft_start;" }
+			*aircraft_return	onClick		{ cmd "aircraft_start;" }
 			*aircraft_return	texl		"0 32"
 		} else {
 			*aircraft_navigation	disabled	true
 
 			*aircraft_return	tooltip		"_Call back"
-			*aircraft_return	click		{ cmd "aircraft_return;" }
+			*aircraft_return	onClick		{ cmd "aircraft_return;" }
 			*aircraft_return	texl		"0 0"
 		}
 

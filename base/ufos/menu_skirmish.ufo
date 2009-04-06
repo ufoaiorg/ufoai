@@ -23,7 +23,7 @@ menu skirmish
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	// ====================
@@ -39,7 +39,7 @@ menu skirmish
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "sk_start;" }
+		onClick		{ cmd "sk_start;" }
 	}
 
 	string settings
@@ -82,7 +82,7 @@ menu skirmish
 		icon		prev
 		onWheelUp	{ cmd "sk_prevequip;" }
 		onWheelDown	{ cmd "sk_nextequip;" }
-		click		{ cmd "sk_prevequip;" }
+		onClick		{ cmd "sk_prevequip;" }
 	}
 	custombutton next_equipment
 	{
@@ -91,7 +91,7 @@ menu skirmish
 		icon		next
 		onWheelUp	{ cmd "sk_prevequip;" }
 		onWheelDown	{ cmd "sk_nextequip;" }
-		click		{ cmd "sk_nextequip;" }
+		onClick		{ cmd "sk_nextequip;" }
 	}
 
 	// ===================
@@ -173,7 +173,7 @@ menu skirmish
 		icon		prev
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_prevmap;" }
+		onClick		{ cmd "mn_prevmap;" }
 	}
 	custombutton next_map
 	{
@@ -182,7 +182,7 @@ menu skirmish
 		icon		next
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_nextmap;" }
 	}
 	pic mappic
 	{
@@ -192,7 +192,7 @@ menu skirmish
 		texh		"128 96"
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_nextmap;" }
 		onRClick		{ cmd "mn_prevmap;" }
 	}
 	pic mappic2
@@ -203,7 +203,7 @@ menu skirmish
 		texh		"128 96"
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_nextmap;" }
 		onRClick		{ cmd "mn_prevmap;" }
 	}
 	pic mappic3
@@ -214,7 +214,7 @@ menu skirmish
 		texh		"128 96"
 		onWheelUp	{ cmd "mn_prevmap;" }
 		onWheelDown	{ cmd "mn_nextmap;" }
-		click		{ cmd "mn_nextmap;" }
+		onClick		{ cmd "mn_nextmap;" }
 		onRClick		{ cmd "mn_prevmap;" }
 	}
 

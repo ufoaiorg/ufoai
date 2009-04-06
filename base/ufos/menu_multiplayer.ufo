@@ -472,52 +472,52 @@ menu mp_bookmarks extends abstract_multiplayer_join
 		}
 
 		string adr0 { pos "95 230" string "*cvar adr0" size "300 12" }
-		custombutton resetadr0 { visiblewhen "*cvar:adr0" pos "65 230" size "22 22" icon garbage	click { cmd "del adr0;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr0 { visiblewhen "*cvar:adr0" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr0;" } tooltip "_Delete this bookmark" }
 
 		string adr1 { pos "95 260" string "*cvar adr1" size "300 12" }
-		custombutton resetadr1 { visiblewhen "*cvar:adr1" pos "65 230" size "22 22" icon garbage	click { cmd "del adr1;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr1 { visiblewhen "*cvar:adr1" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr1;" } tooltip "_Delete this bookmark" }
 
 		string adr2 { pos "95 290" string "*cvar adr2" size "300 12" }
-		custombutton resetadr2 { visiblewhen "*cvar:adr2" pos "65 230" size "22 22" icon garbage	click { cmd "del adr2;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr2 { visiblewhen "*cvar:adr2" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr2;" } tooltip "_Delete this bookmark" }
 
 		string adr3 { pos "95 320" string "*cvar adr3" size "300 12" }
-		custombutton resetadr3 { visiblewhen "*cvar:adr3" pos "65 230" size "22 22" icon garbage	click { cmd "del adr3;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr3 { visiblewhen "*cvar:adr3" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr3;" } tooltip "_Delete this bookmark" }
 
 		string adr4 { pos "95 350" string "*cvar adr4" size "300 12" }
-		custombutton resetadr4 { visiblewhen "*cvar:adr4" pos "65 230" size "22 22" icon garbage	click { cmd "del adr4;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr4 { visiblewhen "*cvar:adr4" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr4;" } tooltip "_Delete this bookmark" }
 
 		string adr5 { pos "95 380" string "*cvar adr5" size "300 12" }
-		custombutton resetadr5 { visiblewhen "*cvar:adr5" pos "65 230" size "22 22" icon garbage	click { cmd "del adr5;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr5 { visiblewhen "*cvar:adr5" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr5;" } tooltip "_Delete this bookmark" }
 
 		string adr6 { pos "95 410" string "*cvar adr6" size "300 12" }
-		custombutton resetadr6 { visiblewhen "*cvar:adr6" pos "65 230" size "22 22" icon garbage	click { cmd "del adr6;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr6 { visiblewhen "*cvar:adr6" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr6;" } tooltip "_Delete this bookmark" }
 
 		string adr7 { pos "95 440" string "*cvar adr7" size "300 12" }
-		custombutton resetadr7 { visiblewhen "*cvar:adr7" pos "65 230" size "22 22" icon garbage	click { cmd "del adr7;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr7 { visiblewhen "*cvar:adr7" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr7;" } tooltip "_Delete this bookmark" }
 
 		string adr8 { pos "95 470" string "*cvar adr8" size "300 12" }
-		custombutton resetadr8 { visiblewhen "*cvar:adr8" pos "65 230" size "22 22" icon garbage	click { cmd "del adr8;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr8 { visiblewhen "*cvar:adr8" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr8;" } tooltip "_Delete this bookmark" }
 
 		string adr9 { pos "95 500" string "*cvar adr9" size "300 12" }
-		custombutton resetadr9 { visiblewhen "*cvar:adr9" pos "65 230" size "22 22" icon garbage	click { cmd "del adr9;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr9 { visiblewhen "*cvar:adr9" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr9;" } tooltip "_Delete this bookmark" }
 
 		string adr10 { pos "95 530" string "*cvar adr10" size "300 12" }
-		custombutton resetadr10 { visiblewhen "*cvar:adr10" pos "65 230" size "22 22" icon garbage	click { cmd "del adr10;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr10 { visiblewhen "*cvar:adr10" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr10;" } tooltip "_Delete this bookmark" }
 
 		string adr11 { pos "95 560" string "*cvar adr11" size "300 12" }
-		custombutton resetadr11 { visiblewhen "*cvar:adr11" pos "65 230" size "22 22" icon garbage	click { cmd "del adr11;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr11 { visiblewhen "*cvar:adr11" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr11;" } tooltip "_Delete this bookmark" }
 
 		string adr12 { pos "95 590" string "*cvar adr12" size "300 12" }
-		custombutton resetadr12 { visiblewhen "*cvar:adr12" pos "65 230" size "22 22" icon garbage	click { cmd "del adr12;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr12 { visiblewhen "*cvar:adr12" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr12;" } tooltip "_Delete this bookmark" }
 
 		string adr13 { pos "95 620" string "*cvar adr13" size "300 12" }
-		custombutton resetadr13 { visiblewhen "*cvar:adr13" pos "65 230" size "22 22" icon garbage	click { cmd "del adr13;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr13 { visiblewhen "*cvar:adr13" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr13;" } tooltip "_Delete this bookmark" }
 
 		string adr14 { pos "95 650" string "*cvar adr14" size "300 12" }
-		custombutton resetadr14 { visiblewhen "*cvar:adr14" pos "65 230" size "22 22" icon garbage	click { cmd "del adr14;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr14 { visiblewhen "*cvar:adr14" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr14;" } tooltip "_Delete this bookmark" }
 
 		string adr15 { pos "95 680" string "*cvar adr15" size "300 12" }
-		custombutton resetadr15 { visiblewhen "*cvar:adr15" pos "65 230" size "22 22" icon garbage	click { cmd "del adr15;" } tooltip "_Delete this bookmark" }
+		custombutton resetadr15 { visiblewhen "*cvar:adr15" pos "65 230" size "22 22" icon garbage	onClick { cmd "del adr15;" } tooltip "_Delete this bookmark" }
 	}
 }
 
@@ -606,7 +606,7 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"364 40"
 			size		"16 16"
 			icon		prev
-			click		{ cmd "mp_prevgametype;" }
+			onClick		{ cmd "mp_prevgametype;" }
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
@@ -615,7 +615,7 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"460 40"
 			size		"16 16"
 			icon		next
-			click		{ cmd "mp_nextgametype;" }
+			onClick		{ cmd "mp_nextgametype;" }
 			onWheelUp	{ cmd "mp_prevgametype;" }
 			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
@@ -664,7 +664,7 @@ menu mp_create_server extends abstract_multiplayer
 			texh		"128 96"
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
+			onClick		{ cmd "mn_nextmap;" }
 			onRClick		{ cmd "mn_prevmap;" }
 		}
 		pic mappic2
@@ -675,7 +675,7 @@ menu mp_create_server extends abstract_multiplayer
 			texh		"128 96"
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
+			onClick		{ cmd "mn_nextmap;" }
 			onRClick		{ cmd "mn_prevmap;" }
 		}
 		pic mappic3
@@ -686,7 +686,7 @@ menu mp_create_server extends abstract_multiplayer
 			texh		"128 96"
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
+			onClick		{ cmd "mn_nextmap;" }
 			onRClick		{ cmd "mn_prevmap;" }
 		}
 
@@ -723,7 +723,7 @@ menu mp_create_server extends abstract_multiplayer
 			icon		prev
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_prevmap;" }
+			onClick		{ cmd "mn_prevmap;" }
 		}
 		custombutton next_map
 		{
@@ -732,7 +732,7 @@ menu mp_create_server extends abstract_multiplayer
 			icon		next
 			onWheelUp	{ cmd "mn_prevmap;" }
 			onWheelDown	{ cmd "mn_nextmap;" }
-			click		{ cmd "mn_nextmap;" }
+			onClick		{ cmd "mn_nextmap;" }
 		}
 
 		// ===================
@@ -1054,7 +1054,7 @@ menu mp_create_server extends abstract_multiplayer
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mp_startserver;" }
+		onClick		{ cmd "mp_startserver;" }
 	}
 
 	// ===================
@@ -1208,7 +1208,7 @@ menu multiplayer_selectteam
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "teamnum_inc;" }
+		onClick		{ cmd "teamnum_inc;" }
 	}
 	pic teamnum_dec
 	{
@@ -1218,7 +1218,7 @@ menu multiplayer_selectteam
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
-		click		{ cmd "teamnum_dec;" }
+		onClick		{ cmd "teamnum_dec;" }
 	}
 
 	custombutton button_exit
@@ -1229,7 +1229,7 @@ menu multiplayer_selectteam
 		size		"64 37"
 		texl		"192 0"
 		icon		return
-		click		{ cmd "spawnsoldiers;" }
+		onClick		{ cmd "spawnsoldiers;" }
 	}
 
 	// update every 2 sec
@@ -1247,7 +1247,7 @@ menu multiplayer_selectteam
 		pos			"96 580"
 		texl		"0 0"
 		texh		"64 64"
-		click		{ cmd "messagesay;" }
+		onClick		{ cmd "messagesay;" }
 	}
 
 	text chatscreen
@@ -1327,7 +1327,7 @@ menu multiplayer_wait
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "sv startgame;" }
+		onClick		{ cmd "sv startgame;" }
 	}
 
 	func event
@@ -1387,7 +1387,7 @@ menu serverpassword
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_server_need_password 0;mn_pop;connect;" }
+		onClick		{ cmd "mn_server_need_password 0;mn_pop;connect;" }
 	}
 }
 
@@ -1428,6 +1428,6 @@ menu chat_popup
 		font		f_menu
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;mn_push irc;" }
+		onClick		{ cmd "mn_pop;mn_push irc;" }
 	}
 }

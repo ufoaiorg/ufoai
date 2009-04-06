@@ -113,7 +113,7 @@ menu equipment
 		texl	"0 0"
 		texh	"28 36"
 		mousefx true
-		click { cmd "equip_select 0;" }
+		onClick { cmd "equip_select 0;" }
 	}
 	pic bt_actor1
 	{
@@ -122,7 +122,7 @@ menu equipment
 		texl	"32 0"
 		texh	"60 36"
 		mousefx true
-		click { cmd "equip_select 1;" }
+		onClick { cmd "equip_select 1;" }
 	}
 	pic bt_actor2
 	{
@@ -131,7 +131,7 @@ menu equipment
 		texl	"64 0"
 		texh	"92 36"
 		mousefx true
-		click { cmd "equip_select 2;" }
+		onClick { cmd "equip_select 2;" }
 	}
 	pic bt_actor3
 	{
@@ -140,7 +140,7 @@ menu equipment
 		texl	"96 0"
 		texh	"124 36"
 		mousefx true
-		click { cmd "equip_select 3;" }
+		onClick { cmd "equip_select 3;" }
 	}
 	pic bt_actor4
 	{
@@ -149,7 +149,7 @@ menu equipment
 		texl	"0 38"
 		texh	"28 74"
 		mousefx true
-		click { cmd "equip_select 4;" }
+		onClick { cmd "equip_select 4;" }
 	}
 	pic bt_actor5
 	{
@@ -158,7 +158,7 @@ menu equipment
 		texl	"32 38"
 		texh	"60 74"
 		mousefx true
-		click { cmd "equip_select 5;" }
+		onClick { cmd "equip_select 5;" }
 	}
 	pic bt_actor6
 	{
@@ -167,7 +167,7 @@ menu equipment
 		texl	"64 38"
 		texh	"92 74"
 		mousefx true
-		click { cmd "equip_select 6;" }
+		onClick { cmd "equip_select 6;" }
 	}
 	pic bt_actor7
 	{
@@ -176,7 +176,7 @@ menu equipment
 		texl	"96 38"
 		texh	"124 74"
 		mousefx true
-		click { cmd "equip_select 7;" }
+		onClick { cmd "equip_select 7;" }
 	}
 
 	string txt_actor0
@@ -185,7 +185,7 @@ menu equipment
 		pos		"60 13"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 0;" }
+		onClick { cmd "equip_select 0;" }
 	}
 	string txt_actor1
 	{
@@ -193,7 +193,7 @@ menu equipment
 		pos		"60 54"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 1;" }
+		onClick { cmd "equip_select 1;" }
 	}
 	string txt_actor2
 	{
@@ -201,7 +201,7 @@ menu equipment
 		pos		"60 95"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 2;" }
+		onClick { cmd "equip_select 2;" }
 	}
 	string txt_actor3
 	{
@@ -209,7 +209,7 @@ menu equipment
 		pos		"60 136"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 3;" }
+		onClick { cmd "equip_select 3;" }
 	}
 	string txt_actor4
 	{
@@ -217,7 +217,7 @@ menu equipment
 		pos		"60 177"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 4;" }
+		onClick { cmd "equip_select 4;" }
 	}
 	string txt_actor5
 	{
@@ -225,7 +225,7 @@ menu equipment
 		pos		"60 218"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 5;" }
+		onClick { cmd "equip_select 5;" }
 	}
 	string txt_actor6
 	{
@@ -233,7 +233,7 @@ menu equipment
 		pos		"60 259"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 6;" }
+		onClick { cmd "equip_select 6;" }
 	}
 	string txt_actor7
 	{
@@ -241,7 +241,7 @@ menu equipment
 		pos		"60 300"
 		size	"270 40"
 		textalign cl
-		click { cmd "equip_select 7;" }
+		onClick { cmd "equip_select 7;" }
 	}
 
 	// ==================
@@ -362,7 +362,7 @@ menu equipment
 			texl	"0 0"
 			texh	"16 16"
 			mousefx	true
-			click	{ cmd "mn_decreaseitem;" }
+			onClick	{ cmd "mn_decreaseitem;" }
 		}
 	
 		string item_name
@@ -381,7 +381,7 @@ menu equipment
 			texl	"16 0"
 			texh	"32 16"
 			mousefx	true
-			click	{ cmd "mn_increaseitem;" }
+			onClick	{ cmd "mn_increaseitem;" }
 		}
 
 		// ==================
@@ -404,7 +404,7 @@ menu equipment
 			texl	"0 0"
 			texh	"16 16"
 			mousefx	true
-			click	{ cmd "mn_decreasefiremode;" }
+			onClick	{ cmd "mn_decreasefiremode;" }
 		}
 		
 		string firemode_name
@@ -424,7 +424,7 @@ menu equipment
 			texl	"16 0"
 			texh	"32 16"
 			mousefx	true
-			click	{ cmd "mn_increasefiremode;" }
+			onClick	{ cmd "mn_increasefiremode;" }
 		}
 	}
 

@@ -39,7 +39,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		0
-			click 		{
+			onClick 		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -51,7 +51,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		1
-			click		{
+			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -63,7 +63,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		2
-			click		{
+			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -75,7 +75,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		3
-			click		{
+			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -87,7 +87,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		4
-			click		{
+			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -99,7 +99,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		5
-			click		{
+			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -111,7 +111,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		6
-			click		{
+			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -123,7 +123,7 @@ menu basesummary
 			color		"1 0 0 0.4"
 			padding		2
 			baseid		7
-			click		{
+			onClick		{
 				cmd "basesummary_selectbase <baseid>;"
 			}
 		}
@@ -216,7 +216,7 @@ menu basesummary
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
-		click	{ cmd "mn_pop;" }
+		onClick	{ cmd "mn_pop;" }
 	}
 
 	// ==================

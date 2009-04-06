@@ -81,12 +81,6 @@ static const value_t properties[] = {
 	{"visiblewhen", V_SPECIAL_IF, offsetof(menuNode_t, visibilityCondition), 0},
 
 	/* action event */
-	/** @deprecated */
-	{"click", V_SPECIAL_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
-	{"in", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseIn), MEMBER_SIZEOF(menuNode_t, onMouseIn)},
-	{"out", V_SPECIAL_ACTION, offsetof(menuNode_t, onMouseOut), MEMBER_SIZEOF(menuNode_t, onMouseOut)},
-
-	/* action event */
 	{"onclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onClick), MEMBER_SIZEOF(menuNode_t, onClick)},
 	{"onrclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onRightClick), MEMBER_SIZEOF(menuNode_t, onRightClick)},
 	{"onmclick", V_SPECIAL_ACTION, offsetof(menuNode_t, onMiddleClick), MEMBER_SIZEOF(menuNode_t, onMiddleClick)},

@@ -56,7 +56,7 @@ menu basedefence
 		lineheight	"22"
 		rows		"27"
 		mousefx		true
-		click
+		onClick
 	}
 
 	pic basedef_selected_slot
@@ -96,7 +96,7 @@ menu basedefence
 		size		"200 175"
 		origin		"0 -42 0"
 		mousefx		true
-		click
+		onClick
 	}
 
 	string basedef_item_name
@@ -127,7 +127,7 @@ menu basedefence
 		size		"128 52"
 		color		"1 1 1 1"
 		selectcolor	"1 1 1 1"
-		click		{ call basedef_missile }
+		onClick		{ call basedef_missile }
 	}
 
 	button basedef_button_laser
@@ -141,7 +141,7 @@ menu basedefence
 		size		"128 52"
 		color		"1 1 1 1"
 		selectcolor	"1 1 1 1"
-		click		{ call basedef_laser }
+		onClick		{ call basedef_laser }
 	}
 
 	text basedef_list
@@ -152,7 +152,7 @@ menu basedefence
 		lineheight	"20"
 		rows		"11"
 		mousefx		true
-		click
+		onClick
 	}
 
 	// ==================
@@ -168,7 +168,7 @@ menu basedefence
 		size		"37 32"
 		texl		"128 0"
 		icon		plus
-		click		{ cmd "airequip_add_item 1;" }
+		onClick		{ cmd "airequip_add_item 1;" }
 	}
 
 	custombutton basedef_button_remove1
@@ -180,7 +180,7 @@ menu basedefence
 		size		"37 32"
 		texl		"128 0"
 		icon		del
-		click		{ cmd "airequip_del_item 1;" }
+		onClick		{ cmd "airequip_del_item 1;" }
 	}
 
 	custombutton basedef_button_add2
@@ -192,7 +192,7 @@ menu basedefence
 		size		"37 32"
 		texl		"128 0"
 		icon		plus
-		click		{ cmd "airequip_add_item 2;" }
+		onClick		{ cmd "airequip_add_item 2;" }
 	}
 
 	custombutton basedef_button_remove2
@@ -204,7 +204,7 @@ menu basedefence
 		size		"37 32"
 		texl		"128 0"
 		icon		del
-		click 		{ cmd "airequip_del_item 2;" }
+		onClick 		{ cmd "airequip_del_item 2;" }
 	}
 
 	pic airequip_zone_select1
@@ -217,7 +217,7 @@ menu basedefence
 		texl		"0 83"
 		texh		"458 190"
 		mousefx		true
-		click		{ call basedef_zone1 }
+		onClick		{ call basedef_zone1 }
 	}
 
 	text basedef_text_zone1
@@ -239,7 +239,7 @@ menu basedefence
 		texl		"0 0"
 		texh		"458 82"
 		mousefx		true
-		click		{ call basedef_zone2 }
+		onClick		{ call basedef_zone2 }
 	}
 
 	text basedef_text_zone2
@@ -285,7 +285,7 @@ menu basedefence
 		size		"64 37"
 		texl		"192 0"
 		icon		return
-		click		{ cmd mn_pop }
+		onClick		{ cmd mn_pop }
 	}
 
 	func init

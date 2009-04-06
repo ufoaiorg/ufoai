@@ -35,7 +35,7 @@ menu bases
 		blend		true
 		pos			"950 20"
 		icon		geoscape
-		click		{ cmd "mn_pop;check_baseattacks;" }
+		onClick		{ cmd "mn_pop;check_baseattacks;" }
 	}
 
 	basemap thebasemap
@@ -59,7 +59,7 @@ menu bases
 		color		"0 0.8 0 1"
 		selectcolor "1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_push buildings;" }
+		onClick		{ cmd "mn_push buildings;" }
 	}
 
 	button aircraft
@@ -73,7 +73,7 @@ menu bases
 		font		f_menu
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push aircraft;" }
+		onClick		{ cmd "mn_push aircraft;" }
 	}
 
 	button buysell
@@ -87,7 +87,7 @@ menu bases
 		selectcolor	"1 1 1 1"
 		color		"0 0.8 0 1"
 		font		f_menu
-		click		{ cmd "mn_push market;" }
+		onClick		{ cmd "mn_push market;" }
 	}
 
 	button transfer
@@ -101,7 +101,7 @@ menu bases
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_push transfer;" }
+		onClick		{ cmd "mn_push transfer;" }
 	}
 
 	button research
@@ -115,7 +115,7 @@ menu bases
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_push research;" }
+		onClick		{ cmd "mn_push research;" }
 	}
 
 	button production
@@ -129,7 +129,7 @@ menu bases
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_push production;" }
+		onClick		{ cmd "mn_push production;" }
 	}
 
 	button hire
@@ -140,7 +140,7 @@ menu bases
 		blend		true
 		pos			"755 488"
 		size		"230 56"
-		click		{ cmd "mn_push employees;" }
+		onClick		{ cmd "mn_push employees;" }
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
@@ -157,7 +157,7 @@ menu bases
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_push aliencont;" }
+		onClick		{ cmd "mn_push aliencont;" }
 	}
 
 	button hospital
@@ -171,7 +171,7 @@ menu bases
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_push hospital;" }
+		onClick		{ cmd "mn_push hospital;" }
 	}
 
 	button summary
@@ -185,7 +185,7 @@ menu bases
 		color		"0 0.8 0 1"
 		selectcolor	"1 1 1 1"
 		font		f_menu
-		click		{ cmd "mn_push basesummary;" }
+		onClick		{ cmd "mn_push basesummary;" }
 	}
 
 	// ==================
@@ -238,7 +238,7 @@ menu bases
 		pos	"570 40"
 		texl	"0 48"
 		texh	"16 64"
-		click
+		onClick
 		{
 			cmd "mn_edittextentry name;"
 		}
@@ -252,7 +252,7 @@ menu bases
 		mousefx true
 		texl	"0 0"
 		texh	"16 16"
-		click	{ cmd "mn_prev_base;" }
+		onClick	{ cmd "mn_prev_base;" }
 	}
 
 	pic next_base
@@ -263,7 +263,7 @@ menu bases
 		mousefx	true
 		texl	"16 0"
 		texh	"32 16"
-		click	{ cmd "mn_next_base;" }
+		onClick	{ cmd "mn_next_base;" }
 	}
 
 	string base_status

@@ -80,7 +80,7 @@ menu aircraft_equip extends iaircraft
 		pos		"312 517"
 		size	"239 96"
 		mousefx	true
-		click
+		onClick
 		view aircraft_equip
 	}
 
@@ -130,7 +130,7 @@ menu aircraft_equip extends iaircraft
 		pos			"238 492"
 		size		"35 35"
 		icon		next
-		click		{ cmd "mn_next_equiptype;" }
+		onClick		{ cmd "mn_next_equiptype;" }
 		onWheelUp	{ cmd "mn_next_equiptype;" }
 		onWheelDown	{ cmd "mn_prev_equiptype;" }
 	}
@@ -153,7 +153,7 @@ menu aircraft_equip extends iaircraft
 		rows		"7"
 		textid		TEXT_LIST
 		mousefx		true
-		click
+		onClick
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 	}
@@ -168,7 +168,7 @@ menu aircraft_equip extends iaircraft
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
 		pos			"592 500"
-		click		{ cmd "airequip_add_item 1;" }
+		onClick		{ cmd "airequip_add_item 1;" }
 		icon		plus
 	}
 
@@ -178,7 +178,7 @@ menu aircraft_equip extends iaircraft
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
 		pos			"592 550"
-		click		{ cmd "airequip_del_item 1;" }
+		onClick		{ cmd "airequip_del_item 1;" }
 		icon		del
 	}
 
@@ -188,7 +188,7 @@ menu aircraft_equip extends iaircraft
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
 		pos			"592 660"
-		click		{ cmd "airequip_add_item 2;" }
+		onClick		{ cmd "airequip_add_item 2;" }
 		icon		plus
 	}
 
@@ -198,7 +198,7 @@ menu aircraft_equip extends iaircraft
 		image menu/button_background	blend true
 		texl "128 0"	size "37 32"
 		pos			"592 695"
-		click		{ cmd "airequip_del_item 2;" }
+		onClick		{ cmd "airequip_del_item 2;" }
 		icon		del
 	}
 
@@ -211,7 +211,7 @@ menu aircraft_equip extends iaircraft
 		texh		"458 190"
 		invis		false
 		mousefx		true
-		click		{ call airequip_zone1 }
+		onClick		{ call airequip_zone1 }
 	}
 
 	text airequip_text_zone1
@@ -222,7 +222,7 @@ menu aircraft_equip extends iaircraft
 		lineheight	"16"
 		textid		TEXT_AIREQUIP_1
 		rows		"3"
-		click		{ call airequip_zone1 }
+		onClick		{ call airequip_zone1 }
 	}
 
 	pic airequip_zone_select2
@@ -234,7 +234,7 @@ menu aircraft_equip extends iaircraft
 		image	menu/airequip_selected_element	blend true
 		texl	"0 0"
 		texh	"458 82"
-		click	{ call airequip_zone2 }
+		onClick	{ call airequip_zone2 }
 	}
 
 	text airequip_text_zone2
@@ -245,7 +245,7 @@ menu aircraft_equip extends iaircraft
 		lineheight	"16"
 		textid		TEXT_AIREQUIP_2
 		rows		"2"
-		click		{ call airequip_zone2 }
+		onClick		{ call airequip_zone2 }
 	}
 
 	string airequip_header1
@@ -256,7 +256,7 @@ menu aircraft_equip extends iaircraft
 		font		f_small
 		color		"0 .78 0 1"
 		textalign	cl
-		click		{ call airequip_zone1 }
+		onClick		{ call airequip_zone1 }
 	}
 
 	string airequip_header2
@@ -267,7 +267,7 @@ menu aircraft_equip extends iaircraft
 		font		f_small
 		color		"0 .78 0 1"
 		textalign	cl
-		click		{ call airequip_zone2 }
+		onClick		{ call airequip_zone2 }
 	}
 
 	// ==================
@@ -282,7 +282,7 @@ menu aircraft_equip extends iaircraft
 		pos			"909 121"
 		texl		"0 0"
 		texh		"64 64"
-		click		{ cmd "airequip_slot_select 0;" }
+		onClick		{ cmd "airequip_slot_select 0;" }
 	}
 	model airequip_model_slot0
 	{
@@ -302,7 +302,7 @@ menu aircraft_equip extends iaircraft
 		pos		"909 201"
 		texl	"0 0"
 		texh	"64 64"
-		click	{ cmd "airequip_slot_select 1;" }
+		onClick	{ cmd "airequip_slot_select 1;" }
 	}
 	model airequip_model_slot1
 	{
@@ -322,7 +322,7 @@ menu aircraft_equip extends iaircraft
 		pos		"909 281"
 		texl	"0 0"
 		texh	"64 64"
-		click	{ cmd "airequip_slot_select 2;" }
+		onClick	{ cmd "airequip_slot_select 2;" }
 	}
 	model airequip_model_slot2
 	{
@@ -342,7 +342,7 @@ menu aircraft_equip extends iaircraft
 		pos		"709 121"
 		texl	"0 0"
 		texh	"64 64"
-		click	{ cmd "airequip_slot_select 3;" }
+		onClick	{ cmd "airequip_slot_select 3;" }
 	}
 	model airequip_model_slot3
 	{
@@ -362,7 +362,7 @@ menu aircraft_equip extends iaircraft
 		pos		"709 281"
 		texl	"0 0"
 		texh	"64 64"
-		click	{ cmd "airequip_slot_select 4;" }
+		onClick	{ cmd "airequip_slot_select 4;" }
 	}
 	model airequip_model_slot4
 	{
@@ -382,7 +382,7 @@ menu aircraft_equip extends iaircraft
 		pos		"509 121"
 		texl	"0 0"
 		texh	"64 64"
-		click	{ cmd "airequip_slot_select 5;" }
+		onClick	{ cmd "airequip_slot_select 5;" }
 	}
 	model airequip_model_slot5
 	{
@@ -402,7 +402,7 @@ menu aircraft_equip extends iaircraft
 		pos		"509 201"
 		texl	"0 0"
 		texh	"64 64"
-		click	{ cmd "airequip_slot_select 6;" }
+		onClick	{ cmd "airequip_slot_select 6;" }
 	}
 	model airequip_model_slot6
 	{
@@ -422,7 +422,7 @@ menu aircraft_equip extends iaircraft
 		pos		"509 281"
 		texl	"0 0"
 		texh	"64 64"
-		click	{ cmd "airequip_slot_select 7;" }
+		onClick	{ cmd "airequip_slot_select 7;" }
 	}
 	model airequip_model_slot7
 	{

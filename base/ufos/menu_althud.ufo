@@ -26,7 +26,7 @@ menu althud extends ahud
 	{
 		pos			"832 0"
 		size		"192 56"
-		click		{ }
+		onClick		{ }
 	}
 
 	pic bar_right
@@ -38,7 +38,7 @@ menu althud extends ahud
 	{
 		pos			"864 64"
 		size		"160 512"
-		click		{ }
+		onClick		{ }
 	}
 
 	// ==================
@@ -65,12 +65,12 @@ menu althud extends ahud
 		image		hud/bar_chat
 		pos			"960 64"
 		size		"64 64"
-		out			{
+		onMouseOut			{
 			*bar_chat image hud/bar_chat
 			*bar_chat size "64 64"
 			cmd "mn_showchatbuttons 0;"
 		}
-		in			{
+		onMouseIn			{
 			*bar_chat image hud/bar_chat_choice
 			*bar_chat size "256 64"
 			cmd "mn_showchatbuttons 1;"
@@ -86,7 +86,7 @@ menu althud extends ahud
 		size		"32 32"
 		texl		"0 0"
 		texh		"32 32"
-		click		{
+		onClick		{
 			cmd	"messagesay;"
 		}
 	}
@@ -100,7 +100,7 @@ menu althud extends ahud
 		texl		"32 0"
 		texh		"64 32"
 		size		"32 32"
-		click		{
+		onClick		{
 			cmd	"messagesayteam;"
 		}
 	}
@@ -115,12 +115,12 @@ menu althud extends ahud
 		texl		"64 0"
 		texh		"96 32"
 		mousefx		false
-		out			{
+		onMouseOut			{
 			*chatscreen size "690 48"
 			*chatscreen rows "3"
 			*(func)event timeout 10000
 		}
-		in			{
+		onMouseIn			{
 			*chatscreen size "690 400"
 			*chatscreen rows "25"
 			*(func)event timeout 0
@@ -137,7 +137,6 @@ menu althud extends ahud
 		texh		"32 36"
 		pos			"985 590"
 		mousefx		false
-		in
 	}
 
 	func event
@@ -150,14 +149,14 @@ menu althud extends ahud
 	{
 		image		althud/bar_floor
 		pos			"960 630"
-		click		{ }
+		onClick		{ }
 	}
 
 	pic bar_teamright
 	{
 		image		althud/bar_teamright
 		pos			"920 640"
-		click		{ }
+		onClick		{ }
 	}
 
 	pic bar_teambox0
@@ -166,14 +165,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"856 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 0;" }
+		onClick		{ cmd "soldier_select 0;" }
 	}
 
 	pic bar_teamsep1
 	{
 		image		althud/bar_teamsep
 		pos			"840 640"
-		click		{ }
+		onClick		{ }
 	}
 	pic bar_teambox1
 	{
@@ -181,14 +180,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"776 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 1;" }
+		onClick		{ cmd "soldier_select 1;" }
 	}
 
 	pic bar_teamsep2
 	{
 		image		althud/bar_teamsep
 		pos			"760 640"
-		click		{ }
+		onClick		{ }
 	}
 	pic bar_teambox2
 	{
@@ -196,14 +195,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"696 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 2;" }
+		onClick		{ cmd "soldier_select 2;" }
 	}
 
 	pic bar_teamsep3
 	{
 		image		althud/bar_teamsep
 		pos			"680 640"
-		click 		{ }
+		onClick 		{ }
 	}
 	pic bar_teambox3
 	{
@@ -211,14 +210,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"616 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 3;" }
+		onClick		{ cmd "soldier_select 3;" }
 	}
 
 	pic bar_teamsep4
 	{
 		image		althud/bar_teamsep
 		pos			"600 640"
-		click		{ }
+		onClick		{ }
 	}
 	pic bar_teambox4
 	{
@@ -226,14 +225,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"536 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 4;" }
+		onClick		{ cmd "soldier_select 4;" }
 	}
 
 	pic bar_teamsep5
 	{
 		image		althud/bar_teamsep
 		pos			"520 640"
-		click		{ }
+		onClick		{ }
 	}
 	pic bar_teambox5
 	{
@@ -241,14 +240,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"456 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 5;" }
+		onClick		{ cmd "soldier_select 5;" }
 	}
 
 	pic bar_teamsep6
 	{
 		image		althud/bar_teamsep
 		pos			"440 640"
-		click		{ }
+		onClick		{ }
 	}
 	pic bar_teambox6
 	{
@@ -256,14 +255,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"376 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 6;" }
+		onClick		{ cmd "soldier_select 6;" }
 	}
 
 	pic bar_teamsep7
 	{
 		image		althud/bar_teamsep
 		pos			"360 640"
-		click		{ }
+		onClick		{ }
 	}
 	pic bar_teambox7
 	{
@@ -271,14 +270,14 @@ menu althud extends ahud
 		image		althud/bar_teambox
 		pos			"296 640"
 		size		"64 128"
-		click		{ cmd "soldier_select 7;" }
+		onClick		{ cmd "soldier_select 7;" }
 	}
 
 	pic bar_teamleft
 	{
 		image		althud/bar_teamleft
 		pos			"264 640"
-		click		{ }
+		onClick		{ }
 	}
 
 	confunc numonteam1
@@ -406,7 +405,7 @@ menu althud extends ahud
 		size		"120 260"
 		scale		"4 4 4"
 
-		click		{ cmd "mn_push ahudinv;" }
+		onClick		{ cmd "mn_push ahudinv;" }
 		onRClick		{ cmd "mn_push ahudphysdat;" }
 	}
 
@@ -512,7 +511,7 @@ menu althud extends ahud
 		key			"*binding nextalien"
 		pos			"841 12"
 		size		"48 34"
-		click		{ cmd "nextalien;" }
+		onClick		{ cmd "nextalien;" }
 	}
 	string numspotted
 	{
@@ -522,7 +521,6 @@ menu althud extends ahud
 		pos			"841 13"
 		size	    "48 34"
 		textalign	cc
-		in
 	}
 	pic nextround
 	{
@@ -533,7 +531,7 @@ menu althud extends ahud
 		texl		"0 0"
 		texh		"40 34"
 		mousefx		true
-		click		{ cmd "nextround;" }
+		onClick		{ cmd "nextround;" }
 	}
 	pic messagelog
 	{
@@ -542,7 +540,7 @@ menu althud extends ahud
 		texl		"43 0"
 		texh		"83 34"
 		mousefx		true
-		click		{ }
+		onClick		{ }
 	}
 	pic menu
 	{
@@ -551,7 +549,7 @@ menu althud extends ahud
 		texl		"86 0"
 		texh		"126 34"
 		mousefx		true
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	confunc selpla { *bt_primaryleft    image althud/buttons_althud1a }
@@ -618,7 +616,7 @@ menu althud extends ahud
 		texl		"81 37"
 		texh		"106 70"
 		mousefx		true
-		click		{ cmd "togglereaction;" }
+		onClick		{ cmd "togglereaction;" }
 	}
 
 	confunc althud_deselheadgear { *althud_bt_use_headgear image althud/buttons_althud1g }
@@ -632,7 +630,7 @@ menu althud extends ahud
 		pos			"930 497"
 		texl		"108 37"
 		texh		"134 70"
-		click		{ cmd "useheadgear;" }
+		onClick		{ cmd "useheadgear;" }
 	}
 
 	pic bt_reloadright
@@ -643,9 +641,9 @@ menu althud extends ahud
 		texl		"0 37"
 		texh		"25 70"
 		mousefx		true
-		click		{ cmd "reloadright;" }
-		in			{ cmd "remaining_tus reload_r 1;" }
-		out			{ cmd "remaining_tus reload_r 0;" }
+		onClick		{ cmd "reloadright;" }
+		onMouseIn			{ cmd "remaining_tus reload_r 1;" }
+		onMouseOut			{ cmd "remaining_tus reload_r 0;" }
 	}
 
 	pic bt_reloadleft
@@ -656,9 +654,9 @@ menu althud extends ahud
 		texl		"0 37"
 		texh		"25 70"
 		mousefx		true
-		click		{ cmd "reloadleft;" }
-		in			{ cmd "remaining_tus reload_l 1;" }
-		out			{ cmd "remaining_tus reload_l 0;" }
+		onClick		{ cmd "reloadleft;" }
+		onMouseIn			{ cmd "remaining_tus reload_l 1;" }
+		onMouseOut			{ cmd "remaining_tus reload_l 0;" }
 	}
 
 	// CROUCH/STAND UP BUTTON
@@ -676,9 +674,9 @@ menu althud extends ahud
 		pos			"991 536"
 		texl		"27 37"
 		texh		"52 70"
-		click		{ cmd "standcrouch;" }
-		in			{ cmd "remaining_tus crouch 1;" }
-		out			{ cmd "remaining_tus crouch 0;" }
+		onClick		{ cmd "standcrouch;" }
+		onMouseIn			{ cmd "remaining_tus crouch 1;" }
+		onMouseOut			{ cmd "remaining_tus crouch 0;" }
 	}
 
 	checkbox bt_crouch_reservation
@@ -728,7 +726,7 @@ menu althud extends ahud
 		texl		"64 32"	// Inital pic - will be overwritten once the game's completely started.
 		texh		"127 64"
 		mousefx		true
-		click		{ cmd "sel_shotreservation;" }
+		onClick		{ cmd "sel_shotreservation;" }
 		onRClick		{ cmd "sel_shotreservation 0;" }
 	}
 
@@ -741,7 +739,7 @@ menu althud extends ahud
 		pos			"991 648"
 		texl		"54 74"
 		texh		"79 107"
-		click		{ cmd "mn_modify cl_worldlevel +1 0 7;" }
+		onClick		{ cmd "mn_modify cl_worldlevel +1 0 7;" }
 	}
 	pic bt_floordown
 	{
@@ -752,7 +750,7 @@ menu althud extends ahud
 		pos			"991 723"
 		texl		"81 74"
 		texh		"106 107"
-		click		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
+		onClick		{ cmd "mn_modify cl_worldlevel -1 0 7;" }
 	}
 
 	container right
@@ -881,7 +879,6 @@ menu althud extends ahud
 		tooltip		"*cvar mn_tu_tooltips"
 		pos			"886 332"
 		size		"120 4"
-		in
 	}
 
 	bar timeall
@@ -1131,7 +1128,7 @@ menu althud extends ahud
 		texl		"0 74"
 		texh		"25 107"
 		mousefx		true
-		click		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
+		onClick		{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor lr althud.bt_primaryright ll;" }
 	}
 	pic bt_primaryleft
 	{
@@ -1141,7 +1138,7 @@ menu althud extends ahud
 		texl		"0 74"
 		texh		"25 107"
 		mousefx		true
-		click		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
+		onClick		{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr althud.bt_primaryright ll;" }
 	}
 
 	// ==================

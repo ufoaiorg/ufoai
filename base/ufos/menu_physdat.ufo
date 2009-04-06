@@ -17,7 +17,7 @@ menu physdata
 	{
 		image		hud/bar_phys
 		pos			"0 0"
-		click
+		onClick
 	}
 
 	string actorname
@@ -142,7 +142,7 @@ menu physdata
 		size		"64 37"
 		texl		"192 0"
 		icon		return
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 }
 
@@ -158,7 +158,7 @@ menu hudphysdat extends physdata
 		mousefx		true
 		pos			"983 266"
 		size		"36 75"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	zone bt_inventory
@@ -167,7 +167,7 @@ menu hudphysdat extends physdata
 		mousefx		true
 		pos			"983 376"
 		size		"36 75"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 	func leave
 	{
@@ -186,7 +186,7 @@ menu ahudphysdat extends physdata
 		tooltip		"_Inventory and physical stats"
 		pos			"878 84"
 		size		"130 265"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 		onRClick		{ cmd "mn_pop;" }
 	}
 	func leave

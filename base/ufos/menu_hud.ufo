@@ -51,7 +51,7 @@ menu hud extends ahud
 			texl	"0 0"
 			texh	"28 36"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 0;" }
+			onClick	{ cmd "cl_worldlevel 0;" }
 		}
 		pic bt2
 		{
@@ -60,7 +60,7 @@ menu hud extends ahud
 			texl	"32 0"
 			texh	"60 36"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 1;" }
+			onClick	{ cmd "cl_worldlevel 1;" }
 		}
 		pic bt3
 		{
@@ -69,7 +69,7 @@ menu hud extends ahud
 			texl	"64 0"
 			texh	"92 36"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 2;" }
+			onClick	{ cmd "cl_worldlevel 2;" }
 		}
 		pic bt4
 		{
@@ -78,7 +78,7 @@ menu hud extends ahud
 			texl	"96 0"
 			texh	"124 36"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 3;" }
+			onClick	{ cmd "cl_worldlevel 3;" }
 		}
 		pic bt5
 		{
@@ -87,7 +87,7 @@ menu hud extends ahud
 			texl	"0 38"
 			texh	"28 74"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 4;" }
+			onClick	{ cmd "cl_worldlevel 4;" }
 		}
 		pic bt6
 		{
@@ -96,7 +96,7 @@ menu hud extends ahud
 			texl	"32 38"
 			texh	"60 74"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 5;" }
+			onClick	{ cmd "cl_worldlevel 5;" }
 		}
 		pic bt7
 		{
@@ -105,7 +105,7 @@ menu hud extends ahud
 			texl	"64 38"
 			texh	"92 74"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 6;" }
+			onClick	{ cmd "cl_worldlevel 6;" }
 		}
 		pic bt8
 		{
@@ -114,7 +114,7 @@ menu hud extends ahud
 			texl	"96 38"
 			texh	"124 74"
 			mousefx	true
-			click	{ cmd "cl_worldlevel 7;" }
+			onClick	{ cmd "cl_worldlevel 7;" }
 		}
 
 	}
@@ -194,7 +194,7 @@ menu hud extends ahud
 			texl	"0 0"
 			texh	"28 36"
 			mousefx	true
-			click	{ cmd "soldier_select 0;" }
+			onClick	{ cmd "soldier_select 0;" }
 		}
 		pic bt_actor1
 		{
@@ -204,7 +204,7 @@ menu hud extends ahud
 			texl	"32 0"
 			texh	"60 36"
 			mousefx	true
-			click	{ cmd "soldier_select 1;" }
+			onClick	{ cmd "soldier_select 1;" }
 		}
 		pic bt_actor2
 		{
@@ -214,7 +214,7 @@ menu hud extends ahud
 			texl	"64 0"
 			texh	"92 36"
 			mousefx	true
-			click	{ cmd "soldier_select 2;" }
+			onClick	{ cmd "soldier_select 2;" }
 		}
 		pic bt_actor3
 		{
@@ -224,7 +224,7 @@ menu hud extends ahud
 			texl	"96 0"
 			texh	"124 36"
 			mousefx	true
-			click	{ cmd "soldier_select 3;" }
+			onClick	{ cmd "soldier_select 3;" }
 		}
 		pic bt_actor4
 		{
@@ -234,7 +234,7 @@ menu hud extends ahud
 			texl	"0 38"
 			texh	"28 74"
 			mousefx	true
-			click	{ cmd "soldier_select 4;" }
+			onClick	{ cmd "soldier_select 4;" }
 		}
 		pic bt_actor5
 		{
@@ -244,7 +244,7 @@ menu hud extends ahud
 			texl	"32 38"
 			texh	"60 74"
 			mousefx	true
-			click	{ cmd "soldier_select 5;" }
+			onClick	{ cmd "soldier_select 5;" }
 		}
 		pic bt_actor6
 		{
@@ -254,7 +254,7 @@ menu hud extends ahud
 			texl	"64 38"
 			texh	"92 74"
 			mousefx	true
-			click	{ cmd "soldier_select 6;" }
+			onClick	{ cmd "soldier_select 6;" }
 		}
 		pic bt_actor7
 		{
@@ -264,7 +264,7 @@ menu hud extends ahud
 			texl	"96 38"
 			texh	"124 74"
 			mousefx	true
-			click	{ cmd "soldier_select 7;" }
+			onClick	{ cmd "soldier_select 7;" }
 		}
 	}
 
@@ -294,7 +294,7 @@ menu hud extends ahud
 			size	"64 37"
 			texl	"192 0"
 			icon	return
-			click	{ cmd "nextround;" }
+			onClick	{ cmd "nextround;" }
 		}
 
 		string numspotted
@@ -305,7 +305,7 @@ menu hud extends ahud
 			size	"48 34"
 			textalign	cc
 			key		"*binding nextalien"
-			click	{ cmd "nextalien;" }
+			onClick	{ cmd "nextalien;" }
 		}
 	}
 
@@ -357,7 +357,7 @@ menu hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			click	{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
+			onClick	{ cmd "list_firemodes r;mn_push_dropdown firemode_right.anchor ll hud.right.bt_pfire ul;" }
 		}
 
 		pic bt_reload
@@ -369,9 +369,9 @@ menu hud extends ahud
 			texl	"0 38"
 			texh	"64 74"
 			mousefx	true
-			click	{ cmd "reloadright;" }
-			in		{ cmd "remaining_tus reload_r 1;" }
-			out		{ cmd "remaining_tus reload_r 0;" }
+			onClick	{ cmd "reloadright;" }
+			onMouseIn		{ cmd "remaining_tus reload_r 1;" }
+			onMouseOut		{ cmd "remaining_tus reload_r 0;" }
 		}
 
 		string ammoright
@@ -396,7 +396,7 @@ menu hud extends ahud
 			texl	"64 0"
 			texh	"128 37"
 			mousefx	true
-			click	{ cmd "useheadgear;" }
+			onClick	{ cmd "useheadgear;" }
 		}
 	}
 
@@ -426,7 +426,7 @@ menu hud extends ahud
 			texl	"0 76"
 			texh	"75 128"
 			mousefx	true
-			click	{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
+			onClick	{ cmd "list_firemodes l;mn_push_dropdown firemode_left.anchor lr hud.left.bt_pfire ur;" }
 		}
 
 		pic bt_reload
@@ -438,9 +438,9 @@ menu hud extends ahud
 			texl	"0 38"
 			texh	"64 74"
 			mousefx	true
-			click	{ cmd "reloadleft;" }
-			in		{ cmd "remaining_tus reload_l 1;" }
-			out		{ cmd "remaining_tus reload_l 0;" }
+			onClick	{ cmd "reloadleft;" }
+			onMouseIn		{ cmd "remaining_tus reload_l 1;" }
+			onMouseOut		{ cmd "remaining_tus reload_l 0;" }
 		}
 
 		string ammoleft
@@ -466,9 +466,9 @@ menu hud extends ahud
 			pos		"8 107"
 			texl	"0 75"
 			texh	"52 112"
-			click	{ cmd "standcrouch;" }
-			in		{ cmd "remaining_tus crouch 1;" }
-			out		{ cmd "remaining_tus crouch 0;" }
+			onClick	{ cmd "standcrouch;" }
+			onMouseIn		{ cmd "remaining_tus crouch 1;" }
+			onMouseOut		{ cmd "remaining_tus crouch 0;" }
 		}
 
 		checkbox bt_crouch_reservation
@@ -530,7 +530,7 @@ menu hud extends ahud
 			texl	"64 32"	// Inital pic - will be overwritten once the game's completely started.
 			texh	"115 64"
 			mousefx	true
-			click	{ cmd "sel_shotreservation;" }
+			onClick	{ cmd "sel_shotreservation;" }
 			onRClick	{ cmd "sel_shotreservation 0;" }
 		}
 
@@ -543,7 +543,7 @@ menu hud extends ahud
 			texl	"0 32"	// Inital pic - will be overwritten once the game's compeletly started.
 			texh	"31 63"
 			mousefx	true
-			click	{ cmd "togglereaction;" }
+			onClick	{ cmd "togglereaction;" }
 		}
 
 		string tus
@@ -569,7 +569,6 @@ menu hud extends ahud
 			tooltip	"*cvar mn_tu_tooltips"
 			pos		"130 21"
 			size	"305 6"
-			in
 		}
 
 		bar timeall
@@ -747,7 +746,7 @@ menu hud extends ahud
 			pos		"6 10"
 			texl	"165 0"
 			texh	"201 75"
-			click	{ cmd "mn_pop;" }
+			onClick	{ cmd "mn_pop;" }
 		}
 
 		pic bt_physdata
@@ -758,7 +757,7 @@ menu hud extends ahud
 			pos		"6 137"
 			texl	"202 0"
 			texh	"238 75"
-			click	{ cmd "mn_push hudphysdat;" }
+			onClick	{ cmd "mn_push hudphysdat;" }
 		}
 
 		pic bt_inventory
@@ -769,7 +768,7 @@ menu hud extends ahud
 			pos		"6 247"
 			texl	"128 0"
 			texh	"164 75"
-			click	{ cmd "mn_push hudinv;" }
+			onClick	{ cmd "mn_push hudinv;" }
 		}
 	}
 
@@ -818,7 +817,7 @@ menu hud extends ahud
 			size		"32 32"
 			texl		"0 0"
 			texh		"32 32"
-			click		{ cmd "messagesay;" }
+			onClick		{ cmd "messagesay;" }
 		}
 		pic bar_chat_team
 		{
@@ -830,7 +829,7 @@ menu hud extends ahud
 			size		"32 32"
 			texl		"32 0"
 			texh		"64 32"
-			click		{ cmd "messagesayteam;" }
+			onClick		{ cmd "messagesayteam;" }
 		}
 		pic bar_chat_show
 		{
@@ -843,12 +842,12 @@ menu hud extends ahud
 			texl		"64 0"
 			texh		"96 32"
 			mousefx		false
-			out			{
+			onMouseOut			{
 				*chatscreen size "690 48"
 				*chatscreen rows "3"
 				*(func)event timeout 10000
 			}
-			in			{
+			onMouseIn			{
 				*chatscreen size "690 400"
 				*chatscreen rows "25"
 				*(func)event timeout 0
@@ -864,15 +863,15 @@ menu hud extends ahud
 			texl		"0 0"
 			texh		"32 36"
 			mousefx		false
-			in {
+			onMouseIn {
 				*node:this	texl	"0 36"
 				*node:this	texh	"32 72"
 			}
-			out {
+			onMouseOut {
 				*node:this	texl	"0 0"
 				*node:this	texh	"32 36"
 			}
-			click		{
+			onClick		{
 				if "*cvar:mn_showchatbuttons != 0" {
 					*node:parent.bar_chat_bg image hud/bar_chat
 					*node:parent.bar_chat_bg pos "192 0"

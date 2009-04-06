@@ -34,14 +34,14 @@ menu singleplayer
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_exit; mn_push campaigns;" }
+		onClick		{ cmd "game_exit; mn_push campaigns;" }
 	}
 
 	button button_skirmish
 	{
 		pos	"640 240"
 		size "256 64"
-		click	{ cmd "mn_push skirmish;" }
+		onClick	{ cmd "mn_push skirmish;" }
 		image	menu/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
@@ -59,7 +59,7 @@ menu singleplayer
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 }
 
@@ -99,7 +99,7 @@ menu singleplayermission
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_continue;" }
+		onClick		{ cmd "game_continue;" }
 	}
 
 	button button_abort
@@ -112,7 +112,7 @@ menu singleplayermission
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_abort;" }
+		onClick		{ cmd "game_abort;" }
 	}
 
 	// @todo only works for campaign mode games - not for skirmish
@@ -126,7 +126,7 @@ menu singleplayermission
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_go;" }
+		onClick		{ cmd "game_go;" }
 	}
 
 	button button_options
@@ -139,7 +139,7 @@ menu singleplayermission
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "mn_push options;" }
+		onClick		{ cmd "mn_push options;" }
 	}
 
 	button button_exit
@@ -152,7 +152,7 @@ menu singleplayermission
 		font		f_menubig
 		color		"0 0.5 0 1"
 		selectcolor	"1 1 1 1"
-		click		{ cmd "game_exit;mn_pop;" }
+		onClick		{ cmd "game_exit;mn_pop;" }
 	}
 }
 
@@ -208,7 +208,7 @@ menu lostgame
 	zone leave
 	{
 		size		"1024 768"
-		click		{ cmd "mn_pop;" }
+		onClick		{ cmd "mn_pop;" }
 	}
 }
 
@@ -272,6 +272,6 @@ menu endgame
 	zone leave
 	{
 		size		"1024 768"
-		click		{ cmd "mn_pop; mn_push main; seq_start credits;" }
+		onClick		{ cmd "mn_pop; mn_push main; seq_start credits;" }
 	}
 }
