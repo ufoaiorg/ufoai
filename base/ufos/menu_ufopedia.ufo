@@ -160,7 +160,6 @@ menu ufopedia
 		tabwidth	230
 		rows		"10"
 		scrollbar	true
-		wheel
 	}
 
 	text techtree
@@ -173,7 +172,6 @@ menu ufopedia
 		mousefx		true
 		scrollbar	true
 		click
-		wheel
 	}
 
 	string title

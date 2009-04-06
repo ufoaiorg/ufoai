@@ -151,7 +151,6 @@ menu basesummary
 		scrollbar	true
 		rows		"38"
 		longlines	prettychop
-		wheel
 	}
 
 	// ==================
@@ -172,7 +171,6 @@ menu basesummary
 		font		f_small
 		lineheight		16
 		tabwidth	50
-		wheel
 		scrollbar	true
 		rows		"23"
 		textid			TEXT_STANDARD

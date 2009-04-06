@@ -216,7 +216,6 @@ menu uforecovery
 			rows		"8"
 			scrollbar	true
 			mousefx		true
-			wheel
 			click
 		}
 
@@ -306,7 +305,6 @@ menu uforecovery
 			rows		"8"		// max. nations
 			click
 			mousefx true
-			wheel
 		}
 
 		string selected_nation_str

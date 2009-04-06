@@ -119,9 +119,9 @@ menu aircraft_equip extends iaircraft
 		pos			"28 492"
 		size		"35 35"
 		icon		prev
-		click		{ cmd "mn_prev_equiptype;" }
-		whup		{ cmd "mn_next_equiptype;" }
-		whdown		{ cmd "mn_prev_equiptype;" }
+		onClick		{ cmd "mn_prev_equiptype;" }
+		onWheelUp	{ cmd "mn_next_equiptype;" }
+		onWheelDown	{ cmd "mn_prev_equiptype;" }
 	}
 
 	custombutton bt_next_craftitemtype
@@ -131,8 +131,8 @@ menu aircraft_equip extends iaircraft
 		size		"35 35"
 		icon		next
 		click		{ cmd "mn_next_equiptype;" }
-		whup		{ cmd "mn_next_equiptype;" }
-		whdown		{ cmd "mn_prev_equiptype;" }
+		onWheelUp	{ cmd "mn_next_equiptype;" }
+		onWheelDown	{ cmd "mn_prev_equiptype;" }
 	}
 
 	string craftitemtype
@@ -141,8 +141,8 @@ menu aircraft_equip extends iaircraft
 		pos			"87 498"
 		size		"120 16"
 		textalign	cc
-		whup		{ cmd "mn_prev_equiptype;" }
-		whdown		{ cmd "mn_next_equiptype;" }
+		onWheelUp	{ cmd "mn_prev_equiptype;" }
+		onWheelDown	{ cmd "mn_next_equiptype;" }
 	}
 
 	text airequip_list
@@ -154,7 +154,6 @@ menu aircraft_equip extends iaircraft
 		textid		TEXT_LIST
 		mousefx		true
 		click
-		wheel
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
 	}

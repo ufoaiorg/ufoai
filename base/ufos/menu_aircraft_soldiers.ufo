@@ -264,7 +264,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 470"
-		change { cmd "team_hire 0 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 0 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -274,7 +274,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 505"
-		change { cmd "team_hire 1 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 1 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -284,7 +284,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 540"
-		change { cmd "team_hire 2 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 2 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -294,7 +294,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 575"
-		change { cmd "team_hire 3 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 3 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -304,7 +304,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 610"
-		change { cmd "team_hire 4 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 4 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -314,7 +314,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 645"
-		change { cmd "team_hire 5 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 5 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -324,7 +324,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 680"
-		change { cmd "team_hire 6 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 6 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -334,7 +334,7 @@ menu team extends iaircraft
 	{
 		tooltip	"_Add/remove this soldier"
 		pos	"280 715"
-		change { cmd "team_hire 7 <cvar:mn_relative_id>;" }
+		onChange { cmd "team_hire 7 <cvar:mn_relative_id>;" }
 		current 0
 		image menu/checkbox_green
 		size "20 20"
@@ -349,8 +349,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 0 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor1
 	{
@@ -360,8 +360,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 1 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor2
 	{
@@ -371,8 +371,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 2 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor3
 	{
@@ -382,8 +382,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 3 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor4
 	{
@@ -393,8 +393,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 4 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor5
 	{
@@ -404,8 +404,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 5 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor6
 	{
@@ -415,8 +415,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 6 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor7
 	{
@@ -426,8 +426,8 @@ menu team extends iaircraft
 		textalign cl
 		click { cmd "team_select 7 <cvar:mn_relative_id>;" }
 		invis	true
-		whup { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		whdown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
 	}
 
 	vscrollbar scroll_employees
@@ -437,7 +437,7 @@ menu team extends iaircraft
 		current 0
 		viewsize 8
 		fullsize 50
-		change {
+		onChange {
 			cmd "update_soldier_list 8 <current>"
 			*cvar:mn_relative_id <current>
 		}

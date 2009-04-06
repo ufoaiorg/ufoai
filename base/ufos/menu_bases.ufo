@@ -219,7 +219,7 @@ menu bases
 		pos			"60 30"
 		size		"240 32"
 		font		f_big
-		change {
+		onChange {
 			// stores the value of the cvar in the base structure
 			cmd	"base_changename"
 		}
@@ -229,8 +229,8 @@ menu bases
 	{
 		pos	"25 25"
 		size	"606 46"
-		whup	{ cmd "mn_next_base;" }
-		whdown	{ cmd "mn_prev_base;" }
+		onWheelUp	{ cmd "mn_next_base;" }
+		onWheelDown	{ cmd "mn_prev_base;" }
 	}
 
 	pic bt_edit

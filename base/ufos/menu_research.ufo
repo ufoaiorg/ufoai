@@ -373,7 +373,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 113"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 0; mn_rs_change 0 <lastdiff>;"
 		}
 	}
@@ -384,7 +384,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 138"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 1; mn_rs_change 1 <lastdiff>;"
 		}
 	}
@@ -395,7 +395,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 163"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 2; mn_rs_change 2 <lastdiff>;"
 		}
 	}
@@ -406,7 +406,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 188"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 3; mn_rs_change 3 <lastdiff>;"
 		}
 	}
@@ -417,7 +417,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 213"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 4; mn_rs_change 4 <lastdiff>;"
 		}
 	}
@@ -428,7 +428,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 238"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 5; mn_rs_change 5 <lastdiff>;"
 		}
 	}
@@ -439,7 +439,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 263"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 6; mn_rs_change 6 <lastdiff>;"
 		}
 	}
@@ -450,7 +450,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 288"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 7; mn_rs_change 7 <lastdiff>;"
 		}
 	}
@@ -461,7 +461,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 313"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 8; mn_rs_change 8 <lastdiff>;"
 		}
 	}
@@ -472,7 +472,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 338"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 9; mn_rs_change 9 <lastdiff>;"
 		}
 	}
@@ -483,7 +483,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 363"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 10; mn_rs_change 10 <lastdiff>;"
 		}
 	}
@@ -494,7 +494,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 388"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 11; mn_rs_change 11 <lastdiff>;"
 		}
 	}
@@ -505,7 +505,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 413"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 12; mn_rs_change 12 <lastdiff>;"
 		}
 	}
@@ -516,7 +516,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 438"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 13; mn_rs_change 13 <lastdiff>;"
 		}
 	}
@@ -527,7 +527,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 463"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 14; mn_rs_change 14 <lastdiff>;"
 		}
 	}
@@ -538,7 +538,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 488"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 15; mn_rs_change 15 <lastdiff>;"
 		}
 	}
@@ -549,7 +549,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 513"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 16; mn_rs_change 16 <lastdiff>;"
 		}
 	}
@@ -560,7 +560,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 538"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 17; mn_rs_change 17 <lastdiff>;"
 		}
 	}
@@ -571,7 +571,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 563"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 18; mn_rs_change 18 <lastdiff>;"
 		}
 	}
@@ -582,7 +582,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 588"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 19; mn_rs_change 19 <lastdiff>;"
 		}
 	}
@@ -593,7 +593,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 613"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 20; mn_rs_change 20 <lastdiff>;"
 		}
 	}
@@ -604,7 +604,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 638"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 21; mn_rs_change 21 <lastdiff>;"
 		}
 	}
@@ -615,7 +615,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 663"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 22; mn_rs_change 22 <lastdiff>;"
 		}
 	}
@@ -626,7 +626,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"500 688"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 23; mn_rs_change 23 <lastdiff>;"
 		}
 	}
@@ -637,7 +637,7 @@ menu research
 		image	menu/spinner_blue blend true
 		pos		"410 713"
 		min 0 current 10000 max 20000 delta 1
-		change {
+		onChange {
 			cmd "research_select 24; mn_rs_change 24 <lastdiff>;"
 		}
 	}

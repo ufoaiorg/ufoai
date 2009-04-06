@@ -144,7 +144,6 @@ menu iaircraft
 		textid		TEXT_AIRCRAFT_LIST
 		color	"0 .78 0 1"
 		selectcolor	"1 1 1 1"
-		wheel
 		mousefx		true
 		longlines	prettychop
 		onLinesChange {

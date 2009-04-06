@@ -57,7 +57,6 @@ menu althud extends ahud
 		bordercolor	"0.5 0.5 0.5 1"
 		border		2
 		bgcolor		"0 0.1 0 0.8"
-		wheel
 	}
 
 	pic bar_chat
@@ -689,7 +688,7 @@ menu althud extends ahud
 		pos			"969 536"
 		size		"20 18"
 		current		0
-		change		{ cmd "togglecrouchreserve;" }
+		onChange	{ cmd "togglecrouchreserve;" }
 	}
 
 	confunc crouch_checkbox_disable_s {
@@ -804,9 +803,9 @@ menu althud extends ahud
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		whup		{ call show_rightweapon cmd "switch_firemode_list r;" }
-		whdown		{ call show_leftweapon cmd "switch_firemode_list l;" }
-		click		{ call show_rightweapon cmd "switch_firemode_list r;" }
+		onWheelUp	{ call show_rightweapon cmd "switch_firemode_list r;" }
+		onWheelDown	{ call show_leftweapon cmd "switch_firemode_list l;" }
+		onClick		{ call show_rightweapon cmd "switch_firemode_list r;" }
 	}
 	pic switch_to_left_hand
 	{
@@ -816,9 +815,9 @@ menu althud extends ahud
 		texl		"16 0"
 		texh		"32 16"
 		mousefx		true
-		whup		{ call show_rightweapon cmd "switch_firemode_list r;" }
-		whdown		{ call show_leftweapon cmd "switch_firemode_list l;" }
-		click		{ call show_leftweapon cmd "switch_firemode_list l;" }
+		onWheelUp	{ call show_rightweapon cmd "switch_firemode_list r;" }
+		onWheelDown	{ call show_leftweapon cmd "switch_firemode_list l;" }
+		onClick		{ call show_leftweapon cmd "switch_firemode_list l;" }
 	}
 
 	// ==================

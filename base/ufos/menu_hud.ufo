@@ -478,7 +478,7 @@ menu hud extends ahud
 			pos		"60 107"
 			size	"20 18"
 			current	0
-			change	{ cmd "togglecrouchreserve;" }
+			onChange	{ cmd "togglecrouchreserve;" }
 		}
 	}
 
@@ -790,7 +790,6 @@ menu hud extends ahud
 		bordercolor	"0.5 0.5 0.5 1"
 		border		2
 		bgcolor		"0 0.1 0 0.8"
-		wheel
 	}
 
 	panel chat {

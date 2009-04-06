@@ -74,7 +74,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 180"
 		size		"20 20"
-		change		{ cmd "employee_hire 0;" }
+		onChange	{ cmd "employee_hire 0;" }
 		rclick		{ cmd "employee_delete 0;" }
 	}
 	checkbox bt_employee1
@@ -84,7 +84,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 218"
 		size		"20 20"
-		change		{ cmd "employee_hire 1;" }
+		onChange	{ cmd "employee_hire 1;" }
 		rclick		{ cmd "employee_delete 1;" }
 	}
 	checkbox bt_employee2
@@ -94,7 +94,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 256"
 		size		"20 20"
-		change		{ cmd "employee_hire 2;" }
+		onChange	{ cmd "employee_hire 2;" }
 		rclick		{ cmd "employee_delete 2;" }
 	}
 	checkbox bt_employee3
@@ -104,7 +104,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 294"
 		size		"20 20"
-		change		{ cmd "employee_hire 3;" }
+		onChange	{ cmd "employee_hire 3;" }
 		rclick		{ cmd "employee_delete 3;" }
 	}
 	checkbox bt_employee4
@@ -114,7 +114,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 332"
 		size		"20 20"
-		change		{ cmd "employee_hire 4;" }
+		onChange	{ cmd "employee_hire 4;" }
 		rclick		{ cmd "employee_delete 4;" }
 	}
 	checkbox bt_employee5
@@ -124,7 +124,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 370"
 		size		"20 20"
-		change		{ cmd "employee_hire 5;" }
+		onChange	{ cmd "employee_hire 5;" }
 		rclick		{ cmd "employee_delete 5;" }
 	}
 	checkbox bt_employee6
@@ -134,7 +134,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 408"
 		size		"20 20"
-		change		{ cmd "employee_hire 6;" }
+		onChange	{ cmd "employee_hire 6;" }
 		rclick		{ cmd "employee_delete 6;" }
 	}
 	checkbox bt_employee7
@@ -144,7 +144,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 446"
 		size		"20 20"
-		change		{ cmd "employee_hire 7;" }
+		onChange	{ cmd "employee_hire 7;" }
 		rclick		{ cmd "employee_delete 7;" }
 	}
 	checkbox bt_employee8
@@ -154,7 +154,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 484"
 		size		"20 20"
-		change		{ cmd "employee_hire 8;" }
+		onChange	{ cmd "employee_hire 8;" }
 		rclick		{ cmd "employee_delete 8;" }
 	}
 	checkbox bt_employee9
@@ -164,7 +164,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 522"
 		size		"20 20"
-		change		{ cmd "employee_hire 9;" }
+		onChange	{ cmd "employee_hire 9;" }
 		rclick		{ cmd "employee_delete 9;" }
 	}
 	checkbox bt_employee10
@@ -174,7 +174,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 560"
 		size		"20 20"
-		change		{ cmd "employee_hire 10;" }
+		onChange	{ cmd "employee_hire 10;" }
 		rclick		{ cmd "employee_delete 10;" }
 	}
 	checkbox bt_employee11
@@ -184,7 +184,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 598"
 		size		"20 20"
-		change		{ cmd "employee_hire 11;" }
+		onChange	{ cmd "employee_hire 11;" }
 		rclick		{ cmd "employee_delete 11;" }
 	}
 	checkbox bt_employee12
@@ -194,7 +194,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 636"
 		size		"20 20"
-		change		{ cmd "employee_hire 12;" }
+		onChange	{ cmd "employee_hire 12;" }
 		rclick		{ cmd "employee_delete 12;" }
 	}
 	checkbox bt_employee13
@@ -204,7 +204,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 674"
 		size		"20 20"
-		change		{ cmd "employee_hire 13;" }
+		onChange	{ cmd "employee_hire 13;" }
 		rclick		{ cmd "employee_delete 13;" }
 	}
 	checkbox bt_employee14
@@ -214,7 +214,7 @@ menu employees
 		image		menu/checkbox_green
 		pos			"325 712"
 		size		"20 20"
-		change		{ cmd "employee_hire 14;" }
+		onChange	{ cmd "employee_hire 14;" }
 		rclick		{ cmd "employee_delete 14;" }
 	}
 
@@ -239,7 +239,7 @@ menu employees
 		current		0
 		viewsize	15
 		fullsize	50
-		change		{ cmd "mn_textscroll employee_list <lastdiff>; employee_scroll;" }
+		onChange	{ cmd "mn_textscroll employee_list <lastdiff>; employee_scroll;" }
 	}
 
 	text employee_list
@@ -254,8 +254,8 @@ menu employees
 		selectcolor	"1 1 1 1"
 		mousefx		true
 		onClick
-		onWhup			{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
-		onWhdown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
+		onWheelUp		{ cmd "mn_textscroll employee_list -1; employee_scroll;" }
+		onWheelDown		{ cmd "mn_textscroll employee_list 1; employee_scroll;" }
 		onLinesChange	{
 			*(abstractscrollbar)scroll fullsize <lines>
 			*(abstractscrollbar)scroll current <text_scroll>

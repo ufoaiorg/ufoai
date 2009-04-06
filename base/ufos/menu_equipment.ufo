@@ -340,7 +340,6 @@ menu equipment
 			tabwidth	190
 			rows		"7"
 			scrollbar	true
-			wheel
 			textid		TEXT_STANDARD
 		}
 	

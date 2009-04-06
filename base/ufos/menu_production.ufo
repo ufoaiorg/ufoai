@@ -423,8 +423,8 @@ menu production
 		texl		"0 0"
 		texh		"16 16"
 		onClick		{ cmd "prod_up;" }
-		onWhup		{ cmd "prod_up;" }
-		onWhdown		{ cmd "prod_down;" }
+		onWheelUp	{ cmd "prod_up;" }
+		onWheelDown	{ cmd "prod_down;" }
 	}
 
 	pic prod_down
@@ -435,8 +435,8 @@ menu production
 		texl		"0 16"
 		texh		"16 32"
 		onClick		{ cmd "prod_down;" }
-		onWhup		{ cmd "prod_up;" }
-		onWhdown	{ cmd "prod_down;" }
+		onWheelUp	{ cmd "prod_up;" }
+		onWheelDown	{ cmd "prod_down;" }
 	}
 
 	// ==========================================

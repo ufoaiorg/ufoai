@@ -40,7 +40,6 @@ menu tutorials
 		textid		TEXT_LIST
 		rows	"14"
 		mousefx true
-		wheel
 		scrollbar true
 		click	{ }
 	}

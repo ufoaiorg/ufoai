@@ -196,7 +196,6 @@ menu serverinfo
 		padding		10
 		bgcolor		"0.3 0.3 0.3 0.4"
 		rows		"19"
-		onWheel
 	}
 
 	string mapstring
@@ -599,8 +598,8 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"380 40"
 			size		"80 20"
 			textalign	uc
-			whup		{ cmd "mp_prevgametype;" }
-			whdown		{ cmd "mp_nextgametype;" }
+			onWheelUp	{ cmd "mp_prevgametype;" }
+			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
 		custombutton gametype_dec
 		{
@@ -608,8 +607,8 @@ menu mp_create_server extends abstract_multiplayer
 			size		"16 16"
 			icon		prev
 			click		{ cmd "mp_prevgametype;" }
-			whup		{ cmd "mp_prevgametype;" }
-			whdown		{ cmd "mp_nextgametype;" }
+			onWheelUp	{ cmd "mp_prevgametype;" }
+			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
 		custombutton gametype_inc
 		{
@@ -617,8 +616,8 @@ menu mp_create_server extends abstract_multiplayer
 			size		"16 16"
 			icon		next
 			click		{ cmd "mp_nextgametype;" }
-			whup		{ cmd "mp_prevgametype;" }
-			whdown		{ cmd "mp_nextgametype;" }
+			onWheelUp	{ cmd "mp_prevgametype;" }
+			onWheelDown	{ cmd "mp_nextgametype;" }
 		}
 
 		// ===================
@@ -663,8 +662,8 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"85 30"
 			texl		"0 0"
 			texh		"128 96"
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_nextmap;" }
 			rclick		{ cmd "mn_prevmap;" }
 		}
@@ -674,8 +673,8 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"225 30"
 			texl		"0 0"
 			texh		"128 96"
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_nextmap;" }
 			rclick		{ cmd "mn_prevmap;" }
 		}
@@ -685,8 +684,8 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"365 30"
 			texl		"0 0"
 			texh		"128 96"
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_nextmap;" }
 			rclick		{ cmd "mn_prevmap;" }
 		}
@@ -713,8 +712,8 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"245 150"
 			size		"256 34"
 			disabled	true
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
 		}
 
 		custombutton prev_map
@@ -722,8 +721,8 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"223 155"
 			size		"16 16"
 			icon		prev
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_prevmap;" }
 		}
 		custombutton next_map
@@ -731,8 +730,8 @@ menu mp_create_server extends abstract_multiplayer
 			pos			"505 155"
 			size		"16 16"
 			icon		next
-			whup		{ cmd "mn_prevmap;" }
-			whdown		{ cmd "mn_nextmap;" }
+			onWheelUp	{ cmd "mn_prevmap;" }
+			onWheelDown	{ cmd "mn_nextmap;" }
 			click		{ cmd "mn_nextmap;" }
 		}
 
@@ -1416,7 +1415,6 @@ menu chat_popup
 		rows		5
 		tabwidth	150
 		font		f_verysmall
-		wheel
 	}
 
 	button enter_lobby

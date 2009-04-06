@@ -125,8 +125,8 @@ menu hospital
 	{
 		pos "0 75"
 		size "1024 690"
-		whup { cmd "hosp_list_up;" }
-		whdown { cmd "hosp_list_down;" }
+		onWheelUp 	{ cmd "hosp_list_up;" }
+		onWheelDown { cmd "hosp_list_down;" }
 	}
 
 	pic hos_button0 {

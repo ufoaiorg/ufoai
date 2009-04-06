@@ -188,7 +188,6 @@ menu lostgame
 		rows		"5"
 		font		"f_normal"
 		scrollbar	 true
-		wheel
 		textid	TEXT_STANDARD
 	}
 
@@ -249,7 +248,6 @@ menu endgame
 		rows		"5"
 		font		"f_normal"
 		scrollbar	true
-		wheel
 		textid	TEXT_STANDARD
 	}
 

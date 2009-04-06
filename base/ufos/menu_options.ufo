@@ -830,8 +830,8 @@ menu options
 				*(vscrollbar)options_game.select_language_scroll fullsize <count>
 				*(vscrollbar)options_game.select_language_scroll viewsize 10
 			}
-			onWhup { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
-			onWhdown { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
+			onWheelUp 	{ cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 0" } // 0: click on top
+			onWheelDown { cmd "mn_active_vscrollbar <path:parent>.select_language_scroll 4" } // 4: click on bottom
 		}
 
 		vscrollbar select_language_scroll {

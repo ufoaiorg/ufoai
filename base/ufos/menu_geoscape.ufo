@@ -19,7 +19,6 @@ menu map
 		click
 		mclick
 		rclick		{ cmd "mn_mapaction_reset;" }
-		wheel
 		num			10
 	}
 
@@ -32,7 +31,6 @@ menu map
 		rows		1
 		textid		TEXT_MESSAGESYSTEM
 		scrollbar	false
-		wheel
 	}
 
 	confunc messagesystem_changemode
@@ -102,7 +100,6 @@ menu map
 			lineheight		18
 			tabwidth	100
 			rows		"8"
-			wheel
 			scrollbar	true
 			textid		TEXT_STANDARD
 		}
@@ -152,9 +149,9 @@ menu map
 				icon		speed_stop
 				pos			"48 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 			radiobutton bt_timeplay1
@@ -164,9 +161,9 @@ menu map
 				icon		speed_dot
 				pos			"68 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 			radiobutton bt_timeplay2
@@ -176,9 +173,9 @@ menu map
 				icon		speed_play1
 				pos			"88 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 
@@ -189,9 +186,9 @@ menu map
 				icon		speed_dot
 				pos			"108 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 			radiobutton bt_timeplay4
@@ -201,9 +198,9 @@ menu map
 				icon		speed_play2
 				pos			"128 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 			radiobutton bt_timeplay5
@@ -213,9 +210,9 @@ menu map
 				icon		speed_dot
 				pos			"148 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 
@@ -226,9 +223,9 @@ menu map
 				icon		speed_dot
 				pos			"168 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 			radiobutton bt_timeplay7
@@ -238,9 +235,9 @@ menu map
 				icon		speed_play3
 				pos			"188 10"
 				size		"20 20"
-				change		{ cmd "game_settimeid <value>;" }
-				whup		{ cmd "game_timefast;" }
-				whdown		{ cmd "game_timeslow;" }
+				onChange	{ cmd "game_settimeid <value>;" }
+				onWheelUp	{ cmd "game_timefast;" }
+				onWheelDown	{ cmd "game_timeslow;" }
 			}
 
 			string timelapse
@@ -563,7 +560,6 @@ menu popup_list
 		tabwidth	100
 		rows		6
 		scrollbar	true
-		wheel
 	}
 
 	button bt_ok
@@ -615,7 +611,6 @@ menu popup_button
 		tabwidth	100
 		rows		8
 		scrollbar	true
-		wheel
 	}
 
 	button popup_button_1
@@ -935,7 +930,6 @@ menu popup_transferbaselist
 		tabwidth	100
 		rows		7
 		mousefx		true
-		wheel
 		click
 		rclick		{ cmd "mn_pop; aircraft_return;" }
 	}
@@ -1557,7 +1551,7 @@ menu popup_installationstatus
 		pos			"46 73"
 		size		"420 32"
 		font		f_big
-		change		{ cmd "mn_installation_changename;" }
+		onChange	{ cmd "mn_installation_changename;" }
 	}
 
 	pic bt_nameedit
@@ -1703,7 +1697,6 @@ menu popup_intercept
 			longlines	prettychop
 			click
 			rclick
-			wheel
 		}
 
 	}
@@ -1731,7 +1724,6 @@ menu popup_intercept
 			tabwidth	175
 			mousefx		true
 			rows		"13"
-			wheel
 			click
 			rclick
 		}
@@ -1826,7 +1818,6 @@ menu popup_mission
 		rows	"13"
 		click
 		rclick
-		wheel
 	}
 
 	button bt_cancel
@@ -1885,7 +1876,6 @@ menu popup_multi_selection
 		rows		5
 		mousefx		true
 		click		{ cmd "multi_select;" }
-		wheel
 	}
 
 	button bt_cancel
@@ -1944,7 +1934,6 @@ menu popup_aircraft
 		rows		5
 		mousefx		true
 		click
-		wheel
 	}
 
 	button bt_cancel
@@ -1991,7 +1980,6 @@ menu popup
 		tabwidth	100
 		rows		8
 		scrollbar	true
-		wheel
 	}
 	button button_ok
 	{

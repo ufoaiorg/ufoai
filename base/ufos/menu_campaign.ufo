@@ -93,7 +93,6 @@ menu campaigns
 		color	"0.60 0.60 0.60 1"
 		selectcolor	"1 1 1 1"
 		rows	"6"
-		wheel
 		scrollbar true
 	}
 

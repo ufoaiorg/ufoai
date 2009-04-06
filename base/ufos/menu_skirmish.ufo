@@ -72,16 +72,16 @@ menu skirmish
 		pos			"500 210"
 		size		"256 34"
 		disabled	true
-		whup		{ cmd "sk_prevequip;" }
-		whdown		{ cmd "sk_nextequip;" }
+		onWheelUp	{ cmd "sk_prevequip;" }
+		onWheelDown	{ cmd "sk_nextequip;" }
 	}
 	custombutton prev_equipment
 	{
 		pos			"468 210"
 		size		"35 35"
 		icon		prev
-		whup		{ cmd "sk_prevequip;" }
-		whdown		{ cmd "sk_nextequip;" }
+		onWheelUp	{ cmd "sk_prevequip;" }
+		onWheelDown	{ cmd "sk_nextequip;" }
 		click		{ cmd "sk_prevequip;" }
 	}
 	custombutton next_equipment
@@ -89,8 +89,8 @@ menu skirmish
 		pos			"753 210"
 		size		"35 35"
 		icon		next
-		whup		{ cmd "sk_prevequip;" }
-		whdown		{ cmd "sk_nextequip;" }
+		onWheelUp	{ cmd "sk_prevequip;" }
+		onWheelDown	{ cmd "sk_nextequip;" }
 		click		{ cmd "sk_nextequip;" }
 	}
 
@@ -161,8 +161,8 @@ menu skirmish
 		font		"f_verysmall"
 		pos			"500 530"
 		size		"256 34"
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
 		disabled	true
 	}
 
@@ -171,8 +171,8 @@ menu skirmish
 		pos			"468 530"
 		size		"35 35"
 		icon		prev
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_prevmap;" }
 	}
 	custombutton next_map
@@ -180,8 +180,8 @@ menu skirmish
 		pos			"753 530"
 		size		"35 35"
 		icon		next
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
 	}
 	pic mappic
@@ -190,8 +190,8 @@ menu skirmish
 		pos			"500 430"
 		texl		"0 0"
 		texh		"128 96"
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
 		rclick		{ cmd "mn_prevmap;" }
 	}
@@ -201,8 +201,8 @@ menu skirmish
 		pos			"650 430"
 		texl		"0 0"
 		texh		"128 96"
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
 		rclick		{ cmd "mn_prevmap;" }
 	}
@@ -212,8 +212,8 @@ menu skirmish
 		pos			"800 430"
 		texl		"0 0"
 		texh		"128 96"
-		whup		{ cmd "mn_prevmap;" }
-		whdown		{ cmd "mn_nextmap;" }
+		onWheelUp	{ cmd "mn_prevmap;" }
+		onWheelDown	{ cmd "mn_nextmap;" }
 		click		{ cmd "mn_nextmap;" }
 		rclick		{ cmd "mn_prevmap;" }
 	}
