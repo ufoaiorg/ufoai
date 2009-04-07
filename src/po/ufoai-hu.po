@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ufoai 2.2\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-04-06 21:42+0200\n"
-"PO-Revision-Date: 2009-03-28 22:08+0100\n"
+"PO-Revision-Date: 2009-04-07 23:51+0100\n"
 "Last-Translator: Tamas Fehervari <ft107@freemail.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -100,7 +100,8 @@ msgstr "Olaszország"
 msgid "Japan"
 msgstr "Japán"
 
-#: ../base/maps/laboratory.ump:43 ../base/ufos/basemanagement.ufo:341
+#: ../base/maps/laboratory.ump:43
+#: ../base/ufos/basemanagement.ufo:341
 #: client/campaign/cp_base_callbacks.c:270
 msgid "Laboratory"
 msgstr "Laboratórium"
@@ -149,7 +150,8 @@ msgstr "Trópusi"
 msgid "Tropical UFO"
 msgstr "Trópusi (UFÓ)"
 
-#: ../base/maps/ufocrash.ump:320 client/campaign/cp_missions.c:450
+#: ../base/maps/ufocrash.ump:320
+#: client/campaign/cp_missions.c:450
 msgid "Crashed UFO"
 msgstr "Lezuhant UFÓ"
 
@@ -225,7 +227,8 @@ msgstr "Stingray vadász"
 msgid "Stingray"
 msgstr "Stingray"
 
-#: ../base/ufos/aircraftmanagement.ufo:383 ../base/ufos/otheritems.ufo:37
+#: ../base/ufos/aircraftmanagement.ufo:383
+#: ../base/ufos/otheritems.ufo:37
 #: ../base/ufos/research.ufo:3379
 msgid "UFO - Scout"
 msgstr "UFÓ - Felderítő"
@@ -234,7 +237,8 @@ msgstr "UFÓ - Felderítő"
 msgid "Scout U"
 msgstr "Felderítő U"
 
-#: ../base/ufos/aircraftmanagement.ufo:404 ../base/ufos/otheritems.ufo:46
+#: ../base/ufos/aircraftmanagement.ufo:404
+#: ../base/ufos/otheritems.ufo:46
 #: ../base/ufos/research.ufo:3421
 msgid "UFO - Fighter"
 msgstr "UFÓ - Vadász"
@@ -243,7 +247,8 @@ msgstr "UFÓ - Vadász"
 msgid "Fighter U"
 msgstr "Vadász U"
 
-#: ../base/ufos/aircraftmanagement.ufo:432 ../base/ufos/otheritems.ufo:55
+#: ../base/ufos/aircraftmanagement.ufo:432
+#: ../base/ufos/otheritems.ufo:55
 #: ../base/ufos/research.ufo:3636
 msgid "UFO - Harvester"
 msgstr "UFÓ - Begyűjtő"
@@ -252,7 +257,8 @@ msgstr "UFÓ - Begyűjtő"
 msgid "Harvester U"
 msgstr "Begyűjtő U"
 
-#: ../base/ufos/aircraftmanagement.ufo:473 ../base/ufos/otheritems.ufo:72
+#: ../base/ufos/aircraftmanagement.ufo:473
+#: ../base/ufos/otheritems.ufo:72
 #: ../base/ufos/research.ufo:3593
 msgid "UFO - Corrupter"
 msgstr ""
@@ -261,7 +267,8 @@ msgstr ""
 msgid "Corrupter U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:500 ../base/ufos/otheritems.ufo:88
+#: ../base/ufos/aircraftmanagement.ufo:500
+#: ../base/ufos/otheritems.ufo:88
 #: ../base/ufos/research.ufo:3464
 msgid "UFO - Supply Ship"
 msgstr "UFÓ - Ellátó hajó"
@@ -270,7 +277,8 @@ msgstr "UFÓ - Ellátó hajó"
 msgid "Supply U"
 msgstr "Ellátó U"
 
-#: ../base/ufos/aircraftmanagement.ufo:523 ../base/ufos/otheritems.ufo:64
+#: ../base/ufos/aircraftmanagement.ufo:523
+#: ../base/ufos/otheritems.ufo:64
 #: ../base/ufos/research.ufo:3550
 msgid "UFO - Bomber"
 msgstr "UFÓ - Bombázó"
@@ -279,7 +287,8 @@ msgstr "UFÓ - Bombázó"
 msgid "Bomber U"
 msgstr "Bombázó U"
 
-#: ../base/ufos/aircraftmanagement.ufo:557 ../base/ufos/otheritems.ufo:80
+#: ../base/ufos/aircraftmanagement.ufo:557
+#: ../base/ufos/otheritems.ufo:80
 #: ../base/ufos/research.ufo:3507
 msgid "UFO - Carrier"
 msgstr "UFÓ - Hordozó"
@@ -288,11 +297,13 @@ msgstr "UFÓ - Hordozó"
 msgid "Carrier U"
 msgstr "Hordozó U"
 
-#: ../base/ufos/aircraftmanagement.ufo:574 ../base/ufos/research.ufo:4253
+#: ../base/ufos/aircraftmanagement.ufo:574
+#: ../base/ufos/research.ufo:4253
 msgid "Aerial Laser Cannon"
 msgstr "Lézerágyú"
 
-#: ../base/ufos/aircraftmanagement.ufo:584 ../base/ufos/research.ufo:4292
+#: ../base/ufos/aircraftmanagement.ufo:584
+#: ../base/ufos/research.ufo:4292
 msgid "DF-Tank"
 msgstr "DF-tartály"
 
@@ -300,11 +311,13 @@ msgstr "DF-tartály"
 msgid "Shiva Rotary Cannon"
 msgstr "Shiva Gépágyú"
 
-#: ../base/ufos/aircraftmanagement.ufo:610 ../base/ufos/research.ufo:4319
+#: ../base/ufos/aircraftmanagement.ufo:610
+#: ../base/ufos/research.ufo:4319
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API lövegek"
 
-#: ../base/ufos/aircraftmanagement.ufo:626 ../base/ufos/research.ufo:4340
+#: ../base/ufos/aircraftmanagement.ufo:626
+#: ../base/ufos/research.ufo:4340
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI lövegek"
 
@@ -320,51 +333,63 @@ msgstr "Sparrowhawk AA Rakétaállás"
 msgid "Sparrowhawk Missile"
 msgstr "Sparrowhawk Rakéta"
 
-#: ../base/ufos/aircraftmanagement.ufo:679 ../base/ufos/research.ufo:4399
+#: ../base/ufos/aircraftmanagement.ufo:679
+#: ../base/ufos/research.ufo:4399
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rakétaállás"
 
-#: ../base/ufos/aircraftmanagement.ufo:691 ../base/ufos/research.ufo:4416
+#: ../base/ufos/aircraftmanagement.ufo:691
+#: ../base/ufos/research.ufo:4416
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rakéta"
 
-#: ../base/ufos/aircraftmanagement.ufo:710 ../base/ufos/research.ufo:4435
+#: ../base/ufos/aircraftmanagement.ufo:710
+#: ../base/ufos/research.ufo:4435
 msgid "Particle Beam Weapon"
 msgstr "Részecskesugár-ágyú"
 
-#: ../base/ufos/aircraftmanagement.ufo:724 ../base/ufos/research.ufo:4483
+#: ../base/ufos/aircraftmanagement.ufo:724
+#: ../base/ufos/research.ufo:4483
 msgid "Targeting Computer"
 msgstr "Célzó számíítógép"
 
-#: ../base/ufos/aircraftmanagement.ufo:735 ../base/ufos/research.ufo:4500
+#: ../base/ufos/aircraftmanagement.ufo:735
+#: ../base/ufos/research.ufo:4500
 msgid "Fuel Pod"
 msgstr "Üzemanyag tartály"
 
-#: ../base/ufos/aircraftmanagement.ufo:748 ../base/ufos/research.ufo:4102
+#: ../base/ufos/aircraftmanagement.ufo:748
+#: ../base/ufos/research.ufo:4102
 msgid "Polymer Aircraft Armour"
 msgstr "Műanyag Repülőgép Páncél"
 
-#: ../base/ufos/aircraftmanagement.ufo:761 ../base/ufos/research.ufo:4119
+#: ../base/ufos/aircraftmanagement.ufo:761
+#: ../base/ufos/research.ufo:4119
 msgid "Alien Aircraft Plating"
 msgstr "Idegen repülő burkolat"
 
-#: ../base/ufos/aircraftmanagement.ufo:774 ../base/ufos/research.ufo:4139
+#: ../base/ufos/aircraftmanagement.ufo:774
+#: ../base/ufos/research.ufo:4139
 msgid "Alien Astrogation"
 msgstr "Idegen Asztrometria"
 
-#: ../base/ufos/aircraftmanagement.ufo:783 ../base/ufos/research.ufo:4177
+#: ../base/ufos/aircraftmanagement.ufo:783
+#: ../base/ufos/research.ufo:4177
 msgid "Alien Propulsion"
 msgstr "Idegen hajtómű"
 
-#: ../base/ufos/aircraftmanagement.ufo:792 ../base/ufos/research.ufo:4214
+#: ../base/ufos/aircraftmanagement.ufo:792
+#: ../base/ufos/research.ufo:4214
 msgid "Alien Detection"
 msgstr "Idegen Érzékelők"
 
-#: ../base/ufos/aircraftmanagement.ufo:805 ../base/ufos/research.ufo:4045
+#: ../base/ufos/aircraftmanagement.ufo:805
+#: ../base/ufos/research.ufo:4045
 msgid "AA51 missile launcher"
 msgstr "AA51 Rakétavető"
 
-#: ../base/ufos/aircraftmanagement.ufo:815 ../base/ufos/research.ufo:4063
+#: ../base/ufos/aircraftmanagement.ufo:815
+#: ../base/ufos/research.ufo:4063
 msgid "AA51 Cicada SAM"
 msgstr "AA51 Cicada SAM"
 
@@ -428,7 +453,8 @@ msgstr "Idegen testpáncél"
 msgid "Medium Alien Armour"
 msgstr "Közepes idegen páncél"
 
-#: ../base/ufos/basemanagement.ufo:62 ../base/ufos/basemanagement.ufo:79
+#: ../base/ufos/basemanagement.ufo:62
+#: ../base/ufos/basemanagement.ufo:79
 msgid "Alien Containment Facility"
 msgstr "Idegen tároló"
 
@@ -440,7 +466,8 @@ msgstr "Bejárat"
 msgid "Missile Battery"
 msgstr "Rakétasiló"
 
-#: ../base/ufos/basemanagement.ufo:119 client/campaign/cp_base_callbacks.c:252
+#: ../base/ufos/basemanagement.ufo:119
+#: client/campaign/cp_base_callbacks.c:252
 msgid "Storage"
 msgstr "Raktár"
 
@@ -452,16 +479,19 @@ msgstr "Erőmű"
 msgid "Command Centre"
 msgstr "Parancsnoki központ"
 
-#: ../base/ufos/basemanagement.ufo:167 client/campaign/cp_base_callbacks.c:288
+#: ../base/ufos/basemanagement.ufo:167
+#: client/campaign/cp_base_callbacks.c:288
 msgid "Living Quarters"
 msgstr "Lakó negyed"
 
-#: ../base/ufos/basemanagement.ufo:183 ../base/ufos/basemanagement.ufo:202
+#: ../base/ufos/basemanagement.ufo:183
+#: ../base/ufos/basemanagement.ufo:202
 #: client/campaign/cp_base_callbacks.c:243
 msgid "Large Hangar"
 msgstr "Nagy hangár"
 
-#: ../base/ufos/basemanagement.ufo:210 client/campaign/cp_base_callbacks.c:243
+#: ../base/ufos/basemanagement.ufo:210
+#: client/campaign/cp_base_callbacks.c:243
 msgid "Small Hangar"
 msgstr "Kis hangár"
 
@@ -469,7 +499,8 @@ msgstr "Kis hangár"
 msgid "Small UFO Hangar"
 msgstr "Kis UFÓ hangár"
 
-#: ../base/ufos/basemanagement.ufo:243 ../base/ufos/basemanagement.ufo:260
+#: ../base/ufos/basemanagement.ufo:243
+#: ../base/ufos/basemanagement.ufo:260
 msgid "Large UFO Hangar"
 msgstr "Nagy UFÓ hangár"
 
@@ -477,7 +508,8 @@ msgstr "Nagy UFÓ hangár"
 msgid "Team Room"
 msgstr "Csapat szoba"
 
-#: ../base/ufos/basemanagement.ufo:281 ../base/ufos/basemanagement.ufo:300
+#: ../base/ufos/basemanagement.ufo:281
+#: ../base/ufos/basemanagement.ufo:300
 #: client/campaign/cp_base_callbacks.c:279
 msgid "Workshop"
 msgstr "Műhely"
@@ -490,7 +522,8 @@ msgstr "Radar"
 msgid "Advanced Radar"
 msgstr "Továbbfejlesztett radar"
 
-#: ../base/ufos/basemanagement.ufo:359 ../base/ufos/menu_bases.ufo:167
+#: ../base/ufos/basemanagement.ufo:359
+#: ../base/ufos/menu_bases.ufo:167
 #: client/campaign/cp_base_callbacks.c:302
 msgid "Hospital"
 msgstr "Kórház"
@@ -602,77 +635,148 @@ msgstr "Idegen Repülőt találtunk"
 msgid "mail_from_un"
 msgstr "Mahouf Serra főtitk., Egyesült Nemzetek, New York"
 
-#: ../base/ufos/events.ufo:79 ../base/ufos/events.ufo:89
-#: ../base/ufos/events.ufo:99 ../base/ufos/events.ufo:110
-#: ../base/ufos/events.ufo:121 ../base/ufos/events.ufo:132
-#: ../base/ufos/events.ufo:143 ../base/ufos/events.ufo:154
-#: ../base/ufos/events.ufo:165 ../base/ufos/events.ufo:176
-#: ../base/ufos/events.ufo:187 ../base/ufos/events.ufo:198
-#: ../base/ufos/events.ufo:209 ../base/ufos/events.ufo:220
-#: ../base/ufos/events.ufo:231 ../base/ufos/events.ufo:242
-#: ../base/ufos/events.ufo:253 ../base/ufos/events.ufo:264
-#: ../base/ufos/events.ufo:275 ../base/ufos/events.ufo:286
-#: ../base/ufos/events.ufo:297 ../base/ufos/events.ufo:308
-#: ../base/ufos/events.ufo:319 ../base/ufos/events.ufo:330
-#: ../base/ufos/events.ufo:341 ../base/ufos/events.ufo:352
-#: ../base/ufos/research.ufo:137 ../base/ufos/research.ufo:145
-#: ../base/ufos/research.ufo:172 ../base/ufos/research.ufo:180
-#: ../base/ufos/research.ufo:234 ../base/ufos/research.ufo:242
-#: ../base/ufos/research.ufo:267 ../base/ufos/research.ufo:275
-#: ../base/ufos/research.ufo:305 ../base/ufos/research.ufo:313
-#: ../base/ufos/research.ufo:367 ../base/ufos/research.ufo:375
-#: ../base/ufos/research.ufo:405 ../base/ufos/research.ufo:413
-#: ../base/ufos/research.ufo:443 ../base/ufos/research.ufo:451
-#: ../base/ufos/research.ufo:481 ../base/ufos/research.ufo:506
-#: ../base/ufos/research.ufo:514 ../base/ufos/research.ufo:543
-#: ../base/ufos/research.ufo:552 ../base/ufos/research.ufo:578
-#: ../base/ufos/research.ufo:586 ../base/ufos/research.ufo:997
-#: ../base/ufos/research.ufo:1005 ../base/ufos/research.ufo:1073
-#: ../base/ufos/research.ufo:1081 ../base/ufos/research.ufo:1284
-#: ../base/ufos/research.ufo:1292 ../base/ufos/research.ufo:1326
-#: ../base/ufos/research.ufo:1334 ../base/ufos/research.ufo:1364
-#: ../base/ufos/research.ufo:1372 ../base/ufos/research.ufo:1423
-#: ../base/ufos/research.ufo:1431 ../base/ufos/research.ufo:1462
-#: ../base/ufos/research.ufo:1470 ../base/ufos/research.ufo:1500
-#: ../base/ufos/research.ufo:1508 ../base/ufos/research.ufo:1558
-#: ../base/ufos/research.ufo:1566 ../base/ufos/research.ufo:1618
-#: ../base/ufos/research.ufo:1626 ../base/ufos/research.ufo:1677
-#: ../base/ufos/research.ufo:1685 ../base/ufos/research.ufo:1717
-#: ../base/ufos/research.ufo:1725 ../base/ufos/research.ufo:1757
-#: ../base/ufos/research.ufo:1765 ../base/ufos/research.ufo:1817
-#: ../base/ufos/research.ufo:1825 ../base/ufos/research.ufo:1857
-#: ../base/ufos/research.ufo:1865 ../base/ufos/research.ufo:1914
-#: ../base/ufos/research.ufo:1922 ../base/ufos/research.ufo:2148
-#: ../base/ufos/research.ufo:2156 ../base/ufos/research.ufo:2195
-#: ../base/ufos/research.ufo:2203 ../base/ufos/research.ufo:2237
-#: ../base/ufos/research.ufo:2245 ../base/ufos/research.ufo:2278
-#: ../base/ufos/research.ufo:2286 ../base/ufos/research.ufo:2337
-#: ../base/ufos/research.ufo:2345 ../base/ufos/research.ufo:2397
-#: ../base/ufos/research.ufo:2405 ../base/ufos/research.ufo:2457
-#: ../base/ufos/research.ufo:2465 ../base/ufos/research.ufo:2530
-#: ../base/ufos/research.ufo:2538 ../base/ufos/research.ufo:2608
-#: ../base/ufos/research.ufo:2616 ../base/ufos/research.ufo:2645
-#: ../base/ufos/research.ufo:2653 ../base/ufos/research.ufo:3229
-#: ../base/ufos/research.ufo:3393 ../base/ufos/research.ufo:3401
-#: ../base/ufos/research.ufo:3435 ../base/ufos/research.ufo:3443
-#: ../base/ufos/research.ufo:3478 ../base/ufos/research.ufo:3486
-#: ../base/ufos/research.ufo:3521 ../base/ufos/research.ufo:3529
-#: ../base/ufos/research.ufo:3564 ../base/ufos/research.ufo:3572
-#: ../base/ufos/research.ufo:3607 ../base/ufos/research.ufo:3615
-#: ../base/ufos/research.ufo:3650 ../base/ufos/research.ufo:3658
-#: ../base/ufos/research.ufo:3721 ../base/ufos/research.ufo:3729
-#: ../base/ufos/research.ufo:3781 ../base/ufos/research.ufo:3789
-#: ../base/ufos/research.ufo:3823 ../base/ufos/research.ufo:3831
-#: ../base/ufos/research.ufo:3865 ../base/ufos/research.ufo:3873
-#: ../base/ufos/research.ufo:4152 ../base/ufos/research.ufo:4159
-#: ../base/ufos/research.ufo:4190 ../base/ufos/research.ufo:4197
-#: ../base/ufos/research.ufo:4227 ../base/ufos/research.ufo:4234
-#: ../base/ufos/research.ufo:4269 ../base/ufos/research.ufo:4277
-#: ../base/ufos/research.ufo:4451 ../base/ufos/research.ufo:4459
-#: ../base/ufos/research.ufo:4534 ../base/ufos/research.ufo:4542
-#: ../base/ufos/research.ufo:4628 ../base/ufos/research.ufo:4662
-#: ../base/ufos/research.ufo:4669 ../base/ufos/research.ufo:4700
-#: ../base/ufos/research.ufo:4709 ../base/ufos/research.ufo:4742
+#: ../base/ufos/events.ufo:79
+#: ../base/ufos/events.ufo:89
+#: ../base/ufos/events.ufo:99
+#: ../base/ufos/events.ufo:110
+#: ../base/ufos/events.ufo:121
+#: ../base/ufos/events.ufo:132
+#: ../base/ufos/events.ufo:143
+#: ../base/ufos/events.ufo:154
+#: ../base/ufos/events.ufo:165
+#: ../base/ufos/events.ufo:176
+#: ../base/ufos/events.ufo:187
+#: ../base/ufos/events.ufo:198
+#: ../base/ufos/events.ufo:209
+#: ../base/ufos/events.ufo:220
+#: ../base/ufos/events.ufo:231
+#: ../base/ufos/events.ufo:242
+#: ../base/ufos/events.ufo:253
+#: ../base/ufos/events.ufo:264
+#: ../base/ufos/events.ufo:275
+#: ../base/ufos/events.ufo:286
+#: ../base/ufos/events.ufo:297
+#: ../base/ufos/events.ufo:308
+#: ../base/ufos/events.ufo:319
+#: ../base/ufos/events.ufo:330
+#: ../base/ufos/events.ufo:341
+#: ../base/ufos/events.ufo:352
+#: ../base/ufos/research.ufo:137
+#: ../base/ufos/research.ufo:145
+#: ../base/ufos/research.ufo:172
+#: ../base/ufos/research.ufo:180
+#: ../base/ufos/research.ufo:234
+#: ../base/ufos/research.ufo:242
+#: ../base/ufos/research.ufo:267
+#: ../base/ufos/research.ufo:275
+#: ../base/ufos/research.ufo:305
+#: ../base/ufos/research.ufo:313
+#: ../base/ufos/research.ufo:367
+#: ../base/ufos/research.ufo:375
+#: ../base/ufos/research.ufo:405
+#: ../base/ufos/research.ufo:413
+#: ../base/ufos/research.ufo:443
+#: ../base/ufos/research.ufo:451
+#: ../base/ufos/research.ufo:481
+#: ../base/ufos/research.ufo:506
+#: ../base/ufos/research.ufo:514
+#: ../base/ufos/research.ufo:543
+#: ../base/ufos/research.ufo:552
+#: ../base/ufos/research.ufo:578
+#: ../base/ufos/research.ufo:586
+#: ../base/ufos/research.ufo:997
+#: ../base/ufos/research.ufo:1005
+#: ../base/ufos/research.ufo:1073
+#: ../base/ufos/research.ufo:1081
+#: ../base/ufos/research.ufo:1284
+#: ../base/ufos/research.ufo:1292
+#: ../base/ufos/research.ufo:1326
+#: ../base/ufos/research.ufo:1334
+#: ../base/ufos/research.ufo:1364
+#: ../base/ufos/research.ufo:1372
+#: ../base/ufos/research.ufo:1423
+#: ../base/ufos/research.ufo:1431
+#: ../base/ufos/research.ufo:1462
+#: ../base/ufos/research.ufo:1470
+#: ../base/ufos/research.ufo:1500
+#: ../base/ufos/research.ufo:1508
+#: ../base/ufos/research.ufo:1558
+#: ../base/ufos/research.ufo:1566
+#: ../base/ufos/research.ufo:1618
+#: ../base/ufos/research.ufo:1626
+#: ../base/ufos/research.ufo:1677
+#: ../base/ufos/research.ufo:1685
+#: ../base/ufos/research.ufo:1717
+#: ../base/ufos/research.ufo:1725
+#: ../base/ufos/research.ufo:1757
+#: ../base/ufos/research.ufo:1765
+#: ../base/ufos/research.ufo:1817
+#: ../base/ufos/research.ufo:1825
+#: ../base/ufos/research.ufo:1857
+#: ../base/ufos/research.ufo:1865
+#: ../base/ufos/research.ufo:1914
+#: ../base/ufos/research.ufo:1922
+#: ../base/ufos/research.ufo:2148
+#: ../base/ufos/research.ufo:2156
+#: ../base/ufos/research.ufo:2195
+#: ../base/ufos/research.ufo:2203
+#: ../base/ufos/research.ufo:2237
+#: ../base/ufos/research.ufo:2245
+#: ../base/ufos/research.ufo:2278
+#: ../base/ufos/research.ufo:2286
+#: ../base/ufos/research.ufo:2337
+#: ../base/ufos/research.ufo:2345
+#: ../base/ufos/research.ufo:2397
+#: ../base/ufos/research.ufo:2405
+#: ../base/ufos/research.ufo:2457
+#: ../base/ufos/research.ufo:2465
+#: ../base/ufos/research.ufo:2530
+#: ../base/ufos/research.ufo:2538
+#: ../base/ufos/research.ufo:2608
+#: ../base/ufos/research.ufo:2616
+#: ../base/ufos/research.ufo:2645
+#: ../base/ufos/research.ufo:2653
+#: ../base/ufos/research.ufo:3229
+#: ../base/ufos/research.ufo:3393
+#: ../base/ufos/research.ufo:3401
+#: ../base/ufos/research.ufo:3435
+#: ../base/ufos/research.ufo:3443
+#: ../base/ufos/research.ufo:3478
+#: ../base/ufos/research.ufo:3486
+#: ../base/ufos/research.ufo:3521
+#: ../base/ufos/research.ufo:3529
+#: ../base/ufos/research.ufo:3564
+#: ../base/ufos/research.ufo:3572
+#: ../base/ufos/research.ufo:3607
+#: ../base/ufos/research.ufo:3615
+#: ../base/ufos/research.ufo:3650
+#: ../base/ufos/research.ufo:3658
+#: ../base/ufos/research.ufo:3721
+#: ../base/ufos/research.ufo:3729
+#: ../base/ufos/research.ufo:3781
+#: ../base/ufos/research.ufo:3789
+#: ../base/ufos/research.ufo:3823
+#: ../base/ufos/research.ufo:3831
+#: ../base/ufos/research.ufo:3865
+#: ../base/ufos/research.ufo:3873
+#: ../base/ufos/research.ufo:4152
+#: ../base/ufos/research.ufo:4159
+#: ../base/ufos/research.ufo:4190
+#: ../base/ufos/research.ufo:4197
+#: ../base/ufos/research.ufo:4227
+#: ../base/ufos/research.ufo:4234
+#: ../base/ufos/research.ufo:4269
+#: ../base/ufos/research.ufo:4277
+#: ../base/ufos/research.ufo:4451
+#: ../base/ufos/research.ufo:4459
+#: ../base/ufos/research.ufo:4534
+#: ../base/ufos/research.ufo:4542
+#: ../base/ufos/research.ufo:4628
+#: ../base/ufos/research.ufo:4662
+#: ../base/ufos/research.ufo:4669
+#: ../base/ufos/research.ufo:4700
+#: ../base/ufos/research.ufo:4709
+#: ../base/ufos/research.ufo:4742
 #: ../base/ufos/research.ufo:4749
 msgid "mail_to_base_commander"
 msgstr "PHALANX Bázisparancsnok, PHALANX Atlanti Műveleti Parancsnokság"
@@ -689,53 +793,100 @@ msgstr "Sok szerencsét"
 msgid "mail_prolog"
 msgstr ""
 
-#: ../base/ufos/events.ufo:88 ../base/ufos/events.ufo:100
-#: ../base/ufos/events.ufo:111 ../base/ufos/events.ufo:122
-#: ../base/ufos/events.ufo:133 ../base/ufos/events.ufo:144
-#: ../base/ufos/events.ufo:166 ../base/ufos/research.ufo:136
-#: ../base/ufos/research.ufo:144 ../base/ufos/research.ufo:171
-#: ../base/ufos/research.ufo:179 ../base/ufos/research.ufo:233
-#: ../base/ufos/research.ufo:241 ../base/ufos/research.ufo:480
-#: ../base/ufos/research.ufo:577 ../base/ufos/research.ufo:585
-#: ../base/ufos/research.ufo:996 ../base/ufos/research.ufo:1004
-#: ../base/ufos/research.ufo:1072 ../base/ufos/research.ufo:1080
-#: ../base/ufos/research.ufo:1283 ../base/ufos/research.ufo:1291
-#: ../base/ufos/research.ufo:1325 ../base/ufos/research.ufo:1333
-#: ../base/ufos/research.ufo:1363 ../base/ufos/research.ufo:1371
-#: ../base/ufos/research.ufo:1422 ../base/ufos/research.ufo:1430
-#: ../base/ufos/research.ufo:1461 ../base/ufos/research.ufo:1469
-#: ../base/ufos/research.ufo:1499 ../base/ufos/research.ufo:1507
-#: ../base/ufos/research.ufo:1557 ../base/ufos/research.ufo:1565
-#: ../base/ufos/research.ufo:1617 ../base/ufos/research.ufo:1625
-#: ../base/ufos/research.ufo:1676 ../base/ufos/research.ufo:1684
-#: ../base/ufos/research.ufo:1716 ../base/ufos/research.ufo:1724
-#: ../base/ufos/research.ufo:1756 ../base/ufos/research.ufo:1764
-#: ../base/ufos/research.ufo:1816 ../base/ufos/research.ufo:1824
-#: ../base/ufos/research.ufo:1856 ../base/ufos/research.ufo:1864
-#: ../base/ufos/research.ufo:1913 ../base/ufos/research.ufo:1921
-#: ../base/ufos/research.ufo:2147 ../base/ufos/research.ufo:2155
-#: ../base/ufos/research.ufo:2194 ../base/ufos/research.ufo:2202
-#: ../base/ufos/research.ufo:2236 ../base/ufos/research.ufo:2244
-#: ../base/ufos/research.ufo:2277 ../base/ufos/research.ufo:2285
-#: ../base/ufos/research.ufo:2336 ../base/ufos/research.ufo:2344
-#: ../base/ufos/research.ufo:2396 ../base/ufos/research.ufo:2404
-#: ../base/ufos/research.ufo:2456 ../base/ufos/research.ufo:2464
-#: ../base/ufos/research.ufo:2529 ../base/ufos/research.ufo:2537
-#: ../base/ufos/research.ufo:2607 ../base/ufos/research.ufo:2615
-#: ../base/ufos/research.ufo:2644 ../base/ufos/research.ufo:2652
-#: ../base/ufos/research.ufo:3228 ../base/ufos/research.ufo:3392
-#: ../base/ufos/research.ufo:3400 ../base/ufos/research.ufo:3434
-#: ../base/ufos/research.ufo:3442 ../base/ufos/research.ufo:3477
-#: ../base/ufos/research.ufo:3485 ../base/ufos/research.ufo:3520
-#: ../base/ufos/research.ufo:3528 ../base/ufos/research.ufo:3563
-#: ../base/ufos/research.ufo:3571 ../base/ufos/research.ufo:3606
-#: ../base/ufos/research.ufo:3614 ../base/ufos/research.ufo:3649
-#: ../base/ufos/research.ufo:3657 ../base/ufos/research.ufo:4151
-#: ../base/ufos/research.ufo:4158 ../base/ufos/research.ufo:4189
-#: ../base/ufos/research.ufo:4196 ../base/ufos/research.ufo:4226
-#: ../base/ufos/research.ufo:4233 ../base/ufos/research.ufo:4268
-#: ../base/ufos/research.ufo:4276 ../base/ufos/research.ufo:4450
-#: ../base/ufos/research.ufo:4458 ../base/ufos/research.ufo:4533
+#: ../base/ufos/events.ufo:88
+#: ../base/ufos/events.ufo:100
+#: ../base/ufos/events.ufo:111
+#: ../base/ufos/events.ufo:122
+#: ../base/ufos/events.ufo:133
+#: ../base/ufos/events.ufo:144
+#: ../base/ufos/events.ufo:166
+#: ../base/ufos/research.ufo:136
+#: ../base/ufos/research.ufo:144
+#: ../base/ufos/research.ufo:171
+#: ../base/ufos/research.ufo:179
+#: ../base/ufos/research.ufo:233
+#: ../base/ufos/research.ufo:241
+#: ../base/ufos/research.ufo:480
+#: ../base/ufos/research.ufo:577
+#: ../base/ufos/research.ufo:585
+#: ../base/ufos/research.ufo:996
+#: ../base/ufos/research.ufo:1004
+#: ../base/ufos/research.ufo:1072
+#: ../base/ufos/research.ufo:1080
+#: ../base/ufos/research.ufo:1283
+#: ../base/ufos/research.ufo:1291
+#: ../base/ufos/research.ufo:1325
+#: ../base/ufos/research.ufo:1333
+#: ../base/ufos/research.ufo:1363
+#: ../base/ufos/research.ufo:1371
+#: ../base/ufos/research.ufo:1422
+#: ../base/ufos/research.ufo:1430
+#: ../base/ufos/research.ufo:1461
+#: ../base/ufos/research.ufo:1469
+#: ../base/ufos/research.ufo:1499
+#: ../base/ufos/research.ufo:1507
+#: ../base/ufos/research.ufo:1557
+#: ../base/ufos/research.ufo:1565
+#: ../base/ufos/research.ufo:1617
+#: ../base/ufos/research.ufo:1625
+#: ../base/ufos/research.ufo:1676
+#: ../base/ufos/research.ufo:1684
+#: ../base/ufos/research.ufo:1716
+#: ../base/ufos/research.ufo:1724
+#: ../base/ufos/research.ufo:1756
+#: ../base/ufos/research.ufo:1764
+#: ../base/ufos/research.ufo:1816
+#: ../base/ufos/research.ufo:1824
+#: ../base/ufos/research.ufo:1856
+#: ../base/ufos/research.ufo:1864
+#: ../base/ufos/research.ufo:1913
+#: ../base/ufos/research.ufo:1921
+#: ../base/ufos/research.ufo:2147
+#: ../base/ufos/research.ufo:2155
+#: ../base/ufos/research.ufo:2194
+#: ../base/ufos/research.ufo:2202
+#: ../base/ufos/research.ufo:2236
+#: ../base/ufos/research.ufo:2244
+#: ../base/ufos/research.ufo:2277
+#: ../base/ufos/research.ufo:2285
+#: ../base/ufos/research.ufo:2336
+#: ../base/ufos/research.ufo:2344
+#: ../base/ufos/research.ufo:2396
+#: ../base/ufos/research.ufo:2404
+#: ../base/ufos/research.ufo:2456
+#: ../base/ufos/research.ufo:2464
+#: ../base/ufos/research.ufo:2529
+#: ../base/ufos/research.ufo:2537
+#: ../base/ufos/research.ufo:2607
+#: ../base/ufos/research.ufo:2615
+#: ../base/ufos/research.ufo:2644
+#: ../base/ufos/research.ufo:2652
+#: ../base/ufos/research.ufo:3228
+#: ../base/ufos/research.ufo:3392
+#: ../base/ufos/research.ufo:3400
+#: ../base/ufos/research.ufo:3434
+#: ../base/ufos/research.ufo:3442
+#: ../base/ufos/research.ufo:3477
+#: ../base/ufos/research.ufo:3485
+#: ../base/ufos/research.ufo:3520
+#: ../base/ufos/research.ufo:3528
+#: ../base/ufos/research.ufo:3563
+#: ../base/ufos/research.ufo:3571
+#: ../base/ufos/research.ufo:3606
+#: ../base/ufos/research.ufo:3614
+#: ../base/ufos/research.ufo:3649
+#: ../base/ufos/research.ufo:3657
+#: ../base/ufos/research.ufo:4151
+#: ../base/ufos/research.ufo:4158
+#: ../base/ufos/research.ufo:4189
+#: ../base/ufos/research.ufo:4196
+#: ../base/ufos/research.ufo:4226
+#: ../base/ufos/research.ufo:4233
+#: ../base/ufos/research.ufo:4268
+#: ../base/ufos/research.ufo:4276
+#: ../base/ufos/research.ufo:4450
+#: ../base/ufos/research.ufo:4458
+#: ../base/ufos/research.ufo:4533
 #: ../base/ufos/research.ufo:4541
 msgid "mail_from_paul_navarre"
 msgstr "Paul Navarre alezr., PHALANX Atlanti Műveleti Parancsnokság, K&F mérnöki részleg"
@@ -748,7 +899,8 @@ msgstr "Idegen meghalt"
 msgid "mail_alienbreathing"
 msgstr ""
 
-#: ../base/ufos/events.ufo:102 ../base/ufos/events.ufo:113
+#: ../base/ufos/events.ufo:102
+#: ../base/ufos/events.ufo:113
 msgid "Recovery Report -- %s"
 msgstr "Helyreállítás jelentés: %s"
 
@@ -784,11 +936,16 @@ msgstr "Gyártás kész -- %s"
 msgid "mail_production_finished"
 msgstr ""
 
-#: ../base/ufos/events.ufo:155 ../base/ufos/events.ufo:177
-#: ../base/ufos/events.ufo:188 ../base/ufos/events.ufo:199
-#: ../base/ufos/events.ufo:210 ../base/ufos/events.ufo:221
-#: ../base/ufos/events.ufo:232 ../base/ufos/events.ufo:243
-#: ../base/ufos/events.ufo:254 ../base/ufos/events.ufo:265
+#: ../base/ufos/events.ufo:155
+#: ../base/ufos/events.ufo:177
+#: ../base/ufos/events.ufo:188
+#: ../base/ufos/events.ufo:199
+#: ../base/ufos/events.ufo:210
+#: ../base/ufos/events.ufo:221
+#: ../base/ufos/events.ufo:232
+#: ../base/ufos/events.ufo:243
+#: ../base/ufos/events.ufo:254
+#: ../base/ufos/events.ufo:265
 msgid "mail_from_xo"
 msgstr "Abel S. Howard par. hely., PHALANX, Atlanti Műveleti Parancsnokság, Parancsnokság"
 
@@ -880,9 +1037,12 @@ msgstr "Új radar kapcsolat: %s"
 msgid "mail_new_radar_contact"
 msgstr ""
 
-#: ../base/ufos/events.ufo:276 ../base/ufos/events.ufo:287
-#: ../base/ufos/events.ufo:298 ../base/ufos/research.ufo:542
-#: ../base/ufos/research.ufo:551 ../base/ufos/research.ufo:4699
+#: ../base/ufos/events.ufo:276
+#: ../base/ufos/events.ufo:287
+#: ../base/ufos/events.ufo:298
+#: ../base/ufos/research.ufo:542
+#: ../base/ufos/research.ufo:551
+#: ../base/ufos/research.ufo:4699
 #: ../base/ufos/research.ufo:4708
 msgid "mail_from_col_falkland"
 msgstr "Ingrid Falkland ezr., PHALANX Atlanti Műveleti Parancsnokság, Felderítési részleg"
@@ -911,8 +1071,10 @@ msgstr "Idegen aktivitást jelentettek: %s"
 msgid "mail_alien_activity_reported"
 msgstr ""
 
-#: ../base/ufos/events.ufo:309 ../base/ufos/events.ufo:320
-#: ../base/ufos/events.ufo:331 ../base/ufos/events.ufo:342
+#: ../base/ufos/events.ufo:309
+#: ../base/ufos/events.ufo:320
+#: ../base/ufos/events.ufo:331
+#: ../base/ufos/events.ufo:342
 #: ../base/ufos/events.ufo:353
 msgid "mail_from_air_cdr"
 msgstr "Subakh al-Kuhar rep. ezr., PHALANX Atlanti Műveleti Parancsnokság, Légierő"
@@ -957,14 +1119,18 @@ msgstr "Repülő leszállt: %s"
 msgid "mail_aircraft_landed"
 msgstr ""
 
-#: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:22
-#: ../base/ufos/fonts.ufo:28 ../base/ufos/fonts.ufo:35
-#: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:48
+#: ../base/ufos/fonts.ufo:15
+#: ../base/ufos/fonts.ufo:22
+#: ../base/ufos/fonts.ufo:28
+#: ../base/ufos/fonts.ufo:35
+#: ../base/ufos/fonts.ufo:41
+#: ../base/ufos/fonts.ufo:48
 #: ../base/ufos/fonts.ufo:54
 msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
-#: ../base/ufos/fonts.ufo:60 ../base/ufos/fonts.ufo:66
+#: ../base/ufos/fonts.ufo:60
+#: ../base/ufos/fonts.ufo:66
 #: ../base/ufos/fonts.ufo:73
 msgid "media/FreeSans.ttf"
 msgstr "media/FreeSans.ttf"
@@ -1017,11 +1183,13 @@ msgstr ""
 msgid "Radar Tower"
 msgstr "Radartorony"
 
-#: ../base/ufos/installation.ufo:20 ../base/ufos/menu_geoscape.ufo:1218
+#: ../base/ufos/installation.ufo:20
+#: ../base/ufos/menu_geoscape.ufo:1218
 msgid "UFO Yard"
 msgstr "UFÓtároló"
 
-#: ../base/ufos/installation.ufo:32 ../base/ufos/menu_geoscape.ufo:1181
+#: ../base/ufos/installation.ufo:32
+#: ../base/ufos/menu_geoscape.ufo:1181
 msgid "SAM Site"
 msgstr "Rakétaállomás"
 
@@ -1121,17 +1289,20 @@ msgstr "Nincs nyelv"
 msgid "Industrial theme."
 msgstr "Gyárnegyed."
 
-#: ../base/ufos/maps.ufo:68 ../base/ufos/maps.ufo:101
+#: ../base/ufos/maps.ufo:68
+#: ../base/ufos/maps.ufo:101
 #: ../base/ufos/maps.ufo:135
 msgid "A suburban district of an oriental area."
 msgstr "Egy keleties terület külvárosa"
 
-#: ../base/ufos/maps.ufo:170 ../base/ufos/maps.ufo:205
+#: ../base/ufos/maps.ufo:170
+#: ../base/ufos/maps.ufo:205
 #: ../base/ufos/maps.ufo:239
 msgid "A farm in a rural area. Lots of land to cover, but few obstacles to impair line of sight."
 msgstr "Egy farm vidéken. Nagy területet kell lefedni, de csak kevés fedezék van."
 
-#: ../base/ufos/maps.ufo:280 ../base/ufos/maps.ufo:347
+#: ../base/ufos/maps.ufo:280
+#: ../base/ufos/maps.ufo:347
 #: ../base/ufos/maps.ufo:381
 msgid "An industrial area in a cold region."
 msgstr "Ipari terület egy hideg régióban."
@@ -1148,22 +1319,27 @@ msgstr "Egy gyárkomplexum"
 msgid "A river runs through this piece of jungle."
 msgstr "Egy folyó szeli át ezt a dzsungelt."
 
-#: ../base/ufos/maps.ufo:494 ../base/ufos/maps.ufo:530
+#: ../base/ufos/maps.ufo:494
+#: ../base/ufos/maps.ufo:530
 msgid "A cleared stretch of land in the middle of the jungle."
 msgstr "Egy lecsupaszított terület a dzsungel közepén."
 
-#: ../base/ufos/maps.ufo:568 ../base/ufos/maps.ufo:599
-#: ../base/ufos/maps.ufo:630 ../base/ufos/maps.ufo:661
+#: ../base/ufos/maps.ufo:568
+#: ../base/ufos/maps.ufo:599
+#: ../base/ufos/maps.ufo:630
+#: ../base/ufos/maps.ufo:661
 msgid "A peaceful neighborhood on the outskirts of a centre of population."
 msgstr "Egy békés utca a külvárosban."
 
-#: ../base/ufos/maps.ufo:693 ../base/ufos/maps.ufo:729
+#: ../base/ufos/maps.ufo:693
+#: ../base/ufos/maps.ufo:729
 msgid "Aliens are up to no good in this sparsely populated forest region."
 msgstr "Az idegenek valami rosszban sántikálnak ezen a ritkásan lakott erdős területen."
 
-#: ../base/ufos/maps.ufo:765 ../base/ufos/maps.ufo:801
+#: ../base/ufos/maps.ufo:765
+#: ../base/ufos/maps.ufo:801
 msgid "Some houses in desert"
-msgstr ""
+msgstr "Néhány ház a sivatagban"
 
 #: ../base/ufos/maps.ufo:838
 msgid "An excavation site that has fallen under alien attack."
@@ -1229,7 +1405,8 @@ msgstr "A parasztház körül szántóföldek és fészerek vannak. Egy UFÓ les
 msgid "A rather old-fashioned suburban district."
 msgstr "Egy kissé régimódi külvárosi rész."
 
-#: ../base/ufos/maps.ufo:1495 ../base/ufos/maps.ufo:1535
+#: ../base/ufos/maps.ufo:1495
+#: ../base/ufos/maps.ufo:1535
 msgid "A small neighbourhood in a warm urban region."
 msgstr "Egy kis szomszédság egy nyárias városi régióban."
 
@@ -1237,7 +1414,8 @@ msgstr "Egy kis szomszédság egy nyárias városi régióban."
 msgid "A place where citizens come to replenish their vehicles' fuel supply."
 msgstr "Egy hely ahol a városlakók megtankolhatják a járműveiket."
 
-#: ../base/ufos/maps.ufo:1617 ../base/ufos/maps.ufo:1656
+#: ../base/ufos/maps.ufo:1617
+#: ../base/ufos/maps.ufo:1656
 msgid "An urban district in an oriental region."
 msgstr ""
 
@@ -1257,7 +1435,8 @@ msgstr "Külvárosi rész."
 msgid "A military convoy has caught the eye of the aliens."
 msgstr "Egy katonai konvoj került az idegenek látókörébe."
 
-#: ../base/ufos/maps.ufo:1859 ../base/ufos/maps.ufo:1900
+#: ../base/ufos/maps.ufo:1859
+#: ../base/ufos/maps.ufo:1900
 msgid "A small UFO has crashed in this mining region."
 msgstr "Egy kis UFO lezuhant ezen a bányatelepen."
 
@@ -1285,7 +1464,8 @@ msgstr ""
 msgid "An alien Harvester has crashed in the wastelands."
 msgstr ""
 
-#: ../base/ufos/maps.ufo:2193 ../base/ufos/maps.ufo:2222
+#: ../base/ufos/maps.ufo:2193
+#: ../base/ufos/maps.ufo:2222
 msgid "A small settlement in winter."
 msgstr "Egy kis télies település."
 
@@ -1333,20 +1513,25 @@ msgstr "Kereszt"
 msgid "Coin"
 msgstr "Érme"
 
-#: ../base/ufos/medals.ufo:30 client/campaign/cl_employee.c:143
+#: ../base/ufos/medals.ufo:30
+#: client/campaign/cl_employee.c:143
 msgid "Scientist"
 msgstr "Tudós"
 
-#: ../base/ufos/medals.ufo:38 client/campaign/cl_employee.c:147
+#: ../base/ufos/medals.ufo:38
+#: client/campaign/cl_employee.c:147
 msgid "Pilot"
 msgstr "Pilóta"
 
-#: ../base/ufos/medals.ufo:46 ../base/ufos/team_humans.ufo:1598
-#: ../base/ufos/team_humans.ufo:1622 client/campaign/cl_employee.c:149
+#: ../base/ufos/medals.ufo:46
+#: ../base/ufos/team_humans.ufo:1598
+#: ../base/ufos/team_humans.ufo:1622
+#: client/campaign/cl_employee.c:149
 msgid "UGV"
 msgstr ""
 
-#: ../base/ufos/medals.ufo:54 client/campaign/cl_employee.c:145
+#: ../base/ufos/medals.ufo:54
+#: client/campaign/cl_employee.c:145
 msgid "Worker"
 msgstr "Munkás"
 
@@ -1444,52 +1629,82 @@ msgstr "Ezredes"
 
 #: ../base/ufos/medals.ufo:186
 msgid "Col"
-msgstr ""
+msgstr "Ezr."
 
-#: ../base/ufos/menu_ahud.ufo:83 ../base/ufos/menu_ahud.ufo:116
-#: ../base/ufos/menu_ahud.ufo:149 ../base/ufos/menu_ahud.ufo:182
-#: ../base/ufos/menu_ahud.ufo:215 ../base/ufos/menu_ahud.ufo:248
-#: ../base/ufos/menu_ahud.ufo:281 ../base/ufos/menu_ahud.ufo:314
-#: ../base/ufos/menu_ahud.ufo:400 ../base/ufos/menu_ahud.ufo:433
-#: ../base/ufos/menu_ahud.ufo:466 ../base/ufos/menu_ahud.ufo:499
-#: ../base/ufos/menu_ahud.ufo:532 ../base/ufos/menu_ahud.ufo:565
-#: ../base/ufos/menu_ahud.ufo:598 ../base/ufos/menu_ahud.ufo:631
+#: ../base/ufos/menu_ahud.ufo:83
+#: ../base/ufos/menu_ahud.ufo:116
+#: ../base/ufos/menu_ahud.ufo:149
+#: ../base/ufos/menu_ahud.ufo:182
+#: ../base/ufos/menu_ahud.ufo:215
+#: ../base/ufos/menu_ahud.ufo:248
+#: ../base/ufos/menu_ahud.ufo:281
+#: ../base/ufos/menu_ahud.ufo:314
+#: ../base/ufos/menu_ahud.ufo:400
+#: ../base/ufos/menu_ahud.ufo:433
+#: ../base/ufos/menu_ahud.ufo:466
+#: ../base/ufos/menu_ahud.ufo:499
+#: ../base/ufos/menu_ahud.ufo:532
+#: ../base/ufos/menu_ahud.ufo:565
+#: ../base/ufos/menu_ahud.ufo:598
+#: ../base/ufos/menu_ahud.ufo:631
 msgid "Check to use this firemode for reaction fire"
 msgstr "Ellenőrizd, hogy ezt a tűzelési módot használjad visszalövésnél"
 
-#: ../base/ufos/menu_aircraft.ufo:44 ../base/ufos/menu_aliencont.ufo:21
-#: ../base/ufos/menu_bases.ufo:218 ../base/ufos/menu_basesummary.ufo:187
-#: ../base/ufos/menu_buildings.ufo:41 ../base/ufos/menu_hire.ufo:586
-#: ../base/ufos/menu_hospital.ufo:21 ../base/ufos/menu_hospital.ufo:488
-#: ../base/ufos/menu_market.ufo:19 ../base/ufos/menu_production.ufo:18
-#: ../base/ufos/menu_research.ufo:18 ../base/ufos/menu_transfer.ufo:18
+#: ../base/ufos/menu_aircraft.ufo:44
+#: ../base/ufos/menu_aliencont.ufo:21
+#: ../base/ufos/menu_bases.ufo:218
+#: ../base/ufos/menu_basesummary.ufo:187
+#: ../base/ufos/menu_buildings.ufo:41
+#: ../base/ufos/menu_hire.ufo:586
+#: ../base/ufos/menu_hospital.ufo:21
+#: ../base/ufos/menu_hospital.ufo:488
+#: ../base/ufos/menu_market.ufo:19
+#: ../base/ufos/menu_production.ufo:18
+#: ../base/ufos/menu_research.ufo:18
+#: ../base/ufos/menu_transfer.ufo:18
 msgid "Name of this base"
 msgstr "Bázis neve"
 
-#: ../base/ufos/menu_aircraft.ufo:55 ../base/ufos/menu_aliencont.ufo:32
-#: ../base/ufos/menu_bases.ufo:199 ../base/ufos/menu_basesummary.ufo:198
-#: ../base/ufos/menu_buildings.ufo:70 ../base/ufos/menu_geoscape.ufo:126
-#: ../base/ufos/menu_hire.ufo:596 ../base/ufos/menu_hospital.ufo:32
-#: ../base/ufos/menu_hospital.ufo:499 ../base/ufos/menu_market.ufo:699
-#: ../base/ufos/menu_production.ufo:109 ../base/ufos/menu_research.ufo:743
+#: ../base/ufos/menu_aircraft.ufo:55
+#: ../base/ufos/menu_aliencont.ufo:32
+#: ../base/ufos/menu_bases.ufo:199
+#: ../base/ufos/menu_basesummary.ufo:198
+#: ../base/ufos/menu_buildings.ufo:70
+#: ../base/ufos/menu_geoscape.ufo:126
+#: ../base/ufos/menu_hire.ufo:596
+#: ../base/ufos/menu_hospital.ufo:32
+#: ../base/ufos/menu_hospital.ufo:499
+#: ../base/ufos/menu_market.ufo:699
+#: ../base/ufos/menu_production.ufo:109
+#: ../base/ufos/menu_research.ufo:743
 #: ../base/ufos/menu_transfer.ufo:47
 msgid "CREDITS"
 msgstr "PÉNZ"
 
-#: ../base/ufos/menu_aircraft.ufo:63 ../base/ufos/menu_aliencont.ufo:40
-#: ../base/ufos/menu_bases.ufo:207 ../base/ufos/menu_basesummary.ufo:206
-#: ../base/ufos/menu_buildings.ufo:78 ../base/ufos/menu_geoscape.ufo:135
-#: ../base/ufos/menu_hire.ufo:604 ../base/ufos/menu_hospital.ufo:40
-#: ../base/ufos/menu_hospital.ufo:507 ../base/ufos/menu_market.ufo:707
-#: ../base/ufos/menu_production.ufo:117 ../base/ufos/menu_research.ufo:751
+#: ../base/ufos/menu_aircraft.ufo:63
+#: ../base/ufos/menu_aliencont.ufo:40
+#: ../base/ufos/menu_bases.ufo:207
+#: ../base/ufos/menu_basesummary.ufo:206
+#: ../base/ufos/menu_buildings.ufo:78
+#: ../base/ufos/menu_geoscape.ufo:135
+#: ../base/ufos/menu_hire.ufo:604
+#: ../base/ufos/menu_hospital.ufo:40
+#: ../base/ufos/menu_hospital.ufo:507
+#: ../base/ufos/menu_market.ufo:707
+#: ../base/ufos/menu_production.ufo:117
+#: ../base/ufos/menu_research.ufo:751
 #: ../base/ufos/menu_transfer.ufo:55
 msgid "Organisation capital"
 msgstr "Szervezeti tőke"
 
-#: ../base/ufos/menu_aircraft.ufo:79 ../base/ufos/menu_campaign.ufo:82
-#: ../base/ufos/menu_campaign.ufo:419 ../base/ufos/menu_campaign.ufo:615
-#: ../base/ufos/menu_multiplayer.ufo:89 ../base/ufos/menu_options.ufo:117
-#: ../base/ufos/menu_singleplayer.ufo:54 ../base/ufos/menu_skirmish.ufo:18
+#: ../base/ufos/menu_aircraft.ufo:79
+#: ../base/ufos/menu_campaign.ufo:82
+#: ../base/ufos/menu_campaign.ufo:419
+#: ../base/ufos/menu_campaign.ufo:615
+#: ../base/ufos/menu_multiplayer.ufo:89
+#: ../base/ufos/menu_options.ufo:117
+#: ../base/ufos/menu_singleplayer.ufo:54
+#: ../base/ufos/menu_skirmish.ufo:18
 #: ../base/ufos/menu_tutorials.ufo:32
 msgid "Back"
 msgstr "Vissza"
@@ -1498,12 +1713,15 @@ msgstr "Vissza"
 msgid "Description"
 msgstr "Leírás"
 
-#: ../base/ufos/menu_aircraft.ufo:102 ../base/ufos/menu_hire.ufo:560
+#: ../base/ufos/menu_aircraft.ufo:102
+#: ../base/ufos/menu_hire.ufo:560
 msgid "Pilots"
 msgstr "Pilóták"
 
-#: ../base/ufos/menu_aircraft.ufo:108 ../base/ufos/menu_skirmish.ufo:58
-#: ../base/ufos/menu_transfer.ufo:79 ../base/ufos/research.ufo:111
+#: ../base/ufos/menu_aircraft.ufo:108
+#: ../base/ufos/menu_skirmish.ufo:58
+#: ../base/ufos/menu_transfer.ufo:79
+#: ../base/ufos/research.ufo:111
 msgid "Equipment"
 msgstr "Felszerelés"
 
@@ -1511,7 +1729,8 @@ msgstr "Felszerelés"
 msgid "Tanks"
 msgstr "Tankok"
 
-#: ../base/ufos/menu_aircraft.ufo:120 ../base/ufos/menu_hire.ufo:554
+#: ../base/ufos/menu_aircraft.ufo:120
+#: ../base/ufos/menu_hire.ufo:554
 msgid "Soldiers"
 msgstr "Katonák"
 
@@ -1618,79 +1837,100 @@ msgid "Soldier carries no equipment"
 msgstr "Felszerelést nem cipelő katonák"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:493
-#: ../base/ufos/menu_equipment.ufo:436 ../base/ufos/menu_hire.ufo:352
+#: ../base/ufos/menu_equipment.ufo:436
+#: ../base/ufos/menu_hire.ufo:352
 #: ../base/ufos/menu_hospital.ufo:566
-#: ../base/ufos/menu_multiplayer_team.ufo:483 ../base/ufos/menu_physdat.ufo:56
+#: ../base/ufos/menu_multiplayer_team.ufo:483
+#: ../base/ufos/menu_physdat.ufo:56
 msgid "Strength:"
 msgstr "Erő:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:498
-#: ../base/ufos/menu_equipment.ufo:441 ../base/ufos/menu_hire.ufo:361
+#: ../base/ufos/menu_equipment.ufo:441
+#: ../base/ufos/menu_hire.ufo:361
 #: ../base/ufos/menu_hospital.ufo:571
 #: ../base/ufos/menu_multiplayer_team.ufo:488
-#: ../base/ufos/menu_options.ufo:1130 ../base/ufos/menu_physdat.ufo:61
+#: ../base/ufos/menu_options.ufo:1130
+#: ../base/ufos/menu_physdat.ufo:61
 msgid "Speed:"
 msgstr "Sebesség:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:503
-#: ../base/ufos/menu_equipment.ufo:446 ../base/ufos/menu_hire.ufo:370
+#: ../base/ufos/menu_equipment.ufo:446
+#: ../base/ufos/menu_hire.ufo:370
 #: ../base/ufos/menu_hospital.ufo:576
-#: ../base/ufos/menu_multiplayer_team.ufo:493 ../base/ufos/menu_physdat.ufo:66
+#: ../base/ufos/menu_multiplayer_team.ufo:493
+#: ../base/ufos/menu_physdat.ufo:66
 msgid "Accuracy:"
 msgstr "Pontosság:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:508
-#: ../base/ufos/menu_equipment.ufo:451 ../base/ufos/menu_hire.ufo:379
+#: ../base/ufos/menu_equipment.ufo:451
+#: ../base/ufos/menu_hire.ufo:379
 #: ../base/ufos/menu_hospital.ufo:581
-#: ../base/ufos/menu_multiplayer_team.ufo:498 ../base/ufos/menu_physdat.ufo:71
+#: ../base/ufos/menu_multiplayer_team.ufo:498
+#: ../base/ufos/menu_physdat.ufo:71
 msgid "Mind:"
 msgstr "Elme:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:513
-#: ../base/ufos/menu_equipment.ufo:456 ../base/ufos/menu_hire.ufo:388
+#: ../base/ufos/menu_equipment.ufo:456
+#: ../base/ufos/menu_hire.ufo:388
 #: ../base/ufos/menu_hospital.ufo:586
-#: ../base/ufos/menu_multiplayer_team.ufo:503 ../base/ufos/menu_physdat.ufo:76
+#: ../base/ufos/menu_multiplayer_team.ufo:503
+#: ../base/ufos/menu_physdat.ufo:76
 msgid "Close Combat:"
 msgstr "Közelharc:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:518
-#: ../base/ufos/menu_equipment.ufo:461 ../base/ufos/menu_hire.ufo:397
+#: ../base/ufos/menu_equipment.ufo:461
+#: ../base/ufos/menu_hire.ufo:397
 #: ../base/ufos/menu_hospital.ufo:591
-#: ../base/ufos/menu_multiplayer_team.ufo:508 ../base/ufos/menu_physdat.ufo:81
+#: ../base/ufos/menu_multiplayer_team.ufo:508
+#: ../base/ufos/menu_physdat.ufo:81
 msgid "Heavy Weapons:"
 msgstr "Nehéz fegyverek:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:523
-#: ../base/ufos/menu_equipment.ufo:466 ../base/ufos/menu_hire.ufo:406
+#: ../base/ufos/menu_equipment.ufo:466
+#: ../base/ufos/menu_hire.ufo:406
 #: ../base/ufos/menu_hospital.ufo:596
-#: ../base/ufos/menu_multiplayer_team.ufo:513 ../base/ufos/menu_physdat.ufo:86
+#: ../base/ufos/menu_multiplayer_team.ufo:513
+#: ../base/ufos/menu_physdat.ufo:86
 msgid "Assault Weapons:"
 msgstr "Gépfegyverek:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:528
-#: ../base/ufos/menu_equipment.ufo:471 ../base/ufos/menu_hire.ufo:415
+#: ../base/ufos/menu_equipment.ufo:471
+#: ../base/ufos/menu_hire.ufo:415
 #: ../base/ufos/menu_hospital.ufo:601
-#: ../base/ufos/menu_multiplayer_team.ufo:518 ../base/ufos/menu_physdat.ufo:91
+#: ../base/ufos/menu_multiplayer_team.ufo:518
+#: ../base/ufos/menu_physdat.ufo:91
 msgid "Sniper Rifles:"
 msgstr "Mesterlövész puskák:"
 
 #: ../base/ufos/menu_aircraft_soldiers.ufo:533
-#: ../base/ufos/menu_equipment.ufo:476 ../base/ufos/menu_hire.ufo:424
+#: ../base/ufos/menu_equipment.ufo:476
+#: ../base/ufos/menu_hire.ufo:424
 #: ../base/ufos/menu_hospital.ufo:606
-#: ../base/ufos/menu_multiplayer_team.ufo:523 ../base/ufos/menu_physdat.ufo:96
+#: ../base/ufos/menu_multiplayer_team.ufo:523
+#: ../base/ufos/menu_physdat.ufo:96
 msgid "High-Explosives:"
 msgstr "Robbanó anyagok:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:545 ../base/ufos/menu_hire.ufo:433
+#: ../base/ufos/menu_aircraft_soldiers.ufo:545
+#: ../base/ufos/menu_hire.ufo:433
 #: ../base/ufos/menu_hospital.ufo:611
 msgid "Health:"
 msgstr "Égészség:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:548 ../base/ufos/menu_hire.ufo:442
+#: ../base/ufos/menu_aircraft_soldiers.ufo:548
+#: ../base/ufos/menu_hire.ufo:442
 msgid "Missions Performed:"
 msgstr "Küldetések:"
 
-#: ../base/ufos/menu_aircraft_soldiers.ufo:551 ../base/ufos/menu_hire.ufo:445
+#: ../base/ufos/menu_aircraft_soldiers.ufo:551
+#: ../base/ufos/menu_hire.ufo:445
 msgid "Enemies Killed:"
 msgstr "Megölt ellenségek:"
 
@@ -1702,30 +1942,47 @@ msgstr "Tankok kijelölése"
 msgid "Assign soldiers"
 msgstr "Katonák hozzárendelése"
 
-#: ../base/ufos/menu_aliencont.ufo:50 ../base/ufos/menu_basesummary.ufo:216
-#: ../base/ufos/menu_buildings.ufo:55 ../base/ufos/menu_hire.ufo:614
-#: ../base/ufos/menu_hospital.ufo:50 ../base/ufos/menu_hospital.ufo:517
-#: ../base/ufos/menu_market.ufo:33 ../base/ufos/menu_production.ufo:32
-#: ../base/ufos/menu_research.ufo:33 ../base/ufos/menu_transfer.ufo:32
+#: ../base/ufos/menu_aliencont.ufo:50
+#: ../base/ufos/menu_basesummary.ufo:216
+#: ../base/ufos/menu_buildings.ufo:55
+#: ../base/ufos/menu_hire.ufo:614
+#: ../base/ufos/menu_hospital.ufo:50
+#: ../base/ufos/menu_hospital.ufo:517
+#: ../base/ufos/menu_market.ufo:33
+#: ../base/ufos/menu_production.ufo:32
+#: ../base/ufos/menu_research.ufo:33
+#: ../base/ufos/menu_transfer.ufo:32
 msgid "Back to baseview"
 msgstr "Vissza a bázisnézethez"
 
-#: ../base/ufos/menu_aliencont.ufo:135 ../base/ufos/menu_aliencont.ufo:263
-#: ../base/ufos/menu_aliencont.ufo:264 ../base/ufos/menu_aliencont.ufo:265
-#: ../base/ufos/menu_aliencont.ufo:266 ../base/ufos/menu_aliencont.ufo:267
-#: ../base/ufos/menu_aliencont.ufo:268 ../base/ufos/menu_aliencont.ufo:269
-#: ../base/ufos/menu_aliencont.ufo:270 ../base/ufos/menu_aliencont.ufo:271
-#: ../base/ufos/menu_aliencont.ufo:272 ../base/ufos/menu_aliencont.ufo:273
+#: ../base/ufos/menu_aliencont.ufo:135
+#: ../base/ufos/menu_aliencont.ufo:263
+#: ../base/ufos/menu_aliencont.ufo:264
+#: ../base/ufos/menu_aliencont.ufo:265
+#: ../base/ufos/menu_aliencont.ufo:266
+#: ../base/ufos/menu_aliencont.ufo:267
+#: ../base/ufos/menu_aliencont.ufo:268
+#: ../base/ufos/menu_aliencont.ufo:269
+#: ../base/ufos/menu_aliencont.ufo:270
+#: ../base/ufos/menu_aliencont.ufo:271
+#: ../base/ufos/menu_aliencont.ufo:272
+#: ../base/ufos/menu_aliencont.ufo:273
 #: ../base/ufos/menu_aliencont.ufo:274
 msgid "Start autopsy"
 msgstr "Boncolás"
 
-#: ../base/ufos/menu_aliencont.ufo:149 ../base/ufos/menu_aliencont.ufo:250
-#: ../base/ufos/menu_aliencont.ufo:251 ../base/ufos/menu_aliencont.ufo:252
-#: ../base/ufos/menu_aliencont.ufo:253 ../base/ufos/menu_aliencont.ufo:254
-#: ../base/ufos/menu_aliencont.ufo:255 ../base/ufos/menu_aliencont.ufo:256
-#: ../base/ufos/menu_aliencont.ufo:257 ../base/ufos/menu_aliencont.ufo:258
-#: ../base/ufos/menu_aliencont.ufo:259 ../base/ufos/menu_aliencont.ufo:260
+#: ../base/ufos/menu_aliencont.ufo:149
+#: ../base/ufos/menu_aliencont.ufo:250
+#: ../base/ufos/menu_aliencont.ufo:251
+#: ../base/ufos/menu_aliencont.ufo:252
+#: ../base/ufos/menu_aliencont.ufo:253
+#: ../base/ufos/menu_aliencont.ufo:254
+#: ../base/ufos/menu_aliencont.ufo:255
+#: ../base/ufos/menu_aliencont.ufo:256
+#: ../base/ufos/menu_aliencont.ufo:257
+#: ../base/ufos/menu_aliencont.ufo:258
+#: ../base/ufos/menu_aliencont.ufo:259
+#: ../base/ufos/menu_aliencont.ufo:260
 #: ../base/ufos/menu_aliencont.ufo:261
 msgid "Kill this alien"
 msgstr "Öld meg"
@@ -1750,23 +2007,28 @@ msgstr "Bázis kapacitás:"
 msgid "Kill all aliens in this base"
 msgstr "Öld meg az idegeneket ezen a bázison"
 
-#: ../base/ufos/menu_althud.ufo:83 ../base/ufos/menu_hud.ufo:815
+#: ../base/ufos/menu_althud.ufo:83
+#: ../base/ufos/menu_hud.ufo:815
 msgid "Chat"
 msgstr "Cset"
 
-#: ../base/ufos/menu_althud.ufo:97 ../base/ufos/menu_hud.ufo:827
+#: ../base/ufos/menu_althud.ufo:97
+#: ../base/ufos/menu_hud.ufo:827
 msgid "Teamchat"
 msgstr "Csapatcset"
 
-#: ../base/ufos/menu_althud.ufo:111 ../base/ufos/menu_hud.ufo:839
+#: ../base/ufos/menu_althud.ufo:111
+#: ../base/ufos/menu_hud.ufo:839
 msgid "Show chat history"
 msgstr "Cset előzmények"
 
-#: ../base/ufos/menu_althud.ufo:135 ../base/ufos/menu_hud.ufo:862
+#: ../base/ufos/menu_althud.ufo:135
+#: ../base/ufos/menu_hud.ufo:862
 msgid "Chat messages"
 msgstr "Cset üzenetek"
 
-#: ../base/ufos/menu_althud.ufo:400 ../base/ufos/menu_inventory.ufo:189
+#: ../base/ufos/menu_althud.ufo:400
+#: ../base/ufos/menu_inventory.ufo:189
 #: ../base/ufos/menu_physdat.ufo:186
 msgid "Inventory and physical stats"
 msgstr "Felszerelések és fizikai adatok"
@@ -1775,15 +2037,18 @@ msgstr "Felszerelések és fizikai adatok"
 msgid "Enemy spotted"
 msgstr "Ellenséget vettünk észre"
 
-#: ../base/ufos/menu_althud.ufo:521 ../base/ufos/menu_hud.ufo:303
+#: ../base/ufos/menu_althud.ufo:521
+#: ../base/ufos/menu_hud.ufo:303
 msgid "Click to cycle through spotted enemies"
 msgstr "Kattints ide ahhoz, hogy végignézd a meglátott ellenfeleket"
 
-#: ../base/ufos/menu_althud.ufo:530 ../base/ufos/menu_hud.ufo:291
+#: ../base/ufos/menu_althud.ufo:530
+#: ../base/ufos/menu_hud.ufo:291
 msgid "Finish round"
 msgstr "Kör befejezése"
 
-#: ../base/ufos/menu_althud.ufo:587 ../base/ufos/menu_hud.ufo:688
+#: ../base/ufos/menu_althud.ufo:587
+#: ../base/ufos/menu_hud.ufo:688
 msgid "Multiple-shot reaction fire"
 msgstr "Több lövéses reakció"
 
@@ -1791,7 +2056,8 @@ msgstr "Több lövéses reakció"
 msgid "Multiple-shot reaction fire (not possible)"
 msgstr "Több lövéses reakció (nem lehetséges)"
 
-#: ../base/ufos/menu_althud.ufo:597 ../base/ufos/menu_hud.ufo:700
+#: ../base/ufos/menu_althud.ufo:597
+#: ../base/ufos/menu_hud.ufo:700
 msgid "One-shot reaction fire"
 msgstr "Egy lövéses reakció"
 
@@ -1799,11 +2065,13 @@ msgstr "Egy lövéses reakció"
 msgid "One-shot reaction fire (not possible)"
 msgstr "Egy lövéses reakció (nem lehetséges)"
 
-#: ../base/ufos/menu_althud.ufo:608 ../base/ufos/menu_hud.ufo:712
+#: ../base/ufos/menu_althud.ufo:608
+#: ../base/ufos/menu_hud.ufo:712
 msgid "No reaction fire"
 msgstr "Nincs reakció"
 
-#: ../base/ufos/menu_althud.ufo:630 ../base/ufos/menu_hud.ufo:392
+#: ../base/ufos/menu_althud.ufo:630
+#: ../base/ufos/menu_hud.ufo:392
 msgid "Use headgear"
 msgstr "Sisak használata"
 
@@ -1823,7 +2091,8 @@ msgstr "Válts a jobb kéz fegyverére"
 msgid "Switch to left hand weapon"
 msgstr "Válts a bal kéz fegyverére"
 
-#: ../base/ufos/menu_althud.ufo:1129 ../base/ufos/menu_althud.ufo:1139
+#: ../base/ufos/menu_althud.ufo:1129
+#: ../base/ufos/menu_althud.ufo:1139
 #: ../base/ufos/menu_hud.ufo:424
 msgid "Use Item"
 msgstr "Tárgy használata"
@@ -1856,11 +2125,13 @@ msgstr "Lézer"
 msgid "Choose laser battery"
 msgstr ""
 
-#: ../base/ufos/menu_basedefence.ufo:166 ../base/ufos/menu_basedefence.ufo:190
+#: ../base/ufos/menu_basedefence.ufo:166
+#: ../base/ufos/menu_basedefence.ufo:190
 msgid "Install selected defence system"
 msgstr "Kiválasztott védelmi rendszer telepítése"
 
-#: ../base/ufos/menu_basedefence.ufo:178 ../base/ufos/menu_basedefence.ufo:202
+#: ../base/ufos/menu_basedefence.ufo:178
+#: ../base/ufos/menu_basedefence.ufo:202
 msgid "Remove this defence system"
 msgstr "Védelmi rendszer eltávolítása"
 
@@ -1880,7 +2151,8 @@ msgstr "Jelenlegi védelmi rendszer"
 msgid "Ammo to use with installed system"
 msgstr "Muníció használata a telepített rendszerrel"
 
-#: ../base/ufos/menu_basedefence.ufo:283 ../base/ufos/menu_equipment.ufo:667
+#: ../base/ufos/menu_basedefence.ufo:283
+#: ../base/ufos/menu_equipment.ufo:667
 #: ../base/ufos/menu_multiplayer_team.ufo:717
 msgid "Done"
 msgstr "Kész"
@@ -1897,14 +2169,18 @@ msgstr "Épületek"
 msgid "Build base facilities"
 msgstr "Új létesítmények építése"
 
-#: ../base/ufos/menu_bases.ufo:69 ../base/ufos/menu_geoscape.ufo:1918
-#: ../base/ufos/menu_market.ufo:88 ../base/ufos/menu_production.ufo:87
-#: ../base/ufos/menu_transfer.ufo:94 ../base/ufos/research.ufo:108
+#: ../base/ufos/menu_bases.ufo:69
+#: ../base/ufos/menu_geoscape.ufo:1918
+#: ../base/ufos/menu_market.ufo:88
+#: ../base/ufos/menu_production.ufo:87
+#: ../base/ufos/menu_transfer.ufo:94
+#: ../base/ufos/research.ufo:108
 #: client/campaign/cl_map.c:336
 msgid "Aircraft"
 msgstr "Repülők"
 
-#: ../base/ufos/menu_bases.ufo:70 client/campaign/cp_base_callbacks.c:238
+#: ../base/ufos/menu_bases.ufo:70
+#: client/campaign/cp_base_callbacks.c:238
 msgid "Manage your aircraft"
 msgstr "Repülők kezelése"
 
@@ -1912,17 +2188,21 @@ msgstr "Repülők kezelése"
 msgid "Buy/Sell Equipment"
 msgstr "Vásárlás/Eladás"
 
-#: ../base/ufos/menu_bases.ufo:84 client/campaign/cp_base_callbacks.c:247
+#: ../base/ufos/menu_bases.ufo:84
+#: client/campaign/cp_base_callbacks.c:247
 msgid "Buy/Sell equipment"
 msgstr "Vásárlás/Eladás"
 
-#: ../base/ufos/menu_bases.ufo:97 ../base/ufos/menu_transfer.ufo:284
-#: client/campaign/cp_base.c:786 client/campaign/cp_base.c:796
+#: ../base/ufos/menu_bases.ufo:97
+#: ../base/ufos/menu_transfer.ufo:284
+#: client/campaign/cp_base.c:786
+#: client/campaign/cp_base.c:796
 #: client/campaign/cp_base.c:806
 msgid "Transfer"
 msgstr "Átcsoportosítás"
 
-#: ../base/ufos/menu_bases.ufo:98 client/campaign/cp_base_callbacks.c:256
+#: ../base/ufos/menu_bases.ufo:98
+#: client/campaign/cp_base_callbacks.c:256
 msgid "Transfer equipment or personnel"
 msgstr "Személyzet vagy felszerelés átcsoportosítása"
 
@@ -1930,7 +2210,8 @@ msgstr "Személyzet vagy felszerelés átcsoportosítása"
 msgid "Research"
 msgstr "Kutatás"
 
-#: ../base/ufos/menu_bases.ufo:112 client/campaign/cp_base_callbacks.c:265
+#: ../base/ufos/menu_bases.ufo:112
+#: client/campaign/cp_base_callbacks.c:265
 msgid "Research new technology"
 msgstr "Új technológiák kutatása"
 
@@ -1938,24 +2219,29 @@ msgstr "Új technológiák kutatása"
 msgid "Production"
 msgstr "Gyártás"
 
-#: ../base/ufos/menu_bases.ufo:126 client/campaign/cp_base_callbacks.c:274
+#: ../base/ufos/menu_bases.ufo:126
+#: client/campaign/cp_base_callbacks.c:274
 msgid "Produce new equipment"
 msgstr "Felszerelések gyártása"
 
-#: ../base/ufos/menu_bases.ufo:139 ../base/ufos/menu_bases.ufo:140
+#: ../base/ufos/menu_bases.ufo:139
+#: ../base/ufos/menu_bases.ufo:140
 #: client/campaign/cp_base_callbacks.c:283
 msgid "Hire employees"
 msgstr "Személyzet felvétel"
 
-#: ../base/ufos/menu_bases.ufo:153 client/campaign/cp_base_callbacks.c:294
+#: ../base/ufos/menu_bases.ufo:153
+#: client/campaign/cp_base_callbacks.c:294
 msgid "Containment"
 msgstr "Idegen tároló"
 
-#: ../base/ufos/menu_bases.ufo:154 client/campaign/cp_base_callbacks.c:292
+#: ../base/ufos/menu_bases.ufo:154
+#: client/campaign/cp_base_callbacks.c:292
 msgid "Deal with Aliens in Alien Containment"
 msgstr "Idegenek kezelése a tárolóban"
 
-#: ../base/ufos/menu_bases.ufo:168 client/campaign/cp_base_callbacks.c:297
+#: ../base/ufos/menu_bases.ufo:168
+#: client/campaign/cp_base_callbacks.c:297
 msgid "Medical and Surgery operations"
 msgstr "Orvosi beavatkozások"
 
@@ -1967,7 +2253,8 @@ msgstr "Bázis összegzés"
 msgid "Base Information"
 msgstr "Bázis információ"
 
-#: ../base/ufos/menu_bases.ufo:238 ../base/ufos/menu_geoscape.ufo:988
+#: ../base/ufos/menu_bases.ufo:238
+#: ../base/ufos/menu_geoscape.ufo:988
 msgid "Rename your base"
 msgstr "Bázis átnevezése"
 
@@ -1979,7 +2266,8 @@ msgstr "Előző bázis"
 msgid "Switch to the next base"
 msgstr "Következő bázis"
 
-#: ../base/ufos/menu_bases.ufo:284 ../base/ufos/menu_geoscape.ufo:761
+#: ../base/ufos/menu_bases.ufo:284
+#: ../base/ufos/menu_geoscape.ufo:761
 msgid "Base is under attack"
 msgstr "Támadják a bázist"
 
@@ -1991,7 +2279,8 @@ msgstr "Válassz épületet"
 msgid "Building preview"
 msgstr "Épület infó"
 
-#: ../base/ufos/menu_buildings.ufo:176 ../base/ufos/menu_geoscape.ufo:383
+#: ../base/ufos/menu_buildings.ufo:176
+#: ../base/ufos/menu_geoscape.ufo:383
 msgid "UFOpaedia"
 msgstr "UFÓpédia"
 
@@ -2003,14 +2292,19 @@ msgstr "Hadjáratok"
 msgid "Start campaign"
 msgstr "Start"
 
-#: ../base/ufos/menu_campaign.ufo:46 ../base/ufos/menu_campaign.ufo:171
-#: ../base/ufos/menu_campaign.ufo:248 ../base/ufos/menu_campaign.ufo:289
+#: ../base/ufos/menu_campaign.ufo:46
+#: ../base/ufos/menu_campaign.ufo:171
+#: ../base/ufos/menu_campaign.ufo:248
+#: ../base/ufos/menu_campaign.ufo:289
 msgid "Load"
 msgstr "Betöltés"
 
-#: ../base/ufos/menu_campaign.ufo:61 ../base/ufos/menu_campaign.ufo:158
-#: ../base/ufos/menu_lostwon.ufo:49 ../base/ufos/menu_lostwon.ufo:50
-#: ../base/ufos/menu_lostwon.ufo:126 ../base/ufos/menu_lostwon.ufo:127
+#: ../base/ufos/menu_campaign.ufo:61
+#: ../base/ufos/menu_campaign.ufo:158
+#: ../base/ufos/menu_lostwon.ufo:49
+#: ../base/ufos/menu_lostwon.ufo:50
+#: ../base/ufos/menu_lostwon.ufo:126
+#: ../base/ufos/menu_lostwon.ufo:127
 #: ../base/ufos/menu_multiplayeringame.ufo:35
 #: ../base/ufos/menu_singleplayer.ufo:94
 msgid "Continue"
@@ -2020,19 +2314,23 @@ msgstr "Folytatás"
 msgid "Load last saved game or continue playing"
 msgstr "Játék folytatása vagy az utolsó mentés betöltése"
 
-#: ../base/ufos/menu_campaign.ufo:184 ../base/ufos/menu_campaign.ufo:461
+#: ../base/ufos/menu_campaign.ufo:184
+#: ../base/ufos/menu_campaign.ufo:461
 #: ../base/ufos/menu_multiplayer_team.ufo:916
 msgid "Save"
 msgstr "Mentés"
 
-#: ../base/ufos/menu_campaign.ufo:197 ../base/ufos/menu_hud.ufo:744
-#: ../base/ufos/menu_main.ufo:59 ../base/ufos/menu_multiplayer.ufo:542
+#: ../base/ufos/menu_campaign.ufo:197
+#: ../base/ufos/menu_hud.ufo:744
+#: ../base/ufos/menu_main.ufo:59
+#: ../base/ufos/menu_multiplayer.ufo:542
 #: ../base/ufos/menu_multiplayeringame.ufo:47
 #: ../base/ufos/menu_singleplayer.ufo:134
 msgid "Options"
 msgstr "Beállítások"
 
-#: ../base/ufos/menu_campaign.ufo:210 ../base/ufos/menu_main.ufo:95
+#: ../base/ufos/menu_campaign.ufo:210
+#: ../base/ufos/menu_main.ufo:95
 #: ../base/ufos/menu_singleplayer.ufo:147
 msgid "Exit"
 msgstr "Kilépés"
@@ -2049,73 +2347,89 @@ msgstr "Biztos, hogy visszatöltöd az utolsó automatikus mentést?"
 msgid "Reload the last automatically saved campaign state"
 msgstr "Utolsó automatikus mentés visszatöltése."
 
-#: ../base/ufos/menu_equipment.ufo:20 ../base/ufos/menu_inventory.ufo:26
+#: ../base/ufos/menu_equipment.ufo:20
+#: ../base/ufos/menu_inventory.ufo:26
 #: ../base/ufos/menu_multiplayer_team.ufo:20
 msgid "Backpack"
 msgstr "Hátizsák"
 
-#: ../base/ufos/menu_equipment.ufo:29 ../base/ufos/menu_inventory.ufo:35
+#: ../base/ufos/menu_equipment.ufo:29
+#: ../base/ufos/menu_inventory.ufo:35
 #: ../base/ufos/menu_multiplayer_team.ufo:29
 msgid "Left Hand"
 msgstr "Bal kéz"
 
-#: ../base/ufos/menu_equipment.ufo:38 ../base/ufos/menu_inventory.ufo:44
+#: ../base/ufos/menu_equipment.ufo:38
+#: ../base/ufos/menu_inventory.ufo:44
 #: ../base/ufos/menu_multiplayer_team.ufo:38
 msgid "Right Hand"
 msgstr "Jobb kéz"
 
-#: ../base/ufos/menu_equipment.ufo:47 ../base/ufos/menu_inventory.ufo:53
+#: ../base/ufos/menu_equipment.ufo:47
+#: ../base/ufos/menu_inventory.ufo:53
 #: ../base/ufos/menu_multiplayer_team.ufo:47
 msgid "Extension"
 msgstr "Bővítmény"
 
-#: ../base/ufos/menu_equipment.ufo:56 ../base/ufos/menu_inventory.ufo:62
+#: ../base/ufos/menu_equipment.ufo:56
+#: ../base/ufos/menu_inventory.ufo:62
 #: ../base/ufos/menu_multiplayer_team.ufo:56
 msgid "Headgear"
 msgstr "Fejfedő"
 
-#: ../base/ufos/menu_equipment.ufo:65 ../base/ufos/menu_inventory.ufo:71
+#: ../base/ufos/menu_equipment.ufo:65
+#: ../base/ufos/menu_inventory.ufo:71
 #: ../base/ufos/menu_multiplayer_team.ufo:65
 msgid "Holster"
 msgstr "Pisztolytáska"
 
-#: ../base/ufos/menu_equipment.ufo:74 ../base/ufos/menu_inventory.ufo:80
+#: ../base/ufos/menu_equipment.ufo:74
+#: ../base/ufos/menu_inventory.ufo:80
 #: ../base/ufos/menu_multiplayer_team.ufo:74
 msgid "Belt"
 msgstr "Öv"
 
-#: ../base/ufos/menu_equipment.ufo:111 ../base/ufos/menu_equipment.ufo:120
-#: ../base/ufos/menu_equipment.ufo:129 ../base/ufos/menu_equipment.ufo:138
-#: ../base/ufos/menu_equipment.ufo:147 ../base/ufos/menu_equipment.ufo:156
-#: ../base/ufos/menu_equipment.ufo:165 ../base/ufos/menu_equipment.ufo:174
+#: ../base/ufos/menu_equipment.ufo:111
+#: ../base/ufos/menu_equipment.ufo:120
+#: ../base/ufos/menu_equipment.ufo:129
+#: ../base/ufos/menu_equipment.ufo:138
+#: ../base/ufos/menu_equipment.ufo:147
+#: ../base/ufos/menu_equipment.ufo:156
+#: ../base/ufos/menu_equipment.ufo:165
+#: ../base/ufos/menu_equipment.ufo:174
 msgid "Equip this soldier"
 msgstr "Katona felfegyverzése"
 
-#: ../base/ufos/menu_equipment.ufo:282 ../base/ufos/menu_market.ufo:58
+#: ../base/ufos/menu_equipment.ufo:282
+#: ../base/ufos/menu_market.ufo:58
 #: ../base/ufos/menu_multiplayer_team.ufo:291
 #: ../base/ufos/menu_production.ufo:57
 msgid "Primary"
 msgstr "Elsődleges"
 
-#: ../base/ufos/menu_equipment.ufo:287 ../base/ufos/menu_market.ufo:63
+#: ../base/ufos/menu_equipment.ufo:287
+#: ../base/ufos/menu_market.ufo:63
 #: ../base/ufos/menu_multiplayer_team.ufo:296
 #: ../base/ufos/menu_production.ufo:62
 msgid "Secondary"
 msgstr "Másodlagos"
 
-#: ../base/ufos/menu_equipment.ufo:292 ../base/ufos/menu_market.ufo:68
+#: ../base/ufos/menu_equipment.ufo:292
+#: ../base/ufos/menu_market.ufo:68
 #: ../base/ufos/menu_multiplayer_team.ufo:301
 #: ../base/ufos/menu_production.ufo:67
 msgid "Heavy"
 msgstr "Nehéz"
 
-#: ../base/ufos/menu_equipment.ufo:297 ../base/ufos/menu_market.ufo:73
+#: ../base/ufos/menu_equipment.ufo:297
+#: ../base/ufos/menu_market.ufo:73
 #: ../base/ufos/menu_multiplayer_team.ufo:306
 #: ../base/ufos/menu_production.ufo:72
 msgid "Misc"
 msgstr "Vegyes"
 
-#: ../base/ufos/menu_equipment.ufo:302 ../base/ufos/menu_market.ufo:78
+#: ../base/ufos/menu_equipment.ufo:302
+#: ../base/ufos/menu_market.ufo:78
 #: ../base/ufos/menu_multiplayer_team.ufo:311
 #: ../base/ufos/menu_production.ufo:77
 #: client/campaign/cl_fightequip_callbacks.c:363
@@ -2125,9 +2439,8 @@ msgstr "Páncél"
 
 #: ../base/ufos/menu_equipment.ufo:353
 #: ../base/ufos/menu_multiplayer_team.ufo:400
-#, fuzzy
 msgid "With:"
-msgstr "Munícióval:"
+msgstr "Ezzel:"
 
 #: ../base/ufos/menu_equipment.ufo:394
 #: ../base/ufos/menu_multiplayer_team.ufo:441
@@ -2189,7 +2502,8 @@ msgstr ""
 msgid "Time lapse: 5 days"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:336 ../base/ufos/menu_geoscape.ufo:353
+#: ../base/ufos/menu_geoscape.ufo:336
+#: ../base/ufos/menu_geoscape.ufo:353
 #: ../base/ufos/menu_mailclient.ufo:126
 msgid "Mailclient"
 msgstr "Levelező program"
@@ -2202,7 +2516,8 @@ msgstr "Levelesláda (olvasattlan levelekkel)"
 msgid "INBOX"
 msgstr "Levelesláda"
 
-#: ../base/ufos/menu_geoscape.ufo:368 ../base/ufos/menu_stats.ufo:29
+#: ../base/ufos/menu_geoscape.ufo:368
+#: ../base/ufos/menu_stats.ufo:29
 msgid "Statistics"
 msgstr "Statisztikák"
 
@@ -2214,19 +2529,23 @@ msgstr "Statisztikák"
 msgid "Open UFOpaedia"
 msgstr "UFÓpédia"
 
-#: ../base/ufos/menu_geoscape.ufo:398 ../base/ufos/menu_geoscape.ufo:399
+#: ../base/ufos/menu_geoscape.ufo:398
+#: ../base/ufos/menu_geoscape.ufo:399
 msgid "Create installation"
 msgstr "Állomás építés"
 
-#: ../base/ufos/menu_geoscape.ufo:417 ../base/ufos/menu_geoscape.ufo:2881
+#: ../base/ufos/menu_geoscape.ufo:417
+#: ../base/ufos/menu_geoscape.ufo:2881
 msgid "Highlight nation borders"
 msgstr "Országhatárak jelzése"
 
-#: ../base/ufos/menu_geoscape.ufo:430 ../base/ufos/menu_geoscape.ufo:2906
+#: ../base/ufos/menu_geoscape.ufo:430
+#: ../base/ufos/menu_geoscape.ufo:2906
 msgid "Show radar range"
 msgstr "Radar távolság kijelzése"
 
-#: ../base/ufos/menu_geoscape.ufo:444 ../base/ufos/menu_geoscape.ufo:2927
+#: ../base/ufos/menu_geoscape.ufo:444
+#: ../base/ufos/menu_geoscape.ufo:2927
 msgid "Show XVI map"
 msgstr "XVI térkép"
 
@@ -2246,18 +2565,27 @@ msgstr ""
 msgid "Go to Options"
 msgstr "Beállítások"
 
-#: ../base/ufos/menu_geoscape.ufo:571 ../base/ufos/menu_geoscape.ufo:1998
-#: ../base/ufos/menu_main.ufo:267 ../base/ufos/menu_multiplayer.ufo:1382
+#: ../base/ufos/menu_geoscape.ufo:571
+#: ../base/ufos/menu_geoscape.ufo:1998
+#: ../base/ufos/menu_main.ufo:267
+#: ../base/ufos/menu_multiplayer.ufo:1382
 msgid "OK"
 msgstr "OK"
 
-#: ../base/ufos/menu_geoscape.ufo:572 ../base/ufos/menu_geoscape.ufo:693
-#: ../base/ufos/menu_geoscape.ufo:946 ../base/ufos/menu_geoscape.ufo:1048
-#: ../base/ufos/menu_geoscape.ufo:1315 ../base/ufos/menu_geoscape.ufo:1467
-#: ../base/ufos/menu_geoscape.ufo:1526 ../base/ufos/menu_geoscape.ufo:1593
-#: ../base/ufos/menu_geoscape.ufo:1743 ../base/ufos/menu_geoscape.ufo:1835
-#: ../base/ufos/menu_geoscape.ufo:1894 ../base/ufos/menu_geoscape.ufo:1953
-#: ../base/ufos/menu_geoscape.ufo:1999 ../base/ufos/menu_irc.ufo:219
+#: ../base/ufos/menu_geoscape.ufo:572
+#: ../base/ufos/menu_geoscape.ufo:693
+#: ../base/ufos/menu_geoscape.ufo:946
+#: ../base/ufos/menu_geoscape.ufo:1048
+#: ../base/ufos/menu_geoscape.ufo:1315
+#: ../base/ufos/menu_geoscape.ufo:1467
+#: ../base/ufos/menu_geoscape.ufo:1526
+#: ../base/ufos/menu_geoscape.ufo:1593
+#: ../base/ufos/menu_geoscape.ufo:1743
+#: ../base/ufos/menu_geoscape.ufo:1835
+#: ../base/ufos/menu_geoscape.ufo:1894
+#: ../base/ufos/menu_geoscape.ufo:1953
+#: ../base/ufos/menu_geoscape.ufo:1999
+#: ../base/ufos/menu_irc.ufo:219
 #: ../base/ufos/menu_options.ufo:1285
 msgid "Close this dialogue"
 msgstr "Ablak bezárása"
@@ -2270,29 +2598,38 @@ msgstr "Kész"
 msgid "Aircraft reached desired location - what to do?"
 msgstr "A repülő elért a megjelölt helyre, mit tegyünk?"
 
-#: ../base/ufos/menu_geoscape.ufo:692 ../base/ufos/menu_geoscape.ufo:945
-#: ../base/ufos/menu_geoscape.ufo:1047 ../base/ufos/menu_geoscape.ufo:1466
-#: ../base/ufos/menu_geoscape.ufo:1742 ../base/ufos/menu_geoscape.ufo:1834
-#: ../base/ufos/menu_geoscape.ufo:1893 ../base/ufos/menu_geoscape.ufo:1952
-#: ../base/ufos/menu_geoscape.ufo:2043 ../base/ufos/menu_irc.ufo:218
+#: ../base/ufos/menu_geoscape.ufo:692
+#: ../base/ufos/menu_geoscape.ufo:945
+#: ../base/ufos/menu_geoscape.ufo:1047
+#: ../base/ufos/menu_geoscape.ufo:1466
+#: ../base/ufos/menu_geoscape.ufo:1742
+#: ../base/ufos/menu_geoscape.ufo:1834
+#: ../base/ufos/menu_geoscape.ufo:1893
+#: ../base/ufos/menu_geoscape.ufo:1952
+#: ../base/ufos/menu_geoscape.ufo:2043
+#: ../base/ufos/menu_irc.ufo:218
 #: ../base/ufos/menu_options.ufo:1284
 #: client/campaign/cp_installation_callbacks.c:214
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../base/ufos/menu_geoscape.ufo:708 ../base/ufos/menu_geoscape.ufo:875
+#: ../base/ufos/menu_geoscape.ufo:708
+#: ../base/ufos/menu_geoscape.ufo:875
 msgid "Enter"
 msgstr "Belépés"
 
-#: ../base/ufos/menu_geoscape.ufo:709 ../base/ufos/menu_geoscape.ufo:876
+#: ../base/ufos/menu_geoscape.ufo:709
+#: ../base/ufos/menu_geoscape.ufo:876
 msgid "Enter the battlefield"
 msgstr "Belépés a csataterületre"
 
-#: ../base/ufos/menu_geoscape.ufo:721 ../base/ufos/menu_geoscape.ufo:846
+#: ../base/ufos/menu_geoscape.ufo:721
+#: ../base/ufos/menu_geoscape.ufo:846
 msgid "Auto mission"
 msgstr "Auto-küldetés"
 
-#: ../base/ufos/menu_geoscape.ufo:722 ../base/ufos/menu_geoscape.ufo:847
+#: ../base/ufos/menu_geoscape.ufo:722
+#: ../base/ufos/menu_geoscape.ufo:847
 msgid "Automatically finish mission"
 msgstr "Küldetés automatikus végrehajtása"
 
@@ -2304,8 +2641,10 @@ msgstr "Irány a katonák felfegyverzése csata előtt"
 msgid "Kill aliens in container"
 msgstr "Öld meg az idegeneket a tárolóban"
 
-#: ../base/ufos/menu_geoscape.ufo:806 ../base/ufos/menu_geoscape.ufo:815
-#: ../base/ufos/menu_geoscape.ufo:824 ../base/ufos/menu_geoscape.ufo:833
+#: ../base/ufos/menu_geoscape.ufo:806
+#: ../base/ufos/menu_geoscape.ufo:815
+#: ../base/ufos/menu_geoscape.ufo:824
+#: ../base/ufos/menu_geoscape.ufo:833
 msgid "Not implemented"
 msgstr "Nincs kész"
 
@@ -2329,14 +2668,19 @@ msgstr "Válassz egy bázist az idegen testek tárolására:"
 msgid "New base"
 msgstr "Új bázis"
 
-#: ../base/ufos/menu_geoscape.ufo:974 ../base/ufos/menu_geoscape.ufo:1409
-#: ../base/ufos/menu_geoscape.ufo:1550 ../base/ufos/menu_geoscape.ufo:1792
-#: ../base/ufos/menu_geoscape.ufo:1872 ../base/ufos/menu_main.ufo:134
-#: ../base/ufos/menu_multiplayer.ufo:372 ../base/ufos/menu_options.ufo:762
+#: ../base/ufos/menu_geoscape.ufo:974
+#: ../base/ufos/menu_geoscape.ufo:1409
+#: ../base/ufos/menu_geoscape.ufo:1550
+#: ../base/ufos/menu_geoscape.ufo:1792
+#: ../base/ufos/menu_geoscape.ufo:1872
+#: ../base/ufos/menu_main.ufo:134
+#: ../base/ufos/menu_multiplayer.ufo:372
+#: ../base/ufos/menu_options.ufo:762
 msgid "Name:"
 msgstr "Név:"
 
-#: ../base/ufos/menu_geoscape.ufo:999 ../base/ufos/menu_geoscape.ufo:1434
+#: ../base/ufos/menu_geoscape.ufo:999
+#: ../base/ufos/menu_geoscape.ufo:1434
 msgid "Cost:"
 msgstr "Ár:"
 
@@ -2356,7 +2700,8 @@ msgstr "Kezdés épületekkel"
 msgid "Buildings already built in the initial base"
 msgstr "Legyenek épületek építve a kezdőbázison"
 
-#: ../base/ufos/menu_geoscape.ufo:1062 ../base/ufos/menu_geoscape.ufo:1478
+#: ../base/ufos/menu_geoscape.ufo:1062
+#: ../base/ufos/menu_geoscape.ufo:1478
 msgid "Build"
 msgstr "Építés"
 
@@ -2384,7 +2729,8 @@ msgstr "Ár"
 msgid "Radar tower"
 msgstr "Radartorony"
 
-#: ../base/ufos/menu_geoscape.ufo:1260 client/campaign/cl_map.c:330
+#: ../base/ufos/menu_geoscape.ufo:1260
+#: client/campaign/cl_map.c:330
 msgid "Base"
 msgstr "Bázis"
 
@@ -2400,8 +2746,10 @@ msgstr ""
 msgid "Base limit reached."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1314 ../base/ufos/menu_geoscape.ufo:1525
-#: ../base/ufos/menu_geoscape.ufo:1592 ../base/ufos/menu_main.ufo:368
+#: ../base/ufos/menu_geoscape.ufo:1314
+#: ../base/ufos/menu_geoscape.ufo:1525
+#: ../base/ufos/menu_geoscape.ufo:1592
+#: ../base/ufos/menu_main.ufo:368
 msgid "Close"
 msgstr "Bezárás"
 
@@ -2417,7 +2765,8 @@ msgstr "Új rakétaállomás"
 msgid "New UFO yard"
 msgstr "Új UFÓtároló"
 
-#: ../base/ufos/menu_geoscape.ufo:1423 ../base/ufos/menu_geoscape.ufo:1565
+#: ../base/ufos/menu_geoscape.ufo:1423
+#: ../base/ufos/menu_geoscape.ufo:1565
 msgid "Rename installation"
 msgstr "Állomás átnevezése"
 
@@ -2445,8 +2794,10 @@ msgstr "Ügyintézés"
 msgid "Manage installation"
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:1617 client/campaign/cp_base.c:785
-#: client/campaign/cp_base.c:795 client/campaign/cp_base.c:805
+#: ../base/ufos/menu_geoscape.ufo:1617
+#: client/campaign/cp_base.c:785
+#: client/campaign/cp_base.c:795
+#: client/campaign/cp_base.c:805
 #: client/campaign/cp_base.c:818
 #: client/campaign/cp_installation_callbacks.c:213
 msgid "Destroy"
@@ -2473,11 +2824,13 @@ msgstr "SAM védelem"
 msgid "Aircraft:"
 msgstr "Repülő:"
 
-#: ../base/ufos/menu_geoscape.ufo:1682 ../base/ufos/menu_geoscape.ufo:1799
+#: ../base/ufos/menu_geoscape.ufo:1682
+#: ../base/ufos/menu_geoscape.ufo:1799
 msgid "Status:"
 msgstr "Állapot:"
 
-#: ../base/ufos/menu_geoscape.ufo:1689 ../base/ufos/menu_geoscape.ufo:1806
+#: ../base/ufos/menu_geoscape.ufo:1689
+#: ../base/ufos/menu_geoscape.ufo:1806
 msgid "Base:"
 msgstr "Bázis:"
 
@@ -2530,55 +2883,92 @@ msgid "Notify types:"
 msgstr "Üzenet típusok"
 
 #: ../base/ufos/menu_geoscape.ufo:2065
-msgid "Enable or disable pause for all notification types\\nPause can't be enabled without notification\\nLeft click enables pause for all, right click disables."
+msgid ""
+"Enable or disable pause for all notification types\\n"
+"Pause can't be enabled without notification\\n"
+"Left click enables pause for all, right click disables."
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:2079
-msgid "Enable or disable messages being displayed for all notification types.\\nLeft click enables all notifications, right click disables."
+msgid ""
+"Enable or disable messages being displayed for all notification types.\\n"
+"Left click enables all notifications, right click disables."
 msgstr ""
 
 #: ../base/ufos/menu_geoscape.ufo:2088
-msgid "Enable or disable sounds being played for all notification types.\\nLeft click enables all sounds, right click disables."
+msgid ""
+"Enable or disable sounds being played for all notification types.\\n"
+"Left click enables all sounds, right click disables."
 msgstr ""
 
-#: ../base/ufos/menu_geoscape.ufo:2134 ../base/ufos/menu_geoscape.ufo:2163
-#: ../base/ufos/menu_geoscape.ufo:2193 ../base/ufos/menu_geoscape.ufo:2223
-#: ../base/ufos/menu_geoscape.ufo:2253 ../base/ufos/menu_geoscape.ufo:2283
-#: ../base/ufos/menu_geoscape.ufo:2313 ../base/ufos/menu_geoscape.ufo:2343
-#: ../base/ufos/menu_geoscape.ufo:2373 ../base/ufos/menu_geoscape.ufo:2403
-#: ../base/ufos/menu_geoscape.ufo:2433 ../base/ufos/menu_geoscape.ufo:2463
-#: ../base/ufos/menu_geoscape.ufo:2493 ../base/ufos/menu_geoscape.ufo:2523
-#: ../base/ufos/menu_geoscape.ufo:2553 ../base/ufos/menu_geoscape.ufo:2583
-#: ../base/ufos/menu_geoscape.ufo:2613 ../base/ufos/menu_geoscape.ufo:2643
-#: ../base/ufos/menu_geoscape.ufo:2673 ../base/ufos/menu_geoscape.ufo:2703
+#: ../base/ufos/menu_geoscape.ufo:2134
+#: ../base/ufos/menu_geoscape.ufo:2163
+#: ../base/ufos/menu_geoscape.ufo:2193
+#: ../base/ufos/menu_geoscape.ufo:2223
+#: ../base/ufos/menu_geoscape.ufo:2253
+#: ../base/ufos/menu_geoscape.ufo:2283
+#: ../base/ufos/menu_geoscape.ufo:2313
+#: ../base/ufos/menu_geoscape.ufo:2343
+#: ../base/ufos/menu_geoscape.ufo:2373
+#: ../base/ufos/menu_geoscape.ufo:2403
+#: ../base/ufos/menu_geoscape.ufo:2433
+#: ../base/ufos/menu_geoscape.ufo:2463
+#: ../base/ufos/menu_geoscape.ufo:2493
+#: ../base/ufos/menu_geoscape.ufo:2523
+#: ../base/ufos/menu_geoscape.ufo:2553
+#: ../base/ufos/menu_geoscape.ufo:2583
+#: ../base/ufos/menu_geoscape.ufo:2613
+#: ../base/ufos/menu_geoscape.ufo:2643
+#: ../base/ufos/menu_geoscape.ufo:2673
+#: ../base/ufos/menu_geoscape.ufo:2703
 #: ../base/ufos/menu_geoscape.ufo:2733
 msgid "enable or disable game stopping"
 msgstr "A játék megállításának engedélyezése vagy tiltása"
 
-#: ../base/ufos/menu_geoscape.ufo:2144 ../base/ufos/menu_geoscape.ufo:2173
-#: ../base/ufos/menu_geoscape.ufo:2203 ../base/ufos/menu_geoscape.ufo:2233
-#: ../base/ufos/menu_geoscape.ufo:2263 ../base/ufos/menu_geoscape.ufo:2293
-#: ../base/ufos/menu_geoscape.ufo:2323 ../base/ufos/menu_geoscape.ufo:2353
-#: ../base/ufos/menu_geoscape.ufo:2383 ../base/ufos/menu_geoscape.ufo:2413
-#: ../base/ufos/menu_geoscape.ufo:2443 ../base/ufos/menu_geoscape.ufo:2473
-#: ../base/ufos/menu_geoscape.ufo:2503 ../base/ufos/menu_geoscape.ufo:2533
-#: ../base/ufos/menu_geoscape.ufo:2563 ../base/ufos/menu_geoscape.ufo:2593
-#: ../base/ufos/menu_geoscape.ufo:2623 ../base/ufos/menu_geoscape.ufo:2653
-#: ../base/ufos/menu_geoscape.ufo:2683 ../base/ufos/menu_geoscape.ufo:2713
+#: ../base/ufos/menu_geoscape.ufo:2144
+#: ../base/ufos/menu_geoscape.ufo:2173
+#: ../base/ufos/menu_geoscape.ufo:2203
+#: ../base/ufos/menu_geoscape.ufo:2233
+#: ../base/ufos/menu_geoscape.ufo:2263
+#: ../base/ufos/menu_geoscape.ufo:2293
+#: ../base/ufos/menu_geoscape.ufo:2323
+#: ../base/ufos/menu_geoscape.ufo:2353
+#: ../base/ufos/menu_geoscape.ufo:2383
+#: ../base/ufos/menu_geoscape.ufo:2413
+#: ../base/ufos/menu_geoscape.ufo:2443
+#: ../base/ufos/menu_geoscape.ufo:2473
+#: ../base/ufos/menu_geoscape.ufo:2503
+#: ../base/ufos/menu_geoscape.ufo:2533
+#: ../base/ufos/menu_geoscape.ufo:2563
+#: ../base/ufos/menu_geoscape.ufo:2593
+#: ../base/ufos/menu_geoscape.ufo:2623
+#: ../base/ufos/menu_geoscape.ufo:2653
+#: ../base/ufos/menu_geoscape.ufo:2683
+#: ../base/ufos/menu_geoscape.ufo:2713
 #: ../base/ufos/menu_geoscape.ufo:2743
 msgid "enable or disable displaying a notification message"
 msgstr "A felbukkanó üzenetek engedélyezése vagy tiltása"
 
-#: ../base/ufos/menu_geoscape.ufo:2154 ../base/ufos/menu_geoscape.ufo:2183
-#: ../base/ufos/menu_geoscape.ufo:2213 ../base/ufos/menu_geoscape.ufo:2243
-#: ../base/ufos/menu_geoscape.ufo:2273 ../base/ufos/menu_geoscape.ufo:2303
-#: ../base/ufos/menu_geoscape.ufo:2333 ../base/ufos/menu_geoscape.ufo:2363
-#: ../base/ufos/menu_geoscape.ufo:2393 ../base/ufos/menu_geoscape.ufo:2423
-#: ../base/ufos/menu_geoscape.ufo:2453 ../base/ufos/menu_geoscape.ufo:2483
-#: ../base/ufos/menu_geoscape.ufo:2513 ../base/ufos/menu_geoscape.ufo:2543
-#: ../base/ufos/menu_geoscape.ufo:2573 ../base/ufos/menu_geoscape.ufo:2603
-#: ../base/ufos/menu_geoscape.ufo:2633 ../base/ufos/menu_geoscape.ufo:2663
-#: ../base/ufos/menu_geoscape.ufo:2693 ../base/ufos/menu_geoscape.ufo:2723
+#: ../base/ufos/menu_geoscape.ufo:2154
+#: ../base/ufos/menu_geoscape.ufo:2183
+#: ../base/ufos/menu_geoscape.ufo:2213
+#: ../base/ufos/menu_geoscape.ufo:2243
+#: ../base/ufos/menu_geoscape.ufo:2273
+#: ../base/ufos/menu_geoscape.ufo:2303
+#: ../base/ufos/menu_geoscape.ufo:2333
+#: ../base/ufos/menu_geoscape.ufo:2363
+#: ../base/ufos/menu_geoscape.ufo:2393
+#: ../base/ufos/menu_geoscape.ufo:2423
+#: ../base/ufos/menu_geoscape.ufo:2453
+#: ../base/ufos/menu_geoscape.ufo:2483
+#: ../base/ufos/menu_geoscape.ufo:2513
+#: ../base/ufos/menu_geoscape.ufo:2543
+#: ../base/ufos/menu_geoscape.ufo:2573
+#: ../base/ufos/menu_geoscape.ufo:2603
+#: ../base/ufos/menu_geoscape.ufo:2633
+#: ../base/ufos/menu_geoscape.ufo:2663
+#: ../base/ufos/menu_geoscape.ufo:2693
+#: ../base/ufos/menu_geoscape.ufo:2723
 #: ../base/ufos/menu_geoscape.ufo:2753
 msgid "enable or disable playing sound"
 msgstr "A játékhangok be- vagy kikapcsolása"
@@ -2599,13 +2989,20 @@ msgstr "2D"
 msgid "3D"
 msgstr "3D"
 
-#: ../base/ufos/menu_hire.ufo:72 ../base/ufos/menu_hire.ufo:82
-#: ../base/ufos/menu_hire.ufo:92 ../base/ufos/menu_hire.ufo:102
-#: ../base/ufos/menu_hire.ufo:112 ../base/ufos/menu_hire.ufo:122
-#: ../base/ufos/menu_hire.ufo:132 ../base/ufos/menu_hire.ufo:142
-#: ../base/ufos/menu_hire.ufo:152 ../base/ufos/menu_hire.ufo:162
-#: ../base/ufos/menu_hire.ufo:172 ../base/ufos/menu_hire.ufo:182
-#: ../base/ufos/menu_hire.ufo:192 ../base/ufos/menu_hire.ufo:202
+#: ../base/ufos/menu_hire.ufo:72
+#: ../base/ufos/menu_hire.ufo:82
+#: ../base/ufos/menu_hire.ufo:92
+#: ../base/ufos/menu_hire.ufo:102
+#: ../base/ufos/menu_hire.ufo:112
+#: ../base/ufos/menu_hire.ufo:122
+#: ../base/ufos/menu_hire.ufo:132
+#: ../base/ufos/menu_hire.ufo:142
+#: ../base/ufos/menu_hire.ufo:152
+#: ../base/ufos/menu_hire.ufo:162
+#: ../base/ufos/menu_hire.ufo:172
+#: ../base/ufos/menu_hire.ufo:182
+#: ../base/ufos/menu_hire.ufo:192
+#: ../base/ufos/menu_hire.ufo:202
 #: ../base/ufos/menu_hire.ufo:212
 msgid "Hire/Unhire - Right click to remove"
 msgstr "Felbérelés/Kirúgás - Jobb klikk az eltávolításhoz"
@@ -2626,27 +3023,48 @@ msgstr "Munkások"
 msgid "Scientists"
 msgstr "Tudósok"
 
-#: ../base/ufos/menu_hospital.ufo:85 ../base/ufos/menu_hospital.ufo:86
-#: ../base/ufos/menu_hospital.ufo:87 ../base/ufos/menu_hospital.ufo:88
-#: ../base/ufos/menu_hospital.ufo:89 ../base/ufos/menu_hospital.ufo:90
-#: ../base/ufos/menu_hospital.ufo:91 ../base/ufos/menu_hospital.ufo:92
-#: ../base/ufos/menu_hospital.ufo:93 ../base/ufos/menu_hospital.ufo:94
-#: ../base/ufos/menu_hospital.ufo:95 ../base/ufos/menu_hospital.ufo:96
-#: ../base/ufos/menu_hospital.ufo:97 ../base/ufos/menu_hospital.ufo:98
-#: ../base/ufos/menu_hospital.ufo:99 ../base/ufos/menu_hospital.ufo:100
-#: ../base/ufos/menu_hospital.ufo:101 ../base/ufos/menu_hospital.ufo:102
-#: ../base/ufos/menu_hospital.ufo:103 ../base/ufos/menu_hospital.ufo:104
-#: ../base/ufos/menu_hospital.ufo:105 ../base/ufos/menu_hospital.ufo:308
-#: ../base/ufos/menu_hospital.ufo:314 ../base/ufos/menu_hospital.ufo:320
-#: ../base/ufos/menu_hospital.ufo:326 ../base/ufos/menu_hospital.ufo:332
-#: ../base/ufos/menu_hospital.ufo:338 ../base/ufos/menu_hospital.ufo:344
-#: ../base/ufos/menu_hospital.ufo:350 ../base/ufos/menu_hospital.ufo:356
-#: ../base/ufos/menu_hospital.ufo:362 ../base/ufos/menu_hospital.ufo:368
-#: ../base/ufos/menu_hospital.ufo:374 ../base/ufos/menu_hospital.ufo:380
-#: ../base/ufos/menu_hospital.ufo:386 ../base/ufos/menu_hospital.ufo:392
-#: ../base/ufos/menu_hospital.ufo:398 ../base/ufos/menu_hospital.ufo:404
-#: ../base/ufos/menu_hospital.ufo:410 ../base/ufos/menu_hospital.ufo:416
-#: ../base/ufos/menu_hospital.ufo:422 ../base/ufos/menu_hospital.ufo:428
+#: ../base/ufos/menu_hospital.ufo:85
+#: ../base/ufos/menu_hospital.ufo:86
+#: ../base/ufos/menu_hospital.ufo:87
+#: ../base/ufos/menu_hospital.ufo:88
+#: ../base/ufos/menu_hospital.ufo:89
+#: ../base/ufos/menu_hospital.ufo:90
+#: ../base/ufos/menu_hospital.ufo:91
+#: ../base/ufos/menu_hospital.ufo:92
+#: ../base/ufos/menu_hospital.ufo:93
+#: ../base/ufos/menu_hospital.ufo:94
+#: ../base/ufos/menu_hospital.ufo:95
+#: ../base/ufos/menu_hospital.ufo:96
+#: ../base/ufos/menu_hospital.ufo:97
+#: ../base/ufos/menu_hospital.ufo:98
+#: ../base/ufos/menu_hospital.ufo:99
+#: ../base/ufos/menu_hospital.ufo:100
+#: ../base/ufos/menu_hospital.ufo:101
+#: ../base/ufos/menu_hospital.ufo:102
+#: ../base/ufos/menu_hospital.ufo:103
+#: ../base/ufos/menu_hospital.ufo:104
+#: ../base/ufos/menu_hospital.ufo:105
+#: ../base/ufos/menu_hospital.ufo:308
+#: ../base/ufos/menu_hospital.ufo:314
+#: ../base/ufos/menu_hospital.ufo:320
+#: ../base/ufos/menu_hospital.ufo:326
+#: ../base/ufos/menu_hospital.ufo:332
+#: ../base/ufos/menu_hospital.ufo:338
+#: ../base/ufos/menu_hospital.ufo:344
+#: ../base/ufos/menu_hospital.ufo:350
+#: ../base/ufos/menu_hospital.ufo:356
+#: ../base/ufos/menu_hospital.ufo:362
+#: ../base/ufos/menu_hospital.ufo:368
+#: ../base/ufos/menu_hospital.ufo:374
+#: ../base/ufos/menu_hospital.ufo:380
+#: ../base/ufos/menu_hospital.ufo:386
+#: ../base/ufos/menu_hospital.ufo:392
+#: ../base/ufos/menu_hospital.ufo:398
+#: ../base/ufos/menu_hospital.ufo:404
+#: ../base/ufos/menu_hospital.ufo:410
+#: ../base/ufos/menu_hospital.ufo:416
+#: ../base/ufos/menu_hospital.ufo:422
+#: ../base/ufos/menu_hospital.ufo:428
 msgid "Unused"
 msgstr "Nem használt"
 
@@ -2726,7 +3144,8 @@ msgstr ""
 msgid "Physical stats of this soldier"
 msgstr "Fizikai adatai ennek a katonának"
 
-#: ../base/ufos/menu_hud.ufo:766 ../base/ufos/seq_tutorials.ufo:518
+#: ../base/ufos/menu_hud.ufo:766
+#: ../base/ufos/seq_tutorials.ufo:518
 msgid "Inventory"
 msgstr "Felszerelések"
 
@@ -2734,7 +3153,8 @@ msgstr "Felszerelések"
 msgid "Floor"
 msgstr "Talaj"
 
-#: ../base/ufos/menu_irc.ufo:19 ../base/ufos/menu_multiplayer.ufo:76
+#: ../base/ufos/menu_irc.ufo:19
+#: ../base/ufos/menu_multiplayer.ufo:76
 #: ../base/ufos/menu_multiplayer.ufo:129
 #: ../base/ufos/menu_multiplayer.ufo:1424
 #: ../base/ufos/menu_multiplayeringame.ufo:60
@@ -2765,7 +3185,8 @@ msgstr "Nincs kapcsolódva"
 msgid "You are not connected to the lobby. Do you want to connect?"
 msgstr ""
 
-#: ../base/ufos/menu_irc.ufo:206 ../base/ufos/menu_multiplayer.ufo:221
+#: ../base/ufos/menu_irc.ufo:206
+#: ../base/ufos/menu_multiplayer.ufo:221
 #: ../base/ufos/menu_multiplayer.ufo:421
 #: ../base/ufos/menu_multiplayer.ufo:1383
 msgid "Connect"
@@ -2775,11 +3196,13 @@ msgstr "Kapcsolódás"
 msgid "Connect to the lobby"
 msgstr ""
 
-#: ../base/ufos/menu_lostwon.ufo:36 ../base/ufos/menu_lostwon.ufo:113
+#: ../base/ufos/menu_lostwon.ufo:36
+#: ../base/ufos/menu_lostwon.ufo:113
 msgid "Try again"
 msgstr "Próbáljuk újra"
 
-#: ../base/ufos/menu_lostwon.ufo:37 ../base/ufos/menu_lostwon.ufo:114
+#: ../base/ufos/menu_lostwon.ufo:37
+#: ../base/ufos/menu_lostwon.ufo:114
 msgid "Retry this mission"
 msgstr "Küldetés újrakezdése"
 
@@ -2859,7 +3282,8 @@ msgstr "Egy játékos"
 msgid "Multiplayer"
 msgstr "Több játékos"
 
-#: ../base/ufos/menu_main.ufo:71 ../base/ufos/menu_tutorials.ufo:18
+#: ../base/ufos/menu_main.ufo:71
+#: ../base/ufos/menu_tutorials.ufo:18
 msgid "Tutorials"
 msgstr "Oktatás"
 
@@ -2875,15 +3299,18 @@ msgstr "Kezdeti beállítások"
 msgid "User Information"
 msgstr "Felhasználó információ"
 
-#: ../base/ufos/menu_main.ufo:158 ../base/ufos/menu_options.ufo:592
+#: ../base/ufos/menu_main.ufo:158
+#: ../base/ufos/menu_options.ufo:592
 msgid "Volume Control"
 msgstr "Hangerő szabályzó"
 
-#: ../base/ufos/menu_main.ufo:165 ../base/ufos/menu_options.ufo:598
+#: ../base/ufos/menu_main.ufo:165
+#: ../base/ufos/menu_options.ufo:598
 msgid "Effects:"
 msgstr "Hangok:"
 
-#: ../base/ufos/menu_main.ufo:186 ../base/ufos/menu_options.ufo:620
+#: ../base/ufos/menu_main.ufo:186
+#: ../base/ufos/menu_options.ufo:620
 msgid "Music:"
 msgstr "Zene:"
 
@@ -2891,7 +3318,8 @@ msgstr "Zene:"
 msgid "Language"
 msgstr "Nyelv"
 
-#: ../base/ufos/menu_main.ufo:218 ../base/ufos/menu_options.ufo:813
+#: ../base/ufos/menu_main.ufo:218
+#: ../base/ufos/menu_options.ufo:813
 msgid "Language:"
 msgstr "Nyelv:"
 
@@ -2911,11 +3339,13 @@ msgstr "A nap tippje"
 msgid "Show tip of the day"
 msgstr "Mutasd a nap tippjét"
 
-#: ../base/ufos/menu_main.ufo:351 ../base/ufos/menu_main.ufo:365
+#: ../base/ufos/menu_main.ufo:351
+#: ../base/ufos/menu_main.ufo:365
 msgid "Next"
 msgstr "Következő"
 
-#: ../base/ufos/menu_main.ufo:352 ../base/ufos/menu_main.ufo:366
+#: ../base/ufos/menu_main.ufo:352
+#: ../base/ufos/menu_main.ufo:366
 msgid "Next tip"
 msgstr "Következő tipp"
 
@@ -2923,7 +3353,8 @@ msgstr "Következő tipp"
 msgid "Close window"
 msgstr "Ablak bezárása"
 
-#: ../base/ufos/menu_market.ufo:83 ../base/ufos/menu_production.ufo:82
+#: ../base/ufos/menu_market.ufo:83
+#: ../base/ufos/menu_production.ufo:82
 msgid "Craft items"
 msgstr "Gépfelszerelés"
 
@@ -2931,21 +3362,33 @@ msgstr "Gépfelszerelés"
 msgid "Other"
 msgstr "Egyéb"
 
-#: ../base/ufos/menu_market.ufo:98 ../base/ufos/menu_production.ufo:92
+#: ../base/ufos/menu_market.ufo:98
+#: ../base/ufos/menu_production.ufo:92
 msgid "UGV items"
 msgstr ""
 
-#: ../base/ufos/menu_market.ufo:195 ../base/ufos/menu_market.ufo:218
-#: ../base/ufos/menu_market.ufo:241 ../base/ufos/menu_market.ufo:264
-#: ../base/ufos/menu_market.ufo:287 ../base/ufos/menu_market.ufo:310
-#: ../base/ufos/menu_market.ufo:333 ../base/ufos/menu_market.ufo:356
-#: ../base/ufos/menu_market.ufo:379 ../base/ufos/menu_market.ufo:402
-#: ../base/ufos/menu_market.ufo:425 ../base/ufos/menu_market.ufo:448
-#: ../base/ufos/menu_market.ufo:471 ../base/ufos/menu_market.ufo:494
-#: ../base/ufos/menu_market.ufo:517 ../base/ufos/menu_market.ufo:540
-#: ../base/ufos/menu_market.ufo:563 ../base/ufos/menu_market.ufo:586
-#: ../base/ufos/menu_market.ufo:609 ../base/ufos/menu_market.ufo:632
-#: ../base/ufos/menu_market.ufo:655 ../base/ufos/menu_market.ufo:678
+#: ../base/ufos/menu_market.ufo:195
+#: ../base/ufos/menu_market.ufo:218
+#: ../base/ufos/menu_market.ufo:241
+#: ../base/ufos/menu_market.ufo:264
+#: ../base/ufos/menu_market.ufo:287
+#: ../base/ufos/menu_market.ufo:310
+#: ../base/ufos/menu_market.ufo:333
+#: ../base/ufos/menu_market.ufo:356
+#: ../base/ufos/menu_market.ufo:379
+#: ../base/ufos/menu_market.ufo:402
+#: ../base/ufos/menu_market.ufo:425
+#: ../base/ufos/menu_market.ufo:448
+#: ../base/ufos/menu_market.ufo:471
+#: ../base/ufos/menu_market.ufo:494
+#: ../base/ufos/menu_market.ufo:517
+#: ../base/ufos/menu_market.ufo:540
+#: ../base/ufos/menu_market.ufo:563
+#: ../base/ufos/menu_market.ufo:586
+#: ../base/ufos/menu_market.ufo:609
+#: ../base/ufos/menu_market.ufo:632
+#: ../base/ufos/menu_market.ufo:655
+#: ../base/ufos/menu_market.ufo:678
 msgid "Buy and sell item"
 msgstr "Felszerelés vásárlása/eladása"
 
@@ -2961,7 +3404,8 @@ msgstr "Automatikus eladás engedélyezve"
 msgid "Item autosell disabled"
 msgstr "Automatikus eladás letiltva"
 
-#: ../base/ufos/menu_multiplayer.ufo:37 ../base/ufos/menu_multiplayer.ufo:178
+#: ../base/ufos/menu_multiplayer.ufo:37
+#: ../base/ufos/menu_multiplayer.ufo:178
 msgid "Team"
 msgstr "Csapat"
 
@@ -2981,7 +3425,8 @@ msgstr "Internet/Lan"
 msgid "Lan"
 msgstr "Lan"
 
-#: ../base/ufos/menu_multiplayer.ufo:123 ../base/ufos/menu_multiplayer.ufo:246
+#: ../base/ufos/menu_multiplayer.ufo:123
+#: ../base/ufos/menu_multiplayer.ufo:246
 msgid "Bookmark"
 msgstr "Könyvjelző"
 
@@ -3013,18 +3458,27 @@ msgstr "Kapcsolódás IP-hez"
 msgid "Bookmarks"
 msgstr "Könyvjelzők"
 
-#: ../base/ufos/menu_multiplayer.ufo:476 ../base/ufos/menu_multiplayer.ufo:479
-#: ../base/ufos/menu_multiplayer.ufo:482 ../base/ufos/menu_multiplayer.ufo:485
-#: ../base/ufos/menu_multiplayer.ufo:488 ../base/ufos/menu_multiplayer.ufo:491
-#: ../base/ufos/menu_multiplayer.ufo:494 ../base/ufos/menu_multiplayer.ufo:497
-#: ../base/ufos/menu_multiplayer.ufo:500 ../base/ufos/menu_multiplayer.ufo:503
-#: ../base/ufos/menu_multiplayer.ufo:506 ../base/ufos/menu_multiplayer.ufo:509
-#: ../base/ufos/menu_multiplayer.ufo:512 ../base/ufos/menu_multiplayer.ufo:515
-#: ../base/ufos/menu_multiplayer.ufo:518 ../base/ufos/menu_multiplayer.ufo:521
+#: ../base/ufos/menu_multiplayer.ufo:476
+#: ../base/ufos/menu_multiplayer.ufo:479
+#: ../base/ufos/menu_multiplayer.ufo:482
+#: ../base/ufos/menu_multiplayer.ufo:485
+#: ../base/ufos/menu_multiplayer.ufo:488
+#: ../base/ufos/menu_multiplayer.ufo:491
+#: ../base/ufos/menu_multiplayer.ufo:494
+#: ../base/ufos/menu_multiplayer.ufo:497
+#: ../base/ufos/menu_multiplayer.ufo:500
+#: ../base/ufos/menu_multiplayer.ufo:503
+#: ../base/ufos/menu_multiplayer.ufo:506
+#: ../base/ufos/menu_multiplayer.ufo:509
+#: ../base/ufos/menu_multiplayer.ufo:512
+#: ../base/ufos/menu_multiplayer.ufo:515
+#: ../base/ufos/menu_multiplayer.ufo:518
+#: ../base/ufos/menu_multiplayer.ufo:521
 msgid "Delete this bookmark"
 msgstr "Könyvjelző törlése"
 
-#: ../base/ufos/menu_multiplayer.ufo:537 ../base/ufos/menu_skirmish.ufo:148
+#: ../base/ufos/menu_multiplayer.ufo:537
+#: ../base/ufos/menu_skirmish.ufo:148
 msgid "Map"
 msgstr "Térkép"
 
@@ -3056,7 +3510,8 @@ msgstr "Térkép neve:"
 msgid "Allowed gametype:"
 msgstr "Játék típusok:"
 
-#: ../base/ufos/menu_multiplayer.ufo:768 ../base/ufos/menu_skirmish.ufo:102
+#: ../base/ufos/menu_multiplayer.ufo:768
+#: ../base/ufos/menu_skirmish.ufo:102
 msgid "Day version:"
 msgstr "Nappali változat:"
 
@@ -3092,7 +3547,8 @@ msgstr "A csapatonkénti maximálisan megengedett katonák száma csapatjáték 
 msgid "Max. human players per team:"
 msgstr "Az emberi játékosok maximális száma csapatonként:"
 
-#: ../base/ufos/menu_multiplayer.ufo:930 ../base/ufos/menu_skirmish.ufo:119
+#: ../base/ufos/menu_multiplayer.ufo:930
+#: ../base/ufos/menu_skirmish.ufo:119
 msgid "Max. AI actors:"
 msgstr ""
 
@@ -3112,7 +3568,8 @@ msgstr "Szerver-jelszó:"
 msgid "RCON-Password:"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1035 ../base/ufos/seq_tutorials.ufo:785
+#: ../base/ufos/menu_multiplayer.ufo:1035
+#: ../base/ufos/seq_tutorials.ufo:785
 msgid "Make sure that you've opened the TCP port 27910 in your firewall settings"
 msgstr "Ellenőrizd le, hogy a 27910-es TCP port nyitva van-e a tűzfal beállításoknál"
 
@@ -3206,7 +3663,8 @@ msgid "Team:"
 msgstr "Csapat:"
 
 #: ../base/ufos/menu_multiplayer_team.ufo:933
-#: ../base/ufos/menu_skirmish.ufo:237 client/cl_game_campaign.c:198
+#: ../base/ufos/menu_skirmish.ufo:237
+#: client/cl_game_campaign.c:198
 msgid "Human"
 msgstr "Ember"
 
@@ -3231,7 +3689,8 @@ msgstr "Játék"
 msgid "Video"
 msgstr "Grafika"
 
-#: ../base/ufos/menu_options.ufo:70 ../base/ufos/menu_options.ufo:88
+#: ../base/ufos/menu_options.ufo:70
+#: ../base/ufos/menu_options.ufo:88
 msgid "Sound"
 msgstr "Hang"
 
@@ -3327,24 +3786,29 @@ msgstr ""
 msgid "Strech the screen with a 4:3 ratio:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:499 ../base/ufos/menu_options.ufo:528
+#: ../base/ufos/menu_options.ufo:499
+#: ../base/ufos/menu_options.ufo:528
 msgid "Low"
 msgstr "Alacsony"
 
-#: ../base/ufos/menu_options.ufo:504 ../base/ufos/menu_options.ufo:533
+#: ../base/ufos/menu_options.ufo:504
+#: ../base/ufos/menu_options.ufo:533
 msgid "Medium"
 msgstr "Közepes"
 
-#: ../base/ufos/menu_options.ufo:509 ../base/ufos/menu_options.ufo:538
+#: ../base/ufos/menu_options.ufo:509
+#: ../base/ufos/menu_options.ufo:538
 #: client/cl_game_campaign.c:129
 msgid "Normal"
 msgstr "Normál"
 
-#: ../base/ufos/menu_options.ufo:514 ../base/ufos/menu_options.ufo:543
+#: ../base/ufos/menu_options.ufo:514
+#: ../base/ufos/menu_options.ufo:543
 msgid "High"
 msgstr "Magas"
 
-#: ../base/ufos/menu_options.ufo:548 client/cl_actor.c:130
+#: ../base/ufos/menu_options.ufo:548
+#: client/cl_actor.c:130
 msgid "Excellent"
 msgstr "Kitűnő"
 
@@ -3464,16 +3928,19 @@ msgstr "Érzékenység:"
 msgid "Keys"
 msgstr "Billentyűk"
 
-#: ../base/ufos/menu_options.ufo:1177 client/cl_hud.c:105
+#: ../base/ufos/menu_options.ufo:1177
+#: client/cl_hud.c:105
 msgid "Autostand"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:1189 ../base/ufos/menu_options.ufo:1217
+#: ../base/ufos/menu_options.ufo:1189
+#: ../base/ufos/menu_options.ufo:1217
 #: po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Igen"
 
-#: ../base/ufos/menu_options.ufo:1194 ../base/ufos/menu_options.ufo:1222
+#: ../base/ufos/menu_options.ufo:1194
+#: ../base/ufos/menu_options.ufo:1222
 #: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Nem"
@@ -3526,7 +3993,8 @@ msgstr "Raktár kapacitás:"
 msgid "Production limit:"
 msgstr "Termelési korlát:"
 
-#: ../base/ufos/menu_production.ufo:373 ../base/ufos/menu_production.ufo:385
+#: ../base/ufos/menu_production.ufo:373
+#: ../base/ufos/menu_production.ufo:385
 msgid "Change the production amount"
 msgstr "Gyártási mennyiség változtatása"
 
@@ -3562,18 +4030,30 @@ msgstr "Kutatási javaslat mutatása"
 msgid "Switch to another base"
 msgstr "Váltás másik bázisra"
 
-#: ../base/ufos/menu_research.ufo:372 ../base/ufos/menu_research.ufo:383
-#: ../base/ufos/menu_research.ufo:394 ../base/ufos/menu_research.ufo:405
-#: ../base/ufos/menu_research.ufo:416 ../base/ufos/menu_research.ufo:427
-#: ../base/ufos/menu_research.ufo:438 ../base/ufos/menu_research.ufo:449
-#: ../base/ufos/menu_research.ufo:460 ../base/ufos/menu_research.ufo:471
-#: ../base/ufos/menu_research.ufo:482 ../base/ufos/menu_research.ufo:493
-#: ../base/ufos/menu_research.ufo:504 ../base/ufos/menu_research.ufo:515
-#: ../base/ufos/menu_research.ufo:526 ../base/ufos/menu_research.ufo:537
-#: ../base/ufos/menu_research.ufo:548 ../base/ufos/menu_research.ufo:559
-#: ../base/ufos/menu_research.ufo:570 ../base/ufos/menu_research.ufo:581
-#: ../base/ufos/menu_research.ufo:592 ../base/ufos/menu_research.ufo:603
-#: ../base/ufos/menu_research.ufo:614 ../base/ufos/menu_research.ufo:625
+#: ../base/ufos/menu_research.ufo:372
+#: ../base/ufos/menu_research.ufo:383
+#: ../base/ufos/menu_research.ufo:394
+#: ../base/ufos/menu_research.ufo:405
+#: ../base/ufos/menu_research.ufo:416
+#: ../base/ufos/menu_research.ufo:427
+#: ../base/ufos/menu_research.ufo:438
+#: ../base/ufos/menu_research.ufo:449
+#: ../base/ufos/menu_research.ufo:460
+#: ../base/ufos/menu_research.ufo:471
+#: ../base/ufos/menu_research.ufo:482
+#: ../base/ufos/menu_research.ufo:493
+#: ../base/ufos/menu_research.ufo:504
+#: ../base/ufos/menu_research.ufo:515
+#: ../base/ufos/menu_research.ufo:526
+#: ../base/ufos/menu_research.ufo:537
+#: ../base/ufos/menu_research.ufo:548
+#: ../base/ufos/menu_research.ufo:559
+#: ../base/ufos/menu_research.ufo:570
+#: ../base/ufos/menu_research.ufo:581
+#: ../base/ufos/menu_research.ufo:592
+#: ../base/ufos/menu_research.ufo:603
+#: ../base/ufos/menu_research.ufo:614
+#: ../base/ufos/menu_research.ufo:625
 #: ../base/ufos/menu_research.ufo:636
 msgid "Add and remove scientist"
 msgstr "Tudós hozzáadása/elvétele"
@@ -3582,7 +4062,8 @@ msgstr "Tudós hozzáadása/elvétele"
 msgid "Base Info"
 msgstr "Bázis információ"
 
-#: ../base/ufos/menu_singleplayer.ufo:29 ../base/ufos/menu_stats.ufo:155
+#: ../base/ufos/menu_singleplayer.ufo:29
+#: ../base/ufos/menu_stats.ufo:155
 msgid "Campaign"
 msgstr "Hadjárat"
 
@@ -3603,8 +4084,10 @@ msgid "You've lost the game"
 msgstr "Elvesztetted a játékot"
 
 #: ../base/ufos/menu_singleplayer.ufo:197
-#: ../base/ufos/menu_singleplayer.ufo:258 ../base/ufos/seq_ingame.ufo:13
-#: ../base/ufos/seq_ingame.ufo:42 ../base/ufos/seq_ingame.ufo:80
+#: ../base/ufos/menu_singleplayer.ufo:258
+#: ../base/ufos/seq_ingame.ufo:13
+#: ../base/ufos/seq_ingame.ufo:42
+#: ../base/ufos/seq_ingame.ufo:80
 #: ../base/ufos/seq_intro.ufo:73
 msgid "Click to continue"
 msgstr "Kattints a folytatáshoz"
@@ -3641,7 +4124,8 @@ msgstr "Bázisok"
 msgid "Installations"
 msgstr "Állomások"
 
-#: ../base/ufos/menu_stats.ufo:95 ../base/ufos/menu_transfer.ufo:84
+#: ../base/ufos/menu_stats.ufo:95
+#: ../base/ufos/menu_transfer.ufo:84
 msgid "Employees"
 msgstr "Alkalmazottak"
 
@@ -3681,7 +4165,8 @@ msgstr "Támogatás"
 msgid "max"
 msgstr "max"
 
-#: ../base/ufos/menu_transfer.ufo:89 client/cl_game_campaign.c:200
+#: ../base/ufos/menu_transfer.ufo:89
+#: client/cl_game_campaign.c:200
 msgid "Aliens"
 msgstr "Idegenek"
 
@@ -3817,23 +4302,28 @@ msgstr "Oroszország"
 msgid "The Commonwealth of Oceania"
 msgstr "Az Óceániai Közösség"
 
-#: ../base/ufos/otheritems.ufo:7 ../base/ufos/research.ufo:156
+#: ../base/ufos/otheritems.ufo:7
+#: ../base/ufos/research.ufo:156
 #: ../base/ufos/research.ufo:197
 msgid "Antimatter"
 msgstr "Antianyag"
 
-#: ../base/ufos/otheritems.ufo:15 ../base/ufos/research.ufo:291
+#: ../base/ufos/otheritems.ufo:15
+#: ../base/ufos/research.ufo:291
 #: ../base/ufos/research.ufo:334
 msgid "Alien Breathing Apparatus"
 msgstr "Idegen légzőkészülék"
 
-#: ../base/ufos/otheritems.ufo:24 ../base/ufos/research.ufo:4520
+#: ../base/ufos/otheritems.ufo:24
+#: ../base/ufos/research.ufo:4520
 #: ../base/ufos/research.ufo:4559
 msgid "Alien Materials"
 msgstr "Idegen anyagok"
 
-#: ../base/ufos/otheritems.ufo:116 ../base/ufos/weapons_melee.ufo:24
-#: ../base/ufos/weapons_melee.ufo:83 ../base/ufos/weapons_melee.ufo:223
+#: ../base/ufos/otheritems.ufo:116
+#: ../base/ufos/weapons_melee.ufo:24
+#: ../base/ufos/weapons_melee.ufo:83
+#: ../base/ufos/weapons_melee.ufo:223
 msgid "Stab"
 msgstr "Szúrás"
 
@@ -3899,7 +4389,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:161 ../base/ufos/research.ufo:199
+#: ../base/ufos/research.ufo:161
+#: ../base/ufos/research.ufo:199
 msgid "antimatter_txt"
 msgstr ""
 "Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
@@ -4003,23 +4494,36 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:266 ../base/ufos/research.ufo:274
-#: ../base/ufos/research.ufo:304 ../base/ufos/research.ufo:312
-#: ../base/ufos/research.ufo:366 ../base/ufos/research.ufo:374
-#: ../base/ufos/research.ufo:404 ../base/ufos/research.ufo:412
-#: ../base/ufos/research.ufo:442 ../base/ufos/research.ufo:450
-#: ../base/ufos/research.ufo:505 ../base/ufos/research.ufo:513
-#: ../base/ufos/research.ufo:3720 ../base/ufos/research.ufo:3728
-#: ../base/ufos/research.ufo:3780 ../base/ufos/research.ufo:3788
-#: ../base/ufos/research.ufo:3822 ../base/ufos/research.ufo:3830
-#: ../base/ufos/research.ufo:3864 ../base/ufos/research.ufo:3872
-#: ../base/ufos/research.ufo:4627 ../base/ufos/research.ufo:4661
-#: ../base/ufos/research.ufo:4668 ../base/ufos/research.ufo:4741
+#: ../base/ufos/research.ufo:266
+#: ../base/ufos/research.ufo:274
+#: ../base/ufos/research.ufo:304
+#: ../base/ufos/research.ufo:312
+#: ../base/ufos/research.ufo:366
+#: ../base/ufos/research.ufo:374
+#: ../base/ufos/research.ufo:404
+#: ../base/ufos/research.ufo:412
+#: ../base/ufos/research.ufo:442
+#: ../base/ufos/research.ufo:450
+#: ../base/ufos/research.ufo:505
+#: ../base/ufos/research.ufo:513
+#: ../base/ufos/research.ufo:3720
+#: ../base/ufos/research.ufo:3728
+#: ../base/ufos/research.ufo:3780
+#: ../base/ufos/research.ufo:3788
+#: ../base/ufos/research.ufo:3822
+#: ../base/ufos/research.ufo:3830
+#: ../base/ufos/research.ufo:3864
+#: ../base/ufos/research.ufo:3872
+#: ../base/ufos/research.ufo:4627
+#: ../base/ufos/research.ufo:4661
+#: ../base/ufos/research.ufo:4668
+#: ../base/ufos/research.ufo:4741
 #: ../base/ufos/research.ufo:4748
 msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, PHALANX Atlanti Műveleti Parancsnokság, K&F: Bio&Karantén részleg"
 
-#: ../base/ufos/research.ufo:296 ../base/ufos/research.ufo:336
+#: ../base/ufos/research.ufo:296
+#: ../base/ufos/research.ufo:336
 msgid "alien_breathing_txt"
 msgstr ""
 "Commander,\n"
@@ -4181,7 +4685,8 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:468 client/campaign/cl_campaign.c:315
+#: ../base/ufos/research.ufo:468
+#: client/campaign/cl_campaign.c:315
 #: client/campaign/cp_missions.c:446
 msgid "Alien base"
 msgstr "Idegen bázis"
@@ -5568,7 +6073,8 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1544 ../base/ufos/research.ufo:1586
+#: ../base/ufos/research.ufo:1544
+#: ../base/ufos/research.ufo:1586
 msgid "Alien Artifact - Plasma Pistol"
 msgstr "Idegen szerkezet - Plazma pisztoly"
 
@@ -5602,7 +6108,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1604 ../base/ufos/research.ufo:1645
+#: ../base/ufos/research.ufo:1604
+#: ../base/ufos/research.ufo:1645
 msgid "Alien Artifact - Plasma Blaster"
 msgstr ""
 
@@ -5692,7 +6199,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1743 ../base/ufos/research.ufo:1785
+#: ../base/ufos/research.ufo:1743
+#: ../base/ufos/research.ufo:1785
 msgid "Alien Artifact - Plasma Rifle"
 msgstr "Idegen szerkezet - Plazma puska"
 
@@ -5720,7 +6228,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1803 ../base/ufos/research.ufo:1883
+#: ../base/ufos/research.ufo:1803
+#: ../base/ufos/research.ufo:1883
 #: ../base/ufos/weapons_aliens.ufo:6
 msgid "Needler Gun"
 msgstr ""
@@ -5751,7 +6260,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1843 ../base/ufos/weapons_aliens.ufo:26
+#: ../base/ufos/research.ufo:1843
+#: ../base/ufos/weapons_aliens.ufo:26
 msgid "Heavy Needler Gun"
 msgstr ""
 
@@ -5771,7 +6281,8 @@ msgstr ""
 msgid "coilgun_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1915 ../base/ufos/research.ufo:1923
+#: ../base/ufos/research.ufo:1915
+#: ../base/ufos/research.ufo:1923
 #: ../base/ufos/weapons_human.ufo:392
 msgid "Coilgun"
 msgstr ""
@@ -6231,7 +6742,8 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2264 ../base/ufos/research.ufo:2304
+#: ../base/ufos/research.ufo:2264
+#: ../base/ufos/research.ufo:2304
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Idegen szerkezet: Részecske pisztoly"
 
@@ -6263,7 +6775,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2323 ../base/ufos/research.ufo:2364
+#: ../base/ufos/research.ufo:2323
+#: ../base/ufos/research.ufo:2364
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Idegen szerkezet: Részecske ágyú"
 
@@ -6295,7 +6808,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2383 ../base/ufos/research.ufo:2423
+#: ../base/ufos/research.ufo:2383
+#: ../base/ufos/research.ufo:2423
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Idegen szerkezet: Részecske puska"
 
@@ -6494,14 +7008,22 @@ msgstr ""
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2677 ../base/ufos/research.ufo:2690
-#: ../base/ufos/research.ufo:2703 ../base/ufos/research.ufo:2721
-#: ../base/ufos/research.ufo:2734 ../base/ufos/research.ufo:2747
-#: ../base/ufos/research.ufo:2768 ../base/ufos/research.ufo:2781
-#: ../base/ufos/research.ufo:2799 ../base/ufos/research.ufo:2812
-#: ../base/ufos/research.ufo:2825 ../base/ufos/research.ufo:2838
-#: ../base/ufos/research.ufo:2851 ../base/ufos/research.ufo:2864
-#: ../base/ufos/research.ufo:2877 ../base/ufos/research.ufo:2890
+#: ../base/ufos/research.ufo:2677
+#: ../base/ufos/research.ufo:2690
+#: ../base/ufos/research.ufo:2703
+#: ../base/ufos/research.ufo:2721
+#: ../base/ufos/research.ufo:2734
+#: ../base/ufos/research.ufo:2747
+#: ../base/ufos/research.ufo:2768
+#: ../base/ufos/research.ufo:2781
+#: ../base/ufos/research.ufo:2799
+#: ../base/ufos/research.ufo:2812
+#: ../base/ufos/research.ufo:2825
+#: ../base/ufos/research.ufo:2838
+#: ../base/ufos/research.ufo:2851
+#: ../base/ufos/research.ufo:2864
+#: ../base/ufos/research.ufo:2877
+#: ../base/ufos/research.ufo:2890
 #: ../base/ufos/research.ufo:2903
 msgid "none"
 msgstr "semmi"
@@ -6683,7 +7205,8 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2967 ../base/ufos/research.ufo:4048
+#: ../base/ufos/research.ufo:2967
+#: ../base/ufos/research.ufo:4048
 #: ../base/ufos/research.ufo:4066
 msgid "b_missile_txt"
 msgstr ""
@@ -8690,7 +9213,8 @@ msgstr ""
 "\n"
 "Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
-#: ../base/ufos/research.ufo:4525 ../base/ufos/research.ufo:4561
+#: ../base/ufos/research.ufo:4525
+#: ../base/ufos/research.ufo:4561
 msgid "alien_materials_txt"
 msgstr ""
 "Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to use the stuff and 'program' it into advanced new shapes.\n"
@@ -9028,7 +9552,8 @@ msgstr ""
 msgid "enemy_on_earth_rev_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/seq_credits.ufo:131 ../base/ufos/seq_credits.ufo:164
+#: ../base/ufos/seq_credits.ufo:131
+#: ../base/ufos/seq_credits.ufo:164
 msgid "Project leader"
 msgstr "Projekt vezető"
 
@@ -9608,8 +10133,10 @@ msgstr ""
 msgid "Heal"
 msgstr "Gyógyítás"
 
-#: ../base/ufos/weapons.ufo:38 ../base/ufos/weapons.ufo:92
-#: ../base/ufos/weapons_melee.ufo:40 ../base/ufos/weapons_melee.ufo:99
+#: ../base/ufos/weapons.ufo:38
+#: ../base/ufos/weapons.ufo:92
+#: ../base/ufos/weapons_melee.ufo:40
+#: ../base/ufos/weapons_melee.ufo:99
 #: ../base/ufos/weapons_melee.ufo:301
 msgid "Throw"
 msgstr "Dob"
@@ -9626,16 +10153,22 @@ msgstr ""
 msgid "Frag Grenade"
 msgstr ""
 
-#: ../base/ufos/weapons.ufo:134 ../base/ufos/weapons.ufo:210
-#: ../base/ufos/weapons.ufo:285 ../base/ufos/weapons.ufo:360
-#: ../base/ufos/weapons.ufo:436 ../base/ufos/weapons.ufo:512
+#: ../base/ufos/weapons.ufo:134
+#: ../base/ufos/weapons.ufo:210
+#: ../base/ufos/weapons.ufo:285
+#: ../base/ufos/weapons.ufo:360
+#: ../base/ufos/weapons.ufo:436
+#: ../base/ufos/weapons.ufo:512
 #: ../base/ufos/weapons.ufo:587
 msgid "Lob"
 msgstr "Dob"
 
-#: ../base/ufos/weapons.ufo:159 ../base/ufos/weapons.ufo:235
-#: ../base/ufos/weapons.ufo:310 ../base/ufos/weapons.ufo:385
-#: ../base/ufos/weapons.ufo:461 ../base/ufos/weapons.ufo:537
+#: ../base/ufos/weapons.ufo:159
+#: ../base/ufos/weapons.ufo:235
+#: ../base/ufos/weapons.ufo:310
+#: ../base/ufos/weapons.ufo:385
+#: ../base/ufos/weapons.ufo:461
+#: ../base/ufos/weapons.ufo:537
 #: ../base/ufos/weapons.ufo:612
 msgid "Roll"
 msgstr "Gurít"
@@ -9664,7 +10197,8 @@ msgstr ""
 msgid "Plasma Grenade"
 msgstr "Plazma gránát"
 
-#: ../base/ufos/weapons.ufo:646 ../base/ufos/weapons.ufo:667
+#: ../base/ufos/weapons.ufo:646
+#: ../base/ufos/weapons.ufo:667
 msgid "Bomb"
 msgstr "Bomba"
 
@@ -9672,22 +10206,32 @@ msgstr "Bomba"
 msgid "Needler Gun Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_aliens.ufo:62 ../base/ufos/weapons_aliens.ufo:125
-#: ../base/ufos/weapons_human.ufo:42 ../base/ufos/weapons_human.ufo:124
-#: ../base/ufos/weapons_human.ufo:348 ../base/ufos/weapons_human.ufo:428
-#: ../base/ufos/weapons_human.ufo:507 ../base/ufos/weapons_human.ufo:607
-#: ../base/ufos/weapons_human.ufo:708 ../base/ufos/weapons_human.ufo:1928
-#: ../base/ufos/weapons_particle.ufo:41 ../base/ufos/weapons_particle.ufo:122
-#: ../base/ufos/weapons_particle.ufo:224 ../base/ufos/weapons_plasma.ufo:41
-#: ../base/ufos/weapons_plasma.ufo:143 ../base/ufos/weapons_plasma.ufo:268
+#: ../base/ufos/weapons_aliens.ufo:62
+#: ../base/ufos/weapons_aliens.ufo:125
+#: ../base/ufos/weapons_human.ufo:42
+#: ../base/ufos/weapons_human.ufo:124
+#: ../base/ufos/weapons_human.ufo:348
+#: ../base/ufos/weapons_human.ufo:428
+#: ../base/ufos/weapons_human.ufo:507
+#: ../base/ufos/weapons_human.ufo:607
+#: ../base/ufos/weapons_human.ufo:708
+#: ../base/ufos/weapons_human.ufo:1928
+#: ../base/ufos/weapons_particle.ufo:41
+#: ../base/ufos/weapons_particle.ufo:122
+#: ../base/ufos/weapons_particle.ufo:224
+#: ../base/ufos/weapons_plasma.ufo:41
+#: ../base/ufos/weapons_plasma.ufo:143
+#: ../base/ufos/weapons_plasma.ufo:268
 msgid "Snap Shot"
 msgstr "Kapás lövés"
 
-#: ../base/ufos/weapons_aliens.ufo:82 ../base/ufos/weapons_aliens.ufo:145
+#: ../base/ufos/weapons_aliens.ufo:82
+#: ../base/ufos/weapons_aliens.ufo:145
 msgid "Cannonade"
 msgstr ""
 
-#: ../base/ufos/weapons_aliens.ufo:102 ../base/ufos/weapons_aliens.ufo:165
+#: ../base/ufos/weapons_aliens.ufo:102
+#: ../base/ufos/weapons_aliens.ufo:165
 msgid "Precision Shot"
 msgstr ""
 
@@ -9699,24 +10243,33 @@ msgstr ""
 msgid "Assault Rifle Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:61 ../base/ufos/weapons_human.ufo:143
-#: ../base/ufos/weapons_human.ufo:526 ../base/ufos/weapons_human.ufo:626
-#: ../base/ufos/weapons_human.ufo:850 ../base/ufos/weapons_human.ufo:935
-#: ../base/ufos/weapons_human.ufo:982 ../base/ufos/weapons_human.ufo:1682
+#: ../base/ufos/weapons_human.ufo:61
+#: ../base/ufos/weapons_human.ufo:143
+#: ../base/ufos/weapons_human.ufo:526
+#: ../base/ufos/weapons_human.ufo:626
+#: ../base/ufos/weapons_human.ufo:850
+#: ../base/ufos/weapons_human.ufo:935
+#: ../base/ufos/weapons_human.ufo:982
+#: ../base/ufos/weapons_human.ufo:1682
 #: ../base/ufos/weapons_human.ufo:1948
 msgid "3-Round Burst"
 msgstr "3 lövéses sorozat"
 
-#: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:163
-#: ../base/ufos/weapons_human.ufo:266 ../base/ufos/weapons_human.ufo:646
-#: ../base/ufos/weapons_human.ufo:747 ../base/ufos/weapons_human.ufo:1004
+#: ../base/ufos/weapons_human.ufo:81
+#: ../base/ufos/weapons_human.ufo:163
+#: ../base/ufos/weapons_human.ufo:266
+#: ../base/ufos/weapons_human.ufo:646
+#: ../base/ufos/weapons_human.ufo:747
+#: ../base/ufos/weapons_human.ufo:1004
 #: ../base/ufos/weapons_multiplayer.ufo:68
 #: ../base/ufos/weapons_multiplayer.ufo:280
-#: ../base/ufos/weapons_plasma.ufo:203 ../base/ufos/weapons_ugv.ufo:101
+#: ../base/ufos/weapons_plasma.ufo:203
+#: ../base/ufos/weapons_ugv.ufo:101
 msgid "Full-Auto"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:101 ../base/ufos/weapons_human.ufo:183
+#: ../base/ufos/weapons_human.ufo:101
+#: ../base/ufos/weapons_human.ufo:183
 msgid "Aimed shot"
 msgstr "Célzott lövés"
 
@@ -9732,7 +10285,8 @@ msgstr "Gépfegyver tár"
 msgid "5-Shot Burst"
 msgstr "5 lövéses sorozat"
 
-#: ../base/ufos/weapons_human.ufo:286 ../base/ufos/weapons_multiplayer.ufo:88
+#: ../base/ufos/weapons_human.ufo:286
+#: ../base/ufos/weapons_multiplayer.ufo:88
 #: ../base/ufos/weapons_multiplayer.ufo:300
 msgid "Full-Auto Sweep"
 msgstr ""
@@ -9745,11 +10299,16 @@ msgstr "Mesterlövész puska"
 msgid "Sniper Rifle Magazine"
 msgstr "Mesterlövész puska tár"
 
-#: ../base/ufos/weapons_human.ufo:367 ../base/ufos/weapons_human.ufo:447
-#: ../base/ufos/weapons_human.ufo:546 ../base/ufos/weapons_human.ufo:767
-#: ../base/ufos/weapons_human.ufo:1176 ../base/ufos/weapons_human.ufo:1219
-#: ../base/ufos/weapons_human.ufo:1968 ../base/ufos/weapons_particle.ufo:141
-#: ../base/ufos/weapons_plasma.ufo:61 ../base/ufos/weapons_plasma.ufo:163
+#: ../base/ufos/weapons_human.ufo:367
+#: ../base/ufos/weapons_human.ufo:447
+#: ../base/ufos/weapons_human.ufo:546
+#: ../base/ufos/weapons_human.ufo:767
+#: ../base/ufos/weapons_human.ufo:1176
+#: ../base/ufos/weapons_human.ufo:1219
+#: ../base/ufos/weapons_human.ufo:1968
+#: ../base/ufos/weapons_particle.ufo:141
+#: ../base/ufos/weapons_plasma.ufo:61
+#: ../base/ufos/weapons_plasma.ufo:163
 msgid "Aimed Shot"
 msgstr "Célzott lövés"
 
@@ -9781,7 +10340,8 @@ msgstr ""
 msgid "SMG Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:727 ../base/ufos/weapons_multiplayer.ufo:48
+#: ../base/ufos/weapons_human.ufo:727
+#: ../base/ufos/weapons_multiplayer.ufo:48
 msgid "5-Round Burst"
 msgstr "5 lövéses sorozat"
 
@@ -9793,8 +10353,10 @@ msgstr ""
 msgid "Saboted Slugs"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:828 ../base/ufos/weapons_human.ufo:913
-#: ../base/ufos/weapons_human.ufo:960 ../base/ufos/weapons_human.ufo:1661
+#: ../base/ufos/weapons_human.ufo:828
+#: ../base/ufos/weapons_human.ufo:913
+#: ../base/ufos/weapons_human.ufo:960
+#: ../base/ufos/weapons_human.ufo:1661
 #: ../base/ufos/weapons_multiplayer.ufo:150
 msgid "Single Shot"
 msgstr "Szimpla lövés"
@@ -9803,7 +10365,8 @@ msgstr "Szimpla lövés"
 msgid "Micro Shotgun"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:897 ../base/ufos/weapons_multiplayer.ufo:134
+#: ../base/ufos/weapons_human.ufo:897
+#: ../base/ufos/weapons_multiplayer.ufo:134
 msgid "Flechette Shells"
 msgstr ""
 
@@ -9847,32 +10410,38 @@ msgstr "Gránátvető"
 msgid "25mm HIT Grenades"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1286 ../base/ufos/weapons_human.ufo:1473
+#: ../base/ufos/weapons_human.ufo:1286
+#: ../base/ufos/weapons_human.ufo:1473
 #: ../base/ufos/weapons_human.ufo:1722
 msgid "Snap Shot - Airburst"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1313 ../base/ufos/weapons_human.ufo:1501
+#: ../base/ufos/weapons_human.ufo:1313
+#: ../base/ufos/weapons_human.ufo:1501
 #: ../base/ufos/weapons_human.ufo:1749
 msgid "Aimed Shot - Airburst"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1340 ../base/ufos/weapons_human.ufo:1528
+#: ../base/ufos/weapons_human.ufo:1340
+#: ../base/ufos/weapons_human.ufo:1528
 #: ../base/ufos/weapons_human.ufo:1775
 msgid "3-Round Burst - Airburst"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1367 ../base/ufos/weapons_human.ufo:1555
+#: ../base/ufos/weapons_human.ufo:1367
+#: ../base/ufos/weapons_human.ufo:1555
 #: ../base/ufos/weapons_human.ufo:1801
 msgid "Snap Shot - Timed"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1396 ../base/ufos/weapons_human.ufo:1584
+#: ../base/ufos/weapons_human.ufo:1396
+#: ../base/ufos/weapons_human.ufo:1584
 #: ../base/ufos/weapons_human.ufo:1829
 msgid "Aimed Shot - Timed"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:1425 ../base/ufos/weapons_human.ufo:1613
+#: ../base/ufos/weapons_human.ufo:1425
+#: ../base/ufos/weapons_human.ufo:1613
 #: ../base/ufos/weapons_human.ufo:1857
 msgid "3-Round Burst - Timed"
 msgstr ""
@@ -9913,12 +10482,14 @@ msgstr "Nehéz lézer"
 msgid "D-F Cartridge"
 msgstr ""
 
-#: ../base/ufos/weapons_laser.ufo:89 ../base/ufos/weapons_laser.ufo:132
+#: ../base/ufos/weapons_laser.ufo:89
+#: ../base/ufos/weapons_laser.ufo:132
 #: ../base/ufos/weapons_laser.ufo:175
 msgid "Wave Fire"
 msgstr ""
 
-#: ../base/ufos/weapons_laser.ufo:108 ../base/ufos/weapons_laser.ufo:151
+#: ../base/ufos/weapons_laser.ufo:108
+#: ../base/ufos/weapons_laser.ufo:151
 #: ../base/ufos/weapons_laser.ufo:194
 msgid "Pulsed Fire"
 msgstr ""
@@ -9991,7 +10562,8 @@ msgstr ""
 msgid "XAW95 Magazine"
 msgstr ""
 
-#: ../base/ufos/weapons_multiplayer.ufo:260 ../base/ufos/weapons_ugv.ufo:80
+#: ../base/ufos/weapons_multiplayer.ufo:260
+#: ../base/ufos/weapons_ugv.ufo:80
 msgid "10-Round Burst"
 msgstr ""
 
@@ -10003,9 +10575,12 @@ msgstr ""
 msgid "Pistol Particle Accelerator"
 msgstr ""
 
-#: ../base/ufos/weapons_particle.ufo:60 ../base/ufos/weapons_particle.ufo:160
-#: ../base/ufos/weapons_particle.ufo:244 ../base/ufos/weapons_plasma.ufo:81
-#: ../base/ufos/weapons_plasma.ufo:183 ../base/ufos/weapons_plasma.ufo:311
+#: ../base/ufos/weapons_particle.ufo:60
+#: ../base/ufos/weapons_particle.ufo:160
+#: ../base/ufos/weapons_particle.ufo:244
+#: ../base/ufos/weapons_plasma.ufo:81
+#: ../base/ufos/weapons_plasma.ufo:183
+#: ../base/ufos/weapons_plasma.ufo:311
 msgid "Burst"
 msgstr ""
 
@@ -10074,17 +10649,26 @@ msgstr ""
 msgid "A UFO is shooting at %s"
 msgstr ""
 
-#: client/campaign/cl_airfight.c:376 client/campaign/cl_airfight.c:400
-#: client/campaign/cl_aliencont.c:229 client/campaign/cl_aliencont.c:258
-#: client/campaign/cl_aliencont.c:275 client/campaign/cl_aliencont.c:285
-#: client/campaign/cl_campaign.c:1561 client/campaign/cl_campaign.c:1606
-#: client/campaign/cl_campaign.c:1660 client/campaign/cl_campaign.c:1672
-#: client/campaign/cl_campaign.c:1674 client/campaign/cl_mapfightequip.c:421
+#: client/campaign/cl_airfight.c:376
+#: client/campaign/cl_airfight.c:400
+#: client/campaign/cl_aliencont.c:229
+#: client/campaign/cl_aliencont.c:258
+#: client/campaign/cl_aliencont.c:275
+#: client/campaign/cl_aliencont.c:285
+#: client/campaign/cl_campaign.c:1561
+#: client/campaign/cl_campaign.c:1606
+#: client/campaign/cl_campaign.c:1660
+#: client/campaign/cl_campaign.c:1672
+#: client/campaign/cl_campaign.c:1674
+#: client/campaign/cl_mapfightequip.c:421
 #: client/campaign/cl_mapfightequip.c:442
 #: client/campaign/cl_mapfightequip.c:448
-#: client/campaign/cl_mapfightequip.c:460 client/campaign/cl_popup.c:507
-#: client/campaign/cl_produce.c:348 client/campaign/cl_produce.c:358
-#: client/campaign/cl_produce.c:369 client/campaign/cl_produce.c:379
+#: client/campaign/cl_mapfightequip.c:460
+#: client/campaign/cl_popup.c:507
+#: client/campaign/cl_produce.c:348
+#: client/campaign/cl_produce.c:358
+#: client/campaign/cl_produce.c:369
+#: client/campaign/cl_produce.c:379
 #: client/campaign/cl_produce.c:390
 #: client/campaign/cl_research_callbacks.c:558
 #: client/campaign/cl_research_callbacks.c:576
@@ -10092,17 +10676,25 @@ msgstr ""
 #: client/campaign/cl_research_callbacks.c:621
 #: client/campaign/cl_research_callbacks.c:647
 #: client/campaign/cl_research_callbacks.c:815
-#: client/campaign/cl_research_callbacks.c:818 client/campaign/cl_ufo.c:484
-#: client/campaign/cl_ufo.c:838 client/campaign/cl_ufo.c:842
-#: client/campaign/cl_ufo.c:846 client/campaign/cp_aircraft.c:747
-#: client/campaign/cp_aircraft.c:1187 client/campaign/cp_aircraft.c:1195
-#: client/campaign/cp_aircraft.c:1298 client/campaign/cp_aircraft.c:1322
+#: client/campaign/cl_research_callbacks.c:818
+#: client/campaign/cl_ufo.c:484
+#: client/campaign/cl_ufo.c:838
+#: client/campaign/cl_ufo.c:842
+#: client/campaign/cl_ufo.c:846
+#: client/campaign/cp_aircraft.c:747
+#: client/campaign/cp_aircraft.c:1187
+#: client/campaign/cp_aircraft.c:1195
+#: client/campaign/cp_aircraft.c:1298
+#: client/campaign/cp_aircraft.c:1322
 #: client/campaign/cp_aircraft.c:2101
 #: client/campaign/cp_aircraft_callbacks.c:165
 #: client/campaign/cp_aircraft_callbacks.c:173
-#: client/campaign/cp_aircraft_callbacks.c:181 client/campaign/cp_base.c:763
-#: client/campaign/cp_base.c:1336 client/campaign/cp_base.c:2539
-#: client/campaign/cp_base.c:2544 client/campaign/cp_base.c:3279
+#: client/campaign/cp_aircraft_callbacks.c:181
+#: client/campaign/cp_base.c:763
+#: client/campaign/cp_base.c:1336
+#: client/campaign/cp_base.c:2539
+#: client/campaign/cp_base.c:2544
+#: client/campaign/cp_base.c:3279
 #: client/campaign/cp_base_callbacks.c:179
 #: client/campaign/cp_base_callbacks.c:662
 #: client/campaign/cp_base_callbacks.c:671
@@ -10116,15 +10708,23 @@ msgstr ""
 #: client/campaign/cp_installation_callbacks.c:132
 #: client/campaign/cp_installation_callbacks.c:168
 #: client/campaign/cp_market_callbacks.c:607
-#: client/campaign/cp_market_callbacks.c:612 client/campaign/cp_missions.c:738
-#: client/campaign/cp_missions.c:1166 client/campaign/cp_nations.c:85
-#: client/campaign/cp_nations.c:97 client/campaign/cp_nations.c:107
-#: client/campaign/cp_nations.c:117 client/campaign/cp_nations.c:127
-#: client/campaign/cp_nations.c:138 client/campaign/cp_nations.c:154
-#: client/campaign/cp_nations.c:167 client/campaign/cp_nations.c:174
+#: client/campaign/cp_market_callbacks.c:612
+#: client/campaign/cp_missions.c:738
+#: client/campaign/cp_missions.c:1166
+#: client/campaign/cp_nations.c:85
+#: client/campaign/cp_nations.c:97
+#: client/campaign/cp_nations.c:107
+#: client/campaign/cp_nations.c:117
+#: client/campaign/cp_nations.c:127
+#: client/campaign/cp_nations.c:138
+#: client/campaign/cp_nations.c:154
+#: client/campaign/cp_nations.c:167
+#: client/campaign/cp_nations.c:174
 #: client/campaign/cp_nations.c:182
-#: client/campaign/missions/cp_mission_baseattack.c:127 client/cl_main.c:400
-#: client/cl_parse.c:1741 client/multiplayer/mp_serverlist.c:461
+#: client/campaign/missions/cp_mission_baseattack.c:127
+#: client/cl_main.c:400
+#: client/cl_parse.c:1741
+#: client/multiplayer/mp_serverlist.c:461
 msgid "Notice"
 msgstr "Figyelmeztetés"
 
@@ -10132,7 +10732,8 @@ msgstr "Figyelmeztetés"
 msgid "Our aircraft has no more ammo left - returning to home base now."
 msgstr ""
 
-#: client/campaign/cl_airfight.c:479 client/campaign/cl_airfight.c:502
+#: client/campaign/cl_airfight.c:479
+#: client/campaign/cl_airfight.c:502
 msgid "Interception"
 msgstr "Elfogás"
 
@@ -10140,11 +10741,13 @@ msgstr "Elfogás"
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr "UFÓ elfogás sikeres -- Az UFÓ tengerbe veszett."
 
-#: client/campaign/cl_airfight.c:502 client/campaign/cl_campaign.c:1674
+#: client/campaign/cl_airfight.c:502
+#: client/campaign/cl_campaign.c:1674
 msgid "You've lost the battle"
 msgstr "Elvesztetted a csatát"
 
-#: client/campaign/cl_airfight.c:634 client/campaign/cl_airfight.c:646
+#: client/campaign/cl_airfight.c:634
+#: client/campaign/cl_airfight.c:646
 #: client/campaign/cl_airfight.c:665
 msgid "Base facility destroyed"
 msgstr "Bázis épület elpusztult"
@@ -10191,7 +10794,8 @@ msgid "Free slot"
 msgstr ""
 
 #: client/campaign/cl_aliencont_callbacks.c:231
-#: client/campaign/cl_ufopedia.c:270 client/cl_inventory_callbacks.c:126
+#: client/campaign/cl_ufopedia.c:270
+#: client/cl_inventory_callbacks.c:126
 msgid "None"
 msgstr "Nincs"
 
@@ -10211,7 +10815,8 @@ msgstr ""
 msgid "Under your command, PHALANX operations have consistently failed to protect nations. The UN, highly unsatisfied with your performance, has decided to remove you from command and subsequently disbands the PHALANX project as an effective task force. No further attempts at global cooperation are made. Earth's nations each try to stand alone against the aliens, and eventually fall one by one."
 msgstr ""
 
-#: client/campaign/cl_campaign.c:837 client/campaign/cp_base_callbacks.c:881
+#: client/campaign/cl_campaign.c:837
+#: client/campaign/cp_base_callbacks.c:881
 #, c-format
 msgid "%i c"
 msgstr "%i c"
@@ -10238,12 +10843,14 @@ msgstr ""
 "Aktív:\t%i\n"
 "Támadott:\t%i\n"
 
-#: client/campaign/cl_campaign.c:879 client/campaign/cl_ufopedia.c:1310
+#: client/campaign/cl_campaign.c:879
+#: client/campaign/cl_ufopedia.c:1310
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/campaign/cl_campaign.c:918 client/cl_inventory_callbacks.c:150
+#: client/campaign/cl_campaign.c:918
+#: client/cl_inventory_callbacks.c:150
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
@@ -10304,7 +10911,8 @@ msgstr ""
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/campaign/cl_campaign.c:1659 client/campaign/cp_missions.c:1165
+#: client/campaign/cl_campaign.c:1659
+#: client/campaign/cp_missions.c:1165
 #, c-format
 msgid "Defence of base: %s successful!"
 msgstr ""
@@ -10406,9 +11014,12 @@ msgid ""
 "Build more quarters."
 msgstr ""
 
-#: client/campaign/cl_event.c:250 client/campaign/cl_save.c:276
-#: client/campaign/cl_save.c:296 client/campaign/cl_ufopedia.c:527
-#: client/campaign/cl_ufopedia.c:532 client/campaign/cp_time.c:74
+#: client/campaign/cl_event.c:250
+#: client/campaign/cl_save.c:276
+#: client/campaign/cl_save.c:296
+#: client/campaign/cl_ufopedia.c:527
+#: client/campaign/cl_ufopedia.c:532
+#: client/campaign/cp_time.c:74
 #, c-format
 msgid "%i %s %02i"
 msgstr "%i %s %02i"
@@ -10430,7 +11041,8 @@ msgstr "Elemek"
 msgid "Ammo"
 msgstr "Töltény"
 
-#: client/campaign/cl_fightequip_callbacks.c:370 client/campaign/cl_map.c:356
+#: client/campaign/cl_fightequip_callbacks.c:370
+#: client/campaign/cl_map.c:356
 msgid "Unknown"
 msgstr "Ismeretlen"
 
@@ -10528,9 +11140,9 @@ msgid " (unlimited ammos)"
 msgstr ""
 
 #: client/campaign/cl_installation.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Installation #%i"
-msgstr "Állomás #1"
+msgstr "Állomás #%i"
 
 #: client/campaign/cl_installation.c:226
 #, c-format
@@ -10614,12 +11226,14 @@ msgstr ""
 "Típus: %s\n"
 "Cél: %s"
 
-#: client/campaign/cl_map.c:1722 client/campaign/cl_map.c:1732
+#: client/campaign/cl_map.c:1722
+#: client/campaign/cl_map.c:1732
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Név:\t%s (%i/%i)\n"
 
-#: client/campaign/cl_map.c:1723 client/campaign/cl_map.c:1733
+#: client/campaign/cl_map.c:1723
+#: client/campaign/cl_map.c:1733
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Állapot:\t%s\n"
@@ -10629,19 +11243,23 @@ msgstr "Állapot:\t%s\n"
 msgid "Distance to target:\t\t%.0f\n"
 msgstr "Távolság a célponthoz:\t\t%.0f\n"
 
-#: client/campaign/cl_map.c:1725 client/campaign/cl_map.c:1734
-#: client/campaign/cl_map.c:1747 client/campaign/cp_aircraft_callbacks.c:244
+#: client/campaign/cl_map.c:1725
+#: client/campaign/cl_map.c:1734
+#: client/campaign/cl_map.c:1747
+#: client/campaign/cp_aircraft_callbacks.c:244
 #, c-format
 msgid "Speed:\t%i km/h\n"
 msgstr "Sebesség:\t%i km/h\n"
 
-#: client/campaign/cl_map.c:1726 client/campaign/cl_map.c:1735
+#: client/campaign/cl_map.c:1726
+#: client/campaign/cl_map.c:1735
 #: client/campaign/cp_aircraft_callbacks.c:246
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Üzemanyag:\t%i/%i\n"
 
-#: client/campaign/cl_map.c:1728 client/campaign/cl_map.c:1740
+#: client/campaign/cl_map.c:1728
+#: client/campaign/cl_map.c:1740
 #, c-format
 msgid "ETA:\t%sh\n"
 msgstr ""
@@ -10697,11 +11315,13 @@ msgstr "Nehéz"
 msgid "Unknown weight"
 msgstr "Ismeretlen súlyú"
 
-#: client/campaign/cl_market.c:108 client/campaign/cp_market_callbacks.c:756
+#: client/campaign/cl_market.c:108
+#: client/campaign/cp_market_callbacks.c:756
 msgid "Not enough storage space"
 msgstr "Nincs elég raktár"
 
-#: client/campaign/cl_market.c:108 client/campaign/cp_market_callbacks.c:756
+#: client/campaign/cl_market.c:108
+#: client/campaign/cp_market_callbacks.c:756
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
@@ -10922,7 +11542,8 @@ msgstr "A(z) %s bázis gyártási sora kiürült."
 msgid "Production queue empty"
 msgstr "A gyártási sor üres"
 
-#: client/campaign/cl_produce.c:347 client/campaign/cl_produce.c:368
+#: client/campaign/cl_produce.c:347
+#: client/campaign/cl_produce.c:368
 #, c-format
 msgid "Not enough credits to finish production in base %s.\n"
 msgstr "Nincs elég pénz a gyártás befejezéséhez a(z) %s bázison.\n"
@@ -10942,12 +11563,14 @@ msgstr "Nincs szabad hangár a(z) %s bázison. A gép gyártása elhalasztva.\n"
 msgid "Not enough free storage space in base %s. Disassembling postponed.\n"
 msgstr "Nincs elég hely a(z) %s bázis raktárában. Szétszerelés elhalasztva.\n"
 
-#: client/campaign/cl_produce.c:421 client/campaign/cl_produce.c:433
+#: client/campaign/cl_produce.c:421
+#: client/campaign/cl_produce.c:433
 #, c-format
 msgid "The production of %s has finished."
 msgstr "A(z) %s gyártása befejeződött."
 
-#: client/campaign/cl_produce.c:422 client/campaign/cl_produce.c:434
+#: client/campaign/cl_produce.c:422
+#: client/campaign/cl_produce.c:434
 #: client/campaign/cl_produce.c:464
 msgid "Production finished"
 msgstr "Gyártás befejeződött"
@@ -10983,7 +11606,8 @@ msgstr ""
 #: client/campaign/cl_produce_callbacks.c:182
 #: client/campaign/cl_produce_callbacks.c:743
 #: client/campaign/cl_produce_callbacks.c:784
-#: client/campaign/cl_transfer.c:297 client/campaign/cl_transfer.c:300
+#: client/campaign/cl_transfer.c:297
+#: client/campaign/cl_transfer.c:300
 #: client/campaign/cl_transfer.c:303
 msgid "Hangars not ready"
 msgstr ""
@@ -11111,7 +11735,8 @@ msgstr "Egy kutatási projekt lezárult: %s\n"
 msgid "Research finished"
 msgstr "Kutatás befejeződött"
 
-#: client/campaign/cl_research.c:120 client/campaign/cl_research.c:308
+#: client/campaign/cl_research.c:120
+#: client/campaign/cl_research.c:308
 #, c-format
 msgid "New research proposal: %s\n"
 msgstr "Új kutatási javaslat: %s\n"
@@ -11124,7 +11749,8 @@ msgstr "Ismeretlen technológia kutatható"
 msgid "Unknown Technology found"
 msgstr "Ismeretlen technológiát találtunk"
 
-#: client/campaign/cl_research.c:665 client/campaign/cl_research.c:669
+#: client/campaign/cl_research.c:665
+#: client/campaign/cl_research.c:669
 msgid ""
 "No free space in laboratories left.\n"
 "Build more laboratories.\n"
@@ -11132,7 +11758,8 @@ msgstr ""
 "Nincs több szabad hely a laborban\n"
 "Építs még laboratóriumot.\n"
 
-#: client/campaign/cl_research.c:665 client/campaign/cl_research.c:669
+#: client/campaign/cl_research.c:665
+#: client/campaign/cl_research.c:669
 msgid "Not enough laboratories"
 msgstr "Nincs elég labor"
 
@@ -11255,28 +11882,39 @@ msgstr ""
 msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
 msgstr ""
 
-#: client/campaign/cl_save.c:375 client/campaign/cl_save.c:377
+#: client/campaign/cl_save.c:375
+#: client/campaign/cl_save.c:377
 msgid "Error saving game."
 msgstr "Hiba a játék mentésekor."
 
-#: client/campaign/cl_save.c:378 client/campaign/cp_base.c:2258
-#: client/campaign/cp_base.c:2260 client/campaign/cp_market_callbacks.c:589
+#: client/campaign/cl_save.c:378
+#: client/campaign/cp_base.c:2258
+#: client/campaign/cp_base.c:2260
+#: client/campaign/cp_market_callbacks.c:589
 #: client/campaign/cp_market_callbacks.c:594
 #: client/campaign/cp_market_callbacks.c:697
-#: client/campaign/cp_market_callbacks.c:699 client/multiplayer/mp_team.c:192
+#: client/campaign/cp_market_callbacks.c:699
+#: client/multiplayer/mp_team.c:192
 #: client/multiplayer/mp_team.c:213
 msgid "Note"
 msgstr ""
 
-#: client/campaign/cl_save.c:466 client/campaign/cl_save.c:489
+#: client/campaign/cl_save.c:466
+#: client/campaign/cl_save.c:489
 #: client/campaign/cl_save.c:625
 msgid "Error loading game."
 msgstr "Hiba a játék betöltésekor."
 
-#: client/campaign/cl_save.c:467 client/campaign/cl_save.c:490
-#: client/campaign/cl_save.c:626 client/cl_irc.c:993 client/cl_irc.c:1221
-#: client/cl_main.c:492 client/cl_main.c:497 client/cl_main.c:503
-#: client/cl_main.c:511 client/multiplayer/mp_callbacks.c:49
+#: client/campaign/cl_save.c:467
+#: client/campaign/cl_save.c:490
+#: client/campaign/cl_save.c:626
+#: client/cl_irc.c:993
+#: client/cl_irc.c:1221
+#: client/cl_main.c:492
+#: client/cl_main.c:497
+#: client/cl_main.c:503
+#: client/cl_main.c:511
+#: client/multiplayer/mp_callbacks.c:49
 #: client/multiplayer/mp_callbacks.c:169
 msgid "Error"
 msgstr "Hiba"
@@ -11315,8 +11953,10 @@ msgid ""
 "Antimatter Storage space to store more antimatter.\n"
 msgstr ""
 
-#: client/campaign/cl_transfer.c:143 client/campaign/cl_transfer.c:182
-#: client/campaign/cl_transfer.c:213 client/campaign/cl_transfer.c:266
+#: client/campaign/cl_transfer.c:143
+#: client/campaign/cl_transfer.c:182
+#: client/campaign/cl_transfer.c:213
+#: client/campaign/cl_transfer.c:266
 #: client/campaign/cl_transfer.c:309
 msgid "Not enough space"
 msgstr "Nincs elég hely"
@@ -11325,7 +11965,8 @@ msgstr "Nincs elég hely"
 msgid "Destination base does not have functional Large UFO Hangar.\n"
 msgstr "A célbázison nincs működő Nagy UFÓ Hangár.\n"
 
-#: client/campaign/cl_transfer.c:154 client/campaign/cl_transfer.c:159
+#: client/campaign/cl_transfer.c:154
+#: client/campaign/cl_transfer.c:159
 msgid "Missing Large UFO Hangar"
 msgstr "Nagy UFÓ Hangár hiányzik"
 
@@ -11337,7 +11978,8 @@ msgstr ""
 msgid "Destination base does not have functional Small UFO Hangar.\n"
 msgstr "A célbázison nincs működő Kis UFÓ Hangár.\n"
 
-#: client/campaign/cl_transfer.c:165 client/campaign/cl_transfer.c:170
+#: client/campaign/cl_transfer.c:165
+#: client/campaign/cl_transfer.c:170
 msgid "Missing Small UFO Hangar"
 msgstr "Kis UFÓ hangár hiányzik"
 
@@ -11407,18 +12049,21 @@ msgid ""
 "in hangars.\n"
 msgstr ""
 
-#: client/campaign/cl_transfer.c:336 client/campaign/cl_transfer.c:376
+#: client/campaign/cl_transfer.c:336
+#: client/campaign/cl_transfer.c:376
 #: client/campaign/cl_transfer.c:405
 #, c-format
 msgid "%s (%i for transfer)"
 msgstr "%s (%i szállításra)"
 
-#: client/campaign/cl_transfer.c:356 client/campaign/cl_transfer.c:534
+#: client/campaign/cl_transfer.c:356
+#: client/campaign/cl_transfer.c:534
 #, c-format
 msgid "Soldier %s %s"
 msgstr "Katona: %s %s"
 
-#: client/campaign/cl_transfer.c:358 client/campaign/cl_transfer.c:536
+#: client/campaign/cl_transfer.c:358
+#: client/campaign/cl_transfer.c:536
 #, c-format
 msgid "Pilot %s"
 msgstr "Pilóta %s"
@@ -11428,17 +12073,20 @@ msgstr "Pilóta %s"
 msgid "Corpse of %s (%i for transfer)"
 msgstr "%s tetem (%i szállításra)"
 
-#: client/campaign/cl_transfer.c:423 client/campaign/cl_transfer.c:600
+#: client/campaign/cl_transfer.c:423
+#: client/campaign/cl_transfer.c:600
 #, c-format
 msgid "Aircraft %s"
 msgstr "Repülő: %s"
 
-#: client/campaign/cl_transfer.c:508 client/campaign/cl_transfer.c:547
+#: client/campaign/cl_transfer.c:508
+#: client/campaign/cl_transfer.c:547
 #, c-format
 msgid "%s (%i for transfer, %i left)"
 msgstr "%s (%i szállításra, %i marad)"
 
-#: client/campaign/cl_transfer.c:510 client/campaign/cl_transfer.c:549
+#: client/campaign/cl_transfer.c:510
+#: client/campaign/cl_transfer.c:549
 #, c-format
 msgid "%s (%i available)"
 msgstr "%s (%i van)"
@@ -11451,7 +12099,8 @@ msgstr "A raktár üres."
 msgid "Transfer is not possible - the base doesn't have a Storage."
 msgstr ""
 
-#: client/campaign/cl_transfer.c:519 client/campaign/cl_transfer.c:591
+#: client/campaign/cl_transfer.c:519
+#: client/campaign/cl_transfer.c:591
 msgid "Transfer is not possible - the base does not have power supplies."
 msgstr ""
 
@@ -11504,10 +12153,14 @@ msgstr "Átszállítás nem lehetséges - nincs működő hangár ezen a báziso
 msgid "Base %s does not have Storage, items are removed!"
 msgstr ""
 
-#: client/campaign/cl_transfer.c:713 client/campaign/cl_transfer.c:744
-#: client/campaign/cl_transfer.c:780 client/campaign/cl_transfer.c:813
-#: client/campaign/cl_transfer.c:902 client/campaign/cl_transfer.c:987
-#: client/campaign/cl_transfer.c:993 client/campaign/cl_transfer.c:1112
+#: client/campaign/cl_transfer.c:713
+#: client/campaign/cl_transfer.c:744
+#: client/campaign/cl_transfer.c:780
+#: client/campaign/cl_transfer.c:813
+#: client/campaign/cl_transfer.c:902
+#: client/campaign/cl_transfer.c:987
+#: client/campaign/cl_transfer.c:993
+#: client/campaign/cl_transfer.c:1112
 msgid "Transport mission"
 msgstr ""
 
@@ -11526,7 +12179,8 @@ msgstr ""
 msgid "Base %s does not have enough free space in hangars. Aircraft is lost!"
 msgstr ""
 
-#: client/campaign/cl_transfer.c:901 client/campaign/cl_transfer.c:1111
+#: client/campaign/cl_transfer.c:901
+#: client/campaign/cl_transfer.c:1111
 #, c-format
 msgid "Transport mission started, cargo is being transported to base %s"
 msgstr ""
@@ -11603,7 +12257,8 @@ msgstr "Nincs Hangár ezen a bázison\n"
 msgid "No power supplies in this base.\n"
 msgstr ""
 
-#: client/campaign/cl_ufo.c:141 client/campaign/cp_aircraft.c:549
+#: client/campaign/cl_ufo.c:141
+#: client/campaign/cp_aircraft.c:549
 msgid "UFO"
 msgstr "UFÓ"
 
@@ -11621,7 +12276,8 @@ msgid ""
 "Secured landed %s\n"
 msgstr ""
 
-#: client/campaign/cl_ufo.c:484 client/campaign/cl_ufo.c:838
+#: client/campaign/cl_ufo.c:484
+#: client/campaign/cl_ufo.c:838
 #, c-format
 msgid "A UFO is flying toward %s"
 msgstr ""
@@ -11662,7 +12318,8 @@ msgstr ""
 msgid "Weapon range"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:169 client/cl_inventory_callbacks.c:57
+#: client/campaign/cl_ufopedia.c:169
+#: client/cl_inventory_callbacks.c:57
 msgid "Unknown weapon skill"
 msgstr ""
 
@@ -11696,7 +12353,8 @@ msgstr ""
 msgid "Error - could not find building"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:270 client/campaign/cp_base.c:1427
+#: client/campaign/cl_ufopedia.c:270
+#: client/campaign/cp_base.c:1427
 #, c-format
 msgid "Needs:\t%s\n"
 msgstr ""
@@ -11713,7 +12371,8 @@ msgstr[1] "Gyártási idő:\t%i nap\n"
 msgid "Cost:\t%i c\n"
 msgstr "Ár:\t%i c\n"
 
-#: client/campaign/cl_ufopedia.c:273 client/campaign/cp_base.c:1424
+#: client/campaign/cl_ufopedia.c:273
+#: client/campaign/cp_base.c:1424
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr ""
@@ -11728,7 +12387,8 @@ msgstr "Súly:\t%s\n"
 msgid "Ammo:\t%i\n"
 msgstr "Töltény:\t%i\n"
 
-#: client/campaign/cl_ufopedia.c:319 client/cl_inventory_callbacks.c:173
+#: client/campaign/cl_ufopedia.c:319
+#: client/cl_inventory_callbacks.c:173
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr ""
@@ -11752,7 +12412,8 @@ msgstr "%s:\t%i %%\n"
 msgid "Error - could not find aircraft"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:369 client/campaign/cl_ufopedia.c:374
+#: client/campaign/cl_ufopedia.c:369
+#: client/campaign/cl_ufopedia.c:374
 #, c-format
 msgid "%s:\t%i km/h\n"
 msgstr "%s:\t%i km/ó\n"
@@ -11778,8 +12439,10 @@ msgstr "Repülő mérete:\t%s\n"
 msgid "Max. soldiers:\t%i\n"
 msgstr ""
 
-#: client/campaign/cl_ufopedia.c:393 client/campaign/cl_ufopedia.c:395
-#: client/campaign/cl_ufopedia.c:428 client/campaign/cl_ufopedia.c:431
+#: client/campaign/cl_ufopedia.c:393
+#: client/campaign/cl_ufopedia.c:395
+#: client/campaign/cl_ufopedia.c:428
+#: client/campaign/cl_ufopedia.c:431
 msgid "Unknown - need to research this"
 msgstr ""
 
@@ -11846,12 +12509,14 @@ msgstr "^BVá: %s\t%i %s %02i\n"
 msgid "Re: %s\t%i %s %02i\n"
 msgstr "Vá: %s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1279 client/campaign/cl_ufopedia.c:1291
+#: client/campaign/cl_ufopedia.c:1279
+#: client/campaign/cl_ufopedia.c:1291
 #, c-format
 msgid "^B%s\t%i %s %02i\n"
 msgstr "^B%s\t%i %s %02i\n"
 
-#: client/campaign/cl_ufopedia.c:1283 client/campaign/cl_ufopedia.c:1295
+#: client/campaign/cl_ufopedia.c:1283
+#: client/campaign/cl_ufopedia.c:1295
 #, c-format
 msgid "%s\t%i %s %02i\n"
 msgstr "%s\t%i %s %02i\n"
@@ -12062,7 +12727,6 @@ msgid "Destroy Entrance"
 msgstr "Bejárat lerombolása"
 
 #: client/campaign/cp_base.c:774
-#, fuzzy
 msgid "You can't destroy the entrance of the base!"
 msgstr "Nem rombolhatod le a bázis bejáratát!"
 
@@ -12084,12 +12748,15 @@ msgstr "Irány a hangár"
 msgid "Go to hangar without destroying building"
 msgstr "Menjünk a hangárba, ne bontsuk le"
 
-#: client/campaign/cp_base.c:785 client/campaign/cp_base.c:795
-#: client/campaign/cp_base.c:805 client/campaign/cp_base.c:818
+#: client/campaign/cp_base.c:785
+#: client/campaign/cp_base.c:795
+#: client/campaign/cp_base.c:805
+#: client/campaign/cp_base.c:818
 msgid "Destroy the building"
 msgstr "Épület lebontása"
 
-#: client/campaign/cp_base.c:787 client/campaign/cp_base.c:797
+#: client/campaign/cp_base.c:787
+#: client/campaign/cp_base.c:797
 #: client/campaign/cp_base.c:807
 msgid "Go to transfer menu without destroying the building"
 msgstr "Menjünk az átszállítás menübe, ne bontsuk le"
@@ -12184,9 +12851,9 @@ msgid "Home"
 msgstr "Otthon"
 
 #: client/campaign/cp_base.c:2112
-#, fuzzy, c-format
+#, c-format
 msgid "Base #%i"
-msgstr "Bázis #%d"
+msgstr "Bázis #%i"
 
 #: client/campaign/cp_base.c:2258
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
@@ -12515,19 +13182,22 @@ msgid_plural "credits"
 msgstr[0] "kredit"
 msgstr[1] "kredit"
 
-#: client/campaign/cp_nations.c:81 client/cl_game_campaign.c:208
+#: client/campaign/cp_nations.c:81
+#: client/cl_game_campaign.c:208
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "tudós"
 msgstr[1] "tudósok"
 
-#: client/campaign/cp_nations.c:82 client/cl_game_campaign.c:207
+#: client/campaign/cp_nations.c:82
+#: client/cl_game_campaign.c:207
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "katona"
 msgstr[1] "katonák"
 
-#: client/campaign/cp_nations.c:83 client/cl_game_campaign.c:209
+#: client/campaign/cp_nations.c:83
+#: client/cl_game_campaign.c:209
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "munkás"
@@ -12846,18 +13516,21 @@ msgstr ""
 msgid "Settings doesn't make sense"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:187 client/cl_game_skirmish.c:110
+#: client/cl_game_multiplayer.c:187
+#: client/cl_game_skirmish.c:110
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_game_multiplayer.c:188 client/cl_game_skirmish.c:111
+#: client/cl_game_multiplayer.c:188
+#: client/cl_game_skirmish.c:111
 msgid "Game Drawn!"
 msgstr "Döntetlen!"
 
-#: client/cl_game_multiplayer.c:200 client/cl_game_skirmish.c:123
+#: client/cl_game_multiplayer.c:200
+#: client/cl_game_skirmish.c:123
 #, c-format
 msgid ""
 "\n"
@@ -12866,23 +13539,28 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_game_multiplayer.c:202 client/cl_game_skirmish.c:125
+#: client/cl_game_multiplayer.c:202
+#: client/cl_game_skirmish.c:125
 msgid "You won the game!"
 msgstr "Megnyerted a játékot!"
 
-#: client/cl_game_multiplayer.c:203 client/cl_game_skirmish.c:126
+#: client/cl_game_multiplayer.c:203
+#: client/cl_game_skirmish.c:126
 msgid "Congratulations"
 msgstr "Gratulálok"
 
-#: client/cl_game_multiplayer.c:205 client/cl_game_skirmish.c:128
+#: client/cl_game_multiplayer.c:205
+#: client/cl_game_skirmish.c:128
 msgid "You've lost the game!"
 msgstr "Elvesztetted a játékot!"
 
-#: client/cl_game_multiplayer.c:206 client/cl_game_skirmish.c:129
+#: client/cl_game_multiplayer.c:206
+#: client/cl_game_skirmish.c:129
 msgid "Better luck next time"
 msgstr "Több szerencsét legközelebb"
 
-#: client/cl_game_multiplayer.c:222 client/multiplayer/mp_callbacks.c:239
+#: client/cl_game_multiplayer.c:222
+#: client/multiplayer/mp_callbacks.c:239
 msgid "Invalid or full team"
 msgstr ""
 
@@ -12890,7 +13568,8 @@ msgstr ""
 msgid "all"
 msgstr "mind"
 
-#: client/cl_hud.c:104 client/cl_hud.c:107
+#: client/cl_hud.c:104
+#: client/cl_hud.c:107
 msgid "Crouch walk"
 msgstr ""
 
@@ -12970,7 +13649,8 @@ msgstr ""
 "Nem lehet:\n"
 "Nincs több töltény!\n"
 
-#: client/cl_hud.c:853 client/cl_hud.c:924
+#: client/cl_hud.c:853
+#: client/cl_hud.c:924
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -13036,7 +13716,8 @@ msgstr ""
 msgid "No reload possible for right hand."
 msgstr ""
 
-#: client/cl_hud.c:1088 client/cl_hud.c:1104
+#: client/cl_hud.c:1088
+#: client/cl_hud.c:1104
 #, c-format
 msgid "Reload weapon (%i TU)."
 msgstr "Fegyver újratöltés (%i TU)."
@@ -13151,11 +13832,13 @@ msgstr "Kamera mozgatása előre"
 msgid "Move battlescape camera backward"
 msgstr "Kamera mozgatása hátra"
 
-#: client/cl_input.c:1411 client/cl_input.c:1441
+#: client/cl_input.c:1411
+#: client/cl_input.c:1441
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: client/cl_input.c:1413 client/cl_input.c:1442
+#: client/cl_input.c:1413
+#: client/cl_input.c:1442
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
@@ -13256,12 +13939,14 @@ msgstr ""
 msgid "Skill:\t%s\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:174 client/cl_inventory_callbacks.c:194
+#: client/cl_inventory_callbacks.c:174
+#: client/cl_inventory_callbacks.c:194
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:175 client/cl_inventory_callbacks.c:195
+#: client/cl_inventory_callbacks.c:175
+#: client/cl_inventory_callbacks.c:195
 #, c-format
 msgid "Range:\t%g\n"
 msgstr ""
@@ -13276,12 +13961,14 @@ msgstr ""
 msgid "%s weapon with\n"
 msgstr ""
 
-#: client/cl_inventory_callbacks.c:179 client/cl_inventory_callbacks.c:182
+#: client/cl_inventory_callbacks.c:179
+#: client/cl_inventory_callbacks.c:182
 #: client/cl_inventory_callbacks.c:192
 msgid "One-handed"
 msgstr "Egy kezes"
 
-#: client/cl_inventory_callbacks.c:179 client/cl_inventory_callbacks.c:182
+#: client/cl_inventory_callbacks.c:179
+#: client/cl_inventory_callbacks.c:182
 #: client/cl_inventory_callbacks.c:192
 msgid "Two-handed"
 msgstr "Két kezes"
@@ -13311,9 +13998,8 @@ msgid "Action:\t%s\n"
 msgstr ""
 
 #: client/cl_inventory_callbacks.c:200
-#, fuzzy
 msgid "Unknown - not useable"
-msgstr "Ismeretlen technológia kutatható"
+msgstr "Ismeretlen - nem használható"
 
 #: client/cl_irc.c:1221
 msgid "Server closed connection"
@@ -13349,7 +14035,8 @@ msgstr ""
 msgid "Open the actors inventory while we are in tactical mission"
 msgstr ""
 
-#: client/cl_main.c:932 client/cl_view.c:279
+#: client/cl_main.c:932
+#: client/cl_view.c:279
 msgid "Awaiting game start"
 msgstr ""
 
@@ -13393,27 +14080,33 @@ msgstr "Letöltés [%s]"
 msgid "Loading Map [%s]"
 msgstr "Térkép betöltése [%s]"
 
-#: client/cl_team.c:49 client/cl_team.c:410
+#: client/cl_team.c:49
+#: client/cl_team.c:410
 msgid "Urban"
 msgstr "Városi"
 
-#: client/cl_team.c:51 client/cl_team.c:411
+#: client/cl_team.c:51
+#: client/cl_team.c:411
 msgid "Jungle"
 msgstr "Dzsungel"
 
-#: client/cl_team.c:53 client/cl_team.c:412
+#: client/cl_team.c:53
+#: client/cl_team.c:412
 msgid "Desert"
 msgstr "Sivatagi"
 
-#: client/cl_team.c:55 client/cl_team.c:413
+#: client/cl_team.c:55
+#: client/cl_team.c:413
 msgid "Arctic"
 msgstr "Sarki"
 
-#: client/cl_team.c:57 client/cl_team.c:414
+#: client/cl_team.c:57
+#: client/cl_team.c:414
 msgid "Yellow"
 msgstr "Sárga"
 
-#: client/cl_team.c:59 client/cl_team.c:415
+#: client/cl_team.c:59
+#: client/cl_team.c:415
 msgid "CCCP"
 msgstr "CCCP"
 
@@ -13437,7 +14130,8 @@ msgstr ""
 msgid "Toggle to next soldier"
 msgstr "Következő katona"
 
-#: client/cl_view.c:214 client/cl_view.c:244
+#: client/cl_view.c:214
+#: client/cl_view.c:244
 #, c-format
 msgid "loading %s"
 msgstr "%s betöltése"
@@ -13458,7 +14152,8 @@ msgstr ""
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr ""
 
-#: client/menu/m_tooltip.c:94 client/menu/m_tooltip.c:99
+#: client/menu/m_tooltip.c:94
+#: client/menu/m_tooltip.c:99
 #, c-format
 msgid "Key: %s"
 msgstr ""
@@ -13514,12 +14209,14 @@ msgstr ""
 msgid "Select a free team or your coop team"
 msgstr ""
 
-#: client/multiplayer/mp_callbacks.c:213 client/multiplayer/mp_callbacks.c:226
+#: client/multiplayer/mp_callbacks.c:213
+#: client/multiplayer/mp_callbacks.c:226
 #, c-format
 msgid "Current team: %i"
 msgstr ""
 
-#: client/multiplayer/mp_callbacks.c:217 client/multiplayer/mp_callbacks.c:230
+#: client/multiplayer/mp_callbacks.c:217
+#: client/multiplayer/mp_callbacks.c:230
 msgid "Team is already in use"
 msgstr ""
 
@@ -13692,7 +14389,8 @@ msgstr ""
 msgid "%s is currently shaken.\n"
 msgstr ""
 
-#: game/g_client.c:2424 game/g_svcmds.c:348
+#: game/g_client.c:2424
+#: game/g_svcmds.c:348
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr ""
@@ -13798,37 +14496,26 @@ msgstr "Játékban"
 
 #~ msgid "Slow down time"
 #~ msgstr "Idő lassítása"
-
 #~ msgid "Speed up time"
 #~ msgstr "Idő gyorsítása"
-
 #~ msgid "Toggle between full zoom and half zoom"
 #~ msgstr "Teljes zoom és fél-zoom közötti váltás"
-
 #~ msgid "%s\n"
 #~ msgstr "%s\n"
-
 #~ msgid "Could not set up your installation at this location"
 #~ msgstr "Nem lehetett állomást építeni a megadott helyre"
-
 #~ msgid "You've reached the base limit."
 #~ msgstr "Nem lehet több bázisod."
-
 #~ msgid "Could not set up your base at this location"
 #~ msgstr "Nem lehetett bázist építeni a megadott helyre"
-
 #~ msgid "10 sec"
 #~ msgstr "10 mp"
-
 #~ msgid "1 min"
 #~ msgstr "1 perc"
-
 #~ msgid "10 mins"
 #~ msgstr "10 perc"
-
 #~ msgid "Nobody selected\n"
 #~ msgstr "Senki sincs kijelölve\n"
-
 #~ msgid "Sniper"
 #~ msgstr "Mesterlövész"
 
@@ -13839,297 +14526,206 @@ msgstr "Játékban"
 #, fuzzy
 #~ msgid "Sell ufo"
 #~ msgstr "Elad"
-
 #~ msgid "Installation #2"
 #~ msgstr "Állomás #2"
-
 #~ msgid "Installation #3"
 #~ msgstr "Állomás #3"
-
 #~ msgid "Installation #4"
 #~ msgstr "Állomás #4"
-
 #~ msgid "Installation #5"
 #~ msgstr "Állomás #5"
-
 #~ msgid "Installation #6"
 #~ msgstr "Állomás #6"
-
 #~ msgid "Installation #7"
 #~ msgstr "Állomás #7"
-
 #~ msgid "Installation #8"
 #~ msgstr "Állomás #8"
-
 #~ msgid "Previous alien containment"
 #~ msgstr "Előző idegen tároló"
-
 #~ msgid "Next alien containment"
 #~ msgstr "Következő idegen tároló"
-
 #~ msgid "Amounts"
 #~ msgstr "Mennyiségek"
-
 #~ msgid "Current base:"
 #~ msgstr "Jelenlegi bázis:"
-
 #~ msgid "Create base"
 #~ msgstr "Bázis építés"
-
 #~ msgid "Max. bases reached"
 #~ msgstr "Maximális bázis szám elérve"
-
 #~ msgid "Max. installations reached"
 #~ msgstr "Maximális állomás szám elérve"
-
 #~ msgid "Equip"
 #~ msgstr "Felszerelés"
-
 #~ msgid "Select base"
 #~ msgstr "Bázis kiválasztása"
-
 #~ msgid "No UFO hangars or no power supply"
 #~ msgstr "Nincs UFÓ hangár vagy erőmű."
-
 #~ msgid "Store the UFO in base"
 #~ msgstr "UFÓ tárolása a bázison"
-
 #~ msgid "Sell the UFO to desired nation"
 #~ msgstr "Az UFO eladása a kiválasztott nemzetnek"
-
 #~ msgid "Destroy UFO"
 #~ msgstr "UFÓ elpusztítása"
-
 #~ msgid "Destroy recovered UFO"
 #~ msgstr "Pusztítsd el az UFÓt"
-
 #~ msgid "Couldn't open file"
 #~ msgstr "Fájl nem nyitható meg"
 
 #, fuzzy
 #~ msgid "Error saving xml game."
 #~ msgstr "Hiba a játék mentésekor."
-
 #~ msgid "Alien spotted: %s!"
 #~ msgstr "Idegent vettünk észre: %s!"
-
 #~ msgid "Alien spotted!\n"
 #~ msgstr "Idegent vettünk észre!\n"
-
 #~ msgid "CREDIT"
 #~ msgstr "PÉNZ"
-
 #~ msgid "Serverbrowser"
 #~ msgstr "Szerverkereső"
-
 #~ msgid "Production queue/producible items"
 #~ msgstr "Gyártási sor/gyártható felszerelések"
-
 #~ msgid "New game"
 #~ msgstr "Új játék"
-
 #~ msgid "No game to save"
 #~ msgstr "Nincs mit menteni"
-
 #~ msgid "Reload"
 #~ msgstr "Újratöltés"
-
 #~ msgid "Baseinfo"
 #~ msgstr "Bázisinfó"
-
 #~ msgid "Cargo onboard"
 #~ msgstr "Rakomány a fedélzeten"
-
 #~ msgid "Primary weapons"
 #~ msgstr "Elsődleges fegyverek"
-
 #~ msgid "Secondary weapons"
 #~ msgstr "Másodlagos fegyverek"
-
 #~ msgid "Heavy weapons"
 #~ msgstr "Nehéz fegyverek"
-
 #~ msgid "Personal Armour"
 #~ msgstr "Személyi páncélok"
-
 #~ msgid "Aircraft equipment"
 #~ msgstr "Repülőgép felszerelés"
-
 #~ msgid "An alien was stunned: %s\n"
 #~ msgstr "Egy idegen elkábítva: %s\n"
-
 #~ msgid "An alien was killed: %s\n"
 #~ msgstr "Egy idegen megölve: %s\n"
-
 #~ msgid "Base #3"
 #~ msgstr "Bázis #3"
-
 #~ msgid "Base #4"
 #~ msgstr "Bázis #4"
-
 #~ msgid "Base #5"
 #~ msgstr "Bázis #5"
-
 #~ msgid "Base #6"
 #~ msgstr "Bázis #6"
-
 #~ msgid "Base #7"
 #~ msgstr "Bázis #7"
-
 #~ msgid "Base #8"
 #~ msgstr "Bázis #8"
-
 #~ msgid "Buy/Sell Aircraft..."
 #~ msgstr "Vásárlás/Eladás..."
-
 #~ msgid "Buy or sell aircraft"
 #~ msgstr "Repülő vásárlása vagy eladása"
-
 #~ msgid "Produce..."
 #~ msgstr "Gyártás..."
-
 #~ msgid "Produce aircraft or aircraft components"
 #~ msgstr "Repülő vagy repülőfelszerelés gyártása"
-
 #~ msgid "Enter base"
 #~ msgstr "Belépés a bázisra"
-
 #~ msgid "Variable:"
 #~ msgstr "Változó:"
-
 #~ msgid "Value:"
 #~ msgstr "Érték:"
-
 #~ msgid "Load team from current selected slot"
 #~ msgstr "Csapat betöltése a kiválasztott helyről"
-
 #~ msgid "Current Team"
 #~ msgstr "Jelenlegi csapat"
-
 #~ msgid "Edit your team after loading"
 #~ msgstr "Csapat módosítása betöltés után"
-
 #~ msgid "Edit"
 #~ msgstr "Módosít"
-
 #~ msgid "Generate a team automatically"
 #~ msgstr "Csapat automatikus létrehozása"
-
 #~ msgid "Auto"
 #~ msgstr "Automata"
-
 #~ msgid "Pilot %s %s"
 #~ msgstr "Pilóta %s %s"
-
 #~ msgid "Race:"
 #~ msgstr "Faj:"
-
 #~ msgid "Use current skin with every soldier aboard"
 #~ msgstr "Jelenlegi kinézet használata az összes katonánál a fedélzeten"
-
 #~ msgid "Assign Soldiers"
 #~ msgstr "Katonák"
-
 #~ msgid "Equip aircraft components"
 #~ msgstr "Repülő felszerelése"
-
 #~ msgid "Switch to the previous aircraft"
 #~ msgstr "Előző repülő"
-
 #~ msgid "Switch to the next aircraft"
 #~ msgstr "Következő repülő"
-
 #~ msgid "Assign your squad"
 #~ msgstr "Katonák hozzárendelése a géphez"
-
 #~ msgid "Aircraft absent from base"
 #~ msgstr "A gép nincs a bázison"
-
 #~ msgid "Previous aircraft"
 #~ msgstr "Előző gép"
-
 #~ msgid "Currently being healed"
 #~ msgstr "Jelenleg kezelés alatt"
-
 #~ msgid "Show available primary weapons"
 #~ msgstr "Mutasd az elsődleges fegyvereket"
-
 #~ msgid "Show available secondary weapons"
 #~ msgstr "Mutasd a másodlagos fegyvereket"
-
 #~ msgid "Show available heavy weapons"
 #~ msgstr "Mutasd a nehézfegyvereket"
-
 #~ msgid "Show available miscellaneous equipment and weapons"
 #~ msgstr "Mutasd az egyéb felszereléseket és fegyvereket"
-
 #~ msgid "Show available armour"
 #~ msgstr "Mutasd a páncélokat"
-
 #~ msgid "Action"
 #~ msgstr "Akció"
-
 #~ msgid "You don't have any aircraft in the base - what do you want to do?"
 #~ msgstr "Nincs egyetlen repülőd se ezen a bázison, mit tegyünk?"
-
 #~ msgid "Buy aircraft"
 #~ msgstr "Reülő vásárlása"
-
 #~ msgid "Buy"
 #~ msgstr "Vásárlás"
-
 #~ msgid "Produce aircraft"
 #~ msgstr "Repülő gyártása"
-
 #~ msgid "New team created"
 #~ msgstr "Új csapat létrehozva"
-
 #~ msgid ""
 #~ "Aliens captured\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Elfogott idegenek\t%i\n"
 #~ "\n"
-
 #~ msgid "Enemies killed\t%i\n"
 #~ msgstr "Megölt ellenség\t%i\n"
-
 #~ msgid ""
 #~ "Enemies captured\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Elfogott ellenség\t%i\n"
 #~ "\n"
-
 #~ msgid ""
 #~ "Enemy survivors\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Ellenséges túlélők\t%i\n"
 #~ "\n"
-
 #~ msgid "Team losses\t%i\n"
 #~ msgstr "Csapat veszteségek\t%i\n"
-
 #~ msgid "Team missing in action\t%i\n"
 #~ msgstr "Eltűnt katonák\t%i\n"
-
 #~ msgid ""
 #~ "Team survivors\t%i\n"
 #~ "\n"
 #~ msgstr ""
 #~ "Túlélők\t%i\n"
 #~ "\n"
-
 #~ msgid "Civilians killed by the Aliens\t%i\n"
 #~ msgstr "Idegenek által megölt civilek\t%i\n"
-
 #~ msgid "Civilians killed by the Enemies\t%i\n"
 #~ msgstr "Ellenség által megölt civilek\t%i\n"
-
 #~ msgid "Civilians killed by your Team\t%i\n"
 #~ msgstr "Általad megölt civilek\t%i\n"
-
 #~ msgid ""
 #~ "Civilians saved\t%i\n"
 #~ "\n"
@@ -14138,205 +14734,138 @@ msgstr "Játékban"
 #~ "Megmentett civilek\t%i\n"
 #~ "\n"
 #~ "\n"
-
 #~ msgid "Crashed UFO - Scout"
 #~ msgstr "Lezuhant UFÓ - Felderítő"
-
 #~ msgid "Oriental UFO"
 #~ msgstr "UFÓ, Keleti"
-
 #~ msgid "Aircraft away"
 #~ msgstr "Repülő úton"
-
 #~ msgid "Start your aircraft"
 #~ msgstr "Repülő elindítása"
-
 #~ msgid "Call back aircraft"
 #~ msgstr "Repülő visszahívása"
-
 #~ msgid "Stop time"
 #~ msgstr "Idő megállítása"
-
 #~ msgid "Stockholm"
 #~ msgstr "Stockholm"
-
 #~ msgid "Equip this defence system with selected ammo"
 #~ msgstr "Védelmi rendszer feltöltése a kiválasztott munícióval"
-
 #~ msgid "Remove ammo from this defence system"
 #~ msgstr "Muníció kivétele a védelmi rendszerből"
-
 #~ msgid "Choose defence system to build after removing current one"
 #~ msgstr "Válaszd ki, hogy milyen védelmi rendszert telepítesz a jelenlegi eltávolítása után"
-
 #~ msgid "System to install after removal"
 #~ msgstr "Az eltávolítás utáni rendszer telepítése"
-
 #~ msgid "Hire soldiers"
 #~ msgstr "Katonák felbérelése"
-
 #~ msgid "Hire scientists"
 #~ msgstr "Tudósok felvétele"
-
 #~ msgid "Hire workers"
 #~ msgstr "Munkások felvétele"
-
 #~ msgid "Hire pilots"
 #~ msgstr "Pilóták felvétele"
-
 #~ msgid "Now after you have finished the single-player campaigns"
 #~ msgstr "Most, miután befejezted az egy játékos hadjáratokat"
-
 #~ msgid "you should try the multiplayer features"
 #~ msgstr "ki kéne próbálnod a több játékos lehetőségeket"
-
 #~ msgid "Visit http://ufoai.sf.net"
 #~ msgstr "Látogasd meg a http://ufoai.sf.net weboldalt"
-
 #~ msgid "and join irc.freenode.org #ufo:ai"
 #~ msgstr "és csatlakozz az irc.freenode.org #ufo:ai chathez"
-
 #~ msgid "Pilot %s %s\n"
 #~ msgstr "Pilóta %s %s\n"
-
 #~ msgid "Soldier %s %s\n"
 #~ msgstr "Katona %s %s\n"
-
 #~ msgid "Aircraft %s\n"
 #~ msgstr "Repülő %s\n"
-
 #~ msgid "Close down messages"
 #~ msgstr "Üzenetablak bezárása"
-
 #~ msgid "Soldier 1"
 #~ msgstr "1. katona"
-
 #~ msgid "Soldier 2"
 #~ msgstr "2. katona"
-
 #~ msgid "Soldier 3"
 #~ msgstr "3. katona"
-
 #~ msgid "Soldier 4"
 #~ msgstr "4. katona"
-
 #~ msgid "Soldier 5"
 #~ msgstr "5. katona"
-
 #~ msgid "Soldier 6"
 #~ msgstr "6. katona"
-
 #~ msgid "Soldier 7"
 #~ msgstr "7. katona"
-
 #~ msgid "Soldier 8"
 #~ msgstr "8. katona"
-
 #~ msgid "Scroll backward"
 #~ msgstr "Lapozz hátra"
-
 #~ msgid "Scroll forward"
 #~ msgstr "Lapozz előre"
-
 #~ msgid "Increase production by 1"
 #~ msgstr "Termelés növelése eggyel"
-
 #~ msgid "Decrease production by 1"
 #~ msgstr "Termelés csökkentése eggyel"
-
 #~ msgid "Increase production by 10"
 #~ msgstr "Termelés növelése tízzel"
-
 #~ msgid "Decrease production by 10"
 #~ msgstr "Termelés csökkentése tízzel"
-
 #~ msgid "Build at least one workshop"
 #~ msgstr "Építs legalább egy műhelyet"
-
 #~ msgid "Build at least one functional Hangar (click for more info)"
 #~ msgstr "Építs legalább egy működő hangárt (további infóért kattints)"
-
 #~ msgid "Build at least one functional Storage (click for more info)"
 #~ msgstr "Építs legalább egy működő raktárat (további infóért kattints)"
-
 #~ msgid "Can't transfer (click for more info)"
 #~ msgstr "Nem lehet átszállítani (több infóért kattints)"
-
 #~ msgid "Build at least one functional Laboratory (click for more info)"
 #~ msgstr "Építs legalább egy működő labort (további infóért kattints)"
-
 #~ msgid "Build at least one functional Workshop (click for more info)"
 #~ msgstr "Építs legalább egy működő műhelyet (további infóért kattints)"
-
 #~ msgid "Build at least one functional Living Quarter (click for more info)"
 #~ msgstr "Építs legalább egy működő lakónegyedet (további infóért kattints)"
-
 #~ msgid "Build at least one functional Alien Containment (click for more info)"
 #~ msgstr "Építs legalább egy működő idegen tárolót (további infóért kattints)"
-
 #~ msgid "Build at least one functional Hospital (click for more info)"
 #~ msgstr "Építs legalább egy működő kórházat (további infóért kattints)"
-
 #~ msgid "Buy item"
 #~ msgstr "Vásárlás"
-
 #~ msgid "Sell item"
 #~ msgstr "Eladás"
-
 #~ msgid "What to do?"
 #~ msgstr "Mit tegyünk?"
-
 #~ msgid "Enable all pause settings"
 #~ msgstr "Minden üzenet-állj tiltása"
-
 #~ msgid "Enable all"
 #~ msgstr "Mindet be"
-
 #~ msgid "Disable all"
 #~ msgstr "Mindet ki"
-
 #~ msgid "Enable all notification messages"
 #~ msgstr "Minden üzenet engedélyezése"
-
 #~ msgid "Disable all notification messages"
 #~ msgstr "Minden üzenet tiltása"
-
 #~ msgid "Change all sound settings"
 #~ msgstr "Minden üzenet-hang beállítás megváltoztatása"
-
 #~ msgid "Add scientist"
 #~ msgstr "Tudós hozzáadása"
-
 #~ msgid "Start base defence"
 #~ msgstr "Bázis megvédése"
-
 #~ msgid "Automatically resolve mission"
 #~ msgstr "Küldetés"
-
 #~ msgid "Moving to mission"
 #~ msgstr "Küldetésre megy"
-
 #~ msgid "Ready for drop down"
 #~ msgstr "Kész a ledobásra"
-
 #~ msgid "Being transfered"
 #~ msgstr "Átszállítás alatt"
-
 #~ msgid "Back to base"
 #~ msgstr "Visszatér a bázisra"
-
 #~ msgid "not a working hangar"
 #~ msgstr "nincs működő hangár"
-
 #~ msgid "no more room in storage"
 #~ msgstr "nincs több hely a raktrárban"
-
 #~ msgid "Your aircraft doesn't have enough fuel to go there and then come back to its home base."
 #~ msgstr "A repülőnek nincs elég üzemanyaga, hogy oda menjen és visszaérjen a bázisra."
-
 #~ msgid "xaw95_ammo_pre_txt"
 #~ msgstr "<TODO>"
-
 #~ msgid "chaingun_ammo_pre_txt"
 #~ msgstr "<TODO>"
 
@@ -14351,151 +14880,106 @@ msgstr "Játékban"
 #, fuzzy
 #~ msgid "Base defence item was successfully removed."
 #~ msgstr "Repülőgép-felszerelés telepítve."
-
 #~ msgid "Show miscellaneous equipment"
 #~ msgstr "Mutasd a vegyes felszereléseket"
-
 #~ msgid "Show heavy equipment"
 #~ msgstr "Nehézfegyverzet"
-
 #~ msgid "Show other items and materials"
 #~ msgstr "Mutasd az egyéb felszereléseket és anyagokat"
-
 #~ msgid "Sell aircraft"
 #~ msgstr "Repülő eladása"
-
 #~ msgid "Buy craftitem"
 #~ msgstr "Gépfelszerelés váaárlása"
-
 #~ msgid "Sell craftitem"
 #~ msgstr "Gépfelszerelés eladása"
-
 #~ msgid "No power supplies in this base"
 #~ msgstr "Nincs erőmű ezen a bázison."
-
 #~ msgid "No storage in this base"
 #~ msgstr "Nincs raktár ezen a bázison."
-
 #~ msgid "Show aircraft"
 #~ msgstr "Repülők mutatása"
-
 #~ msgid "Show craftitems"
 #~ msgstr "Mutasd a repülőfelszereléseket"
-
 #~ msgid "Back to hangar"
 #~ msgstr "Vissza a hangárba"
-
 #~ msgid "Disassembling items"
 #~ msgstr "Tárgyak szétszerelése"
-
 #~ msgid "Hangar capacity:"
 #~ msgstr "Hangár kapacitás"
-
 #~ msgid "Very slow"
 #~ msgstr "Nagyon lassú"
-
 #~ msgid "Slow"
 #~ msgstr "Lassú"
-
 #~ msgid "Currently loaded:"
 #~ msgstr "Jelenleg betöltve:"
-
 #~ msgid "Assign heavy equipment"
 #~ msgstr "Nehézfegyverzet hozzáadása"
-
 #~ msgid "Show primary weapons in store"
 #~ msgstr "Mutasd az elsődleges fegyvereket"
-
 #~ msgid "Show armour in store"
 #~ msgstr "Mutasd a páncélokat"
-
 #~ msgid "Headshot"
 #~ msgstr "Fejlövés"
-
 #~ msgid "No storage in this base."
 #~ msgstr "Nincs raktár ezen a bázison."
-
 #~ msgid "Medic"
 #~ msgstr "Orvos"
-
 #~ msgid "Hire medics"
 #~ msgstr "Orvosok felvétele"
-
 #~ msgid "Medics"
 #~ msgstr "Orvosok"
-
 #~ msgid "Heal this soldier"
 #~ msgstr "Gyógyitsd meg"
-
 #~ msgid "medic"
 #~ msgid_plural "medics"
 #~ msgstr[0] "orvos"
 #~ msgstr[1] "orvosok"
-
 #~ msgid "100000 c"
 #~ msgstr "100000 c"
 
 #, fuzzy
 #~ msgid "Test"
 #~ msgstr "Sivatagi"
-
 #~ msgid "eXtraterrestial Viral Infection"
 #~ msgstr "Földönkívüli vírus fertőzés"
-
 #~ msgid "Alien Medium Armour"
 #~ msgstr "Közepes idegen páncél"
-
 #~ msgid "UFO - Condor"
 #~ msgstr "UFÓ - Kondor"
-
 #~ msgid "steelblade"
 #~ msgstr "acélpenge"
-
 #~ msgid "monomolecularblade"
 #~ msgstr "monomolekuláris-penge"
-
 #~ msgid "Camera Scroll:"
 #~ msgstr "Kamera mozgatás:"
-
 #~ msgid "Camera Rotation:"
 #~ msgstr "Kamera forgatás:"
-
 #~ msgid "%s\t%0.2f%%\n"
 #~ msgstr "%s\t%.02f%%\n"
-
 #~ msgid "Speed"
 #~ msgstr "Sebesség"
-
 #~ msgid "Crashed Alien Ship. Secure the area."
 #~ msgstr "Lezuhant idegen gép. Biztosítsd a területet!"
-
 #~ msgid "Alive aliens in all bases:"
 #~ msgstr "Élő idegenek összesen:"
-
 #~ msgid "Alive aliens in this base:"
 #~ msgstr "Élő idegenek ezen a bázison:"
-
 #~ msgid "Aliens available to process:"
 #~ msgstr "Feldolgozható idegenek:"
-
 #~ msgid "Alien type"
 #~ msgstr "Idegen fajta"
-
 #~ msgid "Examined"
 #~ msgstr "Megvizsgálva"
-
 #~ msgid "Killed:"
 #~ msgstr "Megölt:"
-
 #~ msgid "Captured in all bases:"
 #~ msgstr "Elfogott összesen:"
-
 #~ msgid "Buy or sell aircrafts"
 #~ msgstr "Repülők vásárlása/eladása"
-
 #~ msgid "Show aircrafts"
 #~ msgstr "Mutasd a repülőket"
 
 #, fuzzy
 #~ msgid "Alien Base"
 #~ msgstr "Idegen bázis"
+
