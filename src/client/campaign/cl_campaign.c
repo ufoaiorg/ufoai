@@ -1925,17 +1925,6 @@ static void CL_NationList_f (void)
 
 /* these commands are only available in singleplayer */
 static const cmdList_t game_commands[] = {
-	{"airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu"},
-	{"airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL},
-	{"airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL},
-	{"airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot"},
-	{"airequip_del_item", AIM_AircraftEquipDeleteItem_f, "Remove item from slot"},
-	{"add_battery", BDEF_AddBattery_f, "Add a new battery to base"},
-	{"remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base"},
-	{"basedef_initmenu", BDEF_MenuInit_f, "Inits base defence menu"},
-	{"basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defence menu"},
-	{"basedef_slot_list_click", BDEF_ListClick_f, "Inits base defence menu"},
-	{"basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL},
 	{"update_base_radar_coverage", RADAR_UpdateBaseRadarCoverage_f, "Update base radar coverage"},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 	{"stats_update", CL_StatsUpdate_f, NULL},

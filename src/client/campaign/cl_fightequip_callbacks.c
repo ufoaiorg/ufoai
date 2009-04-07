@@ -5,7 +5,7 @@
  */
 
 /*
-All original material Copyright (C) 2002-2007 UFO: Alien Invasion team.
+All original material Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -630,9 +630,11 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	/* Check if we can change to laser or missile */
 	if (base && base->numBatteries > 0 && base->numLasers > 0) {
 		node = MN_GetNodeByPath("basedefence.basedef_button_missile");
-		MN_UnHideNode(node);
+		if (node)
+			MN_UnHideNode(node);
 		node = MN_GetNodeByPath("basedefence.basedef_button_laser");
-		MN_UnHideNode(node);
+		if (node)
+			MN_UnHideNode(node);
 	}
 
 	/* Select slot */
@@ -734,7 +736,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 			_("No ammo assigned to this defence system."));
 		Q_strncpyz(smallbuffer2, ammo, sizeof(smallbuffer2));
 		/* inform player that base missile are unlimited */
-		if (slot->ammo->craftitem.unlimitedAmmo)
+		if (slot->ammo && slot->ammo->craftitem.unlimitedAmmo)
 			Q_strcat(smallbuffer2, _(" (unlimited missiles)"), sizeof(smallbuffer2));
 	} else {
 		*smallbuffer2 = '\0';
@@ -1355,10 +1357,36 @@ void AIM_InitCallbacks (void)
 	Cmd_AddCommand("mn_next_equiptype", AIM_NextItemtype_f, "Shows the next aircraft equip category.");
 	Cmd_AddCommand("mn_prev_equiptype", AIM_PreviousItemtype_f, "Shows the previous aircraft equip category.");
 	Cmd_AddCommand("airequip_zone_select", AIM_AircraftEquipZoneSelect_f, NULL);
+
+	Cmd_AddCommand("airequip_updatemenu", AIM_AircraftEquipMenuUpdate_f, "Init function for the aircraft equip menu");
+	Cmd_AddCommand("airequip_list_click", AIM_AircraftEquipMenuClick_f, NULL);
+	Cmd_AddCommand("airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL);
+	Cmd_AddCommand("airequip_add_item", AIM_AircraftEquipAddItem_f, "Add item to slot");
+	Cmd_AddCommand("airequip_del_item", AIM_AircraftEquipDeleteItem_f, "Remove item from slot");
+
+	Cmd_AddCommand("add_battery", BDEF_AddBattery_f, "Add a new battery to base");
+	Cmd_AddCommand("remove_battery", BDEF_RemoveBattery_f, "Remove a battery from base");
+	Cmd_AddCommand("basedef_initmenu", BDEF_MenuInit_f, "Inits base defence menu");
+	Cmd_AddCommand("basedef_updatemenu", BDEF_BaseDefenseMenuUpdate_f, "Inits base defence menu");
+	Cmd_AddCommand("basedef_slot_list_click", BDEF_ListClick_f, "Inits base defence menu");
+	Cmd_AddCommand("basedef_list_click", AIM_AircraftEquipMenuClick_f, NULL);
 }
 
 void AIM_ShutdownCallbacks (void)
 {
+	Cmd_RemoveCommand("airequip_updatemenu");
+	Cmd_RemoveCommand("airequip_list_click");
+	Cmd_RemoveCommand("airequip_slot_select");
+	Cmd_RemoveCommand("airequip_add_item");
+	Cmd_RemoveCommand("airequip_del_item");
+
+	Cmd_RemoveCommand("add_battery");
+	Cmd_RemoveCommand("remove_battery");
+	Cmd_RemoveCommand("basedef_initmenu");
+	Cmd_RemoveCommand("basedef_updatemenu");
+	Cmd_RemoveCommand("basedef_slot_list_click");
+	Cmd_RemoveCommand("basedef_list_click");
+
 	Cmd_RemoveCommand("mn_next_equiptype");
 	Cmd_RemoveCommand("mn_prev_equiptype");
 	Cmd_RemoveCommand("airequip_zone_select");
