@@ -188,6 +188,36 @@ static void INS_InstallationList_f (void)
 		Com_Printf("\n\n");
 	}
 }
+
+/**
+ * @brief Finishes the construction of an/all installation(s) 
+ */
+static void INS_ConstructionFinished_f (void)
+{
+	int i;
+	int idx = -1;
+
+	if (Cmd_Argc() == 2) {
+		idx = atoi(Cmd_Argv(1));
+		if (idx < 0 || idx > MAX_INSTALLATIONS) {
+			Com_Printf("Usage: %s [installationIDX]\nWithout parameter it builds up all.\n", Cmd_Argv(0));
+			return;
+		}
+	}
+
+	for (i = 0; i < ccs.numInstallations; i++) {
+		installation_t *ins;
+
+		if (idx >= 0 && i != idx)
+			continue;
+
+		ins = INS_GetInstallationByIDX(i);
+		if (ins && ins->founded) {
+			ins->installationStatus = INSTALLATION_WORKING;
+			RADAR_UpdateInstallationRadarCoverage(ins, ins->installationTemplate->radarRange, ins->installationTemplate->trackingRange);
+		}
+	}
+}
 #endif
 
 /**
@@ -274,6 +304,7 @@ void INS_InitStartup (void)
 	/* add commands and cvars */
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listinstallation", INS_InstallationList_f, "Print installation information to the game console");
+	Cmd_AddCommand("debug_finishinstallation", INS_ConstructionFinished_f, "Finish construction of a specified or every installation");
 #endif
 }
 
