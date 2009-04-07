@@ -112,7 +112,10 @@ static void INS_BuildInstallation_f (void)
 		ccs.numInstallations++;
 		ccs.campaignStats.installationsBuild++;
 		ccs.mapAction = MA_NONE;
+
 		CL_UpdateCredits(ccs.credits - installationTemplate->cost);
+		/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
+		Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 		Q_strncpyz(installation->name, Cvar_GetString("mn_installation_title"), sizeof(installation->name));
 		nation = MAP_GetNation(installation->pos);
 		if (nation)
@@ -247,7 +250,7 @@ void INS_InitCallbacks (void)
 	Cmd_AddCommand("mn_update_max_installations", INS_UpdateInsatallationLimit_f, "Updates the installation count limit");
 
 	INS_UpdateInsatallationLimit_f();
-	Cvar_Set("mn_installation_count", "0");
+	Cvar_SetValue("mn_installation_count", ccs.numInstallations);
 	Cvar_Set("mn_installation_title", "");
 }
 

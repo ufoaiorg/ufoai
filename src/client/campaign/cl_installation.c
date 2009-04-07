@@ -111,9 +111,6 @@ void INS_SetUpInstallation (installation_t* installation, installationTemplate_t
 	/* Reset current capacities. */
 	installation->aircraftCapacity.cur = 0;
 
-	/* this cvar is used for disabling the installation build button on geoscape if MAX_INSTALLATIONS was reached */
-	Cvar_Set("mn_installation_count", va("%i", ccs.numInstallations));
-
 	installation->numUFOsInInstallation = 0;
 
 	/* a new installation is not discovered (yet) */
