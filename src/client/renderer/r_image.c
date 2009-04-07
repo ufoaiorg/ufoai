@@ -1115,48 +1115,48 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 {
 	unsigned *scaled;
 	int samples;
-	int scaled_width, scaled_height;
+	int scaledWidth, scaledHeight;
 	int i, c;
 	byte *scan;
 	qboolean mipmap = (image->type != it_pic && image->type != it_chars);
 	qboolean clamp = (image->type == it_pic);
 
-	for (scaled_width  = 1; scaled_width  < width;  scaled_width  <<= 1) {}
-	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1) {}
+	for (scaledWidth  = 1; scaledWidth  < width;  scaledWidth  <<= 1) {}
+	for (scaledHeight = 1; scaledHeight < height; scaledHeight <<= 1) {}
 
-	while (scaled_width > r_config.maxTextureSize || scaled_height > r_config.maxTextureSize) {
-		scaled_width >>= 1;
-		scaled_height >>= 1;
+	while (scaledWidth > r_config.maxTextureSize || scaledHeight > r_config.maxTextureSize) {
+		scaledWidth >>= 1;
+		scaledHeight >>= 1;
 	}
 
-	if (scaled_width < 1)
-		scaled_width = 1;
-	if (scaled_height < 1)
-		scaled_height = 1;
+	if (scaledWidth < 1)
+		scaledWidth = 1;
+	if (scaledHeight < 1)
+		scaledHeight = 1;
 
 	/* some images need very little attention (pics, fonts, etc..) */
-	if (!mipmap && scaled_width == width && scaled_height == height) {
+	if (!mipmap && scaledWidth == width && scaledHeight == height) {
 		/* no mipmapping for these images - just use GL_NEAREST here to not waste memory */
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		return;
 	}
 
-	if (scaled_width != width || scaled_height != height) {  /* whereas others need to be scaled */
-		scaled = (unsigned *)Mem_PoolAllocExt(scaled_width * scaled_height * sizeof(unsigned), qfalse, vid_imagePool, 0);
-		R_ScaleTexture(data, width, height, scaled, scaled_width, scaled_height);
+	if (scaledWidth != width || scaledHeight != height) {  /* whereas others need to be scaled */
+		scaled = (unsigned *)Mem_PoolAllocExt(scaledWidth * scaledHeight * sizeof(unsigned), qfalse, vid_imagePool, 0);
+		R_ScaleTexture(data, width, height, scaled, scaledWidth, scaledHeight);
 	} else {
 		scaled = data;
 	}
 
 	/* and filter */
 	if (image->type == it_effect || image->type == it_world || image->type == it_material || image->type == it_skin)
-		R_FilterTexture((byte*)scaled, scaled_width, scaled_height, image->type, 4);
+		R_FilterTexture((byte*)scaled, scaledWidth, scaledHeight, image->type, 4);
 
 	/* scan the texture for any non-255 alpha */
-	c = scaled_width * scaled_height;
+	c = scaledWidth * scaledHeight;
 	samples = r_config.gl_compressed_solid_format ? r_config.gl_compressed_solid_format : r_config.gl_solid_format;
 	/* set scan to the first alpha byte */
 	for (i = 0, scan = ((byte *) scaled) + 3; i < c; i++, scan += 4) {
@@ -1167,8 +1167,8 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 	}
 
 	image->has_alpha = (samples == r_config.gl_alpha_format || samples == r_config.gl_compressed_alpha_format);
-	image->upload_width = scaled_width;	/* after power of 2 and scales */
-	image->upload_height = scaled_height;
+	image->upload_width = scaledWidth;	/* after power of 2 and scales */
+	image->upload_height = scaledHeight;
 
 	/* and mipmapped */
 	if (mipmap) {
@@ -1200,7 +1200,7 @@ void R_UploadTexture (unsigned *data, int width, int height, image_t* image)
 		R_CheckError();
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaled_width, scaled_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
+	glTexImage2D(GL_TEXTURE_2D, 0, samples, scaledWidth, scaledHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, scaled);
 	R_CheckError();
 
 	if (scaled != data)
@@ -1367,7 +1367,7 @@ image_t *R_LoadImageData (const char *name, byte * pic, int width, int height, i
 	len = strlen(name);
 	if (len >= sizeof(image->name))
 		Com_Error(ERR_DROP, "R_LoadImageData: \"%s\" is too long", name);
-	Q_strncpyz(image->name, name, MAX_QPATH);
+	Q_strncpyz(image->name, name, sizeof(image->name));
 	/* drop extension */
 	if (len >= 4 && image->name[len - 4] == '.')
 		image->name[len - 4] = '\0';
@@ -1420,7 +1420,7 @@ image_t *R_FindImage (const char *pname, imagetype_t type)
 		return r_noTexture;
 
 	/* drop extension */
-	Q_strncpyz(lname, pname, MAX_QPATH);
+	Q_strncpyz(lname, pname, sizeof(lname));
 	if (lname[len - 4] == '.')
 		len -= 4;
 	ename = &(lname[len]);
@@ -1490,8 +1490,6 @@ void R_InitImages (void)
 	r_dayandnightTexture = R_LoadImageData("***r_dayandnighttexture***", NULL, DAN_WIDTH, DAN_HEIGHT, it_effect);
 	if (!r_dayandnightTexture)
 		Sys_Error("Could not create daynight image for the geoscape");
-
-	/** @todo move r_radarTexture r_xviTexture here */
 
 	for (i = 0; i < MAX_ENVMAPTEXTURES; i++) {
 		r_envmaptextures[i] = R_FindImage(va("pics/envmaps/envmap_%i.tga", i), it_effect);

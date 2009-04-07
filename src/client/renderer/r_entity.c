@@ -274,7 +274,6 @@ static void R_DrawEntityEffects (void)
 		glMultMatrixf(e->transform.matrix);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
-			/** @todo Shouldn't we get the texture type from the team-definition somehow? */
 			if (e->flags & RF_SHADOW)
 				R_BindTexture(shadow->texnum);
 			else
@@ -290,8 +289,6 @@ static void R_DrawEntityEffects (void)
 			glTexCoord2f(0.0, 0.0);
 			glVertex3f(-18.0, -14.0, -28.5);
 			glEnd();
-
-			R_CheckError();
 		}
 
 		if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
@@ -325,16 +322,15 @@ static void R_DrawEntityEffects (void)
 			glVertex3f(7.0, 7.0, -27.0);
 			glVertex3f(10.0, 0.0, -27.0);
 			glEnd();
-			R_CheckError();
 
 			glDisable(GL_LINE_SMOOTH);
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_DEPTH_TEST);
+			R_Color(NULL);
 		}
 		glPopMatrix();
 	}
 
-	R_Color(NULL);
 }
 
 /**
