@@ -140,7 +140,7 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
  */
 sfx_t *S_RegisterSound (const char *soundFile)
 {
-	Mix_Chunk *mix;
+	Mix_Chunk *chunk;
 	sfx_t *sfx;
 	unsigned hash;
 	char name[MAX_QPATH];
@@ -156,15 +156,15 @@ sfx_t *S_RegisterSound (const char *soundFile)
 			return sfx;
 
 	/* make sure the sound is loaded */
-	mix = S_LoadSound(name);
-	if (!mix)
+	chunk = S_LoadSound(name);
+	if (!chunk)
 		return NULL;		/* couldn't load the sound's data */
 
 	sfx = Mem_PoolAlloc(sizeof(*sfx), cl_soundSysPool, 0);
 	sfx->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
-	sfx->data = mix;
+	sfx->chunk = chunk;
 	sfx->loops = 0; /* play once */
-	Mix_VolumeChunk(sfx->data, snd_volume->value * MIX_MAX_VOLUME);
+	Mix_VolumeChunk(sfx->chunk, snd_volume->value * MIX_MAX_VOLUME);
 	sfx->hash_next = sfx_hash[hash];
 	sfx_hash[hash] = sfx;
 	return sfx;
@@ -243,7 +243,7 @@ void S_StartSound (const vec3_t origin, sfx_t* sfx, float atten)
 
 	ch->sample = sfx;
 
-	Mix_PlayChannel(i, ch->sample->data, sfx->loops);
+	Mix_PlayChannel(i, ch->sample->chunk, sfx->loops);
 }
 
 /**
@@ -537,7 +537,7 @@ void S_Shutdown (void)
 
 	for (i = 0; i < SFX_HASH_SIZE; i++)
 		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next)
-			Mix_FreeChunk(sfx->data);
+			Mix_FreeChunk(sfx->chunk);
 
 	M_Shutdown();
 

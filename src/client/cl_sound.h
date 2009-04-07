@@ -45,7 +45,7 @@ enum {
 typedef struct sfx_s {
 	char *name;
 	int loops;					/**< how many loops - 0 = play only once, -1 = infinite */
-	Mix_Chunk* data;
+	Mix_Chunk* chunk;
 	struct sfx_s* hash_next;	/**< next hash entry */
 } sfx_t;
 
