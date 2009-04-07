@@ -28,9 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_le.h"
 #include "../shared/parse.h"
 
-#ifdef _WIN32
-# include "../ports/windows/win_local.h"
-#endif
+#define MAX_CHANNELS 64
+#define DISTANCE_SCALE 0.15
 
 enum {
 	MUSIC_MAIN,
@@ -41,6 +40,29 @@ enum {
 	MUSIC_MAX
 };
 
+typedef struct music_s {
+	char currentlyPlaying[MAX_QPATH];
+	Mix_Music *data;
+	SDL_RWops *musicSrc;		/**< freed by SDL_mixer */
+	char *nextMusicTrack;
+} music_t;
+
+typedef struct s_channel_s {
+	vec3_t org;  // for temporary entities and other positioned sounds
+	sfx_t *sample;
+} s_channel_t;
+
+/** @brief the sound environment */
+typedef struct s_env_s {
+	vec3_t right;  /* for stereo panning */
+
+	s_channel_t channels[MAX_CHANNELS];
+
+	int numChannels;
+
+	qboolean initialized;
+} s_env_t;
+
 #define MUSIC_MAX_ENTRIES 64
 static char *musicArrays[MUSIC_MAX][MUSIC_MAX_ENTRIES];
 static int musicArrayLength[MUSIC_MAX];
@@ -48,18 +70,19 @@ static int musicArrayLength[MUSIC_MAX];
 /** @brief Support sound file extensions */
 static const char *soundExtensions[] = {"ogg", "wav", NULL};
 
+
 /*
 =======================================================================
 Internal sound data & structures
 =======================================================================
 */
 
+static s_env_t s_env;
+
 #define SFX_HASH_SIZE 64
 static sfx_t *sfx_hash[SFX_HASH_SIZE];
 
 static music_t music;
-
-static qboolean sound_started = qfalse;
 
 static cvar_t *snd_volume;
 static cvar_t *snd_init;
@@ -70,9 +93,9 @@ static cvar_t *snd_music_volume;
 /* HACK: Remove this as soon as the reason was found */
 static cvar_t *snd_music_crackleWorkaround;
 
-static int      audio_rate;
-static int      audio_channels;
-static uint16_t audio_format;
+static int      audioRate;
+static int      audioChannels;
+static uint16_t audioFormat;
 
 /*
 MUSIC FUNCTIONS
@@ -115,7 +138,7 @@ static void S_Music_Start (const char *file)
 	if (!file || file[0] == '\0')
 		return;
 
-	if (!sound_started) {
+	if (!s_env.initialized) {
 		Com_Printf("S_Music_Start: no sound started\n");
 		return;
 	}
@@ -186,7 +209,7 @@ static void S_Music_Play_f (void)
 	S_Music_Start(Cvar_GetString("snd_music"));
 #endif
 
-	if (!sound_started) {
+	if (!s_env.initialized) {
 		Com_Printf("No audio activated\n");
 		return;
 	}
@@ -213,7 +236,7 @@ static void S_Music_RandomTrack_f (void)
 	int randomID;
 	const char *musicTrack;
 
-	if (!sound_started)
+	if (!s_env.initialized)
 		return;
 
 	musicTrackCount = FS_BuildFileList("music/*.ogg");
@@ -294,12 +317,12 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 	Mix_Chunk sample;
 	const int samplesize = 2 * channel;
 
-	if (!sound_started)
+	if (!s_env.initialized)
 		return -1;
 
 	/* Build the audio converter and create conversion buffers */
 	if (SDL_BuildAudioCVT(&wavecvt, AUDIO_S16, channel, rate,
-			audio_format, audio_channels, audio_rate) < 0) {
+			audioFormat, audioChannels, audioRate) < 0) {
 		return -1;
 	}
 
@@ -318,8 +341,7 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
 	sample.allocated = 0;
 	sample.abuf = wavecvt.buf;
 	sample.alen = wavecvt.len_cvt;
-	/** @todo make use of snd_volume->value */
-	sample.volume = MIX_MAX_VOLUME;
+	sample.volume = MIX_MAX_VOLUME * snd_volume->value;
 
 	/** @todo Free the channel data after the channel ended - memleak */
 	return Mix_PlayChannelTimed(-1, &sample, 0, ms);
@@ -330,18 +352,21 @@ int S_PlaySoundFromMem (const short* mem, size_t size, int rate, int channel, in
  * @param[in] name The name of the soundfile, relative to the sounds dir
  * @sa S_LoadSound
  */
-sfx_t *S_RegisterSound (const char *name)
+sfx_t *S_RegisterSound (const char *soundFile)
 {
 	Mix_Chunk *mix;
 	sfx_t *sfx;
 	unsigned hash;
+	char name[MAX_QPATH];
 
-	if (!sound_started)
+	if (!s_env.initialized)
 		return NULL;
+
+	COM_StripExtension(soundFile, name, sizeof(name));
 
 	hash = Com_HashKey(name, SFX_HASH_SIZE);
 	for (sfx = sfx_hash[hash]; sfx; sfx = sfx->hash_next)
-		if (!Q_strcasecmp(name, sfx->name))
+		if (!strcmp(name, sfx->name))
 			return sfx;
 
 	/* make sure the sound is loaded */
@@ -352,59 +377,52 @@ sfx_t *S_RegisterSound (const char *name)
 	sfx = Mem_PoolAlloc(sizeof(*sfx), cl_soundSysPool, 0);
 	sfx->name = Mem_PoolStrDup(name, cl_soundSysPool, 0);
 	sfx->data = mix;
-	sfx->channel = -1; /* just a free channel */
 	sfx->loops = 0; /* play once */
-	sfx->volume = sfx->data->volume; /* this is default for loaded chunks, must be adjusted later */
+	Mix_VolumeChunk(sfx->data, snd_volume->value * MIX_MAX_VOLUME);
 	sfx->hash_next = sfx_hash[hash];
 	sfx_hash[hash] = sfx;
 	return sfx;
 }
 
-/**
- * @brief Set volume for mixer chunk relative to snd_volume
- * @param[in,out] sfx The @c sfx_t to set the sound volume for
- * @param[in] volume The channel volume (0-MIX_MAX_VOLUME)
- * a negative value would not update the volume (e.g. if already set)
- * @sa S_StartSound
- */
-void S_SetVolume (sfx_t *sfx, int volume)
+static int S_AllocChannel (void)
 {
-	const float volRate = snd_volume->value / MIX_MAX_VOLUME;
+	int i;
 
-	if (volume < 0)
-		return;
-
-	if (volume >= MIX_MAX_VOLUME)
-		return;
-
-	Com_DPrintf(DEBUG_SOUND, "Volume changed from %i (chunk %i) to %i for sound '%s' on channel %i, volume rate %.2f\n",
-		sfx->volume,sfx->data->volume, volume, sfx->name, sfx->channel, volRate);
-
-	/* only change the chunk volume if it has changed */
-	if (sfx->volume != volume) {
-		sfx->volume = volume;
-		Mix_VolumeChunk(sfx->data, sfx->volume * volRate);
+	for (i = 0; i < MAX_CHANNELS; i++) {
+		if (!s_env.channels[i].sample)
+			return i;
 	}
+
+	return -1;
 }
 
 /**
- * @return true if the sfx is still playing
- * @sa S_StopSound
- * @sa S_StartSound
+ * @brief Set distance and stereo panning for the specified channel.
  */
-qboolean S_Playing (const sfx_t* sfx)
+static void S_SpatializeChannel (const s_channel_t *ch)
 {
-	return Mix_Playing(sfx->channel);
-}
+	vec3_t origin, delta;
+	float dist, angle;
+	const int c = (int)((ptrdiff_t)(ch - s_env.channels));
 
-/**
- * @sa S_StartSound
- * @sa S_Playing
- */
-void S_StopSound (const sfx_t* sfx)
-{
-	if (S_Playing(sfx))
-		Mix_HaltChannel(sfx->channel);
+	VectorCopy(ch->org, origin);
+
+	origin[2] = refdef.vieworg[2];
+
+	VectorSubtract(origin, refdef.vieworg, delta);
+	dist = VectorNormalize(delta) * DISTANCE_SCALE;
+
+	if (dist > 255.0)  /* clamp to max */
+		dist = 255.0;
+
+	if (dist > 10.0) {  /* resolve stereo panning */
+		const float dot = DotProduct(s_env.right, delta);
+		angle = acos(dot) * 180.0 / M_PI - 90.0;
+		angle = (int)(360.0 - angle) % 360;
+	} else
+		angle = 0;
+
+	Mix_SetPosition(c, (int)angle, (int)dist);
 }
 
 /**
@@ -415,51 +433,31 @@ void S_StopSound (const sfx_t* sfx)
  * @sa S_StartLocalSound
  * @sa S_SetVolume
  */
-void S_StartSound (const vec3_t origin, sfx_t* sfx, float relVolume)
+void S_StartSound (const vec3_t origin, sfx_t* sfx, float atten)
 {
-	int volume = min(MIX_MAX_VOLUME, MIX_MAX_VOLUME * relVolume);
+	s_channel_t *ch;
+	int i;
 
-	if (!sound_started) {
-		Com_DPrintf(DEBUG_SOUND, "S_StartSound: no sound started\n");
+	if (!s_env.initialized)
 		return;
-	}
 
 	/* maybe the sound file couldn't be loaded */
 	if (!sfx)
 		return;
 
-	if (origin) {
-		le_t* le = LE_GetClosestActor(origin);
-		if (le) {
-			float dist = VectorDist(origin, le->origin);
-			Com_DPrintf(DEBUG_SOUND, "S_StartSound: world coord distance: %.2f\n", dist);
-			if (dist >= SOUND_FULLVOLUME) {
-				dist = 1.0 - (dist / SOUND_MAX_DISTANCE);
-				if (dist < 0.)
-					/* too far away */
-					volume = 0;
-				else {
-					/* close enough to hear it, but apply a distance effect though
-					 * because it's farer than SOUND_FULLVOLUME */
-					volume *= dist;
-					le->hearTime = cls.realtime;
-				}
-				Com_DPrintf(DEBUG_SOUND, "S_StartSound: dist: %.2f volume: %i\n", dist, volume);
-			}
-		}
-	}
-
-	S_SetVolume(sfx, volume);
-
-	/* play sound on another channel if actual channel is occupied */
-	if (sfx->channel != -1 && Mix_Playing(sfx->channel))
-		sfx->channel = -1;
-
-	sfx->channel = Mix_PlayChannel(sfx->channel, sfx->data, sfx->loops);
-	if (sfx->channel == -1) {
-		Com_Printf("S_StartSound: could not play '%s' (%s)\n", sfx->name, Mix_GetError());
+	if ((i = S_AllocChannel()) == -1)
 		return;
+
+	ch = &s_env.channels[i];
+
+	if (origin != NULL) {
+		VectorCopy(origin, ch->org);
+		S_SpatializeChannel(ch);
 	}
+
+	ch->sample = sfx;
+
+	Mix_PlayChannel(i, ch->sample->data, sfx->loops);
 }
 
 /**
@@ -469,17 +467,15 @@ void S_StartLocalSound (const char *sound)
 {
 	sfx_t *sfx;
 
-	if (!sound_started) {
-		Com_DPrintf(DEBUG_SOUND, "S_StartLocalSound: no sound started\n");
+	if (!s_env.initialized)
 		return;
-	}
 
 	sfx = S_RegisterSound(sound);
 	if (!sfx) {
-		Com_DPrintf(DEBUG_SOUND, "S_StartLocalSound: can't load %s\n", sound);
+		Com_Printf("S_StartLocalSound: can't load %s\n", sound);
 		return;
 	}
-	S_StartSound(NULL, sfx, DEFAULT_SOUND_PACKET_VOLUME);
+	S_StartSound(NULL, sfx, DEFAULT_SOUND_ATTENUATION);
 }
 
 /**
@@ -487,7 +483,7 @@ void S_StartLocalSound (const char *sound)
  */
 void S_StopAllSounds (void)
 {
-	if (!sound_started)
+	if (!s_env.initialized)
 		return;
 	Mix_HaltChannel(-1);
 }
@@ -504,7 +500,7 @@ static void S_Play_f (void)
 		return;
 	}
 
-	if (!sound_started) {
+	if (!s_env.initialized) {
 		Com_Printf("No audio activated\n");
 		return;
 	}
@@ -556,7 +552,7 @@ static void S_Restart_f (void)
 	S_Shutdown();
 	S_Init();
 
-	if (!sound_started)
+	if (!s_env.initialized)
 		return;
 
 	/* restart the music, too */
@@ -577,8 +573,11 @@ void S_Frame (void)
 		snd_init->modified = qfalse;
 	}
 
-	if (!sound_started)
+	if (!s_env.initialized)
 		return;
+
+	/* update right angle for stereo panning */
+	AngleVectors(refdef.viewangles, NULL, s_env.right, NULL);
 
 	if (snd_music->modified) {
 		S_Music_Start(snd_music->string);
@@ -596,6 +595,11 @@ void S_Frame (void)
 			music.nextMusicTrack = NULL;
 		}
 	}
+}
+
+static void S_FreeChannel (int c)
+{
+	memset(&s_env.channels[c], 0, sizeof(s_env.channels[0]));
 }
 
 /**
@@ -627,18 +631,21 @@ static qboolean SND_Init (void)
 		return qfalse;
 	}
 
-	Mix_QuerySpec(&audio_rate, &audio_format, &audio_channels);
-	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audio_rate, audio_channels);
-	if (audio_rate != snd_rate->integer)
-		Cvar_SetValue("snd_rate", audio_rate);
-	if (audio_channels != snd_channels->integer)
-		Cvar_SetValue("snd_channels", audio_channels);
+	Mix_QuerySpec(&audioRate, &audioFormat, &audioChannels);
+	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audioRate, audioChannels);
+	if (audioRate != snd_rate->integer)
+		Cvar_SetValue("snd_rate", audioRate);
+	if (audioChannels != snd_channels->integer)
+		Cvar_SetValue("snd_channels", audioChannels);
 
 	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
 		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
 	Com_Printf("... driver: '%s'\n", drivername);
 
-	Com_Printf("... channels to mix sounds: %i\n",Mix_AllocateChannels(-1));
+	s_env.numChannels = Mix_AllocateChannels(MAX_CHANNELS);
+	Com_Printf("... channels to mix sounds: %i\n", s_env.numChannels);
+
+	Mix_ChannelFinished(S_FreeChannel);
 
 	return qtrue;
 }
@@ -653,7 +660,7 @@ static void S_Music_Change_f (void)
 	int rnd;
 	int category;
 
-	if (!sound_started)
+	if (!s_env.initialized)
 		return;
 
 	if (Cmd_Argc() != 2) {
@@ -812,7 +819,7 @@ void S_Init (void)
 	}
 
 	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
-	snd_volume = Cvar_Get("snd_volume", "128", CVAR_ARCHIVE, "Sound volume - default is 128");
+	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	Cvar_SetCheckFunction("snd_rate", CL_CvarCheckSoundRate);
 	snd_music = Cvar_Get("snd_music", "PsymongN3", 0, "Background music track");
@@ -832,11 +839,11 @@ void S_Init (void)
 
 	if (!SND_Init()) {
 		Com_Printf("SND_Init failed\n");
-		sound_started = qfalse;
+		s_env.initialized = qfalse;
 		return;
 	}
 
-	sound_started = qtrue;
+	s_env.initialized = qtrue;
 
 	S_RegisterSounds();
 
@@ -852,7 +859,7 @@ void S_Shutdown (void)
 	int i;
 	sfx_t* sfx;
 
-	if (!sound_started)
+	if (!s_env.initialized)
 		return;
 
 	for (i = 0; i < SFX_HASH_SIZE; i++)
@@ -866,7 +873,7 @@ void S_Shutdown (void)
 
 	Mem_FreeTag(cl_soundSysPool, 0);
 	memset(sfx_hash, 0, sizeof(sfx_hash));
-	sound_started = qfalse;
+	s_env.initialized = qfalse;
 }
 
 /**

@@ -47,16 +47,16 @@ static qboolean Destroy_Breakable (edict_t *self)
 
 	switch (self->material) {
 	case MAT_GLASS:
-		gi.PositionedSound(PM_ALL, origin, self, "misc/breakglass", 1);
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakglass");
 		break;
 	case MAT_METAL:
-		gi.PositionedSound(PM_ALL, origin, self, "misc/breakmetal", 1);
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakmetal");
 		break;
 	case MAT_ELECTRICAL:
-		gi.PositionedSound(PM_ALL, origin, self, "misc/breakelectric", 1);
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakelectric");
 		break;
 	case MAT_WOOD:
-		gi.PositionedSound(PM_ALL, origin, self, "misc/breakwood", 1);
+		gi.PositionedSound(PM_ALL, origin, self, "misc/breakwood");
 		break;
 	case MAT_MAX:
 		break;
@@ -141,7 +141,7 @@ static qboolean Door_Use (edict_t *door)
 			gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 			gi.WriteShort(door->number);
 			if (door->noise[0] != '\0')
-				gi.PositionedSound(PM_ALL, door->origin, door, door->noise, 1);
+				gi.PositionedSound(PM_ALL, door->origin, door, door->noise);
 		}
 	} else if (door->moveinfo.state == STATE_OPENED) {
 		door->moveinfo.state = STATE_CLOSED;
@@ -157,7 +157,7 @@ static qboolean Door_Use (edict_t *door)
 		gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 		gi.WriteShort(door->number);
 		if (door->noise[0] != '\0')
-			gi.PositionedSound(PM_ALL, door->origin, door, door->noise, 1);
+			gi.PositionedSound(PM_ALL, door->origin, door, door->noise);
 	} else
 		return qfalse;
 

@@ -198,14 +198,7 @@ enum clc_ops_e {
 	clc_oob = 0xff				/**< out of band - connectionless */
 };
 
-
-/*============================================== */
-
-/* a sound without an ent or pos will be a local only sound */
-#define	SND_VOLUME		(1<<0)	/* a byte */
-#define	SND_POS			(1<<1)	/* three coordinates */
-
-#define DEFAULT_SOUND_PACKET_VOLUME	0.8
+#define DEFAULT_SOUND_ATTENUATION	0.15
 
 #include "cmd.h"
 #include "cvar.h"

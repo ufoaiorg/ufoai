@@ -30,41 +30,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int r_numEntities;
 static entity_t r_entities[MAX_ENTITIES];
 
-#define HIGHLIGHT_START_Z 22
-#define HIGHTLIGHT_SIZE 18
-static const vec3_t r_highlightVertices[HIGHTLIGHT_SIZE] = {
-	{4, 4, HIGHLIGHT_START_Z + 0},
-	{0, 0, HIGHLIGHT_START_Z + 16},
-	{8, 0, HIGHLIGHT_START_Z + 16},
-	{4, 4, HIGHLIGHT_START_Z + 0},
-	{0, 0, HIGHLIGHT_START_Z + 16},
-	{0, 8, HIGHLIGHT_START_Z + 16},
-	{4, 4, HIGHLIGHT_START_Z + 0},
-	{0, 8, HIGHLIGHT_START_Z + 16},
-	{8, 8, HIGHLIGHT_START_Z + 16},
-	{4, 4, HIGHLIGHT_START_Z + 0},
-	{8, 8, HIGHLIGHT_START_Z + 16},
-	{8, 0, HIGHLIGHT_START_Z + 16},
-	{0, 0, HIGHLIGHT_START_Z + 16},
-	{0, 8, HIGHLIGHT_START_Z + 16},
-	{8, 0, HIGHLIGHT_START_Z + 16},
-	{0, 8, HIGHLIGHT_START_Z + 16},
-	{8, 0, HIGHLIGHT_START_Z + 16},
-	{8, 8, HIGHLIGHT_START_Z + 16},
-};
-/**
- * @brief Used to draw actor highlights over the actors
- * @sa RF_HIGHLIGHT
- */
-static inline void R_DrawHighlight (const entity_t * e)
-{
-	glDisable(GL_TEXTURE_2D);
-	R_Color(NULL);
-	memcpy(r_state.vertex_array_3d, r_highlightVertices, sizeof(r_highlightVertices));
-	glDrawArrays(GL_TRIANGLES, 0, HIGHTLIGHT_SIZE);
-	glEnable(GL_TEXTURE_2D);
-}
-
 /**
  * @brief Compute the bouding box for an entity out of the mins, maxs
  * @sa R_EntityDrawBBox
@@ -307,10 +272,6 @@ static void R_DrawEntityEffects (void)
 
 		glPushMatrix();
 		glMultMatrixf(e->transform.matrix);
-
-		/* draw a highlight icon over this entity */
-		if (e->flags & RF_HIGHLIGHT)
-			R_DrawHighlight(e);
 
 		if (r_shadows->integer && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 			/** @todo Shouldn't we get the texture type from the team-definition somehow? */

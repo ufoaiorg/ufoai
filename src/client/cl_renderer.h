@@ -50,7 +50,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
 #define RF_ACTOR            0x00000080	/**< this is an actor */
 #define RF_PULSE            0x00000100	/**< glowing entity */
-#define RF_HIGHLIGHT        0x00000200  /**< hightlight the actor with a marker */
 
 #define EARTH_RADIUS 8192.0f
 #define MOON_RADIUS 1024.0f

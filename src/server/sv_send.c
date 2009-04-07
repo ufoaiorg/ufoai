@@ -143,31 +143,12 @@ void SV_Multicast (int mask, struct dbuffer *msg)
 }
 
 /**
- * @brief Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
- * If cahnnel & 8, the sound will be sent to everyone, not just things in the PHS.
- * Channel 0 is an auto-allocate channel, the others override anything already running on that entity/channel pair.
- * Timeofs can range from 0.0 to 0.1 to cause sounds to be started later in the frame than they normally would.
- * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
+ * @brief If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound, float volume)
+void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound)
 {
-	int flags;
 	vec3_t origin_v;
 	struct dbuffer *msg;
-
-	if (volume < 0 || volume > 1.0)
-		Com_Error(ERR_FATAL, "SV_StartSound: volume = %f", volume);
-
-	flags = 0;
-	if (volume != DEFAULT_SOUND_PACKET_VOLUME)
-		flags |= SND_VOLUME;
-
-	/**
-	 * the client doesn't know that bmodels have weird origins
-	 * the origin can also be explicitly set
-	 */
-	if (entity->solid == SOLID_BSP || origin)
-		flags |= SND_POS;
 
 	/* use the entity origin unless it is a bmodel or explicitly specified */
 	if (!origin) {
@@ -183,14 +164,8 @@ void SV_StartSound (int mask, vec3_t origin, edict_t *entity, const char *sound,
 	msg = new_dbuffer();
 
 	NET_WriteByte(msg, svc_sound);
-	NET_WriteByte(msg, flags);
 	NET_WriteString(msg, sound);
-
-	if (flags & SND_VOLUME)
-		NET_WriteByte(msg, volume * 128);
-
-	if (flags & SND_POS)
-		NET_WritePos(msg, origin);
+	NET_WritePos(msg, origin);
 
 	SV_Multicast(mask, msg);
 }

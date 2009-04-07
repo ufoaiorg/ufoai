@@ -49,7 +49,6 @@ typedef struct le_s {
 	qboolean inuse;
 	qboolean invis;
 	qboolean selected;
-	int hearTime;		/**< draw a marker over the entity if its an actor and he heard something */
 	int type;				/**< the local entity type */
 	int entnum;				/**< the server side edict num this le belongs to */
 
@@ -104,7 +103,6 @@ typedef struct le_s {
 
 	/** sound effects */
 	struct sfx_s* sfx;
-	float volume;
 
 	/** gfx */
 	animState_t as;	/**< holds things like the current active frame and so on */
@@ -164,7 +162,7 @@ qboolean CL_OutsideMap(const vec3_t impact, const float delta);
 const char *LE_GetAnim(const char *anim, int right, int left, int state);
 void LE_AddProjectile(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t impact, int normal);
 void LE_AddGrenade(const fireDef_t *fd, int flags, const vec3_t muzzle, const vec3_t v0, int dt);
-void LE_AddAmbientSound(const char *sound, const vec3_t origin, float volume, int levelflags);
+void LE_AddAmbientSound(const char *sound, const vec3_t origin, int levelflags);
 le_t *LE_GetClosestActor(const vec3_t origin);
 
 #define LE_IsStunned(le)	(((le)->state & STATE_STUN) & ~STATE_DEAD)

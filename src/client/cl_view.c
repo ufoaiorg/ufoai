@@ -59,7 +59,6 @@ static void CL_ParseEntitystring (void)
 	vec2_t wait;
 	int maxlevel = 8, maxmultiplayerteams = 2, entnum = 0;
 	int skin, frame, spawnflags;
-	float volume;
 	const int dayLightmap = atoi(cl.configstrings[CS_LIGHTMAP]);
 	const char *es = CM_EntityString();
 
@@ -93,7 +92,6 @@ static void CL_ParseEntitystring (void)
 		Vector2Clear(wait);
 		spawnflags = frame = skin = 0;
 		animname[0] = model[0] = particle[0] = '\0';
-		volume = MIX_MAX_VOLUME / 2;
 
 		/* go through all the dictionary pairs */
 		while (1) {
@@ -127,8 +125,6 @@ static void CL_ParseEntitystring (void)
 				Q_strncpyz(particle, entity_token, sizeof(particle));
 			else if (!strcmp(keyname, "noise"))
 				Q_strncpyz(sound, entity_token, sizeof(sound));
-			else if (!strcmp(keyname, "volume"))
-				volume = atof(entity_token);
 			else if (!strcmp(keyname, "modelscale_vec"))
 				Com_EParseValue(scale, entity_token, V_VECTOR, 0, sizeof(scale));
 			else if (!strcmp(keyname, "origin"))
@@ -189,7 +185,7 @@ static void CL_ParseEntitystring (void)
 			if (!(dayLightmap && (spawnflags & (1 << SPAWNFLAG_NO_DAY))))
 				CL_AddMapParticle(particle, origin, wait, strstart, (spawnflags & 0xFF));
 		} else if (!strcmp(classname, "misc_sound")) {
-			LE_AddAmbientSound(sound, origin, volume, (spawnflags & 0xFF));
+			LE_AddAmbientSound(sound, origin, (spawnflags & 0xFF));
 		}
 
 		entnum++;

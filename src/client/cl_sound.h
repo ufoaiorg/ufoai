@@ -36,13 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief A sound is only hearable when not farer than this value */
 #define SOUND_MAX_DISTANCE 600
 
-enum {
-	SOUND_CHANNEL_OVERRIDE,	/**< entchannel 0 is always overwritten */
-	SOUND_CHANNEL_WEAPON,	/**< shooting sound */
-	SOUND_CHANNEL_ACTOR,	/**< actor die sound, footsteps */
-	SOUND_CHANNEL_AMBIENT
-};
-
 /** @brief These sounds are precached in S_RegisterSounds */
 enum {
 	SOUND_WATER_IN,
@@ -56,25 +49,13 @@ typedef struct sfx_s {
 	char *name;
 	int loops;					/**< how many loops - 0 = play only once, -1 = infinite */
 	Mix_Chunk* data;
-	int channel;				/**< the channel the sfx is played on */
-	int volume;					/**< current volume for this chunk */
 	struct sfx_s* hash_next;	/**< next hash entry */
 } sfx_t;
-
-typedef struct music_s {
-	char currentlyPlaying[MAX_QPATH];
-	Mix_Music *data;
-	SDL_RWops *musicSrc;		/**< freed by SDL_mixer */
-	char *nextMusicTrack;
-} music_t;
 
 void S_Init(void);
 void S_Shutdown(void);
 void S_Frame(void);
-void S_SetVolume(sfx_t *sfx, int volume);
 void S_StopAllSounds(void);
-qboolean S_Playing(const sfx_t* sfx);
-void S_StopSound(const sfx_t* sfx);
 void S_StartSound(const vec3_t origin, sfx_t* sfx, float relVolume);
 void S_StartLocalSound(const char *s);
 sfx_t *S_RegisterSound(const char *s);

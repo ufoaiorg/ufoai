@@ -439,34 +439,15 @@ ACTION MESSAGES
  */
 static void CL_ParseStartSoundPacket (struct dbuffer *msg)
 {
-	vec3_t pos_v;
-	const float *pos;
-	int flags;
-	float volume;
+	vec3_t origin;
 	const char *sound;
 	sfx_t *sfx;
 
-	flags = NET_ReadByte(msg);
 	sound = NET_ReadString(msg);
-
-	if (flags & SND_VOLUME)
-		volume = NET_ReadByte(msg) / 128.0;
-	else
-		volume = DEFAULT_SOUND_PACKET_VOLUME;
-
-	/* positioned in space */
-	if (flags & SND_POS) {
-		NET_ReadPos(msg, pos_v);
-
-		pos = pos_v;
-	} else /* use entity number */
-		pos = NULL;
-
-	Com_DPrintf(DEBUG_SOUND, "startsoundpacket: flags %x, sound %s, volume %.3f, pos %.3f, %.3f, %.3f\n",
-		flags, sound, volume, pos[0], pos[1], pos[2]);
+	NET_ReadPos(msg, origin);
 
 	sfx = S_RegisterSound(sound);
-	S_StartSound(pos, sfx, volume);
+	S_StartSound(origin, sfx, DEFAULT_SOUND_ATTENUATION);
 }
 
 /**

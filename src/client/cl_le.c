@@ -462,42 +462,10 @@ void LET_PlayAmbientSound (le_t * le)
 {
 	assert(le->sfx);
 
-	if (!((1 << cl_worldlevel->integer) & le->levelflags)) {
-		S_StopSound(le->sfx);
-		le->sfx->channel = -1;
+	if (!((1 << cl_worldlevel->integer) & le->levelflags))
 		return;
-	}
 
-	if (le->sfx->channel == -1) {
-		S_SetVolume(le->sfx, le->sfx->volume);
-		S_StartSound(NULL, le->sfx, -1.0f);
-	}
-
-	/* could not start the sound */
-	if (le->sfx->channel == -1) {
-		Com_DPrintf(DEBUG_SOUND, "Could not play the soundfile '%s'\n", le->sfx->name);
-		return;
-	}
-
-	/* find the total contribution of all sounds of this type */
-	if (S_Playing(le->sfx)) {
-		float dist = VectorDist(cl.cam.camorg, le->origin);
-		float volume = le->volume;
-		if (dist >= SOUND_FULLVOLUME) {
-			dist = 1.0 - (dist / SOUND_MAX_DISTANCE);
-			if (dist < 0.)
-				/* too far away */
-				volume = 0;
-			else {
-				/* close enough to hear it, but apply a distance effect though
-				 * because it's farer than SOUND_FULLVOLUME */
-				volume *= dist;
-			}
-		}
-		S_SetVolume(le->sfx, volume);
-	} else {
-		le->sfx->channel = -1;
-	}
+	S_StartSound(le->origin, le->sfx, -1.0f);
 }
 
 /**
@@ -539,17 +507,17 @@ static void LE_PlaySoundFileForContents (le_t* le, int contents)
 			/* were we already in the water? */
 			if (le->positionContents & CONTENTS_WATER) {
 				/* play water moving sound */
-				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_OUT], DEFAULT_SOUND_PACKET_VOLUME);
+				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_OUT], DEFAULT_SOUND_ATTENUATION);
 			} else {
 				/* play water entering sound */
-				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_IN], DEFAULT_SOUND_PACKET_VOLUME);
+				S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_IN], DEFAULT_SOUND_ATTENUATION);
 			}
 			return;
 		}
 
 		if (le->positionContents & CONTENTS_WATER) {
 			/* play water leaving sound */
-			S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_MOVE], DEFAULT_SOUND_PACKET_VOLUME);
+			S_StartSound(le->origin, cls.sound_pool[SOUND_WATER_MOVE], DEFAULT_SOUND_ATTENUATION);
 		}
 	}
 }
@@ -940,7 +908,7 @@ void LET_BrushModel (le_t *le)
  * @brief Adds ambient sounds from misc_sound entities
  * @sa CL_ParseEntitystring
  */
-void LE_AddAmbientSound (const char *sound, const vec3_t origin, float volume, int levelflags)
+void LE_AddAmbientSound (const char *sound, const vec3_t origin, int levelflags)
 {
 	le_t* le;
 	sfx_t* sfx;
@@ -955,11 +923,7 @@ void LE_AddAmbientSound (const char *sound, const vec3_t origin, float volume, i
 		return;
 	}
 	le->type = ET_SOUND;
-	/** @todo What if we call a snd_restart while this is played? */
 	le->sfx = sfx;
-	le->sfx->channel = -1;
-	le->sfx->volume = -1; /* at least one volume change */
-	le->volume = min(volume, MIX_MAX_VOLUME);
 	VectorCopy(origin, le->origin);
 	le->invis = !cl_leshowinvis->integer;
 	le->levelflags = levelflags;

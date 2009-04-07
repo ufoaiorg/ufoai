@@ -1215,8 +1215,8 @@ static void Com_ParseItem (const char *name, const char **text, qboolean craftit
 								if (!strcmp(token, "firedef")) {
 									if (od->numFiredefs[weapFdsIdx] < MAX_FIREDEFS_PER_WEAPON) {
 										const int fdIdx = od->numFiredefs[weapFdsIdx];
-										od->fd[weapFdsIdx][fdIdx].relFireVolume = DEFAULT_SOUND_PACKET_VOLUME;
-										od->fd[weapFdsIdx][fdIdx].relImpactVolume = DEFAULT_SOUND_PACKET_VOLUME;
+										od->fd[weapFdsIdx][fdIdx].relFireVolume = DEFAULT_SOUND_ATTENUATION;
+										od->fd[weapFdsIdx][fdIdx].relImpactVolume = DEFAULT_SOUND_ATTENUATION;
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
 										Com_ParseFire(name, text, &od->fd[weapFdsIdx][fdIdx]);
 										/* Self-link fd */
@@ -2124,7 +2124,7 @@ static void Com_ParseTerrain (const char *name, const char **text)
 	/* link in terrainTypesHash[hash] should be NULL on the first run */
 	t->hash_next = terrainTypesHash[hash];
 	terrainTypesHash[hash] = t;
-	t->footStepVolume = DEFAULT_SOUND_PACKET_VOLUME;
+	t->footStepVolume = DEFAULT_SOUND_ATTENUATION;
 
 	do {
 		/* get the name type */

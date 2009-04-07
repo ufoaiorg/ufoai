@@ -1815,7 +1815,7 @@ void CL_ActorDoThrow (struct dbuffer *msg)
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED)) {
 		sfx_t *sfx = S_RegisterSound(fd->fireSound);
-		S_StartSound(muzzle, sfx, DEFAULT_SOUND_PACKET_VOLUME);
+		S_StartSound(muzzle, sfx, DEFAULT_SOUND_ATTENUATION);
 	}
 
 	firstShot = qfalse;
@@ -2416,15 +2416,6 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 
 	/* add head */
 	memset(&add, 0, sizeof(add));
-
-	/* the actor is hearing a sound */
-	if (le->hearTime) {
-		if (cls.realtime - le->hearTime > 3000) {
-			le->hearTime = 0;
-		} else {
-			add.flags |= RF_HIGHLIGHT;
-		}
-	}
 
 	add.alpha = le->alpha;
 	add.model = le->model2;
@@ -3166,7 +3157,7 @@ void CL_PlayActorSound (const le_t *le, actorSound_t soundType)
 		sfx_t *sfx = S_RegisterSound(actorSound);
 		if (sfx) {
 			Com_DPrintf(DEBUG_SOUND|DEBUG_CLIENT, "CL_PlayActorSound: ActorSound: '%s'\n", actorSound);
-			S_StartSound(le->origin, sfx, DEFAULT_SOUND_PACKET_VOLUME);
+			S_StartSound(le->origin, sfx, DEFAULT_SOUND_ATTENUATION);
 		}
 	}
 }
