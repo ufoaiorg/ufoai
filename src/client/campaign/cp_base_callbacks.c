@@ -132,6 +132,33 @@ static void B_PrevBase_f (void)
 }
 
 /**
+ * @brief Sets the title of the base to a cvar to prepare the rename menu.
+ */
+static void INS_SetBaseTitle_f (void)
+{
+	Com_DPrintf(DEBUG_CLIENT, "INS_SetBaseTitle_f: #bases: %i\n", ccs.numBases);
+	if (ccs.numBases < MAX_BASES) {
+		char baseName[MAX_VAR];
+		int i = 2;
+		int j;
+
+		if (ccs.numBases > 0)
+			do {
+				j = 0;
+				Com_sprintf(baseName, lengthof(baseName), _("Base #%i"), i);
+				while (j <= ccs.numBases && strcmp(baseName, ccs.bases[j++].name));
+			} while (i++ <= ccs.numBases && j <= ccs.numBases);
+		else
+			Q_strncpyz(baseName, _("Home"), lengthof(baseName));
+
+		Cvar_Set("mn_base_title", baseName);
+	} else {
+		MS_AddNewMessage(_("Notice"), _("You've reached the base limit."), qfalse, MSG_STANDARD, NULL);
+		MN_PopMenu(qfalse);		/* remove the new base popup */
+	}
+}
+
+/**
  * @brief Constructs a new base.
  * @sa B_NewBase
  */
@@ -886,6 +913,7 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
+	Cmd_AddCommand("mn_set_base_title", INS_SetBaseTitle_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
@@ -912,6 +940,7 @@ void B_ShutdownCallbacks (void)
 	Cmd_RemoveCommand("mn_select_base");
 	Cmd_RemoveCommand("mn_build_base");
 	Cmd_RemoveCommand("base_changename");
+	Cmd_RemoveCommand("mn_set_base_title");
 	Cmd_RemoveCommand("base_init");
 	Cmd_RemoveCommand("base_assemble");
 	Cmd_RemoveCommand("base_assemble_rand");

@@ -22,7 +22,6 @@ See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 */
 
 #include "../client.h"
@@ -2098,24 +2097,6 @@ void B_BaseResetStatus (base_t* const base)
 	base->baseStatus = BASE_NOT_USED;
 	if (ccs.mapAction == MA_BASEATTACK)
 		ccs.mapAction = MA_NONE;
-}
-
-/**
- * @brief Cleans all bases and related structures to prepare a new campaign mode game
- * @sa CL_GameNew
- */
-void B_NewBases (void)
-{
-	int i;
-
-	/* base setup */
-	for (i = 0; i < MAX_BASES; i++) {
-		base_t *base = B_GetBaseByIDX(i);
-		if (i == 0)
-			Q_strncpyz(base->name, _("Home"), sizeof(base->name));
-		else
-			Com_sprintf(base->name, sizeof(base->name), _("Base #%i"), i);
-	}
 }
 
 #ifdef DEBUG

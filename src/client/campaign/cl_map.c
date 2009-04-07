@@ -278,7 +278,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 			CL_GameTimeStop();
 
 			if (ccs.numBases < MAX_BASES) {
-				Cvar_Set("mn_base_title", ccs.bases[ccs.numBases].name);
+				Cmd_ExecuteString("mn_set_base_title");
 				MN_PushMenu("popup_newbase", NULL);
 			}
 			return;

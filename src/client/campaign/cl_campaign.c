@@ -2051,7 +2051,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/** @todo remove this - ccs should be memset to 0 */
 	ccs.numAircraft = 0;
 
-	B_NewBases();
 	PR_ProductionInit();
 
 	/* get day */
