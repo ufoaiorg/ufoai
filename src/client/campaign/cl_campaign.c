@@ -2063,7 +2063,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	ccs.numAircraft = 0;
 
 	B_NewBases();
-	INS_NewInstallations();
 	PR_ProductionInit();
 
 	/* get day */

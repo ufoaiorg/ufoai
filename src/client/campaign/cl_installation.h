@@ -126,7 +126,6 @@ int INS_GetFoundedInstallationCount(void);
 installation_t* INS_GetFoundedInstallationByIDX(int installationIdx);
 installation_t *INS_GetFirstUnfoundedInstallation(void);
 
-void INS_NewInstallations(void);
 void INS_SelectInstallation(installation_t *installation);
 
 installation_t *INS_GetCurrentSelectedInstallation(void);

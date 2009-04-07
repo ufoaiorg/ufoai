@@ -291,7 +291,7 @@ void MAP_MapClick (menuNode_t* node, int x, int y)
 			CL_GameTimeStop();
 
 			if (ccs.numInstallations < MAX_INSTALLATIONS) {
-				Cvar_Set("mn_installation_title", ccs.installations[ccs.numInstallations].name);
+				Cmd_ExecuteString("mn_set_installation_title");
 				MN_PushMenu("popup_newinstallation", NULL);
 			}
 			return;

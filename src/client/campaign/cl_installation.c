@@ -160,22 +160,6 @@ installation_t *INS_GetFirstUnfoundedInstallation (void)
 	return NULL;
 }
 
-/**
- * @brief Set default installation names
- * @sa CL_GameNew
- */
-
-void INS_NewInstallations (void)
-{
-	int i;
-
-	for (i = 0; i < MAX_INSTALLATIONS; i++) {
-		installation_t *installation = INS_GetInstallationByIDX(i);
-		Com_sprintf(installation->name, lengthof(installation->name), _("Installation #%i"), i);
-	}
-}
-
-
 #ifdef DEBUG
 
 /**

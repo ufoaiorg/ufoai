@@ -88,8 +88,8 @@ static void INS_BuildInstallation_f (void)
 		return;
 	}
 
-	/* we should always have at least one base */
-	if (!ccs.numBases)
+	/* We shouldn't build more installations than the actual limit */
+	if (B_GetInstallationLimit() <= ccs.numInstallations)
 		return;
 
 	installationTemplate = INS_GetInstallationTemplateFromInstallationID(Cmd_Argv(1));
@@ -162,9 +162,19 @@ static void INS_SelectInstallation_f (void)
 static void INS_SetInstallationTitle_f (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "INS_SetInstallationTitle_f: #installations: %i\n", ccs.numInstallations);
-	if (ccs.numInstallations < B_GetInstallationLimit())
-		Cvar_Set("mn_installation_title", ccs.installations[ccs.numInstallations].name);
-	else {
+	if (ccs.numInstallations < B_GetInstallationLimit()) {
+		char insName[MAX_VAR];
+		int i = 1;
+		int j;
+
+		do {
+			j = 0;
+			Com_sprintf(insName, lengthof(insName), _("Installation #%i"), i);
+			while (j <= ccs.numInstallations && strcmp(insName, ccs.installations[j++].name));
+		} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
+
+		Cvar_Set("mn_installation_title", insName);
+	} else {
 		MS_AddNewMessage(_("Notice"), _("You've reached the installation limit."), qfalse, MSG_STANDARD, NULL);
 		MN_PopMenu(qfalse);		/* remove the new installation popup */
 	}
