@@ -259,7 +259,7 @@ void S_StartLocalSound (const char *sound)
 		Com_Printf("S_StartLocalSound: can't load %s\n", sound);
 		return;
 	}
-	S_StartSound(NULL, sfx, DEFAULT_SOUND_ATTENUATION);
+	S_StartSound(NULL, sfx, 0.0);
 }
 
 /**
@@ -534,9 +534,9 @@ void S_Shutdown (void)
 		return;
 
 	for (i = 0; i < SFX_HASH_SIZE; i++)
-		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next) {
+		for (sfx = sfx_hash[i]; sfx; sfx = sfx->hash_next)
 			Mix_FreeChunk(sfx->data);
-		}
+
 	M_Shutdown();
 
 	Mix_CloseAudio();

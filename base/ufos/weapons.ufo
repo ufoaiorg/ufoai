@@ -139,7 +139,6 @@ item fraggrenade
 			impsnd	weapons/grenade
 			bodysnd	weapons/grenade
 			bncsnd	misc/klonk03
-			impactvolume 1.0
 			gravity	true
 			delay	1
 			bounce	10
@@ -164,7 +163,6 @@ item fraggrenade
 			impsnd	weapons/grenade
 			bodysnd	weapons/grenade
 			bncsnd	misc/klonk03
-			impactvolume 1.0
 			gravity	true
 			rolled true
 			delay	1
@@ -215,7 +213,7 @@ item flashbang
 			impsnd	weapons/flashbang
 			bodysnd	weapons/flashbang
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			delay	1
 			bounce	10
@@ -240,7 +238,7 @@ item flashbang
 			impsnd	weapons/flashbang
 			bodysnd	weapons/flashbang
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			rolled true
 			delay	1
@@ -290,7 +288,7 @@ item smokegrenade
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			delay	1
 			bounce	10
@@ -315,7 +313,7 @@ item smokegrenade
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			rolled true
 			delay	1
@@ -365,7 +363,7 @@ item stungrenade
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			delay	1
 			bounce	10
@@ -390,7 +388,7 @@ item stungrenade
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			rolled true
 			delay	1
@@ -441,7 +439,7 @@ item stungrenade_alien
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			delay	1
 			bounce	10
@@ -466,7 +464,7 @@ item stungrenade_alien
 			impsnd	weapons/smokeexplosion
 			bodysnd	weapons/smokeexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			rolled true
 			delay	1
@@ -517,7 +515,7 @@ item incgrenade
 			impsnd	weapons/fireexplosion
 			bodysnd	weapons/fireexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			delay	1
 			bounce	10
@@ -542,7 +540,7 @@ item incgrenade
 			impsnd	weapons/fireexplosion
 			bodysnd	weapons/fireexplosion
 			bncsnd	misc/klonk03
-			impactvolume 0.7
+			impactattenuation 0.07
 			gravity	true
 			rolled true
 			delay	1
@@ -592,7 +590,6 @@ item plasmagrenade
 			impsnd	weapons/plasma_grenade
 			bodysnd	weapons/plasma_grenade
 			bncsnd	misc/klonk03
-			impactvolume 1.0
 			gravity	true
 			delay	1
 			bounce	10
@@ -617,7 +614,6 @@ item plasmagrenade
 			impsnd	weapons/plasma_grenade
 			bodysnd	weapons/plasma_grenade
 			bncsnd	misc/klonk03
-			impactvolume 1.0
 			gravity	true
 			rolled true
 			delay	1

@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_cinematic.h"
 #include "cl_console.h"
 #include "cl_sound.h"
+#include "cl_music.h"
 #include "renderer/r_draw.h"
 
 #define ROQ_IDENT					0x1084

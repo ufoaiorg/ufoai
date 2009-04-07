@@ -64,8 +64,8 @@ typedef struct fireDef_s {
 	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
-	float relFireVolume;
-	float relImpactVolume;
+	float fireAttenuation;
+	float impactAttenuation;
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
@@ -721,8 +721,8 @@ qboolean INV_IsCraftItem(const objDef_t *obj);
 qboolean INV_IsBaseDefenceItem(const objDef_t *item);
 
 void INVSH_PrintItemDescription(const objDef_t *od);
-objDef_t *INVSH_GetItemByIDX(int index);
 objDef_t *INVSH_GetItemByID(const char *id);
+objDef_t *INVSH_GetItemByIDX(int index);
 objDef_t *INVSH_GetItemByIDSilent(const char *id);
 qboolean INVSH_LoadableInWeapon(const objDef_t *od, const objDef_t *weapon);
 qboolean INVSH_UseableForTeam(const objDef_t *od, const int team);

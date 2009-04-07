@@ -29,8 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_MUSIC_H
 #define CLIENT_MUSIC_H
 
-#include "cl_sound.h"
-
 void M_ParseMusic(const char *name, const char **text);
 void M_Frame(void);
 void M_Init(void);

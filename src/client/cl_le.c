@@ -726,7 +726,7 @@ static void LET_Projectile (le_t * le)
 		}
 		if (le->ref2 && le->ref2[0]) {
 			sfx_t *sfx = S_RegisterSound(le->ref2);
-			S_StartSound(impact, sfx, le->fd->relImpactVolume);
+			S_StartSound(impact, sfx, le->fd->impactAttenuation);
 		}
 	} else if (CL_OutsideMap(le->ptl->s, UNIT_SIZE * 10)) {
 		le->endTime = cl.time;
@@ -779,14 +779,14 @@ void LE_AddProjectile (const fireDef_t *fd, int flags, const vec3_t muzzle, cons
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0]) {
 					sfx_t *sfx = S_RegisterSound(fd->hitBodySound);
-					S_StartSound(le->origin, sfx, le->fd->relImpactVolume);
+					S_StartSound(le->origin, sfx, le->fd->impactAttenuation);
 				}
 				if (fd->hitBody[0])
 					ptl = CL_ParticleSpawn(fd->hitBody, 0, impact, bytedirs[normal], NULL);
 			} else {
 				if (fd->impactSound[0]) {
 					sfx_t *sfx = S_RegisterSound(fd->impactSound);
-					S_StartSound(le->origin, sfx, le->fd->relImpactVolume);
+					S_StartSound(le->origin, sfx, le->fd->impactAttenuation);
 				}
 				if (fd->impact[0])
 					ptl = CL_ParticleSpawn(fd->impact, 0, impact, bytedirs[normal], NULL);
