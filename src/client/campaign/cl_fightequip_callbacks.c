@@ -561,7 +561,6 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 	aircraftSlot_t *slot;
 	int i;
 	int type;
-	menuNode_t *node;
 	base_t *base = B_GetCurrentSelectedBase();
 	installation_t *installation = INS_GetCurrentSelectedInstallation();
 
@@ -629,7 +628,7 @@ void BDEF_BaseDefenseMenuUpdate_f (void)
 
 	/* Check if we can change to laser or missile */
 	if (base && base->numBatteries > 0 && base->numLasers > 0) {
-		node = MN_GetNodeByPath("basedefence.basedef_button_missile");
+		menuNode_t *node = MN_GetNodeByPath("basedefence.basedef_button_missile");
 		if (node)
 			MN_UnHideNode(node);
 		node = MN_GetNodeByPath("basedefence.basedef_button_laser");
