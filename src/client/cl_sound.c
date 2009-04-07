@@ -41,7 +41,6 @@ static sfx_t *sfx_hash[SFX_HASH_SIZE];
 
 static cvar_t *snd_volume;
 static cvar_t *snd_init;
-static cvar_t *snd_channels;
 static cvar_t *snd_rate;
 
 static int      audioRate;
@@ -365,54 +364,6 @@ static void S_FreeChannel (int c)
 	memset(&s_env.channels[c], 0, sizeof(s_env.channels[0]));
 }
 
-/**
- * @sa S_Shutdown
- * @sa S_Init
- */
-static qboolean SND_Init (void)
-{
-	SDL_version version;
-	char drivername[MAX_VAR];
-
-	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
-		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
-			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError());
-			return qfalse;
-		}
-	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
-		if (SDL_InitSubSystem(SDL_INIT_AUDIO) == -1) {
-			Com_Printf("Couldn't init SDL audio subsystem: %s\n", SDL_GetError());
-			return qfalse;
-		}
-	}
-
-	MIX_VERSION(&version)
-	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
-
-	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, snd_channels->integer, 1024) == -1) {
-		Com_Printf("Unable to open audio\n");
-		return qfalse;
-	}
-
-	Mix_QuerySpec(&audioRate, &audioFormat, &audioChannels);
-	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audioRate, audioChannels);
-	if (audioRate != snd_rate->integer)
-		Cvar_SetValue("snd_rate", audioRate);
-	if (audioChannels != snd_channels->integer)
-		Cvar_SetValue("snd_channels", audioChannels);
-
-	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
-		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
-	Com_Printf("... driver: '%s'\n", drivername);
-
-	s_env.numChannels = Mix_AllocateChannels(MAX_CHANNELS);
-	Com_Printf("... channels to mix sounds: %i\n", s_env.numChannels);
-
-	Mix_ChannelFinished(S_FreeChannel);
-
-	return qtrue;
-}
-
 /** @todo This should be removed and read from the dir tree instead */
 static const char *soundFileSubDirs[] = {
 	"aliens", "ambience", "civilians", "doors", "footsteps", "geoscape", "misc", "soldiers", "weapons", NULL
@@ -486,11 +437,59 @@ static qboolean CL_CvarCheckSoundRate (cvar_t *cvar)
 
 /**
  * @sa S_Shutdown
+ * @sa S_Init
+ */
+static qboolean SND_Init (void)
+{
+	SDL_version version;
+	char drivername[MAX_VAR];
+
+	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
+		if (SDL_Init(SDL_INIT_AUDIO) == -1) {
+			Com_Printf("Couldn't init SDL audio: %s\n", SDL_GetError());
+			return qfalse;
+		}
+	} else if (SDL_WasInit(SDL_INIT_AUDIO) == 0) {
+		if (SDL_InitSubSystem(SDL_INIT_AUDIO) == -1) {
+			Com_Printf("Couldn't init SDL audio subsystem: %s\n", SDL_GetError());
+			return qfalse;
+		}
+	}
+
+	MIX_VERSION(&version)
+	Com_Printf("SDL_mixer version: %d.%d.%d\n", version.major, version.minor, version.patch);
+
+	if (Mix_OpenAudio(snd_rate->integer, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+		Com_Printf("Unable to open audio\n");
+		return qfalse;
+	}
+
+	Mix_QuerySpec(&audioRate, &audioFormat, &audioChannels);
+	Com_Printf("... audio rate: %i\n... audio channels: %i\n", audioRate, audioChannels);
+	if (audioRate != snd_rate->integer)
+		Cvar_SetValue("snd_rate", audioRate);
+
+	if (SDL_AudioDriverName(drivername, sizeof(drivername)) == NULL)
+		strncpy(drivername, "(UNKNOWN)", sizeof(drivername) - 1);
+	Com_Printf("... driver: '%s'\n", drivername);
+
+	s_env.numChannels = Mix_AllocateChannels(MAX_CHANNELS);
+	Com_Printf("... channels to mix sounds: %i\n", s_env.numChannels);
+
+	Mix_ChannelFinished(S_FreeChannel);
+
+	return qtrue;
+}
+
+/**
+ * @sa S_Shutdown
  * @sa S_Restart_f
  */
 void S_Init (void)
 {
 	Com_Printf("\n------- sound initialization -------\n");
+
+	memset(&s_env, 0, sizeof(s_env));
 
 	snd_init = Cvar_Get("snd_init", "1", CVAR_ARCHIVE, "Should the sound renderer get initialized");
 	snd_init->modified = qfalse; /* don't restart right away */
@@ -501,7 +500,6 @@ void S_Init (void)
 		return;
 	}
 
-	snd_channels = Cvar_Get("snd_channels", "2", CVAR_ARCHIVE, "Sound channels");
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
 	Cvar_SetCheckFunction("snd_rate", CL_CvarCheckSoundRate);
