@@ -54,10 +54,10 @@ static uint16_t audioFormat;
 static Mix_Chunk *S_LoadSound (const char *sound)
 {
 	size_t len;
-	byte *sfxBuf;
-	int size;
-	Mix_Chunk *mix = NULL;
+	byte *buf;
 	const char **extension = soundExtensions;
+	SDL_RWops *rw;
+	Mix_Chunk *chunk;
 
 	if (!sound || sound[0] == '*')
 		return NULL;
@@ -68,26 +68,28 @@ static Mix_Chunk *S_LoadSound (const char *sound)
 		return NULL;
 	}
 
-	size = 0;
 	while (*extension) {
-		/* load it in */
-		if ((size = FS_LoadFile(va("sound/%s.%s", sound, *extension), &sfxBuf)) != -1) {
-			SDL_RWops *src = SDL_RWFromMem(sfxBuf, size);
-			mix = Mix_LoadWAV_RW(src, 1);
-			if (!mix)
-				Com_Printf("S_LoadSound: Could not load %s file 'sound/%s.%s' (%s)\n", *extension, sound, *extension, Mix_GetError());
-			else
-				break;
+		if ((len = FS_LoadFile(va("sound/%s.%s", sound, *extension++), &buf)) == -1)
+			continue;
+
+		if (!(rw = SDL_RWFromMem(buf, len))){
+			FS_FreeFile(buf);
+			continue;
 		}
-		extension++;
+
+		if (!(chunk = Mix_LoadWAV_RW(rw, qfalse)))
+			Com_Printf("S_LoadSound: %s.\n", Mix_GetError());
+
+		FS_FreeFile(buf);
+
+		SDL_FreeRW(rw);
+
+		if (chunk)
+			return chunk;
 	}
 
-	if (size == 0) {
-		Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
-		return NULL;
-	}
-
-	return mix;
+	Com_Printf("S_LoadSound: Could not find sound file: '%s'\n", sound);
+	return NULL;
 }
 
 /**
