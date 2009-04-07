@@ -166,13 +166,14 @@ static void INS_SetInstallationTitle_f (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "INS_SetInstallationTitle_f: #installations: %i\n", ccs.numInstallations);
 	if (ccs.numInstallations < B_GetInstallationLimit()) {
+		const installationTemplate_t *insTemp = INS_GetInstallationTemplateFromInstallationID(Cvar_GetString("mn_installation_type"));
 		char insName[MAX_VAR];
 		int i = 1;
 		int j;
 
 		do {
 			j = 0;
-			Com_sprintf(insName, lengthof(insName), _("Installation #%i"), i);
+			Com_sprintf(insName, lengthof(insName), "%s #%i", (insTemp) ? _(insTemp->name) : _("Installation"), i);
 			while (j <= ccs.numInstallations && strcmp(insName, ccs.installations[j++].name));
 		} while (i++ <= ccs.numInstallations && j <= ccs.numInstallations);
 
