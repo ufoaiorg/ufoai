@@ -10,8 +10,8 @@ path="$(pwd)"
 cd "$(dirname $0)"
 SCRIPTDIR="$PWD"
 . "$SCRIPTDIR/scripts_common" || {
-    echo "can't include scripts_common"
-    exit
+	echo "can't include scripts_common"
+	exit
 }
 
 logfile=~/check_models.log

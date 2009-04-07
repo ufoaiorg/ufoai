@@ -208,31 +208,31 @@ def gen(args):
         if '/.' in dirname:
             # this dir is a / within a hidden one
             continue
-        
+
         for i in fnames:
             if not i.endswith('.map'):
                 continue
-            
+
             mfile = os.path.join(dirname, i)
             bfile = mfile[:-4] + '.bsp'
             if not os.path.exists(bfile):
                 print "Warning: Cant find .bsp for %s" % mfile
                 continue
-            
+
             mmd5 = md5sum(mfile)
             bmd5 = md5sum(bfile)
-            
+
             if not bfile in old or bmd5 != old[bfile]:
                 print '%s - updating' % bfile
                 maps_compiled+= 1
                 if os.path.exists(os.path.join(dst, bfile)):
                     os.unlink(os.path.join(dst, bfile))
-                
+
                 # make sure destination directory exists
                 dst_dir = os.path.split(os.path.join(dst, bfile))[0]
                 if not os.path.exists(dst_dir):
                     os.makedirs(dst_dir)
-                
+
                 data = open(bfile).read()
                 GzipFile(os.path.join(dst, bfile) + '.gz', 'w').write(data)
             else:
@@ -285,5 +285,3 @@ def main(argv=None):
 
 if __name__ == '__main__':
     main()
-
-

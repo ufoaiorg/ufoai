@@ -1,5 +1,5 @@
 fail() {
-    echo
-    echo $1
-    exit 1
+	echo
+	echo $1
+	exit 1
 }

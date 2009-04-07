@@ -119,4 +119,3 @@ class Application(Tk):
 if __name__ == "__main__":
 	application = Application(None)
 	application.mainloop()
-

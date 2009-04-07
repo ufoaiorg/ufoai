@@ -22,20 +22,20 @@ SCRIPTDIR="$PWD"
 [[ -f "$TMPFILE" ]] && fail "$TMPFILE exists, refusing to overwrite"
 
 while read line; do
-    extension=$(echo $line | cut -d" " -f1)
-    mimetype=$(echo $line | cut -d" " -f2)
-    echo -n "$extension $mimetype " >> "$TMPFILE"
-    find "$DIR" -type f -name "*.$extension" ! -wholename '*/.svn*' | wc -l >> "$TMPFILE"
+	extension=$(echo $line | cut -d" " -f1)
+	mimetype=$(echo $line | cut -d" " -f2)
+	echo -n "$extension $mimetype " >> "$TMPFILE"
+	find "$DIR" -type f -name "*.$extension" ! -wholename '*/.svn*' | wc -l >> "$TMPFILE"
 done < <(grep -v ^# "$INFILE")
 
 echo -n "MIME_EXTENSION=(" > mimetypes.ext
 echo -n "MIME_TYPE=(" > mimetypes.mime
 
 while read line; do
-    extension=$(echo $line | cut -d" " -f1)
-    mimetype=$(echo $line | cut -d" " -f2)
-    echo -n "$extension " >> "mimetypes.ext"
-    echo -n "$mimetype " >> "mimetypes.mime"
+	extension=$(echo $line | cut -d" " -f1)
+	mimetype=$(echo $line | cut -d" " -f2)
+	echo -n "$extension " >> "mimetypes.ext"
+	echo -n "$mimetype " >> "mimetypes.mime"
 done < <(sort -nr -k 3 "$TMPFILE")
 [[ $SHOWSTATS ]] && sort -nr -k 3 "$TMPFILE"
 sed -i 's/ $//g' mimetypes.ext mimetypes.mime

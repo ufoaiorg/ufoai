@@ -52,4 +52,3 @@ valgrind \
 	--log-file=$LOG \
 	$VALGRIND_OPTIONS \
 	$APP
-
