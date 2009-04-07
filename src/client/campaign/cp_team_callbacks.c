@@ -366,7 +366,7 @@ static void CL_ResertCharacterCvars (void)
 	Cvar_Set("mn_vsnp", "");
 	Cvar_Set("mn_vexp", "");
 	Cvar_Set("mn_vhp", "");
-	Cvar_Set("mn_vhpmax", "");
+	Cvar_Set("mn_vhpmax", "100");	/*< must be greater than mn_vhp */
 
 	Cvar_Set("mn_tpwr", "");
 	Cvar_Set("mn_tspd", "");

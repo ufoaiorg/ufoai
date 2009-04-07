@@ -1660,71 +1660,112 @@ menu popup_intercept
 	{
 		{
 			pos			"30 100"
-			size		"460 300"
+			size		"490 290"
 		}
 
 		string name_label
 		{
 			string		"_Aircraft:"
-			pos			"26 3"
+			pos			"6 3"
 			size		"140 20"
 		}
 
 		string status_label
 		{
 			string		"_Status:"
-			pos			"176 3"
+			pos			"156 3"
 			size		"140 20"
 		}
 
 		string craft_base_label
 		{
 			string		"_Base:"
-			pos			"326 3"
+			pos			"306 3"
 			size		"150 20"
 		}
 
 		text ships
 		{
 			textid		TEXT_AIRCRAFT_LIST
-			pos			"26 29"
+			pos			"6 29"
 			size		"460 260"
 			lineheight	20
 			tabwidth	150
 			mousefx		true
 			rows		"13"
 			longlines	prettychop
+			onLinesChange {
+				*(abstractscrollbar)aircraft.ships_scroll fullsize <lines>
+				*(abstractscrollbar)aircraft.ships_scroll current <text_scroll>
+			}
+			onWheel {
+				*(abstractscrollbar)aircraft.ships_scroll current <text_scroll>
+			}
 			onClick
 			onRClick
 		}
 
+		vscrollbar ships_scroll {
+			image		menu/scrollbar_v_green
+			blend		true
+			pos			"470 29"
+			height		"260"
+			current		0
+			viewsize	13
+			fullsize	19
+			hidewhenunused	true
+			onChange {
+				cmd "mn_textscroll aircraft.ships <lastdiff>;"
+			}
+		}
 	}
 
 	panel sam
 	{
 		{
 			pos			"30 100"
-			size		"460 300"
+			size		"490 290"
 		}
 
 		string base_label
 		{
 			string		"_Surface-to-air missile site:"
-			pos			"26 3"
+			pos			"6 3"
 			size		"250 20"
 		}
 
 		text bases
 		{
 			textid		TEXT_BASE_LIST
-			pos			"26 29"
+			pos			"6 29"
 			size		"460 260"
 			lineheight	20
 			tabwidth	175
 			mousefx		true
 			rows		"13"
+			onLinesChange {
+				*(abstractscrollbar)sam.bases_scroll fullsize <lines>
+				*(abstractscrollbar)sam.bases_scroll current <text_scroll>
+			}
+			onWheel {
+				*(abstractscrollbar)sam.bases_scroll current <text_scroll>
+			}
 			onClick
 			onRClick
+		}
+
+		vscrollbar bases_scroll {
+			image		menu/scrollbar_v_green
+			blend		true
+			pos			"470 29"
+			height		"260"
+			current		0
+			viewsize	13
+			fullsize	19
+			hidewhenunused	true
+			onChange {
+				cmd "mn_textscroll sam.bases <lastdiff>;"
+			}
 		}
 	}
 

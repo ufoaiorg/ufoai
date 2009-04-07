@@ -138,8 +138,8 @@ menu iaircraft
 	text aircraft_list
 	{
 		pos			"51 153"
-		size		"350 167"
-		rows		8
+		size		"350 220"
+		rows		11
 		lineheight	20
 		textid		TEXT_AIRCRAFT_LIST
 		color	"0 .78 0 1"
@@ -148,6 +148,9 @@ menu iaircraft
 		longlines	prettychop
 		onLinesChange {
 			*(abstractscrollbar)aircraft_list_scroll fullsize <lines>
+			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>
+		}
+		onWheel {
 			*(abstractscrollbar)aircraft_list_scroll current <text_scroll>
 		}
 		onClick {
@@ -159,9 +162,9 @@ menu iaircraft
 		image			menu/scrollbar_v_green
 		blend			true
 		pos				"413 151"
-		height			"172"
+		height			"220"
 		current			0
-		viewsize		8
+		viewsize		11
 		fullsize		19
 		hidewhenunused	true
 		onChange {
