@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_music.h"
 #include "cl_le.h"
 
-#define DISTANCE_SCALE 0.15
+#define DISTANCE_SCALE 0.8
 
 /** @brief Support sound file extensions */
 static const char *soundExtensions[] = {"ogg", "wav", NULL};
@@ -193,15 +193,15 @@ static void S_SpatializeChannel (const s_channel_t *ch)
 
 	VectorCopy(ch->org, origin);
 
-	origin[2] = refdef.vieworg[2];
+	origin[2] = cl.cam.camorg[2];
 
-	VectorSubtract(origin, refdef.vieworg, delta);
+	VectorSubtract(origin, cl.cam.camorg, delta);
 	dist = VectorNormalize(delta) * DISTANCE_SCALE;
 
 	if (dist > 255.0)  /* clamp to max */
 		dist = 255.0;
 
-	if (dist > 10.0) {  /* resolve stereo panning */
+	if (dist > 50.0) {  /* resolve stereo panning */
 		const float dot = DotProduct(s_env.right, delta);
 		angle = acos(dot) * 180.0 / M_PI - 90.0;
 		angle = (int)(360.0 - angle) % 360;
@@ -356,7 +356,7 @@ void S_Frame (void)
 		return;
 
 	/* update right angle for stereo panning */
-	AngleVectors(refdef.viewangles, NULL, s_env.right, NULL);
+	AngleVectors(cl.cam.angles, NULL, s_env.right, NULL);
 
 	M_Frame();
 }
@@ -415,7 +415,7 @@ static int S_CompleteSounds (const char *partial, const char **match)
  * @brief
  * @return true if the value needed adjustment and was changed
  */
-static qboolean CL_CvarCheckSoundRate (cvar_t *cvar)
+static qboolean S_CvarCheckSoundRate (cvar_t *cvar)
 {
 	const int sndRates[] = {48000, 44100, 22050, 11025};
 	const int n = lengthof(sndRates);
@@ -504,7 +504,7 @@ void S_Init (void)
 
 	snd_volume = Cvar_Get("snd_volume", "0.7", CVAR_ARCHIVE, "Sound volume - default is 0.7");
 	snd_rate = Cvar_Get("snd_rate", "44100", CVAR_ARCHIVE, "Hz value for sound renderer - default is 44100");
-	Cvar_SetCheckFunction("snd_rate", CL_CvarCheckSoundRate);
+	Cvar_SetCheckFunction("snd_rate", S_CvarCheckSoundRate);
 	/* set volumes to be changed so they are applied again for next sound/music playing */
 	snd_volume->modified = qtrue;
 

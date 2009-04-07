@@ -1406,13 +1406,9 @@ static void CL_InvReload (struct dbuffer *msg)
 	NET_ReadFormat(msg, ev_format[EV_INV_RELOAD],
 		&number, &ammo, &type, &container, &x, &y);
 
-	S_StartLocalSound("weapons/reload");
-
 	le = LE_Get(number);
-	if (!le) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_InvReload: only sound played\n");
+	if (!le)
 		return;
-	}
 
 	if (le->team != cls.team)
 		return;
@@ -1422,6 +1418,8 @@ static void CL_InvReload (struct dbuffer *msg)
 	ic = Com_SearchInInventory(&le->i, &csi.ids[container], x, y);
 	if (!ic)
 		return;
+
+	S_StartSound(le->origin, S_RegisterSound("weapons/reload"), DEFAULT_SOUND_ATTENUATION);
 
 	/* if the displaced clip had any remaining bullets
 	 * store them as loose, unless the removed clip was full */

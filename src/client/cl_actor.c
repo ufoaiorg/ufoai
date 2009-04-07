@@ -1715,7 +1715,7 @@ void CL_ActorDoShoot (struct dbuffer *msg)
 
 	/* start the sound */
 	if ((!fd->soundOnce || firstShot) && fd->fireSound[0] && !(flags & SF_BOUNCED))
-		S_StartLocalSound(fd->fireSound);
+		S_StartSound(le->origin, S_RegisterSound(fd->fireSound), fd->fireAttenuation);
 
 	firstShot = qfalse;
 
