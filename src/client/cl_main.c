@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_cinematic.h"
 #include "cl_http.h"
 #include "cl_menu.h"
+#include "cl_music.h"
 #include "../shared/infostring.h"
 #include "renderer/r_main.h"
 #include "renderer/r_particle.h"
@@ -667,7 +668,7 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 	else if (!strcmp(type, "sequence"))
 		CL_ParseSequence(name, text);
 	else if (!strcmp(type, "music"))
-		CL_ParseMusic(name, text);
+		M_ParseMusic(name, text);
 	else if (!strcmp(type, "tips"))
 		CL_ParseTipsOfTheDay(name, text);
 	else if (!strcmp(type, "language"))

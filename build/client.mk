@@ -20,6 +20,7 @@ CLIENT_SRCS = \
 	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \
+	client/cl_music.c \
 	client/cl_parse.c \
 	client/cl_particle.c \
 	client/cl_screen.c \

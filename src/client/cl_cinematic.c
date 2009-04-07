@@ -584,7 +584,7 @@ void CIN_PlayCinematic (const char *name)
 		/* Make sure sounds aren't playing */
 		S_StopAllSounds();
 		/* also stop the background music */
-		S_Music_Stop();
+		M_Shutdown();
 	}
 
 	/* If already playing a cinematic, stop it */

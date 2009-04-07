@@ -31,10 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <SDL_mixer.h>
 
-/** @brief only begin attenuating sound volumes when outside the FULLVOLUME range */
-#define SOUND_FULLVOLUME 100
-/** @brief A sound is only hearable when not farer than this value */
-#define SOUND_MAX_DISTANCE 600
+#define MAX_CHANNELS 64
 
 /** @brief These sounds are precached in S_RegisterSounds */
 enum {
@@ -52,6 +49,25 @@ typedef struct sfx_s {
 	struct sfx_s* hash_next;	/**< next hash entry */
 } sfx_t;
 
+
+typedef struct s_channel_s {
+	vec3_t org;  // for temporary entities and other positioned sounds
+	sfx_t *sample;
+} s_channel_t;
+
+/** @brief the sound environment */
+typedef struct s_env_s {
+	vec3_t right;  /* for stereo panning */
+
+	s_channel_t channels[MAX_CHANNELS];
+
+	int numChannels;
+
+	qboolean initialized;
+} s_env_t;
+
+extern s_env_t s_env;
+
 void S_Init(void);
 void S_Shutdown(void);
 void S_Frame(void);
@@ -60,7 +76,6 @@ void S_StartSound(const vec3_t origin, sfx_t* sfx, float relVolume);
 void S_StartLocalSound(const char *s);
 sfx_t *S_RegisterSound(const char *s);
 int S_PlaySoundFromMem(const short* mem, size_t size, int rate, int channel, int ms);
-void CL_ParseMusic(const char *name, const char **text);
 
 void S_Music_Stop(void);
 
