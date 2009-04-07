@@ -134,7 +134,7 @@ static void B_PrevBase_f (void)
 /**
  * @brief Sets the title of the base to a cvar to prepare the rename menu.
  */
-static void INS_SetBaseTitle_f (void)
+static void B_SetBaseTitle_f (void)
 {
 	Com_DPrintf(DEBUG_CLIENT, "INS_SetBaseTitle_f: #bases: %i\n", ccs.numBases);
 	if (ccs.numBases < MAX_BASES) {
@@ -913,7 +913,7 @@ void B_InitCallbacks (void)
 	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, "Select a founded base by index");
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
-	Cmd_AddCommand("mn_set_base_title", INS_SetBaseTitle_f, NULL);
+	Cmd_AddCommand("mn_set_base_title", B_SetBaseTitle_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
