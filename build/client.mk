@@ -72,6 +72,7 @@ CLIENT_SRCS = \
 	client/campaign/cl_research_callbacks.c \
 	client/campaign/cl_save.c \
 	client/campaign/cl_transfer.c \
+	client/campaign/cp_transfer_callbacks.c \
 	client/campaign/cl_ufo.c \
 	client/campaign/cl_ufopedia.c \
 	client/campaign/cl_uforecovery.c \

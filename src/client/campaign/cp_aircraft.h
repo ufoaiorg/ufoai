@@ -241,6 +241,7 @@ typedef struct aircraft_s {
 #ifdef DEBUG
 void AIR_ListAircraft_f(void);
 void AIR_ListAircraftSamples_f(void);
+void AIR_ListCraftIndexes_f(void);
 #endif
 
 int AIR_GetAircraftIdxInBase(const aircraft_t* aircraft);

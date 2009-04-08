@@ -336,6 +336,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\campaign\cl_transfer.h" />
+		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\client\campaign\cp_transfer_callbacks.h" />
 		<Unit filename="..\..\src\client\campaign\cl_ufo.c">
 			<Option compilerVar="CC" />
 		</Unit>

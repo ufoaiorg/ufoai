@@ -52,6 +52,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cp_aircraft_callbacks.h"
 #include "cl_fightequip_callbacks.h"
 #include "cl_produce_callbacks.h"
+#include "cp_transfer_callbacks.h"
 #include "cl_market.h"
 #include "cp_employee_callbacks.h"
 #include "cp_market_callbacks.h"
@@ -1942,6 +1943,7 @@ static const cmdList_t game_commands[] = {
 	{"debug_listaircraftsample", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console"},
 	{"debug_listnation", CL_NationList_f, "List all nations on the game console"},
 	{"debug_listaircraft", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
+	{"debug_listaircraftidx", AIR_ListCraftIndexes_f, "Debug function to list local/global aircraft indexes"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
 	{"debug_addemployees", CL_DebugNewEmployees_f, "Debug function to add 5 new unhired employees of each type"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
@@ -1967,6 +1969,7 @@ static void CP_AddCampaignCallbackCommands (void)
 	E_InitCallbacks();
 	HOS_InitCallbacks();
 	INS_InitCallbacks();
+	TR_InitCallbacks();
 }
 
 static void CP_AddCampaignCommands (void)
@@ -1996,6 +1999,7 @@ static void CP_RemoveCampaignCallbackCommands (void)
 	E_ShutdownCallbacks();
 	HOS_ShutdownCallbacks();
 	INS_ShutdownCallbacks();
+	TR_ShutdownCallbacks();
 }
 
 static void CP_RemoveCampaignCommands (void)

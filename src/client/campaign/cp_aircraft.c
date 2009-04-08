@@ -1701,6 +1701,19 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 }
 
 #ifdef DEBUG
+void AIR_ListCraftIndexes_f (void)
+{
+	int i;
+	
+	Com_Printf("Base\tlocalIDX\tglobalIDX\t(Craftname)\n");
+	for (i = 0; i < ccs.numBases; i++) {
+		int j;
+		for (j = 0; j < ccs.bases[i].numAircraftInBase; j++) {
+			Com_Printf("%i (%s)\t%i\t%i\t(%s)\n", i, ccs.bases[i].name, j, ccs.bases[i].aircraft[j].idx, ccs.bases[i].aircraft[j].shortname);
+		}
+	}
+}
+
 /**
  * @brief Debug function that prints aircraft to game console
  */
