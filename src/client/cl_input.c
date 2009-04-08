@@ -447,9 +447,6 @@ static void CL_TurnUp_f (void)
 	if (mouseSpace == MS_MENU)
 		return;
 	mouseSpace = MS_NULL;
-	/* leave the fire mode when turning around - not everybody has a mmb mouse */
-	if (selActor)
-		selActor->actorMode = M_MOVE;
 }
 
 /**
