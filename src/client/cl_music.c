@@ -97,7 +97,7 @@ void M_ParseMusic (const char *name, const char **text)
 			FS_SkipBlock(text);
 			break;
 		}
-		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_soundSysPool, 0);
+		musicArrays[i][musicArrayLength[i]] = Mem_PoolStrDup(token, cl_genericPool, 0);
 		musicArrayLength[i]++;
 	} while (*text);
 }
