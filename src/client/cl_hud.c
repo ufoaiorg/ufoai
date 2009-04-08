@@ -34,9 +34,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "renderer/r_mesh_anim.h"
 
 /** If this is set to qfalse HUD_DisplayFiremodes_f will not attempt to hide the list */
-static qboolean firemodes_change_display = qtrue;
-static qboolean visible_firemode_list_left = qfalse;
-static qboolean visible_firemode_list_right = qfalse;
+static qboolean firemodesChangeDisplay = qtrue;
+static qboolean visibleFiremodeListLeft = qfalse;
+static qboolean visibleFiremodeListRight = qfalse;
 
 /** keep track of reaction toggle */
 static reactionmode_t selActorReactionState;
@@ -238,8 +238,8 @@ void HUD_HideFiremodes (void)
 {
 	int i;
 
-	visible_firemode_list_left = qfalse;
-	visible_firemode_list_right = qfalse;
+	visibleFiremodeListLeft = qfalse;
+	visibleFiremodeListRight = qfalse;
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		MN_ExecuteConfunc("set_left_inv %i", i);
 		MN_ExecuteConfunc("set_right_inv %i", i);
@@ -434,7 +434,7 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 
 	if (popupNum > 1 || popupReload) {
 		/* We have more entries than the "0 TUs" one
-		 * or we want ot simply refresh/display the popup content (no matter how many TUs are left). */
+		 * or we want to simply refresh/display the popup content (no matter how many TUs are left). */
 		popupListNode = MN_PopupList(_("Shot Reservation"), _("Reserve TUs for firing/using."), popupListText, "reserve_shot");
 		VectorSet(popupListNode->selectedColor, 0.0, 0.78, 0.0);	/**< Set color for selected entry. */
 		popupListNode->selectedColor[3] = 1.0;
@@ -567,7 +567,7 @@ qboolean CL_DisplayImpossibleReaction (const le_t * actor)
 		return qfalse;
 
 	if (actor != selActor) {
-		/* Given actor does not equal the currently selectd actor. This normally only happens on game-start. */
+		/* Given actor does not equal the currently selected actor. */
 		return qfalse;
 	}
 
@@ -631,20 +631,20 @@ static void HUD_DisplayFiremodes_f (void)
 
 	Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: displaying %c firemodes.\n", hand);
 
-	if (firemodes_change_display) {
+	if (firemodesChangeDisplay) {
 		/* Toggle firemode lists if needed. */
 		HUD_HideFiremodes();
 		if (hand == ACTOR_HAND_CHAR_RIGHT) {
-			if (visible_firemode_list_right)
+			if (visibleFiremodeListRight)
 				return;
-			visible_firemode_list_right = qtrue;
+			visibleFiremodeListRight = qtrue;
 		} else { /* ACTOR_HAND_CHAR_LEFT */
-			if (visible_firemode_list_left)
+			if (visibleFiremodeListLeft)
 				return;
-			visible_firemode_list_left = qtrue;
+			visibleFiremodeListLeft = qtrue;
 		}
 	}
-	firemodes_change_display = qtrue;
+	firemodesChangeDisplay = qtrue;
 
 	actorIdx = CL_GetActorNumber(selActor);
 	Com_DPrintf(DEBUG_CLIENT, "HUD_DisplayFiremodes_f: actor index: %i\n", actorIdx);
@@ -654,7 +654,7 @@ static void HUD_DisplayFiremodes_f (void)
 	selChr = CL_GetActorChr(selActor);
 	assert(selChr);
 
-	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
+	/* Set default firemode if the currently selected one is not sane or for another weapon. */
 	if (!CL_WorkingFiremode(selActor, qtrue)) {	/* No usable firemode selected. */
 		/* Set default firemode */
 		CL_SetDefaultReactionFiremode(selActor, ACTOR_GET_HAND_CHAR(selChr->RFmode.hand));
@@ -717,7 +717,7 @@ static void HUD_SwitchFiremodeList_f (void)
 		return;
 	}
 
-	if (visible_firemode_list_right || visible_firemode_list_left) {
+	if (visibleFiremodeListRight || visibleFiremodeListLeft) {
 		Cbuf_AddText(va("list_firemodes %s\n", Cmd_Argv(1)));
 	}
 }
@@ -756,7 +756,7 @@ static void HUD_SelectReactionFiremode_f (void)
 	CL_UpdateReactionFiremodes(selActor, hand, firemode);
 
 	/* Update display of firemode checkbuttons. */
-	firemodes_change_display = qfalse; /* So HUD_DisplayFiremodes_f doesn't hide the list. */
+	firemodesChangeDisplay = qfalse; /* So HUD_DisplayFiremodes_f doesn't hide the list. */
 	HUD_DisplayFiremodes_f();
 }
 
@@ -931,7 +931,7 @@ static void HUD_FireWeapon_f (void)
  * @brief Remember if we hover over a button that would cost some TUs when pressed.
  * @note this is used in HUD_ActorUpdateCvars to update the "remaining TUs" bar correctly.
  */
-static void HUD_RemainingTus_f (void)
+static void HUD_RemainingTUs_f (void)
 {
 	qboolean state;
 	const char *type;
@@ -1164,7 +1164,7 @@ static void HUD_RefreshWeaponButtons (int time)
  *
  * This function updates the cvars for the hud (battlefield)
  * unlike CL_CharacterCvars and CL_UGVCvars which updates them for
- * diplaying the data in the menu system
+ * displaying the data in the menu system
  *
  * @sa CL_CharacterCvars
  * @sa CL_UGVCvars
@@ -1463,8 +1463,13 @@ void HUD_ActorUpdateCvars (void)
 			}
 		}
 		MN_RegisterText(TEXT_STANDARD, infoText);
-	/* This will stop the drawing of the bars over the whole screen when we test maps. */
+
+		if (selActor->oldActorMode != selActor->actorMode || refresh) {
+			selActor->oldActorMode = selActor->actorMode;
+			HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
+		}
 	} else if (!cl.numTeamList) {
+		/* This will stop the drawing of the bars over the whole screen when we test maps. */
 		Cvar_SetValue("mn_tu", 0);
 		Cvar_SetValue("mn_tumax", 100);
 		Cvar_SetValue("mn_morale", 0);
@@ -1474,11 +1479,6 @@ void HUD_ActorUpdateCvars (void)
 		Cvar_SetValue("mn_stun", 0);
 	}
 
-	/* mode */
-	if (selActor && (selActor->oldActorMode != selActor->actorMode || refresh)) {
-		selActor->oldActorMode = selActor->actorMode;
-		HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
-	}
 
 	/* player bar */
 	if (cl_selected->modified || refresh) {
@@ -1594,7 +1594,7 @@ static void CL_ActorToggleReaction_f (void)
 		CL_SetReactionFiremode(selActor, selChr->RFmode.hand, selChr->RFmode.weapon, selChr->RFmode.fmIdx);
 
 		/* Update RF list if it is visible. */
-		if (visible_firemode_list_left || visible_firemode_list_right)
+		if (visibleFiremodeListLeft || visibleFiremodeListRight)
 			HUD_DisplayFiremodes_f();
 	} else {
 		/* No usable RF weapon. */
@@ -1668,7 +1668,7 @@ void HUD_InitStartup (void)
 {
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
 	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
-	Cmd_AddCommand("remaining_tus", HUD_RemainingTus_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
+	Cmd_AddCommand("remaining_tus", HUD_RemainingTUs_f, "Define if remaining TUs should be displayed in the TU-bar for some hovered-over button.");
 	Cmd_AddCommand("togglecrouchreserve", CL_ActorToggleCrouchReservation_f, _("Toggle reservation for crouching."));
 	Cmd_AddCommand("reserve_shot", HUD_ReserveShot_f, "Reserve The TUs for the selected entry in the popup.");
 	Cmd_AddCommand("sel_shotreservation", HUD_PopupFiremodeReservation_f, "Pop up a list of possible firemodes for reservation in the current turn.");
