@@ -697,7 +697,7 @@ static void TR_TransferListClear_f (void)
  * @brief Unloads transfer cargo when finishing the transfer or destroys it when no buildings/base.
  * @param[in,out] destination The destination base - might be NULL in case the base
  * is already destroyed
- * @param[in] transfer Pointer to transfer in ccs.alltransfers.
+ * @param[in] transfer Pointer to transfer in ccs.transfers.
  * @param[in] success True if the transfer reaches dest base, false if the base got destroyed.
  * @sa TR_TransferEnd
  */
@@ -838,17 +838,15 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 		return;
 	}
 
-	transfer = NULL;
-	/* Find free transfer slot. */
-	for (i = 0; i < MAX_TRANSFERS; i++) {
-		if (!ccs.alltransfers[i].active) {
-			transfer = &ccs.alltransfers[i];
-			break;
-		}
+	if (ccs.numTransfers >= MAX_TRANSFERS) {
+		Com_DPrintf(DEBUG_CLIENT, "TR_TransferAlienAfterMissionStart: Max transfers reached.");
+		return;
 	}
 
-	if (!transfer)
-		return;
+	transfer = &ccs.transfers[ccs.numTransfers];
+
+	if (transfer->active)
+		Sys_Error("Transfer idx %i shouldn't be active.", ccs.numTransfers);
 
 	/* Initialize transfer.
 	 * calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
@@ -864,6 +862,7 @@ static void TR_TransferAlienAfterMissionStart (const base_t *base)
 	transfer->destBase = B_GetFoundedBaseByIDX(base->idx);	/* Destination base. */
 	transfer->srcBase = NULL;	/* Source base. */
 	transfer->active = qtrue;
+	ccs.numTransfers++;
 
 	alienCargoTypes = AL_GetAircraftAlienCargoTypes(td.transferStartAircraft);
 	cargo = AL_GetAircraftAlienCargo(td.transferStartAircraft);
@@ -975,7 +974,7 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 
 /**
  * @brief Ends the transfer.
- * @param[in] transfer Pointer to transfer in ccs.alltransfers
+ * @param[in] transfer Pointer to transfer in ccs.transfers
  */
 static void TR_TransferEnd (transfer_t *transfer)
 {
@@ -1023,17 +1022,15 @@ static void TR_TransferStart_f (void)
 		return;
 	}
 
-	transfer = NULL;
-	/* Find free transfer slot. */
-	for (i = 0; i < MAX_TRANSFERS; i++) {
-		if (!ccs.alltransfers[i].active) {
-			transfer = &ccs.alltransfers[i];
-			break;
-		}
+	if (ccs.numTransfers >= MAX_TRANSFERS) {
+		Com_DPrintf(DEBUG_CLIENT, "TR_TransferStart_f: Max transfers reached.");
+		return;
 	}
 
-	if (!transfer)
-		return;
+	transfer = &ccs.transfers[ccs.numTransfers];
+
+	if (transfer->active)
+		Sys_Error("Transfer idx %i shouldn't be active.", ccs.numTransfers);
 
 	/* Initialize transfer. */
 	/* calculate time to go from 1 base to another : 1 day for one quarter of the globe*/
@@ -1050,6 +1047,8 @@ static void TR_TransferStart_f (void)
 	assert(transfer->destBase);
 	transfer->srcBase = base;	/* Source base. */
 	transfer->active = qtrue;
+	ccs.numTransfers++;
+
 	for (i = 0; i < csi.numODs; i++) {	/* Items. */
 		if (td.trItemsTmp[i] > 0) {
 			transfer->hasItems = qtrue;
@@ -1659,8 +1658,8 @@ void TR_NotifyAircraftRemoved (const aircraft_t *aircraft)
 
 	assert(aircraft->idx >= 0 && aircraft->idx < MAX_AIRCRAFT);
 
-	for (i = 0; i < MAX_TRANSFERS; i++) {
-		transfer_t *transfer = &ccs.alltransfers[i];
+	for (i = 0; i < ccs.numTransfers; i++) {
+		transfer_t *transfer = &ccs.transfers[i];
 
 		/* skip non active transfer */
 		if (!transfer->active)
@@ -1679,16 +1678,14 @@ void TR_TransferCheck (void)
 {
 	int i;
 
-	for (i = 0; i < MAX_TRANSFERS; i++) {
-		transfer_t *transfer = &ccs.alltransfers[i];
+	for (i = 0; i < ccs.numTransfers; i++) {
+		transfer_t *transfer = &ccs.transfers[i];
 		if (!transfer->active)
 			continue;
 		if (transfer->event.day == ccs.date.day && ccs.date.sec >= transfer->event.sec) {
 			assert(transfer->destBase);
 			TR_TransferEnd(transfer);
-			/* Reset this transfer. */
-			memset(transfer, 0, sizeof(*transfer));
-			memset(transfer->aircraftArray, TRANS_LIST_EMPTY_SLOT, sizeof(transfer->aircraftArray));
+			REMOVE_ELEM(ccs.transfers, i, ccs.numTransfers);
 			return;
 		}
 	}
@@ -1752,9 +1749,9 @@ qboolean TR_SaveXML (mxml_node_t *p)
 	mxml_node_t *n;
 	n = mxml_AddNode(p, "transfers");
 
-	for (i = 0; i < MAX_TRANSFERS; i++) {
+	for (i = 0; i < ccs.numTransfers; i++) {
 		int j;
-		const transfer_t *transfer = &ccs.alltransfers[i];
+		const transfer_t *transfer = &ccs.transfers[i];
 		mxml_node_t *s;
 
 		s = mxml_AddNode(n, "transfer");
@@ -1831,11 +1828,13 @@ qboolean TR_LoadXML (mxml_node_t *p)
 	for (i = 0, s = mxml_GetNode(n, "transfer"); s && i < MAX_TRANSFERS; i++, s = mxml_GetNextNode(s, n, "transfer")) {
 		byte destBase, srcBase;
 		mxml_node_t *ss;
-		transfer_t *transfer = &ccs.alltransfers[i];
+		transfer_t *transfer = &ccs.transfers[i];
 
 		transfer->event.day = mxml_GetInt(s, "day", 0);
 		transfer->event.sec = mxml_GetInt(s, "sec", 0);
 		transfer->active = mxml_GetBool(s, "active", qfalse);
+		if (transfer->active)
+			ccs.numTransfers++;
 		/* initialising some variables */
 		transfer->hasItems = qfalse;
 		transfer->hasEmployees = qfalse;

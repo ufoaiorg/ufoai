@@ -2051,10 +2051,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	ccs.date = campaign->date;
 
 	MAP_Init();
-
-	/** @todo remove this - ccs should be memset to 0 */
-	ccs.numAircraft = 0;
-
 	PR_ProductionInit();
 
 	/* get day */

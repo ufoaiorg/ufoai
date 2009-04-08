@@ -47,7 +47,7 @@ enum {
 	TRANS_ALIEN_MAX
 };
 
-/** @brief Transfer informations (they are being stored in ccs.alltransfers[MAX_TRANSFERS]. */
+/** @brief Transfer informations (they are being stored in ccs.transfers[MAX_TRANSFERS]. */
 typedef struct transfer_s {
 	int itemAmount[MAX_OBJDEFS];			/**< Amount of given item [csi.ods[idx]]. */
 	int alienAmount[MAX_TEAMDEFS][TRANS_ALIEN_MAX];		/**< Alien cargo, [0] alive, [1] dead. */

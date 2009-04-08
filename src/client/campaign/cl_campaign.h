@@ -456,8 +456,9 @@ typedef struct ccs_s {
 	aircraftProjectile_t projectiles[MAX_PROJECTILESONGEOSCAPE];
 	int numProjectiles;
 
-	/* All transfers. */
-	transfer_t alltransfers[MAX_TRANSFERS];
+	/* == Transfers == */
+	transfer_t transfers[MAX_TRANSFERS];
+	int numTransfers;
 
 	/* UFO recoveries. */
 	ufoRecoveries_t recoveries[MAX_RECOVERIES];
