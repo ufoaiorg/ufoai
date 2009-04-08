@@ -1674,7 +1674,7 @@ static void CL_ActorHit (const le_t * le, vec3_t impact, int normal)
 
 	if (le->teamDef) {
 		/* Spawn "hit_particle" if defined in teamDef. */
-		if (le->teamDef->hitParticle[0])
+		if (le->teamDef->hitParticle[0] != '\0')
 			CL_ParticleSpawn(le->teamDef->hitParticle, 0, impact, bytedirs[normal], NULL);
 	}
 }

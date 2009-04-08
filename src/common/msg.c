@@ -227,7 +227,7 @@ void MSG_WriteAngle16 (sizebuf_t * sb, float f)
 void MSG_WriteDir (sizebuf_t * sb, vec3_t dir)
 {
 	int i, best;
-	float d, bestd;
+	float bestd;
 
 	if (!dir) {
 		MSG_WriteByte(sb, 0);
@@ -237,7 +237,7 @@ void MSG_WriteDir (sizebuf_t * sb, vec3_t dir)
 	bestd = 0;
 	best = 0;
 	for (i = 0; i < NUMVERTEXNORMALS; i++) {
-		d = DotProduct(dir, bytedirs[i]);
+		const float d = DotProduct(dir, bytedirs[i]);
 		if (d > bestd) {
 			bestd = d;
 			best = i;
@@ -252,12 +252,10 @@ void MSG_WriteDir (sizebuf_t * sb, vec3_t dir)
  */
 void MSG_vWriteFormat (sizebuf_t * sb, const char *format, va_list ap)
 {
-	char typeID;
-
 	Com_DPrintf(DEBUG_ENGINE, "MSG_WriteFormat: %s\n", format);
 
 	while (*format) {
-		typeID = *format++;
+		const char typeID = *format++;
 
 		switch (typeID) {
 		case 'c':
@@ -301,12 +299,10 @@ void MSG_vWriteFormat (sizebuf_t * sb, const char *format, va_list ap)
 			break;
 		case '*':
 			{
-				int i, n;
-				byte *p;
+				int i;
+				const int n = va_arg(ap, int);
+				const byte *p = va_arg(ap, byte *);
 
-				n = va_arg(ap, int);
-
-				p = va_arg(ap, byte *);
 				MSG_WriteShort(sb, n);
 				for (i = 0; i < n; i++)
 					MSG_WriteByte(sb, *p++);
@@ -442,43 +438,12 @@ float MSG_ReadFloat (sizebuf_t * msg_read)
 }
 
 /**
- * @brief Don't strip high bits - use this for utf-8 strings
  * @note Don't use this function in a way like
- * <code> char *s = MSG_ReadStringRaw(sb);
- * char *t = MSG_ReadStringRaw(sb);</code>
- * The second reading uses the same data buffer for the string - so
- * s is no longer the first - but the second string
- * @sa MSG_ReadString
- * @sa MSG_ReadStringLine
- */
-char *MSG_ReadStringRaw (sizebuf_t * msg_read)
-{
-	static char string[2048];
-	unsigned int l;
-	int c;
-
-	l = 0;
-	do {
-		c = MSG_ReadByte(msg_read);
-		if (c == -1 || c == 0)
-			break;
-		string[l] = c;
-		l++;
-	} while (l < sizeof(string) - 1);
-
-	string[l] = 0;
-
-	return string;
-}
-
-/**
- * @note Don't use this function in a way like
- * <code> char *s = MSG_ReadStringRaw(sb);
- * char *t = MSG_ReadStringRaw(sb);</code>
+ * <code> char *s = MSG_ReadString(sb);
+ * char *t = MSG_ReadString(sb);</code>
  * The second reading uses the same data buffer for the string - so
  * s is no longer the first - but the second string
  * @note strip high bits - don't use this for utf-8 strings
- * @sa MSG_ReadStringRaw
  * @sa MSG_ReadStringLine
  */
 char *MSG_ReadString (sizebuf_t * msg_read)
@@ -491,34 +456,6 @@ char *MSG_ReadString (sizebuf_t * msg_read)
 	do {
 		c = MSG_ReadByte(msg_read);
 		if (c == -1 || c == 0)
-			break;
-		/* translate all format specs to avoid crash bugs */
-		/* don't allow higher ascii values */
-		if (c == '%' || c > 127)
-			c = '.';
-		string[l] = c;
-		l++;
-	} while (l < sizeof(string) - 1);
-
-	string[l] = 0;
-
-	return string;
-}
-
-/**
- * @sa MSG_ReadString
- * @sa MSG_ReadStringRaw
- */
-char *MSG_ReadStringLine (sizebuf_t * msg_read)
-{
-	static char string[2048];
-	unsigned int l;
-	int c;
-
-	l = 0;
-	do {
-		c = MSG_ReadByte(msg_read);
-		if (c == -1 || c == 0 || c == '\n')
 			break;
 		/* translate all format specs to avoid crash bugs */
 		/* don't allow higher ascii values */
@@ -608,11 +545,9 @@ void MSG_ReadDir (sizebuf_t * sb, vec3_t dir)
  */
 void MSG_vReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
 {
-	char typeID;
-
 	assert(format); /* may not be null */
 	while (*format) {
-		typeID = *format++;
+		const char typeID = *format++;
 
 		switch (typeID) {
 		case 'c':
@@ -687,7 +622,6 @@ void MSG_ReadFormat (sizebuf_t * msg_read, const char *format, ...)
  */
 int MSG_LengthFormat (sizebuf_t * sb, const char *format)
 {
-	char typeID;
 	int length, delta = 0;
 	int oldCount;
 
@@ -695,7 +629,7 @@ int MSG_LengthFormat (sizebuf_t * sb, const char *format)
 	oldCount = sb->readcount;
 
 	while (*format) {
-		typeID = *format++;
+		const char typeID = *format++;
 
 		switch (typeID) {
 		case 'c':
