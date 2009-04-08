@@ -64,9 +64,8 @@ typedef enum {
 } basedefenceType_t;
 
 /** Base defence functions. */
-void BDEF_AddBattery_f(void);
+void BDEF_AddBattery(basedefenceType_t basedefType, base_t* base);
 void BDEF_RemoveBattery(base_t *base, basedefenceType_t basedefType, int idx);
-void BDEF_RemoveBattery_f(void);
 void BDEF_InitialiseBaseSlots(base_t *base);
 void BDEF_InitialiseInstallationSlots(installation_t *installation);
 void BDEF_ReloadBattery(void);
@@ -81,16 +80,14 @@ void AII_InitialiseSlot(aircraftSlot_t *slot, aircraft_t *aircraft, base_t *base
 float AIR_GetMaxAircraftWeaponRange(const aircraftSlot_t *slot, int maxSlot);
 void AII_RepairAircraft(void);
 void AII_UpdateAircraftStats(aircraft_t *aircraft);
-int AII_GetSlotItems(aircraftItemType_t type, const aircraft_t *aircraft);
-int AII_AircraftCanShoot(const aircraft_t *aircraft);
 int AII_BaseCanShoot(const base_t *base);
 qboolean AII_InstallationCanShoot(const installation_t *installation);
 
 itemWeight_t AII_GetItemWeightBySize(const objDef_t *od);
 
 const char* AII_WeightToName(itemWeight_t weight);
-void AIM_AutoAddAmmo (base_t *base, installation_t *installation, aircraft_t *aircraft, aircraftSlot_t *slot, const int airequipID);
+void AIM_AutoAddAmmo(base_t *base, installation_t *installation, aircraft_t *aircraft, aircraftSlot_t *slot, const int airequipID);
 
-qboolean AIM_SelectableAircraftItem (base_t* base, installation_t* installation, aircraft_t *aircraft, const technology_t *tech, const int airequipID);
+qboolean AIM_SelectableAircraftItem(base_t* base, installation_t* installation, aircraft_t *aircraft, const technology_t *tech, const int airequipID);
 
 #endif /* CLIENT_CL_MAPFIGHTEQUIP_H */

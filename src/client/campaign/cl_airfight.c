@@ -265,23 +265,23 @@ int AIRFIGHT_CheckWeapon (const aircraftSlot_t *slot, float distance)
 int AIRFIGHT_ChooseWeapon (const aircraftSlot_t const *slot, int maxSlot, const vec3_t pos, const vec3_t targetPos)
 {
 	int slotIdx = AIRFIGHT_WEAPON_CAN_NEVER_SHOOT;
-	int i, weapon_status;
+	int i, weaponStatus;
 	float distance0 = 99999.9f;
 	const float distance = MAP_GetDistance(pos, targetPos);
 
 	/* We choose the usable weapon with the smallest range */
 	for (i = 0; i < maxSlot; i++) {
 		assert(slot);
-		weapon_status = AIRFIGHT_CheckWeapon(slot + i, distance);
+		weaponStatus = AIRFIGHT_CheckWeapon(slot + i, distance);
 
 		/* set slotIdx to AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT if needed */
 		/* this will only happen if weapon_state is AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT
 		 * and no weapon has been found that can shoot. */
-		if (weapon_status > slotIdx)
+		if (weaponStatus > slotIdx)
 			slotIdx = AIRFIGHT_WEAPON_CAN_NOT_SHOOT_AT_THE_MOMENT;
 
 		/* select this weapon if this is the one with the shortest range */
-		if (weapon_status >= AIRFIGHT_WEAPON_CAN_SHOOT && distance < distance0) {
+		if (weaponStatus >= AIRFIGHT_WEAPON_CAN_SHOOT && distance < distance0) {
 			slotIdx = i;
 			distance0 = distance;
 		}

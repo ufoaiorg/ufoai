@@ -37,6 +37,8 @@ static int airequipSelectedZone = ZONE_NONE;		/**< Selected zone in equip menu *
 static int airequipSelectedSlot = ZONE_NONE;			/**< Selected slot in equip menu */
 static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
+static void BDEF_BaseDefenseMenuUpdate_f(void);
+
 /**
  * @brief Script command to init the base defence menu.
  * @note this function is only called when the menu launches
@@ -553,7 +555,7 @@ static inline void AIM_NoEmphazeAmmoSlotText (void)
  * of the basedefence equip menu
  * @sa BDEF_MenuInit_f
  */
-void BDEF_BaseDefenseMenuUpdate_f (void)
+static void BDEF_BaseDefenseMenuUpdate_f (void)
 {
 	static char defBuffer[1024];
 	static char smallbuffer1[256];
@@ -1349,6 +1351,124 @@ static void AIM_PreviousItemtype_f (void)
 	airequipSelectedZone = ZONE_MAIN;
 
 	Cmd_ExecuteString(va("airequip_updatemenu %d;", airequipID));
+}
+
+/**
+ * @brief Remove a defence system from base.
+ * @note 1st argument is the basedefence system type to destroy (sa basedefenceType_t).
+ * @note 2nd argument is the idx of the base in which you want the battery to be destroyed.
+ * @note if the first argument is BASEDEF_RANDOM, the type of the battery to destroy is randomly selected
+ * @note the building must already be removed from ccs.buildings[baseIdx][]
+ */
+static void BDEF_RemoveBattery_f (void)
+{
+	int basedefType, baseIdx;
+	base_t *base;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
+		return;
+	} else {
+		basedefType = atoi(Cmd_Argv(1));
+		baseIdx = atoi(Cmd_Argv(2));
+	}
+
+	/* Check that the baseIdx exists */
+	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
+		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
+		return;
+	}
+
+	base = B_GetFoundedBaseByIDX(baseIdx);
+	if (!base) {
+		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i is not founded.\n", baseIdx);
+		return;
+	}
+
+	if (basedefType == BASEDEF_RANDOM) {
+		/* Type of base defence to destroy is randomly selected */
+		if (base->numBatteries <= 0 && base->numLasers <= 0) {
+			Com_Printf("No base defence to destroy\n");
+			return;
+		} else if (base->numBatteries <= 0) {
+			/* only laser battery is possible */
+			basedefType = BASEDEF_LASER;
+		} else if (base->numLasers <= 0) {
+			/* only missile battery is possible */
+			basedefType = BASEDEF_MISSILE;
+		} else {
+			/* both type are possible, choose one randomly */
+			basedefType = rand() % 2 + BASEDEF_MISSILE;
+		}
+	} else {
+		/* Check if the removed building was under construction */
+		int i, type, max;
+		int workingNum = 0;
+
+		switch (basedefType) {
+		case BASEDEF_MISSILE:
+			type = B_DEFENCE_MISSILE;
+			max = base->numBatteries;
+			break;
+		case BASEDEF_LASER:
+			type = B_DEFENCE_MISSILE;
+			max = base->numLasers;
+			break;
+		default:
+			Com_Printf("BDEF_RemoveBattery_f: base defence type %i doesn't exists.\n", basedefType);
+			return;
+		}
+
+		for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
+			if (ccs.buildings[baseIdx][i].buildingType == type
+				&& ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
+				workingNum++;
+		}
+
+		if (workingNum == max) {
+			/* Removed building was under construction, do nothing */
+			return;
+		} else if ((workingNum != max - 1)) {
+			/* Should never happen, we only remove building one by one */
+			Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i) in base '%s'.\n",
+				workingNum, max, base->name);
+			return;
+		}
+
+		/* If we reached this point, that means we are removing a working building: continue */
+	}
+
+	BDEF_RemoveBattery(base, basedefType, -1);
+}
+
+/**
+ * @brief Adds a defence system to base.
+ */
+static void BDEF_AddBattery_f (void)
+{
+	int basedefType, baseIdx;
+
+	if (Cmd_Argc() < 3) {
+		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
+		return;
+	} else {
+		basedefType = atoi(Cmd_Argv(1));
+		baseIdx = atoi(Cmd_Argv(2));
+	}
+
+	/* Check that the baseIdx exists */
+	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
+		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
+		return;
+	}
+
+	/* Check that the basedefType exists */
+	if (basedefType != BASEDEF_MISSILE && basedefType != BASEDEF_LASER) {
+		Com_Printf("BDEF_AddBattery_f: base defence type %i doesn't exists.\n", basedefType);
+		return;
+	}
+
+	BDEF_AddBattery(basedefType, B_GetBaseByIDX(baseIdx));
 }
 
 void AIM_InitCallbacks (void)

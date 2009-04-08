@@ -153,7 +153,7 @@ qboolean AIM_PilotAssignedAircraft (const base_t* base, const employee_t* pilot)
  * @param[in] base Pointer to the base in which the battery will be added
  * @sa BDEF_RemoveBattery
  */
-static void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
+void BDEF_AddBattery (basedefenceType_t basedefType, base_t* base)
 {
 	switch (basedefType) {
 	case BASEDEF_MISSILE:
@@ -201,36 +201,6 @@ void BDEF_ReloadBattery (void)
 }
 
 /**
- * @brief Adds a defence system to base.
- */
-void BDEF_AddBattery_f (void)
-{
-	int basedefType, baseIdx;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
-		return;
-	} else {
-		basedefType = atoi(Cmd_Argv(1));
-		baseIdx = atoi(Cmd_Argv(2));
-	}
-
-	/* Check that the baseIdx exists */
-	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
-		Com_Printf("BDEF_AddBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
-		return;
-	}
-
-	/* Check that the basedefType exists */
-	if (basedefType != BASEDEF_MISSILE && basedefType != BASEDEF_LASER) {
-		Com_Printf("BDEF_AddBattery_f: base defence type %i doesn't exists.\n", basedefType);
-		return;
-	}
-
-	BDEF_AddBattery(basedefType, B_GetBaseByIDX(baseIdx));
-}
-
-/**
  * @brief Remove a base defence sytem from base.
  * @param[in] basedefType (see basedefenceType_t)
  * @param[in] idx idx of the battery to destroy (-1 if this is random)
@@ -265,94 +235,6 @@ void BDEF_RemoveBattery (base_t *base, basedefenceType_t basedefType, int idx)
 	default:
 		Com_Printf("BDEF_RemoveBattery_f: unknown type of base defence system.\n");
 	}
-}
-
-/**
- * @brief Remove a defence system from base.
- * @note 1st argument is the basedefence system type to destroy (sa basedefenceType_t).
- * @note 2nd argument is the idx of the base in which you want the battery to be destroyed.
- * @note if the first argument is BASEDEF_RANDOM, the type of the battery to destroy is randomly selected
- * @note the building must already be removed from ccs.buildings[baseIdx][]
- */
-void BDEF_RemoveBattery_f (void)
-{
-	int basedefType, baseIdx;
-	base_t *base;
-
-	if (Cmd_Argc() < 3) {
-		Com_Printf("Usage: %s <basedefType> <baseIdx>", Cmd_Argv(0));
-		return;
-	} else {
-		basedefType = atoi(Cmd_Argv(1));
-		baseIdx = atoi(Cmd_Argv(2));
-	}
-
-	/* Check that the baseIdx exists */
-	if (baseIdx < 0 || baseIdx >= ccs.numBases) {
-		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i doesn't exists: there is only %i bases in game.\n", baseIdx, ccs.numBases);
-		return;
-	}
-
-	base = B_GetFoundedBaseByIDX(baseIdx);
-	if (!base) {
-		Com_Printf("BDEF_RemoveBattery_f: baseIdx %i is not founded.\n", baseIdx);
-		return;
-	}
-
-	if (basedefType == BASEDEF_RANDOM) {
-		/* Type of base defence to destroy is randomly selected */
-		if (base->numBatteries <= 0 && base->numLasers <= 0) {
-			Com_Printf("No base defence to destroy\n");
-			return;
-		} else if (base->numBatteries <= 0) {
-			/* only laser battery is possible */
-			basedefType = BASEDEF_LASER;
-		} else if (base->numLasers <= 0) {
-			/* only missile battery is possible */
-			basedefType = BASEDEF_MISSILE;
-		} else {
-			/* both type are possible, choose one randomly */
-			basedefType = rand() % 2 + BASEDEF_MISSILE;
-		}
-	} else {
-		/* Check if the removed building was under construction */
-		int i, type, max;
-		int workingNum = 0;
-
-		switch (basedefType) {
-		case BASEDEF_MISSILE:
-			type = B_DEFENCE_MISSILE;
-			max = base->numBatteries;
-			break;
-		case BASEDEF_LASER:
-			type = B_DEFENCE_MISSILE;
-			max = base->numLasers;
-			break;
-		default:
-			Com_Printf("BDEF_RemoveBattery_f: base defence type %i doesn't exists.\n", basedefType);
-			return;
-		}
-
-		for (i = 0; i < ccs.numBuildings[baseIdx]; i++) {
-			if (ccs.buildings[baseIdx][i].buildingType == type
-				&& ccs.buildings[baseIdx][i].buildingStatus == B_STATUS_WORKING)
-				workingNum++;
-		}
-
-		if (workingNum == max) {
-			/* Removed building was under construction, do nothing */
-			return;
-		} else if ((workingNum != max - 1)) {
-			/* Should never happen, we only remove building one by one */
-			Com_Printf("BDEF_RemoveBattery_f: Error while checking number of batteries (%i instead of %i) in base '%s'.\n",
-				workingNum, max, base->name);
-			return;
-		}
-
-		/* If we reached this point, that means we are removing a working building: continue */
-	}
-
-	BDEF_RemoveBattery(base, basedefType, -1);
 }
 
 /**
@@ -979,65 +861,6 @@ void AII_UpdateAircraftStats (aircraft_t *aircraft)
 	/* Update aircraft state if needed */
 	if (aircraft->status == AIR_HOME && aircraft->fuel < aircraft->stats[AIR_STATS_FUELSIZE])
 		aircraft->status = AIR_REFUEL;
-}
-
-/**
- * @brief Returns the amount of assigned items for a given slot of a given aircraft
- * @param[in] type This is the slot type to get the amount of assigned items for
- * @param[in] aircraft The aircraft to count the items for (may not be NULL)
- * @return The amount of assigned items for the given slot
- */
-int AII_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
-{
-	int i, max, cnt = 0;
-	const aircraftSlot_t *slot;
-
-	assert(aircraft);
-
-	switch (type) {
-	case AC_ITEM_SHIELD:
-		if (aircraft->shield.item)
-			return 1;
-		else
-			return 0;
-		break;
-	case AC_ITEM_WEAPON:
-		slot = aircraft->weapons;
-		max = MAX_AIRCRAFTSLOT;
-		break;
-	case AC_ITEM_ELECTRONICS:
-		slot = aircraft->electronics;
-		max = MAX_AIRCRAFTSLOT;
-		break;
-	default:
-		Com_Printf("AIR_GetSlotItems: Unknow type of slot : %i", type);
-		return 0;
-	}
-
-	for (i = 0; i < max; i++)
-		if (slot[i].item)
-			cnt++;
-
-	return cnt;
-}
-
-/**
- * @brief Check if the aircraft has weapon and ammo
- * @param[in] aircraft The aircraft to count the items for (may not be NULL)
- * @return qtrue if the aircraft can fight, qfalse else
- * @sa AII_BaseCanShoot
- */
-int AII_AircraftCanShoot (const aircraft_t *aircraft)
-{
-	int i;
-
-	assert(aircraft);
-
-	for (i = 0; i < aircraft->maxWeapons; i++)
-		if (AIRFIGHT_CheckWeapon(&aircraft->weapons[i], 0) != AIRFIGHT_WEAPON_CAN_NEVER_SHOOT)
-			return qtrue;
-
-	return qfalse;
 }
 
 /**

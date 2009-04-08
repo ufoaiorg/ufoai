@@ -52,30 +52,6 @@ static void AIM_AircraftReturnToBase_f (void)
 	}
 }
 
-
-/**
- * @brief Restores aircraft cvars after going back from aircraft buy menu.
- * @sa BS_MarketAircraftDescription
- * @todo check whether this is needed any longer - this is not called anywhere
- */
-static void AIM_ResetAircraftCvars_f (void)
-{
-	base_t *base = B_GetCurrentSelectedBase();
-
-	if (!base || base->numAircraftInBase < 0)
-		return;
-
-	/* Maybe we sold displayed aircraft ? */
-	if (base->numAircraftInBase == 0) {
-		/* no more aircraft in base */
-		/** @todo Why don't we use MN_PopMenu(qfalse) here directly? */
-		Cbuf_AddText("mn_pop\n");
-		return;
-	}
-
-	AIR_AircraftSelect(base->aircraftCurrent);
-}
-
 /**
  * @brief Select an aircraft from a base, by ID
  * @sa AIR_AircraftSelect
@@ -209,6 +185,46 @@ static int CL_EquipSoldierState (const aircraft_t * aircraft)
 }
 
 /**
+ * @brief Returns the amount of assigned items for a given slot of a given aircraft
+ * @param[in] type This is the slot type to get the amount of assigned items for
+ * @param[in] aircraft The aircraft to count the items for (may not be NULL)
+ * @return The amount of assigned items for the given slot
+ */
+static int AIR_GetSlotItems (aircraftItemType_t type, const aircraft_t *aircraft)
+{
+	int i, max, cnt = 0;
+	const aircraftSlot_t *slot;
+
+	assert(aircraft);
+
+	switch (type) {
+	case AC_ITEM_SHIELD:
+		if (aircraft->shield.item)
+			return 1;
+		else
+			return 0;
+		break;
+	case AC_ITEM_WEAPON:
+		slot = aircraft->weapons;
+		max = MAX_AIRCRAFTSLOT;
+		break;
+	case AC_ITEM_ELECTRONICS:
+		slot = aircraft->electronics;
+		max = MAX_AIRCRAFTSLOT;
+		break;
+	default:
+		Com_Printf("AIR_GetSlotItems: Unknow type of slot : %i", type);
+		return 0;
+	}
+
+	for (i = 0; i < max; i++)
+		if (slot[i].item)
+			cnt++;
+
+	return cnt;
+}
+
+/**
  * @brief Sets aircraftCurrent and updates related cvars and menutexts.
  * @param[in] aircraft Pointer to given aircraft that should be selected in the menu.
  */
@@ -247,9 +263,9 @@ void AIR_AircraftSelect (aircraft_t* aircraft)
 		CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE], AIR_STATS_FUELSIZE)), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Operational range:\t%i km\n"), CL_AircraftMenuStatsValues(aircraft->stats[AIR_STATS_FUELSIZE] *
 		aircraft->stats[AIR_STATS_SPEED], AIR_STATS_OP_RANGE)), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AII_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AII_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapons:\t%i on %i\n"), AIR_GetSlotItems(AC_ITEM_WEAPON, aircraft), aircraft->maxWeapons), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Armour:\t%i on 1\n"), AIR_GetSlotItems(AC_ITEM_SHIELD, aircraft)), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Electronics:\t%i on %i"), AIR_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft), aircraft->maxElectronics), sizeof(aircraftInfo));
 
 	MN_RegisterText(TEXT_AIRCRAFT_INFO, aircraftInfo);
 
@@ -294,8 +310,6 @@ static void AIR_AircraftUpdateList_f (void)
 
 void AIR_InitCallbacks (void)
 {
-	/* used nowhere ?*/
-	Cmd_AddCommand("mn_reset_air", AIM_ResetAircraftCvars_f, NULL);
 	/* menu aircraft */
 	Cmd_AddCommand("aircraft_start", AIM_AircraftStart_f, NULL);
 	/* menu aircraft_equip, aircraft */
@@ -310,7 +324,6 @@ void AIR_InitCallbacks (void)
 
 void AIR_ShutdownCallbacks (void)
 {
-	Cmd_RemoveCommand("mn_reset_air");
 	Cmd_RemoveCommand("aircraft_start");
 	Cmd_RemoveCommand("mn_next_aircraft");
 	Cmd_RemoveCommand("mn_prev_aircraft");
