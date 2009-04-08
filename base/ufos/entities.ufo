@@ -471,7 +471,7 @@ entity func_door {
 
 entity func_group {
 	description	"Only for editor and terrain convenience."
-
+	color		"0 0.5 0"
 	optional {
 		terrain			""
 		gensurf			""
