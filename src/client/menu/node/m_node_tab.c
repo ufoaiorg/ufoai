@@ -133,6 +133,8 @@ static void MN_TabNodeClick (menuNode_t * node, int x, int y)
 #endif
 			Cbuf_AddText(option->action);
 		}
+		if (node->onChange)
+			MN_ExecuteEventActions(node, node->onChange);
 	}
 }
 
