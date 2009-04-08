@@ -218,6 +218,9 @@ terrain tex_streets/street001 {
 // tex_streets/street001 dam it_main
 }
 
+terrain tex_streets/street002 {
+}
+
 // gravel street
 terrain tex_streets/street006 {
 }
@@ -598,4 +601,19 @@ terrain tex_mattn/metal {
 ###
 # Not sorted, added by footstepper.sh
 ###
+
+terrain tex_buildings/concrete014 {
+}
+
+terrain tex_buildings/floor004 {
+}
+
+terrain tex_ctp1/concrete_g_11 {
+}
+
+terrain tex_mattn/floor003 {
+}
+
+terrain tex_mattn/floor005 {
+}
 
