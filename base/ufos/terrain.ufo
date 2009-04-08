@@ -233,20 +233,24 @@ terrain tex_nature/railway {
 // wooden floor
 terrain tex_material/wood001 {
 // tex_material/wood001 dam
+	footstepsound "footsteps/wood1"
 }
 
 // wooden floor (big wood squares)
 terrain tex_buildings/floor001 {
 // tex_buildings/floor001 estate
+	footstepsound "footsteps/step_8"
 }
 
 // parquet floor
 terrain tex_buildings/floor002 {
 // tex_buildings/floor002 estate
+	footstepsound "footsteps/step_8"
 }
 
 terrain tex_misc/wood_palet {
 // tex_misc/wood_palet dam
+	footstepsound "footsteps/step_8"
 }
 
 // ==========================
@@ -480,10 +484,6 @@ terrain tex_nature/rock007 {
 //  S T A I R S
 // ==========================
 
-// stone stairs
-terrain tex_buildings/wall_sel2 {
-}
-
 // wooden stairs
 terrain tex_material/wood002 {
 // tex_material/wood002 dam
@@ -498,17 +498,22 @@ terrain tex_material/wood002 {
 terrain tex_buildings/carpet001 {
 // tex_buildings/carpet001 estate
 }
+
 terrain tex_buildings/carpet002 {
 // tex_buildings/carpet002 estate
 }
+
 terrain tex_buildings/carpet005 {
 // tex_buildings/carpet005 estate
 }
+
 terrain tex_furniture/jap_carpet001 {
 }
+
 terrain tex_furniture/jap_carpet002 {
 // tex_furniture/jap_carpet002 estate
 }
+
 terrain tex_carpets/carpet140 {
 }
 
@@ -549,6 +554,7 @@ terrain tex_buildings/floor017 {
 
 terrain tex_material/metall009 {
 // tex_material/metall009 st_i01 industrial
+	footstepsound "footsteps/metal1"
 }
 
 // ==========================
@@ -573,6 +579,7 @@ terrain tex_base/helipad4 {
 terrain tex_nature/snow002 {
 // tex_nature/snow002 industrial
 	footstepsound "footsteps/snow1"
+	bouncefraction 0.6
 }
 
 // ==========================
@@ -580,11 +587,11 @@ terrain tex_nature/snow002 {
 // ==========================
 
 terrain tex_buildings/clangdark {
-	footstepsound "footsteps/water_in"
+	footstepsound "footsteps/metal1"
 }
 
 terrain tex_mattn/metal {
-	footstepsound "footsteps/water_in"
+	footstepsound "footsteps/metal4"
 }
 
 
