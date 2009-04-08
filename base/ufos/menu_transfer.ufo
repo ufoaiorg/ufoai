@@ -71,29 +71,29 @@ menu transfer
 		image	"menu/panel_tab"
 	}
 
-	tab market_navigation {
+	tab trans_navigation {
 		pos		"47 106"
 		size	"938 39"
 		cvar	"*cvar mn_itemtype"
+		onChange	{
+			cmd "trans_type <cvar:mn_itemtype>;"
+		}
+		
 		option description {
 			label	"_Equipment"
 			value	"item"
-			action "trans_type item;"
 		}
 		option description {
 			label	"_Employees"
 			value	"employee"
-			action "trans_type employee;"
 		}
 		option description {
 			label	"_Aliens"
 			value	"alien"
-			action "trans_type alien;"
 		}
 		option description {
 			label	"_Aircraft"
 			value	"aircraft"
-			action "trans_type aircraft;"
 		}
 	}
 
@@ -173,6 +173,7 @@ menu transfer
 		current		0
 		viewsize	9
 		fullsize	9
+		hidewhenunused	true
 		onChange	{ cmd "mn_textscroll trans_cargolist <lastdiff>;" }
 	}
 
@@ -258,6 +259,7 @@ menu transfer
 		current		0
 		viewsize	22
 		fullsize	22
+		hidewhenunused	true
 		onChange	{ cmd "mn_textscroll trans_list <lastdiff>;" }
 	}
 

@@ -1323,6 +1323,7 @@ static void TR_TransferBaseSelect (base_t *srcbase, base_t *destbase)
 	if (!destbase || !srcbase)
 		return;
 
+	baseInfo[0] = '\0';
 	powercomm = B_GetBuildingStatus(destbase, B_POWER);
 
 	/* if there is no power supply facility this check will fail, too */
@@ -1715,6 +1716,9 @@ static void TR_Init_f (void)
 	/* Set up cvar used to display transferBase. */
 	if (td.transferBase)
 		Cvar_Set("mn_trans_base_name", td.transferBase->name);
+	/* Set up cvar used with tabset */
+	Cvar_Set("mn_itemtype", transferTypeIDs[0]);
+
 	/* Reset scrolling for item-in-base list */
 	TR_ResetScrolling_f();
 }
