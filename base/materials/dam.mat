@@ -1,5 +1,28 @@
 {
+	material tex_base/lab_wall001
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_base/wall001
+	specular 0.2
+	hardness 0.2
+}
+{
+	material tex_misc/wood_palet
+	specular 0.2
+}
+{
+	material tex_material/wood002
+	specular 0.2
+}
+{
+	material tex_material/wood001
+	specular 0.2
+}
+{
 	material tex_nature/water
+	specular 2.0
 	{
 		envmap 0
 	}
