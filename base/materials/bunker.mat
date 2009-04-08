@@ -16,3 +16,45 @@
 	specular 2.0
 	bump 2.0
 }
+{
+	material tex_material/wood002
+	specular 0.2
+}
+{
+	material tex_misc/wood_palet
+	specular 0.2
+}
+{
+	material tex_buildings/wall007
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_mattn/window005
+	specular 2.0
+	{
+		envmap 0
+	}
+}
+{
+	material tex_buildings/wall006
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/wall002
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/window001
+	specular 2.0
+	{
+		envmap 0
+	}
+}
+{
+	material tex_buildings/wall003
+	specular 0.6
+	bump 2.0
+}
