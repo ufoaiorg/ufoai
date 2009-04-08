@@ -575,6 +575,19 @@ terrain tex_nature/snow002 {
 	footstepsound "footsteps/snow1"
 }
 
+// ==========================
+//  M E T A L
+// ==========================
+
+terrain tex_buildings/clangdark {
+	footstepsound "footsteps/water_in"
+}
+
+terrain tex_mattn/metal {
+	footstepsound "footsteps/water_in"
+}
+
+
 ###
 # Not sorted, added by footstepper.sh
 ###
