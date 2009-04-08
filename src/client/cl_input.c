@@ -448,8 +448,8 @@ static void CL_TurnUp_f (void)
 		return;
 	mouseSpace = MS_NULL;
 	/* leave the fire mode when turning around - not everybody has a mmb mouse */
-	assert(selActor);
-	selActor->actorMode = M_MOVE;
+	if (selActor)
+		selActor->actorMode = M_MOVE;
 }
 
 /**
