@@ -826,8 +826,6 @@ qboolean CL_ActorSelect (le_t * le)
 
 	selActor = le;
 	menuInventory = &selActor->i;
-	/** @todo remove this here */
-	HUD_UpdateSelectedActorReactionState();
 
 	actorIdx = CL_GetActorNumber(le);
 	if (actorIdx < 0)
@@ -852,7 +850,10 @@ qboolean CL_ActorSelect (le_t * le)
 	}
 
 	/* Forcing the hud-display to refresh its displayed stuff. */
+	/** @todo make this a function parameter to HUD_ActorUpdateCvars ? */
 	Cvar_SetValue("hud_refresh", 1);
+	/** @todo remove this here */
+	HUD_UpdateSelectedActorReactionState();
 	HUD_ActorUpdateCvars();
 
 	CL_ConditionalMoveCalcForCurrentSelectedActor();

@@ -1066,9 +1066,6 @@ static void CL_ActorAppear (struct dbuffer *msg)
 
 	/* add team members to the actor list */
 	CL_AddActorToTeamList(le);
-
-/*	Com_Printf("Player at (%i %i %i) -> (%f %f %f)\n", */
-/*		le->pos[0], le->pos[1], le->pos[2], le->origin[0], le->origin[1], le->origin[2]); */
 }
 
 
@@ -1080,8 +1077,8 @@ static void CL_ActorAppear (struct dbuffer *msg)
  */
 static void CL_ActorStats (struct dbuffer *msg)
 {
-	le_t	*le;
-	int		number, selActorTU = 0;
+	le_t *le;
+	int number, selActorTU = 0;
 
 	number = NET_ReadShort(msg);
 	le = LE_Get(number);
@@ -1113,10 +1110,8 @@ static void CL_ActorStats (struct dbuffer *msg)
 		le->maxMorale = le->morale;
 
 	/* if selActor's timeunits have changed, update movelength */
-	if (le == selActor)
-		if (le->TU != selActorTU) {
-			CL_ResetActorMoveLength();
-		}
+	if (le == selActor && selActor->TU != selActorTU)
+		CL_ResetActorMoveLength();
 }
 
 
