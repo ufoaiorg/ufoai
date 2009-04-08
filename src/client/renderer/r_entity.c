@@ -264,6 +264,8 @@ static void R_DrawEntityEffects (void)
 {
 	int i;
 
+	R_EnableBlend(qtrue);
+
 	for (i = 0; i < r_numEntities; i++) {
 		const entity_t *e = &r_entities[i];
 
@@ -629,10 +631,7 @@ void R_DrawEntities (void)
 	R_DrawBlendMeshEntities(r_blend_mesh_entities);
 	R_Color(NULL);
 	R_DrawNullEntities(r_null_entities);
-
-	R_EnableBlend(qtrue);
 	R_DrawEntityEffects();
-	R_EnableBlend(qfalse);
 }
 
 /**

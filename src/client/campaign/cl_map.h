@@ -47,10 +47,8 @@ void MAP_MapDrawEquidistantPoints(const struct menuNode_s* node, const vec2_t ce
 float MAP_AngleOfPath(const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector);
 void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 void MAP_DrawMap(const struct menuNode_s* node);
-void MAP_SmoothTranslate(void);
 void MAP_CenterOnPoint_f(void);
 void MAP_StopSmoothMovement(void);
-void MAP_SetSmoothZoom(float finalZoomLevel, qboolean useSafeAcceleration);
 base_t* MAP_PositionCloseToBase(const vec2_t pos);
 
 void MAP_Scroll_f(void);
@@ -70,12 +68,10 @@ void MAP_PrintParameterStringByPos(const vec2_t pos);
 float MAP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void MAP_CheckPositionBoundaries(float *pos);
 qboolean MAP_IsNight(const vec2_t pos);
-qboolean MAP_MaskFind(byte * color, vec2_t polar);
 byte *MAP_GetColor(const vec2_t pos, mapType_t type);
 void MAP_Init(void);
 qboolean MAP_PositionFitsTCPNTypes(const vec2_t posT, const linkedList_t* terrainTypes, const linkedList_t* cultureTypes, const linkedList_t* populationTypes, const linkedList_t* nations);
 void MAP_SetOverlay(const char *overlayID);
 void MAP_DeactivateOverlay(const char *overlayID);
-void MAP_DrawMapMarkers (const struct menuNode_s* node);
 
 #endif /* CLIENT_CL_MAP_H */

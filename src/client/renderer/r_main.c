@@ -300,17 +300,11 @@ void R_RenderFrame (void)
 
 	R_DrawEntities();
 
-	R_CheckError();
-
 	R_EnableBlend(qtrue);
 
 	R_DrawParticles();
 
-	R_CheckError();
-
 	R_EnableBlend(qfalse);
-
-	R_CheckError();
 
 	/* leave wire mode again */
 	if (r_wire->integer)

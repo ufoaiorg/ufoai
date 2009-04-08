@@ -1119,53 +1119,6 @@ void MAP_CenterOnPoint_f (void)
 }
 
 /**
- * @brief Smoothly moves the map center position to the specified location on the geoscape.
- * @param[in] pointOnGeoscape  The position to center on.
- * @param[in] zoom  The level at which to zoom.
- * @param[in] acceleration  How fast the smooth movement should go.
- */
-static void MAP_SmoothlyMoveToGeoscapePoint (const vec3_t pointOnGeoscape, const float zoomLevel, float acceleration)
-{
-	/* this function only concerns maps */
-	if (strncmp(MN_GetActiveMenuName(), "map", 3))
-		return;
-
-	if (cl_3dmap->integer) {
-		/* case 3D geoscape */
-		vec3_t diff;
-
-		if (pointOnGeoscape == ccs.angles) {
-			VectorCopy(pointOnGeoscape, smoothFinalGlobeAngle);
-			smoothDeltaLength = 0.0f;
-		} else {
-			VectorSet(smoothFinalGlobeAngle, pointOnGeoscape[0], -pointOnGeoscape[1], 0);
-			smoothFinalGlobeAngle[1] += GLOBE_ROTATE;
-			VectorSubtract(smoothFinalGlobeAngle, ccs.angles, diff);
-			smoothDeltaLength = VectorLength(diff);
-		}
-	} else {
-		/* case 2D geoscape */
-		vec2_t diff;
-
-		Vector2Set(smoothFinal2DGeoscapeCenter, pointOnGeoscape[0], pointOnGeoscape[1]);
-		Vector2Set(smoothFinal2DGeoscapeCenter, 0.5f - smoothFinal2DGeoscapeCenter[0] / 360.0f, 0.5f - smoothFinal2DGeoscapeCenter[1] / 180.0f);
-/*		if (smoothFinal2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
-			smoothFinal2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
-		if (smoothFinal2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
-			smoothFinal2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT; */
-		diff[0] = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
-		diff[1] = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
-		smoothDeltaLength = sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
-	}
-
-	smoothFinalZoom = zoomLevel;
-	smoothDeltaZoom = fabs(smoothFinalZoom - ccs.zoom);
-	smoothAcceleration = acceleration;
-
-	smoothRotation = qtrue;
-}
-
-/**
  * @brief smooth rotation of the 3D geoscape
  * @note updates slowly values of ccs.angles and ccs.zoom so that its value goes to smoothFinalGlobeAngle
  * @sa MAP_DrawMap
@@ -1222,22 +1175,6 @@ void MAP_StopSmoothMovement (void)
 	smoothRotation = qfalse;
 }
 
-/**
- * @brief Sets up the variables required to do a smooth zoom.
- * @param[in] finalZoomLevel  The final zoom level once smooth zooming has completed.
- * @param[in] useSafeAcceleration  Boolean flag indicating if safe acceleration should be used.
- * There are some general bugs with using very fast acceleration.  This is the level at which it generally works.
- */
-void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
-{
-	if (useSafeAcceleration)
-		MAP_SmoothlyMoveToGeoscapePoint(ccs.angles, finalZoomLevel, safeAcceleration);
-	else
-		MAP_SmoothlyMoveToGeoscapePoint(ccs.angles, finalZoomLevel, 0.2f);
-
-}
-
-
 #define SMOOTHING_STEP_2D	0.02f
 /**
  * @brief smooth translation of the 2D geoscape
@@ -1246,7 +1183,7 @@ void MAP_SetSmoothZoom (float finalZoomLevel, qboolean useSafeAcceleration)
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
  */
-void MAP_SmoothTranslate (void)
+static void MAP_SmoothTranslate (void)
 {
 	const float dist1 = smoothFinal2DGeoscapeCenter[0] - ccs.center[0];
 	const float dist2 = smoothFinal2DGeoscapeCenter[1] - ccs.center[1];
@@ -1490,7 +1427,7 @@ static void MAP_DrawMapOnePhalanxAircraft (const menuNode_t* node, aircraft_t *a
  * going to change when you rotate earth around itself and time is stopped eg.).
  * @sa MAP_DrawMap
  */
-void MAP_DrawMapMarkers (const menuNode_t* node)
+static void MAP_DrawMapMarkers (const menuNode_t* node)
 {
 	const linkedList_t *list = ccs.missions;
 	int x, y, i, baseIdx, installationIdx, aircraftIdx, idx;
@@ -1591,9 +1528,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 	else
 		maxInterpolationPoints = 0;
 
-	/** draws projectiles
-	 * @todo you should only draw projectile coming from base here: projectiles fired by missiles
-	 * are drawn only in airfight menu */
+	/** draws projectiles */
 	for (idx = 0; idx < ccs.numProjectiles; idx++) {
 		aircraftProjectile_t *projectile = &ccs.projectiles[idx];
 		vec3_t drawPos = {0, 0, 0};
@@ -1609,7 +1544,7 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 				/* If a new point hasn't been given and there is at least 3 points need to be filled in then
 				 * use linear interpolation to draw the points until a new projectile point is provided.
 				 * The reason you need at least 3 points is that acceptable results can be achieved with 2 or less
-				 * gaps in points so dont add the overhead of interpolation. */
+				 * gaps in points so don't add the overhead of interpolation. */
 				const float xInterpolStep = (projectile->projectedPos[0][0] - projectile->pos[0][0]) / (float)maxInterpolationPoints;
 				projectile->numInterpolationPoints += 1;
 				drawPos[0] = projectile->pos[0][0] + (xInterpolStep * projectile->numInterpolationPoints);
@@ -1642,6 +1577,8 @@ void MAP_DrawMapMarkers (const menuNode_t* node)
 		MN_RegisterText(TEXT_XVI, buffer);
 	else
 		MN_ResetData(TEXT_XVI);
+
+	R_Color(NULL);
 }
 
 /**
@@ -2064,49 +2001,6 @@ qboolean MAP_IsNight (const vec2_t pos)
 	x = sin(p) * root * sin(q) - (a * SIN_ALPHA + cos(p) * root * COS_ALPHA) * cos(q);
 	return (x > 0);
 }
-
-/**
- * @brief Searches the terrain mask for a given color
- * @param[in] color The color to search the terrain picture for
- * @param[out] polar The polar coordinates we found the color at
- * @todo There should only be one loop to search the color and decide
- * whether to use this location
- * @note Function is unused
- */
-qboolean MAP_MaskFind (byte * color, vec2_t polar)
-{
-	byte *c;
-	int res, i, num;
-
-	/* check color */
-	if (!VectorNotEmpty(color))
-		return qfalse;
-
-	/* find possible positions in the terrain pic pixel mask */
-	res = terrainWidth * terrainHeight;
-	num = 0;
-	for (i = 0, c = terrainPic; i < res; i++, c += 4)
-		if (VectorCompare(c, color))
-			num++;
-
-	/* nothing found? */
-	if (!num)
-		return qfalse;
-
-	/* get position */
-	num = rand() % num;
-	for (i = 0, c = terrainPic; i < num; c += 4)
-		if (VectorCompare(c, color))
-			i++;
-
-	/* transform to polar coords */
-	res = (c - terrainPic) / 4;
-	polar[0] = 180.0 - 360.0 * ((float) (res % terrainWidth) + 0.5) / terrainWidth;
-	polar[1] = 90.0 - 180.0 * ((float) (res / terrainWidth) + 0.5) / terrainHeight;
-	Com_DPrintf(DEBUG_CLIENT, "Set new coords for mission to %.0f:%.0f\n", polar[0], polar[1]);
-	return qtrue;
-}
-
 
 /**
  * @brief Returns the color value from geoscape of a certain mask (terrain, culture or population) at a given position.
