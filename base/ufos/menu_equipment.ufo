@@ -278,30 +278,29 @@ menu equipment
 		pos		"400 365"
 		size	"505 40"
 		cvar	"*cvar mn_equiptype"
+		onChange {
+			cmd	"update_item_list;"
+		}
+
 		option primary {
 			label	"_Primary"
 			value	"0"
-			action	"update_item_list;"
 		}
 		option secondary {
 			label	"_Secondary"
 			value	"1"
-			action	"update_item_list;"
 		}
 		option heavy {
 			label	"_Heavy"
 			value	"2"
-			action	"update_item_list;"
 		}
 		option misc {
 			label	"_Misc"
 			value	"3"
-			action	"update_item_list;"
 		}
 		option armour {
 			label	"_Armour"
 			value	"4"
-			action	"update_item_list;"
 		}
 	}
 

@@ -127,7 +127,8 @@ menu aircraft extends iaircraft
 
 	func init
 	{
-		cmd "aircraft_update_list;set mn_aircrafttab 0"
-		cmd "mn_select_aircraft <cvar:mn_aircraft_id>"
+		*cvar:mn_aircrafttab "aircraft"
+		cmd "aircraft_update_list;"
+		cmd "mn_select_aircraft <cvar:mn_aircraft_id>;"
 	}
 }

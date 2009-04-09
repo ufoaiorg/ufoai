@@ -54,50 +54,45 @@ menu market
 		pos		"47 106"
 		size	"938 39"
 		cvar	"*cvar mn_itemtype"
+		onChange {
+			cmd "buy_type <cvar:mn_itemtype>;"
+		}
+
 		option description {
 			label	"_Primary"
 			value	"primary"
-			action "buy_type primary;"
 		}
 		option description {
 			label	"_Secondary"
 			value	"secondary"
-			action "buy_type secondary;"
 		}
 		option description {
 			label	"_Heavy"
 			value	"heavy"
-			action "buy_type heavy;"
 		}
 		option description {
 			label	"_Misc"
 			value	"misc"
-			action "buy_type misc;"
 		}
 		option description {
 			label	"_Armour"
 			value	"armour"
-			action "buy_type armour;"
 		}
 		option description {
 			label	"_Craft items"
 			value	"craftitem"
-			action "buy_type craftitem;"
 		}
 		option description {
 			label	"_Aircraft"
 			value	"aircraft"
-			action "buy_type aircraft;"
 		}
 		option description {
 			label	"_Other"
 			value	"dummy"
-			action "buy_type dummy;"
 		}
 		option description {
 			label	"_UGV items"
 			value	"ugvitem"
-			action "buy_type ugvitem;"
 		}
 	}
 

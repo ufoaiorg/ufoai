@@ -550,29 +550,29 @@ menu employees
 		cvar		"*cvar mn_hiretype"
 		pos			"47 106"
 		size		"938 39"
+		onChange {
+			cmd "employee_init <cvar:mn_hiretype>;"
+		}
+
 		option soldier {
 			label	"_Soldiers"
 			value	"0"
 			icon	smallhead_soldier
-			action "employee_init 0;"
 		}
 		option pilot {
 			label	"_Pilots"
 			value	"3"
 			icon	smallhead_pilot
-			action	"employee_init 3;"
 		}
 		option worker {
 			label	"_Workers"
 			value	"2"
 			icon	smallhead_worker
-			action	"employee_init 2;"
 		}
 		option scientist {
 			label	"_Scientists"
 			value	"1"
 			icon	smallhead_scientist
-			action	"employee_init 1;"
 		}
 	}
 
