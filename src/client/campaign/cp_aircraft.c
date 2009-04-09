@@ -815,7 +815,7 @@ const char *AIR_CheckMoveIntoNewHomebase (const aircraft_t *aircraft, const base
 	if (base->capacities[capacity].cur >= base->capacities[capacity].max)
 		return _("No free hangars at that base.");
 
-	if (aircraft->maxTeamSize + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
+	if (aircraft->maxTeamSize + ((aircraft->pilot) ? 1 : 0) + base->capacities[CAP_EMPLOYEES].cur >  base->capacities[CAP_EMPLOYEES].max)
 		return _("Insufficient free crew quarter space at that base.");
 
 	if (aircraft->maxTeamSize && base->capacities[CAP_ITEMS].cur + AIR_GetStorageRoom(aircraft) > base->capacities[CAP_ITEMS].max)
@@ -872,6 +872,13 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 
 	Com_DPrintf(DEBUG_CLIENT, "AIR_MoveAircraftIntoNewHomebase: Change homebase of '%s' to '%s'\n", aircraft->id, base->name);
 
+	/* Is aircraft being transfered? */
+	if (aircraft->status == AIR_TRANSFER) {
+		/* Move the aircraft to the new base to avoid fuel problems */
+		VectorCopy(base->pos, aircraft->pos);
+		aircraft->status = AIR_HOME;
+	}
+
 	capacity = AIR_GetCapacityByAircraftWeight(aircraft);
 	if (AIR_CheckMoveIntoNewHomebase(aircraft, base, capacity))
 		return qfalse;
@@ -880,6 +887,11 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	assert(oldBase);
 
 	/* Transfer employees */
+	if (aircraft->pilot) {
+		aircraft->pilot->baseHired = base;
+		base->capacities[CAP_EMPLOYEES].cur++;
+		oldBase->capacities[CAP_EMPLOYEES].cur--;
+	}
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i]) {
 			employee_t *employee = aircraft->acTeam[i];
@@ -902,10 +914,17 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	REMOVE_ELEM(oldBase->aircraft, i, oldBase->numAircraftInBase);
 	oldBase->capacities[capacity].cur--;
 
+	if (oldBase->aircraftCurrent == aircraft)
+		oldBase->aircraftCurrent = (oldBase->numAircraftInBase) ? &oldBase->aircraft[oldBase->numAircraftInBase - 1] : NULL;
+	
 	/* Reset aircraft */
 	aircraft = &base->aircraft[base->numAircraftInBase - 1];
 	/* Change homebase of aircraft */
 	aircraft->homebase = base;
+	
+	if (!base->aircraftCurrent)
+		base->aircraftCurrent = aircraft;
+
 	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
 	/* Redirect selectedAircraft */
 	selectedAircraft = aircraft;

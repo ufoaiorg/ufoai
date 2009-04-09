@@ -794,19 +794,23 @@ static void TR_EmptyTransferCargo (base_t *destination, transfer_t *transfer, qb
 	 * aircraftArray should contain pointers to aircraftTemplates to avoid this problem, and be removed from
 	 * source base as soon as transfer starts */
 	if (transfer->hasAircraft && success && transfer->srcBase) {	/* Aircraft. Cannot come from mission */
-		/* reverse loop: aircraft are deleted in the loop: idx change */
-		for (i = min(MAX_AIRCRAFT, ccs.numAircraft) - 1; i >= 0; i--) {
+		for (i = 0; i < ccs.numAircraft; i++) {
 			if (transfer->aircraftArray[i] > TRANS_LIST_EMPTY_SLOT) {
 				aircraft_t *aircraft = AIR_AircraftGetFromIDX(i);
 				assert(aircraft);
 
 				if (AIR_CalculateHangarStorage(aircraft->tpl, destination, 0) > 0) {
-					/** @todo This doesn't work for assigned weapons and other
-					 * assigned stuff like employees and so on */
-					/* Aircraft relocated to new base, just add new one. */
-					AIR_NewAircraft(destination, aircraft->id);
-					/* Remove aircraft from old base. */
-					AIR_DeleteAircraft(transfer->srcBase, aircraft);
+					int j;
+					/* Remove pilot */
+					aircraft->pilot = NULL;
+					/* Remove soldiers */
+					for (j = 0; j < aircraft->maxTeamSize; j++) {
+						if (!aircraft->acTeam[j])
+							continue;
+						AIR_RemoveEmployee(aircraft->acTeam[j], aircraft);
+					}
+					/* Move aircraft */
+					AIR_MoveAircraftIntoNewHomebase(aircraft, destination);
 				} else {
 					/* No space, aircraft will be lost. */
 					Com_sprintf(cp_messageBuffer, sizeof(cp_messageBuffer), _("Base %s does not have enough free space in hangars. Aircraft is lost!"), destination->name);
