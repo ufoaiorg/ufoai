@@ -419,15 +419,15 @@ typedef struct ccs_s {
 	qboolean fund;
 
 	/* == employees == */
-	/* A list of all phalanx employees (soldiers, scies, workers, etc...) */
+	/* A list of all phalanx employees (soldiers, scientists, workers, etc...) */
 	employee_t employees[MAX_EMPL][MAX_EMPLOYEES];
 	/* Total number of employees. */
 	int numEmployees[MAX_EMPL];
 
-	/* == technolgies == */
+	/* == technologies == */
 	/* A list of all research-topics resp. the research-tree. */
 	technology_t technologies[MAX_TECHNOLOGIES];
-	/* Total nubmer of technologies. */
+	/* Total number of technologies. */
 	int numTechnologies;
 
 	/* == bases == */
@@ -478,7 +478,7 @@ typedef struct ccs_s {
 	aliensTmp_t aliencargo[MAX_AIRCRAFT][MAX_CARGO];	/**< Cargo of aliens. */
 	int alientypes[MAX_AIRCRAFT];						/**< How many types of aliens we collected. */
 
-	/* == pedia == */
+	/* == ufopedia == */
 	/* A list of all UFOpaedia chapters. */
 	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];
 	/* Total number uf UFOpaedia chapters */
@@ -489,7 +489,7 @@ typedef struct ccs_s {
 	int numEventMails;	/**< how many eventmails (script-id: mail) parsed */
 
 	/* == buildings in bases == */
-	/* A list of all possible unique buldings. */
+	/* A list of all possible unique buildings. */
 	building_t buildingTemplates[MAX_BUILDINGS];
 	int numBuildingTemplates;
 	/*  A list of the building-list per base. (new buildings in a base get copied from buildingTypes) */
@@ -628,9 +628,7 @@ void CP_InitMarket(qboolean load);
 
 base_t *CP_GetMissionBase(void);
 
-struct alienBase_s;
-void CP_SpawnAlienBaseMission(struct alienBase_s *alienBase);
-void CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
+mission_t *CP_CreateNewMission(interestCategory_t category, qboolean beginNow);
 qboolean CP_ChooseMap(mission_t *mission, const vec2_t pos, qboolean ufoCrashed);
 void CP_StartSelectedMission(void);
 void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, mission_t * mis);

@@ -288,40 +288,6 @@ qboolean CP_ChooseMap (mission_t *mission, const vec2_t pos, qboolean ufoCrashed
 	return qtrue;
 }
 
-
-/**
- * @brief Spawn a new alien base mission after it has been discovered.
- */
-void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
-{
-	mission_t *mission;
-
-	CP_CreateNewMission(INTERESTCATEGORY_ALIENBASE, qtrue);
-	mission = CP_GetLastMissionAdded();
-	if (!mission) {
-		Com_Printf("CP_SpawnAlienBaseMission: Could not add mission, abort\n");
-		return;
-	}
-
-	mission->stage = STAGE_BASE_DISCOVERED;
-	mission->data = (void *) alienBase;
-
-	mission->mapDef = Com_GetMapDefinitionByID("alienbase");
-	if (!mission->mapDef)
-		Sys_Error("Could not find mapdef alienbase");
-
-	Vector2Copy(alienBase->pos, mission->pos);
-	mission->posAssigned = qtrue;
-
-	Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
-
-	/* Alien base stay until it's destroyed */
-	CP_MissionDisableTimeLimit(mission);
-	/* mission appear on geoscape, player can go there */
-	CP_MissionAddToGeoscape(mission, qfalse);
-}
-
-
 /**
  * @brief Function to handle the campaign end
  */

@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_campaign.h"
 #include "cl_alienbase.h"
 #include "cl_map.h"
+#include "cp_missions.h"
 
 /**
  * @brief Set new base position
@@ -135,6 +136,37 @@ alienBase_t* AB_GetBase (int baseIDX, qboolean checkIdx)
 		return NULL;
 
 	return &ccs.alienBases[baseIDX];
+}
+
+/**
+ * @brief Spawn a new alien base mission after it has been discovered.
+ */
+void CP_SpawnAlienBaseMission (alienBase_t *alienBase)
+{
+	mission_t *mission;
+
+	mission = CP_CreateNewMission(INTERESTCATEGORY_ALIENBASE, qtrue);
+	if (!mission) {
+		Com_Printf("CP_SpawnAlienBaseMission: Could not add mission, abort\n");
+		return;
+	}
+
+	mission->stage = STAGE_BASE_DISCOVERED;
+	mission->data = (void *) alienBase;
+
+	mission->mapDef = Com_GetMapDefinitionByID("alienbase");
+	if (!mission->mapDef)
+		Sys_Error("Could not find mapdef alienbase");
+
+	Vector2Copy(alienBase->pos, mission->pos);
+	mission->posAssigned = qtrue;
+
+	Com_sprintf(mission->location, sizeof(mission->location), _("Alien base"));
+
+	/* Alien base stay until it's destroyed */
+	CP_MissionDisableTimeLimit(mission);
+	/* mission appear on geoscape, player can go there */
+	CP_MissionAddToGeoscape(mission, qfalse);
 }
 
 /**

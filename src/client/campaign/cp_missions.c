@@ -379,21 +379,6 @@ mission_t* CP_GetMissionByID (const char *missionId)
 }
 
 /**
- * @brief Get last mission added to ccs.missions.
- * @return Last mission added to ccs.missions, NULL if no mission.
- */
-mission_t* CP_GetLastMissionAdded (void)
-{
-	const linkedList_t *list = ccs.missions;
-	mission_t *mission = NULL;
-
-	for (;list; list = list->next)
-		mission = (mission_t *)list->data;
-
-	return mission;
-}
-
-/**
  * @brief Find mission corresponding to idx
  */
 mission_t* MAP_GetMissionByIdx (int id)
@@ -1421,15 +1406,16 @@ static inline void CP_SetMissionName (mission_t *mission)
  * @sa CP_SpawnNewMissions
  * @sa CP_MissionStageEnd
  */
-void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
+mission_t *CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 {
 	mission_t mission;
 	const date_t minNextSpawningDate = {0, 0};
 	const date_t nextSpawningDate = {3, 0};	/* Delay between 2 mission spawning */
+	linkedList_t *list;
 
 	/* Some event are non-occurrence */
 	if (category == INTERESTCATEGORY_NONE)
-		return;
+		return NULL;
 
 	memset(&mission, 0, sizeof(mission));
 
@@ -1455,7 +1441,8 @@ void CP_CreateNewMission (interestCategory_t category, qboolean beginNow)
 		CP_BaseAttackMissionStart(&mission);
 
 	/* Add mission to global array */
-	LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
+	list = LIST_Add(&ccs.missions, (byte*) &mission, sizeof(mission));
+	return (mission_t *)list->data;
 }
 
 /**
@@ -1531,6 +1518,7 @@ void CP_InitializeSpawningDelay (void)
 static void CP_SpawnNewMissions_f (void)
 {
 	int category, type = 0;
+	mission_t *mission;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <category>\n", Cmd_Argv(0));
@@ -1569,14 +1557,13 @@ static void CP_SpawnNewMissions_f (void)
 		return;
 	}
 
-	CP_CreateNewMission(category, qtrue);
+	mission = CP_CreateNewMission(category, qtrue);
+	if (!mission) {
+		Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
+		return;
+	}
 
 	if (type) {
-		mission_t *mission = CP_GetLastMissionAdded();
-		if (!mission) {
-			Com_Printf("CP_SpawnNewMissions_f: Could not add mission, abort\n");
-			return;
-		}
 		switch (category) {
 		case INTERESTCATEGORY_RECON:
 			/* Start mission */
