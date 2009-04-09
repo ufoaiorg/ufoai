@@ -409,6 +409,17 @@ int main (int argc, char* argv[])
 {
 	streams_init();
 
+#ifdef WIN32
+	HMODULE lib;
+	lib = LoadLibrary("dwmapi.dll");
+	if (lib != 0) {
+		void (WINAPI *DwmEnableComposition) (bool bEnable) = (void (WINAPI *) (bool bEnable)) GetProcAddress(lib, "DwmEnableComposition");
+		if (DwmEnableComposition)
+			DwmEnableComposition(FALSE);
+		FreeLibrary(lib);
+	}
+#endif
+
 	/** @todo support system wide locale dirs */
 	bindtextdomain(GETTEXT_PACKAGE, "i18n");
 	/* set encoding to utf-8 to prevent errors for Windows */
