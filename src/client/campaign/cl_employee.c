@@ -129,6 +129,14 @@ qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
 	return qfalse;
 }
 
+/**
+ * Will change the base where the employee is located in and will also update the
+ * capacity in the affected bases.
+ * @note Doesn't make any capacity checks and the employee must be hired already.
+ * @param employee The employee to change the base for
+ * @param newBase The base where the employee should be located at
+ * @return @c false if @c employee was a @c NULL pointer
+ */
 qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
 {
 	if (employee) {
