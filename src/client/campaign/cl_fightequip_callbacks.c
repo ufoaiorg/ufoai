@@ -50,6 +50,8 @@ void BDEF_MenuInit_f (void)
 
 	/* initialize selected item */
 	Cvar_Set("basedef_item_name", "main");
+	/* Clear model cvar */
+	Cvar_Set("mn_upmodel_top", "");
 	airequipSelectedTechnology = NULL;
 
 	/* initialize different variables */
