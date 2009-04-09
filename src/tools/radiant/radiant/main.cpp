@@ -85,6 +85,10 @@ DefaultAllocator - Memory allocation using new/delete, compliant with std::alloc
 #include "referencecache.h"
 #include "stacktrace.h"
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 #include <locale.h>
 
 static void gtk_error_redirect (const gchar *domain, GLogLevelFlags log_level, const gchar *message, gpointer user_data) {
