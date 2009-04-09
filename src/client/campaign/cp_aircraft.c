@@ -897,25 +897,18 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	base->capacities[capacity].cur++;
 	base->numAircraftInBase++;
 
-	/** @todo use REMOVE_ELEM_ADJUST_IDX here */
 	/* Remove aircraft from old base */
-	oldBase->numAircraftInBase--;
-	oldBase->capacities[capacity].cur--;
 	i = AIR_GetAircraftIdxInBase(aircraft);
-
-	/* move other aircraft if the deleted aircraft was not the last one of the base */
-	if (i != AIRCRAFT_INBASE_INVALID)
-		memmove(aircraft, aircraft + 1, (oldBase->numAircraftInBase - i) * sizeof(*aircraft));
-	/* wipe the now vacant last slot */
-	memset(&oldBase->aircraft[oldBase->numAircraftInBase], 0, sizeof(oldBase->aircraft[oldBase->numAircraftInBase]));
+	REMOVE_ELEM(oldBase->aircraft, i, oldBase->numAircraftInBase);
+	oldBase->capacities[capacity].cur--;
 
 	/* Reset aircraft */
 	aircraft = &base->aircraft[base->numAircraftInBase - 1];
-
 	/* Change homebase of aircraft */
 	aircraft->homebase = base;
-
 	/* No need to update global IDX of every aircraft: the global IDX of this aircraft did not change */
+	/* Redirect selectedAircraft */
+	selectedAircraft = aircraft;
 
 	return qtrue;
 }
