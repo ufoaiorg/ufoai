@@ -1742,6 +1742,108 @@ static void TR_TransferClose_f (void)
 	memset(td.trEmployeesTmp, 0, sizeof(td.trEmployeesTmp));
 	memset(td.trAircraftsTmp, TRANS_LIST_EMPTY_SLOT, sizeof(td.trAircraftsTmp));
 }
+
+#ifdef DEBUG
+/**
+ * @brief Lists an/all active transfer(s)
+ */
+static void TR_ListTransfers_f (void)
+{
+	int transIdx = -1;
+	int i;
+
+	if (Cmd_Argc() == 2) {
+		transIdx = atoi(Cmd_Argv(1));
+		if (transIdx < 0 || transIdx > MAX_TRANSFERS) {
+			Com_Printf("Usage: %s [transferIDX]\nWithout parameter it lists all.\n", Cmd_Argv(0));
+			return;
+		}
+	}
+
+	if (!ccs.numTransfers)
+		Com_Printf("No active transfers.\n");
+
+	for (i = 0; i < ccs.numTransfers; i++) {
+		const transfer_t *transfer = &ccs.transfers[i];
+		dateLong_t date;
+
+		if (transIdx >= 0 && i != transIdx)
+			continue;
+		if (!transfer->active)
+			continue;
+
+		/* @todo: we need a strftime feature to make this easier */
+		CL_DateConvertLong(&transfer->event, &date);
+
+		Com_Printf("Transfer #%d\n", i);
+		Com_Printf("...From %d (%s) To %d (%s) Arrival: %04i-%02i-%02i %02i:%02i:%02i\n",
+			(transfer->srcBase) ? transfer->srcBase->idx : -1,
+			(transfer->srcBase) ? transfer->srcBase->name : "(null)",
+			(transfer->destBase) ? transfer->destBase->idx : -1,
+			(transfer->destBase) ? transfer->destBase->name : "(null)",
+			date.year, date.month, date.day, date.hour, date.min, date.sec);
+
+		/* ItemCargo */
+		if (transfer->hasItems) {
+			int j;
+			Com_Printf("...ItemCargo:\n");
+			for (j = 0; j < csi.numODs; j++) {
+				if (transfer->itemAmount[j])
+					Com_Printf("......%s: %i\n", csi.ods[j].id, transfer->itemAmount[j]);
+			}
+		}
+		/* Carried Employees */
+		if (transfer->hasEmployees) {
+			int j;
+			Com_Printf("...Carried Employee:\n");
+			for (j = 0; j < MAX_EMPL; j++) {
+				int k;
+				for (k = 0; k < MAX_EMPLOYEES; k++) {
+					const struct employee_s *employee = transfer->trEmployees[j][k];
+					if (!employee)
+						continue;
+					if (employee->ugv) {
+						/* @todo: imrove ugv listing when they're implemented */
+						Com_Printf("......ugv: %s [idx: %i]\n", employee->ugv->id, employee->idx);
+					} else {
+						Com_Printf("......%s (%s) / %s [idx: %i ucn: %i]\n", employee->chr.name,
+							E_GetEmployeeString(employee->type),
+							(employee->nation) ? employee->nation->id : "(nonation)",
+							employee->idx, employee->chr.ucn);
+						if (!employee->hired)
+							Com_Printf("Warning: employee^ not hired!\n");
+						if (!employee->transfer)
+							Com_Printf("Warning: employee^ not marked as being transfered!\n");
+					}
+				}
+			}
+		}
+		/* AlienCargo */
+		if (transfer->hasAliens) {
+			int j;
+			Com_Printf("...AlienCargo:\n");
+			for (j = 0; j < csi.numTeamDefs; j++) {
+				if (transfer->alienAmount[j][TRANS_ALIEN_ALIVE] + transfer->alienAmount[j][TRANS_ALIEN_DEAD])
+					Com_Printf("......%s alive: %i dead: %i\n", csi.teamDef[j].id, transfer->alienAmount[j][TRANS_ALIEN_ALIVE], transfer->alienAmount[j][TRANS_ALIEN_DEAD]);
+			}
+		}
+		/* Transfered Aircraft */
+		if (transfer->hasAircraft) {
+			int j;
+			Com_Printf("...Transfered Aircraft:\n");
+			for (j = 0; j < ccs.numAircraft; j++) {
+				const aircraft_t *aircraft;
+				if (transfer->aircraftArray[j] == TRANS_LIST_EMPTY_SLOT)
+					continue;
+				aircraft = AIR_AircraftGetFromIDX(transfer->aircraftArray[j]);
+				Com_Printf("......%s [idx: %i]\n", (aircraft) ? aircraft->id : "(null)", j);
+			}
+		}
+
+	}
+}
+#endif
+
 /**
  * @brief Save callback for xml savegames
  * @sa TR_LoadXML
@@ -1927,6 +2029,9 @@ void TR_InitStartup (void)
 	Cmd_AddCommand("trans_nextbase", TR_NextBase_f, "Callback for selecting next base");
 	Cmd_AddCommand("trans_prevbase", TR_PrevBase_f, "Callback for selecting previous base");
 	Cmd_AddCommand("trans_baselist_click", TR_TransferBaseListClick_f, "Callback for choosing base while recovering alien after mission");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_listtransfers", TR_ListTransfers_f, "Lists an/all active transfer(s)");
+#endif
 
 	memset(&td, 0, sizeof(td));
 }
