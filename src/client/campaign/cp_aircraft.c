@@ -887,18 +887,11 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 	assert(oldBase);
 
 	/* Transfer employees */
-	if (aircraft->pilot) {
-		aircraft->pilot->baseHired = base;
-		base->capacities[CAP_EMPLOYEES].cur++;
-		oldBase->capacities[CAP_EMPLOYEES].cur--;
-	}
+	E_MoveIntoNewBase(aircraft->pilot, base);
 	for (i = 0; i < aircraft->maxTeamSize; i++) {
 		if (aircraft->acTeam[i]) {
 			employee_t *employee = aircraft->acTeam[i];
-			assert(employee);
-			employee->baseHired = base;
-			base->capacities[CAP_EMPLOYEES].cur++;
-			oldBase->capacities[CAP_EMPLOYEES].cur--;
+			E_MoveIntoNewBase(employee, base);
 			/* Transfer items carried by soldiers from oldBase to base */
 			AIR_TransferItemsCarriedByCharacterToBase(&employee->chr, oldBase, base);
 		}
@@ -916,12 +909,12 @@ qboolean AIR_MoveAircraftIntoNewHomebase (aircraft_t *aircraft, base_t *base)
 
 	if (oldBase->aircraftCurrent == aircraft)
 		oldBase->aircraftCurrent = (oldBase->numAircraftInBase) ? &oldBase->aircraft[oldBase->numAircraftInBase - 1] : NULL;
-	
+
 	/* Reset aircraft */
 	aircraft = &base->aircraft[base->numAircraftInBase - 1];
 	/* Change homebase of aircraft */
 	aircraft->homebase = base;
-	
+
 	if (!base->aircraftCurrent)
 		base->aircraftCurrent = aircraft;
 
@@ -1716,7 +1709,7 @@ void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAirc
 void AIR_ListCraftIndexes_f (void)
 {
 	int i;
-	
+
 	Com_Printf("Base\tlocalIDX\tglobalIDX\t(Craftname)\n");
 	for (i = 0; i < ccs.numBases; i++) {
 		int j;

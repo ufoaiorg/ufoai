@@ -129,6 +129,20 @@ qboolean E_IsInBase (const employee_t* empl, const base_t* const base)
 	return qfalse;
 }
 
+qboolean E_MoveIntoNewBase (employee_t *employee, base_t *newBase)
+{
+	if (employee) {
+		base_t *oldBase = employee->baseHired;
+		assert(oldBase);
+		employee->baseHired = newBase;
+		newBase->capacities[CAP_EMPLOYEES].cur++;
+		oldBase->capacities[CAP_EMPLOYEES].cur--;
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
 /**
  * @brief Convert employeeType_t to translated string
  * @param type employeeType_t value
