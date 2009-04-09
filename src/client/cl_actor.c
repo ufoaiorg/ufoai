@@ -2729,7 +2729,7 @@ static void CL_TargetingStraight (pos3_t fromPos, int from_actor_size, pos3_t to
 		CL_ParticleSpawn("cross", 0, end, NULL, NULL);
 	}
 
-	selToHit = 100 * CL_TargetingToHit(toPos);
+	hitProbability = 100 * CL_TargetingToHit(toPos);
 }
 
 
@@ -2835,7 +2835,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, int from_actor_size, pos3_t toP
 		CL_Targeting_Radius(at);
 	}
 
-	selToHit = 100 * CL_TargetingToHit(toPos);
+	hitProbability = 100 * CL_TargetingToHit(toPos);
 
 	/* switch level back to where it was again */
 	cl_worldlevel->integer = oldLevel;

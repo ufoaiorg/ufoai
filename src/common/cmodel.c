@@ -2014,7 +2014,7 @@ void Grid_MoveStore (struct pathing_s *path)
  * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
-pos_t Grid_MoveLength (struct pathing_s *path, pos3_t to, int crouching_state, qboolean stored)
+pos_t Grid_MoveLength (struct pathing_s *path, pos3_t to, int crouchingState, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= PATHFINDING_HEIGHT) {
@@ -2023,14 +2023,14 @@ pos_t Grid_MoveLength (struct pathing_s *path, pos3_t to, int crouching_state, q
 	}
 #endif
 	/* Confirm bounds */
-	assert((to[2]) < PATHFINDING_HEIGHT);
-	assert((crouching_state) >= 0);
-	assert((crouching_state) < ACTOR_MAX_STATES);
+	assert(to[2] < PATHFINDING_HEIGHT);
+	assert(crouchingState >= 0);
+	assert(crouchingState < ACTOR_MAX_STATES);
 
 	if (!stored)
-		return RT_AREA(path, to[0], to[1], to[2], crouching_state);
+		return RT_AREA(path, to[0], to[1], to[2], crouchingState);
 	else
-		return RT_SAREA(path, to[0], to[1], to[2], crouching_state);
+		return RT_SAREA(path, to[0], to[1], to[2], crouchingState);
 }
 
 

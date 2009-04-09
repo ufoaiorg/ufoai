@@ -43,12 +43,8 @@ static reactionmode_t selActorReactionState;
 /** and another to help set buttons! */
 static reactionmode_t selActorOldReactionState = R_FIRE_OFF;
 
-/** to optimise painting of HUD in move-mode, keep track of some globals: */
-static le_t *lastHUDActor; /**< keeps track of selActor */
-static int lastMoveLength; /**< keeps track of actorMoveLength */
-static int lastTU; /**< keeps track of selActor->TU */
 static cvar_t *cl_hud_message_timeout;
-int selToHit;
+int hitProbability;
 
 enum {
 	REMAINING_TU_RELOAD_RIGHT,
@@ -1300,16 +1296,14 @@ void HUD_ActorUpdateCvars (void)
 			if (displayRemainingTus[REMAINING_TU_RELOAD_RIGHT] && RIGHT(selActor)) {
 				const invList_t *weapon = RIGHT(selActor);
 				const int reloadtime = CL_CalcReloadTime(selActor, weapon->item.t);
-				if (weapon->item.m
-					 && weapon->item.t->reload
+				if (weapon->item.m && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = reloadtime;
 				}
 			} else if (displayRemainingTus[REMAINING_TU_RELOAD_LEFT] && LEFT(selActor)) {
 				const invList_t *weapon = LEFT(selActor);
 				const int reloadtime = CL_CalcReloadTime(selActor, weapon->item.t);
-				if (weapon && weapon->item.m
-					 && weapon->item.t->reload
+				if (weapon && weapon->item.m && weapon->item.t->reload
 					 && CL_UsableTUs(selActor) >= reloadtime) {
 					time = reloadtime;
 				}
@@ -1318,25 +1312,24 @@ void HUD_ActorUpdateCvars (void)
 					time = TU_CROUCH;
 			}
 		} else if (selActor->actorMode == M_MOVE || selActor->actorMode == M_PEND_MOVE) {
-			const int reserved_tus = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
+			const int reservedTUs = CL_ReservedTUs(selActor, RES_ALL_ACTIVE);
 			/* If the mouse is outside the world, and we haven't placed the cursor in pend
 			 * mode already or the selected grid field is not reachable (ROUTING_NOT_REACHABLE) */
 			if ((mouseSpace != MS_WORLD && selActor->actorMode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
 				actorMoveLength = ROUTING_NOT_REACHABLE;
-				if (reserved_tus > 0)
-					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reserved_tus);
+				if (reservedTUs > 0)
+					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n"), selActor->morale, reservedTUs);
 				else
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i"), selActor->morale);
 				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
-			if (selActor->actorMode != selActor->oldActorMode || refresh || lastHUDActor != selActor
-						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
+			if (selActor->actorMode != selActor->oldActorMode || refresh) {
 				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
 					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
-					if (reserved_tus > 0)
+					if (reservedTUs > 0)
 						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
-							selActor->morale, reserved_tus, moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)], actorMoveLength,
-							selActor->TU - actorMoveLength, selActor->TU - reserved_tus - actorMoveLength);
+							selActor->morale, reservedTUs, moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)], actorMoveLength,
+							selActor->TU - actorMoveLength, selActor->TU - reservedTUs - actorMoveLength);
 					else
 						Com_sprintf(infoText, lengthof(infoText), _("Morale  %i\n%s %i (%i TU left)\n"), selActor->morale,
 							moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)] , actorMoveLength, selActor->TU - actorMoveLength);
@@ -1348,9 +1341,6 @@ void HUD_ActorUpdateCvars (void)
 				} else {
 					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 				}
-				lastHUDActor = selActor;
-				lastMoveLength = actorMoveLength;
-				lastTU = selActor->TU;
 				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 			}
 			time = actorMoveLength;
@@ -1361,15 +1351,15 @@ void HUD_ActorUpdateCvars (void)
 				selActor->actorMode = M_MOVE;
 			} else if (selWeapon && selFD) {
 				Com_sprintf(infoText, lengthof(infoText),
-							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, selToHit, selFD->time);
+							"%s\n%s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, hitProbability, selFD->time);
 				Com_sprintf(mouseText, lengthof(mouseText),
-							"%s: %s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, selToHit, selFD->time);
+							"%s: %s (%i) [%i%%] %i\n", _(selWeapon->item.t->name), _(selFD->name), selFD->ammo, hitProbability, selFD->time);
 
 				MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);	/* Save the text for later display next to the cursor. */
 
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
-				if (CL_UsableTUs(selActor) < time || (selWeapon->item.t->reload && selWeapon->item.a <= 0)) {
+				if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time) {
 					selActor->actorMode = M_MOVE;
 					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				}

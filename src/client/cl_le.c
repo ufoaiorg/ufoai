@@ -617,6 +617,8 @@ static void LET_PathMove (le_t * le)
 
 			tuCost = Grid_MoveLength(&clPathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouchingState, qfalse);
 			le->TU -= tuCost;
+			if (tuCost < 0 || le->TU < 0)
+				Com_Error(ERR_DROP, "Negative TU costs while walking");
 			if (le == selActor)
 				actorMoveLength -= tuCost;
 

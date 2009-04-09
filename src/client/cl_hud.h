@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CL_HUD_H
 #define CL_HUD_H
 
-extern int selToHit;
+extern int hitProbability;
 
 /* these should probably not be called from other places than menu */
 void HUD_UpdateSelectedActorReactionState(void);
