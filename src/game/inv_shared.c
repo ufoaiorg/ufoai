@@ -488,8 +488,8 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 			return qtrue;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
-		for (i = 0; i < obj->numAmmos; i++) {
-			if (obj->weapons[i] && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+		for (i = 0; i < obj->numWeapons; i++) {
+			if (obj->weapons[i] && obj->weapons[i] != obj  && INV_ItemMatchesFilter(obj->weapons[i], filterType))
 				return qtrue;
 		}
 		break;
@@ -499,8 +499,8 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 			return qtrue;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
-		for (i = 0; i < obj->numAmmos; i++) {
-			if (obj->weapons[i] && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+		for (i = 0; i < obj->numWeapons; i++) {
+			if (obj->weapons[i] && obj->weapons[i] != obj && INV_ItemMatchesFilter(obj->weapons[i], filterType))
 				return qtrue;
 		}
 		break;
@@ -510,8 +510,8 @@ qboolean INV_ItemMatchesFilter (const objDef_t *obj, const itemFilterTypes_t fil
 			return qtrue;
 
 		/* Check if one of the items that uses this ammo matches this filter type. */
-		for (i = 0; i < obj->numAmmos; i++) {
-			if (obj->weapons[i] && INV_ItemMatchesFilter(obj->weapons[i], filterType))
+		for (i = 0; i < obj->numWeapons; i++) {
+			if (obj->weapons[i] && obj->weapons[i] != obj  && INV_ItemMatchesFilter(obj->weapons[i], filterType))
 				return qtrue;
 		}
 		break;
