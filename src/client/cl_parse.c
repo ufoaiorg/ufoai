@@ -278,7 +278,7 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 	static char lastfilename[MAX_OSPATH] = "";
 
 	if (!filename || filename[0] == '\0')
-		return;
+		return qtrue;
 
 	/* r1: don't attempt same file many times */
 	if (!strcmp(filename, lastfilename))
