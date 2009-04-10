@@ -626,4 +626,5 @@ void MP_ServerListShutdown (void)
 
 	if (masterServerQueryThread)
 		SDL_KillThread(masterServerQueryThread);
+	masterServerQueryThread = NULL;
 }
