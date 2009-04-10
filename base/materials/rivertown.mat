@@ -5,11 +5,72 @@
 		envmap 1
 	}
 }
-
+{
+	material tex_buildings/carpet001
+	specular 0.1
+}
+{
+	material tex_buildings/concrete005
+	specular 0.1
+}
+{
+	material tex_buildings/floor_se01
+	specular 0.1
+}
+{
+	material tex_buildings/floor004
+	specular 0.1
+}
+{
+	material tex_buildings/floor021
+	specular 0.1
+}
+{
+	material tex_buildings/floor022
+	specular 0.1
+}
+{
+	material tex_buildings/japwall003
+	specular 0.3
+	bump 2.0
+}
 {
 	// the river
 	material tex_nature/water_dark
+	specular 2.0
 	{
 		envmap 0
 	}
 }
+{
+	material tex_buildings/wall013
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/wall031
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/wall032
+	specular 0.6
+	bump 2.0
+}
+{
+	material tex_buildings/wizwood1_2
+	specular 0.2
+}
+{
+	material tex_material/wood002
+	specular 0.2
+}
+{
+	material tex_material/wood001
+	specular 0.2
+}
+{
+	material tex_ctp1/wood_b_10
+	specular 0.2
+}
+
