@@ -77,10 +77,22 @@ int MN_DNDGetType (void)
 	return objectType;
 }
 
+/**
+ * @brief Return target of the DND
+ */
 menuNode_t *MN_DNDGetTargetNode (void)
 {
 	assert(MN_DNDIsDragging());
 	return targetNode;
+}
+
+/**
+ * @brief Return source of the DND
+ */
+menuNode_t *MN_DNDGetSourceNode (void)
+{
+	assert(MN_DNDIsDragging());
+	return sourceNode;
 }
 
 /**
