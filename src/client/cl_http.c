@@ -415,7 +415,7 @@ static void CL_CheckAndQueueDownload (char *path)
 
 	if (!pak && strcmp(ext, "bsp") && strcmp(ext, "wav") && strcmp(ext, "md2") && strcmp(ext, "ogg") &&
 		strcmp(ext, "md3") && strcmp(ext, "tga") && strcmp(ext, "png") && strcmp(ext, "jpg") &&
-		strcmp(ext, "dpm") && strcmp(ext, "mat") && strcmp(ext, "ump")) {
+		strcmp(ext, "dpm") && strcmp(ext, "obj") && strcmp(ext, "mat") && strcmp(ext, "ump")) {
 		Com_Printf("WARNING: Illegal file type '%s' in filelist.\n", path);
 		return;
 	}
