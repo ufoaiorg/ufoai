@@ -445,7 +445,7 @@ static void CL_CheckAndQueueDownload (char *path)
 
 		/* search the user homedir to find the pk3 file */
 		if (pak) {
-			Com_sprintf(gamePath, sizeof(gamePath),"%s/%s", FS_Gamedir(), path);
+			Com_sprintf(gamePath, sizeof(gamePath), "%s/%s", FS_Gamedir(), path);
 			f = fopen(gamePath, "rb");
 			if (!f)
 				exists = qfalse;
@@ -573,7 +573,7 @@ void CL_HTTP_Cleanup (void)
  */
 static void CL_FinishHTTPDownload (void)
 {
-	int msgs_in_queue, i;
+	int messagesInQueue, i;
 	CURLcode result;
 	CURL *curl;
 	long responseCode;
@@ -582,7 +582,7 @@ static void CL_FinishHTTPDownload (void)
 	qboolean isFile;
 
 	do {
-		CURLMsg *msg = curl_multi_info_read(multi, &msgs_in_queue);
+		CURLMsg *msg = curl_multi_info_read(multi, &messagesInQueue);
 		dlhandle_t *dl = NULL;
 
 		if (!msg) {
@@ -640,8 +640,7 @@ static void CL_FinishHTTPDownload (void)
 				curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 				if (responseCode == 404) {
 					const size_t len = strlen(dl->queueEntry->ufoPath);
-					assert(len >= 4);
-					if (!strcmp(dl->queueEntry->ufoPath + len - 4, ".pk3"))
+					if (len >= 4 && !strcmp(dl->queueEntry->ufoPath + len - 4, ".pk3"))
 						downloading_pak = qfalse;
 
 					if (isFile)
@@ -670,7 +669,7 @@ static void CL_FinishHTTPDownload (void)
 			case CURLE_COULDNT_CONNECT:
 			case CURLE_COULDNT_RESOLVE_PROXY:
 				if (isFile)
-					remove(dl->filePath);
+					FS_RemoveFile(dl->filePath);
 				Com_Printf("Fatal HTTP error: %s\n", curl_easy_strerror(result));
 				curl_multi_remove_handle(multi, dl->curl);
 				if (abortDownloads)
@@ -717,7 +716,7 @@ static void CL_FinishHTTPDownload (void)
 
 		Com_Printf("HTTP(%s): %.f bytes, %.2fkB/sec [%d remaining files]\n",
 			dl->queueEntry->ufoPath, fileSize, (fileSize / 1024.0) / timeTaken, pendingCount);
-	} while (msgs_in_queue > 0);
+	} while (messagesInQueue > 0);
 
 	if (handleCount == 0) {
 		if (abortDownloads == HTTPDL_ABORT_SOFT)
