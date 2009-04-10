@@ -5,7 +5,7 @@
  */
 
 /*
-Copyright (C) 2002-2007 UFO: Alien Invasion team.
+Copyright (C) 2002-2009 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -386,7 +386,10 @@ void UP_AircraftDescription (const technology_t* tech)
 				}
 			}
 			Q_strcat(upBuffer, va(_("Aircraft size:\t%s\n"), CL_AircraftSizeToName(aircraft->size)), sizeof(upBuffer));
-			Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
+			/* @note: while MAX_ACTIVETEAM limits the number of soldiers on a craft
+			 * there is no use to show this in case of an UFO (would be misleading): */
+			if (aircraft->ufotype == UFO_MAX)
+				Q_strcat(upBuffer, va(_("Max. soldiers:\t%i\n"), aircraft->maxTeamSize), sizeof(upBuffer));
 		}
 	} else if (RS_Collected_(tech)) {
 		/** @todo Display crippled info and pre-research text here */
