@@ -150,14 +150,14 @@ typedef enum {
  */
 typedef struct client_static_s {
 	connstate_t state;
-	keydest_t key_dest;
+	keydest_t keyDest;
 
 	int realtime;				/**< always increasing, no clamping, etc */
 	float frametime;			/**< seconds since last frame */
 	float framerate;
 
 	/** showing loading plaque between levels if time gets > 30 seconds ahead, break it */
-	float disable_screen;
+	float disableScreen;
 
 	int gametype;		/**< singleplayer or multiplayer */
 

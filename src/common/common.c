@@ -51,7 +51,7 @@ cvar_t *port;
 
 static FILE *logfile;
 
-static int server_state;
+static int serverState;
 
 struct memPool_s *com_aliasSysPool;
 struct memPool_s *com_cmdSysPool;
@@ -294,7 +294,7 @@ void Com_Quit (void)
  */
 int Com_ServerState (void)
 {
-	return server_state;
+	return serverState;
 }
 
 /**
@@ -304,7 +304,7 @@ int Com_ServerState (void)
 void Com_SetServerState (int state)
 {
 	Com_DPrintf(DEBUG_ENGINE, "Set server state to %i\n", state);
-	server_state = state;
+	serverState = state;
 }
 
 /**

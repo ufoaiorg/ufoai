@@ -84,7 +84,7 @@ void Con_ToggleConsole_f (void)
 	Key_ClearTyping();
 	Con_ClearNotify();
 
-	if (cls.key_dest == key_console) {
+	if (cls.keyDest == key_console) {
 		Key_SetDest(key_game);
 	} else {
 		Key_SetDest(key_console);
@@ -97,7 +97,7 @@ static void Con_ToggleChat_f (void)
 {
 	Key_ClearTyping();
 
-	if (cls.key_dest == key_console) {
+	if (cls.keyDest == key_console) {
 		if (cls.state == ca_active)
 			Key_SetDest(key_game);
 	} else
@@ -378,7 +378,7 @@ DRAWING
  */
 void Con_Close (void)
 {
-	if (cls.key_dest == key_console)
+	if (cls.keyDest == key_console)
 		Key_SetDest(key_game);
 }
 
@@ -391,7 +391,7 @@ static void Con_DrawInput (void)
 	int i;
 	char editlinecopy[MAXCMDLINE], *text;
 
-	if (cls.key_dest != key_console && cls.state == ca_active)
+	if (cls.keyDest != key_console && cls.state == ca_active)
 		return;					/* don't draw anything (always draw if not active) */
 
 	Q_strncpyz(editlinecopy, key_lines[edit_line], sizeof(editlinecopy));
@@ -455,7 +455,7 @@ void Con_DrawNotify (void)
 			v += con_fontHeight;
 	}
 
-	if (cls.key_dest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
+	if (cls.keyDest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
 		const char *s = msg_buffer;
 		int x;
 

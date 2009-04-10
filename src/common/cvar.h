@@ -110,7 +110,7 @@ const char *Cvar_Serverinfo(void);
  * @brief this is set each time a CVAR_USERINFO variable is changed
  * so that the client knows to send it to the server
  */
-extern qboolean userinfo_modified;
+extern qboolean userinfoModified;
 
 /**
  * @brief this function checks cvar ranges and integral values

@@ -58,9 +58,9 @@ typedef struct gameTypeList_s {
 } gameTypeList_t;
 
 static const gameTypeList_t gameTypeList[] = {
-	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, GAME_MP_CharacterCvars, NULL, NULL},
+	{"Multiplayer mode", "multiplayer", GAME_MULTIPLAYER, GAME_MP_InitStartup, GAME_MP_Shutdown, GAME_MP_Spawn, GAME_MP_GetTeam, GAME_MP_MapInfo, GAME_MP_Results, NULL, GAME_MP_GetEquipmentDefinition, NULL, NULL, NULL},
 	{"Campaign mode", "campaigns", GAME_CAMPAIGN, GAME_CP_InitStartup, GAME_CP_Shutdown, GAME_CP_Spawn, GAME_CP_GetTeam, GAME_CP_MapInfo, GAME_CP_Results, GAME_CP_ItemIsUseable, GAME_CP_GetEquipmentDefinition, GAME_CP_CharacterCvars, GAME_CP_TeamIsKnown, GAME_CP_Drop},
-	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, GAME_SK_CharacterCvars, NULL, NULL},
+	{"Skirmish mode", "skirmish", GAME_SKIRMISH, GAME_SK_InitStartup, GAME_SK_Shutdown, GAME_SK_Spawn, GAME_SK_GetTeam, GAME_SK_MapInfo, GAME_SK_Results, NULL, NULL, NULL, NULL, NULL},
 
 	{NULL, NULL, 0, NULL, NULL}
 };
@@ -372,7 +372,8 @@ void GAME_CharacterCvars (const character_t *chr)
 
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
-			list->charactercvars(chr);
+			if (list->charactercvars)
+				list->charactercvars(chr);
 			return;
 		}
 		list++;
@@ -395,7 +396,6 @@ void GAME_Drop (void)
 
 	while (list->name) {
 		if (list->gametype == cls.gametype) {
-			MN_PopMenu(qtrue);
 			if (!list->drop) {
 				GAME_SetMode(GAME_NONE);
 				MN_InitStack("main", NULL, qfalse, qtrue);

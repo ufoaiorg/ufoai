@@ -38,7 +38,7 @@ static void MN_MapNodeDraw (menuNode_t *node)
 	if (GAME_CP_IsRunning()) {
 		vec2_t pos;
 		/* don't run the campaign in console mode */
-		if (cls.key_dest != key_console)
+		if (cls.keyDest != key_console)
 			CL_CampaignRun();	/* advance time */
 
 		MN_GetNodeAbsPos(node, pos);

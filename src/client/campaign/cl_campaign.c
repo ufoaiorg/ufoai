@@ -1984,12 +1984,8 @@ static void CP_RemoveCampaignCommands (void)
  */
 void CP_CampaignInit (campaign_t *campaign, qboolean load)
 {
-	assert(campaign);
-
 	ccs.curCampaign = campaign;
 
-	/** @todo are all these needed on every load?
-	 * what about RS_InitTree? how often must this be done? */
 	RS_InitTree(load);		/**< Initialise all data in the research tree. */
 
 	CP_AddCampaignCommands();
@@ -2001,9 +1997,7 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 	CP_XVIInit();
 
-	MN_PopMenu(qtrue);
-	Cvar_Set("mn_main", "campaign_main");
-	Cvar_Set("mn_active", "map");
+	MN_InitStack("map", "campaign_main", qtrue, qtrue);
 
 	if (load) {
 		/** @todo move into CP_Load? */
@@ -2037,8 +2031,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 	/* Initialize XVI overlay */
 	Cvar_SetValue("mn_xvimap", ccs.XVIShowMap);
 	R_InitializeXVIOverlay(campaign->map, NULL, 0, 0);
-
-	MN_InitStack("map", "campaign_main", qtrue, qtrue);
 
 	/* create a base as first step */
 	B_SelectBase(NULL);

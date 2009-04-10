@@ -190,7 +190,7 @@ void CL_Drop (void)
  */
 static void CL_Connect (void)
 {
-	userinfo_modified = qfalse;
+	userinfoModified = qfalse;
 
 	NET_DatagramSocketClose(cls.netDatagramSocket);
 	cls.netDatagramSocket = NULL;
@@ -861,12 +861,12 @@ static void CL_SendChangedUserinfos (void)
 {
 	/* send a userinfo update if needed */
 	if (cls.state >= ca_connected) {
-		if (userinfo_modified) {
+		if (userinfoModified) {
 			struct dbuffer *msg = new_dbuffer();
 			NET_WriteByte(msg, clc_userinfo);
 			NET_WriteString(msg, Cvar_Userinfo());
 			NET_WriteMsg(cls.netStream, msg);
-			userinfo_modified = qfalse;
+			userinfoModified = qfalse;
 		}
 	}
 }
@@ -915,7 +915,7 @@ static void CL_SendCommand (void)
 			cls.servername[0] = '\0';
 			cls.serverport[0] = '\0';
 			CL_SetClientState(ca_connecting);
-			userinfo_modified = qfalse;
+			userinfoModified = qfalse;
 			return;
 		}
 		break;

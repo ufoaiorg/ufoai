@@ -436,7 +436,7 @@ static void Key_Console (int key, int unicode)
 }
 
 /**
- * @brief Handles input when cls.key_dest == key_message
+ * @brief Handles input when cls.keyDest == key_message
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
  * @sa MN_LeftClick
@@ -887,12 +887,12 @@ void Key_Init (void)
 }
 
 /**
- * @brief Sets the key_dest in cls
- * @param[in] key_dest see keydest_t
+ * @brief Sets the keyDest in cls
+ * @param[in] keyDest see keydest_t
  */
 void Key_SetDest (int key_dest)
 {
-	cls.key_dest = key_dest;
+	cls.keyDest = key_dest;
 }
 
 /**
@@ -912,7 +912,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 	if (cls.state == ca_sequence && !(key >= K_F1 && key <= K_F12))
 		key = K_ESCAPE;
 
-	if (cls.key_dest != key_console && down) {
+	if (cls.keyDest != key_console && down) {
 		if (MN_KeyPressed(key, unicode))
 			return;
 	}
@@ -925,7 +925,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 		if (cls.playingCinematic == CIN_STATUS_FULLSCREEN)
 			CIN_StopCinematic();
 
-		switch (cls.key_dest) {
+		switch (cls.keyDest) {
 		case key_message:
 			Key_Message(unicode);
 			break;
@@ -968,7 +968,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 	}
 
 	/* if not a consolekey, send to the interpreter no matter what mode is */
-	if (cls.key_dest == key_game || (key >= K_MOUSE1 && key <= K_MWHEELUP)) {
+	if (cls.keyDest == key_game || (key >= K_MOUSE1 && key <= K_MWHEELUP)) {
 		/* Some keyboards need modifiers to access key values that are
 		 * present as bare keys on other keyboards. Smooth over the difference
 		 * here by using the translated value if there is a binding for it. */
@@ -994,7 +994,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 				Cbuf_AddText(kb);
 				Cbuf_AddText("\n");
 			}
-			if (cls.key_dest == key_game)
+			if (cls.keyDest == key_game)
 				return;
 		}
 	}
@@ -1002,7 +1002,7 @@ void Key_Event (unsigned int key, unsigned short unicode, qboolean down, unsigne
 	if (!down)
 		return;	/* other systems only care about key down events */
 
-	switch (cls.key_dest) {
+	switch (cls.keyDest) {
 	case key_message:
 		Key_Message(unicode);
 		break;

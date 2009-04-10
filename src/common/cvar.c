@@ -39,7 +39,7 @@ static cvar_t *cvar_vars_hash[CVAR_HASH_SIZE];
  * @brief This is set each time a CVAR_USERINFO variable is changed
  * so that the client knows to send it to the server
  */
-qboolean userinfo_modified;
+qboolean userinfoModified;
 
 /**
  * @brief Cvar list
@@ -480,7 +480,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
-		userinfo_modified = qtrue;	/* transmit at next opportunity */
+		userinfoModified = qtrue;	/* transmit at next opportunity */
 
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
@@ -544,7 +544,7 @@ cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 
 	/* transmit at next opportunity */
 	if (var->flags & CVAR_USERINFO)
-		userinfo_modified = qtrue;
+		userinfoModified = qtrue;
 
 	if (var->old_string)
 		Mem_Free(var->old_string);		/* free the old value string */

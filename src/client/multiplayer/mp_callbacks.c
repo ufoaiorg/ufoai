@@ -93,8 +93,6 @@ void CL_Rcon_f (void)
 		return;
 	}
 
-	/** @todo Implement rcon_address to be able to access servers we are not
-	 * connected to */
 	if (cls.state < ca_connected) {
 		Com_Printf("You are not connected to any server\n");
 		return;

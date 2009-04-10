@@ -51,9 +51,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static float scr_con_current;			/* aproaches scr_conlines at scr_conspeed */
 static float scr_conlines;				/* 0.0 to 1.0 lines of console to display */
 
-static qboolean scr_initialized = qfalse;/* ready to draw */
+static qboolean screenInitialized = qfalse;/* ready to draw */
 
-static int scr_draw_loading = 0;
+static int screenDrawLoading = 0;
 
 static cvar_t *scr_conspeed;
 static cvar_t *scr_consize;
@@ -201,7 +201,7 @@ static void SCR_DrawLoading (void)
 		return;
 	}
 
-	if (!scr_draw_loading) {
+	if (!screenDrawLoading) {
 		loadingPic = NULL;
 		return;
 	}
@@ -347,7 +347,7 @@ static void SCR_DrawCursor (void)
 void SCR_RunConsole (void)
 {
 	/* decide on the height of the console */
-	if (cls.key_dest == key_console)
+	if (cls.keyDest == key_console)
 		scr_conlines = scr_consize->value;	/* half screen */
 	else
 		scr_conlines = 0;		/* none visible */
@@ -379,7 +379,7 @@ static void SCR_DrawConsole (void)
 		if (scr_con_current)
 			Con_DrawConsole(scr_con_current);
 		/* allow chat in waiting dialoges */
-		if (cls.key_dest == key_message)
+		if (cls.keyDest == key_message)
 			Con_DrawNotify(); /* only draw notify in game */
 		return;
 	}
@@ -394,7 +394,7 @@ static void SCR_DrawConsole (void)
 	if (scr_con_current) {
 		Con_DrawConsole(scr_con_current);
 	} else {
-		if ((cls.key_dest == key_game || cls.key_dest == key_message) && cls.state != ca_sequence)
+		if ((cls.keyDest == key_game || cls.keyDest == key_message) && cls.state != ca_sequence)
 			Con_DrawNotify(); /* only draw notify in game */
 	}
 }
@@ -406,10 +406,10 @@ static void SCR_DrawConsole (void)
  */
 void SCR_BeginLoadingPlaque (void)
 {
-	scr_draw_loading = 1;
+	screenDrawLoading = 1;
 
 	SCR_UpdateScreen();
-	cls.disable_screen = cls.realtime;
+	cls.disableScreen = cls.realtime;
 }
 
 /**
@@ -417,8 +417,8 @@ void SCR_BeginLoadingPlaque (void)
  */
 void SCR_EndLoadingPlaque (void)
 {
-	cls.disable_screen = 0;
-	scr_draw_loading = 0;
+	cls.disableScreen = 0;
+	screenDrawLoading = 0;
 	SCR_DrawLoading(); /* reset the loadingPic pointer */
 	/* clear any lines of console text */
 	Con_ClearNotify();
@@ -470,24 +470,24 @@ void SCR_UpdateScreen (void)
 {
 	/* if the screen is disabled (loading plaque is up, or vid mode changing)
 	 * do nothing at all */
-	if (cls.disable_screen) {
-		if (cls.realtime - cls.disable_screen > 120000 && refdef.ready) {
-			cls.disable_screen = 0;
+	if (cls.disableScreen) {
+		if (cls.realtime - cls.disableScreen > 120000 && refdef.ready) {
+			cls.disableScreen = 0;
 			Com_Printf("Loading plaque timed out.\n");
 			return;
 		}
 	}
 
 	/* not initialized yet */
-	if (!scr_initialized)
+	if (!screenInitialized)
 		return;
 
 	R_BeginFrame();
 
-	if (cls.state == ca_disconnected && !scr_draw_loading)
+	if (cls.state == ca_disconnected && !screenDrawLoading)
 		SCR_EndLoadingPlaque();
 
-	if (scr_draw_loading)
+	if (screenDrawLoading)
 		SCR_DrawLoading();
 	else {
 		MN_SetViewRect();
@@ -538,5 +538,5 @@ void SCR_Init (void)
 
 	SCR_TouchPics();
 
-	scr_initialized = qtrue;
+	screenInitialized = qtrue;
 }

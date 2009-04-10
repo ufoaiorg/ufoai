@@ -285,12 +285,6 @@ equipDef_t *GAME_MP_GetEquipmentDefinition (void)
 	return &equipDefMultiplayer;
 }
 
-void GAME_MP_CharacterCvars (const character_t *chr)
-{
-	Cvar_Set("mn_chrrank", "");
-	Cvar_Set("mn_chrrank_img", "");
-}
-
 void GAME_MP_InitStartup (void)
 {
 	const char *max_s = Cvar_VariableStringOld("sv_maxsoldiersperteam");
