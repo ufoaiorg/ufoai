@@ -1957,7 +1957,9 @@ static void CL_SwapSkills (chrList_t *team)
 		for (skill = ABILITY_NUM_TYPES; skill < SKILL_NUM_TYPES; skill++) {
 			for (j = 0; j < team->num - 1; j++) {
 				character_t *cp1 = team->chr[j];
-				const fireDef_t *fdRightArray, *fdHolsterArray;
+				const fireDef_t *fdRightArray = NULL;
+				const fireDef_t *fdHolsterArray = NULL;
+
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m && RIGHT(cp1)->item.t)
 					fdRightArray = FIRESH_FiredefForWeapon(&RIGHT(cp1)->item);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m && HOLSTER(cp1)->item.t)
