@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void SV_Heartbeat_f (void)
 {
 	/* heartbeats will always be sent to the ufo master */
-	svs.last_heartbeat = -9999999;	/* send immediately */
+	svs.lastHeartbeat = -9999999;	/* send immediately */
 }
 
 /**

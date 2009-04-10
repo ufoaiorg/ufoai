@@ -707,13 +707,13 @@ static void Master_Heartbeat (void)
 		return;		/* a private dedicated game */
 
 	/* check for time wraparound */
-	if (svs.last_heartbeat > svs.realtime)
-		svs.last_heartbeat = svs.realtime;
+	if (svs.lastHeartbeat > svs.realtime)
+		svs.lastHeartbeat = svs.realtime;
 
-	if (svs.realtime - svs.last_heartbeat < HEARTBEAT_SECONDS * 1000)
+	if (svs.realtime - svs.lastHeartbeat < HEARTBEAT_SECONDS * 1000)
 		return;					/* not time to send yet */
 
-	svs.last_heartbeat = svs.realtime;
+	svs.lastHeartbeat = svs.realtime;
 
 	if (masterServerHeartBeatThread != NULL) {
 		Com_Printf("heartbeat already in progress\n");

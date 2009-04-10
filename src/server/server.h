@@ -49,7 +49,7 @@ typedef enum {
 typedef struct {
 	server_state_t state;		/**< precache commands are only valid during load */
 
-	char name[MAX_QPATH];		/**< map name, or cinematic name */
+	char name[MAX_QPATH];		/**< map name */
 	qboolean day;				/**< day version loaded */
 	char assembly[MAX_QPATH];		/**< random map assembly name */
 	struct cBspModel_s *models[MAX_MODELS];
@@ -86,7 +86,7 @@ typedef struct client_s {
 
 /**
  * a client can leave the server in one of four ways:
- * @li dropping properly by quiting or disconnecting
+ * @li dropping properly by quitting or disconnecting
  * @li timing out if no valid messages are received
  * @li getting kicked off by the server operator
  * @li a program error, like an overflowed reliable buffer
@@ -101,7 +101,7 @@ typedef struct {
 	struct datagram_socket *netDatagramSocket;
 	int spawncount;				/**< incremented each server start - used to check late spawns */
 	client_t *clients;			/**< [sv_maxclients->value]; */
-	int last_heartbeat;			/**< time where the last heartbeat was send to the master server
+	int lastHeartbeat;			/**< time where the last heartbeat was send to the master server
 								 * Set to a huge negative value to send immmediately */
 } server_static_t;
 
