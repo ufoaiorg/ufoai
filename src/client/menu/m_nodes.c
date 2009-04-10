@@ -195,7 +195,7 @@ const char* MN_GetPath (const menuNode_t* node)
 void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode_t **resultNode, const value_t **resultProperty)
 {
 	char name[MAX_VAR];
-	const menuNode_t* node = NULL;
+	menuNode_t* node = NULL;
 	const char* nextName;
 	char nextCommand = '^';
 
