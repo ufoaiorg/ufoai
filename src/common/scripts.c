@@ -2587,9 +2587,9 @@ void Com_ParseScripts (void)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!strncmp(type, "equipment", 9))
+		if (!strcmp(type, "equipment"))
 			Com_ParseEquipment(name, &text);
-		else if (!strncmp(type, "team", 4))
+		else if (!strcmp(type, "team"))
 			Com_ParseTeam(name, &text);
 	}
 
