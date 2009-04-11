@@ -138,29 +138,27 @@ static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 			isAmmo = obj->numWeapons != 0 && !strcmp(obj->type, "ammo");
 			isWeapon = obj->weapon || obj->isMisc || isArmour;
 
-			if ((filter & CII_WEAPONONLY != 0) && !isWeapon)
+			if ((filter & CII_WEAPONONLY) && !isWeapon)
 				continue;
-			if ((filter & CII_AMMOONLY != 0) && !isAmmo)
+			if ((filter & CII_AMMOONLY) && !isAmmo)
 				continue;
 			if (!INV_ItemMatchesFilter(obj, iterator->filterEquipType))
 				continue;
 
 			/* exists in inventory filter */
 			iterator->itemFound = MN_ContainerNodeGetExistingItem(iterator->node, obj, iterator->filterEquipType);
-			if ((filter & CII_AVAILABLEONLY != 0) && iterator->itemFound == NULL)
+			if ((filter & CII_AVAILABLEONLY) && iterator->itemFound == NULL)
 				continue;
-			if ((filter & CII_NOTAVAILABLEONLY != 0) && iterator->itemFound != NULL)
+			if ((filter & CII_NOTAVAILABLEONLY) && iterator->itemFound != NULL)
 				continue;
 
 			/* we found something */
 			return;
 		}
 
-
 		/* can we search into another group? */
-		if (iterator->groupSteps[iterator->groupID + 1] != CII_END) {
+		if (iterator->groupSteps[iterator->groupID + 1] != CII_END)
 			iterator->itemID = -1;
-		}
 	}
 
 	/* clean up */
