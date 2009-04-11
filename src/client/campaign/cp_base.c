@@ -1184,6 +1184,8 @@ void B_SetUpBase (base_t* base, qboolean hire, qboolean buildings, vec2_t pos)
 	base->baseStatus = BASE_WORKING;
 	base->numAircraftInBase = 0;
 
+	if (!buildings)
+		hire = qfalse;
 	/* setup for first base */
 	if (ccs.campaignStats.basesBuild == 0)
 		B_SetUpFirstBase(base, hire, buildings);

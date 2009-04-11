@@ -1001,6 +1001,15 @@ menu popup_newbase
 		font		f_big
 	}
 
+	func chk_checkboxes {
+		if "*node:menu.start_building@current > 0" {
+			*start_employees disabled false
+		} else {
+			*(abstractvalue)start_employees current 0
+			*start_employees disabled true
+		}		
+	}
+
 	// START WITH EMPLOYEES
 	string start_employees_str
 	{
@@ -1033,6 +1042,7 @@ menu popup_newbase
 		pos			"246 123"
 		image		"menu/checkbox_blue"
 		size		"20 18"
+		onChange 	{ call chk_checkboxes }
 	}
 
 	button bt_cancel
@@ -1073,6 +1083,7 @@ menu popup_newbase
 			*start_employees invis false
 			*start_buildings_str invis false
 			*start_building invis false
+			call chk_checkboxes
 		} else {
 			*start_employees_str invis true
 			*start_employees invis true
