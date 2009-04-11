@@ -70,6 +70,141 @@ static int dragInfoToY = -1;
 static const invList_t *dragInfoIC;
 
 /**
+ * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
+ * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
+ * @param[in] i Pointer to the inventory where we will search.
+ * @param[in] container Container in the inventory.
+ * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
+ * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
+ * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
+ * @sa Com_SearchInInventory
+ */
+static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
+{
+	return Com_SearchInInventoryWithFilter(menuInventory, EXTRADATA(node).container, NONE, NONE, item, filterType);
+}
+
+/**
+ *  @brief Flag for containerItemIterator_t (CII) groupSteps
+ */
+#define CII_AMMOONLY 0x01
+#define CII_WEAPONONLY 0x02		/**< it mean any soldier equipment, else ammo */
+#define CII_AVAILABLEONLY 0x04
+#define CII_NOTAVAILABLEONLY 0x08
+#define CII_END 0x80
+
+typedef struct {
+	menuNode_t* node;
+	byte groupSteps[6];
+	int groupID;
+	itemFilterTypes_t filterEquipType;
+
+	int itemID;				/**< ID into csi.ods array */
+	invList_t *itemFound;	/**< If item foundID into csi.ods array */
+} containerItemIterator_t;
+
+/**
+ * @brief Compute the next itemID
+ * @note If something found, item type can be find with iterator->itemID
+ * @note If item is available into the container iterator->itemFound point to this element
+ * @node If nothing found (no next element) then iterator->itemID >= csi.numODs
+ */
+static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
+{
+	assert(iterator->groupSteps[iterator->groupID] != CII_END);
+
+	/* iterate each groups */
+	for (; iterator->groupSteps[iterator->groupID] != CII_END; iterator->groupID++) {
+		int filter = iterator->groupSteps[iterator->groupID];
+		/* next */
+		iterator->itemID++;
+
+		/* iterate all item type*/
+		for (;iterator->itemID < csi.numODs; iterator->itemID++) {
+			qboolean isAmmo;
+			qboolean isWeapon;
+			qboolean isArmour;
+			objDef_t *obj = &csi.ods[iterator->itemID];
+
+			/* gameplay filter */
+			if (!GAME_ItemIsUseable(obj))
+				continue;
+			if (!INVSH_UseableForTeam(obj, GAME_GetCurrentTeam()))
+				continue;
+
+			/* type filter */
+			/** @todo not sure its the right check */
+			isArmour = !strcmp(obj->type, "armour");
+			isAmmo = obj->numWeapons != 0 && !strcmp(obj->type, "ammo");
+			isWeapon = obj->weapon || obj->isMisc || isArmour;
+
+			if ((filter & CII_WEAPONONLY != 0) && !isWeapon)
+				continue;
+			if ((filter & CII_AMMOONLY != 0) && !isAmmo)
+				continue;
+			if (!INV_ItemMatchesFilter(obj, iterator->filterEquipType))
+				continue;
+
+			/* exists in inventory filter */
+			iterator->itemFound = MN_ContainerNodeGetExistingItem(iterator->node, obj, iterator->filterEquipType);
+			if ((filter & CII_AVAILABLEONLY != 0) && iterator->itemFound == NULL)
+				continue;
+			if ((filter & CII_NOTAVAILABLEONLY != 0) && iterator->itemFound != NULL)
+				continue;
+
+			/* we found something */
+			return;
+		}
+
+
+		/* can we search into another group? */
+		if (iterator->groupSteps[iterator->groupID + 1] != CII_END) {
+			iterator->itemID = -1;
+		}
+	}
+
+	/* clean up */
+	iterator->itemFound = NULL;
+}
+
+/**
+ * @brief Use a container node to init an item iterator
+ */
+static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, menuNode_t* node)
+{
+	int groupID = 0;
+	iterator->itemID = -1;
+	iterator->groupID = 0;
+	iterator->node = node;
+	iterator->filterEquipType = EXTRADATA(node).filterEquipType;
+
+	if (EXTRADATA(node).displayAvailableOnTop) {
+		/* available items */
+		if (EXTRADATA(node).displayWeapon)
+			iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_AVAILABLEONLY;
+		if (EXTRADATA(node).displayAmmo)
+			iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_AVAILABLEONLY;
+		/* unavailable items */
+		if (EXTRADATA(node).displayUnavailableItem) {
+			if (EXTRADATA(node).displayWeapon)
+				iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_NOTAVAILABLEONLY;
+			if (EXTRADATA(node).displayAmmo)
+				iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_NOTAVAILABLEONLY;
+		}
+	} else {
+		const int filter = (EXTRADATA(node).displayUnavailableItem)?0:CII_AVAILABLEONLY;
+		if (EXTRADATA(node).displayWeapon)
+			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
+		if (EXTRADATA(node).displayAmmo)
+			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
+	}
+	iterator->groupSteps[groupID++] = CII_END;
+
+	/* find the first item */
+	MN_ContainerItemIteratorNext(iterator);
+}
+
+/**
  * @brief Set a filter
  */
 void MN_ContainerNodeSetFilter (menuNode_t* node, int num)
@@ -500,21 +635,6 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 			color[3] = 0.5;
 		MN_DrawItem(node, pos, item, -1, -1, scale, color);
 	}
-}
-
-/**
- * @brief Searches if there is an item at location (x/y) in a scrollable container. You can also provide an item to search for directly (x/y is ignored in that case).
- * @note x = x-th item in a row, y = row. i.e. x/y does not equal the "grid" coordinates as used in those containers.
- * @param[in] i Pointer to the inventory where we will search.
- * @param[in] container Container in the inventory.
- * @param[in] x/y Position in the scrollable container that you want to check. Ignored if "item" is set.
- * @param[in] item The item to search. Will ignore "x" and "y" if set, it'll also search invisible items.
- * @return invList_t Pointer to the invList_t/item that is located at x/y or equals "item".
- * @sa Com_SearchInInventory
- */
-static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDef_t *item, const itemFilterTypes_t filterType)
-{
-	return Com_SearchInInventoryWithFilter(menuInventory, EXTRADATA(node).container, NONE, NONE, item, filterType);
 }
 
 /**
