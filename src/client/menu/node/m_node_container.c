@@ -131,9 +131,9 @@ void MN_ContainerNodeUpdateEquipment (inventory_t *inv, equipDef_t *ed)
 
 		while (ed->num[i]) {
 			item_t item = {NONE_AMMO, NULL, &csi.ods[i], 0, 0};
-			item = CL_AddWeaponAmmo(ed, item);
 			if (!Com_AddToInventory(inv, item, &csi.ids[csi.idEquip], NONE, NONE, 1))
 				break; /* no space left in menu */
+			ed->num[item.t->idx]--;
 		}
 	}
 
@@ -1152,6 +1152,11 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 
 	/* Right click: automatic item assignment/removal. */
 	if (EXTRADATA(node).container->id != csi.idEquip) {
+		/* Remove ammo on removing weapon from a soldier */
+		if (ic->item.m && ic->item.m != ic->item.t && ic->item.a) {
+			INV_UnloadWeapon(ic, menuInventory, &csi.ids[csi.idEquip]);
+			return;
+		}
 		/* Move back to idEquip (ground, floor) container. */
 		INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, EXTRADATA(node).container, ic);
 	} else {
@@ -1196,6 +1201,8 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 				 * for available space here, too */
 				Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idRight], &px, &py, NULL);
 				packed = INV_MoveItem(menuInventory, &csi.ids[csi.idRight], px, py, EXTRADATA(node).container, ic);
+				if (ic->item.t->weapon && !ic->item.a && packed)
+					INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, &csi.ids[csi.idRight]);
 				if (!packed) {
 					const invList_t *rightHand = Com_SearchInInventory(menuInventory, &csi.ids[csi.idRight], 0, 0);
 
@@ -1203,19 +1210,27 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 					if (!rightHand || (rightHand && !rightHand->item.t->fireTwoHanded)) {
 						Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idLeft], &px, &py, NULL);
 						packed = INV_MoveItem(menuInventory, &csi.ids[csi.idLeft], px, py, EXTRADATA(node).container, ic);
+						if (ic->item.t->weapon && !ic->item.a && packed)
+							INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, &csi.ids[csi.idLeft]);
 					}
 				}
 				if (!packed) {
 					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBelt], &px, &py, NULL);
 					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBelt], px, py, EXTRADATA(node).container, ic);
+					if (ic->item.t->weapon && !ic->item.a && packed)
+						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, &csi.ids[csi.idBelt]);
 				}
 				if (!packed) {
 					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idHolster], &px, &py, NULL);
 					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idHolster], px, py, EXTRADATA(node).container, ic);
+					if (ic->item.t->weapon && !ic->item.a && packed)
+						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, &csi.ids[csi.idHolster]);
 				}
 				if (!packed) {
 					Com_FindSpace(menuInventory, &ic->item, &csi.ids[csi.idBackpack], &px, &py, NULL);
 					packed = INV_MoveItem(menuInventory, &csi.ids[csi.idBackpack], px, py, EXTRADATA(node).container, ic);
+					if (ic->item.t->weapon && !ic->item.a && packed)
+						INV_LoadWeapon(ic, menuInventory, EXTRADATA(node).container, &csi.ids[csi.idBackpack]);
 				}
 			}
 		}
@@ -1333,7 +1348,7 @@ static void MN_ContainerNodeLoading (menuNode_t *node)
 static qboolean MN_ContainerNodeDNDEnter (menuNode_t *target)
 {
 	/* accept items only, if we have a container */
-	return MN_DNDGetType() == DND_ITEM && EXTRADATA(target).container;
+	return MN_DNDGetType() == DND_ITEM && EXTRADATA(target).container && (!MN_IsScrollContainerNode(target) || MN_DNDGetSourceNode() !=  target);
 }
 
 /**
@@ -1459,9 +1474,19 @@ static qboolean MN_ContainerNodeDNDFinished (menuNode_t *source, qboolean isDrop
 
 			/** @todo We must split the move in two. Here, we should not know how to add the item to the target (see dndDrop) */
 			assert(EXTRADATA(target).container);
+			assert(fItem);
+
+			/* Remove ammo on removing weapon from a soldier */
+			if (MN_IsScrollContainerNode(MN_DNDGetTargetNode()) && fItem->item.m && fItem->item.m != fItem->item.t)
+				INV_UnloadWeapon(fItem, menuInventory, EXTRADATA(target).container);
+			/* move the item */
 			INV_MoveItem(menuInventory,
 				EXTRADATA(target).container, dragInfoToX, dragInfoToY,
 				EXTRADATA(source).container, fItem);
+			/* Add ammo on adding weapon to a soldier  */
+			if (MN_IsScrollContainerNode(source) && fItem->item.t->weapon && !fItem->item.a)
+				INV_LoadWeapon(fItem, menuInventory, EXTRADATA(source).container, EXTRADATA(target).container);
+			/* Run onChange events */
 			if (source->onChange)
 				MN_ExecuteEventActions(source, source->onChange);
 			if (source != target && target->onChange)

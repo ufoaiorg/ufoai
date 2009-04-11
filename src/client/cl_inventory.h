@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define UGV_SIZE 300
 
 qboolean INV_MoveItem(inventory_t* inv, const invDef_t * toContainer, int px, int py, const invDef_t * fromContainer, invList_t *fItem);
+void INV_LoadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer);
+void INV_UnloadWeapon(invList_t *weapon, inventory_t *inv, const invDef_t *container);
 equipDef_t *INV_GetEquipmentDefinitionByID(const char *name);
 void INV_InitStartup(void);
 void INV_ItemDescription(const objDef_t *od);

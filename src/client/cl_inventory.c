@@ -80,6 +80,48 @@ qboolean INV_MoveItem (inventory_t* inv, const invDef_t * toContainer, int px, i
 	}
 }
 
+/**
+ * @brief Load a weapon with ammo
+ * @param[in] invList_t to weapon to load
+ * @param[in] inventory_t in which the change happen
+ * @param[in] container to search ammo in
+ * @param[in] container to put the ammo to (where the weapon is)
+ */
+void INV_LoadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *srcContainer, const invDef_t *destContainer)
+{
+	int equipType;
+	invList_t *ic = NULL;
+	int i = 0;
+
+	assert(weapon);
+
+	equipType = INV_GetFilterFromItem(weapon->item.t);
+	/* search an ammo */
+	while (i < weapon->item.t->numAmmos && !ic) {
+		ic = Com_SearchInInventoryWithFilter(inv, srcContainer, NONE, NONE, weapon->item.t->ammos[i], equipType);
+		i++;
+	}
+	if (ic)
+		INV_MoveItem(inv, destContainer, weapon->x, weapon->y, srcContainer, ic);
+}
+
+/**
+ * @brief Unload a weapon and put the ammo in a container
+ * @param[in] invList_t to weapon to unload
+ * @param[in] inventory_t in which the change happen
+ * @param[in] container to put the removed ammo to
+ */
+void INV_UnloadWeapon (invList_t *weapon, inventory_t *inv, const invDef_t *container)
+{
+	assert(weapon);
+	if (container && inv) {
+		const item_t item = {NONE_AMMO, NULL, weapon->item.m, 0, 0};
+		Com_AddToInventory(inv, item, container, -1, -1, 1);
+	}
+	weapon->item.m = NULL;
+	weapon->item.a = 0;
+}
+
 #ifdef DEBUG
 /**
  * @brief Lists all object definitions.
