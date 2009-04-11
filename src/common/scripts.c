@@ -2556,9 +2556,9 @@ void Com_ParseScripts (void)
 	text = NULL;
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL)
-		if (!strncmp(type, "damagetypes", 11))
+		if (!strcmp(type, "damagetypes"))
 			Com_ParseDamageTypes(name, &text);
-		else if (!strncmp(type, "gametype", 8))
+		else if (!strcmp(type, "gametype"))
 			Com_ParseGameTypes(name, &text);
 
 	/* stage one parsing */
@@ -2567,15 +2567,15 @@ void Com_ParseScripts (void)
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != NULL) {
 		/* server/client scripts */
-		if (!strncmp(type, "item", 4))
+		if (!strcmp(type, "item"))
 			Com_ParseItem(name, &text, qfalse);
-		else if (!strncmp(type, "mapdef", 6))
+		else if (!strcmp(type, "mapdef"))
 			Com_ParseMapDefinition(name, &text);
-		else if (!strncmp(type, "craftitem", 8))
+		else if (!strcmp(type, "craftitem"))
 			Com_ParseItem(name, &text, qtrue);
-		else if (!strncmp(type, "inventory", 9))
+		else if (!strcmp(type, "inventory"))
 			Com_ParseInventory(name, &text);
-		else if (!strncmp(type, "terrain", 7))
+		else if (!strcmp(type, "terrain"))
 			Com_ParseTerrain(name, &text);
 		else if (!sv_dedicated->integer)
 			CL_ParseClientData(type, name, &text);
