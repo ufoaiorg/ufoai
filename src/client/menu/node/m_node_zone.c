@@ -91,7 +91,7 @@ static void MN_ZoneNodeLoaded (menuNode_t *node)
 		if (!menu->u.window.renderNode)
 			menu->u.window.renderNode = node;
 		else
-			Com_Printf("MN_ParseMenuBody: second render node ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_ZoneNodeLoaded: second render node ignored (menu \"%s\")\n", menu->name);
 	}
 }
 
