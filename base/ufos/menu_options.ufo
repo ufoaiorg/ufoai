@@ -1279,18 +1279,6 @@ menu popup_maintain_resolution
 		size		"450 60"
 	}
 
-	button bt_cancel
-	{
-		string		"_Cancel"
-		tooltip		"_Close this dialogue"
-		color		"0 0.5 0 1"
-		font		f_menu
-		image		menu/button_green_small
-		blend		true
-		pos			"26 188"
-		size		"176 32"
-		onClick		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
-	}
 	button bt_change
 	{
 		string		"_Accept"
@@ -1299,9 +1287,21 @@ menu popup_maintain_resolution
 		font		f_menu
 		image		menu/button_green_small
 		blend		true
-		pos			"296 188"
+		pos			"112 188"
 		size		"176 32"
 		onClick		{ cmd "mn_pop; copy new_vidmode mn_vidmode;" }
+	}
+	button bt_cancel
+	{
+		string		"_Cancel"
+		tooltip		"_Close this dialogue"
+		color		"0 0.5 0 1"
+		font		f_menu
+		image		menu/button_green_small
+		blend		true
+		pos			"297 188"
+		size		"176 32"
+		onClick		{ cmd "mn_pop; copy new_vidmode old_vidmode;" }
 	}
 
 	func init
