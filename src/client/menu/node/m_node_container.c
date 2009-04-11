@@ -1152,13 +1152,13 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 
 	/* Right click: automatic item assignment/removal. */
 	if (EXTRADATA(node).container->id != csi.idEquip) {
-		/* Remove ammo on removing weapon from a soldier */
 		if (ic->item.m && ic->item.m != ic->item.t && ic->item.a) {
+			/* Remove ammo on removing weapon from a soldier */
 			INV_UnloadWeapon(ic, menuInventory, &csi.ids[csi.idEquip]);
-			return;
+		} else {
+			/* Move back to idEquip (ground, floor) container. */
+			INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, EXTRADATA(node).container, ic);
 		}
-		/* Move back to idEquip (ground, floor) container. */
-		INV_MoveItem(menuInventory, &csi.ids[csi.idEquip], NONE, NONE, EXTRADATA(node).container, ic);
 	} else {
 		qboolean packed = qfalse;
 		int px, py;
