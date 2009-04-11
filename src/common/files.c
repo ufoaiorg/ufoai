@@ -895,7 +895,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 			**fl = 0;
 
 			/* allocate a new block */
-			tblock = Mem_PoolAlloc(sizeof(listBlock_t), com_fileSysPool, 0);
+			tblock = Mem_PoolAlloc(sizeof(*tblock), com_fileSysPool, 0);
 			tblock->next = block->next;
 			block->next = tblock;
 
@@ -931,7 +931,7 @@ int FS_BuildFileList (const char *fileList)
 	/* check the blocklist for older searches
 	 * and do a new one after deleting them */
 	for (block = fs_blocklist, tblock = NULL; block;) {
-		if (!strncmp(block->path, files, MAX_QPATH)) {
+		if (!strcmp(block->path, files)) {
 			/* delete old one */
 			if (tblock)
 				tblock->next = block->next;
@@ -952,7 +952,7 @@ int FS_BuildFileList (const char *fileList)
 	}
 
 	/* allocate a new block and link it into the list */
-	block = Mem_PoolAlloc(sizeof(listBlock_t), com_fileSysPool, 0);
+	block = Mem_PoolAlloc(sizeof(*block), com_fileSysPool, 0);
 	block->next = fs_blocklist;
 	fs_blocklist = block;
 
