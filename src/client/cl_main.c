@@ -659,8 +659,6 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 		TUT_ParseTutorials(name, text);
 	else if (!strcmp(type, "menu_model"))
 		MN_ParseMenuModel(name, text);
-	else if (!strcmp(type, "menu"))
-		MN_ParseMenu(name, text);
 	else if (!strcmp(type, "icon"))
 		MN_ParseIcon(name, text);
 	else if (!strcmp(type, "particle"))

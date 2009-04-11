@@ -372,6 +372,7 @@ void CL_Shutdown(void);
 void CL_Frame(int now, void *data);
 void CL_SlowFrame(int now, void *data);
 void CL_ParseClientData(const char *type, const char *name, const char **text);
+void MN_ParseMenu(const char *type, const char *name, const char **text);
 void CIN_RunCinematic(void);
 void SCR_BeginLoadingPlaque(void);
 void CL_InitAfter(void);

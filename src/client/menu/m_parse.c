@@ -1263,7 +1263,7 @@ void MN_ParseIcon (const char *name, const char **text)
 /**
  * @sa CL_ParseClientData
  */
-void MN_ParseMenu (const char *name, const char **text)
+void MN_ParseMenu (const char *type, const char *name, const char **text)
 {
 	const char *errhead = "MN_ParseMenu: unexpected end of file (menu";
 	menuNode_t *menu;
@@ -1271,6 +1271,11 @@ void MN_ParseMenu (const char *name, const char **text)
 	const char *token;
 	qboolean result;
 	int i;
+
+	if (strcmp(type, "menu") != 0) {
+		Sys_Error("MN_ParseMenu: '%s %s' is not a menu node\n", type, name);
+		return;	/* never reached */
+	}
 
 	/* search for menus with same name */
 	for (i = 0; i < mn.numMenus; i++)

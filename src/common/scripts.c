@@ -27,6 +27,7 @@
 #include "../game/inv_shared.h"
 #ifndef DEDICATED_ONLY
 #include "../client/client.h"
+#include "../client/menu/m_parse.h"
 #endif
 
 /** @todo remove me if PPC users dont have problems */
@@ -2593,6 +2594,16 @@ void Com_ParseScripts (void)
 	}
 
 	Com_AddObjectLinks();	/* Add ammo<->weapon links to items.*/
+
+	/* parse ui node script */
+	if (!sv_dedicated->integer) {
+		FS_BuildFileList("ufos/ui/*.ufo");
+		FS_NextScriptHeader(NULL, NULL, NULL);
+		text = NULL;
+		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != NULL) {
+			MN_ParseMenu(type, name, &text);
+		}
+	}
 
 	/* sort the mapdef array */
 	qsort(csi.mds, csi.numMDs, sizeof(mapDef_t), Com_MapDefSort);

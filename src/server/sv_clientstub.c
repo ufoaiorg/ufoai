@@ -51,6 +51,10 @@ void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
 }
 
+void MN_ParseMenu (const char *type, const char *name, const char **text)
+{
+}
+
 void Cmd_ForwardToServer (void)
 {
 	const char *cmd;

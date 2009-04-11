@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 struct menuNode_s;
 
-void MN_ParseMenu(const char *name, const char **text);
+void MN_ParseMenu(const char *type, const char *name, const char **text);
 void MN_ParseIcon(const char *name, const char **text);
 void MN_ParseMenuModel(const char *name, const char **text);
 float MN_GetReferenceFloat(const struct menuNode_s* const node, void *ref);
