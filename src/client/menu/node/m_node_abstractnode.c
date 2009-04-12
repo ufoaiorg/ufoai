@@ -493,7 +493,7 @@ static void MN_NodeSetProperty_f (void)
 
 	property = MN_GetPropertyFromBehaviour(node->behaviour, Cmd_Argv(2));
 	if (!property) {
-		Com_Printf("Property '%s.%s@%s' doesn't exist\n", node->root->name, node->name, Cmd_Argv(2));
+		Com_Printf("Property '%s@%s' doesn't exist\n", MN_GetPath(node), Cmd_Argv(2));
 		return;
 	}
 
