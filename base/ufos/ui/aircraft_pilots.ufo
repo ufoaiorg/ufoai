@@ -2,7 +2,7 @@
 // AIRCRAFT PILOTS MENU
 // ==================
 
-menu aircraft_pilots extends iaircraft
+window aircraft_pilots extends iaircraft
 {
 	// ==================
 	// background

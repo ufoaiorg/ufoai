@@ -2,7 +2,7 @@
 // EQUIPMENT MENU
 // ==================
 
-menu equipment
+window equipment
 {
 	// ==================
 	// background

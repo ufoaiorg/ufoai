@@ -1,7 +1,7 @@
 // ===================
 // AIRCRAFT EQUIP MENU
 // ===================
-menu aircraft_equip extends iaircraft
+window aircraft_equip extends iaircraft
 {
 	// ==================
 	// background

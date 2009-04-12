@@ -2,7 +2,7 @@
 // MAP MENU
 // ==================
 
-menu map
+window map
 {
 	// ==================
 	// background
@@ -520,7 +520,7 @@ menu map
 // POPUP LIST
 // ==================
 
-menu popup_list
+window popup_list
 {
 	{
 		pos			"264 262"
@@ -580,7 +580,7 @@ menu popup_list
 // POPUP BUTTON
 // ==================
 
-menu popup_button
+window popup_button
 {
 	{
 		pos			"264 262"
@@ -662,7 +662,7 @@ menu popup_button
 // POPUP INTERCEPT READY
 // ==================
 
-menu popup_intercept_ready
+window popup_intercept_ready
 {
 	{
 		pos			"264 262"
@@ -742,7 +742,7 @@ menu popup_intercept_ready
 // POPUP BASE ATTACK
 // ==================
 
-menu popup_baseattack
+window popup_baseattack
 {
 	{
 		pos			"264 262"
@@ -902,7 +902,7 @@ menu popup_baseattack
 // ===============================
 // POPUP TRANSFER BASE SELECT LIST
 // ===============================
-menu popup_transferbaselist
+window popup_transferbaselist
 {
 	{
 		pos			"264 262"
@@ -950,7 +950,7 @@ menu popup_transferbaselist
 // ==================
 // POPUP NEW BASE
 // ==================
-menu popup_newbase
+window popup_newbase
 {
 	{
 		pos			"264 262"
@@ -1096,7 +1096,7 @@ menu popup_newbase
 // ==================
 // POPUP NEW INSTALLATION
 // ==================
-menu popup_newinstallation_type
+window popup_newinstallation_type
 {
 	{
 		pos			"264 262"
@@ -1373,7 +1373,7 @@ menu popup_newinstallation_type
 
 }
 
-menu popup_newinstallation
+window popup_newinstallation
 {
 	{
 		pos			"264 262"
@@ -1491,7 +1491,7 @@ menu popup_newinstallation
 	}
 }
 
-menu samsite
+window samsite
 {
 	func init
 	{
@@ -1499,7 +1499,7 @@ menu samsite
 	}
 }
 
-menu radartower
+window radartower
 {
 	{
 		pos			"284 282"
@@ -1538,7 +1538,7 @@ menu radartower
 	}
 }
 
-menu popup_installationstatus
+window popup_installationstatus
 {
 	{
 		pos			"264 262"
@@ -1639,7 +1639,7 @@ menu popup_installationstatus
 // POPUP INTERCEPT BASE
 // ====================
 
-menu popup_intercept
+window popup_intercept
 {
 
 	{
@@ -1818,7 +1818,7 @@ menu popup_intercept
 // POPUP MISSION
 // ===================
 
-menu popup_mission
+window popup_mission
 {
 
 	{
@@ -1889,7 +1889,7 @@ menu popup_mission
 // POPUP MULTI SELECTION
 // =====================
 
-menu popup_multi_selection
+window popup_multi_selection
 {
 	{
 		pos			"264 262"
@@ -1948,7 +1948,7 @@ menu popup_multi_selection
 // POPUP AIRCRAFT
 // =====================
 
-menu popup_aircraft
+window popup_aircraft
 {
 	{
 		pos			"264 262"
@@ -2001,7 +2001,7 @@ menu popup_aircraft
 	}
 }
 
-menu popup
+window popup
 {
 	{
 		pos			"264 262"
@@ -2050,7 +2050,7 @@ menu popup
 // MENU FOR PAUSE/MESSAGES
 // ==================
 
-menu messageoptions
+window messageoptions
 {
 	{
 		pos			"256 256"
@@ -2860,7 +2860,7 @@ menu messageoptions
 // MENU FOR GEOSCAPE OPTIONS
 // ==================
 
-menu geoscape_options {
+window geoscape_options {
 	{
 		pos			"256 256"
 		size		"350 300"

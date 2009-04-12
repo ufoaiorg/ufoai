@@ -2,7 +2,7 @@
 // STATS MENU
 // ==================
 
-menu stats
+window stats
 {
 	// ==================
 	// background
@@ -178,7 +178,7 @@ menu stats
 // TODO: add extra button for this:
 // onClick { cmd "mn_push nations;" }
 
-menu nations
+window nations
 {
 	// ==================
 	// background

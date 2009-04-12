@@ -2,7 +2,7 @@
 // ALTERNATIVE HUD MAIN
 // ==================
 
-menu althud extends ahud
+window althud extends ahud
 {
 	// ==================
 	// render rectangle

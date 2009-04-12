@@ -1021,7 +1021,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 	/* get the behaviour */
 	behaviour = MN_GetNodeBehaviour(*token);
 	if (behaviour == NULL) {
-		Com_Printf("MN_ParseNode: node behaviour '%s' doesn't exist (menu \"%s\")\n", *token, MN_GetPath(parent));
+		Com_Printf("MN_ParseNode: node behaviour '%s' doesn't exist (into \"%s\")\n", *token, MN_GetPath(node));
 		return qfalse;
 	}
 
@@ -1272,8 +1272,8 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	qboolean result;
 	int i;
 
-	if (strcmp(type, "menu") != 0) {
-		Sys_Error("MN_ParseMenu: '%s %s' is not a menu node\n", type, name);
+	if (strcmp(type, "window") != 0) {
+		Sys_Error("MN_ParseMenu: '%s %s' is not a window node\n", type, name);
 		return;	/* never reached */
 	}
 
@@ -1283,7 +1283,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 			break;
 
 	if (i < mn.numMenus) {
-		Com_Printf("MN_ParseMenus: menu \"%s\" with same name found, second ignored\n", name);
+		Com_Printf("MN_ParseMenus: %s \"%s\" with same name found, second ignored\n", type, name);
 	}
 
 	if (mn.numMenus >= MAX_MENUS) {
@@ -1292,7 +1292,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	}
 
 	/* initialize the menu */
-	menu = MN_AllocNode("menu");
+	menu = MN_AllocNode(type);
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
 	menu->menu = menu;
 
@@ -1309,10 +1309,10 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 		menuNode_t *newNode;
 
 		token = COM_Parse(text);
-		Com_DPrintf(DEBUG_CLIENT, "MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", name, token);
+		Com_DPrintf(DEBUG_CLIENT, "MN_ParseMenus: %s \"%s\" inheriting node \"%s\"\n", type, name, token);
 		superMenu = MN_GetMenu(token);
 		if (!superMenu)
-			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
+			Sys_Error("MN_ParseMenu: %s '%s' can't inherit from node '%s' - because '%s' was not found\n", type, name, token, token);
 		*menu = *superMenu;
 		menu->super = superMenu;
 		menu->menu = menu;

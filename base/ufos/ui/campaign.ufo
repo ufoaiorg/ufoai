@@ -2,7 +2,7 @@
 // CAMPAIGN MENU
 // ==================
 
-menu campaigns
+window campaigns
 {
 	// ==================
 	// background
@@ -130,7 +130,7 @@ menu campaigns
 	}
 }
 
-menu campaign_main
+window campaign_main
 {
 	// ==================
 	// background
@@ -222,7 +222,7 @@ menu campaign_main
 // QUICK LOAD MENU
 // ==================
 
-menu quickload
+window quickload
 {
 	{
 		string		"_Reload campaign"
@@ -265,7 +265,7 @@ menu quickload
 // LOAD MENU
 // ==================
 
-menu load
+window load
 {
 	// ==================
 	// background
@@ -437,7 +437,7 @@ menu load
 // SAVE MENU
 // ==================
 
-menu save
+window save
 {
 	// ==================
 	// background

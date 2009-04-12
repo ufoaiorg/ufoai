@@ -3,7 +3,7 @@
 // ==================
 // with console command forwarding
 
-menu nohud
+window nohud
 {
 	// ==================
 	// render rectangle

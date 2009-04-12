@@ -2,7 +2,7 @@
 // TUTORIALS MENU
 // ==================
 
-menu tutorials
+window tutorials
 {
 	// ==================
 	// background

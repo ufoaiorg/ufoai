@@ -2,7 +2,7 @@
 // HUD MAIN
 // ==================
 
-menu hud extends ahud
+window hud extends ahud
 {
 	{
 		fill		true

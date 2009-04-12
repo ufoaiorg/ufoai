@@ -3,7 +3,7 @@
 // ==================
 
 // don't change this name!
-menu irc
+window irc
 {
 	// ==================
 	// background
@@ -182,7 +182,7 @@ menu irc
 
 // when you aren't connected you get this popup
 // don't change this name or change it in the code, too
-menu irc_popup
+window irc_popup
 {
 	{
 		pos			"264 262"

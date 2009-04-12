@@ -2,7 +2,7 @@
 // WON MENU
 // ==================
 
-menu won
+window won
 {
 	// ==================
 	// background
@@ -79,7 +79,7 @@ menu won
 // LOST MENU
 // ==================
 
-menu lost
+window lost
 {
 	// ==================
 	// background
@@ -150,7 +150,7 @@ menu lost
 // ==================================
 // POPUP FOR UFO RECOVERY (Base/sell)
 // ==================================
-menu uforecovery
+window uforecovery
 {
 	{
 		pos			"100 150"

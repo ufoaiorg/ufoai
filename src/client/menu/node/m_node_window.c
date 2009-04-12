@@ -328,8 +328,7 @@ static const value_t windowNodeProperties[] = {
 void MN_RegisterWindowNode (nodeBehaviour_t *behaviour)
 {
 	localBehaviour = behaviour;
-	/** @todo rename it according to the function name when its possible */
-	behaviour->name = "menu";
+	behaviour->name = "window";
 	behaviour->loading = MN_WindowNodeLoading;
 	behaviour->loaded = MN_WindowNodeLoaded;
 	behaviour->init = MN_WindowNodeInit;

@@ -2,7 +2,7 @@
 // SKIRMISH MENU
 // ==================
 
-menu skirmish
+window skirmish
 {
 	// ==================
 	// background

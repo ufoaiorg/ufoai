@@ -6,7 +6,7 @@
  * @brief Define interface shared by all huds.
  * @note called "ahud" to be load before another huds
  */
-menu ahud {
+window ahud {
 
 	/* Prevent time for crouch */
 	confunc crouch_checkbox_disable_s { }
@@ -16,7 +16,7 @@ menu ahud {
 	confunc unhide_chatscreen { }
 }
 
-menu radarmenu {
+window radarmenu {
 	{
 		modal true
 	}
@@ -46,7 +46,7 @@ menu radarmenu {
 	inv ... invisible
 */
 
-menu firemode_left {
+window firemode_left {
 	{
 		pos			"622 0"
 		size		"255 700"
@@ -363,7 +363,7 @@ menu firemode_left {
 	}
 }
 
-menu firemode_right {
+window firemode_right {
 	{
 		pos			"164 0"
 		size		"255 700"

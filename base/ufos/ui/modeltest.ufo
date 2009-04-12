@@ -19,7 +19,7 @@
 //	debug_mnscale mdl 2.0 2.0 2.0
 // ==================
 
-menu model_test
+window model_test
 {
 	model mdl
 	{

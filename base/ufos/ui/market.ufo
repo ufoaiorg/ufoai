@@ -2,7 +2,7 @@
 // MARKET MENU
 // ==================
 
-menu market
+window market
 {
 	// ==================
 	// background

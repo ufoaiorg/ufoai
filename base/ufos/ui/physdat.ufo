@@ -2,7 +2,7 @@
 // PHYSDATA BASE MENU
 // ==================
 
-menu physdata
+window physdata
 {
 	{
 		pos			"256 96"
@@ -150,7 +150,7 @@ menu physdata
 // HUD PHYSDATA
 // ==================
 
-menu hudphysdat extends physdata
+window hudphysdat extends physdata
 {
 	zone bt_physdata
 	{
@@ -179,7 +179,7 @@ menu hudphysdat extends physdata
 // ALT HUD PHYSDATA
 // ==================
 
-menu ahudphysdat extends physdata
+window ahudphysdat extends physdata
 {
 	zone zone_clickright
 	{

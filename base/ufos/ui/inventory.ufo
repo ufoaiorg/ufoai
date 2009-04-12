@@ -2,7 +2,7 @@
 // INVENTORY BASE MENU
 // ==================
 
-menu inventory
+window inventory
 {
 	{
 		pos "256 96"
@@ -153,7 +153,7 @@ menu inventory
 // HUD INVENTORY
 // ==================
 
-menu hudinv extends inventory
+window hudinv extends inventory
 {
 	zone bt_physdata
 	{
@@ -182,7 +182,7 @@ menu hudinv extends inventory
 // ALT HUD INVENTORY
 // ==================
 
-menu ahudinv extends inventory
+window ahudinv extends inventory
 {
 	zone zone_clickright
 	{

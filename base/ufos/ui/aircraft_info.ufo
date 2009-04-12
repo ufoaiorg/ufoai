@@ -2,7 +2,7 @@
 // MAIN AIRCRAFT MENU
 // ==================
 
-menu aircraft extends iaircraft
+window aircraft extends iaircraft
 {
 	// ==================
 	// background

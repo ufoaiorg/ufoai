@@ -91,7 +91,6 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterItemNode,
 	MN_RegisterLineChartNode,
 	MN_RegisterMapNode,
-	MN_RegisterWindowNode,	/* menu */
 	MN_RegisterModelNode,
 	MN_RegisterOptionListNode,
 	MN_RegisterPanelNode,
@@ -108,6 +107,7 @@ const static registerFunction_t registerFunctions[] = {
 	MN_RegisterTextEntryNode,
 	MN_RegisterTodoNode,
 	MN_RegisterVScrollbarNode,
+	MN_RegisterWindowNode,
 	MN_RegisterZoneNode
 };
 #define NUMBER_OF_BEHAVIOURS lengthof(registerFunctions)
@@ -414,6 +414,7 @@ nodeBehaviour_t* MN_GetNodeBehaviour (const char* name)
 	}
 
 	Sys_Error("Node behaviour '%s' doesn't exist", name);
+	/* return NULL; */
 }
 
 /**

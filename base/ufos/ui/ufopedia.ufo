@@ -2,7 +2,7 @@
 // UFOPEDIA MENU
 // ==================
 
-menu ufopedia
+window ufopedia
 {
 	// ==================
 	// background

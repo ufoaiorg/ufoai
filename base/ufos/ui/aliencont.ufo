@@ -1,7 +1,7 @@
 // ======================
 // ALIEN CONTAINMENU MENU
 // ======================
-menu aliencont
+window aliencont
 {
 	// ==================
 	// background

@@ -690,8 +690,8 @@ static void MN_FireInit_f (void)
 		return;
 	}
 
-	if (!MN_NodeInstanceOf(menu, "menu")) {
-		Com_Printf("MN_FireInit_f: Node '%s' is not a 'menu'\n", Cmd_Argv(1));
+	if (!MN_NodeInstanceOf(menu, "window")) {
+		Com_Printf("MN_FireInit_f: Node '%s' is not a 'window'\n", Cmd_Argv(1));
 		return;
 	}
 

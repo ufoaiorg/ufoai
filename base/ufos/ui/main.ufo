@@ -2,7 +2,7 @@
 // MAIN MENU
 // ==================
 
-menu main
+window main
 {
 	// ==================
 	// background
@@ -106,7 +106,7 @@ menu main
 // CVAR CHECK MENU
 // ==================
 
-menu checkcvars
+window checkcvars
 {
 	{
 		pos			"124 192"
@@ -285,7 +285,7 @@ menu checkcvars
 // SEQUENCE MENU
 // ==================
 
-menu sequence
+window sequence
 {
 	zone render
 	{
@@ -307,7 +307,7 @@ menu sequence
 // ==================
 // TIP OF THE DAY
 // ==================
-menu popup_tipoftheday
+window popup_tipoftheday
 {
 	{
 		pos			"38 456"

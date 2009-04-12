@@ -2,7 +2,7 @@
 // SINGLE PLAYER MENU
 // ==================
 
-menu singleplayer
+window singleplayer
 {
 	// ==================
 	// background
@@ -67,7 +67,7 @@ menu singleplayer
 // SINGLE PLAYER MISSION MENU
 // ==================
 
-menu singleplayermission
+window singleplayermission
 {
 	// ==================
 	// background
@@ -160,7 +160,7 @@ menu singleplayermission
 // LOST GAME MENU
 // ==================
 
-menu lostgame
+window lostgame
 {
 	pic background
 	{
@@ -216,7 +216,7 @@ menu lostgame
 // END GAME MENU
 // ==================
 
-menu endgame
+window endgame
 {
 	// ==================
 	// background

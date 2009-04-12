@@ -1,7 +1,7 @@
 // ==================
 // PRODUCTION MENU
 // ==================
-menu production
+window production
 {
 	// ==================
 	// background

@@ -2,7 +2,7 @@
 // BUILDINGS
 // ==============
 
-menu buildings
+window buildings
 {
 	// ==================
 	// background
@@ -117,7 +117,7 @@ menu buildings
 
 }
 
-menu popup_buildingpreview
+window popup_buildingpreview
 {
 	{
 		pos			"38 456"

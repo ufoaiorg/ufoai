@@ -2,7 +2,7 @@
 // OPTIONS MENU
 // ==================
 
-menu options
+window options
 {
 	{
 		noticepos	"85 110"
@@ -571,7 +571,7 @@ menu options
 	// SOUND OPTIONS MENU
 	// ==================
 
-	menu options_sound
+	panel options_sound
 	{
 		{
 			pos			"415 0"
@@ -1256,7 +1256,7 @@ menu options
 // POPUP MAINTAIN RESOLUTION
 // ==================
 
-menu popup_maintain_resolution
+window popup_maintain_resolution
 {
 	{
 		string		"_Maintain resolution"

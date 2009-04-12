@@ -5,7 +5,7 @@
 /**
  * @brief Define interface shared by all aircraft menus.
  */
-menu iaircraft
+window iaircraft
 {
 	// ==================
 	// background

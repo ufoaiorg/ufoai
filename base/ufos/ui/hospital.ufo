@@ -1,7 +1,7 @@
 // ==================
 // HOSPITAL MENU
 // ==================
-menu hospital
+window hospital
 {
 	// ==================
 	// background
@@ -468,7 +468,7 @@ menu hospital
 // ======================
 // HOSPITAL EMPLOYEE MENU
 // ======================
-menu hospital_employee
+window hospital_employee
 {
 	// ==================
 	// background

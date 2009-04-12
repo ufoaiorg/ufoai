@@ -2,7 +2,7 @@
 // MULTIPLAYER MENU
 // ==================
 
-menu multiplayer
+window multiplayer
 {
 	confunc mn_push_multiplayer
 	{
@@ -18,7 +18,7 @@ menu multiplayer
 	}
 }
 
-menu abstract_multiplayer {
+window abstract_multiplayer {
 	// ==================
 	// background
 	// ==================
@@ -99,7 +99,7 @@ menu abstract_multiplayer {
 
 }
 
-menu abstract_multiplayer_join extends abstract_multiplayer {
+window abstract_multiplayer_join extends abstract_multiplayer {
 	// ==================
 	// main navigation
 	// ==================
@@ -138,7 +138,7 @@ menu abstract_multiplayer_join extends abstract_multiplayer {
 // ==================
 // SERVER INFO
 // ==================
-menu serverinfo
+window serverinfo
 {
 	pic background
 	{
@@ -265,7 +265,7 @@ menu serverinfo
 // ==================
 // JOIN LAN MENU
 // ==================
-menu mp_serverbrowser extends abstract_multiplayer_join
+window mp_serverbrowser extends abstract_multiplayer_join
 {
 	panel content {
 		{
@@ -449,7 +449,7 @@ menu mp_serverbrowser extends abstract_multiplayer_join
 // INTERNET MENU
 // ==================
 
-menu mp_bookmarks extends abstract_multiplayer_join
+window mp_bookmarks extends abstract_multiplayer_join
 {
 	panel content {
 		{
@@ -525,7 +525,7 @@ menu mp_bookmarks extends abstract_multiplayer_join
 // SERVER MENU
 // ==================
 
-menu mp_create_server extends abstract_multiplayer
+window mp_create_server extends abstract_multiplayer
 {
 
 	tab create_natigation {
@@ -1090,7 +1090,7 @@ menu mp_create_server extends abstract_multiplayer
 // ==========================
 // MULTIPLAYER TEAM SELECTION
 // ==========================
-menu multiplayer_selectteam
+window multiplayer_selectteam
 {
 	// ==================
 	// background
@@ -1276,7 +1276,7 @@ menu multiplayer_selectteam
 // ==========================
 // MULTIPLAYER WAIT POPUP
 // ==========================
-menu multiplayer_wait
+window multiplayer_wait
 {
 	{
 		string		"_Please wait"
@@ -1340,7 +1340,7 @@ menu multiplayer_wait
 // ==========================
 // SERVER PASSWORD
 // ==========================
-menu serverpassword
+window serverpassword
 {
 	{
 		string		"_Enter server password"
@@ -1394,7 +1394,7 @@ menu serverpassword
 // ==========================
 // CHAT POPUP (IRC)
 // ==========================
-menu chat_popup
+window chat_popup
 {
 	{
 		string		"_Personal message"

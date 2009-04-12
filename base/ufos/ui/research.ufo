@@ -2,7 +2,7 @@
 // RESEARCH MENU
 // ==================
 
-menu research
+window research
 {
 	// ==================
 	// background

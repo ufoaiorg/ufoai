@@ -2,7 +2,7 @@
 // MAILCLIENT MENU
 // ==================
 
-menu mail
+window mail
 {
 	// ==================
 	// background
@@ -106,7 +106,7 @@ menu mail
 	}
 }
 
-menu mailclient
+window mailclient
 {
 	// ==================
 	// background

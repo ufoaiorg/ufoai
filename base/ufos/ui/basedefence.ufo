@@ -1,7 +1,7 @@
 // ==================
 // BASE DEFENCE MENU
 // ==================
-menu basedefence
+window basedefence
 {
 	// ==================
 	// background

@@ -2,7 +2,7 @@
 // MULTIPLAYER TEAM CREATION MENU
 // ==============================
 
-menu mp_team_edit
+window mp_team_edit
 {
 	// ==================
 	// background
@@ -735,7 +735,7 @@ menu mp_team_edit
 // MULTIPLAYER TEAM MENU
 // =====================
 
-menu mp_team extends abstract_multiplayer
+window mp_team extends abstract_multiplayer
 {
 	panel content {
 		{
@@ -954,7 +954,7 @@ menu mp_team extends abstract_multiplayer
 /**
  * @todo The mn_pop into the change event dont work - the workaround is the func close team_comments call
  */
-menu mp_team_save_popup
+window mp_team_save_popup
 {
 	{
 		pos			"264 262"

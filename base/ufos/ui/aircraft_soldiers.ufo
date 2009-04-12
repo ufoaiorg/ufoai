@@ -5,7 +5,7 @@
 /**
  * @todo rename the menu according to the file
  */
-menu team extends iaircraft
+window team extends iaircraft
 {
 	// ==================
 	// background

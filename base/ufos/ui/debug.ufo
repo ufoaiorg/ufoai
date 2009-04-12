@@ -2,7 +2,7 @@
 // EDITOR MENU
 // ==================
 
-menu editor {
+window editor {
 	{
 		pos "0 0"
 		size "1 1"

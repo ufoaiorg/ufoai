@@ -1,7 +1,7 @@
 // ==================
 // HIRE MENU
 // ==================
-menu employees
+window employees
 {
 	// ==================
 	// background
