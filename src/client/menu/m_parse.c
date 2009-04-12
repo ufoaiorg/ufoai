@@ -238,7 +238,7 @@ static inline qboolean MN_ParseSetAction (menuNode_t *menuNode, menuAction_t *ac
 	if (!property) {
 		if (action->type.param1 != EA_PATHPROPERTY) {
 			/* do we ALREADY know this node? and his type */
-			const menuNode_t *node = MN_GetNodeByPath(va("%s.%s", menuNode->menu->name, (char*)action->data));
+			const menuNode_t *node = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, (char*)action->data));
 			if (node) {
 				property = MN_GetPropertyFromBehaviour(node->behaviour, *token);
 			} else {
@@ -395,7 +395,7 @@ static menuAction_t *MN_ParseAction (menuNode_t *menuNode, const char **text, co
 				menuNode_t* callNode = NULL;
 				/* get the function name */
 				*token = COM_EParse(text, errhead, NULL);
-				callNode = MN_GetNodeByPath(va("%s.%s", menuNode->menu->name, *token));
+				callNode = MN_GetNodeByPath(va("%s.%s", menuNode->root->name, *token));
 				if (!callNode) {
 					Com_Printf("MN_ParseAction: function '%s' not found (%s)\n", *token, MN_GetPath(menuNode));
 					return NULL;
@@ -1045,7 +1045,7 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 	} else {
 		node = MN_AllocNode(behaviour->name);
 		node->parent = parent;
-		node->menu = parent->menu;
+		node->root = parent->root;
 		Q_strncpyz(node->name, *token, sizeof(node->name));
 		MN_AppendNode(parent, node);
 	}
@@ -1294,7 +1294,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	/* initialize the menu */
 	menu = MN_AllocNode(type);
 	Q_strncpyz(menu->name, name, sizeof(menu->name));
-	menu->menu = menu;
+	menu->root = menu;
 
 	menu->behaviour->loading(menu);
 
@@ -1315,7 +1315,7 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 			Sys_Error("MN_ParseMenu: %s '%s' can't inherit from node '%s' - because '%s' was not found\n", type, name, token, token);
 		*menu = *superMenu;
 		menu->super = superMenu;
-		menu->menu = menu;
+		menu->root = menu;
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 
 		/* start a new list */
@@ -1397,7 +1397,7 @@ const char *MN_GetReferenceString (const menuNode_t* const node, const char *ref
 				return NULL;
 
 			/* draw a reference to a node property */
-			refNode = MN_GetNode(node->menu, ident);
+			refNode = MN_GetNode(node->root, ident);
 			if (!refNode)
 				return NULL;
 
@@ -1447,7 +1447,7 @@ float MN_GetReferenceFloat (const menuNode_t* const node, void *ref)
 			const value_t *val;
 
 			/* draw a reference to a node property */
-			refNode = MN_GetNode(node->menu, ident);
+			refNode = MN_GetNode(node->root, ident);
 			if (!refNode)
 				return 0.0;
 

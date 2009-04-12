@@ -76,7 +76,7 @@ window team extends iaircraft
 		image	ui/button_blue	blend true
 		onClick	{
 			*cvar:cl_selected2 <cvar:cl_selected>
-			cmd "mn_addlistener equipment@close <path:menu>.listen_close_equipment"
+			cmd "mn_addlistener equipment@close <path:root>.listen_close_equipment"
 			cmd "mn_push equipment"
 		}
 		color	"1 1 1 0.8"
@@ -341,8 +341,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 0 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor1
 	{
@@ -352,8 +352,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 1 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor2
 	{
@@ -363,8 +363,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 2 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor3
 	{
@@ -374,8 +374,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 3 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor4
 	{
@@ -385,8 +385,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 4 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor5
 	{
@@ -396,8 +396,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 5 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor6
 	{
@@ -407,8 +407,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 6 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 	string txt_actor7
 	{
@@ -418,8 +418,8 @@ window team extends iaircraft
 		textalign cl
 		onClick { cmd "team_select 7 <cvar:mn_relative_id>;" }
 		invis	true
-		onWheelUp 	{ cmd "mn_active_vscrollbar <path:menu>.scroll_employees 0" } // 0: click on top
-		onWheelDown { cmd "mn_active_vscrollbar <path:menu>.scroll_employees 4" } // 4: click on bottom
+		onWheelUp 	{ cmd "mn_active_vscrollbar <path:root>.scroll_employees 0" } // 0: click on top
+		onWheelDown { cmd "mn_active_vscrollbar <path:root>.scroll_employees 4" } // 4: click on bottom
 	}
 
 	vscrollbar scroll_employees

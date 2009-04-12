@@ -292,9 +292,7 @@ static void MN_PushDropDownMenu_f (void)
 		Com_Printf("MN_PushDropDownMenu_f: Node '%s' doesn't exist\n", Cmd_Argv(1));
 		return;
 	}
-	/** @todo Every node should have a menu; menu too */
-	if (node->menu)
-		node = node->menu;
+	node = node->root;
 	node->pos[0] += destination[0] - source[0];
 	node->pos[1] += destination[1] - source[1];
 	MN_PushMenu(node->name, NULL);
@@ -570,7 +568,7 @@ qboolean MN_IsPointOnMenu (int x, int y)
 	hovered = MN_GetHoveredNode();
 	if (hovered) {
 		/* else if it is a render node */
-		if (hovered->menu && hovered == hovered->menu->u.window.renderNode) {
+		if (hovered->root && hovered == hovered->root->u.window.renderNode) {
 			return qfalse;
 		}
 		return qtrue;

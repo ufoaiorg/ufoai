@@ -86,12 +86,12 @@ static void MN_ZoneNodeLoading (menuNode_t *node)
  */
 static void MN_ZoneNodeLoaded (menuNode_t *node)
 {
-	menuNode_t * menu = node->menu;
+	menuNode_t * root = node->root;
 	if (!strncmp(node->name, "render", 6)) {
-		if (!menu->u.window.renderNode)
-			menu->u.window.renderNode = node;
+		if (!root->u.window.renderNode)
+			root->u.window.renderNode = node;
 		else
-			Com_Printf("MN_ZoneNodeLoaded: second render node ignored (menu \"%s\")\n", menu->name);
+			Com_Printf("MN_ZoneNodeLoaded: second render node ignored (\"%s\")\n", MN_GetPath(node));
 	}
 }
 

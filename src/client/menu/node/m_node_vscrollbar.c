@@ -412,7 +412,7 @@ static void MN_VScrollbarNodeLoaded (menuNode_t *node)
 {
 #ifdef DEBUG
 	if (node->size[1] - (ELEMENT_HEIGHT * 4) < 0)
-		Com_DPrintf(DEBUG_CLIENT, "Node '%s.%s' too small. It can create graphical glitches\n", node->menu->name, node->name);
+		Com_DPrintf(DEBUG_CLIENT, "Node '%s' too small. It can create graphical glitches\n", MN_GetPath(node));
 #endif
 }
 

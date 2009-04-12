@@ -77,6 +77,6 @@ void MP_AddChatMessage (const char *text)
 	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
 	if (chatBufferNode) {
 		Cmd_ExecuteString("unhide_chatscreen");
-		chatBufferNode->menu->u.window.eventTime = cls.realtime;
+		chatBufferNode->root->u.window.eventTime = cls.realtime;
 	}
 }

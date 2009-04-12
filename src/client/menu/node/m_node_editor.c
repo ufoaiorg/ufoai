@@ -187,7 +187,7 @@ static void MN_EditorNodeMouseDown (menuNode_t *node, int x, int y, int button)
 		}
 	}
 
-	if (hovered && hovered->menu != node->menu)
+	if (hovered && hovered->root != node->root)
 		anchoredNode = hovered;
 }
 

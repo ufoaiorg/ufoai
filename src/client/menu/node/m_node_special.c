@@ -56,7 +56,7 @@ static void MN_FuncNodeLoading (menuNode_t *node)
  */
 static void MN_FuncNodeLoaded (menuNode_t *node)
 {
-	menuNode_t * menu = node->menu;
+	menuNode_t * menu = node->root;
 	if (!strcmp(node->name, "init")) {
 		if (!menu->u.window.onInit)
 			menu->u.window.onInit = node->onClick;
@@ -129,7 +129,7 @@ static void MN_ConFuncNodeLoaded (menuNode_t *node)
 			Cmd_AddCommand(node->name, MN_ConfuncCommand_f, "Confunc callback");
 			Cmd_AddUserdata(node->name, node);
 		} else {
-			Com_Printf("MN_ParseNodeBody: Command name for confunc '%s.%s' already registered\n", node->menu->name, node->name);
+			Com_Printf("MN_ParseNodeBody: Command name for confunc '%s' already registered\n", MN_GetPath(node));
 		}
 	}
 }

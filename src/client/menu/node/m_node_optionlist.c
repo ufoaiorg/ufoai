@@ -180,7 +180,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 	/* the cvar string is stored in dataModelSkinOrCVar */
 	/* no cvar given? */
 	if (!node->cvar || !*(char*)node->cvar) {
-		Com_Printf("MN_OptionListNodeClick: node '%s' doesn't have a valid cvar assigned (menu %s)\n", node->name, node->menu->name);
+		Com_Printf("MN_OptionListNodeClick: node '%s' doesn't have a valid cvar assigned\n", MN_GetPath(node));
 		return;
 	}
 
@@ -198,7 +198,7 @@ static void MN_OptionListNodeClick (menuNode_t * node, int x, int y)
 		if (option->action[0] != '\0') {
 #ifdef DEBUG
 			if (option->action[strlen(option->action) - 1] != ';')
-				Com_Printf("MN_OptionListNodeClick: Option with none terminated action command (%s.%s)\n", node->menu->name, node->name);
+				Com_Printf("MN_OptionListNodeClick: Option with none terminated action command (%s)\n", MN_GetPath(node));
 #endif
 			Cbuf_AddText(option->action);
 		}

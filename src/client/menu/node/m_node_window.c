@@ -260,7 +260,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 	if (node->u.window.dragButton) {
 		menuNode_t *control = MN_AllocNode("controls");
 		Q_strncpyz(control->name, "move_window_button", sizeof(control->name));
-		control->menu = node;
+		control->root = node;
 		control->image = NULL;
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		control->size[0] = node->size[0];
@@ -276,7 +276,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		menuNode_t *button = MN_AllocNode("pic");
 		const int positionFromRight = CONTROLS_PADDING;
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
-		button->menu = node;
+		button->root = node;
 		button->image = "ui/close";
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;

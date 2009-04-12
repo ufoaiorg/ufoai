@@ -281,7 +281,7 @@ void MN_InsertNode (menuNode_t* const node, menuNode_t *prevNode, menuNode_t *ne
 	/* insert only a single element */
 	assert(!newNode->next);
 	/* everything come from the same menu (force the dev to update himself this links) */
-	assert(!prevNode || (prevNode->menu == newNode->menu));
+	assert(!prevNode || (prevNode->root == newNode->root));
 	if (prevNode == NULL) {
 		newNode->next = node->firstChild;
 		node->firstChild = newNode;
@@ -493,7 +493,7 @@ static void MN_NodeSetProperty_f (void)
 
 	property = MN_GetPropertyFromBehaviour(node->behaviour, Cmd_Argv(2));
 	if (!property) {
-		Com_Printf("Property '%s.%s@%s' doesn't exist\n", node->menu->name, node->name, Cmd_Argv(2));
+		Com_Printf("Property '%s.%s@%s' doesn't exist\n", node->root->name, node->name, Cmd_Argv(2));
 		return;
 	}
 

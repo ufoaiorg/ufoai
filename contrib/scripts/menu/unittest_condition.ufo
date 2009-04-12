@@ -194,7 +194,7 @@ window unittest_condition
 			else { *testNode7 color "1 0 0 1" }
 			if "*node:this.menu.testNodeFoo2@max == 16" { *testNode8 color "0 1 0 1" }
 			else { *testNode8 color "1 0 0 1" }
-			if "*node:menu.testNodeFoo2@invis == 1" { *testNode9 color "0 1 0 1" }
+			if "*node:root.testNodeFoo2@invis == 1" { *testNode9 color "0 1 0 1" }
 			else { *testNode9 color "1 0 0 1" }
 			if "*node:this.parent.parent.testNodeFoo2.menu.testNodeFoo2@disabled == 0" { *testNode10 color "0 1 0 1" }
 			else { *testNode10 color "1 0 0 1" }

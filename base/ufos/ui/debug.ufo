@@ -15,10 +15,10 @@ window editor {
 
 	func init {
 		cmd "echo \"Use mn_extract to write your changes to a file\";"
-		cmd "mn_editornode_start <path:menu>.editor"
+		cmd "mn_editornode_start <path:root>.editor"
 	}
 
 	func close {
-		cmd "mn_editornode_stop <path:menu>.editor"
+		cmd "mn_editornode_stop <path:root>.editor"
 	}
 }

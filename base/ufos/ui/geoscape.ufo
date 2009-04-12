@@ -846,17 +846,17 @@ window popup_baseattack
 		pos			"259 241"
 		size		"176 32"
 		onClick		{
-			if "*node:menu.liftcrafts@current > 0" {
+			if "*node:root.liftcrafts@current > 0" {
 				cmd "air_liftall;"
 			}
-			if "*node:menu.killaliens@current > 0" {
+			if "*node:root.killaliens@current > 0" {
 				cmd "aliencont_killall;"
 			}
-			if "*node:menu.powerdown@current > 0" {
+			if "*node:root.powerdown@current > 0" {
 				cmd "pwr_down;"
 			}
-			if "*node:menu.equip@current > 0" {
-				cmd "mn_addlistener equipment@close <path:menu>.listen_close_equipment"
+			if "*node:root.equip@current > 0" {
+				cmd "mn_addlistener equipment@close <path:root>.listen_close_equipment"
 				cmd "mn_push equipment;"
 			} else {
 				cmd "cp_mission_autogo;"
@@ -875,16 +875,16 @@ window popup_baseattack
 		pos			"74 241"
 		size		"176 32"
 		onClick		{
-			if "*node:menu.liftcrafts@current > 0" {
+			if "*node:root.liftcrafts@current > 0" {
 				cmd "air_liftall;"
 			}
-			if "*node:menu.killaliens@current > 0" {
+			if "*node:root.killaliens@current > 0" {
 				cmd "aliencont_killall;"
 			}
-			if "*node:menu.powerdown@current > 0" {
+			if "*node:root.powerdown@current > 0" {
 				cmd "pwr_down;"
 			}
-			if "*node:menu.equip@current > 0" {
+			if "*node:root.equip@current > 0" {
 				*cvar:mn_postaction	"game_go"
 				cmd "mn_push equipment;"
 			} else {
@@ -1002,7 +1002,7 @@ window popup_newbase
 	}
 
 	func chk_checkboxes {
-		if "*node:menu.start_building@current > 0" {
+		if "*node:root.start_building@current > 0" {
 			*start_employees disabled false
 		} else {
 			*(abstractvalue)start_employees current 0
@@ -1795,12 +1795,12 @@ window popup_intercept
 
 	confunc popup_intercept_update {
 		if "*cvar:mn_defencetab == 0" {
-			*node:menu.aircraft invis false
-			*node:menu.sam invis true
+			*node:root.aircraft invis false
+			*node:root.sam invis true
 		}
 		if "*cvar:mn_defencetab == 1" {
-			*node:menu.aircraft invis true
-			*node:menu.sam invis false
+			*node:root.aircraft invis true
+			*node:root.sam invis false
 		}
 	}
 

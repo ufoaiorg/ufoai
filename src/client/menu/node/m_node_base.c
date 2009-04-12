@@ -288,7 +288,7 @@ static void MN_BaseMapNodeClick (menuNode_t *node, int x, int y)
 
 	assert(base);
 	assert(node);
-	assert(node->menu);
+	assert(node->root);
 
 	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
@@ -334,7 +334,7 @@ static void MN_BaseMapNodeRightClick (menuNode_t *node, int x, int y)
 
 	assert(base);
 	assert(node);
-	assert(node->menu);
+	assert(node->root);
 
 	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)
@@ -366,7 +366,7 @@ static void MN_BaseMapNodeMiddleClick (menuNode_t *node, int x, int y)
 
 	assert(base);
 	assert(node);
-	assert(node->menu);
+	assert(node->root);
 
 	MN_BaseMapGetCellAtPos(node, x, y, &col, &row);
 	if (col == -1)

@@ -103,8 +103,8 @@ static const char* MN_GenInjectedString (const menuNode_t* source, qboolean useC
 					if (source) {
 						const char *command = propertyName + 5;
 						const menuNode_t *node = NULL;
-						if (!strcmp(command, "menu"))
-							node = source->menu;
+						if (!strcmp(command, "root"))
+							node = source->root;
 						else if (!strcmp(command, "this"))
 							node = source;
 						else if (!strcmp(command, "parent"))
@@ -203,10 +203,10 @@ static inline void MN_ExecuteSetAction (const menuNode_t* source, qboolean useCm
 	switch (action->type.param1) {
 	case EA_THISMENUNODENAMEPROPERTY:
 		{
-			const menuNode_t *menu = source->menu;
-			node = MN_GetNodeByPath(va("%s.%s", menu->name, path));
+			const menuNode_t *root = source->root;
+			node = MN_GetNodeByPath(va("%s.%s", root->name, path));
 			if (!node) {
-				Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist (source: %s)\n", menu->name, path, MN_GetPath(source));
+				Com_Printf("MN_ExecuteSetAction: node \"%s.%s\" doesn't exist (source: %s)\n", root->name, path, MN_GetPath(source));
 				return;
 			}
 		}

@@ -409,8 +409,8 @@ static void MN_DrawModelNodeWithMenuModel (menuNode_t *node, const char *source,
 			pmi.origin[1] = menuModelParent->origin[1] + mi->origin[1];
 			pmi.origin[2] = menuModelParent->origin[2];
 			/* don't count menuoffset twice for tagged models */
-			mi->origin[0] -= node->menu->pos[0];
-			mi->origin[1] -= node->menu->pos[1];
+			mi->origin[0] -= node->root->pos[0];
+			mi->origin[1] -= node->root->pos[1];
 
 			/* autoscale? */
 			if (node->u.model.autoscale) {
@@ -702,9 +702,9 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 
 		/* find the parent node */
 		MN_ModelNodeGetParentFromTag(tag, parentName, MAX_VAR);
-		parent = MN_GetNode(node->menu, parentName);
+		parent = MN_GetNode(node->root, parentName);
 		if (parent == NULL) {
-			Sys_Error("MN_ModelNodeLoaded: Node '%s.%s' not found. Please define parent node before childs\n", node->menu->name, parentName);
+			Sys_Error("MN_ModelNodeLoaded: Node '%s.%s' not found. Please define parent node before childs\n", node->root->name, parentName);
 		}
 
 		/* find the last child, and like the new one */
@@ -715,7 +715,7 @@ static void MN_ModelNodeLoaded (menuNode_t *node)
 	}
 
 	if (node->u.model.tag == NULL && (node->size[0] == 0 || node->size[1] == 0)) {
-		Com_Printf("MN_ModelNodeLoaded: Please set a pos and size to the node '%s.%s'. Note: 'origin' is a relative value to the center of the node\n", node->menu->name, node->name);
+		Com_Printf("MN_ModelNodeLoaded: Please set a pos and size to the node '%s'. Note: 'origin' is a relative value to the center of the node\n", MN_GetPath(node));
 	}
 }
 

@@ -1271,7 +1271,7 @@ static void MN_ContainerNodeAutoPlace (menuNode_t* node, int mouseX, int mouseY)
 	 * The right way is to compute the source and the target container
 	 * and fire the change event for both */
 	if (!strcmp(ic->item.t->type, "armour")) {
-		const menuNode_t *armour = MN_GetNode(node->menu, "armour");
+		const menuNode_t *armour = MN_GetNode(node->root, "armour");
 		if (armour && armour->onChange)
 			MN_ExecuteEventActions(armour, armour->onChange);
 	}

@@ -225,16 +225,16 @@ void MN_ReadNodePath (const char* path, const menuNode_t *relativeNode, menuNode
 				node = *(menuNode_t**) ((void*)&relativeNode);
 			else if (!strcmp(name, "parent"))
 				node = relativeNode->parent;
-			else if (!strcmp(name, "menu"))
-				node = relativeNode->menu;
+			else if (!strcmp(name, "root"))
+				node = relativeNode->root;
 			else
 				node = MN_GetMenu(name);
 			break;
 		case '.':	/* child node */
 			if (!strcmp(name, "parent"))
 				node = node->parent;
-			else if (!strcmp(name, "menu"))
-				node = node->menu;
+			else if (!strcmp(name, "root"))
+				node = node->root;
 			else
 				node = MN_GetNode(node, name);
 			break;
@@ -433,7 +433,7 @@ menuNode_t* MN_CloneNode (const menuNode_t* node, menuNode_t *newMenu, qboolean 
 	*newNode = *node;
 
 	/* clean up node navigation */
-	newNode->menu = newMenu;
+	newNode->root = newMenu;
 	newNode->parent = NULL;
 	newNode->firstChild = NULL;
 	newNode->lastChild = NULL;

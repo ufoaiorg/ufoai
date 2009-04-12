@@ -67,7 +67,7 @@ typedef struct menuNode_s {
 	struct menuNode_s *lastChild;	/**< last element of linked list of child */
 	struct menuNode_s *next;		/**< Next element into linked list */
 	struct menuNode_s *parent;		/**< Parent menu, else NULL */
-	struct menuNode_s *menu;		/**< Shortcut to the menu node */
+	struct menuNode_s *root;		/**< Shortcut to the root node */
 
 	/* common pos */
 	vec2_t pos;
