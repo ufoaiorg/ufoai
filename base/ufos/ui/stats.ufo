@@ -21,7 +21,7 @@ window stats
 		texl		"192 0"
 		size		"64 37"
 		icon		return
-		onClick		{ cmd mn_pop; }
+		onClick		{ cmd "mn_pop;" }
 	}
 
 	string title
@@ -49,7 +49,7 @@ window stats
 		bgcolor		"0.5 0.5 0.5 0.2"
 		lineheight	22
 		tabwidth	170
-		rows		"6"
+		rows		6
 	}
 
 	string base_string
@@ -68,7 +68,7 @@ window stats
 		bgcolor		"0.5 0.5 0.5 0.2"
 		lineheight	22
 		tabwidth	170
-		rows		"6"
+		rows		6
 	}
 
 	string ins_string
@@ -87,7 +87,7 @@ window stats
 		bgcolor		"0.5 0.5 0.5 0.2"
 		lineheight	22
 		tabwidth	170
-		rows		"6"
+		rows		6
 	}
 
 	string empl_string
@@ -106,7 +106,7 @@ window stats
 		bgcolor		"0.5 0.5 0.5 0.2"
 		lineheight	22
 		tabwidth	170
-		rows		"6"
+		rows		6
 	}
 
 	string costs_string
@@ -125,7 +125,7 @@ window stats
 		bgcolor		"0.5 0.5 0.5 0.2"
 		lineheight	22
 		tabwidth	340
-		rows		"18"
+		rows		18
 	}
 
 	string nations_string
@@ -145,7 +145,7 @@ window stats
 		bgcolor		"0.5 0.5 0.5 0.2"
 		lineheight  22
 		tabwidth	360
-		rows		"10"
+		rows		10
 		mousefx		true
 		onClick
 	}
@@ -166,7 +166,7 @@ window stats
 		size		"470 110"
 		lineheight	22
 		tabwidth	360
-		rows		"5"
+		rows		5
 	}
 
 	func init
@@ -209,43 +209,162 @@ window nations
 		font		f_big
 	}
 
-	// Number of nations (0-7) defined by MAX_NATIONS in cl_campaign.h
-	confunc nation_marksel { *nation<1> invis false	*nation<1> color "1 1 1 1"	*nat_fund<1> invis false	*nat_fund<1> color "1 1 1 1" }
-	confunc nation_markdesel { *nation<1> invis false	*nation<1> color "0 .78 0 1"	 *nat_fund<1> invis false	*nat_fund<1> color "0 .78 0 1" }
-	confunc nation_hide { *nation<1> invis true	*nat_fund<1> invis true }
+	/**
+	 * @brief select a nation
+	 * @param <1> nationid
+	 * @SA MAX_NATIONS
+	 * @note: Number of nations (0-7) defined by MAX_NATIONS in cl_campaign.h
+	 */
+	confunc nation_marksel {
+		*node:<path:parent>.nation<1>	invis	false
+		*node:<path:parent>.nation<1>	color	"1 1 1 1"
+		*node:<path:parent>.nat_fund<1>	invis	false
+		*node:<path:parent>.nat_fund<1>	color	"1 1 1 1"
+	}
+
+	/**
+	 * @brief deselect a nation
+	 * @param <1> nationid
+	 * @SA MAX_NATIONS
+	 */
+	confunc nation_markdesel {
+		*node:<path:parent>.nation<1>	invis	false
+		*node:<path:parent>.nation<1>	color	"0 .78 0 1"
+		*node:<path:parent>.nat_fund<1>	invis	false
+		*node:<path:parent>.nat_fund<1>	color	"0 .78 0 1"
+	}
+
+	/**
+	 * @brief hide a nation
+	 * @param <1> nationid
+	 * @SA MAX_NATIONS
+	 */
+	confunc nation_hide {
+		*node:<path:parent>.nation<1>	invis	true
+		*node:<path:parent>.nat_fund<1>	invis	true
+	}
 
 	string nation {
 		string		"_Nation"
 		pos			"40  90"
 		size		"260 20"
 	}
-	string nation0 { string	"*cvar mn_nat_name0"	pos "40 115"	size "260 20"	invis false	onClick { cmd "nation_select 0;" } }
-	string nation1 { string	"*cvar mn_nat_name1"	pos "40 140"	size "260 20"	invis false	onClick { cmd "nation_select 1;" } }
-	string nation2 { string	"*cvar mn_nat_name2"	pos "40 165"	size "260 20"	invis false	onClick { cmd "nation_select 2;" } }
-	string nation3 { string	"*cvar mn_nat_name3"	pos "40 190"	size "260 20"	invis false	onClick { cmd "nation_select 3;" } }
-	string nation4 { string	"*cvar mn_nat_name4"	pos "40 215"	size "260 20"	invis false	onClick { cmd "nation_select 4;" } }
-	string nation5 { string	"*cvar mn_nat_name5"	pos "40 240"	size "260 20"	invis false	onClick { cmd "nation_select 5;" } }
-	string nation6 { string	"*cvar mn_nat_name6"	pos "40 265"	size "260 20"	invis false	onClick { cmd "nation_select 6;" } }
-	string nation7 { string	"*cvar mn_nat_name7"	pos "40 290"	size "260 20"	invis false	onClick { cmd "nation_select 7;" } }
+
+	string nation0 {
+		string		"*cvar mn_nat_name0"
+		pos			"40 115"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 0;" }
+	}
+	string nation1 {
+		string		"*cvar mn_nat_name1"
+		pos			"40 140"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 1;" }
+	}
+	string nation2 {
+		string		"*cvar mn_nat_name2"
+		pos			"40 165"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 2;" }
+	}
+	string nation3 {
+		string		"*cvar mn_nat_name3"
+		pos			"40 190"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 3;" }
+	}
+	string nation4 {
+		string		"*cvar mn_nat_name4"
+		pos			"40 215"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 4;" }
+	}
+	string nation5 {
+		string		"*cvar mn_nat_name5"
+		pos			"40 240"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 5;" }
+	}
+	string nation6 {
+		string		"*cvar mn_nat_name6"
+		pos			"40 265"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 6;" }
+	}
+	string nation7 {
+		string		"*cvar mn_nat_name7"
+		pos			"40 290"
+		size		"260 20"
+		invis		false
+		onClick		{ cmd "nation_select 7;" }
+	}
 
 	string nat_fund {
 		string		"_Current Funding"
 		pos			"340 90"
 		size		"175 20"
 	}
-	string nat_fund0 { string "*cvar mn_nat_fund0"	pos "340 115" size "100 20" invis false }
-	string nat_fund1 { string "*cvar mn_nat_fund1"	pos "340 140" size "100 20" invis false }
-	string nat_fund2 { string "*cvar mn_nat_fund2"	pos "340 165" size "100 20" invis false }
-	string nat_fund3 { string "*cvar mn_nat_fund3"	pos "340 190" size "100 20" invis false }
-	string nat_fund4 { string "*cvar mn_nat_fund4"	pos "340 215" size "100 20" invis false }
-	string nat_fund5 { string "*cvar mn_nat_fund5"	pos "340 240" size "100 20" invis false }
-	string nat_fund6 { string "*cvar mn_nat_fund6"	pos "340 265" size "100 20" invis false }
-	string nat_fund7 { string "*cvar mn_nat_fund7"	pos "340 290" size "100 20" invis false }
+	string nat_fund0 {
+		string		"*cvar mn_nat_fund0"
+		pos			"340 115"
+		size		"100 20"
+		invis		false
+	}
+	string nat_fund1 {
+		string		"*cvar mn_nat_fund1"
+		pos			"340 140"
+		size		"100 20"
+		invis		false
+	}
+	string nat_fund2 {
+		string		"*cvar mn_nat_fund2"
+		pos			"340 165"
+		size		"100 20"
+		invis		false
+	}
+	string nat_fund3 {
+		string		"*cvar mn_nat_fund3"
+		pos			"340 190"
+		size		"100 20"
+		invis		false
+	}
+	string nat_fund4 {
+		string		"*cvar mn_nat_fund4"
+		pos			"340 215"
+		size		"100 20"
+		invis		false
+	}
+	string nat_fund5 {
+		string		"*cvar mn_nat_fund5"
+		pos			"340 240"
+		size		"100 20"
+		invis		false
+	}
+	string nat_fund6 {
+		string		"*cvar mn_nat_fund6"
+		pos			"340 265"
+		size		"100 20"
+		invis		false
+	}
+	string nat_fund7 {
+		string		"*cvar mn_nat_fund7"
+		pos			"340 290"
+		size		"100 20"
+		invis		false
+	}
 
 	linechart nation_graph_colors
 	{
 		pos			"310 124"
-		size		"20 200"	// 8 x 25 -> (8 x entry-height)
+		size		"20 200"	/*< 8 x 25 -> (8 x entry-height) */
 		dataid		LINESTRIP_COLOR
 	}
 
@@ -265,7 +384,7 @@ window nations
 		textalign	uc
 		font		f_small
 	}
-	// todo better display of real month-text (year+month?)
+	/** @todo better display of real month-text (year+month?) */
 	string graph_month0	{
 		string		"0"
 		pos			"600 300"
@@ -347,19 +466,19 @@ window nations
 		font		f_small
 	}
 	string graph_funding_zero {
-		string		"0"
+		string		"0"				/** @todo *cvar mn_nat_fund_zero */
 		pos			"550 290"
 		size		"40 20"
 		textalign	ur
 		font		f_small
-	}	//todo *cvar mn_nat_fund_zero
+	}
 	string graph_funding_max {
-		string		"_max"
+		string		"_max"			/*< @todo *cvar mn_nat_fund_max */
 		pos			"550 100"
 		size		"40 20"
 		textalign	lr
 		font		f_small
-	}	//todo *cvar mn_nat_fund_max
+	}
 
 	pic nation_symbol
 	{
