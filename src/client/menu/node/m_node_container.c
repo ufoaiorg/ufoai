@@ -94,7 +94,7 @@ static invList_t *MN_ContainerNodeGetExistingItem (const menuNode_t *node, objDe
 #define CII_END 0x80
 
 typedef struct {
-	menuNode_t* node;
+	const menuNode_t* node;
 	byte groupSteps[6];
 	int groupID;
 	itemFilterTypes_t filterEquipType;
@@ -168,7 +168,7 @@ static void MN_ContainerItemIteratorNext (containerItemIterator_t *iterator)
 /**
  * @brief Use a container node to init an item iterator
  */
-static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, menuNode_t* node)
+static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, const menuNode_t* const node)
 {
 	int groupID = 0;
 	iterator->itemID = -1;
@@ -187,14 +187,14 @@ static void MN_ContainerItemIteratorInit (containerItemIterator_t *iterator, men
 			if (EXTRADATA(node).displayWeapon)
 				iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_NOTAVAILABLEONLY;
 			if (EXTRADATA(node).displayAmmo)
-				iterator->groupSteps[groupID++] = CII_WEAPONONLY | CII_NOTAVAILABLEONLY;
+				iterator->groupSteps[groupID++] = CII_AMMOONLY | CII_NOTAVAILABLEONLY;
 		}
 	} else {
 		const int filter = (EXTRADATA(node).displayUnavailableItem)?0:CII_AVAILABLEONLY;
 		if (EXTRADATA(node).displayWeapon)
 			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
 		if (EXTRADATA(node).displayAmmo)
-			iterator->groupSteps[groupID++] = CII_WEAPONONLY | filter;
+			iterator->groupSteps[groupID++] = CII_AMMOONLY | filter;
 	}
 	iterator->groupSteps[groupID++] = CII_END;
 
@@ -635,54 +635,14 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 	}
 }
 
-/**
- * @brief Filter an object according to a node configuration
- * @param[in] obj Object request filtering
- * @param[out] itemFound Item found in the container (can be null)
- * @return True is the object is allowed
- */
-static qboolean MN_ContainerNodeFilterItem (const menuNode_t const *node, int displayType, int displayAvailable, objDef_t *obj, invList_t **itemFound)
-{
-	qboolean isAmmo;
-	qboolean isWeapon;
-	qboolean isArmour;
-
-	/* skip none researched objects */
-	if (!GAME_ItemIsUseable(obj))
-		return qfalse;
-
-	if (!INVSH_UseableForTeam(obj, GAME_GetCurrentTeam()))
-		return qfalse;
-
-	/** @todo not sure its the right check */
-	isArmour = !strcmp(obj->type, "armour");
-	isAmmo = obj->numWeapons != 0 && !strcmp(obj->type, "ammo");
-	isWeapon = obj->weapon || obj->isMisc || isArmour;
-
-	if ((displayType == 0 && isAmmo) || (displayType == 1 && isWeapon))
-		return qfalse;
-
-	if (!INV_ItemMatchesFilter(obj, EXTRADATA(node).filterEquipType))
-		return qfalse;
-
-	*itemFound = MN_ContainerNodeGetExistingItem(node, obj, EXTRADATA(node).filterEquipType);
-	if (displayAvailable != -1) {
-		if ((displayAvailable == 1 && *itemFound == NULL) || (displayAvailable == 0 && *itemFound != NULL))
-			return qfalse;
-	}
-
-	return qtrue;
-}
-
-static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType,
-	int *currentHeight, int displayType, int displayAvailable)
+static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *highlightType, int *currentHeight)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
 	int items = 0;
-	int id;
 	int rowHeight = 0;
 	const int cellWidth = node->size[0] / EXTRADATA(node).columns;
+	containerItemIterator_t iterator;
 
 	MN_GetNodeAbsPos(node, nodepos);
 
@@ -690,7 +650,9 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		outOfNode = qtrue;
 	}
 
-	for (id = 0; id < csi.numODs; id++) {
+	MN_ContainerItemIteratorInit(&iterator, node);
+	for (; iterator.itemID < csi.numODs; MN_ContainerItemIteratorNext(&iterator)) {
+		const int id = iterator.itemID;
 		objDef_t *obj = &csi.ods[id];
 		item_t tempItem = {1, NULL, obj, 0, 0};
 		vec3_t pos;
@@ -700,10 +662,7 @@ static void MN_ContainerNodeDrawItems (menuNode_t *node, objDef_t *highlightType
 		int amount;
 		const int col = items % node->u.container.columns;
 		int cellHeight = 0;
-		invList_t *icItem;
-
-		if (!MN_ContainerNodeFilterItem(node, displayType, displayAvailable, obj, &icItem))
-			continue;
+		invList_t *icItem = iterator.itemFound;
 
 		/* skip items over and bellow the node view */
 		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
@@ -845,26 +804,7 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
 	currentHeight = 0;
 
-	if (EXTRADATA(node).displayAvailableOnTop) {
-		/* available items */
-		if (EXTRADATA(node).displayWeapon)
-			MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 0, 1);
-		if (EXTRADATA(node).displayAmmo)
-			MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 1, 1);
-		/* unavailable items */
-		if (EXTRADATA(node).displayUnavailableItem) {
-			if (EXTRADATA(node).displayWeapon)
-				MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 0, 0);
-			if (EXTRADATA(node).displayAmmo)
-				MN_ContainerNodeDrawItems(node, highlightType, &currentHeight, 1, 0);
-		}
-	} else {
-		const int availableFilter = (EXTRADATA(node).displayUnavailableItem) ? -1 : 1;
-		if (EXTRADATA(node).displayWeapon)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 0, availableFilter);
-		if (EXTRADATA(node).displayAmmo)
-			MN_ContainerNodeDrawItems (node, highlightType, &currentHeight, 1, availableFilter);
-	}
+	MN_ContainerNodeDrawBaseInventoryItems(node, highlightType, &currentHeight);
 
 	R_EndClipRect();
 	totalRows = currentHeight;
@@ -1008,17 +948,17 @@ static void MN_ContainerNodeDraw (menuNode_t *node)
 /**
  * @note this function is a copy-paste of MN_ContainerNodeDrawItems (with remove of unneed code)
  */
-static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* const node,
-	int *currentHeight, int displayType, int displayAvailable,
+static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* const node,
 	int mouseX, int mouseY, int* contX, int* contY)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
 	int items = 0;
-	int id;
 	int rowHeight = 0;
 	const int cellWidth = node->size[0] / EXTRADATA(node).columns;
 	int tempX, tempY;
+	containerItemIterator_t iterator;
+	int currentHeight = 0;
 
 	if (!contX)
 		contX = &tempX;
@@ -1027,24 +967,19 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 
 	MN_GetNodeAbsPos(node, nodepos);
 
-	if (*currentHeight >= node->size[1]) {
-		outOfNode = qtrue;
-	}
-
-	for (id = 0; id < csi.numODs; id++) {
+	MN_ContainerItemIteratorInit(&iterator, node);
+	for (; iterator.itemID < csi.numODs; MN_ContainerItemIteratorNext(&iterator)) {
+		const int id = iterator.itemID;
 		objDef_t *obj = &csi.ods[id];
 		vec2_t pos;
 		vec2_t ammopos;
 		const int col = items % node->u.container.columns;
 		int cellHeight = 0;
-		invList_t *icItem;
+		invList_t *icItem = iterator.itemFound;
 		int height;
 
-		if (!MN_ContainerNodeFilterItem(node, displayType, displayAvailable, obj, &icItem))
-			continue;
-
 		/* skip items over and bellow the node view */
-		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
+		if (outOfNode || currentHeight < EXTRADATA(node).scrollCur) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
@@ -1052,9 +987,9 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 			if (height > rowHeight)
 				rowHeight = height;
 
-			if (outOfNode || *currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
+			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
 				if (col == EXTRADATA(node).columns - 1) {
-					*currentHeight += rowHeight;
+					currentHeight += rowHeight;
 					rowHeight = 0;
 				}
 				items++;
@@ -1064,7 +999,7 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += *currentHeight - EXTRADATA(node).scrollCur;
+		pos[1] += currentHeight - EXTRADATA(node).scrollCur;
 
 		/* check item */
 		if (mouseY < pos[1])
@@ -1126,19 +1061,14 @@ static invList_t *MN_ContainerNodeGetItemFromSplitedList (const menuNode_t* cons
 
 		/* add a margin between rows */
 		if (col == EXTRADATA(node).columns - 1) {
-			*currentHeight += rowHeight;
+			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (*currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
+			if (currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
 				return NULL;
 		}
 
 		/* count items */
 		items++;
-	}
-
-	if (rowHeight != 0) {
-		*currentHeight += rowHeight;
-		rowHeight = 0;
 	}
 
 	*contX = NONE;
@@ -1160,27 +1090,7 @@ static invList_t *MN_ContainerNodeGetItemAtPosition (const menuNode_t* const nod
 	invList_t *result = NULL;
 	/* Get coordinates inside a scrollable container (if it is one). */
 	if (MN_IsScrollContainerNode(node)) {
-		int currentHeight = 0;
-		if (EXTRADATA(node).displayAvailableOnTop) {
-			/* available items */
-			if (EXTRADATA(node).displayWeapon)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 0, 1, mouseX, mouseY, contX, contY);
-			if (!result && EXTRADATA(node).displayAmmo)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 1, 1, mouseX, mouseY, contX, contY);
-			/* unavailable items */
-			if (!result && EXTRADATA(node).displayUnavailableItem) {
-				if (EXTRADATA(node).displayWeapon)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 0, 0, mouseX, mouseY, contX, contY);
-				if (!result && EXTRADATA(node).displayAmmo)
-					result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 1, 0, mouseX, mouseY, contX, contY);
-			}
-		} else {
-			const int availableFilter = (EXTRADATA(node).displayUnavailableItem)?-1:1;
-			if (EXTRADATA(node).displayWeapon)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight,0, availableFilter, mouseX, mouseY, contX, contY);
-			if (!result && EXTRADATA(node).displayAmmo)
-				result = MN_ContainerNodeGetItemFromSplitedList (node, &currentHeight, 1, availableFilter, mouseX, mouseY, contX, contY);
-		}
+		result = MN_ContainerNodeGetItemFromBaseInventory (node, mouseX, mouseY, contX, contY);
 	} else {
 		vec2_t nodepos;
 		int fromX, fromY;
