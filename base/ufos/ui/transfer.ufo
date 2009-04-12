@@ -9,7 +9,7 @@ menu transfer
 
 	pic background
 	{
-		image		menu/base_bg
+		image		ui/base_bg
 	}
 
 	string name
@@ -30,7 +30,7 @@ menu transfer
 	custombutton back
 	{
 		tooltip		"_Back to baseview"
-		image		menu/button_background	blend	true
+		image		ui/button_background	blend	true
 		texl		"1 1"
 		size		"59 55"
 		pos			"950 20"
@@ -68,7 +68,7 @@ menu transfer
 		pos		"24 96"
 		size	"986 56"
 		blend	true
-		image	"menu/panel_tab"
+		image	"ui/panel_tab"
 	}
 
 	tab trans_navigation {
@@ -112,7 +112,7 @@ menu transfer
 	panel itemlist {
 		pos		"12 160"
 		size	"553 597"
-		image	menu/panel_grey_green_large2
+		image	ui/panel_grey_green_large2
 		blend	true
 	}
 
@@ -123,7 +123,7 @@ menu transfer
 	panel infopanel {
 		pos		"580 160"
 		size	"420 260"
-		image	menu/panel_grey_green_large
+		image	ui/panel_grey_green_large
 		blend	true
 	}
 
@@ -142,7 +142,7 @@ menu transfer
 	panel transfer_cargolist {
 		pos		"580 440"
 		size	"420 269"
-		image	menu/panel_grey_green_large2
+		image	ui/panel_grey_green_large2
 		blend	true
 	}
 
@@ -166,7 +166,7 @@ menu transfer
 	}
 
 	vscrollbar trans_cargolist_scroll {
-		image		menu/scrollbar_v_green
+		image		ui/scrollbar_v_green
 		blend		true
 		pos			"960 461"
 		height		"220"
@@ -184,7 +184,7 @@ menu transfer
 	pic prev_base
 	{
 		tooltip		"_Select previous base for transfer"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"686 184"
 		texl		"0 0"
 		texh		"16 16"
@@ -205,7 +205,7 @@ menu transfer
 	pic next_base
 	{
 		tooltip		"_Select next base for transfer"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"831 184"
 		texl		"16 0"
 		texh		"32 16"
@@ -252,7 +252,7 @@ menu transfer
 	}
 
 	vscrollbar trans_list_scroll {
-		image		menu/scrollbar_v_green
+		image		ui/scrollbar_v_green
 		blend		true
 		pos			"522 180"
 		height		"554"
@@ -271,7 +271,7 @@ menu transfer
 	{
 		string		"_Unload"
 		tooltip		"_Empty the aircraft storage"
-		image		menu/button_blue
+		image		ui/button_blue
 		blend		true
 		pos			"619 711"
 		size		"128 52"
@@ -285,7 +285,7 @@ menu transfer
 	{
 		string		"_Transfer"
 		tooltip		"_Start the transfer"
-		image		menu/button_blue
+		image		ui/button_blue
 		blend		true
 		pos			"830 711"
 		size		"128 52"

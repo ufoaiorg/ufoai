@@ -10,7 +10,7 @@ menu mail
 
 	pic background
 	{
-		image		menu/mailclient_bg
+		image		ui/mailclient_bg
 	}
 
 	// ==================
@@ -20,7 +20,7 @@ menu mail
 	custombutton button_exit
 	{
 		tooltip		"_Close mail"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		texl		"192 0"
 		pos			"950 720"
@@ -53,7 +53,7 @@ menu mail
 	}
 
 	vscrollbar mail_scroll {
-		image		menu/scrollbar_v_green
+		image		ui/scrollbar_v_green
 		blend		true
 		pos			"960 208"
 		height		"470"
@@ -83,7 +83,7 @@ menu mail
 
 	pic sender_slot
 	{
-		image	menu/button_square
+		image	ui/button_square
 		blend	true
 		pos		"62 82"
 		size	"64 64"
@@ -114,7 +114,7 @@ menu mailclient
 
 	pic background
 	{
-		image		menu/mail_bg
+		image		ui/mail_bg
 	}
 
 	// ==================
@@ -169,7 +169,7 @@ menu mailclient
 
 	pic mail_allread
 	{
-		image		menu/mailclient
+		image		ui/mailclient
 		tooltip		"_Mark all messages read"
 		pos			"50 50"
 		texl		"0 32"
@@ -286,7 +286,7 @@ menu mailclient
 	pic mail_button_0
 	{
 		visiblewhen "*cvar:mn_mail_read0 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 124"
 		texl		"0 0"
 		texh		"852 28"
@@ -294,7 +294,7 @@ menu mailclient
 	pic mail_button_1
 	{
 		visiblewhen "*cvar:mn_mail_read1 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 162"
 		texl		"0 0"
 		texh		"852 28"
@@ -302,7 +302,7 @@ menu mailclient
 	pic mail_button_2
 	{
 		visiblewhen "*cvar:mn_mail_read2 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 200"
 		texl		"0 0"
 		texh		"852 28"
@@ -310,7 +310,7 @@ menu mailclient
 	pic mail_button_3
 	{
 		visiblewhen "*cvar:mn_mail_read3 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 238"
 		texl		"0 0"
 		texh		"852 28"
@@ -318,7 +318,7 @@ menu mailclient
 	pic mail_button_4
 	{
 		visiblewhen "*cvar:mn_mail_read4 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 276"
 		texl		"0 0"
 		texh		"852 28"
@@ -326,7 +326,7 @@ menu mailclient
 	pic mail_button_5
 	{
 		visiblewhen "*cvar:mn_mail_read5 == 1"
-		image		menu/mail_button
+		image		ui/mail_button
 		pos			"90 314"
 		texl		"0 0"
 		texh		"852 28"
@@ -334,7 +334,7 @@ menu mailclient
 	pic mail_button_6
 	{
 		visiblewhen "*cvar:mn_mail_read6 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 352"
 		texl		"0 0"
 		texh		"852 28"
@@ -342,7 +342,7 @@ menu mailclient
 	pic mail_button_7
 	{
 		visiblewhen "*cvar:mn_mail_read7 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 390"
 		texl		"0 0"
 		texh		"852 28"
@@ -350,7 +350,7 @@ menu mailclient
 	pic mail_button_8
 	{
 		visiblewhen "*cvar:mn_mail_read8 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 428"
 		texl		"0 0"
 		texh		"852 28"
@@ -358,7 +358,7 @@ menu mailclient
 	pic mail_button_9
 	{
 		visiblewhen "*cvar:mn_mail_read9 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 466"
 		texl		"0 0"
 		texh		"852 28"
@@ -366,7 +366,7 @@ menu mailclient
 	pic mail_button_10
 	{
 		visiblewhen "*cvar:mn_mail_read10 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 504"
 		texl		"0 0"
 		texh		"852 28"
@@ -374,7 +374,7 @@ menu mailclient
 	pic mail_button_11
 	{
 		visiblewhen "*cvar:mn_mail_read11 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 542"
 		texl		"0 0"
 		texh		"852 28"
@@ -382,7 +382,7 @@ menu mailclient
 	pic mail_button_12
 	{
 		visiblewhen "*cvar:mn_mail_read12 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 580"
 		texl		"0 0"
 		texh		"852 28"
@@ -390,7 +390,7 @@ menu mailclient
 	pic mail_button_13
 	{
 		visiblewhen "*cvar:mn_mail_read13 == 1"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 618"
 		texl		"0 0"
 		texh		"852 28"
@@ -398,7 +398,7 @@ menu mailclient
 	pic mail_button_14
 	{
 		visiblewhen "*cvar:mn_mail_read14 == 1"
-		image 		menu/mail_button
+		image 		ui/mail_button
 		pos			"90 656"
 		texl		"0 0"
 		texh		"852 28"
@@ -407,7 +407,7 @@ menu mailclient
 	pic mail_button_un_0
 	{
 		visiblewhen "*cvar:mn_mail_read0 == 0"
-		image 		menu/mail_button
+		image 		ui/mail_button
 		pos			"90 124"
 		texl		"0 28"
 		texh		"852 56"
@@ -415,7 +415,7 @@ menu mailclient
 	pic mail_button_un_1
 	{
 		visiblewhen "*cvar:mn_mail_read1 == 0"
-		image 		menu/mail_button
+		image 		ui/mail_button
 		pos			"90 162"
 		texl		"0 28"
 		texh		"852 56"
@@ -423,7 +423,7 @@ menu mailclient
 	pic mail_button_un_2
 	{
 		visiblewhen "*cvar:mn_mail_read2 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 200"
 		texl		"0 28"
 		texh		"852 56"
@@ -431,7 +431,7 @@ menu mailclient
 	pic mail_button_un_3
 	{
 		visiblewhen "*cvar:mn_mail_read3 == 0"
-		image 		menu/mail_button
+		image 		ui/mail_button
 		pos			"90 238"
 		texl		"0 28"
 		texh		"852 56"
@@ -439,7 +439,7 @@ menu mailclient
 	pic mail_button_un_4
 	{
 		visiblewhen "*cvar:mn_mail_read4 == 0"
-		image 		menu/mail_button
+		image 		ui/mail_button
 		pos			"90 276"
 		texl		"0 28"
 		texh		"852 56"
@@ -447,7 +447,7 @@ menu mailclient
 	pic mail_button_un_5
 	{
 		visiblewhen "*cvar:mn_mail_read5 == 0"
-		image 		menu/mail_button
+		image 		ui/mail_button
 		pos			"90 314"
 		texl		"0 28"
 		texh		"852 56"
@@ -455,7 +455,7 @@ menu mailclient
 	pic mail_button_un_6
 	{
 		visiblewhen "*cvar:mn_mail_read6 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 352"
 		texl		"0 28"
 		texh		"852 56"
@@ -463,7 +463,7 @@ menu mailclient
 	pic mail_button_un_7
 	{
 		visiblewhen "*cvar:mn_mail_read7 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 390"
 		texl		"0 28"
 		texh		"852 56"
@@ -471,7 +471,7 @@ menu mailclient
 	pic mail_button_un_8
 	{
 		visiblewhen "*cvar:mn_mail_read8 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 428"
 		texl		"0 28"
 		texh		"852 56"
@@ -479,7 +479,7 @@ menu mailclient
 	pic mail_button_un_9
 	{
 		visiblewhen "*cvar:mn_mail_read9 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 466"
 		texl		"0 28"
 		texh		"852 56"
@@ -487,7 +487,7 @@ menu mailclient
 	pic mail_button_un_10
 	{
 		visiblewhen "*cvar:mn_mail_read10 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 504"
 		texl		"0 28"
 		texh		"852 56"
@@ -495,7 +495,7 @@ menu mailclient
 	pic mail_button_un_11
 	{
 		visiblewhen "*cvar:mn_mail_read11 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 542"
 		texl		"0 28"
 		texh		"852 56"
@@ -503,7 +503,7 @@ menu mailclient
 	pic mail_button_un_12
 	{
 		visiblewhen "*cvar:mn_mail_read12 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 580"
 		texl		"0 28"
 		texh		"852 56"
@@ -511,7 +511,7 @@ menu mailclient
 	pic mail_button_un_13
 	{
 		visiblewhen "*cvar:mn_mail_read13 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 618"
 		texl		"0 28"
 		texh		"852 56"
@@ -519,7 +519,7 @@ menu mailclient
 	pic mail_button_un_14
 	{
 		visiblewhen "*cvar:mn_mail_read14 == 0"
-		image	 	menu/mail_button
+		image	 	ui/mail_button
 		pos			"90 656"
 		texl		"0 28"
 		texh		"852 56"
@@ -549,7 +549,7 @@ menu mailclient
 	}
 
 	vscrollbar mailclient_scroll {
-		image		menu/scrollbar_v_green
+		image		ui/scrollbar_v_green
 		blend		true
 		pos			"950 125"
 		height		560
@@ -566,7 +566,7 @@ menu mailclient
 	custombutton button_exit
 	{
 		tooltip		"_Leave mailclient"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		texl		"192 0"
 		pos			"920 720"

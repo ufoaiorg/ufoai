@@ -10,7 +10,7 @@ menu ufopedia
 
 	pic background
 	{
-		image		menu/ufopedia_bg
+		image		ui/ufopedia_bg
 	}
 
 	// ==================
@@ -20,7 +20,7 @@ menu ufopedia
 	custombutton bt_prev
 	{
 		tooltip		"_Previous entry"
-		image		menu/button_background
+		image		ui/button_background
 		texl		"192 0"
 		blend		true
 		pos			"10 10"
@@ -32,7 +32,7 @@ menu ufopedia
 	custombutton bt_next
 	{
 		tooltip		"_Next entry"
-		image		menu/button_background
+		image		ui/button_background
 		texl		"192 0"
 		blend		true
 		pos			"950 10"
@@ -44,7 +44,7 @@ menu ufopedia
 	custombutton button_content
 	{
 		tooltip		"_Back to content"
-		image		menu/button_background
+		image		ui/button_background
 		texl		"192 0"
 		blend		true
 		pos			"10 720"
@@ -57,7 +57,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_uppreavailable == 1"
 		tooltip		"_Pre research text"
-		image		menu/button_background
+		image		ui/button_background
 		texl		"128 0"
 		blend		true
 		pos			"90 14"
@@ -70,7 +70,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_updisplay == 2"
 		tooltip		"_Research results"
-		image		menu/button_background
+		image		ui/button_background
 		texl		"128 0"
 		blend		true
 		pos			"140 14"
@@ -82,7 +82,7 @@ menu ufopedia
 	custombutton button_exit
 	{
 		tooltip		"_Leave UFOpaedia"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		texl		"192 0"
 		pos			"950 720"
@@ -115,7 +115,7 @@ menu ufopedia
 	}
 
 	vscrollbar ufopedia_scroll {
-		image		menu/scrollbar_v_green
+		image		ui/scrollbar_v_green
 		blend		true
 		pos			"704 85"
 		height		"368"
@@ -215,7 +215,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_changeweapon == 1"
 		tooltip		"_Previous weapon chambered for this ammunition"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"270 704"
 		texl		"0 0"
 		texh		"16 16"
@@ -227,7 +227,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_changeweapon == 2"
 		tooltip		"_Previous ammunition compatible with this weapon"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"270 704"
 		texl		"0 0"
 		texh		"16 16"
@@ -239,7 +239,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_changeweapon == 1"
 		tooltip		"_Next weapon chambered for this ammunition"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"510 704"
 		texl		"16 0"
 		texh		"32 16"
@@ -251,7 +251,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_changeweapon == 2"
 		tooltip		"_Next ammunition compatible with this weapon"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"510 704"
 		texl		"16 0"
 		texh		"32 16"
@@ -313,7 +313,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip		"_Previous firemode"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"270 724"
 		texl		"0 0"
 		texh		"16 16"
@@ -335,7 +335,7 @@ menu ufopedia
 	{
 		visiblewhen "*cvar:mn_changefiremode == 1"
 		tooltip		"_Next firemode"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"510 724"
 		texl		"16 0"
 		texh		"32 16"

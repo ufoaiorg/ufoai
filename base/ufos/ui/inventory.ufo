@@ -141,7 +141,7 @@ menu inventory
 
 	custombutton button_exit
 	{
-		image	menu/button_background blend true
+		image	ui/button_background blend true
 		texl	"192 0"	size "64 37"
 		pos		"428 458"
 		icon return

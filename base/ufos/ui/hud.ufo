@@ -289,7 +289,7 @@ menu hud extends ahud
 		{
 			key		"*binding nextround"
 			tooltip	"_Finish round"
-			image	menu/button_background blend true
+			image	ui/button_background blend true
 			pos		"142 10"
 			size	"64 37"
 			texl	"192 0"
@@ -474,7 +474,7 @@ menu hud extends ahud
 		checkbox bt_crouch_reservation
 		{
 			tooltip	"*cvar mn_crouch_reservation_tt"
-			image	"menu/checkbox_blue"
+			image	"ui/checkbox_blue"
 			pos		"60 107"
 			size	"20 18"
 			current	0

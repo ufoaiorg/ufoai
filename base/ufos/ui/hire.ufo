@@ -9,7 +9,7 @@ menu employees
 
 	pic background
 	{
-		image		menu/base_bg
+		image		ui/base_bg
 	}
 
 	// ==================
@@ -33,7 +33,7 @@ menu employees
 	panel list_border {
 		pos		"13 163"
 		size	"393 595"
-		image	menu/panel_grey_green_large2
+		image	ui/panel_grey_green_large2
 		blend	true
 	}
 
@@ -71,7 +71,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 180"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 0;" }
@@ -81,7 +81,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 218"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 1;" }
@@ -91,7 +91,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 256"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 2;" }
@@ -101,7 +101,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 294"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 3;" }
@@ -111,7 +111,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 332"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 4;" }
@@ -121,7 +121,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 370"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 5;" }
@@ -131,7 +131,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 408"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 6;" }
@@ -141,7 +141,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 446"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 7;" }
@@ -151,7 +151,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 484"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 8;" }
@@ -161,7 +161,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 522"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 9;" }
@@ -171,7 +171,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 560"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 10;" }
@@ -181,7 +181,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 598"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 11;" }
@@ -191,7 +191,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 636"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 12;" }
@@ -201,7 +201,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 674"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 13;" }
@@ -211,7 +211,7 @@ menu employees
 	{
 		tooltip		"_Hire/Unhire - Right click to remove"
 		current		0
-		image		menu/checkbox_green
+		image		ui/checkbox_green
 		pos			"325 712"
 		size		"20 20"
 		onChange	{ cmd "employee_hire 14;" }
@@ -232,7 +232,7 @@ menu employees
 
 	vscrollbar scroll
 	{
-		image		menu/scrollbar_v_green
+		image		ui/scrollbar_v_green
 		blend		true
 		pos			"368 182"
 		height		"558"
@@ -270,7 +270,7 @@ menu employees
 		{
 			pos		"451 300"
 			size	"448 60"
-			image	menu/panel_grey_green
+			image	ui/panel_grey_green
 			blend	true
 		}
 	}
@@ -288,7 +288,7 @@ menu employees
 	{
 		visiblewhen "*cvar:mn_employee_hired == 1"
 		tooltip		"_Rename your employee"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"865 322"
 		texl		"0 48"
 		texh		"16 64"
@@ -299,7 +299,7 @@ menu employees
 		{
 			pos		"451 364"
 			size	"561 388"
-			image	menu/panel_grey_green
+			image	ui/panel_grey_green
 			blend	true
 		}
 	}
@@ -351,91 +351,91 @@ menu employees
 
 		string pwr_lbl { pos "5 3" size "180 20" string "_Strength:" }
 		string pwr_val { pos "190 3" size "130 20" string "*cvar mn_tpwr" textalign ur }
-		pic pwr_brd { pos "30 18"  image menu/bar_border }
+		pic pwr_brd { pos "30 18"  image ui/bar_border }
 		tbar pwr_bar
 		{
-			pos "33 18"  current "*cvar mn_vpwr" texl "3 0" image menu/bar_attribute
+			pos "33 18"  current "*cvar mn_vpwr" texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string spd_lbl { pos "010 33" size "180 20" string "_Speed:" }
 		string spd_val { pos "190 33" size "130 20" string "*cvar mn_tspd" textalign ur }
-		pic spd_bdr { pos "30 48" image menu/bar_border }
+		pic spd_bdr { pos "30 48" image ui/bar_border }
 		tbar spd_bar
 		{
-			pos "33 48" current "*cvar mn_vspd" texl "3 0" image menu/bar_attribute
+			pos "33 48" current "*cvar mn_vspd" texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string acc_lbl { pos "5 63" size "180 20" string "_Accuracy:" }
 		string acc_val { pos "190 63" size "130 20" string "*cvar mn_tacc" textalign ur }
-		pic acc_bdr { pos "30 78" image menu/bar_border }
+		pic acc_bdr { pos "30 78" image ui/bar_border }
 		tbar acc_bar
 		{
-			pos "33 78" current "*cvar mn_vacc" texl "3 0" image menu/bar_attribute
+			pos "33 78" current "*cvar mn_vacc" texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string mnd_lbl { pos "5 93" size "180 20" string "_Mind:" }
 		string mnd_val { pos "190 93" size "130 20" string "*cvar mn_tmnd" textalign ur }
-		pic mnd_bdr { pos "30 108" image menu/bar_border }
+		pic mnd_bdr { pos "30 108" image ui/bar_border }
 		tbar mnd_bar
 		{
-			pos "33 108" current "*cvar mn_vmnd" texl "3 0" image menu/bar_attribute
+			pos "33 108" current "*cvar mn_vmnd" texl "3 0" image ui/bar_attribute
 			size "250 16"	max 100
 		}
 
 		string cls_lbl { pos "5 128" size "180 20" string "_Close Combat:" }
 		string cls_val { pos "190 128" size "130 20" string "*cvar mn_tcls" textalign ur }
-		pic cls_bdr { pos "30 143" image menu/bar_border }
+		pic cls_bdr { pos "30 143" image ui/bar_border }
 		tbar cls_bar
 		{
-			pos "33 143" current "*cvar mn_vcls" texl "3 0" image menu/bar_skill
+			pos "33 143" current "*cvar mn_vcls" texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string hvy_lbl { pos "5 158" size "180 20" string "_Heavy Weapons:" }
 		string hvy_val { pos "190 158" size "130 20" string "*cvar mn_thvy" textalign ur }
-		pic hvy_bdr { pos "30 173" image menu/bar_border }
+		pic hvy_bdr { pos "30 173" image ui/bar_border }
 		tbar hvy_bar
 		{
-			pos "33 173" current "*cvar mn_vhvy" texl "3 0" image menu/bar_skill
+			pos "33 173" current "*cvar mn_vhvy" texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string ass_lbl { pos "5 188" size "180 20" string "_Assault Weapons:" }
 		string ass_val { pos "190 188" size "130 20" string "*cvar mn_tass" textalign ur }
-		pic ass_bdr { pos "30 203" image menu/bar_border }
+		pic ass_bdr { pos "30 203" image ui/bar_border }
 		tbar ass_bar
 		{
-			pos "33 203" current "*cvar mn_vass" texl "3 0" image menu/bar_skill
+			pos "33 203" current "*cvar mn_vass" texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string snp_lbl { pos "5 218" size "180 20" string "_Sniper Rifles:" }
 		string snp_val { pos "190 218" size "130 20" string "*cvar mn_tsnp" textalign ur }
-		pic snp_bdr { pos "30 233" image menu/bar_border }
+		pic snp_bdr { pos "30 233" image ui/bar_border }
 		tbar snp_bar
 		{
-			pos "33 233" current "*cvar mn_vsnp" texl "3 0" image menu/bar_skill
+			pos "33 233" current "*cvar mn_vsnp" texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string exp_lbl { pos "5 248" size "180 20" string "_High-Explosives:" }
 		string exp_val { pos "190 248" size "130 20" string "*cvar mn_texp" textalign ur }
-		pic exp_bdr { pos "30 263" image menu/bar_border }
+		pic exp_bdr { pos "30 263" image ui/bar_border }
 		tbar exp_bar
 		{
-			pos "33 263" current "*cvar mn_vexp" texl "3 0" image menu/bar_skill
+			pos "33 263" current "*cvar mn_vexp" texl "3 0" image ui/bar_skill
 			size "250 16"	max 100
 		}
 
 		string hp_lbl { pos "5 283" size "180 20" string "_Health:" }
 		string hp_val { pos "190 283" size "130 20" string "*cvar mn_thp" textalign ur }
-		pic hp_bdr { pos "30 298"  image menu/bar_border }
+		pic hp_bdr { pos "30 298"  image ui/bar_border }
 		tbar hp_bar
 		{
-			pos "33 298" current "*cvar mn_vhp" max "*cvar mn_vhpmax" texl "3 0" image menu/bar_health
+			pos "33 298" current "*cvar mn_vhp" max "*cvar mn_vhpmax" texl "3 0" image ui/bar_health
 			size "250 16"
 		}
 
@@ -468,7 +468,7 @@ menu employees
 		{
 			pos		"483 180"
 			size	"455 111"
-			image	"menu/panel_grey"
+			image	"ui/panel_grey"
 			blend	true
 		}
 
@@ -543,7 +543,7 @@ menu employees
 		pos		"24 96"
 		size	"986 56"
 		blend	true
-		image	"menu/panel_tab"
+		image	"ui/panel_tab"
 	}
 
 	tab empl_switch {
@@ -612,7 +612,7 @@ menu employees
 	custombutton bt_continue
 	{
 		tooltip		"_Back to baseview"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		pos			"950 20"
 		size		"59 55"

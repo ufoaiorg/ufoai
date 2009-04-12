@@ -682,7 +682,7 @@ menu althud extends ahud
 	checkbox bt_crouch_reservation
 	{
 		tooltip		"*cvar mn_crouch_reservation_tt"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		pos			"969 536"
 		size		"20 18"
 		current		0
@@ -796,7 +796,7 @@ menu althud extends ahud
 	pic switch_to_right_hand
 	{
 		tooltip		"_Switch to right hand weapon"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"964 464"
 		texl		"0 0"
 		texh		"16 16"
@@ -808,7 +808,7 @@ menu althud extends ahud
 	pic switch_to_left_hand
 	{
 		tooltip		"_Switch to left hand weapon"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"980 464"
 		texl		"16 0"
 		texh		"32 16"

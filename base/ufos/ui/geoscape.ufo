@@ -75,7 +75,7 @@ menu map
 
 		pic back
 		{
-			image		menu/geo_menu
+			image		ui/geo_menu
 			pos			"0 0"
 			blend		true
 		}
@@ -262,7 +262,7 @@ menu map
 				pos		"0 0"
 				size	"164 164"
 				texh	"164 164"
-				image	menu/geo_miniglobe
+				image	ui/geo_miniglobe
 				blend	true
 			}
 
@@ -336,7 +336,7 @@ menu map
 			pos			"41 556"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		menu/button_geoscape
+			image		ui/button_geoscape
 			blend		true
 
 			onClick		{ cmd "mn_push mailclient;" }
@@ -353,7 +353,7 @@ menu map
 			pos			"41 556"
 			size		"175 34"
 			selectcolor	"1 1 1 1"
-			image		menu/button_geoscape
+			image		ui/button_geoscape
 			blend		true
 
 			onClick		{ cmd "mn_push mailclient;" }
@@ -368,7 +368,7 @@ menu map
 			color		"0 0.5 0 1"
 			font	 	f_small
 			selectcolor	"1 1 1 1"
-			image		menu/button_geoscape
+			image		ui/button_geoscape
 			blend		true
 
 			onClick		{ cmd "mn_push stats;" }
@@ -383,7 +383,7 @@ menu map
 			color		"0 0.5 0 1"
 			font	 	f_small
 			selectcolor	"1 1 1 1"
-			image		menu/button_geoscape
+			image		ui/button_geoscape
 			blend		true
 
 			onClick		{ cmd "mn_push ufopedia;" }
@@ -398,7 +398,7 @@ menu map
 			size		"175 34"
 			font	 	f_small
 			selectcolor	"1 1 1 1"
-			image		menu/button_geoscape
+			image		ui/button_geoscape
 			blend		true
 
 			onClick		{ cmd "mn_push popup_newinstallation_type;" }
@@ -411,7 +411,7 @@ menu map
 		pic bt_show_overlay
 		{
 			tooltip		"_Highlight nation borders"
-			image		menu/geo_nations_highlight
+			image		ui/geo_nations_highlight
 			pos			"40 320"
 			texl		"0 0"
 			texh		"32 32"
@@ -424,7 +424,7 @@ menu map
 		pic bt_show_radar
 		{
 			tooltip		"_Show radar range"
-			image		menu/geo_radar
+			image		ui/geo_radar
 			pos			"40 350"
 			texl		"0 0"
 			texh		"32 32"
@@ -438,7 +438,7 @@ menu map
 		{
 			visiblewhen "*cvar:mn_xvimap == 1"
 			tooltip		"_Show XVI map"
-			image		menu/geo_nations_highlight
+			image		ui/geo_nations_highlight
 			pos			"182 350"
 			texl		"0 0"
 			texh		"32 32"
@@ -452,7 +452,7 @@ menu map
 		{
 			// @todo: better -more verbose- tooltip
 			tooltip		"_Open up messages"
-			image		menu/button_background	blend true
+			image		ui/button_background	blend true
 			icon		geo_messagelog
 			pos			"82 324"
 			size		"28 25"
@@ -471,7 +471,7 @@ menu map
 		custombutton bt_messagesettings
 		{
 			tooltip		"_Change message and pause settings"
-			image		menu/button_background	blend true
+			image		ui/button_background	blend true
 			icon		geo_messageoption
 			pos			"82 354"
 			size		"28 25"
@@ -482,7 +482,7 @@ menu map
 		custombutton bt_mapcenter
 		{
 			tooltip		"_Center objects on the map"
-			image		menu/button_background	blend true
+			image		ui/button_background	blend true
 			icon		geo_center
 			pos			"124 324"
 			size		"28 25"
@@ -493,7 +493,7 @@ menu map
 		custombutton bt_menu
 		{
 			tooltip		"_Go to Options"
-			image		menu/button_background	blend true
+			image		ui/button_background	blend true
 			icon		geo_option
 			pos			"182 324"
 			size		"28 25"
@@ -527,7 +527,7 @@ menu popup_list
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 	}
 
@@ -565,7 +565,7 @@ menu popup_list
 	{
 		string		"_OK"
 		tooltip		"_Close this dialogue"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"296 192"
 		size		"176 32"
@@ -587,7 +587,7 @@ menu popup_button
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 	}
 
@@ -616,7 +616,7 @@ menu popup_button
 	{
 		string		"*cvar mn_popup_button_text1"
 		tooltip		"*cvar mn_popup_button_tooltip1"
-		image		menu/button_green_small	blend true
+		image		ui/button_green_small	blend true
 		pos			"26 192"
 		size		"176 32"
 		font		f_menu
@@ -628,7 +628,7 @@ menu popup_button
 	{
 		string		"*cvar mn_popup_button_text2"
 		tooltip		"*cvar mn_popup_button_tooltip2"
-		image		menu/button_green_small	blend true
+		image		ui/button_green_small	blend true
 		size		"176 32"
 		pos			"296 192"
 		font		f_menu
@@ -640,7 +640,7 @@ menu popup_button
 	{
 		string		"*cvar mn_popup_button_text3"
 		tooltip		"*cvar mn_popup_button_tooltip3"
-		image		menu/button_green_small	blend true
+		image		ui/button_green_small	blend true
 		pos			"296 156"
 		size		"176 32"
 		font		f_menu
@@ -668,7 +668,7 @@ menu popup_intercept_ready
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Ready"
 	}
@@ -687,7 +687,7 @@ menu popup_intercept_ready
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"266 188"
 		size		"176 32"
@@ -703,7 +703,7 @@ menu popup_intercept_ready
 		tooltip		"_Enter the battlefield"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"66 125"
 		size		"176 40"
@@ -716,7 +716,7 @@ menu popup_intercept_ready
 		tooltip		"_Automatically finish mission"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"259 125"
 		size		"176 40"
@@ -750,7 +750,7 @@ menu popup_baseattack
 		dragbutton	true
 		modal		true				// we can't click out
 		preventtypingescape true		// we can't use ESC
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Base is under attack"
 	}
@@ -769,7 +769,7 @@ menu popup_baseattack
 		current		1
 		pos			"26 145"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 	}
 	string equip_str
 	{
@@ -784,7 +784,7 @@ menu popup_baseattack
 		current		0
 		pos			"26 165"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 	}
 	string killaliens_str
 	{
@@ -800,7 +800,7 @@ menu popup_baseattack
 		tooltip		"_Not implemented"
 		pos			"26 185"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 	}
 	string liftcrafts_str
 	{
@@ -818,7 +818,7 @@ menu popup_baseattack
 		tooltip		"_Not implemented"
 		pos			"26 205"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 	}
 	string powerdown_str
 	{
@@ -841,7 +841,7 @@ menu popup_baseattack
 		tooltip		"_Automatically finish mission"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"259 241"
 		size		"176 32"
@@ -870,7 +870,7 @@ menu popup_baseattack
 		tooltip		"_Enter the battlefield"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"74 241"
 		size		"176 32"
@@ -908,7 +908,7 @@ menu popup_transferbaselist
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Select base to transfer to"
 	}
@@ -939,7 +939,7 @@ menu popup_transferbaselist
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"266 188"
 		size		"176 32"
@@ -957,7 +957,7 @@ menu popup_newbase
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_New base"
 	}
@@ -979,7 +979,7 @@ menu popup_newbase
 	pic bt_nameedit
 	{
 		tooltip		"_Rename your base"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"26 78"
 		texl		"0 48"
 		texh		"16 64"
@@ -1024,7 +1024,7 @@ menu popup_newbase
 		current		"*cvar cl_start_employees"
 		pos			"246 98"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 	}
 
 	// START WITH BUILDINGS
@@ -1040,7 +1040,7 @@ menu popup_newbase
 		tooltip		"_Buildings already built in the initial base"
 		current		"*cvar cl_start_buildings"
 		pos			"246 123"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		size		"20 18"
 		onChange 	{ call chk_checkboxes }
 	}
@@ -1051,7 +1051,7 @@ menu popup_newbase
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"298 188"
 		size		"176 32"
@@ -1066,7 +1066,7 @@ menu popup_newbase
 		tooltip		"_Build the base"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"111 188"
 		size		"176 32"
@@ -1103,7 +1103,7 @@ menu popup_newinstallation_type
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_New installation"
 	}
@@ -1134,7 +1134,7 @@ menu popup_newinstallation_type
 
 	pic bt_highlight
 	{
-		image		"menu/popup_button_hl"
+		image		"ui/popup_button_hl"
 		invis		true
 	}
 
@@ -1319,7 +1319,7 @@ menu popup_newinstallation_type
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"297 188"
 		size		"176 32"
@@ -1379,7 +1379,7 @@ menu popup_newinstallation
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 	}
 
@@ -1425,7 +1425,7 @@ menu popup_newinstallation
 	pic bt_nameedit
 	{
 		tooltip		"_Rename installation"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"26 78"
 		texl		"0 48"
 		texh		"16 64"
@@ -1471,7 +1471,7 @@ menu popup_newinstallation
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"294 188"
 		size		"176 32"
@@ -1483,7 +1483,7 @@ menu popup_newinstallation
 		tooltip		"_Build the radar tower"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"109 188"
 		size		"176 32"
@@ -1505,7 +1505,7 @@ menu radartower
 		pos			"284 282"
 		size		"496 247"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 	}
 
@@ -1530,7 +1530,7 @@ menu radartower
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"296 188"
 		size		"176 32"
@@ -1544,7 +1544,7 @@ menu popup_installationstatus
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Installation Status"
 	}
@@ -1567,7 +1567,7 @@ menu popup_installationstatus
 	pic bt_nameedit
 	{
 		tooltip		"_Rename installation"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"26 78"
 		texl		"0 48"
 		texh		"16 64"
@@ -1597,7 +1597,7 @@ menu popup_installationstatus
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"295 189"
 		size		"176 32"
@@ -1610,7 +1610,7 @@ menu popup_installationstatus
 		tooltip		"_Manage installation"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"109 189"
 		size		"176 32"
@@ -1622,7 +1622,7 @@ menu popup_installationstatus
 		tooltip		"_Destroy installation"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"295 78"
 		size		"176 32"
@@ -1646,7 +1646,7 @@ menu popup_intercept
 		pos			"124 192"
 		size		"548 459"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Anti-UFO defence"
 	}
@@ -1717,7 +1717,7 @@ menu popup_intercept
 		}
 
 		vscrollbar ships_scroll {
-			image		menu/scrollbar_v_green
+			image		ui/scrollbar_v_green
 			blend		true
 			pos			"470 29"
 			height		"260"
@@ -1766,7 +1766,7 @@ menu popup_intercept
 		}
 
 		vscrollbar bases_scroll {
-			image		menu/scrollbar_v_green
+			image		ui/scrollbar_v_green
 			blend		true
 			pos			"470 29"
 			height		"260"
@@ -1786,7 +1786,7 @@ menu popup_intercept
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"346 402"
 		size		"176 32"
@@ -1825,7 +1825,7 @@ menu popup_mission
 		pos			"124 192"
 		size		"777 402"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Select aircraft"
 	}
@@ -1877,7 +1877,7 @@ menu popup_mission
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"566 338"
 		size		"176 32"
@@ -1896,7 +1896,7 @@ menu popup_multi_selection
 		size		"496 247"
 		dragbutton	true
 		modal		true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Select item"
 	}
@@ -1935,7 +1935,7 @@ menu popup_multi_selection
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"266 188"
 		size		"176 32"
@@ -1954,7 +1954,7 @@ menu popup_aircraft
 		pos			"264 262"
 		size		"496 247"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Aircraft"
 	}
@@ -1993,7 +1993,7 @@ menu popup_aircraft
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"297 191"
 		size		"176 32"
@@ -2008,7 +2008,7 @@ menu popup
 		size		"496 247"
 		dragbutton	true
 		closebutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 	}
 
@@ -2036,7 +2036,7 @@ menu popup
 	{
 		string		"_OK"
 		tooltip		"_Close this dialogue"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"260 180"
 		width		"200"
@@ -2058,7 +2058,7 @@ menu messageoptions
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Pause/message settings"
 	}
@@ -2069,7 +2069,7 @@ menu messageoptions
 		tooltip		"_Apply changes"
 		pos			"109 436"
 		size		"176 32"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		font		f_menu
 		color		"0 0.5 0 1"
@@ -2083,7 +2083,7 @@ menu messageoptions
 		tooltip		"_Revert changes"
 		pos			"296 437"
 		size		"176 32"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		font		f_menu
 		color		"0 0.5 0 1"
@@ -2103,7 +2103,7 @@ menu messageoptions
 	{
 		tooltip		"_Enable or disable pause for all notification types\nPause can't be enabled without notification\nLeft click enables pause for all, right click disables."
 		pos			"356 60"
-		image		menu/notify_pause
+		image		ui/notify_pause
 		onClick		{ cmd "msgoptions_setall pause 1;" }
 		onRClick		{ cmd "msgoptions_setall pause 0;" }
 	}
@@ -2117,7 +2117,7 @@ menu messageoptions
 	{
 		tooltip		"_Enable or disable messages being displayed for all notification types.\nLeft click enables all notifications, right click disables."
 		pos			"386 60"
-		image		menu/notify_notice
+		image		ui/notify_notice
 		onClick		{ cmd "msgoptions_setall notify 1;" }
 		onRClick		{ cmd "msgoptions_setall notify 0;" }
 	}
@@ -2126,7 +2126,7 @@ menu messageoptions
 	{
 		tooltip		"_Enable or disable sounds being played for all notification types.\nLeft click enables all sounds, right click disables."
 		pos			"416 60"
-		image		menu/notify_sound
+		image		ui/notify_sound
 		onClick		{ cmd "msgoptions_setall sound 1;" }
 		onRClick		{ cmd "msgoptions_setall sound 0;" }
 	}
@@ -2152,7 +2152,7 @@ menu messageoptions
 	}
 
 	vscrollbar messagetypes_scroll {
-		image		menu/scrollbar_v_green
+		image		ui/scrollbar_v_green
 		blend		true
 		pos			"455 90"
 		height		"300"
@@ -2173,7 +2173,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 90"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 0 pause;" }
@@ -2183,7 +2183,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 90"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 0 notify;" }
@@ -2192,7 +2192,7 @@ menu messageoptions
 	checkbox bt_sound0 {
 		tooltip		"_enable or disable playing sound"
 		pos			"420 90"
-		image		"menu/checkbox_blue"	size	"20 18"
+		image		"ui/checkbox_blue"	size	"20 18"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 0 sound;" }
@@ -2202,7 +2202,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 115"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 1 pause;" }
@@ -2212,7 +2212,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 115"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 1 notify;" }
@@ -2222,7 +2222,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 115"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 1 sound;" }
@@ -2232,7 +2232,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 140"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 2 pause;" }
@@ -2242,7 +2242,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 140"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 2 notify;" }
@@ -2252,7 +2252,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 140"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 2 sound;" }
@@ -2262,7 +2262,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 165"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 3 pause;" }
@@ -2272,7 +2272,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 165"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 3 notify;" }
@@ -2282,7 +2282,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 165"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 3 sound;" }
@@ -2292,7 +2292,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 190"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 4 pause;" }
@@ -2302,7 +2302,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 190"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 4 notify;" }
@@ -2312,7 +2312,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 190"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 4 sound;" }
@@ -2322,7 +2322,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 215"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 5 pause;" }
@@ -2332,7 +2332,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 215"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 5 notify;" }
@@ -2342,7 +2342,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 215"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 5 sound;" }
@@ -2352,7 +2352,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 240"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 6 pause;" }
@@ -2362,7 +2362,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 240"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 6 notify;" }
@@ -2372,7 +2372,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 240"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 6 sound;" }
@@ -2382,7 +2382,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 265"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 7 pause;" }
@@ -2392,7 +2392,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 265"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 7 notify;" }
@@ -2402,7 +2402,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 265"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 7 sound;" }
@@ -2412,7 +2412,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 290"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 8 pause;" }
@@ -2422,7 +2422,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 290"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 8 notify;" }
@@ -2432,7 +2432,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 290"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 8 sound;" }
@@ -2442,7 +2442,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 315"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 9 pause;" }
@@ -2452,7 +2452,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 315"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 9 notify;" }
@@ -2462,7 +2462,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 315"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 9 sound;" }
@@ -2472,7 +2472,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 340"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 10 pause;" }
@@ -2482,7 +2482,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 340"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		 true
 		onChange	{ cmd "msgoptions_toggle 10 notify;" }
@@ -2492,7 +2492,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 340"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 10 sound;" }
@@ -2502,7 +2502,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 365"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 11 pause;" }
@@ -2512,7 +2512,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 365"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 11 notify;" }
@@ -2522,7 +2522,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 365"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 11 sound;" }
@@ -2532,7 +2532,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 390"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 12 pause;" }
@@ -2542,7 +2542,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 390"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 12 notify;" }
@@ -2552,7 +2552,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 390"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 12 sound;" }
@@ -2562,7 +2562,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 415"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 13 pause;" }
@@ -2572,7 +2572,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 415"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 13 notify;" }
@@ -2582,7 +2582,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 415"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 13 sound;" }
@@ -2592,7 +2592,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 440"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 14 pause;" }
@@ -2602,7 +2602,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 440"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 14 notify;" }
@@ -2612,7 +2612,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 440"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 14 sound;" }
@@ -2622,7 +2622,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 465"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 15 pause;" }
@@ -2632,7 +2632,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 465"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 15 notify;" }
@@ -2642,7 +2642,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 465"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 15 sound;" }
@@ -2652,7 +2652,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 490"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 16 pause;" }
@@ -2661,7 +2661,7 @@ menu messageoptions
 	checkbox bt_notify16 {
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 490"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		size		"20 18"
 		current		0
 		invis		true
@@ -2672,7 +2672,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 490"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 16 sound;" }
@@ -2682,7 +2682,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 515"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 17 pause;" }
@@ -2692,7 +2692,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 515"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 17 notify;" }
@@ -2702,7 +2702,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 515"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 17 sound;" }
@@ -2712,7 +2712,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 540"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 18 pause;" }
@@ -2722,7 +2722,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 540"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 18 notify;" }
@@ -2732,7 +2732,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 540"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 18 sound;" }
@@ -2742,7 +2742,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 565"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 19 pause;" }
@@ -2752,7 +2752,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 565"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 19 notify;" }
@@ -2762,7 +2762,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 565"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 19 sound;" }
@@ -2772,7 +2772,7 @@ menu messageoptions
 		tooltip		"_enable or disable game stopping"
 		pos			"360 590"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 20 pause;" }
@@ -2782,7 +2782,7 @@ menu messageoptions
 		tooltip		"_enable or disable displaying a notification message"
 		pos			"390 590"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 20 notify;" }
@@ -2792,7 +2792,7 @@ menu messageoptions
 		tooltip		"_enable or disable playing sound"
 		pos			"420 590"
 		size		"20 18"
-		image		"menu/checkbox_blue"
+		image		"ui/checkbox_blue"
 		current		0
 		invis		true
 		onChange	{ cmd "msgoptions_toggle 20 sound;" }
@@ -2866,7 +2866,7 @@ menu geoscape_options {
 		size		"350 300"
 		dragbutton	true
 		closebutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Geoscape options"
 	}
@@ -2887,7 +2887,7 @@ menu geoscape_options {
 			pos			"250 0"
 			size		"55 20"
 			cvar		"*cvar cl_3dmap"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			color		"0.6 0.6 0.6 0.3"
 			option 2d {
 				label	"_2D"
@@ -2912,7 +2912,7 @@ menu geoscape_options {
 			current		"*cvar r_geoscape_overlay_fooooo"
 			pos			"0 0"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 		string label {
 			pos			"20 0"
@@ -2937,7 +2937,7 @@ menu geoscape_options {
 			current		"*cvar r_geoscape_overlay_fooooo"
 			pos			"0 0"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 		string label {
 			pos			"20 0"
@@ -2958,7 +2958,7 @@ menu geoscape_options {
 			current		"*cvar r_geoscape_overlay_fooooo"
 			pos			"0 0"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 		string label {
 			pos			"20 0"

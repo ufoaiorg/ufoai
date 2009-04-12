@@ -10,7 +10,7 @@ menu multiplayerInGame
 
 	pic background
 	{
-		image	menu/main_bg
+		image	ui/main_bg
 	}
 
 	string version
@@ -28,7 +28,7 @@ menu multiplayerInGame
 		pos	"640 170"
 		size "256 64"
 		onClick	{ cmd "mn_pop;" }
-		image	menu/button_green_big	blend true
+		image	ui/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -40,7 +40,7 @@ menu multiplayerInGame
 		pos	"640 240"
 		size "256 64"
 		onClick	{ cmd "mn_push options;" }
-		image	menu/button_green_big	blend true
+		image	ui/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -53,7 +53,7 @@ menu multiplayerInGame
 		pos	"640 310"
 		size "256 64"
 		onClick	{ cmd "mn_push irc;" }
-		image	menu/button_green_big	blend true
+		image	ui/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"
@@ -65,7 +65,7 @@ menu multiplayerInGame
 		pos	"640 520"
 		size "256 64"
 		onClick	{ cmd "game_exit;mn_pop;" }
-		image	menu/button_green_big	blend true
+		image	ui/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

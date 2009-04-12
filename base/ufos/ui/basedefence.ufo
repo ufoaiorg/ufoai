@@ -9,7 +9,7 @@ menu basedefence
 
 	pic background
 	{
-		image		menu/basedefence_bg
+		image		ui/basedefence_bg
 	}
 
 	// ==================
@@ -62,7 +62,7 @@ menu basedefence
 	pic basedef_selected_slot
 	{
 		tooltip		"_Your are changing this defence system"
-		image		menu/buttons_small
+		image		ui/buttons_small
 		pos			"25 30"
 		texl		"23 16"
 		texh		"31 32"
@@ -122,7 +122,7 @@ menu basedefence
 
 		string		"_Missile"
 		tooltip		"_Choose missile battery"
-		image		menu/button_blue
+		image		ui/button_blue
 		pos			"50 710"
 		size		"128 52"
 		color		"1 1 1 1"
@@ -136,7 +136,7 @@ menu basedefence
 
 		string		"_Laser"
 		tooltip		"_Choose laser battery"
-		image		menu/button_blue
+		image		ui/button_blue
 		pos			"288 710"
 		size		"128 52"
 		color		"1 1 1 1"
@@ -162,7 +162,7 @@ menu basedefence
 	custombutton basedef_button_add1
 	{
 		tooltip		"_Install selected defence system"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		pos			"467 75"
 		size		"37 32"
@@ -174,7 +174,7 @@ menu basedefence
 	custombutton basedef_button_remove1
 	{
 		tooltip		"_Remove this defence system"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		pos			"467 125"
 		size		"37 32"
@@ -186,7 +186,7 @@ menu basedefence
 	custombutton basedef_button_add2
 	{
 		tooltip		"_Install selected defence system"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		pos			"467 259"
 		size		"37 32"
@@ -198,7 +198,7 @@ menu basedefence
 	custombutton basedef_button_remove2
 	{
 		tooltip		"_Remove this defence system"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		pos			"467 294"
 		size		"37 32"
@@ -212,7 +212,7 @@ menu basedefence
 		invis		false
 
 		tooltip		"_Choose defence system to build"
-		image		menu/button_big_menu
+		image		ui/button_big_menu
 		pos			"534 66"
 		texl		"0 83"
 		texh		"458 190"
@@ -234,7 +234,7 @@ menu basedefence
 		invis		false
 
 		tooltip		"_Change ammo in the defence system"
-		image		menu/button_big_menu
+		image		ui/button_big_menu
 		pos			"534 254"
 		texl		"0 0"
 		texh		"458 82"
@@ -279,7 +279,7 @@ menu basedefence
 	custombutton button_leave
 	{
 		tooltip		"_Done"
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		pos			"940 720"
 		size		"64 37"

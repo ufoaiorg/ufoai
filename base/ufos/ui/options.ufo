@@ -14,7 +14,7 @@ menu options
 
 	pic background
 	{
-		image		menu/options_bg
+		image		ui/options_bg
 	}
 
 	func hidepanels
@@ -35,7 +35,7 @@ menu options
 		string		"_Game"
 		pos			"80 170"
 		size		"256 64"
-		image		menu/button_green_big
+		image		ui/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
@@ -51,7 +51,7 @@ menu options
 		string		"_Video"
 		pos			"80 240"
 		size		"256 64"
-		image		menu/button_green_big
+		image		ui/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
@@ -70,7 +70,7 @@ menu options
 		string		"_Sound"
 		pos			"80 310"
 		size		"256 64"
-		image		menu/button_green_big
+		image		ui/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
@@ -89,7 +89,7 @@ menu options
 		tooltip		"_Sound is not activated"
 		pos			"80 310"
 		size		"256 64"
-		image		menu/button_green_big
+		image		ui/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
@@ -101,7 +101,7 @@ menu options
 		string		"_Input"
 		pos			"80 380"
 		size		"256 64"
-		image		menu/button_green_big
+		image		ui/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
@@ -117,7 +117,7 @@ menu options
 		string		"_Back"
 		pos			"80 470"
 		size		"256 64"
-		image		menu/button_green_big
+		image		ui/button_green_big
 		blend		true
 		font		f_menubig
 		color		"0 0.5 0 1"
@@ -161,7 +161,7 @@ menu options
 
 		pic res_test_pic
 		{
-			image		menu/buttons_small
+			image		ui/buttons_small
 			pos			"335 140"
 			texl		"32 0"
 			texh		"47 16"
@@ -203,7 +203,7 @@ menu options
 		spinner aniso_change
 		{
 			current		"*cvar r_anisotropic"
-			image		menu/spinner_blue
+			image		ui/spinner_blue
 			blend		true
 			pos			"466 214"
 			min			0
@@ -222,7 +222,7 @@ menu options
 			current		"*cvar vid_fullscreen"
 			pos			"463 240"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string compression_str
@@ -236,7 +236,7 @@ menu options
 			current		"*cvar r_ext_texture_compression"
 			pos			"463 265"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string fps_str
@@ -250,7 +250,7 @@ menu options
 			current		"*cvar cl_fps"
 			pos			"463 290"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string lod_str
@@ -264,7 +264,7 @@ menu options
 			current		"*cvar r_texture_lod"
 			pos			"463 315"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string isomode_str
@@ -278,7 +278,7 @@ menu options
 			current		"*cvar r_isometric"
 			pos			"463 340"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string glsl_str
@@ -292,7 +292,7 @@ menu options
 			current		"*cvar r_programs"
 			pos			"463 365"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string light_str
@@ -306,7 +306,7 @@ menu options
 			current		"*cvar r_lights"
 			pos			"463 390"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string ptlweather_str
@@ -320,7 +320,7 @@ menu options
 			current		"*cvar cl_particleweather"
 			pos			"463 415"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string vbo_str
@@ -334,7 +334,7 @@ menu options
 			current		"*cvar r_vertexbuffers"
 			pos			"463 440"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		string samplebuf_str
@@ -353,7 +353,7 @@ menu options
 		spinner samplebuf_change
 		{
 			current		"*cvar r_multisample"
-			image		menu/spinner_blue
+			image		ui/spinner_blue
 			blend		true
 			pos			"466 464"
 			min			0
@@ -378,7 +378,7 @@ menu options
 		spinner swapinterval_change
 		{
 			current		"*cvar r_swapinterval"
-			image		menu/spinner_blue
+			image		ui/spinner_blue
 			blend		true
 			pos			"466 484"
 			min			0
@@ -394,7 +394,7 @@ menu options
 		}
 		pic gamma_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 520"
 		}
 		bar gamma_bar
@@ -416,7 +416,7 @@ menu options
 		}
 		pic contrast_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 545"
 		}
 		bar contrast_bar
@@ -438,7 +438,7 @@ menu options
 		}
 		pic brightness_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 570"
 		}
 		bar brightness_bar
@@ -460,7 +460,7 @@ menu options
 		}
 		pic lightmap_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 595"
 		}
 		bar lightmap_bar
@@ -485,13 +485,13 @@ menu options
 			current		"*cvar vid_strech"
 			pos			"463 615"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		selectbox lightmapres_box
 		{
 			cvar		"*cvar r_maxlightmap"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			pos			"359 192"
 			size		"125 20"
 			color		"0.6 0.6 0.6 0.3"
@@ -520,7 +520,7 @@ menu options
 		selectbox texres_box
 		{
 			cvar		"*cvar r_maxtexres"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			pos			"359 167"
 			size		"125 20"
 			color		"0.6 0.6 0.6 0.3"
@@ -561,7 +561,7 @@ menu options
 			cvar		"*cvar mn_vidmode"
 			pos			"359 142"
 			size		"125 20"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			color		"0.6 0.6 0.6 0.3"
 			dataid		OPTION_VIDEO_RESOLUTIONS
 		}
@@ -601,7 +601,7 @@ menu options
 		}
 		pic effects_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"230 175"
 		}
 		bar effects_bar
@@ -623,7 +623,7 @@ menu options
 		}
 		pic music_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"230 200"
 		}
 		bar music_bar
@@ -646,7 +646,7 @@ menu options
 		pic rate_test_pic
 		{
 			tooltip		"_Restart sound to change the settings"
-			image		menu/buttons_small
+			image		ui/buttons_small
 			pos			"335 245"
 			texl		"32 0"
 			texh		"47 16"
@@ -657,7 +657,7 @@ menu options
 		selectbox rate_box
 		{
 			cvar		"*cvar snd_rate"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			pos			"359 245"
 			size		"125 20"
 			color		"0.6 0.6 0.6 0.3"
@@ -718,7 +718,7 @@ menu options
 		}
 
 		vscrollbar keyscroll {
-			image		menu/scrollbar_v_green
+			image		ui/scrollbar_v_green
 			blend		true
 			pos			"508 110"
 			height		"560"
@@ -766,7 +766,7 @@ menu options
 		textentry slot_name
 		{
 			string		"*cvar cl_name"
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color 		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -789,7 +789,7 @@ menu options
 		selectbox select_hud
 		{
 			cvar		"*cvar mn_hud"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			pos			"343 230"
 			size		"155 20"
 			color		"0.6 0.6 0.6 0.3"
@@ -819,7 +819,7 @@ menu options
 			dataid		OPTION_LANGUAGES
 			pos			"343 255"
 			cvar		"*cvar s_language"
-			image		"menu/panel_green_slim"
+			image		"ui/panel_green_slim"
 			blend		true
 			size		"155 220"
 			color		"0 .78 0 1"
@@ -835,7 +835,7 @@ menu options
 		}
 
 		vscrollbar select_language_scroll {
-			image		menu/scrollbar_v_green
+			image		ui/scrollbar_v_green
 			blend		true
 			pos			"500 255"
 			height		"220"
@@ -862,7 +862,7 @@ menu options
 			tooltip		"_Activates tooltips"
 			pos			"425 480"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		// ===================
@@ -880,7 +880,7 @@ menu options
 			tooltip		"_Centring at soldier selecting, shooting and appearing"
 			pos			"425 505"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		// ===================
@@ -898,7 +898,7 @@ menu options
 			tooltip		"_Activates cursor tooltips"
 			pos			"425 530"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		// =====================
@@ -916,7 +916,7 @@ menu options
 			tooltip		"_Use 3D geoscape"
 			pos			"425 555"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		// =====================
@@ -934,7 +934,7 @@ menu options
 			current		"*cvar cl_showTipOfTheDay"
 			pos			"425 580"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		// ===================
@@ -952,7 +952,7 @@ menu options
 			tooltip		"_Precache models (faster menus)"
 			pos			"425 605"
 			size		"20 18"
-			image		"menu/checkbox_blue"
+			image		"ui/checkbox_blue"
 		}
 
 		// ==================
@@ -966,7 +966,7 @@ menu options
 		}
 		pic actorsspeed_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"240 635"
 		}
 		bar actorsspeed_bar
@@ -1019,7 +1019,7 @@ menu options
 		}
 		pic camspeed_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 175"
 		}
 		bar camspeed_bar
@@ -1045,7 +1045,7 @@ menu options
 		}
 		pic camrot_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 200"
 		}
 		bar camrot_bar
@@ -1071,7 +1071,7 @@ menu options
 		}
 		pic cammoveaccel_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 250"
 		}
 		bar cammoveaccel_bar
@@ -1107,7 +1107,7 @@ menu options
 		}
 		pic joystick_threshold_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 560"
 		}
 		bar joystick_threshold_bar
@@ -1133,7 +1133,7 @@ menu options
 		}
 		pic joystick_speed_rahmen
 		{
-			image		menu/bar_rahmen
+			image		ui/bar_rahmen
 			pos			"244 585"
 		}
 		bar joystick_speed_bar
@@ -1156,7 +1156,7 @@ menu options
 			string		"_Keys"
 			pos			"85 620"
 			size		"256 64"
-			image		menu/button_green_big
+			image		ui/button_green_big
 			blend		true
 			font		f_menubig
 			color		"0 0.5 0 1"
@@ -1181,7 +1181,7 @@ menu options
 		selectbox select_autostand
 		{
 			cvar		"*cvar cl_autostand"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			pos			"343 310"
 			size		"155 20"
 			color		"0.6 0.6 0.6 0.3"
@@ -1209,7 +1209,7 @@ menu options
 		selectbox select_confirmactions
 		{
 			cvar		"*cvar confirm_actions"
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			pos			"343 285"
 			size		"155 20"
 			color		"0.6 0.6 0.6 0.3"
@@ -1243,7 +1243,7 @@ menu options
 		{
 			cvar		"*cvar in_joystickNo"
 			dataid		OPTION_JOYSTICKS
-			image		"menu/selectbox_green"
+			image		"ui/selectbox_green"
 			pos			"243 530"
 			size		"256 20"
 			color		"0.6 0.6 0.6 0.3"
@@ -1260,7 +1260,7 @@ menu popup_maintain_resolution
 {
 	{
 		string		"_Maintain resolution"
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		pos			"264 262"
 		size		"496 247"
@@ -1285,7 +1285,7 @@ menu popup_maintain_resolution
 		tooltip		"_Change the resolution"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"112 188"
 		size		"176 32"
@@ -1297,7 +1297,7 @@ menu popup_maintain_resolution
 		tooltip		"_Close this dialogue"
 		color		"0 0.5 0 1"
 		font		f_menu
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"297 188"
 		size		"176 32"

@@ -12,21 +12,21 @@ menu aircraft_pilots extends iaircraft
 		pos		"18 443"
 		size	"329 321"
 		blend	true
-		image	"menu/panel_grey_green_large"
+		image	"ui/panel_grey_green_large"
 	}
 
 	panel actormodel_background {
 		pos		"358 443"
 		size	"205 321"
 		blend	true
-		image	"menu/panel_grey_green_large"
+		image	"ui/panel_grey_green_large"
 	}
 
 	panel actorstats_background {
 		pos		"564 443"
 		size	"458 321"
 		blend	true
-		image	"menu/panel_grey_green_large"
+		image	"ui/panel_grey_green_large"
 	}
 
 	// ==================
@@ -44,7 +44,7 @@ menu aircraft_pilots extends iaircraft
 
 	pic aircraft_slot
 	{
-		image	menu/button_square
+		image	ui/button_square
 		blend	true
 		pos		"494 120"
 		size	"64 64"
@@ -191,7 +191,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 470"
 		onChange { cmd "pilot_hire 0 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -201,7 +201,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 505"
 		onChange { cmd "pilot_hire 1 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -211,7 +211,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 540"
 		onChange { cmd "pilot_hire 2 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -221,7 +221,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 575"
 		onChange { cmd "pilot_hire 3 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -231,7 +231,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 610"
 		onChange { cmd "pilot_hire 4 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -241,7 +241,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 645"
 		onChange { cmd "pilot_hire 5 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -251,7 +251,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 680"
 		onChange { cmd "pilot_hire 6 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -261,7 +261,7 @@ menu aircraft_pilots extends iaircraft
 		pos	"280 715"
 		onChange { cmd "pilot_hire 7 <cvar:mn_relative_id>;" }
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		size "20 20"
 		invis	true
 	}
@@ -357,7 +357,7 @@ menu aircraft_pilots extends iaircraft
 
 	vscrollbar scroll_employees
 	{
-		image	menu/scrollbar_v_green	blend	true
+		image	ui/scrollbar_v_green	blend	true
 		pos "310 463"	height	"282"
 		current 0
 		viewsize 8

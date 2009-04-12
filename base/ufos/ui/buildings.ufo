@@ -10,19 +10,19 @@ menu buildings
 
 	pic back_ul
 	{
-		image		menu/base_ul
+		image		ui/base_ul
 		pos			"0 0"
 	}
 
 	pic back_ur
 	{
-		image		menu/base_ur
+		image		ui/base_ur
 		pos			"512 0"
 	}
 
 	pic back_lr
 	{
-		image		menu/base_lr
+		image		ui/base_lr
 		pos			"512 256"
 	}
 
@@ -50,7 +50,7 @@ menu buildings
 	custombutton back
 	{
 		tooltip		"_Back to baseview"
-		image		menu/button_background	blend	true
+		image		ui/button_background	blend	true
 		texl		"1 1"
 		size		"59 55"
 		pos			"950 20"
@@ -123,7 +123,7 @@ menu popup_buildingpreview
 		pos			"38 456"
 		size		"526 237"
 		dragbutton	true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Building preview"
 	}

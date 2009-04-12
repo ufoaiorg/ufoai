@@ -10,7 +10,7 @@ menu won
 
 	pic background
 	{
-		image	menu/won_bg
+		image	ui/won_bg
 	}
 
 	// ==================
@@ -35,7 +35,7 @@ menu won
 	{
 		string		"_Try again"
 		tooltip		"_Retry this mission"
-		image		"menu/button_blue"
+		image		"ui/button_blue"
 		pos			"480 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
@@ -48,7 +48,7 @@ menu won
 	{
 		string		"_Continue"
 		tooltip		"_Continue"
-		image		"menu/button_blue"
+		image		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
@@ -87,7 +87,7 @@ menu lost
 
 	pic background
 	{
-		image	menu/lost_bg
+		image	ui/lost_bg
 	}
 
 	// ==================
@@ -112,7 +112,7 @@ menu lost
 	{
 		string		"_Try again"
 		tooltip		"_Retry this mission"
-		image		"menu/button_blue"
+		image		"ui/button_blue"
 		pos			"480 700"
 		size		"128 53"
 		color		"1 1 1 0.8"
@@ -125,7 +125,7 @@ menu lost
 	{
 		string		"_Continue"
 		tooltip		"_Continue"
-		image		"menu/button_blue"
+		image		"ui/button_blue"
 		pos			"865 700"
 		size		"128 53"
 		texl		"0 0"
@@ -158,7 +158,7 @@ menu uforecovery
 		dragbutton	true
 		modal		true
 		preventtypingescape true		// we can't use ESC
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_UFO recovery"
 	}
@@ -235,7 +235,7 @@ menu uforecovery
 		{
 			string		"_Recover"
 			tooltip		"_Begin UFO recovery process"
-			image		menu/button_green_small
+			image		ui/button_green_small
 			blend		true
 			pos			"140 210"
 			size		"176 32"
@@ -248,7 +248,7 @@ menu uforecovery
 		{
 			string		"_Replace UFO"
 			tooltip		"_Replace stored UFO with actual recovered one"
-			image		menu/button_green_small
+			image		ui/button_green_small
 			blend		true
 			pos			"375 210"
 			size		"176 32"
@@ -323,7 +323,7 @@ menu uforecovery
 		{
 			string		"_Sell"
 			tooltip		"_Begin UFO sell process"
-			image		menu/button_green_small
+			image		ui/button_green_small
 			blend		true
 			pos			"140 210"
 			size		"176 32"

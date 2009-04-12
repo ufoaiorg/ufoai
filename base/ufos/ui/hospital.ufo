@@ -9,7 +9,7 @@ menu hospital
 
 	pic background
 	{
-		image	menu/base_bg
+		image	ui/base_bg
 	}
 
 	// ==================
@@ -48,7 +48,7 @@ menu hospital
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	menu/button_background	blend	true
+		image	ui/button_background	blend	true
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
@@ -61,27 +61,27 @@ menu hospital
 
 	confunc hospital_clear
 	{
-		*hos_button0	image menu/hosp_button_green
-		*hos_button1	image menu/hosp_button_green
-		*hos_button2	image menu/hosp_button_green
-		*hos_button3	image menu/hosp_button_green
-		*hos_button4	image menu/hosp_button_green
-		*hos_button5	image menu/hosp_button_green
-		*hos_button6	image menu/hosp_button_green
-		*hos_button7	image menu/hosp_button_green
-		*hos_button8	image menu/hosp_button_green
-		*hos_button9	image menu/hosp_button_green
-		*hos_button10	image menu/hosp_button_green
-		*hos_button11	image menu/hosp_button_green
-		*hos_button12	image menu/hosp_button_green
-		*hos_button13	image menu/hosp_button_green
-		*hos_button14	image menu/hosp_button_green
-		*hos_button15	image menu/hosp_button_green
-		*hos_button16	image menu/hosp_button_green
-		*hos_button17	image menu/hosp_button_green
-		*hos_button18	image menu/hosp_button_green
-		*hos_button19	image menu/hosp_button_green
-		*hos_button20	image menu/hosp_button_green
+		*hos_button0	image ui/hosp_button_green
+		*hos_button1	image ui/hosp_button_green
+		*hos_button2	image ui/hosp_button_green
+		*hos_button3	image ui/hosp_button_green
+		*hos_button4	image ui/hosp_button_green
+		*hos_button5	image ui/hosp_button_green
+		*hos_button6	image ui/hosp_button_green
+		*hos_button7	image ui/hosp_button_green
+		*hos_button8	image ui/hosp_button_green
+		*hos_button9	image ui/hosp_button_green
+		*hos_button10	image ui/hosp_button_green
+		*hos_button11	image ui/hosp_button_green
+		*hos_button12	image ui/hosp_button_green
+		*hos_button13	image ui/hosp_button_green
+		*hos_button14	image ui/hosp_button_green
+		*hos_button15	image ui/hosp_button_green
+		*hos_button16	image ui/hosp_button_green
+		*hos_button17	image ui/hosp_button_green
+		*hos_button18	image ui/hosp_button_green
+		*hos_button19	image ui/hosp_button_green
+		*hos_button20	image ui/hosp_button_green
 		*click_hos_button0	tooltip "_Unused"
 		*click_hos_button1	tooltip "_Unused"
 		*click_hos_button2	tooltip "_Unused"
@@ -107,17 +107,17 @@ menu hospital
 
 	confunc hospitalserious	{
 		*hos_icon<1>	image	icons/health_critical
-		*hos_button<1>	image	menu/hosp_button_light
+		*hos_button<1>	image	ui/hosp_button_light
 		*click_hos_button<1>	tooltip	"_Heavily wounded"
 	}
 	confunc hospitalmedium	{
 		*hos_icon<1>	image	icons/health_medium
-		*hos_button<1>	image	menu/hosp_button_light
+		*hos_button<1>	image	ui/hosp_button_light
 		*click_hos_button<1>	tooltip	"_Medium wounds"
 	}
 	confunc hospitallight	{
 		*hos_icon<1>	image	icons/health_normal
-		*hos_button<1>	image	menu/hosp_button_light
+		*hos_button<1>	image	ui/hosp_button_light
 		*click_hos_button<1>	tooltip	"_Slightly wounded"
 	}
 
@@ -130,87 +130,87 @@ menu hospital
 	}
 
 	pic hos_button0 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "25 95"
 	}
 	pic hos_button1 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "345 95"
 	}
 	pic hos_button2 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "665 95"
 	}
 	pic hos_button3 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "25 190"
 	}
 	pic hos_button4 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "345 190"
 	}
 	pic hos_button5 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "665 190"
 	}
 	pic hos_button6 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "25 285"
 	}
 	pic hos_button7 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "345 285"
 	}
 	pic hos_button8 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "665 285"
 	}
 	pic hos_button9 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "25 380"
 	}
 	pic hos_button10 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "345 380"
 	}
 	pic hos_button11 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "665 380"
 	}
 	pic hos_button12 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "25 475"
 	}
 	pic hos_button13 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "345 475"
 	}
 	pic hos_button14 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "665 475"
 	}
 	pic hos_button15 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "25 570"
 	}
 	pic hos_button16 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "345 570"
 	}
 	pic hos_button17 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "665 570"
 	}
 	pic hos_button18 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "25 665"
 	}
 	pic hos_button19 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "345 665"
 	}
 	pic hos_button20 {
-		image menu/hosp_button_green
+		image ui/hosp_button_green
 		pos "665 665"
 	}
 
@@ -432,7 +432,7 @@ menu hospital
 	pic hos_button_scrollup
 	{
 		tooltip "_Scroll up"
-		image	menu/buttons_small
+		image	ui/buttons_small
 		mousefx true
 		pos		"980 95"
 		texh	"48 48"
@@ -445,7 +445,7 @@ menu hospital
 	pic hos_button_scrolldown
 	{
 		tooltip "_Scroll down"
-		image	menu/buttons_small
+		image	ui/buttons_small
 		mousefx true
 		pos		"980 733"
 		texl	"32 48"
@@ -476,7 +476,7 @@ menu hospital_employee
 
 	pic background
 	{
-		image	menu/base_bg
+		image	ui/base_bg
 	}
 
 	// ==================
@@ -515,7 +515,7 @@ menu hospital_employee
 	custombutton bt_continue
 	{
 		tooltip	"_Back"
-		image	menu/button_background	blend	true
+		image	ui/button_background	blend	true
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
@@ -529,7 +529,7 @@ menu hospital_employee
 	panel actorinfo {
 		pos		"457 101"
 		size	"555 471"
-		image	menu/panel_grey_green_large
+		image	ui/panel_grey_green_large
 		blend	true
 	}
 
@@ -565,53 +565,53 @@ menu hospital_employee
 
 	string pwr_lbl { pos "690 182" size "180 20" string "_Strength:" longlines prettychop }
 	string pwr_val { pos "860 182" size "130 20" string "*cvar mn_tpwr" textalign ur longlines prettychop }
-	pic pwr_bdr    { pos "707 198"  image menu/bar_border }
-	tbar pwr_bar   { pos "710 198"  max 100 current "*cvar mn_vpwr" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	pic pwr_bdr    { pos "707 198"  image ui/bar_border }
+	tbar pwr_bar   { pos "710 198"  max 100 current "*cvar mn_vpwr" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string spd_lbl { pos "690 212" size "180 20" string "_Speed:" longlines prettychop }
 	string spd_val { pos "860 212" size "130 20" string "*cvar mn_tspd" textalign ur longlines prettychop }
-	pic spd_bdr    { pos "707 228" image menu/bar_border }
-	tbar spd_bar   { pos "710 228" current "*cvar mn_vspd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	pic spd_bdr    { pos "707 228" image ui/bar_border }
+	tbar spd_bar   { pos "710 228" current "*cvar mn_vspd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string acc_lbl { pos "690 242" size "180 20" string "_Accuracy:" longlines prettychop }
 	string acc_val { pos "860 242" size "130 20" string "*cvar mn_tacc" textalign ur longlines prettychop }
-	pic acc_brd    { pos "707 258" image menu/bar_border }
-	tbar acc_bar   { pos "710 258" current "*cvar mn_vacc" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	pic acc_brd    { pos "707 258" image ui/bar_border }
+	tbar acc_bar   { pos "710 258" current "*cvar mn_vacc" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string mnd_lbl { pos "690 272" size "180 20" string "_Mind:" longlines prettychop }
 	string mnd_val { pos "860 272" size "130 20" string "*cvar mn_tmnd" textalign ur longlines prettychop }
-	pic mnd_brd    { pos "707 288" image menu/bar_border }
-	tbar mnd_bar   { pos "710 288" current "*cvar mn_vmnd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	pic mnd_brd    { pos "707 288" image ui/bar_border }
+	tbar mnd_bar   { pos "710 288" current "*cvar mn_vmnd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string cls_lbl { pos "690 312" size "180 20" string "_Close Combat:" longlines prettychop }
 	string cls_val { pos "860 312" size "130 20" string "*cvar mn_tcls" textalign ur longlines prettychop }
-	pic cls_brd    { pos "707 328" image menu/bar_border }
-	tbar cls_bar   { pos "710 328" current "*cvar mn_vcls" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic cls_brd    { pos "707 328" image ui/bar_border }
+	tbar cls_bar   { pos "710 328" current "*cvar mn_vcls" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string hvy_lbl { pos "690 342" size "180 20" string "_Heavy Weapons:" longlines prettychop }
 	string hvy_val { pos "860 342" size "130 20" string "*cvar mn_thvy" textalign ur longlines prettychop }
-	pic hvy_brd    { pos "707 358" image menu/bar_border }
-	tbar hvy_bar   { pos "710 358" current "*cvar mn_vhvy" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic hvy_brd    { pos "707 358" image ui/bar_border }
+	tbar hvy_bar   { pos "710 358" current "*cvar mn_vhvy" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string ass_lbl { pos "690 372" size "180 20" string "_Assault Weapons:" longlines prettychop }
 	string ass_val { pos "860 372" size "130 20" string "*cvar mn_tass" textalign ur longlines prettychop }
-	pic ass_brd    { pos "707 388" image menu/bar_border }
-	tbar ass_bar   { pos "710 388" current "*cvar mn_vass" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic ass_brd    { pos "707 388" image ui/bar_border }
+	tbar ass_bar   { pos "710 388" current "*cvar mn_vass" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string snp_lbl { pos "690 402" size "180 20" string "_Sniper Rifles:" longlines prettychop }
 	string snp_val { pos "860 402" size "130 20" string "*cvar mn_tsnp" textalign ur longlines prettychop }
-	pic snp_brd    { pos "707 418" image menu/bar_border }
-	tbar snp_bar   { pos "710 418" current "*cvar mn_vsnp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic snp_brd    { pos "707 418" image ui/bar_border }
+	tbar snp_bar   { pos "710 418" current "*cvar mn_vsnp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string exp_lbl { pos "690 432" size "180 20" string "_High-Explosives:" longlines prettychop }
 	string exp_val { pos "860 432" size "130 20" string "*cvar mn_texp" textalign ur longlines prettychop }
-	pic exp_brd    { pos "707 448" image menu/bar_border }
-	tbar exp_bar   { pos "710 448" current "*cvar mn_vexp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic exp_brd    { pos "707 448" image ui/bar_border }
+	tbar exp_bar   { pos "710 448" current "*cvar mn_vexp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string health     { pos "690 476" size "180 30" string "_Health:" font f_normal longlines prettychop }
 	string health_val { pos "860 476" size "130 30" string "*cvar mn_hp" textalign ur font f_normal longlines prettychop }
-	pic health_brd    { pos "707 498" image menu/bar_border }
-	tbar health_bar   { pos "710 498" current "*cvar mn_hp" max "*cvar mn_hpmax" texl "3 0" image menu/bar_health size "250 16" }
+	pic health_brd    { pos "707 498" image ui/bar_border }
+	tbar health_bar   { pos "710 498" current "*cvar mn_hp" max "*cvar mn_hpmax" texl "3 0" image ui/bar_health size "250 16" }
 
 	// ==================
 	// action buttons
@@ -620,7 +620,7 @@ menu hospital_employee
 	panel buttonpanel {
 		pos		"26 101"
 		size	"276 471"
-		image	menu/panel_grey_green_large
+		image	ui/panel_grey_green_large
 		blend	true
 	}
 
@@ -628,7 +628,7 @@ menu hospital_employee
 	{
 		string		"_Implants"
 		color		"0 0.8 0 1"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		pos			"60 270"
 		size		"207 48"
 		font		f_menu

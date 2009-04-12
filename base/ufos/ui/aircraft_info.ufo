@@ -12,7 +12,7 @@ menu aircraft extends iaircraft
 		pos		"461 444"
 		size	"561 320"
 		blend	true
-		image	"menu/panel_grey_green_large"
+		image	"ui/panel_grey_green_large"
 	}
 
 	// ==================
@@ -47,7 +47,7 @@ menu aircraft extends iaircraft
 	custombutton aircraft_return
 	{
 		pos			"726 510"
-		image		menu/button_pack1
+		image		ui/button_pack1
 		blend		true
 		size		"16 16"
 	}

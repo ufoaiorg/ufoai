@@ -277,7 +277,7 @@ static void MN_WindowNodeLoaded (menuNode_t *node)
 		const int positionFromRight = CONTROLS_PADDING;
 		Q_strncpyz(button->name, "close_window_button", sizeof(button->name));
 		button->menu = node;
-		button->image = "menu/close";
+		button->image = "ui/close";
 		/** @todo Once @c image_t is known on the client, use @c image->width resp. @c image->height here */
 		button->size[0] = CONTROLS_IMAGE_DIMENSIONS;
 		button->size[1] = CONTROLS_IMAGE_DIMENSIONS;

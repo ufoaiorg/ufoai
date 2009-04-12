@@ -10,12 +10,12 @@ menu stats
 
 	pic background
 	{
-		image		menu/stats_bg
+		image		ui/stats_bg
 	}
 
 	custombutton button_exit
 	{
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		pos			"950 720"
 		texl		"192 0"
@@ -186,12 +186,12 @@ menu nations
 
 	pic background
 	{
-		image		menu/stats_bg
+		image		ui/stats_bg
 	}
 
 	custombutton button_exit
 	{
-		image		menu/button_background
+		image		ui/button_background
 		blend		true
 		texl		"192 0"
 		pos			"950 720"

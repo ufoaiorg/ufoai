@@ -10,26 +10,26 @@ menu bases
 
 	pic back_ul
 	{
-		image		menu/base_ul
+		image		ui/base_ul
 		pos			"0 0"
 	}
 
 	pic back_ur
 	{
-		image		menu/base_ur
+		image		ui/base_ur
 		pos			"512 0"
 	}
 
 	pic back_lr
 	{
-		image		menu/base_lr
+		image		ui/base_lr
 		pos			"512 256"
 	}
 
 	custombutton back_geo
 	{
 		tooltip		"_Back to geoscape"
-		image		menu/button_background
+		image		ui/button_background
 		texl		"1 1"
 		size		"59 55"
 		blend		true
@@ -52,7 +52,7 @@ menu bases
 	{
 		string		"_Buildings"
 		tooltip		"_Build base facilities"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		 true
 		pos			"755 128"
 		size		"230 56"
@@ -66,7 +66,7 @@ menu bases
 	{
 		string		"_Aircraft"
 		tooltip		"_Manage your aircraft"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 188"
 		size		"230 56"
@@ -80,7 +80,7 @@ menu bases
 	{
 		string		"_Buy/Sell Equipment"
 		tooltip		"_Buy/Sell equipment"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 248"
 		size		"230 56"
@@ -94,7 +94,7 @@ menu bases
 	{
 		string		"_Transfer"
 		tooltip		"_Transfer equipment or personnel"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 308"
 		size		"230 56"
@@ -108,7 +108,7 @@ menu bases
 	{
 		string		"_Research"
 		tooltip		"_Research new technology"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 368"
 		size		"230 56"
@@ -122,7 +122,7 @@ menu bases
 	{
 		string		"_Production"
 		tooltip		"_Produce new equipment"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 428"
 		size		"230 56"
@@ -136,7 +136,7 @@ menu bases
 	{
 		string		"_Hire employees"
 		tooltip		"_Hire employees"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 488"
 		size		"230 56"
@@ -150,7 +150,7 @@ menu bases
 	{
 		string		"_Containment"
 		tooltip		"_Deal with Aliens in Alien Containment"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 548"
 		size		"230 56"
@@ -164,7 +164,7 @@ menu bases
 	{
 		string		"_Hospital"
 		tooltip		"_Medical and Surgery operations"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 608"
 		size		"230 56"
@@ -178,7 +178,7 @@ menu bases
 	{
 		string		"_Base Summary"
 		tooltip		"_Base Information"
-		image		menu/button_green_small
+		image		ui/button_green_small
 		blend		true
 		pos			"755 668"
 		size		"230 56"
@@ -234,7 +234,7 @@ menu bases
 	pic bt_edit
 	{
 		tooltip	"_Rename your base"
-		image	menu/buttons_small
+		image	ui/buttons_small
 		pos	"570 40"
 		texl	"0 48"
 		texh	"16 64"
@@ -247,7 +247,7 @@ menu bases
 	pic prev_base
 	{
 		tooltip	"_Switch to the previous base"
-		image	menu/buttons_small
+		image	ui/buttons_small
 		pos	"30 40"
 		mousefx true
 		texl	"0 0"
@@ -258,7 +258,7 @@ menu bases
 	pic next_base
 	{
 		tooltip	"_Switch to the next base"
-		image	menu/buttons_small
+		image	ui/buttons_small
 		pos	"600 40"
 		mousefx	true
 		texl	"16 0"

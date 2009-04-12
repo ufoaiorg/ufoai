@@ -10,7 +10,7 @@ menu mp_team_edit
 
 	pic background
 	{
-		image	menu/mp_team_edit_bg
+		image	ui/mp_team_edit_bg
 	}
 
 	string s_backpack
@@ -89,7 +89,7 @@ menu mp_team_edit
 	checkbox bt_actor0
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 23"
 		size "20 20"
 		onChange { }
@@ -98,7 +98,7 @@ menu mp_team_edit
 	checkbox bt_actor1
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 64"
 		size "20 20"
 		onChange { }
@@ -107,7 +107,7 @@ menu mp_team_edit
 	checkbox bt_actor2
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 105"
 		size "20 20"
 		onChange { }
@@ -116,7 +116,7 @@ menu mp_team_edit
 	checkbox bt_actor3
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 146"
 		size "20 20"
 		onChange { }
@@ -125,7 +125,7 @@ menu mp_team_edit
 	checkbox bt_actor4
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 187"
 		size "20 20"
 		onChange { }
@@ -134,7 +134,7 @@ menu mp_team_edit
 	checkbox bt_actor5
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 228"
 		size "20 20"
 		onChange { }
@@ -143,7 +143,7 @@ menu mp_team_edit
 	checkbox bt_actor6
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 269"
 		size "20 20"
 		onChange { }
@@ -152,7 +152,7 @@ menu mp_team_edit
 	checkbox bt_actor7
 	{
 		current 0
-		image menu/checkbox_green
+		image ui/checkbox_green
 		pos	"60 310"
 		size "20 20"
 		onChange { }
@@ -404,7 +404,7 @@ menu mp_team_edit
 	
 		pic action_dec
 		{
-			image	menu/buttons_small
+			image	ui/buttons_small
 			pos		"120 290"
 			texl	"0 0"
 			texh	"16 16"
@@ -423,7 +423,7 @@ menu mp_team_edit
 
 		pic action_inc
 		{
-			image	menu/buttons_small
+			image	ui/buttons_small
 			pos		"334 290"
 			texl	"16 0"
 			texh	"32 16"
@@ -446,7 +446,7 @@ menu mp_team_edit
 		pic firemode_dec
 		{
 			tooltip "_Previous firemode"
-			image	menu/buttons_small
+			image	ui/buttons_small
 			pos		"120 314"
 			texl	"0 0"
 			texh	"16 16"
@@ -466,7 +466,7 @@ menu mp_team_edit
 		pic firemode_inc
 		{
 			tooltip "_Next firemode"
-			image	menu/buttons_small
+			image	ui/buttons_small
 			pos		"334 314"
 			texl	"16 0"
 			texh	"32 16"
@@ -481,48 +481,48 @@ menu mp_team_edit
 
 	string pwr_lbl { pos "34 414" size "200 20" string "_Strength:" }
 	string pwr_val { pos "220 414" size "150 20" string "*cvar mn_tpwr" textalign ur }
-	pic pwr_bdr    { pos "67 431"  image menu/bar_border }
-	tbar pwr_bar   { pos "70 431"  current "*cvar mn_vpwr" texl "3 0" image menu/bar_attribute	size "250 16"	max 100 }
+	pic pwr_bdr    { pos "67 431"  image ui/bar_border }
+	tbar pwr_bar   { pos "70 431"  current "*cvar mn_vpwr" texl "3 0" image ui/bar_attribute	size "250 16"	max 100 }
 
 	string spd_lbl { pos "34 449"  size "200 20" string "_Speed:" }
 	string spd_val { pos "220 449" size "150 20" string "*cvar mn_tspd" textalign ur }
-	pic spd_bdr    { pos "67 466"  image menu/bar_border }
-	tbar spd_bar   { pos "70 466"  current "*cvar mn_vspd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	pic spd_bdr    { pos "67 466"  image ui/bar_border }
+	tbar spd_bar   { pos "70 466"  current "*cvar mn_vspd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string acc_lbl { pos "34 484"  size "200 20" string "_Accuracy:" }
 	string acc_val { pos "220 484" size "150 20" string "*cvar mn_tacc" textalign ur }
-	pic acc_bdr    { pos "67 501"  image menu/bar_border }
-	tbar acc_bar   { pos "70 501"  current "*cvar mn_vacc" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	pic acc_bdr    { pos "67 501"  image ui/bar_border }
+	tbar acc_bar   { pos "70 501"  current "*cvar mn_vacc" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string mnd_lbl { pos "34 519"  size "200 20" string "_Mind:" }
 	string mnd_val { pos "220 519" size "150 20" string "*cvar mn_tmnd" textalign ur }
-	pic mnd_bdr    { pos "67 536"  image menu/bar_border }
-	tbar mnd_bar   { pos "70 536"  current "*cvar mn_vmnd" texl "3 0" image menu/bar_attribute size "250 16"	max 100 }
+	pic mnd_bdr    { pos "67 536"  image ui/bar_border }
+	tbar mnd_bar   { pos "70 536"  current "*cvar mn_vmnd" texl "3 0" image ui/bar_attribute size "250 16"	max 100 }
 
 	string cls_lbl { pos "34 562"  size "200 20" string "_Close Combat:" }
 	string cls_val { pos "220 562" size "150 20" string "*cvar mn_tcls" textalign ur }
-	pic cls_bdr    { pos "67 579"  image menu/bar_border }
-	tbar cls_bar   { pos "70 579"  current "*cvar mn_vcls" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic cls_bdr    { pos "67 579"  image ui/bar_border }
+	tbar cls_bar   { pos "70 579"  current "*cvar mn_vcls" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string hvy_lbl { pos "34 597"  size "200 20" string "_Heavy Weapons:" }
 	string hvy_val { pos "220 597" size "150 20" string "*cvar mn_thvy" textalign ur }
-	pic hvy_bdr    { pos "67 614"  image menu/bar_border }
-	tbar hvy_bar   { pos "70 614"  current "*cvar mn_vhvy" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic hvy_bdr    { pos "67 614"  image ui/bar_border }
+	tbar hvy_bar   { pos "70 614"  current "*cvar mn_vhvy" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string ass_lbl { pos "34 632" size "200 20" string "_Assault Weapons:" }
 	string ass_val { pos "220 632" size "150 20" string "*cvar mn_tass" textalign ur }
-	pic ass_bdr    { pos "67 649"  image menu/bar_border }
-	tbar ass_bar   { pos "70 649"  current "*cvar mn_vass" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic ass_bdr    { pos "67 649"  image ui/bar_border }
+	tbar ass_bar   { pos "70 649"  current "*cvar mn_vass" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string snp_lbl { pos "34 667" size "200 20" string "_Sniper Rifles:" }
 	string snp_val { pos "220 667" size "150 20" string "*cvar mn_tsnp" textalign ur }
-	pic snp_bdr    { pos "67 684"  image menu/bar_border }
-	tbar snp_bar   { pos "70 684"  current "*cvar mn_vsnp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic snp_bdr    { pos "67 684"  image ui/bar_border }
+	tbar snp_bar   { pos "70 684"  current "*cvar mn_vsnp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	string exp_lbl { pos "34 702" size "200 20" string "_High-Explosives:" }
 	string exp_val { pos "220 702" size "150 20" string "*cvar mn_texp" textalign ur }
-	pic exp_bdr    { pos "67 719"  image menu/bar_border }
-	tbar exp_bar   { pos "70 719"  current "*cvar mn_vexp" texl "3 0" image menu/bar_skill size "250 16"	max 100 }
+	pic exp_bdr    { pos "67 719"  image ui/bar_border }
+	tbar exp_bar   { pos "70 719"  current "*cvar mn_vexp" texl "3 0" image ui/bar_skill size "250 16"	max 100 }
 
 	// ==================
 	// switch
@@ -634,7 +634,7 @@ menu mp_team_edit
 	 * @sa team_initskin
 	 */
 	selectbox skins {
-		image	"menu/selectbox_green"
+		image	"ui/selectbox_green"
 		pos	"660 290"
 		size	"120 40"
 		cvar	"*cvar mn_skin"
@@ -690,7 +690,7 @@ menu mp_team_edit
 	}
 
 	vscrollbar equip_scroll {
-		image	menu/scrollbar_v_green	blend	true
+		image	ui/scrollbar_v_green	blend	true
 		pos "629 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -699,7 +699,7 @@ menu mp_team_edit
 	}
 
 	vscrollbar equip_ammo_scroll {
-		image	menu/scrollbar_v_green	blend	true
+		image	ui/scrollbar_v_green	blend	true
 		pos "892 405"	height	"339"
 		hidewhenunused true
 		onChange {
@@ -714,7 +714,7 @@ menu mp_team_edit
 	custombutton bt_go
 	{
 		tooltip	"_Done"
-		image	menu/button_background blend true
+		image	ui/button_background blend true
 		texl	"192 0"	size "64 37"
 		pos		"940 720"
 		icon return
@@ -759,7 +759,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team0
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -775,7 +775,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team1
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -791,7 +791,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team2
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -807,7 +807,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team3
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -823,7 +823,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team4
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -839,7 +839,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team5
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -855,7 +855,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team6
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -871,7 +871,7 @@ menu mp_team extends abstract_multiplayer
 
 		button slot_team7
 		{
-			image		menu/button_green_verysmall
+			image		ui/button_green_verysmall
 			blend		true
 			color		"0 .78 0 1"
 			selectcolor	"1 1 1 1"
@@ -895,7 +895,7 @@ menu mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Generate a new random team"
 			onClick	{ cmd "mp_autoteam;mn_push mp_team_edit;" }
-			image	menu/button_green_small	blend	true
+			image	ui/button_green_small	blend	true
 			font	f_menusmall
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
@@ -908,7 +908,7 @@ menu mp_team extends abstract_multiplayer
 			size "256 40"
 			tooltip	"_Save the current team"
 			onClick	{ cmd "mn_push mp_team_save_popup;" }
-			image	menu/button_green_small	blend	true
+			image	ui/button_green_small	blend	true
 			font	f_menusmall
 			color	"0 0.5 0 1"
 			selectcolor "1 1 1 1"
@@ -923,7 +923,7 @@ menu mp_team extends abstract_multiplayer
 
 		selectbox team_box
 		{
-			image	"menu/selectbox_green"
+			image	"ui/selectbox_green"
 			pos		"200 570"
 			size	"125 20"
 			color	"0.6 0.6 0.6 0.3"
@@ -962,7 +962,7 @@ menu mp_team_save_popup
 		dragbutton	true
 		closebutton	true
 		modal		true
-		image		menu/popup_alpha_tile
+		image		ui/popup_alpha_tile
 		blend		true
 		string		"_Save your team"
 	}
@@ -974,7 +974,7 @@ menu mp_team_save_popup
 
 	textentry slot_team0
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -989,7 +989,7 @@ menu mp_team_save_popup
 
 	textentry slot_team1
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -1004,7 +1004,7 @@ menu mp_team_save_popup
 
 	textentry slot_team2
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -1019,7 +1019,7 @@ menu mp_team_save_popup
 
 	textentry slot_team3
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -1034,7 +1034,7 @@ menu mp_team_save_popup
 
 	textentry slot_team4
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -1049,7 +1049,7 @@ menu mp_team_save_popup
 
 	textentry slot_team5
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -1064,7 +1064,7 @@ menu mp_team_save_popup
 
 	textentry slot_team6
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"
@@ -1079,7 +1079,7 @@ menu mp_team_save_popup
 
 	textentry slot_team7
 	{
-		image		menu/button_green_verysmall
+		image		ui/button_green_verysmall
 		blend		true
 		color		"0 .78 0 1"
 		selectcolor	"1 1 1 1"

@@ -9,7 +9,7 @@ menu aliencont
 
 	pic background
 	{
-		image		menu/base_bg
+		image		ui/base_bg
 	}
 
 	// ==================
@@ -48,7 +48,7 @@ menu aliencont
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	menu/button_background	blend	true
+		image	ui/button_background	blend	true
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
@@ -73,18 +73,18 @@ menu aliencont
 
 	confunc aliencont_clear
 	{
-		*ac.button0	image menu/hosp_button_green
-		*ac.button1	image menu/hosp_button_green
-		*ac.button2	image menu/hosp_button_green
-		*ac.button3	image menu/hosp_button_green
-		*ac.button4	image menu/hosp_button_green
-		*ac.button5	image menu/hosp_button_green
-		*ac.button6	image menu/hosp_button_green
-		*ac.button7	image menu/hosp_button_green
-		*ac.button8	image menu/hosp_button_green
-		*ac.button9	image menu/hosp_button_green
-		*ac.button10	image menu/hosp_button_green
-		*ac.button11	image menu/hosp_button_green
+		*ac.button0	image ui/hosp_button_green
+		*ac.button1	image ui/hosp_button_green
+		*ac.button2	image ui/hosp_button_green
+		*ac.button3	image ui/hosp_button_green
+		*ac.button4	image ui/hosp_button_green
+		*ac.button5	image ui/hosp_button_green
+		*ac.button6	image ui/hosp_button_green
+		*ac.button7	image ui/hosp_button_green
+		*ac.button8	image ui/hosp_button_green
+		*ac.button9	image ui/hosp_button_green
+		*ac.button10	image ui/hosp_button_green
+		*ac.button11	image ui/hosp_button_green
 
 		*ac.icon0	image	icons/health_unused
 		*ac.icon1	image	icons/health_unused
@@ -131,7 +131,7 @@ menu aliencont
 	 */
 	confunc aliencontneedautopsy {
 		*ac.icon<1>	image icons/surgery
-		*ac.button<1>	image menu/hosp_button_light
+		*ac.button<1>	image ui/hosp_button_light
 		*ac.icon<1>	tooltip "_Start autopsy"
 
 		/* hide kill */
@@ -145,7 +145,7 @@ menu aliencont
 	confunc aliencontkill
 	{
 		*ac.icon<1>  image icons/kill
-		*ac.button<1> image menu/hosp_button_light
+		*ac.button<1> image ui/hosp_button_light
 		*ac.icon<1> tooltip "_Kill this alien"
 
 		/* hide_autopsy */
@@ -157,78 +157,78 @@ menu aliencont
 		{
 			pos "11 92"
 			size "670 606"
-			image	menu/panel_grey_green_large
+			image	ui/panel_grey_green_large
 			blend	true
 		}
 
 		pic button0 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"25  25"
 			onClick		{ cmd "aliencont_click 0;" }
 			onRClick		{ cmd "aliencont_pedia 0;" }
 		}
 		pic button1 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"345  25"
 			onClick		{ cmd "aliencont_click 1;" }
 			onRClick		{ cmd "aliencont_pedia 1;" }
 		}
 		pic button2 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"25 120"
 			onClick		{ cmd "aliencont_click 2;" }
 			onRClick		{ cmd "aliencont_pedia 2;" }
 		}
 		pic button3 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"345 120"
 			onClick		{ cmd "aliencont_click 3;" }
 			onRClick		{ cmd "aliencont_pedia 3;" }
 		}
 		pic button4 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"25 215"
 			onClick		{ cmd "aliencont_click 4;" }
 			onRClick		{ cmd "aliencont_pedia 4;" }
 		}
 		pic button5 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"345 215"
 			onClick		{ cmd "aliencont_click 5;" }
 			onRClick		{ cmd "aliencont_pedia 5;" }
 		}
 		pic button6 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"25 310"
 			onClick		{ cmd "aliencont_click 6;" }
 			onRClick		{ cmd "aliencont_pedia 6;" }
 		}
 		pic button7 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"345 310"
 			onClick		{ cmd "aliencont_click 7;" }
 			onRClick		{ cmd "aliencont_pedia 7;" }
 		}
 		pic button8 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"25 405"
 			onClick		{ cmd "aliencont_click 8;" }
 			onRClick		{ cmd "aliencont_pedia 8;" }
 		}
 		pic button9 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"345 405"
 			onClick		{ cmd "aliencont_click 9;" }
 			onRClick		{ cmd "aliencont_pedia 9;" }
 		}
 		pic button10 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"25 500"
 			onClick		{ cmd "aliencont_click 10;" }
 			onRClick		{ cmd "aliencont_pedia 10;" }
 		}
 		pic button11 {
-			image		menu/hosp_button_green
+			image		ui/hosp_button_green
 			pos			"345 500"
 			onClick		{ cmd "aliencont_click 11;" }
 			onRClick		{ cmd "aliencont_pedia 11;" }
@@ -322,7 +322,7 @@ menu aliencont
 		{
 			pos		"730 90"
 			size	"280 520"
-			image	menu/panel_grey_green_large
+			image	ui/panel_grey_green_large
 			blend	true
 		}
 
@@ -398,7 +398,7 @@ menu aliencont
 		{
 			pos		"728 626"
 			size	"280 134"
-			image	menu/panel_grey_green_large
+			image	ui/panel_grey_green_large
 			blend	true
 		}
 

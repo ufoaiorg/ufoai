@@ -10,7 +10,7 @@ menu tutorials
 
 	pic background
 	{
-		image	menu/main_bg
+		image	ui/main_bg
 	}
 
 	string headline
@@ -25,7 +25,7 @@ menu tutorials
 		pos	"640 520"
 		size "256 64"
 		onClick	{ cmd "mn_pop;" }
-		image	menu/button_green_big	blend true
+		image	ui/button_green_big	blend true
 		font	f_menubig
 		color	"0 0.5 0 1"
 		selectcolor "1 1 1 1"

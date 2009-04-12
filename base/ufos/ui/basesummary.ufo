@@ -9,14 +9,14 @@ menu basesummary
 
 	pic background
 	{
-		image	menu/base_bg
+		image	ui/base_bg
 	}
 
 	panel basenavigation {
 		{
 			pos		"621 115"
 			size	"338 211"
-			image	"menu/panel_grey"
+			image	"ui/panel_grey"
 			blend	true
 		}
 
@@ -24,7 +24,7 @@ menu basesummary
 			{
 				pos		"19 20"
 				size	"298 170"
-				image	"menu/panel_grey_black"
+				image	"ui/panel_grey_black"
 				blend	true
 			}
 		}
@@ -136,7 +136,7 @@ menu basesummary
 	panel base_summary_bg {
 		pos	"12 103"
 		size	"551 655"
-		image	menu/panel_grey_green_large
+		image	ui/panel_grey_green_large
 		blend	true
 	}
 
@@ -160,7 +160,7 @@ menu basesummary
 	panel info_bg {
 		pos	"588 337"
 		size	"408 423"
-		image	menu/panel_grey_green_large
+		image	ui/panel_grey_green_large
 		blend	true
 	}
 
@@ -212,7 +212,7 @@ menu basesummary
 	custombutton bt_continue
 	{
 		tooltip	"_Back to baseview"
-		image	menu/button_background	blend	true
+		image	ui/button_background	blend	true
 		texl	"1 1"	size	"59 55"
 		pos		"950 20"
 		icon	"return"
