@@ -866,7 +866,9 @@ static listBlock_t *fs_blocklist = NULL;
  */
 static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock, char* name)
 {
-	char *f, *tl = NULL;
+	char *f;
+	char *tl = NULL;
+	char path[MAX_QPATH];
 
 	/* strip path */
 	f = strrchr(name, '/');
@@ -878,6 +880,19 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 
 	/* check for double occurrences */
 	for (tblock = block; tblock; tblock = tblock->next) {
+		char *star;
+
+		/* compute the relative path */
+		strcpy(path, tblock->path);
+		star = strchr(path, '*');
+		assert(star);
+		star[0] = '\0';
+		Q_strcat(path, f, MAX_QPATH);
+
+		/* skip incompatible blocks */
+		if (strstr(name, path) == NULL)
+			continue;
+
 		tl = tblock->files;
 		while (*tl) {
 			if (!strcmp(tl, f))
