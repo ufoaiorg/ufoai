@@ -635,7 +635,11 @@ static void MN_ContainerNodeDrawSingle (menuNode_t *node, objDef_t *highlightTyp
 	}
 }
 
-static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *highlightType, int *currentHeight)
+/**
+ * @brief Draw the base inventory
+ * @return The full height requested by the current view (not the node height)
+ */
+static int MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *highlightType)
 {
 	qboolean outOfNode = qfalse;
 	vec2_t nodepos;
@@ -643,12 +647,8 @@ static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *
 	int rowHeight = 0;
 	const int cellWidth = node->size[0] / EXTRADATA(node).columns;
 	containerItemIterator_t iterator;
-
+	int currentHeight = 0;
 	MN_GetNodeAbsPos(node, nodepos);
-
-	if (*currentHeight >= node->size[1]) {
-		outOfNode = qtrue;
-	}
 
 	MN_ContainerItemIteratorInit(&iterator, node);
 	for (; iterator.itemID < csi.numODs; MN_ContainerItemIteratorNext(&iterator)) {
@@ -665,7 +665,7 @@ static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *
 		invList_t *icItem = iterator.itemFound;
 
 		/* skip items over and bellow the node view */
-		if (outOfNode || *currentHeight < EXTRADATA(node).scrollCur) {
+		if (outOfNode || currentHeight < EXTRADATA(node).scrollCur) {
 			int height;
 			R_FontTextSize("f_verysmall", _(obj->name),
 				cellWidth - 5, LONGLINES_WRAP, NULL, &height, NULL, NULL);
@@ -673,9 +673,9 @@ static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *
 			if (height > rowHeight)
 				rowHeight = height;
 
-			if (outOfNode || *currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
+			if (outOfNode || currentHeight + rowHeight < EXTRADATA(node).scrollCur) {
 				if (col == EXTRADATA(node).columns - 1) {
-					*currentHeight += rowHeight;
+					currentHeight += rowHeight;
 					rowHeight = 0;
 				}
 				items++;
@@ -685,7 +685,7 @@ static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *
 
 		Vector2Copy(nodepos, pos);
 		pos[0] += cellWidth * col;
-		pos[1] += *currentHeight - EXTRADATA(node).scrollCur;
+		pos[1] += currentHeight - EXTRADATA(node).scrollCur;
 		pos[2] = 0;
 
 		if (highlightType) {
@@ -774,9 +774,9 @@ static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *
 
 		/* add a marge between rows */
 		if (col == EXTRADATA(node).columns - 1) {
-			*currentHeight += rowHeight;
+			currentHeight += rowHeight;
 			rowHeight = 0;
-			if (*currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
+			if (currentHeight - EXTRADATA(node).scrollCur >= node->size[1])
 				outOfNode = qtrue;
 		}
 
@@ -785,8 +785,9 @@ static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *
 	}
 
 	if (rowHeight != 0) {
-		*currentHeight += rowHeight;
+		currentHeight += rowHeight;
 	}
+	return currentHeight;
 }
 
 /**
@@ -795,20 +796,17 @@ static void MN_ContainerNodeDrawBaseInventoryItems (menuNode_t *node, objDef_t *
 static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highlightType)
 {
 	qboolean updateScroll = qfalse;
-	int currentHeight = 0;
-	int visibleRows = 0;
-	int totalRows = 0;
+	int visibleHeight = 0;
+	int needHeight = 0;
 	vec2_t pos;
 
 	MN_GetNodeAbsPos(node, pos);
 	R_BeginClipRect(pos[0], pos[1], node->size[0], node->size[1]);
-	currentHeight = 0;
 
-	MN_ContainerNodeDrawBaseInventoryItems(node, highlightType, &currentHeight);
+	needHeight = MN_ContainerNodeDrawBaseInventoryItems(node, highlightType);
 
 	R_EndClipRect();
-	totalRows = currentHeight;
-	visibleRows = node->size[1];
+	visibleHeight = node->size[1];
 
 #if 0
 	R_FontDrawString("f_verysmall", ALIGN_UL,
@@ -818,13 +816,13 @@ static void MN_ContainerNodeDrawBaseInventory (menuNode_t *node, objDef_t *highl
 #endif
 
 	/* Update display of scroll buttons if something changed. */
-	if (visibleRows != EXTRADATA(node).scrollNum || totalRows != EXTRADATA(node).scrollTotalNum) {
-		EXTRADATA(node).scrollTotalNum = totalRows;
-		EXTRADATA(node).scrollNum = visibleRows;
+	if (visibleHeight != EXTRADATA(node).scrollNum || needHeight != EXTRADATA(node).scrollTotalNum) {
+		EXTRADATA(node).scrollTotalNum = needHeight;
+		EXTRADATA(node).scrollNum = visibleHeight;
 		updateScroll = qtrue;
 	}
-	if (EXTRADATA(node).scrollCur > totalRows - visibleRows) {
-		EXTRADATA(node).scrollCur = totalRows - visibleRows;
+	if (EXTRADATA(node).scrollCur > needHeight - visibleHeight) {
+		EXTRADATA(node).scrollCur = needHeight - visibleHeight;
 		updateScroll = qtrue;
 	}
 	if (EXTRADATA(node).scrollCur < 0) {
