@@ -184,7 +184,7 @@ static void MN_Memory_f (void)
 	Com_Printf("\t-Model allocation: %i/%i\n", mn.numMenuModels, MAX_MENUMODELS);
 	Com_Printf("\t-Exclude rect allocation: %i/%i\n", mn.numExcludeRect, MAX_EXLUDERECTS);
 	Com_Printf("\t-Condition allocation: %i/%i\n", mn.numConditions, MAX_MENUCONDITIONS);
-	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", mn.curadata - mn.adata, mn.adataize);
+	Com_Printf("\t-AData allocation: "UFO_SIZE_T"/%i B\n", (ptrdiff_t)(mn.curadata - mn.adata), mn.adataize);
 	Com_Printf("\tMemory:\n");
 	Com_Printf("\t-Option structure size: "UFO_SIZE_T" B\n", sizeof(menuOption_t));
 	Com_Printf("\t-Node structure size: "UFO_SIZE_T" B\n", sizeof(menuNode_t));
