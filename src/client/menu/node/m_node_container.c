@@ -1033,7 +1033,7 @@ static invList_t *MN_ContainerNodeGetItemFromBaseInventory (const menuNode_t* co
 				objDef_t *objammo = obj->ammos[ammoIdx];
 
 				/* skip unusable ammo */
-				if (GAME_ItemIsUseable(objammo))
+				if (!GAME_ItemIsUseable(objammo))
 					continue;
 
 				/* find and skip none existing ammo */
