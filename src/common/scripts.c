@@ -27,7 +27,6 @@
 #include "../game/inv_shared.h"
 #ifndef DEDICATED_ONLY
 #include "../client/client.h"
-#include "../client/menu/m_parse.h"
 #endif
 
 /** @todo remove me if PPC users dont have problems */
@@ -2601,7 +2600,7 @@ void Com_ParseScripts (void)
 		FS_NextScriptHeader(NULL, NULL, NULL);
 		text = NULL;
 		while ((type = FS_NextScriptHeader("ufos/ui/*.ufo", &name, &text)) != NULL) {
-			MN_ParseMenu(type, name, &text);
+			CL_ParseClientData(type, name, &text);
 		}
 	}
 
