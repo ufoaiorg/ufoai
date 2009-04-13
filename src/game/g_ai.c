@@ -898,9 +898,8 @@ void AI_Run (void)
 }
 
 /**
- * @brief Initializes the Actor's stats.
- * First we get the templates, then we set the stats, then we tweak stats.
- * @param ent Actor to set stats.
+ * @brief Initializes the actor's stats like morals, strength and so on.
+ * @param ent Actor to set the stats for.
  * @param[in] team Team to which actor belongs.
  */
 static void AI_SetStats (edict_t * ent, int team)
@@ -914,8 +913,8 @@ static void AI_SetStats (edict_t * ent, int team)
 
 
 /**
- * @brief Sets an Actor's ingame model and character values.
- * @param ent Actor to set model of.
+ * @brief Sets an actor's ingame model and character values.
+ * @param ent Actor to set the model for.
  * @param[in] team Team to which actor belongs.
  */
 static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
@@ -941,10 +940,10 @@ static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
 
 
 /**
- * @brief Sets the Actor's equipment.
+ * @brief Sets the actor's equipment.
  * @param ent Actor to give equipment to.
- * @param[in] team Team to which the Actor belongs.
- * @param[in] ed Equipment definition for the new Actor.
+ * @param[in] team Team to which the actor belongs.
+ * @param[in] ed Equipment definition for the new actor.
  */
 static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
 {
@@ -962,10 +961,10 @@ static void AI_SetEquipment (edict_t * ent, int team, equipDef_t * ed)
 
 
 /**
- * @brief Initializes the Actor.
+ * @brief Initializes the actor.
  * @param[in] player Player to which this actor belongs.
- * @param ent Pointer to edict_t representing actor.
- * @param[in] ed Equipment definition for the new Actor.
+ * @param[in,out] ent Pointer to edict_t representing actor.
+ * @param[in] ed Equipment definition for the new actor.
  */
 static void AI_InitPlayer (player_t * player, edict_t * ent, equipDef_t * ed)
 {
