@@ -318,11 +318,6 @@ void GAME_MP_InitStartup (void)
 
 void GAME_MP_Shutdown (void)
 {
-	/* shutdown server */
-	SV_Shutdown("Quitting multiplayer.", qfalse);
-	/* or disconnect from server */
-	CL_Disconnect();
-
 	Cmd_RemoveCommand("mp_startserver");
 	Cmd_RemoveCommand("mp_updategametype");
 	Cmd_RemoveCommand("mp_nextgametype");

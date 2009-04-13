@@ -86,6 +86,9 @@ void GAME_SetMode (int gametype)
 
 	cls.gametype = gametype;
 
+	SV_Shutdown("Quitting server.", qfalse);
+	CL_Disconnect();
+
 	while (list->name) {
 		if (list->gametype == gametype) {
 			Com_Printf("Change gametype to '%s'\n", list->name);

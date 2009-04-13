@@ -164,10 +164,6 @@ void GAME_SK_InitStartup (void)
 
 void GAME_SK_Shutdown (void)
 {
-	/* shutdown any running tactical mission */
-	SV_Shutdown("Quitting skirmish.", qfalse);
-	CL_Disconnect();
-
 	Cvar_Delete("cl_equip");
 
 	Cmd_RemoveCommand("sk_start");

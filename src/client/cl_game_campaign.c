@@ -348,35 +348,6 @@ qboolean GAME_CP_Spawn (void)
 	return qtrue;
 }
 
-void GAME_CP_InitStartup (void)
-{
-	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
-	Cmd_AddCommand("cp_missionauto_check", GAME_CP_MissionAutoCheck_f, "Checks whether this mission can be done automatically");
-	Cmd_AddCommand("cp_mission_autogo", GAME_CP_MissionAutoGo_f, "Let the current selection mission be done automatically");
-	Cmd_AddCommand("campaignlist_click", GAME_CP_CampaignListClick_f, NULL);
-	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
-	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
-
-	CP_InitStartup();
-
-	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
-	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
-	/* cvars might have been changed by other gametypes */
-	Cvar_ForceSet("sv_maxclients", "1");
-	Cvar_ForceSet("sv_ai", "1");
-
-	/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
-	/** @todo do we have to set sv_maxsoldiersperteam for campaign mode? */
-	if (Cvar_GetInteger("sv_maxsoldiersperteam") != MAX_ACTIVETEAM / 2)
-		Cvar_SetValue("sv_maxsoldiersperteam", MAX_ACTIVETEAM / 2);
-	if (Cvar_GetInteger("sv_maxsoldiersperplayer") != MAX_ACTIVETEAM)
-		Cvar_SetValue("sv_maxsoldiersperplayer", MAX_ACTIVETEAM);
-
-	/* reset campaign data */
-	CL_ResetSinglePlayerData();
-	CL_ReadSinglePlayerData();
-}
-
 const mapDef_t* GAME_CP_MapInfo (int step)
 {
 	return &csi.mds[cls.currentSelectedMap];
@@ -426,6 +397,35 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 	}
 }
 
+void GAME_CP_InitStartup (void)
+{
+	Cmd_AddCommand("cp_results", GAME_CP_Results_f, "Parses and shows the game results");
+	Cmd_AddCommand("cp_missionauto_check", GAME_CP_MissionAutoCheck_f, "Checks whether this mission can be done automatically");
+	Cmd_AddCommand("cp_mission_autogo", GAME_CP_MissionAutoGo_f, "Let the current selection mission be done automatically");
+	Cmd_AddCommand("campaignlist_click", GAME_CP_CampaignListClick_f, NULL);
+	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
+	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
+
+	CP_InitStartup();
+
+	cl_campaign = Cvar_Get("cl_campaign", "main", 0, "Which is the current selected campaign id");
+	cl_start_employees = Cvar_Get("cl_start_employees", "1", CVAR_ARCHIVE, "Start with hired employees");
+	/* cvars might have been changed by other gametypes */
+	Cvar_ForceSet("sv_maxclients", "1");
+	Cvar_ForceSet("sv_ai", "1");
+
+	/* reset sv_maxsoldiersperplayer and sv_maxsoldiersperteam to default values */
+	/** @todo do we have to set sv_maxsoldiersperteam for campaign mode? */
+	if (Cvar_GetInteger("sv_maxsoldiersperteam") != MAX_ACTIVETEAM / 2)
+		Cvar_SetValue("sv_maxsoldiersperteam", MAX_ACTIVETEAM / 2);
+	if (Cvar_GetInteger("sv_maxsoldiersperplayer") != MAX_ACTIVETEAM)
+		Cvar_SetValue("sv_maxsoldiersperplayer", MAX_ACTIVETEAM);
+
+	/* reset campaign data */
+	CL_ResetSinglePlayerData();
+	CL_ReadSinglePlayerData();
+}
+
 void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");
@@ -435,8 +435,7 @@ void GAME_CP_Shutdown (void)
 	Cmd_RemoveCommand("cp_getcampaigns");
 	Cmd_RemoveCommand("cp_start");
 
-	SV_Shutdown("Game exit", qfalse);
-	CL_Disconnect();
+	CP_CampaignExit();
 
 	CL_ResetSinglePlayerData();
 }
