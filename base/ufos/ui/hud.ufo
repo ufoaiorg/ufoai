@@ -905,7 +905,6 @@ window hud extends ahud
 	{
 		*chatscreen invis true
 		cmd "music_change battlescape;"
-		cmd "set hud_refresh 1;"
 		cmd "set mn_showchatbuttons 0;"
 	}
 }

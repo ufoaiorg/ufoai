@@ -1153,7 +1153,6 @@ window althud extends ahud
 	{
 		*chatscreen invis true
 		cmd "music_change battlescape;"
-		cmd "set hud_refresh 1;"
 		call show_rightweapon
 		cmd "set mn_showchatbuttons 0;"
 	}
