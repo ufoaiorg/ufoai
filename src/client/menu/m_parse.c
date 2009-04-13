@@ -88,6 +88,25 @@ static const char *ea_special_strings[EA_SPECIAL_NUM_EVENTACTION] = {
 };
 CASSERT(lengthof(ea_special_strings) == EA_SPECIAL_NUM_EVENTACTION);
 
+
+/** @brief reserved token preventing calling a node with it */
+static const char *reserved_tokens[] = {
+	"this",
+	"parent",
+	"root",
+	NULL
+};
+
+static qboolean MN_IsReservedToken(const char *name) {
+	const char **token = reserved_tokens;
+	while (*token) {
+		if (!strcmp(*token, name))
+			return qtrue;
+		token++;
+	}
+	return qfalse;
+}
+
 /**
  * @brief Find a value_t by name into a array of value_t
  * @param[in] propertyList Array of value_t, with null termination
@@ -1029,6 +1048,10 @@ static qboolean MN_ParseNode (menuNode_t * parent, const char **text, const char
 	*token = COM_EParse(text, errhead, parent->name);
 	if (!*text)
 		return qfalse;
+	if (MN_IsReservedToken(*token)) {
+		Com_Printf("MN_ParseNode: \"%s\" is a reserved token, we can't call a node with it (node \"%s.%s\")\n", *token, MN_GetPath(parent), *token);
+		return qfalse;
+	}
 
 	/* test if node already exists */
 	node = MN_GetNode(parent, *token);
@@ -1275,6 +1298,11 @@ void MN_ParseMenu (const char *type, const char *name, const char **text)
 	if (strcmp(type, "window") != 0) {
 		Sys_Error("MN_ParseMenu: '%s %s' is not a window node\n", type, name);
 		return;	/* never reached */
+	}
+
+	if (MN_IsReservedToken(name)) {
+		Com_Printf("MN_ParseMenu: \"%s\" is a reserved token, we can't call a node with it (node \"%s\")\n", name, name);
+		return;
 	}
 
 	/* search for menus with same name */
