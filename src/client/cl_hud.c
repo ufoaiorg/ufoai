@@ -70,7 +70,7 @@ typedef enum {
 } button_types_t;
 
 /** @brief a cbuf string for each button_types_t */
-static const char *shoot_type_strings[] = {
+static const char *shootTypeStrings[] = {
 	"pr",
 	"reaction",
 	"pl",
@@ -80,7 +80,7 @@ static const char *shoot_type_strings[] = {
 	"crouch",
 	"headgear"
 };
-CASSERT(lengthof(shoot_type_strings) == BT_NUM_TYPES);
+CASSERT(lengthof(shootTypeStrings) == BT_NUM_TYPES);
 
 /**
  * @brief Defines the various states of a button.
@@ -120,7 +120,7 @@ void HUD_DisplayMessage (const char *text)
 	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
 }
 
-static void HUD_RefreshWeaponButtons(int time);
+static void HUD_RefreshWeaponButtons(const le_t* le, int additionalTime);
 /**
  * @brief Updates the global character cvars for battlescape.
  * @note This is only called when we are in battlescape rendering mode
@@ -218,7 +218,7 @@ static void HUD_SetWeaponButton (int button, weaponButtonState_t state)
 	}
 
 	/* Connect confunc strings to the ones as defined in "menu nohud". */
-	MN_ExecuteConfunc("%s%s", prefix, shoot_type_strings[button]);
+	MN_ExecuteConfunc("%s%s", prefix, shootTypeStrings[button]);
 	weaponButtonState[button] = state;
 }
 
@@ -354,9 +354,6 @@ static void HUD_PopupFiremodeReservation (qboolean reset)
 		CL_ReserveTUs(selActor, RES_SHOT, 0);
 		CL_CharacterSetShotSettings(selChr, -1, -1, NULL);
 		MSG_Write_PA(PA_RESERVE_STATE, selActor->entnum, RES_REACTION, 0, selChr->reservedTus.shot); /* Update server-side settings */
-
-		/* Refresh button and tooltip. */
-		HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 		return;
 	}
 
@@ -515,9 +512,6 @@ static void HUD_ReserveShot_f (void)
 		if (popupListNode)
 			MN_TextNodeSelectLine(popupListNode, selectedPopupIndex);
 	}
-
-	/* Refresh button and tooltip. */
-	HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
 
 
@@ -981,29 +975,30 @@ static int HUD_GetMinimumTUsForUsage (const invList_t *invList)
  * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa HUD_ActorUpdateCvars
  */
-static void HUD_RefreshWeaponButtons (int time)
+static void HUD_RefreshWeaponButtons (const le_t *le, int additionalTime)
 {
 	invList_t *weaponr;
 	invList_t *weaponl;
 	invList_t *headgear;
 	int reloadtime;
+	const int time = additionalTime + CL_UsableTUs(le);
 
-	if (!selActor)
+	if (!le)
 		return;
 
-	weaponr = RIGHT(selActor);
-	headgear = HEADGEAR(selActor);
+	weaponr = RIGHT(le);
+	headgear = HEADGEAR(le);
 
 	/* check for two-handed weapon - if not, also define weaponl */
 	if (!weaponr || !weaponr->item.t->holdTwoHanded)
-		weaponl = LEFT(selActor);
+		weaponl = LEFT(le);
 	else
 		weaponl = NULL;
 
 	/* Crouch/stand button. */
-	if (selActor->state & STATE_CROUCHED) {
+	if (le->state & STATE_CROUCHED) {
 		weaponButtonState[BT_STAND] = BT_STATE_DISABLE;
-		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
+		if ((time + CL_ReservedTUs(le, RES_CROUCH)) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for standing up."));
 			HUD_SetWeaponButton(BT_CROUCH, BT_STATE_DISABLE);
 		} else {
@@ -1012,7 +1007,7 @@ static void HUD_RefreshWeaponButtons (int time)
 		}
 	} else {
 		weaponButtonState[BT_CROUCH] = BT_STATE_DISABLE;
-		if ((time + CL_ReservedTUs(selActor, RES_CROUCH)) < TU_CROUCH) {
+		if ((time + CL_ReservedTUs(le, RES_CROUCH)) < TU_CROUCH) {
 			Cvar_Set("mn_crouchstand_tt", _("Not enough TUs for crouching."));
 			HUD_SetWeaponButton(BT_STAND, BT_STATE_DISABLE);
 		} else {
@@ -1022,9 +1017,10 @@ static void HUD_RefreshWeaponButtons (int time)
 	}
 
 	/* Crouch/stand reservation checkbox. */
-	if (CL_ReservedTUs(selActor, RES_CROUCH) >= TU_CROUCH) {
+	if (CL_ReservedTUs(le, RES_CROUCH) >= TU_CROUCH) {
 		MN_ExecuteConfunc("crouch_checkbox_check");
-		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."), CL_ReservedTUs(selActor, RES_CROUCH)));
+		Cvar_Set("mn_crouch_reservation_tt", va(_("%i TUs reserved for crouching/standing up.\nClick to clear."),
+				CL_ReservedTUs(le, RES_CROUCH)));
 	} else if (time >= TU_CROUCH) {
 		MN_ExecuteConfunc("crouch_checkbox_clear");
 		Cvar_Set("mn_crouch_reservation_tt", va(_("Reserve %i TUs for crouching/standing up."), TU_CROUCH));
@@ -1034,9 +1030,10 @@ static void HUD_RefreshWeaponButtons (int time)
 	}
 
 	/* Shot reservation button. mn_shot_reservation_tt is the tooltip text */
-	if (CL_ReservedTUs(selActor, RES_SHOT)) {
+	if (CL_ReservedTUs(le, RES_SHOT)) {
 		MN_ExecuteConfunc("reserve_shot_check");
-		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."), CL_ReservedTUs(selActor, RES_SHOT)));
+		Cvar_Set("mn_shot_reservation_tt", va(_("%i TUs reserved for shooting.\nClick to change.\nRight-Click to clear."),
+				CL_ReservedTUs(le, RES_SHOT)));
 	} else if (CL_CheckFiremodeReservation()) {
 		MN_ExecuteConfunc("reserve_shot_clear");
 		Cvar_Set("mn_shot_reservation_tt", _("Reserve TUs for shooting."));
@@ -1046,17 +1043,17 @@ static void HUD_RefreshWeaponButtons (int time)
 	}
 
 	/* reaction-fire button */
-	if (HUD_GetReactionState(selActor) == R_FIRE_OFF) {
-		if (time >= CL_ReservedTUs(selActor, RES_REACTION)
-		 && (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)))
+	if (HUD_GetReactionState(le) == R_FIRE_OFF) {
+		if (time >= CL_ReservedTUs(le, RES_REACTION)
+		 && (CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_LEFT)))
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DESELECT);
 		else
 			HUD_SetWeaponButton(BT_REACTION, BT_STATE_DISABLE);
 	} else {
-		if (CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(selActor, ACTOR_HAND_CHAR_LEFT)) {
-			HUD_DisplayPossibleReaction(selActor);
+		if (CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_RIGHT) || CL_WeaponWithReaction(le, ACTOR_HAND_CHAR_LEFT)) {
+			HUD_DisplayPossibleReaction(le);
 		} else {
-			HUD_DisplayImpossibleReaction(selActor);
+			HUD_DisplayImpossibleReaction(le);
 		}
 	}
 
@@ -1064,7 +1061,7 @@ static void HUD_RefreshWeaponButtons (int time)
 	{
 		const qboolean fullyLoadedR = (weaponr && weaponr->item.t && (weaponr->item.t->ammo == weaponr->item.a));
 		if (weaponr)
-			reloadtime = CL_CalcReloadTime(selActor, weaponr->item.t);
+			reloadtime = CL_CalcReloadTime(le, weaponr->item.t);
 		if (!weaponr || !weaponr->item.m || !weaponr->item.t->reload || time < reloadtime || fullyLoadedR) {
 			HUD_SetWeaponButton(BT_RIGHT_RELOAD, BT_STATE_DISABLE);
 			if (fullyLoadedR)
@@ -1080,7 +1077,7 @@ static void HUD_RefreshWeaponButtons (int time)
 	{
 		const qboolean fullyLoadedL = (weaponl && weaponl->item.t && (weaponl->item.t->ammo == weaponl->item.a));
 		if (weaponl)
-			reloadtime = CL_CalcReloadTime(selActor, weaponl->item.t);
+			reloadtime = CL_CalcReloadTime(le, weaponl->item.t);
 		if (!weaponl || !weaponl->item.m || !weaponl->item.t->reload || time < reloadtime || fullyLoadedL) {
 			HUD_SetWeaponButton(BT_LEFT_RELOAD, BT_STATE_DISABLE);
 			if (fullyLoadedL)
@@ -1128,10 +1125,6 @@ static void HUD_RefreshWeaponButtons (int time)
 	/* Check if the firemode reservation popup is shown and refresh its content. (i.e. close&open it) */
 	{
 		const char* menuName = MN_GetActiveMenuName();
-		if (menuName[0] != '\0')
-			Com_DPrintf(DEBUG_CLIENT, "HUD_RefreshWeaponButtons: Active menu = %s\n", menuName);
-
-
 		if (menuName[0] != '\0' && strstr(MN_GetActiveMenuName(), POPUPLIST_MENU_NAME)) {
 			Com_DPrintf(DEBUG_CLIENT, "HUD_RefreshWeaponButtons: reload popup\n");
 
@@ -1177,7 +1170,7 @@ void HUD_ActorUpdateCvars (void)
 	if (cls.state != ca_active)
 		return;
 
-	HUD_ResetWeaponButtons();
+	/*HUD_ResetWeaponButtons();*/
 
 	/* set Cvars for all actors */
 	HUD_ActorGlobalCvars();
@@ -1191,7 +1184,6 @@ void HUD_ActorUpdateCvars (void)
 		const invList_t *selWeapon;
 
 		selActorReactionState = HUD_GetReactionState(selActor);
-		HUD_HideFiremodes();
 
 		/* set generic cvars */
 		Cvar_Set("mn_tu", va("%i", selActor->TU));
@@ -1313,7 +1305,6 @@ void HUD_ActorUpdateCvars (void)
 				MN_ResetData(TEXT_MOUSECURSOR_RIGHT);
 			}
 			if (actorMoveLength != ROUTING_NOT_REACHABLE) {
-				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 				if (reservedTUs > 0)
 					Com_sprintf(infoText, lengthof(infoText), _("Morale  %i | Reserved TUs: %i\n%s %i (%i|%i TU left)\n"),
 						selActor->morale, reservedTUs, moveModeDescriptions[CL_MoveMode(selActor, actorMoveLength)], actorMoveLength,
@@ -1326,8 +1317,6 @@ void HUD_ActorUpdateCvars (void)
 					Com_sprintf(mouseText, lengthof(mouseText), "%i (%i)\n", actorMoveLength, CL_UsableTUs(selActor));
 				else
 					Com_sprintf(mouseText, lengthof(mouseText), "- (-)\n");
-			} else {
-				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 			}
 			MN_RegisterText(TEXT_MOUSECURSOR_RIGHT, mouseText);
 			time = actorMoveLength;
@@ -1346,15 +1335,12 @@ void HUD_ActorUpdateCvars (void)
 
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
-				if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time) {
+				if ((selWeapon->item.t->reload && selWeapon->item.a <= 0) || CL_UsableTUs(selActor) < time)
 					selActor->actorMode = M_MOVE;
-					HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
-				}
 			} else if (selWeapon) {
 				Com_sprintf(infoText, lengthof(infoText), _("%s\n(empty)\n"), _(selWeapon->item.t->name));
 			} else {
 				selActor->actorMode = M_MOVE;
-				HUD_RefreshWeaponButtons(CL_UsableTUs(selActor) - actorMoveLength);
 			}
 		}
 
@@ -1391,16 +1377,15 @@ void HUD_ActorUpdateCvars (void)
 		Cvar_Set("mn_turemain", va("%i", time));
 
 		/* print ammo */
-		if (RIGHT(selActor)) {
+		if (RIGHT(selActor))
 			Cvar_SetValue("mn_ammoright", RIGHT(selActor)->item.a);
-		} else {
+		else
 			Cvar_Set("mn_ammoright", "");
-		}
-		if (LEFT(selActor)) {
+
+		if (LEFT(selActor))
 			Cvar_SetValue("mn_ammoleft", LEFT(selActor)->item.a);
-		} else {
+		else
 			Cvar_Set("mn_ammoleft", "");
-		}
 
 		if (!LEFT(selActor) && RIGHT(selActor) && RIGHT(selActor)->item.t->holdTwoHanded)
 			Cvar_Set("mn_ammoleft", Cvar_GetString("mn_ammoright"));
@@ -1427,11 +1412,9 @@ void HUD_ActorUpdateCvars (void)
 		if (actorMoveLength >= ROUTING_NOT_REACHABLE || (selActor->actorMode != M_MOVE && selActor->actorMode != M_PEND_MOVE))
 			time = CL_UsableTUs(selActor);
 
-		HUD_RefreshWeaponButtons(time);
+		HUD_RefreshWeaponButtons(selActor, time);
 
 		MN_RegisterText(TEXT_STANDARD, infoText);
-
-		HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 	} else if (!cl.numTeamList) {
 		/* This will stop the drawing of the bars over the whole screen when we test maps. */
 		Cvar_SetValue("mn_tu", 0);
@@ -1481,9 +1464,6 @@ void CL_ActorToggleCrouchReservation_f (void)
 		/* Player wants to reserve Tus for crouching - remember this. */
 		selChr->reservedTus.reserveCrouch = qtrue;
 	}
-
-	/* Refresh checkbox and tooltip. */
-	HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 
 	/** @todo Update shot-reservation popup if it is currently displayed.
 	 * Alternatively just hide it. */
@@ -1580,9 +1560,6 @@ static void CL_ActorToggleReaction_f (void)
 		/* Set RF-mode info to undef. */
 		CL_SetReactionFiremode(selActor, -1, NULL, -1); /* Includes PA_RESERVE_STATE */
 	}
-
-	/* Refresh button and tooltip. */
-	HUD_RefreshWeaponButtons(CL_UsableTUs(selActor));
 }
 
 /**
