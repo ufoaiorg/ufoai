@@ -2725,7 +2725,6 @@ void G_ForceEndRound (void)
 void G_ClientEndRound (player_t * player, qboolean quiet)
 {
 	player_t *p;
-	qboolean sanity = qfalse;
 	int i, lastTeam;
 
 	/* inactive players can't end their inactive round :) */
@@ -2774,16 +2773,8 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		/* search next team */
 		int nextTeam = TEAM_NO_ACTIVE;
 
-		for (i = lastTeam + 1; i != lastTeam; i++) {
-			if (i >= MAX_TEAMS) {
-				if (!sanity)
-					sanity = qtrue;
-				else
-					gi.error("Could not find the next team for the round.");
-				i = 0;
-			}
-
-			if ((level.num_alive[i] || (level.num_spawnpoints[i] && !level.num_spawned[i])) && i != lastTeam) {
+		for (i = 1; i < MAX_TEAMS; i++) {
+			if (level.num_alive[(lastTeam + i) % MAX_TEAMS]) {
 				nextTeam = i;
 				break;
 			}
