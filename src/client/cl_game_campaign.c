@@ -305,7 +305,7 @@ void GAME_CP_Results (struct dbuffer *msg, int winner, int *numSpawned, int *num
 	counts[MRC_CIVILIAN_SURVIVOR] = civilian_survivors;
 	counts[MRC_ITEM_GATHEREDTYPES] = ccs.missionresults.itemtypes;
 	counts[MRC_ITEM_GATHEREDAMOUNT] = ccs.missionresults.itemamount;
-	CP_InitMissionResults(counts,winner == cls.team);
+	CP_InitMissionResults(counts, winner == cls.team);
 
 	MN_InitStack("map", "campaign_main", qtrue, qtrue);
 
@@ -356,7 +356,6 @@ void GAME_CP_InitStartup (void)
 	Cmd_AddCommand("campaignlist_click", GAME_CP_CampaignListClick_f, NULL);
 	Cmd_AddCommand("cp_getcampaigns", GAME_CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("cp_start", GAME_CP_Start_f, "Start the new campaign");
-	Cmd_AddCommand("cp_exit", CP_CampaignExit, "Stop the current running campaign");
 
 	CP_InitStartup();
 

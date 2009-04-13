@@ -59,7 +59,7 @@ GRID ORIENTED MOVEMENT AND SCANNING
 ==========================================================*/
 
 extern struct routing_s svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE];
-extern struct pathing_s svPathMap, clPathMap;
+extern struct pathing_s svPathMap;
 
 void Grid_DumpWholeServerMap_f(void);
 void Grid_DumpWholeClientMap_f(void);

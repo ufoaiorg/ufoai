@@ -1392,7 +1392,7 @@ void HUD_ActorUpdateCvars (void)
 		MN_RegisterText(TEXT_MOUSECURSOR_BOTTOM, bottomText);
 
 		/* Display the floor and ceiling values for the current cell. */
-		dv = Grid_MoveNext(clMap, fieldSize, &clPathMap, mousePos, 0);
+		dv = Grid_MoveNext(clMap, fieldSize, selActor->pathMap, mousePos, 0);
 		Com_sprintf(leftText, lengthof(leftText), "%i-%i\n", getDVdir(dv), getDVz(dv));
 		/* Save the text for later display next to the cursor. */
 		MN_RegisterText(TEXT_MOUSECURSOR_LEFT, leftText);

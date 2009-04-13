@@ -591,7 +591,6 @@ le_t* LE_GetClosestActor (const vec3_t origin)
 static void LET_PathMove (le_t * le)
 {
 	float frac;
-	int tuCost = 0;
 	vec3_t start, dest, delta;
 
 	/* check for start */
@@ -615,12 +614,12 @@ static void LET_PathMove (le_t * le)
 			int newCrouchingState = crouchingState;
 			PosAddDV(le->pos, newCrouchingState, fulldv);
 
-			tuCost = Grid_MoveLength(&clPathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(&clPathMap, le->oldPos, crouchingState, qfalse);
-			le->TU -= tuCost;
-			if (tuCost < 0 || le->TU < 0)
-				Com_Error(ERR_DROP, "Negative TU costs while walking");
-			if (le == selActor)
+			if (le == selActor) {
+				const int tuCost = Grid_MoveLength(le->pathMap, le->pos, newCrouchingState, qfalse) - Grid_MoveLength(le->pathMap, le->oldPos, crouchingState, qfalse);
+				if (tuCost < 0)
+					Com_Error(ERR_DROP, "Negative TU costs while walking");
 				actorMoveLength -= tuCost;
+			}
 
 			/* walking in water will not play the normal footstep sounds */
 			if (!le->pathContents[le->pathPos]) {

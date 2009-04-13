@@ -743,6 +743,7 @@ void CL_AddActorToTeamList (le_t * le)
 	/* add it */
 	if (i == -1) {
 		i = cl.numTeamList;
+		le->pathMap = Mem_PoolAlloc(sizeof(*le->pathMap), cl_genericPool, 0);
 		cl.teamList[cl.numTeamList++] = le;
 		MN_ExecuteConfunc("numonteam%i", cl.numTeamList); /* althud */
 		MN_ExecuteConfunc("huddeselect %i", i);
@@ -767,6 +768,8 @@ void CL_RemoveActorFromTeamList (const le_t * le)
 
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
+			Mem_Free(le->pathMap);
+
 			/* disable hud button */
 			MN_ExecuteConfunc("huddisable %i", i);
 
@@ -805,6 +808,8 @@ qboolean CL_ActorSelect (le_t * le)
 
 	/* test team */
 	if (!le) {
+		if (selActor)
+			selActor->selected = qfalse;
 		selActor = NULL;
 		menuInventory = NULL;
 		return qfalse;
@@ -1047,7 +1052,7 @@ void CL_ConditionalMoveCalcForCurrentSelectedActor (void)
 	if (selActor) {
 		const int crouchingState = (selActor->state & STATE_CROUCHED) ? 1 : 0;
 		CL_BuildForbiddenList();
-		Grid_MoveCalc(clMap, selActor->fieldSize, &clPathMap, selActor->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+		Grid_MoveCalc(clMap, selActor->fieldSize, selActor->pathMap, selActor->pos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 		CL_ResetActorMoveLength();
 	}
 }
@@ -1082,7 +1087,7 @@ int CL_CheckAction (void)
 static int CL_MoveLength (const le_t *le, pos3_t to)
 {
 	const int crouchingState = le->state & STATE_CROUCHED ? 1 : 0;
-	const float length = Grid_MoveLength(&clPathMap, to, crouchingState, qfalse);
+	const float length = Grid_MoveLength(le->pathMap, to, crouchingState, qfalse);
 
 	switch (CL_MoveMode(le, length)) {
 	case WALKTYPE_AUTOSTAND_BEING_USED:
@@ -1137,12 +1142,12 @@ static qboolean CL_TraceMove (pos3_t to)
 
 	Com_DPrintf(DEBUG_PATHING, "Starting pos: (%i, %i, %i).\n", pos[0], pos[1], pos[2]);
 
-	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, &clPathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
+	while ((dv = Grid_MoveNext(clMap, selActor->fieldSize, selActor->pathMap, pos, crouching_state)) != ROUTING_UNREACHABLE) {
 #ifdef DEBUG
 		if (++counter > 100) {
 			Com_Printf("First pos: (%i, %i, %i, %i).\n", to[0], to[1], to[2], selActor->state & STATE_CROUCHED ? 1 : 0);
 			Com_Printf("Last pos: (%i, %i, %i, %i).\n", pos[0], pos[1], pos[2], crouching_state);
-			Grid_DumpDVTable(&clPathMap);
+			Grid_DumpDVTable(selActor->pathMap);
 			Com_Error(ERR_DROP, "CL_TraceMove: DV table loops.");
 		}
 #endif
@@ -1182,7 +1187,7 @@ static void CL_MaximumMove (pos3_t to, const le_t *le, pos3_t pos)
 
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(clMap, le->fieldSize, &clPathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
+	while ((dv = Grid_MoveNext(clMap, le->fieldSize, le->pathMap, pos, crouchingState)) != ROUTING_UNREACHABLE) {
 		length = CL_MoveLength(le, pos);
 		if (length <= tus)
 			return;
@@ -3096,7 +3101,7 @@ static void CL_AddPathingBox (pos3_t pos)
 		: ACTOR_SIZE_NORMAL;
 
 	const int crouchingState = selActor && (selActor->state & STATE_CROUCHED) ? 1 : 0;
-	const int TUneed = Grid_MoveLength(&clPathMap, pos, crouchingState, qfalse);
+	const int TUneed = Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse);
 	const int TUhave = CL_UsableTUs(selActor);
 
 	memset(&ent, 0, sizeof(ent));
@@ -3233,10 +3238,13 @@ void CL_DumpMoveMark_f (void)
 		: 0;
 	const int temp = developer->integer;
 
+	if (!selActor)
+		return;
+
 	developer->integer |= DEBUG_PATHING;
 
 	CL_BuildForbiddenList();
-	Grid_MoveCalc(clMap, fieldSize, &clPathMap, truePos, crouchingState, MAX_ROUTE, fb_list, fb_length);
+	Grid_MoveCalc(clMap, fieldSize, selActor->pathMap, truePos, crouchingState, MAX_ROUTE, fb_list, fb_length);
 
 	developer->integer ^= DEBUG_PATHING;
 
@@ -3264,11 +3272,11 @@ void CL_DumpTUs_f (void)
 	for (y = max(0, pos[1] - 8); y <= min(PATHFINDING_WIDTH, pos[1] + 8); y++) {
 		for (x = max(0, pos[0] - 8); x <= min(PATHFINDING_WIDTH, pos[0] + 8); x++) {
 			VectorSet(loc, x, y, pos[2]);
-			Com_Printf("%3i ", Grid_MoveLength(&clPathMap, loc, crouchingState, qfalse));
+			Com_Printf("%3i ", Grid_MoveLength(selActor->pathMap, loc, crouchingState, qfalse));
 		}
 		Com_Printf("\n");
 	}
-	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(&clPathMap, pos, crouchingState, qfalse));
+	Com_Printf("TUs at (%i, %i, %i) = %i\n", pos[0], pos[1], pos[2], Grid_MoveLength(selActor->pathMap, pos, crouchingState, qfalse));
 }
 
 /**
@@ -3328,7 +3336,7 @@ void CL_DebugPath_f (void)
 #if 0
 	priorityQueue_t pqueue;
 	PQueueInitialise(&pqueue, 1024);
-	Grid_MoveMark(clMap, actor_size, &clPathMap, mousePos, 0, 1,&pqueue);
+	Grid_MoveMark(clMap, actor_size, le->pathMap, mousePos, 0, 1,&pqueue);
 	PQueueFree(&pqueue);
 #endif
 }

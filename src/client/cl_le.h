@@ -117,6 +117,8 @@ typedef struct le_s {
 	int gender;
 	const fireDef_t *fd;	/**< in case this is a projectile */
 
+	struct pathing_s *pathMap;	/**< This is where the data for TUS used to move and actor
+								 * locations go - only available for human controlled actors */
 	static_lighting_t lighting;
 
 	/** is called before adding a le to scene */

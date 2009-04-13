@@ -45,7 +45,7 @@ vec3_t map_min, map_max;
 
 /** @brief server and client routing table */
 routing_t svMap[ACTOR_MAX_SIZE], clMap[ACTOR_MAX_SIZE]; /**< A routing_t per size */
-pathing_t svPathMap, clPathMap; /**< This is where the data for TUS used to move and actor locations go */
+pathing_t svPathMap; /**< This is where the data for TUS used to move and actor locations go */
 
 /** @note holds the number of inline entities, e.g. ET_DOOR */
 static int numInline;

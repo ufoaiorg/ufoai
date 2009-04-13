@@ -1610,7 +1610,7 @@ void CL_GameAutoGo (mission_t *mis)
 		/** @todo set other counts, use the counts above */
 		counts[MRC_ALIENS_KILLED] = ccs.battleParameters.aliens;
 		counts[MRC_CIVILIAN_SURVIVOR] = ccs.battleParameters.civilians;
-		CP_InitMissionResults(counts,won);
+		CP_InitMissionResults(counts, won);
 		MN_PushMenu("won", NULL);
 	}
 
