@@ -521,48 +521,26 @@ void CL_SetReactionFiremode (le_t * actor, const int handidx, const objDef_t *od
 	character_t *chr;
 	int usableTusForRF = 0;
 
-	if (cls.team != cl.actTeam) {	/**< Not our turn */
-		/* This check is just here (additional to the one in HUD_DisplayFiremodes_f) in case a possible situation was missed. */
-		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Function called on enemy/other turn.\n");
+	if (!actor)
 		return;
-	}
-
-	if (!actor) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: No actor given! Abort.\n");
-		return;
-	}
 
 	usableTusForRF = CL_UsableReactionTUs(actor);
 
-	if (handidx < -1 || handidx > ACTOR_HAND_LEFT) {
-		Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Bad hand index given. Abort.\n");
+	if (handidx < -1 || handidx > ACTOR_HAND_LEFT)
 		return;
-	}
-
-	Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n",
-		CL_GetActorNumber(actor), actor->entnum, handidx, fdIdx);
 
 	chr = CL_GetActorChr(actor);
 
 	/* Store TUs needed by the selected firemode (if reaction-fire is enabled). Otherwise set it to 0. */
 	if (od != NULL && fdIdx >= 0) {
-		const fireDef_t *fd;
-
 		/* Get 'ammo' (of weapon in defined hand) and index of firedefinitions in 'ammo'. */
-		fd = CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_CHAR(handidx));
-
-		/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
+		const fireDef_t *fd = CL_GetWeaponAndAmmo(actor, ACTOR_GET_HAND_CHAR(handidx));
 		if (fd) {
-			if (chr->reservedTus.reserveReaction == STATE_REACTION_MANY) {
-				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Reserving %i x %i = %i TUs for RF.\n",
-					usableTusForRF / fd[fdIdx].time, fd[fdIdx].time, fd[fdIdx].time * (usableTusForRF / fd[fdIdx].time));
+			/* Reserve the TUs needed by the selected firemode (defined in the ammo). */
+			if (chr->reservedTus.reserveReaction == STATE_REACTION_MANY)
 				CL_ReserveTUs(actor, RES_REACTION, fd[fdIdx].time * (usableTusForRF / fd[fdIdx].time));
-			} else {
-				Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: Reserving %i TUs for RF.\n", fd[fdIdx].time);
+			else
 				CL_ReserveTUs(actor, RES_REACTION, fd[fdIdx].time);
-			}
-		} else {
-			Com_DPrintf(DEBUG_CLIENT, "CL_SetReactionFiremode: No firedef found! No TUs will be reserved.\n");
 		}
 	}
 
