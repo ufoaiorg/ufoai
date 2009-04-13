@@ -2047,11 +2047,6 @@ void CP_CampaignInit (campaign_t *campaign, qboolean load)
 
 void CP_CampaignExit (void)
 {
-	SV_Shutdown("Game exit", qfalse);
-	CL_Disconnect();
-
-	Mem_DeletePool(cl_campaignPool);
-
 	if (GAME_CP_IsRunning()) {
 		r_geoscape_overlay->integer = 0;
 		/* singleplayer commands are no longer available */

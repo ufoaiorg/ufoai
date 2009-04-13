@@ -429,9 +429,14 @@ void GAME_CP_CharacterCvars (const character_t *chr)
 void GAME_CP_Shutdown (void)
 {
 	Cmd_RemoveCommand("cp_results");
+	Cmd_RemoveCommand("cp_missionauto_check");
+	Cmd_RemoveCommand("cp_mission_autogo");
+	Cmd_RemoveCommand("campaignlist_click");
+	Cmd_RemoveCommand("cp_getcampaigns");
+	Cmd_RemoveCommand("cp_start");
 
-	/* exit running game */
-	CP_CampaignExit();
+	SV_Shutdown("Game exit", qfalse);
+	CL_Disconnect();
 
 	CL_ResetSinglePlayerData();
 }
