@@ -190,11 +190,6 @@ static int HUD_GetReactionState (const le_t * le)
 		return R_FIRE_OFF;
 }
 
-static void HUD_ResetWeaponButtons (void)
-{
-	memset(weaponButtonState, BT_STATE_DISABLE, sizeof(weaponButtonState));
-}
-
 /**
  * @brief Sets the display for a single weapon/reload HUD button.
  */
@@ -1169,8 +1164,6 @@ void HUD_ActorUpdateCvars (void)
 
 	if (cls.state != ca_active)
 		return;
-
-	/*HUD_ResetWeaponButtons();*/
 
 	/* set Cvars for all actors */
 	HUD_ActorGlobalCvars();
