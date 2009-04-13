@@ -932,10 +932,9 @@ static void AI_SetModelAndCharacterValues (edict_t * ent, int team)
 	} else if (team == TEAM_CIVILIAN) {
 		teamDefintion = gi.Cvar_String("ai_civilian");
 	}
-	ent->chr.skin = gi.GetCharacterValues(teamDefintion, &ent->chr);
+	gi.GetCharacterValues(teamDefintion, &ent->chr);
 	ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 	ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
-	ent->skin = ent->chr.skin;
 	if (!ent->chr.teamDef)
 		gi.error("Could not set teamDef for character: '%s'", teamDefintion);
 }

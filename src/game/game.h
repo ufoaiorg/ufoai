@@ -220,7 +220,7 @@ typedef struct {
 	void (IMPORT *ReadFormat) (const char *format, ...);
 
 	/* misc functions */
-	int (IMPORT *GetCharacterValues) (const char *teamDefinition, character_t *chr);
+	void (IMPORT *GetCharacterValues) (const char *teamDefinition, character_t *chr);
 
 	/* managed memory allocation */
 	void *(IMPORT *TagMalloc) (int size, int tag);

@@ -1889,8 +1889,7 @@ static char CHRSH_returnModel[MAX_VAR];
 const char *CHRSH_CharGetBody (const character_t * const chr)
 {
 	/* models of UGVs don't change - because they are already armoured */
-	/** @todo ACTOR_SIZE_NORMAL should not be an indicator for a soldier */
-	if (chr->inv.c[CSI->idArmour] && chr->fieldSize == ACTOR_SIZE_NORMAL) {
+	if (chr->inv.c[CSI->idArmour] && chr->teamDef->race != RACE_ROBOT) {
 		const objDef_t *od = chr->inv.c[CSI->idArmour]->item.t;
 		const char *id = od->armourPath;
 		if (strcmp(od->type, "armour"))
@@ -1899,7 +1898,6 @@ const char *CHRSH_CharGetBody (const character_t * const chr)
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s%s/%s", chr->path, id, chr->body);
 	} else
 		Com_sprintf(CHRSH_returnModel, sizeof(CHRSH_returnModel), "%s/%s", chr->path, chr->body);
-	Com_DPrintf(DEBUG_SHARED, "CHRSH_CharGetBody: use '%s' as body model path for character\n", CHRSH_returnModel);
 	return CHRSH_returnModel;
 }
 

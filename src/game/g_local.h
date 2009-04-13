@@ -514,7 +514,6 @@ struct edict_s {
 	/** the models (hud) */
 	int body;
 	int head;
-	int skin;
 	int frame;					/**< frame of the model to show */
 
 	char *group;				/**< this can be used to trigger a group of entities

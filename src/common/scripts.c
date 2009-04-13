@@ -1668,7 +1668,7 @@ teamDef_t* Com_GetTeamDefinitionByID (const char *team)
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-int Com_GetCharacterValues (const char *teamDefition, character_t * chr)
+void Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 {
 	int retry = 1000;
 
@@ -1726,10 +1726,10 @@ int Com_GetCharacterValues (const char *teamDefition, character_t * chr)
 		str = Com_GiveModel(MODEL_SKIN, gender, chr->teamDef);
 		if (!str)
 			continue;
-		return atoi(str);
+		chr->skin = atoi(str);
+		return;
 	}
-	Com_Printf("Could not set character values for team '%s'\n", teamDefition);
-	return 0;
+	Com_Error(ERR_DROP, "Could not set character values for team '%s'\n", teamDefition);
 }
 
 /**

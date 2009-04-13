@@ -335,7 +335,7 @@ void G_AppearPerishEvent (unsigned int player_mask, int appear, edict_t *check, 
 
 			gi.WriteShort(check->body);
 			gi.WriteShort(check->head);
-			gi.WriteByte(check->skin);
+			gi.WriteByte(check->chr.skin);
 			gi.WriteShort(check->state & STATE_PUBLIC);
 			gi.WriteByte(check->fieldSize);
 			gi.WriteByte(GET_TU(check->chr.score.skills[ABILITY_SPEED]));
@@ -2633,7 +2633,6 @@ void G_ClientTeamInfo (player_t * player)
 			ent->chr.inv = ent->i;
 			ent->body = gi.ModelIndex(CHRSH_CharGetBody(&ent->chr));
 			ent->head = gi.ModelIndex(CHRSH_CharGetHead(&ent->chr));
-			ent->skin = ent->chr.skin;
 
 			/* set initial vital statistics */
 			ent->HP = ent->chr.HP;

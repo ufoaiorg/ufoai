@@ -401,7 +401,7 @@ void CL_GenerateCharacter (character_t *chr, const char *teamDefName, const ugv_
 
 	CL_CharacterSetShotSettings(chr, -1, -1, NULL);
 
-	chr->skin = Com_GetCharacterValues(teamDefName, chr);
+	Com_GetCharacterValues(teamDefName, chr);
 	/* Create attributes. */
 	CHRSH_CharGenAbilitySkills(chr, GAME_IsMultiplayer());
 }
