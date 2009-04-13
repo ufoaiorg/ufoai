@@ -1381,6 +1381,8 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 
 				base->map[row][col + 1].building = buildingNew;
 			}
+			/* Update number of buildings on the base. */
+			ccs.numBuildings[base->idx]++;
 			/* Credits are updated here, too */
 			B_NewBuilding(base, buildingNew);
 
@@ -1389,8 +1391,6 @@ building_t* B_SetBuildingByClick (base_t *base, const building_t const *template
 			/* where is this building located in our base? */
 			buildingNew->pos[0] = row;
 			buildingNew->pos[1] = col;
-
-			ccs.numBuildings[base->idx]++;
 
 			B_ResetBuildingCurrent(base);
 			Cmd_ExecuteString("building_init");
