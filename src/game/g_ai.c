@@ -102,7 +102,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 	if (frand() < 0.3)
 		return qfalse;
 
-	/* not in the view frustom - don't use the door while not seeing it */
+	/* not in the view frustum - don't use the door while not seeing it */
 	if (!G_FrustumVis(door, ent->origin))
 		return qfalse;
 
@@ -128,7 +128,7 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 			/* if it's an actor and he's still living */
 			if (G_IsLivingActor(check)) {
 				/* check whether the origin of the enemy is inside the
-				* AI actors view frustum */
+				 * AI actors view frustum */
 				float actorVis;
 				qboolean frustum = G_FrustumVis(check, ent->origin);
 				if (!frustum)
@@ -156,7 +156,6 @@ qboolean AI_CheckUsingDoor (const edict_t *ent, const edict_t *door)
 	return qtrue;
 }
 
-#ifndef LUA_AI
 /**
  * @brief Checks whether it would be smart to change the state to STATE_CROUCHED
  * @param[in] ent The AI controlled actor to chech the state change for
@@ -735,7 +734,6 @@ static aiAction_t AI_PrepBestAction (player_t *player, edict_t * ent)
 
 	return bestAia;
 }
-#endif /* !LUA_AI */
 
 edict_t *ai_waypointList;
 
@@ -821,7 +819,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		while (bestAia.shots) {
 			G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, fdIdx, NULL, qtrue, bestAia.z_align);
 			bestAia.shots--;
-			/* dies by our own shot? */
+			/* died by our own shot? */
 			if (G_IsDead(ent))
 				return;
 			/* check for target's death */
@@ -907,33 +905,11 @@ void AI_Run (void)
  */
 static void AI_SetStats (edict_t * ent, int team)
 {
-	/* Set base stats. */
-	if (team != TEAM_CIVILIAN) {
-		CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
-		/* Aliens get much more mind */
-		ent->chr.score.skills[ABILITY_MIND] += 100;
-		if (ent->chr.score.skills[ABILITY_MIND] >= MAX_SKILL)
-			ent->chr.score.skills[ABILITY_MIND] = MAX_SKILL;
-	} else if (team == TEAM_CIVILIAN) {
-		CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
-	}
+	CHRSH_CharGenAbilitySkills(&ent->chr, sv_maxclients->integer >= 2);
 
-	/* Set health, morale and stun. */
-	ent->chr.HP = GET_HP(ent->chr.score.skills[ABILITY_POWER]);
 	ent->HP = ent->chr.HP;
-	ent->chr.morale = GET_MORALE(ent->chr.score.skills[ABILITY_MIND]);
-	if (ent->chr.morale >= MAX_SKILL)
-		ent->chr.morale = MAX_SKILL;
 	ent->morale = ent->chr.morale;
 	ent->STUN = 0;
-
-	/* Stat post tweaks. */
-	if (team == TEAM_CIVILIAN) {
-		ent->chr.HP /= 2; /* civilians get half health */
-		ent->HP = ent->chr.HP;
-		if (ent->chr.morale > 45) /* they can't get over 45 morale */
-			ent->chr.morale = 45;
-	}
 }
 
 
